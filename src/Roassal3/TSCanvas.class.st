@@ -36,3 +36,23 @@ TSCanvas >> numberOfShapes [
 	"Return the number of non-fixed shapes"
 	^ shapes size
 ]
+
+{ #category : #'instance creation' }
+TSCanvas >> open [
+	| morph |
+	morph := TSAthensMorph new.
+	morph renderer: TSAthensRenderer new.
+	morph canvas: self.
+	^ morph open
+]
+
+{ #category : #'instance creation' }
+TSCanvas >> openInWindowSized: anExtentAsPoint [
+	| morph window |
+	morph := TSAthensMorph new. 
+	morph renderer: TSAthensRenderer new.
+	morph canvas: self.
+	window := morph openInWindow.
+	window extent: anExtentAsPoint.
+	^ window
+]

@@ -25,3 +25,8 @@ TSCanvasTest >> testAddOneShape [
 TSCanvasTest >> testEmpty [
 	self assert: c numberOfShapes equals: 0
 ]
+
+{ #category : #running }
+TSCanvasTest >> testOpening [
+	c open delete
+]
