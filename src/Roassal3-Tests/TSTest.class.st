@@ -1,7 +1,7 @@
 Class {
 	#name : #TSTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Trachel'
+	#category : #'Roassal3-Tests-Trachel'
 }
 
 { #category : #testing }

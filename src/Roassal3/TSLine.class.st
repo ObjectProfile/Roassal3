@@ -3,8 +3,7 @@ Class {
 	#superclass : #TSShape,
 	#instVars : [
 		'startPoint',
-		'endPoint',
-		'color'
+		'endPoint'
 	],
 	#category : #'Roassal3-Trachel'
 }
