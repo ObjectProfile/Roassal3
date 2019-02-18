@@ -23,6 +23,18 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #actions }
+RSAbstractModelBuilder >> actions [
+	^ actions ifNil: [ #() ].
+]
+
+{ #category : #actions }
+RSAbstractModelBuilder >> addAction: action [
+	self actions isEmpty 
+		ifTrue: [ actions := OrderedCollection new ].
+	self actions add: action.
+]
+
 { #category : #accessing }
 RSAbstractModelBuilder >> commands [
 	^ commands ifNil: [ #() ]
@@ -70,10 +82,18 @@ RSAbstractModelBuilder >> elementOn: object index: index [
 { #category : #'public - accessing' }
 RSAbstractModelBuilder >> elementsOn: aCollection [
 	| g |
-	g := OrderedCollection new: aCollection size.
+	g := TSGroup new: aCollection size.
 	aCollection doWithIndex: [ :obj : index |
 		g add: (self elementOn: obj index: index) ].
 	^ g
+]
+
+{ #category : #actions }
+RSAbstractModelBuilder >> executeActions: block on: element [
+	self actions do: [ :action |
+		action element: element.
+		(block rsValue: action) 
+			ifTrue: [ action execute ] ].
 ]
 
 { #category : #'reflective operations' }

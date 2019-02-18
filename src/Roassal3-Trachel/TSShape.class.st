@@ -10,7 +10,8 @@ Class {
 		'path',
 		'border',
 		'announcer',
-		'canvas'
+		'canvas',
+		'isFixed'
 	],
 	#category : #'Roassal3-Trachel-Shapes'
 }
@@ -82,8 +83,19 @@ TSShape >> includesPoint: aPoint [
 TSShape >> initialize [
 	super initialize.
 	color := Color lightGray.
+	isFixed := false.
 	matrix := AthensAffineTransform new.
 	
+]
+
+{ #category : #testing }
+TSShape >> isFixed [ 
+	^ isFixed
+]
+
+{ #category : #accessing }
+TSShape >> isFixed: aBool [
+	isFixed := aBool
 ]
 
 { #category : #testing }

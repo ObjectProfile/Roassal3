@@ -40,6 +40,8 @@ TSCanvas >> addFixedShape: aShape [
 
 { #category : #adding }
 TSCanvas >> addShape: aShape [
+	aShape isFixed
+		ifTrue: [ ^ self addFixedShape: aShape ].
 	shapes add: aShape.
 	aShape canvas: self
 ]

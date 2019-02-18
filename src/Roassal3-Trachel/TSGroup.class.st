@@ -10,6 +10,14 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes'
 }
 
+{ #category : #'instance creation' }
+TSGroup class >> new: size [
+	| inst |
+	inst := self basicNew.
+	inst children: (OrderedCollection new: size).
+	^ inst.
+]
+
 { #category : #visiting }
 TSGroup >> accept: visitor [
 	visitor visitGroup: self
@@ -23,6 +31,11 @@ TSGroup >> addShape: shape [
 { #category : #accessing }
 TSGroup >> children [
 	^ children
+]
+
+{ #category : #accessing }
+TSGroup >> children: collection [
+	children := collection 
 ]
 
 { #category : #'reflective operations' }

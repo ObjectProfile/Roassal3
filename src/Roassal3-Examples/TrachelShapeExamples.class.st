@@ -2,13 +2,13 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #TSShapeExamples,
+	#name : #TrachelShapeExamples,
 	#superclass : #TSObject,
 	#category : #'Roassal3-Examples'
 }
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example01Basic [
+TrachelShapeExamples >> example01Basic [
 	<script: 'self new example01Basic'>
 
 	| c |
@@ -25,7 +25,7 @@ TSShapeExamples >> example01Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example02Basic [
+TrachelShapeExamples >> example02Basic [
 	<script: 'self new example02Basic'>
 
 	| c |
@@ -42,7 +42,7 @@ TSShapeExamples >> example02Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example03Basic [
+TrachelShapeExamples >> example03Basic [
 	<script: 'self new example03Basic'>
 
 	| c g |
@@ -72,7 +72,7 @@ TSShapeExamples >> example03Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example04Basic [
+TrachelShapeExamples >> example04Basic [
 	<script: 'self new example04Basic'>
 
 	| c g |
@@ -104,7 +104,7 @@ TSShapeExamples >> example04Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example05Basic [
+TrachelShapeExamples >> example05Basic [
 	<script: 'self new example05Basic'>
 
 	| c |
@@ -133,7 +133,7 @@ TSShapeExamples >> example05Basic [
 ]
 
 { #category : #labels }
-TSShapeExamples >> example06Basic [
+TrachelShapeExamples >> example06Basic [
 	<script: 'self new example06Basic'>
 
 	| c label |
@@ -172,7 +172,7 @@ TSShapeExamples >> example06Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example07Basic [
+TrachelShapeExamples >> example07Basic [
 	<script: 'self new example07Basic'>
 
 	| c ellipse a b drag update |
@@ -199,7 +199,7 @@ TSShapeExamples >> example07Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example08Basic [
+TrachelShapeExamples >> example08Basic [
 	<script: 'self new example08Basic'>
 
 	| c y r |
@@ -224,7 +224,7 @@ TSShapeExamples >> example08Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example09Basic [
+TrachelShapeExamples >> example09Basic [
 	<script: 'self new example09Basic'>
 
 	|  c e prev dif |
@@ -249,7 +249,7 @@ TSShapeExamples >> example09Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example10Basic [
+TrachelShapeExamples >> example10Basic [
 	<script: 'self new example10Basic'>
 
 	| c border circleResolution angle a b radius |
@@ -279,7 +279,7 @@ TSShapeExamples >> example10Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example11Basic [
+TrachelShapeExamples >> example11Basic [
 	<script: 'self new example11Basic'>
 
 	| c |
