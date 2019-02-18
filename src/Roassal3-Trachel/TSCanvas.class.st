@@ -13,7 +13,8 @@ Class {
 		'color',
 		'announcer',
 		'morph',
-		'clearBackground'
+		'clearBackground',
+		'animations'
 	],
 	#category : #'Roassal3-Trachel-Trachel'
 }
@@ -23,14 +24,29 @@ TSCanvas >> accept: visitor [
 	visitor visitCanvas: self
 ]
 
+{ #category : #animations }
+TSCanvas >> addAnimation: anAnimation [
+	animations add: anAnimation.
+	anAnimation canvas: self.
+	anAnimation start.
+	self signalUpdate
+]
+
 { #category : #adding }
 TSCanvas >> addFixedShape: aShape [
-	fixedShapes add: aShape
+	fixedShapes add: aShape.
+	aShape canvas: self
 ]
 
 { #category : #adding }
 TSCanvas >> addShape: aShape [
-	shapes add: aShape
+	shapes add: aShape.
+	aShape canvas: self
+]
+
+{ #category : #animations }
+TSCanvas >> animations [
+	^ animations
 ]
 
 { #category : #events }
@@ -103,9 +119,16 @@ TSCanvas >> fixedShapes [
 	^ fixedShapes 
 ]
 
-{ #category : #testing }
+{ #category : #animations }
 TSCanvas >> hasAnimation [
-	^ false
+	"True if at least one animation is running"
+	^ animations notEmpty
+]
+
+{ #category : #animations }
+TSCanvas >> hasAnimation: anAnimation [
+	"True if anAnimation is running"
+	^ animations includes: anAnimation
 ]
 
 { #category : #initialization }
@@ -113,6 +136,7 @@ TSCanvas >> initialize [
 	super initialize.
 	shapes := OrderedCollection new.
 	fixedShapes := OrderedCollection new.
+	animations := OrderedCollection new.
 	clearBackground := true.
 	color := Color white.
 	extent := 500@500.
@@ -127,6 +151,12 @@ TSCanvas >> morph [
 	morph renderer: TSAthensRenderer new.
 	morph canvas: self.
 	^ morph
+]
+
+{ #category : #animations }
+TSCanvas >> numberOfAnimations [
+	"Return the number of animations contained in the canvas"
+	^ animations size
 ]
 
 { #category : #accessing }
@@ -155,9 +185,35 @@ TSCanvas >> openInWindowSized: anExtentAsPoint [
 	^ window
 ]
 
+{ #category : #animations }
+TSCanvas >> playAnimations [
+	| shouldClean |
+	shouldClean := false.
+	animations do: [ :animation | 
+		animation refresh. 
+		animation hasCompleted ifTrue: [ 
+			shouldClean := true.
+			animation executeOnFinish. ] ].
+	
+	shouldClean ifTrue: [ 
+		animations := animations reject: [ :animation | animation hasCompleted ] ].
+]
+
 { #category : #dependencies }
 TSCanvas >> release [
 	camera := nil
+]
+
+{ #category : #'adding removing shapes' }
+TSCanvas >> removeFixedShape: aShape [
+	fixedShapes := fixedShapes remove: aShape
+]
+
+{ #category : #'adding removing shapes' }
+TSCanvas >> removeShape: shape [
+	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
+	shape canvas: nil.
+	
 ]
 
 { #category : #accessing }

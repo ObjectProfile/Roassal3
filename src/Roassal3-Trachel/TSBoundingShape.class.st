@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes'
 }
 
+{ #category : #visiting }
+TSBoundingShape >> accept: visitor [
+	visitor visitBoundingShape: self
+]
+
 { #category : #accessing }
 TSBoundingShape >> encompassingRectangle [ 
 	^ Rectangle center: self position extent: width@height

@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #visiting }
-TSEllipse >> accept: visitor [
-	visitor visitEllipse: self
+TSEllipse >> pathFor: visitor [
+	^ visitor pathOfEllipse: self
 ]
 
 { #category : #'as yet unclassified' }

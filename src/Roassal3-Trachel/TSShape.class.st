@@ -9,7 +9,8 @@ Class {
 		'matrix',
 		'path',
 		'border',
-		'announcer'
+		'announcer',
+		'canvas'
 	],
 	#category : #'Roassal3-Trachel-Shapes'
 }
@@ -38,6 +39,16 @@ TSShape >> border [
 { #category : #accessing }
 TSShape >> border: aBorder [
 	border := aBorder
+]
+
+{ #category : #accessing }
+TSShape >> canvas [
+	^ canvas
+]
+
+{ #category : #accessing }
+TSShape >> canvas: aCanvas [
+	canvas := aCanvas 
 ]
 
 { #category : #accessing }
@@ -75,6 +86,11 @@ TSShape >> initialize [
 	
 ]
 
+{ #category : #testing }
+TSShape >> isInACanvas [
+	^ canvas notNil
+]
+
 { #category : #accessing }
 TSShape >> matrix [
 	^ matrix
@@ -103,6 +119,13 @@ TSShape >> position: aPoint [
 { #category : #dependencies }
 TSShape >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
+{ #category : #actions }
+TSShape >> remove [
+	"Do nothing if the line is not already in a canvas"
+	self isInACanvas ifFalse: [ ^ self ]. 
+	canvas removeShape: self
 ]
 
 { #category : #initialization }

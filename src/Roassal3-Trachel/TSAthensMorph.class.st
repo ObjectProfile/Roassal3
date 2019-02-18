@@ -51,6 +51,7 @@ TSAthensMorph >> drawOn: aCanvas [
 	self recreateSurfaceIfNecessary.
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	
+	trachelCanvas playAnimations.
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [:athensCanvas |
 		trachelCanvas clearBackground ifTrue: [ surface clear ].

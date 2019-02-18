@@ -95,3 +95,13 @@ TSCanvasTest >> testPosition [
 	self assert: b position equals: 0@0.
 	b position: 0@0.
 ]
+
+{ #category : #tests }
+TSCanvasTest >> testRemovingShapes [
+	| e |
+	e := TSEllipse new.
+	c addShape: e.
+	self assert: c shapes size equals: 1.
+	e remove.
+	self assert: c shapes size equals: 0.
+]

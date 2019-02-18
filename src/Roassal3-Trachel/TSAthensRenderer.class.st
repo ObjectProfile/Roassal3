@@ -11,8 +11,8 @@ Class {
 TSAthensRenderer >> pathOfBox: box [
 	| rectangle path |
 	box path ifNotNil: [ ^ box path].
+	rectangle  := Rectangle center: 0@0 extent: box extent.
 	path := athensCanvas createPath: [ :builder | 
-		rectangle := box encompassingRectangle.
 		builder
 			absolute;
 			moveTo: rectangle topLeft;
@@ -74,27 +74,17 @@ TSAthensRenderer >> visitBorderIfNecessary: shape [
 ]
 
 { #category : #visiting }
-TSAthensRenderer >> visitBox: box [
+TSAthensRenderer >> visitBoundingShape: shape [
 	| path |
-	path := self pathOfBox: box.
-	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas 
-			setPaint: box color;
-			drawShape: path.
-		].
-]
-
-{ #category : #visiting }
-TSAthensRenderer >> visitEllipse: ellipse [
-	| path |
-	path := self pathOfEllipse: ellipse.
+	path := shape pathFor: self.
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas pathTransform
-			multiplyBy: ellipse matrix asFloatTransform.
-		athensCanvas 
-			setPaint: ellipse color;
-			drawShape: path.
-		self visitBorderIfNecessary: ellipse.
+			multiplyBy: shape matrix asFloatTransform.
+		shape color ifNotNil: [ 
+			athensCanvas 
+				setPaint: shape color;
+				drawShape: path ].
+		self visitBorderIfNecessary: shape.
 		].
 	
 ]

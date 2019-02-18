@@ -155,12 +155,14 @@ TSShapeExamples >> example06Basic [
 		
 		label rotateByDegrees: angle..
 		label position: p + ((label textWidth/2) * theta).
-		m even
+		"m even
 			ifTrue: [ label bold ]
-			ifFalse: [ label italic ].
+			ifFalse: [ label italic ]."
 		c addShape: label.
 		].
 	c addShape: (TSEllipse new
+		color: nil;
+		border: TSBorder new;
 		radius: 90).
 	c open
 	
@@ -243,5 +245,46 @@ TSShapeExamples >> example09Basic [
 		c signalUpdate.
 		 ].
 	c clearBackground: false.
+	c open.
+]
+
+{ #category : #events }
+TSShapeExamples >> example10Basic [
+	<script: 'self new example10Basic'>
+
+	| c border circleResolution angle a b radius |
+	c := TSCanvas new.
+	c color: Color white.
+	border := TSBorder new color: (Color colorFrom: '002800').
+	b := 1.
+	radius := 200.
+	c when: TSMouseMove do: [ :evt | 
+		circleResolution := b.
+		circleResolution isZero ifTrue: [ circleResolution := 1 ].
+		angle := Float twoPi / circleResolution.
+		a := 175 * evt position x / c extent x.
+		b := 200 * evt position y / c extent y.
+		c shapes copy do: #remove.
+		0 to: circleResolution do: [ :i |
+			c addShape: (TSEllipse new 
+				color: Color transparent;
+				rotateByDegrees: 45;
+				border: border;
+				extent: ((angle * i) cos @ (angle * i) sin) * radius + a
+			)].
+		
+		c signalUpdate.
+		 ].
+	c open.
+]
+
+{ #category : #events }
+TSShapeExamples >> example11Basic [
+	<script: 'self new example11Basic'>
+
+	| c |
+	c := TSCanvas new.
+	c color: Color white.
+	
 	c open.
 ]
