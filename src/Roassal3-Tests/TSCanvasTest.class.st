@@ -25,6 +25,15 @@ TSCanvasTest >> testAddOneShape [
 ]
 
 { #category : #running }
+TSCanvasTest >> testDrawBorder [
+	c addShape: (TSEllipse new
+		radius: 100;
+		border: TSBorder new;
+		yourself).
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
 TSCanvasTest >> testDrawCanvas [
 	c addShape: (TSBox new
 		extent: 100@100;

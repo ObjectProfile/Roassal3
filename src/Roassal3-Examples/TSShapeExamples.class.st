@@ -171,29 +171,77 @@ TSShapeExamples >> example06Basic [
 
 { #category : #events }
 TSShapeExamples >> example07Basic [
-	<script: 'self new example05Basic'>
+	<script: 'self new example07Basic'>
 
-	| c |
+	| c ellipse a b drag update |
 	c := TSCanvas new.
-	c addShape: (TSBox new
-		color: (Color yellow alpha: 0.5);
-		position: -50 @ 0;
-		extent: 50@100;
-		yourself).
-	c addShape: (TSBox new
-		position: 0 @ 0;
-		color: (Color red alpha: 0.5);
-		extent: 50@100;
-		yourself).
-		
-		
-	c addShape: (TSEllipse new
-		color: (Color gray alpha: 0.5);
-		extent: 100@100;
-		yourself).
-	c addShape: (TSEllipse new
-		color: (Color gray alpha: 0.5);
-		extent: 20@20;
-		yourself).
+	ellipse := TSEllipse new
+		radius: 40;
+		border: TSBorder new.
+	c addShape: ellipse.
+	a := Color colorFrom: '12A288'.
+	b := Color colorFrom: 'AB2567'.
+	drag := false.
+	update := [ :evt |
+		ellipse 
+			color: (drag ifTrue: [ a ] ifFalse: [b ]);
+			position: evt position.
+		c signalUpdate ].
+	c
+		when: TSMouseMove do: [ :evt | update value: evt.  ];
+		when: TSMouseDragStart do: [ :evt| drag := true. ];
+		when: TSMouseDragEnd do: [ :evt | drag := false. ].
+	c clearBackground: false.
+	c open.
+	
+]
+
+{ #category : #'box and ellipses' }
+TSShapeExamples >> example08Basic [
+	<script: 'self new example08Basic'>
+
+	| c y r |
+	c := TSCanvas new.
+	r := SharedRandom globalGenerator.
+	c color: (Color colorFrom: '325A64').
+	1 to: 500 do: [ :x |
+		y := 250 + (x sin * 250).
+		c addShape: (TSEllipse new
+			color: Color transparent;
+			border: (TSBorder new
+				width: x/ 50;
+				color: (Color 
+					r: r next * 255 
+					g: r next * 200
+					b: 255
+					range: y) );
+			position: (x@y)-250;
+			extent: (y/10)@( x * 75/ 499 ) ).
+		 ].
 	c open
+]
+
+{ #category : #events }
+TSShapeExamples >> example09Basic [
+	<script: 'self new example09Basic'>
+
+	|  c e prev dif |
+	c := TSCanvas new.
+	c color: Color black.
+	e := TSEllipse new
+		border: (TSBorder new color: Color white);
+		radius: 0.
+	c addShape: e.
+	prev := 0.
+	c when: TSMouseMove do: [ :evt | 
+		dif := (evt position x - prev) abs.
+		prev := evt position x.
+		e 
+			color: (Color r: 0 g: dif b: 0 range: 255);
+			position: evt position;
+			size: dif.
+		c signalUpdate.
+		 ].
+	c clearBackground: false.
+	c open.
 ]

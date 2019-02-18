@@ -115,7 +115,7 @@ TSLabel >> resetCache [
 		familyName: fontName
 		pointSize: fontSize.
 	
-	font emphasized: (emphasis inject: 0 into: [:sum :next | sum + next emphasisCode]).
+	font := font emphasized: (emphasis inject: 0 into: [:sum :next | sum + next emphasisCode]).
 	cachedWidth := nil.
 	cachedHeight := nil
 ]

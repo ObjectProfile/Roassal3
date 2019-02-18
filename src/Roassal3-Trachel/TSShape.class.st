@@ -31,6 +31,16 @@ TSShape >> announcer: anAnnouncer [
 ]
 
 { #category : #accessing }
+TSShape >> border [
+	^ border
+]
+
+{ #category : #accessing }
+TSShape >> border: aBorder [
+	border := aBorder
+]
+
+{ #category : #accessing }
 TSShape >> color [
 	^ color 
 ]
@@ -43,6 +53,12 @@ TSShape >> color: aColor [
 { #category : #accessing }
 TSShape >> encompassingRectangle [
 	
+]
+
+{ #category : #testing }
+TSShape >> hasEventCallback [
+	"Return true if at least one event callback has been added to the shape"
+	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
 { #category : #testing }

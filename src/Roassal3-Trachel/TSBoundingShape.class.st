@@ -17,9 +17,15 @@ TSBoundingShape >> encompassingRectangle [
 ]
 
 { #category : #accessing }
+TSBoundingShape >> extent [
+	^ width @ height
+]
+
+{ #category : #accessing }
 TSBoundingShape >> extent: aPoint [
 	width := aPoint x.
 	height := aPoint y.
+	path := nil.
 ]
 
 { #category : #initialization }

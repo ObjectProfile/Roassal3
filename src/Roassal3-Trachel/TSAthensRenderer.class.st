@@ -27,15 +27,15 @@ TSAthensRenderer >> pathOfBox: box [
 
 { #category : #visiting }
 TSAthensRenderer >> pathOfEllipse: ellipse [
-	| rectangle path halfWidth halfHeight |
+	| extent path halfWidth halfHeight |
 	ellipse path ifNotNil: [ ^ ellipse path ].
-	rectangle := ellipse encompassingRectangle.
-	halfWidth := rectangle width / 2 asFloat.
-	halfHeight := rectangle height / 2 asFloat.
+	extent := ellipse extent.
+	halfWidth := extent x / 2 asFloat.
+	halfHeight := extent y / 2 asFloat.
 	path := athensCanvas createPath: [ :builder | 
 		builder
 			absolute;
-			moveTo: ellipse position;
+			moveTo: 0@0;
 			relative;
 			moveTo: halfWidth negated @ 0;
 			curveVia: 0 @ (halfHeight negated * 0.55)
@@ -55,6 +55,25 @@ TSAthensRenderer >> pathOfEllipse: ellipse [
 ]
 
 { #category : #visiting }
+TSAthensRenderer >> visitBorder: border [
+	| stroke |
+	stroke := athensCanvas setStrokePaint: border color.
+	stroke width: border width asFloat.
+	border style ifNil: [ ^ self ].
+	border style applyOn: stroke.
+		.
+]
+
+{ #category : #visiting }
+TSAthensRenderer >> visitBorderIfNecessary: shape [
+	shape border ifNil: [ ^ self ].
+	shape border width <= 0 ifTrue: [ ^ self ].
+	athensCanvas setShape: shape path.
+	shape border accept: self.
+	athensCanvas draw.
+]
+
+{ #category : #visiting }
 TSAthensRenderer >> visitBox: box [
 	| path |
 	path := self pathOfBox: box.
@@ -70,16 +89,18 @@ TSAthensRenderer >> visitEllipse: ellipse [
 	| path |
 	path := self pathOfEllipse: ellipse.
 	athensCanvas pathTransform restoreAfter: [ 
+		athensCanvas pathTransform
+			multiplyBy: ellipse matrix asFloatTransform.
 		athensCanvas 
 			setPaint: ellipse color;
 			drawShape: path.
+		self visitBorderIfNecessary: ellipse.
 		].
+	
 ]
 
 { #category : #visiting }
 TSAthensRenderer >> visitGroup: group [
-	| rectangle |
-	rectangle := group encompassingRectangle.
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas pathTransform 
 			translateBy: group position";

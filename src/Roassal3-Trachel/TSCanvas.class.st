@@ -11,7 +11,9 @@ Class {
 		'renderTree',
 		'extent',
 		'color',
-		'announcer'
+		'announcer',
+		'morph',
+		'clearBackground'
 	],
 	#category : #'Roassal3-Trachel-Trachel'
 }
@@ -58,6 +60,21 @@ TSCanvas >> camera: aCamera [
 ]
 
 { #category : #accessing }
+TSCanvas >> canvas [
+	^ self
+]
+
+{ #category : #accessing }
+TSCanvas >> clearBackground [
+	^ clearBackground
+]
+
+{ #category : #accessing }
+TSCanvas >> clearBackground: aBool [
+	clearBackground := aBool
+]
+
+{ #category : #accessing }
 TSCanvas >> color [ 
 	^ color
 ]
@@ -74,7 +91,11 @@ TSCanvas >> extent [
 
 { #category : #accessing }
 TSCanvas >> extent: aPoint [
-	extent := aPoint
+	| evt |
+	evt := TSResizeCanvasEvent new
+		oldExtent: extent;
+		newExtent: (extent := aPoint).
+	self announce: evt
 ]
 
 { #category : #accessing }
@@ -92,6 +113,7 @@ TSCanvas >> initialize [
 	super initialize.
 	shapes := OrderedCollection new.
 	fixedShapes := OrderedCollection new.
+	clearBackground := true.
 	color := Color white.
 	extent := 500@500.
 	camera := TSCamera new
@@ -101,7 +123,6 @@ TSCanvas >> initialize [
 
 { #category : #'instance creation' }
 TSCanvas >> morph [
-	| morph |
 	morph := TSAthensMorph new. 
 	morph renderer: TSAthensRenderer new.
 	morph canvas: self.
@@ -177,8 +198,27 @@ TSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 ]
 
 { #category : #accessing }
+TSCanvas >> shapeWithActionForPositionInPixels: position [
+	"position is in pixel, it corresponds to the physical location in the window.
+	e.g., 0 @ 0 is top left of the window"
+	| pos |
+	fixedShapes reverseDo: [ :s | 
+		((s includesPoint: position) and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
+	pos := self camera fromPixelToSpace: position.
+	shapes reverseDo: [ :s | 
+		((s includesPoint: pos) 
+			and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
+	^ self
+]
+
+{ #category : #accessing }
 TSCanvas >> shapes [
 	^shapes
+]
+
+{ #category : #updating }
+TSCanvas >> signalUpdate [
+	morph changed
 ]
 
 { #category : #events }

@@ -49,11 +49,11 @@ TSAthensMorph >> drawOn: aCanvas [
 	self checkSession.
 
 	self recreateSurfaceIfNecessary.
-	aCanvas fillRectangle: bounds color: trachelCanvas color. 
+	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [:athensCanvas |
-		surface clear.
+		trachelCanvas clearBackground ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
 		athensCanvas pathTransform
 			translateBy: (self extent / 2) asFloatPoint;
@@ -176,8 +176,6 @@ TSAthensMorph >> handleMouseOver: aMorphicEvent [
 		ifTrue: [ ^ self ].	"Do nothing if it was already handled"
 	self isDragging
 		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
-	self flag: 'REVIEW'.
-	true ifTrue: [ ^ self ].
 	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
 	currentElement := self shapeForEvent: aMorphicEvent.
 	currentElement == shapeBeingPointed
@@ -279,8 +277,6 @@ TSAthensMorph >> mouseLeave: evt [
 
 { #category : #'event handling' }
 TSAthensMorph >> mouseMove: evt [
-	self flag: 'Review this maybe is never being called'.
-	self halt.
 	evt anyButtonPressed
 		ifTrue: [ self trMouseDragging: evt ]
 		ifFalse: [ self trMouseMove: evt ].
