@@ -16,9 +16,17 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec baseline: 'Bloc' with: [ 
 				spec repository: 'github://pharo-graphics/Bloc/src' ].
 			spec 
-				package: #Roassal3.
+				package: #Roassal3;
+				package: 'Roassal3-Trachel';
+				package: #'Roassal3-Tests';
+				package: #'Roassal3-Examples'.
 			spec 
-				group: 'Core' with: #('Roassal3');
-				group: 'Tests' with: #('Core' 'Tests');
-				group: 'default' with: #('Core') ]
+				group: 'Core' with: #(
+					'Roassal3'
+					'Roassal3-Trachel');
+				group: 'Examples'  with: #('Roassal3-Examples');
+				group: 'Tests' with: #('Roassal3-Tests');
+				group: 'default' with: #('Core' 'Tests' 'Examples') ]
+			
+		
 ]

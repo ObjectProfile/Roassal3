@@ -1,3 +1,6 @@
+"
+I am the top class for tests
+"
 Class {
 	#name : #TSTest,
 	#superclass : #TestCase,

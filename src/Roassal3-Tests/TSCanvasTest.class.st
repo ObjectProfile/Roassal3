@@ -1,3 +1,6 @@
+"
+I have common tests for shapes and canvas
+"
 Class {
 	#name : #TSCanvasTest,
 	#superclass : #TSTest,
@@ -26,6 +29,25 @@ TSCanvasTest >> testDrawCanvas [
 	c addShape: (TSBox new
 		extent: 100@100;
 		yourself).
+	c addShape: (TSEllipse new
+		position: 100@100;
+		extent: 100@100;
+		yourself).
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
+TSCanvasTest >> testDrawCanvasWithGroup [
+	| g |
+	g := TSGroup new.
+	g addShape: (TSBox new
+		extent: 100@100;
+		yourself).
+	g addShape: (TSEllipse new
+		position: 100@100;
+		extent: 100@100;
+		yourself).
+	c addShape: g.
 	c morph drawOnMockCanvas.
 ]
 
@@ -34,7 +56,33 @@ TSCanvasTest >> testEmpty [
 	self assert: c numberOfShapes equals: 0
 ]
 
+{ #category : #events }
+TSCanvasTest >> testEvent [ 
+	| box |
+	box := TSBox new.
+	box when: TSMouseClick do: [ :evt |  ]
+]
+
+{ #category : #events }
+TSCanvasTest >> testLowLevelEvent [
+
+	| box |
+	box := TSBox new size: 30.
+	box when: TSMouseDragging do: [ :evt | box  ].
+	c addShape: box.
+
+	self assert: (c shapeWithAction: TSMouseDragging forPositionInPixels: 250 @ 250) == box
+]
+
 { #category : #running }
 TSCanvasTest >> testOpening [
 	c open delete
+]
+
+{ #category : #tests }
+TSCanvasTest >> testPosition [
+	| b |
+	b := TSBox new.
+	self assert: b position equals: 0@0.
+	b position: 0@0.
 ]
