@@ -194,6 +194,7 @@ TrachelShapeExamples >> example07Basic [
 		when: TSMouseDragStart do: [ :evt| drag := true. ];
 		when: TSMouseDragEnd do: [ :evt | drag := false. ].
 	c clearBackground: false.
+	
 	c open.
 	
 ]
@@ -202,12 +203,12 @@ TrachelShapeExamples >> example07Basic [
 TrachelShapeExamples >> example08Basic [
 	<script: 'self new example08Basic'>
 
-	| c y r |
+	| c y r m |
 	c := TSCanvas new.
 	r := SharedRandom globalGenerator.
 	c color: (Color colorFrom: '325A64').
-	1 to: 500 do: [ :x |
-		y := 250 + (x sin * 250).
+	1 to: 500 do: [ :x|
+		y := 255 + (x sin * 255).
 		c addShape: (TSEllipse new
 			color: Color transparent;
 			border: (TSBorder new
@@ -217,9 +218,13 @@ TrachelShapeExamples >> example08Basic [
 					g: r next * 200
 					b: 255
 					range: y) );
-			position: (x@y)-250;
+			position: (x*2@y)-250;
 			extent: (y/10)@( x * 75/ 499 ) ).
 		 ].
+	m := c morph.
+	PolymorphSystemSettings setDesktopLogoWith: m.
+	m position: 0@World menubar height.
+	m extent: World extent- (0@World menubar height).
 	c open
 ]
 
