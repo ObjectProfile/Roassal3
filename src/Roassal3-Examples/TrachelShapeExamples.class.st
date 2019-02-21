@@ -287,9 +287,40 @@ TrachelShapeExamples >> example10Basic [
 TrachelShapeExamples >> example11Basic [
 	<script: 'self new example11Basic'>
 
-	| c |
+	| c easing canvasExtent boxSize zindex maxDist scale border |
 	c := TSCanvas new.
 	c color: Color white.
-	
+	easing := 0@0.
+	boxSize := 50.
+	canvasExtent := 500 asPoint.
+	maxDist := 0@0 dist: canvasExtent.
+	scale := TSScale linear 
+		domain: { 0. maxDist}; 
+		rangeRound: #(80 0).
+	border := TSBorder new.
+	c when: TSResizeCanvasEvent do: [ 
+		c shapes copy do: #remove.
+		canvasExtent := c extent.
+		maxDist := 0@0 dist: canvasExtent.
+		scale := TSScale linear 
+			domain: { 0. maxDist}; 
+			rangeRound: #(80 0).
+		0 to: canvasExtent y/boxSize do: [ :y|
+			0 to: canvasExtent x/boxSize do: [ :x| 
+				c addShape: (TSBox new 
+					color: Color white;
+					position: ((x@y)*boxSize) - (canvasExtent/2);
+					extent: 10@10;
+					border: border )
+				] ]
+		].
+	c when: TSMouseMove do: [ :evt | 
+		easing := easing + ((evt position - easing)* 0.1).
+		c shapes copy do: [ :s |
+			zindex := scale scale: (easing dist: s position).
+			s extent: boxSize * (zindex /100) asPoint ].
+		c signalUpdate.
+	].
+	c clearBackground: false.
 	c open.
 ]
