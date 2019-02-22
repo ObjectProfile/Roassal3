@@ -67,10 +67,20 @@ TSShape >> encompassingRectangle [
 	
 ]
 
+{ #category : #accessing }
+TSShape >> extent [
+	^ self encompassingRectangle extent
+]
+
 { #category : #testing }
 TSShape >> hasEventCallback [
 	"Return true if at least one event callback has been added to the shape"
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
+]
+
+{ #category : #accessing }
+TSShape >> height [
+	^ self extent y
 ]
 
 { #category : #testing }
@@ -84,8 +94,12 @@ TSShape >> initialize [
 	super initialize.
 	paint := Color lightGray.
 	isFixed := false.
-	matrix := AthensAffineTransform new.
-	
+	self initializeMatrix
+]
+
+{ #category : #initialization }
+TSShape >> initializeMatrix [
+	matrix := AthensAffineTransform new
 ]
 
 { #category : #testing }
@@ -183,7 +197,22 @@ TSShape >> translateBy: delta [
 	
 ]
 
+{ #category : #accessing }
+TSShape >> translateTo: aPoint [
+	| oldPosition |
+	oldPosition := self position.
+	self position: aPoint.
+	
+	"Need to do this in future work. Emit an event"
+	"self triggerCallbacksForStep: (self position - oldPosition)"
+]
+
 { #category : #events }
 TSShape >> when: event do: aBlock [
 	self announcer when: event do: aBlock
+]
+
+{ #category : #accessing }
+TSShape >> width [
+	^ self extent x
 ]

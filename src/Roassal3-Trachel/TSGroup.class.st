@@ -14,6 +14,7 @@ Class {
 TSGroup class >> new: size [
 	| inst |
 	inst := self basicNew.
+	inst initializeMatrix.
 	inst children: (OrderedCollection new: size).
 	^ inst.
 ]
@@ -48,6 +49,13 @@ TSGroup >> encompassingRectangle [
 	^ self
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
 		ifNotEmpty: [ Rectangle merging: (self collect: #encompassingRectangle) ]
+]
+
+{ #category : #accessing }
+TSGroup >> extent [
+	"THIS IS WEIRD. 
+	SHOULD TSGROUPD BE A SUBCLASS OF TSBOX?"
+	^ self encompassingRectangle extent
 ]
 
 { #category : #adding }

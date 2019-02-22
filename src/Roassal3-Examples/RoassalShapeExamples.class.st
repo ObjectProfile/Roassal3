@@ -53,3 +53,25 @@ RoassalShapeExamples >> example02Basic [
 
 
 ]
+
+{ #category : #shapes }
+RoassalShapeExamples >> example03LayoutBasic [
+	<script: 'self new example03LayoutBasic'>
+
+	| v elements |
+	v := RSView new.
+	elements := RSShapeBuilder box
+		size: #yourself;
+		position: [:m | (1 to: m) sum asPoint -150 ];
+		interactionDo: #draggable;
+		onElement;
+		color: [ :e | e index even 
+			ifTrue: [ Color red alpha: 0.5 ]
+			ifFalse: [ Color blue alpha: 0.5 ] ];
+		elementsOn: (1 to: 20).
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
+	v open
+	
+]
