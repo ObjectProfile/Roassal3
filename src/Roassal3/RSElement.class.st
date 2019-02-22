@@ -3,16 +3,20 @@ Too abstract at this point, do we need instances of RSElement?
 "
 Class {
 	#name : #RSElement,
-	#superclass : #RSObject,
+	#superclass : #RSShapedObject,
 	#instVars : [
-		'model',
-		'index',
-		'view',
-		'attributes',
-		'trachelShape'
+		'shouldUpdateEdges',
+		'connectedEdges'
 	],
 	#category : #'Roassal3-Core'
 }
+
+{ #category : #edges }
+RSElement >> addConnectedEdge: anEdge [
+	[ anEdge class == RSEdge ] assert.
+	(self connectedEdges includes: anEdge) 
+		ifFalse: [ self connectedEdges add: anEdge ]
+]
 
 { #category : #adding }
 RSElement >> addedIn: aView [
@@ -20,107 +24,48 @@ RSElement >> addedIn: aView [
 	view addElement: self.
 ]
 
-{ #category : #attributes }
-RSElement >> attributeAt: aKey [
-	"Obtain an attribute to the element. For example: 
-		RTElement new attributeAt: #magic put: 42; attributeAt: #magic
-		RTEdge new attributeAt: #magic put: 42; attributeAt: #magic
-	"
-	^ self attributes at: aKey
-]
-
-{ #category : #attributes }
-RSElement >> attributeAt: aKey ifAbsent: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsent: aBlockClosure 
-]
-
-{ #category : #attributes }
-RSElement >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
-]
-
-{ #category : #attributes }
-RSElement >> attributeAt: aKey put: value [
-	"Set an attribute to the element. For example: 
-		RTElement new attributeAt: #magic put: 42; yourself
-		RTEdge new attributeAt: #magic put: 42; yourself
-	"
-	^ self attributes at: aKey put: value
-]
-
-{ #category : #attributes }
-RSElement >> attributes [
-	"Return the list of attributes associated to the element. Attributes are useful for caching values"
-
-	^ attributes ifNil: [ attributes := Dictionary new ]
-]
-
-{ #category : #attributes }
-RSElement >> hasAttribute: aKey [ 
-	"Return true if attributes includes aKey"
-	
-	^ attributes notNil and: [ attributes includesKey: aKey ]
-]
-
-{ #category : #attributes }
-RSElement >> hasAttributes [ 
-	"Return true if at least one attributes is present"
-	
-	^ attributes notNil and: [ attributes notEmpty ]
-]
-
-{ #category : #attributes }
-RSElement >> hasNotAttribute: aKey [ 
-	"Return false if attributes includes aKey"
-	
-	^ (self hasAttribute: aKey) not 
+{ #category : #converting }
+RSElement >> asAttachPoint [
+	^ RSAttachPoint centered on: self
 ]
 
 { #category : #accessing }
-RSElement >> index [
-	^ index
+RSElement >> connectedEdges [
+	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
+	connectedEdges ifNil: [ connectedEdges := TSGroup new ].
+	^ connectedEdges
 ]
 
-{ #category : #accessing }
-RSElement >> index: anInteger [
-	index := anInteger
+{ #category : #initialization }
+RSElement >> initialize [
+	super initialize.
+	self updateEdgesON
 ]
 
-{ #category : #accessing }
-RSElement >> model [
-	^ model
+{ #category : #edges }
+RSElement >> removeConnectedEdge: anEdge [
+	[  anEdge class == RSEdge ] assert.
+	self connectedEdges remove: anEdge ifAbsent: [ ]
 ]
 
-{ #category : #accessing }
-RSElement >> model: anObject [
-	model := anObject
+{ #category : #actions }
+RSElement >> translateBy: delta [
+	trachelShape translateBy: delta.
+	self updateConnectedEdges.
 ]
 
-{ #category : #attributes }
-RSElement >> removeAttributeAt: aKey [
-	^ self attributes removeKey: aKey
+{ #category : #edges }
+RSElement >> updateConnectedEdges [
+	shouldUpdateEdges ifFalse: [ ^ self ].
+	self connectedEdges do: [ :edge | edge update ]
 ]
 
-{ #category : #attributes }
-RSElement >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
-	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
+{ #category : #edges }
+RSElement >> updateEdgesOFF [
+	shouldUpdateEdges := false
 ]
 
-{ #category : #rendering }
-RSElement >> renderOn: trCanvas [
-	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
-	trCanvas addShape: trachelShape.
-	
-]
-
-{ #category : #accessing }
-RSElement >> trachelShape [
-	^ trachelShape 
-]
-
-{ #category : #accessing }
-RSElement >> trachelShape: aShape [
-	trachelShape := aShape
+{ #category : #edges }
+RSElement >> updateEdgesON [
+	shouldUpdateEdges := true
 ]

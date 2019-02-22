@@ -4,5 +4,5 @@ TODO
 Class {
 	#name : #TSQuadTree,
 	#superclass : #TSObject,
-	#category : #'Roassal3-Trachel-Trachel'
+	#category : #'Roassal3-Trachel-Core'
 }

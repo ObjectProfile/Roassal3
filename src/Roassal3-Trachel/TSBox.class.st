@@ -11,7 +11,7 @@ Class {
 TSBox >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
-	^ self encompassingRectangle containsPoint: invertedPoint.
+	^ baseRectangle containsPoint: invertedPoint.
 ]
 
 { #category : #visiting }

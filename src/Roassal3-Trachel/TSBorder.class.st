@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'width',
 		'style',
-		'color'
+		'paint'
 	],
 	#category : #'Roassal3-Trachel-Border'
 }
@@ -19,20 +19,30 @@ TSBorder >> accept: visitor [
 
 { #category : #accessing }
 TSBorder >> color [
-	^ color
+	^ paint
 ]
 
 { #category : #accessing }
 TSBorder >> color: aColor [
-	color := aColor
+	paint := aColor
 ]
 
 { #category : #accessing }
 TSBorder >> initialize [
 	super initialize.
-	color := Color black.
+	paint := Color black.
 	width := 1.
 	style := nil
+]
+
+{ #category : #accessing }
+TSBorder >> paint [ 
+	^ paint
+]
+
+{ #category : #accessing }
+TSBorder >> paint: aPaint [
+	paint := aPaint
 ]
 
 { #category : #accessing }

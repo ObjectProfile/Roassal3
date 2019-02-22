@@ -23,7 +23,7 @@ Class {
 		'scale',
 		'canvas'
 	],
-	#category : #'Roassal3-Trachel-Trachel'
+	#category : #'Roassal3-Trachel-Core'
 }
 
 { #category : #accessing }
@@ -34,6 +34,11 @@ TSCamera >> canvas [
 { #category : #accessing }
 TSCamera >> canvas: aCanvas [
 	canvas := aCanvas
+]
+
+{ #category : #convertion }
+TSCamera >> distanceFromPixelToSpace: aPoint [
+	^ (aPoint / self scale) asFloatPoint
 ]
 
 { #category : #convertion }

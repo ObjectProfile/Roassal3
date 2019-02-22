@@ -16,7 +16,7 @@ Class {
 		'clearBackground',
 		'animations'
 	],
-	#category : #'Roassal3-Trachel-Trachel'
+	#category : #'Roassal3-Trachel-Core'
 }
 
 { #category : #visiting }

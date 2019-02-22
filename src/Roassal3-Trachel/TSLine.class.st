@@ -3,10 +3,11 @@ TSLine describes a line.
 "
 Class {
 	#name : #TSLine,
-	#superclass : #TSShape,
-	#instVars : [
-		'startPoint',
-		'endPoint'
-	],
+	#superclass : #TSAbstractLine,
 	#category : #'Roassal3-Trachel-Shapes'
 }
+
+{ #category : #visiting }
+TSLine >> pathFor: visitor [
+	^ visitor pathOfLine: self.
+]

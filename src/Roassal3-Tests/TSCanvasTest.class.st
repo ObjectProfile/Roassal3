@@ -61,6 +61,14 @@ TSCanvasTest >> testDrawCanvasWithGroup [
 ]
 
 { #category : #running }
+TSCanvasTest >> testDrawLine [
+	c addShape: (TSLine new
+		strokeColor: Color red;
+		width: 2). 
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
 TSCanvasTest >> testEmpty [
 	self assert: c numberOfShapes equals: 0
 ]

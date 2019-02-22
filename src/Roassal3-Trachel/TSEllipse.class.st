@@ -12,7 +12,7 @@ TSEllipse >> pathFor: visitor [
 	^ visitor pathOfEllipse: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TSEllipse >> radius: integer [
 	self extent: integer * 2 asPoint
 ]

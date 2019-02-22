@@ -5,8 +5,7 @@ Class {
 	#name : #TSBoundingShape,
 	#superclass : #TSShape,
 	#instVars : [
-		'width',
-		'height'
+		'baseRectangle'
 	],
 	#category : #'Roassal3-Trachel-Shapes'
 }
@@ -17,26 +16,30 @@ TSBoundingShape >> accept: visitor [
 ]
 
 { #category : #accessing }
+TSBoundingShape >> baseRectangle [
+	^ baseRectangle
+]
+
+{ #category : #accessing }
 TSBoundingShape >> encompassingRectangle [ 
-	^ Rectangle center: self position extent: width@height
+	^ Rectangle center: self position extent: baseRectangle extent.
 ]
 
 { #category : #accessing }
 TSBoundingShape >> extent [
-	^ width @ height
+	^ baseRectangle extent
 ]
 
 { #category : #accessing }
 TSBoundingShape >> extent: aPoint [
-	width := aPoint x.
-	height := aPoint y.
-	path := nil.
+	baseRectangle := Rectangle center: 0@0 extent: aPoint.
+	self resetPath
 ]
 
 { #category : #initialization }
 TSBoundingShape >> initialize [
 	super initialize.
-	width := height := 0.
+	baseRectangle := (0 @ 0) extent: (0 @ 0).
 ]
 
 { #category : #accessing }

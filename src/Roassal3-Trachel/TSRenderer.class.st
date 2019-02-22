@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'athensCanvas'
 	],
-	#category : #'Roassal3-Trachel-Trachel'
+	#category : #'Roassal3-Trachel-Core'
 }
 
 { #category : #accessing }
@@ -19,9 +19,4 @@ TSRenderer >> canvas [
 TSRenderer >> canvas: aCanvas [
 	"aCanvas is AthensCanvas"
 	athensCanvas := aCanvas
-]
-
-{ #category : #visiting }
-TSRenderer >> visitCanvas: aCanvas [
-	
 ]

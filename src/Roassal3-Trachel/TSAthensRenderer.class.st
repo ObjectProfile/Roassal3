@@ -4,14 +4,14 @@ I can create a visual components in a athensCanvas surface.
 Class {
 	#name : #TSAthensRenderer,
 	#superclass : #TSRenderer,
-	#category : #'Roassal3-Trachel-Trachel'
+	#category : #'Roassal3-Trachel-Core'
 }
 
-{ #category : #visiting }
+{ #category : #'visiting - helpers' }
 TSAthensRenderer >> pathOfBox: box [
 	| rectangle path |
 	box path ifNotNil: [ ^ box path].
-	rectangle  := Rectangle center: 0@0 extent: box extent.
+	rectangle  := box baseRectangle.
 	path := athensCanvas createPath: [ :builder | 
 		builder
 			absolute;
@@ -25,7 +25,7 @@ TSAthensRenderer >> pathOfBox: box [
 	^ path.
 ]
 
-{ #category : #visiting }
+{ #category : #'visiting - helpers' }
 TSAthensRenderer >> pathOfEllipse: ellipse [
 	| extent path halfWidth halfHeight |
 	ellipse path ifNotNil: [ ^ ellipse path ].
@@ -54,17 +54,30 @@ TSAthensRenderer >> pathOfEllipse: ellipse [
 	^ path
 ]
 
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> pathOfLine: line [
+	| path |
+	line path ifNotNil: [ ^ line path ].
+	path := athensCanvas createPath: [ :builder | 
+		builder
+			absolute;
+			moveTo: line startPoint;
+			lineTo: line endPoint ].
+	line path: path.
+	^ path.
+]
+
 { #category : #visiting }
 TSAthensRenderer >> visitBorder: border [
 	| stroke |
-	stroke := athensCanvas setStrokePaint: border color.
+	stroke := athensCanvas setStrokePaint: border paint.
 	stroke width: border width asFloat.
 	border style ifNil: [ ^ self ].
 	border style applyOn: stroke.
 		.
 ]
 
-{ #category : #visiting }
+{ #category : #'visiting - helpers' }
 TSAthensRenderer >> visitBorderIfNecessary: shape [
 	shape border ifNil: [ ^ self ].
 	shape border width <= 0 ifTrue: [ ^ self ].
@@ -82,7 +95,7 @@ TSAthensRenderer >> visitBoundingShape: shape [
 			multiplyBy: shape matrix asFloatTransform.
 		shape color ifNotNil: [ 
 			athensCanvas 
-				setPaint: shape color;
+				setPaint: shape paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
 		].
@@ -108,8 +121,16 @@ TSAthensRenderer >> visitLabel: label [
 			translateBy: ((label textWidth / -2) @ (label textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ label descent negated) asFloatPoint.
 		athensCanvas 
-			setPaint: label color;
+			setPaint: label paint;
 			setFont: label font;
 			drawString: label text.
+		].
+]
+
+{ #category : #visiting }
+TSAthensRenderer >> visitLine: line [
+	athensCanvas pathTransform restoreAfter: [ 
+		line pathFor: self.
+		self visitBorderIfNecessary: line.
 		].
 ]

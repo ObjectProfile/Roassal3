@@ -324,3 +324,13 @@ TrachelShapeExamples >> example11Basic [
 	c clearBackground: false.
 	c open.
 ]
+
+{ #category : #lines }
+TrachelShapeExamples >> example12Basic [
+	<script: 'self new example12Basic'>
+
+	| c |
+	c := TSCanvas new.
+	c addShape: TSLine new.
+	c open.
+]

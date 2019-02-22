@@ -5,7 +5,7 @@ Class {
 	#name : #TSShape,
 	#superclass : #TSObject,
 	#instVars : [
-		'color',
+		'paint',
 		'matrix',
 		'path',
 		'border',
@@ -54,12 +54,12 @@ TSShape >> canvas: aCanvas [
 
 { #category : #accessing }
 TSShape >> color [
-	^ color 
+	^ paint 
 ]
 
 { #category : #accessing }
 TSShape >> color: aColor [
-	color := aColor
+	paint := aColor
 ]
 
 { #category : #accessing }
@@ -82,7 +82,7 @@ TSShape >> includesPoint: aPoint [
 { #category : #initialization }
 TSShape >> initialize [
 	super initialize.
-	color := Color lightGray.
+	paint := Color lightGray.
 	isFixed := false.
 	matrix := AthensAffineTransform new.
 	
@@ -106,6 +106,16 @@ TSShape >> isInACanvas [
 { #category : #accessing }
 TSShape >> matrix [
 	^ matrix
+]
+
+{ #category : #accessing }
+TSShape >> paint [
+	^ paint
+]
+
+{ #category : #accessing }
+TSShape >> paint: aPaint [
+	paint := aPaint
 ]
 
 { #category : #accessing }
@@ -140,7 +150,7 @@ TSShape >> remove [
 	canvas removeShape: self
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 TSShape >> resetPath [
 	path := nil
 ]
@@ -158,6 +168,19 @@ TSShape >> scale [
 { #category : #transformations }
 TSShape >> scaleBy: anInteger [
 	matrix scaleBy: anInteger
+]
+
+{ #category : #actions }
+TSShape >> signalUpdate [
+	"Refresh the canvas"
+	canvas ifNil: [ ^ self ].
+	canvas signalUpdate
+]
+
+{ #category : #matrix }
+TSShape >> translateBy: delta [
+	matrix translateBy: delta.
+	
 ]
 
 { #category : #events }

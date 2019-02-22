@@ -5,7 +5,7 @@ Roassal structures a visualization in terms of views, elements, shapes, interact
 A ''view'' is a container of graphical elements and represents a layer that may be combined with other views.
 "
 Class {
-	#name : #TSView,
+	#name : #RSView,
 	#superclass : #RSObject,
 	#instVars : [
 		'elements',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #accessing }
-TSView >> add: anElementOrAnEdge [
+RSView >> add: anElementOrAnEdge [
 	self assert: [ anElementOrAnEdge ~= nil ] description: 'Nil cannot be added to a view'.
 	anElementOrAnEdge 
 		addedIn: self;
@@ -24,40 +24,55 @@ TSView >> add: anElementOrAnEdge [
 ]
 
 { #category : #accessing }
-TSView >> addAll: someElements [
+RSView >> addAll: someElements [
 	someElements do: [ :e | self add: e  ].
 ]
 
 { #category : #accessing }
-TSView >> addElement: anElement [
+RSView >> addEdge: anEdge [
+	edges add: anEdge
+]
+
+{ #category : #accessing }
+RSView >> addElement: anElement [
 	elements add: anElement
 ]
 
 { #category : #accessing }
-TSView >> canvas [
+RSView >> canvas [
 	^trCanvas 
 ]
 
 { #category : #'reflective operations' }
-TSView >> doesNotUnderstand: aMessage [
+RSView >> doesNotUnderstand: aMessage [
 
 	^ aMessage sendTo: trCanvas
 ]
 
+{ #category : #accessing }
+RSView >> edges [
+	^ edges
+]
+
+{ #category : #accessing }
+RSView >> elements [
+	^ elements
+]
+
 { #category : #initialization }
-TSView >> initialize [
+RSView >> initialize [
 	super initialize.
 	self initializeContent.
 	self setCanvas: TSCanvas new
 ]
 
 { #category : #initialization }
-TSView >> initializeContent [
+RSView >> initializeContent [
 	elements := TSGroup new.
 	edges := TSGroup new
 ]
 
 { #category : #accessing }
-TSView >> setCanvas: aTrachelCanvas [
+RSView >> setCanvas: aTrachelCanvas [
 	trCanvas := aTrachelCanvas.
 ]
