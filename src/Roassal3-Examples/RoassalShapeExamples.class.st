@@ -75,3 +75,20 @@ RoassalShapeExamples >> example03LayoutBasic [
 	v open
 	
 ]
+
+{ #category : #shapes }
+RoassalShapeExamples >> example04LayoutBasic [
+	<script: 'self new example04LayoutBasic'>
+
+	| v elements |
+	v := RSView new.
+	elements := RSShapeBuilder box
+		size: #numberOfMethods;
+		interactionDo: #draggable;
+		elementsOn: (Collection withAllSubclasses).
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
+	v open
+	
+]
