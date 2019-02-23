@@ -24,8 +24,9 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Animation'.
 			spec 
 				group: 'Core' with: #(
-					'Roassal3'
 					'Roassal3-Trachel'
+					'Roassal3'					
+					'Roassal3-Layout'
 					'Roassal3-Animation');
 				group: 'Examples'  with: #('Roassal3-Examples');
 				group: 'Tests' with: #('Roassal3-Tests');
