@@ -13,12 +13,13 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec
 		for: #common
 		do: [
-			spec baseline: 'Bloc' with: [ 
-				spec repository: 'github://pharo-graphics/Bloc/src' ].
+			"spec baseline: 'Bloc' with: [ 
+				spec repository: 'github://pharo-graphics/Bloc/src' ]."
 			spec 
-				package: #Roassal3;
 				package: 'Roassal3-Trachel';
+				package: #Roassal3;
 				package: #'Roassal3-Tests';
+				package: #'Roassal3-Layout';
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Animation'.
 			spec 
