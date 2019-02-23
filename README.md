@@ -13,7 +13,7 @@ If you have a local copy of Roassal3, you can do the following:
 
 ```Smalltalk
 Metacello new
-  baseline: 'Roassal2';
+  baseline: 'Roassal3';
   repository: 'gitlocal:///Users/alexandrebergel/Dropbox/GitRepos/Roassal3' ;
   lock;
   load.
