@@ -35,6 +35,22 @@ RSAbstractModelBuilder >> addAction: action [
 	self actions add: action.
 ]
 
+{ #category : #private }
+RSAbstractModelBuilder >> basicElementOn: object index: index [
+	| el shape |
+	el := self elementClass new.
+	el
+		model: object;
+		index: index.
+	self executeActions: #isPreload on: el.
+	shape := self innerClass new.
+	self updateElement: el innerComponent: shape.
+	el trachelShape: shape.
+	self executeActions: #isPostload on: el.
+	^ el
+	
+]
+
 { #category : #accessing }
 RSAbstractModelBuilder >> commands [
 	^ commands ifNil: [ #() ]

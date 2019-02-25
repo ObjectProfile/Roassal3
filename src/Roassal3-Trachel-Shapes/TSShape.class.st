@@ -16,6 +16,17 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes'
 }
 
+{ #category : #animation }
+TSShape >> animation [ 
+	^ self animation: TSNumberAnimation new.
+]
+
+{ #category : #animation }
+TSShape >> animation: animation [
+	canvas addAnimation: animation.
+	^ animation
+]
+
 { #category : #events }
 TSShape >> announce: anEvent [
 	self announcer announce: anEvent
@@ -179,9 +190,9 @@ TSShape >> scale [
 	^ matrix scale
 ]
 
-{ #category : #transformations }
-TSShape >> scaleBy: anInteger [
-	matrix scaleBy: anInteger
+{ #category : #accessing }
+TSShape >> scaleBy: scale [ 
+	matrix scaleBy: scale.
 ]
 
 { #category : #actions }

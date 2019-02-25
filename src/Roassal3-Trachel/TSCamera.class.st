@@ -75,5 +75,5 @@ TSCamera >> scale [
 
 { #category : #accessing }
 TSCamera >> scale: aNumber [
-	^ scale
+	scale := aNumber
 ]

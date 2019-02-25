@@ -8,10 +8,23 @@ Class {
 		'onFinished',
 		'progress',
 		'isRunning',
-		'elapsedTime'
+		'elapsedTime',
+		'canvas',
+		'repeat',
+		'cycleLenght'
 	],
-	#category : #'Roassal3-Animation'
+	#category : #'Roassal3-Trachel-Animation'
 }
+
+{ #category : #accessing }
+TSAbstractAnimation >> canvas [
+	^ canvas
+]
+
+{ #category : #accessing }
+TSAbstractAnimation >> canvas: aCanvas [
+	canvas := aCanvas
+]
 
 { #category : #accessing }
 TSAbstractAnimation >> elapsedTime [
@@ -31,13 +44,25 @@ TSAbstractAnimation >> hasCompleted [
 
 { #category : #initialization }
 TSAbstractAnimation >> initialize [
+	repeat := false.
+	cycleLenght := 1.0.
 	super initialize.
 	self reset
 ]
 
 { #category : #testing }
+TSAbstractAnimation >> isRepeating [
+	^ repeat 
+]
+
+{ #category : #testing }
 TSAbstractAnimation >> isRunning [
 	^ isRunning
+]
+
+{ #category : #'api - running' }
+TSAbstractAnimation >> noRepeat [
+	repeat := false 
 ]
 
 { #category : #accessing }
@@ -49,6 +74,16 @@ TSAbstractAnimation >> onFinished [
 { #category : #accessing }
 TSAbstractAnimation >> onFinished: block [
 	onFinished := block
+]
+
+{ #category : #refresing }
+TSAbstractAnimation >> refresh [
+]
+
+{ #category : #'api - running' }
+TSAbstractAnimation >> repeat [
+	"make receiver to be a repeating timer"
+	repeat := true 
 ]
 
 { #category : #initialization }

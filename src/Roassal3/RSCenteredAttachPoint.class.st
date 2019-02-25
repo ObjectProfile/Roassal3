@@ -3,11 +3,17 @@ I am the centered attach point
 "
 Class {
 	#name : #RSCenteredAttachPoint,
-	#superclass : #RSElementAttachPoint,
+	#superclass : #RSAttachPoint,
 	#category : #'Roassal3-AttachPoint'
 }
 
-{ #category : #accessing }
-RSCenteredAttachPoint >> globalPoint [ 
-	^ target position
+{ #category : #'public - hooks' }
+RSCenteredAttachPoint >> basicEndingPointOf: anEdge [
+	^ self position: anEdge to
+	
+]
+
+{ #category : #'public - hooks' }
+RSCenteredAttachPoint >> basicStartingPointOf: anEdge [
+	^ self position: anEdge from
 ]

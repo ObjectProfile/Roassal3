@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSShapedObject,
 	#instVars : [
 		'from',
-		'to'
+		'to',
+		'attachPoint'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -26,6 +27,16 @@ RSEdge >> addedIn: aView [
 ]
 
 { #category : #accessing }
+RSEdge >> attachPoint [
+	^ attachPoint
+]
+
+{ #category : #accessing }
+RSEdge >> attachPoint: ap [
+	attachPoint := ap.
+]
+
+{ #category : #accessing }
 RSEdge >> from [
 	^ from
 ]
@@ -35,6 +46,12 @@ RSEdge >> from: anElement [
 	from := self setAnchor: from element: anElement.
 ]
 
+{ #category : #initialization }
+RSEdge >> initialize [
+	super initialize.
+	attachPoint := RSCenteredAttachPoint new.
+]
+
 { #category : #rendering }
 RSEdge >> renderOn: v [
 	super renderOn: v.
@@ -42,12 +59,12 @@ RSEdge >> renderOn: v [
 ]
 
 { #category : #private }
-RSEdge >> setAnchor: ref element: anElement [
-	| attachPoint |
-	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
-	attachPoint := anElement asAttachPoint.
-	attachPoint addConnectedEdge: self.
-	^ attachPoint
+RSEdge >> setAnchor: ref element: anObject [
+	(ref isNotNil and: [ anObject isPoint not ])
+		ifTrue: [ ref removeConnectedEdge: self ].
+	anObject isPoint
+		ifFalse: [ anObject addConnectedEdge: self ].
+	^ anObject
 ]
 
 { #category : #accessing }
@@ -62,6 +79,7 @@ RSEdge >> to: anElement [
 
 { #category : #updating }
 RSEdge >> update [
-	trachelShape startPoint: from globalPoint.
-	trachelShape endPoint: to globalPoint.
+	trachelShape 
+		startPoint: (attachPoint startingPointOf: self);
+		endPoint: (attachPoint endingPointOf: self).
 ]

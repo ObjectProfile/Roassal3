@@ -24,11 +24,6 @@ RSElement >> addedIn: aView [
 	view addElement: self.
 ]
 
-{ #category : #converting }
-RSElement >> asAttachPoint [
-	^ RSAttachPoint centered on: self
-]
-
 { #category : #accessing }
 RSElement >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"

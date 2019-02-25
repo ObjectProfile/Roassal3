@@ -20,7 +20,8 @@ RSView >> add: anElementOrAnEdge [
 	self assert: [ anElementOrAnEdge ~= nil ] description: 'Nil cannot be added to a view'.
 	anElementOrAnEdge 
 		addedIn: self;
-		renderOn: trCanvas 
+		renderOn: trCanvas.
+	^ anElementOrAnEdge
 ]
 
 { #category : #accessing }

@@ -334,3 +334,46 @@ TrachelShapeExamples >> example12Basic [
 	c addShape: TSLine new.
 	c open.
 ]
+
+{ #category : #lines }
+TrachelShapeExamples >> example13Basic [
+	<script: 'self new example13Basic'>
+
+	| c box paint form border offset |
+	c := TSCanvas new.
+	form := self iconNamed: #eyedropper.
+	paint := (AthensCairoPatternSurfacePaint 
+		createForSurface: (AthensCairoSurface 
+			fromForm: form)).
+	paint origin: (form extent / 2) negated.
+	border := TSBorder new
+		color: Color purple;
+		width: 1;
+		dashArray: #(4).
+	box := TSBox new
+		paint: paint;
+		extent: form extent;
+		border: border;
+		scaleBy: 3.
+	
+	c addShape: box.
+	
+	"box animation
+		repeat;
+		on: border
+		style: #dashOffset
+		value: 4."
+	c open.
+	
+
+
+
+
+]
+
+{ #category : #lines }
+TrachelShapeExamples >> example14Basic [
+	<script: 'self new example14Basic'>
+
+	
+]

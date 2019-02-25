@@ -5,21 +5,22 @@ Class {
 	#name : #TSStrokeStyle,
 	#superclass : #TSObject,
 	#instVars : [
-		'lineCap',
-		'lineJoin',
+		'capStyle',
+		'joinStyle',
 		'dashArray',
 		'dashOffset'
 	],
 	#category : #'Roassal3-Trachel-Border'
 }
 
-{ #category : #applying }
-TSStrokeStyle >> applyOn: strokePaint [
-	strokePaint 
-		dashes: dashArray offset: dashOffset;
-		perform: lineJoin;
-		perform: lineCap.
-	
+{ #category : #accessing }
+TSStrokeStyle >> capStyle [
+	^ capStyle
+]
+
+{ #category : #accessing }
+TSStrokeStyle >> capStyle: symbol [
+	capStyle := symbol
 ]
 
 { #category : #accessing }
@@ -42,22 +43,18 @@ TSStrokeStyle >> dashOffset: aNumber [
 	dashOffset := aNumber
 ]
 
-{ #category : #accessing }
-TSStrokeStyle >> lineCap [
-	^ lineCap
+{ #category : #initialization }
+TSStrokeStyle >> initialize [
+	super initialize.
+	dashOffset := 0
 ]
 
 { #category : #accessing }
-TSStrokeStyle >> lineCap: selector [
-	lineCap := selector
+TSStrokeStyle >> joinStyle [
+	^ joinStyle
 ]
 
 { #category : #accessing }
-TSStrokeStyle >> lineJoin [
-	^ lineJoin 
-]
-
-{ #category : #accessing }
-TSStrokeStyle >> lineJoin: selector [
-	lineJoin := selector
+TSStrokeStyle >> joinStyle: symbol [
+	joinStyle := symbol
 ]

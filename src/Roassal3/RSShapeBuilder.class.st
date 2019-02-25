@@ -36,18 +36,7 @@ RSShapeBuilder class >> rectangle [
 
 { #category : #'public - accessing' }
 RSShapeBuilder >> elementOn: object index: index [
-	| el shape |
-	el := self elementClass new.
-	el
-		model: object;
-		index: index.
-	self executeActions: #isPreload on: el.
-	shape := self shapeClass new.
-	self updateElement: el innerComponent: shape.
-	el trachelShape: shape.
-	self executeActions: #isPostload on: el.
-	^ el
-	
+	^ self basicElementOn: object index: index
 ]
 
 { #category : #accessing }

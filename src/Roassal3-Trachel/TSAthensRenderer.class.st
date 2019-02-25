@@ -67,14 +67,33 @@ TSAthensRenderer >> pathOfLine: line [
 	^ path.
 ]
 
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> pathOfSVGPathLine: line [
+	| path |
+	line path ifNotNil: [ ^ line path ].
+	path := athensCanvas createPath: [ :builder | 
+		builder
+			absolute;
+			moveTo: line startPoint;
+			lineTo: line endPoint ].
+	line path: path.
+	^ path.
+]
+
 { #category : #visiting }
 TSAthensRenderer >> visitBorder: border [
-	| stroke |
+	| stroke style |
 	stroke := athensCanvas setStrokePaint: border paint.
 	stroke width: border width asFloat.
-	border style ifNil: [ ^ self ].
-	border style applyOn: stroke.
-		.
+	style := border style.
+	style ifNil: [ ^ self ].
+	style dashArray 
+		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
+	style capStyle
+		ifNotNil: [:s | stroke perform: s].
+	style joinStyle
+		ifNotNil: [:s | stroke perform: s]
+		
 ]
 
 { #category : #'visiting - helpers' }

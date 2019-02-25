@@ -5,7 +5,7 @@ Class {
 	#name : #RSAttachPoint,
 	#superclass : #RSObject,
 	#instVars : [
-		'target'
+		'inverted'
 	],
 	#category : #'Roassal3-AttachPoint'
 }
@@ -15,30 +15,43 @@ RSAttachPoint class >> centered [
 	^ RSCenteredAttachPoint new
 ]
 
-{ #category : #'instance creation' }
-RSAttachPoint class >> point [
-	^ RSPositionAttachPoint new
-]
-
-{ #category : #edges }
-RSAttachPoint >> addConnectedEdge: edge [
-]
-
-{ #category : #accessing }
-RSAttachPoint >> globalPoint [ 
+{ #category : #'public - hooks' }
+RSAttachPoint >> basicEndingPointOf: anEdge [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #accessing }
-RSAttachPoint >> on: anObject [
-	target := anObject
+{ #category : #'public - hooks' }
+RSAttachPoint >> basicStartingPointOf: anEdge [
+	self subclassResponsibility 
 ]
 
-{ #category : #edges }
-RSAttachPoint >> removeConnectedEdge: edge [
+{ #category : #'public - hooks' }
+RSAttachPoint >> endingPointOf: anEdge [
+	(anEdge from = anEdge to) 
+		ifTrue: [ ^ anEdge from encompassingRectangle topCenter ].
+    ^ inverted
+        ifTrue: [ self basicStartingPointOf: anEdge ]
+        ifFalse: [ self basicEndingPointOf: anEdge ]
 ]
 
-{ #category : #accessing }
-RSAttachPoint >> target [
-	target
+{ #category : #'public - hooks' }
+RSAttachPoint >> initialize [
+	super initialize.
+	inverted := false.
+]
+
+{ #category : #'public - hooks' }
+RSAttachPoint >> position: anObject [
+	anObject isPoint ifTrue: [ anObject ].
+	^ anObject position
+]
+
+{ #category : #'public - hooks' }
+RSAttachPoint >> startingPointOf: anEdge [
+	(anEdge from = anEdge to) 
+		ifTrue: [ ^ anEdge from encompassingRectangle rightCenter ].
+    ^ inverted
+        ifTrue: [ self basicEndingPointOf: anEdge ]
+        ifFalse: [ self basicStartingPointOf: anEdge ]
+
 ]

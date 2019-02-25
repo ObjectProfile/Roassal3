@@ -33,20 +33,16 @@ RoassalShapeExamples >> example02Basic [
 	| v box box1 box2 line |
 	v := RSView new.
 	box := RSShapeBuilder box
-		size: 100";
-		interactionDo: [ :i | i draggable ]".
-	box interaction draggable.
+		size: 100;
+		interactionDo: [ :i | i draggable ].
 	box1 := box element.
 	box1 translateBy: 150@150.
 	box2 := box element.
 	v add: box1.
-	"line := RSEdgeBuilder line 
-		color: Color red;
-		attachPoint: RSCenteredAttachPoint new.
-	v add: (line edgeFrom: box1 to: box2)."
-	
-	v add: ((RSEdge from: box1 to: 0@0) 
-		trachelShape: (TSLine new color: Color red)).
+	line := RSEdgeBuilder line 
+		color: Color red.
+	v add: (line edgeFrom: box1 to: box2).
+
 	v open
 	
 
@@ -54,7 +50,7 @@ RoassalShapeExamples >> example02Basic [
 
 ]
 
-{ #category : #shapes }
+{ #category : #layouts }
 RoassalShapeExamples >> example03LayoutBasic [
 	<script: 'self new example03LayoutBasic'>
 
@@ -72,6 +68,38 @@ RoassalShapeExamples >> example03LayoutBasic [
 
 	v addAll: elements.
 	RTGridLayout on: elements children.
+	v open
+	
+]
+
+{ #category : #lines }
+RoassalShapeExamples >> example04Basic [
+	<script: 'self new example04Basic'>
+
+	| v elements form paint line path |
+	v := RSView new.
+	form := self iconNamed: #remote.
+	paint := (AthensCairoPatternSurfacePaint 
+		createForSurface: (AthensCairoSurface 
+			fromForm: form)).
+	paint origin: (form extent / 2) negated.
+	elements := RSShapeBuilder box
+		size: form extent x;
+		paint: paint;
+		position: [:m | m * 20 asPoint ];
+		interactionDo: #draggable;
+		elementsOn: (0 to: 1).
+	path := [ :edge | String streamContents: [ :s|
+		s nextPutAll:'M100 100L 0 0Z'.
+		
+		 ] ].
+	line := RSEdgeBuilder linePath
+		color: Color red;
+		onElement;
+		svgPath: path.
+	v add: (line edgeFrom: elements first to: elements second).
+	v addAll: elements.
+	v camera scale: 4.
 	v open
 	
 ]
