@@ -24,6 +24,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3';
 				
 				package: #'Roassal3-Scales';
+				package: #'Roassal3-Layouts';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Tests'.
