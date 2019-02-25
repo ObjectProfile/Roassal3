@@ -28,7 +28,7 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec 
 				group: 'Core' with: #(
 					'Roassal3'
-					'Roassal3-Layout'
+					'Roassal3-Layouts'
 					'Roassal3-Scales'
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes');
