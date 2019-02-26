@@ -4,6 +4,10 @@ I am an edge builder
 Class {
 	#name : #RSEdgeBuilder,
 	#superclass : #RSAbstractModelBuilder,
+	#instVars : [
+		'fromObject',
+		'toObject'
+	],
 	#category : #'Roassal3-Core'
 }
 
@@ -17,6 +21,11 @@ RSEdgeBuilder class >> linePath [
 	^ self new edgeClass: TSSVGPathLine
 ]
 
+{ #category : #'public - accessing' }
+RSEdgeBuilder >> edge [
+	^ self edgeOn: fromObject -> toObject
+]
+
 { #category : #accessing }
 RSEdgeBuilder >> edgeClass: aClass [
 	self 
@@ -25,14 +34,14 @@ RSEdgeBuilder >> edgeClass: aClass [
 ]
 
 { #category : #'public - accessing' }
-RSEdgeBuilder >> edgeFrom: fromObject to: toObject [
-	^ self edgeFrom: fromObject to: toObject index: nil
+RSEdgeBuilder >> edgeOn: model [
+	^ self edgeOn: model index: nil
 ]
 
 { #category : #'public - accessing' }
-RSEdgeBuilder >> edgeFrom: fromObject to: toObject index: index [
+RSEdgeBuilder >> edgeOn: model index: index [
 	| ed |
-	ed := self basicElementOn: fromObject ->toObject index: index.
+	ed := self basicElementOn: model index: index.
 	ed 
 		from: fromObject;
 		to: toObject.
@@ -42,4 +51,24 @@ RSEdgeBuilder >> edgeFrom: fromObject to: toObject index: index [
 { #category : #'public - accessing' }
 RSEdgeBuilder >> elementOn: model index: index [
 	self error: 'You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> from [
+	^ fromObject
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> from: anObject [
+	fromObject := anObject.
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> to [
+	^ toObject
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> to: anObject [
+	toObject := anObject.
 ]

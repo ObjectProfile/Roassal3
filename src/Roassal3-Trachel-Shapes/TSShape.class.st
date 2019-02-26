@@ -13,7 +13,7 @@ Class {
 		'canvas',
 		'isFixed'
 	],
-	#category : #'Roassal3-Trachel-Shapes'
+	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
 { #category : #animation }
@@ -23,13 +23,14 @@ TSShape >> animation [
 
 { #category : #animation }
 TSShape >> animation: animation [
-	canvas addAnimation: animation.
+	canvas animation: animation.
 	^ animation
 ]
 
 { #category : #events }
 TSShape >> announce: anEvent [
-	self announcer announce: anEvent
+	announcer ifNil: [ ^ self ].
+	announcer announce: anEvent
 ]
 
 { #category : #events }

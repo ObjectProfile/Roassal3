@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'baseRectangle'
 	],
-	#category : #'Roassal3-Trachel-Shapes'
+	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
 { #category : #visiting }

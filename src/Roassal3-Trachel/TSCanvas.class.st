@@ -47,13 +47,25 @@ TSCanvas >> addShape: aShape [
 ]
 
 { #category : #animations }
+TSCanvas >> animation [ 
+	^ self animation: TSNumberAnimation new.
+]
+
+{ #category : #animations }
+TSCanvas >> animation: anAnimation [
+	self addAnimation: anAnimation.
+	^ anAnimation
+]
+
+{ #category : #animations }
 TSCanvas >> animations [
 	^ animations
 ]
 
 { #category : #events }
 TSCanvas >> announce: anEvent [
-	self announcer announce: anEvent
+	announcer ifNil: [ ^ self ].
+	announcer announce: anEvent
 ]
 
 { #category : #events }
@@ -193,17 +205,16 @@ TSCanvas >> playAnimations [
 	shouldClean := false.
 	animations do: [ :animation | 
 		animation refresh. 
-		animation hasCompleted ifTrue: [ 
-			shouldClean := true.
-			animation executeOnFinish. ] ].
-	
+		animation hasCompleted 
+			ifTrue: [ shouldClean := true. ] ].
 	shouldClean ifTrue: [ 
-		animations := animations reject: [ :animation | animation hasCompleted ] ].
+		animations copy do: [ :animation |
+			animation hasCompleted ifTrue: [ animation remove ] ] ].
 ]
 
 { #category : #dependencies }
 TSCanvas >> release [
-	camera := nil
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #'adding removing shapes' }

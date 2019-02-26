@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'children'
 	],
-	#category : #'Roassal3-Trachel-Shapes'
+	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
 { #category : #'instance creation' }

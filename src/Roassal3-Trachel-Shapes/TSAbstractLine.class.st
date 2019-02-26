@@ -8,12 +8,38 @@ Class {
 		'startPoint',
 		'endPoint'
 	],
-	#category : #'Roassal3-Trachel-Shapes'
+	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
 { #category : #visiting }
 TSAbstractLine >> accept: visitor [
 	visitor visitLine: self.
+]
+
+{ #category : #'style-cap' }
+TSAbstractLine >> capButt [
+	self border capButt
+]
+
+{ #category : #'style-cap' }
+TSAbstractLine >> capRound [
+	self border capRound
+]
+
+{ #category : #'style-cap' }
+TSAbstractLine >> capSquare [
+	self border capSquare
+]
+
+{ #category : #accessing }
+TSAbstractLine >> color: aColor [
+	self strokePaint: aColor
+]
+
+{ #category : #'style-dashes' }
+TSAbstractLine >> dashArray: arrayOfNumbers [
+	self border dashArray: arrayOfNumbers
+	
 ]
 
 { #category : #accessing }
@@ -35,6 +61,21 @@ TSAbstractLine >> initialize [
 	startPoint := 0@0.
 	endPoint := 100@100.
 	
+]
+
+{ #category : #'style-join' }
+TSAbstractLine >> joinBevel [
+	self border joinBevel
+]
+
+{ #category : #'style-join' }
+TSAbstractLine >> joinMiter [
+	self border joinMiter
+]
+
+{ #category : #'style-join' }
+TSAbstractLine >> joinRound [
+	self border joinRound
 ]
 
 { #category : #accessing }
@@ -60,5 +101,5 @@ TSAbstractLine >> strokePaint: aPaint [
 
 { #category : #accessing }
 TSAbstractLine >> width: aNumber [
-	self border width: 2.
+	self border width: aNumber.
 ]

@@ -13,13 +13,12 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec
 		for: #common
 		do: [
-			"spec baseline: 'Bloc' with: [ 
-				spec repository: 'github://pharo-graphics/Bloc/src' ]."
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+			
 			spec
-				
 				package: 'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
+				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3';
 				
@@ -28,11 +27,13 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Tests'.
+				
 			spec 
 				group: 'Core' with: #(
 					'Roassal3'
 					'Roassal3-Layouts'
 					'Roassal3-Scales'
+					'Roassal3-Animation'
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes');
 				group: 'Examples'  with: #('Roassal3-Examples');

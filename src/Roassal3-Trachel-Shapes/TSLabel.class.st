@@ -13,7 +13,7 @@ Class {
 		'cachedHeight',
 		'cachedWidth'
 	],
-	#category : #'Roassal3-Trachel-Shapes'
+	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
 { #category : #public }

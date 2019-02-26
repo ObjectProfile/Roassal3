@@ -65,7 +65,7 @@ TSCamera >> position [
 
 { #category : #accessing }
 TSCamera >> position: aPoint [
-	^position 
+	position := aPoint
 ]
 
 { #category : #accessing }

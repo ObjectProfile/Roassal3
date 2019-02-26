@@ -69,13 +69,15 @@ TSAthensRenderer >> pathOfLine: line [
 
 { #category : #'visiting - helpers' }
 TSAthensRenderer >> pathOfSVGPathLine: line [
-	| path |
+	| path string |
 	line path ifNotNil: [ ^ line path ].
+	string := line svgPath value: line startPoint value: line endPoint.
 	path := athensCanvas createPath: [ :builder | 
-		builder
-			absolute;
-			moveTo: line startPoint;
-			lineTo: line endPoint ].
+		| pathCommands converter |
+		converter := ASPathConverter new stream: string readStream.
+		pathCommands := converter convertPathData.
+		pathCommands
+			do: [ :each | builder perform: each first withArguments: each second ]].
 	line path: path.
 	^ path.
 ]
@@ -92,8 +94,8 @@ TSAthensRenderer >> visitBorder: border [
 	style capStyle
 		ifNotNil: [:s | stroke perform: s].
 	style joinStyle
-		ifNotNil: [:s | stroke perform: s]
-		
+		ifNotNil: [:s | stroke perform: s].
+	
 ]
 
 { #category : #'visiting - helpers' }

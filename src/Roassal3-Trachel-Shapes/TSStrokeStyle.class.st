@@ -10,7 +10,7 @@ Class {
 		'dashArray',
 		'dashOffset'
 	],
-	#category : #'Roassal3-Trachel-Border'
+	#category : #'Roassal3-Trachel-Shapes-Border'
 }
 
 { #category : #accessing }

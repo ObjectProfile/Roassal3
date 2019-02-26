@@ -155,9 +155,9 @@ TrachelShapeExamples >> example06Basic [
 		
 		label rotateByDegrees: angle..
 		label position: p + ((label textWidth/2) * theta).
-		"m even
+		m even
 			ifTrue: [ label bold ]
-			ifFalse: [ label italic ]."
+			ifFalse: [ label italic ].
 		c addShape: label.
 		].
 	c addShape: (TSEllipse new
@@ -339,7 +339,7 @@ TrachelShapeExamples >> example12Basic [
 TrachelShapeExamples >> example13Basic [
 	<script: 'self new example13Basic'>
 
-	| c box paint form border offset |
+	| c box paint form border |
 	c := TSCanvas new.
 	form := self iconNamed: #eyedropper.
 	paint := (AthensCairoPatternSurfacePaint 
@@ -358,11 +358,11 @@ TrachelShapeExamples >> example13Basic [
 	
 	c addShape: box.
 	
-	"box animation
+	c animation
 		repeat;
-		on: border
-		style: #dashOffset
-		value: 4."
+		from: 0;
+		to: 8;
+		on: border set: #dashOffset:.
 	c open.
 	
 
