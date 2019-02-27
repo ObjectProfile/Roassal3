@@ -296,3 +296,48 @@ RoassalShapeExamples >> example10LayoutColorFadingBasic2 [
 	v open
 	
 ]
+
+{ #category : #layouts }
+RoassalShapeExamples >> example11LayoutBasicWithColorFading [
+	<script: 'self new example11LayoutBasicWithColorFading'>
+
+	| v elements minAndMax color |
+	v := RSView new.
+	minAndMax := Collection withAllSubclasses inject: { 10000 . 0 } into: [ :res :cls | {res first min: cls numberOfMethods . res second max: cls numberOfMethods}].
+	color := TSScale linear
+		domain: minAndMax;
+		range: { Color green . Color red }.
+	elements := RSShapeBuilder box
+		size: #numberOfMethods;
+		interactionDo: #draggable;
+		color: [ :cls | color scale: cls numberOfMethods ];
+		elementsOn: (Collection withAllSubclasses).
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
+	v open
+	
+]
+
+{ #category : #normalizer }
+RoassalShapeExamples >> normalize01Color [
+	| v elements |
+	v := RSView new.
+	elements := RSShapeBuilder box
+		size: #numberOfMethods;
+		interactionDo: #draggable;
+		elementsOn: (Collection withAllSubclasses).
+
+	RSNormalizer color
+		elements: elements;
+		normalize: #numberOfMethods.
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
+
+	v camera position: v elements encompassingRectangle center.
+	
+	
+	v open
+	
+]

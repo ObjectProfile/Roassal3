@@ -3,7 +3,7 @@ I am an edge builder
 "
 Class {
 	#name : #RSEdgeBuilder,
-	#superclass : #RSAbstractModelBuilder,
+	#superclass : #RSAbstractShapeBuilder,
 	#instVars : [
 		'fromObject',
 		'toObject'

@@ -3,10 +3,7 @@ I can create shapes for roassal based on a model
 "
 Class {
 	#name : #RSShapeBuilder,
-	#superclass : #RSAbstractModelBuilder,
-	#instVars : [
-		'interaction'
-	],
+	#superclass : #RSAbstractShapeBuilder,
 	#category : #'Roassal3-Core'
 }
 
@@ -37,15 +34,6 @@ RSShapeBuilder class >> rectangle [
 { #category : #'public - accessing' }
 RSShapeBuilder >> elementOn: object index: index [
 	^ self basicElementOn: object index: index
-]
-
-{ #category : #accessing }
-RSShapeBuilder >> interaction [
-	^ interaction ifNil: [
-		interaction := RSInteractionBuilder new.
-		self addAction: (RSAction new
-			action: [ :el | interaction setUpElement: el ]).
-		interaction ].
 ]
 
 { #category : #accessing }
