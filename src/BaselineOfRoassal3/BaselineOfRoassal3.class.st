@@ -18,11 +18,11 @@ BaselineOfRoassal3 >> baseline: spec [
 			
 			spec
 				package: 'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
+				package: #'Roassal3-Scales';
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3';
 				
-				package: #'Roassal3-Scales';
 				package: #'Roassal3-Layouts';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Examples';
