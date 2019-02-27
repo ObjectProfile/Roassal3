@@ -3,8 +3,8 @@ I am a interpolator to round numbers
 "
 Class {
 	#name : #TSRoundInterpolator,
-	#superclass : #TSInterpolator,
-	#category : #'Roassal3-Scales'
+	#superclass : #TSAbstractInterpolator,
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #interpolation }

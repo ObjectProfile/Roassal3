@@ -1,16 +1,17 @@
 "
-I have test for animation in trachel
+base of animation tests
 "
 Class {
 	#name : #TSAnimationTest,
 	#superclass : #TSTest,
+	#instVars : [
+		'canvas'
+	],
 	#category : #'Roassal3-Tests-Animation'
 }
 
 { #category : #tests }
-TSAnimationTest >> testBasic [ 
-	| animation |
-	animation := TSNumberAnimation new.
+TSAnimationTest >> basicAnimation: animation [
 	self assert: animation loops equals: 1.
 	self deny: animation hasCompleted.
 	
@@ -33,74 +34,41 @@ TSAnimationTest >> testBasic [
 	self assert: animation loops equals: 3.
 ]
 
-{ #category : #tests }
-TSAnimationTest >> testBasicCanvas [
+{ #category : #running }
+TSAnimationTest >> runAnimation: animation threshold: threshold [
+	| time ended |
 	
-	| canvas animation |
-	canvas := TSCanvas new.
-	
-	self assert: canvas animations size equals: 0.
-	animation := canvas animation.
-	self assert: canvas animations size equals: 1.
-	
-	self assert: animation isRunning.
-	self assert: animation duration equals: 2 asSeconds.
-]
-
-{ #category : #tests }
-TSAnimationTest >> testDelay [
-	
-	| canvas animation |
-	canvas := TSCanvas new.
-	animation := canvas animation
-		delay: 100 milliSeconds.
-	self deny: animation isDelayDone.
-	(Delay forMilliseconds: 101) wait.
-	self assert: animation isDelayDone.
-	
-]
-
-{ #category : #tests }
-TSAnimationTest >> testStep [
-	
-	| canvas value |
-	canvas := TSCanvas new.
-	value := 0.
-	canvas animation
-		onStepDo: [ :t| value := value + 1 ].
-		
-	self assert: value equals: 0.
-	canvas playAnimations.
-	self assert: value equals: 1.
-]
-
-{ #category : #tests }
-TSAnimationTest >> testStepEvent [
-	
-	| value loop ended time canvas animation |
-	canvas := TSCanvas new.
-	value := nil.
-	loop := 0.
 	ended := false.
-	animation := canvas animation
-		duration: 100 milliSeconds;
-		loops: 3;
-		onStepDo: [ :t| value := t ];
-		when: TSAnimationLoopEvent do: [ :evt | loop := loop + 1.];
-		when: TSAnimationEndEvent do: [ :evt | ended := true ].
-	self assert: value isNil.
-	self assert: loop equals: 0.
-	self assert: animation endTime isNil.
+	animation when: TSAnimationEndEvent do: [ :evt | ended := true ].
 	time := Time now asDuration.
 	[ ended ] whileFalse: [ 
-		(Time now asDuration - time) > 310 milliSeconds ifTrue: [ 
+		(Time now asDuration - time) > threshold milliSeconds ifTrue: [ 
 			"time up"
 			self error: 'Time up'.
 			^ self ].
 		canvas playAnimations.
 		].
-	self deny: value isNil.
-	self assert: loop equals: 3.
-	self deny: animation endTime isNil.
-	self deny: animation isRunning.
+]
+
+{ #category : #running }
+TSAnimationTest >> setUp [
+	canvas := TSCanvas new.
+]
+
+{ #category : #tests }
+TSAnimationTest >> testSequentialAnimationCreation [
+	| animation |
+	self assert: canvas animations size equals: 0.
+	animation := canvas animationFrom: {}.
+	self assert: canvas animations size equals: 1.
+	self assert: animation class equals: TSSequentialAnimation.
+]
+
+{ #category : #tests }
+TSAnimationTest >> testTransitionAnimationCreation [
+	| animation |
+	self assert: canvas animations size equals: 0.
+	animation := canvas animation.
+	self assert: canvas animations size equals: 1.
+	self assert: animation class equals: TSTransitionAnimation.
 ]

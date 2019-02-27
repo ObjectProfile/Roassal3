@@ -2,7 +2,7 @@
 I am an animation that provides a number interpolating between 0 and 1. and apply it the value to one block
 "
 Class {
-	#name : #TSNumberAnimation,
+	#name : #TSTransitionAnimation,
 	#superclass : #TSAbstractAnimation,
 	#instVars : [
 		'stepAction',
@@ -14,43 +14,52 @@ Class {
 }
 
 { #category : #accessing }
-TSNumberAnimation >> duration [
+TSTransitionAnimation >> duration [
 	^ Duration milliSeconds: duration
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> duration: aDuration [
+TSTransitionAnimation >> duration: aDuration [
 	duration := aDuration asMilliSeconds
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> easing [
+TSTransitionAnimation >> easing [
 	^ easing
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> easing: anInterpolator [
+TSTransitionAnimation >> easing: anInterpolator [
 	easing := anInterpolator 
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> from [
+TSTransitionAnimation >> from [
 	^ scale range first
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> from: anObject [
+TSTransitionAnimation >> from: anObject [
 	scale range: { anObject. self to}.
 ]
 
+{ #category : #initialization }
+TSTransitionAnimation >> initialize [
+	super initialize.
+	self onStepDo: [ :t | ].
+	
+]
+
 { #category : #'action handling' }
-TSNumberAnimation >> on: object set: setSelector [
+TSTransitionAnimation >> on: object set: setSelector [
+	| sel |
+	sel := setSelector asSymbol.
 	self 
-		assert: (object class canUnderstand: setSelector) 
+		assert: (object class canUnderstand: sel) 
 		description: 'Invalid input'.
 	
 	self onStepDo: [ :t |
-		object perform: setSelector withArguments: { t }.
+		object perform: sel withArguments: { t }.
 		canvas signalUpdate.
 	]
 	
@@ -58,30 +67,39 @@ TSNumberAnimation >> on: object set: setSelector [
 ]
 
 { #category : #'action handling' }
-TSNumberAnimation >> onStepDo: aBlock [
+TSTransitionAnimation >> onStepDo: aBlock [
 	stepAction := aBlock
 ]
 
 { #category : #'accessing - computed' }
-TSNumberAnimation >> progress [ 
-	| progress |
-	currentLoop ifNil: [ 
-		currentLoop := 1 ].
-	startLoopTime 
-		ifNil: [ startLoopTime := self currentTime ].
-	progress := (self currentTime - startLoopTime)/ self duration asMilliSeconds asFloat.
+TSTransitionAnimation >> progress [ 
+	| progress pauseTime |
+	self startStep.
+	pauseTime := (endPauseTime - startPauseTime) max: 0.
+	progress := (self currentTime -pauseTime - startLoopTime)/ self duration asMilliSeconds asFloat.
 	progress > 1 ifTrue: [ 
-		currentLoop := currentLoop + 1.
-		startLoopTime := self currentTime.
+		self loopDone.
 		progress := 1.
-		self announce: (TSAnimationLoopEvent new animation: self).
 		 ].
 	
 	^ progress
 ]
 
+{ #category : #accessing }
+TSTransitionAnimation >> ramp: arrayOfAssociations [
+	"canvas animation
+		ramp: { 
+		 	0 -> (0@0).
+			0.25 -> (200@180).
+			0.75 -> (-200@ -80).
+			1 -> (200@0)}."
+	scale := TSScale linear
+		domain: (arrayOfAssociations collect: #key);
+		range: (arrayOfAssociations collect: #value)
+]
+
 { #category : #initialization }
-TSNumberAnimation >> reset [
+TSTransitionAnimation >> reset [
 	super reset.
 	self duration: 2 asSeconds.
 	easing := TSLinearInterpolator new.
@@ -89,17 +107,17 @@ TSNumberAnimation >> reset [
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> scale [
+TSTransitionAnimation >> scale [
 	^ scale
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> scale: aScale [
+TSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
 { #category : #refresing }
-TSNumberAnimation >> step [ 
+TSTransitionAnimation >> step [ 
 	| progress value |
 	
 	progress := self progress.
@@ -114,11 +132,11 @@ TSNumberAnimation >> step [
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> to [
+TSTransitionAnimation >> to [
 	^ scale range last
 ]
 
 { #category : #accessing }
-TSNumberAnimation >> to: aValue [
+TSTransitionAnimation >> to: aValue [
 	self scale range: { self from. aValue }
 ]

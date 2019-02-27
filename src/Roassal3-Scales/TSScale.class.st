@@ -10,7 +10,7 @@ Class {
 		'interpolate',
 		'uninterpolate'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #'instance creation' }
@@ -62,7 +62,12 @@ TSScale class >> ordinal [
 
 { #category : #'instance creation' }
 TSScale class >> paired12 [
-	^ self fromColorCategory: #sky8
+	^ self fromColorCategory: #paired12
+]
+
+{ #category : #'instance creation' }
+TSScale class >> pow [
+	^ TSScalePow new
 ]
 
 { #category : #'instance creation' }

@@ -3,8 +3,8 @@ I am the interpolator  for colors
 "
 Class {
 	#name : #TSColorInterpolator,
-	#superclass : #TSInterpolator,
-	#category : #'Roassal3-Scales'
+	#superclass : #TSAbstractInterpolator,
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #'color categories' }

@@ -11,7 +11,7 @@ Class {
 		'a',
 		'b'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #interpolating }

@@ -9,7 +9,7 @@ Class {
 		'base',
 		'positive'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #accessing }

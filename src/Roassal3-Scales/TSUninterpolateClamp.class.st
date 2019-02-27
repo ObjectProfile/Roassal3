@@ -5,7 +5,7 @@ I do not allow a value get off the scale of
 Class {
 	#name : #TSUninterpolateClamp,
 	#superclass : #TSUninterpolate,
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #interpolating }

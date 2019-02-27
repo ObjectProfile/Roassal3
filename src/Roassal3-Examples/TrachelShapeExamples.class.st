@@ -339,7 +339,7 @@ TrachelShapeExamples >> example12Basic [
 TrachelShapeExamples >> example13Basic [
 	<script: 'self new example13Basic'>
 
-	| c box paint form border |
+	| c box paint form border animation |
 	c := TSCanvas new.
 	form := self iconNamed: #eyedropper.
 	paint := (AthensCairoPatternSurfacePaint 
@@ -348,7 +348,6 @@ TrachelShapeExamples >> example13Basic [
 	paint origin: (form extent / 2) negated.
 	border := TSBorder new
 		color: Color purple;
-		width: 1;
 		dashArray: #(4).
 	box := TSBox new
 		paint: paint;
@@ -358,11 +357,15 @@ TrachelShapeExamples >> example13Basic [
 	
 	c addShape: box.
 	
-	c animation
+	animation := c animation
 		repeat;
 		from: 0;
 		to: 8;
 		on: border set: #dashOffset:.
+	box when: TSMouseClick do: [ :a |
+		animation isPaused 
+			ifTrue: [ animation continue ]
+			ifFalse: [ animation pause ] ].
 	c open.
 	
 

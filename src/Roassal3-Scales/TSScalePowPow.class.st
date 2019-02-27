@@ -7,8 +7,15 @@ Class {
 	#instVars : [
 		'exponent'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
+
+{ #category : #'instance creation' }
+TSScalePowPow class >> exponent: exponent [
+	^ self new 
+		exponent: exponent;
+		yourself
+]
 
 { #category : #accessing }
 TSScalePowPow >> exponent: aNumber [

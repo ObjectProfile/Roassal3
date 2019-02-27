@@ -8,7 +8,7 @@ Class {
 		'i',
 		'u'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #hooks }

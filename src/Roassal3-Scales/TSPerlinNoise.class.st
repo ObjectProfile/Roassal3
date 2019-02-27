@@ -8,7 +8,7 @@ Class {
 		'grad3',
 		'perm'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #private }

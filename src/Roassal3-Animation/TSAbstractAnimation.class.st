@@ -6,17 +6,19 @@ Class {
 	#superclass : #TSObject,
 	#instVars : [
 		'canvas',
+		'announcer',
 		'isRunning',
+		'hasCompleted',
 		'startTime',
 		'endTime',
 		'loop',
-		'delay',
-		'hasCompleted',
-		'loops',
-		'isPaused',
-		'announcer',
 		'currentLoop',
-		'startLoopTime'
+		'startLoopTime',
+		'loops',
+		'delay',
+		'isPaused',
+		'startPauseTime',
+		'endPauseTime'
 	],
 	#category : #'Roassal3-Animation-Core'
 }
@@ -50,7 +52,11 @@ TSAbstractAnimation >> canvas: aCanvas [
 
 { #category : #actions }
 TSAbstractAnimation >> continue [
+	| oldPaused |
+	oldPaused := isPaused.
 	isPaused := false.
+	oldPaused 
+		ifTrue: [ endPauseTime := self currentTime. ]
 ]
 
 { #category : #accessing }
@@ -76,6 +82,11 @@ TSAbstractAnimation >> delay: aDuration [
 { #category : #accessing }
 TSAbstractAnimation >> duration [
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+TSAbstractAnimation >> endPauseTime [
+	^ endPauseTime
 ]
 
 { #category : #accessing }
@@ -115,6 +126,14 @@ TSAbstractAnimation >> isRunning [
 	^ isRunning
 ]
 
+{ #category : #private }
+TSAbstractAnimation >> loopDone [
+	currentLoop := currentLoop + 1.
+	startPauseTime := endPauseTime := 0.
+	startLoopTime := self currentTime.
+	self announce: (TSAnimationLoopEvent new animation: self).
+]
+
 { #category : #accessing }
 TSAbstractAnimation >> loops [
 	^ loops
@@ -133,7 +152,12 @@ TSAbstractAnimation >> noRepeat [
 
 { #category : #actions }
 TSAbstractAnimation >> pause [
+	| oldPaused |
+	oldPaused := isPaused.
 	isPaused := true.
+	oldPaused 
+		ifFalse: [ startPauseTime := self currentTime. ].
+	
 ]
 
 { #category : #refresing }
@@ -158,6 +182,8 @@ TSAbstractAnimation >> remove [
 	canvas animations remove: self ifAbsent: [  ].
 	endTime := self currentTime.
 	isRunning := false.
+	currentLoop := nil.
+	startLoopTime := nil.
 	self announce: (TSAnimationEndEvent new animation: self)
 	
 ]
@@ -174,17 +200,36 @@ TSAbstractAnimation >> reset [
 	self noRepeat.
 	hasCompleted := false.
 	isPaused := false.
+	currentLoop := nil.
+	startLoopTime := nil.
+	startPauseTime := 0.
+	endPauseTime := 0.
 ]
 
 { #category : #actions }
 TSAbstractAnimation >> start [
 	isRunning := true.
+	hasCompleted := false.
 	startTime := self currentTime.
+	self announce: (TSAnimationStartEvent new animation: self)
 ]
 
 { #category : #accessing }
 TSAbstractAnimation >> startLoopTime [
 	^ startLoopTime 
+]
+
+{ #category : #accessing }
+TSAbstractAnimation >> startPauseTime [
+	^ startPauseTime
+]
+
+{ #category : #private }
+TSAbstractAnimation >> startStep [
+	currentLoop 
+		ifNil: [ currentLoop := 1 ].
+	startLoopTime 
+		ifNil: [ startLoopTime := self currentTime ].
 ]
 
 { #category : #accessing }

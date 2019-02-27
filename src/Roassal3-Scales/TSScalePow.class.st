@@ -10,7 +10,7 @@ Class {
 		'powp',
 		'powb'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #accessing }
@@ -46,12 +46,36 @@ TSScalePow >> initialize [
 	powb := TSScalePowPow exponent: 1 / exponent.
 ]
 
-{ #category : #transformation }
+{ #category : #initialization }
+TSScalePow >> interpolate [
+	^ linear interpolate
+]
+
+{ #category : #initialization }
+TSScalePow >> interpolate: x [
+	linear interpolate: x
+]
+
+{ #category : #initialization }
 TSScalePow >> invert: x [
 	^ powb scale: (linear invert: x)
 ]
 
-{ #category : #transformation }
+{ #category : #initialization }
+TSScalePow >> range [
+	^ linear range
+]
+
+{ #category : #initialization }
+TSScalePow >> range: x [
+	linear range: x
+]
+
+{ #category : #initialization }
+TSScalePow >> rescale [
+]
+
+{ #category : #initialization }
 TSScalePow >> scale: x [
 	^ linear scale: (powp scale: x)
 ]

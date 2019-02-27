@@ -146,7 +146,7 @@ RoassalShapeExamples >> example05Basic [
 		to: elements first;
 		edgeOn: Color blue).
 	v addAll: elements.
-	v camera scale: 4.
+	v camera scale: 1.
 	v open
 	
 ]
@@ -245,6 +245,54 @@ RoassalShapeExamples >> example08Basic [
 			edge).
 	].
 	
+	v open
+	
+]
+
+{ #category : #layouts }
+RoassalShapeExamples >> example09LayoutColorFadingBasic [
+	<script: 'self new example09LayoutColorFadingBasic'>
+
+	| v elements color |
+	v := RSView new.
+	color := TSScale linear
+		domain: #(1 20);
+		range: {Color red. Color green}.
+		
+	elements := RSShapeBuilder box
+		size: #yourself;
+		position: [:m | (1 to: m) sum asPoint -150 ];
+		interactionDo: #draggable;
+		onElement;
+		color: [ :e | color scale: e index ];
+		elementsOn: (1 to: 20).
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
+	v open
+	
+]
+
+{ #category : #layouts }
+RoassalShapeExamples >> example10LayoutColorFadingBasic2 [
+	<script: 'self new example10LayoutColorFadingBasic2'>
+
+	| v elements color |
+	v := RSView new.
+	color := TSScale linear
+		domain: #(1 10 20);
+		range: { Color red. Color green. Color blue }.
+		
+		
+	elements := RSShapeBuilder box
+		size: #yourself;
+		position: [:m | (1 to: m) sum asPoint -150 ];
+		interactionDo: #draggable;
+		color: [ :m |color scale: m ];
+		elementsOn: (1 to: 20).
+
+	v addAll: elements.
+	RTGridLayout on: elements children.
 	v open
 	
 ]

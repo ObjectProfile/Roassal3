@@ -1,8 +1,8 @@
 "
-For when the animation is removed or ends from the canvas
+When the animation starts
 "
 Class {
-	#name : #TSAnimationEndEvent,
+	#name : #TSAnimationStartEvent,
 	#superclass : #TSAnimationEvent,
 	#category : #'Roassal3-Animation-Events'
 }

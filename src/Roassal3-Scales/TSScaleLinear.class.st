@@ -9,7 +9,7 @@ Class {
 		'input',
 		'output'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #accessing }

@@ -18,7 +18,7 @@ Class {
 
 { #category : #animation }
 TSShape >> animation [ 
-	^ self animation: TSNumberAnimation new.
+	^ self animation: TSTransitionAnimation new.
 ]
 
 { #category : #animation }

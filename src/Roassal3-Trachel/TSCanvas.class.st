@@ -48,13 +48,21 @@ TSCanvas >> addShape: aShape [
 
 { #category : #animations }
 TSCanvas >> animation [ 
-	^ self animation: TSNumberAnimation new.
+	^ self animation: TSTransitionAnimation new.
 ]
 
 { #category : #animations }
 TSCanvas >> animation: anAnimation [
 	self addAnimation: anAnimation.
 	^ anAnimation
+]
+
+{ #category : #animations }
+TSCanvas >> animationFrom: array [
+	| animation |
+	animation := TSSequentialAnimation new.
+	animation addAll: array.
+	^ self animation: animation.
 ]
 
 { #category : #animations }
@@ -288,6 +296,11 @@ TSCanvas >> shapes [
 { #category : #updating }
 TSCanvas >> signalUpdate [
 	morph changed
+]
+
+{ #category : #animations }
+TSCanvas >> tAnimation [ 
+	^ TSTransitionAnimation new.
 ]
 
 { #category : #events }

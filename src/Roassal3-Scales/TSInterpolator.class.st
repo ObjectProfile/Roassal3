@@ -7,11 +7,7 @@ RTNumberInterpolator
 Class {
 	#name : #TSInterpolator,
 	#superclass : #TSObject,
-	#instVars : [
-		'start',
-		'stop'
-	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #interpolation }
@@ -25,21 +21,11 @@ TSInterpolator class >> interpolate: a and: b [
 TSInterpolator class >> interpolatorFor: b [
 	(b isString or: [ b isColor ]) ifTrue: [ ^ TSColorInterpolator ].
 	b isNumber ifTrue: [ ^ TSNumberInterpolator ].
-	
+	b isPoint ifTrue: [ ^ TSNumberInterpolator ].
 	self error: 'Invalid value for interpolator'
 ]
 
 { #category : #interpolation }
 TSInterpolator >> interpolate: anObject [
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-TSInterpolator >> start: anObject [
-	start := anObject
-]
-
-{ #category : #accessing }
-TSInterpolator >> stop: anObject [
-	stop := anObject
 ]

@@ -3,8 +3,8 @@ I am the basic interpolator for numbers
 "
 Class {
 	#name : #TSNumberInterpolator,
-	#superclass : #TSInterpolator,
-	#category : #'Roassal3-Scales'
+	#superclass : #TSAbstractInterpolator,
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #interpolation }

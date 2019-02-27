@@ -9,7 +9,7 @@ Class {
 		'u',
 		'i'
 	],
-	#category : #'Roassal3-Scales'
+	#category : #'Roassal3-Scales-Core'
 }
 
 { #category : #private }
@@ -27,10 +27,13 @@ TSScalePolylinear >> findJ: x [
 
 { #category : #hooks }
 TSScalePolylinear >> rescale [
+	| obj |
 	u := OrderedCollection new.
 	i := OrderedCollection new.
 	k := domain size min: range size.
-	(domain at: k) < domain first ifTrue: [
+	obj := domain at: k.
+	
+	((obj class canUnderstand: #<) and: [obj < domain first]) ifTrue: [
 		domain := domain reverse.
 		range := range reverse ].
 	

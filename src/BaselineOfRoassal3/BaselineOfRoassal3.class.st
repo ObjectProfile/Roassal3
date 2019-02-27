@@ -36,8 +36,8 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Animation'
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes');
-				group: 'Examples'  with: #('Roassal3-Examples');
-				group: 'Tests' with: #('Roassal3-Tests');
+				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
+				group: 'Tests' with: #('Core' 'Roassal3-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ]
 			
 		

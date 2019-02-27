@@ -58,7 +58,7 @@ TSBorder >> dashOffset: offset [
 	self pStyle dashOffset: offset
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TSBorder >> initialize [
 	super initialize.
 	paint := Color black.
