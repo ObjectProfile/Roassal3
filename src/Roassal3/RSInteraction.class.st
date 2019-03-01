@@ -7,7 +7,12 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
+RSInteraction class >> onElement: element [
+	^ self new onElement: element
+]
+
+{ #category : #hooks }
 RSInteraction >> onElement: anElement [
 
 	self subclassResponsibility 

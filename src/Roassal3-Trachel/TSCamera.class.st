@@ -77,3 +77,13 @@ TSCamera >> scale [
 TSCamera >> scale: aNumber [
 	scale := aNumber
 ]
+
+{ #category : #actions }
+TSCamera >> translateBy: aPoint [
+	self translateTo: position + aPoint.
+]
+
+{ #category : #actions }
+TSCamera >> translateTo: aPoint [
+	position := aPoint.
+]

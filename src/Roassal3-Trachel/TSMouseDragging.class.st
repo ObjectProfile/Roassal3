@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Trachel-Events'
 }
 
+{ #category : #'instance creation' }
+TSMouseDragging class >> step: aStepAsPoint [
+	^ self new step: aStepAsPoint
+]
+
 { #category : #'initialize - release' }
 TSMouseDragging >> initialize [
 	super initialize.

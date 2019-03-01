@@ -50,7 +50,8 @@ RSEdgeBuilder >> edgeOn: model index: index [
 
 { #category : #'public - accessing' }
 RSEdgeBuilder >> elementOn: model index: index [
-	self error: 'You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:'
+	"You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:"
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

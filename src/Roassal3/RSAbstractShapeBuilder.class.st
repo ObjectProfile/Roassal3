@@ -1,3 +1,6 @@
+"
+I am base class for builders with interactions
+"
 Class {
 	#name : #RSAbstractShapeBuilder,
 	#superclass : #RSAbstractModelBuilder,
@@ -14,4 +17,9 @@ RSAbstractShapeBuilder >> interaction [
 		self addAction: (RSAction new
 			action: [ :el | interaction setUpElement: el ]).
 		interaction ].
+]
+
+{ #category : #accessing }
+RSAbstractShapeBuilder >> interactionDo: aBlock [
+	aBlock value: self interaction
 ]

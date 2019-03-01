@@ -37,11 +37,6 @@ RSShapeBuilder >> elementOn: object index: index [
 ]
 
 { #category : #accessing }
-RSShapeBuilder >> interactionDo: aBlock [
-	aBlock value: self interaction
-]
-
-{ #category : #accessing }
 RSShapeBuilder >> shapeClass [
 	^ self innerClass 
 ]

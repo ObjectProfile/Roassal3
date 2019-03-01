@@ -338,7 +338,7 @@ RoassalShapeExamples >> normalize01Color [
 
 	v camera position: v elements encompassingRectangle center.
 	
-	
+	v @ RSControlsView.
 	v open
 	
 ]

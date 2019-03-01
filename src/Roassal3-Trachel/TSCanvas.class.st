@@ -123,6 +123,14 @@ TSCanvas >> color: aColor [
 ]
 
 { #category : #accessing }
+TSCanvas >> encompassingRectangle [
+	| r e |
+	r := Rectangle merging: (shapes collect: #encompassingRectangle).
+	e := r extent max: 1 @ 1.
+	^ r topLeft extent: e
+]
+
+{ #category : #accessing }
 TSCanvas >> extent [
 	^ extent
 ]

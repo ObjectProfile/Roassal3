@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RSDraggable >> onElement: e [
 	| d |
 	e when: TSMouseDragging do: [ :evt |

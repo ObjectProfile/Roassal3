@@ -6,7 +6,7 @@ A ''view'' is a container of graphical elements and represents a layer that may 
 "
 Class {
 	#name : #RSView,
-	#superclass : #RSObject,
+	#superclass : #RSAnnounceableObject,
 	#instVars : [
 		'elements',
 		'edges',
@@ -37,6 +37,11 @@ RSView >> addEdge: anEdge [
 { #category : #accessing }
 RSView >> addElement: anElement [
 	elements add: anElement
+]
+
+{ #category : #accessing }
+RSView >> announcer [ 
+	^ trCanvas announcer
 ]
 
 { #category : #accessing }

@@ -36,6 +36,11 @@ TSBoundingShape >> extent: aPoint [
 	self resetPath
 ]
 
+{ #category : #accessing }
+TSBoundingShape >> height: aNumber [
+	self extent: self extent x @ aNumber
+]
+
 { #category : #initialization }
 TSBoundingShape >> initialize [
 	super initialize.
@@ -45,4 +50,9 @@ TSBoundingShape >> initialize [
 { #category : #accessing }
 TSBoundingShape >> size: anInteger [
 	self extent: anInteger asPoint
+]
+
+{ #category : #accessing }
+TSBoundingShape >> width: aNumber [
+	self extent: aNumber @ self extent y
 ]
