@@ -321,6 +321,7 @@ RoassalShapeExamples >> example11LayoutBasicWithColorFading [
 
 { #category : #normalizer }
 RoassalShapeExamples >> normalize01Color [
+	<script: 'self new normalize01Color'>
 	| v elements |
 	v := RSView new.
 	elements := RSShapeBuilder box
