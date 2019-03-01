@@ -88,6 +88,11 @@ TSScale >> domain: anObject [
 ]
 
 { #category : #accessing }
+TSScale >> from: value [
+	self range: { value. self range last }.
+]
+
+{ #category : #accessing }
 TSScale >> interpolate [
 	^ interpolate
 ]
@@ -127,6 +132,11 @@ TSScale >> rsValue: obj [
 TSScale >> scale: anObject [
 	"do you have your domain, and your range? ok so use this method in one of my subclasses"
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TSScale >> to: value [
+	self range: { self range first. value }.
 ]
 
 { #category : #accessing }

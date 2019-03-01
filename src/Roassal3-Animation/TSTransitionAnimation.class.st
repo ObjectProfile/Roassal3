@@ -40,7 +40,7 @@ TSTransitionAnimation >> from [
 
 { #category : #accessing }
 TSTransitionAnimation >> from: anObject [
-	scale range: { anObject. self to}.
+	scale from: anObject
 ]
 
 { #category : #initialization }
@@ -138,5 +138,5 @@ TSTransitionAnimation >> to [
 
 { #category : #accessing }
 TSTransitionAnimation >> to: aValue [
-	self scale range: { self from. aValue }
+	scale to: aValue.
 ]

@@ -43,49 +43,24 @@ TSAthensMorph >> createSurface [
 
 { #category : #drawing }
 TSAthensMorph >> drawOn: aCanvas [
-	"aCanvas is a FormCanvas"
-	| f |
-	"#drawOn: cannot be reintrant"
 	isDrawing ifTrue: [ ^ self ].
-	isDrawing := true. 
+	isDrawing := true.
 	self checkSession.
-
 	self recreateSurfaceIfNecessary.
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
-	
 	trachelCanvas playAnimations.
-	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	surface drawDuring: [:athensCanvas |
-		trachelCanvas clearBackground ifTrue: [ surface clear ].
-		"We display the elements that are subject to the camera"
-		athensCanvas pathTransform
-			translateBy: (self extent / 2) asFloatPoint;
-			    scaleBy: trachelCanvas camera scale asFloat;
-			translateBy: trachelCanvas camera position negated asFloatPoint.
-		renderer canvas: athensCanvas.
-		trachelCanvas shapes do: [ :trachelShape |
-			trachelShape accept: renderer.
-		].
-	
-		"We display the elements that are _NOT_ subject to the camera"
-		athensCanvas pathTransform loadIdentity scaleBy: 1.001.
-		trachelCanvas fixedShapes do: [ :trachelShape |
-			trachelShape accept: athensCanvas.
-		].
-	].
-	"aCanvas translucentImage: surface asForm at: self bounds origin."
-	"asForm creates a new Form, which is likely to be expensive. This can be cached"
-	surface hasBeenFreed ifTrue: [ self createSurface ].
-	f := surface asForm.
-"
-	aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
-"
-	"surface displayOnMorphicCanvas: aCanvas at: self position."
-	[ aCanvas image: f at: self bounds origin asIntegerPoint sourceRect: (0 @ 0 extent: surface extent) rule: 34 ]
-		on: Exception "PrimitiveFailed"
-		do: [ :ex | "Maybe just memory object pinning issue so skipping a single paint cycle" ].
+	self drawShapes.
 
-	isDrawing := false.
+	surface hasBeenFreed
+		ifTrue: [ self createSurface ].
+	[ aCanvas
+		image: surface asForm
+		at: self bounds origin asIntegerPoint
+		sourceRect: (0 @ 0 extent: surface extent)
+		rule: 34 ]
+		on: Exception
+		do: [ :ex |  ].
+	isDrawing := false
 ]
 
 { #category : #drawing }
@@ -101,6 +76,28 @@ v canvas buildMorph drawOnMockCanvas
 
 	"
 	self drawOn: (FormCanvas extent: self extent)
+]
+
+{ #category : #drawing }
+TSAthensMorph >> drawShapes [
+	"The drawing has to be done when a change in the shapes occured or when there is an animation."
+	surface
+		drawDuring: [ :athensCanvas | 
+			trachelCanvas clearBackground
+				ifTrue: [ surface clear ].
+			"We display the elements that are subject to the camera"
+			athensCanvas pathTransform
+				translateBy: (self extent / 2) asFloatPoint;
+				scaleBy: trachelCanvas camera scale asFloat;
+				translateBy: trachelCanvas camera position negated asFloatPoint.
+			renderer canvas: athensCanvas.
+			trachelCanvas shapes
+				do: [ :trachelShape | trachelShape accept: renderer ].
+
+			"We display the elements that are _NOT_ subject to the camera"
+			athensCanvas pathTransform loadIdentity scaleBy: 1.001.
+			trachelCanvas fixedShapes
+				do: [ :trachelShape | trachelShape accept: athensCanvas ] ]	
 ]
 
 { #category : #'event-processed' }

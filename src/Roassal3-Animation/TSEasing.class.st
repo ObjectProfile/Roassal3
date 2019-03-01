@@ -5,7 +5,8 @@ Class {
 	#name : #TSEasing,
 	#superclass : #TSInterpolator,
 	#instVars : [
-		'exponent'
+		'useOut',
+		'useIn'
 	],
 	#category : #'Roassal3-Animation-Easing'
 }
@@ -17,37 +18,37 @@ TSEasing class >> back [
 
 { #category : #back }
 TSEasing class >> backIn [
-	^ TSBackInInterpolator new
+	^ TSBackInterpolator new in
 ]
 
 { #category : #back }
 TSEasing class >> backInOut [
-	^ TSBackInOutInterpolator new
+	^ TSBackInterpolator new
 ]
 
 { #category : #back }
 TSEasing class >> backOut [
-	^ TSBackOutInterpolator new
+	^ TSBackInterpolator new out
 ]
 
 { #category : #bounce }
 TSEasing class >> bounce [
-	^ self bounceInOut
+	^ self bounceOut
 ]
 
 { #category : #bounce }
 TSEasing class >> bounceIn [
-	^ TSBounceInInterpolator new
+	^ TSBounceInterpolator new in
 ]
 
 { #category : #bounce }
 TSEasing class >> bounceInOut [
-	^ TSBounceInOutInterpolator new
+	^ TSBounceInterpolator new
 ]
 
 { #category : #bounce }
 TSEasing class >> bounceOut [
-	^ TSBounceOutInterpolator new
+	^ TSBounceInterpolator new out
 ]
 
 { #category : #circle }
@@ -57,17 +58,17 @@ TSEasing class >> circle [
 
 { #category : #circle }
 TSEasing class >> circleIn [
-	^ TSCircleInInterpolator new
+	^ TSCircleInterpolator new in
 ]
 
 { #category : #circle }
 TSEasing class >> circleInOut [
-	^ TSCircleInOutInterpolator new
+	^ TSCircleInterpolator new
 ]
 
 { #category : #circle }
 TSEasing class >> circleOut [
-	^ TSCircleOutInterpolator new
+	^ TSCircleInterpolator new out
 ]
 
 { #category : #cubic }
@@ -77,17 +78,17 @@ TSEasing class >> cubic [
 
 { #category : #cubic }
 TSEasing class >> cubicIn [
-	^ TSCubicInInterpolator new
+	^ TSCubicInterpolator new in
 ]
 
 { #category : #cubic }
 TSEasing class >> cubicInOut [
-	^ TSCubicInOutInterpolator new
+	^ TSCubicInterpolator new
 ]
 
 { #category : #cubic }
 TSEasing class >> cubicOut [
-	^ TSCubicOutInterpolator new
+	^ TSCubicInterpolator new out
 ]
 
 { #category : #elastic }
@@ -97,17 +98,17 @@ TSEasing class >> elastic [
 
 { #category : #elastic }
 TSEasing class >> elasticIn [
-	^ TSElasticInInterpolator new
+	^ TSElasticInterpolator new in
 ]
 
 { #category : #elastic }
 TSEasing class >> elasticInOut [
-	^ TSElasticInOutInterpolator new
+	^ TSElasticInterpolator new
 ]
 
 { #category : #elastic }
 TSEasing class >> elasticOut [
-	^ TSElasticOutInterpolator new
+	^ TSElasticInterpolator new out
 ]
 
 { #category : #exp }
@@ -117,17 +118,17 @@ TSEasing class >> exp [
 
 { #category : #exp }
 TSEasing class >> expIn [
-	^ TSExpInInterpolator new
+	^ TSExpInterpolator new in
 ]
 
 { #category : #exp }
 TSEasing class >> expInOut [
-	^ TSExpInOutInterpolator new
+	^ TSExpInterpolator new
 ]
 
 { #category : #exp }
 TSEasing class >> expOut [
-	^ TSExpOutInterpolator new
+	^ TSExpInterpolator new out
 ]
 
 { #category : #linear }
@@ -142,17 +143,17 @@ TSEasing class >> poly [
 
 { #category : #poly }
 TSEasing class >> polyIn [
-	^ TSPolyInInterpolator new.
+	^ TSPolyInterpolator new in
 ]
 
 { #category : #poly }
 TSEasing class >> polyInOut [
-	^ TSPolyInOutInterpolator new.
+	^ TSPolyInterpolator new.
 ]
 
 { #category : #poly }
 TSEasing class >> polyOut [
-	^ TSPolyOutInterpolator new.
+	^ TSPolyInterpolator new out
 ]
 
 { #category : #quad }
@@ -162,17 +163,17 @@ TSEasing class >> quad [
 
 { #category : #quad }
 TSEasing class >> quadIn [
-	^ TSQuadInInterpolator new
+	^ TSQuadInterpolator new in
 ]
 
 { #category : #quad }
 TSEasing class >> quadInOut [
-	^ TSQuadInOutInterpolator new
+	^ TSQuadInterpolator new
 ]
 
 { #category : #quad }
 TSEasing class >> quadOut [
-	^ TSQuadOutInterpolator new
+	^ TSQuadInterpolator new out
 ]
 
 { #category : #sin }
@@ -182,20 +183,58 @@ TSEasing class >> sin [
 
 { #category : #sin }
 TSEasing class >> sinIn [
-	^ TSSinInInterpolator new
+	^ TSSinInterpolator new in
 ]
 
 { #category : #sin }
 TSEasing class >> sinInOut [
-	^ TSSinInOutInterpolator new
+	^ TSSinInterpolator new
 ]
 
 { #category : #sin }
 TSEasing class >> sinOut [
-	^ TSSinOutInterpolator new
+	^ TSSinInterpolator new out
+]
+
+{ #category : #actions }
+TSEasing >> in [
+	useIn := true.
+]
+
+{ #category : #actions }
+TSEasing >> inOut [
+	useIn := useOut := false
+]
+
+{ #category : #initialization }
+TSEasing >> initialize [
+	super initialize.
+	self inOut.
 ]
 
 { #category : #interpolation }
 TSEasing >> interpolate: t [
-	self shouldNotImplement
+	useIn ifTrue: [ ^ self interpolateIn: t ].
+	useOut ifTrue: [ ^ self interpolateOut: t ].
+	^ self interpolateInOut: t.
+]
+
+{ #category : #interpolation }
+TSEasing >> interpolateIn: t [
+	^ self subclassResponsibility
+]
+
+{ #category : #interpolation }
+TSEasing >> interpolateInOut: t [
+	^ self subclassResponsibility 
+]
+
+{ #category : #interpolation }
+TSEasing >> interpolateOut: t [
+	^ self subclassResponsibility
+]
+
+{ #category : #actions }
+TSEasing >> out [ 
+	useOut := true.
 ]
