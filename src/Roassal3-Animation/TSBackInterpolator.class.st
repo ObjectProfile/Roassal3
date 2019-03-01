@@ -19,9 +19,9 @@ Class {
 }
 
 { #category : #initialization }
-TSBackInterpolator >> initialize. [
+TSBackInterpolator >> initialize [
 	super initialize.
-	overshoot := 1.70158.
+	overshoot := 1.70158
 ]
 
 { #category : #interpolation }

@@ -42,12 +42,13 @@ TSElasticInterpolator >> calculateS [
 ]
 
 { #category : #initialization }
-TSElasticInterpolator >> initialize. [
+TSElasticInterpolator >> initialize [
 	super initialize.
 	tau := 2* Float pi.
 	amplitude := 1.
 	period := 0.3.
-	self calculateS.
+	
+	self calculateS
 ]
 
 { #category : #interpolation }
