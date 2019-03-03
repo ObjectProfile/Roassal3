@@ -73,7 +73,7 @@ TSCanvas >> animations [
 { #category : #events }
 TSCanvas >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent
+	announcer announce: anEvent value
 ]
 
 { #category : #events }

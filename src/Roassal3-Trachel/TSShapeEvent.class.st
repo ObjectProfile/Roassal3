@@ -12,6 +12,16 @@ Class {
 }
 
 { #category : #accessing }
+TSShapeEvent >> canvas [
+	^ canvas ifNil: [ canvas := shape canvas ].
+]
+
+{ #category : #accessing }
+TSShapeEvent >> morph [
+	^ morph ifNil: [ ^ morph := self canvas morph ]
+]
+
+{ #category : #accessing }
 TSShapeEvent >> position [ 
 	^ position 
 ]

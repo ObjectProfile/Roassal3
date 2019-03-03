@@ -7,13 +7,26 @@ Class {
 	#category : #'Roassal3-Trachel-Core'
 }
 
+{ #category : #paint }
+TSAthensRenderer >> paintForBitmap: shape [
+	| paint |
+	^ CairoBackendCache soleInstance 
+		at: shape form
+		ifAbsentPut: [ 
+			paint := (AthensCairoPatternSurfacePaint 
+				createForSurface: (AthensCairoSurface 
+				fromForm: shape form)).
+			paint origin: (shape form extent /2) negated.
+			paint  ]
+]
+
 { #category : #'visiting - helpers' }
 TSAthensRenderer >> pathOfBox: box [
-	| rectangle path |
+	| rectangle path simple corner |
 	box path ifNotNil: [ ^ box path].
 	rectangle  := box baseRectangle.
-	path := athensCanvas createPath: [ :builder | 
-		builder
+	simple := [ :b | 
+		b
 			absolute;
 			moveTo: rectangle topLeft;
 			lineTo: rectangle topRight;
@@ -21,6 +34,27 @@ TSAthensRenderer >> pathOfBox: box [
 			lineTo: rectangle bottomLeft;
 			lineTo: rectangle topLeft;
 			closePath ].
+	corner := [ :b |
+		| c |
+		c := box cornerRadius.
+		b 
+				absolute;
+				moveTo: rectangle topLeft + (c topLeft@0);
+				lineTo: rectangle topRight - (c topRight@0);
+				cwArcTo: rectangle topRight + (0@c topRight) angle: Float halfPi;
+				lineTo: rectangle bottomRight- (0 @ c bottomRight);
+				cwArcTo: rectangle bottomRight - (c bottomRight @ 0) angle: Float halfPi;
+				lineTo: rectangle bottomLeft + (c bottomLeft @ 0);
+				cwArcTo: rectangle bottomLeft - (0@ c bottomLeft) angle: Float halfPi;
+				lineTo: rectangle topLeft + (0@ c topLeft);
+				cwArcTo: rectangle topLeft + (c topLeft@0) angle: Float halfPi;
+				closePath
+		 ].
+	path := athensCanvas createPath: [ :builder |
+		(box hasCornerRadius 
+			ifTrue: [ corner]
+			ifFalse: [ simple] ) value: builder
+		].
 	box path: path.
 	^ path.
 ]
@@ -109,14 +143,15 @@ TSAthensRenderer >> visitBorderIfNecessary: shape [
 
 { #category : #visiting }
 TSAthensRenderer >> visitBoundingShape: shape [
-	| path |
+	| path paint |
 	path := shape pathFor: self.
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas pathTransform
 			multiplyBy: shape matrix asFloatTransform.
-		shape color ifNotNil: [ 
+		paint := shape paintOn: self.
+		paint ifNotNil: [ 
 			athensCanvas 
-				setPaint: shape paint;
+				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
 		].

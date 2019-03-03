@@ -30,7 +30,7 @@ TSShape >> animation: animation [
 { #category : #events }
 TSShape >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent
+	announcer announce: anEvent value.
 ]
 
 { #category : #events }
@@ -135,6 +135,11 @@ TSShape >> matrix [
 ]
 
 { #category : #accessing }
+TSShape >> matrix: aMatrix [
+	matrix := aMatrix
+]
+
+{ #category : #accessing }
 TSShape >> paint [
 	^ paint
 ]
@@ -205,7 +210,7 @@ TSShape >> signalUpdate [
 
 { #category : #matrix }
 TSShape >> translateBy: delta [
-	matrix translateBy: delta.
+	self translateTo: self position + delta.
 	
 ]
 
@@ -215,8 +220,11 @@ TSShape >> translateTo: aPoint [
 	oldPosition := self position.
 	self position: aPoint.
 	
-	"Need to do this in future work. Emit an event"
-	"self triggerCallbacksForStep: (self position - oldPosition)"
+	self announce: [TSTranslationEvent new 
+		shape: self; 
+		position: oldPosition;
+		step: aPoint - oldPosition ].
+
 ]
 
 { #category : #events }

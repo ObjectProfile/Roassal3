@@ -203,7 +203,7 @@ TrachelShapeExamples >> example07Basic [
 TrachelShapeExamples >> example08Basic [
 	<script: 'self new example08Basic'>
 
-	| c y r m |
+	| c y r |
 	c := TSCanvas new.
 	r := SharedRandom globalGenerator.
 	c color: (Color colorFrom: '325A64').
@@ -221,10 +221,10 @@ TrachelShapeExamples >> example08Basic [
 			position: (x*2@y)-250;
 			extent: (y/10)@( x * 75/ 499 ) ).
 		 ].
-	m := c morph.
+	"m := c morph.
 	PolymorphSystemSettings setDesktopLogoWith: m.
 	m position: 0@World menubar height.
-	m extent: World extent- (0@World menubar height).
+	m extent: World extent- (0@World menubar height)."
 	c open
 ]
 
@@ -374,9 +374,34 @@ TrachelShapeExamples >> example13Basic [
 
 ]
 
-{ #category : #lines }
+{ #category : #bitmap }
 TrachelShapeExamples >> example14Basic [
 	<script: 'self new example14Basic'>
 
-	
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSBitmap new
+		form: (self iconNamed: #eyedropper);
+		extent: 200@350).
+		
+	c open
+]
+
+{ #category : #bitmap }
+TrachelShapeExamples >> example15Basic [
+	<script: 'self new example15Basic'>
+
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSBox new
+		cornerRadius: 5;
+		extent: 100@50).
+		
+	c addShape: (TSBox new
+		cornerRadius: (TSCornerRadius new top: 20);
+		position: 100@100;
+		extent: 100@50;
+		border: TSBorder new).
+		
+	c open
 ]

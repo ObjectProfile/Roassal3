@@ -63,5 +63,17 @@ RSShapedObject >> trachelShape [
 
 { #category : #accessing }
 RSShapedObject >> trachelShape: aShape [
-	trachelShape := aShape
+	| old |
+	old := trachelShape. 
+	trachelShape := aShape.
+	old ifNil: [ ^ self ].
+	aShape 
+		extent: old extent;
+		matrix: old matrix;
+		border: old border;
+		paint: old paint;
+		announcer: old announcer;
+		canvas: old canvas.
+	old canvas shapes replaceAll: old with: trachelShape.
+	
 ]

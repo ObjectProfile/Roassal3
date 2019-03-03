@@ -128,3 +128,94 @@ AnimationExamples >> example04 [
 			frameCount := frameCount + 1. ].
 	v open.
 ]
+
+{ #category : #examples }
+AnimationExamples >> example05 [
+	<script: 'self new example05'>
+	| v extent r  elements position shape alpha update updateLine lineX line |
+	v := RSView new.
+	r := SharedRandom globalGenerator.
+
+	shape := RSShapeBuilder box
+		paint: nil;
+		border: (TSBorder new
+			width: 4).
+		
+	elements := shape elementsOn: ((1 to: 12) collect: [:i | r next ]).
+	v addAll: elements.
+	lineX := 0.
+	line := RSEdgeBuilder line
+		color: Color red;
+		width: 8;
+		from: 1@0; to: 0@0; edge.
+	v add: line. 
+	position := nil.
+	updateLine := [
+		line 
+			from: lineX@position from y;
+			to: lineX@position to y;
+			update. ].
+	v when: TSMouseMove do: [ :ev | 
+		lineX := ev position x.
+		updateLine value ].
+	update := [ 
+		extent := v extent.
+		position := TSScale linear
+			range: { extent / 2 negated. extent /2 }.
+		updateLine value.
+		elements do: [ :e | e translateTo: (position scale: r next@ r next) ].
+	].
+	update value.
+	v when: TSResizeCanvasEvent do: update.
+	
+	RSNormalizer size
+		from: 30;
+		to: 100;
+		elements: elements;
+		normalize: #yourself.
+	"shadow"
+	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
+	elements do: [ :e | | ant |
+		ant := e.
+		1 to: 4 do: [:i | | s |
+			s := shape
+				position: e position;
+				extent: e extent;
+				border: (TSBorder new
+					width: 5;
+					color: (e border color alpha: (alpha scale: i)));
+				elementOn: i.
+			ant when: TSTranslationEvent do: [ :evt | 
+				s translateTo: evt position ].
+			ant := s.
+			v add: s
+			] ] .
+	"animation"
+	v animation repeat; 
+		onStepDo: [ :t | 
+			elements do: [ :e |
+				| delta newX |
+				delta := e attributes at: #delta ifAbsentPut: [ 5 ].
+				newX := e position x + delta.
+				(newX 
+					between: position from x 
+					and: position to x) ifFalse: [ 
+					delta := delta negated.
+					newX := e position x + delta.
+					 ].
+				e translateTo: newX@e position y.
+				e attributes at: #delta put: delta
+				].
+			v elements do: [ :e | | cls |
+				cls := e position x > lineX 
+					ifTrue: [ TSEllipse ]
+					ifFalse: [ TSBox ].
+				e trachelShape: cls new.
+				 ].
+			v signalUpdate ].
+	"m := v morph.
+	PolymorphSystemSettings setDesktopLogoWith: m.
+	m position: 0@World menubar height.
+	m extent: World extent- (0@World menubar height)."
+	v open.
+]

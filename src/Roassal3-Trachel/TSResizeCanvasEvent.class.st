@@ -3,7 +3,7 @@ When canvas changes of size for a window resizes
 "
 Class {
 	#name : #TSResizeCanvasEvent,
-	#superclass : #TSEvent,
+	#superclass : #TSCanvasEvent,
 	#instVars : [
 		'newExtent',
 		'oldExtent'

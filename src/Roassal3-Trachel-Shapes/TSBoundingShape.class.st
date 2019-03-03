@@ -41,10 +41,24 @@ TSBoundingShape >> height: aNumber [
 	self extent: self extent x @ aNumber
 ]
 
+{ #category : #testing }
+TSBoundingShape >> includesPoint: aPoint [
+	| invertedPoint |
+	invertedPoint := matrix inverseTransform: aPoint.
+	^ baseRectangle containsPoint: invertedPoint.
+]
+
 { #category : #initialization }
 TSBoundingShape >> initialize [
 	super initialize.
 	baseRectangle := (0 @ 0) extent: (0 @ 0).
+]
+
+{ #category : #accessing }
+TSBoundingShape >> paintOn: visitor [
+	^ paint
+	
+	
 ]
 
 { #category : #accessing }

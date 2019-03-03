@@ -25,10 +25,26 @@ TSCanvasTest >> testAddOneShape [
 ]
 
 { #category : #running }
+TSCanvasTest >> testDrawBitamp [
+	c addShape: (TSBitmap new
+		form: (ColorForm extent: 100@100 depth: 32)). 
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
 TSCanvasTest >> testDrawBorder [
 	c addShape: (TSEllipse new
 		radius: 100;
 		border: TSBorder new;
+		yourself).
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
+TSCanvasTest >> testDrawBoxCornerRadius [
+	c addShape: (TSBox new
+		extent: 100@100;
+		cornerRadius: 5;
 		yourself).
 	c morph drawOnMockCanvas.
 ]
@@ -64,6 +80,15 @@ TSCanvasTest >> testDrawCanvasWithGroup [
 TSCanvasTest >> testDrawLine [
 	c addShape: (TSLine new
 		strokeColor: Color red;
+		width: 2). 
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
+TSCanvasTest >> testDrawSVGLine [
+	c addShape: (TSSVGPathLine new
+		strokeColor: Color red;
+		svgPath: [ :a :b | 'M0 0L 100 100' ];
 		width: 2). 
 	c morph drawOnMockCanvas.
 ]

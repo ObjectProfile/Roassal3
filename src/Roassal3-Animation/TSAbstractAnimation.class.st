@@ -26,7 +26,7 @@ Class {
 { #category : #events }
 TSAbstractAnimation >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent
+	announcer announce: anEvent value
 ]
 
 { #category : #events }

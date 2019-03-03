@@ -22,8 +22,6 @@ Class {
 RSControlsView >> onElement: aView [
 	aView @ RSZoomableView.
 	aView @ RSDraggableView.
-	aView when: TSMouseDoubleClick do: [ :e | 
-		Transcript show: aView camera scale; cr ].
 	aView @ (RSMenuActivable new 
 		menuDo: [:menu | 
 			(menu 
