@@ -18,9 +18,8 @@ Class {
 	#name : #TSCamera,
 	#superclass : #TSObject,
 	#instVars : [
-		'position',
-		'height',
 		'scale',
+		'position',
 		'canvas'
 	],
 	#category : #'Roassal3-Trachel-Core'
@@ -54,18 +53,18 @@ TSCamera >> fromPixelToSpace: aPoint [
 { #category : #initialization }
 TSCamera >> initialize [
 	super initialize.
-	position := 0 @ 0.
-	scale := 1.0001.
+	position := 0@0.
+	scale := 1.0000001.
 ]
 
 { #category : #accessing }
 TSCamera >> position [
-	^ position 
+	^ position
 ]
 
 { #category : #accessing }
 TSCamera >> position: aPoint [
-	position := aPoint
+ 	position := aPoint
 ]
 
 { #category : #accessing }
@@ -80,10 +79,22 @@ TSCamera >> scale: aNumber [
 
 { #category : #actions }
 TSCamera >> translateBy: aPoint [
-	self translateTo: position + aPoint.
+	self translateTo: self position + aPoint.
 ]
 
 { #category : #actions }
 TSCamera >> translateTo: aPoint [
-	position := aPoint.
+	self position: aPoint
+]
+
+{ #category : #actions }
+TSCamera >> zoomToFit: anExtent [
+	| rect extent sc |
+	rect := canvas encompassingRectangle.
+	extent := canvas extent * 0.9.
+	sc := extent / (rect extent max: 1 @ 1).
+	sc := sc x min: sc y.
+	self 
+		translateTo: rect center;
+		scale: sc.
 ]

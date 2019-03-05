@@ -405,3 +405,57 @@ TrachelShapeExamples >> example15Basic [
 		
 	c open
 ]
+
+{ #category : #bitmap }
+TrachelShapeExamples >> example16Basic [
+	<script: 'self new example16Basic'>
+	| c b1 b2 translate l arrowWidth arrowHeight middle |
+	c := TSCanvas new.
+	b1 := TSBox new size: 100@100.
+	b2 := TSBox new size: 100@100; color: Color blue; position: 100@100.
+	c addShape: b1.
+	c addShape: b2.
+	
+	l := TSSVGPathLine new
+		svgPath: [ :a :b |
+			[ :canvas | | vector u unit left right left1 right1 |
+			arrowWidth := 50.
+			arrowHeight := 30.
+			vector := a-b.
+			u := vector normal.
+			unit := vector / (vector r max: 1).
+			middle := b + (unit* arrowHeight).
+			left := middle - (u * arrowWidth / 4).
+			right := middle + (u * arrowWidth / 4).
+			left1 := middle - (u * arrowWidth / 2).
+			right1 := middle + (u * arrowWidth / 2).
+			
+			canvas
+				absolute;
+				moveTo: a;
+				lineTo: left;
+				lineTo: left1;
+				lineTo: b;
+				lineTo: right1;
+				lineTo: right;
+				close.
+			 ]
+			 ];
+		width: 5;
+		paint: Color yellow;
+		dashArray: { 10. 2 };
+		joinMiter;
+		startPoint: 0@0;
+		endPoint: 100@100.
+	c addShape: l.
+	
+	translate := [ :evt |
+		l 
+			startPoint: b1 position;
+			endPoint: b2 position.
+		evt shape translateBy: evt step.
+		evt signalUpdate ].
+	b1 when: TSMouseDragging do: translate.
+	b2 when: TSMouseDragging do: translate.
+	c open
+]

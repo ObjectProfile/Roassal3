@@ -78,6 +78,12 @@ RSView >> initializeContent [
 	edges := TSGroup new
 ]
 
+{ #category : #removing }
+RSView >> removeElement: anElement [
+	elements remove: anElement ifAbsent: [ ].
+	anElement trachelShape remove.
+]
+
 { #category : #accessing }
 RSView >> setCanvas: aTrachelCanvas [
 	trCanvas := aTrachelCanvas.

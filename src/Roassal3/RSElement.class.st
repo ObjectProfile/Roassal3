@@ -37,10 +37,22 @@ RSElement >> initialize [
 	self updateEdgesON
 ]
 
+{ #category : #removing }
+RSElement >> remove [
+	super remove.
+	self removeConnectedEdges.
+]
+
 { #category : #edges }
 RSElement >> removeConnectedEdge: anEdge [
 	[  anEdge class == RSEdge ] assert.
 	self connectedEdges remove: anEdge ifAbsent: [ ]
+]
+
+{ #category : #edges }
+RSElement >> removeConnectedEdges [
+	"Remove all the edges connected (incoming and outgoing)."
+	self connectedEdges copy do: [ :edge | edge remove ]
 ]
 
 { #category : #actions }

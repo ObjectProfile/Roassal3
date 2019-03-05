@@ -3,7 +3,7 @@ TSLine describes a line.
 "
 Class {
 	#name : #TSLine,
-	#superclass : #TSAbstractLine,
+	#superclass : #TSAbstractDualLine,
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 

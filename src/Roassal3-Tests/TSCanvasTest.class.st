@@ -25,6 +25,14 @@ TSCanvasTest >> testAddOneShape [
 ]
 
 { #category : #running }
+TSCanvasTest >> testDrawBezierLine [
+	c addShape: (TSBezier new
+		strokeColor: Color red;
+		width: 2). 
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
 TSCanvasTest >> testDrawBitamp [
 	c addShape: (TSBitmap new
 		form: (ColorForm extent: 100@100 depth: 32)). 
@@ -88,7 +96,32 @@ TSCanvasTest >> testDrawLine [
 TSCanvasTest >> testDrawSVGLine [
 	c addShape: (TSSVGPathLine new
 		strokeColor: Color red;
-		svgPath: [ :a :b | 'M0 0L 100 100' ];
+		svgPath: [ :a :b | 'M 100 100 L 200 200' ];
+		width: 2). 
+	c addShape: (TSSVGPathLine new
+		strokeColor: Color red;
+		svgPath: [:a :b | String streamContents: [:stream |
+			stream 
+				nextPutAll: 'M ';
+				nextPutAll: a x asString;
+				space;
+				nextPutAll: a y asString;
+				space;
+				nextPutAll: 'L ';
+				nextPutAll: b x asString;
+				space;
+				nextPutAll: b y asString.
+		] ];
+		startPoint: 100@100;
+		endPoint: 200@200;
+		width: 2). 
+	c addShape: (TSSVGPathLine new
+		strokeColor: Color red;
+		svgPath: [ :a :b | [ :canvas| 
+			canvas
+				absolute;
+				moveTo: a;
+				lineTo: b. ] ];
 		width: 2). 
 	c morph drawOnMockCanvas.
 ]

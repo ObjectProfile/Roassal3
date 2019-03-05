@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> bezier [
+	^ self new edgeClass: TSBezier
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> line [
 	^ self new edgeClass: TSLine
 ]
@@ -43,9 +48,18 @@ RSEdgeBuilder >> edgeOn: model index: index [
 	| ed |
 	ed := self basicElementOn: model index: index.
 	ed 
-		from: fromObject;
-		to: toObject.
+		from: (fromObject rsValue: model) ;
+		to: (toObject rsValue: model).
 	^ ed
+]
+
+{ #category : #'public - accessing' }
+RSEdgeBuilder >> edgesOn: aCollection [
+	| g |
+	g := TSGroup new: aCollection size.
+	aCollection doWithIndex: [ :obj : index |
+		g add: (self edgeOn: obj index: index) ].
+	^ g
 ]
 
 { #category : #'public - accessing' }
@@ -72,4 +86,10 @@ RSEdgeBuilder >> to [
 { #category : #accessing }
 RSEdgeBuilder >> to: anObject [
 	toObject := anObject.
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> updateElement: edge [
+	super updateElement: edge.
+	edge update.
 ]

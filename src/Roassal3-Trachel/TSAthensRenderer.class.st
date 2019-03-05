@@ -21,6 +21,32 @@ TSAthensRenderer >> paintForBitmap: shape [
 ]
 
 { #category : #'visiting - helpers' }
+TSAthensRenderer >> pathOfBezier: bezier [
+	| path points |
+	bezier path ifNotNil: [ ^ bezier path ].
+	points := bezier controlPoints.
+	path := nil.
+	points size = 2 ifTrue: [ 
+		path := athensCanvas createPath: [ :b |
+			b absolute; moveTo: points first; lineTo: points second ] ].
+	points size = 3 ifTrue: [ 
+		path := athensCanvas createPath: [ :b | 
+			b absolute; moveTo: points first; curveVia: points second to: points third] ].
+	points size = 4 ifTrue: [ 
+		path := athensCanvas createPath: [ :b|
+			b 
+				absolute; 
+				moveTo: points first; 
+				curveVia: points second 
+					and: points third 
+					to: points fourth  ] ].
+	bezier path: path. 
+	
+	^ path.
+	
+]
+
+{ #category : #'visiting - helpers' }
 TSAthensRenderer >> pathOfBox: box [
 	| rectangle path simple corner |
 	box path ifNotNil: [ ^ box path].
@@ -107,11 +133,17 @@ TSAthensRenderer >> pathOfSVGPathLine: line [
 	line path ifNotNil: [ ^ line path ].
 	string := line svgPath value: line startPoint value: line endPoint.
 	path := athensCanvas createPath: [ :builder | 
-		| pathCommands converter |
-		converter := ASPathConverter new stream: string readStream.
-		pathCommands := converter convertPathData.
-		pathCommands
-			do: [ :each | builder perform: each first withArguments: each second ]].
+		
+		string isString ifTrue: [ | converter |
+			converter := ASPathConverter new stream: string readStream.
+			converter convertPathData do: [ :each | 
+				builder 
+					perform: each first 
+					withArguments: each second ]
+		] ifFalse: [
+			string rsValue: builder.
+		].
+	].
 	line path: path.
 	^ path.
 ]
@@ -185,8 +217,14 @@ TSAthensRenderer >> visitLabel: label [
 
 { #category : #visiting }
 TSAthensRenderer >> visitLine: line [
+	| path paint |
 	athensCanvas pathTransform restoreAfter: [ 
-		line pathFor: self.
+		path := line pathFor: self.
+		paint := line paint.
+		paint ifNotNil: [ 
+			athensCanvas
+				setPaint: paint;
+				drawShape: path ].
 		self visitBorderIfNecessary: line.
 		].
 ]

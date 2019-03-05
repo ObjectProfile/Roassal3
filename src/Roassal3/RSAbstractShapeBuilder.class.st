@@ -23,3 +23,9 @@ RSAbstractShapeBuilder >> interaction [
 RSAbstractShapeBuilder >> interactionDo: aBlock [
 	aBlock value: self interaction
 ]
+
+{ #category : #accessing }
+RSAbstractShapeBuilder >> updateElement: element [
+
+	self updateElement: element innerComponent: element trachelShape
+]

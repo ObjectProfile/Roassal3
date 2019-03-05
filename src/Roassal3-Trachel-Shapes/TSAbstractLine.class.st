@@ -4,10 +4,6 @@ I represent the abstract lines that have start and end points
 Class {
 	#name : #TSAbstractLine,
 	#superclass : #TSShape,
-	#instVars : [
-		'startPoint',
-		'endPoint'
-	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
@@ -43,14 +39,18 @@ TSAbstractLine >> dashArray: arrayOfNumbers [
 ]
 
 { #category : #accessing }
-TSAbstractLine >> endPoint [
-	^ endPoint
+TSAbstractLine >> encompassingRectangle [
+	^ Rectangle encompassing: (Array with: self startPoint with: self endPoint)
 ]
 
 { #category : #accessing }
-TSAbstractLine >> endPoint: point [
-	endPoint := point.
-	self resetPath
+TSAbstractLine >> endPoint [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+TSAbstractLine >> endPoint: aPoint [
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -58,8 +58,6 @@ TSAbstractLine >> initialize [
 	super initialize.
 	paint := nil.
 	border := TSBorder new.
-	startPoint := 0@0.
-	endPoint := 100@100.
 	
 ]
 
@@ -79,14 +77,13 @@ TSAbstractLine >> joinRound [
 ]
 
 { #category : #accessing }
-TSAbstractLine >> startPoint [ 
-	^ startPoint 
+TSAbstractLine >> startPoint [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-TSAbstractLine >> startPoint: point [
-	startPoint := point.
-	self resetPath
+TSAbstractLine >> startPoint: aPoint [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

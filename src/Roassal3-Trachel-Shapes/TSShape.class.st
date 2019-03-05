@@ -44,14 +44,19 @@ TSShape >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #accessing }
+{ #category : #border }
 TSShape >> border [
 	^ border
 ]
 
-{ #category : #accessing }
+{ #category : #border }
 TSShape >> border: aBorder [
 	border := aBorder
+]
+
+{ #category : #border }
+TSShape >> borderDo: aBlock [
+	aBlock value: border
 ]
 
 { #category : #accessing }
@@ -129,6 +134,17 @@ TSShape >> isInACanvas [
 	^ canvas notNil
 ]
 
+{ #category : #actions }
+TSShape >> loadShape: aShape [
+	self 
+		extent: aShape extent;
+		matrix: aShape matrix;
+		border: aShape border;
+		paint: aShape paint;
+		announcer: aShape announcer;
+		canvas: aShape canvas.
+]
+
 { #category : #accessing }
 TSShape >> matrix [
 	^ matrix
@@ -137,6 +153,11 @@ TSShape >> matrix [
 { #category : #accessing }
 TSShape >> matrix: aMatrix [
 	matrix := aMatrix
+]
+
+{ #category : #matrix }
+TSShape >> matrixDo: aBlock [
+	aBlock value: matrix
 ]
 
 { #category : #accessing }
@@ -186,7 +207,7 @@ TSShape >> resetPath [
 	path := nil
 ]
 
-{ #category : #transformations }
+{ #category : #matrix }
 TSShape >> rotateByDegrees: angle [
 	matrix rotateByDegrees: angle.
 ]
@@ -214,7 +235,7 @@ TSShape >> translateBy: delta [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #matrix }
 TSShape >> translateTo: aPoint [
 	| oldPosition |
 	oldPosition := self position.

@@ -60,8 +60,10 @@ RSEdge >> renderOn: v [
 
 { #category : #private }
 RSEdge >> setAnchor: ref element: anObject [
+	
 	(ref isNotNil and: [ anObject isPoint not ])
 		ifTrue: [ ref removeConnectedEdge: self ].
+	anObject ifNil: [ ^ nil ].
 	anObject isPoint
 		ifFalse: [ anObject addConnectedEdge: self ].
 	^ anObject

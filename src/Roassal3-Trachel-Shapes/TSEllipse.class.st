@@ -28,6 +28,11 @@ TSEllipse >> pathFor: visitor [
 ]
 
 { #category : #accessing }
+TSEllipse >> radius [
+	^ self extent x / 2
+]
+
+{ #category : #accessing }
 TSEllipse >> radius: integer [
 	self extent: integer * 2 asPoint
 ]

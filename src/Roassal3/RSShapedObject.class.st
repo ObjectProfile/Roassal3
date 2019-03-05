@@ -49,6 +49,17 @@ RSShapedObject >> model: anObject [
 	model := anObject
 ]
 
+{ #category : #'reflective operations' }
+RSShapedObject >> onMyselfDo: ablock [
+	ablock value: self.
+]
+
+{ #category : #removing }
+RSShapedObject >> remove [
+	view removeElement: self.
+	view := nil.
+]
+
 { #category : #rendering }
 RSShapedObject >> renderOn: trCanvas [
 	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
@@ -67,13 +78,7 @@ RSShapedObject >> trachelShape: aShape [
 	old := trachelShape. 
 	trachelShape := aShape.
 	old ifNil: [ ^ self ].
-	aShape 
-		extent: old extent;
-		matrix: old matrix;
-		border: old border;
-		paint: old paint;
-		announcer: old announcer;
-		canvas: old canvas.
+	aShape loadShape: old.
 	old canvas shapes replaceAll: old with: trachelShape.
 	
 ]

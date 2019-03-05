@@ -125,7 +125,9 @@ TSCanvas >> color: aColor [
 { #category : #accessing }
 TSCanvas >> encompassingRectangle [
 	| r e |
-	r := Rectangle merging: (shapes collect: #encompassingRectangle).
+	r := shapes
+		ifEmpty: [ 0@0 corner: 0@0 ]
+		ifNotEmpty: [ Rectangle merging: (shapes collect: #encompassingRectangle) ].
 	e := r extent max: 1 @ 1.
 	^ r topLeft extent: e
 ]
@@ -314,4 +316,9 @@ TSCanvas >> tAnimation [
 { #category : #events }
 TSCanvas >> when: event do: aBlock [
 	self announcer when: event do: aBlock
+]
+
+{ #category : #actions }
+TSCanvas >> zoomToFit [
+	self camera zoomToFit: self extent * 0.9
 ]
