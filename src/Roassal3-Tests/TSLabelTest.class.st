@@ -3,7 +3,7 @@ A TSLabelTest is a test class for testing the behavior of TSLabel
 "
 Class {
 	#name : #TSLabelTest,
-	#superclass : #TSTest,
+	#superclass : #TSCanvasTest,
 	#category : #'Roassal3-Tests-Trachel'
 }
 

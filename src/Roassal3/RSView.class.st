@@ -79,6 +79,12 @@ RSView >> initializeContent [
 ]
 
 { #category : #removing }
+RSView >> removeEdge: edge [
+	edges remove: edge ifAbsent: [ ].
+	edge trachelShape remove.
+]
+
+{ #category : #removing }
 RSView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
 	anElement trachelShape remove.

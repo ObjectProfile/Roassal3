@@ -11,5 +11,17 @@ Class {
 TSGroupTest >> testAddShape [
 	| g |
 	g := TSGroup new.
-	g addShape: TSBox new.
+	g add: TSBox new.
+]
+
+{ #category : #tests }
+TSGroupTest >> testDrawGroup [
+	| g c |
+	c := TSCanvas new.
+	g := TSGroup new.
+	g add: TSBox new.
+	
+	c addShape: g.
+	self assert: c numberOfShapes equals: 1.
+	c morph drawOnMockCanvas.
 ]

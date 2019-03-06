@@ -3,7 +3,7 @@ I represent simple label text
 "
 Class {
 	#name : #TSLabel,
-	#superclass : #TSShape,
+	#superclass : #TSBoundingShape,
 	#instVars : [
 		'text',
 		'fontName',

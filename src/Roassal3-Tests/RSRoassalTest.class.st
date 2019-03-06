@@ -23,6 +23,17 @@ RSRoassalTest >> testCommands [
 		
 ]
 
+{ #category : #tests }
+RSRoassalTest >> testViewBasic [
+	| v e |
+	v := RSView new.
+	self assert: v canvas numberOfShapes equals: 0.
+	e := RSShapeBuilder box element.
+	v add: e.
+	self assert: v canvas numberOfShapes equals: 1.
+	v open delete.
+]
+
 { #category : #'tests - abstract' }
 RSRoassalTest >> testrsValue [
 	"in roassal a parameter for one metric of the visualizacion can be anything"

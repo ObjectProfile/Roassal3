@@ -1,5 +1,7 @@
 "
 Given the specified normalized time t, typically in the range [0,1], returns the “eased” time tʹ, also typically in [0,1]. 0 represents the start of the animation and 1 represents the end. A good implementation returns 0 if t = 0 and 1 if t = 1.
+
+I am highli inspired in d3js source code https://github.com/d3/d3-transition and in the base animation of Bloc https://github.com/pharo-graphics/Bloc
 "
 Class {
 	#name : #TSEasing,

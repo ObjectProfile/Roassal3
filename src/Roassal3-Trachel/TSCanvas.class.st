@@ -33,17 +33,18 @@ TSCanvas >> addAnimation: anAnimation [
 ]
 
 { #category : #adding }
+TSCanvas >> addBasicShape: aShape [
+	shapes add: aShape
+]
+
+{ #category : #adding }
 TSCanvas >> addFixedShape: aShape [
-	fixedShapes add: aShape.
-	aShape canvas: self
+	fixedShapes add: aShape
 ]
 
 { #category : #adding }
 TSCanvas >> addShape: aShape [
-	aShape isFixed
-		ifTrue: [ ^ self addFixedShape: aShape ].
-	shapes add: aShape.
-	aShape canvas: self
+	aShape addedIn: self.
 ]
 
 { #category : #animations }

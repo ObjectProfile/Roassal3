@@ -66,7 +66,7 @@ RoassalShapeExamples >> example03LayoutBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 	v open
 	
 ]
@@ -83,7 +83,7 @@ RoassalShapeExamples >> example04LayoutBasic [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 	v open
 	
 ]
@@ -268,7 +268,7 @@ RoassalShapeExamples >> example09LayoutColorFadingBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 	v open
 	
 ]
@@ -281,7 +281,8 @@ RoassalShapeExamples >> example10LayoutColorFadingBasic2 [
 	v := RSView new.
 	color := TSScale linear
 		domain: #(1 10 20);
-		range: { Color red. Color green. Color blue }.
+		range: { Color red. Color green. Color blue }";
+		interpolate: TSColorHSVAInterpolator".
 		
 		
 	elements := RSShapeBuilder box
@@ -292,7 +293,7 @@ RoassalShapeExamples >> example10LayoutColorFadingBasic2 [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 	v open
 	
 ]
@@ -314,7 +315,7 @@ RoassalShapeExamples >> example11LayoutBasicWithColorFading [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 	v open
 	
 ]
@@ -334,7 +335,7 @@ RoassalShapeExamples >> normalize01Color [
 		normalize: #numberOfMethods.
 
 	v addAll: elements.
-	RTGridLayout on: elements children.
+	RSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
 	

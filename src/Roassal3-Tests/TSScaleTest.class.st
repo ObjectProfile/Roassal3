@@ -279,6 +279,18 @@ TSScaleTest >> testScalePolyLinear [
 	
 ]
 
+{ #category : #'test - colors' }
+TSScaleTest >> testSetInterpolator [
+	| scale |
+	scale := TSScale linear
+		range: { 'white'. 'black' }.
+	self assert: (scale scale: 0.5) equals: Color gray.
+	scale interpolate: TSColorHSLAInterpolator.
+	self assert: (scale scale: 0.5) equals: Color gray.
+	scale interpolate: TSColorHSVAInterpolator.
+	self assert: (scale scale: 0.5) equals: Color gray.
+]
+
 { #category : #'test - scales' }
 TSScaleTest >> testSqrt [
 	| sqrt |

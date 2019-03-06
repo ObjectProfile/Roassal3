@@ -52,6 +52,13 @@ RSEdge >> initialize [
 	attachPoint := RSCenteredAttachPoint new.
 ]
 
+{ #category : #removing }
+RSEdge >> remove [
+	view ifNil: [ ^ self ].
+	view removeEdge: self.
+	view := nil.
+]
+
 { #category : #rendering }
 RSEdge >> renderOn: v [
 	super renderOn: v.

@@ -1,47 +1,27 @@
 "
-I am a shape but also I am a composition of shapes
+A TSGroup represents collections of Roassal elements. A RTGroup is not designed to contain other things than Roassal elements. 
+A TSGroup is polymorphic to RSElement. When an RSElement is expected, one can provide an RTGroup.
 "
 Class {
 	#name : #TSGroup,
-	#superclass : #TSBox,
+	#superclass : #OrderedCollection,
 	#instVars : [
-		'children'
+		'isFixed',
+		'matrix'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
-{ #category : #'instance creation' }
-TSGroup class >> new: size [
-	| inst |
-	inst := self basicNew.
-	inst initializeMatrix.
-	inst children: (OrderedCollection new: size).
-	^ inst.
-]
-
 { #category : #visiting }
 TSGroup >> accept: visitor [
-	visitor visitGroup: self
+	visitor visitGroup: self.
 ]
 
 { #category : #adding }
-TSGroup >> addShape: shape [
-	children add: shape
-]
-
-{ #category : #accessing }
-TSGroup >> children [
-	^ children
-]
-
-{ #category : #accessing }
-TSGroup >> children: collection [
-	children := collection 
-]
-
-{ #category : #'reflective operations' }
-TSGroup >> doesNotUnderstand: message [
-	^ children perform: message selector withArguments: message arguments
+TSGroup >> addedIn: canvas [
+	self isFixed
+		ifTrue: [ canvas addFixedShape: self ]
+		ifFalse: [ canvas addBasicShape: self ].
 ]
 
 { #category : #accessing }
@@ -53,13 +33,41 @@ TSGroup >> encompassingRectangle [
 
 { #category : #accessing }
 TSGroup >> extent [
-	"THIS IS WEIRD. 
-	SHOULD TSGROUPD BE A SUBCLASS OF TSBOX?"
 	^ self encompassingRectangle extent
 ]
 
-{ #category : #adding }
-TSGroup >> initialize [
-	super initialize.
-	children := OrderedCollection new.
+{ #category : #testing }
+TSGroup >> includesPoint: aPoint [
+	"Return true or false"
+	^ false
+]
+
+{ #category : #accessing }
+TSGroup >> isFixed [ 
+	^ isFixed ifNil: [ isFixed := false ].
+]
+
+{ #category : #accessing }
+TSGroup >> isFixed: aBool [
+	isFixed := aBool
+]
+
+{ #category : #matrix }
+TSGroup >> matrix [
+	^ matrix ifNil: [ matrix := AthensAffineTransform new ].
+]
+
+{ #category : #matrix }
+TSGroup >> matrix: aMatrix [
+	matrix := aMatrix
+]
+
+{ #category : #matrix }
+TSGroup >> position [ 
+	^ self matrix translation
+]
+
+{ #category : #matrix }
+TSGroup >> position: aPoint [
+	self matrix translation: aPoint
 ]

@@ -18,14 +18,14 @@ bounds
 "
 Class {
 	#name : #RTRectanglePackLayout,
-	#superclass : #RTLayout,
+	#superclass : #RSLayout,
 	#instVars : [
 		'freeSpace',
 		'gap',
 		'padding',
 		'bounds'
 	],
-	#category : #'Roassal3-Layouts'
+	#category : #'Roassal3-Layouts-Core'
 }
 
 { #category : #'space-calculation' }
@@ -75,7 +75,7 @@ RTRectanglePackLayout >> doExecute: elements [
 	sortedElements addAll: elements.
 	
 	sortedElements size <= 2 ifTrue: [ 
-		RTHorizontalLineLayout on: sortedElements.
+		RSHorizontalLineLayout on: sortedElements.
 		^ self
 	].
 	sortedElements

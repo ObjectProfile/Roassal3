@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #accessing }
+TSScaleOrdinal >> dictionary [ 
+	^ dictionary 
+]
+
+{ #category : #accessing }
 TSScaleOrdinal >> domain: arr [
 	domain := OrderedCollection new.
 	dictionary := Dictionary new.
@@ -32,6 +37,11 @@ TSScaleOrdinal >> initialize [
 	self domain: #().
 	
 	
+]
+
+{ #category : #transformation }
+TSScaleOrdinal >> invert: anObject [
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

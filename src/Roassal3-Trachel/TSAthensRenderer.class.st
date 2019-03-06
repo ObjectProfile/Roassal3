@@ -193,10 +193,9 @@ TSAthensRenderer >> visitBoundingShape: shape [
 { #category : #visiting }
 TSAthensRenderer >> visitGroup: group [
 	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas pathTransform 
-			translateBy: group position";
-			translateBy: (rectangle extent / 4) negated".
-		group children do: [ :child |
+		athensCanvas pathTransform
+			multiplyBy: group matrix asFloatTransform.
+		group do: [ :child |
 			child accept: self ].
 		].
 ]

@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Scales-Core'
 }
 
+{ #category : #transformation }
+TSScaleBilinear >> invert: anObject [
+	self shouldNotImplement
+]
+
 { #category : #hooks }
 TSScaleBilinear >> rescale [
 	u := uninterpolate uninterpolate: domain first and: domain second.

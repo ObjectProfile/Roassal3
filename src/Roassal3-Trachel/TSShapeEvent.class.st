@@ -23,7 +23,7 @@ TSShapeEvent >> morph [
 
 { #category : #accessing }
 TSShapeEvent >> position [ 
-	^ position 
+	^ position ifNil: [ self shape position ]
 ]
 
 { #category : #accessing }

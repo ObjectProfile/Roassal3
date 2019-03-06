@@ -142,6 +142,13 @@ AnimationExamples >> example05 [
 		
 	elements := shape elementsOn: ((1 to: 12) collect: [:i | r next ]).
 	v addAll: elements.
+	
+	RSNormalizer size
+		from: 30;
+		to: 100;
+		elements: elements;
+		normalize: #yourself.
+	
 	lineX := 0.
 	line := RSEdgeBuilder line
 		color: Color red;
@@ -167,11 +174,6 @@ AnimationExamples >> example05 [
 	update value.
 	v when: TSResizeCanvasEvent do: update.
 	
-	RSNormalizer size
-		from: 30;
-		to: 100;
-		elements: elements;
-		normalize: #yourself.
 	"shadow"
 	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
 	elements do: [ :e | | ant |
@@ -184,7 +186,7 @@ AnimationExamples >> example05 [
 					width: 5;
 					color: (e border color alpha: (alpha scale: i)));
 				elementOn: i.
-			ant when: TSTranslationEvent do: [ :evt | 
+			ant when: TSTranslationShapeEvent do: [ :evt | 
 				s translateTo: evt position ].
 			ant := s.
 			v add: s
@@ -212,11 +214,98 @@ AnimationExamples >> example05 [
 				e trachelShape: cls new.
 				 ].
 	].
-	"m := v morph.
-	PolymorphSystemSettings setDesktopLogoWith: m.
-	m position: 0@World menubar height.
-	m extent: World extent- (0@World menubar height)."
 	v open.
+	"87 lines of code"
+]
+
+{ #category : #examples }
+AnimationExamples >> example05b [
+	<script: 'self new example05b'>
+	| v extent r elements position alpha update updateLine lineX line |
+	v := RSView new.
+	r := SharedRandom globalGenerator.
+	elements := (1 to: 12) collect: [ :i | | e | 
+		e := RSElement new
+			model: r next;
+			trachelShape: TSBox new;
+			paint: nil;
+			border: (TSBorder new width: 4);
+			yourself.
+		e.].
+	v addAll: elements.
+	RSNormalizer size
+		from: 30;
+		to: 100;
+		elements: elements;
+		normalize: #yourself.
+	lineX := 0.
+	line := RSEdgeBuilder line
+		color: Color red;
+		width: 8;
+		from: 1@0; to: 0@0; edge.
+	v add: line. 
+	position := nil.
+	updateLine := [
+		line 
+			from: lineX@position from y;
+			to: lineX@position to y;
+			update. ].
+	v when: TSMouseMove do: [ :ev | 
+		lineX := ev position x.
+		updateLine value ].
+	update := [ 
+		extent := v extent.
+		position := TSScale linear
+			range: { extent / 2 negated. extent /2 }.
+		updateLine value.
+		elements do: [ :e | e translateTo: (position scale: r next@ r next) ].
+	].
+	update value.
+	v when: TSResizeCanvasEvent do: update.
+	
+	"shadow"
+	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
+	elements do: [ :e | | ant |
+		ant := e.
+		1 to: 4 do: [:i | | s |
+			s := RSElement new 
+				trachelShape: TSBox new;
+				paint: nil;
+				position: e position;
+				extent: e extent;
+				border: (TSBorder new
+					width: 6;
+					color: (e border color alpha: (alpha scale: i)));
+				yourself.
+			ant when: TSTranslationShapeEvent do: [ :evt | 
+				s translateTo: evt position ].
+			ant := s.
+			v add: s
+			] ] .
+	v animation repeat; 
+		onStepDo: [ :t | 
+			elements do: [ :e |
+				| delta newX |
+				delta := e attributes at: #delta ifAbsentPut: [ 5 ].
+				newX := e position x + delta.
+				(newX 
+					between: position from x 
+					and: position to x) ifFalse: [ 
+					delta := delta negated.
+					newX := e position x + delta.
+					 ].
+				e translateTo: newX@e position y.
+				e attributes at: #delta put: delta
+				].
+			v elements do: [ :e | | cls |
+				cls := e position x > lineX 
+					ifTrue: [ TSEllipse ]
+					ifFalse: [ TSBox ].
+				e trachelShape: cls new.
+				 ].
+	].
+	v open.
+	"87 lines of code"
 ]
 
 { #category : #examples }
@@ -315,7 +404,66 @@ AnimationExamples >> example07 [
 	v when: TSResizeCanvasEvent do: [ :evt | 
 		v zoomToFit ].
 	v open.
+	"53 lines of code"
+]
+
+{ #category : #examples }
+AnimationExamples >> example07b [
+	<script: 'self new example07b'>
+	| update v theta slices unit color sc1 sc2 |
+	v := RSView new.
+	slices := 50.
+	unit := Float pi * 2 / slices.
+	"domain: aBoolean, range: aColor"
+	color := TSScale ordinal rangeFrom: { '480D4A'. 'BB1C60' }.
+	"input: a number between {-1 1} ouput: a number between 100 and 350"
+	sc1 := TSScale linear domain: #(-1 1);range: { 100. 350 }.
+	sc2 := TSScale linear domain: #(-1 1);range: { 350. 100 }.
+	"for zoom to fit"
+	v add: (RSShapeBuilder box extent: 800@800; paint: nil; element).
+	theta := 0.
+	update := [ 
+		v edges copy do: #remove.
+		1 to: slices do: [ :i | | e sz  |
+			"e is an instance of RSEdge, not been created by shape"
+			e := RSEdge new
+				model: i;
+				trachelShape: TSSVGPathLine new.
+			sz := i even
+				ifTrue: [ sc1 scale: (i *unit + theta) sin ]
+				ifFalse: [ sc2 scale: (e model*unit - theta) sin ].
+			e 
+				width:  sz /2;
+				color: (color scale: i even);
+				from: (i even
+					ifTrue: [-25@ -25 ]
+					ifFalse: [ 25@25 ]);
+				to: 0@0.
+			e svgPath: [ :a :b |
+				"a and b are points, the vertices from this edge"
+				"this block returns a block to use complex operations of Athens Canvas"
+				"in this part you can also return a string, the svg path"
+				[ :canvas | | angle |
+					angle := i * unit.
+					canvas  
+						moveTo: a + (sz * (angle cos@ angle sin));
+						arcCenterX: a x
+							centerY: a y 
+							radius: sz
+							startAngle: e model* unit
+							endAngle: (e model+1)*unit 
+					 ] ].
+			v add: e.
+		].	
+	].
 	
+	v animation repeat onStepDo: [ :t |
+		update value.
+		theta := theta + 0.0523 ].
+	v when: TSResizeCanvasEvent do: [ :evt | 
+		v zoomToFit ].
+	v open.
+	"56 lines of code without RSShapeBuilder"
 ]
 
 { #category : #examples }
@@ -326,8 +474,7 @@ AnimationExamples >> example08 [
 	r := SharedRandom globalGenerator.
 	
 	mouseClick := [ | c1 c2 color  |
-		v elements children copy do: #remove.
-		Transcript show: v elements children size; cr.
+		v elements copy do: #remove.
 		c1 := Color r: r next g: r next b: r next.
 		c2 := Color r: r next g: r next b: r next.
 		color := TSScale linear range: { c1. c2 }.
@@ -364,5 +511,104 @@ AnimationExamples >> example08 [
 		when: TSResizeCanvasEvent do: [ :evt | v zoomToFit ];
 		when: TSMouseClick do: mouseClick;
 		open
+
+]
+
+{ #category : #examples }
+AnimationExamples >> example09 [
+	<script: 'self new example09'>
+	| v step frame border dot bar radius data update |
+	v := RSView new.
+	step := 0.
+	frame := 0.
+	bar := 200.
+	radius := 150.
+	data := (1 to: 360 by: 3) collect: #degreesToRadians.
+	v add: (RSShapeBuilder box paint: nil; size: 640; element).
+	border := TSBorder new
+		color: (Color colorFrom: '00004A');
+		width: 2.
+	dot := RSShapeBuilder ellipse
+		size: 5;
+		border: border.
+	update := [ 
+		v elements copy do: #remove.
+		v addAll: (data collect: [ :radian | | matrix e d1 d2 |
+			"edges do not handle matrix"
+			matrix := AthensAffineTransform new.
+			matrix translateBy: radius * (radian cos @ radian sin);
+				rotateByRadians: radian + (radian * step * 5) + (frame *0.02).
+			d1 := dot element.
+			d2 := dot element.
+			d1 position: (matrix transform: bar/2@0).
+			d2 position: (matrix transform: bar/ -2 * radian cos @ 0 ).
+			d2 size: 6* radian cos.
+			v add: d1; add: d2.
+			e := RSEdge new
+				trachelShape: TSLine new.
+			e border: border.
+			e from: d1.
+			e to: d2.
+			e ]).
+	].
+	v animation repeat onStepDo: [ :t | 
+		frame := frame + 1.
+		update value.
+	].
+	v 
+		when: TSResizeCanvasEvent do: [ :evt | v zoomToFit ];
+		when: TSMouseClick do: [ 
+			step := step +1.
+			step > 20 ifTrue: [ step := 0 ] ];
+		open
+
+]
+
+{ #category : #examples }
+AnimationExamples >> example10 [
+	<script: 'self new example10'>
+	| v x x2 speed speed2 r shape color |
+	v := RSView new.
+	x := 1. x2 := 2.
+	speed := 5. speed2 := 10.
+	r := SharedRandom globalGenerator.
+	color := TSScale ordinal rangeFrom: { 
+		(Color colorFrom: 'B4FA05') alpha: 0.7. 
+		'FF7C7C'.
+		(Color colorFrom: 'EA323E') alpha: 0.5.
+		'BDEA5C'.
+		(Color colorFrom: 'CB1D34') alpha: 0.3.
+		'E0CC14'}.
+	v color: Color black.
+	shape := RSShapeBuilder circle
+		borderDo: [ [:b |
+			b width: 25;
+			color: (Color 
+				r: (r rsNext: 0 and: 40)
+				g: (r rsNext: 100 and: 200)
+				b: (r rsNext: 100 and: 255)
+				range: 255)] ];
+		color: [ :m | color scale: m ];
+		position: #key;
+		size: #value.
+	v animation repeat onStepDo: [:t | 
+		v elements copy do: #remove.
+		color dictionary keysAndValuesRemove: [:a :b| true ].
+		(x between: 0 and: 1000) ifFalse: [ speed := speed negated ].
+		x2 >= x ifTrue: [ 
+			speed2 := speed2 negated.
+			x2 > 20 ifTrue: [ x2 := x2 - 20 ] ].
+		x2 <= 0 ifTrue: [ speed2 := speed2 negated ].
+		x := x + speed.
+		x2 := x2 + speed2.
+		v add: (shape elementOn: 0@0 -> x).
+		v add: (shape elementOn: 0@0 -> x2).
+		v add: (shape elementOn: -300 asPoint -> x).
+		v add: (shape elementOn: -300 asPoint -> x2).
+		v add: (shape elementOn: 300 asPoint -> x).
+		v add: (shape elementOn: 300 asPoint -> x2).
+		].
+	v camera scale: 0.5.
+	v open
 
 ]

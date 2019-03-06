@@ -1,5 +1,6 @@
 "
-I am a common scale interpolator, just put your entry value and this objects scale and return the value in your domain
+I am a common scale interpolator, just put your entry value and this objects scale and return the value in your domain.
+I am inspired in the d3 implementation of scales you can find the source code in https://github.com/d3/d3-scale
 "
 Class {
 	#name : #TSScale,
@@ -36,7 +37,7 @@ TSScale class >> category20c [
 { #category : #'instance creation' }
 TSScale class >> fromColorCategory: symbol [
 	^ self ordinal 
-		range: (TSColorInterpolator perform: symbol);
+		range: (TSColorRGBAInterpolator perform: symbol);
 		yourself
 ]
 

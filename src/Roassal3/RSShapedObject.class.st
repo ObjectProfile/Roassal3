@@ -56,8 +56,7 @@ RSShapedObject >> onMyselfDo: ablock [
 
 { #category : #removing }
 RSShapedObject >> remove [
-	view removeElement: self.
-	view := nil.
+	self subclassResponsibility
 ]
 
 { #category : #rendering }

@@ -6,7 +6,6 @@ Class {
 	#superclass : #TSObject,
 	#instVars : [
 		'paint',
-		'matrix',
 		'path',
 		'border',
 		'announcer',
@@ -15,6 +14,14 @@ Class {
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
+
+{ #category : #adding }
+TSShape >> addedIn: aCanvas [
+	self isFixed
+		ifTrue: [ aCanvas addFixedShape: self ]
+		ifFalse: [ aCanvas addBasicShape: self ].
+	canvas := aCanvas.
+]
 
 { #category : #animation }
 TSShape >> animation [ 
@@ -56,6 +63,7 @@ TSShape >> border: aBorder [
 
 { #category : #border }
 TSShape >> borderDo: aBlock [
+	border ifNil: [ border := TSBorder new ].
 	aBlock value: border
 ]
 
@@ -81,7 +89,7 @@ TSShape >> color: aColor [
 
 { #category : #accessing }
 TSShape >> encompassingRectangle [
-	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -111,12 +119,6 @@ TSShape >> initialize [
 	super initialize.
 	paint := Color lightGray.
 	isFixed := false.
-	self initializeMatrix
-]
-
-{ #category : #initialization }
-TSShape >> initializeMatrix [
-	matrix := AthensAffineTransform new
 ]
 
 { #category : #testing }
@@ -136,28 +138,7 @@ TSShape >> isInACanvas [
 
 { #category : #actions }
 TSShape >> loadShape: aShape [
-	self 
-		extent: aShape extent;
-		matrix: aShape matrix;
-		border: aShape border;
-		paint: aShape paint;
-		announcer: aShape announcer;
-		canvas: aShape canvas.
-]
-
-{ #category : #accessing }
-TSShape >> matrix [
-	^ matrix
-]
-
-{ #category : #accessing }
-TSShape >> matrix: aMatrix [
-	matrix := aMatrix
-]
-
-{ #category : #matrix }
-TSShape >> matrixDo: aBlock [
-	aBlock value: matrix
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -180,16 +161,6 @@ TSShape >> path: aPath [
 	path := aPath
 ]
 
-{ #category : #accessing }
-TSShape >> position [ 
-	^ matrix x @ matrix y
-]
-
-{ #category : #accessing }
-TSShape >> position: aPoint [
-	matrix translation: aPoint
-]
-
 { #category : #dependencies }
 TSShape >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
@@ -207,45 +178,11 @@ TSShape >> resetPath [
 	path := nil
 ]
 
-{ #category : #matrix }
-TSShape >> rotateByDegrees: angle [
-	matrix rotateByDegrees: angle.
-]
-
-{ #category : #accessing }
-TSShape >> scale [
-	^ matrix scale
-]
-
-{ #category : #accessing }
-TSShape >> scaleBy: scale [ 
-	matrix scaleBy: scale.
-]
-
 { #category : #actions }
 TSShape >> signalUpdate [
 	"Refresh the canvas"
 	canvas ifNil: [ ^ self ].
 	canvas signalUpdate
-]
-
-{ #category : #matrix }
-TSShape >> translateBy: delta [
-	self translateTo: self position + delta.
-	
-]
-
-{ #category : #matrix }
-TSShape >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	self position: aPoint.
-	
-	self announce: [TSTranslationEvent new 
-		shape: self; 
-		position: oldPosition;
-		step: aPoint - oldPosition ].
-
 ]
 
 { #category : #events }

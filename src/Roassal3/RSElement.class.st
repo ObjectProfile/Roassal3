@@ -39,7 +39,8 @@ RSElement >> initialize [
 
 { #category : #removing }
 RSElement >> remove [
-	super remove.
+	view removeElement: self.
+	view := nil.
 	self removeConnectedEdges.
 ]
 

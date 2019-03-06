@@ -25,6 +25,11 @@ TSScalePolylinear >> findJ: x [
 	^ lo - 1 
 ]
 
+{ #category : #transformation }
+TSScalePolylinear >> invert: anObject [
+	self shouldNotImplement
+]
+
 { #category : #hooks }
 TSScalePolylinear >> rescale [
 	| obj |

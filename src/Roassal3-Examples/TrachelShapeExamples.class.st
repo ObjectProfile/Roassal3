@@ -48,11 +48,11 @@ TrachelShapeExamples >> example03Basic [
 	| c g |
 	c := TSCanvas new.
 	g := TSGroup new.
-	g addShape: (TSBox new
+	g add: (TSBox new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
 		yourself).
-	g addShape: (TSBox new
+	g add: (TSBox new
 		position: 100@100;
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
@@ -78,12 +78,12 @@ TrachelShapeExamples >> example04Basic [
 	| c g |
 	c := TSCanvas new.
 	g := TSGroup new.
-	g addShape: (TSBox new
+	g add: (TSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
 		extent: 50@100;
 		yourself).
-	g addShape: (TSBox new
+	g add: (TSBox new
 		position: 0 @ 0;
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
@@ -387,7 +387,7 @@ TrachelShapeExamples >> example14Basic [
 	c open
 ]
 
-{ #category : #bitmap }
+{ #category : #'box and ellipses' }
 TrachelShapeExamples >> example15Basic [
 	<script: 'self new example15Basic'>
 
@@ -406,7 +406,7 @@ TrachelShapeExamples >> example15Basic [
 	c open
 ]
 
-{ #category : #bitmap }
+{ #category : #lines }
 TrachelShapeExamples >> example16Basic [
 	<script: 'self new example16Basic'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
@@ -458,4 +458,127 @@ TrachelShapeExamples >> example16Basic [
 	b1 when: TSMouseDragging do: translate.
 	b2 when: TSMouseDragging do: translate.
 	c open
+]
+
+{ #category : #border }
+TrachelShapeExamples >> example17Borders [
+	<script: 'self new example17Borders'>
+	| c border border2 a b ce d |
+	c := TSCanvas new.
+	border := [ :position :inner :outer :text |
+		c addShape: (TSBox new
+			color: Color lightGray;
+			position: position;
+			border: (TSBorder new
+				capSquare;
+				joinMiter;
+				color: inner);"brighter"
+			size: 100).
+		c addShape: (TSBox new
+			color: nil;
+			position: position;
+			border: (TSBorder new
+				capSquare;
+				dashArray: #(98 196);
+				color: outer);"darker"
+			size: 98).
+		c addShape: (TSBox new
+			color: nil;
+			position: position;
+			border: (TSBorder new
+				capSquare;
+				dashArray: #(0 102 102 0 102 0);
+				color: outer);"darker"
+			size: 102).
+		c addShape: (TSLabel new
+			text: text;
+			position: position;
+			color: Color black).
+		 ].
+	border2 := [ :position :text |
+		
+		c addShape: (TSBox new
+			color: Color lightGray;
+			position: position;
+			size: 100).
+		c addShape: (TSLine new
+			startPoint: position - 50;
+			endPoint: position + (50 @ -50);
+			color: a).
+		c addShape: (TSLine new
+			startPoint: position - 50;
+			endPoint: position + (-50 @ 50);
+			color: a).
+		c addShape: (TSLine new
+			startPoint: position - 49;
+			endPoint: position + (49 @ -49);
+			color: b).
+		c addShape: (TSLine new
+			startPoint: position - 49;
+			endPoint: position + (-49 @ 49);
+			color: b).
+			
+		c addShape: (TSLine new
+			startPoint: position + (-49@49);
+			endPoint: position + 49;
+			color: ce ).
+		c addShape: (TSLine new
+			startPoint: position + (49@ -49) ;
+			endPoint: position + (49 @ 49);
+			color: ce).
+			
+		c addShape: (TSLine new
+			startPoint: position + (-50@50);
+			endPoint: position + 50;
+			color: d).
+		c addShape: (TSLine new
+			startPoint: position + (50@ -50);
+			endPoint: position + (50 @ 50);
+			color: d).
+		c addShape: (TSLabel new
+			text: text;
+			position: position;
+			color: Color black).
+		 ].
+	
+	"line border"
+	c addShape: (TSBox new
+		color: Color lightGray;
+		border: TSBorder new;
+		size: 100).
+	c addShape: (TSLabel new
+		text: 'Line border';
+		color: Color black).
+	"raised etched"
+	border 
+		value: 120@0
+		value: (Color lightGray adjustBrightness: 0.08)
+		value: (Color lightGray adjustBrightness: -0.08)
+		value: 'Raised etched'.
+	
+	"lowered etched"
+	border 
+		value: -120@0
+		value: (Color lightGray adjustBrightness: -0.08)
+		value: (Color lightGray adjustBrightness: 0.08)
+		value: 'Lowered etch'.
+	"Raised bevel"
+	b := Color lightGray adjustBrightness: 0.08.
+	a := b adjustBrightness: 0.08.
+	ce := Color lightGray adjustBrightness: -0.08.
+	d := ce adjustBrightness: -0.08.
+	border2
+		value: 0@ -120
+		value: 'Raised bevel'.
+	"Lowered bevel"
+	b := Color lightGray adjustBrightness: -0.08.
+	a := b adjustBrightness: -0.08.
+	ce := Color lightGray adjustBrightness: 0.08.
+	d := ce adjustBrightness: 0.08.
+	border2 
+		value: 0@ 120
+		value: 'Lowered bevel'.
+	"RSDraggableView new onElement: c.
+	RSZoomableView new onElement: c."
+	c open.
 ]
