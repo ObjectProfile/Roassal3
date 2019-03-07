@@ -316,6 +316,7 @@ RoassalShapeExamples >> example11LayoutBasicWithColorFading [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
+	v @ RSDraggableView .
 	v open
 	
 ]
