@@ -61,8 +61,29 @@ RSView >> edges [
 ]
 
 { #category : #accessing }
+RSView >> elementFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ elements elementFromModel: anObject
+
+]
+
+{ #category : #accessing }
 RSView >> elements [
-	^ elements
+	^ TSGroup withAll: elements
+]
+
+{ #category : #accessing }
+RSView >> elementsFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ elements elementsFromModel: anObject
+
+]
+
+{ #category : #accessing }
+RSView >> elementsFromModels: objects [
+	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	^ elements elementsFromModels: objects
+
 ]
 
 { #category : #initialization }
