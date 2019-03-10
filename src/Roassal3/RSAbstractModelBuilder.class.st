@@ -38,6 +38,7 @@ RSAbstractModelBuilder >> addAction: action [
 { #category : #private }
 RSAbstractModelBuilder >> basicElementOn: object index: index [
 	| el shape |
+	self assert: [ self elementClass notNil ] description: 'Need to set a shape'.
 	el := self elementClass new.
 	el
 		model: object;

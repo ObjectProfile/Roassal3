@@ -57,6 +57,7 @@ RSView >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 RSView >> edges [
+	"Return the edges that belongs to the view"
 	^ edges
 ]
 
@@ -97,6 +98,12 @@ RSView >> initialize [
 RSView >> initializeContent [
 	elements := TSGroup new.
 	edges := TSGroup new
+]
+
+{ #category : #accessing }
+RSView >> numberOfEdges [
+	"Return the number of edges that belongs to the view"
+	^ self edges size
 ]
 
 { #category : #removing }

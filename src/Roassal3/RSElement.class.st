@@ -31,10 +31,30 @@ RSElement >> connectedEdges [
 	^ connectedEdges
 ]
 
+{ #category : #edges }
+RSElement >> incomingEdges [
+	"Return the list of incoming edges from the node"
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e to == self ]
+]
+
 { #category : #initialization }
 RSElement >> initialize [
 	super initialize.
 	self updateEdgesON
+]
+
+{ #category : #edges }
+RSElement >> isDirectlyConnectedTo: anElement [
+	connectedEdges ifNil: [ ^ false ].
+	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
+]
+
+{ #category : #edges }
+RSElement >> outgoingEdges [
+	"Return the list of outgoing edges from the node"
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e from == self ]
 ]
 
 { #category : #removing }

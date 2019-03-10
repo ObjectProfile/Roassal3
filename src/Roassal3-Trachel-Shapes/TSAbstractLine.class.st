@@ -28,6 +28,11 @@ TSAbstractLine >> capSquare [
 ]
 
 { #category : #accessing }
+TSAbstractLine >> color [
+	^ self strokePaint
+]
+
+{ #category : #accessing }
 TSAbstractLine >> color: aColor [
 	self strokePaint: aColor
 ]
@@ -89,6 +94,11 @@ TSAbstractLine >> startPoint: aPoint [
 { #category : #accessing }
 TSAbstractLine >> strokeColor: aColor [
 	self strokePaint: aColor
+]
+
+{ #category : #accessing }
+TSAbstractLine >> strokePaint [
+	^ self border paint
 ]
 
 { #category : #accessing }
