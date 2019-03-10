@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #shapes }
-RSShapeExamples >> example01Basic [
-	<script: 'self new example01Basic'>
+RSShapeExamples >> example01BasicShape [
+	<script: 'self new example01BasicShape'>
 
 	| v elements |
 	v := RSView new.
@@ -27,8 +27,8 @@ RSShapeExamples >> example01Basic [
 ]
 
 { #category : #shapes }
-RSShapeExamples >> example02Basic [
-	<script: 'self new example02Basic'>
+RSShapeExamples >> example02BasicEdge [
+	<script: 'self new example02BasicEdge'>
 
 	| v box box1 line |
 	v := RSView new.
@@ -49,48 +49,9 @@ RSShapeExamples >> example02Basic [
 
 ]
 
-{ #category : #layouts }
-RSShapeExamples >> example03LayoutBasic [
-	<script: 'self new example03LayoutBasic'>
-
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		onElement;
-		color: [ :e | e index even 
-			ifTrue: [ Color red alpha: 0.5 ]
-			ifFalse: [ Color blue alpha: 0.5 ] ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open
-	
-]
-
-{ #category : #layouts }
-RSShapeExamples >> example04LayoutBasic [
-	<script: 'self new example04LayoutBasic'>
-
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		elementsOn: (Collection withAllSubclasses).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open
-	
-]
-
 { #category : #lines }
-RSShapeExamples >> example05Basic [
-	<script: 'self new example05Basic'>
+RSShapeExamples >> example03LinePath [
+	<script: 'self new example03LinePath'>
 
 	| v elements form paint line path |
 	v := RSView new.
@@ -152,8 +113,8 @@ RSShapeExamples >> example05Basic [
 ]
 
 { #category : #lines }
-RSShapeExamples >> example06Basic [
-	<script: 'self new example06Basic'>
+RSShapeExamples >> example04LineDashes [
+	<script: 'self new example04LineDashes'>
 
 	| v line |
 	v := RSView new.
@@ -181,8 +142,8 @@ RSShapeExamples >> example06Basic [
 ]
 
 { #category : #lines }
-RSShapeExamples >> example07Basic [
-	<script: 'self new example07Basic'>
+RSShapeExamples >> example05CapStyles [
+	<script: 'self new example05CapStyles'>
 
 	| v line dot d1 d2 ed styles |
 	v := RSView new.
@@ -208,8 +169,8 @@ RSShapeExamples >> example07Basic [
 ]
 
 { #category : #lines }
-RSShapeExamples >> example08Basic [
-	<script: 'self new example08Basic'>
+RSShapeExamples >> example06JoinStyles [
+	<script: 'self new example06JoinStyles'>
 
 	| v line path styles |
 	v := RSView new.
@@ -249,80 +210,9 @@ RSShapeExamples >> example08Basic [
 	
 ]
 
-{ #category : #layouts }
-RSShapeExamples >> example09LayoutColorFadingBasic [
-	<script: 'self new example09LayoutColorFadingBasic'>
-
-	| v elements color |
-	v := RSView new.
-	color := TSScale linear
-		domain: #(1 20);
-		range: {Color red. Color green}.
-		
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		onElement;
-		color: [ :e | color scale: e index ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open
-	
-]
-
-{ #category : #layouts }
-RSShapeExamples >> example10LayoutColorFadingBasic2 [
-	<script: 'self new example10LayoutColorFadingBasic2'>
-
-	| v elements color |
-	v := RSView new.
-	color := TSScale linear
-		domain: #(1 10 20);
-		range: { Color red. Color green. Color blue }";
-		interpolate: TSColorHSVAInterpolator".
-		
-		
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		color: [ :m |color scale: m ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open
-	
-]
-
-{ #category : #layouts }
-RSShapeExamples >> example11LayoutBasicWithColorFading [
-	<script: 'self new example11LayoutBasicWithColorFading'>
-
-	| v elements minAndMax color |
-	v := RSView new.
-	minAndMax := Collection withAllSubclasses inject: { 10000 . 0 } into: [ :res :cls | {res first min: cls numberOfMethods . res second max: cls numberOfMethods}].
-	color := TSScale linear
-		domain: minAndMax;
-		range: { Color green . Color red }.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		color: [ :cls | color scale: cls numberOfMethods ];
-		elementsOn: (Collection withAllSubclasses).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open
-	
-]
-
 { #category : #normalizer }
-RSShapeExamples >> normalize01Color [
-	<script: 'self new normalize01Color'>
+RSShapeExamples >> example07NormalizeColor [
+	<script: 'self new example07NormalizeColor'>
 	| v elements |
 	v := RSView new.
 	elements := RSShapeBuilder box

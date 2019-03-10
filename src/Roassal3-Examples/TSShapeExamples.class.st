@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example01Basic [
-	<script: 'self new example01Basic'>
+TSShapeExamples >> example01BasicBoxes [
+	<script: 'self new example01BasicBoxes'>
 
 	| c |
 	c := TSCanvas new.
@@ -25,8 +25,8 @@ TSShapeExamples >> example01Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example02Basic [
-	<script: 'self new example02Basic'>
+TSShapeExamples >> example02BasicEllipses [
+	<script: 'self new example02BasicEllipses'>
 
 	| c |
 	c := TSCanvas new.
@@ -42,8 +42,8 @@ TSShapeExamples >> example02Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example03Basic [
-	<script: 'self new example03Basic'>
+TSShapeExamples >> example03BasicGroup [
+	<script: 'self new example03BasicGroup'>
 
 	| c g |
 	c := TSCanvas new.
@@ -72,8 +72,8 @@ TSShapeExamples >> example03Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example04Basic [
-	<script: 'self new example04Basic'>
+TSShapeExamples >> example04BasicGroup [
+	<script: 'self new example04BasicGroup'>
 
 	| c g |
 	c := TSCanvas new.
@@ -104,8 +104,8 @@ TSShapeExamples >> example04Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example05Basic [
-	<script: 'self new example05Basic'>
+TSShapeExamples >> example05BasicGroup [
+	<script: 'self new example05BasicGroup'>
 
 	| c |
 	c := TSCanvas new.
@@ -133,8 +133,8 @@ TSShapeExamples >> example05Basic [
 ]
 
 { #category : #labels }
-TSShapeExamples >> example06Basic [
-	<script: 'self new example06Basic'>
+TSShapeExamples >> example06BasicLabels [
+	<script: 'self new example06BasicLabels'>
 
 	| c label |
 	c := TSCanvas new.
@@ -172,8 +172,8 @@ TSShapeExamples >> example06Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example07Basic [
-	<script: 'self new example07Basic'>
+TSShapeExamples >> example07EventsMouseMoveDrag [
+	<script: 'self new example07EventsMouseMoveDrag'>
 
 	| c ellipse a b drag update |
 	c := TSCanvas new.
@@ -200,8 +200,8 @@ TSShapeExamples >> example07Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example08Basic [
-	<script: 'self new example08Basic'>
+TSShapeExamples >> example08EllipseBorder [
+	<script: 'self new example08EllipseBorder'>
 
 	| c y r |
 	c := TSCanvas new.
@@ -229,8 +229,8 @@ TSShapeExamples >> example08Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example09Basic [
-	<script: 'self new example09Basic'>
+TSShapeExamples >> example09MouseStep [
+	<script: 'self new example09MouseStep'>
 
 	|  c e prev dif |
 	c := TSCanvas new.
@@ -254,8 +254,8 @@ TSShapeExamples >> example09Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example10Basic [
-	<script: 'self new example10Basic'>
+TSShapeExamples >> example10EllipseMouseMove [
+	<script: 'self new example10EllipseMouseMove'>
 
 	| c border circleResolution angle a b radius |
 	c := TSCanvas new.
@@ -284,8 +284,8 @@ TSShapeExamples >> example10Basic [
 ]
 
 { #category : #events }
-TSShapeExamples >> example11Basic [
-	<script: 'self new example11Basic'>
+TSShapeExamples >> example11ScaleMouseDistance [
+	<script: 'self new example11ScaleMouseDistance'>
 
 	| c easing canvasExtent boxSize zindex maxDist scale border |
 	c := TSCanvas new.
@@ -326,8 +326,8 @@ TSShapeExamples >> example11Basic [
 ]
 
 { #category : #lines }
-TSShapeExamples >> example12Basic [
-	<script: 'self new example12Basic'>
+TSShapeExamples >> example12BasicLine [
+	<script: 'self new example12BasicLine'>
 
 	| c |
 	c := TSCanvas new.
@@ -336,8 +336,8 @@ TSShapeExamples >> example12Basic [
 ]
 
 { #category : #lines }
-TSShapeExamples >> example13Basic [
-	<script: 'self new example13Basic'>
+TSShapeExamples >> example13DashAnimation [
+	<script: 'self new example13DashAnimation'>
 
 	| c box paint form border animation |
 	c := TSCanvas new.
@@ -375,8 +375,8 @@ TSShapeExamples >> example13Basic [
 ]
 
 { #category : #bitmap }
-TSShapeExamples >> example14Basic [
-	<script: 'self new example14Basic'>
+TSShapeExamples >> example14BasicBitmap [
+	<script: 'self new example14BasicBitmap'>
 
 	| c |
 	c := TSCanvas new.
@@ -388,8 +388,8 @@ TSShapeExamples >> example14Basic [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example15Basic [
-	<script: 'self new example15Basic'>
+TSShapeExamples >> example15BasicRoundBoxses [
+	<script: 'self new example15BasicRoundBoxses'>
 
 	| c |
 	c := TSCanvas new.
@@ -407,8 +407,8 @@ TSShapeExamples >> example15Basic [
 ]
 
 { #category : #lines }
-TSShapeExamples >> example16Basic [
-	<script: 'self new example16Basic'>
+TSShapeExamples >> example16BasicLinePath [
+	<script: 'self new example16BasicLinePath'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
 	c := TSCanvas new.
 	b1 := TSBox new size: 100@100.
@@ -584,8 +584,8 @@ TSShapeExamples >> example17Borders [
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example18 [
-	<script: 'self new example18'>
+TSShapeExamples >> example18BasicPieSlice [
+	<script: 'self new example18BasicPieSlice'>
 	| c |
 	c := TSCanvas new.
 	"empty"
@@ -600,8 +600,8 @@ TSShapeExamples >> example18 [
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example19 [
-	<script: 'self new example19'>
+TSShapeExamples >> example19PieSlice [
+	<script: 'self new example19PieSlice'>
 	| c |
 	c := TSCanvas new.
 	"slice"
@@ -615,8 +615,8 @@ TSShapeExamples >> example19 [
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example20 [
-	<script: 'self new example20'>
+TSShapeExamples >> example20Donut [
+	<script: 'self new example20Donut'>
 	| c |
 	c := TSCanvas new.
 	"donut"
@@ -630,8 +630,8 @@ TSShapeExamples >> example20 [
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example21 [
-	<script: 'self new example21'>
+TSShapeExamples >> example21CornerRadii [
+	<script: 'self new example21CornerRadii'>
 	| c |
 	c := TSCanvas new.
 	"corner radii"
@@ -645,8 +645,8 @@ TSShapeExamples >> example21 [
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example22 [
-	<script: 'self new example22'>
+TSShapeExamples >> example22BasicPieSlice [
+	<script: 'self new example22BasicPieSlice'>
 	| c |
 	c := TSCanvas new.
 	"slice"

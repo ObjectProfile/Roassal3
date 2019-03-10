@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #examples }
-RSAnimationExamples >> example01 [ 
-	<script: 'self new example01'>
+RSAnimationExamples >> example01Basic [
+	<script: 'self new example01Basic'>
 	| c b |
 	c := TSCanvas new.
 	b := TSBox new
@@ -40,8 +40,8 @@ RSAnimationExamples >> example01 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example02 [
-	<script: 'self new example02'>
+RSAnimationExamples >> example02Sequential [
+	<script: 'self new example02Sequential'>
 	| c b animation |
 	c := TSCanvas new.
 	b := TSBox new
@@ -75,8 +75,8 @@ RSAnimationExamples >> example02 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example03 [
-	<script: 'self new example03'>
+RSAnimationExamples >> example03Ramp [
+	<script: 'self new example03Ramp'>
 	| c b |
 	c := TSCanvas new.
 	b := TSBox new
@@ -101,8 +101,8 @@ RSAnimationExamples >> example03 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example04 [
-	<script: 'self new example04'>
+RSAnimationExamples >> example04BoxWindmill [
+	<script: 'self new example04BoxWindmill'>
 	| v elements extent points frameCount |
 	v := RSView new.
 	v color: Color black.
@@ -129,8 +129,8 @@ RSAnimationExamples >> example04 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example05 [
-	<script: 'self new example05'>
+RSAnimationExamples >> example05BoxesLineCircles [
+	<script: 'self new example05BoxesLineCircles'>
 	| v extent r  elements position shape alpha update updateLine lineX line |
 	v := RSView new.
 	r := SharedRandom globalGenerator.
@@ -309,8 +309,8 @@ RSAnimationExamples >> example05b [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example06 [
-	<script: 'self new example06'>
+RSAnimationExamples >> example06Atom [
+	<script: 'self new example06Atom'>
 	| elements v border extent speed frame |
 	v := RSView new.
 	border := TSBorder new width: 4.
@@ -352,8 +352,8 @@ RSAnimationExamples >> example06 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example07 [
-	<script: 'self new example07'>
+RSAnimationExamples >> example07Psycho [
+	<script: 'self new example07Psycho'>
 	| shape v theta slices unit color sc1 sc2 |
 	v := RSView new.
 	slices := 50.
@@ -468,8 +468,8 @@ RSAnimationExamples >> example07b [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example08 [
-	<script: 'self new example08'>
+RSAnimationExamples >> example08ElasticEllipses [
+	<script: 'self new example08ElasticEllipses'>
 	| v r mouseClick |
 	v := RSView new.
 	r := SharedRandom globalGenerator.
@@ -516,8 +516,8 @@ RSAnimationExamples >> example08 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example09 [
-	<script: 'self new example09'>
+RSAnimationExamples >> example09LinePatterns [
+	<script: 'self new example09LinePatterns'>
 	| v step frame border dot bar radius data update |
 	v := RSView new.
 	step := 0.
@@ -566,8 +566,8 @@ RSAnimationExamples >> example09 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example10 [
-	<script: 'self new example10'>
+RSAnimationExamples >> example10CircleParty [
+	<script: 'self new example10CircleParty'>
 	| v x x2 speed speed2 r shape color |
 	v := RSView new.
 	x := 1. x2 := 2.
@@ -615,8 +615,8 @@ RSAnimationExamples >> example10 [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example11 [
-	<script: 'self new example11'>
+RSAnimationExamples >> example11ArcTree [
+	<script: 'self new example11ArcTree'>
 	| v shape newArc alpha beta |
 	v := RSView new.
 	shape := RSShapeBuilder arc.
