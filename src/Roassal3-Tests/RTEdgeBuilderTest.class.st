@@ -11,7 +11,7 @@ Class {
 
 { #category : #tests }
 RTEdgeBuilderTest >> expectedFailures [
-	^ #(#testFromAll #testUseInLayout #testUseInLayoutDefault #testWithMoveBehind #testWithMoveBehind02)
+	^ #(#testFromAll #testUseInLayout #testWithMoveBehind #testWithMoveBehind02)
 ]
 
 { #category : #running }

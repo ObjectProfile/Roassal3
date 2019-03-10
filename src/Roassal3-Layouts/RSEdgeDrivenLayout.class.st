@@ -32,9 +32,11 @@ RSEdgeDrivenLayout class >> withEdges: aCollection [
 
 { #category : #'default attach points' }
 RSEdgeDrivenLayout >> addDefaultAttachPointToEdges [
-	| a |
+	"TODO!!!!!"
+
+"	| a |
 	a := self defaultAttachPoint.
-	edges do: [ :e | e shape attachPoint: a ]
+	edges do: [ :e | e shape attachPoint: a ]"
 ]
 
 { #category : #accessing }

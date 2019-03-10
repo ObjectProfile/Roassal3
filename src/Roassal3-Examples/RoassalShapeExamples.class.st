@@ -321,6 +321,32 @@ RoassalShapeExamples >> example11LayoutBasicWithColorFading [
 	
 ]
 
+{ #category : #layouts }
+RoassalShapeExamples >> example12TreeLayout [
+	<script: 'self new example12TreeLayout'>
+	| v elements eb |
+	v := RSView new.
+	elements := RSShapeBuilder circle
+		interactionDo: #draggable;
+		elementsOn: Collection withAllSubclasses.
+	v addAll: elements.
+	RSNormalizer color
+		from: (Color gray alpha: 0.5);
+		to: (Color red alpha: 0.5);
+		elements: elements;
+		normalize: #numberOfMethods.
+	RSNormalizer size
+		elements: elements;
+		normalize: #numberOfMethods.
+	eb := RSEdgeBuilder line.
+	eb view: v.
+	eb connectFrom: #superclass.
+	RSTreeLayout on: elements.
+	elements do: [ :e | e translateBy: 0 @ 0 ].
+	v @ RSDraggableView.
+	v open
+]
+
 { #category : #normalizer }
 RoassalShapeExamples >> normalize01Color [
 	<script: 'self new normalize01Color'>

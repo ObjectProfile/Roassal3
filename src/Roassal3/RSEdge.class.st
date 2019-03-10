@@ -52,6 +52,12 @@ RSEdge >> initialize [
 	attachPoint := RSCenteredAttachPoint new.
 ]
 
+{ #category : #testing }
+RSEdge >> isUsedInLayout [
+	"This should be changed"
+	^ true
+]
+
 { #category : #removing }
 RSEdge >> remove [
 	view ifNil: [ ^ self ].
