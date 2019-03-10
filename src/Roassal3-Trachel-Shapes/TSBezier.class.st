@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
+{ #category : #visiting }
+TSBezier >> buildPathOn: visitor [
+	visitor buildBezierPath: self.
+]
+
 { #category : #accessing }
 TSBezier >> endPoint [
 	^ controlPoints last
@@ -16,11 +21,6 @@ TSBezier >> endPoint [
 TSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }.
-]
-
-{ #category : #accessing }
-TSBezier >> pathFor: visitor [
-	^ visitor pathOfBezier: self
 ]
 
 { #category : #accessing }

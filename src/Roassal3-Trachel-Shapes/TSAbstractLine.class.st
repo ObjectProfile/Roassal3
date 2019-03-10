@@ -81,6 +81,11 @@ TSAbstractLine >> joinRound [
 	self border joinRound
 ]
 
+{ #category : #actions }
+TSAbstractLine >> loadShape: other [
+	self shouldBeImplemented 
+]
+
 { #category : #accessing }
 TSAbstractLine >> startPoint [
 	^ self subclassResponsibility

@@ -10,6 +10,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
+{ #category : #visiting }
+TSBox >> buildPathOn: visitor [
+	visitor buildBoxPath: self
+]
+
 { #category : #accessing }
 TSBox >> cornerRadius [
 	^ cornerRadius
@@ -26,9 +31,4 @@ TSBox >> cornerRadius: aTSCornerRadius [
 { #category : #testing }
 TSBox >> hasCornerRadius [
 	^ cornerRadius notNil and: [ cornerRadius max > 0 and: [(cornerRadius min < 0) not] ].
-]
-
-{ #category : #visiting }
-TSBox >> pathFor: visitor [
-	^ visitor pathOfBox: self
 ]

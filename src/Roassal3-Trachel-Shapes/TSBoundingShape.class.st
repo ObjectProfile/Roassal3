@@ -5,7 +5,7 @@ Class {
 	#name : #TSBoundingShape,
 	#superclass : #TSShape,
 	#instVars : [
-		'baseRectangle',
+		'extent',
 		'matrix'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
@@ -18,27 +18,27 @@ TSBoundingShape >> accept: visitor [
 
 { #category : #accessing }
 TSBoundingShape >> baseRectangle [
-	^ baseRectangle
+	^ Rectangle center: 0@0 extent: extent
 ]
 
 { #category : #accessing }
 TSBoundingShape >> encompassingRectangle [ 
-	^ Rectangle center: self position extent: baseRectangle extent.
+	^ Rectangle center: self position extent: extent.
 ]
 
 { #category : #accessing }
 TSBoundingShape >> extent [
-	^ baseRectangle extent
+	^ extent
 ]
 
 { #category : #accessing }
 TSBoundingShape >> extent: aPoint [
 	| oldExtent |
-	oldExtent := baseRectangle extent.
-	baseRectangle := Rectangle center: 0@0 extent: aPoint.
+	oldExtent := extent.
+	extent := aPoint.
 	self resetPath.
 	
-	oldExtent = aPoint ifTrue: [ ^ self  ].
+	oldExtent = extent ifTrue: [ ^ self  ].
 	self announce: [ TSExtentShapeEvent new 
 		shape: self;
 		oldExtent: oldExtent ]
@@ -53,14 +53,14 @@ TSBoundingShape >> height: aNumber [
 TSBoundingShape >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
-	^ baseRectangle containsPoint: invertedPoint.
+	^ self baseRectangle containsPoint: invertedPoint.
 ]
 
 { #category : #initialization }
 TSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix.
-	baseRectangle := (0 @ 0) extent: (0 @ 0).
+	extent := 0@0.
 ]
 
 { #category : #initialization }

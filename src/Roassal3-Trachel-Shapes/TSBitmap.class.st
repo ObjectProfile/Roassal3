@@ -12,9 +12,9 @@ Class {
 
 { #category : #private }
 TSBitmap >> computeRectangle [
-	baseRectangle := form 
-		ifNil: [ Rectangle center:0@0 extent: 0@0 ]
-		ifNotNil: [ Rectangle center: 0@0 extent: form extent ]
+	extent := form 
+		ifNil: [ 0@0 ]
+		ifNotNil: [ form extent ]
 ]
 
 { #category : #accessing }
@@ -45,10 +45,5 @@ TSBitmap >> paintOn: visitor [
 
 { #category : #visiting }
 TSBitmap >> path [
-	^ baseRectangle
-]
-
-{ #category : #visiting }
-TSBitmap >> pathFor: visitor [
-	^ baseRectangle
+	^ self baseRectangle
 ]

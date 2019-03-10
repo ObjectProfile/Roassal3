@@ -2,13 +2,13 @@
 I have examples for animation
 "
 Class {
-	#name : #AnimationExamples,
+	#name : #RSAnimationExamples,
 	#superclass : #TSObject,
 	#category : #'Roassal3-Examples'
 }
 
 { #category : #examples }
-AnimationExamples >> example01 [ 
+RSAnimationExamples >> example01 [ 
 	<script: 'self new example01'>
 	| c b |
 	c := TSCanvas new.
@@ -40,7 +40,7 @@ AnimationExamples >> example01 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example02 [
+RSAnimationExamples >> example02 [
 	<script: 'self new example02'>
 	| c b animation |
 	c := TSCanvas new.
@@ -75,7 +75,7 @@ AnimationExamples >> example02 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example03 [
+RSAnimationExamples >> example03 [
 	<script: 'self new example03'>
 	| c b |
 	c := TSCanvas new.
@@ -101,7 +101,7 @@ AnimationExamples >> example03 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example04 [
+RSAnimationExamples >> example04 [
 	<script: 'self new example04'>
 	| v elements extent points frameCount |
 	v := RSView new.
@@ -129,7 +129,7 @@ AnimationExamples >> example04 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example05 [
+RSAnimationExamples >> example05 [
 	<script: 'self new example05'>
 	| v extent r  elements position shape alpha update updateLine lineX line |
 	v := RSView new.
@@ -219,7 +219,7 @@ AnimationExamples >> example05 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example05b [
+RSAnimationExamples >> example05b [
 	<script: 'self new example05b'>
 	| v extent r elements position alpha update updateLine lineX line |
 	v := RSView new.
@@ -309,7 +309,7 @@ AnimationExamples >> example05b [
 ]
 
 { #category : #examples }
-AnimationExamples >> example06 [
+RSAnimationExamples >> example06 [
 	<script: 'self new example06'>
 	| elements v border extent speed frame |
 	v := RSView new.
@@ -352,7 +352,7 @@ AnimationExamples >> example06 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example07 [
+RSAnimationExamples >> example07 [
 	<script: 'self new example07'>
 	| shape v theta slices unit color sc1 sc2 |
 	v := RSView new.
@@ -368,7 +368,8 @@ AnimationExamples >> example07 [
 	theta := 0.	
 	shape := RSEdgeBuilder linePath 
 		onElement; 
-		onMyselfDo: [ [: e| e attributes at: #zn
+		onMyselfDo: [ 
+			[: e| e attributes at: #zn
 				put: (e model even 
 						ifTrue: [ sc1 scale: (e model *unit + theta) sin ]
 						ifFalse: [ sc2 scale: (e model*unit - theta) sin ]).] ];
@@ -408,7 +409,7 @@ AnimationExamples >> example07 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example07b [
+RSAnimationExamples >> example07b [
 	<script: 'self new example07b'>
 	| update v theta slices unit color sc1 sc2 |
 	v := RSView new.
@@ -467,7 +468,7 @@ AnimationExamples >> example07b [
 ]
 
 { #category : #examples }
-AnimationExamples >> example08 [
+RSAnimationExamples >> example08 [
 	<script: 'self new example08'>
 	| v r mouseClick |
 	v := RSView new.
@@ -515,7 +516,7 @@ AnimationExamples >> example08 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example09 [
+RSAnimationExamples >> example09 [
 	<script: 'self new example09'>
 	| v step frame border dot bar radius data update |
 	v := RSView new.
@@ -565,7 +566,7 @@ AnimationExamples >> example09 [
 ]
 
 { #category : #examples }
-AnimationExamples >> example10 [
+RSAnimationExamples >> example10 [
 	<script: 'self new example10'>
 	| v x x2 speed speed2 r shape color |
 	v := RSView new.
@@ -610,5 +611,59 @@ AnimationExamples >> example10 [
 		].
 	v camera scale: 0.5.
 	v open
+
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example11 [
+	<script: 'self new example11'>
+	| v shape newArc alpha beta |
+	v := RSView new.
+	shape := RSShapeBuilder arc.
+	shape 
+		color: Color black;
+		innerRadius: [:m | m * 0.9];
+		externalRadius: #yourself.
+	newArc := nil.
+	newArc := [ :point :size :iteration | | e |
+		e := shape elementOn: size index: iteration. 
+		e position: point.
+		v add: e.
+		iteration > 1 ifTrue: [ 
+			newArc 
+				value: point + (0 - size@ (size/2 - (size* 0.01) ) ) 
+				value: size/2
+				value: iteration - 1.
+			newArc 
+				value: point + (size@ (size/2 - (size* 0.01) ) ) 
+				value: size/2
+				value: iteration - 1.
+			 ]
+		].
+	newArc value: 0@0 value: 100 value: 5.
+	alpha := TSScale linear range: #(90 0).
+	beta := TSScale linear range: #(90 180).
+	v showEncompassingRectangles.
+	v animationFrom: ((1 to: 5) reverse collect: [ :i| | elements |
+		elements := v elements select: [ :e | e index = i ].
+		v tAnimation 
+			duration: 1 seconds;
+			easing: TSEasing bounceOut;
+			onStepDo: [ :t |
+			elements do: [ :e |
+				e 
+					alphaAngle: (alpha scale: t);
+					betaAngle: (beta scale: t);
+					resetPath.
+				 ]
+			 ]
+		 ]).
+	v when: TSResizeCanvasEvent do: [ v zoomToFit; signalUpdate ].
+	v open
+	
+
+
+
+
 
 ]

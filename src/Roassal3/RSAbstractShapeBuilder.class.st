@@ -24,8 +24,19 @@ RSAbstractShapeBuilder >> interactionDo: aBlock [
 	aBlock value: self interaction
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 RSAbstractShapeBuilder >> updateElement: element [
+	self 
+		updateElement: element 
+		innerComponent: element trachelShape
+]
 
-	self updateElement: element innerComponent: element trachelShape
+{ #category : #updating }
+RSAbstractShapeBuilder >> updateElement: element withCommand: selector [
+	| temp |
+	temp := commands.
+	commands := commands select: [ :c | c selector = selector ].
+	self updateElement: element.
+	commands := temp.
+		
 ]

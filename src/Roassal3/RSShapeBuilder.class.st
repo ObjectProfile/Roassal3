@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSShapeBuilder class >> arc [
+	"TODO find the best name, ring, arc, circle sector, ellipse segment, foobar, etc"
+	^ self new
+		shapeClass: TSPieSlice;
+		yourself 
+]
+
+{ #category : #'instance creation' }
 RSShapeBuilder class >> box [
 	^ self rectangle
 ]

@@ -52,12 +52,12 @@ RSAbstractModelBuilder >> basicElementOn: object index: index [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #commands }
 RSAbstractModelBuilder >> commands [
 	^ commands ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : #commands }
 RSAbstractModelBuilder >> commands: aCollection [
 	commands := aCollection 
 ]
@@ -189,6 +189,14 @@ RSAbstractModelBuilder >> release [
 	super release.
 	self commands do: #release.
 	self commands: nil.
+]
+
+{ #category : #'reflective operations' }
+RSAbstractModelBuilder >> removeCommandsBySelector: selector [
+	| toDelete |
+	toDelete := commands select: [ :cmd | cmd selector = selector ].
+	toDelete do: [ :cmd | commands remove: cmd ].
+	^ toDelete
 ]
 
 { #category : #updating }

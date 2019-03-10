@@ -2,13 +2,13 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #TrachelShapeExamples,
+	#name : #TSShapeExamples,
 	#superclass : #TSObject,
 	#category : #'Roassal3-Examples'
 }
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example01Basic [
+TSShapeExamples >> example01Basic [
 	<script: 'self new example01Basic'>
 
 	| c |
@@ -25,7 +25,7 @@ TrachelShapeExamples >> example01Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example02Basic [
+TSShapeExamples >> example02Basic [
 	<script: 'self new example02Basic'>
 
 	| c |
@@ -42,7 +42,7 @@ TrachelShapeExamples >> example02Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example03Basic [
+TSShapeExamples >> example03Basic [
 	<script: 'self new example03Basic'>
 
 	| c g |
@@ -72,7 +72,7 @@ TrachelShapeExamples >> example03Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example04Basic [
+TSShapeExamples >> example04Basic [
 	<script: 'self new example04Basic'>
 
 	| c g |
@@ -104,7 +104,7 @@ TrachelShapeExamples >> example04Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example05Basic [
+TSShapeExamples >> example05Basic [
 	<script: 'self new example05Basic'>
 
 	| c |
@@ -133,7 +133,7 @@ TrachelShapeExamples >> example05Basic [
 ]
 
 { #category : #labels }
-TrachelShapeExamples >> example06Basic [
+TSShapeExamples >> example06Basic [
 	<script: 'self new example06Basic'>
 
 	| c label |
@@ -172,7 +172,7 @@ TrachelShapeExamples >> example06Basic [
 ]
 
 { #category : #events }
-TrachelShapeExamples >> example07Basic [
+TSShapeExamples >> example07Basic [
 	<script: 'self new example07Basic'>
 
 	| c ellipse a b drag update |
@@ -200,7 +200,7 @@ TrachelShapeExamples >> example07Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example08Basic [
+TSShapeExamples >> example08Basic [
 	<script: 'self new example08Basic'>
 
 	| c y r |
@@ -229,7 +229,7 @@ TrachelShapeExamples >> example08Basic [
 ]
 
 { #category : #events }
-TrachelShapeExamples >> example09Basic [
+TSShapeExamples >> example09Basic [
 	<script: 'self new example09Basic'>
 
 	|  c e prev dif |
@@ -254,7 +254,7 @@ TrachelShapeExamples >> example09Basic [
 ]
 
 { #category : #events }
-TrachelShapeExamples >> example10Basic [
+TSShapeExamples >> example10Basic [
 	<script: 'self new example10Basic'>
 
 	| c border circleResolution angle a b radius |
@@ -284,7 +284,7 @@ TrachelShapeExamples >> example10Basic [
 ]
 
 { #category : #events }
-TrachelShapeExamples >> example11Basic [
+TSShapeExamples >> example11Basic [
 	<script: 'self new example11Basic'>
 
 	| c easing canvasExtent boxSize zindex maxDist scale border |
@@ -326,7 +326,7 @@ TrachelShapeExamples >> example11Basic [
 ]
 
 { #category : #lines }
-TrachelShapeExamples >> example12Basic [
+TSShapeExamples >> example12Basic [
 	<script: 'self new example12Basic'>
 
 	| c |
@@ -336,7 +336,7 @@ TrachelShapeExamples >> example12Basic [
 ]
 
 { #category : #lines }
-TrachelShapeExamples >> example13Basic [
+TSShapeExamples >> example13Basic [
 	<script: 'self new example13Basic'>
 
 	| c box paint form border animation |
@@ -375,7 +375,7 @@ TrachelShapeExamples >> example13Basic [
 ]
 
 { #category : #bitmap }
-TrachelShapeExamples >> example14Basic [
+TSShapeExamples >> example14Basic [
 	<script: 'self new example14Basic'>
 
 	| c |
@@ -388,7 +388,7 @@ TrachelShapeExamples >> example14Basic [
 ]
 
 { #category : #'box and ellipses' }
-TrachelShapeExamples >> example15Basic [
+TSShapeExamples >> example15Basic [
 	<script: 'self new example15Basic'>
 
 	| c |
@@ -407,7 +407,7 @@ TrachelShapeExamples >> example15Basic [
 ]
 
 { #category : #lines }
-TrachelShapeExamples >> example16Basic [
+TSShapeExamples >> example16Basic [
 	<script: 'self new example16Basic'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
 	c := TSCanvas new.
@@ -461,7 +461,7 @@ TrachelShapeExamples >> example16Basic [
 ]
 
 { #category : #border }
-TrachelShapeExamples >> example17Borders [
+TSShapeExamples >> example17Borders [
 	<script: 'self new example17Borders'>
 	| c border border2 a b ce d |
 	c := TSCanvas new.
@@ -578,7 +578,81 @@ TrachelShapeExamples >> example17Borders [
 	border2 
 		value: 0@ 120
 		value: 'Lowered bevel'.
-	"RSDraggableView new onElement: c.
-	RSZoomableView new onElement: c."
+	RSDraggableView new onElement: c.
+	RSZoomableView new onElement: c.
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example18 [
+	<script: 'self new example18'>
+	| c |
+	c := TSCanvas new.
+	"empty"
+	c addShape: TSPieSlice new.
+	"circle"
+	c addShape: (TSPieSlice new
+		innerRadius: 0;
+		externalRadius: 100;
+		alphaAngle: 0;
+		betaAngle: 360).
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example19 [
+	<script: 'self new example19'>
+	| c |
+	c := TSCanvas new.
+	"slice"
+	c addShape: (TSPieSlice new
+		externalRadius: 100;
+		innerRadius: 50;
+		alphaAngle: 30;
+		betaAngle: 90;
+		segmentSpacing: 5).
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example20 [
+	<script: 'self new example20'>
+	| c |
+	c := TSCanvas new.
+	"donut"
+	c addShape: (TSPieSlice new
+		border: TSBorder new;
+		externalRadius: 100;
+		innerRadius: 50;
+		alphaAngle: 0;
+		betaAngle: 360).
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example21 [
+	<script: 'self new example21'>
+	| c |
+	c := TSCanvas new.
+	"corner radii"
+	c addShape: (TSPieSlice new
+		externalRadius: 100;
+		innerRadius: 50;
+		alphaAngle: 0;
+		betaAngle: 45;
+		cornerRadii: 20).
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example22 [
+	<script: 'self new example22'>
+	| c |
+	c := TSCanvas new.
+	"slice"
+	c addShape: (TSPieSlice new
+		externalRadius: 100;
+		alphaAngle: 30;
+		betaAngle: 90).
 	c open.
 ]

@@ -12,15 +12,29 @@ Class {
 
 { #category : #'tests - conditions' }
 RSRoassalTest >> testCommands [
-	| command |
-	command := RSCommand new
-		message: (Message selector: #red arguments: #());
-		isForModel: true.
-	command 
-		element: RSElement new;
-		component: Color.
-	command execute
-		
+	| shape removedCommands |
+	shape := RSShapeBuilder new.
+	self assert: shape commands size equals: 0.
+	shape shapeClass: TSBox.
+	self assert: shape commands size equals: 2.
+	
+	shape := RSShapeBuilder box.
+	self assert: shape commands size equals: 2.
+
+	shape removeCommandsBySelector: #size:.
+	self assert: shape commands size equals: 1.
+	
+	shape := RSShapeBuilder box
+		size: 10;
+		size: [ 100 ];
+		size: [ :m | m ];
+		size: #yourself.
+	self assert: shape commands size equals: 6.
+	removedCommands := shape removeCommandsBySelector: #size:.
+	self assert: shape commands size equals: 1.
+	self assert: removedCommands size equals: 5 
+
+	
 ]
 
 { #category : #tests }

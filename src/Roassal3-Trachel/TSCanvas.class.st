@@ -14,7 +14,8 @@ Class {
 		'announcer',
 		'morph',
 		'clearBackground',
-		'animations'
+		'animations',
+		'showRectangles'
 	],
 	#category : #'Roassal3-Trachel-Core'
 }
@@ -103,7 +104,7 @@ TSCanvas >> canvas [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TSCanvas >> clearBackground [
 	^ clearBackground
 ]
@@ -164,9 +165,15 @@ TSCanvas >> hasAnimation: anAnimation [
 	^ animations includes: anAnimation
 ]
 
+{ #category : #actions }
+TSCanvas >> hideEncompassingRectangles [
+	showRectangles := false.
+]
+
 { #category : #initialization }
 TSCanvas >> initialize [
 	super initialize.
+	showRectangles := false.
 	shapes := OrderedCollection new.
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
@@ -302,6 +309,16 @@ TSCanvas >> shapeWithActionForPositionInPixels: position [
 { #category : #accessing }
 TSCanvas >> shapes [
 	^shapes
+]
+
+{ #category : #actions }
+TSCanvas >> showEncompassingRectangles [
+	showRectangles := true.
+]
+
+{ #category : #testing }
+TSCanvas >> showRectangles [
+	^ showRectangles
 ]
 
 { #category : #updating }

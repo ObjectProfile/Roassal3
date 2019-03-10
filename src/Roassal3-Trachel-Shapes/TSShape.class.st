@@ -151,12 +151,12 @@ TSShape >> paint: aPaint [
 	paint := aPaint
 ]
 
-{ #category : #accessing }
+{ #category : #path }
 TSShape >> path [
 	^ path
 ]
 
-{ #category : #accessing }
+{ #category : #path }
 TSShape >> path: aPath [
 	path := aPath
 ]
@@ -173,7 +173,7 @@ TSShape >> remove [
 	canvas removeShape: self
 ]
 
-{ #category : #actions }
+{ #category : #path }
 TSShape >> resetPath [
 	path := nil
 ]

@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #visiting }
-TSLine >> pathFor: visitor [
-	^ visitor pathOfLine: self.
+TSLine >> buildPathOn: visitor [
+	visitor buildLinePath: self
 ]

@@ -91,13 +91,16 @@ TSAthensMorph >> drawShapes [
 				scaleBy: trachelCanvas camera scale asFloat;
 				translateBy: trachelCanvas camera position negated asFloatPoint.
 			renderer canvas: athensCanvas.
-			trachelCanvas shapes
-				do: [ :trachelShape | trachelShape accept: renderer ].
+			
+			trachelCanvas shapes do: [ :trachelShape | 
+				trachelShape accept: renderer.
+				self showRectangleIfNecessary: trachelShape.
+			 ].
 
 			"We display the elements that are _NOT_ subject to the camera"
-			athensCanvas pathTransform loadIdentity scaleBy: 1.001.
-			trachelCanvas fixedShapes
-				do: [ :trachelShape | trachelShape accept: athensCanvas ] ]	
+			athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
+			trachelCanvas fixedShapes do: [ :trachelShape | 
+				trachelShape accept: athensCanvas ] ]	
 ]
 
 { #category : #'event-processed' }
@@ -296,12 +299,6 @@ TSAthensMorph >> mouseWheel: evt [
 	evt wasHandled: true
 ]
 
-{ #category : #opening }
-TSAthensMorph >> open [
-
-	
-]
-
 { #category : #recategorized }
 TSAthensMorph >> recreateSurfaceIfNecessary [
 	surface
@@ -359,6 +356,18 @@ TSAthensMorph >> shapeWithAction: eventClass forPositionInPixels: position under
 TSAthensMorph >> shapeWithActionForPositionInPixels: point [
 	"Return the shape with event handler located that contains point"
 	 ^ trachelCanvas shapeWithActionForPositionInPixels: point
+]
+
+{ #category : #drawing }
+TSAthensMorph >> showRectangleIfNecessary: shape [
+	| box rect |
+	trachelCanvas showRectangles ifFalse: [ ^ self ].
+	rect := shape encompassingRectangle.
+	box := TSBox new
+		position: rect center;
+		extent: rect extent;
+		color: (Color blue alpha: 0.2).
+	box accept: renderer.
 ]
 
 { #category : #signaling }

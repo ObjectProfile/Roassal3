@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #visiting }
-TSSVGPathLine >> pathFor: visitor [
-	^ visitor pathOfSVGPathLine: self.
+TSSVGPathLine >> buildPathOn: visitor [
+	visitor buildSVGPathLine: self.
 ]
 
 { #category : #accessing }
