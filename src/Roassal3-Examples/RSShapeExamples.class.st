@@ -233,3 +233,28 @@ RSShapeExamples >> example07NormalizeColor [
 	v open
 	
 ]
+
+{ #category : #normalizer }
+RSShapeExamples >> example08Labels [
+	<script: 'self new example08Labels'>
+	| v sb elements |
+	v := RSView new.
+	v @ RSControlsView.
+	sb := RSShapeBuilder label.
+	sb interactionDo: #draggable.
+	sb text: #asString.
+	elements := sb elementsOn: Collection withAllSubclasses.
+	elements
+		do:
+			[ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
+	v addAll: elements.
+	RSNormalizer fontSize
+		elements: elements;
+		to: 30;
+		normalize: #numberOfMethods.
+	RSNormalizer color
+		elements: elements;
+		normalize: #numberOfMethods.
+	v zoomToFit.
+	v open
+]

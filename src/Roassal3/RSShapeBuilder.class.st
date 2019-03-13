@@ -34,6 +34,30 @@ RSShapeBuilder class >> ellipse [
 
 { #category : #'instance creation' }
 RSShapeBuilder class >> label [
+
+"Here is an exampe on how to use it
+-=-=-=-=-=
+v := RSView new.
+v @ RSControlsView.
+
+sb := RSShapeBuilder label.
+sb interactionDo: #draggable.
+sb text: #asString.
+elements := sb elementsOn: (Collection withAllSubclasses).
+
+elements do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
+v addAll: elements.
+
+RSNormalizer fontSize
+	elements: elements;
+	to: 30;
+	normalize: #numberOfMethods.
+
+v zoomToFit.
+v open
+-=-=-=-=-=
+"
+
 	^ self new
 		innerClass: TSLabel;
 		elementClass: RSElement;

@@ -25,6 +25,40 @@ RSNormalizer class >> color [
 ]
 
 { #category : #'instance creation' }
+RSNormalizer class >> fontSize [ 
+"Here is example
+-=-=-=-=-=-=-=
+v := RSView new.
+v @ RSControlsView.
+
+sb := RSShapeBuilder label.
+sb interactionDo: #draggable.
+sb text: #asString.
+elements := sb elementsOn: (Collection withAllSubclasses).
+
+elements do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
+v addAll: elements.
+
+RSNormalizer fontSize
+	elements: elements;
+	to: 30;
+	normalize: #numberOfMethods.
+
+v zoomToFit.
+v open
+-=-=-=-=-=-=-=
+"
+
+	| n |
+	n := self new.
+	n from: 5.
+	n to: 100.
+	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement fontSize: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	^ n
+
+]
+
+{ #category : #'instance creation' }
 RSNormalizer class >> size [ 
 	| n |
 	n := self new.
@@ -72,7 +106,7 @@ RSNormalizer >> initialize [
 { #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [ 
 	| minAndMax |
-	minAndMax := elements inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :anElement | 
+	minAndMax := elements inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :anElement |
 		| tmp |
 		tmp := anOneArgBlockOrSymbol rsValue: anElement model.
 		{ res first min: tmp . res second max: tmp } ].
