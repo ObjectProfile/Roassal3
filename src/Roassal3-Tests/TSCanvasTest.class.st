@@ -38,18 +38,38 @@ TSCanvasTest >> testDrawCanvas [
 
 { #category : #running }
 TSCanvasTest >> testDrawCanvasWithGroup [
-	"| g |
+	| g |
 	g := TSGroup new.
-	g addShape: (TSBox new
+	g add: (TSBox new
 		extent: 100@100;
 		yourself).
-	g addShape: (TSEllipse new
+	g add: (TSEllipse new
 		position: 100@100;
 		extent: 100@100;
 		yourself).
 	c addShape: g.
-	c morph drawOnMockCanvas."
-	self flag: 'TODO'
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
+TSCanvasTest >> testDrawFixed [
+	| box |
+	box := TSBox new
+		extent: 100@100;
+		yourself.
+	box isFixed: true.
+	c addShape: box.
+	
+	box := TSBox new
+		extent: 100@100;
+		yourself.
+	c addShape: box.
+	self deny: box isFixed.
+	box setAsFixed.
+	self assert: box isFixed.
+	self assert: c numberOfShapes equals: 0.
+	self assert: c numberOfFixedShapes equals: 2.
+	c morph drawOnMockCanvas.
 ]
 
 { #category : #running }

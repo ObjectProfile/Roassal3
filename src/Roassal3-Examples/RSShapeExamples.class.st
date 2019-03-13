@@ -228,7 +228,7 @@ RSShapeExamples >> example07NormalizeColor [
 	RSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
-	v when: TSResizeCanvasEvent do: [ v zoomToFit; signalUpdate ].
+	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
 	v @ RSControlsView.
 	v open
 	

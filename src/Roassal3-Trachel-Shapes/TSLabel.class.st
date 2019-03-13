@@ -117,7 +117,8 @@ TSLabel >> resetCache [
 	
 	font := font emphasized: (emphasis inject: 0 into: [:sum :next | sum + next emphasisCode]).
 	cachedWidth := nil.
-	cachedHeight := nil
+	cachedHeight := nil.
+	self extent: self textWidth @ self textHeight.
 ]
 
 { #category : #accessing }

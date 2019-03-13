@@ -33,6 +33,15 @@ RSShapeBuilder class >> ellipse [
 ]
 
 { #category : #'instance creation' }
+RSShapeBuilder class >> label [
+	^ self new
+		innerClass: TSLabel;
+		elementClass: RSElement;
+		addAction: (RSAction new action: [:el | el text: el text asString ] ) 
+		yourself 
+]
+
+{ #category : #'instance creation' }
 RSShapeBuilder class >> rectangle [
 	^ self new
 		shapeClass: TSBox;
@@ -52,7 +61,7 @@ RSShapeBuilder >> shapeClass [
 { #category : #accessing }
 RSShapeBuilder >> shapeClass: aClass [
 	self innerClass: aClass;
+		elementClass: RSElement;
 		size: 5;
-		color: Color gray;
-		elementClass: RSElement.
+		color: Color gray
 ]

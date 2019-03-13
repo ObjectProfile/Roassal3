@@ -23,30 +23,22 @@ Class {
 	#instVars : [
 		'objects',
 		'values',
-		'sum'
+		'sumValues',
+		'totalSum'
 	],
 	#category : #'Roassal3-Pie-Core'
 }
 
 { #category : #'accessing - computed' }
 RSPieBuilder >> alphaAngleFor: e [
-	| temporalSum |
 	values ifNil: [ self slice: #yourself ].
-	temporalSum := 0.
-	1 to: e index-1 do: [ :i |
-		temporalSum := temporalSum + values at: i
-		 ].
-	^ temporalSum * 360 / sum
+	
+	^ (sumValues at: e index) * 360 / totalSum.
 ]
 
 { #category : #'accessing - computed' }
 RSPieBuilder >> betaAngleFor: e [
-	| temporalSum |
-	temporalSum := 0.
-	1 to: e index do: [ :i |
-		temporalSum := temporalSum + values at: i
-	].
-	^ temporalSum * 360 / sum
+	^ ((sumValues at: e index) + (values at: e index)) * 360 / totalSum.
 ]
 
 { #category : #initialization }
@@ -81,6 +73,18 @@ RSPieBuilder >> renderIn: aView [
 
 { #category : #public }
 RSPieBuilder >> slice: aBlockOrASymbol [
+	| tempSum |
 	values := objects collect: aBlockOrASymbol.
-	sum := values sum.
+	sumValues := Array new: objects size.
+	tempSum := 0.
+	values doWithIndex: [ :v :i |
+		sumValues at: i put: tempSum.
+		tempSum := tempSum + v
+		 ].
+	totalSum := tempSum.
+]
+
+{ #category : #'accessing - computed' }
+RSPieBuilder >> totalSum [
+	^ totalSum
 ]

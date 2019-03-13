@@ -5,21 +5,10 @@ Class {
 	#name : #TSShapeEvent,
 	#superclass : #TSEvent,
 	#instVars : [
-		'position',
-		'shape'
+		'position'
 	],
 	#category : #'Roassal3-Trachel-Events'
 }
-
-{ #category : #accessing }
-TSShapeEvent >> canvas [
-	^ canvas ifNil: [ canvas := shape canvas ].
-]
-
-{ #category : #accessing }
-TSShapeEvent >> morph [
-	^ morph ifNil: [ ^ morph := self canvas morph ]
-]
 
 { #category : #accessing }
 TSShapeEvent >> position [ 
@@ -38,14 +27,4 @@ TSShapeEvent >> positionFromCamera [
 		ifNotNil: [ canvas camera fromPixelToSpace: self position ]
 		ifNil: [ -250 @ -250 ]
 
-]
-
-{ #category : #accessing }
-TSShapeEvent >> shape [
-	^ shape
-]
-
-{ #category : #accessing }
-TSShapeEvent >> shape: aTrachelShape [
-	shape := aTrachelShape
 ]

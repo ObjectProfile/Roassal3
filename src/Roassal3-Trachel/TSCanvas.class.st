@@ -33,17 +33,17 @@ TSCanvas >> addAnimation: anAnimation [
 	self signalUpdate
 ]
 
-{ #category : #adding }
+{ #category : #'adding removing shapes' }
 TSCanvas >> addBasicShape: aShape [
 	shapes add: aShape
 ]
 
-{ #category : #adding }
+{ #category : #'adding removing shapes' }
 TSCanvas >> addFixedShape: aShape [
 	fixedShapes add: aShape
 ]
 
-{ #category : #adding }
+{ #category : #'adding removing shapes' }
 TSCanvas >> addShape: aShape [
 	aShape addedIn: self.
 ]
@@ -109,7 +109,7 @@ TSCanvas >> clearBackground [
 	^ clearBackground
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
 TSCanvas >> clearBackground: aBool [
 	clearBackground := aBool
 ]
@@ -142,7 +142,8 @@ TSCanvas >> extent [
 { #category : #accessing }
 TSCanvas >> extent: aPoint [
 	| evt |
-	evt := TSResizeCanvasEvent new
+	evt := TSExtentChangedEvent new
+		shape: self;
 		oldExtent: extent;
 		newExtent: (extent := aPoint).
 	self announce: evt
@@ -245,14 +246,26 @@ TSCanvas >> release [
 
 { #category : #'adding removing shapes' }
 TSCanvas >> removeFixedShape: aShape [
-	fixedShapes := fixedShapes remove: aShape
+	fixedShapes remove: aShape
 ]
 
 { #category : #'adding removing shapes' }
 TSCanvas >> removeShape: shape [
+	| evt |
 	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
 	shape canvas: nil.
+	evt := TSShapeRemovedEvent new shape: shape.
+	self announce: evt.
+	shape announce: evt.
 	
+]
+
+{ #category : #'adding removing shapes' }
+TSCanvas >> setAsFixed: aShape [
+	self
+		removeShape: aShape;
+		addFixedShape: aShape.
+	aShape isFixed: true.
 ]
 
 { #category : #accessing }

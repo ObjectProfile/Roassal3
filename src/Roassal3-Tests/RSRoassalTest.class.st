@@ -37,6 +37,14 @@ RSRoassalTest >> testCommands [
 	
 ]
 
+{ #category : #'tests - abstract' }
+RSRoassalTest >> testShapeDNU [
+	| shape |
+	shape := RSShapeBuilder box.
+	shape size: 100.
+	self should: [ shape foo ] raise: Error
+]
+
 { #category : #tests }
 RSRoassalTest >> testViewBasic [
 	| v e |

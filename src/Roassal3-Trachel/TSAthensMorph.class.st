@@ -81,26 +81,28 @@ v canvas buildMorph drawOnMockCanvas
 { #category : #drawing }
 TSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	surface
-		drawDuring: [ :athensCanvas | 
-			trachelCanvas clearBackground
-				ifTrue: [ surface clear ].
-			"We display the elements that are subject to the camera"
-			athensCanvas pathTransform
-				translateBy: (self extent / 2) asFloatPoint;
-				scaleBy: trachelCanvas camera scale asFloat;
-				translateBy: trachelCanvas camera position negated asFloatPoint.
-			renderer canvas: athensCanvas.
+	surface drawDuring: [ :athensCanvas | 
+		trachelCanvas clearBackground
+			ifTrue: [ surface clear ].
+		"We display the elements that are subject to the camera"
+		athensCanvas pathTransform
+			translateBy: (self extent / 2) asFloatPoint;
+			scaleBy: trachelCanvas camera scale asFloat;
+			translateBy: trachelCanvas camera position negated asFloatPoint.
+		renderer canvas: athensCanvas.
 			
-			trachelCanvas shapes do: [ :trachelShape | 
-				trachelShape accept: renderer.
-				self showRectangleIfNecessary: trachelShape.
-			 ].
+		trachelCanvas shapes do: [ :trachelShape | 
+			trachelShape accept: renderer.
+			self showRectangleIfNecessary: trachelShape.
+		 ].
 
-			"We display the elements that are _NOT_ subject to the camera"
-			athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-			trachelCanvas fixedShapes do: [ :trachelShape | 
-				trachelShape accept: athensCanvas ] ]	
+		"We display the elements that are _NOT_ subject to the camera"
+		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
+		trachelCanvas fixedShapes do: [ :trachelShape | 
+			trachelShape accept: renderer.
+			self showRectangleIfNecessary: trachelShape. ] ]
+		
+
 ]
 
 { #category : #'event-processed' }
@@ -167,7 +169,8 @@ TSAthensMorph >> handleKeystroke: anEvent [
 { #category : #'events-processing' }
 TSAthensMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
-	self trMouseMove: anEvent
+	anEvent anyButtonPressed ifFalse: [ self trMouseMove: anEvent ].
+	
 	
 ]
 
@@ -488,10 +491,10 @@ TSAthensMorph >> trMouseDragging: aMorphicEvent [
 
 	shapeBeingPointed ifNil: [ shapeBeingPointed := trEvent shape ].
 	"If the element was removed during the drag then cancel the event"
-	shapeBeingPointed canvas
-		ifNil: [ eventBeginingDragging := nil.
-			shapeBeingPointed := nil.
-			^ self ].
+	shapeBeingPointed canvas ifNil: [
+		eventBeginingDragging := nil.
+		shapeBeingPointed := nil.
+		^ self ].
 
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.

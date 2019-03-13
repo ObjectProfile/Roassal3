@@ -1,15 +1,14 @@
 "
 I am a condition command. my use is the next.
 -------------------------------
-shape := RSGeometryBuilder box
-	size: 40;
-	if: [ :m | m even ] actions: [ 
-		shapes background: Color red ].
-	
-shape elementsOn: (1 to: 10).
+builder := RSShapeBuilder box
+    size: 40;
+    if: [ : shapeIndex | shapeIndex even ] actions: [: shape | 
+        shape color: Color red ].
+builder elementsOn: (1 to: 10).
 -------------------------------
 Subclasses of RSAbstractModelBuilder can use the method #if:actions: 
-The previous method creates the CAConditionCommand to create elements based on a condition.
+The previous method creates the RSConditionCommand to create elements based on a condition.
 
 the condition'block can be a block or a symbol, the actions'block can recive or not an argument
 

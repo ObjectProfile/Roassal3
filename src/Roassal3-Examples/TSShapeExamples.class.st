@@ -298,7 +298,7 @@ TSShapeExamples >> example11ScaleMouseDistance [
 		domain: { 0. maxDist}; 
 		rangeRound: #(80 0).
 	border := TSBorder new.
-	c when: TSResizeCanvasEvent do: [ 
+	c when: TSExtentChangedEvent do: [ 
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
 		maxDist := 0@0 dist: canvasExtent.
@@ -654,5 +654,26 @@ TSShapeExamples >> example22BasicPieSlice [
 		externalRadius: 100;
 		alphaAngle: 30;
 		betaAngle: 90).
+	c open.
+]
+
+{ #category : #arcs }
+TSShapeExamples >> example23FixedShape [
+	<script: 'self new example23FixedShape'>
+	| c box |
+	c := TSCanvas new.
+	box := TSBox new
+		extent: 100@100;
+		position: 200 asPoint;
+		color: Color blue;
+		yourself.
+	box isFixed: true.
+	c addShape: box.
+	
+	box := TSBox new
+		extent: 100@100;
+		yourself.
+	c addShape: box.
+	box setAsFixed.
 	c open.
 ]

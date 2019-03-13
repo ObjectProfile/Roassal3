@@ -81,3 +81,8 @@ RSShapedObject >> trachelShape: aShape [
 	old canvas shapes replaceAll: old with: trachelShape.
 	
 ]
+
+{ #category : #accessing }
+RSShapedObject >> view [
+	^ view
+]

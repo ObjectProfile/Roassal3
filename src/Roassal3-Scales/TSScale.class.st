@@ -72,6 +72,11 @@ TSScale class >> pow [
 ]
 
 { #category : #'instance creation' }
+TSScale class >> sky8 [
+	^ self fromColorCategory: #sky8
+]
+
+{ #category : #'instance creation' }
 TSScale class >> sqrt [
 	^ self pow
 		exponent: 0.5; 

@@ -6,14 +6,15 @@ Class {
 	#superclass : #Announcement,
 	#instVars : [
 		'canvas',
-		'morph'
+		'morph',
+		'shape'
 	],
 	#category : #'Roassal3-Trachel-Events'
 }
 
 { #category : #accessing }
 TSEvent >> canvas [
-	^ canvas
+	^ canvas ifNil: [ canvas := shape canvas ].
 ]
 
 { #category : #accessing }
@@ -24,12 +25,22 @@ TSEvent >> canvas: aTrachelCanvas [
 
 { #category : #accessing }
 TSEvent >> morph [
-	^ morph
+	^ morph ifNil: [ ^ morph := self canvas morph ]
 ]
 
 { #category : #accessing }
 TSEvent >> morph: aMorph [
 	morph := aMorph
+]
+
+{ #category : #accessing }
+TSEvent >> shape [
+	^ shape
+]
+
+{ #category : #accessing }
+TSEvent >> shape: aTrachelShape [
+	shape := aTrachelShape
 ]
 
 { #category : #accessing }

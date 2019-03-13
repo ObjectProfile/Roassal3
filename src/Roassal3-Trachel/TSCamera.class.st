@@ -50,6 +50,17 @@ TSCamera >> fromPixelToSpace: aPoint [
 		transform: aPoint
 ]
 
+{ #category : #convertion }
+TSCamera >> fromSpaceToPixel: aPoint [
+
+	^ AthensAffineTransform new
+		translateBy: self canvas extent / 2;
+		scaleBy: self scale;
+		translateBy: self position negated;
+		transform: aPoint
+	
+]
+
 { #category : #initialization }
 TSCamera >> initialize [
 	super initialize.

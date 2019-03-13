@@ -172,7 +172,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		elements do: [ :e | e translateTo: (position scale: r next@ r next) ].
 	].
 	update value.
-	v when: TSResizeCanvasEvent do: update.
+	v when: TSExtentChangedEvent do: update.
 	
 	"shadow"
 	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
@@ -186,8 +186,8 @@ RSAnimationExamples >> example05BoxesLineCircles [
 					width: 5;
 					color: (e border color alpha: (alpha scale: i)));
 				elementOn: i.
-			ant when: TSTranslationShapeEvent do: [ :evt | 
-				s translateTo: evt position ].
+			ant when: TSPositionChangedEvent do: [ :evt | 
+				s translateTo: evt oldPosition ].
 			ant := s.
 			v add: s
 			] ] .
@@ -261,7 +261,7 @@ RSAnimationExamples >> example05b [
 		elements do: [ :e | e translateTo: (position scale: r next@ r next) ].
 	].
 	update value.
-	v when: TSResizeCanvasEvent do: update.
+	v when: TSExtentChangedEvent do: update.
 	
 	"shadow"
 	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
@@ -277,8 +277,8 @@ RSAnimationExamples >> example05b [
 					width: 6;
 					color: (e border color alpha: (alpha scale: i)));
 				yourself.
-			ant when: TSTranslationShapeEvent do: [ :evt | 
-				s translateTo: evt position ].
+			ant when: TSPositionChangedEvent do: [ :evt | 
+				s translateTo: evt oldPosition ].
 			ant := s.
 			v add: s
 			] ] .
@@ -345,7 +345,7 @@ RSAnimationExamples >> example06Atom [
 			 ]
 	].
 		
-	v when: TSResizeCanvasEvent do: [ :evt | 
+	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
 	v open.
 	
@@ -402,7 +402,7 @@ RSAnimationExamples >> example07Psycho [
 	v animation repeat onStepDo: [ :t |
 		v edges do: [ :ed | shape updateElement: ed ].
 		theta := theta + 0.0523 ].
-	v when: TSResizeCanvasEvent do: [ :evt | 
+	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
 	v open.
 	"53 lines of code"
@@ -461,7 +461,7 @@ RSAnimationExamples >> example07b [
 	v animation repeat onStepDo: [ :t |
 		update value.
 		theta := theta + 0.0523 ].
-	v when: TSResizeCanvasEvent do: [ :evt | 
+	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
 	v open.
 	"56 lines of code without RSShapeBuilder"
@@ -509,7 +509,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 	mouseClick value.
 	
 	v 
-		when: TSResizeCanvasEvent do: [ :evt | v zoomToFit ];
+		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
 		when: TSMouseClick do: mouseClick;
 		open
 
@@ -557,7 +557,7 @@ RSAnimationExamples >> example09LinePatterns [
 		update value.
 	].
 	v 
-		when: TSResizeCanvasEvent do: [ :evt | v zoomToFit ];
+		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
 		when: TSMouseClick do: [ 
 			step := step +1.
 			step > 20 ifTrue: [ step := 0 ] ];
@@ -658,7 +658,7 @@ RSAnimationExamples >> example11ArcTree [
 				 ]
 			 ]
 		 ]).
-	v when: TSResizeCanvasEvent do: [ v zoomToFit; signalUpdate ].
+	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
 	v open
 	
 
@@ -666,4 +666,41 @@ RSAnimationExamples >> example11ArcTree [
 
 
 
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example12PerlinParticles [
+	<script: 'self new example12PerlinParticles'>
+	| v w label pts particle r |
+	v := RSView new.
+	r := SharedRandom globalGenerator.
+	label := RSShapeBuilder label 
+		color: Color black;
+		text: 'Drag to draw. type ''c'' to clear the view'; element.
+	v add: label.
+	(v animation delay: 2 seconds;
+		from: Color black; 
+		to: Color transparent; 
+		on: label trachelShape set: #color:)
+		when: TSAnimationEndEvent do: [ v clearBackground: false ].
+	pts := OrderedCollection new.
+	particle := RSShapeBuilder box
+		onMyselfDo: [ [ :e | 
+			| ang vel |
+			ang := r next * Float pi * 2.
+			vel := r next * 5 * (ang cos @ ang sin).
+			e attributes
+				at: #vel put:vel ] ];
+		color: [ Color h: r next * 255 s: r next * 255 v: 255 ];
+		size: 50;
+		position: [ :m | v camera fromPixelToSpace: m key ].
+	
+	v when: TSMouseDragging do: [ :evt | 
+		1 to: 10 do: [ :i | | p |
+			p := (particle elementOn: evt position-> (i+pts size) ).
+			v add: p.
+			pts add: p. ].
+		v signalUpdate ].
+	w := v open.
+	w setLabel: 'Particles!!! :V'
 ]

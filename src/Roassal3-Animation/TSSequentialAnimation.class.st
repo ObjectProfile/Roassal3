@@ -80,10 +80,10 @@ TSSequentialAnimation >> start [
 TSSequentialAnimation >> step [
 	self startStep.
 	self stepCurrent.
-	self currentHasCompleted 
-		ifTrue: [ currentIndex := currentIndex + 1. ].
+	self currentHasCompleted ifTrue: [ 
+		self current remove.
+		currentIndex := currentIndex + 1. ].
 	currentIndex > animations size ifTrue: [ 
-		self animations do: #remove.
 		currentIndex := 1.
 		self loopDone ].
 	hasCompleted := currentLoop > loops.

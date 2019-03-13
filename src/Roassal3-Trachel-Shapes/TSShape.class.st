@@ -179,6 +179,13 @@ TSShape >> resetPath [
 ]
 
 { #category : #actions }
+TSShape >> setAsFixed [
+	canvas ifNil: [ self error: 'Add first this shape in the canvas' ].
+	isFixed := true.
+	canvas setAsFixed: self.
+]
+
+{ #category : #actions }
 TSShape >> signalUpdate [
 	"Refresh the canvas"
 	canvas ifNil: [ ^ self ].

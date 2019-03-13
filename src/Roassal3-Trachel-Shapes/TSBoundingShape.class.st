@@ -36,12 +36,12 @@ TSBoundingShape >> extent: aPoint [
 	| oldExtent |
 	oldExtent := extent.
 	extent := aPoint.
-	self resetPath.
-	
 	oldExtent = extent ifTrue: [ ^ self  ].
-	self announce: [ TSExtentShapeEvent new 
+	self resetPath.
+	self announce: [ TSExtentChangedEvent new 
 		shape: self;
-		oldExtent: oldExtent ]
+		oldExtent: oldExtent;
+		newExtent: extent ]
 ]
 
 { #category : #accessing }
@@ -146,12 +146,12 @@ TSBoundingShape >> translateBy: delta [
 TSBoundingShape >> translateTo: aPoint [
 	| oldPosition |
 	oldPosition := self position.
-	self position: aPoint.
 	oldPosition = aPoint ifTrue: [ ^ self ].
-	self announce: [TSTranslationShapeEvent new 
+	self position: aPoint.
+	self announce: [TSPositionChangedEvent new 
 		shape: self; 
-		position: oldPosition;
-		step: aPoint - oldPosition ].
+		oldPosition: oldPosition;
+		newPosition: aPoint ].
 
 ]
 

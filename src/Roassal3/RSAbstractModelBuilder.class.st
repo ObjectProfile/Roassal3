@@ -43,10 +43,10 @@ RSAbstractModelBuilder >> basicElementOn: object index: index [
 	el
 		model: object;
 		index: index.
-	self executeActions: #isPreload on: el.
 	shape := self innerClass new.
-	self updateElement: el innerComponent: shape.
 	el trachelShape: shape.
+	self executeActions: #isPreload on: el.
+	self updateElement: el innerComponent: shape.
 	self executeActions: #isPostload on: el.
 	^ el
 	
@@ -65,6 +65,10 @@ RSAbstractModelBuilder >> commands: aCollection [
 { #category : #'reflective operations' }
 RSAbstractModelBuilder >> doesNotUnderstand: aMessage [
 	"magic"
+	((elementClass canUnderstand: aMessage selector) not 
+		and: [ (innerClass canUnderstand: aMessage selector) not ])
+			ifTrue: [ ^ super doesNotUnderstand: aMessage ].
+		
 	commands add: (RSCommand new 
 		message: aMessage;
 		isForModel: self isForModel;

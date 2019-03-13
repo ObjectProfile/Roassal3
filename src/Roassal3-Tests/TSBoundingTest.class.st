@@ -36,7 +36,6 @@ TSBoundingTest >> testDrawBoxCornerRadius [
 TSBoundingTest >> testDrawRing [
 	| r |
 	r := TSPieSlice new.
-	self should: [ r extent: 100@100 ] raise: Error.
 	"empty"
 	c addShape: r.
 	"circle"
