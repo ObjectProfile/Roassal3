@@ -23,6 +23,7 @@ TSPieSlice >> alphaAngle [
 
 { #category : #accessing }
 TSPieSlice >> alphaAngle: stAngle [
+	"Starting angle"
 	| old |
 	old := alphaAngle.
 	alphaAngle := stAngle.
@@ -45,6 +46,7 @@ TSPieSlice >> betaAngle [
 
 { #category : #accessing }
 TSPieSlice >> betaAngle: ndAngle [
+	"Finishing angle"
 	| old |
 	old := betaAngle.
 	betaAngle := ndAngle.

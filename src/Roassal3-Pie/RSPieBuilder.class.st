@@ -73,6 +73,24 @@ RSPieBuilder >> renderIn: aView [
 
 { #category : #public }
 RSPieBuilder >> slice: aBlockOrASymbol [
+	"
+	Set the way we give a pie share for each element.
+	
+Example:
+-=-=-=-=-=-=
+b := RSPieBuilder new.
+    
+b objects: (Set withAllSubclasses).
+b shape interactionDo: #popup.
+b slice: #numberOfMethods. 
+b build.
+
+RSNormalizer color
+	elements: b elements;
+	normalize: #numberOfMethods.
+b open.
+-=-=-=-=-=-=
+"
 	| tempSum |
 	values := objects collect: aBlockOrASymbol.
 	sumValues := Array new: objects size.
