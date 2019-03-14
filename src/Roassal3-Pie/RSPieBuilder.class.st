@@ -24,7 +24,9 @@ Class {
 		'objects',
 		'values',
 		'sumValues',
-		'totalSum'
+		'totalSum',
+		'labelElements',
+		'label'
 	],
 	#category : #'Roassal3-Pie-Core'
 }
@@ -56,6 +58,21 @@ RSPieBuilder >> initialize [
 		onModel.
 ]
 
+{ #category : #'accessing - computed' }
+RSPieBuilder >> label [ 
+	^ label ifNil: [ 
+		label := RSPieLabelBuilder label
+			builder: self;
+			yourself.
+		 ]
+]
+
+{ #category : #accessing }
+RSPieBuilder >> labelElements [
+	"return the labels created by this builder"
+	^ labelElements 
+]
+
 { #category : #accessing }
 RSPieBuilder >> objects [
 	^objects
@@ -68,7 +85,9 @@ RSPieBuilder >> objects: someObjects [
 
 { #category : #hooks }
 RSPieBuilder >> renderIn: aView [
-	aView addAll: (elements := shape elementsOn: objects)
+	aView addAll: (elements := shape elementsOn: objects).
+	label ifNil: [ ^ self ].
+	aView addAll: (labelElements := label elementsOn: objects).
 ]
 
 { #category : #public }

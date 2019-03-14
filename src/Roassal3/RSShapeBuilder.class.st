@@ -61,7 +61,12 @@ v open
 	^ self new
 		innerClass: TSLabel;
 		elementClass: RSElement;
-		addAction: (RSAction new action: [:el | el text: el text asString ] ) 
+		color: Color black;
+		addAction: (RSAction new action: [:el | 
+			| text |
+			text := el text.
+			text ifNil: [ text := el model ].
+			el text: text asString ] ) 
 		yourself 
 ]
 

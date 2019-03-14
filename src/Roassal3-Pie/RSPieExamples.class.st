@@ -7,6 +7,35 @@ Class {
 	#category : #'Roassal3-Pie-Examples'
 }
 
+{ #category : #data }
+RSPieExamples >> esportPrizepool [
+	"source https://www.esportsearnings.com/games"
+	| arr data |
+	arr := {
+		{'Dota' . 2013 . 2874380}.
+		{'Dota' . 2014 . 10931105}.
+		{'Dota' . 2015 . 18429613}.
+		{'Dota' . 2016 . 20770460}.
+		{'Dota' . 2017 . 24787916}.
+		{'SC2' . 2013 . 250000}.
+		{'SC2' . 2014 . 250000}.
+		{'SC2' . 2015 . 250000}.
+		{'SC2' . 2016 . 500000}.
+		{'SC2' . 2017 . 700000}.
+		{'LOL' . 2013 . 246575}.
+		{'LOL' . 2014 . 2130000}.
+		{'LOL' . 2015 . 2130000}.
+		{'LOL' . 2016 . 5070000}.
+		{'LOL' . 2017 . 4946969}}.
+	data := Dictionary new.
+	arr do: [ :d | 
+		| list |
+		list := data at: d first ifAbsentPut: [ OrderedCollection new ].
+		list add: d second -> d third ].
+	^ data
+	
+]
+
 { #category : #examples }
 RSPieExamples >> example01Basic [
 	<script: 'self new example01Basic'>
@@ -467,4 +496,282 @@ RSPieExamples >> example15Clockwise [
 	
 	b build.
 	b open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example16MyDay [
+	<script: 'self new example16MyDay'>
+	| pie data color title view |
+	
+	data := { 
+		{ 'sleep'. 'I dream with my gf 8hrs'. 8 }.
+		{ 'eat'. 'Sometimes I cook for 4hrs'. 3 }.
+		{ 'work with smalltalk'. 'with Roassal & Carlone 8hrs'. 8 }.
+		{ 'draw and play dota'. 'I draw with manga style and play dota in leyend level 4hrs'. 5} }.
+	color := TSScale ordinal
+		domain: data;
+		rangeFrom: { 'ae579c'. 'f28d1b'. 'e21454'. '4cbcec' }.
+	view := RSView new.
+	pie := RSPieBuilder new
+		view: view;
+		objects: data;
+		slice: #third.
+	pie view color: (Color colorFrom: '1a1b3a').
+	pie shape
+		externalRadius: 200;
+		interactionDo: [:i | i popupText: [ :obj | obj first capitalized ] ];
+		innerRadius: 140;
+		color: color;
+		segmentSpacing: 1.
+	pie label
+		fontSize: 16;
+		fontName: 'Source Code Pro';
+		color: color;
+		text: [ :obj | (obj third * 100 / pie totalSum) rounded asString, '%' ];
+		rotated;
+		offset: 50.
+	pie build.
+	title := RSShapeBuilder label
+		color: Color white;
+		fontSize: 30;
+		text: #asUppercase;
+		fontName: 'Source Code Pro'.
+	view 
+		add: (title elementOn: 'Milton');
+		add: (title elementOn: 'Day').
+	view elements last translateTo: 0@30.
+	pie open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example17PieLabels [
+	<script: 'self new example17PieLabels'>
+	| data pie |
+	"source https://www.indexmundi.com/bolivia/age_structure.html"
+	data := { 
+		'<=14'->3547498.
+		'15-24'->2168047. 
+		'25-54'->4174931. 
+		'55-64'->657007. 
+		'>=65'->590751}.
+	pie := RSPieBuilder new 
+		objects: data;
+		slice: #value.
+	pie shape 
+		externalRadius: 240;
+		innerRadius: 170;
+		color: TSScale category20;
+		segmentSpacing: 0.4.
+	pie label
+		fontSize: 13;
+		text: [ :obj | obj key, ', ', (obj value * 100 / pie totalSum) rounded asString, ' %' ].
+	pie build.
+	pie view when: TSExtentChangedEvent do: [ pie view zoomToFit ].
+	pie open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example18ManyPies [
+	<script: 'self new example18ManyPies'>
+	| data pie title color view |
+	data := self esportPrizepool.
+	title :=RSShapeBuilder label
+		fontSize: 20;
+		bold.
+	color := TSScale google20.
+	pie := RSPieBuilder new.
+	view := pie view.
+	pie shape 
+		externalRadius: 200;
+		innerRadius: 100;
+		color: [ :obj | color scale: obj key ];
+		segmentSpacing: 0.5.
+
+	pie label
+		text: #key;
+		rotated.
+	data keysAndValuesDo: [ :k :v | 
+		| elements sum e |
+		pie 
+			objects: v;
+			slice: #value;
+			build.
+		sum := pie totalSum.
+		pie elements @ (RSPopup text: [ :obj|
+			obj value asStringWithCommas , '$, ' ,
+			(obj value * 100 / sum) rounded asString, '%' ] ).
+		elements := pie elements, pie labelElements.
+		elements do: #remove.
+		elements add: (title elementOn: k).
+		
+		e := RSElement new.
+		e trachelShape: (elements collect: #trachelShape).
+		view add: e.
+		
+		 ].
+	view showEncompassingRectangles.
+	RSGridLayout on: view elements.
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view @ RSControlsView.
+	view open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example19Buttons [
+	<script: 'self new example19Buttons'>
+	| v elements pie move  |
+	v := RSView new.
+	elements := RSShapeBuilder box
+		size: #numberOfMethods;
+		interactionDo: #draggable;
+		elementsOn: (Collection withAllSubclasses).
+
+	RSNormalizer color
+		elements: elements;
+		normalize: #numberOfMethods.
+
+	v addAll: elements.
+	RSGridLayout on: elements.
+
+	v camera position: v elements encompassingRectangle center.
+	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
+	v @ RSControlsView.
+	
+	pie := RSPieBuilder new.
+	pie 
+		view: v;
+		objects: { 1@0. 1@ -1. 0@ -1. -1@ -1. -1@0. -1@1. 0@1. 1@1 };
+		slice: [:ob | 1 ].
+	pie shape
+		innerRadius:10;
+		onElement; 
+		border: (TSBorder new color: Color lightGray);
+		paint: (RadialGradientPaint new 
+			center: 0 asPoint;
+			focalPoint: 0 asPoint;
+			colorRamp: { 
+				0 -> (Color colorFrom: 'E5EFF0').
+				0.6->(Color colorFrom: 'D9D9D9').
+				1 -> (Color colorFrom: 'A0ABAD') };
+			radius: 50);
+		alphaAngle: [ :e | e alphaAngle - (45/2) ];
+		position: 50 asPoint;
+		betaAngle: [ :e | e betaAngle - (45/2) ];
+		externalRadius: 40.
+	pie build.
+	move := 0@0.
+	pie view animation repeat;
+		onStepDo: [ :t | 
+			v camera translateBy: move. ].
+	"todo
+	pie elements
+		setAsFixed;
+		when: ... do: ..."
+	pie elements do: [:e | 
+		e 
+			setAsFixed
+			when: TSMouseEnter do: [ 
+				move := e model.
+				v animation 
+					duration: 1 second;
+					easing: TSEasing backOut;
+					from: 40; to: 50;
+					on: e trachelShape set: #externalRadius:. ];
+			when: TSMouseLeave do: [ 
+				move := 0@0.
+				v animation 
+					duration: 1 second;
+					easing: TSEasing backOut;
+					from: 50; to: 40;
+					on: e trachelShape set: #externalRadius:. ] ] .
+	v open
+	
+
+
+
+]
+
+{ #category : #examples }
+RSPieExamples >> example20AddingRemoving [
+	<script: 'self new example20AddingRemoving'>
+	| pie objects view color elements updatePie label labels removed updateLabel |
+	objects := String withAllSubclasses.
+	removed := OrderedCollection new.
+	pie := RSPieBuilder new.
+	view := pie view.
+	pie objects: objects;
+		slice: #linesOfCode.
+	color := TSScale category10.
+	labels := TSGroup new.
+	elements := nil.
+	updatePie := nil.
+	updateLabel := nil.
+	view add: (RSShapeBuilder box
+		extent: 100@200;
+		paint: nil;
+		border: (TSBorder new);
+		position: 300@100 ) element.
+		
+	label := RSShapeBuilder label
+		onElement; 
+		position: [ :e | e index * (0@30) + (300@0) ];
+		when: TSMouseClick do: [:e | [ 
+			objects add: e model.
+			removed remove: e model.
+			updateLabel value.
+			updatePie value.
+			 ] ].
+		
+	pie shape 
+		innerRadius: 70;
+		externalRadius: 220;
+		interactionDo: #popup;
+		color: color;
+		onElement;
+		when: TSMouseClick do: [ :e | [ 
+			objects remove: e model.
+			removed add: e model.
+			updateLabel value.
+			updatePie value.
+			] ].
+	updatePie := [ 
+		elements := pie elements.
+		elements do: #remove.
+		pie slice: #linesOfCode; build.
+		pie elements do: [:e2 | | x y |
+			x := e2 alphaAngle.
+			y := e2 betaAngle.
+			elements 
+				detect: [ :e1 | e1 model = e2 model ]
+				ifFound: [ :e1|
+					view animation 
+						easing: TSEasing quad;
+						onStepDo: [:t |
+							e2 
+								alphaAngle: (e1 alphaAngle interpolateTo: x at: t);
+								betaAngle: (e1 betaAngle interpolateTo: y at: t);
+						 		signalUpdate.
+						] 
+				].
+		].
+		pie elements size > elements size ifTrue: [ 
+			| e x |
+			e := pie elements last.
+			x := e alphaAngle.
+			view animation
+				easing: TSEasing quad;
+				onStepDo: [ :t |
+					e 
+						alphaAngle: (e betaAngle interpolateTo: x at: t);
+						signalUpdate. ]
+		].
+	].
+	updateLabel := [ 
+		labels do: #remove.
+		view addAll: (labels := label elementsOn: removed) ].
+		
+	pie build.
+	view zoomToFit.
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view open.
 ]

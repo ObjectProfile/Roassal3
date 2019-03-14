@@ -1,5 +1,5 @@
 Class {
-	#name : #RTEdgeBuilderTest,
+	#name : #RSEdgeBuilderTest,
 	#superclass : #TSTest,
 	#instVars : [
 		'view',
@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #tests }
-RTEdgeBuilderTest >> expectedFailures [
+RSEdgeBuilderTest >> expectedFailures [
 	^ #(#testFromAll #testUseInLayout #testWithMoveBehind #testWithMoveBehind02)
 ]
 
 { #category : #running }
-RTEdgeBuilderTest >> setUp [
+RSEdgeBuilderTest >> setUp [
 	super setUp.
 	view := RSView new.
 	elements := RSShapeBuilder box elementsOn: (1 to: 10).
@@ -24,7 +24,7 @@ RTEdgeBuilderTest >> setUp [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
+RSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 
 	| v eb |
 	v := RSView new.
@@ -42,7 +42,7 @@ RTEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testConnectFrom [
+RSEdgeBuilderTest >> testConnectFrom [
 	| e |
 	b view: view.
 	b objects: #(1 2).
@@ -56,7 +56,7 @@ RTEdgeBuilderTest >> testConnectFrom [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testConnectTo [
+RSEdgeBuilderTest >> testConnectTo [
 	| e |
 	b view: view.
 	b objects: #(1 2).
@@ -70,7 +70,7 @@ RTEdgeBuilderTest >> testConnectTo [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testConnectToAll [
+RSEdgeBuilderTest >> testConnectToAll [
 	| eFrom eTo |
 	b view: view.
 	b objects: #(1 2 3).
@@ -85,12 +85,12 @@ RTEdgeBuilderTest >> testConnectToAll [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testDefault [
+RSEdgeBuilderTest >> testDefault [
 	self assert: view numberOfEdges equals: 0
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testElements [
+RSEdgeBuilderTest >> testElements [
 
 	| es |
 	b := RSEdgeBuilder new.
@@ -103,7 +103,7 @@ RTEdgeBuilderTest >> testElements [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testElementsToLookup [
+RSEdgeBuilderTest >> testElementsToLookup [
 
 	| es1 es2 edges v |
 	es1 := RSShapeBuilder circle elementsOn: #(1 2 3).
@@ -123,7 +123,7 @@ RTEdgeBuilderTest >> testElementsToLookup [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testFromAll [
+RSEdgeBuilderTest >> testFromAll [
 
 	| v es |
 	v := RSView new.
@@ -145,7 +145,7 @@ RTEdgeBuilderTest >> testFromAll [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testFromObjects [
+RSEdgeBuilderTest >> testFromObjects [
 	"
 	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
@@ -166,7 +166,7 @@ RTEdgeBuilderTest >> testFromObjects [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testFromObjects02 [
+RSEdgeBuilderTest >> testFromObjects02 [
 	"
 	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
@@ -183,7 +183,7 @@ RTEdgeBuilderTest >> testFromObjects02 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testFromObjectsError [
+RSEdgeBuilderTest >> testFromObjectsError [
 
 "
 view := RTView new.
@@ -194,7 +194,7 @@ view := RTView new.
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testFromObjectsToElements [
+RSEdgeBuilderTest >> testFromObjectsToElements [
 	| edges |
 	b view: view.
 	edges := 
@@ -205,7 +205,7 @@ RTEdgeBuilderTest >> testFromObjectsToElements [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testInit [
+RSEdgeBuilderTest >> testInit [
 	| eb |
 	eb := RSEdgeBuilder new.
 	self deny: eb shouldAllowRepetition.
@@ -214,7 +214,7 @@ RTEdgeBuilderTest >> testInit [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testNoMoveBehind [
+RSEdgeBuilderTest >> testNoMoveBehind [
 
 	RSEdgeBuilder line
 		view: view;
@@ -226,7 +226,7 @@ RTEdgeBuilderTest >> testNoMoveBehind [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testObjectFrom [
+RSEdgeBuilderTest >> testObjectFrom [
 	| e |
 	b view: view.
 	b objects: #(1 2); connectFrom: [ :v | v - 1 ].
@@ -239,7 +239,7 @@ RTEdgeBuilderTest >> testObjectFrom [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testObjectTo [
+RSEdgeBuilderTest >> testObjectTo [
 	| e |
 	b view: view.
 	b objects: #(1 2); connectTo: [ :v | v - 1 ].
@@ -252,7 +252,7 @@ RTEdgeBuilderTest >> testObjectTo [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testObjects [
+RSEdgeBuilderTest >> testObjects [
 	b view: view.
 	b objects: (1 to: 5).
 	self assert: b fromElements equals: (elements copyFrom: 1 to: 5)
@@ -264,7 +264,7 @@ RTEdgeBuilderTest >> testObjects [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testObjects02 [
+RSEdgeBuilderTest >> testObjects02 [
 	b view: view.
 	b objects: #even.
 	self assert: (b fromElements collect: #model) asArray equals: #(2 4 6 8 10)
@@ -276,7 +276,7 @@ RTEdgeBuilderTest >> testObjects02 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testObjects03 [
+RSEdgeBuilderTest >> testObjects03 [
 	b view: view.
 	b objects: #odd.
 	self assert: (b fromElements collect: #model) asArray equals: #(1 3 5 7 9)
@@ -288,7 +288,7 @@ RTEdgeBuilderTest >> testObjects03 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testShouldAllowBidirection [
+RSEdgeBuilderTest >> testShouldAllowBidirection [
 
 	self assert: view numberOfEdges equals: 0.
 	self assert: b isBidirectional.
@@ -308,7 +308,7 @@ RTEdgeBuilderTest >> testShouldAllowBidirection [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testShouldNotAllowBidirection [
+RSEdgeBuilderTest >> testShouldNotAllowBidirection [
 
 	self assert: view numberOfEdges equals: 0.
 	b view: view.
@@ -318,7 +318,7 @@ RTEdgeBuilderTest >> testShouldNotAllowBidirection [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple [
+RSEdgeBuilderTest >> testSimple [
 
 	RSEdgeBuilder line
 		view: view;
@@ -329,7 +329,7 @@ RTEdgeBuilderTest >> testSimple [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple2 [
+RSEdgeBuilderTest >> testSimple2 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -341,7 +341,7 @@ RTEdgeBuilderTest >> testSimple2 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple3 [
+RSEdgeBuilderTest >> testSimple3 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -353,7 +353,7 @@ RTEdgeBuilderTest >> testSimple3 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple4 [
+RSEdgeBuilderTest >> testSimple4 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -365,7 +365,7 @@ RTEdgeBuilderTest >> testSimple4 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple5 [
+RSEdgeBuilderTest >> testSimple5 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -377,7 +377,7 @@ RTEdgeBuilderTest >> testSimple5 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple6 [
+RSEdgeBuilderTest >> testSimple6 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -388,7 +388,7 @@ RTEdgeBuilderTest >> testSimple6 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSimple7 [
+RSEdgeBuilderTest >> testSimple7 [
 
 	RSEdgeBuilder line
 		view: view;
@@ -400,7 +400,7 @@ RTEdgeBuilderTest >> testSimple7 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testSource [
+RSEdgeBuilderTest >> testSource [
 
 	| v es eb c |
 	v := RSView new.
@@ -419,7 +419,7 @@ RTEdgeBuilderTest >> testSource [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testToObjects [
+RSEdgeBuilderTest >> testToObjects [
 	"
 	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
@@ -436,7 +436,7 @@ RTEdgeBuilderTest >> testToObjects [
 ]
 
 { #category : #'tests - use in layout' }
-RTEdgeBuilderTest >> testUseInLayout [
+RSEdgeBuilderTest >> testUseInLayout [
 
 	b
 		view: view; 
@@ -448,7 +448,7 @@ RTEdgeBuilderTest >> testUseInLayout [
 ]
 
 { #category : #'tests - use in layout' }
-RTEdgeBuilderTest >> testUseInLayoutDefault [
+RSEdgeBuilderTest >> testUseInLayoutDefault [
 
 	b 
 		view: view;
@@ -459,7 +459,7 @@ RTEdgeBuilderTest >> testUseInLayoutDefault [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testWithMoveBehind [
+RSEdgeBuilderTest >> testWithMoveBehind [
 
 	RSEdgeBuilder new
 		view: view;
@@ -472,7 +472,7 @@ RTEdgeBuilderTest >> testWithMoveBehind [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testWithMoveBehind02 [
+RSEdgeBuilderTest >> testWithMoveBehind02 [
 
 	RSEdgeBuilder new
 		view: view;
@@ -482,7 +482,7 @@ RTEdgeBuilderTest >> testWithMoveBehind02 [
 ]
 
 { #category : #tests }
-RTEdgeBuilderTest >> testconnectFromToAll [
+RSEdgeBuilderTest >> testconnectFromToAll [
 
 	| es1 es2 edges v |
 	es1 := RSShapeBuilder circle elementsOn: #(1 2 3).

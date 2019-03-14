@@ -13,6 +13,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
+{ #category : #converting }
+TSGroup >> @ int [
+	self do: [ :e | e @ int ].
+]
+
 { #category : #visiting }
 TSGroup >> accept: visitor [
 	visitor visitGroup: self.
@@ -106,12 +111,20 @@ TSGroup >> elementsFromModels: objects [
 TSGroup >> encompassingRectangle [
 	^ self
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
-		ifNotEmpty: [ Rectangle merging: (self collect: #encompassingRectangle) ]
+		ifNotEmpty: [ 
+			| rec |
+			rec := Rectangle merging: (self collect: #encompassingRectangle).
+			Rectangle center: self position extent: rec extent ]
 ]
 
 { #category : #accessing }
 TSGroup >> extent [
 	^ self encompassingRectangle extent
+]
+
+{ #category : #accessing }
+TSGroup >> height [ 
+	^ self extent y
 ]
 
 { #category : #testing }
@@ -154,4 +167,14 @@ TSGroup >> position: aPoint [
 TSGroup >> resetElementFromModelCache [
 	"Reset the cache"
 	elementFromModelCache := nil
+]
+
+{ #category : #matrix }
+TSGroup >> translateTo: aPoint [
+	self position: aPoint.
+]
+
+{ #category : #accessing }
+TSGroup >> width [ 
+	^ self extent x
 ]

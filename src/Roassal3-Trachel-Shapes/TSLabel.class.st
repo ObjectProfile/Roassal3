@@ -98,7 +98,7 @@ TSLabel >> fontSize: integer [
 { #category : #initialization }
 TSLabel >> initialize [
 	super initialize.
-	text := 'Roassal3 Text'.
+	text := nil.
 	fontSize := 12.
 	emphasis := #().
 	self fontName: self class familyFontName.

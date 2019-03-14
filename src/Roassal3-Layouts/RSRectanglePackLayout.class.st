@@ -17,7 +17,7 @@ bounds
 
 "
 Class {
-	#name : #RTRectanglePackLayout,
+	#name : #RSRectanglePackLayout,
 	#superclass : #RSLayout,
 	#instVars : [
 		'freeSpace',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #'space-calculation' }
-RTRectanglePackLayout >> bestSpaceFor: anElement [
+RSRectanglePackLayout >> bestSpaceFor: anElement [
 	| elementsPadedBox suitableSpaces |
 	
 	elementsPadedBox := anElement encompassingRectangle extendBy: padding * 2.
@@ -50,12 +50,12 @@ RTRectanglePackLayout >> bestSpaceFor: anElement [
 ]
 
 { #category : #accessing }
-RTRectanglePackLayout >> boundingBox [
+RSRectanglePackLayout >> boundingBox [
 	^ bounds
 ]
 
 { #category : #hook }
-RTRectanglePackLayout >> doExecute: elements [
+RSRectanglePackLayout >> doExecute: elements [
 	| sortedElements maxSpace |
 	bounds := 0@0.
 	
@@ -84,7 +84,7 @@ RTRectanglePackLayout >> doExecute: elements [
 ]
 
 { #category : #'space-calculation' }
-RTRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
+RSRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 	| futureCorner |
 	futureCorner := aSpace origin + aRectangle extent.
 	
@@ -96,24 +96,24 @@ RTRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 ]
 
 { #category : #accessing }
-RTRectanglePackLayout >> gap [
+RSRectanglePackLayout >> gap [
 	"gap between elements defined as ''percentage'' of average size. 0.2 means 20%"
 	^ gap
 ]
 
 { #category : #accessing }
-RTRectanglePackLayout >> gap: anObject [
+RSRectanglePackLayout >> gap: anObject [
 	gap := anObject
 ]
 
 { #category : #'initialize-release' }
-RTRectanglePackLayout >> initialize [
+RSRectanglePackLayout >> initialize [
 	super initialize.
 	gap := 0.2
 ]
 
 { #category : #execution }
-RTRectanglePackLayout >> packIn: anElement [
+RSRectanglePackLayout >> packIn: anElement [
 	translator translateTopLeftOf: anElement to: (self bestSpaceFor: anElement) origin + padding.
 	bounds := bounds max: anElement encompassingRectangle bottomRight + padding.
 	
@@ -121,19 +121,19 @@ RTRectanglePackLayout >> packIn: anElement [
 ]
 
 { #category : #deprecated }
-RTRectanglePackLayout >> padding [
+RSRectanglePackLayout >> padding [
 	self deprecated: 'Use gap instead'.
 	^ self gap
 ]
 
 { #category : #deprecated }
-RTRectanglePackLayout >> padding: anObject [
+RSRectanglePackLayout >> padding: anObject [
 	self deprecated: 'Use gap: instead'.
 	self gap: anObject
 ]
 
 { #category : #'space-calculation' }
-RTRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
+RSRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
 	freeSpace := freeSpace inject: Set new into: [ :set :space |
 		 set
 			addAll: (space areasOverlapingOutside:

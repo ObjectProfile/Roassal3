@@ -11,6 +11,14 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
+{ #category : #accessing }
+RSPopup class >> text: anObject [
+	| inst |
+	inst := self new.
+	inst label text: anObject.
+	^ inst
+]
+
 { #category : #hooks }
 RSPopup >> createOrGetPopupOn: anElement [
 	| textElement boxElement att |
@@ -68,6 +76,7 @@ RSPopup >> onElement: anElement [
 { #category : #hooks }
 RSPopup >> removePopupOn: anElement [ 
 	| att popup |
+	anElement view ifNil: [ ^ self ].
 	att := anElement view attributes.
 	(att includesKey: #popup) ifFalse: [ ^ self ].
 	popup := att at: #popup.

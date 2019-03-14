@@ -436,8 +436,8 @@ TSAthensRenderer >> visitLabel: label [
 			translateBy: ((label textWidth / -2) @ (label textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ label descent negated) asFloatPoint.
 		athensCanvas 
-			setPaint: label paint;
 			setFont: label font;
+			setPaint: label paint;
 			drawString: label text.
 		].
 ]
