@@ -35,6 +35,11 @@ TSScale class >> category20c [
 ]
 
 { #category : #'instance creation' }
+TSScale class >> eva10 [
+	^ self fromColorCategory: #eva10
+]
+
+{ #category : #'instance creation' }
 TSScale class >> fromColorCategory: symbol [
 	^ self ordinal 
 		range: (TSColorRGBAInterpolator perform: symbol);

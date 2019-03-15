@@ -73,10 +73,9 @@ TSTransitionAnimation >> onStepDo: aBlock [
 
 { #category : #'accessing - computed' }
 TSTransitionAnimation >> progress [ 
-	| progress pauseTime |
+	| progress |
 	self startStep.
-	pauseTime := (endPauseTime - startPauseTime) max: 0.
-	progress := (self currentTime -pauseTime - startLoopTime)/ self duration asMilliSeconds asFloat.
+	progress := (self currentTime - pauseTime - startLoopTime)/ duration asFloat.
 	progress > 1 ifTrue: [ 
 		self loopDone.
 		progress := 1.

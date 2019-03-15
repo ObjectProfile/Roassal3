@@ -100,10 +100,16 @@ TSCamera >> translateTo: aPoint [
 
 { #category : #actions }
 TSCamera >> zoomToFit: anExtent [
-	| rect extent sc |
-	rect := canvas encompassingRectangle.
-	extent := canvas extent * 0.9.
-	sc := extent / (rect extent max: 1 @ 1).
+	self 
+		zoomToFit: anExtent 
+		rectangle: canvas encompassingRectangle
+	
+]
+
+{ #category : #actions }
+TSCamera >> zoomToFit: anExtent rectangle: rect [
+	| sc |
+	sc := anExtent / (rect extent max: 1 @ 1).
 	sc := sc x min: sc y.
 	self 
 		translateTo: rect center;

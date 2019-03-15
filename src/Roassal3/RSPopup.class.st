@@ -66,11 +66,19 @@ RSPopup >> onElement: anElement [
 		when: TSMouseEnter do: remove;
 		when: TSMouseLeave do: remove;
 		when: TSMouseDragging do: remove;
-		when: TSMouseMove do: [ :evt | | popup |
+		when: TSMouseMove do: [ :evt | | popup e p |
 			popup := self createOrGetPopupOn: anElement.
-			popup translateTo: (anElement view camera 
-				fromSpaceToPixel: evt position) + (popup extent /2) + 5.
+			p := (anElement view camera 
+				fromSpaceToPixel: evt position).
+			e :=  (popup extent /2) + 5.
+			p x +  popup extent x > popup view extent x ifTrue: [ 
+				e := e x negated @ e y.
+				p x - popup extent x < 0
+					ifTrue: [ e := p x negated + (popup extent x /2) @ e y ].
+			].
+			popup translateTo: p + e.
 			popup signalUpdate. ]
+
 ]
 
 { #category : #hooks }

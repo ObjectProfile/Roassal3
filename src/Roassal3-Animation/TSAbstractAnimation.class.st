@@ -18,7 +18,8 @@ Class {
 		'delay',
 		'isPaused',
 		'startPauseTime',
-		'endPauseTime'
+		'endPauseTime',
+		'pauseTime'
 	],
 	#category : #'Roassal3-Animation-Core'
 }
@@ -52,11 +53,15 @@ TSAbstractAnimation >> canvas: aCanvas [
 
 { #category : #actions }
 TSAbstractAnimation >> continue [
-	| oldPaused |
+	"| oldPaused |
 	oldPaused := isPaused.
 	isPaused := false.
 	oldPaused 
-		ifTrue: [ endPauseTime := self currentTime. ]
+		ifTrue: [ endPauseTime := self currentTime. ]"
+	isPaused ifFalse: [ ^ self ].
+	isPaused := false.
+	endPauseTime := self currentTime.
+	pauseTime := pauseTime + endPauseTime - startPauseTime.
 ]
 
 { #category : #accessing }
@@ -129,7 +134,7 @@ TSAbstractAnimation >> isRunning [
 { #category : #private }
 TSAbstractAnimation >> loopDone [
 	currentLoop := currentLoop + 1.
-	startPauseTime := endPauseTime := 0.
+	startPauseTime := endPauseTime := pauseTime := 0.
 	startLoopTime := self currentTime.
 	self announce: (TSAnimationLoopEvent new animation: self).
 ]
@@ -152,12 +157,15 @@ TSAbstractAnimation >> noRepeat [
 
 { #category : #actions }
 TSAbstractAnimation >> pause [
-	| oldPaused |
-	oldPaused := isPaused.
+	isPaused ifTrue: [ ^ self ].
 	isPaused := true.
-	oldPaused 
-		ifFalse: [ startPauseTime := self currentTime. ].
+	startPauseTime := self currentTime.
 	
+]
+
+{ #category : #accessing }
+TSAbstractAnimation >> pauseTime [
+	^ pauseTime
 ]
 
 { #category : #refresing }
@@ -204,6 +212,7 @@ TSAbstractAnimation >> reset [
 	startLoopTime := nil.
 	startPauseTime := 0.
 	endPauseTime := 0.
+	pauseTime := 0.
 ]
 
 { #category : #actions }
@@ -246,6 +255,13 @@ TSAbstractAnimation >> step [
 TSAbstractAnimation >> stop [
 	isRunning := false.
 	hasCompleted := true.
+]
+
+{ #category : #actions }
+TSAbstractAnimation >> toggle [
+	self isPaused 
+		ifTrue: [ self continue ]
+		ifFalse: [ self pause ]
 ]
 
 { #category : #events }

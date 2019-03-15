@@ -46,7 +46,7 @@ RSPieExamples >> example01Basic [
 		slice: #numberOfMethods;
 		yourself.
 	pie build.
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -70,7 +70,7 @@ RSPieExamples >> example02Emphasize [
 					20 * (angle cos @ angle sin negated ) ]. ].
 	
 	pie build.
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -90,7 +90,7 @@ RSPieExamples >> example03BasicColors [
 		segmentSpacing: 5;
 		externalRadius: 120.
 	pie build.
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -121,7 +121,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 			pie view elements do: [ :e | | op |
 				op := 125 - (t degreesToRadians sin abs * 125).
 				e segmentSpacing: op. ] ].
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -161,7 +161,7 @@ RSPieExamples >> example05Smash [
 				to: 120;
 				on: e trachelShape set: #innerRadius: ) }. ].
 	
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -202,7 +202,7 @@ RSPieExamples >> example06SmashHSL [
 				to: 120;
 				on: e trachelShape set: #innerRadius: ) }. ].
 	
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -448,7 +448,7 @@ RSPieExamples >> example13BasicColorNormalize [
 		to: Color red;
 		elements: pie elements;
 		normalize: #numberOfMethods.
-	pie view camera zoomToFit: 200@200.
+	pie view zoomToFit.
 	pie open.
 ]
 
@@ -774,4 +774,98 @@ RSPieExamples >> example20AddingRemoving [
 	view zoomToFit.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example21ProgressLable [
+	<script: 'self new example21ProgressLable'>
+	| data org pie label l scale |
+	org := RPackage organizer.
+	data := (org packageNames 
+		select: [ :s | 'Roassal3*' match: s  ]
+		thenCollect: [ :s | org packageNamed: s ]) 
+		sorted: [:a :b | a linesOfCode < b linesOfCode ].
+	pie := RSPieBuilder new
+		objects: data;
+		slice: #linesOfCode.
+	scale := TSScale eva10.
+	pie shape 
+		innerRadius: 50;
+		segmentSpacing: 0.5;
+		externalRadius: 100;
+		interactionDo: [:i | i popupText: #name ];
+		color: scale.
+	pie build.
+	label := RSShapeBuilder label
+		fontSize: 20;
+		color: scale;
+		text: '';
+		if: #notNil actions: [ :s |
+			s text: [ :obj | (obj linesOfCode*100/pie totalSum) rounded asString,'%' ]
+			].
+	l := label element.
+	pie view add: l.
+	pie elements do: [ :e | | color |
+		color := e color.
+		e 
+			when: TSMouseEnter do: [ :evt | 
+				e color: (color adjustBrightness: 0.08).
+				l model: e model.
+				label updateElement: l.
+				 ];
+			when: TSMouseLeave do: [ :evt | e color: color.
+				l model: nil.
+				label updateElement: l. ]
+	].
+	pie view zoomToFit.
+	pie open.
+]
+
+{ #category : #examples }
+RSPieExamples >> example22RotatedAnimation [
+	<script: 'self new example22RotatedAnimation'>
+	| data org pie labels animation view |
+	org := RPackage organizer.
+	data := (org packageNames 
+		select: [ :s | 'Roassal3*' match: s  ]
+		thenCollect: [ :s | org packageNamed: s ]) 
+		sorted: [:a :b | a linesOfCode < b linesOfCode ].
+	pie := RSPieBuilder new
+		objects: data;
+		slice: #linesOfCode.
+	view := pie view.
+	animation := nil.
+	pie shape
+		color: TSScale category20b;
+		innerRadius: 70;
+		segmentSpacing: 0.5;
+		externalRadius: 220;
+		when: TSMouseClick do: [ [ animation toggle ] ].
+	pie build.
+	labels := RSShapeBuilder label
+		text: #name;
+		elementsOn: data.
+	view addAll: labels.
+	animation := view animation
+		from: 0; to: 360; repeat; duration: 15 seconds;
+		onStepDo: [ :t | 
+			pie elements do: [ :e | | att a b l ext ang |
+				att := e attributes.
+				a := att at: #a ifAbsentPut: [ e alphaAngle ].
+				b := att at: #b ifAbsentPut: [ e betaAngle ].
+				e alphaAngle: a + t.
+				e betaAngle: b + t.
+				l := labels at: e index.
+				ang := ((e alphaAngle + e betaAngle)/2) %360.
+				ext := l extent x/2 @ 0.
+				(ang between: 90 and: 270) ifFalse: [ ext := ext negated ].
+				l position: (e centroid: 80) - ext .
+			]
+		].
+	view camera zoomToFit: 270 asPoint.
+	pie open.
+	
+
+
+
 ]

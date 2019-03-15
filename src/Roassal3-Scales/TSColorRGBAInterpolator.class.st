@@ -34,7 +34,7 @@ TSColorRGBAInterpolator class >> category20c [
 { #category : #helpers }
 TSColorRGBAInterpolator class >> colorHex: arr [
 	^ arr collect: [ :value | Color colorFrom: (
-		'#', (self hex: value >> 16),
+		(self hex: value >> 16),
 		(self hex: value >> 8 & 255), 
 		(self hex: value & 255))
 		 ].
@@ -44,6 +44,12 @@ TSColorRGBAInterpolator class >> colorHex: arr [
 { #category : #interpolation }
 TSColorRGBAInterpolator class >> colorInterpolator [
 	^ self
+]
+
+{ #category : #'color categories' }
+TSColorRGBAInterpolator class >> eva10 [
+	^ #('A57DBF' '562A65' 'A1DC5C' '46705C' 'B5A7DD' 'F1C123' 'C9783E' '605EA9' '730D0B' '5B5C65') 
+		collect: [ :s | Color colorFrom: s ].
 ]
 
 { #category : #'color categories' }
