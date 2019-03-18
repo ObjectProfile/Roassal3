@@ -657,7 +657,7 @@ TSShapeExamples >> example22BasicPieSlice [
 	c open.
 ]
 
-{ #category : #arcs }
+{ #category : #'box and ellipses' }
 TSShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape'>
 	| c box |
@@ -675,5 +675,15 @@ TSShapeExamples >> example23FixedShape [
 		yourself.
 	c addShape: box.
 	box setAsFixed.
+	c open.
+]
+
+{ #category : #lines }
+TSShapeExamples >> example24Polyline [
+	<script: 'self new example24Polyline'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSPolyline new
+		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10}).
 	c open.
 ]

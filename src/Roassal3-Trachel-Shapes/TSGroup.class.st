@@ -36,10 +36,10 @@ TSGroup >> addAll: elements [
 ]
 
 { #category : #adding }
-TSGroup >> addedIn: canvas [
+TSGroup >> addedIn: aCanvas [
 	self isFixed
-		ifTrue: [ canvas addFixedShape: self ]
-		ifFalse: [ canvas addBasicShape: self ].
+		ifTrue: [ aCanvas addFixedShape: self ]
+		ifFalse: [ aCanvas addBasicShape: self ].
 ]
 
 { #category : #accessing }

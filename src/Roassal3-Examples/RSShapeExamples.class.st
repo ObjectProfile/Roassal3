@@ -26,7 +26,7 @@ RSShapeExamples >> example01BasicShape [
 	v open
 ]
 
-{ #category : #shapes }
+{ #category : #lines }
 RSShapeExamples >> example02BasicEdge [
 	<script: 'self new example02BasicEdge'>
 
@@ -234,7 +234,7 @@ RSShapeExamples >> example07NormalizeColor [
 	
 ]
 
-{ #category : #normalizer }
+{ #category : #shapes }
 RSShapeExamples >> example08Labels [
 	<script: 'self new example08Labels'>
 	| v sb elements |
@@ -257,4 +257,58 @@ RSShapeExamples >> example08Labels [
 		normalize: #numberOfMethods.
 	v zoomToFit.
 	v open
+]
+
+{ #category : #lines }
+RSShapeExamples >> example09Polyline [
+	<script: 'self new example09Polyline'>
+	| v box box1 line box2 |
+	v := RSView new.
+	box := RSShapeBuilder box
+		size: 100;
+		interactionDo: #draggable.
+	box1 := box element.
+	box1 translateBy: 150@150.
+	box2 := box element.
+	box2 translateBy: -200@200.
+	v add: box1; add: box2.
+	line := RSSingleEdgeBuilder polyline 
+		color: Color red;
+		controlPoints: { box1. 0@0. [ box1 position x@ box2 position y ]. box2 }.
+	v add: (line edge).
+
+	v open
+	
+
+
+
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example10Donut [
+	<script: 'self new example10Donut'>
+	| data shape radius color view border |
+	data := 0 to: 358 by: 2.
+	view := RSView new.
+	radius := TSScale linear
+		domain: #(1 10);
+		range: #(180 240).
+	color := TSScale linear
+		domain: #(1 7 10);
+		range: #('brown' '4682b4' 'brown').
+	border := TSBorder new.
+	1 to: 10 do: [ :i |
+		shape := RSShapeBuilder circle
+			radius: 4.5;
+			color: (color scale: i);
+			border: border;
+			position: [ :a | | d |
+				d := a degreesToRadians.
+				(radius scale: i) * (d cos @ d sin)
+				 ].
+		view addAll: (shape elementsOn: data).
+		 ].
+	view @ RSControlsView.
+	view zoomToFit.
+	view open.
 ]

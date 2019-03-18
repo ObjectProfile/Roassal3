@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+TSAbstractDualLine >> controlPoints [ 
+	^ Array with: self startPoint with: self endPoint
+]
+
+{ #category : #accessing }
 TSAbstractDualLine >> endPoint [
 	^ endPoint
 ]

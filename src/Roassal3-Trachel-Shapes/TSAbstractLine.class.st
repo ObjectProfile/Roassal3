@@ -37,6 +37,11 @@ TSAbstractLine >> color: aColor [
 	self strokePaint: aColor
 ]
 
+{ #category : #accessing }
+TSAbstractLine >> controlPoints [
+	^ self subclassResponsibility
+]
+
 { #category : #'style-dashes' }
 TSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
@@ -45,7 +50,10 @@ TSAbstractLine >> dashArray: arrayOfNumbers [
 
 { #category : #accessing }
 TSAbstractLine >> encompassingRectangle [
-	^ Rectangle encompassing: (Array with: self startPoint with: self endPoint)
+	| cp |
+	cp := self controlPoints.
+	cp ifEmpty: [ ^ Rectangle center: 0@0 extent: 0@0 ].
+	^ Rectangle encompassing: cp
 ]
 
 { #category : #accessing }
@@ -64,6 +72,11 @@ TSAbstractLine >> initialize [
 	paint := nil.
 	border := TSBorder new.
 	
+]
+
+{ #category : #testing }
+TSAbstractLine >> isControlPointsLine [
+	^ false
 ]
 
 { #category : #'style-join' }

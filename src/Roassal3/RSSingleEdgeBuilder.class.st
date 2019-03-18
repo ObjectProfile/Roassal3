@@ -26,6 +26,11 @@ RSSingleEdgeBuilder class >> linePath [
 	^ self new edgeClass: TSSVGPathLine
 ]
 
+{ #category : #'instance creation' }
+RSSingleEdgeBuilder class >> polyline [
+	^ self new edgeClass: TSPolyline
+]
+
 { #category : #'public - accessing' }
 RSSingleEdgeBuilder >> edge [
 	^ self edgeOn: fromObject -> toObject

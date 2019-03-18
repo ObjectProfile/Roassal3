@@ -567,7 +567,7 @@ RSPieExamples >> example17PieLabels [
 		text: [ :obj | obj key, ', ', (obj value * 100 / pie totalSum) rounded asString, ' %' ].
 	pie build.
 	pie view when: TSExtentChangedEvent do: [ pie view zoomToFit ].
-	pie open.
+	pie open setLabel: 'Bolivia population by age'.
 ]
 
 { #category : #examples }
@@ -613,7 +613,7 @@ RSPieExamples >> example18ManyPies [
 	RSGridLayout on: view elements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view @ RSControlsView.
-	view open.
+	view open setLabel: 'Prizepool in esports :V'
 ]
 
 { #category : #examples }
@@ -653,7 +653,7 @@ RSPieExamples >> example19Buttons [
 				0 -> (Color colorFrom: 'E5EFF0').
 				0.6->(Color colorFrom: 'D9D9D9').
 				1 -> (Color colorFrom: 'A0ABAD') };
-			radius: 50);
+			radius: 40);
 		alphaAngle: [ :e | e alphaAngle - (45/2) ];
 		position: 50 asPoint;
 		betaAngle: [ :e | e betaAngle - (45/2) ];
@@ -684,7 +684,7 @@ RSPieExamples >> example19Buttons [
 					easing: TSEasing backOut;
 					from: 50; to: 40;
 					on: e trachelShape set: #externalRadius:. ] ] .
-	v open
+	v open setLabel: 'Arc buttons'
 	
 
 
@@ -773,12 +773,12 @@ RSPieExamples >> example20AddingRemoving [
 	pie build.
 	view zoomToFit.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
-	view open.
+	view open setLabel: 'Click in arcs or labels'
 ]
 
 { #category : #examples }
-RSPieExamples >> example21ProgressLable [
-	<script: 'self new example21ProgressLable'>
+RSPieExamples >> example21ProgressLabel [
+	<script: 'self new example21ProgressLabel'>
 	| data org pie label l scale |
 	org := RPackage organizer.
 	data := (org packageNames 
@@ -818,16 +818,16 @@ RSPieExamples >> example21ProgressLable [
 				label updateElement: l. ]
 	].
 	pie view zoomToFit.
-	pie open.
+	pie open setLabel: 'Roassal3 packages by linesOfCode'
 ]
 
 { #category : #examples }
 RSPieExamples >> example22RotatedAnimation [
 	<script: 'self new example22RotatedAnimation'>
-	| data org pie labels animation view |
+	| data org pie animation view |
 	org := RPackage organizer.
 	data := (org packageNames 
-		select: [ :s | 'Roassal3*' match: s  ]
+		select: [ :s | '*Roassal3*' match: s  ]
 		thenCollect: [ :s | org packageNamed: s ]) 
 		sorted: [:a :b | a linesOfCode < b linesOfCode ].
 	pie := RSPieBuilder new
@@ -837,15 +837,14 @@ RSPieExamples >> example22RotatedAnimation [
 	animation := nil.
 	pie shape
 		color: TSScale category20b;
+		interactionDo: [ :i | i popupText: [ :obj| 
+			obj linesOfCode asString, ' LOC' ] ];
 		innerRadius: 70;
 		segmentSpacing: 0.5;
 		externalRadius: 220;
 		when: TSMouseClick do: [ [ animation toggle ] ].
+	pie label text: #name.
 	pie build.
-	labels := RSShapeBuilder label
-		text: #name;
-		elementsOn: data.
-	view addAll: labels.
 	animation := view animation
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
@@ -855,15 +854,80 @@ RSPieExamples >> example22RotatedAnimation [
 				b := att at: #b ifAbsentPut: [ e betaAngle ].
 				e alphaAngle: a + t.
 				e betaAngle: b + t.
-				l := labels at: e index.
+				l := pie labelElements at: e index.
 				ang := ((e alphaAngle + e betaAngle)/2) %360.
 				ext := l extent x/2 @ 0.
 				(ang between: 90 and: 270) ifFalse: [ ext := ext negated ].
 				l position: (e centroid: 80) - ext .
 			]
 		].
+	view add:(RSShapeBuilder label elementOn: pie totalSum asString, ' LOC').
 	view camera zoomToFit: 270 asPoint.
-	pie open.
+	view @ RSControlsView.
+	pie open setLabel: 'Roassal3 packages by #linesOfCode'
+
+
+
+]
+
+{ #category : #examples }
+RSPieExamples >> example23RotatedAnimation [
+	<script: 'self new example23RotatedAnimation'>
+	| data pie animation view lines |
+	data := './pharo-local/iceberg/ObjectProfile/Roassal3/src' asFileReference 
+		directories.
+	pie := RSPieBuilder new
+		objects: data;
+		slice: #size.
+	view := pie view.
+	animation := nil.
+	pie shape
+		color: TSScale category20b;
+		innerRadius: 70;
+		interactionDo: [ :i | i popupText: [ :obj| 
+			obj humanReadableSize ] ];
+		segmentSpacing: 0.5;
+		externalRadius: 220;
+		when: TSMouseClick do: [ [ animation toggle ] ].
+	pie label text: #basename.
+	pie build.
+	lines := RSEdgeBuilder polyline
+		border: (TSBorder new dashArray: #(3));
+		edgesOn: pie labelElements.
+	view addAll: lines.
+	view add: (RSShapeBuilder label 
+		elementOn: pie totalSum humanReadableSIByteSize).
+	animation := view animation
+		from: 0; to: 360; repeat; duration: 15 seconds;
+		onStepDo: [ :t | 
+			pie elements do: [ :e | | att a b l ext ang x p1 p2 p3 line |
+				att := e attributes.
+				a := att at: #a ifAbsentPut: [ e alphaAngle ].
+				b := att at: #b ifAbsentPut: [ e betaAngle ].
+				e alphaAngle: a + t.
+				e betaAngle: b + t.
+				l := pie labelElements at: e index.
+				ang := ((e alphaAngle + e betaAngle)/2) %360.
+				ext := l extent x/2 @ 0.
+				x := -250.
+				(ang between: 90 and: 270) ifFalse: [ 
+					ext := ext negated.
+					x := x negated ].
+				p1 := e centroid: 0.
+				p2 := e centroid: 80.
+				p3 := x @ p2 y.
+				line := lines at: e index.
+				line trachelShape 
+					controlPoints: { p1. p2. p3 }.
+				l position: p3-ext.
+			]
+		].
+	view camera zoomToFit: 270 asPoint.
+	view when: TSExtentChangedEvent do: [ 
+		view camera 
+			zoomToFit: view extent * 0.9
+			rectangle: (Rectangle center: 0@0 extent: 800@600) ].
+	pie open setLabel: 'Roassal3 packages by size in the file system'
 	
 
 

@@ -64,6 +64,11 @@ RSAnnounceableObject >> attributes [
 	^ attributes ifNil: [ attributes := Dictionary new ]
 ]
 
+{ #category : #attributes }
+RSAnnounceableObject >> attributesDo: block [
+	block value: self attributes.
+]
+
 { #category : #accessing }
 RSAnnounceableObject >> getInteractionsForClass: anInteractionClass [
 	"Return the Announcement subscriptions for the interaction"

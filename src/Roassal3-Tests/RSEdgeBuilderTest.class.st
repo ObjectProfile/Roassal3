@@ -1,3 +1,6 @@
+"
+I have tests for RSEdgeBuilder
+"
 Class {
 	#name : #RSEdgeBuilderTest,
 	#superclass : #TSTest,

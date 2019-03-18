@@ -704,3 +704,248 @@ RSAnimationExamples >> example12PerlinParticles [
 	w := v open.
 	w setLabel: 'Particles!!! :V'
 ]
+
+{ #category : #examples }
+RSAnimationExamples >> example13Arcs [
+	<script: 'self new example13Arcs'>
+	| view beta shape theta step size |
+	theta := 0.
+	step := 12.
+	size := 21.
+	view := RSView new.
+	view color: Color black.
+	beta := TSScale linear
+		domain: #(-1 1);
+		range: #(180 360).
+	shape := RSShapeBuilder arc
+		color: [:m | Color h: theta * 2 + (m * 10) s: 1 l: 0.5];
+		innerRadius: [ :m | m * step ];
+		externalRadius: [ :m | m * step + 5 ];
+		alphaAngle: 180;
+		betaAngle: [ :m | | offset |
+			offset := Float pi * 2 / size * m.
+			beta scale: (theta + offset) sin ].
+		
+	view addAll: (shape elementsOn: (1 to: size)).
+	view animation repeat onStepDo: [ :t |
+		theta := theta + 0.0523.
+		view elements do: [ :e |
+			shape 
+				updateElement: e withCommand: #betaAngle:;
+				updateElement: e withCommand: #color:
+			 ] ].
+	view when: TSExtentChangedEvent do: [ | s sc e |
+		s := (size * step + 5) * 2.
+		e := view extent.
+		sc := e x / s.
+		view camera
+			scale: sc.
+		view animation 
+			from: 0@0; 
+			to: 0@ (e y/sc "+ (s/2)"  )/2;
+			on: view camera set: #translateTo:.  ].
+	view open setLabel: 'Arc animation'.
+	
+
+
+
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example14C [
+	<script: 'self new example14C'>
+	| view shape step theta |
+	view := RSView new.
+	view color: Color black.
+	step := 15.
+	theta := 0.
+	shape := RSShapeBuilder arc
+		innerRadius: [ :m | m * step + 7];
+		externalRadius: [ :m | m * step + 10 ].
+	view addAll: (shape elementsOn: (1 to: 16) ).
+	view animation repeat onStepDo: [ :t |
+		theta := theta + 0.2.
+		view elements do: [ :e |
+			e 
+				alphaAngle: 30 + (theta * e model);
+				betaAngle: 300 + (theta * e model);
+				color: (Color h: theta * e model s: 1 l: 0.5) ] ].
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view open setLabel: 'C!!!'
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example15Sky [
+	<script: 'self new example15Sky'>
+	| view client image ext shape dots r frame box colors |
+	view := RSView new.
+	r := SharedRandom globalGenerator.
+	ext := 2200 @ 2200.
+	box := TSBox new
+		extent: ext;
+		position: 0 @ ext y / 2 negated;
+		paint:
+			(LinearGradientPaint new
+				colorRamp:
+					{(0 -> Color black).
+					(1 -> Color blue muchDarker)};
+				start: ext / 2 negated;
+				stop: ext / 2).
+	view addShape: box.
+	colors := TSScale linear
+		domain: #(5 15);
+		range: {'6A6569' . 'white'}.
+	shape := RSShapeBuilder ellipse
+		attributesDo: [ [ :a | 
+			a
+				at: #a put: (r rsNext: 0 and: 350);
+				at: #r put: (r rsNext: 3500 and: 6000) ] ];
+		size: [ r rsNext: 5 and: 15 ];
+		onElement;
+		color: [ :e | (colors scale: e width) alpha: (r rsNext: 0.1 and: 0.8) ].
+	dots := shape elementsOn: (1 to: 800).
+	view addAll: dots.
+	frame := 0.
+	view clearBackground: false.
+	(view animation duration: 5 seconds;onStepDo: [ :t| ])
+		when: TSAnimationEndEvent do: [ box remove ].
+	view animation repeat
+		onStepDo: [ :t | 
+			frame := frame + 0.1.
+			dots
+				do: [ :e | 
+					| ang radius |
+					ang := ((e attributes at: #a) + frame) degreesToRadians.
+					radius := e attributes at: #r.
+					e position: ang cos @ ang sin negated * radius + (2500 @ 3000) ] ].
+	(client := ZnEasy client)
+		url:
+			'http://www.transparentpng.com/download/mountain/68IzPF-mountain-clipart-png-photos.png';
+		accept: ZnMimeType imagePng;
+		signalProgress: true;
+		get.
+	image := ImageReadWriter formFromStream: client entity readStream.
+	view addShape: (TSBitmap new form: image).
+	view
+		when: TSExtentChangedEvent
+		do: [ | e s |
+			e := view extent.
+			s := e x / 2200.
+			"2200 x 800 = image extent"
+			view camera
+				scale: s;
+				translateTo: 0 @ (e y / s - 800) / 2 negated ].
+	view open setLabel: 'Star trails'
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example16ArcNoise [
+	<script: 'self new example16ArcNoise'>
+	| frame view perlin radius shape line points yscale |
+	frame := 0.
+	view := RSView new.
+	view color: Color black.
+	perlin := TSPerlinNoise new.
+	radius := TSScale linear domain: #(1 20); range: #(50 250).
+	shape := RSShapeBuilder arc 
+		color: Color white;
+		externalRadius: [ :m | radius scale: m ];
+		alphaAngle: 0;
+		onElement;
+		betaAngle: [ :e | | t |
+			t := (frame * 0.025) + (e externalRadius * 0.0005).
+			360 * (perlin noise: t and: 0.01) abs ];
+		innerRadius: [ :e | e externalRadius - 5 ].
+	view addAll: (shape elementsOn: (1 to: 20) ).
+	view addShape: (TSBox new 
+		color: (Color white alpha: 0.4);
+		cornerRadius: 7;
+		extent: 140@80;
+		position: 70@40;
+		isFixed: true ).
+		
+	points := OrderedCollection new.
+	yscale := TSScale linear domain: #(0 360); range: #(80 5).
+	
+	line := TSPolyline new
+		border: (TSBorder new  width: 2; paint: (LinearGradientPaint new
+			colorRamp:
+				{(0 -> Color red).
+				(0.5 -> Color yellow).
+				(1 -> Color green)};
+			start: 0@0;
+			stop: 0@80));
+		isFixed: true.
+	view addShape: line.
+		
+	view animation repeat; onStepDo: [ :t| | last | 
+		frame := frame + 0.2.
+		view elements do: [ :e | 
+			shape updateElement: e withCommand: #betaAngle:.
+			e color: (Color h: e betaAngle s: 0.5 v: 1).
+			
+			 ].
+		last := view elements last.
+		points add: (yscale scale: last betaAngle).
+		points size > 140 ifTrue: [ points removeFirst ].
+		line controlPoints: (points collectWithIndex: [:y :x | x@ y]).
+		 ].
+	
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view open setLabel: 'Arcs with Perlin noise'
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example17Retina [
+	<script: 'self new example17Retina'>
+	| r view perlin side angle circleSize ringSize label minR updateValues offset rad val radius shape |
+	view := RSView new.
+	view color: Color black.
+	minR := 0.08.
+	side := 900.
+	perlin := TSPerlinNoise new.
+	circleSize := ringSize := 100.
+	r := SharedRandom globalGenerator.
+	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
+	label := TSLabel new text: 'Now begin!'; fontSize: 30.
+	view addShape: label.
+	(view animation 
+		delay: 2 seconds;
+		from: Color white; to: Color transparent;
+		on: label set: #color:) when: TSAnimationEndEvent do: [
+			label remove.
+			view clearBackground: false].
+	updateValues := [ 
+		offset := r rsNext: 90.
+		rad := r rsNext: minR*side and: 1/ 2 sqrt*side.
+		val := rad / side * 100.
+		radius := ((rad / (side /2))-minR)*((perlin noise: val and: 0) abs) * side / 6.
+	].
+	updateValues value.
+	shape := RSShapeBuilder circle
+		size: [ radius ];
+		paint: nil;
+		borderDo: [ :m | [ :b | | theta |
+			theta := angle scale: m.
+			b color: (Color h: theta + offset s: 1 v: 1 alpha: 0.7) ] ];
+		position: [:m | | theta |
+			theta := (angle scale: m) degreesToRadians.
+			((theta cos @ theta sin) * rad).
+			].
+	view addAll: (shape elementsOn: (1 to: circleSize)).
+
+	(view animation 
+		delay: 4 seconds;
+		loops: ringSize; 
+		duration: 200 milliSeconds; 
+		onStepDo: [ :t | ])
+	 	when: TSAnimationLoopEvent do: [ :evt | 
+			evt animation currentLoop >= ringSize ifFalse: [ 
+				updateValues value.
+				view elements do: [ :e | shape updateElement: e ]]
+		].
+		
+	view when: TSExtentChangedEvent do: [ 
+		view camera zoomToFit: view extent rectangle: (Rectangle center: 0@0 extent: side@side) ].
+	view open setLabel: 'Retina (~˘.˘)~'.
+]

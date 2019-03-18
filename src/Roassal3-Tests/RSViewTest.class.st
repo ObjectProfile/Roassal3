@@ -1,3 +1,6 @@
+"
+I have tests for RSView
+"
 Class {
 	#name : #RSViewTest,
 	#superclass : #TSTest,

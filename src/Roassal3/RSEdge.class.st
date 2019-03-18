@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'from',
 		'to',
-		'attachPoint'
+		'attachPoint',
+		'controlPoints'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -34,6 +35,18 @@ RSEdge >> attachPoint [
 { #category : #accessing }
 RSEdge >> attachPoint: ap [
 	attachPoint := ap.
+]
+
+{ #category : #accessing }
+RSEdge >> controlPoints [ 
+	^ controlPoints
+]
+
+{ #category : #accessing }
+RSEdge >> controlPoints: aCollection [
+	controlPoints := aCollection.
+	controlPoints do: [ :cp | 
+		self setAnchor: nil element: cp ].
 ]
 
 { #category : #accessing }
@@ -77,7 +90,7 @@ RSEdge >> setAnchor: ref element: anObject [
 	(ref isNotNil and: [ anObject isPoint not ])
 		ifTrue: [ ref removeConnectedEdge: self ].
 	anObject ifNil: [ ^ nil ].
-	anObject isPoint
+	anObject isPoint | anObject isBlock
 		ifFalse: [ anObject addConnectedEdge: self ].
 	^ anObject
 ]
@@ -94,6 +107,14 @@ RSEdge >> to: anElement [
 
 { #category : #updating }
 RSEdge >> update [
+	trachelShape isControlPointsLine ifTrue: [ 
+		controlPoints ifNil: [ ^ self ].
+		trachelShape controlPoints: (controlPoints collect: [ :anObject | | v |
+			v := anObject value.
+			v class = RSElement ifTrue: [ v := v position ].
+			v ]).
+		^ self
+	].
 	trachelShape 
 		startPoint: (attachPoint startingPointOf: self);
 		endPoint: (attachPoint endingPointOf: self).

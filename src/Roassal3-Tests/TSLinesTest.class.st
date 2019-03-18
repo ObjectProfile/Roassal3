@@ -56,3 +56,10 @@ TSLinesTest >> testDrawSVGLine [
 		width: 2). 
 	c morph drawOnMockCanvas.
 ]
+
+{ #category : #running }
+TSLinesTest >> testPolyline [
+	c addShape: (TSPolyline new
+		controlPoints: {0@0. 100@100. 100@ -100}).
+	c morph drawOnMockCanvas.
+]

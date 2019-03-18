@@ -166,6 +166,19 @@ TSAthensRenderer >> buildLinePath: line [
 ]
 
 { #category : #'creating path' }
+TSAthensRenderer >> buildPolyinePath: path [
+	| first |
+	first := true.
+	builder absolute.
+	path controlPoints do: [ :point |
+		first ifTrue: [ 
+			first := false.
+			builder moveTo: point ]
+		ifFalse: [ 
+			builder lineTo: point ] ].
+]
+
+{ #category : #'creating path' }
 TSAthensRenderer >> buildRingPath: ring [
 	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2 rp da da0 da1 rc x1 x2 x3 x4 y1 y2 y3 y4 rc0 rc1 t41 t23  t14 t32 |
 	epsilon := 1e-12.

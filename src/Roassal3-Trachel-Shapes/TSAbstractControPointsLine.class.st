@@ -9,15 +9,16 @@ Class {
 
 { #category : #accessing }
 TSAbstractControPointsLine >> controlPoints [
-	^ controlPoints
+	^ controlPoints ifNil: [ #() ].
 ]
 
 { #category : #accessing }
 TSAbstractControPointsLine >> controlPoints: anArrayOfPoints [
-	self
-		assert: anArrayOfPoints notNil 
-		description: 'The argument can not be nil';
-		assert: (anArrayOfPoints size between: 2 and: 4)
-		description: 'The array size must be between 2 and 4 points'.
-	controlPoints := anArrayOfPoints. 
+	controlPoints := anArrayOfPoints.
+	self resetPath.
+]
+
+{ #category : #testing }
+TSAbstractControPointsLine >> isControlPointsLine [
+	^ true
 ]
