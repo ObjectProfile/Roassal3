@@ -42,23 +42,23 @@ TSShapeExamples >> example02BasicEllipses [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example03BasicGroup [
-	<script: 'self new example03BasicGroup'>
+TSShapeExamples >> example03BasicComposite [
+	<script: 'self new example03BasicComposite'>
 
-	| c g |
+	| c com |
 	c := TSCanvas new.
-	g := TSGroup new.
-	g add: (TSBox new
+	com := TSComposite new.
+	com add: (TSBox new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
 		yourself).
-	g add: (TSBox new
+	com add: (TSBox new
 		position: 100@100;
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
 		
-	c addShape: g.	
+	c addShape: com.	
 	c addShape: (TSEllipse new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
@@ -72,26 +72,26 @@ TSShapeExamples >> example03BasicGroup [
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example04BasicGroup [
-	<script: 'self new example04BasicGroup'>
+TSShapeExamples >> example04BasicComposite [
+	<script: 'self new example04BasicComposite'>
 
-	| c g |
+	| c com |
 	c := TSCanvas new.
-	g := TSGroup new.
-	g add: (TSBox new
+	com := TSComposite new.
+	com add: (TSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
 		extent: 50@100;
 		yourself).
-	g add: (TSBox new
+	com add: (TSBox new
 		position: 0 @ 0;
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
 		
-	g position: 100@100.
+	com position: 100@100.
 	
-	c addShape: g.	
+	c addShape: com.	
 	c addShape: (TSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
@@ -175,7 +175,7 @@ TSShapeExamples >> example06BasicLabels [
 TSShapeExamples >> example07EventsMouseMoveDrag [
 	<script: 'self new example07EventsMouseMoveDrag'>
 
-	| c ellipse a b drag update |
+	| c ellipse a b update anim |
 	c := TSCanvas new.
 	ellipse := TSEllipse new
 		radius: 40;
@@ -183,16 +183,15 @@ TSShapeExamples >> example07EventsMouseMoveDrag [
 	c addShape: ellipse.
 	a := Color colorFrom: '12A288'.
 	b := Color colorFrom: 'AB2567'.
-	drag := false.
-	update := [ :evt |
+	update := [ :evt :color |
 		ellipse 
-			color: (drag ifTrue: [ a ] ifFalse: [b ]);
-			position: evt position.
-		c signalUpdate ].
+			color: color;
+			position: evt position;
+			signalUpdate].
+	anim := nil.
 	c
-		when: TSMouseMove do: [ :evt | update value: evt.  ];
-		when: TSMouseDragStart do: [ :evt| drag := true. ];
-		when: TSMouseDragEnd do: [ :evt | drag := false. ].
+		when: TSMouseDragging do: [ :evt | update value: evt value: a ];
+		when: TSMouseMove do: [ :evt | update value: evt value: b  ].
 	c clearBackground: false.
 	
 	c open.

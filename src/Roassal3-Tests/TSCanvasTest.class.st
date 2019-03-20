@@ -39,7 +39,7 @@ TSCanvasTest >> testDrawCanvas [
 { #category : #running }
 TSCanvasTest >> testDrawCanvasWithGroup [
 	| g |
-	g := TSGroup new.
+	g := TSComposite new.
 	g add: (TSBox new
 		extent: 100@100;
 		yourself).

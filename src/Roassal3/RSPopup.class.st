@@ -21,22 +21,20 @@ RSPopup class >> text: anObject [
 
 { #category : #hooks }
 RSPopup >> createOrGetPopupOn: anElement [
-	| textElement boxElement att |
-	att := anElement view attributes.
+	| textElement boxElement att g element |
+	att := anElement topParent view attributes.
 	att
 		at: #popup
 		ifPresent: [ :popup | ^ popup ].
-		
+	g := TSGroup new.
 	textElement := label elementOn: anElement model.
 	boxElement := box elementOn: textElement.
-	
-	att at: #popup put: boxElement.
-	boxElement isFixed: true.
-	textElement isFixed: true.
-	anElement view 
-		add: boxElement;
-		add: textElement.
-	^ boxElement
+	g add: boxElement; add: textElement.
+	element := g asElement.
+	att at: #popup put: element.
+	element isFixed: true.
+	anElement topParent view add: element.
+	^ element
 	
 ]
 
@@ -46,10 +44,9 @@ RSPopup >> initialize [
 	label := RSShapeBuilder label.
 	box := RSShapeBuilder box
 		color: (Color colorFrom: 'efefef');
+		cornerRadius: 5;
 		border: (TSBorder new color: Color gray);
-		extent: [ :m | m extent + 5 ];
-		when: TSPositionChangedEvent do: [ :m | [ :evt | m translateTo: evt newPosition ] ];
-		when: TSShapeRemovedEvent do: [ :m | [ :evt | m remove ] ].
+		extent: [ :m | m extent + 5 ].
 ]
 
 { #category : #accessing }
@@ -68,7 +65,7 @@ RSPopup >> onElement: anElement [
 		when: TSMouseDragging do: remove;
 		when: TSMouseMove do: [ :evt | | popup e p |
 			popup := self createOrGetPopupOn: anElement.
-			p := (anElement view camera 
+			p := (anElement topParent camera 
 				fromSpaceToPixel: evt position).
 			e :=  (popup extent /2) + 5.
 			p x +  popup extent x > popup view extent x ifTrue: [ 
@@ -83,9 +80,10 @@ RSPopup >> onElement: anElement [
 
 { #category : #hooks }
 RSPopup >> removePopupOn: anElement [ 
-	| att popup |
-	anElement view ifNil: [ ^ self ].
-	att := anElement view attributes.
+	| att popup view |
+	view := anElement topParent view.
+	view ifNil: [ ^ self ].
+	att := view attributes.
 	(att includesKey: #popup) ifFalse: [ ^ self ].
 	popup := att at: #popup.
 	

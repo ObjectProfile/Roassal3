@@ -26,6 +26,14 @@ RSShapeBuilder class >> circle [
 ]
 
 { #category : #'instance creation' }
+RSShapeBuilder class >> composite [
+	^ self new
+		innerClass: TSComposite;
+		elementClass: RSElement;
+		yourself 
+]
+
+{ #category : #'instance creation' }
 RSShapeBuilder class >> ellipse [
 	^ self new
 		shapeClass: TSEllipse;

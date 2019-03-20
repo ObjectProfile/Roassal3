@@ -7,9 +7,8 @@ TSGroup >> asElement [
 
 { #category : #'*Roassal3' }
 TSGroup >> asElementOn: model [
-	| el |
-	el := RSElement new 
-		model: model.
-	el trachelShape: self.
-	^ el
+	^ RSElement new 
+		model: model;
+		trachelShape: (TSComposite new 
+			shapes: self).
 ]

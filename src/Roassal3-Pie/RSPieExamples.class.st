@@ -519,7 +519,8 @@ RSPieExamples >> example16MyDay [
 	pie view color: (Color colorFrom: '1a1b3a').
 	pie shape
 		externalRadius: 200;
-		interactionDo: [:i | i popupText: [ :obj | obj first capitalized ] ];
+		interactionDo: [:i | i popupText: [ :obj | 
+				obj first capitalized, '. ', obj third asString, ' hrs' ] ];
 		innerRadius: 140;
 		color: color;
 		segmentSpacing: 1.
@@ -537,7 +538,7 @@ RSPieExamples >> example16MyDay [
 		text: #asUppercase;
 		fontName: 'Source Code Pro'.
 	view 
-		add: (title elementOn: 'Milton');
+		add: (title elementOn: 'Milton''s');
 		add: (title elementOn: 'Day').
 	view elements last translateTo: 0@30.
 	pie open.
@@ -573,7 +574,7 @@ RSPieExamples >> example17PieLabels [
 { #category : #examples }
 RSPieExamples >> example18ManyPies [
 	<script: 'self new example18ManyPies'>
-	| data pie title color view |
+	| data pie title color view elements |
 	data := self esportPrizepool.
 	title :=RSShapeBuilder label
 		fontSize: 20;
@@ -586,30 +587,29 @@ RSPieExamples >> example18ManyPies [
 		innerRadius: 100;
 		color: [ :obj | color scale: obj key ];
 		segmentSpacing: 0.5.
-
 	pie label
 		text: #key;
 		rotated.
-	data keysAndValuesDo: [ :k :v | 
-		| elements sum e |
-		pie 
-			objects: v;
-			slice: #value;
-			build.
-		sum := pie totalSum.
-		pie elements @ (RSPopup text: [ :obj|
-			obj value asStringWithCommas , '$, ' ,
-			(obj value * 100 / sum) rounded asString, '%' ] ).
-		elements := pie elements, pie labelElements.
-		elements do: #remove.
-		elements add: (title elementOn: k).
-		
-		e := RSElement new.
-		e trachelShape: (elements collect: #trachelShape).
-		view add: e.
-		
-		 ].
-	view showEncompassingRectangles.
+	elements := RSShapeBuilder composite
+		shapes: [ :m | | sum shapes |
+			shapes := TSGroup new.
+			pie
+				view: shapes;
+				objects: (data at: m);
+				slice: #value;
+				build.
+			sum := pie totalSum.
+			pie elements @ (RSPopup text: [ :obj|
+				obj value asStringWithCommas , '$, ' ,
+				(obj value * 100 / sum) rounded asString, '%' ] ).
+			shapes add: (title elementOn: m).
+			shapes ];
+		elementsOn: data keys.
+	"elements do: [ :e | e scaleBy: 0.5@1.
+		e matrix shy: 0.25 ]."
+	view addAll: elements.
+	elements @RSDraggable.
+	"view showEncompassingRectangles."
 	RSGridLayout on: view elements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view @ RSControlsView.
@@ -932,4 +932,127 @@ RSPieExamples >> example23RotatedAnimation [
 
 
 
+]
+
+{ #category : #examples }
+RSPieExamples >> example24ManyPies [
+	<script: 'self new example24ManyPies'>
+	| data labels maxSum radius color view composite pie title sumLabel format |
+	"data processing"
+	data := self usaPopulation.
+	labels := data first.
+	maxSum := 0.
+	data := (data allButFirst collect: [ :line | | arr sum |
+		arr :=  Array new: line size.
+		sum := 0.
+		2 to: line size do: [ :n | | v |
+			v := (line at: n) asNumber.
+			sum := sum + v.
+			arr at: n put: v ].
+		arr at: 1 put: line first -> sum.
+		maxSum := maxSum max: sum.
+		arr ]) sorted: [:a :b | a first value > b first value ].
+	
+	"the visualization"
+	radius := TSScale sqrt domain: { 0. maxSum }; range: #(0 220).
+	color := TSScale eva10.
+	view := RSView new.
+	pie := RSPieBuilder new.
+	pie shape
+		onElement;
+		color: [ :e | color scale: e index ];
+		segmentSpacing: 0.5.
+	title := RSShapeBuilder label
+		fontSize: 12;
+		bold;
+		position: 0@ -6;
+		text: [:obj | obj first key ].
+
+	format := [ :n | 
+		n < 1000000 
+			ifTrue: [ (n / 1000) asInteger asString,'K' ]
+			ifFalse: [ (n / 1000000) asInteger asString,'M'  ] ].
+	sumLabel := RSShapeBuilder label
+		fontSize: 11;
+		position: 0@5;
+		text: [ :obj | format value: obj first value ].
+	composite := RSShapeBuilder composite shapes: [ :m | | g |
+		g := TSGroup new.
+		pie shape 
+			externalRadius: [ radius scale: m first value ];
+			innerRadius: [ :e| e externalRadius * 0.6 ].
+		pie 
+			view: g;
+			objects: m allButFirst;
+			slice: #yourself;
+			build.
+		pie elements do: [ :e  | e @ (RSPopup text: [:obj | 
+			(labels at: e index+1),': ',obj asString ] ) ].
+		g add: (title elementOn: m).
+		g add: (sumLabel elementOn: m).
+		g
+		].
+	view addAll: (composite elementsOn: data).
+	RSFlowLayout on: view elements.
+	view @ RSControlsView.
+	view zoomToFit.
+	view open setLabel: 'Usa population by State'.
+]
+
+{ #category : #data }
+RSPieExamples >> usaPopulation [
+	| str |
+	str := 'State,Under 5 Years,5 to 13 Years,14 to 17 Years,18 to 24 Years,25 to 44 Years,45 to 64 Years,65 Years and Over
+AL,310504,552339,259034,450818,1231572,1215966,641667
+AK,52083,85640,42153,74257,198724,183159,50277
+AZ,515910,828669,362642,601943,1804762,1523681,862573
+AR,202070,343207,157204,264160,754420,727124,407205
+CA,2704659,4499890,2159981,3853788,10604510,8819342,4114496
+CO,358280,587154,261701,466194,1464939,1290094,511094
+CT,211637,403658,196918,325110,916955,968967,478007
+DE,59319,99496,47414,84464,230183,230528,121688
+DC,36352,50439,25225,75569,193557,140043,70648
+FL,1140516,1938695,925060,1607297,4782119,4746856,3187797
+GA,740521,1250460,557860,919876,2846985,2389018,981024
+HI,87207,134025,64011,124834,356237,331817,190067
+ID,121746,201192,89702,147606,406247,375173,182150
+IL,894368,1558919,725973,1311479,3596343,3239173,1575308
+IN,443089,780199,361393,605863,1724528,1647881,813839
+IA,201321,345409,165883,306398,750505,788485,444554
+KS,202529,342134,155822,293114,728166,713663,366706
+KY,284601,493536,229927,381394,1179637,1134283,565867
+LA,310716,542341,254916,471275,1162463,1128771,540314
+ME,71459,133656,69752,112682,331809,397911,199187
+MD,371787,651923,316873,543470,1556225,1513754,679565
+MA,383568,701752,341713,665879,1782449,1751508,871098
+MI,625526,1179503,585169,974480,2628322,2706100,1304322
+MN,358471,606802,289371,507289,1416063,1391878,650519
+MS,220813,371502,174405,305964,764203,730133,371598
+MO,399450,690476,331543,560463,1569626,1554812,805235
+MT,61114,106088,53156,95232,236297,278241,137312
+NE,132092,215265,99638,186657,457177,451756,240847
+NV,199175,325650,142976,212379,769913,653357,296717
+NH,75297,144235,73826,119114,345109,388250,169978
+NJ,557421,1011656,478505,769321,2379649,2335168,1150941
+NM,148323,241326,112801,203097,517154,501604,260051
+NY,1208495,2141490,1058031,1999120,5355235,5120254,2607672
+NC,652823,1097890,492964,883397,2575603,2380685,1139052
+ND,41896,67358,33794,82629,154913,166615,94276
+OH,743750,1340492,646135,1081734,3019147,3083815,1570837
+OK,266547,438926,200562,369916,957085,918688,490637
+OR,243483,424167,199925,338162,1044056,1036269,503998
+PA,737462,1345341,679201,1203944,3157759,3414001,1910571
+RI,60934,111408,56198,114502,277779,282321,147646
+SC,303024,517803,245400,438147,1193112,1186019,596295
+SD,58566,94438,45305,82869,196738,210178,116100
+TN,416334,725948,336312,550612,1719433,1646623,819626
+TX,2027307,3277946,1420518,2454721,7017731,5656528,2472223
+UT,268916,413034,167685,329585,772024,538978,246202
+VT,32635,62538,33757,61679,155419,188593,86649
+VA,522672,887525,413004,768475,2203286,2033550,940577
+WA,433119,750274,357782,610378,1850983,1762811,783877
+WV,105435,189649,91074,157989,470749,514505,285067
+WI,362277,640286,311849,553914,1487457,1522038,750146
+WY,38253,60890,29314,53980,137338,147279,65614'.
+	^ str lines collect: [ :line |  line trimBoth splitOn: ',' ].
 ]

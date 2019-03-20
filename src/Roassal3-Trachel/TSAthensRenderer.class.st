@@ -432,11 +432,11 @@ TSAthensRenderer >> visitBoundingShape: shape [
 ]
 
 { #category : #visiting }
-TSAthensRenderer >> visitGroup: group [
+TSAthensRenderer >> visitComposite: composite [
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas pathTransform
-			multiplyBy: group matrix asFloatTransform.
-		group do: [ :child |
+			multiplyBy: composite matrix asFloatTransform.
+		composite shapes do: [ :child |
 			child accept: self ].
 		].
 ]
@@ -448,11 +448,19 @@ TSAthensRenderer >> visitLabel: label [
 			multiplyBy: label matrix asFloatTransform;
 			translateBy: ((label textWidth / -2) @ (label textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ label descent negated) asFloatPoint.
-		athensCanvas 
-			setFont: label font;
-			setPaint: label paint;
-			drawString: label text.
-		].
+		(label border isNil or: [label border width <= 0]) ifTrue:  [ 
+			athensCanvas 
+				setPaint: label paint;
+				setFont: label font;
+				drawString: label text.
+		] ifFalse: [ | f |
+			f := CairoScaledFont fromFreetypeFont: label font realFont.
+			f lock.
+			"athensCanvas setPaint: label paint."
+			f unlock.
+		] ].
+	
+
 ]
 
 { #category : #visiting }

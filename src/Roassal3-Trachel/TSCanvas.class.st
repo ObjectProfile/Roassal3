@@ -15,7 +15,8 @@ Class {
 		'morph',
 		'clearBackground',
 		'animations',
-		'showRectangles'
+		'showRectangles',
+		'view'
 	],
 	#category : #'Roassal3-Trachel-Core'
 }
@@ -45,7 +46,7 @@ TSCanvas >> addFixedShape: aShape [
 
 { #category : #'adding removing shapes' }
 TSCanvas >> addShape: aShape [
-	aShape addedIn: self.
+	aShape addedIn: self
 ]
 
 { #category : #animations }
@@ -226,6 +227,11 @@ TSCanvas >> openInWindowSized: anExtentAsPoint [
 	^ window
 ]
 
+{ #category : #accessing }
+TSCanvas >> parent [
+	^ self
+]
+
 { #category : #animations }
 TSCanvas >> playAnimations [
 	| shouldClean |
@@ -253,7 +259,7 @@ TSCanvas >> removeFixedShape: aShape [
 TSCanvas >> removeShape: shape [
 	| evt |
 	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
-	shape canvas: nil.
+	shape parent: nil.
 	evt := TSShapeRemovedEvent new shape: shape.
 	self announce: evt.
 	shape announce: evt.
@@ -269,39 +275,16 @@ TSCanvas >> setAsFixed: aShape [
 ]
 
 { #category : #accessing }
-TSCanvas >> shapeForPosition: position [
-	"Return the Trachel shape located at position"
-	fixedShapes reverseDo: [ :s | 
-		(s includesPoint: position) ifTrue: [ ^ s ] ].
-
-	shapes reverseDo: [ :s | 
-		(s includesPoint: position) ifTrue: [ ^ s ] ].
-	^ self
-]
-
-{ #category : #accessing }
-TSCanvas >> shapeForPositionInPixels: position [
-	"position is in pixel, it corresponds to the physical location in the window.
-	e.g., 0 @ 0 is top left of the window"
-	fixedShapes reverseDo: [ :s | 
-		(s includesPoint: position) ifTrue: [ ^ s ] ].
-
-	shapes reverseDo: [ :s | 
-		(s includesPoint: (self camera fromPixelToSpace: position)) ifTrue: [ ^ s ] ].
-	^ self
-]
-
-{ #category : #accessing }
 TSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| pos |
-	fixedShapes reverseDo: [ :s | 
-		((s includesPoint: position) and: [ s announcer handleEventClass: eventClass ]) ifTrue: [ ^ s ] ].
-	pos := self camera fromPixelToSpace: position.
-	shapes reverseDo: [ :s | 
-		((s includesPoint: pos) 
-			and: [ s announcer handleEventClass: eventClass ]) ifTrue: [ ^ s ] ].
+	| block |
+	block := [ :list :pos| 
+		list reverseDo: [ :s | | shape |
+			shape := s shapeWithAction: eventClass forPosition: pos.
+			shape ifNotNil: [ ^ shape ] ] ].
+	block value: fixedShapes value: position.
+	block value: shapes value: (self camera fromPixelToSpace: position).
 	^ self
 ]
 
@@ -309,14 +292,15 @@ TSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 TSCanvas >> shapeWithActionForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| pos |
-	fixedShapes reverseDo: [ :s | 
-		((s includesPoint: position) and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
-	pos := self camera fromPixelToSpace: position.
-	shapes reverseDo: [ :s | 
-		((s includesPoint: pos) 
-			and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
+	| block |
+	block := [ :list :pos |
+		list reverseDo: [ :s | | shape |
+			shape := s shapeWithActionForPosition: pos.
+			shape ifNotNil: [^ shape ] ] ].
+	block value: fixedShapes value: position.
+	block value: shapes value: (self camera fromPixelToSpace: position).
 	^ self
+	
 ]
 
 { #category : #accessing }
@@ -342,6 +326,21 @@ TSCanvas >> signalUpdate [
 { #category : #animations }
 TSCanvas >> tAnimation [ 
 	^ TSTransitionAnimation new.
+]
+
+{ #category : #accessing }
+TSCanvas >> topParent [
+	^ self
+]
+
+{ #category : #accessing }
+TSCanvas >> view [
+	^ view
+]
+
+{ #category : #accessing }
+TSCanvas >> view: aRSView [
+	view := aRSView
 ]
 
 { #category : #events }

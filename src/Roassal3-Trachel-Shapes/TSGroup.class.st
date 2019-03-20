@@ -6,8 +6,6 @@ Class {
 	#name : #TSGroup,
 	#superclass : #OrderedCollection,
 	#instVars : [
-		'isFixed',
-		'matrix',
 		'elementFromModelCache'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
@@ -16,11 +14,6 @@ Class {
 { #category : #converting }
 TSGroup >> @ int [
 	self do: [ :e | e @ int ].
-]
-
-{ #category : #visiting }
-TSGroup >> accept: visitor [
-	visitor visitGroup: self.
 ]
 
 { #category : #accessing }
@@ -33,13 +26,6 @@ TSGroup >> add: element [
 TSGroup >> addAll: elements [
 	self resetElementFromModelCache.
 	^ super addAll: elements
-]
-
-{ #category : #adding }
-TSGroup >> addedIn: aCanvas [
-	self isFixed
-		ifTrue: [ aCanvas addFixedShape: self ]
-		ifFalse: [ aCanvas addBasicShape: self ].
 ]
 
 { #category : #accessing }
@@ -113,8 +99,7 @@ TSGroup >> encompassingRectangle [
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
 		ifNotEmpty: [ 
 			| rec |
-			rec := Rectangle merging: (self collect: #encompassingRectangle).
-			Rectangle center: self position extent: rec extent ]
+			rec := Rectangle merging: (self collect: #encompassingRectangle) ]
 ]
 
 { #category : #accessing }
@@ -127,51 +112,10 @@ TSGroup >> height [
 	^ self extent y
 ]
 
-{ #category : #testing }
-TSGroup >> includesPoint: aPoint [
-	"Return true or false"
-	^ false
-]
-
-{ #category : #accessing }
-TSGroup >> isFixed [ 
-	^ isFixed ifNil: [ isFixed := false ].
-]
-
-{ #category : #accessing }
-TSGroup >> isFixed: aBool [
-	isFixed := aBool
-]
-
-{ #category : #matrix }
-TSGroup >> matrix [
-	^ matrix ifNil: [ matrix := AthensAffineTransform new ].
-]
-
-{ #category : #matrix }
-TSGroup >> matrix: aMatrix [
-	matrix := aMatrix
-]
-
-{ #category : #matrix }
-TSGroup >> position [ 
-	^ self matrix translation
-]
-
-{ #category : #matrix }
-TSGroup >> position: aPoint [
-	self matrix translation: aPoint
-]
-
 { #category : #accessing }
 TSGroup >> resetElementFromModelCache [
 	"Reset the cache"
 	elementFromModelCache := nil
-]
-
-{ #category : #matrix }
-TSGroup >> translateTo: aPoint [
-	self position: aPoint.
 ]
 
 { #category : #accessing }

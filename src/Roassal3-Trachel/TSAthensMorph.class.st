@@ -109,8 +109,8 @@ TSAthensMorph >> drawShapes [
 TSAthensMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
 	| relativePosition trEvent shape |
 	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
-
+	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition. 
+	
 	trEvent := anEventClass fromEvent: aMorphicEvent.
 	trEvent
 		morph: self;
@@ -118,22 +118,6 @@ TSAthensMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMo
 		shape: shape;
 		position: relativePosition.
 	^ trEvent
-]
-
-{ #category : #'event-processed' }
-TSAthensMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent under: aShape [
-	| relativePosition shape |
-	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self
-		shapeWithAction: anActionClass
-		forPositionInPixels: relativePosition
-		under: aShape.
-	^ (anEventClass fromEvent: aMorphicEvent)
-		morph: self;
-		canvas: trachelCanvas;
-		shape: shape;
-		position: relativePosition;
-		yourself
 ]
 
 { #category : #'event-processed' }
@@ -292,7 +276,8 @@ TSAthensMorph >> mouseMove: evt [
 { #category : #'event handling' }
 TSAthensMorph >> mouseUp: evt [
 	self isDragging
-		ifTrue: [ self trMouseDragEnd: evt ].
+		ifTrue: [ self trMouseDragEnd: evt ]
+		ifFalse: [ self trMouseUp: evt ].
 	evt wasHandled: true
 ]
 
@@ -347,12 +332,6 @@ TSAthensMorph >> shapeForPositionInPixels: point [
 TSAthensMorph >> shapeWithAction: eventClass forPositionInPixels: position [
 	"Return the shape with event handler located that contains point"
 	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position
-]
-
-{ #category : #accessing }
-TSAthensMorph >> shapeWithAction: eventClass forPositionInPixels: position under: aShape [
-	"Return the shape with event handler located that contains point"
-	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position under: aShape
 ]
 
 { #category : #accessing }
@@ -487,11 +466,12 @@ TSAthensMorph >> trMouseDragging: aMorphicEvent [
 	step := aMorphicEvent position - eventBeginingDragging position.
 
 	trEvent := self eventOfClass: TSMouseDragging from: aMorphicEvent.
+	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
 	trEvent step: step.
 
 	shapeBeingPointed ifNil: [ shapeBeingPointed := trEvent shape ].
 	"If the element was removed during the drag then cancel the event"
-	shapeBeingPointed canvas ifNil: [
+	shapeBeingPointed parent ifNil: [
 		eventBeginingDragging := nil.
 		shapeBeingPointed := nil.
 		^ self ].
@@ -520,6 +500,18 @@ TSAthensMorph >> trMouseLeave: aMorphicEvent [
 TSAthensMorph >> trMouseMove: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: TSMouseMove from: aMorphicEvent.
+	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent shape announce: trEvent.
+]
+
+{ #category : #'event-processed' }
+TSAthensMorph >> trMouseUp: aMorphicEvent [
+	| trEvent |
+	trEvent := self
+		mouseEventOfClass: TSMouseUp
+		ifLeftButton: TSMouseUpLeft  
+		ifRightButton: TSMouseUpRight
+		from: aMorphicEvent.
 	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
 	trEvent shape announce: trEvent.
 ]

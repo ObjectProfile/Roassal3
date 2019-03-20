@@ -78,7 +78,7 @@ RSShapedObject >> trachelShape: aShape [
 	trachelShape := aShape.
 	old ifNil: [ ^ self ].
 	aShape loadShape: old.
-	old canvas shapes replaceAll: old with: trachelShape.
+	old parent shapes replaceAll: old with: trachelShape.
 	
 ]
 

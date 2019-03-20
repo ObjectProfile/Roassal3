@@ -121,4 +121,5 @@ RSView >> removeElement: anElement [
 { #category : #accessing }
 RSView >> setCanvas: aTrachelCanvas [
 	trCanvas := aTrachelCanvas.
+	trCanvas view: self.
 ]

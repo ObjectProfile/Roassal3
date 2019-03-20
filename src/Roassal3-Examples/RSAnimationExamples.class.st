@@ -907,8 +907,13 @@ RSAnimationExamples >> example17Retina [
 	circleSize := ringSize := 100.
 	r := SharedRandom globalGenerator.
 	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
-	label := TSLabel new text: 'Now begin!'; fontSize: 30.
+	label := TSLabel new text: 'Now begin!'; color: Color white;fontSize: 40.
 	view addShape: label.
+	(view animation 
+		delay: 2 seconds; 
+		from: 40; 
+		to: 12; 
+		on: label set:#fontSize: ).
 	(view animation 
 		delay: 2 seconds;
 		from: Color white; to: Color transparent;
@@ -940,12 +945,70 @@ RSAnimationExamples >> example17Retina [
 		duration: 200 milliSeconds; 
 		onStepDo: [ :t | ])
 	 	when: TSAnimationLoopEvent do: [ :evt | 
-			evt animation currentLoop >= ringSize ifFalse: [ 
-				updateValues value.
-				view elements do: [ :e | shape updateElement: e ]]
+			updateValues value.
+			view elements do: [ :e | shape updateElement: e ]
 		].
 		
 	view when: TSExtentChangedEvent do: [ 
 		view camera zoomToFit: view extent rectangle: (Rectangle center: 0@0 extent: side@side) ].
 	view open setLabel: 'Retina (~˘.˘)~'.
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example18SpaceDandy [
+	<script: 'self new example18SpaceDandy'>
+	| random extent diagonal rotation init drawDist view shape elements |
+	random := SharedRandom globalGenerator.
+	extent := 800@600.
+	diagonal := ((extent x * extent x)+ (extent y* extent y)) sqrt / 2.
+	rotation := 0.
+	init := [ :e | | n |
+		e attributes 
+			at: #l put: 1;
+			at: #n put: (n := random rsNext: 1 and: extent x/2);
+			at: #r put: (random rsNext: Float pi * 2);
+			at: #off put: (random rsNext: 90);
+			at: #o put: (random rsNext: 1 and: (random rsNext: 1 and: extent x / n ))  ].
+	drawDist := [ :att | | n o |
+		n := att at: #n.
+		o := att at: #o.
+		(n / o) arcTan * extent x / (Float pi / 2)].
+	view := RSView new.
+	view color: Color black.
+	shape := RSShapeBuilder ellipse
+		color: Color white.
+	
+	elements := shape elementsOn: (1 to: 500).
+	elements do: [ :e | init value: e ].
+	view addAll: elements.
+	view addShape: (TSLabel new 
+		color: (Color white alpha: 0.4);
+		fontSize: 100;
+		border: (TSBorder new color: Color white);
+		bold;
+		text: 'Pharo').
+	view animation repeat onStepDo: [ :t|
+		rotation := rotation - 0.002.
+		elements do: [ :e | | l o r d off | 
+			l := (e attributes at: #l)+1.
+			e attributes at: #l put: l.
+			r := (e attributes at: #r) + rotation.
+			o := e attributes at: #o.
+			off := e attributes at: #off.
+			d := drawDist value: e attributes.
+			
+			"e color: (Color white alpha: d/ diagonal)."
+			e color: ((Color h: (e attributes at: #r) radiansToDegrees+off s: 1 v: 0.5) 
+				alpha: d / diagonal).
+			e size: extent x/o/8.
+			e position: (r cos @ r sin) * d.
+			e attributes at: #o put: o - 0.07.
+			(drawDist value: e attributes) > diagonal ifTrue: [ init value: e ].
+			].
+		 ].
+	view when: TSExtentChangedEvent do: [ 
+		view camera
+			zoomToFit: view extent 
+			rectangle: (Rectangle center: 0@0 extent: extent) ].
+	view open setLabel: 'Space :D'.
 ]

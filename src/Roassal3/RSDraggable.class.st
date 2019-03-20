@@ -11,7 +11,7 @@ Class {
 RSDraggable >> onElement: e [
 	| d |
 	e when: TSMouseDragging do: [ :evt |
-		d := e canvas camera distanceFromPixelToSpace: evt step. 
+		d := e parent camera distanceFromPixelToSpace: evt step. 
 		e translateBy: d.
 		e signalUpdate.
 		 ].

@@ -70,12 +70,13 @@ TSGroupTest >> testCache04 [
 
 { #category : #tests }
 TSGroupTest >> testDrawGroup [
-	| g c |
+	| g c com |
 	c := TSCanvas new.
 	g := TSGroup new.
 	g add: TSBox new.
-	
-	c addShape: g.
+	com := TSComposite new
+		shapes: g.
+	c addShape: com.
 	self assert: c numberOfShapes equals: 1.
 	c morph drawOnMockCanvas.
 ]

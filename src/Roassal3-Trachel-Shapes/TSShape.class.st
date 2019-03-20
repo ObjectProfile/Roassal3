@@ -9,7 +9,7 @@ Class {
 		'path',
 		'border',
 		'announcer',
-		'canvas',
+		'parent',
 		'isFixed'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
@@ -20,7 +20,8 @@ TSShape >> addedIn: aCanvas [
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
 		ifFalse: [ aCanvas addBasicShape: self ].
-	canvas := aCanvas.
+	parent ifNotNil: [ self remove ].
+	parent := aCanvas.
 ]
 
 { #category : #animation }
@@ -30,7 +31,7 @@ TSShape >> animation [
 
 { #category : #animation }
 TSShape >> animation: animation [
-	canvas animation: animation.
+	parent animation: animation.
 	^ animation
 ]
 
@@ -65,16 +66,6 @@ TSShape >> border: aBorder [
 TSShape >> borderDo: aBlock [
 	border ifNil: [ border := TSBorder new ].
 	aBlock value: border
-]
-
-{ #category : #accessing }
-TSShape >> canvas [
-	^ canvas
-]
-
-{ #category : #accessing }
-TSShape >> canvas: aCanvas [
-	canvas := aCanvas 
 ]
 
 { #category : #accessing }
@@ -133,7 +124,7 @@ TSShape >> isFixed: aBool [
 
 { #category : #testing }
 TSShape >> isInACanvas [
-	^ canvas notNil
+	^ parent notNil
 ]
 
 { #category : #actions }
@@ -149,6 +140,16 @@ TSShape >> paint [
 { #category : #accessing }
 TSShape >> paint: aPaint [
 	paint := aPaint
+]
+
+{ #category : #accessing }
+TSShape >> parent [
+	^ parent
+]
+
+{ #category : #accessing }
+TSShape >> parent: aCanvasOrComposite [
+	parent := aCanvasOrComposite
 ]
 
 { #category : #path }
@@ -170,7 +171,7 @@ TSShape >> release [
 TSShape >> remove [
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ]. 
-	canvas removeShape: self
+	parent removeShape: self
 ]
 
 { #category : #path }
@@ -180,16 +181,43 @@ TSShape >> resetPath [
 
 { #category : #actions }
 TSShape >> setAsFixed [
-	canvas ifNil: [ self error: 'Add first this shape in the canvas' ].
+	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
 	isFixed := true.
-	canvas setAsFixed: self.
+	parent setAsFixed: self.
+]
+
+{ #category : #'accessing - computed' }
+TSShape >> shapeWithAction: eventClass forPosition: position [
+	^ (self hasEventCallback and: [ 
+		(self announcer handleEventClass: eventClass)
+			and: [ self includesPoint: position ] ]) 
+			
+			ifTrue: [ self ]
+			ifFalse: [ ^ nil ]
+]
+
+{ #category : #'accessing - computed' }
+TSShape >> shapeWithActionForPosition: position [
+	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
+			ifTrue: [ self ]
+			ifFalse: [ ^ nil ]
 ]
 
 { #category : #actions }
 TSShape >> signalUpdate [
 	"Refresh the canvas"
-	canvas ifNil: [ ^ self ].
-	canvas signalUpdate
+	parent ifNil: [ ^ self ].
+	parent signalUpdate
+]
+
+{ #category : #accessing }
+TSShape >> topParent [
+	^ parent topParent
+]
+
+{ #category : #accessing }
+TSShape >> trachelShape [
+	^ self
 ]
 
 { #category : #events }

@@ -76,7 +76,7 @@ TSBoundingShape >> loadBoundingShape: aShape [
 		border: aShape border;
 		paint: aShape paint;
 		announcer: aShape announcer;
-		canvas: aShape canvas.
+		parent: aShape parent.
 ]
 
 { #category : #actions }
