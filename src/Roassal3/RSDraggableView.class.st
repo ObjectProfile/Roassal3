@@ -90,6 +90,7 @@ RSDraggableView >> mouse [
 { #category : #hooks }
 RSDraggableView >> onElement: aView [
 	"Configure the view provided as argument with call to properly handles the mouse interaction"
+	"also add key events for navigation"
 	| move lastStep camera |
 	move := false.
 	lastStep := nil.
@@ -101,17 +102,17 @@ RSDraggableView >> onElement: aView [
 			camera translateBy: lastStep.
 			e signalUpdate ]
 		].
-	aView canvas when: TSMouseDragEnd do: [ move := false.
-		(lastStep isNotNil and: [ lastStep x abs > 2 or: [lastStep y abs > 2]  ])
-			ifTrue: [ 
-				aView animation 
-					easing: TSEasing cubicOut;
-					duration: 200 milliSeconds;
-					from: camera position;
-					to: camera position + (lastStep * 3);
-					on: camera set: #translateTo:
-				 ]
-		 ].
+	aView when: TSMouseDragEnd do: [ 
+		move := false.
+		(lastStep isNotNil and: [ lastStep x abs > 2 or: [lastStep y abs > 2]  ]) ifTrue: [ 
+			aView animation 
+				easing: TSEasing cubicOut;
+				duration: 200 milliSeconds;
+				from: camera position;
+				to: camera position + (lastStep * 3);
+				on: camera set: #translateTo:
+		]
+	].
 	
 ]
 

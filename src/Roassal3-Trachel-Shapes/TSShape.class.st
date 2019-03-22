@@ -89,6 +89,11 @@ TSShape >> extent [
 ]
 
 { #category : #testing }
+TSShape >> hasBorder [
+	^ border notNil and: [ border width > 0 ].
+]
+
+{ #category : #testing }
 TSShape >> hasEventCallback [
 	"Return true if at least one event callback has been added to the shape"
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]

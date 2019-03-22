@@ -79,6 +79,9 @@ TSLabel >> fontName [
 
 { #category : #accessing }
 TSLabel >> fontName: string [
+	"
+	LogicalFontManager current allFamilies inspect
+	"
 	fontName := string.
 	self resetCache.
 	

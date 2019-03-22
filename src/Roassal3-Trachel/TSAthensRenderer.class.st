@@ -395,13 +395,14 @@ TSAthensRenderer >> visitBorder: border [
 	stroke := athensCanvas setStrokePaint: border paint.
 	stroke width: border width asFloat.
 	style := border style.
-	style ifNil: [ ^ self ].
+	style ifNil: [ ^ stroke ].
 	style dashArray 
 		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
 	style capStyle
 		ifNotNil: [:s | stroke perform: s].
 	style joinStyle
 		ifNotNil: [:s | stroke perform: s].
+	^ stroke.
 	
 ]
 
@@ -444,21 +445,38 @@ TSAthensRenderer >> visitComposite: composite [
 { #category : #visiting }
 TSAthensRenderer >> visitLabel: label [
 	athensCanvas pathTransform restoreAfter: [ 
+		| utf8String act f stroke |
 		athensCanvas pathTransform
 			multiplyBy: label matrix asFloatTransform;
 			translateBy: ((label textWidth / -2) @ (label textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ label descent negated) asFloatPoint.
-		(label border isNil or: [label border width <= 0]) ifTrue:  [ 
-			athensCanvas 
-				setPaint: label paint;
-				setFont: label font;
-				drawString: label text.
-		] ifFalse: [ | f |
+		
+			utf8String := label path.
+			utf8String ifNil: [ 
+				act := AthensCairoText new.
+				utf8String := act convertTextUtf8: label text.
+				label path: utf8String.
+			 ].
 			f := CairoScaledFont fromFreetypeFont: label font realFont.
+			
+			athensCanvas newPath.
 			f lock.
-			"athensCanvas setPaint: label paint."
+			athensCanvas 
+				setPathMatrix;
+				setScaledFont: f.
+			label paint ifNotNil: [ 
+				(label paint asAthensPaintOn: athensCanvas)
+					loadOnCairoCanvas: athensCanvas. ].
+			athensCanvas textPath: utf8String.
+			label paint ifNotNil: [ athensCanvas fillPreserve ].
+			label hasBorder ifTrue: [ 
+				label border paint loadOnCairoCanvas: athensCanvas.
+				stroke := label border accept: self.
+				stroke prepareForDrawingOn: athensCanvas.
+				athensCanvas stroke.
+			 ].
 			f unlock.
-		] ].
+		].
 	
 
 ]

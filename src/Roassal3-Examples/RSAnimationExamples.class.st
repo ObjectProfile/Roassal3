@@ -907,7 +907,11 @@ RSAnimationExamples >> example17Retina [
 	circleSize := ringSize := 100.
 	r := SharedRandom globalGenerator.
 	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
-	label := TSLabel new text: 'Now begin!'; color: Color white;fontSize: 40.
+	label := TSLabel new 
+		fontName: 'Source Sans Pro'; 
+		text: 'Now begin!'; 
+		color: Color white;
+		fontSize: 40.
 	view addShape: label.
 	(view animation 
 		delay: 2 seconds; 
@@ -981,12 +985,25 @@ RSAnimationExamples >> example18SpaceDandy [
 	elements := shape elementsOn: (1 to: 500).
 	elements do: [ :e | init value: e ].
 	view addAll: elements.
+	
 	view addShape: (TSLabel new 
-		color: (Color white alpha: 0.4);
-		fontSize: 100;
-		border: (TSBorder new color: Color white);
+		paint: (LinearGradientPaint new
+			colorRamp:
+				{(0 -> Color yellow).
+				(0.35 -> Color orange).
+				(0.25 -> Color white darker).
+				(0.35 -> Color orange).
+				(1 -> Color white)};
+			start: 0@ -150;
+			stop: 0@130);
+		fontSize: 150;
+		"fontName: 'Source Sans Pro';"
+		fontName: 'Brushcrazy DEMO';
+		border: (TSBorder new color: Color black);
 		bold;
 		text: 'Pharo').
+	(view animation repeat duration: 5 seconds; onStepDo: [ :t |  ]) 
+		when: TSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
 	view animation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
 		elements do: [ :e | | l o r d off | 
@@ -1011,4 +1028,72 @@ RSAnimationExamples >> example18SpaceDandy [
 			zoomToFit: view extent 
 			rectangle: (Rectangle center: 0@0 extent: extent) ].
 	view open setLabel: 'Space :D'.
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example19Gris [
+	<script: 'self new example19Gris'>
+	| v label shape border r mini animation |
+	v := RSView new.
+	r := SharedRandom globalGenerator.
+	border := TSBorder new.
+	label := TSLabel new
+		fontName: 'Marker Felt';
+		text: 'Roassal';
+		paint: nil;
+		border: border;
+		fontSize: 30.
+	v addShape: label.
+	shape := RSShapeBuilder circle
+		paint: nil;
+		radius: [ :m | m * label width ];
+		border: border;
+		onElement;
+		if: [ :e | e index = 5 ] actions: [ :s| s border: (TSBorder new width: 1.5) ];
+		if: [ :e | e index = 4 ] actions: [ :s | s border: (TSBorder new dashArray: #(4)) ].
+		
+	v addAll: (shape elementsOn: { 0.6. 0.64. 1.05. 1.20. 1.7 }).
+	
+	v animation repeat from: 0; to: 8; duration: 200 milliSeconds;
+		on: v elements fourth border set: #dashOffset:.
+		
+	mini := RSShapeBuilder circle
+		paint: nil;
+		border: (TSBorder new width: 0.5);
+		radius: [ :m | m * 5 ];
+		if: [ :m | m = 1 ] actions: [ :s | s paint: Color black ];
+		if: [ :m | m = 2 ] actions: [ :s | s radius: [ :m | m * 6 ] ].
+		
+	animation := [ :e :seconds :target :dir | |  ang |
+		ang := r next * Float pi * 2.
+		v animation repeat duration: seconds asSeconds;
+				from: ang; to: ang + (Float pi * 2* dir);
+				onStepDo: [ :t | e translateTo: (t cos@ t sin)* target radius ] ].
+			
+	shape := RSShapeBuilder composite 
+		shapes: [:m | mini elementsOn: (1 to: m value) ];
+		onMyselfDo: [:m | [ :e | 
+			animation value: e value: m key * 6 value: (v elements at: m key) value: 1
+			 ] ].
+	v addAll: (shape elementsOn: {3-> 3. 4->2}).
+	
+	shape := RSShapeBuilder composite 
+		shapes: [:m | | g |
+			g := mini elementsOn: (1 to: 4).
+			g first radius: 10.
+			g second radius: 15.
+			g third radius: 18.
+			g fourth radius: 25.
+			g add: ((mini elementOn: 1) radius: 3).
+			g ];
+		onMyselfDo: [:m | [ :e |
+			animation value: e value: 30 value: v elements fifth value: -1.
+			animation value: e shapes fifth value: 10 value: e shapes fourth value: 1.
+			] ].
+	v add: shape element.
+	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v open setLabel: 'Roassal :V'.
+	
+
+
 ]

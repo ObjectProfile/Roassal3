@@ -609,7 +609,7 @@ RSPieExamples >> example18ManyPies [
 		e matrix shy: 0.25 ]."
 	view addAll: elements.
 	elements @RSDraggable.
-	"view showEncompassingRectangles."
+	view showEncompassingRectangles.
 	RSGridLayout on: view elements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view @ RSControlsView.

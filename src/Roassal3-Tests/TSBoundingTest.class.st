@@ -33,6 +33,14 @@ TSBoundingTest >> testDrawBoxCornerRadius [
 ]
 
 { #category : #running }
+TSBoundingTest >> testDrawPolygon [
+	c addShape: (TSPolygon new
+		points: { 0@0. 100@0. 100@100. 0@100 }
+		yourself).
+	c morph drawOnMockCanvas.
+]
+
+{ #category : #running }
 TSBoundingTest >> testDrawRing [
 	| r |
 	r := TSPieSlice new.

@@ -14,7 +14,7 @@ Class {
 
 { #category : #visiting }
 TSBorder >> accept: visitor [
-	visitor visitBorder: self
+	^ visitor visitBorder: self
 ]
 
 { #category : #'style-cap' }

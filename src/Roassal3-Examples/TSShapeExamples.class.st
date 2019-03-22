@@ -145,6 +145,7 @@ TSShapeExamples >> example06BasicLabels [
 		p := theta * 100.
 		label := TSLabel new
 			color: (Color purple alpha: 0.5);
+			fontName: 'Source Sans Pro';
 			fontSize: 20;
 			text: (Month nameOfMonth: m);
 			yourself.
@@ -684,5 +685,21 @@ TSShapeExamples >> example24Polyline [
 	c := TSCanvas new.
 	c addShape: (TSPolyline new
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10}).
+	c open.
+]
+
+{ #category : #labels }
+TSShapeExamples >> example25LabelWithBorder [
+	<script: 'self new example25LabelWithBorder'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSLabel new
+		fontSize: 60;
+		fontName: 'Source Sans Pro';
+		"fontName: 'Brushcrazy DEMO';"
+		border: (TSBorder new 
+			color: Color red;
+			dashArray: #(4) );
+		text: 'Roassal Pharo').
 	c open.
 ]
