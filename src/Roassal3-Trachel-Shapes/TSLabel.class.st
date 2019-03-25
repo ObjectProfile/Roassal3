@@ -23,13 +23,14 @@ TSLabel class >> familyFontName [
 	"
 	| fontList |
 	fontList := LogicalFontManager current allFamilies collect: #familyName.
+	
+	(fontList includes: 'Source Sans Pro') ifTrue: [ ^ 'Source Sans Pro' ].
+	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
 	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
 	
 	(fontList includes: StandardFonts listFont familyName ) 
 		ifTrue: [ ^ StandardFonts listFont familyName ].
 		
-	(fontList includes: 'Source Sans Pro') ifTrue: [ ^ 'Source Sans Pro' ].
-	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
 	
 	^  StandardFonts defaultFont familyName 
 ]

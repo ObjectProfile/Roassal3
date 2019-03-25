@@ -60,7 +60,7 @@ TSBoundingShape >> includesPoint: aPoint [
 TSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix.
-	extent := 0@0.
+	extent := 0@0
 ]
 
 { #category : #initialization }
@@ -129,6 +129,12 @@ TSBoundingShape >> scale [
 { #category : #matrix }
 TSBoundingShape >> scaleBy: scale [ 
 	matrix scaleBy: scale
+]
+
+{ #category : #accessing }
+TSBoundingShape >> shapes [
+	"only TSComposite can use shapes "
+	^ nil
 ]
 
 { #category : #accessing }

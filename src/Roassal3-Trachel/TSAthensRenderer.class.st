@@ -95,7 +95,7 @@ TSAthensRenderer >> buildBezierPath: bezier [
 { #category : #'creating path' }
 TSAthensRenderer >> buildBoxPath: box [
 	| rectangle simple corner |
-	rectangle  := box baseRectangle.
+	rectangle := box baseRectangle.
 	simple := [ 
 		builder
 			absolute;
@@ -288,7 +288,7 @@ TSAthensRenderer >> buildRingPath: ring [
 				sweep: 0
 				to: t23 key + center ].
 	
-	x4 isZero ifTrue: [ 
+	(x4 isZero & y4 isZero) ifTrue: [ 
 		builder lineTo: center. ]
 	ifFalse: [ 
 		t14 := self arcCornerTangets: x1@y1 p1: x4@y4 r: i rc: rc1 negated cw: true.
@@ -385,7 +385,7 @@ TSAthensRenderer >> paintForBitmap: shape [
 			paint := (AthensCairoPatternSurfacePaint 
 				createForSurface: (AthensCairoSurface 
 				fromForm: shape form)).
-			paint origin: (shape form extent /2) negated.
+			paint origin: (shape form extent /2) negated asFloatPoint.
 			paint  ]
 ]
 
@@ -408,8 +408,7 @@ TSAthensRenderer >> visitBorder: border [
 
 { #category : #'visiting - helpers' }
 TSAthensRenderer >> visitBorderIfNecessary: shape [
-	shape border ifNil: [ ^ self ].
-	shape border width <= 0 ifTrue: [ ^ self ].
+	shape hasBorder ifFalse: [ ^ self ].
 	athensCanvas setShape: shape path.
 	shape border accept: self.
 	athensCanvas draw.
@@ -428,18 +427,11 @@ TSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
+		shape shapes ifNotNil: [ 
+			shape shapes do: [ :s |
+				s accept: self ] ]
 		].
 	
-]
-
-{ #category : #visiting }
-TSAthensRenderer >> visitComposite: composite [
-	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas pathTransform
-			multiplyBy: composite matrix asFloatTransform.
-		composite shapes do: [ :child |
-			child accept: self ].
-		].
 ]
 
 { #category : #visiting }

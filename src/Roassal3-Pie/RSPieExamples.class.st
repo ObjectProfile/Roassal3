@@ -713,6 +713,7 @@ RSPieExamples >> example20AddingRemoving [
 		position: 300@100 ) element.
 		
 	label := RSShapeBuilder label
+		fontName: 'Source Sans Pro';
 		onElement; 
 		position: [ :e | e index * (0@30) + (300@0) ];
 		when: TSMouseClick do: [:e | [ 
@@ -926,7 +927,7 @@ RSPieExamples >> example23RotatedAnimation [
 	view when: TSExtentChangedEvent do: [ 
 		view camera 
 			zoomToFit: view extent * 0.9
-			rectangle: (Rectangle center: 0@0 extent: 800@600) ].
+			extent: 800@600 ].
 	pie open setLabel: 'Roassal3 packages by size in the file system'
 	
 

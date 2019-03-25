@@ -40,3 +40,8 @@ RSAbstractShapeBuilder >> updateElement: element withCommand: selector [
 	commands := temp.
 		
 ]
+
+{ #category : #updating }
+RSAbstractShapeBuilder >> updateElements: elements [
+	elements do: [ :e | self updateElement: e ].
+]

@@ -107,6 +107,14 @@ TSCamera >> zoomToFit: anExtent [
 ]
 
 { #category : #actions }
+TSCamera >> zoomToFit: anExtent extent: otherExtent [
+	self 
+		zoomToFit: anExtent 
+		rectangle: (Rectangle center: 0@0 extent: otherExtent)
+	
+]
+
+{ #category : #actions }
 TSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
 	sc := anExtent / (rect extent max: 1 @ 1).

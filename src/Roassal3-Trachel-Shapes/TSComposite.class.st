@@ -10,11 +10,6 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
-{ #category : #visiting }
-TSComposite >> accept: visitor [
-	visitor visitComposite: self
-]
-
 { #category : #adding }
 TSComposite >> add: aShape [
 	aShape addedIn: self
@@ -33,6 +28,30 @@ TSComposite >> addBasicShape: aShape [
 { #category : #adding }
 TSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
+]
+
+{ #category : #initialization }
+TSComposite >> initialize [
+	super initialize.
+	paint := nil.
+	self resetPath.
+	
+]
+
+{ #category : #removing }
+TSComposite >> removeShape: shape [
+	| evt |
+	shapes remove: shape.
+	shape parent: nil.
+	evt := TSShapeRemovedEvent new shape: shape.
+	self announce: evt.
+	shape announce: evt.
+	
+]
+
+{ #category : #path }
+TSComposite >> resetPath [
+	path := self baseRectangle
 ]
 
 { #category : #'accessing - computed' }

@@ -195,10 +195,15 @@ RSAbstractModelBuilder >> release [
 	self commands: nil.
 ]
 
-{ #category : #'reflective operations' }
+{ #category : #commands }
 RSAbstractModelBuilder >> removeCommandsBySelector: selector [
+	^ self removeCommandsBySelectors: { selector }.
+]
+
+{ #category : #commands }
+RSAbstractModelBuilder >> removeCommandsBySelectors: selectors [
 	| toDelete |
-	toDelete := commands select: [ :cmd | cmd selector = selector ].
+	toDelete := commands select: [ :cmd | selectors includes: cmd selector ].
 	toDelete do: [ :cmd | commands remove: cmd ].
 	^ toDelete
 ]

@@ -288,6 +288,7 @@ RSShapeExamples >> example09Polyline [
 RSShapeExamples >> example10Donut [
 	<script: 'self new example10Donut'>
 	| data shape radius color view border |
+	"1800 ellipses"
 	data := 0 to: 358 by: 2.
 	view := RSView new.
 	radius := TSScale linear

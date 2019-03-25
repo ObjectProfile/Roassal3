@@ -57,7 +57,7 @@ RSPopup >> label [
 { #category : #hooks }
 RSPopup >> onElement: anElement [
 	| remove |
-	remove := [ :evt | self removePopupOn: anElement ].
+	remove := [ :evt | self removePopupOn: evt ].
 	anElement
 		when: TSMouseClick do: remove;
 		when: TSMouseEnter do: remove;
@@ -79,9 +79,9 @@ RSPopup >> onElement: anElement [
 ]
 
 { #category : #hooks }
-RSPopup >> removePopupOn: anElement [ 
+RSPopup >> removePopupOn: evt [ 
 	| att popup view |
-	view := anElement topParent view.
+	view := evt canvas view.
 	view ifNil: [ ^ self ].
 	att := view attributes.
 	(att includesKey: #popup) ifFalse: [ ^ self ].
@@ -89,5 +89,5 @@ RSPopup >> removePopupOn: anElement [
 	
 	popup remove.
 	att removeKey: #popup.
-	anElement signalUpdate.
+	evt signalUpdate.
 ]

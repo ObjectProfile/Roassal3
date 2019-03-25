@@ -89,7 +89,7 @@ RSControlsView >> processKeyDown: evt [
 			onStepDo: [ :t | | step |
 				step := steps inject: 0@0 into: [:p :s |p+s ].
 				
-				evt canvas camera translateBy: (step / evt canvas camera scale) * speed.
+				evt canvas camera translateBy: step / (evt canvas camera scale / speed).
 				evt signalUpdate ] ].
 ]
 

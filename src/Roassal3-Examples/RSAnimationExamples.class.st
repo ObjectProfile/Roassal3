@@ -954,7 +954,7 @@ RSAnimationExamples >> example17Retina [
 		].
 		
 	view when: TSExtentChangedEvent do: [ 
-		view camera zoomToFit: view extent rectangle: (Rectangle center: 0@0 extent: side@side) ].
+		view camera zoomToFit: view extent extent: side@side ].
 	view open setLabel: 'Retina (~˘.˘)~'.
 ]
 
@@ -1026,7 +1026,7 @@ RSAnimationExamples >> example18SpaceDandy [
 	view when: TSExtentChangedEvent do: [ 
 		view camera
 			zoomToFit: view extent 
-			rectangle: (Rectangle center: 0@0 extent: extent) ].
+			extent: extent ].
 	view open setLabel: 'Space :D'.
 ]
 
@@ -1096,4 +1096,138 @@ RSAnimationExamples >> example19Gris [
 	
 
 
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example20Flor [
+	<script: 'self new example20Flor'>
+	| v shape frame angleSp alphaS hueS dia1 dia2 |
+	v := RSView new.
+	frame := 0.
+	angleSp := 0.
+	hueS := TSScale linear domain: #(50 200); range: #(250 360).
+	alphaS := TSScale linear domain: #(50 200); range: #(0.3 1).
+	dia1 := TSScale linear domain: #(50 180); range: #(90 1).
+	dia2 := TSScale linear domain: #(-1 1); range: #(5 20).
+	shape := RSShapeBuilder circle
+		attributesDo: [ :m | [ :att |
+			att at: #angle 
+				put: (m key + (angleSp sin * m value)) degreesToRadians ] ];
+		color: [ :m |
+			Color 
+				h: (hueS scale: m value)
+				s: 0.8 
+				v: 1 
+				alpha: (alphaS scale: m value) ];
+		onElement;
+		position: [ :e | | angle | 
+			angle := e attributes at: #angle.
+			e model value * (angle cos @ angle sin). ];
+		extent: [:e | | dist diameter |
+			dist := e position dist: 0@0.
+			diameter := dia2 scale: (dia1 scale: dist) sin.
+			diameter asPoint.
+			].
+	(0 to: 350 by: 60) do: [ :i | 
+		v addAll: (shape elementsOn: ((50 to: 170 by: 10) 
+			collect: [:radius| i-> radius ]) ).
+		 ].
+	shape removeCommandsBySelectors: {#size:. #extent:. #color:}.
+	v animation repeat onStepDo: [ :t | 
+		frame := frame + 1.
+		angleSp := frame / 250.0 * (Float pi * 2).
+		shape updateElements: v elements.
+		].
+	v when: TSExtentChangedEvent do: [ 
+		v camera zoomToFit: v extent extent: 500 asPoint ].
+	v open setLabel: 'Animation test'.
+	
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example21Rainbow [
+	<script: 'self new example21Rainbow'>
+	| v r shape mode color frame |
+	v := RSView new.
+	v clearBackground: false.
+	v color: Color black.
+	r := SharedRandom globalGenerator.
+	shape := RSShapeBuilder circle
+		onElement;
+		attributesDo: [ [ :att | 
+			| xs ys |
+			xs := r rsNext: -3 and: 3.
+			ys := (xs between: -1 and: 1)
+				ifTrue: [ r next > 0.5
+					ifTrue: [ r rsNext: 1 and: 3 ]
+					ifFalse: [ r rsNext: -3 and: -1 ] ]
+				ifFalse: [ r rsNext: 3 and: -3 ].
+			att
+				at: #s put: 0;
+				at: #t put: 0;
+				at: #degX put: r next;
+				at: #degY put: r next;
+				at: #xs put: xs;
+				at: #ys put: ys;
+				at: #hue put: r next * 360;
+				at: #hue2 put: 4 ] ];
+		border: [ TSBorder new width: 0.5 ].
+	mode := 1.
+	frame := 0.
+	color := TSScale ordinal
+		domain: #(0 1 2);
+		range:
+			{[ Color black ].
+			[ :e | Color h: (e attributes at: #hue) s: 0.7 v: 1 ].
+			[ :e | 
+			frame even
+				ifTrue: [ Color black ]
+				ifFalse: [ Color h: (e attributes at: #hue) s: 1 v: 1 ] ]}.
+	v animation repeat
+		onStepDo: [ :k | 
+			| elements |
+			v add: shape element.
+			frame := frame + 1.
+			elements := v elements copy.
+			elements do: [ :e | | att t s degX degY xs ys hue hue2|
+				"From Milton: please Milton use a class for this work next time"
+				att := e attributes.
+				t := att at: #t.
+				s := att at: #s.
+				degX := att at: #degX.
+				degY := att at: #degY.
+				xs := att at: #xs.
+				ys := att at: #ys.
+				hue := att at: #hue.
+				hue2 := att at: #hue2.
+				
+				e color: ((color scale: mode) rsValue: e).
+				e border color: (Color h: 360 - (att at: #hue) s: 1 v: 1).
+				e size: s.
+				
+				t := t + 0.02.
+				s := s + 0.2.
+				e translateBy: ((xs @ ys )+(degX cos@ degY cos)) * t.
+				degX := degX +  (r rsNext: 0.1 and: 0.8).
+				degY := degY + (r rsNext: 0.1 and: 0.8).
+				hue := hue + hue2.
+				(hue > 360 or: [hue < 0])
+					ifTrue: [ hue2 := hue2 negated ].
+				att
+					at: #t put: t;
+					at: #s put: s;
+					at: #degX put: degX;
+					at: #degY put: degY;
+					at: #hue put: hue;
+					at: #hue2 put: hue2.
+				((Rectangle center: 0@0 extent: v extent + 200) 
+					containsPoint: e position)
+					ifFalse: [ e remove ]  ] ].
+	v
+		when: TSExtentChangedEvent
+		do: [ v camera zoomToFit: v extent extent: v extent ];
+		when: TSMouseClick do: [ 
+			mode := mode +1.
+			mode > 2 ifTrue: [mode := 0] ].
+	v open setLabel: 'Worms'
 ]
