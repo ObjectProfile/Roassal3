@@ -15,6 +15,14 @@ TSGroupTest >> testAddShape [
 ]
 
 { #category : #tests }
+TSGroupTest >> testAsGroup [
+	| t |
+	t := #(1 2 3) asGroup.
+	self assert: t asArray equals: #(1 2 3).
+	self assert: t class equals: TSGroup
+]
+
+{ #category : #tests }
 TSGroupTest >> testCache01 [
 
 	| es el |
