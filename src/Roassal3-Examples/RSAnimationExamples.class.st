@@ -943,11 +943,10 @@ RSAnimationExamples >> example17Retina [
 			].
 	view addAll: (shape elementsOn: (1 to: circleSize)).
 
-	(view animation 
+	view animation 
 		delay: 4 seconds;
 		loops: ringSize; 
 		duration: 200 milliSeconds; 
-		onStepDo: [ :t | ])
 	 	when: TSAnimationLoopEvent do: [ :evt | 
 			updateValues value.
 			view elements do: [ :e | shape updateElement: e ]
@@ -1002,7 +1001,9 @@ RSAnimationExamples >> example18SpaceDandy [
 		border: (TSBorder new color: Color black);
 		bold;
 		text: 'Pharo').
-	(view animation repeat duration: 5 seconds; onStepDo: [ :t |  ]) 
+	view animation 
+		repeat;
+		duration: 5 seconds; 
 		when: TSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
 	view animation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
