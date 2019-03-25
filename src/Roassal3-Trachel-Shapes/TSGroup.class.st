@@ -28,6 +28,19 @@ TSGroup >> addAll: elements [
 	^ super addAll: elements
 ]
 
+{ #category : #converting }
+TSGroup >> asElement [ 
+	^ self asElementOn: nil
+]
+
+{ #category : #converting }
+TSGroup >> asElementOn: model [
+	^ RSElement new 
+		model: model;
+		trachelShape: (TSComposite new 
+			shapes: self).
+]
+
 { #category : #accessing }
 TSGroup >> edges [
 	^ self select: [ :o | o class == RSEdge ]
