@@ -167,6 +167,11 @@ TSShape >> path: aPath [
 	path := aPath
 ]
 
+{ #category : #actions }
+TSShape >> pushBack [
+	parent pushBack: self.
+]
+
 { #category : #dependencies }
 TSShape >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]

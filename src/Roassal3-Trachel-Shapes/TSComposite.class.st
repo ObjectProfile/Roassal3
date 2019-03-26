@@ -51,7 +51,7 @@ TSComposite >> removeShape: shape [
 
 { #category : #path }
 TSComposite >> resetPath [
-	path := self baseRectangle
+	path := Rectangle center: 0@0 extent: extent asFloatPoint.
 ]
 
 { #category : #'accessing - computed' }

@@ -78,13 +78,20 @@ RSElement >> removeConnectedEdges [
 
 { #category : #actions }
 RSElement >> translateBy: delta [
-	trachelShape translateBy: delta.
+	self translateTo: self trachelShape position + delta.
+	
+]
+
+{ #category : #actions }
+RSElement >> translateTo: position [
+	trachelShape translateTo: position.
 	self updateConnectedEdges.
 ]
 
 { #category : #edges }
 RSElement >> updateConnectedEdges [
 	shouldUpdateEdges ifFalse: [ ^ self ].
+	connectedEdges ifNil: [ ^ self ].
 	self connectedEdges do: [ :edge | edge update ]
 ]
 

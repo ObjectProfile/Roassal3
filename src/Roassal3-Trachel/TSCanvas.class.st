@@ -245,6 +245,17 @@ TSCanvas >> playAnimations [
 			animation hasCompleted ifTrue: [ animation remove ] ] ].
 ]
 
+{ #category : #actions }
+TSCanvas >> pushBack: aShape [
+	(shapes includes: aShape)
+		ifTrue: [ shapes remove: aShape.
+			shapes addFirst: aShape ].
+	(fixedShapes includes: aShape)
+		ifFalse: [ ^ self ].
+	fixedShapes remove: aShape.
+	fixedShapes addFirst: aShape
+]
+
 { #category : #dependencies }
 TSCanvas >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]

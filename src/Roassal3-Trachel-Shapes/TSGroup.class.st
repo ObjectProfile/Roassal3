@@ -125,6 +125,11 @@ TSGroup >> height [
 	^ self extent y
 ]
 
+{ #category : #actions }
+TSGroup >> pushBack [ 
+	self do: #pushBack
+]
+
 { #category : #accessing }
 TSGroup >> resetElementFromModelCache [
 	"Reset the cache"

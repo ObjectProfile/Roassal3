@@ -21,7 +21,6 @@ RSShapeExamples >> example01BasicShape [
 			ifTrue: [ Color red ]
 			ifFalse: [ Color blue ] ];
 		elementsOn: (1 to: 20).
-
 	v addAll: elements.
 	v open
 ]
@@ -38,7 +37,7 @@ RSShapeExamples >> example02BasicEdge [
 	box1 := box element.
 	box1 translateBy: 150@150.
 	v add: box1.
-	line := RSEdgeBuilder line 
+	line := RSSingleEdgeBuilder line 
 		color: Color red.
 	v add: (line from: box1; to: 0@0; edge).
 
@@ -312,4 +311,50 @@ RSShapeExamples >> example10Donut [
 	view @ RSControlsView.
 	view zoomToFit.
 	view open.
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example11ClassTree [
+	<script: 'self new example11ClassTree'>
+	| v shape label shapeWithTitle elements |
+	v := RSView new.
+	"v showEncompassingRectangles."
+	shape := RSShapeBuilder composite
+		color: (Color lightGray alpha: 0.4);
+		shapes: [ :cls | 
+			| group |
+			group := RSShapeBuilder box
+				interactionDo: [ :i | i popupText: #selector ];
+				size: #linesOfCode;
+				elementsOn: cls methods.
+			RSGridLayout on: group.
+			group ];
+		onElement;
+		extent: [ :anElement | anElement extent + (10 @ 10) ].
+	label := RSShapeBuilder label.
+	shapeWithTitle := RSShapeBuilder composite
+		interactionDo: [ :i | 
+			i
+				draggable;
+				popup ];
+		shapes: [ :cls | 
+			| group lb s |
+			group := TSGroup new.
+			s := shape elementOn: cls.
+			lb := label elementOn: cls.
+			group add: lb.
+			group add: s.
+			RSVerticalLineLayout on: group.
+			group ].
+	elements := shapeWithTitle elementsOn: Collection withAllSubclasses.
+	v addAll: elements.
+	RSEdgeBuilder line
+		view: v;
+		objects: Collection withAllSubclasses;
+		connectFrom: #superclass.
+	v edges pushBack.
+	RSTreeLayout on: elements.
+	v @ RSControlsView.
+	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v open setLabel: 'Collection withAllSubclasses'
 ]
