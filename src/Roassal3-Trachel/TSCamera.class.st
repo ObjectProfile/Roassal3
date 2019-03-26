@@ -110,7 +110,7 @@ TSCamera >> zoomToFit: anExtent [
 TSCamera >> zoomToFit: anExtent extent: otherExtent [
 	self 
 		zoomToFit: anExtent 
-		rectangle: (Rectangle center: 0@0 extent: otherExtent)
+		rectangle: (Rectangle rsCenter: 0@0 extent: otherExtent)
 	
 ]
 

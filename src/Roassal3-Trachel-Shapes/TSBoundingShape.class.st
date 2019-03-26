@@ -18,12 +18,12 @@ TSBoundingShape >> accept: visitor [
 
 { #category : #accessing }
 TSBoundingShape >> baseRectangle [
-	^ Rectangle center: 0@0 extent: extent
+	^ Rectangle rsCenter: 0@0 extent: extent
 ]
 
 { #category : #accessing }
 TSBoundingShape >> encompassingRectangle [ 
-	^ Rectangle center: self position extent: extent.
+	^ Rectangle rsCenter: self position extent: extent.
 ]
 
 { #category : #accessing }
