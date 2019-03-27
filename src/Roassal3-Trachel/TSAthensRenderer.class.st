@@ -166,6 +166,20 @@ TSAthensRenderer >> buildLinePath: line [
 ]
 
 { #category : #'creating path' }
+TSAthensRenderer >> buildPolygonPath: path [
+	| first |
+	first := true.
+	builder absolute.
+	path points do: [ :point |
+		first ifTrue: [ 
+			first := false.
+			builder moveTo: point ]
+		ifFalse: [ 
+			builder lineTo: point ] ].
+	builder closePath.
+]
+
+{ #category : #'creating path' }
 TSAthensRenderer >> buildPolyinePath: path [
 	| first |
 	first := true.

@@ -751,6 +751,45 @@ RSAnimationExamples >> example13Arcs [
 
 ]
 
+{ #category : #lines }
+RSAnimationExamples >> example13DashAnimation [
+	<script: 'self new example13DashAnimation'>
+
+	| c box paint form border animation |
+	c := TSCanvas new.
+	form := self iconNamed: #eyedropper.
+	paint := (AthensCairoPatternSurfacePaint 
+		createForSurface: (AthensCairoSurface 
+			fromForm: form)).
+	paint origin: (form extent / 2) negated.
+	border := TSBorder new
+		color: Color purple;
+		dashArray: #(4).
+	box := TSBox new
+		paint: paint;
+		extent: form extent;
+		border: border;
+		scaleBy: 3.
+	
+	c addShape: box.
+	
+	animation := c animation
+		repeat;
+		from: 0;
+		to: 8;
+		on: border set: #dashOffset:.
+	box when: TSMouseClick do: [ :a |
+		animation isPaused 
+			ifTrue: [ animation continue ]
+			ifFalse: [ animation pause ] ].
+	c open.
+	
+
+
+
+
+]
+
 { #category : #examples }
 RSAnimationExamples >> example14C [
 	<script: 'self new example14C'>
@@ -1231,4 +1270,72 @@ RSAnimationExamples >> example21Rainbow [
 			mode := mode +1.
 			mode > 2 ifTrue: [mode := 0] ].
 	v open setLabel: 'Worms'
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example22Stars [
+	<script: 'self new example22Stars'>
+	| v color shape r stars |
+	v := RSView new.
+	r := SharedRandom globalGenerator.
+	color := TSScale linear domain: #(0 10); range: #('black' 'blue').
+	shape := RSShapeBuilder box
+		size: 39;
+		color: [ :m | color scale: m-1 // 10 ].
+	v addAll: (shape elementsOn: (1 to: 100)).
+	RSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
+	shape := RSShapeBuilder star 
+		size: [ r rsNext: 10 and: 100 ];
+		position: [ (r rsNext: 50 and: 300)@ (r rsNext: 50 and: 300) ];
+		color: Color white.
+	stars := shape elementsOn: (1 to: 5).
+	v addAll: stars.
+	v animation repeat to: 360; onStepDo: [ :t |
+		stars do: [ :star | | position |
+			position := star position.
+			star matrix loadIdentity.
+			star translateTo: position.
+			star rotateByDegrees: t ] ].
+	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v open setLabel: 'Stars'.
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example23CircleWaves [
+	<script: 'self new example23CircleWaves'>
+	| v shape elements frame |
+	v := RSView new.
+	frame := 0.
+	
+	shape := RSShapeBuilder polygon
+		color: nil;
+		border: [:m | TSBorder new 
+			color: ((Color colorFrom: m) alpha: 0.5);
+			width: 10 ];
+		onElement;
+		privatePoints: [ :e | | points |
+			points := TSPolygon
+				generateUnitNgonPoints: 150
+				rotation: 0 
+				angle: [ :a :i | a ]
+				radius: [ :a :i | | t |
+					t := frame.
+					200 + (((a * 8) - ((e index * 2 * Float pi) / 3) + t ) cos * 
+				(((1 + (a - t) cos) / 2) raisedTo: 3) * 32 ) ].
+			e resetPath.
+			points
+			 ].
+		
+	elements := shape elementsOn: #('15c108' '8d0402' '0002ab').
+	v addAll: elements.
+	
+	v animation repeat onStepDo: [ :t | 
+		frame := frame + 0.02.
+		elements do: [ :e | 
+			shape
+				updateElement: e
+				withCommand: #privatePoints: ] ].
+	"at this point: elements encompassingRectangle = zero"
+	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
+	v open setLabel: 'Waves'.
 ]

@@ -335,45 +335,6 @@ TSShapeExamples >> example12BasicLine [
 	c open.
 ]
 
-{ #category : #lines }
-TSShapeExamples >> example13DashAnimation [
-	<script: 'self new example13DashAnimation'>
-
-	| c box paint form border animation |
-	c := TSCanvas new.
-	form := self iconNamed: #eyedropper.
-	paint := (AthensCairoPatternSurfacePaint 
-		createForSurface: (AthensCairoSurface 
-			fromForm: form)).
-	paint origin: (form extent / 2) negated.
-	border := TSBorder new
-		color: Color purple;
-		dashArray: #(4).
-	box := TSBox new
-		paint: paint;
-		extent: form extent;
-		border: border;
-		scaleBy: 3.
-	
-	c addShape: box.
-	
-	animation := c animation
-		repeat;
-		from: 0;
-		to: 8;
-		on: border set: #dashOffset:.
-	box when: TSMouseClick do: [ :a |
-		animation isPaused 
-			ifTrue: [ animation continue ]
-			ifFalse: [ animation pause ] ].
-	c open.
-	
-
-
-
-
-]
-
 { #category : #bitmap }
 TSShapeExamples >> example14BasicBitmap [
 	<script: 'self new example14BasicBitmap'>
@@ -701,5 +662,20 @@ TSShapeExamples >> example25LabelWithBorder [
 			color: Color red;
 			dashArray: #(4) );
 		text: 'Roassal Pharo').
+	c open.
+]
+
+{ #category : #labels }
+TSShapeExamples >> example26Polygon [
+	<script: 'self new example26Polygon'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSPolygon new
+		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
+		yourself).
+	c shapes first translateTo: 0@0.
+	c showEncompassingRectangles.
+	c shapes first when: TSMouseDragging do: [:evt |
+		evt shape translateBy: evt step; signalUpdate].
 	c open.
 ]

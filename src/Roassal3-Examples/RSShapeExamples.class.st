@@ -323,7 +323,7 @@ RSShapeExamples >> example11ClassTree [
 		color: (Color lightGray alpha: 0.4);
 		shapes: [ :cls | 
 			| group |
-			group := RSShapeBuilder box
+			group := RSShapeBuilder octagon
 				interactionDo: [ :i | i popupText: #selector ];
 				size: #linesOfCode;
 				elementsOn: cls methods.
@@ -344,7 +344,7 @@ RSShapeExamples >> example11ClassTree [
 			lb := label elementOn: cls.
 			group add: lb.
 			group add: s.
-			RSVerticalLineLayout on: group.
+			RSVerticalLineLayout new alignCenter on: group.
 			group ].
 	elements := shapeWithTitle elementsOn: Collection withAllSubclasses.
 	v addAll: elements.
@@ -357,4 +357,64 @@ RSShapeExamples >> example11ClassTree [
 	v @ RSControlsView.
 	v when: TSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Collection withAllSubclasses'
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example12Polygons [
+	<script: 'self new example12Polygons'>
+	| view color border |
+	view := RSView new.
+	color:= TSScale eva10.
+	border := TSBorder new paint: Color black; width: 2.
+	#('diamond' 'square' 'heptagon' 'hexagon' 
+	'octagon' 'pentagon' 'rhomboid' 'star'
+	'triangle' 'vee' "not polygons" 'box' 'circle') do: [ :selector| 
+		| shape |
+		shape := (RSShapeBuilder perform: selector asSymbol)
+			size: 100;
+			interactionDo: #popup;
+			color: color;
+			border: border.
+		view add: (shape elementOn: selector)
+		 ].
+	view showEncompassingRectangles.
+	"view animation repeat;
+		scale: (TSScale linear domain: {0. 0.5. 1}; range:{ 100. 150. 100} );
+		onStepDo: [ :t | 
+			view elements do: [ :e | e size: t ] ]."
+	RSGridLayout new gapSize: 50; on: view elements.
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view @ RSControlsView.
+	view open setLabel: 'Polygon shapes'.
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example13Arrow [
+	<script: 'self new example13Arrow'>
+	| view triangle box label labels |
+	view := RSView new.
+	triangle := RSShapeBuilder triangle
+		color: Color lightGray;
+		border: (TSBorder new width: 20; joinRound; color: Color lightGray);
+		extent: 200@100.
+	view add: triangle element.
+	box := RSShapeBuilder box
+		color: Color lightGray;
+		extent: 120@200.
+	view add: box element.
+	
+	RSVerticalLineLayout new alignCenter; gapSize: -1; on: view elements.
+	label := RSShapeBuilder label
+		fontSize: 20;
+		text: #asUppercase;
+		onElement;
+		if: [ :e | e index = 3 ] actions: [ :s |
+			s fontSize: 10 ].
+	labels := label elementsOn: #('Keep' 'calm' 'and' 'roassal' 'on').
+	view addAll: labels.
+	RSVerticalLineLayout new alignCenter on: labels.
+	labels translateBy: 50@50.
+	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view @ RSControlsView.
+	view open setLabel: 'You can do it'.
 ]

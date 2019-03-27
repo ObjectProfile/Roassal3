@@ -34,10 +34,11 @@ TSBoundingTest >> testDrawBoxCornerRadius [
 
 { #category : #running }
 TSBoundingTest >> testDrawPolygon [
-	self skip.
+	c addShape: (TSPolygon new).
 	c addShape: (TSPolygon new
-		points: { 0@0. 100@0. 100@100. 0@100 }
+		points: { 200@10. 250@190. 160@210 };
 		yourself).
+	self assert: c shapes second points equals: {(-5@ -100). (45@80). (-45@100)}.
 	c morph drawOnMockCanvas.
 ]
 

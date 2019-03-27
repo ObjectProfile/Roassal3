@@ -34,9 +34,9 @@ TSBoundingShape >> extent [
 { #category : #accessing }
 TSBoundingShape >> extent: aPoint [
 	| oldExtent |
+	extent = aPoint ifTrue: [ ^ self ].
 	oldExtent := extent.
 	extent := aPoint.
-	oldExtent = extent ifTrue: [ ^ self  ].
 	self resetPath.
 	self announce: [ TSExtentChangedEvent new 
 		shape: self;

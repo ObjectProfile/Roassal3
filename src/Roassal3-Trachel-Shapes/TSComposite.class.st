@@ -88,7 +88,7 @@ TSComposite >> shapes: aTSGroup [
 	"
 	| rect delta |
 	rect := aTSGroup encompassingRectangle.
-	delta := rect center.
+	delta := rect rsCenter.
 	aTSGroup do: [ :s | 
 		s isInACanvas ifTrue: [ s remove ].
 		s translateBy: delta negated ].

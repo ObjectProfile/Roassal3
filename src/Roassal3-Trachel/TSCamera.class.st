@@ -120,6 +120,6 @@ TSCamera >> zoomToFit: anExtent rectangle: rect [
 	sc := anExtent / (rect extent max: 1 @ 1).
 	sc := sc x min: sc y.
 	self 
-		translateTo: rect center;
+		translateTo: rect rsCenter;
 		scale: sc.
 ]

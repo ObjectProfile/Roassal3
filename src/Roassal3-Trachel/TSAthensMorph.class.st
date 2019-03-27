@@ -346,7 +346,7 @@ TSAthensMorph >> showRectangleIfNecessary: shape [
 	trachelCanvas showRectangles ifFalse: [ ^ self ].
 	rect := shape encompassingRectangle.
 	box := TSBox new
-		position: rect center;
+		position: rect rsCenter;
 		extent: rect extent;
 		color: (Color blue alpha: 0.2).
 	box accept: renderer.

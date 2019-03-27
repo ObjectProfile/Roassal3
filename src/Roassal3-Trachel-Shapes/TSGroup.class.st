@@ -136,6 +136,11 @@ TSGroup >> resetElementFromModelCache [
 	elementFromModelCache := nil
 ]
 
+{ #category : #transforming }
+TSGroup >> translateBy: delta [
+	self do: [ :e | e translateBy: delta ]
+]
+
 { #category : #accessing }
 TSGroup >> width [ 
 	^ self extent x
