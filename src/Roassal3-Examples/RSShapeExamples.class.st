@@ -323,7 +323,7 @@ RSShapeExamples >> example11ClassTree [
 		color: (Color lightGray alpha: 0.4);
 		shapes: [ :cls | 
 			| group |
-			group := RSShapeBuilder octagon
+			group := RSShapeBuilder box
 				interactionDo: [ :i | i popupText: #selector ];
 				size: #linesOfCode;
 				elementsOn: cls methods.
@@ -364,7 +364,7 @@ RSShapeExamples >> example12Polygons [
 	<script: 'self new example12Polygons'>
 	| view color border |
 	view := RSView new.
-	color:= TSScale eva10.
+	color:= TSGradientPalette gradient21.
 	border := TSBorder new paint: Color black; width: 2.
 	#('diamond' 'square' 'heptagon' 'hexagon' 
 	'octagon' 'pentagon' 'rhomboid' 'star'
@@ -373,11 +373,14 @@ RSShapeExamples >> example12Polygons [
 		shape := (RSShapeBuilder perform: selector asSymbol)
 			size: 100;
 			interactionDo: #popup;
-			color: color;
+			color: [:e | | grad |
+				grad := color scale: e.
+				grad start: -50 asPoint; stop: 50 asPoint.
+				grad];
 			border: border.
 		view add: (shape elementOn: selector)
 		 ].
-	view showEncompassingRectangles.
+	"view showEncompassingRectangles."
 	"view animation repeat;
 		scale: (TSScale linear domain: {0. 0.5. 1}; range:{ 100. 150. 100} );
 		onStepDo: [ :t | 
@@ -391,25 +394,35 @@ RSShapeExamples >> example12Polygons [
 { #category : #shapes }
 RSShapeExamples >> example13Arrow [
 	<script: 'self new example13Arrow'>
-	| view triangle box label labels |
+	| view triangle box label labels paint |
 	view := RSView new.
+	   
+	paint := LinearGradientPaint new
+		colorRamp:
+			{(0 -> (Color colorFrom: 'CC2A49')).
+			(0.25 -> (Color colorFrom: 'F99E4C')).
+			(0.50 -> (Color colorFrom: 'F36F38')).
+			(0.75 -> (Color colorFrom: 'EF4648')).
+			(1 -> (Color colorFrom: '582841'))};
+		start: -100 asPoint;
+		stop: 100 asPoint.
 	triangle := RSShapeBuilder triangle
-		color: Color lightGray;
-		border: (TSBorder new width: 20; joinRound; color: Color lightGray);
+		color: paint;
+		border: (TSBorder new width: 20; joinRound; paint: paint);
 		extent: 200@100.
 	view add: triangle element.
 	box := RSShapeBuilder box
-		color: Color lightGray;
+		color: paint;
 		extent: 120@200.
 	view add: box element.
+	view elements second pushBack.
 	
 	RSVerticalLineLayout new alignCenter; gapSize: -1; on: view elements.
 	label := RSShapeBuilder label
 		fontSize: 20;
 		text: #asUppercase;
 		onElement;
-		if: [ :e | e index = 3 ] actions: [ :s |
-			s fontSize: 10 ].
+		if: [ :e | e index = 3 ] actions: [ :s | s fontSize: 10 ].
 	labels := label elementsOn: #('Keep' 'calm' 'and' 'roassal' 'on').
 	view addAll: labels.
 	RSVerticalLineLayout new alignCenter on: labels.
