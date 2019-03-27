@@ -132,8 +132,9 @@ TSLabel >> text [
 
 { #category : #accessing }
 TSLabel >> text: string [
+	text = string ifTrue: [ ^ self ].
 	text := string.
-	self resetCache.
+	self resetCache; resetPath.
 ]
 
 { #category : #accessing }
