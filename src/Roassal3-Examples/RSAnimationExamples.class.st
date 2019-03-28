@@ -671,38 +671,98 @@ RSAnimationExamples >> example11ArcTree [
 { #category : #examples }
 RSAnimationExamples >> example12PerlinParticles [
 	<script: 'self new example12PerlinParticles'>
-	| v w label pts particle r |
+	| v label particle r frame perlin color |
 	v := RSView new.
 	r := SharedRandom globalGenerator.
-	label := RSShapeBuilder label 
+	frame := 0.
+	perlin := TSPerlinNoise new.
+	
+	label := TSLabel new
 		color: Color black;
-		text: 'Drag to draw. type ''c'' to clear the view'; element.
-	v add: label.
-	(v animation delay: 2 seconds;
+		text: 'Drag to draw. type ''c'' to clear the view'.
+	v addShape: label.
+	
+	v animation delay: 2 seconds;
 		from: Color black; 
 		to: Color transparent; 
-		on: label trachelShape set: #color:)
-		when: TSAnimationEndEvent do: [ v clearBackground: false ].
-	pts := OrderedCollection new.
-	particle := RSShapeBuilder box
-		onMyselfDo: [ [ :e | 
-			| ang vel |
+		on: label set: #color:;
+		when: TSAnimationEndEvent do: [ 
+			v clearBackground: false.
+			label remove. ].
+	color := TSGradientPalette fabledSunset asScale.
+	color domain: color domain reverse.
+	particle := RSShapeBuilder ellipse
+		onMyselfDo: [ :m | [ :e | 
+			| ang vel att lifeSpan decay passedLife weightRange update |
+			att := e attributes.
+			
 			ang := r next * Float pi * 2.
 			vel := r next * 5 * (ang cos @ ang sin).
-			e attributes
-				at: #vel put:vel ] ];
-		color: [ Color h: r next * 255 s: r next * 255 v: 255 ];
-		size: 50;
-		position: [ :m | v camera fromPixelToSpace: m key ].
+			lifeSpan := r rsNext: 30 and: 90.
+			
+			decay := r rsNext: 0.75 and: 0.9.
+			passedLife := 0.
+			weightRange := r rsNext: 3 and: 50.
+			att at: #dead put: false.
+			"in this case use a class"
+			update := [ | radius rn acc mag pos dir rand alpha |
+				att at: #dead put: (passedLife >= lifeSpan).
+				passedLife := passedLife + 1.
+				acc := (lifeSpan - passedLife)/lifeSpan.
+				alpha := acc max: 0.4.
+				e border color: (Color black alpha: alpha).
+				e color: (color scale: acc asFloat).
+				radius := acc * weightRange.
+				pos := e position.
+				rn := 4*Float pi*((perlin 
+					noise: 0.02
+					and:0.02) - 0.5).
+				mag := (perlin noise: (pos y + frame) * 0.01 and: (pos x + frame)* 0.01) abs.
+				dir := rn cos @ rn sin.
+				ang :=  r next * Float pi * 2.
+				rand := (ang cos @ ang sin) * 0.5.
+				acc := (dir * mag) + rand.
+				vel := (vel + acc)* decay.
+				vel := vel normalized * 3.	
+				e size: radius.
+				e translateBy: vel.
+				 ].
+			att at: #update put: update.  
+			 ] ];
+		border: TSBorder new;
+		position: #key.
+	v animation repeat; onStepDo: [ :t| 
+		frame := frame + 30.
+		v elements copy do: [ :e| 
+			(e attributes at: #update) value.
+			(e attributes at: #dead) ifTrue: [ e remove ] ].
+		v signalUpdate ].
 	
 	v when: TSMouseDragging do: [ :evt | 
 		1 to: 10 do: [ :i | | p |
-			p := (particle elementOn: evt position-> (i+pts size) ).
-			v add: p.
-			pts add: p. ].
-		v signalUpdate ].
-	w := v open.
-	w setLabel: 'Particles!!! :V'
+			p := (particle elementOn: evt position-> (i+v elements size) ).
+			v add: p ].
+		v signalUpdate ];
+		when: TSKeyUp do: [:evt | 
+			evt keyValue = 8 ifTrue: [ 
+				v clearBackground: true.
+				v elements do: #remove.
+				v signalUpdate.
+				v animation duration: 200 milliSeconds;
+				when: TSAnimationEndEvent do: [ v clearBackground: false ] ] ].
+
+	v open setLabel: 'Particles!!! :V'
+	
+
+
+
+
+
+
+
+
+
+
 ]
 
 { #category : #examples }
