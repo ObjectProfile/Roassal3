@@ -143,3 +143,30 @@ RSLayoutExamples >> example05TreeLayout [
 	v @ RSDraggableView.
 	v open
 ]
+
+{ #category : #layouts }
+RSLayoutExamples >> example06Cluster [
+
+| v sb eb |
+v := RSView new.
+sb := RSShapeBuilder circle.
+v addAll: (sb elementsOn: GLMBrickedMorph withAllSubclasses).
+
+eb := RSEdgeBuilder line
+			view: v;
+			color: Color blue trans;
+			connectFrom: #superclass.
+
+RSNormalizer size
+	scale: (TSScale log base: 2.7; range: {1 . 30});
+	elements: v elements;
+	normalize: #numberOfMethods.
+
+RSNormalizer color
+	scale: (TSScale log base: 2.7; range: {Color blue . Color red});
+	elements: v elements;
+	normalize: #numberOfMethods.
+	
+RSClusterLayout on: v elements.
+v open
+]

@@ -431,3 +431,35 @@ RSShapeExamples >> example13Arrow [
 	view @ RSControlsView.
 	view open setLabel: 'You can do it'.
 ]
+
+{ #category : #lines }
+RSShapeExamples >> exampleForceBasedLayout [
+	<script: 'self new exampleForceBasedLayout'>
+	| v sb eb |
+	v := RSView new.
+	sb := RSShapeBuilder circle
+		interactionDo: [ :i | 
+			i
+				draggable;
+				popup ].
+	v addAll: (sb elementsOn: TSShape withAllSubclasses).
+	RSNormalizer size
+		elements: v elements;
+		normalize: #numberOfMethods.
+	RSNormalizer color
+		from: (Color green alpha: 0.5);
+		to: (Color red alpha: 0.5);
+		elements: v elements;
+		normalize: #numberOfMethods.
+	eb := RSEdgeBuilder line.
+	eb
+		view: v;
+		moveBehind;
+		connectFrom: #superclass.
+	RSForceBasedLayout new
+		charge: -350;
+		on: v elements.
+	v @ RSControlsView.
+	v zoomToFit.
+	v open
+]
