@@ -16,7 +16,7 @@ Once loaded, you can execute in a playground:
 RSAnimationExamples new example06Atom
 ```
 You should an animated version of:
-[atom](screenshots/atom.png)
+![atom](screenshots/atom.png)
 
 _____
 ## For developers
