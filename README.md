@@ -17,7 +17,7 @@ RSAnimationExamples new example06Atom
 ```
 You should an animated version of:
 
-![atom](screenshots/atom.png)
+![atom](screenshots/smallAtom.png)
 
 _____
 ## For developers
