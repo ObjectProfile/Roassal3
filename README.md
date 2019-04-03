@@ -15,7 +15,8 @@ Once loaded, you can execute in a playground:
 ```Smalltalk
 RSAnimationExamples new example06Atom
 ```
-You should see an animation:
+You should an animated version of:
+
 
 _____
 ## For developers
