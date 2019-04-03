@@ -11,6 +11,12 @@ Metacello new
     load.
 ``` 
 
+Once loaded, you can execute in a playground:
+```Smalltalk
+RSAnimationExamples new example06Atom
+```
+You should see an animation:
+
 _____
 ## For developers
 A local clone of Roassal3 can be loaded with the following code (you need to provide the full path of the clone):
