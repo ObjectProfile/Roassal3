@@ -28,7 +28,18 @@ RSUMLClassBuilder >> initialize [
 
 { #category : #initialization }
 RSUMLClassBuilder >> initializeShapes [
-	shape := RSShapeBuilder box.
+	| box title |
+	box := RSShapeBuilder box
+		cornerRadius: 5;
+		border: TSBorder new.
+	title := RSShapeBuilder label.
+	shape := RSShapeBuilder composite shapes: [ :m | | g b t |
+		g := TSGroup new.
+		b := box elementOn: m.
+		g add: b.
+		t := title elementOn: m.
+		g add: t.
+		g ].
 ]
 
 { #category : #hooks }

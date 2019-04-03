@@ -204,5 +204,5 @@ TSGradientPalette class >> youngPassion [
 		(0.21 -> 'ff8c7f').
 		(0.52 -> 'f99185').
 		(0.78 -> 'cf556c').
-		(1 -> '100')}
+		(1 -> 'b12a5b')}
 ]

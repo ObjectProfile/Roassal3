@@ -12,8 +12,9 @@ RSUmlExamples >> example01Basic [
 	<script: 'self new example01Basic'>
 	| builder |
 	builder := RSUMLClassBuilder new.
-	builder classes: Collection withAllSubclasses.
+	builder classes: ByteSymbol withAllSubclasses.
 	builder build.
+	builder view when: TSExtentChangedEvent do: [ builder view zoomToFit ].
 	builder open setLabel: 'Collection withAllSubclasses'.
 	
 ]

@@ -766,6 +766,115 @@ RSAnimationExamples >> example12PerlinParticles [
 ]
 
 { #category : #examples }
+RSAnimationExamples >> example12b [
+	<script: 'self new example12b'>
+	| v label particle r frame perlin changeHue hIndex hExtent h |
+	v := RSView new.
+	v color: Color black.
+	r := SharedRandom globalGenerator.
+	frame := 0.
+	perlin := TSPerlinNoise new.
+	
+	label := TSLabel new
+		color: Color white;
+		text: 'Drag to draw. type ''c'' to clear the view.'.
+	v addShape: label.
+	
+	v animation delay: 2 seconds;
+		from: Color black; 
+		to: Color transparent; 
+		on: label set: #color:;
+		when: TSAnimationEndEvent do: [ 
+			v clearBackground: false.
+			label remove. ].
+		
+	hIndex := 4.
+	changeHue := [
+		hIndex := hIndex + 1.
+		hIndex > 4 ifTrue: [ hIndex := 0 ].
+		hExtent := TSScale linear
+			domain: #(0 1 2 3 4);
+			range: { 220@100. 55@0. 100@20. 180@110. 255@150 };
+			scale: hIndex.
+		hExtent := hExtent * 360 / 255.
+		h := hExtent y ].
+	changeHue value.
+	particle := RSShapeBuilder ellipse
+		onMyselfDo: [ :m | [ :e | 
+			| ang vel att lifeSpan decay passedLife update sizeMult |
+			att := e attributes.
+			
+			ang := r next * Float pi * 2.
+			vel := r next * 5 * (ang cos @ ang sin).
+			lifeSpan := r rsNext: 30 and: 90.
+			
+			decay := r rsNext: 0.75 and: 0.9.
+			passedLife := 0.
+			h := h + 0.5.
+			h > hExtent x ifTrue: [ h := hExtent y + h - hExtent x ].
+			e color: ((Color h: h s: 1 v: 1) alpha: 0.2).
+			sizeMult := ((frame * 0.02) sin max: 0.05) min: 0.5.
+			att at: #dead put: false.
+			"in this case use a class"
+			update := [ | radius rn acc mag pos dir rand |
+				att at: #dead put: (passedLife >= lifeSpan).
+				passedLife := passedLife + 1.
+				acc := lifeSpan - passedLife.
+				
+				radius := acc * sizeMult.
+				pos := e position.
+				rn := 4*Float pi*((perlin 
+					noise: 0.02
+					and:0.02) - 0.5).
+				mag := (perlin noise: (pos y + frame) * 0.01 and: (pos x + frame)* 0.01) abs.
+				dir := rn cos @ rn sin.
+				ang :=  r next * Float pi * 2.
+				rand := (ang cos @ ang sin) * 0.5.
+				acc := (dir * mag) + rand.
+				vel := (vel + acc)* decay.
+				vel := vel normalized * 3.	
+				e size: radius.
+				e translateBy: vel.
+				 ].
+			att at: #update put: update.  
+			 ] ];
+		position: #key.
+	v animation repeat; onStepDo: [ :t| 
+		frame := frame + 30.
+		v elements copy do: [ :e| 
+			(e attributes at: #update) value.
+			(e attributes at: #dead) ifTrue: [ e remove ] ].
+		v signalUpdate ].
+	
+	v when: TSMouseDragging do: [ :evt | 
+		1 to: 10 do: [ :i | | p |
+			p := (particle elementOn: evt position-> (i+v elements size) ).
+			v add: p ].
+		v signalUpdate ];
+		when: TSKeyUp do: [:evt | 
+			evt keyValue = 8 ifTrue: [ 
+				v clearBackground: true.
+				v elements do: #remove.
+				v signalUpdate.
+				v animation duration: 200 milliSeconds;
+				when: TSAnimationEndEvent do: [ v clearBackground: false ] ]
+			ifFalse: changeHue ].
+
+	v open setLabel: 'Particles!!! :V'
+	
+
+
+
+
+
+
+
+
+
+
+]
+
+{ #category : #examples }
 RSAnimationExamples >> example13Arcs [
 	<script: 'self new example13Arcs'>
 	| view beta shape theta step size |
@@ -1398,4 +1507,170 @@ RSAnimationExamples >> example23CircleWaves [
 	"at this point: elements encompassingRectangle = zero"
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
 	v open setLabel: 'Waves'.
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example24Lines [
+	<script: 'self new example24Lines'>
+	| v frame radius hueOffset shape line angleSp elements soffset size mult  |
+	v := RSView new.
+	v color: Color black.
+	frame := 0.
+	radius := 200.
+	hueOffset := 0.
+	angleSp := 0.
+	"<globals>"
+	soffset := nil. size := nil. mult := 0.
+	"</globals>"
+	line := RSSingleEdgeBuilder line
+		width: 1.5;
+		color: [ :m | Color h: m + hueOffset s: 0.6 v: 1 ].
+	shape := RSShapeBuilder composite 
+		onMyselfDo: [ :i | [:e | | ed pos offset ang a soff|
+			ang := i degreesToRadians.
+			a := Float halfPi + ang.
+			soff := soffset.
+			offset := a * size.
+			pos := 0.
+			ed := line from: 0@0; to: 0@pos; edgeOn: i+soff.
+			
+			e attributes at:#update put: [
+				pos := (angleSp negated + offset) cos * 30.
+				line updateElement: ed withCommand: #color:.
+				ed to: 0@pos.
+				ed update.
+				 ].
+			e add: ed trachelShape.
+			e translateTo: ang cos @ ang sin * radius * mult.
+			e matrix rotateByRadians: a. ] ].
+	
+	soffset := 0. size := 12. mult := 1.
+	elements := shape elementsOn: (0 to: 359 by: 12).
+	v addAll: elements.
+	
+	soffset := 180. size := 8. mult := 0.5.
+	elements := shape elementsOn: (0 to: 359 by: 5).
+	v addAll: elements.
+	
+	soffset := 120. size := 4. mult := 0.5@0.75.
+	elements := shape elementsOn: (0 to: 359 by: 5).
+	v addAll: elements.
+	
+	soffset := 240. size := 4. mult := 0.75@0.5.
+	elements := shape elementsOn: (0 to: 359 by: 5).
+	v addAll: elements.
+	elements := v elements.
+	v addShape: (TSLabel new 
+		text: 'Roassal';
+		fontSize: 30;
+		border: (TSBorder new color: Color white);
+		color: nil).
+	v animation repeat onStepDo: [ :t |
+		frame := frame + 1. 
+		angleSp := frame / 300 * Float twoPi.
+		hueOffset := hueOffset + 1.
+		elements do: [ :e | (e attributes at: #update) value ].
+		 ].
+	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500 asPoint ].
+	v open setLabel: '.=.= Lines =.=.'.
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example25Lines [
+	<script: 'self new example25Lines'>
+	| v radius bar step line shape frame label |
+	v := RSView new.
+	v color: (Color colorFrom: 'EEEEEE').
+	radius := 200.
+	bar := 180.
+	step := 1.
+	frame := 0.
+	line := RSSingleEdgeBuilder line
+		color: Color lightGray;
+		from: bar negated /2 @0;
+		to: bar / 2 @ 0.
+	shape := RSShapeBuilder composite add: [line edge trachelShape ].
+	v addAll: (shape elementsOn: (0 to: 360 by: 0.5) ).
+	v animation repeat onStepDo: [ :t | 
+		frame := frame + 4.
+		v elements do: [ :e | | radian |
+			radian := e model degreesToRadians.
+			e matrix 
+				loadIdentity;
+				translation: radius * (radian cos@radian sin);
+				rotateByRadians: radian + (frame * (radian * step * 0.5) sin * 0.05) ]
+		].
+	label := TSLabel new 
+		text: 'Pharo';
+		fontName: 'Brushcrazy DEMO';
+		fontSize: 50;
+		paint: nil;
+		bold;
+		border: (TSBorder new paint: Color black; dashArray: #(4)).
+	v addShape: label.
+	v animation repeat from: 0; to: 8; on: label border set: #dashOffset:.
+	
+	v when: TSMouseClick do: [
+		step := step + 0.5.
+		step > 11 ifTrue: [ step := 1 ] ].
+	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 640@640 ].
+	v open setLabel: 'Line patterns'.
+	
+
+
+
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example26PerlinNoise [
+	<script: 'self new example26PerlinNoise'>
+	"inpired by wangyasai Twitter: @yasai_wang"
+	| v r s c1 c2 c3 size perlin noiseScale rec |
+	v := RSView new.
+	rec := Rectangle rsCenter: 0@0 extent: World extent.
+	r := SharedRandom globalGenerator.
+	size := 200.
+	noiseScale := 300.
+	v clearBackground: false.
+	perlin := TSPerlinNoise2 new.
+	v color: (Color colorFrom: '150832').
+	c1 := '45217C'. c2 := '0799F2'. c3 := 'white'.
+	
+	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e| | a b c newcircle |
+		newcircle := [ :col | TSEllipse new
+			position: (r next* rec width)@(r next * rec height) + rec origin;
+			size: 1 + (e index /size);
+			color: ((Color colorFrom: col) alpha: e index*(250 / 255)/ size);
+			yourself ].
+		a := newcircle value: c1.
+		b := newcircle value: c2.
+		c := newcircle value: c3.
+		e add: a; add: b; add: c.
+		] ].
+	v addAll: (s elementsOn: (1 to: size)).
+	v animation repeat onStepDo: [ :t | | speed |
+		speed := 0.4.
+		v elements do: [ :c |
+			c shapes do: [ :e |
+				| angle p dir vel pval |
+				p := e position.
+				pval := perlin 
+					noise: p x / noiseScale
+					and: p y / noiseScale.
+				pval := (pval + 1) / 2.
+				angle := Float twoPi * noiseScale * pval.
+				dir := angle cos @ angle sin.
+				vel := dir * speed.
+				p := p + vel.
+				(rec containsPoint: p) ifFalse: [ 
+					p := (r next * rec width )@(r next * rec height) + rec origin ].
+				e translateTo: p.
+				].
+			].
+		].
+	v open setLabel: 'Perlin Noise'.
+	
+
+
+
 ]

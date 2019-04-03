@@ -28,7 +28,7 @@ RSAttachPoint >> basicStartingPointOf: anEdge [
 { #category : #'public - hooks' }
 RSAttachPoint >> endingPointOf: anEdge [
 	(anEdge from = anEdge to) 
-		ifTrue: [ ^ anEdge from encompassingRectangle topCenter ].
+		ifTrue: [ ^ self position: anEdge from ].
     ^ inverted
         ifTrue: [ self basicStartingPointOf: anEdge ]
         ifFalse: [ self basicEndingPointOf: anEdge ]
@@ -49,7 +49,7 @@ RSAttachPoint >> position: anObject [
 { #category : #'public - hooks' }
 RSAttachPoint >> startingPointOf: anEdge [
 	(anEdge from = anEdge to) 
-		ifTrue: [ ^ anEdge from encompassingRectangle rightCenter ].
+		ifTrue: [ ^ self position: anEdge from ].
     ^ inverted
         ifTrue: [ self basicEndingPointOf: anEdge ]
         ifFalse: [ self basicStartingPointOf: anEdge ]

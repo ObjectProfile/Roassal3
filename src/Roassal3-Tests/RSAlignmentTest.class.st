@@ -1,5 +1,5 @@
 Class {
-	#name : #RTAlignmentTest,
+	#name : #RSAlignmentTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'align'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #running }
-RTAlignmentTest >> setUp [
+RSAlignmentTest >> setUp [
 	super setUp.
 	align := RSAlignment new.
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testFromBottom [
+RSAlignmentTest >> testFromBottom [
 	| es |
 	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
 	align elements: es.
@@ -30,7 +30,7 @@ RTAlignmentTest >> testFromBottom [
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testFromLeft [
+RSAlignmentTest >> testFromLeft [
 	| es |
 	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
 	align elements: es.
@@ -46,7 +46,7 @@ RTAlignmentTest >> testFromLeft [
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testFromRight [
+RSAlignmentTest >> testFromRight [
 	| es |
 	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
 	align elements: es.
@@ -62,7 +62,7 @@ RTAlignmentTest >> testFromRight [
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testFromTop [
+RSAlignmentTest >> testFromTop [
 	| es |
 	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
 	align elements: es.
@@ -75,7 +75,7 @@ RTAlignmentTest >> testFromTop [
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testHasElement [
+RSAlignmentTest >> testHasElement [
 	self deny: align hasElement.
 	align elements: (Array with: RSElement new).
 	self assert: align hasElement.
@@ -84,7 +84,7 @@ RTAlignmentTest >> testHasElement [
 ]
 
 { #category : #tests }
-RTAlignmentTest >> testNoErrorOnDefault [
+RSAlignmentTest >> testNoErrorOnDefault [
 
 	RSAlignment new left; right; top; bottom
 ]

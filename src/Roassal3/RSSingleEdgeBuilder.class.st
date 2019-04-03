@@ -54,7 +54,8 @@ RSSingleEdgeBuilder >> edgeOn: model index: index [
 	ed := self basicElementOn: model index: index.
 	ed 
 		from: (fromObject rsValue: model) ;
-		to: (toObject rsValue: model).
+		to: (toObject rsValue: model);
+		update.
 	^ ed
 ]
 
