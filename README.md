@@ -27,8 +27,8 @@ Share your happiness by joining the #Roassal channel, in the Pharo discord serve
 A list of differences and migration instruction are accessible from the Wiki https://github.com/ObjectProfile/Roassal3/wiki
 
 _____
-## For developers
-A local clone of Roassal3 can be loaded with the following code (you need to provide the full path of the clone):
+## Developers section
+If you are a regular contributor of Roassal3, you probably wish to have a local clone of it on your local disk. You can load Roassal3 with the following code (assuming that you provide the full path of your clone):
 
 ```Smalltalk
 Metacello new
