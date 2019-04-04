@@ -22,10 +22,10 @@ You should an animated version of:
 
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
-_____
-# Difference between Roassal2 and Roassal3
 
+## Difference between Roassal2 and Roassal3
 A list of differences and migration instruction are accessible from the Wiki https://github.com/ObjectProfile/Roassal3/wiki
+
 _____
 ## For developers
 A local clone of Roassal3 can be loaded with the following code (you need to provide the full path of the clone):
