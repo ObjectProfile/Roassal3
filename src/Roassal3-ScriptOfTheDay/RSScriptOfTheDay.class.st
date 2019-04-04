@@ -7,6 +7,16 @@ Class {
 	#category : #'Roassal3-ScriptOfTheDay'
 }
 
+{ #category : #'class initialization' }
+RSScriptOfTheDay class >> initialize [ 
+	(Smalltalk includesKey: #DSWebhookClient) ifFalse: [ 
+		Metacello new
+		    baseline: #DiscordSt;
+		    repository: 'github://JurajKubelka/DiscordSt/src';
+		    load: #webhook ]. 
+	
+]
+
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> initialize [
 	"
