@@ -471,7 +471,8 @@ TSAthensRenderer >> visitLabel: label [
 				setPathMatrix;
 				setScaledFont: f.
 			label paint ifNotNil: [ 
-				(label paint asAthensPaintOn: athensCanvas)
+				(label paint asAthensPaintOn: athensCanvas)"
+					setMatrix: athensCanvas paintTransform inverted;"
 					loadOnCairoCanvas: athensCanvas. ].
 			athensCanvas textPath: utf8String.
 			label paint ifNotNil: [ athensCanvas fillPreserve ].
@@ -492,11 +493,71 @@ TSAthensRenderer >> visitLine: line [
 	| path paint |
 	athensCanvas pathTransform restoreAfter: [ 
 		path := self getOrCreatePathOf: line.
-		paint := line paint.
+		paint := line paintOn: self.
 		paint ifNotNil: [ 
 			athensCanvas
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: line.
+		self visitMarkersIfNecessary: line.
 		].
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitMarker: marker to: from vector: vector [
+	| shape angle pos |
+	shape := marker shape.
+	angle := vector angle + Float halfPi.
+	pos := from.
+	shape matrix
+		loadIdentity;
+		rotateByRadians: angle.
+	(marker offset isZero and: [ marker transition isZero ]) ifFalse: [ 
+		| unit |
+		unit := vector / (vector r max: 1).
+		pos := pos -(vector * marker transition) - (unit * marker offset)
+		 ].
+	shape
+		position: pos;
+		accept: self.
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitMarkerEnd: marker with: controlPoints [
+	| from to |
+	marker ifNil: [ ^ self ].
+	from := controlPoints at: controlPoints size - 1.
+	to := controlPoints last.
+	self visitMarker: marker to: to vector: to-from. 
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitMarkerMid: marker with: controlPoints [
+	marker ifNil: [ ^ self ].
+	controlPoints size < 3 ifTrue: [ ^ self ].
+	1 to: controlPoints size -2 do: [ :i | | a b |
+		a := controlPoints at: i.
+		b := controlPoints at: i + 1.
+		self visitMarker: marker to: b vector: b - a. 
+	 ].
+	
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitMarkerStart: marker with: controlPoints [
+	| from to |
+	marker ifNil: [ ^ self ].
+	from := controlPoints first.
+	to := controlPoints second.
+	self visitMarker: marker to: from vector: from - to. 
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitMarkersIfNecessary: line [
+	| cp |
+	line hasMarkers ifFalse: [ ^ self ].
+	cp := line controlPoints.
+	self visitMarkerStart: line markerStart with: cp.
+	self visitMarkerMid: line markerMid with: cp.
+	self visitMarkerEnd: line markerEnd with: cp.
 ]

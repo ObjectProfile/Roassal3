@@ -22,7 +22,7 @@ RSAttachPoint >> basicEndingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RSAttachPoint >> basicStartingPointOf: anEdge [
-	self subclassResponsibility 
+	^ self subclassResponsibility 
 ]
 
 { #category : #'public - hooks' }

@@ -44,3 +44,11 @@ TSAbstractDualLine >> startPoint: point [
 	startPoint := point.
 	self resetPath
 ]
+
+{ #category : #transforming }
+TSAbstractDualLine >> translateBy: delta [
+	self
+		startPoint: startPoint + delta;
+		endPoint: endPoint + delta.
+	self resetPath
+]

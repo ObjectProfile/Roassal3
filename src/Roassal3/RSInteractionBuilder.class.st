@@ -23,6 +23,11 @@ RSInteractionBuilder >> addInteraction: anInteraction [
 ]
 
 { #category : #interactions }
+RSInteractionBuilder >> browseable [
+	self addInteraction: [ :element | element when: TSMouseClick do: [ :evt | element model browse ] ].
+]
+
+{ #category : #interactions }
 RSInteractionBuilder >> clear [
 	interactions removeAll.
 ]
@@ -59,4 +64,9 @@ RSInteractionBuilder >> setUpElement: elementOrGroup [
 	"elements is an RTGroup, that contains RTElement or RTEdges"
 	
 	interactions do: [ :int | elementOrGroup @ int ]
+]
+
+{ #category : #interactions }
+RSInteractionBuilder >> when: event do: block [
+	self addInteraction: [ :element | element when: event do: block ]
 ]

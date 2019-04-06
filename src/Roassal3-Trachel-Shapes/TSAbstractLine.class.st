@@ -4,6 +4,8 @@ I represent the abstract lines that have start and end points
 Class {
 	#name : #TSAbstractLine,
 	#superclass : #TSShape,
+	#traits : 'TMarkeable',
+	#classTraits : 'TMarkeable classTrait',
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
@@ -66,6 +68,14 @@ TSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+TSAbstractLine >> hasMarkers [
+	| m |
+	m := self privateMarkers.
+	^ m notNil and: [ 
+		m anySatisfy: [ :mar | mar notNil ].  ]
+]
+
 { #category : #initialization }
 TSAbstractLine >> initialize [ 
 	super initialize.
@@ -97,6 +107,11 @@ TSAbstractLine >> joinRound [
 { #category : #actions }
 TSAbstractLine >> loadShape: other [
 	self shouldBeImplemented 
+]
+
+{ #category : #private }
+TSAbstractLine >> privateMarkers [
+	^ nil
 ]
 
 { #category : #accessing }

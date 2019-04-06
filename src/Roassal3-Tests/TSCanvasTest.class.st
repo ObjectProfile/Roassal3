@@ -33,7 +33,7 @@ TSCanvasTest >> testDrawCanvas [
 		position: 100@100;
 		extent: 100@100;
 		yourself).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -48,7 +48,7 @@ TSCanvasTest >> testDrawCanvasWithGroup [
 		extent: 100@100;
 		yourself).
 	c addShape: g.
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -69,7 +69,7 @@ TSCanvasTest >> testDrawFixed [
 	self assert: box isFixed.
 	self assert: c numberOfShapes equals: 0.
 	self assert: c numberOfFixedShapes equals: 2.
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }

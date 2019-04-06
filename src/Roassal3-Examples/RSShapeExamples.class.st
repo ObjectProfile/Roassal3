@@ -413,7 +413,8 @@ RSShapeExamples >> example13Arrow [
 	view add: triangle element.
 	box := RSShapeBuilder box
 		color: paint;
-		extent: 120@200.
+		extent: 120@200;
+		cornerRadius: (TSCornerRadius new bottom: 20).
 	view add: box element.
 	view elements second pushBack.
 	
@@ -432,34 +433,27 @@ RSShapeExamples >> example13Arrow [
 	view open setLabel: 'You can do it'.
 ]
 
-{ #category : #lines }
-RSShapeExamples >> exampleForceBasedLayout [
-	<script: 'self new exampleForceBasedLayout'>
-	| v sb eb |
-	v := RSView new.
-	sb := RSShapeBuilder circle
-		interactionDo: [ :i | 
-			i
-				draggable;
-				popup ].
-	v addAll: (sb elementsOn: TSShape withAllSubclasses).
-	RSNormalizer size
-		elements: v elements;
-		normalize: #numberOfMethods.
-	RSNormalizer color
-		from: (Color green alpha: 0.5);
-		to: (Color red alpha: 0.5);
-		elements: v elements;
-		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
-	eb
-		view: v;
-		moveBehind;
-		connectFrom: #superclass.
-	RSForceBasedLayout new
-		charge: -350;
-		on: v elements.
-	v @ RSControlsView.
-	v zoomToFit.
-	v open
+{ #category : #shapes }
+RSShapeExamples >> example14Arrow [
+	<script: 'self new example14Arrow'>
+	| view  elements line arrow |
+	view := RSView new.
+	elements := RSShapeBuilder ellipse 
+		interactionDo: #draggable;
+		size: 100; elementsOn: (1 to: 2).
+	
+	arrow := RSShapeBuilder triangle 
+		color: Color white;
+		border: (TSBorder new color: Color red; width: 3);
+		size: 20; element.
+	line := RSSingleEdgeBuilder line
+		markerEnd: (TSMarker new shape: arrow; transition: 0.5; offset: 10); 
+		from: elements first;
+		to: elements second;
+		edge.
+
+	view addAll: elements.
+	view add: line.
+	RSFlowLayout on: elements.
+	view open
 ]

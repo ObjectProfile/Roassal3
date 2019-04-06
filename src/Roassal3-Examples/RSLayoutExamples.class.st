@@ -146,27 +146,63 @@ RSLayoutExamples >> example05TreeLayout [
 
 { #category : #layouts }
 RSLayoutExamples >> example06Cluster [
+	<script: 'self new example06Cluster'>
+	| v sb eb |
+	v := RSView new.
+	sb := RSShapeBuilder circle.
+	v addAll: (sb elementsOn: GLMBrickedMorph withAllSubclasses).
+	eb := RSEdgeBuilder line
+		view: v;
+		color: Color blue trans;
+		connectFrom: #superclass.
+	RSNormalizer size
+		scale:
+			(TSScale log
+				base: 2.7;
+				range: {1 . 30});
+		elements: v elements;
+		normalize: #numberOfMethods.
+	RSNormalizer color
+		scale:
+			(TSScale log
+				base: 2.7;
+				range:
+					{Color blue.
+					Color red});
+		elements: v elements;
+		normalize: #numberOfMethods.
+	RSClusterLayout on: v elements.
+	v open
+]
 
-| v sb eb |
-v := RSView new.
-sb := RSShapeBuilder circle.
-v addAll: (sb elementsOn: GLMBrickedMorph withAllSubclasses).
-
-eb := RSEdgeBuilder line
-			view: v;
-			color: Color blue trans;
-			connectFrom: #superclass.
-
-RSNormalizer size
-	scale: (TSScale log base: 2.7; range: {1 . 30});
-	elements: v elements;
-	normalize: #numberOfMethods.
-
-RSNormalizer color
-	scale: (TSScale log base: 2.7; range: {Color blue . Color red});
-	elements: v elements;
-	normalize: #numberOfMethods.
-	
-RSClusterLayout on: v elements.
-v open
+{ #category : #lines }
+RSLayoutExamples >> example07ForceBasedLayout [
+	<script: 'self new example07ForceBasedLayout'>
+	| v sb eb |
+	v := RSView new.
+	sb := RSShapeBuilder circle
+		interactionDo: [ :i | 
+			i
+				draggable;
+				popup ].
+	v addAll: (sb elementsOn: TSShape withAllSubclasses).
+	RSNormalizer size
+		elements: v elements;
+		normalize: #numberOfMethods.
+	RSNormalizer color
+		from: (Color green alpha: 0.5);
+		to: (Color red alpha: 0.5);
+		elements: v elements;
+		normalize: #numberOfMethods.
+	eb := RSEdgeBuilder line.
+	eb
+		view: v;
+		moveBehind;
+		connectFrom: #superclass.
+	RSForceBasedLayout new
+		charge: -350;
+		on: v elements.
+	v @ RSControlsView.
+	v zoomToFit.
+	v open
 ]

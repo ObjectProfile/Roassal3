@@ -10,8 +10,8 @@ Class {
 { #category : #running }
 TSBoundingTest >> testDrawBitamp [
 	c addShape: (TSBitmap new
-		form: (ColorForm extent: 100@100 depth: 32)). 
-	c morph drawOnMockCanvas.
+		form: (ColorForm extent: 100@100 depth: 32)).
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -20,7 +20,7 @@ TSBoundingTest >> testDrawBorder [
 		radius: 100;
 		border: TSBorder new;
 		yourself).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -29,7 +29,7 @@ TSBoundingTest >> testDrawBoxCornerRadius [
 		extent: 100@100;
 		cornerRadius: 5;
 		yourself).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -39,7 +39,7 @@ TSBoundingTest >> testDrawPolygon [
 		points: { 200@10. 250@190. 160@210 };
 		yourself).
 	self assert: c shapes second points equals: {(-5@ -100). (45@80). (-45@100)}.
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -73,7 +73,7 @@ TSBoundingTest >> testDrawRing [
 		alphaAngle: 0;
 		betaAngle: 45;
 		cornerRadii: 20).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }

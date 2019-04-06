@@ -99,13 +99,6 @@ TSBoundingShape >> matrixDo: aBlock [
 	aBlock value: matrix
 ]
 
-{ #category : #accessing }
-TSBoundingShape >> paintOn: visitor [
-	^ paint
-	
-	
-]
-
 { #category : #matrix }
 TSBoundingShape >> position [ 
 	^ matrix translation

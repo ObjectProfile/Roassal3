@@ -1639,7 +1639,7 @@ RSAnimationExamples >> example26PerlinNoise [
 	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e| | a b c newcircle |
 		newcircle := [ :col | TSEllipse new
 			position: (r next* rec width)@(r next * rec height) + rec origin;
-			size: 1 + (e index /size);
+			size: 0.1 + (e index /size);
 			color: ((Color colorFrom: col) alpha: e index*(250 / 255)/ size);
 			yourself ].
 		a := newcircle value: c1.
@@ -1670,6 +1670,164 @@ RSAnimationExamples >> example26PerlinNoise [
 		].
 	v open setLabel: 'Perlin Noise'.
 	
+
+
+
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example27RoassalPerlinNoise [
+	<script: 'self new example27RoassalPerlinNoise'>
+	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 morph v2 |
+	v := RSView new.
+	v color: Color black.
+	v clearBackground: false.
+	r := SharedRandom globalGenerator.
+	perlin := TSPerlinNoise2 new.
+	density := 800. maxLife := 10. noiseScale := 800.
+	rect := Rectangle rsCenter: 0@0 extent: World extent.
+	size := rect width * rect height / density.
+	color := TSScale ordinal rangeFrom: { '6E39CC'. '0799F2'. 'white'}.
+	sc1 := TSScale linear domain: {1. size}; range: #(5 1).
+	sc2 := TSScale linear domain: {1. size}; range: #(1 2).
+	shape := RSShapeBuilder ellipse
+		onMyselfDo: [ :m | [ :e | 
+			e size: (sc2 scale: e index).
+			e attributes
+				at: #flip put: (r next* 2) asInteger * 2 - 1;
+				at: #life put: r next * maxLife;
+				at: #color put: (color scale: (r next * 3) asInteger) ] ];
+		position: [ (r next * rect width)@ (r next * rect height )+ rect origin ].
+	v addAll: (shape elementsOn: (1 to: size)).
+	
+	v animation repeat onStepDo: [ :t |
+		v elements do: [ :e | 
+			| life att p flip iterations respawn case fadeRatio colorCase c |
+			att := e attributes.
+			flip := att at: #flip.
+			life := att at: #life.
+			c := att at: #color.
+			life := life - 0.06667.
+			respawn := [
+				shape updateElement: e withCommand: #position:.
+				life := maxLife. ].
+			life < 0 ifTrue: respawn.
+			att at: #life put: life.
+			p := e position-rect origin.
+			iterations := sc1 scale: e index.
+			1 to: iterations do: [ :i| | angle dir |
+				angle := Float twoPi * noiseScale * flip * (perlin 
+					snoise: p x / noiseScale  
+					and: p y / noiseScale).
+				dir := angle cos @ angle sin * 1.2.
+				p := p + dir.
+				].
+			case := p / rect extent.
+			case := ((case x + case y)/2 *3 )asInteger.
+			p := p + rect origin.
+			e position: p.
+			(rect containsPoint: p) ifFalse: respawn.
+			fadeRatio := (life * 5) min: 1.
+			fadeRatio := fadeRatio min: (maxLife - life)*5 / maxLife .
+			colorCase := TSScale ordinal domain: #(0 1 2); range: { 
+				[ Color gray: life / maxLife ].
+				[ c ].
+				[ (Color 
+					r: (c blue * 255) + 10
+					g: (c green * 255)- 20
+					b: (c red * 255) - 5 range: 255) ]
+			}.
+			c := (colorCase scale: case) value.
+			e color: (c setAlpha: fadeRatio).
+			 ]. ].
+	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
+	v open extent: 800@500; setLabel: 'Roassal'.
+	"morph := v canvas morph.
+	morph extent: 800@500.
+	v2 := RSView new.
+	v2 color: Color black.
+	
+	v2 addShape: (TSLabel new
+		text: 'Roassal3';
+		fontName: 'Impact';
+		fontSize: 150;
+		border: (TSBorder new color: Color white trans)).
+	
+	v2 animation repeat onStepDo: [ :t| | paint |
+		morph drawOnMockCanvas.
+		paint := AthensCairoPatternSurfacePaint createForSurface: morph surface.
+		paint origin: ( -100@ -300) .
+		v2 shapes first paint: paint.
+		v2 signalUpdate ].
+	v2 when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v2 open extent: 800@500; setLabel: 'Roassal'.
+	
+
+
+
+"
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example28AnimationDelay [
+	<script: 'self new example28AnimationDelay'>
+	| v r line shape elements update sc1 sc2 |
+	v := RSView new.
+	r := 50.
+	v addShape: (TSEllipse new
+		color: Color black;
+		radius: r).
+	shape := RSShapeBuilder circle
+		color: Color white;
+		onElement;
+		if: [ :e | e index = 1 ] actions: [ :s | s color: Color red ];
+		if: [ :e | e index = 2 ] actions: [ :s | s color: Color green ].
+	line := RSSingleEdgeBuilder line
+		width: 0.1;
+		color: Color white.
+	elements := shape elementsOn: ((1 to: 10) collect: [:i | (i-1) / 4]).
+	sc2 := TSScale linear domain: #(0 1).
+	
+	elements do: [ :e | | delta |
+		delta := 0.001.
+		v animation repeat onStepDo: [ :t | | ed |
+			e model: e model + delta.
+			(e model between: 0 and: 1) ifFalse: [ 
+				delta := delta negated.
+				(e model < 0 and: [ e index = 1 ]) ifTrue: [ 
+					elements do: [ :e2 | e2 model: e2 index/v edges size ]  ].
+				e model: e model + delta. ].
+			
+			v edges size >= e index ifTrue: [ 
+				ed := v edges at: e index.
+				e position: (sc2 range: {ed from. ed to.}; 
+					scale: (e model* Float halfPi) cos ).
+			] ] ].
+	update := [:size | | slice |
+		slice := Float twoPi / (size * 2).
+		1 to: size do: [ :i| | a b e |
+			a := (i-1) * slice + Float halfPi.
+			b := a + Float pi.
+			a := (a cos @ a sin ) * r.
+			b := (b cos @ b sin) * r.
+			v add: (line from: a; to: b; edge).
+			
+			e := elements at: i.
+			v add: e.
+		].
+	].
+	update value: 4.
+	"v animation repeat; 
+		when: TSAnimationLoopEvent do: [ :evt | 
+		v elements copy do: #remove.
+		v edges copy do: #remove.
+		update value: ((evt animation currentLoop % 10) max: 2). 
+		 ]."
+	
+	v @ RSControlsView.
+	v open setLabel: 'Animation Test'.
+	
+
 
 
 

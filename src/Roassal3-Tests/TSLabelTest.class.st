@@ -17,7 +17,7 @@ TSLabelTest >> testDrawBorderLabel [
 		position: -50 @ 0;
 		text: 'Hello world!';
 		yourself).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }
@@ -28,5 +28,5 @@ TSLabelTest >> testDrawLabel [
 		position: -50 @ 0;
 		text: 'Hello world!';
 		yourself).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]

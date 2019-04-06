@@ -39,7 +39,9 @@ TSBorder >> color [
 
 { #category : #accessing }
 TSBorder >> color: aColor [
-	paint := aColor
+	paint := aColor.
+	paint isColor ifTrue: [ ^ self ].
+	paint := Color colorFrom: aColor.
 ]
 
 { #category : #'style-dashes' }

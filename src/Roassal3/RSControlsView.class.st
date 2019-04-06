@@ -36,7 +36,8 @@ RSControlsView >> initialize [
 	keyUpActions := Dictionary new "mac" "TODO review asKeyCombination and this in other os"
 		at: 34 put: RSZoomMove in;
 		at: 31 put: RSZoomMove out;
-		at: 3 put: RSZoomToFitView new;
+		at: 49 put: RSZoomToFitView new;
+		at: 46 put: RSMaximizeView new;
 		at: 123 put: -1@ 0; "left"
 		at: 124 put: 1 @ 0; "right"
 		at: 126 put: 0 @ -1; "up"
@@ -49,6 +50,8 @@ RSControlsView >> onElement: aView [
 	aView @ RSZoomableView.
 	aView @ RSDraggableView.
 	
+	aView zoomToFit.
+	aView when: TSExtentChangedEvent do: [ aView zoomToFit ]. 
 	aView
 		when: TSKeyDown do: [ :evt| self processKeyDown: evt ];
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
@@ -96,6 +99,7 @@ RSControlsView >> processKeyDown: evt [
 { #category : #hooks }
 RSControlsView >> processKeyUp: evt [
 	| action remove |
+	"Transcript show: evt keyValue; cr."
 	action := keyUpActions at: evt keyValue ifAbsent: [^ self ].
 	remove := [ 
 		(steps isEmpty and: [ translationAnimation notNil ]) ifTrue:  [ 

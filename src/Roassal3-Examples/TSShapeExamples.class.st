@@ -679,3 +679,27 @@ TSShapeExamples >> example26Polygon [
 		evt shape translateBy: evt step; signalUpdate].
 	c open.
 ]
+
+{ #category : #labels }
+TSShapeExamples >> example27Markers [
+	<script: 'self new example27Markers'>
+	| c arrow axes circle dataLine |
+	c := TSCanvas new.
+	arrow := TSPolygon new 
+		points: { -10@0. 0@ -10. 10@0 };
+		color: Color black;
+		size: 10.
+	circle := TSEllipse new
+		radius: 2.5;
+		color: Color red.
+	axes := TSPolyline new
+		controlPoints: { 10@10. 10@90. 90@90 }.
+	dataLine := TSPolyline new 
+		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
+	axes markerEnd: (axes markerStart: arrow).
+	dataLine marker: circle.
+	c addShape: axes.
+	c addShape: dataLine.
+	c camera zoomToFit: 250@250.
+	c open.
+]

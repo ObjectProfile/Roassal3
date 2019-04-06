@@ -86,7 +86,7 @@ TSGroupTest >> testDrawGroup [
 		shapes: g.
 	c addShape: com.
 	self assert: c numberOfShapes equals: 1.
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }

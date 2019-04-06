@@ -122,7 +122,17 @@ TSCanvas >> color [
 
 { #category : #accessing }
 TSCanvas >> color: aColor [
-	color := aColor
+	color := aColor.
+	color isColor ifTrue: [ ^ self ].
+	color := Color colorFrom: aColor.
+]
+
+{ #category : #'instance creation' }
+TSCanvas >> createMorph [
+	morph := TSAthensMorph new. 
+	morph renderer: TSAthensRenderer new.
+	morph canvas: self.
+	^ morph
 ]
 
 { #category : #accessing }
@@ -189,9 +199,6 @@ TSCanvas >> initialize [
 
 { #category : #'instance creation' }
 TSCanvas >> morph [
-	morph := TSAthensMorph new. 
-	morph renderer: TSAthensRenderer new.
-	morph canvas: self.
 	^ morph
 ]
 
@@ -215,16 +222,13 @@ TSCanvas >> numberOfShapes [
 
 { #category : #'instance creation' }
 TSCanvas >> open [
-	^ self openInWindowSized: 500@500
-]
-
-{ #category : #'instance creation' }
-TSCanvas >> openInWindowSized: anExtentAsPoint [
-	| morph window |
-	morph := self morph.
+	| window |
+	self createMorph.
 	window := morph openInWindow.
-	window extent: anExtentAsPoint.
+	window extent: 500@500.
+	morph privateOwner: window.
 	^ window
+	
 ]
 
 { #category : #accessing }

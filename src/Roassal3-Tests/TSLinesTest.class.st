@@ -12,7 +12,7 @@ TSLinesTest >> testDrawBezierLine [
 	c addShape: (TSBezier new
 		strokeColor: Color red;
 		width: 2). 
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -20,7 +20,22 @@ TSLinesTest >> testDrawLine [
 	c addShape: (TSLine new
 		strokeColor: Color red;
 		width: 2). 
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
+]
+
+{ #category : #running }
+TSLinesTest >> testDrawMarkers [
+	| line m |
+	m := TSPolygon new 
+		points: { -10@0. 0@ -10. 10@0 };
+		color: Color black;
+		size: 10.
+	line := TSLine new
+		startPoint: 50@50;
+		endPoint: 250@50.
+	line markerStart: m.
+	c addShape: line.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -54,12 +69,12 @@ TSLinesTest >> testDrawSVGLine [
 				moveTo: a;
 				lineTo: b. ] ];
 		width: 2). 
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
 TSLinesTest >> testPolyline [
 	c addShape: (TSPolyline new
 		controlPoints: {0@0. 100@100. 100@ -100}).
-	c morph drawOnMockCanvas.
+	c createMorph drawOnMockCanvas.
 ]

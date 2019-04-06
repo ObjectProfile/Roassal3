@@ -52,6 +52,11 @@ TSShape >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
+{ #category : #converting }
+TSShape >> asMarker [
+	^ TSMarker new shape: self
+]
+
 { #category : #border }
 TSShape >> border [
 	^ border
@@ -75,7 +80,9 @@ TSShape >> color [
 
 { #category : #accessing }
 TSShape >> color: aColor [
-	paint := aColor
+	paint := aColor.
+	paint isColor ifTrue: [ ^ self ].
+	paint := Color colorFrom: aColor.
 ]
 
 { #category : #accessing }
@@ -145,6 +152,13 @@ TSShape >> paint [
 { #category : #accessing }
 TSShape >> paint: aPaint [
 	paint := aPaint
+]
+
+{ #category : #accessing }
+TSShape >> paintOn: visitor [
+	^ paint
+	
+	
 ]
 
 { #category : #accessing }
