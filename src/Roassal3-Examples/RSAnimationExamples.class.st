@@ -1552,13 +1552,13 @@ RSAnimationExamples >> example24Lines [
 	elements := shape elementsOn: (0 to: 359 by: 5).
 	v addAll: elements.
 	
-	soffset := 120. size := 4. mult := 0.5@0.75.
+	"soffset := 120. size := 4. mult := 0.5@0.75.
 	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements.
+	v addAll: elements."
 	
-	soffset := 240. size := 4. mult := 0.75@0.5.
+	"soffset := 240. size := 4. mult := 0.75@0.5.
 	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements.
+	v addAll: elements."
 	elements := v elements.
 	v addShape: (TSLabel new 
 		text: 'Roassal';
@@ -1771,12 +1771,13 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 { #category : #examples }
 RSAnimationExamples >> example28AnimationDelay [
 	<script: 'self new example28AnimationDelay'>
-	| v r line shape elements update sc1 sc2 |
+	| v radius line shape elements update points lines sc1 sc2 |
 	v := RSView new.
-	r := 50.
+	radius := 50.
+	lines := 1.
 	v addShape: (TSEllipse new
 		color: Color black;
-		radius: r).
+		radius: radius).
 	shape := RSShapeBuilder circle
 		color: Color white;
 		onElement;
@@ -1785,44 +1786,44 @@ RSAnimationExamples >> example28AnimationDelay [
 	line := RSSingleEdgeBuilder line
 		width: 0.1;
 		color: Color white.
-	elements := shape elementsOn: ((1 to: 10) collect: [:i | (i-1) / 4]).
-	sc2 := TSScale linear domain: #(0 1).
+	elements := shape elementsOn: (1 to: 10).
 	
-	elements do: [ :e | | delta |
-		delta := 0.001.
-		v animation repeat onStepDo: [ :t | | ed |
-			e model: e model + delta.
-			(e model between: 0 and: 1) ifFalse: [ 
-				delta := delta negated.
-				(e model < 0 and: [ e index = 1 ]) ifTrue: [ 
-					elements do: [ :e2 | e2 model: e2 index/v edges size ]  ].
-				e model: e model + delta. ].
-			
-			v edges size >= e index ifTrue: [ 
-				ed := v edges at: e index.
-				e position: (sc2 range: {ed from. ed to.}; 
-					scale: (e model* Float halfPi) cos ).
-			] ] ].
-	update := [:size | | slice |
-		slice := Float twoPi / (size * 2).
-		1 to: size do: [ :i| | a b e |
-			a := (i-1) * slice + Float halfPi.
-			b := a + Float pi.
-			a := (a cos @ a sin ) * r.
-			b := (b cos @ b sin) * r.
-			v add: (line from: a; to: b; edge).
-			
-			e := elements at: i.
-			v add: e.
-		].
-	].
-	update value: 4.
-	"v animation repeat; 
-		when: TSAnimationLoopEvent do: [ :evt | 
+	points := [ :r :i |
+		| a b slice |
+		slice := Float twoPi / (lines * 2).
+		a := (i-1) * slice + Float halfPi.
+		b := a + Float pi.
+		a := (a cos @ a sin ) * r.
+		b := (b cos @ b sin) * r.
+		a -> b ].
+	update := [ 
+		lines := lines + 1.
+		lines > 10 ifTrue: [ lines := 2 ].
 		v elements copy do: #remove.
 		v edges copy do: #remove.
-		update value: ((evt animation currentLoop % 10) max: 2). 
-		 ]."
+		elements do: [ :e | e model: (e index - 1) / (lines*2) ].
+		1 to: lines do: [ :i| | ab |
+			ab := points value: radius value: i.
+			v add: (line from: ab key; to: ab value; edge).
+			v add: (elements at: i).
+		].
+	].
+	update value.
+	sc1 := TSScale linear range: {0. Float twoPi}.
+	sc2 := TSScale linear domain: #(-1 1).
+	elements do: [ :e | | animation |
+		animation := v animation repeat 
+			"easing: TSEasing sinIn;"
+			duration: 2 seconds; onStepDo: [ :t | 
+			| val |
+			val := (e model + t)%1.
+			val := (sc1 scale: val) cos.
+			v edges size >= e index ifTrue: [ | ab |
+				ab := points value: radius - 2.5 value: e index.
+				e position: (sc2 range: { ab key. ab value. };
+					scale: val).
+			] ].
+		e index = 1 ifTrue:[ animation when: TSAnimationLoopEvent do: update ] ].
 	
 	v @ RSControlsView.
 	v open setLabel: 'Animation Test'.
