@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shape',
 		'offset',
-		'transition'
+		'offsetRatio'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Border'
 }
@@ -21,7 +21,7 @@ TSMarker >> asMarker [
 TSMarker >> initialize [
 	super initialize.
 	offset := 0.
-	transition :=0.
+	offsetRatio :=0.
 ]
 
 { #category : #accessing }
@@ -35,6 +35,17 @@ TSMarker >> offset: anObject [
 ]
 
 { #category : #accessing }
+TSMarker >> offsetRatio [
+	^ offsetRatio
+]
+
+{ #category : #accessing }
+TSMarker >> offsetRatio: aFloat [
+	"[0 1] value"
+	offsetRatio := aFloat
+]
+
+{ #category : #accessing }
 TSMarker >> shape [
 	^ shape
 ]
@@ -42,14 +53,4 @@ TSMarker >> shape [
 { #category : #accessing }
 TSMarker >> shape: anObject [
 	shape := anObject
-]
-
-{ #category : #accessing }
-TSMarker >> transition [
-	^ transition
-]
-
-{ #category : #accessing }
-TSMarker >> transition: anObject [
-	transition := anObject
 ]

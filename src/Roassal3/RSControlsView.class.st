@@ -53,7 +53,10 @@ RSControlsView >> onElement: aView [
 	aView zoomToFit.
 	aView when: TSExtentChangedEvent do: [ aView zoomToFit ]. 
 	aView
-		when: TSKeyDown do: [ :evt| self processKeyDown: evt ];
+		when: TSKeyDown do: [ :evt | | rect | 
+			rect := aView encompassingRectangle.
+			speed := (rect width min: rect height) * 0.05.
+			self processKeyDown: evt ];
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 	
 	RSMenuActivable new 
@@ -83,16 +86,16 @@ RSControlsView >> onElement: aView [
 
 { #category : #hooks }
 RSControlsView >> processKeyDown: evt [
-	| action |
+	| action mult |
 	action := keyDownActions at: evt keyValue ifAbsent: [^ self ].
 	steps add: action.
-	speed := evt shiftKeyPressed ifTrue: [  10 ] ifFalse: [ 3 ].
+	
+	mult := evt shiftKeyPressed ifTrue: [ 3 ] ifFalse: [ 1 ].
 	translationAnimation ifNil: [  
 		translationAnimation := evt canvas animation repeat
 			onStepDo: [ :t | | step |
 				step := steps inject: 0@0 into: [:p :s |p+s ].
-				
-				evt canvas camera translateBy: step / (evt canvas camera scale / speed).
+				evt canvas camera translateBy: step / (evt canvas camera scale / (speed*mult) ).
 				evt signalUpdate ] ].
 ]
 

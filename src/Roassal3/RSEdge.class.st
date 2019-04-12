@@ -45,6 +45,7 @@ RSEdge >> controlPoints [
 { #category : #accessing }
 RSEdge >> controlPoints: aCollection [
 	controlPoints := aCollection.
+	aCollection isCollection ifFalse: [ ^ self ].
 	controlPoints do: [ :cp | 
 		self setAnchor: nil element: cp ].
 ]
@@ -108,14 +109,28 @@ RSEdge >> to: anElement [
 { #category : #updating }
 RSEdge >> update [
 	trachelShape isControlPointsLine ifTrue: [ 
-		controlPoints ifNil: [ ^ self ].
-		trachelShape controlPoints: (controlPoints collect: [ :anObject | | v |
-			v := anObject value.
-			v class = RSElement ifTrue: [ v := v position ].
-			v ]).
-		^ self
+		^ self updateWithControlPoints.
 	].
 	trachelShape 
 		startPoint: (attachPoint startingPointOf: self);
 		endPoint: (attachPoint endingPointOf: self).
+]
+
+{ #category : #updating }
+RSEdge >> updateWithControlPoints [
+	| cp |
+	controlPoints ifNil: [ ^ self ]. 
+	
+	cp := controlPoints isCollection ifTrue: [  
+		controlPoints collect: [ :anObject | | v |
+			v := anObject value.
+			v class = RSElement ifTrue: [ v := v position ].
+			v ].
+	] ifFalse: [ 
+		controlPoints 
+			value: (attachPoint startingPointOf: self)
+			value: (attachPoint endingPointOf: self)
+	].
+
+	trachelShape controlPoints: cp.
 ]

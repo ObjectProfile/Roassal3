@@ -434,8 +434,8 @@ RSShapeExamples >> example13Arrow [
 ]
 
 { #category : #shapes }
-RSShapeExamples >> example14Arrow [
-	<script: 'self new example14Arrow'>
+RSShapeExamples >> example14Marker [
+	<script: 'self new example14Marker'>
 	| view  elements line arrow |
 	view := RSView new.
 	elements := RSShapeBuilder ellipse 
@@ -447,7 +447,7 @@ RSShapeExamples >> example14Arrow [
 		border: (TSBorder new color: Color red; width: 3);
 		size: 20; element.
 	line := RSSingleEdgeBuilder line
-		markerEnd: (TSMarker new shape: arrow; transition: 0.5; offset: 10); 
+		markerEnd: (TSMarker new shape: arrow; offsetRatio: 0.5; offset: 10); 
 		from: elements first;
 		to: elements second;
 		edge.
@@ -456,4 +456,69 @@ RSShapeExamples >> example14Arrow [
 	view add: line.
 	RSFlowLayout on: elements.
 	view open
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example15BimetricLine [
+	<script: 'self new example15BimetricLine'>
+	| view e1 e2 box l |
+	view := RSView new.
+	box := RSShapeBuilder box 
+		size: 100;
+		draggable.
+	e1 := box element.
+	e1 color: Color blue.
+	e2 := box element.
+	e2 translateTo: 400@0.
+	l := RSSingleEdgeBuilder bimetricLine
+		widthFrom: 50;
+		widthTo: 10;
+		paint: Color red;
+		border: nil;
+		withBorderAttachPoint;
+		from: e1;
+		to: e2;
+		edge.
+	view addAll: { e1. e2. l}.
+	view @ RSControlsView. 
+	view open
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example16BimetricLine [
+	<script: 'self new example16BimetricLine'>
+	| v box e1 e2 l |
+	v := RSView new.
+	v addShape: (TSBezier new
+		color: Color red;
+		controlPoints:
+			{(0 @ 0).
+			(100 @ 100).
+			(200 @ 0).
+			(300 @ 100)}).
+	box := RSShapeBuilder box draggable size: 100.
+	e1 := box element.
+	e1 color: Color blue.
+	e1 translateTo: 100 @ -200.
+	e2 := box element.
+	v
+		add: e1;
+		add: e2.
+	l := RSSingleEdgeBuilder bezier
+		withVerticallAttachPoint;
+		paint: Color red trans;
+		from: e1;
+		to: e2;
+		controlPoints: [ :m | 
+			[ :a :b | 
+			| mid |
+			mid := (a + b) / 2.
+			Array
+				with: a
+				with: a x @ mid y
+				with: b x @ mid y
+				with: b ] ];
+		edge.
+	v add: l.
+	v open
 ]

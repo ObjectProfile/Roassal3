@@ -5,10 +5,16 @@ Class {
 	#name : #RSUMLClassBuilder,
 	#superclass : #RSAbstractBuilder,
 	#instVars : [
-		'classes'
+		'classes',
+		'classDescriptor'
 	],
 	#category : #'Roassal3-UML'
 }
+
+{ #category : #accessing }
+RSUMLClassBuilder >> classDescriptor [
+	^ classDescriptor
+]
 
 { #category : #accessing }
 RSUMLClassBuilder >> classes [
@@ -23,6 +29,7 @@ RSUMLClassBuilder >> classes: aColletionOfClasses [
 { #category : #initialization }
 RSUMLClassBuilder >> initialize [
 	super initialize.
+	classDescriptor := RSUMLClassDescriptor new.
 	self initializeShapes.
 ]
 
@@ -35,18 +42,19 @@ RSUMLClassBuilder >> initializeShapes [
 		cornerRadius: 5;
 		border: border.
 	line := RSSingleEdgeBuilder line.
-	title := RSShapeBuilder label fontSize: 20.
+	title := RSShapeBuilder label 
+		fontSize: 20;
+		text: [ :m | classDescriptor classname rsValue: m ].
 	varShape := RSShapeBuilder label fontSize: 12.
 	varsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := varShape elementsOn: m instVarNames.
+		g := varShape elementsOn: (classDescriptor instVars rsValue: m).
 		RSVerticalLineLayout new gapSize: 0; on: g.
 		g ].
 	methodShape := RSShapeBuilder label 
 		fontSize: 12;
-		text: #selector.
+		text: [:m | classDescriptor methodSelector rsValue: m ].
 	methodsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := methodShape elementsOn: (m methods 
-			sorted: [:a :b | a selector < b selector]).
+		g := methodShape elementsOn: (classDescriptor methods rsValue: m).
 		RSVerticalLineLayout new gapSize: 0; on: g.
 		g ].
 	shape := RSShapeBuilder composite
@@ -84,9 +92,17 @@ RSUMLClassBuilder >> initializeShapes [
 
 { #category : #hooks }
 RSUMLClassBuilder >> renderIn: aView [
+	| marker |
 	aView addAll: (elements := shape elementsOn: classes).
-	RSEdgeBuilder line
+	marker := TSMarker new 
+		offset: 25 / 2;
+		shape: (RSShapeBuilder triangle
+			color: Color white;
+			border: (TSBorder new);
+			extent: 20@25) element.
+	RSEdgeBuilder orthoVertical
 		attachPoint: RSVerticalAttachPoint new; 
+		markerStart: marker;
 		view: aView;
 		objects: classes;
 		connectFrom: #superclass.

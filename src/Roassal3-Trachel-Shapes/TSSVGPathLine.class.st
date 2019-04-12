@@ -12,7 +12,7 @@ Class {
 
 { #category : #visiting }
 TSSVGPathLine >> buildPathOn: visitor [
-	visitor buildSVGPathLine: self.
+	visitor buildSVGLinePath: self.
 ]
 
 { #category : #accessing }

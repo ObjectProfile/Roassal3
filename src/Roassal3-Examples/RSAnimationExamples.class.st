@@ -1769,8 +1769,8 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example28AnimationDelay [
-	<script: 'self new example28AnimationDelay'>
+RSAnimationExamples >> example28AnimationCircle [
+	<script: 'self new example28AnimationCircle'>
 	| v radius line shape elements update points lines sc1 sc2 |
 	v := RSView new.
 	radius := 50.
@@ -1813,8 +1813,8 @@ RSAnimationExamples >> example28AnimationDelay [
 	sc2 := TSScale linear domain: #(-1 1).
 	elements do: [ :e | | animation |
 		animation := v animation repeat 
-			"easing: TSEasing sinIn;"
-			duration: 2 seconds; onStepDo: [ :t | 
+			"easing: TSEasing bounceOut;"
+			duration: 3 seconds; onStepDo: [ :t | 
 			| val |
 			val := (e model + t)%1.
 			val := (sc1 scale: val) cos.
@@ -1832,4 +1832,44 @@ RSAnimationExamples >> example28AnimationDelay [
 
 
 
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example29Bezier [
+	<script: 'self new example29Bezier'>
+	| v size theta s bezier sc |
+	v := RSView new.
+	size := 50.
+	theta := 0.
+	v color: Color black.
+	sc := TSScale linear domain: #(-1 1); range: #(0 80).
+	bezier := RSSingleEdgeBuilder bezier
+		color: Color white;
+		width: 2;
+		controlPoints: [ :m | 
+			| x1 |
+			x1 := sc scale: (theta + (m * 5)) sin.
+			Array
+				with: x1 @ 0
+				with: 100 @ -100
+				with: 100 @ 50
+				with: 200 @ -120 ].
+	s := RSShapeBuilder composite onMyselfDo: [ :m | 	[ :e | 
+		| offset b |
+		offset := Float twoPi / size * e index.
+		e matrix rotateByRadians: offset.
+		b := bezier edgeOn: offset.
+		b paint: (Color h: 360 / size * e index s: 1 v: 1 alpha: 0.4).
+		e add: b trachelShape.
+		e attributes
+			at: #update
+			put: [ bezier updateElement: b withCommand: #controlPoints: ] ] ].
+	v addAll: (s elementsOn: (1 to: size)).
+	v animation repeat onStepDo: [ :t | 
+		theta := theta + 0.0523.
+		v elements do: [ :e | (e attributes at: #update) value ] ].
+	v
+		when: TSExtentChangedEvent
+		do: [ v camera zoomToFit: v extent extent: 500 @ 500 ].
+	v open setLabel: 'Bezier Test'
 ]

@@ -18,7 +18,31 @@ TSAbstractControPointsLine >> controlPoints: anArrayOfPoints [
 	self resetPath.
 ]
 
+{ #category : #accessing }
+TSAbstractControPointsLine >> endPoint [
+	^ self controlPoints last
+]
+
+{ #category : #accessing }
+TSAbstractControPointsLine >> endPoint: aPoint [
+	self controlPoints 
+		at: self controlPoints size
+		put: aPoint.
+	self resetPath.
+]
+
 { #category : #testing }
 TSAbstractControPointsLine >> isControlPointsLine [
 	^ true
+]
+
+{ #category : #accessing }
+TSAbstractControPointsLine >> startPoint [
+	^ self controlPoints first
+]
+
+{ #category : #accessing }
+TSAbstractControPointsLine >> startPoint: aPoint [
+	self controlPoints at: 1 put: aPoint.
+	self resetPath.
 ]

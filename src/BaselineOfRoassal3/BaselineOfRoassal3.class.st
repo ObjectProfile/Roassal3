@@ -15,13 +15,14 @@ BaselineOfRoassal3 >> baseline: spec [
 		do: [
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
-			
+			spec package: 'Geometry' with: [ 
+				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
 			spec
 				package: 'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
 				package: #'Roassal3-Scales';
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
-				package: #'Roassal3';
+				package: #'Roassal3' with: [spec requires: #('Geometry')];
 				package: #'Roassal3-Utils';
 				
 				package: #'Roassal3-Layouts';

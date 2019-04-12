@@ -22,18 +22,8 @@ TSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
-{ #category : #accessing }
-TSBezier >> endPoint [
-	^ controlPoints last
-]
-
 { #category : #initialization }
 TSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }.
-]
-
-{ #category : #accessing }
-TSBezier >> startPoint [
-	^ controlPoints first
 ]

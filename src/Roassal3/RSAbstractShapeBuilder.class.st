@@ -10,7 +10,12 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
-{ #category : #accessing }
+{ #category : #interactions }
+RSAbstractShapeBuilder >> draggable [
+	self interactionDo: #draggable.
+]
+
+{ #category : #interactions }
 RSAbstractShapeBuilder >> interaction [
 	^ interaction ifNil: [
 		interaction := RSInteractionBuilder new.
@@ -19,9 +24,14 @@ RSAbstractShapeBuilder >> interaction [
 		interaction ].
 ]
 
-{ #category : #accessing }
+{ #category : #interactions }
 RSAbstractShapeBuilder >> interactionDo: aBlock [
 	aBlock value: self interaction
+]
+
+{ #category : #interactions }
+RSAbstractShapeBuilder >> popup [
+	self interactionDo: #popup.
 ]
 
 { #category : #updating }

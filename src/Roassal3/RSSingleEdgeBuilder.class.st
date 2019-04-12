@@ -11,9 +11,26 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> arrowedLine [
+	| marker inst |
+	marker := TSPolygon new
+		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
+		paint: nil;
+		border: (TSBorder new).
+	inst := self line.
+	inst markerEnd: marker.
+	^ inst.
+]
+
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> bezier [
 	^ self new edgeClass: TSBezier
+]
+
+{ #category : #'instance creation' }
+RSSingleEdgeBuilder class >> bimetricLine [
+	^ self new edgeClass: TSBimetricLine
 ]
 
 { #category : #'instance creation' }
@@ -24,6 +41,46 @@ RSSingleEdgeBuilder class >> line [
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> linePath [
 	^ self new edgeClass: TSSVGPathLine
+]
+
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> orthoHorizontal [
+	^ self orthoHorizontalBalanceTo: 0.5
+]
+
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> orthoHorizontalBalanceTo: balance [
+	| inst |
+	inst := self polyline.
+	inst controlPoints: [ [:from :to | 
+		| midx |
+		midx := to x * balance + (from x * (1 - balance)).
+		Array
+			with: from
+			with: midx @ from y
+			with: midx @ to y
+			with: to ] ].
+	^ inst
+]
+
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> orthoVertical [
+	^ self orthoVerticalBalanceTo: 0.5
+]
+
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> orthoVerticalBalanceTo: balance [
+	| inst |
+	inst := self polyline.
+	inst controlPoints: [ [:from :to | 
+		| midy |
+		midy := to y * balance + (from y * (1 - balance)).
+		Array
+			with: from
+			with: from x @ midy
+			with: to x @ midy
+			with: to ] ].
+	^ inst
 ]
 
 { #category : #'instance creation' }
@@ -98,4 +155,24 @@ RSSingleEdgeBuilder >> to: anObject [
 RSSingleEdgeBuilder >> updateElement: edge [
 	super updateElement: edge.
 	edge update.
+]
+
+{ #category : #'public - attach point' }
+RSSingleEdgeBuilder >> withBorderAttachPoint [
+	self attachPoint: RSBorderAttachPoint new.
+]
+
+{ #category : #'public - attach point' }
+RSSingleEdgeBuilder >> withCenteredAttachPoint [
+	self attachPoint: RSAttachPoint new.
+]
+
+{ #category : #'public - attach point' }
+RSSingleEdgeBuilder >> withHorizontalAttachPoint [
+	self attachPoint: RSHorizontalAttachPoint new.
+]
+
+{ #category : #'public - attach point' }
+RSSingleEdgeBuilder >> withVerticallAttachPoint [
+	self attachPoint: RSVerticalAttachPoint new.
 ]

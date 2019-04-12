@@ -206,3 +206,55 @@ RSLayoutExamples >> example07ForceBasedLayout [
 	v zoomToFit.
 	v open
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example08HorizontalTree [
+	<script: 'self new example08HorizontalTree'>
+	| v sb label box |
+	v := RSView new.
+	label := RSShapeBuilder label.
+	box := RSShapeBuilder box
+		border: TSBorder new;
+		cornerRadius: (TSCornerRadius new right: 10);
+		extent: [ :lb | lb extent + 5 ].
+	sb := RSShapeBuilder composite
+		interactionDo: #draggable;
+		shapes: [ :m | | l |
+			l := label elementOn: m.
+			TSGroup with: (box elementOn: l) with: l].
+	v addAll: (sb elementsOn: String withAllSubclasses).
+	v @ RSControlsView.
+	RSEdgeBuilder orthoHorizontal
+		markerEnd: (TSMarker new 
+			offset: 2;
+			shape: (RSShapeBuilder triangle 
+				color: Color black;
+				size: 5;
+				element));
+		attachPoint: RSHorizontalAttachPoint new; 
+		view: v;
+		elements: v elements;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new on: v elements.
+	v open setLabel: 'Horizontal Tree'
+]
+
+{ #category : #lines }
+RSLayoutExamples >> example09BorderAttachPoint [
+	<script: 'self new example09BorderAttachPoint'>
+	| v sb |
+	v := RSView new.
+	sb := RSShapeBuilder square 
+		interactionDo: #draggable;
+		size: 30.
+	v addAll: (sb elementsOn: (TSShape withAllSubclasses) ).
+	RSEdgeBuilder arrowedLine 
+		withBorderAttachPoint;
+		view: v;
+		connectFrom: #superclass.
+	RSForceBasedLayout new 
+		charge: -500; 
+		on: v elements.
+	v @ RSControlsView.
+	v open setLabel: 'TSShape withAllSubclasses'
+]

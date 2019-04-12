@@ -59,8 +59,9 @@ TSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |
 	pos := self matrix inverseTransform: position.
 	self shapes reverseDo: [ :s |
-		res := s shapeWithAction: eventClass forPosition: pos "position - self position".
+		res := s shapeWithAction: eventClass forPosition: pos.
 		res ifNotNil: [ ^ res] ].
+	
 	^ super shapeWithAction: eventClass forPosition: position.
 ]
 

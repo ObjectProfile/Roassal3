@@ -205,7 +205,6 @@ TSAthensRenderer >> buildRingPath: ring [
 	center := 0@0.
 	i := ring innerRadius asFloat.
 	e := ring externalRadius.
-	"builder setFillRuleEvenOdd."
 	
 	builder absolute.
 	"is it a point? "
@@ -337,7 +336,7 @@ TSAthensRenderer >> buildRingPath: ring [
 ]
 
 { #category : #'creating path' }
-TSAthensRenderer >> buildSVGPathLine: line [
+TSAthensRenderer >> buildSVGLinePath: line [
 	| string |
 	string := line svgPath value: line startPoint value: line endPoint.
 	
@@ -438,6 +437,7 @@ TSAthensRenderer >> visitBoundingShape: shape [
 		paint := shape paintOn: self.
 		paint ifNotNil: [ 
 			athensCanvas 
+				fillRuleEvenOdd;
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
@@ -512,10 +512,10 @@ TSAthensRenderer >> visitMarker: marker to: from vector: vector [
 	shape matrix
 		loadIdentity;
 		rotateByRadians: angle.
-	(marker offset isZero and: [ marker transition isZero ]) ifFalse: [ 
+	(marker offset isZero and: [ marker offsetRatio isZero ]) ifFalse: [ 
 		| unit |
 		unit := vector / (vector r max: 1).
-		pos := pos -(vector * marker transition) - (unit * marker offset)
+		pos := pos -(vector * marker offsetRatio) - (unit * marker offset)
 		 ].
 	shape
 		position: pos;
