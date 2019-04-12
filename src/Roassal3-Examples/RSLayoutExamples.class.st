@@ -258,3 +258,31 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	v @ RSControlsView.
 	v open setLabel: 'TSShape withAllSubclasses'
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example10Locate [
+	<script: 'self new example10Locate'>
+	| v shape e1 e2 |
+	v := RSView new.
+	shape := RSShapeBuilder box
+		@ RSDraggable;
+		onElement;
+		color: TSColorPalette sequential blues3;
+		size: 100.
+		
+	e1 := shape element.
+	"e1 @ RSDraggable."
+	e2 := shape element.
+	e2 size: 20.
+	RSLocate new
+		padding: 1;
+		fix: e1;
+		movable: e2;
+		inner;
+		bottom;
+		left;
+		stick.
+	v addAll: {e1. e2}.
+	v @ RSControlsView.
+	v open
+]
