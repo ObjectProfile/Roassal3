@@ -65,6 +65,31 @@ RSSingleEdgeBuilder class >> orthoHorizontalBalanceTo: balance [
 
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> orthoVertical [
+
+"Here is an example
+
+
+v := RSView new.
+
+classes := Collection withAllSubclasses.
+boxes := RSShapeBuilder box
+				width: [ :cls | cls instVarNames size * 5 max: 5 ];
+				height: [ :cls | cls numberOfMethods max: 5 ];
+				elementsOn: classes.
+boxes @ RSDraggable.
+v addAll: boxes.
+
+RSEdgeBuilder orthoVertical
+	view: v;
+	attachPoint: RSVerticalAttachPoint new;
+	elements: boxes;
+	connectFrom: #superclass.
+
+RSTreeLayout on: v elements.
+v @ RSControlsView.
+v open
+"
+
 	^ self orthoVerticalBalanceTo: 0.5
 ]
 

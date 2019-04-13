@@ -1,22 +1,28 @@
 "
-RTEdgeBuilder offers an API to easily build edges.
+RSEdgeBuilder offers an API to easily build edges.
 
 Here is an example:
-[ [ [ 
-	| v es |
-	v := RTView new.
+```
+v := RSView new.
 
-	es := (RTEllipse new size: 20) elementsOn: (1 to: 20).
-	v addAll: es.
+classes := Collection withAllSubclasses.
+boxes := RSShapeBuilder box
+				width: [ :cls | cls instVarNames size * 5 max: 5 ];
+				height: [ :cls | cls numberOfMethods max: 5 ];
+				elementsOn: classes.
+boxes @ RSDraggable.
+v addAll: boxes.
 
-	RTEdgeBuilder new
-		view: v;
-		objects: (1 to: 20);
-		connectFrom: [ :value | value // 2 ].
+RSEdgeBuilder orthoVertical
+	view: v;
+	attachPoint: RSVerticalAttachPoint new;
+	elements: boxes;
+	connectFrom: #superclass.
 
-	es @ RTPopup @ RTDraggable.
-	RTTreeLayout on: es.
-	v ] ] ]
+RSTreeLayout on: v elements.
+v @ RSControlsView.
+v open
+```
 "
 Class {
 	#name : #RSEdgeBuilder,
