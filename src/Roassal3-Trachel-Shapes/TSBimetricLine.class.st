@@ -1,5 +1,30 @@
 "
 I am a line with different sizes in each side.
+
+Here is how to use it, from Roassal code
+```
+| view e1 e2 box l |
+	view := RSView new.
+	box := RSShapeBuilder box 
+		size: 100;
+		draggable.
+	e1 := box element.
+	e1 color: Color blue.
+	e2 := box element.
+	e2 translateTo: 400@0.
+	l := RSSingleEdgeBuilder bimetricLine
+		widthFrom: 50;
+		widthTo: 10;
+		paint: Color red;
+		border: nil;
+		withBorderAttachPoint;
+		from: e1;
+		to: e2;
+		edge.
+	view addAll: { e1. e2. l}.
+	view @ RSControlsView. 
+	view open
+```
 "
 Class {
 	#name : #TSBimetricLine,
