@@ -33,6 +33,25 @@ RSSingleEdgeBuilder class >> bimetricLine [
 	^ self new edgeClass: TSBimetricLine
 ]
 
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> horizontalBezier [
+	^ self horizontalLine: self bezier.
+	
+]
+
+{ #category : #helpers }
+RSSingleEdgeBuilder class >> horizontalLine: inst [
+	inst controlPoints: [ [:from :to | 
+		| mid |
+		mid := (from + to)/2.
+		Array 
+			with: from
+			with: mid x @ from y
+			with: mid x @ to y
+			with: to ] ].
+	^ inst
+]
+
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> line [
 	^ self new edgeClass: TSLine
@@ -45,47 +64,36 @@ RSSingleEdgeBuilder class >> linePath [
 
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> orthoHorizontal [
-	^ self orthoHorizontalBalanceTo: 0.5
-]
-
-{ #category : #'instance variations' }
-RSSingleEdgeBuilder class >> orthoHorizontalBalanceTo: balance [
-	| inst |
-	inst := self polyline.
-	inst controlPoints: [ [:from :to | 
-		| midx |
-		midx := to x * balance + (from x * (1 - balance)).
-		Array
-			with: from
-			with: midx @ from y
-			with: midx @ to y
-			with: to ] ].
-	^ inst
+	^ self horizontalLine: self polyline.
 ]
 
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> orthoVertical [
-	^ self orthoVerticalBalanceTo: 0.5
-]
-
-{ #category : #'instance variations' }
-RSSingleEdgeBuilder class >> orthoVerticalBalanceTo: balance [
-	| inst |
-	inst := self polyline.
-	inst controlPoints: [ [:from :to | 
-		| midy |
-		midy := to y * balance + (from y * (1 - balance)).
-		Array
-			with: from
-			with: from x @ midy
-			with: to x @ midy
-			with: to ] ].
-	^ inst
+	^ self verticalLine: self polyline.
 ]
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> polyline [
 	^ self new edgeClass: TSPolyline
+]
+
+{ #category : #'instance variations' }
+RSSingleEdgeBuilder class >> verticalBezier [
+	^ self verticalLine: self bezier.
+	
+]
+
+{ #category : #helpers }
+RSSingleEdgeBuilder class >> verticalLine: inst [
+	inst controlPoints: [ [:from :to | 
+		| mid |
+		mid := (from + to)/2.
+		Array
+			with: from
+			with: from x @ mid y
+			with: to x @ mid y
+			with: to ] ].
+	^ inst
 ]
 
 { #category : #'public - accessing' }

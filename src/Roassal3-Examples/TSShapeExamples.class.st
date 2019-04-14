@@ -703,3 +703,33 @@ TSShapeExamples >> example27Markers [
 	c camera zoomToFit: 250@250.
 	c open.
 ]
+
+{ #category : #labels }
+TSShapeExamples >> example28SVGShape [
+	<script: 'self new example28SVGShape'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSSVGPath new
+		paint: nil;
+		border: TSBorder new;
+		svgPath: 'M 100 350 q 150 -300 300 0';
+		yourself).
+	c addShape: (TSSVGPath new
+		paint: nil;
+		border: (TSBorder new color: Color red);
+		svgPath: 'M 100 350 l 150 -300';
+		yourself).
+	c addShape: (TSSVGPath new
+		paint: nil;
+		border: (TSBorder new color: Color red);
+		svgPath: 'M 250 50 l 150 300';
+		yourself).
+	c addShape: (TSSVGPath new
+		paint: nil;
+		border: (TSBorder new color: Color green);
+		svgPath: 'M 175 200 l 150 0';
+		yourself).
+	c showEncompassingRectangles.
+	c zoomToFit.
+	c open
+]

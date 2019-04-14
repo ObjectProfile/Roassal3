@@ -485,8 +485,8 @@ RSShapeExamples >> example15BimetricLine [
 ]
 
 { #category : #shapes }
-RSShapeExamples >> example16BimetricLine [
-	<script: 'self new example16BimetricLine'>
+RSShapeExamples >> example16Bezier [
+	<script: 'self new example16Bezier'>
 	| v box e1 e2 l |
 	v := RSView new.
 	v addShape: (TSBezier new
@@ -506,7 +506,7 @@ RSShapeExamples >> example16BimetricLine [
 		add: e2.
 	l := RSSingleEdgeBuilder bezier
 		withVerticallAttachPoint;
-		paint: Color red trans;
+		"paint: Color red trans;"
 		from: e1;
 		to: e2;
 		controlPoints: [ :m | 

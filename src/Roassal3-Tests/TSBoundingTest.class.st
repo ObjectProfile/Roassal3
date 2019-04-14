@@ -76,6 +76,15 @@ TSBoundingTest >> testDrawRing [
 	c createMorph drawOnMockCanvas.
 ]
 
+{ #category : #running }
+TSBoundingTest >> testDrawSVG [
+	c addShape: (TSSVGPath new).
+	c addShape: (TSSVGPath new
+		svgPath: 'M 100 350 q 150 -300 300 0';
+		yourself).
+	c createMorph drawOnMockCanvas.
+]
+
 { #category : #tests }
 TSBoundingTest >> testPosition [
 	| b |

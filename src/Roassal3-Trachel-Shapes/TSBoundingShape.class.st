@@ -35,6 +35,7 @@ TSBoundingShape >> extent [
 TSBoundingShape >> extent: aPoint [
 	| oldExtent |
 	extent = aPoint ifTrue: [ ^ self ].
+	self assert: aPoint isPoint.
 	oldExtent := extent.
 	extent := aPoint.
 	self resetPath.

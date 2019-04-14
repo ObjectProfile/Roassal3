@@ -4,6 +4,9 @@ TSBezier represents a bezier lines of one and 2 control points
 Class {
 	#name : #TSBezier,
 	#superclass : #TSAbstractControPointsLine,
+	#instVars : [
+		'markers'
+	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
@@ -26,4 +29,14 @@ TSBezier >> controlPoints: anArrayOfPoints [
 TSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }.
+]
+
+{ #category : #'accessing - markers' }
+TSBezier >> markers [
+	^ markers ifNil: [ markers := Array new: 3 ].
+]
+
+{ #category : #'accessing - markers' }
+TSBezier >> privateMarkers [
+	^ markers
 ]

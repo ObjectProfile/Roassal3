@@ -22,7 +22,7 @@ TSSVGPathLine >> svgPath [
 
 { #category : #accessing }
 TSSVGPathLine >> svgPath: aBlock [
-	"aBlock return a string and recives 2 arguments"
+	"aBlock return a string and recives 2 arguments, the start point and the end point"
 	svgPath := aBlock 
 	
 ]

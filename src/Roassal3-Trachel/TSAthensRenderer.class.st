@@ -352,6 +352,13 @@ TSAthensRenderer >> buildSVGLinePath: line [
 	
 ]
 
+{ #category : #'creating path' }
+TSAthensRenderer >> buildSVGPath: svg [
+	svg segments ifNil: [ ^ self ].
+	svg segments
+		do: [ :each | builder perform: each first withArguments: each second ]
+]
+
 { #category : #accessing }
 TSAthensRenderer >> builder [
 	^ builder

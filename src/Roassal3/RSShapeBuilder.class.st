@@ -163,6 +163,14 @@ RSShapeBuilder class >> star [
 	^ self polygonWithPoints: star5Points
 ]
 
+{ #category : #'instance creation' }
+RSShapeBuilder class >> svgPath [
+	^ self new
+		innerClass: TSSVGPath;
+		elementClass: RSElement;
+		yourself 
+]
+
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> triangle [
 	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 3)
