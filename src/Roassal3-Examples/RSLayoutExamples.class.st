@@ -269,20 +269,17 @@ RSLayoutExamples >> example10Locate [
 		onElement;
 		color: TSColorPalette sequential blues3;
 		size: 100.
-		
 	e1 := shape element.
 	"e1 @ RSDraggable."
 	e2 := shape element.
 	e2 size: 20.
 	RSLocate new
 		padding: 1;
-		fix: e1;
-		movable: e2;
 		inner;
 		bottom;
 		left;
-		stick.
-	v addAll: {e1. e2}.
+		stick: e2 on: e1.
+	v addAll:{e1. e2}.
 	v @ RSControlsView.
 	v open
 ]

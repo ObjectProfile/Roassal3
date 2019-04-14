@@ -15,13 +15,10 @@ Class {
 RSLabeled >> createLabel: anElement [
 	| label v |
 	label := shape elementOn: anElement model.
-	location copy
-		fix: anElement;
-		movable: label;
-		stick.
+	location stick: label on: anElement.
 	v := anElement view.
 	v add: label.
-	anElement attributes at: #RSLabeled put: label.
+	anElement attributes at: #RSLabeled put: label
 ]
 
 { #category : #initialization }
@@ -48,4 +45,9 @@ RSLabeled >> onElement: anElement [
 { #category : #accessing }
 RSLabeled >> shape [
 	^ shape
+]
+
+{ #category : #accessing }
+RSLabeled >> shape: aShapeBuilder [
+	shape := aShapeBuilder
 ]

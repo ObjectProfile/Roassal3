@@ -141,6 +141,13 @@ TSGroup >> translateBy: delta [
 	self do: [ :e | e translateBy: delta ]
 ]
 
+{ #category : #transforming }
+TSGroup >> translateTo: aPosition [
+	| center |
+	center := self encompassingRectangle rsCenter.
+	self translateBy: (aPosition - center)
+]
+
 { #category : #accessing }
 TSGroup >> width [ 
 	^ self extent x

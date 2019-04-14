@@ -43,8 +43,6 @@ Class {
 	#name : #RSLocate,
 	#superclass : #RSObject,
 	#instVars : [
-		'fixedElement',
-		'movableElement',
 		'padding',
 		'orientation',
 		'direction',
@@ -82,20 +80,13 @@ RSLocate >> center [
 ]
 
 { #category : #private }
-RSLocate >> computePosition [
-	" movableElement width / 2 + horizontalPadding * orientation * directionX + self parentX
-	 movableElement height / 2 + verticalPadding * orientation * directionY + self parentY"
-	 ^ movableElement extent / 2 + padding * orientation * direction + self parentPosition.
+RSLocate >> computePosition: movableElement [
+	^ movableElement extent / 2 + padding * orientation * direction + self parentPosition.
 ]
 
-{ #category : #accessing }
-RSLocate >> fix [
-	^ fixedElement
-]
-
-{ #category : #accessing }
-RSLocate >> fix: targetShape [
-	fixedElement := targetShape
+{ #category : #private }
+RSLocate >> computePosition: movableElement on: fixedElement [
+	^ movableElement extent / 2 + padding * orientation * direction + (self parentPosition: fixedElement).
 ]
 
 { #category : #initialization }
@@ -126,19 +117,9 @@ RSLocate >> middle [
 	direction := direction x @ 0
 ]
 
-{ #category : #accessing }
-RSLocate >> movable [
-	^ movableElement
-]
-
-{ #category : #accessing }
-RSLocate >> movable: aShape [
-	movableElement := aShape
-]
-
 { #category : #'public - executing' }
-RSLocate >> move [
-	movableElement translateTo: self computePosition.
+RSLocate >> move: movableElement on: fixElement [
+	movableElement translateTo: (self computePosition: movableElement on: fixElement).
 ]
 
 { #category : #'public - modifiers' }
@@ -157,7 +138,7 @@ RSLocate >> padding: aNumber [
 ]
 
 { #category : #private }
-RSLocate >> parentPosition [
+RSLocate >> parentPosition: fixedElement [
 	| rec |
 	rec := fixedElement encompassingRectangle.
 	^ (fixedX value: rec)@ (fixedY value: rec).
@@ -170,10 +151,10 @@ RSLocate >> right [
 ]
 
 { #category : #'public - executing' }
-RSLocate >> stick [ 
+RSLocate >> stick: movableElement on: fixedElement [
 	| block |
-	self move.
-	block := [ self move ].
+	block := [ self move: movableElement on: fixedElement ].
+	block value.
 	fixedElement 
 		when: TSExtentChangedEvent do: block;
 		when: TSPositionChangedEvent do: block.
