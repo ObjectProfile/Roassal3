@@ -30,6 +30,30 @@ RSSingleEdgeBuilder class >> bezier [
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> bimetricLine [
+"Here is an example on how to use it.
+
+| view e1 e2 box l |
+	view := RSView new.
+	box := RSShapeBuilder box 
+		size: 100;
+		draggable.
+	e1 := box element.
+	e1 color: Color blue.
+	e2 := box element.
+	e2 translateTo: 400@0.
+	l := RSSingleEdgeBuilder bimetricLine
+		widthFrom: 50;
+		widthTo: 10;
+		paint: Color red;
+		border: nil;
+		withBorderAttachPoint;
+		from: e1;
+		to: e2;
+		edge.
+	view addAll: { e1. e2. l}.
+	view @ RSControlsView. 
+	view open
+"
 	^ self new edgeClass: TSBimetricLine
 ]
 

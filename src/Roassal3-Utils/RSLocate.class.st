@@ -1,12 +1,43 @@
 "
-I am a new version of RTConstraint
-
 I am iteratively buildable constraint for moving and positioning an element on top of another one.
 
 !! Usage
 
 The order of configuration message sends is irrelevant, only the last of a group will be used.
 
+Here is an example:
+```Smalltalk
+v := RSView new.
+
+classes := Collection withAllSubclasses.
+boxes := RSShapeBuilder box
+				width: [ :cls | cls instVarNames size * 5 max: 5 ];
+				height: [ :cls | cls numberOfMethods max: 5 ];
+				elementsOn: classes.
+boxes @ RSDraggable.
+v addAll: boxes.
+
+RSEdgeBuilder orthoVertical
+	view: v;
+	attachPoint: RSVerticalAttachPoint new;
+	elements: boxes;
+	connectFrom: #superclass.
+
+boxes do: [ :b |
+	| t |
+	t := RSShapeBuilder label height: 2; text: #name; elementOn: b model.
+	v add: t.
+	RSLocate new
+		padding: 1;
+		fix: b;
+		movable: t;
+		above; center; stick.
+].
+
+RSTreeLayout on: boxes.
+v @ RSControlsView.
+v open
+```
 "
 Class {
 	#name : #RSLocate,

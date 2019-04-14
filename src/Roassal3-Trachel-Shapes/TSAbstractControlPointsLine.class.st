@@ -1,5 +1,5 @@
 Class {
-	#name : #TSAbstractControPointsLine,
+	#name : #TSAbstractControlPointsLine,
 	#superclass : #TSAbstractLine,
 	#instVars : [
 		'controlPoints'
@@ -8,23 +8,23 @@ Class {
 }
 
 { #category : #accessing }
-TSAbstractControPointsLine >> controlPoints [
+TSAbstractControlPointsLine >> controlPoints [
 	^ controlPoints ifNil: [ #() ].
 ]
 
 { #category : #accessing }
-TSAbstractControPointsLine >> controlPoints: anArrayOfPoints [
+TSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
 	controlPoints := anArrayOfPoints.
 	self resetPath.
 ]
 
 { #category : #accessing }
-TSAbstractControPointsLine >> endPoint [
+TSAbstractControlPointsLine >> endPoint [
 	^ self controlPoints last
 ]
 
 { #category : #accessing }
-TSAbstractControPointsLine >> endPoint: aPoint [
+TSAbstractControlPointsLine >> endPoint: aPoint [
 	self controlPoints 
 		at: self controlPoints size
 		put: aPoint.
@@ -32,17 +32,17 @@ TSAbstractControPointsLine >> endPoint: aPoint [
 ]
 
 { #category : #testing }
-TSAbstractControPointsLine >> isControlPointsLine [
+TSAbstractControlPointsLine >> isControlPointsLine [
 	^ true
 ]
 
 { #category : #accessing }
-TSAbstractControPointsLine >> startPoint [
+TSAbstractControlPointsLine >> startPoint [
 	^ self controlPoints first
 ]
 
 { #category : #accessing }
-TSAbstractControPointsLine >> startPoint: aPoint [
+TSAbstractControlPointsLine >> startPoint: aPoint [
 	self controlPoints at: 1 put: aPoint.
 	self resetPath.
 ]

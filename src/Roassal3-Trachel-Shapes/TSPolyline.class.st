@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSPolyline,
-	#superclass : #TSAbstractControPointsLine,
+	#superclass : #TSAbstractControlPointsLine,
 	#instVars : [
 		'markers'
 	],
