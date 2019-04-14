@@ -522,3 +522,31 @@ RSShapeExamples >> example16Bezier [
 	v add: l.
 	v open
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example17Labeled [
+	<script: 'self new example17Labeled'>
+	| v e1 e2 s l |
+	v := RSView new.
+	s := RSShapeBuilder ellipse
+		border: TSBorder new;
+		interactionDo: [:i | i draggable; labeled];
+		size: 20.
+	e1 := s elementOn: 'hello'.
+	e2 := s elementOn: 'world'.
+	e2 translateTo: 60@80.
+	l := RSSingleEdgeBuilder arrowedLine 
+		interactionDo: [ :i | | label |
+			label := i labeled.
+			label location  
+				inner;
+				middle.
+			label shape text: 'lining up!' ];
+		color: Color red;
+		from: e1;
+		to: e2;
+		edge.
+	v add: e1; add: e2; add: l.
+	v @ RSControlsView.
+	v open.
+]

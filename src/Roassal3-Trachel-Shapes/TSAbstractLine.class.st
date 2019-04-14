@@ -109,6 +109,14 @@ TSAbstractLine >> loadShape: other [
 	self shouldBeImplemented 
 ]
 
+{ #category : #'event handling' }
+TSAbstractLine >> notifyExtentChanged [
+	self announce: [ TSExtentChangedEvent new 
+		shape: self;
+		oldExtent: nil;
+		newExtent: self controlPoints first - self controlPoints last ]
+]
+
 { #category : #private }
 TSAbstractLine >> privateMarkers [
 	^ nil

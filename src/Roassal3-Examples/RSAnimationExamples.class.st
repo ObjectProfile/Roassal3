@@ -1858,13 +1858,21 @@ RSAnimationExamples >> example29Bezier [
 				with: x1 @ 0
 				with: 100 @ -100
 				with: 100 @ 50
-				with: 200 @ -120 ].
-	s := RSShapeBuilder composite onMyselfDo: [ :m | 	[ :e | 
+				with: 200 @ -120 ];
+		onElement;
+		paint: [ :e| (Color h: 360 / size * e index s: 1 v: 1 alpha: 0.4) ];
+		markerEnd: [ :e | 
+			(RSShapeBuilder triangle
+				extent: 10@20;
+				color: e paint;
+				border: (TSBorder new color: Color white);
+				element) trachelShape asMarker offset: -10 ] .
+	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e | 
 		| offset b |
 		offset := Float twoPi / size * e index.
 		e matrix rotateByRadians: offset.
-		b := bezier edgeOn: offset.
-		b paint: (Color h: 360 / size * e index s: 1 v: 1 alpha: 0.4).
+		b := bezier edgeOn: offset index: e index.
+		"b paint:  Variable or expression expected ->."
 		e add: b trachelShape.
 		e attributes
 			at: #update

@@ -47,6 +47,14 @@ RSInteractionBuilder >> initialize [
 ]
 
 { #category : #interactions }
+RSInteractionBuilder >> labeled [
+	| i |
+	self addExclusiveInteraction: (i := RSLabeled new).
+	^ i
+	
+]
+
+{ #category : #interactions }
 RSInteractionBuilder >> popup [
 	^ self popupText: #yourself
 ]

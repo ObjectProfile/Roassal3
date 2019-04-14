@@ -24,7 +24,8 @@ TSAbstractDualLine >> endPoint [
 { #category : #accessing }
 TSAbstractDualLine >> endPoint: point [
 	endPoint := point.
-	self resetPath
+	self resetPath.
+	self notifyExtentChanged.
 ]
 
 { #category : #initialization }

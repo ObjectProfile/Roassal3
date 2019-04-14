@@ -113,7 +113,8 @@ RSEdge >> update [
 	].
 	trachelShape 
 		startPoint: (attachPoint startingPointOf: self);
-		endPoint: (attachPoint endingPointOf: self).
+		endPoint: (attachPoint endingPointOf: self);
+		notifyExtentChanged.
 ]
 
 { #category : #updating }
@@ -132,5 +133,5 @@ RSEdge >> updateWithControlPoints [
 			value: (attachPoint endingPointOf: self)
 	].
 
-	trachelShape controlPoints: cp.
+	trachelShape controlPoints: cp; notifyExtentChanged.
 ]
