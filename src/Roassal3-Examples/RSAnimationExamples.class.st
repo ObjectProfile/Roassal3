@@ -2036,6 +2036,57 @@ RSAnimationExamples >> example32RSLocate [
 	v open setLabel: 'RSLocate methods'
 ]
 
+{ #category : #examples }
+RSAnimationExamples >> example33AlteredWorld [
+	<script: 'self new example33AlteredWorld'>
+	"base on Gerard Ferrandez source code"
+	"https://codepen.io/ge1doot/details/GQobbq/"
+	| v extent px perlin path r period length |
+	v := RSView new.
+	r := Random new.
+	extent := 500@500.
+	period := 0.01.
+	length := 400.
+	v clearBackground: false.
+	v color: Color black.
+	px := 0.
+	perlin := TSPerlinNoise3 new octaves: 5.
+	path := RSSingleEdgeBuilder polyline
+		width: 0.5.
+	v addAll: (path edgesOn: (1 to: extent y /6)).
+	v animation
+		loops: extent x;
+		duration: 50 milliSeconds;
+		when: TSAnimationLoopEvent do: [
+			v edges do: [ :e | | x y n points m |
+				x := px.
+				y := extent y * r next.
+				n := perlin noise: x * period and: y * period.
+				e color: ((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
+				
+				points := OrderedCollection new.
+				points add: x@y.
+				m := 0.
+				[ m < length and:  [y >= 0 and: [ y <= extent y ] ]] whileTrue: [ 
+					n := perlin noise: x * period and: y * period.
+					x := x + (n * 14) cos.
+					y := y + (n * 14) sin.
+					points add: x@y.
+					m := m + 1 ].
+				e trachelShape controlPoints: points.
+				].
+			v signalUpdate.
+			px := px + 1
+			].
+	v when: TSExtentChangedEvent do: [ v camera 
+		zoomToFit: v extent 
+		rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
+	v open setLabel: 'Altered World :V'
+	
+
+
+]
+
 { #category : #data }
 RSAnimationExamples >> miku [
 	^ 'm 148.25647,236.39122 -3.89508,14.84999 -14.11966,51.12292 -10.10286,26.9004 -15.70204,33.35162 -14.849996,32.37785 -10.589748,26.90039 -6.207783,20.20573 -5.477456,18.25819 -3.408195,26.77867 0.365164,20.69261 2.556146,18.62335 6.329504,21.42294 1.095491,-13.38934 2.434425,-21.7881 3.89508,-24.34425 7.546717,-21.1795 5.477456,19.84057 7.303275,27.63072 11.92868,23.97908 17.04097,22.8836 9.61598,9.25081 5.84262,-16.43237 6.81639,-24.1008 3.28648,-15.21516 2.3127,-20.57089 2.55615,-15.70204 0.48688,-21.7881 0.60861,-26.90039 3.85187,-84.73722 3.09851,-18.41896 3.09852,-17.73041 7.57415,23.58316 2.23782,-5.85275 8.95127,-21.51748 5.1642,-11.18909 6.71345,27.54237 8.60699,21.34534 3.27066,-26.85381 4.13136,15.83686 4.64777,18.24682 6.88559,16.86971 4.64778,5.33633 -0.17214,-11.87765 0.34428,-15.49258 228.94597,2.23782 2.06568,14.45974 0.8607,18.5911 1.03284,24.616 0.51642,34.08369 0.17214,32.53443 1.54926,22.55031 5.33633,26.3374 2.92638,17.38612 8.43485,32.70657 4.13136,-2.23782 17.55826,-19.62394 15.83687,-20.3125 12.22192,-17.7304 12.22193,-21.34534 9.12341,-22.72246 7.74629,-25.64883 5.68062,17.7304 8.09057,30.12447 4.81992,22.20604 2.40995,18.93538 0.51642,9.29555 2.75424,-7.22987 4.13136,-14.80403 2.58209,-14.80403 -0.86069,-19.10752 -2.75424,-16.52542 -3.4428,-16.18114 -4.99205,-13.25477 -8.26272,-17.55826 -6.19703,-12.73835 -10.84481,-20.82892 -14.63188,-25.4767 -9.4677,-19.96822 -7.05773,-16.35328 -6.36917,-14.97617 -3.95922,-11.18908 -21.87474,-45.37302 -14.3631,-37.73359 -37.73359,15.33688 0.73033,17.28442 -4.86885,6.08606 -0.24344,-23.12704 -60.86062,13.63278 -74.4934,10.22459 -67.92046,-2.19099 -54.77455,-7.30327 z

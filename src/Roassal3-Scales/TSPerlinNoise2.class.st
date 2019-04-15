@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'p'
 	],
-	#category : #'Roassal3-Scales-Core'
+	#category : #'Roassal3-Scales-Noises'
 }
 
 { #category : #public }
