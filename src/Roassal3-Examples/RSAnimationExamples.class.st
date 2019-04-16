@@ -1978,7 +1978,7 @@ RSAnimationExamples >> example31Miku [
 { #category : #examples }
 RSAnimationExamples >> example32RSLocate [
 	<script: 'self new example32RSLocate'>
-	| v box fixedElement movableElement buttonShape buttons locate labelShape label |
+	| v box fixedElement movableElement buttonShape buttons locate labelShape label grad1 grad2 |
 	v := RSView new.
 	locate := RSLocate new.
 	box := RSShapeBuilder box
@@ -2006,16 +2006,30 @@ RSAnimationExamples >> example32RSLocate [
 	movableElement size: 40.
 	
 	v add: fixedElement; add: movableElement; add: label.
-	
+	grad2 := (TSGradientPalette linearGradient: 
+		{0->'white'.
+		0.25->'black'.
+		1 ->'lightGray'})
+		start: 0@ -15;
+		stop: 0@ 15.
+	grad1 := (TSGradientPalette linearGradient: 
+		{0->'lightGray'.
+		0.25->'black'.
+		1 ->'gray'})
+		start: 0@ -15;
+		stop: 0@ 15.
 	buttonShape := RSShapeBuilder box
 		cornerRadius: 5;
 		extent: 60@30;
-		color: Color white;
-		interactionDo: [ :i| i labeled location middle];
+		paint: grad1;
+		interactionDo: [ :i| | lbl |
+			lbl := i labeled.
+			lbl shape color: Color white.
+			lbl location middle];
 		border: (TSBorder new color: Color lightGray);
 		onElement;
-		when: TSMouseEnter do: [:e | [ e color: Color lightGray; signalUpdate ] ]; 
-		when: TSMouseLeave do: [:e | [ e color: Color white; signalUpdate ] ];
+		when: TSMouseEnter do: [:e | [ e paint: grad2; signalUpdate ] ]; 
+		when: TSMouseLeave do: [:e | [ e paint: grad1; signalUpdate ] ];
 		when: TSMouseClick do: [:e | [ | p |
 			locate perform: e model. 
 			p := movableElement position.

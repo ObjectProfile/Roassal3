@@ -38,6 +38,11 @@ TSComposite >> initialize [
 	
 ]
 
+{ #category : #accessing }
+TSComposite >> padding: aPoint [
+	self extent: self extent + aPoint.
+]
+
 { #category : #removing }
 TSComposite >> removeShape: shape [
 	| evt |

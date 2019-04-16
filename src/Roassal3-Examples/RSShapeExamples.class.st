@@ -550,3 +550,51 @@ RSShapeExamples >> example17Labeled [
 	v @ RSControlsView.
 	v open.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example18ExampleFromMondrian [
+	<script: 'self new example18ExampleFromMondrian'>
+	| v shape composite legend |
+	v := RSView new.
+	shape := RSShapeBuilder circle
+		draggable;
+		popup;
+		color: Color red trans.
+	v addAll: (shape elementsOn: Collection withAllSubclasses).
+	RSNormalizer size
+		from: 5;
+		to: 50;
+		elements: v elements;
+		normalize: #numberOfMethods.
+	RSEdgeBuilder line
+		color: Color lightGray;
+		elements: v elements;
+		view: v;
+		connectFrom: #superclass.
+	RSForceBasedLayout on: v elements.
+	RSEdgeBuilder linePath
+		color: (Color blue alpha: 0.1);
+		elements: v elements;
+		view: v;
+		tension: 0.7;
+		bezierLineFollowing: #superclass;
+		connectToAll: #dependentClasses.
+	
+	composite := RSShapeBuilder composite 
+		border: (TSBorder new);
+		shapes: [ | labels |
+			labels := RSShapeBuilder label
+				elementsOn: { 'Circle = classes, size = number of methods; gray links = inheritance;'.
+				'blue links = dependencies; layout = force based layout on the inheritance links' }.
+			RSVerticalLineLayout on: labels.
+			labels. ];
+		padding: 10.
+	legend := composite element.
+	RSLocate new
+		below;
+		padding: 10;
+		move: legend on: v elements.
+	v add: legend.
+	v @ RSControlsView.
+	v open.
+]

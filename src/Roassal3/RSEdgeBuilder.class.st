@@ -46,10 +46,99 @@ RSEdgeBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
+{ #category : #'private - utility' }
+RSEdgeBuilder >> applyTension: tension on: points [
+	| n dp p1 |
+	n := points size - 1.
+	p1 := points first.
+	dp := points last - p1 .
+	2 to: n do: [ :i| | p t |
+		p := points at: i.
+		t := (i -1)/n. 
+		points at: i put: (1 - tension) * (p1 + (t * dp)) + (tension * p)].
+]
+
 { #category : #'public - configuration' }
 RSEdgeBuilder >> beDirectional [
 	"When edges are created, this allow for having edges going from A to B, and from B to A"
 	beDirectional := true
+]
+
+{ #category : #'public - line path' }
+RSEdgeBuilder >> bezierLineFollowing: selector [
+	self 
+		onElement;
+		svgPath: [ :ed | [ :a :b | [:builder | | points elements att |
+			att := ed attributes.
+			elements := att
+				at: #commom
+				ifAbsentPut: [ self commonElements: ed with: selector ].
+			points := elements collect: [ :e | e position asFloatPoint ].
+			points removeFirst; removeLast; addFirst: a; addLast: b.
+			self applyTension: (att 
+					at: #tension
+					ifAbsentPut: [0.7]) 
+				on: points. 
+			builder absolute; moveTo: points first.
+			2 to: points size - 2 do: [ :i | | p1 p2 |
+				p1 := points at: i.
+				p2 := points at: i +1.
+				builder 
+					curveVia: p1
+					to: (p1 + p2)/2 ].
+			builder
+				curveVia:( points at: points size -1)
+				to: points last.
+			] ] ].
+]
+
+{ #category : #'private - utility' }
+RSEdgeBuilder >> commonAncestor: edge with: selector [
+	| a b aNodes bNodes sharedNode remove |
+	a := edge from.
+	b := edge to.
+	a == b ifTrue: [ ^ a ].
+	aNodes := self followersOf: a with: selector.
+	bNodes := self followersOf: b with: selector.
+	a := aNodes removeLast.
+	b := bNodes removeLast.
+	sharedNode := nil.
+	remove := [ :list | list 
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ list removeLast ] ].
+	[ a == b ] whileTrue: [ 
+		sharedNode := a.
+		sharedNode ifNil: [ ^ nil ].
+		a := remove value: aNodes.
+		b := remove value: bNodes. ].
+	^ sharedNode.
+]
+
+{ #category : #'private - utility' }
+RSEdgeBuilder >> commonElements: edge with: selector [
+	"obtaint a list of points from the elements in the view based on a selector"
+	| from to ancestor elements search index |
+	from := edge from.
+	to := edge to.
+	ancestor := self commonAncestor: edge with: selector.
+	ancestor ifNil: [ 
+		elements := (self followersOf: from with: selector),
+			(self followersOf: to with: selector) reverse.
+		^ elements ].
+	search := [ :model | view elementFromModel: (selector rsValue: model) ].
+	elements := OrderedCollection new.
+	elements add: from.
+	[ from == ancestor ] whileFalse: [ 
+		from := search value: from model.
+		elements add: from ].
+	index := elements size.
+	[ to == ancestor ] whileFalse: [ 
+		elements add: to afterIndex: index.
+		to := search value: to model ].
+	elements do: [ :e | (e connectedEdges includes: edge)
+		ifFalse: [ e addConnectedEdge: edge ] ].
+	^ elements.
+	
 ]
 
 { #category : #public }
@@ -148,6 +237,17 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 RSEdgeBuilder >> elements: someElements [
 	self toElements: someElements.
 	self fromElements: someElements
+]
+
+{ #category : #'private - utility' }
+RSEdgeBuilder >> followersOf: element with: selector [
+	| t followers |
+	followers := OrderedCollection new.
+	t := element. 
+	[ t notNil ] whileTrue: [ 
+		followers add: t.
+		t := view elementFromModel: (selector rsValue: t model) ].
+	^ followers
 ]
 
 { #category : #accessing }
@@ -543,6 +643,13 @@ b
 			ccc -> t ] ].
 	self objects: allObjects asArray.
 	^ self useAssociations: assocs
+]
+
+{ #category : #'public - line path' }
+RSEdgeBuilder >> tension: aNumber [
+	self
+		onElement;
+		attributesDo: [ [ :att | att at: #tension put: aNumber ] ]
 ]
 
 { #category : #accessing }
