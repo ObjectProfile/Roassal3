@@ -12,13 +12,17 @@ BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [
+		do: [ | dep |
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
+			dep := (AthensCairoCanvas canUnderstand: #fillRuleEvenOdd)
+				ifTrue: [ #('Athens-SVG') ]
+				ifFalse: [ #('Athens-SVG' 'Roassal3-Pharo7') ].
 			spec
-				package: 'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
+				package: #'Roassal3-Pharo7';
+				package: #'Roassal3-Trachel' with: [spec requires: dep];
 				package: #'Roassal3-Scales';
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
