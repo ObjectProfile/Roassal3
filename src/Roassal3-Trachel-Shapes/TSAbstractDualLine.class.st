@@ -53,3 +53,10 @@ TSAbstractDualLine >> translateBy: delta [
 		endPoint: endPoint + delta.
 	self resetPath
 ]
+
+{ #category : #transforming }
+TSAbstractDualLine >> translateTo: delta [
+	| center |
+	center := (startPoint + endPoint ) /2.
+	self translateBy: delta - center
+]

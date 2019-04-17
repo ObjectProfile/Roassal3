@@ -145,7 +145,7 @@ TSGroup >> translateBy: delta [
 TSGroup >> translateTo: aPosition [
 	| center |
 	center := self encompassingRectangle rsCenter.
-	self translateBy: (aPosition - center)
+	self translateBy: aPosition - center
 ]
 
 { #category : #accessing }

@@ -21,6 +21,11 @@ Class {
 	#category : #'Roassal3-Commands'
 }
 
+{ #category : #comparing }
+RSCommand >> = aCommand [
+	^ aCommand class == self class and: [ message selector == aCommand message selector ].
+]
+
 { #category : #'accessing - computed' }
 RSCommand >> argumentTarget [
 	^ self isForModel
@@ -65,6 +70,11 @@ RSCommand >> execute [
 	arguments := self arguments.
 	target perform: self message selector withArguments: arguments.
 	^ arguments.
+]
+
+{ #category : #comparing }
+RSCommand >> hash [ 
+	^ message selector hash
 ]
 
 { #category : #testing }
