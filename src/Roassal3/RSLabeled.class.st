@@ -1,5 +1,19 @@
 "
 A RSLabeled  adds a label above an element. The label may be particularized using #text: in the default string representation is not sufficient. 
+
+```Smalltalk
+	| v es |
+	v := RTView new.
+
+	es := RTBox new size: 20; color: Color blue; elementsOn: #('Hello' 'World').
+	v addAll: es.
+	RTHorizontalLineLayout on: es.
+
+	es do: [ :e |
+		e @ (RTLabeled new color: Color red; setAsHighlightable) ]. 
+	es @ RTDraggable.
+	v
+```
 "
 Class {
 	#name : #RSLabeled,

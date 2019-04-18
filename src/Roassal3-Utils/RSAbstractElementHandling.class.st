@@ -8,7 +8,7 @@ Class {
 		'elements',
 		'fixedElement'
 	],
-	#category : #'Roassal3-Utils-AlignementAndResize'
+	#category : #'Roassal3-Utils-PositionAndResize'
 }
 
 { #category : #accessing }

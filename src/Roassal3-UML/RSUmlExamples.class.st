@@ -21,9 +21,11 @@ RSUmlExamples >> example01Basic [
 { #category : #examples }
 RSUmlExamples >> example02ClassDescriptor [
 	<script: 'self new example02ClassDescriptor'>
-	| builder |
+	| builder pharoClassesToBeVisualized |
+	pharoClassesToBeVisualized := TSAbstractLine withAllSubclasses.
+	
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAbstractLine withAllSubclasses.
+	builder classes: pharoClassesToBeVisualized.
 	
 	builder classDescriptor 
 		methods: [ :cls | | methods |

@@ -505,7 +505,7 @@ RSShapeExamples >> example16Bezier [
 		add: e1;
 		add: e2.
 	l := RSSingleEdgeBuilder bezier
-		withVerticallAttachPoint;
+		withVerticalAttachPoint;
 		"paint: Color red trans;"
 		from: e1;
 		to: e2;
@@ -530,7 +530,7 @@ RSShapeExamples >> example17Labeled [
 	v := RSView new.
 	s := RSShapeBuilder ellipse
 		border: TSBorder new;
-		interactionDo: [:i | i draggable; labeled];
+		interactionDo: [:i | i draggable; labeled ];
 		size: 20.
 	e1 := s elementOn: 'hello'.
 	e2 := s elementOn: 'world'.

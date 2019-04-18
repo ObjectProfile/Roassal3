@@ -178,7 +178,7 @@ RSLegendExamples >> example10Location [
 	elements := shape elementsOn: (TSShape withAllSubclasses).
 	v addAll: elements.
 	RSEdgeBuilder line
-		withVerticallAttachPoint;
+		withVerticalAttachPoint;
 		width: 0.1;
 		view: v;
 		elements: elements;

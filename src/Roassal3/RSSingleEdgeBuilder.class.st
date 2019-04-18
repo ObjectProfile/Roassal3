@@ -59,6 +59,25 @@ RSSingleEdgeBuilder class >> bimetricLine [
 
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> horizontalBezier [
+"Here is an example
+
+v := RSView new.
+
+sb := RSShapeBuilder circle
+			size: 20;
+			elementsOn: (1 to: 20).
+v addAll: sb.
+sb @ RSDraggable.
+
+eb := RSEdgeBuilder horizontalBezier
+			view: v;
+			connectFrom: 1 toAll: (2 to: 20).
+
+RSCircleLayout on: sb.
+v zoomToFit.
+v open			
+			"
+
 	^ self horizontalLine: self bezier.
 	
 ]
@@ -103,6 +122,24 @@ RSSingleEdgeBuilder class >> polyline [
 
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> verticalBezier [
+"Here is an example:
+
+v := RSView new.
+
+sb := RSShapeBuilder circle
+			size: 20;
+			elementsOn: (1 to: 20).
+v addAll: sb.
+sb @ RSDraggable.
+
+eb := RSEdgeBuilder verticalBezier
+			view: v;
+			connectFrom: 1 toAll: (2 to: 20).
+
+RSCircleLayout on: sb.
+v zoomToFit.
+v open			
+			"
 	^ self verticalLine: self bezier.
 	
 ]
@@ -205,6 +242,29 @@ RSSingleEdgeBuilder >> withHorizontalAttachPoint [
 ]
 
 { #category : #'public - attach point' }
-RSSingleEdgeBuilder >> withVerticallAttachPoint [
+RSSingleEdgeBuilder >> withVerticalAttachPoint [
+"
+An example:
+
+classesToVisualize := Collection withAllSubclasses.
+
+v := RSView new.
+boxes := RSShapeBuilder box
+				width: [ :cls | cls instVarNames size * 3 max: 5 ];
+				height: [ :cls | cls numberOfMethods max: 5 ];
+				elementsOn: classesToVisualize.
+v addAll: boxes.
+
+RSEdgeBuilder orthoVertical 
+	withVerticalAttachPoint
+	view: v;
+	connectFrom: #superclass.
+	
+RSTreeLayout on: boxes.
+
+v @ RSControlsView.
+v open			
+"
+
 	self attachPoint: RSVerticalAttachPoint new.
 ]
