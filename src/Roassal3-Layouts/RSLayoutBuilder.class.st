@@ -16,8 +16,18 @@ RSLayoutBuilder >> flow [
 ]
 
 { #category : #'public layout' }
+RSLayoutBuilder >> grid [
+	^ layout := RSGridLayout new.
+]
+
+{ #category : #'public layout' }
 RSLayoutBuilder >> horizontal [
 	^ layout := RSHorizontalLineLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> horizontalTree [
+	^ layout := RSHorizontalTreeLayout new.
 ]
 
 { #category : #initialization }
@@ -35,6 +45,11 @@ RSLayoutBuilder >> layout [
 { #category : #'public layout' }
 RSLayoutBuilder >> on: elements [
 	layout on: elements
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> tree [
+	^ layout := RSTreeLayout new.
 ]
 
 { #category : #'public layout' }

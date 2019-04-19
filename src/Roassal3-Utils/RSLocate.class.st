@@ -80,13 +80,8 @@ RSLocate >> center [
 ]
 
 { #category : #private }
-RSLocate >> computePosition: movableElement [
-	^ movableElement extent / 2 + padding * orientation * direction + self parentPosition.
-]
-
-{ #category : #private }
 RSLocate >> computePosition: movableElement on: fixedElement [
-	^ movableElement extent / 2 + padding * orientation * direction + (self parentPosition: fixedElement).
+	^ movableElement extent / 2 * orientation * direction + (self parentPosition: fixedElement) + padding.
 ]
 
 { #category : #initialization }

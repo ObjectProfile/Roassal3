@@ -3,16 +3,16 @@ Vertical attach points between elements when drawing lines. Useful for (vertical
 "
 Class {
 	#name : #RSVerticalAttachPoint,
-	#superclass : #RSAttachPoint,
+	#superclass : #RSOffsetAttachPoint,
 	#category : #'Roassal3-AttachPoint'
 }
 
 { #category : #'public - hooks' }
 RSVerticalAttachPoint >> basicEndingPointOf: anEdge [
-	^ anEdge to encompassingRectangle topCenter
+	^ anEdge to encompassingRectangle topCenter + (0@endOffset)
 ]
 
 { #category : #'public - hooks' }
 RSVerticalAttachPoint >> basicStartingPointOf: anEdge [
-	^ anEdge from encompassingRectangle bottomCenter
+	^ anEdge from encompassingRectangle bottomCenter + (0@startOffset)
 ]

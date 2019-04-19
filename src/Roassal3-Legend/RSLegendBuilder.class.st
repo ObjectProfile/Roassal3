@@ -41,7 +41,7 @@ RSLegendBuilder >> custom: anObject shape: aShape [
 
 { #category : #accessing }
 RSLegendBuilder >> defLabel [
-	^ defaultLabel
+	^ defaultLabel ifNil: [ defaultLabel := RSShapeBuilder label ].
 ]
 
 { #category : #accessing }
@@ -51,17 +51,21 @@ RSLegendBuilder >> defLabel: aShape [
 
 { #category : #accessing }
 RSLegendBuilder >> defaultBox [
-	^ defaultBox
+	^ defaultBox ifNil: [ defaultBox := RSShapeBuilder box 
+		uniqueCommands;
+		size: 15. ].
 ]
 
 { #category : #accessing }
 RSLegendBuilder >> defaultCircle [
-	^ defaultCircle
+	^ defaultCircle ifNil: [ defaultCircle := RSShapeBuilder circle 
+		uniqueCommands;
+		size: 15. ]
 ]
 
 { #category : #accessing }
 RSLegendBuilder >> defaultTitle [
-	^ defaultTitle
+	^ defaultTitle ifNil: [ defaultTitle := RSShapeBuilder label fontSize: 20; bold ].
 ]
 
 { #category : #accessing }
@@ -105,8 +109,9 @@ RSLegendBuilder >> padding [
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> padding: aPoint [
-	padding := aPoint.
+RSLegendBuilder >> padding: anObject [
+	"Number point or Margin"
+	padding := anObject.
 ]
 
 { #category : #'public - specific' }
@@ -150,37 +155,31 @@ RSLegendBuilder >> reset [
 	location := RSLocate new below.
 	layout := RSLayoutBuilder new.
 	layout vertical gapSize: 0.
+	defaultBox := defaultCircle := defaultLabel := defaultTitle := nil.
 	
-	defaultLabel := RSShapeBuilder label.
-	defaultTitle := RSShapeBuilder label fontSize: 20; bold.
-	defaultBox := RSShapeBuilder box 
-		commands: Set new;
-		size: 15.
 		
-	defaultCircle := RSShapeBuilder circle 
-		commands: Set new;
-		size: 15.
+	
 ]
 
 { #category : #public }
 RSLegendBuilder >> text: aString [
-	^ self custom: aString shape: defaultLabel.
+	^ self custom: aString shape: self defLabel.
 ]
 
 { #category : #public }
 RSLegendBuilder >> text: aString withBoxColor: color [
-	defaultBox color: color.
+	self defaultBox color: color.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: defaultBox text: defaultLabel)
+		shape: (self horizontalComposite: defaultBox text: self defLabel)
 ]
 
 { #category : #public }
 RSLegendBuilder >> text: aString withCircleColor: color [
-	defaultCircle color: color.
+	self defaultCircle color: color.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: defaultCircle text: defaultLabel)
+		shape: (self horizontalComposite: defaultCircle text: self defLabel)
 ]
 
 { #category : #'public - specific' }
@@ -194,12 +193,12 @@ RSLegendBuilder >> text: aString withFadingRamp: ramp [
 		paint: gradient.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: s text: defaultLabel)
+		shape: (self horizontalComposite: s text: self defLabel)
 ]
 
 { #category : #public }
 RSLegendBuilder >> title: aString [
-	^ self custom: aString shape: defaultTitle.
+	^ self custom: aString shape: self defaultTitle.
 ]
 
 { #category : #'public - composite' }

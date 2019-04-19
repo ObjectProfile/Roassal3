@@ -15,6 +15,16 @@ RSShapeBuilder class >> arc [
 		yourself 
 ]
 
+{ #category : #'instance creation - polygon' }
+RSShapeBuilder class >> arrow [
+	"inverted vee"
+	^ self polygonWithPoints: (Array
+		with: 1 @ 1
+		with: 0 @ 0.333
+		with: -1 @ 1
+		with: 0 @ -1)
+]
+
 { #category : #'instance creation' }
 RSShapeBuilder class >> box [
 	^ self rectangle
@@ -31,6 +41,26 @@ RSShapeBuilder class >> composite [
 		innerClass: TSComposite;
 		elementClass: RSElement;
 		yourself 
+]
+
+{ #category : #'instance creation - polygon' }
+RSShapeBuilder class >> cross [
+	| t t1 |
+	t := 2 / 6 asFloat.
+	t1 := t negated.
+	^ self polygonWithPoints:
+		{(-1 @ t1).
+		(t1 @ t1).
+		(t1 @ -1).
+		(t @ -1).
+		(t @ t1).
+		(1 @ t1).
+		(1 @ t).
+		(t @ t).
+		(t @ 1).
+		(t1@ 1).
+		(t1@ t).
+		(-1@ t)}
 ]
 
 { #category : #'instance creation - polygon' }
@@ -150,7 +180,7 @@ RSShapeBuilder class >> star [
 	outerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: 0.
 	innerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: Float pi / -5.
 	"Outer radius is 1; inner radius of star is smaller"
-	innerRadius := 0.5 * (3 - 5 sqrt) * 1.57.
+	innerRadius := 0.5.
 	innerPoints
 		doWithIndex: [ :p :i | innerPoints at: i put: (p x * innerRadius) @ (p y * innerRadius) ].
 	star5Points

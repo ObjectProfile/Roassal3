@@ -18,7 +18,8 @@ Class {
 		'elementClass',
 		'innerClass',
 		'commands',
-		'actions'
+		'actions',
+		'hasUniqueCommands'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -65,14 +66,21 @@ RSAbstractModelBuilder >> commands: aCollection [
 { #category : #'reflective operations' }
 RSAbstractModelBuilder >> doesNotUnderstand: aMessage [
 	"magic"
+	| command |
 	((elementClass canUnderstand: aMessage selector) not 
 		and: [ (innerClass canUnderstand: aMessage selector) not ])
 			ifTrue: [ ^ super doesNotUnderstand: aMessage ].
-		
-	commands add: (RSCommand new 
+	command := RSCommand new 
 		message: aMessage;
 		isForModel: self isForModel;
-		yourself).
+		yourself.
+	hasUniqueCommands ifTrue: [ | index |
+		index := commands indexOf: command.
+		index = 0 
+			ifTrue: [ commands add: command ] 
+			ifFalse: [ commands at: index put: command ] ]
+		ifFalse: [ commands add: command. ].
+	
 ]
 
 { #category : #'public - accessing' }
@@ -141,6 +149,11 @@ RSAbstractModelBuilder >> executeDuring: aBlock element: element component: comp
 	
 ]
 
+{ #category : #testing }
+RSAbstractModelBuilder >> hasUniqueCommands [
+	^ hasUniqueCommands
+]
+
 { #category : #'reflective operations' }
 RSAbstractModelBuilder >> if: booleanBlock actions: actionsBlock [
 	commands add: (RSConditionCommand new 
@@ -156,6 +169,7 @@ RSAbstractModelBuilder >> initialize [
 	super initialize.
 	self onModel.
 	commands := OrderedCollection new.
+	hasUniqueCommands := false.
 ]
 
 { #category : #accessing }
@@ -206,6 +220,31 @@ RSAbstractModelBuilder >> removeCommandsBySelectors: selectors [
 	toDelete := commands select: [ :cmd | selectors includes: cmd selector ].
 	toDelete do: [ :cmd | commands remove: cmd ].
 	^ toDelete
+]
+
+{ #category : #'public - accessing' }
+RSAbstractModelBuilder >> uniqueCommands [
+	"with this commands are uniques and we keep the last command if they are equal.
+	EG with hasUniqueCommands equals true
+	.=.=
+	RSShapeBuilder box 
+		color: [ Color red ];
+		color: [ Color blue ];
+		color: Color blue;
+		color: nil.
+	.=.=
+	In this case commands collection are { [ red ]. [ blue ]. Color blue. nil }.
+	.=.=
+	RSShapeBuilder box 
+		uniqueCommands;
+		color: [ Color red ];
+		color: [ Color blue ];
+		color: Color blue;
+		color: nil.
+	.=.=
+	In this case commands collection are { nil }.
+	"
+	hasUniqueCommands := true
 ]
 
 { #category : #updating }

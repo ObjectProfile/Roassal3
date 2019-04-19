@@ -368,7 +368,8 @@ RSShapeExamples >> example12Polygons [
 	border := TSBorder new paint: Color black; width: 2.
 	#('diamond' 'square' 'heptagon' 'hexagon' 
 	'octagon' 'pentagon' 'rhomboid' 'star'
-	'triangle' 'vee' "not polygons" 'box' 'circle') do: [ :selector| 
+	'triangle' 'vee' 'cross' 'arrow'
+	"not polygons" 'box' 'circle') do: [ :selector| 
 		| shape |
 		shape := (RSShapeBuilder perform: selector asSymbol)
 			size: 100;
@@ -380,8 +381,8 @@ RSShapeExamples >> example12Polygons [
 			border: border.
 		view add: (shape elementOn: selector)
 		 ].
-	"view showEncompassingRectangles."
-	"view animation repeat;
+	"view showEncompassingRectangles.
+	view animation repeat;
 		scale: (TSScale linear domain: {0. 0.5. 1}; range:{ 100. 150. 100} );
 		onStepDo: [ :t | 
 			view elements do: [ :e | e size: t ] ]."

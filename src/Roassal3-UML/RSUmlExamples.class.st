@@ -14,7 +14,6 @@ RSUmlExamples >> example01Basic [
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
 	builder build.
-	builder view when: TSExtentChangedEvent do: [ builder view zoomToFit ].
 	builder open
 ]
 
@@ -33,6 +32,100 @@ RSUmlExamples >> example02ClassDescriptor [
 			to: (methods size min: 5 ) ].
 		
 	builder build.
-	builder view when: TSExtentChangedEvent do: [ builder view zoomToFit ].
+	builder open
+]
+
+{ #category : #examples }
+RSUmlExamples >> example03DifferentLines [
+	<script: 'self new example03DifferentLines'>
+	| builder marker |
+	builder := RSUMLClassBuilder new.
+	builder classes: RSAttachPoint withAllSubclasses.
+	marker := (RSShapeBuilder arrow
+		extent: 20@25;
+		noPaint;
+		border: TSBorder new;
+		element) asMarker offset: -7.
+	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
+		width: 2;
+		dashArray: #(4);
+		capRound;
+		attachPoint: (RSVerticalAttachPoint new startOffset: 20);
+		markerStart: marker).
+	builder build.
+	builder open
+]
+
+{ #category : #examples }
+RSUmlExamples >> example04Nolines [
+	<script: 'self new example04Nolines'>
+	| builder |
+	builder := RSUMLClassBuilder new.
+	builder classes: RSAttachPoint withAllSubclasses.
+	builder renderer marker: ((RSShapeBuilder arrow
+		extent: 20@25;
+		color: Color black;
+		element) asMarker offset: 25/2).
+	
+	builder layout grid.
+	builder build.
+	builder view edges copy do: #remove."ugly, maybe later #noEdges or something like that"
+	builder open
+]
+
+{ #category : #examples }
+RSUmlExamples >> example05Horizontal [
+	<script: 'self new example05Horizontal'>
+	| builder marker |
+	builder := RSUMLClassBuilder new.
+	builder classes: RSAttachPoint withAllSubclasses.
+	marker := (RSShapeBuilder arrow
+		extent: 20@25;
+		noPaint;
+		border: TSBorder new;
+		element) asMarker offset: -7.
+	builder renderer edgeBuilder: (RSEdgeBuilder horizontalBezier
+		width: 2;
+		dashArray: #(4);
+		capRound;
+		attachPoint: (RSHorizontalAttachPoint new startOffset: 20);
+		markerStart: marker).
+	builder layout horizontalTree
+		verticalGap: 50;
+		horizontalGap: 100.
+	builder build.
+	builder open
+]
+
+{ #category : #examples }
+RSUmlExamples >> example06CustomText [
+	<script: 'self new example06CustomText'>
+	| builder renderer c1 |
+	builder := RSUMLClassBuilder new.
+	builder classes: RSAttachPoint withAllSubclasses.
+	c1 := Color r: 0.130 g: 0.130 b: 0.130.
+	builder view color: c1.
+	renderer := builder renderer.
+	renderer classBoxShape color: c1.
+	renderer marker shape color: c1.
+	renderer defaultBorder
+		width: 2;
+		color: Color white.
+	renderer classNameShape: (RSShapeBuilder composite shapes: [:cls | 
+		| title g |
+		g := TSGroup new.
+		title := RSShapeBuilder label fontSize: 20; color: Color white; elementOn: cls.
+		g add: title.
+		cls hasAbstractMethods ifTrue: [ 
+			g addFirst: (RSShapeBuilder label color: Color magenta; italic; elementOn: '<<Abstract>>')
+			 ].
+		RSVerticalLineLayout new center; gapSize: 0; on: g.
+		g ]).
+	renderer methodShape 
+		color: Color white;
+		if: #isOverridden actions: [ :s | s color: Color cyan ].
+	renderer varShape 
+		color: Color white.
+	builder build.
 	builder open
 ]

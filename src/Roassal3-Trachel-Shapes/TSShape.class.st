@@ -145,6 +145,11 @@ TSShape >> loadShape: aShape [
 ]
 
 { #category : #accessing }
+TSShape >> noPaint [
+	paint := nil
+]
+
+{ #category : #accessing }
 TSShape >> paint [
 	^ paint
 ]

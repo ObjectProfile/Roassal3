@@ -14,7 +14,7 @@ TSAbstractControlPointsLine >> controlPoints [
 
 { #category : #accessing }
 TSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
-	controlPoints := anArrayOfPoints.
+	controlPoints := anArrayOfPoints collect: #asFloatPoint.
 	self resetPath.
 ]
 

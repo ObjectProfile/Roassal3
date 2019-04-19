@@ -49,7 +49,9 @@ RSLegendExamples >> example03Vertical [
 	b shape border: TSBorder new.
 	b layout vertical gapSize: 20.
 	b 
-		padding: 50;
+		"padding: 20;
+		padding: 20@50;"
+		padding: (Margin left: 50 right: 10 top: 10  bottom: 50);
 		build.
 	b view @ RSControlsView.
 	b view open.
@@ -86,10 +88,10 @@ RSLegendExamples >> example05Colors [
 		text: 'Invoker' withCircleColor: color;
 		text: 'Shadow Fiend' withCircleColor: color;
 		text: 'Tinker' withCircleColor: color;
-		text: 'Meepo' withCircleColor: color.
+		text: 'Meepo' withCircleColor: Color black.
 	b shape border: TSBorder new.
 	b 
-		padding: 50;
+		padding: 20;
 		build.
 	b view @ RSControlsView.
 	b view open.
@@ -110,7 +112,7 @@ RSLegendExamples >> example06BoxColors [
 	b shape border: TSBorder new.
 	b layout horizontal gapSize: 30.
 	b 
-		padding: 50;
+		padding: 20;
 		build.
 	b view @ RSControlsView.
 	b view open.
@@ -151,7 +153,7 @@ RSLegendExamples >> example09Lines [
 	| b |
 	b := RSLegendBuilder new.
 	b title: 'Line with markers'.
-	#(diamond triangle star pentagon octagon vee) do: [ :selector |
+	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
 		marker := (RSShapeBuilder perform: selector) size: 10; element.
 		line := RSSingleEdgeBuilder line markerEnd: marker; from: 0@0; to: 20@0.
@@ -201,7 +203,7 @@ RSLegendExamples >> example10Location [
 	b shape border:(TSBorder new
 		color: Color red;
 		dashArray: #(4)).
-	"b location right middle."
+	b location right middle.
 	b build.
 	v elements last scaleBy: 0.5.
 	v @ RSControlsView.

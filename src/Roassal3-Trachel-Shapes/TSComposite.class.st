@@ -39,8 +39,17 @@ TSComposite >> initialize [
 ]
 
 { #category : #accessing }
-TSComposite >> padding: aPoint [
-	self extent: self extent + aPoint.
+TSComposite >> padding: anObject [
+	"anObject can be a number, a point or Margin"
+	| margin rect center |
+	margin := anObject asMargin.
+	rect := shapes encompassingRectangle.
+	rect := margin expandRectangle: rect.
+	self extent: rect extent.
+	
+	(center := rect rsCenter) = (0@0) ifTrue: [ ^ self ].
+	center := center negated.
+	shapes do: [ :s | s translateBy: center ].
 ]
 
 { #category : #removing }

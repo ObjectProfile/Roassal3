@@ -141,7 +141,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 	r := SharedRandom globalGenerator.
 
 	shape := RSShapeBuilder box
-		paint: nil;
+		noPaint;
 		border: (TSBorder new
 			width: 4).
 		
@@ -233,7 +233,7 @@ RSAnimationExamples >> example05b [
 		e := RSElement new
 			model: r next;
 			trachelShape: TSBox new;
-			paint: nil;
+			noPaint;
 			border: (TSBorder new width: 4);
 			yourself.
 		e.].
@@ -275,7 +275,7 @@ RSAnimationExamples >> example05b [
 		1 to: 4 do: [:i | | s |
 			s := RSElement new 
 				trachelShape: TSBox new;
-				paint: nil;
+				noPaint;
 				position: e position;
 				extent: e extent;
 				border: (TSBorder new
@@ -369,7 +369,7 @@ RSAnimationExamples >> example07Psycho [
 	sc1 := TSScale linear domain: #(-1 1);range: { 100. 350 }.
 	sc2 := TSScale linear domain: #(-1 1);range: { 350. 100 }.
 	"for zoom to fit"
-	v add: (RSShapeBuilder box extent: 800@800; paint: nil; element).
+	v add: (RSShapeBuilder box extent: 800@800; noPaint; element).
 	theta := 0.	
 	shape := RSEdgeBuilder linePath 
 		onElement; 
@@ -426,7 +426,7 @@ RSAnimationExamples >> example07b [
 	sc1 := TSScale linear domain: #(-1 1);range: { 100. 350 }.
 	sc2 := TSScale linear domain: #(-1 1);range: { 350. 100 }.
 	"for zoom to fit"
-	v add: (RSShapeBuilder box extent: 800@800; paint: nil; element).
+	v add: (RSShapeBuilder box extent: 800@800; noPaint; element).
 	theta := 0.
 	update := [ 
 		v edges copy do: #remove.
@@ -530,7 +530,7 @@ RSAnimationExamples >> example09LinePatterns [
 	bar := 200.
 	radius := 150.
 	data := (1 to: 360 by: 3) collect: #degreesToRadians.
-	v add: (RSShapeBuilder box paint: nil; size: 640; element).
+	v add: (RSShapeBuilder box noPaint; size: 640; element).
 	border := TSBorder new
 		color: (Color colorFrom: '00004A');
 		width: 2.
@@ -1146,7 +1146,7 @@ RSAnimationExamples >> example17Retina [
 	updateValues value.
 	shape := RSShapeBuilder circle
 		size: [ radius ];
-		paint: nil;
+		noPaint;
 		borderDo: [ :m | [ :b | | theta |
 			theta := angle scale: m.
 			b color: (Color h: theta + offset s: 1 v: 1 alpha: 0.7) ] ];
@@ -1254,12 +1254,12 @@ RSAnimationExamples >> example19Gris [
 	label := TSLabel new
 		fontName: 'Marker Felt';
 		text: 'Roassal';
-		paint: nil;
+		noPaint;
 		border: border;
 		fontSize: 30.
 	v addShape: label.
 	shape := RSShapeBuilder circle
-		paint: nil;
+		noPaint;
 		radius: [ :m | m * label width ];
 		border: border;
 		onElement;
@@ -1272,7 +1272,7 @@ RSAnimationExamples >> example19Gris [
 		on: v elements fourth border set: #dashOffset:.
 		
 	mini := RSShapeBuilder circle
-		paint: nil;
+		noPaint;
 		border: (TSBorder new width: 0.5);
 		radius: [ :m | m * 5 ];
 		if: [ :m | m = 1 ] actions: [ :s | s paint: Color black ];
@@ -1609,7 +1609,7 @@ RSAnimationExamples >> example25Lines [
 		text: 'Pharo';
 		fontName: 'Brushcrazy DEMO';
 		fontSize: 50;
-		paint: nil;
+		noPaint;
 		bold;
 		border: (TSBorder new paint: Color black; dashArray: #(4)).
 	v addShape: label.
@@ -1924,7 +1924,7 @@ RSAnimationExamples >> example30SVGIcons [
 			 ] ].
 	v addShape: (TSBox new
 		extent: 100@100;
-		paint: nil;
+		noPaint;
 		border: TSBorder new).
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 100 asPoint ].
 	"v showEncompassingRectangles."
@@ -1961,7 +1961,7 @@ RSAnimationExamples >> example31Miku [
 	v addShape: (TSLabel new
 		text: 'Roassal';
 		fontName: 'Marker Felt';
-		paint: nil;
+		noPaint;
 		border: (TSBorder new color: Color transparent; width: 1.5);
 		fontSize: 100;
 		position: 320 @ 630).
@@ -1991,19 +1991,19 @@ RSAnimationExamples >> example32RSLocate [
 			(m padding y printShowingDecimalPlaces: 1) ].
 	label := labelShape elementOn: locate.
 	fixedElement := box elementOn: 'padding'.
+	movableElement := box element.
+	movableElement size: 40.
 	fixedElement when: TSMouseClick do: [ 
 		v animation
 			scale: (TSScale linear 
 				domain: #(0 0.5 1); 
-				range: { 0@0. 10@10. 0@0});
+				range: { 0@0. 20@20. 0@0});
 			onStepDo: [ :t | 
 				locate padding: t.
 				locate move: movableElement on: fixedElement.
 				labelShape updateElement: label.
 				label signalUpdate.
 				 ]  ].
-	movableElement := box element.
-	movableElement size: 40.
 	
 	v add: fixedElement; add: movableElement; add: label.
 	grad2 := (TSGradientPalette linearGradient: 
@@ -2031,7 +2031,7 @@ RSAnimationExamples >> example32RSLocate [
 		when: TSMouseEnter do: [:e | [ e paint: grad2; signalUpdate ] ]; 
 		when: TSMouseLeave do: [:e | [ e paint: grad1; signalUpdate ] ];
 		when: TSMouseClick do: [:e | [ | p |
-			locate perform: e model. 
+			e model value: locate. "= locate perform: e model"
 			p := movableElement position.
 			locate move: movableElement on: fixedElement.
 			v animation
@@ -2044,7 +2044,7 @@ RSAnimationExamples >> example32RSLocate [
 	RSVerticalLineLayout new center; gapSize: 30; on: (TSGroup with: v elements with: buttons).
 	v addAll: buttons.
 	v when: TSExtentChangedEvent do: [ 
-		v camera zoomToFit: v extent * 0.8.
+		v camera zoomToFit: v extent * 0.7.
 		v signalUpdate ].
 	 
 	v open setLabel: 'RSLocate methods'
