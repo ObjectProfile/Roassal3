@@ -49,7 +49,7 @@ Class {
 		'fixedX',
 		'fixedY'
 	],
-	#category : #'Roassal3-Utils-Normalizer'
+	#category : #'Roassal3-Utils-PositionAndResize'
 }
 
 { #category : #'public - positioning shorcuts' }

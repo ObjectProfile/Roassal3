@@ -647,6 +647,7 @@ b
 
 { #category : #'public - line path' }
 RSEdgeBuilder >> tension: aNumber [
+	"Tension for the Bezier line"
 	self
 		onElement;
 		attributesDo: [ [ :att | att at: #tension put: aNumber ] ]

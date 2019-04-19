@@ -180,7 +180,7 @@ RSLegendExamples >> example10Location [
 	elements := shape elementsOn: (TSShape withAllSubclasses).
 	v addAll: elements.
 	RSEdgeBuilder line
-		withVerticallAttachPoint;
+		withVerticalAttachPoint;
 		width: 0.1;
 		view: v;
 		elements: elements;
@@ -203,7 +203,7 @@ RSLegendExamples >> example10Location [
 	b shape border:(TSBorder new
 		color: Color red;
 		dashArray: #(4)).
-	b location right middle.
+	"b location right middle."
 	b build.
 	v elements last scaleBy: 0.5.
 	v @ RSControlsView.

@@ -18,7 +18,7 @@ Adjust the size of the Elements.
 Class {
 	#name : #RSResize,
 	#superclass : #RSAbstractElementHandling,
-	#category : #'Roassal3-Utils-AlignementAndResize'
+	#category : #'Roassal3-Utils-PositionAndResize'
 }
 
 { #category : #'accessing - computed' }
