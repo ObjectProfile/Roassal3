@@ -66,7 +66,26 @@ RSUMLClassBuilder >> initializeShapes [
 			g add: (line 
 				from: rec origin x @ (titleLabel height+ g third height);
 				to: rec corner x @ (titleLabel height + g third height); edge ).
-			g ]
+			g ];
+		onMyselfDo: [ [ :e| | expand collapse button |
+			expand := self iconNamed: #overlayAdd.
+			collapse := self iconNamed: #overlayRemove.
+			button := RSShapeBuilder bitmap
+				form: collapse;
+				size: 20;
+				element.
+			button when: TSMouseClick do: [ 
+				button form: (button form = expand 
+					ifTrue: [ collapse ]
+					ifFalse: [ expand ]).
+				button signalUpdate. ].
+			RSLocate new border top; right;
+				stick: button on: e shapes first.
+			e add: button trachelShape.
+			] ].
+		
+	
+
 ]
 
 { #category : #accessing }

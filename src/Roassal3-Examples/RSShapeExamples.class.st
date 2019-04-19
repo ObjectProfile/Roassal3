@@ -599,3 +599,18 @@ RSShapeExamples >> example18ExampleFromMondrian [
 	v @ RSControlsView.
 	v open.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example19Bitmap [
+	<script: 'self new example19Bitmap'>
+	| v elements |
+	v := RSView new.
+	elements := RSShapeBuilder bitmap
+		form: #value;
+		interactionDo: [ :i | i popupText: #key ];
+		elementsOn: Smalltalk ui icons icons associations.
+	v addAll: elements.
+	RSGridLayout on: elements.
+	v @ RSControlsView.
+	v open
+]

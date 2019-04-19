@@ -26,6 +26,14 @@ RSShapeBuilder class >> arrow [
 ]
 
 { #category : #'instance creation' }
+RSShapeBuilder class >> bitmap [
+	 ^ self new
+		innerClass: TSBitmap;
+		elementClass: RSElement;
+		yourself 
+]
+
+{ #category : #'instance creation' }
 RSShapeBuilder class >> box [
 	^ self rectangle
 ]
