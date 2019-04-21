@@ -63,6 +63,19 @@ TSScale class >> log [
 
 { #category : #'instance creation' }
 TSScale class >> ordinal [
+"Define an ordinal scale. Here is an example:
+
+v := RSView new.
+colors := TSScale ordinal range: { Color red . Color yellow . Color blue }.
+boxes := RSShapeBuilder box
+				size: 20;
+				color: [ :vv | colors scale: vv ];
+				elementsOn: ((1 to: 10) collect: [:vv | vv // 2 ]) shuffled.
+v addAll: boxes.
+RSHorizontalLineLayout new gapSize: 0; on: boxes.
+v @ RSControlsView.
+v open
+"
 	^ TSScaleOrdinal new 
 ]
 
