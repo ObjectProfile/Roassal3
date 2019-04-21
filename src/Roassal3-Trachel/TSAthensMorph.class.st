@@ -177,7 +177,7 @@ TSAthensMorph >> handleMouseOver: aMorphicEvent [
 	self trMouseEnter: aMorphicEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : #testing }
 TSAthensMorph >> handlesKeyboard: evt [
 	^true
 ]
@@ -195,6 +195,11 @@ TSAthensMorph >> handlesMouseOver: evt [
 { #category : #'events-processing' }
 TSAthensMorph >> handlesMouseWheel: evt [
 	^true
+]
+
+{ #category : #'event handling' }
+TSAthensMorph >> hasFocus [
+	^ true
 ]
 
 { #category : #initialization }
@@ -534,4 +539,11 @@ TSAthensMorph >> trachelCanvas [
 { #category : #testing }
 TSAthensMorph >> wantsSteps [
 	^ trachelCanvas hasAnimation 
+]
+
+{ #category : #'event handling' }
+TSAthensMorph >> wouldAcceptKeyboardFocusUponTab [
+	"Answer whether the receiver might accept keyboard focus if 
+	tab were hit in some container playfield"
+	^ true
 ]

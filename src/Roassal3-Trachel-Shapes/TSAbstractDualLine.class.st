@@ -35,6 +35,11 @@ TSAbstractDualLine >> initialize [
 	endPoint := 100@100.
 ]
 
+{ #category : #transforming }
+TSAbstractDualLine >> position [
+	^ self encompassingRectangle rsCenter
+]
+
 { #category : #accessing }
 TSAbstractDualLine >> startPoint [ 
 	^ startPoint
