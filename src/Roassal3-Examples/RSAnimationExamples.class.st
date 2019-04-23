@@ -1683,7 +1683,7 @@ RSAnimationExamples >> example26PerlinNoise [
 { #category : #examples }
 RSAnimationExamples >> example27RoassalPerlinNoise [
 	<script: 'self new example27RoassalPerlinNoise'>
-	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 morph v2 |
+	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 |
 	v := RSView new.
 	v color: Color black.
 	v clearBackground: false.
@@ -2151,6 +2151,74 @@ RSAnimationExamples >> example34Tick [
 	
 
 
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example35Perlin [
+	<script: 'self new example35Perlin'>
+	| v r s frame scIterations scRadius rect extent maxLife perlin noiseScale |
+	r := Random new.
+	v := RSView new.
+	v clearBackground: false.
+	extent := 500@500.
+	rect := Rectangle rsCenter: extent/2 extent: extent.
+	maxLife := 10.
+	perlin := TSPerlinNoise2 new.
+	noiseScale := 160.
+	v color: Color black.
+	scIterations := TSScale linear domain: #(0 100); range: #(5 1).
+	scRadius := TSScale linear domain: #(0 100); range: #(1 3).
+	
+	s := RSShapeBuilder circle onMyselfDo: [:i | [:e |
+		| iterations life flip c1 c2 respawnTop color |
+		iterations := scIterations scale: i.
+		e size: (scRadius scale: i).
+		flip := (r next * 2 ) asInteger * 2 - 1. 
+		c1 := c2 :=  Color white.
+		
+		respawnTop := [
+			life := r next * maxLife.
+			e position: r next @ 0 * extent ].
+		respawnTop value.
+		(r next * 3) asInteger = 1 ifTrue: [ 
+			c1 := Color purple.
+			c2 := Color cyan ].
+		
+		e attributes at: #update put: [ | p vel heading alpha |
+			(life := life - 0.01666) < 0 ifTrue: respawnTop.
+			p := e position.
+			vel := 0@0.
+			1 to: iterations do: [ :k | 
+				| transition angle |
+				transition := p x / extent x.
+				angle := (perlin
+					snoise: p x / noiseScale
+					and: p y / noiseScale) * transition * Float twoPi * noiseScale.
+				vel := angle cos @ angle sin * 0.2.
+				p := p + vel. ].
+			(rect containsPoint: p) ifFalse: respawnTop.
+			e position: p.
+			heading := vel angle / Float twoPi.
+			heading < 0 ifTrue: [ heading := heading negated ].
+			color := TSScale linear range: { c1. c2 }; scale: heading.
+			alpha := life * 5 / maxLife min: 1.
+			alpha := (maxLife - life * 5 )/ maxLife min: alpha.
+			color setAlpha: alpha.
+			e color: color.
+			].
+		 ] ].
+	frame := 0.
+	
+	v addAll: (s elementsOn: (1 to: 100)).
+	v animation repeat onStepDo: [ :t |
+		frame := frame + 1.
+		v elements do: [ :e |
+			(e attributes at:#update) value ]. ].
+	v when: TSExtentChangedEvent do: [ v camera 
+		zoomToFit: v extent
+		rectangle: rect ].
+	v open setLabel: 'Perlin :V'.
+	
 ]
 
 { #category : #data }

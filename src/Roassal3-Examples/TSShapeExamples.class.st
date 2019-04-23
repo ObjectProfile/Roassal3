@@ -665,7 +665,7 @@ TSShapeExamples >> example25LabelWithBorder [
 	c open.
 ]
 
-{ #category : #labels }
+{ #category : #'box and ellipses' }
 TSShapeExamples >> example26Polygon [
 	<script: 'self new example26Polygon'>
 	| c |
@@ -680,7 +680,7 @@ TSShapeExamples >> example26Polygon [
 	c open.
 ]
 
-{ #category : #labels }
+{ #category : #lines }
 TSShapeExamples >> example27Markers [
 	<script: 'self new example27Markers'>
 	| c arrow axes circle dataLine |
@@ -704,7 +704,7 @@ TSShapeExamples >> example27Markers [
 	c open.
 ]
 
-{ #category : #labels }
+{ #category : #svg }
 TSShapeExamples >> example28SVGShape [
 	<script: 'self new example28SVGShape'>
 	| c |
@@ -730,6 +730,19 @@ TSShapeExamples >> example28SVGShape [
 		svgPath: 'M 175 200 l 150 0';
 		yourself).
 	c showEncompassingRectangles.
+	c zoomToFit.
+	c open
+]
+
+{ #category : #lines }
+TSShapeExamples >> example29PolylineRadius [
+	<script: 'self new example29PolylineRadius'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSPolyline new
+		border: (TSBorder new width: 10);
+		cornerRadii: -50;
+		controlPoints: { 5@30. 15@30. 15@0. 25@20. 25@10. 35@10} * 20).
 	c zoomToFit.
 	c open
 ]

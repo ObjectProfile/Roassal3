@@ -30,7 +30,8 @@ RSUmlExamples >> example02ClassDescriptor [
 				a selector < b selector ].
 			methods copyFrom: 1
 			to: (methods size min: 5 ) ].
-		
+	builder renderer edgeBuilder
+		cornerRadii: 20.
 	builder build.
 	builder open
 ]

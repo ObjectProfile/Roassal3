@@ -17,7 +17,8 @@ Class {
 		'keyUpActions',
 		'keyDownActions',
 		'steps',
-		'speed'
+		'speed',
+		'resizeCanvas'
 	],
 	#category : #'Roassal3-Interaction'
 }
@@ -25,6 +26,7 @@ Class {
 { #category : #initialization }
 RSControlsView >> initialize [
 	super initialize.
+	resizeCanvas := true.
 	steps := Set new.
 	speed := 1.
 	keyDownActions := Dictionary new
@@ -45,13 +47,20 @@ RSControlsView >> initialize [
 		yourself.
 ]
 
+{ #category : #public }
+RSControlsView >> noResizeCanvas [
+	resizeCanvas := false
+]
+
 { #category : #hooks }
 RSControlsView >> onElement: aView [
 	aView @ RSZoomableView.
 	aView @ RSDraggableView.
+	resizeCanvas ifTrue: [ 
+		aView zoomToFit.
+		aView when: TSExtentChangedEvent do: [ aView zoomToFit ]. 
+	 ].
 	
-	aView zoomToFit.
-	aView when: TSExtentChangedEvent do: [ aView zoomToFit ]. 
 	aView
 		when: TSKeyDown do: [ :evt | | rect | 
 			rect := aView encompassingRectangle.

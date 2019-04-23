@@ -5,7 +5,8 @@ Class {
 	#name : #TSPolyline,
 	#superclass : #TSAbstractControlPointsLine,
 	#instVars : [
-		'markers'
+		'markers',
+		'radius'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
@@ -13,6 +14,16 @@ Class {
 { #category : #visiting }
 TSPolyline >> buildPathOn: visitor [
 	visitor buildPolyinePath: self
+]
+
+{ #category : #accessing }
+TSPolyline >> cornerRadii [
+	^ radius ifNil: [ 0 ].
+]
+
+{ #category : #accessing }
+TSPolyline >> cornerRadii: aNumber [
+	radius := aNumber abs
 ]
 
 { #category : #'accessing - markers' }

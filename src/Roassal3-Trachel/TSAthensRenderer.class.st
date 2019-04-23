@@ -180,11 +180,80 @@ TSAthensRenderer >> buildPolygonPath: path [
 ]
 
 { #category : #'creating path' }
-TSAthensRenderer >> buildPolyinePath: path [
-	| first |
+TSAthensRenderer >> buildPolyinePath: line [
+	"based on https://riptutorial.com/html5-canvas/example/18766/render-a-rounded-polygon-"
+	| first radius cp  |
+	radius := line cornerRadii.
 	first := true.
 	builder absolute.
-	path controlPoints do: [ :point |
+	cp := line controlPoints.
+	radius = 0 ifFalse: [
+		| p1 p2 p3 v1 v2 a1 a2 sinA sin90 angle radDir
+		drawDir halfAngle lenOut len1 len2 cRadius p a b arc |
+		arc := [ 
+			v1 := p1 - p2.
+			len1 := ((v1 x * v1 x) + (v1 y * v1 y)) sqrt.
+			v1 := v1 / len1.
+			a1 := v1 angle.
+			
+			v2 := p3 - p2.
+			len2 := ((v2 x * v2 x) + (v2 y * v2 y)) sqrt.
+			v2 := v2 / len2.
+			a2 := v2 angle.
+			
+			sinA := (v1 x * v2 y) - (v1 y * v2 x).
+			sin90 := (v1 x * v2 x) - (v1 y * v2 y negated).
+			angle := sinA arcSin.
+			radDir := 1.
+			drawDir := false.
+			sin90 < 0 ifTrue: [ 
+				angle < 0 ifTrue: [ 
+					angle := angle + Float pi ]
+				ifFalse: [ 
+					angle := angle - Float pi.
+					radDir := -1.
+					drawDir := true ] ]
+			ifFalse: [ 
+				angle > 0 ifTrue: [ 
+					radDir := -1.
+					drawDir := true. ] ].
+			halfAngle := angle / 2.
+			sinA :=  halfAngle sin.
+			lenOut := (halfAngle cos * radius/ sinA) abs.
+			cRadius := radius.
+			lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [ 
+				lenOut := (len1 / 2) min: (len2 / 2).
+				cRadius := (lenOut * halfAngle tan) abs.
+				].
+			p := p2 + (v2 * lenOut) + (v2 y negated@ v2 x * cRadius * radDir).
+			a := a1 + (Float halfPi * radDir).
+			b := a2 - (Float halfPi * radDir). 
+			drawDir not ifTrue: [ 
+				builder 
+					arcCenterX: p x
+					centerY: p y
+					radius: cRadius
+					startAngle: a
+					endAngle: b ]
+			ifFalse: [ 
+				builder
+					arcNegativeCenterX: p x 
+					centerY: p y 
+					radius: cRadius
+					startAngle: a
+					endAngle: b ] ].
+		builder moveTo: cp first .
+		1 to: cp size-2 do: [ :i |
+			p1 := cp at: i.
+			p2 := cp at: i + 1.
+			p3 := cp at: i + 2.
+			(p1 = p2 or: [p2 = p3])
+				ifFalse: [ arc value ].
+			].
+		builder lineTo: cp last.
+		^ self. ].
+
+	cp do: [ :point |
 		first ifTrue: [ 
 			first := false.
 			builder moveTo: point ]
