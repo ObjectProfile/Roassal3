@@ -2223,6 +2223,7 @@ RSAnimationExamples >> example35Perlin [
 
 { #category : #examples }
 RSAnimationExamples >> example36RoundRectagles [
+	"example inspired in paper.js"
 	<script: 'self new example36RoundRectagles'>
 	| v mouse extent s frame scale |
 	v := RSView new.

@@ -741,8 +741,24 @@ TSShapeExamples >> example29PolylineRadius [
 	c := TSCanvas new.
 	c addShape: (TSPolyline new
 		border: (TSBorder new width: 10);
-		cornerRadii: -50;
-		controlPoints: { 5@30. 15@30. 15@0. 25@20. 25@10. 35@10} * 20).
+		cornerRadii: 50;
+		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10} * 50).
 	c zoomToFit.
 	c open
+]
+
+{ #category : #'box and ellipses' }
+TSShapeExamples >> example30PolygonWithRadius [
+	<script: 'self new example30PolygonWithRadius'>
+	| c |
+	c := TSCanvas new.
+	c addShape: (TSPolygon new
+		cornerRadii: 10;
+		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
+		yourself).
+	c shapes first translateTo: 0@0.
+	c showEncompassingRectangles.
+	c shapes first when: TSMouseDragging do: [:evt |
+		evt shape translateBy: evt step; signalUpdate].
+	c open.
 ]

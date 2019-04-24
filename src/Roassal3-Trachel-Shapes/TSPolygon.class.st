@@ -5,7 +5,8 @@ Class {
 	#name : #TSPolygon,
 	#superclass : #TSBoundingShape,
 	#instVars : [
-		'points'
+		'points',
+		'radius'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
@@ -88,6 +89,16 @@ TSPolygon >> centerPoints [
 		points at: i put: p - center.
 		 ].
 	^ r.
+]
+
+{ #category : #accessing }
+TSPolygon >> cornerRadii [ 
+	^ radius ifNil: [ 0 ]
+]
+
+{ #category : #accessing }
+TSPolygon >> cornerRadii: aNumber [
+	radius := aNumber abs.
 ]
 
 { #category : #private }

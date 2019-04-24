@@ -11,6 +11,66 @@ Class {
 }
 
 { #category : #utilities }
+TSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
+	"based on https://riptutorial.com/html5-canvas/example/18766/render-a-rounded-polygon-"
+	| cp p1 p2 p3 arc v1 len1 a1 v2 len2 a2 sinA sin90 
+	angle radDir drawDir halfAngle cRadius lenOut p a b len |
+	cp := controlPoints.
+	len := cp size.
+	p1 := p2 := p3 := nil.
+	arc := [ 
+		v1 := p1 - p2.
+		len1 := ((v1 x * v1 x) + (v1 y * v1 y)) sqrt.
+		v1 := v1 / len1.
+		a1 := v1 angle.
+		
+		v2 := p3 - p2.
+		len2 := ((v2 x * v2 x) + (v2 y * v2 y)) sqrt.
+		v2 := v2 / len2.
+		a2 := v2 angle.
+			
+		sinA := (v1 x * v2 y) - (v1 y * v2 x).
+		sin90 := (v1 x * v2 x) - (v1 y * v2 y negated).
+		angle := sinA arcSin.
+		radDir := 1.
+		drawDir := false.
+		sin90 < 0 ifTrue: [ 
+			angle < 0 ifTrue: [ 
+				angle := angle + Float pi ]
+			ifFalse: [ 
+				angle := angle - Float pi.
+				radDir := -1.
+				drawDir := true ] ]
+		ifFalse: [ 
+			angle > 0 ifTrue: [ 
+				radDir := -1.
+				drawDir := true. ] ].
+		halfAngle := angle / 2.
+		sinA :=  halfAngle sin.
+		lenOut := (halfAngle cos * radius/ sinA) abs.
+		cRadius := radius.
+		lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [ 
+			lenOut := (len1 / 2) min: (len2 / 2).
+			cRadius := (lenOut * halfAngle tan) abs.
+			].
+		p := p2 + (v2 * lenOut) + (v2 y negated@ v2 x * cRadius * radDir).
+		a := a1 + (Float halfPi * radDir).
+		b := a2 - (Float halfPi * radDir). 
+		builder 
+			arcAround: p
+			radius: cRadius
+			startAngle: a
+			endAngle: b
+			cw: drawDir. ].
+	start to: end do: [ :i |
+		p1 := cp at: (i)%len + 1.
+		p2 := cp at: (i + 1)%len + 1.
+		p3 := cp at: (i + 2)%len + 1.
+		(p1 = p2 or: [p2 = p3]) ifFalse: [ arc value ] ].
+	
+]
+
+{ #category : #utilities }
 TSAthensRenderer >> arcCornerTangets: p0 p1: p1 r: r1 rc: rc cw: cw [
 	| x01 y01 lo ox oy x1 y1 x2 y2 x3 y3 dx dy d2 r d D cx0 cy0 cx1 cy1 dx0 dy0 dx1 dy1 |
 	x01 := p0 x - p1 x.
@@ -166,99 +226,47 @@ TSAthensRenderer >> buildLinePath: line [
 ]
 
 { #category : #'creating path' }
-TSAthensRenderer >> buildPolygonPath: path [
-	| first |
-	first := true.
+TSAthensRenderer >> buildPolygonPath: polygon [
+	| first radius cp |
 	builder absolute.
-	path points do: [ :point |
-		first ifTrue: [ 
-			first := false.
-			builder moveTo: point ]
-		ifFalse: [ 
-			builder lineTo: point ] ].
-	builder closePath.
-]
-
-{ #category : #'creating path' }
-TSAthensRenderer >> buildPolyinePath: line [
-	"based on https://riptutorial.com/html5-canvas/example/18766/render-a-rounded-polygon-"
-	| first radius cp  |
-	radius := line cornerRadii.
+	radius := polygon cornerRadii.
+	cp := polygon points.
+	[
+	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [ 
+		builder moveTo: (cp first + cp second) /2.
+		self applyRadius: radius on: cp from: 0 to: cp size-1.
+		^ self ].
 	first := true.
-	builder absolute.
-	cp := line controlPoints.
-	radius = 0 ifFalse: [
-		| p1 p2 p3 v1 v2 a1 a2 sinA sin90 angle radDir
-		drawDir halfAngle lenOut len1 len2 cRadius p a b arc |
-		arc := [ 
-			v1 := p1 - p2.
-			len1 := ((v1 x * v1 x) + (v1 y * v1 y)) sqrt.
-			v1 := v1 / len1.
-			a1 := v1 angle.
-			
-			v2 := p3 - p2.
-			len2 := ((v2 x * v2 x) + (v2 y * v2 y)) sqrt.
-			v2 := v2 / len2.
-			a2 := v2 angle.
-			
-			sinA := (v1 x * v2 y) - (v1 y * v2 x).
-			sin90 := (v1 x * v2 x) - (v1 y * v2 y negated).
-			angle := sinA arcSin.
-			radDir := 1.
-			drawDir := false.
-			sin90 < 0 ifTrue: [ 
-				angle < 0 ifTrue: [ 
-					angle := angle + Float pi ]
-				ifFalse: [ 
-					angle := angle - Float pi.
-					radDir := -1.
-					drawDir := true ] ]
-			ifFalse: [ 
-				angle > 0 ifTrue: [ 
-					radDir := -1.
-					drawDir := true. ] ].
-			halfAngle := angle / 2.
-			sinA :=  halfAngle sin.
-			lenOut := (halfAngle cos * radius/ sinA) abs.
-			cRadius := radius.
-			lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [ 
-				lenOut := (len1 / 2) min: (len2 / 2).
-				cRadius := (lenOut * halfAngle tan) abs.
-				].
-			p := p2 + (v2 * lenOut) + (v2 y negated@ v2 x * cRadius * radDir).
-			a := a1 + (Float halfPi * radDir).
-			b := a2 - (Float halfPi * radDir). 
-			drawDir not ifTrue: [ 
-				builder 
-					arcCenterX: p x
-					centerY: p y
-					radius: cRadius
-					startAngle: a
-					endAngle: b ]
-			ifFalse: [ 
-				builder
-					arcNegativeCenterX: p x 
-					centerY: p y 
-					radius: cRadius
-					startAngle: a
-					endAngle: b ] ].
-		builder moveTo: cp first .
-		1 to: cp size-2 do: [ :i |
-			p1 := cp at: i.
-			p2 := cp at: i + 1.
-			p3 := cp at: i + 2.
-			(p1 = p2 or: [p2 = p3])
-				ifFalse: [ arc value ].
-			].
-		builder lineTo: cp last.
-		^ self. ].
-
 	cp do: [ :point |
 		first ifTrue: [ 
 			first := false.
 			builder moveTo: point ]
 		ifFalse: [ 
 			builder lineTo: point ] ].
+	] ensure: [ builder closePath. ].
+	
+	
+	
+]
+
+{ #category : #'creating path' }
+TSAthensRenderer >> buildPolyinePath: line [
+	| first cp radius |
+	builder absolute.
+	cp := line controlPoints.
+	radius := line cornerRadii.
+	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [ 
+		builder moveTo: cp first.
+		self applyRadius: radius on: cp from: 0 to: cp size - 3.
+		builder lineTo: cp last.
+		^ self ].
+	first := true.
+	cp do: [ :point | 
+		first ifTrue: [ 
+			first := false.
+			builder moveTo: point ]
+		ifFalse: [ 
+			builder lineTo: point ] ]
 ]
 
 { #category : #'creating path' }

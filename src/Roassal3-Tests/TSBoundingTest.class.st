@@ -38,6 +38,10 @@ TSBoundingTest >> testDrawPolygon [
 	c addShape: (TSPolygon new
 		points: { 200@10. 250@190. 160@210 };
 		yourself).
+	c addShape: (TSPolygon new
+		cornerRadii: 20;
+		points: { 200@10. 250@190. 160@210 };
+		yourself).
 	self assert: c shapes second points equals: {(-5@ -100). (45@80). (-45@100)}.
 	c createMorph drawOnMockCanvas.
 ]
