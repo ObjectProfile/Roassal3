@@ -1,38 +1,39 @@
 "
 A RSLabeled  adds a label above an element. The label may be particularized using #text: in the default string representation is not sufficient. 
 
-```Smalltalk
-	| v es |
-	v := RTView new.
-
-	es := RTBox new size: 20; color: Color blue; elementsOn: #('Hello' 'World').
-	v addAll: es.
-	RTHorizontalLineLayout on: es.
-
-	es do: [ :e |
-		e @ (RTLabeled new color: Color red; setAsHighlightable) ]. 
-	es @ RTDraggable.
-	v
-```
 "
 Class {
 	#name : #RSLabeled,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'shape',
-		'location'
+		'location',
+		'isHighlightable',
+		'lowColor'
 	],
 	#category : #'Roassal3-Interaction'
 }
 
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
-	| label v |
+	| label v color set |
 	label := shape elementOn: anElement model.
 	location stick: label on: anElement.
 	v := anElement view.
 	v add: label.
-	anElement attributes at: #RSLabeled put: label
+	anElement attributes at: #RSLabeled put: label.
+	isHighlightable ifFalse: [ ^ self ].
+	color := label color.
+	label color: self lowColor.
+	set := [ :c | label pushFront; color: c; signalUpdate ].
+	anElement 
+		when: TSMouseEnter do: [ set value: color ];
+		when: TSMouseLeave do: [ set value: lowColor ].
+]
+
+{ #category : #'public - configuration' }
+RSLabeled >> highlightable [
+	isHighlightable := true
 ]
 
 { #category : #initialization }
@@ -47,10 +48,20 @@ RSLabeled >> location [
 	^ location
 ]
 
+{ #category : #accessing }
+RSLabeled >> lowColor [
+	^ lowColor ifNil: [ lowColor := Color veryVeryLightGray ].
+]
+
+{ #category : #accessing }
+RSLabeled >> lowColor: aColor [
+	lowColor := aColor
+]
+
 { #category : #hooks }
 RSLabeled >> onElement: anElement [
 	| block |
-	block := [ self createLabel: anElement ]. 
+	block := [ self createLabel: anElement. ]. 
 	anElement isInACanvas 
 		ifTrue: block
 		ifFalse: [ anElement when: TSShapeAddedEvent do: block ].

@@ -255,13 +255,24 @@ TSCanvas >> playAnimations [
 
 { #category : #actions }
 TSCanvas >> pushBack: aShape [
-	(shapes includes: aShape)
-		ifTrue: [ shapes remove: aShape.
-			shapes addFirst: aShape ].
-	(fixedShapes includes: aShape)
-		ifFalse: [ ^ self ].
-	fixedShapes remove: aShape.
-	fixedShapes addFirst: aShape
+	| col |
+	col := aShape isFixed 
+		ifTrue: [ fixedShapes ]
+		ifFalse: [ shapes ].
+	col 
+		remove: aShape;
+		addFirst: aShape.
+]
+
+{ #category : #actions }
+TSCanvas >> pushFront: aShape [
+	| col |
+	col := aShape isFixed 
+		ifTrue: [ fixedShapes ]
+		ifFalse: [ shapes ].
+	col 
+		remove: aShape;
+		addLast: aShape.
 ]
 
 { #category : #dependencies }

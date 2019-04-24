@@ -106,6 +106,11 @@ RSSingleEdgeBuilder class >> linePath [
 ]
 
 { #category : #'instance variations' }
+RSSingleEdgeBuilder class >> multiBezier [
+	^ RSMultiBezierEdgeBuilder linePath
+]
+
+{ #category : #'instance variations' }
 RSSingleEdgeBuilder class >> orthoHorizontal [
 	^ self horizontalLine: self polyline.
 ]

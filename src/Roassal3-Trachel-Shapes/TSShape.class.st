@@ -191,6 +191,11 @@ TSShape >> pushBack [
 	parent pushBack: self.
 ]
 
+{ #category : #actions }
+TSShape >> pushFront [
+	parent pushFront: self.
+]
+
 { #category : #dependencies }
 TSShape >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
