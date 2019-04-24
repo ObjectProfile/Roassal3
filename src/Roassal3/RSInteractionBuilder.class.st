@@ -55,6 +55,14 @@ RSInteractionBuilder >> labeled [
 ]
 
 { #category : #interactions }
+RSInteractionBuilder >> labeledHighlightable [
+	| i |
+	i := self labeled.
+	i highlightable.
+	^ i
+]
+
+{ #category : #interactions }
 RSInteractionBuilder >> popup [
 	^ self popupText: #yourself
 ]

@@ -573,12 +573,12 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		view: v;
 		connectFrom: #superclass.
 	RSForceBasedLayout on: v elements.
-	RSEdgeBuilder linePath
+	RSEdgeBuilder multiBezier
 		color: (Color blue alpha: 0.1);
 		elements: v elements;
 		view: v;
 		tension: 0.7;
-		bezierLineFollowing: #superclass;
+		following: #superclass;
 		connectToAll: #dependentClasses.
 	
 	composite := RSShapeBuilder composite 
@@ -613,4 +613,20 @@ RSShapeExamples >> example19Bitmap [
 	RSGridLayout on: elements.
 	v @ RSControlsView.
 	v open
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example20Highlightable [
+	<script: 'self new example20Highlightable'>
+	| v es s |
+	v := RSView new.
+	s := RSShapeBuilder ellipse
+		color: Color blue;
+		interactionDo: [:i | i draggable; labeledHighlightable];
+		size: 20.
+	es := s elementsOn: #('Hello' 'World').
+	v addAll: es.
+	RSHorizontalLineLayout on: es.
+	v @ RSControlsView.
+	v open.
 ]
