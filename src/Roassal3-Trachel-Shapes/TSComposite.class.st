@@ -43,7 +43,7 @@ TSComposite >> padding: anObject [
 	"anObject can be a number, a point or Margin"
 	| margin rect center |
 	margin := anObject asMargin.
-	rect := shapes encompassingRectangle.
+	rect := self shapes encompassingRectangle.
 	rect := margin expandRectangle: rect.
 	self extent: rect extent.
 	
