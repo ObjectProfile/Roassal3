@@ -41,9 +41,13 @@ TSComposite >> initialize [
 { #category : #accessing }
 TSComposite >> padding: anObject [
 	"anObject can be a number, a point or Margin"
+	"Shapes should be set in the composite before calling #padding:"
+	
 	| margin rect center |
-	margin := anObject asMargin.
-	rect := self shapes encompassingRectangle.
+	(shapes isNil or: [ shapes isEmpty ]) ifTrue: [ Error signal: 'Composite cannot not be empty' ].
+	
+	margin := anObject asMargin. 
+	rect := shapes encompassingRectangle.
 	rect := margin expandRectangle: rect.
 	self extent: rect extent.
 	
