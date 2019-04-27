@@ -55,6 +55,9 @@ RSMenuActivable >> menuDo: block [
 { #category : #hooks }
 RSMenuActivable >> onElement: anElement [
 	| remove |
+	"No need to do anything if empty"
+	menuBlock isNil ifTrue: [ ^ self ].
+	
 	anElement when: TSMouseRightClick do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
