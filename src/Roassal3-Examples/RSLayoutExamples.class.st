@@ -283,3 +283,30 @@ RSLayoutExamples >> example10Locate [
 	v @ RSControlsView.
 	v open
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example11PaddingInComposite [
+	<script: 'self new example11PaddingInComposite'>
+	| v box shape elements |
+	v := RSView new.
+	box := RSShapeBuilder box.
+	shape := RSShapeBuilder composite
+		popup;
+		shapes: [ :cls | 
+			| g |
+			g := box elementsOn: cls methods.
+			RSGridLayout on: g.
+			g ];
+		padding:
+			(Margin
+				left: 50
+				right: 5
+				top: 20
+				bottom: 5);
+		color: Color blue trans.
+	elements := shape elementsOn: Collection withAllSubclasses.
+	RSGridLayout on: elements.
+	v addAll: elements.
+	v @ RSControlsView.
+	v open
+]

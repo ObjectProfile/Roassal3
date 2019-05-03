@@ -104,9 +104,12 @@ TSSVGPath >> extent: newExtent [
 	min := self position - (extent / 2).
 	max := self position + (extent / 2).
 	s := newExtent / (max - min).
-	segments do: [ :segment | 
-		segment args doWithIndex: [ :point :index |
-			segment at: index put: point * s ] ].
+	segments do: [ :segment | | args |
+		args := segment second.
+		args doWithIndex: [ :point :index |
+			args at: index put: (point isPoint
+				ifTrue: [ point * s ]
+				ifFalse: [ point * s x ] ) ] ].
 	polygons do: [ :polygon|
 		polygon doWithIndex: [ :point :index |
 			polygon at: index put: point * s ]  ].

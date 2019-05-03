@@ -23,6 +23,28 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
+{ #category : #hooks }
+RSControlsView >> addLegendOn: aView [
+	| lb |
+	lb := RSLegendBuilder new
+		view: aView.
+	lb defaultTitle fontSize: 12.
+	lb defLabel fontSize: 10.
+	lb shape
+		border: TSBorder new;
+		color: (Color white alpha: 0.8).
+	lb padding: 10.
+	lb 
+		title: 'Use shortcuts';
+		text: '↑ ↓ → ← Arrow keys to move the view';
+		text: '''M'' Maximize or restore the window';
+		text: '''I'' Zoom in';
+		text: '''o'' Zoom out';
+		text: '''Space'' To zoom to fit the view'.
+	lb onDemand.
+	lb build.
+]
+
 { #category : #initialization }
 RSControlsView >> initialize [
 	super initialize.
@@ -64,10 +86,10 @@ RSControlsView >> onElement: aView [
 	aView
 		when: TSKeyDown do: [ :evt | | rect | 
 			rect := aView encompassingRectangle.
-			speed := (rect width min: rect height) * 0.05.
+			speed := (rect width min: rect height) * 0.01.
 			self processKeyDown: evt ];
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
-	
+	self addLegendOn: aView.
 	RSMenuActivable new 
 		onElement: aView;
 		menuDo: [:menu | 

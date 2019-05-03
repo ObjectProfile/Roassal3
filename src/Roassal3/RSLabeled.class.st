@@ -41,6 +41,7 @@ RSLabeled >> initialize [
 	super initialize.
 	shape := RSShapeBuilder label.
 	location := RSLocate new above.
+	isHighlightable := false.
 ]
 
 { #category : #accessing }

@@ -11,7 +11,8 @@ Class {
 		'defaultTitle',
 		'defaultCircle',
 		'defaultBox',
-		'location'
+		'location',
+		'menuShape'
 	],
 	#category : #'Roassal3-Legend'
 }
@@ -104,6 +105,25 @@ RSLegendBuilder >> location [
 ]
 
 { #category : #accessing }
+RSLegendBuilder >> menuShape [
+	^ menuShape
+]
+
+{ #category : #public }
+RSLegendBuilder >> onDemand [
+	self onDemand: 'Help'.
+]
+
+{ #category : #public }
+RSLegendBuilder >> onDemand: text [
+	menuShape := RSShapeBuilder label
+		text: text;
+		color: Color lightGray;
+		when: TSMouseEnter do: [ [ :evt | evt shape color: Color blue; signalUpdate ] ];
+		when: TSMouseLeave do: [ [ :evt | evt shape color: Color lightGray; signalUpdate ] ]
+]
+
+{ #category : #accessing }
 RSLegendBuilder >> padding [
 	^ padding
 ]
@@ -142,10 +162,32 @@ RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox
 
 { #category : #hooks }
 RSLegendBuilder >> renderIn: aView [
-	| legend|
+	| legend label |
 	legend := shape element.
-	location move: legend on: aView elements.
-	aView add: legend
+	menuShape ifNil: [ 
+		location move: legend on: aView elements.
+		aView add: legend.
+		^ self. ].
+	
+	label := menuShape element.
+	label isFixed: true.
+	legend isFixed: true.
+	aView add: label.
+	label when: TSMouseEnter do: [ :m | aView add: legend.
+		"aView animation from: 1@0; to: 1@1; on: legend matrix set: #scaleBy:"
+		].
+	label when: TSMouseLeave do: [ :m | legend remove ].
+	aView when: TSExtentChangedEvent do: [ 
+		RSLocate new 
+			inner; top; right;
+			move: label on: (Rectangle origin: 0@0 extent: aView extent);
+			outer; bottom;
+			offset: legend extent x negated - 5 @ 0;
+			move: legend on: label ].
+	
+		
+
+
 ]
 
 { #category : #initialization }

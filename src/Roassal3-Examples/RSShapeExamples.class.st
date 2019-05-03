@@ -630,3 +630,89 @@ RSShapeExamples >> example20Highlightable [
 	v @ RSControlsView.
 	v open.
 ]
+
+{ #category : #lines }
+RSShapeExamples >> example21SpockLizard [
+	<script: 'self new example21SpockLizard'>
+	| this v radius paint arrow svg circle hand shape relations color lb |
+	this := RSAnimationExamples new.
+	v := RSView new.
+	radius := 1500.
+	paint := TSGradientPalette linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
+	paint start: -900 @ 900; stop: 900 @ -900.
+	v addShape: (TSEllipse new
+		noPaint;
+		border: (TSBorder new width: 300; paint: paint);
+		radius: 1500).
+	arrow := RSShapeBuilder triangle
+		extent: 380 @ 200;
+		color: (Color colorFrom: '36C5B8').
+	1 to: 5 do: [ :i | 
+		| angle a |
+		angle := i * 360 / 5 + 45.
+		v addShape: (TSPieSlice new
+			color: '36C5B8';
+			innerRadius: 1350;
+			externalRadius: 1650;
+			alphaAngle: angle;
+			betaAngle: (angle := angle + 15)).
+		a := arrow element.
+		a matrix rotateByDegrees: angle negated.
+		angle := (angle + 3) degreesToRadians.
+		a position: angle cos @ angle sin negated * radius.
+		v addShape: a trachelShape ].
+	svg := RSShapeBuilder svgPath
+		svgPath: [ :sel | this perform: sel asSymbol ].
+	shape := RSShapeBuilder composite
+		popup;
+		onElement;
+		if: [ :e | e index = 5 ] actions: [ :s | s scaleBy: 2 ];
+		shapes: [ :e | 
+			circle := TSEllipse new color: Color white.
+			hand := svg elementOn: e model index: e index.
+			circle
+				position: hand position;
+				size: (hand extent x max: hand extent y).
+			TSGroup with: circle with: hand ];
+		position: [ :e | 
+			| ang |
+			ang := e index * Float twoPi / 5 - Float halfPi.
+			ang cos @ ang sin * radius ].
+	v
+		addAll: (shape elementsOn: #('paper' 'scissors' 'spock' 'lizard' 'rock')).
+	relations := {('scissors' -> 'lizard').
+	('lizard' -> 'paper').
+	('paper' -> 'spock').
+	('spock' -> 'rock').
+	('rock' -> 'scissors')}.
+	color := TSScale category20c.
+	RSEdgeBuilder bezier
+		color: color;
+		controlPoints: [ :m | 
+			[ :a :b | 
+			| vec f t |
+			vec := b - a.
+			f := vec * 0.25 + a.
+			t := vec * 0.75 + a.
+			Array with: f with: 0 @ 0 with: t ] ];
+		markerEnd: [ :m | (arrow element color: (color scale: m)) asMarker offset: -90 ];
+		width: 300;
+		view: v;
+		elements: v elements;
+		useAssociations: relations.
+	v elements pushFront.
+	lb := RSLegendBuilder new.
+	lb defLabel fontSize: 50.
+	lb view: v.
+	lb shape border: TSBorder new.
+	lb padding: 50.
+	lb
+		text:
+			'... It''s very simple. Scissors cuts paper, paper covers rock, rock crushes lizard, lizard poisons Spock, Spock smashes scissors, '.
+	lb
+		text:
+			'scissors decapitates lizard, lizard eats paper, paper disproves Spock, Spock vaporizes rock, and, as it always has, rock crushes scissors'.
+	lb build.
+	v @ RSControlsView.
+	v open
+]

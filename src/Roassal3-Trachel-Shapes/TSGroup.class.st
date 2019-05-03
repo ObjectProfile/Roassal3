@@ -130,6 +130,11 @@ TSGroup >> pushBack [
 	self do: #pushBack
 ]
 
+{ #category : #actions }
+TSGroup >> pushFront [
+	self do: #pushFront
+]
+
 { #category : #accessing }
 TSGroup >> resetElementFromModelCache [
 	"Reset the cache"

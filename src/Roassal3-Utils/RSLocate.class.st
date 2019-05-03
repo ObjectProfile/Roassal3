@@ -43,7 +43,7 @@ Class {
 	#name : #RSLocate,
 	#superclass : #RSObject,
 	#instVars : [
-		'padding',
+		'offset',
 		'orientation',
 		'direction',
 		'fixedX',
@@ -81,7 +81,7 @@ RSLocate >> center [
 
 { #category : #private }
 RSLocate >> computePosition: movableElement on: fixedElement [
-	^ movableElement extent / 2 * orientation * direction + (self parentPosition: fixedElement) + padding.
+	^ movableElement extent / 2 * orientation * direction + (self parentPosition: fixedElement) + offset.
 ]
 
 { #category : #initialization }
@@ -89,7 +89,7 @@ RSLocate >> initialize [
 	super initialize.
 	direction := 0@0.
 	self
-		padding: 0;
+		offset: 0;
 		inner;
 		middle;
 		center
@@ -118,24 +118,25 @@ RSLocate >> move: movableElement on: fixElement [
 ]
 
 { #category : #'public - modifiers' }
+RSLocate >> offset [
+	^ offset
+]
+
+{ #category : #'public - modifiers' }
+RSLocate >> offset: aNumber [
+	offset := aNumber asPoint
+]
+
+{ #category : #'public - modifiers' }
 RSLocate >> outer [
 	orientation := -1
-]
-
-{ #category : #'public - modifiers' }
-RSLocate >> padding [
-	^ padding
-]
-
-{ #category : #'public - modifiers' }
-RSLocate >> padding: aNumber [
-	padding := aNumber asPoint
 ]
 
 { #category : #private }
 RSLocate >> parentPosition: fixedElement [
 	| rec |
-	rec := fixedElement encompassingRectangle.
+	rec := fixedElement.
+	rec isRectangle ifFalse:  [ rec := rec encompassingRectangle ] .
 	^ (fixedX value: rec)@ (fixedY value: rec).
 ]
 
