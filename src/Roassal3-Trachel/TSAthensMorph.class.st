@@ -11,7 +11,8 @@ Class {
 		'isDrawing',
 		'trachelCanvas',
 		'eventBeginingDragging',
-		'shapeBeingPointed'
+		'shapeBeingPointed',
+		'lastMousePosition'
 	],
 	#category : #'Roassal3-Trachel-Morph'
 }
@@ -60,7 +61,7 @@ TSAthensMorph >> drawOn: aCanvas [
 		rule: 34 ]
 		on: Exception
 		do: [ :ex |  ].
-	isDrawing := false
+	isDrawing := false.
 ]
 
 { #category : #drawing }
@@ -166,15 +167,19 @@ TSAthensMorph >> handleMouseOver: aMorphicEvent [
 		ifTrue: [ ^ self ].	"Do nothing if it was already handled"
 	self isDragging
 		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
+	lastMousePosition = aMorphicEvent position 
+		ifTrue: [ ^ self].		"Do nothing if it is in the same position"
 	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
+	
 	currentElement := self shapeForEvent: aMorphicEvent.
-	currentElement == shapeBeingPointed
-		ifTrue: [ ^ self ].
+	lastMousePosition := aMorphicEvent position.
+	currentElement == shapeBeingPointed ifTrue: [ 
+		^ self ].
 	trEvent := self eventOfClass: TSMouseLeave from: aMorphicEvent.
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
 	shapeBeingPointed := currentElement.
-	self trMouseEnter: aMorphicEvent
+	self trMouseEnter: aMorphicEvent.
 ]
 
 { #category : #testing }
