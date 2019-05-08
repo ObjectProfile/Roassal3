@@ -35,14 +35,14 @@ TSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		radDir := 1.
 		drawDir := false.
 		sin90 < 0 ifTrue: [ 
-			angle < 0 ifTrue: [ 
+			angle <= 0 ifTrue: [ 
 				angle := angle + Float pi ]
 			ifFalse: [ 
 				angle := angle - Float pi.
 				radDir := -1.
 				drawDir := true ] ]
 		ifFalse: [ 
-			angle > 0 ifTrue: [ 
+			angle >= 0 ifTrue: [ 
 				radDir := -1.
 				drawDir := true. ] ].
 		halfAngle := angle / 2.
