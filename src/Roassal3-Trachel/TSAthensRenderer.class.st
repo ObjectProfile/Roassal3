@@ -567,9 +567,28 @@ TSAthensRenderer >> visitLabel: label [
 				athensCanvas stroke.
 			 ].
 			f unlock.
+			self visitLabelDecoratorsIfNecessary: label.
 		].
 	
 
+]
+
+{ #category : #'visiting - helpers' }
+TSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
+	| advance |
+	(label isUnderlined or: [label isStruckOut]) ifFalse: [ ^ self ].
+	
+	athensCanvas setPaint: label paint.
+	advance := (CairoFontMetricsProvider new
+			font: label font;
+			extentsOf: label text) x_advance.
+	label isUnderlined
+		ifTrue: [ athensCanvas drawShape: ((0 @ 1 extent: advance @ 1)) ].
+	label isStruckOut ifFalse:  [ ^ self ]. 
+	
+	athensCanvas pathTransform
+		translateBy: (0@ (label textHeight / 4)) negated asFloatPoint.
+	athensCanvas drawShape: ((0 @ 1 extent: advance @ 1))
 ]
 
 { #category : #visiting }

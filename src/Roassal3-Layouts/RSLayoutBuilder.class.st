@@ -11,6 +11,16 @@ Class {
 }
 
 { #category : #'public layout' }
+RSLayoutBuilder >> circle [
+	^ layout := RSCircleLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> cluster [
+	^ layout := RSClusterLayout new.
+]
+
+{ #category : #'public layout' }
 RSLayoutBuilder >> flow [
 	^ layout := RSFlowLayout new.
 ]
@@ -45,6 +55,16 @@ RSLayoutBuilder >> layout [
 { #category : #'public layout' }
 RSLayoutBuilder >> on: elements [
 	layout on: elements
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> radial [
+	^ layout := RSRadialTreeLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> sugiyama [
+	^ layout := RSSugiyamaLayout new.
 ]
 
 { #category : #'public layout' }

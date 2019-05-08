@@ -593,7 +593,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 	legend := composite element.
 	RSLocate new
 		below;
-		padding: 10;
+		offset: 10;
 		move: legend on: v elements.
 	v add: legend.
 	v @ RSControlsView.
@@ -665,6 +665,7 @@ RSShapeExamples >> example21SpockLizard [
 		svgPath: [ :sel | this perform: sel asSymbol ].
 	shape := RSShapeBuilder composite
 		popup;
+		draggable;
 		onElement;
 		if: [ :e | e index = 5 ] actions: [ :s | s scaleBy: 2 ];
 		shapes: [ :e | 

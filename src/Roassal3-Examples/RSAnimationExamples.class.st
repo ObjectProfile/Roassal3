@@ -2301,6 +2301,62 @@ RSAnimationExamples >> example37SimpleClock [
 	v open setLabel: '4 gradient corners'
 ]
 
+{ #category : #examples }
+RSAnimationExamples >> example38AnimatedLayout [
+	<script: 'self new example38AnimatedLayout'>
+	| v objects layout update labels elements |
+	v := RSView new.
+	objects := 1 to: 100.
+	elements := RSShapeBuilder box 
+		border: TSBorder new;
+		color: TSColorPalette sequential ylorrd9;
+		size: 10; 
+		elementsOn: objects.
+	v addAll: elements.
+	RSEdgeBuilder line 
+		view: v;
+		objects: objects;
+		connectFrom: [ :value | value //2 ] to: #yourself.
+	layout := RSLayoutBuilder new.
+	update := [ :sel | 
+		layout perform: sel asSymbol.
+		layout on: elements.
+		 ].
+	
+	update value: #tree.
+	v@RSZoomToFitView.
+
+	labels := RSShapeBuilder label
+		isFixed: true;
+		text: #capitalized;
+		when: TSMouseLeave do: [ [ :evt | evt shape 
+			color: Color black; 
+			normal;
+			signalUpdate ] ];
+		when: TSMouseEnter do: [ [ :evt | evt shape 
+			color: Color blue; 
+			underline;
+			signalUpdate ] ];
+		when: TSMouseClick do: [ :sel | [ :evt | | pos1 pos2 |
+			pos1 := elements collect: #position.
+			update value: sel.
+			pos2 := elements collect: #position.
+			v animation onStepDo: [ :t |
+				elements do: [ :e |
+					e translateTo: ((pos1 at: e index) 
+						interpolateTo: (pos2 at: e index) at: t) ].
+				v zoomToFit ] ] ];
+		elementsOn: #('grid' 'tree' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
+	v addAll: labels.
+	RSHorizontalLineLayout on: labels.
+	v open setLabel: 'Layouts'.
+	
+
+
+
+
+]
+
 { #category : #'data - svg' }
 RSAnimationExamples >> lizard [
 	^ 'M560.8,71.3c19.5,0,38,4.5,55.5,13.4c17.5,8.9,32.1,21.2,43.5,36.8l273.7,373.7c37.6,50.7,56.5,108,56.5,171.8v169.9c0,25.5-8.9,47.2-26.8,65.1s-39.6,26.8-65.1,26.8H714.4c-25.5,0-47.2-8.9-65.1-26.8s-26.8-39.6-26.8-65.1v-84.7l-136.9-68.4H224.4c-25.5,0-47.2-8.9-65.1-26.8c-17.9-17.9-26.8-39.6-26.8-65.1v-15.3c0-38,13.5-70.4,40.4-97.4c27-27,59.4-40.4,97.4-40.4h201l20.1-61.3H163.1c-31.9,0-59.6-10.8-83-32.3c-23.4-21.5-36.4-48.1-39-79.7C20.4,240.3,10,211.3,10,178.4v-15.3c0-25.5,8.9-47.2,26.8-65.1c17.9-17.9,39.6-26.8,65.1-26.8H560.8L560.8,71.3z M928.8,836.9V667c0-50.1-14.8-95.4-44.5-135.9L610.1,157.4c-12.4-16.6-28.9-24.9-49.3-24.9H101.9c-8.3,0-15.5,3-21.5,9.1c-6.1,6.1-9.1,13.2-9.1,21.5c0,10.2,0.2,18.1,0.7,23.7c0.5,5.6,2,12,4.5,19.4s6.5,14.2,12,20.6c3.2-9.9,8.9-17.9,17-23.9s17.1-9.1,27-9.1h398.1v15.3H132.5c-8.3,0-15.5,3-21.5,9.1c-6.1,6.1-9.1,13.2-9.1,21.5c0,14,0.5,23.3,1.4,27.8c2.6,14,9.6,25.7,21.1,34.9c11.5,9.3,24.4,13.9,38.8,13.9h349.8c12.8,0,23.6,4.5,32.5,13.4c8.9,8.9,13.4,19.8,13.4,32.5c0,4.8-0.8,9.6-2.4,14.4l-30.6,91.9c-3.2,9.3-8.8,16.8-16.7,22.7c-8,5.9-16.9,8.9-26.8,8.9h-212c-21.1,0-39.1,7.5-54.1,22.5c-15,15-22.5,33-22.5,54.1v15.3c0,8.3,3,15.5,9.1,21.5c6.1,6.1,13.2,9.1,21.5,9.1h268.4c5.1,0,9.7,1.1,13.9,3.3l151.7,75.6c7.7,4.1,13.8,9.9,18.4,17.2c4.6,7.3,6.9,15.3,6.9,23.9v94.3c0,8.3,3,15.5,9.1,21.5c6.1,6.1,13.2,9.1,21.5,9.1h183.8c8.3,0,15.5-3,21.5-9.1C925.7,852.3,928.8,845.2,928.8,836.9L928.8,836.9z'

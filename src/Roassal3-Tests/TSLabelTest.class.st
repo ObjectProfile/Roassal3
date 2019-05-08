@@ -30,3 +30,14 @@ TSLabelTest >> testDrawLabel [
 		yourself).
 	c createMorph drawOnMockCanvas.
 ]
+
+{ #category : #tests }
+TSLabelTest >> testUnderlineStruckout [
+	| label |
+	label := TSLabel new.
+	self assert: label isNormal.
+	label underline.
+	label bold.
+	self assert: label isBold.
+	self assert: label isUnderlined.
+]

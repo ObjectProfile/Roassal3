@@ -35,12 +35,13 @@ RSControlsView >> addLegendOn: aView [
 		color: (Color white alpha: 0.8).
 	lb padding: 10.
 	lb 
-		title: 'Use shortcuts';
-		text: '↑ ↓ → ← Arrow keys to move the view';
-		text: '''M'' Maximize or restore the window';
-		text: '''I'' Zoom in';
-		text: '''o'' Zoom out';
-		text: '''Space'' To zoom to fit the view'.
+		title: 'Shortcuts';
+		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
+		text: 'Shift + arrows' description: 'Accelerate the move';
+		text: 'M' description: 'Maximize or restore the window';
+		text: 'I' description: 'Zoom in';
+		text: 'O' description: 'Zoom out';
+		text: 'Space' description: 'To zoom to fit the view'.
 	lb onDemand.
 	lb build.
 ]

@@ -42,7 +42,7 @@ TSLabel >> accept: visitor [
 
 { #category : #'managing font' }
 TSLabel >> bold [
-	self emphasis: (Array with: TextEmphasis bold).
+	self emphasisAdd: TextEmphasis bold.
 ]
 
 { #category : #accessing }
@@ -57,10 +57,14 @@ TSLabel >> emphasis [
 
 { #category : #accessing }
 TSLabel >> emphasis: anEmphasis [
-	emphasis := anEmphasis isCollection
-		ifTrue: [ anEmphasis ]
-		ifFalse: [ Array with: anEmphasis ].
+	emphasis := anEmphasis.
 	self resetCache.
+]
+
+{ #category : #'managing font' }
+TSLabel >> emphasisAdd: anEmphasis [
+	emphasis add: anEmphasis.
+	self resetCache
 ]
 
 { #category : #accessing }
@@ -104,13 +108,49 @@ TSLabel >> initialize [
 	super initialize.
 	text := nil.
 	fontSize := 12.
-	emphasis := #().
+	self normal.
 	self fontName: self class familyFontName.
+]
+
+{ #category : #testing }
+TSLabel >> is: anInteger [
+	"anInteger is a valid code"
+	^ (emphasis emphasisCode bitAnd: anInteger) > 0
+]
+
+{ #category : #testing }
+TSLabel >> isBold [
+	^ self is: 1
+]
+
+{ #category : #testing }
+TSLabel >> isItalic [
+	^ self is: 2
+]
+
+{ #category : #testing }
+TSLabel >> isNormal [
+	^ emphasis emphasisCode = 0
+]
+
+{ #category : #testing }
+TSLabel >> isStruckOut [
+	^ self is: 16
+]
+
+{ #category : #testing }
+TSLabel >> isUnderlined [
+	^ self is: 4
 ]
 
 { #category : #'managing font' }
 TSLabel >> italic [
-	self emphasis: (Array with: TextEmphasis italic).
+	self emphasisAdd: TextEmphasis italic.
+]
+
+{ #category : #'managing font' }
+TSLabel >> normal [
+	self emphasis: TextEmphasis normal.
 ]
 
 { #category : #'managing font' }
@@ -119,10 +159,15 @@ TSLabel >> resetCache [
 		familyName: fontName
 		pointSize: fontSize.
 	
-	font := font emphasized: (emphasis inject: 0 into: [:sum :next | sum + next emphasisCode]).
+	font := font emphasized: emphasis emphasisCode.
 	cachedWidth := nil.
 	cachedHeight := nil.
 	self extent: self textWidth @ self textHeight.
+]
+
+{ #category : #'managing font' }
+TSLabel >> struckOut [
+	self emphasisAdd: TextEmphasis struckOut.
 ]
 
 { #category : #accessing }
@@ -155,4 +200,9 @@ TSLabel >> textWidth [
 		ifNil: [ [ cachedWidth := font widthOfString: text ]
 				on: Error
 				do: [ :ex | cachedWidth := 5 ] ]
+]
+
+{ #category : #'managing font' }
+TSLabel >> underline [
+	self emphasisAdd: TextEmphasis underlined.
 ]

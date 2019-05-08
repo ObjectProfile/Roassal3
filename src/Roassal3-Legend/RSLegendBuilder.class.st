@@ -162,7 +162,7 @@ RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox
 
 { #category : #hooks }
 RSLegendBuilder >> renderIn: aView [
-	| legend label |
+	| legend label position |
 	legend := shape element.
 	menuShape ifNil: [ 
 		location move: legend on: aView elements.
@@ -173,8 +173,16 @@ RSLegendBuilder >> renderIn: aView [
 	label isFixed: true.
 	legend isFixed: true.
 	aView add: label.
-	label when: TSMouseEnter do: [ :m | aView add: legend.
-		"aView animation from: 1@0; to: 1@1; on: legend matrix set: #scaleBy:"
+	position := legend position.
+	label when: TSMouseEnter do: [ :m | | p |
+		aView add: legend.
+		p := position.
+		p := TSScale linear range: { p x @ (p y - (legend extent y/2)). p }.
+		aView animation duration: 400 milliSeconds; from: 0.05; to: 1; onStepDo: [ :t | 
+			legend matrix loadIdentity; 
+				translation: (p scale: t);
+				scaleBy: 1@t.
+			legend signalUpdate].
 		].
 	label when: TSMouseLeave do: [ :m | legend remove ].
 	aView when: TSExtentChangedEvent do: [ 
@@ -183,7 +191,8 @@ RSLegendBuilder >> renderIn: aView [
 			move: label on: (Rectangle origin: 0@0 extent: aView extent);
 			outer; bottom;
 			offset: legend extent x negated - 5 @ 0;
-			move: legend on: label ].
+			move: legend on: label.
+		position := legend position. ].
 	
 		
 
@@ -206,6 +215,17 @@ RSLegendBuilder >> reset [
 { #category : #public }
 RSLegendBuilder >> text: aString [
 	^ self custom: aString shape: self defLabel.
+]
+
+{ #category : #public }
+RSLegendBuilder >> text: aString description: desc [
+	| s |
+	s := RSShapeBuilder label
+		text: aString;
+		bold.
+	^ self
+		custom: desc
+		shape: (self horizontalComposite: s text: self defLabel)
 ]
 
 { #category : #public }
