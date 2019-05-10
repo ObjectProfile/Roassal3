@@ -201,9 +201,14 @@ TSCanvas >> initialize [
 		yourself.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
 TSCanvas >> morph [
 	^ morph
+]
+
+{ #category : #accessing }
+TSCanvas >> morph: aMorph [
+	morph := aMorph
 ]
 
 { #category : #animations }
@@ -336,6 +341,11 @@ TSCanvas >> shapeWithActionForPositionInPixels: position [
 { #category : #accessing }
 TSCanvas >> shapes [
 	^shapes
+]
+
+{ #category : #accessing }
+TSCanvas >> shapes: aCollection [
+	shapes := aCollection
 ]
 
 { #category : #actions }
