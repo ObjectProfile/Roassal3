@@ -74,7 +74,14 @@ TSLinesTest >> testDrawSVGLine [
 
 { #category : #running }
 TSLinesTest >> testPolyline [
-	c addShape: (TSPolyline new
-		controlPoints: {0@0. 100@100. 100@ -100}).
-	c createMorph drawOnMockCanvas.
+	| line |
+	line := TSPolyline new.
+	line controlPoints: { 0@0. 0@100 }.
+	self assert: (line includesPoint: 0@0).
+	self assert: (line includesPoint: 0@100).
+	self assert: (line includesPoint: 0@50).
+	self assert: (line includesPoint: 5@50).
+	
+	self deny: (line includesPoint: 500@500).
+	self deny: (line includesPoint: 6@50).
 ]
