@@ -874,13 +874,21 @@ RSPieExamples >> example22RotatedAnimation [
 { #category : #examples }
 RSPieExamples >> example23RotatedAnimation [
 	<script: 'self new example23RotatedAnimation'>
-	| data pie animation view lines |
-	data := (IceRepository registry detect: [ :each | each includesPackageNamed: 'Roassal3' ] ifNone: [ self error: 'Please add a clone of this project to Iceberg to access to the resources' ]) location directories.
-	"data := './pharo-local/iceberg/ObjectProfile/Roassal3/src' asFileReference
-		directories."
+	| data pie animation view lines directorySize |
+	"data := (IceRepository registry detect: [ :each | each includesPackageNamed: 'Roassal3' ] ifNone: [ self error: 'Please add a clone of this project to Iceberg to access to the resources' ]) location directories."
+	data := './pharo-local/iceberg/ObjectProfile/Roassal3/src' asFileReference
+		directories.
+	directorySize := nil.
+	directorySize := [ :d | | sum |
+		sum := 0.
+		d children do: [ :child |
+			sum := sum + (child isDirectory 
+				ifTrue: [ directorySize value: child ]
+				ifFalse: [ child size ]) ].
+		sum ].
 	pie := RSPieBuilder new
 		objects: data;
-		slice: #size.
+		slice:  directorySize.
 	view := pie view.
 	animation := nil.
 	pie shape
@@ -930,10 +938,6 @@ RSPieExamples >> example23RotatedAnimation [
 			zoomToFit: view extent * 0.9
 			extent: 800@600 ].
 	pie open setLabel: 'Roassal3 packages by size in the file system'
-	
-
-
-
 ]
 
 { #category : #examples }

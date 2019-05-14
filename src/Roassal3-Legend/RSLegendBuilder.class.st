@@ -172,7 +172,7 @@ RSLegendBuilder >> renderIn: aView [
 	label := menuShape element.
 	label isFixed: true.
 	legend isFixed: true.
-	aView add: label.
+	aView addShape: label trachelShape.
 	position := legend position.
 	label when: TSMouseEnter do: [ :m | | p |
 		aView add: legend.

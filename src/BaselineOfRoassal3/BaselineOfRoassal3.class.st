@@ -27,6 +27,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3' with: [spec requires: #('Geometry')];
+				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
 				
@@ -39,6 +40,7 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec 
 				group: 'Core' with: #(
 					'Roassal3'
+					'Roassal3-Interaction'
 					'Roassal3-Layouts'
 					'Roassal3-Utils'
 					'Roassal3-Colors'
