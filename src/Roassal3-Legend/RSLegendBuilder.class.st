@@ -20,9 +20,7 @@ Class {
 { #category : #'public - composite' }
 RSLegendBuilder >> composite: refShape text: textShape layout: aLayout [
 	^ RSShapeBuilder composite shapes: [ :m| | targetShape g text |
-		targetShape := refShape class = RSShapeBuilder
-			ifTrue: [ refShape elementOn: m]
-			ifFalse: [ refShape edgeOn: m ]. "TODO do we need to separate elementOn: and edgeOn:?"
+		targetShape := refShape elementOn: m.
 		text := textShape elementOn: m.
 		g := TSGroup new.
 		g add: targetShape; add: text.

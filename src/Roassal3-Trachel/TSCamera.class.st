@@ -85,7 +85,14 @@ TSCamera >> scale [
 
 { #category : #accessing }
 TSCamera >> scale: aNumber [
-	scale := aNumber
+	| oldScale |
+	scale = aNumber ifTrue: [ ^ self ].
+	oldScale := scale.
+	scale := aNumber.
+	self canvas announce: [ TSScaleChangedEvent new
+		shape: self canvas;
+		oldScale: oldScale;
+		newScale: aNumber ]
 ]
 
 { #category : #actions }

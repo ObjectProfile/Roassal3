@@ -202,7 +202,7 @@ RSSingleEdgeBuilder >> edgesOn: aCollection [
 { #category : #'public - accessing' }
 RSSingleEdgeBuilder >> elementOn: model index: index [
 	"You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:"
-	self shouldNotImplement
+	^ self edgeOn: model index: index
 ]
 
 { #category : #accessing }

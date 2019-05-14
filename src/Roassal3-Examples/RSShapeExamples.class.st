@@ -743,3 +743,40 @@ RSShapeExamples >> example21SpockLizard [
 	v @ RSControlsView.
 	v open
 ]
+
+{ #category : #lines }
+RSShapeExamples >> example22ScaleEvents [
+	<script: 'self new example22ScaleEvents'>
+	| v sb label box |
+	v := RSView new.
+	label := RSShapeBuilder label.
+	box := RSShapeBuilder box
+		border: TSBorder new;
+		cornerRadius: (TSCornerRadius new right: 10);
+		extent: [ :lb | lb extent + 5 ].
+	sb := RSShapeBuilder composite
+		interactionDo: #draggable;
+		shapes: [ :m | | l |
+			l := label elementOn: m.
+			TSGroup with: (box elementOn: l) with: l].
+	v addAll: (sb elementsOn: ArrayedCollection withAllSubclasses).
+	v @ RSControlsView.
+	RSEdgeBuilder orthoHorizontal
+		markerEnd: (TSMarker new 
+			offset: 2;
+			shape: (RSShapeBuilder triangle 
+				color: Color gray;
+				size: 10;
+				element));
+		attachPoint: RSHorizontalAttachPoint new; 
+		border: (TSBorder new);
+		view: v;
+		elements: v elements;
+		connectFrom: #superclass.
+	"v edges @ RSKeepBorderWidthRatio. Not necessary since all edges shares the same border"
+	
+	v edges first @ RSKeepBorderWidthRatio. 
+	v edges first @ RSKeepMarkersSizeRatio.
+	RSHorizontalTreeLayout new on: v elements.
+	v open setLabel: 'Horizontal Tree'
+]
