@@ -274,7 +274,7 @@ RSLayoutExamples >> example10Locate [
 	e2 := shape element.
 	e2 size: 20.
 	RSLocate new
-		padding: 1@ -1;
+		offset: 1@ -1;
 		inner;
 		bottom;
 		left;

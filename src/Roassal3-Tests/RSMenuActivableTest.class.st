@@ -19,7 +19,11 @@ RSMenuActivableTest >> setUp [
 { #category : #tests }
 RSMenuActivableTest >> testBasic [
 	self assert: element color equals: Color blue.
-	element @ RSMenuActivable.
+	element @ (RSMenuActivable new menuDo: [:menu :e | menu 
+		add: 'Inspect' 
+		target: e
+		selector: #inspect
+		argument: #() ]).
 	element announce: (TSMouseEnter new canvas: view canvas; shape: element).
 	self assert: element color equals: Color red.
 	element announce: (TSMouseLeave new canvas: view canvas; shape: element).

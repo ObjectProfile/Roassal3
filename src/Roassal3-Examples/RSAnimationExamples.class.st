@@ -2392,8 +2392,9 @@ RSAnimationExamples >> example39ForceLayout [
 { #category : #examples }
 RSAnimationExamples >> example40Roassal [
 	<script: 'self new example40Roassal'>
-	| v points paint fscale timeSize |
+	| v points paint fscale timeSize text |
 	v := RSView new.
+	text := 'Roassal3'.
 	points := TSPolygon 
 		generateUnitNgonPoints: 3
 		rotation: Float pi.
@@ -2418,7 +2419,7 @@ RSAnimationExamples >> example40Roassal [
 		colorRamp: {0 -> Color white};
 		start: 0@ -100;
 		stop: 0@100.
-	'Roassal3' doWithIndex: [ :char :index | |lbl |
+	text doWithIndex: [ :char :index | |lbl |
 		lbl := TSLabel new
 			text: char asString;
 			bold;
@@ -2440,9 +2441,9 @@ RSAnimationExamples >> example40Roassal [
 					1 -> Color transparent } ];
 			when: TSAnimationEndEvent do: [ lbl remove ].
 		 ].
-	v animation duration: (timeSize * 8) milliSeconds ; when: TSAnimationEndEvent do: [
+	v animation duration: (timeSize * text size) milliSeconds ; when: TSAnimationEndEvent do: [
 		v addShape: (TSLabel new
-		text: 'Roassal3';
+		text:  text;
 		bold;
 		position: 5@ -50;
 		fontName: 'Marker Felt';

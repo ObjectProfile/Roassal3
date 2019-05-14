@@ -631,6 +631,32 @@ RSShapeExamples >> example20Highlightable [
 	v open.
 ]
 
+{ #category : #shapes }
+RSShapeExamples >> example21MenuActivableOnElement [
+	<script: 'self new example21MenuActivableOnElement'>
+	|v boxes |
+	v := RSView new.
+
+	boxes := RSShapeBuilder composite
+		color: Color blue trans;
+		shapes: [ :nb | 
+			TSGroup with: (RSShapeBuilder label elementOn: nb)
+	 	]; 
+		size: 30;
+		elementsOn: (1 to: 100).
+	v addAll: boxes.
+	RSGridLayout on: boxes.
+	boxes @ (RSMenuActivable new menuDo: [ :menu :box | 
+		menu 
+			add: 'Inspect'
+			target: box
+			selector: #inspect
+			argument: #() ]).
+
+	v @ RSControlsView.
+	v open
+]
+
 { #category : #lines }
 RSShapeExamples >> example21SpockLizard [
 	<script: 'self new example21SpockLizard'>

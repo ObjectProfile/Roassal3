@@ -49,6 +49,10 @@ RSMenuActivable >> highlightOn: evt [
 
 { #category : #enumerating }
 RSMenuActivable >> menuDo: block [
+	"a block with two args
+	first arg, a MenuMorph
+	second arg, a RSElement or RSView
+	"
 	menuBlock := block
 ]
 
@@ -57,11 +61,10 @@ RSMenuActivable >> onElement: anElement [
 	| remove |
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
-	
 	anElement when: TSMouseRightClick do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
-		menuBlock value: menu.
+		menuBlock value: menu value: anElement.
 		menu popUpInWorld ].
 	
 	"No need to have highlight for a view"

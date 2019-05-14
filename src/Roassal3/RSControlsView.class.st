@@ -92,7 +92,6 @@ RSControlsView >> onElement: aView [
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 	self addLegendOn: aView.
 	RSMenuActivable new 
-		onElement: aView;
 		menuDo: [:menu | 
 			(menu 
 				add: 'Zoom in'
@@ -111,7 +110,8 @@ RSControlsView >> onElement: aView [
 				target: RSZoomMove out
 				selector: #onElement: 
 				argument: aView)
-				icon: (self iconNamed: #glamorousZoomOut) ].
+				icon: (self iconNamed: #glamorousZoomOut) ];
+		onElement: aView.
 
 	
 ]
