@@ -93,15 +93,14 @@ TSAthensMorph >> drawShapes [
 		renderer canvas: athensCanvas.
 			
 		trachelCanvas shapes do: [ :trachelShape | 
-			trachelShape accept: renderer.
-			self showRectangleIfNecessary: trachelShape.
-		 ].
-
+			trachelShape accept: renderer ].
+		self showRectanglesIfNecessary: trachelCanvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
 		trachelCanvas fixedShapes do: [ :trachelShape | 
-			trachelShape accept: renderer.
-			self showRectangleIfNecessary: trachelShape. ] ]
+			trachelShape accept: renderer ].
+		"debug mode to show encompassingRectangles"
+		self showRectanglesIfNecessary: trachelCanvas fixedShapes. ]
 		
 
 ]
@@ -351,15 +350,17 @@ TSAthensMorph >> shapeWithActionForPositionInPixels: point [
 ]
 
 { #category : #drawing }
-TSAthensMorph >> showRectangleIfNecessary: shape [
+TSAthensMorph >> showRectanglesIfNecessary: shapes [
 	| box rect |
 	trachelCanvas showRectangles ifFalse: [ ^ self ].
-	rect := shape encompassingRectangle.
+	
 	box := TSBox new
-		position: rect rsCenter;
-		extent: rect extent;
 		color: (Color blue alpha: 0.2).
-	box accept: renderer.
+	shapes do: [ :shape | 
+		rect := shape encompassingRectangle.
+		box position: rect rsCenter.
+		box extent: rect extent.
+		box accept: renderer.].
 ]
 
 { #category : #signaling }

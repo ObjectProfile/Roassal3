@@ -763,9 +763,9 @@ RSShapeExamples >> example22ScaleEvents [
 	v @ RSControlsView.
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (TSMarker new 
-			offset: 2;
+			offsetRatio: 0.1;
 			shape: (RSShapeBuilder triangle 
-				color: Color gray;
+				color: Color red;
 				size: 10;
 				element));
 		attachPoint: RSHorizontalAttachPoint new; 

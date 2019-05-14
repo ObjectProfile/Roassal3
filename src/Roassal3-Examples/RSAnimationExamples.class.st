@@ -520,7 +520,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 
 ]
 
-{ #category : #examples }
+{ #category : #lines }
 RSAnimationExamples >> example09LinePatterns [
 	<script: 'self new example09LinePatterns'>
 	| v step frame border dot bar radius data update |
@@ -1514,7 +1514,7 @@ RSAnimationExamples >> example23CircleWaves [
 	v open setLabel: 'Waves'.
 ]
 
-{ #category : #examples }
+{ #category : #lines }
 RSAnimationExamples >> example24Lines [
 	<script: 'self new example24Lines'>
 	| v frame radius hueOffset shape line angleSp elements soffset size mult  |
@@ -1580,7 +1580,7 @@ RSAnimationExamples >> example24Lines [
 	v open setLabel: '.=.= Lines =.=.'.
 ]
 
-{ #category : #examples }
+{ #category : #lines }
 RSAnimationExamples >> example25Lines [
 	<script: 'self new example25Lines'>
 	| v radius bar step line shape frame label |
@@ -1839,7 +1839,7 @@ RSAnimationExamples >> example28AnimationCircle [
 
 ]
 
-{ #category : #examples }
+{ #category : #lines }
 RSAnimationExamples >> example29Bezier [
 	<script: 'self new example29Bezier'>
 	| v size theta s bezier sc |
@@ -1986,11 +1986,11 @@ RSAnimationExamples >> example32RSLocate [
 		size: 200;
 		color: TSColorPalette qualitative paired3.
 	labelShape  := RSShapeBuilder label
-		text: [ :m | 'Padding:', 
-			(m padding x printShowingDecimalPlaces: 1),'@',
-			(m padding y printShowingDecimalPlaces: 1) ].
+		text: [ :m | 'Offset:', 
+			(m offset x printShowingDecimalPlaces: 1),'@',
+			(m offset y printShowingDecimalPlaces: 1) ].
 	label := labelShape elementOn: locate.
-	fixedElement := box elementOn: 'padding'.
+	fixedElement := box elementOn: 'offset'.
 	movableElement := box element.
 	movableElement size: 40.
 	fixedElement when: TSMouseClick do: [ 
@@ -1999,7 +1999,7 @@ RSAnimationExamples >> example32RSLocate [
 				domain: #(0 0.5 1); 
 				range: { 0@0. 20@20. 0@0});
 			onStepDo: [ :t | 
-				locate padding: t.
+				locate offset: t.
 				locate move: movableElement on: fixedElement.
 				labelShape updateElement: label.
 				label signalUpdate.
