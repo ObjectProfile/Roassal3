@@ -1557,13 +1557,13 @@ RSAnimationExamples >> example24Lines [
 	elements := shape elementsOn: (0 to: 359 by: 5).
 	v addAll: elements.
 	
-	"soffset := 120. size := 4. mult := 0.5@0.75.
+	soffset := 120. size := 4. mult := 0.5@0.75.
 	elements := shape elementsOn: (0 to: 359 by: 5).
 	v addAll: elements."
 	
 	"soffset := 240. size := 4. mult := 0.75@0.5.
 	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements."
+	v addAll: elements.
 	elements := v elements.
 	v addShape: (TSLabel new 
 		text: 'Roassal';

@@ -202,10 +202,10 @@ RSLegendExamples >> example10Location [
 	b padding: 15.
 	b shape border:(TSBorder new
 		color: Color red;
-		dashArray: #(4)).
-	"b location right middle."
+		dashArray: #(4));
+		scaleBy: 0.5.
+	b location right middle.
 	b build.
-	v elements last scaleBy: 0.5.
 	v @ RSControlsView.
 	v open setLabel: 'TSShape withAllSubclasses'.
 	

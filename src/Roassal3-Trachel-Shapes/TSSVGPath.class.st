@@ -40,7 +40,7 @@ TSSVGPath >> centerSegments [
 			polygon at: index put: point - position ] ].
 	rect := self segmentsRectangle.
 	self position: position.
-	extent := rect extent.
+	baseRectangle := Rectangle rsCenter: 0@0 extent: rect extent.
 ]
 
 { #category : #private }
@@ -98,7 +98,8 @@ TSSVGPath >> computeSegments [
 
 { #category : #accessing }
 TSSVGPath >> extent: newExtent [
-	| min max s |
+	| min max s extent |
+	extent := baseRectangle extent.
 	extent = newExtent 
 		ifTrue: [ ^ self ].
 	min := self position - (extent / 2).

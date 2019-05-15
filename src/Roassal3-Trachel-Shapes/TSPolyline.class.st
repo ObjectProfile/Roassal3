@@ -33,7 +33,7 @@ TSPolyline >> includesPoint: aPoint [
 	1 to: cp size - 1 do: [ :i | | p2 p1|
 		p1 := cp at: i.
 		p2 := cp at: i + 1.
-		(aPoint onLineFrom: p1 to: p2 within: 5) ifTrue: [ ^ true ] ].
+		(aPoint onLineFrom: p1 to: p2 within: TSLine delta) ifTrue: [ ^ true ] ].
 	^ false.
 ]
 

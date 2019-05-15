@@ -395,8 +395,7 @@ TSAthensMorph >> takesKeyboardFocus [
 TSAthensMorph >> trKeyDown: aMorphicEvent [
 	| trEvent |
 	(aMorphicEvent commandKeyPressed and: [ aMorphicEvent keyCharacter = $w ])
-		ifTrue: [ self owner delete ].
-
+		ifTrue: [ ^ self owner delete ].
 	trEvent := self eventOfClass: TSKeyDown from: aMorphicEvent.
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);

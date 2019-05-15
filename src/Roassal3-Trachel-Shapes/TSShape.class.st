@@ -10,7 +10,8 @@ Class {
 		'border',
 		'announcer',
 		'parent',
-		'isFixed'
+		'isFixed',
+		'encompassingRectangle'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
@@ -87,7 +88,12 @@ TSShape >> color: aColor [
 
 { #category : #accessing }
 TSShape >> encompassingRectangle [
-	self subclassResponsibility
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+TSShape >> encompassingRectangle: aRectangle [
+	encompassingRectangle := aRectangle
 ]
 
 { #category : #accessing }
@@ -206,6 +212,11 @@ TSShape >> remove [
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ]. 
 	parent removeShape: self
+]
+
+{ #category : #initialization }
+TSShape >> resetBBox [
+	encompassingRectangle := nil.
 ]
 
 { #category : #path }

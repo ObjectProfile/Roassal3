@@ -12,9 +12,9 @@ Class {
 
 { #category : #private }
 TSBitmap >> computeRectangle [
-	extent := form 
+	baseRectangle := Rectangle rsCenter: 0@0 extent: (form 
 		ifNil: [ 0@0 ]
-		ifNotNil: [ form extent ]
+		ifNotNil: [ form extent ])
 ]
 
 { #category : #accessing }

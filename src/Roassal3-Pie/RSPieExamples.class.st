@@ -605,8 +605,8 @@ RSPieExamples >> example18ManyPies [
 			shapes add: (title elementOn: m).
 			shapes ];
 		elementsOn: data keys.
-	"elements do: [ :e | e scaleBy: 0.5@1.
-		e matrix shy: 0.25 ]."
+	elements do: [ :e | e scaleBy: 0.5@1.
+		e matrix shy: 0.25 ].
 	view addAll: elements.
 	elements @RSDraggable.
 	view showEncompassingRectangles.

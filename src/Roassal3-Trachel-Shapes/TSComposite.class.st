@@ -45,7 +45,7 @@ TSComposite >> padding: anObject [
 	
 	| margin rect center temp |
 	temp := shapes 
-		ifNil: [ TSGroup new:0 ]
+		ifNil: [ TSGroup new: 0 ]
 		ifNotNil: [shapes].
 	margin := anObject asMargin. 
 	rect := temp encompassingRectangle.
@@ -70,7 +70,7 @@ TSComposite >> removeShape: shape [
 
 { #category : #path }
 TSComposite >> resetPath [
-	path := Rectangle rsCenter: 0@0 extent: extent asFloatPoint.
+	path := baseRectangle
 ]
 
 { #category : #'accessing - computed' }

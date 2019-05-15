@@ -103,7 +103,8 @@ TSPolygon >> cornerRadii: aNumber [
 
 { #category : #private }
 TSPolygon >> extent: newExtent [
-	| min max s |
+	| min max s extent |
+	extent := baseRectangle extent.
 	extent = newExtent
 		ifTrue: [ ^ self ].
 	min := points min.
@@ -115,11 +116,11 @@ TSPolygon >> extent: newExtent [
 
 { #category : #testing }
 TSPolygon >> includesPoint: aPoint [
-	| res invertedPoint |
-	res := super includesPoint: aPoint.
-	res ifFalse: [ ^ false ].
+	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
-	^ (AthensPolygonTester new polygon: points) includesPoint: invertedPoint
+	^ (self baseRectangle containsPoint: invertedPoint)
+		ifFalse: [ ^ false ]
+		ifTrue: [(AthensPolygonTester new polygon: points) includesPoint: invertedPoint]
 ]
 
 { #category : #initialization }

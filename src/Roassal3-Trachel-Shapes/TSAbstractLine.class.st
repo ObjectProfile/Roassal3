@@ -53,9 +53,13 @@ TSAbstractLine >> dashArray: arrayOfNumbers [
 { #category : #accessing }
 TSAbstractLine >> encompassingRectangle [
 	| cp |
-	cp := self controlPoints.
-	cp ifEmpty: [ ^ Rectangle center: 0@0 extent: 0@0 ].
-	^ Rectangle encompassing: cp
+	^ encompassingRectangle ifNil: [
+		cp := self controlPoints.
+		encompassingRectangle := cp 
+			ifEmpty: [ 0@0 corner: 0@0 ]
+			ifNotEmpty: [ Rectangle encompassing: cp ]
+		].
+
 ]
 
 { #category : #accessing }
@@ -120,6 +124,12 @@ TSAbstractLine >> notifyExtentChanged [
 { #category : #private }
 TSAbstractLine >> privateMarkers [
 	^ nil
+]
+
+{ #category : #path }
+TSAbstractLine >> resetPath [
+	super resetPath.
+	self resetBBox
 ]
 
 { #category : #accessing }

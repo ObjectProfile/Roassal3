@@ -30,5 +30,6 @@ TSBox >> cornerRadius: aTSCornerRadius [
 
 { #category : #testing }
 TSBox >> hasCornerRadius [
-	^ cornerRadius notNil and: [ cornerRadius max > 0 and: [(cornerRadius min < 0) not] ].
+	^ cornerRadius notNil
+		and: [ cornerRadius max > 0 and: [ cornerRadius min >= 0 ] ]
 ]

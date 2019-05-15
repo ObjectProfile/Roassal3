@@ -29,6 +29,8 @@ RSUmlCalypso >> build [
 	builder build.
 	builder view createMorph.
 	morph := builder view morph.
+	morph onAnnouncement: MorphDeleted 
+		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
 	builder view when: TSMouseClick do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
