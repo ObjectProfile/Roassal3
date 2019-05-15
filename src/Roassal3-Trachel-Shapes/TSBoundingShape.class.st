@@ -4,6 +4,8 @@ My subclasses has an extent and a transformation matrix
 Class {
 	#name : #TSBoundingShape,
 	#superclass : #TSShape,
+	#traits : 'TPositionable',
+	#classTraits : 'TPositionable classTrait',
 	#instVars : [
 		'baseRectangle',
 		'matrix'
@@ -139,25 +141,6 @@ TSBoundingShape >> shapes [
 { #category : #accessing }
 TSBoundingShape >> size: anInteger [
 	self extent: anInteger asPoint
-]
-
-{ #category : #accessing }
-TSBoundingShape >> translateBy: delta [
-	self translateTo: self position + delta.
-	
-]
-
-{ #category : #accessing }
-TSBoundingShape >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	oldPosition = aPoint ifTrue: [ ^ self ].
-	self position: aPoint.
-	self announce: [TSPositionChangedEvent new 
-		shape: self; 
-		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
 ]
 
 { #category : #accessing }

@@ -17,6 +17,8 @@ My two main properties are position and scale.
 Class {
 	#name : #TSCamera,
 	#superclass : #TSObject,
+	#traits : 'TPositionable',
+	#classTraits : 'TPositionable classTrait',
 	#instVars : [
 		'scale',
 		'position',
@@ -24,6 +26,11 @@ Class {
 	],
 	#category : #'Roassal3-Trachel-Core'
 }
+
+{ #category : #announce }
+TSCamera >> announce: anEvent [
+	canvas announce: anEvent
+]
 
 { #category : #accessing }
 TSCamera >> canvas [
@@ -93,16 +100,6 @@ TSCamera >> scale: aNumber [
 		shape: self canvas;
 		oldScale: oldScale;
 		newScale: aNumber ]
-]
-
-{ #category : #actions }
-TSCamera >> translateBy: aPoint [
-	self translateTo: self position + aPoint.
-]
-
-{ #category : #actions }
-TSCamera >> translateTo: aPoint [
-	self position: aPoint
 ]
 
 { #category : #actions }
