@@ -503,6 +503,8 @@ TSAthensMorph >> trMouseEnter: aMorphicEvent [
 TSAthensMorph >> trMouseLeave: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: TSMouseLeave from: aMorphicEvent.
+	shapeBeingPointed ifNotNil: [ 
+		trEvent shape: shapeBeingPointed].
 	trEvent shape announce: trEvent.
 ]
 
