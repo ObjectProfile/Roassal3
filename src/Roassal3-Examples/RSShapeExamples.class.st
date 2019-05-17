@@ -821,3 +821,37 @@ RSShapeExamples >> example23LightShapes [
 	v @ RSLightShapesView.
 	v open
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example24Highlightable [
+	<script: 'self new example24Highlightable'>
+	
+	| v es s l label boxShape composite |
+	v := RSView new.
+	l := RSLabeled new.
+	label := RSShapeBuilder label.
+	boxShape := RSShapeBuilder box
+		border: TSBorder new.
+	composite := RSShapeBuilder composite shapes: [ :m |
+		| g title box |
+		g := TSGroup new.
+		title := label elementOn: m.
+		box := boxShape elementOn: m.
+		box extent: title textWidth  @ 3.
+		g add: title; add: box. 
+		RSVerticalLineLayout new alignCenter; gapSize: 0; on: g.
+		g ].
+	l shape: composite.
+	l highlightable.
+	l target: [ :e | e shapes first ].
+	s := RSShapeBuilder ellipse
+		color: Color blue;
+		addInteraction: l;
+		interactionDo: [:i | i draggable];
+		size: 20.
+	es := s elementsOn: #('Hello' 'World').
+	v addAll: es.
+	RSHorizontalLineLayout on: es.
+	v @ RSControlsView.
+	v open.
+]

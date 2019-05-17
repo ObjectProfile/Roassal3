@@ -9,23 +9,28 @@ Class {
 		'shape',
 		'location',
 		'isHighlightable',
-		'lowColor'
+		'lowColor',
+		'target'
 	],
 	#category : #'Roassal3-Interaction'
 }
 
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
-	| label v color set |
+	| label v color set targetLabel |
 	label := shape elementOn: anElement model.
 	location stick: label on: anElement.
 	v := anElement view.
 	v add: label.
 	anElement attributes at: #RSLabeled put: label.
 	isHighlightable ifFalse: [ ^ self ].
-	color := label color.
-	label color: self lowColor.
-	set := [ :c | label pushFront; color: c; signalUpdate ].
+	targetLabel := target value: label.
+	color := targetLabel color.
+	targetLabel color: self lowColor.
+	set := [ :c | 
+		label pushFront.
+		targetLabel color: c.
+		label signalUpdate ].
 	anElement 
 		when: TSMouseEnter do: [ set value: color ];
 		when: TSMouseLeave do: [ set value: lowColor ].
@@ -33,7 +38,10 @@ RSLabeled >> createLabel: anElement [
 
 { #category : #'public - configuration' }
 RSLabeled >> highlightable [
-	isHighlightable := true
+	isHighlightable := true.
+	self 
+		lowColor: Color veryVeryLightGray;
+		target: #yourself.
 ]
 
 { #category : #initialization }
@@ -51,7 +59,7 @@ RSLabeled >> location [
 
 { #category : #accessing }
 RSLabeled >> lowColor [
-	^ lowColor ifNil: [ lowColor := Color veryVeryLightGray ].
+	^ lowColor
 ]
 
 { #category : #accessing }
@@ -76,4 +84,14 @@ RSLabeled >> shape [
 { #category : #accessing }
 RSLabeled >> shape: aShapeBuilder [
 	shape := aShapeBuilder
+]
+
+{ #category : #accessing }
+RSLabeled >> target [
+	^ target
+]
+
+{ #category : #accessing }
+RSLabeled >> target: aBlock [
+	target := aBlock
 ]
