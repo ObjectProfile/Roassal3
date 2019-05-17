@@ -77,18 +77,20 @@ RSControlsView >> noResizeCanvas [
 
 { #category : #hooks }
 RSControlsView >> onElement: aView [
+	| rect |
 	aView @ RSZoomableView.
 	aView @ RSDraggableView.
+	
+	rect := aView encompassingRectangle.
+	speed := (rect width min: rect height) * 0.01.
+	
 	resizeCanvas ifTrue: [ 
 		aView zoomToFit.
 		aView when: TSExtentChangedEvent do: [ aView zoomToFit ]. 
 	 ].
 	
 	aView
-		when: TSKeyDown do: [ :evt | | rect | 
-			rect := aView encompassingRectangle.
-			speed := (rect width min: rect height) * 0.01.
-			self processKeyDown: evt ];
+		when: TSKeyDown do: [ :evt | self processKeyDown: evt ];
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 	self addLegendOn: aView.
 	RSMenuActivable new 
@@ -120,6 +122,7 @@ RSControlsView >> onElement: aView [
 RSControlsView >> processKeyDown: evt [
 	| action mult |
 	action := keyDownActions at: evt keyValue ifAbsent: [^ self ].
+	
 	steps add: action.
 	
 	mult := evt shiftKeyPressed ifTrue: [ 3 ] ifFalse: [ 1 ].
@@ -134,7 +137,6 @@ RSControlsView >> processKeyDown: evt [
 { #category : #hooks }
 RSControlsView >> processKeyUp: evt [
 	| action remove |
-	"Transcript show: evt keyValue; cr."
 	action := keyUpActions at: evt keyValue ifAbsent: [^ self ].
 	remove := [ 
 		(steps isEmpty and: [ translationAnimation notNil ]) ifTrue:  [ 

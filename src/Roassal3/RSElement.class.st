@@ -31,6 +31,11 @@ RSElement >> connectedEdges [
 	^ connectedEdges
 ]
 
+{ #category : #testing }
+RSElement >> hasEdges [
+	^ connectedEdges notNil
+]
+
 { #category : #edges }
 RSElement >> incomingEdges [
 	"Return the list of incoming edges from the node"

@@ -37,6 +37,19 @@ RSRoassalTest >> testCommands [
 	
 ]
 
+{ #category : #'tests - elements' }
+RSRoassalTest >> testHasEdges [
+	| e1 e2 edge |
+	e1 := RSElement new.
+	e2 := RSElement new.
+	self deny: e1 hasEdges.
+	self deny: e2 hasEdges.
+	edge := RSEdge new from: e1; to: e2.
+	self assert: e1 hasEdges.
+	self assert: e2 hasEdges.
+	self assert: e1 connectedEdges size equals: 1.
+]
+
 { #category : #'tests - abstract' }
 RSRoassalTest >> testShapeDNU [
 	| shape |

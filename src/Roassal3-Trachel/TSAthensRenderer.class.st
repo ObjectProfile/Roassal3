@@ -191,7 +191,7 @@ TSAthensRenderer >> buildBoxPath: box [
 { #category : #'creating path' }
 TSAthensRenderer >> buildEllipsePath: ellipse [
 	| extent halfWidth halfHeight |
-	extent := ellipse extent.
+	extent := ellipse baseRectangle extent.
 	halfWidth := extent x / 2 asFloat.
 	halfHeight := extent y / 2 asFloat.
 	
