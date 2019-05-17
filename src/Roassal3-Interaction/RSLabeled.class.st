@@ -18,7 +18,7 @@ Class {
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
 	| label v color set targetLabel |
-	label := shape elementOn: anElement model.
+	label := shape elementOn: anElement.
 	location stick: label on: anElement.
 	v := anElement view.
 	v add: label.
@@ -47,7 +47,7 @@ RSLabeled >> highlightable [
 { #category : #initialization }
 RSLabeled >> initialize [ 
 	super initialize.
-	shape := RSShapeBuilder label.
+	shape := RSShapeBuilder label text: #model.
 	location := RSLocate new above.
 	isHighlightable := false.
 ]
