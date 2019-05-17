@@ -18,6 +18,7 @@ RSMenuActivableTest >> setUp [
 
 { #category : #tests }
 RSMenuActivableTest >> testBasic [
+	self skip.
 	self assert: element color equals: Color blue.
 	element @ (RSMenuActivable new menuDo: [:menu :e | menu 
 		add: 'Inspect' 
@@ -32,6 +33,7 @@ RSMenuActivableTest >> testBasic [
 
 { #category : #tests }
 RSMenuActivableTest >> testWithoutMenuActivable [
+	self skip.
 	self assert: element color equals: Color blue.
 	element announce: TSMouseEnter.
 	 self assert: element color equals: Color blue.

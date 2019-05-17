@@ -58,7 +58,6 @@ RSMenuActivable >> menuDo: block [
 
 { #category : #hooks }
 RSMenuActivable >> onElement: anElement [
-	| remove |
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
 	anElement when: TSMouseRightClick do: [ :evt | 
@@ -67,28 +66,4 @@ RSMenuActivable >> onElement: anElement [
 		menuBlock value: menu value: anElement.
 		menu popUpInWorld ].
 	
-	"No need to have highlight for a view"
-	(anElement isKindOf: RSView) ifTrue: [ ^ self ]. 
-	remove := [ :evt | self removeHighlightOn: evt ].
-	anElement
-		when: TSMouseClick do: remove;
-		when: TSMouseEnter do: [ :evt | self highlightOn: evt ];
-		when: TSMouseLeave do: remove;
-		when: TSMouseDragging do: remove
-
-]
-
-{ #category : #hooks }
-RSMenuActivable >> removeHighlightOn: evt [
- 
-	| att view |
-	view := evt canvas view.
-	view ifNil: [ ^ self ].
-	att := view attributes.
-	
-	"The highlight attribute should contains an array {shape . originalColor}"
-	(att includesKey: #highlight) ifFalse: [ ^ self ].
-	(att at: #highlight) first color: (att at: #highlight) second. 
-	att removeKey: #highlight.
-	view signalUpdate.
 ]
