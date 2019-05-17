@@ -30,6 +30,11 @@ TSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
 ]
 
+{ #category : #accessing }
+TSComposite >> camera [
+	^ parent camera
+]
+
 { #category : #initialization }
 TSComposite >> initialize [
 	super initialize.
