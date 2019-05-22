@@ -12,7 +12,8 @@ Class {
 		'defaultCircle',
 		'defaultBox',
 		'location',
-		'menuShape'
+		'menuShape',
+		'defaultBoldText'
 	],
 	#category : #'Roassal3-Legend'
 }
@@ -46,6 +47,11 @@ RSLegendBuilder >> defLabel [
 { #category : #accessing }
 RSLegendBuilder >> defLabel: aShape [
 	defaultLabel := aShape
+]
+
+{ #category : #accessing }
+RSLegendBuilder >> defaultBoldText [
+	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label bold ].
 ]
 
 { #category : #accessing }
@@ -217,13 +223,9 @@ RSLegendBuilder >> text: aString [
 
 { #category : #public }
 RSLegendBuilder >> text: aString description: desc [
-	| s |
-	s := RSShapeBuilder label
-		text: aString;
-		bold.
 	^ self
 		custom: desc
-		shape: (self horizontalComposite: s text: self defLabel)
+		shape: (self horizontalComposite: self defaultBoldText text: self defLabel)
 ]
 
 { #category : #public }

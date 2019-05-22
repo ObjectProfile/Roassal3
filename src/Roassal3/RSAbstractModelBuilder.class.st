@@ -74,12 +74,11 @@ RSAbstractModelBuilder >> doesNotUnderstand: aMessage [
 		message: aMessage;
 		isForModel: self isForModel;
 		yourself.
-	hasUniqueCommands ifTrue: [ | index |
-		index := commands indexOf: command.
-		index = 0 
-			ifTrue: [ commands add: command ] 
-			ifFalse: [ commands at: index put: command ] ]
-		ifFalse: [ commands add: command. ].
+	(hasUniqueCommands and: [ commands includes: command ]) ifTrue: [ 
+		commands 
+			remove: command;
+			add: command.
+	 ] ifFalse: [ commands add: command. ].
 	
 ]
 
@@ -222,7 +221,7 @@ RSAbstractModelBuilder >> removeCommandsBySelectors: selectors [
 	^ toDelete
 ]
 
-{ #category : #'public - accessing' }
+{ #category : #commands }
 RSAbstractModelBuilder >> uniqueCommands [
 	"with this commands are uniques and we keep the last command if they are equal.
 	EG with hasUniqueCommands equals true
