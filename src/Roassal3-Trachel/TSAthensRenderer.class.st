@@ -34,8 +34,9 @@ TSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		angle := sinA arcSin.
 		radDir := 1.
 		drawDir := false.
+		
 		sin90 < 0 ifTrue: [ 
-			angle <= 0 ifTrue: [ 
+			angle < 0 ifTrue: [ 
 				angle := angle + Float pi ]
 			ifFalse: [ 
 				angle := angle - Float pi.
@@ -56,6 +57,7 @@ TSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		p := p2 + (v2 * lenOut) + (v2 y negated@ v2 x * cRadius * radDir).
 		a := a1 + (Float halfPi * radDir).
 		b := a2 - (Float halfPi * radDir). 
+		(a closeTo: b) ifTrue: [ a := b ].
 		builder 
 			arcAround: p
 			radius: cRadius
