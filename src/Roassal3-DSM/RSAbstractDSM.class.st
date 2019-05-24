@@ -124,14 +124,6 @@ RSAbstractDSM >> createObjectBlock: aBlock [
 	creationBlock := aBlock
 ]
 
-{ #category : #hooks }
-RSAbstractDSM >> createShapeBuilder [
-	| sb |
-	sb := super createShapeBuilder.
-	sb shape: self defaultCellShape.
-	^ sb
-]
-
 { #category : #UI }
 RSAbstractDSM >> defaultTopLabelRotation [
 	^ -55
