@@ -95,6 +95,35 @@ TSCanvasTest >> testLowLevelEvent [
 	self assert: (c shapeWithAction: TSMouseDragging forPositionInPixels: 250 @ 250) == box
 ]
 
+{ #category : #tests }
+TSCanvasTest >> testNestedShape [
+
+	| shape innerShape |
+	shape := TSComposite new.
+	c addShape: shape.
+	innerShape := TSBox new.
+	shape add: innerShape.
+	
+	self assert: shape canvas equals: c.
+	self assert: innerShape parent equals: shape.
+	self assert: innerShape canvas equals: c.
+	
+]
+
+{ #category : #tests }
+TSCanvasTest >> testNestedShapeNotAddedToACanvas [
+
+	| shape innerShape |
+	shape := TSComposite new.
+	innerShape := TSBox new.
+	shape add: innerShape.
+	
+	self assert: shape canvas isNil.
+	self assert: innerShape parent equals: shape.
+	self assert: innerShape canvas isNil.
+	
+]
+
 { #category : #running }
 TSCanvasTest >> testOpening [
 	c open delete

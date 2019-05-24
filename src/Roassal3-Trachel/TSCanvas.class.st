@@ -201,6 +201,12 @@ TSCanvas >> initialize [
 		yourself.
 ]
 
+{ #category : #testing }
+TSCanvas >> isShape [
+	"Useful to lookup the canvas in a hierarchy of nested shapes"
+	^ false
+]
+
 { #category : #accessing }
 TSCanvas >> morph [
 	^ morph

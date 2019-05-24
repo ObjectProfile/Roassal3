@@ -28,10 +28,9 @@ boxes do: [ :b |
 	t := RSShapeBuilder label height: 2; text: #name; elementOn: b model.
 	v add: t.
 	RSLocate new
-		padding: 1;
-		fix: b;
-		movable: t;
-		above; center; stick.
+		offset: 1;
+		above; center;
+		stick: t on: b.
 ].
 
 RSTreeLayout on: boxes.

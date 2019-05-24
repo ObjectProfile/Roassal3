@@ -37,9 +37,14 @@ TSShape >> animation: animation [
 ]
 
 { #category : #events }
-TSShape >> announce: anEvent [
+TSShape >> announce: anEventOrAnEventClass [
+	"Send an event"
+	| theEventToSend |
 	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent value.
+	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend canvas: self parent.
+	theEventToSend shape: self.
+	announcer announce: theEventToSend.
 ]
 
 { #category : #events }
@@ -72,6 +77,15 @@ TSShape >> border: aBorder [
 TSShape >> borderDo: aBlock [
 	border ifNil: [ border := TSBorder new ].
 	aBlock value: border
+]
+
+{ #category : #'accessing - computed' }
+TSShape >> canvas [
+	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas" 
+	parent ifNil: [ ^ nil ].
+	^ parent isShape 
+		ifTrue: [ parent canvas ]
+		ifFalse: [ parent ]
 ]
 
 { #category : #accessing }
@@ -143,6 +157,12 @@ TSShape >> isFixed: aBool [
 { #category : #testing }
 TSShape >> isInACanvas [
 	^ parent notNil
+]
+
+{ #category : #testing }
+TSShape >> isShape [
+	"Useful to lookup the canvas in a hierarchy of nested shapes"
+	^ true
 ]
 
 { #category : #actions }

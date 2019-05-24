@@ -40,6 +40,8 @@ TSEvent >> shape [
 
 { #category : #accessing }
 TSEvent >> shape: aTrachelShape [
+	"An event should now the shape to which it is related to. 
+	The shape has to be set before emitting the event. See TSShape>>announce:"
 	shape := aTrachelShape
 ]
 

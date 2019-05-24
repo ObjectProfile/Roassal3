@@ -81,6 +81,10 @@ RSPopup >> onElement: anElement [
 { #category : #hooks }
 RSPopup >> removePopupOn: evt [ 
 	| att popup view |
+	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
+	If the element is not part of a view, then there is nothing to remove, so we exit early."
+	evt canvas ifNil: [ ^ self ].
+	
 	view := evt canvas view.
 	view ifNil: [ ^ self ].
 	att := view attributes.

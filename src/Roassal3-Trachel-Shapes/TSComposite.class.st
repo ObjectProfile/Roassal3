@@ -12,6 +12,7 @@ Class {
 
 { #category : #adding }
 TSComposite >> add: aShape [
+	"Add a shape in a composite shape"
 	aShape addedIn: self
 ]
 
