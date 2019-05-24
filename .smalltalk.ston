@@ -1,0 +1,15 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Roassal3',
+      #directory : 'src',
+      #platforms : [ #pharo ]
+    }
+  ],
+  
+  #testing : {
+  	 #packages: : [ 'Roassal3-Tests'
+ ],
+  	 #defaultTimeout : 120
+   	}
+}

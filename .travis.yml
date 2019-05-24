@@ -1,0 +1,11 @@
+language: smalltalk
+
+os:
+  - osx
+  - linux
+
+smalltalk:
+  - Pharo-7.0
+  - Pharo64-7.0
+  - Pharo-8.0
+  - Pharo64-8.0
