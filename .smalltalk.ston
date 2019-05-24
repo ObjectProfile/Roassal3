@@ -8,8 +8,7 @@ SmalltalkCISpec {
   ],
   
   #testing : {
-  	 #packages: : [ 'Roassal3-Tests'
- ],
+  	 #packages: [ 'Roassal3-Tests' ],
   	 #defaultTimeout : 120
    	}
 }
