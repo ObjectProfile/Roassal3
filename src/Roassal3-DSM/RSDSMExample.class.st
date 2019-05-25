@@ -332,6 +332,45 @@ RSDSMExample >> exampleNumbers [
 ]
 
 { #category : #sources }
+RSDSMExample >> exampleNumbers02 [
+	<script: 'self new exampleNumbers02'>
+	| dsm |
+	dsm := RSDSM new.
+	dsm objectsX: (1 to: 10).
+	dsm objectsY: (1 to: 10 by: 2).
+	dsm dependency: [ :aValue | aValue // 2 ].
+	dsm build.
+	dsm open
+
+
+]
+
+{ #category : #sources }
+RSDSMExample >> exampleToken [
+	<script: 'self new exampleToken'>
+	
+	| packageRegExp packages getKeywordsFromClass rawKeywords top10Keywords dsm |
+	packageRegExp := { 'Roassal3-*'  }.
+	packages := RPackageOrganizer default packages select: [ :p | packageRegExp anySatisfy: [ :r | r match: p packageName ] ].
+	
+	getKeywordsFromClass := [ :cls | (cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k | k substrings: ':' ] ) flatCollect: #cutCamelCase))) collect: #asLowercase ].
+	rawKeywords := (packages flatCollect: #definedClasses) flatCollect: getKeywordsFromClass.
+	
+	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b | a value size > b value size ]) first: 10) collect: #key.
+	
+	dsm := RSDSM new.
+	dsm objectsX: top10Keywords .
+	dsm objectsY: packages.
+"	dsm setShouldFeedY."
+	dsm dependency: [ :pak | pak definedClasses flatCollect: getKeywordsFromClass ].
+	dsm build.
+	dsm open
+
+
+
+]
+
+{ #category : #sources }
 RSDSMExample >> exampleTopLabelRotation [
 	<script: 'self new exampleTopLabelRotation'>
 	| dsm v keys |

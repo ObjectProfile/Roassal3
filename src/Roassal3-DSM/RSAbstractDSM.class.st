@@ -17,7 +17,8 @@ Class {
 		'xinteraction',
 		'yinteraction',
 		'labelShapeX',
-		'labelShapeY'
+		'labelShapeY',
+		'shouldFeedX'
 	],
 	#category : #'Roassal3-DSM'
 }
@@ -108,8 +109,9 @@ RSAbstractDSM >> createElements [
 			[ :anObject1 :index1 | 
 			objectsX copy
 				doWithIndex:
-					[ :anObject2 :index2 | 
-					e := self shape elementOn: (self createObjectBlock value: anObject1 -> anObject2).
+					[ :anObject2 :index2 | | tuple | 
+					tuple := shouldFeedX ifTrue: [ anObject1 -> anObject2 ] ifFalse: [ anObject2 -> anObject1 ].
+					e := self shape elementOn: (self createObjectBlock value: tuple).
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 ]
@@ -182,6 +184,7 @@ RSAbstractDSM >> initialize [
 	shape color: Color veryVeryLightGray.
 	shape size: self cellSize.
 	shape popup.
+	self setShouldFeedX.
 "TODO:"
 "	shape interaction 
 		when: TSMouseEnter do: [ :evt | 
@@ -279,8 +282,8 @@ RSAbstractDSM >> objectsX [
 ]
 
 { #category : #accessing }
-RSAbstractDSM >> objectsX: anObject [
-	objectsX := anObject
+RSAbstractDSM >> objectsX: someObjects [
+	objectsX := someObjects
 ]
 
 { #category : #accessing }
@@ -289,8 +292,8 @@ RSAbstractDSM >> objectsY [
 ]
 
 { #category : #accessing }
-RSAbstractDSM >> objectsY: anObject [
-	objectsY := anObject
+RSAbstractDSM >> objectsY: someObjects [
+	objectsY := someObjects
 ]
 
 { #category : #hooks }
@@ -333,6 +336,18 @@ RSAbstractDSM >> selectElement [
 { #category : #accessing }
 RSAbstractDSM >> selectElement: aBlock [
 	selectElement := aBlock
+]
+
+{ #category : #configuration }
+RSAbstractDSM >> setShouldFeedX [
+	"The dependency is fed with X values"
+	shouldFeedX := true
+]
+
+{ #category : #configuration }
+RSAbstractDSM >> setShouldFeedY [
+	"The dependency is fed with Y values"
+	shouldFeedX := false
 ]
 
 { #category : #accessing }

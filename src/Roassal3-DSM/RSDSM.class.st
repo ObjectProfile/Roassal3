@@ -80,14 +80,12 @@ RSDSM >> dependency [
 
 { #category : #accessing }
 RSDSM >> dependency: aOneArgBlock [
+	"Take either X or Y values"
 	dependency := aOneArgBlock
 ]
 
 { #category : #initialization }
 RSDSM >> initialize [
-	"
-	:: Void -> RTDSM
-	"
 	super initialize.
 	dependency := #yourself.
 	self shape
