@@ -17,6 +17,8 @@ Class {
 
 { #category : #accessing }
 RSView >> add: anElementOrAnEdge [
+	"Add a single roassal element to a view"
+	self assert: [ anElementOrAnEdge isKindOf: RSShapedObject ] description: 'Only trachel shapes or Roassal elements can be added to a view'.
 	self assert: [ anElementOrAnEdge ~= nil ] description: 'Nil cannot be added to a view'.
 	anElementOrAnEdge 
 		addedIn: self;
@@ -26,6 +28,7 @@ RSView >> add: anElementOrAnEdge [
 
 { #category : #accessing }
 RSView >> addAll: someElements [
+	"Add many roassal elements to a view"
 	someElements do: [ :e | self add: e  ].
 ]
 

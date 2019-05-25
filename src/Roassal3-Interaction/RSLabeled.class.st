@@ -38,6 +38,19 @@ RSLabeled >> createLabel: anElement [
 
 { #category : #'public - configuration' }
 RSLabeled >> highlightable [
+	"Make the label highlightable.
+E.g.,
+
+v := RSView new.
+
+els := RSShapeBuilder box elementsOn: (1 to: 10).
+v addAll: els.
+els @ RSLabeled new highlightable.
+RSNormalizer size elements: els; normalize: #yourself.
+RSGridLayout on: els.
+v @ RSControlsView.
+v open
+"
 	isHighlightable := true.
 	self 
 		lowColor: Color veryVeryLightGray;
@@ -94,4 +107,23 @@ RSLabeled >> target [
 { #category : #accessing }
 RSLabeled >> target: aBlock [
 	target := aBlock
+]
+
+{ #category : #initialization }
+RSLabeled >> text: aBlockOrSymbol [
+	"Set the transformation to be obtained
+E.g.,
+
+v := RSView new.
+els := RSShapeBuilder box elementsOn: (1 to: 10).
+v addAll: els.
+els @ (RSLabeled new highlightable; text: [ :nb | nb model *10 ]).
+RSNormalizer size elements: els; normalize: #yourself.
+RSGridLayout on: els.
+v @ RSControlsView.
+v open
+
+	"
+	shape := RSShapeBuilder label text: aBlockOrSymbol.
+
 ]

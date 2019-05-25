@@ -3,11 +3,12 @@ RTEquidistantCircleLayout is a circle layout in which elements are equidistant f
 
 Here is an example:
 -=-=-=-=-=-=-=-=-=-=-=-=
-v := RTView new.
-elements := (RTEllipse new size: 5; color: Color red; size: [:vv | vv * 4 ]) elementsOn: (1 to: 15).
+v := RSView new.
+elements := (RSShapeBuilder circle size: 5; color: Color red; size: [:vv | vv * 4 ]) elementsOn: (1 to: 15).
 v addAll: elements.
-RTEquidistantCircleLayout on: elements.
-v
+RSEquidistantCircleLayout on: elements.
+v @ RSControlsView.
+v open
 -=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
