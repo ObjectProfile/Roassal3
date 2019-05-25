@@ -42,6 +42,18 @@ TSLabel >> accept: visitor [
 
 { #category : #'managing font' }
 TSLabel >> bold [
+"
+Make the font bold
+
+| c lbl1 lbl2 |
+c := TSCanvas new.
+lbl1 := TSLabel new bold; text: 'hello'.
+c addShape: lbl1.
+lbl2 := TSLabel new text: 'world'.
+c addShape: lbl2.
+RSLocate new below; move: lbl2 on: lbl1.
+c open
+"
 	self emphasisAdd: TextEmphasis bold.
 ]
 
@@ -52,6 +64,14 @@ TSLabel >> descent [
 
 { #category : #accessing }
 TSLabel >> emphasis [
+"
+| c lbl |
+c := TSCanvas new.
+lbl := TSLabel new text: 'hello'.
+c addShape: lbl.
+c open
+"
+
 	^ emphasis
 ]
 
@@ -145,6 +165,18 @@ TSLabel >> isUnderlined [
 
 { #category : #'managing font' }
 TSLabel >> italic [
+"
+Make the font italic
+
+| c lbl1 lbl2 |
+c := TSCanvas new.
+lbl1 := TSLabel new italic; text: 'hello'.
+c addShape: lbl1.
+lbl2 := TSLabel new text: 'world'.
+c addShape: lbl2.
+RSLocate new below; move: lbl2 on: lbl1.
+c open
+"
 	self emphasisAdd: TextEmphasis italic.
 ]
 
@@ -204,5 +236,17 @@ TSLabel >> textWidth [
 
 { #category : #'managing font' }
 TSLabel >> underline [
+"
+Make the font underlined
+
+| c lbl1 lbl2 |
+c := TSCanvas new.
+lbl1 := TSLabel new underline; text: 'hello'.
+c addShape: lbl1.
+lbl2 := TSLabel new text: 'world'.
+c addShape: lbl2.
+RSLocate new below; move: lbl2 on: lbl1.
+c open
+"
 	self emphasisAdd: TextEmphasis underlined.
 ]

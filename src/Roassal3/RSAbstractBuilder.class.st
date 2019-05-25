@@ -20,6 +20,11 @@ RSAbstractBuilder >> build [
 ]
 
 { #category : #accessing }
+RSAbstractBuilder >> createView [
+	^ RSView new
+]
+
+{ #category : #accessing }
 RSAbstractBuilder >> elements [
 	"usually to keep a referece to created elements by this builder"
 	^ elements ifNil: [ self view elements ].
@@ -52,7 +57,7 @@ RSAbstractBuilder >> shape: aRSShapeBuilder [
 
 { #category : #accessing }
 RSAbstractBuilder >> view [
-	^ view ifNil: [ view := RSView new ].
+	^ view ifNil: [ view := self createView ]
 ]
 
 { #category : #accessing }
