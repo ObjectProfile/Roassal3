@@ -356,11 +356,12 @@ RSDSMExample >> exampleToken [
 	getKeywordsFromClass := [ :cls | (cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k | k substrings: ':' ] ) flatCollect: #cutCamelCase))) collect: #asLowercase ].
 	rawKeywords := (packages flatCollect: #definedClasses) flatCollect: getKeywordsFromClass.
 	
-	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b | a value size > b value size ]) first: 10) collect: #key.
+	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b | a value size > b value size ]) first: 70) collect: #key.
 	
 	dsm := RSDSM new.
 	dsm objectsX: top10Keywords .
 	dsm objectsY: packages.
+	dsm labelShapeY text: #packageName.
 "	dsm setShouldFeedY."
 	dsm dependency: [ :pak | pak definedClasses flatCollect: getKeywordsFromClass ].
 	dsm build.
