@@ -125,3 +125,8 @@ TSComposite >> shapes: aTSGroup [
 
 	
 ]
+
+{ #category : #accessing }
+TSComposite >> view [
+	^ parent view
+]
