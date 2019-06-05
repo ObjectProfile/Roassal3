@@ -86,3 +86,8 @@ RSShapedObject >> trachelShape: aShape [
 RSShapedObject >> view [
 	^ view
 ]
+
+{ #category : #accessing }
+RSShapedObject >> view: aView [ 
+	view := aView
+]

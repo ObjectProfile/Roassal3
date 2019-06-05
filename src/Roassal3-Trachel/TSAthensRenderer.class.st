@@ -631,6 +631,7 @@ TSAthensRenderer >> visitMarker: marker to: from vector: vector [
 TSAthensRenderer >> visitMarkerEnd: marker with: controlPoints [
 	| from to |
 	marker ifNil: [ ^ self ].
+	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints at: controlPoints size - 1.
 	to := controlPoints last.
 	self visitMarker: marker to: to vector: to-from. 
@@ -652,6 +653,7 @@ TSAthensRenderer >> visitMarkerMid: marker with: controlPoints [
 TSAthensRenderer >> visitMarkerStart: marker with: controlPoints [
 	| from to |
 	marker ifNil: [ ^ self ].
+	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints first.
 	to := controlPoints second.
 	self visitMarker: marker to: from vector: from - to. 

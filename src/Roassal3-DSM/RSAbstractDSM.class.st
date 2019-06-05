@@ -54,27 +54,15 @@ RSAbstractDSM >> addLabelsLeft [
 
 { #category : #UI }
 RSAbstractDSM >> addLabelsTop [
-	| es theModel lbl labels deltaY |
+	| es labels |
 	es := self rowAt: 1.
-	labels := OrderedCollection new.
-	deltaY := Float fmax.
-	es
-		do:
-			[ :e | 
-			theModel := e model value.
-			lbl := self labelShapeX elementOn: theModel.
-			labels add: lbl.
-			xinteraction setUpElement: lbl.
-			view add: lbl.
-			lbl rotateByDegrees: rotation.
-			RSLocate new
-				outer;
-				middle;
-				top;
-				move: lbl on: e.
-			deltaY := deltaY min: lbl position y ].
-	labels do: [ :l | 
-		l translateTo: l position x @ deltaY ].
+	labels := self labelShapeX elementsOn: (es collect: #value).
+	labels do: [ :lbl | 
+		lbl rotateByDegrees: rotation.
+		xinteraction setUpElement: lbl ].
+	view addAll: labels.
+	
+	
 ]
 
 { #category : #configuration }

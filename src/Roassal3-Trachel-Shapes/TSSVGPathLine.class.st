@@ -16,6 +16,16 @@ TSSVGPathLine >> buildPathOn: visitor [
 ]
 
 { #category : #accessing }
+TSSVGPathLine >> color [
+	^ self paint
+]
+
+{ #category : #accessing }
+TSSVGPathLine >> color: aColor [
+	self paint: aColor
+]
+
+{ #category : #accessing }
 TSSVGPathLine >> svgPath [
 	^svgPath
 ]

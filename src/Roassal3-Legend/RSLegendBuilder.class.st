@@ -188,7 +188,9 @@ RSLegendBuilder >> renderIn: aView [
 				scaleBy: 1@t.
 			legend signalUpdate].
 		].
-	label when: TSMouseLeave do: [ :m | legend remove ].
+	label when: TSMouseLeave do: [ :m | 
+		legend view 
+			ifNotNil: [legend remove] ].
 	aView when: TSExtentChangedEvent do: [ 
 		RSLocate new 
 			inner; top; right;
