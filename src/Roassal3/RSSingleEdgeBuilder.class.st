@@ -32,7 +32,7 @@ RSSingleEdgeBuilder class >> bezier [
 RSSingleEdgeBuilder class >> bimetricLine [
 "Here is an example on how to use it.
 
-| view e1 e2 box l |
+	| view e1 e2 box l |
 	view := RSView new.
 	box := RSShapeBuilder box 
 		size: 100;

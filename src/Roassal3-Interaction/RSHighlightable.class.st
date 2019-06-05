@@ -76,6 +76,25 @@ RSHighlightable >> highlightElementsFor: element [
 
 { #category : #accessing }
 RSHighlightable >> highlightShape [
+	"
+	Gives a highlight shape. Useful to change the color of the highlight. 
+
+For example
+-=-=-=
+v := RSView new.
+
+sb := RSShapeBuilder box
+			elementsOn: (1 to: 100).
+v addAll: sb.
+
+highlight := RSHighlightable new.
+highlight highlightShape color: Color red trans.
+sb @ highlight.
+RSGridLayout on: sb.
+v @ RSControlsView.
+v open			
+-=-=-=
+	"
 	^ highlightShape
 ]
 

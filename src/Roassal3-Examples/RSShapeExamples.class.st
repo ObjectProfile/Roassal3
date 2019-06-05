@@ -855,3 +855,52 @@ RSShapeExamples >> example24Highlightable [
 	v @ RSControlsView.
 	v open.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example25BimetricLineOnLargeExample [
+	<script: 'self new example24BimetricLineOnLargeExample'>
+| packagesRegExp packages l packageElements high v |
+packagesRegExp := { 'Calypso*' }.
+
+packages := packagesRegExp flatCollect: [ :regExp | RPackageOrganizer default packages select: [ :p | regExp match: p packageName ] ].
+
+l := RSLabeled new text: [ :e | e model packageName ].
+packageElements := RSShapeBuilder composite
+							color: Color blue trans;
+							addInteraction: l;
+							draggable;
+							shapes: [ :pak |
+								| g lbl |
+								g := RSShapeBuilder box
+									size: [ :cls | cls numberOfMethods sqrt ];
+									elementsOn: pak definedClasses.
+								RSGridLayout on: g.
+								g
+							]; 
+							padding: 5;
+							elementsOn: packages.
+high := RSHighlightable new.
+high withEdges.
+high highlightShape color: Color red trans.							
+packageElements @ high.						
+v := RSView new.
+v addAll: packageElements.
+
+RSEdgeBuilder bimetricLine
+		view: v;
+		objects: packages;
+		widthFrom:
+				[ :edge | (edge key model numberOfDependenciesToward: edge value model) sqrt * 10 ];
+		widthTo:
+				[ :edge | (edge value model numberOfDependenciesToward: edge key model) sqrt * 10 ];
+		paint: Color blue trans;
+		border: nil;
+		withBorderAttachPoint;
+		connectFrom: #yourself toAll: #dependentPackages.
+		
+		
+RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+v @ RSControlsView.
+
+v open			
+]
