@@ -858,7 +858,7 @@ RSShapeExamples >> example24Highlightable [
 
 { #category : #shapes }
 RSShapeExamples >> example25BimetricLineOnLargeExample [
-	<script: 'self new example24BimetricLineOnLargeExample'>
+	<script: 'self new example25BimetricLineOnLargeExample'>
 | packagesRegExp packages l packageElements high v |
 packagesRegExp := { 'Calypso*' }.
 
