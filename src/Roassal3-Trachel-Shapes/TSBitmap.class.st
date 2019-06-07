@@ -40,7 +40,7 @@ TSBitmap >> form: aForm [
 
 { #category : #accessing }
 TSBitmap >> paintOn: visitor [
-	^ visitor paintForBitmap: self
+	^ visitor paintFor: self form: self form
 ]
 
 { #category : #visiting }

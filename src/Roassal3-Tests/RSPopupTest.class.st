@@ -34,6 +34,9 @@ RSPopupTest >> testPopupOnElementNotAddedToAView [
 { #category : #tests }
 RSPopupTest >> testWithPopup [
 	elements @ RSPopup.
-	elements first announce: TSMouseEnter.
-	self assert: view numberOfShapes equals: elements size + 1.
+	self assert: view fixedShapes size equals: 0 .
+	
+	elements first announce: TSMouseMove.
+	self assert: view numberOfShapes equals: elements size.
+	self assert: view fixedShapes size equals: 1.
 ]

@@ -476,16 +476,18 @@ TSAthensRenderer >> getOrCreatePathOf: shape [
 ]
 
 { #category : #paint }
-TSAthensRenderer >> paintForBitmap: shape [
-	| paint |
+TSAthensRenderer >> paintFor: shape form: form [
+	form isForm ifFalse: [ ^ form ].
+	
 	^ CairoBackendCache soleInstance 
-		at: shape form
+		at: form
 		ifAbsentPut: [ 
+			| paint |
 			paint := (AthensCairoPatternSurfacePaint 
 				createForSurface: (AthensCairoSurface 
-				fromForm: shape form)).
-			paint origin: (shape form extent /2) negated asFloatPoint.
-			paint  ]
+				fromForm: form)).
+			paint origin: (form extent /2) negated asFloatPoint.
+			paint ]
 ]
 
 { #category : #visiting }

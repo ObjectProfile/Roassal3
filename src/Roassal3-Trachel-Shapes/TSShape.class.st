@@ -187,9 +187,7 @@ TSShape >> paint: aPaint [
 
 { #category : #accessing }
 TSShape >> paintOn: visitor [
-	^ paint
-	
-	
+	^ visitor paintFor: self form: self paint
 ]
 
 { #category : #accessing }
