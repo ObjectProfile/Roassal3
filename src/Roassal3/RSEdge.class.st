@@ -67,6 +67,11 @@ RSEdge >> initialize [
 ]
 
 { #category : #testing }
+RSEdge >> isEdge [
+	^ true
+]
+
+{ #category : #testing }
 RSEdge >> isUsedInLayout [
 	"This should be changed"
 	^ true

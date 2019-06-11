@@ -287,7 +287,7 @@ TSCanvas >> pushFront: aShape [
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
 	col 
-		remove: aShape;
+		remove: aShape ifAbsent: [];
 		addLast: aShape.
 ]
 

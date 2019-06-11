@@ -55,6 +55,11 @@ RSElement >> isDirectlyConnectedTo: anElement [
 	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
 ]
 
+{ #category : #testing }
+RSElement >> isElement [
+	^ true
+]
+
 { #category : #edges }
 RSElement >> outgoingEdges [
 	"Return the list of outgoing edges from the node"

@@ -39,6 +39,16 @@ RSShapedObject >> index: anInteger [
 	index := anInteger
 ]
 
+{ #category : #testing }
+RSShapedObject >> isEdge [
+	^ false
+]
+
+{ #category : #testing }
+RSShapedObject >> isElement [
+	^ false
+]
+
 { #category : #accessing }
 RSShapedObject >> model [
 	^ model

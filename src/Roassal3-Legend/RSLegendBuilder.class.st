@@ -58,7 +58,8 @@ RSLegendBuilder >> defLabel: aShape [
 
 { #category : #accessing }
 RSLegendBuilder >> defaultBoldText [
-	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label bold ].
+	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label 
+		uniqueCommands; bold ].
 ]
 
 { #category : #accessing }
@@ -204,7 +205,6 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 { #category : #initialization }
 RSLegendBuilder >> reset [
 	elements := TSGroup new.
-	padding := 5.
 	location := RSLocate new below.
 	layout := RSLayoutBuilder new.
 	layout vertical gapSize: 0.
@@ -221,6 +221,7 @@ RSLegendBuilder >> text: aString [
 
 { #category : #public }
 RSLegendBuilder >> text: aString description: desc [
+	self defaultBoldText text: aString.
 	^ self
 		custom: desc
 		shape: (self horizontalComposite: self defaultBoldText text: self defLabel)

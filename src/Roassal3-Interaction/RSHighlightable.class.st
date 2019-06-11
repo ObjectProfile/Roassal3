@@ -152,7 +152,7 @@ RSHighlightable >> recordElements: elements [
 RSHighlightable >> recordIfNecessary: element [
 	| att |
 	att := element attributes.
-	(att includesKey: #originalColor) ifTrue: [ ^ self ].
+	(att includesKey: #original) ifTrue: [ ^ self ].
 	self record: element.
 ]
 
