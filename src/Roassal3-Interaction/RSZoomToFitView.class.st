@@ -4,14 +4,24 @@ I add an interaction for the view
 Class {
 	#name : #RSZoomToFitView,
 	#superclass : #RSAbstractViewInteraction,
+	#instVars : [
+		'shapes'
+	],
 	#category : #'Roassal3-Interaction'
 }
+
+{ #category : #accessing }
+RSZoomToFitView >> encompassingRectangleFor: aView [
+	^ shapes 
+		ifNil: [ aView encompassingRectangle ]
+		ifNotNil: [ aView encompassingRectangleOf: shapes].
+]
 
 { #category : #hooks }
 RSZoomToFitView >> onElement: aView [
 	| rect extent sc position scale camera |
 	camera := aView camera.
-	rect := aView encompassingRectangle.
+	rect := self encompassingRectangleFor: aView.
 	extent := aView extent * 0.9.
 	sc := extent / (rect extent max: 1 @ 1).
 	sc := sc x min: sc y.
@@ -46,4 +56,14 @@ RSZoomToFitView >> onElement: aView [
 				aView signalUpdate]
 	
 	
+]
+
+{ #category : #accessing }
+RSZoomToFitView >> shapes [
+	^ shapes
+]
+
+{ #category : #accessing }
+RSZoomToFitView >> shapes: aCollection [
+	shapes := aCollection
 ]

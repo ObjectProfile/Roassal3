@@ -32,8 +32,8 @@ RSControlsView >> addLegendOn: aView [
 	lb defLabel fontSize: 10.
 	lb shape
 		border: TSBorder new;
-		color: (Color white alpha: 0.8).
-	lb padding: 10.
+		color: (Color white alpha: 0.8);
+		padding: 10.
 	lb 
 		title: 'Shortcuts';
 		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
@@ -83,6 +83,8 @@ RSControlsView >> onElement: aView [
 	
 	rect := aView encompassingRectangle.
 	speed := (rect width min: rect height) * 0.01.
+	"the zoom to fit interaction. It sets the first collection of shapes that this view has"
+	(keyUpActions at: 49) shapes: aView shapes.
 	
 	resizeCanvas ifTrue: [ 
 		aView zoomToFit.

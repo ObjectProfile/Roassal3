@@ -904,3 +904,25 @@ v @ RSControlsView.
 
 v open			
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example26AnimatedPopup [
+	<script: 'self new example26AnimatedPopup'>
+	| v i s b |
+	v := RSView new.
+	i := RSAnimatedPopup new.
+		
+	s := RSShapeBuilder box
+		size: 100;
+		addInteraction: i;
+		translateTo: 100 asPoint;
+		isFixed: true.
+	b := s elementOn: 'Fixed'.
+	v add: b.
+	b := s elementOn: 'Not Fixed'.
+	b color: Color red.
+	b isFixed: false.
+	v add: b.
+	
+	v open.
+]

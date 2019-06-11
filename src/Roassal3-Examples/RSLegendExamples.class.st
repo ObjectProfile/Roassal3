@@ -28,8 +28,9 @@ RSLegendExamples >> example02Border [
 	b := RSLegendBuilder new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
-	b shape border: TSBorder new.
-	b padding: 50.
+	b shape 
+		border: TSBorder new;
+		padding: 50.
 	b build.
 	b view @ RSControlsView.
 	b view open.
@@ -46,13 +47,13 @@ RSLegendExamples >> example03Vertical [
 		text: 'Shadow Fiend';
 		text: 'Tinker';
 		text: 'Meepo'.
-	b shape border: TSBorder new.
 	b layout vertical gapSize: 20.
-	b 
+	b shape 
+		border: TSBorder new;
 		"padding: 20;
 		padding: 20@50;"
-		padding: (Margin left: 50 right: 10 top: 10  bottom: 50);
-		build.
+		padding: (Margin left: 50 right: 10 top: 10  bottom: 50).
+	b build.
 	b view @ RSControlsView.
 	b view open.
 ]
@@ -67,11 +68,11 @@ RSLegendExamples >> example04Horizontal [
 		text: 'Shadow Fiend';
 		text: 'Tinker';
 		text: 'Meepo'.
-	b shape border: TSBorder new.
+	b shape 
+		border: TSBorder new;
+		padding: 10.
 	b layout horizontal gapSize: 20.
-	b 
-		padding: 10;
-		build.
+	b build.
 	b view @ RSControlsView.
 	b view open.
 ]
@@ -89,10 +90,10 @@ RSLegendExamples >> example05Colors [
 		text: 'Shadow Fiend' withCircleColor: color;
 		text: 'Tinker' withCircleColor: color;
 		text: 'Meepo' withCircleColor: Color black.
-	b shape border: TSBorder new.
-	b 
-		padding: 20;
-		build.
+	b shape 
+		border: TSBorder new;
+		padding: 20.
+	b build.
 	b view @ RSControlsView.
 	b view open.
 ]
@@ -109,11 +110,11 @@ RSLegendExamples >> example06BoxColors [
 		text: 'Shadow Fiend' withBoxColor: color;
 		text: 'Tinker' withBoxColor: color;
 		text: 'Meepo' withBoxColor: color.
-	b shape border: TSBorder new.
+	b shape 
+		border: TSBorder new;
+		padding: 20.
 	b layout horizontal gapSize: 30.
-	b 
-		padding: 20;
-		build.
+	b build.
 	b view @ RSControlsView.
 	b view open.
 ]

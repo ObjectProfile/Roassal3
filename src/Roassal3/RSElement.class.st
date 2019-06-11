@@ -64,8 +64,10 @@ RSElement >> outgoingEdges [
 
 { #category : #removing }
 RSElement >> remove [
-	view removeElement: self.
-	view := nil.
+	view ifNotNil: [ 
+		view removeElement: self.
+		view := nil.
+	 ].
 	self removeConnectedEdges.
 ]
 

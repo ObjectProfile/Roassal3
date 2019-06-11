@@ -141,10 +141,15 @@ TSCanvas >> createMorph [
 
 { #category : #accessing }
 TSCanvas >> encompassingRectangle [
+	^ self encompassingRectangleOf: shapes
+]
+
+{ #category : #accessing }
+TSCanvas >> encompassingRectangleOf: aCollectionOfShapes [
 	| r e |
-	r := shapes
+	r := aCollectionOfShapes
 		ifEmpty: [ 0@0 corner: 0@0 ]
-		ifNotEmpty: [ Rectangle merging: (shapes collect: #encompassingRectangle) ].
+		ifNotEmpty: [ Rectangle merging: (aCollectionOfShapes collect: #encompassingRectangle) ].
 	e := r extent max: 1 @ 1.
 	^ r topLeft extent: e
 ]

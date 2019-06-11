@@ -6,7 +6,6 @@ Class {
 	#superclass : #RSAbstractBuilder,
 	#instVars : [
 		'layout',
-		'padding',
 		'defaultLabel',
 		'defaultTitle',
 		'defaultCircle',
@@ -17,6 +16,14 @@ Class {
 	],
 	#category : #'Roassal3-Legend'
 }
+
+{ #category : #hooks }
+RSLegendBuilder >> basicRenderIn: aView [ 
+	| legend |
+	legend := shape element.
+	location move: legend on: aView elements.
+	aView add: legend.
+]
 
 { #category : #'public - composite' }
 RSLegendBuilder >> composite: refShape text: textShape layout: aLayout [
@@ -98,6 +105,11 @@ RSLegendBuilder >> initializeShape [
 		draggable.
 ]
 
+{ #category : #testing }
+RSLegendBuilder >> isOnDemand [
+	^ menuShape notNil
+]
+
 { #category : #layout }
 RSLegendBuilder >> layout [ 
 	^ layout
@@ -125,17 +137,6 @@ RSLegendBuilder >> onDemand: text [
 		color: Color lightGray;
 		when: TSMouseEnter do: [ [ :evt | evt shape color: Color blue; signalUpdate ] ];
 		when: TSMouseLeave do: [ [ :evt | evt shape color: Color lightGray; signalUpdate ] ]
-]
-
-{ #category : #accessing }
-RSLegendBuilder >> padding [
-	^ padding
-]
-
-{ #category : #accessing }
-RSLegendBuilder >> padding: anObject [
-	"Number point or Margin"
-	padding := anObject.
 ]
 
 { #category : #'public - specific' }
@@ -166,43 +167,38 @@ RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox
 
 { #category : #hooks }
 RSLegendBuilder >> renderIn: aView [
-	| legend label position |
-	legend := shape element.
-	menuShape ifNil: [ 
-		location move: legend on: aView elements.
-		aView add: legend.
-		^ self. ].
+	self isOnDemand 
+		ifTrue: [ self renderOnDemandIn: aView ]
+		ifFalse: [self basicRenderIn: aView ].
 	
+]
+
+{ #category : #hooks }
+RSLegendBuilder >> renderOnDemandIn: aView [
+	| label i legendLabels update |
 	label := menuShape element.
 	label isFixed: true.
-	legend isFixed: true.
 	aView addShape: label trachelShape.
-	position := legend position.
-	label when: TSMouseEnter do: [ :m | | p |
-		aView add: legend.
-		p := position.
-		p := TSScale linear range: { p x @ (p y - (legend extent y/2)). p }.
-		aView animation duration: 400 milliSeconds; from: 0.05; to: 1; onStepDo: [ :t | 
-			legend matrix loadIdentity; 
-				translation: (p scale: t);
-				scaleBy: 1@t.
-			legend signalUpdate].
-		].
-	label when: TSMouseLeave do: [ :m | 
-		legend view 
-			ifNotNil: [legend remove] ].
-	aView when: TSExtentChangedEvent do: [ 
-		RSLocate new 
+	i := RSAnimatedPopup new.
+	i shape: shape. 
+	label addInteraction: i.
+	legendLabels := nil.
+	update := [ 
+		RSHorizontalLineLayout on: legendLabels.
+		RSLocate new
 			inner; top; right;
-			move: label on: (Rectangle origin: 0@0 extent: aView extent);
-			outer; bottom;
-			offset: legend extent x negated - 5 @ 0;
-			move: legend on: label.
-		position := legend position. ].
+			move: legendLabels 
+				on: (Rectangle origin: 0@0 extent: aView extent)
+	].
+	legendLabels := aView attributes 
+		at: #legendLabels
+		ifAbsentPut: [ 
+			aView when: TSExtentChangedEvent do: update.
+			TSGroup new: 5 ].
+	legendLabels add: label.
+	update value.
+
 	
-		
-
-
 ]
 
 { #category : #initialization }
