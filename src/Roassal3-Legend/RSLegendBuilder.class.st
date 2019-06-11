@@ -101,7 +101,7 @@ RSLegendBuilder >> initializeShape [
 	shape := RSShapeBuilder composite shapes: [ 
 		layout on: elements.
 		elements. ];
-		padding: [padding];
+		padding: 10;
 		draggable.
 ]
 
@@ -181,7 +181,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 	aView addShape: label trachelShape.
 	i := RSAnimatedPopup new.
 	i shape: shape. 
-	label addInteraction: i.
+	label @ i.
 	legendLabels := nil.
 	update := [ 
 		RSHorizontalLineLayout on: legendLabels.
