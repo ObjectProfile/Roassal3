@@ -1,11 +1,12 @@
 "
 A TSGroup represents collections of Roassal elements. A RTGroup is not designed to contain other things than Roassal elements. 
-A TSGroup is polymorphic to RSElement. When an RSElement is expected, one can provide an RTGroup.
+A TSGroup is polymorphic to RSElement. When an RSElement is expected, one can provide an TSGroup.
 "
 Class {
 	#name : #TSGroup,
 	#superclass : #OrderedCollection,
 	#instVars : [
+		'allMethods',
 		'elementFromModelCache'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
@@ -123,6 +124,26 @@ TSGroup >> extent [
 { #category : #accessing }
 TSGroup >> height [ 
 	^ self extent y
+]
+
+{ #category : #ui }
+TSGroup >> paintOn: b [
+	"b is a mondrian builder"
+	| methodsToBeVisualized |
+	methodsToBeVisualized := self, (self flatCollect: #allOutgoingCalls) asSet asArray.
+	b shape 
+		box if: #isTest fillColor: Color green.
+	b nodes: methodsToBeVisualized.
+	
+	b shape line color: Color veryLightGray trans.
+	b edges
+		moveBehind;
+		connectToAll: #outgoingCalls.
+		
+	b normalizer
+		normalizeSize: #numberOfLinesOfCode;
+		normalizeColor: [ :m | (m tests intersection: self) size ] using: { Color blue. Color red }.
+	b layout tree.
 ]
 
 { #category : #actions }

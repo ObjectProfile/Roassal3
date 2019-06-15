@@ -17,11 +17,9 @@ Class {
 
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
-	| label v color set targetLabel |
+	| label color set targetLabel |
 	label := shape elementOn: anElement.
 	location stick: label on: anElement.
-	v := anElement view.
-	v add: label.
 	anElement attributes at: #RSLabeled put: label.
 	isHighlightable ifFalse: [ ^ self ].
 	targetLabel := target value: label.
@@ -33,7 +31,21 @@ RSLabeled >> createLabel: anElement [
 		label signalUpdate ].
 	anElement 
 		when: TSMouseEnter do: [ set value: color ];
-		when: TSMouseLeave do: [ set value: lowColor ].
+		when: TSMouseLeave do: [ set value: lowColor ];
+		when: TSShapeRemovedEvent do: [ label remove ].
+	^ label
+]
+
+{ #category : #hooks }
+RSLabeled >> getOrCreateLabel: anElement [
+	| label view |
+	label := anElement attributes 
+		at: #RSLabeled
+		ifAbsentPut: [ self createLabel: anElement ].
+	view :=anElement view.
+	(label isInACanvas not and: [view notNil ]) 
+		ifTrue: [ view add: label ].
+	^ label
 ]
 
 { #category : #'public - configuration' }
@@ -83,7 +95,7 @@ RSLabeled >> lowColor: aColor [
 { #category : #hooks }
 RSLabeled >> onElement: anElement [
 	| block |
-	block := [ self createLabel: anElement. ]. 
+	block := [ self getOrCreateLabel: anElement. ]. 
 	anElement isInACanvas 
 		ifTrue: block
 		ifFalse: [ anElement when: TSShapeAddedEvent do: block ].

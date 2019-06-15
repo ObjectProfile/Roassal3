@@ -1,19 +1,5 @@
 "
-A layout that packs rectangles in as amall space as possible (at least it tries to)
-
-Instance Variables
-	padding:	<Number>
-	freeSpace:	<Set of Rectamgles>
-	bounds:	<Point>
-
-gap
-	- gap between elements defined as ""percentage"" of average size. 0.2 means 20%
-
-freeSpace
-	- collection of spaces that can be used for next element insertion
-	
-bounds
-	- bounding box of all currently processed elements
+A layout that packs rectangles in as small space as possible (at least it tries to)
 
 "
 Class {
@@ -42,7 +28,7 @@ RSRectanglePackLayout >> bestSpaceFor: anElement [
 		fold: [ :best :current |
 			| bestExt currentExt | 
 			((currentExt := self extentByInserting: elementsPadedBox into: current) <
-			(bestExt := self extentByInserting: elementsPadedBox  into: best) or: [ 
+			(bestExt := self extentByInserting: elementsPadedBox into: best) or: [ 
 				currentExt = bestExt and: [
 					current halfPerimeter < best halfPerimeter ] ])
 						ifTrue: [ current ]
@@ -63,11 +49,10 @@ RSRectanglePackLayout >> doExecute: elements [
 			sum + el extent ].
 		
 	padding := maxSpace / elements size * gap / 2.
-	
-	maxSpace := 1 + gap * maxSpace.
+	maxSpace :=(1 + gap) * maxSpace.
 	
 	freeSpace := Set new.
-	freeSpace add: (0@0 corner: maxSpace).
+	freeSpace add: (0@0 corner: maxSpace ).
 	
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
 		larger  encompassingRectangle halfPerimeter >
@@ -120,24 +105,13 @@ RSRectanglePackLayout >> packIn: anElement [
 	self recalculateFreeSpacesWith: anElement
 ]
 
-{ #category : #deprecated }
-RSRectanglePackLayout >> padding [
-	self deprecated: 'Use gap instead'.
-	^ self gap
-]
-
-{ #category : #deprecated }
-RSRectanglePackLayout >> padding: anObject [
-	self deprecated: 'Use gap: instead'.
-	self gap: anObject
-]
-
 { #category : #'space-calculation' }
 RSRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
+	| rectangle |
+	rectangle := anElement encompassingRectangle expandBy: padding.
 	freeSpace := freeSpace inject: Set new into: [ :set :space |
 		 set
-			addAll: (space areasOverlapingOutside:
-				(anElement encompassingRectangle expandBy: padding)); 
+			addAll: (space areasOverlapingOutside: rectangle); 
 			yourself ].
 		
 	"remove subspaces"

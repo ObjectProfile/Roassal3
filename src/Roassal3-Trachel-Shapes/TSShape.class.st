@@ -42,7 +42,7 @@ TSShape >> announce: anEventOrAnEventClass [
 	| theEventToSend |
 	announcer ifNil: [ ^ self ].
 	theEventToSend := anEventOrAnEventClass value asAnnouncement.
-	theEventToSend canvas: self parent.
+	theEventToSend canvas: self canvas.
 	theEventToSend shape: self.
 	announcer announce: theEventToSend.
 ]

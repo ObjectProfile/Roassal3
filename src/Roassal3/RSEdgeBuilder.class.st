@@ -138,7 +138,7 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 	| edge |
 	self from: source; to: target.
 	edge := self edge. 
-	view add: edge.
+	view ifNotNil: [ view add: edge ].
 	shouldNotBeUsedInLayout ifFalse: [ edge notUseInLayout ].
 	self processEdge: edge.
 	^ edge
@@ -152,8 +152,7 @@ RSEdgeBuilder >> elements: someElements [
 
 { #category : #accessing }
 RSEdgeBuilder >> fromElements [
-	self assert: [ self view notNil ] description: 'You need to set a view'.
-	fromElements ifNil: [ ^ self view elements ].
+	fromElements ifNil: [ ^ self viewElements  ].
 	^ fromElements
 ]
 
@@ -178,29 +177,6 @@ RSEdgeBuilder >> fromObjects: someObjectsOrABlock [
 		ifFalse: [ self fromElements: (view elements select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
 ]
 
-{ #category : #'public - configuration' }
-RSEdgeBuilder >> highlightable [
-	"Make the edges highlightable.
-	Here is an example:
-	
-	| b edges |
-	b := RTMondrian new.
-	b shape circle size: 10; color: Color red.
-	b nodes: (1 to: 20).
-
-	b edges 
-		moveBehind; 
-		highlightable;
-		connectFrom: [ :v | v // 2 ].
-
-	b layout cluster.
-	b
-
-	"
-	actions add: [ :edge | 
-		edge @ RTHighlightable ] 
-]
-
 { #category : #initialization }
 RSEdgeBuilder >> initialize [
 	super initialize.
@@ -222,104 +198,6 @@ RSEdgeBuilder >> isBidirectional [
 	"Return true or false, indicating whether the edge builder is bidirectional or not (i.e., if 
 	edges from A to B, __and__ B to A can be created"
 	^ beDirectional 
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> label: twoArgBlock [
-	"Method useful to label edges. The argument is a two arg block that accept the starting object model and the ending object model. The block has to return a String that will be used to label the edge.
-	
-	Here is an example:
-	| b edges |
-	b := RTMondrian new.
-	b shape circle size: 10; color: Color red.
-	b nodes: (1 to: 20).
-
-	b edges 
-		moveBehind; 
-		highlightable;
-		label: [ :from :to | from asString, '>', to asString ];
-		connectFrom: [ :v | v // 2 ].
-
-	b layout cluster.
-	b
-	"
-	^ self label: twoArgBlock fontSize: TRLabelShape defaultFontSize
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> label: twoArgBlock fontSize: fontSizeAsBlockOrValue [
-	"Method useful to label edges. The argument is a two arg block that accept the starting object model and the ending object model. The block has to return a String that will be used to label the edge.
-	
-	Here is an example:
-	| b edges |
-	b := RTMondrian new.
-	b shape circle size: 10; color: Color red.
-	b nodes: (1 to: 20).
-
-	b edges 
-		moveBehind; 
-		highlightable;
-		label: [ :from :to | from asString, '>', to asString ] fontSize: 5;
-		connectFrom: [ :v | v // 2 ].
-
-	b layout cluster.
-	b
-	"
-	actions add: [ :edge | 
-		| lbl lblEl |
-		lbl := twoArgBlock value: edge from model value: edge to model.
-		lblEl := RTLabel new height: fontSizeAsBlockOrValue; elementOn: lbl.
-		view add: lblEl.
-		TRConstraint stick: lblEl between: edge from and: edge to ] 
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> labelElement: oneArgBlock [
-	"Method useful to label edges. The argument is a one arg block that accept the edge. The block has to return a String that will be used to label the edge.
-	
-	Here is an example:
-	| b edges |
-	b := RTMondrian new.
-	b shape circle size: 10; color: Color red.
-	b nodes: (1 to: 20).
-
-	b edges 
-		moveBehind; 
-		highlightable;
-		labelElement: [ :anEdge | anEdge from model asString, '>', anEdge to model asString ];
-		connectFrom: [ :v | v // 2 ].
-
-	b layout cluster.
-	b
-	"
-	^ self labelElement: oneArgBlock fontSize: TRLabelShape defaultFontSize
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> labelElement: oneArgBlock fontSize: fontSizeAsBlockOrValue [
-	"Method useful to label edges. The argument is a one arg block that accept the edge. The block has to return a String that will be used to label the edge.
-	
-	Here is an example:
-	| b edges |
-	b := RTMondrian new.
-	b shape circle size: 10; color: Color red.
-	b nodes: (1 to: 20).
-
-	b edges 
-		moveBehind; 
-		highlightable;
-		labelElement: [ :anEdge | anEdge from model asString, '>', anEdge to model asString ] fontSize: 5;
-		connectFrom: [ :v | v // 2 ].
-
-	b layout cluster.
-	b
-	"
-	actions add: [ :edge | 
-		| lbl lblEl |
-		lbl := oneArgBlock value: edge.
-		lblEl := RTLabel new height: fontSizeAsBlockOrValue; elementOn: lbl.
-		view add: lblEl.
-		TRConstraint stick: lblEl between: edge from and: edge to ] 
 ]
 
 { #category : #'private - utility' }
@@ -547,7 +425,7 @@ b
 
 { #category : #accessing }
 RSEdgeBuilder >> toElements [
-	toElements ifNil: [ ^ self view elements ].
+	toElements ifNil: [ ^ self viewElements ].
 	^ toElements
 ]
 
@@ -632,4 +510,10 @@ RSEdgeBuilder >> view [
 RSEdgeBuilder >> view: aView [
 	viewHasBeenManuallySet := true.
 	view := aView
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> viewElements [
+	view ifNil: [ ^ #() ].
+	^ view elements.
 ]

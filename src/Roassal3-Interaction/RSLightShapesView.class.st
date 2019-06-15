@@ -22,6 +22,16 @@ RSLightShapesView >> onElement: aView [
 ]
 
 { #category : #hooks }
+RSLightShapesView >> shapes [
+	^ shapes
+]
+
+{ #category : #hooks }
+RSLightShapesView >> shapes: aCollection [
+	shapes := aCollection
+]
+
+{ #category : #hooks }
 RSLightShapesView >> updateView: aView [
 	| extent cam p rect tempShapes |
 	cam := aView camera.

@@ -6,10 +6,44 @@ Class {
 	#superclass : #RSInteraction,
 	#instVars : [
 		'highlightElements',
-		'highlightShape'
+		'highlightShape',
+		'announcer'
 	],
 	#category : #'Roassal3-Interaction'
 }
+
+{ #category : #announce }
+RSHighlightable >> announce: anEvent [
+	announcer ifNil: [ ^ self ].
+	announcer announce: anEvent value
+]
+
+{ #category : #announce }
+RSHighlightable >> announceHighlight: element elements: elements [
+	self announce: [ TSHighlightEvent new
+		interaction: self;
+		element: element;
+		elements: elements ].
+]
+
+{ #category : #announce }
+RSHighlightable >> announceUnHightlight: element elements: elements [
+	self announce: [ TSUnHighlightEvent new
+		interaction: self;
+		element: element;
+		elements: elements ].
+]
+
+{ #category : #accessing }
+RSHighlightable >> announcer [
+	announcer isNil ifTrue: [ announcer := Announcer new ].
+	^ announcer
+]
+
+{ #category : #accessing }
+RSHighlightable >> announcer: anAnnouncer [
+	announcer := anAnnouncer
+]
 
 { #category : #actions }
 RSHighlightable >> doHighlight: element [
@@ -17,6 +51,7 @@ RSHighlightable >> doHighlight: element [
 	self unhighlightRecordedElements: element.
 	elements := self highlightElementsFor: element.
 	elements do: [ :e | self doHighlightElement: e ].
+	self announceHighlight: element elements: elements.
 	element view attributes at: self key put: elements.
 ]
 
@@ -55,6 +90,7 @@ RSHighlightable >> doUnhighlightElement: element [
 	originals do: [ :ab | 
 		args at: 1 put: ab value.
 		s perform: ab key withArguments: args ].
+	att removeKey: #original.
 ]
 
 { #category : #accessing }
@@ -167,8 +203,15 @@ RSHighlightable >> resetHighlightedElements: element [
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedElements: element [
 	element view attributes at: self key ifPresent: [ :elements |
-		elements do: [ :e | self doUnhighlightElement: e ] ].
+		elements do: [ :e | self doUnhighlightElement: e ].
+		self announceUnHightlight: element elements: elements.
+		 ].
 	self resetHighlightedElements: element
+]
+
+{ #category : #announcing }
+RSHighlightable >> when: event do: aBlock [
+	self announcer when: event do: aBlock
 ]
 
 { #category : #public }

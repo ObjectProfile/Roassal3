@@ -151,14 +151,17 @@ v open
 
 { #category : #helpers }
 RSSingleEdgeBuilder class >> verticalLine: inst [
-	inst controlPoints: [ [:from :to | 
+	inst 
+		onElement;
+		controlPoints: [ :ed | [:from :to | 
 		| mid |
 		mid := (from + to)/2.
 		Array
 			with: from
 			with: from x @ mid y
 			with: to x @ mid y
-			with: to ] ].
+			with: to ] ];
+		onModel.
 	^ inst
 ]
 
