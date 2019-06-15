@@ -9,7 +9,8 @@ Class {
 		'freeSpace',
 		'gap',
 		'padding',
-		'bounds'
+		'bounds',
+		'preferredAngle'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -70,13 +71,12 @@ RSRectanglePackLayout >> doExecute: elements [
 
 { #category : #'space-calculation' }
 RSRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
-	| futureCorner |
+	| futureCorner preferredAngleInDegrees |
 	futureCorner := aSpace origin + aRectangle extent.
+	 
+	preferredAngleInDegrees := preferredAngle radiansToDegrees.
 	
-	^	(((futureCorner x - bounds x) max: 0) +
-		((futureCorner y - bounds y) max: 0))
-		* "this is balancing magic"
-		(((futureCorner max: bounds) degrees - 45) abs / 45 + 1)
+	^ (((futureCorner max: bounds) degrees - preferredAngleInDegrees) abs / preferredAngleInDegrees + 1) 
 
 ]
 
@@ -94,7 +94,8 @@ RSRectanglePackLayout >> gap: anObject [
 { #category : #'initialize-release' }
 RSRectanglePackLayout >> initialize [
 	super initialize.
-	gap := 0.2
+	gap := 0.2.
+	preferredAngle := Float pi / 4. "Squared"
 ]
 
 { #category : #execution }
@@ -103,6 +104,16 @@ RSRectanglePackLayout >> packIn: anElement [
 	bounds := bounds max: anElement encompassingRectangle bottomRight + padding.
 	
 	self recalculateFreeSpacesWith: anElement
+]
+
+{ #category : #accessing }
+RSRectanglePackLayout >> preferredAngle [
+	^ preferredAngle
+]
+
+{ #category : #accessing }
+RSRectanglePackLayout >> preferredAngle: anObject [
+	preferredAngle := anObject
 ]
 
 { #category : #'space-calculation' }
