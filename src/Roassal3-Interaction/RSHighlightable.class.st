@@ -218,3 +218,13 @@ RSHighlightable >> when: event do: aBlock [
 RSHighlightable >> withEdges [
 	self highlightElements: [ :e | e connectedEdges copy add: e; yourself ].
 ]
+
+{ #category : #public }
+RSHighlightable >> withIncomingEdges [
+	self highlightElements: [ :e | e incomingEdges copy add: e; yourself ].
+]
+
+{ #category : #public }
+RSHighlightable >> withOutgoingEdges [
+	self highlightElements: [ :e | e outgoingEdges copy add: e; yourself ].
+]
