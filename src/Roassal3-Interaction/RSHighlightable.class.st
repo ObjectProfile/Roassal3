@@ -221,10 +221,10 @@ RSHighlightable >> withEdges [
 
 { #category : #public }
 RSHighlightable >> withIncomingEdges [
-	self highlightElements: [ :e | e incomingEdges copy add: e; yourself ].
+	self highlightElements: [ :e | e incomingEdges copy asOrderedCollection add: e; yourself ].
 ]
 
 { #category : #public }
 RSHighlightable >> withOutgoingEdges [
-	self highlightElements: [ :e | e outgoingEdges copy add: e; yourself ].
+	self highlightElements: [ :e | e outgoingEdges copy asOrderedCollection add: e; yourself ].
 ]
