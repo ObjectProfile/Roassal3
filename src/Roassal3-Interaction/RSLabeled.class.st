@@ -20,8 +20,8 @@ RSLabeled >> createLabel: anElement [
 	| label color set targetLabel |
 	label := shape elementOn: anElement.
 	location stick: label on: anElement.
-	anElement attributes at: #RSLabeled put: label.
-	isHighlightable ifFalse: [ ^ self ].
+	isHighlightable 
+		ifFalse: [ ^ label ].
 	targetLabel := target value: label.
 	color := targetLabel color.
 	targetLabel color: self lowColor.

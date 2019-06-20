@@ -40,6 +40,11 @@ Class {
 TSBimetricLine >> initialize [
 	super initialize.
 	widthFrom := widthTo := 0.
+	self initializeSVG.
+]
+
+{ #category : #initialization }
+TSBimetricLine >> initializeSVG [
 	self svgPath: [ :from :to | 
 		| e w1 w2 dist z |
 		e := 0.001.

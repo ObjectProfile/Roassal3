@@ -74,6 +74,16 @@ TSShape >> border: aBorder [
 ]
 
 { #category : #border }
+TSShape >> borderColor [
+	^ self border color
+]
+
+{ #category : #border }
+TSShape >> borderColor: aColor [
+	self border color: aColor
+]
+
+{ #category : #border }
 TSShape >> borderDo: aBlock [
 	border ifNil: [ border := TSBorder new ].
 	aBlock value: border
