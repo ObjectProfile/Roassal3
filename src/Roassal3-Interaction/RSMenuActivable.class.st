@@ -14,10 +14,7 @@ boxes := RSShapeBuilder composite
 				elementsOn: (1 to: 100).
 v addAll: boxes.
 RSGridLayout on: boxes.
-boxes do: [ :b |
-	b @ (RSMenuActivable new menuDo: [ :menu | menu add: 'Inspect' target: b selector: #inspect argument: #() ])
-].
-""boxes @ (RSMenuActivable new menuDo: [ :menu | menu add: 'Inspect' target: )""
+boxes @ (RSMenuActivable new menuDo: [ :menu :element | menu add: 'Inspect' target: element model selector: #inspect ]).
 v @ RSControlsView.
 v open
 -=-=-=-=

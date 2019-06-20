@@ -59,12 +59,34 @@ v open
 ]
 
 { #category : #'instance creation' }
+RSNormalizer class >> height [ 
+	| n |
+	n := self new.
+	n from: 5.
+	n to: 100.
+	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement height: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	^ n
+
+]
+
+{ #category : #'instance creation' }
 RSNormalizer class >> size [ 
 	| n |
 	n := self new.
 	n from: 5 @ 5.
 	n to: 100 @ 100.
 	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement size: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	^ n
+
+]
+
+{ #category : #'instance creation' }
+RSNormalizer class >> width [ 
+	| n |
+	n := self new.
+	n from: 5.
+	n to: 100.
+	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement width: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
 	^ n
 
 ]
