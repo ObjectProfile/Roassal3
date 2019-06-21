@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAbstractGrapher,
-	#superclass : #RTBuilder,
+	#superclass : #RSAbstractBuilder,
 	#instVars : [
 		'axisConfigurationX',
 		'axisConfigurationY',
@@ -94,7 +94,7 @@ RTAbstractGrapher >> createLegendBuilder [
 
 { #category : #hooks }
 RTAbstractGrapher >> createView [
-	^ RTView new @ RTDraggableView
+	^ RSView new @ RSControlsView
 ]
 
 { #category : #'private - accessing' }

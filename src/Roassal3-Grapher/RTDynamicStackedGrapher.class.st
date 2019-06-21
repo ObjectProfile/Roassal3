@@ -234,5 +234,5 @@ RTDynamicStackedGrapher >> y: anObject [
 
 { #category : #'private - bar management' }
 RTDynamicStackedGrapher >> yValueFor: anObject [
-	^ y rtValue: anObject
+	^ y rsValue: anObject
 ]

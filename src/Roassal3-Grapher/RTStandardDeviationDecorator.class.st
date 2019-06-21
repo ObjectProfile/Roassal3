@@ -34,5 +34,5 @@ RTStandardDeviationDecorator >> render [
 	to := builder getPixelPositionOf: builder maxX @ (average - stdev).
 	self lineFrom: from to: to.
 	shouldHaveLabel
-		ifTrue: [ self label: (labelBlock rtValue: average) asString above: to ]
+		ifTrue: [ self label: (labelBlock rsValue: average) asString above: to ]
 ]

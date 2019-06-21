@@ -3,7 +3,7 @@ I am interaction builder that provides some extra interactions specific for RTGr
 "
 Class {
 	#name : #RTDataInteractionBuilder,
-	#superclass : #RTInteractionBuilder,
+	#superclass : #RSInteractionBuilder,
 	#instVars : [
 		'builder',
 		'dataSet'

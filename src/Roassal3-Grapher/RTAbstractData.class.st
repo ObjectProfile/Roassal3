@@ -365,8 +365,7 @@ RTAbstractData >> resetMinAndMax [
 
 { #category : #hooks }
 RTAbstractData >> resetShapeBuilderForBar [
-	barBuilder := RTShapeBuilder new.
-	barBuilder rectangle.
+	barBuilder := RSShapeBuilder rectangle.
 	
 	"Default width that compute an appropriate width"
 	barBuilder width: [ :object | 

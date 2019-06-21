@@ -120,7 +120,7 @@ RTData >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: tran
 { #category : #utility }
 RTData >> executeUserDeclaredActions [
 	"Execute the actions on all the elements (i.e., dots)"
-	elementActions do: [ :act | act rtValue: elements ]
+	elementActions do: [ :act | act rsValue: elements ]
 ]
 
 { #category : #accessing }
@@ -420,13 +420,13 @@ RTData >> resetShapeBuilderForBar [
 
 { #category : #initialization }
 RTData >> resetShapeBuilderForDot [
-	dotBuilder := RTShapeBuilder new.
-	dotBuilder circle size: 5
+	dotBuilder := RSShapeBuilder circle.
+	dotBuilder size: 5
 ]
 
 { #category : #initialization }
 RTData >> resetShapeBuilderForLine [
-	lineBuilder := RTShapeBuilder new
+	lineBuilder := RSEdgeBuilder line
 ]
 
 { #category : #'public - configuration' }
@@ -471,8 +471,8 @@ RTData >> x: blockOrSymbol [
 				xElement: [ :anElement | 
 					anElement model isDictionary
 						ifTrue: [ anElement model at: blockOrSymbol ]
-						ifFalse: [ blockOrSymbol rtValue: anElement model ] ] ]
-		ifFalse: [ self xElement: [ :anElement | blockOrSymbol rtValue: anElement model ] ]
+						ifFalse: [ blockOrSymbol rsValue: anElement model ] ] ]
+		ifFalse: [ self xElement: [ :anElement | blockOrSymbol rsValue: anElement model ] ]
 ]
 
 { #category : #accessing }
@@ -492,8 +492,8 @@ RTData >> y: blockOrSymbol [
 				yElement: [ :anElement | 
 					anElement model isDictionary
 						ifTrue: [ anElement model at: blockOrSymbol ]
-						ifFalse: [ blockOrSymbol rtValue: anElement model ] ] ]
-		ifFalse: [ self yElement: [ :anElement | blockOrSymbol rtValue: anElement model ] ]
+						ifFalse: [ blockOrSymbol rsValue: anElement model ] ] ]
+		ifFalse: [ self yElement: [ :anElement | blockOrSymbol rsValue: anElement model ] ]
 ]
 
 { #category : #accessing }

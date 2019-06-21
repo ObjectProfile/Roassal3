@@ -30,8 +30,8 @@ Class {
 
 { #category : #'public - adding' }
 RTDynamicGrapher >> add: anObject [
-	| positionInView el |
-	positionInView := self getPixelPositionOf: (x rtValue: anObject) @ (y rtValue: anObject).
+	| positionInView el shapeBuilder |
+	positionInView := self getPixelPositionOf: (x rsValue: anObject) @ (y rsValue: anObject).
 	el := shapeBuilder elementOn: anObject.
 	el translateTo: positionInView.
 	view add: el.

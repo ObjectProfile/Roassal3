@@ -50,16 +50,18 @@ RTDynamicEqualizerGrapher >> numberOfMetrics [
 { #category : #'public - generation' }
 RTDynamicEqualizerGrapher >> object: anObject [
 	| values |
-	values := metrics collect: [ :tupple | tupple second rtValue: anObject ].
+	values := metrics collect: [ :tupple | tupple second rsValue: anObject ].
 	barElements ifNil: [ 
 		barElements := self elementsOn: values.
-		RTHorizontalLineLayout on: barElements.
+		RSHorizontalLineLayout on: barElements.
 		view addAll: barElements.
 		].
 	
-	RTMetricNormalizer new
+	RSNormalizer height 
 		elements: barElements;
-		normalizeHeight: #yourself min: self minY max: self maxX.
+		from: self min;
+		to: self maxX;
+		normalize: #yourself.
 		
 	view signalUpdate
 ]

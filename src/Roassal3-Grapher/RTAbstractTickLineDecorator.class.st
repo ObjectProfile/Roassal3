@@ -40,7 +40,7 @@ RTAbstractTickLineDecorator >> numberOfTicks: nbOfTicks [
 
 { #category : #drawing }
 RTAbstractTickLineDecorator >> step [
-	^ step rtValue: self axis
+	^ step rsValue: self axis
 ]
 
 { #category : #accessing }

@@ -24,7 +24,7 @@ RTHistogramSet >> addedInBuilder: aBuilder [
 		distribution metric: nil.
 		 ].
 	 
-	self points: (distribution annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points)).
+	self points: (distribution annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rsValue: points)).
 	
 	self y: #first.
 	

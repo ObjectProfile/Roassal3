@@ -314,8 +314,8 @@ RTGrapher >> renderDataSetsIn: aView [
 RTGrapher >> renderDataset: aDataset inLegend: aLegend [
 	| color |
 	color := aDataset shouldConnect
-		ifTrue: [ aDataset lineShape color rtValue: RTElement new ]
-		ifFalse: [ aDataset dotShape color rtValue: RTElement new ].
+		ifTrue: [ aDataset lineShape color rsValue: RSElement new ]
+		ifFalse: [ aDataset dotShape color rsValue: RSElement new ].
 	aLegend addColor: color object: aDataset text: #label
 ]
 

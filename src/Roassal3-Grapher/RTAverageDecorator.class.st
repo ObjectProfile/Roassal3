@@ -29,6 +29,6 @@ RTAverageDecorator >> render [
 	self lineFrom: from to: to.
 	
 	shouldHaveLabel ifTrue: [ 
-		self label: ((labelBlock rtValue: average) asString) above: to.
+		self label: ((labelBlock rsValue: average) asString) above: to.
 	]
 ]

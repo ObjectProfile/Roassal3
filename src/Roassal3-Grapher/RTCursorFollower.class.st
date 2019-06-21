@@ -66,12 +66,12 @@ RTCursorFollower >> defaultColor [
 
 { #category : #drawing }
 RTCursorFollower >> getLabelXValueFor: pp [
-	^ (labelXTextConvertion rtValue: pp x) asString
+	^ (labelXTextConvertion rsValue: pp x) asString
 ]
 
 { #category : #drawing }
 RTCursorFollower >> getLabelYValueFor: pp [
-	^ (labelYTextConvertion rtValue: pp y negated) asString
+	^ (labelYTextConvertion rsValue: pp y negated) asString
 ]
 
 { #category : #drawing }

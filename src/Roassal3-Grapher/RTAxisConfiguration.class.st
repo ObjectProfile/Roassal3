@@ -130,7 +130,7 @@ RTAxisConfiguration >> fromPoint: aPoint [
 
 { #category : #action }
 RTAxisConfiguration >> getStringFromNumber: aNumber [
-	^ (self labelConversion rtValue: aNumber) asString
+	^ (self labelConversion rsValue: aNumber) asString
 ]
 
 { #category : #testing }

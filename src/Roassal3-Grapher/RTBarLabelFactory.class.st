@@ -42,7 +42,7 @@ RTBarLabelFactory >> createLabelForModel: anObject [
 
 	| lbl |
 	lbl := self labelShape elementOn: anObject.
-	lbl rotateByDegrees: (rotation rtValue: anObject).
+	lbl rotateByDegrees: (rotation rsValue: anObject).
 	^ lbl
 ]
 
