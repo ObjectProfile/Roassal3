@@ -200,11 +200,11 @@ RSLegendExamples >> example10Location [
 		polymetricWidth: 'number of methods' 
 			height: 'lines of code'
 			box: 'a Pharo class'.
-	b padding: 15.
 	b shape border:(TSBorder new
 		color: Color red;
 		dashArray: #(4));
-		scaleBy: 0.5.
+		scaleBy: 0.5;
+		padding: 15.
 	b location right middle.
 	b build.
 	v @ RSControlsView.

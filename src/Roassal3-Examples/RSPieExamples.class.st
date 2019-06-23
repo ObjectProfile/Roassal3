@@ -1,5 +1,5 @@
 "
-I have examples for RSPieBuilder
+I have examples for RSPieBuilder load the package Roassal3-Pie
 "
 Class {
 	#name : #RSPieExamples,

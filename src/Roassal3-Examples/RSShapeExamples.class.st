@@ -194,7 +194,6 @@ RSShapeExamples >> example06JoinStyles [
 	
 	line := RSEdgeBuilder linePath
 		svgPath: [ path ];
-		color: Color lightGray;
 		width: 25.
 	styles := #('joinMiter' 'joinRound' 'joinBevel').
 	styles doWithIndex: [ :style :i|
@@ -574,7 +573,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		connectFrom: #superclass.
 	RSForceBasedLayout on: v elements.
 	RSEdgeBuilder multiBezier
-		color: (Color blue alpha: 0.1);
+		borderColor: (Color blue alpha: 0.1);
 		elements: v elements;
 		view: v;
 		tension: 0.7;
@@ -608,6 +607,9 @@ RSShapeExamples >> example19Bitmap [
 	elements := RSShapeBuilder bitmap
 		form: #value;
 		interactionDo: [ :i | i popupText: #key ];
+		when: TSMouseClick do: [:m | [   
+			Clipboard clipboardText: m key.
+			self inform: 'Copied icon name' ]];
 		elementsOn: Smalltalk ui icons icons associations.
 	v addAll: elements.
 	RSGridLayout on: elements.
@@ -645,6 +647,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 		size: 30;
 		elementsOn: (1 to: 100).
 	v addAll: boxes.
+	boxes @ RSHighlightable.
 	RSGridLayout on: boxes.
 	boxes @ (RSMenuActivable new menuDo: [ :menu :box | 
 		menu 
@@ -731,8 +734,9 @@ RSShapeExamples >> example21SpockLizard [
 	lb := RSLegendBuilder new.
 	lb defLabel fontSize: 50.
 	lb view: v.
-	lb shape border: TSBorder new.
-	lb padding: 50.
+	lb shape 
+		border: TSBorder new;
+		padding: 50.
 	lb
 		text:
 			'... It''s very simple. Scissors cuts paper, paper covers rock, rock crushes lizard, lizard poisons Spock, Spock smashes scissors, '.
