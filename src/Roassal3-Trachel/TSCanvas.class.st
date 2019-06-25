@@ -304,10 +304,13 @@ TSCanvas >> removeFixedShape: aShape [
 { #category : #'adding removing shapes' }
 TSCanvas >> removeShape: shape [
 	| evt collection |
-	collection := shape isFixed
+	(shapes includes: shape) 
+		ifTrue: [ shapes remove: shape ]
+		ifFalse: [ (fixedShapes includes: shape) ifTrue: [ fixedShapes remove: shape ] ].
+"	collection := shape isFixed
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
-	collection remove: shape.
+	collection remove: shape."
 	shape parent: nil.
 	evt := TSShapeRemovedEvent new shape: shape.
 	self announce: evt.

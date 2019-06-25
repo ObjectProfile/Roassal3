@@ -65,7 +65,7 @@ TSTransitionAnimationTest >> testStepEvent [
 	self assert: value isNil.
 	self assert: loop equals: 0.
 	self assert: animation endTime isNil.
-	self runAnimation: animation threshold: 310.
+	self runAnimation: animation threshold: 3000.
 	self deny: value isNil.
 	self assert: loop equals: 3.
 	self deny: animation endTime isNil.
