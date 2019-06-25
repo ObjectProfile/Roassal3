@@ -18,6 +18,7 @@ TSComposite >> add: aShape [
 
 { #category : #adding }
 TSComposite >> addAll: aCollection [
+	shapes ifNil: [ shapes := TSGroup new: aCollection size ].
 	aCollection do: [ :s| self add: s trachelShape ].
 ]
 
@@ -29,6 +30,18 @@ TSComposite >> addBasicShape: aShape [
 { #category : #adding }
 TSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
+]
+
+{ #category : #public }
+TSComposite >> adjustToChildren [
+	| rect delta |
+	shapes ifNil: [ ^ self ].
+	rect := shapes encompassingRectangle.
+	delta := rect rsCenter.
+	shapes do: [ :s | s translateBy: delta negated ].
+	self 
+		extent: rect extent;
+		translateTo: delta.
 ]
 
 { #category : #accessing }
@@ -112,16 +125,11 @@ TSComposite >> shapes: aTSGroup [
 	this method changes the position of the shapes and set the position of this composite shape
 	to the center of the encompassingRectangle.
 	"
-	| rect delta |
-	rect := aTSGroup encompassingRectangle.
-	delta := rect rsCenter.
 	aTSGroup do: [ :s | 
-		s isInACanvas ifTrue: [ s remove ].
-		s translateBy: delta negated ].
-	self 
-		extent: rect extent;
-		translateTo: delta.
+		s isInACanvas 
+			ifTrue: [ s remove ] ].
 	self addAll: aTSGroup.
+	self adjustToChildren.
 
 	
 ]

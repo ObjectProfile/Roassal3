@@ -64,6 +64,11 @@ RSShapedObject >> onMyselfDo: ablock [
 	ablock value: self.
 ]
 
+{ #category : #accessing }
+RSShapedObject >> privateTrachelShape: shape [
+	trachelShape := shape
+]
+
 { #category : #removing }
 RSShapedObject >> remove [
 	self subclassResponsibility
@@ -85,7 +90,7 @@ RSShapedObject >> trachelShape [
 RSShapedObject >> trachelShape: aShape [
 	| old |
 	old := trachelShape. 
-	trachelShape := aShape.
+	self privateTrachelShape: aShape.
 	old ifNil: [ ^ self ].
 	aShape loadShape: old.
 	old parent shapes replaceAll: old with: trachelShape.

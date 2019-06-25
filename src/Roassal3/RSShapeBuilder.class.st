@@ -128,11 +128,39 @@ v open
 		elementClass: RSElement;
 		color: Color black;
 		addAction: (RSAction new action: [:el | 
-			| text |
-			text := el text.
+			| text tshape |
+			tshape := el trachelShape.
+			text := tshape text.
 			text ifNil: [ text := el model ].
-			el text: text asString ] ) 
+			tshape text: text asString ] ) 
 		yourself 
+]
+
+{ #category : #'instance creation' }
+RSShapeBuilder class >> multiline [ 
+	| shape |
+	shape := self label.
+	shape addAction:  (RSAction new action: [:e |
+		| tshape composite |
+		tshape := e trachelShape.
+		composite := TSComposite new.
+		composite addAll: (tshape text lines collect: [:line |
+			| label |
+			label := tshape copy.
+			label initializeMatrix. 
+			label text: (line copyReplaceAll: String tab with: '   ').
+			label announcer: nil.
+			label ]).
+		
+		RSVerticalLineLayout new 
+			alignLeft; 
+			gapSize: 0; 
+			on: composite shapes.
+		composite announcer: tshape announcer.
+		composite adjustToChildren.
+		e privateTrachelShape: composite.
+		 ]).
+	^ shape
 ]
 
 { #category : #'instance creation - polygon' }

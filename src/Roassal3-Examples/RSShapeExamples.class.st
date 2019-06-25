@@ -931,3 +931,50 @@ RSShapeExamples >> example26AnimatedPopup [
 	
 	v open.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example27MultilineLabelBasic [
+	<script: 'self new example27MultilineLabelBasic'>
+	| v shape |
+	v := RSView new.
+	shape := RSShapeBuilder multiline
+		font: 20;
+		italic.
+	v add:(shape elementOn: '"tu est loin, 
+très loin de tous ces regards vicieux 
+qui s''alimentent de ta lumière"').
+	v elements last when: TSMouseClick do: [ :evt | v elements last inspect ].
+	v showEncompassingRectangles.
+	v open setLabel: 'Multiline'
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example28MultilineLabel [
+	<script: 'self new example28MultilineLabel'>
+	| v shape box elements |
+	v := RSView new.
+	box := RSShapeBuilder box 
+		size: 20;
+		interactionDo: [:i | i popup label: RSShapeBuilder multiline ];
+		onMyselfDo: [:m | [:e | 
+			e when: TSMouseClick do: [ e inspect ] ]].
+	shape := RSShapeBuilder composite shapes: [ :m | 
+		| methods |
+		methods := box elementsOn: m methods.
+		RSGridLayout on: methods.
+		methods.
+		];
+		color: (Color purple alpha: 0.3);
+		padding: 10;
+		interactionDo: [:i | i draggable; popup ].
+	elements := shape elementsOn: TSShape withAllSubclasses.
+	RSEdgeBuilder orthoVertical
+		withVerticalAttachPoint;
+		view: v;
+		elements: elements;
+		connectFrom: #superclass.
+	v addAll: elements.
+	RSTreeLayout on: elements.
+	v @ RSControlsView.
+	v open setLabel: 'Example with multiline labels'.
+]

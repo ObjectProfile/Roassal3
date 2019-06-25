@@ -42,6 +42,11 @@ TSGroup >> asElementOn: model [
 			shapes: self).
 ]
 
+{ #category : #converting }
+TSGroup >> asGroup [
+	^ self
+]
+
 { #category : #accessing }
 TSGroup >> edges [
 	^ self select: [ :o | o class == RSEdge ]

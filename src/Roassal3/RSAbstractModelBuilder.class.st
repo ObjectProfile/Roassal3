@@ -32,7 +32,7 @@ RSAbstractModelBuilder >> actions [
 { #category : #actions }
 RSAbstractModelBuilder >> addAction: action [
 	self actions isEmpty 
-		ifTrue: [ actions := OrderedCollection new ].
+		ifTrue: [ actions := OrderedCollection new: 2 ].
 	self actions add: action.
 ]
 

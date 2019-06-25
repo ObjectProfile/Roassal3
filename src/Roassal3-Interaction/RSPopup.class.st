@@ -77,6 +77,7 @@ RSPopup >> initializeShape [
 	shape := RSShapeBuilder composite shapes: [ :model | 
 		| l b |
 		l := label elementOn: model.
+		l translateTo: 0@0.
 		b := box elementOn: l.
 		TSGroup with: b with: l ].
 	
@@ -88,6 +89,11 @@ RSPopup >> initializeShape [
 { #category : #accessing }
 RSPopup >> label [
 	^ label
+]
+
+{ #category : #accessing }
+RSPopup >> label: aShape [
+	label := aShape
 ]
 
 { #category : #hooks }
