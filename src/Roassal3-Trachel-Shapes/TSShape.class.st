@@ -255,8 +255,8 @@ TSShape >> resetPath [
 { #category : #actions }
 TSShape >> setAsFixed [
 	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
-	isFixed := true.
 	parent setAsFixed: self.
+	isFixed := true.
 ]
 
 { #category : #'accessing - computed' }

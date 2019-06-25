@@ -36,6 +36,31 @@ RSAbstractModelBuilder >> addAction: action [
 	self actions add: action.
 ]
 
+{ #category : #commands }
+RSAbstractModelBuilder >> allowRepeatCommands [
+	"with this commands are uniques and we keep the last command if they are equal.
+	EG with hasUniqueCommands equals true
+	.=.=
+	RSShapeBuilder box 
+		color: [ Color red ];
+		color: [ Color blue ];
+		color: Color blue;
+		color: nil.
+	.=.=
+	In this case commands collection are { [ red ]. [ blue ]. Color blue. nil }.
+	.=.=
+	RSShapeBuilder box 
+		uniqueCommands;
+		color: [ Color red ];
+		color: [ Color blue ];
+		color: Color blue;
+		color: nil.
+	.=.=
+	In this case commands collection are { nil }.
+	"
+	hasUniqueCommands := false
+]
+
 { #category : #private }
 RSAbstractModelBuilder >> basicElementOn: object index: index [
 	| el shape |
@@ -154,7 +179,7 @@ RSAbstractModelBuilder >> hasUniqueCommands [
 ]
 
 { #category : #'reflective operations' }
-RSAbstractModelBuilder >> if: booleanBlock actions: actionsBlock [
+RSAbstractModelBuilder >> if: booleanBlock then: actionsBlock [
 	commands add: (RSConditionCommand new 
 		message: actionsBlock;
 		builder: self;
@@ -168,7 +193,7 @@ RSAbstractModelBuilder >> initialize [
 	super initialize.
 	self onModel.
 	commands := OrderedCollection new.
-	hasUniqueCommands := false.
+	hasUniqueCommands := true.
 ]
 
 { #category : #accessing }
@@ -204,8 +229,10 @@ RSAbstractModelBuilder >> onModel [
 { #category : #dependencies }
 RSAbstractModelBuilder >> release [ 
 	super release.
+	actions := nil.
 	self commands do: #release.
 	self commands: nil.
+	
 ]
 
 { #category : #commands }

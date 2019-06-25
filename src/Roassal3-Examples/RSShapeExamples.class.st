@@ -93,7 +93,7 @@ RSShapeExamples >> example03LinePath [
 			].
 		 ] ].
 	line := RSEdgeBuilder linePath
-		color: [:m | m alpha: 0.4];
+		borderColor: [:m | m alpha: 0.4];
 		svgPath: [path];
 		width: 4;
 		capRound.
@@ -194,6 +194,7 @@ RSShapeExamples >> example06JoinStyles [
 	
 	line := RSEdgeBuilder linePath
 		svgPath: [ path ];
+		borderColor: Color gray;
 		width: 25.
 	styles := #('joinMiter' 'joinRound' 'joinBevel').
 	styles doWithIndex: [ :style :i|
@@ -423,7 +424,7 @@ RSShapeExamples >> example13Arrow [
 		fontSize: 20;
 		text: #asUppercase;
 		onElement;
-		if: [ :e | e index = 3 ] actions: [ :s | s fontSize: 10 ].
+		if: [ :e | e index = 3 ] then: [ :s | s fontSize: 10 ].
 	labels := label elementsOn: #('Keep' 'calm' 'and' 'roassal' 'on').
 	view addAll: labels.
 	RSVerticalLineLayout new alignCenter on: labels.
@@ -696,7 +697,7 @@ RSShapeExamples >> example21SpockLizard [
 		popup;
 		draggable;
 		onElement;
-		if: [ :e | e index = 5 ] actions: [ :s | s scaleBy: 2 ];
+		if: [ :e | e index = 5 ] then: [ :s | s scaleBy: 2 ];
 		shapes: [ :e | 
 			circle := TSEllipse new color: Color white.
 			hand := svg elementOn: e model index: e index.

@@ -25,6 +25,7 @@ RSRoassalTest >> testCommands [
 	self assert: shape commands size equals: 1.
 	
 	shape := RSShapeBuilder box
+		allowRepeatCommands;
 		size: 10;
 		size: [ 100 ];
 		size: [ :m | m ];

@@ -61,7 +61,7 @@ RSPieExamples >> example02Emphasize [
 		yourself.
 	pie shape 
 		if: [ :cls | cls numberOfMethods > 100 ] 
-		actions: [ :s |
+		then: [ :s |
 			s 
 				onElement;
 			 	position: [ :e | | angle |
@@ -465,6 +465,7 @@ RSPieExamples >> example14Pyramid [
 		objects: data;
 		slice: #first.
 	b shape
+		allowRepeatCommands;
 		externalRadius: 200;
 		color: #third;
 		interactionDo: [:i| i popupText: #second ];
@@ -486,6 +487,7 @@ RSPieExamples >> example15Clockwise [
 	r := SharedRandom globalGenerator.
 	b objects: ((1 to: 10) collect: [:e | r next]) sort.
 	b shape
+		allowRepeatCommands;
 		onElement;
 		color: TSScale sky8;
 		externalRadius: 200;
@@ -643,6 +645,7 @@ RSPieExamples >> example19Buttons [
 		objects: { 1@0. 1@ -1. 0@ -1. -1@ -1. -1@0. -1@1. 0@1. 1@1 };
 		slice: [:ob | 1 ].
 	pie shape
+		allowRepeatCommands;
 		innerRadius:10;
 		onElement; 
 		border: (TSBorder new color: Color lightGray);
@@ -801,7 +804,7 @@ RSPieExamples >> example21ProgressLabel [
 		fontSize: 20;
 		color: scale;
 		text: '';
-		if: #notNil actions: [ :s |
+		if: #notNil then: [ :s |
 			s text: [ :obj | (obj linesOfCode*100/pie totalSum) rounded asString,'%' ]
 			].
 	l := label element.

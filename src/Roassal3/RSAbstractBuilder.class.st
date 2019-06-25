@@ -5,9 +5,9 @@ Class {
 	#name : #RSAbstractBuilder,
 	#superclass : #RSObject,
 	#instVars : [
-		'view',
 		'shape',
-		'elements'
+		'elements',
+		'container'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -17,6 +17,11 @@ RSAbstractBuilder >> build [
 	"Public method that produces the visualization"
 	self renderIn: self view.
 	^ elements
+]
+
+{ #category : #accessing }
+RSAbstractBuilder >> container: aRSViewORTSGroup [
+	container := aRSViewORTSGroup
 ]
 
 { #category : #accessing }
@@ -57,10 +62,10 @@ RSAbstractBuilder >> shape: aRSShapeBuilder [
 
 { #category : #accessing }
 RSAbstractBuilder >> view [
-	^ view ifNil: [ view := self createView ]
+	^ container ifNil: [ container := self createView ]
 ]
 
 { #category : #accessing }
 RSAbstractBuilder >> view: aRSView [
-	view := aRSView
+	self container: aRSView
 ]

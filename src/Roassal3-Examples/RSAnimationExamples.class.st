@@ -327,7 +327,7 @@ RSAnimationExamples >> example06Atom [
 		onElement;
 		matrixDo: [ :e | [ :m | m rotateByRadians: e index * Float pi/4 ] ];
 		if: [ :e | e index = 1 ] 
-			actions: [ :s | s color: Color black ];
+			then: [ :s | s color: Color black ];
 		elementsOn: { 40@40. extent. extent. extent. extent}.
 	v addAll: elements.
 	elements := RSShapeBuilder ellipse
@@ -397,7 +397,7 @@ RSAnimationExamples >> example07Psycho [
 				  ] ] ];
 		width: [ :e | (e attributes at: #zn) /2 ];
 		onModel;"change context, now the bock argument recives the model, a number between [1 50]"
-		color: [ :m | color scale: m even ];
+		borderColor: [ :m | color scale: m even ];
 		from: [ :m | m even
 			ifTrue: [-25@ -25 ]
 			ifFalse: [ 25@25 ] ];
@@ -440,7 +440,7 @@ RSAnimationExamples >> example07b [
 				ifFalse: [ sc2 scale: (e model*unit - theta) sin ].
 			e 
 				width:  sz /2;
-				color: (color scale: i even);
+				borderColor: (color scale: i even);
 				from: (i even
 					ifTrue: [-25@ -25 ]
 					ifFalse: [ 25@25 ]);
@@ -1263,8 +1263,8 @@ RSAnimationExamples >> example19Gris [
 		radius: [ :m | m * label width ];
 		border: border;
 		onElement;
-		if: [ :e | e index = 5 ] actions: [ :s| s border: (TSBorder new width: 1.5) ];
-		if: [ :e | e index = 4 ] actions: [ :s | s border: (TSBorder new dashArray: #(4)) ].
+		if: [ :e | e index = 5 ] then: [ :s| s border: (TSBorder new width: 1.5) ];
+		if: [ :e | e index = 4 ] then: [ :s | s border: (TSBorder new dashArray: #(4)) ].
 		
 	v addAll: (shape elementsOn: { 0.6. 0.64. 1.05. 1.20. 1.7 }).
 	
@@ -1275,8 +1275,8 @@ RSAnimationExamples >> example19Gris [
 		noPaint;
 		border: (TSBorder new width: 0.5);
 		radius: [ :m | m * 5 ];
-		if: [ :m | m = 1 ] actions: [ :s | s paint: Color black ];
-		if: [ :m | m = 2 ] actions: [ :s | s radius: [ :m | m * 6 ] ].
+		if: [ :m | m = 1 ] then: [ :s | s paint: Color black ];
+		if: [ :m | m = 2 ] then: [ :s | s radius: [ :m | m * 6 ] ].
 		
 	animation := [ :e :seconds :target :dir | |  ang |
 		ang := r next * Float pi * 2.
@@ -1743,7 +1743,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 					b: (c red * 255) - 5 range: 255) ]
 			}.
 			c := (colorCase scale: case) value.
-			e color: (c setAlpha: fadeRatio).
+			e color: (c alpha: fadeRatio).
 			 ]. ].
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
 	v open extent: 800@500; setLabel: 'Roassal'.
@@ -1786,8 +1786,8 @@ RSAnimationExamples >> example28AnimationCircle [
 	shape := RSShapeBuilder circle
 		color: Color white;
 		onElement;
-		if: [ :e | e index = 1 ] actions: [ :s | s color: Color red ];
-		if: [ :e | e index = 2 ] actions: [ :s | s color: Color green ].
+		if: [ :e | e index = 1 ] then: [ :s | s color: Color red ];
+		if: [ :e | e index = 2 ] then: [ :s | s color: Color green ].
 	line := RSSingleEdgeBuilder line
 		width: 0.1;
 		color: Color white.
@@ -2203,7 +2203,7 @@ RSAnimationExamples >> example35Perlin [
 			color := TSScale linear range: { c1. c2 }; scale: heading.
 			alpha := life * 5 / maxLife min: 1.
 			alpha := (maxLife - life * 5 )/ maxLife min: alpha.
-			color setAlpha: alpha.
+			color alpha: alpha.
 			e color: color.
 			].
 		 ] ].
@@ -2366,7 +2366,7 @@ RSAnimationExamples >> example39ForceLayout [
 		draggable;
 		color: Color purple trans;
 		size: 10;
-		if: [ :cls | cls = Collection ] actions: [ :s | s color: Color red ];
+		if: [ :cls | cls = Collection ] then: [ :s | s color: Color red ];
 		elementsOn: Collection withAllSubclasses.
 
 	RSEdgeBuilder line
