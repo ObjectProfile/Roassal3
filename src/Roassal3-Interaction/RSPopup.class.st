@@ -96,6 +96,11 @@ RSPopup >> label: aShape [
 	label := aShape
 ]
 
+{ #category : #public }
+RSPopup >> multiline [
+	self label: RSShapeBuilder multiline
+]
+
 { #category : #hooks }
 RSPopup >> onElement: anElement [
 	self registerRemoveEventsOn: anElement.

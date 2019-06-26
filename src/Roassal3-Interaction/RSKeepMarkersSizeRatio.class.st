@@ -40,10 +40,7 @@ Example:
 "
 Class {
 	#name : #RSKeepMarkersSizeRatio,
-	#superclass : #RSInteraction,
-	#instVars : [
-		'menuBlock'
-	],
+	#superclass : #RSAbstractScaleInteraction,
 	#category : #'Roassal3-Interaction'
 }
 
@@ -56,7 +53,7 @@ RSKeepMarkersSizeRatio >> onElement: anEdge [
 	sizes := markers collect: [:marker | marker shape extent].
 	offsets := markers collect: #offset.
 	view when: TSScaleChangedEvent do: [ :evt | | delta |
-		delta := 1 / evt newScale.
+		delta := self scaleFor: evt.
 		markers doWithIndex: [ :marker :index | 
 			marker shape extent: delta * (sizes at: index).
 			marker offset: delta * (offsets at: index)  ] ].

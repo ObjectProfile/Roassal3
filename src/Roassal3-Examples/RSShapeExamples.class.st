@@ -768,7 +768,7 @@ RSShapeExamples >> example22ScaleEvents [
 	v @ RSControlsView.
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (TSMarker new 
-			offsetRatio: 0.1;
+			offset: 5.5;
 			shape: (RSShapeBuilder triangle 
 				color: Color red;
 				size: 10;
@@ -779,7 +779,8 @@ RSShapeExamples >> example22ScaleEvents [
 		elements: v elements;
 		connectFrom: #superclass.
 	"v edges @ RSKeepBorderWidthRatio. Not necessary since all edges shares the same border"
-	
+	RSKeepBorderWidthRatio reset.
+	RSKeepMarkersSizeRatio reset.
 	v edges first @ RSKeepBorderWidthRatio. 
 	v edges first @ RSKeepMarkersSizeRatio.
 	RSHorizontalTreeLayout new on: v elements.
@@ -955,7 +956,7 @@ RSShapeExamples >> example28MultilineLabel [
 	v := RSView new.
 	box := RSShapeBuilder box 
 		size: 20;
-		interactionDo: [:i | i popup label: RSShapeBuilder multiline ];
+		interactionDo: [:i | i popup multiline ];
 		onMyselfDo: [:m | [:e | 
 			e when: TSMouseClick do: [ e inspect ] ]].
 	shape := RSShapeBuilder composite shapes: [ :m | 

@@ -37,10 +37,7 @@ Here is an example:
 "
 Class {
 	#name : #RSKeepBorderWidthRatio,
-	#superclass : #RSInteraction,
-	#instVars : [
-		'menuBlock'
-	],
+	#superclass : #RSAbstractScaleInteraction,
 	#category : #'Roassal3-Interaction'
 }
 
@@ -52,6 +49,7 @@ RSKeepBorderWidthRatio >> onElement: anElement [
 	view := anElement view.
 	width := anElement border width.
 	view when: TSScaleChangedEvent do: [:evt | 
-		anElement border width: 1 / evt newScale * width.
+		
+		anElement border width: (self scaleFor: evt) * width.
 		view signalUpdate. ]. 
 ]
