@@ -1,13 +1,7 @@
 "
-I am experimental class.
-Add to the view the next interactions
-- RSZoomableView
-- RSDraggableView
- 
-- RSMenuActivable
-- RSZoomMove
-- RSFocusOnCenterScaleMove
+I am the general control interaction for one view with general elements.
 
+You can zoom it, zoom out, drag the view, zoomToFit it, and move it with the arrow keys, and add RSLightShapesView
 "
 Class {
 	#name : #RSControlsView,
@@ -22,6 +16,11 @@ Class {
 	],
 	#category : #'Roassal3-Interaction'
 }
+
+{ #category : #'instance creation' }
+RSControlsView class >> wantsUniqueInstance [ 
+	^ false
+]
 
 { #category : #hooks }
 RSControlsView >> addLegendOn: aView [
@@ -77,12 +76,9 @@ RSControlsView >> noResizeCanvas [
 
 { #category : #hooks }
 RSControlsView >> onElement: aView [
-	| rect |
 	aView @ RSZoomableView.
 	aView @ RSDraggableView.
 	
-	rect := aView encompassingRectangle.
-	speed := (rect width min: rect height) * 0.01.
 	"the zoom to fit interaction. It sets the first collection of shapes that this view has"
 	(keyUpActions at: 49) shapes: aView shapes.
 	
@@ -92,8 +88,14 @@ RSControlsView >> onElement: aView [
 	 ].
 	
 	aView
-		when: TSKeyDown do: [ :evt | self processKeyDown: evt ];
-		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
+		when: TSKeyDown do: [ :evt | 
+			speed ifNil: [| rect |
+				rect := aView encompassingRectangle.
+				speed := (rect width min: rect height) * 0.01.
+			].
+			self processKeyDown: evt ];
+		when: TSKeyUp do: [ :evt | self processKeyUp: evt.
+			speed := nil ].
 	self addLegendOn: aView.
 	RSMenuActivable new 
 		menuDo: [:menu :viw | 

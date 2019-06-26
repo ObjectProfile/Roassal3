@@ -167,8 +167,8 @@ RSUMLClassBuilder >> renderer [
 
 { #category : #accessing }
 RSUMLClassBuilder >> view [
-	^ view ifNil: [ 
-		view := RSView new.
-		view @ RSControlsView.
-		view ]
+	^ container ifNil: [ 
+		container := RSView new.
+		container @ RSControlsView.
+		container ]
 ]

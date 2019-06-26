@@ -1,3 +1,6 @@
+"
+I allow to inspect another view or windows. It can be configurable to set the kind of view you want to inspect
+"
 Class {
 	#name : #RSInspectable,
 	#superclass : #RSInteraction,
@@ -42,7 +45,7 @@ RSInspectable >> initialize [
 
 { #category : #hooks }
 RSInspectable >> inspectElement: anElement [
-	| oldInspectorWindow |
+	| oldInspectorWindow viewMorph |
 	self deselectIfNecessary.
 	selectedElement := anElement.
 	highlightable doHighlightElement: selectedElement.
@@ -50,13 +53,16 @@ RSInspectable >> inspectElement: anElement [
 	oldInspectorWindow := inspectorWindow.
 	inspectorWindow := inspectElementBlock rsValue: anElement model.
 	inspectorWindow setLabel: anElement model asString.
-	
+	viewMorph := anElement view canvas morph.
+	viewMorph root activate.
+	"viewMorph takeKeyboardFocus."
 	"If there is a previous inspector window, then we use the same position and extent"
 	oldInspectorWindow ifNil: [ ^ self ].
 	inspectorWindow position: oldInspectorWindow position.
 	inspectorWindow extent: oldInspectorWindow extent.
-	oldInspectorWindow delete
-
+	oldInspectorWindow delete.
+	oldInspectorWindow := nil
+	
 	
 ]
 
