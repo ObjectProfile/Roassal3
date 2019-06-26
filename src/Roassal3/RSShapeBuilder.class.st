@@ -156,7 +156,8 @@ RSShapeBuilder class >> multiline [
 			alignLeft; 
 			gapSize: 0; 
 			on: composite shapes.
-		composite announcer: tshape announcer.
+		tshape hasEventCallback 
+			ifTrue: [ composite announcer: tshape announcer ].
 		composite adjustToChildren.
 		e privateTrachelShape: composite.
 		 ]).

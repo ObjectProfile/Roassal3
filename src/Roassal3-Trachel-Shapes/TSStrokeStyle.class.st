@@ -30,6 +30,7 @@ TSStrokeStyle >> dashArray [
 
 { #category : #accessing }
 TSStrokeStyle >> dashArray: array [
+	self assert: array isArray description: 'enter an array of numbers'.
 	dashArray := array
 ]
 
