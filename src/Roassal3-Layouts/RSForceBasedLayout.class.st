@@ -118,13 +118,13 @@ RSForceBasedLayout >> doNotUseProgressBar [
 	shouldUseProgressBar := false	
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> fix: aNode at: aPoint [
 
 	fixedNodes at: aNode put: aPoint  
 ]
 
-{ #category : #algorithm }
+{ #category : #accessing }
 RSForceBasedLayout >> gravityAt: aPoint [
 
 	center := aPoint 
@@ -181,7 +181,7 @@ RSForceBasedLayout >> length: aFloat [
 	length := aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> lengthOf: anEdge [
 
 	^ lengths at: anEdge ifAbsent: [ ^ length ] 
@@ -242,6 +242,11 @@ RSForceBasedLayout >> removeAllEdges [
 { #category : #updating }
 RSForceBasedLayout >> removeEdge: ed [
 	edges remove: ed
+]
+
+{ #category : #'accessing - computed' }
+RSForceBasedLayout >> removeFix: aNode [
+	fixedNodes removeKey: aNode ifAbsent: []
 ]
 
 { #category : #updating }
@@ -310,26 +315,26 @@ RSForceBasedLayout >> runLayoutSimply [
 					self step ] ]
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> set: aNode charge: aFloat [ 
 
 	charges at: aNode put: aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> set: anEdge length: aFloat [ 
 
 	lengths at: anEdge put: aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> set: anEdge length: aFloat strength: another [
 
 	lengths at: anEdge put: aFloat.
 	strengths at: anEdge put: another 
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> set: anEdge strength: aFloat [ 
 
 	strengths at: anEdge put: aFloat
@@ -406,7 +411,7 @@ RSForceBasedLayout >> strength: aFloat [
 	strength := aFloat
 ]
 
-{ #category : #algorithm }
+{ #category : #'accessing - computed' }
 RSForceBasedLayout >> strengthOf: anEdge [
 
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
