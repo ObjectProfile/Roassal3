@@ -2382,7 +2382,7 @@ RSAnimationExamples >> example39ForceLayout [
 		yourself.
 	v animation repeat onStepDo: [ :t | 
 		layout step ].
-	v camera zoomToFit: v extent rectangle: ( 0@0 corner: 400 asPoint).
+
 	v open
 	
 

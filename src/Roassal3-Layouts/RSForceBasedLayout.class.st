@@ -158,7 +158,7 @@ RSForceBasedLayout >> initialize [
 	gravity := 0.1.
 	friction := 0.9.
 	theta := 0.8.
-	center := 200 @ 200.
+	center := 0@0.
 	alpha := 0.1.
 	self useProgressBar
 ]
