@@ -2577,12 +2577,13 @@ for Pharo 7 and Pharo 8.'.
 
 { #category : #examples }
 RSAnimationExamples >> example42RectangleForceLayout [
-	<script: 'self new example42ForceLayoutInRectangle'>
+	<script: 'self new example42RectangleForceLayout'>
 	| view classes layout |
 	view := RSView new.
+
 	classes := RSShapeBuilder box
 		draggable;
-		color: [Color random alpha: 0.5 ];
+		color: [ Color random alpha: 0.8 ];
 		size: 10;
 		elementsOn: Collection withAllSubclasses.
 	RSEdgeBuilder line
@@ -2591,13 +2592,16 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		color: (Color blue alpha: 0.5);
 		connectFrom: #superclass to: #yourself.
 	view addAll: classes.
+	
 	layout := RSRectangleForceLayout new
 		nodes: classes;
 		edges: view edges;
 		start: classes;
 		yourself.
 	view animation repeat 
-		onStepDo: [ :t |layout step ].
+		onStepDo: [ :t | layout step ].
+
+	"Apply forces from the window borders to the elements."
 	view when: TSExtentChangedEvent do: [ :evt |
 		| camera origin corner |
 		camera := view canvas camera.
@@ -2605,6 +2609,15 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		corner := camera fromPixelToSpace: view canvas extent.
 		layout enclosingRectangle: (origin corner: corner).
 	].
+
+	"Attach the dragged element to the cursor."
+	classes do: [ :each | 
+		each 
+			when: TSMouseDragging do: [:evt | 
+				layout fix: each at: evt position - (each extent /  2) ];
+			when: TSMouseDragEnd do: [:evt |
+				layout removeFix: each ] ].
+
 	view camera scale: 2.
 	view open
 ]
