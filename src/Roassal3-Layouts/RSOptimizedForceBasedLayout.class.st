@@ -19,12 +19,6 @@ RSOptimizedForceBasedLayout >> executeOnElements: elements [
 ]
 
 { #category : #accessing }
-RSOptimizedForceBasedLayout >> prepareNodes: nodeElements [
-	"Probably something has to be done here"
-	super prepareNodes: nodeElements
-]
-
-{ #category : #accessing }
 RSOptimizedForceBasedLayout >> setEdgesFromElements: elements [ 
 	| view realElements realEdges mockEdges |
 	elements isEmpty ifTrue: [ ^ self ].
