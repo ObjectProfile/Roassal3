@@ -125,6 +125,16 @@ RSForceBasedLayout >> fix: aNode at: aPoint [
 ]
 
 { #category : #accessing }
+RSForceBasedLayout >> friction [
+	^ friction
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> friction: anObject [
+	friction := anObject
+]
+
+{ #category : #accessing }
 RSForceBasedLayout >> gravityAt: aPoint [
 
 	center := aPoint 
