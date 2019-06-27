@@ -124,7 +124,7 @@ RSUmlExamples >> example06CustomText [
 		g ]).
 	renderer methodShape 
 		color: Color white;
-		if: #isOverridden actions: [ :s | s color: Color cyan ].
+		if: #isOverridden then: [ :s | s color: Color cyan ].
 	renderer varShape 
 		color: Color white.
 	builder build.

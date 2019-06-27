@@ -10,12 +10,6 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #updating }
-RSOptimizedForceBasedLayout >> addEdges: someEdges [
-	"Probably something has to be done here"
-	super addEdges: someEdges
-]
-
 { #category : #hook }
 RSOptimizedForceBasedLayout >> executeOnElements: elements [
 	"The argument is the set of Roassal elements"

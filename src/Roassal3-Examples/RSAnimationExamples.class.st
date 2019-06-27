@@ -2382,7 +2382,7 @@ RSAnimationExamples >> example39ForceLayout [
 		yourself.
 	v animation repeat onStepDo: [ :t | 
 		layout step ].
-	v camera zoomToFit: v extent rectangle: ( 0@0 corner: 400 asPoint).
+
 	v open
 	
 
@@ -2573,6 +2573,40 @@ for Pharo 7 and Pharo 8.'.
 
 	v open setLabel: 'Basic Animation'.
 	"TODO add animation to line3 and line4, hide and remove with animation these elements"
+]
+
+{ #category : #examples }
+RSAnimationExamples >> example42RectangleForceLayout [
+	<script: 'self new example42ForceLayoutInRectangle'>
+	| view classes layout |
+	view := RSView new.
+	classes := RSShapeBuilder box
+		draggable;
+		color: [Color random alpha: 0.5 ];
+		size: 10;
+		elementsOn: Collection withAllSubclasses.
+	RSEdgeBuilder line
+		view: view;
+		elements: classes;
+		color: (Color blue alpha: 0.5);
+		connectFrom: #superclass to: #yourself.
+	view addAll: classes.
+	layout := RSRectangleForceLayout new
+		nodes: classes;
+		edges: view edges;
+		start: classes;
+		yourself.
+	view animation repeat 
+		onStepDo: [ :t |layout step ].
+	view when: TSExtentChangedEvent do: [ :evt |
+		| camera origin corner |
+		camera := view canvas camera.
+		origin := camera fromPixelToSpace: 0@0.
+		corner := camera fromPixelToSpace: view canvas extent.
+		layout enclosingRectangle: (origin corner: corner).
+	].
+	view camera scale: 2.
+	view open
 ]
 
 { #category : #'data - svg' }

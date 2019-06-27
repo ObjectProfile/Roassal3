@@ -158,7 +158,7 @@ RSForceBasedLayout >> initialize [
 	gravity := 0.1.
 	friction := 0.9.
 	theta := 0.8.
-	center := 200 @ 200.
+	center := 0@0.
 	alpha := 0.1.
 	self useProgressBar
 ]
@@ -357,51 +357,83 @@ RSForceBasedLayout >> start: nodeElements [
 ]
 
 { #category : #events }
-RSForceBasedLayout >> step [ 
-	"run a step of the force layout algorithm"
-	| from to fp tp x y len k quad old |	
-		
-	"If there is no nodes, then there is not much to do"
+RSForceBasedLayout >> step [
+	"Run a step of the force layout algorithm."
+
+	"If there is no nodes, then there is not much to do."
 	nodes ifEmpty: [ ^ self ].
 	super step.
-	edges do: [ :e | 
-					from := e from. 
-					fp := from position.
-					to := e to. 
-					tp := to position.
-					x := tp x - fp x.
-					y := tp y - fp y.
-					len := ((x * x) + (y * y)) sqrt.
-					((len closeTo: 0) not) ifTrue: [ 
-						len :=  alpha * (self strengthOf: e) * ( len - (self lengthOf: e) ) / len.
-						x := x * len.
-						y := y * len.
-						k := (weights at: from) / (( weights at: from) +( weights at: to )).
-						to translateTo: ( tp x - (x * k) )@( tp y - (y * k) ).
-						k := 1 -  k.
-						from translateTo: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
-			
-		k := alpha * gravity.
-		((k closeTo: 0) not) ifTrue: [ 
-			x := center x.
-			y := center y.
-			nodes do: [ :ea | | pos |
-					pos := ea position.
-					ea translateTo: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
-				
-		quad := RSQuadTree withAll: nodes.
-		self accumulate: quad.
-		nodes do: [ :e | 
-			(self isFixed: e) 
-				ifFalse: [ self repulse: e from: quad ]
-				ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
 
-		nodes do: [ :e | 
-			old := e position.
-			e translateTo: 
-				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
-				(old y - (( (oldPositions at: e) y - old y ) * friction)).
-			oldPositions at: e put: old.].
+	self stepEdgeForces.
+	self stepGravityForce.
+	self stepFixedNodes.
+	self stepFriction.
+]
+
+{ #category : #events }
+RSForceBasedLayout >> stepEdgeForces [
+	"Apply forces of edges."
+	
+	edges do: [ :each | 
+		| from to fp tp x y len k |
+		from := each from.
+		fp := from position.
+		to := each to.
+		tp := to position.
+		x := tp x - fp x.
+		y := tp y - fp y.
+		len := (x * x + (y * y)) sqrt.
+		(len closeTo: 0) ifFalse: [
+			len := alpha * (self strengthOf: each) * (len - (self lengthOf: each)) / len.
+			x := x * len.
+			y := y * len.
+			k := (weights at: from) / ((weights at: from) + (weights at: to)).
+			to translateTo: (tp x - (x * k)) @ (tp y - (y * k)).
+			k := 1 - k.
+			from translateTo: (fp x + (x * k)) @ (fp y + (y * k)) ] ].
+
+]
+
+{ #category : #events }
+RSForceBasedLayout >> stepFixedNodes [
+	"Handle fixed nodes. Do this after all forces in a step were already applied."
+
+	| quad |
+	quad := RSQuadTree withAll: nodes.
+	self accumulate: quad.
+	nodes do: [ :each | 
+		(self isFixed: each)
+			ifFalse: [ self repulse: each from: quad ]
+			ifTrue: [ translator translateTopLeftOf: each to: (fixedNodes at: each) ] ].
+
+]
+
+{ #category : #events }
+RSForceBasedLayout >> stepFriction [
+	"Apply friction. This is the last to do in a step, after new positions have been defined."
+
+	nodes do: [ :each | 
+		| old new |
+		old := each position.
+		new := (old x - (((oldPositions at: each) x - old x) * friction))
+					@ (old y - (((oldPositions at: each) y - old y) * friction)).
+		each translateTo: new.
+		oldPositions at: each put: old ]
+]
+
+{ #category : #events }
+RSForceBasedLayout >> stepGravityForce [
+	"Apply gravity"
+	
+	| k |
+	k := alpha * gravity.
+	(k closeTo: 0) ifTrue: [ ^self ].
+
+	nodes do: [ :each | 
+		| pos |
+		pos := each position.
+		each translateTo: pos + (k * (center - pos)) ]
+
 ]
 
 { #category : #accessing }
