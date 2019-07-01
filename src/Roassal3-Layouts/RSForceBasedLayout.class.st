@@ -439,12 +439,13 @@ RSForceBasedLayout >> stepFriction [
 	"Apply friction. This is the last to do in a step, after new positions have been defined."
 
 	nodes do: [ :each | 
-		| old new |
-		old := each position.
-		new := (old x - (((oldPositions at: each) x - old x) * friction))
-					@ (old y - (((oldPositions at: each) y - old y) * friction)).
+		| current new old |
+		current := each position.
+		old := oldPositions at: each.
+
+		new := current - ((old - current) * friction).
 		each translateTo: new.
-		oldPositions at: each put: old ]
+		oldPositions at: each put: current ]
 ]
 
 { #category : #events }
