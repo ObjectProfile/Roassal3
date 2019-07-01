@@ -269,6 +269,12 @@ RSForceBasedLayout >> removeFix: aNode [
 	fixedNodes removeKey: aNode ifAbsent: []
 ]
 
+{ #category : #'accessing - computed' }
+RSForceBasedLayout >> removeLengthAt: anEdge [
+
+	lengths removeKey: anEdge ifAbsent: []
+]
+
 { #category : #updating }
 RSForceBasedLayout >> removeNode: node [
 	nodes remove: node.
