@@ -354,13 +354,6 @@ RSForceBasedLayout >> set: anEdge length: aFloat [
 ]
 
 { #category : #'accessing - computed' }
-RSForceBasedLayout >> set: anEdge length: aFloat strength: another [
-
-	lengths at: anEdge put: aFloat.
-	strengths at: anEdge put: another 
-]
-
-{ #category : #'accessing - computed' }
 RSForceBasedLayout >> set: anEdge strength: aFloat [ 
 
 	strengths at: anEdge put: aFloat
