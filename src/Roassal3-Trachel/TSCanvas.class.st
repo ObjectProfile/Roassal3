@@ -195,8 +195,8 @@ TSCanvas >> hideEncompassingRectangles [
 TSCanvas >> initialize [
 	super initialize.
 	showRectangles := false.
-	shapes := OrderedCollection new.
-	fixedShapes := OrderedCollection new.
+	shapes := TSGroup new.
+	fixedShapes := TSGroup new.
 	animations := OrderedCollection new.
 	clearBackground := true.
 	color := Color white.

@@ -187,8 +187,6 @@ RSEdgeBuilder >> initialize [
 	"The view has to be explicitely set by the end-user"
 	viewHasBeenManuallySet := false.
 	
-	actions := OrderedCollection new.
-	
 	"We could have edges from A to B, and from B to A"
 	self beDirectional
 ]
@@ -282,11 +280,6 @@ RSEdgeBuilder >> objects: someObjectsOrABlock [
 	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
-]
-
-{ #category : #'private - utility' }
-RSEdgeBuilder >> processEdge: anEdge [
-	actions do: [ :action | action value: anEdge ]
 ]
 
 { #category : #'private - utility' }
