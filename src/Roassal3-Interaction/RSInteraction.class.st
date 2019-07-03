@@ -1,5 +1,14 @@
 "
-I am the top class for interactions in roassal
+I am the top class for interactions in roassal.
+
+You can add an interaction to an instance of RSElement or RSEdge or RSView with: 
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+element addInteraction: RSDraggable.
+edge addInteraction: (RSHighlightable new).
+view @ RSDraggableView.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 "
 Class {
 	#name : #RSInteraction,
@@ -11,10 +20,15 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSInteraction class >> instance [
+	^ instance ifNil: [ instance := self new ].
+]
+
+{ #category : #'instance creation' }
 RSInteraction class >> onElement: element [
 	| inst |
 	inst := self wantsUniqueInstance 
-		ifTrue: [ self uniqueInstance ]
+		ifTrue: [ self instance ]
 		ifFalse: [ self new ].
 	inst onElement: element.
 	^ inst
@@ -27,13 +41,8 @@ RSInteraction class >> reset [
 ]
 
 { #category : #'instance creation' }
-RSInteraction class >> uniqueInstance [
-	^ instance ifNil: [ instance := self new ].
-]
-
-{ #category : #'instance creation' }
 RSInteraction class >> wantsUniqueInstance [ 
-	^ true
+	^ false
 ]
 
 { #category : #hooks }

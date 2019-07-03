@@ -42,6 +42,11 @@ RSPopup class >> text: anObject [
 ]
 
 { #category : #accessing }
+RSPopup class >> wantsUniqueInstance [ 
+	^ true
+]
+
+{ #category : #accessing }
 RSPopup >> box [
 	^ box
 ]

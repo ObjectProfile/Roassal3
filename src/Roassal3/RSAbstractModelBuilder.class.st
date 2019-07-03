@@ -193,7 +193,7 @@ RSAbstractModelBuilder >> initialize [
 	super initialize.
 	self onModel.
 	commands := OrderedCollection new.
-	hasUniqueCommands := true.
+	hasUniqueCommands := false.
 ]
 
 { #category : #accessing }

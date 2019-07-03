@@ -17,11 +17,6 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
-{ #category : #'instance creation' }
-RSControlsView class >> wantsUniqueInstance [ 
-	^ false
-]
-
 { #category : #hooks }
 RSControlsView >> addLegendOn: aView [
 	| lb |

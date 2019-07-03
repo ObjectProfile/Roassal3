@@ -50,7 +50,7 @@ RSZoomToFitView >> onElement: aView [
 			aView signalUpdate].
 	aView animation
 		duration: 300 milliSeconds;
-		easing: (TSEasing exp);
+		easing: TSEasing exp;
 		onStepDo: [ :t | 
 				camera scale: (scale scale: t).
 				aView signalUpdate]

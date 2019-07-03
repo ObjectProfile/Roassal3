@@ -189,7 +189,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 		RSLocate new
 			inner; top; right;
 			move: legendLabels 
-				on: (Rectangle origin: 0@0 extent: aView extent)
+				on: aView basicRectangle.
 	].
 	legendLabels := aView attributes 
 		at: #legendLabels

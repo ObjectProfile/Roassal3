@@ -140,7 +140,6 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 	edge := self edge. 
 	view ifNotNil: [ view add: edge ].
 	shouldNotBeUsedInLayout ifFalse: [ edge notUseInLayout ].
-	self processEdge: edge.
 	^ edge
 ]
 

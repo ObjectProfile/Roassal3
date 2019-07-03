@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Interaction'
 }
 
+{ #category : #'instance creation' }
+RSDraggable class >> wantsUniqueInstance [
+	^ true
+]
+
 { #category : #hooks }
 RSDraggable >> onElement: e [
 	| d |

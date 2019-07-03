@@ -1,5 +1,5 @@
 "
-Subclasses of myself are interaction for the view
+Subclasses of myself are interaction for the view.
 "
 Class {
 	#name : #RSAbstractViewInteraction,

@@ -95,6 +95,11 @@ TSCanvas >> announcer: anAnnouncer [
 ]
 
 { #category : #accessing }
+TSCanvas >> basicRectangle [
+	^ Rectangle origin: 0@0 extent: self extent
+]
+
+{ #category : #accessing }
 TSCanvas >> camera [
 	^ camera
 ]

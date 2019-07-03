@@ -35,7 +35,7 @@ RSInteractionBuilder >> clear [
 { #category : #interactions }
 RSInteractionBuilder >> draggable [
 	| i |
-	self addExclusiveInteraction: (i := RSDraggable new).
+	self addExclusiveInteraction: (i := RSDraggable instance).
 	^ i
 	
 ]
@@ -65,6 +65,12 @@ RSInteractionBuilder >> labeledHighlightable [
 { #category : #interactions }
 RSInteractionBuilder >> popup [
 	^ self popupText: #yourself
+]
+
+{ #category : #interactions }
+RSInteractionBuilder >> popupAndDraggable [
+	self popup.
+	self draggable.
 ]
 
 { #category : #interactions }
