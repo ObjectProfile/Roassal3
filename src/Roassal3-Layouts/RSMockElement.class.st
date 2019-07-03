@@ -16,12 +16,17 @@ RSMockElement >> applyToRealElement [
 	realElement translateTo: position
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RSMockElement >> encompassingRectangle [ 
+	^ realElement encompassingRectangle
+]
+
+{ #category : #accessing }
 RSMockElement >> extent [
 	^ realElement extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSMockElement >> height [
 	^ realElement height
 ]
@@ -47,12 +52,12 @@ RSMockElement >> translateTo: aPosition [
 	position := aPosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSMockElement >> view [
 	^ realElement view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSMockElement >> width [
 	^ realElement width
 ]

@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'from',
-		'to'
+		'to',
+		'realEdge'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -19,6 +20,16 @@ RSMockEdge >> from [
 { #category : #accessing }
 RSMockEdge >> from: aMockElement [
 	from := aMockElement
+]
+
+{ #category : #accessing }
+RSMockEdge >> realEdge [
+	^ realEdge
+]
+
+{ #category : #accessing }
+RSMockEdge >> realEdge: anObject [
+	realEdge := anObject
 ]
 
 { #category : #accessing }

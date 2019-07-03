@@ -135,6 +135,16 @@ RSForceBasedLayout >> friction: anObject [
 ]
 
 { #category : #accessing }
+RSForceBasedLayout >> gravity [
+	^ gravity
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> gravity: anObject [
+	gravity := anObject
+]
+
+{ #category : #accessing }
 RSForceBasedLayout >> gravityAt: aPoint [
 
 	center := aPoint 
@@ -259,6 +269,12 @@ RSForceBasedLayout >> removeFix: aNode [
 	fixedNodes removeKey: aNode ifAbsent: []
 ]
 
+{ #category : #'accessing - computed' }
+RSForceBasedLayout >> removeLengthAt: anEdge [
+
+	lengths removeKey: anEdge ifAbsent: []
+]
+
 { #category : #updating }
 RSForceBasedLayout >> removeNode: node [
 	nodes remove: node.
@@ -335,13 +351,6 @@ RSForceBasedLayout >> set: aNode charge: aFloat [
 RSForceBasedLayout >> set: anEdge length: aFloat [ 
 
 	lengths at: anEdge put: aFloat
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> set: anEdge length: aFloat strength: another [
-
-	lengths at: anEdge put: aFloat.
-	strengths at: anEdge put: another 
 ]
 
 { #category : #'accessing - computed' }
@@ -423,12 +432,13 @@ RSForceBasedLayout >> stepFriction [
 	"Apply friction. This is the last to do in a step, after new positions have been defined."
 
 	nodes do: [ :each | 
-		| old new |
-		old := each position.
-		new := (old x - (((oldPositions at: each) x - old x) * friction))
-					@ (old y - (((oldPositions at: each) y - old y) * friction)).
+		| current new old |
+		current := each position.
+		old := oldPositions at: each.
+
+		new := current - ((old - current) * friction).
 		each translateTo: new.
-		oldPositions at: each put: old ]
+		oldPositions at: each put: current ]
 ]
 
 { #category : #events }
