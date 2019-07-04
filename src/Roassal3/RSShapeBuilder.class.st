@@ -138,9 +138,25 @@ v open
 
 { #category : #'instance creation' }
 RSShapeBuilder class >> multiline [ 
+	"Define a multline composite shape
+For example:
+
+| v shape |
+v := RSView new.
+shape := RSShapeBuilder multiline
+	font: 20;
+	italic.
+v add:(shape elementOn: '""tu est loin, 
+très loin de tous ces regards vicieux 
+qui s''alimentent de ta lumière""').
+v elements last when: TSMouseClick do: [ :evt | v elements last inspect ].
+v showEncompassingRectangles.
+v open setLabel: 'Multiline'
+
+	"
 	| shape |
 	shape := self label.
-	shape addAction:  (RSAction new action: [:e |
+	shape addAction: (RSAction new action: [ :e |
 		| tshape composite |
 		tshape := e trachelShape.
 		composite := TSComposite new.
