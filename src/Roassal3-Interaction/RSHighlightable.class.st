@@ -45,6 +45,11 @@ RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
+{ #category : #initialization }
+RSHighlightable >> defaultColor [
+	^ Color red
+]
+
 { #category : #actions }
 RSHighlightable >> doHighlight: element [
 	| elements |
@@ -149,7 +154,7 @@ RSHighlightable >> initialize [
 	self highlightElements: [ :el | Array with: el ].
 	shape := RSShapeBuilder box.
 	self highlightShape: shape.
-	shape color: Color red.
+	shape color: self defaultColor
 ]
 
 { #category : #accessing }
@@ -198,6 +203,37 @@ RSHighlightable >> resetHighlightedElements: element [
 	att := element view attributes.
 	(att includesKey: self key) ifFalse: [ ^ self ].
 	att removeKey: self key
+]
+
+{ #category : #public }
+RSHighlightable >> setupAntAnimation [
+	self noDefaultColor withEdges.
+	self highlightShape
+		border: [ TSBorder new width: 2; color: self defaultColor ].
+	self when: TSHighlightEvent do: [ :evt | 
+		| e array anime |
+		e := evt element.
+		array := #(4).
+		e connectedEdges do: [ :ed| ed border 
+			color: Color blue; 
+			width: 2;
+			dashArray: array. ].
+		anime := e animation
+			repeat;
+			from: 0;
+			to: -8;
+			duration: 1 second;
+			onStepDo: [ :t |
+				e connectedEdges do: [ :ed |ed border dashOffset: t ].
+				e signalUpdate ].
+		e attributes at: #anime put: anime.
+	].
+	self when: TSUnHighlightEvent do: [ :evt | 
+		| e |
+		e := evt element.
+		(e attributes at: #anime) stop.
+		e attributes removeKey: #anime.
+	].
 ]
 
 { #category : #actions }

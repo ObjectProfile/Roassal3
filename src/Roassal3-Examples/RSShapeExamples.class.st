@@ -979,3 +979,49 @@ RSShapeExamples >> example28MultilineLabel [
 	v @ RSControlsView.
 	v open setLabel: 'Example with multiline labels'.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example29AntAnimation [
+	<script: 'self new example29AntAnimation'>
+	
+	| v shape shapeWithTitle elements methodShape models |
+	v := RSView new.
+	models := String withAllSubclasses.
+	v color: Smalltalk ui theme backgroundColor.
+	methodShape := RSShapeBuilder box
+		color: Color green;
+		interactionDo: [ :i | i popupText: #selector ];
+		size: #linesOfCode.
+	shape := RSShapeBuilder composite
+		color: Color white trans;
+		interactionDo: [:i | 
+			| high label |
+			label := RSLabeled new.
+			label shape color: Color white.
+			high := RSHighlightable new.
+			high setupAntAnimation.
+			i popupAndDraggable; addInteraction: label; addInteraction: high ];
+		shapes: [ :cls | 
+			| group |
+			group := methodShape elementsOn: cls methods.
+			RSGridLayout on: group.
+			group ];
+		onElement;
+		extent: [ :anElement | anElement extent + (10 @ 10) ].
+	elements := shape elementsOn: models.
+	v addAll: elements.
+	
+	RSEdgeBuilder line
+		color: Color white;
+		withVerticalAttachPoint;
+		view: v;
+		objects: models;
+		connectFrom: #superclass.
+	v edges pushBack.
+	RSTreeLayout new 
+		verticalGap: 100;
+		on: elements.
+	v @ RSControlsView.
+	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v open setLabel: 'Move mouse on one box'
+]
