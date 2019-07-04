@@ -130,6 +130,7 @@ RSAnimationExamples >> example04BoxWindmill [
 					translateBy: e model;
 					rotateByRadians: (e model x + e model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
+	v @ RSActivityMonitorView.
 	v open.
 ]
 
