@@ -4,7 +4,7 @@ I am an interaction for RSView, I can add to the a fixed shape that contains bas
 Frames per second, this number show the quantity of frames rendered. useful to debug animations
 "
 Class {
-	#name : #RSMonitorView,
+	#name : #RSActivityMonitorView,
 	#superclass : #RSAbstractViewInteraction,
 	#instVars : [
 		'shape',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : #initialization }
-RSMonitorView >> currentTime [
+RSActivityMonitorView >> currentTime [
 	 ^ Time microsecondClockValue
 ]
 
 { #category : #initialization }
-RSMonitorView >> initialize [
+RSActivityMonitorView >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSMonitorView >> initializeShape [
+RSActivityMonitorView >> initializeShape [
 	shape := RSShapeBuilder label
 		color: Color green;
 		text: [
@@ -36,7 +36,7 @@ RSMonitorView >> initializeShape [
 ]
 
 { #category : #initialization }
-RSMonitorView >> lastFrameCPUConsumption [
+RSActivityMonitorView >> lastFrameCPUConsumption [
 	| res current |
 	current := self currentTime.
 	lastFrameEndTime ifNil: [ 
@@ -47,7 +47,7 @@ RSMonitorView >> lastFrameCPUConsumption [
 ]
 
 { #category : #hooks }
-RSMonitorView >> onElement: aView [
+RSActivityMonitorView >> onElement: aView [
 	| monitor location |
 	monitor := shape element.
 	monitor isFixed: true.
@@ -61,11 +61,11 @@ RSMonitorView >> onElement: aView [
 ]
 
 { #category : #initialization }
-RSMonitorView >> shape [
+RSActivityMonitorView >> shape [
 	^ shape
 ]
 
 { #category : #initialization }
-RSMonitorView >> shape: aShapeBuilder [
+RSActivityMonitorView >> shape: aShapeBuilder [
 	shape := aShapeBuilder
 ]
