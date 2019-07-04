@@ -10,7 +10,8 @@ Class {
 		'location',
 		'isHighlightable',
 		'lowColor',
-		'target'
+		'target',
+		'modelBlock'
 	],
 	#category : #'Roassal3-Interaction'
 }
@@ -18,7 +19,7 @@ Class {
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
 	| label color set targetLabel |
-	label := shape elementOn: anElement.
+	label := shape elementOn: (self modelFor: anElement).
 	location stick: label on: anElement.
 	isHighlightable 
 		ifFalse: [ ^ label ].
@@ -72,7 +73,8 @@ v open
 { #category : #initialization }
 RSLabeled >> initialize [ 
 	super initialize.
-	shape := RSShapeBuilder label text: #model.
+	self shape: RSShapeBuilder label.
+	self model: #model.
 	location := RSLocate new above.
 	isHighlightable := false.
 ]
@@ -90,6 +92,21 @@ RSLabeled >> lowColor [
 { #category : #accessing }
 RSLabeled >> lowColor: aColor [
 	lowColor := aColor
+]
+
+{ #category : #accessing }
+RSLabeled >> model [
+	^ modelBlock
+]
+
+{ #category : #accessing }
+RSLabeled >> model: aBlock [
+	modelBlock := aBlock
+]
+
+{ #category : #hooks }
+RSLabeled >> modelFor: anElement [
+	^ modelBlock rsValue: anElement.
 ]
 
 { #category : #hooks }
@@ -121,7 +138,7 @@ RSLabeled >> target: aBlock [
 	target := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
 	"Set the transformation to be obtained
 E.g.,
@@ -136,6 +153,6 @@ v @ RSControlsView.
 v open
 
 	"
-	shape := RSShapeBuilder label text: aBlockOrSymbol.
+	self shape: (RSShapeBuilder label text: aBlockOrSymbol).
 
 ]

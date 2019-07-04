@@ -870,7 +870,7 @@ packagesRegExp := { 'Calypso*' }.
 
 packages := packagesRegExp flatCollect: [ :regExp | RPackageOrganizer default packages select: [ :p | regExp match: p packageName ] ].
 
-l := RSLabeled new text: [ :e | e model packageName ].
+l := RSLabeled new text: [ :model | model packageName ].
 packageElements := RSShapeBuilder composite
 							color: Color blue trans;
 							addInteraction: l;
