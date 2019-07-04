@@ -31,7 +31,7 @@ RSMonitorView >> initializeShape [
 		text: [
 			| delta |
 			delta := self lastFrameCPUConsumption.
-			(delta * 1000) asInteger asString, ' fps'. ].
+			(1.0 / (delta max: 0.001) ) asInteger asString, ' fps'. ].
 		
 ]
 
@@ -52,7 +52,7 @@ RSMonitorView >> onElement: aView [
 	monitor := shape element.
 	monitor isFixed: true.
 	aView addShape: monitor trachelShape. 
-	location := RSLocate new inner; bottom; left.
+	location := RSLocate new inner; bottom; left; offset: 10@0.
 	aView animation
 		repeat;
 		onStepDo: [ :t | 
