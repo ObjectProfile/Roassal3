@@ -103,7 +103,6 @@ RSUMLClassRenderer >> marker: aMarker [
 RSUMLClassRenderer >> methodShape [ 
 	^ methodShape ifNil: [ methodShape := RSShapeBuilder label 
 		fontSize: 12;
-		if: #isAbstract then: [ :s | s italic ];
 		text: [:m | classDescriptor methodSelector rsValue: m ] ]
 ]
 
