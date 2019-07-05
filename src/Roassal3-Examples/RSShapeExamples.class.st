@@ -984,7 +984,7 @@ RSShapeExamples >> example28MultilineLabel [
 RSShapeExamples >> example29AntAnimation [
 	<script: 'self new example29AntAnimation'>
 	
-	| v shape shapeWithTitle elements methodShape models |
+	| v shape elements methodShape models |
 	v := RSView new.
 	models := String withAllSubclasses.
 	v color: Smalltalk ui theme backgroundColor.

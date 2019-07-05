@@ -91,7 +91,7 @@ RSUMLClassRenderer >> marker [
 		shape: (RSShapeBuilder triangle
 			color: Color white;
 			border: self defaultBorder;
-			extent: 20@25) element. ]
+			size: 25) element. ]
 ]
 
 { #category : #'accessing - shapes' }
