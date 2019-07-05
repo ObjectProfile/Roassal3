@@ -54,22 +54,12 @@ TSCanvas >> addShape: aShape [
 ]
 
 { #category : #animations }
-TSCanvas >> animation [ 
-	^ self animation: TSTransitionAnimation new.
-]
-
-{ #category : #animations }
-TSCanvas >> animation: anAnimation [
-	self addAnimation: anAnimation.
-	^ anAnimation
-]
-
-{ #category : #animations }
 TSCanvas >> animationFrom: array [
-	| animation |
-	animation := TSSequentialAnimation new.
-	animation addAll: array.
-	^ self animation: animation.
+	| anime |
+	anime := TSSequentialAnimation new.
+	anime addAll: array.
+	self addAnimation: anime.
+	^ anime
 ]
 
 { #category : #animations }
@@ -225,6 +215,14 @@ TSCanvas >> morph [
 { #category : #accessing }
 TSCanvas >> morph: aMorph [
 	morph := aMorph
+]
+
+{ #category : #animations }
+TSCanvas >> newAnimation [
+	| anime |
+	anime := self tAnimation.
+	self addAnimation: anime.
+	^ anime
 ]
 
 { #category : #animations }

@@ -126,7 +126,7 @@ RSControlsView >> processKeyDown: evt [
 	
 	mult := evt shiftKeyPressed ifTrue: [ 3 ] ifFalse: [ 1 ].
 	translationAnimation ifNil: [  
-		translationAnimation := evt canvas animation repeat
+		translationAnimation := evt canvas newAnimation repeat
 			onStepDo: [ :t | | step |
 				step := steps inject: 0@0 into: [:p :s |p+s ].
 				evt canvas camera translateBy: step / (evt canvas camera scale / (speed*mult) ).

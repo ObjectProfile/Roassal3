@@ -36,7 +36,7 @@ RSZoomMove >> onElement: anElement [
 	| scale camera |
 	camera := anElement canvas camera.
 	scale := camera scale.
-	anElement animation 
+	anElement newAnimation 
 		easing: TSEasing backOut;
 		duration: 200 milliSeconds;
 		from: scale;

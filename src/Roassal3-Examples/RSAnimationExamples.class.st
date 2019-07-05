@@ -22,16 +22,16 @@ RSAnimationExamples >> example01Basic [
 		border: TSBorder new.
 	c addShape: b.
 	
-	c animation 
+	c newAnimation 
 		easing: TSEasing bounce;
 		from: -100@ -100;
 		to: 100@100;
 		on: b set: #position:.
-	c animation 
+	c newAnimation 
 		from: Color red;
 		to: Color blue;
 		on: b set: #color:.
-	c animation 
+	c newAnimation 
 		from: 0;
 		to: 10;
 		on: b border set: 'width:'.
@@ -89,7 +89,7 @@ RSAnimationExamples >> example03Ramp [
 		border: TSBorder new.
 	c addShape: b.
 	
-	c animation
+	c newAnimation
 		ramp: { 
 		 	0 -> (0@0).
 			0.25 -> (200@180).
@@ -122,7 +122,7 @@ RSAnimationExamples >> example04BoxWindmill [
 		elementsOn: points.
 	v addAll: elements.
 	frameCount := 0.
-	v animation repeat;
+	v newAnimation repeat;
 		onStepDo: [ :t |
 			elements do: [ :e | 
 				e matrix 
@@ -198,7 +198,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 			v add: s
 			] ] .
 	"animation"
-	v animation repeat; 
+	v newAnimation repeat; 
 		onStepDo: [ :t | 
 			elements do: [ :e |
 				| delta newX |
@@ -288,7 +288,7 @@ RSAnimationExamples >> example05b [
 			ant := s.
 			v add: s
 			] ] .
-	v animation repeat; 
+	v newAnimation repeat; 
 		onStepDo: [ :t | 
 			elements do: [ :e |
 				| delta newX |
@@ -339,7 +339,7 @@ RSAnimationExamples >> example06Atom [
 	v addAll: elements.
 	frame := 0.
 	
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		frame := frame +1.
 		speed := frame/50.
 		elements do: [ :e | | ang |
@@ -405,7 +405,7 @@ RSAnimationExamples >> example07Psycho [
 		to: 0@0.
 	v addAll: (shape edgesOn: (1 to: slices)).
 	
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		v edges do: [ :ed | shape updateElement: ed ].
 		theta := theta + 0.0523 ].
 	v when: TSExtentChangedEvent do: [ :evt | 
@@ -464,7 +464,7 @@ RSAnimationExamples >> example07b [
 		].	
 	].
 	
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		update value.
 		theta := theta + 0.0523 ].
 	v when: TSExtentChangedEvent do: [ :evt | 
@@ -503,7 +503,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 				e attributes at: #radius put: e radius.
 				e color: (color scale: (e position dist: 0@0)/250 ) ].
 		].
-		v animation
+		v newAnimation
 			easing: TSEasing elasticOut;
 			onStepDo: [ :t |
 				v elements do: [ :e | | scale |
@@ -558,7 +558,7 @@ RSAnimationExamples >> example09LinePatterns [
 			e to: d2.
 			e ]).
 	].
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 1.
 		update value.
 	].
@@ -598,7 +598,7 @@ RSAnimationExamples >> example10CircleParty [
 		color: [ :m | color scale: m ];
 		position: #key;
 		size: #value.
-	v animation repeat onStepDo: [:t | 
+	v newAnimation repeat onStepDo: [:t | 
 		v elements copy do: #remove.
 		color dictionary keysAndValuesRemove: [:a :b| true ].
 		(x between: 0 and: 1000) ifFalse: [ speed := speed negated ].
@@ -688,7 +688,7 @@ RSAnimationExamples >> example12PerlinParticles [
 		text: 'Drag to draw. type ''c'' to clear the view'.
 	v addShape: label.
 	
-	v animation delay: 2 seconds;
+	v newAnimation delay: 2 seconds;
 		from: Color black; 
 		to: Color transparent; 
 		on: label set: #color:;
@@ -737,7 +737,7 @@ RSAnimationExamples >> example12PerlinParticles [
 			 ] ];
 		border: TSBorder new;
 		position: #key.
-	v animation repeat; onStepDo: [ :t| 
+	v newAnimation repeat; onStepDo: [ :t| 
 		frame := frame + 30.
 		v elements copy do: [ :e| 
 			(e attributes at: #update) value.
@@ -754,7 +754,7 @@ RSAnimationExamples >> example12PerlinParticles [
 				v clearBackground: true.
 				v elements do: #remove.
 				v signalUpdate.
-				v animation duration: 200 milliSeconds;
+				v newAnimation duration: 200 milliSeconds;
 				when: TSAnimationEndEvent do: [ v clearBackground: false ] ] ].
 
 	v open setLabel: 'Particles!!! :V'
@@ -786,7 +786,7 @@ RSAnimationExamples >> example12b [
 		text: 'Drag to draw. type ''c'' to clear the view.'.
 	v addShape: label.
 	
-	v animation delay: 2 seconds;
+	v newAnimation delay: 2 seconds;
 		from: Color black; 
 		to: Color transparent; 
 		on: label set: #color:;
@@ -845,7 +845,7 @@ RSAnimationExamples >> example12b [
 			att at: #update put: update.  
 			 ] ];
 		position: #key.
-	v animation repeat; onStepDo: [ :t| 
+	v newAnimation repeat; onStepDo: [ :t| 
 		frame := frame + 30.
 		v elements copy do: [ :e| 
 			(e attributes at: #update) value.
@@ -862,7 +862,7 @@ RSAnimationExamples >> example12b [
 				v clearBackground: true.
 				v elements do: #remove.
 				v signalUpdate.
-				v animation duration: 200 milliSeconds;
+				v newAnimation duration: 200 milliSeconds;
 				when: TSAnimationEndEvent do: [ v clearBackground: false ] ]
 			ifFalse: changeHue ].
 
@@ -902,7 +902,7 @@ RSAnimationExamples >> example13Arcs [
 			beta scale: (theta + offset) sin ].
 		
 	view addAll: (shape elementsOn: (1 to: size)).
-	view animation repeat onStepDo: [ :t |
+	view newAnimation repeat onStepDo: [ :t |
 		theta := theta + 0.0523.
 		view elements do: [ :e |
 			shape 
@@ -915,9 +915,9 @@ RSAnimationExamples >> example13Arcs [
 		sc := e x / s.
 		view camera
 			scale: sc.
-		view animation 
+		view newAnimation 
 			from: 0@0; 
-			to: 0@ (e y/sc "+ (s/2)"  )/2;
+			to: 0@ (e y/sc)/2;
 			on: view camera set: #translateTo:.  ].
 	view open setLabel: 'Arc animation'.
 	
@@ -948,7 +948,7 @@ RSAnimationExamples >> example13DashAnimation [
 	
 	c addShape: box.
 	
-	animation := c animation
+	animation := c newAnimation
 		repeat;
 		from: 0;
 		to: 8;
@@ -977,7 +977,7 @@ RSAnimationExamples >> example14C [
 		innerRadius: [ :m | m * step + 7];
 		externalRadius: [ :m | m * step + 10 ].
 	view addAll: (shape elementsOn: (1 to: 16) ).
-	view animation repeat onStepDo: [ :t |
+	view newAnimation repeat onStepDo: [ :t |
 		theta := theta + 0.2.
 		view elements do: [ :e |
 			e 
@@ -1021,9 +1021,9 @@ RSAnimationExamples >> example15Sky [
 	view addAll: dots.
 	frame := 0.
 	view clearBackground: false.
-	(view animation duration: 5 seconds;onStepDo: [ :t| ])
+	(view newAnimation duration: 5 seconds;onStepDo: [ :t| ])
 		when: TSAnimationEndEvent do: [ box remove ].
-	view animation repeat
+	view newAnimation repeat
 		onStepDo: [ :t | 
 			frame := frame + 0.1.
 			dots
@@ -1092,7 +1092,7 @@ RSAnimationExamples >> example16ArcNoise [
 		isFixed: true.
 	view addShape: line.
 		
-	view animation repeat; onStepDo: [ :t| | last | 
+	view newAnimation repeat; onStepDo: [ :t| | last | 
 		frame := frame + 0.2.
 		view elements do: [ :e | 
 			shape updateElement: e withCommand: #betaAngle:.
@@ -1127,12 +1127,12 @@ RSAnimationExamples >> example17Retina [
 		color: Color white;
 		fontSize: 40.
 	view addShape: label.
-	(view animation 
+	(view newAnimation 
 		delay: 2 seconds; 
 		from: 40; 
 		to: 12; 
 		on: label set:#fontSize: ).
-	(view animation 
+	(view newAnimation 
 		delay: 2 seconds;
 		from: Color white; to: Color transparent;
 		on: label set: #color:) when: TSAnimationEndEvent do: [
@@ -1157,7 +1157,7 @@ RSAnimationExamples >> example17Retina [
 			].
 	view addAll: (shape elementsOn: (1 to: circleSize)).
 
-	view animation 
+	view newAnimation 
 		delay: 4 seconds;
 		loops: ringSize; 
 		duration: 200 milliSeconds; 
@@ -1215,11 +1215,11 @@ RSAnimationExamples >> example18SpaceDandy [
 		border: (TSBorder new color: Color black);
 		bold;
 		text: 'Pharo').
-	view animation 
+	view newAnimation 
 		repeat;
 		duration: 5 seconds; 
 		when: TSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
-	view animation repeat onStepDo: [ :t|
+	view newAnimation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
 		elements do: [ :e | | l o r d off | 
 			l := (e attributes at: #l)+1.
@@ -1269,7 +1269,7 @@ RSAnimationExamples >> example19Gris [
 		
 	v addAll: (shape elementsOn: { 0.6. 0.64. 1.05. 1.20. 1.7 }).
 	
-	v animation repeat from: 0; to: 8; duration: 200 milliSeconds;
+	v newAnimation repeat from: 0; to: 8; duration: 200 milliSeconds;
 		on: v elements fourth border set: #dashOffset:.
 		
 	mini := RSShapeBuilder circle
@@ -1281,7 +1281,7 @@ RSAnimationExamples >> example19Gris [
 		
 	animation := [ :e :seconds :target :dir | |  ang |
 		ang := r next * Float pi * 2.
-		v animation repeat duration: seconds asSeconds;
+		v newAnimation repeat duration: seconds asSeconds;
 				from: ang; to: ang + (Float pi * 2* dir);
 				onStepDo: [ :t | e translateTo: (t cos@ t sin)* target radius ] ].
 			
@@ -1348,7 +1348,7 @@ RSAnimationExamples >> example20Flor [
 			collect: [:radius| i-> radius ]) ).
 		 ].
 	shape removeCommandsBySelectors: {#size:. #extent:. #color:}.
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 1.
 		angleSp := frame / 250.0 * (Float pi * 2).
 		shape updateElements: v elements.
@@ -1398,7 +1398,7 @@ RSAnimationExamples >> example21Rainbow [
 			frame even
 				ifTrue: [ Color black ]
 				ifFalse: [ Color h: (e attributes at: #hue) s: 1 v: 1 ] ]}.
-	v animation repeat
+	v newAnimation repeat
 		onStepDo: [ :k | 
 			| elements |
 			v add: shape element.
@@ -1465,7 +1465,7 @@ RSAnimationExamples >> example22Stars [
 		color: Color white.
 	stars := shape elementsOn: (1 to: 5).
 	v addAll: stars.
-	v animation repeat to: 360; onStepDo: [ :t |
+	v newAnimation repeat to: 360; onStepDo: [ :t |
 		stars do: [ :star | | position |
 			position := star position.
 			star matrix loadIdentity.
@@ -1504,7 +1504,7 @@ RSAnimationExamples >> example23CircleWaves [
 	elements := shape elementsOn: #('15c108' '8d0402' '0002ab').
 	v addAll: elements.
 	
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 0.02.
 		elements do: [ :e | 
 			shape
@@ -1571,7 +1571,7 @@ RSAnimationExamples >> example24Lines [
 		fontSize: 30;
 		border: (TSBorder new color: Color white);
 		color: nil).
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1. 
 		angleSp := frame / 300 * Float twoPi.
 		hueOffset := hueOffset + 1.
@@ -1597,7 +1597,7 @@ RSAnimationExamples >> example25Lines [
 		to: bar / 2 @ 0.
 	shape := RSShapeBuilder composite add: [line edge trachelShape ].
 	v addAll: (shape elementsOn: (0 to: 360 by: 0.5) ).
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 4.
 		v elements do: [ :e | | radian |
 			radian := e model degreesToRadians.
@@ -1614,7 +1614,7 @@ RSAnimationExamples >> example25Lines [
 		bold;
 		border: (TSBorder new paint: Color black; dashArray: #(4)).
 	v addShape: label.
-	v animation repeat from: 0; to: 8; on: label border set: #dashOffset:.
+	v newAnimation repeat from: 0; to: 8; on: label border set: #dashOffset:.
 	
 	v when: TSMouseClick do: [
 		step := step + 0.5.
@@ -1654,7 +1654,7 @@ RSAnimationExamples >> example26PerlinNoise [
 		e add: a; add: b; add: c.
 		] ].
 	v addAll: (s elementsOn: (1 to: size)).
-	v animation repeat onStepDo: [ :t | | speed |
+	v newAnimation repeat onStepDo: [ :t | | speed |
 		speed := 0.4.
 		v elements do: [ :c |
 			c shapes do: [ :e |
@@ -1706,7 +1706,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 		position: [ (r next * rect width)@ (r next * rect height )+ rect origin ].
 	v addAll: (shape elementsOn: (1 to: size)).
 	
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		v elements do: [ :e | 
 			| life att p flip iterations respawn case fadeRatio colorCase c |
 			att := e attributes.
@@ -1818,7 +1818,7 @@ RSAnimationExamples >> example28AnimationCircle [
 	sc1 := TSScale linear range: {0. Float twoPi}.
 	sc2 := TSScale linear domain: #(-1 1).
 	elements do: [ :e | | animation |
-		animation := v animation repeat 
+		animation := v newAnimation repeat 
 			"easing: TSEasing bounceOut;"
 			duration: 3 seconds; onStepDo: [ :t | 
 			| val |
@@ -1879,7 +1879,7 @@ RSAnimationExamples >> example29Bezier [
 			at: #update
 			put: [ bezier updateElement: b withCommand: #controlPoints: ] ] ].
 	v addAll: (s elementsOn: (1 to: size)).
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		theta := theta + 0.0523.
 		v elements do: [ :e | (e attributes at: #update) value ] ].
 	v
@@ -1907,7 +1907,7 @@ RSAnimationExamples >> example30SVGIcons [
 			grad ].
 	elements := s elementsOn: #(america puzzlePiece supermarketCart).
 	v addAll: elements.
-	v animation repeat onStepDo: [:t | 
+	v newAnimation repeat onStepDo: [:t | 
 		elements do: [:e | | p ang ext block | 
 			p := e position.
 			ext := e extent / 2.
@@ -1951,7 +1951,7 @@ RSAnimationExamples >> example31Miku [
 	easing := TSEasing elasticOut.
 	v elements do: [ :e | | position |
 		position := (r next * 1000) @ (r next * 1000) - 100.
-		v animation
+		v newAnimation
 			easing: easing;
 			delay: (e index * 50) milliSeconds;
 			from: position;
@@ -1966,7 +1966,7 @@ RSAnimationExamples >> example31Miku [
 		border: (TSBorder new color: Color transparent; width: 1.5);
 		fontSize: 100;
 		position: 320 @ 630).
-	v animation
+	v newAnimation
 		delay: 6 seconds;
 		duration: 3 seconds;
 		from: Color transparent;
@@ -1995,7 +1995,7 @@ RSAnimationExamples >> example32RSLocate [
 	movableElement := box element.
 	movableElement size: 40.
 	fixedElement when: TSMouseClick do: [ 
-		v animation
+		v newAnimation
 			scale: (TSScale linear 
 				domain: #(0 0.5 1); 
 				range: { 0@0. 20@20. 0@0});
@@ -2035,7 +2035,7 @@ RSAnimationExamples >> example32RSLocate [
 			e model value: locate. "= locate perform: e model"
 			p := movableElement position.
 			locate move: movableElement on: fixedElement.
-			v animation
+			v newAnimation
 				from: p;
 				duration: 500 milliSeconds;
 				to: movableElement position;
@@ -2069,7 +2069,7 @@ RSAnimationExamples >> example33AlteredWorld [
 	path := RSSingleEdgeBuilder polyline
 		width: 0.5.
 	v addAll: (path edgesOn: (1 to: extent y /6)).
-	v animation
+	v newAnimation
 		loops: extent x;
 		duration: 50 milliSeconds;
 		when: TSAnimationLoopEvent do: [
@@ -2211,7 +2211,7 @@ RSAnimationExamples >> example35Perlin [
 	frame := 0.
 	
 	v addAll: (s elementsOn: (1 to: 100)).
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1.
 		v elements do: [ :e |
 			(e attributes at:#update) value ]. ].
@@ -2240,7 +2240,7 @@ RSAnimationExamples >> example36RoundRectagles [
 		v camera zoomToFit: v extent extent: extent ].
 	v when: TSMouseMove do: [ :evt | mouse := evt position. ].
 	frame := 0.
-	v animation repeat onStepDo: [ :t |
+	v newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1.
 		v elements do: [ :e | | pos angle |
 			pos := e position + ((mouse - e position) / (e index + 5)).
@@ -2283,7 +2283,7 @@ RSAnimationExamples >> example37SimpleClock [
 	clock := label elementOn: Time now print24.
 	v add: roassal.
 	v add: clock.
-	v animation
+	v newAnimation
 		duration: 500 milliSeconds;
 		repeat;
 		when: TSAnimationLoopEvent do: [ clock text: Time now print24 ].
@@ -2342,7 +2342,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 			pos1 := elements collect: #position.
 			update value: sel.
 			pos2 := elements collect: #position.
-			v animation onStepDo: [ :t |
+			v newAnimation onStepDo: [ :t |
 				elements do: [ :e |
 					e translateTo: ((pos1 at: e index) 
 						interpolateTo: (pos2 at: e index) at: t) ].
@@ -2381,7 +2381,7 @@ RSAnimationExamples >> example39ForceLayout [
 		edges: v edges;
 		start: classes;
 		yourself.
-	v animation repeat onStepDo: [ :t | 
+	v newAnimation repeat onStepDo: [ :t | 
 		layout step ].
 
 	v open
@@ -2429,7 +2429,7 @@ RSAnimationExamples >> example40Roassal [
 			border: (TSBorder new color: Color white; width: 3);
 			paint: paint;
 			fontSize: 130.
-		v animation
+		v newAnimation
 			duration: timeSize milliSeconds;
 			delay: ((index - 1) * timeSize) milliSeconds;
 			onStepDo: [ :t |
@@ -2442,7 +2442,7 @@ RSAnimationExamples >> example40Roassal [
 					1 -> Color transparent } ];
 			when: TSAnimationEndEvent do: [ lbl remove ].
 		 ].
-	v animation duration: (timeSize * text size) milliSeconds ; when: TSAnimationEndEvent do: [
+	v newAnimation duration: (timeSize * text size) milliSeconds ; when: TSAnimationEndEvent do: [
 		v addShape: (TSLabel new
 		text:  text;
 		bold;
@@ -2450,7 +2450,7 @@ RSAnimationExamples >> example40Roassal [
 		fontName: 'Marker Felt';
 		color: Color white;
 		fontSize: 30).
-		v animation
+		v newAnimation
 			easing: TSEasing elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
 			v shapes last matrix shy: t ] ]. 
@@ -2537,14 +2537,14 @@ for Pharo 7 and Pharo 8.'.
 		(cp third x - cp fourth x) abs  ].
 	lineAnime := [ :line :lbl :pscale :array |
 		line border dashArray: array.
-		v animation 
+		v newAnimation 
 			from: 0;
 			to: (sum value: line);
 			onStepDo: [ :t | array at: 1 put: t ].
-		v animation 
+		v newAnimation 
 			duration: 1 second; 
 			when: TSAnimationEndEvent do: [ v add: lbl ].
-		v animation
+		v newAnimation
 			delay: 1 second;
 			duration: 1 second;
 			from: 0.05;
@@ -2566,7 +2566,7 @@ for Pharo 7 and Pharo 8.'.
 		value: desc 
 		value: (TSScale linear range: {(p x - (desc width/2))@ p y. p })
 		value: { 0. 1000 }.
-	v animation
+	v newAnimation
 		delay: 2 seconds;
 		duration: 1 second;
 		from: 0; to: 360;
@@ -2599,7 +2599,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		edges: view edges;
 		start: classes;
 		yourself.
-	view animation repeat 
+	view newAnimation repeat 
 		onStepDo: [ :t | layout step ].
 
 	"Apply forces from the window borders to the elements."

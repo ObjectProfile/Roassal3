@@ -105,7 +105,7 @@ RSDraggableView >> onElement: aView [
 	aView when: TSMouseDragEnd do: [ 
 		move := false.
 		(lastStep isNotNil and: [ lastStep x abs > 2 or: [lastStep y abs > 2]  ]) ifTrue: [ 
-			aView animation 
+			aView newAnimation 
 				easing: TSEasing cubicOut;
 				duration: 200 milliSeconds;
 				from: camera position;

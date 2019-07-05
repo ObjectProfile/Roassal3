@@ -32,7 +32,7 @@ RSZoomToFitView >> onElement: aView [
 		from: camera scale;
 		to: sc.
 	camera scale < 1 ifTrue: [ 
-		aView animation
+		aView newAnimation
 			duration: 500 milliSeconds;
 			easing: TSEasing backOut;
 			onStepDo: [ :t | 
@@ -41,14 +41,14 @@ RSZoomToFitView >> onElement: aView [
 					scale: (scale scale: t).
 				aView signalUpdate ].
 		^ self ].
-	aView animation 
+	aView newAnimation 
 		delay: 150 milliSeconds;
 		duration: 700 milliSeconds;
 		easing: TSEasing backOut;
 		onStepDo: [:t |
 			camera position: (position scale: t).
 			aView signalUpdate].
-	aView animation
+	aView newAnimation
 		duration: 300 milliSeconds;
 		easing: TSEasing exp;
 		onStepDo: [ :t | 

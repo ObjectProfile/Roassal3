@@ -200,6 +200,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		moveBehind;
 		connectFrom: #superclass.
 	RSForceBasedLayout new
+		doNotUseProgressBar; 
 		charge: -350;
 		on: v elements.
 	v @ RSControlsView.

@@ -25,17 +25,6 @@ TSShape >> addedIn: aCanvas [
 	parent := aCanvas.
 ]
 
-{ #category : #animation }
-TSShape >> animation [ 
-	^ self animation: TSTransitionAnimation new.
-]
-
-{ #category : #animation }
-TSShape >> animation: animation [
-	parent animation: animation.
-	^ animation
-]
-
 { #category : #events }
 TSShape >> announce: anEventOrAnEventClass [
 	"Send an event"
@@ -178,6 +167,11 @@ TSShape >> isShape [
 { #category : #actions }
 TSShape >> loadShape: aShape [
 	self subclassResponsibility
+]
+
+{ #category : #animation }
+TSShape >> newAnimation [
+	^ self parent newAnimation
 ]
 
 { #category : #accessing }

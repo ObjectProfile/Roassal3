@@ -32,7 +32,8 @@ TSSequentialAnimationTest >> testBasicCanvas [
 	|  animation |
 	
 	self assert: canvas animations size equals: 0.
-	animation := canvas animation: TSSequentialAnimation new.
+	animation := TSSequentialAnimation new.
+	canvas addAnimation: animation.
 	self assert: canvas animations size equals: 1.
 	
 	self assert: animation isRunning.

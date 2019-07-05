@@ -54,7 +54,7 @@ RSView >> canvas [
 
 { #category : #'reflective operations' }
 RSView >> doesNotUnderstand: aMessage [
-
+	<debuggerCompleteToSender>
 	^ aMessage sendTo: trCanvas
 ]
 

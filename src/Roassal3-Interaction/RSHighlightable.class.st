@@ -200,7 +200,7 @@ RSHighlightable >> recordIfNecessary: element [
 { #category : #actions }
 RSHighlightable >> resetHighlightedElements: element [
 	| att |
-	att := element view attributes.
+	att := element topParent view attributes.
 	(att includesKey: self key) ifFalse: [ ^ self ].
 	att removeKey: self key
 ]
@@ -218,7 +218,7 @@ RSHighlightable >> setupAntAnimation [
 			color: Color blue; 
 			width: 2;
 			dashArray: array. ].
-		anime := e animation
+		anime := e newAnimation
 			repeat;
 			from: 0;
 			to: -8;
@@ -238,7 +238,7 @@ RSHighlightable >> setupAntAnimation [
 
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedElements: element [
-	element view attributes at: self key ifPresent: [ :elements |
+	element topParent view attributes at: self key ifPresent: [ :elements |
 		elements do: [ :e | self doUnhighlightElement: e ].
 		self announceUnHightlight: element elements: elements.
 		 ].

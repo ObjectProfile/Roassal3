@@ -18,7 +18,7 @@ TSTransitionAnimationTest >> testBasicCanvas [
 	|  animation |
 	
 	self assert: canvas animations size equals: 0.
-	animation := canvas animation.
+	animation := canvas newAnimation.
 	self assert: canvas animations size equals: 1.
 	
 	self assert: animation isRunning.
@@ -29,7 +29,7 @@ TSTransitionAnimationTest >> testBasicCanvas [
 TSTransitionAnimationTest >> testDelay [
 	
 	| animation |
-	animation := canvas animation
+	animation := canvas newAnimation
 		delay: 100 milliSeconds.
 	self deny: animation isDelayDone.
 	(Delay forMilliseconds: 101) wait.
@@ -42,7 +42,7 @@ TSTransitionAnimationTest >> testStep [
 	
 	| value |
 	value := 0.
-	canvas animation
+	canvas newAnimation
 		onStepDo: [ :t| value := value + 1 ].
 		
 	self assert: value equals: 0.
@@ -57,7 +57,7 @@ TSTransitionAnimationTest >> testStepEvent [
 	canvas := TSCanvas new.
 	value := nil.
 	loop := 0.
-	animation := canvas animation
+	animation := canvas newAnimation
 		duration: 100 milliSeconds;
 		loops: 3;
 		onStepDo: [ :t| value := t ];
@@ -76,7 +76,7 @@ TSTransitionAnimationTest >> testStepEvent [
 TSTransitionAnimationTest >> testStepReset [
 	
 	| animation |
-	animation := canvas animation
+	animation := canvas newAnimation
 		duration: 100 milliSeconds.
 	self runAnimation: animation threshold: 110.
 	

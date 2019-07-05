@@ -111,7 +111,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 		innerRadius: 50;
 		externalRadius: 200.
 	pie build.
-	pie view animation 
+	pie view newAnimation 
 		repeat;
 		easing: TSEasing sinIn;
 		duration: 5 seconds;
@@ -279,7 +279,7 @@ RSPieExamples >> example09TickAnimation [
 		alphaAngle: #yourself;
 		betaAngle: [:d | d + 2]."avoid arc spacing"
 	pie build.
-	pie view animation repeat; from: 0; to: 500;
+	pie view newAnimation repeat; from: 0; to: 500;
 		easing: TSEasing elasticOut;
 		onStepDo: [ :t |
 			pie elements do: [ :e |
@@ -309,7 +309,7 @@ RSPieExamples >> example10CornerRadiiAnimation [
 		color: colors.
 
 	pie build.
-	pie view animation repeat
+	pie view newAnimation repeat
 		onStepDo: [ :k |
 			pie elements do: [ :el | 
 				| t |
@@ -418,7 +418,7 @@ RSPieExamples >> example12RainbowPie [
 			t := frame / 50.0.
 			300 + ( (t +  ((i /n) * Float pi * 4)) sin * d )].
 	pie build.
-	pie view animation repeat onStepDo: [ :t | 
+	pie view newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 1.
 		pie elements do:[ :e | 
 			pie shape updateElement: e withCommand: #externalRadius:.
@@ -663,7 +663,7 @@ RSPieExamples >> example19Buttons [
 		externalRadius: 40.
 	pie build.
 	move := 0@0.
-	pie view animation repeat;
+	pie view newAnimation repeat;
 		onStepDo: [ :t | 
 			v camera translateBy: move. ].
 	"todo
@@ -675,14 +675,14 @@ RSPieExamples >> example19Buttons [
 			setAsFixed
 			when: TSMouseEnter do: [ 
 				move := e model.
-				v animation 
+				v newAnimation 
 					duration: 1 second;
 					easing: TSEasing backOut;
 					from: 40; to: 50;
 					on: e trachelShape set: #externalRadius:. ];
 			when: TSMouseLeave do: [ 
 				move := 0@0.
-				v animation 
+				v newAnimation 
 					duration: 1 second;
 					easing: TSEasing backOut;
 					from: 50; to: 40;
@@ -748,7 +748,7 @@ RSPieExamples >> example20AddingRemoving [
 			elements 
 				detect: [ :e1 | e1 model = e2 model ]
 				ifFound: [ :e1|
-					view animation 
+					view newAnimation 
 						easing: TSEasing quad;
 						onStepDo: [:t |
 							e2 
@@ -762,7 +762,7 @@ RSPieExamples >> example20AddingRemoving [
 			| e x |
 			e := pie elements last.
 			x := e alphaAngle.
-			view animation
+			view newAnimation
 				easing: TSEasing quad;
 				onStepDo: [ :t |
 					e 
@@ -849,7 +849,7 @@ RSPieExamples >> example22RotatedAnimation [
 		when: TSMouseClick do: [ [ animation toggle ] ].
 	pie label text: #name.
 	pie build.
-	animation := view animation
+	animation := view newAnimation
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
 			pie elements do: [ :e | | att a b l ext ang |
@@ -910,7 +910,7 @@ RSPieExamples >> example23RotatedAnimation [
 	view addAll: lines.
 	view add: (RSShapeBuilder label 
 		elementOn: pie totalSum humanReadableSIByteSize).
-	animation := view animation
+	animation := view newAnimation
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
 			pie elements do: [ :e | | att a b l ext ang x p1 p2 p3 line |

@@ -76,7 +76,7 @@ RSHighlightableExamples >> example03Interactive [
 	interaction := RSHighlightable new withEdges.
 	update := [ interaction doHighlight: elements atRandom ].
 	update value.
-	v animation repeat  when: TSAnimationLoopEvent do: update.
+	v newAnimation repeat  when: TSAnimationLoopEvent do: update.
 	
 	v zoomToFit.
 	v open
@@ -111,7 +111,7 @@ RSHighlightableExamples >> example04Interactive [
 				ifFalse: [ e model odd ] ]).
 		bool := bool not ].
 	update value.
-	v animation repeat when: TSAnimationLoopEvent do: update.
+	v newAnimation repeat when: TSAnimationLoopEvent do: update.
 	v zoomToFit.
 	v open
 ]

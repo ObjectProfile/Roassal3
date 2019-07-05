@@ -53,7 +53,7 @@ RSActivityMonitorView >> onElement: aView [
 	monitor isFixed: true.
 	aView addShape: monitor trachelShape. 
 	location := RSLocate new inner; bottom; left; offset: 10@0.
-	aView animation
+	aView newAnimation
 		repeat;
 		onStepDo: [ :t | 
 			shape updateElement: monitor.
