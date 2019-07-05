@@ -87,6 +87,16 @@ RSForceBasedLayout >> addNodes: nodeElements [
 ]
 
 { #category : #accessing }
+RSForceBasedLayout >> alpha [
+	^ alpha
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> alpha: anObject [
+	alpha := anObject
+]
+
+{ #category : #accessing }
 RSForceBasedLayout >> charge: aFloat [
 	"Typically a negative value. E.g., -300"
 	charge := aFloat
