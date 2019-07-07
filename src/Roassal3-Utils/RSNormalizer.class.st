@@ -1,6 +1,25 @@
 "
 A Metric normalizer is made to assign a color, or a particular shape computed from a group of elements. Consider the following example:
+-=-=-=-=
+	| v elements |
+	v := RSView new.
+	elements := RSShapeBuilder box
+		size: #numberOfMethods;
+		interactionDo: #draggable;
+		elementsOn: (Collection withAllSubclasses).
 
+	RSNormalizer color
+		elements: elements;
+		normalize: #numberOfMethods.
+
+	v addAll: elements.
+	RSGridLayout on: elements.
+
+	v camera position: v elements encompassingRectangle center.
+	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
+	v @ RSControlsView.
+	v open
+-=-=-=-=
 "
 Class {
 	#name : #RSNormalizer,
@@ -70,6 +89,17 @@ RSNormalizer class >> height [
 ]
 
 { #category : #'instance creation' }
+RSNormalizer class >> position [ 
+	| n |
+	n := self new.
+	n from: 0 @ 0.
+	n to: 100 @ 100.
+	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement translateTo: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	^ n
+
+]
+
+{ #category : #'instance creation' }
 RSNormalizer class >> size [ 
 	| n |
 	n := self new.
@@ -93,22 +123,21 @@ RSNormalizer class >> width [
 
 { #category : #accessing }
 RSNormalizer >> elements [
+	"Return the elements that should be normalized"
 	^ elements
 
 ]
 
 { #category : #accessing }
 RSNormalizer >> elements: someRSElements [
+	"Set to the normalizer the elements that should be normalized"
 	elements := someRSElements
 ]
 
-{ #category : #accessing }
-RSNormalizer >> executeBlock [
-	^ executeBlock
-]
-
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RSNormalizer >> executeBlock: anOneArgBlock [
+	"Set the block to be executed for the normalizer. The end user should not call this method
+	Instead, it is called from methods on the class side"
 	executeBlock := anOneArgBlock
 ]
 
