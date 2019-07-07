@@ -1,6 +1,20 @@
 "
 I am a common scale interpolator, just put your entry value and this objects scale and return the value in your domain.
 I am inspired in the d3 implementation of scales you can find the source code in https://github.com/d3/d3-scale
+
+Here is an example:
+-=-=-=
+s := TSScale linear.
+s range: { 5 . 10 }.
+s scale: 0. ""=> 5""
+s scale: 0.5. ""=> 7.5""
+s scale: 1. ""=> 10""
+-=-=-=
+
+Another example:
+-=-=-=
+s := TSScale linear.
+-=-=-=
 "
 Class {
 	#name : #TSScale,
@@ -107,8 +121,18 @@ TSScale >> domain [
 ]
 
 { #category : #accessing }
-TSScale >> domain: anObject [
-	domain := anObject
+TSScale >> domain: aTwoArrayAsNumbers [
+	"Define the domain of the input values. Values provided to scale: should be within the domain
+	For example
+	-=-=-=
+	s := TSScale linear.
+	s domain: { -1 . 1 }.
+	s range: { 5 . 10 }.
+	s scale: 0
+	-=-=-=
+	Return 7.5
+	"
+	domain := aTwoArrayAsNumbers
 ]
 
 { #category : #accessing }
@@ -143,8 +167,20 @@ TSScale >> range [
 ]
 
 { #category : #accessing }
-TSScale >> range: anObject [
-	range := anObject
+TSScale >> range: aTwoArrayOfNumbers [
+	"Expect an array of two numbers.
+	A range defines the range of the scaled value.
+	
+	For example:
+	-=-=-=
+	s := TSScale linear.
+	s range: { 5 . 10 }.
+	s scale: 0.5 
+	-=-=-=
+	Return 7.5
+	"
+	
+	range := aTwoArrayOfNumbers
 ]
 
 { #category : #hooks }
