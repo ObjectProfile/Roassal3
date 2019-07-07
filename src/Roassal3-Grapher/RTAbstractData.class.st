@@ -231,13 +231,22 @@ RTAbstractData >> getModelForElement: element atIndex: index [
 { #category : #hooks }
 RTAbstractData >> getPixelPositionOf: aPoint [
 	"Return the position in the Roassal view of a point"
-
-	| anX anY |
-	anX := RTMetricNormalizer new
+ 
+	| anX anY s |
+	s := TSScale linear.
+	s domain: { 0 .  builder extent x}.
+	s range: { minX . maxX }.
+	anX := s scale: aPoint x.
+	
+	s domain: { 0 .  builder extent y}.
+	s range: { minY . maxY }.
+	anY := s scale: aPoint y.
+	
+"	anX := RTMetricNormalizer new
 		getValue: aPoint x min: 0 max: builder extent x minValue: minX maxValue: maxX.
 	anY := RTMetricNormalizer new
 		getValue: aPoint y min: 0 max: builder extent y negated minValue: minY maxValue: maxY.
-			
+"			
 	^ anX @ anY
 ]
 
