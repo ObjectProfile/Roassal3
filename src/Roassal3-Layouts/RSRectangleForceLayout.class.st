@@ -63,25 +63,27 @@ RSRectangleForceLayout >> step [
 RSRectangleForceLayout >> stepRectangleForces [
 	"Apply a repulsion force to elements that are close to the enclosing rectangle."
 
+	| k |
+	k := enclosingForce * alpha.
+	(k closeTo: 0) ifTrue: [ ^self ].
+	
 	nodes do: [ :each |
 		| eachRect diff |
 		eachRect := each encompassingRectangle.
 
 		"horizontal"
 		(diff := eachRect left - enclosingRectangle left) < enclosingThreshold ifTrue: [ 
-			each translateTo: each position + (enclosingForce * (enclosingThreshold - diff)@0) ].
+			each translateTo: each position + (k * (enclosingThreshold - diff)@0) ].
 
 		(diff := enclosingRectangle right - eachRect right) < enclosingThreshold ifTrue: [ 
-			each translateTo: each position - (enclosingForce * (enclosingThreshold - diff)@0) ].
+			each translateTo: each position - (k * (enclosingThreshold - diff)@0) ].
 
 		"vertical"
 		(diff := eachRect top - enclosingRectangle top) < enclosingThreshold ifTrue: [ 
-			each translateTo: each position + (0@(enclosingForce * (enclosingThreshold - diff))) ].
+			each translateTo: each position + (0@(k * (enclosingThreshold - diff))) ].
 
 		(diff := enclosingRectangle bottom - eachRect bottom) < enclosingThreshold ifTrue: [ 
-			each translateTo: each position - (0@(enclosingForce * (enclosingThreshold - diff))) ].
-
+			each translateTo: each position - (0@(k * (enclosingThreshold - diff))) ].
 		].
-
 
 ]
