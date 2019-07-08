@@ -48,7 +48,7 @@ RSRectangleForceLayout >> initialize [
 	super initialize.
 
 	enclosingThreshold := 50.
-	enclosingForce := 0.03.
+	enclosingForce := 0.3.
 
 ]
 
