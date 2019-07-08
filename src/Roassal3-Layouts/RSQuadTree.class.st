@@ -9,12 +9,15 @@ Class {
 		'x',
 		'y',
 		'leaf',
-		'nodes',
 		'origin',
 		'corner',
 		'node',
 		'cx',
-		'cy'
+		'cy',
+		'northWest',
+		'northEast',
+		'southWest',
+		'southEast'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -46,54 +49,69 @@ RSQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint
 
 { #category : #adding }
 RSQuadTree >> add: aNode [
+	| n |
+	leaf
+		ifTrue: [
+			x isNil
+				ifFalse: [
+					(x - aNode position x) abs + (y - aNode position y) abs < 0.01
+						ifTrue: [ self addChild: aNode ]
+						ifFalse: [ n := node.
+							x := nil.
+							y := nil.
+							node := nil.
+							self
+								addChild: aNode;
+								addChild: n ] ]
+				ifTrue: [
+					x := aNode position x.
+					y := aNode position y.
+					node := aNode ] ]
+		ifFalse: [ self addChild: aNode ]
 
-	|n|
-
-	leaf ifTrue: [ x isNil ifFalse: [ (x - aNode position x) abs + (y - aNode position y) abs < 0.01 ifTrue: [ self addChild: aNode ]
-																								   ifFalse: [ n := node.
-																											x := nil.
-																											y := nil.
-																											node := nil.
-																											self addChild: aNode;
-																												addChild: n ] ] 
-						ifTrue: [ x := aNode position x.
-								y := aNode position y.
-								node := aNode ] ] 
-		 ifFalse: [ self addChild: aNode ] 
 ]
 
 { #category : #adding }
 RSQuadTree >> addChild: aNode [
-
-
 	| sx sy new |
-	
 	sx := (origin x + corner x) / 2.
 	sy := (origin y + corner y) / 2.
-	
 	leaf := false.
 
-	aNode position x < sx ifTrue: [ aNode position y < sy ifTrue: [ (nodes at: 1) isNil ifTrue: [ new := RSQuadTree new.
-																								new origin: origin;
-																									corner: sx@sy.
-																								nodes at: 1 put: new ] .
-																	(nodes at: 1) add: aNode ]
-															ifFalse: [ (nodes at: 3) isNil ifTrue: [ new := RSQuadTree new.
-																								new origin: origin x @ sy;
-																									corner: sx @ corner y.
-																								nodes at: 3 put: new ] .
-																	(nodes at: 3) add: aNode ] ]
-	 
-						    ifFalse: [ aNode position y < sy ifTrue: [  (nodes at: 2) isNil ifTrue: [ new := RSQuadTree new.
-																								new origin: sx @ origin y;
-																									corner: corner x @ sy.
-																								nodes at: 2 put: new ] .
-																	(nodes at: 2) add: aNode ] 
-															ifFalse: [ (nodes at: 4) isNil ifTrue: [ new := RSQuadTree new.
-																								new origin: sx @ sy;
-																									corner: corner.
-																								nodes at: 4 put: new ] .
-																	(nodes at: 4) add: aNode ] ] 
+	aNode position x < sx
+		ifTrue: [
+			aNode position y < sy
+				ifTrue: [
+					northWest ifNil: [ 
+						northWest := RSQuadTree new
+							origin: origin;
+							corner: sx @ sy;
+							yourself ].
+					northWest add: aNode ]
+				ifFalse: [
+					southWest ifNil: [ 
+						southWest := RSQuadTree new
+							origin: origin x @ sy;
+							corner: sx @ corner y;
+							yourself ].
+					southWest add: aNode ] ]
+		ifFalse: [
+			aNode position y < sy
+				ifTrue: [
+					northEast ifNil: [
+						northEast := RSQuadTree new
+							origin: sx @ origin y;
+							corner: corner x @ sy;
+							yourself ].
+					northEast add: aNode ]
+				ifFalse: [
+					southEast ifNil: [ 
+						southEast := RSQuadTree new
+							origin: sx @ sy;
+							corner: corner;
+							yourself ].
+					southEast add: aNode ] ]
+
 ]
 
 { #category : #accessing }
@@ -138,16 +156,14 @@ RSQuadTree >> cy: aFloat [
 
 { #category : #'initialize-release' }
 RSQuadTree >> initialize [ 
-
 	super initialize.
 	
 	leaf := true.
-	nodes := Array new: 4.
-	
+
 ]
 
-{ #category : #accessing }
-RSQuadTree >> leaf [
+{ #category : #testing }
+RSQuadTree >> isLeaf [
 	^ leaf
 ]
 
@@ -157,8 +173,13 @@ RSQuadTree >> node [
 ]
 
 { #category : #accessing }
-RSQuadTree >> nodes [
-	^ nodes
+RSQuadTree >> notNilNodesDo: aBlockClosure [
+
+  northWest ifNotNil: aBlockClosure.
+  northEast ifNotNil: aBlockClosure.
+  southWest ifNotNil: aBlockClosure.
+  southEast ifNotNil: aBlockClosure.
+
 ]
 
 { #category : #accessing }

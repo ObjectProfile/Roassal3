@@ -42,12 +42,12 @@ RSForceBasedLayout >> accumulate: aQuad [
 	
 	random := Random new.
 	
-	aQuad leaf ifFalse: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self accumulate: e.
+	aQuad isLeaf ifFalse: [ aQuad notNilNodesDo: [ :e | self accumulate: e.
 																aQuad charge: aQuad charge + e charge.
 																cx := cx + (e charge * e cx).
-																cy := cy + (e charge * e cy) ] ] ].
+																cy := cy + (e charge * e cy) ] ].
 												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node translateTo: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
+	aQuad node isNil ifFalse: [ aQuad isLeaf ifFalse: [ aQuad node translateTo: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
 								k := alpha * (self chargeOf: aQuad node).
 								aQuad charge: aQuad charge + k.
 								cx := cx + (k * aQuad node position x). 
@@ -293,25 +293,29 @@ RSForceBasedLayout >> removeNode: node [
 
 { #category : #algorithm }
 RSForceBasedLayout >> repulse: aNode from: aQuad [
-
-	| dx dy dn k p |
-	
+	| dx dy |
 	dx := aQuad cx - aNode position x.
 	dy := aQuad cy - aNode position y.
-	
-	((dx closeTo: 0) and: [ dy closeTo: 0 ] ) ifFalse: [ 
-	
-	dn := 1 / ((dx * dx) + (dy * dy)) sqrt.
-	
-	p := oldPositions at: aNode.
-	aQuad node ~= aNode ifTrue: [ aQuad corner x - aQuad origin x * dn < theta ifTrue: [ k := aQuad charge * dn * dn.
-																							oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ).
-																							^ self].
-												
-									(aQuad node isNil not and: [ dn < 1e9 ]) ifTrue: [ k := (self chargeOf: aQuad node) * dn * dn * alpha.
-																					  oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ) ] ]. ].
-																			
-	(aQuad charge closeTo: 0) not ifTrue: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self repulse: aNode from: e ] ] ]
+
+	((dx closeTo: 0) and: [ dy closeTo: 0 ]) ifFalse: [
+		| dn p k |
+		dn := 1 / (dx*dx + (dy*dy)) sqrt.
+		p := oldPositions at: aNode.
+
+		aQuad node = aNode ifFalse: [
+			(aQuad corner x - aQuad origin x) * dn < theta 		"<--- only x?"
+				ifTrue: [
+					k := aQuad charge * dn * dn.
+					oldPositions at: aNode put: (p - ((dx@dy) * k)).
+					^ self ].
+			(aQuad node notNil and: [ dn < 1e9 ])
+				ifTrue: [
+					k := (self chargeOf: aQuad node) * dn * dn * alpha.
+					oldPositions at: aNode put: (p - ((dx@dy) * k)) ] ] ].
+
+	(aQuad charge closeTo: 0) ifFalse: [ 
+		aQuad notNilNodesDo: [ :e | self repulse: aNode from: e ] ]
+
 ]
 
 { #category : #hook }
@@ -395,7 +399,7 @@ RSForceBasedLayout >> step [
 
 	self stepEdgeForces.
 	self stepGravityForce.
-	self stepFixedNodes.
+	self stepNodeRepulsion.
 	self stepFriction.
 ]
 
@@ -420,20 +424,6 @@ RSForceBasedLayout >> stepEdgeForces [
 			to translateTo: (tp x - (x * k)) @ (tp y - (y * k)).
 			k := 1 - k.
 			from translateTo: (fp x + (x * k)) @ (fp y + (y * k)) ] ].
-
-]
-
-{ #category : #events }
-RSForceBasedLayout >> stepFixedNodes [
-	"Handle fixed nodes. Do this after all forces in a step were already applied."
-
-	| quad |
-	quad := RSQuadTree withAll: nodes.
-	self accumulate: quad.
-	nodes do: [ :each | 
-		(self isFixed: each)
-			ifFalse: [ self repulse: each from: quad ]
-			ifTrue: [ translator translateTopLeftOf: each to: (fixedNodes at: each) ] ].
 
 ]
 
@@ -463,6 +453,20 @@ RSForceBasedLayout >> stepGravityForce [
 		| pos |
 		pos := each position.
 		each translateTo: pos + (k * (center - pos)) ]
+
+]
+
+{ #category : #events }
+RSForceBasedLayout >> stepNodeRepulsion [
+	"Apply repulsion between nodes, using the charge."
+
+	| quad |
+	quad := RSQuadTree withAll: nodes.
+	self accumulate: quad.
+	nodes do: [ :each | 
+		(self isFixed: each)
+			ifFalse: [ self repulse: each from: quad ]
+			ifTrue: [ translator translateTopLeftOf: each to: (fixedNodes at: each) ] ].
 
 ]
 
