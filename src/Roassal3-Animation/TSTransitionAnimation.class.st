@@ -97,6 +97,11 @@ TSTransitionAnimation >> ramp: arrayOfAssociations [
 		range: (arrayOfAssociations collect: #value)
 ]
 
+{ #category : #accessing }
+TSTransitionAnimation >> range: aTwoArrayOfNumbers [
+	scale range: aTwoArrayOfNumbers
+]
+
 { #category : #initialization }
 TSTransitionAnimation >> reset [
 	super reset.
