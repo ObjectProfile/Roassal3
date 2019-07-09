@@ -300,7 +300,7 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 			| dn p k |
 			dn := 1 / d r.
 			p := oldPositions at: aNode.
-			(aQuad corner x - aQuad origin x) * dn < theta
+			aQuad rectangle width * dn < theta
 				ifTrue: [
 					k := aQuad charge * dn squared.
 					oldPositions at: aNode put: (p - (d * k)).

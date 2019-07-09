@@ -7,41 +7,47 @@ Class {
 	#instVars : [
 		'charge',
 		'leaf',
-		'origin',
-		'corner',
 		'soleChild',
 		'northEastQuad',
 		'northWestQuad',
 		'southEastQuad',
 		'southWestQuad',
-		'centerOfCharge'
+		'centerOfCharge',
+		'rectangle'
 	],
 	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #public }
 RSQuadTree class >> withAll: aNodeCollection [
-
-	^ self withAll: aNodeCollection origin: (aNodeCollection collect: [:e | e position x]) min @ (aNodeCollection collect: [:e | e position y]) min corner: (aNodeCollection collect: [:e | e position x]) max @ (aNodeCollection collect: [:e | e position y]) max
+	^ self
+		withAll: aNodeCollection
+		rectangle: (Rectangle encompassing: (aNodeCollection collect: #position))
 ]
 
 { #category : #public }
-RSQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint [
-
-	| dx dy root |
-
-	dx := anotherPoint x - aPoint x.
-	dy := anotherPoint y - aPoint y.
-
-
-	(dx closeTo: dy ) ifTrue: [ root := self new.
-										root origin: aPoint;
-											corner: anotherPoint.
-										aNodeCollection do: [ :e | root add: e ].
-										^ root ] .
+RSQuadTree class >> withAll: aNodeCollection rectangle: rectangle [
 	
-	dx > dy ifTrue: [ ^ self withAll: aNodeCollection origin: aPoint corner: anotherPoint x @ (aPoint y + dx) ].
-	dy > dx ifTrue: [ ^ self withAll: aNodeCollection origin: aPoint corner: (aPoint x + dy) @ anotherPoint y ] .
+	| root extent |
+	extent := rectangle extent.
+
+	(extent x closeTo: extent y) ifTrue: [ 
+		root := self new.
+		root rectangle: rectangle.
+		aNodeCollection do: [ :e | root add: e ].
+		^ root ].
+	
+	^ extent x > extent y
+		ifTrue: [ 
+			self 
+				withAll: aNodeCollection
+				rectangle: (rectangle origin corner: rectangle corner x @ (extent x + rectangle origin y)) ]
+		ifFalse: [
+			self 
+				withAll: aNodeCollection
+				rectangle: (rectangle origin corner: (extent y + rectangle origin x) @ rectangle corner y) ]
+
+
 ]
 
 { #category : #adding }
@@ -66,42 +72,39 @@ RSQuadTree >> add: aNode [
 
 { #category : #adding }
 RSQuadTree >> addChild: aNode [
-	| sx sy |
-	sx := (origin x + corner x) / 2.
-	sy := (origin y + corner y) / 2.
+	| s origin corner |
 	leaf := false.
+	s := rectangle rsCenter.
+	origin := rectangle origin.
+	corner := rectangle corner.
 
-	aNode position x < sx
+	aNode position x < s x
 		ifTrue: [
-			aNode position y < sy
+			aNode position y < s y
 				ifTrue: [
 					northWestQuad ifNil: [ 
 						northWestQuad := RSQuadTree new
-							origin: origin;
-							corner: sx @ sy;
+							rectangle: (origin corner: s);
 							yourself ].
 					northWestQuad add: aNode ]
 				ifFalse: [
 					southWestQuad ifNil: [ 
 						southWestQuad := RSQuadTree new
-							origin: origin x @ sy;
-							corner: sx @ corner y;
+							rectangle: ((origin x @ s y ) corner: (s x @ corner y));
 							yourself ].
 					southWestQuad add: aNode ] ]
 		ifFalse: [
-			aNode position y < sy
+			aNode position y < s y
 				ifTrue: [
 					northEastQuad ifNil: [
 						northEastQuad := RSQuadTree new
-							origin: sx @ origin y;
-							corner: corner x @ sy;
+							rectangle: ((s x @ origin y) corner: (corner x @ s y));
 							yourself ].
 					northEastQuad add: aNode ]
 				ifFalse: [
 					southEastQuad ifNil: [ 
 						southEastQuad := RSQuadTree new
-							origin: sx @ sy;
-							corner: corner;
+							rectangle: (s corner: corner);
 							yourself ].
 					southEastQuad add: aNode ] ]
 
@@ -127,16 +130,6 @@ RSQuadTree >> charge: anObject [
 	charge := anObject
 ]
 
-{ #category : #accessing }
-RSQuadTree >> corner [
-	^ corner
-]
-
-{ #category : #accessing }
-RSQuadTree >> corner: anObject [
-	corner := anObject
-]
-
 { #category : #'initialize-release' }
 RSQuadTree >> initialize [ 
 	super initialize.
@@ -151,13 +144,13 @@ RSQuadTree >> isLeaf [
 ]
 
 { #category : #accessing }
-RSQuadTree >> origin [
-	^ origin
+RSQuadTree >> rectangle [
+	^ rectangle
 ]
 
 { #category : #accessing }
-RSQuadTree >> origin: anObject [
-	origin := anObject
+RSQuadTree >> rectangle: aRectangle [ 
+	rectangle := aRectangle
 ]
 
 { #category : #accessing }
