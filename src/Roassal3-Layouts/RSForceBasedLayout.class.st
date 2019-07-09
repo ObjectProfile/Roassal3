@@ -34,18 +34,13 @@ Class {
 { #category : #algorithm }
 RSForceBasedLayout >> accumulate: aQuad [ 
 
-	| cx cy |
-	cx := 0.
-	cy := 0.
-	
-	aQuad charge: 0; cx: 0; cy: 0.
+	aQuad charge: 0; centerOfCharge: 0@0.
 	
 	aQuad isLeaf ifFalse: [
 		aQuad subQuadsDo: [ :aSubQuad |
 			self accumulate: aSubQuad.
 			aQuad charge: aQuad charge + aSubQuad charge.
-			cx := cx + (aSubQuad charge * aSubQuad cx).
-			cy := cy + (aSubQuad charge * aSubQuad cy) ] ].
+			aQuad centerOfCharge: aQuad centerOfCharge + (aSubQuad charge * aSubQuad centerOfCharge) ] ].
 
 	aQuad soleChild ifNotNil: [ :soleChild |
 		| k |
@@ -53,12 +48,10 @@ RSForceBasedLayout >> accumulate: aQuad [
 			soleChild translateTo: soleChild position + (random next - 0.5 @ (random next - 0.5)) ].
 		k := alpha * (self chargeOf: soleChild).
 		aQuad charge: aQuad charge + k.
-		cx := cx + (k * soleChild position x). 
-		cy := cy + (k * soleChild position y) ].
+		aQuad centerOfCharge: aQuad centerOfCharge + (k * soleChild position) ].
 		
 	aQuad charge = 0 ifTrue: [ ^ self ].				
-	aQuad cx: cx / aQuad charge.
-	aQuad cy: cy / aQuad charge.
+	aQuad centerOfCharge: aQuad centerOfCharge / aQuad charge.
 
 ]
 
@@ -301,7 +294,7 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 
 	aQuad soleChild = aNode ifFalse: [
 		| d |
-		d := (aQuad cx @ aQuad cy) - aNode position.
+		d := aQuad centerOfCharge - aNode position.
 		
 		(d closeTo: 0@0) ifFalse: [
 			| dn p k |

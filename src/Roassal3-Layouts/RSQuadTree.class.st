@@ -9,15 +9,14 @@ Class {
 		'leaf',
 		'origin',
 		'corner',
-		'cx',
-		'cy',
 		'soleChild',
 		'northEastQuad',
 		'northWestQuad',
 		'southEastQuad',
-		'southWestQuad'
+		'southWestQuad',
+		'centerOfCharge'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #public }
@@ -109,6 +108,16 @@ RSQuadTree >> addChild: aNode [
 ]
 
 { #category : #accessing }
+RSQuadTree >> centerOfCharge [
+	^ centerOfCharge
+]
+
+{ #category : #accessing }
+RSQuadTree >> centerOfCharge: aPoint [
+	centerOfCharge := aPoint
+]
+
+{ #category : #accessing }
 RSQuadTree >> charge [
 	^ charge
 ]
@@ -126,26 +135,6 @@ RSQuadTree >> corner [
 { #category : #accessing }
 RSQuadTree >> corner: anObject [
 	corner := anObject
-]
-
-{ #category : #accessing }
-RSQuadTree >> cx [
-	^ cx
-]
-
-{ #category : #accessing }
-RSQuadTree >> cx: aFloat [
-	cx := aFloat
-]
-
-{ #category : #accessing }
-RSQuadTree >> cy [
-	^ cy
-]
-
-{ #category : #accessing }
-RSQuadTree >> cy: aFloat [
-	cy := aFloat
 ]
 
 { #category : #'initialize-release' }
