@@ -290,7 +290,7 @@ RSForceBasedLayout >> shouldUseProgressBar [
 { #category : #hook }
 RSForceBasedLayout >> start [
 	"mandatory for animations"
-	initialLayout on: nodes.
+	initialLayout on: (nodes collect: #realElement).
 	alpha :=  0.1.
 	edges := edges collect: [ :e | self newMockEdgeFor: e ].
 ]
