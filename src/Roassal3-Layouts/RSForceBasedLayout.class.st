@@ -1,30 +1,22 @@
 "
-A ROForceBasedLayout is inspired from the Code of D3. The original d3 version may be found on: http://bl.ocks.org/mbostock/4062045
-
-Layout algorithm inspired by Tim Dwyer and Thomas Jakobsen.
+I am a layout that uses forces in each elements, I have create a light representation of one element.
 
 "
 Class {
 	#name : #RSForceBasedLayout,
 	#superclass : #RSEdgeDrivenLayout,
 	#instVars : [
-		'oldPositions',
+		'iterations',
 		'nodes',
-		'weights',
-		'strengths',
-		'lengths',
+		'initialLayout',
 		'gravity',
 		'friction',
 		'theta',
-		'charge',
-		'alpha',
-		'charges',
 		'strength',
 		'length',
-		'fixedNodes',
+		'charge',
 		'center',
-		'initialLayout',
-		'nbIterations',
+		'alpha',
 		'shouldUseProgressBar',
 		'random'
 	],
@@ -46,7 +38,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 		| k |
 		aQuad isLeaf ifFalse: [
 			soleChild translateTo: soleChild position + (random next - 0.5 @ (random next - 0.5)) ].
-		k := alpha * (self chargeOf: soleChild).
+		k := alpha * soleChild charge.
 		aQuad charge: aQuad charge + k.
 		aQuad centerOfCharge: aQuad centerOfCharge + (k * soleChild position) ].
 		
@@ -55,32 +47,24 @@ RSForceBasedLayout >> accumulate: aQuad [
 
 ]
 
-{ #category : #updating }
-RSForceBasedLayout >> addEdge: anEdge [
-	self addEdges: (Array with: anEdge)
+{ #category : #adding }
+RSForceBasedLayout >> addEdges: realEdges [
+	
+	| newMockEdges |
+	newMockEdges := realEdges collect: [ :e | self newMockEdgeFor: e ].
+	edges class = Array ifTrue: [ edges := OrderedCollection new ].
+	edges addAll: newMockEdges.
+
 ]
 
-{ #category : #updating }
-RSForceBasedLayout >> addEdges: someEdges [
-	someEdges
-		do: [ :e | 
-			| from to |
-			from := e from.
-			to := e to.
-			weights at: from put: (weights at: from) + 1.
-			weights at: to put: (weights at: to) + 1 ].
-	edges := edges, someEdges
-]
+{ #category : #adding }
+RSForceBasedLayout >> addNodes: realElements [
 
-{ #category : #updating }
-RSForceBasedLayout >> addNodes: nodeElements [
-	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
-	nodes := nodes, nodeElements.
-	nodeElements
-		do: [ :e | 
-			weights add: (Association key: e value: 0).
-			oldPositions add: (Association key: e value: e position) ].
-
+	| newMockElements |
+	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
+	nodes class = Array ifTrue: [ nodes := OrderedCollection new ].
+	nodes addAll: newMockElements.
+	
 ]
 
 { #category : #accessing }
@@ -89,8 +73,24 @@ RSForceBasedLayout >> alpha [
 ]
 
 { #category : #accessing }
-RSForceBasedLayout >> alpha: anObject [
-	alpha := anObject
+RSForceBasedLayout >> alpha: aFloat [
+	alpha := aFloat
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> center [
+	^ center
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> center: aPoint [
+	"gravity moves elements to that point"
+	center := aPoint.
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> charge [
+	^ charge
 ]
 
 { #category : #accessing }
@@ -99,21 +99,11 @@ RSForceBasedLayout >> charge: aFloat [
 	charge := aFloat
 ]
 
-{ #category : #algorithm }
-RSForceBasedLayout >> chargeOf: aNode [ 
-
-	^ charges at: aNode ifAbsent: [ ^ charge ] 
-]
-
-{ #category : #'initialize-release' }
-RSForceBasedLayout >> defaultInitialLayout [
-	^ RSGridLayout new
-]
-
 { #category : #hook }
 RSForceBasedLayout >> doExecute: nodeElements [
-	self start: nodeElements.
-	self shouldRunLayoutWithProgressBar
+	self nodes: nodeElements.
+	self start.
+	self shouldUseProgressBar
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
@@ -122,13 +112,7 @@ RSForceBasedLayout >> doExecute: nodeElements [
 
 { #category : #configuration }
 RSForceBasedLayout >> doNotUseProgressBar [
-	shouldUseProgressBar := false	
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> fix: aNode at: aPoint [
-
-	fixedNodes at: aNode put: aPoint  
+	shouldUseProgressBar := false
 ]
 
 { #category : #accessing }
@@ -137,8 +121,8 @@ RSForceBasedLayout >> friction [
 ]
 
 { #category : #accessing }
-RSForceBasedLayout >> friction: anObject [
-	friction := anObject
+RSForceBasedLayout >> friction: aNumber [
+	friction := aNumber
 ]
 
 { #category : #accessing }
@@ -147,60 +131,47 @@ RSForceBasedLayout >> gravity [
 ]
 
 { #category : #accessing }
-RSForceBasedLayout >> gravity: anObject [
-	gravity := anObject
+RSForceBasedLayout >> gravity: aNumber [
+	gravity := aNumber
 ]
 
 { #category : #accessing }
-RSForceBasedLayout >> gravityAt: aPoint [
-
-	center := aPoint 
+RSForceBasedLayout >> initialLayout [
+	^ initialLayout
 ]
 
 { #category : #accessing }
 RSForceBasedLayout >> initialLayout: aLayout [
-	"Set the initial layout to be used before stepping"
 	initialLayout := aLayout
-]
-
-{ #category : #hook }
-RSForceBasedLayout >> initialPositionOfNodes: nodeElements [
-	initialLayout executeOnElements: nodeElements
 ]
 
 { #category : #'initialize-release' }
 RSForceBasedLayout >> initialize [
 	super initialize.
 	random := Random new.
-	nbIterations := 0.
-	edges := #().
-	nodes := #().
-	initialLayout := self defaultInitialLayout.
-	fixedNodes := Dictionary new.
-	strengths := Dictionary new.
-	lengths := Dictionary new.
-	charges := Dictionary new.
-	strength := 1.
-	length := 20.
-	charge := -30.
-	gravity := 0.1.
-	friction := 0.9.
-	theta := 0.8.
-	center := 0@0.
-	alpha := 0.1.
-	self useProgressBar
+	self
+		iterations: 0;
+		edges: #();
+		nodes: #();
+		initialLayout: RSGridLayout new;
+		gravity: 0.1;
+		friction: 0.9;
+		theta: 0.8;
+		strength: 1;
+		length: 20;
+		charge: -30;
+		center: 0@0;
+		useProgressBar.
 ]
 
-{ #category : #testing }
-RSForceBasedLayout >> isFixed: aNode [
-
-	^ fixedNodes includesKey: aNode 
+{ #category : #accessing }
+RSForceBasedLayout >> iterations: aNumber [
+	iterations := aNumber
 ]
 
-{ #category : #testing }
-RSForceBasedLayout >> isJobInstalled [
-	"Return true if the class Job exist. This is mainly useful to make a distinction between Pharo and VisualWorks"
-	^ Smalltalk includesKey: #Job
+{ #category : #accessing }
+RSForceBasedLayout >> length [
+	^ length
 ]
 
 { #category : #accessing }
@@ -209,84 +180,49 @@ RSForceBasedLayout >> length: aFloat [
 	length := aFloat
 ]
 
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> lengthOf: anEdge [
-
-	^ lengths at: anEdge ifAbsent: [ ^ length ] 
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockEdgeAt: anEdge [
+	^ edges detect: [ :each | each realEdge == anEdge ]
 ]
 
-{ #category : #accessing }
-RSForceBasedLayout >> nbIterations [
-	^ nbIterations
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockElementAt: realNode [
+	^ nodes detect: [ :each | each realElement == realNode ]
 ]
 
-{ #category : #accessing }
-RSForceBasedLayout >> nbIterations: anObject [
-	nbIterations := anObject
+{ #category : #'private - initialization' }
+RSForceBasedLayout >> newMockEdgeFor: e [
+	| from to |
+	from := self mockElementAt: e from.
+	to := self mockElementAt: e to.
+	from addWeight.
+	to addWeight.
+	^ RSMockEdge new
+		from: from;
+		to: to;
+		strength: strength;
+		length: length;
+		realEdge: e;
+		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'private - initialization' }
+RSForceBasedLayout >> newMockElementFor: e [
+	^ RSMockElement new
+		realElement: e;
+		charge: charge;
+		weight: 0;
+		yourself
+]
+
+{ #category : #'accessing - model' }
 RSForceBasedLayout >> nodes [
 	^ nodes
 ]
 
-{ #category : #accessing }
-RSForceBasedLayout >> nodes: elements [
-	nodes := elements
-]
-
-{ #category : #hook }
-RSForceBasedLayout >> on: elements edges: edgesCol [
-	self nodes: elements.
-	self userDefinedEdges: edgesCol.
-	self applyOn: elements.
-]
-
-{ #category : #accessing }
-RSForceBasedLayout >> prepareNodes: nodeElements [
-	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
-	weights := Dictionary new.
-	oldPositions := Dictionary new.
-	nodes := nodeElements.
-	nodes
-		do: [ :e | 
-			weights add: (Association key: e value: 0).
-			oldPositions add: (Association key: e value: e position) ].
-	edges
-		do: [ :e | 
-			| from to |
-			from := e from.
-			to := e to.
-			weights at: from put: (weights at: from) + 1.
-			weights at: to put: (weights at: to) + 1 ].
-	alpha := 0.1
-]
-
-{ #category : #updating }
-RSForceBasedLayout >> removeAllEdges [
-	edges := OrderedCollection new
-]
-
-{ #category : #updating }
-RSForceBasedLayout >> removeEdge: ed [
-	edges remove: ed
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> removeFix: aNode [
-	fixedNodes removeKey: aNode ifAbsent: []
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> removeLengthAt: anEdge [
-
-	lengths removeKey: anEdge ifAbsent: []
-]
-
-{ #category : #updating }
-RSForceBasedLayout >> removeNode: node [
-	nodes remove: node.
-	node connectedEdges do: [ :ed | self removeEdge: ed. ]
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> nodes: aCollection [
+	nodes := aCollection collect: [ :node | self newMockElementFor: node ].
 ]
 
 { #category : #algorithm }
@@ -299,16 +235,16 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 		(d closeTo: 0@0) ifFalse: [
 			| dn p k |
 			dn := 1 / d r.
-			p := oldPositions at: aNode.
+			p := aNode oldPosition.
 			aQuad rectangle width * dn < theta
 				ifTrue: [
 					k := aQuad charge * dn squared.
-					oldPositions at: aNode put: (p - (d * k)).
+					aNode oldPosition: p - (d * k).
 					^ self ].
 			(aQuad soleChild notNil and: [ dn < 1e9 ])
 				ifTrue: [
-					k := (self chargeOf: aQuad soleChild) * dn squared * alpha.
-					oldPositions at: aNode put: (p - (d * k)) ] ] ].
+					k := aQuad soleChild charge * dn squared * alpha.
+					aNode oldPosition: p - (d * k).] ] ].
  
 	(aQuad charge closeTo: 0) ifFalse: [ 
 		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
@@ -322,82 +258,50 @@ RSForceBasedLayout >> runLayoutInJob [
 		title: 'Laying out elements';
 		min: 1 - alpha;
 		max: 1.
-	nbIterations = 0
-		ifTrue: [ 
-			[ 
+	iterations = 0 ifTrue: [ 
+		
+		[ alpha := alpha * 0.99.
+		alpha > 0.005 ] whileTrue: [ 
+			self step.
+			job currentValue: 1 - alpha ] ]
+	ifFalse: [ 
+		iterations timesRepeat: [ 
 			alpha := alpha * 0.99.
-			alpha > 0.005 ]
-				whileTrue: [ 
-					self step.
-					job currentValue: 1 - alpha ] ]
-		ifFalse: [ 
-			nbIterations
-				timesRepeat: [ 
-					alpha := alpha * 0.99.
-					self step.
-					job currentValue: 1 - alpha ] ] ] asJob run
+			self step.
+		job currentValue: 1 - alpha ] ] ] asJob run
 ]
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutSimply [
-	nbIterations = 0
-		ifTrue: [ 
-			[ 
+	iterations = 0 ifTrue: [ 
+		[ alpha := alpha * 0.99.
+		alpha > 0.005 ] whileTrue: [ self step ] ]
+	ifFalse: [ 
+		iterations timesRepeat: [ 
 			alpha := alpha * 0.99.
-			alpha > 0.005 ] whileTrue: [ self step ] ]
-		ifFalse: [ 
-			nbIterations
-				timesRepeat: [ 
-					alpha := alpha * 0.99.
-					self step ] ]
+			self step ] ]
 ]
 
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> set: aNode charge: aFloat [ 
-
-	charges at: aNode put: aFloat
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> set: anEdge length: aFloat [ 
-
-	lengths at: anEdge put: aFloat
-]
-
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> set: anEdge strength: aFloat [ 
-
-	strengths at: anEdge put: aFloat
-]
-
-{ #category : #updating }
-RSForceBasedLayout >> shouldRunLayoutWithProgressBar [
-	^ self isJobInstalled and: [ self shouldUseProgressBar ]
-]
-
-{ #category : #accessing }
+{ #category : #testing }
 RSForceBasedLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
 ]
 
-{ #category : #accessing }
-RSForceBasedLayout >> start: nodeElements [
-	self initialPositionOfNodes: nodeElements.
-	self prepareNodes: nodeElements
+{ #category : #hook }
+RSForceBasedLayout >> start [
+	"mandatory for animations"
+	initialLayout on: nodes.
+	alpha :=  0.1.
+	edges := edges collect: [ :e | self newMockEdgeFor: e ].
 ]
 
 { #category : #events }
 RSForceBasedLayout >> step [
-	"Run a step of the force layout algorithm."
-
-	"If there is no nodes, then there is not much to do."
-	nodes ifEmpty: [ ^ self ].
-	super step.
-
 	self stepEdgeForces.
 	self stepGravityForce.
 	self stepNodeRepulsion.
 	self stepFriction.
+	nodes do: #applyToRealElement
 ]
 
 { #category : #events }
@@ -405,22 +309,21 @@ RSForceBasedLayout >> stepEdgeForces [
 	"Apply forces of edges."
 	
 	edges do: [ :each | 
-		| from to fp tp x y len k |
+		| from to fp tp len k pd |
 		from := each from.
-		fp := from position.
 		to := each to.
+		fp := from position.
 		tp := to position.
-		x := tp x - fp x.
-		y := tp y - fp y.
-		len := (x * x + (y * y)) sqrt.
+		pd := tp - fp.
+		len := tp dist: fp.
 		(len closeTo: 0) ifFalse: [
-			len := alpha * (self strengthOf: each) * (len - (self lengthOf: each)) / len.
-			x := x * len.
-			y := y * len.
-			k := (weights at: from) / ((weights at: from) + (weights at: to)).
-			to translateTo: (tp x - (x * k)) @ (tp y - (y * k)).
+			len := alpha * (each strength) * (len - (each length)) / len.
+			pd := pd * len.
+			k := from weight / (from weight + to weight).
+			to translateTo: tp - (pd * k).
 			k := 1 - k.
-			from translateTo: (fp x + (x * k)) @ (fp y + (y * k)) ] ].
+			from translateTo: fp + (pd * k).]
+	].
 
 ]
 
@@ -431,21 +334,19 @@ RSForceBasedLayout >> stepFriction [
 	nodes do: [ :each | 
 		| current new old |
 		current := each position.
-		old := oldPositions at: each.
+		old := each oldPosition.
 
 		new := current - ((old - current) * friction).
 		each translateTo: new.
-		oldPositions at: each put: current ]
+		each oldPosition: current ]
 ]
 
 { #category : #events }
 RSForceBasedLayout >> stepGravityForce [
 	"Apply gravity"
-	
 	| k |
 	k := alpha * gravity.
-	(k closeTo: 0) ifTrue: [ ^self ].
-
+	(k closeTo: 0) ifTrue: [ ^ self ].
 	nodes do: [ :each | 
 		| pos |
 		pos := each position.
@@ -455,16 +356,15 @@ RSForceBasedLayout >> stepGravityForce [
 
 { #category : #events }
 RSForceBasedLayout >> stepNodeRepulsion [
-	"Apply repulsion between nodes, using the charge."
+	"Handle fixed nodes. Do this after all forces in a step were already applied."
 
 	| quad |
 	quad := RSQuadTree withAll: nodes.
 	self accumulate: quad.
 	nodes do: [ :each | 
-		(self isFixed: each)
-			ifFalse: [ self repulse: each from: quad ]
-			ifTrue: [ translator translateTopLeftOf: each to: (fixedNodes at: each) ] ].
-
+		each isFixed 
+			ifTrue: [ each translateTo: each fixPosition ]
+			ifFalse: [ self repulse: each from: quad ] ].
 ]
 
 { #category : #accessing }
@@ -474,21 +374,17 @@ RSForceBasedLayout >> strength: aFloat [
 	strength := aFloat
 ]
 
-{ #category : #'accessing - computed' }
-RSForceBasedLayout >> strengthOf: anEdge [
+{ #category : #accessing }
+RSForceBasedLayout >> theta [
+	^ theta
+]
 
-	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
+{ #category : #accessing }
+RSForceBasedLayout >> theta: aNumber [
+	theta := aNumber
 ]
 
 { #category : #configuration }
 RSForceBasedLayout >> useProgressBar [
-	shouldUseProgressBar := true	
-]
-
-{ #category : #public }
-RSForceBasedLayout >> userDefinedEdges: aCollectionOfEdges [
-	"useful to tell to the layout which edges have to be used for the layout"
-	userDefinedEdges := aCollectionOfEdges select: [ :e |
-		(nodes includes: e from) and: [ nodes includes: e to ] ]
-	
+	shouldUseProgressBar := true
 ]

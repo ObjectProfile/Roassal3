@@ -2379,7 +2379,7 @@ RSAnimationExamples >> example39ForceLayout [
 	layout := RSForceBasedLayout new 
 		nodes: classes;
 		edges: v edges;
-		start: classes;
+		start;
 		yourself.
 	v newAnimation repeat onStepDo: [ :t | 
 		layout step ].

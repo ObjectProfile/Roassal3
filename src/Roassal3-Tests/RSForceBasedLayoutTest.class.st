@@ -25,17 +25,17 @@ RSForceBasedLayoutTest >> setUp [
 { #category : #tests }
 RSForceBasedLayoutTest >> testAddNodesAndEdges [
 
-	RSForceBasedLayout2 new
-		length: 100;
-		charge: -300;
-		center: 200@200;
-		on: classes
+	RSForceBasedLayout new
+		start;
+		addNodes: classes;
+		addEdges: view edges;
+		step.
 		
 ]
 
 { #category : #tests }
 RSForceBasedLayoutTest >> testAttributes [
-	RSForceBasedLayout2 new
+	RSForceBasedLayout new
 		length: 100;
 		charge: -300;
 		center: 200@200;
@@ -45,8 +45,8 @@ RSForceBasedLayoutTest >> testAttributes [
 
 { #category : #tests }
 RSForceBasedLayoutTest >> testBasic [
-	RSForceBasedLayout2 on: classes.
-	RSForceBasedLayout2 new
+	RSForceBasedLayout on: classes.
+	RSForceBasedLayout new
 		doNotUseProgressBar;
 		on: classes.
 ]
