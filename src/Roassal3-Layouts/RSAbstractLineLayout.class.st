@@ -45,9 +45,7 @@ Class {
 		'verticalGap',
 		'horizontalOutGap',
 		'verticalOutGap',
-		'alignment',
-		'horizontallyStretchable',
-		'verticallyStretchable'
+		'alignment'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -126,32 +124,14 @@ RSAbstractLineLayout >> doCenter: aGraph [
 { #category : #hook }
 RSAbstractLineLayout >> doExecute: elements [ 
 	| pointer delta |
-	horizontallyStretchable ifTrue: 
-		[ self doStretchHorizontal: elements ].
-	verticallyStretchable ifTrue: 
-		[ self doStretchVertical: elements ].
 	pointer := self positionOriginalPointer: elements.
-
-	elements do: 
-		[ :element |
+	elements do: [ :element |
 		delta := self deltaFor: element.
 		translator translateTopLeftOf: element to: pointer - delta.
 		pointer := self 
-					movePointer: pointer
-					accordingToFigure: element.
+			movePointer: pointer
+			accordingToFigure: element.
 		self step ].
-]
-
-{ #category : #hook }
-RSAbstractLineLayout >> doStretchHorizontal: aCollectionOfElements [ 
-
-	self subclassResponsibility
-]
-
-{ #category : #hook }
-RSAbstractLineLayout >> doStretchVertical: aCollectionOfElements [ 
-
-	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -180,19 +160,12 @@ RSAbstractLineLayout >> horizontalGap: anInteger [
 	horizontalGap := anInteger
 ]
 
-{ #category : #testing }
-RSAbstractLineLayout >> horizontallyStretchable [
-	^ horizontallyStretchable
-]
-
 { #category : #'initialize-release' }
 RSAbstractLineLayout >> initialize [
 	
 	super initialize.
 	verticalGap := 10.
 	horizontalGap := 10.
-	horizontallyStretchable := false.
-	verticallyStretchable := false
 ]
 
 { #category : #hook }
@@ -207,21 +180,6 @@ RSAbstractLineLayout >> positionOriginalPointer: aGraph [
 	^self subclassResponsibility
 ]
 
-{ #category : #configuration }
-RSAbstractLineLayout >> stretch [
-	horizontallyStretchable := verticallyStretchable := true
-]
-
-{ #category : #configuration }
-RSAbstractLineLayout >> stretchHorizontally [
-	horizontallyStretchable := true
-]
-
-{ #category : #configuration }
-RSAbstractLineLayout >> stretchVertically [
-	verticallyStretchable := true
-]
-
 { #category : #accessing }
 RSAbstractLineLayout >> verticalGap [
 	
@@ -232,9 +190,4 @@ RSAbstractLineLayout >> verticalGap [
 RSAbstractLineLayout >> verticalGap: anInteger [
 	
 	verticalGap := anInteger
-]
-
-{ #category : #testing }
-RSAbstractLineLayout >> verticallyStretchable [
-	^ verticallyStretchable
 ]

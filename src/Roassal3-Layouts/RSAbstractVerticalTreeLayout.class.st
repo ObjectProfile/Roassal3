@@ -17,36 +17,11 @@ RSAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #'default attach points' }
-RSAbstractVerticalTreeLayout >> defaultAttachPoint [
-	^ RTVerticalAttachPoint new
-]
-
 { #category : #'initialize-release' }
 RSAbstractVerticalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 3
-]
-
-{ #category : #reversing }
-RSAbstractVerticalTreeLayout >> inverseAttachPoint [
-	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
-
-	| a |
-	a := RTShorterVerticalDistanceAttachPoint new.
-	edges
-		do: [ :edge | 
-			edge shape attachPoint: a.
-			edge updateFromTo ]
-
-]
-
-{ #category : #reversing }
-RSAbstractVerticalTreeLayout >> inverseAttachPointIfNecessary [
-	"Inverse the attach point if the user has not used #doNotAttachPoint"
-	self shouldSetDefaultAttachPoint
-		ifTrue: [ self inverseAttachPoint ]
 ]
 
 { #category : #'hook-private' }
@@ -77,12 +52,4 @@ RSAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 			translator translateTopLeftOf: eachNode to: (eachNode position x @ cursor).
 			max max: eachNode height ].
 		cursor := cursor + layerDepthSize + self verticalGap ]
-]
-
-{ #category : #reversing }
-RSAbstractVerticalTreeLayout >> verticallyReverse: elements [
-	"Vertically reverse the elements, as well as the attachpoints"
-
-	super verticallyReverse: elements.
-	self inverseAttachPointIfNecessary
 ]

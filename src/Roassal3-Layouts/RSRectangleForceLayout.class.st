@@ -4,7 +4,7 @@ I am a specific kind of force based layout that has an enclosing rectangle for e
 "
 Class {
 	#name : #RSRectangleForceLayout,
-	#superclass : #RSOptimizedForceBasedLayout,
+	#superclass : #RSForceBasedLayout2,
 	#instVars : [
 		'enclosingRectangle',
 		'enclosingThreshold',

@@ -7,9 +7,11 @@ Class {
 	#instVars : [
 		'from',
 		'to',
-		'realEdge'
+		'realEdge',
+		'strength',
+		'length'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #accessing }
@@ -23,6 +25,16 @@ RSMockEdge >> from: aMockElement [
 ]
 
 { #category : #accessing }
+RSMockEdge >> length [
+	^ length
+]
+
+{ #category : #accessing }
+RSMockEdge >> length: aNumber [
+	length := aNumber
+]
+
+{ #category : #accessing }
 RSMockEdge >> realEdge [
 	^ realEdge
 ]
@@ -30,6 +42,16 @@ RSMockEdge >> realEdge [
 { #category : #accessing }
 RSMockEdge >> realEdge: anObject [
 	realEdge := anObject
+]
+
+{ #category : #accessing }
+RSMockEdge >> strength [ 
+	^ strength
+]
+
+{ #category : #accessing }
+RSMockEdge >> strength: aNumber [
+	strength := aNumber
 ]
 
 { #category : #accessing }

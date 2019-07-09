@@ -116,11 +116,6 @@ RSAbstractCompactTree >> computePosition: aNode [
 ]
 
 { #category : #hook }
-RSAbstractCompactTree >> coordinate: aNode withMod: aFloat [
-	self subclassResponsibility
-]
-
-{ #category : #hook }
 RSAbstractCompactTree >> doExecute: nodeElements [ 
 	| rootNodes |
 	
@@ -137,11 +132,6 @@ RSAbstractCompactTree >> doExecute: nodeElements [
 	
 	rootNodes  do: [:e |
 					self draw:e withMod: 0  ]
-]
-
-{ #category : #hook }
-RSAbstractCompactTree >> draw: aNode withMod: aFloat [
-	self subclassResponsibility
 ]
 
 { #category : #algorithm }
@@ -230,12 +220,6 @@ RSAbstractCompactTree >> leftSiblingOf: aNode [
 					    ifFalse: [ children := self childrenFor: (self fatherOf: aNode).
 								(children first) = aNode ifTrue: ["as no left sibling" ^ nil ]
 																    ifFalse: [^ children at: ((children indexOf: aNode) - 1) ] ]
-]
-
-{ #category : #algorithm }
-RSAbstractCompactTree >> nodeAbcissaWithNeighbor: aNode [
-
-	self subclassResponsibility 
 ]
 
 { #category : #'initialize-release' }

@@ -85,17 +85,6 @@ RSRadialTreeLayout >> computePosition: aNode [
 											
 ]
 
-{ #category : #algorithm }
-RSRadialTreeLayout >> diameterOf: aNode [
-
-	|diam|
-	
-	(aNode shapes first isKindOf: RTEllipse) ifTrue: [ diam := aNode width max: aNode height ]
-										ifFalse: [ diam := (aNode width * aNode width + (aNode height * aNode height)) sqrt floor ].
-	
-	^ diam
-]
-
 { #category : #hook }
 RSRadialTreeLayout >> doExecute: nodeElements [
 
@@ -123,17 +112,6 @@ RSRadialTreeLayout >> doExecute: nodeElements [
 RSRadialTreeLayout >> gap [
 	
 	^ self verticalGap
-]
-
-{ #category : #algorithm }
-RSRadialTreeLayout >> halfDiameterOf: aNode [
-
-	|diam|
-	
-	(aNode shapes first isKindOf: RTEllipse) ifTrue: [ diam := aNode width max: aNode height ]
-										ifFalse: [ diam := (aNode width * aNode width + (aNode height * aNode height)) sqrt floor ].
-	
-	^ diam / 2
 ]
 
 { #category : #private }
@@ -188,12 +166,6 @@ RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
 ]
 
 { #category : #algorithm }
-RSRadialTreeLayout >> nodeAbcissaWithNeighbor: aNode [
-
-	^ aNode x + (horizontalGap / aNode layer /2) + ((self halfDiameterOf: aNode) / aNode layer)
-]
-
-{ #category : #algorithm }
 RSRadialTreeLayout >> radialDraw: aNode [
 	"draw the subtree induced by the given node"
 
@@ -213,26 +185,6 @@ RSRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
 	aNode theta: aNode theta + aFloat.
 	
 	(self childrenFor: aNode) do: [ :e | self rotateSubtreeFrom: e by: aFloat ]
-]
-
-{ #category : #hook }
-RSRadialTreeLayout >> spreadNodes: nodeElements around: aNode [
-
-	|nodeL nodeR i angle beta lay1 |
-	
-	i := 1.
-	angle := 0.
-	
-	[ nodeL :=(self followLeftContour: aNode toLayer: i).
-	nodeR := (self followRightContour: aNode toLayer: i).
-	nodeL isNil not & nodeR isNil not ] whileTrue: [ angle := angle max: ((nodeR theta - nodeL theta) + ((self halfDiameterOf: nodeR) + (self halfDiameterOf: nodeL) + horizontalGap  /i /verticalGap )).
-													i := i+1. ].
-
-	lay1 := nodeElements select: [ :e | e layer = 1 ].
-
-	beta := Float pi * 2 - angle / lay1 size.
-	
-	lay1 do: [ :e | self rotateSubtreeFrom: e by: (lay1 indexOf: e) - 1 * beta ].
 ]
 
 { #category : #algorithm }

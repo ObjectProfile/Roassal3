@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #'public layout' }
+RSLayoutBuilder >> cell [
+	^ layout := RSCellLayout new.
+]
+
+{ #category : #'public layout' }
 RSLayoutBuilder >> circle [
 	^ layout := RSCircleLayout new.
 ]
@@ -50,6 +55,12 @@ RSLayoutBuilder >> initialize [
 { #category : #accessing }
 RSLayoutBuilder >> layout [
 	^ layout 
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> none [
+	layout := RSNoLayout new.
+	^ layout
 ]
 
 { #category : #'public layout' }

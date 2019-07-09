@@ -14,8 +14,8 @@ RSDraggable class >> wantsUniqueInstance [
 
 { #category : #hooks }
 RSDraggable >> onElement: e [
-	| d |
 	e when: TSMouseDragging do: [ :evt |
+		| d |
 		d := e parent camera distanceFromPixelToSpace: evt step. 
 		e translateBy: d.
 		e signalUpdate.

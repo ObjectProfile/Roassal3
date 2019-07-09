@@ -5,10 +5,7 @@ Class {
 	#name : #RSLayout,
 	#superclass : #RSObject,
 	#instVars : [
-		'affectedNodes',
-		'translator',
-		'eventHandler',
-		'currentIteraction'
+		'translator'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -101,8 +98,7 @@ RSLayout >> fatherOf: aNode put: aValue [
 { #category : #'initialize-release' }
 RSLayout >> initialize [
 	super initialize.
-	translator := RSLayoutTranslator default.
-
+	translator := RSLayoutTranslator default
 ]
 
 { #category : #testing }
@@ -187,12 +183,6 @@ RSLayout >> rightContourOf: aNode put: aValue [
 
 { #category : #events }
 RSLayout >> step [
-"	currentIteraction := currentIteraction + 1.
-	(currentIteraction \\ self iterationsToSendEvent) = 0 
-		ifTrue: [ self announce: (ROLayoutStep new 
-											currentIteration: currentIteraction;
-											maxInterations: maxInterations) ].
-	"
 ]
 
 { #category : #utils }
@@ -211,8 +201,8 @@ RSLayout >> translator [
 ]
 
 { #category : #accessing }
-RSLayout >> translator: t [
-	translator := t
+RSLayout >> translator: aTranslator [
+	translator := aTranslator
 ]
 
 { #category : #hook }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'edge'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #'instance creation' }

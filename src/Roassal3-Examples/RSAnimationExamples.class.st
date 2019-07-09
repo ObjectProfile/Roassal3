@@ -2347,7 +2347,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 					e translateTo: ((pos1 at: e index) 
 						interpolateTo: (pos2 at: e index) at: t) ].
 				v zoomToFit ] ] ];
-		elementsOn: #('grid' 'tree' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
+		elementsOn: #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	v addAll: labels.
 	RSHorizontalLineLayout on: labels.
 	v open setLabel: 'Layouts'.
@@ -2583,8 +2583,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	view := RSView new.
 
 	classes := RSShapeBuilder box
-		draggable;
-		color: [ Color random alpha: 0.8 ];
+		color: TSScale category20;
 		size: 10;
 		elementsOn: Collection withAllSubclasses.
 	RSEdgeBuilder line
@@ -2597,10 +2596,10 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	layout := RSRectangleForceLayout new
 		nodes: classes;
 		edges: view edges;
-		start: classes;
+		start;
 		yourself.
-	view newAnimation repeat 
-		onStepDo: [ :t | layout step ].
+	view @ RSActivityMonitorView.
+	view newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
 	view when: TSExtentChangedEvent do: [ :evt |
@@ -2610,14 +2609,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		corner := camera fromPixelToSpace: view canvas extent.
 		layout enclosingRectangle: (origin corner: corner).
 	].
-
-	"Attach the dragged element to the cursor."
-	classes do: [ :each | 
-		each 
-			when: TSMouseDragging do: [:evt | 
-				layout fix: each at: evt position - (each extent /  2) ];
-			when: TSMouseDragEnd do: [:evt |
-				layout removeFix: each ] ].
+	classes @ (RSDraggableForce new layout: layout).
 
 	view camera scale: 2.
 	view open

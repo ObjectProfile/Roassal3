@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSDirectLayoutTranslator,
 	#superclass : #RSLayoutTranslator,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #testing }

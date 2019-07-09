@@ -19,7 +19,7 @@ Class {
 		'southWest',
 		'southEast'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
 { #category : #public }

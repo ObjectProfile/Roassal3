@@ -139,11 +139,6 @@ RSSugiyamaLayout >> cl: layer u: u v: v [
 	^c
 ]
 
-{ #category : #'default attach points' }
-RSSugiyamaLayout >> defaultAttachPoint [
-	^ RTVerticalAttachPoint new
-]
-
 { #category : #hook }
 RSSugiyamaLayout >> doExecute: aNodeCollection [ 
 	"Coffman-Graham-Layering. Di Battista Book, page 275, chapter, 9.2.1"

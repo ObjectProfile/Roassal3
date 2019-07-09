@@ -17,44 +17,11 @@ RSAbstractHorizontalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #'default attach points' }
-RSAbstractHorizontalTreeLayout >> defaultAttachPoint [
-	^ RTHorizontalAttachPoint new
-]
-
-{ #category : #reversing }
-RSAbstractHorizontalTreeLayout >> horizontallyReverse: elements [
-	"Horizontally reverse the elements, as well as the attachpoints"
-
-	super horizontallyReverse: elements.
-	self inverseAttachPointIfNecessary
-]
-
 { #category : #'initialize-release' }
 RSAbstractHorizontalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 3.
 	horizontalGap := 20
-]
-
-{ #category : #reversing }
-RSAbstractHorizontalTreeLayout >> inverseAttachPoint [
-	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
-
-	| a |
-	a := RTShorterHorizontalDistanceAttachPoint new.
-	edges
-		do: [ :edge | 
-			edge shape attachPoint: a.
-			edge updateFromTo ]
-
-]
-
-{ #category : #reversing }
-RSAbstractHorizontalTreeLayout >> inverseAttachPointIfNecessary [
-	"Inverse the attach point if the user has not used #doNotAttachPoint"
-	self shouldSetDefaultAttachPoint
-		ifTrue: [ self inverseAttachPoint ]
 ]
 
 { #category : #'hook-private' }

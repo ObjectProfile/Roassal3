@@ -112,8 +112,8 @@ RSRectanglePackLayout >> preferredAngle [
 ]
 
 { #category : #accessing }
-RSRectanglePackLayout >> preferredAngle: anObject [
-	preferredAngle := anObject
+RSRectanglePackLayout >> preferredAngle: angleInRadians [
+	preferredAngle := angleInRadians
 ]
 
 { #category : #'space-calculation' }

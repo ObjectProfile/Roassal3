@@ -6,14 +6,35 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'realElement',
-		'position'
+		'position',
+		'weight',
+		'oldPosition',
+		'isFixed',
+		'fixPosition',
+		'charge'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Utils'
 }
 
-{ #category : #action }
+{ #category : #actions }
+RSMockElement >> addWeight [
+	weight := weight + 1
+]
+
+{ #category : #actions }
 RSMockElement >> applyToRealElement [
-	realElement translateTo: position
+	isFixed ifTrue: [ ^ self ].
+	realElement translateTo: position 
+]
+
+{ #category : #accessing }
+RSMockElement >> charge [
+	^ charge
+]
+
+{ #category : #accessing }
+RSMockElement >> charge: aNum [
+	charge := aNum
 ]
 
 { #category : #accessing }
@@ -27,8 +48,44 @@ RSMockElement >> extent [
 ]
 
 { #category : #accessing }
+RSMockElement >> fixPosition [
+	^ fixPosition
+]
+
+{ #category : #accessing }
+RSMockElement >> fixPosition: aPoint [
+	fixPosition := aPoint
+]
+
+{ #category : #accessing }
 RSMockElement >> height [
 	^ realElement height
+]
+
+{ #category : #actions }
+RSMockElement >> initialize [
+	super initialize.
+	isFixed := false.
+]
+
+{ #category : #accessing }
+RSMockElement >> isFixed [
+	^ isFixed 
+]
+
+{ #category : #accessing }
+RSMockElement >> isFixed: aBool [
+	isFixed := aBool
+]
+
+{ #category : #accessing }
+RSMockElement >> oldPosition [
+	^ oldPosition
+]
+
+{ #category : #accessing }
+RSMockElement >> oldPosition: aPoint [
+	oldPosition := aPoint
 ]
 
 { #category : #accessing }
@@ -44,7 +101,8 @@ RSMockElement >> realElement [
 { #category : #accessing }
 RSMockElement >> realElement: rtElement [
 	realElement := rtElement.
-	position := rtElement position
+	position := rtElement position.
+	self oldPosition: position.
 ]
 
 { #category : #actions }
@@ -55,6 +113,16 @@ RSMockElement >> translateTo: aPosition [
 { #category : #accessing }
 RSMockElement >> view [
 	^ realElement view
+]
+
+{ #category : #accessing }
+RSMockElement >> weight [
+	^ weight
+]
+
+{ #category : #accessing }
+RSMockElement >> weight: aNumber [
+	weight := aNumber
 ]
 
 { #category : #accessing }

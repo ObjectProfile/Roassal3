@@ -72,17 +72,6 @@ RSAbstractRegularTreeLayout >> initialize [
 	isLayered := false.
 	shouldBeHorizontallyReversed := false.
 	shouldBeVerticallyReversed := false.
-	self doAttachPoint.
-]
-
-{ #category : #reversing }
-RSAbstractRegularTreeLayout >> inverseAttachPoint [
-	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
-	self shouldSetDefaultAttachPoint ifFalse: [ ^ self ].
-	edges
-		do: [ :edge | 
-			edge shape attachPoint inverted: true.
-			edge updateFromTo ]
 ]
 
 { #category : #accessing }
