@@ -25,7 +25,8 @@ Class {
 		'center',
 		'initialLayout',
 		'nbIterations',
-		'shouldUseProgressBar'
+		'shouldUseProgressBar',
+		'random'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -33,29 +34,32 @@ Class {
 { #category : #algorithm }
 RSForceBasedLayout >> accumulate: aQuad [ 
 
-	| cx cy k random |
-	
+	| cx cy |
 	cx := 0.
 	cy := 0.
 	
 	aQuad charge: 0; cx: 0; cy: 0.
 	
-	random := Random new.
-	
-	aQuad isLeaf ifFalse: [ aQuad notNilNodesDo: [ :e | self accumulate: e.
-																aQuad charge: aQuad charge + e charge.
-																cx := cx + (e charge * e cx).
-																cy := cy + (e charge * e cy) ] ].
-												
-	aQuad node isNil ifFalse: [ aQuad isLeaf ifFalse: [ aQuad node translateTo: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
-								k := alpha * (self chargeOf: aQuad node).
-								aQuad charge: aQuad charge + k.
-								cx := cx + (k * aQuad node position x). 
-								cy := cy + (k * aQuad node position y).].
-							
+	aQuad isLeaf ifFalse: [
+		aQuad subQuadsDo: [ :aSubQuad |
+			self accumulate: aSubQuad.
+			aQuad charge: aQuad charge + aSubQuad charge.
+			cx := cx + (aSubQuad charge * aSubQuad cx).
+			cy := cy + (aSubQuad charge * aSubQuad cy) ] ].
+
+	aQuad soleChild ifNotNil: [ :soleChild |
+		| k |
+		aQuad isLeaf ifFalse: [
+			soleChild translateTo: soleChild position + (random next - 0.5 @ (random next - 0.5)) ].
+		k := alpha * (self chargeOf: soleChild).
+		aQuad charge: aQuad charge + k.
+		cx := cx + (k * soleChild position x). 
+		cy := cy + (k * soleChild position y) ].
+		
 	aQuad charge = 0 ifTrue: [ ^ self ].				
 	aQuad cx: cx / aQuad charge.
 	aQuad cy: cy / aQuad charge.
+
 ]
 
 { #category : #updating }
@@ -174,6 +178,7 @@ RSForceBasedLayout >> initialPositionOfNodes: nodeElements [
 { #category : #'initialize-release' }
 RSForceBasedLayout >> initialize [
 	super initialize.
+	random := Random new.
 	nbIterations := 0.
 	edges := #().
 	nodes := #().
@@ -293,28 +298,27 @@ RSForceBasedLayout >> removeNode: node [
 
 { #category : #algorithm }
 RSForceBasedLayout >> repulse: aNode from: aQuad [
-	| dx dy |
-	dx := aQuad cx - aNode position x.
-	dy := aQuad cy - aNode position y.
 
-	((dx closeTo: 0) and: [ dy closeTo: 0 ]) ifFalse: [
-		| dn p k |
-		dn := 1 / (dx*dx + (dy*dy)) sqrt.
-		p := oldPositions at: aNode.
-
-		aQuad node = aNode ifFalse: [
-			(aQuad corner x - aQuad origin x) * dn < theta 		"<--- only x?"
+	aQuad soleChild = aNode ifFalse: [
+		| d |
+		d := (aQuad cx @ aQuad cy) - aNode position.
+		
+		(d closeTo: 0@0) ifFalse: [
+			| dn p k |
+			dn := 1 / d r.
+			p := oldPositions at: aNode.
+			(aQuad corner x - aQuad origin x) * dn < theta
 				ifTrue: [
-					k := aQuad charge * dn * dn.
-					oldPositions at: aNode put: (p - ((dx@dy) * k)).
+					k := aQuad charge * dn squared.
+					oldPositions at: aNode put: (p - (d * k)).
 					^ self ].
-			(aQuad node notNil and: [ dn < 1e9 ])
+			(aQuad soleChild notNil and: [ dn < 1e9 ])
 				ifTrue: [
-					k := (self chargeOf: aQuad node) * dn * dn * alpha.
-					oldPositions at: aNode put: (p - ((dx@dy) * k)) ] ] ].
-
+					k := (self chargeOf: aQuad soleChild) * dn squared * alpha.
+					oldPositions at: aNode put: (p - (d * k)) ] ] ].
+ 
 	(aQuad charge closeTo: 0) ifFalse: [ 
-		aQuad notNilNodesDo: [ :e | self repulse: aNode from: e ] ]
+		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
 
 ]
 

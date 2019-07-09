@@ -6,20 +6,18 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'charge',
-		'x',
-		'y',
 		'leaf',
 		'origin',
 		'corner',
-		'node',
 		'cx',
 		'cy',
-		'northWest',
-		'northEast',
-		'southWest',
-		'southEast'
+		'soleChild',
+		'northEastQuad',
+		'northWestQuad',
+		'southEastQuad',
+		'southWestQuad'
 	],
-	#category : #'Roassal3-Layouts-Utils'
+	#category : #'Roassal3-Layouts-Core'
 }
 
 { #category : #public }
@@ -49,31 +47,27 @@ RSQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint
 
 { #category : #adding }
 RSQuadTree >> add: aNode [
-	| n |
 	leaf
 		ifTrue: [
-			x isNil
+			soleChild isNil
+				ifTrue: [ soleChild := aNode ]
 				ifFalse: [
-					(x - aNode position x) abs + (y - aNode position y) abs < 0.01
+					(soleChild position closeTo: aNode position)
 						ifTrue: [ self addChild: aNode ]
-						ifFalse: [ n := node.
-							x := nil.
-							y := nil.
-							node := nil.
+						ifFalse: [
+							| firstChild |
+							firstChild := soleChild.
+							soleChild := nil.
 							self
 								addChild: aNode;
-								addChild: n ] ]
-				ifTrue: [
-					x := aNode position x.
-					y := aNode position y.
-					node := aNode ] ]
+								addChild: firstChild ] ] ]
 		ifFalse: [ self addChild: aNode ]
 
 ]
 
 { #category : #adding }
 RSQuadTree >> addChild: aNode [
-	| sx sy new |
+	| sx sy |
 	sx := (origin x + corner x) / 2.
 	sy := (origin y + corner y) / 2.
 	leaf := false.
@@ -82,35 +76,35 @@ RSQuadTree >> addChild: aNode [
 		ifTrue: [
 			aNode position y < sy
 				ifTrue: [
-					northWest ifNil: [ 
-						northWest := RSQuadTree new
+					northWestQuad ifNil: [ 
+						northWestQuad := RSQuadTree new
 							origin: origin;
 							corner: sx @ sy;
 							yourself ].
-					northWest add: aNode ]
+					northWestQuad add: aNode ]
 				ifFalse: [
-					southWest ifNil: [ 
-						southWest := RSQuadTree new
+					southWestQuad ifNil: [ 
+						southWestQuad := RSQuadTree new
 							origin: origin x @ sy;
 							corner: sx @ corner y;
 							yourself ].
-					southWest add: aNode ] ]
+					southWestQuad add: aNode ] ]
 		ifFalse: [
 			aNode position y < sy
 				ifTrue: [
-					northEast ifNil: [
-						northEast := RSQuadTree new
+					northEastQuad ifNil: [
+						northEastQuad := RSQuadTree new
 							origin: sx @ origin y;
 							corner: corner x @ sy;
 							yourself ].
-					northEast add: aNode ]
+					northEastQuad add: aNode ]
 				ifFalse: [
-					southEast ifNil: [ 
-						southEast := RSQuadTree new
+					southEastQuad ifNil: [ 
+						southEastQuad := RSQuadTree new
 							origin: sx @ sy;
 							corner: corner;
 							yourself ].
-					southEast add: aNode ] ]
+					southEastQuad add: aNode ] ]
 
 ]
 
@@ -168,21 +162,6 @@ RSQuadTree >> isLeaf [
 ]
 
 { #category : #accessing }
-RSQuadTree >> node [
-	^ node
-]
-
-{ #category : #accessing }
-RSQuadTree >> notNilNodesDo: aBlockClosure [
-
-  northWest ifNotNil: aBlockClosure.
-  northEast ifNotNil: aBlockClosure.
-  southWest ifNotNil: aBlockClosure.
-  southEast ifNotNil: aBlockClosure.
-
-]
-
-{ #category : #accessing }
 RSQuadTree >> origin [
 	^ origin
 ]
@@ -190,4 +169,19 @@ RSQuadTree >> origin [
 { #category : #accessing }
 RSQuadTree >> origin: anObject [
 	origin := anObject
+]
+
+{ #category : #accessing }
+RSQuadTree >> soleChild [
+	^ soleChild
+]
+
+{ #category : #accessing }
+RSQuadTree >> subQuadsDo: aBlockClosure [
+
+  northWestQuad ifNotNil: aBlockClosure.
+  northEastQuad ifNotNil: aBlockClosure.
+  southWestQuad ifNotNil: aBlockClosure.
+  southEastQuad ifNotNil: aBlockClosure.
+
 ]
