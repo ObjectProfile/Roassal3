@@ -15,6 +15,13 @@ RSComposite >> children [
 	^ children
 ]
 
+{ #category : #accessing }
+RSComposite >> elementFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ children ifNotNil: [ children elementFromModel: anObject ]
+
+]
+
 { #category : #testing }
 RSComposite >> hasChildren [
 	^ children notNil and: [children notEmpty]
@@ -22,7 +29,8 @@ RSComposite >> hasChildren [
 
 { #category : #accessing }
 RSComposite >> removeElement: anElement [
-	"TODO"
+	children remove: anElement ifAbsent: [ ].
+	anElement trachelShape remove.
 ]
 
 { #category : #accessing }
