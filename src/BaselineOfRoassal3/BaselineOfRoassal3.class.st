@@ -17,7 +17,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
-			spec package: 'GraphLayout' with: [ 
+			spec baseline: 'GraphLayout' with: [ 
 				spec repository: 'github://medicka/PharoGSoC:master' ].
 			dep := (AthensCairoCanvas canUnderstand: #fillRuleEvenOdd)
 				ifTrue: [ #('Athens-SVG') ]
