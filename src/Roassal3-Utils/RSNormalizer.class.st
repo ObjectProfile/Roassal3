@@ -90,6 +90,69 @@ RSNormalizer class >> height [
 
 { #category : #'instance creation' }
 RSNormalizer class >> position [ 
+	"Create a normalizer for position.
+	
+Here is an example:
+-=-=-=
+classes := Collection withAllSubclasses.
+
+v := RSView new.
+es := RSShapeBuilder circle
+			color: (Color gray alpha: 0.3);
+			elementsOn: classes.
+es @ RSPopup.
+v addAll: es.
+RSNormalizer size
+	elements: es;
+	from: 5;
+	to: 20;
+	normalize: [ :cls | cls instVarNames size ].
+	
+RSNormalizer position
+	to: 500 @ -500;
+	elements: es;
+	normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
+v open		
+-=-=-=		
+
+and a more elaborated example:
+-=-=-=
+classes := Collection withAllSubclasses.
+
+v := RSView new.
+line := RSSingleEdgeBuilder polyline 
+	width: 2;
+	controlPoints: { 0@ -600. 0@0. 600@0 };
+	markerStartEnd: (RSShapeBuilder triangle
+		size: 20;
+		color: Color black;
+		element);
+	edge.
+es := RSShapeBuilder circle
+	interactionDo: [ :i | i popup; browseable ];
+	border: TSBorder new;
+	color: TSColorPalette sequential orrd9;
+	elementsOn: classes.
+v addAll: es.
+v add: line.
+RSNormalizer size
+	from: 5;
+	to: 20;
+	elements: es;
+	normalize: [ :cls | cls instVarNames size ].
+	
+RSNormalizer position
+	from: 0@0;
+	to: 600@ -600;
+	elements: es;
+	normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
+v @ RSControlsView.
+v 
+-=-=-=
+	
+	"
+
+
 	| n |
 	n := self new.
 	n from: 0 @ 0.

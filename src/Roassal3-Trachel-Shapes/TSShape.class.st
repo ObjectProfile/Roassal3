@@ -221,6 +221,8 @@ TSShape >> path: aPath [
 
 { #category : #actions }
 TSShape >> pushBack [
+	"Move the element behind. This method can be called only if the shape is in a canvas"
+	self assert: [ parent notNil ] description: 'Should add the shape in a canvas first'.
 	parent pushBack: self.
 ]
 
