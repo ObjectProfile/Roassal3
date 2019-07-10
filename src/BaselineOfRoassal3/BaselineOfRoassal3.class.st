@@ -28,14 +28,14 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Scales';
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
-				package: #'Roassal3' with: [spec requires: #('Geometry')];
+				package: #'Roassal3' with: [spec requires: #('Geometry' 'GraphLayout')];
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Spec';
 				
 				package: #'Roassal3-Layouts';
-				package: #'Roassal3-Trachel-Shapes' with: [ spec requires: #('GraphLayout') ];
+				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Colors';
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Tests'.
