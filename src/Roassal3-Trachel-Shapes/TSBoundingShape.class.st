@@ -4,8 +4,8 @@ My subclasses has an extent and a transformation matrix
 Class {
 	#name : #TSBoundingShape,
 	#superclass : #TSShape,
-	#traits : 'TPositionable',
-	#classTraits : 'TPositionable classTrait',
+	#traits : 'TPositionable + TVertexTrait',
+	#classTraits : 'TPositionable classTrait + TVertexTrait classTrait',
 	#instVars : [
 		'baseRectangle',
 		'matrix'

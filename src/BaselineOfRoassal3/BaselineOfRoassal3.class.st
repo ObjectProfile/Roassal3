@@ -17,6 +17,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
+			spec package: 'GraphLayout' with: [ 
+				spec repository: 'github://medicka/PharoGSoC:master' ].
 			dep := (AthensCairoCanvas canUnderstand: #fillRuleEvenOdd)
 				ifTrue: [ #('Athens-SVG') ]
 				ifFalse: [ #('Athens-SVG' 'Roassal3-Pharo7') ].
@@ -32,7 +34,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Spec';
 				
-				package: #'Roassal3-Layouts';
+				package: #'Roassal3-Layouts' with: [ spec requires: #('GraphLayout') ];
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Colors';
 				package: #'Roassal3-Examples';
