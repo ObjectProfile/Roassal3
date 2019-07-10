@@ -29,6 +29,14 @@ TSUninterpolate >> uninterpolate: x [
 TSUninterpolate >> uninterpolate: aNum1 and: aNum2 [
 	a := aNum1.
 	b := aNum2.
+	(a isPoint or: [ b isPoint ]) ifTrue: [ 
+		| b2 |
+		a := a asPoint.
+		b2 := b := b asPoint.
+		b := b - a.
+		b x isZero ifTrue: [ b := 1/ b2 x @ b y ].
+		b y isZero ifTrue: [ b := b x @ (1 / b2 y ) ].
+		^ self  ].
 	a isNumber 
 		ifFalse: [ ^ a := b := Float nan. ].
 	b  := b - a.

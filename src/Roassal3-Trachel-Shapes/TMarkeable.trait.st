@@ -57,6 +57,16 @@ TMarkeable >> markerStart: marker [
 ]
 
 { #category : #'accessing - markers' }
+TMarkeable >> markerStartEnd: aMarker [
+	| m |
+	m := aMarker asMarker. 
+	self 
+		markerStart: m;
+		markerEnd: m.
+	^ m
+]
+
+{ #category : #'accessing - markers' }
 TMarkeable >> markers [
 	^ nil
 ]
