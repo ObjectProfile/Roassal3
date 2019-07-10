@@ -61,7 +61,7 @@ RSRectanglePackLayout >> doExecute: elements [
 	sortedElements addAll: elements.
 	
 	sortedElements size <= 2 ifTrue: [ 
-		RSHorizontalLineLayout on: sortedElements.
+		RSHorizontalLineLayout new gapSize: gap; on: sortedElements.
 		^ self
 	].
 	sortedElements
