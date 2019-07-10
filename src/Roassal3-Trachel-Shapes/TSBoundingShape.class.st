@@ -143,6 +143,12 @@ TSBoundingShape >> size: anInteger [
 	self extent: anInteger asPoint
 ]
 
+{ #category : #matrix }
+TSBoundingShape >> transform: aPoint [
+	"useful for attachpoints"
+	^ matrix transform: aPoint
+]
+
 { #category : #accessing }
 TSBoundingShape >> width: aNumber [
 	self extent: aNumber @ self extent y

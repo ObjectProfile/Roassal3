@@ -1025,3 +1025,47 @@ RSShapeExamples >> example29AntAnimation [
 	v when: TSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Move mouse on one box'
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example30EdgesToChildren [
+	<script: 'self new example30EdgesToChildren'>
+	
+	| view color ellipse shape parent1 parent2 edge |
+	view := RSView new.
+	color := TSScale category20b.
+	ellipse := RSShapeBuilder ellipse
+		color: color;
+		size: 20.
+	shape := RSShapeBuilder composite
+		shapes: [ :m | ellipse elementsOn: { m+2 } ];
+		color: color;
+		draggable;
+		padding: (Margin 
+			left: 100
+			right: 10
+			top: 100
+			bottom: 10).
+	parent1 := shape elementOn: 1.
+	parent2 := shape elementOn: 2.
+	parent1 translateTo: 100@100.
+	edge := RSSingleEdgeBuilder line
+		width: 2;
+		color: Color red;
+		from: parent1 children first;
+		to: parent2 children first;
+		edge.
+	view newAnimation
+		repeat;
+		from: 0;
+		to: 360;
+		onStepDo: [:t | | p |
+			p := parent1 position.
+			parent1 matrix
+				loadIdentity;
+				rotateByDegrees: t.
+			parent1 translateTo: p].
+	view add: parent1; add: parent2; add: edge.
+	view open
+
+
+]

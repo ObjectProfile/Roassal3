@@ -55,3 +55,8 @@ RSMorphicAdapter >> freeCanvas [
 	widget canvas: canvas.
 	canvas morph: widget.
 ]
+
+{ #category : #initialization }
+RSMorphicAdapter >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]

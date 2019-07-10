@@ -57,7 +57,7 @@ RSHighlightable >> doHighlight: element [
 	elements := self highlightElementsFor: element.
 	elements do: [ :e | self doHighlightElement: e ].
 	self announceHighlight: element elements: elements.
-	element view attributes at: self key put: elements.
+	element topParent view attributes at: self key put: elements.
 ]
 
 { #category : #'public - hooks' }
@@ -226,18 +226,19 @@ RSHighlightable >> setupAntAnimation [
 			onStepDo: [ :t |
 				e connectedEdges do: [ :ed |ed border dashOffset: t ].
 				e signalUpdate ].
-		e attributes at: #anime put: anime.
+		e topParent view attributes at: #antAnimation put: anime.
 	].
 	self when: TSUnHighlightEvent do: [ :evt | 
-		| e |
-		e := evt element.
-		(e attributes at: #anime) stop.
-		e attributes removeKey: #anime.
+		| att |
+		att := evt element topParent view attributes.
+		(att at: #antAnimation) stop.
+		att removeKey: #antAnimation.
 	].
 ]
 
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedElements: element [
+	
 	element topParent view attributes at: self key ifPresent: [ :elements |
 		elements do: [ :e | self doUnhighlightElement: e ].
 		self announceUnHightlight: element elements: elements.

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model',
 		'index',
-		'view',
+		'parent',
 		'trachelShape'
 	],
 	#category : #'Roassal3-Core'
@@ -49,6 +49,11 @@ RSShapedObject >> isElement [
 	^ false
 ]
 
+{ #category : #testing }
+RSShapedObject >> isRoassalElement [
+	^ true
+]
+
 { #category : #accessing }
 RSShapedObject >> model [
 	^ model
@@ -62,6 +67,16 @@ RSShapedObject >> model: anObject [
 { #category : #'reflective operations' }
 RSShapedObject >> onMyselfDo: ablock [
 	ablock value: self.
+]
+
+{ #category : #accessing }
+RSShapedObject >> parent [
+	^ parent
+]
+
+{ #category : #accessing }
+RSShapedObject >> parent: aViewOrElement [
+	parent := aViewOrElement
 ]
 
 { #category : #accessing }
@@ -99,10 +114,10 @@ RSShapedObject >> trachelShape: aShape [
 
 { #category : #accessing }
 RSShapedObject >> view [
-	^ view
+	^ parent view
 ]
 
 { #category : #accessing }
 RSShapedObject >> view: aView [ 
-	view := aView
+	parent:= aView
 ]

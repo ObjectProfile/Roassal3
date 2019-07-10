@@ -23,8 +23,8 @@ RSEdge class >> from: anElement1 to: anElement2 [
 
 { #category : #adding }
 RSEdge >> addedIn: aView [
-	view := aView.
-	view addEdge: self.
+	parent := aView.
+	parent addEdge: self.
 ]
 
 { #category : #accessing }
@@ -73,9 +73,9 @@ RSEdge >> isEdge [
 
 { #category : #removing }
 RSEdge >> remove [
-	view ifNil: [ ^ self ].
-	view removeEdge: self.
-	view := nil.
+	parent ifNil: [ ^ self ].
+	parent removeEdge: self.
+	parent := nil.
 ]
 
 { #category : #rendering }

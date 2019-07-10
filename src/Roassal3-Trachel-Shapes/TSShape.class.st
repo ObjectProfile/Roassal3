@@ -159,6 +159,11 @@ TSShape >> isInACanvas [
 ]
 
 { #category : #testing }
+TSShape >> isRoassalElement [
+	^ false
+]
+
+{ #category : #testing }
 TSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
 	^ true
@@ -171,7 +176,7 @@ TSShape >> loadShape: aShape [
 
 { #category : #animation }
 TSShape >> newAnimation [
-	^ self parent newAnimation
+	^ parent newAnimation
 ]
 
 { #category : #accessing }

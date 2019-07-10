@@ -76,7 +76,6 @@ RSEaselExample >> initializeWidgets [
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
 	diagram script: [ :view :canvas | 
-		'foo' logCr.
 		self textAsCode value: view value: canvas ]
 ]
 

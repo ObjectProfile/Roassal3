@@ -42,8 +42,12 @@ RSAttachPoint >> initialize [
 
 { #category : #'public - hooks' }
 RSAttachPoint >> position: anObject [
+	| parent position |
 	anObject isPoint ifTrue: [ ^ anObject ].
-	^ anObject position
+	position := anObject position. 
+	(parent := anObject parent) ifNil: [ ^ position ].
+	^ parent transform: position
+	
 ]
 
 { #category : #'public - hooks' }

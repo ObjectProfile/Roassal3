@@ -41,6 +41,11 @@ RoassalPresenter >> refresh [
 	self changed: #applyScript with: #()
 ]
 
+{ #category : #dependencies }
+RoassalPresenter >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
 { #category : #accessing }
 RoassalPresenter >> script [
 	^ script value

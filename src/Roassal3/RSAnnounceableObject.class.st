@@ -103,6 +103,11 @@ RSAnnounceableObject >> hasNotAttribute: aKey [
 	^ (self hasAttribute: aKey) not 
 ]
 
+{ #category : #dependencies }
+RSAnnounceableObject >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
 { #category : #attributes }
 RSAnnounceableObject >> removeAttributeAt: aKey [
 	^ self attributes removeKey: aKey

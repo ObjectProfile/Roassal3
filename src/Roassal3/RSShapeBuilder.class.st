@@ -47,7 +47,7 @@ RSShapeBuilder class >> circle [
 RSShapeBuilder class >> composite [
 	^ self new
 		innerClass: TSComposite;
-		elementClass: RSElement;
+		elementClass: RSComposite;
 		yourself 
 ]
 

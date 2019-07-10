@@ -393,6 +393,11 @@ TSCanvas >> topParent [
 	^ self
 ]
 
+{ #category : #'accessing - computed' }
+TSCanvas >> transform: aPoint [
+	^ aPoint
+]
+
 { #category : #accessing }
 TSCanvas >> view [
 	^ view
