@@ -34,8 +34,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Spec';
 				
-				package: #'Roassal3-Layouts' with: [ spec requires: #('GraphLayout') ];
-				package: #'Roassal3-Trachel-Shapes';
+				package: #'Roassal3-Layouts';
+				package: #'Roassal3-Trachel-Shapes' with: [ spec requires: #('GraphLayout') ];
 				package: #'Roassal3-Colors';
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Tests'.
