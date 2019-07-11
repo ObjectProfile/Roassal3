@@ -51,6 +51,7 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes'
 					'Roassal3-Spec');
+				group: 'utils' with: #('Core' 'Roassal3-UML');
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
 				group: 'Tests' with: #('Core' 'Roassal3-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ]
