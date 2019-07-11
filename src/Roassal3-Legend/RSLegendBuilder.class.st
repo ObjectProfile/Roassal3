@@ -101,7 +101,7 @@ RSLegendBuilder >> initialize [
 RSLegendBuilder >> initializeShape [
 	shape := RSShapeBuilder composite shapes: [ 
 		layout on: elements.
-		elements. ];
+		elements ];
 		padding: 10;
 		draggable.
 ]

@@ -37,7 +37,7 @@ RSComposite >> removeElement: anElement [
 RSComposite >> shapes: aTSGroup [
 	trachelShape shapes: aTSGroup.
 	(aTSGroup allSatisfy: #isRoassalElement) ifFalse: [ ^ self ].
-	children := aTSGroup.
+	children := aTSGroup copy.
 	children do: [ :child | 
 		child parent: self ].
 ]

@@ -1069,3 +1069,40 @@ RSShapeExamples >> example30EdgesToChildren [
 
 
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example31BasicGrapher [
+	<script: 'self new example31BasicGrapher'>
+	| classes v line es |
+	classes := Collection withAllSubclasses.
+	
+	v := RSView new.
+	line := RSSingleEdgeBuilder polyline 
+		width: 2;
+		controlPoints: { 0@ -600. 0@0. 600@0 };
+		markerStartEnd: (RSShapeBuilder triangle
+			size: 20;
+			color: Color black;
+			element);
+		edge.
+	es := RSShapeBuilder circle
+		interactionDo: [ :i | i popup; browseable ];
+		border: TSBorder new;
+		color: TSColorPalette sequential orrd9;
+		elementsOn: classes.
+	v addAll: es.
+	v add: line.
+	RSNormalizer size
+		from: 5;
+		to: 20;
+		elements: es;
+		normalize: [ :cls | cls instVarNames size ].
+	
+	RSNormalizer position
+		from: 0@0;
+		to: 600@ -600;
+		elements: es;
+		normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
+	v @ RSControlsView.
+	v open
+]

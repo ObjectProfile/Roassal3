@@ -25,25 +25,25 @@ Class {
 
 { #category : #algorithm }
 RSForceBasedLayout >> accumulate: aQuad [ 
-
+	| centerCharge |
+	centerCharge := 0@0.
 	aQuad charge: 0; centerOfCharge: 0@0.
-	
 	aQuad isLeaf ifFalse: [
 		aQuad subQuadsDo: [ :aSubQuad |
 			self accumulate: aSubQuad.
 			aQuad charge: aQuad charge + aSubQuad charge.
-			aQuad centerOfCharge: aQuad centerOfCharge + (aSubQuad charge * aSubQuad centerOfCharge) ] ].
+			centerCharge := centerCharge + (aSubQuad charge * aSubQuad centerOfCharge)] ].
 
 	aQuad soleChild ifNotNil: [ :soleChild |
 		| k |
 		aQuad isLeaf ifFalse: [
-			soleChild translateTo: soleChild position + (random next - 0.5 @ (random next - 0.5)) ].
+			soleChild translateTo: soleChild position + (random next @ random next) - 0.5 ].
 		k := alpha * soleChild charge.
 		aQuad charge: aQuad charge + k.
-		aQuad centerOfCharge: aQuad centerOfCharge + (k * soleChild position) ].
+		centerCharge := centerCharge + (k * soleChild position) ].
 		
-	aQuad charge = 0 ifTrue: [ ^ self ].				
-	aQuad centerOfCharge: aQuad centerOfCharge / aQuad charge.
+	aQuad charge = 0 ifTrue: [ ^ self ].		
+	aQuad centerOfCharge: centerCharge / aQuad charge.		
 
 ]
 
@@ -222,28 +222,27 @@ RSForceBasedLayout >> nodes [
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> nodes: aCollection [
-	nodes := aCollection collect: [ :node | self newMockElementFor: node ].
+	nodes := aCollection
 ]
 
 { #category : #algorithm }
 RSForceBasedLayout >> repulse: aNode from: aQuad [
-
+	
 	aQuad soleChild = aNode ifFalse: [
 		| d |
 		d := aQuad centerOfCharge - aNode position.
-		
 		(d closeTo: 0@0) ifFalse: [
 			| dn p k |
 			dn := 1 / d r.
 			p := aNode oldPosition.
 			aQuad rectangle width * dn < theta
 				ifTrue: [
-					k := aQuad charge * dn squared.
+					k := aQuad charge * dn * dn.
 					aNode oldPosition: p - (d * k).
 					^ self ].
 			(aQuad soleChild notNil and: [ dn < 1e9 ])
 				ifTrue: [
-					k := aQuad soleChild charge * dn squared * alpha.
+					k := aQuad soleChild charge * dn * dn * alpha.
 					aNode oldPosition: p - (d * k).] ] ].
  
 	(aQuad charge closeTo: 0) ifFalse: [ 
@@ -290,13 +289,15 @@ RSForceBasedLayout >> shouldUseProgressBar [
 { #category : #hook }
 RSForceBasedLayout >> start [
 	"mandatory for animations"
-	initialLayout on: (nodes collect: #realElement).
-	alpha :=  0.1.
+	initialLayout on: nodes.
+	nodes := nodes collect: [ :node | self newMockElementFor: node ].
 	edges := edges collect: [ :e | self newMockEdgeFor: e ].
+	alpha :=  0.1.
 ]
 
 { #category : #events }
 RSForceBasedLayout >> step [
+	nodes ifEmpty: [ ^ self ].
 	self stepEdgeForces.
 	self stepGravityForce.
 	self stepNodeRepulsion.
