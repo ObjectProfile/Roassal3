@@ -140,3 +140,72 @@ RSHighlightableExamples >> example05Border [
 	v zoomToFit.
 	v open
 ]
+
+{ #category : #examples }
+RSHighlightableExamples >> example06IterateNext [
+	<script: 'self new example06IterateNext'>
+	
+	| view numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
+	view := RSView new.
+	legendBuilder := RSLegendBuilder new view: view. 
+
+	"Create the view with numbers as elements."
+	numbers := RSShapeBuilder box
+		size: 30;
+		addInteraction: RSLabeled new;
+		elementsOn: (1 to: 10).
+	edges := RSEdgeBuilder line
+		elements: numbers;
+		connectFrom: [ :i | i // 2 ].
+	view
+		addAll: edges;
+		addAll: numbers.
+	layout := RSForceBasedLayout new
+		length: 80;
+		charge: -300;
+		nodes: numbers;
+		edges: view edges;
+		start;
+		yourself.
+	view newAnimation repeat onStepDo: [ :t | layout step ].
+	numbers @ (RSDraggableForce new layout: layout).
+
+	"Set up highlighting interactions"
+	highlightableForBoxes := RSHighlightable new.
+	highlightableForLabels := RSHighlightable new
+		noDefaultColor;
+		attributeKey: #exampleKey;
+		when: TSHighlightEvent do: [ :evt | evt element bold ];
+		when: TSUnHighlightEvent do: [ :evt | evt element normal ].
+	highlightBlock := [ :model |
+		highlightableForBoxes doHighlight: (view elementFromModel: model).
+		highlightableForLabels doHighlight: (legendBuilder elements elementFromModel: model).
+		selectedNumber := model ].
+	unhighlightAllBlock := [
+		highlightableForBoxes unhighlightRecordedElements: view.
+		highlightableForLabels unhighlightRecordedElements: view ].
+
+	"Build a legend with all the numbers"
+	legendBuilder shape border: TSBorder new.
+	legendBuilder defLabel 
+		onElement;
+		when: TSMouseClick do: [ :e | [ highlightBlock value: e model ] ].
+	legendBuilder location 
+		outer; right; offset: 70@ -200.
+	numbers do: [ :e | 
+		legendBuilder text: e model.
+		e when: TSMouseClick do: [ :evt | highlightBlock value: e model ]. ].
+	legendBuilder build.
+
+	"Unhighlight all when clicking on background."
+	view when: TSMouseClick do: unhighlightAllBlock.
+
+	"Highlight next number when N key is pressed. Initial is nothing."
+	selectedNumber := 0.
+	view when: TSKeyUp do: [ :evt |
+		evt keyValue = 45 ifTrue: [
+			selectedNumber := (selectedNumber \\ numbers size) + 1.
+			highlightBlock value: selectedNumber ] ].
+
+	view open.
+]

@@ -6,7 +6,7 @@ Class {
 	#superclass : #TSEvent,
 	#instVars : [
 		'element',
-		'elements',
+		'source',
 		'interaction'
 	],
 	#category : #'Roassal3-Trachel-Events'
@@ -24,16 +24,6 @@ TSHighlightableEvent >> element: anElement [
 ]
 
 { #category : #accessing }
-TSHighlightableEvent >> elements [
-	^ elements
-]
-
-{ #category : #accessing }
-TSHighlightableEvent >> elements: aCollection [
-	elements := aCollection
-]
-
-{ #category : #accessing }
 TSHighlightableEvent >> interaction [
 	^ interaction
 ]
@@ -41,4 +31,14 @@ TSHighlightableEvent >> interaction [
 { #category : #accessing }
 TSHighlightableEvent >> interaction: aInteraction [
 	interaction := aInteraction
+]
+
+{ #category : #accessing }
+TSHighlightableEvent >> source [
+	^ source
+]
+
+{ #category : #accessing }
+TSHighlightableEvent >> source: anElementOrView [
+	source := anElementOrView
 ]

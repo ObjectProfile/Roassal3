@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'highlightElements',
 		'highlightShape',
-		'announcer'
+		'announcer',
+		'attributeKey'
 	],
 	#category : #'Roassal3-Interaction'
 }
@@ -19,19 +20,19 @@ RSHighlightable >> announce: anEvent [
 ]
 
 { #category : #announce }
-RSHighlightable >> announceHighlight: element elements: elements [
+RSHighlightable >> announceHighlight: element source: anElementOrView [
 	self announce: [ TSHighlightEvent new
 		interaction: self;
 		element: element;
-		elements: elements ].
+		source: anElementOrView ].
 ]
 
 { #category : #announce }
-RSHighlightable >> announceUnHightlight: element elements: elements [
+RSHighlightable >> announceUnHightlight: element source: anElementOrView [
 	self announce: [ TSUnHighlightEvent new
 		interaction: self;
 		element: element;
-		elements: elements ].
+		source: anElementOrView ].
 ]
 
 { #category : #accessing }
@@ -45,6 +46,11 @@ RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
+{ #category : #accessing }
+RSHighlightable >> attributeKey: aSymbol [
+	attributeKey := aSymbol.
+]
+
 { #category : #initialization }
 RSHighlightable >> defaultColor [
 	^ Color red
@@ -55,8 +61,10 @@ RSHighlightable >> doHighlight: element [
 	| elements |
 	self unhighlightRecordedElements: element.
 	elements := self highlightElementsFor: element.
-	elements do: [ :e | self doHighlightElement: e ].
-	self announceHighlight: element elements: elements.
+	elements do: [ :e | 
+		self doHighlightElement: e.
+		self announceHighlight: e source: element. ].
+	
 	element topParent view attributes at: self key put: elements.
 ]
 
@@ -136,30 +144,28 @@ v @ RSControlsView.
 v open			
 -=-=-=
 	"
-	^ highlightShape
+	^ highlightShape ifNil: [ self highlightShape: RSShapeBuilder box.
+		highlightShape color: self defaultColor.
+		highlightShape ]
 ]
 
 { #category : #accessing }
 RSHighlightable >> highlightShape: aShapeBuilder [
 	highlightShape := aShapeBuilder.
 	highlightShape 
-		commands: OrderedCollection new;
-		uniqueCommands.
+		commands: OrderedCollection new.
 ]
 
 { #category : #initialization }
 RSHighlightable >> initialize [
-	| shape |
 	super initialize.
 	self highlightElements: [ :el | Array with: el ].
-	shape := RSShapeBuilder box.
-	self highlightShape: shape.
-	shape color: self defaultColor
+
 ]
 
 { #category : #accessing }
 RSHighlightable >> key [
-	^ #highlightElements
+	^ attributeKey ifNil: [ attributeKey := #highlightElements ].
 ]
 
 { #category : #public }
@@ -198,9 +204,9 @@ RSHighlightable >> recordIfNecessary: element [
 ]
 
 { #category : #actions }
-RSHighlightable >> resetHighlightedElements: element [
+RSHighlightable >> resetHighlightedElements: anElementOrView [
 	| att |
-	att := element topParent view attributes.
+	att := anElementOrView topParent view attributes.
 	(att includesKey: self key) ifFalse: [ ^ self ].
 	att removeKey: self key
 ]
@@ -237,13 +243,15 @@ RSHighlightable >> setupAntAnimation [
 ]
 
 { #category : #actions }
-RSHighlightable >> unhighlightRecordedElements: element [
+RSHighlightable >> unhighlightRecordedElements: anElementOrView [
 	
-	element topParent view attributes at: self key ifPresent: [ :elements |
-		elements do: [ :e | self doUnhighlightElement: e ].
-		self announceUnHightlight: element elements: elements.
+	anElementOrView topParent view attributes at: self key ifPresent: [ :elements |
+		elements do: [ :e | 
+			self doUnhighlightElement: e.
+			self announceUnHightlight: e source: anElementOrView.
+			 ].
 		 ].
-	self resetHighlightedElements: element
+	self resetHighlightedElements: anElementOrView
 ]
 
 { #category : #announcing }
