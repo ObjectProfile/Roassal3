@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #accessing }
+TSEvent >> camera [
+	^ self canvas camera
+]
+
+{ #category : #accessing }
 TSEvent >> canvas [
 	^ canvas ifNil: [ canvas := shape canvas ].
 ]
@@ -49,4 +54,9 @@ TSEvent >> shape: aTrachelShape [
 TSEvent >> signalUpdate [
 	morph notNil ifTrue: [ morph changed ]
 	
+]
+
+{ #category : #accessing }
+TSEvent >> view [
+	^ self canvas view
 ]
