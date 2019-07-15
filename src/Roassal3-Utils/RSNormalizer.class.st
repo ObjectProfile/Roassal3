@@ -149,10 +149,7 @@ RSNormalizer position
 v @ RSControlsView.
 v 
 -=-=-=
-	
 	"
-
-
 	| n |
 	n := self new.
 	n from: 0 @ 0.
