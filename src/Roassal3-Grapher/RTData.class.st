@@ -354,9 +354,19 @@ RTData >> renderBarChartIn: aView [
 
 { #category : #hooks }
 RTData >> renderDotAndLinesIn: aView [
+	| n |
 	builder view addAll: elements.
-	interaction setUpElements: elements.
-	RTMetricNormalizer new
+	interaction setUpElement: elements.
+	
+	n := RSNormalizer position
+				from: 0 @ 0;
+				to: builder extent x @ builder extent y negated.
+	n elements: elements.
+	n scale domain: { (xScale rtValue: minX) @ (yScale rtValue: minY) . (xScale rtValue: maxX) @ (yScale rtValue: maxY) }.
+	n normalize: [ :anElement | (x rsValue: (RSElement new model: anElement)) @ (y rsValue: (RSElement new model: anElement)) ].
+	"Really really ugly...^^^^ "
+	
+	"RTMetricNormalizer new
 		elements: elements;
 		normalizeElementX: [ :anElement | x rtValue: anElement ]
 			min: 0
@@ -371,7 +381,7 @@ RTData >> renderDotAndLinesIn: aView [
 			max: builder extent y negated
 			minValue: (yScale rtValue: minY)
 			maxValue: (yScale rtValue: maxY)
-			using: yScale.
+			using: yScale."
 	self renderLinesFor: elements in: aView.
 	self executeUserDeclaredActions
 ]

@@ -24,7 +24,7 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	| tickShape ticks tickLength angle ticksShift |
 	tickLength := 5.
 	angle := (toPosition - fromPosition) angle.
-	tickShape := RTBox new
+	tickShape := RSShapeBuilder box 
 		color: config color;
 		height: tickLength;
 		width: config lineThickness.
@@ -34,13 +34,21 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	ticksShift := self areTicksCentered
 		ifTrue: [ 1 ]
 		ifFalse: [ tickLength ].
-	RTMetricNormalizer new
+		
+	RSNormalizer position
+		elements: ticks;
+		from: 	fromPosition + (angle sin @ angle cos * ticksShift / 2);
+		to: toPosition + (angle sin @ angle cos * ticksShift / 2);
+		normalize: [ :v | | aPoint | aPoint := v @ v. (config scaleTransformation rtValue: aPoint x) @ (config scaleTransformation rtValue: aPoint y) ].
+		
+"	RTMetricNormalizer new
 		elements: ticks;
 		normalizePosition: [ :v | v @ v ]
 			min: fromPosition + (angle sin @ angle cos * ticksShift / 2)
 			max: toPosition + (angle sin @ angle cos * ticksShift / 2)
 			using: [ :aPoint | (config scaleTransformation rtValue: aPoint x) @ (config scaleTransformation rtValue: aPoint y) ].
-	ticks rotateByDegrees: angle radiansToDegrees.
+"	
+	ticks do: [ :t | t rotateByDegrees: angle radiansToDegrees ].
 
 	"Ticks should not have any model"
 	ticks do: [ :el | el model: nil ].
@@ -87,7 +95,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	labelValues := (0 to: self numberOfLabels)
 		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
 
-	labelShape := RTLabel new 
+	labelShape := RSShapeBuilder label 
 		color: self defaultLabelColor;
 		text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ];
 		height: self labelFontHeight.
