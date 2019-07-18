@@ -141,7 +141,7 @@ RSLegendExamples >> example08Polygons [
 	#(diamond triangle star pentagon octagon) do: [ :selector |
 		b custom: selector shape: (b 
 			horizontalComposite: ((RSShapeBuilder perform: selector) size: 15)
-			text: b defLabel).
+			text: b defaultLabel).
 		 ].
 	b build.
 	b view @ RSControlsView.
@@ -160,7 +160,7 @@ RSLegendExamples >> example09Lines [
 		line := RSSingleEdgeBuilder line markerEnd: marker; from: 0@0; to: 20@0.
 		b custom: selector shape: (b 
 			horizontalComposite: line
-			text: b defLabel).
+			text: b defaultLabel).
 		 ].
 	b build.
 	b view @ RSControlsView.

@@ -47,16 +47,6 @@ RSLegendBuilder >> custom: anObject shape: aShape [
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defLabel [
-	^ defaultLabel ifNil: [ defaultLabel := RSShapeBuilder label ].
-]
-
-{ #category : #accessing }
-RSLegendBuilder >> defLabel: aShape [
-	defaultLabel := aShape
-]
-
-{ #category : #accessing }
 RSLegendBuilder >> defaultBoldText [
 	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label 
 		uniqueCommands; bold ].
@@ -74,6 +64,16 @@ RSLegendBuilder >> defaultCircle [
 	^ defaultCircle ifNil: [ defaultCircle := RSShapeBuilder circle 
 		uniqueCommands;
 		size: 15. ]
+]
+
+{ #category : #accessing }
+RSLegendBuilder >> defaultLabel [
+	^ defaultLabel ifNil: [ defaultLabel := RSShapeBuilder label ].
+]
+
+{ #category : #accessing }
+RSLegendBuilder >> defaultLabel: aShape [
+	defaultLabel := aShape
 ]
 
 { #category : #accessing }
@@ -216,7 +216,7 @@ RSLegendBuilder >> reset [
 
 { #category : #public }
 RSLegendBuilder >> text: aString [
-	^ self custom: aString shape: self defLabel.
+	^ self custom: aString shape: self defaultLabel.
 ]
 
 { #category : #public }
@@ -224,7 +224,7 @@ RSLegendBuilder >> text: aString description: desc [
 	self defaultBoldText text: aString.
 	^ self
 		custom: desc
-		shape: (self horizontalComposite: self defaultBoldText text: self defLabel)
+		shape: (self horizontalComposite: self defaultBoldText text: self defaultLabel)
 ]
 
 { #category : #public }
@@ -232,7 +232,7 @@ RSLegendBuilder >> text: aString withBoxColor: color [
 	self defaultBox color: color.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: defaultBox text: self defLabel)
+		shape: (self horizontalComposite: defaultBox text: self defaultLabel)
 ]
 
 { #category : #public }
@@ -240,7 +240,7 @@ RSLegendBuilder >> text: aString withCircleColor: color [
 	self defaultCircle color: color.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: defaultCircle text: self defLabel)
+		shape: (self horizontalComposite: defaultCircle text: self defaultLabel)
 ]
 
 { #category : #'public - specific' }
@@ -254,7 +254,7 @@ RSLegendBuilder >> text: aString withFadingRamp: ramp [
 		paint: gradient.
 	^ self
 		custom: aString
-		shape: (self horizontalComposite: s text: self defLabel)
+		shape: (self horizontalComposite: s text: self defaultLabel)
 ]
 
 { #category : #public }

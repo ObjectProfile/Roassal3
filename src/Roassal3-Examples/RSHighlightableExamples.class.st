@@ -187,7 +187,7 @@ RSHighlightableExamples >> example06IterateNext [
 
 	"Build a legend with all the numbers"
 	legendBuilder shape border: TSBorder new.
-	legendBuilder defLabel 
+	legendBuilder defaultLabel 
 		onElement;
 		when: TSMouseClick do: [ :e | [ highlightBlock value: e model ] ].
 	legendBuilder location 
