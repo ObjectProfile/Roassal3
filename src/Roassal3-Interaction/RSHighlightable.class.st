@@ -81,7 +81,9 @@ RSHighlightable >> doHighlightElements: elements [
 	self unhighlightRecordedElements: elements first.
 	allHElements := elements flatCollect: [ :e | | helements |
 		helements := self highlightElementsFor: e.
-		helements do: [ :he | self doHighlightElement: he ].
+		helements do: [ :he | 
+			self doHighlightElement: he.
+			self announceHighlight: he source: e ].
 		helements ].
 	
 	elements first view attributes at: self key put: allHElements.
