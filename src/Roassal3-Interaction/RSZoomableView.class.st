@@ -1,71 +1,52 @@
 "
-I am interaction which allows view to be zoomed with a mouce wheel. While zomming mouce cursor stays on the same spot in the canvas
+I handle the zoom interaction with mouse wheel event, also I handle all the zoom process
 "
 Class {
 	#name : #RSZoomableView,
-	#superclass : #RSAbstractViewInteraction,
+	#superclass : #RSAbstractControlView,
 	#instVars : [
-		'minZoom',
-		'maxZoom'
+		'animation'
 	],
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Controls'
 }
-
-{ #category : #'instance creation' }
-RSZoomableView class >> min: aMin max: aMax [
-	^ self new
-		minZoom: aMin;
-		maxZoom: aMax;
-		yourself
-]
-
-{ #category : #accessing }
-RSZoomableView >> maxZoom [
-	^ maxZoom ifNil: [ 10 ]
-]
-
-{ #category : #accessing }
-RSZoomableView >> maxZoom: aFloat [
-	maxZoom := aFloat
-]
-
-{ #category : #accessing }
-RSZoomableView >> minZoom [
-	^ minZoom ifNil: [ 0.1 ]
-]
-
-{ #category : #accessing }
-RSZoomableView >> minZoom: aFloat [
-	minZoom := aFloat
-]
 
 { #category : #hooks }
 RSZoomableView >> onElement: aView [
-	aView 
-		when: TSMouseWheelEvent		
-		do: [ :e | self processEvent: e ]
+	aView when: TSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
+RSZoomableView >> order [
+	^ 4
+]
+
+{ #category : #'events-processing' }
 RSZoomableView >> processEvent: evt [
-	| scale dist |
-	dist := evt position - evt canvas camera position.
-	scale := evt canvas camera scale.
+	| sc delta camera dist scale position |
 	
-	evt isUp ifTrue: [  
-		scale * 1.25 <= self maxZoom ifTrue: [ 
-			scale := scale * 1.25.
-			dist := dist * 0.2 ]
-		ifFalse: [ ^ self ].
-		].
-	evt isDown ifTrue:  [
-		scale * 0.8 >= self minZoom ifTrue: [ 
-			scale := scale * 0.8.
-			dist := dist * -0.25 ]
-		ifFalse: [ ^ self ]
-	].
-	evt canvas camera
-		scale: scale;
-		translateBy: dist.
-	evt signalUpdate
+	animation ifNotNil: [ ^ self ].
+	delta := evt isUp
+		ifTrue: [ 1.25@0.2 ]
+		ifFalse: [ 0.8@ -0.25 ].
+	camera := evt camera.
+	sc := camera scale * delta x.
+	sc = (self scaleFor: sc) ifFalse: [ ^ self ].
+	dist := evt position - camera position.
+	
+	scale := TSScale sqrt range: { camera scale. sc }.
+	position := TSScale sqrt range: { camera position. camera position + (dist * delta y) }.
+	animation := evt canvas newAnimation
+		duration: 200 milliSeconds;
+		onStepDo: [ :t |
+			camera 
+				scale: (scale scale: t);
+				translateTo: (position scale: t).
+			evt signalUpdate ];
+		when: TSAnimationEndEvent do: [ animation := nil ]
+	
+]
+
+{ #category : #rendering }
+RSZoomableView >> renderOn: lb [
+	lb text: 'Wheel' description: 'To zoom in-out the view'.
 ]

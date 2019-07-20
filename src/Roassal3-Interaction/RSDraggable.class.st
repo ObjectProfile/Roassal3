@@ -4,7 +4,7 @@ I can move an element from its position
 Class {
 	#name : #RSDraggable,
 	#superclass : #RSInteraction,
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #'instance creation' }

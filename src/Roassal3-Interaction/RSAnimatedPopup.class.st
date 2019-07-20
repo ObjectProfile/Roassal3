@@ -4,7 +4,7 @@ I am a basic popup for animated content in a view of roassal3
 Class {
 	#name : #RSAnimatedPopup,
 	#superclass : #RSPopup,
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #accessing }

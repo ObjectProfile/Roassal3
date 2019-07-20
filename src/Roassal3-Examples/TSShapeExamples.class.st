@@ -539,8 +539,6 @@ TSShapeExamples >> example17Borders [
 	border2 
 		value: 0@ 120
 		value: 'Lowered bevel'.
-	RSDraggableView new onElement: c.
-	RSZoomableView new onElement: c.
 	c open.
 ]
 

@@ -124,3 +124,12 @@ RSAnnounceableObject >> removeInteractionIfPresent: anInteractionClass [
 	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
+
+{ #category : #attributes }
+RSAnnounceableObject >> removeKey: aKey [
+	| att |
+	att := self attributes.
+	(att includesKey: aKey) ifFalse: [ ^ self ].
+	att removeKey: aKey.
+	
+]

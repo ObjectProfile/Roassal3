@@ -10,7 +10,7 @@ Class {
 		'announcer',
 		'attributeKey'
 	],
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #announce }
@@ -215,12 +215,13 @@ RSHighlightable >> resetHighlightedElements: anElementOrView [
 
 { #category : #public }
 RSHighlightable >> setupAntAnimation [
-	self noDefaultColor withEdges.
+	self noDefaultColor.
 	self highlightShape
 		border: [ TSBorder new width: 2; color: self defaultColor ].
 	self when: TSHighlightEvent do: [ :evt | 
 		| e array anime |
 		e := evt element.
+		
 		array := #(4).
 		e connectedEdges do: [ :ed| ed border 
 			color: Color blue; 

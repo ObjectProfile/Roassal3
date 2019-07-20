@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'interactions'
 	],
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Utils'
 }
 
 { #category : #adding }

@@ -787,47 +787,6 @@ RSShapeExamples >> example22ScaleEvents [
 	v open setLabel: 'Horizontal Tree'
 ]
 
-{ #category : #lines }
-RSShapeExamples >> example23LightShapes [
-	<script: 'self new example23LightShapes'>
-	| v box shape elements lbl update |
-	v := RSView new.
-	box := RSShapeBuilder box.
-	shape := RSShapeBuilder composite
-		popup;
-		draggable;
-		shapes: [ :cls | 
-			| g |
-			g := box elementsOn: cls methods.
-			RSGridLayout on: g.
-			g ];
-		padding:
-			(Margin
-				left: 50
-				right: 5
-				top: 20
-				bottom: 5);
-		color: Color blue trans.
-	elements := shape elementsOn: Collection withAllSubclasses.
-	RSGridLayout on: elements.
-	v addAll: elements.
-	lbl := TSLabel new
-		text: '';
-		color: Color black;
-		isFixed: true.
-	v addShape: lbl.
-	update := [ 
-		lbl text: 'Shapes size: ', v shapes size asString.
-		lbl color: Color black.
-		lbl position: lbl extent / 2 ].
-	v
-		when: TSPositionChangedEvent do: update;
-		when: TSScaleChangedEvent do: update.
-	v @ RSControlsView.
-	v @ RSLightShapesView.
-	v open
-]
-
 { #category : #shapes }
 RSShapeExamples >> example24Highlightable [
 	<script: 'self new example24Highlightable'>

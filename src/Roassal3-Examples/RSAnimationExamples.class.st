@@ -2325,7 +2325,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 		 ].
 	
 	update value: #tree.
-	v@RSZoomToFitView.
+	RSZoomToFitView new animatedZoomToFit: v.
 
 	labels := RSShapeBuilder label
 		isFixed: true;

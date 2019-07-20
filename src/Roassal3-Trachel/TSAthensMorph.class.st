@@ -82,18 +82,25 @@ v canvas buildMorph drawOnMockCanvas
 { #category : #drawing }
 TSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
+	
 	surface drawDuring: [ :athensCanvas | 
+		| camera canvasRect |
 		trachelCanvas clearBackground
 			ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
+		camera := trachelCanvas camera.
 		athensCanvas pathTransform
 			translateBy: (self extent / 2) asFloatPoint;
-			scaleBy: trachelCanvas camera scale asFloat;
-			translateBy: trachelCanvas camera position negated asFloatPoint.
+			scaleBy: camera scale asFloat;
+			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
-			
+		canvasRect := Rectangle 
+			rsCenter: trachelCanvas camera position
+			extent: trachelCanvas extent / camera scale.
 		trachelCanvas shapes do: [ :trachelShape | 
-			trachelShape accept: renderer ].
+			(trachelShape encompassingRectangle intersects: canvasRect)
+				ifTrue: [ 
+					trachelShape accept: renderer ] ].
 		self showRectanglesIfNecessary: trachelCanvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
@@ -393,14 +400,15 @@ TSAthensMorph >> takesKeyboardFocus [
 
 { #category : #'event-processed' }
 TSAthensMorph >> trKeyDown: aMorphicEvent [
-	| trEvent |
-	(aMorphicEvent commandKeyPressed and: [ aMorphicEvent keyCharacter = $w ])
+	| trEvent keyCharacter |
+	keyCharacter := aMorphicEvent keyCharacter.
+	(aMorphicEvent commandKeyPressed and: [ keyCharacter = $w ])
 		ifTrue: [ ^ self root delete ].
 	trEvent := self eventOfClass: TSKeyDown from: aMorphicEvent.
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
-		keyCombination: aMorphicEvent asKeyCombination.
+		keyCharacter: keyCharacter.
 	trEvent shape announce: trEvent
 ]
 
@@ -411,7 +419,7 @@ TSAthensMorph >> trKeyUp: aMorphicEvent [
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
-		keyCombination: aMorphicEvent asKeyCombination.
+		keyCharacter: aMorphicEvent keyCharacter.
 	trEvent shape announce: trEvent
 ]
 

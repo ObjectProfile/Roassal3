@@ -10,7 +10,7 @@ Class {
 		'shape',
 		'lastFrameEndTime'
 	],
-	#category : #'Roassal3-Interaction'
+	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #initialization }
