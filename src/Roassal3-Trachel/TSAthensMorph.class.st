@@ -179,8 +179,8 @@ TSAthensMorph >> handleMouseOver: aMorphicEvent [
 	
 	currentElement := self shapeForEvent: aMorphicEvent.
 	lastMousePosition := aMorphicEvent position.
-	currentElement == shapeBeingPointed ifTrue: [ 
-		^ self ].
+	currentElement == shapeBeingPointed 
+		ifTrue: [ ^ self ].
 	trEvent := self eventOfClass: TSMouseLeave from: aMorphicEvent.
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
@@ -455,7 +455,6 @@ TSAthensMorph >> trMouseDragEnd: aMorphicEvent [
 	shapeBeingPointed announce: trEvent.
 	
 	eventBeginingDragging := nil.
-	shapeBeingPointed := nil.
 ]
 
 { #category : #'event-processed' }

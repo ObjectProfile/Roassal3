@@ -76,7 +76,7 @@ RSZoomToFitView >> renderOn: lb [
 RSZoomToFitView >> zoomToFit: aView [
 	| camera rect extent sc viewRect |
 	camera := aView camera.
-	rect := aView encompassingRectangle.
+	rect := self encompassingRectangleFor: aView.
 	extent := aView extent * 0.9.
 	sc := extent / (rect extent max: 1 @ 1).
 	sc := self scaleFor: (sc x min: sc y).
@@ -88,7 +88,7 @@ RSZoomToFitView >> zoomToFit: aView [
 		and: [ viewRect containsRect: rect ]) ifTrue: [ 
 		camera scale: 1.
 	]ifFalse: [ camera scale: sc].
-	
+	self removeRectanglesFor: aView.
 	aView signalUpdate.
 	
 ]

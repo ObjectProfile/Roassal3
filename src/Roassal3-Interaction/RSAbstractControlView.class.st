@@ -75,7 +75,7 @@ RSAbstractControlView >> correctCameraPosition: evt scale: scale [
 RSAbstractControlView >> encompassingRectangleFor: aView [
 	^ aView attributes 
 		at: #encompassingRectangle 
-		ifAbsentPut: [ aView encompassingRectangle ].
+		ifAbsentPut: [ aView encompassingRectangle  ].
 ]
 
 { #category : #utilities }
@@ -95,13 +95,10 @@ RSAbstractControlView >> order [
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> removeEncompassingRectangleFor: aView [
-	aView removeKey: #encompassingRectangle
-]
-
-{ #category : #utilities }
-RSAbstractControlView >> removeExpandedRectangle: aView [
-	aView removeKey: #expanedEncompassingRectangle
+RSAbstractControlView >> removeRectanglesFor: aView [
+	aView 
+		removeKey: #encompassingRectangle;
+		removeKey: #expanedEncompassingRectangle
 ]
 
 { #category : #rendering }

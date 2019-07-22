@@ -167,8 +167,12 @@ RSUMLClassBuilder >> renderer [
 
 { #category : #accessing }
 RSUMLClassBuilder >> view [
-	^ container ifNil: [ 
+	^ container ifNil: [ | int |
 		container := RSView new.
-		container @ RSControlsView.
+		int := RSControlsView new.
+		int configuration
+			useBasicZoom. 
+			
+		container @ int .
 		container ]
 ]

@@ -41,9 +41,7 @@ RSDraggableView2 >> checkCameraView: aView [
 	correct := self correctCameraPosition: aView.
 	correct = p ifTrue: [ ^ self ].
 	
-	self 
-		removeEncompassingRectangleFor: aView;
-		removeExpandedRectangle: aView.
+	self removeRectanglesFor: aView.
 	
 	aView newAnimation
 		easing: TSEasing cubicIn;

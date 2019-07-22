@@ -41,7 +41,7 @@ RSKeyNavigationView >> order [
 
 { #category : #events }
 RSKeyNavigationView >> processKeyDown: evt [
-	| char rect |
+	| char rect lastMS |
 	char := evt keyCharacter.
 	char == Character arrowLeft ifTrue: [ steps add: -1@0 ].
 	char == Character arrowRight ifTrue: [ steps add: 1@0 ].
@@ -54,13 +54,18 @@ RSKeyNavigationView >> processKeyDown: evt [
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].
 	rect := self encompassingRectangleFor: evt view.
-	speed := (rect width min: rect height) * 0.01.
+	speed := (rect width min: rect height) * 0.0005.
+	animation := nil.
+	lastMS := nil.
 	animation := evt canvas newAnimation repeat onStepDo: [ :t |
-		| step camera correct position |
-		
+		| step camera correct position deltaMS current |
+		current := animation currentTime.
+		lastMS ifNil: [ lastMS := current-1 ].
+		deltaMS := current - lastMS.
+		lastMS := current.
 		step := steps inject: 0@0 into: [:p :s |p+s ].
 		camera := evt camera.
-		camera translateBy: step / (evt canvas camera scale / (speed * speedMult)).
+		camera translateBy: step / (evt canvas camera scale / (speed * speedMult * deltaMS)).
 		position := camera position.
 		correct := self correctCameraPosition: evt.
 		correct = position 
@@ -78,9 +83,7 @@ RSKeyNavigationView >> processKeyUp: evt [
 	key == 31 "$o" ifTrue: [ ^ self zoomOut: evt ].
 	key == 46 "$m" ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
-	self 
-		removeEncompassingRectangleFor: evt view;
-		removeExpandedRectangle: evt view.
+	self removeRectanglesFor: evt view.
 	animation stop.
 	animation := nil.
 ]
