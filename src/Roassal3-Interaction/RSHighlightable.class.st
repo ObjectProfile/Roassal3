@@ -215,33 +215,36 @@ RSHighlightable >> resetHighlightedElements: anElementOrView [
 
 { #category : #public }
 RSHighlightable >> setupAntAnimation [
-	self noDefaultColor.
+	self noDefaultColor withEdges.
 	self highlightShape
 		border: [ TSBorder new width: 2; color: self defaultColor ].
-	self when: TSHighlightEvent do: [ :evt | 
-		| e array anime |
-		e := evt element.
-		
-		array := #(4).
-		e connectedEdges do: [ :ed| ed border 
-			color: Color blue; 
-			width: 2;
-			dashArray: array. ].
-		anime := e newAnimation
-			repeat;
-			from: 0;
-			to: -8;
-			duration: 1 second;
-			onStepDo: [ :t |
-				e connectedEdges do: [ :ed |ed border dashOffset: t ].
-				e signalUpdate ].
-		e topParent view attributes at: #antAnimation put: anime.
+	self when: TSHighlightEvent do: [ :evt | | e |
+		(e := evt element) isElement ifTrue: [ 
+			| array anime |
+			array := #(4).
+			e connectedEdges do: [ :ed| ed border 
+				color: Color blue; 
+				width: 2;
+				dashArray: array. ].
+			anime := e newAnimation
+				repeat;
+				from: 0;
+				to: -8;
+				duration: 1 second;
+				onStepDo: [ :t |
+					e connectedEdges do: [ :ed |ed border dashOffset: t ].
+					e signalUpdate ].
+			e topParent view attributes at: #antAnimation put: anime.
+		].
 	].
 	self when: TSUnHighlightEvent do: [ :evt | 
-		| att |
-		att := evt element topParent view attributes.
-		(att at: #antAnimation) stop.
-		att removeKey: #antAnimation.
+		| att e |
+		e := evt element.
+		e isElement ifTrue: [ 
+			att := evt element topParent view attributes.
+			(att at: #antAnimation) stop.
+			att removeKey: #antAnimation.
+		 ]
 	].
 ]
 
