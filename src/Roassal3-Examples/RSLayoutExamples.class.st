@@ -311,3 +311,31 @@ RSLayoutExamples >> example11PaddingInComposite [
 	v @ RSControlsView.
 	v open
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example12AnimatedForceBasedLayout [ 
+	<script: 'self new example12AnimatedForceBasedLayout'>
+	| view shape elements layout edges  |
+	view := RSView new.
+	shape := RSShapeBuilder box
+		size: 30;
+		interactionDo:[:i | i draggable; labeled].
+	elements := shape elementsOn: (1 to: 10).
+	edges := RSEdgeBuilder line
+		elements: elements;
+		connectFrom: [ :i | i // 2 ].
+	view
+		addAll: edges;
+		addAll: elements.
+	layout := RSForceBasedLayout new
+		length: 80;
+		charge: -300;
+		nodes: elements;
+		edges: view edges;
+		start;
+		yourself.
+	view @ RSControlsView.
+	
+	view @ (RSForceLayoutStepping new layout: layout).
+	view open.
+]
