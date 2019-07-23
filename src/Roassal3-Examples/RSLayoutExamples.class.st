@@ -339,3 +339,58 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	view @ (RSForceLayoutStepping new layout: layout).
 	view open.
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example13VisualizeQuatree [
+	<script: 'self new example13VisualizeQuatree'>
+	| view shape elements layout edges boxBuilder boxes createBoxes colors labelBuilder |
+	view := RSView new.
+	shape := RSShapeBuilder box
+		size: 30;
+		interactionDo: [ :i | i draggable; labeled ].
+	elements := shape elementsOn: (1 to: 50).
+	edges := RSEdgeBuilder line
+		elements: elements;
+		connectFrom: [ :i | i // 2 ].
+	view
+		addAll: edges;
+		addAll: elements.
+	layout := RSForceBasedLayout new
+		length: 80;
+		charge: -300;
+		nodes: elements;
+		edges: view edges;
+		start;
+		yourself.
+	view @ RSControlsView.
+	view @ (RSForceLayoutStepping new layout: layout).
+	colors := TSColorPalette sequential pubu9.
+	boxBuilder := RSShapeBuilder box
+		border: (TSBorder new color: Color lightGray trans; width: 0.5);
+		extent: [ :quad | quad rectangle extent ];
+		position: [ :quad | quad rectangle rsCenter ];
+		onElement;
+		color: [:e | (colors scale: e index) alpha: 0.5 ].
+	labelBuilder := RSShapeBuilder label
+		text: [:quad | quad charge printShowingDecimalPlaces: 1];
+		position: [ :quad | quad rectangle rsCenter ].
+	boxes := #().
+	createBoxes := nil.
+	createBoxes := [ :quad :lvl | | box label |
+		box := boxBuilder elementOn: quad index: lvl.
+		label := labelBuilder elementOn: quad index: lvl.
+		quad subQuadsDo: [ :subQuad | createBoxes value: subQuad value: lvl + 1 ].
+		boxes add: box.
+		boxes add: label.
+		].
+	view newAnimation
+		repeat;
+		duration: 500 milliSeconds;
+		when: TSAnimationLoopEvent do: [ :v | 
+			boxes do: #remove.
+			boxes := TSGroup new.
+			createBoxes value: layout currentQuadtree value: 0.
+			view addAll: boxes.
+			boxes pushBack ].
+	view open
+]

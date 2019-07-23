@@ -18,7 +18,8 @@ Class {
 		'center',
 		'alpha',
 		'shouldUseProgressBar',
-		'random'
+		'random',
+		'quadtree'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -97,6 +98,11 @@ RSForceBasedLayout >> charge [
 RSForceBasedLayout >> charge: aFloat [
 	"Typically a negative value. E.g., -300"
 	charge := aFloat
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> currentQuadtree [
+	^ quadtree
 ]
 
 { #category : #hook }
@@ -359,13 +365,13 @@ RSForceBasedLayout >> stepGravityForce [
 RSForceBasedLayout >> stepNodeRepulsion [
 	"Handle fixed nodes. Do this after all forces in a step were already applied."
 
-	| quad |
-	quad := RSQuadTree withAll: nodes.
-	self accumulate: quad.
-	nodes do: [ :each | 
-		each isFixed 
-			ifTrue: [ each translateTo: each fixPosition ]
-			ifFalse: [ self repulse: each from: quad ] ].
+	quadtree := RSQuadTree withAll: nodes.
+	self accumulate: quadtree.
+	nodes
+		do: [ :each | 
+			each isFixed
+				ifTrue: [ each translateTo: each fixPosition ]
+				ifFalse: [ self repulse: each from: quadtree ] ]
 ]
 
 { #category : #accessing }
