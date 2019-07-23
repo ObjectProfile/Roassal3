@@ -34,11 +34,6 @@ RSKeyNavigationView >> onElement: aView [
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 ]
 
-{ #category : #accessing }
-RSKeyNavigationView >> order [
-	^ 2
-]
-
 { #category : #events }
 RSKeyNavigationView >> processKeyDown: evt [
 	| char rect lastMS |

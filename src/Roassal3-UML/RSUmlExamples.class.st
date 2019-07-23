@@ -2,13 +2,13 @@
 I have examples of how to manage the uml builder in different cases
 "
 Class {
-	#name : #RSUmlExamples,
+	#name : #RSUMLExamples,
 	#superclass : #RSObject,
 	#category : #'Roassal3-UML'
 }
 
 { #category : #examples }
-RSUmlExamples >> example01Basic [ 
+RSUMLExamples >> example01Basic [ 
 	<script: 'self new example01Basic'>
 	| builder |
 	builder := RSUMLClassBuilder new.
@@ -18,7 +18,7 @@ RSUmlExamples >> example01Basic [
 ]
 
 { #category : #examples }
-RSUmlExamples >> example02ClassDescriptor [
+RSUMLExamples >> example02ClassDescriptor [
 	<script: 'self new example02ClassDescriptor'>
 	| builder |
 	builder := RSUMLClassBuilder new.
@@ -37,7 +37,7 @@ RSUmlExamples >> example02ClassDescriptor [
 ]
 
 { #category : #examples }
-RSUmlExamples >> example03DifferentLines [
+RSUMLExamples >> example03DifferentLines [
 	<script: 'self new example03DifferentLines'>
 	| builder marker |
 	builder := RSUMLClassBuilder new.
@@ -58,7 +58,7 @@ RSUmlExamples >> example03DifferentLines [
 ]
 
 { #category : #examples }
-RSUmlExamples >> example04Nolines [
+RSUMLExamples >> example04Nolines [
 	<script: 'self new example04Nolines'>
 	| builder |
 	builder := RSUMLClassBuilder new.
@@ -75,7 +75,7 @@ RSUmlExamples >> example04Nolines [
 ]
 
 { #category : #examples }
-RSUmlExamples >> example05Horizontal [
+RSUMLExamples >> example05Horizontal [
 	<script: 'self new example05Horizontal'>
 	| builder marker |
 	builder := RSUMLClassBuilder new.
@@ -99,7 +99,7 @@ RSUmlExamples >> example05Horizontal [
 ]
 
 { #category : #examples }
-RSUmlExamples >> example06CustomText [
+RSUMLExamples >> example06CustomText [
 	<script: 'self new example06CustomText'>
 	| builder renderer c1 |
 	builder := RSUMLClassBuilder new.

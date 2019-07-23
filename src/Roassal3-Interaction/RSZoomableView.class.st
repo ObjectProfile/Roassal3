@@ -15,11 +15,6 @@ RSZoomableView >> onElement: aView [
 	aView when: TSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
-{ #category : #accessing }
-RSZoomableView >> order [
-	^ 4
-]
-
 { #category : #'events-processing' }
 RSZoomableView >> processEvent: evt [
 	| sc delta camera dist scale position |

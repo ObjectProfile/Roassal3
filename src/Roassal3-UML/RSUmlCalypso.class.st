@@ -1,32 +1,30 @@
 "
-I am a basic browser with roassal and calypso
+I am an abstract browser for uml classes and packages in calypso
 "
 Class {
-	#name : #RSUmlCalypso,
+	#name : #RSUMLCalypso,
 	#superclass : #ClyBrowserToolMorph,
-	#instVars : [
-		'targetClass'
-	],
 	#category : #'Roassal3-UML'
 }
 
-{ #category : #activation }
-RSUmlCalypso class >> classUmlTapActivation [
-	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
-]
-
 { #category : #initialization }
-RSUmlCalypso >> activationPriority [
+RSUMLCalypso >> activationPriority [
 	^0
 ]
 
 { #category : #building }
-RSUmlCalypso >> build [
-	| builder morph |
+RSUMLCalypso >> build [
+	| builder morph controls |
 	builder := RSUMLClassBuilder new.
-	builder classes: self targetClass withAllSubclasses.
+	builder view: RSView new.
+	controls := RSControlsView new.
+	controls configuration 
+		useBasicZoom;
+		maxScale: 1.
+	builder view @ controls.
+	builder classes: self classes.
 	builder build.
+
 	builder view createMorph.
 	morph := builder view morph.
 	morph onAnnouncement: MorphDeleted 
@@ -35,36 +33,17 @@ RSUmlCalypso >> build [
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 
+{ #category : #accessing }
+RSUMLCalypso >> classes [
+	^ self subclassResponsibility
+]
+
 { #category : #initialization }
-RSUmlCalypso >> defaultIconName [
+RSUMLCalypso >> defaultIconName [
 	^#hierarchy
 ]
 
 { #category : #initialization }
-RSUmlCalypso >> defaultTitle [
-	^'UML'
-]
-
-{ #category : #initialization }
-RSUmlCalypso >> isSimilarTo: anotherBrowserTool [
-	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	
-	^targetClass  = anotherBrowserTool targetClass
-]
-
-{ #category : #initialization }
-RSUmlCalypso >> setUpModelFromContext [
-	super setUpModelFromContext.
-
-	targetClass := context lastSelectedClass
-]
-
-{ #category : #initialization }
-RSUmlCalypso >> tabOrder [
+RSUMLCalypso >> tabOrder [
 	^ 200
-]
-
-{ #category : #initialization }
-RSUmlCalypso >> targetClass [
-	^ targetClass
 ]

@@ -89,11 +89,6 @@ RSAbstractControlView >> expandedRectangle: evt [
 	
 ]
 
-{ #category : #accessing }
-RSAbstractControlView >> order [
-	^ 0
-]
-
 { #category : #utilities }
 RSAbstractControlView >> removeRectanglesFor: aView [
 	aView 

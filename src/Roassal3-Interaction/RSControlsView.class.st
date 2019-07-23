@@ -25,10 +25,15 @@ RSControlsView >> configuration: aRSControlLimits [
 ]
 
 { #category : #initialization }
+RSControlsView >> defaultInteractions [
+	"create a subclass of RSControslView and define your own custom interactions for your views :V"
+	^ { RSDraggableView. RSKeyNavigationView. RSZoomToFitView. RSZoomableView. RSScrollsView }
+]
+
+{ #category : #initialization }
 RSControlsView >> initialize [
 	super initialize.
-	self interactions: ((RSAbstractControlView subclasses collect: #new) 
-		sorted: [:a :b| a order < b order ]).
+	self interactions: (self defaultInteractions collect: #new).
 	self
 		withLegend;
 		configuration: RSControlConfiguration new.

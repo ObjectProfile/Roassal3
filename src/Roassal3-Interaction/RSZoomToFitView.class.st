@@ -56,11 +56,6 @@ RSZoomToFitView >> onElement: aView [
 	self zoomToFit: aView.
 ]
 
-{ #category : #accessing }
-RSZoomToFitView >> order [
-	^ 3
-]
-
 { #category : #'private - events' }
 RSZoomToFitView >> processKeyUp: evt [
 	evt keyValue == 49 "Character space"  ifFalse:  [ ^ self ].
@@ -74,20 +69,24 @@ RSZoomToFitView >> renderOn: lb [
 
 { #category : #'zoom animation' }
 RSZoomToFitView >> zoomToFit: aView [
-	| camera rect extent sc viewRect |
+	| camera shapesRect extent sc viewRect original |
 	camera := aView camera.
-	rect := self encompassingRectangleFor: aView.
+	shapesRect := self encompassingRectangleFor: aView.
 	extent := aView extent * 0.9.
-	sc := extent / (rect extent max: 1 @ 1).
-	sc := self scaleFor: (sc x min: sc y).
+	sc := extent / (shapesRect extent max: 1 @ 1).
+	original := sc x min: sc y.
+	sc := self scaleFor: original.
 	viewRect := Rectangle 
-		rsCenter: rect rsCenter
+		rsCenter: shapesRect rsCenter
 		extent: aView extent / 1.
-	camera translateTo: rect rsCenter.
-	(self configuration shouldUseBasicZoom 
-		and: [ viewRect containsRect: rect ]) ifTrue: [ 
-		camera scale: 1.
-	]ifFalse: [ camera scale: sc].
+	camera translateTo: shapesRect rsCenter.
+	self configuration shouldUseBasicZoom ifTrue: [ 
+		(viewRect containsRect: shapesRect )
+			ifTrue: [ camera scale: 1]
+			ifFalse: [
+				self configuration minScale: original.
+				camera scale: original ]
+	] ifFalse: [ camera scale: sc].
 	self removeRectanglesFor: aView.
 	aView signalUpdate.
 	

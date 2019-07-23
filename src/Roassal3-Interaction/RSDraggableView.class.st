@@ -2,7 +2,7 @@
 I set the drag event for view, I use a basic bars to do that
 "
 Class {
-	#name : #RSDraggableView2,
+	#name : #RSDraggableView,
 	#superclass : #RSAbstractControlView,
 	#instVars : [
 		'mouseEvent',
@@ -13,28 +13,28 @@ Class {
 }
 
 { #category : #accessing }
-RSDraggableView2 class >> left [
+RSDraggableView class >> left [
 	^ self new left
 ]
 
 { #category : #accessing }
-RSDraggableView2 class >> middle [
+RSDraggableView class >> middle [
 	^ self new middle
 ]
 
 { #category : #accessing }
-RSDraggableView2 class >> right [
+RSDraggableView class >> right [
 	^ self new right
 ]
 
 { #category : #mouse }
-RSDraggableView2 >> all [
+RSDraggableView >> all [
 	"Any mouse button can be used to drag and drop the view"
 	mouseEvent := TSMouseDragStart.
 ]
 
 { #category : #computing }
-RSDraggableView2 >> checkCameraView: aView [
+RSDraggableView >> checkCameraView: aView [
 	| camera p correct |
 	camera := aView camera.
 	p := camera position.
@@ -52,24 +52,24 @@ RSDraggableView2 >> checkCameraView: aView [
 ]
 
 { #category : #initialize }
-RSDraggableView2 >> initialize [
+RSDraggableView >> initialize [
 	super initialize.
 	self all.
 	isMoving := false.
 ]
 
 { #category : #mouse }
-RSDraggableView2 >> left [
+RSDraggableView >> left [
 	mouseEvent := TSMouseLeftDragStart
 ]
 
 { #category : #mouse }
-RSDraggableView2 >> middle [
+RSDraggableView >> middle [
 	mouseEvent := TSMouseMiddleDragStart
 ]
 
 { #category : #events }
-RSDraggableView2 >> mouseEnd: evt [
+RSDraggableView >> mouseEnd: evt [
 	| threshold aView camera delta p correct |
 	isMoving := false.
 	lastStep ifNil: [ ^ self ].
@@ -98,12 +98,12 @@ RSDraggableView2 >> mouseEnd: evt [
 ]
 
 { #category : #mouse }
-RSDraggableView2 >> mouseEvent [
+RSDraggableView >> mouseEvent [
 	^ mouseEvent
 ]
 
 { #category : #events }
-RSDraggableView2 >> mouseMove: evt [
+RSDraggableView >> mouseMove: evt [
 	| camera p correct |
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
@@ -116,30 +116,25 @@ RSDraggableView2 >> mouseMove: evt [
 ]
 
 { #category : #events }
-RSDraggableView2 >> mouseStart: evt [
+RSDraggableView >> mouseStart: evt [
 	isMoving := true.
 	lastStep := nil.
 ]
 
 { #category : #hooks }
-RSDraggableView2 >> onElement: aView [
+RSDraggableView >> onElement: aView [
 	aView 
 		when: self mouseEvent do: [ :evt | self mouseStart: evt ];
 		when: TSMouseDragging do: [ :evt | self mouseMove: evt ];
 		when: TSMouseDragEnd do: [ :evt | self mouseEnd: evt ].
 ]
 
-{ #category : #accessing }
-RSDraggableView2 >> order [
-	^ 1
-]
-
 { #category : #rendering }
-RSDraggableView2 >> renderOn: lb [
+RSDraggableView >> renderOn: lb [
 	lb text: 'Mouse click' description: 'To move the view''s camera'
 ]
 
 { #category : #mouse }
-RSDraggableView2 >> right [
+RSDraggableView >> right [
 	mouseEvent := TSMouseRightDragStart.
 ]

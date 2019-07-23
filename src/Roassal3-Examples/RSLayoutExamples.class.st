@@ -113,7 +113,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v @ RSDraggableView2 .
+	v @ RSDraggableView .
 	v open
 	
 ]
@@ -140,7 +140,7 @@ RSLayoutExamples >> example05TreeLayout [
 	eb connectFrom: #superclass.
 	RSTreeLayout on: elements.
 	elements do: [ :e | e translateBy: 0 @ 0 ].
-	v @ RSDraggableView2.
+	v @ RSDraggableView.
 	v open
 ]
 
