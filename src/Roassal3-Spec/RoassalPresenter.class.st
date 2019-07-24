@@ -32,7 +32,7 @@ RoassalPresenter class >> open [
 { #category : #initialization }
 RoassalPresenter >> initialize [
 	super initialize.
-	script := [ :v :canvas | ] asValueHolder.
+	script := [ :v | ] asValueHolder.
 	script whenChangedDo: [ :s | self refresh ].
 ]
 

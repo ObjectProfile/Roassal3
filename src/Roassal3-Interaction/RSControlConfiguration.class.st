@@ -8,8 +8,9 @@ Class {
 		'padding',
 		'maxScale',
 		'minScale',
-		'shouldZoomToFit',
-		'shouldUseBasicZoom'
+		'shouldUseBasicZoom',
+		'zoomToFitOnStart',
+		'zoomToFitOnExtent'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
@@ -22,6 +23,7 @@ RSControlConfiguration >> initialize [
 		maxScale: 7;
 		padding: 25;
 		useZoomToFitOnExtendChanged;
+		useZoomToFitOnStart;
 		noBasicZoom.
 ]
 
@@ -52,7 +54,12 @@ RSControlConfiguration >> noBasicZoom [
 
 { #category : #configuration }
 RSControlConfiguration >> noZoomToFitOnExtendChanged [
-	shouldZoomToFit := false
+	zoomToFitOnExtent := false
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> noZoomToFitOnStart [
+	zoomToFitOnStart := false.
 ]
 
 { #category : #accessing }
@@ -72,7 +79,12 @@ RSControlConfiguration >> shouldUseBasicZoom [
 
 { #category : #testing }
 RSControlConfiguration >> shouldZoomToFitOnExtendChanged [
-	^ shouldZoomToFit
+	^ zoomToFitOnExtent
+]
+
+{ #category : #testing }
+RSControlConfiguration >> shouldZoomToFitOnStart [
+	^ zoomToFitOnStart
 ]
 
 { #category : #configuration }
@@ -82,5 +94,10 @@ RSControlConfiguration >> useBasicZoom [
 
 { #category : #configuration }
 RSControlConfiguration >> useZoomToFitOnExtendChanged [
-	shouldZoomToFit := true
+	zoomToFitOnExtent := true
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> useZoomToFitOnStart [
+	zoomToFitOnStart := true.
 ]

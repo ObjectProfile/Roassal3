@@ -3,7 +3,7 @@ I am a basic spec example. You can edit a script with roassal then this will be 
 "
 Class {
 	#name : #RSEaselExample,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'diagram',
 		'label',
@@ -16,12 +16,13 @@ Class {
 { #category : #specs }
 RSEaselExample class >> defaultSpec [ 
 	<spec: #default>
-	^ SpecBoxLayout newHorizontal 
-		add: (SpecBoxLayout newVertical
+	^ SpPanedLayout newHorizontal 
+		position: 35 percent;
+		add: (SpBoxLayout newVertical
 			add: #label withConstraints: [ :c | c height: self toolbarHeight ];
 			add: #text;
 			add: #button withConstraints: [ :c | c height: self toolbarHeight ]
-			)withConstraints: [ :c | c width: 300 ];
+			);
 		add: #diagram ;
 		yourself
 ]
@@ -75,8 +76,7 @@ RSEaselExample >> initializeWidgets [
 	diagram := self instantiate: RoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
-	diagram script: [ :view :canvas | 
-		self textAsCode value: view value: canvas ]
+	diagram script: [ :view | self textAsCode value: view ]
 ]
 
 { #category : #initialization }
@@ -99,13 +99,11 @@ RSEaselExample >> label: anObject [
 { #category : #initialization }
 RSEaselExample >> startText [
 	^
-'
-box := RSShapeBuilder box
+'box := RSShapeBuilder box
 	size: 100;
 	draggable.
 element := box element.
 view add: element.
-view zoomToFit.
 view @ RSControlsView.
 '  asText
 ]
@@ -125,7 +123,7 @@ RSEaselExample >> textAsCode [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 
 	^ OpalCompiler new
-		source: '[:view :canvas | ' , self text getText asString , ']';
+		source: '[:view | ' , self text text asString , ']';
 		logged: false;
 		evaluate
 ]

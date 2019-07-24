@@ -127,7 +127,3 @@ RSKeyNavigationView >> zoomOut: evt [
 	self zoomMove: evt delta: 0.5.
 	
 ]
-
-{ #category : #'events-processing' }
-RSKeyNavigationView >> zoomToFit: evt [
-]

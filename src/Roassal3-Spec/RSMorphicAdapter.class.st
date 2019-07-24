@@ -21,7 +21,6 @@ RSMorphicAdapter >> adapt: aComposableModel [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	self basicApplyScript.
-	
 ]
 
 { #category : #'scripting actions' }
@@ -31,14 +30,15 @@ RSMorphicAdapter >> applyScript [
 	self freeCanvas.
 	self basicApplyScript.
 	canvas extent: extent.
+	
 ]
 
 { #category : #'scripting actions' }
 RSMorphicAdapter >> basicApplyScript [
-	self model script 
-		cull: view 
-		cull: canvas.
-	self widgetDo: [ :w | w startStepping ]
+	self model script cull: view.
+	self widgetDo: #startStepping.
+	
+	view when: TSAbstractMouseEvent do: [ widget takeKeyboardFocus].
 ]
 
 { #category : #factory }

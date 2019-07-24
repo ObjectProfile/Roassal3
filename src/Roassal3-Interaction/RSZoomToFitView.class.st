@@ -53,6 +53,7 @@ RSZoomToFitView >> animatedZoomToFit: aView [
 RSZoomToFitView >> onElement: aView [
 	aView when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 	aView when: TSExtentChangedEvent do: [ self zoomToFitIfNecessary: aView ].
+	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
 	self zoomToFit: aView.
 ]
 
