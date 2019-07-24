@@ -3,7 +3,7 @@ I am a basic presenter for widgets in roassal with the Spec system
 "
 Class {
 	#name : #RoassalPresenter,
-	#superclass : #AbstractWidgetPresenter,
+	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'script'
 	],

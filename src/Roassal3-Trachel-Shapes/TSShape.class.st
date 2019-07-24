@@ -38,8 +38,7 @@ TSShape >> announce: anEventOrAnEventClass [
 
 { #category : #events }
 TSShape >> announcer [
-	announcer isNil ifTrue: [ announcer := Announcer new ].
-	^ announcer
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #events }
