@@ -115,6 +115,11 @@ RSColorPaletteChooser >> initializeWindow: w [
 		centered
 ]
 
+{ #category : #dependencies }
+RSColorPaletteChooser >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: view [
 	| data bshape elements  lshape menuButton high |

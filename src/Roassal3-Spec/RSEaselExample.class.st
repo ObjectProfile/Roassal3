@@ -96,6 +96,11 @@ RSEaselExample >> label: anObject [
 	label := anObject
 ]
 
+{ #category : #dependencies }
+RSEaselExample >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
 { #category : #initialization }
 RSEaselExample >> startText [
 	^
