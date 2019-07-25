@@ -354,17 +354,26 @@ RTData >> renderBarChartIn: aView [
 
 { #category : #hooks }
 RTData >> renderDotAndLinesIn: aView [
-	| n |
+	| n sc |
 	builder view addAll: elements.
 	interaction setUpElement: elements.
 	
-	n := RSNormalizer position
+	sc := TSScale linear
+				domain: { (xScale rtValue: minX) @ (yScale rtValue: minY) . (xScale rtValue: maxX) @ (yScale rtValue: maxY) };
+				range: { 0@0. builder extent x @ builder extent y negated }. 
+	elements do: [ :e |
+		| newPos |
+		newPos := sc scale: (x rsValue: e) @ (y rsValue: e).
+		e translateTo: newPos
+		 ].
+	
+"	n := RSNormalizer position
 				from: 0 @ 0;
 				to: builder extent x @ builder extent y negated.
 	n elements: elements.
 	n scale domain: { (xScale rtValue: minX) @ (yScale rtValue: minY) . (xScale rtValue: maxX) @ (yScale rtValue: maxY) }.
 	n normalize: [ :anElement | (x rsValue: (RSElement new model: anElement)) @ (y rsValue: (RSElement new model: anElement)) ].
-	"Really really ugly...^^^^ "
+"	"Really really ugly...^^^^ "
 	
 	"RTMetricNormalizer new
 		elements: elements;
