@@ -153,7 +153,7 @@ RTAbstractData >> builder: aBuilder [
 
 { #category : #hooks }
 RTAbstractData >> centralDot [
-	^ (RTEllipse new
+	^ (RSShapeBuilder circle
 		size: 0;
 		color: Color red) element translateTo: (builder getPixelPositionOf: 0 @ 0)
 ]

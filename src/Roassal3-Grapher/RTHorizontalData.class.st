@@ -102,8 +102,7 @@ RTHorizontalData >> renderDotAndLinesIn: aView [
 
 { #category : #hooks }
 RTHorizontalData >> resetShapeBuilderForBar [
-	barBuilder := RTShapeBuilder new.
-	barBuilder rectangle.
+	barBuilder := RSShapeBuilder rectangle.
 	
 	"Default height that compute an appropriate height"
 	barBuilder height: [ :object | 
