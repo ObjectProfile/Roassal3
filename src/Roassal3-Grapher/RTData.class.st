@@ -92,13 +92,13 @@ RTData >> connect [
 { #category : #'public - lines' }
 RTData >> connectColor: aColor [
 	"Draw a line between each point, of a given color"
-	^ self connectUsing: (RTLine new color: aColor)
+	^ self connectUsing: (RSEdgeBuilder line color: aColor)
 ]
 
 { #category : #'public - lines' }
 RTData >> connectUsing: aShape [
 	"Connect all the point, using a particular shape"
-	lineBuilder shape: aShape.
+	lineBuilder := aShape.
 	self connect
 ]
 
