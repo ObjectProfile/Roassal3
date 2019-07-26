@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'keyValue',
 		'symbol',
-		'keyCharacter'
+		'keyCharacter',
+		'keyCombination'
 	],
 	#classVars : [
 		'KeySymbolMap'
@@ -36,6 +37,16 @@ TSKeyboardEvent >> keyCharacter [
 { #category : #accessing }
 TSKeyboardEvent >> keyCharacter: anObject [
 	keyCharacter := anObject
+]
+
+{ #category : #accessing }
+TSKeyboardEvent >> keyCombination [
+	^ keyCombination
+]
+
+{ #category : #accessing }
+TSKeyboardEvent >> keyCombination: aKeyCombination [
+	keyCombination := aKeyCombination
 ]
 
 { #category : #accessing }

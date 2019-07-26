@@ -407,6 +407,7 @@ TSAthensMorph >> trKeyDown: aMorphicEvent [
 	trEvent := self eventOfClass: TSKeyDown from: aMorphicEvent.
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
+		keyCombination: aMorphicEvent asKeyCombination;
 		keyValue: aMorphicEvent keyValue;
 		keyCharacter: keyCharacter.
 	trEvent shape announce: trEvent
@@ -419,6 +420,7 @@ TSAthensMorph >> trKeyUp: aMorphicEvent [
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
+		keyCombination: aMorphicEvent asKeyCombination;
 		keyCharacter: aMorphicEvent keyCharacter.
 	trEvent shape announce: trEvent
 ]
