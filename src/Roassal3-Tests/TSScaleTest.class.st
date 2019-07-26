@@ -186,6 +186,26 @@ TSScaleTest >> testRandom [
 	self assert: (value between: -10 and: -5 ).
 ]
 
+{ #category : #'test - scales' }
+TSScaleTest >> testSameRange [
+	| sc |
+	sc := TSScale linear
+		domain: #(0 100);
+		range: #(100 100).
+	self assert: (sc scale: 0) equals: 100.
+	self assert: (sc scale: 50) equals: 100.
+	self assert: (sc scale: 100) equals: 100.
+	self assert: (sc scale: 123123) equals: 100.
+
+	sc := TSScale linear
+		domain: #(0 100);
+		range: #(0 0).
+	self assert: (sc scale: 0) equals: 0.
+	self assert: (sc scale: 50) equals: 0.
+	self assert: (sc scale: 100) equals: 0.
+	self assert: (sc scale: 123123) equals: 0.
+]
+
 { #category : #'test - linear' }
 TSScaleTest >> testScaleLinear [
 	| linear |
