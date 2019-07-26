@@ -674,7 +674,7 @@ RSAnimationExamples >> example11ArcTree [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example12PerlinParticles [
 	<script: 'self new example12PerlinParticles'>
 	| v label particle r frame perlin color |
@@ -771,7 +771,7 @@ RSAnimationExamples >> example12PerlinParticles [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example12b [
 	<script: 'self new example12b'>
 	| v label particle r frame perlin changeHue hIndex hExtent h |
@@ -880,7 +880,7 @@ RSAnimationExamples >> example12b [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example13Arcs [
 	<script: 'self new example13Arcs'>
 	| view beta shape theta step size |
@@ -1052,7 +1052,7 @@ RSAnimationExamples >> example15Sky [
 	view open setLabel: 'Star trails'
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example16ArcNoise [
 	<script: 'self new example16ArcNoise'>
 	| frame view perlin radius shape line points yscale |
@@ -1109,7 +1109,7 @@ RSAnimationExamples >> example16ArcNoise [
 	view open setLabel: 'Arcs with Perlin noise'
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example17Retina [
 	<script: 'self new example17Retina'>
 	| r view perlin side angle circleSize ringSize label minR updateValues offset rad val radius shape |
@@ -1359,7 +1359,7 @@ RSAnimationExamples >> example20Flor [
 	
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example21Rainbow [
 	<script: 'self new example21Rainbow'>
 	| v r shape mode color frame |
@@ -1627,7 +1627,7 @@ RSAnimationExamples >> example25Lines [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example26PerlinNoise [
 	<script: 'self new example26PerlinNoise'>
 	"inpired by wangyasai Twitter: @yasai_wang"
@@ -1681,7 +1681,7 @@ RSAnimationExamples >> example26PerlinNoise [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example27RoassalPerlinNoise [
 	<script: 'self new example27RoassalPerlinNoise'>
 	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 |
@@ -2051,7 +2051,7 @@ RSAnimationExamples >> example32RSLocate [
 	v open setLabel: 'RSLocate methods'
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example33AlteredWorld [
 	<script: 'self new example33AlteredWorld'>
 	"base on Gerard Ferrandez source code"
@@ -2154,7 +2154,7 @@ RSAnimationExamples >> example34Tick [
 
 ]
 
-{ #category : #examples }
+{ #category : #perlin }
 RSAnimationExamples >> example35Perlin [
 	<script: 'self new example35Perlin'>
 	| v r s frame scIterations scRadius rect extent maxLife perlin noiseScale |
@@ -2613,6 +2613,152 @@ RSAnimationExamples >> example42RectangleForceLayout [
 
 	view camera scale: 2.
 	view open
+]
+
+{ #category : #perlin }
+RSAnimationExamples >> example43PerlinRose [
+	<script: 'self new example43PerlinRose'>
+	| v offset offsetInc inc m s tau perlin polygons |
+	v := RSView new.
+	offset:= 0@0.			"Perlin offset"
+	offsetInc := 0.006.	"Perlin offset increment"
+	inc := 1. 				"Perlin increment"
+	m := 1.005.				"size multiplier"
+	s := 1.					"Start size of perlin ring"
+	tau := 6.2831855.		"It is the circle constant relating the circumference of a circle to its linear dimension"
+	v color: Color black.
+	perlin := TSPerlinNoise3 new. 
+	perlin octaves: 3.
+	v clearBackground: false.
+	polygons := RSShapeBuilder polygon 
+		noPaint;
+		border: (TSBorder new color: (Color blue alpha: 0.1)).
+	v addAll: (polygons elementsOn: (1 to: 10)).
+	v newAnimation 
+		loops: 1000;
+		duration: 50 milliSeconds;
+		when: TSAnimationLoopEvent do: [ :evt | 
+			"Create a series of perlin rings from big to small"
+			s < 2000 ifTrue: [ 
+				v elements do: [ :e | | nPoints points |
+					nPoints := 2* Float pi * s.
+					nPoints := nPoints min: 500.
+					points := (1 to: nPoints) collect: [ :i | 
+						|a p n |
+						a := i / nPoints * tau.
+						p := a cos @ a sin.
+						n := (perlin 
+							noise: offset x + (p x * inc)
+							and: offset y + (p y * inc )) * s.
+						p * n ].
+					e points: points.
+					offset := offset + offsetInc.
+					s := s * m
+				]
+			] ifFalse: [evt animation stop].
+			v signalUpdate. ].
+	v open 
+		extent: 800@600;
+		setLabel: 'Rose'.
+
+
+
+
+
+]
+
+{ #category : #perlin }
+RSAnimationExamples >> example44Boat [
+	<script: 'self new example44Boat'>
+	| v perlin frame scale shape lines boat x pharo |
+	v := RSView new.
+	v color: Color pink.
+	perlin := TSPerlinNoise2 new.
+	frame := 0.
+	"perlin octaves: 3."
+	scale := 20.
+	shape := RSSingleEdgeBuilder polyline
+		controlPoints: [ :m | 
+			(1 to: 200) collect: [ :i | | y |
+				y := (perlin snoise: (i+ frame)/scale and: (m + frame) / scale) * 20.
+				i @ (7* m + y) ].
+			];
+		width: #log.
+	lines := shape edgesOn: (1 to: 25).
+	boat := RSShapeBuilder composite shapes: [ | g |
+		g := TSGroup new.
+		g add: (TSSVGPath new
+			svgPath:'M254.4,440.8c0,2.4-2.4,4.8-4.8,4.8l0,0c-2.4,0-4.8-2.4-4.8-4.8V24c0-2.4,2.4-4.8,4.8-4.8l0,0c2.4,0,4.8,2.4,4.8,4.8V440.8z';
+			color: '788787').
+		g add: (TSSVGPath new
+			svgPath: 'M9.6,418.4c10.4,45.6,113.6,80.8,240,80.8s229.6-36,240-80.8H9.6z';
+			color: '9E6226').
+		g add: (TSSVGPath new
+			svgPath: 'M17.6,434.4c4.8,6.4,12,12.8,20,18.4h423.2c8.8-5.6,15.2-12,20-18.4H17.6z';
+			color: 'AF7643').
+		g add: (TSSVGPath new
+			svgPath: 'M367.2,488c24-4.8,44.8-11.2,63.2-18.4H68.8c17.6,7.2,39.2,13.6,63.2,18.4H367.2z';
+			color: 'AF7643').
+		g add: (TSSVGPath new
+			svgPath:'M497.6,414.4c0,2.4-2.4,4.8-4.8,4.8H6.4c-3.2,0-4.8-2.4-4.8-4.8l0,0c0-3.2,2.4-4.8,4.8-4.8H492C495.2,409.6,497.6,411.2,497.6,414.4L497.6,414.4z';
+			color: 'AF7643').
+		g add: (TSEllipse new
+			position: 249.6@ 18.4; radius: 18.4;
+			color: '788787').	
+		g add: (TSSVGPath new
+			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
+			color: '0C91C4').
+		g add: (TSSVGPath new
+			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6';
+			color: '22B3E0').
+		g add: (TSPolygon new
+			points: {232.8@43.2. 144.8@87.2. 232.8@130.4};
+			color: 'FFAE0B').
+		g add: (TSPolygon new
+			points: {232.8@80.8. 144.8@87.2. 232.8@130.4};
+			color: 'FF860D').
+		g add: (TSPolygon new
+			points: {231.2@144.8. 231.2@363.2. 89.6@363.2};
+			color: 'E00E0E').
+		g add: (TSPolygon new
+			points: {231.2@198.4. 231.2@363.2. 89.6@363.2};
+			color: 'BF1111').
+		g 
+		 ];
+		element.
+	x := 1.
+	v newAnimation
+		repeat; 
+		onStepDo: [ :t | 
+			| cp p1 p2 vector |
+			frame := frame + 0.5.
+			shape updateElements: lines.
+			cp := (lines at: lines size / 2) controlPoints.
+			x := x + 0.3.
+			
+			(x between: 1 and: cp size - 1)
+				ifFalse: [ x := cp size - 1 ].
+			p1 := cp at: x.
+			p2 := cp at: x + 1.
+			vector := p2 - p1.
+			boat matrix
+				loadIdentity;
+				rotateByRadians: vector angle;
+				scaleBy: 0.025;
+				translation: x @ p1 y.
+			v signalUpdate. ].
+	v addAll: lines.
+	pharo := RSShapeBuilder bitmap
+		form: (self iconNamed: #pharo);
+		element.
+	v open.
+	v zoomToFit.
+	v camera scale: 2.5.
+	v add: pharo.
+	v add: boat.
+	RSLocate new 
+		inner; bottom; right;
+		move: pharo on: lines.
 ]
 
 { #category : #'data - svg' }
