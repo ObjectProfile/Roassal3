@@ -62,6 +62,21 @@ RSConditionCommand >> execute [
 			component: self component ].
 ]
 
+{ #category : #'special objects' }
+RSConditionCommand >> fillGetterIn: dictionary [
+	| target cmds bool  |
+	target := self argumentTarget.
+	(self condition rsValue: target) ifFalse: [ ^ self] .
+	cmds := builder commands.
+	bool := builder isForElement.
+	builder commands: OrderedCollection new.
+	self message rsValue: builder.
+	builder updateElement: element innerComponent: component.
+	builder commands: cmds.
+	builder isForElement: bool.
+
+]
+
 { #category : #testing }
 RSConditionCommand >> isCondition [ 
 	^ true

@@ -72,6 +72,14 @@ RSCommand >> execute [
 	^ arguments.
 ]
 
+{ #category : #'special objects' }
+RSCommand >> fillGetterIn: dictionary [
+	| sel |
+	sel := self selector.
+	"getter value"
+	dictionary at: sel put: (element perform: sel allButLast asSymbol)
+]
+
 { #category : #comparing }
 RSCommand >> hash [ 
 	^ message selector hash

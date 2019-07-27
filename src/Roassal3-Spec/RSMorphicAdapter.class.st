@@ -35,7 +35,7 @@ RSMorphicAdapter >> applyScript [
 
 { #category : #'scripting actions' }
 RSMorphicAdapter >> basicApplyScript [
-	self model script cull: view.
+	self model script value: view.
 	self widgetDo: #startStepping.
 	
 	view when: TSAbstractMouseEvent do: [ widget takeKeyboardFocus].

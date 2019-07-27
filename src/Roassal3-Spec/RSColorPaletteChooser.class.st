@@ -8,7 +8,9 @@ Class {
 		'buttons',
 		'colors',
 		'shape',
-		'currentPalette'
+		'currentPalette',
+		'selectedHighlight',
+		'buttonElements'
 	],
 	#category : #'Roassal3-Spec-Examples'
 }
@@ -73,7 +75,6 @@ RSColorPaletteChooser >> initializeShape [
 		extent: 150@30;
 		color: #yourself.
 	high := RSHighlightable new.
-	high noDefaultColor.
 	high highlightElements: [ :e | {e children second} ].
 	high highlightShape color: Color black.
 	bcolor := RSShapeBuilder composite
@@ -102,9 +103,11 @@ RSColorPaletteChooser >> initializeShape [
 RSColorPaletteChooser >> initializeWidgets [
 	buttons := self instantiate: RoassalPresenter.
 	colors := self instantiate: RoassalPresenter.
-	buttons script: [ :view | self renderButtonsOn: view ].
+	buttons script: [ :view | 
+		self renderButtonsOn: view.
+		self renderColorPalettesFor: buttonElements first.].
 	self initializeShape.
-	self renderColorPalettesFor: 'diverging'.
+	
 ]
 
 { #category : #initialization }
@@ -122,7 +125,7 @@ RSColorPaletteChooser >> release [
 
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: view [
-	| data bshape elements  lshape menuButton high |
+	| data bshape lshape menuButton high |
 	view color: '2d5c7f'.
 	data := { 
 		'Diverging' -> { 0@0. 150@0. 130@30. 0@30}.
@@ -144,7 +147,6 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 		text: #key;
 		color: Color white.
 	high := RSHighlightable new.
-	high noDefaultColor.
 	high highlightElements: [ :e | {e children first} ].
 	high highlightShape 
 		paint: ((TSGradientPalette linearGradient: 
@@ -153,6 +155,8 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 			1 ->'lightGray'})
 			start: 0@ -15;
 			stop: 0@ 15).
+	selectedHighlight := high copy.
+	selectedHighlight attributeKey: #buttons.
 	menuButton := RSShapeBuilder composite
 		addInteraction: high;
 		shapes: [ :m | | box label |
@@ -160,12 +164,11 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 			box position: 0@0.
 			label := lshape elementOn: m.
 			TSGroup with: box with: label ];
-		
-		when: TSMouseClick do: [:m  | [ :evt |
-			self renderColorPalettesFor: m key ] ].
-	elements := menuButton elementsOn: data.
-	RSHorizontalLineLayout new gapSize: -9; on: elements.
-	view addAll: elements.
+		onElement;
+		when: TSMouseClick do: [:e | [ self renderColorPalettesFor: e ] ].
+	buttonElements := menuButton elementsOn: data.
+	RSHorizontalLineLayout new gapSize: -9; on: buttonElements.
+	view addAll: buttonElements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 ]
 
@@ -195,8 +198,11 @@ RSColorPaletteChooser >> renderColorPaletteOn: view [
 ]
 
 { #category : #rendering }
-RSColorPaletteChooser >> renderColorPalettesFor: aSymbol [
-	currentPalette := TSColorPalette perform: aSymbol asLowercase asSymbol.
+RSColorPaletteChooser >> renderColorPalettesFor: aElement [
+	| symbol |
+	symbol := aElement model key.
+	currentPalette := TSColorPalette perform: symbol asLowercase asSymbol.
+	selectedHighlight doHighlight: aElement.
 	colors script: [ :view | self renderColorPaletteOn: view ].
 ]
 

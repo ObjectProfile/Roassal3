@@ -33,19 +33,21 @@ RSHighlightableExamples >> example01Basic [
 { #category : #examples }
 RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges'>
-	| v s elements |
+	| v s elements interaction |
 	v := RSView new.
-	
+	interaction := RSHighlightable new.
+	interaction withEdges.
+	interaction highlightShape color: Color red.
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
 		border: TSBorder new;
 		color: TSColorPalette diverging rdylbu3;
-		addInteraction: RSHighlightable new withEdges.
+		addInteraction: interaction.
 	elements := s elementsOn: (1 to: 20).
 	RSEdgeBuilder line
 		elements: elements;
-		addInteraction: RSHighlightable;
+		@ RSHighlightable;
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
@@ -73,7 +75,9 @@ RSHighlightableExamples >> example03Interactive [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	
-	interaction := RSHighlightable new withEdges.
+	interaction := RSHighlightable new .
+	interaction withEdges.
+	interaction highlightShape color: Color red.
 	update := [ interaction doHighlight: elements atRandom ].
 	update value.
 	v newAnimation repeat  when: TSAnimationLoopEvent do: update.
@@ -103,9 +107,10 @@ RSHighlightableExamples >> example04Interactive [
 	
 	interaction := RSHighlightable new.
 	bool := true.
+	interaction highlightShape color: Color red.
 	interaction recordElements: v elements, v edges.
+	
 	update := [
-		interaction unhighlightRecordedElements: v.
 		interaction doHighlightElements: (elements select: [ :e | bool 
 				ifTrue: [ e model even ]
 				ifFalse: [ e model odd ] ]).
@@ -132,7 +137,6 @@ RSHighlightableExamples >> example05Border [
 			view: v;
 		connectFrom: [ :n | n // 2 ].
 	int := RSHighlightable new.
-	int noDefaultColor.
 	int highlightShape border: (TSBorder new width: 2).
 	elements @ int.
 	v addAll: elements.
@@ -172,8 +176,8 @@ RSHighlightableExamples >> example06IterateNext [
 
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightable new.
+	highlightableForBoxes highlightShape color: Color red.
 	highlightableForLabels := RSHighlightable new
-		noDefaultColor;
 		attributeKey: #exampleKey;
 		when: TSHighlightEvent do: [ :evt | evt element bold ];
 		when: TSUnHighlightEvent do: [ :evt | evt element normal ].
@@ -208,4 +212,38 @@ RSHighlightableExamples >> example06IterateNext [
 			highlightBlock value: selectedNumber ] ].
 
 	view open.
+]
+
+{ #category : #examples }
+RSHighlightableExamples >> example07HighlightButtons [
+	<script: 'self new example07HighlightButtons'>
+	| v int1 int2 box |
+	v := RSView new.
+	int1 := RSHighlightable new.
+	int1 highlightShape color: Color red.
+
+	int2:= RSHighlightable new.
+	int2 highlightShape 
+		color: Color blue;
+		if: [:m | m > 5] then: [:s | 
+			s color: Color purple ].
+	int2 
+		attributeKey: #buttons;
+		copyKey: #fofo.
+
+	box := RSShapeBuilder box
+		extent: 120@30;
+		@ int1 ;
+		cornerRadius: 3;
+		onElement;
+		when: TSMouseClick do: [ :e | [ 
+			int1 doUnhighlight: e.
+			int2 doHighlight: e.
+			e signalUpdate ] ].
+	v addAll: (box elementsOn:  (1 to: 10)).
+
+	int2 doHighlight: v elements first.
+	RSVerticalLineLayout on: v elements.
+	v @ RSControlsView.
+	v open
 ]

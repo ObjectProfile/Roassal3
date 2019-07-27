@@ -8,10 +8,21 @@ Class {
 		'highlightElements',
 		'highlightShape',
 		'announcer',
-		'attributeKey'
+		'attributeKey',
+		'copyKey'
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
+
+{ #category : #'instance creation' }
+RSHighlightable class >> onElement: element [
+	instance ifNil: [ 
+		instance := self new.
+		instance highlightShape color: Color red.
+		 ].
+	instance onElement: element.
+	^ instance 
+]
 
 { #category : #announce }
 RSHighlightable >> announce: anEvent [
@@ -37,8 +48,7 @@ RSHighlightable >> announceUnHightlight: element source: anElementOrView [
 
 { #category : #accessing }
 RSHighlightable >> announcer [
-	announcer isNil ifTrue: [ announcer := Announcer new ].
-	^ announcer
+	^ announcer ifNil: [ announcer := Announcer new ].
 ]
 
 { #category : #accessing }
@@ -47,13 +57,23 @@ RSHighlightable >> announcer: anAnnouncer [
 ]
 
 { #category : #accessing }
+RSHighlightable >> attributeKey [
+	^ attributeKey ifNil: [ attributeKey := #highlightElements ].
+]
+
+{ #category : #accessing }
 RSHighlightable >> attributeKey: aSymbol [
 	attributeKey := aSymbol.
 ]
 
-{ #category : #initialization }
-RSHighlightable >> defaultColor [
-	^ Color red
+{ #category : #accessing }
+RSHighlightable >> copyKey [
+	^ copyKey ifNil: [ copyKey := #original ].
+]
+
+{ #category : #accessing }
+RSHighlightable >> copyKey: aSymbol [
+	copyKey := aSymbol
 ]
 
 { #category : #actions }
@@ -65,12 +85,13 @@ RSHighlightable >> doHighlight: element [
 		self doHighlightElement: e.
 		self announceHighlight: e source: element. ].
 	
-	element topParent view attributes at: self key put: elements.
+	element topParent view attributes at: self attributeKey put: elements.
 ]
 
 { #category : #'public - hooks' }
 RSHighlightable >> doHighlightElement: element [
 	self recordIfNecessary: element.
+	highlightShape commands ifEmpty: [ ^ self ].
 	highlightShape updateElement: element.
 ]
 
@@ -86,7 +107,7 @@ RSHighlightable >> doHighlightElements: elements [
 			self announceHighlight: he source: e ].
 		helements ].
 	
-	elements first view attributes at: self key put: allHElements.
+	elements first view attributes at: self attributeKey put: allHElements.
 ]
 
 { #category : #actions }
@@ -98,14 +119,14 @@ RSHighlightable >> doUnhighlight: anElement [
 RSHighlightable >> doUnhighlightElement: element [
 	| att s originals args |
 	att := element attributes.
-	(att includesKey: #original) ifFalse: [ ^ self ].
+	(att includesKey: self copyKey) ifFalse: [ ^ self ].
 	s := element trachelShape.
-	originals := att at: #original.
+	originals := att at: self copyKey.
 	args := Array new: 1.
-	originals do: [ :ab | 
-		args at: 1 put: ab value.
-		s perform: ab key withArguments: args ].
-	att removeKey: #original.
+	originals keysAndValuesDo: [ :key :value | 
+		args at: 1 put: value.
+		s perform: key withArguments: args ].
+	att removeKey: self copyKey.
 ]
 
 { #category : #accessing }
@@ -120,8 +141,9 @@ RSHighlightable >> highlightElements: aBlock [
 
 { #category : #'accessing - computed' }
 RSHighlightable >> highlightElementsFor: element [
-	^ element attributes at: self key ifAbsentPut: [ 
-		highlightElements rsValue: element ].
+	^ element attributes 
+		at: self attributeKey
+		ifAbsentPut: [ highlightElements rsValue: element ].
 
 ]
 
@@ -146,16 +168,15 @@ v @ RSControlsView.
 v open			
 -=-=-=
 	"
-	^ highlightShape ifNil: [ self highlightShape: RSShapeBuilder box.
-		highlightShape color: self defaultColor.
+	^ highlightShape ifNil: [
+		self highlightShape: RSShapeBuilder box.
 		highlightShape ]
 ]
 
 { #category : #accessing }
 RSHighlightable >> highlightShape: aShapeBuilder [
 	highlightShape := aShapeBuilder.
-	highlightShape 
-		commands: OrderedCollection new.
+	highlightShape commands removeAll.
 ]
 
 { #category : #initialization }
@@ -163,16 +184,6 @@ RSHighlightable >> initialize [
 	super initialize.
 	self highlightElements: [ :el | Array with: el ].
 
-]
-
-{ #category : #accessing }
-RSHighlightable >> key [
-	^ attributeKey ifNil: [ attributeKey := #highlightElements ].
-]
-
-{ #category : #public }
-RSHighlightable >> noDefaultColor [
-	self highlightShape removeCommandsBySelector: #color:
 ]
 
 { #category : #hooks }
@@ -184,12 +195,9 @@ RSHighlightable >> onElement: anElement [
 
 { #category : #'public - hooks' }
 RSHighlightable >> record: element [
-	| originals |
-	originals := self highlightShape commands collect: [ :cmd |
-		| sel |
-		sel := cmd selector.
-		sel -> (element perform: sel allButLast asSymbol)  ].
-	element attributes at: #original put: originals
+	element attributes 
+		at: self copyKey 
+		put: (self highlightShape currentGetterValues: element)
 ]
 
 { #category : #public }
@@ -201,7 +209,7 @@ RSHighlightable >> recordElements: elements [
 RSHighlightable >> recordIfNecessary: element [
 	| att |
 	att := element attributes.
-	(att includesKey: #original) ifTrue: [ ^ self ].
+	(att includesKey: self copyKey) ifTrue: [ ^ self ].
 	self record: element.
 ]
 
@@ -209,15 +217,15 @@ RSHighlightable >> recordIfNecessary: element [
 RSHighlightable >> resetHighlightedElements: anElementOrView [
 	| att |
 	att := anElementOrView topParent view attributes.
-	(att includesKey: self key) ifFalse: [ ^ self ].
-	att removeKey: self key
+	(att includesKey: self attributeKey) ifFalse: [ ^ self ].
+	att removeKey: self attributeKey
 ]
 
 { #category : #public }
 RSHighlightable >> setupAntAnimation [
-	self noDefaultColor withEdges.
+	self withEdges.
 	self highlightShape
-		border: [ TSBorder new width: 2; color: self defaultColor ].
+		border: [ TSBorder new width: 2; color: Color red ].
 	self when: TSHighlightEvent do: [ :evt | | e |
 		(e := evt element) isElement ifTrue: [ 
 			| array anime |
@@ -251,7 +259,7 @@ RSHighlightable >> setupAntAnimation [
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedElements: anElementOrView [
 	
-	anElementOrView topParent view attributes at: self key ifPresent: [ :elements |
+	anElementOrView topParent view attributes at: self attributeKey ifPresent: [ :elements |
 		elements do: [ :e | 
 			self doUnhighlightElement: e.
 			self announceUnHightlight: e source: anElementOrView.

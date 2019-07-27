@@ -88,6 +88,19 @@ RSAbstractModelBuilder >> commands: aCollection [
 	commands := aCollection 
 ]
 
+{ #category : #'special objects' }
+RSAbstractModelBuilder >> currentGetterValues: element [
+	| dict tshape |
+	dict := Dictionary new.
+	tshape := element trachelShape.
+	self commands do: [ :cmd |
+		cmd 
+			element: element;	
+			component: tshape. 
+		cmd fillGetterIn: dict ].
+	^ dict 
+]
+
 { #category : #'reflective operations' }
 RSAbstractModelBuilder >> doesNotUnderstand: aMessage [
 	"magic"
@@ -150,17 +163,6 @@ RSAbstractModelBuilder >> executeActions: block on: element [
 ]
 
 { #category : #'reflective operations' }
-RSAbstractModelBuilder >> executeCommand: name [
-	
-	| res |
-	res := nil.
-	self commands 
-		select: [ :cmd | cmd selector = name ]
-		thenDo: [ :cmd | res := cmd execute ].
-	^ res
-]
-
-{ #category : #'reflective operations' }
 RSAbstractModelBuilder >> executeDuring: aBlock element: element component: component [
 	| bool cmds |
 	cmds := commands.
@@ -209,6 +211,11 @@ RSAbstractModelBuilder >> innerClass: aClass [
 { #category : #testing }
 RSAbstractModelBuilder >> isForElement [
 	^ isForElement
+]
+
+{ #category : #accessing }
+RSAbstractModelBuilder >> isForElement: aBool [
+	isForElement := aBool
 ]
 
 { #category : #testing }
