@@ -217,32 +217,35 @@ RSHighlightableExamples >> example06IterateNext [
 { #category : #examples }
 RSHighlightableExamples >> example07HighlightButtons [
 	<script: 'self new example07HighlightButtons'>
-	| v int1 int2 box |
+	| v bluePurple red box |
 	v := RSView new.
-	int1 := RSHighlightable new.
-	int1 highlightShape color: Color red.
+	red := RSHighlightable new.
+	red highlightShape color: Color red.
 
-	int2:= RSHighlightable new.
-	int2 highlightShape 
+	bluePurple:= RSHighlightable new.
+	bluePurple highlightShape 
 		color: Color blue;
 		if: [:m | m > 5] then: [:s | 
 			s color: Color purple ].
-	int2 
+	red 
 		attributeKey: #buttons;
 		copyKey: #fofo.
+	bluePurple
+		highlightElements: [ :e | { e } ] 
+		butKeep: red.
 
 	box := RSShapeBuilder box
 		extent: 120@30;
-		@ int1 ;
+		@ bluePurple;
 		cornerRadius: 3;
 		onElement;
 		when: TSMouseClick do: [ :e | [ 
-			int1 doUnhighlight: e.
-			int2 doHighlight: e.
+			bluePurple doUnhighlight: e.
+			red doHighlight: e.
 			e signalUpdate ] ].
 	v addAll: (box elementsOn:  (1 to: 10)).
 
-	int2 doHighlight: v elements first.
+	red doHighlight: v elements first.
 	RSVerticalLineLayout on: v elements.
 	v @ RSControlsView.
 	v open

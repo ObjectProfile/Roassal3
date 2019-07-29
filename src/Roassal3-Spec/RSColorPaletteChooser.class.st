@@ -10,7 +10,8 @@ Class {
 		'shape',
 		'currentPalette',
 		'selectedHighlight',
-		'buttonElements'
+		'buttonElements',
+		'overHighlight'
 	],
 	#category : #'Roassal3-Spec-Examples'
 }
@@ -65,6 +66,34 @@ RSColorPaletteChooser >> copyToClipboard: object [
 ]
 
 { #category : #initialization }
+RSColorPaletteChooser >> initializeInteractions [
+	selectedHighlight := RSHighlightable new.
+	selectedHighlight highlightElements: [ :e | {e children first} ].
+	selectedHighlight highlightShape 
+		paint: ((TSGradientPalette linearGradient: 
+			{0->'white'.
+			0.25->'blue'.
+			1 ->'lightGray'})
+			start: 0@ -15;
+			stop: 0@ 15).
+	selectedHighlight 
+		attributeKey: #buttons;
+		copyKey: #qwer.
+	overHighlight := RSHighlightable new.
+	overHighlight 
+		highlightElements: [ :e | {e children first} ]
+		butKeep: selectedHighlight.
+	overHighlight highlightShape 
+		paint: ((TSGradientPalette linearGradient: 
+			{0->'white'.
+			0.25->'black'.
+			1 ->'lightGray'})
+			start: 0@ -15;
+			stop: 0@ 15).
+	
+]
+
+{ #category : #initialization }
 RSColorPaletteChooser >> initializeShape [
 	| lshape bshape bcolor slabel high |
 	lshape := RSShapeBuilder label bold.
@@ -107,6 +136,7 @@ RSColorPaletteChooser >> initializeWidgets [
 		self renderButtonsOn: view.
 		self renderColorPalettesFor: buttonElements first.].
 	self initializeShape.
+	self initializeInteractions.
 	
 ]
 
@@ -125,7 +155,7 @@ RSColorPaletteChooser >> release [
 
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: view [
-	| data bshape lshape menuButton high |
+	| data bshape lshape menuButton |
 	view color: '2d5c7f'.
 	data := { 
 		'Diverging' -> { 0@0. 150@0. 130@30. 0@30}.
@@ -146,19 +176,8 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 		bold; 
 		text: #key;
 		color: Color white.
-	high := RSHighlightable new.
-	high highlightElements: [ :e | {e children first} ].
-	high highlightShape 
-		paint: ((TSGradientPalette linearGradient: 
-			{0->'white'.
-			0.25->'black'.
-			1 ->'lightGray'})
-			start: 0@ -15;
-			stop: 0@ 15).
-	selectedHighlight := high copy.
-	selectedHighlight attributeKey: #buttons.
 	menuButton := RSShapeBuilder composite
-		addInteraction: high;
+		addInteraction: overHighlight;
 		shapes: [ :m | | box label |
 			box := bshape elementOn: m.
 			box position: 0@0.
@@ -202,7 +221,9 @@ RSColorPaletteChooser >> renderColorPalettesFor: aElement [
 	| symbol |
 	symbol := aElement model key.
 	currentPalette := TSColorPalette perform: symbol asLowercase asSymbol.
+	overHighlight doUnhighlight: aElement.
 	selectedHighlight doHighlight: aElement.
+	aElement signalUpdate.
 	colors script: [ :view | self renderColorPaletteOn: view ].
 ]
 

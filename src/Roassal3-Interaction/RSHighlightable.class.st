@@ -56,22 +56,22 @@ RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys' }
 RSHighlightable >> attributeKey [
 	^ attributeKey ifNil: [ attributeKey := #highlightElements ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys' }
 RSHighlightable >> attributeKey: aSymbol [
 	attributeKey := aSymbol.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys' }
 RSHighlightable >> copyKey [
 	^ copyKey ifNil: [ copyKey := #original ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - keys' }
 RSHighlightable >> copyKey: aSymbol [
 	copyKey := aSymbol
 ]
@@ -139,12 +139,23 @@ RSHighlightable >> highlightElements: aBlock [
 	highlightElements := aBlock
 ]
 
+{ #category : #'highlight elements' }
+RSHighlightable >> highlightElements: aBlock butKeep: aRSHilightable [
+	"aBlock recives an element and return a collection of elements"
+	self highlightElements: [ :e | 
+		| elements |
+		elements := aBlock value: e.
+		e view attributes
+			at: aRSHilightable attributeKey
+			ifPresent: [ :helements | 
+				
+				elements reject: [ :he | helements includes: he ] ]
+			ifAbsent: [ elements ] ]
+]
+
 { #category : #'accessing - computed' }
 RSHighlightable >> highlightElementsFor: element [
-	^ element attributes 
-		at: self attributeKey
-		ifAbsentPut: [ highlightElements rsValue: element ].
-
+	^ highlightElements rsValue: element
 ]
 
 { #category : #accessing }
@@ -273,17 +284,17 @@ RSHighlightable >> when: event do: aBlock [
 	self announcer when: event do: aBlock
 ]
 
-{ #category : #public }
+{ #category : #'highlight elements' }
 RSHighlightable >> withEdges [
 	self highlightElements: [ :e | e connectedEdges copy add: e; yourself ].
 ]
 
-{ #category : #public }
+{ #category : #'highlight elements' }
 RSHighlightable >> withIncomingEdges [
 	self highlightElements: [ :e | e incomingEdges copy asOrderedCollection add: e; yourself ].
 ]
 
-{ #category : #public }
+{ #category : #'highlight elements' }
 RSHighlightable >> withOutgoingEdges [
 	self highlightElements: [ :e | e outgoingEdges copy asOrderedCollection add: e; yourself ].
 ]
