@@ -46,7 +46,10 @@ RSControlsView >> interactions [
 
 { #category : #accessing }
 RSControlsView >> interactions: aCollectionOfInteractions [
-	interactions := aCollectionOfInteractions
+	interactions := OrderedDictionary new.
+	aCollectionOfInteractions do: [ :int |
+		interactions at: int class put: int ].
+	
 ]
 
 { #category : #configuration }
@@ -88,4 +91,9 @@ RSControlsView >> shouldShowLegend [
 { #category : #configuration }
 RSControlsView >> withLegend [
 	withLegend := true
+]
+
+{ #category : #public }
+RSControlsView >> zoomToFit: aView [
+	(self interactions: RSZoomToFitView) zoomToFit: aView
 ]

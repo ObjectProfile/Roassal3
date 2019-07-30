@@ -104,6 +104,5 @@ RSAbstractControlView >> renderOn: aLegendBuilder [
 RSAbstractControlView >> scaleFor: aScale [
 	| l |
 	l := self configuration.
-	^ (l maxScale min: aScale ) max: l minScale.
-	
+	^ (l maxScale min: aScale ) max: l minScale
 ]

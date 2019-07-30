@@ -17,7 +17,7 @@ RSZoomableView >> onElement: aView [
 
 { #category : #'events-processing' }
 RSZoomableView >> processEvent: evt [
-	| sc delta camera dist scale position |
+	| sc delta camera dist scale position correct |
 	
 	animation ifNotNil: [ ^ self ].
 	delta := evt isUp
@@ -27,9 +27,13 @@ RSZoomableView >> processEvent: evt [
 	sc := camera scale * delta x.
 	sc = (self scaleFor: sc) ifFalse: [ ^ self ].
 	dist := evt position - camera position.
-	
+	correct := self
+		correctCameraPosition: evt 
+		inRectangle: (self expandedRectangle: evt)
+		position: camera position + (dist * delta y)
+		scale: sc.
 	scale := TSScale sqrt range: { camera scale. sc }.
-	position := TSScale sqrt range: { camera position. camera position + (dist * delta y) }.
+	position := TSScale sqrt range: { camera position. correct }.
 	animation := evt canvas newAnimation
 		duration: 200 milliSeconds;
 		onStepDo: [ :t |
@@ -38,7 +42,6 @@ RSZoomableView >> processEvent: evt [
 				translateTo: (position scale: t).
 			evt signalUpdate ];
 		when: TSAnimationEndEvent do: [ animation := nil ]
-	
 ]
 
 { #category : #rendering }

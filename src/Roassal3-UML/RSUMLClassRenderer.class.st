@@ -87,11 +87,11 @@ RSUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 { #category : #'accessing - shapes' }
 RSUMLClassRenderer >> marker [ 
 	^ marker ifNil: [ marker := TSMarker new 
-		offset: 25 / 2;
+		offset: 10;
 		shape: (RSShapeBuilder triangle
 			color: Color white;
 			border: self defaultBorder;
-			size: 25) element. ]
+			size: 20) element ]
 ]
 
 { #category : #'accessing - shapes' }
