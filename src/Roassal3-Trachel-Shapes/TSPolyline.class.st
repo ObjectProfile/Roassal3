@@ -5,7 +5,6 @@ Class {
 	#name : #TSPolyline,
 	#superclass : #TSAbstractControlPointsLine,
 	#instVars : [
-		'markers',
 		'radius'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
@@ -35,14 +34,4 @@ TSPolyline >> includesPoint: aPoint [
 		p2 := cp at: i + 1.
 		(aPoint onLineFrom: p1 to: p2 within: TSLine delta) ifTrue: [ ^ true ] ].
 	^ false.
-]
-
-{ #category : #'accessing - markers' }
-TSPolyline >> markers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
-{ #category : #'accessing - markers' }
-TSPolyline >> privateMarkers [
-	^ markers
 ]

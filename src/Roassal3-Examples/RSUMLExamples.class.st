@@ -130,3 +130,14 @@ RSUMLExamples >> example06CustomText [
 	builder build.
 	builder open
 ]
+
+{ #category : #examples }
+RSUMLExamples >> example07TorchRenderer [
+	<script: 'self new example07TorchRenderer'>
+	| builder |
+	builder := RSUMLClassBuilder new.
+	builder classes: Collection withAllSubclasses.
+	builder renderer: RSTorchUMLClassRenderer new.
+	builder build.
+	builder open
+]

@@ -1,8 +1,12 @@
+"
+I am an abstract class for lines with control points
+"
 Class {
 	#name : #TSAbstractControlPointsLine,
 	#superclass : #TSAbstractLine,
 	#instVars : [
-		'controlPoints'
+		'controlPoints',
+		'markers'
 	],
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
@@ -34,6 +38,16 @@ TSAbstractControlPointsLine >> endPoint: aPoint [
 { #category : #testing }
 TSAbstractControlPointsLine >> isControlPointsLine [
 	^ true
+]
+
+{ #category : #'accessing - markers' }
+TSAbstractControlPointsLine >> markers [
+	^ markers ifNil: [ markers := Array new: 3 ].
+]
+
+{ #category : #'accessing - markers' }
+TSAbstractControlPointsLine >> privateMarkers [
+	^ markers
 ]
 
 { #category : #accessing }

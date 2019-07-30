@@ -19,6 +19,12 @@ RSUMLClassBuilder >> classDescriptor [
 ]
 
 { #category : #accessing }
+RSUMLClassBuilder >> classDescriptor: aRSClassDescriptor [
+	classDescriptor := aRSClassDescriptor.
+	renderer ifNotNil: [ renderer classDescriptor: classDescriptor ].
+]
+
+{ #category : #accessing }
 RSUMLClassBuilder >> classes [
 	^ classes
 ]
@@ -111,36 +117,14 @@ RSUMLClassBuilder >> expand: e [
 { #category : #initialization }
 RSUMLClassBuilder >> initialize [
 	super initialize.
-	classDescriptor := RSUMLClassDescriptor new.
-	renderer := RSUMLClassRenderer new.
-	renderer classDescriptor: classDescriptor.
-	self initializeShapes.
+	self
+		classDescriptor: RSUMLClassDescriptor new;
+		renderer: RSBasicUMLClassRenderer new.
 ]
 
 { #category : #initialization }
-RSUMLClassBuilder >> initializeShapes [
-	shape := RSShapeBuilder composite
-		interactionDo: [ :i | i popup; draggable; browseable ];
-		shapes: [ :m | self createShapesFor: m ];
-		onMyselfDo: [ [ :e | | b |
-			b := self createButtonOn: e.
-			e add: b.
-			e attributes 
-				at: #button put: b;
-				at: #shapes put: e shapes copy;
-				at: #positions put: (e shapes collect: #position);
-				at: #extent put: e shapes first extent.
-			b remove ] ];
-		onElement;
-		when: TSMouseEnter do: [:e| [ | b |
-			b := e attributes at: #button.
-			b isInACanvas ifFalse:[ e add: b ] ] ];
-		when: TSMouseLeave do: [:e| [ | b |
-			b := e attributes at: #button.
-			b remove. ] ].
-		
-	
-
+RSUMLClassBuilder >> initializeShape [
+	shape := renderer classShape.
 ]
 
 { #category : #accessing }
@@ -163,6 +147,13 @@ RSUMLClassBuilder >> renderIn: aView [
 { #category : #accessing }
 RSUMLClassBuilder >> renderer [
 	^ renderer
+]
+
+{ #category : #accessing }
+RSUMLClassBuilder >> renderer: aRSUMLRenderer [
+	renderer := aRSUMLRenderer.
+	renderer classDescriptor: classDescriptor.
+	self initializeShape.
 ]
 
 { #category : #accessing }
