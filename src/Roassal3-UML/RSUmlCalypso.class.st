@@ -13,6 +13,20 @@ RSUMLCalypso >> activationPriority [
 ]
 
 { #category : #building }
+RSUMLCalypso >> applyTheme: builder [
+	| theme renderer |
+	theme := Smalltalk ui theme.
+	builder view color: theme backgroundColor.
+	renderer := builder renderer.
+	renderer defaultBorder color: theme textColor.
+	renderer marker shape color: theme backgroundColor.
+	renderer classNameShape color: theme textColor.
+	renderer varShape color: theme textColor.
+	renderer methodShape color: theme textColor.
+	renderer classBoxShape color: theme classBoxBackgroundColor.
+]
+
+{ #category : #building }
 RSUMLCalypso >> build [
 	| builder morph controls |
 	builder := RSUMLClassBuilder new.
@@ -21,7 +35,8 @@ RSUMLCalypso >> build [
 	controls configuration 
 		useBasicZoom;
 		maxScale: 1.
-	builder view @ controls.
+	self applyTheme: builder.
+	builder view addInteraction: controls.
 	builder classes: self classes.
 	builder build.
 
