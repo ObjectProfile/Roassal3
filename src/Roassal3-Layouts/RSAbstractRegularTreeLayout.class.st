@@ -43,6 +43,11 @@ RSAbstractRegularTreeLayout >> doExecute: elements [
 ]
 
 { #category : #hook }
+RSAbstractRegularTreeLayout >> doInitialize: elements [ 
+	self clear
+]
+
+{ #category : #hook }
 RSAbstractRegularTreeLayout >> doPost: elements [
 	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
 	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ].

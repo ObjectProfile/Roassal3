@@ -106,7 +106,7 @@ RSAbstractGraphLayout >> clear [
 RSAbstractGraphLayout >> doInitialize: elements [ 
 	super doInitialize: elements.
 	self clear.
-	self greedyCycleRemoval: elements
+	"self greedyCycleRemoval: elements"
 ]
 
 { #category : #battista }

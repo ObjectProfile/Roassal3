@@ -32,10 +32,18 @@ RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer:
 	y := aPoint y.
 	alreadyLayoutedNodes addAll: aNodeCollection.
 	self atLayer: aNumber add: aNodeCollection.
-	aNodeCollection do: [ :each | 
+	aNodeCollection do: [ :each |
+		| children |
 		childrenPosition := y + each height + self verticalGap.
-		treeSize := each width
-			max: (self layout: (self computeChildrenFor: each) atPoint: x @ childrenPosition atLayer: aNumber + 1).
+		children := self computeChildrenFor: each.
+		treeSize := self 
+			layout: children
+			atPoint: x @ childrenPosition
+			atLayer: aNumber + 1.
+		treeSize < each width ifTrue: [ 
+			self translate: children by: (each width - treeSize) / 2.0 @ 0.
+			treeSize := each width. ].
+		
 		middleOfTree := x + (treeSize / 2.0) - (each width / 2.0).
 		translator translateTopLeftOf: each to: middleOfTree @ y.
 		x := x + treeSize + self horizontalGap.
@@ -52,4 +60,12 @@ RSAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 			translator translateTopLeftOf: eachNode to: (eachNode position x @ cursor).
 			max max: eachNode height ].
 		cursor := cursor + layerDepthSize + self verticalGap ]
+]
+
+{ #category : #'hook-private' }
+RSAbstractVerticalTreeLayout >> translate: aNodeCollection by: delta [
+	aNodeCollection ifEmpty: [ ^ self ].
+	aNodeCollection do: [ :each | 
+		each translateBy: delta.
+		self translate: (self childrenFor: each) by: delta]
 ]
