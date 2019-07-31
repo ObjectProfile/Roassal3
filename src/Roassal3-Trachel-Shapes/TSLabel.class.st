@@ -17,6 +17,11 @@ Class {
 }
 
 { #category : #public }
+TSLabel class >> defaultFont [
+	^ StandardFonts defaultFont
+]
+
+{ #category : #public }
 TSLabel class >> familyFontName [
 	"
 	self familyFontName
@@ -125,11 +130,16 @@ TSLabel >> fontSize: integer [
 
 { #category : #initialization }
 TSLabel >> initialize [
+	| defaultFont |
 	super initialize.
 	text := nil.
-	fontSize := 12.
-	self normal.
-	self fontName: self class familyFontName.
+	defaultFont := self class defaultFont.
+	fontSize := defaultFont pixelSize.
+	emphasis := TextEmphasis normal.
+	
+	self fontName: (defaultFont realFont class == StrikeFont 
+		ifTrue: [ self class familyFontName ]
+		ifFalse: [ defaultFont familyName ]).
 ]
 
 { #category : #testing }

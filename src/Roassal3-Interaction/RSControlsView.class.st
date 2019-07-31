@@ -73,6 +73,7 @@ RSControlsView >> renderLegendOn: aView [
 		yourself.
 	lb defaultTitle fontSize: 12.
 	lb defaultLabel fontSize: 10.
+	lb defaultBoldText fontSize: 10.
 	lb shape
 		border: TSBorder new;
 		color: (Color white alpha: 0.8);

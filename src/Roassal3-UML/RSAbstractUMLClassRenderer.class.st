@@ -65,9 +65,11 @@ RSAbstractUMLClassRenderer >> classDescriptor: aClassDescriptor [
 
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> classNameShape [
-	^ classNameShape ifNil: [ classNameShape := RSShapeBuilder label 
-		fontSize: 20;
-		text: [ :m | classDescriptor classname rsValue: m ] ]
+	^ classNameShape ifNil: [ classNameShape := RSShapeBuilder label
+		text: [ :m | classDescriptor classname rsValue: m ];
+		onElement;
+		fontSize: [ :e | e font pointSize * 1.2];
+		onModel ]
 ]
 
 { #category : #'accessing - shapes' }
@@ -133,7 +135,6 @@ RSAbstractUMLClassRenderer >> marker: aMarker [
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> methodShape [ 
 	^ methodShape ifNil: [ methodShape := RSShapeBuilder label 
-		fontSize: 12;
 		text: [:m | classDescriptor methodSelector rsValue: m ] ]
 ]
 
@@ -157,7 +158,7 @@ RSAbstractUMLClassRenderer >> methodsShape: aRSShapeBuilder [
 
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> varShape [
-	^ varShape ifNil: [ varShape := RSShapeBuilder label fontSize: 12 ].
+	^ varShape ifNil: [ varShape := RSShapeBuilder label ].
 ]
 
 { #category : #'accessing - shapes' }
