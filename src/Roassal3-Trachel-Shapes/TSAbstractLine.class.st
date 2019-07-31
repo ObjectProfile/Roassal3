@@ -132,6 +132,14 @@ TSAbstractLine >> resetPath [
 	self resetBBox
 ]
 
+{ #category : #path }
+TSAbstractLine >> sessionChanged [
+	self resetPath.
+	self hasMarkers ifFalse: [ ^ self ].
+	self markersDo: [ :mark | mark shape sessionChanged ].
+	
+]
+
 { #category : #accessing }
 TSAbstractLine >> startPoint [
 	^ self subclassResponsibility

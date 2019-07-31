@@ -31,9 +31,10 @@ TSAthensMorph >> canvas: aTrachelCanvas [
 TSAthensMorph >> checkSession [
 	session == Smalltalk session ifTrue: [ ^ self ].
 	surface := nil.
-	trachelCanvas shapes do: [ :s | s resetPath ].
-	trachelCanvas fixedShapes do: [ :s | s resetPath ].
 	self createSurface
+	trachelCanvas shapes do: #sessionChanged.
+	trachelCanvas fixedShapes do: #sessionChanged.
+	
 ]
 
 { #category : #'surface management' }

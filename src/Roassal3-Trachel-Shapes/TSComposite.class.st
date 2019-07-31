@@ -92,6 +92,13 @@ TSComposite >> resetPath [
 	path := baseRectangle
 ]
 
+{ #category : #path }
+TSComposite >> sessionChanged [
+	self resetPath.
+	shapes ifNil: [ ^ self ].
+	shapes do: #sessionChanged
+]
+
 { #category : #'accessing - computed' }
 TSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |

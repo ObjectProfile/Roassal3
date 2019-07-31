@@ -70,3 +70,8 @@ TMarkeable >> markerStartEnd: aMarker [
 TMarkeable >> markers [
 	^ nil
 ]
+
+{ #category : #'accessing - markers' }
+TMarkeable >> markersDo: block [
+	self markers do: [ :m | m ifNotNil: block  ].
+]
