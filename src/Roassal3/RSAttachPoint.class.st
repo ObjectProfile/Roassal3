@@ -40,13 +40,17 @@ RSAttachPoint >> initialize [
 	inverted := false.
 ]
 
-{ #category : #'public - hooks' }
+{ #category : #private }
 RSAttachPoint >> position: anObject [
-	| parent position |
 	anObject isPoint ifTrue: [ ^ anObject ].
-	position := anObject position. 
-	(parent := anObject parent) ifNil: [ ^ position ].
-	^ parent transform: position
+	^ self positionFor: anObject point: anObject position.
+]
+
+{ #category : #private }
+RSAttachPoint >> positionFor: anElement point: aPoint [
+	| parent |
+	(parent := anElement parent )ifNil: [ ^ aPoint ].
+	^ parent transform: aPoint
 	
 ]
 

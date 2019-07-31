@@ -14,7 +14,9 @@ Class {
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicEndingPointOf: anEdge [
-	^ self basicPointFrom: anEdge to to: anEdge from of: anEdge
+	^ self
+		positionFor: anEdge to
+		point: (self basicPointFrom: anEdge to to: anEdge from of: anEdge)
 ]
 
 { #category : #'public - hooks' }
@@ -35,7 +37,9 @@ RSBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicStartingPointOf: anEdge [
-	^ self basicPointFrom: anEdge from to: anEdge to of: anEdge
+	^ self
+		positionFor: anEdge from 
+		point: (self basicPointFrom: anEdge from to: anEdge to of: anEdge)
 ]
 
 { #category : #'public - hooks' }

@@ -9,10 +9,14 @@ Class {
 
 { #category : #'public - hooks' }
 RSVerticalAttachPoint >> basicEndingPointOf: anEdge [
-	^ anEdge to encompassingRectangle topCenter + (0@endOffset)
+	^ self
+		positionFor: anEdge to 
+		point: anEdge to encompassingRectangle topCenter + (0@endOffset)
 ]
 
 { #category : #'public - hooks' }
 RSVerticalAttachPoint >> basicStartingPointOf: anEdge [
-	^ anEdge from encompassingRectangle bottomCenter + (0@startOffset)
+	^ self
+		positionFor: anEdge from 
+		point: anEdge from encompassingRectangle bottomCenter + (0@startOffset)
 ]
