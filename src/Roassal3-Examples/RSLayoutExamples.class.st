@@ -4,7 +4,7 @@ I use the RSShapeBuilder
 Class {
 	#name : #RSLayoutExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #layouts }

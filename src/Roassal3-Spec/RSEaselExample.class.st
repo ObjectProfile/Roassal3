@@ -101,6 +101,11 @@ RSEaselExample >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
+{ #category : #running }
+RSEaselExample >> run [
+	<script: 'self new openWithSpec'>
+]
+
 { #category : #initialization }
 RSEaselExample >> startText [
 	^

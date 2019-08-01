@@ -4,7 +4,7 @@ Basic examples about highlighting
 Class {
 	#name : #RSHighlightableExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #examples }

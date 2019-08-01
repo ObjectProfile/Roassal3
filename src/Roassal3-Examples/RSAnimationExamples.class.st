@@ -4,7 +4,7 @@ I have examples for animation
 Class {
 	#name : #RSAnimationExamples,
 	#superclass : #TSObject,
-	#category : #'Roassal3-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #'data - svg' }

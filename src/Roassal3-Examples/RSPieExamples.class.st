@@ -4,7 +4,7 @@ I have examples for RSPieBuilder load the package Roassal3-Pie
 Class {
 	#name : #RSPieExamples,
 	#superclass : #TSObject,
-	#category : #'Roassal3-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #data }
