@@ -603,7 +603,9 @@ RSShapeExamples >> example18ExampleFromMondrian [
 { #category : #shapes }
 RSShapeExamples >> example19Bitmap [
 	<script: 'self new example19Bitmap'>
-	| v elements |
+	| v elements icons |
+	icons := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key].
+
 	v := RSView new.
 	elements := RSShapeBuilder bitmap
 		form: #value;
@@ -611,7 +613,7 @@ RSShapeExamples >> example19Bitmap [
 		when: TSMouseClick do: [:m | [   
 			Clipboard clipboardText: m key.
 			self inform: 'Copied icon name' ]];
-		elementsOn: Smalltalk ui icons icons associations.
+		elementsOn: icons.
 	v addAll: elements.
 	RSGridLayout on: elements.
 	v @ RSControlsView.
