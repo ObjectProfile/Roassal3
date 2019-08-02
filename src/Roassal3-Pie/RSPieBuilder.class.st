@@ -111,7 +111,7 @@ b open.
 -=-=-=-=-=-=
 "
 	| tempSum |
-	values := objects collect: aBlockOrASymbol.
+	values := objects collect: aBlockOrASymbol as: Array.
 	sumValues := Array new: objects size.
 	tempSum := 0.
 	values doWithIndex: [ :v :i |

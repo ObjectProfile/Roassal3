@@ -179,6 +179,11 @@ TSGroup >> translateTo: aPosition [
 	self translateBy: aPosition - center
 ]
 
+{ #category : #announcing }
+TSGroup >> when: event do: block [
+	self do: [ :element | element when: event do: block ]
+]
+
 { #category : #accessing }
 TSGroup >> width [ 
 	^ self extent x

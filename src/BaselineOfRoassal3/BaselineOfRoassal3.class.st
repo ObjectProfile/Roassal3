@@ -31,6 +31,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Spec';
+				package: #'Roassal3-Pie';
 				package: #'Roassal3-UML';
 				package: #'Roassal3-Layouts';
 				package: #'Roassal3-Trachel-Shapes';
@@ -53,6 +54,7 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Trachel-Shapes'
 					'Roassal3-Spec'
 					'Roassal3-UML'
+					'Roassal3-Pie'
 					'Roassal3-Menu');
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
 				group: 'Tests' with: #('Core' 'Roassal3-Tests');
