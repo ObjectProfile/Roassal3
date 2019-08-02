@@ -46,6 +46,11 @@ RSInteractionBuilder >> initialize [
 	interactions := OrderedCollection new.
 ]
 
+{ #category : #actions }
+RSInteractionBuilder >> inspectable [
+	self addInteraction: [ :element | element when: TSMouseClick do: [ :evt | element model inspect ] ].
+]
+
 { #category : #interactions }
 RSInteractionBuilder >> labeled [
 	| i |
