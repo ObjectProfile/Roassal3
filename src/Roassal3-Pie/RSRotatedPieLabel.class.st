@@ -18,13 +18,24 @@ RSRotatedPieLabel >> onElement: view [
 		dashArray: #(4);
 		edgesOn: pieBuilder labelElements.
 	view addAll: lines.
+	pieBuilder elements do: [ :e |
+		| a b |
+		e attributes
+			at: #a put: (a := e alphaAngle);
+			at: #b put: (b := e betaAngle).
+		(b - a) < 4 ifTrue: [ | line |
+			line := lines at: e index.
+			line border: nil.
+			line model noPaint.
+			 ]
+		 ].
 	pieBuilder elements when: TSMouseClick do: [ animation toggle ].
 	update := [ :t |
 		pieBuilder elements do: [ :e | 
 			| att a b ang ext x p1 p2 p3 line l |
 			att := e attributes.
-			a := att at: #a ifAbsentPut: [ e alphaAngle ].
-			b := att at: #b ifAbsentPut: [ e betaAngle ].
+			a := att at: #a.
+			b := att at: #b.
 			e 
 				alphaAngle: a + t;
 				betaAngle: b + t.
