@@ -58,7 +58,8 @@ RSScrollsView >> initializeHideAnimation [
 		onStepDo: [ :t | 
 			self 
 				color: (sc1 scale: t) 
-				border: (sc2 scale: t) ] 
+				border: (sc2 scale: t).
+			vertical signalUpdate. ] 
 ]
 
 { #category : #initialization }
@@ -142,11 +143,12 @@ RSScrollsView >> updateAnimation [
 		hideAnimation stop.
 		^ canvas addAnimation: animation.
 		].
-	
 	animation := canvas newAnimation
 		duration: 700 milliSeconds;
+		onStepDo: [ :t | canvas signalUpdate ];
 		when: TSAnimationLoopEvent do: [ 
 			canvas addAnimation: hideAnimation ].
+		
 ]
 
 { #category : #hooks }
