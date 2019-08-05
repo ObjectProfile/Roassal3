@@ -591,7 +591,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 			labels. ];
 		padding: 10.
 	legend := composite element.
-	RSLocate new
+	RSLocation new
 		below;
 		offset: 10;
 		move: legend on: v elements.

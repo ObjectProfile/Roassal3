@@ -45,7 +45,7 @@ RSUMLClassBuilder >> collapse: e [
 	
 	extent := title extent + 5.
 	box extent: extent.
-	RSLocate new border top; left; move: button on: box.
+	RSLocation new border top; left; move: button on: box.
 	e extent: extent; translateTo: e position.
 	shapes := e shapes copy.
 	3 to: e shapes size do: [ :i | (shapes at: i) remove ].
@@ -65,7 +65,7 @@ RSUMLClassBuilder >> createButtonOn: e [
 			ifTrue: [ self expand: e. collapse ]
 			ifFalse: [ self collapse: e. expand ]).
 		e signalUpdate ].
-	RSLocate new border top; left; move: button on: e shapes first.
+	RSLocation new border top; left; move: button on: e shapes first.
 	^ button trachelShape
 ]
 

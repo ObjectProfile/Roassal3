@@ -75,7 +75,7 @@ RSLabeled >> initialize [
 	super initialize.
 	self shape: RSShapeBuilder label.
 	self model: #model.
-	location := RSLocate new above.
+	location := RSLocation new above.
 	isHighlightable := false.
 ]
 

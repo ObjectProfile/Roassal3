@@ -39,7 +39,7 @@ v open
 ```
 "
 Class {
-	#name : #RSLocate,
+	#name : #RSLocation,
 	#superclass : #RSObject,
 	#instVars : [
 		'offset',
@@ -52,39 +52,39 @@ Class {
 }
 
 { #category : #'public - positioning shorcuts' }
-RSLocate >> above [ 
+RSLocation >> above [ 
 	self top; outer.
 ]
 
 { #category : #'public - positioning shorcuts' }
-RSLocate >> below [ 
+RSLocation >> below [ 
 	self bottom; outer
 ]
 
 { #category : #'public - modifiers' }
-RSLocate >> border [
+RSLocation >> border [
 	orientation := 0
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> bottom [
+RSLocation >> bottom [
 	fixedY := #bottom.
 	direction := direction x@ -1.
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> center [
+RSLocation >> center [
 	fixedX := [:rec | rec rsCenter x].
 	direction := 0@ direction y
 ]
 
 { #category : #private }
-RSLocate >> computePosition: movableElement on: fixedElement [
+RSLocation >> computePosition: movableElement on: fixedElement [
 	^ movableElement extent / 2 * orientation * direction + (self parentPosition: fixedElement) + offset.
 ]
 
 { #category : #initialization }
-RSLocate >> initialize [
+RSLocation >> initialize [
 	super initialize.
 	direction := 0@0.
 	self
@@ -95,44 +95,44 @@ RSLocate >> initialize [
 ]
 
 { #category : #'public - modifiers' }
-RSLocate >> inner [
+RSLocation >> inner [
 	orientation := 1
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> left [
+RSLocation >> left [
 	fixedX := #left.
 	direction := 1@ direction y
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> middle [
+RSLocation >> middle [
 	fixedY := [ :r | r rsCenter y ].
 	direction := direction x @ 0
 ]
 
 { #category : #'public - executing' }
-RSLocate >> move: movableElement on: fixElement [
+RSLocation >> move: movableElement on: fixElement [
 	movableElement translateTo: (self computePosition: movableElement on: fixElement).
 ]
 
 { #category : #'public - modifiers' }
-RSLocate >> offset [
+RSLocation >> offset [
 	^ offset
 ]
 
 { #category : #'public - modifiers' }
-RSLocate >> offset: aNumber [
+RSLocation >> offset: aNumber [
 	offset := aNumber asPoint
 ]
 
 { #category : #'public - modifiers' }
-RSLocate >> outer [
+RSLocation >> outer [
 	orientation := -1
 ]
 
 { #category : #private }
-RSLocate >> parentPosition: fixedElement [
+RSLocation >> parentPosition: fixedElement [
 	| rec |
 	rec := fixedElement.
 	rec isRectangle ifFalse:  [ rec := rec encompassingRectangle ] .
@@ -140,13 +140,13 @@ RSLocate >> parentPosition: fixedElement [
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> right [
+RSLocation >> right [
 	fixedX := #right.
 	direction := -1@direction y.
 ]
 
 { #category : #'public - executing' }
-RSLocate >> stick: movableElement on: fixedElement [
+RSLocation >> stick: movableElement on: fixedElement [
 	| block |
 	block := [ self move: movableElement on: fixedElement ].
 	block value.
@@ -156,7 +156,7 @@ RSLocate >> stick: movableElement on: fixedElement [
 ]
 
 { #category : #'public - positioning' }
-RSLocate >> top [
+RSLocation >> top [
 	fixedY := #top.
 	direction := direction x @ 1
 ]

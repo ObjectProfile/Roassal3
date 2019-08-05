@@ -1981,7 +1981,7 @@ RSAnimationExamples >> example32RSLocate [
 	<script: 'self new example32RSLocate'>
 	| v box fixedElement movableElement buttonShape buttons locate labelShape label grad1 grad2 |
 	v := RSView new.
-	locate := RSLocate new.
+	locate := RSLocation new.
 	box := RSShapeBuilder box
 		onElement;
 		size: 200;
@@ -2048,7 +2048,7 @@ RSAnimationExamples >> example32RSLocate [
 		v camera zoomToFit: v extent * 0.7.
 		v signalUpdate ].
 	 
-	v open setLabel: 'RSLocate methods'
+	v open setLabel: 'RSLocation methods'
 ]
 
 { #category : #perlin }
@@ -2287,7 +2287,7 @@ RSAnimationExamples >> example37SimpleClock [
 		duration: 500 milliSeconds;
 		repeat;
 		when: TSAnimationLoopEvent do: [ clock text: Time now print24 ].
-	location := RSLocate new
+	location := RSLocation new
 		inner;
 		bottom;
 		offset: 0 @ -15.
@@ -2479,7 +2479,7 @@ for Pharo 7 and Pharo 8.'.
 	s fontSize: 25.
 	title := s elementOn: t1.
 
-	RSLocate new 
+	RSLocation new 
 		outer; right; top;
 		offset: title width / -2 @ -20;
 		move: title on: desc.
@@ -2756,7 +2756,7 @@ RSAnimationExamples >> example44Boat [
 	v camera scale: 2.5.
 	v add: pharo.
 	v add: boat.
-	RSLocate new 
+	RSLocation new 
 		inner; bottom; right;
 		move: pharo on: lines.
 ]

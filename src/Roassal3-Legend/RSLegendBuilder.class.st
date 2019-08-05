@@ -186,7 +186,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 	legendLabels := nil.
 	update := [ 
 		RSHorizontalLineLayout on: legendLabels.
-		RSLocate new
+		RSLocation new
 			inner; top; right;
 			move: legendLabels 
 				on: aView basicRectangle.
@@ -205,7 +205,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 { #category : #initialization }
 RSLegendBuilder >> reset [
 	elements := TSGroup new.
-	location := RSLocate new below.
+	location := RSLocation new below.
 	layout := RSLayoutBuilder new.
 	layout vertical gapSize: 0.
 	defaultBox := defaultCircle := defaultLabel := defaultTitle := nil.

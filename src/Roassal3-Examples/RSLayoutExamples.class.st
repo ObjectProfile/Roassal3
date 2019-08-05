@@ -274,7 +274,7 @@ RSLayoutExamples >> example10Locate [
 	"e1 @ RSDraggable."
 	e2 := shape element.
 	e2 size: 20.
-	RSLocate new
+	RSLocation new
 		offset: 1@ -1;
 		inner;
 		bottom;
