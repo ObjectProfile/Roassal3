@@ -141,3 +141,19 @@ RSUMLExamples >> example07TorchRenderer [
 	builder build.
 	builder open
 ]
+
+{ #category : #examples }
+RSUMLExamples >> example08HierarchyPacker [
+	<script: 'self new example08HierarchyPacker'>
+	| builder classes |
+	builder := RSUMLClassBuilder new.
+	classes := { 'Roassal3-Grapher'. 'Roassal3-Layouts'. 'Roassal3-Trachel' }
+		flatCollect: [:pkgname | (RPackage organizer 
+			packageNamed: pkgname) definedClasses ].
+	builder classes: classes.
+	builder renderer: RSTorchUMLClassRenderer new.
+	builder build.
+	builder view @ RSHierarchyPacker.
+	builder view open
+		extent: 900@300.
+]

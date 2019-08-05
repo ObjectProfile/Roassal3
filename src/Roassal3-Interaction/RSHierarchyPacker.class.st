@@ -1,19 +1,29 @@
+"
+This interactions adds as
+"
 Class {
 	#name : #RSHierarchyPacker,
-	#superclass : #Object,
-	#category : #'Roassal3-Interaction'
+	#superclass : #RSAbstractViewInteraction,
+	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'as yet unclassified' }
-RSHierarchyPacker >> applyto: view [
-	| foo connectedAsGroups connected isolated all |
-	foo := RSTreeLayout new
-		edges: view edges.
-	connectedAsGroups := view elements.
+{ #category : #private }
+RSHierarchyPacker >> fill: group with: e [
+	group add: e.
+	e outgoingEdges do: [ :ed | 
+		self fill: group with: ed to ].
+]
+
+{ #category : #private }
+RSHierarchyPacker >> onElement: aView [
+	| layout connectedAsGroups connected isolated all |
+	layout := RSTreeLayout new
+		edges: aView edges.
+	connectedAsGroups := aView elements.
 	connected := connectedAsGroups select: #hasEdges.
 	isolated := connectedAsGroups reject: #hasEdges.
 
-	connectedAsGroups := (foo rootNodesFor: connected) collect: [ :e | 
+	connectedAsGroups := (layout rootNodesFor: connected) collect: [ :e | 
 		| group |
 		group :=  TSGroup new.
 		self fill: group with: e.
@@ -21,17 +31,11 @@ RSHierarchyPacker >> applyto: view [
 	
 	all := connectedAsGroups, isolated.
 
-	view when: TSExtentChangedEvent do: [ 
+	aView when: TSExtentChangedEvent do: [ 
 		RSRectanglePackLayout new
-			preferredAngle: view extent angle;
+			doNotUseProgressBar;
+			preferredAngle: aView extent angle;
 			on: all.
-		view zoomToFit; signalUpdate ].
+		aView zoomToFit; signalUpdate ].
 
-]
-
-{ #category : #'as yet unclassified' }
-RSHierarchyPacker >> fill: group with: e [
-	group add: e.
-	e outgoingEdges do: [ :ed | 
-		self fill: group with: ed to ].
 ]

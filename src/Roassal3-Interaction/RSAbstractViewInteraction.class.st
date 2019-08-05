@@ -6,3 +6,10 @@ Class {
 	#superclass : #RSInteraction,
 	#category : #'Roassal3-Interaction-Core'
 }
+
+{ #category : #hooks }
+RSAbstractViewInteraction >> onElement: aView [
+
+	self subclassResponsibility 
+	
+]

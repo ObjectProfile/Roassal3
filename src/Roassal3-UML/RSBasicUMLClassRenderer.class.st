@@ -50,11 +50,11 @@ RSBasicUMLClassRenderer >> initializeShape [
 		g add: (line
 			from: rec origin x @ title height;
 			to: rec corner x @ title height;
-			edge).
+			edgeOn: nil).
 		g add: (line
 			from: rec origin x @ (title height + g third height);
 			to: rec corner x @ (title height + g third height);
-			edge).
+			edgeOn: nil).
 		g ];
 		interactionDo: [ :i | i popup; draggable; browseable ]
 ]

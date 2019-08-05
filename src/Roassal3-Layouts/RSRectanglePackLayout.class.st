@@ -10,7 +10,8 @@ Class {
 		'gap',
 		'padding',
 		'bounds',
-		'preferredAngle'
+		'preferredAngle',
+		'shouldUseProgressBar'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -64,9 +65,19 @@ RSRectanglePackLayout >> doExecute: elements [
 		RSHorizontalLineLayout new gapSize: gap; on: sortedElements.
 		^ self
 	].
-	sortedElements
-		do: [ :element | self packIn: element ]
-		displayingProgress: 'Laying out elements'
+	self shouldUseProgressBar ifTrue: [ 
+		sortedElements
+			do: [ :element | self packIn: element ]
+			displayingProgress: 'Laying out elements' ]
+	ifFalse: [ 
+		sortedElements 
+			do: [ :element | self packIn: element ] ]
+	
+]
+
+{ #category : #configuration }
+RSRectanglePackLayout >> doNotUseProgressBar [
+	shouldUseProgressBar := false
 ]
 
 { #category : #'space-calculation' }
@@ -131,4 +142,14 @@ RSRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
 			space ~~ subspace and: [ 
 				space containsRect: subspace ] ] ]
 	
+]
+
+{ #category : #testing }
+RSRectanglePackLayout >> shouldUseProgressBar [
+	^ shouldUseProgressBar
+]
+
+{ #category : #configuration }
+RSRectanglePackLayout >> useProgressBar [
+	shouldUseProgressBar := true
 ]
