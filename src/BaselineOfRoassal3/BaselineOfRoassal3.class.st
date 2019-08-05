@@ -12,17 +12,14 @@ BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ | dep |
+		do: [
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
-			dep := (AthensCairoCanvas canUnderstand: #fillRuleEvenOdd)
-				ifTrue: [ #('Athens-SVG') ]
-				ifFalse: [ #('Athens-SVG' 'Roassal3-Pharo7') ].
+			
 			spec
-				package: #'Roassal3-Pharo7';
-				package: #'Roassal3-Trachel' with: [spec requires: dep];
+				package: #'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
 				package: #'Roassal3-Scales';
 				package: 'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
@@ -30,7 +27,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
-				package: #'Roassal3-Spec';
 				package: #'Roassal3-Pie';
 				package: #'Roassal3-UML';
 				package: #'Roassal3-Layouts';
@@ -53,14 +49,25 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Animation'
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes'
-					'Roassal3-Spec'
 					'Roassal3-UML'
 					'Roassal3-Pie'
 					'Roassal3-Inspector'
 					'Roassal3-Menu');
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
 				group: 'Tests' with: #('Core' 'Roassal3-Tests');
-				group: 'default' with: #('Core' 'Tests' 'Examples') ]
+				group: 'default' with: #('Core' 'Tests' 'Examples') ].
+	spec for: #'pharo7.x' do: [
+		 #('Athens-SVG' 'Roassal3-Pharo7')
+		spec 
+			package: #'Roassal3-Pharo7';
+			package: #'Roassal3-Trachel' with: [spec requires: #('Athens-SVG' 'Roassal3-Pharo7') ].
+		].
+	spec for: #'pharo8.x' do: [
+		 #('Athens-SVG' 'Roassal3-Pharo7')
+		spec 
+			package: #'Roassal3-Spec';
+			package: #'Roassal3-Menu' with: [spec requires: #('Roassal3-Spec') ].
+		].
 			
 		
 	
