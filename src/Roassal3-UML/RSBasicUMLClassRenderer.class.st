@@ -52,7 +52,7 @@ RSBasicUMLClassRenderer >> initializeShape [
 				from: rec origin x @ title height;
 				to: rec corner x @ title height;
 				edgeOn: nil) ].
-		g size > 3 ifTrue: [ 
+		g size > 4 ifTrue: [ 
 			g add: (line
 				from: rec origin x @ (title height + g third height);
 				to: rec corner x @ (title height + g third height);
