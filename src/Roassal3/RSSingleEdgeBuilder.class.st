@@ -167,7 +167,7 @@ RSSingleEdgeBuilder class >> verticalLine: inst [
 
 { #category : #'public - accessing' }
 RSSingleEdgeBuilder >> edge [
-	^ self edgeOn: fromObject -> toObject
+	^ self edgeOn: fromObject model -> toObject model
 ]
 
 { #category : #accessing }

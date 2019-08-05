@@ -86,7 +86,7 @@ TSSequentialAnimation >> step [
 	currentIndex > animations size ifTrue: [ 
 		currentIndex := 1.
 		self loopDone ].
-	hasCompleted := currentLoop > loops.
+	hasCompleted ifFalse: [ hasCompleted := currentLoop > loops ].
 ]
 
 { #category : #refresing }

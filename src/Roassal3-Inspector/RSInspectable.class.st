@@ -10,7 +10,7 @@ Class {
 		'inspectorWindow',
 		'inspectElementBlock'
 	],
-	#category : #'Roassal3-Inspector'
+	#category : #'Roassal3-Inspector-Interaction'
 }
 
 { #category : #hooks }

@@ -96,5 +96,5 @@ RSControlsView >> withLegend [
 
 { #category : #public }
 RSControlsView >> zoomToFit: aView [
-	(self interactions: RSZoomToFitView) zoomToFit: aView
+	(self interactions at: RSZoomToFitView) zoomToFit: aView
 ]

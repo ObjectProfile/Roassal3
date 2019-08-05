@@ -25,6 +25,7 @@ RSEdge class >> from: anElement1 to: anElement2 [
 RSEdge >> addedIn: aView [
 	parent := aView.
 	parent addEdge: self.
+	parent announce: [ TSEdgeAdded new shapedObject: self ]. 
 ]
 
 { #category : #accessing }
@@ -75,6 +76,8 @@ RSEdge >> isEdge [
 RSEdge >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeEdge: self.
+	to connectedEdges remove: self ifAbsent: [ ].
+	from connectedEdges remove: self ifAbsent: [ ].
 	parent := nil.
 ]
 

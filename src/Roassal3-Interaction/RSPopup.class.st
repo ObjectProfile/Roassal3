@@ -53,15 +53,15 @@ RSPopup >> box [
 
 { #category : #hooks }
 RSPopup >> createOrGetPopupOn: anElement event: event [
-	| att popupElement view |
-	att := anElement topParent view attributes.
+	| att popupShape view |
+	att := event view attributes.
 	att at: #popup ifPresent: [ :popup | ^ popup ].
-	popupElement := shape elementOn: anElement model.
-	att at: #popup put: popupElement.
-	popupElement isFixed: true.
+	popupShape := (shape elementOn: anElement model) trachelShape.
+	att at: #popup put: popupShape.
+	popupShape isFixed: true.
 	view := anElement topParent view.
-	view add: popupElement.
-	^ popupElement
+	view addShape: popupShape.
+	^ popupShape
 	
 ]
 
@@ -137,7 +137,6 @@ RSPopup >> removePopupOn: evt [
 	att := view attributes.
 	(att includesKey: #popup) ifFalse: [ ^ self ].
 	popup := att at: #popup.
-	
 	popup remove.
 	att removeKey: #popup.
 	evt signalUpdate.
@@ -161,7 +160,7 @@ RSPopup >> translatePopup: popup event: evt [
 		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p. ].
 	
 	e := (popup extent /2) + 5.
-	p x +  popup extent x > popup view extent x ifTrue: [ 
+	p x +  popup extent x > popup canvas extent x ifTrue: [ 
 		e := e x negated @ e y.
 		p x - popup extent x < 0
 		ifTrue: [ e := p x negated + (popup extent x /2) @ e y ].

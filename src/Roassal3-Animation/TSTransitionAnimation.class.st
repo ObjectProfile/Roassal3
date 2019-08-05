@@ -131,8 +131,9 @@ TSTransitionAnimation >> step [
 	value := self scale scale: progress.
 	
 	stepAction value: value.
+	hasCompleted ifFalse: [ hasCompleted := currentLoop > loops ].
 	
-	hasCompleted := currentLoop > loops.
+	
 ]
 
 { #category : #accessing }

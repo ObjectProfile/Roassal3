@@ -22,6 +22,7 @@ RSAbstractElement >> addConnectedEdge: anEdge [
 RSAbstractElement >> addedIn: aView [
 	parent := aView.
 	parent addElement: self.
+	parent announce: [ TSElementAdded new shapedObject: self ]. 
 ]
 
 { #category : #'accessing - children' }

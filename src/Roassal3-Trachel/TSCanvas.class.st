@@ -279,7 +279,7 @@ TSCanvas >> playAnimations [
 	shouldClean := false.
 	animations do: [ :animation | 
 		animation refresh. 
-		animation hasCompleted 
+		animation hasCompleted
 			ifTrue: [ shouldClean := true. ] ].
 	shouldClean ifTrue: [ 
 		animations copy do: [ :animation |

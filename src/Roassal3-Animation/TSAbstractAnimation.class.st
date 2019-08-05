@@ -11,7 +11,6 @@ Class {
 		'hasCompleted',
 		'startTime',
 		'endTime',
-		'loop',
 		'currentLoop',
 		'startLoopTime',
 		'loops',
