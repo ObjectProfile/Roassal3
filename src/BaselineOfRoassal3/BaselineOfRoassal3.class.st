@@ -12,16 +12,25 @@ BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [
+		do: [ | dep1 dep2  |
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
 			
+			(AthensCairoCanvas canUnderstand: #fillRuleEvenOdd) ifTrue: [
+				dep1 := #('Athens-SVG').
+				dep2 := #('Roassal3-Spec').
+			] ifFalse: [
+				dep1 := #('Athens-SVG' 'Roassal3-Pharo7').
+				dep2 := #() ].
+			
 			spec
-				package: #'Roassal3-Trachel' with: [spec requires: #('Athens-SVG')];
+				package: #'Roassal3-Pharo7';
+				
+				package: #'Roassal3-Trachel' with: [ spec requires: dep1 ];
 				package: #'Roassal3-Scales';
-				package: 'Roassal3-Animation';
+				package: #'Roassal3-Animation';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3' with: [spec requires: #('Geometry')];
 				package: #'Roassal3-Interaction';
@@ -32,7 +41,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Layouts';
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Colors';
-				package: #'Roassal3-Inspector';
+				package: #'Roassal3-Spec';
+				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Tests';
 				package: #'Roassal3-Menu'.
@@ -56,17 +66,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
 				group: 'Tests' with: #('Core' 'Roassal3-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ].
-	spec for: #'pharo7.x' do: [
-		spec 
-			package: #'Roassal3-Pharo7';
-			package: #'Roassal3-Trachel' with: [spec requires: #('Athens-SVG' 'Roassal3-Pharo7') ].
-		].
-	spec for: #'pharo8.x' do: [
-		spec 
-			package: #'Roassal3-Spec';
-			package: #'Roassal3-Menu' with: [spec requires: #('Roassal3-Spec') ].
-		].
-			
+
 		
 	
 
