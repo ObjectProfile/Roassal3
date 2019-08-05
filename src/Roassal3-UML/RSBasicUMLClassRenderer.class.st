@@ -47,14 +47,16 @@ RSBasicUMLClassRenderer >> initializeShape [
 		title position: rec rsCenter x @ title position y.
 		rec := boxElement encompassingRectangle.
 		line := self classInnerLine.
-		g add: (line
-			from: rec origin x @ title height;
-			to: rec corner x @ title height;
-			edgeOn: nil).
-		g add: (line
-			from: rec origin x @ (title height + g third height);
-			to: rec corner x @ (title height + g third height);
-			edgeOn: nil).
+		g size > 2 ifTrue: [ 
+			g add: (line
+				from: rec origin x @ title height;
+				to: rec corner x @ title height;
+				edgeOn: nil) ].
+		g size > 3 ifTrue: [ 
+			g add: (line
+				from: rec origin x @ (title height + g third height);
+				to: rec corner x @ (title height + g third height);
+				edgeOn: nil) ].
 		g ];
 		interactionDo: [ :i | i popup; draggable; browseable ]
 ]

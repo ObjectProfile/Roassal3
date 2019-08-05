@@ -21,14 +21,18 @@ Class {
 	#category : #'Roassal3-UML'
 }
 
-{ #category : #initialization }
+{ #category : #private }
 RSAbstractUMLClassRenderer >> basicGroupOn: cls [
-	| g |
-	g := TSGroup new
-		add: (self classNameShape elementOn: cls);
-		add: (self varsShape elementOn: cls);
-		add: (self methodsShape elementOn: cls);
-		yourself.
+	| g vars methods |
+	g := TSGroup new.
+	g add: (self classNameShape elementOn: cls).
+	vars := self varsShape elementOn: cls.
+	methods := self methodsShape elementOn: cls.
+	vars hasChildren 
+		ifTrue: [ g add: vars ].
+	methods hasChildren
+		ifTrue: [ g add: methods ].
+	
 	RSVerticalLineLayout new gapSize: 0; on: g.
 	^ g 
 ]

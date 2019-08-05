@@ -32,7 +32,7 @@ GLMRoassal3Presentation >> setUpInteractions [
 	self view edges @ interaction.
 	self view 
 		when: TSShapedObjectAdded
-		do: [ :evt| evt shapedObject @ interaction logCr. ].
+		do: [ :evt| evt shapedObject @ interaction ].
 	
 	
 	
