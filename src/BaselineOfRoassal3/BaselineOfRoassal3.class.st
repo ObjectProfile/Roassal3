@@ -57,13 +57,11 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'Tests' with: #('Core' 'Roassal3-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ].
 	spec for: #'pharo7.x' do: [
-		 #('Athens-SVG' 'Roassal3-Pharo7')
 		spec 
 			package: #'Roassal3-Pharo7';
 			package: #'Roassal3-Trachel' with: [spec requires: #('Athens-SVG' 'Roassal3-Pharo7') ].
 		].
 	spec for: #'pharo8.x' do: [
-		 #('Athens-SVG' 'Roassal3-Pharo7')
 		spec 
 			package: #'Roassal3-Spec';
 			package: #'Roassal3-Menu' with: [spec requires: #('Roassal3-Spec') ].
