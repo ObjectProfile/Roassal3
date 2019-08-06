@@ -22,6 +22,7 @@ RSCompositeElementTest >> testAddOnceInCanvas [
 		elementsOn: (1 to: 10).
 	view addAll: elements.
 	self assert: view elements size equals: 10.
+	view := RSView new.
 	view add: elements asElement.
 	self assert: view elements size equals: 1.
 ]
