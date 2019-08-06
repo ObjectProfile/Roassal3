@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
+{ #category : #actions }
+TSAbstractControlPointsLine >> basicTranslateBy: delta [
+	controlPoints := controlPoints collect: [:p | p + delta ].
+]
+
 { #category : #accessing }
 TSAbstractControlPointsLine >> controlPoints [
 	^ controlPoints ifNil: [ #() ].
