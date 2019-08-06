@@ -32,13 +32,19 @@ TSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
 ]
 
+{ #category : #adding }
+TSComposite >> addShape: aShape [
+	"Add a shape in a composite shape"
+	aShape addedIn: self
+]
+
 { #category : #public }
 TSComposite >> adjustToChildren [
 	| rect delta |
 	shapes ifNil: [ ^ self ].
 	rect := shapes encompassingRectangle.
-	delta := rect rsCenter.
-	shapes do: [ :s | s translateBy: delta negated ].
+	delta := rect rsCenter negated.
+	shapes do: [ :s | s basicTranslateBy: delta ].
 	self 
 		extent: rect extent;
 		translateTo: delta.

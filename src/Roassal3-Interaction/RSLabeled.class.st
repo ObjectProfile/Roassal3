@@ -39,13 +39,13 @@ RSLabeled >> createLabel: anElement [
 
 { #category : #hooks }
 RSLabeled >> getOrCreateLabel: anElement [
-	| label view |
+	| label parent |
 	label := anElement attributes 
 		at: #RSLabeled
 		ifAbsentPut: [ self createLabel: anElement ].
-	view :=anElement view.
-	(label isInACanvas not and: [view notNil ]) 
-		ifTrue: [ view add: label ].
+	parent :=anElement parent.
+	(label isInACanvas not and: [parent notNil ]) 
+		ifTrue: [ parent add: label ].
 	^ label
 ]
 
@@ -115,7 +115,7 @@ RSLabeled >> onElement: anElement [
 	block := [ self getOrCreateLabel: anElement. ]. 
 	anElement isInACanvas 
 		ifTrue: block
-		ifFalse: [ anElement when: TSShapeAddedEvent do: block ].
+		ifFalse: [ anElement when: TSShapedObjectAdded do: block ].
 ]
 
 { #category : #accessing }

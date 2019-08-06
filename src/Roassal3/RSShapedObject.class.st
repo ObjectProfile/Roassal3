@@ -18,6 +18,15 @@ RSShapedObject >> addedIn: c [
 	self subclassResponsibility
 ]
 
+{ #category : #adding }
+RSShapedObject >> announceAdded: eventClass parent: aParent [
+	| evt |
+	parent := aParent.
+	evt := eventClass new shapedObject: self.
+	parent announce: evt.
+	trachelShape announce: evt.
+]
+
 { #category : #accessing }
 RSShapedObject >> announcer [
 	^ trachelShape announcer

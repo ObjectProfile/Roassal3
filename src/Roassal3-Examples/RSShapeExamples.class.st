@@ -857,9 +857,9 @@ RSEdgeBuilder bimetricLine
 		view: v;
 		objects: packages;
 		widthFrom:
-				[ :edge | (edge key model numberOfDependenciesToward: edge value model) sqrt * 10 ];
+				[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 10 ];
 		widthTo:
-				[ :edge | (edge value model numberOfDependenciesToward: edge key model) sqrt * 10 ];
+				[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 10 ];
 		paint: Color blue trans;
 		border: nil;
 		withBorderAttachPoint;
@@ -1045,7 +1045,7 @@ RSShapeExamples >> example31BasicGrapher [
 			size: 20;
 			color: Color black;
 			element);
-		edge.
+		edgeOn: nil.
 	es := RSShapeBuilder circle
 		interactionDo: [ :i | i popup; browseable ];
 		border: TSBorder new;
@@ -1066,4 +1066,27 @@ RSShapeExamples >> example31BasicGrapher [
 		normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
 	v @ RSControlsView.
 	v open
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example32RSLabeledOnComposite [
+	<script: 'self new example32RSLabeledOnComposite'>
+	| v shape elements labeled |
+	v := RSView new.
+	labeled := RSLabeled new.
+	labeled location middle.
+	shape := RSShapeBuilder box
+		border: TSBorder new;
+		@ labeled;
+		popup;draggable;
+		size:50.
+	elements := shape elementsOn: (1 to: 20).
+	RSGridLayout on: elements.
+	v add: elements asElement.
+	elements translateBy: 0@0.
+	v elements first
+		scaleBy: 0.5@ 1;
+		rotateByDegrees: 45.
+	v @ RSControlsView.
+	v open.
 ]

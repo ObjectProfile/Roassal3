@@ -10,6 +10,32 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #accessing }
+RSComposite >> add: child [
+	child isRoassalElement ifFalse: [ ^ trachelShape addShape: child ].
+	child 
+		renderOn: trachelShape;
+		addedIn: self.
+		
+	
+]
+
+{ #category : #accessing }
+RSComposite >> addAll: aTSGroup [
+	children ifNil: [ children := TSGroup new: aTSGroup size ].
+	aTSGroup do: [ :child | self add: child ].
+]
+
+{ #category : #'accessing - children' }
+RSComposite >> addEdge: aChild [
+	children add: aChild
+]
+
+{ #category : #'accessing - children' }
+RSComposite >> addElement: aChild [
+	children add: aChild
+]
+
 { #category : #'accessing - children' }
 RSComposite >> children [
 	^ children
@@ -35,11 +61,8 @@ RSComposite >> removeElement: anElement [
 
 { #category : #accessing }
 RSComposite >> shapes: aTSGroup [
-	trachelShape shapes: aTSGroup.
-	(aTSGroup allSatisfy: #isRoassalElement) ifFalse: [ ^ self ].
-	children := aTSGroup copy.
-	children do: [ :child | 
-		child parent: self ].
+	self addAll: aTSGroup.
+	trachelShape adjustToChildren
 ]
 
 { #category : #actions }

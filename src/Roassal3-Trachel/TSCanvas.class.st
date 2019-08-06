@@ -46,11 +46,7 @@ TSCanvas >> addFixedShape: aShape [
 
 { #category : #'adding removing shapes' }
 TSCanvas >> addShape: aShape [
-	| evt |
-	aShape addedIn: self.
-	evt := TSShapeAddedEvent new shape: aShape.
-	self announce: evt.
-	aShape announce: evt.
+	aShape addedIn: self
 ]
 
 { #category : #animations }

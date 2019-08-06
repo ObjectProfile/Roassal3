@@ -7,6 +7,11 @@ Trait {
 }
 
 { #category : #actions }
+TPositionable >> basicTranslateBy: delta [
+	self position: self position + delta
+]
+
+{ #category : #actions }
 TPositionable >> translateBy: delta [
 	self translateTo: self position + delta.
 	

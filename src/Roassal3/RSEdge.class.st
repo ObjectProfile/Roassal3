@@ -22,10 +22,9 @@ RSEdge class >> from: anElement1 to: anElement2 [
 ]
 
 { #category : #adding }
-RSEdge >> addedIn: aView [
-	parent := aView.
-	parent addEdge: self.
-	parent announce: [ TSEdgeAdded new shapedObject: self ]. 
+RSEdge >> addedIn: aParent [
+	aParent addEdge: self.
+	self announceAdded: TSEdgeAdded parent: aParent
 ]
 
 { #category : #accessing }

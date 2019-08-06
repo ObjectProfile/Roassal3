@@ -36,10 +36,10 @@ TSGroup >> asElement [
 
 { #category : #converting }
 TSGroup >> asElementOn: model [
-	^ RSElement new 
+	^ RSComposite new 
 		model: model;
-		trachelShape: (TSComposite new 
-			shapes: self).
+		trachelShape: TSComposite new;
+		shapes: self.
 ]
 
 { #category : #converting }

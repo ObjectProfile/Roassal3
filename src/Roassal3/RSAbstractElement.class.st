@@ -19,10 +19,9 @@ RSAbstractElement >> addConnectedEdge: anEdge [
 ]
 
 { #category : #adding }
-RSAbstractElement >> addedIn: aView [
-	parent := aView.
-	parent addElement: self.
-	parent announce: [ TSElementAdded new shapedObject: self ]. 
+RSAbstractElement >> addedIn: aParent [
+	aParent addElement: self.
+	self announceAdded: TSElementAdded parent: aParent
 ]
 
 { #category : #'accessing - children' }

@@ -18,11 +18,16 @@ Class {
 
 { #category : #adding }
 TSShape >> addedIn: aCanvas [
+	| evt |
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
 		ifFalse: [ aCanvas addBasicShape: self ].
 	parent ifNotNil: [ self remove ].
 	parent := aCanvas.
+	
+	evt := TSShapeAddedEvent new shape: self.
+	self announce: evt.
+	parent announce: evt.
 ]
 
 { #category : #events }

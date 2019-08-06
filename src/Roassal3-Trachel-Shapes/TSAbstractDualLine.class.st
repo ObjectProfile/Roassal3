@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Trachel-Shapes-Core'
 }
 
+{ #category : #transforming }
+TSAbstractDualLine >> basicTranslateBy: delta [
+	self translateBy: delta
+]
+
 { #category : #accessing }
 TSAbstractDualLine >> controlPoints [ 
 	^ Array with: self startPoint with: self endPoint
