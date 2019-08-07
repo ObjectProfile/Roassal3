@@ -20,7 +20,7 @@ TSHighlightableEvent >> element [
 { #category : #accessing }
 TSHighlightableEvent >> element: anElement [
 	element := anElement.
-	self shape: anElement trachelShape
+	self shape: anElement shape
 ]
 
 { #category : #accessing }

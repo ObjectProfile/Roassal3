@@ -217,7 +217,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 				cls := e position x > lineX 
 					ifTrue: [ TSEllipse ]
 					ifFalse: [ TSBox ].
-				e trachelShape: cls new.
+				e shape: cls new.
 				 ].
 	].
 	v open.
@@ -233,7 +233,7 @@ RSAnimationExamples >> example05b [
 	elements := (1 to: 12) collect: [ :i | | e | 
 		e := RSElement new
 			model: r next;
-			trachelShape: TSBox new;
+			shape: TSBox new;
 			noPaint;
 			border: (TSBorder new width: 4);
 			yourself.
@@ -275,7 +275,7 @@ RSAnimationExamples >> example05b [
 		ant := e.
 		1 to: 4 do: [:i | | s |
 			s := RSElement new 
-				trachelShape: TSBox new;
+				shape: TSBox new;
 				noPaint;
 				position: e position;
 				extent: e extent;
@@ -307,7 +307,7 @@ RSAnimationExamples >> example05b [
 				cls := e position x > lineX 
 					ifTrue: [ TSEllipse ]
 					ifFalse: [ TSBox ].
-				e trachelShape: cls new.
+				e shape: cls new.
 				 ].
 	].
 	v open.
@@ -435,7 +435,7 @@ RSAnimationExamples >> example07b [
 			"e is an instance of RSEdge, not been created by shape"
 			e := RSEdge new
 				model: i;
-				trachelShape: TSSVGPathLine new.
+				shape: TSSVGPathLine new.
 			sz := i even
 				ifTrue: [ sc1 scale: (i *unit + theta) sin ]
 				ifFalse: [ sc2 scale: (e model*unit - theta) sin ].
@@ -488,7 +488,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 		1 to: 10000 do: [ :i | | e shape radius ang overlapped |
 			e := RSElement new.
 			shape := TSEllipse new.
-			e trachelShape: shape.
+			e shape: shape.
 			"old days, without RSShapeBuilder"
 			
 			e radius: r next * 30 + 2.
@@ -552,7 +552,7 @@ RSAnimationExamples >> example09LinePatterns [
 			d2 size: 6* radian cos.
 			v add: d1; add: d2.
 			e := RSEdge new
-				trachelShape: TSLine new.
+				shape: TSLine new.
 			e border: border.
 			e from: d1.
 			e to: d2.
@@ -1546,7 +1546,7 @@ RSAnimationExamples >> example24Lines [
 				ed to: 0@pos.
 				ed update.
 				 ].
-			e add: ed trachelShape.
+			e add: ed shape.
 			e translateTo: ang cos @ ang sin * radius * mult.
 			e matrix rotateByRadians: a. ] ].
 	
@@ -1595,7 +1595,7 @@ RSAnimationExamples >> example25Lines [
 		color: Color lightGray;
 		from: bar negated /2 @0;
 		to: bar / 2 @ 0.
-	shape := RSShapeBuilder composite add: [line edge trachelShape ].
+	shape := RSShapeBuilder composite add: [line edge shape ].
 	v addAll: (shape elementsOn: (0 to: 360 by: 0.5) ).
 	v newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 4.
@@ -1867,14 +1867,14 @@ RSAnimationExamples >> example29Bezier [
 				extent: 10@20;
 				color: e paint;
 				border: (TSBorder new color: Color white);
-				element) trachelShape asMarker offset: -10 ] .
+				element) shape asMarker offset: -10 ] .
 	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e | 
 		| offset b |
 		offset := Float twoPi / size * e index.
 		e matrix rotateByRadians: offset.
 		b := bezier edgeOn: offset index: e index.
 		"b paint:  Variable or expression expected ->."
-		e add: b trachelShape.
+		e add: b shape.
 		e attributes
 			at: #update
 			put: [ bezier updateElement: b withCommand: #controlPoints: ] ] ].
@@ -1957,7 +1957,7 @@ RSAnimationExamples >> example31Miku [
 			from: position;
 			to: e position;
 			duration: 5 seconds;
-			on: e trachelShape set: #position:.
+			on: e shape set: #position:.
 			e position: position ].
 	v addShape: (TSLabel new
 		text: 'Roassal';
@@ -2039,7 +2039,7 @@ RSAnimationExamples >> example32RSLocate [
 				from: p;
 				duration: 500 milliSeconds;
 				to: movableElement position;
-				on: movableElement trachelShape set: #position: ] ].
+				on: movableElement shape set: #position: ] ].
 	buttons := buttonShape elementsOn: #(outer border inner left center right top middle bottom).
 	RSGridLayout new lineItemsCount: 3; on: buttons.
 	RSVerticalLineLayout new center; gapSize: 30; on: (TSGroup with: v elements with: buttons).
@@ -2088,7 +2088,7 @@ RSAnimationExamples >> example33AlteredWorld [
 					y := y + (n * 14) sin.
 					points add: x@y.
 					m := m + 1 ].
-				e trachelShape controlPoints: points.
+				e shape controlPoints: points.
 				].
 			v signalUpdate.
 			px := px + 1

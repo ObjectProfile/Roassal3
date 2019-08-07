@@ -105,13 +105,13 @@ RSAbstractElement >> shouldUpdateEdges [
 
 { #category : #actions }
 RSAbstractElement >> translateBy: delta [
-	self translateTo: self trachelShape position + delta.
+	self translateTo: self shape position + delta.
 	
 ]
 
 { #category : #actions }
 RSAbstractElement >> translateTo: position [
-	trachelShape translateTo: position.
+	shape translateTo: position.
 	 self updateConnectedEdges.
 	
 ]

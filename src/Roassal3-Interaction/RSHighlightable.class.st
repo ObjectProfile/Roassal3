@@ -120,7 +120,7 @@ RSHighlightable >> doUnhighlightElement: element [
 	| att s originals args |
 	att := element attributes.
 	(att includesKey: self copyKey) ifFalse: [ ^ self ].
-	s := element trachelShape.
+	s := element shape.
 	originals := att at: self copyKey.
 	args := Array new: 1.
 	originals keysAndValuesDo: [ :key :value | 

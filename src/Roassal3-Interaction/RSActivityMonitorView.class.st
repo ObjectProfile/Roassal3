@@ -97,7 +97,7 @@ RSActivityMonitorView >> onElement: aView [
 	| monitor location |
 	monitor := shape element.
 	monitor isFixed: true.
-	aView addShape: monitor trachelShape. 
+	aView addShape: monitor shape. 
 	location := RSLocation new inner; bottom; left; offset: 10@0.
 	aView newAnimation
 		repeat;

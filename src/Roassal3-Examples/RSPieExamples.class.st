@@ -159,7 +159,7 @@ RSPieExamples >> example05Smash [
 				easing: TSEasing elasticOut;
 				from: 0;
 				to: 120;
-				on: e trachelShape set: #innerRadius: ) }. ].
+				on: e shape set: #innerRadius: ) }. ].
 	
 	pie view zoomToFit.
 	pie open.
@@ -200,7 +200,7 @@ RSPieExamples >> example06SmashHSL [
 				easing: (TSEasing elasticOut period: 0.30; amplitude: 0.8) ;
 				from: 0;
 				to: 120;
-				on: e trachelShape set: #innerRadius: ) }. ].
+				on: e shape set: #innerRadius: ) }. ].
 	
 	pie view zoomToFit.
 	pie open.
@@ -679,14 +679,14 @@ RSPieExamples >> example19Buttons [
 					duration: 1 second;
 					easing: TSEasing backOut;
 					from: 40; to: 50;
-					on: e trachelShape set: #externalRadius:. ];
+					on: e shape set: #externalRadius:. ];
 			when: TSMouseLeave do: [ 
 				move := 0@0.
 				v newAnimation 
 					duration: 1 second;
 					easing: TSEasing backOut;
 					from: 50; to: 40;
-					on: e trachelShape set: #externalRadius:. ] ] .
+					on: e shape set: #externalRadius:. ] ] .
 	v open setLabel: 'Arc buttons'
 	
 
@@ -930,7 +930,7 @@ RSPieExamples >> example23RotatedAnimation [
 				p2 := e centroid: 80.
 				p3 := x @ p2 y.
 				line := lines at: e index.
-				line trachelShape 
+				line shape 
 					controlPoints: { p1. p2. p3 }.
 				l position: p3-ext.
 			]

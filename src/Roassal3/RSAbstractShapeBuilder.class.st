@@ -38,7 +38,7 @@ RSAbstractShapeBuilder >> popup [
 RSAbstractShapeBuilder >> updateElement: element [
 	self 
 		updateElement: element 
-		innerComponent: element trachelShape
+		innerComponent: element shape
 ]
 
 { #category : #updating }

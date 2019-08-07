@@ -16,8 +16,8 @@ Class {
 
 { #category : #hooks }
 RSScrollsView >> addScrollBars: aView [
-	vertical := barShape element trachelShape.
-	horizontal := barShape element trachelShape.
+	vertical := barShape element shape.
+	horizontal := barShape element shape.
 	aView addShape: vertical; addShape: horizontal.
 	
 ]
@@ -91,7 +91,7 @@ RSScrollsView >> moveScroll: evt [
 	| shape delta position camera viewExtent shapesRect correct |
 	shape := evt shape.
 	delta := evt step.
-	delta := shape = vertical trachelShape
+	delta := shape = vertical shape
 		ifTrue: [ 0@delta y ]
 		ifFalse: [ delta x@0 ].
 	shape translateBy: delta.

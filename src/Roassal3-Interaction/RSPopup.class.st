@@ -56,7 +56,7 @@ RSPopup >> createOrGetPopupOn: anElement event: event [
 	| att popupShape view |
 	att := event view attributes.
 	att at: #popup ifPresent: [ :popup | ^ popup ].
-	popupShape := (shape elementOn: anElement model) trachelShape.
+	popupShape := (shape elementOn: anElement model) shape.
 	att at: #popup put: popupShape.
 	popupShape isFixed: true.
 	view := anElement topParent view.

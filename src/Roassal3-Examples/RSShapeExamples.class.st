@@ -692,7 +692,7 @@ RSShapeExamples >> example21SpockLizard [
 		a matrix rotateByDegrees: angle negated.
 		angle := (angle + 3) degreesToRadians.
 		a position: angle cos @ angle sin negated * radius.
-		v addShape: a trachelShape ].
+		v addShape: a shape ].
 	svg := RSShapeBuilder svgPath
 		svgPath: [ :sel | this perform: sel asSymbol ].
 	shape := RSShapeBuilder composite

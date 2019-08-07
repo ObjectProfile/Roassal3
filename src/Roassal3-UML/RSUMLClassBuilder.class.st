@@ -66,7 +66,7 @@ RSUMLClassBuilder >> createButtonOn: e [
 			ifFalse: [ self collapse: e. expand ]).
 		e signalUpdate ].
 	RSLocation new border top; left; move: button on: e shapes first.
-	^ button trachelShape
+	^ button shape
 ]
 
 { #category : #initialization }

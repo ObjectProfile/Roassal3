@@ -129,7 +129,7 @@ v open
 		color: Color black;
 		addAction: (RSAction new action: [:el | 
 			| text tshape |
-			tshape := el trachelShape.
+			tshape := el shape.
 			text := tshape text.
 			text ifNil: [ text := el model ].
 			tshape text: text asString ] ) 
@@ -158,7 +158,7 @@ v open setLabel: 'Multiline'
 	shape := self label.
 	shape addAction: (RSAction new action: [ :e |
 		| tshape composite |
-		tshape := e trachelShape.
+		tshape := e shape.
 		composite := TSComposite new.
 		composite addAll: (tshape text lines collect: [:line |
 			| label |

@@ -12,9 +12,9 @@ Class {
 
 { #category : #accessing }
 RSComposite >> add: child [
-	child isRoassalElement ifFalse: [ ^ trachelShape addShape: child ].
+	child isRoassalElement ifFalse: [ ^ shape addShape: child ].
 	child 
-		renderOn: trachelShape;
+		renderOn: shape;
 		addedIn: self.
 		
 	
@@ -56,13 +56,13 @@ RSComposite >> hasChildren [
 { #category : #accessing }
 RSComposite >> removeElement: anElement [
 	children remove: anElement ifAbsent: [ ].
-	anElement trachelShape remove.
+	anElement shape remove.
 ]
 
 { #category : #accessing }
 RSComposite >> shapes: aTSGroup [
 	self addAll: aTSGroup.
-	trachelShape adjustToChildren
+	shape adjustToChildren
 ]
 
 { #category : #actions }

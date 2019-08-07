@@ -19,7 +19,7 @@ TSComposite >> add: aShape [
 { #category : #adding }
 TSComposite >> addAll: aCollection [
 	shapes ifNil: [ shapes := TSGroup new: aCollection size ].
-	aCollection do: [ :s| self add: s trachelShape ].
+	aCollection do: [ :s| self add: s shape ].
 ]
 
 { #category : #adding }

@@ -50,7 +50,7 @@ RSRotatedPieLabel >> onElement: view [
 			p2 := e centroid: 50.
 			p3 := x @ p2 y.
 			line := lines at: e index.
-			line trachelShape 
+			line shape 
 				controlPoints: { p1. p2. p3 }.
 			l position: p3-ext.
 			 ] ].

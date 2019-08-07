@@ -35,6 +35,6 @@ RSEdgeTest >> testAddingEdgeAndGroup [
 		add: el2;
 		add: edge.
 	v addAll: g.
-	self assert: edge trachelShape notNil.
-	self assert: edge trachelShape color notNil.
+	self assert: edge shape notNil.
+	self assert: edge shape color notNil.
 ]

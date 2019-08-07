@@ -112,13 +112,13 @@ RSView >> numberOfEdges [
 { #category : #removing }
 RSView >> removeEdge: edge [
 	edges remove: edge ifAbsent: [ ].
-	edge trachelShape remove.
+	edge shape remove.
 ]
 
 { #category : #removing }
 RSView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
-	anElement trachelShape remove.
+	anElement shape remove.
 ]
 
 { #category : #accessing }

@@ -38,7 +38,7 @@ TSGroup >> asElement [
 TSGroup >> asElementOn: model [
 	^ RSComposite new 
 		model: model;
-		trachelShape: TSComposite new;
+		shape: TSComposite new;
 		shapes: self.
 ]
 

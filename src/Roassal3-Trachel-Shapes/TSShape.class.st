@@ -269,6 +269,11 @@ TSShape >> setAsFixed [
 	isFixed := true.
 ]
 
+{ #category : #accessing }
+TSShape >> shape [
+	^ self
+]
+
 { #category : #'accessing - computed' }
 TSShape >> shapeWithAction: eventClass forPosition: position [
 	^ (self hasEventCallback and: [ 
@@ -296,11 +301,6 @@ TSShape >> signalUpdate [
 { #category : #accessing }
 TSShape >> topParent [
 	^ parent topParent
-]
-
-{ #category : #accessing }
-TSShape >> trachelShape [
-	^ self
 ]
 
 { #category : #events }

@@ -70,7 +70,7 @@ RSAbstractModelBuilder >> basicElementOn: object index: index [
 		model: object;
 		index: index.
 	shape := self innerClass new.
-	el trachelShape: shape.
+	el shape: shape.
 	self executeActions: #isPreload on: el.
 	self updateElement: el innerComponent: shape.
 	self executeActions: #isPostload on: el.
@@ -92,7 +92,7 @@ RSAbstractModelBuilder >> commands: aCollection [
 RSAbstractModelBuilder >> currentGetterValues: element [
 	| dict tshape |
 	dict := Dictionary new.
-	tshape := element trachelShape.
+	tshape := element shape.
 	self commands do: [ :cmd |
 		cmd 
 			element: element;	

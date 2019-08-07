@@ -8,7 +8,7 @@ Class {
 		'model',
 		'index',
 		'parent',
-		'trachelShape'
+		'shape'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -24,18 +24,18 @@ RSShapedObject >> announceAdded: eventClass parent: aParent [
 	parent := aParent.
 	evt := eventClass new shapedObject: self.
 	parent announce: evt.
-	trachelShape announce: evt.
+	shape announce: evt.
 ]
 
 { #category : #accessing }
 RSShapedObject >> announcer [
-	^ trachelShape announcer
+	^ shape announcer
 ]
 
 { #category : #'reflective operations' }
 RSShapedObject >> doesNotUnderstand: aMessage [
 
-	^ aMessage sendTo: trachelShape 
+	^ aMessage sendTo: shape 
 ]
 
 { #category : #accessing }
@@ -89,8 +89,8 @@ RSShapedObject >> parent: aViewOrElement [
 ]
 
 { #category : #accessing }
-RSShapedObject >> privateTrachelShape: shape [
-	trachelShape := shape
+RSShapedObject >> privateTrachelShape: aShape [
+	shape := aShape
 ]
 
 { #category : #removing }
@@ -100,24 +100,24 @@ RSShapedObject >> remove [
 
 { #category : #rendering }
 RSShapedObject >> renderOn: trCanvas [
-	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
-	trCanvas addShape: trachelShape.
+	shape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
+	trCanvas addShape: shape.
 	
 ]
 
 { #category : #accessing }
-RSShapedObject >> trachelShape [
-	^ trachelShape 
+RSShapedObject >> shape [
+	^ shape 
 ]
 
 { #category : #accessing }
-RSShapedObject >> trachelShape: aShape [
+RSShapedObject >> shape: aShape [
 	| old |
-	old := trachelShape. 
+	old := shape. 
 	self privateTrachelShape: aShape.
 	old ifNil: [ ^ self ].
 	aShape loadShape: old.
-	old parent shapes replaceAll: old with: trachelShape.
+	old parent shapes replaceAll: old with: shape.
 	
 ]
 
