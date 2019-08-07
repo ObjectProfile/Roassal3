@@ -17,7 +17,7 @@ TSCanvas >> gtInspectorShapesIn: composite [
 TSCanvas >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
-		title: 'Canvas';
+		title: ['Canvas'];
 		initializeView: [ 
 			view ifNil: [ RSView new
 				setCanvas: self;

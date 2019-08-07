@@ -4,7 +4,7 @@ Extension { #name : #TSShape }
 TSShape >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
-		title: 'Shape';
+		title: ['Shape'];
 		initializeView: [ self gtViewForInspector ].
 		
 ]

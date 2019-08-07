@@ -223,6 +223,11 @@ TSShape >> path: aPath [
 	path := aPath
 ]
 
+{ #category : #events }
+TSShape >> privateAnnouncer [
+	^ announcer
+]
+
 { #category : #actions }
 TSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"

@@ -30,7 +30,7 @@ RSView >> gtInspectorElementsIn: composite [
 RSView >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
-		title: 'View';
+		title: ['View'];
 		initializeView: [ self ]
 		
 ]
