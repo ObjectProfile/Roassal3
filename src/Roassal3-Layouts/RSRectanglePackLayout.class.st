@@ -1,6 +1,5 @@
 "
-A layout that packs rectangles in as small space as possible (at least it tries to)
-
+A layout that packs elements according to their bounding box. Check #gap and #preferredAngle.
 "
 Class {
 	#name : #RSRectanglePackLayout,
@@ -93,13 +92,14 @@ RSRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 
 { #category : #accessing }
 RSRectanglePackLayout >> gap [
-	"gap between elements defined as ''percentage'' of average size. 0.2 means 20%"
+	"Answer the gap between elements, defined as ''percentage'' of average size. For example, 0.2 means 20%."
+	
 	^ gap
 ]
 
 { #category : #accessing }
-RSRectanglePackLayout >> gap: anObject [
-	gap := anObject
+RSRectanglePackLayout >> gap: aFloat [
+	gap := aFloat
 ]
 
 { #category : #'initialize-release' }
@@ -119,6 +119,8 @@ RSRectanglePackLayout >> packIn: anElement [
 
 { #category : #accessing }
 RSRectanglePackLayout >> preferredAngle [
+	"Answer the angle (in radians) that the pack algorithm will use to distribute (layout) the elements. For example, setting value of '(2@1) angle', the elements will tend to be distributed horizontally."
+
 	^ preferredAngle
 ]
 

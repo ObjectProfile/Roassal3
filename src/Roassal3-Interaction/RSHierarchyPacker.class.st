@@ -1,9 +1,12 @@
 "
-This interactions adds as
+This interaction layouts the connected subgraphs of a view using a rectangle pack layout each time the view changes it's extent (e.g. a window resize).
 "
 Class {
 	#name : #RSHierarchyPacker,
 	#superclass : #RSAbstractViewInteraction,
+	#instVars : [
+		'rectanglePackLayout'
+	],
 	#category : #'Roassal3-Interaction-Core'
 }
 
@@ -12,6 +15,15 @@ RSHierarchyPacker >> fill: group with: e [
 	group add: e.
 	e outgoingEdges do: [ :ed | 
 		self fill: group with: ed to ].
+]
+
+{ #category : #private }
+RSHierarchyPacker >> initialize [
+	super initialize.
+	
+	rectanglePackLayout := RSRectanglePackLayout new
+		doNotUseProgressBar;
+		yourself.
 ]
 
 { #category : #private }
@@ -31,11 +43,20 @@ RSHierarchyPacker >> onElement: aView [
 	
 	all := connectedAsGroups, isolated.
 
-	aView when: TSExtentChangedEvent do: [ 
-		RSRectanglePackLayout new
-			doNotUseProgressBar;
+	aView when: TSExtentChangedEvent do: [
+		rectanglePackLayout
 			preferredAngle: aView extent angle;
 			on: all.
 		aView zoomToFit; signalUpdate ].
 
+]
+
+{ #category : #accessing }
+RSHierarchyPacker >> rectanglePackLayout [
+	^ rectanglePackLayout
+]
+
+{ #category : #accessing }
+RSHierarchyPacker >> rectanglePackLayout: anObject [
+	rectanglePackLayout := anObject
 ]

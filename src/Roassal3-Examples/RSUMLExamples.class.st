@@ -147,7 +147,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	<script: 'self new example08HierarchyPacker'>
 	| builder classes |
 	builder := RSUMLClassBuilder new.
-	classes := { 'Roassal3-Grapher'. 'Roassal3-Layouts'. 'Roassal3-Trachel' }
+	classes := { 'Roassal3-Layouts'. 'Roassal3-Trachel' }
 		flatCollect: [:pkgname | (RPackage organizer 
 			packageNamed: pkgname) definedClasses ].
 	builder classes: classes.
