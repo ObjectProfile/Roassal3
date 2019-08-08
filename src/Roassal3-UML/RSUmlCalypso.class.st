@@ -4,7 +4,7 @@ I am an abstract browser for uml classes and packages in calypso
 Class {
 	#name : #RSUMLCalypso,
 	#superclass : #ClyBrowserToolMorph,
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Calypso'
 }
 
 { #category : #initialization }

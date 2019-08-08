@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Calypso'
 }
 
 { #category : #activation }

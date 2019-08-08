@@ -10,7 +10,7 @@ Class {
 		'renderer',
 		'layout'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Base'
 }
 
 { #category : #accessing }

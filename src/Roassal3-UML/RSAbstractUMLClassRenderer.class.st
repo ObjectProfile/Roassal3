@@ -18,7 +18,7 @@ Class {
 		'classShape',
 		'padding'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #private }

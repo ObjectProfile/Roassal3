@@ -8,7 +8,7 @@ Class {
 		'classNameBoxShape',
 		'currentTitleWidth'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #'accessing - shapes' }
