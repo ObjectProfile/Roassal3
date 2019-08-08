@@ -21,9 +21,14 @@ RSUMLPackageCalypso >> classes [
 	^ packages flatCollect: #classes.
 ]
 
+{ #category : #defaults }
+RSUMLPackageCalypso >> defaultIconName [
+	^#package
+]
+
 { #category : #initialization }
 RSUMLPackageCalypso >> defaultTitle [
-	^'UML+'
+	^'UML-Package'
 ]
 
 { #category : #accessing }

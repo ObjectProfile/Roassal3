@@ -23,7 +23,7 @@ RSUmlClassCalypso >> classes [
 
 { #category : #initialization }
 RSUmlClassCalypso >> defaultTitle [
-	^'UML'
+	^'UML-Class'
 ]
 
 { #category : #initialization }
