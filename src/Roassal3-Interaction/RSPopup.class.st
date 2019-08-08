@@ -154,16 +154,21 @@ RSPopup >> shape: aShape [
 
 { #category : #hooks }
 RSPopup >> translatePopup: popup event: evt [ 
-	| p e |
+	| p e extent |
 	p := evt position.
 	evt shape isFixed 
 		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p. ].
-	
+	extent := popup canvas extent.
 	e := (popup extent /2) + 5.
-	p x +  popup extent x > popup canvas extent x ifTrue: [ 
+	p x + popup width > extent x ifTrue: [ 
 		e := e x negated @ e y.
-		p x - popup extent x < 0
-		ifTrue: [ e := p x negated + (popup extent x /2) @ e y ].
+		p x - popup width < 0
+		ifTrue: [ e := p x negated + (popup width/2 + 4) @ e y ].
 		].
+	p y + popup height > extent y ifTrue: [ 
+		e := e x @ e y negated.
+		p y - popup height < 0
+		ifTrue: [ e := e x @ ( p y negated + (popup height/2 + 4) ) ]
+		]. 
 	popup translateTo: p + e.
 ]

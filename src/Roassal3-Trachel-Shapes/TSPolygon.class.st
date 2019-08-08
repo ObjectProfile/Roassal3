@@ -139,9 +139,8 @@ TSPolygon >> points: anArray [
 	| rec |
 	self privatePoints: anArray.
 	rec := self centerPoints.
-	self
-		translateTo: rec rsCenter;
-		extent: rec extent
+	self translateTo: rec rsCenter.
+	super extent: rec extent
 ]
 
 { #category : #private }

@@ -94,3 +94,10 @@ RSInspectableExample >> example02Inspect [
 	view @ RSControlsView.
 	view inspect
 ]
+
+{ #category : #examples }
+RSInspectableExample >> example03Easing [
+	<script: 'self new example03Easing'>
+	TSEasing bounceOut inspect.
+	
+]

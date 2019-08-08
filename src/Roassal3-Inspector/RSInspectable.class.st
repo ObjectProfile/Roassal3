@@ -58,8 +58,9 @@ RSInspectable >> inspectElement: anElement [
 	"viewMorph takeKeyboardFocus."
 	"If there is a previous inspector window, then we use the same position and extent"
 	oldInspectorWindow ifNil: [ ^ self ].
-	inspectorWindow position: oldInspectorWindow position.
-	inspectorWindow extent: oldInspectorWindow extent.
+	inspectorWindow 
+		position: oldInspectorWindow position;
+		extent: oldInspectorWindow extent.
 	oldInspectorWindow delete.
 	oldInspectorWindow := nil
 	
