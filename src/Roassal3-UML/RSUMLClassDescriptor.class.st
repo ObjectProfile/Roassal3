@@ -3,7 +3,7 @@ I have information about how to accessing to one class in the Roassal Uml class 
 "
 Class {
 	#name : #RSUMLClassDescriptor,
-	#superclass : #RSObject,
+	#superclass : #RSUMLAbstractModelDescriptor,
 	#instVars : [
 		'instVars',
 		'methods',
@@ -27,21 +27,15 @@ RSUMLClassDescriptor >> classname: aSymbolOrBlock [
 ]
 
 { #category : #public }
-RSUMLClassDescriptor >> forPharoClasses [
+RSUMLClassDescriptor >> forPharo [
 	self
 		classname: #name;
 		instVars: [:cls | cls instVarNames sorted ];
 		methods: [ :cls | cls methods sorted:[ :a :b | a selector < b selector ] ];
 		superclass: #superclass;
 		methodSelector: #selector;
-		instVarSelector: #yourself.
+		instVarSelector: #yourself
 		
-]
-
-{ #category : #initialization }
-RSUMLClassDescriptor >> initialize [
-	super initialize.
-	self forPharoClasses.
 ]
 
 { #category : #accessing }
