@@ -56,8 +56,9 @@ RSPieChartExample >> initializeWidgets [
 	droplist whenSelectedItemChangedDo: [ :pkg | 
 		chart script: [ :view | 
 			view when: TSExtentChangedEvent do: [ 
-				view elements do: #remove.
-				view edges do: #remove.
+				view edges copy do: #remove.
+				view elements copy do: #remove.
+				
 				self visualizeChart: view package: pkg
 				 ]
 			 ].

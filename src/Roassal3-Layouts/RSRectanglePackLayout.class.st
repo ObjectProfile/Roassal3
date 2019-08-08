@@ -105,6 +105,7 @@ RSRectanglePackLayout >> gap: aFloat [
 { #category : #'initialize-release' }
 RSRectanglePackLayout >> initialize [
 	super initialize.
+	self doNotUseProgressBar.
 	gap := 0.2.
 	preferredAngle := Float pi / 4. "Squared"
 ]

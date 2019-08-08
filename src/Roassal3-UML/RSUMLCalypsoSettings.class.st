@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor [
-	^DarkThemeUMLClassColor
+	^ DarkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
 ]
 
 { #category : #accessing }
@@ -35,7 +35,7 @@ RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor [
-	^LightThemeUMLClassColor
+	^LightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
 ]
 
 { #category : #accessing }

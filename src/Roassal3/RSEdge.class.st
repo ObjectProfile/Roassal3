@@ -75,8 +75,8 @@ RSEdge >> isEdge [
 RSEdge >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeEdge: self.
-	to connectedEdges remove: self ifAbsent: [ ].
-	from connectedEdges remove: self ifAbsent: [ ].
+	to ifNotNil: [ to connectedEdges remove: self ifAbsent: [ ] ].
+	from ifNotNil: [ from connectedEdges remove: self ifAbsent: [ ] ].
 	parent := nil.
 ]
 
