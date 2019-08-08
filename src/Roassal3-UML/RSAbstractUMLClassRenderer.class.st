@@ -18,7 +18,7 @@ Class {
 		'classShape',
 		'padding'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #private }
@@ -112,7 +112,7 @@ RSAbstractUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 { #category : #initialization }
 RSAbstractUMLClassRenderer >> initialize [
 	super initialize.
-	self initializeShape.
+	self initializeShape
 ]
 
 { #category : #initialization }

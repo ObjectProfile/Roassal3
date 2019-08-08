@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classInnerLine'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #'accessing - shapes' }
@@ -30,14 +30,16 @@ RSBasicUMLClassRenderer >> initialize [
 		border: self defaultBorder
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RSBasicUMLClassRenderer >> initializeShape [
 	classShape := RSShapeBuilder composite shapes: [ :cls | 
 		| g boxElement title rec line |
 		g := self basicGroupOn: cls.
 		title := g first.
+	 
 		boxElement := self classBoxShape elementOn: cls.
 		g addFirst: boxElement.
+		
 		
 		rec := g encompassingRectangle.
 		boxElement

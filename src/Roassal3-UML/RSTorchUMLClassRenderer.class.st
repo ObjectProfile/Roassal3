@@ -8,7 +8,7 @@ Class {
 		'classNameBoxShape',
 		'currentTitleWidth'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #'accessing - shapes' }
@@ -42,7 +42,7 @@ RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RSTorchUMLClassRenderer >> initializeShape [
 	classShape := RSShapeBuilder composite
 		shapes: [ :cls | 

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #'Roassal3-UML'
+	#category : #'Roassal3-UML-Calypso'
 }
 
 { #category : #activation }
@@ -21,9 +21,14 @@ RSUMLPackageCalypso >> classes [
 	^ packages flatCollect: #classes.
 ]
 
+{ #category : #defaults }
+RSUMLPackageCalypso >> defaultIconName [
+	^#package
+]
+
 { #category : #initialization }
 RSUMLPackageCalypso >> defaultTitle [
-	^'UML+'
+	^'UML-Package'
 ]
 
 { #category : #accessing }
