@@ -112,7 +112,7 @@ RSAbstractUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 { #category : #initialization }
 RSAbstractUMLClassRenderer >> initialize [
 	super initialize.
-	self initializeShape.
+	self initializeShape
 ]
 
 { #category : #initialization }

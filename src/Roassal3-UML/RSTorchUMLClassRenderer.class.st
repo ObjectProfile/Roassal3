@@ -42,7 +42,7 @@ RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RSTorchUMLClassRenderer >> initializeShape [
 	classShape := RSShapeBuilder composite
 		shapes: [ :cls | 
