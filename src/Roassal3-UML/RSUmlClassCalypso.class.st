@@ -2,7 +2,7 @@
 I am a basic uml class browser
 "
 Class {
-	#name : #RSUmlClassCalypso,
+	#name : #RSUMLClassCalypso,
 	#superclass : #RSUMLCalypso,
 	#instVars : [
 		'targetClass'
@@ -11,36 +11,36 @@ Class {
 }
 
 { #category : #activation }
-RSUmlClassCalypso class >> classUmlTapActivation [
+RSUMLClassCalypso class >> classUmlTapActivation [
 	<classAnnotation>
 	^ ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #accessing }
-RSUmlClassCalypso >> classes [
+RSUMLClassCalypso >> classes [
 	^ targetClass withAllSubclasses
 ]
 
 { #category : #initialization }
-RSUmlClassCalypso >> defaultTitle [
+RSUMLClassCalypso >> defaultTitle [
 	^'UML-Class'
 ]
 
 { #category : #initialization }
-RSUmlClassCalypso >> isSimilarTo: anotherBrowserTool [
+RSUMLClassCalypso >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	
 	^targetClass  = anotherBrowserTool targetClass
 ]
 
 { #category : #initialization }
-RSUmlClassCalypso >> setUpModelFromContext [
+RSUMLClassCalypso >> setUpModelFromContext [
 	super setUpModelFromContext.
 
 	targetClass := context lastSelectedClass
 ]
 
 { #category : #accessing }
-RSUmlClassCalypso >> targetClass [
+RSUMLClassCalypso >> targetClass [
 	^ targetClass
 ]
