@@ -296,6 +296,12 @@ TSShape >> shapeWithActionForPosition: position [
 			ifFalse: [ ^ nil ]
 ]
 
+{ #category : #accessing }
+TSShape >> shapes [
+	"only TSComposite can use shapes "
+	^ nil
+]
+
 { #category : #actions }
 TSShape >> signalUpdate [
 	"Refresh the canvas"

@@ -2507,7 +2507,7 @@ for Pharo 7 and Pharo 8.'.
 		cornerRadii: 50;
 		controlPoints: { 
 			mid.
-			r2 origin x - pad*2 @ mid y.
+			(r2 origin x - (pad*2)) @ mid y.
 			r2 bottomLeft + ( pad negated * 2 @ pad). 
 			(r1 corner x @ r2 corner y)  + (pad@pad)}.
 	line3 := TSPolyline new

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'presentation'
 	],
-	#category : #'Roassal3-Inspector-GT'
+	#category : #'Roassal3-Inspector-Interaction'
 }
 
 { #category : #hooks }

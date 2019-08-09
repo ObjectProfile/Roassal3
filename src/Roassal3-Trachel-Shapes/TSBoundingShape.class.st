@@ -133,12 +133,6 @@ TSBoundingShape >> scaleBy: scale [
 ]
 
 { #category : #accessing }
-TSBoundingShape >> shapes [
-	"only TSComposite can use shapes "
-	^ nil
-]
-
-{ #category : #accessing }
 TSBoundingShape >> size: anInteger [
 	self extent: anInteger asPoint
 ]

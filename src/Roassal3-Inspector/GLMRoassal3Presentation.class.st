@@ -12,6 +12,19 @@ Class {
 }
 
 { #category : #initialization }
+GLMRoassal3Presentation >> initialize [
+	super initialize.
+	self 
+		act: [ :presentation | 
+			view showRectangles
+			ifTrue:[ view hideEncompassingRectangles]
+			ifFalse:[view showEncompassingRectangles ].
+			view signalUpdate ]
+		icon: (self iconNamed: #smallDebug)
+		entitled: 'Show Encompassing Rectangles'
+]
+
+{ #category : #initialization }
 GLMRoassal3Presentation >> initializeView: aZeroArgBlock [
 	^ newViewBlock := aZeroArgBlock 
 ]

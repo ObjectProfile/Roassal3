@@ -32,5 +32,4 @@ RSView >> gtInspectorViewIn: composite [
 	composite roassal3
 		title: ['View'];
 		initializeView: [ self ]
-		
 ]

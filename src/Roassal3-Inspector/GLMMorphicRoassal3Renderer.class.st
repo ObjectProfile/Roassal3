@@ -12,7 +12,9 @@ Class {
 
 { #category : #rendering }
 GLMMorphicRoassal3Renderer >> render: aRoassalPresentation [
-	aRoassalPresentation setUpInteractions.
-	aRoassalPresentation when: GLMPresentationUpdated send: #actOnPresentationUpdate: to: self.
+	aRoassalPresentation 
+		setUpInteractions;
+		when: GLMPresentationUpdated send: #actOnPresentationUpdate: to: self.
+
 	^ myMorph :=aRoassalPresentation view createMorph.
 ]
