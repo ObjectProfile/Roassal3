@@ -12,8 +12,10 @@ Class {
 
 { #category : #'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine [
-	^ classInnerLine ifNil: [ classInnerLine := RSSingleEdgeBuilder line 
-		border: self defaultBorder ].
+	^ classInnerLine ifNil: [
+		classInnerLine := RSSingleEdgeBuilder line
+			border: self border;
+			yourself ]
 ]
 
 { #category : #'accessing - shapes' }
@@ -27,7 +29,7 @@ RSBasicUMLClassRenderer >> initialize [
 	classBoxShape := RSShapeBuilder box
 		paint: (Color colorFrom: 'cfd9df');
 		cornerRadius: 10;
-		border: self defaultBorder
+		border: self border
 ]
 
 { #category : #'private - initialization' }

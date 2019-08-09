@@ -18,7 +18,7 @@ RSUMLCalypso >> applyTheme: builder [
 	theme := Smalltalk ui theme.
 	builder view color: theme backgroundColor.
 	renderer := builder renderer.
-	renderer defaultBorder color: theme textColor.
+	renderer border color: theme textColor.
 	renderer marker shape color: theme backgroundColor.
 	renderer classNameShape color: theme textColor.
 	renderer varShape color: theme textColor.
