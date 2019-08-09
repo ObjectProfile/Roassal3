@@ -46,16 +46,16 @@ RSTorchUMLClassRenderer >> currentMaxWidth [
 RSTorchUMLClassRenderer >> initializeShape [
 	classShape := RSShapeBuilder composite
 		shapes: [ :cls | 
-			| g title box boxTitle rect |
-			g := self basicGroupOn: cls.
+			| group title box boxTitle rect |
+			group := self initBasicGroupOn: cls.
 			boxTitle := self classNameBoxShape elementOn: cls.
 			box := self classBoxShape elementOn: cls.
-			title := g first.
-			g addFirst: boxTitle.
-			g addLast: box.
+			title := group first.
+			group addFirst: boxTitle.
+			group addLast: box.
 			padding := self classBoxPadding.
-			rect := g encompassingRectangle.
-			g size = 3 ifTrue: [ padding := padding x@0. ].
+			rect := group encompassingRectangle.
+			group size = 3 ifTrue: [ padding := padding x@0. ].
 			box 
 				extent: rect extent + padding;
 				position: rect rsCenter.
@@ -64,7 +64,7 @@ RSTorchUMLClassRenderer >> initializeShape [
 			boxTitle 
 				position: rect rsCenter x @ title position y ;
 				extent: (box width @ title height).
-			g
+			group
 		];
 	popup; draggable.
 ]
@@ -81,7 +81,7 @@ RSTorchUMLClassRenderer >> methodShape [
 RSTorchUMLClassRenderer >> methodsShape [
 
 	^ methodsShape ifNil: [ methodsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := self methodShape elementsOn: (classDescriptor methods rsValue: m).
+		g := self methodShape elementsOn: (modelDescriptor methods rsValue: m).
 		RSFlowLayout new 
 			gapSize: 2; 
 			maxWidth: self currentMaxWidth; 
@@ -109,7 +109,7 @@ RSTorchUMLClassRenderer >> varShape [
 { #category : #'accessing - shapes' }
 RSTorchUMLClassRenderer >> varsShape [
 	^ varsShape ifNil: [ varsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := self varShape elementsOn: (classDescriptor instVars rsValue: m).
+		g := self varShape elementsOn: (modelDescriptor instVars rsValue: m).
 		RSFlowLayout new 
 			gapSize: 2; 
 			maxWidth: self currentMaxWidth; 

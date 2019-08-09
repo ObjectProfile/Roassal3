@@ -33,15 +33,15 @@ RSBasicUMLClassRenderer >> initialize [
 { #category : #'private - initialization' }
 RSBasicUMLClassRenderer >> initializeShape [
 	classShape := RSShapeBuilder composite shapes: [ :cls | 
-		| g boxElement title rec line |
-		g := self basicGroupOn: cls.
-		title := g first.
+		| group boxElement title rec line |
+		group := self initBasicGroupOn: cls.
+		title := group first.
 	 
 		boxElement := self classBoxShape elementOn: cls.
-		g addFirst: boxElement.
+		group addFirst: boxElement.
 		
 		
-		rec := g encompassingRectangle.
+		rec := group encompassingRectangle.
 		boxElement
 			extent: rec extent + self classBoxPadding;
 			position: rec rsCenter.
@@ -49,16 +49,16 @@ RSBasicUMLClassRenderer >> initializeShape [
 		title position: rec rsCenter x @ title position y.
 		rec := boxElement encompassingRectangle.
 		line := self classInnerLine.
-		g size > 2 ifTrue: [ 
-			g add: (line
+		group size > 2 ifTrue: [ 
+			group add: (line
 				from: rec origin x @ title height;
 				to: rec corner x @ title height;
 				edgeOn: nil) ].
-		g size > 4 ifTrue: [ 
-			g add: (line
-				from: rec origin x @ (title height + g third height);
-				to: rec corner x @ (title height + g third height);
+		group size > 4 ifTrue: [ 
+			group add: (line
+				from: rec origin x @ (title height + group third height);
+				to: rec corner x @ (title height + group third height);
 				edgeOn: nil) ].
-		g ];
+		group ];
 		interactionDo: [ :i | i popup; draggable; browseable ]
 ]

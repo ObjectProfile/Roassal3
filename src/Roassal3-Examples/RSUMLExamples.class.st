@@ -24,7 +24,7 @@ RSUMLExamples >> example02ClassDescriptor [
 	builder := RSUMLClassBuilder new.
 	builder classes: TSAbstractLine withAllSubclasses.
 	
-	builder classDescriptor 
+	builder modelDescriptor 
 		methods: [ :cls | | methods |
 			methods := cls methods sorted: [ :a :b |
 				a selector < b selector ].
@@ -156,4 +156,15 @@ RSUMLExamples >> example08HierarchyPacker [
 	builder view @ RSHierarchyPacker.
 	builder view open
 		extent: 900@300.
+]
+
+{ #category : #examples }
+RSUMLExamples >> example09Package [
+	<script: 'self new example09Package'>
+	| builder |
+	builder := RSUMLPackageBuilder new.
+	builder packages: (Array with: self class package).
+	builder renderer: RSBasicUMLPackageRenderer new.
+	builder build.
+	builder open
 ]

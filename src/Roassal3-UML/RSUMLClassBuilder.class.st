@@ -3,26 +3,12 @@ I am a builder to create UML diagrams in Roassal3, see examples
 "
 Class {
 	#name : #RSUMLClassBuilder,
-	#superclass : #RSAbstractBuilder,
+	#superclass : #RSUMLAbstractBuilder,
 	#instVars : [
-		'classes',
-		'classDescriptor',
-		'renderer',
-		'layout'
+		'classes'
 	],
-	#category : #'Roassal3-UML-Base'
+	#category : #'Roassal3-UML-Builder'
 }
-
-{ #category : #accessing }
-RSUMLClassBuilder >> classDescriptor [
-	^ classDescriptor
-]
-
-{ #category : #accessing }
-RSUMLClassBuilder >> classDescriptor: aRSClassDescriptor [
-	classDescriptor := aRSClassDescriptor.
-	renderer ifNotNil: [ renderer classDescriptor: classDescriptor ].
-]
 
 { #category : #accessing }
 RSUMLClassBuilder >> classes [
@@ -98,6 +84,17 @@ RSUMLClassBuilder >> createShapesFor: cls [
 	^ g
 ]
 
+{ #category : #defaults }
+RSUMLClassBuilder >> defaultLayout [
+
+	| defaultLayout |
+	defaultLayout := RSLayoutBuilder new.
+	defaultLayout tree 
+		verticalGap: 100; 
+		horizontalGap: 50.
+	^defaultLayout
+]
+
 { #category : #'button behavior' }
 RSUMLClassBuilder >> expand: e [
 	| shapes att positions extent |
@@ -118,20 +115,13 @@ RSUMLClassBuilder >> expand: e [
 RSUMLClassBuilder >> initialize [
 	super initialize.
 	self
-		classDescriptor: RSUMLClassDescriptor new;
-		renderer: RSBasicUMLClassRenderer new.
+		modelDescriptor: RSUMLClassDescriptor new;
+		renderer: RSBasicUMLClassRenderer new
 ]
 
 { #category : #initialization }
 RSUMLClassBuilder >> initializeShape [
 	shape := renderer classShape.
-]
-
-{ #category : #accessing }
-RSUMLClassBuilder >> layout [ 
-	^ layout ifNil: [ layout := RSLayoutBuilder new.
-		layout tree verticalGap: 100; horizontalGap: 50.
-		layout ]
 ]
 
 { #category : #hooks }
@@ -140,26 +130,6 @@ RSUMLClassBuilder >> renderIn: aView [
 	self renderer edgeBuilder
 		view: aView;
 		objects: classes;
-		connectFrom: classDescriptor superclass.
+		connectFrom: modelDescriptor superclass.
 	self layout on: elements.
-]
-
-{ #category : #accessing }
-RSUMLClassBuilder >> renderer [
-	^ renderer
-]
-
-{ #category : #accessing }
-RSUMLClassBuilder >> renderer: aRSUMLRenderer [
-	renderer := aRSUMLRenderer.
-	renderer classDescriptor: classDescriptor.
-	self initializeShape.
-]
-
-{ #category : #accessing }
-RSUMLClassBuilder >> view [
-	^ container ifNil: [
-		container := RSView new.
-		container @ RSControlsView.
-		container ]
 ]
