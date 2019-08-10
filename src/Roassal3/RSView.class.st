@@ -21,8 +21,8 @@ RSView >> add: anElementOrAnEdge [
 	self assert: [ anElementOrAnEdge isKindOf: RSShapedObject ] description: 'Only trachel shapes or Roassal elements can be added to a view'.
 	self assert: [ anElementOrAnEdge ~= nil ] description: 'Nil cannot be added to a view'.
 	anElementOrAnEdge 
-		addedIn: self;
-		renderOn: trCanvas.
+		renderOn: trCanvas;
+		addedIn: self.
 	^ anElementOrAnEdge
 ]
 
