@@ -109,7 +109,7 @@ RSUMLExamples >> example06CustomText [
 	renderer := builder renderer.
 	renderer classBoxShape color: c1.
 	renderer marker shape color: c1.
-	renderer defaultBorder
+	renderer border
 		width: 2;
 		color: Color white.
 	renderer classNameShape: (RSShapeBuilder composite shapes: [:cls | 

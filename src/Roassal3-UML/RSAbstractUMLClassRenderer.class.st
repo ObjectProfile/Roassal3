@@ -73,7 +73,7 @@ RSAbstractUMLClassRenderer >> classShape: aRSShapeBuilder [
 RSAbstractUMLClassRenderer >> edgeBuilder [
 	^ edgeBuilder ifNil: [ edgeBuilder := RSEdgeBuilder orthoVertical
 		attachPoint: RSVerticalAttachPoint new; 
-		border: self defaultBorder;
+		border: self border;
 		markerStart: self marker ]
 ]
 
@@ -104,7 +104,7 @@ RSAbstractUMLClassRenderer >> marker [
 		offset: 10;
 		shape: (RSShapeBuilder triangle
 			color: Color white;
-			border: self defaultBorder;
+			border: self border;
 			size: 20) element ]
 ]
 

@@ -12,10 +12,10 @@ RSBasicUMLPackageRenderer >> initialize [
 	super initialize.
 	packageBoxShape := RSShapeBuilder box
 								paint: (Color colorFrom: 'cfd9df');								
-								border: self defaultBorder.
+								border: self border.
 	packageNameBoxShape := RSShapeBuilder box
 								paint: (Color colorFrom: 'cfd9df');								
-								border: self defaultBorder							
+								border: self border							
 ]
 
 { #category : #'private - initialization' }

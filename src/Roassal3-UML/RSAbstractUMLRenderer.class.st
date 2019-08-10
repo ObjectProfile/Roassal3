@@ -18,8 +18,13 @@ RSAbstractUMLRenderer class >> isAbstract [
 ]
 
 { #category : #defaults }
-RSAbstractUMLRenderer >> defaultBorder [
+RSAbstractUMLRenderer >> border [
 	^ border ifNil: [ border := TSBorder new ].
+]
+
+{ #category : #defaults }
+RSAbstractUMLRenderer >> defaultBorder [
+	^ TSBorder new
 ]
 
 { #category : #initialization }
