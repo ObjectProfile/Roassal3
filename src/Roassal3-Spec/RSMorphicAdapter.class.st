@@ -3,7 +3,7 @@ I am bridging RoassalPresenter and RTView
 "
 Class {
 	#name : #RSMorphicAdapter,
-	#superclass : #AbstractMorphicAdapter,
+	#superclass : #SpAbstractMorphicAdapter,
 	#instVars : [
 		'view',
 		'canvas'
