@@ -7,7 +7,10 @@ Class {
 { #category : #tests }
 RoassalSpecTest >> testBasic [
 	| spec value window |
-	spec := RoassalPresenter new.
+	
+	spec := Smalltalk globals at: #RoassalPresenter 
+		ifPresent: [:cls | cls new]
+		ifAbsent: [^ self ].
 	self assert: spec class equals: RoassalPresenter.
 	window := spec openWithSpec.
 	value := 0.
