@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RoassalSpecTest >> testBasic [
 	| spec value window |
-	
+	"comment"
 	spec := Smalltalk globals at: #RoassalPresenter 
 		ifPresent: [:cls | cls new]
 		ifAbsent: [^ self ].
