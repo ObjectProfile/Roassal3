@@ -2053,7 +2053,7 @@ RSAnimationExamples >> example32RSLocate [
 
 { #category : #perlin }
 RSAnimationExamples >> example33AlteredWorld [
-	<script: 'self new example33AlteredWorld'>
+	<script: 'self new example33AlteredWorld open setLabel: ''Altered World :V'''>
 	"base on Gerard Ferrandez source code"
 	"https://codepen.io/ge1doot/details/GQobbq/"
 	| v extent px perlin path r period length |
@@ -2096,7 +2096,7 @@ RSAnimationExamples >> example33AlteredWorld [
 	v when: TSExtentChangedEvent do: [ v camera 
 		zoomToFit: v extent 
 		rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
-	v open setLabel: 'Altered World :V'
+	^ v
 	
 
 

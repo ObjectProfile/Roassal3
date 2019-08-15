@@ -183,7 +183,7 @@ RSEdgeBuilder >> initialize [
 	shouldMoveBehind := false.
 	shouldNotBeUsedInLayout := true.
 	
-	"The view has to be explicitely set by the end-user"
+	"The view has to be explicitly set by the end-user"
 	viewHasBeenManuallySet := false.
 	
 	"We could have edges from A to B, and from B to A"
