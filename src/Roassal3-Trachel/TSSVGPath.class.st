@@ -9,7 +9,7 @@ Class {
 		'segments',
 		'polygons'
 	],
-	#category : #'Roassal3-Trachel-Shapes-Core'
+	#category : #'Roassal3-Trachel-Shape'
 }
 
 { #category : #visiting }

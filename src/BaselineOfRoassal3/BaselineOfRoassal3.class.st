@@ -30,7 +30,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Pharo7';
 				package: #'Roassal3-Trachel' with: [ spec requires: dep1 ];
 				package: #'Roassal3-Animation' with: [ spec requires: #('NumericScales') ];
-				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3' with: [spec requires: #('Geometry')];
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Utils';
@@ -38,7 +37,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Pie';
 				package: #'Roassal3-UML';
 				package: #'Roassal3-Layouts';
-				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3-Colors';
 				package: #'Roassal3-Spec';
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];

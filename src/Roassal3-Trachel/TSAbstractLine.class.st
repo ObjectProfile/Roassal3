@@ -6,7 +6,7 @@ Class {
 	#superclass : #TSShape,
 	#traits : 'TMarkeable',
 	#classTraits : 'TMarkeable classTrait',
-	#category : #'Roassal3-Trachel-Shapes-Core'
+	#category : #'Roassal3-Trachel-Shape'
 }
 
 { #category : #visiting }

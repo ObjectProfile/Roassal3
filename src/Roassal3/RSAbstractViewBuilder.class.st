@@ -34,7 +34,7 @@ RSAbstractViewBuilder >> container: aRSViewORTSGroup [
 	container := aRSViewORTSGroup
 ]
 
-{ #category : #default }
+{ #category : #private }
 RSAbstractViewBuilder >> defaultContainer [
 	^ RSView new
 ]

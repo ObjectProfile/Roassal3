@@ -10,7 +10,7 @@ Class {
 		'topRight',
 		'topLeft'
 	],
-	#category : #'Roassal3-Trachel-Shapes-Border'
+	#category : #'Roassal3-Trachel-Border'
 }
 
 { #category : #accessing }

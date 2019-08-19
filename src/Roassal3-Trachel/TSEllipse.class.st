@@ -4,7 +4,7 @@ I am an ellipse shape
 Class {
 	#name : #TSEllipse,
 	#superclass : #TSBoundingShape,
-	#category : #'Roassal3-Trachel-Shapes-Core'
+	#category : #'Roassal3-Trachel-Shape'
 }
 
 { #category : #visiting }

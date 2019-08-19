@@ -30,7 +30,7 @@ RSUMLCalypso >> applyTheme: builder [
 RSUMLCalypso >> build [
 	| builder morph controls |
 	builder := RSUMLClassBuilder new.
-	builder view: RSView new.
+	builder container: RSView new.
 	controls := RSControlsView new.
 	controls configuration 
 		useBasicZoom;

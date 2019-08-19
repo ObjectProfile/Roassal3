@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shapes'
 	],
-	#category : #'Roassal3-Trachel-Shapes-Core'
+	#category : #'Roassal3-Trachel-Shape'
 }
 
 { #category : #adding }
