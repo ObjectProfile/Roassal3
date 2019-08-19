@@ -4,7 +4,7 @@ I have examples of how to manage the uml builder in different cases
 Class {
 	#name : #RSUMLExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal3-UML-Examples'
 }
 
 { #category : #examples }

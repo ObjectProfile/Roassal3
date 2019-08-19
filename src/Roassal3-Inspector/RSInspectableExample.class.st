@@ -4,7 +4,7 @@ I have examples of different ways to inspect views an objects in roassal3
 Class {
 	#name : #RSInspectableExample,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal3-Inspector-Examples'
 }
 
 { #category : #examples }

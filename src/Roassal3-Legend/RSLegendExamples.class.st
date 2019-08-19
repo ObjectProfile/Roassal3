@@ -4,7 +4,7 @@ I have basic examples of legend builder
 Class {
 	#name : #RSLegendExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal3-Legend-Examples'
 }
 
 { #category : #examples }

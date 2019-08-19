@@ -14,7 +14,7 @@ Class {
 		'menuShape',
 		'defaultBoldText'
 	],
-	#category : #'Roassal3-Legend'
+	#category : #'Roassal3-Legend-Core'
 }
 
 { #category : #hooks }
