@@ -65,73 +65,13 @@ RSAbstractCompactTree >> childrenFor: aNode [
 { #category : #algorithm }
 RSAbstractCompactTree >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
-
-	| difference max nodeA nodeB |
-	nodeB := aNode.	"the right one"
-	nodeA := another.	"the left one"
-	max := aNode = another
-		ifTrue: [ 0 ]
-		ifFalse: [ horizontalGap / 2 - (nodeB x - (self getAbcissaOf: nodeA inSubtreeFromLayer: aNode layer - 1)) ].
-	nodeB := self followLeftContour: nodeB toLayer: nodeB layer + 1.
-	nodeA := self followRightContour: nodeA toLayer: nodeA layer + 1.
-	[ nodeB isNil not & nodeA isNil not ]
-		whileTrue: [ 
-			difference := horizontalGap
-				-
-					((self getAbcissaOf: nodeB inSubtreeFromLayer: aNode layer - 1)
-						- (self getAbcissaOf: nodeA inSubtreeFromLayer: aNode layer - 1)).
-			max := max max: difference.
-			nodeB := self followLeftContour: nodeB toLayer: nodeB layer + 1.
-			nodeA := self followRightContour: nodeA toLayer: nodeA layer + 1 ].
-	^ max
+	self subclassResponsibility
 ]
 
 { #category : #algorithm }
 RSAbstractCompactTree >> computePosition: aNode [
 "compute the position of the given node and of his sons recursively"
-
-	| children neighbor nodeA |
-	
-	children := self childrenFor: aNode.
-	neighbor := self leftSiblingOf: aNode.
-	
-	children isEmpty ifTrue: [ neighbor isNil ifTrue: [ aNode x: 0; mod: 0.]  
-											 ifFalse: [ aNode x: (neighbor x + (horizontalGap /2)); mod: (neighbor mod);
-													  pointer: (self followRightContour: neighbor toLayer: (aNode layer + 1)) ] ]
-					 
-					 ifFalse: [aNode leftContour: children first;
-									rightContour: children last.
-							  children do: [:e | self computePosition: e ].
-							      aNode x: (aNode leftContour x + aNode rightContour x + aNode rightContour mod ) /2;
-										mod: 0. 
-								neighbor isNil ifFalse: [ aNode mod: (self compareContourOf: aNode with: neighbor).
-									
-													  nodeA := (self followLeftContour: (aNode father) toLayer: (aNode layer)).
-													  [(self followLeftContour: nodeA toLayer: (nodeA layer + 1)) isNil ] whileFalse: [ nodeA := self followLeftContour: nodeA toLayer: (nodeA layer + 1) ].
-													 nodeA pointer: (self followLeftContour: aNode toLayer: (nodeA layer + 1)).
-													
-													 nodeA := self followRightContour: aNode toLayer: (aNode layer + 1).
-													 [(self followRightContour: nodeA toLayer: (nodeA layer +1)) isNil ] whileFalse: [ nodeA := self followRightContour: nodeA toLayer: (nodeA layer +1) ].
-													nodeA pointer: (self followRightContour: neighbor toLayer: (nodeA layer +1) ) ] ] 
-]
-
-{ #category : #hook }
-RSAbstractCompactTree >> doExecute: nodeElements [ 
-	| rootNodes |
-	
-	initialLayout isNil  ifFalse: [ initialLayout new executeOnElements: nodeElements. ].
-	
-	rootNodes := self rootNodesFor: nodeElements.
-
-"	root isNil ifTrue: [ rootNodes := self rootNodesFor: nodeElements. ]
-			 ifFalse: [ rootNodes := Array with: root.
-						self coveringTreeFor: nodeElements from: root ].
-"	
-	rootNodes do: [:e | self initialize: e whoseFatherIs: nil ];
-		do: [:e | self computePosition:e].
-	
-	rootNodes  do: [:e |
-					self draw:e withMod: 0  ]
+	self subclassResponsibility.
 ]
 
 { #category : #algorithm }

@@ -75,7 +75,7 @@ RSLayout >> doPost: elements [
 
 ]
 
-{ #category : #accessing }
+{ #category : #hook }
 RSLayout >> executeOnElements: elements [ 
 	"Execute the layout, myself, on the elements"
 		
