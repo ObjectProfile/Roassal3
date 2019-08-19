@@ -58,7 +58,6 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Legend'
 					'Roassal3-Trachel'
 					'Roassal3-Trachel-Shapes'
-					'Roassal3-Scales'
 					'Roassal3-Animation'
 					'Roassal3-UML'
 					'Roassal3-Pie'
