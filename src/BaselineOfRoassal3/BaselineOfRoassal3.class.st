@@ -17,7 +17,9 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
-			
+			spec
+				baseline: 'NumericScales'
+				with: [ spec repository: 'github://ObjectProfile/NumericScales/src' ].
 			(AthensCairoCanvas canUnderstand: #fillRuleEvenOdd) ifTrue: [
 				dep1 := #('Athens-SVG').
 				dep2 := #('Roassal3-Spec').
@@ -26,11 +28,10 @@ BaselineOfRoassal3 >> baseline: spec [
 				dep2 := #() ].
 			
 			spec
+				package: #'NumericScales';
 				package: #'Roassal3-Pharo7';
-				
 				package: #'Roassal3-Trachel' with: [ spec requires: dep1 ];
-				package: #'Roassal3-Scales';
-				package: #'Roassal3-Animation';
+				package: #'Roassal3-Animation' with: [ spec requires: #(NumericScales) ];
 				package: #'Roassal3-Trachel-Shapes';
 				package: #'Roassal3' with: [spec requires: #('Geometry')];
 				package: #'Roassal3-Interaction';
