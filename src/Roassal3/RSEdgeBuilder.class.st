@@ -38,7 +38,7 @@ Class {
 		'viewHasBeenManuallySet',
 		'beDirectional'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
 
 { #category : #'public repetition' }

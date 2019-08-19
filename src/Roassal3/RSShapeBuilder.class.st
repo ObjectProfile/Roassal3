@@ -3,8 +3,8 @@ I can create shapes for roassal based on a model
 "
 Class {
 	#name : #RSShapeBuilder,
-	#superclass : #RSAbstractShapeBuilder,
-	#category : #'Roassal3-Core'
+	#superclass : #RSAbstractModelBuilder,
+	#category : #'Roassal3-Builders'
 }
 
 { #category : #'instance creation' }

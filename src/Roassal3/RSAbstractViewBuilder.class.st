@@ -2,70 +2,75 @@
 I am the base for custom visualization, like sunburst, treemap, grapher custom visualizations with different interactions. In order to change the domain and obtain a similar visualization
 "
 Class {
-	#name : #RSAbstractBuilder,
+	#name : #RSAbstractViewBuilder,
 	#superclass : #RSObject,
 	#instVars : [
 		'shape',
 		'elements',
 		'container'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
 
 { #category : #building }
-RSAbstractBuilder >> build [
+RSAbstractViewBuilder >> build [
 	"Public method that produces the visualization"
 	self renderIn: self view.
 	^ elements
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> container: aRSViewORTSGroup [
-	container := aRSViewORTSGroup
+RSAbstractViewBuilder >> container [
+	^ container ifNil: [ container := self defaultContainer ]
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> createView [
+RSAbstractViewBuilder >> container: aRSViewORTSGroup [
+	""
+	self 
+		assert: aRSViewORTSGroup view notNil | (aRSViewORTSGroup class = TSGroup)
+		description: 'The container of this builder must be a RSView or TSGroup'.
+	
+	container := aRSViewORTSGroup
+]
+
+{ #category : #default }
+RSAbstractViewBuilder >> defaultContainer [
 	^ RSView new
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> elements [
+RSAbstractViewBuilder >> elements [
 	"usually to keep a referece to created elements by this builder"
 	^ elements ifNil: [ self view elements ].
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> elements: aCollectionOfRSElements [
+RSAbstractViewBuilder >> elements: aCollectionOfRSElements [
 	elements := aCollectionOfRSElements
 ]
 
 { #category : #hooks }
-RSAbstractBuilder >> open [
+RSAbstractViewBuilder >> open [
 	^ self view open
 ]
 
 { #category : #hooks }
-RSAbstractBuilder >> renderIn: aView [
+RSAbstractViewBuilder >> renderIn: aView [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> shape [
+RSAbstractViewBuilder >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> shape: aRSShapeBuilder [
+RSAbstractViewBuilder >> shape: aRSShapeBuilder [
 	shape := aRSShapeBuilder
 ]
 
 { #category : #accessing }
-RSAbstractBuilder >> view [
-	^ container ifNil: [ container := self createView ]
-]
-
-{ #category : #accessing }
-RSAbstractBuilder >> view: aRSView [
-	self container: aRSView
+RSAbstractViewBuilder >> view [
+	^ self container view
 ]

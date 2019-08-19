@@ -3,7 +3,7 @@ I am an handy class to build legend in a visualization
 "
 Class {
 	#name : #RSLegendBuilder,
-	#superclass : #RSAbstractBuilder,
+	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
 		'layout',
 		'defaultLabel',

@@ -3,12 +3,12 @@ I am an edge builder
 "
 Class {
 	#name : #RSSingleEdgeBuilder,
-	#superclass : #RSAbstractShapeBuilder,
+	#superclass : #RSAbstractModelBuilder,
 	#instVars : [
 		'fromObject',
 		'toObject'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
 
 { #category : #'instance variations' }

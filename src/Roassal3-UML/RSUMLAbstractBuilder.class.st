@@ -3,7 +3,7 @@ An abstract builder for UML shapes based on a model description (like a class or
 "
 Class {
 	#name : #RSUMLAbstractBuilder,
-	#superclass : #RSAbstractBuilder,
+	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
 		'renderer',
 		'modelDescriptor',

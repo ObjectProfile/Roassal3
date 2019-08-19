@@ -53,11 +53,6 @@ RTDynamicGrapher >> clean [
 	self updateView
 ]
 
-{ #category : #hooks }
-RTDynamicGrapher >> createView [
-	^ RTView new
-]
-
 { #category : #examples }
 RTDynamicGrapher >> example01 [
 

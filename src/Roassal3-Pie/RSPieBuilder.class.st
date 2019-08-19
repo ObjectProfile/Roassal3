@@ -19,7 +19,7 @@ b open
 "
 Class {
 	#name : #RSPieBuilder,
-	#superclass : #RSAbstractBuilder,
+	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
 		'objects',
 		'values',

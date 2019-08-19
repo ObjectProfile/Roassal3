@@ -69,7 +69,7 @@ RSControlsView >> renderLegendOn: aView [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
 	lb := RSLegendBuilder new 
-		view: aView;
+		container: aView;
 		yourself.
 	lb defaultTitle fontSize: 12.
 	lb defaultLabel fontSize: 10.

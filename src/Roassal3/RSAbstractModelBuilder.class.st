@@ -19,9 +19,10 @@ Class {
 		'innerClass',
 		'commands',
 		'actions',
-		'hasUniqueCommands'
+		'hasUniqueCommands',
+		'interaction'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
 
 { #category : #actions }
@@ -120,6 +121,11 @@ RSAbstractModelBuilder >> doesNotUnderstand: aMessage [
 	
 ]
 
+{ #category : #interactions }
+RSAbstractModelBuilder >> draggable [
+	self interactionDo: #draggable.
+]
+
 { #category : #'public - accessing' }
 RSAbstractModelBuilder >> element [
 	^ self elementOn: nil
@@ -208,6 +214,20 @@ RSAbstractModelBuilder >> innerClass: aClass [
 	innerClass := aClass
 ]
 
+{ #category : #interactions }
+RSAbstractModelBuilder >> interaction [
+	^ interaction ifNil: [
+		interaction := RSInteractionBuilder new.
+		self addAction: (RSAction new
+			action: [ :el | interaction setUpElement: el ]).
+		interaction ].
+]
+
+{ #category : #interactions }
+RSAbstractModelBuilder >> interactionDo: aBlock [
+	aBlock value: self interaction
+]
+
 { #category : #testing }
 RSAbstractModelBuilder >> isForElement [
 	^ isForElement
@@ -231,6 +251,11 @@ RSAbstractModelBuilder >> onElement [
 { #category : #'public - accessing' }
 RSAbstractModelBuilder >> onModel [
 	isForElement := false
+]
+
+{ #category : #interactions }
+RSAbstractModelBuilder >> popup [
+	self interactionDo: #popup.
 ]
 
 { #category : #dependencies }
@@ -281,6 +306,13 @@ RSAbstractModelBuilder >> uniqueCommands [
 ]
 
 { #category : #updating }
+RSAbstractModelBuilder >> updateElement: element [
+	self 
+		updateElement: element 
+		innerComponent: element shape
+]
+
+{ #category : #updating }
 RSAbstractModelBuilder >> updateElement: element innerComponent: component [
 	| copy |
 	copy := self commands copy.
@@ -289,4 +321,19 @@ RSAbstractModelBuilder >> updateElement: element innerComponent: component [
 			element: element;
 			component: component ].
 	copy do: #execute
+]
+
+{ #category : #updating }
+RSAbstractModelBuilder >> updateElement: element withCommand: selector [
+	| temp |
+	temp := commands.
+	commands := commands select: [ :c | c selector = selector ].
+	self updateElement: element.
+	commands := temp.
+		
+]
+
+{ #category : #updating }
+RSAbstractModelBuilder >> updateElements: elements [
+	elements do: [ :e | self updateElement: e ].
 ]

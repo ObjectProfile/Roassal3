@@ -51,11 +51,6 @@ RTDoubleBarBuilder >> createPointNameFrom: someObjects [
 	^ es
 ]
 
-{ #category : #hooks }
-RTDoubleBarBuilder >> createView [
-	^ super createView @ RTDraggableView
-]
-
 { #category : #configuration }
 RTDoubleBarBuilder >> defaultVerticalGap [
 	^ 5
