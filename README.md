@@ -1,4 +1,6 @@
 # Roassal3
+[![Build Status](https://travis-ci.org/ObjectProfile/Roassal3.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal3) [![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg)](https://coveralls.io/github/ObjectProfile/Roassal3)
+
 Roassal3 is a new agile visualization engine for Pharo 7 and Pharo 8.
 
 
