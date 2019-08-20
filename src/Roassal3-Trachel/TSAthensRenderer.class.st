@@ -254,7 +254,7 @@ TSAthensRenderer >> buildPolygonPath: polygon [
 ]
 
 { #category : #'creating path' }
-TSAthensRenderer >> buildPolyinePath: line [
+TSAthensRenderer >> buildPolylinePath: line [
 	| first cp radius |
 	builder absolute.
 	cp := line controlPoints.

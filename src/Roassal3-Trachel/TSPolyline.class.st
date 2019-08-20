@@ -12,7 +12,7 @@ Class {
 
 { #category : #visiting }
 TSPolyline >> buildPathOn: visitor [
-	visitor buildPolyinePath: self
+	visitor buildPolylinePath: self
 ]
 
 { #category : #accessing }
