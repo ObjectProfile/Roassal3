@@ -66,6 +66,29 @@ TSAthensMorph >> drawOn: aCanvas [
 ]
 
 { #category : #drawing }
+TSAthensMorph >> drawOnAthensCanvas: aCanvas [
+
+	isDrawing ifTrue: [ ^ self ].
+	isDrawing := true.
+	
+	[  
+		self checkSession.
+		self recreateSurfaceIfNecessary.
+		
+		aCanvas setPaint: trachelCanvas color.
+		aCanvas drawShape: bounds.
+		trachelCanvas playAnimations.
+		self drawShapes.
+		surface hasBeenFreed ifTrue: [ self createSurface ].	
+	
+		aCanvas	
+			setPaint: surface;
+			draw ]
+	ensure: [ 
+		isDrawing := false ]
+]
+
+{ #category : #drawing }
 TSAthensMorph >> drawOnMockCanvas [
 	"This method is used to trigger all the rendering in a temporary FormCanvas. This method is useful when a bug happens when rendering. Such situation are difficult to debug to the multi-threading and low level graphical primitive. The method #drawOnMockCanvas helps addressing this.
 
