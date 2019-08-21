@@ -41,7 +41,7 @@ g legend.
 "
 Class {
 	#name : #RTMultiGrapher,
-	#superclass : #RTBuilder,
+	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
 		'graphers',
 		'legendBuilder',

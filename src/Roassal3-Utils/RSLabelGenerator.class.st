@@ -3,8 +3,8 @@ Reference:
  	[1] An Extension of Wilkinson's Algorithm for positioning Tick Labels on Axes  (Justin Talbot, Sharon Lin, Pat Hanrahan)
 "
 Class {
-	#name : #RTLabelGenerator,
-	#superclass : #RTObject,
+	#name : #RSLabelGenerator,
+	#superclass : #RSObject,
 	#instVars : [
 		'nice',
 		'loose',
@@ -12,16 +12,16 @@ Class {
 		'w',
 		'epsilon'
 	],
-	#category : #'Roassal3-Grapher-Builder-Grapher-Labeling'
+	#category : #'Roassal3-Utils-Labeling'
 }
 
 { #category : #'instance creation' }
-RTLabelGenerator class >> nice: aNiceGenerator [
+RSLabelGenerator class >> nice: aNiceGenerator [
 	^ self new nice: aNiceGenerator
 ]
 
 { #category : #private }
-RTLabelGenerator >> coverageMin: dmin max: dmax lmin: lmin lmax: lmax [
+RSLabelGenerator >> coverageMin: dmin max: dmax lmin: lmin lmax: lmax [
 	| a b c|
 	a := dmax - lmax.
 	b := dmin - lmin.
@@ -31,7 +31,7 @@ RTLabelGenerator >> coverageMin: dmin max: dmax lmin: lmin lmax: lmax [
 ]
 
 { #category : #private }
-RTLabelGenerator >> coverageMin: dmin max: dmax span: span [
+RSLabelGenerator >> coverageMin: dmin max: dmax span: span [
 	| range r half|
 	range := dmax - dmin.
 	(span > range) ifTrue: [ 
@@ -42,7 +42,7 @@ RTLabelGenerator >> coverageMin: dmin max: dmax span: span [
 ]
 
 { #category : #private }
-RTLabelGenerator >> density: k m: m dmin: dmin dmax: dmax lmin: lmin lmax: lmax [
+RSLabelGenerator >> density: k m: m dmin: dmin dmax: dmax lmin: lmin lmax: lmax [
 	"* k		number of labels
 	 * m		number of desired labels
 	 * dmin	data range minimum
@@ -62,13 +62,13 @@ RTLabelGenerator >> density: k m: m dmin: dmin dmax: dmax lmin: lmin lmax: lmax 
 ]
 
 { #category : #private }
-RTLabelGenerator >> densityMax: k m: m [
+RSLabelGenerator >> densityMax: k m: m [
 	(k >= m) ifTrue: [ ^ 2 - ((k-1)/(m-1)) ].
 	^ 1
 ]
 
 { #category : #private }
-RTLabelGenerator >> epsilon [
+RSLabelGenerator >> epsilon [
 	" Compute the machine epsilon for the float type, the largest positive 
  	floating-point value that, when added to 1, results in a value equal to 1 due to 
  	roundoff."
@@ -82,30 +82,31 @@ RTLabelGenerator >> epsilon [
 ]
 
 { #category : #private }
-RTLabelGenerator >> flooredMod: a n: num [
+RSLabelGenerator >> flooredMod: a n: num [
 	^ a - (num * (a / num) floor).
 ]
 
 { #category : #initialization }
-RTLabelGenerator >> initialize [
+RSLabelGenerator >> initialize [
 	super initialize.
 	nice := nil.
 	loose := false.
-	w := #(0.25 0.2 0.5 0.05)
+	w := #(0.25 0.2 0.5 0.05).
+	self nice: RSNiceStepSizeGenerator new.
 ]
 
 { #category : #private }
-RTLabelGenerator >> legibility: min max: max step: step [
+RSLabelGenerator >> legibility: min max: max step: step [
 	^ 1
 ]
 
 { #category : #public }
-RTLabelGenerator >> nice: aNiceGenerator [
+RSLabelGenerator >> nice: aNiceGenerator [
 	nice := aNiceGenerator
 ]
 
 { #category : #public }
-RTLabelGenerator >> searchMin: dmin max: dmax desired: desiredNumberOfTicks [
+RSLabelGenerator >> searchMin: dmin max: dmax desired: desiredNumberOfTicks [
 	| best sm dm cm delta bestScore k |
 	best := RTGrapherLabel new.
 	bestScore := -2.
@@ -185,7 +186,7 @@ RTLabelGenerator >> searchMin: dmin max: dmax desired: desiredNumberOfTicks [
 ]
 
 { #category : #public }
-RTLabelGenerator >> setLooseFlag: aBool [
+RSLabelGenerator >> setLooseFlag: aBool [
 	"Configuration to 'loose' labelings.
 	The extreme labels can be placement both inside(setLooseFlag: false) and outside (setLooseFlag: true) of the range of the data.
 	
@@ -204,7 +205,7 @@ RTLabelGenerator >> setLooseFlag: aBool [
 ]
 
 { #category : #private }
-RTLabelGenerator >> simplicity: min max: max step: step [
+RSLabelGenerator >> simplicity: min max: max step: step [
 	(nice qvar size > 1) ifTrue: [ 
 		^ 1 - (n i/ (nice qvar size - 1)) - n j + (self vMin: min max: max step: step) ].
 	^ 1 - n j + (self vMin: min max: max step: step)
@@ -212,18 +213,18 @@ RTLabelGenerator >> simplicity: min max: max step: step [
 ]
 
 { #category : #private }
-RTLabelGenerator >> simplicityMax [
+RSLabelGenerator >> simplicityMax [
 	(nice qvar size > 1) ifTrue: [ ^ 1 - ((n i )/(nice qvar size -1)) - n j + 1.0 ].
 	 ^ 1 - n j + 1.0
 ]
 
 { #category : #private }
-RTLabelGenerator >> vMin: min max: max step: step [
+RSLabelGenerator >> vMin: min max: max step: step [
 	^ ((self flooredMod: min n: step) < (self epsilon) 
 	and: [ min <= 0 and: [ max >= 0 ] ]) ifTrue: [ 1 ] ifFalse: [ 0 ]
 ]
 
 { #category : #private }
-RTLabelGenerator >> w: s c: c d: d l: l [
+RSLabelGenerator >> w: s c: c d: d l: l [
 	^ (w first * s) + (w second * c) + (w third * d) + (w fourth * l)
 ]

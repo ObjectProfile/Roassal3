@@ -3,7 +3,7 @@ A RTAxisConfiguration describes an axis configuration
 "
 Class {
 	#name : #RTAxisConfiguration,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'numberOfTicks',
 		'numberOfLabels',

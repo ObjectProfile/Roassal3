@@ -1,6 +1,6 @@
 Class {
 	#name : #RTScaleTransformation,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#classInstVars : [
 		'instance'
 	],

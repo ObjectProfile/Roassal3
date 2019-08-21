@@ -1,6 +1,6 @@
 Class {
 	#name : #RTSamplingGrapher,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'threshold'
 	],

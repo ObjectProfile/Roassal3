@@ -4,7 +4,7 @@ A RTAxisRenderer is a renderer for axis. It simply render in a view an axis conf
 "
 Class {
 	#name : #RTAxisRenderer,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'config',
 		'builder'

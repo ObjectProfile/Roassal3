@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAbstractGrapherDecorator,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'builder',
 		'shapeBuilder',

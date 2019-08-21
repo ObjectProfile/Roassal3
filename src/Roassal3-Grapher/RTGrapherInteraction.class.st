@@ -3,7 +3,7 @@ I am a base class for interactions specific to RTGrapher.
 "
 Class {
 	#name : #RTGrapherInteraction,
-	#superclass : #RTInteraction,
+	#superclass : #RSInteraction,
 	#category : #'Roassal3-Grapher-Builder-Grapher-Core'
 }
 

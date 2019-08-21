@@ -14,7 +14,7 @@ b
 "
 Class {
 	#name : #RTBarLabelFactory,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'color',
 		'label',

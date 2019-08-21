@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAbstractData,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'builder',
 		'maxX',

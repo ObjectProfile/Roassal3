@@ -3,53 +3,53 @@ I am an utility class for RTNiceStepSizeGenerator>>next
 
 "
 Class {
-	#name : #RTNiceStep,
-	#superclass : #RTObject,
+	#name : #RSNiceStep,
+	#superclass : #RSObject,
 	#instVars : [
 		'stepSize',
 		'offset',
 		'i',
 		'j'
 	],
-	#category : #'Roassal3-Grapher-Builder-Grapher-Labeling'
+	#category : #'Roassal3-Utils-Labeling'
 }
 
 { #category : #accessing }
-RTNiceStep >> i [
+RSNiceStep >> i [
 	^ i
 ]
 
 { #category : #accessing }
-RTNiceStep >> i: aNumber [
+RSNiceStep >> i: aNumber [
 	i := aNumber
 ]
 
 { #category : #accessing }
-RTNiceStep >> j [
+RSNiceStep >> j [
 	^ j
 ]
 
 { #category : #accessing }
-RTNiceStep >> j: aNumber [
+RSNiceStep >> j: aNumber [
 	j := aNumber
 ]
 
 { #category : #accessing }
-RTNiceStep >> offset [
+RSNiceStep >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-RTNiceStep >> offset: aNumber [
+RSNiceStep >> offset: aNumber [
 	offset := aNumber
 ]
 
 { #category : #accessing }
-RTNiceStep >> stepSize [
+RSNiceStep >> stepSize [
 	^ stepSize
 ]
 
 { #category : #accessing }
-RTNiceStep >> stepSize: aNumber [
+RSNiceStep >> stepSize: aNumber [
 	stepSize := aNumber
 ]

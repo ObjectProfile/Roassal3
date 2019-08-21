@@ -3,9 +3,8 @@ A RTDoubleBarBuilder render a double bar chart
 "
 Class {
 	#name : #RTDoubleBarBuilder,
-	#superclass : #RTBuilder,
+	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
-		'elements',
 		'topExtremity',
 		'bottomExtremity',
 		'verticalGap',

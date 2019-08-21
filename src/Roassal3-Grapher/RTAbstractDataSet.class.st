@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAbstractDataSet,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'points',
 		'x',
@@ -177,17 +177,17 @@ RTAbstractDataSet >> initialize [
 	y := #yourself.
 	self resetMinAndMax.
  
-	dotBuilder := RTShapeBuilder new.
+	dotBuilder := RSShapeBuilder new.
 	dotBuilder circle size: 5.
 	
 	"Maybe this can be lazily done"
-	histogramBuilder := RTShapeBuilder new.
+	histogramBuilder := RSShapeBuilder new.
 	histogramBuilder rectangle.
 	
 	"Maybe this can be lazily done"
-	lineBuilder := RTShapeBuilder new.
+	lineBuilder := RSShapeBuilder new.
 	
-	interaction := RTInteractionBuilder new.
+	interaction := RSInteractionBuilder new.
 	interaction popup.
 	shouldConnect := false.
 	

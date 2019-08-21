@@ -3,7 +3,7 @@ I am an utility class for RTLabelGenerator
 "
 Class {
 	#name : #RTGrapherLabel,
-	#superclass : #RTObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'min',
 		'max',

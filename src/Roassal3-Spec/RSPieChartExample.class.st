@@ -87,7 +87,7 @@ RSPieChartExample >> run [
 { #category : #initialization }
 RSPieChartExample >> visualizeChart: view package: pkg [
 	| generator result ticks scale bscale  viewRect label box  |
-	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
+	generator := RSLabelGenerator nice: RSNiceStepSizeGenerator new.
 	generator setLooseFlag: true.
 	result := generator searchMin: 0 max: totalSum desired: 10.
 	ticks := result min to: result max by: result step.
