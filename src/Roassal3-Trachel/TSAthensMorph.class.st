@@ -80,10 +80,13 @@ TSAthensMorph >> drawOnAthensCanvas: aCanvas [
 		trachelCanvas playAnimations.
 		self drawShapes.
 		surface hasBeenFreed ifTrue: [ self createSurface ].	
-	
-		aCanvas	
-			setPaint: surface;
-			draw ]
+
+		aCanvas pathTransform restoreAfter: [
+			aCanvas pathTransform loadIdentity.
+			aCanvas paintMode restoreAfter: [
+				aCanvas 
+					setPaint: surface;
+					drawShape: (0@0 extent: self extent) ] ] ]
 	ensure: [ 
 		isDrawing := false ]
 ]
@@ -168,6 +171,12 @@ TSAthensMorph >> eventOfClass: anEventClass shape: aShape from: aMorphicEvent [
 		shape: aShape;
 		position: relativePosition.
 	^ trEvent
+]
+
+{ #category : #drawing }
+TSAthensMorph >> fullDrawOnAthensCanvas: aCanvas [
+
+	self drawOnAthensCanvas: aCanvas
 ]
 
 { #category : #'events-processing' }
