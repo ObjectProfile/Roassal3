@@ -45,50 +45,33 @@ TSAthensMorph >> createSurface [
 
 { #category : #drawing }
 TSAthensMorph >> drawOn: aCanvas [
+
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true.
-	self checkSession.
-	self recreateSurfaceIfNecessary.
-	aCanvas fillRectangle: bounds color: trachelCanvas color.
-	trachelCanvas playAnimations.
-	self drawShapes.
+	[ 
+		self checkSession.
+		self recreateSurfaceIfNecessary.
+		aCanvas fillRectangle: bounds color: trachelCanvas color.
+		trachelCanvas playAnimations.
+		self drawShapes.
 
-	surface hasBeenFreed
-		ifTrue: [ self createSurface ].
-	[ aCanvas
-		image: surface asForm
-		at: self bounds origin asIntegerPoint
-		sourceRect: (0 @ 0 extent: surface extent)
-		rule: 34 ]
+		surface hasBeenFreed
+			ifTrue: [ self createSurface ].
+		[ aCanvas
+			image: surface asForm
+			at: self bounds origin asIntegerPoint
+			sourceRect: (0 @ 0 extent: surface extent)
+			rule: 34 ]
 		on: Exception
-		do: [ :ex |  ].
-	isDrawing := false.
+		do: [ :ex |  ] ] 
+	ensure: [ 
+		isDrawing := false ]
 ]
 
 { #category : #drawing }
 TSAthensMorph >> drawOnAthensCanvas: aCanvas [
 
-	isDrawing ifTrue: [ ^ self ].
-	isDrawing := true.
-	
-	[  
-		self checkSession.
-		self recreateSurfaceIfNecessary.
-		
-		aCanvas setPaint: trachelCanvas color.
-		aCanvas drawShape: bounds.
-		trachelCanvas playAnimations.
-		self drawShapes.
-		surface hasBeenFreed ifTrue: [ self createSurface ].	
-
-		aCanvas pathTransform restoreAfter: [
-			aCanvas pathTransform loadIdentity.
-			aCanvas paintMode restoreAfter: [
-				aCanvas 
-					setPaint: surface;
-					drawShape: (0@0 extent: self extent) ] ] ]
-	ensure: [ 
-		isDrawing := false ]
+	self fullDrawOnAthensCanvas: aCanvas
 ]
 
 { #category : #drawing }
@@ -176,7 +159,26 @@ TSAthensMorph >> eventOfClass: anEventClass shape: aShape from: aMorphicEvent [
 { #category : #drawing }
 TSAthensMorph >> fullDrawOnAthensCanvas: aCanvas [
 
-	self drawOnAthensCanvas: aCanvas
+	isDrawing ifTrue: [ ^ self ].
+	isDrawing := true.
+	[  
+		self checkSession.
+		self recreateSurfaceIfNecessary.
+		
+		aCanvas setPaint: trachelCanvas color.
+		aCanvas drawShape: bounds.
+		trachelCanvas playAnimations.
+		self drawShapes.
+		surface hasBeenFreed ifTrue: [ self createSurface ].	
+
+		aCanvas pathTransform restoreAfter: [
+			aCanvas pathTransform loadIdentity.
+			aCanvas paintMode restoreAfter: [
+				aCanvas 
+					setPaint: surface;
+					drawShape: (0@0 extent: self extent) ] ] ]
+	ensure: [ 
+		isDrawing := false ]
 ]
 
 { #category : #'events-processing' }
