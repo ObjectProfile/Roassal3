@@ -223,6 +223,15 @@ TSShape >> path: aPath [
 	path := aPath
 ]
 
+{ #category : #copying }
+TSShape >> postCopy [
+	self 
+		parent: nil; 
+		announcer: nil;
+		resetPath;
+		resetBBox
+]
+
 { #category : #events }
 TSShape >> privateAnnouncer [
 	^ announcer

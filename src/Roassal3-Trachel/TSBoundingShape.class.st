@@ -117,6 +117,12 @@ TSBoundingShape >> position: aPoint [
 	self resetBBox.
 ]
 
+{ #category : #copying }
+TSBoundingShape >> postCopy [
+	super postCopy.
+	self matrix: self matrix copy
+]
+
 { #category : #matrix }
 TSBoundingShape >> rotateByDegrees: angle [
 	matrix rotateByDegrees: angle.

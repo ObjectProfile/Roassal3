@@ -13,17 +13,8 @@ TSShape >> gtInspectorViewIn: composite [
 TSShape >> gtViewForInspector [
 	| view copy |
 	view := RSView new.
-	copy := self trachelCopy.
+	copy := self copy.
 	view addShape: copy.
 	view @ RSChessBackground.
 	^ view
-]
-
-{ #category : #'*Roassal3-Inspector' }
-TSShape >> trachelCopy [
-	| copy |
-	copy := self copy.
-	copy parent: nil.
-	copy announcer: nil.
-	^ copy
 ]
