@@ -41,7 +41,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Spec';
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
 				package: #'Roassal3-Examples';
-				package: #'Roassal3-Tests';
+				package: #'Roassal3-Global-Tests';
 				package: #'Roassal3-Menu'.
 				
 			spec 
@@ -59,7 +59,7 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Inspector'
 					'Roassal3-Menu');
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
-				group: 'Tests' with: #('Core' 'Roassal3-Tests');
+				group: 'Tests' with: #('Core' 'Roassal3-Global-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ].
 
 		

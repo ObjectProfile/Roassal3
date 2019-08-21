@@ -4,7 +4,7 @@ I have test for animation in trachel
 Class {
 	#name : #TSTransitionAnimationTest,
 	#superclass : #TSAnimationTest,
-	#category : #'Roassal3-Tests-Animation'
+	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }

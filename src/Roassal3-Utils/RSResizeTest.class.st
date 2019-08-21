@@ -5,7 +5,7 @@ Class {
 		'elements',
 		'resize'
 	],
-	#category : #'Roassal3-Tests-AlignmentAndResize'
+	#category : #'Roassal3-Utils-Tests'
 }
 
 { #category : #running }

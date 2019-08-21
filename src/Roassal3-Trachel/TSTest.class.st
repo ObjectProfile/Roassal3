@@ -4,7 +4,7 @@ I am the top class for tests
 Class {
 	#name : #TSTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Tests-Trachel'
+	#category : #'Roassal3-Trachel-Tests'
 }
 
 { #category : #testing }

@@ -5,7 +5,7 @@ Class {
 		'view',
 		'elements'
 	],
-	#category : #'Roassal3-Tests-Interactions'
+	#category : #'Roassal3-Interaction-Tests'
 }
 
 { #category : #running }

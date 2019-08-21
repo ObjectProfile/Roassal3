@@ -1,29 +1,11 @@
-"
-A TSGroupTest is a test class for testing the behavior of TSGroup
-"
 Class {
-	#name : #TSGroupTest,
+	#name : #RSGroupTest,
 	#superclass : #TSTest,
-	#category : #'Roassal3-Tests-Trachel'
+	#category : #'Roassal3-Test'
 }
 
 { #category : #tests }
-TSGroupTest >> testAddShape [
-	| g |
-	g := TSGroup new.
-	g add: TSBox new.
-]
-
-{ #category : #tests }
-TSGroupTest >> testAsGroup [
-	| t |
-	t := #(1 2 3) asGroup.
-	self assert: t asArray equals: #(1 2 3).
-	self assert: t class equals: TSGroup
-]
-
-{ #category : #tests }
-TSGroupTest >> testCache01 [
+RSGroupTest >> testCache01 [
 
 	| es el |
 	es := RSShapeBuilder box elementsOn: (1 to: 5).
@@ -38,7 +20,7 @@ TSGroupTest >> testCache01 [
 ]
 
 { #category : #tests }
-TSGroupTest >> testCache02 [
+RSGroupTest >> testCache02 [
 
 	| es el els |
 	es := RSShapeBuilder box elementsOn: #(1 1).
@@ -53,7 +35,7 @@ TSGroupTest >> testCache02 [
 ]
 
 { #category : #tests }
-TSGroupTest >> testCache03 [
+RSGroupTest >> testCache03 [
 
 	| es el |
 	es := RSShapeBuilder box elementsOn: #(1 1).
@@ -66,7 +48,7 @@ TSGroupTest >> testCache03 [
 ]
 
 { #category : #tests }
-TSGroupTest >> testCache04 [
+RSGroupTest >> testCache04 [
 
 	| es |
 	es := RSShapeBuilder box elementsOn: #(1).
@@ -77,20 +59,7 @@ TSGroupTest >> testCache04 [
 ]
 
 { #category : #tests }
-TSGroupTest >> testDrawGroup [
-	| g c com |
-	c := TSCanvas new.
-	g := TSGroup new.
-	g add: TSBox new.
-	com := TSComposite new
-		shapes: g.
-	c addShape: com.
-	self assert: c numberOfShapes equals: 1.
-	c createMorph drawOnMockCanvas.
-]
-
-{ #category : #tests }
-TSGroupTest >> testElementFromModel [
+RSGroupTest >> testElementFromModel [
 	| group |
 	group := RSShapeBuilder box elementsOn: (1 to: 5).
 	self assert: (group elementFromModel: 1) == group first.

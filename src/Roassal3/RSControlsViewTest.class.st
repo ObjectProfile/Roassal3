@@ -1,7 +1,7 @@
 Class {
 	#name : #RSControlsViewTest,
 	#superclass : #TSTest,
-	#category : #'Roassal3-Tests-Roassal'
+	#category : #'Roassal3-Test'
 }
 
 { #category : #tests }

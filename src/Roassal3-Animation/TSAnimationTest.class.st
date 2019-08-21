@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Tests-Animation'
+	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }

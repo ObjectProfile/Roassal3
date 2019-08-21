@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'c'
 	],
-	#category : #'Roassal3-Tests-Trachel'
+	#category : #'Roassal3-Trachel-Tests'
 }
 
 { #category : #running }

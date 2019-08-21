@@ -9,7 +9,7 @@ Class {
 		'el2',
 		'edge'
 	],
-	#category : #'Roassal3-Tests-Roassal'
+	#category : #'Roassal3-Test'
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ Test for all shapes with a matrix an one encompassing rectangle
 Class {
 	#name : #TSBoundingTest,
 	#superclass : #TSCanvasTest,
-	#category : #'Roassal3-Tests-Trachel'
+	#category : #'Roassal3-Trachel-Tests'
 }
 
 { #category : #running }

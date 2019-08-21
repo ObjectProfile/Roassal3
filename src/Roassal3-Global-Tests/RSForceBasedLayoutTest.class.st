@@ -5,7 +5,7 @@ Class {
 		'view',
 		'classes'
 	],
-	#category : #'Roassal3-Tests-Layouts'
+	#category : #'Roassal3-Global-Tests-Layouts'
 }
 
 { #category : #running }

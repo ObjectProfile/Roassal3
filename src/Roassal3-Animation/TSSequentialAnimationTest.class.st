@@ -4,7 +4,7 @@ I have test for sequential animation
 Class {
 	#name : #TSSequentialAnimationTest,
 	#superclass : #TSAnimationTest,
-	#category : #'Roassal3-Tests-Animation'
+	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }
