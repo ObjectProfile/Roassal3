@@ -123,7 +123,7 @@ RSPieChartExample >> visualizeChart: view package: pkg [
 RSPieChartExample >> visualizePie: view package: pkg [
 	| b rect max |
 	b := RSPieBuilder new.
-	b view: view.
+	b container: view.
 	
 	b shape 
 		interactionDo: [ :i | | popup |
