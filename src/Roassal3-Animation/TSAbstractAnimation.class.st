@@ -3,9 +3,8 @@ I am the abstract class that defines animations for roassal3
 "
 Class {
 	#name : #TSAbstractAnimation,
-	#superclass : #TSObject,
+	#superclass : #TSAnimation,
 	#instVars : [
-		'canvas',
 		'announcer',
 		'isRunning',
 		'hasCompleted',
@@ -38,16 +37,6 @@ TSAbstractAnimation >> announcer [
 { #category : #events }
 TSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
-]
-
-{ #category : #accessing }
-TSAbstractAnimation >> canvas [
-	^ canvas
-]
-
-{ #category : #accessing }
-TSAbstractAnimation >> canvas: aCanvas [
-	canvas := aCanvas
 ]
 
 { #category : #actions }
@@ -177,11 +166,6 @@ TSAbstractAnimation >> refresh [
 		ifTrue: [ ^ self ].
 	self step.
 	
-]
-
-{ #category : #dependencies }
-TSAbstractAnimation >> release [
-	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #actions }
