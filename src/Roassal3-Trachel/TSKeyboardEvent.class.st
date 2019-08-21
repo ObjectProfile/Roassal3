@@ -58,8 +58,3 @@ TSKeyboardEvent >> keyValue [
 TSKeyboardEvent >> keyValue: anObject [
 	keyValue := anObject
 ]
-
-{ #category : #accessing }
-TSKeyboardEvent >> symbol [ 
-	^ symbol ifNil: [ symbol := self class symbolFor: keyValue ].
-]

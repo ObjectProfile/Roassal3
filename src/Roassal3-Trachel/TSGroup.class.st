@@ -12,11 +12,6 @@ Class {
 	#category : #'Roassal3-Trachel-Shape'
 }
 
-{ #category : #converting }
-TSGroup >> @ int [
-	self do: [ :e | e @ int ].
-]
-
 { #category : #accessing }
 TSGroup >> add: element [
 	self resetElementFromModelCache.
@@ -30,26 +25,8 @@ TSGroup >> addAll: elements [
 ]
 
 { #category : #converting }
-TSGroup >> asElement [ 
-	^ self asElementOn: nil
-]
-
-{ #category : #converting }
-TSGroup >> asElementOn: model [
-	^ RSComposite new 
-		model: model;
-		shape: TSComposite new;
-		shapes: self.
-]
-
-{ #category : #converting }
 TSGroup >> asGroup [
 	^ self
-]
-
-{ #category : #accessing }
-TSGroup >> edges [
-	^ self select: [ :o | o class == RSEdge ]
 ]
 
 { #category : #accessing }
@@ -75,11 +52,6 @@ TSGroup >> elementFromModelCache [
 	"Define a cache for the element lookup from models"
 	elementFromModelCache ifNil: [ elementFromModelCache := Dictionary new ].
 	^ elementFromModelCache
-]
-
-{ #category : #accessing }
-TSGroup >> elements [
-	^ self select: [ :o | o class == RSElement ]
 ]
 
 { #category : #accessing }
@@ -129,26 +101,6 @@ TSGroup >> extent [
 { #category : #accessing }
 TSGroup >> height [ 
 	^ self extent y
-]
-
-{ #category : #ui }
-TSGroup >> paintOn: b [
-	"b is a mondrian builder"
-	| methodsToBeVisualized |
-	methodsToBeVisualized := self, (self flatCollect: #allOutgoingCalls) asSet asArray.
-	b shape 
-		box if: #isTest fillColor: Color green.
-	b nodes: methodsToBeVisualized.
-	
-	b shape line color: Color veryLightGray trans.
-	b edges
-		moveBehind;
-		connectToAll: #outgoingCalls.
-		
-	b normalizer
-		normalizeSize: #numberOfLinesOfCode;
-		normalizeColor: [ :m | (m tests intersection: self) size ] using: { Color blue. Color red }.
-	b layout tree.
 ]
 
 { #category : #actions }

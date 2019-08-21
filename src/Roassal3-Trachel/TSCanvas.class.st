@@ -50,15 +50,6 @@ TSCanvas >> addShape: aShape [
 ]
 
 { #category : #animations }
-TSCanvas >> animationFrom: array [
-	| anime |
-	anime := TSSequentialAnimation new.
-	anime addAll: array.
-	self addAnimation: anime.
-	^ anime
-]
-
-{ #category : #animations }
 TSCanvas >> animations [
 	^ animations
 ]
@@ -211,14 +202,6 @@ TSCanvas >> morph [
 { #category : #accessing }
 TSCanvas >> morph: aMorph [
 	morph := aMorph
-]
-
-{ #category : #animations }
-TSCanvas >> newAnimation [
-	| anime |
-	anime := self tAnimation.
-	self addAnimation: anime.
-	^ anime
 ]
 
 { #category : #animations }
@@ -391,11 +374,6 @@ TSCanvas >> showRectangles [
 { #category : #updating }
 TSCanvas >> signalUpdate [
 	morph changed
-]
-
-{ #category : #animations }
-TSCanvas >> tAnimation [ 
-	^ TSTransitionAnimation new.
 ]
 
 { #category : #accessing }
