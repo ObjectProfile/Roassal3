@@ -358,51 +358,6 @@ RSAnimationExamples >> example06Atom [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example06AtomSpec2 [
-	<script: 'self new example06AtomSpec2'>
-	| elements v border extent speed frame |
-	
-	v := RSView new.
-	border := TSBorder new width: 4.
-	extent := 450@110.
-	elements := RSShapeBuilder ellipse
-		border: border;
-		extent: #yourself;
-		color: nil;
-		onElement;
-		matrixDo: [ :e | [ :m | m rotateByRadians: e index * Float pi/4 ] ];
-		if: [ :e | e index = 1 ] 
-			then: [ :s | s color: Color black ];
-		elementsOn: { 40@40. extent. extent. extent. extent}.
-	v addAll: elements.
-	elements := RSShapeBuilder ellipse
-		border: border;
-		color: Color black;
-		extent: 20@20;
-		elementsOn: (1 to: 4).
-	v addAll: elements.
-	frame := 0.
-	
-	v newAnimation repeat onStepDo: [ :t |
-		frame := frame +1.
-		speed := frame/50.
-		elements do: [ :e | | ang |
-			ang := speed + (e index * 90).
-			e matrix
-				loadIdentity;
-				rotateByRadians: e index * Float pi /4;
-				translateBy: (extent/2)* (ang cos @ ang sin)
-			 ]
-	].
-		
-	v when: TSExtentChangedEvent do: [ :evt | 
-		v zoomToFit ].
-	
-	^ v canvas createMorph
-	
-]
-
-{ #category : #examples }
 RSAnimationExamples >> example07Psycho [
 	<script: 'self new example07Psycho'>
 	| shape v theta slices unit color sc1 sc2 |
