@@ -202,7 +202,7 @@ RTGrapher >> initialize [
 	"Collection of data sets"
 	datasets := OrderedCollection new.
 	
-	generator := RSLabelGenerator nice: RSNiceStepSizeGenerator new.
+	generator := RSLabelGenerator new.
 	self shouldUseNiceLabels: true
 ]
 

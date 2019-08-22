@@ -108,7 +108,7 @@ RSLabelGenerator >> nice: aNiceGenerator [
 { #category : #public }
 RSLabelGenerator >> searchMin: dmin max: dmax desired: desiredNumberOfTicks [
 	| best sm dm cm delta bestScore k |
-	best := RTGrapherLabel new.
+	best := RSNiceLabel new.
 	bestScore := -2.
 	desiredNumberOfTicks <= 0 ifTrue: [ self error: 'The minimun value of desiredNumberOfTicks is 1' ].
 	

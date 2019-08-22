@@ -2,7 +2,7 @@
 I am an utility class for RTLabelGenerator
 "
 Class {
-	#name : #RTGrapherLabel,
+	#name : #RSNiceLabel,
 	#superclass : #RSObject,
 	#instVars : [
 		'min',
@@ -10,31 +10,31 @@ Class {
 		'step',
 		'score'
 	],
-	#category : #'Roassal3-Grapher-Builder-Grapher-Labeling'
+	#category : #'Roassal3-Utils-Labeling'
 }
 
 { #category : #accessing }
-RTGrapherLabel >> max [
+RSNiceLabel >> max [
 	^ max
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> max: aNumber [
+RSNiceLabel >> max: aNumber [
 	max := aNumber
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> min [
+RSNiceLabel >> min [
 	^ min
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> min: aNumber [
+RSNiceLabel >> min: aNumber [
 	min := aNumber
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> numberOfTicks [
+RSNiceLabel >> numberOfTicks [
 	| ticks |
 	min < 0 ifTrue: [ 
 		ticks := max < 0 ifTrue: [ (max - min) abs ] ifFalse: [ max+min abs  ]
@@ -45,7 +45,7 @@ RTGrapherLabel >> numberOfTicks [
 ]
 
 { #category : #printing }
-RTGrapherLabel >> printOn: aStream [
+RSNiceLabel >> printOn: aStream [
 	| x |
 	aStream 
 		nextPutAll: '(Score: ';
@@ -61,21 +61,21 @@ RTGrapherLabel >> printOn: aStream [
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> score [
+RSNiceLabel >> score [
 	^ score
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> score: aNumber [
+RSNiceLabel >> score: aNumber [
 	score := aNumber
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> step [
+RSNiceLabel >> step [
 	^ step
 ]
 
 { #category : #accessing }
-RTGrapherLabel >> step: aNumber [
+RSNiceLabel >> step: aNumber [
 	step := aNumber
 ]
