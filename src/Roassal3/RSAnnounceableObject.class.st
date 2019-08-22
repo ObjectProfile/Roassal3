@@ -69,6 +69,11 @@ RSAnnounceableObject >> attributesDo: block [
 	block value: self attributes.
 ]
 
+{ #category : #events }
+RSAnnounceableObject >> click [
+	self announcer announce: (TSMouseClick new).
+]
+
 { #category : #accessing }
 RSAnnounceableObject >> getInteractionsForClass: anInteractionClass [
 	"Return the Announcement subscriptions for the interaction"
