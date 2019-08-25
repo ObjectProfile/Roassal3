@@ -134,11 +134,6 @@ TSShape >> height [
 	^ self extent y
 ]
 
-{ #category : #accessing }
-TSShape >> inNeighbourhood [
-	^ #()
-]
-
 { #category : #testing }
 TSShape >> includesPoint: aPoint [
 	"Return true or false"
@@ -191,11 +186,6 @@ TSShape >> newAnimation [
 { #category : #accessing }
 TSShape >> noPaint [
 	paint := nil
-]
-
-{ #category : #accessing }
-TSShape >> outNeighbourhood [
-	^ #()
 ]
 
 { #category : #accessing }
