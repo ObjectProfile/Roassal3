@@ -567,7 +567,6 @@ TSAthensRenderer >> visitLabel: label [
 			athensCanvas textPath: utf8String.
 			label paint ifNotNil: [ athensCanvas fillPreserve ].
 			label hasBorder ifTrue: [ 
-				label border paint loadOnCairoCanvas: athensCanvas.
 				stroke := label border accept: self.
 				stroke prepareForDrawingOn: athensCanvas.
 				athensCanvas stroke.
