@@ -72,6 +72,23 @@ PLTAbstractPlotTest >> testWithOnePlotWithTitle [
 ]
 
 { #category : #tests }
+PLTAbstractPlotTest >> testWithOnePlotWithTitleAndTitleOnAxes [
+
+	| p |
+	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
+	plt addPlot: p.
+	plt xlabel: 'X Axis'.
+	plt ylabel: 'Y Axis'.
+	self assert: plt numberOfPlots equals: 1.
+	plt title: 'Hello World'.
+	plt build.
+	
+	self assert: plt plots size equals: 1.
+	self assert: plt plots first equals: p.
+	self assert: p plt equals: plt
+]
+
+{ #category : #tests }
 PLTAbstractPlotTest >> testWithTwoPlots [
 
 	| p1 p2 |

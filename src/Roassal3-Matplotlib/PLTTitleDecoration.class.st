@@ -18,11 +18,6 @@ PLTTitleDecoration >> renderIn: canvas [
 		stick: label on: self spine.
 ]
 
-{ #category : #rendering }
-PLTTitleDecoration >> spine [
-	^ (plt decorations detect: [ :d | d class == PLTSpineDecoration ] ifNone: [ ^ nil ]) shape
-]
-
 { #category : #accessing }
 PLTTitleDecoration >> title [
 	^ title

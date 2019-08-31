@@ -108,3 +108,13 @@ PLT >> show [
 PLT >> title: aTitle [
 	self addDecoration: (PLTTitleDecoration new title: aTitle)
 ]
+
+{ #category : #'as yet unclassified' }
+PLT >> xlabel: aTitle [
+	self addDecoration: (PLTXLabelDecoration new title: aTitle)
+]
+
+{ #category : #'as yet unclassified' }
+PLT >> ylabel: aTitle [
+	self addDecoration: (PLTYLabelDecoration new title: aTitle)
+]
