@@ -35,6 +35,11 @@ PLT >> build [
 	
 ]
 
+{ #category : #accessing }
+PLT >> decorations [
+	^ decorations
+]
+
 { #category : #'as yet unclassified' }
 PLT >> defaultPlotColors [
 	^ { Color blue . Color orange . Color green darker }
@@ -97,4 +102,9 @@ PLT >> renderDecorationIn: aCanvas [
 { #category : #building }
 PLT >> show [
 	^ canvas open
+]
+
+{ #category : #accessing }
+PLT >> title: aTitle [
+	self addDecoration: (PLTTitleDecoration new title: aTitle)
 ]
