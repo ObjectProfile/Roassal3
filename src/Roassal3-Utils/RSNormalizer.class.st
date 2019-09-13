@@ -203,6 +203,33 @@ RSNormalizer >> executeBlock: anOneArgBlock [
 
 { #category : #accessing }
 RSNormalizer >> from: aValue [
+	"Set the lower limit of the normalized value. For example:
+-=-=-=-=-=-=-=-=-=
+v := RSView new.
+
+classes := Collection withAllSubclasses.
+es := RSShapeBuilder circle elementsOn: classes.
+
+v addAll: es.
+es @ RSPopup @ RSDraggable.
+
+
+RSNormalizer size
+	elements: es;
+	from: 2;
+	to: 50;
+	normalize: #numberOfMethods.
+	
+RSNormalizer color
+	elements: es;
+	from: Color blue;
+	to: Color pink;
+	normalize: #numberOfMethods.
+RSGridLayout on: es.
+v @ RSControlsView.
+v  
+-=-=-=-=-=-=-=-=-=
+"
 	scale from: aValue
 ]
 
@@ -239,6 +266,31 @@ RSNormalizer >> scale: aTSScale [
 
 { #category : #accessing }
 RSNormalizer >> to: aValue [
+	"Set the upper limit of the normalized value. For example:
+-=-=-=-=-=-=-=-=-=
+v := RSView new.
+
+classes := Collection withAllSubclasses.
+es := RSShapeBuilder circle elementsOn: classes.
+
+v addAll: es.
+es @ RSPopup @ RSDraggable.
+
+
+RSNormalizer size
+	elements: es;
+	to: 20;
+	normalize: #numberOfMethods.
+	
+RSNormalizer color
+	elements: es;
+	to: Color pink;
+	normalize: #numberOfMethods.
+RSGridLayout on: es.
+v @ RSControlsView.
+v  
+-=-=-=-=-=-=-=-=-=
+"
 	scale to: aValue
 
 ]

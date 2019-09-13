@@ -2,6 +2,49 @@
 I am a special edge builder with some especial contruction with #linePath and #multiBezier
 
 My instances provide a new edges that you can connect with ancestors between models
+
+Here is an example:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+v := RSView new.
+
+classes := Collection withAllSubclasses.
+es := RSShapeBuilder circle elementsOn: classes.
+
+v addAll: es.
+es @ RSPopup @ RSDraggable.
+
+eb := RSEdgeBuilder line.
+eb color: Color gray.
+eb view: v.
+eb elements: es.
+eb withBorderAttachPoint.
+""eb following: #superclass.""
+eb connectFrom: #superclass.
+
+
+RSNormalizer size
+	elements: es;
+	to: 20;
+	normalize: #numberOfMethods.
+	
+RSNormalizer color
+	elements: es;
+	normalize: #numberOfMethods.
+
+RSClusterLayout on: es.
+
+eb2 := RSMultiBezierEdgeBuilder multiBezier.
+eb2 borderColor: (Color blue alpha: 0.5).
+eb2 view: v.
+eb2 elements: es.
+eb2 withBorderAttachPoint.
+eb2 following: #superclass.
+eb2 connectToAll: #dependentClasses.
+
+v @ RSControlsView.
+
+v  
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSMultiBezierEdgeBuilder,

@@ -394,3 +394,41 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			boxes pushBack ].
 	view open
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example14ClassHierarchy [
+	<script: 'self new example14ClassHierarchy'>
+	| v classes es eb eb2 |
+	v := RSView new.
+
+	classes := (Object withAllSubclasses first: 300)
+		flatCollect: #withAllSuperclasses.
+	classes := classes asSet asArray.
+	es := RSShapeBuilder circle elementsOn: classes.
+	v addAll: es.
+	es @ RSPopup @ RSDraggable.
+	eb := RSEdgeBuilder line.
+	eb color: Color gray.
+	eb view: v.
+	eb elements: es.
+	eb withBorderAttachPoint.
+	"eb following: #superclass."
+	eb connectFrom: #superclass.
+	RSNormalizer size
+		elements: es;
+		to: 20;
+		normalize: #numberOfMethods.
+	RSNormalizer color
+		elements: es;
+		normalize: #numberOfMethods.
+	RSClusterLayout on: es.
+	eb2 := RSMultiBezierEdgeBuilder multiBezier.
+	eb2 borderColor: (Color blue alpha: 0.3).
+	eb2 view: v.
+	eb2 elements: es.
+	eb2 withBorderAttachPoint.
+	eb2 following: #superclass.
+	eb2 connectToAll: #dependentClasses.
+	v @ RSControlsView.
+	v open
+]
