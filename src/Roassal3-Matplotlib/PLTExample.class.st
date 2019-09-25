@@ -5,9 +5,28 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+PLTExample >> example02ScatterPlot [
+	<script: 'self new example02ScatterPlot'>
+
+	| classes plt p |
+	classes := Collection withAllSubclasses.
+	plt := PLT new.
+	p := PLTScatter new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
+	plt addPlot: p.
+	
+	plt xlabel: 'X Axis'.
+	plt ylabel: 'Y Axis'.
+	plt title: 'Hello World'.
+	plt build.
+	plt show
+]
+
+{ #category : #'as yet unclassified' }
 PLTExample >> exampleBasic01 [
 
 "
+This example is not meant to work. It is just the result of a brainstorming
+
 x = np.linspace(0, 2, 100)
 
 plt.plot(x, x, label='linear')
