@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'shape',
 		'elements',
-		'container'
+		'container',
+		'weight'
 	],
 	#category : #'Roassal3-Builders'
 }
@@ -17,6 +18,11 @@ RSAbstractViewBuilder >> build [
 	"Public method that produces the visualization"
 	self renderIn: self view.
 	^ elements
+]
+
+{ #category : #default }
+RSAbstractViewBuilder >> childrenKey [
+	^ #elements
 ]
 
 { #category : #accessing }
@@ -50,6 +56,24 @@ RSAbstractViewBuilder >> elements: aCollectionOfRSElements [
 	elements := aCollectionOfRSElements
 ]
 
+{ #category : #weight }
+RSAbstractViewBuilder >> leafWeight: block [
+	self weightElement: [ :e | 
+		(e attributes includesKey: #weight) 
+			ifTrue: [ e attributes at: #weight ]
+			ifFalse: [ | w children |
+				children := e attributes at: self childrenKey.
+				children 
+					ifEmpty: [ w := block rsValue: e model ]
+					ifNotEmpty: [ 
+						w := children
+							inject: 0 
+							into: [ :s :el | s + (weight rsValue: el) ] ].
+				w := w max: self minWeightValue.
+				e attributes at: #weight put: w.
+				w ] ].
+]
+
 { #category : #hooks }
 RSAbstractViewBuilder >> open [
 	^ self view open
@@ -73,4 +97,30 @@ RSAbstractViewBuilder >> shape: aRSShapeBuilder [
 { #category : #accessing }
 RSAbstractViewBuilder >> view [
 	^ self container view
+]
+
+{ #category : #weight }
+RSAbstractViewBuilder >> weight [
+	^ weight
+]
+
+{ #category : #weight }
+RSAbstractViewBuilder >> weight: anObject [
+	self weightElement: [ :e| anObject rsValue: e model ].
+]
+
+{ #category : #weight }
+RSAbstractViewBuilder >> weightElement: block [
+	"
+	This builder uses weight variable do calculate the size of each rectangle
+	weight block recives an element of the square and return a number
+	self weightElement: [:element | 1 ]"
+	weight := block
+	
+	
+]
+
+{ #category : #weight }
+RSAbstractViewBuilder >> weightOf: e [
+	^ self weight rsValue: e
 ]
