@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'view'
 	],
-	#category : #'Roassal3-Test'
+	#category : #'Roassal3-Scripting-Tests'
 }
 
 { #category : #running }

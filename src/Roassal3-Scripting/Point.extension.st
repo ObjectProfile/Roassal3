@@ -1,6 +1,6 @@
 Extension { #name : #Point }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Scripting' }
 Point >> model [
 	^ self
 ]

@@ -1,11 +1,11 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Scripting' }
 BlockClosure >> onElement: aRTElement [ 
 	self value: aRTElement 
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Scripting' }
 BlockClosure >> rsValue: valueOrArray [
 	self numArgs = 0 ifTrue: [ ^ self value ].  
 	self numArgs = 1 ifTrue: [ ^ self value: valueOrArray ].
