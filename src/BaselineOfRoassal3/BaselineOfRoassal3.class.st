@@ -23,9 +23,9 @@ BaselineOfRoassal3 >> baseline: spec [
 				add: 'Athens-SVG';
 				add: 'Geometry';
 				yourself.
-			(AthensCairoCanvas canUnderstand: #fillRuleEvenOdd) ifTrue: [
+			Smalltalk globals at: #SpPresenter ifPresent: [
 				dep2 := #('Roassal3-Spec').
-			] ifFalse: [
+			] ifAbsent: [
 				dep1 add: 'Roassal3-Pharo7'.
 				dep2 := #() ].
 			
