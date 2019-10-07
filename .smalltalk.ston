@@ -10,9 +10,8 @@ SmalltalkCISpec {
   #testing : {
     #packages: ['Roassal3-Global-Tests'],
   	#categories: [ 
-        'Roassal3-Trachel-Tests',
+        'Roassal3-Tests', 
         'Roassal3-Animation-Tests',
-        'Roassal-Test', 
         'Roassal3-Interaction-Tests', 
         'Roassal3-Utils-Tests',
         'Roassal3-UML-Tests',
