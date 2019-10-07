@@ -10,7 +10,7 @@ Class {
 		'container',
 		'weight'
 	],
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Scripting-Builders'
 }
 
 { #category : #building }
@@ -54,6 +54,18 @@ RSAbstractViewBuilder >> elements [
 { #category : #accessing }
 RSAbstractViewBuilder >> elements: aCollectionOfRSElements [
 	elements := aCollectionOfRSElements
+]
+
+{ #category : #'as yet unclassified' }
+RSAbstractViewBuilder >> gtInspectorBuilderIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['Builder'];
+		initializeView: [ 
+			self build.
+			self view when: TSExtentChangedEvent do: [ self view zoomToFit ].
+			self view.
+			 ]
 ]
 
 { #category : #weight }

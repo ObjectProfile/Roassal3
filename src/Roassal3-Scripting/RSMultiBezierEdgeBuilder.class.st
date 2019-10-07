@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'tension'
 	],
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Scripting-Builders'
 }
 
 { #category : #private }

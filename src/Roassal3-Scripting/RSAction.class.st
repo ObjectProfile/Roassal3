@@ -13,7 +13,7 @@ Class {
 		'isPreloadAction',
 		'element'
 	],
-	#category : #'Roassal3-Commands'
+	#category : #'Roassal3-Scripting-Commands'
 }
 
 { #category : #accessing }

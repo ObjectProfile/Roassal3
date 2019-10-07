@@ -28,7 +28,7 @@ Class {
 		'condition',
 		'builder'
 	],
-	#category : #'Roassal3-Commands'
+	#category : #'Roassal3-Scripting-Commands'
 }
 
 { #category : #accessing }

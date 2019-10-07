@@ -22,7 +22,7 @@ Class {
 		'hasUniqueCommands',
 		'interaction'
 	],
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Scripting-Builders'
 }
 
 { #category : #actions }

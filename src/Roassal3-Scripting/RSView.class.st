@@ -12,7 +12,7 @@ Class {
 		'edges',
 		'trCanvas'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Scripting-Core'
 }
 
 { #category : #accessing }
@@ -88,6 +88,40 @@ RSView >> elementsFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	^ elements elementsFromModels: objects
 
+]
+
+{ #category : #'as yet unclassified' }
+RSView >> gtInspectorEdgesIn: composite [
+	<gtInspectorPresentationOrder: 21>
+	composite table
+		when: [ self edges isNotEmpty ];
+		title: 'Edges';
+		showOnly: 50;
+		display: [ :each | each edges ];
+		column: 'Shape' evaluated: [ :each | each shape asString ];
+		column: 'Model' evaluated: [ :each | each model asString ];
+		column: 'Attributes' evaluated: [ :each | each privateAttributes asString ].
+]
+
+{ #category : #'as yet unclassified' }
+RSView >> gtInspectorElementsIn: composite [
+	<gtInspectorPresentationOrder: 20>
+	composite table 
+		title: 'Elements';
+		showOnly: 50;
+		display: [ :each | each elements ];
+		children: #children;
+		column: 'Shape' evaluated: [ :each | each shape asString ];
+		column: 'Model' evaluated: [ :each | each model asString ];
+		column: 'Attributes' evaluated: [ :each | each privateAttributes asString ].
+]
+
+{ #category : #'as yet unclassified' }
+RSView >> gtInspectorViewIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['View'];
+		initializeView: [ self ]
 ]
 
 { #category : #initialization }

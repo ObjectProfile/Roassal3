@@ -4,7 +4,7 @@ I can create shapes for roassal based on a model
 Class {
 	#name : #RSShapeBuilder,
 	#superclass : #RSAbstractModelBuilder,
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Scripting-Builders'
 }
 
 { #category : #'instance creation' }
