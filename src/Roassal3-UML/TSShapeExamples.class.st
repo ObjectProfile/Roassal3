@@ -265,7 +265,7 @@ TSShapeExamples >> example10EllipseMouseMove [
 	radius := 200.
 	c when: TSMouseMove do: [ :evt | 
 		circleResolution := b.
-		circleResolution isZero ifTrue: [ circleResolution := 1 ].
+		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
 		angle := Float twoPi / circleResolution.
 		a := 175 * evt position x / c extent x.
 		b := 200 * evt position y / c extent y.
@@ -315,7 +315,7 @@ TSShapeExamples >> example11ScaleMouseDistance [
 				] ]
 		].
 	c when: TSMouseMove do: [ :evt | 
-		easing := easing + ((evt position - easing)* 0.1).
+		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
 			zindex := scale scale: (easing dist: s position).
 			s extent: boxSize * (zindex /100) asPoint ].

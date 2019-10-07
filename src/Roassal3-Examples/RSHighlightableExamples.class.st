@@ -151,7 +151,7 @@ RSHighlightableExamples >> example06IterateNext [
 	
 	| view numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	view := RSView new.
-	legendBuilder := RSLegendBuilder new view: view. 
+	legendBuilder := RSLegendBuilder new container: view. 
 
 	"Create the view with numbers as elements."
 	numbers := RSShapeBuilder box

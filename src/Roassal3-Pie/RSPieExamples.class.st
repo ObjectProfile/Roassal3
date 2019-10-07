@@ -596,7 +596,7 @@ RSPieExamples >> example18ManyPies [
 		shapes: [ :m | | sum shapes |
 			shapes := TSGroup new.
 			pie
-				view: shapes;
+				container: shapes;
 				objects: (data at: m);
 				slice: #value;
 				build.

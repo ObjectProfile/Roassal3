@@ -334,6 +334,9 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 		edges: view edges;
 		start;
 		yourself.
+	"elements do: [ :e |
+		(layout mockElementAt: e) charge: e model * -20 ]."
+	view edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
 	view @ RSControlsView.
 	
 	view @ (RSForceLayoutStepping new layout: layout).
