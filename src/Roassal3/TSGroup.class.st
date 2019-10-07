@@ -9,7 +9,7 @@ Class {
 		'allMethods',
 		'elementFromModelCache'
 	],
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #'as yet unclassified' }
@@ -29,9 +29,27 @@ TSGroup >> addAll: elements [
 	^ super addAll: elements
 ]
 
+{ #category : #'as yet unclassified' }
+TSGroup >> asElement [ 
+	^ self asElementOn: nil
+]
+
+{ #category : #'as yet unclassified' }
+TSGroup >> asElementOn: model [
+	^ RSComposite new 
+		model: model;
+		shape: TSComposite new;
+		shapes: self.
+]
+
 { #category : #converting }
 TSGroup >> asGroup [
 	^ self
+]
+
+{ #category : #'as yet unclassified' }
+TSGroup >> edges [
+	^ self select: [ :o | o class == RSEdge ]
 ]
 
 { #category : #accessing }
@@ -57,6 +75,11 @@ TSGroup >> elementFromModelCache [
 	"Define a cache for the element lookup from models"
 	elementFromModelCache ifNil: [ elementFromModelCache := Dictionary new ].
 	^ elementFromModelCache
+]
+
+{ #category : #'as yet unclassified' }
+TSGroup >> elements [
+	^ self select: [ :o | o class == RSElement ]
 ]
 
 { #category : #accessing }

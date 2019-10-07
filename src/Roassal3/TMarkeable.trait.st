@@ -3,7 +3,7 @@ I am a trait to create markers in some especific classes
 "
 Trait {
 	#name : #TMarkeable,
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #'accessing - markers' }

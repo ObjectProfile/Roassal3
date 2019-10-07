@@ -10,7 +10,7 @@ Class {
 		'baseRectangle',
 		'matrix'
 	],
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #visiting }
@@ -24,15 +24,13 @@ TSBoundingShape >> baseRectangle [
 ]
 
 { #category : #accessing }
-TSBoundingShape >> encompassingRectangle [ 
+TSBoundingShape >> computeEncompassingRectangle [
 	| rect points |
-	encompassingRectangle ifNotNil: [ ^ encompassingRectangle ].
 	rect := self baseRectangle.
 	points := #(topLeft topRight bottomRight bottomLeft)
 		collect: [ :s | matrix transform: (s value: rect) ].
-	rect := Rectangle encompassing: points.
-	encompassingRectangle := rect.
-	^ encompassingRectangle
+	^ Rectangle encompassing: points.
+	
 ]
 
 { #category : #accessing }

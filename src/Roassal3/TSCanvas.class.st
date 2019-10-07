@@ -3,7 +3,7 @@ I represent the basic canvas or paint area. I have a collection of shapes
 "
 Class {
 	#name : #TSCanvas,
-	#superclass : #TSObject,
+	#superclass : #TSAttributableObject,
 	#instVars : [
 		'shapes',
 		'fixedShapes',
@@ -11,12 +11,10 @@ Class {
 		'renderTree',
 		'extent',
 		'color',
-		'announcer',
 		'morph',
 		'clearBackground',
 		'animations',
-		'showRectangles',
-		'view'
+		'showRectangles'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -54,34 +52,17 @@ TSCanvas >> animations [
 	^ animations
 ]
 
-{ #category : #events }
-TSCanvas >> announce: anEvent [
-	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent value
-]
-
-{ #category : #events }
-TSCanvas >> announcer [
-	announcer isNil ifTrue: [ announcer := Announcer new ].
-	^ announcer
-]
-
-{ #category : #events }
-TSCanvas >> announcer: anAnnouncer [
-	announcer := anAnnouncer
-]
-
 { #category : #accessing }
 TSCanvas >> basicRectangle [
 	^ Rectangle origin: 0@0 extent: self extent
 ]
 
-{ #category : #accessing }
+{ #category : #camera }
 TSCanvas >> camera [
 	^ camera
 ]
 
-{ #category : #accessing }
+{ #category : #camera }
 TSCanvas >> camera: aCamera [
 	camera := aCamera
 ]
@@ -96,7 +77,7 @@ TSCanvas >> clearBackground [
 	^ clearBackground
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 TSCanvas >> clearBackground: aBool [
 	clearBackground := aBool
 ]
@@ -113,7 +94,7 @@ TSCanvas >> color: aColor [
 	color := Color colorFrom: aColor.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'morph creation' }
 TSCanvas >> createMorph [
 	morph := TSAthensMorph new. 
 	morph renderer: TSAthensRenderer new.
@@ -168,7 +149,7 @@ TSCanvas >> hasAnimation: anAnimation [
 	^ animations includes: anAnimation
 ]
 
-{ #category : #actions }
+{ #category : #'debug support' }
 TSCanvas >> hideEncompassingRectangles [
 	showRectangles := false.
 ]
@@ -222,7 +203,7 @@ TSCanvas >> numberOfShapes [
 	^ shapes size
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'morph creation' }
 TSCanvas >> open [
 	| window |
 	self createMorph.
@@ -233,7 +214,7 @@ TSCanvas >> open [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'morph creation' }
 TSCanvas >> openOnce [
 	"Open a visualization and record the position. When #openOnce is called a second time,
 	the new window replace the previous one, at the recorded position. This method is useful when 
@@ -265,7 +246,7 @@ TSCanvas >> playAnimations [
 			animation hasCompleted ifTrue: [ animation remove ] ] ].
 ]
 
-{ #category : #actions }
+{ #category : #'shapes controling' }
 TSCanvas >> pushBack: aShape [
 	| col |
 	col := aShape isFixed 
@@ -276,7 +257,7 @@ TSCanvas >> pushBack: aShape [
 		addFirst: aShape.
 ]
 
-{ #category : #actions }
+{ #category : #'shapes controling' }
 TSCanvas >> pushFront: aShape [
 	| col |
 	col := aShape isFixed 
@@ -285,11 +266,6 @@ TSCanvas >> pushFront: aShape [
 	col 
 		remove: aShape ifAbsent: [];
 		addLast: aShape.
-]
-
-{ #category : #dependencies }
-TSCanvas >> release [
-	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #'adding removing shapes' }
@@ -361,7 +337,7 @@ TSCanvas >> shapes: aCollection [
 	shapes := aCollection
 ]
 
-{ #category : #actions }
+{ #category : #'debug support' }
 TSCanvas >> showEncompassingRectangles [
 	showRectangles := true.
 ]
@@ -388,20 +364,15 @@ TSCanvas >> transform: aPoint [
 
 { #category : #accessing }
 TSCanvas >> view [
-	^ view
+	^ self attributes at:#view ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
 TSCanvas >> view: aRSView [
-	view := aRSView
+	self attributes at: #view put: aRSView
 ]
 
-{ #category : #events }
-TSCanvas >> when: event do: aBlock [
-	self announcer when: event do: aBlock
-]
-
-{ #category : #actions }
+{ #category : #camera }
 TSCanvas >> zoomToFit [
 	self camera zoomToFit: self extent * 0.9
 ]

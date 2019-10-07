@@ -33,7 +33,7 @@ Class {
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #initialization }

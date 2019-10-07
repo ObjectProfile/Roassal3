@@ -8,7 +8,7 @@ Class {
 		'controlPoints',
 		'markers'
 	],
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #actions }

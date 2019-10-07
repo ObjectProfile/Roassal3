@@ -6,7 +6,7 @@ Class {
 	#superclass : #TSShape,
 	#traits : 'TMarkeable',
 	#classTraits : 'TMarkeable classTrait',
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #visiting }
@@ -40,6 +40,15 @@ TSAbstractLine >> color: aColor [
 ]
 
 { #category : #accessing }
+TSAbstractLine >> computeEncompassingRectangle [
+	| cp |
+	cp := self controlPoints.
+	^ cp 
+			ifEmpty: [ 0@0 corner: 0@0 ]
+			ifNotEmpty: [ Rectangle encompassing: cp ]
+]
+
+{ #category : #accessing }
 TSAbstractLine >> controlPoints [
 	^ self subclassResponsibility
 ]
@@ -48,18 +57,6 @@ TSAbstractLine >> controlPoints [
 TSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
 	
-]
-
-{ #category : #accessing }
-TSAbstractLine >> encompassingRectangle [
-	| cp |
-	^ encompassingRectangle ifNil: [
-		cp := self controlPoints.
-		encompassingRectangle := cp 
-			ifEmpty: [ 0@0 corner: 0@0 ]
-			ifNotEmpty: [ Rectangle encompassing: cp ]
-		].
-
 ]
 
 { #category : #accessing }

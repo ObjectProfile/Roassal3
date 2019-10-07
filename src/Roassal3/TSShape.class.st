@@ -3,17 +3,16 @@ I am the top class of shapes
 "
 Class {
 	#name : #TSShape,
-	#superclass : #TSObject,
+	#superclass : #TSAttributableObject,
 	#instVars : [
 		'paint',
 		'path',
 		'border',
-		'announcer',
 		'parent',
 		'isFixed',
 		'encompassingRectangle'
 	],
-	#category : #'Roassal3-Shape'
+	#category : #'Roassal3-Shapes'
 }
 
 { #category : #adding }
@@ -28,27 +27,6 @@ TSShape >> addedIn: aCanvas [
 	evt := TSShapeAddedEvent new shape: self.
 	self announce: evt.
 	parent announce: evt.
-]
-
-{ #category : #events }
-TSShape >> announce: anEventOrAnEventClass [
-	"Send an event"
-	| theEventToSend |
-	announcer ifNil: [ ^ self ].
-	theEventToSend := anEventOrAnEventClass value asAnnouncement.
-	theEventToSend canvas: self canvas.
-	theEventToSend shape: self.
-	announcer announce: theEventToSend.
-]
-
-{ #category : #events }
-TSShape >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #events }
-TSShape >> announcer: anAnnouncer [
-	announcer := anAnnouncer
 ]
 
 { #category : #converting }
@@ -104,8 +82,14 @@ TSShape >> color: aColor [
 ]
 
 { #category : #accessing }
+TSShape >> computeEncompassingRectangle [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 TSShape >> encompassingRectangle [
-	^ self subclassResponsibility 
+	^ encompassingRectangle ifNil: [ 
+		encompassingRectangle := self computeEncompassingRectangle ].
 ]
 
 { #category : #accessing }
@@ -163,11 +147,6 @@ TSShape >> isInACanvas [
 ]
 
 { #category : #testing }
-TSShape >> isRoassalElement [
-	^ false
-]
-
-{ #category : #testing }
 TSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
 	^ true
@@ -176,11 +155,6 @@ TSShape >> isShape [
 { #category : #actions }
 TSShape >> loadShape: aShape [
 	self subclassResponsibility
-]
-
-{ #category : #animation }
-TSShape >> newAnimation [
-	^ parent newAnimation
 ]
 
 { #category : #accessing }
@@ -232,11 +206,6 @@ TSShape >> postCopy [
 		resetBBox
 ]
 
-{ #category : #events }
-TSShape >> privateAnnouncer [
-	^ announcer
-]
-
 { #category : #actions }
 TSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"
@@ -247,11 +216,6 @@ TSShape >> pushBack [
 { #category : #actions }
 TSShape >> pushFront [
 	parent pushFront: self.
-]
-
-{ #category : #dependencies }
-TSShape >> release [
-	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #actions }
@@ -321,11 +285,6 @@ TSShape >> signalUpdate [
 { #category : #accessing }
 TSShape >> topParent [
 	^ parent topParent
-]
-
-{ #category : #events }
-TSShape >> when: event do: aBlock [
-	self announcer when: event do: aBlock
 ]
 
 { #category : #accessing }
