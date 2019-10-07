@@ -96,7 +96,7 @@ RSSunburstConstantWidthStrategy >> layoutSunburst: el [
 	children doWithIndex: [ :c :i |
 		a := auxAngle.
 		b := auxAngle + (angleOffset * (builder weightOf: c)	).
-		s := self angularSpacing.
+		s := 0.
 		auxAngle := b.
 		(b - a) > s ifTrue: [ 
 			depth = 1 
