@@ -12,6 +12,13 @@ SubscriptionRegistry >> getInteractionsForClass: eventClass [
 ]
 
 { #category : #'*Roassal3' }
+SubscriptionRegistry >> handleEventClass: eventClass [
+	"Return true if the receiver has a callback subscripbed for the event class"
+	^ subscriptions
+		anySatisfy: [ :sub | sub announcementClass includesBehavior: eventClass ]
+]
+
+{ #category : #'*Roassal3' }
 SubscriptionRegistry >> handleSubscriberClass: eventClass [
 	"Return true if the receiver has a callback subscripbed for the event class"
 	^ subscriptions anySatisfy: [ :sub | 

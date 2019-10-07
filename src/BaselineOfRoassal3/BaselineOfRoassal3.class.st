@@ -19,19 +19,21 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
 			spec package: 'NumericScales'with: [ 
 				spec repository: 'github://ObjectProfile/NumericScales/src' ].
+			dep1 := OrderedCollection new
+				add: 'Athens-SVG';
+				add: 'Geometry';
+				yourself.
 			(AthensCairoCanvas canUnderstand: #fillRuleEvenOdd) ifTrue: [
-				dep1 := #('Athens-SVG').
 				dep2 := #('Roassal3-Spec').
 			] ifFalse: [
-				dep1 := #('Athens-SVG' 'Roassal3-Pharo7').
+				dep1 add: 'Roassal3-Pharo7'.
 				dep2 := #() ].
 			
 			spec
 				package: #'Roassal3-Pharo7';
-				package: #'Roassal3-Trachel' with: [ spec requires: dep1 ];
+				package: #'Roassal3' with: [ spec requires: dep1 asArray ];
 				package: #'Roassal3-Animation' with: [ spec requires: #('NumericScales') ];
 				package: #'Roassal3-Scripting';
-				package: #'Roassal3' with: [spec requires: #('Geometry')];
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
@@ -54,7 +56,6 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Utils'
 					'Roassal3-Colors'
 					'Roassal3-Legend'
-					'Roassal3-Trachel'
 					'Roassal3-Animation'
 					'Roassal3-UML'
 					'Roassal3-Pie'
