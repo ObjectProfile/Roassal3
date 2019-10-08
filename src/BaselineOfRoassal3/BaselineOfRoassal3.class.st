@@ -42,6 +42,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Layouts';
 				package: #'Roassal3-Colors';
 				package: #'Roassal3-Spec';
+				package: #'Roassal3-Sunburst';
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Global-Tests';
@@ -52,12 +53,14 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Scripting'
 					'Roassal3'
 					'Roassal3-Interaction'
+					
 					'Roassal3-Layouts'
 					'Roassal3-Utils'
 					'Roassal3-Colors'
 					'Roassal3-Legend'
 					'Roassal3-Animation'
 					'Roassal3-UML'
+					'Roassal3-Sunburst'
 					'Roassal3-Pie'
 					'Roassal3-Inspector'
 					'Roassal3-Menu');
