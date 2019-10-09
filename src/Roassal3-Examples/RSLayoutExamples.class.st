@@ -3,13 +3,13 @@ I use the RSShapeBuilder
 "
 Class {
 	#name : #RSLayoutExamples,
-	#superclass : #RSObject,
+	#superclass : #TSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #layouts }
 RSLayoutExamples >> example01LayoutBasic [
-	<script: 'self new example01LayoutBasic'>
+	<script: 'self new example01LayoutBasic open'>
 
 	| v elements |
 	v := RSView new.
@@ -25,13 +25,12 @@ RSLayoutExamples >> example01LayoutBasic [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v open
-	
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example02Grid [
-	<script: 'self new example02Grid'>
+	<script: 'self new example02Grid open'>
 
 	| v elements |
 	v := RSView new.
@@ -42,13 +41,12 @@ RSLayoutExamples >> example02Grid [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v open
-	
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example03LayoutColorFadingBasic [
-	<script: 'self new example03LayoutColorFadingBasic'>
+	<script: 'self new example03LayoutColorFadingBasic open'>
 
 	| v elements color |
 	v := RSView new.
@@ -66,13 +64,12 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v open
-	
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example04LayoutColorFadingBasic2 [
-	<script: 'self new example04LayoutColorFadingBasic2'>
+	<script: 'self new example04LayoutColorFadingBasic2 open'>
 
 	| v elements color |
 	v := RSView new.
@@ -91,13 +88,12 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v open
-	
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example05LayoutBasicWithColorFading [
-	<script: 'self new example05LayoutBasicWithColorFading'>
+	<script: 'self new example05LayoutBasicWithColorFading open'>
 
 	| v elements minAndMax color |
 	v := RSView new.
@@ -114,13 +110,12 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 	v addAll: elements.
 	RSGridLayout on: elements.
 	v @ RSDraggableView .
-	v open
-	
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example05TreeLayout [
-	<script: 'self new example05TreeLayout'>
+	<script: 'self new example05TreeLayout open'>
 	| v elements eb |
 	v := RSView new.
 	elements := RSShapeBuilder circle
@@ -141,12 +136,12 @@ RSLayoutExamples >> example05TreeLayout [
 	RSTreeLayout on: elements.
 	elements do: [ :e | e translateBy: 0 @ 0 ].
 	v @ RSDraggableView.
-	v open
+	^ v
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example06Cluster [
-	<script: 'self new example06Cluster'>
+	<script: 'self new example06Cluster open'>
 	| v sb eb |
 	v := RSView new.
 	sb := RSShapeBuilder circle.
@@ -172,12 +167,12 @@ RSLayoutExamples >> example06Cluster [
 		elements: v elements;
 		normalize: #numberOfMethods.
 	RSClusterLayout on: v elements.
-	v open
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example07ForceBasedLayout [
-	<script: 'self new example07ForceBasedLayout'>
+	<script: 'self new example07ForceBasedLayout open'>
 	| v sb eb |
 	v := RSView new.
 	sb := RSShapeBuilder circle
@@ -205,12 +200,12 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		on: v elements.
 	v @ RSControlsView.
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example08HorizontalTree [
-	<script: 'self new example08HorizontalTree'>
+	<script: 'self new example08HorizontalTree open setLabel: ''Horizontal Tree'''>
 	| v sb label box |
 	v := RSView new.
 	label := RSShapeBuilder label.
@@ -237,12 +232,12 @@ RSLayoutExamples >> example08HorizontalTree [
 		elements: v elements;
 		connectFrom: #superclass.
 	RSHorizontalTreeLayout new on: v elements.
-	v open setLabel: 'Horizontal Tree'
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example09BorderAttachPoint [
-	<script: 'self new example09BorderAttachPoint'>
+	<script: 'self new example09BorderAttachPoint open setLabel: ''TSShape withAllSubclasses'''>
 	| v sb |
 	v := RSView new.
 	sb := RSShapeBuilder square 
@@ -257,12 +252,12 @@ RSLayoutExamples >> example09BorderAttachPoint [
 		charge: -500; 
 		on: v elements.
 	v @ RSControlsView.
-	v open setLabel: 'TSShape withAllSubclasses'
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example10Locate [
-	<script: 'self new example10Locate'>
+	<script: 'self new example10Locate open'>
 	| v shape e1 e2 |
 	v := RSView new.
 	shape := RSShapeBuilder box
@@ -282,12 +277,12 @@ RSLayoutExamples >> example10Locate [
 		stick: e2 on: e1.
 	v addAll:{e1. e2}.
 	v @ RSControlsView.
-	v open
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example11PaddingInComposite [
-	<script: 'self new example11PaddingInComposite'>
+	<script: 'self new example11PaddingInComposite open'>
 	| v box shape elements |
 	v := RSView new.
 	box := RSShapeBuilder box.
@@ -309,12 +304,12 @@ RSLayoutExamples >> example11PaddingInComposite [
 	RSGridLayout on: elements.
 	v addAll: elements.
 	v @ RSControlsView.
-	v open
+	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example12AnimatedForceBasedLayout [ 
-	<script: 'self new example12AnimatedForceBasedLayout'>
+	<script: 'self new example12AnimatedForceBasedLayout open'>
 	| view shape elements layout edges  |
 	view := RSView new.
 	shape := RSShapeBuilder box
@@ -340,12 +335,12 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	view @ RSControlsView.
 	
 	view @ (RSForceLayoutStepping new layout: layout).
-	view open.
+	^ view
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example13VisualizeQuatree [
-	<script: 'self new example13VisualizeQuatree'>
+	<script: 'self new example13VisualizeQuatree open'>
 	| view shape elements layout edges boxBuilder boxes createBoxes colors labelBuilder |
 	view := RSView new.
 	shape := RSShapeBuilder box
@@ -395,12 +390,12 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			createBoxes value: layout currentQuadtree value: 0.
 			view addAll: boxes.
 			boxes pushBack ].
-	view open
+	^ view
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example14ClassHierarchy [
-	<script: 'self new example14ClassHierarchy'>
+	<script: 'self new example14ClassHierarchy open'>
 	| v classes es eb eb2 |
 	v := RSView new.
 
@@ -433,5 +428,5 @@ RSLayoutExamples >> example14ClassHierarchy [
 	eb2 following: #superclass.
 	eb2 connectToAll: #dependentClasses.
 	v @ RSControlsView.
-	v open
+	^ v
 ]

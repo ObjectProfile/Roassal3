@@ -3,7 +3,7 @@ I have examples for animation
 "
 Class {
 	#name : #RSAnimationExamples,
-	#superclass : #TSObject,
+	#superclass : #TSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
@@ -14,7 +14,7 @@ RSAnimationExamples >> america [
 
 { #category : #examples }
 RSAnimationExamples >> example01Basic [
-	<script: 'self new example01Basic'>
+	<script: 'self new example01Basic open'>
 	| c b |
 	c := TSCanvas new.
 	b := TSBox new
@@ -41,12 +41,12 @@ RSAnimationExamples >> example01Basic [
 		when: TSMouseDoubleClick 
 		do: [ c animations do: #continue ].
 	c clearBackground: false.
-	c open.
+	^ c
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example02Sequential [
-	<script: 'self new example02Sequential'>
+	<script: 'self new example02Sequential open'>
 	| c b animation |
 	c := TSCanvas new.
 	b := TSBox new
@@ -76,12 +76,12 @@ RSAnimationExamples >> example02Sequential [
 		do: [ c animations do: #pause ];
 		when: TSMouseDoubleClick 
 		do: [ c animations do: #continue ].
-	c open.
+	^ c
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example03Ramp [
-	<script: 'self new example03Ramp'>
+	<script: 'self new example03Ramp open'>
 	| c b |
 	c := TSCanvas new.
 	b := TSBox new
@@ -102,12 +102,12 @@ RSAnimationExamples >> example03Ramp [
 		do: [ c animations do: #pause ];
 		when: TSMouseDoubleClick 
 		do: [ c animations do: #continue ].
-	c open.
+	^ c
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example04BoxWindmill [
-	<script: 'self new example04BoxWindmill'>
+	<script: 'self new example04BoxWindmill open'>
 	| v elements extent points frameCount |
 	v := RSView new.
 	v color: Color black.
@@ -131,7 +131,7 @@ RSAnimationExamples >> example04BoxWindmill [
 					rotateByRadians: (e model x + e model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
 	v @ (RSActivityMonitorView new initializeGraphShape).
-	v open.
+	^ v
 ]
 
 { #category : #examples }
@@ -139,7 +139,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 	<script: 'self new example05BoxesLineCircles'>
 	| v extent r  elements position shape alpha update updateLine lineX line |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 
 	shape := RSShapeBuilder box
 		noPaint;
@@ -220,16 +220,16 @@ RSAnimationExamples >> example05BoxesLineCircles [
 				e shape: cls new.
 				 ].
 	].
-	v open.
+	^ v
 	"87 lines of code"
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example05b [
-	<script: 'self new example05b'>
+	<script: 'self new example05b open'>
 	| v extent r elements position alpha update updateLine lineX line |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	elements := (1 to: 12) collect: [ :i | | e | 
 		e := RSElement new
 			model: r next;
@@ -310,13 +310,13 @@ RSAnimationExamples >> example05b [
 				e shape: cls new.
 				 ].
 	].
-	v open.
+	^ v
 	"87 lines of code"
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example06Atom [
-	<script: 'self new example06Atom'>
+	<script: 'self new example06Atom open'>
 	| elements v border extent speed frame |
 	v := RSView new.
 	border := TSBorder new width: 4.
@@ -353,13 +353,12 @@ RSAnimationExamples >> example06Atom [
 		
 	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
-	v open.
-	
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example07Psycho [
-	<script: 'self new example07Psycho'>
+	<script: 'self new example07Psycho open'>
 	| shape v theta slices unit color sc1 sc2 |
 	v := RSView new.
 	slices := 50.
@@ -410,13 +409,13 @@ RSAnimationExamples >> example07Psycho [
 		theta := theta + 0.0523 ].
 	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
-	v open.
+	^ v
 	"53 lines of code"
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example07b [
-	<script: 'self new example07b'>
+	<script: 'self new example07b open'>
 	| update v theta slices unit color sc1 sc2 |
 	v := RSView new.
 	slices := 50.
@@ -469,16 +468,16 @@ RSAnimationExamples >> example07b [
 		theta := theta + 0.0523 ].
 	v when: TSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
-	v open.
+	^ v
 	"56 lines of code without RSShapeBuilder"
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example08ElasticEllipses [
-	<script: 'self new example08ElasticEllipses'>
+	<script: 'self new example08ElasticEllipses open'>
 	| v r mouseClick |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	
 	mouseClick := [ | c1 c2 color  |
 		v elements copy do: #remove.
@@ -516,14 +515,14 @@ RSAnimationExamples >> example08ElasticEllipses [
 	
 	v 
 		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
-		when: TSMouseClick do: mouseClick;
-		open
+		when: TSMouseClick do: mouseClick.
+	^ v
 
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example09LinePatterns [
-	<script: 'self new example09LinePatterns'>
+	<script: 'self new example09LinePatterns open'>
 	| v step frame border dot bar radius data update |
 	v := RSView new.
 	step := 0.
@@ -566,19 +565,19 @@ RSAnimationExamples >> example09LinePatterns [
 		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
 		when: TSMouseClick do: [ 
 			step := step +1.
-			step > 20 ifTrue: [ step := 0 ] ];
-		open
+			step > 20 ifTrue: [ step := 0 ] ].
+	^ v
 
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example10CircleParty [
-	<script: 'self new example10CircleParty'>
+	<script: 'self new example10CircleParty open'>
 	| v x x2 speed speed2 r shape color |
 	v := RSView new.
 	x := 1. x2 := 2.
 	speed := 5. speed2 := 10.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	color := TSScale ordinal rangeFrom: { 
 		(Color colorFrom: 'B4FA05') alpha: 0.7. 
 		'FF7C7C'.
@@ -616,13 +615,12 @@ RSAnimationExamples >> example10CircleParty [
 		v add: (shape elementOn: 300 asPoint -> x2).
 		].
 	v camera scale: 0.5.
-	v open
-
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example11ArcTree [
-	<script: 'self new example11ArcTree'>
+	<script: 'self new example11ArcTree open'>
 	| v shape newArc alpha beta |
 	v := RSView new.
 	shape := RSShapeBuilder arc.
@@ -665,9 +663,7 @@ RSAnimationExamples >> example11ArcTree [
 			 ]
 		 ]).
 	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v open
-	
-
+	^ v
 
 
 
@@ -676,10 +672,10 @@ RSAnimationExamples >> example11ArcTree [
 
 { #category : #perlin }
 RSAnimationExamples >> example12PerlinParticles [
-	<script: 'self new example12PerlinParticles'>
+	<script: 'self new example12PerlinParticles  open setLabel: ''Particles!!! :V'''>
 	| v label particle r frame perlin color |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	frame := 0.
 	perlin := TSPerlinNoise new.
 	
@@ -757,9 +753,7 @@ RSAnimationExamples >> example12PerlinParticles [
 				v newAnimation duration: 200 milliSeconds;
 				when: TSAnimationEndEvent do: [ v clearBackground: false ] ] ].
 
-	v open setLabel: 'Particles!!! :V'
-	
-
+	^ v
 
 
 
@@ -773,11 +767,11 @@ RSAnimationExamples >> example12PerlinParticles [
 
 { #category : #perlin }
 RSAnimationExamples >> example12b [
-	<script: 'self new example12b'>
+	<script: 'self new example12b  open setLabel: ''Particles!!! :V'''>
 	| v label particle r frame perlin changeHue hIndex hExtent h |
 	v := RSView new.
 	v color: Color black.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	frame := 0.
 	perlin := TSPerlinNoise new.
 	
@@ -866,10 +860,7 @@ RSAnimationExamples >> example12b [
 				when: TSAnimationEndEvent do: [ v clearBackground: false ] ]
 			ifFalse: changeHue ].
 
-	v open setLabel: 'Particles!!! :V'
-	
-
-
+	^ v
 
 
 
@@ -882,7 +873,7 @@ RSAnimationExamples >> example12b [
 
 { #category : #perlin }
 RSAnimationExamples >> example13Arcs [
-	<script: 'self new example13Arcs'>
+	<script: 'self new example13Arcs open setLabel: ''Arc animation'''>
 	| view beta shape theta step size |
 	theta := 0.
 	step := 12.
@@ -919,16 +910,12 @@ RSAnimationExamples >> example13Arcs [
 			from: 0@0; 
 			to: 0@ (e y/sc)/2;
 			on: view camera set: #translateTo:.  ].
-	view open setLabel: 'Arc animation'.
-	
-
-
-
+	^ view
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example13DashAnimation [
-	<script: 'self new example13DashAnimation'>
+	<script: 'self new example13DashAnimation open'>
 
 	| c box paint form border animation |
 	c := TSCanvas new.
@@ -957,17 +944,13 @@ RSAnimationExamples >> example13DashAnimation [
 		animation isPaused 
 			ifTrue: [ animation continue ]
 			ifFalse: [ animation pause ] ].
-	c open.
-	
-
-
-
+	^ c
 
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example14C [
-	<script: 'self new example14C'>
+	<script: 'self new example14C open setLabel: ''C!!!'''>
 	| view shape step theta |
 	view := RSView new.
 	view color: Color black.
@@ -985,15 +968,15 @@ RSAnimationExamples >> example14C [
 				betaAngle: 300 + (theta * e model);
 				color: (Color h: theta * e model s: 1 l: 0.5) ] ].
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
-	view open setLabel: 'C!!!'
+	^ view
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example15Sky [
-	<script: 'self new example15Sky'>
+	<script: 'self new example15Sky open setLabel: ''Star trails'''>
 	| view client image ext shape dots r frame box colors |
 	view := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	ext := 2200 @ 2200.
 	box := TSBox new
 		extent: ext;
@@ -1049,12 +1032,12 @@ RSAnimationExamples >> example15Sky [
 			view camera
 				scale: s;
 				translateTo: 0 @ (e y / s - 800) / 2 negated ].
-	view open setLabel: 'Star trails'
+	^ view
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example16ArcNoise [
-	<script: 'self new example16ArcNoise'>
+	<script: 'self new example16ArcNoise open setLabel: ''Arcs with Perlin noise'''>
 	| frame view perlin radius shape line points yscale |
 	frame := 0.
 	view := RSView new.
@@ -1106,12 +1089,12 @@ RSAnimationExamples >> example16ArcNoise [
 		 ].
 	
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
-	view open setLabel: 'Arcs with Perlin noise'
+	^ view
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example17Retina [
-	<script: 'self new example17Retina'>
+	<script: 'self new example17Retina open setLabel: ''Retina (~o.o)~'''>
 	| r view perlin side angle circleSize ringSize label minR updateValues offset rad val radius shape |
 	view := RSView new.
 	view color: Color black.
@@ -1119,7 +1102,7 @@ RSAnimationExamples >> example17Retina [
 	side := 900.
 	perlin := TSPerlinNoise new.
 	circleSize := ringSize := 100.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
 	label := TSLabel new 
 		fontName: 'Source Sans Pro'; 
@@ -1168,14 +1151,14 @@ RSAnimationExamples >> example17Retina [
 		
 	view when: TSExtentChangedEvent do: [ 
 		view camera zoomToFit: view extent extent: side@side ].
-	view open setLabel: 'Retina (~˘.˘)~'.
+	^ view
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example18SpaceDandy [
-	<script: 'self new example18SpaceDandy'>
+	<script: 'self new example18SpaceDandy open setLabel: ''Space :D'''>
 	| random extent diagonal rotation init drawDist view shape elements |
-	random := SharedRandom globalGenerator.
+	random := Random new.
 	extent := 800@600.
 	diagonal := ((extent x * extent x)+ (extent y* extent y)) sqrt / 2.
 	rotation := 0.
@@ -1242,15 +1225,15 @@ RSAnimationExamples >> example18SpaceDandy [
 		view camera
 			zoomToFit: view extent 
 			extent: extent ].
-	view open setLabel: 'Space :D'.
+	^ view.
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example19Gris [
-	<script: 'self new example19Gris'>
+	<script: 'self new example19Gris open setLabel: ''Roassal :V'''>
 	| v label shape border r mini animation |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	border := TSBorder new.
 	label := TSLabel new
 		fontName: 'Marker Felt';
@@ -1307,7 +1290,7 @@ RSAnimationExamples >> example19Gris [
 			] ].
 	v add: shape element.
 	v when: TSExtentChangedEvent do: [ v zoomToFit ].
-	v open setLabel: 'Roassal :V'.
+	^ v
 	
 
 
@@ -1315,7 +1298,7 @@ RSAnimationExamples >> example19Gris [
 
 { #category : #examples }
 RSAnimationExamples >> example20Flor [
-	<script: 'self new example20Flor'>
+	<script: 'self new example20Flor open setLabel: ''Animation test'''>
 	| v shape frame angleSp alphaS hueS dia1 dia2 |
 	v := RSView new.
 	frame := 0.
@@ -1355,18 +1338,18 @@ RSAnimationExamples >> example20Flor [
 		].
 	v when: TSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent extent: 500 asPoint ].
-	v open setLabel: 'Animation test'.
+	^ v
 	
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example21Rainbow [
-	<script: 'self new example21Rainbow'>
+	<script: 'self new example21Rainbow open setLabel: ''Worms'''>
 	| v r shape mode color frame |
 	v := RSView new.
 	v clearBackground: false.
 	v color: Color black.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	shape := RSShapeBuilder circle
 		onElement;
 		attributesDo: [ [ :att | 
@@ -1444,15 +1427,15 @@ RSAnimationExamples >> example21Rainbow [
 		when: TSMouseClick do: [ 
 			mode := mode +1.
 			mode > 2 ifTrue: [mode := 0] ].
-	v open setLabel: 'Worms'
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example22Stars [
-	<script: 'self new example22Stars'>
+	<script: 'self new example22Stars open setLabel: ''Stars'''>
 	| v color shape r stars |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	color := TSScale linear domain: #(0 10); range: #('black' 'blue').
 	shape := RSShapeBuilder box
 		size: 39;
@@ -1472,12 +1455,12 @@ RSAnimationExamples >> example22Stars [
 			star translateTo: position.
 			star rotateByDegrees: t ] ].
 	v when: TSExtentChangedEvent do: [ v zoomToFit ].
-	v open setLabel: 'Stars'.
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example23CircleWaves [
-	<script: 'self new example23CircleWaves'>
+	<script: 'self new example23CircleWaves open setLabel: ''Waves'''>
 	| v shape elements frame |
 	v := RSView new.
 	frame := 0.
@@ -1512,12 +1495,12 @@ RSAnimationExamples >> example23CircleWaves [
 				withCommand: #privatePoints: ] ].
 	"at this point: elements encompassingRectangle = zero"
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
-	v open setLabel: 'Waves'.
+	^ v
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example24Lines [
-	<script: 'self new example24Lines'>
+	<script: 'self new example24Lines open setLabel: ''.=.= Lines =.=.'''>
 	| v frame radius hueOffset shape line angleSp elements soffset size mult  |
 	v := RSView new.
 	v color: Color black.
@@ -1578,12 +1561,12 @@ RSAnimationExamples >> example24Lines [
 		elements do: [ :e | (e attributes at: #update) value ].
 		 ].
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500 asPoint ].
-	v open setLabel: '.=.= Lines =.=.'.
+	^ v
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example25Lines [
-	<script: 'self new example25Lines'>
+	<script: 'self new example25Lines open setLabel: ''Line patterns'''>
 	| v radius bar step line shape frame label |
 	v := RSView new.
 	v color: (Color colorFrom: 'EEEEEE').
@@ -1620,7 +1603,7 @@ RSAnimationExamples >> example25Lines [
 		step := step + 0.5.
 		step > 11 ifTrue: [ step := 1 ] ].
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 640@640 ].
-	v open setLabel: 'Line patterns'.
+	^ v
 	
 
 
@@ -1629,12 +1612,12 @@ RSAnimationExamples >> example25Lines [
 
 { #category : #perlin }
 RSAnimationExamples >> example26PerlinNoise [
-	<script: 'self new example26PerlinNoise'>
+	<script: 'self new example26PerlinNoise open setLabel: ''Perlin Noise'''>
 	"inpired by wangyasai Twitter: @yasai_wang"
 	| v r s c1 c2 c3 size perlin noiseScale rec |
 	v := RSView new.
 	rec := Rectangle rsCenter: 0@0 extent: World extent.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	size := 200.
 	noiseScale := 300.
 	v clearBackground: false.
@@ -1674,7 +1657,7 @@ RSAnimationExamples >> example26PerlinNoise [
 				].
 			].
 		].
-	v open setLabel: 'Perlin Noise'.
+	^ v
 	
 
 
@@ -1683,12 +1666,12 @@ RSAnimationExamples >> example26PerlinNoise [
 
 { #category : #perlin }
 RSAnimationExamples >> example27RoassalPerlinNoise [
-	<script: 'self new example27RoassalPerlinNoise'>
+	<script: 'self new example27RoassalPerlinNoise open extent: 800@500; setLabel: ''Roassal'''>
 	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 |
 	v := RSView new.
 	v color: Color black.
 	v clearBackground: false.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	perlin := TSPerlinNoise2 new.
 	density := 800. maxLife := 10. noiseScale := 800.
 	rect := Rectangle rsCenter: 0@0 extent: World extent.
@@ -1747,7 +1730,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 			e color: (c alpha: fadeRatio).
 			 ]. ].
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
-	v open extent: 800@500; setLabel: 'Roassal'.
+	^ v
 	"morph := v canvas morph.
 	morph extent: 800@500.
 	v2 := RSView new.
@@ -1776,7 +1759,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 
 { #category : #examples }
 RSAnimationExamples >> example28AnimationCircle [
-	<script: 'self new example28AnimationCircle'>
+	<script: 'self new example28AnimationCircle open setLabel: ''Animation Test'''>
 	| v radius line shape elements update points lines sc1 sc2 |
 	v := RSView new.
 	radius := 50.
@@ -1832,7 +1815,7 @@ RSAnimationExamples >> example28AnimationCircle [
 		e index = 1 ifTrue:[ animation when: TSAnimationLoopEvent do: update ] ].
 	
 	v @ RSControlsView.
-	v open setLabel: 'Animation Test'.
+	^ v
 	
 
 
@@ -1842,7 +1825,7 @@ RSAnimationExamples >> example28AnimationCircle [
 
 { #category : #lines }
 RSAnimationExamples >> example29Bezier [
-	<script: 'self new example29Bezier'>
+	<script: 'self new example29Bezier open setLabel: ''Bezier Test'''>
 	| v size theta s bezier sc |
 	v := RSView new.
 	size := 50.
@@ -1885,15 +1868,15 @@ RSAnimationExamples >> example29Bezier [
 	v
 		when: TSExtentChangedEvent
 		do: [ v camera zoomToFit: v extent extent: 500 @ 500 ].
-	v open setLabel: 'Bezier Test'
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example30SVGIcons [
-	<script: 'self new example30SVGIcons'>
+	<script: 'self new example30SVGIcons open setLabel: ''Icons'''>
 	| v elements s color r theta |
 	v := RSView new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	color := TSGradientPalette gradient21.
 	color range at: 1 put: TSGradientPalette trueSunset.
 	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
@@ -1928,16 +1911,15 @@ RSAnimationExamples >> example30SVGIcons [
 		noPaint;
 		border: TSBorder new).
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 100 asPoint ].
-	"v showEncompassingRectangles."
-	v open setLabel: 'Icons'.
+	^ v
 	
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example31Miku [
-	<script: 'self new example31Miku'>
+	<script: 'self new example31Miku open setLabel: ''Miku'''>
 	| r v lines svg easing |
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	v := RSView new.
 	lines := RSAnimationExamples new miku lines.
 	lines := (0 to: lines size / 2 - 1)
@@ -1972,13 +1954,12 @@ RSAnimationExamples >> example31Miku [
 		from: Color transparent;
 		to: Color black;
 		on: v shapes last border set: #color:.
-	"v showEncompassingRectangles."
-	v open setLabel: 'Miku'
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example32RSLocate [
-	<script: 'self new example32RSLocate'>
+	<script: 'self new example32RSLocate open setLabel: ''RSLocation methods'''>
 	| v box fixedElement movableElement buttonShape buttons locate labelShape label grad1 grad2 |
 	v := RSView new.
 	locate := RSLocation new.
@@ -2048,7 +2029,7 @@ RSAnimationExamples >> example32RSLocate [
 		v camera zoomToFit: v extent * 0.7.
 		v signalUpdate ].
 	 
-	v open setLabel: 'RSLocation methods'
+	^ v
 ]
 
 { #category : #perlin }
@@ -2104,7 +2085,7 @@ RSAnimationExamples >> example33AlteredWorld [
 
 { #category : #examples }
 RSAnimationExamples >> example34Tick [
-	<script: 'self new example34Tick'>
+	<script: 'self new example34Tick open setLabel: ''Can you hear it?'''>
 	| v shape labelShape slice animation |
 	v := RSView new.
 	v color: Color black.
@@ -2148,7 +2129,7 @@ RSAnimationExamples >> example34Tick [
 		(animation value: slice value: slice * 2 value: 11->10)}) repeat.
 	
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 120 asPoint ].
-	v open setLabel: 'Can you hear it?'.
+	^ v
 	
 
 
@@ -2156,7 +2137,7 @@ RSAnimationExamples >> example34Tick [
 
 { #category : #perlin }
 RSAnimationExamples >> example35Perlin [
-	<script: 'self new example35Perlin'>
+	<script: 'self new example35Perlin open setLabel: ''Perlin :V'''>
 	| v r s frame scIterations scRadius rect extent maxLife perlin noiseScale |
 	r := Random new.
 	v := RSView new.
@@ -2218,14 +2199,14 @@ RSAnimationExamples >> example35Perlin [
 	v when: TSExtentChangedEvent do: [ v camera 
 		zoomToFit: v extent
 		rectangle: rect ].
-	v open setLabel: 'Perlin :V'.
+	^ v
 	
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example36RoundRectagles [
 	"example inspired in paper.js"
-	<script: 'self new example36RoundRectagles'>
+	<script: 'self new example36RoundRectagles open setLabel: ''Round Rectangles'''>
 	| v mouse extent s frame scale |
 	v := RSView new.
 	extent := 500@500.
@@ -2252,12 +2233,12 @@ RSAnimationExamples >> example36RoundRectagles [
 				translation: pos;
 				rotateByDegrees: angle.
 			]].
-	v open setLabel: 'Round Rectangles'
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example37SimpleClock [
-	<script: 'self new example37SimpleClock'>
+	<script: 'self new example37SimpleClock open setLabel: ''4 gradient corners'''>
 	| v extent half linear color shape label roassal clock location |
 	v := RSView new.
 	extent := 800 @ 600.
@@ -2299,12 +2280,12 @@ RSAnimationExamples >> example37SimpleClock [
 		offset: 0 @ 15.
 	location move: v shapes last on: v elements.
 	v @ RSControlsView.
-	v open setLabel: '4 gradient corners'
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example38AnimatedLayout [
-	<script: 'self new example38AnimatedLayout'>
+	<script: 'self new example38AnimatedLayout open setLabel: ''Layouts'''>
 	| v objects layout update labels elements |
 	v := RSView new.
 	objects := 1 to: 100.
@@ -2350,7 +2331,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 		elementsOn: #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	v addAll: labels.
 	RSHorizontalLineLayout on: labels.
-	v open setLabel: 'Layouts'.
+	^ v
 	
 
 
@@ -2360,7 +2341,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 
 { #category : #examples }
 RSAnimationExamples >> example39ForceLayout [
-	<script: 'self new example39ForceLayout'>
+	<script: 'self new example39ForceLayout open'>
 	| v classes layout |
 	v := RSView new.
 	classes := RSShapeBuilder ellipse
@@ -2384,7 +2365,7 @@ RSAnimationExamples >> example39ForceLayout [
 	v newAnimation repeat onStepDo: [ :t | 
 		layout step ].
 
-	v open
+	^ v
 	
 
 
@@ -2392,7 +2373,7 @@ RSAnimationExamples >> example39ForceLayout [
 
 { #category : #examples }
 RSAnimationExamples >> example40Roassal [
-	<script: 'self new example40Roassal'>
+	<script: 'self new example40Roassal open'>
 	| v points paint fscale timeSize text |
 	v := RSView new.
 	text := 'Roassal3'.
@@ -2455,12 +2436,12 @@ RSAnimationExamples >> example40Roassal [
 			from: -1; to: 0; onStepDo: [ :t |
 			v shapes last matrix shy: t ] ]. 
 	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent * 0.8 extent: 300@300 ].
-	v open.
+	^ v
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example41Title [
-	<script: 'self new example41Title'>
+	<script: 'self new example41Title open setLabel: ''Basic Animation'''>
 	| v t1 t2 s line1 line2 line3 line4 title desc r1 r2 pad mid marker sum lineAnime p |
 	v := RSView new.
 	t1 := 'Roassal3'.
@@ -2571,14 +2552,13 @@ for Pharo 7 and Pharo 8.'.
 		duration: 1 second;
 		from: 0; to: 360;
 		onStepDo: [ :t | marker betaAngle: t - 90.].
-
-	v open setLabel: 'Basic Animation'.
+	^ v.
 	"TODO add animation to line3 and line4, hide and remove with animation these elements"
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example42RectangleForceLayout [
-	<script: 'self new example42RectangleForceLayout'>
+	<script: 'self new example42RectangleForceLayout open'>
 	| view classes layout |
 	view := RSView new.
 
@@ -2612,12 +2592,12 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	classes @ (RSDraggableForce new layout: layout).
 
 	view camera scale: 2.
-	view open
+	^ view
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example43PerlinRose [
-	<script: 'self new example43PerlinRose'>
+	<script: 'self new example43PerlinRose open extent: 800@600; setLabel: ''Rose'''>
 	| v offset offsetInc inc m s tau perlin polygons |
 	v := RSView new.
 	offset:= 0@0.			"Perlin offset"
@@ -2657,10 +2637,7 @@ RSAnimationExamples >> example43PerlinRose [
 				]
 			] ifFalse: [evt animation stop].
 			v signalUpdate. ].
-	v open 
-		extent: 800@600;
-		setLabel: 'Rose'.
-
+	^ v
 
 
 
@@ -2669,7 +2646,7 @@ RSAnimationExamples >> example43PerlinRose [
 
 { #category : #perlin }
 RSAnimationExamples >> example44Boat [
-	<script: 'self new example44Boat'>
+	<script: 'self new example44Boat open'>
 	| v perlin frame scale shape lines boat x pharo |
 	v := RSView new.
 	v color: Color pink.
@@ -2751,7 +2728,6 @@ RSAnimationExamples >> example44Boat [
 	pharo := RSShapeBuilder bitmap
 		form: (self iconNamed: #pharo);
 		element.
-	v open.
 	v zoomToFit.
 	v camera scale: 2.5.
 	v add: pharo.
@@ -2759,11 +2735,12 @@ RSAnimationExamples >> example44Boat [
 	RSLocation new 
 		inner; bottom; right;
 		move: pharo on: lines.
+	^ v
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example45Duna [
-	<script: 'self new example45Duna'>
+	<script: 'self new example45Duna  open extent: 1000@700; position: World center - (1000@700 / 2)'>
 	| v extent num color noiseScale perlin c particles |
 	v := RSView new.
 	extent := 1000@700.
@@ -2794,9 +2771,7 @@ RSAnimationExamples >> example45Duna [
 			particle translateBy: vel.
 			 ].
 		 ].
-	v open
-		extent: extent;
-		position: World center - (extent / 2).
+	^ v
 ]
 
 { #category : #'data - svg' }

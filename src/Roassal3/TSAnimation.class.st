@@ -37,5 +37,5 @@ TSAnimation >> release [
 
 { #category : #dependencies }
 TSAnimation >> start [
-	"self subclassResponsibility"
+	self subclassResponsibility
 ]

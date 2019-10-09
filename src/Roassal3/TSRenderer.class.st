@@ -20,3 +20,7 @@ TSRenderer >> canvas: aCanvas [
 	"aCanvas is AthensCanvas"
 	athensCanvas := aCanvas
 ]
+
+{ #category : #accessing }
+TSRenderer >> visitCanvas: canvas [
+]

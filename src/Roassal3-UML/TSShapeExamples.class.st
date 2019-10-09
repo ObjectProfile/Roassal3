@@ -205,7 +205,7 @@ TSShapeExamples >> example08EllipseBorder [
 
 	| c y r |
 	c := TSCanvas new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	c color: (Color colorFrom: '325A64').
 	1 to: 500 do: [ :x|
 		y := 255 + (x sin * 255).

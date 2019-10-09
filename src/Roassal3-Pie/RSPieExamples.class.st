@@ -129,7 +129,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 RSPieExamples >> example05Smash [
 	<script: 'self new example05Smash'>
 	| pie colors r |
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	pie := RSPieBuilder new
 		objects: ((1 to: 10) collect: [:e | r next]) sort;
 		yourself.
@@ -210,7 +210,7 @@ RSPieExamples >> example06SmashHSL [
 RSPieExamples >> example07Dendi [
 	<script: 'self new example07Dendi'>
 	| pie colors r |
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	pie := RSPieBuilder new
 		objects: ((1 to: 10) collect: [:e | r next]) sort;
 		yourself.
@@ -484,7 +484,7 @@ RSPieExamples >> example15Clockwise [
 	| b r  |
 	
 	b := RSPieBuilder new.
-	r := SharedRandom globalGenerator.
+	r := Random new.
 	b objects: ((1 to: 10) collect: [:e | r next]) sort.
 	b shape
 		allowRepeatCommands;

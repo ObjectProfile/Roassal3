@@ -3,13 +3,13 @@ Basic examples about highlighting
 "
 Class {
 	#name : #RSHighlightableExamples,
-	#superclass : #RSObject,
+	#superclass : #TSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #examples }
 RSHighlightableExamples >> example01Basic [
-	<script: 'self new example01Basic'>
+	<script: 'self new example01Basic open'>
 	| v s elements |
 	v := RSView new.
 	s := RSShapeBuilder box
@@ -27,12 +27,12 @@ RSHighlightableExamples >> example01Basic [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example02ElementEdges [
-	<script: 'self new example02ElementEdges'>
+	<script: 'self new example02ElementEdges open'>
 	| v s elements interaction |
 	v := RSView new.
 	interaction := RSHighlightable new.
@@ -53,12 +53,12 @@ RSHighlightableExamples >> example02ElementEdges [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example03Interactive [
-	<script: 'self new example03Interactive'>
+	<script: 'self new example03Interactive open'>
 	| v s elements interaction update |
 	v := RSView new.
 	
@@ -83,12 +83,12 @@ RSHighlightableExamples >> example03Interactive [
 	v newAnimation repeat  when: TSAnimationLoopEvent do: update.
 	
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example04Interactive [
-	<script: 'self new example04Interactive'>
+	<script: 'self new example04Interactive open'>
 	| v s elements interaction bool update |
 	v := RSView new.
 	
@@ -118,12 +118,12 @@ RSHighlightableExamples >> example04Interactive [
 	update value.
 	v newAnimation repeat when: TSAnimationLoopEvent do: update.
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example05Border [
-	<script: 'self new example05Border'>
+	<script: 'self new example05Border open'>
 	| v s elements int |
 	v := RSView new.
 	s := RSShapeBuilder box
@@ -142,12 +142,12 @@ RSHighlightableExamples >> example05Border [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	v zoomToFit.
-	v open
+	^ v
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example06IterateNext [
-	<script: 'self new example06IterateNext'>
+	<script: 'self new example06IterateNext open'>
 	
 	| view numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	view := RSView new.
@@ -211,12 +211,12 @@ RSHighlightableExamples >> example06IterateNext [
 			selectedNumber := (selectedNumber \\ numbers size) + 1.
 			highlightBlock value: selectedNumber ] ].
 
-	view open.
+	^ view
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example07HighlightButtons [
-	<script: 'self new example07HighlightButtons'>
+	<script: 'self new example07HighlightButtons open'>
 	| v bluePurple red box |
 	v := RSView new.
 	red := RSHighlightable new.
@@ -248,5 +248,5 @@ RSHighlightableExamples >> example07HighlightButtons [
 	red doHighlight: v elements first.
 	RSVerticalLineLayout on: v elements.
 	v @ RSControlsView.
-	v open
+	^ v
 ]
