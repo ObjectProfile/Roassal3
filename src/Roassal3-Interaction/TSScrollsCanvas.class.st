@@ -2,8 +2,8 @@
 I put a scrool shapes to the view when the view moves
 "
 Class {
-	#name : #RSScrollsView,
-	#superclass : #RSAbstractControlView,
+	#name : #TSScrollsCanvas,
+	#superclass : #TSAbstractControlCanvas,
 	#instVars : [
 		'barShape',
 		'vertical',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #hooks }
-RSScrollsView >> addScrollBars: aView [
+TSScrollsCanvas >> addScrollBars: aView [
 	vertical := barShape element shape.
 	horizontal := barShape element shape.
 	aView addShape: vertical; addShape: horizontal.
@@ -23,7 +23,7 @@ RSScrollsView >> addScrollBars: aView [
 ]
 
 { #category : #private }
-RSScrollsView >> color: color1 border: color2 [
+TSScrollsCanvas >> color: color1 border: color2 [
 	| c1 c2 extent |
 	c1 := color1.
 	c2 := color2.
@@ -43,13 +43,13 @@ RSScrollsView >> color: color1 border: color2 [
 ]
 
 { #category : #initialization }
-RSScrollsView >> initialize [
+TSScrollsCanvas >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSScrollsView >> initializeHideAnimation [
+TSScrollsCanvas >> initializeHideAnimation [
 	| sc1 sc2 |
 	sc1 := TSScale linear range: { self scrollColor. Color transparent }.
 	sc2 := TSScale linear range: { self scrollBorderColor. Color transparent }.
@@ -63,7 +63,7 @@ RSScrollsView >> initializeHideAnimation [
 ]
 
 { #category : #initialization }
-RSScrollsView >> initializeShape [
+TSScrollsCanvas >> initializeShape [
 	barShape := RSShapeBuilder box
 		cornerRadius: (TSCornerRadius new radius: 5);
 		border: [TSBorder new color: self scrollBorderColor; width: 0.5];
@@ -87,7 +87,7 @@ RSScrollsView >> initializeShape [
 ]
 
 { #category : #hooks }
-RSScrollsView >> moveScroll: evt [
+TSScrollsCanvas >> moveScroll: evt [
 	| shape delta position camera viewExtent shapesRect correct |
 	shape := evt shape.
 	delta := evt step.
@@ -110,30 +110,30 @@ RSScrollsView >> moveScroll: evt [
 ]
 
 { #category : #hooks }
-RSScrollsView >> onElement: aView [
-	self addScrollBars: aView.
+TSScrollsCanvas >> onShape: aCanvas [
+	self addScrollBars: aCanvas.
 	
-	aView when: TSPositionChangedEvent do: [ self updateScrollbars ].
-	aView when: TSScaleChangedEvent do: [ self updateScrollbars ].
+	aCanvas when: TSPositionChangedEvent do: [ self updateScrollbars ].
+	aCanvas when: TSScaleChangedEvent do: [ self updateScrollbars ].
 ]
 
 { #category : #accessing }
-RSScrollsView >> scrollBorderColor [
+TSScrollsCanvas >> scrollBorderColor [
 	^ Smalltalk ui theme textColor trans
 ]
 
 { #category : #accessing }
-RSScrollsView >> scrollColor [
+TSScrollsCanvas >> scrollColor [
 	^ Color blue trans
 ]
 
 { #category : #accessing }
-RSScrollsView >> shape [
+TSScrollsCanvas >> shape [
 	^ barShape
 ]
 
 { #category : #hooks }
-RSScrollsView >> updateAnimation [
+TSScrollsCanvas >> updateAnimation [
 	| canvas |
 	canvas := vertical parent.
 	hideAnimation 
@@ -152,7 +152,7 @@ RSScrollsView >> updateAnimation [
 ]
 
 { #category : #hooks }
-RSScrollsView >> updateBasicScrollbars [
+TSScrollsCanvas >> updateBasicScrollbars [
 	| canvas viewRect camera shapesRect p pd ext scrollExtent |
 	canvas := vertical parent.
 	camera := canvas camera. 
@@ -171,7 +171,7 @@ RSScrollsView >> updateBasicScrollbars [
 ]
 
 { #category : #hooks }
-RSScrollsView >> updateScrollbars [
+TSScrollsCanvas >> updateScrollbars [
 	self updateBasicScrollbars.
 	self color: self scrollColor border: self scrollBorderColor.
 	self updateAnimation.

@@ -130,7 +130,7 @@ RSAnimationExamples >> example04BoxWindmill [
 					translateBy: e model;
 					rotateByRadians: (e model x + e model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
-	v @ (RSActivityMonitorView new initializeGraphShape).
+	v @ (TSActivityMonitorView new initializeGraphShape).
 	^ v
 ]
 
@@ -1814,7 +1814,7 @@ RSAnimationExamples >> example28AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: TSAnimationLoopEvent do: update ] ].
 	
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 	
 
@@ -1929,7 +1929,7 @@ RSAnimationExamples >> example31Miku [
 		svgPath: #key;
 		color: #value.
 	v addAll: (svg elementsOn: lines).
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	easing := TSEasing elasticOut.
 	v elements do: [ :e | | position |
 		position := (r next * 1000) @ (r next * 1000) - 100.
@@ -2279,7 +2279,7 @@ RSAnimationExamples >> example37SimpleClock [
 		top;
 		offset: 0 @ 15.
 	location move: v shapes last on: v elements.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]
 
@@ -2306,7 +2306,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 		 ].
 	
 	update value: #tree.
-	RSZoomToFitView new animatedZoomToFit: v.
+	TSZoomToFitCanvas new animatedZoomToFit: v.
 
 	labels := RSShapeBuilder label
 		isFixed: true;
@@ -2578,7 +2578,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		edges: view edges;
 		start;
 		yourself.
-	view @ RSActivityMonitorView.
+	view @ TSActivityMonitorView.
 	view newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."

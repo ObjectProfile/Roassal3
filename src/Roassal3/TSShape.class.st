@@ -124,6 +124,16 @@ TSShape >> includesPoint: aPoint [
 	^ false
 ]
 
+{ #category : #accessing }
+TSShape >> index [
+	^ self attributeAt: #index ifAbsent: [ nil ].
+]
+
+{ #category : #accessing }
+TSShape >> index: anInteger [
+	^ self attributeAt: #index put: anInteger.
+]
+
 { #category : #initialization }
 TSShape >> initialize [
 	super initialize.
@@ -155,6 +165,16 @@ TSShape >> isShape [
 { #category : #actions }
 TSShape >> loadShape: aShape [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+TSShape >> model [
+	^ self attributeAt: #model ifAbsent: [ nil ].
+]
+
+{ #category : #accessing }
+TSShape >> model: anObject [
+	^ self attributeAt: #model put: anObject.
 ]
 
 { #category : #accessing }

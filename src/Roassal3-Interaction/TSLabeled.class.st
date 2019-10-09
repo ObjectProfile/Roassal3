@@ -3,8 +3,8 @@ A RSLabeled  adds a label above an element. The label may be particularized usin
 
 "
 Class {
-	#name : #RSLabeled,
-	#superclass : #RSInteraction,
+	#name : #TSLabeled,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'shape',
 		'location',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #hooks }
-RSLabeled >> createLabel: anElement [
+TSLabeled >> createLabel: anElement [
 	| label color set targetLabel |
 	label := shape elementOn: (self modelFor: anElement).
 	location stick: label on: anElement.
@@ -38,19 +38,19 @@ RSLabeled >> createLabel: anElement [
 ]
 
 { #category : #hooks }
-RSLabeled >> getOrCreateLabel: anElement [
+TSLabeled >> getOrCreateLabel: aShape [
 	| label parent |
-	label := anElement attributes 
-		at: #RSLabeled
-		ifAbsentPut: [ self createLabel: anElement ].
-	parent :=anElement parent.
+	label := aShape attributes 
+		at: #TSLabeled
+		ifAbsentPut: [ self createLabel: aShape ].
+	parent :=aShape parent.
 	(label isInACanvas not and: [parent notNil ]) 
-		ifTrue: [ parent add: label ].
+		ifTrue: [ parent addShape: label shape ].
 	^ label
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> highlightable [
+TSLabeled >> highlightable [
 	"Make the label highlightable.
 E.g.,
 
@@ -71,7 +71,7 @@ v open
 ]
 
 { #category : #initialization }
-RSLabeled >> initialize [ 
+TSLabeled >> initialize [ 
 	super initialize.
 	self shape: RSShapeBuilder label.
 	self model: #model.
@@ -80,66 +80,66 @@ RSLabeled >> initialize [
 ]
 
 { #category : #accessing }
-RSLabeled >> location [
+TSLabeled >> location [
 	^ location
 ]
 
 { #category : #accessing }
-RSLabeled >> lowColor [
+TSLabeled >> lowColor [
 	^ lowColor
 ]
 
 { #category : #accessing }
-RSLabeled >> lowColor: aColor [
+TSLabeled >> lowColor: aColor [
 	lowColor := aColor
 ]
 
 { #category : #accessing }
-RSLabeled >> model [
+TSLabeled >> model [
 	^ modelBlock
 ]
 
 { #category : #accessing }
-RSLabeled >> model: aBlock [
+TSLabeled >> model: aBlock [
 	modelBlock := aBlock
 ]
 
 { #category : #hooks }
-RSLabeled >> modelFor: anElement [
+TSLabeled >> modelFor: anElement [
 	^ modelBlock rsValue: anElement.
 ]
 
 { #category : #hooks }
-RSLabeled >> onElement: anElement [
+TSLabeled >> onShape: aShape [
 	| block |
-	block := [ self getOrCreateLabel: anElement. ]. 
-	anElement isInACanvas 
+	block := [ self getOrCreateLabel: aShape. ]. 
+	aShape isInACanvas 
 		ifTrue: block
-		ifFalse: [ anElement when: TSShapedObjectAdded do: block ].
+		ifFalse: [ aShape when: TSShapedObjectAdded do: block ].
 ]
 
 { #category : #accessing }
-RSLabeled >> shape [
+TSLabeled >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSLabeled >> shape: aShapeBuilder [
+TSLabeled >> shape: aShapeBuilder [
 	shape := aShapeBuilder
 ]
 
 { #category : #accessing }
-RSLabeled >> target [
+TSLabeled >> target [
 	^ target
 ]
 
 { #category : #accessing }
-RSLabeled >> target: aBlock [
+TSLabeled >> target: aBlock [
 	target := aBlock
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> text: aBlockOrSymbol [
+TSLabeled >> text: aBlockOrSymbol [
 	"Set the transformation to be obtained
 E.g.,
 

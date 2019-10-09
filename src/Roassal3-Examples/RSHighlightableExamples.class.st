@@ -16,12 +16,12 @@ RSHighlightableExamples >> example01Basic [
 		size: 10;
 		draggable;
 		border: TSBorder new;
-		@ RSHighlightable;
+		@ TSHighlightable;
 		color: TSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
 	RSEdgeBuilder line
 		elements: elements;
-		addInteraction: RSHighlightable;
+		addInteraction: TSHighlightable;
 			view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
@@ -35,7 +35,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges open'>
 	| v s elements interaction |
 	v := RSView new.
-	interaction := RSHighlightable new.
+	interaction := TSHighlightable new.
 	interaction withEdges.
 	interaction highlightShape color: Color red.
 	s := RSShapeBuilder box
@@ -47,7 +47,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	elements := s elementsOn: (1 to: 20).
 	RSEdgeBuilder line
 		elements: elements;
-		@ RSHighlightable;
+		@ TSHighlightable;
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
@@ -75,7 +75,7 @@ RSHighlightableExamples >> example03Interactive [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	
-	interaction := RSHighlightable new .
+	interaction := TSHighlightable new .
 	interaction withEdges.
 	interaction highlightShape color: Color red.
 	update := [ interaction doHighlight: elements atRandom ].
@@ -105,7 +105,7 @@ RSHighlightableExamples >> example04Interactive [
 	v addAll: elements.
 	RSClusterLayout on: elements.
 	
-	interaction := RSHighlightable new.
+	interaction := TSHighlightable new.
 	bool := true.
 	interaction highlightShape color: Color red.
 	interaction recordElements: v elements, v edges.
@@ -136,7 +136,7 @@ RSHighlightableExamples >> example05Border [
 		elements: elements;
 			view: v;
 		connectFrom: [ :n | n // 2 ].
-	int := RSHighlightable new.
+	int := TSHighlightable new.
 	int highlightShape border: (TSBorder new width: 2).
 	elements @ int.
 	v addAll: elements.
@@ -156,7 +156,7 @@ RSHighlightableExamples >> example06IterateNext [
 	"Create the view with numbers as elements."
 	numbers := RSShapeBuilder box
 		size: 30;
-		addInteraction: RSLabeled new;
+		addInteraction: TSLabeled new;
 		elementsOn: (1 to: 10).
 	edges := RSEdgeBuilder line
 		elements: numbers;
@@ -175,9 +175,9 @@ RSHighlightableExamples >> example06IterateNext [
 	numbers @ (RSDraggableForce new layout: layout).
 
 	"Set up highlighting interactions"
-	highlightableForBoxes := RSHighlightable new.
+	highlightableForBoxes := TSHighlightable new.
 	highlightableForBoxes highlightShape color: Color red.
-	highlightableForLabels := RSHighlightable new
+	highlightableForLabels := TSHighlightable new
 		attributeKey: #exampleKey;
 		when: TSHighlightEvent do: [ :evt | evt element bold ];
 		when: TSUnHighlightEvent do: [ :evt | evt element normal ].
@@ -219,10 +219,10 @@ RSHighlightableExamples >> example07HighlightButtons [
 	<script: 'self new example07HighlightButtons open'>
 	| v bluePurple red box |
 	v := RSView new.
-	red := RSHighlightable new.
+	red := TSHighlightable new.
 	red highlightShape color: Color red.
 
-	bluePurple:= RSHighlightable new.
+	bluePurple:= TSHighlightable new.
 	bluePurple highlightShape 
 		color: Color blue;
 		if: [:m | m > 5] then: [:s | 
@@ -247,6 +247,6 @@ RSHighlightableExamples >> example07HighlightButtons [
 
 	red doHighlight: v elements first.
 	RSVerticalLineLayout on: v elements.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #RSPopupTest,
+	#name : #TSPopupTest,
 	#superclass : #TSTest,
 	#instVars : [
 		'view',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #running }
-RSPopupTest >> setUp [
+TSPopupTest >> setUp [
 	super setUp.
 	view := RSView new.
 	elements := RSShapeBuilder box elementsOn: #(1 2).
@@ -17,23 +17,23 @@ RSPopupTest >> setUp [
 ]
 
 { #category : #tests }
-RSPopupTest >> testNoPopup [
+TSPopupTest >> testNoPopup [
 	elements first announce: TSMouseEnter.
 	self assert: view numberOfShapes equals: elements size.
 ]
 
 { #category : #tests }
-RSPopupTest >> testPopupOnElementNotAddedToAView [
+TSPopupTest >> testPopupOnElementNotAddedToAView [
 	| el |
 	el := RSShapeBuilder box element.
-	el @ RSPopup.
+	el @ TSPopup.
 	el announce: TSMouseEnter.
 	"Should not produce an error"
 ]
 
 { #category : #tests }
-RSPopupTest >> testWithPopup [
-	elements @ RSPopup.
+TSPopupTest >> testWithPopup [
+	elements @ TSPopup.
 	self assert: view fixedShapes size equals: 0 .
 	
 	elements first announce: TSMouseMove.

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shapedObject'
 	],
-	#category : #'Roassal3-Events'
+	#category : #'Roassal3-Scripting-Events'
 }
 
 { #category : #accessing }

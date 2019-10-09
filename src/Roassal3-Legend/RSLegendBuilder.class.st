@@ -180,7 +180,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 	label := menuShape element.
 	label isFixed: true.
 	aView addShape: label shape.
-	i := RSAnimatedPopup new.
+	i := TSAnimatedPopup new.
 	i shape: shape. 
 	label @ i.
 	legendLabels := nil.

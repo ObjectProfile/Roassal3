@@ -35,7 +35,7 @@ RSInteractionBuilder >> clear [
 { #category : #interactions }
 RSInteractionBuilder >> draggable [
 	| i |
-	self addExclusiveInteraction: (i := RSDraggable instance).
+	self addExclusiveInteraction: (i := TSDraggable instance).
 	^ i
 	
 ]
@@ -54,7 +54,7 @@ RSInteractionBuilder >> inspectable [
 { #category : #interactions }
 RSInteractionBuilder >> labeled [
 	| i |
-	self addExclusiveInteraction: (i := RSLabeled new).
+	self addExclusiveInteraction: (i := TSLabeled new).
 	^ i
 	
 ]
@@ -81,7 +81,7 @@ RSInteractionBuilder >> popupAndDraggable [
 { #category : #interactions }
 RSInteractionBuilder >> popupText: anObject [
 	| i |
-	self addExclusiveInteraction: (i := RSPopup new).
+	self addExclusiveInteraction: (i := TSPopup new).
 	i label text: anObject.
 	^ i.
 ]

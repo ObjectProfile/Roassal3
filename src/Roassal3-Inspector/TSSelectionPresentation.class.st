@@ -2,8 +2,8 @@
 I am used on the inspector for Roassal3, when you select one element the view changes its shapes
 "
 Class {
-	#name : #RSSelectionPresentation,
-	#superclass : #RSInteraction,
+	#name : #TSSelectionPresentation,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'presentation'
 	],
@@ -11,17 +11,22 @@ Class {
 }
 
 { #category : #hooks }
-RSSelectionPresentation >> onElement: anElement [
+TSSelectionPresentation >> onShape: anElement [
 	anElement when: TSMouseClick do: [ self presentation selection: anElement model ]
 	
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> presentation [
+TSSelectionPresentation >> presentation [
 	^ presentation
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> presentation: aRSRoassalPresentation [
+TSSelectionPresentation >> presentation: aRSRoassalPresentation [
 	presentation := aRSRoassalPresentation
+]
+
+{ #category : #dependencies }
+TSSelectionPresentation >> release [
+	presentation := nil
 ]

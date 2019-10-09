@@ -2,8 +2,8 @@
 I interact with RSControlsView. my subclasses are added to the controls
 "
 Class {
-	#name : #RSAbstractControlView,
-	#superclass : #RSAbstractViewInteraction,
+	#name : #TSAbstractControlCanvas,
+	#superclass : #TSAbstractCanvasInteraction,
 	#instVars : [
 		'limits'
 	],
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #accessing }
-RSAbstractControlView >> configuration [
+TSAbstractControlCanvas >> configuration [
 	^ limits ifNil: [ limits := RSControlConfiguration new ]
 ]
 
 { #category : #accessing }
-RSAbstractControlView >> configuration: aRSControlLimits [
+TSAbstractControlCanvas >> configuration: aRSControlLimits [
 	limits := aRSControlLimits
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> correctCameraPosition: evt [ 
+TSAbstractControlCanvas >> correctCameraPosition: evt [ 
 	^ self 
 		correctCameraPosition: evt
 		inRectangle: (self expandedRectangle: evt)
@@ -30,7 +30,7 @@ RSAbstractControlView >> correctCameraPosition: evt [
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> correctCameraPosition: evt inRectangle: rectangle position: position scale: scale [
+TSAbstractControlCanvas >> correctCameraPosition: evt inRectangle: rectangle position: position scale: scale [
 	| aView viewRect x y p |
 	aView := evt view.
 	p := position.
@@ -63,7 +63,7 @@ RSAbstractControlView >> correctCameraPosition: evt inRectangle: rectangle posit
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> correctCameraPosition: evt scale: scale [
+TSAbstractControlCanvas >> correctCameraPosition: evt scale: scale [
 	^ self 
 		correctCameraPosition: evt
 		inRectangle: (self expandedRectangle: evt)
@@ -72,14 +72,14 @@ RSAbstractControlView >> correctCameraPosition: evt scale: scale [
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> encompassingRectangleFor: aView [
+TSAbstractControlCanvas >> encompassingRectangleFor: aView [
 	^ aView attributes 
 		at: #encompassingRectangle 
 		ifAbsentPut: [ aView encompassingRectangle  ].
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> expandedRectangle: evt [
+TSAbstractControlCanvas >> expandedRectangle: evt [
 	| key | 
 	key := #expanedEncompassingRectangle.
 	^ evt view attributes at: key ifAbsentPut: [ 
@@ -90,18 +90,18 @@ RSAbstractControlView >> expandedRectangle: evt [
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> removeRectanglesFor: aView [
+TSAbstractControlCanvas >> removeRectanglesFor: aView [
 	aView 
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]
 
 { #category : #rendering }
-RSAbstractControlView >> renderOn: aLegendBuilder [
+TSAbstractControlCanvas >> renderOn: aLegendBuilder [
 ]
 
 { #category : #utilities }
-RSAbstractControlView >> scaleFor: aScale [
+TSAbstractControlCanvas >> scaleFor: aScale [
 	| l |
 	l := self configuration.
 	^ (l maxScale min: aScale ) max: l minScale

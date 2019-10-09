@@ -1,8 +1,8 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Roassal3-Scripting' }
-BlockClosure >> onElement: aRTElement [ 
-	self value: aRTElement 
+BlockClosure >> onShape: aTSShape [ 
+	self value: aTSShape 
 ]
 
 { #category : #'*Roassal3-Scripting' }

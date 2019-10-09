@@ -2,8 +2,8 @@
 Hi!, I can control the RSForceBaseLayout step method, in order to use it only when it needs
 "
 Class {
-	#name : #RSForceLayoutStepping,
-	#superclass : #RSInteraction,
+	#name : #TSForceLayoutStepping,
+	#superclass : #TSAbstractCanvasInteraction,
 	#instVars : [
 		'layout',
 		'animation'
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #hooks }
-RSForceLayoutStepping >> addEventsTo: el [
+TSForceLayoutStepping >> addEventsTo: el [
 	| mock |
 	el 
 		when: TSMouseDragStart do: [ :evt | 
@@ -28,29 +28,29 @@ RSForceLayoutStepping >> addEventsTo: el [
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> alphaRange [
+TSForceLayoutStepping >> alphaRange [
 	^ #(0 0.1)
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> layout [
+TSForceLayoutStepping >> layout [
 	^ layout
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> layout: aRSForceBasedLayout [
+TSForceLayoutStepping >> layout: aRSForceBasedLayout [
 	layout := aRSForceBasedLayout
 ]
 
 { #category : #hooks }
-RSForceLayoutStepping >> onElement: aView [
-	aView elements do: [ :e | self addEventsTo: e ].
-	self startSimpleAnimation: aView.
-	aView newAnimation onStepDo: [:t| aView zoomToFit ].
+TSForceLayoutStepping >> onShape: aCanvas [
+	aCanvas view elements do: [ :e | self addEventsTo: e ].
+	self startSimpleAnimation: aCanvas.
+	aCanvas newAnimation onStepDo: [:t| aCanvas zoomToFit ].
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startForceAnimation: aView [
+TSForceLayoutStepping >> startForceAnimation: aView [
 	animation ifNotNil: #stop.
 	animation := aView animationFrom: {
 		"Start smoothly"
@@ -68,7 +68,7 @@ RSForceLayoutStepping >> startForceAnimation: aView [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startSimpleAnimation: aView [
+TSForceLayoutStepping >> startSimpleAnimation: aView [
 	animation ifNotNil: #stop.
 	animation := aView newAnimation 
 		easing: TSEasing cubicInOut;

@@ -2,25 +2,25 @@
 I am a basici class
 "
 Class {
-	#name : #RSChessBackground,
-	#superclass : #RSAbstractViewInteraction,
+	#name : #TSChessBackground,
+	#superclass : #TSAbstractCanvasInteraction,
 	#category : #'Roassal3-Inspector-Interaction'
 }
 
 { #category : #hooks }
-RSChessBackground >> onElement: aView [
+TSChessBackground >> onShape: aCanvas [
 	| boxes theme color |
 	theme := Smalltalk ui theme.
-	aView color: theme backgroundColor.
+	aCanvas color: theme backgroundColor.
 	color := theme caretColor alpha: 0.2.
 	boxes := nil.
-	aView when: TSExtentChangedEvent do: [ 
+	aCanvas when: TSExtentChangedEvent do: [ 
 		| extent side counter even camera |
 		boxes ifNotNil: [ boxes do: #remove ].
-		extent := aView extent.
-		camera := aView camera.
+		extent := aCanvas extent.
+		camera := aCanvas camera.
 		
-		aView zoomToFit.
+		aCanvas zoomToFit.
 		side := 20.
 		boxes := TSGroup new.
 		counter := 0.
@@ -34,13 +34,13 @@ RSChessBackground >> onElement: aView [
 						size: side / camera scale;
 						position: (camera fromPixelToSpace: j@k).
 					boxes add: box.
-					aView addShape: box.
+					aCanvas addShape: box.
 				 ].
 				even := even not.
 			].
 			counter := counter + 1 ].
 		boxes pushBack.
-		aView signalUpdate ].
+		aCanvas signalUpdate ].
 	
 
 ]

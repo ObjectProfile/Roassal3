@@ -2,7 +2,7 @@
 For drag view tests
 "
 Class {
-	#name : #RSDraggableViewTest,
+	#name : #TSDraggableCanvasTest,
 	#superclass : #TSTest,
 	#instVars : [
 		'view'
@@ -11,26 +11,26 @@ Class {
 }
 
 { #category : #running }
-RSDraggableViewTest >> setUp [
+TSDraggableCanvasTest >> setUp [
 	view := RSView new.
 	view add: (RSShapeBuilder ellipse width: 40; height: 20) element.
 	
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDefault [
+TSDraggableCanvasTest >> testDefault [
 	self assert: view canvas camera position equals: 0@0.
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDraggingModeLeft [
-	view @ RSDraggableView left.
+TSDraggableCanvasTest >> testDraggingModeLeft [
+	view @ TSDraggableCanvas left.
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	self assert: (view canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableView.
+	view removeInteractionIfPresent: TSDraggableCanvas.
 	
-	view @ RSDraggableView left.
+	view @ TSDraggableCanvas left.
 	view canvas announce: (TSMouseDragStart new canvas: view canvas).
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas ).
 	view canvas announce: (TSMouseDragEnd new canvas: view canvas).
@@ -45,14 +45,14 @@ RSDraggableViewTest >> testDraggingModeLeft [
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDraggingModeMiddle [
-	view @ RSDraggableView middle.
+TSDraggableCanvasTest >> testDraggingModeMiddle [
+	view @ TSDraggableCanvas middle.
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	self assert: (view canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableView.
+	view removeInteractionIfPresent: TSDraggableCanvas.
 	
-	view @ RSDraggableView middle.
+	view @ TSDraggableCanvas middle.
 	view canvas announce: (TSMouseDragStart new canvas: view canvas).
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	view canvas announce: (TSMouseDragEnd new canvas: view canvas).
@@ -67,14 +67,14 @@ RSDraggableViewTest >> testDraggingModeMiddle [
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDraggingModeRight [
-	view @ RSDraggableView right.
+TSDraggableCanvasTest >> testDraggingModeRight [
+	view @ TSDraggableCanvas right.
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	self assert: (view canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableView.
+	view removeInteractionIfPresent: TSDraggableCanvas.
 	
-	view @ RSDraggableView right.
+	view @ TSDraggableCanvas right.
 	view canvas announce: (TSMouseDragStart new canvas: view canvas).
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	view canvas announce: (TSMouseDragEnd new canvas: view canvas).
@@ -89,8 +89,8 @@ RSDraggableViewTest >> testDraggingModeRight [
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDraggingOnDraggable [
-	view @ RSDraggableView.
+TSDraggableCanvasTest >> testDraggingOnDraggable [
+	view @ TSDraggableCanvas.
 	view canvas announce: (TSMouseDragStart new canvas: view canvas).
 	view canvas announce: (TSMouseDragging new step: 10 @ 5; canvas: view canvas).
 	view canvas announce: (TSMouseDragEnd new canvas: view canvas).
@@ -98,7 +98,7 @@ RSDraggableViewTest >> testDraggingOnDraggable [
 ]
 
 { #category : #tests }
-RSDraggableViewTest >> testDraggingOnNotDraggable [
+TSDraggableCanvasTest >> testDraggingOnNotDraggable [
 	view canvas announce: (TSMouseDragging step: 10 @ 5).
 	self assert: view canvas camera position = (0 @ 0)
 ]

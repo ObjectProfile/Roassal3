@@ -2,8 +2,8 @@
 I add key events to the view to move it, zoom it with the key board
 "
 Class {
-	#name : #RSKeyNavigationView,
-	#superclass : #RSAbstractControlView,
+	#name : #TSKeyNavigationCanvas,
+	#superclass : #TSAbstractControlCanvas,
 	#instVars : [
 		'steps',
 		'speed',
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : #'events-processing' }
-RSKeyNavigationView >> expandCollapse: evt [
+TSKeyNavigationCanvas >> expandCollapse: evt [
 	evt view morph owner expandBoxHit
 ]
 
 { #category : #initialization }
-RSKeyNavigationView >> initialize [
+TSKeyNavigationCanvas >> initialize [
 	super initialize.
 	steps := Set new.
 	speed := 1.
@@ -28,14 +28,14 @@ RSKeyNavigationView >> initialize [
 ]
 
 { #category : #hooks }
-RSKeyNavigationView >> onElement: aView [
-	aView 
+TSKeyNavigationCanvas >> onShape: aCanvas [
+	aCanvas 
 		when: TSKeyDown do: [ :evt | self processKeyDown: evt ];
 		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
 ]
 
 { #category : #events }
-RSKeyNavigationView >> processKeyDown: evt [
+TSKeyNavigationCanvas >> processKeyDown: evt [
 	| char rect lastMS |
 	char := evt keyCharacter.
 	char == Character arrowLeft ifTrue: [ steps add: -1@0 ].
@@ -70,7 +70,7 @@ RSKeyNavigationView >> processKeyDown: evt [
 ]
 
 { #category : #events }
-RSKeyNavigationView >> processKeyUp: evt [
+TSKeyNavigationCanvas >> processKeyUp: evt [
 	| key |
 	steps removeAll.
 	key := evt keyValue.
@@ -84,7 +84,7 @@ RSKeyNavigationView >> processKeyUp: evt [
 ]
 
 { #category : #rendering }
-RSKeyNavigationView >> renderOn: lb [
+TSKeyNavigationCanvas >> renderOn: lb [
 	lb
 		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
 		text: 'Shift + arrows' description: 'Accelerate the move';
@@ -94,12 +94,12 @@ RSKeyNavigationView >> renderOn: lb [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationView >> zoomIn: evt [
+TSKeyNavigationCanvas >> zoomIn: evt [
 	self zoomMove: evt delta: 1.5
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationView >> zoomMove: evt delta: delta [
+TSKeyNavigationCanvas >> zoomMove: evt delta: delta [
 	| scale camera newScale correct |
 	camera := evt camera.
 	scale := camera scale.
@@ -123,7 +123,7 @@ RSKeyNavigationView >> zoomMove: evt delta: delta [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationView >> zoomOut: evt [
+TSKeyNavigationCanvas >> zoomOut: evt [
 	self zoomMove: evt delta: 0.5.
 	
 ]

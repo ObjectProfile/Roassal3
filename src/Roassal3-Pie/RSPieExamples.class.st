@@ -601,7 +601,7 @@ RSPieExamples >> example18ManyPies [
 				slice: #value;
 				build.
 			sum := pie totalSum.
-			pie elements @ (RSPopup text: [ :obj|
+			pie elements @ (TSPopup text: [ :obj|
 				obj value asStringWithCommas , '$, ' ,
 				(obj value * 100 / sum) rounded asString, '%' ] ).
 			shapes add: (title elementOn: m).
@@ -610,11 +610,11 @@ RSPieExamples >> example18ManyPies [
 	elements do: [ :e | e scaleBy: 0.5@1.
 		e matrix shy: 0.25 ].
 	view addAll: elements.
-	elements @RSDraggable.
+	elements @TSDraggable.
 	view showEncompassingRectangles.
 	RSGridLayout on: view elements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
-	view @ RSControlsView.
+	view @ TSControlsCanvas.
 	view open setLabel: 'Prizepool in esports :V'
 ]
 
@@ -637,7 +637,7 @@ RSPieExamples >> example19Buttons [
 
 	v camera position: v elements encompassingRectangle center.
 	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	
 	pie := RSPieBuilder new.
 	pie 
@@ -867,7 +867,7 @@ RSPieExamples >> example22RotatedAnimation [
 		].
 	view add:(RSShapeBuilder label elementOn: pie totalSum asString, ' LOC').
 	view camera zoomToFit: 270 asPoint.
-	view @ RSControlsView.
+	view @ TSControlsCanvas.
 	pie open setLabel: 'Roassal3 packages by #linesOfCode'
 
 
@@ -995,7 +995,7 @@ RSPieExamples >> example24ManyPies [
 			objects: m allButFirst;
 			slice: #yourself;
 			build.
-		pie elements do: [ :e  | e @ (RSPopup text: [:obj | 
+		pie elements do: [ :e  | e @ (TSPopup text: [:obj | 
 			(labels at: e index+1),': ',obj asString ] ) ].
 		g add: (title elementOn: m).
 		g add: (sumLabel elementOn: m).
@@ -1003,7 +1003,7 @@ RSPieExamples >> example24ManyPies [
 		].
 	view addAll: (composite elementsOn: data).
 	RSFlowLayout on: view elements.
-	view @ RSControlsView.
+	view @ TSControlsCanvas.
 	view zoomToFit.
 	view open setLabel: 'Usa population by State'.
 ]

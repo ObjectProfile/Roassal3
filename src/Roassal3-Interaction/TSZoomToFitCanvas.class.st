@@ -2,13 +2,13 @@
 I add an interaction for the view
 "
 Class {
-	#name : #RSZoomToFitView,
-	#superclass : #RSAbstractControlView,
+	#name : #TSZoomToFitCanvas,
+	#superclass : #TSAbstractControlCanvas,
 	#category : #'Roassal3-Interaction-Controls'
 }
 
 { #category : #'zoom animation' }
-RSZoomToFitView >> animatedZoomToFit: aView [
+TSZoomToFitCanvas >> animatedZoomToFit: aView [
 	| sc position scale camera pos |
 	camera := aView camera.
 	sc := camera scale.
@@ -50,26 +50,26 @@ RSZoomToFitView >> animatedZoomToFit: aView [
 ]
 
 { #category : #hooks }
-RSZoomToFitView >> onElement: aView [
-	aView when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
-	aView when: TSExtentChangedEvent do: [ self zoomToFitIfNecessary: aView ].
+TSZoomToFitCanvas >> onShape: aCanvas [
+	aCanvas when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
+	aCanvas when: TSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
-	self zoomToFit: aView.
+	self zoomToFit: aCanvas.
 ]
 
 { #category : #'private - events' }
-RSZoomToFitView >> processKeyUp: evt [
+TSZoomToFitCanvas >> processKeyUp: evt [
 	evt keyValue == 49 "Character space"  ifFalse:  [ ^ self ].
 	self animatedZoomToFit: evt view
 ]
 
 { #category : #rendering }
-RSZoomToFitView >> renderOn: lb [
+TSZoomToFitCanvas >> renderOn: lb [
 	lb text: 'Space' description: 'To zoom to fit the view'.
 ]
 
 { #category : #'zoom animation' }
-RSZoomToFitView >> zoomToFit: aView [
+TSZoomToFitCanvas >> zoomToFit: aView [
 	| camera shapesRect extent sc viewRect original |
 	camera := aView camera.
 	shapesRect := self encompassingRectangleFor: aView.
@@ -94,7 +94,7 @@ RSZoomToFitView >> zoomToFit: aView [
 ]
 
 { #category : #'zoom animation' }
-RSZoomToFitView >> zoomToFitIfNecessary: aView [
+TSZoomToFitCanvas >> zoomToFitIfNecessary: aView [
 	self configuration shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
 	self zoomToFit: aView
 ]

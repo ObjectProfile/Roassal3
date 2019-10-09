@@ -20,8 +20,8 @@ v open
 -=-=-=-=
 "
 Class {
-	#name : #RSMenuActivable,
-	#superclass : #RSInteraction,
+	#name : #TSMenuActivable,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'menuBlock'
 	],
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #hooks }
-RSMenuActivable >> highlightOn: evt [
+TSMenuActivable >> highlightOn: evt [
  
 	| att view |
 	view := evt canvas view.
@@ -45,7 +45,7 @@ RSMenuActivable >> highlightOn: evt [
 ]
 
 { #category : #enumerating }
-RSMenuActivable >> menuDo: block [
+TSMenuActivable >> menuDo: block [
 	"a block with two args
 	first arg, a MenuMorph
 	second arg, a RSElement or RSView
@@ -54,13 +54,13 @@ RSMenuActivable >> menuDo: block [
 ]
 
 { #category : #hooks }
-RSMenuActivable >> onElement: anElement [
+TSMenuActivable >> onShape: aShape [
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
-	anElement when: TSMouseRightClick do: [ :evt | 
+	aShape when: TSMouseRightClick do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
-		menuBlock value: menu value: anElement.
+		menuBlock value: menu value: aShape.
 		menu popUpInWorld ].
 	
 ]

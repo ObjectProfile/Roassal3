@@ -3,7 +3,7 @@ I am a specific interaction based on the example23RotatedAnimation
 "
 Class {
 	#name : #RSRotatedPieLabel,
-	#superclass : #RSAbstractViewInteraction,
+	#superclass : #TSAbstractCanvasInteraction,
 	#instVars : [
 		'pieBuilder',
 		'animation'

@@ -2,8 +2,8 @@
 I handle the zoom interaction with mouse wheel event, also I handle all the zoom process
 "
 Class {
-	#name : #RSZoomableView,
-	#superclass : #RSAbstractControlView,
+	#name : #TSZoomableCanvas,
+	#superclass : #TSAbstractControlCanvas,
 	#instVars : [
 		'animation'
 	],
@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #hooks }
-RSZoomableView >> onElement: aView [
-	aView when: TSMouseWheelEvent do: [ :evt | self processEvent: evt ]
+TSZoomableCanvas >> onShape: aCanvas [
+	aCanvas when: TSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
 { #category : #'events-processing' }
-RSZoomableView >> processEvent: evt [
+TSZoomableCanvas >> processEvent: evt [
 	| sc delta camera dist scale position correct |
 	
 	animation ifNotNil: [ ^ self ].
@@ -45,6 +45,6 @@ RSZoomableView >> processEvent: evt [
 ]
 
 { #category : #rendering }
-RSZoomableView >> renderOn: lb [
+TSZoomableCanvas >> renderOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'.
 ]

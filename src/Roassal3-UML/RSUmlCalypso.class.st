@@ -31,7 +31,7 @@ RSUMLCalypso >> build [
 	| builder morph controls |
 	builder := RSUMLClassBuilder new.
 	builder container: RSView new.
-	controls := RSControlsView new.
+	controls := TSControlsCanvas new.
 	controls configuration 
 		useBasicZoom;
 		maxScale: 1.

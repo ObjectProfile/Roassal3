@@ -5,53 +5,51 @@ Class {
 	#name : #GLMRoassal3Presentation,
 	#superclass : #GLMPresentation,
 	#instVars : [
-		'newViewBlock',
-		'view'
+		'canvas',
+		'newCanvasBlock'
 	],
 	#category : #'Roassal3-Inspector-GT'
 }
+
+{ #category : #accessing }
+GLMRoassal3Presentation >> canvas [
+	^ canvas ifNil: [ canvas := newCanvasBlock value ].
+]
 
 { #category : #initialization }
 GLMRoassal3Presentation >> initialize [
 	super initialize.
 	self 
 		act: [ :presentation | 
-			view showRectangles
-			ifTrue:[ view hideEncompassingRectangles]
-			ifFalse:[view showEncompassingRectangles ].
-			view signalUpdate ]
+			canvas showRectangles
+			ifTrue:[ canvas hideEncompassingRectangles]
+			ifFalse:[canvas showEncompassingRectangles ].
+			canvas signalUpdate ]
 		icon: (self iconNamed: #smallDebug)
 		entitled: 'Show Encompassing Rectangles'
 ]
 
 { #category : #initialization }
-GLMRoassal3Presentation >> initializeView: aZeroArgBlock [
-	^ newViewBlock := aZeroArgBlock 
+GLMRoassal3Presentation >> initializeCanvas: aZeroArgBlock [
+	^ newCanvasBlock := aZeroArgBlock 
 ]
 
 { #category : #rendering }
 GLMRoassal3Presentation >> renderGlamorouslyOn: aRenderer [
 	self registerAnnouncements.
-	
 	^ aRenderer renderRoassal3Presentation: self
 ]
 
 { #category : #initialization }
 GLMRoassal3Presentation >> setUpInteractions [
 	| interaction |
-	interaction := RSSelectionPresentation new
+	interaction := TSSelectionPresentation new
 		presentation: self.
-	self view elements @ interaction.
-	self view edges @ interaction.
-	self view 
+	self canvas shapes @ interaction.
+	self canvas
 		when: TSShapedObjectAdded
 		do: [ :evt| evt shapedObject @ interaction ].
 	
 	
 	
-]
-
-{ #category : #accessing }
-GLMRoassal3Presentation >> view [
-	^ view ifNil: [ view := newViewBlock value ].
 ]

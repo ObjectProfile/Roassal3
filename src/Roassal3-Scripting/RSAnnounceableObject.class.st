@@ -10,18 +10,6 @@ Class {
 	#category : #'Roassal3-Scripting-Core'
 }
 
-{ #category : #interactions }
-RSAnnounceableObject >> @ anInteractionClassOrInstance [
-	"Add an interaction to the node"
-	
-	self addInteraction: anInteractionClassOrInstance
-]
-
-{ #category : #interactions }
-RSAnnounceableObject >> addInteraction: anInteractionClassOrInstance [
- 	anInteractionClassOrInstance onElement: self
-]
-
 { #category : #accessing }
 RSAnnounceableObject >> announcer [ 
 	self subclassResponsibility

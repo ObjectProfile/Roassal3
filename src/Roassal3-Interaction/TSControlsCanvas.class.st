@@ -3,8 +3,8 @@ I the main interaction that handles roassal3 general control about a view.
 I interact with the Abstract class RSAbstractControlView. I creates instances of all subclasses of RSAbstractControlsView 
 "
 Class {
-	#name : #RSControlsView,
-	#superclass : #RSAbstractViewInteraction,
+	#name : #TSControlsCanvas,
+	#superclass : #TSAbstractCanvasInteraction,
 	#instVars : [
 		'interactions',
 		'withLegend',
@@ -14,24 +14,24 @@ Class {
 }
 
 { #category : #accessing }
-RSControlsView >> configuration [
+TSControlsCanvas >> configuration [
 	^ configuration
 ]
 
 { #category : #accessing }
-RSControlsView >> configuration: aRSControlLimits [
+TSControlsCanvas >> configuration: aRSControlLimits [
 	configuration := aRSControlLimits.
 	self interactions do: [ :i | i configuration: configuration].
 ]
 
 { #category : #initialization }
-RSControlsView >> defaultInteractions [
+TSControlsCanvas >> defaultInteractions [
 	"create a subclass of RSControslView and define your own custom interactions for your views :V"
-	^ { RSDraggableView. RSKeyNavigationView. RSZoomToFitView. RSZoomableView. RSScrollsView }
+	^ { TSDraggableCanvas. TSKeyNavigationCanvas. TSZoomToFitCanvas. TSZoomableCanvas. TSScrollsCanvas }
 ]
 
 { #category : #initialization }
-RSControlsView >> initialize [
+TSControlsCanvas >> initialize [
 	super initialize.
 	self interactions: (self defaultInteractions collect: #new).
 	self
@@ -40,12 +40,12 @@ RSControlsView >> initialize [
 ]
 
 { #category : #accessing }
-RSControlsView >> interactions [
+TSControlsCanvas >> interactions [
 	^ interactions
 ]
 
 { #category : #accessing }
-RSControlsView >> interactions: aCollectionOfInteractions [
+TSControlsCanvas >> interactions: aCollectionOfInteractions [
 	interactions := OrderedDictionary new.
 	aCollectionOfInteractions do: [ :int |
 		interactions at: int class put: int ].
@@ -53,19 +53,19 @@ RSControlsView >> interactions: aCollectionOfInteractions [
 ]
 
 { #category : #configuration }
-RSControlsView >> noLegend [
+TSControlsCanvas >> noLegend [
 	withLegend := false
 ]
 
 { #category : #hooks }
-RSControlsView >> onElement: aView [
-	self interactions do: [ :int | int onElement: aView ].
-	self renderLegendOn: aView.
+TSControlsCanvas >> onShape: aCanvas [
+	self interactions do: [ :int | int onShape: aCanvas ].
+	self renderLegendOn: aCanvas.
 	
 ]
 
 { #category : #hooks }
-RSControlsView >> renderLegendOn: aView [
+TSControlsCanvas >> renderLegendOn: aView [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
 	lb := RSLegendBuilder new 
@@ -85,16 +85,16 @@ RSControlsView >> renderLegendOn: aView [
 ]
 
 { #category : #testing }
-RSControlsView >> shouldShowLegend [
+TSControlsCanvas >> shouldShowLegend [
 	^ withLegend
 ]
 
 { #category : #configuration }
-RSControlsView >> withLegend [
+TSControlsCanvas >> withLegend [
 	withLegend := true
 ]
 
 { #category : #public }
-RSControlsView >> zoomToFit: aView [
-	(self interactions at: RSZoomToFitView) zoomToFit: aView
+TSControlsCanvas >> zoomToFit: aView [
+	(self interactions at: TSZoomToFitCanvas) zoomToFit: aView
 ]

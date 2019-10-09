@@ -4,8 +4,8 @@ I am an interaction for RSView, I can add to the a fixed shape that contains bas
 Frames per second, this number show the quantity of frames rendered. useful to debug animations
 "
 Class {
-	#name : #RSActivityMonitorView,
-	#superclass : #RSAbstractViewInteraction,
+	#name : #TSActivityMonitorView,
+	#superclass : #TSAbstractCanvasInteraction,
 	#instVars : [
 		'shape',
 		'lastFrameEndTime'
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : #accessing }
-RSActivityMonitorView >> currentTime [
+TSActivityMonitorView >> currentTime [
 	 ^ Time microsecondClockValue
 ]
 
 { #category : #initialization }
-RSActivityMonitorView >> initialize [
+TSActivityMonitorView >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSActivityMonitorView >> initializeGraphShape [
+TSActivityMonitorView >> initializeGraphShape [
 	| frames polyScale |
 	frames := OrderedCollection new.
 	polyScale := TSScale linear
@@ -83,7 +83,7 @@ RSActivityMonitorView >> initializeGraphShape [
 ]
 
 { #category : #initialization }
-RSActivityMonitorView >> initializeShape [
+TSActivityMonitorView >> initializeShape [
 	shape := RSShapeBuilder label
 		color: Color green;
 		onMyselfDo: [[:e | e text: self lastFramePerSecond asString, 'fps' ] ].
@@ -91,7 +91,7 @@ RSActivityMonitorView >> initializeShape [
 ]
 
 { #category : #accessing }
-RSActivityMonitorView >> lastFrameCPUConsumption [
+TSActivityMonitorView >> lastFrameCPUConsumption [
 	| res current |
 	current := self currentTime.
 	lastFrameEndTime ifNil: [ 
@@ -102,32 +102,32 @@ RSActivityMonitorView >> lastFrameCPUConsumption [
 ]
 
 { #category : #accessing }
-RSActivityMonitorView >> lastFramePerSecond [
+TSActivityMonitorView >> lastFramePerSecond [
 	| delta |
 	delta := self lastFrameCPUConsumption.
 	^ (1.0 / (delta max: 0.001) ) asInteger
 ]
 
 { #category : #hooks }
-RSActivityMonitorView >> onElement: aView [
+TSActivityMonitorView >> onShape: aCanvas [
 	| monitor location |
 	monitor := shape element.
 	monitor isFixed: true.
-	aView addShape: monitor shape. 
+	aCanvas addShape: monitor shape. 
 	location := RSLocation new inner; bottom; left; offset: 10@0.
-	aView newAnimation
+	aCanvas newAnimation
 		repeat;
 		onStepDo: [ :t | 
 			shape updateElement: monitor withCommand: #onMyselfDo:.
-			location move: monitor on: aView basicRectangle ].
+			location move: monitor on: aCanvas basicRectangle ].
 ]
 
 { #category : #accessing }
-RSActivityMonitorView >> shape [
+TSActivityMonitorView >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSActivityMonitorView >> shape: aShapeBuilder [
+TSActivityMonitorView >> shape: aShapeBuilder [
 	shape := aShapeBuilder
 ]

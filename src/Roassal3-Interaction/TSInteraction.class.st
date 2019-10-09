@@ -11,8 +11,8 @@ view @ RSDraggableView.
 
 "
 Class {
-	#name : #RSInteraction,
-	#superclass : #RSObject,
+	#name : #TSInteraction,
+	#superclass : #TSObject,
 	#classInstVars : [
 		'instance'
 	],
@@ -20,34 +20,33 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSInteraction class >> instance [
+TSInteraction class >> instance [
 	^ instance ifNil: [ instance := self new ].
 ]
 
 { #category : #'instance creation' }
-RSInteraction class >> onElement: element [
+TSInteraction class >> onShape: aShape [
 	| inst |
 	inst := self wantsUniqueInstance 
 		ifTrue: [ self instance ]
 		ifFalse: [ self new ].
-	inst onElement: element.
+	inst onShape: aShape.
 	^ inst
 ]
 
 { #category : #'instance creation' }
-RSInteraction class >> reset [
+TSInteraction class >> reset [
 	<script: 'self reset'>
 	instance := nil
 ]
 
 { #category : #'instance creation' }
-RSInteraction class >> wantsUniqueInstance [ 
+TSInteraction class >> wantsUniqueInstance [ 
 	^ false
 ]
 
 { #category : #hooks }
-RSInteraction >> onElement: anElement [
-
+TSInteraction >> onShape: aShape [
 	self subclassResponsibility 
 	
 ]

@@ -60,6 +60,6 @@ TSInterpolator >> gtViewForInspector [
 	view add: (label elementOn: 'X').
 	loc bottom; right;
 		move: view elements last on: rect.
-	view @ RSControlsView.
+	view @ TSControlsCanvas.
 	^ view
 ]

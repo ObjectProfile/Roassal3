@@ -109,7 +109,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v @ RSDraggableView .
+	v @ TSDraggableCanvas .
 	^ v
 ]
 
@@ -135,7 +135,7 @@ RSLayoutExamples >> example05TreeLayout [
 	eb connectFrom: #superclass.
 	RSTreeLayout on: elements.
 	elements do: [ :e | e translateBy: 0 @ 0 ].
-	v @ RSDraggableView.
+	v @ TSDraggableCanvas.
 	^ v
 ]
 
@@ -198,7 +198,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		doNotUseProgressBar; 
 		charge: -350;
 		on: v elements.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	v zoomToFit.
 	^ v
 ]
@@ -219,7 +219,7 @@ RSLayoutExamples >> example08HorizontalTree [
 			l := label elementOn: m.
 			TSGroup with: (box elementOn: l) with: l].
 	v addAll: (sb elementsOn: String withAllSubclasses).
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (TSMarker new 
 			offset: 2;
@@ -251,7 +251,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	RSForceBasedLayout new 
 		charge: -500; 
 		on: v elements.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]
 
@@ -261,7 +261,7 @@ RSLayoutExamples >> example10Locate [
 	| v shape e1 e2 |
 	v := RSView new.
 	shape := RSShapeBuilder box
-		@ RSDraggable;
+		@ TSDraggable;
 		onElement;
 		color: TSColorPalette sequential blues3;
 		size: 100.
@@ -276,7 +276,7 @@ RSLayoutExamples >> example10Locate [
 		left;
 		stick: e2 on: e1.
 	v addAll:{e1. e2}.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]
 
@@ -303,7 +303,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 	elements := shape elementsOn: Collection withAllSubclasses.
 	RSGridLayout on: elements.
 	v addAll: elements.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]
 
@@ -332,9 +332,9 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	"elements do: [ :e |
 		(layout mockElementAt: e) charge: e model * -20 ]."
 	view edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
-	view @ RSControlsView.
+	view @ TSControlsCanvas.
 	
-	view @ (RSForceLayoutStepping new layout: layout).
+	view @ (TSForceLayoutStepping new layout: layout).
 	^ view
 ]
 
@@ -360,8 +360,8 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		edges: view edges;
 		start;
 		yourself.
-	view @ RSControlsView.
-	view @ (RSForceLayoutStepping new layout: layout).
+	view @ TSControlsCanvas.
+	view @ (TSForceLayoutStepping new layout: layout).
 	colors := TSColorPalette sequential pubu9.
 	boxBuilder := RSShapeBuilder box
 		border: (TSBorder new color: Color lightGray trans; width: 0.5);
@@ -404,7 +404,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	classes := classes asSet asArray.
 	es := RSShapeBuilder circle elementsOn: classes.
 	v addAll: es.
-	es @ RSPopup @ RSDraggable.
+	es @ TSPopup @ TSDraggable.
 	eb := RSEdgeBuilder line.
 	eb color: Color gray.
 	eb view: v.
@@ -427,6 +427,6 @@ RSLayoutExamples >> example14ClassHierarchy [
 	eb2 withBorderAttachPoint.
 	eb2 following: #superclass.
 	eb2 connectToAll: #dependentClasses.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	^ v
 ]

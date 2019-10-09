@@ -2,8 +2,8 @@
 I can add a popup on an element when a move over event occurs 
 "
 Class {
-	#name : #RSPopup,
-	#superclass : #RSInteraction,
+	#name : #TSPopup,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'shape',
 		'label',
@@ -16,25 +16,25 @@ Class {
 }
 
 { #category : #accessing }
-RSPopup class >> activationEvent [
+TSPopup class >> activationEvent [
 	^ TSMouseMove
 ]
 
 { #category : #accessing }
-RSPopup class >> removeEvents [
+TSPopup class >> removeEvents [
 	^ removeEvents ifNil: [ 
 		removeEvents := { TSMouseClick. TSMouseEnter. TSMouseLeave. TSMouseDragging } ]
 ]
 
 { #category : #'instance creation' }
-RSPopup class >> reset [
+TSPopup class >> reset [
 	<script: 'self reset'>
 	super reset.
 	removeEvents := nil.
 ]
 
 { #category : #accessing }
-RSPopup class >> text: anObject [
+TSPopup class >> text: anObject [
 	| inst |
 	inst := self new.
 	inst label text: anObject.
@@ -42,37 +42,37 @@ RSPopup class >> text: anObject [
 ]
 
 { #category : #accessing }
-RSPopup class >> wantsUniqueInstance [ 
+TSPopup class >> wantsUniqueInstance [ 
 	^ true
 ]
 
 { #category : #accessing }
-RSPopup >> box [
+TSPopup >> box [
 	^ box
 ]
 
 { #category : #hooks }
-RSPopup >> createOrGetPopupOn: anElement event: event [
-	| att popupShape view |
-	att := event view attributes.
+TSPopup >> createOrGetPopupOn: aShape event: event [
+	| att popupShape canvas |
+	att := event canvas attributes.
 	att at: #popup ifPresent: [ :popup | ^ popup ].
-	popupShape := (shape elementOn: anElement model) shape.
+	popupShape := (shape elementOn: aShape model) shape.
 	att at: #popup put: popupShape.
 	popupShape isFixed: true.
-	view := anElement topParent view.
-	view addShape: popupShape.
+	canvas := aShape canvas.
+	canvas addShape: popupShape.
 	^ popupShape
 	
 ]
 
 { #category : #initialization }
-RSPopup >> initialize [
+TSPopup >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSPopup >> initializeShape [
+TSPopup >> initializeShape [
 	label := RSShapeBuilder label.
 	box := RSShapeBuilder box
 		color: (Color colorFrom: 'efefef');
@@ -92,33 +92,33 @@ RSPopup >> initializeShape [
 ]
 
 { #category : #accessing }
-RSPopup >> label [
+TSPopup >> label [
 	^ label
 ]
 
 { #category : #accessing }
-RSPopup >> label: aShape [
+TSPopup >> label: aShape [
 	label := aShape
 ]
 
 { #category : #public }
-RSPopup >> multiline [
+TSPopup >> multiline [
 	self label: RSShapeBuilder multiline
 ]
 
 { #category : #hooks }
-RSPopup >> onElement: anElement [
-	self registerRemoveEventsOn: anElement.
-	anElement
+TSPopup >> onShape: aShape [
+	self registerRemoveEventsOn: aShape.
+	aShape
 		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: anElement event: evt.
+			popup := self createOrGetPopupOn: aShape event: evt.
 			self translatePopup: popup event: evt.
 			popup signalUpdate. ]
 
 ]
 
 { #category : #private }
-RSPopup >> registerRemoveEventsOn: anElement [
+TSPopup >> registerRemoveEventsOn: anElement [
 	| remove |
 	remove := [:evt | self removePopupOn: evt  ].
 	self class removeEvents do: [ :cls | 
@@ -126,7 +126,7 @@ RSPopup >> registerRemoveEventsOn: anElement [
 ]
 
 { #category : #hooks }
-RSPopup >> removePopupOn: evt [ 
+TSPopup >> removePopupOn: evt [ 
 	| att popup view |
 	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
 	If the element is not part of a view, then there is nothing to remove, so we exit early."
@@ -143,17 +143,17 @@ RSPopup >> removePopupOn: evt [
 ]
 
 { #category : #accessing }
-RSPopup >> shape [
+TSPopup >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSPopup >> shape: aShape [
+TSPopup >> shape: aShape [
 	shape := aShape
 ]
 
 { #category : #hooks }
-RSPopup >> translatePopup: popup event: evt [ 
+TSPopup >> translatePopup: popup event: evt [ 
 	| p e extent |
 	p := evt position.
 	evt shape isFixed 

@@ -2,8 +2,8 @@
 I allow to inspect another view or windows. It can be configurable to set the kind of view you want to inspect
 "
 Class {
-	#name : #RSInspectable,
-	#superclass : #RSInteraction,
+	#name : #TSInspectable,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'selectedElement',
 		'highlightable',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #hooks }
-RSInspectable >> deselectIfNecessary [
+TSInspectable >> deselectIfNecessary [
 	"Nothing to unselect"
 	selectedElement ifNil: [ ^ self ].
 	
@@ -28,23 +28,23 @@ RSInspectable >> deselectIfNecessary [
 ]
 
 { #category : #accessing }
-RSInspectable >> highlightable [
+TSInspectable >> highlightable [
 	^ highlightable
 ]
 
 { #category : #accessing }
-RSInspectable >> highlightable: anObject [
+TSInspectable >> highlightable: anObject [
 	highlightable := anObject
 ]
 
 { #category : #hooks }
-RSInspectable >> initialize [
+TSInspectable >> initialize [
 	super initialize.
-	highlightable := RSHighlightable new.
+	highlightable := TSHighlightable new.
 ]
 
 { #category : #hooks }
-RSInspectable >> inspectElement: anElement [
+TSInspectable >> inspectElement: anElement [
 	| oldInspectorWindow viewMorph |
 	self deselectIfNecessary.
 	selectedElement := anElement.
@@ -68,19 +68,19 @@ RSInspectable >> inspectElement: anElement [
 ]
 
 { #category : #accessing }
-RSInspectable >> inspectElementBlock [
+TSInspectable >> inspectElementBlock [
 	^ inspectElementBlock
 ]
 
 { #category : #accessing }
-RSInspectable >> inspectElementBlock: oneArgBlock [
+TSInspectable >> inspectElementBlock: oneArgBlock [
 	"The block should return a window"
 	inspectElementBlock := oneArgBlock
 ]
 
 { #category : #hooks }
-RSInspectable >> onElement: anElement [
+TSInspectable >> onShape: aShape [
 	
-	anElement when: TSMouseLeftClick do: [ :evt | 
-		self inspectElement: anElement ]
+	aShape when: TSMouseLeftClick do: [ :evt | 
+		self inspectElement: aShape ]
 ]

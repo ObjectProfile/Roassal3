@@ -2,14 +2,14 @@
 I have examples of different ways to inspect views an objects in roassal3
 "
 Class {
-	#name : #RSInspectableExample,
-	#superclass : #RSObject,
+	#name : #TSInspectableExample,
+	#superclass : #TSAbstractExamples,
 	#category : #'Roassal3-Inspector-Examples'
 }
 
 { #category : #examples }
-RSInspectableExample >> example01SimpleExample [
-	<script: 'self new example01SimpleExample'>
+TSInspectableExample >> example01SimpleExample [
+	<script: 'self new example01SimpleExample open'>
 	| classes v shape elements inspectable highligtable |
 	classes := Collection withAllSubclasses.
 	v := RSView new.
@@ -25,8 +25,8 @@ RSInspectableExample >> example01SimpleExample [
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
 	RSTreeLayout on: elements.
-	RSInspectable reset.
-	inspectable := RSInspectable new.
+	TSInspectable reset.
+	inspectable := TSInspectable new.
 	highligtable := inspectable highlightable.
 	highligtable highlightShape color: Color green.
 	inspectable
@@ -38,13 +38,13 @@ RSInspectableExample >> example01SimpleExample [
 			builder open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	elements @ inspectable.
-	v @ RSControlsView.
-	v open
+	v @ TSControlsCanvas.
+	^ v
 ]
 
 { #category : #examples }
-RSInspectableExample >> example02Inspect [
-	<script: 'self new example02Inspect'>
+TSInspectableExample >> example02Inspect [
+	<script: 'self new example02Inspect inspect'>
 	| view box animation lastSize |
 	view := RSView new.
 	box := RSShapeBuilder box
@@ -91,13 +91,12 @@ RSInspectableExample >> example02Inspect [
 			view elements do: [:e |
 				e attributes at: #new put: e position. ].
 		 ]}.
-	view @ RSControlsView.
-	view inspect
+	view @ TSControlsCanvas.
+	^ view
 ]
 
 { #category : #examples }
-RSInspectableExample >> example03Easing [
-	<script: 'self new example03Easing'>
-	TSEasing bounceOut inspect.
-	
+TSInspectableExample >> example03Easing [
+	<script: 'self new example03Easing inspect'>
+	^ TSEasing bounceOut
 ]

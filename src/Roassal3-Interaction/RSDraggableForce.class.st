@@ -3,7 +3,7 @@ I am a special case to drag elements with the draggable interaction and the RSFo
 "
 Class {
 	#name : #RSDraggableForce,
-	#superclass : #RSDraggable,
+	#superclass : #TSDraggable,
 	#instVars : [
 		'layout'
 	],

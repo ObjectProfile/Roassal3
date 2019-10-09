@@ -3,7 +3,7 @@ I define accessors for min and max scale value for some scale interactions
 "
 Class {
 	#name : #RSAbstractScaleInteraction,
-	#superclass : #RSInteraction,
+	#superclass : #TSInteraction,
 	#instVars : [
 		'minScale',
 		'maxScale'

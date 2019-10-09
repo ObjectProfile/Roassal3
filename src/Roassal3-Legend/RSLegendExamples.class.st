@@ -17,7 +17,7 @@ RSLegendExamples >> example01Basic [
 	b build.
 	self assert: b elements size = 2.
 	self assert: b view elements size = 1.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -32,7 +32,7 @@ RSLegendExamples >> example02Border [
 		border: TSBorder new;
 		padding: 50.
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -54,7 +54,7 @@ RSLegendExamples >> example03Vertical [
 		padding: 20@50;"
 		padding: (Margin left: 50 right: 10 top: 10  bottom: 50).
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -73,7 +73,7 @@ RSLegendExamples >> example04Horizontal [
 		padding: 10.
 	b layout horizontal gapSize: 20.
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -94,7 +94,7 @@ RSLegendExamples >> example05Colors [
 		border: TSBorder new;
 		padding: 20.
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -115,7 +115,7 @@ RSLegendExamples >> example06BoxColors [
 		padding: 20.
 	b layout horizontal gapSize: 30.
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -128,7 +128,7 @@ RSLegendExamples >> example07BoxFading [
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
 	b shape border: TSBorder new.
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -144,7 +144,7 @@ RSLegendExamples >> example08Polygons [
 			text: b defaultLabel).
 		 ].
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -163,7 +163,7 @@ RSLegendExamples >> example09Lines [
 			text: b defaultLabel).
 		 ].
 	b build.
-	b view @ RSControlsView.
+	b view @ TSControlsCanvas.
 	b view open.
 ]
 
@@ -207,7 +207,7 @@ RSLegendExamples >> example10Location [
 		padding: 15.
 	b location right middle.
 	b build.
-	v @ RSControlsView.
+	v @ TSControlsCanvas.
 	v open setLabel: 'TSShape withAllSubclasses'.
 	
 

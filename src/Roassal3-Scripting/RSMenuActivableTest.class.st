@@ -19,7 +19,7 @@ RSMenuActivableTest >> setUp [
 { #category : #tests }
 RSMenuActivableTest >> testBasic [
 	self assert: element color equals: Color blue.
-	element @ (RSMenuActivable new menuDo: [:menu :e | menu 
+	element @ (TSMenuActivable new menuDo: [:menu :e | menu 
 		add: 'Inspect' 
 		target: e
 		selector: #inspect

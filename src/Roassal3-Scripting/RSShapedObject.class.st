@@ -38,7 +38,15 @@ RSShapedObject >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: shape 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
+RSShapedObject >> gtInspectorCanvasIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['Element'];
+		initializeCanvas: [ self shape gtCanvasForInspector ]
+]
+
+{ #category : #inspector }
 RSShapedObject >> gtInspectorSybscriptionsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	composite table
@@ -47,14 +55,6 @@ RSShapedObject >> gtInspectorSybscriptionsIn: composite [
 		when: [ shape privateAnnouncer notNil ];
 		column: 'Subscriber' evaluated: [ :each | each subscriber asString ];
 		column: 'Announcement' evaluated: [ :each | each announcementClass printString ].
-]
-
-{ #category : #'as yet unclassified' }
-RSShapedObject >> gtInspectorViewIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Element'];
-		initializeView: [ self shape gtViewForInspector ]
 ]
 
 { #category : #accessing }
