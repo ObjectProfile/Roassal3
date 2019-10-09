@@ -191,7 +191,7 @@ RSLegendExamples >> example10Location [
 		to: Color red;
 		elements: elements;
 		normalize: #numberOfMethods.
-	RSTreeLayout on: elements.
+	TSTreeLayout on: elements.
 	b := RSLegendBuilder new.
 	b view: v.
 	b title: 'System complexity view'.

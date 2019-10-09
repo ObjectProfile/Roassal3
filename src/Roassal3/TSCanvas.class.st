@@ -24,6 +24,11 @@ TSCanvas >> accept: visitor [
 	visitor visitCanvas: self
 ]
 
+{ #category : #'adding removing shapes' }
+TSCanvas >> addAll: aCollection [
+	aCollection do: [ :s | self addShape: s ]
+]
+
 { #category : #animations }
 TSCanvas >> addAnimation: anAnimation [
 	animations add: anAnimation.

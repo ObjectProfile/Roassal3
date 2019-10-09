@@ -25,7 +25,7 @@ RSHighlightableExamples >> example01Basic [
 			view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
-	RSClusterLayout on: elements.
+	TSClusterLayout on: elements.
 	v zoomToFit.
 	^ v
 ]
@@ -51,7 +51,7 @@ RSHighlightableExamples >> example02ElementEdges [
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
-	RSClusterLayout on: elements.
+	TSClusterLayout on: elements.
 	v zoomToFit.
 	^ v
 ]
@@ -73,7 +73,7 @@ RSHighlightableExamples >> example03Interactive [
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
-	RSClusterLayout on: elements.
+	TSClusterLayout on: elements.
 	
 	interaction := TSHighlightable new .
 	interaction withEdges.
@@ -103,7 +103,7 @@ RSHighlightableExamples >> example04Interactive [
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
-	RSClusterLayout on: elements.
+	TSClusterLayout on: elements.
 	
 	interaction := TSHighlightable new.
 	bool := true.
@@ -140,7 +140,7 @@ RSHighlightableExamples >> example05Border [
 	int highlightShape border: (TSBorder new width: 2).
 	elements @ int.
 	v addAll: elements.
-	RSClusterLayout on: elements.
+	TSClusterLayout on: elements.
 	v zoomToFit.
 	^ v
 ]
@@ -164,7 +164,7 @@ RSHighlightableExamples >> example06IterateNext [
 	view
 		addAll: edges;
 		addAll: numbers.
-	layout := RSForceBasedLayout new
+	layout := TSForceBasedLayout new
 		length: 80;
 		charge: -300;
 		nodes: numbers;
@@ -246,7 +246,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 	v addAll: (box elementsOn:  (1 to: 10)).
 
 	red doHighlight: v elements first.
-	RSVerticalLineLayout on: v elements.
+	TSVerticalLineLayout on: v elements.
 	v @ TSControlsCanvas.
 	^ v
 ]

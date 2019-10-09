@@ -136,7 +136,7 @@ RSAnimationExamples >> example04BoxWindmill [
 
 { #category : #examples }
 RSAnimationExamples >> example05BoxesLineCircles [
-	<script: 'self new example05BoxesLineCircles'>
+	<script: 'self new example05BoxesLineCircles open'>
 	| v extent r  elements position shape alpha update updateLine lineX line |
 	v := RSView new.
 	r := Random new.
@@ -1441,7 +1441,7 @@ RSAnimationExamples >> example22Stars [
 		size: 39;
 		color: [ :m | color scale: m-1 // 10 ].
 	v addAll: (shape elementsOn: (1 to: 100)).
-	RSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
+	TSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
 	shape := RSShapeBuilder star 
 		size: [ r rsNext: 10 and: 100 ];
 		position: [ (r rsNext: 50 and: 300)@ (r rsNext: 50 and: 300) ];
@@ -2022,8 +2022,8 @@ RSAnimationExamples >> example32RSLocate [
 				to: movableElement position;
 				on: movableElement shape set: #position: ] ].
 	buttons := buttonShape elementsOn: #(outer border inner left center right top middle bottom).
-	RSGridLayout new lineItemsCount: 3; on: buttons.
-	RSVerticalLineLayout new center; gapSize: 30; on: (TSGroup with: v elements with: buttons).
+	TSGridLayout new lineItemsCount: 3; on: buttons.
+	TSVerticalLineLayout new center; gapSize: 30; on: (TSGroup with: v elements with: buttons).
 	v addAll: buttons.
 	v when: TSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent * 0.7.
@@ -2299,7 +2299,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 		view: v;
 		objects: objects;
 		connectFrom: [ :value | value //2 ] to: #yourself.
-	layout := RSLayoutBuilder new.
+	layout := TSLayoutBuilder new.
 	update := [ :sel | 
 		layout perform: sel asSymbol.
 		layout on: elements.
@@ -2330,7 +2330,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 				v zoomToFit ] ] ];
 		elementsOn: #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	v addAll: labels.
-	RSHorizontalLineLayout on: labels.
+	TSHorizontalLineLayout on: labels.
 	^ v
 	
 
@@ -2357,7 +2357,7 @@ RSAnimationExamples >> example39ForceLayout [
 		color: (Color purple alpha: 0.2);
 		connectFrom: #superclass to: #yourself.
 	v addAll: classes.
-	layout := RSForceBasedLayout new 
+	layout := TSForceBasedLayout new 
 		nodes: classes;
 		edges: v edges;
 		start;
@@ -2453,7 +2453,7 @@ for Pharo 7 and Pharo 8.'.
 		fontName: 'Marker Felt';
 		border: TSBorder new.
 	desc := s elementsOn: t2 lines.
-	RSVerticalLineLayout new
+	TSVerticalLineLayout new
 		gapSize: 0;
 		on: desc.
 	desc := desc asElement.
@@ -2573,7 +2573,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		connectFrom: #superclass to: #yourself.
 	view addAll: classes.
 	
-	layout := RSRectangleForceLayout new
+	layout := TSRectangleForceLayout new
 		nodes: classes;
 		edges: view edges;
 		start;

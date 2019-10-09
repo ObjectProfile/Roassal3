@@ -48,7 +48,7 @@ TSKeyNavigationCanvas >> processKeyDown: evt [
 		ifFalse: [ 1 ].
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].
-	rect := self encompassingRectangleFor: evt view.
+	rect := self encompassingRectangleFor: evt canvas.
 	speed := (rect width min: rect height) * 0.0005.
 	animation := nil.
 	lastMS := nil.

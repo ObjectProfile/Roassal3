@@ -94,7 +94,7 @@ RSAbstractUMLClassRenderer >> initBasicGroupOn: cls [
 	methods hasChildren
 		ifTrue: [ group add: methods ].
 	
-	RSVerticalLineLayout new gapSize: 0; on: group.
+	TSVerticalLineLayout new gapSize: 0; on: group.
 	^ group 
 ]
 
@@ -128,7 +128,7 @@ RSAbstractUMLClassRenderer >> methodShape: aRSShapeBuilder [
 RSAbstractUMLClassRenderer >> methodsShape [ 
 	^ methodsShape ifNil: [ methodsShape := RSShapeBuilder composite shapes: [ :m | | g |
 		g := self methodShape elementsOn: (modelDescriptor methods rsValue: m).
-		RSVerticalLineLayout new gapSize: 0; on: g.
+		TSVerticalLineLayout new gapSize: 0; on: g.
 		g ] ]
 ]
 
@@ -151,7 +151,7 @@ RSAbstractUMLClassRenderer >> varShape: aRSShapeBuilder [
 RSAbstractUMLClassRenderer >> varsShape [
 	^ varsShape ifNil: [ varsShape := RSShapeBuilder composite shapes: [ :m | | g |
 		g := self varShape elementsOn: (modelDescriptor instVars rsValue: m).
-		RSVerticalLineLayout new gapSize: 0; on: g.
+		TSVerticalLineLayout new gapSize: 0; on: g.
 		g ] ].
 ]
 

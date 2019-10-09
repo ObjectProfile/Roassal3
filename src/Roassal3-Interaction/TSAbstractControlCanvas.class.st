@@ -82,9 +82,9 @@ TSAbstractControlCanvas >> encompassingRectangleFor: aView [
 TSAbstractControlCanvas >> expandedRectangle: evt [
 	| key | 
 	key := #expanedEncompassingRectangle.
-	^ evt view attributes at: key ifAbsentPut: [ 
+	^ evt canvas attributes at: key ifAbsentPut: [ 
 		| rectangle |
-		rectangle := self encompassingRectangleFor: evt view.
+		rectangle := self encompassingRectangleFor: evt canvas.
 		self configuration padding expandRectangle: rectangle ].
 	
 ]

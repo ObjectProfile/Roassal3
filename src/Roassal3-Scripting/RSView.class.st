@@ -90,7 +90,15 @@ RSView >> elementsFromModels: objects [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
+RSView >> gtInspectorCanvasIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['View'];
+		initializeCanvas: [ self canvas ]
+]
+
+{ #category : #inspector }
 RSView >> gtInspectorEdgesIn: composite [
 	<gtInspectorPresentationOrder: 21>
 	composite table
@@ -103,7 +111,7 @@ RSView >> gtInspectorEdgesIn: composite [
 		column: 'Attributes' evaluated: [ :each | each privateAttributes asString ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
 RSView >> gtInspectorElementsIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite table 
@@ -114,14 +122,6 @@ RSView >> gtInspectorElementsIn: composite [
 		column: 'Shape' evaluated: [ :each | each shape asString ];
 		column: 'Model' evaluated: [ :each | each model asString ];
 		column: 'Attributes' evaluated: [ :each | each privateAttributes asString ].
-]
-
-{ #category : #'as yet unclassified' }
-RSView >> gtInspectorViewIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['View'];
-		initializeView: [ self ]
 ]
 
 { #category : #initialization }

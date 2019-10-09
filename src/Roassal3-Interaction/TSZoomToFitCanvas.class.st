@@ -69,17 +69,17 @@ TSZoomToFitCanvas >> renderOn: lb [
 ]
 
 { #category : #'zoom animation' }
-TSZoomToFitCanvas >> zoomToFit: aView [
+TSZoomToFitCanvas >> zoomToFit: aCanvas [
 	| camera shapesRect extent sc viewRect original |
-	camera := aView camera.
-	shapesRect := self encompassingRectangleFor: aView.
-	extent := aView extent * 0.9.
+	camera := aCanvas camera.
+	shapesRect := self encompassingRectangleFor: aCanvas.
+	extent := aCanvas extent * 0.9.
 	sc := extent / (shapesRect extent max: 1 @ 1).
 	original := sc x min: sc y.
 	sc := self scaleFor: original.
 	viewRect := Rectangle 
 		rsCenter: shapesRect rsCenter
-		extent: aView extent / 1.
+		extent: aCanvas extent / 1.
 	camera translateTo: shapesRect rsCenter.
 	self configuration shouldUseBasicZoom ifTrue: [ 
 		(viewRect containsRect: shapesRect )
@@ -88,8 +88,8 @@ TSZoomToFitCanvas >> zoomToFit: aView [
 				self configuration minScale: original.
 				camera scale: original ]
 	] ifFalse: [ camera scale: sc].
-	self removeRectanglesFor: aView.
-	aView signalUpdate.
+	self removeRectanglesFor: aCanvas.
+	aCanvas signalUpdate.
 	
 ]
 

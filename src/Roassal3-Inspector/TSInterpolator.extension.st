@@ -1,24 +1,17 @@
 Extension { #name : #TSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
-TSInterpolator >> gtInspectorViewIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Interpolator'];
-		initializeView: [ self gtViewForInspector ]
-]
-
-{ #category : #'*Roassal3-Inspector' }
-TSInterpolator >> gtViewForInspector [
-	| view theme boxBuilder boxes pos rect line cp label loc |
- 	view := RSView new.
+TSInterpolator >> gtCanvasForInspector [
+	| canvas theme boxes pos rect line cp label loc |
+ 	canvas := TSCanvas new.
 	theme := Smalltalk ui theme.
-	view color: theme backgroundColor.
-	boxBuilder := RSShapeBuilder box
-		size: 40;
-		color: (theme caretColor alpha: 0.2).
-	boxes := boxBuilder elementsOn: (1 to: 100).
-	RSGridLayout new 
+	canvas color: theme backgroundColor.
+	boxes := (1 to: 100) collect: [ :i |
+		TSBox new
+			size: 40;
+			color: (theme caretColor alpha: 0.2);
+			yourself ] as: TSGroup.
+	TSGridLayout new 
 		lineItemsCount: 10;
 		gapSize: 2; 
 		on: boxes.
@@ -34,32 +27,43 @@ TSInterpolator >> gtViewForInspector [
 				stop: rect topRight;
 				yourself
 			) ).
-	view addShape: line.
+	canvas addShape: line.
 	cp := OrderedCollection new.
-	view newAnimation
+	canvas newAnimation
 		duration: 5 seconds;
 		onStepDo: [ :t |
 			cp add: t.
 			line controlPoints: (cp collect: [:value | 
 				pos scale: value @ (self interpolate: value) ]).
-			view signalUpdate].
-	view addAll: boxes.
-	label := RSShapeBuilder label
-		color: theme textColor;
-		size: 20.
-	view add: (label elementOn: 1).
+			canvas signalUpdate].
+	canvas addAll: boxes.
+	label := [ :text | 
+		TSLabel new
+			color: theme textColor;
+			size: 20;
+			text: text;
+			yourself ].
+	canvas addShape: (label value: '1').
 	loc := RSLocation new outer.
 	loc top; right;
-		move: view elements last on: rect.
-	view add: (label elementOn: 0).
+		move: canvas shapes last on: rect.
+	canvas addShape: (label value: '0').
 	loc bottom; left;
-		move: view elements last on: rect.
-	view add: (label elementOn: 'Y').
+		move: canvas shapes last on: rect.
+	canvas addShape: (label value: 'Y').
 	loc top; left;
-		move: view elements last on: rect.
-	view add: (label elementOn: 'X').
+		move: canvas shapes last on: rect.
+	canvas addShape: (label value: 'X').
 	loc bottom; right;
-		move: view elements last on: rect.
-	view @ TSControlsCanvas.
-	^ view
+		move: canvas shapes last on: rect.
+	canvas @ TSControlsCanvas.
+	^ canvas
+]
+
+{ #category : #'*Roassal3-Inspector' }
+TSInterpolator >> gtInspectorCanvasIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['Interpolator'];
+		initializeCanvas: [ self gtCanvasForInspector ]
 ]

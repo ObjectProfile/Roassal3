@@ -65,11 +65,11 @@ TSControlsCanvas >> onShape: aCanvas [
 ]
 
 { #category : #hooks }
-TSControlsCanvas >> renderLegendOn: aView [
+TSControlsCanvas >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
 	lb := RSLegendBuilder new 
-		container: aView;
+		container: aCanvas;
 		yourself.
 	lb defaultTitle fontSize: 12.
 	lb defaultLabel fontSize: 10.
@@ -81,7 +81,7 @@ TSControlsCanvas >> renderLegendOn: aView [
 	lb title: 'Shortcuts'.
 	self interactions do: [ :int | int renderOn: lb ].
 	lb onDemand.
-	lb build.
+	"lb build."
 ]
 
 { #category : #testing }

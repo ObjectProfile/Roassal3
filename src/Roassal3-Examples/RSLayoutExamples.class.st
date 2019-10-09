@@ -24,7 +24,7 @@ RSLayoutExamples >> example01LayoutBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	^ v
 ]
 
@@ -40,7 +40,7 @@ RSLayoutExamples >> example02Grid [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	^ v
 ]
 
@@ -63,7 +63,7 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	^ v
 ]
 
@@ -87,7 +87,7 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	^ v
 ]
 
@@ -108,7 +108,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	v @ TSDraggableCanvas .
 	^ v
 ]
@@ -133,7 +133,7 @@ RSLayoutExamples >> example05TreeLayout [
 	eb := RSEdgeBuilder line.
 	eb view: v.
 	eb connectFrom: #superclass.
-	RSTreeLayout on: elements.
+	TSTreeLayout on: elements.
 	elements do: [ :e | e translateBy: 0 @ 0 ].
 	v @ TSDraggableCanvas.
 	^ v
@@ -166,7 +166,7 @@ RSLayoutExamples >> example06Cluster [
 					Color red});
 		elements: v elements;
 		normalize: #numberOfMethods.
-	RSClusterLayout on: v elements.
+	TSClusterLayout on: v elements.
 	^ v
 ]
 
@@ -194,7 +194,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		view: v;
 		moveBehind;
 		connectFrom: #superclass.
-	RSForceBasedLayout new
+	TSForceBasedLayout new
 		doNotUseProgressBar; 
 		charge: -350;
 		on: v elements.
@@ -231,7 +231,7 @@ RSLayoutExamples >> example08HorizontalTree [
 		view: v;
 		elements: v elements;
 		connectFrom: #superclass.
-	RSHorizontalTreeLayout new on: v elements.
+	TSHorizontalTreeLayout new on: v elements.
 	^ v
 ]
 
@@ -248,7 +248,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 		withBorderAttachPoint;
 		view: v;
 		connectFrom: #superclass.
-	RSForceBasedLayout new 
+	TSForceBasedLayout new 
 		charge: -500; 
 		on: v elements.
 	v @ TSControlsCanvas.
@@ -291,7 +291,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 		shapes: [ :cls | 
 			| g |
 			g := box elementsOn: cls methods.
-			RSGridLayout on: g.
+			TSGridLayout on: g.
 			g ];
 		padding:
 			(Margin
@@ -301,7 +301,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 				bottom: 5);
 		color: Color blue trans.
 	elements := shape elementsOn: Collection withAllSubclasses.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	v addAll: elements.
 	v @ TSControlsCanvas.
 	^ v
@@ -322,7 +322,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	view
 		addAll: edges;
 		addAll: elements.
-	layout := RSForceBasedLayout new
+	layout := TSForceBasedLayout new
 		length: 80;
 		charge: -300;
 		nodes: elements;
@@ -353,7 +353,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	view
 		addAll: edges;
 		addAll: elements.
-	layout := RSForceBasedLayout new
+	layout := TSForceBasedLayout new
 		length: 80;
 		charge: -300;
 		nodes: elements;
@@ -419,7 +419,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	RSNormalizer color
 		elements: es;
 		normalize: #numberOfMethods.
-	RSClusterLayout on: es.
+	TSClusterLayout on: es.
 	eb2 := RSMultiBezierEdgeBuilder multiBezier.
 	eb2 borderColor: (Color blue alpha: 0.3).
 	eb2 view: v.

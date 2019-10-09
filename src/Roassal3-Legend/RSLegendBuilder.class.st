@@ -88,7 +88,7 @@ RSLegendBuilder >> defaultTitle: aShape [
 
 { #category : #'public - composite' }
 RSLegendBuilder >> horizontalComposite: refShape text: textShape [ 
-	^ self composite: refShape text: textShape layout: RSHorizontalLineLayout new center.
+	^ self composite: refShape text: textShape layout: TSHorizontalLineLayout new center.
 ]
 
 { #category : #initialization }
@@ -185,7 +185,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 	label @ i.
 	legendLabels := nil.
 	update := [ 
-		RSHorizontalLineLayout on: legendLabels.
+		TSHorizontalLineLayout on: legendLabels.
 		RSLocation new
 			inner; top; right;
 			move: legendLabels 
@@ -206,7 +206,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 RSLegendBuilder >> reset [
 	elements := TSGroup new.
 	location := RSLocation new below.
-	layout := RSLayoutBuilder new.
+	layout := TSLayoutBuilder new.
 	layout vertical gapSize: 0.
 	defaultBox := defaultCircle := defaultLabel := defaultTitle := nil.
 	
@@ -264,5 +264,5 @@ RSLegendBuilder >> title: aString [
 
 { #category : #'public - composite' }
 RSLegendBuilder >> verticalComposite: refShape text: textShape [ 
-	^ self composite: refShape text: textShape layout: RSVerticalLineLayout new center
+	^ self composite: refShape text: textShape layout: TSVerticalLineLayout new center
 ]

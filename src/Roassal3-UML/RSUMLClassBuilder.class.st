@@ -64,7 +64,7 @@ RSUMLClassBuilder >> createShapesFor: cls [
 	g add: titleLabel.
 	g add: (renderer varsShape elementOn: cls).
 	g add: (renderer methodsShape elementOn: cls).
-	RSVerticalLineLayout new gapSize: 0; on: g.
+	TSVerticalLineLayout new gapSize: 0; on: g.
 	rec := g encompassingRectangle.
 	boxElement
 		extent: rec extent + 10;
@@ -88,7 +88,7 @@ RSUMLClassBuilder >> createShapesFor: cls [
 RSUMLClassBuilder >> defaultLayout [
 
 	| defaultLayout |
-	defaultLayout := RSLayoutBuilder new.
+	defaultLayout := TSLayoutBuilder new.
 	defaultLayout tree 
 		verticalGap: 100; 
 		horizontalGap: 50.

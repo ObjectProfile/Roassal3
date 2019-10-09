@@ -82,7 +82,7 @@ RSTorchUMLClassRenderer >> methodsShape [
 
 	^ methodsShape ifNil: [ methodsShape := RSShapeBuilder composite shapes: [ :m | | g |
 		g := self methodShape elementsOn: (modelDescriptor methods rsValue: m).
-		RSFlowLayout new 
+		TSFlowLayout new 
 			gapSize: 2; 
 			maxWidth: self currentMaxWidth; 
 			on: g.
@@ -110,7 +110,7 @@ RSTorchUMLClassRenderer >> varShape [
 RSTorchUMLClassRenderer >> varsShape [
 	^ varsShape ifNil: [ varsShape := RSShapeBuilder composite shapes: [ :m | | g |
 		g := self varShape elementsOn: (modelDescriptor instVars rsValue: m).
-		RSFlowLayout new 
+		TSFlowLayout new 
 			gapSize: 2; 
 			maxWidth: self currentMaxWidth; 
 			on: g.

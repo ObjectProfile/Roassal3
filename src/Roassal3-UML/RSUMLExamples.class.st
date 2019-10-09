@@ -120,7 +120,7 @@ RSUMLExamples >> example06CustomText [
 		cls hasAbstractMethods ifTrue: [ 
 			g addFirst: (RSShapeBuilder label color: Color magenta; italic; elementOn: '<<Abstract>>')
 			 ].
-		RSVerticalLineLayout new center; gapSize: 0; on: g.
+		TSVerticalLineLayout new center; gapSize: 0; on: g.
 		g ]).
 	renderer methodShape 
 		color: Color white;

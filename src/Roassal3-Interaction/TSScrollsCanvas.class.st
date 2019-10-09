@@ -96,7 +96,7 @@ TSScrollsCanvas >> moveScroll: evt [
 		ifFalse: [ delta x@0 ].
 	shape translateBy: delta.
 	viewExtent := evt canvas extent.
-	shapesRect := self encompassingRectangleFor: evt view.
+	shapesRect := self encompassingRectangleFor: evt canvas.
 	position := horizontal position x @ vertical position y.
 	position := position * shapesRect extent / viewExtent.
 	
@@ -159,7 +159,7 @@ TSScrollsCanvas >> updateBasicScrollbars [
 	viewRect := Rectangle
 		rsCenter: camera position
 		extent: canvas extent / camera scale.
-	shapesRect := self encompassingRectangleFor: canvas view.
+	shapesRect := self encompassingRectangleFor: canvas.
 	
 	scrollExtent := vertical width @ horizontal height.
 	p := canvas extent - 1 - (scrollExtent / 2).

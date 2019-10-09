@@ -34,8 +34,8 @@ RSAbstractViewBuilder >> container [
 RSAbstractViewBuilder >> container: aRSViewORTSGroup [
 	""
 	self 
-		assert: aRSViewORTSGroup view notNil | (aRSViewORTSGroup class = TSGroup)
-		description: 'The container of this builder must be a RSView or TSGroup'.
+		assert: aRSViewORTSGroup canvas notNil | (aRSViewORTSGroup class = TSGroup)
+		description: 'The container of this builder must be a TSCanvas or TSGroup'.
 	
 	container := aRSViewORTSGroup
 ]

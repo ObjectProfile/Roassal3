@@ -24,7 +24,7 @@ TSInspectableExample >> example01SimpleExample [
 		objects: classes;
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
-	RSTreeLayout on: elements.
+	TSTreeLayout on: elements.
 	TSInspectable reset.
 	inspectable := TSInspectable new.
 	highligtable := inspectable highlightable.
@@ -86,7 +86,7 @@ TSInspectableExample >> example02Inspect [
 				view: view;
 				connectFrom: #superclass.
 			view elements do: #updateEdgesOFF.
-			RSClusterLayout on: view elements.
+			TSClusterLayout on: view elements.
 			view elements do: #updateEdgesON.
 			view elements do: [:e |
 				e attributes at: #new put: e position. ].

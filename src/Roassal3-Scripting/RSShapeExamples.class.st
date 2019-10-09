@@ -224,7 +224,7 @@ RSShapeExamples >> example07NormalizeColor [
 		normalize: #numberOfMethods.
 
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
 	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
@@ -327,7 +327,7 @@ RSShapeExamples >> example11ClassTree [
 				interactionDo: [ :i | i popupText: #selector ];
 				size: #linesOfCode;
 				elementsOn: cls methods.
-			RSGridLayout on: group.
+			TSGridLayout on: group.
 			group ];
 		onElement;
 		extent: [ :anElement | anElement extent + (10 @ 10) ].
@@ -344,7 +344,7 @@ RSShapeExamples >> example11ClassTree [
 			lb := label elementOn: cls.
 			group add: lb.
 			group add: s.
-			RSVerticalLineLayout new alignCenter on: group.
+			TSVerticalLineLayout new alignCenter on: group.
 			group ].
 	elements := shapeWithTitle elementsOn: Collection withAllSubclasses.
 	v addAll: elements.
@@ -353,7 +353,7 @@ RSShapeExamples >> example11ClassTree [
 		objects: Collection withAllSubclasses;
 		connectFrom: #superclass.
 	v edges pushBack.
-	RSTreeLayout on: elements.
+	TSTreeLayout on: elements.
 	v @ TSControlsCanvas.
 	v when: TSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Collection withAllSubclasses'
@@ -386,7 +386,7 @@ RSShapeExamples >> example12Polygons [
 		scale: (TSScale linear domain: {0. 0.5. 1}; range:{ 100. 150. 100} );
 		onStepDo: [ :t | 
 			view elements do: [ :e | e size: t ] ]."
-	RSGridLayout new gapSize: 50; on: view elements.
+	TSGridLayout new gapSize: 50; on: view elements.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view @ TSControlsCanvas.
 	view open setLabel: 'Polygon shapes'.
@@ -419,7 +419,7 @@ RSShapeExamples >> example13Arrow [
 	view add: box element.
 	view elements second pushBack.
 	
-	RSVerticalLineLayout new alignCenter; gapSize: -1; on: view elements.
+	TSVerticalLineLayout new alignCenter; gapSize: -1; on: view elements.
 	label := RSShapeBuilder label
 		fontSize: 20;
 		text: #asUppercase;
@@ -427,7 +427,7 @@ RSShapeExamples >> example13Arrow [
 		if: [ :e | e index = 3 ] then: [ :s | s fontSize: 10 ].
 	labels := label elementsOn: #('Keep' 'calm' 'and' 'roassal' 'on').
 	view addAll: labels.
-	RSVerticalLineLayout new alignCenter on: labels.
+	TSVerticalLineLayout new alignCenter on: labels.
 	labels translateBy: 50@50.
 	view when: TSExtentChangedEvent do: [ view zoomToFit ].
 	view @ TSControlsCanvas.
@@ -455,7 +455,7 @@ RSShapeExamples >> example14Marker [
 
 	view addAll: elements.
 	view add: line.
-	RSFlowLayout on: elements.
+	TSFlowLayout on: elements.
 	view open
 ]
 
@@ -572,7 +572,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		elements: v elements;
 		view: v;
 		connectFrom: #superclass.
-	RSForceBasedLayout on: v elements.
+	TSForceBasedLayout on: v elements.
 	RSEdgeBuilder multiBezier
 		borderColor: (Color blue alpha: 0.1);
 		elements: v elements;
@@ -587,7 +587,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 			labels := RSShapeBuilder label
 				elementsOn: { 'Circle = classes, size = number of methods; gray links = inheritance;'.
 				'blue links = dependencies; layout = force based layout on the inheritance links' }.
-			RSVerticalLineLayout on: labels.
+			TSVerticalLineLayout on: labels.
 			labels. ];
 		padding: 10.
 	legend := composite element.
@@ -615,7 +615,7 @@ RSShapeExamples >> example19Bitmap [
 			self inform: 'Copied icon name' ]];
 		elementsOn: icons.
 	v addAll: elements.
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	v @ TSControlsCanvas.
 	v open
 ]
@@ -631,7 +631,7 @@ RSShapeExamples >> example20Highlightable [
 		size: 20.
 	es := s elementsOn: #('Hello' 'World').
 	v addAll: es.
-	RSHorizontalLineLayout on: es.
+	TSHorizontalLineLayout on: es.
 	v @ TSControlsCanvas.
 	v open.
 ]
@@ -651,7 +651,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 		elementsOn: (1 to: 100).
 	v addAll: boxes.
 	boxes @ TSHighlightable.
-	RSGridLayout on: boxes.
+	TSGridLayout on: boxes.
 	boxes @ (TSMenuActivable new menuDo: [ :menu :box | 
 		menu 
 			add: 'Inspect'
@@ -785,7 +785,7 @@ RSShapeExamples >> example22ScaleEvents [
 	RSKeepMarkersSizeRatio reset.
 	v edges first @ RSKeepBorderWidthRatio. 
 	v edges first @ RSKeepMarkersSizeRatio.
-	RSHorizontalTreeLayout new on: v elements.
+	TSHorizontalTreeLayout new on: v elements.
 	v open setLabel: 'Horizontal Tree'
 ]
 
@@ -806,7 +806,7 @@ RSShapeExamples >> example24Highlightable [
 		box := boxShape elementOn: m.
 		box extent: title textWidth  @ 3.
 		g add: title; add: box. 
-		RSVerticalLineLayout new alignCenter; gapSize: 0; on: g.
+		TSVerticalLineLayout new alignCenter; gapSize: 0; on: g.
 		g ].
 	l shape: composite.
 	l highlightable.
@@ -818,7 +818,7 @@ RSShapeExamples >> example24Highlightable [
 		size: 20.
 	es := s elementsOn: #('Hello' 'World').
 	v addAll: es.
-	RSHorizontalLineLayout on: es.
+	TSHorizontalLineLayout on: es.
 	v @ TSControlsCanvas.
 	v open.
 ]
@@ -841,7 +841,7 @@ packageElements := RSShapeBuilder composite
 								g := RSShapeBuilder box
 									size: [ :cls | cls numberOfMethods sqrt ];
 									elementsOn: pak definedClasses.
-								RSGridLayout on: g.
+								TSGridLayout on: g.
 								g
 							]; 
 							padding: 5;
@@ -866,7 +866,7 @@ RSEdgeBuilder bimetricLine
 		connectFrom: #yourself toAll: #dependentPackages.
 		
 		
-RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+TSWeightedCircleLayout new initialRadius: 300; on: packageElements.
 v @ TSControlsCanvas.
 
 v open			
@@ -923,7 +923,7 @@ RSShapeExamples >> example28MultilineLabel [
 	shape := RSShapeBuilder composite shapes: [ :m | 
 		| methods |
 		methods := box elementsOn: m methods.
-		RSGridLayout on: methods.
+		TSGridLayout on: methods.
 		methods.
 		];
 		color: (Color purple alpha: 0.3);
@@ -936,7 +936,7 @@ RSShapeExamples >> example28MultilineLabel [
 		elements: elements;
 		connectFrom: #superclass.
 	v addAll: elements.
-	RSTreeLayout on: elements.
+	TSTreeLayout on: elements.
 	v @ TSControlsCanvas.
 	v open setLabel: 'Example with multiline labels'.
 ]
@@ -965,7 +965,7 @@ RSShapeExamples >> example29AntAnimation [
 		shapes: [ :cls | 
 			| group |
 			group := methodShape elementsOn: cls methods.
-			RSGridLayout on: group.
+			TSGridLayout on: group.
 			group ];
 		onElement;
 		extent: [ :anElement | anElement extent + (10 @ 10) ].
@@ -979,7 +979,7 @@ RSShapeExamples >> example29AntAnimation [
 		objects: models;
 		connectFrom: #superclass.
 	v edges pushBack.
-	RSTreeLayout new 
+	TSTreeLayout new 
 		verticalGap: 100;
 		on: elements.
 	v @ TSControlsCanvas.
@@ -1081,7 +1081,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 		popup;draggable;
 		size:50.
 	elements := shape elementsOn: (1 to: 20).
-	RSGridLayout on: elements.
+	TSGridLayout on: elements.
 	v add: elements asElement.
 	elements translateBy: 0@0.
 	v elements first
