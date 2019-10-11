@@ -51,8 +51,8 @@ RSPieChartExample >> initializeWidgets [
 		items: packages;
 		displayBlock: [:i | i name].
 		
-	chart := self instantiate: RoassalPresenter.
-	pie := self instantiate: RoassalPresenter.
+	chart := self instantiate: SpRoassalPresenter.
+	pie := self instantiate: SpRoassalPresenter.
 	droplist whenSelectedItemChangedDo: [ :pkg | 
 		chart script: [ :view | 
 			view when: TSExtentChangedEvent do: [ 

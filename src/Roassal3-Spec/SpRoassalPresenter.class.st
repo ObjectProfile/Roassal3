@@ -2,7 +2,7 @@
 I am a basic presenter for widgets in roassal with the Spec system
 "
 Class {
-	#name : #RoassalPresenter,
+	#name : #SpRoassalPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'script'
@@ -11,47 +11,47 @@ Class {
 }
 
 { #category : #specs }
-RoassalPresenter class >> adapterName [
-	^ #RSMorphicAdapter
+SpRoassalPresenter class >> adapterName [
+	^ #SpMorphicAdapter
 ]
 
 { #category : #specs }
-RoassalPresenter class >> defaultSpec [
+SpRoassalPresenter class >> defaultSpec [
 	<spec>
 	
-	^ #(RSMorphicAdapter
+	^ #(#SpMorphicAdapter
 		adapt: #(model))
 ]
 
 { #category : #'instance creation' }
-RoassalPresenter class >> open [
+SpRoassalPresenter class >> open [
 	<script>
 	^ self new openWithSpec
 ]
 
 { #category : #initialization }
-RoassalPresenter >> initialize [
+SpRoassalPresenter >> initialize [
 	super initialize.
 	script := [ :v | ] asValueHolder.
 	script whenChangedDo: [ :s | self refresh ].
 ]
 
 { #category : #public }
-RoassalPresenter >> refresh [ 
+SpRoassalPresenter >> refresh [ 
 	self changed: #applyScript with: #()
 ]
 
 { #category : #dependencies }
-RoassalPresenter >> release [
+SpRoassalPresenter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #accessing }
-RoassalPresenter >> script [
+SpRoassalPresenter >> script [
 	^ script value
 ]
 
 { #category : #accessing }
-RoassalPresenter >> script: anObject [
+SpRoassalPresenter >> script: anObject [
 	script value: anObject
 ]
