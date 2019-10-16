@@ -115,7 +115,7 @@ TSLabeled >> onShape: aShape [
 	block := [ self getOrCreateLabel: aShape. ]. 
 	aShape isInACanvas 
 		ifTrue: block
-		ifFalse: [ aShape when: TSShapedObjectAdded do: block ].
+		ifFalse: [ aShape when: TSShapeAddedEvent do: block ].
 ]
 
 { #category : #accessing }

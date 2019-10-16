@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'children'
 	],
-	#category : #'Roassal3-Scripting-Core'
+	#category : #'Roassal3-Graph'
 }
 
 { #category : #accessing }

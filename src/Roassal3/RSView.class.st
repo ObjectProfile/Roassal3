@@ -6,21 +6,26 @@ A ''view'' is a container of graphical elements and represents a layer that may 
 "
 Class {
 	#name : #RSView,
-	#superclass : #RSAnnounceableObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'elements',
 		'edges',
 		'trCanvas'
 	],
-	#category : #'Roassal3-Scripting-Core'
+	#category : #'Roassal3-Graph'
 }
 
 { #category : #accessing }
 RSView >> add: anElementOrAnEdge [
 	"Add a single roassal element to a view"
-	self assert: [ anElementOrAnEdge isKindOf: RSShapedObject ] description: 'Only trachel shapes or Roassal elements can be added to a view'.
-	self assert: [ anElementOrAnEdge ~= nil ] description: 'Nil cannot be added to a view'.
-	anElementOrAnEdge 
+
+	self
+		assert: [ anElementOrAnEdge isRoassalElement ]
+		description: 'Only trachel shapes or Roassal elements can be added to a view'.
+	self
+		assert: [ anElementOrAnEdge notNil ]
+		description: 'Nil cannot be added to a view'.
+	anElementOrAnEdge
 		renderOn: trCanvas;
 		addedIn: self.
 	^ anElementOrAnEdge

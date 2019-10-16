@@ -4,23 +4,23 @@ I am an attach point that will end the line on the border of the end shapes.
 Unline ContinuousAttachPoint & co. you don't need to care about what the end shape is, as long as it is one of the basic shapes.
 "
 Class {
-	#name : #RSBorderAttachPoint,
-	#superclass : #RSAttachPoint,
+	#name : #TSBorderAttachPoint,
+	#superclass : #TSAttachPoint,
 	#instVars : [
 		'offset'
 	],
-	#category : #'Roassal3-Scripting-AttachPoint'
+	#category : #'Roassal3-AttachPoint'
 }
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicEndingPointOf: anEdge [
+TSBorderAttachPoint >> basicEndingPointOf: anEdge [
 	^ self
 		positionFor: anEdge to
 		point: (self basicPointFrom: anEdge to to: anEdge from of: anEdge)
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
+TSBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
 	| source target line shift |
 	source := fromElement geometry.
 	target := toElement geometry.
@@ -36,36 +36,36 @@ RSBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicStartingPointOf: anEdge [
+TSBorderAttachPoint >> basicStartingPointOf: anEdge [
 	^ self
 		positionFor: anEdge from 
 		point: (self basicPointFrom: anEdge from to: anEdge to of: anEdge)
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
+TSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 	^ ((aLine intersect: aSource) detectMin: [ :p | p dist: aLine to ])
 		ifNil: [ aSource center ]
 ]
 
 { #category : #initialization }
-RSBorderAttachPoint >> initialize [
+TSBorderAttachPoint >> initialize [
 	super initialize.
 	offset := 5
 ]
 
 { #category : #accessing }
-RSBorderAttachPoint >> offset [
+TSBorderAttachPoint >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-RSBorderAttachPoint >> offset: aNumber [
+TSBorderAttachPoint >> offset: aNumber [
 	offset := aNumber
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> offsetNormalFor: anEdge [
+TSBorderAttachPoint >> offsetNormalFor: anEdge [
 	"Return the offset in case of multiple edges with the same starting and ending points"
 
 	| indexOfEdge multipleEdges |

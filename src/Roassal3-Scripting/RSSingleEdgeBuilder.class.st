@@ -236,17 +236,17 @@ RSSingleEdgeBuilder >> updateElement: edge [
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withBorderAttachPoint [
-	self attachPoint: RSBorderAttachPoint new.
+	self attachPoint: TSBorderAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withCenteredAttachPoint [
-	self attachPoint: RSAttachPoint new.
+	self attachPoint: TSAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withHorizontalAttachPoint [
-	self attachPoint: RSHorizontalAttachPoint new.
+	self attachPoint: TSHorizontalAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
@@ -274,5 +274,5 @@ v @ RSControlsView.
 v open			
 "
 
-	self attachPoint: RSVerticalAttachPoint new.
+	self attachPoint: TSVerticalAttachPoint new.
 ]

@@ -10,36 +10,41 @@ Class {
 { #category : #examples }
 TSInspectableExample >> example01SimpleExample [
 	<script: 'self new example01SimpleExample open'>
-	| classes v shape elements inspectable highligtable |
+	| classes view boxes inspectable highligtable edges |
 	classes := Collection withAllSubclasses.
-	v := RSView new.
-	shape := RSShapeBuilder box
-		popup;
-		width: [ :cls | cls instVarNames size * 5 max: 5 ];
-		height: [ :cls | cls numberOfMethods max: 5 ].
-	elements := shape elementsOn: classes.
-	v addAll: elements.
-	RSEdgeBuilder line
-		view: v;
+	view := RSView new.
+	boxes := classes collect: [ :cls | 
+		RSElement new
+			model: cls;
+			shape: (TSBox new
+				width: (cls instVarNames size * 5 max: 5);
+				height: (cls numberOfMethods max: 5);
+				yourself);
+			yourself ] as: TSGroup.
+	view addAll: boxes.
+		
+	edges := RSEdgeBuilder line
+		view: view;
 		objects: classes;
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
-	TSTreeLayout on: elements.
+	view addAll: edges.
+	TSTreeLayout on: boxes.
 	TSInspectable reset.
 	inspectable := TSInspectable new.
 	highligtable := inspectable highlightable.
 	highligtable highlightShape color: Color green.
 	inspectable
-		inspectElementBlock: [ :cls | 
+		inspectShapeBlock: [ :cls | 
 			| builder |
 			builder := RSUMLClassBuilder new.
 			builder classes: {cls}.
 			builder build.
 			builder open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
-	elements @ inspectable.
-	v @ TSControlsCanvas.
-	^ v
+	boxes @ inspectable.
+	view @ TSControlsCanvas.
+	^ view
 ]
 
 { #category : #examples }

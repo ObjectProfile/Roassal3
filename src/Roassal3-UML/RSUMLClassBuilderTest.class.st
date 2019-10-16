@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSUMLClassBuilderTest >> testBasic [
 	| builder classes |
-	classes := RSAttachPoint withAllSubclasses.
+	classes := TSAttachPoint withAllSubclasses.
 	builder := RSUMLClassBuilder new.
 	builder classes: classes.
 	builder build.

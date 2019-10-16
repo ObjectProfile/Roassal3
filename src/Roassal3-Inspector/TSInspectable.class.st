@@ -8,7 +8,7 @@ Class {
 		'selectedElement',
 		'highlightable',
 		'inspectorWindow',
-		'inspectElementBlock'
+		'inspectShapeBlock'
 	],
 	#category : #'Roassal3-Inspector-Interaction'
 }
@@ -51,7 +51,7 @@ TSInspectable >> inspectElement: anElement [
 	highlightable doHighlightElement: selectedElement.
 	
 	oldInspectorWindow := inspectorWindow.
-	inspectorWindow := inspectElementBlock rsValue: anElement model.
+	inspectorWindow := inspectShapeBlock rsValue: anElement model.
 	inspectorWindow setLabel: anElement model asString.
 	viewMorph := anElement view canvas morph.
 	viewMorph root activate.
@@ -69,13 +69,13 @@ TSInspectable >> inspectElement: anElement [
 
 { #category : #accessing }
 TSInspectable >> inspectElementBlock [
-	^ inspectElementBlock
+	^ inspectShapeBlock
 ]
 
 { #category : #accessing }
-TSInspectable >> inspectElementBlock: oneArgBlock [
+TSInspectable >> inspectShapeBlock: oneArgBlock [
 	"The block should return a window"
-	inspectElementBlock := oneArgBlock
+	inspectShapeBlock := oneArgBlock
 ]
 
 { #category : #hooks }

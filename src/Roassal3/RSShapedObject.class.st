@@ -3,14 +3,14 @@ I am usefull to define RSElement and RSEdge
 "
 Class {
 	#name : #RSShapedObject,
-	#superclass : #RSAnnounceableObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'model',
 		'index',
 		'parent',
 		'shape'
 	],
-	#category : #'Roassal3-Scripting-Core'
+	#category : #'Roassal3-Graph'
 }
 
 { #category : #adding }

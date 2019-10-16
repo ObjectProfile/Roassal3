@@ -775,7 +775,7 @@ RSShapeExamples >> example22ScaleEvents [
 				color: Color red;
 				size: 10;
 				element));
-		attachPoint: RSHorizontalAttachPoint new; 
+		attachPoint: TSHorizontalAttachPoint new; 
 		border: (TSBorder new);
 		view: v;
 		elements: v elements;

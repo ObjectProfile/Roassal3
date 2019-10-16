@@ -8,12 +8,11 @@ Class {
 		'shapes',
 		'fixedShapes',
 		'camera',
-		'renderTree',
+		'animations',
 		'extent',
 		'color',
 		'morph',
 		'clearBackground',
-		'animations',
 		'showRectangles'
 	],
 	#category : #'Roassal3-Core'
@@ -22,11 +21,6 @@ Class {
 { #category : #visiting }
 TSCanvas >> accept: visitor [
 	visitor visitCanvas: self
-]
-
-{ #category : #'adding removing shapes' }
-TSCanvas >> addAll: aCollection [
-	aCollection do: [ :s | self addShape: s ]
 ]
 
 { #category : #animations }
@@ -165,6 +159,8 @@ TSCanvas >> initialize [
 	showRectangles := false.
 	shapes := TSGroup new.
 	fixedShapes := TSGroup new.
+	elements := TSGroup new.
+	edges := TSGroup new.
 	animations := OrderedCollection new.
 	clearBackground := true.
 	color := Color white.

@@ -2,31 +2,31 @@
 I am the base for attach points
 "
 Class {
-	#name : #RSAttachPoint,
-	#superclass : #RSObject,
+	#name : #TSAttachPoint,
+	#superclass : #TSObject,
 	#instVars : [
 		'inverted'
 	],
-	#category : #'Roassal3-Scripting-AttachPoint'
+	#category : #'Roassal3-AttachPoint'
 }
 
 { #category : #'instance creation' }
-RSAttachPoint class >> centered [
-	^ RSCenteredAttachPoint new
+TSAttachPoint class >> centered [
+	^ TSCenteredAttachPoint new
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> basicEndingPointOf: anEdge [
+TSAttachPoint >> basicEndingPointOf: anEdge [
 	^ self subclassResponsibility 
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> basicStartingPointOf: anEdge [
+TSAttachPoint >> basicStartingPointOf: anEdge [
 	^ self subclassResponsibility 
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> endingPointOf: anEdge [
+TSAttachPoint >> endingPointOf: anEdge [
 	(anEdge from = anEdge to) 
 		ifTrue: [ ^ self position: anEdge from ].
     ^ inverted
@@ -35,19 +35,19 @@ RSAttachPoint >> endingPointOf: anEdge [
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> initialize [
+TSAttachPoint >> initialize [
 	super initialize.
 	inverted := false.
 ]
 
 { #category : #private }
-RSAttachPoint >> position: anObject [
+TSAttachPoint >> position: anObject [
 	anObject isPoint ifTrue: [ ^ anObject ].
 	^ self positionFor: anObject point: anObject position.
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: anElement point: aPoint [
+TSAttachPoint >> positionFor: anElement point: aPoint [
 	| parent |
 	(parent := anElement parent )ifNil: [ ^ aPoint ].
 	^ parent transform: aPoint
@@ -55,7 +55,7 @@ RSAttachPoint >> positionFor: anElement point: aPoint [
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> startingPointOf: anEdge [
+TSAttachPoint >> startingPointOf: anEdge [
 	(anEdge from = anEdge to) 
 		ifTrue: [ ^ self position: anEdge from ].
     ^ inverted

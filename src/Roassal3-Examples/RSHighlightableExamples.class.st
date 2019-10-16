@@ -47,7 +47,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	elements := s elementsOn: (1 to: 20).
 	RSEdgeBuilder line
 		elements: elements;
-		@ TSHighlightable;
+		addInteraction: TSHighlightable;
 		view: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.

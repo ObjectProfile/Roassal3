@@ -156,10 +156,13 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		normalize: #yourself.
 	
 	lineX := 0.
-	line := RSEdgeBuilder line
-		color: Color red;
-		width: 8;
-		from: 1@0; to: 0@0; edge.
+	line := RSEdge new 
+		shape: (TSLine new
+			color: Color red;
+			width: 8);
+		from: 1@0; 
+		to: 0@0;
+		yourself.
 	v add: line. 
 	position := nil.
 	updateLine := [
@@ -245,10 +248,14 @@ RSAnimationExamples >> example05b [
 		elements: elements;
 		normalize: #yourself.
 	lineX := 0.
-	line := RSEdgeBuilder line
-		color: Color red;
-		width: 8;
-		from: 1@0; to: 0@0; edge.
+	line := RSEdge new 
+		shape: (TSLine new
+			color: Color red;
+			width: 8;
+			yourself);
+		from: 1@0;
+		to: 0@0;
+		yourself.
 	v add: line. 
 	position := nil.
 	updateLine := [
@@ -357,64 +364,7 @@ RSAnimationExamples >> example06Atom [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example07Psycho [
-	<script: 'self new example07Psycho open'>
-	| shape v theta slices unit color sc1 sc2 |
-	v := RSView new.
-	slices := 50.
-	unit := Float pi * 2 / slices.
-	"domain: aBoolean, range: aColor"
-	color := TSScale ordinal rangeFrom: { '480D4A'. 'BB1C60' }.
-	"input: a number between {-1 1} ouput: a number between 100 and 350"
-	sc1 := TSScale linear domain: #(-1 1);range: { 100. 350 }.
-	sc2 := TSScale linear domain: #(-1 1);range: { 350. 100 }.
-	"for zoom to fit"
-	v add: (RSShapeBuilder box extent: 800@800; noPaint; element).
-	theta := 0.	
-	shape := RSEdgeBuilder linePath 
-		onElement; 
-		onMyselfDo: [ 
-			[: e| e attributes at: #zn
-				put: (e model even 
-						ifTrue: [ sc1 scale: (e model *unit + theta) sin ]
-						ifFalse: [ sc2 scale: (e model*unit - theta) sin ]).] ];
-		svgPath: [ :e |
-			"e is an instance of RSEdge, been created by shape"
-			[ :a :b |
-			"a and b are points, the vertices from this edge"
-			"this block returns a block to use complex operations of Athens Canvas"
-			"in this part you can also return a string, the svg path"
-				[ :canvas | | angle sz |
-				angle := e model* unit.
-				sz := e attributes at: #zn. 
-				canvas  
-					moveTo: a + (sz * (angle cos@ angle sin));
-					arcCenterX: a x
-						centerY: a y 
-						radius: sz
-						startAngle: e model* unit
-						endAngle: (e model+1)*unit 
-				  ] ] ];
-		width: [ :e | (e attributes at: #zn) /2 ];
-		onModel;"change context, now the bock argument recives the model, a number between [1 50]"
-		borderColor: [ :m | color scale: m even ];
-		from: [ :m | m even
-			ifTrue: [-25@ -25 ]
-			ifFalse: [ 25@25 ] ];
-		to: 0@0.
-	v addAll: (shape edgesOn: (1 to: slices)).
-	
-	v newAnimation repeat onStepDo: [ :t |
-		v edges do: [ :ed | shape updateElement: ed ].
-		theta := theta + 0.0523 ].
-	v when: TSExtentChangedEvent do: [ :evt | 
-		v zoomToFit ].
-	^ v
-	"53 lines of code"
-]
-
-{ #category : #examples }
-RSAnimationExamples >> example07b [
+RSAnimationExamples >> example07Phyco [
 	<script: 'self new example07b open'>
 	| update v theta slices unit color sc1 sc2 |
 	v := RSView new.
@@ -1299,46 +1249,45 @@ RSAnimationExamples >> example19Gris [
 { #category : #examples }
 RSAnimationExamples >> example20Flor [
 	<script: 'self new example20Flor open setLabel: ''Animation test'''>
-	| v shape frame angleSp alphaS hueS dia1 dia2 |
-	v := RSView new.
+	| c frame angleSp alphaS hueS dia1 dia2 |
+	c := TSCanvas new.
 	frame := 0.
 	angleSp := 0.
 	hueS := TSScale linear domain: #(50 200); range: #(250 360).
 	alphaS := TSScale linear domain: #(50 200); range: #(0.3 1).
 	dia1 := TSScale linear domain: #(50 180); range: #(90 1).
 	dia2 := TSScale linear domain: #(-1 1); range: #(5 20).
-	shape := RSShapeBuilder circle
-		attributesDo: [ :m | [ :att |
-			att at: #angle 
-				put: (m key + (angleSp sin * m value)) degreesToRadians ] ];
-		color: [ :m |
-			Color 
-				h: (hueS scale: m value)
+	(0 to: 350 by: 60) do: [ :i | 
+		(50 to: 170 by: 10) do: [ :m |  | color |
+			color := Color 
+				h: (hueS scale: m)
 				s: 0.8 
 				v: 1 
-				alpha: (alphaS scale: m value) ];
-		onElement;
-		position: [ :e | | angle | 
-			angle := e attributes at: #angle.
-			e model value * (angle cos @ angle sin). ];
-		extent: [:e | | dist diameter |
-			dist := e position dist: 0@0.
-			diameter := dia2 scale: (dia1 scale: dist) sin.
-			diameter asPoint.
-			].
-	(0 to: 350 by: 60) do: [ :i | 
-		v addAll: (shape elementsOn: ((50 to: 170 by: 10) 
-			collect: [:radius| i-> radius ]) ).
+				alpha: (alphaS scale: m).
+			c addShape: (TSEllipse new
+				color: color;
+				model: i -> m;
+				yourself).
+			 ].
 		 ].
-	shape removeCommandsBySelectors: {#size:. #extent:. #color:}.
-	v newAnimation repeat onStepDo: [ :t | 
+	c newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 1.
 		angleSp := frame / 250.0 * (Float pi * 2).
-		shape updateElements: v elements.
+		c shapes do: [ :s | 
+			| angle i m dist diameter |
+			i := s model key.
+			m := s model value.
+			angle := (i + (angleSp sin * m)) degreesToRadians.
+			s position: m * (angle cos @ angle sin).
+			dist := s position dist: 0@0.
+			diameter := dia2 scale: (dia1 scale: dist) sin.
+			s extent: diameter asPoint.
+	 	].
+		c signalUpdate.
 		].
-	v when: TSExtentChangedEvent do: [ 
-		v camera zoomToFit: v extent extent: 500 asPoint ].
-	^ v
+	c when: TSExtentChangedEvent do: [ 
+		c camera zoomToFit: c extent extent: 500 asPoint ].
+	^ c
 	
 ]
 

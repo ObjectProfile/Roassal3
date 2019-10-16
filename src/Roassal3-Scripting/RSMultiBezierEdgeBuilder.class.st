@@ -55,6 +55,11 @@ Class {
 	#category : #'Roassal3-Scripting-Builders'
 }
 
+{ #category : #'instance variations' }
+RSMultiBezierEdgeBuilder class >> multiBezier [
+	^ self new: TSSVGPathLine new.
+]
+
 { #category : #private }
 RSMultiBezierEdgeBuilder >> applyTensionOn: points [
 	| n dp p1 ten |
@@ -130,9 +135,9 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 
 { #category : #'public - line path' }
 RSMultiBezierEdgeBuilder >> following: selector [
-	self
-		onElement;
-		svgPath: [ :ed | [ :a :b | [:builder | | points elements att |
+	| ed |
+	ed := nil.
+	self shape svgPath: [ :a :b | [:builder | | points elements att |
 			att := ed attributes.
 			elements := att
 				at: #commom
@@ -150,7 +155,7 @@ RSMultiBezierEdgeBuilder >> following: selector [
 			builder
 				curveVia:( points at: points size -1)
 				to: points last.
-			] ] ].
+			] ].
 ]
 
 { #category : #'public - line path' }

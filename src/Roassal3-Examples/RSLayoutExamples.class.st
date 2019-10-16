@@ -227,7 +227,7 @@ RSLayoutExamples >> example08HorizontalTree [
 				color: Color black;
 				size: 5;
 				element));
-		attachPoint: RSHorizontalAttachPoint new; 
+		attachPoint: TSHorizontalAttachPoint new; 
 		view: v;
 		elements: v elements;
 		connectFrom: #superclass.

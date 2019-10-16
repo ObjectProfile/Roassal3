@@ -2,37 +2,37 @@
 I can define offsets in each side of the attach point
 "
 Class {
-	#name : #RSOffsetAttachPoint,
-	#superclass : #RSAttachPoint,
+	#name : #TSOffsetAttachPoint,
+	#superclass : #TSAttachPoint,
 	#instVars : [
 		'startOffset',
 		'endOffset'
 	],
-	#category : #'Roassal3-Scripting-AttachPoint'
+	#category : #'Roassal3-AttachPoint'
 }
 
 { #category : #accessing }
-RSOffsetAttachPoint >> endOffset [
+TSOffsetAttachPoint >> endOffset [
 	^ endOffset
 ]
 
 { #category : #accessing }
-RSOffsetAttachPoint >> endOffset: aNumber [
+TSOffsetAttachPoint >> endOffset: aNumber [
 	endOffset := aNumber
 ]
 
 { #category : #'public - hooks' }
-RSOffsetAttachPoint >> initialize [ 
+TSOffsetAttachPoint >> initialize [ 
 	super initialize.
 	startOffset := endOffset := 0.
 ]
 
 { #category : #accessing }
-RSOffsetAttachPoint >> startOffset [
+TSOffsetAttachPoint >> startOffset [
 	^ startOffset
 ]
 
 { #category : #accessing }
-RSOffsetAttachPoint >> startOffset: aNumber [
+TSOffsetAttachPoint >> startOffset: aNumber [
 	startOffset := aNumber.
 ]

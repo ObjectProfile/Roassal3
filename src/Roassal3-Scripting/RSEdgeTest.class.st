@@ -19,7 +19,12 @@ RSEdgeTest >> setUp [
 	el2 := RSShapeBuilder box element.
 	el1 translateTo: 20 @ 20.
 	el2 translateTo: 60 @ 80.
-	edge := RSEdgeBuilder line from: el1; to: el2; edge.
+	edge := RSEdge new
+		attachPoint: TSCenteredAttachPoint new;
+		shape: TSLine new;
+		from: el1;
+		to: el2;
+		yourself. 
 
 ]
 

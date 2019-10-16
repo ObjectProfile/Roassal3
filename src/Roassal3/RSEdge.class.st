@@ -10,7 +10,7 @@ Class {
 		'attachPoint',
 		'controlPoints'
 	],
-	#category : #'Roassal3-Scripting-Core'
+	#category : #'Roassal3-Graph'
 }
 
 { #category : #'instance creation' }
@@ -63,7 +63,7 @@ RSEdge >> from: anElement [
 { #category : #initialization }
 RSEdge >> initialize [
 	super initialize.
-	attachPoint := RSCenteredAttachPoint new.
+	attachPoint := TSCenteredAttachPoint new.
 ]
 
 { #category : #testing }

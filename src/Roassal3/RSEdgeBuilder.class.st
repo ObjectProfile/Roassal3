@@ -26,30 +26,130 @@ v open
 "
 Class {
 	#name : #RSEdgeBuilder,
-	#superclass : #RSSingleEdgeBuilder,
+	#superclass : #TSObject,
 	#instVars : [
 		'view',
+		'shape',
 		'allowRepetition',
 		'fromElements',
 		'toElements',
 		'shouldMoveBehind',
-		'shouldNotBeUsedInLayout',
 		'createdEdges',
 		'viewHasBeenManuallySet',
-		'beDirectional'
+		'beDirectional',
+		'attachPoint',
+		'controlPoints'
 	],
-	#category : #'Roassal3-Scripting-Builders'
+	#category : #'Roassal3-Graph'
 }
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> arrowedLine [
+	| marker shape |
+	marker := TSPolygon new
+		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
+		paint: nil;
+		border: (TSBorder new).
+	shape := TSLine new.
+	shape markerEnd: marker.
+	^ self new: shape
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> horizontalLine: aShape [
+	^ (self new: aShape) controlPoints: [:from :to | 
+		| mid |
+		mid := (from + to)/2.
+		Array 
+			with: from
+			with: mid x @ from y
+			with: mid x @ to y
+			with: to ];
+		yourself.
+	
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> line [
+	^ self new: TSLine new
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> new: aTSShape [
+	 ^ self new 
+		shape: aTSShape;
+		yourself
+		
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> orthoHorizontal [
+	^ self horizontalLine: TSPolyline new.
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> orthoVertical [
+	^ self verticalLine: TSPolyline new.
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> verticalLine: aShape [
+	^ (self new: aShape) controlPoints: [ :from :to | 
+		| mid |
+		mid := (from + to)/2.
+		Array
+			with: from
+			with: from x @ mid y
+			with: to x @ mid y
+			with: to ];
+		yourself.
+	
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> addInteraction: anInteraction [
+	self shape addInteraction: anInteraction
+]
 
 { #category : #'public repetition' }
 RSEdgeBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
+{ #category : #'public - attach point' }
+RSEdgeBuilder >> attachPoint [
+	^ attachPoint
+]
+
+{ #category : #'public - attach point' }
+RSEdgeBuilder >> attachPoint: anAttachPoint [
+	attachPoint := anAttachPoint
+]
+
 { #category : #'public - configuration' }
 RSEdgeBuilder >> beDirectional [
 	"When edges are created, this allow for having edges going from A to B, and from B to A"
 	beDirectional := true
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> border [
+	^ self shape border
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> border: aBorder [
+	self shape border: aBorder
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> borderColor: aColor [
+	self shape borderColor: aColor
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> color: aColor [
+	self shape color: aColor
 ]
 
 { #category : #public }
@@ -125,6 +225,16 @@ RSEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	^ createdEdges
 ]
 
+{ #category : #accessing }
+RSEdgeBuilder >> controlPoints [
+	^ controlPoints
+]
+
+{ #category : #accessing }
+RSEdgeBuilder >> controlPoints: aBlock [
+	controlPoints := aBlock
+]
+
 { #category : #'private - utility' }
 RSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	"This is a private method. Create, if necessary, an edge between two elements"
@@ -136,10 +246,16 @@ RSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 RSEdgeBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
 	| edge |
-	self from: source; to: target.
-	edge := self edge. 
+	
+	edge := RSEdge new
+		model: source model -> target model;
+		attachPoint: self attachPoint;
+		from: source;
+		to: target;
+		shape: self shape copy;
+		yourself.
 	view ifNotNil: [ view add: edge ].
-	shouldNotBeUsedInLayout ifFalse: [ edge notUseInLayout ].
+	controlPoints ifNotNil: [ edge controlPoints: controlPoints ].
 	^ edge
 ]
 
@@ -181,13 +297,12 @@ RSEdgeBuilder >> initialize [
 	super initialize.
 	self noRepetition.
 	shouldMoveBehind := false.
-	shouldNotBeUsedInLayout := true.
 	
 	"The view has to be explicitly set by the end-user"
 	viewHasBeenManuallySet := false.
-	
 	"We could have edges from A to B, and from B to A"
-	self beDirectional
+	self beDirectional.
+	self attachPoint: TSCenteredAttachPoint new.
 ]
 
 { #category : #testing }
@@ -206,6 +321,16 @@ RSEdgeBuilder >> linkElements: someElements [
 		self edgeFrom: head to: e.
 		head := e.
 		]
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> markerEnd: aMarker [
+	self shape markerEnd: aMarker
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> markerStart: aMarker [
+	self shape markerStart: aMarker
 ]
 
 { #category : #accessing }
@@ -244,30 +369,6 @@ RSEdgeBuilder >> noRepetition [
 	allowRepetition := false
 ]
 
-{ #category : #'public - configuration' }
-RSEdgeBuilder >> notUseInLayout [
-	"Indicate that the edges should not be used in the layout.
-The following example shows that the layout is driven only by the red lines, and not the blue ones:
-
-b := RTMondrian new.
-b nodes: RTShape withAllSubclasses.
-
-b shape line color: Color red trans.
-b edges connectFrom: #superclass.
-
-b shape line color: Color blue trans.
-b edges
-	notUseInLayout;
-	connectToAll: #dependentClasses.
-
-b layout tree.
-b
-
-	
-	"
-	shouldNotBeUsedInLayout := false
-]
-
 { #category : #accessing }
 RSEdgeBuilder >> object: anObject [
 	^ self objects: (Array with: anObject)
@@ -284,6 +385,16 @@ RSEdgeBuilder >> objects: someObjectsOrABlock [
 { #category : #'private - utility' }
 RSEdgeBuilder >> resetCreatedEdges [
 	createdEdges := TSGroup new
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> shape [
+	^ shape
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> shape: aTSShape [
+	shape := aTSShape
 ]
 
 { #category : #'public repetition' }
@@ -508,4 +619,14 @@ RSEdgeBuilder >> view: aView [
 RSEdgeBuilder >> viewElements [
 	view ifNil: [ ^ #() ].
 	^ view elements.
+]
+
+{ #category : #'public - attach point' }
+RSEdgeBuilder >> withBorderAttachPoint [
+	self attachPoint: TSBorderAttachPoint new.
+]
+
+{ #category : #'public - attach point' }
+RSEdgeBuilder >> withVerticalAttachPoint [
+	self attachPoint: TSVerticalAttachPoint new.
 ]
