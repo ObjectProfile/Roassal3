@@ -1,9 +1,9 @@
 "
-I am bridging RoassalPresenter and RTView
+I am bridging RoassalPresenter and RSView
 "
 Class {
-	#name : #RSMorphicAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#name : #Sp1MorphicAdapter,
+	#superclass : #AbstractMorphicAdapter,
 	#instVars : [
 		'view',
 		'canvas'
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #initialization }
-RSMorphicAdapter >> adapt: aComposableModel [
+Sp1MorphicAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
 	canvas := widget trachelCanvas.
 	view := canvas view.
@@ -23,8 +23,8 @@ RSMorphicAdapter >> adapt: aComposableModel [
 	self basicApplyScript.
 ]
 
-{ #category : #'scripting actions' }
-RSMorphicAdapter >> applyScript [
+{ #category : #initialization }
+Sp1MorphicAdapter >> applyScript [
 	| extent |
 	extent := canvas extent.
 	self freeCanvas.
@@ -33,21 +33,21 @@ RSMorphicAdapter >> applyScript [
 	
 ]
 
-{ #category : #'scripting actions' }
-RSMorphicAdapter >> basicApplyScript [
+{ #category : #initialization }
+Sp1MorphicAdapter >> basicApplyScript [
 	self model script value: view.
 	self widgetDo: #startStepping.
 	
 	view when: TSAbstractMouseEvent do: [ widget takeKeyboardFocus].
 ]
 
-{ #category : #factory }
-RSMorphicAdapter >> buildWidget [
+{ #category : #initialization }
+Sp1MorphicAdapter >> buildWidget [
 	^ RSView new canvas createMorph
 ]
 
-{ #category : #'scripting actions' }
-RSMorphicAdapter >> freeCanvas [
+{ #category : #initialization }
+Sp1MorphicAdapter >> freeCanvas [
 	| temp |
 	temp := self buildWidget.
 	canvas := temp trachelCanvas.
@@ -57,6 +57,6 @@ RSMorphicAdapter >> freeCanvas [
 ]
 
 { #category : #initialization }
-RSMorphicAdapter >> release [
+Sp1MorphicAdapter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]

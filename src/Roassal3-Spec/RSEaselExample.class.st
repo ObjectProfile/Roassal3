@@ -73,7 +73,7 @@ RSEaselExample >> initializeWidgets [
 	button := self newButton.
 	button label: 'Draw this!'.
 
-	diagram := self instantiate: RoassalPresenter.	
+	diagram := self instantiate: SpRoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
 	diagram script: [ :view | self textAsCode value: view ]

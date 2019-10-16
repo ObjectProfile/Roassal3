@@ -130,8 +130,8 @@ RSColorPaletteChooser >> initializeShape [
 
 { #category : #initialization }
 RSColorPaletteChooser >> initializeWidgets [
-	buttons := self instantiate: RoassalPresenter.
-	colors := self instantiate: RoassalPresenter.
+	buttons := self instantiate: SpRoassalPresenter.
+	colors := self instantiate: SpRoassalPresenter.
 	buttons script: [ :view | 
 		self renderButtonsOn: view.
 		self renderColorPalettesFor: buttonElements first.].
