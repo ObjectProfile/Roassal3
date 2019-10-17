@@ -3,7 +3,7 @@ A RODummyNode is used by the sugiyama layout
 "
 Class {
 	#name : #TSDummyNode,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'edge'
 	],

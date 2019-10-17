@@ -3,7 +3,7 @@ RTLayoutBuilder is a higher abstract to manage layout. Most builder use it as it
 "
 Class {
 	#name : #TSLayoutBuilder,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'layout'
 	],

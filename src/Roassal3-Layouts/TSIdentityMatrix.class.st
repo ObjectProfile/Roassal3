@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSIdentityMatrix,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'rows'
 	],

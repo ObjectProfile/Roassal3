@@ -2,7 +2,7 @@
 I am an handy class to build legend in a visualization
 "
 Class {
-	#name : #RSLegendBuilder,
+	#name : #TSLegend,
 	#superclass : #RSAbstractViewBuilder,
 	#instVars : [
 		'layout',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #hooks }
-RSLegendBuilder >> basicRenderIn: aView [ 
+TSLegend >> basicRenderIn: aView [ 
 	| legend |
 	legend := shape element.
 	location move: legend on: aView elements.
@@ -26,7 +26,7 @@ RSLegendBuilder >> basicRenderIn: aView [
 ]
 
 { #category : #'public - composite' }
-RSLegendBuilder >> composite: refShape text: textShape layout: aLayout [
+TSLegend >> composite: refShape text: textShape layout: aLayout [
 	^ RSShapeBuilder composite shapes: [ :m| | targetShape g text |
 		targetShape := refShape elementOn: m.
 		text := textShape elementOn: m.
@@ -38,7 +38,7 @@ RSLegendBuilder >> composite: refShape text: textShape layout: aLayout [
 ]
 
 { #category : #'public - specific' }
-RSLegendBuilder >> custom: anObject shape: aShape [
+TSLegend >> custom: anObject shape: aShape [
 	| element |
 	"general propuse, you can add and define anything in aShape to be a legend"
 	element := aShape elementOn: anObject.
@@ -47,58 +47,58 @@ RSLegendBuilder >> custom: anObject shape: aShape [
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultBoldText [
+TSLegend >> defaultBoldText [
 	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label 
 		uniqueCommands; bold ].
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultBox [
+TSLegend >> defaultBox [
 	^ defaultBox ifNil: [ defaultBox := RSShapeBuilder box 
 		uniqueCommands;
 		size: 15. ].
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultCircle [
+TSLegend >> defaultCircle [
 	^ defaultCircle ifNil: [ defaultCircle := RSShapeBuilder circle 
 		uniqueCommands;
 		size: 15. ]
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultLabel [
+TSLegend >> defaultLabel [
 	^ defaultLabel ifNil: [ defaultLabel := RSShapeBuilder label ].
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultLabel: aShape [
+TSLegend >> defaultLabel: aShape [
 	defaultLabel := aShape
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultTitle [
+TSLegend >> defaultTitle [
 	^ defaultTitle ifNil: [ defaultTitle := RSShapeBuilder label fontSize: 20; bold ].
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> defaultTitle: aShape [
+TSLegend >> defaultTitle: aShape [
 	defaultTitle := aShape
 ]
 
 { #category : #'public - composite' }
-RSLegendBuilder >> horizontalComposite: refShape text: textShape [ 
+TSLegend >> horizontalComposite: refShape text: textShape [ 
 	^ self composite: refShape text: textShape layout: TSHorizontalLineLayout new center.
 ]
 
 { #category : #initialization }
-RSLegendBuilder >> initialize [
+TSLegend >> initialize [
 	super initialize.
 	self reset; initializeShape.
 ]
 
 { #category : #initialization }
-RSLegendBuilder >> initializeShape [
+TSLegend >> initializeShape [
 	shape := RSShapeBuilder composite shapes: [ 
 		layout on: elements.
 		elements ];
@@ -107,32 +107,32 @@ RSLegendBuilder >> initializeShape [
 ]
 
 { #category : #testing }
-RSLegendBuilder >> isOnDemand [
+TSLegend >> isOnDemand [
 	^ menuShape notNil
 ]
 
 { #category : #layout }
-RSLegendBuilder >> layout [ 
+TSLegend >> layout [ 
 	^ layout
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> location [
+TSLegend >> location [
 	^ location
 ]
 
 { #category : #accessing }
-RSLegendBuilder >> menuShape [
+TSLegend >> menuShape [
 	^ menuShape
 ]
 
 { #category : #public }
-RSLegendBuilder >> onDemand [
+TSLegend >> onDemand [
 	self onDemand: 'Help'.
 ]
 
 { #category : #public }
-RSLegendBuilder >> onDemand: text [
+TSLegend >> onDemand: text [
 	menuShape := RSShapeBuilder label
 		text: text;
 		color: Color lightGray;
@@ -141,7 +141,7 @@ RSLegendBuilder >> onDemand: text [
 ]
 
 { #category : #'public - specific' }
-RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
+TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	"very very specific shape"
 	| box s marker line |
 	box := RSShapeBuilder box
@@ -167,7 +167,7 @@ RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox
 ]
 
 { #category : #hooks }
-RSLegendBuilder >> renderIn: aView [
+TSLegend >> renderIn: aView [
 	self isOnDemand 
 		ifTrue: [ self renderOnDemandIn: aView ]
 		ifFalse: [self basicRenderIn: aView ].
@@ -175,7 +175,7 @@ RSLegendBuilder >> renderIn: aView [
 ]
 
 { #category : #hooks }
-RSLegendBuilder >> renderOnDemandIn: aView [
+TSLegend >> renderOnDemandIn: aView [
 	| label i legendLabels update |
 	label := menuShape element.
 	label isFixed: true.
@@ -203,7 +203,7 @@ RSLegendBuilder >> renderOnDemandIn: aView [
 ]
 
 { #category : #initialization }
-RSLegendBuilder >> reset [
+TSLegend >> reset [
 	elements := TSGroup new.
 	location := RSLocation new below.
 	layout := TSLayoutBuilder new.
@@ -215,12 +215,12 @@ RSLegendBuilder >> reset [
 ]
 
 { #category : #public }
-RSLegendBuilder >> text: aString [
+TSLegend >> text: aString [
 	^ self custom: aString shape: self defaultLabel.
 ]
 
 { #category : #public }
-RSLegendBuilder >> text: aString description: desc [
+TSLegend >> text: aString description: desc [
 	self defaultBoldText text: aString.
 	^ self
 		custom: desc
@@ -228,7 +228,7 @@ RSLegendBuilder >> text: aString description: desc [
 ]
 
 { #category : #public }
-RSLegendBuilder >> text: aString withBoxColor: color [
+TSLegend >> text: aString withBoxColor: color [
 	self defaultBox color: color.
 	^ self
 		custom: aString
@@ -236,7 +236,7 @@ RSLegendBuilder >> text: aString withBoxColor: color [
 ]
 
 { #category : #public }
-RSLegendBuilder >> text: aString withCircleColor: color [
+TSLegend >> text: aString withCircleColor: color [
 	self defaultCircle color: color.
 	^ self
 		custom: aString
@@ -244,7 +244,7 @@ RSLegendBuilder >> text: aString withCircleColor: color [
 ]
 
 { #category : #'public - specific' }
-RSLegendBuilder >> text: aString withFadingRamp: ramp [
+TSLegend >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
 	gradient := TSGradientPalette linearGradient: ramp.
@@ -258,11 +258,11 @@ RSLegendBuilder >> text: aString withFadingRamp: ramp [
 ]
 
 { #category : #public }
-RSLegendBuilder >> title: aString [
+TSLegend >> title: aString [
 	^ self custom: aString shape: self defaultTitle.
 ]
 
 { #category : #'public - composite' }
-RSLegendBuilder >> verticalComposite: refShape text: textShape [ 
+TSLegend >> verticalComposite: refShape text: textShape [ 
 	^ self composite: refShape text: textShape layout: TSVerticalLineLayout new center
 ]

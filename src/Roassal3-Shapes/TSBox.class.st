@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cornerRadius'
 	],
-	#category : #'Roassal3-Shapes'
+	#category : #'Roassal3-Shapes-Core'
 }
 
 { #category : #visiting }

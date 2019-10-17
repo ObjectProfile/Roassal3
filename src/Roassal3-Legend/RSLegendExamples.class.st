@@ -3,7 +3,7 @@ I have basic examples of legend builder
 "
 Class {
 	#name : #RSLegendExamples,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#category : #'Roassal3-Legend-Examples'
 }
 
@@ -11,7 +11,7 @@ Class {
 RSLegendExamples >> example01Basic [ 
 	<script: 'self new example01Basic'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
 	b build.
@@ -25,7 +25,7 @@ RSLegendExamples >> example01Basic [
 RSLegendExamples >> example02Border [
 	<script: 'self new example02Border'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
 	b shape 
@@ -40,7 +40,7 @@ RSLegendExamples >> example02Border [
 RSLegendExamples >> example03Vertical [
 	<script: 'self new example03Vertical'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b 
 		title: 'Mid Heros';
 		text: 'Invoker';
@@ -62,7 +62,7 @@ RSLegendExamples >> example03Vertical [
 RSLegendExamples >> example04Horizontal [
 	<script: 'self new example04Horizontal'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b 
 		text: 'Invoker';
 		text: 'Shadow Fiend';
@@ -81,7 +81,7 @@ RSLegendExamples >> example04Horizontal [
 RSLegendExamples >> example05Colors [
 	<script: 'self new example05Colors'>
 	| b color |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	
 	color := TSScale category20.
 	b 
@@ -102,7 +102,7 @@ RSLegendExamples >> example05Colors [
 RSLegendExamples >> example06BoxColors [
 	<script: 'self new example06BoxColors'>
 	| b color |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 
 	color := TSScale category20.
 	b 
@@ -123,7 +123,7 @@ RSLegendExamples >> example06BoxColors [
 RSLegendExamples >> example07BoxFading [
 	<script: 'self new example07BoxFading'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b title: 'Legend'.
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
 	b shape border: TSBorder new.
@@ -136,7 +136,7 @@ RSLegendExamples >> example07BoxFading [
 RSLegendExamples >> example08Polygons [
 	<script: 'self new example08Polygons'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b title: 'Polygons'.
 	#(diamond triangle star pentagon octagon) do: [ :selector |
 		b custom: selector shape: (b 
@@ -152,7 +152,7 @@ RSLegendExamples >> example08Polygons [
 RSLegendExamples >> example09Lines [
 	<script: 'self new example09Lines'>
 	| b |
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b title: 'Line with markers'.
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
@@ -192,7 +192,7 @@ RSLegendExamples >> example10Location [
 		elements: elements;
 		normalize: #numberOfMethods.
 	TSTreeLayout on: elements.
-	b := RSLegendBuilder new.
+	b := TSLegend new.
 	b view: v.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.

@@ -48,7 +48,7 @@ GLMRoassal3Presentation >> setUpInteractions [
 	self canvas shapes @ interaction.
 	self canvas
 		when: TSShapeAddedEvent
-		do: [ :evt| evt shapedObject @ interaction ].
+		do: [ :evt| evt shape @ interaction ].
 	
 	
 	

@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 TSAbstractControlCanvas >> configuration [
-	^ limits ifNil: [ limits := RSControlConfiguration new ]
+	^ limits ifNil: [ limits := TSControlConfiguration new ]
 ]
 
 { #category : #accessing }

@@ -734,7 +734,7 @@ RSShapeExamples >> example21SpockLizard [
 		elements: v elements;
 		useAssociations: relations.
 	v elements pushFront.
-	lb := RSLegendBuilder new.
+	lb := TSLegend new.
 	lb defaultLabel fontSize: 50.
 	lb view: v.
 	lb shape 

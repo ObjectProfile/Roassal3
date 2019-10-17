@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSLayoutTranslator,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'view'
 	],

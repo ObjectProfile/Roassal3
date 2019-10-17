@@ -50,15 +50,19 @@ TSInspectableExample >> example01SimpleExample [
 { #category : #examples }
 TSInspectableExample >> example02Inspect [
 	<script: 'self new example02Inspect inspect'>
-	| view box animation lastSize |
-	view := RSView new.
-	box := RSShapeBuilder box
-		color: TSScale category20c;
-		popup;
-		draggable;
-		size: 20.
 	
-	view add: (box elementOn: Collection).
+	| view animation lastSize box color |
+	view := RSView new.
+	color := TSScale category20c.
+	box := [ :model | RSElement new
+		model: model; 
+		shape: (TSBox new
+			color: (color scale: model) ;
+			yourself);
+		size: 20;
+		yourself ].
+	
+	view add: (box value: Collection).
 	lastSize := 0.
 	animation := nil.
 	animation := view animationFrom: { 
@@ -80,7 +84,7 @@ TSInspectableExample >> example02Inspect [
 			lastSize := view elements size.
 			view elements do: [ :e |
 				e outgoingEdges ifEmpty: [ | children |
-					children := box elementsOn: e model subclasses.
+					children := e model subclasses collect: [:cls | box value: cls ].
 					children do: [ :child | child position: e position ].
 					view addAll: children ]. ].
 			

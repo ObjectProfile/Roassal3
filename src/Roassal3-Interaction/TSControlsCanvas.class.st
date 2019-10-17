@@ -36,7 +36,7 @@ TSControlsCanvas >> initialize [
 	self interactions: (self defaultInteractions collect: #new).
 	self
 		withLegend;
-		configuration: RSControlConfiguration new.
+		configuration: TSControlConfiguration new.
 ]
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ TSControlsCanvas >> onShape: aCanvas [
 TSControlsCanvas >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
-	lb := RSLegendBuilder new 
+	"lb := TSLegend new 
 		container: aCanvas;
 		yourself.
 	lb defaultTitle fontSize: 12.
@@ -80,7 +80,7 @@ TSControlsCanvas >> renderLegendOn: aCanvas [
 		padding: 10.
 	lb title: 'Shortcuts'.
 	self interactions do: [ :int | int renderOn: lb ].
-	lb onDemand.
+	lb onDemand."
 	"lb build."
 ]
 

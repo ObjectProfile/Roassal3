@@ -3,7 +3,7 @@ I a m the interaction builder
 "
 Class {
 	#name : #RSInteractionBuilder,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'interactions'
 	],

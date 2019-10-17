@@ -2,8 +2,8 @@
 I have basic information of RSControlsView
 "
 Class {
-	#name : #RSControlConfiguration,
-	#superclass : #RSObject,
+	#name : #TSControlConfiguration,
+	#superclass : #TSObject,
 	#instVars : [
 		'padding',
 		'maxScale',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #initialization }
-RSControlConfiguration >> initialize [
+TSControlConfiguration >> initialize [
 	super initialize.
 	self 
 		minScale: 0.04;
@@ -28,76 +28,76 @@ RSControlConfiguration >> initialize [
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> maxScale [
+TSControlConfiguration >> maxScale [
 	^ maxScale
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> maxScale: aNum [
+TSControlConfiguration >> maxScale: aNum [
 	maxScale := aNum
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> minScale [
+TSControlConfiguration >> minScale [
 	^ minScale
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> minScale: aNum [
+TSControlConfiguration >> minScale: aNum [
 	minScale := aNum
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> noBasicZoom [
+TSControlConfiguration >> noBasicZoom [
 	shouldUseBasicZoom := false.
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> noZoomToFitOnExtendChanged [
+TSControlConfiguration >> noZoomToFitOnExtendChanged [
 	zoomToFitOnExtent := false
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> noZoomToFitOnStart [
+TSControlConfiguration >> noZoomToFitOnStart [
 	zoomToFitOnStart := false.
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> padding [
+TSControlConfiguration >> padding [
 	^ padding
 ]
 
 { #category : #accessing }
-RSControlConfiguration >> padding: aMargin [
+TSControlConfiguration >> padding: aMargin [
 	padding := aMargin asMargin
 ]
 
 { #category : #testing }
-RSControlConfiguration >> shouldUseBasicZoom [
+TSControlConfiguration >> shouldUseBasicZoom [
 	^ shouldUseBasicZoom
 ]
 
 { #category : #testing }
-RSControlConfiguration >> shouldZoomToFitOnExtendChanged [
+TSControlConfiguration >> shouldZoomToFitOnExtendChanged [
 	^ zoomToFitOnExtent
 ]
 
 { #category : #testing }
-RSControlConfiguration >> shouldZoomToFitOnStart [
+TSControlConfiguration >> shouldZoomToFitOnStart [
 	^ zoomToFitOnStart
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> useBasicZoom [
+TSControlConfiguration >> useBasicZoom [
 	shouldUseBasicZoom := true.
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> useZoomToFitOnExtendChanged [
+TSControlConfiguration >> useZoomToFitOnExtendChanged [
 	zoomToFitOnExtent := true
 ]
 
 { #category : #configuration }
-RSControlConfiguration >> useZoomToFitOnStart [
+TSControlConfiguration >> useZoomToFitOnStart [
 	zoomToFitOnStart := true.
 ]
