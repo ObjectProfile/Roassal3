@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shapes'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #adding }

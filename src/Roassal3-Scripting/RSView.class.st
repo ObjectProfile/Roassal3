@@ -12,7 +12,7 @@ Class {
 		'edges',
 		'trCanvas'
 	],
-	#category : #'Roassal3-Graph'
+	#category : #'Roassal3-Scripting-Core'
 }
 
 { #category : #accessing }

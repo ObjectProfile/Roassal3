@@ -10,7 +10,7 @@ Class {
 		'baseRectangle',
 		'matrix'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #visiting }
@@ -130,6 +130,11 @@ TSBoundingShape >> postCopy [
 	self matrix: self matrix copy
 ]
 
+{ #category : #adding }
+TSBoundingShape >> renderOn: aCanvas [
+	aCanvas addNode: aCanvas
+]
+
 { #category : #matrix }
 TSBoundingShape >> rotateByDegrees: angle [
 	matrix rotateByDegrees: angle.
@@ -159,4 +164,16 @@ TSBoundingShape >> transform: aPoint [
 { #category : #accessing }
 TSBoundingShape >> width: aNumber [
 	self extent: aNumber @ self extent y
+]
+
+{ #category : #matrix }
+TSBoundingShape >> x: aNumber [
+	"recibes a number"
+	self position: aNumber @ self position y
+]
+
+{ #category : #matrix }
+TSBoundingShape >> y: aNumber [
+	"recibes a number"
+	self position: self position x @ aNumber
 ]

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'c'
 	],
-	#category : #'Roassal3-Tests'
+	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #running }

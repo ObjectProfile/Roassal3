@@ -4,7 +4,7 @@ Test for all the lines of trachel
 Class {
 	#name : #TSLinesTest,
 	#superclass : #TSCanvasTest,
-	#category : #'Roassal3-Tests'
+	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #running }

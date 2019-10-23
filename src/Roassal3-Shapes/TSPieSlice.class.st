@@ -13,7 +13,7 @@ Class {
 		'segmentSpacing',
 		'cornerRadii'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #accessing }

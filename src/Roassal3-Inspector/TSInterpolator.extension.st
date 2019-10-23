@@ -2,19 +2,19 @@ Extension { #name : #TSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
 TSInterpolator >> gtCanvasForInspector [
-	| canvas theme boxes pos rect line cp label loc |
+	| canvas theme boxes pos rect line cp label loc s |
  	canvas := TSCanvas new.
 	theme := Smalltalk ui theme.
 	canvas color: theme backgroundColor.
-	boxes := (1 to: 100) collect: [ :i |
+	s := TSScale linear domain: #(1 100); range: #(0 420).
+	boxes := (0 to: 99) collect: [ :i |
 		TSBox new
 			size: 40;
+			x: (s scale: (i / 10) asInteger) * 10 + 64;
+			y: (s scale: (i % 10) asInteger) * 10 + 64;
 			color: (theme caretColor alpha: 0.2);
+			resetBBox;
 			yourself ] as: TSGroup.
-	TSGridLayout new 
-		lineItemsCount: 10;
-		gapSize: 2; 
-		on: boxes.
 	rect := boxes encompassingRectangle.
 	pos := TSScale linear
 		domain: { 0@0. 1@1 };

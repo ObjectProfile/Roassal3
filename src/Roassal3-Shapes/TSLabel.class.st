@@ -13,7 +13,7 @@ Class {
 		'cachedHeight',
 		'cachedWidth'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #public }

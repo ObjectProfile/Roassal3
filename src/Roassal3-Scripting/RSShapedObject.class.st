@@ -10,7 +10,7 @@ Class {
 		'parent',
 		'shape'
 	],
-	#category : #'Roassal3-Graph'
+	#category : #'Roassal3-Scripting-Core'
 }
 
 { #category : #adding }

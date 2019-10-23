@@ -396,7 +396,7 @@ TSAthensMorph >> showRectanglesIfNecessary: shapes [
 	| box rect |
 	trachelCanvas showRectangles ifFalse: [ ^ self ].
 	
-	box := TSBox new
+	box := TSShape box
 		color: (Color blue alpha: 0.2).
 	shapes do: [ :shape | 
 		rect := shape encompassingRectangle.

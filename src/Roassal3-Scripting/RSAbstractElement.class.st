@@ -8,7 +8,7 @@ Class {
 		'shouldUpdateEdges',
 		'connectedEdges'
 	],
-	#category : #'Roassal3-Graph'
+	#category : #'Roassal3-Scripting-Core'
 }
 
 { #category : #edges }

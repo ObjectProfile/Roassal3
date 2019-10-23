@@ -8,7 +8,7 @@ Class {
 		'startPoint',
 		'endPoint'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #transforming }

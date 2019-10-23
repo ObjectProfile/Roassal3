@@ -1,0 +1,90 @@
+"
+My users can have edges and nodes useful to build graphs with roassal
+"
+Trait {
+	#name : #TContainer,
+	#category : #'Roassal3-Core'
+}
+
+{ #category : #'adding nodes edges' }
+TContainer >> add: aShape [
+	self
+		assert: aShape notNil
+		description: 'Nil cannot be added to a canvas'.
+	aShape 
+		renderOn: self;
+		addedIn: self.
+	^ aShape
+]
+
+{ #category : #'adding nodes edges' }
+TContainer >> addAll: aCollection [
+	"aCollection of shapes, a shape can be a line or can be a node"
+	aCollection do: [ :aShape | self add: aShape ]
+]
+
+{ #category : #'adding nodes edges' }
+TContainer >> addEdge: aShape [
+	self edges add: aShape.
+	^ aShape
+]
+
+{ #category : #'adding nodes edges' }
+TContainer >> addNode: aShape [
+	self nodes add: aShape.
+	^ aShape
+]
+
+{ #category : #accessing }
+TContainer >> edges [
+	^ self privateEdges
+		ifNil: [ | res |
+			self privateEdges: (res := TSGroup new).
+			res ]
+]
+
+{ #category : #accessing }
+TContainer >> nodes [ 
+	^ self privateNodes
+		ifNil: [ | res |
+			self privateNodes: (res := TSGroup new).
+			res ]
+]
+
+{ #category : #private }
+TContainer >> privateEdges [
+	^ self explicitRequirement
+]
+
+{ #category : #private }
+TContainer >> privateEdges: aTSGroup [
+	self explicitRequirement
+]
+
+{ #category : #private }
+TContainer >> privateNodes [
+	^ self explicitRequirement
+]
+
+{ #category : #private }
+TContainer >> privateNodes: aTSGroup [
+	self explicitRequirement
+]
+
+{ #category : #private }
+TContainer >> privateShapes [
+	^ self explicitRequirement
+]
+
+{ #category : #private }
+TContainer >> privateShapes: aCollection [
+	self explicitRequirement
+]
+
+{ #category : #accessing }
+TContainer >> shapes [ 
+	^ self privateShapes
+		ifNil: [ | res |
+			self privateShapes: (res := TSGroup new).
+			res ]
+]

@@ -4,6 +4,8 @@ I represent the basic canvas or paint area. I have a collection of shapes
 Class {
 	#name : #TSCanvas,
 	#superclass : #TSAttributableObject,
+	#traits : 'TContainer',
+	#classTraits : 'TContainer classTrait',
 	#instVars : [
 		'shapes',
 		'fixedShapes',
@@ -13,7 +15,9 @@ Class {
 		'color',
 		'morph',
 		'clearBackground',
-		'showRectangles'
+		'showRectangles',
+		'nodes',
+		'edges'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -159,7 +163,7 @@ TSCanvas >> initialize [
 	showRectangles := false.
 	shapes := TSGroup new.
 	fixedShapes := TSGroup new.
-	elements := TSGroup new.
+	nodes := TSGroup new.
 	edges := TSGroup new.
 	animations := OrderedCollection new.
 	clearBackground := true.
@@ -245,6 +249,26 @@ TSCanvas >> playAnimations [
 	shouldClean ifTrue: [ 
 		animations copy do: [ :animation |
 			animation hasCompleted ifTrue: [ animation remove ] ] ].
+]
+
+{ #category : #private }
+TSCanvas >> privateEdges [
+	^ edges
+]
+
+{ #category : #private }
+TSCanvas >> privateEdges: aTSGroup [
+	edges := aTSGroup
+]
+
+{ #category : #private }
+TSCanvas >> privateNodes [
+	^ nodes
+]
+
+{ #category : #private }
+TSCanvas >> privateNodes: aTSGroup [
+	nodes := aTSGroup
 ]
 
 { #category : #'shapes controling' }

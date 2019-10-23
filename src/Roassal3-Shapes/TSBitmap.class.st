@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'form'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #private }

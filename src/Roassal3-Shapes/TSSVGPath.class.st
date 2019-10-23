@@ -9,7 +9,7 @@ Class {
 		'segments',
 		'polygons'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #visiting }

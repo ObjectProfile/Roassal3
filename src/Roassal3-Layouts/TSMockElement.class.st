@@ -28,6 +28,11 @@ TSMockElement >> applyToRealElement [
 ]
 
 { #category : #accessing }
+TSMockElement >> canvas [
+	^ realElement canvas
+]
+
+{ #category : #accessing }
 TSMockElement >> charge [
 	^ charge
 ]
@@ -108,11 +113,6 @@ TSMockElement >> realElement: rtElement [
 { #category : #actions }
 TSMockElement >> translateTo: aPosition [
 	position := aPosition
-]
-
-{ #category : #accessing }
-TSMockElement >> view [
-	^ realElement view
 ]
 
 { #category : #accessing }

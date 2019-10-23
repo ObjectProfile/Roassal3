@@ -10,7 +10,7 @@ Class {
 		'attachPoint',
 		'controlPoints'
 	],
-	#category : #'Roassal3-Graph'
+	#category : #'Roassal3-Scripting-Core'
 }
 
 { #category : #'instance creation' }

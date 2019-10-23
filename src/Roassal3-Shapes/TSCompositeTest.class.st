@@ -4,7 +4,7 @@ I am test class for composite shapes in roassal
 Class {
 	#name : #TSCompositeTest,
 	#superclass : #TSTest,
-	#category : #'Roassal3-Tests'
+	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #tests }

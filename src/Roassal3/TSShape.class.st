@@ -12,7 +12,7 @@ Class {
 		'isFixed',
 		'encompassingRectangle'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Core'
 }
 
 { #category : #adding }
@@ -102,24 +102,6 @@ TSShape >> extent [
 	^ self encompassingRectangle extent
 ]
 
-{ #category : #'as yet unclassified' }
-TSShape >> gtCanvasForInspector [
-	| view copy |
-	view := TSCanvas new.
-	copy := self copy.
-	view addShape: copy.
-	view @ TSChessBackground.
-	^ view
-]
-
-{ #category : #'as yet unclassified' }
-TSShape >> gtInspectorCanvasIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Shape'];
-		initializeCanvas: [ self gtCanvasForInspector ]
-]
-
 { #category : #testing }
 TSShape >> hasBorder [
 	^ border notNil and: [ border width > 0 ].
@@ -174,11 +156,6 @@ TSShape >> isInACanvas [
 	^ parent notNil
 ]
 
-{ #category : #'as yet unclassified' }
-TSShape >> isRoassalElement [
-	^ false
-]
-
 { #category : #testing }
 TSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
@@ -198,11 +175,6 @@ TSShape >> model [
 { #category : #accessing }
 TSShape >> model: anObject [
 	^ self attributeAt: #model put: anObject.
-]
-
-{ #category : #'as yet unclassified' }
-TSShape >> newAnimation [
-	^ parent newAnimation
 ]
 
 { #category : #accessing }
@@ -245,11 +217,6 @@ TSShape >> path: aPath [
 	path := aPath
 ]
 
-{ #category : #'as yet unclassified' }
-TSShape >> popup [
-	self @ TSPopup.
-]
-
 { #category : #copying }
 TSShape >> postCopy [
 	self 
@@ -276,6 +243,11 @@ TSShape >> remove [
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ]. 
 	parent removeShape: self
+]
+
+{ #category : #adding }
+TSShape >> renderOn: aCanvas [
+	self subclassResponsibility
 ]
 
 { #category : #initialization }

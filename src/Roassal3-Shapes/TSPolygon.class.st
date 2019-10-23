@@ -8,7 +8,7 @@ Class {
 		'points',
 		'radius'
 	],
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Bounding'
 }
 
 { #category : #utilities }

@@ -4,7 +4,7 @@ TSBezier represents a bezier lines of one and 2 control points
 Class {
 	#name : #TSBezier,
 	#superclass : #TSAbstractControlPointsLine,
-	#category : #'Roassal3-Shapes-Core'
+	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #visiting }

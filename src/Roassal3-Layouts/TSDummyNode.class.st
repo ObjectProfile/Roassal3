@@ -69,11 +69,6 @@ TSDummyNode >> translateTo: aPoint [
 ]
 
 { #category : #accessing }
-TSDummyNode >> view [
-	^ RSView new
-]
-
-{ #category : #accessing }
 TSDummyNode >> width [
 	
 	^0
