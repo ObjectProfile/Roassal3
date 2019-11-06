@@ -35,7 +35,7 @@ TSPopup class >> reset [
 TSPopup class >> text: anObject [
 	| inst |
 	inst := self new.
-	inst shapeBuilder text: anObject.
+	inst shapeBuilder textBlock: anObject.
 	^ inst
 ]
 

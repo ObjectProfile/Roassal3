@@ -446,3 +446,67 @@ RSLayoutExamples >> example14ClassHierarchy [
 	v @ TSControlsCanvas.
 	^ v
 ]
+
+{ #category : #lines }
+RSLayoutExamples >> example15SimpleClassHierarchy [
+	<script: 'self new example15SimpleClassHierarchy open'>
+	| c methods |
+	c := TSCanvas new.
+
+	GoferOperation withAllSubclassesDo: [ :cls |
+		| composite label |
+		methods := cls methods collect: [ :m | TSBox new color: Color red; size: 5; model: m; yourself ] as: TSGroup.
+		methods @ (TSPopup text: #selector).
+		
+		TSGridLayout on: methods.
+		composite := TSComposite new.
+		label := TSLabel new text: cls name.
+		RSLocation new above; move: label on: methods.
+		composite shapes:  methods, { label }.
+		
+		composite color: Color gray.
+		composite model: cls.
+		composite @ TSAnimatedPopup @ TSDraggable.
+		composite padding: 10.
+		c add: composite ].
+
+	TSEdgeBuilder line
+		canvas: c;
+		withVerticalAttachPoint;
+		color: Color blue;
+		connectFrom: #superclass.
+
+	TSTreeLayout on: c nodes.
+
+	"Making sure we have zooming"
+	c @ TSControlsCanvas.
+	^ c 
+]
+
+{ #category : #lines }
+RSLayoutExamples >> example16SimpleClassHierarchy [
+	<script: 'self new example16SimpleClassHierarchy open'>
+	| c |
+	c := TSCanvas new.
+
+	Collection withAllSubclassesDo: [ :cls |
+		| box |
+		box := TSBox new.
+		box model: cls.
+		box height: (cls numberOfMethods max: 5).
+		box width: ((cls instVarNames size * 4) max: 5).
+		box @ TSPopup @ TSDraggable.
+		c add: box.
+		 ].
+
+	TSEdgeBuilder line
+		canvas: c;
+		withVerticalAttachPoint;
+		color: Color blue;
+		connectFrom: #superclass.
+
+	TSTreeLayout on: c nodes.
+
+	c @ TSControlsCanvas.
+	^ c 
+]

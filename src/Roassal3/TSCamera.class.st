@@ -97,7 +97,7 @@ TSCamera >> scale: aNumber [
 	oldScale := scale.
 	scale := aNumber.
 	self canvas announce: [ TSScaleChangedEvent new
-		shape: self canvas;
+		canvas: self canvas;
 		oldScale: oldScale;
 		newScale: aNumber ]
 ]

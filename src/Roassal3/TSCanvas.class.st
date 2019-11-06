@@ -55,6 +55,16 @@ TSCanvas >> animations [
 	^ animations
 ]
 
+{ #category : #announcer }
+TSCanvas >> announce: anEventOrAnEventClass [
+	"Send an event"
+	| theEventToSend |
+	announcer ifNil: [ ^ self ].
+	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend canvas: self.
+	announcer announce: theEventToSend.
+]
+
 { #category : #accessing }
 TSCanvas >> basicRectangle [
 	^ Rectangle origin: 0@0 extent: self extent

@@ -29,6 +29,17 @@ TSShape >> addedIn: aCanvas [
 	parent announce: evt.
 ]
 
+{ #category : #announcer }
+TSShape >> announce: anEventOrAnEventClass [
+	"Send an event"
+	| theEventToSend |
+	announcer ifNil: [ ^ self ].
+	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend canvas: self canvas.
+	theEventToSend shape: self.
+	announcer announce: theEventToSend.
+]
+
 { #category : #converting }
 TSShape >> asMarker [
 	^ TSMarker new shape: self

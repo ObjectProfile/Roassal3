@@ -26,12 +26,7 @@ TSAttributableObject >> addInteraction: anInteractionClassOrInstance [
 { #category : #announcer }
 TSAttributableObject >> announce: anEventOrAnEventClass [
 	"Send an event"
-	| theEventToSend |
-	announcer ifNil: [ ^ self ].
-	theEventToSend := anEventOrAnEventClass value asAnnouncement.
-	theEventToSend canvas: self canvas.
-	theEventToSend shape: self.
-	announcer announce: theEventToSend.
+	self subclassResponsibility
 ]
 
 { #category : #announcer }
