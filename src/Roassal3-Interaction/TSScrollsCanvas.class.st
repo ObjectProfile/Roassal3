@@ -82,7 +82,7 @@ TSScrollsCanvas >> initializeShape [
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: self scrollColor ].
-			self removeRectanglesFor: evt view.
+			self removeRectanglesFor: evt canvas.
 			vertical parent addAnimation: animation ] ]
 ]
 
@@ -102,7 +102,7 @@ TSScrollsCanvas >> moveScroll: evt [
 	
 	camera := evt camera.
 	camera position: position + shapesRect origin.
-	correct := self correctCameraPosition: evt view.
+	correct := self correctCameraPosition: evt canvas.
 	correct = camera position ifFalse: [ 
 		camera position: correct.
 		self updateBasicScrollbars. ].

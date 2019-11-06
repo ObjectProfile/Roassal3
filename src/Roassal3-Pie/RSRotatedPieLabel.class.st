@@ -14,7 +14,7 @@ Class {
 { #category : #hooks }
 RSRotatedPieLabel >> onElement: view [
 	| lines update |
-	lines := RSEdgeBuilder polyline
+	lines := TSEdgeBuilder polyline
 		dashArray: #(4);
 		edgesOn: pieBuilder labelElements.
 	view addAll: lines.

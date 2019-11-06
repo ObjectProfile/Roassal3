@@ -74,7 +74,7 @@ RSTorchUMLClassRenderer >> methodShape [
 	^ methodShape ifNil: [ methodShape := RSShapeBuilder box 
 		width: 20;
 		height: [ :met | met linesOfCode * 5 + 1];
-		interactionDo: [:i | i popup multiline] ]
+		popup ]
 ]
 
 { #category : #'accessing - shapes' }

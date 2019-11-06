@@ -16,8 +16,8 @@ RSAlignmentTest >> setUp [
 { #category : #tests }
 RSAlignmentTest >> testFromBottom [
 	| es |
-	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
-	align elements: es.
+	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	align shapes: es.
 	TSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ 150.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
@@ -32,8 +32,8 @@ RSAlignmentTest >> testFromBottom [
 { #category : #tests }
 RSAlignmentTest >> testFromLeft [
 	| es |
-	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
-	align elements: es.
+	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	align shapes: es.
 	TSVerticalLineLayout on: es.
 	es second translateBy: -150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 -150.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
@@ -48,24 +48,21 @@ RSAlignmentTest >> testFromLeft [
 { #category : #tests }
 RSAlignmentTest >> testFromRight [
 	| es |
-	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
-	align elements: es.
+	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	align shapes: es.
 	TSVerticalLineLayout on: es.
 	es second translateBy: 150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
 	self assert: align rightMostElement equals: es second.
 	align right.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
-"	
-	RTView new addAll: es; inspect.
-	"
 ]
 
 { #category : #tests }
 RSAlignmentTest >> testFromTop [
 	| es |
-	es := (RSShapeBuilder box size: #yourself) elementsOn: (10 to: 100 by: 10).
-	align elements: es.
+	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	align shapes: es.
 	TSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ -50.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
@@ -76,11 +73,11 @@ RSAlignmentTest >> testFromTop [
 
 { #category : #tests }
 RSAlignmentTest >> testHasElement [
-	self deny: align hasElement.
-	align elements: (Array with: RSElement new).
-	self assert: align hasElement.
-	align elements: #().
-	self deny: align hasElement.
+	self deny: align hasShape.
+	align shapes: (Array with: TSBox new).
+	self assert: align hasShape.
+	align shapes: #().
+	self deny: align hasShape.
 ]
 
 { #category : #tests }

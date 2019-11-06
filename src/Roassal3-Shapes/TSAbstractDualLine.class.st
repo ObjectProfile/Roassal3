@@ -70,3 +70,11 @@ TSAbstractDualLine >> translateTo: delta [
 	center := (startPoint + endPoint ) /2.
 	self translateBy: delta - center
 ]
+
+{ #category : #update }
+TSAbstractDualLine >> update [
+	self 
+		startPoint: (attachPoint startingPointOf: self);
+		endPoint: (attachPoint endingPointOf: self);
+		notifyExtentChanged.
+]

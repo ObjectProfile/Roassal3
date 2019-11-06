@@ -132,6 +132,7 @@ TSLabel >> fontSize: integer [
 TSLabel >> initialize [
 	| defaultFont |
 	super initialize.
+	paint := Color black.
 	text := nil.
 	defaultFont := self class defaultFont.
 	fontSize := defaultFont pixelSize.

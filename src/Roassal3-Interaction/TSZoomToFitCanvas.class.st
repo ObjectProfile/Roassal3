@@ -60,7 +60,7 @@ TSZoomToFitCanvas >> onShape: aCanvas [
 { #category : #'private - events' }
 TSZoomToFitCanvas >> processKeyUp: evt [
 	evt keyValue == 49 "Character space"  ifFalse:  [ ^ self ].
-	self animatedZoomToFit: evt view
+	self animatedZoomToFit: evt canvas
 ]
 
 { #category : #rendering }

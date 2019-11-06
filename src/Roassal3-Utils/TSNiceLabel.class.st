@@ -2,8 +2,8 @@
 I am an utility class for RTLabelGenerator
 "
 Class {
-	#name : #RSNiceLabel,
-	#superclass : #RSObject,
+	#name : #TSNiceLabel,
+	#superclass : #TSObject,
 	#instVars : [
 		'min',
 		'max',
@@ -14,27 +14,27 @@ Class {
 }
 
 { #category : #accessing }
-RSNiceLabel >> max [
+TSNiceLabel >> max [
 	^ max
 ]
 
 { #category : #accessing }
-RSNiceLabel >> max: aNumber [
+TSNiceLabel >> max: aNumber [
 	max := aNumber
 ]
 
 { #category : #accessing }
-RSNiceLabel >> min [
+TSNiceLabel >> min [
 	^ min
 ]
 
 { #category : #accessing }
-RSNiceLabel >> min: aNumber [
+TSNiceLabel >> min: aNumber [
 	min := aNumber
 ]
 
 { #category : #accessing }
-RSNiceLabel >> numberOfTicks [
+TSNiceLabel >> numberOfTicks [
 	| ticks |
 	min < 0 ifTrue: [ 
 		ticks := max < 0 ifTrue: [ (max - min) abs ] ifFalse: [ max+min abs  ]
@@ -45,7 +45,7 @@ RSNiceLabel >> numberOfTicks [
 ]
 
 { #category : #printing }
-RSNiceLabel >> printOn: aStream [
+TSNiceLabel >> printOn: aStream [
 	| x |
 	aStream 
 		nextPutAll: '(Score: ';
@@ -61,21 +61,21 @@ RSNiceLabel >> printOn: aStream [
 ]
 
 { #category : #accessing }
-RSNiceLabel >> score [
+TSNiceLabel >> score [
 	^ score
 ]
 
 { #category : #accessing }
-RSNiceLabel >> score: aNumber [
+TSNiceLabel >> score: aNumber [
 	score := aNumber
 ]
 
 { #category : #accessing }
-RSNiceLabel >> step [
+TSNiceLabel >> step [
 	^ step
 ]
 
 { #category : #accessing }
-RSNiceLabel >> step: aNumber [
+TSNiceLabel >> step: aNumber [
 	step := aNumber
 ]

@@ -105,7 +105,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 	pie shape 
 		onElement;
 		color: colors;
-		border: (TSBorder new);
+		withBorder;
 		onModel;
 		segmentSpacing: 5;
 		innerRadius: 50;
@@ -712,7 +712,7 @@ RSPieExamples >> example20AddingRemoving [
 	view add: (RSShapeBuilder box
 		extent: 100@200;
 		paint: nil;
-		border: (TSBorder new);
+		withBorder;
 		position: 300@100 ) element.
 		
 	label := RSShapeBuilder label
@@ -904,7 +904,7 @@ RSPieExamples >> example23RotatedAnimation [
 		when: TSMouseClick do: [ [ animation toggle ] ].
 	pie label text: #basename.
 	pie build.
-	lines := RSEdgeBuilder polyline
+	lines := TSEdgeBuilder polyline
 		border: (TSBorder new dashArray: #(3));
 		edgesOn: pie labelElements.
 	view addAll: lines.

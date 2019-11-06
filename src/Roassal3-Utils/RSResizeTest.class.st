@@ -2,8 +2,8 @@ Class {
 	#name : #RSResizeTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'elements',
-		'resize'
+		'resize',
+		'shapes'
 	],
 	#category : #'Roassal3-Utils-Tests'
 }
@@ -11,16 +11,20 @@ Class {
 { #category : #running }
 RSResizeTest >> setUp [
 	super setUp.
-	elements := (RSShapeBuilder box height: #yourself; width: [ :o | o + 1 ]) elementsOn: (1 to: 3).
+	shapes := (1 to: 3) collect: [ :o | 
+		TSBox new
+			height: o;
+			width: o + 1;
+			yourself ].
 	resize := RSResize new.
-	resize elements: elements.
+	resize shapes: shapes.
 ]
 
 { #category : #tests }
 RSResizeTest >> testBiggestElement [
-	self assert: resize biggestElement equals: elements last.
-	resize useBiggestElement.
-	self assert: resize fixedElement equals: elements last.
+	self assert: resize biggestShape equals: shapes last.
+	resize useBiggestShape.
+	self assert: resize fixedShape equals: shapes last.
 ]
 
 { #category : #tests }
@@ -30,39 +34,39 @@ RSResizeTest >> testBiggestExtent [
 
 { #category : #tests }
 RSResizeTest >> testHighestElement [
-	self assert: resize highestElement equals: elements last.
+	self assert: resize highestShape equals: shapes last.
 
 ]
 
 { #category : #tests }
 RSResizeTest >> testSameHeight [
-	resize fixedElement: elements second.
+	resize fixedShape: shapes second.
 	resize sameHeight.
-	self assert: (elements collect: #extent) sorted asArray equals: (Array with: (2.0@2.0) with: (3.0@2.0) with: (4.0@2.0))
+	self assert: (shapes collect: #extent) sorted asArray equals: (Array with: (2.0@2.0) with: (3.0@2.0) with: (4.0@2.0))
 ]
 
 { #category : #tests }
 RSResizeTest >> testSameSize [
-	resize fixedElement: elements second.
+	resize fixedShape: shapes second.
 	resize sameSize.
-	self assert: (elements collect: #extent) asSet asArray equals: (Array with: (3.0@2.0))
+	self assert: (shapes collect: #extent) asSet asArray equals: (Array with: (3.0@2.0))
 ]
 
 { #category : #tests }
 RSResizeTest >> testSameSizeWithoutFixedElement [
 	resize sameSize.
-	self assert: (elements collect: #extent) asSet asArray equals: (Array with: (4.0 @ 3.0))
+	self assert: (shapes collect: #extent) asSet asArray equals: (Array with: (4.0 @ 3.0))
 ]
 
 { #category : #tests }
 RSResizeTest >> testSameWidth [
-	resize fixedElement: elements second.
+	resize fixedShape: shapes second.
 	resize sameWidth.
-	self assert: (elements collect: #extent) sorted asArray equals: (Array with: (3.0@1.0) with:(3.0@2.0) with: (3.0@3.0))
+	self assert: (shapes collect: #extent) sorted asArray equals: (Array with: (3.0@1.0) with:(3.0@2.0) with: (3.0@3.0))
 ]
 
 { #category : #tests }
 RSResizeTest >> testWidestElement [
-	self assert: resize widestElement equals: elements last.
+	self assert: resize widestElement equals: shapes last.
 
 ]

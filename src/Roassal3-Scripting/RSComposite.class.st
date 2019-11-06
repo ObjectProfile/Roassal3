@@ -41,13 +41,6 @@ RSComposite >> children [
 	^ children
 ]
 
-{ #category : #accessing }
-RSComposite >> elementFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ children ifNotNil: [ children elementFromModel: anObject ]
-
-]
-
 { #category : #testing }
 RSComposite >> hasChildren [
 	^ children notNil and: [children notEmpty]
@@ -57,6 +50,13 @@ RSComposite >> hasChildren [
 RSComposite >> removeElement: anElement [
 	children remove: anElement ifAbsent: [ ].
 	anElement shape remove.
+]
+
+{ #category : #accessing }
+RSComposite >> shapeFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ children ifNotNil: [ children shapeFromModel: anObject ]
+
 ]
 
 { #category : #accessing }

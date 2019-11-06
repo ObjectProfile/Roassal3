@@ -13,7 +13,7 @@ Class {
 
 { #category : #edges }
 RSAbstractElement >> addConnectedEdge: anEdge [
-	[ anEdge class == RSEdge ] assert.
+	[ anEdge isEdge ] assert.
 	(self connectedEdges includes: anEdge) 
 		ifFalse: [ self connectedEdges add: anEdge ]
 ]

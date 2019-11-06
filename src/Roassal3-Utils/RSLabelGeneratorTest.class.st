@@ -11,8 +11,8 @@ Class {
 RSLabelGeneratorTest >> setUp [
 	| nice |
 	super setUp.
-	nice := RSNiceStepSizeGenerator new.
-	lg := RSLabelGenerator nice: nice
+	nice := TSNiceStepSizeGenerator new.
+	lg := TSLabelGenerator nice: nice
 ]
 
 { #category : #tests }

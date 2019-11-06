@@ -92,7 +92,7 @@ RSShapeExamples >> example03LinePath [
 			point value: r.
 			].
 		 ] ].
-	line := RSEdgeBuilder linePath
+	line := TSEdgeBuilder linePath
 		borderColor: [:m | m alpha: 0.4];
 		svgPath: [path];
 		width: 4;
@@ -117,7 +117,7 @@ RSShapeExamples >> example04LineDashes [
 
 	| v line |
 	v := RSView new.
-	line := RSEdgeBuilder line
+	line := TSEdgeBuilder line
 		width: 1.
 	"no dashes no gaps"
 	v add: (line from: -15@ 1; to: 15@ 1; edge).
@@ -146,7 +146,7 @@ RSShapeExamples >> example05CapStyles [
 
 	| v line dot d1 d2 ed styles |
 	v := RSView new.
-	line := RSEdgeBuilder line
+	line := TSEdgeBuilder line
 		color: Color lightGray;
 		width: 20.
 	dot := RSShapeBuilder circle
@@ -192,7 +192,7 @@ RSShapeExamples >> example06JoinStyles [
 		point value: b.
 		 ] ].
 	
-	line := RSEdgeBuilder linePath
+	line := TSEdgeBuilder linePath
 		svgPath: [ path ];
 		borderColor: Color gray;
 		width: 25.
@@ -348,7 +348,7 @@ RSShapeExamples >> example11ClassTree [
 			group ].
 	elements := shapeWithTitle elementsOn: Collection withAllSubclasses.
 	v addAll: elements.
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		view: v;
 		objects: Collection withAllSubclasses;
 		connectFrom: #superclass.
@@ -567,13 +567,13 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		to: 50;
 		elements: v elements;
 		normalize: #numberOfMethods.
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		color: Color lightGray;
 		elements: v elements;
 		view: v;
 		connectFrom: #superclass.
 	TSForceBasedLayout on: v elements.
-	RSEdgeBuilder multiBezier
+	TSEdgeBuilder multiBezier
 		borderColor: (Color blue alpha: 0.1);
 		elements: v elements;
 		view: v;
@@ -582,7 +582,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		connectToAll: #dependentClasses.
 	
 	composite := RSShapeBuilder composite 
-		border: (TSBorder new);
+		withBorder;
 		shapes: [ | labels |
 			labels := RSShapeBuilder label
 				elementsOn: { 'Circle = classes, size = number of methods; gray links = inheritance;'.
@@ -719,7 +719,7 @@ RSShapeExamples >> example21SpockLizard [
 	('spock' -> 'rock').
 	('rock' -> 'scissors')}.
 	color := TSScale category20c.
-	RSEdgeBuilder bezier
+	TSEdgeBuilder bezier
 		color: color;
 		controlPoints: [ :m | 
 			[ :a :b | 
@@ -768,7 +768,7 @@ RSShapeExamples >> example22ScaleEvents [
 			TSGroup with: (box elementOn: l) with: l].
 	v addAll: (sb elementsOn: ArrayedCollection withAllSubclasses).
 	v @ TSControlsCanvas.
-	RSEdgeBuilder orthoHorizontal
+	TSEdgeBuilder orthoHorizontal
 		markerEnd: (TSMarker new 
 			offset: 6;
 			shape: (RSShapeBuilder triangle 
@@ -798,7 +798,7 @@ RSShapeExamples >> example24Highlightable [
 	l := TSLabeled new.
 	label := RSShapeBuilder label.
 	boxShape := RSShapeBuilder box
-		border: TSBorder new.
+		withBorder.
 	composite := RSShapeBuilder composite shapes: [ :m |
 		| g title box |
 		g := TSGroup new.
@@ -853,7 +853,7 @@ packageElements @ high.
 v := RSView new.
 v addAll: packageElements.
 
-RSEdgeBuilder bimetricLine
+TSEdgeBuilder bimetricLine
 		view: v;
 		objects: packages;
 		widthFrom:
@@ -930,7 +930,7 @@ RSShapeExamples >> example28MultilineLabel [
 		padding: 10;
 		interactionDo: [:i | i draggable; popup ].
 	elements := shape elementsOn: TSShape withAllSubclasses.
-	RSEdgeBuilder orthoVertical
+	TSEdgeBuilder orthoVertical
 		withVerticalAttachPoint;
 		view: v;
 		elements: elements;
@@ -972,7 +972,7 @@ RSShapeExamples >> example29AntAnimation [
 	elements := shape elementsOn: models.
 	v addAll: elements.
 	
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		color: Color white;
 		withVerticalAttachPoint;
 		view: v;
@@ -1048,7 +1048,7 @@ RSShapeExamples >> example31BasicGrapher [
 		edgeOn: nil.
 	es := RSShapeBuilder circle
 		interactionDo: [ :i | i popup; browseable ];
-		border: TSBorder new;
+		withBorder;
 		color: TSColorPalette sequential orrd9;
 		elementsOn: classes.
 	v addAll: es.
@@ -1076,7 +1076,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	labeled := TSLabeled new.
 	labeled location middle.
 	shape := RSShapeBuilder box
-		border: TSBorder new;
+		withBorder;
 		@ labeled;
 		popup;draggable;
 		size:50.

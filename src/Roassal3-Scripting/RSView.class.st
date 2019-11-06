@@ -18,7 +18,7 @@ Class {
 { #category : #accessing }
 RSView >> add: anElementOrAnEdge [
 	"Add a single roassal element to a view"
-
+	true ifTrue: [ ^ self ].
 	self
 		assert: [ anElementOrAnEdge isRoassalElement ]
 		description: 'Only trachel shapes or Roassal elements can be added to a view'.
@@ -70,29 +70,8 @@ RSView >> edges [
 ]
 
 { #category : #accessing }
-RSView >> elementFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements elementFromModel: anObject
-
-]
-
-{ #category : #accessing }
 RSView >> elements [
 	^ TSGroup withAll: elements
-]
-
-{ #category : #accessing }
-RSView >> elementsFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements elementsFromModel: anObject
-
-]
-
-{ #category : #accessing }
-RSView >> elementsFromModels: objects [
-	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
-	^ elements elementsFromModels: objects
-
 ]
 
 { #category : #inspector }
@@ -164,4 +143,25 @@ RSView >> removeElement: anElement [
 RSView >> setCanvas: aTrachelCanvas [
 	trCanvas := aTrachelCanvas.
 	trCanvas view: self.
+]
+
+{ #category : #accessing }
+RSView >> shapeFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ elements shapeFromModel: anObject
+
+]
+
+{ #category : #accessing }
+RSView >> shapesFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ elements shapesFromModel: anObject
+
+]
+
+{ #category : #accessing }
+RSView >> shapesFromModels: objects [
+	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	^ elements shapesFromModels: objects
+
 ]

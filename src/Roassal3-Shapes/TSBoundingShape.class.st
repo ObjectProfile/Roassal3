@@ -8,7 +8,9 @@ Class {
 	#classTraits : 'TPositionable classTrait',
 	#instVars : [
 		'baseRectangle',
-		'matrix'
+		'matrix',
+		'connectedEdges',
+		'shouldUpdateEdges'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -16,6 +18,13 @@ Class {
 { #category : #visiting }
 TSBoundingShape >> accept: visitor [
 	visitor visitBoundingShape: self
+]
+
+{ #category : #edges }
+TSBoundingShape >> addConnectedEdge: anEdge [
+	[ anEdge isEdge ] assert.
+	(self connectedEdges includes: anEdge) 
+		ifFalse: [ self connectedEdges add: anEdge ]
 ]
 
 { #category : #accessing }
@@ -31,6 +40,13 @@ TSBoundingShape >> computeEncompassingRectangle [
 		collect: [ :s | matrix transform: (s value: rect) ].
 	^ Rectangle encompassing: points.
 	
+]
+
+{ #category : #edges }
+TSBoundingShape >> connectedEdges [
+	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
+	connectedEdges ifNil: [ connectedEdges := TSGroup new ].
+	^ connectedEdges
 ]
 
 { #category : #accessing }
@@ -57,6 +73,11 @@ TSBoundingShape >> geometry [
 		corner: rect corner
 ]
 
+{ #category : #testing }
+TSBoundingShape >> hasEdges [
+	^ connectedEdges notNil
+]
+
 { #category : #accessing }
 TSBoundingShape >> height: aNumber [
 	self extent: self extent x @ aNumber
@@ -69,16 +90,29 @@ TSBoundingShape >> includesPoint: aPoint [
 	^ self baseRectangle containsPoint: invertedPoint.
 ]
 
+{ #category : #edges }
+TSBoundingShape >> incomingEdges [
+	"Return the list of incoming edges from the node"
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e to == self ]
+]
+
 { #category : #initialization }
 TSBoundingShape >> initialize [
 	super initialize.
-	self initializeMatrix.
+	self initializeMatrix; updateEdgesON.
 	baseRectangle := 0@0 corner: 0@0.
 ]
 
 { #category : #initialization }
 TSBoundingShape >> initializeMatrix [
 	matrix := AthensAffineTransform new
+]
+
+{ #category : #edges }
+TSBoundingShape >> isDirectlyConnectedTo: anElement [
+	connectedEdges ifNil: [ ^ false ].
+	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
 ]
 
 { #category : #actions }
@@ -113,6 +147,13 @@ TSBoundingShape >> matrixDo: aBlock [
 	self resetBBox.
 ]
 
+{ #category : #edges }
+TSBoundingShape >> outgoingEdges [
+	"Return the list of outgoing edges from the node"
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e from == self ]
+]
+
 { #category : #matrix }
 TSBoundingShape >> position [ 
 	^ matrix translation
@@ -122,6 +163,7 @@ TSBoundingShape >> position [
 TSBoundingShape >> position: aPoint [
 	matrix translation: aPoint.
 	self resetBBox.
+	self updateConnectedEdges.
 ]
 
 { #category : #copying }
@@ -130,9 +172,21 @@ TSBoundingShape >> postCopy [
 	self matrix: self matrix copy
 ]
 
+{ #category : #edges }
+TSBoundingShape >> removeConnectedEdge: anEdge [
+	[  anEdge isEdge ] assert.
+	self connectedEdges remove: anEdge ifAbsent: [ ]
+]
+
+{ #category : #edges }
+TSBoundingShape >> removeConnectedEdges [
+	"Remove all the edges connected (incoming and outgoing)."
+	self connectedEdges copy do: [ :edge | edge remove ]
+]
+
 { #category : #adding }
 TSBoundingShape >> renderOn: aCanvas [
-	aCanvas addNode: aCanvas
+	aCanvas addNode: self
 ]
 
 { #category : #matrix }
@@ -150,6 +204,11 @@ TSBoundingShape >> scaleBy: scale [
 	matrix scaleBy: scale
 ]
 
+{ #category : #testing }
+TSBoundingShape >> shouldUpdateEdges [
+	^ shouldUpdateEdges and: [ connectedEdges notNil ]
+]
+
 { #category : #accessing }
 TSBoundingShape >> size: anInteger [
 	self extent: anInteger asPoint
@@ -159,6 +218,22 @@ TSBoundingShape >> size: anInteger [
 TSBoundingShape >> transform: aPoint [
 	"useful for attachpoints"
 	^ matrix transform: aPoint
+]
+
+{ #category : #edges }
+TSBoundingShape >> updateConnectedEdges [
+	self shouldUpdateEdges ifFalse: [ ^ self ].
+	self connectedEdges do: [ :edge | edge update ]
+]
+
+{ #category : #edges }
+TSBoundingShape >> updateEdgesOFF [
+	shouldUpdateEdges := false
+]
+
+{ #category : #edges }
+TSBoundingShape >> updateEdgesON [
+	shouldUpdateEdges := true
 ]
 
 { #category : #accessing }

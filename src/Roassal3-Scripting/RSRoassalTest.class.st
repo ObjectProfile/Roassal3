@@ -38,36 +38,12 @@ RSRoassalTest >> testCommands [
 	
 ]
 
-{ #category : #'tests - elements' }
-RSRoassalTest >> testHasEdges [
-	| e1 e2 |
-	e1 := RSElement new.
-	e2 := RSElement new.
-	self deny: e1 hasEdges.
-	self deny: e2 hasEdges.
-	RSEdge new from: e1; to: e2.
-	self assert: e1 hasEdges.
-	self assert: e2 hasEdges.
-	self assert: e1 connectedEdges size equals: 1.
-]
-
 { #category : #'tests - abstract' }
 RSRoassalTest >> testShapeDNU [
 	| shape |
 	shape := RSShapeBuilder box.
 	shape size: 100.
 	self should: [ shape foo ] raise: Error
-]
-
-{ #category : #tests }
-RSRoassalTest >> testViewBasic [
-	| v e |
-	v := RSView new.
-	self assert: v canvas numberOfShapes equals: 0.
-	e := RSShapeBuilder box element.
-	v add: e.
-	self assert: v canvas numberOfShapes equals: 1.
-	v open delete.
 ]
 
 { #category : #'tests - abstract' }

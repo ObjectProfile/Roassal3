@@ -3,36 +3,36 @@ I am base class for RSAlignment and RSResize
 "
 Class {
 	#name : #RSAbstractElementHandling,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
-		'elements',
-		'fixedElement'
+		'shapes',
+		'fixedShape'
 	],
 	#category : #'Roassal3-Utils-PositionAndResize'
 }
 
 { #category : #accessing }
-RSAbstractElementHandling >> elements [
-	^ elements
+RSAbstractElementHandling >> fixedShape [
+	^ fixedShape
 ]
 
 { #category : #accessing }
-RSAbstractElementHandling >> elements: someElements [
-	elements := someElements asGroup
-]
-
-{ #category : #accessing }
-RSAbstractElementHandling >> fixedElement [
-	^ fixedElement
-]
-
-{ #category : #accessing }
-RSAbstractElementHandling >> fixedElement: anElement [
-	"Designate a particular element for which all the other will be aligned against"
-	fixedElement := anElement
+RSAbstractElementHandling >> fixedShape: aShape [
+	"Designate a particular shape for which all the other will be aligned against"
+	fixedShape := aShape
 ]
 
 { #category : #'private - configuration' }
-RSAbstractElementHandling >> ifNoFixedElementThen: aBlock [
-	fixedElement ifNil: [ aBlock value  ]
+RSAbstractElementHandling >> ifNoFixedShapeThen: aBlock [
+	fixedShape ifNil: [ aBlock value  ]
+]
+
+{ #category : #accessing }
+RSAbstractElementHandling >> shapes [
+	^ shapes
+]
+
+{ #category : #accessing }
+RSAbstractElementHandling >> shapes: someShapes [
+	shapes := someShapes asGroup
 ]

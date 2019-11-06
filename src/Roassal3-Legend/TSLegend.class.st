@@ -3,7 +3,7 @@ I am an handy class to build legend in a visualization
 "
 Class {
 	#name : #TSLegend,
-	#superclass : #RSAbstractViewBuilder,
+	#superclass : #TSAbstractContainerBuilder,
 	#instVars : [
 		'layout',
 		'defaultLabel',
@@ -12,63 +12,47 @@ Class {
 		'defaultBox',
 		'location',
 		'menuShape',
-		'defaultBoldText'
+		'defaultBoldText',
+		'legendBlock'
 	],
 	#category : #'Roassal3-Legend-Core'
 }
 
 { #category : #hooks }
-TSLegend >> basicRenderIn: aView [ 
+TSLegend >> basicRenderIn: aCanvas [
 	| legend |
-	legend := shape element.
-	location move: legend on: aView elements.
-	aView add: legend.
-]
-
-{ #category : #'public - composite' }
-TSLegend >> composite: refShape text: textShape layout: aLayout [
-	^ RSShapeBuilder composite shapes: [ :m| | targetShape g text |
-		targetShape := refShape elementOn: m.
-		text := textShape elementOn: m.
-		g := TSGroup new.
-		g add: targetShape; add: text.
-		aLayout on: g.
-		g ].
-	
+	legend := self legend.
+	location move: legend on: aCanvas shapes.
+	aCanvas addShape: legend.
 ]
 
 { #category : #'public - specific' }
-TSLegend >> custom: anObject shape: aShape [
-	| element |
+TSLegend >> customText: anObject shape: aShape [
+	| shape |
 	"general propuse, you can add and define anything in aShape to be a legend"
-	element := aShape elementOn: anObject.
-	elements add: element.
-	^ element.
+	shape := aShape copy text: anObject asString.
+	shapes add: shape.
+	^ shape.
 ]
 
 { #category : #accessing }
 TSLegend >> defaultBoldText [
-	^ defaultBoldText ifNil: [ defaultBoldText := RSShapeBuilder label 
-		uniqueCommands; bold ].
+	^ defaultBoldText ifNil: [ defaultBoldText := TSLabel new bold ].
 ]
 
 { #category : #accessing }
 TSLegend >> defaultBox [
-	^ defaultBox ifNil: [ defaultBox := RSShapeBuilder box 
-		uniqueCommands;
-		size: 15. ].
+	^ defaultBox ifNil: [ defaultBox := TSBox new size: 15 ].
 ]
 
 { #category : #accessing }
 TSLegend >> defaultCircle [
-	^ defaultCircle ifNil: [ defaultCircle := RSShapeBuilder circle 
-		uniqueCommands;
-		size: 15. ]
+	^ defaultCircle ifNil: [ defaultCircle := TSEllipse new size: 15. ]
 ]
 
 { #category : #accessing }
 TSLegend >> defaultLabel [
-	^ defaultLabel ifNil: [ defaultLabel := RSShapeBuilder label ].
+	^ defaultLabel ifNil: [ defaultLabel := TSLabel new ].
 ]
 
 { #category : #accessing }
@@ -78,7 +62,7 @@ TSLegend >> defaultLabel: aShape [
 
 { #category : #accessing }
 TSLegend >> defaultTitle [
-	^ defaultTitle ifNil: [ defaultTitle := RSShapeBuilder label fontSize: 20; bold ].
+	^ defaultTitle ifNil: [ defaultTitle := TSLabel new fontSize: 20; bold ].
 ]
 
 { #category : #accessing }
@@ -86,24 +70,10 @@ TSLegend >> defaultTitle: aShape [
 	defaultTitle := aShape
 ]
 
-{ #category : #'public - composite' }
-TSLegend >> horizontalComposite: refShape text: textShape [ 
-	^ self composite: refShape text: textShape layout: TSHorizontalLineLayout new center.
-]
-
 { #category : #initialization }
 TSLegend >> initialize [
 	super initialize.
-	self reset; initializeShape.
-]
-
-{ #category : #initialization }
-TSLegend >> initializeShape [
-	shape := RSShapeBuilder composite shapes: [ 
-		layout on: elements.
-		elements ];
-		padding: 10;
-		draggable.
+	self reset.
 ]
 
 { #category : #testing }
@@ -114,6 +84,22 @@ TSLegend >> isOnDemand [
 { #category : #layout }
 TSLegend >> layout [ 
 	^ layout
+]
+
+{ #category : #accessing }
+TSLegend >> legend [
+	| legend |
+	layout on: self shapes.
+	legend := TSComposite new
+		shapes: self shapes;
+		yourself.
+	legendBlock value: legend.
+	^ legend
+]
+
+{ #category : #public }
+TSLegend >> leyendDo: aBlock [
+	legendBlock := aBlock
 ]
 
 { #category : #accessing }
@@ -128,61 +114,63 @@ TSLegend >> menuShape [
 
 { #category : #public }
 TSLegend >> onDemand [
-	self onDemand: 'Help'.
+	^ self onDemand: 'Help'.
 ]
 
 { #category : #public }
 TSLegend >> onDemand: text [
-	menuShape := RSShapeBuilder label
+	^ menuShape := TSLabel new
 		text: text;
 		color: Color lightGray;
-		when: TSMouseEnter do: [ [ :evt | evt shape color: Color blue; signalUpdate ] ];
-		when: TSMouseLeave do: [ [ :evt | evt shape color: Color lightGray; signalUpdate ] ]
+		@ (TSHighlightable new low: Color lightGray high: Color blue);
+		yourself
 ]
 
 { #category : #'public - specific' }
 TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	"very very specific shape"
-	| box s marker line |
-	box := RSShapeBuilder box
+	| box s marker line g l1 l2 l3 line1 line2  |
+	box := TSBox new
 		size: 100.
-	marker := RSShapeBuilder triangle
+	marker := TSShape triangle
 		color: Color black;
-		size: 5; element.
-	line := RSSingleEdgeBuilder line 
-		marker: marker.
-	s := RSShapeBuilder composite shapes: [ | g l1 l2 l3 line1 line2 |
-		g := TSGroup new.
-		l1 := defaultLabel elementOn: labelWidth.
-		l2 := defaultLabel elementOn: labelHeight.
-		l3 := defaultLabel elementOn: labelBox.
-		l1 position: 0@70.
-		l3 scaleBy: 90/ l3 width.
-		l2 position: l2 width / 2 negated - 60 @ 0.
-		line1 := line from: -50@60; to: 50@60; edge.
-		line2 := line from: -60@ -50; to: -60@ 50; edge.
-		g addAll: {box element. l1. l2. l3. line1. line2 }.
-		g ].
-	^ self custom: nil shape: s.
+		size: 5.
+	line := TSLine new 
+		marker: marker;
+		yourself.
+	g := TSGroup new.
+	l1 := defaultLabel copy text: labelWidth.
+	l2 := defaultLabel copy text: labelHeight.
+	l3 := defaultLabel copy text: labelBox.
+	l1 position: 0@70.
+	l3 scaleBy: 90/ l3 width.
+	l2 position: l2 width / 2 negated - 60 @ 0.
+	line1 := line copy startPoint:  -50@60; endPoint: 50@60.
+	line2 := line copy startPoint: -60@ -50; endPoint: -60@ 50.
+	g addAll: {box. l1. l2. l3. line1. line2 }.
+	s := TSComposite new
+		shapes: g.
+	self shapes add: s.
+	
+
 ]
 
 { #category : #hooks }
-TSLegend >> renderIn: aView [
+TSLegend >> renderIn: aCanvas [
 	self isOnDemand 
-		ifTrue: [ self renderOnDemandIn: aView ]
-		ifFalse: [self basicRenderIn: aView ].
+		ifTrue: [ self renderOnDemandIn: aCanvas ]
+		ifFalse: [self basicRenderIn: aCanvas ].
 	
 ]
 
 { #category : #hooks }
 TSLegend >> renderOnDemandIn: aView [
-	| label i legendLabels update |
-	label := menuShape element.
-	label isFixed: true.
-	aView addShape: label shape.
+	| i legendLabels update |
+	menuShape isFixed: true.
+	aView addShape: menuShape.
 	i := TSAnimatedPopup new.
-	i shape: shape. 
-	label @ i.
+	i shapeBuilder: [ self legend ].
+	menuShape @ i.
 	legendLabels := nil.
 	update := [ 
 		TSHorizontalLineLayout on: legendLabels.
@@ -196,7 +184,7 @@ TSLegend >> renderOnDemandIn: aView [
 		ifAbsentPut: [ 
 			aView when: TSExtentChangedEvent do: update.
 			TSGroup new: 5 ].
-	legendLabels add: label.
+	legendLabels add: menuShape.
 	update value.
 
 	
@@ -204,7 +192,8 @@ TSLegend >> renderOnDemandIn: aView [
 
 { #category : #initialization }
 TSLegend >> reset [
-	elements := TSGroup new.
+	legendBlock := [ :l | l draggable ].
+	shapes := TSGroup new.
 	location := RSLocation new below.
 	layout := TSLayoutBuilder new.
 	layout vertical gapSize: 0.
@@ -214,9 +203,17 @@ TSLegend >> reset [
 	
 ]
 
+{ #category : #utilities }
+TSLegend >> shape: aShape withColor: color [
+	| copy |
+	copy := aShape copy.
+	copy color: (color rsValue: copy).
+	^ copy
+]
+
 { #category : #public }
 TSLegend >> text: aString [
-	^ self custom: aString shape: self defaultLabel.
+	^ self customText: aString shape: self defaultLabel
 ]
 
 { #category : #public }
@@ -229,18 +226,12 @@ TSLegend >> text: aString description: desc [
 
 { #category : #public }
 TSLegend >> text: aString withBoxColor: color [
-	self defaultBox color: color.
-	^ self
-		custom: aString
-		shape: (self horizontalComposite: defaultBox text: self defaultLabel)
+	^ self text: aString withShape: (self shape: self defaultBox withColor: color).
 ]
 
 { #category : #public }
 TSLegend >> text: aString withCircleColor: color [
-	self defaultCircle color: color.
-	^ self
-		custom: aString
-		shape: (self horizontalComposite: defaultCircle text: self defaultLabel)
+	^ self text: aString withShape: (self shape: self defaultCircle withColor: color).
 ]
 
 { #category : #'public - specific' }
@@ -249,20 +240,30 @@ TSLegend >> text: aString withFadingRamp: ramp [
 	"very specific shape"
 	gradient := TSGradientPalette linearGradient: ramp.
 	gradient start: -20@0; stop: 20@0.
-	s := RSShapeBuilder box
+	s := TSBox new
 		extent: 40@20;
-		paint: gradient.
-	^ self
-		custom: aString
-		shape: (self horizontalComposite: s text: self defaultLabel)
+		paint: gradient;
+		yourself.
+	^ self text: aString withShape: s.
+	
+]
+
+{ #category : #public }
+TSLegend >> text: aString withShape: aShape [
+	| text tshapes line l |
+	text := self defaultLabel copy.
+	text text: aString.
+	tshapes := TSGroup with: aShape with: text.
+	l := TSHorizontalLineLayout new center.
+	l on: tshapes.
+	line := TSComposite new
+		shapes: tshapes;
+		yourself.
+	self shapes add: line.
+	^ line
 ]
 
 { #category : #public }
 TSLegend >> title: aString [
-	^ self custom: aString shape: self defaultTitle.
-]
-
-{ #category : #'public - composite' }
-TSLegend >> verticalComposite: refShape text: textShape [ 
-	^ self composite: refShape text: textShape layout: TSVerticalLineLayout new center
+	^ self customText: aString shape: self defaultTitle
 ]

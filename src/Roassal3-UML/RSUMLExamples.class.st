@@ -45,9 +45,9 @@ RSUMLExamples >> example03DifferentLines [
 	marker := (RSShapeBuilder arrow
 		extent: 20@25;
 		noPaint;
-		border: TSBorder new;
+		withBorder;
 		element) asMarker offset: -7.
-	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
+	builder renderer edgeBuilder: (TSEdgeBuilder verticalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;
@@ -83,9 +83,9 @@ RSUMLExamples >> example05Horizontal [
 	marker := (RSShapeBuilder arrow
 		extent: 20@25;
 		noPaint;
-		border: TSBorder new;
+		withBorder;
 		element) asMarker offset: -7.
-	builder renderer edgeBuilder: (RSEdgeBuilder horizontalBezier
+	builder renderer edgeBuilder: (TSEdgeBuilder horizontalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;

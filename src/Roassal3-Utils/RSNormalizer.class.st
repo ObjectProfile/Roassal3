@@ -23,11 +23,11 @@ A Metric normalizer is made to assign a color, or a particular shape computed fr
 "
 Class {
 	#name : #RSNormalizer,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'scale',
 		'executeBlock',
-		'elements'
+		'shapes'
 	],
 	#category : #'Roassal3-Utils-Normalizer'
 }
@@ -181,19 +181,6 @@ RSNormalizer class >> width [
 
 ]
 
-{ #category : #accessing }
-RSNormalizer >> elements [
-	"Return the elements that should be normalized"
-	^ elements
-
-]
-
-{ #category : #accessing }
-RSNormalizer >> elements: someRSElements [
-	"Set to the normalizer the elements that should be normalized"
-	elements := someRSElements
-]
-
 { #category : #'private - accessing' }
 RSNormalizer >> executeBlock: anOneArgBlock [
 	"Set the block to be executed for the normalizer. The end user should not call this method
@@ -221,7 +208,7 @@ RSNormalizer size
 	normalize: #numberOfMethods.
 	
 RSNormalizer color
-	elements: es;
+	shapes: es;
 	from: Color blue;
 	to: Color pink;
 	normalize: #numberOfMethods.
@@ -237,19 +224,19 @@ v
 RSNormalizer >> initialize [
 	super initialize.
 	scale := TSScale linear.
-	elements := #()
+	shapes := #()
 
 ]
 
 { #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [ 
 	| minAndMax |
-	minAndMax := elements inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :anElement |
+	minAndMax := shapes inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :anElement |
 		| tmp |
 		tmp := anOneArgBlockOrSymbol rsValue: anElement model.
 		{ res first min: tmp . res second max: tmp } ].
 	scale domain: minAndMax.
-	elements do: [ :anEl | executeBlock value: anEl value: anOneArgBlockOrSymbol ]
+	shapes do: [ :anEl | executeBlock value: anEl value: anOneArgBlockOrSymbol ]
 
 ]
 
@@ -262,6 +249,19 @@ RSNormalizer >> scale [
 { #category : #accessing }
 RSNormalizer >> scale: aTSScale [
 	scale := aTSScale
+]
+
+{ #category : #accessing }
+RSNormalizer >> shapes [
+	"Return the shapes that should be normalized"
+	^ shapes
+
+]
+
+{ #category : #accessing }
+RSNormalizer >> shapes: someShapes [
+	"Set to the normalizer the elements that should be normalized"
+	shapes := someShapes
 ]
 
 { #category : #accessing }

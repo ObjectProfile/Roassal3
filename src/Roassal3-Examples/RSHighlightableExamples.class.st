@@ -19,10 +19,10 @@ RSHighlightableExamples >> example01Basic [
 		@ TSHighlightable;
 		color: TSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
-	RSEdgeBuilder line
-		elements: elements;
+	TSEdgeBuilder line
+		shapes: elements;
 		addInteraction: TSHighlightable;
-			view: v;
+		canvas: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
 	TSClusterLayout on: elements.
@@ -33,7 +33,7 @@ RSHighlightableExamples >> example01Basic [
 { #category : #examples }
 RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges open'>
-	| v s elements interaction |
+	"| v s elements interaction |
 	v := RSView new.
 	interaction := TSHighlightable new.
 	interaction withEdges.
@@ -41,11 +41,11 @@ RSHighlightableExamples >> example02ElementEdges [
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
-		border: TSBorder new;
+		withBorder;
 		color: TSColorPalette diverging rdylbu3;
 		addInteraction: interaction.
 	elements := s elementsOn: (1 to: 20).
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		elements: elements;
 		addInteraction: TSHighlightable;
 		view: v;
@@ -53,24 +53,25 @@ RSHighlightableExamples >> example02ElementEdges [
 	v addAll: elements.
 	TSClusterLayout on: elements.
 	v zoomToFit.
-	^ v
+	^ v"
+	^TSCanvas new
 ]
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example03Interactive [
 	<script: 'self new example03Interactive open'>
-	| v s elements interaction update |
+	"| v s elements interaction update |
 	v := RSView new.
 	
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
-		border: TSBorder new;
+		withBorder;
 		color: TSColorPalette diverging rdylbu3.
 	elements := s elementsOn: (1 to: 20).
-	RSEdgeBuilder line
-		elements: elements;
-		view: v;
+	TSEdgeBuilder line
+		shapes: elements;
+		canvas: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
 	TSClusterLayout on: elements.
@@ -83,22 +84,23 @@ RSHighlightableExamples >> example03Interactive [
 	v newAnimation repeat  when: TSAnimationLoopEvent do: update.
 	
 	v zoomToFit.
-	^ v
+	^ v"
+	^ TSCanvas new
 ]
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example04Interactive [
 	<script: 'self new example04Interactive open'>
-	| v s elements interaction bool update |
+	"| v s elements interaction bool update |
 	v := RSView new.
 	
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
-		border: TSBorder new;
+		withBorder;
 		color: TSColorPalette diverging rdylbu3.
 	elements := s elementsOn: (1 to: 20).
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		elements: elements;
 		view: v;
 		connectFrom: [ :n | n // 2 ].
@@ -119,20 +121,22 @@ RSHighlightableExamples >> example04Interactive [
 	v newAnimation repeat when: TSAnimationLoopEvent do: update.
 	v zoomToFit.
 	^ v
+	"
+	^ TSCanvas new
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example05Border [
 	<script: 'self new example05Border open'>
-	| v s elements int |
+	"| v s elements int |
 	v := RSView new.
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
-		border: TSBorder new;
+		withBorder;
 		color: TSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
-	RSEdgeBuilder line
+	TSEdgeBuilder line
 		elements: elements;
 			view: v;
 		connectFrom: [ :n | n // 2 ].
@@ -142,23 +146,24 @@ RSHighlightableExamples >> example05Border [
 	v addAll: elements.
 	TSClusterLayout on: elements.
 	v zoomToFit.
-	^ v
+	^ v"
+	^ nil
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example06IterateNext [
 	<script: 'self new example06IterateNext open'>
 	
-	| view numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
+	"| view numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	view := RSView new.
 	legendBuilder := TSLegend new container: view. 
 
-	"Create the view with numbers as elements."
+	Create the view with numbers as elements.
 	numbers := RSShapeBuilder box
 		size: 30;
 		addInteraction: TSLabeled new;
 		elementsOn: (1 to: 10).
-	edges := RSEdgeBuilder line
+	edges := TSEdgeBuilder line
 		elements: numbers;
 		connectFrom: [ :i | i // 2 ].
 	view
@@ -174,7 +179,7 @@ RSHighlightableExamples >> example06IterateNext [
 	view newAnimation repeat onStepDo: [ :t | layout step ].
 	numbers @ (RSDraggableForce new layout: layout).
 
-	"Set up highlighting interactions"
+	Set up highlighting interactions
 	highlightableForBoxes := TSHighlightable new.
 	highlightableForBoxes highlightShape color: Color red.
 	highlightableForLabels := TSHighlightable new
@@ -182,15 +187,15 @@ RSHighlightableExamples >> example06IterateNext [
 		when: TSHighlightEvent do: [ :evt | evt element bold ];
 		when: TSUnHighlightEvent do: [ :evt | evt element normal ].
 	highlightBlock := [ :model |
-		highlightableForBoxes doHighlight: (view elementFromModel: model).
-		highlightableForLabels doHighlight: (legendBuilder elements elementFromModel: model).
+		highlightableForBoxes doHighlight: (view shapeFromModel: model).
+		highlightableForLabels doHighlight: (legendBuilder elements shapeFromModel: model).
 		selectedNumber := model ].
 	unhighlightAllBlock := [
 		highlightableForBoxes unhighlightRecordedElements: view.
 		highlightableForLabels unhighlightRecordedElements: view ].
 
-	"Build a legend with all the numbers"
-	legendBuilder shape border: TSBorder new.
+	Build a legend with all the numbers
+	legendBuilder shape withBorder.
 	legendBuilder defaultLabel 
 		onElement;
 		when: TSMouseClick do: [ :e | [ highlightBlock value: e model ] ].
@@ -201,23 +206,24 @@ RSHighlightableExamples >> example06IterateNext [
 		e when: TSMouseClick do: [ :evt | highlightBlock value: e model ]. ].
 	legendBuilder build.
 
-	"Unhighlight all when clicking on background."
+	Unhighlight all when clicking on background.
 	view when: TSMouseClick do: unhighlightAllBlock.
 
-	"Highlight next number when N key is pressed. Initial is nothing."
+	Highlight next number when N key is pressed. Initial is nothing.
 	selectedNumber := 0.
 	view when: TSKeyUp do: [ :evt |
 		evt keyValue = 45 ifTrue: [
 			selectedNumber := (selectedNumber \\ numbers size) + 1.
 			highlightBlock value: selectedNumber ] ].
 
-	^ view
+	^ view"
+	^nil
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example07HighlightButtons [
 	<script: 'self new example07HighlightButtons open'>
-	| v bluePurple red box |
+	"| v bluePurple red box |
 	v := RSView new.
 	red := TSHighlightable new.
 	red highlightShape color: Color red.
@@ -248,5 +254,6 @@ RSHighlightableExamples >> example07HighlightButtons [
 	red doHighlight: v elements first.
 	TSVerticalLineLayout on: v elements.
 	v @ TSControlsCanvas.
-	^ v
+	^ v"
+	^ nil
 ]

@@ -128,7 +128,7 @@ RSUMLClassBuilder >> initializeShape [
 RSUMLClassBuilder >> renderIn: aView [
 	aView addAll: (elements := shape elementsOn: classes).
 	self renderer edgeBuilder
-		view: aView;
+		canvas: aView;
 		objects: classes;
 		connectFrom: modelDescriptor superclass.
 	self layout on: elements.

@@ -124,16 +124,6 @@ TSShape >> includesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #accessing }
-TSShape >> index [
-	^ self attributeAt: #index ifAbsent: [ nil ].
-]
-
-{ #category : #accessing }
-TSShape >> index: anInteger [
-	^ self attributeAt: #index put: anInteger.
-]
-
 { #category : #initialization }
 TSShape >> initialize [
 	super initialize.
@@ -250,6 +240,15 @@ TSShape >> renderOn: aCanvas [
 	self subclassResponsibility
 ]
 
+{ #category : #actions }
+TSShape >> replaceWith: aShape [
+	parent ifNil: [ ^ self ].
+	aShape loadShape: self.
+	parent shapes replaceAll: self with: aShape.
+	parent nodes replaceAll: self with: aShape.
+	
+]
+
 { #category : #initialization }
 TSShape >> resetBBox [
 	encompassingRectangle := nil.
@@ -315,4 +314,9 @@ TSShape >> topParent [
 { #category : #accessing }
 TSShape >> width [
 	^ self extent x
+]
+
+{ #category : #border }
+TSShape >> withBorder [
+	self border: TSBorder new
 ]

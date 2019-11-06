@@ -51,6 +51,13 @@ TContainer >> nodes [
 			res ]
 ]
 
+{ #category : #accessing }
+TContainer >> numberOfEdges [
+	^ self privateEdges
+		ifNil: [ 0 ]
+		ifNotNil: [ :edges | edges size ]
+]
+
 { #category : #private }
 TContainer >> privateEdges [
 	^ self explicitRequirement
@@ -79,6 +86,11 @@ TContainer >> privateShapes [
 { #category : #private }
 TContainer >> privateShapes: aCollection [
 	self explicitRequirement
+]
+
+{ #category : #accessing }
+TContainer >> shapeFromModel: anObject [
+	^ self nodes shapeFromModel: anObject
 ]
 
 { #category : #accessing }

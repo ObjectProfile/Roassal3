@@ -6,12 +6,27 @@ Class {
 	#superclass : #TSShape,
 	#traits : 'TMarkeable',
 	#classTraits : 'TMarkeable classTrait',
+	#instVars : [
+		'attachPoint',
+		'from',
+		'to'
+	],
 	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #visiting }
 TSAbstractLine >> accept: visitor [
 	visitor visitLine: self.
+]
+
+{ #category : #accessing }
+TSAbstractLine >> attachPoint [
+	^ attachPoint
+]
+
+{ #category : #accessing }
+TSAbstractLine >> attachPoint: ap [
+	attachPoint := ap
 ]
 
 { #category : #'style-cap' }
@@ -69,6 +84,16 @@ TSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+TSAbstractLine >> from [
+	^ from
+]
+
+{ #category : #accessing }
+TSAbstractLine >> from: aShape [
+	from := self setAnchor: from shape: aShape
+]
+
 { #category : #testing }
 TSAbstractLine >> hasMarkers [
 	| m |
@@ -88,6 +113,11 @@ TSAbstractLine >> initialize [
 { #category : #testing }
 TSAbstractLine >> isControlPointsLine [
 	^ false
+]
+
+{ #category : #testing }
+TSAbstractLine >> isEdge [
+	^ true
 ]
 
 { #category : #'style-join' }
@@ -123,6 +153,11 @@ TSAbstractLine >> privateMarkers [
 	^ nil
 ]
 
+{ #category : #adding }
+TSAbstractLine >> renderOn: aCanvas [
+	aCanvas addEdge: self
+]
+
 { #category : #path }
 TSAbstractLine >> resetPath [
 	super resetPath.
@@ -135,6 +170,16 @@ TSAbstractLine >> sessionChanged [
 	self hasMarkers ifFalse: [ ^ self ].
 	self markersDo: [ :mark | mark shape sessionChanged ].
 	
+]
+
+{ #category : #private }
+TSAbstractLine >> setAnchor: ref shape: anObject [
+	(ref isNotNil and: [ anObject isPoint not ])
+		ifTrue: [ ref removeConnectedEdge: self ].
+	anObject ifNil: [ ^ nil ].
+	anObject isPoint | anObject isBlock
+		ifFalse: [ anObject addConnectedEdge: self ].
+	^ anObject
 ]
 
 { #category : #accessing }
@@ -160,6 +205,21 @@ TSAbstractLine >> strokePaint [
 { #category : #accessing }
 TSAbstractLine >> strokePaint: aPaint [
 	self border paint: aPaint.
+]
+
+{ #category : #accessing }
+TSAbstractLine >> to [ 	
+	^ to
+]
+
+{ #category : #accessing }
+TSAbstractLine >> to: aShape [
+	to := self setAnchor: to shape: aShape
+]
+
+{ #category : #update }
+TSAbstractLine >> update [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

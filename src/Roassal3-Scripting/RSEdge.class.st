@@ -56,8 +56,8 @@ RSEdge >> from [
 ]
 
 { #category : #accessing }
-RSEdge >> from: anElement [
-	from := self setAnchor: from element: anElement.
+RSEdge >> from: aShape [
+	from := self setAnchor: from shape: aShape.
 ]
 
 { #category : #initialization }

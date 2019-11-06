@@ -55,8 +55,3 @@ TSEvent >> signalUpdate [
 	morph notNil ifTrue: [ morph changed ]
 	
 ]
-
-{ #category : #accessing }
-TSEvent >> view [
-	^ self canvas view
-]

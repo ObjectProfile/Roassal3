@@ -354,12 +354,19 @@ TSCanvas >> shapeWithActionForPositionInPixels: position [
 
 { #category : #accessing }
 TSCanvas >> shapes [
-	^shapes
+	^ shapes
 ]
 
 { #category : #accessing }
 TSCanvas >> shapes: aCollection [
 	shapes := aCollection
+]
+
+{ #category : #accessing }
+TSCanvas >> shapesFromModels: objects [
+	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	^ self nodes shapesFromModels: objects
+
 ]
 
 { #category : #'debug support' }

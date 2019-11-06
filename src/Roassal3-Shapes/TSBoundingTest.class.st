@@ -18,7 +18,7 @@ TSBoundingTest >> testDrawBitamp [
 TSBoundingTest >> testDrawBorder [
 	c addShape: (TSEllipse new
 		radius: 100;
-		border: TSBorder new;
+		withBorder;
 		yourself).
 	c createMorph drawOnMockCanvas.
 ]

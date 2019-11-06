@@ -9,21 +9,20 @@ Class {
 
 { #category : #tests }
 TSNormalizerTest >> testBasic [ 
-	| elements |
-	elements := RSShapeBuilder box
-		elementsOn: #(1 2).
+	| shapes |
+	shapes := (1 to: 2) collect: [ :n | TSBox new model: n; yourself ].
 	
-	self assert: elements size equals: 2.
-	self assert: elements first color equals: Color gray.
+	self assert: shapes size equals: 2.
+	self assert: shapes first color equals: Color lightGray.
 	RSNormalizer color
-		elements: elements;
+		shapes: shapes;
 		normalize: #yourself.
-	self assert: elements first color equals: Color green.
+	self assert: shapes first color equals: Color green.
 	RSNormalizer size
-		elements: elements;
+		shapes: shapes;
 		from: 100;
 		to: 200;
 		normalize: #yourself.
-	self assert: elements first extent equals: 100@100.
-	self assert: elements first extent equals: 100@100.
+	self assert: shapes first extent equals: 100@100.
+	self assert: shapes first extent equals: 100@100.
 ]

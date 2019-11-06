@@ -6,7 +6,8 @@ Class {
 	#superclass : #TSAbstractLine,
 	#instVars : [
 		'controlPoints',
-		'markers'
+		'markers',
+		'controlPointsBlock'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -25,6 +26,16 @@ TSAbstractControlPointsLine >> controlPoints [
 TSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
 	controlPoints := anArrayOfPoints collect: #asFloatPoint.
 	self resetPath.
+]
+
+{ #category : #accessing }
+TSAbstractControlPointsLine >> controlPointsBlock [
+	^ controlPointsBlock
+]
+
+{ #category : #accessing }
+TSAbstractControlPointsLine >> controlPointsBlock: aBlockOrValue [
+	controlPointsBlock := aBlockOrValue
 ]
 
 { #category : #accessing }
@@ -64,4 +75,21 @@ TSAbstractControlPointsLine >> startPoint [
 TSAbstractControlPointsLine >> startPoint: aPoint [
 	self controlPoints at: 1 put: aPoint.
 	self resetPath.
+]
+
+{ #category : #update }
+TSAbstractControlPointsLine >> update [
+	| cp |
+	controlPointsBlock ifNil: [ ^ self ].
+	cp := controlPointsBlock isCollection ifTrue: [  
+		controlPointsBlock collect: [ :anObject | | v |
+			v := anObject value.
+			v isShape ifTrue: [ v := v position ].
+			v ].
+	] ifFalse: [ 
+		controlPointsBlock 
+			value: (attachPoint startingPointOf: self)
+			value: (attachPoint endingPointOf: self)
+	].
+	self controlPoints: cp; notifyExtentChanged.
 ]

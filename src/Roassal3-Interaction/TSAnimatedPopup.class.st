@@ -4,7 +4,7 @@ I am a basic popup for animated content in a view of roassal3
 Class {
 	#name : #TSAnimatedPopup,
 	#superclass : #TSPopup,
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Interaction-Popup'
 }
 
 { #category : #accessing }
@@ -20,10 +20,11 @@ TSAnimatedPopup class >> removeEvents [
 
 { #category : #hooks }
 TSAnimatedPopup >> translatePopup: popup event: evt [ 
-	| p pscale canvasExtent side  |
+	| p pscale canvasExtent side scale |
 	p := evt shape position.
 	evt shape isFixed
 		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p ].
+	popup translateTo: 0@0.
 	p := p + (0@(evt shape height + popup height + 10 / 2)).
 	canvasExtent := evt shape canvas extent.
 	side := popup width / 2.
@@ -31,8 +32,10 @@ TSAnimatedPopup >> translatePopup: popup event: evt [
 		ifTrue: [ p := (canvasExtent x - side - 5)@ p y ].
 	
 	popup translateTo: p.
+	
 	"animation part"
 	pscale := TSScale linear range: { p x @ (p y - (popup height / 2) ) . p }.
+	scale := popup matrix sx @ popup matrix sy.
 	evt shape newAnimation 
 		duration: 300 milliSeconds; 
 		from: 0.05; to: 1;
@@ -41,7 +44,7 @@ TSAnimatedPopup >> translatePopup: popup event: evt [
 			popup matrix 
 				loadIdentity;
 				translation: (pscale scale: t);
-				scaleBy: 1@t.
+				scaleBy: (1@t) * scale.
 			popup signalUpdate.
 			].
 ]

@@ -116,38 +116,48 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 { #category : #layouts }
 RSLayoutExamples >> example05TreeLayout [
 	<script: 'self new example05TreeLayout open'>
-	| v elements eb |
-	v := RSView new.
-	elements := RSShapeBuilder circle
-		interactionDo: #draggable;
-		elementsOn: Collection withAllSubclasses.
-	v addAll: elements.
+	| c shapes eb |
+	c := TSCanvas new.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		TSEllipse new
+			model: cls;
+			draggable;
+			size: 5;
+			yourself
+		 ].
+	
+	c addAll: shapes.
 	RSNormalizer color
 		from: (Color gray alpha: 0.5);
 		to: (Color red alpha: 0.5);
-		elements: elements;
+		shapes: shapes;
 		normalize: #numberOfMethods.
 	RSNormalizer size
-		elements: elements;
+		shapes: shapes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
-	eb view: v.
+	eb := TSEdgeBuilder line.
+	eb canvas: c.
 	eb connectFrom: #superclass.
-	TSTreeLayout on: elements.
-	elements do: [ :e | e translateBy: 0 @ 0 ].
-	v @ TSDraggableCanvas.
-	^ v
+	TSTreeLayout on: shapes.
+	shapes do: [ :e | e translateBy: 0 @ 0 ].
+	c @ TSDraggableCanvas.
+	^ c
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example06Cluster [
 	<script: 'self new example06Cluster open'>
-	| v sb eb |
-	v := RSView new.
-	sb := RSShapeBuilder circle.
-	v addAll: (sb elementsOn: GLMBrickedMorph withAllSubclasses).
-	eb := RSEdgeBuilder line
-		view: v;
+	| c shapes |
+	c := TSCanvas new.
+	shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+		TSEllipse new 
+			size: 5;
+			color: Color red;
+			model: cls;
+			yourself ].
+	c addAll: shapes.
+	TSEdgeBuilder line
+		canvas: c;
 		color: Color blue trans;
 		connectFrom: #superclass.
 	RSNormalizer size
@@ -155,7 +165,7 @@ RSLayoutExamples >> example06Cluster [
 			(TSScale log
 				base: 2.7;
 				range: {1 . 30});
-		elements: v elements;
+		shapes: c nodes;
 		normalize: #numberOfMethods.
 	RSNormalizer color
 		scale:
@@ -164,63 +174,69 @@ RSLayoutExamples >> example06Cluster [
 				range:
 					{Color blue.
 					Color red});
-		elements: v elements;
+		shapes: c nodes;
 		normalize: #numberOfMethods.
-	TSClusterLayout on: v elements.
-	^ v
+	TSClusterLayout on: c nodes.
+	^ c
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example07ForceBasedLayout [
 	<script: 'self new example07ForceBasedLayout open'>
-	| v sb eb |
-	v := RSView new.
-	sb := RSShapeBuilder circle
-		interactionDo: [ :i | 
-			i
-				draggable;
-				popup ].
-	v addAll: (sb elementsOn: TSShape withAllSubclasses).
+	| c shapes eb |
+	c := TSCanvas new.
+	shapes := TSShape withAllSubclasses collect: [ :cls |
+		TSEllipse new 
+			popup;
+			draggable;
+			model: cls;
+			size: 5;
+			yourself ].
+	c addAll: shapes.
 	RSNormalizer size
-		elements: v elements;
+		shapes: c nodes;
 		normalize: #numberOfMethods.
 	RSNormalizer color
 		from: (Color green alpha: 0.5);
 		to: (Color red alpha: 0.5);
-		elements: v elements;
+		shapes: c nodes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
+	eb := TSEdgeBuilder line.
 	eb
-		view: v;
+		canvas: c;
 		moveBehind;
 		connectFrom: #superclass.
 	TSForceBasedLayout new
 		doNotUseProgressBar; 
 		charge: -350;
-		on: v elements.
-	v @ TSControlsCanvas.
-	v zoomToFit.
-	^ v
+		on: c nodes.
+	c @ TSControlsCanvas.
+	c zoomToFit.
+	^ c
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example08HorizontalTree [
 	<script: 'self new example08HorizontalTree open setLabel: ''Horizontal Tree'''>
-	| v sb label box |
-	v := RSView new.
-	label := RSShapeBuilder label.
-	box := RSShapeBuilder box
-		border: TSBorder new;
-		cornerRadius: (TSCornerRadius new right: 10);
-		extent: [ :lb | lb extent + 5 ].
-	sb := RSShapeBuilder composite
-		interactionDo: #draggable;
-		shapes: [ :m | | l |
-			l := label elementOn: m.
-			TSGroup with: (box elementOn: l) with: l].
-	v addAll: (sb elementsOn: String withAllSubclasses).
-	v @ TSControlsCanvas.
-	RSEdgeBuilder orthoHorizontal
+	| c shapes |
+	c := TSCanvas new.
+	
+	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := TSLabel new
+			text: cls asString;
+			yourself.
+		box := TSBox new
+			withBorder;
+			cornerRadius: (TSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		TSComposite new
+			draggable;
+			model: cls;
+			shapes: (TSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ TSControlsCanvas.
+	TSEdgeBuilder orthoHorizontal
 		markerEnd: (TSMarker new 
 			offset: 2;
 			shape: (RSShapeBuilder triangle 
@@ -228,11 +244,11 @@ RSLayoutExamples >> example08HorizontalTree [
 				size: 5;
 				element));
 		attachPoint: TSHorizontalAttachPoint new; 
-		view: v;
-		elements: v elements;
+		canvas: c;
+		shapes: c nodes;
 		connectFrom: #superclass.
-	TSHorizontalTreeLayout new on: v elements.
-	^ v
+	TSHorizontalTreeLayout new on: c nodes.
+	^ c
 ]
 
 { #category : #lines }
@@ -244,7 +260,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 		interactionDo: #draggable;
 		size: 30.
 	v addAll: (sb elementsOn: (TSShape withAllSubclasses) ).
-	RSEdgeBuilder arrowedLine 
+	TSEdgeBuilder arrowedLine 
 		withBorderAttachPoint;
 		view: v;
 		connectFrom: #superclass.
@@ -316,7 +332,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 		size: 30;
 		interactionDo:[:i | i draggable; labeled].
 	elements := shape elementsOn: (1 to: 10).
-	edges := RSEdgeBuilder line
+	edges := TSEdgeBuilder line
 		elements: elements;
 		connectFrom: [ :i | i // 2 ].
 	view
@@ -347,7 +363,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		size: 30;
 		interactionDo: [ :i | i draggable; labeled ].
 	elements := shape elementsOn: (1 to: 50).
-	edges := RSEdgeBuilder line
+	edges := TSEdgeBuilder line
 		elements: elements;
 		connectFrom: [ :i | i // 2 ].
 	view
@@ -405,7 +421,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	es := RSShapeBuilder circle elementsOn: classes.
 	v addAll: es.
 	es @ TSPopup @ TSDraggable.
-	eb := RSEdgeBuilder line.
+	eb := TSEdgeBuilder line.
 	eb color: Color gray.
 	eb view: v.
 	eb elements: es.

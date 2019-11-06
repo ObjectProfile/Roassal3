@@ -48,7 +48,7 @@ v
 "
 Class {
 	#name : #RSMultiBezierEdgeBuilder,
-	#superclass : #RSEdgeBuilder,
+	#superclass : #TSEdgeBuilder,
 	#instVars : [
 		'tension'
 	],
@@ -106,7 +106,7 @@ RSMultiBezierEdgeBuilder >> commonElements: edge with: selector [
 		elements := (self followersOf: from with: selector),
 			(self followersOf: to with: selector) reverse.
 		^ elements ].
-	search := [ :model | view elementFromModel: (selector rsValue: model) ].
+	search := [ :model | canvas shapeFromModel: (selector rsValue: model) ].
 	elements := OrderedCollection new.
 	elements add: from.
 	[ from == ancestor ] whileFalse: [ 
@@ -129,7 +129,7 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 	t := element. 
 	[ t notNil ] whileTrue: [ 
 		followers add: t.
-		t := view elementFromModel: (selector rsValue: t model) ].
+		t := canvas shapeFromModel: (selector rsValue: t model) ].
 	^ followers
 ]
 

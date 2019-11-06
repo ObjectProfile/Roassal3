@@ -34,16 +34,16 @@ TSDraggableCanvas >> all [
 ]
 
 { #category : #computing }
-TSDraggableCanvas >> checkCameraView: aView [
+TSDraggableCanvas >> checkCamera: aCanvas [
 	| camera p correct |
-	camera := aView camera.
+	camera := aCanvas camera.
 	p := camera position.
-	correct := self correctCameraPosition: aView.
+	correct := self correctCameraPosition: aCanvas.
 	correct = p ifTrue: [ ^ self ].
 	
-	self removeRectanglesFor: aView.
+	self removeRectanglesFor: aCanvas.
 	
-	aView newAnimation
+	aCanvas newAnimation
 		easing: TSEasing cubicIn;
 		duration: 200 milliSeconds;
 		from: p;
@@ -70,14 +70,14 @@ TSDraggableCanvas >> middle [
 
 { #category : #events }
 TSDraggableCanvas >> mouseEnd: evt [
-	| threshold aView camera delta p correct |
+	| threshold aCanvas camera delta p correct |
 	isMoving := false.
 	lastStep ifNil: [ ^ self ].
-	aView := evt view.
+	aCanvas := evt canvas.
 	camera := evt camera.
 	threshold := 4.
 	(lastStep dist: 0@0) < threshold
-		ifTrue: [ ^ self checkCameraView: aView ].
+		ifTrue: [ ^ self checkCamera: aCanvas ].
 		
 	delta := lastStep * 2.5.
 	camera translateBy: delta.
@@ -87,12 +87,12 @@ TSDraggableCanvas >> mouseEnd: evt [
 	p := (correct - camera position) abs max: 1@1.
 	p := p x sqrt @ p y sqrt.
 	
-	aView newAnimation 
+	aCanvas newAnimation 
 		easing: TSEasing cubicOut;
 		duration: 200 milliSeconds;
 		from: camera position; to: camera position + (delta / p);
 		on: camera set: #translateTo:;
-		when: TSAnimationEndEvent do: [ self checkCameraView: aView ].
+		when: TSAnimationEndEvent do: [ self checkCamera: aCanvas ].
 		
 
 ]

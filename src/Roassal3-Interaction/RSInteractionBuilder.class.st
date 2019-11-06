@@ -82,7 +82,7 @@ RSInteractionBuilder >> popupAndDraggable [
 RSInteractionBuilder >> popupText: anObject [
 	| i |
 	self addExclusiveInteraction: (i := TSPopup new).
-	i label text: anObject.
+	i shapeBuilder textBlock: anObject.
 	^ i.
 ]
 

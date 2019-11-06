@@ -163,7 +163,7 @@ TSShapeExamples >> example06BasicLabels [
 		].
 	c addShape: (TSEllipse new
 		color: nil;
-		border: TSBorder new;
+		withBorder;
 		radius: 90).
 	c open
 	
@@ -180,7 +180,7 @@ TSShapeExamples >> example07EventsMouseMoveDrag [
 	c := TSCanvas new.
 	ellipse := TSEllipse new
 		radius: 40;
-		border: TSBorder new.
+		withBorder.
 	c addShape: ellipse.
 	a := Color colorFrom: '12A288'.
 	b := Color colorFrom: 'AB2567'.
@@ -362,7 +362,7 @@ TSShapeExamples >> example15BasicRoundBoxses [
 		cornerRadius: (TSCornerRadius new top: 20);
 		position: 100@100;
 		extent: 100@50;
-		border: TSBorder new).
+		withBorder).
 		
 	c open
 ]
@@ -580,7 +580,7 @@ TSShapeExamples >> example20Donut [
 	c := TSCanvas new.
 	"donut"
 	c addShape: (TSPieSlice new
-		border: TSBorder new;
+		withBorder;
 		externalRadius: 100;
 		innerRadius: 50;
 		alphaAngle: 0;
@@ -709,7 +709,7 @@ TSShapeExamples >> example28SVGShape [
 	c := TSCanvas new.
 	c addShape: (TSSVGPath new
 		paint: nil;
-		border: TSBorder new;
+		withBorder;
 		svgPath: 'M 100 350 q 150 -300 300 0';
 		yourself).
 	c addShape: (TSSVGPath new

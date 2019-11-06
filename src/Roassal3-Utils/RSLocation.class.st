@@ -40,7 +40,7 @@ v open
 "
 Class {
 	#name : #RSLocation,
-	#superclass : #RSObject,
+	#superclass : #TSObject,
 	#instVars : [
 		'offset',
 		'orientation',

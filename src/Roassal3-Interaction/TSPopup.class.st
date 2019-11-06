@@ -5,14 +5,12 @@ Class {
 	#name : #TSPopup,
 	#superclass : #TSInteraction,
 	#instVars : [
-		'shape',
-		'label',
-		'box'
+		'shapeBuilder'
 	],
 	#classInstVars : [
 		'removeEvents'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Interaction-Popup'
 }
 
 { #category : #accessing }
@@ -37,18 +35,8 @@ TSPopup class >> reset [
 TSPopup class >> text: anObject [
 	| inst |
 	inst := self new.
-	inst label text: anObject.
+	inst shapeBuilder text: anObject.
 	^ inst
-]
-
-{ #category : #accessing }
-TSPopup class >> wantsUniqueInstance [ 
-	^ true
-]
-
-{ #category : #accessing }
-TSPopup >> box [
-	^ box
 ]
 
 { #category : #hooks }
@@ -56,7 +44,8 @@ TSPopup >> createOrGetPopupOn: aShape event: event [
 	| att popupShape canvas |
 	att := event canvas attributes.
 	att at: #popup ifPresent: [ :popup | ^ popup ].
-	popupShape := (shape elementOn: aShape model) shape.
+	popupShape := shapeBuilder shapeOn: aShape model.
+	"popupShape :=(shape elementOn: aShape model) shape."
 	att at: #popup put: popupShape.
 	popupShape isFixed: true.
 	canvas := aShape canvas.
@@ -68,37 +57,7 @@ TSPopup >> createOrGetPopupOn: aShape event: event [
 { #category : #initialization }
 TSPopup >> initialize [
 	super initialize.
-	self initializeShape.
-]
-
-{ #category : #initialization }
-TSPopup >> initializeShape [
-	label := RSShapeBuilder label.
-	box := RSShapeBuilder box
-		color: (Color colorFrom: 'efefef');
-		cornerRadius: 5;
-		border: (TSBorder new color: Color gray);
-		extent: [ :m | m extent + 5 ].
-	shape := RSShapeBuilder composite shapes: [ :model | 
-		| l b |
-		l := label elementOn: model.
-		l translateTo: 0@0.
-		b := box elementOn: l.
-		TSGroup with: b with: l ].
-	
-		
-	
-	
-]
-
-{ #category : #accessing }
-TSPopup >> label [
-	^ label
-]
-
-{ #category : #accessing }
-TSPopup >> label: aShape [
-	label := aShape
+	shapeBuilder := TSSimplePopup new.
 ]
 
 { #category : #public }
@@ -118,23 +77,20 @@ TSPopup >> onShape: aShape [
 ]
 
 { #category : #private }
-TSPopup >> registerRemoveEventsOn: anElement [
+TSPopup >> registerRemoveEventsOn: aShape [
 	| remove |
 	remove := [:evt | self removePopupOn: evt  ].
 	self class removeEvents do: [ :cls | 
-		anElement when: cls do: remove ]
+		aShape when: cls do: remove ]
 ]
 
 { #category : #hooks }
 TSPopup >> removePopupOn: evt [ 
-	| att popup view |
+	| att popup |
 	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
 	If the element is not part of a view, then there is nothing to remove, so we exit early."
 	evt canvas ifNil: [ ^ self ].
-	
-	view := evt canvas view.
-	view ifNil: [ ^ self ].
-	att := view attributes.
+	att := evt canvas attributes.
 	(att includesKey: #popup) ifFalse: [ ^ self ].
 	popup := att at: #popup.
 	popup remove.
@@ -143,13 +99,13 @@ TSPopup >> removePopupOn: evt [
 ]
 
 { #category : #accessing }
-TSPopup >> shape [
-	^ shape
+TSPopup >> shapeBuilder [
+	^ shapeBuilder
 ]
 
 { #category : #accessing }
-TSPopup >> shape: aShape [
-	shape := aShape
+TSPopup >> shapeBuilder: aShapeBuilder [
+	shapeBuilder := aShapeBuilder
 ]
 
 { #category : #hooks }

@@ -5,35 +5,14 @@ Class {
 	#name : #RSCompositeElementTest,
 	#superclass : #TSTest,
 	#instVars : [
-		'view'
+		'canvas'
 	],
 	#category : #'Roassal3-Scripting-Tests'
 }
 
 { #category : #running }
 RSCompositeElementTest >> setUp [
-	view := RSView new
-]
-
-{ #category : #tests }
-RSCompositeElementTest >> testAddOnceInCanvas [
-	| elements |
-	elements := RSShapeBuilder box 
-		elementsOn: (1 to: 10).
-	view addAll: elements.
-	self assert: view elements size equals: 10.
-	view := RSView new.
-	view add: elements asElement.
-	self assert: view elements size equals: 1.
-]
-
-{ #category : #tests }
-RSCompositeElementTest >> testAsElement [
-	| elements |
-	elements := RSShapeBuilder box 
-		elementsOn: (1 to: 10).
-	view add: elements asElement.
-	self assert: view elements size equals: 1.
+	canvas := TSCanvas new
 ]
 
 { #category : #tests }

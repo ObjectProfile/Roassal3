@@ -6,7 +6,6 @@ Class {
 	#superclass : #TSInteraction,
 	#instVars : [
 		'highlightElements',
-		'highlightShape',
 		'announcer',
 		'attributeKey',
 		'copyKey'
@@ -82,17 +81,9 @@ TSHighlightable >> doHighlight: element [
 	self unhighlightRecordedElements: element.
 	elements := self highlightElementsFor: element.
 	elements do: [ :e | 
-		self doHighlightElement: e.
 		self announceHighlight: e source: element. ].
 	
-	element topParent view attributes at: self attributeKey put: elements.
-]
-
-{ #category : #'public - hooks' }
-TSHighlightable >> doHighlightElement: element [
-	self recordIfNecessary: element.
-	highlightShape commands ifEmpty: [ ^ self ].
-	highlightShape updateElement: element.
+	element topParent attributes at: self attributeKey put: elements.
 ]
 
 { #category : #actions }
@@ -113,20 +104,6 @@ TSHighlightable >> doHighlightElements: elements [
 { #category : #actions }
 TSHighlightable >> doUnhighlight: anElement [
 	self unhighlightRecordedElements: anElement
-]
-
-{ #category : #'public - hooks' }
-TSHighlightable >> doUnhighlightElement: element [
-	| att s originals args |
-	att := element attributes.
-	(att includesKey: self copyKey) ifFalse: [ ^ self ].
-	s := element shape.
-	originals := att at: self copyKey.
-	args := Array new: 1.
-	originals keysAndValuesDo: [ :key :value | 
-		args at: 1 put: value.
-		s perform: key withArguments: args ].
-	att removeKey: self copyKey.
 ]
 
 { #category : #accessing }
@@ -158,43 +135,19 @@ TSHighlightable >> highlightElementsFor: element [
 	^ highlightElements rsValue: element
 ]
 
-{ #category : #accessing }
-TSHighlightable >> highlightShape [
-	"
-	Gives a highlight shape. Useful to change the color of the highlight. 
-
-For example
--=-=-=
-v := RSView new.
-
-sb := RSShapeBuilder box
-			elementsOn: (1 to: 100).
-v addAll: sb.
-
-highlight := RSHighlightable new.
-highlight highlightShape color: Color red trans.
-sb @ highlight.
-RSGridLayout on: sb.
-v @ RSControlsView.
-v open			
--=-=-=
-	"
-	^ highlightShape ifNil: [
-		self highlightShape: RSShapeBuilder box.
-		highlightShape ]
-]
-
-{ #category : #accessing }
-TSHighlightable >> highlightShape: aShapeBuilder [
-	highlightShape := aShapeBuilder.
-	highlightShape commands removeAll.
-]
-
 { #category : #initialization }
 TSHighlightable >> initialize [
 	super initialize.
 	self highlightElements: [ :el | Array with: el ].
 
+]
+
+{ #category : #public }
+TSHighlightable >> low: aColorA high: aColorB [
+	self 
+		when: TSHighlightEvent do: [ :evt | evt shape color: aColorB  ];
+		when: TSUnHighlightEvent do: [ :evt | evt shape color: aColorA ].
+	
 ]
 
 { #category : #hooks }
@@ -227,7 +180,7 @@ TSHighlightable >> recordIfNecessary: element [
 { #category : #actions }
 TSHighlightable >> resetHighlightedElements: anElementOrView [
 	| att |
-	att := anElementOrView topParent view attributes.
+	att := anElementOrView topParent attributes.
 	(att includesKey: self attributeKey) ifFalse: [ ^ self ].
 	att removeKey: self attributeKey
 ]
@@ -270,9 +223,8 @@ TSHighlightable >> setupAntAnimation [
 { #category : #actions }
 TSHighlightable >> unhighlightRecordedElements: anElementOrView [
 	
-	anElementOrView topParent view attributes at: self attributeKey ifPresent: [ :elements |
+	anElementOrView topParent attributes at: self attributeKey ifPresent: [ :elements |
 		elements do: [ :e | 
-			self doUnhighlightElement: e.
 			self announceUnHightlight: e source: anElementOrView.
 			 ].
 		 ].

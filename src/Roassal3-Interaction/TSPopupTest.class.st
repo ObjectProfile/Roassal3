@@ -2,8 +2,8 @@ Class {
 	#name : #TSPopupTest,
 	#superclass : #TSTest,
 	#instVars : [
-		'view',
-		'elements'
+		'canvas',
+		'shapes'
 	],
 	#category : #'Roassal3-Interaction-Tests'
 }
@@ -11,15 +11,15 @@ Class {
 { #category : #running }
 TSPopupTest >> setUp [
 	super setUp.
-	view := RSView new.
-	elements := RSShapeBuilder box elementsOn: #(1 2).
-	view addAll: elements
+	canvas := TSCanvas new.
+	shapes := #(1 2) collect: [ :m | TSBox new model: m; yourself ] as: TSGroup.
+	canvas addAll: shapes
 ]
 
 { #category : #tests }
 TSPopupTest >> testNoPopup [
-	elements first announce: TSMouseEnter.
-	self assert: view numberOfShapes equals: elements size.
+	shapes first announce: TSMouseEnter.
+	self assert: canvas numberOfShapes equals: shapes size.
 ]
 
 { #category : #tests }
@@ -33,10 +33,10 @@ TSPopupTest >> testPopupOnElementNotAddedToAView [
 
 { #category : #tests }
 TSPopupTest >> testWithPopup [
-	elements @ TSPopup.
-	self assert: view fixedShapes size equals: 0 .
+	shapes @ TSPopup.
+	self assert: canvas fixedShapes size equals: 0 .
 	
-	elements first announce: TSMouseMove.
-	self assert: view numberOfShapes equals: elements size.
-	self assert: view fixedShapes size equals: 1.
+	shapes first announce: TSMouseMove.
+	self assert: canvas numberOfShapes equals: shapes size.
+	self assert: canvas fixedShapes size equals: 1.
 ]

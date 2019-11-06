@@ -23,7 +23,7 @@ TSInspectableExample >> example01SimpleExample [
 			yourself ] as: TSGroup.
 	view addAll: boxes.
 		
-	edges := RSEdgeBuilder line
+	edges := TSEdgeBuilder line
 		view: view;
 		objects: classes;
 		withVerticalAttachPoint;
@@ -91,7 +91,7 @@ TSInspectableExample >> example02Inspect [
 			view edges copy do: #remove.
 			view elements do: [:e |
 				e attributes at: #old put: e position ].
-			RSEdgeBuilder arrowedLine 
+			TSEdgeBuilder arrowedLine 
 				view: view;
 				connectFrom: #superclass.
 			view elements do: #updateEdgesOFF.

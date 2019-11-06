@@ -7,7 +7,7 @@ Class {
 	#superclass : #OrderedCollection,
 	#instVars : [
 		'allMethods',
-		'elementFromModelCache'
+		'shapeFromModelCache'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -19,74 +19,19 @@ TSGroup >> @ int [
 
 { #category : #accessing }
 TSGroup >> add: element [
-	self resetElementFromModelCache.
+	self resetShapeFromModelCache.
 	^ super add: element
 ]
 
 { #category : #accessing }
 TSGroup >> addAll: elements [
-	self resetElementFromModelCache.
+	self resetShapeFromModelCache.
 	^ super addAll: elements
 ]
 
 { #category : #converting }
 TSGroup >> asGroup [
 	^ self
-]
-
-{ #category : #accessing }
-TSGroup >> elementFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	
-	| t key|
-	self elementFromModelCache at: anObject ifPresent: [ :v |
-		v isCollection ifFalse: [ ^ v ] ].
-
-	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
-				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
-	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
-	self elementFromModelCache at: key put: t.
-	^ t
-]
-
-{ #category : #accessing }
-TSGroup >> elementFromModelCache [
-	"Define a cache for the element lookup from models"
-	elementFromModelCache ifNil: [ elementFromModelCache := Dictionary new ].
-	^ elementFromModelCache
-]
-
-{ #category : #accessing }
-TSGroup >> elementsFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
-
-	| t key |
-	self elementFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
-
-	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self select: [ :el | el model == anObject ] ]
-				ifFalse: [ self select: [ :el | el model = anObject ] ].
-
-	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
-	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
-	self elementFromModelCache at: key put: t.
-	^ t
-]
-
-{ #category : #accessing }
-TSGroup >> elementsFromModels: objects [
-	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
-	| answer t |
-	self assert: [ objects isCollection ] description: 'Provide a set of elements instead of one single element'. 
-	answer := TSGroup new.
-	objects do: [ :o |
-		t := self elementsFromModel: o.
-		t notNil ifTrue: [ answer addAll: t ] ].
-	^ answer
 ]
 
 { #category : #accessing }
@@ -119,9 +64,64 @@ TSGroup >> pushFront [
 ]
 
 { #category : #accessing }
-TSGroup >> resetElementFromModelCache [
+TSGroup >> resetShapeFromModelCache [
 	"Reset the cache"
-	elementFromModelCache := nil
+	shapeFromModelCache := nil
+]
+
+{ #category : #accessing }
+TSGroup >> shapeFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	
+	| t key|
+	self shapeFromModelCache at: anObject ifPresent: [ :v |
+		v isCollection ifFalse: [ ^ v ] ].
+
+	"We have this line because of a bug of the implementation of CompiledMethod>>#="
+	t := (anObject class == CompiledMethod) 
+				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
+				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
+	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
+	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
+	self shapeFromModelCache at: key put: t.
+	^ t
+]
+
+{ #category : #accessing }
+TSGroup >> shapeFromModelCache [
+	"Define a cache for the element lookup from models"
+	shapeFromModelCache ifNil: [ shapeFromModelCache := Dictionary new ].
+	^ shapeFromModelCache
+]
+
+{ #category : #accessing }
+TSGroup >> shapesFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
+
+	| t key |
+	self shapeFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
+
+	"We have this line because of a bug of the implementation of CompiledMethod>>#="
+	t := (anObject class == CompiledMethod) 
+				ifTrue: [ self select: [ :el | el model == anObject ] ]
+				ifFalse: [ self select: [ :el | el model = anObject ] ].
+
+	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
+	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
+	self shapeFromModelCache at: key put: t.
+	^ t
+]
+
+{ #category : #accessing }
+TSGroup >> shapesFromModels: objects [
+	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	| answer t |
+	self assert: [ objects isCollection ] description: 'Provide a set of shapes instead of one single shape'. 
+	answer := TSGroup new.
+	objects do: [ :o |
+		t := self shapesFromModel: o.
+		t notNil ifTrue: [ answer addAll: t ] ].
+	^ answer
 ]
 
 { #category : #transforming }

@@ -25,38 +25,38 @@ v open
 ```
 "
 Class {
-	#name : #RSEdgeBuilder,
+	#name : #TSEdgeBuilder,
 	#superclass : #TSObject,
 	#instVars : [
-		'view',
 		'shape',
 		'allowRepetition',
-		'fromElements',
-		'toElements',
 		'shouldMoveBehind',
 		'createdEdges',
-		'viewHasBeenManuallySet',
 		'beDirectional',
 		'attachPoint',
-		'controlPoints'
+		'controlPoints',
+		'fromShapes',
+		'toShapes',
+		'canvas',
+		'canvasHasBeenManuallySet'
 	],
-	#category : #'Roassal3-Scripting-Core'
+	#category : #'Roassal3-Shapes-Graph'
 }
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> arrowedLine [
+TSEdgeBuilder class >> arrowedLine [
 	| marker shape |
 	marker := TSPolygon new
 		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
 		paint: nil;
-		border: (TSBorder new).
+		withBorder.
 	shape := TSLine new.
 	shape markerEnd: marker.
 	^ self new: shape
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> horizontalLine: aShape [
+TSEdgeBuilder class >> horizontalLine: aShape [
 	^ (self new: aShape) controlPoints: [:from :to | 
 		| mid |
 		mid := (from + to)/2.
@@ -70,12 +70,12 @@ RSEdgeBuilder class >> horizontalLine: aShape [
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> line [
+TSEdgeBuilder class >> line [
 	^ self new: TSLine new
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> new: aTSShape [
+TSEdgeBuilder class >> new: aTSShape [
 	 ^ self new 
 		shape: aTSShape;
 		yourself
@@ -83,17 +83,17 @@ RSEdgeBuilder class >> new: aTSShape [
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> orthoHorizontal [
+TSEdgeBuilder class >> orthoHorizontal [
 	^ self horizontalLine: TSPolyline new.
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> orthoVertical [
+TSEdgeBuilder class >> orthoVertical [
 	^ self verticalLine: TSPolyline new.
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> verticalLine: aShape [
+TSEdgeBuilder class >> verticalLine: aShape [
 	^ (self new: aShape) controlPoints: [ :from :to | 
 		| mid |
 		mid := (from + to)/2.
@@ -107,77 +107,93 @@ RSEdgeBuilder class >> verticalLine: aShape [
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> addInteraction: anInteraction [
+TSEdgeBuilder >> addInteraction: anInteraction [
 	self shape addInteraction: anInteraction
 ]
 
 { #category : #'public repetition' }
-RSEdgeBuilder >> allowRepetition [
+TSEdgeBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
 { #category : #'public - attach point' }
-RSEdgeBuilder >> attachPoint [
+TSEdgeBuilder >> attachPoint [
 	^ attachPoint
 ]
 
 { #category : #'public - attach point' }
-RSEdgeBuilder >> attachPoint: anAttachPoint [
+TSEdgeBuilder >> attachPoint: anAttachPoint [
 	attachPoint := anAttachPoint
 ]
 
 { #category : #'public - configuration' }
-RSEdgeBuilder >> beDirectional [
+TSEdgeBuilder >> beDirectional [
 	"When edges are created, this allow for having edges going from A to B, and from B to A"
 	beDirectional := true
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> border [
+TSEdgeBuilder >> border [
 	^ self shape border
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> border: aBorder [
+TSEdgeBuilder >> border: aBorder [
 	self shape border: aBorder
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> borderColor: aColor [
+TSEdgeBuilder >> borderColor: aColor [
 	self shape borderColor: aColor
 ]
 
+{ #category : #accessing }
+TSEdgeBuilder >> canvas [
+	^ canvas
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> canvas: aCanvas [
+	canvasHasBeenManuallySet := true.
+	canvas := aCanvas
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> canvasNodes [
+	canvas ifNil: [ ^ #() ].
+	^ canvas nodes
+]
+
 { #category : #'public - shape' }
-RSEdgeBuilder >> color: aColor [
+TSEdgeBuilder >> color: aColor [
 	self shape color: aColor
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectFrom: aBlockOrASymbol [
+TSEdgeBuilder >> connectFrom: aBlockOrASymbol [
 	^ self connectFrom: aBlockOrASymbol to: [ :each | each ]
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
+TSEdgeBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	| toElement fromElement |
 	self resetCreatedEdges.
-	self fromElements copy
-		do: [ :e | 
-			fromElement := self fromElements elementFromModel: (aFromBlock rsValue: e model).
-			toElement := self toElements elementFromModel: (aBlockOrASymbol rsValue: e model).
+	self fromShapes copy do: [ :e | 
+			fromElement := self fromShapes shapeFromModel: (aFromBlock rsValue: e model).
+			toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
 			toElement ifNotNil: [ self createEdgeIfNecessaryFrom: fromElement to: toElement ] ].
 	self moveBehindIfNecessary: createdEdges.
 	^ createdEdges
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
+TSEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 
 	| fromElement tes |
 	self resetCreatedEdges.
-	self fromElements copy do: [ :e | 
-		fromElement := self fromElements elementFromModel: (aFromBlock rsValue: e model).
-		tes := self toElements elementsFromModels: (aBlockOrASymbol rsValue: e model).
+	self fromShapes copy do: [ :e | 
+		fromElement := self fromShapes shapeFromModel: (aFromBlock rsValue: e model).
+		tes := self toShapes shapesFromModels: (aBlockOrASymbol rsValue: e model).
 		tes ifNotNil: [ 
 			tes do: [ :toE | 
 				self createEdgeIfNecessaryFrom: fromElement to: toE ] ] ].
@@ -186,19 +202,19 @@ RSEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectFromAll: aFromBlockOrSymbol [
+TSEdgeBuilder >> connectFromAll: aFromBlockOrSymbol [
 	^ self connectFromAll: aFromBlockOrSymbol to: [ :each | each ]
 
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
+TSEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 	| toElement tfromElements |
 	self resetCreatedEdges.
-	self fromElements copy do: [ :e | 
-		tfromElements := self fromElements elementsFromModels: (aFromBlockOrSymbol rsValue: e model). 
-		toElement := self toElements elementFromModel: (aBlockOrASymbol rsValue: e model).
+	self fromShapes copy do: [ :e | 
+		tfromElements := self fromShapes shapesFromModels: (aFromBlockOrSymbol rsValue: e model). 
+		toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
 		tfromElements ifNotNil: [ 
 			tfromElements do: [ :fromElement | 
 				self createEdgeIfNecessaryFrom: fromElement to: toElement ] ] ].
@@ -207,17 +223,17 @@ RSEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectTo: aBlockOrASymbol [
+TSEdgeBuilder >> connectTo: aBlockOrASymbol [
 	^ self connectFrom: [ :each | each ] to: aBlockOrASymbol
 ]
 
 { #category : #public }
-RSEdgeBuilder >> connectToAll: aBlockOrASymbol [
+TSEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	"Should this method use connectFrom:ToAll: ?????"
 	| tmptoElements |
 	self resetCreatedEdges.
-	self fromElements copy do: [ :e | 
-		tmptoElements := self toElements elementsFromModels: (aBlockOrASymbol rsValue: e model).
+	self fromShapes copy do: [ :e | 
+		tmptoElements := self toShapes shapesFromModels: (aBlockOrASymbol rsValue: e model).
 		tmptoElements ifNotNil: [ 
 			tmptoElements do: [ :toE | 
 				self createEdgeIfNecessaryFrom: e to: toE ] ] ].
@@ -226,133 +242,114 @@ RSEdgeBuilder >> connectToAll: aBlockOrASymbol [
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> controlPoints [
+TSEdgeBuilder >> controlPoints [
 	^ controlPoints
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> controlPoints: aBlock [
+TSEdgeBuilder >> controlPoints: aBlock [
 	controlPoints := aBlock
 ]
 
 { #category : #'private - utility' }
-RSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
+TSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	"This is a private method. Create, if necessary, an edge between two elements"
 	(self shouldCreateEdgeFrom: fromElement to: toElement)
 		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
 ]
 
 { #category : #'private - utility' }
-RSEdgeBuilder >> edgeFrom: source to: target [ 
+TSEdgeBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
 	| edge |
-	
-	edge := RSEdge new
+	edge := self shape copy
 		model: source model -> target model;
 		attachPoint: self attachPoint;
 		from: source;
 		to: target;
-		shape: self shape copy;
 		yourself.
-	view ifNotNil: [ view add: edge ].
-	controlPoints ifNotNil: [ edge controlPoints: controlPoints ].
+	canvas ifNotNil: [ canvas add: edge ].
+	controlPoints ifNotNil: [ edge controlPointsBlock: controlPoints ].
 	^ edge
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> elements: someElements [
-	self toElements: someElements.
-	self fromElements: someElements
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> fromElements [
-	fromElements ifNil: [ ^ self viewElements  ].
-	^ fromElements
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> fromElements: someElements [
-	fromElements := someElements
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> fromObjects [
+TSEdgeBuilder >> fromObjects [
 	"Return the list of objects considered as targets for the edges"
-	^ self fromElements collect: #model
+	^ self fromShapes collect: #model
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> fromObjects: someObjectsOrABlock [
+TSEdgeBuilder >> fromObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
+	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	 
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
-		ifTrue: [ self fromElements: (view elementsFromModels: someObjectsOrABlock) ]
-		ifFalse: [ self fromElements: (view elements select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
+		ifTrue: [ self fromShapes: (canvas shapesFromModels: someObjectsOrABlock) ]
+		ifFalse: [ self fromShapes: (canvas nodes select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> fromShapes [
+	fromShapes ifNil: [ ^ self canvasNodes ].
+	^ fromShapes
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> fromShapes: someShapes [
+	fromShapes := someShapes asGroup
 ]
 
 { #category : #initialization }
-RSEdgeBuilder >> initialize [
+TSEdgeBuilder >> initialize [
 	super initialize.
 	self noRepetition.
 	shouldMoveBehind := false.
 	
 	"The view has to be explicitly set by the end-user"
-	viewHasBeenManuallySet := false.
+	canvasHasBeenManuallySet := false.
 	"We could have edges from A to B, and from B to A"
 	self beDirectional.
 	self attachPoint: TSCenteredAttachPoint new.
 ]
 
 { #category : #testing }
-RSEdgeBuilder >> isBidirectional [
+TSEdgeBuilder >> isBidirectional [
 	"Return true or false, indicating whether the edge builder is bidirectional or not (i.e., if 
 	edges from A to B, __and__ B to A can be created"
 	^ beDirectional 
 ]
 
-{ #category : #'private - utility' }
-RSEdgeBuilder >> linkElements: someElements [
-	"Link the first element to the second, the second to the third and so on"
-	| head |
-	head := someElements first.
-	someElements allButFirst do: [ :e |
-		self edgeFrom: head to: e.
-		head := e.
-		]
-]
-
 { #category : #'public - shape' }
-RSEdgeBuilder >> markerEnd: aMarker [
+TSEdgeBuilder >> markerEnd: aMarker [
 	self shape markerEnd: aMarker
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> markerStart: aMarker [
+TSEdgeBuilder >> markerStart: aMarker [
 	self shape markerStart: aMarker
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> moveBehind [
+TSEdgeBuilder >> moveBehind [
 	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"
 	shouldMoveBehind := true
 ]
 
 { #category : #'private - utility' }
-RSEdgeBuilder >> moveBehindIfNecessary: someEdges [
+TSEdgeBuilder >> moveBehindIfNecessary: someEdges [
 	shouldMoveBehind ifFalse: [ ^ self ].
 	someEdges pushBack
 ]
 
 { #category : #'public - configuration' }
-RSEdgeBuilder >> noBidirectional [
+TSEdgeBuilder >> noBidirectional [
 	"When edges are created, this does not allow for having edges going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
 	beDirectional := false
 ]
 
 { #category : #'public - configuration' }
-RSEdgeBuilder >> noRepetition [
+TSEdgeBuilder >> noRepetition [
 	"
 	Avoid having more than one edge between two elements
 
@@ -370,40 +367,46 @@ RSEdgeBuilder >> noRepetition [
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> object: anObject [
+TSEdgeBuilder >> object: anObject [
 	^ self objects: (Array with: anObject)
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> objects: someObjectsOrABlock [
+TSEdgeBuilder >> objects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
+	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
 ]
 
 { #category : #'private - utility' }
-RSEdgeBuilder >> resetCreatedEdges [
+TSEdgeBuilder >> resetCreatedEdges [
 	createdEdges := TSGroup new
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> shape [
+TSEdgeBuilder >> shape [
 	^ shape
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> shape: aTSShape [
+TSEdgeBuilder >> shape: aTSShape [
 	shape := aTSShape
 ]
 
+{ #category : #accessing }
+TSEdgeBuilder >> shapes: someShapes [
+	self toShapes: someShapes.
+	self fromShapes: someShapes
+]
+
 { #category : #'public repetition' }
-RSEdgeBuilder >> shouldAllowRepetition [
+TSEdgeBuilder >> shouldAllowRepetition [
 	^ allowRepetition
 ]
 
 { #category : #testing }
-RSEdgeBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
+TSEdgeBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
 	"Return true if an edge has to be created"
 	fromElement == toElement ifTrue: [ ^ false ].
 	(fromElement isNil or: [ toElement isNil ]) ifTrue: [ ^ false ].
@@ -413,7 +416,7 @@ RSEdgeBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
 ]
 
 { #category : #'public using source' }
-RSEdgeBuilder >> source: objects connectFrom: fromblock to: toBlock [
+TSEdgeBuilder >> source: objects connectFrom: fromblock to: toBlock [
 	"Define some edges from objects that are not part of the view
 	
 nbOfNodes := 40.
@@ -451,7 +454,7 @@ b
 ]
 
 { #category : #'public using source' }
-RSEdgeBuilder >> source: objects connectFrom: fromblock toAll: toBlock [
+TSEdgeBuilder >> source: objects connectFrom: fromblock toAll: toBlock [
 	"Define some edges from objects that are not part of the view
 	
 nbOfNodes := 40.
@@ -489,7 +492,7 @@ b
 ]
 
 { #category : #'public using source' }
-RSEdgeBuilder >> source: objects connectFromAll: fromBlock to: toBlock [
+TSEdgeBuilder >> source: objects connectFromAll: fromBlock to: toBlock [
 	"Define some edges from objects that are not part of the view
 	
 nbOfNodes := 40.
@@ -527,39 +530,39 @@ b
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> toElements [
-	toElements ifNil: [ ^ self viewElements ].
-	^ toElements
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> toElements: someElements [
-	toElements := someElements
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> toObject: anObject [
+TSEdgeBuilder >> toObject: anObject [
 	^ self toObjects: (Array with: anObject)
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> toObjects [
+TSEdgeBuilder >> toObjects [
 	"Return the list of objects considered as sources for the edges"
-	^ self toElements collect: #model
+	^ self toShapes collect: #model
 ]
 
 { #category : #accessing }
-RSEdgeBuilder >> toObjects: someObjectsOrABlock [
+TSEdgeBuilder >> toObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
+	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	 
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
-		ifTrue: [ self toElements: (view elementsFromModels: someObjectsOrABlock) ]
-		ifFalse: [ self toElements: (view elements select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
+		ifTrue: [ self toShapes: (canvas shapesFromModels: someObjectsOrABlock) ]
+		ifFalse: [ self toShapes: (canvas nodes select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> toShapes [
+	toShapes ifNil: [ ^ self canvasNodes ].
+	^ toShapes
+]
+
+{ #category : #accessing }
+TSEdgeBuilder >> toShapes: someShapes [
+	toShapes := someShapes asGroup
 ]
 
 { #category : #'public associations' }
-RSEdgeBuilder >> useAssociation: assoc [
+TSEdgeBuilder >> useAssociation: assoc [
 	"assoc have to be between model objects"
 	| result |
 	self assert: [ assoc isKindOf: Association ] description: 'Please, provide an association instead'.
@@ -570,7 +573,7 @@ RSEdgeBuilder >> useAssociation: assoc [
 ]
 
 { #category : #'public associations' }
-RSEdgeBuilder >> useAssociations: associations [
+TSEdgeBuilder >> useAssociations: associations [
 	"associations have to be between model objects"
 	
 	"
@@ -590,8 +593,8 @@ b
 	| fromElement toElement |
 	createdEdges := TSGroup new.
 	associations do: [ :assoc |
-		fromElement := self fromElements elementFromModel: assoc key.
-		toElement := self toElements elementFromModel: assoc value.
+		fromElement := self fromShapes shapeFromModel: assoc key.
+		toElement := self toShapes shapeFromModel: assoc value.
 		(fromElement notNil and: [ toElement notNil ])
 			ifTrue: [ self createEdgeIfNecessaryFrom: fromElement to: toElement ] ].
 	self moveBehindIfNecessary: createdEdges.
@@ -599,34 +602,22 @@ b
 ]
 
 { #category : #'public associations' }
-RSEdgeBuilder >> useElementAssociations: associationsBetweenElements [
+TSEdgeBuilder >> useElementAssociations: associationsBetweenElements [
 	associationsBetweenElements do: [ :assoc |
 		self edgeFrom: assoc key to: assoc value ]
 ]
 
-{ #category : #accessing }
-RSEdgeBuilder >> view [
-	^ view
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> view: aView [
-	viewHasBeenManuallySet := true.
-	view := aView
-]
-
-{ #category : #accessing }
-RSEdgeBuilder >> viewElements [
-	view ifNil: [ ^ #() ].
-	^ view elements.
+{ #category : #'public - shape' }
+TSEdgeBuilder >> width: aNumber [
+	self shape width: aNumber
 ]
 
 { #category : #'public - attach point' }
-RSEdgeBuilder >> withBorderAttachPoint [
+TSEdgeBuilder >> withBorderAttachPoint [
 	self attachPoint: TSBorderAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
-RSEdgeBuilder >> withVerticalAttachPoint [
+TSEdgeBuilder >> withVerticalAttachPoint [
 	self attachPoint: TSVerticalAttachPoint new.
 ]

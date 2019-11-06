@@ -1,16 +1,16 @@
 Extension { #name : #TSGroup }
 
 { #category : #'*Roassal3-Scripting' }
-TSGroup >> asElement [ 
-	^ self asElementOn: nil
+TSGroup >> asShape [
+	^ self asShapeOn: nil
 ]
 
 { #category : #'*Roassal3-Scripting' }
-TSGroup >> asElementOn: model [
-	^ RSComposite new 
+TSGroup >> asShapeOn: model [
+	^ TSComposite new 
 		model: model;
-		shape: TSComposite new;
-		shapes: self.
+		shapes: self
+		yourself
 ]
 
 { #category : #'*Roassal3-Scripting' }

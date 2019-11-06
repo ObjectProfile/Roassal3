@@ -11,7 +11,7 @@ Class {
 TSLabelTest >> testDrawBorderLabel [
 	|  |
 	c addShape: (TSLabel new
-		border: (TSBorder new);
+		withBorder;
 		color: (Color purple alpha: 0.5);
 		fontName: 'Source Sans Pro';
 		position: -50 @ 0;

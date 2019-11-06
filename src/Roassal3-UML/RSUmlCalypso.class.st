@@ -36,8 +36,7 @@ RSUMLCalypso >> build [
 		useBasicZoom;
 		maxScale: 1.
 	self applyTheme: builder.
-	builder renderer methodShape
-		interactionDo: [ :i | i popup multiline ].
+	builder renderer methodShape popup.
 	builder view addInteraction: controls.
 	builder classes: self classes.
 	builder build.

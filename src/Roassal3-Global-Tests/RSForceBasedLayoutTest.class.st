@@ -2,24 +2,23 @@ Class {
 	#name : #RSForceBasedLayoutTest,
 	#superclass : #TSTest,
 	#instVars : [
-		'view',
-		'classes'
+		'classes',
+		'canvas'
 	],
 	#category : #'Roassal3-Global-Tests-Layouts'
 }
 
 { #category : #running }
 RSForceBasedLayoutTest >> setUp [
-	view := RSView new.
-	classes := RSShapeBuilder box
-		size: 10;
-		elementsOn: Collection withAllSubclasses.
-	RSEdgeBuilder line
-		view: view;
-		elements: classes;
+	canvas := TSCanvas new.
+	classes := Collection withAllSubclasses collect:[:cls |
+		TSBox new model: cls; size: 10; yourself].
+	TSEdgeBuilder line
+		canvas: canvas;
+		shapes: classes;
 		color: (Color blue alpha: 0.5);
 		connectFrom: #superclass to: #yourself.
-	view addAll: classes.
+	canvas addAll: classes.
 ]
 
 { #category : #tests }
@@ -28,7 +27,7 @@ RSForceBasedLayoutTest >> testAddNodesAndEdges [
 	TSForceBasedLayout new
 		start;
 		addNodes: classes;
-		addEdges: view edges;
+		addEdges: canvas edges;
 		step.
 		
 ]

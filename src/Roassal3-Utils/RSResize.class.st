@@ -22,62 +22,62 @@ Class {
 }
 
 { #category : #'accessing - computed' }
-RSResize >> biggestElement [
-	^ elements inject: elements anyOne into: [ :biggestElement :e | 
-			biggestElement extent < e extent
-				ifTrue: [ e ] ifFalse: [ biggestElement ] ] 
-]
-
-{ #category : #'accessing - computed' }
 RSResize >> biggestExtent [
-	fixedElement ifNotNil: [ ^ fixedElement extent ].
-	^ elements inject: 0 @ 0 into: [ :maxExtent :e | 
+	fixedShape ifNotNil: [ ^ fixedShape extent ].
+	^ shapes inject: 0 @ 0 into: [ :maxExtent :e | 
 			maxExtent max: e extent ] 
 ]
 
 { #category : #'accessing - computed' }
-RSResize >> highestElement [
-	^ elements inject: elements anyOne into: [ :highestElement :e | 
-			highestElement extent y < e extent y
-				ifTrue: [ e ] ifFalse: [ highestElement ] ] 
+RSResize >> biggestShape [
+	^ shapes inject: shapes anyOne into: [ :biggestShape :e | 
+			biggestShape extent < e extent
+				ifTrue: [ e ] ifFalse: [ biggestShape ] ] 
+]
+
+{ #category : #'accessing - computed' }
+RSResize >> highestShape [
+	^ shapes inject: shapes anyOne into: [ :highestShape :e | 
+			highestShape extent y < e extent y
+				ifTrue: [ e ] ifFalse: [ highestShape ] ] 
 ]
 
 { #category : #public }
 RSResize >> sameHeight [
-	self ifNoFixedElementThen: [ self useHighestElement ].
-	elements do: [ :e | e height: self fixedElement height ]
+	self ifNoFixedShapeThen: [ self useHighestShape ].
+	shapes do: [ :e | e height: self fixedShape height ]
 ]
 
 { #category : #public }
 RSResize >> sameSize [
-	self ifNoFixedElementThen: [ self useBiggestElement ].
-	elements do: [ :e | e extent: self fixedElement extent ]
+	self ifNoFixedShapeThen: [ self useBiggestShape ].
+	shapes do: [ :e | e extent: self fixedShape extent ]
 ]
 
 { #category : #public }
 RSResize >> sameWidth [
-	self ifNoFixedElementThen: [ self useWidestElement ].
-	elements do: [ :e | e width: self fixedElement width ]
+	self ifNoFixedShapeThen: [ self useWidestShape ].
+	shapes do: [ :e | e width: self fixedShape width ]
 ]
 
 { #category : #'public - configuration' }
-RSResize >> useBiggestElement [
-	self fixedElement: self biggestElement
+RSResize >> useBiggestShape [
+	self fixedShape: self biggestShape
 ]
 
 { #category : #'public - configuration' }
-RSResize >> useHighestElement [
-	self fixedElement: self highestElement 
+RSResize >> useHighestShape [
+	self fixedShape: self highestShape 
 ]
 
 { #category : #'public - configuration' }
-RSResize >> useWidestElement [
-	self fixedElement: self widestElement
+RSResize >> useWidestShape [
+	self fixedShape: self widestElement
 ]
 
 { #category : #'accessing - computed' }
 RSResize >> widestElement [
-	^ elements inject: elements anyOne into: [ :widestElement :e | 
+	^ shapes inject: shapes anyOne into: [ :widestElement :e | 
 			widestElement extent x < e extent x
 				ifTrue: [ e ] ifFalse: [ widestElement ] ] 
 ]
