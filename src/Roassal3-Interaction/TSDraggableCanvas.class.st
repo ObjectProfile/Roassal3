@@ -30,7 +30,7 @@ TSDraggableCanvas class >> right [
 { #category : #mouse }
 TSDraggableCanvas >> all [
 	"Any mouse button can be used to drag and drop the view"
-	mouseEvent := TSMouseDragStart.
+	mouseEvent := RSMouseDragStart.
 ]
 
 { #category : #computing }
@@ -60,12 +60,12 @@ TSDraggableCanvas >> initialize [
 
 { #category : #mouse }
 TSDraggableCanvas >> left [
-	mouseEvent := TSMouseLeftDragStart
+	mouseEvent := RSMouseLeftDragStart
 ]
 
 { #category : #mouse }
 TSDraggableCanvas >> middle [
-	mouseEvent := TSMouseMiddleDragStart
+	mouseEvent := RSMouseMiddleDragStart
 ]
 
 { #category : #events }
@@ -125,8 +125,8 @@ TSDraggableCanvas >> mouseStart: evt [
 TSDraggableCanvas >> onShape: aCanvas [
 	aCanvas 
 		when: self mouseEvent do: [ :evt | self mouseStart: evt ];
-		when: TSMouseDragging do: [ :evt | self mouseMove: evt ];
-		when: TSMouseDragEnd do: [ :evt | self mouseEnd: evt ].
+		when: RSMouseDragging do: [ :evt | self mouseMove: evt ];
+		when: RSMouseDragEnd do: [ :evt | self mouseEnd: evt ].
 ]
 
 { #category : #rendering }
@@ -136,5 +136,5 @@ TSDraggableCanvas >> renderOn: lb [
 
 { #category : #mouse }
 TSDraggableCanvas >> right [
-	mouseEvent := TSMouseRightDragStart.
+	mouseEvent := RSMouseRightDragStart.
 ]

@@ -24,7 +24,7 @@ RSBasicUMLPackageRenderer >> initializeShape [
 	packageShape := RSShapeBuilder composite shapes: [ :pck | 
 			| title group box1Element box2Element rec1 rec2 |
 			 
-			group := TSGroup new.
+			group := RSGroup new.
 			group add: (self packageNameShape elementOn: pck).
 
 			title := group first.

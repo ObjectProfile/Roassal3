@@ -30,8 +30,8 @@ TSKeyNavigationCanvas >> initialize [
 { #category : #hooks }
 TSKeyNavigationCanvas >> onShape: aCanvas [
 	aCanvas 
-		when: TSKeyDown do: [ :evt | self processKeyDown: evt ];
-		when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
+		when: RSKeyDown do: [ :evt | self processKeyDown: evt ];
+		when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
 ]
 
 { #category : #events }

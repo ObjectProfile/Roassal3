@@ -3,7 +3,7 @@ I have basic information of RSControlsView
 "
 Class {
 	#name : #TSControlConfiguration,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'padding',
 		'maxScale',

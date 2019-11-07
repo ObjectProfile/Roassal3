@@ -23,7 +23,7 @@ TSBox >> cornerRadius [
 { #category : #accessing }
 TSBox >> cornerRadius: aTSCornerRadius [
 	aTSCornerRadius isNumber ifTrue: [ 
-		cornerRadius := TSCornerRadius new radius: aTSCornerRadius.
+		cornerRadius := RSCornerRadius new radius: aTSCornerRadius.
 		^ self	 ].
 	cornerRadius := aTSCornerRadius 
 ]

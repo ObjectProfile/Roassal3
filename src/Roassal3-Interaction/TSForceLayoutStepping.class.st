@@ -15,13 +15,13 @@ Class {
 TSForceLayoutStepping >> addEventsTo: el [
 	| mock |
 	el 
-		when: TSMouseDragStart do: [ :evt | 
+		when: RSMouseDragStart do: [ :evt | 
 			mock := layout mockElementAt: el.
 			mock isFixed: true.
 			self startForceAnimation: el view ];
-		when: TSMouseDragging do: [ :evt |
+		when: RSMouseDragging do: [ :evt |
 			mock fixPosition: el position ];
-		when: TSMouseDragEnd do:[:evt | 
+		when: RSMouseDragEnd do:[:evt | 
 			mock isFixed: false.
 			mock := nil.
 			self startSimpleAnimation: el view ].

@@ -18,7 +18,7 @@ TSComposite >> add: aShape [
 
 { #category : #adding }
 TSComposite >> addAll: aCollection [
-	shapes ifNil: [ shapes := TSGroup new: aCollection size ].
+	shapes ifNil: [ shapes := RSGroup new: aCollection size ].
 	aCollection do: [ :s| self add: s shape ].
 ]
 
@@ -70,7 +70,7 @@ TSComposite >> padding: anObject [
 	
 	| margin rect center temp |
 	temp := shapes 
-		ifNil: [ TSGroup new: 0 ]
+		ifNil: [ RSGroup new: 0 ]
 		ifNotNil: [shapes].
 	margin := anObject asMargin. 
 	rect := temp encompassingRectangle.
@@ -87,7 +87,7 @@ TSComposite >> removeShape: shape [
 	| evt |
 	shapes remove: shape.
 	shape parent: nil.
-	evt := TSShapeRemovedEvent new shape: shape.
+	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.
 	shape announce: evt.
 	
@@ -128,7 +128,7 @@ TSComposite >> shapeWithActionForPosition: position [
 
 { #category : #accessing }
 TSComposite >> shapes [
-	^ shapes ifNil: [ shapes := TSGroup new ]
+	^ shapes ifNil: [ shapes := RSGroup new ]
 ]
 
 { #category : #accessing }

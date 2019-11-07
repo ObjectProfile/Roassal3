@@ -29,7 +29,7 @@ RSRotatedPieLabel >> onElement: view [
 			line model noPaint.
 			 ]
 		 ].
-	pieBuilder elements when: TSMouseClick do: [ animation toggle ].
+	pieBuilder elements when: RSMouseClick do: [ animation toggle ].
 	update := [ :t |
 		pieBuilder elements do: [ :e | 
 			| att a b ang ext x p1 p2 p3 line l |

@@ -81,6 +81,6 @@ TSInspectable >> inspectShapeBlock: oneArgBlock [
 { #category : #hooks }
 TSInspectable >> onShape: aShape [
 	
-	aShape when: TSMouseLeftClick do: [ :evt | 
+	aShape when: RSMouseLeftClick do: [ :evt | 
 		self inspectElement: aShape ]
 ]

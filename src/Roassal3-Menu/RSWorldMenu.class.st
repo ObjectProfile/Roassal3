@@ -3,7 +3,7 @@ I am have the menu items for the menu Roassal3 on Tools
 "
 Class {
 	#name : #RSWorldMenu,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#classInstVars : [
 		'discord',
 		'roassalIcon'

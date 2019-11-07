@@ -3,7 +3,7 @@ I use the RSShapeBuilder
 "
 Class {
 	#name : #RSShapeExamples,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#category : #'Roassal3-Scripting-Examples'
 }
 
@@ -227,7 +227,7 @@ RSShapeExamples >> example07NormalizeColor [
 	TSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
-	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
 	v @ TSControlsCanvas.
 	v open
 	
@@ -296,7 +296,7 @@ RSShapeExamples >> example10Donut [
 	color := TSScale linear
 		domain: #(1 7 10);
 		range: #('brown' '4682b4' 'brown').
-	border := TSBorder new.
+	border := RSBorder new.
 	1 to: 10 do: [ :i |
 		shape := RSShapeBuilder circle
 			radius: 4.5;
@@ -339,7 +339,7 @@ RSShapeExamples >> example11ClassTree [
 				popup ];
 		shapes: [ :cls | 
 			| group lb s |
-			group := TSGroup new.
+			group := RSGroup new.
 			s := shape elementOn: cls.
 			lb := label elementOn: cls.
 			group add: lb.
@@ -355,7 +355,7 @@ RSShapeExamples >> example11ClassTree [
 	v edges pushBack.
 	TSTreeLayout on: elements.
 	v @ TSControlsCanvas.
-	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Collection withAllSubclasses'
 ]
 
@@ -365,7 +365,7 @@ RSShapeExamples >> example12Polygons [
 	| view color border |
 	view := RSView new.
 	color:= TSGradientPalette gradient21.
-	border := TSBorder new paint: Color black; width: 2.
+	border := RSBorder new paint: Color black; width: 2.
 	#('diamond' 'square' 'heptagon' 'hexagon' 
 	'octagon' 'pentagon' 'rhomboid' 'star'
 	'triangle' 'vee' 'cross' 'arrow'
@@ -387,7 +387,7 @@ RSShapeExamples >> example12Polygons [
 		onStepDo: [ :t | 
 			view elements do: [ :e | e size: t ] ]."
 	TSGridLayout new gapSize: 50; on: view elements.
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	view @ TSControlsCanvas.
 	view open setLabel: 'Polygon shapes'.
 ]
@@ -409,13 +409,13 @@ RSShapeExamples >> example13Arrow [
 		stop: 100 asPoint.
 	triangle := RSShapeBuilder triangle
 		color: paint;
-		border: (TSBorder new width: 20; joinRound; paint: paint);
+		border: (RSBorder new width: 20; joinRound; paint: paint);
 		extent: 200@100.
 	view add: triangle element.
 	box := RSShapeBuilder box
 		color: paint;
 		extent: 120@200;
-		cornerRadius: (TSCornerRadius new bottom: 20).
+		cornerRadius: (RSCornerRadius new bottom: 20).
 	view add: box element.
 	view elements second pushBack.
 	
@@ -429,7 +429,7 @@ RSShapeExamples >> example13Arrow [
 	view addAll: labels.
 	TSVerticalLineLayout new alignCenter on: labels.
 	labels translateBy: 50@50.
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	view @ TSControlsCanvas.
 	view open setLabel: 'You can do it'.
 ]
@@ -445,10 +445,10 @@ RSShapeExamples >> example14Marker [
 	
 	arrow := RSShapeBuilder triangle 
 		color: Color white;
-		border: (TSBorder new color: Color red; width: 3);
+		border: (RSBorder new color: Color red; width: 3);
 		size: 20; element.
 	line := RSSingleEdgeBuilder line
-		markerEnd: (TSMarker new shape: arrow; offsetRatio: 0.5; offset: 10); 
+		markerEnd: (RSMarker new shape: arrow; offsetRatio: 0.5; offset: 10); 
 		from: elements first;
 		to: elements second;
 		edge.
@@ -530,7 +530,7 @@ RSShapeExamples >> example17Labeled [
 	| v e1 e2 s l |
 	v := RSView new.
 	s := RSShapeBuilder ellipse
-		border: TSBorder new;
+		border: RSBorder new;
 		interactionDo: [:i | i draggable; labeled ];
 		size: 20.
 	e1 := s elementOn: 'hello'.
@@ -610,7 +610,7 @@ RSShapeExamples >> example19Bitmap [
 	elements := RSShapeBuilder bitmap
 		form: #value;
 		interactionDo: [ :i | i popupText: #key ];
-		when: TSMouseClick do: [:m | [   
+		when: RSMouseClick do: [:m | [   
 			Clipboard clipboardText: m key.
 			self inform: 'Copied icon name' ]];
 		elementsOn: icons.
@@ -645,7 +645,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 	boxes := RSShapeBuilder composite
 		color: Color blue trans;
 		shapes: [ :nb | 
-			TSGroup with: (RSShapeBuilder label elementOn: nb)
+			RSGroup with: (RSShapeBuilder label elementOn: nb)
 	 	]; 
 		size: 30;
 		elementsOn: (1 to: 100).
@@ -674,7 +674,7 @@ RSShapeExamples >> example21SpockLizard [
 	paint start: -900 @ 900; stop: 900 @ -900.
 	v addShape: (TSEllipse new
 		noPaint;
-		border: (TSBorder new width: 300; paint: paint);
+		border: (RSBorder new width: 300; paint: paint);
 		radius: 1500).
 	arrow := RSShapeBuilder triangle
 		extent: 380 @ 200;
@@ -706,7 +706,7 @@ RSShapeExamples >> example21SpockLizard [
 			circle
 				position: hand position;
 				size: (hand extent x max: hand extent y).
-			TSGroup with: circle with: hand ];
+			RSGroup with: circle with: hand ];
 		position: [ :e | 
 			| ang |
 			ang := e index * Float twoPi / 5 - Float halfPi.
@@ -738,7 +738,7 @@ RSShapeExamples >> example21SpockLizard [
 	lb defaultLabel fontSize: 50.
 	lb view: v.
 	lb shape 
-		border: TSBorder new;
+		border: RSBorder new;
 		padding: 50.
 	lb
 		text:
@@ -758,25 +758,25 @@ RSShapeExamples >> example22ScaleEvents [
 	v := RSView new.
 	label := RSShapeBuilder label.
 	box := RSShapeBuilder box
-		border: TSBorder new;
-		cornerRadius: (TSCornerRadius new right: 10);
+		border: RSBorder new;
+		cornerRadius: (RSCornerRadius new right: 10);
 		extent: [ :lb | lb extent + 5 ].
 	sb := RSShapeBuilder composite
 		interactionDo: #draggable;
 		shapes: [ :m | | l |
 			l := label elementOn: m.
-			TSGroup with: (box elementOn: l) with: l].
+			RSGroup with: (box elementOn: l) with: l].
 	v addAll: (sb elementsOn: ArrayedCollection withAllSubclasses).
 	v @ TSControlsCanvas.
 	TSEdgeBuilder orthoHorizontal
-		markerEnd: (TSMarker new 
+		markerEnd: (RSMarker new 
 			offset: 6;
 			shape: (RSShapeBuilder triangle 
 				color: Color red;
 				size: 10;
 				element));
-		attachPoint: TSHorizontalAttachPoint new; 
-		border: (TSBorder new);
+		attachPoint: RSHorizontalAttachPoint new; 
+		border: (RSBorder new);
 		view: v;
 		elements: v elements;
 		connectFrom: #superclass.
@@ -801,7 +801,7 @@ RSShapeExamples >> example24Highlightable [
 		withBorder.
 	composite := RSShapeBuilder composite shapes: [ :m |
 		| g title box |
-		g := TSGroup new.
+		g := RSGroup new.
 		title := label elementOn: m.
 		box := boxShape elementOn: m.
 		box extent: title textWidth  @ 3.
@@ -905,7 +905,7 @@ RSShapeExamples >> example27MultilineLabelBasic [
 	v add:(shape elementOn: '"tu est loin, 
 très loin de tous ces regards vicieux 
 qui s''alimentent de ta lumière"').
-	v elements last when: TSMouseClick do: [ :evt | v elements last inspect ].
+	v elements last when: RSMouseClick do: [ :evt | v elements last inspect ].
 	v showEncompassingRectangles.
 	v open setLabel: 'Multiline'
 ]
@@ -919,7 +919,7 @@ RSShapeExamples >> example28MultilineLabel [
 		size: 20;
 		interactionDo: [:i | i popup multiline ];
 		onMyselfDo: [:m | [:e | 
-			e when: TSMouseClick do: [ e inspect ] ]].
+			e when: RSMouseClick do: [ e inspect ] ]].
 	shape := RSShapeBuilder composite shapes: [ :m | 
 		| methods |
 		methods := box elementsOn: m methods.
@@ -929,7 +929,7 @@ RSShapeExamples >> example28MultilineLabel [
 		color: (Color purple alpha: 0.3);
 		padding: 10;
 		interactionDo: [:i | i draggable; popup ].
-	elements := shape elementsOn: TSShape withAllSubclasses.
+	elements := shape elementsOn: RSShape withAllSubclasses.
 	TSEdgeBuilder orthoVertical
 		withVerticalAttachPoint;
 		view: v;
@@ -983,7 +983,7 @@ RSShapeExamples >> example29AntAnimation [
 		verticalGap: 100;
 		on: elements.
 	v @ TSControlsCanvas.
-	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Move mouse on one box'
 ]
 

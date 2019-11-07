@@ -3,7 +3,7 @@ I am the abstract class that defines animations for roassal3
 "
 Class {
 	#name : #TSAbstractAnimation,
-	#superclass : #TSAnimation,
+	#superclass : #RSAnimation,
 	#instVars : [
 		'announcer',
 		'isRunning',

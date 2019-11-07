@@ -23,7 +23,7 @@ TPositionable >> translateTo: aPoint [
 	oldPosition := self position.
 	oldPosition = aPoint ifTrue: [ ^ self ].
 	self position: aPoint.
-	self announce: [TSPositionChangedEvent new 
+	self announce: [RSPositionChangedEvent new 
 		shape: self; 
 		oldPosition: oldPosition;
 		newPosition: aPoint ].

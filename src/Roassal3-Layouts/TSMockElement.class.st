@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSMockElement,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'realElement',
 		'position',

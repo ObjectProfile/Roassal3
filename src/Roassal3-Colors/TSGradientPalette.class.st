@@ -4,7 +4,7 @@ I use the colors from this website https://webgradients.com/
 "
 Class {
 	#name : #TSGradientPalette,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#category : #'Roassal3-Colors'
 }
 

@@ -3,7 +3,7 @@ I an an event for animations in trachel
 "
 Class {
 	#name : #TSAnimationEvent,
-	#superclass : #TSEvent,
+	#superclass : #RSEvent,
 	#instVars : [
 		'animation'
 	],

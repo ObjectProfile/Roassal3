@@ -15,7 +15,7 @@ TSDraggable class >> wantsUniqueInstance [
 { #category : #hooks }
 TSDraggable >> onShape: aShape [
 	aShape
-		when: TSMouseDragging
+		when: RSMouseDragging
 		do: [ :evt | 
 			| d |
 			d := aShape parent camera distanceFromPixelToSpace: evt step.

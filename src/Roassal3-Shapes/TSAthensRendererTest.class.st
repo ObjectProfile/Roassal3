@@ -3,14 +3,14 @@ I am the test class for TSAthensRenderer
 "
 Class {
 	#name : #TSAthensRendererTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #tests }
 TSAthensRendererTest >> testArcCorner [
 	| renderer |
-	renderer := TSAthensRenderer new.
+	renderer := RSAthensRenderer new.
 	self assert: (renderer
 		arcCornerTangets: -17.172947580489485@ -71.29423293069038
 		p1: -58.258908750504766 @ -212.1459392757739

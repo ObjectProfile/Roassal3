@@ -14,7 +14,7 @@ TSChessBackground >> onShape: aCanvas [
 	aCanvas color: theme backgroundColor.
 	color := theme caretColor alpha: 0.2.
 	boxes := nil.
-	aCanvas when: TSExtentChangedEvent do: [ 
+	aCanvas when: RSExtentChangedEvent do: [ 
 		| extent side counter even camera |
 		boxes ifNotNil: [ boxes do: #remove ].
 		extent := aCanvas extent.
@@ -22,7 +22,7 @@ TSChessBackground >> onShape: aCanvas [
 		
 		aCanvas zoomToFit.
 		side := 20.
-		boxes := TSGroup new.
+		boxes := RSGroup new.
 		counter := 0.
 		(side / 2) to: extent x by: 20 do: [ :j |
 			even := counter even.

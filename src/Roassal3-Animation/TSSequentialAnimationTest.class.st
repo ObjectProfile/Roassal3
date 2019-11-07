@@ -71,7 +71,7 @@ TSSequentialAnimationTest >> testStep [
 { #category : #tests }
 TSSequentialAnimationTest >> testStepEvent [
 	| value loop animation |
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 	value := nil.
 	loop := 0.
 	animation := TSSequentialAnimation new

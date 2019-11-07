@@ -4,7 +4,7 @@ Reference:
 "
 Class {
 	#name : #TSLabelGenerator,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'nice',
 		'loose',

@@ -3,14 +3,14 @@ A TSGroupTest is a test class for testing the behavior of TSGroup
 "
 Class {
 	#name : #TSGroupTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #tests }
 TSGroupTest >> testAddShape [
 	| g |
-	g := TSGroup new.
+	g := RSGroup new.
 	g add: TSBox new.
 ]
 
@@ -19,14 +19,14 @@ TSGroupTest >> testAsGroup [
 	| t |
 	t := #(1 2 3) asGroup.
 	self assert: t asArray equals: #(1 2 3).
-	self assert: t class equals: TSGroup
+	self assert: t class equals: RSGroup
 ]
 
 { #category : #tests }
 TSGroupTest >> testDrawGroup [
 	| g c com |
-	c := TSCanvas new.
-	g := TSGroup new.
+	c := RSCanvas new.
+	g := RSGroup new.
 	g add: TSBox new.
 	com := TSComposite new
 		shapes: g.

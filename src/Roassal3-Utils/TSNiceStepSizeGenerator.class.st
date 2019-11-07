@@ -9,7 +9,7 @@ Nice numbers are just step sizes and used for tick spacing. We will use only nic
 "
 Class {
 	#name : #TSNiceStepSizeGenerator,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'qvar',
 		'i',

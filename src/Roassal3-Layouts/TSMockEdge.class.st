@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSMockEdge,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'from',
 		'to',

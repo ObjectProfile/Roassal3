@@ -7,7 +7,7 @@ Instances of RSAbstractModelBuilder usually creates this 2 components and then u
 "
 Class {
 	#name : #RSAction,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'action',
 		'isPreloadAction',

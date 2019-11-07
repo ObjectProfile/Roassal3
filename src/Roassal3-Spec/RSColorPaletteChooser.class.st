@@ -108,9 +108,9 @@ RSColorPaletteChooser >> initializeShape [
 	high highlightShape color: Color black.
 	bcolor := RSShapeBuilder composite
 		addInteraction: high; 
-		when: TSMouseClick do: [ :c | [ self copyToClipboard: c ] ];
+		when: RSMouseClick do: [ :c | [ self copyToClipboard: c ] ];
 		shapes: [ :c | 
-			TSGroup
+			RSGroup
 				with: (bshape elementOn: c)
 				with: (slabel elementOn: c) ].
 	shape := RSShapeBuilder composite
@@ -124,8 +124,8 @@ RSColorPaletteChooser >> initializeShape [
 				on: shapes.
 			shapes ];
 		padding: 10 asMargin;
-		border: TSBorder new;
-		when: TSMouseClick do: [:m | [:evt| self copyToClipboard: m] ].
+		border: RSBorder new;
+		when: RSMouseClick do: [:m | [:evt| self copyToClipboard: m] ].
 ]
 
 { #category : #initialization }
@@ -163,7 +163,7 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 		'Sequential' -> { 20@0. 150@0. 150@ 30. 0@30 } }.
 	
 	bshape := RSShapeBuilder polygon
-		border: TSBorder new;
+		border: RSBorder new;
 		cornerRadii: 5;
 		paint: ((TSGradientPalette linearGradient: 
 			{0->'lightGray'.
@@ -182,13 +182,13 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 			box := bshape elementOn: m.
 			box position: 0@0.
 			label := lshape elementOn: m.
-			TSGroup with: box with: label ];
+			RSGroup with: box with: label ];
 		onElement;
-		when: TSMouseClick do: [:e | [ self renderColorPalettesFor: e ] ].
+		when: RSMouseClick do: [:e | [ self renderColorPalettesFor: e ] ].
 	buttonElements := menuButton elementsOn: data.
 	TSHorizontalLineLayout new gapSize: -9; on: buttonElements.
 	view addAll: buttonElements.
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 ]
 
 { #category : #rendering }
@@ -206,7 +206,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: view [
 		noZoomToFitOnExtendChanged;
 		maxScale: 1;
 		minScale: 1.
-	view when: TSExtentChangedEvent do: [ 
+	view when: RSExtentChangedEvent do: [ 
 		TSFlowLayout new
 			maxWidth: view extent;
 			on: elements.

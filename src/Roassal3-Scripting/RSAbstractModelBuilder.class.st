@@ -12,7 +12,7 @@ This class allows you to create a builder of classes with a lot of methods like 
 "
 Class {
 	#name : #RSAbstractModelBuilder,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'isForElement',
 		'elementClass',
@@ -154,7 +154,7 @@ RSAbstractModelBuilder >> elementOn: object index: index [
 { #category : #'public - accessing' }
 RSAbstractModelBuilder >> elementsOn: aCollection [
 	| g |
-	g := TSGroup new: aCollection size.
+	g := RSGroup new: aCollection size.
 	aCollection doWithIndex: [ :obj : index |
 		g add: (self elementOn: obj index: index) ].
 	^ g

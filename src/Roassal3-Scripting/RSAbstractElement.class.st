@@ -21,7 +21,7 @@ RSAbstractElement >> addConnectedEdge: anEdge [
 { #category : #adding }
 RSAbstractElement >> addedIn: aParent [
 	aParent addElement: self.
-	self announceAdded: TSElementAdded parent: aParent
+	self announceAdded: RSElementAdded parent: aParent
 ]
 
 { #category : #'accessing - children' }
@@ -32,7 +32,7 @@ RSAbstractElement >> children [
 { #category : #accessing }
 RSAbstractElement >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
-	connectedEdges ifNil: [ connectedEdges := TSGroup new ].
+	connectedEdges ifNil: [ connectedEdges := RSGroup new ].
 	^ connectedEdges
 ]
 

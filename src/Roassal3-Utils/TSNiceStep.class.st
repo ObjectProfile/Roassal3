@@ -4,7 +4,7 @@ I am an utility class for RTNiceStepSizeGenerator>>next
 "
 Class {
 	#name : #TSNiceStep,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'stepSize',
 		'offset',

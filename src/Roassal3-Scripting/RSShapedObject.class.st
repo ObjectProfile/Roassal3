@@ -3,7 +3,7 @@ I am usefull to define RSElement and RSEdge
 "
 Class {
 	#name : #RSShapedObject,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'model',
 		'index',

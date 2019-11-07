@@ -3,7 +3,7 @@ I have common tests for shapes and canvas
 "
 Class {
 	#name : #TSCanvasTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'c'
 	],
@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 TSCanvasTest >> setUp [
 	super setUp.
-	c := TSCanvas new
+	c := RSCanvas new
 ]
 
 { #category : #running }
@@ -92,7 +92,7 @@ TSCanvasTest >> testEmpty [
 TSCanvasTest >> testEvent [ 
 	| box |
 	box := TSBox new.
-	box when: TSMouseClick do: [ :evt |  ]
+	box when: RSMouseClick do: [ :evt |  ]
 ]
 
 { #category : #events }
@@ -100,10 +100,10 @@ TSCanvasTest >> testLowLevelEvent [
 
 	| box |
 	box := TSBox new size: 30.
-	box when: TSMouseDragging do: [ :evt | box  ].
+	box when: RSMouseDragging do: [ :evt | box  ].
 	c addShape: box.
 
-	self assert: (c shapeWithAction: TSMouseDragging forPositionInPixels: 250 @ 250) == box
+	self assert: (c shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250) == box
 ]
 
 { #category : #tests }

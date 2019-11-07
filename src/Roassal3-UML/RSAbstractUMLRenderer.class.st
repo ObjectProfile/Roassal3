@@ -3,7 +3,7 @@ Abstract renderer for UML
 "
 Class {
 	#name : #RSAbstractUMLRenderer,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'border',
 		'modelDescriptor'
@@ -19,12 +19,12 @@ RSAbstractUMLRenderer class >> isAbstract [
 
 { #category : #defaults }
 RSAbstractUMLRenderer >> border [
-	^ border ifNil: [ border := TSBorder new ].
+	^ border ifNil: [ border := RSBorder new ].
 ]
 
 { #category : #defaults }
 RSAbstractUMLRenderer >> defaultBorder [
-	^ TSBorder new
+	^ RSBorder new
 ]
 
 { #category : #initialization }

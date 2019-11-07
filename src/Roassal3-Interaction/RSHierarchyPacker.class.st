@@ -37,13 +37,13 @@ RSHierarchyPacker >> onElement: aView [
 
 	connectedAsGroups := (layout rootNodesFor: connected) collect: [ :e | 
 		| group |
-		group :=  TSGroup new.
+		group :=  RSGroup new.
 		self fill: group with: e.
 		group ]. 
 	
 	all := connectedAsGroups, isolated.
 
-	aView when: TSExtentChangedEvent do: [
+	aView when: RSExtentChangedEvent do: [
 		rectanglePackLayout
 			preferredAngle: aView extent angle;
 			on: all.

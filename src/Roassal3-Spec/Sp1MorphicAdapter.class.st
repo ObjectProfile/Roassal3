@@ -38,7 +38,7 @@ Sp1MorphicAdapter >> basicApplyScript [
 	self model script value: view.
 	self widgetDo: #startStepping.
 	
-	view when: TSAbstractMouseEvent do: [ widget takeKeyboardFocus].
+	view when: RSAbstractMouseEvent do: [ widget takeKeyboardFocus].
 ]
 
 { #category : #initialization }

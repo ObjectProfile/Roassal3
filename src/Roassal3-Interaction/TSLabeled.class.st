@@ -31,9 +31,9 @@ TSLabeled >> createLabel: anElement [
 		targetLabel color: c.
 		label signalUpdate ].
 	anElement 
-		when: TSMouseEnter do: [ set value: color ];
-		when: TSMouseLeave do: [ set value: lowColor ];
-		when: TSShapeRemovedEvent do: [ label remove ].
+		when: RSMouseEnter do: [ set value: color ];
+		when: RSMouseLeave do: [ set value: lowColor ];
+		when: RSShapeRemovedEvent do: [ label remove ].
 	^ label
 ]
 
@@ -115,7 +115,7 @@ TSLabeled >> onShape: aShape [
 	block := [ self getOrCreateLabel: aShape. ]. 
 	aShape isInACanvas 
 		ifTrue: block
-		ifFalse: [ aShape when: TSShapeAddedEvent do: block ].
+		ifFalse: [ aShape when: RSShapeAddedEvent do: block ].
 ]
 
 { #category : #accessing }

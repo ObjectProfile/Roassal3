@@ -51,8 +51,8 @@ TSZoomToFitCanvas >> animatedZoomToFit: aView [
 
 { #category : #hooks }
 TSZoomToFitCanvas >> onShape: aCanvas [
-	aCanvas when: TSKeyUp do: [ :evt | self processKeyUp: evt ].
-	aCanvas when: TSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
+	aCanvas when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
+	aCanvas when: RSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
 	self zoomToFit: aCanvas.
 ]

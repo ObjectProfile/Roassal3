@@ -1,13 +1,13 @@
 Class {
 	#name : #RSUMLClassBuilderTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-UML-Tests'
 }
 
 { #category : #tests }
 RSUMLClassBuilderTest >> testBasic [
 	| builder classes |
-	classes := TSAttachPoint withAllSubclasses.
+	classes := RSAttachPoint withAllSubclasses.
 	builder := RSUMLClassBuilder new.
 	builder classes: classes.
 	builder build.
@@ -18,7 +18,7 @@ RSUMLClassBuilderTest >> testBasic [
 RSUMLClassBuilderTest >> testJustClassName [
 	| builder element  |
 	builder := RSUMLClassBuilder new.
-	builder classes: {TSMouseMove}.
+	builder classes: {RSMouseMove}.
 	builder build.
 	element := builder elements first.
 	self assert: element children size equals: 2.
@@ -26,7 +26,7 @@ RSUMLClassBuilderTest >> testJustClassName [
 	self assert: element shapes second class equals: TSLabel.
 	
 	builder := RSUMLClassBuilder new.
-	builder classes: {TSMouseMove}.
+	builder classes: {RSMouseMove}.
 	builder renderer: RSTorchUMLClassRenderer new.
 	builder build.
 	element := builder elements first.

@@ -24,7 +24,7 @@ RSEdge class >> from: anElement1 to: anElement2 [
 { #category : #adding }
 RSEdge >> addedIn: aParent [
 	aParent addEdge: self.
-	self announceAdded: TSEdgeAdded parent: aParent
+	self announceAdded: RSEdgeAdded parent: aParent
 ]
 
 { #category : #accessing }
@@ -63,7 +63,7 @@ RSEdge >> from: aShape [
 { #category : #initialization }
 RSEdge >> initialize [
 	super initialize.
-	attachPoint := TSCenteredAttachPoint new.
+	attachPoint := RSCenteredAttachPoint new.
 ]
 
 { #category : #testing }

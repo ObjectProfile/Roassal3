@@ -26,7 +26,7 @@ v open
 "
 Class {
 	#name : #TSEdgeBuilder,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'shape',
 		'allowRepetition',
@@ -310,7 +310,7 @@ TSEdgeBuilder >> initialize [
 	canvasHasBeenManuallySet := false.
 	"We could have edges from A to B, and from B to A"
 	self beDirectional.
-	self attachPoint: TSCenteredAttachPoint new.
+	self attachPoint: RSCenteredAttachPoint new.
 ]
 
 { #category : #testing }
@@ -381,7 +381,7 @@ TSEdgeBuilder >> objects: someObjectsOrABlock [
 
 { #category : #'private - utility' }
 TSEdgeBuilder >> resetCreatedEdges [
-	createdEdges := TSGroup new
+	createdEdges := RSGroup new
 ]
 
 { #category : #'public - shape' }
@@ -591,7 +591,7 @@ b
 	"
 	
 	| fromElement toElement |
-	createdEdges := TSGroup new.
+	createdEdges := RSGroup new.
 	associations do: [ :assoc |
 		fromElement := self fromShapes shapeFromModel: assoc key.
 		toElement := self toShapes shapeFromModel: assoc value.
@@ -614,10 +614,10 @@ TSEdgeBuilder >> width: aNumber [
 
 { #category : #'public - attach point' }
 TSEdgeBuilder >> withBorderAttachPoint [
-	self attachPoint: TSBorderAttachPoint new.
+	self attachPoint: RSBorderAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
 TSEdgeBuilder >> withVerticalAttachPoint [
-	self attachPoint: TSVerticalAttachPoint new.
+	self attachPoint: RSVerticalAttachPoint new.
 ]

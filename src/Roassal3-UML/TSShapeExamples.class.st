@@ -3,7 +3,7 @@ I have the basic examples for shapes
 "
 Class {
 	#name : #TSShapeExamples,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#category : #'Roassal3-UML-Examples'
 }
 
@@ -12,7 +12,7 @@ TSShapeExamples >> example01BasicBoxes [
 	<script: 'self new example01BasicBoxes'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSBox new
 		extent: 100@100;
 		yourself).
@@ -29,7 +29,7 @@ TSShapeExamples >> example02BasicEllipses [
 	<script: 'self new example02BasicEllipses'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSEllipse new
 		extent: 100@100;
 		yourself).
@@ -46,7 +46,7 @@ TSShapeExamples >> example03BasicComposite [
 	<script: 'self new example03BasicComposite'>
 
 	| c com |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	com := TSComposite new.
 	com add: (TSBox new
 		color: (Color gray alpha: 0.4);
@@ -76,7 +76,7 @@ TSShapeExamples >> example04BasicComposite [
 	<script: 'self new example04BasicComposite'>
 
 	| c com |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	com := TSComposite new.
 	com add: (TSBox new
 		color: (Color yellow alpha: 0.5);
@@ -108,7 +108,7 @@ TSShapeExamples >> example05BasicGroup [
 	<script: 'self new example05BasicGroup'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
@@ -137,7 +137,7 @@ TSShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels'>
 
 	| c label |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	1 to: 12 do: [ :m | 
 		| angle theta p|
 		angle := (m * 360 / 12) degreesToRadians.
@@ -177,7 +177,7 @@ TSShapeExamples >> example07EventsMouseMoveDrag [
 	<script: 'self new example07EventsMouseMoveDrag'>
 
 	| c ellipse a b update anim |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	ellipse := TSEllipse new
 		radius: 40;
 		withBorder.
@@ -191,8 +191,8 @@ TSShapeExamples >> example07EventsMouseMoveDrag [
 			signalUpdate].
 	anim := nil.
 	c
-		when: TSMouseDragging do: [ :evt | update value: evt value: a ];
-		when: TSMouseMove do: [ :evt | update value: evt value: b  ].
+		when: RSMouseDragging do: [ :evt | update value: evt value: a ];
+		when: RSMouseMove do: [ :evt | update value: evt value: b  ].
 	c clearBackground: false.
 	
 	c open.
@@ -204,14 +204,14 @@ TSShapeExamples >> example08EllipseBorder [
 	<script: 'self new example08EllipseBorder'>
 
 	| c y r |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	r := Random new.
 	c color: (Color colorFrom: '325A64').
 	1 to: 500 do: [ :x|
 		y := 255 + (x sin * 255).
 		c addShape: (TSEllipse new
 			color: Color transparent;
-			border: (TSBorder new
+			border: (RSBorder new
 				width: x/ 50;
 				color: (Color 
 					r: r next * 255 
@@ -233,14 +233,14 @@ TSShapeExamples >> example09MouseStep [
 	<script: 'self new example09MouseStep'>
 
 	|  c e prev dif |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c color: Color black.
 	e := TSEllipse new
-		border: (TSBorder new color: Color white);
+		border: (RSBorder new color: Color white);
 		radius: 0.
 	c addShape: e.
 	prev := 0.
-	c when: TSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt | 
 		dif := (evt position x - prev) abs.
 		prev := evt position x.
 		e 
@@ -258,12 +258,12 @@ TSShapeExamples >> example10EllipseMouseMove [
 	<script: 'self new example10EllipseMouseMove'>
 
 	| c border circleResolution angle a b radius |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c color: Color white.
-	border := TSBorder new color: (Color colorFrom: '002800').
+	border := RSBorder new color: (Color colorFrom: '002800').
 	b := 1.
 	radius := 200.
-	c when: TSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt | 
 		circleResolution := b.
 		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
 		angle := Float twoPi / circleResolution.
@@ -288,7 +288,7 @@ TSShapeExamples >> example11ScaleMouseDistance [
 	<script: 'self new example11ScaleMouseDistance'>
 
 	| c easing canvasExtent boxSize zindex maxDist scale border |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c color: Color white.
 	easing := 0@0.
 	boxSize := 50.
@@ -297,8 +297,8 @@ TSShapeExamples >> example11ScaleMouseDistance [
 	scale := TSScale linear 
 		domain: { 0. maxDist}; 
 		rangeRound: #(80 0).
-	border := TSBorder new.
-	c when: TSExtentChangedEvent do: [ 
+	border := RSBorder new.
+	c when: RSExtentChangedEvent do: [ 
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
 		maxDist := 0@0 dist: canvasExtent.
@@ -314,7 +314,7 @@ TSShapeExamples >> example11ScaleMouseDistance [
 					border: border )
 				] ]
 		].
-	c when: TSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt | 
 		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
 			zindex := scale scale: (easing dist: s position).
@@ -330,7 +330,7 @@ TSShapeExamples >> example12BasicLine [
 	<script: 'self new example12BasicLine'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: TSLine new.
 	c open.
 ]
@@ -340,7 +340,7 @@ TSShapeExamples >> example14BasicBitmap [
 	<script: 'self new example14BasicBitmap'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSBitmap new
 		form: (self iconNamed: #eyedropper);
 		extent: 200@350).
@@ -353,13 +353,13 @@ TSShapeExamples >> example15BasicRoundBoxses [
 	<script: 'self new example15BasicRoundBoxses'>
 
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSBox new
 		cornerRadius: 5;
 		extent: 100@50).
 		
 	c addShape: (TSBox new
-		cornerRadius: (TSCornerRadius new top: 20);
+		cornerRadius: (RSCornerRadius new top: 20);
 		position: 100@100;
 		extent: 100@50;
 		withBorder).
@@ -371,7 +371,7 @@ TSShapeExamples >> example15BasicRoundBoxses [
 TSShapeExamples >> example16BasicLinePath [
 	<script: 'self new example16BasicLinePath'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	b1 := TSBox new size: 100@100.
 	b2 := TSBox new size: 100@100; color: Color blue; position: 100@100.
 	c addShape: b1.
@@ -416,8 +416,8 @@ TSShapeExamples >> example16BasicLinePath [
 			endPoint: b2 position.
 		evt shape translateBy: evt step.
 		evt signalUpdate ].
-	b1 when: TSMouseDragging do: translate.
-	b2 when: TSMouseDragging do: translate.
+	b1 when: RSMouseDragging do: translate.
+	b2 when: RSMouseDragging do: translate.
 	c open
 ]
 
@@ -425,12 +425,12 @@ TSShapeExamples >> example16BasicLinePath [
 TSShapeExamples >> example17Borders [
 	<script: 'self new example17Borders'>
 	| c border border2 a b ce d |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	border := [ :position :inner :outer :text |
 		c addShape: (TSBox new
 			color: Color lightGray;
 			position: position;
-			border: (TSBorder new
+			border: (RSBorder new
 				capSquare;
 				joinMiter;
 				color: inner);"brighter"
@@ -438,7 +438,7 @@ TSShapeExamples >> example17Borders [
 		c addShape: (TSBox new
 			color: nil;
 			position: position;
-			border: (TSBorder new
+			border: (RSBorder new
 				capSquare;
 				dashArray: #(98 196);
 				color: outer);"darker"
@@ -446,7 +446,7 @@ TSShapeExamples >> example17Borders [
 		c addShape: (TSBox new
 			color: nil;
 			position: position;
-			border: (TSBorder new
+			border: (RSBorder new
 				capSquare;
 				dashArray: #(0 102 102 0 102 0);
 				color: outer);"darker"
@@ -505,7 +505,7 @@ TSShapeExamples >> example17Borders [
 	"line border"
 	c addShape: (TSBox new
 		color: Color lightGray;
-		border: TSBorder new;
+		border: RSBorder new;
 		size: 100).
 	c addShape: (TSLabel new
 		text: 'Line border';
@@ -546,7 +546,7 @@ TSShapeExamples >> example17Borders [
 TSShapeExamples >> example18BasicPieSlice [
 	<script: 'self new example18BasicPieSlice'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	"empty"
 	c addShape: TSPieSlice new.
 	"circle"
@@ -562,7 +562,7 @@ TSShapeExamples >> example18BasicPieSlice [
 TSShapeExamples >> example19PieSlice [
 	<script: 'self new example19PieSlice'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	"slice"
 	c addShape: (TSPieSlice new
 		externalRadius: 100;
@@ -577,7 +577,7 @@ TSShapeExamples >> example19PieSlice [
 TSShapeExamples >> example20Donut [
 	<script: 'self new example20Donut'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	"donut"
 	c addShape: (TSPieSlice new
 		withBorder;
@@ -592,7 +592,7 @@ TSShapeExamples >> example20Donut [
 TSShapeExamples >> example21CornerRadii [
 	<script: 'self new example21CornerRadii'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	"corner radii"
 	c addShape: (TSPieSlice new
 		externalRadius: 100;
@@ -607,7 +607,7 @@ TSShapeExamples >> example21CornerRadii [
 TSShapeExamples >> example22BasicPieSlice [
 	<script: 'self new example22BasicPieSlice'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	"slice"
 	c addShape: (TSPieSlice new
 		externalRadius: 100;
@@ -620,7 +620,7 @@ TSShapeExamples >> example22BasicPieSlice [
 TSShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape'>
 	| c box |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	box := TSBox new
 		extent: 100@100;
 		position: 200 asPoint;
@@ -641,7 +641,7 @@ TSShapeExamples >> example23FixedShape [
 TSShapeExamples >> example24Polyline [
 	<script: 'self new example24Polyline'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSPolyline new
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10}).
 	c open.
@@ -651,12 +651,12 @@ TSShapeExamples >> example24Polyline [
 TSShapeExamples >> example25LabelWithBorder [
 	<script: 'self new example25LabelWithBorder'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSLabel new
 		fontSize: 60;
 		fontName: 'Source Sans Pro';
 		"fontName: 'Brushcrazy DEMO';"
-		border: (TSBorder new 
+		border: (RSBorder new 
 			color: Color red;
 			dashArray: #(4) );
 		text: 'Roassal Pharo').
@@ -667,13 +667,13 @@ TSShapeExamples >> example25LabelWithBorder [
 TSShapeExamples >> example26Polygon [
 	<script: 'self new example26Polygon'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSPolygon new
 		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
 		yourself).
 	c shapes first translateTo: 0@0.
 	c showEncompassingRectangles.
-	c shapes first when: TSMouseDragging do: [:evt |
+	c shapes first when: RSMouseDragging do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
 	c open.
 ]
@@ -682,7 +682,7 @@ TSShapeExamples >> example26Polygon [
 TSShapeExamples >> example27Markers [
 	<script: 'self new example27Markers'>
 	| c arrow axes circle dataLine |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	arrow := TSPolygon new 
 		points: { -10@0. 0@ -10. 10@0 };
 		color: Color black;
@@ -706,7 +706,7 @@ TSShapeExamples >> example27Markers [
 TSShapeExamples >> example28SVGShape [
 	<script: 'self new example28SVGShape'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSSVGPath new
 		paint: nil;
 		withBorder;
@@ -714,17 +714,17 @@ TSShapeExamples >> example28SVGShape [
 		yourself).
 	c addShape: (TSSVGPath new
 		paint: nil;
-		border: (TSBorder new color: Color red);
+		border: (RSBorder new color: Color red);
 		svgPath: 'M 100 350 l 150 -300';
 		yourself).
 	c addShape: (TSSVGPath new
 		paint: nil;
-		border: (TSBorder new color: Color red);
+		border: (RSBorder new color: Color red);
 		svgPath: 'M 250 50 l 150 300';
 		yourself).
 	c addShape: (TSSVGPath new
 		paint: nil;
-		border: (TSBorder new color: Color green);
+		border: (RSBorder new color: Color green);
 		svgPath: 'M 175 200 l 150 0';
 		yourself).
 	c showEncompassingRectangles.
@@ -736,9 +736,9 @@ TSShapeExamples >> example28SVGShape [
 TSShapeExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSPolyline new
-		border: (TSBorder new width: 10);
+		border: (RSBorder new width: 10);
 		cornerRadii: 50;
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10} * 50).
 	c zoomToFit.
@@ -749,14 +749,14 @@ TSShapeExamples >> example29PolylineRadius [
 TSShapeExamples >> example30PolygonWithRadius [
 	<script: 'self new example30PolygonWithRadius'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addShape: (TSPolygon new
 		cornerRadii: 10;
 		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
 		yourself).
 	c shapes first translateTo: 0@0.
 	c showEncompassingRectangles.
-	c shapes first when: TSMouseDragging do: [:evt |
+	c shapes first when: RSMouseDragging do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
 	c open.
 ]

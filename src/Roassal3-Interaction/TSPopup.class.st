@@ -15,13 +15,13 @@ Class {
 
 { #category : #accessing }
 TSPopup class >> activationEvent [
-	^ TSMouseMove
+	^ RSMouseMove
 ]
 
 { #category : #accessing }
 TSPopup class >> removeEvents [
 	^ removeEvents ifNil: [ 
-		removeEvents := { TSMouseClick. TSMouseEnter. TSMouseLeave. TSMouseDragging } ]
+		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
 ]
 
 { #category : #'instance creation' }

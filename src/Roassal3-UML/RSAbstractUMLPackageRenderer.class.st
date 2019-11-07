@@ -24,7 +24,7 @@ RSAbstractUMLPackageRenderer >> packageBoxShape [
 
 	^ packageBoxShape ifNil: [ packageBoxShape := RSShapeBuilder box
 		noPaint;
-		border: (TSBorder new width: 5; joinMiter; color: '666EA0') ]
+		border: (RSBorder new width: 5; joinMiter; color: '666EA0') ]
 ]
 
 { #category : #accessing }
@@ -32,7 +32,7 @@ RSAbstractUMLPackageRenderer >> packageNameBoxShape [
 
 	^ packageNameBoxShape ifNil: [ packageNameBoxShape := RSShapeBuilder box
 		noPaint;
-		border: (TSBorder new width: 5; joinMiter; color: '666EA0') ]
+		border: (RSBorder new width: 5; joinMiter; color: '666EA0') ]
 ]
 
 { #category : #accessing }

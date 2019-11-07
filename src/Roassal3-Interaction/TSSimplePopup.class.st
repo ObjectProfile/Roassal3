@@ -3,7 +3,7 @@ I create a popup from an object
 "
 Class {
 	#name : #TSSimplePopup,
-	#superclass : #TSAbstractShapeBuilder,
+	#superclass : #RSAbstractShapeBuilder,
 	#instVars : [
 		'textBlock'
 	],
@@ -15,7 +15,7 @@ TSSimplePopup >> boxOn: lbl [
 	^ TSBox new
 		color: (Color colorFrom: 'efefef');
 		cornerRadius: 5;
-		border: (TSBorder new color: Color gray);
+		border: (RSBorder new color: Color gray);
 		extent: lbl extent + 5;
 		yourself
 ]
@@ -39,7 +39,7 @@ TSSimplePopup >> shapeOn: anObject [
 	lbl := self labelOn: anObject.
 	box := self boxOn: lbl.
 	^ TSComposite new
-		shapes: (TSGroup with: box with: lbl);
+		shapes: (RSGroup with: box with: lbl);
 		yourself
 	
 	

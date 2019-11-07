@@ -31,7 +31,7 @@ TSHighlightable >> announce: anEvent [
 
 { #category : #announce }
 TSHighlightable >> announceHighlight: element source: anElementOrView [
-	self announce: [ TSHighlightEvent new
+	self announce: [ RSHighlightEvent new
 		interaction: self;
 		element: element;
 		source: anElementOrView ].
@@ -39,7 +39,7 @@ TSHighlightable >> announceHighlight: element source: anElementOrView [
 
 { #category : #announce }
 TSHighlightable >> announceUnHightlight: element source: anElementOrView [
-	self announce: [ TSUnHighlightEvent new
+	self announce: [ RSUnHighlightEvent new
 		interaction: self;
 		element: element;
 		source: anElementOrView ].
@@ -145,16 +145,16 @@ TSHighlightable >> initialize [
 { #category : #public }
 TSHighlightable >> low: aColorA high: aColorB [
 	self 
-		when: TSHighlightEvent do: [ :evt | evt shape color: aColorB  ];
-		when: TSUnHighlightEvent do: [ :evt | evt shape color: aColorA ].
+		when: RSHighlightEvent do: [ :evt | evt shape color: aColorB  ];
+		when: RSUnHighlightEvent do: [ :evt | evt shape color: aColorA ].
 	
 ]
 
 { #category : #hooks }
 TSHighlightable >> onShape: aShape [
 	aShape
-		when: TSMouseEnter do: [ self doHighlight: aShape. aShape signalUpdate ];
-		when: TSMouseLeave do: [ self doUnhighlight: aShape. aShape signalUpdate ]
+		when: RSMouseEnter do: [ self doHighlight: aShape. aShape signalUpdate ];
+		when: RSMouseLeave do: [ self doUnhighlight: aShape. aShape signalUpdate ]
 ]
 
 { #category : #'public - hooks' }
@@ -189,8 +189,8 @@ TSHighlightable >> resetHighlightedElements: anElementOrView [
 TSHighlightable >> setupAntAnimation [
 	self withEdges.
 	self highlightShape
-		border: [ TSBorder new width: 2; color: Color red ].
-	self when: TSHighlightEvent do: [ :evt | | e |
+		border: [ RSBorder new width: 2; color: Color red ].
+	self when: RSHighlightEvent do: [ :evt | | e |
 		(e := evt element) isElement ifTrue: [ 
 			| array anime |
 			array := #(4).
@@ -209,7 +209,7 @@ TSHighlightable >> setupAntAnimation [
 			e topParent view attributes at: #antAnimation put: anime.
 		].
 	].
-	self when: TSUnHighlightEvent do: [ :evt | 
+	self when: RSUnHighlightEvent do: [ :evt | 
 		| att e |
 		e := evt element.
 		e isElement ifTrue: [ 

@@ -35,7 +35,7 @@ TSActivityMonitorView >> initializeGraphShape [
 	shape := RSShapeBuilder composite
 		noPaint;
 		shapes: [ | g |
-			g := TSGroup new.
+			g := RSGroup new.
 			g add: (TSBox new
 				extent: 100@50;
 				color: Color lightGray trans;
@@ -51,7 +51,7 @@ TSActivityMonitorView >> initializeGraphShape [
 				cornerRadii: 5).
 			g add: (TSPolyline new 
 				controlPoints: #();
-				border: (TSBorder new paint: ((TSGradientPalette 
+				border: (RSBorder new paint: ((TSGradientPalette 
 					linearGradient:
 						{0 -> 'red'.
 						0.5 -> 'orange'.

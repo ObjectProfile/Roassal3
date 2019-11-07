@@ -1,0 +1,23 @@
+Extension { #name : #RSCanvas }
+
+{ #category : #'*Roassal3-Inspector' }
+RSCanvas >> gtInspectorShapesIn: composite [
+	<gtInspectorPresentationOrder: 20>
+	composite table 
+		title: 'Shapes';
+		showOnly: 50;
+		display: [ :each | each shapes ];
+		children: #shapes;
+		column: 'Shape' evaluated: [ :each | each asString ];
+		column: 'Paint' evaluated: [ :each | each paint asString ];
+		column: 'Border' evaluated: [ :each | each border asString ].
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSCanvas >> gtInspectorViewIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['Canvas'];
+		initializeCanvas: [ self ]
+		
+]

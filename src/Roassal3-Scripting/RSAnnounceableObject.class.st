@@ -3,7 +3,7 @@ I am the root for object with attributes and external values
 "
 Class {
 	#name : #RSAnnounceableObject,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'attributes'
 	],
@@ -59,7 +59,7 @@ RSAnnounceableObject >> attributesDo: block [
 
 { #category : #events }
 RSAnnounceableObject >> click [
-	self announcer announce: (TSMouseClick new).
+	self announcer announce: (RSMouseClick new).
 ]
 
 { #category : #accessing }

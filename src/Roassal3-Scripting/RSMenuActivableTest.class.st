@@ -1,6 +1,6 @@
 Class {
 	#name : #RSMenuActivableTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'view',
 		'element'

@@ -15,7 +15,7 @@ Class {
 RSTorchUMLClassRenderer >> classBoxShape [
 	^ classBoxShape ifNil: [ classBoxShape := RSShapeBuilder box
 		noPaint;
-		border: (TSBorder new width: 5; joinMiter; color: '666EA0') ]
+		border: (RSBorder new width: 5; joinMiter; color: '666EA0') ]
 ]
 
 { #category : #'accessing - shapes' }

@@ -3,7 +3,7 @@ I have tests for TSGroup asElement
 "
 Class {
 	#name : #RSCompositeElementTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'canvas'
 	],
@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 RSCompositeElementTest >> setUp [
-	canvas := TSCanvas new
+	canvas := RSCanvas new
 ]
 
 { #category : #tests }

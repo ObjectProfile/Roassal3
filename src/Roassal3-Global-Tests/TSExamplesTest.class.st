@@ -1,12 +1,12 @@
 Class {
 	#name : #TSExamplesTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Global-Tests-Examples'
 }
 
 { #category : #tests }
 TSExamplesTest >> testExamples [
-	TSAbstractExamples subclasses
+	RSAbstractExamples subclasses
 		do: [ :cls | 
 			| inst methods res |
 			inst := cls new.

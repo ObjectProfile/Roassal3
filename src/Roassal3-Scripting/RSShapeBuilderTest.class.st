@@ -1,6 +1,6 @@
 Class {
 	#name : #RSShapeBuilderTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Scripting-Tests'
 }
 

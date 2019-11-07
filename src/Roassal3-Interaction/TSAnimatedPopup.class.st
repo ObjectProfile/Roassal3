@@ -9,13 +9,13 @@ Class {
 
 { #category : #accessing }
 TSAnimatedPopup class >> activationEvent [
-	^ TSMouseEnter
+	^ RSMouseEnter
 ]
 
 { #category : #accessing }
 TSAnimatedPopup class >> removeEvents [
 	^ removeEvents ifNil: [ 
-		removeEvents := { TSMouseClick. TSMouseLeave. TSMouseDragging } ]
+		removeEvents := { RSMouseClick. RSMouseLeave. RSMouseDragging } ]
 ]
 
 { #category : #hooks }

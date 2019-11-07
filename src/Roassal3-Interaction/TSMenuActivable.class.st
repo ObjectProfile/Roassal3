@@ -57,7 +57,7 @@ TSMenuActivable >> menuDo: block [
 TSMenuActivable >> onShape: aShape [
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
-	aShape when: TSMouseRightClick do: [ :evt | 
+	aShape when: RSMouseRightClick do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
 		menuBlock value: menu value: aShape.

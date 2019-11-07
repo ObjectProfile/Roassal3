@@ -55,7 +55,7 @@ RSPieChartExample >> initializeWidgets [
 	pie := self instantiate: SpRoassalPresenter.
 	droplist whenSelectedItemChangedDo: [ :pkg | 
 		chart script: [ :view | 
-			view when: TSExtentChangedEvent do: [ 
+			view when: RSExtentChangedEvent do: [ 
 				view edges copy do: #remove.
 				view elements copy do: #remove.
 				
@@ -144,7 +144,7 @@ RSPieChartExample >> visualizePie: view package: pkg [
 	view @ (RSRotatedPieLabel new pieBuilder: b).
 	rect := view encompassingRectangle.
 	max := rect origin x abs max: rect corner x.
-	view when: TSExtentChangedEvent do: [ 
+	view when: RSExtentChangedEvent do: [ 
 		view camera 
 			zoomToFit: view extent 
 			rectangle: (Rectangle rsCenter: 0@0 extent: max * 2@0).

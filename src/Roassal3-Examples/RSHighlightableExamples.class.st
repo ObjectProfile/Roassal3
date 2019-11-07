@@ -3,7 +3,7 @@ Basic examples about highlighting
 "
 Class {
 	#name : #RSHighlightableExamples,
-	#superclass : #TSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
@@ -15,7 +15,7 @@ RSHighlightableExamples >> example01Basic [
 	s := RSShapeBuilder box
 		size: 10;
 		draggable;
-		border: TSBorder new;
+		border: RSBorder new;
 		@ TSHighlightable;
 		color: TSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
@@ -54,7 +54,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	TSClusterLayout on: elements.
 	v zoomToFit.
 	^ v"
-	^TSCanvas new
+	^RSCanvas new
 ]
 
 { #category : #'examples - animated' }
@@ -85,7 +85,7 @@ RSHighlightableExamples >> example03Interactive [
 	
 	v zoomToFit.
 	^ v"
-	^ TSCanvas new
+	^ RSCanvas new
 ]
 
 { #category : #'examples - animated' }
@@ -122,7 +122,7 @@ RSHighlightableExamples >> example04Interactive [
 	v zoomToFit.
 	^ v
 	"
-	^ TSCanvas new
+	^ RSCanvas new
 ]
 
 { #category : #examples }

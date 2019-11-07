@@ -48,7 +48,7 @@ RSKeepBorderWidthRatio >> onElement: anElement [
 	anElement isInACanvas ifFalse: [ self error: 'anElement needs to be part of one view' ].
 	view := anElement view.
 	width := anElement border width.
-	view when: TSScaleChangedEvent do: [:evt | 
+	view when: RSScaleChangedEvent do: [:evt | 
 		
 		anElement border width: (self scaleFor: evt) * width.
 		view signalUpdate. ]. 

@@ -39,7 +39,7 @@ TContainer >> addNode: aShape [
 TContainer >> edges [
 	^ self privateEdges
 		ifNil: [ | res |
-			self privateEdges: (res := TSGroup new).
+			self privateEdges: (res := RSGroup new).
 			res ]
 ]
 
@@ -47,7 +47,7 @@ TContainer >> edges [
 TContainer >> nodes [ 
 	^ self privateNodes
 		ifNil: [ | res |
-			self privateNodes: (res := TSGroup new).
+			self privateNodes: (res := RSGroup new).
 			res ]
 ]
 
@@ -97,6 +97,6 @@ TContainer >> shapeFromModel: anObject [
 TContainer >> shapes [ 
 	^ self privateShapes
 		ifNil: [ | res |
-			self privateShapes: (res := TSGroup new).
+			self privateShapes: (res := RSGroup new).
 			res ]
 ]

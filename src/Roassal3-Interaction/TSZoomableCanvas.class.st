@@ -12,7 +12,7 @@ Class {
 
 { #category : #hooks }
 TSZoomableCanvas >> onShape: aCanvas [
-	aCanvas when: TSMouseWheelEvent do: [ :evt | self processEvent: evt ]
+	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
 { #category : #'events-processing' }

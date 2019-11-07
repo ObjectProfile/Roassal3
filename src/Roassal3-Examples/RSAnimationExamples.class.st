@@ -3,7 +3,7 @@ I have examples for animation
 "
 Class {
 	#name : #RSAnimationExamples,
-	#superclass : #TSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
@@ -16,7 +16,7 @@ RSAnimationExamples >> america [
 RSAnimationExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| c b |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	b := TSBox new
 		extent: 100@100;
 		withBorder.
@@ -36,9 +36,9 @@ RSAnimationExamples >> example01Basic [
 		to: 10;
 		on: b border set: 'width:'.
 	c 
-		when:TSMouseClick
+		when:RSMouseClick
 		do: [ c animations do: #pause ];
-		when: TSMouseDoubleClick 
+		when: RSMouseDoubleClick 
 		do: [ c animations do: #continue ].
 	c clearBackground: false.
 	^ c
@@ -48,7 +48,7 @@ RSAnimationExamples >> example01Basic [
 RSAnimationExamples >> example02Sequential [
 	<script: 'self new example02Sequential open'>
 	| c b animation |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	b := TSBox new
 		extent: 100@100;
 		withBorder.
@@ -72,9 +72,9 @@ RSAnimationExamples >> example02Sequential [
 		loops: 2.
 	
 	c 
-		when:TSMouseClick
+		when:RSMouseClick
 		do: [ c animations do: #pause ];
-		when: TSMouseDoubleClick 
+		when: RSMouseDoubleClick 
 		do: [ c animations do: #continue ].
 	^ c
 ]
@@ -83,7 +83,7 @@ RSAnimationExamples >> example02Sequential [
 RSAnimationExamples >> example03Ramp [
 	<script: 'self new example03Ramp open'>
 	| c b |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	b := TSBox new
 		extent: 100@100;
 		withBorder.
@@ -98,9 +98,9 @@ RSAnimationExamples >> example03Ramp [
 		on: b set: #position:.
 	
 	c 
-		when:TSMouseClick
+		when:RSMouseClick
 		do: [ c animations do: #pause ];
-		when: TSMouseDoubleClick 
+		when: RSMouseDoubleClick 
 		do: [ c animations do: #continue ].
 	^ c
 ]
@@ -117,7 +117,7 @@ RSAnimationExamples >> example04BoxWindmill [
 	elements := RSShapeBuilder box
 		extent: 140@40;
 		color: Color white;
-		border: (TSBorder new
+		border: (RSBorder new
 			color: (Color gray alpha: 0.5) ) ;
 		elementsOn: points.
 	v addAll: elements.
@@ -138,13 +138,13 @@ RSAnimationExamples >> example04BoxWindmill [
 RSAnimationExamples >> example05BoxesLineCircles [
 	<script: 'self new example05BoxesLineCircles open'>
 	| c extent r shapes position alpha update updateLine lineX line |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	r := Random new.
 	shapes := (1 to: 12) collect: [ :i | 
 		TSBox new
 			model: r next;
 			noPaint;
-			border: (TSBorder new width: 4);
+			border: (RSBorder new width: 4);
 			yourself].
 	c addAll: shapes.
 	RSNormalizer size
@@ -168,7 +168,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 			from: lineX@position from y;
 			to: lineX@position to y;
 			update. ].
-	c when: TSMouseMove do: [ :ev | 
+	c when: RSMouseMove do: [ :ev | 
 		lineX := ev position x.
 		updateLine value ].
 	update := [ 
@@ -179,7 +179,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		shapes do: [ :e | e translateTo: (position scale: r next@ r next) ].
 	].
 	update value.
-	c when: TSExtentChangedEvent do: update.
+	c when: RSExtentChangedEvent do: update.
 	
 	"shadow"
 	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
@@ -190,11 +190,11 @@ RSAnimationExamples >> example05BoxesLineCircles [
 				noPaint;
 				position: e position;
 				extent: e extent;
-				border: (TSBorder new
+				border: (RSBorder new
 					width: 6;
 					color: (e border color alpha: (alpha scale: i)));
 				yourself.
-			ant when: TSPositionChangedEvent do: [ :evt | 
+			ant when: RSPositionChangedEvent do: [ :evt | 
 				s translateTo: evt oldPosition ].
 			ant := s.
 			c add: s
@@ -229,7 +229,7 @@ RSAnimationExamples >> example06Atom [
 	<script: 'self new example06Atom open'>
 	| elements v border extent speed frame |
 	v := RSView new.
-	border := TSBorder new width: 4.
+	border := RSBorder new width: 4.
 	extent := 450@110.
 	elements := RSShapeBuilder ellipse
 		border: border;
@@ -261,7 +261,7 @@ RSAnimationExamples >> example06Atom [
 			 ]
 	].
 		
-	v when: TSExtentChangedEvent do: [ :evt | 
+	v when: RSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
 	^ v
 ]
@@ -319,7 +319,7 @@ RSAnimationExamples >> example07Phyco [
 	v newAnimation repeat onStepDo: [ :t |
 		update value.
 		theta := theta + 0.0523 ].
-	v when: TSExtentChangedEvent do: [ :evt | 
+	v when: RSExtentChangedEvent do: [ :evt | 
 		v zoomToFit ].
 	^ v
 	"56 lines of code without RSShapeBuilder"
@@ -367,8 +367,8 @@ RSAnimationExamples >> example08ElasticEllipses [
 	mouseClick value.
 	
 	v 
-		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
-		when: TSMouseClick do: mouseClick.
+		when: RSExtentChangedEvent do: [ :evt | v zoomToFit ];
+		when: RSMouseClick do: mouseClick.
 	^ v
 
 ]
@@ -384,7 +384,7 @@ RSAnimationExamples >> example09LinePatterns [
 	radius := 150.
 	data := (1 to: 360 by: 3) collect: #degreesToRadians.
 	v add: (RSShapeBuilder box noPaint; size: 640; element).
-	border := TSBorder new
+	border := RSBorder new
 		color: (Color colorFrom: '00004A');
 		width: 2.
 	dot := RSShapeBuilder ellipse
@@ -415,8 +415,8 @@ RSAnimationExamples >> example09LinePatterns [
 		update value.
 	].
 	v 
-		when: TSExtentChangedEvent do: [ :evt | v zoomToFit ];
-		when: TSMouseClick do: [ 
+		when: RSExtentChangedEvent do: [ :evt | v zoomToFit ];
+		when: RSMouseClick do: [ 
 			step := step +1.
 			step > 20 ifTrue: [ step := 0 ] ].
 	^ v
@@ -515,7 +515,7 @@ RSAnimationExamples >> example11ArcTree [
 				 ]
 			 ]
 		 ]).
-	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
 	^ v
 
 
@@ -593,12 +593,12 @@ RSAnimationExamples >> example12PerlinParticles [
 			(e attributes at: #dead) ifTrue: [ e remove ] ].
 		v signalUpdate ].
 	
-	v when: TSMouseDragging do: [ :evt | 
+	v when: RSMouseDragging do: [ :evt | 
 		1 to: 10 do: [ :i | | p |
 			p := (particle elementOn: evt position-> (i+v elements size) ).
 			v add: p ].
 		v signalUpdate ];
-		when: TSKeyUp do: [:evt | 
+		when: RSKeyUp do: [:evt | 
 			evt keyValue = 8 ifTrue: [ 
 				v clearBackground: true.
 				v elements do: #remove.
@@ -699,12 +699,12 @@ RSAnimationExamples >> example12b [
 			(e attributes at: #dead) ifTrue: [ e remove ] ].
 		v signalUpdate ].
 	
-	v when: TSMouseDragging do: [ :evt | 
+	v when: RSMouseDragging do: [ :evt | 
 		1 to: 10 do: [ :i | | p |
 			p := (particle elementOn: evt position-> (i+v elements size) ).
 			v add: p ].
 		v signalUpdate ];
-		when: TSKeyUp do: [:evt | 
+		when: RSKeyUp do: [:evt | 
 			evt keyValue = 8 ifTrue: [ 
 				v clearBackground: true.
 				v elements do: #remove.
@@ -753,7 +753,7 @@ RSAnimationExamples >> example13Arcs [
 				updateElement: e withCommand: #betaAngle:;
 				updateElement: e withCommand: #color:
 			 ] ].
-	view when: TSExtentChangedEvent do: [ | s sc e |
+	view when: RSExtentChangedEvent do: [ | s sc e |
 		s := (size * step + 5) * 2.
 		e := view extent.
 		sc := e x / s.
@@ -771,13 +771,13 @@ RSAnimationExamples >> example13DashAnimation [
 	<script: 'self new example13DashAnimation open'>
 
 	| c box paint form border animation |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	form := self iconNamed: #eyedropper.
 	paint := (AthensCairoPatternSurfacePaint 
 		createForSurface: (AthensCairoSurface 
 			fromForm: form)).
 	paint origin: (form extent / 2) negated.
-	border := TSBorder new
+	border := RSBorder new
 		color: Color purple;
 		dashArray: #(4).
 	box := TSBox new
@@ -793,7 +793,7 @@ RSAnimationExamples >> example13DashAnimation [
 		from: 0;
 		to: 8;
 		on: border set: #dashOffset:.
-	box when: TSMouseClick do: [ :a |
+	box when: RSMouseClick do: [ :a |
 		animation isPaused 
 			ifTrue: [ animation continue ]
 			ifFalse: [ animation pause ] ].
@@ -820,7 +820,7 @@ RSAnimationExamples >> example14C [
 				alphaAngle: 30 + (theta * e model);
 				betaAngle: 300 + (theta * e model);
 				color: (Color h: theta * e model s: 1 l: 0.5) ] ].
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	^ view
 ]
 
@@ -877,7 +877,7 @@ RSAnimationExamples >> example15Sky [
 	image := ImageReadWriter formFromStream: client entity readStream.
 	view addShape: (TSBitmap new form: image).
 	view
-		when: TSExtentChangedEvent
+		when: RSExtentChangedEvent
 		do: [ | e s |
 			e := view extent.
 			s := e x / 2200.
@@ -918,7 +918,7 @@ RSAnimationExamples >> example16ArcNoise [
 	yscale := TSScale linear domain: #(0 360); range: #(80 5).
 	
 	line := TSPolyline new
-		border: (TSBorder new  width: 2; paint: (LinearGradientPaint new
+		border: (RSBorder new  width: 2; paint: (LinearGradientPaint new
 			colorRamp:
 				{(0 -> Color red).
 				(0.5 -> Color yellow).
@@ -941,7 +941,7 @@ RSAnimationExamples >> example16ArcNoise [
 		line controlPoints: (points collectWithIndex: [:y :x | x@ y]).
 		 ].
 	
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	^ view
 ]
 
@@ -1002,7 +1002,7 @@ RSAnimationExamples >> example17Retina [
 			view elements do: [ :e | shape updateElement: e ]
 		].
 		
-	view when: TSExtentChangedEvent do: [ 
+	view when: RSExtentChangedEvent do: [ 
 		view camera zoomToFit: view extent extent: side@side ].
 	^ view
 ]
@@ -1074,7 +1074,7 @@ RSAnimationExamples >> example18SpaceDandy [
 			(drawDist value: e attributes) > diagonal ifTrue: [ init value: e ].
 			].
 		 ].
-	view when: TSExtentChangedEvent do: [ 
+	view when: RSExtentChangedEvent do: [ 
 		view camera
 			zoomToFit: view extent 
 			extent: extent ].
@@ -1085,9 +1085,9 @@ RSAnimationExamples >> example18SpaceDandy [
 RSAnimationExamples >> example19Gris [
 	<script: 'self new example19Gris open setLabel: ''Roassal :V'''>
 		| c label shape border r mini animation g|
-	c := TSCanvas new.
+	c := RSCanvas new.
 	r := Random new.
-	border := TSBorder new.
+	border := RSBorder new.
 	label := TSLabel new
 		fontName: 'Marker Felt';
 		text: 'Roassal';
@@ -1102,8 +1102,8 @@ RSAnimationExamples >> example19Gris [
 			radius: m * label width;
 			border: border;
 			yourself.
-		i = 5 ifTrue: [ s border: (TSBorder new width: 1.5) ].
-		i = 4 ifTrue: [ s border: (TSBorder new dashArray: #(4)) ].
+		i = 5 ifTrue: [ s border: (RSBorder new width: 1.5) ].
+		i = 4 ifTrue: [ s border: (RSBorder new dashArray: #(4)) ].
 		s ] ).
 	
 	c newAnimation repeat from: 0; to: 8; duration: 200 milliSeconds;
@@ -1113,7 +1113,7 @@ RSAnimationExamples >> example19Gris [
 		s := TSEllipse new
 			noPaint;
 			radius: m * 5;
-			border: (TSBorder new width: 0.5);
+			border: (RSBorder new width: 0.5);
 			yourself.
 		m = 1 ifTrue: [ s paint: Color black ].
 		m = 2 ifTrue: [ s radius: m * 6 ].
@@ -1130,7 +1130,7 @@ RSAnimationExamples >> example19Gris [
 			yourself.
 		animation value: s value: m key * 6 value: (c nodes at: m key) value: 1.
 		s ] ).
-	g := (1 to: 4) collect: [ :m | mini value: m ] as: TSGroup.
+	g := (1 to: 4) collect: [ :m | mini value: m ] as: RSGroup.
 	g first radius: 10.
 	g second radius: 15.
 	g third radius: 18.
@@ -1142,7 +1142,7 @@ RSAnimationExamples >> example19Gris [
 	c add: shape.
 	animation value: shape value: 30 value: c nodes fifth value: -1.
 	animation value: shape shapes fifth value: 10 value: shape shapes fourth value: 1.
-	c when: TSExtentChangedEvent do: [ c zoomToFit ].
+	c when: RSExtentChangedEvent do: [ c zoomToFit ].
 	^ c
 	
 
@@ -1153,7 +1153,7 @@ RSAnimationExamples >> example19Gris [
 RSAnimationExamples >> example20Flor [
 	<script: 'self new example20Flor open setLabel: ''Animation test'''>
 	| c frame angleSp alphaS hueS dia1 dia2 |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	frame := 0.
 	angleSp := 0.
 	hueS := TSScale linear domain: #(50 200); range: #(250 360).
@@ -1188,7 +1188,7 @@ RSAnimationExamples >> example20Flor [
 	 	].
 		c signalUpdate.
 		].
-	c when: TSExtentChangedEvent do: [ 
+	c when: RSExtentChangedEvent do: [ 
 		c camera zoomToFit: c extent extent: 500 asPoint ].
 	^ c
 	
@@ -1221,7 +1221,7 @@ RSAnimationExamples >> example21Rainbow [
 				at: #ys put: ys;
 				at: #hue put: r next * 360;
 				at: #hue2 put: 4 ] ];
-		border: [ TSBorder new width: 0.5 ].
+		border: [ RSBorder new width: 0.5 ].
 	mode := 1.
 	frame := 0.
 	color := TSScale ordinal
@@ -1274,9 +1274,9 @@ RSAnimationExamples >> example21Rainbow [
 					containsPoint: e position)
 					ifFalse: [ e remove ]  ] ].
 	v
-		when: TSExtentChangedEvent
+		when: RSExtentChangedEvent
 		do: [ v camera zoomToFit: v extent extent: v extent ];
-		when: TSMouseClick do: [ 
+		when: RSMouseClick do: [ 
 			mode := mode +1.
 			mode > 2 ifTrue: [mode := 0] ].
 	^ v
@@ -1306,7 +1306,7 @@ RSAnimationExamples >> example22Stars [
 			star matrix loadIdentity.
 			star translateTo: position.
 			star rotateByDegrees: t ] ].
-	v when: TSExtentChangedEvent do: [ v zoomToFit ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	^ v
 ]
 
@@ -1319,7 +1319,7 @@ RSAnimationExamples >> example23CircleWaves [
 	
 	shape := RSShapeBuilder polygon
 		color: nil;
-		border: [:m | TSBorder new 
+		border: [:m | RSBorder new 
 			color: ((Color colorFrom: m) alpha: 0.5);
 			width: 10 ];
 		onElement;
@@ -1346,7 +1346,7 @@ RSAnimationExamples >> example23CircleWaves [
 				updateElement: e
 				withCommand: #privatePoints: ] ].
 	"at this point: elements encompassingRectangle = zero"
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
 	^ v
 ]
 
@@ -1404,7 +1404,7 @@ RSAnimationExamples >> example24Lines [
 	v addShape: (TSLabel new 
 		text: 'Roassal';
 		fontSize: 30;
-		border: (TSBorder new color: Color white);
+		border: (RSBorder new color: Color white);
 		color: nil).
 	v newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1. 
@@ -1412,7 +1412,7 @@ RSAnimationExamples >> example24Lines [
 		hueOffset := hueOffset + 1.
 		elements do: [ :e | (e attributes at: #update) value ].
 		 ].
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500 asPoint ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500 asPoint ].
 	^ v
 ]
 
@@ -1447,14 +1447,14 @@ RSAnimationExamples >> example25Lines [
 		fontSize: 50;
 		noPaint;
 		bold;
-		border: (TSBorder new paint: Color black; dashArray: #(4)).
+		border: (RSBorder new paint: Color black; dashArray: #(4)).
 	v addShape: label.
 	v newAnimation repeat from: 0; to: 8; on: label border set: #dashOffset:.
 	
-	v when: TSMouseClick do: [
+	v when: RSMouseClick do: [
 		step := step + 0.5.
 		step > 11 ifTrue: [ step := 1 ] ].
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 640@640 ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 640@640 ].
 	^ v
 	
 
@@ -1581,7 +1581,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 			c := (colorCase scale: case) value.
 			e color: (c alpha: fadeRatio).
 			 ]. ].
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
 	^ v
 	"morph := v canvas morph.
 	morph extent: 800@500.
@@ -1701,7 +1701,7 @@ RSAnimationExamples >> example29Bezier [
 			(RSShapeBuilder triangle
 				extent: 10@20;
 				color: e paint;
-				border: (TSBorder new color: Color white);
+				border: (RSBorder new color: Color white);
 				element) shape asMarker offset: -10 ] .
 	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e | 
 		| offset b |
@@ -1718,7 +1718,7 @@ RSAnimationExamples >> example29Bezier [
 		theta := theta + 0.0523.
 		v elements do: [ :e | (e attributes at: #update) value ] ].
 	v
-		when: TSExtentChangedEvent
+		when: RSExtentChangedEvent
 		do: [ v camera zoomToFit: v extent extent: 500 @ 500 ].
 	^ v
 ]
@@ -1762,7 +1762,7 @@ RSAnimationExamples >> example30SVGIcons [
 		extent: 100@100;
 		noPaint;
 		withBorder).
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 100 asPoint ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 100 asPoint ].
 	^ v
 	
 ]
@@ -1797,7 +1797,7 @@ RSAnimationExamples >> example31Miku [
 		text: 'Roassal';
 		fontName: 'Marker Felt';
 		noPaint;
-		border: (TSBorder new color: Color transparent; width: 1.5);
+		border: (RSBorder new color: Color transparent; width: 1.5);
 		fontSize: 100;
 		position: 320 @ 630).
 	v newAnimation
@@ -1827,7 +1827,7 @@ RSAnimationExamples >> example32RSLocate [
 	fixedElement := box elementOn: 'offset'.
 	movableElement := box element.
 	movableElement size: 40.
-	fixedElement when: TSMouseClick do: [ 
+	fixedElement when: RSMouseClick do: [ 
 		v newAnimation
 			scale: (TSScale linear 
 				domain: #(0 0.5 1); 
@@ -1860,11 +1860,11 @@ RSAnimationExamples >> example32RSLocate [
 			lbl := i labeled.
 			lbl shape color: Color white.
 			lbl location middle];
-		border: (TSBorder new color: Color lightGray);
+		border: (RSBorder new color: Color lightGray);
 		onElement;
-		when: TSMouseEnter do: [:e | [ e paint: grad2; signalUpdate ] ]; 
-		when: TSMouseLeave do: [:e | [ e paint: grad1; signalUpdate ] ];
-		when: TSMouseClick do: [:e | [ | p |
+		when: RSMouseEnter do: [:e | [ e paint: grad2; signalUpdate ] ]; 
+		when: RSMouseLeave do: [:e | [ e paint: grad1; signalUpdate ] ];
+		when: RSMouseClick do: [:e | [ | p |
 			e model value: locate. "= locate perform: e model"
 			p := movableElement position.
 			locate move: movableElement on: fixedElement.
@@ -1875,9 +1875,9 @@ RSAnimationExamples >> example32RSLocate [
 				on: movableElement shape set: #position: ] ].
 	buttons := buttonShape elementsOn: #(outer border inner left center right top middle bottom).
 	TSGridLayout new lineItemsCount: 3; on: buttons.
-	TSVerticalLineLayout new center; gapSize: 30; on: (TSGroup with: v elements with: buttons).
+	TSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: v elements with: buttons).
 	v addAll: buttons.
-	v when: TSExtentChangedEvent do: [ 
+	v when: RSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent * 0.7.
 		v signalUpdate ].
 	 
@@ -1926,7 +1926,7 @@ RSAnimationExamples >> example33AlteredWorld [
 			v signalUpdate.
 			px := px + 1
 			].
-	v when: TSExtentChangedEvent do: [ v camera 
+	v when: RSExtentChangedEvent do: [ v camera 
 		zoomToFit: v extent 
 		rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
 	^ v
@@ -1939,7 +1939,7 @@ RSAnimationExamples >> example33AlteredWorld [
 RSAnimationExamples >> example34Tick [
 	<script: 'self new example34Tick open setLabel: ''Can you hear it?'''>
 	| c slice animation ios g |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c color: Color black.
 	slice := Float twoPi / 16.
 	
@@ -1984,7 +1984,7 @@ RSAnimationExamples >> example34Tick [
 		(animation value: 0 value: slice value: 10->11).
 		(animation value: slice value: slice * 2 value: 11->10)}) repeat.
 	
-	c when: TSExtentChangedEvent do: [ c camera zoomToFit: c extent extent: 120 asPoint ].
+	c when: RSExtentChangedEvent do: [ c camera zoomToFit: c extent extent: 120 asPoint ].
 	^ c
 	
 
@@ -2052,7 +2052,7 @@ RSAnimationExamples >> example35Perlin [
 		frame := frame + 1.
 		v elements do: [ :e |
 			(e attributes at:#update) value ]. ].
-	v when: TSExtentChangedEvent do: [ v camera 
+	v when: RSExtentChangedEvent do: [ v camera 
 		zoomToFit: v extent
 		rectangle: rect ].
 	^ v
@@ -2073,9 +2073,9 @@ RSAnimationExamples >> example36RoundRectagles [
 		cornerRadius: [:i | 6 * (scale value: i) ];
 		color: TSColorPalette sequential blues9.
 	v addAll: (s elementsOn: (1 to: 25) ).
-	v when: TSExtentChangedEvent do: [ 
+	v when: RSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent extent: extent ].
-	v when: TSMouseMove do: [ :evt | mouse := evt position. ].
+	v when: RSMouseMove do: [ :evt | mouse := evt position. ].
 	frame := 0.
 	v newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1.
@@ -2143,13 +2143,13 @@ RSAnimationExamples >> example37SimpleClock [
 RSAnimationExamples >> example38AnimatedLayout [
 	<script: 'self new example38AnimatedLayout open setLabel: ''Layouts'''>
 	| c objects layout update labels shapes color |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	objects := 1 to: 100.
 	
 	color := TSColorPalette sequential ylorrd9.
 	shapes := objects collect: [ :m |
 		TSBox new
-			border: TSBorder new;
+			border: RSBorder new;
 			color: (color scale: m);
 			size: 10;
 			model: m;
@@ -2172,15 +2172,15 @@ RSAnimationExamples >> example38AnimatedLayout [
 		TSLabel new
 			isFixed: true;
 			text: sel capitalized;
-			when: TSMouseLeave do: [ :evt | evt shape 
+			when: RSMouseLeave do: [ :evt | evt shape 
 				color: Color black; 
 				normal;
 				signalUpdate ];
-			when: TSMouseEnter do: [ :evt | evt shape 
+			when: RSMouseEnter do: [ :evt | evt shape 
 				color: Color blue; 
 				underline;
 				signalUpdate ];
-			when: TSMouseClick do: [ :evt | | pos1 pos2 |
+			when: RSMouseClick do: [ :evt | | pos1 pos2 |
 				pos1 := shapes collect: #position.
 				update value: sel.
 				pos2 := shapes collect: #position.
@@ -2199,7 +2199,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 RSAnimationExamples >> example39ForceLayout [
 	<script: 'self new example39ForceLayout open'>
 	| c classes layout |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	classes := Collection withAllSubclasses collect: [ :cls | | e |
 		e := TSEllipse new
 			draggable;
@@ -2249,7 +2249,7 @@ RSAnimationExamples >> example40Roassal [
 		position: 0@0).
 	v addShape: (TSPolygon new
 		cornerRadii: 5;
-		border: (TSBorder new color: Color white; width: 5);
+		border: (RSBorder new color: Color white; width: 5);
 		noPaint;
 		points: points;
 		position: 0@ -3;
@@ -2267,7 +2267,7 @@ RSAnimationExamples >> example40Roassal [
 			bold;
 			fontName: 'Marker Felt';
 			position: 0@ -40;
-			border: (TSBorder new color: Color white; width: 3);
+			border: (RSBorder new color: Color white; width: 3);
 			paint: paint;
 			fontSize: 130.
 		v newAnimation
@@ -2295,7 +2295,7 @@ RSAnimationExamples >> example40Roassal [
 			easing: TSEasing elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
 			v shapes last matrix shy: t ] ]. 
-	v when: TSExtentChangedEvent do: [ v camera zoomToFit: v extent * 0.8 extent: 300@300 ].
+	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent * 0.8 extent: 300@300 ].
 	^ v
 ]
 
@@ -2303,7 +2303,7 @@ RSAnimationExamples >> example40Roassal [
 RSAnimationExamples >> example41Title [
 	<script: 'self new example41Title open setLabel: ''Basic Animation'''>
 	| c t1 t2 s line1 line2 line3 line4 title desc r1 r2 pad mid marker sum lineAnime p lblbase |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	t1 := 'Roassal3'.
 	t2 := 'It is a new agile visualization engine
 for Pharo 7 and Pharo 8.'.
@@ -2314,7 +2314,7 @@ for Pharo 7 and Pharo 8.'.
 		withBorder;
 		yourself.
 	s := [ :m | lblbase copy text: m ].
-	desc := t2 lines collect: [:m | s value: m ] as: TSGroup.
+	desc := t2 lines collect: [:m | s value: m ] as: RSGroup.
 	TSVerticalLineLayout new
 		gapSize: 0;
 		on: desc.
@@ -2422,14 +2422,14 @@ for Pharo 7 and Pharo 8.'.
 RSAnimationExamples >> example42RectangleForceLayout [
 	<script: 'self new example42RectangleForceLayout open'>
 	| canvas classes layout color |
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 	color := TSScale category20.
 	classes := Collection withAllSubclasses collect: [ :cls |
 		TSBox new
 			model: cls;
 			color: (color scale: cls);
 			size: 10;
-			yourself ] as: TSGroup.
+			yourself ] as: RSGroup.
 	TSEdgeBuilder line
 		canvas: canvas;
 		shapes: classes;
@@ -2446,7 +2446,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
-	canvas when: TSExtentChangedEvent do: [ :evt |
+	canvas when: RSExtentChangedEvent do: [ :evt |
 		| camera origin corner |
 		camera := canvas canvas camera.
 		origin := camera fromPixelToSpace: 0@0.
@@ -2476,7 +2476,7 @@ RSAnimationExamples >> example43PerlinRose [
 	v clearBackground: false.
 	polygons := RSShapeBuilder polygon 
 		noPaint;
-		border: (TSBorder new color: (Color blue alpha: 0.1)).
+		border: (RSBorder new color: (Color blue alpha: 0.1)).
 	v addAll: (polygons elementsOn: (1 to: 10)).
 	v newAnimation 
 		loops: 1000;
@@ -2527,7 +2527,7 @@ RSAnimationExamples >> example44Boat [
 		width: #log.
 	lines := shape edgesOn: (1 to: 25).
 	boat := RSShapeBuilder composite shapes: [ | g |
-		g := TSGroup new.
+		g := RSGroup new.
 		g add: (TSSVGPath new
 			svgPath:'M254.4,440.8c0,2.4-2.4,4.8-4.8,4.8l0,0c-2.4,0-4.8-2.4-4.8-4.8V24c0-2.4,2.4-4.8,4.8-4.8l0,0c2.4,0,4.8,2.4,4.8,4.8V440.8z';
 			color: '788787').

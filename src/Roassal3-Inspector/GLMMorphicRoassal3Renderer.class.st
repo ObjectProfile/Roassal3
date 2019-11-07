@@ -18,6 +18,6 @@ GLMMorphicRoassal3Renderer >> render: aRoassalPresentation [
 
 	myMorph :=aRoassalPresentation canvas createMorph.
 	myMorph takeKeyboardFocus.
-	aRoassalPresentation canvas when: TSMouseClick do: [ myMorph takeKeyboardFocus ].
+	aRoassalPresentation canvas when: RSMouseClick do: [ myMorph takeKeyboardFocus ].
 	^ myMorph
 ]

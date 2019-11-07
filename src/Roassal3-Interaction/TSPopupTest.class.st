@@ -1,6 +1,6 @@
 Class {
 	#name : #TSPopupTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'canvas',
 		'shapes'
@@ -11,14 +11,14 @@ Class {
 { #category : #running }
 TSPopupTest >> setUp [
 	super setUp.
-	canvas := TSCanvas new.
-	shapes := #(1 2) collect: [ :m | TSBox new model: m; yourself ] as: TSGroup.
+	canvas := RSCanvas new.
+	shapes := #(1 2) collect: [ :m | TSBox new model: m; yourself ] as: RSGroup.
 	canvas addAll: shapes
 ]
 
 { #category : #tests }
 TSPopupTest >> testNoPopup [
-	shapes first announce: TSMouseEnter.
+	shapes first announce: RSMouseEnter.
 	self assert: canvas numberOfShapes equals: shapes size.
 ]
 
@@ -27,7 +27,7 @@ TSPopupTest >> testPopupOnElementNotAddedToAView [
 	| el |
 	el := RSShapeBuilder box element.
 	el @ TSPopup.
-	el announce: TSMouseEnter.
+	el announce: RSMouseEnter.
 	"Should not produce an error"
 ]
 
@@ -36,7 +36,7 @@ TSPopupTest >> testWithPopup [
 	shapes @ TSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
 	
-	shapes first announce: TSMouseMove.
+	shapes first announce: RSMouseMove.
 	self assert: canvas numberOfShapes equals: shapes size.
 	self assert: canvas fixedShapes size equals: 1.
 ]

@@ -22,7 +22,7 @@ RSComposite >> add: child [
 
 { #category : #accessing }
 RSComposite >> addAll: aTSGroup [
-	children ifNil: [ children := TSGroup new: aTSGroup size ].
+	children ifNil: [ children := RSGroup new: aTSGroup size ].
 	aTSGroup do: [ :child | self add: child ].
 ]
 

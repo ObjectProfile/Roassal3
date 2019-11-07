@@ -12,8 +12,8 @@ Class {
 
 { #category : #hooks }
 TSSelectionPresentation >> onShape: anElement [
-Halt if: [ anElement isKindOf: TSCanvas ].
-	anElement when: TSMouseClick do: [ self presentation selection: anElement model ]
+Halt if: [ anElement isKindOf: RSCanvas ].
+	anElement when: RSMouseClick do: [ self presentation selection: anElement model ]
 	
 ]
 

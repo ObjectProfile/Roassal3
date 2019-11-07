@@ -3,7 +3,7 @@ My subclasses has an extent and a transformation matrix
 "
 Class {
 	#name : #TSBoundingShape,
-	#superclass : #TSShape,
+	#superclass : #RSShape,
 	#traits : 'TPositionable',
 	#classTraits : 'TPositionable classTrait',
 	#instVars : [
@@ -45,7 +45,7 @@ TSBoundingShape >> computeEncompassingRectangle [
 { #category : #edges }
 TSBoundingShape >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
-	connectedEdges ifNil: [ connectedEdges := TSGroup new ].
+	connectedEdges ifNil: [ connectedEdges := RSGroup new ].
 	^ connectedEdges
 ]
 
@@ -58,7 +58,7 @@ TSBoundingShape >> extent: aPoint [
 	oldExtent := extent.
 	baseRectangle := Rectangle rsCenter: 0@0 extent: aPoint.
 	self resetBBox; resetPath.
-	self announce: [ TSExtentChangedEvent new 
+	self announce: [ RSExtentChangedEvent new 
 		shape: self;
 		oldExtent: oldExtent;
 		newExtent: extent ]
@@ -218,6 +218,19 @@ TSBoundingShape >> size: anInteger [
 TSBoundingShape >> transform: aPoint [
 	"useful for attachpoints"
 	^ matrix transform: aPoint
+]
+
+{ #category : #actions }
+TSBoundingShape >> translateTo: aPoint [
+	| oldPosition |
+	oldPosition := self position.
+	oldPosition = aPoint ifTrue: [ ^ self ].
+	self position: aPoint.
+	self announce: [RSPositionChangedEvent new 
+		shape: self; 
+		oldPosition: oldPosition;
+		newPosition: aPoint ].
+
 ]
 
 { #category : #edges }

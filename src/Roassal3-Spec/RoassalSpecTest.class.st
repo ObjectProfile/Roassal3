@@ -1,6 +1,6 @@
 Class {
 	#name : #RoassalSpecTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Spec-Tests'
 }
 

@@ -2,5 +2,5 @@ Extension { #name : #SequenceableCollection }
 
 { #category : #'*Roassal3' }
 SequenceableCollection >> asGroup [
-	^ (TSGroup new: self size) addAll: self; yourself
+	^ (RSGroup new: self size) addAll: self; yourself
 ]

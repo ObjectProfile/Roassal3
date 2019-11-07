@@ -72,7 +72,7 @@ RSAbstractUMLClassRenderer >> classShape: aRSShapeBuilder [
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> edgeBuilder [
 	^ edgeBuilder ifNil: [ edgeBuilder := TSEdgeBuilder orthoVertical
-		attachPoint: TSVerticalAttachPoint new; 
+		attachPoint: RSVerticalAttachPoint new; 
 		border: self border;
 		markerStart: self marker ]
 ]
@@ -85,7 +85,7 @@ RSAbstractUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 { #category : #'private - initialization' }
 RSAbstractUMLClassRenderer >> initBasicGroupOn: cls [
 	| group vars methods |
-	group := TSGroup new.
+	group := RSGroup new.
 	group add: (self classNameShape elementOn: cls).
 	vars := self varsShape elementOn: cls.
 	methods := self methodsShape elementOn: cls.
@@ -100,7 +100,7 @@ RSAbstractUMLClassRenderer >> initBasicGroupOn: cls [
 
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> marker [ 
-	^ marker ifNil: [ marker := TSMarker new 
+	^ marker ifNil: [ marker := RSMarker new 
 		offset: 10;
 		shape: (RSShapeBuilder triangle
 			color: Color white;

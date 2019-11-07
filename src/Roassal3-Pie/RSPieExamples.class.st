@@ -3,7 +3,7 @@ I have examples for RSPieBuilder load the package Roassal3-Pie
 "
 Class {
 	#name : #RSPieExamples,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#category : #'Roassal3-Pie-Examples'
 }
 
@@ -138,7 +138,7 @@ RSPieExamples >> example05Smash [
 		onElement;
 		color: colors;
 		onModel;
-		border: (TSBorder new width: 1.5);
+		border: (RSBorder new width: 1.5);
 		innerRadius: 0;
 		externalRadius: 200.
 	pie build.
@@ -219,7 +219,7 @@ RSPieExamples >> example07Dendi [
 		onElement;
 		color: colors;
 		onModel;
-		border: (TSBorder new width: 1.5);
+		border: (RSBorder new width: 1.5);
 		externalRadius: 200.
 	pie build.
 	pie elements do: [ :e | | a b |
@@ -255,7 +255,7 @@ RSPieExamples >> example08CornerRadii [
 		onElement;
 		color: colors;
 		onModel;
-		border: (TSBorder new width: 1.5);
+		border: (RSBorder new width: 1.5);
 		externalRadius: 220;
 		innerRadius: 220/3;
 		cornerRadii: 30.
@@ -298,7 +298,7 @@ RSPieExamples >> example10CornerRadiiAnimation [
 	pie shape 
 		color: nil;
 		segmentSpacing: 1;
-		border: (TSBorder new width: 1.5; color: Color gray);
+		border: (RSBorder new width: 1.5; color: Color gray);
 		externalRadius: 220;
 		innerRadius: 70.
 	pie build.
@@ -333,7 +333,7 @@ RSPieExamples >> example11OpenningAnimation [
 		onElement;
 		color: [:e | colors scale: e index];
 		segmentSpacing: 1;
-		border: (TSBorder new width: 1.5; color: Color gray);
+		border: (RSBorder new width: 1.5; color: Color gray);
 		externalRadius: 220;
 		innerRadius: 70.
 	reset := [ pie elements do: #remove. pie build. pie view signalUpdate ].
@@ -423,7 +423,7 @@ RSPieExamples >> example12RainbowPie [
 		pie elements do:[ :e | 
 			pie shape updateElement: e withCommand: #externalRadius:.
 			] ].
-	pie view when: TSExtentChangedEvent do: [ :evt | pie view zoomToFit ].
+	pie view when: RSExtentChangedEvent do: [ :evt | pie view zoomToFit ].
 	w := pie view open.
 	w setLabel: 'Roassal :V'.
 ]
@@ -432,7 +432,7 @@ RSPieExamples >> example12RainbowPie [
 RSPieExamples >> example13BasicColorNormalize [
 	<script: 'self new example13BasicColorNormalize'>
 	| classes pie  |
-	classes :=TSEvent withAllSubclasses.
+	classes :=RSEvent withAllSubclasses.
 	pie := RSPieBuilder new
 		objects: classes;
 		slice: #numberOfMethods;
@@ -569,7 +569,7 @@ RSPieExamples >> example17PieLabels [
 		fontSize: 13;
 		text: [ :obj | obj key, ', ', (obj value * 100 / pie totalSum) rounded asString, ' %' ].
 	pie build.
-	pie view when: TSExtentChangedEvent do: [ pie view zoomToFit ].
+	pie view when: RSExtentChangedEvent do: [ pie view zoomToFit ].
 	pie open setLabel: 'Bolivia population by age'.
 ]
 
@@ -594,7 +594,7 @@ RSPieExamples >> example18ManyPies [
 		rotated.
 	elements := RSShapeBuilder composite
 		shapes: [ :m | | sum shapes |
-			shapes := TSGroup new.
+			shapes := RSGroup new.
 			pie
 				container: shapes;
 				objects: (data at: m);
@@ -613,7 +613,7 @@ RSPieExamples >> example18ManyPies [
 	elements @TSDraggable.
 	view showEncompassingRectangles.
 	TSGridLayout on: view elements.
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	view @ TSControlsCanvas.
 	view open setLabel: 'Prizepool in esports :V'
 ]
@@ -636,7 +636,7 @@ RSPieExamples >> example19Buttons [
 	TSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
-	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
+	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
 	v @ TSControlsCanvas.
 	
 	pie := RSPieBuilder new.
@@ -648,7 +648,7 @@ RSPieExamples >> example19Buttons [
 		allowRepeatCommands;
 		innerRadius:10;
 		onElement; 
-		border: (TSBorder new color: Color lightGray);
+		border: (RSBorder new color: Color lightGray);
 		paint: (RadialGradientPaint new 
 			center: 0 asPoint;
 			focalPoint: 0 asPoint;
@@ -673,14 +673,14 @@ RSPieExamples >> example19Buttons [
 	pie elements do: [:e | 
 		e 
 			setAsFixed
-			when: TSMouseEnter do: [ 
+			when: RSMouseEnter do: [ 
 				move := e model.
 				v newAnimation 
 					duration: 1 second;
 					easing: TSEasing backOut;
 					from: 40; to: 50;
 					on: e shape set: #externalRadius:. ];
-			when: TSMouseLeave do: [ 
+			when: RSMouseLeave do: [ 
 				move := 0@0.
 				v newAnimation 
 					duration: 1 second;
@@ -705,7 +705,7 @@ RSPieExamples >> example20AddingRemoving [
 	pie objects: objects;
 		slice: #linesOfCode.
 	color := TSScale category10.
-	labels := TSGroup new.
+	labels := RSGroup new.
 	elements := nil.
 	updatePie := nil.
 	updateLabel := nil.
@@ -719,7 +719,7 @@ RSPieExamples >> example20AddingRemoving [
 		fontName: 'Source Sans Pro';
 		onElement; 
 		position: [ :e | e index * (0@30) + (300@0) ];
-		when: TSMouseClick do: [:e | [ 
+		when: RSMouseClick do: [:e | [ 
 			objects add: e model.
 			removed remove: e model.
 			updateLabel value.
@@ -732,7 +732,7 @@ RSPieExamples >> example20AddingRemoving [
 		interactionDo: #popup;
 		color: color;
 		onElement;
-		when: TSMouseClick do: [ :e | [ 
+		when: RSMouseClick do: [ :e | [ 
 			objects remove: e model.
 			removed add: e model.
 			updateLabel value.
@@ -776,7 +776,7 @@ RSPieExamples >> example20AddingRemoving [
 		
 	pie build.
 	view zoomToFit.
-	view when: TSExtentChangedEvent do: [ view zoomToFit ].
+	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	view open setLabel: 'Click in arcs or labels'
 ]
 
@@ -812,12 +812,12 @@ RSPieExamples >> example21ProgressLabel [
 	pie elements do: [ :e | | color |
 		color := e color.
 		e 
-			when: TSMouseEnter do: [ :evt | 
+			when: RSMouseEnter do: [ :evt | 
 				e color: (color adjustBrightness: 0.08).
 				l model: e model.
 				label updateElement: l.
 				 ];
-			when: TSMouseLeave do: [ :evt | e color: color.
+			when: RSMouseLeave do: [ :evt | e color: color.
 				l model: nil.
 				label updateElement: l. ]
 	].
@@ -846,7 +846,7 @@ RSPieExamples >> example22RotatedAnimation [
 		innerRadius: 70;
 		segmentSpacing: 0.5;
 		externalRadius: 220;
-		when: TSMouseClick do: [ [ animation toggle ] ].
+		when: RSMouseClick do: [ [ animation toggle ] ].
 	pie label text: #name.
 	pie build.
 	animation := view newAnimation
@@ -901,11 +901,11 @@ RSPieExamples >> example23RotatedAnimation [
 			obj humanReadableSize ] ];
 		segmentSpacing: 0.5;
 		externalRadius: 220;
-		when: TSMouseClick do: [ [ animation toggle ] ].
+		when: RSMouseClick do: [ [ animation toggle ] ].
 	pie label text: #basename.
 	pie build.
 	lines := TSEdgeBuilder polyline
-		border: (TSBorder new dashArray: #(3));
+		border: (RSBorder new dashArray: #(3));
 		edgesOn: pie labelElements.
 	view addAll: lines.
 	view add: (RSShapeBuilder label 
@@ -936,7 +936,7 @@ RSPieExamples >> example23RotatedAnimation [
 			]
 		].
 	view camera zoomToFit: 270 asPoint.
-	view when: TSExtentChangedEvent do: [ 
+	view when: RSExtentChangedEvent do: [ 
 		view camera 
 			zoomToFit: view extent * 0.9
 			extent: 800@600 ].
@@ -986,7 +986,7 @@ RSPieExamples >> example24ManyPies [
 		position: 0@5;
 		text: [ :obj | format value: obj first value ].
 	composite := RSShapeBuilder composite shapes: [ :m | | g |
-		g := TSGroup new.
+		g := RSGroup new.
 		pie shape 
 			externalRadius: [ radius scale: m first value ];
 			innerRadius: [ :e| e externalRadius * 0.6 ].

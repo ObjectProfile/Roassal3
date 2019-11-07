@@ -40,7 +40,7 @@ v open
 "
 Class {
 	#name : #RSLocation,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'offset',
 		'orientation',
@@ -151,8 +151,8 @@ RSLocation >> stick: movableElement on: fixedElement [
 	block := [ self move: movableElement on: fixedElement ].
 	block value.
 	fixedElement 
-		when: TSExtentChangedEvent do: block;
-		when: TSPositionChangedEvent do: block.
+		when: RSExtentChangedEvent do: block;
+		when: RSPositionChangedEvent do: block.
 ]
 
 { #category : #'public - positioning' }

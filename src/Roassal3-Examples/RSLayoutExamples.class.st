@@ -3,7 +3,7 @@ I use the RSShapeBuilder
 "
 Class {
 	#name : #RSLayoutExamples,
-	#superclass : #TSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
@@ -117,7 +117,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 RSLayoutExamples >> example05TreeLayout [
 	<script: 'self new example05TreeLayout open'>
 	| c shapes eb |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
 		TSEllipse new
 			model: cls;
@@ -148,7 +148,7 @@ RSLayoutExamples >> example05TreeLayout [
 RSLayoutExamples >> example06Cluster [
 	<script: 'self new example06Cluster open'>
 	| c shapes |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
 		TSEllipse new 
 			size: 5;
@@ -184,8 +184,8 @@ RSLayoutExamples >> example06Cluster [
 RSLayoutExamples >> example07ForceBasedLayout [
 	<script: 'self new example07ForceBasedLayout open'>
 	| c shapes eb |
-	c := TSCanvas new.
-	shapes := TSShape withAllSubclasses collect: [ :cls |
+	c := RSCanvas new.
+	shapes := RSShape withAllSubclasses collect: [ :cls |
 		TSEllipse new 
 			popup;
 			draggable;
@@ -219,7 +219,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 RSLayoutExamples >> example08HorizontalTree [
 	<script: 'self new example08HorizontalTree open setLabel: ''Horizontal Tree'''>
 	| c shapes |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	
 	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
 		lbl := TSLabel new
@@ -227,23 +227,23 @@ RSLayoutExamples >> example08HorizontalTree [
 			yourself.
 		box := TSBox new
 			withBorder;
-			cornerRadius: (TSCornerRadius new right: 10);
+			cornerRadius: (RSCornerRadius new right: 10);
 			extent: lbl extent + 10.
 		TSComposite new
 			draggable;
 			model: cls;
-			shapes: (TSGroup with: box with: lbl );
+			shapes: (RSGroup with: box with: lbl );
 			yourself ].
 	c addAll: shapes.
 	c @ TSControlsCanvas.
 	TSEdgeBuilder orthoHorizontal
-		markerEnd: (TSMarker new 
+		markerEnd: (RSMarker new 
 			offset: 2;
 			shape: (RSShapeBuilder triangle 
 				color: Color black;
 				size: 5;
 				element));
-		attachPoint: TSHorizontalAttachPoint new; 
+		attachPoint: RSHorizontalAttachPoint new; 
 		canvas: c;
 		shapes: c nodes;
 		connectFrom: #superclass.
@@ -259,7 +259,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	sb := RSShapeBuilder square 
 		interactionDo: #draggable;
 		size: 30.
-	v addAll: (sb elementsOn: (TSShape withAllSubclasses) ).
+	v addAll: (sb elementsOn: (RSShape withAllSubclasses) ).
 	TSEdgeBuilder arrowedLine 
 		withBorderAttachPoint;
 		view: v;
@@ -380,7 +380,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	view @ (TSForceLayoutStepping new layout: layout).
 	colors := TSColorPalette sequential pubu9.
 	boxBuilder := RSShapeBuilder box
-		border: (TSBorder new color: Color lightGray trans; width: 0.5);
+		border: (RSBorder new color: Color lightGray trans; width: 0.5);
 		extent: [ :quad | quad rectangle extent ];
 		position: [ :quad | quad rectangle rsCenter ];
 		onElement;
@@ -402,7 +402,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		duration: 500 milliSeconds;
 		when: TSAnimationLoopEvent do: [ :v | 
 			boxes do: #remove.
-			boxes := TSGroup new.
+			boxes := RSGroup new.
 			createBoxes value: layout currentQuadtree value: 0.
 			view addAll: boxes.
 			boxes pushBack ].
@@ -451,11 +451,11 @@ RSLayoutExamples >> example14ClassHierarchy [
 RSLayoutExamples >> example15SimpleClassHierarchy [
 	<script: 'self new example15SimpleClassHierarchy open'>
 	| c methods |
-	c := TSCanvas new.
+	c := RSCanvas new.
 
 	GoferOperation withAllSubclassesDo: [ :cls |
 		| composite label |
-		methods := cls methods collect: [ :m | TSBox new color: Color red; size: 5; model: m; yourself ] as: TSGroup.
+		methods := cls methods collect: [ :m | TSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
 		methods @ (TSPopup text: #selector).
 		
 		TSGridLayout on: methods.
@@ -487,7 +487,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 RSLayoutExamples >> example16SimpleClassHierarchy [
 	<script: 'self new example16SimpleClassHierarchy open'>
 	| c |
-	c := TSCanvas new.
+	c := RSCanvas new.
 
 	Collection withAllSubclassesDo: [ :cls |
 		| box |

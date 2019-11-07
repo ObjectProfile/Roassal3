@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #TSQuadTreeF,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'charge',
 		'leaf',

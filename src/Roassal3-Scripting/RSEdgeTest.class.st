@@ -3,7 +3,7 @@ I have tests for RSEdge
 "
 Class {
 	#name : #RSEdgeTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'el1',
 		'el2',
@@ -20,7 +20,7 @@ RSEdgeTest >> setUp [
 	el1 translateTo: 20 @ 20.
 	el2 translateTo: 60 @ 80.
 	edge := RSEdge new
-		attachPoint: TSCenteredAttachPoint new;
+		attachPoint: RSCenteredAttachPoint new;
 		shape: TSLine new;
 		from: el1;
 		to: el2;
@@ -33,7 +33,7 @@ RSEdgeTest >> testAddingEdgeAndGroup [
 
 	| v g |
 	v := RSView new.
-	g := TSGroup new.
+	g := RSGroup new.
 	
 	g
 		add: el1;

@@ -11,7 +11,7 @@ My main mission is
 "
 Class {
 	#name : #RSCommand,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'message',
 		'element',

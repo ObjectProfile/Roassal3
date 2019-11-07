@@ -65,20 +65,20 @@ TSScrollsCanvas >> initializeHideAnimation [
 { #category : #initialization }
 TSScrollsCanvas >> initializeShape [
 	barShape := RSShapeBuilder box
-		cornerRadius: (TSCornerRadius new radius: 5);
-		border: [TSBorder new color: self scrollBorderColor; width: 0.5];
+		cornerRadius: (RSCornerRadius new radius: 5);
+		border: [RSBorder new color: self scrollBorderColor; width: 0.5];
 		size: 10;
 		noPaint;
 		isFixed: true;
-		when: TSMouseDragging do: [ :e | [:evt| self moveScroll: evt ] ];
-		when: TSMouseEnter do: [ :e | [ :evt| | shape |
+		when: RSMouseDragging do: [ :e | [:evt| self moveScroll: evt ] ];
+		when: RSMouseEnter do: [ :e | [ :evt| | shape |
 			self updateScrollbars.
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: (self scrollColor alpha: 1) ].
 			animation stop.
 			hideAnimation stop. ] ];
-		when: TSMouseLeave do: [ :e | [ :evt| | shape |
+		when: RSMouseLeave do: [ :e | [ :evt| | shape |
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: self scrollColor ].
@@ -113,8 +113,8 @@ TSScrollsCanvas >> moveScroll: evt [
 TSScrollsCanvas >> onShape: aCanvas [
 	self addScrollBars: aCanvas.
 	
-	aCanvas when: TSPositionChangedEvent do: [ self updateScrollbars ].
-	aCanvas when: TSScaleChangedEvent do: [ self updateScrollbars ].
+	aCanvas when: RSPositionChangedEvent do: [ self updateScrollbars ].
+	aCanvas when: RSScaleChangedEvent do: [ self updateScrollbars ].
 ]
 
 { #category : #accessing }

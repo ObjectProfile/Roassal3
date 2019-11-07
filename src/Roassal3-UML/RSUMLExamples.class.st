@@ -3,7 +3,7 @@ I have examples of how to manage the uml builder in different cases
 "
 Class {
 	#name : #RSUMLExamples,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#category : #'Roassal3-UML-Examples'
 }
 
@@ -12,7 +12,7 @@ RSUMLExamples >> example01Basic [
 	<script: 'self new example01Basic'>
 	| builder |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAttachPoint withAllSubclasses.
+	builder classes: RSAttachPoint withAllSubclasses.
 	builder build.
 	builder open
 ]
@@ -41,7 +41,7 @@ RSUMLExamples >> example03DifferentLines [
 	<script: 'self new example03DifferentLines'>
 	| builder marker |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAttachPoint withAllSubclasses.
+	builder classes: RSAttachPoint withAllSubclasses.
 	marker := (RSShapeBuilder arrow
 		extent: 20@25;
 		noPaint;
@@ -51,7 +51,7 @@ RSUMLExamples >> example03DifferentLines [
 		width: 2;
 		dashArray: #(4);
 		capRound;
-		attachPoint: (TSVerticalAttachPoint new startOffset: 20);
+		attachPoint: (RSVerticalAttachPoint new startOffset: 20);
 		markerStart: marker).
 	builder build.
 	builder open
@@ -62,7 +62,7 @@ RSUMLExamples >> example04Nolines [
 	<script: 'self new example04Nolines'>
 	| builder |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAttachPoint withAllSubclasses.
+	builder classes: RSAttachPoint withAllSubclasses.
 	builder renderer marker: ((RSShapeBuilder arrow
 		extent: 20@25;
 		color: Color black;
@@ -79,7 +79,7 @@ RSUMLExamples >> example05Horizontal [
 	<script: 'self new example05Horizontal'>
 	| builder marker |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAttachPoint withAllSubclasses.
+	builder classes: RSAttachPoint withAllSubclasses.
 	marker := (RSShapeBuilder arrow
 		extent: 20@25;
 		noPaint;
@@ -89,7 +89,7 @@ RSUMLExamples >> example05Horizontal [
 		width: 2;
 		dashArray: #(4);
 		capRound;
-		attachPoint: (TSHorizontalAttachPoint new startOffset: 20);
+		attachPoint: (RSHorizontalAttachPoint new startOffset: 20);
 		markerStart: marker).
 	builder layout horizontalTree
 		verticalGap: 50;
@@ -103,7 +103,7 @@ RSUMLExamples >> example06CustomText [
 	<script: 'self new example06CustomText'>
 	| builder renderer c1 |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAttachPoint withAllSubclasses.
+	builder classes: RSAttachPoint withAllSubclasses.
 	c1 := Color r: 0.130 g: 0.130 b: 0.130.
 	builder view color: c1.
 	renderer := builder renderer.
@@ -114,7 +114,7 @@ RSUMLExamples >> example06CustomText [
 		color: Color white.
 	renderer classNameShape: (RSShapeBuilder composite shapes: [:cls | 
 		| title g |
-		g := TSGroup new.
+		g := RSGroup new.
 		title := RSShapeBuilder label fontSize: 20; color: Color white; elementOn: cls.
 		g add: title.
 		cls hasAbstractMethods ifTrue: [ 

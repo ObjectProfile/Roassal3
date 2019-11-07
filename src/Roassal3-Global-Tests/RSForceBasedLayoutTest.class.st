@@ -1,6 +1,6 @@
 Class {
 	#name : #RSForceBasedLayoutTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'classes',
 		'canvas'
@@ -10,7 +10,7 @@ Class {
 
 { #category : #running }
 RSForceBasedLayoutTest >> setUp [
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 	classes := Collection withAllSubclasses collect:[:cls |
 		TSBox new model: cls; size: 10; yourself].
 	TSEdgeBuilder line

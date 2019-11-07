@@ -54,7 +54,7 @@ TSTransitionAnimationTest >> testStep [
 TSTransitionAnimationTest >> testStepEvent [
 	
 	| value loop animation |
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 	value := nil.
 	loop := 0.
 	animation := canvas newAnimation

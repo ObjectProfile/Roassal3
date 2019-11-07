@@ -3,7 +3,7 @@ I have test of global uses of roassal
 "
 Class {
 	#name : #RSRoassalTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'c'
 	],

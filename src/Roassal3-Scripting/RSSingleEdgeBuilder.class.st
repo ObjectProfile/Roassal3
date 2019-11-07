@@ -17,7 +17,7 @@ RSSingleEdgeBuilder class >> arrowedLine [
 	marker := TSPolygon new
 		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
 		paint: nil;
-		border: (TSBorder new).
+		border: (RSBorder new).
 	inst := self line.
 	inst markerEnd: marker.
 	^ inst.
@@ -196,7 +196,7 @@ RSSingleEdgeBuilder >> edgeOn: model index: index [
 { #category : #'public - accessing' }
 RSSingleEdgeBuilder >> edgesOn: aCollection [
 	| g |
-	g := TSGroup new: aCollection size.
+	g := RSGroup new: aCollection size.
 	aCollection doWithIndex: [ :obj : index |
 		g add: (self edgeOn: obj index: index) ].
 	^ g
@@ -236,17 +236,17 @@ RSSingleEdgeBuilder >> updateElement: edge [
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withBorderAttachPoint [
-	self attachPoint: TSBorderAttachPoint new.
+	self attachPoint: RSBorderAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withCenteredAttachPoint [
-	self attachPoint: TSAttachPoint new.
+	self attachPoint: RSAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
 RSSingleEdgeBuilder >> withHorizontalAttachPoint [
-	self attachPoint: TSHorizontalAttachPoint new.
+	self attachPoint: RSHorizontalAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
@@ -274,5 +274,5 @@ v @ RSControlsView.
 v open			
 "
 
-	self attachPoint: TSVerticalAttachPoint new.
+	self attachPoint: RSVerticalAttachPoint new.
 ]

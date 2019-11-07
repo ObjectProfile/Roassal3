@@ -3,7 +3,7 @@ I have tests for RSEdgeBuilder
 "
 Class {
 	#name : #TSEdgeBuilderTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'b',
 		'canvas',
@@ -20,8 +20,8 @@ TSEdgeBuilderTest >> expectedFailures [
 { #category : #running }
 TSEdgeBuilderTest >> setUp [
 	super setUp.
-	canvas := TSCanvas new.
-	shapes := (1 to: 10) collect: [:n | TSBox new model: n; size: 5; yourself] as: TSGroup.
+	canvas := RSCanvas new.
+	shapes := (1 to: 10) collect: [:n | TSBox new model: n; size: 5; yourself] as: RSGroup.
 	canvas addAll: shapes. 
 	b := TSEdgeBuilder line.
 ]
@@ -30,7 +30,7 @@ TSEdgeBuilderTest >> setUp [
 TSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 
 	| eb |
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 	canvas addAll: ((1 to: 3) collect: [ :n | TSBox new model: n; yourself] ).
 
 	eb := TSEdgeBuilder line.
@@ -61,7 +61,7 @@ TSEdgeBuilderTest >> testConnectFrom [
 { #category : #tests }
 TSEdgeBuilderTest >> testConnectFromAll [
 	| c es |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	es := (1 to: 2) collect: [ :m | TSEllipse new size: 20; model: m; yourself ].
 	c addAll: es.
 	
@@ -120,7 +120,7 @@ TSEdgeBuilderTest >> testElements [
 	b canvas: canvas.
 	self assert: b fromShapes equals: canvas nodes.
 	
-	es := (1 to: 4) collect: [:n | TSBox new model: n; yourself] as: TSGroup.
+	es := (1 to: 4) collect: [:n | TSBox new model: n; yourself] as: RSGroup.
 	b shapes: es.
 	self assert: b fromShapes equals: es.
 ]
@@ -131,7 +131,7 @@ TSEdgeBuilderTest >> testElementsToLookup [
 	| es1 es2 edges c |
 	es1 := #(1 2 3) collect: [:n | TSEllipse new model: n; yourself].
 	es2 := #(1 2 3) collect: [:n | TSBox new model: n; yourself].
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addAll: es1.
 	c addAll: es2.
 	edges := TSEdgeBuilder line
@@ -399,7 +399,7 @@ TSEdgeBuilderTest >> testSimple7 [
 { #category : #tests }
 TSEdgeBuilderTest >> testSource [
 	| c es eb col |
-	c := TSCanvas new.
+	c := RSCanvas new.
 	es := #(1 2 3) collect: [:n | TSBox new model: n; yourself]. 
 	c addAll: es.
 	
@@ -474,7 +474,7 @@ TSEdgeBuilderTest >> testconnectFromToAll [
 	| es1 es2 edges c |
 	es1 := #(1 2 3) collect: [:n | TSEllipse new model: n; yourself].
 	es2 := #(1 2 3) collect: [:n | TSBox new model: n; yourself].
-	c := TSCanvas new.
+	c := RSCanvas new.
 	c addAll: es1; addAll: es2.
 	edges := TSEdgeBuilder line
 					canvas: c;

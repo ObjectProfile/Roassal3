@@ -3,7 +3,7 @@ I a m the interaction builder
 "
 Class {
 	#name : #RSInteractionBuilder,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'interactions'
 	],
@@ -24,7 +24,7 @@ RSInteractionBuilder >> addInteraction: anInteraction [
 
 { #category : #interactions }
 RSInteractionBuilder >> browseable [
-	self addInteraction: [ :element | element when: TSMouseClick do: [ :evt | element model browse ] ].
+	self addInteraction: [ :element | element when: RSMouseClick do: [ :evt | element model browse ] ].
 ]
 
 { #category : #interactions }
@@ -48,7 +48,7 @@ RSInteractionBuilder >> initialize [
 
 { #category : #actions }
 RSInteractionBuilder >> inspectable [
-	self addInteraction: [ :element | element when: TSMouseClick do: [ :evt | element model inspect ] ].
+	self addInteraction: [ :element | element when: RSMouseClick do: [ :evt | element model inspect ] ].
 ]
 
 { #category : #interactions }

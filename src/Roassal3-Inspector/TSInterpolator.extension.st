@@ -3,7 +3,7 @@ Extension { #name : #TSInterpolator }
 { #category : #'*Roassal3-Inspector' }
 TSInterpolator >> gtCanvasForInspector [
 	| canvas theme boxes pos rect line cp label loc s |
- 	canvas := TSCanvas new.
+ 	canvas := RSCanvas new.
 	theme := Smalltalk ui theme.
 	canvas color: theme backgroundColor.
 	s := TSScale linear domain: #(1 100); range: #(0 420).
@@ -14,13 +14,13 @@ TSInterpolator >> gtCanvasForInspector [
 			y: (s scale: (i % 10) asInteger) * 10 + 64;
 			color: (theme caretColor alpha: 0.2);
 			resetBBox;
-			yourself ] as: TSGroup.
+			yourself ] as: RSGroup.
 	rect := boxes encompassingRectangle.
 	pos := TSScale linear
 		domain: { 0@0. 1@1 };
 		range: { 0 @ rect height. rect width@ 0 }.
 	line := TSPolyline new 
-		border: (TSBorder new 
+		border: (RSBorder new 
 			width: 4;
 			paint: (TSGradientPalette sweetPeriod
 				start: rect bottomLeft;

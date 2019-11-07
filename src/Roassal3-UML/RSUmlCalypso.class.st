@@ -45,7 +45,7 @@ RSUMLCalypso >> build [
 	morph := builder view morph.
 	morph onAnnouncement: MorphDeleted 
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
-	builder view when: TSMouseClick do: [ morph takeKeyboardFocus].
+	builder view when: RSMouseClick do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 

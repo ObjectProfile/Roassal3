@@ -3,7 +3,7 @@ I am an handy class to build legend in a visualization
 "
 Class {
 	#name : #TSLegend,
-	#superclass : #TSAbstractContainerBuilder,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'layout',
 		'defaultLabel',
@@ -132,13 +132,13 @@ TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	| box s marker line g l1 l2 l3 line1 line2  |
 	box := TSBox new
 		size: 100.
-	marker := TSShape triangle
+	marker := RSShape triangle
 		color: Color black;
 		size: 5.
 	line := TSLine new 
 		marker: marker;
 		yourself.
-	g := TSGroup new.
+	g := RSGroup new.
 	l1 := defaultLabel copy text: labelWidth.
 	l2 := defaultLabel copy text: labelHeight.
 	l3 := defaultLabel copy text: labelBox.
@@ -182,8 +182,8 @@ TSLegend >> renderOnDemandIn: aView [
 	legendLabels := aView attributes 
 		at: #legendLabels
 		ifAbsentPut: [ 
-			aView when: TSExtentChangedEvent do: update.
-			TSGroup new: 5 ].
+			aView when: RSExtentChangedEvent do: update.
+			RSGroup new: 5 ].
 	legendLabels add: menuShape.
 	update value.
 
@@ -193,7 +193,7 @@ TSLegend >> renderOnDemandIn: aView [
 { #category : #initialization }
 TSLegend >> reset [
 	legendBlock := [ :l | l draggable ].
-	shapes := TSGroup new.
+	shapes := RSGroup new.
 	location := RSLocation new below.
 	layout := TSLayoutBuilder new.
 	layout vertical gapSize: 0.
@@ -253,7 +253,7 @@ TSLegend >> text: aString withShape: aShape [
 	| text tshapes line l |
 	text := self defaultLabel copy.
 	text text: aString.
-	tshapes := TSGroup with: aShape with: text.
+	tshapes := RSGroup with: aShape with: text.
 	l := TSHorizontalLineLayout new center.
 	l on: tshapes.
 	line := TSComposite new

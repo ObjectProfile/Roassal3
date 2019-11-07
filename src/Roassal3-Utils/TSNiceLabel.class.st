@@ -3,7 +3,7 @@ I am an utility class for RTLabelGenerator
 "
 Class {
 	#name : #TSNiceLabel,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'min',
 		'max',

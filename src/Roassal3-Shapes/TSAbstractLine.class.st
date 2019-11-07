@@ -3,7 +3,7 @@ I represent the abstract lines that have start and end points
 "
 Class {
 	#name : #TSAbstractLine,
-	#superclass : #TSShape,
+	#superclass : #RSShape,
 	#traits : 'TMarkeable',
 	#classTraits : 'TMarkeable classTrait',
 	#instVars : [
@@ -106,7 +106,7 @@ TSAbstractLine >> hasMarkers [
 TSAbstractLine >> initialize [ 
 	super initialize.
 	paint := nil.
-	border := TSBorder new.
+	border := RSBorder new.
 	
 ]
 
@@ -142,7 +142,7 @@ TSAbstractLine >> loadShape: other [
 
 { #category : #'event handling' }
 TSAbstractLine >> notifyExtentChanged [
-	self announce: [ TSExtentChangedEvent new 
+	self announce: [ RSExtentChangedEvent new 
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]

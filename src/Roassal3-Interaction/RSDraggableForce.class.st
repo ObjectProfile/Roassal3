@@ -25,12 +25,12 @@ RSDraggableForce >> onElement: e [
 	| mock |
 	super onElement: e.
 	e 
-		when: TSMouseDragStart do: [ :evt | 
+		when: RSMouseDragStart do: [ :evt | 
 			mock := layout mockElementAt: e.
 			mock isFixed: true. ];
-		when: TSMouseDragging do: [ :evt |
+		when: RSMouseDragging do: [ :evt |
 			mock fixPosition: e position.];
-		when: TSMouseDragEnd do:[:evt | 
+		when: RSMouseDragEnd do:[:evt | 
 			mock isFixed: false.
 			mock := nil ].
 ]

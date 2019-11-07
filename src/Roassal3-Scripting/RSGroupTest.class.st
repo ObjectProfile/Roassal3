@@ -1,6 +1,6 @@
 Class {
 	#name : #RSGroupTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Scripting-Tests'
 }
 
@@ -9,7 +9,7 @@ RSGroupTest >> testCache01 [
 
 	| es el |
 	es := RSShapeBuilder box elementsOn: (1 to: 5).
-	self assert: es class equals: TSGroup.
+	self assert: es class equals: RSGroup.
 	self assert: es shapeFromModelCache isEmpty.
 	
 	el := es shapeFromModel: 2.
@@ -30,7 +30,7 @@ RSGroupTest >> testCache02 [
 	self assert: el model equals: 1.
 	
 	els := es shapesFromModel: 1.
-	self assert: els class equals: TSGroup.
+	self assert: els class equals: RSGroup.
 	self assert: els size equals: 2
 ]
 

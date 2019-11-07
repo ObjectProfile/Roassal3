@@ -3,7 +3,7 @@ I am base class for RSAlignment and RSResize
 "
 Class {
 	#name : #RSAbstractElementHandling,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'shapes',
 		'fixedShape'

@@ -3,7 +3,7 @@ base of animation tests
 "
 Class {
 	#name : #TSAnimationTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'canvas'
 	],
@@ -52,7 +52,7 @@ TSAnimationTest >> runAnimation: animation threshold: threshold [
 
 { #category : #running }
 TSAnimationTest >> setUp [
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
 ]
 
 { #category : #tests }

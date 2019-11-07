@@ -3,7 +3,7 @@ I have examples of different ways to inspect views an objects in roassal3
 "
 Class {
 	#name : #TSInspectableExample,
-	#superclass : #TSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
@@ -20,7 +20,7 @@ TSInspectableExample >> example01SimpleExample [
 				width: (cls instVarNames size * 5 max: 5);
 				height: (cls numberOfMethods max: 5);
 				yourself);
-			yourself ] as: TSGroup.
+			yourself ] as: RSGroup.
 	view addAll: boxes.
 		
 	edges := TSEdgeBuilder line

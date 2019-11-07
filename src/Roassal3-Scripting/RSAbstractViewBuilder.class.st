@@ -3,7 +3,7 @@ I am the base for custom visualization, like sunburst, treemap, grapher custom v
 "
 Class {
 	#name : #RSAbstractViewBuilder,
-	#superclass : #RSObject,
+	#superclass : #RS3Object,
 	#instVars : [
 		'shape',
 		'elements',
@@ -34,7 +34,7 @@ RSAbstractViewBuilder >> container [
 RSAbstractViewBuilder >> container: aRSViewORTSGroup [
 	""
 	self 
-		assert: aRSViewORTSGroup canvas notNil | (aRSViewORTSGroup class = TSGroup)
+		assert: aRSViewORTSGroup canvas notNil | (aRSViewORTSGroup class = RSGroup)
 		description: 'The container of this builder must be a TSCanvas or TSGroup'.
 	
 	container := aRSViewORTSGroup
@@ -63,7 +63,7 @@ RSAbstractViewBuilder >> gtInspectorBuilderIn: composite [
 		title: ['Builder'];
 		initializeView: [ 
 			self build.
-			self view when: TSExtentChangedEvent do: [ self view zoomToFit ].
+			self view when: RSExtentChangedEvent do: [ self view zoomToFit ].
 			self view.
 			 ]
 ]

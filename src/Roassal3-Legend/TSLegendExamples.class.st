@@ -3,7 +3,7 @@ I have basic examples of legend builder
 "
 Class {
 	#name : #TSLegendExamples,
-	#superclass : #TSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Legend-Examples'
 }
 
@@ -143,7 +143,7 @@ TSLegendExamples >> example08Polygons [
 	b := TSLegend new.
 	b title: 'Polygons'.
 	#(diamond triangle star pentagon octagon) do: [ :selector | 
-		b text: selector withShape: ((TSShape perform: selector) size: 15) ].
+		b text: selector withShape: ((RSShape perform: selector) size: 15) ].
 	b build.
 	b canvas @ TSControlsCanvas.
 	^ b canvas
@@ -157,7 +157,7 @@ TSLegendExamples >> example09Lines [
 	b title: 'Line with markers'.
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
-		marker := (TSShape perform: selector) size: 10.
+		marker := (RSShape perform: selector) size: 10.
 		line := TSLine new markerEnd: marker; 
 			startPoint: 0@0; 
 			endPoint: 20@0;
@@ -173,14 +173,14 @@ TSLegendExamples >> example09Lines [
 TSLegendExamples >> example10Location [
 	<script: 'self new example10Location open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
-	canvas := TSCanvas new.
-	classes := TSShape withAllSubclasses collect: [ :cls | 
+	canvas := RSCanvas new.
+	classes := RSShape withAllSubclasses collect: [ :cls | 
 		TSBox new
 			draggable;
 			popup;
 			model: cls;
 			height: cls numberOfMethods;
-			width: (cls instVarNames size + 1) * 5 ] as: TSGroup.
+			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
 	TSEdgeBuilder line
 		withVerticalAttachPoint;
@@ -205,7 +205,7 @@ TSLegendExamples >> example10Location [
 	b leyendDo: [ :s | 
 		s
 			draggable;
-			border:(TSBorder new
+			border:(RSBorder new
 				color: Color red;
 				dashArray: #(4));
 			scaleBy: 0.5;
@@ -224,14 +224,14 @@ TSLegendExamples >> example10Location [
 TSLegendExamples >> example11OnDemand [
 	<script: 'self new example11OnDemand open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
-	canvas := TSCanvas new.
-	classes := TSShape withAllSubclasses collect: [ :cls | 
+	canvas := RSCanvas new.
+	classes := RSShape withAllSubclasses collect: [ :cls | 
 		TSBox new
 			draggable;
 			popup;
 			model: cls;
 			height: cls numberOfMethods;
-			width: (cls instVarNames size + 1) * 5 ] as: TSGroup.
+			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
 	TSEdgeBuilder line
 		withVerticalAttachPoint;
@@ -256,7 +256,7 @@ TSLegendExamples >> example11OnDemand [
 	b leyendDo: [ :s | 
 		s
 			draggable;
-			border:(TSBorder new
+			border:(RSBorder new
 				color: Color red;
 				dashArray: #(4));
 			scaleBy: 0.5;

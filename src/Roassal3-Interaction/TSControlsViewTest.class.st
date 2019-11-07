@@ -1,6 +1,6 @@
 Class {
 	#name : #TSControlsViewTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Interaction-Tests'
 }
 

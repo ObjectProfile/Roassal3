@@ -6,7 +6,7 @@ A ''view'' is a container of graphical elements and represents a layer that may 
 "
 Class {
 	#name : #RSView,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'elements',
 		'edges',
@@ -71,7 +71,7 @@ RSView >> edges [
 
 { #category : #accessing }
 RSView >> elements [
-	^ TSGroup withAll: elements
+	^ RSGroup withAll: elements
 ]
 
 { #category : #inspector }
@@ -112,13 +112,13 @@ RSView >> gtInspectorElementsIn: composite [
 RSView >> initialize [
 	super initialize.
 	self initializeContent.
-	self setCanvas: TSCanvas new
+	self setCanvas: RSCanvas new
 ]
 
 { #category : #initialization }
 RSView >> initializeContent [
-	elements := TSGroup new.
-	edges := TSGroup new
+	elements := RSGroup new.
+	edges := RSGroup new
 ]
 
 { #category : #accessing }

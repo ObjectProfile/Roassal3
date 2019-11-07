@@ -23,7 +23,7 @@ A Metric normalizer is made to assign a color, or a particular shape computed fr
 "
 Class {
 	#name : #RSNormalizer,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#instVars : [
 		'scale',
 		'executeBlock',

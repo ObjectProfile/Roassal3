@@ -12,7 +12,7 @@ view @ RSDraggableView.
 "
 Class {
 	#name : #TSInteraction,
-	#superclass : #TSObject,
+	#superclass : #RSObject,
 	#classInstVars : [
 		'instance'
 	],

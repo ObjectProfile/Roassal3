@@ -46,7 +46,7 @@ RSUMLClassBuilder >> createButtonOn: e [
 		form: collapse;
 		size: 20;
 		element.
-	button when: TSMouseClick do: [ 
+	button when: RSMouseClick do: [ 
 		button form: (button form = expand
 			ifTrue: [ self expand: e. collapse ]
 			ifFalse: [ self collapse: e. expand ]).
@@ -58,7 +58,7 @@ RSUMLClassBuilder >> createButtonOn: e [
 { #category : #initialization }
 RSUMLClassBuilder >> createShapesFor: cls [
 	| g boxElement titleLabel rec line |
-	g := TSGroup new.
+	g := RSGroup new.
 	boxElement := renderer classBoxShape elementOn: cls.
 	titleLabel := renderer classNameShape elementOn: cls.
 	g add: titleLabel.

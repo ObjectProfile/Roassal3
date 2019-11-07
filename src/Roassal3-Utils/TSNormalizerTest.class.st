@@ -3,7 +3,7 @@ I am test for RSNormalizer
 "
 Class {
 	#name : #TSNormalizerTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Utils-Tests'
 }
 
