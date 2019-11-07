@@ -78,7 +78,7 @@ TSKeyNavigationCanvas >> processKeyUp: evt [
 	key == 31 "$o" ifTrue: [ ^ self zoomOut: evt ].
 	key == 46 "$m" ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
-	self removeRectanglesFor: evt view.
+	self removeRectanglesFor: evt canvas.
 	animation stop.
 	animation := nil.
 ]

@@ -90,8 +90,8 @@ TSAbstractControlCanvas >> expandedRectangle: evt [
 ]
 
 { #category : #utilities }
-TSAbstractControlCanvas >> removeRectanglesFor: aView [
-	aView 
+TSAbstractControlCanvas >> removeRectanglesFor: aCanvas [
+	aCanvas 
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]

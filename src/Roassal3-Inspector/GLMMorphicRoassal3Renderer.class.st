@@ -16,5 +16,8 @@ GLMMorphicRoassal3Renderer >> render: aRoassalPresentation [
 		setUpInteractions;
 		when: GLMPresentationUpdated send: #actOnPresentationUpdate: to: self.
 
-	^ myMorph :=aRoassalPresentation canvas createMorph.
+	myMorph :=aRoassalPresentation canvas createMorph.
+	myMorph takeKeyboardFocus.
+	aRoassalPresentation canvas when: TSMouseClick do: [ myMorph takeKeyboardFocus ].
+	^ myMorph
 ]
