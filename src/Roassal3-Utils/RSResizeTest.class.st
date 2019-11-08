@@ -21,19 +21,19 @@ RSResizeTest >> setUp [
 ]
 
 { #category : #tests }
-RSResizeTest >> testBiggestElement [
+RSResizeTest >> testBiggestExtent [
+	self assert: resize biggestExtent equals: 4 @ 3
+]
+
+{ #category : #tests }
+RSResizeTest >> testBiggestShape [
 	self assert: resize biggestShape equals: shapes last.
 	resize useBiggestShape.
 	self assert: resize fixedShape equals: shapes last.
 ]
 
 { #category : #tests }
-RSResizeTest >> testBiggestExtent [
-	self assert: resize biggestExtent equals: 4 @ 3
-]
-
-{ #category : #tests }
-RSResizeTest >> testHighestElement [
+RSResizeTest >> testHighestShape [
 	self assert: resize highestShape equals: shapes last.
 
 ]
@@ -53,7 +53,7 @@ RSResizeTest >> testSameSize [
 ]
 
 { #category : #tests }
-RSResizeTest >> testSameSizeWithoutFixedElement [
+RSResizeTest >> testSameSizeWithoutFixedShape [
 	resize sameSize.
 	self assert: (shapes collect: #extent) asSet asArray equals: (Array with: (4.0 @ 3.0))
 ]
@@ -66,7 +66,7 @@ RSResizeTest >> testSameWidth [
 ]
 
 { #category : #tests }
-RSResizeTest >> testWidestElement [
-	self assert: resize widestElement equals: shapes last.
+RSResizeTest >> testWidestShape [
+	self assert: resize widestShape equals: shapes last.
 
 ]

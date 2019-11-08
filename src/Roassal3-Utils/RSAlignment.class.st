@@ -23,10 +23,10 @@ Class {
 }
 
 { #category : #public }
-RSAlignment >> alignFromBottomUsing: anElement [
-	"The argument anElement is a fix point. It does not move"
+RSAlignment >> alignFromBottomUsing: aShape [
+	"The argument aShape is a fix point. It does not move"
 	| topY newY |
-	topY := anElement encompassingRectangle bottomCenter y.
+	topY := aShape encompassingRectangle bottomCenter y.
 	shapes do: [ :s |
 		newY := topY - (s encompassingRectangle height / 2).
 		s translateTo: s position x @ newY
@@ -34,11 +34,10 @@ RSAlignment >> alignFromBottomUsing: anElement [
 ]
 
 { #category : #public }
-RSAlignment >> alignFromCenterUsing: anElement [
+RSAlignment >> alignFromCenterUsing: aShape [
 	| topX newX topY newY |
-	
-	topX := anElement encompassingRectangle center x.
-	topY := anElement encompassingRectangle center y.	
+	topX := aShape encompassingRectangle center x.
+	topY := aShape encompassingRectangle center y.	
 	shapes do: [ :s |
 		newX := topX + (s encompassingRectangle width / 2).
 		newY := topY + (s encompassingRectangle height / 2).		
@@ -47,9 +46,9 @@ RSAlignment >> alignFromCenterUsing: anElement [
 ]
 
 { #category : #public }
-RSAlignment >> alignFromLeftUsing: anElement [
+RSAlignment >> alignFromLeftUsing: aShape [
 	| topX newX |
-	topX := anElement encompassingRectangle topLeft x.
+	topX := aShape encompassingRectangle topLeft x.
 	shapes do: [ :s |
 		newX := topX + (s encompassingRectangle width / 2).
 		s translateTo: newX @ s position y
@@ -57,9 +56,9 @@ RSAlignment >> alignFromLeftUsing: anElement [
 ]
 
 { #category : #public }
-RSAlignment >> alignFromRightUsing: anElement [
+RSAlignment >> alignFromRightUsing: aShape [
 	| topX newX |
-	topX := anElement encompassingRectangle topRight x.
+	topX := aShape encompassingRectangle topRight x.
 	shapes do: [ :s |
 		newX := topX - (s encompassingRectangle width / 2).
 		s translateTo: newX @ s position y
@@ -67,9 +66,9 @@ RSAlignment >> alignFromRightUsing: anElement [
 ]
 
 { #category : #public }
-RSAlignment >> alignFromTopUsing: anElement [
+RSAlignment >> alignFromTopUsing: aShape [
 	| topY newY |
-	topY := anElement encompassingRectangle topCenter y.
+	topY := aShape encompassingRectangle topCenter y.
 	shapes do: [ :s |
 		newY := topY + (s encompassingRectangle height / 2).
 		s translateTo: s position x @ newY
@@ -79,11 +78,11 @@ RSAlignment >> alignFromTopUsing: anElement [
 { #category : #public }
 RSAlignment >> bottom [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromBottomUsing: self bottomMostElement 
+	self alignFromBottomUsing: self bottomMostShape 
 ]
 
 { #category : #'accessing - computed' }
-RSAlignment >> bottomMostElement [
+RSAlignment >> bottomMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle top <= s encompassingRectangle top
@@ -92,13 +91,12 @@ RSAlignment >> bottomMostElement [
 
 { #category : #public }
 RSAlignment >> center [
-	self hasElement ifFalse: [ ^ self ].
-	self alignFromCenterUsing: self centerMostElement
+	self hasShape ifFalse: [ ^ self ].
+	self alignFromCenterUsing: self centerMostShape
 ]
 
 { #category : #public }
-RSAlignment >> centerMostElement [
-
+RSAlignment >> centerMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle center <= s encompassingRectangle center
@@ -107,7 +105,7 @@ RSAlignment >> centerMostElement [
 
 { #category : #testing }
 RSAlignment >> hasShape [
-	"Return true if some elements have been set"
+	"Return true if some shapes have been set"
 	^ (shapes isNil or: [ shapes isEmpty ]) not
 ]
 
@@ -128,11 +126,11 @@ RSAlignment >> leftMostElement [
 { #category : #public }
 RSAlignment >> right [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromRightUsing: self rightMostElement 
+	self alignFromRightUsing: self rightMostShape 
 ]
 
 { #category : #'accessing - computed' }
-RSAlignment >> rightMostElement [
+RSAlignment >> rightMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle right <= s encompassingRectangle right
@@ -142,11 +140,11 @@ RSAlignment >> rightMostElement [
 { #category : #public }
 RSAlignment >> top [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromTopUsing: self topMostElement 
+	self alignFromTopUsing: self topMostShape 
 ]
 
 { #category : #'accessing - computed' }
-RSAlignment >> topMostElement [
+RSAlignment >> topMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle top >= s encompassingRectangle top

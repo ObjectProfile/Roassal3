@@ -231,12 +231,12 @@ RSNormalizer >> initialize [
 { #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [ 
 	| minAndMax |
-	minAndMax := shapes inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :anElement |
+	minAndMax := shapes inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :aShape |
 		| tmp |
-		tmp := anOneArgBlockOrSymbol rsValue: anElement model.
+		tmp := anOneArgBlockOrSymbol rsValue: aShape model.
 		{ res first min: tmp . res second max: tmp } ].
 	scale domain: minAndMax.
-	shapes do: [ :anEl | executeBlock value: anEl value: anOneArgBlockOrSymbol ]
+	shapes do: [ :anSha | executeBlock value: anSha value: anOneArgBlockOrSymbol ]
 
 ]
 

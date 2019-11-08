@@ -2,13 +2,13 @@
 I am test for RSNormalizer
 "
 Class {
-	#name : #TSNormalizerTest,
+	#name : #RSNormalizerTest,
 	#superclass : #RSTest,
 	#category : #'Roassal3-Utils-Tests'
 }
 
 { #category : #tests }
-TSNormalizerTest >> testBasic [ 
+RSNormalizerTest >> testBasic [ 
 	| shapes |
 	shapes := (1 to: 2) collect: [ :n | RSBox new model: n; yourself ].
 	

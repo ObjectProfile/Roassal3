@@ -8,7 +8,7 @@ Nice numbers are just step sizes and used for tick spacing. We will use only nic
    [2] Nice Numbers for Graph Labels (Paul S. Heckbert, Graphic Gems I)
 "
 Class {
-	#name : #TSNiceStepSizeGenerator,
+	#name : #RSNiceStepSizeGenerator,
 	#superclass : #RSObject,
 	#instVars : [
 		'qvar',
@@ -28,28 +28,28 @@ Class {
 }
 
 { #category : #accessing }
-TSNiceStepSizeGenerator >> base [
+RSNiceStepSizeGenerator >> base [
 	^ base
 ]
 
 { #category : #initialization }
-TSNiceStepSizeGenerator >> initialize [
+RSNiceStepSizeGenerator >> initialize [
 	"Generates a NiceNumberGenerator"
 	
 	super initialize.
-	niceStep := TSNiceStep new.
+	niceStep := RSNiceStep new.
 	o := 0.0.
 	self setQ: #(1 5 2 2.5 4 3) base: 10.
 	
 ]
 
 { #category : #private }
-TSNiceStepSizeGenerator >> logB: a [
+RSNiceStepSizeGenerator >> logB: a [
 	^ a ln / base ln
 ]
 
 { #category : #public }
-TSNiceStepSizeGenerator >> next [
+RSNiceStepSizeGenerator >> next [
 	| oSet |
 	
 	niceStep
@@ -90,7 +90,7 @@ TSNiceStepSizeGenerator >> next [
 ]
 
 { #category : #private }
-TSNiceStepSizeGenerator >> offsets: tj q: tq [
+RSNiceStepSizeGenerator >> offsets: tj q: tq [
 	| offs |
 	offs := Array new: tj.
 	(0 to: tj-1) do: [ :ti |
@@ -99,17 +99,17 @@ TSNiceStepSizeGenerator >> offsets: tj q: tq [
 ]
 
 { #category : #private }
-TSNiceStepSizeGenerator >> qat: index [
+RSNiceStepSizeGenerator >> qat: index [
 	^ qvar at: index + 1
 ]
 
 { #category : #accessing }
-TSNiceStepSizeGenerator >> qvar [
+RSNiceStepSizeGenerator >> qvar [
 	^ qvar
 ]
 
 { #category : #public }
-TSNiceStepSizeGenerator >> reset [
+RSNiceStepSizeGenerator >> reset [
 	resetRequired ifFalse: [ ^ self ].
 	i := 0.
 	io := 0.
@@ -121,7 +121,7 @@ TSNiceStepSizeGenerator >> reset [
 ]
 
 { #category : #initialization }
-TSNiceStepSizeGenerator >> setQ: anArray base: aNumber [
+RSNiceStepSizeGenerator >> setQ: anArray base: aNumber [
 	"anArray: preference ordered list of niceStep step sizes. 
 	The deault is set by the initializer selector
 	
@@ -141,7 +141,7 @@ TSNiceStepSizeGenerator >> setQ: anArray base: aNumber [
 ]
 
 { #category : #private }
-TSNiceStepSizeGenerator >> stepSize: tj q: tq [
+RSNiceStepSizeGenerator >> stepSize: tj q: tq [
 
 	^ tj * tq / (base raisedTo: (self logB: tj*tq ) floor ).
 	

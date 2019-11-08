@@ -72,11 +72,11 @@ RSResize >> useHighestShape [
 
 { #category : #'public - configuration' }
 RSResize >> useWidestShape [
-	self fixedShape: self widestElement
+	self fixedShape: self widestShape
 ]
 
 { #category : #'accessing - computed' }
-RSResize >> widestElement [
+RSResize >> widestShape [
 	^ shapes inject: shapes anyOne into: [ :widestElement :e | 
 			widestElement extent x < e extent x
 				ifTrue: [ e ] ifFalse: [ widestElement ] ] 

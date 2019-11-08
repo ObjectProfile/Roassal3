@@ -2,7 +2,7 @@
 I am an utility class for RTLabelGenerator
 "
 Class {
-	#name : #TSNiceLabel,
+	#name : #RSNiceLabel,
 	#superclass : #RSObject,
 	#instVars : [
 		'min',
@@ -14,27 +14,27 @@ Class {
 }
 
 { #category : #accessing }
-TSNiceLabel >> max [
+RSNiceLabel >> max [
 	^ max
 ]
 
 { #category : #accessing }
-TSNiceLabel >> max: aNumber [
+RSNiceLabel >> max: aNumber [
 	max := aNumber
 ]
 
 { #category : #accessing }
-TSNiceLabel >> min [
+RSNiceLabel >> min [
 	^ min
 ]
 
 { #category : #accessing }
-TSNiceLabel >> min: aNumber [
+RSNiceLabel >> min: aNumber [
 	min := aNumber
 ]
 
 { #category : #accessing }
-TSNiceLabel >> numberOfTicks [
+RSNiceLabel >> numberOfTicks [
 	| ticks |
 	min < 0 ifTrue: [ 
 		ticks := max < 0 ifTrue: [ (max - min) abs ] ifFalse: [ max+min abs  ]
@@ -45,7 +45,7 @@ TSNiceLabel >> numberOfTicks [
 ]
 
 { #category : #printing }
-TSNiceLabel >> printOn: aStream [
+RSNiceLabel >> printOn: aStream [
 	| x |
 	aStream 
 		nextPutAll: '(Score: ';
@@ -61,21 +61,21 @@ TSNiceLabel >> printOn: aStream [
 ]
 
 { #category : #accessing }
-TSNiceLabel >> score [
+RSNiceLabel >> score [
 	^ score
 ]
 
 { #category : #accessing }
-TSNiceLabel >> score: aNumber [
+RSNiceLabel >> score: aNumber [
 	score := aNumber
 ]
 
 { #category : #accessing }
-TSNiceLabel >> step [
+RSNiceLabel >> step [
 	^ step
 ]
 
 { #category : #accessing }
-TSNiceLabel >> step: aNumber [
+RSNiceLabel >> step: aNumber [
 	step := aNumber
 ]

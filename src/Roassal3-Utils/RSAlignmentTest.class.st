@@ -21,7 +21,7 @@ RSAlignmentTest >> testFromBottom [
 	RSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ 150.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
-	self assert: align bottomMostElement equals: es second.
+	self assert: align bottomMostShape equals: es second.
 	align bottom.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 	"	
@@ -53,7 +53,7 @@ RSAlignmentTest >> testFromRight [
 	RSVerticalLineLayout on: es.
 	es second translateBy: 150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
-	self assert: align rightMostElement equals: es second.
+	self assert: align rightMostShape equals: es second.
 	align right.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 ]
@@ -66,7 +66,7 @@ RSAlignmentTest >> testFromTop [
 	RSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ -50.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
-	self assert: align topMostElement equals: es second.
+	self assert: align topMostShape equals: es second.
 	align top.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(-50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0).
 ]

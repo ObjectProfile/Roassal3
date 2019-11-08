@@ -3,7 +3,7 @@ I am an utility class for RTNiceStepSizeGenerator>>next
 
 "
 Class {
-	#name : #TSNiceStep,
+	#name : #RSNiceStep,
 	#superclass : #RSObject,
 	#instVars : [
 		'stepSize',
@@ -15,41 +15,41 @@ Class {
 }
 
 { #category : #accessing }
-TSNiceStep >> i [
+RSNiceStep >> i [
 	^ i
 ]
 
 { #category : #accessing }
-TSNiceStep >> i: aNumber [
+RSNiceStep >> i: aNumber [
 	i := aNumber
 ]
 
 { #category : #accessing }
-TSNiceStep >> j [
+RSNiceStep >> j [
 	^ j
 ]
 
 { #category : #accessing }
-TSNiceStep >> j: aNumber [
+RSNiceStep >> j: aNumber [
 	j := aNumber
 ]
 
 { #category : #accessing }
-TSNiceStep >> offset [
+RSNiceStep >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-TSNiceStep >> offset: aNumber [
+RSNiceStep >> offset: aNumber [
 	offset := aNumber
 ]
 
 { #category : #accessing }
-TSNiceStep >> stepSize [
+RSNiceStep >> stepSize [
 	^ stepSize
 ]
 
 { #category : #accessing }
-TSNiceStep >> stepSize: aNumber [
+RSNiceStep >> stepSize: aNumber [
 	stepSize := aNumber
 ]

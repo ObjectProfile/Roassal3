@@ -79,8 +79,8 @@ RSLocation >> center [
 ]
 
 { #category : #private }
-RSLocation >> computePosition: movableElement on: fixedElement [
-	^ movableElement extent / 2 * orientation * direction + (self parentPosition: fixedElement) + offset.
+RSLocation >> computePosition: movableShape on: fixedShape [
+	^ movableShape extent / 2 * orientation * direction + (self parentPosition: fixedShape) + offset.
 ]
 
 { #category : #initialization }
@@ -112,8 +112,8 @@ RSLocation >> middle [
 ]
 
 { #category : #'public - executing' }
-RSLocation >> move: movableElement on: fixElement [
-	movableElement translateTo: (self computePosition: movableElement on: fixElement).
+RSLocation >> move: movableShape on: fixShape [
+	movableShape translateTo: (self computePosition: movableShape on: fixShape).
 ]
 
 { #category : #'public - modifiers' }
@@ -132,9 +132,9 @@ RSLocation >> outer [
 ]
 
 { #category : #private }
-RSLocation >> parentPosition: fixedElement [
+RSLocation >> parentPosition: fixedShape [
 	| rec |
-	rec := fixedElement.
+	rec := fixedShape.
 	rec isRectangle ifFalse:  [ rec := rec encompassingRectangle ] .
 	^ (fixedX value: rec)@ (fixedY value: rec).
 ]
@@ -146,11 +146,11 @@ RSLocation >> right [
 ]
 
 { #category : #'public - executing' }
-RSLocation >> stick: movableElement on: fixedElement [
+RSLocation >> stick: movableShape on: fixedShape [
 	| block |
-	block := [ self move: movableElement on: fixedElement ].
+	block := [ self move: movableShape on: fixedShape ].
 	block value.
-	fixedElement 
+	fixedShape 
 		when: RSExtentChangedEvent do: block;
 		when: RSPositionChangedEvent do: block.
 ]
