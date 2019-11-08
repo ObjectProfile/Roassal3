@@ -2,7 +2,7 @@
 I am an handy class to build legend in a visualization
 "
 Class {
-	#name : #TSLegend,
+	#name : #RSLegend,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'layout',
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : #hooks }
-TSLegend >> basicRenderIn: aCanvas [
+RSLegend >> basicRenderIn: aCanvas [
 	| legend |
 	legend := self legend.
 	location move: legend on: aCanvas shapes.
@@ -27,7 +27,7 @@ TSLegend >> basicRenderIn: aCanvas [
 ]
 
 { #category : #'public - specific' }
-TSLegend >> customText: anObject shape: aShape [
+RSLegend >> customText: anObject shape: aShape [
 	| shape |
 	"general propuse, you can add and define anything in aShape to be a legend"
 	shape := aShape copy text: anObject asString.
@@ -36,58 +36,58 @@ TSLegend >> customText: anObject shape: aShape [
 ]
 
 { #category : #accessing }
-TSLegend >> defaultBoldText [
+RSLegend >> defaultBoldText [
 	^ defaultBoldText ifNil: [ defaultBoldText := RSLabel new bold ].
 ]
 
 { #category : #accessing }
-TSLegend >> defaultBox [
+RSLegend >> defaultBox [
 	^ defaultBox ifNil: [ defaultBox := RSBox new size: 15 ].
 ]
 
 { #category : #accessing }
-TSLegend >> defaultCircle [
+RSLegend >> defaultCircle [
 	^ defaultCircle ifNil: [ defaultCircle := RSEllipse new size: 15. ]
 ]
 
 { #category : #accessing }
-TSLegend >> defaultLabel [
+RSLegend >> defaultLabel [
 	^ defaultLabel ifNil: [ defaultLabel := RSLabel new ].
 ]
 
 { #category : #accessing }
-TSLegend >> defaultLabel: aShape [
+RSLegend >> defaultLabel: aShape [
 	defaultLabel := aShape
 ]
 
 { #category : #accessing }
-TSLegend >> defaultTitle [
+RSLegend >> defaultTitle [
 	^ defaultTitle ifNil: [ defaultTitle := RSLabel new fontSize: 20; bold ].
 ]
 
 { #category : #accessing }
-TSLegend >> defaultTitle: aShape [
+RSLegend >> defaultTitle: aShape [
 	defaultTitle := aShape
 ]
 
 { #category : #initialization }
-TSLegend >> initialize [
+RSLegend >> initialize [
 	super initialize.
 	self reset.
 ]
 
 { #category : #testing }
-TSLegend >> isOnDemand [
+RSLegend >> isOnDemand [
 	^ menuShape notNil
 ]
 
 { #category : #layout }
-TSLegend >> layout [ 
+RSLegend >> layout [ 
 	^ layout
 ]
 
 { #category : #accessing }
-TSLegend >> legend [
+RSLegend >> legend [
 	| legend |
 	layout on: self shapes.
 	legend := RSComposite new
@@ -98,27 +98,27 @@ TSLegend >> legend [
 ]
 
 { #category : #public }
-TSLegend >> leyendDo: aBlock [
+RSLegend >> leyendDo: aBlock [
 	legendBlock := aBlock
 ]
 
 { #category : #accessing }
-TSLegend >> location [
+RSLegend >> location [
 	^ location
 ]
 
 { #category : #accessing }
-TSLegend >> menuShape [
+RSLegend >> menuShape [
 	^ menuShape
 ]
 
 { #category : #public }
-TSLegend >> onDemand [
+RSLegend >> onDemand [
 	^ self onDemand: 'Help'.
 ]
 
 { #category : #public }
-TSLegend >> onDemand: text [
+RSLegend >> onDemand: text [
 	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
@@ -127,7 +127,7 @@ TSLegend >> onDemand: text [
 ]
 
 { #category : #'public - specific' }
-TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
+RSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	"very very specific shape"
 	| box s marker line g l1 l2 l3 line1 line2  |
 	box := RSBox new
@@ -156,7 +156,7 @@ TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 ]
 
 { #category : #hooks }
-TSLegend >> renderIn: aCanvas [
+RSLegend >> renderIn: aCanvas [
 	self isOnDemand 
 		ifTrue: [ self renderOnDemandIn: aCanvas ]
 		ifFalse: [self basicRenderIn: aCanvas ].
@@ -164,7 +164,7 @@ TSLegend >> renderIn: aCanvas [
 ]
 
 { #category : #hooks }
-TSLegend >> renderOnDemandIn: aView [
+RSLegend >> renderOnDemandIn: aView [
 	| i legendLabels update |
 	menuShape isFixed: true.
 	aView addShape: menuShape.
@@ -191,7 +191,7 @@ TSLegend >> renderOnDemandIn: aView [
 ]
 
 { #category : #initialization }
-TSLegend >> reset [
+RSLegend >> reset [
 	legendBlock := [ :l | l draggable ].
 	shapes := RSGroup new.
 	location := RSLocation new below.
@@ -204,7 +204,7 @@ TSLegend >> reset [
 ]
 
 { #category : #utilities }
-TSLegend >> shape: aShape withColor: color [
+RSLegend >> shape: aShape withColor: color [
 	| copy |
 	copy := aShape copy.
 	copy color: (color rsValue: copy).
@@ -212,12 +212,12 @@ TSLegend >> shape: aShape withColor: color [
 ]
 
 { #category : #public }
-TSLegend >> text: aString [
+RSLegend >> text: aString [
 	^ self customText: aString shape: self defaultLabel
 ]
 
 { #category : #public }
-TSLegend >> text: aString description: desc [
+RSLegend >> text: aString description: desc [
 	self defaultBoldText text: aString.
 	^ self
 		custom: desc
@@ -225,17 +225,17 @@ TSLegend >> text: aString description: desc [
 ]
 
 { #category : #public }
-TSLegend >> text: aString withBoxColor: color [
+RSLegend >> text: aString withBoxColor: color [
 	^ self text: aString withShape: (self shape: self defaultBox withColor: color).
 ]
 
 { #category : #public }
-TSLegend >> text: aString withCircleColor: color [
+RSLegend >> text: aString withCircleColor: color [
 	^ self text: aString withShape: (self shape: self defaultCircle withColor: color).
 ]
 
 { #category : #'public - specific' }
-TSLegend >> text: aString withFadingRamp: ramp [
+RSLegend >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
 	gradient := RSGradientPalette linearGradient: ramp.
@@ -249,7 +249,7 @@ TSLegend >> text: aString withFadingRamp: ramp [
 ]
 
 { #category : #public }
-TSLegend >> text: aString withShape: aShape [
+RSLegend >> text: aString withShape: aShape [
 	| text tshapes line l |
 	text := self defaultLabel copy.
 	text text: aString.
@@ -264,6 +264,6 @@ TSLegend >> text: aString withShape: aShape [
 ]
 
 { #category : #public }
-TSLegend >> title: aString [
+RSLegend >> title: aString [
 	^ self customText: aString shape: self defaultTitle
 ]

@@ -2,16 +2,16 @@
 I have basic examples of legend builder
 "
 Class {
-	#name : #TSLegendExamples,
+	#name : #RSLegendExamples,
 	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Legend-Examples'
 }
 
 { #category : #examples }
-TSLegendExamples >> example01Basic [ 
+RSLegendExamples >> example01Basic [ 
 	<script: 'self new example01Basic open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
 	b build.
@@ -22,10 +22,10 @@ TSLegendExamples >> example01Basic [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example02Border [
+RSLegendExamples >> example02Border [
 	<script: 'self new example02Border open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
 	b leyendDo: [ :l | 
@@ -38,10 +38,10 @@ TSLegendExamples >> example02Border [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example03Vertical [
+RSLegendExamples >> example03Vertical [
 	<script: 'self new example03Vertical open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b 
 		title: 'Mid Heros';
 		text: 'Invoker';
@@ -59,10 +59,10 @@ TSLegendExamples >> example03Vertical [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example04Horizontal [
+RSLegendExamples >> example04Horizontal [
 	<script: 'self new example04Horizontal open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b 
 		text: 'Invoker';
 		text: 'Shadow Fiend';
@@ -80,10 +80,10 @@ TSLegendExamples >> example04Horizontal [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example05Colors [
+RSLegendExamples >> example05Colors [
 	<script: 'self new example05Colors open'>
 	| b color |
-	b := TSLegend new.
+	b := RSLegend new.
 	
 	color := TSScale category20.
 	b 
@@ -102,10 +102,10 @@ TSLegendExamples >> example05Colors [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example06BoxColors [
+RSLegendExamples >> example06BoxColors [
 	<script: 'self new example06BoxColors open'>
 	| b color |
-	b := TSLegend new.
+	b := RSLegend new.
 
 	color := TSScale category20.
 	b 
@@ -124,10 +124,10 @@ TSLegendExamples >> example06BoxColors [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example07BoxFading [
+RSLegendExamples >> example07BoxFading [
 	<script: 'self new example07BoxFading open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b title: 'Legend'.
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
 	b leyendDo: [:l | l withBorder; padding: 10 ].
@@ -137,10 +137,10 @@ TSLegendExamples >> example07BoxFading [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example08Polygons [
+RSLegendExamples >> example08Polygons [
 	<script: 'self new example08Polygons open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b title: 'Polygons'.
 	#(diamond triangle star pentagon octagon) do: [ :selector | 
 		b text: selector withShape: ((RSShape perform: selector) size: 15) ].
@@ -150,10 +150,10 @@ TSLegendExamples >> example08Polygons [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example09Lines [
+RSLegendExamples >> example09Lines [
 	<script: 'self new example09Lines open'>
 	| b |
-	b := TSLegend new.
+	b := RSLegend new.
 	b title: 'Line with markers'.
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
@@ -170,7 +170,7 @@ TSLegendExamples >> example09Lines [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example10Location [
+RSLegendExamples >> example10Location [
 	<script: 'self new example10Location open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
 	canvas := RSCanvas new.
@@ -194,7 +194,7 @@ TSLegendExamples >> example10Location [
 		shapes: classes;
 		normalize: #numberOfMethods.
 	RSTreeLayout on: classes.
-	b := TSLegend new.
+	b := RSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.
@@ -221,7 +221,7 @@ TSLegendExamples >> example10Location [
 ]
 
 { #category : #examples }
-TSLegendExamples >> example11OnDemand [
+RSLegendExamples >> example11OnDemand [
 	<script: 'self new example11OnDemand open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
 	canvas := RSCanvas new.
@@ -245,7 +245,7 @@ TSLegendExamples >> example11OnDemand [
 		shapes: classes;
 		normalize: #numberOfMethods.
 	RSTreeLayout on: classes.
-	b := TSLegend new.
+	b := RSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.
