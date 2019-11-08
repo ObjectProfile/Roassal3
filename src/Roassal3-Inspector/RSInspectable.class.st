@@ -2,7 +2,7 @@
 I allow to inspect another view or windows. It can be configurable to set the kind of view you want to inspect
 "
 Class {
-	#name : #TSInspectable,
+	#name : #RSInspectable,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'highlightable',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #hooks }
-TSInspectable >> deselectIfNecessary [
+RSInspectable >> deselectIfNecessary [
 	"Nothing to unselect"
 	selectedShape ifNil: [ ^ self ].
 	highlightable doUnhighlight: selectedShape
@@ -22,28 +22,28 @@ TSInspectable >> deselectIfNecessary [
 ]
 
 { #category : #accessing }
-TSInspectable >> highlightable [
+RSInspectable >> highlightable [
 	^ highlightable
 ]
 
 { #category : #accessing }
-TSInspectable >> highlightable: anObject [
+RSInspectable >> highlightable: anObject [
 	highlightable := anObject
 ]
 
 { #category : #hooks }
-TSInspectable >> initialize [
+RSInspectable >> initialize [
 	super initialize.
 	highlightable := RSHighlightable new.
 ]
 
 { #category : #accessing }
-TSInspectable >> inspectElementBlock [
+RSInspectable >> inspectElementBlock [
 	^ inspectShapeBlock
 ]
 
 { #category : #hooks }
-TSInspectable >> inspectShape: aShape [
+RSInspectable >> inspectShape: aShape [
 	| oldInspectorWindow canvasMorph |
 	self deselectIfNecessary.
 	selectedShape := aShape.
@@ -66,13 +66,13 @@ TSInspectable >> inspectShape: aShape [
 ]
 
 { #category : #accessing }
-TSInspectable >> inspectShapeBlock: oneArgBlock [
+RSInspectable >> inspectShapeBlock: oneArgBlock [
 	"The block should return a window"
 	inspectShapeBlock := oneArgBlock
 ]
 
 { #category : #hooks }
-TSInspectable >> onShape: aShape [
+RSInspectable >> onShape: aShape [
 	aShape 
 		when: RSMouseLeftClick
 		do: [ :evt | self inspectShape: aShape ]

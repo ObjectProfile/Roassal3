@@ -2,7 +2,7 @@
 I am used on the inspector for Roassal3, when you select one element the view changes its shapes
 "
 Class {
-	#name : #TSSelectionPresentation,
+	#name : #RSSelectionPresentation,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'presentation'
@@ -11,23 +11,23 @@ Class {
 }
 
 { #category : #hooks }
-TSSelectionPresentation >> onShape: anElement [
+RSSelectionPresentation >> onShape: anElement [
 Halt if: [ anElement isKindOf: RSCanvas ].
 	anElement when: RSMouseClick do: [ self presentation selection: anElement model ]
 	
 ]
 
 { #category : #accessing }
-TSSelectionPresentation >> presentation [
+RSSelectionPresentation >> presentation [
 	^ presentation
 ]
 
 { #category : #accessing }
-TSSelectionPresentation >> presentation: aRSRoassalPresentation [
+RSSelectionPresentation >> presentation: aRSRoassalPresentation [
 	presentation := aRSRoassalPresentation
 ]
 
 { #category : #dependencies }
-TSSelectionPresentation >> release [
+RSSelectionPresentation >> release [
 	presentation := nil
 ]

@@ -43,7 +43,7 @@ GLMRoassal3Presentation >> renderGlamorouslyOn: aRenderer [
 { #category : #initialization }
 GLMRoassal3Presentation >> setUpInteractions [
 	| interaction |
-	interaction := TSSelectionPresentation new
+	interaction := RSSelectionPresentation new
 		presentation: self.
 	self canvas shapes @ interaction.
 	self canvas

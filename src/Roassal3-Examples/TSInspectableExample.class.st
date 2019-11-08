@@ -25,8 +25,8 @@ TSInspectableExample >> example01SimpleExample [
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
 	RSTreeLayout on: boxes.
-	TSInspectable reset.
-	inspectable := TSInspectable new.
+	RSInspectable reset.
+	inspectable := RSInspectable new.
 	highligtable := inspectable highlightable.
 	highligtable highlightColor: Color green.
 	inspectable inspectShapeBlock: [ :cls | 
