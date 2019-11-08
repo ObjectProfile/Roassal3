@@ -11,7 +11,7 @@ Class {
 RSShapeBuilder class >> arc [
 	"TODO find the best name, ring, arc, circle sector, ellipse segment, foobar, etc"
 	^ self new
-		shapeClass: TSPieSlice;
+		shapeClass: RSPieSlice;
 		yourself 
 ]
 
@@ -28,7 +28,7 @@ RSShapeBuilder class >> arrow [
 { #category : #'instance creation' }
 RSShapeBuilder class >> bitmap [
 	 ^ self new
-		innerClass: TSBitmap;
+		innerClass: RSBitmap;
 		elementClass: RSElement;
 		yourself 
 ]
@@ -46,8 +46,8 @@ RSShapeBuilder class >> circle [
 { #category : #'instance creation' }
 RSShapeBuilder class >> composite [
 	^ self new
-		innerClass: TSComposite;
-		elementClass: RSComposite;
+		innerClass: RSComposite;
+		elementClass: RSCompositeElement;
 		yourself 
 ]
 
@@ -83,18 +83,18 @@ RSShapeBuilder class >> diamond [
 { #category : #'instance creation' }
 RSShapeBuilder class >> ellipse [
 	^ self new
-		shapeClass: TSEllipse;
+		shapeClass: RSEllipse;
 		yourself 
 ]
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> heptagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 7)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 7)
 ]
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> hexagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 6)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 6)
 ]
 
 { #category : #'instance creation' }
@@ -124,7 +124,7 @@ v open
 "
 
 	^ self new
-		innerClass: TSLabel;
+		innerClass: RSLabel;
 		elementClass: RSElement;
 		color: Color black;
 		addAction: (RSAction new action: [:el | 
@@ -159,7 +159,7 @@ v open setLabel: 'Multiline'
 	shape addAction: (RSAction new action: [ :e |
 		| tshape composite |
 		tshape := e shape.
-		composite := TSComposite new.
+		composite := RSComposite new.
 		composite addAll: (tshape text lines collect: [:line |
 			| label |
 			label := tshape copy.
@@ -182,18 +182,18 @@ v open setLabel: 'Multiline'
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> octagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 8)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 8)
 ]
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> pentagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 5)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 5)
 ]
 
 { #category : #'instance creation' }
 RSShapeBuilder class >> polygon [
 	^ self new
-		innerClass: TSPolygon;
+		innerClass: RSPolygon;
 		elementClass: RSElement;
 		yourself 
 ]
@@ -208,7 +208,7 @@ RSShapeBuilder class >> polygonWithPoints: points [
 { #category : #'instance creation' }
 RSShapeBuilder class >> rectangle [
 	^ self new
-		shapeClass: TSBox;
+		shapeClass: RSBox;
 		yourself 
 ]
 
@@ -223,15 +223,15 @@ RSShapeBuilder class >> rhomboid [
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> square [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 4)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 4)
 ]
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> star [
 	| star5Points outerPoints innerPoints innerRadius ar |
 	star5Points := Array new: 10.
-	outerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: 0.
-	innerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: Float pi / -5.
+	outerPoints := RSPolygon generateUnitNgonPoints: 5 rotation: 0.
+	innerPoints := RSPolygon generateUnitNgonPoints: 5 rotation: Float pi / -5.
 	"Outer radius is 1; inner radius of star is smaller"
 	innerRadius := 0.5.
 	innerPoints
@@ -242,21 +242,21 @@ RSShapeBuilder class >> star [
 				ifTrue: [ outerPoints ]
 				ifFalse: [ innerPoints ].
 			star5Points at: i put: (ar at: i // 2 + (i % 2)) ].
-	star5Points := TSPolygon fitPolygonToSquare: star5Points.
+	star5Points := RSPolygon fitPolygonToSquare: star5Points.
 	^ self polygonWithPoints: star5Points
 ]
 
 { #category : #'instance creation' }
 RSShapeBuilder class >> svgPath [
 	^ self new
-		innerClass: TSSVGPath;
+		innerClass: RSSVGPath;
 		elementClass: RSElement;
 		yourself 
 ]
 
 { #category : #'instance creation - polygon' }
 RSShapeBuilder class >> triangle [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 3)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]
 
 { #category : #'instance creation - polygon' }

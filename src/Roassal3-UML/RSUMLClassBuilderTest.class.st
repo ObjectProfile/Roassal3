@@ -22,8 +22,8 @@ RSUMLClassBuilderTest >> testJustClassName [
 	builder build.
 	element := builder elements first.
 	self assert: element children size equals: 2.
-	self assert: element shapes first class equals: TSBox.
-	self assert: element shapes second class equals: TSLabel.
+	self assert: element shapes first class equals: RSBox.
+	self assert: element shapes second class equals: RSLabel.
 	
 	builder := RSUMLClassBuilder new.
 	builder classes: {RSMouseMove}.
@@ -31,7 +31,7 @@ RSUMLClassBuilderTest >> testJustClassName [
 	builder build.
 	element := builder elements first.
 	self assert: element children size equals: 3.
-	self assert: element shapes first class equals: TSBox.
-	self assert: element shapes second class equals: TSLabel.
-	self assert: element shapes third class equals: TSBox.
+	self assert: element shapes first class equals: RSBox.
+	self assert: element shapes second class equals: RSLabel.
+	self assert: element shapes third class equals: RSBox.
 ]

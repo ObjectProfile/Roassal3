@@ -14,7 +14,7 @@ Class {
 { #category : #'instance variations' }
 RSSingleEdgeBuilder class >> arrowedLine [
 	| marker inst |
-	marker := TSPolygon new
+	marker := RSPolygon new
 		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
 		paint: nil;
 		border: (RSBorder new).
@@ -25,7 +25,7 @@ RSSingleEdgeBuilder class >> arrowedLine [
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> bezier [
-	^ self new edgeClass: TSBezier
+	^ self new edgeClass: RSBezier
 ]
 
 { #category : #'instance creation' }
@@ -54,7 +54,7 @@ RSSingleEdgeBuilder class >> bimetricLine [
 	view @ RSControlsView. 
 	view open
 "
-	^ self new edgeClass: TSBimetricLine
+	^ self new edgeClass: RSBimetricLine
 ]
 
 { #category : #'instance variations' }
@@ -97,12 +97,12 @@ RSSingleEdgeBuilder class >> horizontalLine: inst [
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> line [
-	^ self new edgeClass: TSLine
+	^ self new edgeClass: RSLine
 ]
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> linePath [
-	^ self new edgeClass: TSSVGPathLine
+	^ self new edgeClass: RSSVGPathLine
 ]
 
 { #category : #'instance variations' }
@@ -122,7 +122,7 @@ RSSingleEdgeBuilder class >> orthoVertical [
 
 { #category : #'instance creation' }
 RSSingleEdgeBuilder class >> polyline [
-	^ self new edgeClass: TSPolyline
+	^ self new edgeClass: RSPolyline
 ]
 
 { #category : #'instance variations' }

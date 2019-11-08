@@ -3,7 +3,7 @@ I am a basici class
 "
 Class {
 	#name : #TSChessBackground,
-	#superclass : #TSAbstractCanvasInteraction,
+	#superclass : #RSAbstractCanvasInteraction,
 	#category : #'Roassal3-Inspector-Interaction'
 }
 
@@ -29,7 +29,7 @@ TSChessBackground >> onShape: aCanvas [
 			(side / 2) to: extent y by: 20 do: [ :k |
 				| box |
 				even ifTrue: [ 
-					box := TSBox new
+					box := RSBox new
 						color: color;
 						size: side / camera scale;
 						position: (camera fromPixelToSpace: j@k).

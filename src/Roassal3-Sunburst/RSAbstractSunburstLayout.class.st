@@ -36,7 +36,7 @@ RSAbstractSunburstLayout >> doExecute: elements [
 	elements size = 1 ifTrue: [ 
 		^ self layoutSunburst: elements first ].
 	virtual := RSElement new
-		shape: TSPieSlice new;
+		shape: RSPieSlice new;
 		yourself.
 		
 	virtual attributes at: builder childrenKey put: elements.

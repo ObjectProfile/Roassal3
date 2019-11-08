@@ -3,7 +3,7 @@ I am used on the inspector for Roassal3, when you select one element the view ch
 "
 Class {
 	#name : #TSSelectionPresentation,
-	#superclass : #TSInteraction,
+	#superclass : #RSInteraction,
 	#instVars : [
 		'presentation'
 	],

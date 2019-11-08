@@ -17,7 +17,7 @@ RSAnimationExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| c b |
 	c := RSCanvas new.
-	b := TSBox new
+	b := RSBox new
 		extent: 100@100;
 		withBorder.
 	c addShape: b.
@@ -49,7 +49,7 @@ RSAnimationExamples >> example02Sequential [
 	<script: 'self new example02Sequential open'>
 	| c b animation |
 	c := RSCanvas new.
-	b := TSBox new
+	b := RSBox new
 		extent: 100@100;
 		withBorder.
 	c addShape: b.
@@ -84,7 +84,7 @@ RSAnimationExamples >> example03Ramp [
 	<script: 'self new example03Ramp open'>
 	| c b |
 	c := RSCanvas new.
-	b := TSBox new
+	b := RSBox new
 		extent: 100@100;
 		withBorder.
 	c addShape: b.
@@ -130,7 +130,7 @@ RSAnimationExamples >> example04BoxWindmill [
 					translateBy: e model;
 					rotateByRadians: (e model x + e model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
-	v @ (TSActivityMonitorView new initializeGraphShape).
+	v @ (RSActivityMonitorView new initializeGraphShape).
 	^ v
 ]
 
@@ -141,7 +141,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 	c := RSCanvas new.
 	r := Random new.
 	shapes := (1 to: 12) collect: [ :i | 
-		TSBox new
+		RSBox new
 			model: r next;
 			noPaint;
 			border: (RSBorder new width: 4);
@@ -154,7 +154,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		normalize: #yourself.
 	lineX := 0.
 	line := RSEdge new 
-		shape: (TSLine new
+		shape: (RSLine new
 			color: Color red;
 			width: 8;
 			yourself);
@@ -186,7 +186,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 	shapes do: [ :e | | ant |
 		ant := e.
 		1 to: 4 do: [:i | | s |
-			s := TSBox new 
+			s := RSBox new 
 				noPaint;
 				position: e position;
 				extent: e extent;
@@ -216,8 +216,8 @@ RSAnimationExamples >> example05BoxesLineCircles [
 				].
 			c nodes copy do: [ :e | | cls |
 				cls := e position x > lineX 
-					ifTrue: [ TSEllipse ]
-					ifFalse: [ TSBox ].
+					ifTrue: [ RSEllipse ]
+					ifFalse: [ RSBox ].
 				e replaceWith: cls new.
 				 ].
 	].
@@ -287,7 +287,7 @@ RSAnimationExamples >> example07Phyco [
 			"e is an instance of RSEdge, not been created by shape"
 			e := RSEdge new
 				model: i;
-				shape: TSSVGPathLine new.
+				shape: RSSVGPathLine new.
 			sz := i even
 				ifTrue: [ sc1 scale: (i *unit + theta) sin ]
 				ifFalse: [ sc2 scale: (e model*unit - theta) sin ].
@@ -339,7 +339,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 		color := TSScale linear range: { c1. c2 }.
 		1 to: 10000 do: [ :i | | e shape radius ang overlapped |
 			e := RSElement new.
-			shape := TSEllipse new.
+			shape := RSEllipse new.
 			e shape: shape.
 			"old days, without RSShapeBuilder"
 			
@@ -404,7 +404,7 @@ RSAnimationExamples >> example09LinePatterns [
 			d2 size: 6* radian cos.
 			v add: d1; add: d2.
 			e := RSEdge new
-				shape: TSLine new.
+				shape: RSLine new.
 			e border: border.
 			e from: d1.
 			e to: d2.
@@ -532,7 +532,7 @@ RSAnimationExamples >> example12PerlinParticles [
 	frame := 0.
 	perlin := TSPerlinNoise new.
 	
-	label := TSLabel new
+	label := RSLabel new
 		color: Color black;
 		text: 'Drag to draw. type ''c'' to clear the view'.
 	v addShape: label.
@@ -628,7 +628,7 @@ RSAnimationExamples >> example12b [
 	frame := 0.
 	perlin := TSPerlinNoise new.
 	
-	label := TSLabel new
+	label := RSLabel new
 		color: Color white;
 		text: 'Drag to draw. type ''c'' to clear the view.'.
 	v addShape: label.
@@ -780,7 +780,7 @@ RSAnimationExamples >> example13DashAnimation [
 	border := RSBorder new
 		color: Color purple;
 		dashArray: #(4).
-	box := TSBox new
+	box := RSBox new
 		paint: paint;
 		extent: form extent;
 		border: border;
@@ -831,7 +831,7 @@ RSAnimationExamples >> example15Sky [
 	view := RSView new.
 	r := Random new.
 	ext := 2200 @ 2200.
-	box := TSBox new
+	box := RSBox new
 		extent: ext;
 		position: 0 @ ext y / 2 negated;
 		paint:
@@ -875,7 +875,7 @@ RSAnimationExamples >> example15Sky [
 		signalProgress: true;
 		get.
 	image := ImageReadWriter formFromStream: client entity readStream.
-	view addShape: (TSBitmap new form: image).
+	view addShape: (RSBitmap new form: image).
 	view
 		when: RSExtentChangedEvent
 		do: [ | e s |
@@ -907,7 +907,7 @@ RSAnimationExamples >> example16ArcNoise [
 			360 * (perlin noise: t and: 0.01) abs ];
 		innerRadius: [ :e | e externalRadius - 5 ].
 	view addAll: (shape elementsOn: (1 to: 20) ).
-	view addShape: (TSBox new 
+	view addShape: (RSBox new 
 		color: (Color white alpha: 0.4);
 		cornerRadius: 7;
 		extent: 140@80;
@@ -917,7 +917,7 @@ RSAnimationExamples >> example16ArcNoise [
 	points := OrderedCollection new.
 	yscale := TSScale linear domain: #(0 360); range: #(80 5).
 	
-	line := TSPolyline new
+	line := RSPolyline new
 		border: (RSBorder new  width: 2; paint: (LinearGradientPaint new
 			colorRamp:
 				{(0 -> Color red).
@@ -957,7 +957,7 @@ RSAnimationExamples >> example17Retina [
 	circleSize := ringSize := 100.
 	r := Random new.
 	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
-	label := TSLabel new 
+	label := RSLabel new 
 		fontName: 'Source Sans Pro'; 
 		text: 'Now begin!'; 
 		color: Color white;
@@ -1035,7 +1035,7 @@ RSAnimationExamples >> example18SpaceDandy [
 	elements do: [ :e | init value: e ].
 	view addAll: elements.
 	
-	view addShape: (TSLabel new 
+	view addShape: (RSLabel new 
 		paint: (LinearGradientPaint new
 			colorRamp:
 				{(0 -> Color yellow).
@@ -1088,7 +1088,7 @@ RSAnimationExamples >> example19Gris [
 	c := RSCanvas new.
 	r := Random new.
 	border := RSBorder new.
-	label := TSLabel new
+	label := RSLabel new
 		fontName: 'Marker Felt';
 		text: 'Roassal';
 		noPaint;
@@ -1097,7 +1097,7 @@ RSAnimationExamples >> example19Gris [
 	c addShape: label.
 	
 	c addAll: ({0.6. 0.64. 1.05. 1.20. 1.7} collectWithIndex: [ :m :i | | s |
-		s := TSEllipse new
+		s := RSEllipse new
 			noPaint;
 			radius: m * label width;
 			border: border;
@@ -1110,7 +1110,7 @@ RSAnimationExamples >> example19Gris [
 		on: c nodes fourth border set: #dashOffset:.
 		
 	mini := [ :m | | s |
-		s := TSEllipse new
+		s := RSEllipse new
 			noPaint;
 			radius: m * 5;
 			border: (RSBorder new width: 0.5);
@@ -1125,7 +1125,7 @@ RSAnimationExamples >> example19Gris [
 				onStepDo: [ :t | s translateTo: (t cos@t sin) * target radius ] ].
 			
 	c addAll: ({3-> 3. 4->2} collect: [ :m | | s |
-		s := TSComposite new
+		s := RSComposite new
 			shapes: ((1 to: m value) collect: [ :k | mini value: k ]);
 			yourself.
 		animation value: s value: m key * 6 value: (c nodes at: m key) value: 1.
@@ -1136,7 +1136,7 @@ RSAnimationExamples >> example19Gris [
 	g third radius: 18.
 	g fourth radius: 25.
 	g add: ((mini value: 1) radius: 3).
-	shape := TSComposite new
+	shape := RSComposite new
 		shapes: g;
 		yourself.
 	c add: shape.
@@ -1167,7 +1167,7 @@ RSAnimationExamples >> example20Flor [
 				s: 0.8 
 				v: 1 
 				alpha: (alphaS scale: m).
-			c addShape: (TSEllipse new
+			c addShape: (RSEllipse new
 				color: color;
 				model: i -> m;
 				yourself).
@@ -1324,7 +1324,7 @@ RSAnimationExamples >> example23CircleWaves [
 			width: 10 ];
 		onElement;
 		privatePoints: [ :e | | points |
-			points := TSPolygon
+			points := RSPolygon
 				generateUnitNgonPoints: 150
 				rotation: 0 
 				angle: [ :a :i | a ]
@@ -1401,7 +1401,7 @@ RSAnimationExamples >> example24Lines [
 	elements := shape elementsOn: (0 to: 359 by: 5).
 	v addAll: elements.
 	elements := v elements.
-	v addShape: (TSLabel new 
+	v addShape: (RSLabel new 
 		text: 'Roassal';
 		fontSize: 30;
 		border: (RSBorder new color: Color white);
@@ -1441,7 +1441,7 @@ RSAnimationExamples >> example25Lines [
 				translation: radius * (radian cos@radian sin);
 				rotateByRadians: radian + (frame * (radian * step * 0.5) sin * 0.05) ]
 		].
-	label := TSLabel new 
+	label := RSLabel new 
 		text: 'Pharo';
 		fontName: 'Brushcrazy DEMO';
 		fontSize: 50;
@@ -1478,7 +1478,7 @@ RSAnimationExamples >> example26PerlinNoise [
 	c1 := '45217C'. c2 := '0799F2'. c3 := 'white'.
 	
 	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e| | a b c newcircle |
-		newcircle := [ :col | TSEllipse new
+		newcircle := [ :col | RSEllipse new
 			position: (r next* rec width)@(r next * rec height) + rec origin;
 			size: 0.1 + (e index /size);
 			color: ((Color colorFrom: col) alpha: e index*(250 / 255)/ size);
@@ -1616,7 +1616,7 @@ RSAnimationExamples >> example28AnimationCircle [
 	v := RSView new.
 	radius := 50.
 	lines := 1.
-	v addShape: (TSEllipse new
+	v addShape: (RSEllipse new
 		color: Color black;
 		radius: radius).
 	shape := RSShapeBuilder circle
@@ -1666,7 +1666,7 @@ RSAnimationExamples >> example28AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: TSAnimationLoopEvent do: update ] ].
 	
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	^ v
 	
 
@@ -1758,7 +1758,7 @@ RSAnimationExamples >> example30SVGIcons [
 			theta at: e index put: ang.
 			e position: p.
 			 ] ].
-	v addShape: (TSBox new
+	v addShape: (RSBox new
 		extent: 100@100;
 		noPaint;
 		withBorder).
@@ -1781,7 +1781,7 @@ RSAnimationExamples >> example31Miku [
 		svgPath: #key;
 		color: #value.
 	v addAll: (svg elementsOn: lines).
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	easing := TSEasing elasticOut.
 	v elements do: [ :e | | position |
 		position := (r next * 1000) @ (r next * 1000) - 100.
@@ -1793,7 +1793,7 @@ RSAnimationExamples >> example31Miku [
 			duration: 5 seconds;
 			on: e shape set: #position:.
 			e position: position ].
-	v addShape: (TSLabel new
+	v addShape: (RSLabel new
 		text: 'Roassal';
 		fontName: 'Marker Felt';
 		noPaint;
@@ -1947,7 +1947,7 @@ RSAnimationExamples >> example34Tick [
 		i even
 			ifTrue: [ 'I' ]
 			ifFalse: [ 'O' ] ].
-	g := ios collect: [ :m | TSLabel new
+	g := ios collect: [ :m | RSLabel new
 		color: Color gray;
 		text: m;
 		yourself ].
@@ -1956,12 +1956,12 @@ RSAnimationExamples >> example34Tick [
 		s matrix rotateByRadians: ang + Float halfPi.
 		s position: (ang cos @ ang sin) * 30.
 		 ].
-	c add: (TSComposite new
+	c add: (RSComposite new
 		shapes: g;
 		yourself).
 	
 	c addAll: ('TICK' asArray collectWithIndex: [:m :i | | s |
-		s := TSLabel new
+		s := RSLabel new
 			color: Color white;
 			text: m asString;
 			yourself.
@@ -2130,12 +2130,12 @@ RSAnimationExamples >> example37SimpleClock [
 		offset: 0 @ -15.
 	location move: roassal on: v elements.
 	v
-		addShape: (TSBitmap new form: PolymorphSystemSettings pharoLogoForm).
+		addShape: (RSBitmap new form: PolymorphSystemSettings pharoLogoForm).
 	location
 		top;
 		offset: 0 @ 15.
 	location move: v shapes last on: v elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	^ v
 ]
 
@@ -2148,14 +2148,14 @@ RSAnimationExamples >> example38AnimatedLayout [
 	
 	color := TSColorPalette sequential ylorrd9.
 	shapes := objects collect: [ :m |
-		TSBox new
+		RSBox new
 			border: RSBorder new;
 			color: (color scale: m);
 			size: 10;
 			model: m;
 		yourself ].
 	c addAll: shapes.
-	TSEdgeBuilder line 
+	RSEdgeBuilder line 
 		canvas: c;
 		objects: objects;
 		connectFrom: [ :value | value //2 ] to: #yourself.
@@ -2165,11 +2165,11 @@ RSAnimationExamples >> example38AnimatedLayout [
 		layout on: shapes.
 		 ].
 	update value: #tree.
-	TSZoomToFitCanvas new animatedZoomToFit: c.
+	RSZoomToFitCanvas new animatedZoomToFit: c.
 
 	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	labels := labels collect: [ :sel |
-		TSLabel new
+		RSLabel new
 			isFixed: true;
 			text: sel capitalized;
 			when: RSMouseLeave do: [ :evt | evt shape 
@@ -2201,7 +2201,7 @@ RSAnimationExamples >> example39ForceLayout [
 	| c classes layout |
 	c := RSCanvas new.
 	classes := Collection withAllSubclasses collect: [ :cls | | e |
-		e := TSEllipse new
+		e := RSEllipse new
 			draggable;
 			model: cls;
 			color: Color purple trans;
@@ -2211,7 +2211,7 @@ RSAnimationExamples >> example39ForceLayout [
 		e
 		 ].
 
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		canvas: c;
 		shapes: classes;
 		color: (Color purple alpha: 0.2);
@@ -2237,17 +2237,17 @@ RSAnimationExamples >> example40Roassal [
 	| v points paint fscale timeSize text |
 	v := RSView new.
 	text := 'Roassal3'.
-	points := TSPolygon 
+	points := RSPolygon 
 		generateUnitNgonPoints: 3
 		rotation: Float pi.
 	
-	v addShape: (TSPolygon new
+	v addShape: (RSPolygon new
 		cornerRadii: 5;
 		color: Color red;
 		points: points;
 		size: 300;
 		position: 0@0).
-	v addShape: (TSPolygon new
+	v addShape: (RSPolygon new
 		cornerRadii: 5;
 		border: (RSBorder new color: Color white; width: 5);
 		noPaint;
@@ -2262,7 +2262,7 @@ RSAnimationExamples >> example40Roassal [
 		start: 0@ -100;
 		stop: 0@100.
 	text doWithIndex: [ :char :index | |lbl |
-		lbl := TSLabel new
+		lbl := RSLabel new
 			text: char asString;
 			bold;
 			fontName: 'Marker Felt';
@@ -2284,7 +2284,7 @@ RSAnimationExamples >> example40Roassal [
 			when: TSAnimationEndEvent do: [ lbl remove ].
 		 ].
 	v newAnimation duration: (timeSize * text size) milliSeconds ; when: TSAnimationEndEvent do: [
-		v addShape: (TSLabel new
+		v addShape: (RSLabel new
 		text:  text;
 		bold;
 		position: 5@ -50;
@@ -2307,7 +2307,7 @@ RSAnimationExamples >> example41Title [
 	t1 := 'Roassal3'.
 	t2 := 'It is a new agile visualization engine
 for Pharo 7 and Pharo 8.'.
-	lblbase := TSLabel new
+	lblbase := RSLabel new
 		color: Color white;
 		fontSize: 30;
 		fontName: 'Marker Felt';
@@ -2332,12 +2332,12 @@ for Pharo 7 and Pharo 8.'.
 	pad := 15.
 	mid := (r2 origin + r1 corner)/2. 
 
-	marker := TSPieSlice new 
+	marker := RSPieSlice new 
 		color: Color black;
 		externalRadius: 5;
 		alphaAngle: -90;
 		betaAngle: -90.
-	line1 := TSPolyline new
+	line1 := RSPolyline new
 		cornerRadii: 30;
 		markerEnd: marker;
 		controlPoints: {
@@ -2345,7 +2345,7 @@ for Pharo 7 and Pharo 8.'.
 			(r1 corner x + (pad * 2) ) @ mid y.
 			r1 topRight + ((pad *2) @ pad negated ).
 			r1 origin - pad asPoint }.
-	line2 := TSPolyline new 
+	line2 := RSPolyline new 
 		markerEnd: marker;
 		cornerRadii: 50;
 		controlPoints: { 
@@ -2353,13 +2353,13 @@ for Pharo 7 and Pharo 8.'.
 			(r2 origin x - (pad*2)) @ mid y.
 			r2 bottomLeft + ( pad negated * 2 @ pad). 
 			(r1 corner x @ r2 corner y)  + (pad@pad)}.
-	line3 := TSPolyline new
+	line3 := RSPolyline new
 		cornerRadii: 30;
 		controlPoints: { 
 			r1 rightCenter  + ( pad * 3 @ 0).
 			r1 topRight + (3@ -2 * pad).
 			r1 topCenter + (0 @ -2 * pad) } .
-	line4 := TSPolyline new
+	line4 := RSPolyline new
 		cornerRadii: 50;
 		controlPoints: {
 			r2 leftCenter + (-3 @ 0 * pad).
@@ -2425,12 +2425,12 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	canvas := RSCanvas new.
 	color := TSScale category20.
 	classes := Collection withAllSubclasses collect: [ :cls |
-		TSBox new
+		RSBox new
 			model: cls;
 			color: (color scale: cls);
 			size: 10;
 			yourself ] as: RSGroup.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		canvas: canvas;
 		shapes: classes;
 		color: (Color blue alpha: 0.5);
@@ -2442,7 +2442,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		edges: canvas edges;
 		start;
 		yourself.
-	canvas @ TSActivityMonitorView.
+	canvas @ RSActivityMonitorView.
 	canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
@@ -2528,40 +2528,40 @@ RSAnimationExamples >> example44Boat [
 	lines := shape edgesOn: (1 to: 25).
 	boat := RSShapeBuilder composite shapes: [ | g |
 		g := RSGroup new.
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath:'M254.4,440.8c0,2.4-2.4,4.8-4.8,4.8l0,0c-2.4,0-4.8-2.4-4.8-4.8V24c0-2.4,2.4-4.8,4.8-4.8l0,0c2.4,0,4.8,2.4,4.8,4.8V440.8z';
 			color: '788787').
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath: 'M9.6,418.4c10.4,45.6,113.6,80.8,240,80.8s229.6-36,240-80.8H9.6z';
 			color: '9E6226').
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath: 'M17.6,434.4c4.8,6.4,12,12.8,20,18.4h423.2c8.8-5.6,15.2-12,20-18.4H17.6z';
 			color: 'AF7643').
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath: 'M367.2,488c24-4.8,44.8-11.2,63.2-18.4H68.8c17.6,7.2,39.2,13.6,63.2,18.4H367.2z';
 			color: 'AF7643').
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath:'M497.6,414.4c0,2.4-2.4,4.8-4.8,4.8H6.4c-3.2,0-4.8-2.4-4.8-4.8l0,0c0-3.2,2.4-4.8,4.8-4.8H492C495.2,409.6,497.6,411.2,497.6,414.4L497.6,414.4z';
 			color: 'AF7643').
-		g add: (TSEllipse new
+		g add: (RSEllipse new
 			position: 249.6@ 18.4; radius: 18.4;
 			color: '788787').	
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
 			color: '0C91C4').
-		g add: (TSSVGPath new
+		g add: (RSSVGPath new
 			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6';
 			color: '22B3E0').
-		g add: (TSPolygon new
+		g add: (RSPolygon new
 			points: {232.8@43.2. 144.8@87.2. 232.8@130.4};
 			color: 'FFAE0B').
-		g add: (TSPolygon new
+		g add: (RSPolygon new
 			points: {232.8@80.8. 144.8@87.2. 232.8@130.4};
 			color: 'FF860D').
-		g add: (TSPolygon new
+		g add: (RSPolygon new
 			points: {231.2@144.8. 231.2@363.2. 89.6@363.2};
 			color: 'E00E0E').
-		g add: (TSPolygon new
+		g add: (RSPolygon new
 			points: {231.2@198.4. 231.2@363.2. 89.6@363.2};
 			color: 'BF1111').
 		g 

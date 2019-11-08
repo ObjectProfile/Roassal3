@@ -67,8 +67,8 @@ RSColorPaletteChooser >> copyToClipboard: object [
 
 { #category : #initialization }
 RSColorPaletteChooser >> initializeInteractions [
-	selectedHighlight := TSHighlightable new.
-	selectedHighlight highlightElements: [ :e | {e children first} ].
+	selectedHighlight := RSHighlightable new.
+	selectedHighlight highlightShapes: [ :e | {e children first} ].
 	selectedHighlight highlightShape 
 		paint: ((TSGradientPalette linearGradient: 
 			{0->'white'.
@@ -79,7 +79,7 @@ RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight 
 		attributeKey: #buttons;
 		copyKey: #qwer.
-	overHighlight := TSHighlightable new.
+	overHighlight := RSHighlightable new.
 	overHighlight 
 		highlightElements: [ :e | {e children first} ]
 		butKeep: selectedHighlight.
@@ -103,8 +103,8 @@ RSColorPaletteChooser >> initializeShape [
 	bshape := RSShapeBuilder box
 		extent: 150@30;
 		color: #yourself.
-	high := TSHighlightable new.
-	high highlightElements: [ :e | {e children second} ].
+	high := RSHighlightable new.
+	high highlightShapes: [ :e | {e children second} ].
 	high highlightShape color: Color black.
 	bcolor := RSShapeBuilder composite
 		addInteraction: high; 
@@ -199,7 +199,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: view [
 		sorted: [:a :b | a selector <  b selector]).
 	view addAll: elements.
 	
-	controls := TSControlsCanvas new.
+	controls := RSControlsCanvas new.
 	controls noLegend.
 	controls configuration 
 		noZoomToFitOnStart;

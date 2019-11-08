@@ -10,41 +10,35 @@ Class {
 { #category : #examples }
 TSInspectableExample >> example01SimpleExample [
 	<script: 'self new example01SimpleExample open'>
-	| classes view boxes inspectable highligtable edges |
-	classes := Collection withAllSubclasses.
-	view := RSView new.
-	boxes := classes collect: [ :cls | 
-		RSElement new
+	| canvas boxes inspectable highligtable |
+	canvas := RSCanvas new.
+	boxes := Collection withAllSubclasses collect: [ :cls | 
+		RSBox new
 			model: cls;
-			shape: (TSBox new
-				width: (cls instVarNames size * 5 max: 5);
-				height: (cls numberOfMethods max: 5);
-				yourself);
-			yourself ] as: RSGroup.
-	view addAll: boxes.
-		
-	edges := TSEdgeBuilder line
-		view: view;
-		objects: classes;
+			width: (cls instVarNames size * 5 max: 5);
+			height: (cls numberOfMethods max: 5);
+			yourself] as: RSGroup.
+	canvas addAll: boxes.
+	RSEdgeBuilder line
+		canvas: canvas;
+		shapes: boxes;
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
-	view addAll: edges.
 	TSTreeLayout on: boxes.
 	TSInspectable reset.
 	inspectable := TSInspectable new.
 	highligtable := inspectable highlightable.
-	highligtable highlightShape color: Color green.
-	inspectable
-		inspectShapeBlock: [ :cls | 
-			| builder |
-			builder := RSUMLClassBuilder new.
-			builder classes: {cls}.
-			builder build.
-			builder open ].
+	highligtable highlightColor: Color green.
+	inspectable inspectShapeBlock: [ :cls | 
+		| builder |
+		builder := RSUMLClassBuilder new.
+		builder classes: {cls}.
+		builder build.
+		builder open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	boxes @ inspectable.
-	view @ TSControlsCanvas.
-	^ view
+	canvas @ RSControlsCanvas.
+	^ canvas
 ]
 
 { #category : #examples }
@@ -56,7 +50,7 @@ TSInspectableExample >> example02Inspect [
 	color := TSScale category20c.
 	box := [ :model | RSElement new
 		model: model; 
-		shape: (TSBox new
+		shape: (RSBox new
 			color: (color scale: model) ;
 			yourself);
 		size: 20;
@@ -91,7 +85,7 @@ TSInspectableExample >> example02Inspect [
 			view edges copy do: #remove.
 			view elements do: [:e |
 				e attributes at: #old put: e position ].
-			TSEdgeBuilder arrowedLine 
+			RSEdgeBuilder arrowedLine 
 				view: view;
 				connectFrom: #superclass.
 			view elements do: #updateEdgesOFF.
@@ -100,7 +94,7 @@ TSInspectableExample >> example02Inspect [
 			view elements do: [:e |
 				e attributes at: #new put: e position. ].
 		 ]}.
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	^ view
 ]
 

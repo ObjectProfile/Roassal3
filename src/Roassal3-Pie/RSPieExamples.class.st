@@ -601,7 +601,7 @@ RSPieExamples >> example18ManyPies [
 				slice: #value;
 				build.
 			sum := pie totalSum.
-			pie elements @ (TSPopup text: [ :obj|
+			pie elements @ (RSPopup text: [ :obj|
 				obj value asStringWithCommas , '$, ' ,
 				(obj value * 100 / sum) rounded asString, '%' ] ).
 			shapes add: (title elementOn: m).
@@ -610,11 +610,11 @@ RSPieExamples >> example18ManyPies [
 	elements do: [ :e | e scaleBy: 0.5@1.
 		e matrix shy: 0.25 ].
 	view addAll: elements.
-	elements @TSDraggable.
+	elements @RSDraggable.
 	view showEncompassingRectangles.
 	TSGridLayout on: view elements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	view open setLabel: 'Prizepool in esports :V'
 ]
 
@@ -637,7 +637,7 @@ RSPieExamples >> example19Buttons [
 
 	v camera position: v elements encompassingRectangle center.
 	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	
 	pie := RSPieBuilder new.
 	pie 
@@ -867,7 +867,7 @@ RSPieExamples >> example22RotatedAnimation [
 		].
 	view add:(RSShapeBuilder label elementOn: pie totalSum asString, ' LOC').
 	view camera zoomToFit: 270 asPoint.
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	pie open setLabel: 'Roassal3 packages by #linesOfCode'
 
 
@@ -904,7 +904,7 @@ RSPieExamples >> example23RotatedAnimation [
 		when: RSMouseClick do: [ [ animation toggle ] ].
 	pie label text: #basename.
 	pie build.
-	lines := TSEdgeBuilder polyline
+	lines := RSEdgeBuilder polyline
 		border: (RSBorder new dashArray: #(3));
 		edgesOn: pie labelElements.
 	view addAll: lines.
@@ -995,7 +995,7 @@ RSPieExamples >> example24ManyPies [
 			objects: m allButFirst;
 			slice: #yourself;
 			build.
-		pie elements do: [ :e  | e @ (TSPopup text: [:obj | 
+		pie elements do: [ :e  | e @ (RSPopup text: [:obj | 
 			(labels at: e index+1),': ',obj asString ] ) ].
 		g add: (title elementOn: m).
 		g add: (sumLabel elementOn: m).
@@ -1003,7 +1003,7 @@ RSPieExamples >> example24ManyPies [
 		].
 	view addAll: (composite elementsOn: data).
 	TSFlowLayout on: view elements.
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	view zoomToFit.
 	view open setLabel: 'Usa population by State'.
 ]

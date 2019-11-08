@@ -8,7 +8,7 @@ TSInterpolator >> gtCanvasForInspector [
 	canvas color: theme backgroundColor.
 	s := TSScale linear domain: #(1 100); range: #(0 420).
 	boxes := (0 to: 99) collect: [ :i |
-		TSBox new
+		RSBox new
 			size: 40;
 			x: (s scale: (i / 10) asInteger) * 10 + 64;
 			y: (s scale: (i % 10) asInteger) * 10 + 64;
@@ -19,7 +19,7 @@ TSInterpolator >> gtCanvasForInspector [
 	pos := TSScale linear
 		domain: { 0@0. 1@1 };
 		range: { 0 @ rect height. rect width@ 0 }.
-	line := TSPolyline new 
+	line := RSPolyline new 
 		border: (RSBorder new 
 			width: 4;
 			paint: (TSGradientPalette sweetPeriod
@@ -38,7 +38,7 @@ TSInterpolator >> gtCanvasForInspector [
 			canvas signalUpdate].
 	canvas addAll: boxes.
 	label := [ :text | 
-		TSLabel new
+		RSLabel new
 			color: theme textColor;
 			size: 20;
 			text: text;
@@ -56,7 +56,7 @@ TSInterpolator >> gtCanvasForInspector [
 	canvas addShape: (label value: 'X').
 	loc bottom; right;
 		move: canvas shapes last on: rect.
-	canvas @ TSControlsCanvas.
+	canvas @ RSControlsCanvas.
 	^ canvas
 ]
 

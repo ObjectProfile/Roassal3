@@ -13,10 +13,10 @@ TSShapeExamples >> example01BasicBoxes [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		extent: 100@100;
 		yourself).
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		position: 100@100;
 		color: Color red;
 		extent: 100@100;
@@ -30,10 +30,10 @@ TSShapeExamples >> example02BasicEllipses [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		extent: 100@100;
 		yourself).
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		position: 100@100;
 		color: Color red;
 		extent: 100@100;
@@ -47,23 +47,23 @@ TSShapeExamples >> example03BasicComposite [
 
 	| c com |
 	c := RSCanvas new.
-	com := TSComposite new.
-	com add: (TSBox new
+	com := RSComposite new.
+	com add: (RSBox new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
 		yourself).
-	com add: (TSBox new
+	com add: (RSBox new
 		position: 100@100;
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
 		
 	c addShape: com.	
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
 		yourself).
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		position: 100@100;
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
@@ -77,13 +77,13 @@ TSShapeExamples >> example04BasicComposite [
 
 	| c com |
 	c := RSCanvas new.
-	com := TSComposite new.
-	com add: (TSBox new
+	com := RSComposite new.
+	com add: (RSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
 		extent: 50@100;
 		yourself).
-	com add: (TSBox new
+	com add: (RSBox new
 		position: 0 @ 0;
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
@@ -92,11 +92,11 @@ TSShapeExamples >> example04BasicComposite [
 	com position: 100@100.
 	
 	c addShape: com.	
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
 		yourself).
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 20@20;
 		yourself).
@@ -109,23 +109,23 @@ TSShapeExamples >> example05BasicGroup [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
 		extent: 50@100;
 		yourself).
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		position: 0 @ 0;
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
 		
 		
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
 		yourself).
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 20@20;
 		yourself).
@@ -143,7 +143,7 @@ TSShapeExamples >> example06BasicLabels [
 		angle := (m * 360 / 12) degreesToRadians.
 		theta := angle cos @ angle sin.
 		p := theta * 100.
-		label := TSLabel new
+		label := RSLabel new
 			color: (Color purple alpha: 0.5);
 			fontName: 'Source Sans Pro';
 			fontSize: 20;
@@ -161,7 +161,7 @@ TSShapeExamples >> example06BasicLabels [
 			ifFalse: [ label italic ].
 		c addShape: label.
 		].
-	c addShape: (TSEllipse new
+	c addShape: (RSEllipse new
 		color: nil;
 		withBorder;
 		radius: 90).
@@ -178,7 +178,7 @@ TSShapeExamples >> example07EventsMouseMoveDrag [
 
 	| c ellipse a b update anim |
 	c := RSCanvas new.
-	ellipse := TSEllipse new
+	ellipse := RSEllipse new
 		radius: 40;
 		withBorder.
 	c addShape: ellipse.
@@ -209,7 +209,7 @@ TSShapeExamples >> example08EllipseBorder [
 	c color: (Color colorFrom: '325A64').
 	1 to: 500 do: [ :x|
 		y := 255 + (x sin * 255).
-		c addShape: (TSEllipse new
+		c addShape: (RSEllipse new
 			color: Color transparent;
 			border: (RSBorder new
 				width: x/ 50;
@@ -235,7 +235,7 @@ TSShapeExamples >> example09MouseStep [
 	|  c e prev dif |
 	c := RSCanvas new.
 	c color: Color black.
-	e := TSEllipse new
+	e := RSEllipse new
 		border: (RSBorder new color: Color white);
 		radius: 0.
 	c addShape: e.
@@ -271,7 +271,7 @@ TSShapeExamples >> example10EllipseMouseMove [
 		b := 200 * evt position y / c extent y.
 		c shapes copy do: #remove.
 		0 to: circleResolution do: [ :i |
-			c addShape: (TSEllipse new 
+			c addShape: (RSEllipse new 
 				color: Color transparent;
 				rotateByDegrees: 45;
 				border: border;
@@ -307,7 +307,7 @@ TSShapeExamples >> example11ScaleMouseDistance [
 			rangeRound: #(80 0).
 		0 to: canvasExtent y/boxSize do: [ :y|
 			0 to: canvasExtent x/boxSize do: [ :x| 
-				c addShape: (TSBox new 
+				c addShape: (RSBox new 
 					color: Color white;
 					position: ((x@y)*boxSize) - (canvasExtent/2);
 					extent: 10@10;
@@ -331,7 +331,7 @@ TSShapeExamples >> example12BasicLine [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: TSLine new.
+	c addShape: RSLine new.
 	c open.
 ]
 
@@ -341,7 +341,7 @@ TSShapeExamples >> example14BasicBitmap [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSBitmap new
+	c addShape: (RSBitmap new
 		form: (self iconNamed: #eyedropper);
 		extent: 200@350).
 		
@@ -354,11 +354,11 @@ TSShapeExamples >> example15BasicRoundBoxses [
 
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		cornerRadius: 5;
 		extent: 100@50).
 		
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		cornerRadius: (RSCornerRadius new top: 20);
 		position: 100@100;
 		extent: 100@50;
@@ -372,12 +372,12 @@ TSShapeExamples >> example16BasicLinePath [
 	<script: 'self new example16BasicLinePath'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
 	c := RSCanvas new.
-	b1 := TSBox new size: 100@100.
-	b2 := TSBox new size: 100@100; color: Color blue; position: 100@100.
+	b1 := RSBox new size: 100@100.
+	b2 := RSBox new size: 100@100; color: Color blue; position: 100@100.
 	c addShape: b1.
 	c addShape: b2.
 	
-	l := TSSVGPathLine new
+	l := RSSVGPathLine new
 		svgPath: [ :a :b |
 			[ :canvas | | vector u unit left right left1 right1 |
 			arrowWidth := 50.
@@ -427,7 +427,7 @@ TSShapeExamples >> example17Borders [
 	| c border border2 a b ce d |
 	c := RSCanvas new.
 	border := [ :position :inner :outer :text |
-		c addShape: (TSBox new
+		c addShape: (RSBox new
 			color: Color lightGray;
 			position: position;
 			border: (RSBorder new
@@ -435,7 +435,7 @@ TSShapeExamples >> example17Borders [
 				joinMiter;
 				color: inner);"brighter"
 			size: 100).
-		c addShape: (TSBox new
+		c addShape: (RSBox new
 			color: nil;
 			position: position;
 			border: (RSBorder new
@@ -443,7 +443,7 @@ TSShapeExamples >> example17Borders [
 				dashArray: #(98 196);
 				color: outer);"darker"
 			size: 98).
-		c addShape: (TSBox new
+		c addShape: (RSBox new
 			color: nil;
 			position: position;
 			border: (RSBorder new
@@ -451,63 +451,63 @@ TSShapeExamples >> example17Borders [
 				dashArray: #(0 102 102 0 102 0);
 				color: outer);"darker"
 			size: 102).
-		c addShape: (TSLabel new
+		c addShape: (RSLabel new
 			text: text;
 			position: position;
 			color: Color black).
 		 ].
 	border2 := [ :position :text |
 		
-		c addShape: (TSBox new
+		c addShape: (RSBox new
 			color: Color lightGray;
 			position: position;
 			size: 100).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position - 50;
 			endPoint: position + (50 @ -50);
 			color: a).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position - 50;
 			endPoint: position + (-50 @ 50);
 			color: a).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position - 49;
 			endPoint: position + (49 @ -49);
 			color: b).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position - 49;
 			endPoint: position + (-49 @ 49);
 			color: b).
 			
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position + (-49@49);
 			endPoint: position + 49;
 			color: ce ).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position + (49@ -49) ;
 			endPoint: position + (49 @ 49);
 			color: ce).
 			
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position + (-50@50);
 			endPoint: position + 50;
 			color: d).
-		c addShape: (TSLine new
+		c addShape: (RSLine new
 			startPoint: position + (50@ -50);
 			endPoint: position + (50 @ 50);
 			color: d).
-		c addShape: (TSLabel new
+		c addShape: (RSLabel new
 			text: text;
 			position: position;
 			color: Color black).
 		 ].
 	
 	"line border"
-	c addShape: (TSBox new
+	c addShape: (RSBox new
 		color: Color lightGray;
 		border: RSBorder new;
 		size: 100).
-	c addShape: (TSLabel new
+	c addShape: (RSLabel new
 		text: 'Line border';
 		color: Color black).
 	"raised etched"
@@ -548,9 +548,9 @@ TSShapeExamples >> example18BasicPieSlice [
 	| c |
 	c := RSCanvas new.
 	"empty"
-	c addShape: TSPieSlice new.
+	c addShape: RSPieSlice new.
 	"circle"
-	c addShape: (TSPieSlice new
+	c addShape: (RSPieSlice new
 		innerRadius: 0;
 		externalRadius: 100;
 		alphaAngle: 0;
@@ -564,7 +564,7 @@ TSShapeExamples >> example19PieSlice [
 	| c |
 	c := RSCanvas new.
 	"slice"
-	c addShape: (TSPieSlice new
+	c addShape: (RSPieSlice new
 		externalRadius: 100;
 		innerRadius: 50;
 		alphaAngle: 30;
@@ -579,7 +579,7 @@ TSShapeExamples >> example20Donut [
 	| c |
 	c := RSCanvas new.
 	"donut"
-	c addShape: (TSPieSlice new
+	c addShape: (RSPieSlice new
 		withBorder;
 		externalRadius: 100;
 		innerRadius: 50;
@@ -594,7 +594,7 @@ TSShapeExamples >> example21CornerRadii [
 	| c |
 	c := RSCanvas new.
 	"corner radii"
-	c addShape: (TSPieSlice new
+	c addShape: (RSPieSlice new
 		externalRadius: 100;
 		innerRadius: 50;
 		alphaAngle: 0;
@@ -609,7 +609,7 @@ TSShapeExamples >> example22BasicPieSlice [
 	| c |
 	c := RSCanvas new.
 	"slice"
-	c addShape: (TSPieSlice new
+	c addShape: (RSPieSlice new
 		externalRadius: 100;
 		alphaAngle: 30;
 		betaAngle: 90).
@@ -621,7 +621,7 @@ TSShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape'>
 	| c box |
 	c := RSCanvas new.
-	box := TSBox new
+	box := RSBox new
 		extent: 100@100;
 		position: 200 asPoint;
 		color: Color blue;
@@ -629,7 +629,7 @@ TSShapeExamples >> example23FixedShape [
 	box isFixed: true.
 	c addShape: box.
 	
-	box := TSBox new
+	box := RSBox new
 		extent: 100@100;
 		yourself.
 	c addShape: box.
@@ -642,7 +642,7 @@ TSShapeExamples >> example24Polyline [
 	<script: 'self new example24Polyline'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSPolyline new
+	c addShape: (RSPolyline new
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10}).
 	c open.
 ]
@@ -652,7 +652,7 @@ TSShapeExamples >> example25LabelWithBorder [
 	<script: 'self new example25LabelWithBorder'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSLabel new
+	c addShape: (RSLabel new
 		fontSize: 60;
 		fontName: 'Source Sans Pro';
 		"fontName: 'Brushcrazy DEMO';"
@@ -668,7 +668,7 @@ TSShapeExamples >> example26Polygon [
 	<script: 'self new example26Polygon'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSPolygon new
+	c addShape: (RSPolygon new
 		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
 		yourself).
 	c shapes first translateTo: 0@0.
@@ -683,16 +683,16 @@ TSShapeExamples >> example27Markers [
 	<script: 'self new example27Markers'>
 	| c arrow axes circle dataLine |
 	c := RSCanvas new.
-	arrow := TSPolygon new 
+	arrow := RSPolygon new 
 		points: { -10@0. 0@ -10. 10@0 };
 		color: Color black;
 		size: 10.
-	circle := TSEllipse new
+	circle := RSEllipse new
 		radius: 2.5;
 		color: Color red.
-	axes := TSPolyline new
+	axes := RSPolyline new
 		controlPoints: { 10@10. 10@90. 90@90 }.
-	dataLine := TSPolyline new 
+	dataLine := RSPolyline new 
 		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
 	axes markerEnd: (axes markerStart: arrow).
 	dataLine marker: circle.
@@ -707,22 +707,22 @@ TSShapeExamples >> example28SVGShape [
 	<script: 'self new example28SVGShape'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSSVGPath new
+	c addShape: (RSSVGPath new
 		paint: nil;
 		withBorder;
 		svgPath: 'M 100 350 q 150 -300 300 0';
 		yourself).
-	c addShape: (TSSVGPath new
+	c addShape: (RSSVGPath new
 		paint: nil;
 		border: (RSBorder new color: Color red);
 		svgPath: 'M 100 350 l 150 -300';
 		yourself).
-	c addShape: (TSSVGPath new
+	c addShape: (RSSVGPath new
 		paint: nil;
 		border: (RSBorder new color: Color red);
 		svgPath: 'M 250 50 l 150 300';
 		yourself).
-	c addShape: (TSSVGPath new
+	c addShape: (RSSVGPath new
 		paint: nil;
 		border: (RSBorder new color: Color green);
 		svgPath: 'M 175 200 l 150 0';
@@ -737,7 +737,7 @@ TSShapeExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSPolyline new
+	c addShape: (RSPolyline new
 		border: (RSBorder new width: 10);
 		cornerRadii: 50;
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10} * 50).
@@ -750,7 +750,7 @@ TSShapeExamples >> example30PolygonWithRadius [
 	<script: 'self new example30PolygonWithRadius'>
 	| c |
 	c := RSCanvas new.
-	c addShape: (TSPolygon new
+	c addShape: (RSPolygon new
 		cornerRadii: 10;
 		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
 		yourself).

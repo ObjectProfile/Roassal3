@@ -3,7 +3,7 @@ I am a specific interaction based on the example23RotatedAnimation
 "
 Class {
 	#name : #RSRotatedPieLabel,
-	#superclass : #TSAbstractCanvasInteraction,
+	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'pieBuilder',
 		'animation'
@@ -14,7 +14,7 @@ Class {
 { #category : #hooks }
 RSRotatedPieLabel >> onElement: view [
 	| lines update |
-	lines := TSEdgeBuilder polyline
+	lines := RSEdgeBuilder polyline
 		dashArray: #(4);
 		edgesOn: pieBuilder labelElements.
 	view addAll: lines.

@@ -12,8 +12,8 @@ Class {
 RSForceBasedLayoutTest >> setUp [
 	canvas := RSCanvas new.
 	classes := Collection withAllSubclasses collect:[:cls |
-		TSBox new model: cls; size: 10; yourself].
-	TSEdgeBuilder line
+		RSBox new model: cls; size: 10; yourself].
+	RSEdgeBuilder line
 		canvas: canvas;
 		shapes: classes;
 		color: (Color blue alpha: 0.5);

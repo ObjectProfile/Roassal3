@@ -48,7 +48,7 @@ v
 "
 Class {
 	#name : #RSMultiBezierEdgeBuilder,
-	#superclass : #TSEdgeBuilder,
+	#superclass : #RSEdgeBuilder,
 	#instVars : [
 		'tension'
 	],
@@ -57,7 +57,7 @@ Class {
 
 { #category : #'instance variations' }
 RSMultiBezierEdgeBuilder class >> multiBezier [
-	^ self new: TSSVGPathLine new.
+	^ self new: RSSVGPathLine new.
 ]
 
 { #category : #private }

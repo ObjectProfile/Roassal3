@@ -15,7 +15,7 @@ RSRoassalTest >> testCommands [
 	| shape removedCommands |
 	shape := RSShapeBuilder new.
 	self assert: shape commands size equals: 0.
-	shape shapeClass: TSBox.
+	shape shapeClass: RSBox.
 	self assert: shape commands size equals: 2.
 	
 	shape := RSShapeBuilder box.

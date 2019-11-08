@@ -17,7 +17,7 @@ TSLegendExamples >> example01Basic [
 	b build.
 	self assert: b shapes size = 2.
 	self assert: b container shapes size = 1.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -33,7 +33,7 @@ TSLegendExamples >> example02Border [
 			withBorder;
 			padding: 50 ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas.
 ]
 
@@ -54,7 +54,7 @@ TSLegendExamples >> example03Vertical [
 			withBorder;
 			padding: (Margin left: 50 right: 10 top: 10  bottom: 50) ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -75,7 +75,7 @@ TSLegendExamples >> example04Horizontal [
 
 	b layout horizontal gapSize: 20.
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -97,7 +97,7 @@ TSLegendExamples >> example05Colors [
 			withBorder;
 			padding: 20 ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -119,7 +119,7 @@ TSLegendExamples >> example06BoxColors [
 			padding: 20 ].
 	b layout horizontal gapSize: 30.
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -132,7 +132,7 @@ TSLegendExamples >> example07BoxFading [
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
 	b leyendDo: [:l | l withBorder; padding: 10 ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -145,7 +145,7 @@ TSLegendExamples >> example08Polygons [
 	#(diamond triangle star pentagon octagon) do: [ :selector | 
 		b text: selector withShape: ((RSShape perform: selector) size: 15) ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -158,14 +158,14 @@ TSLegendExamples >> example09Lines [
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
 		marker := (RSShape perform: selector) size: 10.
-		line := TSLine new markerEnd: marker; 
+		line := RSLine new markerEnd: marker; 
 			startPoint: 0@0; 
 			endPoint: 20@0;
 			yourself.
 		b text: selector withShape: line.
 		 ].
 	b build.
-	b canvas @ TSControlsCanvas.
+	b canvas @ RSControlsCanvas.
 	^ b canvas
 ]
 
@@ -175,14 +175,14 @@ TSLegendExamples >> example10Location [
 	| canvas classes b |
 	canvas := RSCanvas new.
 	classes := RSShape withAllSubclasses collect: [ :cls | 
-		TSBox new
+		RSBox new
 			draggable;
 			popup;
 			model: cls;
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;
@@ -212,7 +212,7 @@ TSLegendExamples >> example10Location [
 			padding: 15 ].
 	b location right middle.
 	b build.
-	canvas @ TSControlsCanvas.
+	canvas @ RSControlsCanvas.
 	^ canvas.
 	
 
@@ -226,14 +226,14 @@ TSLegendExamples >> example11OnDemand [
 	| canvas classes b |
 	canvas := RSCanvas new.
 	classes := RSShape withAllSubclasses collect: [ :cls | 
-		TSBox new
+		RSBox new
 			draggable;
 			popup;
 			model: cls;
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;
@@ -263,7 +263,7 @@ TSLegendExamples >> example11OnDemand [
 			padding: 15 ].
 	b location right middle.
 	b onDemand; build.
-	canvas @ TSControlsCanvas.
+	canvas @ RSControlsCanvas.
 	^ canvas.
 	
 

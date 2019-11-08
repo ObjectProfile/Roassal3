@@ -3,12 +3,12 @@ I allow to inspect another view or windows. It can be configurable to set the ki
 "
 Class {
 	#name : #TSInspectable,
-	#superclass : #TSInteraction,
+	#superclass : #RSInteraction,
 	#instVars : [
-		'selectedElement',
 		'highlightable',
 		'inspectorWindow',
-		'inspectShapeBlock'
+		'inspectShapeBlock',
+		'selectedShape'
 	],
 	#category : #'Roassal3-Inspector-Interaction'
 }
@@ -16,15 +16,9 @@ Class {
 { #category : #hooks }
 TSInspectable >> deselectIfNecessary [
 	"Nothing to unselect"
-	selectedElement ifNil: [ ^ self ].
+	selectedShape ifNil: [ ^ self ].
+	highlightable doUnhighlight: selectedShape
 	
-	highlightable doUnhighlightElement: selectedElement
-	
-	"Does not have a previous color"
-	"(selectedElement attributes includesKey: #oldColor) ifFalse: [ ^ self ].
-
-	selectedElement color: (selectedElement attributes at: #oldColor).
-	selectedElement attributes removeKey: #oldColor"
 ]
 
 { #category : #accessing }
@@ -40,22 +34,26 @@ TSInspectable >> highlightable: anObject [
 { #category : #hooks }
 TSInspectable >> initialize [
 	super initialize.
-	highlightable := TSHighlightable new.
+	highlightable := RSHighlightable new.
+]
+
+{ #category : #accessing }
+TSInspectable >> inspectElementBlock [
+	^ inspectShapeBlock
 ]
 
 { #category : #hooks }
-TSInspectable >> inspectElement: anElement [
-	| oldInspectorWindow viewMorph |
+TSInspectable >> inspectShape: aShape [
+	| oldInspectorWindow canvasMorph |
 	self deselectIfNecessary.
-	selectedElement := anElement.
-	highlightable doHighlightElement: selectedElement.
+	selectedShape := aShape.
+	highlightable doHighlight: selectedShape.
 	
 	oldInspectorWindow := inspectorWindow.
-	inspectorWindow := inspectShapeBlock rsValue: anElement model.
-	inspectorWindow setLabel: anElement model asString.
-	viewMorph := anElement view canvas morph.
-	viewMorph root activate.
-	"viewMorph takeKeyboardFocus."
+	inspectorWindow := inspectShapeBlock rsValue: aShape model.
+	inspectorWindow setLabel: aShape model asString.
+	canvasMorph := aShape canvas morph.
+	canvasMorph root activate.
 	"If there is a previous inspector window, then we use the same position and extent"
 	oldInspectorWindow ifNil: [ ^ self ].
 	inspectorWindow 
@@ -68,11 +66,6 @@ TSInspectable >> inspectElement: anElement [
 ]
 
 { #category : #accessing }
-TSInspectable >> inspectElementBlock [
-	^ inspectShapeBlock
-]
-
-{ #category : #accessing }
 TSInspectable >> inspectShapeBlock: oneArgBlock [
 	"The block should return a window"
 	inspectShapeBlock := oneArgBlock
@@ -80,7 +73,7 @@ TSInspectable >> inspectShapeBlock: oneArgBlock [
 
 { #category : #hooks }
 TSInspectable >> onShape: aShape [
-	
-	aShape when: RSMouseLeftClick do: [ :evt | 
-		self inspectElement: aShape ]
+	aShape 
+		when: RSMouseLeftClick
+		do: [ :evt | self inspectShape: aShape ]
 ]

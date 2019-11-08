@@ -7,7 +7,7 @@ RSGroup >> asShape [
 
 { #category : #'*Roassal3-Scripting' }
 RSGroup >> asShapeOn: model [
-	^ TSComposite new 
+	^ RSComposite new 
 		model: model;
 		shapes: self
 		yourself

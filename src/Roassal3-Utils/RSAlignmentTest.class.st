@@ -16,7 +16,7 @@ RSAlignmentTest >> setUp [
 { #category : #tests }
 RSAlignmentTest >> testFromBottom [
 	| es |
-	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
 	TSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ 150.
@@ -32,7 +32,7 @@ RSAlignmentTest >> testFromBottom [
 { #category : #tests }
 RSAlignmentTest >> testFromLeft [
 	| es |
-	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
 	TSVerticalLineLayout on: es.
 	es second translateBy: -150 @ 0.
@@ -48,7 +48,7 @@ RSAlignmentTest >> testFromLeft [
 { #category : #tests }
 RSAlignmentTest >> testFromRight [
 	| es |
-	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
 	TSVerticalLineLayout on: es.
 	es second translateBy: 150 @ 0.
@@ -61,7 +61,7 @@ RSAlignmentTest >> testFromRight [
 { #category : #tests }
 RSAlignmentTest >> testFromTop [
 	| es |
-	es := (10 to: 100 by: 10) collect: [ :n | TSBox new size: n; yourself ].
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
 	TSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ -50.
@@ -74,7 +74,7 @@ RSAlignmentTest >> testFromTop [
 { #category : #tests }
 RSAlignmentTest >> testHasElement [
 	self deny: align hasShape.
-	align shapes: (Array with: TSBox new).
+	align shapes: (Array with: RSBox new).
 	self assert: align hasShape.
 	align shapes: #().
 	self deny: align hasShape.

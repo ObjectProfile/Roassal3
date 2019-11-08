@@ -21,7 +21,7 @@ RSEdgeTest >> setUp [
 	el2 translateTo: 60 @ 80.
 	edge := RSEdge new
 		attachPoint: RSCenteredAttachPoint new;
-		shape: TSLine new;
+		shape: RSLine new;
 		from: el1;
 		to: el2;
 		yourself. 

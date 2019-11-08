@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 TSNormalizerTest >> testBasic [ 
 	| shapes |
-	shapes := (1 to: 2) collect: [ :n | TSBox new model: n; yourself ].
+	shapes := (1 to: 2) collect: [ :n | RSBox new model: n; yourself ].
 	
 	self assert: shapes size equals: 2.
 	self assert: shapes first color equals: Color lightGray.

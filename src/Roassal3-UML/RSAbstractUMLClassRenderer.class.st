@@ -71,7 +71,7 @@ RSAbstractUMLClassRenderer >> classShape: aRSShapeBuilder [
 
 { #category : #'accessing - shapes' }
 RSAbstractUMLClassRenderer >> edgeBuilder [
-	^ edgeBuilder ifNil: [ edgeBuilder := TSEdgeBuilder orthoVertical
+	^ edgeBuilder ifNil: [ edgeBuilder := RSEdgeBuilder orthoVertical
 		attachPoint: RSVerticalAttachPoint new; 
 		border: self border;
 		markerStart: self marker ]

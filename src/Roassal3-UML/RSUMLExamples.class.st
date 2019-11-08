@@ -22,7 +22,7 @@ RSUMLExamples >> example02ClassDescriptor [
 	<script: 'self new example02ClassDescriptor'>
 	| builder |
 	builder := RSUMLClassBuilder new.
-	builder classes: TSAbstractLine withAllSubclasses.
+	builder classes: RSAbstractLine withAllSubclasses.
 	
 	builder modelDescriptor 
 		methods: [ :cls | | methods |
@@ -47,7 +47,7 @@ RSUMLExamples >> example03DifferentLines [
 		noPaint;
 		withBorder;
 		element) asMarker offset: -7.
-	builder renderer edgeBuilder: (TSEdgeBuilder verticalBezier
+	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;
@@ -85,7 +85,7 @@ RSUMLExamples >> example05Horizontal [
 		noPaint;
 		withBorder;
 		element) asMarker offset: -7.
-	builder renderer edgeBuilder: (TSEdgeBuilder horizontalBezier
+	builder renderer edgeBuilder: (RSEdgeBuilder horizontalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;

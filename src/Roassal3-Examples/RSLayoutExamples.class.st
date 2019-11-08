@@ -109,7 +109,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	v addAll: elements.
 	TSGridLayout on: elements.
-	v @ TSDraggableCanvas .
+	v @ RSDraggableCanvas .
 	^ v
 ]
 
@@ -119,7 +119,7 @@ RSLayoutExamples >> example05TreeLayout [
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
-		TSEllipse new
+		RSEllipse new
 			model: cls;
 			draggable;
 			size: 5;
@@ -135,12 +135,12 @@ RSLayoutExamples >> example05TreeLayout [
 	RSNormalizer size
 		shapes: shapes;
 		normalize: #numberOfMethods.
-	eb := TSEdgeBuilder line.
+	eb := RSEdgeBuilder line.
 	eb canvas: c.
 	eb connectFrom: #superclass.
 	TSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
-	c @ TSDraggableCanvas.
+	c @ RSDraggableCanvas.
 	^ c
 ]
 
@@ -150,13 +150,13 @@ RSLayoutExamples >> example06Cluster [
 	| c shapes |
 	c := RSCanvas new.
 	shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
-		TSEllipse new 
+		RSEllipse new 
 			size: 5;
 			color: Color red;
 			model: cls;
 			yourself ].
 	c addAll: shapes.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		canvas: c;
 		color: Color blue trans;
 		connectFrom: #superclass.
@@ -186,7 +186,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := RSShape withAllSubclasses collect: [ :cls |
-		TSEllipse new 
+		RSEllipse new 
 			popup;
 			draggable;
 			model: cls;
@@ -201,7 +201,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		to: (Color red alpha: 0.5);
 		shapes: c nodes;
 		normalize: #numberOfMethods.
-	eb := TSEdgeBuilder line.
+	eb := RSEdgeBuilder line.
 	eb
 		canvas: c;
 		moveBehind;
@@ -210,7 +210,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		doNotUseProgressBar; 
 		charge: -350;
 		on: c nodes.
-	c @ TSControlsCanvas.
+	c @ RSControlsCanvas.
 	c zoomToFit.
 	^ c
 ]
@@ -222,21 +222,21 @@ RSLayoutExamples >> example08HorizontalTree [
 	c := RSCanvas new.
 	
 	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
-		lbl := TSLabel new
+		lbl := RSLabel new
 			text: cls asString;
 			yourself.
-		box := TSBox new
+		box := RSBox new
 			withBorder;
 			cornerRadius: (RSCornerRadius new right: 10);
 			extent: lbl extent + 10.
-		TSComposite new
+		RSComposite new
 			draggable;
 			model: cls;
 			shapes: (RSGroup with: box with: lbl );
 			yourself ].
 	c addAll: shapes.
-	c @ TSControlsCanvas.
-	TSEdgeBuilder orthoHorizontal
+	c @ RSControlsCanvas.
+	RSEdgeBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
 			shape: (RSShapeBuilder triangle 
@@ -254,21 +254,20 @@ RSLayoutExamples >> example08HorizontalTree [
 { #category : #lines }
 RSLayoutExamples >> example09BorderAttachPoint [
 	<script: 'self new example09BorderAttachPoint open setLabel: ''TSShape withAllSubclasses'''>
-	| v sb |
-	v := RSView new.
-	sb := RSShapeBuilder square 
-		interactionDo: #draggable;
-		size: 30.
-	v addAll: (sb elementsOn: (RSShape withAllSubclasses) ).
-	TSEdgeBuilder arrowedLine 
+	| c shapes |
+	c := RSCanvas new.
+	shapes := RSShape withAllSubclasses collect: [ :cls | 
+		RSShape square size: 30; draggable; model: cls; yourself ].
+	c addAll: shapes.
+	RSEdgeBuilder arrowedLine 
 		withBorderAttachPoint;
-		view: v;
+		canvas: c;
 		connectFrom: #superclass.
 	TSForceBasedLayout new 
 		charge: -500; 
-		on: v elements.
-	v @ TSControlsCanvas.
-	^ v
+		on: c nodes.
+	c @ RSControlsCanvas.
+	^ c
 ]
 
 { #category : #lines }
@@ -277,7 +276,7 @@ RSLayoutExamples >> example10Locate [
 	| v shape e1 e2 |
 	v := RSView new.
 	shape := RSShapeBuilder box
-		@ TSDraggable;
+		@ RSDraggable;
 		onElement;
 		color: TSColorPalette sequential blues3;
 		size: 100.
@@ -292,7 +291,7 @@ RSLayoutExamples >> example10Locate [
 		left;
 		stick: e2 on: e1.
 	v addAll:{e1. e2}.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	^ v
 ]
 
@@ -319,132 +318,143 @@ RSLayoutExamples >> example11PaddingInComposite [
 	elements := shape elementsOn: Collection withAllSubclasses.
 	TSGridLayout on: elements.
 	v addAll: elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	^ v
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example12AnimatedForceBasedLayout [ 
 	<script: 'self new example12AnimatedForceBasedLayout open'>
-	| view shape elements layout edges  |
-	view := RSView new.
-	shape := RSShapeBuilder box
-		size: 30;
-		interactionDo:[:i | i draggable; labeled].
-	elements := shape elementsOn: (1 to: 10).
-	edges := TSEdgeBuilder line
-		elements: elements;
+	| canvas shapes layout edges  |
+	canvas := RSCanvas new.
+	shapes := (1 to: 10) collect: [ :m | 
+		RSBox new 
+			size: 30;
+			draggable;
+			labeled;
+			model: m;
+			yourself ].
+	edges := RSEdgeBuilder line
+		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
-	view
+	canvas
 		addAll: edges;
-		addAll: elements.
+		addAll: shapes.
 	layout := TSForceBasedLayout new
 		length: 80;
 		charge: -300;
-		nodes: elements;
-		edges: view edges;
+		nodes: shapes;
+		edges: canvas edges;
 		start;
 		yourself.
 	"elements do: [ :e |
 		(layout mockElementAt: e) charge: e model * -20 ]."
-	view edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
-	view @ TSControlsCanvas.
+	canvas edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
+	canvas @ RSControlsCanvas.
 	
-	view @ (TSForceLayoutStepping new layout: layout).
-	^ view
+	canvas @ (RSForceLayoutStepping new layout: layout).
+	^ canvas
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example13VisualizeQuatree [
 	<script: 'self new example13VisualizeQuatree open'>
-	| view shape elements layout edges boxBuilder boxes createBoxes colors labelBuilder |
-	view := RSView new.
-	shape := RSShapeBuilder box
-		size: 30;
-		interactionDo: [ :i | i draggable; labeled ].
-	elements := shape elementsOn: (1 to: 50).
-	edges := TSEdgeBuilder line
-		elements: elements;
+	| canvas shapes layout edges boxBuilder boxes createBoxes colors labelBuilder |
+	canvas := RSCanvas new.
+	shapes := (1 to: 50) collect: [:n | 
+		RSBox new
+			size: 30;
+			draggable; 
+			labeled;
+			model: n;
+			yourself].
+	edges := RSEdgeBuilder line
+		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
-	view
+	canvas
 		addAll: edges;
-		addAll: elements.
+		addAll: shapes.
 	layout := TSForceBasedLayout new
 		length: 80;
 		charge: -300;
-		nodes: elements;
-		edges: view edges;
+		nodes: shapes;
+		edges: canvas edges;
 		start;
 		yourself.
-	view @ TSControlsCanvas.
-	view @ (TSForceLayoutStepping new layout: layout).
+	canvas @ RSControlsCanvas.
+	canvas @ (RSForceLayoutStepping new layout: layout).
 	colors := TSColorPalette sequential pubu9.
-	boxBuilder := RSShapeBuilder box
-		border: (RSBorder new color: Color lightGray trans; width: 0.5);
-		extent: [ :quad | quad rectangle extent ];
-		position: [ :quad | quad rectangle rsCenter ];
-		onElement;
-		color: [:e | (colors scale: e index) alpha: 0.5 ].
-	labelBuilder := RSShapeBuilder label
-		text: [:quad | quad charge printShowingDecimalPlaces: 1];
-		position: [ :quad | quad rectangle rsCenter ].
+	boxBuilder := [ :quad :index |
+		RSBox new
+			border: (RSBorder new color: Color lightGray trans; width: 0.5);
+			extent: quad rectangle extent;
+			position: quad rectangle rsCenter;
+			color: ((colors scale: index) alpha: 0.5 );
+			yourself
+			 ]. 
+	labelBuilder := [ :quad :index |
+		RSLabel new
+			text: (quad charge printShowingDecimalPlaces: 1);
+			position: quad rectangle rsCenter;
+			yourself.
+		 ].
 	boxes := #().
 	createBoxes := nil.
 	createBoxes := [ :quad :lvl | | box label |
-		box := boxBuilder elementOn: quad index: lvl.
-		label := labelBuilder elementOn: quad index: lvl.
+		box := boxBuilder value: quad value: lvl.
+		label := labelBuilder value: quad value: lvl.
 		quad subQuadsDo: [ :subQuad | createBoxes value: subQuad value: lvl + 1 ].
 		boxes add: box.
 		boxes add: label.
 		].
-	view newAnimation
+	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;
 		when: TSAnimationLoopEvent do: [ :v | 
 			boxes do: #remove.
 			boxes := RSGroup new.
 			createBoxes value: layout currentQuadtree value: 0.
-			view addAll: boxes.
+			canvas addAll: boxes.
 			boxes pushBack ].
-	^ view
+	^ canvas
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example14ClassHierarchy [
 	<script: 'self new example14ClassHierarchy open'>
-	| v classes es eb eb2 |
-	v := RSView new.
+	| c classes |
+	c := RSCanvas new.
 
 	classes := (Object withAllSubclasses first: 300)
 		flatCollect: #withAllSuperclasses.
-	classes := classes asSet asArray.
-	es := RSShapeBuilder circle elementsOn: classes.
-	v addAll: es.
-	es @ TSPopup @ TSDraggable.
-	eb := TSEdgeBuilder line.
-	eb color: Color gray.
-	eb view: v.
-	eb elements: es.
-	eb withBorderAttachPoint.
-	"eb following: #superclass."
-	eb connectFrom: #superclass.
+	classes := classes asSet 
+		collect: [:cls | RSEllipse new model: cls; yourself] 
+		as: RSGroup.
+	c addAll: classes.
+	classes @ RSPopup @ RSDraggable.
+	RSEdgeBuilder line
+		color: Color gray;
+		color: c;
+		shapes: classes;
+		withBorderAttachPoint;
+		connectFrom: #superclass.
 	RSNormalizer size
-		elements: es;
+		shapes: classes;
 		to: 20;
 		normalize: #numberOfMethods.
 	RSNormalizer color
-		elements: es;
+		shapes: classes;
 		normalize: #numberOfMethods.
-	TSClusterLayout on: es.
-	eb2 := RSMultiBezierEdgeBuilder multiBezier.
-	eb2 borderColor: (Color blue alpha: 0.3).
-	eb2 view: v.
+	TSClusterLayout on: classes.
+	"" RSMultiBezierEdgeBuilder multiBezier.
+	"eb2 borderColor: (Color blue alpha: 0.3).
+	eb2 view: c.
 	eb2 elements: es.
 	eb2 withBorderAttachPoint.
 	eb2 following: #superclass.
-	eb2 connectToAll: #dependentClasses.
-	v @ TSControlsCanvas.
-	^ v
+	eb2 connectToAll: #dependentClasses."
+	c @ RSControlsCanvas.
+	^ c
 ]
 
 { #category : #lines }
@@ -455,22 +465,22 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 
 	GoferOperation withAllSubclassesDo: [ :cls |
 		| composite label |
-		methods := cls methods collect: [ :m | TSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
-		methods @ (TSPopup text: #selector).
+		methods := cls methods collect: [ :m | RSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
+		methods @ (RSPopup text: #selector).
 		
 		TSGridLayout on: methods.
-		composite := TSComposite new.
-		label := TSLabel new text: cls name.
+		composite := RSComposite new.
+		label := RSLabel new text: cls name.
 		RSLocation new above; move: label on: methods.
 		composite shapes:  methods, { label }.
 		
 		composite color: Color gray.
 		composite model: cls.
-		composite @ TSAnimatedPopup @ TSDraggable.
+		composite @ RSAnimatedPopup @ RSDraggable.
 		composite padding: 10.
 		c add: composite ].
 
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -479,7 +489,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 	TSTreeLayout on: c nodes.
 
 	"Making sure we have zooming"
-	c @ TSControlsCanvas.
+	c @ RSControlsCanvas.
 	^ c 
 ]
 
@@ -491,15 +501,15 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 
 	Collection withAllSubclassesDo: [ :cls |
 		| box |
-		box := TSBox new.
+		box := RSBox new.
 		box model: cls.
 		box height: (cls numberOfMethods max: 5).
 		box width: ((cls instVarNames size * 4) max: 5).
-		box @ TSPopup @ TSDraggable.
+		box @ RSPopup @ RSDraggable.
 		c add: box.
 		 ].
 
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -507,6 +517,6 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 
 	TSTreeLayout on: c nodes.
 
-	c @ TSControlsCanvas.
+	c @ RSControlsCanvas.
 	^ c 
 ]

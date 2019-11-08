@@ -92,7 +92,7 @@ RSShapeExamples >> example03LinePath [
 			point value: r.
 			].
 		 ] ].
-	line := TSEdgeBuilder linePath
+	line := RSEdgeBuilder linePath
 		borderColor: [:m | m alpha: 0.4];
 		svgPath: [path];
 		width: 4;
@@ -117,7 +117,7 @@ RSShapeExamples >> example04LineDashes [
 
 	| v line |
 	v := RSView new.
-	line := TSEdgeBuilder line
+	line := RSEdgeBuilder line
 		width: 1.
 	"no dashes no gaps"
 	v add: (line from: -15@ 1; to: 15@ 1; edge).
@@ -146,7 +146,7 @@ RSShapeExamples >> example05CapStyles [
 
 	| v line dot d1 d2 ed styles |
 	v := RSView new.
-	line := TSEdgeBuilder line
+	line := RSEdgeBuilder line
 		color: Color lightGray;
 		width: 20.
 	dot := RSShapeBuilder circle
@@ -192,7 +192,7 @@ RSShapeExamples >> example06JoinStyles [
 		point value: b.
 		 ] ].
 	
-	line := TSEdgeBuilder linePath
+	line := RSEdgeBuilder linePath
 		svgPath: [ path ];
 		borderColor: Color gray;
 		width: 25.
@@ -228,7 +228,7 @@ RSShapeExamples >> example07NormalizeColor [
 
 	v camera position: v elements encompassingRectangle center.
 	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open
 	
 ]
@@ -238,7 +238,7 @@ RSShapeExamples >> example08Labels [
 	<script: 'self new example08Labels'>
 	| v sb elements |
 	v := RSView new.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	sb := RSShapeBuilder label.
 	sb interactionDo: #draggable.
 	sb text: #asString.
@@ -308,7 +308,7 @@ RSShapeExamples >> example10Donut [
 				 ].
 		view addAll: (shape elementsOn: data).
 		 ].
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	view zoomToFit.
 	view open.
 ]
@@ -348,13 +348,13 @@ RSShapeExamples >> example11ClassTree [
 			group ].
 	elements := shapeWithTitle elementsOn: Collection withAllSubclasses.
 	v addAll: elements.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		view: v;
 		objects: Collection withAllSubclasses;
 		connectFrom: #superclass.
 	v edges pushBack.
 	TSTreeLayout on: elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Collection withAllSubclasses'
 ]
@@ -388,7 +388,7 @@ RSShapeExamples >> example12Polygons [
 			view elements do: [ :e | e size: t ] ]."
 	TSGridLayout new gapSize: 50; on: view elements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	view open setLabel: 'Polygon shapes'.
 ]
 
@@ -430,7 +430,7 @@ RSShapeExamples >> example13Arrow [
 	TSVerticalLineLayout new alignCenter on: labels.
 	labels translateBy: 50@50.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ TSControlsCanvas.
+	view @ RSControlsCanvas.
 	view open setLabel: 'You can do it'.
 ]
 
@@ -481,7 +481,7 @@ RSShapeExamples >> example15BimetricLine [
 		to: e2;
 		edge.
 	view addAll: { e1. e2. l}.
-	view @ TSControlsCanvas. 
+	view @ RSControlsCanvas. 
 	view open
 ]
 
@@ -490,7 +490,7 @@ RSShapeExamples >> example16Bezier [
 	<script: 'self new example16Bezier'>
 	| v box e1 e2 l |
 	v := RSView new.
-	v addShape: (TSBezier new
+	v addShape: (RSBezier new
 		color: Color red;
 		controlPoints:
 			{(0 @ 0).
@@ -548,7 +548,7 @@ RSShapeExamples >> example17Labeled [
 		to: e2;
 		edge.
 	v add: e1; add: e2; add: l.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open.
 ]
 
@@ -567,13 +567,13 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		to: 50;
 		elements: v elements;
 		normalize: #numberOfMethods.
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		color: Color lightGray;
 		elements: v elements;
 		view: v;
 		connectFrom: #superclass.
 	TSForceBasedLayout on: v elements.
-	TSEdgeBuilder multiBezier
+	RSEdgeBuilder multiBezier
 		borderColor: (Color blue alpha: 0.1);
 		elements: v elements;
 		view: v;
@@ -596,7 +596,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		offset: 10;
 		move: legend on: v elements.
 	v add: legend.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open.
 ]
 
@@ -616,7 +616,7 @@ RSShapeExamples >> example19Bitmap [
 		elementsOn: icons.
 	v addAll: elements.
 	TSGridLayout on: elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open
 ]
 
@@ -632,7 +632,7 @@ RSShapeExamples >> example20Highlightable [
 	es := s elementsOn: #('Hello' 'World').
 	v addAll: es.
 	TSHorizontalLineLayout on: es.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open.
 ]
 
@@ -650,16 +650,16 @@ RSShapeExamples >> example21MenuActivableOnElement [
 		size: 30;
 		elementsOn: (1 to: 100).
 	v addAll: boxes.
-	boxes @ TSHighlightable.
+	boxes @ RSHighlightable.
 	TSGridLayout on: boxes.
-	boxes @ (TSMenuActivable new menuDo: [ :menu :box | 
+	boxes @ (RSMenuActivable new menuDo: [ :menu :box | 
 		menu 
 			add: 'Inspect'
 			target: box
 			selector: #inspect
 			argument: #() ]).
 
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open
 ]
 
@@ -672,7 +672,7 @@ RSShapeExamples >> example21SpockLizard [
 	radius := 1500.
 	paint := TSGradientPalette linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
 	paint start: -900 @ 900; stop: 900 @ -900.
-	v addShape: (TSEllipse new
+	v addShape: (RSEllipse new
 		noPaint;
 		border: (RSBorder new width: 300; paint: paint);
 		radius: 1500).
@@ -682,7 +682,7 @@ RSShapeExamples >> example21SpockLizard [
 	1 to: 5 do: [ :i | 
 		| angle a |
 		angle := i * 360 / 5 + 45.
-		v addShape: (TSPieSlice new
+		v addShape: (RSPieSlice new
 			color: '36C5B8';
 			innerRadius: 1350;
 			externalRadius: 1650;
@@ -701,7 +701,7 @@ RSShapeExamples >> example21SpockLizard [
 		onElement;
 		if: [ :e | e index = 5 ] then: [ :s | s scaleBy: 2 ];
 		shapes: [ :e | 
-			circle := TSEllipse new color: Color white.
+			circle := RSEllipse new color: Color white.
 			hand := svg elementOn: e model index: e index.
 			circle
 				position: hand position;
@@ -719,7 +719,7 @@ RSShapeExamples >> example21SpockLizard [
 	('spock' -> 'rock').
 	('rock' -> 'scissors')}.
 	color := TSScale category20c.
-	TSEdgeBuilder bezier
+	RSEdgeBuilder bezier
 		color: color;
 		controlPoints: [ :m | 
 			[ :a :b | 
@@ -747,7 +747,7 @@ RSShapeExamples >> example21SpockLizard [
 		text:
 			'scissors decapitates lizard, lizard eats paper, paper disproves Spock, Spock vaporizes rock, and, as it always has, rock crushes scissors'.
 	lb build.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open
 ]
 
@@ -767,8 +767,8 @@ RSShapeExamples >> example22ScaleEvents [
 			l := label elementOn: m.
 			RSGroup with: (box elementOn: l) with: l].
 	v addAll: (sb elementsOn: ArrayedCollection withAllSubclasses).
-	v @ TSControlsCanvas.
-	TSEdgeBuilder orthoHorizontal
+	v @ RSControlsCanvas.
+	RSEdgeBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 6;
 			shape: (RSShapeBuilder triangle 
@@ -795,7 +795,7 @@ RSShapeExamples >> example24Highlightable [
 	
 	| v es s l label boxShape composite |
 	v := RSView new.
-	l := TSLabeled new.
+	l := RSLabeled new.
 	label := RSShapeBuilder label.
 	boxShape := RSShapeBuilder box
 		withBorder.
@@ -819,7 +819,7 @@ RSShapeExamples >> example24Highlightable [
 	es := s elementsOn: #('Hello' 'World').
 	v addAll: es.
 	TSHorizontalLineLayout on: es.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open.
 ]
 
@@ -831,7 +831,7 @@ packagesRegExp := { 'Calypso*' }.
 
 packages := packagesRegExp flatCollect: [ :regExp | RPackageOrganizer default packages select: [ :p | regExp match: p packageName ] ].
 
-l := TSLabeled new text: [ :model | model packageName ].
+l := RSLabeled new text: [ :model | model packageName ].
 packageElements := RSShapeBuilder composite
 							color: Color blue trans;
 							addInteraction: l;
@@ -846,14 +846,14 @@ packageElements := RSShapeBuilder composite
 							]; 
 							padding: 5;
 							elementsOn: packages.
-high := TSHighlightable new.
+high := RSHighlightable new.
 high withEdges.
 high highlightShape color: Color red trans.							
 packageElements @ high.						
 v := RSView new.
 v addAll: packageElements.
 
-TSEdgeBuilder bimetricLine
+RSEdgeBuilder bimetricLine
 		view: v;
 		objects: packages;
 		widthFrom:
@@ -867,7 +867,7 @@ TSEdgeBuilder bimetricLine
 		
 		
 TSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-v @ TSControlsCanvas.
+v @ RSControlsCanvas.
 
 v open			
 ]
@@ -877,7 +877,7 @@ RSShapeExamples >> example26AnimatedPopup [
 	<script: 'self new example26AnimatedPopup'>
 	| v i s b |
 	v := RSView new.
-	i := TSAnimatedPopup new.
+	i := RSAnimatedPopup new.
 		
 	s := RSShapeBuilder box
 		size: 100;
@@ -930,14 +930,14 @@ RSShapeExamples >> example28MultilineLabel [
 		padding: 10;
 		interactionDo: [:i | i draggable; popup ].
 	elements := shape elementsOn: RSShape withAllSubclasses.
-	TSEdgeBuilder orthoVertical
+	RSEdgeBuilder orthoVertical
 		withVerticalAttachPoint;
 		view: v;
 		elements: elements;
 		connectFrom: #superclass.
 	v addAll: elements.
 	TSTreeLayout on: elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open setLabel: 'Example with multiline labels'.
 ]
 
@@ -957,9 +957,9 @@ RSShapeExamples >> example29AntAnimation [
 		color: Color white trans;
 		interactionDo: [:i | 
 			| high label |
-			label := TSLabeled new.
+			label := RSLabeled new.
 			label shape color: Color white.
-			high := TSHighlightable new.
+			high := RSHighlightable new.
 			high setupAntAnimation.
 			i popupAndDraggable; addInteraction: label; addInteraction: high ];
 		shapes: [ :cls | 
@@ -972,7 +972,7 @@ RSShapeExamples >> example29AntAnimation [
 	elements := shape elementsOn: models.
 	v addAll: elements.
 	
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		color: Color white;
 		withVerticalAttachPoint;
 		view: v;
@@ -982,7 +982,7 @@ RSShapeExamples >> example29AntAnimation [
 	TSTreeLayout new 
 		verticalGap: 100;
 		on: elements.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Move mouse on one box'
 ]
@@ -1064,7 +1064,7 @@ RSShapeExamples >> example31BasicGrapher [
 		to: 600@ -600;
 		elements: es;
 		normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open
 ]
 
@@ -1073,7 +1073,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	<script: 'self new example32RSLabeledOnComposite'>
 	| v shape elements labeled |
 	v := RSView new.
-	labeled := TSLabeled new.
+	labeled := RSLabeled new.
 	labeled location middle.
 	shape := RSShapeBuilder box
 		withBorder;
@@ -1087,6 +1087,6 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	v elements first
 		scaleBy: 0.5@ 1;
 		rotateByDegrees: 45.
-	v @ TSControlsCanvas.
+	v @ RSControlsCanvas.
 	v open.
 ]

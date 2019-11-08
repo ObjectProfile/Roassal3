@@ -175,7 +175,7 @@ RSShape >> model [
 
 { #category : #accessing }
 RSShape >> model: anObject [
-	^ self attributeAt: #model put: anObject.
+	self attributeAt: #model put: anObject
 ]
 
 { #category : #accessing }

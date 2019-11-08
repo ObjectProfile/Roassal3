@@ -3,7 +3,7 @@ This interaction layouts the connected subgraphs of a view using a rectangle pac
 "
 Class {
 	#name : #RSHierarchyPacker,
-	#superclass : #TSAbstractCanvasInteraction,
+	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'rectanglePackLayout'
 	],

@@ -115,7 +115,7 @@ RSPieChartExample >> visualizeChart: view package: pkg [
 	view addAll: (label elementsOn: ticks).
 	view add: (RSSingleEdgeBuilder polyline
 		controlPoints: (ticks collect: [:p | -10 @ (scale scale: p)]);
-		marker: (TSBox new extent: 10@2; color: Color black);
+		marker: (RSBox new extent: 10@2; color: Color black);
 		edge)
 ]
 
@@ -139,7 +139,7 @@ RSPieChartExample >> visualizePie: view package: pkg [
 		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;
 		build.
-	view addShape: (TSLabel new
+	view addShape: (RSLabel new
 		text: pkg linesOfCode asString,'LOC').
 	view @ (RSRotatedPieLabel new pieBuilder: b).
 	rect := view encompassingRectangle.

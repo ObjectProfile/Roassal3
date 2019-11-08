@@ -16,12 +16,12 @@ RSHighlightableExamples >> example01Basic [
 		size: 10;
 		draggable;
 		border: RSBorder new;
-		@ TSHighlightable;
+		@ RSHighlightable;
 		color: TSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
-	TSEdgeBuilder line
+	RSEdgeBuilder line
 		shapes: elements;
-		addInteraction: TSHighlightable;
+		addInteraction: RSHighlightable;
 		canvas: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.

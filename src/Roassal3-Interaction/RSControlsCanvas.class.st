@@ -1,0 +1,100 @@
+"
+I the main interaction that handles roassal3 general control about a view.
+I interact with the Abstract class RSAbstractControlView. I creates instances of all subclasses of RSAbstractControlsView 
+"
+Class {
+	#name : #RSControlsCanvas,
+	#superclass : #RSAbstractCanvasInteraction,
+	#instVars : [
+		'interactions',
+		'withLegend',
+		'configuration'
+	],
+	#category : #'Roassal3-Interaction-Controls'
+}
+
+{ #category : #accessing }
+RSControlsCanvas >> configuration [
+	^ configuration
+]
+
+{ #category : #accessing }
+RSControlsCanvas >> configuration: aRSControlLimits [
+	configuration := aRSControlLimits.
+	self interactions do: [ :i | i configuration: configuration].
+]
+
+{ #category : #initialization }
+RSControlsCanvas >> defaultInteractions [
+	"create a subclass of RSControslView and define your own custom interactions for your views :V"
+	^ { RSDraggableCanvas. RSKeyNavigationCanvas. RSZoomToFitCanvas. RSZoomableCanvas. RSScrollsCanvas }
+]
+
+{ #category : #initialization }
+RSControlsCanvas >> initialize [
+	super initialize.
+	self interactions: (self defaultInteractions collect: #new).
+	self
+		withLegend;
+		configuration: RSControlConfiguration new.
+]
+
+{ #category : #accessing }
+RSControlsCanvas >> interactions [
+	^ interactions
+]
+
+{ #category : #accessing }
+RSControlsCanvas >> interactions: aCollectionOfInteractions [
+	interactions := OrderedDictionary new.
+	aCollectionOfInteractions do: [ :int |
+		interactions at: int class put: int ].
+	
+]
+
+{ #category : #configuration }
+RSControlsCanvas >> noLegend [
+	withLegend := false
+]
+
+{ #category : #hooks }
+RSControlsCanvas >> onShape: aCanvas [
+	self interactions do: [ :int | int onShape: aCanvas ].
+	self renderLegendOn: aCanvas.
+	
+]
+
+{ #category : #hooks }
+RSControlsCanvas >> renderLegendOn: aCanvas [
+	| lb |
+	self shouldShowLegend ifFalse: [ ^ self ].
+	"lb := TSLegend new 
+		container: aCanvas;
+		yourself.
+	lb defaultTitle fontSize: 12.
+	lb defaultLabel fontSize: 10.
+	lb defaultBoldText fontSize: 10.
+	lb shape
+		border: TSBorder new;
+		color: (Color white alpha: 0.8);
+		padding: 10.
+	lb title: 'Shortcuts'.
+	self interactions do: [ :int | int renderOn: lb ].
+	lb onDemand."
+	"lb build."
+]
+
+{ #category : #testing }
+RSControlsCanvas >> shouldShowLegend [
+	^ withLegend
+]
+
+{ #category : #configuration }
+RSControlsCanvas >> withLegend [
+	withLegend := true
+]
+
+{ #category : #public }
+RSControlsCanvas >> zoomToFit: aView [
+	(self interactions at: RSZoomToFitCanvas) zoomToFit: aView
+]

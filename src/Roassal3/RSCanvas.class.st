@@ -326,14 +326,10 @@ RSCanvas >> removeFixedShape: aShape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> removeShape: shape [
-	| evt collection |
+	| evt |
 	(shapes includes: shape) 
 		ifTrue: [ shapes remove: shape ]
 		ifFalse: [ (fixedShapes includes: shape) ifTrue: [ fixedShapes remove: shape ] ].
-"	collection := shape isFixed
-		ifTrue: [ fixedShapes ]
-		ifFalse: [ shapes ].
-	collection remove: shape."
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.

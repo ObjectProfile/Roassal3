@@ -37,22 +37,22 @@ TSLegend >> customText: anObject shape: aShape [
 
 { #category : #accessing }
 TSLegend >> defaultBoldText [
-	^ defaultBoldText ifNil: [ defaultBoldText := TSLabel new bold ].
+	^ defaultBoldText ifNil: [ defaultBoldText := RSLabel new bold ].
 ]
 
 { #category : #accessing }
 TSLegend >> defaultBox [
-	^ defaultBox ifNil: [ defaultBox := TSBox new size: 15 ].
+	^ defaultBox ifNil: [ defaultBox := RSBox new size: 15 ].
 ]
 
 { #category : #accessing }
 TSLegend >> defaultCircle [
-	^ defaultCircle ifNil: [ defaultCircle := TSEllipse new size: 15. ]
+	^ defaultCircle ifNil: [ defaultCircle := RSEllipse new size: 15. ]
 ]
 
 { #category : #accessing }
 TSLegend >> defaultLabel [
-	^ defaultLabel ifNil: [ defaultLabel := TSLabel new ].
+	^ defaultLabel ifNil: [ defaultLabel := RSLabel new ].
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ TSLegend >> defaultLabel: aShape [
 
 { #category : #accessing }
 TSLegend >> defaultTitle [
-	^ defaultTitle ifNil: [ defaultTitle := TSLabel new fontSize: 20; bold ].
+	^ defaultTitle ifNil: [ defaultTitle := RSLabel new fontSize: 20; bold ].
 ]
 
 { #category : #accessing }
@@ -90,7 +90,7 @@ TSLegend >> layout [
 TSLegend >> legend [
 	| legend |
 	layout on: self shapes.
-	legend := TSComposite new
+	legend := RSComposite new
 		shapes: self shapes;
 		yourself.
 	legendBlock value: legend.
@@ -119,10 +119,10 @@ TSLegend >> onDemand [
 
 { #category : #public }
 TSLegend >> onDemand: text [
-	^ menuShape := TSLabel new
+	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
-		@ (TSHighlightable new low: Color lightGray high: Color blue);
+		@ (RSHighlightable new low: Color lightGray high: Color blue);
 		yourself
 ]
 
@@ -130,12 +130,12 @@ TSLegend >> onDemand: text [
 TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	"very very specific shape"
 	| box s marker line g l1 l2 l3 line1 line2  |
-	box := TSBox new
+	box := RSBox new
 		size: 100.
 	marker := RSShape triangle
 		color: Color black;
 		size: 5.
-	line := TSLine new 
+	line := RSLine new 
 		marker: marker;
 		yourself.
 	g := RSGroup new.
@@ -148,7 +148,7 @@ TSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	line1 := line copy startPoint:  -50@60; endPoint: 50@60.
 	line2 := line copy startPoint: -60@ -50; endPoint: -60@ 50.
 	g addAll: {box. l1. l2. l3. line1. line2 }.
-	s := TSComposite new
+	s := RSComposite new
 		shapes: g.
 	self shapes add: s.
 	
@@ -168,7 +168,7 @@ TSLegend >> renderOnDemandIn: aView [
 	| i legendLabels update |
 	menuShape isFixed: true.
 	aView addShape: menuShape.
-	i := TSAnimatedPopup new.
+	i := RSAnimatedPopup new.
 	i shapeBuilder: [ self legend ].
 	menuShape @ i.
 	legendLabels := nil.
@@ -240,7 +240,7 @@ TSLegend >> text: aString withFadingRamp: ramp [
 	"very specific shape"
 	gradient := TSGradientPalette linearGradient: ramp.
 	gradient start: -20@0; stop: 20@0.
-	s := TSBox new
+	s := RSBox new
 		extent: 40@20;
 		paint: gradient;
 		yourself.
@@ -256,7 +256,7 @@ TSLegend >> text: aString withShape: aShape [
 	tshapes := RSGroup with: aShape with: text.
 	l := TSHorizontalLineLayout new center.
 	l on: tshapes.
-	line := TSComposite new
+	line := RSComposite new
 		shapes: tshapes;
 		yourself.
 	self shapes add: line.

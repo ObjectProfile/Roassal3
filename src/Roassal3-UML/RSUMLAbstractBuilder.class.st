@@ -61,6 +61,6 @@ RSUMLAbstractBuilder >> renderer: aRSUMLRenderer [
 RSUMLAbstractBuilder >> view [
 	^ container ifNil: [
 		container := RSView new.
-		container @ TSControlsCanvas.
+		container @ RSControlsCanvas.
 		container ]
 ]

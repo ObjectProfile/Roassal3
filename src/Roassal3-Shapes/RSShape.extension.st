@@ -2,7 +2,7 @@ Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> arc [
-	^ TSPieSlice new
+	^ RSPieSlice new
 ]
 
 { #category : #'*Roassal3-Shapes' }
@@ -17,7 +17,7 @@ RSShape class >> arrow [
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> bitmap [
-	^ TSBitmap new
+	^ RSBitmap new
 ]
 
 { #category : #'*Roassal3-Shapes' }
@@ -32,7 +32,7 @@ RSShape class >> circle [
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> composite [ 
-	^ TSComposite new
+	^ RSComposite new
 ]
 
 { #category : #'*Roassal3-Shapes' }
@@ -66,37 +66,37 @@ RSShape class >> diamond [
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> ellipse [
-	^ TSEllipse new
+	^ RSEllipse new
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> heptagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 7)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 7)
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> hexagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 6)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 6)
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> label [
-	^ TSLabel new
+	^ RSLabel new
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> octagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 8)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 8)
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> pentagon [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 5)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 5)
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> polygon [
-	^ TSPolygon new
+	^ RSPolygon new
 ]
 
 { #category : #'*Roassal3-Shapes' }
@@ -108,7 +108,7 @@ RSShape class >> polygonWithPoints: points [
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> rectangle [
-	^ TSBox new
+	^ RSBox new
 ]
 
 { #category : #'*Roassal3-Shapes' }
@@ -122,15 +122,15 @@ RSShape class >> rhomboid [
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> square [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 4)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 4)
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> star [
 	| star5Points outerPoints innerPoints innerRadius ar |
 	star5Points := Array new: 10.
-	outerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: 0.
-	innerPoints := TSPolygon generateUnitNgonPoints: 5 rotation: Float pi / -5.
+	outerPoints := RSPolygon generateUnitNgonPoints: 5 rotation: 0.
+	innerPoints := RSPolygon generateUnitNgonPoints: 5 rotation: Float pi / -5.
 	"Outer radius is 1; inner radius of star is smaller"
 	innerRadius := 0.5.
 	innerPoints
@@ -141,18 +141,18 @@ RSShape class >> star [
 				ifTrue: [ outerPoints ]
 				ifFalse: [ innerPoints ].
 			star5Points at: i put: (ar at: i // 2 + (i % 2)) ].
-	star5Points := TSPolygon fitPolygonToSquare: star5Points.
+	star5Points := RSPolygon fitPolygonToSquare: star5Points.
 	^ self polygonWithPoints: star5Points
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> svgPath [
-	^ TSSVGPath new
+	^ RSSVGPath new
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSShape class >> triangle [
-	^ self polygonWithPoints: (TSPolygon generatePointsFitSquare: 3)
+	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]
 
 { #category : #'*Roassal3-Shapes' }
