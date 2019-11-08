@@ -10,8 +10,8 @@ TSEasing backInOut
 Symmetric anticipatory easing; scales backIn for t in [0, 0.5] and backOut for t in [0.5, 1].
 "
 Class {
-	#name : #TSBackInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSBackInterpolator,
+	#superclass : #RSEasing,
 	#instVars : [
 		'overshoot'
 	],
@@ -19,18 +19,18 @@ Class {
 }
 
 { #category : #initialization }
-TSBackInterpolator >> initialize [
+RSBackInterpolator >> initialize [
 	super initialize.
 	overshoot := 1.70158
 ]
 
 { #category : #interpolation }
-TSBackInterpolator >> interpolateIn: t [
+RSBackInterpolator >> interpolateIn: t [
 	^ t * t * ((overshoot + 1) * t - overshoot)
 ]
 
 { #category : #interpolation }
-TSBackInterpolator >> interpolateInOut: i [
+RSBackInterpolator >> interpolateInOut: i [
 	"((t *= 2) < 1 ? t * t * ((s + 1) * t - s) : (t -= 2) * t * ((s + 1) * t + s) + 2) / 2;"
 	| t |
 	t := i * 2.
@@ -42,18 +42,18 @@ TSBackInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSBackInterpolator >> interpolateOut: i [
+RSBackInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.
 	^ t * t * ((overshoot + 1) * t + overshoot) + 1
 ]
 
 { #category : #accessing }
-TSBackInterpolator >> overshoot [
+RSBackInterpolator >> overshoot [
 	^ overshoot
 ]
 
 { #category : #accessing }
-TSBackInterpolator >> overshoot: aNumber [
+RSBackInterpolator >> overshoot: aNumber [
 	overshoot := aNumber
 ]

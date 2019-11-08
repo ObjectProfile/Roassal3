@@ -2,7 +2,7 @@
 base of animation tests
 "
 Class {
-	#name : #TSAnimationTest,
+	#name : #RSAnimationTest,
 	#superclass : #RSTest,
 	#instVars : [
 		'canvas'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #tests }
-TSAnimationTest >> basicAnimation: animation [
+RSAnimationTest >> basicAnimation: animation [
 	self assert: animation loops equals: 1.
 	self deny: animation hasCompleted.
 	
@@ -35,11 +35,11 @@ TSAnimationTest >> basicAnimation: animation [
 ]
 
 { #category : #running }
-TSAnimationTest >> runAnimation: animation threshold: threshold [
+RSAnimationTest >> runAnimation: animation threshold: threshold [
 	| time ended |
 	
 	ended := false.
-	animation when: TSAnimationEndEvent do: [ :evt | ended := true ].
+	animation when: RSAnimationEndEvent do: [ :evt | ended := true ].
 	time := Time now asDuration.
 	[ ended ] whileFalse: [ 
 		(Time now asDuration - time) > threshold milliSeconds ifTrue: [ 
@@ -51,24 +51,24 @@ TSAnimationTest >> runAnimation: animation threshold: threshold [
 ]
 
 { #category : #running }
-TSAnimationTest >> setUp [
+RSAnimationTest >> setUp [
 	canvas := RSCanvas new.
 ]
 
 { #category : #tests }
-TSAnimationTest >> testSequentialAnimationCreation [
+RSAnimationTest >> testSequentialAnimationCreation [
 	| animation |
 	self assert: canvas animations size equals: 0.
 	animation := canvas animationFrom: {}.
 	self assert: canvas animations size equals: 1.
-	self assert: animation class equals: TSSequentialAnimation.
+	self assert: animation class equals: RSSequentialAnimation.
 ]
 
 { #category : #tests }
-TSAnimationTest >> testTransitionAnimationCreation [
+RSAnimationTest >> testTransitionAnimationCreation [
 	| animation |
 	self assert: canvas animations size equals: 0.
 	animation := canvas newAnimation.
 	self assert: canvas animations size equals: 1.
-	self assert: animation class equals: TSTransitionAnimation.
+	self assert: animation class equals: RSTransitionAnimation.
 ]

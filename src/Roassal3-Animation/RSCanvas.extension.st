@@ -3,7 +3,7 @@ Extension { #name : #RSCanvas }
 { #category : #'*Roassal3-Animation' }
 RSCanvas >> animationFrom: array [
 	| anime |
-	anime := TSSequentialAnimation new.
+	anime := RSSequentialAnimation new.
 	anime addAll: array.
 	self addAnimation: anime.
 	^ anime
@@ -19,5 +19,5 @@ RSCanvas >> newAnimation [
 
 { #category : #'*Roassal3-Animation' }
 RSCanvas >> tAnimation [ 
-	^ TSTransitionAnimation new.
+	^ RSTransitionAnimation new.
 ]

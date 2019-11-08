@@ -2,19 +2,19 @@
 I have test for sequential animation
 "
 Class {
-	#name : #TSSequentialAnimationTest,
-	#superclass : #TSAnimationTest,
+	#name : #RSSequentialAnimationTest,
+	#superclass : #RSAnimationTest,
 	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }
-TSSequentialAnimationTest >> testAddingAnimations [
+RSSequentialAnimationTest >> testAddingAnimations [
 	|  animation |
-	animation := TSSequentialAnimation new.
+	animation := RSSequentialAnimation new.
 	animation
-		add: (TSTransitionAnimation new
+		add: (RSTransitionAnimation new
 			duration: 1 second);
-		add: (TSTransitionAnimation new
+		add: (RSTransitionAnimation new
 			duration: 2 seconds).
 	canvas addAnimation: animation.
 	self assert: animation isRunning.
@@ -22,17 +22,16 @@ TSSequentialAnimationTest >> testAddingAnimations [
 ]
 
 { #category : #tests }
-TSSequentialAnimationTest >> testBasic [
-	self basicAnimation: TSSequentialAnimation new.
+RSSequentialAnimationTest >> testBasic [
+	self basicAnimation: RSSequentialAnimation new.
 ]
 
 { #category : #tests }
-TSSequentialAnimationTest >> testBasicCanvas [
-	
+RSSequentialAnimationTest >> testBasicCanvas [
 	|  animation |
 	
 	self assert: canvas animations size equals: 0.
-	animation := TSSequentialAnimation new.
+	animation := RSSequentialAnimation new.
 	canvas addAnimation: animation.
 	self assert: canvas animations size equals: 1.
 	
@@ -41,10 +40,9 @@ TSSequentialAnimationTest >> testBasicCanvas [
 ]
 
 { #category : #tests }
-TSSequentialAnimationTest >> testDelay [
-	
+RSSequentialAnimationTest >> testDelay [
 	| animation |
-	animation := TSSequentialAnimation new
+	animation := RSSequentialAnimation new
 		delay: 100 milliSeconds.
 	animation start.
 	self deny: animation isDelayDone.
@@ -54,12 +52,11 @@ TSSequentialAnimationTest >> testDelay [
 ]
 
 { #category : #tests }
-TSSequentialAnimationTest >> testStep [
-	
+RSSequentialAnimationTest >> testStep [
 	| value animation |
 	value := 0.
-	animation := TSSequentialAnimation new
-		add: (TSTransitionAnimation new 
+	animation := RSSequentialAnimation new
+		add: (RSTransitionAnimation new 
 			onStepDo: [ :t| value := value + 1 ]);
 		yourself.
 	canvas addAnimation: animation.
@@ -69,17 +66,17 @@ TSSequentialAnimationTest >> testStep [
 ]
 
 { #category : #tests }
-TSSequentialAnimationTest >> testStepEvent [
+RSSequentialAnimationTest >> testStepEvent [
 	| value loop animation |
 	canvas := RSCanvas new.
 	value := nil.
 	loop := 0.
-	animation := TSSequentialAnimation new
+	animation := RSSequentialAnimation new
 		loops: 3;
-		add: (TSTransitionAnimation new 
+		add: (RSTransitionAnimation new 
 			duration: 100 milliSeconds;
 			onStepDo: [ :t| value := t ]);
-		when: TSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
+		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
 	canvas addAnimation: animation.
 	self assert: value isNil.
 	self assert: loop equals: 0.

@@ -39,7 +39,7 @@ RSAnimatedPopup >> translatePopup: popup event: evt [
 	evt shape newAnimation 
 		duration: 300 milliSeconds; 
 		from: 0.05; to: 1;
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		onStepDo: [ :t | 
 			popup matrix 
 				loadIdentity;

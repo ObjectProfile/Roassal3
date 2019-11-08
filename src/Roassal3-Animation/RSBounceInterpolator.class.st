@@ -10,8 +10,8 @@ TSEasing bounceInOut
 Symmetric bounce easing; scales bounceIn for t in [0, 0.5] and bounceOut for t in [0.5, 1].
 "
 Class {
-	#name : #TSBounceInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSBounceInterpolator,
+	#superclass : #RSEasing,
 	#instVars : [
 		'b1',
 		'b2',
@@ -28,7 +28,7 @@ Class {
 }
 
 { #category : #initialization }
-TSBounceInterpolator >> initialize [
+RSBounceInterpolator >> initialize [
 	super initialize.
 	b1 := 4 / 11.
 	b2 := 6 / 11.
@@ -43,12 +43,12 @@ TSBounceInterpolator >> initialize [
 ]
 
 { #category : #interpolation }
-TSBounceInterpolator >> interpolateIn: t [
+RSBounceInterpolator >> interpolateIn: t [
 	^ 1 - (self interpolateOut: 1 - t)
 ]
 
 { #category : #interpolation }
-TSBounceInterpolator >> interpolateInOut: i [
+RSBounceInterpolator >> interpolateInOut: i [
 	"((t *= 2) <= 1 ? 1 - bounceOut(1 - t) : bounceOut(t - 1) + 1) / 2;"
 	| t |
 	t := i * 2.
@@ -58,7 +58,7 @@ TSBounceInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSBounceInterpolator >> interpolateOut: i [
+RSBounceInterpolator >> interpolateOut: i [
 	| t |
 	t := i.
 	^ t < b1 

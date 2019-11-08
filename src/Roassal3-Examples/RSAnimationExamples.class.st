@@ -23,7 +23,7 @@ RSAnimationExamples >> example01Basic [
 	c addShape: b.
 	
 	c newAnimation 
-		easing: TSEasing bounce;
+		easing: RSEasing bounce;
 		from: -100@ -100;
 		to: 100@100;
 		on: b set: #position:.
@@ -356,7 +356,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 				e color: (color scale: (e position dist: 0@0)/250 ) ].
 		].
 		v newAnimation
-			easing: TSEasing elasticOut;
+			easing: RSEasing elasticOut;
 			onStepDo: [ :t |
 				v elements do: [ :e | | scale |
 					scale := TSScale linear range: { 1. e attributes at: #radius }.
@@ -505,7 +505,7 @@ RSAnimationExamples >> example11ArcTree [
 		elements := v elements select: [ :e | e index = i ].
 		v tAnimation 
 			duration: 1 seconds;
-			easing: TSEasing bounceOut;
+			easing: RSEasing bounceOut;
 			onStepDo: [ :t |
 			elements do: [ :e |
 				e 
@@ -541,7 +541,7 @@ RSAnimationExamples >> example12PerlinParticles [
 		from: Color black; 
 		to: Color transparent; 
 		on: label set: #color:;
-		when: TSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [ 
 			v clearBackground: false.
 			label remove. ].
 	color := RSGradientPalette fabledSunset asScale.
@@ -604,7 +604,7 @@ RSAnimationExamples >> example12PerlinParticles [
 				v elements do: #remove.
 				v signalUpdate.
 				v newAnimation duration: 200 milliSeconds;
-				when: TSAnimationEndEvent do: [ v clearBackground: false ] ] ].
+				when: RSAnimationEndEvent do: [ v clearBackground: false ] ] ].
 
 	^ v
 
@@ -637,7 +637,7 @@ RSAnimationExamples >> example12b [
 		from: Color black; 
 		to: Color transparent; 
 		on: label set: #color:;
-		when: TSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [ 
 			v clearBackground: false.
 			label remove. ].
 		
@@ -710,7 +710,7 @@ RSAnimationExamples >> example12b [
 				v elements do: #remove.
 				v signalUpdate.
 				v newAnimation duration: 200 milliSeconds;
-				when: TSAnimationEndEvent do: [ v clearBackground: false ] ]
+				when: RSAnimationEndEvent do: [ v clearBackground: false ] ]
 			ifFalse: changeHue ].
 
 	^ v
@@ -858,7 +858,7 @@ RSAnimationExamples >> example15Sky [
 	frame := 0.
 	view clearBackground: false.
 	(view newAnimation duration: 5 seconds;onStepDo: [ :t| ])
-		when: TSAnimationEndEvent do: [ box remove ].
+		when: RSAnimationEndEvent do: [ box remove ].
 	view newAnimation repeat
 		onStepDo: [ :t | 
 			frame := frame + 0.1.
@@ -971,7 +971,7 @@ RSAnimationExamples >> example17Retina [
 	(view newAnimation 
 		delay: 2 seconds;
 		from: Color white; to: Color transparent;
-		on: label set: #color:) when: TSAnimationEndEvent do: [
+		on: label set: #color:) when: RSAnimationEndEvent do: [
 			label remove.
 			view clearBackground: false].
 	updateValues := [ 
@@ -997,7 +997,7 @@ RSAnimationExamples >> example17Retina [
 		delay: 4 seconds;
 		loops: ringSize; 
 		duration: 200 milliSeconds; 
-	 	when: TSAnimationLoopEvent do: [ :evt | 
+	 	when: RSAnimationLoopEvent do: [ :evt | 
 			updateValues value.
 			view elements do: [ :e | shape updateElement: e ]
 		].
@@ -1054,7 +1054,7 @@ RSAnimationExamples >> example18SpaceDandy [
 	view newAnimation 
 		repeat;
 		duration: 5 seconds; 
-		when: TSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
+		when: RSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
 	view newAnimation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
 		elements do: [ :e | | l o r d off | 
@@ -1664,7 +1664,7 @@ RSAnimationExamples >> example28AnimationCircle [
 				e position: (sc2 range: { ab key. ab value. };
 					scale: val).
 			] ].
-		e index = 1 ifTrue:[ animation when: TSAnimationLoopEvent do: update ] ].
+		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
 	v @ RSControlsCanvas.
 	^ v
@@ -1782,7 +1782,7 @@ RSAnimationExamples >> example31Miku [
 		color: #value.
 	v addAll: (svg elementsOn: lines).
 	v @ RSControlsCanvas.
-	easing := TSEasing elasticOut.
+	easing := RSEasing elasticOut.
 	v elements do: [ :e | | position |
 		position := (r next * 1000) @ (r next * 1000) - 100.
 		v newAnimation
@@ -1905,7 +1905,7 @@ RSAnimationExamples >> example33AlteredWorld [
 	v newAnimation
 		loops: extent x;
 		duration: 50 milliSeconds;
-		when: TSAnimationLoopEvent do: [
+		when: RSAnimationLoopEvent do: [
 			v edges do: [ :e | | x y n points m |
 				x := px.
 				y := extent y * r next.
@@ -1970,7 +1970,7 @@ RSAnimationExamples >> example34Tick [
 	(c nodes at: 3) remove.
 	animation := [:a :b :k | c tAnimation 
 		duration: 700 milliSeconds;
-		easing: TSEasing bounceOut;
+		easing: RSEasing bounceOut;
 		from: a;
 		to: b;
 		onStepDo: [ :t | | s |
@@ -2123,7 +2123,7 @@ RSAnimationExamples >> example37SimpleClock [
 	v newAnimation
 		duration: 500 milliSeconds;
 		repeat;
-		when: TSAnimationLoopEvent do: [ clock text: Time now print24 ].
+		when: RSAnimationLoopEvent do: [ clock text: Time now print24 ].
 	location := RSLocation new
 		inner;
 		bottom;
@@ -2281,9 +2281,9 @@ RSAnimationExamples >> example40Roassal [
 					t -> Color white.
 					t+0.001->Color transparent.
 					1 -> Color transparent } ];
-			when: TSAnimationEndEvent do: [ lbl remove ].
+			when: RSAnimationEndEvent do: [ lbl remove ].
 		 ].
-	v newAnimation duration: (timeSize * text size) milliSeconds ; when: TSAnimationEndEvent do: [
+	v newAnimation duration: (timeSize * text size) milliSeconds ; when: RSAnimationEndEvent do: [
 		v addShape: (RSLabel new
 		text:  text;
 		bold;
@@ -2292,7 +2292,7 @@ RSAnimationExamples >> example40Roassal [
 		color: Color white;
 		fontSize: 30).
 		v newAnimation
-			easing: TSEasing elasticOut;
+			easing: RSEasing elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
 			v shapes last matrix shy: t ] ]. 
 	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent * 0.8 extent: 300@300 ].
@@ -2386,7 +2386,7 @@ for Pharo 7 and Pharo 8.'.
 			onStepDo: [ :t | array at: 1 put: t ].
 		c newAnimation 
 			duration: 1 second; 
-			when: TSAnimationEndEvent do: [ c add: lbl ].
+			when: RSAnimationEndEvent do: [ c add: lbl ].
 		c newAnimation
 			delay: 1 second;
 			duration: 1 second;
@@ -2481,7 +2481,7 @@ RSAnimationExamples >> example43PerlinRose [
 	v newAnimation 
 		loops: 1000;
 		duration: 50 milliSeconds;
-		when: TSAnimationLoopEvent do: [ :evt | 
+		when: RSAnimationLoopEvent do: [ :evt | 
 			"Create a series of perlin rings from big to small"
 			s < 2000 ifTrue: [ 
 				v elements do: [ :e | | nPoints points |

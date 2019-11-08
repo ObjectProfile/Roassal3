@@ -2,7 +2,7 @@
 I am the abstract class that defines animations for roassal3
 "
 Class {
-	#name : #TSAbstractAnimation,
+	#name : #RSAbstractAnimation,
 	#superclass : #RSAnimation,
 	#instVars : [
 		'announcer',
@@ -23,29 +23,23 @@ Class {
 }
 
 { #category : #events }
-TSAbstractAnimation >> announce: anEvent [
+RSAbstractAnimation >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
 	announcer announce: anEvent value
 ]
 
 { #category : #events }
-TSAbstractAnimation >> announcer [
-	announcer isNil ifTrue: [ announcer := Announcer new ].
-	^ announcer
+RSAbstractAnimation >> announcer [
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #events }
-TSAbstractAnimation >> announcer: anAnnouncer [
+RSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> continue [
-	"| oldPaused |
-	oldPaused := isPaused.
-	isPaused := false.
-	oldPaused 
-		ifTrue: [ endPauseTime := self currentTime. ]"
+RSAbstractAnimation >> continue [
 	isPaused ifFalse: [ ^ self ].
 	isPaused := false.
 	endPauseTime := self currentTime.
@@ -53,98 +47,98 @@ TSAbstractAnimation >> continue [
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> currentLoop [
+RSAbstractAnimation >> currentLoop [
 	^ currentLoop
 ]
 
 { #category : #private }
-TSAbstractAnimation >> currentTime [
+RSAbstractAnimation >> currentTime [
 	^ Time millisecondClockValue 
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> delay [ 
+RSAbstractAnimation >> delay [ 
 	^ delay
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> delay: aDuration [
+RSAbstractAnimation >> delay: aDuration [
 	delay := aDuration asMilliSeconds
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> duration [
+RSAbstractAnimation >> duration [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> endPauseTime [
+RSAbstractAnimation >> endPauseTime [
 	^ endPauseTime
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> endTime [
+RSAbstractAnimation >> endTime [
 	^ endTime
 ]
 
 { #category : #testing }
-TSAbstractAnimation >> hasCompleted [
+RSAbstractAnimation >> hasCompleted [
 	 ^ hasCompleted
 ]
 
 { #category : #initialization }
-TSAbstractAnimation >> initialize [
+RSAbstractAnimation >> initialize [
 	super initialize.
 	self reset.
 ]
 
 { #category : #testing }
-TSAbstractAnimation >> isDelayDone [
+RSAbstractAnimation >> isDelayDone [
 	delay ifNil: [ ^ true ].
 	^ startTime + delay < self currentTime.
 ]
 
 { #category : #testing }
-TSAbstractAnimation >> isPaused [
+RSAbstractAnimation >> isPaused [
 	^ isPaused
 ]
 
 { #category : #testing }
-TSAbstractAnimation >> isRepeating [
+RSAbstractAnimation >> isRepeating [
 	^ loops isInfinite.
 ]
 
 { #category : #testing }
-TSAbstractAnimation >> isRunning [ 
+RSAbstractAnimation >> isRunning [ 
 	^ isRunning
 ]
 
 { #category : #private }
-TSAbstractAnimation >> loopDone [
+RSAbstractAnimation >> loopDone [
 	currentLoop := currentLoop + 1.
 	startPauseTime := endPauseTime := pauseTime := 0.
 	startLoopTime := self currentTime.
-	self announce: (TSAnimationLoopEvent new animation: self).
+	self announce: (RSAnimationLoopEvent new animation: self).
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> loops [
+RSAbstractAnimation >> loops [
 	^ loops
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> loops: aNumber [
+RSAbstractAnimation >> loops: aNumber [
 	self assert: aNumber >= 1 description: 'The number of times to repeat this animation'.
 	loops := aNumber
 ]
 
 { #category : #'api - running' }
-TSAbstractAnimation >> noRepeat [
+RSAbstractAnimation >> noRepeat [
 	self loops: 1
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> pause [
+RSAbstractAnimation >> pause [
 	isPaused ifTrue: [ ^ self ].
 	isPaused := true.
 	startPauseTime := self currentTime.
@@ -152,12 +146,12 @@ TSAbstractAnimation >> pause [
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> pauseTime [
+RSAbstractAnimation >> pauseTime [
 	^ pauseTime
 ]
 
 { #category : #refresing }
-TSAbstractAnimation >> refresh [
+RSAbstractAnimation >> refresh [
 	self hasCompleted
 		ifTrue: [ ^ self ].
 	self isDelayDone
@@ -169,24 +163,24 @@ TSAbstractAnimation >> refresh [
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> remove [
+RSAbstractAnimation >> remove [
 	canvas animations remove: self ifAbsent: [  ].
 	endTime := self currentTime.
 	isRunning := false.
 	currentLoop := nil.
 	startLoopTime := nil.
-	self announce: (TSAnimationEndEvent new animation: self)
+	self announce: (RSAnimationEndEvent new animation: self)
 	
 ]
 
 { #category : #'api - running' }
-TSAbstractAnimation >> repeat [
+RSAbstractAnimation >> repeat [
 	"make receiver to be a repeating timer"
 	self loops: Float infinity
 ]
 
 { #category : #initialization }
-TSAbstractAnimation >> reset [
+RSAbstractAnimation >> reset [
 	isRunning := false.
 	self noRepeat.
 	hasCompleted := false.
@@ -199,25 +193,25 @@ TSAbstractAnimation >> reset [
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> start [
+RSAbstractAnimation >> start [
 	isRunning := true.
 	hasCompleted := false.
 	startTime := self currentTime.
-	self announce: (TSAnimationStartEvent new animation: self)
+	self announce: (RSAnimationStartEvent new animation: self)
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> startLoopTime [
+RSAbstractAnimation >> startLoopTime [
 	^ startLoopTime 
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> startPauseTime [
+RSAbstractAnimation >> startPauseTime [
 	^ startPauseTime
 ]
 
 { #category : #private }
-TSAbstractAnimation >> startStep [
+RSAbstractAnimation >> startStep [
 	currentLoop 
 		ifNil: [ currentLoop := 1 ].
 	startLoopTime 
@@ -225,29 +219,29 @@ TSAbstractAnimation >> startStep [
 ]
 
 { #category : #accessing }
-TSAbstractAnimation >> startTime [
+RSAbstractAnimation >> startTime [
 	^ startTime 
 ]
 
 { #category : #refresing }
-TSAbstractAnimation >> step [
+RSAbstractAnimation >> step [
 	self subclassResponsibility
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> stop [
+RSAbstractAnimation >> stop [
 	isRunning := false.
 	hasCompleted := true.
 ]
 
 { #category : #actions }
-TSAbstractAnimation >> toggle [
+RSAbstractAnimation >> toggle [
 	self isPaused 
 		ifTrue: [ self continue ]
 		ifFalse: [ self pause ]
 ]
 
 { #category : #events }
-TSAbstractAnimation >> when: event do: aBlock [
+RSAbstractAnimation >> when: event do: aBlock [
 	self announcer when: event do: aBlock
 ]

@@ -105,7 +105,7 @@ RSKeyNavigationCanvas >> zoomMove: evt delta: delta [
 	scale := camera scale.
 	newScale := self scaleFor: delta * scale. 
 	evt canvas newAnimation 
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		duration: 200 milliSeconds;
 		from: scale;
 		to: newScale;
@@ -115,7 +115,7 @@ RSKeyNavigationCanvas >> zoomMove: evt delta: delta [
 		scale: newScale.
 	correct = camera position ifTrue: [ ^ self ].
 	evt canvas newAnimation 
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		duration: 200 milliSeconds;
 		from: camera position;
 		to: correct;

@@ -2,7 +2,7 @@
 I an an event for animations in trachel
 "
 Class {
-	#name : #TSAnimationEvent,
+	#name : #RSAnimationEvent,
 	#superclass : #RSEvent,
 	#instVars : [
 		'animation'
@@ -11,11 +11,11 @@ Class {
 }
 
 { #category : #accessing }
-TSAnimationEvent >> animation [
+RSAnimationEvent >> animation [
 	^ animation
 ]
 
 { #category : #accessing }
-TSAnimationEvent >> animation: anAnimation [
+RSAnimationEvent >> animation: anAnimation [
 	animation := anAnimation.
 ]

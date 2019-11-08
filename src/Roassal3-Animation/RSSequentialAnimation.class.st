@@ -2,8 +2,8 @@
 I wait until one animation ends to start the another animation
 "
 Class {
-	#name : #TSSequentialAnimation,
-	#superclass : #TSAbstractAnimation,
+	#name : #RSSequentialAnimation,
+	#superclass : #RSAbstractAnimation,
 	#instVars : [
 		'animations',
 		'currentIndex'
@@ -12,33 +12,33 @@ Class {
 }
 
 { #category : #adding }
-TSSequentialAnimation >> add: anAnimation [
+RSSequentialAnimation >> add: anAnimation [
 	self animations add: anAnimation 
 ]
 
 { #category : #adding }
-TSSequentialAnimation >> addAll: array [
+RSSequentialAnimation >> addAll: array [
 	animations addAll: array.
 ]
 
 { #category : #accessing }
-TSSequentialAnimation >> animations [
+RSSequentialAnimation >> animations [
 	^ animations
 ]
 
 { #category : #actions }
-TSSequentialAnimation >> continue [
+RSSequentialAnimation >> continue [
 	super continue.
 	self currentDo: #continue.
 ]
 
 { #category : #refresing }
-TSSequentialAnimation >> current [
+RSSequentialAnimation >> current [
 	^ animations at: currentIndex ifAbsent: [ ^ nil ].
 ]
 
 { #category : #actions }
-TSSequentialAnimation >> currentDo: block [
+RSSequentialAnimation >> currentDo: block [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].
@@ -46,7 +46,7 @@ TSSequentialAnimation >> currentDo: block [
 ]
 
 { #category : #refresing }
-TSSequentialAnimation >> currentHasCompleted [
+RSSequentialAnimation >> currentHasCompleted [
 	| current |
 	current := self current.
 	current ifNil: [ ^ false ].
@@ -54,30 +54,30 @@ TSSequentialAnimation >> currentHasCompleted [
 ]
 
 { #category : #accessing }
-TSSequentialAnimation >> duration [
+RSSequentialAnimation >> duration [
 	^ Duration milliSeconds: (self animations inject: 0 into: [ :sum :a| sum + (a duration asMilliSeconds * a loops) ]).
 ]
 
 { #category : #actions }
-TSSequentialAnimation >> pause [
+RSSequentialAnimation >> pause [
 	super pause.
 	self currentDo: #pause.
 ]
 
 { #category : #initialization }
-TSSequentialAnimation >> reset [
+RSSequentialAnimation >> reset [
 	super reset.
 	animations := OrderedCollection new.
 ]
 
 { #category : #actions }
-TSSequentialAnimation >> start [
+RSSequentialAnimation >> start [
 	super start.
 	currentIndex := 1.
 ]
 
 { #category : #refresing }
-TSSequentialAnimation >> step [
+RSSequentialAnimation >> step [
 	self startStep.
 	self stepCurrent.
 	self currentHasCompleted ifTrue: [ 
@@ -90,7 +90,7 @@ TSSequentialAnimation >> step [
 ]
 
 { #category : #refresing }
-TSSequentialAnimation >> stepCurrent [
+RSSequentialAnimation >> stepCurrent [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].

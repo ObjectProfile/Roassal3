@@ -61,7 +61,7 @@ TSInspectableExample >> example02Inspect [
 	animation := nil.
 	animation := view animationFrom: { 
 		view tAnimation repeat
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		onStepDo: [ :t |
 			view elements do: [ :e |
 				| att a b |
@@ -71,7 +71,7 @@ TSInspectableExample >> example02Inspect [
 				e translateTo: (a interpolateTo: b at: t ) ].
 			view zoomToFit.
 			 ];
-		when: TSAnimationLoopEvent do: [ 
+		when: RSAnimationLoopEvent do: [ 
 			view elements size = lastSize ifTrue: [ 
 				animation stop.
 				self inform: 'Done :V!!!' ].
@@ -101,5 +101,5 @@ TSInspectableExample >> example02Inspect [
 { #category : #examples }
 TSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
-	^ TSEasing bounceOut
+	^ RSEasing bounceOut
 ]

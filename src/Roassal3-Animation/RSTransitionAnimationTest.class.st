@@ -2,21 +2,19 @@
 I have test for animation in trachel
 "
 Class {
-	#name : #TSTransitionAnimationTest,
-	#superclass : #TSAnimationTest,
+	#name : #RSTransitionAnimationTest,
+	#superclass : #RSAnimationTest,
 	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }
-TSTransitionAnimationTest >> testBasic [ 
-	self basicAnimation: TSTransitionAnimation new
+RSTransitionAnimationTest >> testBasic [ 
+	self basicAnimation: RSTransitionAnimation new
 ]
 
 { #category : #tests }
-TSTransitionAnimationTest >> testBasicCanvas [
-	
+RSTransitionAnimationTest >> testBasicCanvas [
 	|  animation |
-	
 	self assert: canvas animations size equals: 0.
 	animation := canvas newAnimation.
 	self assert: canvas animations size equals: 1.
@@ -26,8 +24,7 @@ TSTransitionAnimationTest >> testBasicCanvas [
 ]
 
 { #category : #tests }
-TSTransitionAnimationTest >> testDelay [
-	
+RSTransitionAnimationTest >> testDelay [
 	| animation |
 	animation := canvas newAnimation
 		delay: 100 milliSeconds.
@@ -38,8 +35,7 @@ TSTransitionAnimationTest >> testDelay [
 ]
 
 { #category : #tests }
-TSTransitionAnimationTest >> testStep [
-	
+RSTransitionAnimationTest >> testStep [
 	| value |
 	value := 0.
 	canvas newAnimation
@@ -51,8 +47,7 @@ TSTransitionAnimationTest >> testStep [
 ]
 
 { #category : #tests }
-TSTransitionAnimationTest >> testStepEvent [
-	
+RSTransitionAnimationTest >> testStepEvent [
 	| value loop animation |
 	canvas := RSCanvas new.
 	value := nil.
@@ -61,7 +56,7 @@ TSTransitionAnimationTest >> testStepEvent [
 		duration: 100 milliSeconds;
 		loops: 3;
 		onStepDo: [ :t| value := t ];
-		when: TSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
+		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
 	self assert: value isNil.
 	self assert: loop equals: 0.
 	self assert: animation endTime isNil.
@@ -73,8 +68,7 @@ TSTransitionAnimationTest >> testStepEvent [
 ]
 
 { #category : #tests }
-TSTransitionAnimationTest >> testStepReset [
-	
+RSTransitionAnimationTest >> testStepReset [
 	| animation |
 	animation := canvas newAnimation
 		duration: 100 milliSeconds.

@@ -10,8 +10,8 @@ TSEasing elasticInOut.
 Symmetric elastic easing; scales elasticIn for t in [0, 0.5] and elasticOut for t in [0.5, 1].
 "
 Class {
-	#name : #TSElasticInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSElasticInterpolator,
+	#superclass : #RSEasing,
 	#instVars : [
 		'tau',
 		'amplitude',
@@ -22,19 +22,19 @@ Class {
 }
 
 { #category : #accessing }
-TSElasticInterpolator >> amplitude [
+RSElasticInterpolator >> amplitude [
 	^ amplitude
 ]
 
 { #category : #accessing }
-TSElasticInterpolator >> amplitude: a [
+RSElasticInterpolator >> amplitude: a [
 	amplitude := a.
 	period := period * tau.
 	self calculateS.
 ]
 
 { #category : #accessing }
-TSElasticInterpolator >> calculateS [
+RSElasticInterpolator >> calculateS [
 	"var s = Math.asin(1 / (a = Math.max(1, a))) * (p /= tau);"
 	amplitude := 1 max: amplitude.
 	period := period / tau.
@@ -42,7 +42,7 @@ TSElasticInterpolator >> calculateS [
 ]
 
 { #category : #initialization }
-TSElasticInterpolator >> initialize [
+RSElasticInterpolator >> initialize [
 	super initialize.
 	tau := 2* Float pi.
 	amplitude := 1.
@@ -52,14 +52,14 @@ TSElasticInterpolator >> initialize [
 ]
 
 { #category : #interpolation }
-TSElasticInterpolator >> interpolateIn: i [
+RSElasticInterpolator >> interpolateIn: i [
 	| t |
 	t := i -1.
 	^ amplitude * (2 raisedTo: 10*t) * ((s - t) / period) sin
 ]
 
 { #category : #interpolation }
-TSElasticInterpolator >> interpolateInOut: i [
+RSElasticInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2 - 1.
 	^ (t < 0
@@ -68,17 +68,17 @@ TSElasticInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSElasticInterpolator >> interpolateOut: t [
+RSElasticInterpolator >> interpolateOut: t [
 	^ 1 - (amplitude * (2 raisedTo: -10 * t ) * ((t + s) / period) sin )
 ]
 
 { #category : #accessing }
-TSElasticInterpolator >> period [
+RSElasticInterpolator >> period [
 	^ period
 ]
 
 { #category : #accessing }
-TSElasticInterpolator >> period: p [
+RSElasticInterpolator >> period: p [
 	period := p.
 	self calculateS.
 ]

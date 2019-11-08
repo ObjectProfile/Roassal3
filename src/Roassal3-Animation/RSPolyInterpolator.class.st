@@ -14,8 +14,8 @@ TSEasing polyInOut
 Symmetric polynomial easing; scales polyIn for t in [0, 0.5] and polyOut for t in [0.5, 1]. If the exponent is not specified, it defaults to 3, equivalent to cubic.
 "
 Class {
-	#name : #TSPolyInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSPolyInterpolator,
+	#superclass : #RSEasing,
 	#instVars : [
 		'exponent'
 	],
@@ -23,28 +23,28 @@ Class {
 }
 
 { #category : #accessing }
-TSPolyInterpolator >> exponent [
+RSPolyInterpolator >> exponent [
 	^ exponent
 ]
 
 { #category : #accessing }
-TSPolyInterpolator >> exponent: aNumber [
+RSPolyInterpolator >> exponent: aNumber [
 	exponent := aNumber
 ]
 
 { #category : #initialization }
-TSPolyInterpolator >> initialize [
+RSPolyInterpolator >> initialize [
 	super initialize.
 	self exponent: 3.
 ]
 
 { #category : #interpolation }
-TSPolyInterpolator >> interpolateIn: i [
+RSPolyInterpolator >> interpolateIn: i [
 	^ i raisedTo: exponent.
 ]
 
 { #category : #interpolation }
-TSPolyInterpolator >> interpolateInOut: i [
+RSPolyInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
 	^ (t <= 1
@@ -54,6 +54,6 @@ TSPolyInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSPolyInterpolator >> interpolateOut:  t [
+RSPolyInterpolator >> interpolateOut:  t [
 	^ 1 - ((1 -t) raisedTo: exponent).
 ]

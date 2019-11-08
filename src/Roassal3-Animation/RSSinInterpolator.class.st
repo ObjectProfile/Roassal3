@@ -10,22 +10,22 @@ TSEasing sinInOut
 Symmetric sinusoidal easing; scales sinIn for t in [0, 0.5] and sinOut for t in [0.5, 1].
 "
 Class {
-	#name : #TSSinInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSSinInterpolator,
+	#superclass : #RSEasing,
 	#category : #'Roassal3-Animation-Easing'
 }
 
 { #category : #interpolation }
-TSSinInterpolator >> interpolateIn: t [
+RSSinInterpolator >> interpolateIn: t [
 	^ 1 - (t * Float halfPi) cos
 ]
 
 { #category : #interpolation }
-TSSinInterpolator >> interpolateInOut: t [
+RSSinInterpolator >> interpolateInOut: t [
 	^ (1 - (Float pi * t) cos ) / 2.
 ]
 
 { #category : #interpolation }
-TSSinInterpolator >> interpolateOut: t [
+RSSinInterpolator >> interpolateOut: t [
 	^ (t * Float halfPi) sin
 ]

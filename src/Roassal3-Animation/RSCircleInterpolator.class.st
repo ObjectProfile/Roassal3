@@ -12,18 +12,18 @@ Symmetric circular easing; scales circleIn for t in {0. 0.5} and circleOut for t
 
 "
 Class {
-	#name : #TSCircleInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSCircleInterpolator,
+	#superclass : #RSEasing,
 	#category : #'Roassal3-Animation-Easing'
 }
 
 { #category : #interpolation }
-TSCircleInterpolator >> interpolateIn:  t [
+RSCircleInterpolator >> interpolateIn:  t [
 	^ 1 - (1 - (t * t) ) sqrt
 ]
 
 { #category : #interpolation }
-TSCircleInterpolator >> interpolateInOut: i [
+RSCircleInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
 	^ (t<=1
@@ -34,7 +34,7 @@ TSCircleInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSCircleInterpolator >> interpolateOut: i [
+RSCircleInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.
 	^ (1 - (t* t)) sqrt.

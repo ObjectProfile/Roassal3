@@ -12,18 +12,18 @@ Also equivalent to TSEasing poly exponent: 3.
 
 "
 Class {
-	#name : #TSCubicInterpolator,
-	#superclass : #TSEasing,
+	#name : #RSCubicInterpolator,
+	#superclass : #RSEasing,
 	#category : #'Roassal3-Animation-Easing'
 }
 
 { #category : #interpolation }
-TSCubicInterpolator >> interpolateIn: t [
+RSCubicInterpolator >> interpolateIn: t [
 	^ t * t * t
 ]
 
 { #category : #interpolation }
-TSCubicInterpolator >> interpolateInOut: i [
+RSCubicInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
 	^ (t <= 1 
@@ -34,7 +34,7 @@ TSCubicInterpolator >> interpolateInOut: i [
 ]
 
 { #category : #interpolation }
-TSCubicInterpolator >> interpolateOut: i [
+RSCubicInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.
 	^ t * t * t + 1

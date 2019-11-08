@@ -113,7 +113,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 	pie build.
 	pie view newAnimation 
 		repeat;
-		easing: TSEasing sinIn;
+		easing: RSEasing sinIn;
 		duration: 5 seconds;
 		from: 0; 
 		to: 180;
@@ -148,7 +148,7 @@ RSPieExamples >> example05Smash [
 		pie view animationFrom: { 
 			(pie view tAnimation 
 				duration: 2 seconds;
-				easing: TSEasing bounceOut;
+				easing: RSEasing bounceOut;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
@@ -156,7 +156,7 @@ RSPieExamples >> example05Smash [
 			(pie view tAnimation 
 				delay: (50 * e index) milliSeconds;
 				duration: 750 milliSecond;
-				easing: TSEasing elasticOut;
+				easing: RSEasing elasticOut;
 				from: 0;
 				to: 120;
 				on: e shape set: #innerRadius: ) }. ].
@@ -189,7 +189,7 @@ RSPieExamples >> example06SmashHSL [
 		pie view animationFrom: { 
 			(pie view tAnimation 
 				duration: 2 seconds;
-				easing: TSEasing bounceOut;
+				easing: RSEasing bounceOut;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
@@ -197,7 +197,7 @@ RSPieExamples >> example06SmashHSL [
 			(pie view tAnimation 
 				delay: (10 * e index) milliSeconds;
 				duration: 2 seconds;
-				easing: (TSEasing elasticOut period: 0.30; amplitude: 0.8) ;
+				easing: (RSEasing elasticOut period: 0.30; amplitude: 0.8) ;
 				from: 0;
 				to: 120;
 				on: e shape set: #innerRadius: ) }. ].
@@ -227,14 +227,14 @@ RSPieExamples >> example07Dendi [
 		b := e betaAngle.
 		pie view animationFrom: { 
 			(pie view tAnimation 
-				easing: TSEasing bounce;
+				easing: RSEasing bounce;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
 						betaAngle: b * t ]).
 			(pie view tAnimation 
 				delay: 3 seconds;
-				easing: TSEasing  bounce;
+				easing: RSEasing  bounce;
 				onStepDo: [:t | 
 					e
 						alphaAngle: a + ((360 - a) * t);
@@ -280,7 +280,7 @@ RSPieExamples >> example09TickAnimation [
 		betaAngle: [:d | d + 2]."avoid arc spacing"
 	pie build.
 	pie view newAnimation repeat; from: 0; to: 500;
-		easing: TSEasing elasticOut;
+		easing: RSEasing elasticOut;
 		onStepDo: [ :t |
 			pie elements do: [ :e |
 				e color: (Color h: e model + t s: 1 l: 0.5) ] ].
@@ -340,7 +340,7 @@ RSPieExamples >> example11OpenningAnimation [
 	pie build.
 	
 	bounce := pie view tAnimation from: 0; to: 360; 
-		easing: TSEasing bounceOut;
+		easing: RSEasing bounceOut;
 		onStepDo: [ :t | 
 		pie elements do: [ :e | | beta |
 			beta := e attributes at: #beta.
@@ -349,26 +349,26 @@ RSPieExamples >> example11OpenningAnimation [
 			t >= beta ifTrue: [ e betaAngle: beta ].
 			t < e alphaAngle ifTrue: [ e betaAngle: e alphaAngle ]
 			 ] ].
-	bounce when: TSAnimationStartEvent do: [ 
+	bounce when: RSAnimationStartEvent do: [ 
 		pie elements do: [ :e|
 			e attributes at: #beta put: e betaAngle.
 			e betaAngle: e alphaAngle.
 			 ] ].
-	bounce when: TSAnimationEndEvent do: reset.
+	bounce when: RSAnimationEndEvent do: reset.
 	
 	inout := pie view tAnimation 
 		delay: 1 second;
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		onStepDo: [ :t |
 			pie elements do: [ :e |
 				e innerRadius: 70 * t.
 				e externalRadius: 220 * t ]
 			 ].
-	inout when: TSAnimationEndEvent do: reset.
+	inout when: RSAnimationEndEvent do: reset.
 	
 	outin := pie view tAnimation
 		delay: 1 second;
-		easing: TSEasing elasticOut;
+		easing: RSEasing elasticOut;
 		onStepDo: [ :t |
 			pie elements do: [ :e | | p a b att |
 				att := e attributes.
@@ -387,7 +387,7 @@ RSPieExamples >> example11OpenningAnimation [
 				 ] ].
 	"It is not necessary rebuild all the arc, you can reuse them
 	but I did not try this animation event, for that reason I use it"
-	outin when: TSAnimationEndEvent do: reset.
+	outin when: RSAnimationEndEvent do: reset.
 	(pie view animationFrom: { bounce. inout. outin }) repeat.
 	pie open.
 
@@ -677,14 +677,14 @@ RSPieExamples >> example19Buttons [
 				move := e model.
 				v newAnimation 
 					duration: 1 second;
-					easing: TSEasing backOut;
+					easing: RSEasing backOut;
 					from: 40; to: 50;
 					on: e shape set: #externalRadius:. ];
 			when: RSMouseLeave do: [ 
 				move := 0@0.
 				v newAnimation 
 					duration: 1 second;
-					easing: TSEasing backOut;
+					easing: RSEasing backOut;
 					from: 50; to: 40;
 					on: e shape set: #externalRadius:. ] ] .
 	v open setLabel: 'Arc buttons'
@@ -749,7 +749,7 @@ RSPieExamples >> example20AddingRemoving [
 				detect: [ :e1 | e1 model = e2 model ]
 				ifFound: [ :e1|
 					view newAnimation 
-						easing: TSEasing quad;
+						easing: RSEasing quad;
 						onStepDo: [:t |
 							e2 
 								alphaAngle: (e1 alphaAngle interpolateTo: x at: t);
@@ -763,7 +763,7 @@ RSPieExamples >> example20AddingRemoving [
 			e := pie elements last.
 			x := e alphaAngle.
 			view newAnimation
-				easing: TSEasing quad;
+				easing: RSEasing quad;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: (e betaAngle interpolateTo: x at: t);

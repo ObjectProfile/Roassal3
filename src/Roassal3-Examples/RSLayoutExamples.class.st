@@ -410,7 +410,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;
-		when: TSAnimationLoopEvent do: [ :v | 
+		when: RSAnimationLoopEvent do: [ :v | 
 			boxes do: #remove.
 			boxes := RSGroup new.
 			createBoxes value: layout currentQuadtree value: 0.

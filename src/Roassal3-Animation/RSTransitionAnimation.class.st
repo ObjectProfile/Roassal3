@@ -2,8 +2,8 @@
 I am an animation that provides a number interpolating between 0 and 1. and apply it the value to one block
 "
 Class {
-	#name : #TSTransitionAnimation,
-	#superclass : #TSAbstractAnimation,
+	#name : #RSTransitionAnimation,
+	#superclass : #RSAbstractAnimation,
 	#instVars : [
 		'stepAction',
 		'duration',
@@ -14,44 +14,44 @@ Class {
 }
 
 { #category : #accessing }
-TSTransitionAnimation >> duration [
+RSTransitionAnimation >> duration [
 	^ Duration milliSeconds: duration
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> duration: aDuration [
+RSTransitionAnimation >> duration: aDuration [
 	duration := aDuration asMilliSeconds
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> easing [
+RSTransitionAnimation >> easing [
 	^ easing
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> easing: anInterpolator [
+RSTransitionAnimation >> easing: anInterpolator [
 	easing := anInterpolator 
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> from [
+RSTransitionAnimation >> from [
 	^ scale range first
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> from: anObject [
+RSTransitionAnimation >> from: anObject [
 	scale from: anObject
 ]
 
 { #category : #initialization }
-TSTransitionAnimation >> initialize [
+RSTransitionAnimation >> initialize [
 	super initialize.
 	self onStepDo: [ :t | ].
 	
 ]
 
 { #category : #'action handling' }
-TSTransitionAnimation >> on: object set: setSelector [
+RSTransitionAnimation >> on: object set: setSelector [
 	| sel |
 	sel := setSelector asSymbol.
 	self 
@@ -67,12 +67,12 @@ TSTransitionAnimation >> on: object set: setSelector [
 ]
 
 { #category : #'action handling' }
-TSTransitionAnimation >> onStepDo: aBlock [
+RSTransitionAnimation >> onStepDo: aBlock [
 	stepAction := aBlock
 ]
 
 { #category : #'accessing - computed' }
-TSTransitionAnimation >> progress [ 
+RSTransitionAnimation >> progress [ 
 	| progress |
 	self startStep.
 	progress := (self currentTime - pauseTime - startLoopTime)/ duration asFloat.
@@ -85,25 +85,19 @@ TSTransitionAnimation >> progress [
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> ramp: arrayOfAssociations [
-	"canvas animation
-		ramp: { 
-		 	0 -> (0@0).
-			0.25 -> (200@180).
-			0.75 -> (-200@ -80).
-			1 -> (200@0)}."
+RSTransitionAnimation >> ramp: arrayOfAssociations [
 	scale := TSScale linear
 		domain: (arrayOfAssociations collect: #key);
 		range: (arrayOfAssociations collect: #value)
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> range: aTwoArrayOfNumbers [
+RSTransitionAnimation >> range: aTwoArrayOfNumbers [
 	scale range: aTwoArrayOfNumbers
 ]
 
 { #category : #initialization }
-TSTransitionAnimation >> reset [
+RSTransitionAnimation >> reset [
 	super reset.
 	self duration: 2 asSeconds.
 	easing := TSLinearInterpolator new.
@@ -111,17 +105,17 @@ TSTransitionAnimation >> reset [
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> scale [
+RSTransitionAnimation >> scale [
 	^ scale
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> scale: aScale [
+RSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
 { #category : #refresing }
-TSTransitionAnimation >> step [ 
+RSTransitionAnimation >> step [ 
 	| progress value |
 	
 	progress := self progress.
@@ -137,11 +131,11 @@ TSTransitionAnimation >> step [
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> to [
+RSTransitionAnimation >> to [
 	^ scale range last
 ]
 
 { #category : #accessing }
-TSTransitionAnimation >> to: aValue [
+RSTransitionAnimation >> to: aValue [
 	scale to: aValue.
 ]

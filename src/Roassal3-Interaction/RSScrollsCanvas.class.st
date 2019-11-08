@@ -146,7 +146,7 @@ RSScrollsCanvas >> updateAnimation [
 	animation := canvas newAnimation
 		duration: 700 milliSeconds;
 		onStepDo: [ :t | canvas signalUpdate ];
-		when: TSAnimationLoopEvent do: [ 
+		when: RSAnimationLoopEvent do: [ 
 			canvas addAnimation: hideAnimation ].
 		
 ]

@@ -41,7 +41,7 @@ RSZoomableCanvas >> processEvent: evt [
 				scale: (scale scale: t);
 				translateTo: (position scale: t).
 			evt signalUpdate ];
-		when: TSAnimationEndEvent do: [ animation := nil ]
+		when: RSAnimationEndEvent do: [ animation := nil ]
 ]
 
 { #category : #rendering }

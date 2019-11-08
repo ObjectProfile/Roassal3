@@ -2,7 +2,7 @@
 for loop events
 "
 Class {
-	#name : #TSAnimationLoopEvent,
-	#superclass : #TSAnimationEvent,
+	#name : #RSAnimationLoopEvent,
+	#superclass : #RSAnimationEvent,
 	#category : #'Roassal3-Animation-Events'
 }

@@ -25,7 +25,7 @@ RSZoomToFitCanvas >> animatedZoomToFit: aView [
 	sc < 1 ifTrue: [ 
 		aView newAnimation
 			duration: 500 milliSeconds;
-			easing: TSEasing backOut;
+			easing: RSEasing backOut;
 			onStepDo: [ :t | 
 				camera
 					position: (position scale: t);
@@ -35,13 +35,13 @@ RSZoomToFitCanvas >> animatedZoomToFit: aView [
 	aView newAnimation 
 		delay: 150 milliSeconds;
 		duration: 700 milliSeconds;
-		easing: TSEasing backOut;
+		easing: RSEasing backOut;
 		onStepDo: [:t |
 			camera position: (position scale: t).
 			aView signalUpdate].
 	aView newAnimation
 		duration: 300 milliSeconds;
-		easing: TSEasing exp;
+		easing: RSEasing exp;
 		onStepDo: [ :t | 
 				camera scale: (scale scale: t).
 				aView signalUpdate]

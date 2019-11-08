@@ -55,7 +55,7 @@ RSForceLayoutStepping >> startForceAnimation: aView [
 	animation := aView animationFrom: {
 		"Start smoothly"
 		aView tAnimation
-			easing: TSEasing cubicOut;
+			easing: RSEasing cubicOut;
 			duration: 500 milliSeconds;
 			range: self alphaRange;
 			onStepDo: [ :t | layout alpha: t; step ].
@@ -71,7 +71,7 @@ RSForceLayoutStepping >> startForceAnimation: aView [
 RSForceLayoutStepping >> startSimpleAnimation: aView [
 	animation ifNotNil: #stop.
 	animation := aView newAnimation 
-		easing: TSEasing cubicInOut;
+		easing: RSEasing cubicInOut;
 		range: self alphaRange reversed;
 		duration: 2 seconds;
 		onStepDo: [ :t | layout alpha: t; step  ];
