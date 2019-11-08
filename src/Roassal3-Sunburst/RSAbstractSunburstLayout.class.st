@@ -9,7 +9,7 @@ and their examples to get more info
 "
 Class {
 	#name : #RSAbstractSunburstLayout,
-	#superclass : #TSLayout,
+	#superclass : #RSLayout,
 	#instVars : [
 		'hasCenter',
 		'radialSpacing',

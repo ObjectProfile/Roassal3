@@ -118,7 +118,7 @@ RSColorPaletteChooser >> initializeShape [
 			scale := (currentPalette perform: m selector). 
 			shapes := bcolor elementsOn: scale range.
 			shapes add: (lshape elementOn: m selector).
-			TSVerticalLineLayout new
+			RSVerticalLineLayout new
 				alignCenter;
 				gapSize: 0; 
 				on: shapes.
@@ -186,7 +186,7 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 		onElement;
 		when: RSMouseClick do: [:e | [ self renderColorPalettesFor: e ] ].
 	buttonElements := menuButton elementsOn: data.
-	TSHorizontalLineLayout new gapSize: -9; on: buttonElements.
+	RSHorizontalLineLayout new gapSize: -9; on: buttonElements.
 	view addAll: buttonElements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 ]
@@ -207,7 +207,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: view [
 		maxScale: 1;
 		minScale: 1.
 	view when: RSExtentChangedEvent do: [ 
-		TSFlowLayout new
+		RSFlowLayout new
 			maxWidth: view extent;
 			on: elements.
 		view camera translateTo: view extent / 2. ].

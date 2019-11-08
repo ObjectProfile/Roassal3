@@ -1293,7 +1293,7 @@ RSAnimationExamples >> example22Stars [
 		size: 39;
 		color: [ :m | color scale: m-1 // 10 ].
 	v addAll: (shape elementsOn: (1 to: 100)).
-	TSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
+	RSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
 	shape := RSShapeBuilder star 
 		size: [ r rsNext: 10 and: 100 ];
 		position: [ (r rsNext: 50 and: 300)@ (r rsNext: 50 and: 300) ];
@@ -1874,8 +1874,8 @@ RSAnimationExamples >> example32RSLocate [
 				to: movableElement position;
 				on: movableElement shape set: #position: ] ].
 	buttons := buttonShape elementsOn: #(outer border inner left center right top middle bottom).
-	TSGridLayout new lineItemsCount: 3; on: buttons.
-	TSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: v elements with: buttons).
+	RSGridLayout new lineItemsCount: 3; on: buttons.
+	RSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: v elements with: buttons).
 	v addAll: buttons.
 	v when: RSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent * 0.7.
@@ -2159,7 +2159,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 		canvas: c;
 		objects: objects;
 		connectFrom: [ :value | value //2 ] to: #yourself.
-	layout := TSLayoutBuilder new.
+	layout := RSLayoutBuilder new.
 	update := [ :sel | 
 		layout perform: sel asSymbol.
 		layout on: shapes.
@@ -2190,7 +2190,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 							interpolateTo: (pos2 at: i) at: t) ].
 					c zoomToFit ] ] ].
 	c addAll: labels.
-	TSHorizontalLineLayout on: labels.
+	RSHorizontalLineLayout on: labels.
 	^ c
 	
 ]
@@ -2217,7 +2217,7 @@ RSAnimationExamples >> example39ForceLayout [
 		color: (Color purple alpha: 0.2);
 		connectFrom: #superclass to: #yourself.
 	c addAll: classes.
-	layout := TSForceBasedLayout new 
+	layout := RSForceBasedLayout new 
 		nodes: classes;
 		edges: c edges;
 		start;
@@ -2315,7 +2315,7 @@ for Pharo 7 and Pharo 8.'.
 		yourself.
 	s := [ :m | lblbase copy text: m ].
 	desc := t2 lines collect: [:m | s value: m ] as: RSGroup.
-	TSVerticalLineLayout new
+	RSVerticalLineLayout new
 		gapSize: 0;
 		on: desc.
 	desc := desc asShape.
@@ -2437,7 +2437,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		connectFrom: #superclass to: #yourself.
 	canvas addAll: classes.
 	
-	layout := TSRectangleForceLayout new
+	layout := RSRectangleForceLayout new
 		nodes: classes;
 		edges: canvas edges;
 		start;

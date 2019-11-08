@@ -14,7 +14,7 @@ Class {
 RSUMLPackageBuilder >> defaultLayout [
 
 	| defaultLayout |
-	defaultLayout := TSLayoutBuilder new.
+	defaultLayout := RSLayoutBuilder new.
 	defaultLayout vertical 
 		verticalGap: 100; 
 		horizontalGap: 50.

@@ -21,7 +21,7 @@ RSHierarchyPacker >> fill: group with: e [
 RSHierarchyPacker >> initialize [
 	super initialize.
 	
-	rectanglePackLayout := TSRectanglePackLayout new
+	rectanglePackLayout := RSRectanglePackLayout new
 		doNotUseProgressBar;
 		yourself.
 ]
@@ -29,7 +29,7 @@ RSHierarchyPacker >> initialize [
 { #category : #private }
 RSHierarchyPacker >> onElement: aView [
 	| layout connectedAsGroups connected isolated all |
-	layout := TSTreeLayout new
+	layout := RSTreeLayout new
 		edges: aView edges.
 	connectedAsGroups := aView elements.
 	connected := connectedAsGroups select: #hasEdges.

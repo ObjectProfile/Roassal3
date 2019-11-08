@@ -193,7 +193,7 @@ TSLegendExamples >> example10Location [
 		to: Color red;
 		shapes: classes;
 		normalize: #numberOfMethods.
-	TSTreeLayout on: classes.
+	RSTreeLayout on: classes.
 	b := TSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.
@@ -244,7 +244,7 @@ TSLegendExamples >> example11OnDemand [
 		to: Color red;
 		shapes: classes;
 		normalize: #numberOfMethods.
-	TSTreeLayout on: classes.
+	RSTreeLayout on: classes.
 	b := TSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.

@@ -24,7 +24,7 @@ RSLayoutExamples >> example01LayoutBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	^ v
 ]
 
@@ -40,7 +40,7 @@ RSLayoutExamples >> example02Grid [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	^ v
 ]
 
@@ -63,7 +63,7 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	^ v
 ]
 
@@ -87,7 +87,7 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 		elementsOn: (1 to: 20).
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	^ v
 ]
 
@@ -108,7 +108,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 		elementsOn: (Collection withAllSubclasses).
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	v @ RSDraggableCanvas .
 	^ v
 ]
@@ -138,7 +138,7 @@ RSLayoutExamples >> example05TreeLayout [
 	eb := RSEdgeBuilder line.
 	eb canvas: c.
 	eb connectFrom: #superclass.
-	TSTreeLayout on: shapes.
+	RSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
 	c @ RSDraggableCanvas.
 	^ c
@@ -176,7 +176,7 @@ RSLayoutExamples >> example06Cluster [
 					Color red});
 		shapes: c nodes;
 		normalize: #numberOfMethods.
-	TSClusterLayout on: c nodes.
+	RSClusterLayout on: c nodes.
 	^ c
 ]
 
@@ -206,7 +206,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		canvas: c;
 		moveBehind;
 		connectFrom: #superclass.
-	TSForceBasedLayout new
+	RSForceBasedLayout new
 		doNotUseProgressBar; 
 		charge: -350;
 		on: c nodes.
@@ -247,7 +247,7 @@ RSLayoutExamples >> example08HorizontalTree [
 		canvas: c;
 		shapes: c nodes;
 		connectFrom: #superclass.
-	TSHorizontalTreeLayout new on: c nodes.
+	RSHorizontalTreeLayout new on: c nodes.
 	^ c
 ]
 
@@ -263,7 +263,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 		withBorderAttachPoint;
 		canvas: c;
 		connectFrom: #superclass.
-	TSForceBasedLayout new 
+	RSForceBasedLayout new 
 		charge: -500; 
 		on: c nodes.
 	c @ RSControlsCanvas.
@@ -306,7 +306,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 		shapes: [ :cls | 
 			| g |
 			g := box elementsOn: cls methods.
-			TSGridLayout on: g.
+			RSGridLayout on: g.
 			g ];
 		padding:
 			(Margin
@@ -316,7 +316,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 				bottom: 5);
 		color: Color blue trans.
 	elements := shape elementsOn: Collection withAllSubclasses.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 	v addAll: elements.
 	v @ RSControlsCanvas.
 	^ v
@@ -340,7 +340,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	layout := TSForceBasedLayout new
+	layout := RSForceBasedLayout new
 		length: 80;
 		charge: -300;
 		nodes: shapes;
@@ -374,7 +374,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	layout := TSForceBasedLayout new
+	layout := RSForceBasedLayout new
 		length: 80;
 		charge: -300;
 		nodes: shapes;
@@ -445,7 +445,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	RSNormalizer color
 		shapes: classes;
 		normalize: #numberOfMethods.
-	TSClusterLayout on: classes.
+	RSClusterLayout on: classes.
 	"" RSMultiBezierEdgeBuilder multiBezier.
 	"eb2 borderColor: (Color blue alpha: 0.3).
 	eb2 view: c.
@@ -468,7 +468,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		methods := cls methods collect: [ :m | RSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
 		methods @ (RSPopup text: #selector).
 		
-		TSGridLayout on: methods.
+		RSGridLayout on: methods.
 		composite := RSComposite new.
 		label := RSLabel new text: cls name.
 		RSLocation new above; move: label on: methods.
@@ -486,7 +486,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		color: Color blue;
 		connectFrom: #superclass.
 
-	TSTreeLayout on: c nodes.
+	RSTreeLayout on: c nodes.
 
 	"Making sure we have zooming"
 	c @ RSControlsCanvas.
@@ -515,7 +515,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 		color: Color blue;
 		connectFrom: #superclass.
 
-	TSTreeLayout on: c nodes.
+	RSTreeLayout on: c nodes.
 
 	c @ RSControlsCanvas.
 	^ c 

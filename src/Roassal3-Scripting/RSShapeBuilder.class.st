@@ -168,7 +168,7 @@ v open setLabel: 'Multiline'
 			label announcer: nil.
 			label ]).
 		
-		TSVerticalLineLayout new 
+		RSVerticalLineLayout new 
 			alignLeft; 
 			gapSize: 0; 
 			on: composite shapes.

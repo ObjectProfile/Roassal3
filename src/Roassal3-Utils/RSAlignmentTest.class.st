@@ -18,7 +18,7 @@ RSAlignmentTest >> testFromBottom [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
-	TSHorizontalLineLayout on: es.
+	RSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ 150.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
 	self assert: align bottomMostElement equals: es second.
@@ -34,7 +34,7 @@ RSAlignmentTest >> testFromLeft [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
-	TSVerticalLineLayout on: es.
+	RSVerticalLineLayout on: es.
 	es second translateBy: -150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 -150.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align leftMostElement equals: es second.
@@ -50,7 +50,7 @@ RSAlignmentTest >> testFromRight [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
-	TSVerticalLineLayout on: es.
+	RSVerticalLineLayout on: es.
 	es second translateBy: 150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
 	self assert: align rightMostElement equals: es second.
@@ -63,7 +63,7 @@ RSAlignmentTest >> testFromTop [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
 	align shapes: es.
-	TSHorizontalLineLayout on: es.
+	RSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ -50.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align topMostElement equals: es second.

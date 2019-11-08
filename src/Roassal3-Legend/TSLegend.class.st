@@ -173,7 +173,7 @@ TSLegend >> renderOnDemandIn: aView [
 	menuShape @ i.
 	legendLabels := nil.
 	update := [ 
-		TSHorizontalLineLayout on: legendLabels.
+		RSHorizontalLineLayout on: legendLabels.
 		RSLocation new
 			inner; top; right;
 			move: legendLabels 
@@ -195,7 +195,7 @@ TSLegend >> reset [
 	legendBlock := [ :l | l draggable ].
 	shapes := RSGroup new.
 	location := RSLocation new below.
-	layout := TSLayoutBuilder new.
+	layout := RSLayoutBuilder new.
 	layout vertical gapSize: 0.
 	defaultBox := defaultCircle := defaultLabel := defaultTitle := nil.
 	
@@ -254,7 +254,7 @@ TSLegend >> text: aString withShape: aShape [
 	text := self defaultLabel copy.
 	text text: aString.
 	tshapes := RSGroup with: aShape with: text.
-	l := TSHorizontalLineLayout new center.
+	l := RSHorizontalLineLayout new center.
 	l on: tshapes.
 	line := RSComposite new
 		shapes: tshapes;

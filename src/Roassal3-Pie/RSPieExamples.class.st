@@ -612,7 +612,7 @@ RSPieExamples >> example18ManyPies [
 	view addAll: elements.
 	elements @RSDraggable.
 	view showEncompassingRectangles.
-	TSGridLayout on: view elements.
+	RSGridLayout on: view elements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
 	view @ RSControlsCanvas.
 	view open setLabel: 'Prizepool in esports :V'
@@ -633,7 +633,7 @@ RSPieExamples >> example19Buttons [
 		normalize: #numberOfMethods.
 
 	v addAll: elements.
-	TSGridLayout on: elements.
+	RSGridLayout on: elements.
 
 	v camera position: v elements encompassingRectangle center.
 	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
@@ -1002,7 +1002,7 @@ RSPieExamples >> example24ManyPies [
 		g
 		].
 	view addAll: (composite elementsOn: data).
-	TSFlowLayout on: view elements.
+	RSFlowLayout on: view elements.
 	view @ RSControlsCanvas.
 	view zoomToFit.
 	view open setLabel: 'Usa population by State'.

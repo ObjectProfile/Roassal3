@@ -25,7 +25,7 @@ RSHighlightableExamples >> example01Basic [
 		canvas: v;
 		connectFrom: [ :n | n // 2 ].
 	v addAll: elements.
-	TSClusterLayout on: elements.
+	RSClusterLayout on: elements.
 	v zoomToFit.
 	^ v
 ]
