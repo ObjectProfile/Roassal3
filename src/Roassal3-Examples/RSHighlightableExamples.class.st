@@ -17,7 +17,7 @@ RSHighlightableExamples >> example01Basic [
 		draggable;
 		border: RSBorder new;
 		@ RSHighlightable;
-		color: TSColorPalette sequential bupu3.
+		color: RSColorPalette sequential bupu3.
 	elements := s elementsOn: (1 to: 20).
 	RSEdgeBuilder line
 		shapes: elements;

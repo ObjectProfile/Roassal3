@@ -364,7 +364,7 @@ RSShapeExamples >> example12Polygons [
 	<script: 'self new example12Polygons'>
 	| view color border |
 	view := RSView new.
-	color:= TSGradientPalette gradient21.
+	color:= RSGradientPalette gradient21.
 	border := RSBorder new paint: Color black; width: 2.
 	#('diamond' 'square' 'heptagon' 'hexagon' 
 	'octagon' 'pentagon' 'rhomboid' 'star'
@@ -670,7 +670,7 @@ RSShapeExamples >> example21SpockLizard [
 	this := RSAnimationExamples new.
 	v := RSView new.
 	radius := 1500.
-	paint := TSGradientPalette linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
+	paint := RSGradientPalette linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
 	paint start: -900 @ 900; stop: 900 @ -900.
 	v addShape: (RSEllipse new
 		noPaint;
@@ -1049,7 +1049,7 @@ RSShapeExamples >> example31BasicGrapher [
 	es := RSShapeBuilder circle
 		interactionDo: [ :i | i popup; browseable ];
 		withBorder;
-		color: TSColorPalette sequential orrd9;
+		color: RSColorPalette sequential orrd9;
 		elementsOn: classes.
 	v addAll: es.
 	v add: line.

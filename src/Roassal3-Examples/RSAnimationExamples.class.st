@@ -544,7 +544,7 @@ RSAnimationExamples >> example12PerlinParticles [
 		when: TSAnimationEndEvent do: [ 
 			v clearBackground: false.
 			label remove. ].
-	color := TSGradientPalette fabledSunset asScale.
+	color := RSGradientPalette fabledSunset asScale.
 	color domain: color domain reverse.
 	particle := RSShapeBuilder ellipse
 		onMyselfDo: [ :m | [ :e | 
@@ -1729,8 +1729,8 @@ RSAnimationExamples >> example30SVGIcons [
 	| v elements s color r theta |
 	v := RSView new.
 	r := Random new.
-	color := TSGradientPalette gradient21.
-	color range at: 1 put: TSGradientPalette trueSunset.
+	color := RSGradientPalette gradient21.
+	color range at: 1 put: RSGradientPalette trueSunset.
 	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
 	s := RSShapeBuilder svgPath
 		draggable;
@@ -1818,7 +1818,7 @@ RSAnimationExamples >> example32RSLocate [
 	box := RSShapeBuilder box
 		onElement;
 		size: 200;
-		color: TSColorPalette qualitative paired3.
+		color: RSColorPalette qualitative paired3.
 	labelShape  := RSShapeBuilder label
 		text: [ :m | 'Offset:', 
 			(m offset x printShowingDecimalPlaces: 1),'@',
@@ -1840,13 +1840,13 @@ RSAnimationExamples >> example32RSLocate [
 				 ]  ].
 	
 	v add: fixedElement; add: movableElement; add: label.
-	grad2 := (TSGradientPalette linearGradient: 
+	grad2 := (RSGradientPalette linearGradient: 
 		{0->'white'.
 		0.25->'black'.
 		1 ->'lightGray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	grad1 := (TSGradientPalette linearGradient: 
+	grad1 := (RSGradientPalette linearGradient: 
 		{0->'lightGray'.
 		0.25->'black'.
 		1 ->'gray'})
@@ -2071,7 +2071,7 @@ RSAnimationExamples >> example36RoundRectagles [
 	s := RSShapeBuilder box
 		size: [:i | 25 * (scale value: i) ];
 		cornerRadius: [:i | 6 * (scale value: i) ];
-		color: TSColorPalette sequential blues9.
+		color: RSColorPalette sequential blues9.
 	v addAll: (s elementsOn: (1 to: 25) ).
 	v when: RSExtentChangedEvent do: [ 
 		v camera zoomToFit: v extent extent: extent ].
@@ -2100,7 +2100,7 @@ RSAnimationExamples >> example37SimpleClock [
 	extent := 800 @ 600.
 	half := extent / 2.
 	linear := [ :val :a :b | 
-	(TSGradientPalette linearGradient: val)
+	(RSGradientPalette linearGradient: val)
 		start: a * half;
 		stop: b * half ].
 	color := TSScale ordinal range:
@@ -2146,7 +2146,7 @@ RSAnimationExamples >> example38AnimatedLayout [
 	c := RSCanvas new.
 	objects := 1 to: 100.
 	
-	color := TSColorPalette sequential ylorrd9.
+	color := RSColorPalette sequential ylorrd9.
 	shapes := objects collect: [ :m |
 		RSBox new
 			border: RSBorder new;

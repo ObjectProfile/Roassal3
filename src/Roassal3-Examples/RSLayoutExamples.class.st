@@ -278,7 +278,7 @@ RSLayoutExamples >> example10Locate [
 	shape := RSShapeBuilder box
 		@ RSDraggable;
 		onElement;
-		color: TSColorPalette sequential blues3;
+		color: RSColorPalette sequential blues3;
 		size: 100.
 	e1 := shape element.
 	"e1 @ RSDraggable."
@@ -383,7 +383,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		yourself.
 	canvas @ RSControlsCanvas.
 	canvas @ (RSForceLayoutStepping new layout: layout).
-	colors := TSColorPalette sequential pubu9.
+	colors := RSColorPalette sequential pubu9.
 	boxBuilder := [ :quad :index |
 		RSBox new
 			border: (RSBorder new color: Color lightGray trans; width: 0.5);

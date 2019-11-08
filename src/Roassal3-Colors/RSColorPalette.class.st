@@ -14,28 +14,28 @@ More detailed information is on it class comments.
 All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania State University.
 "
 Class {
-	#name : #TSColorPalette,
+	#name : #RSColorPalette,
 	#superclass : #RSObject,
 	#category : #'Roassal3-Colors'
 }
 
 { #category : #'instance creation' }
-TSColorPalette class >> diverging [
-	^ TSCPDiverging new
+RSColorPalette class >> diverging [
+	^ RSCPDiverging new
 ]
 
 { #category : #'instance creation' }
-TSColorPalette class >> qualitative [
-	^ TSCPQualitative new
+RSColorPalette class >> qualitative [
+	^ RSCPQualitative new
 ]
 
 { #category : #'instance creation' }
-TSColorPalette class >> sequential [
-	^ TSCPSequential new
+RSColorPalette class >> sequential [
+	^ RSCPSequential new
 ]
 
 { #category : #'instance creation' }
-TSColorPalette >> fromTriplet: array [
+RSColorPalette >> fromTriplet: array [
 	^ TSScale ordinal
 		range: (array collect: [ :arr | 
 			Color

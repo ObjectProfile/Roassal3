@@ -238,7 +238,7 @@ TSLegend >> text: aString withCircleColor: color [
 TSLegend >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
-	gradient := TSGradientPalette linearGradient: ramp.
+	gradient := RSGradientPalette linearGradient: ramp.
 	gradient start: -20@0; stop: 20@0.
 	s := RSBox new
 		extent: 40@20;

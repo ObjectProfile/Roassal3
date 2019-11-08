@@ -22,7 +22,7 @@ TSInterpolator >> gtCanvasForInspector [
 	line := RSPolyline new 
 		border: (RSBorder new 
 			width: 4;
-			paint: (TSGradientPalette sweetPeriod
+			paint: (RSGradientPalette sweetPeriod
 				start: rect bottomLeft;
 				stop: rect topRight;
 				yourself

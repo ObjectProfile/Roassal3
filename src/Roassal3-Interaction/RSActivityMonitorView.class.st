@@ -41,7 +41,7 @@ RSActivityMonitorView >> initializeGraphShape [
 				color: Color lightGray trans;
 				cornerRadius: 5).
 			g add: (RSPolygon new
-				paint: ((TSGradientPalette 
+				paint: ((RSGradientPalette 
 					linearGradient:
 						{0 -> Color red trans.
 						0.5 -> Color orange trans.
@@ -51,7 +51,7 @@ RSActivityMonitorView >> initializeGraphShape [
 				cornerRadii: 5).
 			g add: (RSPolyline new 
 				controlPoints: #();
-				border: (RSBorder new paint: ((TSGradientPalette 
+				border: (RSBorder new paint: ((RSGradientPalette 
 					linearGradient:
 						{0 -> 'red'.
 						0.5 -> 'orange'.

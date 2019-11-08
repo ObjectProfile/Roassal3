@@ -3,13 +3,13 @@ I have instances of linear graient paints
 I use the colors from this website https://webgradients.com/
 "
 Class {
-	#name : #TSGradientPalette,
+	#name : #RSGradientPalette,
 	#superclass : #RSObject,
 	#category : #'Roassal3-Colors'
 }
 
 { #category : #gradients }
-TSGradientPalette class >> burningSpring [
+RSGradientPalette class >> burningSpring [
 	^ self linearGradient: 
 		{0->'4fb576'. 
 		0.30->'44c489'.
@@ -21,28 +21,28 @@ TSGradientPalette class >> burningSpring [
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> cloudyKnoxville [
+RSGradientPalette class >> cloudyKnoxville [
 	^ self linearGradient: 
 		{0->'fdfbfb'. 
 		1->'ebedee' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> deepBlue [
+RSGradientPalette class >> deepBlue [
 	^ self linearGradient: 
 		{0->'e0c3fc'. 
 		1->'8ec5fc' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> dustyGrass [
+RSGradientPalette class >> dustyGrass [
 	^ self linearGradient: 
 		{0->'d4fc79'. 
 		1->'96e6a1' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> fabledSunset [
+RSGradientPalette class >> fabledSunset [
 	^ self linearGradient: 
 		{0->'231557'. 
 		0.29->'44107A'.
@@ -51,7 +51,7 @@ TSGradientPalette class >> fabledSunset [
 ]
 
 { #category : #palette }
-TSGradientPalette class >> gradient21 [
+RSGradientPalette class >> gradient21 [
 	^ TSScale ordinal range:( 
 		#('warmFlame' 
 			'nightFade' 
@@ -78,84 +78,84 @@ TSGradientPalette class >> gradient21 [
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> happyFisher [
+RSGradientPalette class >> happyFisher [
 	^ self linearGradient: 
 		{0->'89f7fe'. 
 		1->'66a6ff' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> heavyRain [
+RSGradientPalette class >> heavyRain [
 	^ self linearGradient: 
 		{0->'cfd9df'. 
 		1->'e2ebf0' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> linearGradient: array [
+RSGradientPalette class >> linearGradient: array [
 	^ LinearGradientPaint new 
 		colorRamp: (array collect: [ :as | as key -> (Color colorFrom: as value) ] );
 		yourself
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> malibuBeach [
+RSGradientPalette class >> malibuBeach [
 	^ self linearGradient: 
 		{0->'4facfe'. 
 		1->'00f2fe' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> morpheusDen [
+RSGradientPalette class >> morpheusDen [
 	^ self linearGradient: 
 		{0->'30cfd0'. 
 		1->'330867' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> nearMoon [
+RSGradientPalette class >> nearMoon [
 	^ self linearGradient: 
 		{0->'5ee7df'. 
 		1->'b490ca' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> nightFade [
+RSGradientPalette class >> nightFade [
 	^ self linearGradient: 
 		{0->'a18cd1'. 
 		1->'fbc2eb' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> northMiracle [
+RSGradientPalette class >> northMiracle [
 	^ self linearGradient: 
 		{0->'00dbde'. 
 		1->'fc00ff' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> rainyAshville [
+RSGradientPalette class >> rainyAshville [
 	^ self linearGradient: 
 		{0->'fbc2eb'. 
 		1->'a6c1ee' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> redSalvation [
+RSGradientPalette class >> redSalvation [
 	^ self linearGradient: 
 		{0->'f43b47'. 
 		1->'453a94' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> sunnyMorning [
+RSGradientPalette class >> sunnyMorning [
 	^ self linearGradient: 
 		{0->'f6d365'. 
 		1->'fda085' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> sweetPeriod [
+RSGradientPalette class >> sweetPeriod [
 	^ self linearGradient: 
 		{0->'3f51b1'. 
 		0.13->'5a55ae'.
@@ -169,21 +169,21 @@ TSGradientPalette class >> sweetPeriod [
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> temptingAzure [
+RSGradientPalette class >> temptingAzure [
 	^ self linearGradient: 
 		{0->'84fab0'. 
 		1->'8fd3f4' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> trueSunset [
+RSGradientPalette class >> trueSunset [
 	^ self linearGradient: 
 		{0->'fa709a'. 
 		1->'fee140' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> warmFlame [
+RSGradientPalette class >> warmFlame [
 	^ self linearGradient: 
 		{0-> 'ff9a9e'. 
 		1->'fad0c4' }.
@@ -191,14 +191,14 @@ TSGradientPalette class >> warmFlame [
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> winterNeva [
+RSGradientPalette class >> winterNeva [
 	^ self linearGradient: 
 		{0->'a1c4fd'. 
 		1->'c2e9fb' }
 ]
 
 { #category : #gradients }
-TSGradientPalette class >> youngPassion [
+RSGradientPalette class >> youngPassion [
 	^ self linearGradient:
 		{(0 -> 'ff867a').
 		(0.21 -> 'ff8c7f').
