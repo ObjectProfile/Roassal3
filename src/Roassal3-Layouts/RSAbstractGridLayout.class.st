@@ -88,7 +88,6 @@ RSAbstractGridLayout >> defaultGapSize [
 
 { #category : #accessing }
 RSAbstractGridLayout >> defaultLineItemsCount [
-	
 	^ [ :elements | 
 			| height width |
 			(elements size < 3 
@@ -101,7 +100,6 @@ RSAbstractGridLayout >> defaultLineItemsCount [
 
 { #category : #accessing }
 RSAbstractGridLayout >> gapSize [
-	
 	^ gapSize
 ]
 
@@ -125,6 +123,5 @@ RSAbstractGridLayout >> lineItemsCount: aNumberOrASymbolOrABlock [
 
 { #category : #accessing }
 RSAbstractGridLayout >> lineItemsCountBlock [
-	
 	^ lineItemsCountBlock
 ]

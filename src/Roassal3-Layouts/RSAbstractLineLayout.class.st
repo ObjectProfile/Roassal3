@@ -65,7 +65,6 @@ RSAbstractLineLayout class >> withGap: anInteger [
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignBottom [
-	
 	alignment := #bottom
 ]
 
@@ -77,31 +76,26 @@ RSAbstractLineLayout >> alignCenter [
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignLeft [
-	
 	alignment := #left
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignRight [
-	
 	alignment := #right
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignTop [
-	
 	alignment := #top
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignment [
-	
-	^alignment
+	^ alignment
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> alignment: anObject [
-	
 	alignment := anObject
 ]
 
@@ -112,8 +106,7 @@ RSAbstractLineLayout >> center [
 
 { #category : #hook }
 RSAbstractLineLayout >> deltaFor: aNodeFigure [
-	
-	^self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #hook }
@@ -136,8 +129,7 @@ RSAbstractLineLayout >> doExecute: elements [
 
 { #category : #accessing }
 RSAbstractLineLayout >> gapSize [
-	
-	^gapSize
+	^ gapSize
 ]
 
 { #category : #accessing }
@@ -150,19 +142,16 @@ RSAbstractLineLayout >> gapSize: aNumber [
 
 { #category : #accessing }
 RSAbstractLineLayout >> horizontalGap [
-	
-	^horizontalGap
+	^ horizontalGap
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> horizontalGap: anInteger [
-	
 	horizontalGap := anInteger
 ]
 
 { #category : #'initialize-release' }
 RSAbstractLineLayout >> initialize [
-	
 	super initialize.
 	verticalGap := 10.
 	horizontalGap := 10.
@@ -170,24 +159,20 @@ RSAbstractLineLayout >> initialize [
 
 { #category : #hook }
 RSAbstractLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
-	
 	self subclassResponsibility
 ]
 
 { #category : #hook }
 RSAbstractLineLayout >> positionOriginalPointer: aGraph [
-	
-	^self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> verticalGap [
-	
-	^verticalGap
+	^ verticalGap
 ]
 
 { #category : #accessing }
 RSAbstractLineLayout >> verticalGap: anInteger [
-	
 	verticalGap := anInteger
 ]

@@ -55,12 +55,11 @@ RSAbstractFlowLayout >> alignTop [
 
 { #category : #configuration }
 RSAbstractFlowLayout >> defaultGapSize [
- ^ 5
+	^ 5
 ]
 
 { #category : #configuration }
 RSAbstractFlowLayout >> defaultMaxWidth [
-	
 	^ [ :elements | 
 		(elements size < 4) ifTrue: [ (((elements collect: [ :each | each width * each height]) * 2) sum ) + (elements size * (gapSize squared)) ]
 			ifFalse: [
@@ -71,19 +70,16 @@ RSAbstractFlowLayout >> defaultMaxWidth [
 
 { #category : #accessing }
 RSAbstractFlowLayout >> gapSize [
-	
-	^gapSize
+	^ gapSize
 ]
 
 { #category : #accessing }
 RSAbstractFlowLayout >> gapSize: aSizeInPixels [
-	
 	gapSize := aSizeInPixels
 ]
 
 { #category : #'initialize-release' }
 RSAbstractFlowLayout >> initialize [
-	
 	super initialize.
 	maxWidth := self defaultMaxWidth.
 	gapSize := self defaultGapSize.
@@ -106,12 +102,10 @@ RSAbstractFlowLayout >> isAlignTop [
 
 { #category : #private }
 RSAbstractFlowLayout >> maxWidth [
-	
-	^maxWidth
+	^ maxWidth
 ]
 
 { #category : #accessing }
 RSAbstractFlowLayout >> maxWidth: aSizeInPixels [
-	
 	maxWidth := aSizeInPixels
 ]

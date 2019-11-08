@@ -21,13 +21,11 @@ RSDummyNode class >> on: anEdge slot: anIndex [
 
 { #category : #accessing }
 RSDummyNode >> edge [
-	
-	^edge
+	^ edge
 ]
 
 { #category : #accessing }
 RSDummyNode >> edge: anEdge [
-	
 	edge := anEdge
 ]
 
@@ -38,8 +36,7 @@ RSDummyNode >> extent [
 
 { #category : #accessing }
 RSDummyNode >> height [
-	
-	^0
+	^ 0
 ]
 
 { #category : #accessing }
@@ -64,12 +61,10 @@ RSDummyNode >> translateBy: apoint [
 
 { #category : #accessing }
 RSDummyNode >> translateTo: aPoint [
-	
 	"edge index: index point: aPoint"
 ]
 
 { #category : #accessing }
 RSDummyNode >> width [
-	
-	^0
+	^ 0
 ]

@@ -10,7 +10,6 @@ Class {
 { #category : #algorithm }
 RSRadialTreeLayout >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
-
 	| difference max nodeA nodeB |
 	nodeB := aNode.	"the right one"
 	nodeA := another.	"the left one"
@@ -56,7 +55,6 @@ RSRadialTreeLayout >> computeGap: aNode [
 { #category : #algorithm }
 RSRadialTreeLayout >> computePosition: aNode [
 	"compute the position of the given node and of his sons recursively"
-
 	| children neighbor nodeA |
 	children := self childrenFor: aNode.
 	neighbor := self leftSiblingOf: aNode.
@@ -114,7 +112,6 @@ RSRadialTreeLayout >> computePosition: aNode [
 
 { #category : #hook }
 RSRadialTreeLayout >> doExecute: nodeElements [
-
 	| rootNodes xOffset maximumRadius | 
 	initialLayout isNil
 		ifFalse: [ initialLayout new executeOnElements: nodeElements ].
@@ -137,13 +134,11 @@ RSRadialTreeLayout >> doExecute: nodeElements [
 
 { #category : #private }
 RSRadialTreeLayout >> gap [
-	
 	^ self verticalGap
 ]
 
 { #category : #private }
 RSRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngle to: aToAngle [
-	
 	| delta childRadius maximumRadius myRadius fromAngle toAngle |
 	"Initialize with default value"
 	maximumRadius := oldRadius.
@@ -185,7 +180,6 @@ RSRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngl
 
 { #category : #private }
 RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
-
 	| pos min |
 	pos := elements collect: #position.
 	min := pos inject: 0 @ 0 into: [ :minimum :p | minimum min: p ].
@@ -195,7 +189,6 @@ RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
 { #category : #algorithm }
 RSRadialTreeLayout >> radialDraw: aNode [
 	"draw the subtree induced by the given node"
-
 	| children r max |
 	r := (self rOf: aNode).
 	translator translateTopLeftOf: aNode to: (Point r: r theta: (self thetaOf: aNode)).
@@ -208,10 +201,9 @@ RSRadialTreeLayout >> radialDraw: aNode [
 
 { #category : #hook }
 RSRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
-	
 	aNode theta: aNode theta + aFloat.
-	
-	(self childrenFor: aNode) do: [ :e | self rotateSubtreeFrom: e by: aFloat ]
+	(self childrenFor: aNode) do: [ :e | 
+		self rotateSubtreeFrom: e by: aFloat ]
 ]
 
 { #category : #algorithm }

@@ -50,7 +50,6 @@ RSForceBasedLayout >> accumulate: aQuad [
 
 { #category : #adding }
 RSForceBasedLayout >> addEdges: realEdges [
-	
 	| newMockEdges |
 	newMockEdges := realEdges collect: [ :e | self newMockEdgeFor: e ].
 	edges class = Array ifTrue: [ edges := OrderedCollection new ].
@@ -60,7 +59,6 @@ RSForceBasedLayout >> addEdges: realEdges [
 
 { #category : #adding }
 RSForceBasedLayout >> addNodes: realElements [
-
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
 	nodes class = Array ifTrue: [ nodes := OrderedCollection new ].
@@ -314,7 +312,6 @@ RSForceBasedLayout >> step [
 { #category : #events }
 RSForceBasedLayout >> stepEdgeForces [
 	"Apply forces of edges."
-	
 	edges do: [ :each | 
 		| from to fp tp len k pd |
 		from := each from.
@@ -337,7 +334,6 @@ RSForceBasedLayout >> stepEdgeForces [
 { #category : #events }
 RSForceBasedLayout >> stepFriction [
 	"Apply friction. This is the last to do in a step, after new positions have been defined."
-
 	nodes do: [ :each | 
 		| current new old |
 		current := each position.
@@ -364,7 +360,6 @@ RSForceBasedLayout >> stepGravityForce [
 { #category : #events }
 RSForceBasedLayout >> stepNodeRepulsion [
 	"Handle fixed nodes. Do this after all forces in a step were already applied."
-
 	quadtree := RSQuadTreeF withAll: nodes.
 	self accumulate: quadtree.
 	nodes

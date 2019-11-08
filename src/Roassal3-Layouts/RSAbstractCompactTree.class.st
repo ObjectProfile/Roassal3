@@ -57,7 +57,6 @@ RSAbstractCompactTree class >> verticalGap: anInt [
 
 { #category : #private }
 RSAbstractCompactTree >> childrenFor: aNode [ 
-
 	sonsDictionary isEmpty ifTrue: [ ^ super childrenFor: aNode ] 
 							ifFalse: [ ^sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
 ]
@@ -102,7 +101,6 @@ RSAbstractCompactTree >> followRightContour: aNode toLayer: anInteger [
 
 { #category : #algorithm }
 RSAbstractCompactTree >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
-
 	| node x |
 	
 	(anInteger < 0) ifTrue: [^ self getAbcissaOf: aNode inSubtreeFromLayer: 0 ].
@@ -126,13 +124,11 @@ RSAbstractCompactTree >> greedyCycleRemoval: aGraph [
 
 { #category : #'initialize-release' }
 RSAbstractCompactTree >> initialLayout: aLayout [
-
 	initialLayout := aLayout 
 ]
 
 { #category : #'initialize-release' }
 RSAbstractCompactTree >> initialize [ 
-
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 30.
@@ -142,7 +138,6 @@ RSAbstractCompactTree >> initialize [
 
 { #category : #'initialize-release' }
 RSAbstractCompactTree >> initialize: aNode whoseFatherIs: another [ 
-
 	self fatherOf: aNode put: another.
 	
 	another isNil ifTrue: [ self layerOf: aNode put: 0 ] ifFalse: [ self layerOf: aNode put: (self layerOf: another) + 1 ] .
@@ -152,8 +147,7 @@ RSAbstractCompactTree >> initialize: aNode whoseFatherIs: another [
 
 { #category : #algorithm }
 RSAbstractCompactTree >> leftSiblingOf: aNode [
-"return the left sibling of the given node "
-
+	"return the left sibling of the given node "
 	| children |
 
 	(self fatherOf: aNode) isNil ifTrue: ["has no sibling" ^ nil]
@@ -164,6 +158,5 @@ RSAbstractCompactTree >> leftSiblingOf: aNode [
 
 { #category : #'initialize-release' }
 RSAbstractCompactTree >> root: aNode [ 
-
 	root := aNode 
 ]

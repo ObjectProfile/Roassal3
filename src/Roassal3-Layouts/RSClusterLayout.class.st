@@ -14,7 +14,6 @@ Class {
 
 { #category : #algorithm }
 RSClusterLayout >> computePosition: aNode [
-
 	|children previous|
 	
 	children := self childrenFor: aNode.
@@ -30,7 +29,6 @@ RSClusterLayout >> computePosition: aNode [
 
 { #category : #hook }
 RSClusterLayout >> doExecute: nodeElements [ 
-
 	| root gap |
 	"Not much to do if there is only one element"
 	nodeElements size = 1 ifTrue: [ ^ self ].
@@ -56,7 +54,6 @@ RSClusterLayout >> doExecute: nodeElements [
 
 { #category : #'drawing-general' }
 RSClusterLayout >> draw: aNode [
-
 	(self childrenFor: aNode) do: [ :e | self draw: e ].
 	translator 
 		translateTopLeftOf: aNode 
@@ -65,7 +62,6 @@ RSClusterLayout >> draw: aNode [
 
 { #category : #'initialize-release' }
 RSClusterLayout >> initialize [ 
-
 	super initialize.
 	verticalGap := 30.
 	horizontalGap := 20.
@@ -74,9 +70,7 @@ RSClusterLayout >> initialize [
 
 { #category : #'initialize-release' }
 RSClusterLayout >> initializeNode: aNode [
-
 	|children|
-	
 	children := self childrenFor: aNode.
 	
 	children do: [ :e | self initializeNode: e.

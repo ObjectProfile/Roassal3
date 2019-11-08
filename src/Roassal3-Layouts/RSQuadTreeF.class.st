@@ -160,7 +160,6 @@ RSQuadTreeF >> soleChild [
 
 { #category : #accessing }
 RSQuadTreeF >> subQuadsDo: aBlockClosure [
-
   northWestQuad ifNotNil: aBlockClosure.
   northEastQuad ifNotNil: aBlockClosure.
   southWestQuad ifNotNil: aBlockClosure.

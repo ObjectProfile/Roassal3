@@ -29,7 +29,6 @@ RSCellLayout >> centered [
 
 { #category : #hook }
 RSCellLayout >> doExecute: elements [ 
-	
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
 	lineItemSize := self lineItemsCountBlock rsValue: elements.
 
@@ -77,7 +76,6 @@ RSCellLayout >> doExecute: elements [
 
 { #category : #accessing }
 RSCellLayout >> inCellPosition: anObjectOrOneArgBlock [
-
 	inCellPosition := anObjectOrOneArgBlock
 ]
 

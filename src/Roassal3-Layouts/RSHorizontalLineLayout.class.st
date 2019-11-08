@@ -9,7 +9,6 @@ Class {
 
 { #category : #hook }
 RSHorizontalLineLayout >> deltaFor: aNodeFigure [
-	
 	| delta |
 	delta := 0.
 	self alignment == #bottom ifTrue: [delta := aNodeFigure height].
@@ -19,7 +18,6 @@ RSHorizontalLineLayout >> deltaFor: aNodeFigure [
 
 { #category : #hook }
 RSHorizontalLineLayout >> doCenter: elements [ 
-
  	| midTallest step |
 	midTallest := 0.
 	midTallest := elements nodes 
@@ -36,14 +34,12 @@ RSHorizontalLineLayout >> doCenter: elements [
 
 { #category : #'initialize-release' }
 RSHorizontalLineLayout >> initialize [
-	
 	super initialize.
 	self alignTop
 ]
 
 { #category : #hook }
 RSHorizontalLineLayout >> movePointer: pointer accordingToFigure: element [
-	
 	^ (pointer x + element width + self horizontalGap) @ pointer y
 ]
 

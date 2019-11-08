@@ -31,20 +31,17 @@ RSEdgeDrivenLayout class >> withEdges: aCollection [
 
 { #category : #hook }
 RSEdgeDrivenLayout >> doExecute: elements [
-	
 	self subclassResponsibility
 ]
 
 { #category : #hook }
 RSEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
 	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
-	
 	self doExecute: anElementNode
 ]
 
 { #category : #private }
 RSEdgeDrivenLayout >> edges [
-	
 	^ edges
 ]
 
@@ -59,7 +56,6 @@ RSEdgeDrivenLayout >> edges: aCollection [
 { #category : #iterator }
 RSEdgeDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
-	
 	edges ifNil: [ ^ self ].
 	edges do: aBlock
 
@@ -68,7 +64,6 @@ RSEdgeDrivenLayout >> edgesDo: aBlock [
 { #category : #hook }
 RSEdgeDrivenLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
-
 	self userDefinedEdges
 		ifNil: [ self setEdgesFromElements: elements ]
 		ifNotNil: [ | flat |
@@ -84,7 +79,6 @@ RSEdgeDrivenLayout >> executeOnElements: elements [
 
 { #category : #accessing }
 RSEdgeDrivenLayout >> fromPositions: anArray [
-	
 	fromPositions := anArray
 ]
 
@@ -101,8 +95,7 @@ RSEdgeDrivenLayout >> isEdgeDrivenLayout [
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> setEdgesFromElements: elements [ 
-
+RSEdgeDrivenLayout >> setEdgesFromElements: elements [
 	elements isEmpty ifTrue: [ ^ self ].
 	
 	^ self edges:
@@ -113,20 +106,17 @@ RSEdgeDrivenLayout >> setEdgesFromElements: elements [
 
 { #category : #accessing }
 RSEdgeDrivenLayout >> toPositions: anArray [
-	
 	toPositions := anArray
 ]
 
 { #category : #private }
 RSEdgeDrivenLayout >> userDefinedEdges [
-	
-	^userDefinedEdges
+	^ userDefinedEdges
 ]
 
 { #category : #accessing }
 RSEdgeDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
 	"useful to tell to the layout which edges have to be used for the layout"
-
 	userDefinedEdges := aCollectionOfEdges.
 	
 ]

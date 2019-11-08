@@ -22,7 +22,6 @@ RSSugiyamaLayout class >> sortBlock [
 
 { #category : #private }
 RSSugiyamaLayout >> addDummyNodes [
-	
 	| layer layerNr |
 	connections := RSIdentityMatrix new.
 	self edgesDo:
@@ -90,7 +89,6 @@ RSSugiyamaLayout >> assignLabels: aNodeCollection [
 
 { #category : #private }
 RSSugiyamaLayout >> buildLayers: g [
-	
 	| w layerNr u vertices vertex layer done |
 	w := self maxFloat.
 	u := OrderedCollection new.
@@ -123,7 +121,6 @@ RSSugiyamaLayout >> buildLayers: g [
 { #category : #private }
 RSSugiyamaLayout >> cl: layer u: u v: v [
 	"Calculates cuv. Di Battista, chapter 9.2.2, page 283"
-	
 	| partnersOfU partnersOfV c partnersOfUIndex partnersOfVIndex layerNr |
 	layerNr := layerNrs at: u.	":= layerNrs at: v"
 	partnersOfU := (connections at: u)
@@ -151,7 +148,6 @@ RSSugiyamaLayout >> doExecute: aNodeCollection [
 
 { #category : #private }
 RSSugiyamaLayout >> layoutAt: aPoint [
-	
 	| treeWidth layerKeys layer layerWidth horizontalPosition verticalPosition layerHeight |
 	treeWidth := layers values
 		inject: self maxFloat negated
@@ -185,7 +181,6 @@ RSSugiyamaLayout >> maxFloat [
 { #category : #private }
 RSSugiyamaLayout >> reduceCrossing [
 	"Crossing reduction"
-	
 	| layer2 u v c1 c2 layer1 done |
 	2
 		to: layers keys size
@@ -213,7 +208,6 @@ RSSugiyamaLayout >> reduceCrossing [
 
 { #category : #private }
 RSSugiyamaLayout >> sortBlock [
-	
 	sortBlock isNil ifTrue: [ sortBlock := self class sortBlock ].
 	^sortBlock
 ]

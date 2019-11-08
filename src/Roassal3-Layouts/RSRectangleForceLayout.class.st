@@ -62,7 +62,6 @@ RSRectangleForceLayout >> step [
 { #category : #events }
 RSRectangleForceLayout >> stepRectangleForces [
 	"Apply a repulsion force to elements that are close to the enclosing rectangle."
-
 	| k |
 	k := enclosingForce * alpha.
 	(k closeTo: 0) ifTrue: [ ^self ].

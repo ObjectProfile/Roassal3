@@ -12,7 +12,6 @@ Class {
 
 { #category : #accessing }
 RSIdentityMatrix >> at: u [
-	
 	| row |
 	row := rows
 		at: u
@@ -22,7 +21,6 @@ RSIdentityMatrix >> at: u [
 
 { #category : #accessing }
 RSIdentityMatrix >> at: u at: v [
-	
 	| row |
 	row := rows
 		at: u
@@ -34,7 +32,6 @@ RSIdentityMatrix >> at: u at: v [
 
 { #category : #accessing }
 RSIdentityMatrix >> at: u at: v put: aBoolean [
-	
 	| row |
 	"u -> v"
 	row := rows
@@ -49,6 +46,5 @@ RSIdentityMatrix >> at: u at: v put: aBoolean [
 
 { #category : #'initialize-release' }
 RSIdentityMatrix >> initialize [
-	
 	rows := IdentityDictionary new
 ]

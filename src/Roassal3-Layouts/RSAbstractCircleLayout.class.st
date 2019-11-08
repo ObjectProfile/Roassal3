@@ -111,7 +111,6 @@ RSAbstractCircleLayout >> radius: aNumber [
 
 { #category : #accessing }
 RSAbstractCircleLayout >> scaleBy: aNumber [
-	
 	factor := aNumber
 ]
 

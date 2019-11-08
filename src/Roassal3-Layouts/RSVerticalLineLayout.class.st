@@ -9,7 +9,6 @@ Class {
 
 { #category : #hook }
 RSVerticalLineLayout >> deltaFor: aNodeFigure [
-	
 	| delta |
 	delta := 0.
 	self alignment == #right ifTrue: [delta := aNodeFigure width].
@@ -19,7 +18,6 @@ RSVerticalLineLayout >> deltaFor: aNodeFigure [
 
 { #category : #hook }
 RSVerticalLineLayout >> doCenter: aGraph [ 
-
  	| midWidest step |
 	midWidest := aGraph nodes 
 		inject: 0
@@ -35,14 +33,12 @@ RSVerticalLineLayout >> doCenter: aGraph [
 
 { #category : #'initialize-release' }
 RSVerticalLineLayout >> initialize [
-	
 	super initialize.
 	self alignLeft
 ]
 
 { #category : #hook }
 RSVerticalLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
-	
 	^ pointer x @ (pointer y + aNodeFigure height + self verticalGap)
 ]
 

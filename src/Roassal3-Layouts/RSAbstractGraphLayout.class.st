@@ -42,30 +42,26 @@ RSAbstractGraphLayout class >> verticalGap [
 
 { #category : #private }
 RSAbstractGraphLayout >> cachedChildren [
-	
 	cachedChildren ifNil: [cachedChildren := IdentityDictionary new: 1000].
-	^cachedChildren
+	^ cachedChildren
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> cachedParents [
-	
 	cachedParents ifNil: [cachedParents := IdentityDictionary new: 1000].
-	^cachedParents
+	^ cachedParents
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> cachedParentsWithHighestNestings [
-	
 	cachedParentsWithHighestNestings
 		ifNil: [cachedParentsWithHighestNestings := IdentityDictionary new: 1000].
-	^cachedParentsWithHighestNestings
+	^ cachedParentsWithHighestNestings
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> childrenFor: aNode [
-	
-	^self cachedChildren
+	^ self cachedChildren
 		at: aNode
 		ifAbsentPut:
 			[| nodes |
@@ -80,8 +76,7 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 
 { #category : #private }
 RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
-	
-	^(self childrenFor: aNode) 
+	^ (self childrenFor: aNode) 
 		reject: [:each | aNodeCollection includes: each]
 	
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
@@ -89,14 +84,12 @@ RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 
 { #category : #private }
 RSAbstractGraphLayout >> childrenWithHighestNestingLevelFor: aNode [
-	
-	^(self childrenFor: aNode)
+	^ (self childrenFor: aNode)
 		select: [:eachChild | (self highestNestingParentFor: eachChild) == aNode]
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> clear [
-	
 	cachedParents := nil.
 	cachedChildren := nil.
 	cachedParentsWithHighestNestings := nil
@@ -164,7 +157,6 @@ RSAbstractGraphLayout >> greedyCycleRemoval: aCollection [
 
 { #category : #private }
 RSAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
-	
 	| parents |
 	^self cachedParentsWithHighestNestings
 		at: aNodeFigure
@@ -179,21 +171,18 @@ RSAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 { #category : #accessing }
 RSAbstractGraphLayout >> horizontalGap [
 	"Return the horizontal space, in pixel, between two neighbors"
-
 	^ horizontalGap ifNil: [ self class horizontalGap ]
 ]
 
 { #category : #accessing }
 RSAbstractGraphLayout >> horizontalGap: anInteger [
 	"Set the horizontal space, in pixel, between two neighbors"
-
 	horizontalGap := anInteger
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> maximumDiameter: aCollection [
-	
-	^aCollection
+	^ aCollection
 		inject: 0
 		into: [:max :node | max max: (node radius * 2) ]
  
@@ -201,15 +190,13 @@ RSAbstractGraphLayout >> maximumDiameter: aCollection [
 
 { #category : #private }
 RSAbstractGraphLayout >> maximumRadius: aCollection [
-	
-	^aCollection
+	^ aCollection
 		inject: 0
 		into: [:max :node | max max: node radius]
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
-	
 	| parents parentsNesting |
 	parents := self parentsFor: aNodeFigure.
 	parentsNesting := parents
@@ -223,7 +210,6 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 { #category : #actions }
 RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
-
 	self userDefinedEdges ifNil: [ self userDefinedEdges: edgs ].
 
 	^ self applyOn: el.
@@ -250,7 +236,6 @@ RSAbstractGraphLayout >> rootNodesFor: aCollection [
 
 { #category : #private }
 RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
-	
 	aNode translateBy: aPoint.
 	(self childrenFor: aNode) do: [:child | self shiftTree: child by: aPoint]
 ]
@@ -258,13 +243,11 @@ RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 { #category : #accessing }
 RSAbstractGraphLayout >> verticalGap [
 	"Return the vertical space, in pixel, between a layer and a children layer"
-
 	^ verticalGap ifNil: [ self class verticalGap ]
 ]
 
 { #category : #accessing }
 RSAbstractGraphLayout >> verticalGap: anInteger [
 	"Set the vertical space, in pixel, between a layer and a children layer"
-
 	verticalGap := anInteger
 ]

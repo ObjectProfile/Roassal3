@@ -61,7 +61,6 @@ RSAbstractRegularTreeLayout >> horizontallyReverse [
 { #category : #reversing }
 RSAbstractRegularTreeLayout >> horizontallyReverse: elements [
 	"Horizontally reverse the elements, as well as the attachpoints"
-
 	| g largeur |
 	g := elements asGroup.
 	largeur := g extent x.
@@ -82,14 +81,12 @@ RSAbstractRegularTreeLayout >> initialize [
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> isLayered [
 	"Is the layout layered"
-	
 	^ isLayered
 ]
 
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> isLayered: boolean [
 	"Is the layout layered"
-	
 	isLayered := boolean
 ]
 
@@ -160,7 +157,6 @@ b
 { #category : #reversing }
 RSAbstractRegularTreeLayout >> verticallyReverse: elements [
 	"Vertically reverse the elements, as well as the attachpoints"
-
 	| g hauteur |
 	g := elements asGroup.
 	hauteur := g extent y.
