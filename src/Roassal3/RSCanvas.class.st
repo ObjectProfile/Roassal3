@@ -109,6 +109,7 @@ RSCanvas >> color: aColor [
 
 { #category : #'morph creation' }
 RSCanvas >> createMorph [
+	"Create a Morph that contains myself."
 	morph := RSAthensMorph new. 
 	morph renderer: RSAthensRenderer new.
 	morph canvas: self.

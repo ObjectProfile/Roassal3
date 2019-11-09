@@ -7,34 +7,37 @@ The order of configuration message sends is irrelevant, only the last of a group
 
 Here is an example:
 ```Smalltalk
-v := RSView new.
+v := RSCanvas new.
 
 classes := Collection withAllSubclasses.
-boxes := RSShapeBuilder box
-				width: [ :cls | cls instVarNames size * 5 max: 5 ];
-				height: [ :cls | cls numberOfMethods max: 5 ];
-				elementsOn: classes.
+boxes := classes collect: [ :cls |
+	RSBox new
+		width: (cls instVarNames size * 5 max: 5);
+		height: (cls numberOfMethods max: 5);
+		model: cls
+] as: RSGroup.
+
 boxes @ RSDraggable.
 v addAll: boxes.
 
 RSEdgeBuilder orthoVertical
-	view: v;
+	canvas: v;
 	attachPoint: RSVerticalAttachPoint new;
-	elements: boxes;
+	shapes: boxes;
 	connectFrom: #superclass.
 
 boxes do: [ :b |
 	| t |
-	t := RSShapeBuilder label height: 2; text: #name; elementOn: b model.
+	t := RSLabel new height: 2; text: b model name.
 	v add: t.
-	RSLocate new
+	RSLocation new
 		offset: 1;
 		above; center;
 		stick: t on: b.
 ].
 
 RSTreeLayout on: boxes.
-v @ RSControlsView.
+v @ RSControlsCanvas.
 v open
 ```
 "

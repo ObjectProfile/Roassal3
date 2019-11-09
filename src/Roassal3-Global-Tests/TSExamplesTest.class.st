@@ -6,6 +6,7 @@ Class {
 
 { #category : #tests }
 TSExamplesTest >> testExamples [
+	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
 	RSAbstractExamples subclasses
 		do: [ :cls | 
 			| inst methods res |

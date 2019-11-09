@@ -14,7 +14,7 @@ Class {
 { #category : #initialization }
 SpMorphicAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
-	canvas := widget trachelCanvas.
+	canvas := widget roassalCanvas.
 	view := canvas view.
 	widget
 		setProperty: #model toValue: self;
@@ -50,7 +50,7 @@ SpMorphicAdapter >> buildWidget [
 SpMorphicAdapter >> freeCanvas [
 	| temp |
 	temp := self buildWidget.
-	canvas := temp trachelCanvas.
+	canvas := temp roassalCanvas.
 	view := canvas view.
 	widget canvas: canvas.
 	canvas morph: widget.
