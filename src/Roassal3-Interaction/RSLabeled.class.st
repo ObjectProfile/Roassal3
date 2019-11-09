@@ -6,12 +6,12 @@ Class {
 	#name : #RSLabeled,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'shape',
 		'location',
 		'isHighlightable',
 		'lowColor',
 		'target',
-		'modelBlock'
+		'modelBlock',
+		'shapeBuilder'
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
@@ -19,7 +19,7 @@ Class {
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
 	| label color set targetLabel |
-	label := shape elementOn: (self modelFor: anElement).
+	label := self shapeBuilder shapeOn: (self modelFor: anElement).
 	location stick: label on: anElement.
 	isHighlightable 
 		ifFalse: [ ^ label ].
@@ -73,7 +73,7 @@ v open
 { #category : #initialization }
 RSLabeled >> initialize [ 
 	super initialize.
-	self shape: RSShapeBuilder label.
+	self shapeBuilder: [:model |RSShape label text: model asString ].
 	self model: #model.
 	location := RSLocation new above.
 	isHighlightable := false.
@@ -119,13 +119,13 @@ RSLabeled >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSLabeled >> shape [
-	^ shape
+RSLabeled >> shapeBuilder [
+	^ shapeBuilder
 ]
 
 { #category : #accessing }
-RSLabeled >> shape: aShapeBuilder [
-	shape := aShapeBuilder
+RSLabeled >> shapeBuilder: aShapeBuilder [
+	shapeBuilder := aShapeBuilder
 ]
 
 { #category : #accessing }
@@ -140,19 +140,6 @@ RSLabeled >> target: aBlock [
 
 { #category : #'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
-	"Set the transformation to be obtained
-E.g.,
-
-v := RSView new.
-els := RSShapeBuilder box elementsOn: (1 to: 10).
-v addAll: els.
-els @ (RSLabeled new highlightable; text: [ :nb | nb model *10 ]).
-RSNormalizer size elements: els; normalize: #yourself.
-RSGridLayout on: els.
-v @ RSControlsView.
-v open
-
-	"
-	self shape: (RSShapeBuilder label text: aBlockOrSymbol).
+	self shapeBuilder: [:model | RSShape label text: (aBlockOrSymbol rsValue: model)].
 
 ]

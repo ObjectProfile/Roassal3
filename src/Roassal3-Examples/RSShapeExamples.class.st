@@ -4,7 +4,7 @@ I use the RSShapeBuilder
 Class {
 	#name : #RSShapeExamples,
 	#superclass : #RS3Object,
-	#category : #'Roassal3-Scripting-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #shapes }
@@ -792,84 +792,83 @@ RSShapeExamples >> example22ScaleEvents [
 { #category : #shapes }
 RSShapeExamples >> example24Highlightable [
 	<script: 'self new example24Highlightable'>
-	
-	| v es s l label boxShape composite |
-	v := RSView new.
-	l := RSLabeled new.
-	label := RSShapeBuilder label.
-	boxShape := RSShapeBuilder box
-		withBorder.
-	composite := RSShapeBuilder composite shapes: [ :m |
+	| canvas shapes interaction |
+	canvas := RSCanvas new.
+	interaction := RSLabeled new.
+	interaction shapeBuilder: [:str | 
 		| g title box |
-		g := RSGroup new.
-		title := label elementOn: m.
-		box := boxShape elementOn: m.
-		box extent: title textWidth  @ 3.
-		g add: title; add: box. 
+		title := RSLabel new text: str; yourself.
+		box := RSBox new
+			withBorder;
+			extent: title textWidth @ 3;
+			yourself.
+		g := { title. box }.
 		RSVerticalLineLayout new alignCenter; gapSize: 0; on: g.
-		g ].
-	l shape: composite.
-	l highlightable.
-	l target: [ :e | e shapes first ].
-	s := RSShapeBuilder ellipse
-		color: Color blue;
-		addInteraction: l;
-		interactionDo: [:i | i draggable];
-		size: 20.
-	es := s elementsOn: #('Hello' 'World').
-	v addAll: es.
-	RSHorizontalLineLayout on: es.
-	v @ RSControlsCanvas.
-	v open.
+		g asGroup asShape].
+	interaction highlightable.
+	interaction target: [ :e | e shapes first ].
+	shapes := #('Hello' 'World') collect: [:str | 
+		RSEllipse new
+			color: Color blue;
+			model: str;
+			addInteraction: interaction;
+			draggable;
+			size: 20;
+			yourself ].
+	canvas addAll: shapes.
+	RSHorizontalLineLayout on: shapes.
+	canvas @ RSControlsCanvas.
+	canvas open.
 ]
 
 { #category : #shapes }
 RSShapeExamples >> example25BimetricLineOnLargeExample [
 	<script: 'self new example25BimetricLineOnLargeExample'>
-| packagesRegExp packages l packageElements high v |
-packagesRegExp := { 'Calypso*' }.
+	| packagesRegExp packages l packageElements high v |
+	packagesRegExp := { 'Calypso*' }.
 
-packages := packagesRegExp flatCollect: [ :regExp | RPackageOrganizer default packages select: [ :p | regExp match: p packageName ] ].
+	packages := packagesRegExp flatCollect: [ :regExp | 
+		RPackageOrganizer default packages 
+		select: [ :p | regExp match: p packageName ] ].
 
-l := RSLabeled new text: [ :model | model packageName ].
-packageElements := RSShapeBuilder composite
-							color: Color blue trans;
-							addInteraction: l;
-							draggable;
-							shapes: [ :pak |
-								| g lbl |
-								g := RSShapeBuilder box
-									size: [ :cls | cls numberOfMethods sqrt ];
-									elementsOn: pak definedClasses.
-								RSGridLayout on: g.
-								g
-							]; 
-							padding: 5;
-							elementsOn: packages.
-high := RSHighlightable new.
-high withEdges.
-high highlightShape color: Color red trans.							
-packageElements @ high.						
-v := RSView new.
-v addAll: packageElements.
+	l := RSLabeled new text: [ :model | model packageName ].
+	packageElements := RSShapeBuilder composite
+								color: Color blue trans;
+								addInteraction: l;
+								draggable;
+								shapes: [ :pak |
+									| g lbl |
+									g := RSShapeBuilder box
+										size: [ :cls | cls numberOfMethods sqrt ];
+										elementsOn: pak definedClasses.
+									RSGridLayout on: g.
+									g
+								]; 
+								padding: 5;
+								elementsOn: packages.
+	high := RSHighlightable new.
+	high withEdges.
+	high highlightShape color: Color red trans.							
+	packageElements @ high.						
+	v := RSView new.
+	v addAll: packageElements.
 
-RSEdgeBuilder bimetricLine
-		view: v;
-		objects: packages;
-		widthFrom:
-				[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 10 ];
-		widthTo:
-				[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 10 ];
-		paint: Color blue trans;
-		border: nil;
-		withBorderAttachPoint;
-		connectFrom: #yourself toAll: #dependentPackages.
-		
-		
-RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-v @ RSControlsCanvas.
-
-v open			
+	RSEdgeBuilder bimetricLine
+			view: v;
+			objects: packages;
+			widthFrom:
+					[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 10 ];
+			widthTo:
+					[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 10 ];
+			paint: Color blue trans;
+			border: nil;
+			withBorderAttachPoint;
+			connectFrom: #yourself toAll: #dependentPackages.
+			
+			
+	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+	v @ RSControlsCanvas.
+	v open	
 ]
 
 { #category : #shapes }
