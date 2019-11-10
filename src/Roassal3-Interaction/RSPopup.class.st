@@ -1,5 +1,29 @@
 "
-I can add a popup on an element when a move over event occurs 
+I can add a popup on an element when a move over event occurs.
+
+Here is an example:
+-=-=-=-=
+c := RSCanvas new.
+
+classes := RSObject withAllSubclasses.
+
+scale := TSScale linear
+	domain: { (classes collect: #numberOfMethods) min . (classes collect: #numberOfMethods) max};
+	range: { 'red'. 'blue' }.
+
+classes do: [ :cls |
+	| b |
+	b := RSEllipse new.
+	b size: cls numberOfMethods.
+	b color: (scale scale: cls numberOfMethods).
+	b model: cls.
+	b @ RSPopup.
+	c add: b ].
+
+RSFlowLayout on: c shapes.
+
+c @ RSControlsCanvas
+-=-=-=-=
 "
 Class {
 	#name : #RSPopup,

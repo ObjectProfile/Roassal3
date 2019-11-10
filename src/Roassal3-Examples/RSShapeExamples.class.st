@@ -1089,3 +1089,30 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	v @ RSControlsCanvas.
 	v open.
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example33ColorScaling [
+	<script: 'self new example33ColorScaling'>
+	| c classes scale |
+	c := RSCanvas new.
+
+	classes := RSObject withAllSubclasses.
+
+	scale := TSScale linear
+		domain: { (classes collect: #numberOfMethods) min . (classes collect: #numberOfMethods) max};
+		range: { 'red'. 'blue' }.
+
+	classes do: [ :cls |
+		| b |
+		b := RSEllipse new.
+		b size: cls numberOfMethods.
+		b color: (scale scale: cls numberOfMethods).
+		b model: cls.
+		b @ RSPopup.
+		c add: b ].
+
+	RSFlowLayout on: c shapes.
+
+	c @ RSControlsCanvas.
+	c open
+]
