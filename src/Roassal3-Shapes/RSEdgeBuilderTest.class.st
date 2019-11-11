@@ -315,6 +315,12 @@ RSEdgeBuilderTest >> testShouldNotAllowBidirection [
 ]
 
 { #category : #tests }
+RSEdgeBuilderTest >> testShouldNotInstantiate [
+
+	self should: [ RSEdgeBuilder new ] raise: Error
+]
+
+{ #category : #tests }
 RSEdgeBuilderTest >> testSimple [
 
 	RSEdgeBuilder line

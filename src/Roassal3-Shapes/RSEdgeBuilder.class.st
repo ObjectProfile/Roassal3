@@ -2,26 +2,30 @@
 RSEdgeBuilder offers an API to easily build edges.
 
 Here is an example:
-```
-v := RSView new.
+```Smalltalk
+c := RSCanvas new.
 
 classes := Collection withAllSubclasses.
-boxes := RSShapeBuilder box
-				width: [ :cls | cls instVarNames size * 5 max: 5 ];
-				height: [ :cls | cls numberOfMethods max: 5 ];
-				elementsOn: classes.
+boxes := classes collect: [ :cls |
+				RSBox new
+					width: (cls instVarNames size * 5 max: 5);
+					height: (cls numberOfMethods max: 5);
+					model: cls;
+					yourself ] as: RSGroup.
+
+
 boxes @ RSDraggable.
-v addAll: boxes.
+c addAll: boxes.
 
 RSEdgeBuilder orthoVertical
-	view: v;
+	canvas: c;
 	attachPoint: RSVerticalAttachPoint new;
-	elements: boxes;
+	shapes: boxes;
 	connectFrom: #superclass.
 
-RSTreeLayout on: v elements.
-v @ RSControlsView.
-v open
+RSTreeLayout on: c nodes.
+c @ RSControlsCanvas.
+c open
 ```
 "
 Class {
@@ -75,8 +79,13 @@ RSEdgeBuilder class >> line [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> new [
+	^ self error: 'Should not use #new to create an edge builder. Instead, use a #line, #arrowedLine.'
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> new: aTSShape [
-	 ^ self new 
+	 ^ super new 
 		shape: aTSShape;
 		yourself
 		
@@ -154,12 +163,14 @@ RSEdgeBuilder >> canvas [
 
 { #category : #accessing }
 RSEdgeBuilder >> canvas: aCanvas [
+	"Provide a reference to the Roassal canvas in which (i) shapes will be looked up and (ii) lines will be added"
 	canvasHasBeenManuallySet := true.
 	canvas := aCanvas
 ]
 
 { #category : #accessing }
 RSEdgeBuilder >> canvasNodes [
+	"Return the nodes of the canvas"
 	canvas ifNil: [ ^ #() ].
 	^ canvas nodes
 ]
@@ -171,6 +182,7 @@ RSEdgeBuilder >> color: aColor [
 
 { #category : #public }
 RSEdgeBuilder >> connectFrom: aBlockOrASymbol [
+	"Connect each shapes with the shapes for which the model matches aBlockOrASymbol"
 	^ self connectFrom: aBlockOrASymbol to: [ :each | each ]
 ]
 
@@ -188,6 +200,32 @@ RSEdgeBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 
 { #category : #public }
 RSEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
+	"Define edges from a particular element to another set of elements. For example:
+
+-=-=-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+shapes := (30 to: 50) collect: [ :nb |
+	RSEllipse new size: nb; model: nb; yourself.
+	 ] as: RSGroup.
+
+c addAll: shapes.
+
+RSEdgeBuilder line
+	canvas: c;
+	withBorderAttachPoint;
+	connectFrom: 30 toAll: (31 to: 50).
+
+
+RSGridLayout on: shapes. 
+RSLocation new
+	above;
+	move: shapes first on: shapes allButFirst.
+shapes @ RSDraggable.
+
+c @ RSControlsCanvas
+-=-=-=-=-=-=-=-=-=-=-=-=
+	"
 
 	| fromElement tes |
 	self resetCreatedEdges.
@@ -609,15 +647,117 @@ RSEdgeBuilder >> useElementAssociations: associationsBetweenElements [
 
 { #category : #'public - shape' }
 RSEdgeBuilder >> width: aNumber [
+	"Set the width of the line. For example:
+	
+-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+from := RSBox new size: 30; model: 'from'.
+to := RSEllipse new size: 30; model: 'to'.
+
+c add: from.
+c add: to.
+
+RSEdgeBuilder line
+	canvas: c;
+	width: 10;
+	connectFrom: 'from' to: 'to'.
+
+
+from @ RSDraggable.
+to @ RSDraggable.
+
+to translateTo: 50 @ 40.
+
+c @ RSControlsCanvas
+-=-=-=-=-=-=-=-=-=-=
+	"
 	self shape width: aNumber
 ]
 
 { #category : #'public - attach point' }
 RSEdgeBuilder >> withBorderAttachPoint [
+	"Make the produced line use a border attach point. For example:
+-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+from := RSBox new size: 30; model: 'from'.
+to := RSEllipse new size: 30; model: 'to'.
+
+c add: from.
+c add: to.
+
+RSEdgeBuilder line
+	canvas: c;
+	withBorderAttachPoint;
+	connectFrom: 'from' to: 'to'.
+
+
+from @ RSDraggable.
+to @ RSDraggable.
+
+to translateTo: 50 @ 40.
+
+c @ RSControlsCanvas
+-=-=-=-=-=-=-=-=-=-=
+	"
 	self attachPoint: RSBorderAttachPoint new.
 ]
 
 { #category : #'public - attach point' }
+RSEdgeBuilder >> withHorizontalAttachPoint [
+	"Make the produced line use a vertical attach point. For example:
+-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+from := RSBox new size: 30; model: 'from'.
+to := RSEllipse new size: 30; model: 'to'.
+
+c add: from.
+c add: to.
+
+RSEdgeBuilder line
+	canvas: c;
+	withHorizontalAttachPoint;
+	connectFrom: 'from' to: 'to'.
+
+
+from @ RSDraggable.
+to @ RSDraggable.
+
+to translateTo: 50 @ 40.
+
+c @ RSControlsCanvas
+-=-=-=-=-=-=-=-=-=-=
+	"
+	self attachPoint: RSHorizontalAttachPoint new.
+]
+
+{ #category : #'public - attach point' }
 RSEdgeBuilder >> withVerticalAttachPoint [
+	"Make the produced line use a vertical attach point. For example:
+-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+from := RSBox new size: 30; model: 'from'.
+to := RSEllipse new size: 30; model: 'to'.
+
+c add: from.
+c add: to.
+
+RSEdgeBuilder line
+	canvas: c;
+	withVerticalAttachPoint;
+	connectFrom: 'from' to: 'to'.
+
+
+from @ RSDraggable.
+to @ RSDraggable.
+
+to translateTo: 50 @ 40.
+
+c @ RSControlsCanvas
+-=-=-=-=-=-=-=-=-=-=
+	"
 	self attachPoint: RSVerticalAttachPoint new.
 ]
