@@ -1,5 +1,13 @@
 "
-I represent a visual component box in a canvas
+I represent a visual component box in a canvas.
+
+Here is an example:
+c := RSCanvas new.
+(30 to: 150 by: 10) do: [ :nb |
+	b := RSBox new size: nb.
+	c add: b ].
+RSFlowLayout on: c nodes.
+c @ RSControlsCanvas
 "
 Class {
 	#name : #RSBox,
