@@ -19,12 +19,12 @@ RSAbstractLine >> accept: visitor [
 	visitor visitLine: self.
 ]
 
-{ #category : #accessing }
+{ #category : #'attach point' }
 RSAbstractLine >> attachPoint [
 	^ attachPoint
 ]
 
-{ #category : #accessing }
+{ #category : #'attach point' }
 RSAbstractLine >> attachPoint: ap [
 	attachPoint := ap
 ]
@@ -156,7 +156,8 @@ RSAbstractLine >> privateMarkers [
 
 { #category : #adding }
 RSAbstractLine >> renderOn: aCanvas [
-	aCanvas addEdge: self
+	aCanvas addEdge: self.
+	self update.
 ]
 
 { #category : #path }
@@ -226,4 +227,19 @@ RSAbstractLine >> update [
 { #category : #accessing }
 RSAbstractLine >> width: aNumber [
 	self border width: aNumber.
+]
+
+{ #category : #'attach point' }
+RSAbstractLine >> withBorderAttachPoint [
+	self attachPoint: RSBorderAttachPoint new.
+]
+
+{ #category : #'attach point' }
+RSAbstractLine >> withHorizontalAttachPoint [
+	self attachPoint: RSHorizontalAttachPoint new.
+]
+
+{ #category : #'attach point' }
+RSAbstractLine >> withVerticalAttachPoint [
+	self attachPoint: RSVerticalAttachPoint new.
 ]
