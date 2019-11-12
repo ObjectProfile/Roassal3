@@ -19,6 +19,31 @@ RSFlowLayout on: c shapes.
 c @ RSControlsCanvas.
 c
 ```
+
+Another example, using animation: 
+```Smalltalk
+c := RSCanvas new.
+
+b := RSBorder new color: Color blue.
+b dashArray: #(5 1 5).
+(30 to: 60) do: [ :nb |
+	box := RSBox new size: nb.
+	ellipse := RSEllipse new width: nb; height: nb + 10.
+	box border: b.
+	ellipse border: b.
+	c add: box; add: ellipse.
+	 ].
+
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas.
+
+c newAnimation 
+	from: 0;
+	to: 40;
+	on: b set: #dashOffset:.
+c
+```
+
 "
 Class {
 	#name : #RSBorder,

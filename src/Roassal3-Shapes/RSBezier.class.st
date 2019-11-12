@@ -1,5 +1,51 @@
 "
-TSBezier represents a bezier lines of one and 2 control points
+RSBezier represents a bezier lines of one and 2 control points.
+
+Here is an example:
+```Smalltalk
+	c := RSCanvas new.
+	c add: (RSBezier new
+		color: Color red;
+		controlPoints:
+			{(0 @ 0).
+			(100 @ 100).
+			(200 @ 0).
+			(300 @ 100)}).
+	c 
+```
+
+Another example:
+```Smalltalk
+	v := RSCanvas new.
+	
+	e1 := RSBox new size: 100; color: Color blue.
+	e2 := RSBox new size: 100; color: Color red.
+	e1 translateTo: 100 @ -200.
+
+	e1 @ RSDraggable.
+	e2 @ RSDraggable.
+	v
+		add: e1;
+		add: e2.
+	
+	l := RSSingleEdgeBuilder bezier
+		withVerticalAttachPoint;
+		""paint: Color red trans;""
+		from: e1;
+		to: e2;
+		controlPoints: [ :m | 
+			[ :a :b | 
+			| mid |
+			mid := (a + b) / 2.
+			Array
+				with: a
+				with: a x @ mid y
+				with: b x @ mid y
+				with: b ] ];
+		edge.
+	v add: l.
+	v open
+```
 "
 Class {
 	#name : #RSBezier,
