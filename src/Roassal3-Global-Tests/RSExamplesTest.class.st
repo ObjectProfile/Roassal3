@@ -1,11 +1,11 @@
 Class {
-	#name : #TSExamplesTest,
+	#name : #RSExamplesTest,
 	#superclass : #RSTest,
 	#category : #'Roassal3-Global-Tests-Examples'
 }
 
 { #category : #tests }
-TSExamplesTest >> testExamples [
+RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
 	RSAbstractExamples subclasses
 		do: [ :cls | 

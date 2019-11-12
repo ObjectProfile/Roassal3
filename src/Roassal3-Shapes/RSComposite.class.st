@@ -1,5 +1,114 @@
 "
-I am a shape with a lot of shapes
+I am a composite shapes. I can therefore contain other shapes.
+
+Here is a simple example:
+-=-=-=
+c := RSCanvas new.
+
+box := RSBox new width: 40; height: 10; color: Color blue.
+label := RSLabel new text: 'Hello Roassal3'.
+RSLocation new above; move: box on: label.
+composite := RSComposite new.
+composite shapes: { label . box }.
+composite @ RSDraggable.
+
+c add: composite.
+c
+-=-=-=
+
+A composite can also have a background color. Simply use #color: for this:
+-=-=-=
+c := RSCanvas new.
+
+box := RSBox new width: 40; height: 10; color: Color blue.
+label := RSLabel new text: 'Hello Roassal3'.
+RSLocation new above; move: box on: label.
+composite := RSComposite new.
+composite color: Color gray.
+composite shapes: { label . box }.
+composite @ RSDraggable.
+
+c add: composite.
+c
+-=-=-=
+
+A padding describes a space between the border of the composite element and the inner shapes. It can be adjusted using the message #padding:
+
+-=-=-=
+c := RSCanvas new.
+
+box := RSBox new width: 40; height: 10; color: Color blue.
+label := RSLabel new text: 'Hello Roassal3'.
+RSLocation new above; move: box on: label.
+composite := RSComposite new.
+composite color: Color gray.
+composite shapes: { label . box }.
+composite @ RSDraggable.
+composite padding: 10.
+
+c add: composite.
+c
+-=-=-=
+
+Inner nodes can be layouted:
+-=-=-=
+classes := RSObject withAllSubclasses.
+
+c := RSCanvas new.
+
+classes do: [ :cls |
+	label := RSLabel new text: cls name.
+	methods := 
+		cls methods collect: [ :m |
+			RSBox new model: m; size: m sourceCode size sqrt; color: Color blue ] as: RSGroup.
+	RSGridLayout on: methods.
+	methods @ RSPopup.
+	RSLocation new above; move: label on: methods.
+	composite := RSComposite new.
+	composite color: Color gray.
+	composite shapes: { label }, methods.
+	composite @ RSDraggable.
+	composite padding: 10.
+	c add: composite.
+].
+
+RSFlowLayout on: c shapes.
+
+c @ RSControlsCanvas
+-=-=-=
+
+Lines can be added between composite. Here is an example:
+-=-=-=
+classes := RSObject withAllSubclasses.
+
+c := RSCanvas new.
+
+classes do: [ :cls |
+	label := RSLabel new text: cls name.
+	methods := 
+		cls methods collect: [ :m |
+			RSBox new model: m; size: m sourceCode size sqrt; color: Color blue ] as: RSGroup.
+	RSGridLayout on: methods.
+	methods @ RSPopup.
+	RSLocation new above; move: label on: methods.
+	composite := RSComposite new.
+	composite model: cls.
+	composite color: Color gray.
+	composite shapes: { label }, methods.
+	composite @ RSDraggable.
+	composite padding: 10.
+	c add: composite.
+].
+
+RSEdgeBuilder orthoVertical
+	canvas: c;
+	withVerticalAttachPoint;
+	connectFrom: #superclass.
+
+RSTreeLayout on: c nodes.
+
+c @ RSControlsCanvas
+-=-=-=
 "
 Class {
 	#name : #RSComposite,

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSAttachPointTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Tests'
+	#category : #'Roassal3-Global-Tests'
 }
 
 { #category : #tests }
@@ -16,8 +16,6 @@ RSAttachPointTest >> testBorderAttachPoint [
 		to: b2.
 	l attachPoint: RSBorderAttachPoint new.
 	l update.
-	b1 @ RSDraggable.
-	b2 @ RSDraggable.
 	c := RSCanvas new.
 	c
 		add: b1;
@@ -39,8 +37,6 @@ RSAttachPointTest >> testCenteredAttachPoint [
 		to: b2.
 	l attachPoint: RSCenteredAttachPoint new.
 	l update.
-	b1 @ RSDraggable.
-	b2 @ RSDraggable.
 	c := RSCanvas new.
 	c
 		add: b1;
@@ -62,8 +58,6 @@ RSAttachPointTest >> testHorizontalAttachPoint [
 		to: b2.
 	l attachPoint: RSHorizontalAttachPoint new.
 	l update.
-	b1 @ RSDraggable.
-	b2 @ RSDraggable.
 	c := RSCanvas new.
 	c
 		add: b1;
@@ -85,8 +79,6 @@ RSAttachPointTest >> testVerticalAttachPoint [
 		to: b2.
 	l attachPoint: RSVerticalAttachPoint new.
 	l update.
-	b1 @ RSDraggable.
-	b2 @ RSDraggable.
 	c := RSCanvas new.
 	c
 		add: b1;
