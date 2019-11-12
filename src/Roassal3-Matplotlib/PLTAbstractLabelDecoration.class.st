@@ -9,7 +9,7 @@ Class {
 
 { #category : #rendering }
 PLTAbstractLabelDecoration >> createLabel [
-	^ TSLabel new
+	^ RSLabel new
 		text: title;
 		fontSize: 10;
 		color: Color black

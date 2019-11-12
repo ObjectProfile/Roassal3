@@ -12,7 +12,7 @@ PLTScatter >> renderIn: canvas [
 	yScale := self createYScale.
 	elements := (1 to: xValues size)
 		collect: [ :notUsed | 
-			TSEllipse new
+			RSEllipse new
 				radius: 2;
 				color: (plt defaultPlotColors at: self index) ].
 	1 to: xValues size do: [ :i | 

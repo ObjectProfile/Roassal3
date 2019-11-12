@@ -10,7 +10,7 @@ Class {
 { #category : #rendering }
 PLTTitleDecoration >> renderIn: canvas [
 	| label |
-	label := TSLabel new text: title; color: Color black.
+	label := RSLabel new text: title; color: Color black.
 	canvas addShape: label.
 	RSLocation new
 		offset: 1;

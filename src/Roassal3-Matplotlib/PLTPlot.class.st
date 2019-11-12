@@ -16,7 +16,7 @@ PLTPlot >> renderIn: canvas [
 		xt := xValues at: i.
 		yt := yValues at: i.
 		newPoint := (xScale scale: xt) @ (yScale scale: yt).
-		et := TSLine new startPoint: lastPoint; endPoint: (lastPoint := newPoint).
+		et := RSLine new startPoint: lastPoint; endPoint: (lastPoint := newPoint).
 		et color: (plt defaultPlotColors at: self index).
 		canvas addShape: et ].
 

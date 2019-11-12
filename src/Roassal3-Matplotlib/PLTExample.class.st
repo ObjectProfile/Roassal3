@@ -22,6 +22,30 @@ PLTExample >> example02ScatterPlot [
 ]
 
 { #category : #'as yet unclassified' }
+PLTExample >> example03Plot [
+	<script: 'self new example03Plot'>
+
+	| classes plt p x |
+	x := 0.0 to: 2 count: 100.
+	classes := Collection withAllSubclasses.
+	plt := PLT new.
+	p := PLTPlot new x: x y: (x raisedTo: 2).
+	plt addPlot: p.
+
+	p := PLTPlot new x: x y: (x raisedTo: 3).
+	plt addPlot: p.
+
+	p := PLTPlot new x: x y: (x raisedTo: 4).
+	plt addPlot: p.
+
+	plt xlabel: 'X Axis'.
+	plt ylabel: 'Y Axis'.
+	plt title: 'Hello World'.
+	plt build.
+	plt show
+]
+
+{ #category : #'as yet unclassified' }
 PLTExample >> exampleBasic01 [
 
 "
