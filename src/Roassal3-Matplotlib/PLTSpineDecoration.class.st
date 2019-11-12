@@ -22,7 +22,7 @@ Class {
 
 { #category : #rendering }
 PLTSpineDecoration >> renderIn: canvas [
-	shape := TSBox new color: nil; extent: plt extent; border: TSBorder new.
+	shape := RSBox new color: nil; extent: plt extent; border: RSBorder new.
 	shape translateTo: (plt extent x / 2) @ (plt extent y negated / 2).
 	canvas addShape: shape
 ]

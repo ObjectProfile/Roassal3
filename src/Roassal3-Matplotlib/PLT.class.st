@@ -27,12 +27,17 @@ PLT >> addPlot: aPlot [
 
 { #category : #building }
 PLT >> build [
-	canvas := TSCanvas new.
-	"canvas @ RSControlsView."
+	canvas := RSCanvas new.
+	canvas @ RSControlsCanvas.
 	"RSControlsView new onElement: canvas."
 	self renderDecorationIn: canvas.
 	plots do: [ :p | p renderIn: canvas ].
 	
+]
+
+{ #category : #building }
+PLT >> canvas [
+	^ canvas
 ]
 
 { #category : #accessing }
