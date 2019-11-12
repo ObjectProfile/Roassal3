@@ -91,6 +91,7 @@ RSAbstractLine >> from [
 
 { #category : #accessing }
 RSAbstractLine >> from: aShape [
+	"A line connect two shapes. "
 	from := self setAnchor: from shape: aShape
 ]
 

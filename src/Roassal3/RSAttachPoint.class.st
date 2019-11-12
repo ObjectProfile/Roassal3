@@ -26,12 +26,34 @@ RSAttachPoint >> basicStartingPointOf: anEdge [
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> endingPointOf: anEdge [
-	(anEdge from = anEdge to) 
-		ifTrue: [ ^ self position: anEdge from ].
+RSAttachPoint >> endingPointOf: aLine [
+	"Return the end point of a line.
+	
+	b1 := RSBox new size: 20.
+	b2 := RSBox new size: 20.
+	b1 translateTo: 20 @ 30.
+	b2 translateTo: 60 @ 50.
+	l := RSLine new
+		from: b1;
+		to: b2.
+	l attachPoint: RSBorderAttachPoint new.
+	l update.
+	b1 @ RSDraggable.
+	b2 @ RSDraggable.
+	c := RSCanvas new.
+	c
+		add: b1;
+		add: b2;
+		add: l.
+	
+	l attachPoint startingPointOf: l
+=> 	50 @ 45
+	"
+	(aLine from = aLine to) 
+		ifTrue: [ ^ self position: aLine from ].
     ^ inverted
-        ifTrue: [ self basicStartingPointOf: anEdge ]
-        ifFalse: [ self basicEndingPointOf: anEdge ]
+        ifTrue: [ self basicStartingPointOf: aLine ]
+        ifFalse: [ self basicEndingPointOf: aLine ]
 ]
 
 { #category : #'public - hooks' }
@@ -41,25 +63,48 @@ RSAttachPoint >> initialize [
 ]
 
 { #category : #private }
-RSAttachPoint >> position: anObject [
-	anObject isPoint ifTrue: [ ^ anObject ].
-	^ self positionFor: anObject point: anObject position.
+RSAttachPoint >> position: aShapeOrAPoint [
+	"Return the position of a shape. Polymorphic to point"
+	aShapeOrAPoint isPoint ifTrue: [ ^ aShapeOrAPoint ].
+	^ self positionFor: aShapeOrAPoint point: aShapeOrAPoint position.
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: anElement point: aPoint [
+RSAttachPoint >> positionFor: aShape point: aPoint [
 	| parent |
-	(parent := anElement parent )ifNil: [ ^ aPoint ].
+	(parent := aShape parent )ifNil: [ ^ aPoint ].
 	^ parent transform: aPoint
 	
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> startingPointOf: anEdge [
-	(anEdge from = anEdge to) 
-		ifTrue: [ ^ self position: anEdge from ].
+RSAttachPoint >> startingPointOf: aLine [
+"Return the starting point of a line.
+	
+	b1 := RSBox new size: 20.
+	b2 := RSBox new size: 20.
+	b1 translateTo: 20 @ 30.
+	b2 translateTo: 60 @ 50.
+	l := RSLine new
+		from: b1;
+		to: b2.
+	l attachPoint: RSBorderAttachPoint new.
+	l update.
+	b1 @ RSDraggable.
+	b2 @ RSDraggable.
+	c := RSCanvas new.
+	c
+		add: b1;
+		add: b2;
+		add: l.
+	
+	l attachPoint startingPointOf: l
+=> 	30 @ 35
+	"
+	(aLine from = aLine to) 
+		ifTrue: [ ^ self position: aLine from ].
     ^ inverted
-        ifTrue: [ self basicEndingPointOf: anEdge ]
-        ifFalse: [ self basicStartingPointOf: anEdge ]
+        ifTrue: [ self basicEndingPointOf: aLine ]
+        ifFalse: [ self basicStartingPointOf: aLine ]
 
 ]
