@@ -52,6 +52,46 @@ RSTransitionAnimation >> initialize [
 
 { #category : #'action handling' }
 RSTransitionAnimation >> on: object set: setSelector [
+	"Key method to set an animation. the first argument receives an object, typically a shape, a border, a line. The second argument is a selector that will be used to set the animated value. The selector must take one argument as parameter. Here is an example:
+
+-=-=-=-=
+c := RSCanvas new.
+
+b := RSBorder new color: Color blue.
+b dashArray: #(5 1 5).
+(30 to: 60) do: [ :nb |
+	box := RSBox new size: nb.
+	ellipse := RSEllipse new width: nb; height: nb + 10.
+	box border: b.
+	ellipse border: b.
+	c add: box; add: ellipse.
+	 ].
+
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas.
+
+c newAnimation 
+	from: 0;
+	to: 40;
+	on: b set: #dashOffset:.
+c
+-=-=-=-=
+
+Another example, simpler: 
+-=-=-=-=
+c := RSCanvas new.
+
+b := RSBox new size: 30.
+c add: b.
+
+c newAnimation 
+	from: 0 @ 0;
+	to: 100 @ 100;
+	on: b set: #position:.
+
+c
+-=-=-=-=
+	"
 	| sel |
 	sel := setSelector asSymbol.
 	self 

@@ -1,5 +1,24 @@
 "
-I represent borders and line styles
+I represent borders and line styles.
+
+A same border can be shared amoung different shapes. Here is an example:
+
+```Smalltalk
+c := RSCanvas new.
+
+b := RSBorder new color: Color blue.
+(30 to: 60) do: [ :nb |
+	box := RSBox new size: nb.
+	ellipse := RSEllipse new width: nb; height: nb + 10.
+	box border: b.
+	ellipse border: b.
+	c add: box; add: ellipse.
+	 ].
+
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas.
+c
+```
 "
 Class {
 	#name : #RSBorder,
@@ -46,6 +65,26 @@ RSBorder >> color: aColor [
 
 { #category : #'style-dashes' }
 RSBorder >> dashArray: arrayOfNumbers [
+	"Set the pattern for the dash. For example:
+-=-=-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+b := RSBorder new color: Color blue.
+b dashArray: #(1 5 10 15).
+(30 to: 60) do: [ :nb |
+	box := RSBox new size: nb.
+	ellipse := RSEllipse new width: nb; height: nb + 10.
+	box border: b.
+	ellipse border: b.
+	c add: box; add: ellipse.
+	 ].
+
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas.
+c
+-=-=-=-=-=-=-=-=-=-=-=-=
+
+	"
 	self pStyle dashArray: arrayOfNumbers
 	
 ]
@@ -57,6 +96,32 @@ RSBorder >> dashOffset [
 
 { #category : #accessing }
 RSBorder >> dashOffset: offset [
+	"Set the offset for the dash. The offset is useful when animating. 
+
+=-=-=-==-=-=-==-=-=-==-=-=-=
+c := RSCanvas new.
+
+b := RSBorder new color: Color blue.
+b dashArray: #(5 1 5).
+(30 to: 60) do: [ :nb |
+	box := RSBox new size: nb.
+	ellipse := RSEllipse new width: nb; height: nb + 10.
+	box border: b.
+	ellipse border: b.
+	c add: box; add: ellipse.
+	 ].
+
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas.
+
+c newAnimation 
+	from: 0;
+	to: 40;
+	on: b set: #dashOffset:.
+
+c
+=-=-=-==-=-=-==-=-=-==-=-=-=
+	"
 	self pStyle dashOffset: offset
 ]
 
