@@ -146,14 +146,14 @@ RSPieExamples >> example05Smash [
 		a := e alphaAngle.
 		b := e betaAngle.
 		pie view animationFrom: { 
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				duration: 2 seconds;
 				easing: RSEasing bounceOut;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
 						betaAngle: b * t ]).
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				delay: (50 * e index) milliSeconds;
 				duration: 750 milliSecond;
 				easing: RSEasing elasticOut;
@@ -187,14 +187,14 @@ RSPieExamples >> example06SmashHSL [
 		a := e alphaAngle.
 		b := e betaAngle.
 		pie view animationFrom: { 
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				duration: 2 seconds;
 				easing: RSEasing bounceOut;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
 						betaAngle: b * t ]).
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				delay: (10 * e index) milliSeconds;
 				duration: 2 seconds;
 				easing: (RSEasing elasticOut period: 0.30; amplitude: 0.8) ;
@@ -226,13 +226,13 @@ RSPieExamples >> example07Dendi [
 		a := e alphaAngle.
 		b := e betaAngle.
 		pie view animationFrom: { 
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				easing: RSEasing bounce;
 				onStepDo: [ :t |
 					e 
 						alphaAngle: a * t;
 						betaAngle: b * t ]).
-			(pie view tAnimation 
+			(pie view transitionAnimation 
 				delay: 3 seconds;
 				easing: RSEasing  bounce;
 				onStepDo: [:t | 
@@ -339,7 +339,7 @@ RSPieExamples >> example11OpenningAnimation [
 	reset := [ pie elements do: #remove. pie build. pie view signalUpdate ].
 	pie build.
 	
-	bounce := pie view tAnimation from: 0; to: 360; 
+	bounce := pie view transitionAnimation from: 0; to: 360; 
 		easing: RSEasing bounceOut;
 		onStepDo: [ :t | 
 		pie elements do: [ :e | | beta |
@@ -356,7 +356,7 @@ RSPieExamples >> example11OpenningAnimation [
 			 ] ].
 	bounce when: RSAnimationEndEvent do: reset.
 	
-	inout := pie view tAnimation 
+	inout := pie view transitionAnimation 
 		delay: 1 second;
 		easing: RSEasing backOut;
 		onStepDo: [ :t |
@@ -366,7 +366,7 @@ RSPieExamples >> example11OpenningAnimation [
 			 ].
 	inout when: RSAnimationEndEvent do: reset.
 	
-	outin := pie view tAnimation
+	outin := pie view transitionAnimation
 		delay: 1 second;
 		easing: RSEasing elasticOut;
 		onStepDo: [ :t |

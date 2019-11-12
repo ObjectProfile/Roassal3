@@ -54,14 +54,14 @@ RSForceLayoutStepping >> startForceAnimation: aView [
 	animation ifNotNil: #stop.
 	animation := aView animationFrom: {
 		"Start smoothly"
-		aView tAnimation
+		aView transitionAnimation
 			easing: RSEasing cubicOut;
 			duration: 500 milliSeconds;
 			range: self alphaRange;
 			onStepDo: [ :t | layout alpha: t; step ].
 
 		"Continue on max alpha undefinitely"
-		aView tAnimation
+		aView transitionAnimation
 			repeat;
 			onStepDo: [ :t | layout step ] }.
 

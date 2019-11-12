@@ -55,15 +55,15 @@ RSAnimationExamples >> example02Sequential [
 	c addShape: b.
 	
 	animation := c animationFrom: { 
-		(c tAnimation
+		(c transitionAnimation
 			from: -100@ -200;
 			to: 100@130;
 			on: b set: #position:).
-		(c tAnimation
+		(c transitionAnimation
 			from: Color red;
 			to: Color blue;
 			on: b set: #color:).
-		(c tAnimation 
+		(c transitionAnimation 
 			from: 0;
 			to: 10;
 			on: b border set: 'width:')
@@ -503,7 +503,7 @@ RSAnimationExamples >> example11ArcTree [
 	v showEncompassingRectangles.
 	v animationFrom: ((1 to: 5) reverse collect: [ :i| | elements |
 		elements := v elements select: [ :e | e index = i ].
-		v tAnimation 
+		v transitionAnimation 
 			duration: 1 seconds;
 			easing: RSEasing bounceOut;
 			onStepDo: [ :t |
@@ -1968,7 +1968,7 @@ RSAnimationExamples >> example34Tick [
 		s position: 0@ ( -60 + (i * 15)).
 		s]).
 	(c nodes at: 3) remove.
-	animation := [:a :b :k | c tAnimation 
+	animation := [:a :b :k | c transitionAnimation 
 		duration: 700 milliSeconds;
 		easing: RSEasing bounceOut;
 		from: a;

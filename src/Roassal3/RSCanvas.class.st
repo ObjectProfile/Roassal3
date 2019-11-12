@@ -29,6 +29,7 @@ RSCanvas >> accept: visitor [
 
 { #category : #animations }
 RSCanvas >> addAnimation: anAnimation [
+	"Schedule an animation, and run it until its completion"
 	animations add: anAnimation.
 	anAnimation canvas: self.
 	anAnimation start.

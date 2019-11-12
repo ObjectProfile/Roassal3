@@ -1,5 +1,21 @@
 "
 I am an abstraction of what an animation should need to do in the trachel canvas. Check package Roassal3-Animation to see a concrete subclasses.
+
+Here is an example on how to create animation
+
+-=-=-=-=-=-=-=-=-=
+	c := RSCanvas new.
+	b := RSBox new
+		extent: 100@100;
+		withBorder.
+	c add: b.
+	c newAnimation
+			from: -100 @ -100;
+			to: 100 @ 100;
+			on: b set: #position:.
+	c
+-=-=-=-=-=-=-=-=-=
+	
 "
 Class {
 	#name : #RSAnimation,
@@ -22,6 +38,7 @@ RSAnimation >> canvas: aCanvas [
 
 { #category : #dependencies }
 RSAnimation >> hasCompleted [
+	"Return true if the animation has completed"
 	^ self subclassResponsibility
 ]
 

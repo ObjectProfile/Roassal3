@@ -60,7 +60,7 @@ TSInspectableExample >> example02Inspect [
 	lastSize := 0.
 	animation := nil.
 	animation := view animationFrom: { 
-		view tAnimation repeat
+		view transitionAnimation repeat
 		easing: RSEasing backOut;
 		onStepDo: [ :t |
 			view elements do: [ :e |

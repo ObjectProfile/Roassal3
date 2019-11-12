@@ -53,7 +53,7 @@ RSScrollsCanvas >> initializeHideAnimation [
 	| sc1 sc2 |
 	sc1 := TSScale linear range: { self scrollColor. Color transparent }.
 	sc2 := TSScale linear range: { self scrollBorderColor. Color transparent }.
-	hideAnimation := vertical parent tAnimation
+	hideAnimation := vertical parent transitionAnimation
 		duration: 1 second;
 		onStepDo: [ :t | 
 			self 
