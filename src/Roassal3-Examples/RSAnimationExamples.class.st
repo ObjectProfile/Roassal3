@@ -828,6 +828,7 @@ RSAnimationExamples >> example14C [
 RSAnimationExamples >> example15Sky [
 	<script: 'self new example15Sky open setLabel: ''Star trails'''>
 	| view client image ext shape dots r frame box colors |
+	true ifTrue: [ ^ nil ].
 	view := RSView new.
 	r := Random new.
 	ext := 2200 @ 2200.
@@ -1812,34 +1813,37 @@ RSAnimationExamples >> example31Miku [
 { #category : #examples }
 RSAnimationExamples >> example32RSLocate [
 	<script: 'self new example32RSLocate open setLabel: ''RSLocation methods'''>
-	| v box fixedElement movableElement buttonShape buttons locate labelShape label grad1 grad2 |
-	v := RSView new.
+	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
+	canvas := RSCanvas new.
 	locate := RSLocation new.
-	box := RSShapeBuilder box
-		onElement;
-		size: 200;
-		color: RSColorPalette qualitative paired3.
-	labelShape  := RSShapeBuilder label
-		text: [ :m | 'Offset:', 
-			(m offset x printShowingDecimalPlaces: 1),'@',
-			(m offset y printShowingDecimalPlaces: 1) ].
-	label := labelShape elementOn: locate.
-	fixedElement := box elementOn: 'offset'.
-	movableElement := box element.
+	color := RSColorPalette qualitative paired3.
+	newBox := [ :m | RSBox new
+			size: 200;
+			color: (color scale: m);
+			yourself. ].
+
+	label := RSLabel new.
+	updateText := [ 
+		label text: 'Offset:', 
+			(locate offset x printShowingDecimalPlaces: 1),'@',
+			(locate offset y printShowingDecimalPlaces: 1) ].
+	updateText value.
+	fixedElement := newBox value: 1.
+	movableElement := newBox value: 2.
 	movableElement size: 40.
-	fixedElement when: RSMouseClick do: [ 
-		v newAnimation
+	movableElement when: RSMouseClick do: [ 
+		canvas newAnimation
 			scale: (TSScale linear 
 				domain: #(0 0.5 1); 
 				range: { 0@0. 20@20. 0@0});
 			onStepDo: [ :t | 
 				locate offset: t.
 				locate move: movableElement on: fixedElement.
-				labelShape updateElement: label.
+				updateText value.
 				label signalUpdate.
 				 ]  ].
 	
-	v add: fixedElement; add: movableElement; add: label.
+	canvas add: fixedElement; add: movableElement; add: label.
 	grad2 := (RSGradientPalette linearGradient: 
 		{0->'white'.
 		0.25->'black'.
@@ -1852,36 +1856,37 @@ RSAnimationExamples >> example32RSLocate [
 		1 ->'gray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	buttonShape := RSShapeBuilder box
-		cornerRadius: 5;
-		extent: 60@30;
-		paint: grad1;
-		interactionDo: [ :i| | lbl |
-			lbl := i labeled.
-			lbl shape color: Color white.
-			lbl location middle];
-		border: (RSBorder new color: Color lightGray);
-		onElement;
-		when: RSMouseEnter do: [:e | [ e paint: grad2; signalUpdate ] ]; 
-		when: RSMouseLeave do: [:e | [ e paint: grad1; signalUpdate ] ];
-		when: RSMouseClick do: [:e | [ | p |
-			e model value: locate. "= locate perform: e model"
-			p := movableElement position.
-			locate move: movableElement on: fixedElement.
-			v newAnimation
-				from: p;
-				duration: 500 milliSeconds;
-				to: movableElement position;
-				on: movableElement shape set: #position: ] ].
-	buttons := buttonShape elementsOn: #(outer border inner left center right top middle bottom).
+	labeled := RSLabeled new.
+	labeled shapeBuilder: [ :m | RSLabel new text: m asString; color: Color white ].
+	labeled location middle.
+	buttons :=  #(outer border inner left center right top middle bottom) collect: [ :t |
+		RSBox new
+			border: (RSBorder new color: Color lightGray);
+			cornerRadius: 5;
+			extent: 60@30;
+			paint: grad1;
+			model: t;
+			addInteraction: labeled;
+			when: RSMouseEnter do: [:evt | evt shape paint: grad2; signalUpdate ]; 
+			when: RSMouseLeave do: [:evt | evt shape paint: grad1; signalUpdate ];
+			when: RSMouseClick do: [:evt | | p |
+				evt shape model value: locate.
+				p := movableElement position.
+				locate move: movableElement on: fixedElement.
+				canvas newAnimation
+					from: p;
+					duration: 500 milliSeconds;
+					to: movableElement position;
+					on: movableElement shape set: #position: ]
+			] as: RSGroup.
 	RSGridLayout new lineItemsCount: 3; on: buttons.
-	RSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: v elements with: buttons).
-	v addAll: buttons.
-	v when: RSExtentChangedEvent do: [ 
-		v camera zoomToFit: v extent * 0.7.
-		v signalUpdate ].
-	 
-	^ v
+	RSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: canvas nodes with: buttons).
+	canvas addAll: buttons.
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera zoomToFit: canvas extent * 0.7.
+		canvas signalUpdate ].
+	
+	^ canvas
 ]
 
 { #category : #perlin }

@@ -826,12 +826,14 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 	<script: 'self new example25BimetricLineOnLargeExample'>
 	| packagesRegExp packages l packageElements high v |
 	packagesRegExp := { 'Calypso*' }.
-
+	
 	packages := packagesRegExp flatCollect: [ :regExp | 
 		RPackageOrganizer default packages 
-		select: [ :p | regExp match: p packageName ] ].
-
+			select: [ :p | regExp match: p packageName ] ].
+		
 	l := RSLabeled new text: [ :model | model packageName ].
+	packageElements  := packages collect: [ :pkg |
+		 ].
 	packageElements := RSShapeBuilder composite
 								color: Color blue trans;
 								addInteraction: l;

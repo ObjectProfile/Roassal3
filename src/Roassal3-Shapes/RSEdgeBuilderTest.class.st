@@ -116,7 +116,7 @@ RSEdgeBuilderTest >> testDefault [
 RSEdgeBuilderTest >> testElements [
 
 	| es |
-	b := RSEdgeBuilder new.
+	b := RSEdgeBuilder line.
 	b canvas: canvas.
 	self assert: b fromShapes equals: canvas nodes.
 	
@@ -214,7 +214,7 @@ RSEdgeBuilderTest >> testHasEdges [
 { #category : #tests }
 RSEdgeBuilderTest >> testInit [
 	| eb |
-	eb := RSEdgeBuilder new.
+	eb := RSEdgeBuilder line.
 	self deny: eb shouldAllowRepetition.
 	eb allowRepetition.
 	self assert: eb shouldAllowRepetition.
