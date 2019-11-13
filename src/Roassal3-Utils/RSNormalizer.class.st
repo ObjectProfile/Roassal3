@@ -1,24 +1,81 @@
 "
 A Metric normalizer is made to assign a color, or a particular shape computed from a group of elements. Consider the following example:
 -=-=-=-=
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		elementsOn: (Collection withAllSubclasses).
+	classes := Collection withAllSubclasses.
+	c := RSCanvas new.
+	
+	shapes := classes collect: [ :cls |
+		b := RSBox new.
+		b model: cls.
+		b size: cls numberOfMethods.
+		b @ RSDraggable @ RSPopup.
+		b ].
 
 	RSNormalizer color
-		elements: elements;
+		shapes: shapes;
 		normalize: #numberOfMethods.
 
-	v addAll: elements.
-	RSGridLayout on: elements.
+	c addAll: shapes.
+	RSGridLayout on: shapes.
 
-	v camera position: v elements encompassingRectangle center.
-	v when: TSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ RSControlsView.
-	v open
+	c @ RSControlsCanvas 
+-=-=-=-=
+
+Here is another example:
+-=-=-=-=
+canvas := RSCanvas new.
+classes := Collection withAllSubclasses.
+shapes := classes collect: [ :cls |
+    RSEllipse new
+        size: 10;
+        model: cls;
+        draggable;
+        yourself ].
+canvas addAll: shapes.
+
+RSNormalizer size
+    from: 10;
+    to: 100;
+    shapes: shapes;
+    normalize: #numberOfMethods.
+RSNormalizer color
+    from: Color green;
+    to: Color red;
+    shapes: shapes;
+    normalize: #numberOfMethods.
+
+RSEdgeBuilder orthoVertical
+    withVerticalAttachPoint;
+    markerStart: (RSPolygon arrow size: 5; color: Color blue);
+    canvas: canvas;
+    shapes: shapes;
+    connectFrom: #superclass.
+    
+RSTreeLayout on: shapes.
+canvas @ RSControlsCanvas.
+canvas
+-=-=-=-=
+
+Another example:
+-=-=-=-=
+c := RSCanvas new.
+
+(30 to: 100 by: 5) do: [ :nb |
+	c add: (RSEllipse new size: nb; model: nb) ].
+
+RSNormalizer size
+	shapes: c shapes;
+	normalize: #yourself.
+
+RSNormalizer color
+	shapes: c shapes;
+	normalize: #yourself.
+	
+RSFlowLayout on: c shapes.
+
+c shapes @ RSPopup.
+
+c
 -=-=-=-=
 "
 Class {
@@ -229,7 +286,45 @@ RSNormalizer >> initialize [
 ]
 
 { #category : #normalizer }
-RSNormalizer >> normalize: anOneArgBlockOrSymbol [ 
+RSNormalizer >> normalize: anOneArgBlockOrSymbol [
+	"Trigger the normalization using a particular metric to normalize.
+	The metric is computed on each model of the shapes that are considered.
+	Here is an example:
+-=-=-=
+canvas := RSCanvas new.
+classes := Collection withAllSubclasses.
+shapes := classes collect: [ :cls |
+    RSEllipse new
+        size: 10;
+        model: cls;
+        draggable;
+        yourself ].
+canvas addAll: shapes.
+
+RSNormalizer size
+    from: 10;
+    to: 100;
+    shapes: shapes;
+    normalize: #numberOfMethods.
+RSNormalizer color
+    from: Color green;
+    to: Color red;
+    shapes: shapes;
+    normalize: #numberOfMethods.
+
+RSEdgeBuilder orthoVertical
+    withVerticalAttachPoint;
+    markerStart: (RSPolygon arrow size: 5; color: Color blue);
+    canvas: canvas;
+    shapes: shapes;
+    connectFrom: #superclass.
+    
+RSTreeLayout on: shapes.
+canvas @ RSControlsCanvas.
+canvas
+-=-=-=	
+	"
+
 	| minAndMax |
 	minAndMax := shapes inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :aShape |
 		| tmp |

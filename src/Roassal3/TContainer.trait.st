@@ -19,7 +19,12 @@ TContainer >> add: aShape [
 
 { #category : #'adding nodes edges' }
 TContainer >> addAll: aCollection [
-	"aCollection of shapes, a shape can be a line or can be a node"
+	"Add a collection of shapes to the canvas
+	aCollection of shapes, a shape can be a line or can be a node"
+	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
+	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
+	
+	"Add each shape"
 	aCollection do: [ :aShape | self add: aShape ]
 ]
 
