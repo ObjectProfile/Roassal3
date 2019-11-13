@@ -1,11 +1,11 @@
 Class {
-	#name : #PLTScatter,
+	#name : #RSScatterPlot,
 	#superclass : #PLTAbstractPlot,
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #rendering }
-PLTScatter >> renderIn: canvas [
+RSScatterPlot >> renderIn: canvas [
 	| elements xScale yScale |
 	self checkAssertion.
 	xScale := self createXScale.

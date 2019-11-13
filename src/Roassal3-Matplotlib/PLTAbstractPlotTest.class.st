@@ -20,7 +20,7 @@ PLTAbstractPlotTest >> classToTest [
 { #category : #tests }
 PLTAbstractPlotTest >> setUp [ 
 	super setUp.
-	plt := PLT new.
+	plt := RSChart new.
 	
 ]
 
@@ -33,7 +33,7 @@ PLTAbstractPlotTest >> testBasic [
 { #category : #tests }
 PLTAbstractPlotTest >> testOpening [
 	| x |
-	plt := PLT new.
+	plt := RSChart new.
 	x := 0 to: 2 by: 1 / 100.
 	plt addPlot: (self classToTest new x: x y: x).
 	plt addPlot: (self classToTest new x: x y: (x collect: #squared)).

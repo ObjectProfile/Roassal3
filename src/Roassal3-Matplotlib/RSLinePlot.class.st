@@ -1,11 +1,11 @@
 Class {
-	#name : #PLTPlot,
+	#name : #RSLinePlot,
 	#superclass : #PLTAbstractPlot,
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #rendering }
-PLTPlot >> renderIn: canvas [
+RSLinePlot >> renderIn: canvas [
 	| xScale yScale lastPoint newPoint |
 	self checkAssertion.
 	xScale := self createXScale.

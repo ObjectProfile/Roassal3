@@ -1,5 +1,5 @@
 Class {
-	#name : #PLT,
+	#name : #RSChart,
 	#superclass : #Object,
 	#instVars : [
 		'plots',
@@ -13,20 +13,20 @@ Class {
 }
 
 { #category : #adding }
-PLT >> addDecoration: aDecoration [
+RSChart >> addDecoration: aDecoration [
 	"Maybe use a double dispatch"
 	decorations add: aDecoration.
 	aDecoration plt: self
 ]
 
 { #category : #adding }
-PLT >> addPlot: aPlot [
+RSChart >> addPlot: aPlot [
 	plots add: aPlot.
 	aPlot plt: self
 ]
 
 { #category : #building }
-PLT >> build [
+RSChart >> build [
 	canvas := RSCanvas new.
 	canvas @ RSControlsCanvas.
 	"RSControlsView new onElement: canvas."
@@ -36,27 +36,36 @@ PLT >> build [
 ]
 
 { #category : #building }
-PLT >> canvas [
+RSChart >> canvas [
 	^ canvas
 ]
 
 { #category : #accessing }
-PLT >> decorations [
+RSChart >> decorations [
 	^ decorations
 ]
 
 { #category : #'as yet unclassified' }
-PLT >> defaultPlotColors [
+RSChart >> defaultPlotColors [
 	^ { Color blue . Color orange . Color green darker }
 ]
 
 { #category : #accessing }
-PLT >> extent [
+RSChart >> extent [
 	^ extent
 ]
 
+{ #category : #visualization }
+RSChart >> gtInspectorViewIn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal3
+		title: ['Canvas'];
+		initializeCanvas: [ self build; canvas ]
+		
+]
+
 { #category : #initialization }
-PLT >> initialize [
+RSChart >> initialize [
 	super initialize.
 	plots := OrderedCollection new.
 	extent := 200 @ 200.
@@ -64,62 +73,63 @@ PLT >> initialize [
 ]
 
 { #category : #initialization }
-PLT >> initializeDecorations [
+RSChart >> initializeDecorations [
 	decorations := OrderedCollection new.
 	self addDecoration: PLTSpineDecoration new.
 ]
 
 { #category : #accessing }
-PLT >> maxValueX [ 
+RSChart >> maxValueX [ 
 	^ (plots collect: #maxValueX) max
 ]
 
 { #category : #accessing }
-PLT >> maxValueY [
+RSChart >> maxValueY [
 	^ (plots collect: #maxValueY) max
 ]
 
 { #category : #accessing }
-PLT >> minValueX [ 
+RSChart >> minValueX [ 
 	^ (plots collect: #minValueX) min
 ]
 
 { #category : #accessing }
-PLT >> minValueY [
+RSChart >> minValueY [
 	^ (plots collect: #minValueY) min
 ]
 
 { #category : #'as yet unclassified' }
-PLT >> numberOfPlots [
+RSChart >> numberOfPlots [
 	^ plots size
 ]
 
 { #category : #accessing }
-PLT >> plots [
+RSChart >> plots [
 	^ plots
 ]
 
 { #category : #building }
-PLT >> renderDecorationIn: aCanvas [
+RSChart >> renderDecorationIn: aCanvas [
 	decorations do: [ :d | d renderIn: aCanvas ]
 ]
 
 { #category : #building }
-PLT >> show [
+RSChart >> show [
+	self build.
 	^ canvas open
 ]
 
 { #category : #accessing }
-PLT >> title: aTitle [
+RSChart >> title: aTitle [
 	self addDecoration: (PLTTitleDecoration new title: aTitle)
 ]
 
 { #category : #'as yet unclassified' }
-PLT >> xlabel: aTitle [
+RSChart >> xlabel: aTitle [
 	self addDecoration: (PLTXLabelDecoration new title: aTitle)
 ]
 
 { #category : #'as yet unclassified' }
-PLT >> ylabel: aTitle [
+RSChart >> ylabel: aTitle [
 	self addDecoration: (PLTYLabelDecoration new title: aTitle)
 ]

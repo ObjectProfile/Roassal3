@@ -10,14 +10,13 @@ PLTExample >> example02ScatterPlot [
 
 	| classes plt p |
 	classes := Collection withAllSubclasses.
-	plt := PLT new.
-	p := PLTScatter new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
+	plt := RSChart new.
+	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
 	plt addPlot: p.
 	
 	plt xlabel: 'X Axis'.
 	plt ylabel: 'Y Axis'.
 	plt title: 'Hello World'.
-	plt build.
 	plt show
 ]
 
@@ -28,20 +27,19 @@ PLTExample >> example03Plot [
 	| classes plt p x |
 	x := 0.0 to: 2 count: 100.
 	classes := Collection withAllSubclasses.
-	plt := PLT new.
-	p := PLTPlot new x: x y: (x raisedTo: 2).
+	plt := RSChart new.
+	p := RSLinePlot new x: x y: (x raisedTo: 2).
 	plt addPlot: p.
 
-	p := PLTPlot new x: x y: (x raisedTo: 3).
+	p := RSLinePlot new x: x y: (x raisedTo: 3).
 	plt addPlot: p.
 
-	p := PLTPlot new x: x y: (x raisedTo: 4).
+	p := RSLinePlot new x: x y: (x raisedTo: 4).
 	plt addPlot: p.
 
 	plt xlabel: 'X Axis'.
 	plt ylabel: 'Y Axis'.
 	plt title: 'Hello World'.
-	plt build.
 	plt show
 ]
 
@@ -68,7 +66,7 @@ From: https://matplotlib.org/tutorials/introductory/usage.html#sphx-glr-tutorial
 "
 
 	| plt x |
-	plt := PLT new.
+	plt := RSChart new.
 	x := (0 to: 2 by: 1 / 100).
 	plt plotX: x y: x label: 'linear'.
 	plt plotX: x y: (x collect: [ :v | v raisedTo: 2 ]) label: 'quadratic'.

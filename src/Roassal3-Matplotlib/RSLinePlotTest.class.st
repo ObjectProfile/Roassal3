@@ -1,10 +1,10 @@
 Class {
-	#name : #PLTScatterTest,
+	#name : #RSLinePlotTest,
 	#superclass : #PLTAbstractPlotTest,
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #tests }
-PLTScatterTest >> classToTest [
-	^ PLTScatter
+RSLinePlotTest >> classToTest [
+	^ RSLinePlot
 ]
