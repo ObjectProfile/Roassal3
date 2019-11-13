@@ -1,11 +1,11 @@
 Class {
-	#name : #PLTExample,
+	#name : #RSChartExample,
 	#superclass : #Object,
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #'as yet unclassified' }
-PLTExample >> example02ScatterPlot [
+RSChartExample >> example02ScatterPlot [
 	<script: 'self new example02ScatterPlot'>
 
 	| classes plt p |
@@ -21,7 +21,7 @@ PLTExample >> example02ScatterPlot [
 ]
 
 { #category : #'as yet unclassified' }
-PLTExample >> example03Plot [
+RSChartExample >> example03Plot [
 	<script: 'self new example03Plot'>
 
 	| classes plt p x |
@@ -44,7 +44,21 @@ PLTExample >> example03Plot [
 ]
 
 { #category : #'as yet unclassified' }
-PLTExample >> exampleBasic01 [
+RSChartExample >> example04WithTick [
+	<script: 'self new example04WithTick'>
+
+	| x |
+	x := 0.0 to: 20.0 count: 100.
+
+	RSChart new
+    addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
+    addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
+	addDecoration: RSVerticalTick new;
+	show
+]
+
+{ #category : #'as yet unclassified' }
+RSChartExample >> exampleBasic01 [
 
 "
 This example is not meant to work. It is just the result of a brainstorming

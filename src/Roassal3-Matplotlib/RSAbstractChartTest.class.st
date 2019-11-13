@@ -1,5 +1,5 @@
 Class {
-	#name : #PLTAbstractPlotTest,
+	#name : #RSAbstractChartTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'plt'
@@ -8,30 +8,30 @@ Class {
 }
 
 { #category : #testing }
-PLTAbstractPlotTest class >> isAbstract [
-	^ self =  PLTAbstractPlotTest
+RSAbstractChartTest class >> isAbstract [
+	^ self =  RSAbstractChartTest
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> classToTest [
+RSAbstractChartTest >> classToTest [
 	self subclassResponsibility
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> setUp [ 
+RSAbstractChartTest >> setUp [ 
 	super setUp.
 	plt := RSChart new.
 	
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testBasic [
+RSAbstractChartTest >> testBasic [
 
 	self assert: plt numberOfPlots equals: 0
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testOpening [
+RSAbstractChartTest >> testOpening [
 	| x |
 	plt := RSChart new.
 	x := 0 to: 2 by: 1 / 100.
@@ -43,7 +43,7 @@ PLTAbstractPlotTest >> testOpening [
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testWithOnePlot [
+RSAbstractChartTest >> testWithOnePlot [
 
 	| p |
 	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
@@ -57,7 +57,7 @@ PLTAbstractPlotTest >> testWithOnePlot [
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testWithOnePlotWithTitle [
+RSAbstractChartTest >> testWithOnePlotWithTitle [
 
 	| p |
 	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
@@ -72,7 +72,7 @@ PLTAbstractPlotTest >> testWithOnePlotWithTitle [
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testWithOnePlotWithTitleAndTitleOnAxes [
+RSAbstractChartTest >> testWithOnePlotWithTitleAndTitleOnAxes [
 
 	| p |
 	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
@@ -89,7 +89,7 @@ PLTAbstractPlotTest >> testWithOnePlotWithTitleAndTitleOnAxes [
 ]
 
 { #category : #tests }
-PLTAbstractPlotTest >> testWithTwoPlots [
+RSAbstractChartTest >> testWithTwoPlots [
 
 	| p1 p2 |
 	p1 := self classToTest new x: #(1 2 3) y: #(1 2 3).

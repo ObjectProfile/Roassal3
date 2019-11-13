@@ -1,6 +1,6 @@
 Class {
-	#name : #PLTAbstractPlot,
-	#superclass : #PLTAbstractElement,
+	#name : #RSAbstractPlot,
+	#superclass : #RSAbstractChartElement,
 	#instVars : [
 		'label',
 		'xValues',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #rendering }
-PLTAbstractPlot >> checkAssertion [
+RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues notNil and: [ yValues notNil ] ]
 		description: 'X and Y values must be added'.
@@ -20,7 +20,7 @@ PLTAbstractPlot >> checkAssertion [
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> createXScale [
+RSAbstractPlot >> createXScale [
 	^ TSScale linear
 		domain:
 			{plt minValueX.
@@ -31,7 +31,7 @@ PLTAbstractPlot >> createXScale [
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> createYScale [
+RSAbstractPlot >> createYScale [
 	^ TSScale linear
 		domain:
 			{plt minValueY.
@@ -42,39 +42,39 @@ PLTAbstractPlot >> createYScale [
 ]
 
 { #category : #accessing }
-PLTAbstractPlot >> index [
+RSAbstractPlot >> index [
 	"Return the index of the plot within the list of plots to display in the plt object"
 	^ plt plots indexOf: self
 ]
 
 { #category : #initialization }
-PLTAbstractPlot >> initialize [
+RSAbstractPlot >> initialize [
 	super initialize.
 	label := ''
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> maxValueX [
+RSAbstractPlot >> maxValueX [
 	^ xValues max
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> maxValueY [
+RSAbstractPlot >> maxValueY [
 	^ yValues max
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> minValueX [
+RSAbstractPlot >> minValueX [
 	^ xValues min
 ]
 
 { #category : #rendering }
-PLTAbstractPlot >> minValueY [
+RSAbstractPlot >> minValueY [
 	^ yValues min
 ]
 
 { #category : #public }
-PLTAbstractPlot >> x: aCollection y: aCollection2 [ 
+RSAbstractPlot >> x: aCollection y: aCollection2 [ 
 	xValues := aCollection.
 	yValues := aCollection2.
 ]

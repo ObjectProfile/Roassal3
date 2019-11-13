@@ -13,7 +13,7 @@ The method is not meant to be used by a normal user as it represents a functiona
 "
 Class {
 	#name : #PLTSpineDecoration,
-	#superclass : #PLTDecoration,
+	#superclass : #RSChartDecoration,
 	#instVars : [
 		'shape'
 	],

@@ -1,6 +1,6 @@
 Class {
 	#name : #PLTAbstractLabelDecoration,
-	#superclass : #PLTDecoration,
+	#superclass : #RSChartDecoration,
 	#instVars : [
 		'title'
 	],

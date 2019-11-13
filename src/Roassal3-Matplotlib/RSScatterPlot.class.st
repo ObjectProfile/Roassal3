@@ -1,6 +1,6 @@
 Class {
 	#name : #RSScatterPlot,
-	#superclass : #PLTAbstractPlot,
+	#superclass : #RSAbstractPlot,
 	#category : #'Roassal3-Matplotlib'
 }
 

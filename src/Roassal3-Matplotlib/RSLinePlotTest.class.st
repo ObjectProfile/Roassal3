@@ -1,6 +1,6 @@
 Class {
 	#name : #RSLinePlotTest,
-	#superclass : #PLTAbstractPlotTest,
+	#superclass : #RSAbstractChartTest,
 	#category : #'Roassal3-Matplotlib'
 }
 
