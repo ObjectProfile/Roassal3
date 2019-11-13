@@ -28,21 +28,19 @@ Another example:
 		add: e1;
 		add: e2.
 	
-	l := RSSingleEdgeBuilder bezier
+	l := RSBezier new
 		withVerticalAttachPoint;
-		""paint: Color red trans;""
 		from: e1;
 		to: e2;
-		controlPoints: [ :m | 
-			[ :a :b | 
+		controlPointsBlock: [ :a :b | 
 			| mid |
 			mid := (a + b) / 2.
 			Array
 				with: a
 				with: a x @ mid y
 				with: b x @ mid y
-				with: b ] ];
-		edge.
+				with: b ];
+		yourself.
 	v add: l.
 	v open
 ```
