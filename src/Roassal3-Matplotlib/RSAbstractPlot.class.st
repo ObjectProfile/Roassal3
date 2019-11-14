@@ -23,28 +23,28 @@ RSAbstractPlot >> checkAssertion [
 RSAbstractPlot >> createXScale [
 	^ TSScale linear
 		domain:
-			{plt minValueX.
-			plt maxValueX};
+			{chart minValueX.
+			chart maxValueX};
 		range:
 			{0.
-			plt extent x}
+			chart extent x}
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> createYScale [
 	^ TSScale linear
 		domain:
-			{plt minValueY.
-			plt maxValueY};
+			{chart minValueY.
+			chart maxValueY};
 		range:
 			{0.
-			plt extent y negated}
+			chart extent y negated}
 ]
 
 { #category : #accessing }
 RSAbstractPlot >> index [
 	"Return the index of the plot within the list of plots to display in the plt object"
-	^ plt plots indexOf: self
+	^ chart plots indexOf: self
 ]
 
 { #category : #initialization }

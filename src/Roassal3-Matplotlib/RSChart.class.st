@@ -16,13 +16,13 @@ Class {
 RSChart >> addDecoration: aDecoration [
 	"Maybe use a double dispatch"
 	decorations add: aDecoration.
-	aDecoration plt: self
+	aDecoration chart: self
 ]
 
 { #category : #adding }
 RSChart >> addPlot: aPlot [
 	plots add: aPlot.
-	aPlot plt: self
+	aPlot chart: self
 ]
 
 { #category : #building }
@@ -75,7 +75,7 @@ RSChart >> initialize [
 { #category : #initialization }
 RSChart >> initializeDecorations [
 	decorations := OrderedCollection new.
-	self addDecoration: PLTSpineDecoration new.
+	self addDecoration: RSChartSpineDecoration new.
 ]
 
 { #category : #accessing }
@@ -121,15 +121,15 @@ RSChart >> show [
 
 { #category : #accessing }
 RSChart >> title: aTitle [
-	self addDecoration: (PLTTitleDecoration new title: aTitle)
+	self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
 { #category : #'as yet unclassified' }
 RSChart >> xlabel: aTitle [
-	self addDecoration: (PLTXLabelDecoration new title: aTitle)
+	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
 { #category : #'as yet unclassified' }
 RSChart >> ylabel: aTitle [
-	self addDecoration: (PLTYLabelDecoration new title: aTitle)
+	self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]

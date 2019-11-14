@@ -48,13 +48,28 @@ RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick'>
 
 	| x |
-	x := 0.0 to: 20.0 count: 100.
+	x := -10.0 to: 20.0 count: 100.
 
 	RSChart new
     addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
     addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-	addDecoration: RSVerticalTick new;
+	addDecoration: RSHorizontalTick new integer;
+	addDecoration: RSVerticalTick new integer;
 	show
+]
+
+{ #category : #'as yet unclassified' }
+RSChartExample >> example05WithTick [
+	<script: 'self new example05WithTick'>
+	| x c |
+	x := 0.0 to: 14 count: 100.
+	c := RSChart new.
+	1 to: 7 do: [ :i |
+		c addPlot: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
+	].
+	c addDecoration: RSVerticalTick new integer.
+	c addDecoration: RSHorizontalTick new integer.
+	c show
 ]
 
 { #category : #'as yet unclassified' }

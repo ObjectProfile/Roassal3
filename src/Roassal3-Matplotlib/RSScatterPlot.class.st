@@ -14,7 +14,7 @@ RSScatterPlot >> renderIn: canvas [
 		collect: [ :notUsed | 
 			RSEllipse new
 				radius: 2;
-				color: (plt defaultPlotColors at: self index) ].
+				color: (chart defaultPlotColors at: self index) ].
 	1 to: xValues size do: [ :i | 
 		| xt yt et |
 		et := elements at: i.

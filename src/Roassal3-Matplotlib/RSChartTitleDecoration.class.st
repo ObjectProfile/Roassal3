@@ -1,5 +1,5 @@
 Class {
-	#name : #PLTTitleDecoration,
+	#name : #RSChartTitleDecoration,
 	#superclass : #RSChartDecoration,
 	#instVars : [
 		'title'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #rendering }
-PLTTitleDecoration >> renderIn: canvas [
+RSChartTitleDecoration >> renderIn: canvas [
 	| label |
 	label := RSLabel new text: title; color: Color black.
 	canvas addShape: label.
@@ -19,11 +19,11 @@ PLTTitleDecoration >> renderIn: canvas [
 ]
 
 { #category : #accessing }
-PLTTitleDecoration >> title [
+RSChartTitleDecoration >> title [
 	^ title
 ]
 
 { #category : #accessing }
-PLTTitleDecoration >> title: aString [
+RSChartTitleDecoration >> title: aString [
 	title := aString
 ]

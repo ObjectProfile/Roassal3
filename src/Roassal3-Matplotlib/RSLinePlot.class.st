@@ -17,7 +17,7 @@ RSLinePlot >> renderIn: canvas [
 		yt := yValues at: i.
 		newPoint := (xScale scale: xt) @ (yScale scale: yt).
 		et := RSLine new startPoint: lastPoint; endPoint: (lastPoint := newPoint).
-		et color: (plt defaultPlotColors at: self index).
+		et color: (chart defaultPlotColors at: (self index \\ chart defaultPlotColors size) + 1) .
 		canvas addShape: et ].
 
 ]

@@ -124,6 +124,20 @@ RSLabel >> fontSize [
 
 { #category : #accessing }
 RSLabel >> fontSize: integer [
+	"Set the size of the label.
+Here is an example:
+-=-=-=-=-=-=
+c := RSCanvas new.
+
+(1 to: 100 by: 5) shuffled do: [ :i |
+	lbl := RSLabel new fontSize: i; text: 'hello'; model: i.
+	c add: lbl.
+	lbl @ RSPopup.
+].
+RSFlowLayout on: c shapes.
+c @ RSControlsCanvas
+-=-=-=-=-=-=
+"
 	fontSize := integer.
 	self resetCache
 ]

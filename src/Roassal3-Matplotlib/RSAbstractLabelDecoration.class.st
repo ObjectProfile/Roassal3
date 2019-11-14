@@ -1,5 +1,5 @@
 Class {
-	#name : #PLTAbstractLabelDecoration,
+	#name : #RSAbstractLabelDecoration,
 	#superclass : #RSChartDecoration,
 	#instVars : [
 		'title'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #rendering }
-PLTAbstractLabelDecoration >> createLabel [
+RSAbstractLabelDecoration >> createLabel [
 	^ RSLabel new
 		text: title;
 		fontSize: 10;
@@ -16,12 +16,12 @@ PLTAbstractLabelDecoration >> createLabel [
 ]
 
 { #category : #accessing }
-PLTAbstractLabelDecoration >> title [
+RSAbstractLabelDecoration >> title [
 	^ title
 ]
 
 { #category : #accessing }
-PLTAbstractLabelDecoration >> title: aLabelAsString [
+RSAbstractLabelDecoration >> title: aLabelAsString [
 	"This method is useful to set the name of an axis"
 	title := aLabelAsString
 ]

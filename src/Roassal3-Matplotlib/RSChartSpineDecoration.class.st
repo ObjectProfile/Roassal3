@@ -12,7 +12,7 @@ The method is not meant to be used by a normal user as it represents a functiona
 
 "
 Class {
-	#name : #PLTSpineDecoration,
+	#name : #RSChartSpineDecoration,
 	#superclass : #RSChartDecoration,
 	#instVars : [
 		'shape'
@@ -21,13 +21,13 @@ Class {
 }
 
 { #category : #rendering }
-PLTSpineDecoration >> renderIn: canvas [
-	shape := RSBox new color: nil; extent: plt extent; border: RSBorder new.
-	shape translateTo: (plt extent x / 2) @ (plt extent y negated / 2).
+RSChartSpineDecoration >> renderIn: canvas [
+	shape := RSBox new color: nil; extent: chart extent; border: RSBorder new.
+	shape translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
 	canvas addShape: shape
 ]
 
 { #category : #rendering }
-PLTSpineDecoration >> shape [
+RSChartSpineDecoration >> shape [
 	^ shape
 ]

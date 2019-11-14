@@ -1,11 +1,11 @@
 Class {
-	#name : #PLTYLabelDecoration,
-	#superclass : #PLTAbstractLabelDecoration,
+	#name : #RSYLabelDecoration,
+	#superclass : #RSAbstractLabelDecoration,
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #rendering }
-PLTYLabelDecoration >> renderIn: canvas [
+RSYLabelDecoration >> renderIn: canvas [
 	| label |
 	label := self createLabel.
 	canvas addShape: label.

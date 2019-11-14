@@ -2,19 +2,19 @@ Class {
 	#name : #RSAbstractChartElement,
 	#superclass : #Object,
 	#instVars : [
-		'plt'
+		'chart'
 	],
 	#category : #'Roassal3-Matplotlib'
 }
 
 { #category : #accessing }
-RSAbstractChartElement >> plt [
-	^ plt
+RSAbstractChartElement >> chart [
+	^ chart
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> plt: aPlt [
-	plt := aPlt
+RSAbstractChartElement >> chart: aChart [
+	chart := aChart
 ]
 
 { #category : #rendering }
@@ -26,8 +26,8 @@ RSAbstractChartElement >> renderIn: canvas [
 { #category : #rendering }
 RSAbstractChartElement >> spine [
 	"Return the Trachel shape that describe the spine"
-	^ (plt decorations
-		detect: [ :d | d class == PLTSpineDecoration ]
+	^ (chart decorations
+		detect: [ :d | d class == RSChartSpineDecoration ]
 		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
 		shape
 ]
