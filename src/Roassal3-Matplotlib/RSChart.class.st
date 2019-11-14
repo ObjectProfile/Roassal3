@@ -29,10 +29,9 @@ RSChart >> addPlot: aPlot [
 RSChart >> build [
 	canvas := RSCanvas new.
 	canvas @ RSControlsCanvas.
-	"RSControlsView new onElement: canvas."
+	plots, decorations do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: canvas.
-	plots do: [ :p | p renderIn: canvas ].
-	
+	self renderPlotsIn: canvas
 ]
 
 { #category : #building }
@@ -114,6 +113,12 @@ RSChart >> renderDecorationIn: aCanvas [
 ]
 
 { #category : #building }
+RSChart >> renderPlotsIn: aCanvas [
+	plots do: [ :p | p renderIn: canvas ].
+	
+]
+
+{ #category : #building }
 RSChart >> show [
 	self build.
 	^ canvas open
@@ -124,9 +129,39 @@ RSChart >> title: aTitle [
 	self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
+{ #category : #'public - configuration' }
+RSChart >> xLog [
+	self xScale: TSScale log
+]
+
+{ #category : #'public - configuration' }
+RSChart >> xScale: aScale [
+	plots, decorations do: [ :e | e xScale: aScale ].
+]
+
+{ #category : #'public - configuration' }
+RSChart >> xSqrt [
+	self xScale: TSScale sqrt
+]
+
 { #category : #'as yet unclassified' }
 RSChart >> xlabel: aTitle [
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
+]
+
+{ #category : #'public - configuration' }
+RSChart >> yLog [
+	self yScale: TSScale log
+]
+
+{ #category : #'public - configuration' }
+RSChart >> yScale: aScale [
+	plots, decorations do: [ :e | e yScale: aScale ].
+]
+
+{ #category : #'public - configuration' }
+RSChart >> ySqrt [
+	self yScale: TSScale sqrt
 ]
 
 { #category : #'as yet unclassified' }

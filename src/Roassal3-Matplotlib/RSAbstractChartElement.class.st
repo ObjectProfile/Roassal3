@@ -2,10 +2,17 @@ Class {
 	#name : #RSAbstractChartElement,
 	#superclass : #Object,
 	#instVars : [
-		'chart'
+		'chart',
+		'xScale',
+		'yScale'
 	],
 	#category : #'Roassal3-Matplotlib'
 }
+
+{ #category : #rendering }
+RSAbstractChartElement >> beforeRenderingIn: aChart [
+	"do nothing here"
+]
 
 { #category : #accessing }
 RSAbstractChartElement >> chart [
@@ -15,6 +22,31 @@ RSAbstractChartElement >> chart [
 { #category : #accessing }
 RSAbstractChartElement >> chart: aChart [
 	chart := aChart
+]
+
+{ #category : #rendering }
+RSAbstractChartElement >> createXScale [
+	xScale ifNil: [ xScale := TSScale linear ].
+	xScale
+		domain:
+			{chart minValueX.
+			chart maxValueX};
+		range:
+			{0.
+			chart extent x}
+]
+
+{ #category : #rendering }
+RSAbstractChartElement >> createYScale [
+	yScale ifNil: [ yScale := TSScale linear ].
+	yScale
+		domain:
+			{chart minValueY.
+			chart maxValueY};
+		range:
+			{0.
+			chart extent y negated}
+
 ]
 
 { #category : #rendering }
@@ -30,4 +62,14 @@ RSAbstractChartElement >> spine [
 		detect: [ :d | d class == RSChartSpineDecoration ]
 		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
 		shape
+]
+
+{ #category : #accessing }
+RSAbstractChartElement >> xScale: aScale [
+	xScale := aScale
+]
+
+{ #category : #accessing }
+RSAbstractChartElement >> yScale: aScale [
+	yScale := aScale
 ]

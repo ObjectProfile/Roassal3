@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : #rendering }
+RSAbstractPlot >> beforeRenderingIn: aChart [
+	super beforeRenderingIn: aChart.
+	self createXScale.
+	self createYScale
+]
+
+{ #category : #rendering }
 RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues notNil and: [ yValues notNil ] ]
@@ -17,28 +24,6 @@ RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues size = yValues size ]
 		description: 'X and Y values have not the same size, and they should'
-]
-
-{ #category : #rendering }
-RSAbstractPlot >> createXScale [
-	^ TSScale linear
-		domain:
-			{chart minValueX.
-			chart maxValueX};
-		range:
-			{0.
-			chart extent x}
-]
-
-{ #category : #rendering }
-RSAbstractPlot >> createYScale [
-	^ TSScale linear
-		domain:
-			{chart minValueY.
-			chart maxValueY};
-		range:
-			{0.
-			chart extent y negated}
 ]
 
 { #category : #accessing }

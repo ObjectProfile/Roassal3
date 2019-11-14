@@ -6,10 +6,8 @@ Class {
 
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
-	| elements xScale yScale |
+	| elements newPoint |
 	self checkAssertion.
-	xScale := self createXScale.
-	yScale := self createYScale.
 	elements := (1 to: xValues size)
 		collect: [ :notUsed | 
 			RSEllipse new
@@ -20,6 +18,8 @@ RSScatterPlot >> renderIn: canvas [
 		et := elements at: i.
 		xt := xValues at: i.
 		yt := yValues at: i.
-		et translateTo: (xScale scale: xt) @ (yScale scale: yt) ].
+		newPoint := (xScale scale: xt) @ (yScale scale: yt).
+		(newPoint x isInfinite not and: [ newPoint x isInfinite not ]) ifTrue: [ 
+			et translateTo: newPoint ] ].
 	elements do: [ :e | canvas addShape: e ]
 ]

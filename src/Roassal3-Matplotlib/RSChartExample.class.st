@@ -46,16 +46,14 @@ RSChartExample >> example03Plot [
 { #category : #'as yet unclassified' }
 RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick'>
-
 	| x |
 	x := -10.0 to: 20.0 count: 100.
-
 	RSChart new
-    addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
-    addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-	addDecoration: RSHorizontalTick new integer;
-	addDecoration: RSVerticalTick new integer;
-	show
+		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
+		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
+		addDecoration: RSHorizontalTick new integer;
+		addDecoration: RSVerticalTick new integer;
+		show
 ]
 
 { #category : #'as yet unclassified' }
