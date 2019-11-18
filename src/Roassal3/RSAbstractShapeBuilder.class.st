@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RSAbstractShapeBuilder >> shapeOn: anObject [
+RSAbstractShapeBuilder >> shapeFor: anObject [
 	^ self subclassResponsibility
 ]
