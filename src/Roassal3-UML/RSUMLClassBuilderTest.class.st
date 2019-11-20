@@ -11,27 +11,27 @@ RSUMLClassBuilderTest >> testBasic [
 	builder := RSUMLClassBuilder new.
 	builder classes: classes.
 	builder build.
-	self assert: builder elements size equals: classes size.
+	self assert: builder shapes size equals: classes size.
 ]
 
 { #category : #tests }
 RSUMLClassBuilderTest >> testJustClassName [
-	| builder element  |
+	| builder shape  |
 	builder := RSUMLClassBuilder new.
 	builder classes: {RSMouseMove}.
 	builder build.
-	element := builder elements first.
-	self assert: element children size equals: 2.
-	self assert: element shapes first class equals: RSBox.
-	self assert: element shapes second class equals: RSLabel.
+	shape := builder shapes first.
+	self assert: shape shapes size equals: 2.
+	self assert: shape shapes first class equals: RSBox.
+	self assert: shape shapes second class equals: RSLabel.
 	
 	builder := RSUMLClassBuilder new.
 	builder classes: {RSMouseMove}.
 	builder renderer: RSTorchUMLClassRenderer new.
 	builder build.
-	element := builder elements first.
-	self assert: element children size equals: 3.
-	self assert: element shapes first class equals: RSBox.
-	self assert: element shapes second class equals: RSLabel.
-	self assert: element shapes third class equals: RSBox.
+	shape := builder shapes first.
+	self assert: shape shapes size equals: 3.
+	self assert: shape shapes first class equals: RSBox.
+	self assert: shape shapes second class equals: RSLabel.
+	self assert: shape shapes third class equals: RSBox.
 ]

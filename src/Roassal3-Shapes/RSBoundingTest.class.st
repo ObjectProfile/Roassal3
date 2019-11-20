@@ -90,6 +90,15 @@ RSBoundingTest >> testDrawSVG [
 ]
 
 { #category : #tests }
+RSBoundingTest >> testHasChildren [
+	| b |
+	b := RSBox new.
+	self deny: b hasChildren.
+	b := RSEllipse new.
+	self deny: b hasChildren
+]
+
+{ #category : #tests }
 RSBoundingTest >> testPosition [
 	| b |
 	b := RSBox new.

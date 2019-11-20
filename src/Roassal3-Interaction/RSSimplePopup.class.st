@@ -10,8 +10,8 @@ Class {
 	#category : #'Roassal3-Interaction-Popup'
 }
 
-{ #category : #'as yet unclassified' }
-RSSimplePopup >> boxOn: lbl [
+{ #category : #hooks }
+RSSimplePopup >> boxFor: lbl [
 	^ RSBox new
 		color: (Color colorFrom: 'efefef');
 		cornerRadius: 5;
@@ -20,37 +20,61 @@ RSSimplePopup >> boxOn: lbl [
 		yourself
 ]
 
+{ #category : #hooks }
+RSSimplePopup >> compositeLabelFor: lines [ 
+	| shapes |
+	shapes := lines collect: [:line | 
+		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ].
+	RSVerticalLineLayout new 
+		alignLeft; 
+		gapSize: 0; 
+		on: shapes.
+	^ RSComposite new
+		shapes: shapes;
+		adjustToChildren;
+		yourself.
+]
+
 { #category : #initialization }
 RSSimplePopup >> initialize [
 	self textBlock: #yourself
 ]
 
-{ #category : #'as yet unclassified' }
-RSSimplePopup >> labelOn: anObject [
+{ #category : #hooks }
+RSSimplePopup >> labelFor: anObject [
+	| text lines |
+	text := self textFor: anObject.
+	lines := text lines.
+	^ lines size = 1 
+		ifTrue: [ self singleLabelFor: text ]
+		ifFalse: [ self compositeLabelFor: lines ]
+	
+]
+
+{ #category : #hooks }
+RSSimplePopup >> shapeFor: anObject [
+	| lbl box |
+	lbl := self labelFor: anObject.
+	box := self boxFor: lbl.
+	^ RSComposite new
+		shapes: {box. lbl};
+		yourself
+]
+
+{ #category : #hooks }
+RSSimplePopup >> singleLabelFor: text [
 	^ RSLabel new
-		text: (self textFor: anObject);
+		text: text;
 		yourself
 		
 ]
 
-{ #category : #'as yet unclassified' }
-RSSimplePopup >> shapeOn: anObject [
-	| lbl box |
-	lbl := self labelOn: anObject.
-	box := self boxOn: lbl.
-	^ RSComposite new
-		shapes: (RSGroup with: box with: lbl);
-		yourself
-	
-	
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RSSimplePopup >> textBlock: aBlock [
 	textBlock := aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RSSimplePopup >> textFor: anObject [
 	^ (textBlock rsValue: anObject) asString
 ]

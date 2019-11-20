@@ -11,9 +11,9 @@ Class {
 }
 
 { #category : #private }
-RSHierarchyPacker >> fill: group with: e [
-	group add: e.
-	e outgoingEdges do: [ :ed | 
+RSHierarchyPacker >> fill: group with: aShape [
+	group add: aShape.
+	aShape outgoingEdges do: [ :ed | 
 		self fill: group with: ed to ].
 ]
 
@@ -27,11 +27,11 @@ RSHierarchyPacker >> initialize [
 ]
 
 { #category : #private }
-RSHierarchyPacker >> onElement: aView [
+RSHierarchyPacker >> onShape: aCanvas [
 	| layout connectedAsGroups connected isolated all |
 	layout := RSTreeLayout new
-		edges: aView edges.
-	connectedAsGroups := aView elements.
+		edges: aCanvas edges.
+	connectedAsGroups := aCanvas nodes.
 	connected := connectedAsGroups select: #hasEdges.
 	isolated := connectedAsGroups reject: #hasEdges.
 
@@ -43,11 +43,11 @@ RSHierarchyPacker >> onElement: aView [
 	
 	all := connectedAsGroups, isolated.
 
-	aView when: RSExtentChangedEvent do: [
+	aCanvas when: RSExtentChangedEvent do: [
 		rectanglePackLayout
-			preferredAngle: aView extent angle;
+			preferredAngle: aCanvas extent angle;
 			on: all.
-		aView zoomToFit; signalUpdate ].
+		aCanvas zoomToFit; signalUpdate ].
 
 ]
 

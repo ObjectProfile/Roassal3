@@ -18,7 +18,10 @@ RSUMLClassCalypso class >> classUmlTapActivation [
 
 { #category : #accessing }
 RSUMLClassCalypso >> classes [
-	^ targetClass withAllSubclasses
+	| supers |
+	supers := targetClass allSuperclasses remove: Object; remove: ProtoObject; yourself .
+	
+	^ supers, targetClass withAllSubclasses
 ]
 
 { #category : #initialization }

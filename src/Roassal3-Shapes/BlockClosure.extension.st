@@ -1,6 +1,6 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Roassal3-Shapes' }
-BlockClosure >> shapeOn: model [
+BlockClosure >> shapeFor: model [
 	^ self cull: model
 ]

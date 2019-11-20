@@ -5,15 +5,41 @@ Class {
 	#name : #RSBasicUMLClassRenderer,
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
-		'classInnerLine'
+		'classInnerLine',
+		'boxColor'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
 
+{ #category : #hooks }
+RSBasicUMLClassRenderer >> addLines: group title: title [ 
+	| line rec |
+	line := self classInnerLine.
+	rec := group encompassingRectangle.
+	group size > 2 ifTrue: [ 
+		group add: (line copy
+			startPoint: rec origin x @ title height;
+			endPoint: rec corner x @ title height) ].
+	group size > 4 ifTrue: [ 
+		group add: (line copy
+			startPoint: rec origin x @ (title height + group third height);
+			endPoint: rec corner x @ (title height + group third height)) ].
+]
+
+{ #category : #accessing }
+RSBasicUMLClassRenderer >> boxColor [ 
+	^ boxColor ifNil: [ boxColor := self defaultBoxColor ]
+]
+
+{ #category : #accessing }
+RSBasicUMLClassRenderer >> boxColor: aColor [
+	boxColor := aColor
+]
+
 { #category : #'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine [
 	^ classInnerLine ifNil: [
-		classInnerLine := RSSingleEdgeBuilder line
+		classInnerLine := RSLine new
 			border: self border;
 			yourself ]
 ]
@@ -23,44 +49,29 @@ RSBasicUMLClassRenderer >> classInnerLine: aShape [
 	classInnerLine := aShape
 ]
 
-{ #category : #initialization }
-RSBasicUMLClassRenderer >> initialize [
-	super initialize.
-	classBoxShape := RSShapeBuilder box
-		paint: (Color colorFrom: 'cfd9df');
-		cornerRadius: 10;
-		border: self border
+{ #category : #accessing }
+RSBasicUMLClassRenderer >> defaultBoxColor [
+	^ Color colorFrom: 'cfd9df'
 ]
 
-{ #category : #'private - initialization' }
-RSBasicUMLClassRenderer >> initializeShape [
-	classShape := RSShapeBuilder composite shapes: [ :cls | 
-		| group boxElement title rec line |
-		group := self initBasicGroupOn: cls.
-		title := group first.
-	 
-		boxElement := self classBoxShape elementOn: cls.
-		group addFirst: boxElement.
-		
-		
-		rec := group encompassingRectangle.
-		boxElement
-			extent: rec extent + self classBoxPadding;
-			position: rec rsCenter.
-		
-		title position: rec rsCenter x @ title position y.
-		rec := boxElement encompassingRectangle.
-		line := self classInnerLine.
-		group size > 2 ifTrue: [ 
-			group add: (line
-				from: rec origin x @ title height;
-				to: rec corner x @ title height;
-				edgeOn: nil) ].
-		group size > 4 ifTrue: [ 
-			group add: (line
-				from: rec origin x @ (title height + group third height);
-				to: rec corner x @ (title height + group third height);
-				edgeOn: nil) ].
-		group ];
-		interactionDo: [ :i | i popup; draggable; browseable ]
+{ #category : #hooks }
+RSBasicUMLClassRenderer >> shapeFor: aClass [
+	| shapes box title vars methods |
+	title := self titleFor: aClass.
+	vars := self varsFor: aClass.
+	methods := self methodsFor: aClass.
+	shapes := self groupFor: { vars. methods }.
+	shapes addFirst: title.
+	box := self classBoxShapeFor: aClass.
+	self applyLayoutOn: shapes.
+	self adjustTitle: title on: shapes.
+	shapes addFirst: box.
+	self adjustBox: box on: shapes. 
+	self addLines: shapes title: title.
+	^ RSComposite new
+		popup;
+		draggable;
+		model: aClass;
+		shapes: shapes;
+		yourself.
 ]

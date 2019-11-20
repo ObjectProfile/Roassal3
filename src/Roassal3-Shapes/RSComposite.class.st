@@ -164,6 +164,11 @@ RSComposite >> camera [
 	^ parent camera
 ]
 
+{ #category : #testing }
+RSComposite >> hasChildren [
+	^ shapes notNil and: [ shapes isNotEmpty ]
+]
+
 { #category : #initialization }
 RSComposite >> initialize [
 	super initialize.

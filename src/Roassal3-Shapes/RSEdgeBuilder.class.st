@@ -85,6 +85,11 @@ RSEdgeBuilder class >> arrowedLine [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> horizontalBezier [
+	^ self horizontalLine: RSBezier new
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> horizontalLine: aShape [
 	^ (self new: aShape) controlPoints: [:from :to | 
 		| mid |
@@ -124,6 +129,11 @@ RSEdgeBuilder class >> orthoHorizontal [
 { #category : #'instance creation' }
 RSEdgeBuilder class >> orthoVertical [
 	^ self verticalLine: RSPolyline new.
+]
+
+{ #category : #'instance creation' }
+RSEdgeBuilder class >> verticalBezier [
+	^ self verticalLine: RSBezier new
 ]
 
 { #category : #'instance creation' }
@@ -198,6 +208,11 @@ RSEdgeBuilder >> canvasNodes [
 	"Return the nodes of the canvas"
 	canvas ifNil: [ ^ #() ].
 	^ canvas nodes
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> capRound [
+	self shape capRound
 ]
 
 { #category : #'public - shape' }
@@ -314,11 +329,21 @@ RSEdgeBuilder >> controlPoints: aBlock [
 	controlPoints := aBlock
 ]
 
+{ #category : #'public - shape' }
+RSEdgeBuilder >> cornerRadii: aNumber [
+	^ self shape cornerRadii: aNumber
+]
+
 { #category : #'private - utility' }
 RSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	"This is a private method. Create, if necessary, an edge between two elements"
 	(self shouldCreateEdgeFrom: fromElement to: toElement)
 		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> dashArray: anArray [
+	^ self shape dashArray: anArray
 ]
 
 { #category : #'private - utility' }

@@ -3,11 +3,10 @@ An abstract builder for UML shapes based on a model description (like a class or
 "
 Class {
 	#name : #RSUMLAbstractBuilder,
-	#superclass : #RSAbstractViewBuilder,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'renderer',
-		'modelDescriptor',
-		'layout'
+		'modelDescriptor'
 	],
 	#category : #'Roassal3-UML-Builder'
 }
@@ -17,16 +16,22 @@ RSUMLAbstractBuilder class >> isAbstract [
 	^self name = #RSUMLAbstractBuilder
 ]
 
-{ #category : #defaults }
-RSUMLAbstractBuilder >> defaultLayout [
+{ #category : #private }
+RSUMLAbstractBuilder >> defaultContainer [
+	^ RSCanvas new 
+		addInteraction: RSControlsCanvas new;
+		yourself.
+]
 
-	^self subclassResponsibility
+{ #category : #accessing }
+RSUMLAbstractBuilder >> initialize [
+	super initialize.
+	shapes := RSGroup new.
 ]
 
 { #category : #accessing }
 RSUMLAbstractBuilder >> layout [
-
-	^layout ifNil: [ layout := self defaultLayout ]
+	^ renderer layout
 ]
 
 { #category : #accessing }
@@ -53,14 +58,5 @@ RSUMLAbstractBuilder >> renderer [
 { #category : #accessing }
 RSUMLAbstractBuilder >> renderer: aRSUMLRenderer [
 	renderer := aRSUMLRenderer.
-	renderer modelDescriptor: modelDescriptor.
-	self initializeShape.
-]
-
-{ #category : #accessing }
-RSUMLAbstractBuilder >> view [
-	^ container ifNil: [
-		container := RSView new.
-		container @ RSControlsCanvas.
-		container ]
+	renderer modelDescriptor: modelDescriptor
 ]

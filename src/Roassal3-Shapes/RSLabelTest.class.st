@@ -32,6 +32,14 @@ RSLabelTest >> testDrawLabel [
 ]
 
 { #category : #tests }
+RSLabelTest >> testHasChildren [
+	| b |
+	b := RSLabel new.
+	self deny: b hasChildren.
+	
+]
+
+{ #category : #tests }
 RSLabelTest >> testUnderlineStruckout [
 	| label |
 	label := RSLabel new.

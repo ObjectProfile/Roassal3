@@ -4,7 +4,7 @@ I have the basic examples for shapes
 Class {
 	#name : #TSShapeExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-UML-Examples'
+	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #'box and ellipses' }

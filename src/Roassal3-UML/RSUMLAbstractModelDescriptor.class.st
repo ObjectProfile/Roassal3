@@ -3,8 +3,8 @@ Abstract descriptor for UML artifacts
 "
 Class {
 	#name : #RSUMLAbstractModelDescriptor,
-	#superclass : #RS3Object,
-	#category : #'Roassal3-UML-Base'
+	#superclass : #RSObject,
+	#category : #'Roassal3-UML-Descriptor'
 }
 
 { #category : #testing }

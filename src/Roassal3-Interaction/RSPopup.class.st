@@ -68,8 +68,7 @@ RSPopup >> createOrGetPopupOn: aShape event: event [
 	| att popupShape canvas |
 	att := event canvas attributes.
 	att at: #popup ifPresent: [ :popup | ^ popup ].
-	popupShape := shapeBuilder shapeOn: aShape model.
-	"popupShape :=(shape elementOn: aShape model) shape."
+	popupShape := shapeBuilder shapeFor: aShape model.
 	att at: #popup put: popupShape.
 	popupShape isFixed: true.
 	canvas := aShape canvas.

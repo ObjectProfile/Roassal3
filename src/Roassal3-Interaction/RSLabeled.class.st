@@ -19,7 +19,7 @@ Class {
 { #category : #hooks }
 RSLabeled >> createLabel: anElement [
 	| label color set targetLabel |
-	label := self shapeBuilder shapeOn: (self modelFor: anElement).
+	label := self shapeBuilder shapeFor: (self modelFor: anElement).
 	location stick: label on: anElement.
 	isHighlightable 
 		ifFalse: [ ^ label ].

@@ -8,6 +8,17 @@ Class {
 }
 
 { #category : #tests }
+RSCompositeTest >> testHasChildren [
+	| b |
+	b := RSComposite new.
+	self deny: b hasChildren.
+	b shapes: {}.
+	self deny: b hasChildren.
+	b shapes: {RSBox new. RSEllipse new}.
+	self assert: b hasChildren.
+]
+
+{ #category : #tests }
 RSCompositeTest >> testPaddingOkay [
 	"No error should be raised"
 	

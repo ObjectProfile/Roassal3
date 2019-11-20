@@ -501,6 +501,7 @@ RSAthensRenderer >> visitBorder: border [
 	style ifNil: [ ^ stroke ].
 	style dashArray 
 		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
+		
 	style capStyle
 		ifNotNil: [:s | stroke perform: s].
 	style joinStyle
@@ -531,7 +532,7 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
-		shape shapes ifNotNil: [ 
+		shape hasChildren ifTrue: [ 
 			shape shapes do: [ :s |
 				s accept: self ] ]
 		].

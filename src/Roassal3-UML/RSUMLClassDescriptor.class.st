@@ -12,7 +12,7 @@ Class {
 		'classname',
 		'superclass'
 	],
-	#category : #'Roassal3-UML-Base'
+	#category : #'Roassal3-UML-Descriptor'
 }
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ RSUMLClassDescriptor >> forPharo [
 	self
 		classname: #name;
 		instVars: [:cls | cls instVarNames sorted ];
-		methods: [ :cls | cls methods sorted:[ :a :b | a selector < b selector ] ];
+		methods: [ :cls | cls methods sorted: CompiledMethod sortBlock ];
 		superclass: #superclass;
 		methodSelector: #selector;
 		instVarSelector: #yourself

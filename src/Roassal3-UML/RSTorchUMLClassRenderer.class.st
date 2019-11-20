@@ -5,36 +5,55 @@ Class {
 	#name : #RSTorchUMLClassRenderer,
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
-		'classNameBoxShape',
-		'currentTitleWidth'
+		'currentTitleWidth',
+		'boxBorder',
+		'titleBoxColor'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> classBoxShape [
-	^ classBoxShape ifNil: [ classBoxShape := RSShapeBuilder box
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> adjustBox: box on: shapes [
+	shapes size = 3 ifTrue: [ padding := self classBoxPadding x @ 0 ].
+	super adjustBox: box on: shapes
+]
+
+{ #category : #layout }
+RSTorchUMLClassRenderer >> applyMLayoutOn: shapes [
+	RSFlowLayout new 
+		gapSize: 2;
+		maxWidth: self currentMaxWidth;
+		on: shapes.
+]
+
+{ #category : #layout }
+RSTorchUMLClassRenderer >> applyVLayoutOn: shapes [
+	self applyMLayoutOn: shapes
+]
+
+{ #category : #accessing }
+RSTorchUMLClassRenderer >> boxBorder [
+	^ boxBorder ifNil: [ boxBorder := self defaultBoxBorder ]
+]
+
+{ #category : #accessing }
+RSTorchUMLClassRenderer >> boxBorder: aBorder [
+	boxBorder := aBorder
+]
+
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> classBoxShapeFor: aClass [
+	^ RSBox new
 		noPaint;
-		border: (RSBorder new width: 5; joinMiter; color: '666EA0') ]
+		border: self boxBorder;
+		yourself
 ]
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> classNameBoxShape [
-	^ classNameBoxShape ifNil: [ classNameBoxShape := RSShapeBuilder box
-		color: 'AFD2EE' ].
-]
-
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> classNameBoxShape: aShapeBuilder [
-	classNameBoxShape := aShapeBuilder
-]
-
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> classNameShape [
-	"^ super classNameShape"
-	^ classNameShape ifNil: [ classNameShape := super classNameShape
-		addAction: (RSAction new action: [:el| 
-			currentTitleWidth := el textWidth ]) ].
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> classNameBoxFor: aClass [ 
+	^ RSBox new
+		color: self titleBoxColor;
+		yourself
 ]
 
 { #category : #'accessing - shapes' }
@@ -42,56 +61,46 @@ RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
 ]
 
-{ #category : #'private - initialization' }
-RSTorchUMLClassRenderer >> initializeShape [
-	classShape := RSShapeBuilder composite
-		shapes: [ :cls | 
-			| group title box boxTitle rect |
-			group := self initBasicGroupOn: cls.
-			boxTitle := self classNameBoxShape elementOn: cls.
-			box := self classBoxShape elementOn: cls.
-			title := group first.
-			group addFirst: boxTitle.
-			group addLast: box.
-			padding := self classBoxPadding.
-			rect := group encompassingRectangle.
-			group size = 3 ifTrue: [ padding := padding x@0. ].
-			box 
-				extent: rect extent + padding;
-				position: rect rsCenter.
-			title translateBy: 0@ (padding y / -2).
-			
-			boxTitle 
-				position: rect rsCenter x @ title position y ;
-				extent: (box width @ title height).
-			group
-		];
-	popup; draggable.
+{ #category : #defaults }
+RSTorchUMLClassRenderer >> defaultBoxBorder [
+	^ RSBorder new
+		width: 5; 
+		joinMiter; 
+		color: '666EA0';
+		yourself 
 ]
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> methodShape [ 
-	^ methodShape ifNil: [ methodShape := RSShapeBuilder box 
+{ #category : #defaults }
+RSTorchUMLClassRenderer >> defaultLayout [
+	^ super defaultLayout tree
+		verticalGap: 50;
+		horizontalGap: 10;
+		yourself
+]
+
+{ #category : #defaults }
+RSTorchUMLClassRenderer >> defaultTitleBoxColor [
+	^ Color colorFrom: 'AFD2EE'
+]
+
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> methodFor: aMethod [
+	^ RSBox new
 		width: 20;
-		height: [ :met | met linesOfCode * 5 + 1];
-		popup ]
+		height: aMethod linesOfCode * 5 + 1;
+		popup;
+		yourself
 ]
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> methodsShape [
-
-	^ methodsShape ifNil: [ methodsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := self methodShape elementsOn: (modelDescriptor methods rsValue: m).
-		RSFlowLayout new 
-			gapSize: 2; 
-			maxWidth: self currentMaxWidth; 
-			on: g.
-		g ];
-		padding:( Margin 
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> methodsFor: aClass [
+	^ (super methodsFor: aClass)
+		padding: ( Margin 
 		 	left: 0
 			right: 0
 			top: 5
-			bottom: 0) ]
+			bottom: 5);
+		yourself
 ]
 
 { #category : #'accessing - shapes' }
@@ -99,20 +108,56 @@ RSTorchUMLClassRenderer >> minMethodsWidth [
 	^ 200
 ]
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> varShape [
-	^ varShape ifNil: [ varShape := RSShapeBuilder triangle
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> shapeFor: aClass [
+	| shapes box title vars methods boxTitle |
+	title := self titleFor: aClass.
+	vars := self varsFor: aClass.
+	methods := self methodsFor: aClass.
+	shapes := self groupFor: { vars. methods }.
+	shapes addFirst: title.
+	box := self classBoxShapeFor: aClass.
+	boxTitle := self classNameBoxFor: aClass.
+	self applyLayoutOn: shapes.
+	self adjustTitle: title on: shapes.
+	shapes addFirst: boxTitle.
+	shapes addLast: box.
+	self adjustBox: box on: shapes. 
+	boxTitle 
+		position: box position x @ title position y ;
+		extent: (box width @ title height).
+	^ RSComposite new
 		popup;
-		size: 20 ].
+		draggable;
+		model: aClass;
+		shapes: shapes;
+		yourself.
 ]
 
-{ #category : #'accessing - shapes' }
-RSTorchUMLClassRenderer >> varsShape [
-	^ varsShape ifNil: [ varsShape := RSShapeBuilder composite shapes: [ :m | | g |
-		g := self varShape elementsOn: (modelDescriptor instVars rsValue: m).
-		RSFlowLayout new 
-			gapSize: 2; 
-			maxWidth: self currentMaxWidth; 
-			on: g.
-		g ]  ]
+{ #category : #accessing }
+RSTorchUMLClassRenderer >> titleBoxColor [
+	^ titleBoxColor ifNil: [ titleBoxColor := self defaultTitleBoxColor ]
+]
+
+{ #category : #accessing }
+RSTorchUMLClassRenderer >> titleBoxColor: aColor [
+	titleBoxColor := aColor
+]
+
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> titleFor: aClass [
+	| s |
+	s := super titleFor: aClass.
+	currentTitleWidth := s textWidth.
+	^ s
+]
+
+{ #category : #hooks }
+RSTorchUMLClassRenderer >> varFor: model [
+	^ RSPolygon triangle
+		model: model;
+		popup;
+		size: 20;
+		yourself
+		
 ]
