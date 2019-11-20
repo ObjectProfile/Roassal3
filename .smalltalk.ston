@@ -11,7 +11,7 @@ SmalltalkCISpec {
     #packages: ['Roassal3-Global-Tests'],
   	#categories: [ 
         'Roassal3-Tests', 
-        'Roassal3-Shapes-Tests'
+        'Roassal3-Shapes-Tests',
         'Roassal3-Animation-Tests',
         'Roassal3-Interaction-Tests', 
         'Roassal3-Utils-Tests',
