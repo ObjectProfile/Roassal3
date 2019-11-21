@@ -8,6 +8,9 @@ Class {
 		'DarkThemeUMLClassColor',
 		'LightThemeUMLClassColor'
 	],
+	#classInstVars : [
+		'methodsLimitUML'
+	],
 	#category : #'Roassal3-UML-Calypso-Settings'
 }
 
@@ -43,6 +46,16 @@ RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
 	LightThemeUMLClassColor := aColor
 ]
 
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> methodsLimitUML [
+	^ methodsLimitUML ifNil: [ methodsLimitUML := 20 ].
+]
+
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
+	methodsLimitUML := aNumber
+]
+
 { #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [ 
 	<systemsettings>
@@ -50,7 +63,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 		parent: #CalypsoUML;
 		label: 'UML Colors' ;  
 		description: 'All settings concerned with the look''n feel of your system';
-		with: [ 			
+		with: [
 			(aBuilder setting: #lightThemeUMLClassColor)
 				target: self;
 				label: 'Light Theme UML Class color';
@@ -60,6 +73,21 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 				target: self;
 				label: 'Dark Theme UML Class color';
 				default: self defaultDarkThemeColorUMLClass	 ]
+]
+
+{ #category : #settings }
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [ 
+	<systemsettings>
+	(aBuilder group: #CalypsoUMLValues)
+		parent: #CalypsoUML;
+		label: 'Capypso UML Methods' ;  
+		description: 'All settings concerned with the size of variables to show';
+		with: [
+			(aBuilder range: #methodsLimitUML)
+				target: self;
+				label: 'Limit for number of methods to show in UML class';
+				default: 30;
+				range: ( 0 to: 200). ]
 ]
 
 { #category : #settings }

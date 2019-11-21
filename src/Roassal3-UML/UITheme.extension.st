@@ -4,3 +4,8 @@ Extension { #name : #UITheme }
 UITheme >> classBoxBackgroundColor [
 	^ RSUMLCalypsoSettings lightThemeUMLClassColor
 ]
+
+{ #category : #'*Roassal3-UML' }
+UITheme >> methodsLimitUML [
+	^ RSUMLCalypsoSettings methodsLimitUML
+]

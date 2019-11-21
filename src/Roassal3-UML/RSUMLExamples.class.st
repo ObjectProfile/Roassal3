@@ -24,12 +24,7 @@ RSUMLExamples >> example02ClassDescriptor [
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAbstractLine withAllSubclasses.
 	
-	builder modelDescriptor
-		methods: [ :cls | | methods |
-			methods := cls methods sorted: [ :a :b |
-				a selector < b selector ].
-			methods copyFrom: 1
-			to: (methods size min: 5 ) ].
+	builder modelDescriptor methodsLimit: 5.
 	builder renderer edgeBuilder
 		cornerRadii: 20.
 	builder build.

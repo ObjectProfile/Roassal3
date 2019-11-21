@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'marker',
 		'edgeBuilder',
-		'padding'
+		'padding',
+		'currentClassMethods'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
@@ -66,6 +67,18 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 		yourself
 ]
 
+{ #category : #hooks }
+RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
+	| rect ellipsis |
+	self needsEllipsis ifFalse: [ ^ self ].
+	
+	ellipsis := self ellipsisShape.
+	rect := aGroup encompassingRectangle.
+	ellipsis position: rect rsCenter x @ (rect height / 2 + rect rsCenter y).
+	aGroup add: ellipsis.
+	
+]
+
 { #category : #defaults }
 RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 	^ RSEdgeBuilder orthoVertical
@@ -80,7 +93,7 @@ RSAbstractUMLClassRenderer >> defaultLayout [
 	| defaultLayout |
 	defaultLayout := RSLayoutBuilder new.
 	defaultLayout tree 
-		verticalGap: 100; 
+		verticalGap: 50; 
 		horizontalGap: 50.
 	^ defaultLayout
 ]
@@ -104,6 +117,15 @@ RSAbstractUMLClassRenderer >> edgeBuilder [
 { #category : #edges }
 RSAbstractUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 	edgeBuilder := anEdgeBuilder
+]
+
+{ #category : #hooks }
+RSAbstractUMLClassRenderer >> ellipsisShape [
+	^ RSLabel new
+		text: '...';
+		color: self textColor;
+		addInteraction: (RSPopup text: 'This class has more methods.' )
+		yourself
 ]
 
 { #category : #hooks }
@@ -134,13 +156,24 @@ RSAbstractUMLClassRenderer >> methodFor: method [
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> methodsFor: model [
-	| methods shapes |
-	methods := modelDescriptor methods rsValue: model.
+	| shapes methods |
+	methods := currentClassMethods := modelDescriptor methods rsValue: model.
+	currentClassMethods size > modelDescriptor methodsLimit
+		ifTrue: [ methods := currentClassMethods 
+			copyFrom: 1 
+			to: modelDescriptor methodsLimit ].
 	shapes := methods collect: [ :met | self methodFor: met ].
 	self applyMLayoutOn: shapes.
 	^ RSComposite new
 		shapes: shapes;
 		yourself
+]
+
+{ #category : #testing }
+RSAbstractUMLClassRenderer >> needsEllipsis [ 
+	^ currentClassMethods isNotNil 
+		and:  [ currentClassMethods size > modelDescriptor methodsLimit ]
+		
 ]
 
 { #category : #hooks }

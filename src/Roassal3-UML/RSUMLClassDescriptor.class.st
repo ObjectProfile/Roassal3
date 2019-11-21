@@ -10,7 +10,8 @@ Class {
 		'methodSelector',
 		'instVarSelector',
 		'classname',
-		'superclass'
+		'superclass',
+		'methodsLimit'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -34,7 +35,8 @@ RSUMLClassDescriptor >> forPharo [
 		methods: [ :cls | cls methods sorted: CompiledMethod sortBlock ];
 		superclass: #superclass;
 		methodSelector: #selector;
-		instVarSelector: #yourself
+		instVarSelector: #yourself;
+		methodsLimit: SmallInteger maxVal.
 		
 ]
 
@@ -76,6 +78,17 @@ RSUMLClassDescriptor >> methods [
 { #category : #accessing }
 RSUMLClassDescriptor >> methods: aSymbolOrBlock [
 	methods := aSymbolOrBlock
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> methodsLimit [
+	^ methodsLimit
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> methodsLimit: aNumber [
+	self assert: aNumber >= 1 description: 'Cannot have a negative limit'.
+	methodsLimit := aNumber
 ]
 
 { #category : #accessing }

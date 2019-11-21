@@ -22,16 +22,13 @@ RSUMLCalypso >> applyTheme: builder [
 	renderer marker shape color: theme backgroundColor.
 	renderer textColor: theme textColor.
 	renderer boxColor: theme classBoxBackgroundColor.
+	builder modelDescriptor methodsLimit: theme methodsLimitUML.
 ]
 
 { #category : #building }
 RSUMLCalypso >> build [
 	| builder morph controls |
 	builder := RSUMLClassBuilder new.
-	builder modelDescriptor
-		methods: [ :cls | | methods |
-			methods := cls methods.
-			(methods copyFrom: 1 to: (methods size min: 20)) sorted: CompiledMethod sortBlock ].
 	builder container: RSCanvas new.
 	controls := RSControlsCanvas new.
 	controls configuration 

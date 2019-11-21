@@ -59,14 +59,17 @@ RSBasicUMLClassRenderer >> shapeFor: aClass [
 	| shapes box title vars methods |
 	title := self titleFor: aClass.
 	vars := self varsFor: aClass.
+	
 	methods := self methodsFor: aClass.
 	shapes := self groupFor: { vars. methods }.
 	shapes addFirst: title.
 	box := self classBoxShapeFor: aClass.
 	self applyLayoutOn: shapes.
 	self adjustTitle: title on: shapes.
+	
+	self createEllipsisIfNecessaryOn: shapes.
 	shapes addFirst: box.
-	self adjustBox: box on: shapes. 
+	self adjustBox: box on: shapes.
 	self addLines: shapes title: title.
 	^ RSComposite new
 		popup;
