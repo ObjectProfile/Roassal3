@@ -2,15 +2,14 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #TSShapeExamples,
-	#superclass : #RSObject,
+	#name : #RSShapeBasicExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example01BasicBoxes [
-	<script: 'self new example01BasicBoxes'>
-
+RSShapeBasicExamples >> example01BasicBoxes [
+	<script: 'self new example01BasicBoxes open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSBox new
@@ -21,12 +20,12 @@ TSShapeExamples >> example01BasicBoxes [
 		color: Color red;
 		extent: 100@100;
 		yourself).
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example02BasicEllipses [
-	<script: 'self new example02BasicEllipses'>
+RSShapeBasicExamples >> example02BasicEllipses [
+	<script: 'self new example02BasicEllipses open'>
 
 	| c |
 	c := RSCanvas new.
@@ -38,13 +37,12 @@ TSShapeExamples >> example02BasicEllipses [
 		color: Color red;
 		extent: 100@100;
 		yourself).
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example03BasicComposite [
-	<script: 'self new example03BasicComposite'>
-
+RSShapeBasicExamples >> example03BasicComposite [
+	<script: 'self new example03BasicComposite open'>
 	| c com |
 	c := RSCanvas new.
 	com := RSComposite new.
@@ -68,13 +66,12 @@ TSShapeExamples >> example03BasicComposite [
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example04BasicComposite [
-	<script: 'self new example04BasicComposite'>
-
+RSShapeBasicExamples >> example04BasicComposite [
+	<script: 'self new example04BasicComposite open'>
 	| c com |
 	c := RSCanvas new.
 	com := RSComposite new.
@@ -100,42 +97,39 @@ TSShapeExamples >> example04BasicComposite [
 		color: (Color gray alpha: 0.5);
 		extent: 20@20;
 		yourself).
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example05BasicGroup [
-	<script: 'self new example05BasicGroup'>
-
-	| c |
-	c := RSCanvas new.
-	c addShape: (RSBox new
+RSShapeBasicExamples >> example05BasicGroup [
+	<script: 'self new example05BasicGroup inspect'>
+	| g |
+	g := RSGroup new.
+	g add: (RSBox new
 		color: (Color yellow alpha: 0.5);
 		position: -50 @ 0;
 		extent: 50@100;
 		yourself).
-	c addShape: (RSBox new
+	g add: (RSBox new
 		position: 0 @ 0;
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
-		
-		
-	c addShape: (RSEllipse new
+
+	g add: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
 		yourself).
-	c addShape: (RSEllipse new
+	g add: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 20@20;
 		yourself).
-	c open
+	^ g
 ]
 
 { #category : #labels }
-TSShapeExamples >> example06BasicLabels [
-	<script: 'self new example06BasicLabels'>
-
+RSShapeBasicExamples >> example06BasicLabels [
+	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
 	1 to: 12 do: [ :m | 
@@ -165,44 +159,36 @@ TSShapeExamples >> example06BasicLabels [
 		color: nil;
 		withBorder;
 		radius: 90).
-	c open
-	
-
-
-
+	^ c
 ]
 
 { #category : #events }
-TSShapeExamples >> example07EventsMouseMoveDrag [
-	<script: 'self new example07EventsMouseMoveDrag'>
-
-	| c ellipse a b update anim |
+RSShapeBasicExamples >> example07EventsMouseMoveDrag [
+	<script: 'self new example07EventsMouseMoveDrag open'>
+	| c ellipse update |
 	c := RSCanvas new.
 	ellipse := RSEllipse new
 		radius: 40;
 		withBorder.
 	c addShape: ellipse.
-	a := Color colorFrom: '12A288'.
-	b := Color colorFrom: 'AB2567'.
 	update := [ :evt :color |
 		ellipse 
 			color: color;
 			position: evt position;
 			signalUpdate].
-	anim := nil.
 	c
-		when: RSMouseDragging do: [ :evt | update value: evt value: a ];
-		when: RSMouseMove do: [ :evt | update value: evt value: b  ].
+		when: RSMouseDragging do: [ :evt | 
+			update value: evt value: (Color colorFrom: '12A288')];
+		when: RSMouseMove do: [ :evt | 
+			update value: evt value: (Color colorFrom: 'AB2567') ].
 	c clearBackground: false.
-	
-	c open.
+	^ c
 	
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example08EllipseBorder [
-	<script: 'self new example08EllipseBorder'>
-
+RSShapeBasicExamples >> example08EllipseBorder [
+	<script: 'self new example08EllipseBorder open'>
 	| c y r |
 	c := RSCanvas new.
 	r := Random new.
@@ -225,13 +211,12 @@ TSShapeExamples >> example08EllipseBorder [
 	PolymorphSystemSettings setDesktopLogoWith: m.
 	m position: 0@World menubar height.
 	m extent: World extent- (0@World menubar height)."
-	c open
+	^ c
 ]
 
 { #category : #events }
-TSShapeExamples >> example09MouseStep [
-	<script: 'self new example09MouseStep'>
-
+RSShapeBasicExamples >> example09MouseStep [
+	<script: 'self new example09MouseStep open'>
 	|  c e prev dif |
 	c := RSCanvas new.
 	c color: Color black.
@@ -250,14 +235,13 @@ TSShapeExamples >> example09MouseStep [
 		c signalUpdate.
 		 ].
 	c clearBackground: false.
-	c open.
+	^ c
 ]
 
 { #category : #events }
-TSShapeExamples >> example10EllipseMouseMove [
-	<script: 'self new example10EllipseMouseMove'>
-
-	| c border circleResolution angle a b radius |
+RSShapeBasicExamples >> example10EllipseMouseMove [
+	<script: 'self new example10EllipseMouseMove open'>
+	| c border circleResolution angle a b radius p |
 	c := RSCanvas new.
 	c color: Color white.
 	border := RSBorder new color: (Color colorFrom: '002800').
@@ -267,8 +251,9 @@ TSShapeExamples >> example10EllipseMouseMove [
 		circleResolution := b.
 		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
 		angle := Float twoPi / circleResolution.
-		a := 175 * evt position x / c extent x.
-		b := 200 * evt position y / c extent y.
+		p := evt position abs.
+		a := 175 * p x / c extent x.
+		b := 200 * p y / c extent y.
 		c shapes copy do: #remove.
 		0 to: circleResolution do: [ :i |
 			c addShape: (RSEllipse new 
@@ -280,13 +265,12 @@ TSShapeExamples >> example10EllipseMouseMove [
 		
 		c signalUpdate.
 		 ].
-	c open.
+	^ c
 ]
 
 { #category : #events }
-TSShapeExamples >> example11ScaleMouseDistance [
-	<script: 'self new example11ScaleMouseDistance'>
-
+RSShapeBasicExamples >> example11ScaleMouseDistance [
+	<script: 'self new example11ScaleMouseDistance open'>
 	| c easing canvasExtent boxSize zindex maxDist scale border |
 	c := RSCanvas new.
 	c color: Color white.
@@ -322,22 +306,47 @@ TSShapeExamples >> example11ScaleMouseDistance [
 		c signalUpdate.
 	].
 	c clearBackground: false.
-	c open.
+	^ c
 ]
 
 { #category : #lines }
-TSShapeExamples >> example12BasicLine [
-	<script: 'self new example12BasicLine'>
-
-	| c |
+RSShapeBasicExamples >> example12BasicLine [
+	<script: 'self new example12BasicLine open'>
+	| c rotate size angle |
 	c := RSCanvas new.
-	c addShape: RSLine new.
-	c open.
+	angle := 0.
+	size := 0.
+	rotate := [ :point | | cos sin p |
+		cos := angle cos.
+		sin := angle sin.
+		"origin"
+		p := point - ((size @ size)/2).
+		"rotated"
+		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
+	].
+	c when: RSMouseMove do: [ :evt | 
+		size := evt position distanceTo: 0@0.
+		angle := evt position angle + 135 degreesToRadians.
+		c shapes copy do: #remove.
+		size := size asInteger.
+		(0 to: size by: 3) do: [ :k |
+			| a b |
+			a := rotate value: k @ 0.
+			b := rotate value: 0 @ (size - k).
+			c addShape: (RSLine new
+				startPoint: a;
+				endPoint: b;
+				yourself).
+		 ].
+		c signalUpdate.
+	].
+	
+	^ c
 ]
 
 { #category : #bitmap }
-TSShapeExamples >> example14BasicBitmap [
-	<script: 'self new example14BasicBitmap'>
+RSShapeBasicExamples >> example14BasicBitmap [
+	<script: 'self new example14BasicBitmap open'>
 
 	| c |
 	c := RSCanvas new.
@@ -345,12 +354,12 @@ TSShapeExamples >> example14BasicBitmap [
 		form: (self iconNamed: #eyedropper);
 		extent: 200@350).
 		
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example15BasicRoundBoxses [
-	<script: 'self new example15BasicRoundBoxses'>
+RSShapeBasicExamples >> example15BasicRoundBoxses [
+	<script: 'self new example15BasicRoundBoxses open'>
 
 	| c |
 	c := RSCanvas new.
@@ -364,12 +373,12 @@ TSShapeExamples >> example15BasicRoundBoxses [
 		extent: 100@50;
 		withBorder).
 		
-	c open
+	^ c
 ]
 
 { #category : #lines }
-TSShapeExamples >> example16BasicLinePath [
-	<script: 'self new example16BasicLinePath'>
+RSShapeBasicExamples >> example16BasicLinePath [
+	<script: 'self new example16BasicLinePath open'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
 	c := RSCanvas new.
 	b1 := RSBox new size: 100@100.
@@ -418,133 +427,38 @@ TSShapeExamples >> example16BasicLinePath [
 		evt signalUpdate ].
 	b1 when: RSMouseDragging do: translate.
 	b2 when: RSMouseDragging do: translate.
-	c open
+	^ c
 ]
 
 { #category : #border }
-TSShapeExamples >> example17Borders [
-	<script: 'self new example17Borders'>
-	| c border border2 a b ce d |
+RSShapeBasicExamples >> example17Borders [
+	<script: 'self new example17Borders open'>
+	| c |
 	c := RSCanvas new.
-	border := [ :position :inner :outer :text |
-		c addShape: (RSBox new
-			color: Color lightGray;
-			position: position;
-			border: (RSBorder new
-				capSquare;
-				joinMiter;
-				color: inner);"brighter"
-			size: 100).
-		c addShape: (RSBox new
-			color: nil;
-			position: position;
-			border: (RSBorder new
-				capSquare;
-				dashArray: #(98 196);
-				color: outer);"darker"
-			size: 98).
-		c addShape: (RSBox new
-			color: nil;
-			position: position;
-			border: (RSBorder new
-				capSquare;
-				dashArray: #(0 102 102 0 102 0);
-				color: outer);"darker"
-			size: 102).
-		c addShape: (RSLabel new
-			text: text;
-			position: position;
-			color: Color black).
-		 ].
-	border2 := [ :position :text |
-		
-		c addShape: (RSBox new
-			color: Color lightGray;
-			position: position;
-			size: 100).
-		c addShape: (RSLine new
-			startPoint: position - 50;
-			endPoint: position + (50 @ -50);
-			color: a).
-		c addShape: (RSLine new
-			startPoint: position - 50;
-			endPoint: position + (-50 @ 50);
-			color: a).
-		c addShape: (RSLine new
-			startPoint: position - 49;
-			endPoint: position + (49 @ -49);
-			color: b).
-		c addShape: (RSLine new
-			startPoint: position - 49;
-			endPoint: position + (-49 @ 49);
-			color: b).
-			
-		c addShape: (RSLine new
-			startPoint: position + (-49@49);
-			endPoint: position + 49;
-			color: ce ).
-		c addShape: (RSLine new
-			startPoint: position + (49@ -49) ;
-			endPoint: position + (49 @ 49);
-			color: ce).
-			
-		c addShape: (RSLine new
-			startPoint: position + (-50@50);
-			endPoint: position + 50;
-			color: d).
-		c addShape: (RSLine new
-			startPoint: position + (50@ -50);
-			endPoint: position + (50 @ 50);
-			color: d).
-		c addShape: (RSLabel new
-			text: text;
-			position: position;
-			color: Color black).
-		 ].
-	
-	"line border"
-	c addShape: (RSBox new
-		color: Color lightGray;
-		border: RSBorder new;
-		size: 100).
-	c addShape: (RSLabel new
-		text: 'Line border';
-		color: Color black).
-	"raised etched"
-	border 
-		value: 120@0
-		value: (Color lightGray adjustBrightness: 0.08)
-		value: (Color lightGray adjustBrightness: -0.08)
-		value: 'Raised etched'.
-	
-	"lowered etched"
-	border 
-		value: -120@0
-		value: (Color lightGray adjustBrightness: -0.08)
-		value: (Color lightGray adjustBrightness: 0.08)
-		value: 'Lowered etch'.
-	"Raised bevel"
-	b := Color lightGray adjustBrightness: 0.08.
-	a := b adjustBrightness: 0.08.
-	ce := Color lightGray adjustBrightness: -0.08.
-	d := ce adjustBrightness: -0.08.
-	border2
-		value: 0@ -120
-		value: 'Raised bevel'.
-	"Lowered bevel"
-	b := Color lightGray adjustBrightness: -0.08.
-	a := b adjustBrightness: -0.08.
-	ce := Color lightGray adjustBrightness: 0.08.
-	d := ce adjustBrightness: 0.08.
-	border2 
-		value: 0@ 120
-		value: 'Lowered bevel'.
-	c open.
+	c addShape: (RSLine new
+		startPoint: -100@ -100;
+		endPoint: 100@ -100;
+		width: 50;
+		capRound;
+		yourself).
+	c addShape: (RSLine new
+		startPoint: -100@ 0;
+		endPoint: 100@ 0;
+		width: 50;
+		capButt;
+		yourself).
+	c addShape: (RSLine new
+		startPoint: -100@ 100;
+		endPoint: 100@ 100;
+		width: 50;
+		capSquare;
+		yourself).
+	^ c
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example18BasicPieSlice [
-	<script: 'self new example18BasicPieSlice'>
+RSShapeBasicExamples >> example18BasicPieSlice [
+	<script: 'self new example18BasicPieSlice open'>
 	| c |
 	c := RSCanvas new.
 	"empty"
@@ -555,12 +469,12 @@ TSShapeExamples >> example18BasicPieSlice [
 		externalRadius: 100;
 		alphaAngle: 0;
 		betaAngle: 360).
-	c open.
+	^ c
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example19PieSlice [
-	<script: 'self new example19PieSlice'>
+RSShapeBasicExamples >> example19PieSlice [
+	<script: 'self new example19PieSlice open'>
 	| c |
 	c := RSCanvas new.
 	"slice"
@@ -570,12 +484,12 @@ TSShapeExamples >> example19PieSlice [
 		alphaAngle: 30;
 		betaAngle: 90;
 		segmentSpacing: 5).
-	c open.
+	^ c
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example20Donut [
-	<script: 'self new example20Donut'>
+RSShapeBasicExamples >> example20Donut [
+	<script: 'self new example20Donut open'>
 	| c |
 	c := RSCanvas new.
 	"donut"
@@ -585,12 +499,12 @@ TSShapeExamples >> example20Donut [
 		innerRadius: 50;
 		alphaAngle: 0;
 		betaAngle: 360).
-	c open.
+	^ c
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example21CornerRadii [
-	<script: 'self new example21CornerRadii'>
+RSShapeBasicExamples >> example21CornerRadii [
+	<script: 'self new example21CornerRadii open'>
 	| c |
 	c := RSCanvas new.
 	"corner radii"
@@ -598,14 +512,14 @@ TSShapeExamples >> example21CornerRadii [
 		externalRadius: 100;
 		innerRadius: 50;
 		alphaAngle: 0;
-		betaAngle: 45;
+		betaAngle: 90;
 		cornerRadii: 20).
-	c open.
+	^ c
 ]
 
 { #category : #arcs }
-TSShapeExamples >> example22BasicPieSlice [
-	<script: 'self new example22BasicPieSlice'>
+RSShapeBasicExamples >> example22BasicPieSlice [
+	<script: 'self new example22BasicPieSlice open'>
 	| c |
 	c := RSCanvas new.
 	"slice"
@@ -613,12 +527,12 @@ TSShapeExamples >> example22BasicPieSlice [
 		externalRadius: 100;
 		alphaAngle: 30;
 		betaAngle: 90).
-	c open.
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example23FixedShape [
-	<script: 'self new example23FixedShape'>
+RSShapeBasicExamples >> example23FixedShape [
+	<script: 'self new example23FixedShape open'>
 	| c box |
 	c := RSCanvas new.
 	box := RSBox new
@@ -634,22 +548,27 @@ TSShapeExamples >> example23FixedShape [
 		yourself.
 	c addShape: box.
 	box setAsFixed.
-	c open.
+	^ c
 ]
 
 { #category : #lines }
-TSShapeExamples >> example24Polyline [
-	<script: 'self new example24Polyline'>
+RSShapeBasicExamples >> example24Polyline [
+	<script: 'self new example24Polyline open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolyline new
-		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10}).
-	c open.
+		width: 30;
+		joinRound;"joinBevel; joinMiter"
+		color: Color blue;
+		controlPoints: { 50@300. 150@300. 150@200. 250@200. 250@100. 350@100};
+		basicTranslateBy: -150 @ -150;
+		yourself).
+	^ c
 ]
 
 { #category : #labels }
-TSShapeExamples >> example25LabelWithBorder [
-	<script: 'self new example25LabelWithBorder'>
+RSShapeBasicExamples >> example25LabelWithBorder [
+	<script: 'self new example25LabelWithBorder open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSLabel new
@@ -660,12 +579,12 @@ TSShapeExamples >> example25LabelWithBorder [
 			color: Color red;
 			dashArray: #(4) );
 		text: 'Roassal Pharo').
-	c open.
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example26Polygon [
-	<script: 'self new example26Polygon'>
+RSShapeBasicExamples >> example26Polygon [
+	<script: 'self new example26Polygon open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolygon new
@@ -675,12 +594,12 @@ TSShapeExamples >> example26Polygon [
 	c showEncompassingRectangles.
 	c shapes first when: RSMouseDragging do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
-	c open.
+	^ c
 ]
 
 { #category : #lines }
-TSShapeExamples >> example27Markers [
-	<script: 'self new example27Markers'>
+RSShapeBasicExamples >> example27Markers [
+	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
 	c := RSCanvas new.
 	arrow := RSPolygon new 
@@ -699,12 +618,12 @@ TSShapeExamples >> example27Markers [
 	c addShape: axes.
 	c addShape: dataLine.
 	c camera zoomToFit: 250@250.
-	c open.
+	^ c
 ]
 
 { #category : #svg }
-TSShapeExamples >> example28SVGShape [
-	<script: 'self new example28SVGShape'>
+RSShapeBasicExamples >> example28SVGShape [
+	<script: 'self new example28SVGShape open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSSVGPath new
@@ -729,12 +648,12 @@ TSShapeExamples >> example28SVGShape [
 		yourself).
 	c showEncompassingRectangles.
 	c zoomToFit.
-	c open
+	^ c
 ]
 
 { #category : #lines }
-TSShapeExamples >> example29PolylineRadius [
-	<script: 'self new example29PolylineRadius'>
+RSShapeBasicExamples >> example29PolylineRadius [
+	<script: 'self new example29PolylineRadius open '>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolyline new
@@ -742,12 +661,12 @@ TSShapeExamples >> example29PolylineRadius [
 		cornerRadii: 50;
 		controlPoints: { 5@30. 15@30. 15@20. 25@20. 25@10. 35@10} * 50).
 	c zoomToFit.
-	c open
+	^ c
 ]
 
 { #category : #'box and ellipses' }
-TSShapeExamples >> example30PolygonWithRadius [
-	<script: 'self new example30PolygonWithRadius'>
+RSShapeBasicExamples >> example30PolygonWithRadius [
+	<script: 'self new example30PolygonWithRadius open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolygon new
@@ -758,5 +677,5 @@ TSShapeExamples >> example30PolygonWithRadius [
 	c showEncompassingRectangles.
 	c shapes first when: RSMouseDragging do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
-	c open.
+	^ c
 ]

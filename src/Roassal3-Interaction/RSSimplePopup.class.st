@@ -3,7 +3,7 @@ I create a popup from an object
 "
 Class {
 	#name : #RSSimplePopup,
-	#superclass : #RSAbstractShapeBuilder,
+	#superclass : #RSObject,
 	#instVars : [
 		'textBlock'
 	],

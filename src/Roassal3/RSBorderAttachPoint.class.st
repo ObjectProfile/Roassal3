@@ -56,7 +56,7 @@ c @ RSControlsCanvas
 "
 Class {
 	#name : #RSBorderAttachPoint,
-	#superclass : #RSAttachPoint,
+	#superclass : #RSOffsetAttachPoint,
 	#instVars : [
 		'offset'
 	],

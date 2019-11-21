@@ -73,7 +73,6 @@ RSAthensMorph >> drawOn: aCanvas [
 
 { #category : #drawing }
 RSAthensMorph >> drawOnAthensCanvas: aCanvas [
-
 	self fullDrawOnAthensCanvas: aCanvas
 ]
 
