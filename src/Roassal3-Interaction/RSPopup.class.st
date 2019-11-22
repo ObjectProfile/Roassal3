@@ -80,12 +80,7 @@ RSPopup >> createOrGetPopupOn: aShape event: event [
 { #category : #initialization }
 RSPopup >> initialize [
 	super initialize.
-	shapeBuilder := RSSimplePopup new.
-]
-
-{ #category : #public }
-RSPopup >> multiline [
-	self label: RSShapeBuilder multiline
+	shapeBuilder := RSSimplePopupBuilder new.
 ]
 
 { #category : #hooks }

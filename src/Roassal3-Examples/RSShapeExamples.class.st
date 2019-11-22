@@ -896,49 +896,54 @@ RSShapeExamples >> example26AnimatedPopup [
 
 { #category : #shapes }
 RSShapeExamples >> example27MultilineLabelBasic [
-	<script: 'self new example27MultilineLabelBasic'>
-	| v shape |
-	v := RSView new.
-	shape := RSShapeBuilder multiline
+	<script: 'self new example27MultilineLabelBasic open'>
+	| canvas shapeBuilder |
+	canvas := RSCanvas new.
+	shapeBuilder := RSSimplePopupBuilder new.
+	shapeBuilder labelShape
 		font: 20;
 		italic.
-	v add:(shape elementOn: '"tu est loin, 
+	canvas add:(shapeBuilder labelFor: '"tu est loin, 
 très loin de tous ces regards vicieux 
 qui s''alimentent de ta lumière"').
-	v elements last when: RSMouseClick do: [ :evt | v elements last inspect ].
-	v showEncompassingRectangles.
-	v open setLabel: 'Multiline'
+	canvas nodes when: RSMouseClick do: [ :evt | canvas nodes last inspect ].
+	canvas showEncompassingRectangles.
+	^ canvas
 ]
 
 { #category : #shapes }
 RSShapeExamples >> example28MultilineLabel [
-	<script: 'self new example28MultilineLabel'>
-	| v shape box elements |
-	v := RSView new.
-	box := RSShapeBuilder box 
-		size: 20;
-		interactionDo: [:i | i popup multiline ];
-		onMyselfDo: [:m | [:e | 
-			e when: RSMouseClick do: [ e inspect ] ]].
-	shape := RSShapeBuilder composite shapes: [ :m | 
+	<script: 'self new example28MultilineLabel open'>
+	| canvas shapes |
+	canvas := RSCanvas new.
+	shapes := RSShape withAllSubclasses collect: [ :cls | 
 		| methods |
-		methods := box elementsOn: m methods.
+		methods := cls methods collect: [ :met | 
+			RSBox new
+				model: met;
+				size: 20;
+				popup;
+				when: RSMouseClick do: [ :evt | evt shape inspect ];
+				yourself
+			 ].
 		RSGridLayout on: methods.
-		methods.
-		];
-		color: (Color purple alpha: 0.3);
-		padding: 10;
-		interactionDo: [:i | i draggable; popup ].
-	elements := shape elementsOn: RSShape withAllSubclasses.
+		RSComposite new
+			model: cls;
+			shapes: methods;
+			padding: 10;
+			color: (Color purple alpha: 0.3 );
+			draggable; 
+			popup;
+			yourself ].
 	RSEdgeBuilder orthoVertical
 		withVerticalAttachPoint;
-		view: v;
-		elements: elements;
+		canvas: canvas;
+		shapes: shapes;
 		connectFrom: #superclass.
-	v addAll: elements.
-	RSTreeLayout on: elements.
-	v @ RSCanvasController.
-	v open setLabel: 'Example with multiline labels'.
+	canvas addAll: shapes.
+	RSTreeLayout on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas.
 ]
 
 { #category : #shapes }

@@ -2,16 +2,17 @@
 I create a popup from an object
 "
 Class {
-	#name : #RSSimplePopup,
+	#name : #RSSimplePopupBuilder,
 	#superclass : #RSObject,
 	#instVars : [
-		'textBlock'
+		'textBlock',
+		'labelShape'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
 
 { #category : #hooks }
-RSSimplePopup >> boxFor: lbl [
+RSSimplePopupBuilder >> boxFor: lbl [
 	^ RSBox new
 		color: (Color colorFrom: 'efefef');
 		cornerRadius: 5;
@@ -21,7 +22,7 @@ RSSimplePopup >> boxFor: lbl [
 ]
 
 { #category : #hooks }
-RSSimplePopup >> compositeLabelFor: lines [ 
+RSSimplePopupBuilder >> compositeLabelFor: lines [ 
 	| shapes |
 	shapes := lines collect: [:line | 
 		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ].
@@ -36,12 +37,12 @@ RSSimplePopup >> compositeLabelFor: lines [
 ]
 
 { #category : #initialization }
-RSSimplePopup >> initialize [
-	self textBlock: #yourself
+RSSimplePopupBuilder >> initialize [
+	self labelShape: RSLabel new; textBlock: #yourself.
 ]
 
 { #category : #hooks }
-RSSimplePopup >> labelFor: anObject [
+RSSimplePopupBuilder >> labelFor: anObject [
 	| text lines |
 	text := self textFor: anObject.
 	lines := text lines.
@@ -51,8 +52,18 @@ RSSimplePopup >> labelFor: anObject [
 	
 ]
 
+{ #category : #accessing }
+RSSimplePopupBuilder >> labelShape [
+	^ labelShape
+]
+
+{ #category : #accessing }
+RSSimplePopupBuilder >> labelShape: aLabelShape [
+	labelShape := aLabelShape
+]
+
 { #category : #hooks }
-RSSimplePopup >> shapeFor: anObject [
+RSSimplePopupBuilder >> shapeFor: anObject [
 	| lbl box |
 	lbl := self labelFor: anObject.
 	box := self boxFor: lbl.
@@ -62,19 +73,19 @@ RSSimplePopup >> shapeFor: anObject [
 ]
 
 { #category : #hooks }
-RSSimplePopup >> singleLabelFor: text [
-	^ RSLabel new
+RSSimplePopupBuilder >> singleLabelFor: text [
+	^ self labelShape copy
 		text: text;
 		yourself
 		
 ]
 
 { #category : #hooks }
-RSSimplePopup >> textBlock: aBlock [
+RSSimplePopupBuilder >> textBlock: aBlock [
 	textBlock := aBlock
 ]
 
 { #category : #hooks }
-RSSimplePopup >> textFor: anObject [
+RSSimplePopupBuilder >> textFor: anObject [
 	^ (textBlock rsValue: anObject) asString
 ]
