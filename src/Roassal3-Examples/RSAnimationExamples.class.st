@@ -1667,7 +1667,7 @@ RSAnimationExamples >> example28AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	^ v
 	
 
@@ -1782,7 +1782,7 @@ RSAnimationExamples >> example31Miku [
 		svgPath: #key;
 		color: #value.
 	v addAll: (svg elementsOn: lines).
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	easing := RSEasing elasticOut.
 	v elements do: [ :e | | position |
 		position := (r next * 1000) @ (r next * 1000) - 100.
@@ -2140,7 +2140,7 @@ RSAnimationExamples >> example37SimpleClock [
 		top;
 		offset: 0 @ 15.
 	location move: v shapes last on: v elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	^ v
 ]
 

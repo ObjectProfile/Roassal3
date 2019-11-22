@@ -19,7 +19,7 @@ RSUMLAbstractBuilder class >> isAbstract [
 { #category : #private }
 RSUMLAbstractBuilder >> defaultContainer [
 	^ RSCanvas new 
-		addInteraction: RSControlsCanvas new;
+		addInteraction: RSCanvasController new;
 		yourself.
 ]
 

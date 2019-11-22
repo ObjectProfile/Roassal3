@@ -210,7 +210,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		doNotUseProgressBar; 
 		charge: -350;
 		on: c nodes.
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	c zoomToFit.
 	^ c
 ]
@@ -235,7 +235,7 @@ RSLayoutExamples >> example08HorizontalTree [
 			shapes: (RSGroup with: box with: lbl );
 			yourself ].
 	c addAll: shapes.
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
@@ -266,7 +266,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	RSForceBasedLayout new 
 		charge: -500; 
 		on: c nodes.
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	^ c
 ]
 
@@ -291,7 +291,7 @@ RSLayoutExamples >> example10Locate [
 		left;
 		stick: e2 on: e1.
 	v addAll:{e1. e2}.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	^ v
 ]
 
@@ -318,7 +318,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 	elements := shape elementsOn: Collection withAllSubclasses.
 	RSGridLayout on: elements.
 	v addAll: elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	^ v
 ]
 
@@ -350,7 +350,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	"elements do: [ :e |
 		(layout mockElementAt: e) charge: e model * -20 ]."
 	canvas edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	
 	canvas @ (RSForceLayoutStepping new layout: layout).
 	^ canvas
@@ -381,7 +381,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		edges: canvas edges;
 		start;
 		yourself.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	canvas @ (RSForceLayoutStepping new layout: layout).
 	colors := RSColorPalette sequential pubu9.
 	boxBuilder := [ :quad :index |
@@ -453,7 +453,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	eb2 withBorderAttachPoint.
 	eb2 following: #superclass.
 	eb2 connectToAll: #dependentClasses."
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	^ c
 ]
 
@@ -489,7 +489,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 	RSTreeLayout on: c nodes.
 
 	"Making sure we have zooming"
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	^ c 
 ]
 
@@ -517,6 +517,6 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 
 	RSTreeLayout on: c nodes.
 
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	^ c 
 ]

@@ -199,7 +199,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: view [
 		sorted: [:a :b | a selector <  b selector]).
 	view addAll: elements.
 	
-	controls := RSControlsCanvas new.
+	controls := RSCanvasController new.
 	controls noLegend.
 	controls configuration 
 		noZoomToFitOnStart;

@@ -8,5 +8,5 @@ Class {
 RSControlsViewTest >> testBasic [
 	| view |
 	view := RSView new.
-	view @ RSControlsCanvas
+	view @ RSCanvasController
 ]

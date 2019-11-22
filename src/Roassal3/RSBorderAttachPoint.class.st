@@ -67,30 +67,31 @@ Class {
 RSBorderAttachPoint >> basicEndingPointOf: anEdge [
 	^ self
 		positionFor: anEdge to
-		point: (self basicPointFrom: anEdge to to: anEdge from of: anEdge)
+		point: (self basicPointFrom: anEdge to to: anEdge from of: anEdge offset: endOffset)
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge [
-	| source target line shift |
+RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge offset: aNumber [
+	| source target line shift res vector unit |
 	source := fromShape geometry.
 	target := toShape geometry.
 	shift := self offsetNormalFor: anEdge.
 	line := GLineSegment from: source center to: target center.
-	shift := (line vector = (0@0) 
-		ifTrue: [ -1 @ 0]
-		ifFalse: [ line vector normal ]) * shift.
+	vector := line vector.
+	unit := vector / (vector r max: 1).
+	shift :=  vector normal * shift.
 	anEdge from = toShape
 		ifTrue: [ shift := shift * -1 ].
 	line := GLineSegment from: source center + shift to: target center + shift.
-	^ self borderPointFrom: source to: target via: line
+	res := self borderPointFrom: source to: target via: line.
+	^ res + (unit * aNumber).
 ]
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicStartingPointOf: anEdge [
 	^ self
 		positionFor: anEdge from 
-		point: (self basicPointFrom: anEdge from to: anEdge to of: anEdge)
+		point: (self basicPointFrom: anEdge from to: anEdge to of: anEdge offset: startOffset)
 ]
 
 { #category : #'public - hooks' }

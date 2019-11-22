@@ -679,3 +679,29 @@ RSShapeBasicExamples >> example30PolygonWithRadius [
 		evt shape translateBy: evt step; signalUpdate].
 	^ c
 ]
+
+{ #category : #'box and ellipses' }
+RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
+	<script: 'self new example31BorderAttachPointWithOffset open'>
+	| c s1 s2|
+	c := RSCanvas new.
+	s1 := RSEllipse new
+		size: 30;
+		yourself.
+	s2 := RSBox new
+		size: 50;
+		yourself.
+	s2 translateTo: 200@200.
+	c add: s1; add: s2.
+	c add: (RSLine new
+		attachPoint: (RSBorderAttachPoint new
+			startOffset: 5;
+			endOffset: 10;
+			yourself);
+		from: s1;
+		to: s2;
+		yourself).
+	c nodes @ RSDraggable.
+	c @ RSCanvasController.
+	^ c
+]

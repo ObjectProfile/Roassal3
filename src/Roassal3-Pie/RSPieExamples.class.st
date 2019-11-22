@@ -614,7 +614,7 @@ RSPieExamples >> example18ManyPies [
 	view showEncompassingRectangles.
 	RSGridLayout on: view elements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	view open setLabel: 'Prizepool in esports :V'
 ]
 
@@ -637,7 +637,7 @@ RSPieExamples >> example19Buttons [
 
 	v camera position: v elements encompassingRectangle center.
 	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	
 	pie := RSPieBuilder new.
 	pie 
@@ -867,7 +867,7 @@ RSPieExamples >> example22RotatedAnimation [
 		].
 	view add:(RSShapeBuilder label elementOn: pie totalSum asString, ' LOC').
 	view camera zoomToFit: 270 asPoint.
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	pie open setLabel: 'Roassal3 packages by #linesOfCode'
 
 
@@ -1003,7 +1003,7 @@ RSPieExamples >> example24ManyPies [
 		].
 	view addAll: (composite elementsOn: data).
 	RSFlowLayout on: view elements.
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	view zoomToFit.
 	view open setLabel: 'Usa population by State'.
 ]

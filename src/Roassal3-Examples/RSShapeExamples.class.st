@@ -228,7 +228,7 @@ RSShapeExamples >> example07NormalizeColor [
 
 	v camera position: v elements encompassingRectangle center.
 	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open
 	
 ]
@@ -238,7 +238,7 @@ RSShapeExamples >> example08Labels [
 	<script: 'self new example08Labels'>
 	| v sb elements |
 	v := RSView new.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	sb := RSShapeBuilder label.
 	sb interactionDo: #draggable.
 	sb text: #asString.
@@ -308,7 +308,7 @@ RSShapeExamples >> example10Donut [
 				 ].
 		view addAll: (shape elementsOn: data).
 		 ].
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	view zoomToFit.
 	view open.
 ]
@@ -354,7 +354,7 @@ RSShapeExamples >> example11ClassTree [
 		connectFrom: #superclass.
 	v edges pushBack.
 	RSTreeLayout on: elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Collection withAllSubclasses'
 ]
@@ -388,7 +388,7 @@ RSShapeExamples >> example12Polygons [
 			view elements do: [ :e | e size: t ] ]."
 	RSGridLayout new gapSize: 50; on: view elements.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	view open setLabel: 'Polygon shapes'.
 ]
 
@@ -430,7 +430,7 @@ RSShapeExamples >> example13Arrow [
 	RSVerticalLineLayout new alignCenter on: labels.
 	labels translateBy: 50@50.
 	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	view open setLabel: 'You can do it'.
 ]
 
@@ -481,7 +481,7 @@ RSShapeExamples >> example15BimetricLine [
 		to: e2;
 		edge.
 	view addAll: { e1. e2. l}.
-	view @ RSControlsCanvas. 
+	view @ RSCanvasController. 
 	view open
 ]
 
@@ -548,7 +548,7 @@ RSShapeExamples >> example17Labeled [
 		to: e2;
 		edge.
 	v add: e1; add: e2; add: l.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open.
 ]
 
@@ -596,7 +596,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		offset: 10;
 		move: legend on: v elements.
 	v add: legend.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open.
 ]
 
@@ -616,7 +616,7 @@ RSShapeExamples >> example19Bitmap [
 		elementsOn: icons.
 	v addAll: elements.
 	RSGridLayout on: elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open
 ]
 
@@ -632,7 +632,7 @@ RSShapeExamples >> example20Highlightable [
 	es := s elementsOn: #('Hello' 'World').
 	v addAll: es.
 	RSHorizontalLineLayout on: es.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open.
 ]
 
@@ -659,7 +659,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 			selector: #inspect
 			argument: #() ]).
 
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open
 ]
 
@@ -747,7 +747,7 @@ RSShapeExamples >> example21SpockLizard [
 		text:
 			'scissors decapitates lizard, lizard eats paper, paper disproves Spock, Spock vaporizes rock, and, as it always has, rock crushes scissors'.
 	lb build.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open
 ]
 
@@ -767,7 +767,7 @@ RSShapeExamples >> example22ScaleEvents [
 			l := label elementOn: m.
 			RSGroup with: (box elementOn: l) with: l].
 	v addAll: (sb elementsOn: ArrayedCollection withAllSubclasses).
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 6;
@@ -817,7 +817,7 @@ RSShapeExamples >> example24Highlightable [
 			yourself ].
 	canvas addAll: shapes.
 	RSHorizontalLineLayout on: shapes.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	canvas open.
 ]
 
@@ -869,7 +869,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			
 			
 	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open	
 ]
 
@@ -938,7 +938,7 @@ RSShapeExamples >> example28MultilineLabel [
 		connectFrom: #superclass.
 	v addAll: elements.
 	RSTreeLayout on: elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open setLabel: 'Example with multiline labels'.
 ]
 
@@ -983,7 +983,7 @@ RSShapeExamples >> example29AntAnimation [
 	RSTreeLayout new 
 		verticalGap: 100;
 		on: elements.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v when: RSExtentChangedEvent do: [ v zoomToFit ].
 	v open setLabel: 'Move mouse on one box'
 ]
@@ -1065,7 +1065,7 @@ RSShapeExamples >> example31BasicGrapher [
 		to: 600@ -600;
 		elements: es;
 		normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open
 ]
 
@@ -1088,7 +1088,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	v elements first
 		scaleBy: 0.5@ 1;
 		rotateByDegrees: 45.
-	v @ RSControlsCanvas.
+	v @ RSCanvasController.
 	v open.
 ]
 
@@ -1115,6 +1115,6 @@ RSShapeExamples >> example33ColorScaling [
 
 	RSFlowLayout on: c shapes.
 
-	c @ RSControlsCanvas.
+	c @ RSCanvasController.
 	c open
 ]

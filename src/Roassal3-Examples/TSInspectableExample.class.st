@@ -37,7 +37,7 @@ TSInspectableExample >> example01SimpleExample [
 		builder open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	boxes @ inspectable.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -94,7 +94,7 @@ TSInspectableExample >> example02Inspect [
 			view elements do: [:e |
 				e attributes at: #new put: e position. ].
 		 ]}.
-	view @ RSControlsCanvas.
+	view @ RSCanvasController.
 	^ view
 ]
 

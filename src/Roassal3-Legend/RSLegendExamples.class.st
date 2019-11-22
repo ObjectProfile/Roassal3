@@ -17,7 +17,7 @@ RSLegendExamples >> example01Basic [
 	b build.
 	self assert: b shapes size = 2.
 	self assert: b container shapes size = 1.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -33,7 +33,7 @@ RSLegendExamples >> example02Border [
 			withBorder;
 			padding: 50 ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas.
 ]
 
@@ -54,7 +54,7 @@ RSLegendExamples >> example03Vertical [
 			withBorder;
 			padding: (Margin left: 50 right: 10 top: 10  bottom: 50) ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -75,7 +75,7 @@ RSLegendExamples >> example04Horizontal [
 
 	b layout horizontal gapSize: 20.
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -97,7 +97,7 @@ RSLegendExamples >> example05Colors [
 			withBorder;
 			padding: 20 ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -119,7 +119,7 @@ RSLegendExamples >> example06BoxColors [
 			padding: 20 ].
 	b layout horizontal gapSize: 30.
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -132,7 +132,7 @@ RSLegendExamples >> example07BoxFading [
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
 	b leyendDo: [:l | l withBorder; padding: 10 ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -145,7 +145,7 @@ RSLegendExamples >> example08Polygons [
 	#(diamond triangle star pentagon octagon) do: [ :selector | 
 		b text: selector withShape: ((RSShape perform: selector) size: 15) ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -165,7 +165,7 @@ RSLegendExamples >> example09Lines [
 		b text: selector withShape: line.
 		 ].
 	b build.
-	b canvas @ RSControlsCanvas.
+	b canvas @ RSCanvasController.
 	^ b canvas
 ]
 
@@ -212,7 +212,7 @@ RSLegendExamples >> example10Location [
 			padding: 15 ].
 	b location right middle.
 	b build.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	^ canvas.
 	
 
@@ -263,7 +263,7 @@ RSLegendExamples >> example11OnDemand [
 			padding: 15 ].
 	b location right middle.
 	b onDemand; build.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	^ canvas.
 	
 

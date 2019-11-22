@@ -56,7 +56,7 @@ TSInterpolator >> gtCanvasForInspector [
 	canvas addShape: (label value: 'X').
 	loc bottom; right;
 		move: canvas shapes last on: rect.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
