@@ -3,7 +3,7 @@ I am a special case to drag elements with the draggable interaction and the RSFo
 "
 Class {
 	#name : #RSDraggableForce,
-	#superclass : #RSDraggable,
+	#superclass : #RSInteraction,
 	#instVars : [
 		'layout'
 	],
@@ -23,13 +23,16 @@ RSDraggableForce >> layout: aForceLayout [
 { #category : #hooks }
 RSDraggableForce >> onShape: aShape [
 	| mock |
-	super onShape: aShape.
 	aShape 
 		when: RSMouseDragStart do: [ :evt | 
 			mock := layout mockElementAt: aShape.
 			mock isFixed: true. ];
 		when: RSMouseDragging do: [ :evt |
-			mock fixPosition: aShape position.];
+			| d |
+			d := aShape parent camera distanceFromPixelToSpace: evt step.
+			aShape translateBy: d.
+			mock fixPosition: aShape position.
+			aShape signalUpdate ];
 		when: RSMouseDragEnd do:[:evt | 
 			mock isFixed: false.
 			mock := nil ].

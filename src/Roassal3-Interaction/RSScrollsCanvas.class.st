@@ -15,10 +15,10 @@ Class {
 }
 
 { #category : #hooks }
-RSScrollsCanvas >> addScrollBars: aView [
+RSScrollsCanvas >> addScrollBars: aCanvas [
 	vertical := barShape element shape.
 	horizontal := barShape element shape.
-	aView addShape: vertical; addShape: horizontal.
+	aCanvas addShape: vertical; addShape: horizontal.
 	
 ]
 
@@ -88,17 +88,17 @@ RSScrollsCanvas >> initializeShape [
 
 { #category : #hooks }
 RSScrollsCanvas >> moveScroll: evt [
-	| shape delta position camera viewExtent shapesRect correct |
+	| shape delta position camera canvasExtent shapesRect correct |
 	shape := evt shape.
 	delta := evt step.
 	delta := shape = vertical shape
 		ifTrue: [ 0@delta y ]
 		ifFalse: [ delta x@0 ].
 	shape translateBy: delta.
-	viewExtent := evt canvas extent.
+	canvasExtent := evt canvas extent.
 	shapesRect := self encompassingRectangleFor: evt canvas.
 	position := horizontal position x @ vertical position y.
-	position := position * shapesRect extent / viewExtent.
+	position := position * shapesRect extent / canvasExtent.
 	
 	camera := evt camera.
 	camera position: position + shapesRect origin.
@@ -117,14 +117,19 @@ RSScrollsCanvas >> onShape: aCanvas [
 	aCanvas when: RSScaleChangedEvent do: [ self updateScrollbars ].
 ]
 
+{ #category : #rendering }
+RSScrollsCanvas >> renderOn: lb [ 
+	lb text: '' description: 'Use scrool bars to navigate'
+]
+
 { #category : #accessing }
 RSScrollsCanvas >> scrollBorderColor [
-	^ Smalltalk ui theme textColor trans
+	^ Color lightGray trans
 ]
 
 { #category : #accessing }
 RSScrollsCanvas >> scrollColor [
-	^ Color blue trans
+	^ Color lightGray trans.
 ]
 
 { #category : #accessing }
@@ -153,10 +158,10 @@ RSScrollsCanvas >> updateAnimation [
 
 { #category : #hooks }
 RSScrollsCanvas >> updateBasicScrollbars [
-	| canvas viewRect camera shapesRect p pd ext scrollExtent |
+	| canvas canvasRect camera shapesRect p pd ext scrollExtent |
 	canvas := vertical parent.
 	camera := canvas camera. 
-	viewRect := Rectangle
+	canvasRect := Rectangle
 		rsCenter: camera position
 		extent: canvas extent / camera scale.
 	shapesRect := self encompassingRectangleFor: canvas.
@@ -164,8 +169,8 @@ RSScrollsCanvas >> updateBasicScrollbars [
 	scrollExtent := vertical width @ horizontal height.
 	p := canvas extent - 1 - (scrollExtent / 2).
 	
-	pd := canvas extent * (viewRect rsCenter - shapesRect origin) / shapesRect extent.
-	ext := viewRect extent * canvas extent / shapesRect extent.
+	pd := canvas extent * (canvasRect rsCenter - shapesRect origin) / shapesRect extent.
+	ext := canvasRect extent * canvas extent / shapesRect extent.
 	vertical position: p x @ pd y ; height: ext y.
 	horizontal position: pd x @ p y; width: ext x.
 ]

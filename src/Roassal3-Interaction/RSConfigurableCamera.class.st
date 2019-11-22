@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'zoomInteraction'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal3-Interaction-Utils'
 }
 
 { #category : #accessing }

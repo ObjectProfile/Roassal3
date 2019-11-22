@@ -72,10 +72,10 @@ RSAbstractControlCanvas >> correctCameraPosition: evt scale: scale [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> encompassingRectangleFor: aView [
-	^ aView attributes 
+RSAbstractControlCanvas >> encompassingRectangleFor: aCanvas [
+	^ aCanvas attributes 
 		at: #encompassingRectangle 
-		ifAbsentPut: [ aView encompassingRectangle  ].
+		ifAbsentPut: [ aCanvas encompassingRectangle  ].
 ]
 
 { #category : #utilities }
@@ -98,6 +98,7 @@ RSAbstractControlCanvas >> removeRectanglesFor: aCanvas [
 
 { #category : #rendering }
 RSAbstractControlCanvas >> renderOn: aLegendBuilder [
+	self subclassResponsibility
 ]
 
 { #category : #utilities }

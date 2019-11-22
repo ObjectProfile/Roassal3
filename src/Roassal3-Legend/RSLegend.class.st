@@ -218,10 +218,18 @@ RSLegend >> text: aString [
 
 { #category : #public }
 RSLegend >> text: aString description: desc [
-	self defaultBoldText text: aString.
-	^ self
-		custom: desc
-		shape: (self horizontalComposite: self defaultBoldText text: self defaultLabel)
+	| text tshapes line l d|
+	text := self defaultBoldText copy.
+	text text: aString.
+	d := self defaultLabel copy text: desc.
+	tshapes := RSGroup with: text with: d.
+	l := RSHorizontalLineLayout new center.
+	l on: tshapes.
+	line := RSComposite new
+		shapes: tshapes;
+		yourself.
+	self shapes add: line.
+	^ line
 ]
 
 { #category : #public }

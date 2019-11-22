@@ -68,20 +68,22 @@ RSCanvasController >> onShape: aCanvas [
 RSCanvasController >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
-	"lb := TSLegend new 
+	lb := RSLegend new 
 		container: aCanvas;
 		yourself.
 	lb defaultTitle fontSize: 12.
 	lb defaultLabel fontSize: 10.
 	lb defaultBoldText fontSize: 10.
-	lb shape
-		border: TSBorder new;
-		color: (Color white alpha: 0.8);
-		padding: 10.
+	lb leyendDo: [ :l |
+		l 
+			border: RSBorder new;
+			color: (Color white alpha: 0.8);
+			padding: 10.
+		].
 	lb title: 'Shortcuts'.
 	self interactions do: [ :int | int renderOn: lb ].
-	lb onDemand."
-	"lb build."
+	lb onDemand.
+	lb build.
 ]
 
 { #category : #testing }

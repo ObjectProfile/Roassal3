@@ -18,7 +18,6 @@ RSZoomableCanvas >> onShape: aCanvas [
 { #category : #'events-processing' }
 RSZoomableCanvas >> processEvent: evt [
 	| sc delta camera dist scale position correct |
-	
 	animation ifNotNil: [ ^ self ].
 	delta := evt isUp
 		ifTrue: [ 1.25@0.2 ]
