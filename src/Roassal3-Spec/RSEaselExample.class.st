@@ -76,7 +76,7 @@ RSEaselExample >> initializeWidgets [
 	diagram := self instantiate: SpRoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
-	diagram script: [ :view | self textAsCode value: view ]
+	diagram script: [ :canvas | self textAsCode value: canvas ]
 ]
 
 { #category : #initialization }
@@ -109,12 +109,13 @@ RSEaselExample >> run [
 { #category : #initialization }
 RSEaselExample >> startText [
 	^
-'box := RSShapeBuilder box
+'box := RSBox new
 	size: 100;
-	draggable.
-element := box element.
-view add: element.
-view @ RSControlsView.
+	draggable;
+	yourself.
+canvas add: box.
+canvas addInteraction: RSCanvasController.
+canvas.
 '  asText
 ]
 
@@ -133,7 +134,7 @@ RSEaselExample >> textAsCode [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 
 	^ OpalCompiler new
-		source: '[:view | ' , self text text asString , ']';
+		source: '[:canvas | ' , self text text asString , ']';
 		logged: false;
 		evaluate
 ]

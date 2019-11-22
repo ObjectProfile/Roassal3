@@ -5,7 +5,6 @@ Class {
 	#name : #Sp1MorphicAdapter,
 	#superclass : #AbstractMorphicAdapter,
 	#instVars : [
-		'view',
 		'canvas'
 	],
 	#category : #'Roassal3-Spec-Core'
@@ -15,7 +14,6 @@ Class {
 Sp1MorphicAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
 	canvas := widget roassalCanvas.
-	view := canvas view.
 	widget
 		setProperty: #model toValue: self;
 		hResizing: #spaceFill;
@@ -35,15 +33,15 @@ Sp1MorphicAdapter >> applyScript [
 
 { #category : #initialization }
 Sp1MorphicAdapter >> basicApplyScript [
-	self model script value: view.
+	self model script value: canvas.
 	self widgetDo: #startStepping.
 	
-	view when: RSAbstractMouseEvent do: [ widget takeKeyboardFocus].
+	canvas when: RSAbstractMouseEvent do: [ widget takeKeyboardFocus].
 ]
 
 { #category : #initialization }
 Sp1MorphicAdapter >> buildWidget [
-	^ RSView new canvas createMorph
+	^ RSCanvas new createMorph
 ]
 
 { #category : #initialization }
@@ -51,7 +49,6 @@ Sp1MorphicAdapter >> freeCanvas [
 	| temp |
 	temp := self buildWidget.
 	canvas := temp roassalCanvas.
-	view := canvas view.
 	widget canvas: canvas.
 	canvas morph: widget.
 ]
