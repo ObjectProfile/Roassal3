@@ -148,6 +148,11 @@ RSShape >> initialize [
 ]
 
 { #category : #testing }
+RSShape >> isEdge [
+	^ false
+]
+
+{ #category : #testing }
 RSShape >> isFixed [ 
 	^ isFixed
 ]
@@ -160,6 +165,11 @@ RSShape >> isFixed: aBool [
 { #category : #testing }
 RSShape >> isInACanvas [
 	^ parent notNil
+]
+
+{ #category : #testing }
+RSShape >> isNode [
+	^ false
 ]
 
 { #category : #testing }
@@ -181,6 +191,11 @@ RSShape >> model [
 { #category : #accessing }
 RSShape >> model: anObject [
 	self attributeAt: #model put: anObject
+]
+
+{ #category : #border }
+RSShape >> noBorder [
+	border := nil
 ]
 
 { #category : #accessing }
