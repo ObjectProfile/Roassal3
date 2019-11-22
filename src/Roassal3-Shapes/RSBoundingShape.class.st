@@ -115,6 +115,11 @@ RSBoundingShape >> isDirectlyConnectedTo: anElement [
 	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
 ]
 
+{ #category : #testing }
+RSBoundingShape >> isNode [
+	^ true
+]
+
 { #category : #actions }
 RSBoundingShape >> loadBoundingShape: aShape [
 	self 

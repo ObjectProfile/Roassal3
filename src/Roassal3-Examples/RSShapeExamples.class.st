@@ -461,28 +461,31 @@ RSShapeExamples >> example14Marker [
 
 { #category : #shapes }
 RSShapeExamples >> example15BimetricLine [
-	<script: 'self new example15BimetricLine'>
-	| view e1 e2 box l |
-	view := RSView new.
-	box := RSShapeBuilder box 
+	<script: 'self new example15BimetricLine open'>
+	| canvas s1 s2 l |
+	canvas := RSCanvas new.
+	s1 := RSBox new
+		color: Color blue;
+		draggable;
 		size: 100;
-		draggable.
-	e1 := box element.
-	e1 color: Color blue.
-	e2 := box element.
-	e2 translateTo: 400@0.
-	l := RSSingleEdgeBuilder bimetricLine
+		yourself.
+	s2 := RSBox new
+		translateTo: 400@0;
+		draggable;
+		size: 100;
+		yourself.
+	l := RSBimetricLine new
 		widthFrom: 50;
 		widthTo: 10;
 		paint: Color red;
 		border: nil;
 		withBorderAttachPoint;
-		from: e1;
-		to: e2;
-		edge.
-	view addAll: { e1. e2. l}.
-	view @ RSCanvasController. 
-	view open
+		from: s1;
+		to: s2;
+		yourself.
+	canvas addAll: { s1. s2. l}.
+	canvas @ RSCanvasController. 
+	^ canvas
 ]
 
 { #category : #shapes }
@@ -823,8 +826,8 @@ RSShapeExamples >> example24Highlightable [
 
 { #category : #shapes }
 RSShapeExamples >> example25BimetricLineOnLargeExample [
-	<script: 'self new example25BimetricLineOnLargeExample'>
-	| packagesRegExp packages l packageElements high v |
+	<script: 'self new example25BimetricLineOnLargeExample open'>
+	| packagesRegExp packages l packageElements high canvas |
 	packagesRegExp := { 'Calypso*' }.
 	
 	packages := packagesRegExp flatCollect: [ :regExp | 
@@ -832,45 +835,41 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			select: [ :p | regExp match: p packageName ] ].
 		
 	l := RSLabeled new text: [ :model | model packageName ].
-	packageElements  := packages collect: [ :pkg |
-		 ].
-	packageElements := RSShapeBuilder composite
-								color: Color blue trans;
-								addInteraction: l;
-								draggable;
-								shapes: [ :pak |
-									| g lbl |
-									g := RSShapeBuilder box
-										size: [ :cls | cls numberOfMethods sqrt ];
-										elementsOn: pak definedClasses.
-									RSGridLayout on: g.
-									g
-								]; 
-								padding: 5;
-								elementsOn: packages.
+	packageElements  := packages collect: [ :pkg | | shapes |
+		shapes := pkg definedClasses collect: [ :cls |
+			RSBox new
+				color: Color black;
+				size: cls numberOfMethods sqrt;
+				yourself
+			 ].
+		RSGridLayout on: shapes.
+		RSComposite new
+			color: Color blue trans;
+			model: pkg;
+			addInteraction: l;
+			draggable;
+			shapes: shapes;
+			padding: 5;
+			yourself ] as: RSGroup.
 	high := RSHighlightable new.
 	high withEdges.
-	high highlightShape color: Color red trans.							
+	high highlightColor: Color red trans.							
 	packageElements @ high.						
-	v := RSView new.
-	v addAll: packageElements.
+	canvas := RSCanvas new.
+	canvas addAll: packageElements.
 
 	RSEdgeBuilder bimetricLine
-			view: v;
-			objects: packages;
-			widthFrom:
-					[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 10 ];
-			widthTo:
-					[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 10 ];
-			paint: Color blue trans;
-			border: nil;
-			withBorderAttachPoint;
-			connectFrom: #yourself toAll: #dependentPackages.
-			
-			
+		canvas: canvas;
+		objects: packages;
+		noBorder;
+		widthFrom:[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
+		widthTo:[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
+		paint: Color blue trans;
+		withBorderAttachPoint;
+		connectFrom: #yourself toAll: #dependentPackages.
 	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-	v @ RSCanvasController.
-	v open	
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #shapes }
@@ -944,48 +943,51 @@ RSShapeExamples >> example28MultilineLabel [
 
 { #category : #shapes }
 RSShapeExamples >> example29AntAnimation [
-	<script: 'self new example29AntAnimation'>
+	<script: 'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
+	| canvas shapes labelInt highInt popupMethod |
+	canvas := RSCanvas new.
+	labelInt := RSLabeled new.
+	labelInt shapeBuilder: [ :model |
+		 RSLabel new 
+			color: Color white; 
+			text: model asString;
+			yourself ].
+	highInt := RSHighlightable new setupAntAnimation yourself.
+	popupMethod := RSPopup text: #selector.
+	shapes := String withAllSubclasses collect: [ :cls | | methods |
+		methods := cls methods collect: [ :met |
+			RSBox new
+				color: Color green;
+				model: met;
+				addInteraction: popupMethod;
+				size: met linesOfCode ].
+		RSGridLayout on: methods.
+		RSComposite new
+			color: Color white trans;
+			model: cls;
+			shapes: methods;
+			padding: 10;
+			popup;
+			draggable;
+			addInteraction: labelInt;
+			addInteraction: highInt;
+			yourself ].
+	canvas color: Smalltalk ui theme backgroundColor.
 	
-	| v shape elements methodShape models |
-	v := RSView new.
-	models := String withAllSubclasses.
-	v color: Smalltalk ui theme backgroundColor.
-	methodShape := RSShapeBuilder box
-		color: Color green;
-		interactionDo: [ :i | i popupText: #selector ];
-		size: #linesOfCode.
-	shape := RSShapeBuilder composite
-		color: Color white trans;
-		interactionDo: [:i | 
-			| high label |
-			label := RSLabeled new.
-			label shape color: Color white.
-			high := RSHighlightable new.
-			high setupAntAnimation.
-			i popupAndDraggable; addInteraction: label; addInteraction: high ];
-		shapes: [ :cls | 
-			| group |
-			group := methodShape elementsOn: cls methods.
-			RSGridLayout on: group.
-			group ];
-		onElement;
-		extent: [ :anElement | anElement extent + (10 @ 10) ].
-	elements := shape elementsOn: models.
-	v addAll: elements.
+	canvas addAll: shapes.
 	
 	RSEdgeBuilder line
 		color: Color white;
 		withVerticalAttachPoint;
-		view: v;
-		objects: models;
+		canvas: canvas;
 		connectFrom: #superclass.
-	v edges pushBack.
+	canvas edges pushBack.
 	RSTreeLayout new 
 		verticalGap: 100;
-		on: elements.
-	v @ RSCanvasController.
-	v when: RSExtentChangedEvent do: [ v zoomToFit ].
-	v open setLabel: 'Move mouse on one box'
+		on: shapes.
+	canvas @ RSCanvasController.
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
+	^ canvas
 ]
 
 { #category : #shapes }
@@ -1071,25 +1073,28 @@ RSShapeExamples >> example31BasicGrapher [
 
 { #category : #shapes }
 RSShapeExamples >> example32RSLabeledOnComposite [
-	<script: 'self new example32RSLabeledOnComposite'>
-	| v shape elements labeled |
-	v := RSView new.
+	<script: 'self new example32RSLabeledOnComposite open'>
+	| canvas shapes labeled |
+	canvas := RSCanvas new.
 	labeled := RSLabeled new.
 	labeled location middle.
-	shape := RSShapeBuilder box
-		withBorder;
-		@ labeled;
-		popup;draggable;
-		size:50.
-	elements := shape elementsOn: (1 to: 20).
-	RSGridLayout on: elements.
-	v add: elements asElement.
-	elements translateBy: 0@0.
-	v elements first
+	shapes := (1 to: 20) collect: [:n| 
+		RSBox new
+			withBorder;
+			model: n;
+			@ labeled;
+			popup; draggable;
+			size: 50;
+			yourself
+		] as: RSGroup.
+	RSGridLayout on: shapes.
+	canvas add: shapes asShape.
+	shapes translateBy: 0@0.
+	canvas nodes first
 		scaleBy: 0.5@ 1;
 		rotateByDegrees: 45.
-	v @ RSCanvasController.
-	v open.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #shapes }

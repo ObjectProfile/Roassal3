@@ -85,6 +85,11 @@ RSEdgeBuilder class >> arrowedLine [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> bimetricLine [
+	^ RSBimetricEdgeBuilder new: RSBimetricLine new
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> horizontalBezier [
 	^ self horizontalLine: RSBezier new
 ]
@@ -436,6 +441,11 @@ RSEdgeBuilder >> noBidirectional [
 	beDirectional := false
 ]
 
+{ #category : #'public - shape' }
+RSEdgeBuilder >> noBorder [
+	self shape noBorder
+]
+
 { #category : #'public - configuration' }
 RSEdgeBuilder >> noRepetition [
 	"
@@ -465,6 +475,11 @@ RSEdgeBuilder >> objects: someObjectsOrABlock [
 	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
+]
+
+{ #category : #'public - shape' }
+RSEdgeBuilder >> paint: aPaint [
+	self shape paint: aPaint
 ]
 
 { #category : #'private - utility' }

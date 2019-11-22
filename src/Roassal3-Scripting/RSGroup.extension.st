@@ -2,11 +2,11 @@ Extension { #name : #RSGroup }
 
 { #category : #'*Roassal3-Scripting' }
 RSGroup >> asShape [
-	^ self asShapeOn: nil
+	^ self asShapeFor: nil
 ]
 
 { #category : #'*Roassal3-Scripting' }
-RSGroup >> asShapeOn: model [
+RSGroup >> asShapeFor: model [
 	^ RSComposite new 
 		model: model;
 		shapes: self

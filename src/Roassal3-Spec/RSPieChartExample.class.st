@@ -38,32 +38,31 @@ RSPieChartExample >> droplist [
 
 { #category : #initialization }
 RSPieChartExample >> initializeWidgets [
-	|  org |
+	| org |
 	droplist := self instantiate: SpLabelledDropList.
 	org := RPackage organizer.
-	packages := (org packageNames 
-		select: [ :s | '*Roassal3*' match: s  ]
-		thenCollect: [ :s | org packageNamed: s ]) 
-		sorted: [:a :b | a linesOfCode > b linesOfCode ].
+	packages := (org packageNames
+		select: [ :s | '*Roassal3*' match: s ]
+		thenCollect: [ :s | org packageNamed: s ])
+		sorted: [ :a :b | a linesOfCode > b linesOfCode ].
 	totalSum := packages max: #linesOfCode.
-	droplist 
+	droplist
 		label: 'Roassal Packages';
 		items: packages;
-		displayBlock: [:i | i name].
-		
+		display: [ :i | i name ].
 	chart := self instantiate: SpRoassalPresenter.
 	pie := self instantiate: SpRoassalPresenter.
-	droplist whenSelectedItemChangedDo: [ :pkg | 
-		chart script: [ :view | 
-			view when: RSExtentChangedEvent do: [ 
-				view edges copy do: #remove.
-				view elements copy do: #remove.
-				
-				self visualizeChart: view package: pkg
-				 ]
-			 ].
-		pie script: [ :view| self visualizePie: view package: pkg ] ].
-	droplist dropList selectedIndex: 1.
+	droplist
+		whenSelectedItemChangedDo: [ :pkg | 
+			chart
+				script: [ :view | 
+					view
+						when: RSExtentChangedEvent
+						do: [ view edges copy do: #remove.
+							view elements copy do: #remove.
+							self visualizeChart: view package: pkg ] ].
+			pie script: [ :view | self visualizePie: view package: pkg ] ].
+	droplist dropList selectIndex: 1
 ]
 
 { #category : #initialization }
