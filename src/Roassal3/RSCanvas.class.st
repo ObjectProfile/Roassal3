@@ -430,5 +430,5 @@ RSCanvas >> view: aRSView [
 
 { #category : #camera }
 RSCanvas >> zoomToFit [
-	self camera zoomToFit: self extent * 0.9
+	self camera zoomToFit
 ]

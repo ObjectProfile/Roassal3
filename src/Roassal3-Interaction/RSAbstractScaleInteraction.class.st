@@ -8,7 +8,7 @@ Class {
 		'minScale',
 		'maxScale'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #accessing }

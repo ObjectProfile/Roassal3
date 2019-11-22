@@ -115,7 +115,12 @@ RSCamera >> translateTo: aPoint [
 
 ]
 
-{ #category : #actions }
+{ #category : #zoom }
+RSCamera >> zoomToFit [
+	self zoomToFit: canvas extent * 0.9
+]
+
+{ #category : #zoom }
 RSCamera >> zoomToFit: anExtent [
 	self 
 		zoomToFit: anExtent 
@@ -123,7 +128,7 @@ RSCamera >> zoomToFit: anExtent [
 	
 ]
 
-{ #category : #actions }
+{ #category : #zoom }
 RSCamera >> zoomToFit: anExtent extent: otherExtent [
 	self 
 		zoomToFit: anExtent 
@@ -131,7 +136,7 @@ RSCamera >> zoomToFit: anExtent extent: otherExtent [
 	
 ]
 
-{ #category : #actions }
+{ #category : #zoom }
 RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
 	sc := anExtent / (rect extent max: 1 @ 1).

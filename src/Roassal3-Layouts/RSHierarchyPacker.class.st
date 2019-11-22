@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rectanglePackLayout'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Layouts-Interactions'
 }
 
 { #category : #private }

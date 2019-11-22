@@ -93,8 +93,3 @@ RSCanvasController >> shouldShowLegend [
 RSCanvasController >> withLegend [
 	withLegend := true
 ]
-
-{ #category : #public }
-RSCanvasController >> zoomToFit: aView [
-	(self interactions at: RSZoomToFitCanvas) zoomToFit: aView
-]

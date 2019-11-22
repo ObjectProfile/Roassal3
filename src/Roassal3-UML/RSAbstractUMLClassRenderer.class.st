@@ -50,7 +50,7 @@ RSAbstractUMLClassRenderer >> applyVLayoutOn: shapes [
 
 { #category : #accessing }
 RSAbstractUMLClassRenderer >> classBoxPadding [
-	^ padding ifNil: [ padding := 10@10 ]
+	^ padding ifNil: [ padding := self defaultClassBoxPadding ]
 ]
 
 { #category : #accessing }
@@ -77,6 +77,11 @@ RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
 	ellipsis position: rect rsCenter x @ (rect height / 2 + rect rsCenter y).
 	aGroup add: ellipsis.
 	
+]
+
+{ #category : #defaults }
+RSAbstractUMLClassRenderer >> defaultClassBoxPadding [
+	^ 10@10
 ]
 
 { #category : #defaults }

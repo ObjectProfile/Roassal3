@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'layout'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Layouts-Interactions'
 }
 
 { #category : #hooks }
@@ -21,15 +21,15 @@ RSDraggableForce >> layout: aForceLayout [
 ]
 
 { #category : #hooks }
-RSDraggableForce >> onElement: e [
+RSDraggableForce >> onShape: aShape [
 	| mock |
-	super onElement: e.
-	e 
+	super onShape: aShape.
+	aShape 
 		when: RSMouseDragStart do: [ :evt | 
-			mock := layout mockElementAt: e.
+			mock := layout mockElementAt: aShape.
 			mock isFixed: true. ];
 		when: RSMouseDragging do: [ :evt |
-			mock fixPosition: e position.];
+			mock fixPosition: aShape position.];
 		when: RSMouseDragEnd do:[:evt | 
 			mock isFixed: false.
 			mock := nil ].

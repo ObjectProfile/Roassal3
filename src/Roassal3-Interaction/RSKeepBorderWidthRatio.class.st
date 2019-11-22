@@ -38,7 +38,7 @@ Here is an example:
 Class {
 	#name : #RSKeepBorderWidthRatio,
 	#superclass : #RSAbstractScaleInteraction,
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #hooks }

@@ -11,12 +11,6 @@ Class {
 	#category : #'Roassal3-UML-Rendering'
 }
 
-{ #category : #hooks }
-RSTorchUMLClassRenderer >> adjustBox: box on: shapes [
-	shapes size = 3 ifTrue: [ padding := self classBoxPadding x @ 0 ].
-	super adjustBox: box on: shapes
-]
-
 { #category : #layout }
 RSTorchUMLClassRenderer >> applyMLayoutOn: shapes [
 	RSFlowLayout new 
@@ -48,6 +42,11 @@ RSTorchUMLClassRenderer >> classNameBoxFor: aClass [
 { #category : #'accessing - shapes' }
 RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
+]
+
+{ #category : #defaults }
+RSTorchUMLClassRenderer >> defaultClassBoxPadding [
+	^ 10@0
 ]
 
 { #category : #defaults }

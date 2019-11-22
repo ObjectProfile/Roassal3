@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #'zoom animation' }
-RSZoomToFitCanvas >> animatedZoomToFit: aView [
+RSZoomToFitCanvas >> animatedZoomToFit: aCanvas [
 	| sc position scale camera pos |
-	camera := aView camera.
+	camera := aCanvas camera.
 	sc := camera scale.
 	pos := camera position.
-	self zoomToFit: aView. 
+	aCanvas zoomToFit. 
 	
 	position := TSScale linear
 		from: pos;
@@ -23,38 +23,47 @@ RSZoomToFitCanvas >> animatedZoomToFit: aView [
 		to: camera scale.
 	camera translateTo: pos; scale: sc.
 	sc < 1 ifTrue: [ 
-		aView newAnimation
+		aCanvas newAnimation
 			duration: 500 milliSeconds;
 			easing: RSEasing backOut;
 			onStepDo: [ :t | 
 				camera
 					position: (position scale: t);
 					scale: (scale scale: t).
-				aView signalUpdate ].
+				aCanvas signalUpdate ].
 		^ self ].
-	aView newAnimation 
+	aCanvas newAnimation 
 		delay: 150 milliSeconds;
 		duration: 700 milliSeconds;
 		easing: RSEasing backOut;
 		onStepDo: [:t |
 			camera position: (position scale: t).
-			aView signalUpdate].
-	aView newAnimation
+			aCanvas signalUpdate].
+	aCanvas newAnimation
 		duration: 300 milliSeconds;
 		easing: RSEasing exp;
 		onStepDo: [ :t | 
 				camera scale: (scale scale: t).
-				aView signalUpdate]
+				aCanvas signalUpdate ]
 	
 	
+]
+
+{ #category : #hooks }
+RSZoomToFitCanvas >> cameraFor: aCanvas [
+	^ RSConfigurableCamera new
+		canvas: aCanvas;
+		zoomInteraction: self;
+		yourself
 ]
 
 { #category : #hooks }
 RSZoomToFitCanvas >> onShape: aCanvas [
 	aCanvas when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
 	aCanvas when: RSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
+	aCanvas camera: (self cameraFor: aCanvas). 
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
-	self zoomToFit: aCanvas.
+	aCanvas zoomToFit.
 ]
 
 { #category : #'private - events' }
@@ -69,32 +78,7 @@ RSZoomToFitCanvas >> renderOn: lb [
 ]
 
 { #category : #'zoom animation' }
-RSZoomToFitCanvas >> zoomToFit: aCanvas [
-	| camera shapesRect extent sc viewRect original |
-	camera := aCanvas camera.
-	shapesRect := self encompassingRectangleFor: aCanvas.
-	extent := aCanvas extent * 0.9.
-	sc := extent / (shapesRect extent max: 1 @ 1).
-	original := sc x min: sc y.
-	sc := self scaleFor: original.
-	viewRect := Rectangle 
-		rsCenter: shapesRect rsCenter
-		extent: aCanvas extent / 1.
-	camera translateTo: shapesRect rsCenter.
-	self configuration shouldUseBasicZoom ifTrue: [ 
-		(viewRect containsRect: shapesRect )
-			ifTrue: [ camera scale: 1]
-			ifFalse: [
-				self configuration minScale: original.
-				camera scale: original ]
-	] ifFalse: [ camera scale: sc].
-	self removeRectanglesFor: aCanvas.
-	aCanvas signalUpdate.
-	
-]
-
-{ #category : #'zoom animation' }
-RSZoomToFitCanvas >> zoomToFitIfNecessary: aView [
+RSZoomToFitCanvas >> zoomToFitIfNecessary: aCanvas [
 	self configuration shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
-	self zoomToFit: aView
+	aCanvas zoomToFit
 ]
