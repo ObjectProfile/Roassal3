@@ -32,7 +32,6 @@ RSUMLClassBuilder >> initialize [
 RSUMLClassBuilder >> renderIn: aCanvas [
 	| classShapes |
 	classShapes := self renderer shapesFor: classes.
-	renderer setUpCanvas: aCanvas.
 	aCanvas addAll: classShapes.
 	shapes addAll: classShapes.
 	self renderer edgeBuilder
@@ -40,4 +39,6 @@ RSUMLClassBuilder >> renderIn: aCanvas [
 		shapes: classShapes;
 		connectFrom: modelDescriptor superclass.
 	self layout on: classShapes.
+	renderer setUpCanvas: aCanvas.
+
 ]
