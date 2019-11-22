@@ -46,32 +46,32 @@ RSRectanglePackLayout >> doExecute: elements [
 	| sortedElements maxSpace |
 	bounds := 0@0.
 	
-	maxSpace := elements inject: 0@0 into: [ :sum :el |
-			sum + el extent ].
+	maxSpace := elements
+		inject: 0@0
+		into: [ :sum :el | sum + el extent ].
 		
 	padding := maxSpace / elements size * gap / 2.
 	maxSpace :=(1 + gap) * maxSpace.
 	
-	freeSpace := Set new.
-	freeSpace add: (0@0 corner: maxSpace ).
+	freeSpace := Set with: (0@0 corner: maxSpace).
 	
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
 		larger  encompassingRectangle halfPerimeter >
 		smaller encompassingRectangle halfPerimeter ].
 	sortedElements addAll: elements.
 	
-	sortedElements size <= 2 ifTrue: [ 
-		RSHorizontalLineLayout new gapSize: gap; on: sortedElements.
-		^ self
-	].
-	self shouldUseProgressBar ifTrue: [ 
-		sortedElements
-			do: [ :element | self packIn: element ]
-			displayingProgress: 'Laying out elements' ]
-	ifFalse: [ 
-		sortedElements 
-			do: [ :element | self packIn: element ] ]
-	
+	sortedElements size <= 2 ifTrue: [
+		^ RSHorizontalLineLayout on: sortedElements ].
+
+	self shouldUseProgressBar
+		ifTrue: [
+			sortedElements
+				do: [ :element | self packIn: element ]
+				displayingProgress: 'Laying out elements' ]
+		ifFalse: [
+			sortedElements 
+				do: [ :element | self packIn: element ] ]
+
 ]
 
 { #category : #configuration }
