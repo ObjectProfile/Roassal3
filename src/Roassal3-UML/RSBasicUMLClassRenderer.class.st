@@ -5,8 +5,7 @@ Class {
 	#name : #RSBasicUMLClassRenderer,
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
-		'classInnerLine',
-		'boxColor'
+		'classInnerLine'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
@@ -26,16 +25,6 @@ RSBasicUMLClassRenderer >> addLines: group title: title [
 			endPoint: rec corner x @ (title height + group third height)) ].
 ]
 
-{ #category : #accessing }
-RSBasicUMLClassRenderer >> boxColor [ 
-	^ boxColor ifNil: [ boxColor := self defaultBoxColor ]
-]
-
-{ #category : #accessing }
-RSBasicUMLClassRenderer >> boxColor: aColor [
-	boxColor := aColor
-]
-
 { #category : #'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine [
 	^ classInnerLine ifNil: [
@@ -47,11 +36,6 @@ RSBasicUMLClassRenderer >> classInnerLine [
 { #category : #'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine: aShape [
 	classInnerLine := aShape
-]
-
-{ #category : #accessing }
-RSBasicUMLClassRenderer >> defaultBoxColor [
-	^ Color colorFrom: 'cfd9df'
 ]
 
 { #category : #hooks }

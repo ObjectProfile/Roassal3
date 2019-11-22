@@ -8,7 +8,9 @@ Class {
 		'border',
 		'modelDescriptor',
 		'textColor',
-		'layout'
+		'layout',
+		'boxBorder',
+		'boxColor'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
@@ -29,11 +31,45 @@ RSAbstractUMLRenderer >> border: aBorder [
 	border := aBorder
 ]
 
+{ #category : #accessing }
+RSAbstractUMLRenderer >> boxBorder [
+	^ boxBorder ifNil: [ boxBorder := self defaultBoxBorder ]
+]
+
+{ #category : #accessing }
+RSAbstractUMLRenderer >> boxBorder: aBorder [
+	boxBorder := aBorder
+]
+
+{ #category : #accessing }
+RSAbstractUMLRenderer >> boxColor [ 
+	^ boxColor ifNil: [ boxColor := self defaultBoxColor ]
+]
+
+{ #category : #accessing }
+RSAbstractUMLRenderer >> boxColor: aColor [
+	boxColor := aColor
+]
+
 { #category : #defaults }
 RSAbstractUMLRenderer >> defaultBorder [
 	^ RSBorder new
 		color: self textColor;
 		yourself
+]
+
+{ #category : #defaults }
+RSAbstractUMLRenderer >> defaultBoxBorder [
+	^ RSBorder new
+		width: 5; 
+		joinMiter; 
+		color: '666EA0';
+		yourself 
+]
+
+{ #category : #accessing }
+RSAbstractUMLRenderer >> defaultBoxColor [
+	^ Color colorFrom: 'cfd9df'
 ]
 
 { #category : #accessing }

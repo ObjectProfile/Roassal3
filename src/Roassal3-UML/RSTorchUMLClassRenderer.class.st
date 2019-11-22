@@ -6,7 +6,6 @@ Class {
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
 		'currentTitleWidth',
-		'boxBorder',
 		'titleBoxColor'
 	],
 	#category : #'Roassal3-UML-Rendering'
@@ -31,16 +30,6 @@ RSTorchUMLClassRenderer >> applyVLayoutOn: shapes [
 	self applyMLayoutOn: shapes
 ]
 
-{ #category : #accessing }
-RSTorchUMLClassRenderer >> boxBorder [
-	^ boxBorder ifNil: [ boxBorder := self defaultBoxBorder ]
-]
-
-{ #category : #accessing }
-RSTorchUMLClassRenderer >> boxBorder: aBorder [
-	boxBorder := aBorder
-]
-
 { #category : #hooks }
 RSTorchUMLClassRenderer >> classBoxShapeFor: aClass [
 	^ RSBox new
@@ -59,15 +48,6 @@ RSTorchUMLClassRenderer >> classNameBoxFor: aClass [
 { #category : #'accessing - shapes' }
 RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
-]
-
-{ #category : #defaults }
-RSTorchUMLClassRenderer >> defaultBoxBorder [
-	^ RSBorder new
-		width: 5; 
-		joinMiter; 
-		color: '666EA0';
-		yourself 
 ]
 
 { #category : #defaults }

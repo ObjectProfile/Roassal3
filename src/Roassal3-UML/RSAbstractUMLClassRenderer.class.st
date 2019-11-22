@@ -63,7 +63,7 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 	^ RSBox new
 		paint: self boxColor;
 		cornerRadius: 10;
-		border: self border;
+		border: self boxBorder;
 		yourself
 ]
 
