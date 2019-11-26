@@ -16,10 +16,22 @@ Class {
 
 { #category : #hooks }
 RSScrollsCanvas >> addScrollBars: aCanvas [
-	vertical := barShape element shape.
-	horizontal := barShape element shape.
+	vertical := self barShapeCopy.
+	horizontal := self barShapeCopy.
+	
 	aCanvas addShape: vertical; addShape: horizontal.
 	
+]
+
+{ #category : #hooks }
+RSScrollsCanvas >> barShapeCopy [
+	^ barShape copy
+		announcer: barShape announcer;
+		border: (RSBorder new
+			color: self scrollBorderColor;
+			width: 0.5;
+			yourself);
+		yourself
 ]
 
 { #category : #private }
@@ -64,26 +76,26 @@ RSScrollsCanvas >> initializeHideAnimation [
 
 { #category : #initialization }
 RSScrollsCanvas >> initializeShape [
-	barShape := RSShapeBuilder box
+	barShape := RSBox new
 		cornerRadius: (RSCornerRadius new radius: 5);
-		border: [RSBorder new color: self scrollBorderColor; width: 0.5];
 		size: 10;
 		noPaint;
 		isFixed: true;
-		when: RSMouseDragging do: [ :e | [:evt| self moveScroll: evt ] ];
-		when: RSMouseEnter do: [ :e | [ :evt| | shape |
+		when: RSMouseDragging do: [:evt| 1 traceCr. self moveScroll: evt ];
+		when: RSMouseEnter do: [ :evt| | shape |
 			self updateScrollbars.
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: (self scrollColor alpha: 1) ].
 			animation stop.
-			hideAnimation stop. ] ];
-		when: RSMouseLeave do: [ :e | [ :evt| | shape |
+			hideAnimation stop ];
+		when: RSMouseLeave do: [ :evt| | shape |
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: self scrollColor ].
 			self removeRectanglesFor: evt canvas.
-			vertical parent addAnimation: animation ] ]
+			vertical parent addAnimation: animation ];
+		yourself
 ]
 
 { #category : #hooks }

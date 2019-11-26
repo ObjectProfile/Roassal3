@@ -108,30 +108,35 @@ RSAnimationExamples >> example03Ramp [
 { #category : #examples }
 RSAnimationExamples >> example04BoxWindmill [
 	<script: 'self new example04BoxWindmill open'>
-	| v elements extent points frameCount |
-	v := RSView new.
-	v color: Color black.
+	| canvas shapes extent points frameCount border |
+	canvas := RSCanvas new.
+	canvas color: Color black.
 	extent := 1920@1080.
 	points := (0 to: extent x by: 50) flatCollect: [ :x |
 		(0 to: extent y by: 50) collect: [ :y | (x@y)- (extent/2) ] ].
-	elements := RSShapeBuilder box
-		extent: 140@40;
-		color: Color white;
-		border: (RSBorder new
-			color: (Color gray alpha: 0.5) ) ;
-		elementsOn: points.
-	v addAll: elements.
+	border := RSBorder new
+		color: (Color gray alpha: 0.5);
+		yourself.
+		
+	shapes := points collect: [ :p | 
+		RSBox new
+			extent: 140@40;
+			model: p;
+			color: Color white;
+			border: border;
+			yourself  ].
+	canvas addAll: shapes.
 	frameCount := 0.
-	v newAnimation repeat;
+	canvas newAnimation repeat;
 		onStepDo: [ :t |
-			elements do: [ :e | 
-				e matrix 
+			shapes do: [ :s | 
+				s matrix 
 					loadIdentity;
-					translateBy: e model;
-					rotateByRadians: (e model x + e model y + frameCount) degreesToRadians * 1.95  ].
+					translateBy: s model;
+					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
-	v @ (RSActivityMonitorView new initializeGraphShape).
-	^ v
+	canvas @ RSGraphCanvasMonitor.
+	^ canvas
 ]
 
 { #category : #examples }
@@ -2447,7 +2452,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 		edges: canvas edges;
 		start;
 		yourself.
-	canvas @ RSActivityMonitorView.
+	canvas @ RSSimpleCanvasMonitor.
 	canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
