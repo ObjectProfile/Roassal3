@@ -1,7 +1,7 @@
 Class {
 	#name : #RSChartExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #'as yet unclassified' }

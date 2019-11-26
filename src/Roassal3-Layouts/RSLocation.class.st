@@ -51,7 +51,7 @@ Class {
 		'fixedX',
 		'fixedY'
 	],
-	#category : #'Roassal3-Utils-PositionAndResize'
+	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
 { #category : #'public - positioning shorcuts' }

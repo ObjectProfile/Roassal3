@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'shape'
 	],
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }

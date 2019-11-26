@@ -86,7 +86,7 @@ Class {
 		'executeBlock',
 		'shapes'
 	],
-	#category : #'Roassal3-Utils-Normalizer'
+	#category : #'Roassal3-Shapes-Normalizer'
 }
 
 { #category : #'instance creation' }

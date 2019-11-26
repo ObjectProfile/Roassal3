@@ -1,7 +1,7 @@
 Class {
 	#name : #RSXLabelDecoration,
 	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }

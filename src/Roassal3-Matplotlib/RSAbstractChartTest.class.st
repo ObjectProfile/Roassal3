@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'chart'
 	],
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #testing }

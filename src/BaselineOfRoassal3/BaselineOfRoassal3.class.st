@@ -36,7 +36,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Animation' with: [ spec requires: #('NumericScales') ];
 				package: #'Roassal3-Scripting';
 				package: #'Roassal3-Interaction';
-				package: #'Roassal3-Utils';
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Pie';
 				package: #'Roassal3-UML';
@@ -56,7 +55,6 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Shapes'
 					'Roassal3-Interaction'
 					'Roassal3-Layouts'
-					'Roassal3-Utils'
 					'Roassal3-Colors'
 					'Roassal3-Legend'
 					'Roassal3-Animation'

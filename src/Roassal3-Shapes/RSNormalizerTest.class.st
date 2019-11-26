@@ -4,7 +4,7 @@ I am test for RSNormalizer
 Class {
 	#name : #RSNormalizerTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Utils-Tests'
+	#category : #'Roassal3-Shapes-Tests'
 }
 
 { #category : #tests }

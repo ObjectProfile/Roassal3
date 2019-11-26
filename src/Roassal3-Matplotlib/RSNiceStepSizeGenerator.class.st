@@ -24,7 +24,7 @@ Class {
 		'niceStep',
 		'o'
 	],
-	#category : #'Roassal3-Utils-Labeling'
+	#category : #'Roassal3-Matplotlib-Labeling'
 }
 
 { #category : #accessing }

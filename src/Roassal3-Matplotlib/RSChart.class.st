@@ -9,7 +9,7 @@ Class {
 		'plot',
 		'decorations'
 	],
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #adding }
@@ -28,7 +28,7 @@ RSChart >> addPlot: aPlot [
 { #category : #building }
 RSChart >> build [
 	canvas := RSCanvas new.
-	canvas @ RSControlsCanvas.
+	canvas @ RSCanvasController.
 	plots, decorations do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: canvas.
 	self renderPlotsIn: canvas

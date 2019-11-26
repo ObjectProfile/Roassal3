@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'lg'
 	],
-	#category : #'Roassal3-Utils-Tests'
+	#category : #'Roassal3-Matplotlib-Tests'
 }
 
 { #category : #running }

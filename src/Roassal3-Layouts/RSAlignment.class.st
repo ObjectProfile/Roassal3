@@ -19,7 +19,7 @@ For example, inspect the following:
 Class {
 	#name : #RSAlignment,
 	#superclass : #RSAbstractElementHandling,
-	#category : #'Roassal3-Utils-PositionAndResize'
+	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
 { #category : #public }

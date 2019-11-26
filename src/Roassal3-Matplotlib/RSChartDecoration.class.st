@@ -1,5 +1,5 @@
 Class {
 	#name : #RSChartDecoration,
 	#superclass : #RSAbstractChartElement,
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }

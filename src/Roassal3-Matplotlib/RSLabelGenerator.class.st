@@ -12,7 +12,7 @@ Class {
 		'w',
 		'epsilon'
 	],
-	#category : #'Roassal3-Utils-Labeling'
+	#category : #'Roassal3-Matplotlib-Labeling'
 }
 
 { #category : #'instance creation' }

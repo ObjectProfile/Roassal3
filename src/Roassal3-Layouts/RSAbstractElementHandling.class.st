@@ -8,7 +8,7 @@ Class {
 		'shapes',
 		'fixedShape'
 	],
-	#category : #'Roassal3-Utils-PositionAndResize'
+	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
 { #category : #accessing }

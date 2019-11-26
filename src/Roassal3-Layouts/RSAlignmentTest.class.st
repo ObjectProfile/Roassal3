@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'align'
 	],
-	#category : #'Roassal3-Utils-Tests'
+	#category : #'Roassal3-Layouts-Tests'
 }
 
 { #category : #running }

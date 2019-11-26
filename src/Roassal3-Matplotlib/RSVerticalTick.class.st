@@ -1,7 +1,7 @@
 Class {
 	#name : #RSVerticalTick,
 	#superclass : #RSAbstractTick,
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }

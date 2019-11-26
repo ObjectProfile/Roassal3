@@ -1,7 +1,7 @@
 Class {
 	#name : #RSLinePlot,
 	#superclass : #RSAbstractPlot,
-	#category : #'Roassal3-Matplotlib'
+	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }
