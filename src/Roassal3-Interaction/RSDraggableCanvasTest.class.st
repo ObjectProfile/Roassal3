@@ -5,100 +5,100 @@ Class {
 	#name : #RSDraggableCanvasTest,
 	#superclass : #RSTest,
 	#instVars : [
-		'view'
+		'canvas'
 	],
 	#category : #'Roassal3-Interaction-Tests'
 }
 
 { #category : #running }
 RSDraggableCanvasTest >> setUp [
-	view := RSView new.
-	view add: (RSShapeBuilder ellipse width: 40; height: 20) element.
+	canvas := RSCanvas new.
+	canvas add: (RSEllipse new width: 40; height: 20; yourself).
 	
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDefault [
-	self assert: view canvas camera position equals: 0@0.
+	self assert: canvas canvas camera position equals: 0@0.
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeLeft [
-	view @ RSDraggableCanvas left.
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas left.
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvas.
 	
-	view @ RSDraggableCanvas left.
-	view canvas announce: (RSMouseDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas ).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas left.
+	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas ).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view canvas announce: (RSMouseLeftDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas ).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (-10 @ -5)).
+	canvas canvas announce: (RSMouseLeftDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas ).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (-10 @ -5)).
 
 
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeMiddle [
-	view @ RSDraggableCanvas middle.
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas middle.
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvas.
 	
-	view @ RSDraggableCanvas middle.
-	view canvas announce: (RSMouseDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas middle.
+	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view canvas announce: (RSMouseMiddleDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (-10 @ -5)).
+	canvas canvas announce: (RSMouseMiddleDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (-10 @ -5)).
 
 
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeRight [
-	view @ RSDraggableCanvas right.
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas right.
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvas.
 	
-	view @ RSDraggableCanvas right.
-	view canvas announce: (RSMouseDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (0 @ 0)).
+	canvas @ RSDraggableCanvas right.
+	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	view canvas announce: (RSMouseRightDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (-10 @ -5)).
+	canvas canvas announce: (RSMouseRightDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (-10 @ -5)).
 
 
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingOnDraggable [
-	view @ RSDraggableCanvas.
-	view canvas announce: (RSMouseDragStart new canvas: view canvas).
-	view canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: view canvas).
-	view canvas announce: (RSMouseDragEnd new canvas: view canvas).
-	self assert: (view canvas camera position closeTo: (-10 @ -5))
+	canvas @ RSDraggableCanvas.
+	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
+	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
+	self assert: (canvas canvas camera position closeTo: (-10 @ -5))
 ]
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingOnNotDraggable [
-	view canvas announce: (RSMouseDragging step: 10 @ 5).
-	self assert: view canvas camera position = (0 @ 0)
+	canvas canvas announce: (RSMouseDragging step: 10 @ 5).
+	self assert: canvas canvas camera position = (0 @ 0)
 ]

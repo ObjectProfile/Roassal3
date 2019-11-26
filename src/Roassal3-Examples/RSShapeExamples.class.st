@@ -673,7 +673,7 @@ RSShapeExamples >> example21SpockLizard [
 	this := RSAnimationExamples new.
 	v := RSView new.
 	radius := 1500.
-	paint := RSGradientPalette linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
+	paint := GradientPaint linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
 	paint start: -900 @ 900; stop: 900 @ -900.
 	v addShape: (RSEllipse new
 		noPaint;

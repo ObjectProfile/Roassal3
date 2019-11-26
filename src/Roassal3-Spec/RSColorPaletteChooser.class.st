@@ -70,7 +70,7 @@ RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight := RSHighlightable new.
 	selectedHighlight highlightShapes: [ :e | {e children first} ].
 	selectedHighlight highlightShape 
-		paint: ((RSGradientPalette linearGradient: 
+		paint: ((GradientPaint linearGradient: 
 			{0->'white'.
 			0.25->'blue'.
 			1 ->'lightGray'})
@@ -84,7 +84,7 @@ RSColorPaletteChooser >> initializeInteractions [
 		highlightElements: [ :e | {e children first} ]
 		butKeep: selectedHighlight.
 	overHighlight highlightShape 
-		paint: ((RSGradientPalette linearGradient: 
+		paint: ((GradientPaint linearGradient: 
 			{0->'white'.
 			0.25->'black'.
 			1 ->'lightGray'})
@@ -165,7 +165,7 @@ RSColorPaletteChooser >> renderButtonsOn: view [
 	bshape := RSShapeBuilder polygon
 		border: RSBorder new;
 		cornerRadii: 5;
-		paint: ((RSGradientPalette linearGradient: 
+		paint: ((GradientPaint linearGradient: 
 			{0->'lightGray'.
 			0.25->'black'.
 			1 ->'gray'})

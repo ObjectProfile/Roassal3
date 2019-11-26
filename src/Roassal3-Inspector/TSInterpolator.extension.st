@@ -22,11 +22,20 @@ TSInterpolator >> gtCanvasForInspector [
 	line := RSPolyline new 
 		border: (RSBorder new 
 			width: 4;
-			paint: (RSGradientPalette sweetPeriod
+			paint: ((GradientPaint linearGradient: {"sweetPeriod"
+					0->'3f51b1'. 
+					0.13->'5a55ae'.
+					0.25->'7b5fac'.
+					0.38->'8f6aae'.
+					0.50->'a86aa4'.
+					0.62->'cc6b8e'.
+					0.75->'f18271'.
+					0.87->'f3a469'.
+					1->'f7c978'
+				})
 				start: rect bottomLeft;
 				stop: rect topRight;
-				yourself
-			) ).
+				yourself)).
 	canvas addShape: line.
 	cp := OrderedCollection new.
 	canvas newAnimation

@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 RSControlsViewTest >> testBasic [
-	| view |
-	view := RSView new.
-	view @ RSCanvasController
+	| canvas |
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController
 ]

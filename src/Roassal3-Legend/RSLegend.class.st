@@ -246,7 +246,7 @@ RSLegend >> text: aString withCircleColor: color [
 RSLegend >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
-	gradient := RSGradientPalette linearGradient: ramp.
+	gradient := GradientPaint linearGradient: ramp.
 	gradient start: -20@0; stop: 20@0.
 	s := RSBox new
 		extent: 40@20;

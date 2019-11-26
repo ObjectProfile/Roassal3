@@ -1844,13 +1844,13 @@ RSAnimationExamples >> example32RSLocate [
 				 ]  ].
 	
 	canvas add: fixedElement; add: movableElement; add: label.
-	grad2 := (RSGradientPalette linearGradient: 
+	grad2 := (GradientPaint linearGradient: 
 		{0->'white'.
 		0.25->'black'.
 		1 ->'lightGray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	grad1 := (RSGradientPalette linearGradient: 
+	grad1 := (GradientPaint linearGradient: 
 		{0->'lightGray'.
 		0.25->'black'.
 		1 ->'gray'})
@@ -2105,7 +2105,7 @@ RSAnimationExamples >> example37SimpleClock [
 	extent := 800 @ 600.
 	half := extent / 2.
 	linear := [ :val :a :b | 
-	(RSGradientPalette linearGradient: val)
+	(GradientPaint linearGradient: val)
 		start: a * half;
 		stop: b * half ].
 	color := TSScale ordinal range:
