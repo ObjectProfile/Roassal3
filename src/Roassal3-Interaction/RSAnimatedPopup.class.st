@@ -21,7 +21,7 @@ RSAnimatedPopup class >> removeEvents [
 { #category : #hooks }
 RSAnimatedPopup >> translatePopup: popup event: evt [ 
 	| p pscale canvasExtent side scale |
-	p := evt shape position.
+	p := evt shape positionInCanvas.
 	evt shape isFixed
 		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p ].
 	popup translateTo: 0@0.
