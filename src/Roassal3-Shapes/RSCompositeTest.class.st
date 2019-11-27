@@ -34,3 +34,22 @@ RSCompositeTest >> testPaddingOkay [
 		shapes: (RSGroup new);
 		padding: 5.
 ]
+
+{ #category : #tests }
+RSCompositeTest >> testPositionInCanvas [
+	| box composite canvas |
+	canvas := RSCanvas new.
+	box := RSBox new
+		size: 100;
+		yourself.
+	composite := RSComposite new
+		shapes: { box };
+		position: 100@100;
+		yourself.
+	canvas add: composite.
+	box translateTo: 10@10.
+	self assert: composite position equals: 100@100.
+	self assert: composite positionInCanvas equals: 100@100.
+	self assert: box position equals: 10@10.
+	self assert: box positionInCanvas equals: 110@110.
+]

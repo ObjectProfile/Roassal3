@@ -160,6 +160,11 @@ RSCanvas >> fixedShapes [
 	^ fixedShapes 
 ]
 
+{ #category : #matrix }
+RSCanvas >> globalMatrix [
+	^ AthensAffineTransform new
+]
+
 { #category : #animations }
 RSCanvas >> hasAnimation [
 	"True if at least one animation is running"

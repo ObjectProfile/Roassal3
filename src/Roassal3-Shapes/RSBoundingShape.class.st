@@ -73,6 +73,11 @@ RSBoundingShape >> geometry [
 		corner: rect corner
 ]
 
+{ #category : #matrix }
+RSBoundingShape >> globalMatrix [
+	^ parent globalMatrix multiplyBy: matrix.
+]
+
 { #category : #testing }
 RSBoundingShape >> hasEdges [
 	^ connectedEdges notNil
@@ -169,6 +174,11 @@ RSBoundingShape >> position: aPoint [
 	matrix translation: aPoint.
 	self resetBBox.
 	self updateConnectedEdges.
+]
+
+{ #category : #accessing }
+RSBoundingShape >> positionInCanvas [
+	^ self globalMatrix transform: 0@0.
 ]
 
 { #category : #copying }
