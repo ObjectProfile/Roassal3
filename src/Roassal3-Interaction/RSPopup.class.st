@@ -90,7 +90,7 @@ RSPopup >> onShape: aShape [
 		when: self class activationEvent do: [ :evt | | popup |
 			popup := self createOrGetPopupOn: aShape event: evt.
 			self translatePopup: popup event: evt.
-			popup signalUpdate. ]
+			evt signalUpdate. ]
 
 ]
 
@@ -131,7 +131,7 @@ RSPopup >> translatePopup: popup event: evt [
 	| p e extent |
 	p := evt position.
 	evt shape isFixed 
-		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p. ].
+		ifFalse: [ p := evt camera fromSpaceToPixel: p. ].
 	extent := popup canvas extent.
 	e := (popup extent /2) + 5.
 	p x + popup width > extent x ifTrue: [ 
