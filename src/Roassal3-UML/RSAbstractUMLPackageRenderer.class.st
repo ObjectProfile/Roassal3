@@ -54,7 +54,7 @@ RSAbstractUMLPackageRenderer >> classFor: aClass [
 { #category : #hooks }
 RSAbstractUMLPackageRenderer >> classNameFor: aClass [
 	^ RSLabel new
-		text: (modelDescriptor classname rsValue: aClass) asString;
+		text: (modelDescriptor classname rsValue: aClass);
 		yourself
 ]
 
@@ -133,7 +133,7 @@ RSAbstractUMLPackageRenderer >> packageNameFor: aPackage [
 	| shape |
 	shape := RSLabel new
 		bold;
-		text: (modelDescriptor packagename rsValue: aPackage) asString;
+		text: (modelDescriptor packagename rsValue: aPackage);
 		yourself.
 	shape fontSize: shape fontSize * 1.2.
 	^ shape

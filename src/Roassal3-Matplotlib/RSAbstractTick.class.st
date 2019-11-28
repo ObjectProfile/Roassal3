@@ -13,7 +13,7 @@ Class {
 RSAbstractTick >> createLabelFor: aValue [
 	"Create a label and returns it."
 
-	^ RSLabel new fontSize: 5; text: (labelConversion value: aValue) asString
+	^ RSLabel new fontSize: 5; text: (labelConversion value: aValue)
 ]
 
 { #category : #rendering }

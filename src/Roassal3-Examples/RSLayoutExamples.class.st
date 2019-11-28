@@ -223,7 +223,7 @@ RSLayoutExamples >> example08HorizontalTree [
 	
 	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
 		lbl := RSLabel new
-			text: cls asString;
+			text: cls;
 			yourself.
 		box := RSBox new
 			withBorder;

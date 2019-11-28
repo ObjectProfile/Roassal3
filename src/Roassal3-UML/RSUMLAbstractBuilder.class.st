@@ -3,7 +3,7 @@ An abstract builder for UML shapes based on a model description (like a class or
 "
 Class {
 	#name : #RSUMLAbstractBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSAbstractShapesBuilder,
 	#instVars : [
 		'renderer',
 		'modelDescriptor'
@@ -24,12 +24,6 @@ RSUMLAbstractBuilder >> defaultContainer [
 ]
 
 { #category : #accessing }
-RSUMLAbstractBuilder >> initialize [
-	super initialize.
-	shapes := RSGroup new.
-]
-
-{ #category : #accessing }
 RSUMLAbstractBuilder >> layout [
 	^ renderer layout
 ]
@@ -45,11 +39,6 @@ RSUMLAbstractBuilder >> modelDescriptor: aRSClassDescriptor [
 	renderer ifNotNil: [ renderer modelDescriptor: modelDescriptor ].
 ]
 
-{ #category : #hooks }
-RSUMLAbstractBuilder >> renderIn: aView [
-	self subclassResponsibility 
-]
-
 { #category : #accessing }
 RSUMLAbstractBuilder >> renderer [
 	^ renderer
@@ -59,4 +48,9 @@ RSUMLAbstractBuilder >> renderer [
 RSUMLAbstractBuilder >> renderer: aRSUMLRenderer [
 	renderer := aRSUMLRenderer.
 	renderer modelDescriptor: modelDescriptor
+]
+
+{ #category : #hooks }
+RSUMLAbstractBuilder >> shapeFor: anObject [
+	^ self renderer shapeFor: anObject
 ]

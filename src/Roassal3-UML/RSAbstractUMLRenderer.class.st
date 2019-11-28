@@ -107,11 +107,6 @@ RSAbstractUMLRenderer >> shapeFor: anObject [
 	^ self subclassResponsibility
 ]
 
-{ #category : #public }
-RSAbstractUMLRenderer >> shapesFor: aCollection [
-	^ aCollection collect: [ :obj | self shapeFor: obj ] as: RSGroup.
-]
-
 { #category : #accessing }
 RSAbstractUMLRenderer >> textColor [
 	^ textColor ifNil: [ textColor := self defaultTextColor ]

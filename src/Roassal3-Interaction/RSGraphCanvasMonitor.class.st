@@ -36,8 +36,7 @@ RSGraphCanvasMonitor >> defaultLabel [
 { #category : #defaults }
 RSGraphCanvasMonitor >> defaultPolygon [
 	^ RSPolygon new
-		paint: ((GradientPaint 
-			linearGradient:
+		paint: ((LinearGradientPaint fromArray:
 				{0  -> Color red trans.
 				0.5 -> Color orange trans.
 				1   -> Color green trans. } )
@@ -53,8 +52,7 @@ RSGraphCanvasMonitor >> defaultPolyline [
 	^ RSPolyline new
 		controlPoints: #();
 		border: (RSBorder new
-			paint: ((GradientPaint
-				linearGradient: 
+			paint: ((LinearGradientPaint fromArray:
 					{0  -> 'red'.
 					0.5 -> 'orange'.
 					1   -> 'gree'})

@@ -22,7 +22,7 @@ TSInterpolator >> gtCanvasForInspector [
 	line := RSPolyline new 
 		border: (RSBorder new 
 			width: 4;
-			paint: ((GradientPaint linearGradient: {"sweetPeriod"
+			paint: ((LinearGradientPaint fromArray: {"sweetPeriod"
 					0->'3f51b1'. 
 					0.13->'5a55ae'.
 					0.25->'7b5fac'.

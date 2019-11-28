@@ -29,16 +29,18 @@ RSUMLClassBuilder >> initialize [
 ]
 
 { #category : #hooks }
+RSUMLClassBuilder >> objects [
+	^ classes
+]
+
+{ #category : #hooks }
 RSUMLClassBuilder >> renderIn: aCanvas [
-	| classShapes |
-	classShapes := self renderer shapesFor: classes.
-	aCanvas addAll: classShapes.
-	shapes addAll: classShapes.
+	super renderIn: aCanvas.
 	self renderer edgeBuilder
 		canvas: aCanvas;
-		shapes: classShapes;
+		shapes: shapes;
 		connectFrom: modelDescriptor superclass.
-	self layout on: classShapes.
+	self layout on: shapes.
 	renderer setUpCanvas: aCanvas.
 
 ]

@@ -43,7 +43,7 @@ RSCanvas >> addBasicShape: aShape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> addFixedShape: aShape [
-	fixedShapes add: aShape
+	fixedShapes add: aShape.
 ]
 
 { #category : #'adding removing shapes' }
@@ -328,10 +328,13 @@ RSCanvas >> removeFixedShape: aShape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> removeShape: shape [
-	| evt |
-	(shapes includes: shape) 
-		ifTrue: [ shapes remove: shape ]
-		ifFalse: [ (fixedShapes includes: shape) ifTrue: [ fixedShapes remove: shape ] ].
+	| evt index |
+	index := shapes indexOf: shape.
+	index = 0 
+		ifTrue: [ index := fixedShapes indexOf: shape.
+			index = 0 ifFalse: [ fixedShapes remove: shape ] ]
+		ifFalse: [ shapes removeAt: index ].
+	
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.
@@ -341,10 +344,10 @@ RSCanvas >> removeShape: shape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> setAsFixed: aShape [
-	self
-		removeShape: aShape;
-		addFixedShape: aShape.
+	self removeShape: aShape.
 	aShape isFixed: true.
+	self addShape: aShape.
+	
 ]
 
 { #category : #accessing }

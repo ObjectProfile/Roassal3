@@ -18,6 +18,11 @@ RSUMLPackageBuilder >> initialize [
 		renderer: RSBasicUMLPackageRenderer new
 ]
 
+{ #category : #hooks }
+RSUMLPackageBuilder >> objects [
+	^ packages
+]
+
 { #category : #accessing }
 RSUMLPackageBuilder >> packages [ 
 
@@ -32,6 +37,6 @@ RSUMLPackageBuilder >> packages: aCollection [
 
 { #category : #hooks }
 RSUMLPackageBuilder >> renderIn: aCanvas [
-	aCanvas addAll: (shapes := self renderer shapesFor: self packages).
+	super renderIn: aCanvas.
 	self layout on: shapes.
 ]

@@ -30,7 +30,7 @@ RSLegend >> basicRenderIn: aCanvas [
 RSLegend >> customText: anObject shape: aShape [
 	| shape |
 	"general propuse, you can add and define anything in aShape to be a legend"
-	shape := aShape copy text: anObject asString.
+	shape := aShape copy text: anObject.
 	shapes add: shape.
 	^ shape.
 ]
@@ -246,7 +246,7 @@ RSLegend >> text: aString withCircleColor: color [
 RSLegend >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
-	gradient := GradientPaint linearGradient: ramp.
+	gradient := LinearGradientPaint fromArray: ramp.
 	gradient start: -20@0; stop: 20@0.
 	s := RSBox new
 		extent: 40@20;

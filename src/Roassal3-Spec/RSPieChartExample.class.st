@@ -121,7 +121,7 @@ RSPieChartExample >> visualizeChart: view package: pkg [
 { #category : #initialization }
 RSPieChartExample >> visualizePie: view package: pkg [
 	| b rect max |
-	b := RSPieBuilder new.
+	b := RSPie new.
 	b container: view.
 	
 	b shape 

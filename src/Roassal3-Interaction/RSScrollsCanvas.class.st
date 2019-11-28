@@ -81,7 +81,7 @@ RSScrollsCanvas >> initializeShape [
 		size: 10;
 		noPaint;
 		isFixed: true;
-		when: RSMouseDragging do: [:evt| 1 traceCr. self moveScroll: evt ];
+		when: RSMouseDragging do: [:evt| self moveScroll: evt ];
 		when: RSMouseEnter do: [ :evt| | shape |
 			self updateScrollbars.
 			shape := evt shape.

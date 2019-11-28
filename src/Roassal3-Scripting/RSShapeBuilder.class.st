@@ -132,7 +132,7 @@ v open
 			tshape := el shape.
 			text := tshape text.
 			text ifNil: [ text := el model ].
-			tshape text: text asString ] ) 
+			tshape text: text ] ) 
 		yourself 
 ]
 

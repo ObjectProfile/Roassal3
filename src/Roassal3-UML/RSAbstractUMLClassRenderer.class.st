@@ -154,7 +154,7 @@ RSAbstractUMLClassRenderer >> methodFor: method [
 	^ RSLabel new
 		model: method;
 		color: self textColor;
-		text: (modelDescriptor methodSelector rsValue: method) asString;
+		text: (modelDescriptor methodSelector rsValue: method);
 		popup;
 		yourself
 ]
@@ -186,7 +186,7 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 	| label |
 	label := RSLabel new
 		color: self textColor;
-		text: (modelDescriptor classname rsValue: model) asString;
+		text: (modelDescriptor classname rsValue: model);
 		yourself.
 	label fontSize: label fontSize * 1.2.
 	^ label
@@ -198,7 +198,7 @@ RSAbstractUMLClassRenderer >> varFor: model [
 	^ RSLabel new
 		model: model;
 		color: self textColor;
-		text: model asString;
+		text: model;
 		yourself
 ]
 

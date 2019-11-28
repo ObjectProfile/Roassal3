@@ -241,7 +241,6 @@ RSShapeExamples >> example08Labels [
 	v @ RSCanvasController.
 	sb := RSShapeBuilder label.
 	sb interactionDo: #draggable.
-	sb text: #asString.
 	elements := sb elementsOn: Collection withAllSubclasses.
 	elements
 		do:
@@ -673,7 +672,7 @@ RSShapeExamples >> example21SpockLizard [
 	this := RSAnimationExamples new.
 	v := RSView new.
 	radius := 1500.
-	paint := GradientPaint linearGradient: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
+	paint := LinearGradientPaint fromArray: {(0 -> 'E0BA82'). (1 -> 'F4DFA5')}.
 	paint start: -900 @ 900; stop: 900 @ -900.
 	v addShape: (RSEllipse new
 		noPaint;
@@ -955,7 +954,7 @@ RSShapeExamples >> example29AntAnimation [
 	labelInt shapeBuilder: [ :model |
 		 RSLabel new 
 			color: Color white; 
-			text: model asString;
+			text: model;
 			yourself ].
 	highInt := RSHighlightable new setupAntAnimation yourself.
 	popupMethod := RSPopup text: #selector.
@@ -977,7 +976,7 @@ RSShapeExamples >> example29AntAnimation [
 			addInteraction: labelInt;
 			addInteraction: highInt;
 			yourself ].
-	canvas color: Smalltalk ui theme backgroundColor.
+	canvas color: PharoDarkTheme new backgroundColor.
 	
 	canvas addAll: shapes.
 	

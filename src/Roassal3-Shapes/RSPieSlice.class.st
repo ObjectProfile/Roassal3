@@ -34,7 +34,7 @@ RSPieSlice >> alphaAngle: stAngle [
 { #category : #public }
 RSPieSlice >> arcRadiusAuto [
 	| e i |
-	e := externalRadius .
+	e := externalRadius.
 	i := innerRadius.
 	self cornerRadii: ((i * i) + (e * e)) sqrt
 ]
@@ -63,7 +63,7 @@ RSPieSlice >> buildPathOn: visitor [
 RSPieSlice >> centroid: off [
 	| r a |
 	r := (innerRadius + externalRadius)/2 + off.
-	a := ((alphaAngle + betaAngle) / 2) degreesToRadians.
+	a := self middleAngle degreesToRadians.
 	^ (a cos @ (a sin negated) * r).
 ]
 
@@ -82,6 +82,11 @@ RSPieSlice >> cornerRadii: aNumber [
 	cornerRadii := aNumber.
 	old = cornerRadii ifTrue: [ ^ self ].
 	self resetPath.
+]
+
+{ #category : #utilities }
+RSPieSlice >> emphasizeWith: anInteger [ 
+	self translateBy: (self centroid: (innerRadius + externalRadius) / -2 + anInteger)
 ]
 
 { #category : #accessing }
@@ -144,6 +149,11 @@ RSPieSlice >> innerRadius: iR [
 ]
 
 { #category : #accessing }
+RSPieSlice >> middleAngle [
+	^ (alphaAngle + betaAngle) / 2
+]
+
+{ #category : #accessing }
 RSPieSlice >> segmentSpacing [
 	^ segmentSpacing
 ]
@@ -155,4 +165,12 @@ RSPieSlice >> segmentSpacing: anAngleInDegrees [
 	segmentSpacing := anAngleInDegrees.
 	old = segmentSpacing ifTrue: [ ^self ].
 	self resetPath.
+]
+
+{ #category : #accessing }
+RSPieSlice >> shiftAngles: aNumber [ 
+	self 
+		alphaAngle: alphaAngle + aNumber;
+		betaAngle: betaAngle + aNumber
+	
 ]

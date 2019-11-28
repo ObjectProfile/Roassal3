@@ -235,7 +235,7 @@ RSLabel >> text [
 { #category : #accessing }
 RSLabel >> text: string [
 	text = string ifTrue: [ ^ self ].
-	text := string.
+	text := string asString.
 	self resetCache; resetPath.
 ]
 
