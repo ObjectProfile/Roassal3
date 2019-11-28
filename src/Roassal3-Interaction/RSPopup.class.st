@@ -85,6 +85,8 @@ RSPopup >> initialize [
 
 { #category : #hooks }
 RSPopup >> onShape: aShape [
+	aShape removeInteractionIfPresent: self class.
+	
 	self registerRemoveEventsOn: aShape.
 	aShape
 		when: self class activationEvent do: [ :evt | | popup |
