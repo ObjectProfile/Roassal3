@@ -1127,3 +1127,20 @@ RSShapeExamples >> example33ColorScaling [
 	c @ RSCanvasController.
 	c open
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example34MorphicPopup [
+	<script: 'self new example34MorphicPopup open'>
+	| c |
+	c := RSCanvas new.
+	Collection withAllSubclassesDo: [ :cls |
+		c add: (RSBox new
+			model: cls;
+			size: 10;
+			yourself) ].
+	RSGridLayout on: c nodes.
+	c @ RSCanvasController.
+	c nodes @ (RSMorphicPopup new
+		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
+	^ c
+]

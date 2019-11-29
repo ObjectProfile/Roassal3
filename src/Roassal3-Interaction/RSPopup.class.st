@@ -27,33 +27,12 @@ c @ RSControlsCanvas
 "
 Class {
 	#name : #RSPopup,
-	#superclass : #RSInteraction,
+	#superclass : #RSAbstractPopup,
 	#instVars : [
 		'shapeBuilder'
 	],
-	#classInstVars : [
-		'removeEvents'
-	],
 	#category : #'Roassal3-Interaction-Popup'
 }
-
-{ #category : #accessing }
-RSPopup class >> activationEvent [
-	^ RSMouseMove
-]
-
-{ #category : #accessing }
-RSPopup class >> removeEvents [
-	^ removeEvents ifNil: [ 
-		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
-]
-
-{ #category : #'instance creation' }
-RSPopup class >> reset [
-	<script: 'self reset'>
-	super reset.
-	removeEvents := nil.
-]
 
 { #category : #accessing }
 RSPopup class >> text: anObject [
@@ -64,17 +43,12 @@ RSPopup class >> text: anObject [
 ]
 
 { #category : #hooks }
-RSPopup >> createOrGetPopupOn: aShape event: event [
-	| att popupShape canvas |
-	att := event canvas attributes.
-	att at: #popup ifPresent: [ :popup | ^ popup ].
+RSPopup >> createPopupFor: aShape event: event [
+	| popupShape |
 	popupShape := shapeBuilder shapeFor: aShape model.
-	att at: #popup put: popupShape.
 	popupShape isFixed: true.
-	canvas := aShape canvas.
-	canvas addShape: popupShape.
-	^ popupShape
-	
+	event canvas addShape: popupShape.
+	^ popupShape.
 ]
 
 { #category : #initialization }
@@ -84,38 +58,8 @@ RSPopup >> initialize [
 ]
 
 { #category : #hooks }
-RSPopup >> onShape: aShape [
-	aShape removeInteractionIfPresent: self class.
-	
-	self registerRemoveEventsOn: aShape.
-	aShape
-		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: aShape event: evt.
-			self translatePopup: popup event: evt.
-			evt signalUpdate. ]
-
-]
-
-{ #category : #private }
-RSPopup >> registerRemoveEventsOn: aShape [
-	| remove |
-	remove := [:evt | self removePopupOn: evt  ].
-	self class removeEvents do: [ :cls | 
-		aShape when: cls do: remove ]
-]
-
-{ #category : #hooks }
-RSPopup >> removePopupOn: evt [ 
-	| att popup |
-	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
-	If the element is not part of a view, then there is nothing to remove, so we exit early."
-	evt canvas ifNil: [ ^ self ].
-	att := evt canvas attributes.
-	(att includesKey: #popup) ifFalse: [ ^ self ].
-	popup := att at: #popup.
-	popup remove.
-	att removeKey: #popup.
-	evt signalUpdate.
+RSPopup >> releasePopup: popup [
+	popup remove
 ]
 
 { #category : #accessing }
