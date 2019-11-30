@@ -196,6 +196,13 @@ RSComposite >> padding: anObject [
 	temp do: [ :s | s translateBy: center ].
 ]
 
+{ #category : #actions }
+RSComposite >> pushBack: aShape [
+	shapes
+		remove: aShape;
+		addFirst: aShape
+]
+
 { #category : #removing }
 RSComposite >> removeShape: shape [
 	| evt |
