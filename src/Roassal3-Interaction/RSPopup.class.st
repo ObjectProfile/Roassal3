@@ -75,9 +75,7 @@ RSPopup >> shapeBuilder: aShapeBuilder [
 { #category : #hooks }
 RSPopup >> translatePopup: popup event: evt [ 
 	| p e extent |
-	p := evt position.
-	evt shape isFixed 
-		ifFalse: [ p := evt camera fromSpaceToPixel: p. ].
+	p := evt camera fromSpaceToPixel: evt position.
 	extent := popup canvas extent.
 	e := (popup extent /2) + 5.
 	p x + popup width > extent x ifTrue: [ 

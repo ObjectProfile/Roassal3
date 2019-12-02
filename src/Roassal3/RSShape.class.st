@@ -140,6 +140,16 @@ RSShape >> includesPoint: aPoint [
 	^ false
 ]
 
+{ #category : #accessing }
+RSShape >> index [
+	^ self attributeAt: #index ifAbsent: [ nil ].
+]
+
+{ #category : #accessing }
+RSShape >> index: anObject [
+	self attributeAt: #index put: anObject
+]
+
 { #category : #initialization }
 RSShape >> initialize [
 	super initialize.
