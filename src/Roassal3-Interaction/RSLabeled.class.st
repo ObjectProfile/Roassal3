@@ -73,7 +73,7 @@ v open
 { #category : #initialization }
 RSLabeled >> initialize [ 
 	super initialize.
-	self shapeBuilder: [:model |RSShape label text: model ].
+	self shapeBuilder: [:model |RSShapeFactory label text: model ].
 	self model: #model.
 	location := RSLocation new above.
 	isHighlightable := false.

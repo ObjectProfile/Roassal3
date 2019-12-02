@@ -143,7 +143,7 @@ RSLegendExamples >> example08Polygons [
 	b := RSLegend new.
 	b title: 'Polygons'.
 	#(diamond triangle star pentagon octagon) do: [ :selector | 
-		b text: selector withShape: ((RSShape perform: selector) size: 15) ].
+		b text: selector withShape: ((RSShapeFactory perform: selector) size: 15) ].
 	b build.
 	b canvas @ RSCanvasController.
 	^ b canvas
@@ -157,7 +157,7 @@ RSLegendExamples >> example09Lines [
 	b title: 'Line with markers'.
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
-		marker := (RSShape perform: selector) size: 10.
+		marker := (RSShapeFactory perform: selector) size: 10.
 		line := RSLine new markerEnd: marker; 
 			startPoint: 0@0; 
 			endPoint: 20@0;

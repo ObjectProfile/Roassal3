@@ -74,7 +74,7 @@ RSGraphCanvasMonitor >> initialize [
 
 { #category : #initialization }
 RSGraphCanvasMonitor >> initializeShape [
-	shape := RSShape composite
+	shape := RSShapeFactory composite
 		noPaint;
 		shapes: { self box. self polygon. self  polyline. self label};
 		padding: 5;

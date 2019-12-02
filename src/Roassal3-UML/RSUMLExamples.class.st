@@ -37,7 +37,7 @@ RSUMLExamples >> example03DifferentLines [
 	| builder marker |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
-	marker := (RSPolygon arrow
+	marker := (RSShapeFactory arrow
 		extent: 20@25;
 		noPaint;
 		withBorder) asMarker offset: -7.
@@ -58,7 +58,7 @@ RSUMLExamples >> example04Nolines [
 	| builder |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
-	builder renderer marker: ((RSPolygon arrow
+	builder renderer marker: ((RSShapeFactory arrow
 		extent: 20@25;
 		color: Color black) asMarker offset: 25/2).
 	
@@ -74,7 +74,7 @@ RSUMLExamples >> example05Horizontal [
 	| builder marker |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
-	marker := (RSPolygon arrow
+	marker := (RSShapeFactory arrow
 		extent: 20@25;
 		noPaint;
 		withBorder) asMarker offset: -7.

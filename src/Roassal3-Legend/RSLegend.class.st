@@ -132,7 +132,7 @@ RSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	| box s marker line g l1 l2 l3 line1 line2  |
 	box := RSBox new
 		size: 100.
-	marker := RSShape triangle
+	marker := RSShapeFactory triangle
 		color: Color black;
 		size: 5.
 	line := RSLine new 

@@ -257,7 +257,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	| c shapes |
 	c := RSCanvas new.
 	shapes := RSShape withAllSubclasses collect: [ :cls | 
-		RSShape square size: 30; draggable; model: cls; yourself ].
+		RSShapeFactory square size: 30; draggable; model: cls; yourself ].
 	c addAll: shapes.
 	RSEdgeBuilder arrowedLine 
 		withBorderAttachPoint;

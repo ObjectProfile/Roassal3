@@ -133,7 +133,7 @@ RSTorchUMLClassRenderer >> titleFor: aClass [
 
 { #category : #hooks }
 RSTorchUMLClassRenderer >> varFor: model [
-	^ RSPolygon triangle
+	^ RSShapeFactory triangle
 		model: model;
 		popup;
 		size: 20;
