@@ -401,16 +401,12 @@ RSAthensMorph >> shapeWithActionForPositionInPixels: point [
 
 { #category : #drawing }
 RSAthensMorph >> showRectanglesIfNecessary: shapes [
-	| box rect |
 	roassalCanvas showRectangles ifFalse: [ ^ self ].
 	
-	box := RSShape box
-		color: (Color blue alpha: 0.2).
-	shapes do: [ :shape | 
-		rect := shape encompassingRectangle.
-		box position: rect rsCenter.
-		box extent: rect extent.
-		box accept: renderer.].
+	renderer canvas setPaint: (Color blue alpha: 0.2).
+	shapes do: [ :shape |
+		renderer canvas drawShape: shape encompassingRectangle.
+		].
 ]
 
 { #category : #signaling }

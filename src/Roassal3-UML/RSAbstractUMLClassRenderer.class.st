@@ -106,7 +106,7 @@ RSAbstractUMLClassRenderer >> defaultLayout [
 { #category : #defaults }
 RSAbstractUMLClassRenderer >> defaultMarker [
 	^ RSMarker new 
-		shape: (RSPolygon triangle
+		shape: (RSShapeFactory triangle
 			color: Color white;
 			border: self border;
 			size: 20;

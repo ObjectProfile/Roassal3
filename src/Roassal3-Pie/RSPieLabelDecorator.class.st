@@ -11,7 +11,7 @@ Class {
 		'labelColor',
 		'labelText'
 	],
-	#category : #'Roassal3-Pie-Core'
+	#category : #'Roassal3-Pie-Decorators'
 }
 
 { #category : #initialization }

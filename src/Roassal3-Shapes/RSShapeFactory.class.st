@@ -1,12 +1,19 @@
-Extension { #name : #RSShape }
+"
+I can create shapes in order that the client can modify it
+"
+Class {
+	#name : #RSShapeFactory,
+	#superclass : #RSObject,
+	#category : #'Roassal3-Shapes-Util'
+}
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> arc [
+RSShapeFactory class >> arc [
 	^ RSPieSlice new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> arrow [
+RSShapeFactory class >> arrow [
 	"inverted vee"
 	^ self polygonWithPoints: (Array
 		with: 1 @ 1
@@ -16,27 +23,27 @@ RSShape class >> arrow [
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> bitmap [
+RSShapeFactory class >> bitmap [
 	^ RSBitmap new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> box [
+RSShapeFactory class >> box [
 	^ self rectangle
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> circle [
+RSShapeFactory class >> circle [
 	^ self ellipse
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> composite [ 
+RSShapeFactory class >> composite [ 
 	^ RSComposite new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> cross [
+RSShapeFactory class >> cross [
 	| t t1 |
 	t := 2 / 6 asFloat.
 	t1 := t negated.
@@ -56,7 +63,7 @@ RSShape class >> cross [
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> diamond [
+RSShapeFactory class >> diamond [
 	^ self polygonWithPoints: (Array
 		with: 0 @ 1
 		with: 1 @ 0
@@ -65,54 +72,54 @@ RSShape class >> diamond [
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> ellipse [
+RSShapeFactory class >> ellipse [
 	^ RSEllipse new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> heptagon [
+RSShapeFactory class >> heptagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 7)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> hexagon [
+RSShapeFactory class >> hexagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 6)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> label [
+RSShapeFactory class >> label [
 	^ RSLabel new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> octagon [
+RSShapeFactory class >> octagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 8)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> pentagon [
+RSShapeFactory class >> pentagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 5)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> polygon [
+RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> polygonWithPoints: points [
+RSShapeFactory class >> polygonWithPoints: points [
 	^ self polygon
 		privatePoints: points;
 		yourself
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> rectangle [
+RSShapeFactory class >> rectangle [
 	^ RSBox new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> rhomboid [
+RSShapeFactory class >> rhomboid [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1
 		with: 0.333 @ -1
@@ -121,12 +128,12 @@ RSShape class >> rhomboid [
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> square [
+RSShapeFactory class >> square [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 4)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> star [
+RSShapeFactory class >> star [
 	| star5Points outerPoints innerPoints innerRadius ar |
 	star5Points := Array new: 10.
 	outerPoints := RSPolygon generateUnitNgonPoints: 5 rotation: 0.
@@ -146,17 +153,17 @@ RSShape class >> star [
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> svgPath [
+RSShapeFactory class >> svgPath [
 	^ RSSVGPath new
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> triangle [
+RSShapeFactory class >> triangle [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]
 
 { #category : #'*Roassal3-Shapes' }
-RSShape class >> vee [
+RSShapeFactory class >> vee [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1
 		with: 0 @ -0.333

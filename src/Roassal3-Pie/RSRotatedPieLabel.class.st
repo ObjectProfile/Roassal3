@@ -8,7 +8,7 @@ Class {
 		'pieBuilder',
 		'animation'
 	],
-	#category : #'Roassal3-Pie-Core'
+	#category : #'Roassal3-Pie-Decorators'
 }
 
 { #category : #hooks }
