@@ -10,11 +10,6 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
-{ #category : #'instance creation' }
-RSAbstractBuilderDecorator class >> newOn: aBuilder [
-	^ self new builder: aBuilder; yourself
-]
-
 { #category : #accessing }
 RSAbstractBuilderDecorator >> builder [
 	^ builder
@@ -35,10 +30,4 @@ RSAbstractBuilderDecorator >> container: aContainer [
 { #category : #hooks }
 RSAbstractBuilderDecorator >> objects [
 	^ builder shapes
-]
-
-{ #category : #hooks }
-RSAbstractBuilderDecorator >> renderIn: aCanvas [
-	builder renderIn: aCanvas.
-	super renderIn: aCanvas
 ]

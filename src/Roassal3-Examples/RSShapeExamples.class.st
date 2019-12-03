@@ -898,11 +898,11 @@ RSShapeExamples >> example27MultilineLabelBasic [
 	<script: 'self new example27MultilineLabelBasic open'>
 	| canvas shapeBuilder |
 	canvas := RSCanvas new.
-	shapeBuilder := RSSimplePopupBuilder new.
+	shapeBuilder := RSMultilineLabelBuilder new.
 	shapeBuilder labelShape
 		font: 20;
 		italic.
-	canvas add:(shapeBuilder labelFor: '"tu est loin, 
+	canvas add:(shapeBuilder shapeFor: '"tu est loin, 
 très loin de tous ces regards vicieux 
 qui s''alimentent de ta lumière"').
 	canvas nodes when: RSMouseClick do: [ :evt | canvas nodes last inspect ].

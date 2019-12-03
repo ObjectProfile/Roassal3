@@ -51,6 +51,6 @@ RSUMLAbstractBuilder >> renderer: aRSUMLRenderer [
 ]
 
 { #category : #hooks }
-RSUMLAbstractBuilder >> shapeFor: anObject [
+RSUMLAbstractBuilder >> shapeFor: anObject index: index [
 	^ self renderer shapeFor: anObject
 ]

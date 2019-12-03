@@ -55,7 +55,6 @@ RSPie >> initialize [
 		cornerRadii: 0;
 		innerRadius: 0;
 		externalRadius: 120.
-		
 ]
 
 { #category : #accessing }
@@ -74,7 +73,6 @@ RSPie >> shapeFor: anObject [
 	slice := self sliceShape copy.
 	slice
 		model: anObject;
-		index: currentIndex;
 		color: (self sliceColor rsValue: slice);
 		alphaAngle: (self alphaAngleFor: slice);
 		betaAngle: (self betaAngleFor: slice);
@@ -83,11 +81,17 @@ RSPie >> shapeFor: anObject [
 ]
 
 { #category : #hooks }
-RSPie >> shapesFor: aCollection [
-	currentIndex := 0.
-	^ aCollection collect: [ :m | 
-		currentIndex := currentIndex + 1.
-		self shapeFor: m. ] as: RSGroup.
+RSPie >> shapeFor: anObject index: index [
+	| slice |
+	slice := self sliceShape copy.
+	slice
+		model: anObject;
+		index: index;
+		color: (self sliceColor rsValue: slice);
+		alphaAngle: (self alphaAngleFor: slice);
+		betaAngle: (self betaAngleFor: slice);
+		popup.
+	^ slice
 ]
 
 { #category : #public }

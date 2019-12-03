@@ -3,7 +3,7 @@ I have examples for RSPieBuilder load the package Roassal3-Pie
 "
 Class {
 	#name : #RSPieExamples,
-	#superclass : #RSObject,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Pie-Examples'
 }
 
@@ -472,7 +472,7 @@ RSPieExamples >> example15Clockwise [
 { #category : #examples }
 RSPieExamples >> example16MyDay [
 	<script: 'self new example16MyDay open'>
-	| pie data color title canvas pieLabel |
+	| pie data color canvas pieLabel pieTitle |
 	data := { 
 		{ 'sleep'. 'I dream with my gf 8hrs'. 8 }.
 		{ 'eat'. 'Sometimes I cook for 4hrs'. 3 }.
@@ -492,8 +492,8 @@ RSPieExamples >> example16MyDay [
 		segmentSpacing: 1.
 	pie sliceColor: color.
 		
-	pieLabel := RSPieLabelDecorator newOn: pie.
-	pieLabel label
+	pieLabel := RSPieLabelDecorator new.
+	pieLabel labelShape
 		fontSize: 16;
 		fontName: 'Source Code Pro'.
 	pieLabel
@@ -501,21 +501,16 @@ RSPieExamples >> example16MyDay [
 		labelText: [ :obj | (obj third * 100 / pie totalSum) rounded asString, '%' ];
 		rotated;
 		offset: 60.
-	pieLabel build.
+	pieTitle := RSPieTitleDecorator new.
+	pieTitle labelShape
+		fontSize: 30;
+		color: Color white.
+	pieTitle labelText: 'Milton''s', String cr, 'Day'.
+	pie addDecorator: pieLabel.
+	pie addDecorator: pieTitle.
+	pie build.
 	pie shapes @ (RSPopup text: [ :obj |
 		obj first capitalized, '. ', obj third asString, ' hrs' ] ).
-	title := [ :m |
-		RSLabel new
-			color: Color white;
-			fontSize: 30;
-			text: m asUppercase;
-			fontName: 'Source Code Pro';
-			yourself ].
-	canvas 
-		add: (title value: 'Milton''s');
-		add: (title value: 'Day').
-	canvas shapes last translateTo: 0@30.
-	
 	^ canvas
 ]
 
@@ -539,11 +534,12 @@ RSPieExamples >> example17PieLabels [
 		segmentSpacing: 0.4.
 	pie sliceColor: TSScale category20.
 		
-	pieLabel := RSPieLabelDecorator newOn: pie.
-	pieLabel label fontSize: 13.
+	pieLabel := RSPieLabelDecorator new.
+	pieLabel labelShape fontSize: 13.
 	pieLabel labelText: [ :obj |
 		obj key, (obj value * 100 / pie totalSum) rounded asString, ' %' ].
-	pieLabel build.
+	pie addDecorator: pieLabel.
+	pie build.
 	pie canvas when: RSExtentChangedEvent do: [ pie canvas zoomToFit ].
 	^ pie canvas.
 ]
@@ -551,7 +547,7 @@ RSPieExamples >> example17PieLabels [
 { #category : #examples }
 RSPieExamples >> example18ManyPies [
 	<script: 'self new example18ManyPies open setLabel: ''Prizepool in esports :V'''>
-	| data pie color canvas shapes pieLabel |
+	| data pie color canvas shapes pieLabel pieTitle |
 	data := self esportPrizepool.
 	color := TSScale google20.
 	pie := RSPie new.
@@ -562,26 +558,29 @@ RSPieExamples >> example18ManyPies [
 		segmentSpacing: 0.5.
 	pie sliceColor: [ :shape | color scale: shape index ].
 		
-	pieLabel := RSPieLabelDecorator newOn: pie.
+	pieLabel := RSPieLabelDecorator new.
 	pieLabel
 		labelText: #key;
 		rotated.
+	pieTitle := RSPieTitleDecorator new.
+	pieTitle labelShape
+		bold;
+		fontSize: 20.
+	pie addDecorator: pieLabel.
+	pie addDecorator: pieTitle.
+	
 	shapes := data keys collect: [ :key | 
 		| composite sum |
 		composite := RSComposite new.
 		pie
 			objects: (data at: key);
 			slice: #value.
-		pieLabel container: composite; build.
+		pieTitle labelText: key.
+		pie container: composite; build.
 		sum := pie totalSum.
 		pie shapes @ (RSPopup text: [ :obj |
 			obj value asStringWithCommas , '$, ' ,
 				(obj value * 100 / sum) rounded asString, '%'  ]).
-		composite add: (RSLabel new
-			fontSize: 20;
-			bold;
-			text: key;
-			yourself).
 		composite adjustToChildren.
 		composite  ] as: RSGroup.
 	shapes do: [ :e | e scaleBy: 0.5@1.
@@ -597,7 +596,7 @@ RSPieExamples >> example18ManyPies [
 
 { #category : #examples }
 RSPieExamples >> example19Buttons [
-	<script: 'self new example19Buttons'>
+	<script: 'self new example19Buttons open setLabel: ''Arc buttons'''>
 	| canvas shapes pie move |
 	canvas := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls | 
@@ -660,7 +659,7 @@ RSPieExamples >> example19Buttons [
 					easing: RSEasing backOut;
 					from: 50; to: 40;
 					on: shape shape set: #externalRadius:. ] ] .
-	canvas open setLabel: 'Arc buttons'
+	^ canvas
 	
 
 
@@ -823,9 +822,10 @@ RSPieExamples >> example22RotatedAnimation [
 		segmentSpacing: 0.5;
 		externalRadius: 220;
 		when: RSMouseClick do: [ [ animation toggle ] ].
-	pieLabel := RSPieLabelDecorator newOn: pie.
+	pieLabel := RSPieLabelDecorator new.
 	pieLabel labelText: #name.
-	pieLabel build.
+	pie addDecorator: pieLabel.
+	pie build.
 	pie shapes @ (RSPopup text: [:obj | obj linesOfCode asString, 'LOC']).
 	animation := canvas newAnimation
 		from: 0; to: 360; repeat; duration: 15 seconds;
@@ -876,9 +876,10 @@ RSPieExamples >> example23RotatedAnimation [
 		externalRadius: 220.
 	pie
 		sliceColor: TSScale category20b.
-	pieLabel := RSPieLabelDecorator newOn: pie.
+	pieLabel := RSPieLabelDecorator new.
 	pieLabel labelText: #basename.
-	pieLabel build.
+	pie addDecorator: pieLabel.
+	pie build.
 	pie shapes 
 		@ (RSPopup text: [ :obj|
 			obj basename, String cr,

@@ -5,8 +5,7 @@ Class {
 	#name : #RSSimplePopupBuilder,
 	#superclass : #RSObject,
 	#instVars : [
-		'textBlock',
-		'labelShape'
+		'labelBuilder'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
@@ -21,45 +20,25 @@ RSSimplePopupBuilder >> boxFor: lbl [
 		yourself
 ]
 
-{ #category : #hooks }
-RSSimplePopupBuilder >> compositeLabelFor: lines [ 
-	| shapes |
-	shapes := lines collect: [:line | 
-		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ].
-	RSVerticalLineLayout new 
-		alignLeft; 
-		gapSize: 0; 
-		on: shapes.
-	^ RSComposite new
-		shapes: shapes;
-		adjustToChildren;
-		yourself.
+{ #category : #initialization }
+RSSimplePopupBuilder >> initialize [
+	super initialize.
+	self labelBuilder: RSMultilineLabelBuilder new.
 ]
 
 { #category : #initialization }
-RSSimplePopupBuilder >> initialize [
-	self labelShape: RSLabel new; textBlock: #yourself.
+RSSimplePopupBuilder >> labelBuilder [
+	^ labelBuilder
+]
+
+{ #category : #initialization }
+RSSimplePopupBuilder >> labelBuilder: aLabelBuilder [
+	labelBuilder := aLabelBuilder
 ]
 
 { #category : #hooks }
 RSSimplePopupBuilder >> labelFor: anObject [
-	| text lines |
-	text := self textFor: anObject.
-	lines := text lines.
-	^ lines size = 1 
-		ifTrue: [ self singleLabelFor: text ]
-		ifFalse: [ self compositeLabelFor: lines ]
-	
-]
-
-{ #category : #accessing }
-RSSimplePopupBuilder >> labelShape [
-	^ labelShape
-]
-
-{ #category : #accessing }
-RSSimplePopupBuilder >> labelShape: aLabelShape [
-	labelShape := aLabelShape
+	^ labelBuilder shapeFor: anObject
 ]
 
 { #category : #hooks }
@@ -73,19 +52,6 @@ RSSimplePopupBuilder >> shapeFor: anObject [
 ]
 
 { #category : #hooks }
-RSSimplePopupBuilder >> singleLabelFor: text [
-	^ self labelShape copy
-		text: text;
-		yourself
-		
-]
-
-{ #category : #hooks }
 RSSimplePopupBuilder >> textBlock: aBlock [
-	textBlock := aBlock
-]
-
-{ #category : #hooks }
-RSSimplePopupBuilder >> textFor: anObject [
-	^ (textBlock rsValue: anObject) asString
+	labelBuilder textBlock: aBlock
 ]

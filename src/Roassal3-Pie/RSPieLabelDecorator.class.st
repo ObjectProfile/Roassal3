@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'rotated',
 		'offset',
-		'label',
 		'labelColor',
-		'labelText'
+		'labelText',
+		'labelShape'
 	],
 	#category : #'Roassal3-Pie-Decorators'
 }
@@ -17,7 +17,7 @@ Class {
 { #category : #initialization }
 RSPieLabelDecorator >> initialize [
 	super initialize.
-	self label: RSLabel new.
+	self labelShape: RSLabel new.
 	self labelColor: Color black.
 	offset := 0.
 	rotated := false.
@@ -26,16 +26,6 @@ RSPieLabelDecorator >> initialize [
 { #category : #testing }
 RSPieLabelDecorator >> isRotated [
 	^ rotated
-]
-
-{ #category : #accessing }
-RSPieLabelDecorator >> label [
-	^ label
-]
-
-{ #category : #accessing }
-RSPieLabelDecorator >> label: aLabel [
-	label := aLabel
 ]
 
 { #category : #accessing }
@@ -50,6 +40,16 @@ RSPieLabelDecorator >> labelColor: aColor [
 	"self labelColor: [:model | model modelColor ]"
 	"self labelColor: TSScale category20"
 	labelColor := aColor
+]
+
+{ #category : #accessing }
+RSPieLabelDecorator >> labelShape [
+	^ labelShape
+]
+
+{ #category : #accessing }
+RSPieLabelDecorator >> labelShape: aLabel [
+	labelShape := aLabel
 ]
 
 { #category : #accessing }
@@ -81,10 +81,10 @@ RSPieLabelDecorator >> rotated [
 ]
 
 { #category : #hooks }
-RSPieLabelDecorator >> shapeFor: aPieSliceShape [
+RSPieLabelDecorator >> shapeFor: aPieSliceShape index: index [
 	| res arc ang |
 	arc := aPieSliceShape.
-	res := label copy
+	res := labelShape copy
 		text: (self labelText rsValue: arc model);
 		color: (self labelColor rsValue: arc model);
 		position: (arc centroid: self offset) + arc position;
