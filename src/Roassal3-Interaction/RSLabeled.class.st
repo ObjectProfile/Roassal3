@@ -73,7 +73,7 @@ v open
 { #category : #initialization }
 RSLabeled >> initialize [ 
 	super initialize.
-	self shapeBuilder: [:model |RSShapeFactory label text: model ].
+	self shapeBuilder: RSMultilineLabelBuilder new.
 	self model: #model.
 	location := RSLocation new above.
 	isHighlightable := false.
@@ -140,6 +140,5 @@ RSLabeled >> target: aBlock [
 
 { #category : #'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
-	self shapeBuilder: [:model | RSShape label text: (aBlockOrSymbol rsValue: model)].
-
+	shapeBuilder textBlock: aBlockOrSymbol
 ]
