@@ -3,19 +3,25 @@ I am a abstract class to create visual elements based on tree structured in roas
 "
 Class {
 	#name : #RSAbstractTreeBuilder,
-	#superclass : #RSAbstractViewBuilder,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
-		'rootNodes'
+		'rootNodes',
+		'weight'
 	],
-	#category : #'Roassal3-Scripting-Builders'
+	#category : #'Roassal3-Builders'
 }
+
+{ #category : #'accessing - keys' }
+RSAbstractTreeBuilder >> childrenKey [
+	^ #children
+]
 
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
 	| children e leaves nodes|
 	
-	e := shape elementOn: atree.
-	self elements add: e.
+	e := self shapeFor: atree.
+	shapes add: e.
 	
 	children := block1 rsValue: atree.
 	e attributes at: #depth put: depth.
@@ -40,8 +46,8 @@ RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 de
 RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 	| children e |
 	
-	e := shape elementOn: atree.
-	self elements add: e.
+	e := self shapeFor: atree.
+	shapes add: e.
 	
 	children := ablock rsValue: atree.
 	e attributes at: #depth put: depth.
@@ -82,8 +88,13 @@ RSAbstractTreeBuilder >> from: objects using: ablock [
 { #category : #initialization }
 RSAbstractTreeBuilder >> initialize [
 	super initialize.
-	elements := OrderedCollection new.
-	rootNodes := OrderedCollection new.
+	shapes := RSGroup new.
+	rootNodes := RSGroup new.
+]
+
+{ #category : #weight }
+RSAbstractTreeBuilder >> leafWeight: block [
+	self weight: [ :shape | self weightLeafShape: shape block: block ].
 ]
 
 { #category : #default }
@@ -92,9 +103,8 @@ RSAbstractTreeBuilder >> minWeightValue [
 ]
 
 { #category : #hooks }
-RSAbstractTreeBuilder >> renderIn: aView [
-	aView addAll: self elements.
-	
+RSAbstractTreeBuilder >> renderIn: aCanvas [
+	aCanvas addAll: self shapes
 ]
 
 { #category : #accessing }
@@ -105,4 +115,46 @@ RSAbstractTreeBuilder >> rootNodes [
 { #category : #accessing }
 RSAbstractTreeBuilder >> rootNodes: anArray [
 	rootNodes := anArray
+]
+
+{ #category : #weight }
+RSAbstractTreeBuilder >> weight [
+	^ weight
+]
+
+{ #category : #weight }
+RSAbstractTreeBuilder >> weight: anObject [
+	weight := anObject
+]
+
+{ #category : #private }
+RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
+	| children weightValue |
+	children := shape attributeAt: self childrenKey.
+	weightValue := children
+		ifEmpty: [ aBlock rsValue: shape model ]
+		ifNotEmpty: [ 
+			children 
+				inject: 0 
+				into: [ :s :el | s + self weightLeafShape: shape block: aBlock ] ].
+	^ weightValue min: self minWeightValue.
+	
+]
+
+{ #category : #'accessing - keys' }
+RSAbstractTreeBuilder >> weightKey [
+	^ #weight
+]
+
+{ #category : #private }
+RSAbstractTreeBuilder >> weightLeafShape: shape block: aBlock [
+	^ shape
+		attributeAt: self weightKey
+		ifAbsentPut: [ 
+			self weightFromChildren: shape block: aBlock ]
+]
+
+{ #category : #weight }
+RSAbstractTreeBuilder >> weightOf: aShape [
+	^ self weight rsValue: aShape
 ]

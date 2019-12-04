@@ -2,44 +2,42 @@
 I can add a basic title in a pie
 "
 Class {
-	#name : #RSPieTitleDecorator,
-	#superclass : #RSAbstractContainerBuilder,
+	#name : #RSPieTitle,
+	#superclass : #RSInteraction,
 	#instVars : [
 		'labelBuilder',
 		'labelText'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : #'Roassal3-Pie-Interactions'
 }
 
-{ #category : #accessing }
-RSPieTitleDecorator >> builder: aBuilder [
-]
-
 { #category : #initialization }
-RSPieTitleDecorator >> initialize [
+RSPieTitle >> initialize [
 	super initialize.
 	labelBuilder := RSMultilineLabelBuilder new.
 	labelBuilder layout alignCenter.
 ]
 
 { #category : #accessing }
-RSPieTitleDecorator >> labelShape [
+RSPieTitle >> labelShape [
 	^ labelBuilder labelShape
 ]
 
 { #category : #accessing }
-RSPieTitleDecorator >> labelText [
+RSPieTitle >> labelText [
 	^ labelText
 ]
 
 { #category : #accessing }
-RSPieTitleDecorator >> labelText: aString [
+RSPieTitle >> labelText: aString [
 	labelText := aString
 ]
 
 { #category : #hooks }
-RSPieTitleDecorator >> renderIn: aCanvas [
+RSPieTitle >> onShape: aCanvas [
 	| label |
 	label := labelBuilder shapeFor: self labelText.
 	aCanvas add: label.
+	
+	
 ]

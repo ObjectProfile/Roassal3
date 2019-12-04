@@ -6,14 +6,21 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'container',
-		'shapes'
+		'shapes',
+		'decorators'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
+
+{ #category : #decoration }
+RSAbstractContainerBuilder >> addDecorator: aRSDecorator [
+	aRSDecorator builder: self.
+	self decorators add: aRSDecorator
+]
 
 { #category : #building }
 RSAbstractContainerBuilder >> build [
-	self renderIn: self container
+	self fullRenderIn: self container
 ]
 
 { #category : #accessing }
@@ -31,9 +38,32 @@ RSAbstractContainerBuilder >> container: aTContainer [
 	container := aTContainer
 ]
 
-{ #category : #private }
+{ #category : #decoration }
+RSAbstractContainerBuilder >> decorators [
+	^ decorators ifNil: [ decorators := OrderedCollection new ]
+]
+
+{ #category : #defaults }
 RSAbstractContainerBuilder >> defaultContainer [
 	^ RSCanvas new
+]
+
+{ #category : #rendering }
+RSAbstractContainerBuilder >> fullRenderIn: aContainer [
+	self
+		renderIn: aContainer;
+		renderDecoratorsIfNecessary: aContainer.
+]
+
+{ #category : #testing }
+RSAbstractContainerBuilder >> hasDecorators [
+	^ decorators notNil and: [ decorators isNotEmpty ]
+]
+
+{ #category : #rendering }
+RSAbstractContainerBuilder >> renderDecoratorsIfNecessary: aContainer [
+	self hasDecorators ifFalse: [ ^ self ].
+	decorators do: #render
 ]
 
 { #category : #hooks }

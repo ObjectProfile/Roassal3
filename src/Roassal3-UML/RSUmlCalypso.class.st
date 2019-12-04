@@ -38,7 +38,7 @@ RSUMLCalypso >> build [
 	builder canvas addInteraction: controls.
 	builder classes: self classes.
 	builder build.
-	
+	builder shapes do: #browseable.
 	builder canvas createMorph.
 	morph := builder canvas morph.
 	morph onAnnouncement: MorphDeleted 

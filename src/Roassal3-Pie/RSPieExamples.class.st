@@ -492,7 +492,7 @@ RSPieExamples >> example16MyDay [
 		segmentSpacing: 1.
 	pie sliceColor: color.
 		
-	pieLabel := RSPieLabelDecorator new.
+	pieLabel := RSPieLabeled new.
 	pieLabel labelShape
 		fontSize: 16;
 		fontName: 'Source Code Pro'.
@@ -501,16 +501,17 @@ RSPieExamples >> example16MyDay [
 		labelText: [ :obj | (obj third * 100 / pie totalSum) rounded asString, '%' ];
 		rotated;
 		offset: 60.
-	pieTitle := RSPieTitleDecorator new.
+	pieTitle := RSPieTitle new.
 	pieTitle labelShape
 		fontSize: 30;
 		color: Color white.
 	pieTitle labelText: 'Milton''s', String cr, 'Day'.
-	pie addDecorator: pieLabel.
-	pie addDecorator: pieTitle.
 	pie build.
+	
 	pie shapes @ (RSPopup text: [ :obj |
 		obj first capitalized, '. ', obj third asString, ' hrs' ] ).
+	pie shapes @ pieLabel.
+	pie canvas @ pieTitle.
 	^ canvas
 ]
 
@@ -534,13 +535,14 @@ RSPieExamples >> example17PieLabels [
 		segmentSpacing: 0.4.
 	pie sliceColor: TSScale category20.
 		
-	pieLabel := RSPieLabelDecorator new.
+	pieLabel := RSPieLabeled new.
 	pieLabel labelShape fontSize: 13.
 	pieLabel labelText: [ :obj |
 		obj key, (obj value * 100 / pie totalSum) rounded asString, ' %' ].
-	pie addDecorator: pieLabel.
+	
 	pie build.
 	pie canvas when: RSExtentChangedEvent do: [ pie canvas zoomToFit ].
+	pie shapes @ pieLabel.
 	^ pie canvas.
 ]
 
@@ -558,29 +560,30 @@ RSPieExamples >> example18ManyPies [
 		segmentSpacing: 0.5.
 	pie sliceColor: [ :shape | color scale: shape index ].
 		
-	pieLabel := RSPieLabelDecorator new.
+	pieLabel := RSPieLabeled new.
 	pieLabel
 		labelText: #key;
 		rotated.
-	pieTitle := RSPieTitleDecorator new.
+	pieTitle := RSPieTitle new.
 	pieTitle labelShape
 		bold;
 		fontSize: 20.
-	pie addDecorator: pieLabel.
-	pie addDecorator: pieTitle.
-	
 	shapes := data keys collect: [ :key | 
 		| composite sum |
 		composite := RSComposite new.
 		pie
 			objects: (data at: key);
 			slice: #value.
-		pieTitle labelText: key.
+		
 		pie container: composite; build.
 		sum := pie totalSum.
 		pie shapes @ (RSPopup text: [ :obj |
 			obj value asStringWithCommas , '$, ' ,
 				(obj value * 100 / sum) rounded asString, '%'  ]).
+		pie shapes @ pieLabel.
+		
+		pieTitle labelText: key.
+		composite @ pieTitle.
 		composite adjustToChildren.
 		composite  ] as: RSGroup.
 	shapes do: [ :e | e scaleBy: 0.5@1.
@@ -757,7 +760,7 @@ RSPieExamples >> example20AddingRemoving [
 { #category : #examples }
 RSPieExamples >> example21ProgressLabel [
 	<script: 'self new example21ProgressLabel open setLabel: ''Roassal3 packages by linesOfCode'''>
-	| data org pie updateLabel label scale canvas |
+	| data org pie scale |
 	org := RPackage organizer.
 	data := (org packageNames 
 		select: [ :s | 'Roassal3*' match: s  ]
@@ -766,7 +769,6 @@ RSPieExamples >> example21ProgressLabel [
 	pie := RSPie new
 		objects: data;
 		slice: #linesOfCode.
-	canvas := pie canvas.
 	scale := TSScale eva10.
 	pie sliceShape 
 		innerRadius: 50;
@@ -774,30 +776,9 @@ RSPieExamples >> example21ProgressLabel [
 		externalRadius: 100.
 	pie 
 		sliceColor: scale;
+		addDecorator: RSShowProgressLabelDecorator new;
 		build.
-	
-	label := RSLabel new
-		fontSize: 20;
-		text: '';
-		yourself.
-	updateLabel := [ :m |
-		label
-			color: (scale scale: m);
-			text: (m 
-				ifNil: [ '' ] 
-				ifNotNil: [(m linesOfCode*100/pie totalSum) rounded asString,'%' ] ) ].
-	canvas add: label.
 	pie shapes @ (RSPopup text: #name).
-	pie shapes do: [ :shape | | color |
-		color := shape color.
-		shape 
-			when: RSMouseEnter do: [ :evt | 
-				shape color: (color adjustBrightness: 0.08).
-				updateLabel value: shape model.
-				 ];
-			when: RSMouseLeave do: [ :evt | shape color: color.
-				updateLabel value: nil ]
-	].
 	pie canvas zoomToFit.
 	^ pie canvas
 ]
@@ -822,11 +803,11 @@ RSPieExamples >> example22RotatedAnimation [
 		segmentSpacing: 0.5;
 		externalRadius: 220;
 		when: RSMouseClick do: [ [ animation toggle ] ].
-	pieLabel := RSPieLabelDecorator new.
+	pieLabel := RSPieLabeled new.
 	pieLabel labelText: #name.
-	pie addDecorator: pieLabel.
 	pie build.
 	pie shapes @ (RSPopup text: [:obj | obj linesOfCode asString, 'LOC']).
+	pie shapes @ pieLabel.
 	animation := canvas newAnimation
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
@@ -836,7 +817,7 @@ RSPieExamples >> example22RotatedAnimation [
 				b := att at: #b ifAbsentPut: [ shape betaAngle ].
 				shape alphaAngle: a + t.
 				shape betaAngle: b + t.
-				l := pieLabel shapes at: shape index.
+				l := shape attributeAt: pieLabel labelKey.
 				ang := ((shape alphaAngle + shape betaAngle)/2) %360.
 				ext := l extent x/2 @ 0.
 				(ang between: 90 and: 270) ifFalse: [ ext := ext negated ].
@@ -876,17 +857,17 @@ RSPieExamples >> example23RotatedAnimation [
 		externalRadius: 220.
 	pie
 		sliceColor: TSScale category20b.
-	pieLabel := RSPieLabelDecorator new.
+	pieLabel := RSPieLabeled new.
 	pieLabel labelText: #basename.
-	pie addDecorator: pieLabel.
 	pie build.
 	pie shapes 
 		@ (RSPopup text: [ :obj|
 			obj basename, String cr,
 			(directorySize value: obj) humanReadableSIByteSize ]);
+		@ pieLabel;
 		when: RSMouseClick do: [ animation toggle ].
 	
-	lines := pieLabel shapes collect: [:s | RSPolyline new
+	lines := pie shapes collect: [:s | RSPolyline new
 		border: (RSBorder new dashArray: #(3));
 		yourself ].
 	canvas addAll: lines.
@@ -896,15 +877,15 @@ RSPieExamples >> example23RotatedAnimation [
 	animation := canvas newAnimation
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
-			pie shapes do: [ :shape | | att a b l ext ang x p1 p2 p3 line |
+			pie shapes do: [ :shape | | att a b label ext ang x p1 p2 p3 line |
 				att := shape attributes.
 				a := att at: #a ifAbsentPut: [ shape alphaAngle ].
 				b := att at: #b ifAbsentPut: [ shape betaAngle ].
 				shape alphaAngle: a + t.
 				shape betaAngle: b + t.
-				l := pieLabel shapes at: shape index.
+				label := shape attributeAt: pieLabel labelKey.
 				ang := ((shape alphaAngle + shape betaAngle)/2) %360.
-				ext := l extent x/2 @ 0.
+				ext := label extent x/2 @ 0.
 				x := -250.
 				(ang between: 90 and: 270) ifFalse: [ 
 					ext := ext negated.
@@ -915,7 +896,7 @@ RSPieExamples >> example23RotatedAnimation [
 				line := lines at: shape index.
 				line shape 
 					controlPoints: { p1. p2. p3 }.
-				l position: p3-ext.
+				label position: p3-ext.
 			]
 		].
 	canvas camera zoomToFit: 270 asPoint.

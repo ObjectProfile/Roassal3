@@ -1144,3 +1144,44 @@ RSShapeExamples >> example34MorphicPopup [
 		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
 	^ c
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example35RoassalPackages [
+	<script: 'self new example35RoassalPackages open'>
+	| packagesRegExp packages canvas color labeled boxes layout |
+	packagesRegExp := { 'Roassal3*' }.
+	    
+	packages := packagesRegExp flatCollect: [ :regExp | 
+	    RPackageOrganizer default packages 
+	        select: [ :p | regExp match: p packageName ] ].
+	    
+	canvas := RSCanvas new.
+	color := TSScale category20c.
+	labeled := RSLabeled new.
+	labeled shapeBuilder textBlock: #name.
+	boxes := packages collect: [ :pkg |
+	    RSBox new
+	        model: pkg;
+	        color: (color scale: pkg);
+	        @labeled;
+	        size: pkg linesOfCode sqrt;
+	        yourself  ].
+	canvas addAll: boxes.
+	canvas nodes @ (RSPopup text: #name).
+	RSEdgeBuilder arrowedLine
+	    withBorderAttachPoint;
+	    canvas: canvas;
+	    connectFrom: #yourself toAll: #dependentPackages.
+
+	layout := RSForceBasedLayout new
+	    nodes: boxes;
+	    length: 300;
+	    charge: -300;
+	    edges: canvas edges;
+	    start;
+	    yourself.
+	canvas nodes @ (RSDraggableForce new layout: layout).
+	canvas @ (RSForceLayoutStepping new layout: layout).
+	canvas @ RSCanvasController.
+	^ canvas
+]

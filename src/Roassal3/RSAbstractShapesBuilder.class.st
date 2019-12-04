@@ -6,27 +6,8 @@ My subclasses needs to implement #objects and: #shapesFor:
 Class {
 	#name : #RSAbstractShapesBuilder,
 	#superclass : #RSAbstractContainerBuilder,
-	#instVars : [
-		'decorators'
-	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Builders'
 }
-
-{ #category : #decoration }
-RSAbstractShapesBuilder >> addDecorator: aBuilderDecorator [
-	aBuilderDecorator builder: self.
-	self decorators add: aBuilderDecorator
-]
-
-{ #category : #decoration }
-RSAbstractShapesBuilder >> decorators [
-	^ decorators ifNil: [ decorators := OrderedCollection new ]
-]
-
-{ #category : #hooks }
-RSAbstractShapesBuilder >> hasDecorators [
-	^ decorators notNil and: [ decorators isNotEmpty ]
-]
 
 { #category : #hooks }
 RSAbstractShapesBuilder >> objects [
@@ -34,15 +15,8 @@ RSAbstractShapesBuilder >> objects [
 ]
 
 { #category : #hooks }
-RSAbstractShapesBuilder >> renderDecoratorsIfNecessary: aCanvas [
-	self hasDecorators ifFalse: [ ^ self ].
-	decorators do: [ :decorator | decorator renderIn: aCanvas ].
-]
-
-{ #category : #hooks }
 RSAbstractShapesBuilder >> renderIn: aCanvas [
 	aCanvas addAll: (shapes := self shapesFor: self objects).
-	self renderDecoratorsIfNecessary: aCanvas
 ]
 
 { #category : #hooks }

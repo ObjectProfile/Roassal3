@@ -2,8 +2,8 @@
 I can create labels for a pie builder and set the position acording to arc
 "
 Class {
-	#name : #RSPieLabelDecorator,
-	#superclass : #RSAbstractBuilderDecorator,
+	#name : #RSPieLabeled,
+	#superclass : #RSInteraction,
 	#instVars : [
 		'rotated',
 		'offset',
@@ -11,11 +11,11 @@ Class {
 		'labelText',
 		'labelShape'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : #'Roassal3-Pie-Interactions'
 }
 
 { #category : #initialization }
-RSPieLabelDecorator >> initialize [
+RSPieLabeled >> initialize [
 	super initialize.
 	self labelShape: RSLabel new.
 	self labelColor: Color black.
@@ -24,17 +24,17 @@ RSPieLabelDecorator >> initialize [
 ]
 
 { #category : #testing }
-RSPieLabelDecorator >> isRotated [
+RSPieLabeled >> isRotated [
 	^ rotated
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> labelColor [
+RSPieLabeled >> labelColor [
 	^ labelColor
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> labelColor: aColor [
+RSPieLabeled >> labelColor: aColor [
 	"can be a color, a block or color scale"
 	"self labelColor: Color white"
 	"self labelColor: [:model | model modelColor ]"
@@ -42,23 +42,28 @@ RSPieLabelDecorator >> labelColor: aColor [
 	labelColor := aColor
 ]
 
+{ #category : #'accessing - keys' }
+RSPieLabeled >> labelKey [
+	^ #RSPieLabeled
+]
+
 { #category : #accessing }
-RSPieLabelDecorator >> labelShape [
+RSPieLabeled >> labelShape [
 	^ labelShape
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> labelShape: aLabel [
+RSPieLabeled >> labelShape: aLabel [
 	labelShape := aLabel
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> labelText [
+RSPieLabeled >> labelText [
 	^ labelText
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> labelText: anObject [
+RSPieLabeled >> labelText: anObject [
 	"can be an object or block"
 	"self labelText: 'Hi'"
 	"self labelText: [:model | 'The model: ', model asString]"
@@ -66,22 +71,31 @@ RSPieLabelDecorator >> labelText: anObject [
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> offset [
+RSPieLabeled >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-RSPieLabelDecorator >> offset: aNumber [
+RSPieLabeled >> offset: aNumber [
 	offset := aNumber
 ]
 
+{ #category : #hooks }
+RSPieLabeled >> onShape: aShape [
+	| label parent |
+	label := self shapeFor: aShape.
+	aShape attributeAt: self labelKey put: label.
+	parent := aShape parent.
+	parent add: label.
+]
+
 { #category : #accessing }
-RSPieLabelDecorator >> rotated [
+RSPieLabeled >> rotated [
 	rotated := true.
 ]
 
 { #category : #hooks }
-RSPieLabelDecorator >> shapeFor: aPieSliceShape index: index [
+RSPieLabeled >> shapeFor: aPieSliceShape [
 	| res arc ang |
 	arc := aPieSliceShape.
 	res := labelShape copy

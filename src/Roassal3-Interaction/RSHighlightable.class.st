@@ -163,7 +163,7 @@ RSHighlightable >> onShape: aShape [
 { #category : #private }
 RSHighlightable >> record: aShape color: aColor [
 	self record: aShape key: #color value: aShape color.
-	aShape color: aColor
+	aShape color: (aColor rsValue: aShape)
 ]
 
 { #category : #private }
