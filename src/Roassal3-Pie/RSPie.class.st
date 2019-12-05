@@ -25,7 +25,6 @@ Class {
 		'values',
 		'sumValues',
 		'totalSum',
-		'currentIndex',
 		'sliceShape',
 		'sliceColor'
 	],

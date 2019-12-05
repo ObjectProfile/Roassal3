@@ -13,7 +13,8 @@ Class {
 	#instVars : [
 		'hasCenter',
 		'radialSpacing',
-		'builder'
+		'builder',
+		'firstNode'
 	],
 	#category : #'Roassal3-Sunburst'
 }
@@ -29,22 +30,21 @@ RSAbstractSunburstLayout >> builder: aSunburstBuilder [
 ]
 
 { #category : #hook }
-RSAbstractSunburstLayout >> doExecute: elements [
+RSAbstractSunburstLayout >> doExecute: shapes [
 	| virtual |
-	
-	elements isEmpty ifTrue: [ ^  self ].
-	elements size = 1 ifTrue: [ 
-		^ self layoutSunburst: elements first ].
-	virtual := RSElement new
-		shape: RSPieSlice new;
-		yourself.
+	shapes isEmpty ifTrue: [ ^  self ].
+	firstNode := true.
+	shapes size = 1 ifTrue: [ 
+		^ self layoutSunburst: shapes first ].
+	virtual := RSPieSlice new.
 		
-	virtual attributes at: builder childrenKey put: elements.
-	elements do: [ :e | e attributes at: #parent put: virtual ].
-	virtual attributes at: #parent put: nil.
-	virtual attributes at: #depth put: 0.
+	virtual attributeAt: builder childrenKey put: shapes.
+	shapes do: [ :shape | 
+		shape attributeAt: #parent put: virtual ].
+	virtual attributeAt: #parent put: nil.
+	virtual attributeAt: #depth put: 0.
 	self layoutSunburst: virtual.
-	elements do: [ :e | e attributes at: #parent put: nil ].
+	shapes do: [ :shape | shape attributes at: #parent put: nil ].
 ]
 
 { #category : #accessing }
@@ -65,9 +65,11 @@ RSAbstractSunburstLayout >> initialize [
 		radialSpacing: 5.
 ]
 
-{ #category : #'initialize-release' }
-RSAbstractSunburstLayout >> layoutSunburst: el [
-	self subclassResponsibility
+{ #category : #hook }
+RSAbstractSunburstLayout >> layoutSunburst: shape [
+	self 
+		setRadius: shape;
+		setChildrenAngles: shape.
 ]
 
 { #category : #accessing }
@@ -78,4 +80,43 @@ RSAbstractSunburstLayout >> radialSpacing [
 { #category : #accessing }
 RSAbstractSunburstLayout >> radialSpacing: aNumber [
 	radialSpacing := aNumber
+]
+
+{ #category : #hook }
+RSAbstractSunburstLayout >> setCenterRadius: shape [
+	self subclassResponsibility
+]
+
+{ #category : #hook }
+RSAbstractSunburstLayout >> setChildrenAngles: shape [
+	| children parentAngle angleOffset parentWeight |
+	children := shape attributeAt: #children.
+	parentAngle := shape alphaAngle.
+	parentWeight := builder weightOf: shape.
+	angleOffset := (shape betaAngle - shape alphaAngle) / parentWeight.
+	children doWithIndex: [ :child :index |
+		| a b |
+		a := parentAngle.
+		b := angleOffset * (builder weightOf: child) + a.
+		child
+			alphaAngle: a;
+			betaAngle: b.
+		self layoutSunburst: child.
+		parentAngle := b. ].
+]
+
+{ #category : #hook }
+RSAbstractSunburstLayout >> setNormalRadius: shape [
+	self subclassResponsibility
+]
+
+{ #category : #hook }
+RSAbstractSunburstLayout >> setRadius: shape [
+	firstNode
+		ifTrue: [ 
+			self hasCenter 
+				ifTrue: [ self setCenterRadius: shape ].
+			shape betaAngle: 360. ]
+		ifFalse: [ self setNormalRadius: shape ].
+	firstNode := false.
 ]

@@ -9,10 +9,18 @@ Class {
 	#superclass : #RSAbstractTreeBuilder,
 	#instVars : [
 		'maxLevel',
-		'strategy'
+		'strategy',
+		'sliceShape',
+		'color'
 	],
 	#category : #'Roassal3-Sunburst'
 }
+
+{ #category : #'public - shape' }
+RSSunburstBuilder >> color: aBlock [
+	"an object"
+	color := aBlock
+]
 
 { #category : #strategry }
 RSSunburstBuilder >> constantWidthStrategy [
@@ -44,14 +52,11 @@ RSSunburstBuilder >> from: objects using: ablock [
 
 { #category : #initialization }
 RSSunburstBuilder >> initialize [
-	super initialize.
-	"self constantWidthStrategy arcWidth: 25."
+	super initialize. 
 	self extentStrategy extent: 500@500.
 	self leafWeight: 1.
-	self shape: (RSShapeBuilder arc 
-		color: [ Color random ];
-		popup;
-		yourself).
+	self color: TSScale category20c.
+	sliceShape := RSPieSlice new.
 	maxLevel := 0.
 ]
 
@@ -61,10 +66,26 @@ RSSunburstBuilder >> maxLevel [
 ]
 
 { #category : #hooks }
-RSSunburstBuilder >> renderIn: aView [
-	super renderIn: aView.
+RSSunburstBuilder >> renderIn: aCanvas [
+	super renderIn: aCanvas.
 	self strategy on: self rootNodes
+]
 
+{ #category : #hooks }
+RSSunburstBuilder >> shapeFor: anObject [
+	| slice |
+	slice := self sliceShape copy
+		model: anObject;
+		popup;
+		draggable;
+		yourself.
+	slice color: (color rsValue: slice).
+	^ slice 
+]
+
+{ #category : #accessing }
+RSSunburstBuilder >> sliceShape [
+	^ sliceShape
 ]
 
 { #category : #accessing }

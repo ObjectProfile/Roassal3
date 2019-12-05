@@ -136,8 +136,8 @@ RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 		ifNotEmpty: [ 
 			children 
 				inject: 0 
-				into: [ :s :el | s + self weightLeafShape: shape block: aBlock ] ].
-	^ weightValue min: self minWeightValue.
+				into: [ :s :child | s + (self weightLeafShape: child block: aBlock) ] ].
+	^ weightValue max: self minWeightValue.
 	
 ]
 
