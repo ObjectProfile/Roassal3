@@ -23,6 +23,7 @@ RSSunburstExamples >> example02MultipleRoots [
 	<script: 'self new example02MultipleRoots open'>
 	| sb |
 	sb := RSSunburstBuilder new.
+	sb strategy hasCenter: false.
 	sb sliceShape 
 		withBorder;
 		segmentSpacing: 1.
@@ -38,8 +39,45 @@ RSSunburstExamples >> example03ConstantStrategy [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb constantWidthStrategy arcWidth: 25.
-	sb explore: String using:  #subclasses.
+	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
+	^ sb canvas
+]
+
+{ #category : #examples }
+RSSunburstExamples >> example04Edges [
+	<script: 'self new example04Edges open'>
+	| sb |
+	sb := RSSunburstBuilder new.
+	sb explore: Collection using:  #subclasses.
+	sb build.
+	sb canvas @ RSCanvasController.
+	RSEdgeBuilder arrowedLine
+		attachPoint: RSSunburstAttachPoint new;
+		canvas: sb canvas;
+		connectFrom: #superclass.
+	^ sb canvas
+]
+
+{ #category : #examples }
+RSSunburstExamples >> example05BezierEdges [
+	<script: 'self new example05BezierEdges open'>
+	| sb |
+	sb := RSSunburstBuilder new.
+	sb sliceShape
+		withBorder.
+	sb explore: Collection using:  #subclasses.
+	sb build.
+	sb canvas @ RSCanvasController.
+	RSEdgeBuilder sunburstBezier
+		width: 2;
+		markerEnd: (RSEllipse new 
+			size: 10;
+			color: Color white;
+			withBorder;
+			yourself);
+		canvas: sb canvas;
+		connectFrom: #superclass.
 	^ sb canvas
 ]

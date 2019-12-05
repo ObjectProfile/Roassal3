@@ -37,14 +37,12 @@ RSAbstractSunburstLayout >> doExecute: shapes [
 	shapes size = 1 ifTrue: [ 
 		^ self layoutSunburst: shapes first ].
 	virtual := RSPieSlice new.
-		
-	virtual attributeAt: builder childrenKey put: shapes.
-	shapes do: [ :shape | 
-		shape attributeAt: #parent put: virtual ].
-	virtual attributeAt: #parent put: nil.
-	virtual attributeAt: #depth put: 0.
+	virtual children: shapes.
+	shapes do: [ :shape | shape sparent: virtual ].
+	virtual sparent: nil.
+	virtual depth: 0.
 	self layoutSunburst: virtual.
-	shapes do: [ :shape | shape attributes at: #parent put: nil ].
+	shapes do: [ :shape | shape sparent: nil ].
 ]
 
 { #category : #accessing }
@@ -90,7 +88,7 @@ RSAbstractSunburstLayout >> setCenterRadius: shape [
 { #category : #hook }
 RSAbstractSunburstLayout >> setChildrenAngles: shape [
 	| children parentAngle angleOffset parentWeight |
-	children := shape attributeAt: #children.
+	children := shape children.
 	parentAngle := shape alphaAngle.
 	parentWeight := builder weightOf: shape.
 	angleOffset := (shape betaAngle - shape alphaAngle) / parentWeight.

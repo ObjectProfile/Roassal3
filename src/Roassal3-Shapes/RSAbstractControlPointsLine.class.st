@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'controlPoints',
 		'markers',
-		'controlPointsBlock'
+		'controlPointsController'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -29,13 +29,13 @@ RSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
 ]
 
 { #category : #accessing }
-RSAbstractControlPointsLine >> controlPointsBlock [
-	^ controlPointsBlock
+RSAbstractControlPointsLine >> controlPointsController [
+	^ controlPointsController
 ]
 
 { #category : #accessing }
-RSAbstractControlPointsLine >> controlPointsBlock: aBlockOrValue [
-	controlPointsBlock := aBlockOrValue
+RSAbstractControlPointsLine >> controlPointsController: aCPController [
+	controlPointsController := aCPController
 ]
 
 { #category : #accessing }
@@ -79,17 +79,21 @@ RSAbstractControlPointsLine >> startPoint: aPoint [
 
 { #category : #update }
 RSAbstractControlPointsLine >> update [
-	| cp |
-	controlPointsBlock ifNil: [ ^ self ].
-	cp := controlPointsBlock isCollection ifTrue: [  
-		controlPointsBlock collect: [ :anObject | | v |
+	"| cp |
+	controlPointsController ifNil: [ ^ self ].
+	cp := controlPointsController isCollection ifTrue: [  
+		controlPointsController collect: [ :anObject | | v |
 			v := anObject value.
 			v isShape ifTrue: [ v := v position ].
 			v ].
 	] ifFalse: [ 
-		controlPointsBlock 
+		controlPointsController 
 			value: (attachPoint startingPointOf: self)
 			value: (attachPoint endingPointOf: self)
 	].
-	self controlPoints: cp; notifyExtentChanged.
+	self controlPoints: cp; "
+	controlPointsController ifNil: [ ^ self ].
+	self
+		controlPoints: (controlPointsController controlPointsFor: self);
+		notifyExtentChanged.
 ]

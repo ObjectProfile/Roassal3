@@ -62,9 +62,12 @@ RSPieSlice >> buildPathOn: visitor [
 { #category : #accessing }
 RSPieSlice >> centroid: off [
 	| r a |
-	r := (innerRadius + externalRadius)/2 + off.
+	r := innerRadius isZero
+		ifTrue: [ 0 ]
+		ifFalse: [ (innerRadius + externalRadius)/2 ].
+	r := r + off.
 	a := self middleAngle degreesToRadians.
-	^ (a cos @ (a sin negated) * r).
+	^ (a cos @ (a sin negated) * r)  + self position.
 ]
 
 { #category : #accessing }

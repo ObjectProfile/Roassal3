@@ -41,7 +41,7 @@ RSAttributableObject >> announcer: anAnnouncer [
 
 { #category : #attributes }
 RSAttributableObject >> attributeAt: aKey [
-	^ self attributes at: aKey
+	^ self attributes at: aKey ifAbsent: nil
 ]
 
 { #category : #attributes }

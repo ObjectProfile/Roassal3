@@ -87,7 +87,7 @@ RSLayout >> executeOnElements: elements [
 
 { #category : #utils }
 RSLayout >> fatherOf: aNode [
-	^ aNode attributes at: #father ifAbsent: [ nil ]
+	^ aNode attributeAt: #father
 ]
 
 { #category : #utils }
@@ -118,7 +118,7 @@ RSLayout >> layerOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> leftContourOf: aNode [
-	^ aNode attributes at: #leftContour ifAbsent: [ ^ nil ]
+	^ aNode attributeAt: #leftContour
 ]
 
 { #category : #utils }
@@ -128,7 +128,7 @@ RSLayout >> leftContourOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> modOf: aNode [
-	^ aNode attributes at: #mod ifAbsent: [ ^ 0 ]
+	^ aNode attributeAt: #mod ifAbsent: [ 0 ]
 
 ]
 
@@ -150,8 +150,7 @@ RSLayout >> on: elements edges: edges [
 
 { #category : #utils }
 RSLayout >> pointerOf: aNode [
-
-	^ aNode attributes at: #pointer ifAbsent: [ ^ nil ]
+	^ aNode attributeAt: #pointer
 ]
 
 { #category : #utils }
@@ -162,7 +161,7 @@ RSLayout >> pointerOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> rOf: aNode [ 
-	^ aNode attributes at: #r ifAbsent: [ 0 ]
+	^ aNode attributeAt: #r ifAbsent: [ 0 ]
 	
 ]
 
@@ -173,7 +172,7 @@ RSLayout >> rOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> rightContourOf: aNode [
-	^ aNode attributes at: #rightContour ifAbsent: [ ^ nil ]
+	^ aNode attributeAt: #rightContour
 ]
 
 { #category : #utils }
@@ -212,7 +211,7 @@ RSLayout >> userDefinedEdges: edges [
 
 { #category : #utils }
 RSLayout >> xOf: aNode [ 
-	^ aNode attributes at: #x ifAbsent: [ 0 ]
+	^ aNode attributeAt: #x ifAbsent: [ 0 ]
 ]
 
 { #category : #utils }

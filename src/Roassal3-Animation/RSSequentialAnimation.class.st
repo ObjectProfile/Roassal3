@@ -34,7 +34,7 @@ RSSequentialAnimation >> continue [
 
 { #category : #refresing }
 RSSequentialAnimation >> current [
-	^ animations at: currentIndex ifAbsent: [ ^ nil ].
+	^ animations at: currentIndex ifAbsent: [ nil ].
 ]
 
 { #category : #actions }

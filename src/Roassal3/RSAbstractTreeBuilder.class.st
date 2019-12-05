@@ -11,11 +11,6 @@ Class {
 	#category : #'Roassal3-Builders'
 }
 
-{ #category : #'accessing - keys' }
-RSAbstractTreeBuilder >> childrenKey [
-	^ #children
-]
-
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
 	| children e leaves nodes|
@@ -44,19 +39,19 @@ RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 de
 
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
-	| children e |
+	| children shape |
 	
-	e := self shapeFor: atree.
-	shapes add: e.
+	shape := self shapeFor: atree.
+	shapes add: shape.
 	
 	children := ablock rsValue: atree.
-	e attributes at: #depth put: depth.
+	shape depth: depth.
 	children := children collect: [ :child | | e2 |
 		e2 := self createElements: child using: ablock depth: depth + 1.
-		e2 attributes at: #parent put: e.
+		e2 sparent: shape.
 		e2 ] as: Array.
-	e attributes at: self childrenKey put: children.
-	^ e.
+	shape children: children.
+	^ shape.
 ]
 
 { #category : #'public - building' }
@@ -117,6 +112,11 @@ RSAbstractTreeBuilder >> rootNodes: anArray [
 	rootNodes := anArray
 ]
 
+{ #category : #hooks }
+RSAbstractTreeBuilder >> shapeFor: anObject [
+	^ self subclassResponsibility
+]
+
 { #category : #weight }
 RSAbstractTreeBuilder >> weight [
 	^ weight
@@ -130,7 +130,7 @@ RSAbstractTreeBuilder >> weight: anObject [
 { #category : #private }
 RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 	| children weightValue |
-	children := shape attributeAt: self childrenKey.
+	children := shape children.
 	weightValue := children
 		ifEmpty: [ aBlock rsValue: shape model ]
 		ifNotEmpty: [ 

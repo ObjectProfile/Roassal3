@@ -80,6 +80,17 @@ RSShape >> canvas [
 		ifFalse: [ parent ]
 ]
 
+{ #category : #'accessing - attributes' }
+RSShape >> children [
+	^ self attributeAt: #children
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> children: anObject [
+	"children is used by tree builders usefull to relationate hierarchy visualizations"
+	self attributeAt: #children put: anObject
+]
+
 { #category : #accessing }
 RSShape >> color [
 	^ paint 
@@ -95,6 +106,17 @@ RSShape >> color: aColor [
 { #category : #accessing }
 RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> depth [
+	^ self attributeAt: #depth
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> depth: anObject [
+	"depth is used by tree builders usefull to relationate hierarchy visualizations"
+	self attributeAt: #depth put: anObject
 ]
 
 { #category : #accessing }
@@ -140,13 +162,14 @@ RSShape >> includesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - attributes' }
 RSShape >> index [
-	^ self attributeAt: #index ifAbsent: [ nil ].
+	^ self attributeAt: #index
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - attributes' }
 RSShape >> index: anObject [
+	"the current index of this object in an object collection"
 	self attributeAt: #index put: anObject
 ]
 
@@ -193,13 +216,14 @@ RSShape >> loadShape: aShape [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - attributes' }
 RSShape >> model [
-	^ self attributeAt: #model ifAbsent: [ nil ].
+	^ self attributeAt: #model
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - attributes' }
 RSShape >> model: anObject [
+	"model is used to create popups and other interactions"
 	self attributeAt: #model put: anObject
 ]
 
@@ -345,6 +369,17 @@ RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> sparent [
+	^ self attributeAt: #sparent
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> sparent: anObject [
+	"children is used by tree builders usefull to relationate hierarchy visualizations"
+	self attributeAt: #sparent put: anObject
 ]
 
 { #category : #accessing }

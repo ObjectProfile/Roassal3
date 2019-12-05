@@ -57,8 +57,9 @@ RSAbstractCompactTree class >> verticalGap: anInt [
 
 { #category : #private }
 RSAbstractCompactTree >> childrenFor: aNode [ 
-	sonsDictionary isEmpty ifTrue: [ ^ super childrenFor: aNode ] 
-							ifFalse: [ ^sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
+	^ sonsDictionary isEmpty 
+		ifTrue: [ super childrenFor: aNode ] 
+		ifFalse: [ sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
 ]
 
 { #category : #algorithm }

@@ -62,8 +62,6 @@ Class {
 		'shouldMoveBehind',
 		'createdEdges',
 		'beDirectional',
-		'attachPoint',
-		'controlPoints',
 		'fromShapes',
 		'toShapes',
 		'canvas',
@@ -85,6 +83,11 @@ RSEdgeBuilder class >> arrowedLine [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> bezier [
+	^ self new: RSBezier new
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> bimetricLine [
 	^ RSBimetricEdgeBuilder new: RSBimetricLine new
 ]
@@ -96,14 +99,8 @@ RSEdgeBuilder class >> horizontalBezier [
 
 { #category : #'instance creation' }
 RSEdgeBuilder class >> horizontalLine: aShape [
-	^ (self new: aShape) controlPoints: [:from :to | 
-		| mid |
-		mid := (from + to)/2.
-		Array 
-			with: from
-			with: mid x @ from y
-			with: mid x @ to y
-			with: to ];
+	^ (self new: aShape)
+		controlPointsController: RSHorizontalCPAPController new;
 		yourself.
 	
 ]
@@ -137,20 +134,19 @@ RSEdgeBuilder class >> orthoVertical [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> polyline [
+	^ self new: RSPolyline new
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> verticalBezier [
 	^ self verticalLine: RSBezier new
 ]
 
 { #category : #'instance creation' }
 RSEdgeBuilder class >> verticalLine: aShape [
-	^ (self new: aShape) controlPoints: [ :from :to | 
-		| mid |
-		mid := (from + to)/2.
-		Array
-			with: from
-			with: from x @ mid y
-			with: to x @ mid y
-			with: to ];
+	^ (self new: aShape)
+		controlPointsController: RSVerticalCPAPController new;
 		yourself.
 	
 ]
@@ -167,12 +163,12 @@ RSEdgeBuilder >> allowRepetition [
 
 { #category : #'public - attach point' }
 RSEdgeBuilder >> attachPoint [
-	^ attachPoint
+	^ self shape attachPoint
 ]
 
 { #category : #'public - attach point' }
 RSEdgeBuilder >> attachPoint: anAttachPoint [
-	attachPoint := anAttachPoint
+	self shape attachPoint: anAttachPoint
 ]
 
 { #category : #'public - configuration' }
@@ -324,14 +320,14 @@ RSEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #accessing }
-RSEdgeBuilder >> controlPoints [
-	^ controlPoints
+{ #category : #'public - shape' }
+RSEdgeBuilder >> controlPointsController [
+	^ shape controlPointsController
 ]
 
-{ #category : #accessing }
-RSEdgeBuilder >> controlPoints: aBlock [
-	controlPoints := aBlock
+{ #category : #'public - shape' }
+RSEdgeBuilder >> controlPointsController: aCPController [
+	shape controlPointsController: aCPController
 ]
 
 { #category : #'public - shape' }
@@ -357,12 +353,10 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 	| edge |
 	edge := self shape copy
 		model: source model -> target model;
-		attachPoint: self attachPoint;
 		from: source;
 		to: target;
 		yourself.
 	canvas ifNotNil: [ canvas add: edge ].
-	controlPoints ifNotNil: [ edge controlPointsBlock: controlPoints ].
 	^ edge
 ]
 
@@ -403,7 +397,6 @@ RSEdgeBuilder >> initialize [
 	canvasHasBeenManuallySet := false.
 	"We could have edges from A to B, and from B to A"
 	self beDirectional.
-	self attachPoint: RSCenteredAttachPoint new.
 ]
 
 { #category : #testing }
@@ -494,7 +487,8 @@ RSEdgeBuilder >> shape [
 
 { #category : #'public - shape' }
 RSEdgeBuilder >> shape: aTSShape [
-	shape := aTSShape
+	shape := aTSShape.
+	self attachPoint: RSCenteredAttachPoint new.
 ]
 
 { #category : #accessing }

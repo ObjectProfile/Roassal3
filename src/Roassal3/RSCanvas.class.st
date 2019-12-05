@@ -428,7 +428,7 @@ RSCanvas >> transform: aPoint [
 
 { #category : #accessing }
 RSCanvas >> view [
-	^ self attributes at:#view ifAbsent: [ nil ]
+	^ self attributes at:#view
 ]
 
 { #category : #accessing }
