@@ -113,23 +113,15 @@ c @ RSControlsCanvas
 Class {
 	#name : #RSComposite,
 	#superclass : #RSBoundingShape,
+	#traits : 'TContainer',
+	#classTraits : 'TContainer classTrait',
 	#instVars : [
-		'shapes'
+		'shapes',
+		'nodes',
+		'edges'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
-
-{ #category : #adding }
-RSComposite >> add: aShape [
-	"Add a shape in a composite shape"
-	aShape addedIn: self
-]
-
-{ #category : #adding }
-RSComposite >> addAll: aCollection [
-	shapes ifNil: [ shapes := RSGroup new: aCollection size ].
-	aCollection do: [ :s| self add: s shape ].
-]
 
 { #category : #adding }
 RSComposite >> addBasicShape: aShape [
@@ -194,6 +186,26 @@ RSComposite >> padding: anObject [
 	(center := rect rsCenter) = (0@0) ifTrue: [ ^ self ].
 	center := center negated.
 	temp do: [ :s | s translateBy: center ].
+]
+
+{ #category : #private }
+RSComposite >> privateEdges [
+	^ edges
+]
+
+{ #category : #private }
+RSComposite >> privateEdges: aTSGroup [
+	edges := aTSGroup
+]
+
+{ #category : #private }
+RSComposite >> privateNodes [
+	^ nodes
+]
+
+{ #category : #private }
+RSComposite >> privateNodes: aTSGroup [
+	nodes := aTSGroup
 ]
 
 { #category : #actions }

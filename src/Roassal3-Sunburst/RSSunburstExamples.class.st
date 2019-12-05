@@ -67,6 +67,9 @@ RSSunburstExamples >> example05BezierEdges [
 	sb := RSSunburstBuilder new.
 	sb sliceShape
 		withBorder.
+	sb color: [:shape | shape model subclasses 
+		ifEmpty: [ Color purple ]
+		ifNotEmpty: [ Color lightGray ] ].
 	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
@@ -80,4 +83,35 @@ RSSunburstExamples >> example05BezierEdges [
 		canvas: sb canvas;
 		connectFrom: #superclass.
 	^ sb canvas
+]
+
+{ #category : #examples }
+RSSunburstExamples >> example06Rotation [
+	<script: 'self new example06Rotation open'>
+	| sb composite canvas controller |
+	composite := RSComposite new.
+	sb := RSSunburstBuilder new.
+	sb container: composite.
+	sb sliceShape
+		withBorder.
+	sb explore: Collection using:  #subclasses.
+	sb build.
+	composite adjustToChildren.
+	RSEdgeBuilder sunburstBezier
+		width: 2;
+		markerEnd: (RSEllipse new 
+			size: 10;
+			color: Color white;
+			withBorder;
+			yourself);
+		canvas: composite;
+		connectFrom: #superclass.
+	composite adjustToChildren.
+	canvas := RSCanvas new.
+	controller := RSCanvasController new.
+	(controller interactions at: RSDraggableCanvas) right.
+	canvas @ controller.
+	canvas add: composite.
+	composite @ RSRotated. 
+	^ canvas
 ]

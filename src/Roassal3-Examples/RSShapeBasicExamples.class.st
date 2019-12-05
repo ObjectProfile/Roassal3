@@ -705,3 +705,17 @@ RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #'box and ellipses' }
+RSShapeBasicExamples >> example32RotateShapeByMouse [
+	<script: 'self new example32RotateShapeByMouse open'>
+	| c s |
+	c := RSCanvas new.
+	s := RSLabel new
+		text: 'Dehaka';
+		draggable;
+		yourself.
+	c add: s.
+	s @ RSRotated.
+	^ c
+]
