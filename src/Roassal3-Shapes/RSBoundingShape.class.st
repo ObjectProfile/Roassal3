@@ -187,6 +187,14 @@ RSBoundingShape >> postCopy [
 	self matrix: self matrix copy
 ]
 
+{ #category : #actions }
+RSBoundingShape >> remove [
+	parent ifNil: [ ^ self ].
+	parent removeNode: self.
+	self removeConnectedEdges.
+	super remove
+]
+
 { #category : #edges }
 RSBoundingShape >> removeConnectedEdge: anEdge [
 	[  anEdge isEdge ] assert.

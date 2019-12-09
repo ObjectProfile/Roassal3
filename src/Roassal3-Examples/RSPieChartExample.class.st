@@ -11,7 +11,7 @@ Class {
 		'packages',
 		'totalSum'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Examples-Spec'
 }
 
 { #category : #specs }

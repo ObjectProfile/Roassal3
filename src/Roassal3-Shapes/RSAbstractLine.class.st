@@ -155,6 +155,23 @@ RSAbstractLine >> privateMarkers [
 ]
 
 { #category : #adding }
+RSAbstractLine >> remove [
+	parent ifNil: [ ^ self ].
+	parent removeEdge: self.
+	self 
+		removeFromParent: to;
+		removeFromParent: from.
+	super remove
+]
+
+{ #category : #private }
+RSAbstractLine >> removeFromParent: aShape [
+	aShape ifNil: [ ^ self ].
+	aShape connectedEdges remove: self ifAbsent: [  ].
+
+]
+
+{ #category : #adding }
 RSAbstractLine >> renderOn: aCanvas [
 	aCanvas addEdge: self.
 	self update.

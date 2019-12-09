@@ -95,6 +95,7 @@ RSAbstractElement >> removeConnectedEdge: anEdge [
 { #category : #edges }
 RSAbstractElement >> removeConnectedEdges [
 	"Remove all the edges connected (incoming and outgoing)."
+	self hasEdges ifFalse: [ ^ self ].
 	self connectedEdges copy do: [ :edge | edge remove ]
 ]
 

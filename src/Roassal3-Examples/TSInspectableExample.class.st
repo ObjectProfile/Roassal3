@@ -34,7 +34,7 @@ TSInspectableExample >> example01SimpleExample [
 		builder := RSUMLClassBuilder new.
 		builder classes: {cls}.
 		builder build.
-		builder open ].
+		builder canvas open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	boxes @ inspectable.
 	canvas @ RSCanvasController.
@@ -45,57 +45,54 @@ TSInspectableExample >> example01SimpleExample [
 TSInspectableExample >> example02Inspect [
 	<script: 'self new example02Inspect inspect'>
 	
-	| view animation lastSize box color |
-	view := RSView new.
+	| canvas animation lastSize box color |
+	canvas := RSCanvas new.
 	color := TSScale category20c.
-	box := [ :model | RSElement new
-		model: model; 
-		shape: (RSBox new
-			color: (color scale: model) ;
-			yourself);
-		size: 20;
+	box := [ :model |
+		RSBox new
+			model: model;
+			color: (color scale: model);
+			size: 20;
 		yourself ].
 	
-	view add: (box value: Collection).
+	canvas add: (box value: Collection).
 	lastSize := 0.
 	animation := nil.
-	animation := view animationFrom: { 
-		view transitionAnimation repeat
+	animation := canvas animationFrom: { 
+		canvas transitionAnimation repeat
 		easing: RSEasing backOut;
 		onStepDo: [ :t |
-			view elements do: [ :e |
+			canvas nodes do: [ :shape |
 				| att a b |
-				att := e attributes.
-				a := att at: #old ifAbsentPut: [ e position ].
-				b := att at: #new ifAbsentPut: [ e position ].
-				e translateTo: (a interpolateTo: b at: t ) ].
-			view zoomToFit.
-			 ];
+				att := shape attributes.
+				a := att at: #old ifAbsentPut: [ shape position ].
+				b := att at: #new ifAbsentPut: [ shape position ].
+				shape translateTo: (a interpolateTo: b at: t ) ].
+			canvas zoomToFit.
+		];
 		when: RSAnimationLoopEvent do: [ 
-			view elements size = lastSize ifTrue: [ 
+			canvas nodes size = lastSize ifTrue: [ 
 				animation stop.
 				self inform: 'Done :V!!!' ].
-			lastSize := view elements size.
-			view elements do: [ :e |
-				e outgoingEdges ifEmpty: [ | children |
-					children := e model subclasses collect: [:cls | box value: cls ].
-					children do: [ :child | child position: e position ].
-					view addAll: children ]. ].
+			lastSize := canvas nodes size.
+			canvas nodes do: [ :shape |
+				shape outgoingEdges ifEmpty: [ | children |
+					children := shape model subclasses collect: [:cls | box value: cls ].
+					children do: [ :child | child position: shape position ].
+					canvas addAll: children ]. ].
 			
-			view edges copy do: #remove.
-			view elements do: [:e |
-				e attributes at: #old put: e position ].
+			canvas edges copy do: #remove.
+			canvas nodes do: [:shape | shape attributeAt: #old put: shape position ].
 			RSEdgeBuilder arrowedLine 
-				view: view;
+				canvas: canvas;
 				connectFrom: #superclass.
-			view elements do: #updateEdgesOFF.
-			RSClusterLayout on: view elements.
-			view elements do: #updateEdgesON.
-			view elements do: [:e |
-				e attributes at: #new put: e position. ].
+			canvas nodes do: #updateEdgesOFF.
+			RSClusterLayout on: canvas nodes.
+			canvas nodes do: #updateEdgesON.
+			canvas nodes do: [:shape | shape attributeAt: #new put: shape position. ].
 		 ]}.
-	view @ RSCanvasController.
-	^ view
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #examples }

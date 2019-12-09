@@ -93,6 +93,16 @@ TContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
+{ #category : #removing }
+TContainer >> removeEdge: anEdge [
+	self edges remove: anEdge ifAbsent: [  ].
+]
+
+{ #category : #removing }
+TContainer >> removeNode: aNode [
+	self nodes remove: aNode ifAbsent: [  ].
+]
+
 { #category : #accessing }
 TContainer >> shapeFromModel: anObject [
 	^ self nodes shapeFromModel: anObject
