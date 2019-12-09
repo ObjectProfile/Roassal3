@@ -3,45 +3,56 @@ I use the RSShapeBuilder
 "
 Class {
 	#name : #RSShapeExamples,
-	#superclass : #RS3Object,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #shapes }
 RSShapeExamples >> example01BasicShape [
-	<script: 'self new example01BasicShape'>
+	<script: 'self new example01BasicShape open'>
 
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		onElement;
-		color: [ :e | e index even 
-			ifTrue: [ Color red ]
-			ifFalse: [ Color blue ] ];
-		elementsOn: (1 to: 20).
-	v addAll: elements.
-	v open
+	| canvas shapes |
+	canvas := RSCanvas new.
+
+	shapes := (1 to: 20) collect: [ :m |
+		RSBox new
+			size: m;
+			position: (1 to: m) sum asPoint - 150;
+			color: (m even
+				ifTrue: Color red
+				ifFalse: Color blue);
+			yourself
+		 ].
+	canvas addAll: shapes.
+	^ canvas
 ]
 
 { #category : #lines }
 RSShapeExamples >> example02BasicEdge [
-	<script: 'self new example02BasicEdge'>
+	<script: 'self new example02BasicEdge open'>
 
-	| v box box1 line |
-	v := RSView new.
-	box := RSShapeBuilder box
+	| canvas box |
+	canvas := RSCanvas new.
+	
+	box := RSBox new
 		size: 100;
-		interactionDo: [ :i | i draggable ].
-	box1 := box element.
-	box1 translateBy: 150@150.
-	v add: box1.
-	line := RSSingleEdgeBuilder line 
-		color: Color red.
-	v add: (line from: box1; to: 0@0; edge).
+		draggable;
+		position: -100@150;
+		yourself.
+	canvas add: box.
+	canvas add: (
+		RSLine new
+			from: box;
+			to: 0@0;
+			color: Color red;
+			yourself).
+	canvas add: (
+		RSLine new
+			startPoint: 100@100;
+			endPoint: 150@150;
+			yourself).
 
-	v open
+	^ canvas
 	
 
 
@@ -50,22 +61,23 @@ RSShapeExamples >> example02BasicEdge [
 
 { #category : #lines }
 RSShapeExamples >> example03LinePath [
-	<script: 'self new example03LinePath'>
+	<script: 'self new example03LinePath open'>
 
-	| v elements form paint line path |
-	v := RSView new.
+	| canvas shapes form paint line path |
+	canvas := RSCanvas new.
 	form := self iconNamed: #remote.
 	paint := (AthensCairoPatternSurfacePaint 
 		createForSurface: (AthensCairoSurface 
 			fromForm: form)).
 	paint origin: (form extent / 2) negated.
-	elements := RSShapeBuilder box
-		size: form extent x;
-		paint: paint;
-		position: [:m | m * 50 asPoint ];
-		interactionDo: #draggable;
-		elementsOn: {-1. 1}.
-		
+	shapes := #(-1 1 ) collect: [ :m |
+		RSBox new
+			size: form extent x;
+			paint: paint;
+			position: m * 50 asPoint;
+			draggable;
+			yourself
+		].
 	path := [ :a :b | String streamContents: [ :s|
 		| point number vector u unit middle middle2 l r |
 		number := [ :n | 
@@ -92,78 +104,79 @@ RSShapeExamples >> example03LinePath [
 			point value: r.
 			].
 		 ] ].
-	line := RSEdgeBuilder linePath
-		borderColor: [:m | m alpha: 0.4];
-		svgPath: [path];
+	line := [:m | RSSVGPathLine new
+		borderColor: (m alpha: 0.4);
+		svgPath: path;
 		width: 4;
-		capRound.
-	v add: (line 
-		from: elements first;
-		to: elements second;
-		edgeOn: Color red).
-	v add: (line 
-		from: elements second;
-		to: elements first;
-		edgeOn: Color blue).
-	v addAll: elements.
-	v camera scale: 1.
-	v open
-	
+		capRound;
+		yourself].
+	canvas add: ((line value: Color red)
+		from: shapes first;
+		to: shapes second).
+	canvas add: ((line value: Color blue)
+		from: shapes second;
+		to: shapes first).
+	canvas addAll: shapes.
+	canvas camera scale: 1.
+	^ canvas
 ]
 
 { #category : #lines }
 RSShapeExamples >> example04LineDashes [
-	<script: 'self new example04LineDashes'>
+	<script: 'self new example04LineDashes open'>
 
-	| v line |
-	v := RSView new.
-	line := RSEdgeBuilder line
-		width: 1.
-	"no dashes no gaps"
-	v add: (line from: -15@ 1; to: 15@ 1; edge).
-	"Dashes and gaps of the same size"
-	line dashArray: { 4 }.
-	v add: (line from: -15@ 3; to: 15@ 3; edge).
-	"Dashes and gaps of different sizes"
-	line dashArray: { 4. 1 }.
-	v add: (line from: -15@ 5; to: 15@ 5; edge).
-	"Dashes and gaps of various sizes with an odd number of values"
-	line dashArray: { 4. 1. 2 }.
-	v add: (line from: -15@ 7; to: 15@ 7; edge).
-	"Dashes and gaps of various sizes with an even number of values"
-	line dashArray: { 4. 1. 2. 3 }.
-	v add: (line from: -15@ 9; to: 15@ 9; edge).
-	v camera 
+	| canvas dashes |
+	canvas := RSCanvas new.
+	
+	dashes := #(
+		#()			"no dashes no gaps"
+		#(4) 			"Dashes and gaps of the same size"
+		#(4 1)		"Dashes and gaps of different sizes"
+		#(4 1 2) 	"Dashes and gaps of various sizes with an odd number of values"
+		#(4 1 2 3)	"Dashes and gaps of various sizes with an even number of values"
+		) doWithIndex: [ :array :k |
+		canvas add: (RSLine new
+			dashArray: array;
+			from: -15@ (k*2);
+			to: 15 @(k*2);
+			yourself) ] .
+	canvas camera 
 		scale: 10;
 		position: 0@5.
-	v open
-	
+	^ canvas
 ]
 
 { #category : #lines }
 RSShapeExamples >> example05CapStyles [
-	<script: 'self new example05CapStyles'>
+	<script: 'self new example05CapStyles open'>
 
-	| v line dot d1 d2 ed styles |
-	v := RSView new.
-	line := RSEdgeBuilder line
-		color: Color lightGray;
-		width: 20.
-	dot := RSShapeBuilder circle
-		interactionDo: #draggable;
-		color: Color darkGray;
-		position: #yourself;
-		radius: 5.
+	| canvas dot styles ann |
+	canvas := RSCanvas new.
+	dot := [ :position | 
+		RSEllipse new
+			color: Color darkGray;
+			position: position;
+			radius: 5;
+			yourself
+	].
 	styles := #('capButt' 'capRound' 'capSquare').
-	styles doWithIndex: [ :style :i|
-		d1 := dot elementOn: -100@(i*30).
-		d2 := dot elementOn: 100@(i*30).
+	styles doWithIndex: [ :style :i| 
+		| d1 d2 line |
+		d1 := dot value: -100@(i*30).
+		d2 := dot value: 100@(i*30).
+		line := RSLine new
+			width: 20;
+			color: Color lightGray;
+			from: d1;
+			to: d2;
+			yourself.
 		line perform: style asSymbol.
-		ed := line from: d1; to: d2; edge.
-		v add: ed; add: d1; add: d2.
+		canvas add: line; add: d1; add: d2.
 		 ].
-	
-	v open
+	canvas nodes first @ RSDraggable.
+	ann := canvas nodes first announcer.
+	canvas nodes do: [ :s | s announcer: ann ].
+	^ canvas
 	
 ]
 
@@ -171,8 +184,8 @@ RSShapeExamples >> example05CapStyles [
 RSShapeExamples >> example06JoinStyles [
 	<script: 'self new example06JoinStyles'>
 
-	| v line path styles |
-	v := RSView new.
+	| canvas line path styles |
+	canvas := RSCanvas new.
 	path := [ :a :b| String streamContents: [ :s| 
 		| mid number point |
 		number := [ :n | 
@@ -192,94 +205,102 @@ RSShapeExamples >> example06JoinStyles [
 		point value: b.
 		 ] ].
 	
-	line := RSEdgeBuilder linePath
-		svgPath: [ path ];
-		borderColor: Color gray;
-		width: 25.
 	styles := #('joinMiter' 'joinRound' 'joinBevel').
 	styles doWithIndex: [ :style :i|
-		line perform: style asSymbol.
-		v add: (line
+		line := RSSVGPathLine new 
+			svgPath: path;
+			borderColor: Color gray;
+			draggable;
+			width: 25;
 			from: ((i-2) * 80)@0;
 			to: (((i-2) * 80) + 50)@0;
-			edge).
+			perform: style asSymbol;
+			yourself.
+		canvas add: line.
+		.
 	].
 	
-	v open
+	canvas open
 	
 ]
 
 { #category : #normalizer }
 RSShapeExamples >> example07NormalizeColor [
-	<script: 'self new example07NormalizeColor'>
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		elementsOn: (Collection withAllSubclasses).
+	<script: 'self new example07NormalizeColor open'>
+	| canvas shapes |
+	canvas := RSCanvas new.
 
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSBox new
+			model: cls;
+			draggable;
+			"size: cls numberOfMethods;"
+			popup;
+			yourself ].
 	RSNormalizer color
-		elements: elements;
+		shapes: shapes;
+		normalize: #numberOfMethods.
+	RSNormalizer size
+		scale: TSScale sqrt;
+		shapes: shapes;
 		normalize: #numberOfMethods.
 
-	v addAll: elements.
-	RSGridLayout on: elements.
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
 
-	v camera position: v elements encompassingRectangle center.
-	v when: RSExtentChangedEvent do: [ v zoomToFit; signalUpdate ].
-	v @ RSCanvasController.
-	v open
-	
+	canvas camera position: canvas shapes encompassingRectangle center.
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit; signalUpdate ].
+	^ canvas
 ]
 
 { #category : #shapes }
 RSShapeExamples >> example08Labels [
-	<script: 'self new example08Labels'>
-	| v sb elements |
-	v := RSView new.
-	v @ RSCanvasController.
+	<script: 'self new example08Labels open'>
+	| canvas sb shapes random |
+	canvas := RSCanvas new.
+	random := Random new.
 	sb := RSShapeBuilder label.
 	sb interactionDo: #draggable.
-	elements := sb elementsOn: Collection withAllSubclasses.
-	elements
-		do:
-			[ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
-	v addAll: elements.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSLabel new
+			draggable;
+			text: cls;
+			model: cls;
+			translateTo: (random rsNext: 300) @ (random rsNext: 300);
+			yourself ].
+
+	canvas addAll: shapes.
 	RSNormalizer fontSize
-		elements: elements;
+		shapes: shapes;
 		to: 30;
 		normalize: #numberOfMethods.
 	RSNormalizer color
-		elements: elements;
+		shapes: shapes;
 		normalize: #numberOfMethods.
-	v zoomToFit.
-	v open
+
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #lines }
 RSShapeExamples >> example09Polyline [
-	<script: 'self new example09Polyline'>
-	| v box box1 line box2 |
-	v := RSView new.
-	box := RSShapeBuilder box
+	<script: 'self new example09Polyline open'>
+	| canvas box box1 line box2 |
+	canvas := RSCanvas new.
+	box := [ RSBox new 
 		size: 100;
-		interactionDo: #draggable.
-	box1 := box element.
+		draggable;
+		yourself ].
+	box1 := box value.
 	box1 translateBy: 150@150.
-	box2 := box element.
+	box2 := box value.
 	box2 translateBy: -200@200.
-	v add: box1; add: box2.
-	line := RSSingleEdgeBuilder polyline 
+	canvas add: box1; add: box2.
+	line := RSPolyline new
 		color: Color red;
-		controlPoints: { box1. 0@0. [ box1 position x@ box2 position y ]. box2 }.
-	v add: (line edge).
-
-	v open
-	
-
-
-
+		controlPointsController:  { box1. 0@0. [ box1 position x@ box2 position y ]. box2 }.
+	canvas add: line.
+	^ canvas
 ]
 
 { #category : #shapes }

@@ -848,6 +848,7 @@ RSAnimationExamples >> example14C [
 RSAnimationExamples >> example15Sky [
 	<script: 'self new example15Sky open setLabel: ''Star trails'''>
 	| canvas client image ext shape dots random frame box colors |
+	true ifTrue: [ ^ nil ].
 	canvas := RSView new.
 	random := Random new.
 	ext := 2200 @ 2200.

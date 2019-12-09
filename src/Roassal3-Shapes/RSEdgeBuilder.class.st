@@ -487,8 +487,7 @@ RSEdgeBuilder >> shape [
 
 { #category : #'public - shape' }
 RSEdgeBuilder >> shape: aTSShape [
-	shape := aTSShape.
-	self attachPoint: RSCenteredAttachPoint new.
+	shape := aTSShape
 ]
 
 { #category : #accessing }

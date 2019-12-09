@@ -7,6 +7,7 @@ Class {
 { #category : #tests }
 RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
+	self timeLimit: 3 minutes.
 	RSAbstractExamples subclasses
 		do: [ :cls | 
 			| inst methods res |

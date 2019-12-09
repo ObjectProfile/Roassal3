@@ -106,8 +106,10 @@ RSAbstractLine >> hasMarkers [
 { #category : #initialization }
 RSAbstractLine >> initialize [ 
 	super initialize.
-	paint := nil.
-	border := RSBorder new.
+	self
+		withBorder;
+		noPaint;
+		withCenteredAttachPoint.
 	
 ]
 
@@ -167,6 +169,7 @@ RSAbstractLine >> remove [
 { #category : #private }
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
+	aShape isPoint ifTrue: [ ^ self ].
 	aShape connectedEdges remove: self ifAbsent: [  ].
 
 ]
@@ -193,11 +196,8 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	(ref isNotNil and: [ anObject isPoint not ])
-		ifTrue: [ ref removeConnectedEdge: self ].
-	anObject ifNil: [ ^ nil ].
-	anObject isPoint | anObject isBlock
-		ifFalse: [ anObject addConnectedEdge: self ].
+	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
+	anObject isPoint ifFalse: [ anObject addConnectedEdge: self ].
 	^ anObject
 ]
 
@@ -249,6 +249,11 @@ RSAbstractLine >> width: aNumber [
 { #category : #'attach point' }
 RSAbstractLine >> withBorderAttachPoint [
 	self attachPoint: RSBorderAttachPoint new.
+]
+
+{ #category : #'attach point' }
+RSAbstractLine >> withCenteredAttachPoint [
+	self attachPoint: RSCenteredAttachPoint new.
 ]
 
 { #category : #'attach point' }

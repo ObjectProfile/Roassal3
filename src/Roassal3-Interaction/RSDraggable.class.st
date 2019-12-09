@@ -18,7 +18,7 @@ RSDraggable >> onShape: aShape [
 		when: RSMouseDragging
 		do: [ :evt | 
 			| d |
-			d := aShape parent camera distanceFromPixelToSpace: evt step.
-			aShape translateBy: d.
-			aShape signalUpdate ]
+			d := evt camera distanceFromPixelToSpace: evt step.
+			evt shape translateBy: d.
+			evt signalUpdate ]
 ]

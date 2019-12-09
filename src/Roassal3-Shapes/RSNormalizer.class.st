@@ -95,7 +95,7 @@ RSNormalizer class >> color [
 	n := self new.
 	n from: Color green.
 	n to: Color red.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement color: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n executeBlock: [ :shape :scaledValue | shape color: scaledValue ].
 	^ n
 
 ]
@@ -129,7 +129,7 @@ v open
 	n := self new.
 	n from: 5.
 	n to: 100.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement fontSize: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n executeBlock: [ :shape :scaledValue | shape fontSize: scaledValue ].
 	^ n
 
 ]
@@ -140,7 +140,7 @@ RSNormalizer class >> height [
 	n := self new.
 	n from: 5.
 	n to: 100.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement height: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n executeBlock: [ :shape :scaledValue | shape height: scaledValue ].
 	^ n
 
 ]
@@ -211,7 +211,7 @@ v
 	n := self new.
 	n from: 0 @ 0.
 	n to: 100 @ 100.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement translateTo: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n executeBlock: [ :shape :scaledValue | shape translateTo: scaledValue ].
 	^ n
 
 ]
@@ -220,9 +220,9 @@ v
 RSNormalizer class >> size [ 
 	| n |
 	n := self new.
-	n from: 5 @ 5.
-	n to: 100 @ 100.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement size: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n from: 5.
+	n to: 100.
+	n executeBlock: [ :shape :scaledValue | shape size: scaledValue ].
 	^ n
 
 ]
@@ -233,7 +233,7 @@ RSNormalizer class >> width [
 	n := self new.
 	n from: 5.
 	n to: 100.
-	n executeBlock: [ :rsElement :aOneArgBlockOrSymbol | rsElement width: (n scale scale: (aOneArgBlockOrSymbol rsValue: rsElement model)) ].
+	n executeBlock: [ :shape :scaledValue | shape width: scaledValue ].
 	^ n
 
 ]
@@ -285,53 +285,37 @@ RSNormalizer >> initialize [
 
 ]
 
+{ #category : #'private - accessing' }
+RSNormalizer >> key [
+	^ #normalizerValue
+]
+
+{ #category : #'private - accessing' }
+RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
+	| min max |
+	min := SmallInteger maxVal.
+	max := SmallInteger minVal.
+	shapes do: [ :shape | | res |
+		res := anOneArgBlockOrSymbol rsValue: shape model.
+		shape attributeAt: self key put: res.
+		min := min min: res.
+		max := max max: res ].
+	^ { min. max }.
+]
+
 { #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [
 	"Trigger the normalization using a particular metric to normalize.
 	The metric is computed on each model of the shapes that are considered.
-	Here is an example:
--=-=-=
-canvas := RSCanvas new.
-classes := Collection withAllSubclasses.
-shapes := classes collect: [ :cls |
-    RSEllipse new
-        size: 10;
-        model: cls;
-        draggable;
-        yourself ].
-canvas addAll: shapes.
-
-RSNormalizer size
-    from: 10;
-    to: 100;
-    shapes: shapes;
-    normalize: #numberOfMethods.
-RSNormalizer color
-    from: Color green;
-    to: Color red;
-    shapes: shapes;
-    normalize: #numberOfMethods.
-
-RSEdgeBuilder orthoVertical
-    withVerticalAttachPoint;
-    markerStart: (RSPolygon arrow size: 5; color: Color blue);
-    canvas: canvas;
-    shapes: shapes;
-    connectFrom: #superclass.
-    
-RSTreeLayout on: shapes.
-canvas @ RSControlsCanvas.
-canvas
--=-=-=	
 	"
-
 	| minAndMax |
-	minAndMax := shapes inject: { SmallInteger maxVal . SmallInteger minVal } into: [ :res :aShape |
-		| tmp |
-		tmp := anOneArgBlockOrSymbol rsValue: aShape model.
-		{ res first min: tmp . res second max: tmp } ].
+	minAndMax := self minAndMaxFor: anOneArgBlockOrSymbol.
 	scale domain: minAndMax.
-	shapes do: [ :anSha | executeBlock value: anSha value: anOneArgBlockOrSymbol ]
+	shapes do: [ :shape |
+		| scaledValue objectValue |
+		objectValue := shape attributeAt: self key.
+		scaledValue := scale scale: objectValue.
+		executeBlock value: shape value: scaledValue ]
 
 ]
 
@@ -343,7 +327,9 @@ RSNormalizer >> scale [
 
 { #category : #accessing }
 RSNormalizer >> scale: aTSScale [
-	scale := aTSScale
+	scale ifNotNil: [ aTSScale range: scale range ].
+	scale := aTSScale.
+	
 ]
 
 { #category : #accessing }

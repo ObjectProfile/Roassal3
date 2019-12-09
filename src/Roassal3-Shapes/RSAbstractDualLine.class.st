@@ -87,8 +87,8 @@ l update.
 
 Removing the call to #attachPoint: raised an error
 	"
-	attachPoint ifNil: [ ^ self ].
-	self 
+	(attachPoint isNil | from isNil | to isNil) ifTrue: [ ^ self ].
+	self
 		startPoint: (attachPoint startingPointOf: self);
 		endPoint: (attachPoint endingPointOf: self);
 		notifyExtentChanged.
