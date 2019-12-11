@@ -45,14 +45,13 @@ Class {
 }
 
 { #category : #hooks }
-RSKeepMarkersSizeRatio >> onElement: anEdge [
-	| view markers sizes offsets |
-	anEdge isInACanvas ifFalse: [ self error: 'add this edge to a view first' ].
-	view := anEdge view.
+RSKeepMarkersSizeRatio >> onShape: anEdge [
+	| markers sizes offsets |
+	anEdge isInACanvas ifFalse: [ self error: 'add this edge to a canvas first' ].
 	markers := anEdge markers select: #notNil.
 	sizes := markers collect: [:marker | marker shape extent].
 	offsets := markers collect: #offset.
-	view when: RSScaleChangedEvent do: [ :evt | | delta |
+	anEdge canvas when: RSScaleChangedEvent do: [ :evt | | delta |
 		delta := self scaleFor: evt.
 		markers doWithIndex: [ :marker :index | 
 			marker shape extent: delta * (sizes at: index).

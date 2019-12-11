@@ -13,14 +13,13 @@ Class {
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'instance creation' }
-RSHighlightable class >> onElement: element [
-	instance ifNil: [ 
-		instance := self new.
-		instance highlightShape color: Color red.
-		 ].
-	instance onElement: element.
-	^ instance 
+{ #category : #accessing }
+RSHighlightable class >> default [
+	| inst |
+	inst := self new.
+	inst highlightColor: Color red.
+	^ inst
+	
 ]
 
 { #category : #announce }

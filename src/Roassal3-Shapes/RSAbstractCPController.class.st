@@ -4,7 +4,7 @@ My subclasses can determine the control points for an object usefull for the upd
 Class {
 	#name : #RSAbstractCPController,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal3-Shapes-CP'
 }
 
 { #category : #hooks }

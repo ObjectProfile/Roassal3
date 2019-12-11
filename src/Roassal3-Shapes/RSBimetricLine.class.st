@@ -46,11 +46,13 @@ RSBimetricLine >> initialize [
 { #category : #initialization }
 RSBimetricLine >> initializeSVG [
 	self
-		svgPath: [ :sourcePoint :targetPoint | 
-			| e w1 w2 dist z |
+		svgPath: [ :aLine | 
+			| e w1 w2 dist z sourcePoint targetPoint |
+			sourcePoint := aLine startPoint.
+			targetPoint := aLine endPoint.
 			e := 0.001.
-			w1 := widthTo max: e.
-			w2 := widthFrom max: e.
+			w1 := aLine widthTo max: e.
+			w2 := aLine widthFrom max: e.
 			dist := sourcePoint distanceTo: targetPoint.
 			dist := dist max: e.
 			z := (w1 + w2) * 2.

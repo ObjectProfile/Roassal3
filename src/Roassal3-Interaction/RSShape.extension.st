@@ -14,3 +14,8 @@ RSShape >> labeled [
 RSShape >> popup [
 	self @ RSPopup.
 ]
+
+{ #category : #'*Roassal3-Interaction' }
+RSShape >> popupText: aBlock [
+	self @ (RSPopup text: aBlock).
+]

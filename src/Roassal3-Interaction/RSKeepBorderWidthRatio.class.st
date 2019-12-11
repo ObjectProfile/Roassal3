@@ -42,14 +42,12 @@ Class {
 }
 
 { #category : #hooks }
-RSKeepBorderWidthRatio >> onElement: anElement [
+RSKeepBorderWidthRatio >> onShape: aShape [
 
-	| view width |
-	anElement isInACanvas ifFalse: [ self error: 'anElement needs to be part of one view' ].
-	view := anElement view.
-	width := anElement border width.
-	view when: RSScaleChangedEvent do: [:evt | 
-		
-		anElement border width: (self scaleFor: evt) * width.
-		view signalUpdate. ]. 
+	| width |
+	aShape isInACanvas ifFalse: [ self error: 'aShape needs to be part of one canvas' ].
+	width := aShape border width.
+	aShape canvas when: RSScaleChangedEvent do: [:evt | 
+		aShape border width: (self scaleFor: evt) * width.
+		evt signalUpdate ]. 
 ]

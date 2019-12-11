@@ -7,12 +7,12 @@ Class {
 	#category : #'Roassal3-Shapes-Util'
 }
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> arc [
 	^ RSPieSlice new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> arrow [
 	"inverted vee"
 	^ self polygonWithPoints: (Array
@@ -22,27 +22,39 @@ RSShapeFactory class >> arrow [
 		with: 0 @ -1)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #lines }
+RSShapeFactory class >> arrowedLine [
+	| marker shape |
+	marker := RSPolygon new
+		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
+		paint: nil;
+		withBorder.
+	shape := RSLine new.
+	shape markerEnd: marker.
+	^ shape
+]
+
+{ #category : #shapes }
 RSShapeFactory class >> bitmap [
 	^ RSBitmap new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> box [
 	^ self rectangle
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> circle [
 	^ self ellipse
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> composite [ 
 	^ RSComposite new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> cross [
 	| t t1 |
 	t := 2 / 6 asFloat.
@@ -62,7 +74,7 @@ RSShapeFactory class >> cross [
 		(-1@ t)}
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> diamond [
 	^ self polygonWithPoints: (Array
 		with: 0 @ 1
@@ -71,54 +83,54 @@ RSShapeFactory class >> diamond [
 		with: -1 @ 0)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> ellipse [
 	^ RSEllipse new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> heptagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 7)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> hexagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 6)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> label [
 	^ RSLabel new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> octagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 8)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> pentagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 5)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #utils }
 RSShapeFactory class >> polygonWithPoints: points [
 	^ self polygon
 		privatePoints: points;
 		yourself
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> rectangle [
 	^ RSBox new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> rhomboid [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1
@@ -127,12 +139,12 @@ RSShapeFactory class >> rhomboid [
 		with: -0.333 @ 1)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> square [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 4)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> star [
 	| star5Points outerPoints innerPoints innerRadius ar |
 	star5Points := Array new: 10.
@@ -152,17 +164,17 @@ RSShapeFactory class >> star [
 	^ self polygonWithPoints: star5Points
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> svgPath [
 	^ RSSVGPath new
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> triangle [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> vee [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1

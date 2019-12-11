@@ -419,7 +419,7 @@ RSAthensRenderer >> buildRingPath: ring [
 { #category : #'creating path' }
 RSAthensRenderer >> buildSVGLinePath: line [
 	| string |
-	string := line svgPath value: line startPoint value: line endPoint.
+	string := line svgPath value: line.
 	
 	string isString ifTrue: [ | converter |
 		converter := ASPathConverter new stream: string readStream.
@@ -430,7 +430,6 @@ RSAthensRenderer >> buildSVGLinePath: line [
 	] ifFalse: [
 		string value: builder.
 	].
-	
 ]
 
 { #category : #'creating path' }

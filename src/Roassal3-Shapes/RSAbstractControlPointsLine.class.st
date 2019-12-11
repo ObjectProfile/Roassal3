@@ -79,19 +79,6 @@ RSAbstractControlPointsLine >> startPoint: aPoint [
 
 { #category : #update }
 RSAbstractControlPointsLine >> update [
-	"| cp |
-	controlPointsController ifNil: [ ^ self ].
-	cp := controlPointsController isCollection ifTrue: [  
-		controlPointsController collect: [ :anObject | | v |
-			v := anObject value.
-			v isShape ifTrue: [ v := v position ].
-			v ].
-	] ifFalse: [ 
-		controlPointsController 
-			value: (attachPoint startingPointOf: self)
-			value: (attachPoint endingPointOf: self)
-	].
-	self controlPoints: cp; "
 	controlPointsController ifNil: [ ^ self ].
 	self
 		controlPoints: (controlPointsController controlPointsFor: self);

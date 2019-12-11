@@ -387,8 +387,10 @@ RSShapeBasicExamples >> example16BasicLinePath [
 	c addShape: b2.
 	
 	l := RSSVGPathLine new
-		svgPath: [ :a :b |
-			[ :canvas | | vector u unit left right left1 right1 |
+		svgPath: [ :aLine |
+			[ :canvas | | vector u unit left right left1 right1 a b |
+			a := aLine startPoint.
+			b := aLine endPoint.
 			arrowWidth := 50.
 			arrowHeight := 30.
 			vector := a-b.

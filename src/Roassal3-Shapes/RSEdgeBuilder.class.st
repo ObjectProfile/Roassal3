@@ -72,14 +72,7 @@ Class {
 
 { #category : #'instance creation' }
 RSEdgeBuilder class >> arrowedLine [
-	| marker shape |
-	marker := RSPolygon new
-		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
-		paint: nil;
-		withBorder.
-	shape := RSLine new.
-	shape markerEnd: marker.
-	^ self new: shape
+	^ self new: RSShapeFactory arrowedLine
 ]
 
 { #category : #'instance creation' }
@@ -87,7 +80,7 @@ RSEdgeBuilder class >> bezier [
 	^ self new: RSBezier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - specific' }
 RSEdgeBuilder class >> bimetricLine [
 	^ RSBimetricEdgeBuilder new: RSBimetricLine new
 ]
@@ -487,6 +480,7 @@ RSEdgeBuilder >> shape [
 
 { #category : #'public - shape' }
 RSEdgeBuilder >> shape: aTSShape [
+	self assert: aTSShape isEdge.
 	shape := aTSShape
 ]
 

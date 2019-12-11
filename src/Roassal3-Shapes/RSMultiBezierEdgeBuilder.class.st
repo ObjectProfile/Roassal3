@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'tension'
 	],
-	#category : #'Roassal3-Scripting-Builders'
+	#category : #'Roassal3-Shapes-Graph'
 }
 
 { #category : #'instance variations' }
@@ -96,29 +96,29 @@ RSMultiBezierEdgeBuilder >> commonAncestor: edge with: selector [
 ]
 
 { #category : #private }
-RSMultiBezierEdgeBuilder >> commonElements: edge with: selector [
+RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	"obtaint a list of points from the elements in the view based on a selector"
-	| from to ancestor elements search index |
+	| from to ancestor shapes search index |
 	from := edge from.
 	to := edge to.
 	ancestor := self commonAncestor: edge with: selector.
 	ancestor ifNil: [ 
-		elements := (self followersOf: from with: selector),
+		shapes := (self followersOf: from with: selector),
 			(self followersOf: to with: selector) reverse.
-		^ elements ].
+		^ shapes ].
 	search := [ :model | canvas shapeFromModel: (selector rsValue: model) ].
-	elements := OrderedCollection new.
-	elements add: from.
+	shapes := OrderedCollection new.
+	shapes add: from.
 	[ from == ancestor ] whileFalse: [ 
 		from := search value: from model.
-		elements add: from ].
-	index := elements size.
+		shapes add: from ].
+	index := shapes size.
 	[ to == ancestor ] whileFalse: [ 
-		elements add: to afterIndex: index.
+		shapes add: to afterIndex: index.
 		to := search value: to model ].
-	elements do: [ :e | (e connectedEdges includes: edge)
+	shapes do: [ :e | (e connectedEdges includes: edge)
 		ifFalse: [ e addConnectedEdge: edge ] ].
-	^ elements.
+	^ shapes.
 	
 ]
 
@@ -135,27 +135,27 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 
 { #category : #'public - line path' }
 RSMultiBezierEdgeBuilder >> following: selector [
-	| ed |
-	ed := nil.
-	self shape svgPath: [ :a :b | [:builder | | points elements att |
-			att := ed attributes.
-			elements := att
-				at: #commom
-				ifAbsentPut: [ self commonElements: ed with: selector ].
-			points := elements collect: [ :e | e position asFloatPoint ].
-			points removeFirst; removeLast; addFirst: a; addLast: b.
-			self applyTensionOn: points. 
-			builder absolute; moveTo: points first.
-			2 to: points size - 2 do: [ :i | | p1 p2 |
-				p1 := points at: i.
-				p2 := points at: i +1.
-				builder 
-					curveVia: p1
-					to: (p1 + p2)/2 ].
-			builder
-				curveVia:( points at: points size -1)
-				to: points last.
-			] ].
+	self shape svgPath: [ :line | [:builder | 
+		| points commonShapes att a b |
+		att := line attributes.
+		a := line startPoint.
+		b := line endPoint.
+		commonShapes := att
+			at: #commom
+			ifAbsentPut: [ self commonShapes: line with: selector ].
+		points := commonShapes collect: [ :e | e position asFloatPoint ].
+		points removeFirst; removeLast; addFirst: a; addLast: b.
+		self applyTensionOn: points. 
+		builder absolute; moveTo: points first.
+		2 to: points size - 2 do: [ :i | | p1 p2 |
+			p1 := points at: i.
+			p2 := points at: i +1.
+			builder 
+				curveVia: p1
+				to: (p1 + p2)/2 ].
+		builder
+			curveVia:( points at: points size -1)
+			to: points last ] ].
 ]
 
 { #category : #'public - line path' }

@@ -280,6 +280,15 @@ RSComposite >> shapes: aTSGroup [
 	
 ]
 
+{ #category : #actions }
+RSComposite >> translateTo: position [
+	super translateTo: position.
+	self hasChildren ifFalse: [ ^ self ].
+	shapes do: [ :child | 
+		child isNode
+			ifTrue: [ child updateConnectedEdges] ].
+]
+
 { #category : #accessing }
 RSComposite >> view [
 	^ parent view

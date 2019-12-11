@@ -22,7 +22,7 @@ RSBoundingShape >> accept: visitor [
 
 { #category : #edges }
 RSBoundingShape >> addConnectedEdge: anEdge [
-	[ anEdge isEdge ] assert.
+	self assert: anEdge isEdge.
 	(self connectedEdges includes: anEdge) 
 		ifFalse: [ self connectedEdges add: anEdge ]
 ]

@@ -17,8 +17,7 @@ RSBimetricEdgeBuilder >> edgeFrom: source to: target [
 	edge := super edgeFrom: source to: target.
 	edge
 		widthFrom: (widthFrom rsValue: edge model);
-		widthTo: (widthTo rsValue: edge model);
-		initializeSVG.
+		widthTo: (widthTo rsValue: edge model).
 	^ edge
 ]
 

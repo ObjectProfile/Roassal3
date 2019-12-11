@@ -4,7 +4,7 @@ I apply the attachpoint and then return an array with the control points for the
 Class {
 	#name : #RSAbstractCPAPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal3-Shapes-CP'
 }
 
 { #category : #hooks }

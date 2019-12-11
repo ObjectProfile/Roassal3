@@ -4,7 +4,7 @@ I can return the control points for vertical lines
 Class {
 	#name : #RSVerticalCPAPController,
 	#superclass : #RSAbstractCPAPController,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal3-Shapes-CP'
 }
 
 { #category : #hooks }
