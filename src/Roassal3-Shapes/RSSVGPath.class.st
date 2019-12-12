@@ -117,6 +117,19 @@ RSSVGPath >> extent: newExtent [
 	super extent: newExtent.
 ]
 
+{ #category : #testing }
+RSSVGPath >> includesPoint: aPoint [
+	| invertedPoint |
+	invertedPoint := matrix inverseTransform: aPoint.
+	
+	^ (self baseRectangle containsPoint: invertedPoint)
+		ifFalse: [ false ]
+		ifTrue: [ | apt |
+			apt := AthensPolygonTester new.
+			polygons anySatisfy: [ :eachPolygon | 
+				(apt polygon: eachPolygon) includesPoint: invertedPoint]]
+]
+
 { #category : #accessing }
 RSSVGPath >> segments [
 	^ segments

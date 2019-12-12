@@ -71,10 +71,7 @@ RSAttachPoint >> position: aShapeOrAPoint [
 
 { #category : #private }
 RSAttachPoint >> positionFor: aShape point: aPoint [
-	| parent |
-	(parent := aShape parent )ifNil: [ ^ aPoint ].
-	^ parent transform: aPoint
-	
+	^ aPoint
 ]
 
 { #category : #'public - hooks' }

@@ -11,106 +11,105 @@ Class {
 RSLayoutExamples >> example01LayoutBasic [
 	<script: 'self new example01LayoutBasic open'>
 
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		onElement;
-		color: [ :e | e index even 
-			ifTrue: [ Color red alpha: 0.5 ]
-			ifFalse: [ Color blue alpha: 0.5 ] ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	^ v
+	| canvas shapes |
+	canvas := RSCanvas new.
+	shapes := (1 to: 20) collect: [ :m | 
+		RSBox new
+			size: m;
+			position: (1 to: m) sum asPoint -150;
+			draggable;
+			color: (m even
+				ifTrue: Color red
+				ifFalse: Color blue);
+			yourself ].
+	shapes do: [ :s | s color: (s color alpha: 0.5) ].
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	^ canvas
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example02Grid [
 	<script: 'self new example02Grid open'>
 
-	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		elementsOn: (Collection withAllSubclasses).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	^ v
+	| canvas shapes |
+	canvas := RSCanvas new.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSBox new
+			size: cls numberOfMethods;
+			draggable;
+			yourself ].
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	^ canvas
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example03LayoutColorFadingBasic [
 	<script: 'self new example03LayoutColorFadingBasic open'>
 
-	| v elements color |
-	v := RSView new.
+	| canvas shapes color |
+	canvas := RSCanvas new.
 	color := TSScale linear
 		domain: #(1 20);
 		range: {Color red. Color green}.
 		
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		onElement;
-		color: [ :e | color scale: e index ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	^ v
+	shapes := (1 to: 20) collect: [ :m |
+		RSBox new
+			size: m;
+			position: (1 to: m) sum asPoint -150;
+			draggable;
+			color: (color scale: m);
+			yourself ].
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	^ canvas
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 	<script: 'self new example04LayoutColorFadingBasic2 open'>
 
-	| v elements color |
-	v := RSView new.
+	| canvas shapes color |
+	canvas := RSCanvas new.
 	color := TSScale linear
 		domain: #(1 10 20);
 		range: { Color red. Color green. Color blue }";
 		interpolate: TSColorHSVAInterpolator".
 		
-		
-	elements := RSShapeBuilder box
-		size: #yourself;
-		position: [:m | (1 to: m) sum asPoint -150 ];
-		interactionDo: #draggable;
-		color: [ :m |color scale: m ];
-		elementsOn: (1 to: 20).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	^ v
+	shapes := (1 to: 20) collect: [ :m |
+		RSBox new
+			size: m;
+			position: (1 to: m) sum asPoint -150;
+			draggable;
+			color: (color scale: m);
+			yourself ].
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	^ canvas
 ]
 
 { #category : #layouts }
 RSLayoutExamples >> example05LayoutBasicWithColorFading [
 	<script: 'self new example05LayoutBasicWithColorFading open'>
-
-	| v elements minAndMax color |
-	v := RSView new.
+	| canvas shapes minAndMax color |
+	canvas := RSCanvas new.
 	minAndMax := Collection withAllSubclasses inject: { 10000 . 0 } into: [ :res :cls | {res first min: cls numberOfMethods . res second max: cls numberOfMethods}].
 	color := TSScale linear
 		domain: minAndMax;
 		range: { Color green . Color red }.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		color: [ :cls | color scale: cls numberOfMethods ];
-		elementsOn: (Collection withAllSubclasses).
 
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v @ RSDraggableCanvas .
-	^ v
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSBox new
+			size: cls numberOfMethods;
+			draggable;
+			color: (color scale: cls numberOfMethods);
+			yourself ].
+
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	canvas @ RSDraggableCanvas .
+	^ canvas
 ]
 
 { #category : #layouts }
@@ -147,37 +146,49 @@ RSLayoutExamples >> example05TreeLayout [
 { #category : #layouts }
 RSLayoutExamples >> example06Cluster [
 	<script: 'self new example06Cluster open'>
-	| c shapes |
-	c := RSCanvas new.
-	shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
-		RSEllipse new 
-			size: 5;
-			color: Color red;
-			model: cls;
-			yourself ].
-	c addAll: shapes.
-	RSEdgeBuilder line
-		canvas: c;
-		color: Color blue trans;
-		connectFrom: #superclass.
-	RSNormalizer size
-		scale:
-			(TSScale log
-				base: 2.7;
-				range: {1 . 30});
-		shapes: c nodes;
-		normalize: #numberOfMethods.
-	RSNormalizer color
-		scale:
-			(TSScale log
-				base: 2.7;
-				range:
-					{Color blue.
-					Color red});
-		shapes: c nodes;
-		normalize: #numberOfMethods.
-	RSClusterLayout on: c nodes.
-	^ c
+	| canvas shapes |
+	canvas := RSCanvas new.
+	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
+		| group |
+		group := RSGroup new.
+		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+			RSEllipse new 
+				size: 5;
+				draggable;
+				color: Color red;
+				model: cls;
+				yourself ].
+		group addAll: shapes.
+		RSEdgeBuilder line
+			color: Color blue trans;
+			canvas: group;
+			shapes: shapes;
+			connectFrom: #superclass.
+		
+		RSNormalizer size
+			scale: (TSScale perform: scale);
+			from: 1;
+			to: 30;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSNormalizer color
+			scale: (TSScale perform: scale);
+			from: Color blue;
+			to: Color red;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSClusterLayout on: shapes.
+		RSComposite new
+			color: Color veryLightGray trans;
+			model: scale;
+			labeled;
+			draggable;
+			shapes: group;
+			yourself.
+		]).
+	RSGridLayout new gapSize: 20; on: canvas nodes.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #lines }
@@ -239,10 +250,10 @@ RSLayoutExamples >> example08HorizontalTree [
 	RSEdgeBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
-			shape: (RSShapeBuilder triangle 
+			shape: (RSShapeFactory triangle 
 				color: Color black;
 				size: 5;
-				element));
+				yourself));
 		attachPoint: RSHorizontalAttachPoint new; 
 		canvas: c;
 		shapes: c nodes;
@@ -273,16 +284,17 @@ RSLayoutExamples >> example09BorderAttachPoint [
 { #category : #lines }
 RSLayoutExamples >> example10Locate [
 	<script: 'self new example10Locate open'>
-	| v shape e1 e2 |
-	v := RSView new.
-	shape := RSShapeBuilder box
-		@ RSDraggable;
-		onElement;
-		color: RSColorPalette sequential blues3;
-		size: 100.
-	e1 := shape element.
-	"e1 @ RSDraggable."
-	e2 := shape element.
+	| canvas newshape e1 e2 color |
+	canvas := RSCanvas new.
+	color := RSColorPalette sequential blues3.
+	newshape := [ :m |
+		RSBox new
+			draggable;
+			color: (color scale: m) ;
+			size: 100;
+			yourself].
+	e1 := newshape value: 1.
+	e2 := newshape value: 2.
 	e2 size: 20.
 	RSLocation new
 		offset: 1@ -1;
@@ -290,36 +302,35 @@ RSLayoutExamples >> example10Locate [
 		bottom;
 		left;
 		stick: e2 on: e1.
-	v addAll:{e1. e2}.
-	v @ RSCanvasController.
-	^ v
+	canvas addAll:{e1. e2}.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #lines }
 RSLayoutExamples >> example11PaddingInComposite [
 	<script: 'self new example11PaddingInComposite open'>
-	| v box shape elements |
-	v := RSView new.
-	box := RSShapeBuilder box.
-	shape := RSShapeBuilder composite
-		popup;
-		shapes: [ :cls | 
-			| g |
-			g := box elementsOn: cls methods.
-			RSGridLayout on: g.
-			g ];
-		padding:
-			(Margin
+	| canvas shapes |
+	canvas := RSCanvas new.
+	
+	shapes := Collection withAllSubclasses collect: [ :cls | | methods |
+		methods := cls methods collect: [:met | RSBox new color: Color black; size: 5; yourself ].
+		RSGridLayout on: methods.
+		RSComposite new
+			model: cls;
+			popup;
+			shapes: methods;
+			padding: (Margin
 				left: 50
 				right: 5
 				top: 20
 				bottom: 5);
-		color: Color blue trans.
-	elements := shape elementsOn: Collection withAllSubclasses.
-	RSGridLayout on: elements.
-	v addAll: elements.
-	v @ RSCanvasController.
-	^ v
+			color: Color blue trans;
+			yourself  ].
+	RSGridLayout on: shapes.
+	canvas addAll: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #lines }
@@ -347,8 +358,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 		edges: canvas edges;
 		start;
 		yourself.
-	"elements do: [ :e |
-		(layout mockElementAt: e) charge: e model * -20 ]."
+
 	canvas edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
 	canvas @ RSCanvasController.
 	
@@ -428,15 +438,13 @@ RSLayoutExamples >> example14ClassHierarchy [
 	classes := (Object withAllSubclasses first: 300)
 		flatCollect: #withAllSuperclasses.
 	classes := classes asSet 
-		collect: [:cls | RSEllipse new model: cls; yourself] 
+		collect: [:cls | RSEllipse new draggable; popup; model: cls; yourself] 
 		as: RSGroup.
 	c addAll: classes.
-	classes @ RSPopup @ RSDraggable.
 	RSEdgeBuilder line
 		color: Color gray;
-		color: c;
+		canvas: c;
 		shapes: classes;
-		withBorderAttachPoint;
 		connectFrom: #superclass.
 	RSNormalizer size
 		shapes: classes;
@@ -446,13 +454,13 @@ RSLayoutExamples >> example14ClassHierarchy [
 		shapes: classes;
 		normalize: #numberOfMethods.
 	RSClusterLayout on: classes.
-	"" RSMultiBezierEdgeBuilder multiBezier.
-	"eb2 borderColor: (Color blue alpha: 0.3).
-	eb2 view: c.
-	eb2 elements: es.
-	eb2 withBorderAttachPoint.
-	eb2 following: #superclass.
-	eb2 connectToAll: #dependentClasses."
+	RSMultiBezierEdgeBuilder multiBezier
+		borderColor: (Color blue alpha: 0.3);
+		canvas: c;
+		shapes: classes;
+		withBorderAttachPoint;
+		following: #superclass;
+		connectToAll: #dependentClasses.
 	c @ RSCanvasController.
 	^ c
 ]

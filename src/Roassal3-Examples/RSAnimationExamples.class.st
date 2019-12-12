@@ -158,21 +158,19 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		shapes: shapes;
 		normalize: #yourself.
 	lineX := 0.
-	line := RSEdge new 
-		shape: (RSLine new
-			color: Color red;
-			width: 8;
-			yourself);
-		from: 1@0;
-		to: 0@0;
+	line := RSLine new
+		color: Color red;
+		width: 8;
+		yourself;
+		startPoint: 1@0;
+		endPoint: 0@0;
 		yourself.
 	c add: line. 
 	position := nil.
 	updateLine := [
 		line 
-			from: lineX@position from y;
-			to: lineX@position to y;
-			update. ].
+			startPoint: lineX@position from y;
+			endPoint: lineX@position to y. ].
 	c when: RSMouseMove do: [ :ev | 
 		lineX := ev position x.
 		updateLine value ].
@@ -848,9 +846,9 @@ RSAnimationExamples >> example14C [
 { #category : #examples }
 RSAnimationExamples >> example15Sky [
 	<script: 'self new example15Sky open setLabel: ''Star trails'''>
-	| canvas client image ext shape dots random frame box colors |
-	true ifTrue: [ ^ nil ].
-	canvas := RSView new.
+	<noTest>
+	| canvas client image ext dots random frame box colors |
+	canvas := RSCanvas new.
 	random := Random new.
 	ext := 2200 @ 2200.
 	box := RSBox new
@@ -867,15 +865,16 @@ RSAnimationExamples >> example15Sky [
 	colors := TSScale linear
 		domain: #(5 15);
 		range: {'6A6569' . 'white'}.
-	shape := RSShapeBuilder ellipse
-		attributesDo: [ [ :a | 
-			a
-				at: #a put: (random rsNext: 0 and: 350);
-				at: #r put: (random rsNext: 3500 and: 6000) ] ];
-		size: [ random rsNext: 5 and: 15 ];
-		onElement;
-		color: [ :e | (colors scale: e width) alpha: (random rsNext: 0.1 and: 0.8) ].
-	dots := shape elementsOn: (1 to: 800).
+
+	dots := (1 to: 800) collect: [ :n | 
+		| e |
+		e := RSEllipse new
+			attributeAt: #a put: (random rsNext: 0 and: 350);
+			attributeAt: #r put: (random rsNext: 3500 and: 6000);
+			size: (random rsNext: 5 and: 15);
+			yourself. 
+		e color: ((colors scale: e width) alpha: (random rsNext: 0.1 and: 0.8)).
+		e ].
 	canvas addAll: dots.
 	frame := 0.
 	canvas clearBackground: false.
@@ -913,23 +912,22 @@ RSAnimationExamples >> example15Sky [
 { #category : #perlin }
 RSAnimationExamples >> example16ArcNoise [
 	<script: 'self new example16ArcNoise open setLabel: ''Arcs with Perlin noise'''>
-	| frame view perlin radius shape line points yscale |
+	| frame canvas perlin radius line points yscale |
 	frame := 0.
-	view := RSView new.
-	view color: Color black.
+	canvas := RSCanvas new.
+	canvas color: Color black.
 	perlin := TSPerlinNoise new.
 	radius := TSScale linear domain: #(1 20); range: #(50 250).
-	shape := RSShapeBuilder arc 
-		color: Color white;
-		externalRadius: [ :m | radius scale: m ];
-		alphaAngle: 0;
-		onElement;
-		betaAngle: [ :e | | t |
-			t := (frame * 0.025) + (e externalRadius * 0.0005).
-			360 * (perlin noise: t and: 0.01) abs ];
-		innerRadius: [ :e | e externalRadius - 5 ].
-	view addAll: (shape elementsOn: (1 to: 20) ).
-	view addShape: (RSBox new 
+	canvas addAll: ((1 to: 20) collect: [:n |
+		| r |
+		r := radius scale: n.
+		RSPieSlice new
+			color: Color white;
+			externalRadius: r;
+			alphaAngle: 0;
+			innerRadius: r - 5;
+			yourself. ]).
+	canvas addShape: (RSBox new 
 		color: (Color white alpha: 0.4);
 		cornerRadius: 7;
 		extent: 140@80;
@@ -940,99 +938,105 @@ RSAnimationExamples >> example16ArcNoise [
 	yscale := TSScale linear domain: #(0 360); range: #(80 5).
 	
 	line := RSPolyline new
-		border: (RSBorder new  width: 2; paint: (LinearGradientPaint new
-			colorRamp:
-				{(0 -> Color red).
-				(0.5 -> Color yellow).
-				(1 -> Color green)};
-			start: 0@0;
-			stop: 0@80));
-		isFixed: true.
-	view addShape: line.
+		border: (RSBorder new  
+			width: 2;
+			paint: ((LinearGradientPaint fromArray:
+				{0 -> 'red'.
+				0.5 -> 'yellow'.
+				1 -> 'green'})
+				start: 0@0;
+				stop: 0@80;
+				yourself);
+			yourself);
+		isFixed: true;
+		yourself.
+	canvas addShape: line.
 		
-	view newAnimation repeat; onStepDo: [ :t| | last | 
+	canvas newAnimation repeat; onStepDo: [ :t|
+		| last temp | 
 		frame := frame + 0.2.
-		view elements do: [ :e | 
-			shape updateElement: e withCommand: #betaAngle:.
-			e color: (Color h: e betaAngle s: 0.5 v: 1).
-			
+		canvas nodes do: [ :arc | 
+			temp := (frame * 0.025) + (arc externalRadius * 0.0005).
+			arc betaAngle: 360 * (perlin noise: temp and: 0.01) abs.
+			arc color: (Color h: arc betaAngle s: 0.5 v: 1).
 			 ].
-		last := view elements last.
+		last := canvas nodes last.
 		points add: (yscale scale: last betaAngle).
 		points size > 140 ifTrue: [ points removeFirst ].
 		line controlPoints: (points collectWithIndex: [:y :x | x@ y]).
 		 ].
 	
-	view when: RSExtentChangedEvent do: [ view zoomToFit ].
-	^ view
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
+	^ canvas
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example17Retina [
 	<script: 'self new example17Retina open setLabel: ''Retina (~o.o)~'''>
-	| r view perlin side angle circleSize ringSize label minR updateValues offset rad val radius shape |
-	view := RSView new.
-	view color: Color black.
+	| random canvas perlin side angle circleSize ringSize label minR updateValues offset rad val radius |
+	canvas := RSCanvas new.
+	canvas color: Color black.
 	minR := 0.08.
 	side := 900.
 	perlin := TSPerlinNoise new.
 	circleSize := ringSize := 100.
-	r := Random new.
+	random := Random new.
 	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
 	label := RSLabel new 
 		fontName: 'Source Sans Pro'; 
 		text: 'Now begin!'; 
 		color: Color white;
 		fontSize: 40.
-	view addShape: label.
-	(view newAnimation 
+	canvas addShape: label.
+	(canvas newAnimation 
 		delay: 2 seconds; 
 		from: 40; 
 		to: 12; 
 		on: label set:#fontSize: ).
-	(view newAnimation 
+	(canvas newAnimation 
 		delay: 2 seconds;
 		from: Color white; to: Color transparent;
 		on: label set: #color:) when: RSAnimationEndEvent do: [
 			label remove.
-			view clearBackground: false].
+			canvas clearBackground: false].
 	updateValues := [ 
-		offset := r rsNext: 90.
-		rad := r rsNext: minR*side and: 1/ 2 sqrt*side.
+		offset := random rsNext: 90.
+		rad := random rsNext: minR*side and: 1/ 2 sqrt*side.
 		val := rad / side * 100.
 		radius := ((rad / (side /2))-minR)*((perlin noise: val and: 0) abs) * side / 6.
 	].
 	updateValues value.
-	shape := RSShapeBuilder circle
-		size: [ radius ];
-		noPaint;
-		borderDo: [ :m | [ :b | | theta |
-			theta := angle scale: m.
-			b color: (Color h: theta + offset s: 1 v: 1 alpha: 0.7) ] ];
-		position: [:m | | theta |
-			theta := (angle scale: m) degreesToRadians.
-			((theta cos @ theta sin) * rad).
-			].
-	view addAll: (shape elementsOn: (1 to: circleSize)).
+	
+	canvas addAll: ((1 to: circleSize) collect: [:m |
+		RSEllipse new
+			noPaint;
+			withBorder;
+			yourself ]).
 
-	view newAnimation 
+	canvas newAnimation 
 		delay: 4 seconds;
 		loops: ringSize; 
 		duration: 200 milliSeconds; 
 	 	when: RSAnimationLoopEvent do: [ :evt | 
 			updateValues value.
-			view elements do: [ :e | shape updateElement: e ]
+			canvas nodes doWithIndex: [ :e :index | 
+				| theta |
+				theta := angle scale: index.
+				e border color: (Color h: theta + offset s: 1 v: 1 alpha: 0.7).
+				theta := theta degreesToRadians.
+				e size: radius.
+				e position: (theta cos @ theta sin) * rad.
+				 ].
 		].
-		
-	view when: RSExtentChangedEvent do: [ 
-		view camera zoomToFit: view extent extent: side@side ].
-	^ view
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera zoomToFit: canvas extent extent: side@side ].
+	^ canvas
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example18SpaceDandy [
 	<script: 'self new example18SpaceDandy open setLabel: ''Space :D'''>
-	| random extent diagonal rotation init drawDist view shape elements |
+	| random extent diagonal rotation init drawDist canvas shapes |
 	random := Random new.
 	extent := 800@600.
 	diagonal := ((extent x * extent x)+ (extent y* extent y)) sqrt / 2.
@@ -1047,47 +1051,47 @@ RSAnimationExamples >> example18SpaceDandy [
 	drawDist := [ :att | | n o |
 		n := att at: #n.
 		o := att at: #o.
-		(n / o) arcTan * extent x / (Float pi / 2)].
-	view := RSView new.
-	view color: Color black.
-	shape := RSShapeBuilder ellipse
-		color: Color white.
+		(n / o) arcTan * extent x / (Float pi / 2) ].
+	canvas := RSCanvas new.
+	canvas color: Color black.
+
+	shapes := (1 to: 500) collect: [ :m |
+		RSEllipse new
+			color: Color white;
+			yourself ].
+	shapes do: [ :e | init value: e ].
+	canvas addAll: shapes.
 	
-	elements := shape elementsOn: (1 to: 500).
-	elements do: [ :e | init value: e ].
-	view addAll: elements.
-	
-	view addShape: (RSLabel new 
-		paint: (LinearGradientPaint new
-			colorRamp:
-				{(0 -> Color yellow).
-				(0.35 -> Color orange).
-				(0.25 -> Color white darker).
-				(0.35 -> Color orange).
-				(1 -> Color white)};
+	canvas addShape: (RSLabel new 
+		paint: ((LinearGradientPaint fromArray:
+				{0 -> 'yellow'.
+				0.35 -> 'orange'.
+				0.25 -> Color white darker.
+				0.35 -> 'orange'.
+				1 -> 'white'})
 			start: 0@ -150;
-			stop: 0@130);
+			stop: 0@130;
+			yourself);
 		fontSize: 150;
-		"fontName: 'Source Sans Pro';"
 		fontName: 'Brushcrazy DEMO';
 		withBorder;
 		bold;
-		text: 'Pharo').
-	view newAnimation 
+		text: 'Pharo';
+		yourself).
+	canvas newAnimation 
 		repeat;
 		duration: 5 seconds; 
-		when: RSAnimationLoopEvent do: [ :e| view clearBackground: e animation currentLoop odd  ].
-	view newAnimation repeat onStepDo: [ :t|
+		when: RSAnimationLoopEvent do: [ :e| canvas clearBackground: e animation currentLoop odd  ].
+	canvas newAnimation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
-		elements do: [ :e | | l o r d off | 
-			l := (e attributes at: #l)+1.
-			e attributes at: #l put: l.
-			r := (e attributes at: #r) + rotation.
-			o := e attributes at: #o.
-			off := e attributes at: #off.
+		shapes do: [ :e | | l o r d off | 
+			l := (e attributeAt: #l)+1.
+			e attributeAt: #l put: l.
+			r := (e attributeAt: #r) + rotation.
+			o := e attributeAt: #o.
+			off := e attributeAt: #off.
 			d := drawDist value: e attributes.
 			
-			"e color: (Color white alpha: d/ diagonal)."
 			e color: ((Color h: (e attributes at: #r) radiansToDegrees+off s: 1 v: 0.5) 
 				alpha: d / diagonal).
 			e size: extent x/o/8.
@@ -1096,17 +1100,17 @@ RSAnimationExamples >> example18SpaceDandy [
 			(drawDist value: e attributes) > diagonal ifTrue: [ init value: e ].
 			].
 		 ].
-	view when: RSExtentChangedEvent do: [ 
-		view camera
-			zoomToFit: view extent 
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera
+			zoomToFit: canvas extent 
 			extent: extent ].
-	^ view.
+	^ canvas.
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example19Gris [
 	<script: 'self new example19Gris open setLabel: ''Roassal :V'''>
-		| c label shape border r mini animation g|
+	| c label shape border r mini animation g|
 	c := RSCanvas new.
 	r := Random new.
 	border := RSBorder new.
@@ -1219,31 +1223,35 @@ RSAnimationExamples >> example20Flor [
 { #category : #perlin }
 RSAnimationExamples >> example21Rainbow [
 	<script: 'self new example21Rainbow open setLabel: ''Worms'''>
-	| v r shape mode color frame |
-	v := RSView new.
-	v clearBackground: false.
-	v color: Color black.
-	r := Random new.
-	shape := RSShapeBuilder circle
-		onElement;
-		attributesDo: [ [ :att | 
-			| xs ys |
-			xs := r rsNext: -3 and: 3.
-			ys := (xs between: -1 and: 1)
-				ifTrue: [ r next > 0.5
-					ifTrue: [ r rsNext: 1 and: 3 ]
-					ifFalse: [ r rsNext: -3 and: -1 ] ]
-				ifFalse: [ r rsNext: 3 and: -3 ].
-			att
-				at: #s put: 0;
-				at: #t put: 0;
-				at: #degX put: r next;
-				at: #degY put: r next;
-				at: #xs put: xs;
-				at: #ys put: ys;
-				at: #hue put: r next * 360;
-				at: #hue2 put: 4 ] ];
-		border: [ RSBorder new width: 0.5 ].
+	| canvas random shape mode color frame border |
+	canvas := RSCanvas new.
+	canvas clearBackground: false.
+	canvas color: Color black.
+	random := Random new.
+	
+	border := RSBorder new
+		width: 0.5;
+		yourself. 
+	shape := [ | e att xs ys  |
+		e := RSEllipse new.
+		e border: border.
+		att := e attributes.
+		xs := random rsNext: -3 and: 3.
+		ys := (xs between: -1 and: 1)
+			ifTrue: [ random next > 0.5
+				ifTrue: [ random rsNext: 1 and: 3 ]
+				ifFalse: [ random rsNext: -3 and: -1 ] ]
+			ifFalse: [ random rsNext: 3 and: -3 ].
+		att
+			at: #s put: 0;
+			at: #t put: 0;
+			at: #degX put: random next;
+			at: #degY put: random next;
+			at: #xs put: xs;
+			at: #ys put: ys;
+			at: #hue put: random next * 360;
+			at: #hue2 put: 4.
+		e].
 	mode := 1.
 	frame := 0.
 	color := TSScale ordinal
@@ -1255,14 +1263,13 @@ RSAnimationExamples >> example21Rainbow [
 			frame even
 				ifTrue: [ Color black ]
 				ifFalse: [ Color h: (e attributes at: #hue) s: 1 v: 1 ] ]}.
-	v newAnimation repeat
+	canvas newAnimation repeat
 		onStepDo: [ :k | 
-			| elements |
-			v add: shape element.
+			| shapes |
+			canvas add: shape value.
 			frame := frame + 1.
-			elements := v elements copy.
-			elements do: [ :e | | att t s degX degY xs ys hue hue2|
-				"From Milton: please Milton use a class for this work next time"
+			shapes := canvas shapes copy.
+			shapes do: [ :e | | att t s degX degY xs ys hue hue2|
 				att := e attributes.
 				t := att at: #t.
 				s := att at: #s.
@@ -1280,8 +1287,8 @@ RSAnimationExamples >> example21Rainbow [
 				t := t + 0.02.
 				s := s + 0.2.
 				e translateBy: ((xs @ ys )+(degX cos@ degY cos)) * t.
-				degX := degX +  (r rsNext: 0.1 and: 0.8).
-				degY := degY + (r rsNext: 0.1 and: 0.8).
+				degX := degX +  (random rsNext: 0.1 and: 0.8).
+				degY := degY + (random rsNext: 0.1 and: 0.8).
 				hue := hue + hue2.
 				(hue > 360 or: [hue < 0])
 					ifTrue: [ hue2 := hue2 negated ].
@@ -1292,92 +1299,94 @@ RSAnimationExamples >> example21Rainbow [
 					at: #degY put: degY;
 					at: #hue put: hue;
 					at: #hue2 put: hue2.
-				((Rectangle center: 0@0 extent: v extent + 200) 
+				((Rectangle center: 0@0 extent: canvas extent + 200) 
 					containsPoint: e position)
 					ifFalse: [ e remove ]  ] ].
-	v
+	canvas
 		when: RSExtentChangedEvent
-		do: [ v camera zoomToFit: v extent extent: v extent ];
+		do: [ canvas camera zoomToFit: canvas extent extent: canvas extent ];
 		when: RSMouseClick do: [ 
 			mode := mode +1.
 			mode > 2 ifTrue: [mode := 0] ].
-	^ v
+	^ canvas
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example22Stars [
 	<script: 'self new example22Stars open setLabel: ''Stars'''>
-	| v color shape r stars |
-	v := RSView new.
-	r := Random new.
+	| canvas color random stars |
+	canvas := RSCanvas new.
+	random := Random new.
 	color := TSScale linear domain: #(0 10); range: #('black' 'blue').
-	shape := RSShapeBuilder box
-		size: 39;
-		color: [ :m | color scale: m-1 // 10 ].
-	v addAll: (shape elementsOn: (1 to: 100)).
-	RSGridLayout new lineItemsCount: 10; gapSize: 1; on: v elements. 
-	shape := RSShapeBuilder star 
-		size: [ r rsNext: 10 and: 100 ];
-		position: [ (r rsNext: 50 and: 300)@ (r rsNext: 50 and: 300) ];
-		color: Color white.
-	stars := shape elementsOn: (1 to: 5).
-	v addAll: stars.
-	v newAnimation repeat to: 360; onStepDo: [ :t |
+	canvas addAll: ((1 to: 100) collect: [:m | 
+		RSBox new
+			size: 39;
+			color: (color scale: m-1 // 10);
+			yourself ]).
+	RSGridLayout new lineItemsCount: 10; gapSize: 1; on: canvas nodes. 
+	stars := (1 to: 5) collect: [:m | 
+		RSShapeFactory star
+			withBorder;
+			size: (random rsNext: 10 and: 100);
+			position:  (random rsNext: 50 and: 300)@ (random rsNext: 50 and: 300);
+			color: Color white;
+			yourself ].
+	canvas addAll: stars.
+	canvas newAnimation repeat to: 360; onStepDo: [ :t |
 		stars do: [ :star | | position |
 			position := star position.
 			star matrix loadIdentity.
 			star translateTo: position.
 			star rotateByDegrees: t ] ].
-	v when: RSExtentChangedEvent do: [ v zoomToFit ].
-	^ v
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
+	^ canvas
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example23CircleWaves [
 	<script: 'self new example23CircleWaves open setLabel: ''Waves'''>
-	| v shape elements frame |
-	v := RSView new.
+	| canvas shapes frame |
+	canvas := RSCanvas new.
 	frame := 0.
+		
+	shapes := #('15c108' '8d0402' '0002ab') collect: [:m |
+		RSPolygon new
+			noPaint;
+			border: (RSBorder new
+				color: ((Color colorFrom: m) alpha: 0.5);
+				width: 10;
+				yourself);
+			yourself ].
+	canvas addAll: shapes.
 	
-	shape := RSShapeBuilder polygon
-		color: nil;
-		border: [:m | RSBorder new 
-			color: ((Color colorFrom: m) alpha: 0.5);
-			width: 10 ];
-		onElement;
-		privatePoints: [ :e | | points |
+	canvas newAnimation repeat onStepDo: [ :transition | 
+		frame := frame + 0.02.
+		shapes doWithIndex: [ :poly :index | 
+			| points |
 			points := RSPolygon
 				generateUnitNgonPoints: 150
 				rotation: 0 
 				angle: [ :a :i | a ]
 				radius: [ :a :i | | t |
 					t := frame.
-					200 + (((a * 8) - ((e index * 2 * Float pi) / 3) + t ) cos * 
+					200 + (((a * 8) - ((index * 2 * Float pi) / 3) + t ) cos * 
 				(((1 + (a - t) cos) / 2) raisedTo: 3) * 32 ) ].
-			e resetPath.
-			points
-			 ].
-		
-	elements := shape elementsOn: #('15c108' '8d0402' '0002ab').
-	v addAll: elements.
-	
-	v newAnimation repeat onStepDo: [ :t | 
-		frame := frame + 0.02.
-		elements do: [ :e | 
-			shape
-				updateElement: e
-				withCommand: #privatePoints: ] ].
-	"at this point: elements encompassingRectangle = zero"
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500@500 ].
-	^ v
+			poly 
+				privatePoints: points;
+				resetPath
+			 ] ].
+	canvas 
+		when: RSExtentChangedEvent 
+		do: [ canvas camera zoomToFit: canvas extent extent: 500@500 ].
+	^ canvas
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example24Lines [
 	<script: 'self new example24Lines open setLabel: ''.=.= Lines =.=.'''>
-	| v frame radius hueOffset shape line angleSp elements soffset size mult  |
-	v := RSView new.
-	v color: Color black.
+	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
+	canvas := RSCanvas new.
+	canvas color: Color black.
 	frame := 0.
 	radius := 200.
 	hueOffset := 0.
@@ -1385,80 +1394,84 @@ RSAnimationExamples >> example24Lines [
 	"<globals>"
 	soffset := nil. size := nil. mult := 0.
 	"</globals>"
-	line := RSSingleEdgeBuilder line
-		width: 1.5;
-		color: [ :m | Color h: m + hueOffset s: 0.6 v: 1 ].
-	shape := RSShapeBuilder composite 
-		onMyselfDo: [ :i | [:e | | ed pos offset ang a soff|
-			ang := i degreesToRadians.
+	shape := [ :array |
+		array collect: [ :m | | com ang a line |
+			com := RSComposite new.
+			com model: m + soffset.
+			ang := m degreesToRadians.
 			a := Float halfPi + ang.
-			soff := soffset.
-			offset := a * size.
-			pos := 0.
-			ed := line from: 0@0; to: 0@pos; edgeOn: i+soff.
-			
-			e attributes at:#update put: [
-				pos := (angleSp negated + offset) cos * 30.
-				line updateElement: ed withCommand: #color:.
-				ed to: 0@pos.
-				ed update.
-				 ].
-			e add: ed shape.
-			e translateTo: ang cos @ ang sin * radius * mult.
-			e matrix rotateByRadians: a. ] ].
+			com attributeAt: #offset put: a * size.
+			line := RSLine new
+				width: 1.5;
+				yourself.
+				
+			com add: line.
+			com translateTo: ang cos @ ang sin * radius * mult.
+			com matrix rotateByRadians: a.
+			com ] ].
 	
 	soffset := 0. size := 12. mult := 1.
-	elements := shape elementsOn: (0 to: 359 by: 12).
-	v addAll: elements.
+	shapes := shape value: (0 to: 359 by: 12).
+	canvas addAll: shapes.
 	
 	soffset := 180. size := 8. mult := 0.5.
-	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements.
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes.
 	
 	soffset := 120. size := 4. mult := 0.5@0.75.
-	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements."
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes."
 	
 	"soffset := 240. size := 4. mult := 0.75@0.5.
-	elements := shape elementsOn: (0 to: 359 by: 5).
-	v addAll: elements.
-	elements := v elements.
-	v addShape: (RSLabel new 
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes.
+	shapes := canvas nodes.
+	canvas addShape: (RSLabel new 
 		text: 'Roassal';
 		fontSize: 30;
 		border: (RSBorder new color: Color white);
 		color: nil).
-	v newAnimation repeat onStepDo: [ :t |
+	canvas newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1. 
 		angleSp := frame / 300 * Float twoPi.
 		hueOffset := hueOffset + 1.
-		elements do: [ :e | (e attributes at: #update) value ].
+		shapes do: [ :s | | pos line |
+			pos := (angleSp negated + (s attributeAt: #offset)) cos * 30.
+			line := s shapes first.
+			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
+			line endPoint: 0@ pos ].
 		 ].
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 500 asPoint ].
-	^ v
+	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
+	^ canvas
 ]
 
 { #category : #lines }
 RSAnimationExamples >> example25Lines [
 	<script: 'self new example25Lines open setLabel: ''Line patterns'''>
-	| v radius bar step line shape frame label |
-	v := RSView new.
-	v color: (Color colorFrom: 'EEEEEE').
+	| canvas radius bar step frame label border |
+	canvas := RSCanvas new.
+	canvas color: (Color colorFrom: 'EEEEEE').
 	radius := 200.
 	bar := 180.
 	step := 1.
 	frame := 0.
-	line := RSSingleEdgeBuilder line
+	border := RSBorder new
 		color: Color lightGray;
-		from: bar negated /2 @0;
-		to: bar / 2 @ 0.
-	shape := RSShapeBuilder composite add: [line edge shape ].
-	v addAll: (shape elementsOn: (0 to: 360 by: 0.5) ).
-	v newAnimation repeat onStepDo: [ :t | 
+		yourself.
+	canvas addAll: ((0 to: 360 by: 0.5) collect: [ :i |
+		RSComposite new
+			model: i;
+			add: (RSLine new
+				border: border;
+				startPoint: bar negated /2 @0;
+				endPoint: bar / 2 @ 0;
+				yourself);
+			yourself ] ).
+	canvas newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 4.
-		v elements do: [ :e | | radian |
-			radian := e model degreesToRadians.
-			e matrix 
+		canvas nodes do: [ :s | | radian |
+			radian := s model degreesToRadians.
+			s matrix 
 				loadIdentity;
 				translation: radius * (radian cos@radian sin);
 				rotateByRadians: radian + (frame * (radian * step * 0.5) sin * 0.05) ]
@@ -1470,14 +1483,14 @@ RSAnimationExamples >> example25Lines [
 		noPaint;
 		bold;
 		border: (RSBorder new paint: Color black; dashArray: #(4)).
-	v addShape: label.
-	v newAnimation repeat from: 0; to: 8; on: label border set: #dashOffset:.
+	canvas addShape: label.
+	canvas newAnimation repeat from: 0; to: 8; on: label border set: #dashOffset:.
 	
-	v when: RSMouseClick do: [
+	canvas when: RSMouseClick do: [
 		step := step + 0.5.
 		step > 11 ifTrue: [ step := 1 ] ].
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 640@640 ].
-	^ v
+	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 640@640 ].
+	^ canvas
 	
 
 
@@ -1488,32 +1501,34 @@ RSAnimationExamples >> example25Lines [
 RSAnimationExamples >> example26PerlinNoise [
 	<script: 'self new example26PerlinNoise open setLabel: ''Perlin Noise'''>
 	"inpired by wangyasai Twitter: @yasai_wang"
-	| v r s c1 c2 c3 size perlin noiseScale rec |
-	v := RSView new.
-	rec := Rectangle rsCenter: 0@0 extent: World extent.
-	r := Random new.
+	| canvas random c1 c2 c3 size perlin noiseScale rec |
+	canvas := RSCanvas new.
+	rec := Rectangle rsCenter: 0@0 extent: self currentWorld extent.
+	random := Random new.
 	size := 200.
 	noiseScale := 300.
-	v clearBackground: false.
+	canvas clearBackground: false.
 	perlin := TSPerlinNoise2 new.
-	v color: (Color colorFrom: '150832').
+	canvas color: (Color colorFrom: '150832').
 	c1 := '45217C'. c2 := '0799F2'. c3 := 'white'.
 	
-	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e| | a b c newcircle |
+	canvas addAll: ((1 to: size) collect: [ :i |
+		| newcircle |
 		newcircle := [ :col | RSEllipse new
-			position: (r next* rec width)@(r next * rec height) + rec origin;
-			size: 0.1 + (e index /size);
-			color: ((Color colorFrom: col) alpha: e index*(250 / 255)/ size);
+			position: (random next* rec width)@(random next * rec height) + rec origin;
+			size: 0.1 + (i/size);
+			color: ((Color colorFrom: col) alpha: i*(250 / 255)/ size);
 			yourself ].
-		a := newcircle value: c1.
-		b := newcircle value: c2.
-		c := newcircle value: c3.
-		e add: a; add: b; add: c.
-		] ].
-	v addAll: (s elementsOn: (1 to: size)).
-	v newAnimation repeat onStepDo: [ :t | | speed |
+		RSComposite new
+			model: i;
+			add: (newcircle value: c1);
+			add: (newcircle value: c2);
+			add: (newcircle value: c3);
+			yourself.
+			 ] ).
+	canvas newAnimation repeat onStepDo: [ :t | | speed |
 		speed := 0.4.
-		v elements do: [ :c |
+		canvas nodes do: [ :c |
 			c shapes do: [ :e |
 				| angle p dir vel pval |
 				p := e position.
@@ -1526,12 +1541,12 @@ RSAnimationExamples >> example26PerlinNoise [
 				vel := dir * speed.
 				p := p + vel.
 				(rec containsPoint: p) ifFalse: [ 
-					p := (r next * rec width )@(r next * rec height) + rec origin ].
+					p := (random next * rec width )@(random next * rec height) + rec origin ].
 				e translateTo: p.
 				].
 			].
 		].
-	^ v
+	^ canvas
 	
 
 
@@ -1541,30 +1556,30 @@ RSAnimationExamples >> example26PerlinNoise [
 { #category : #perlin }
 RSAnimationExamples >> example27RoassalPerlinNoise [
 	<script: 'self new example27RoassalPerlinNoise open extent: 800@500; setLabel: ''Roassal'''>
-	| v density rect maxLife size shape perlin r color noiseScale sc1 sc2 |
-	v := RSView new.
-	v color: Color black.
-	v clearBackground: false.
+	| canvas density rect maxLife size perlin r color noiseScale sc1 sc2 |
+	canvas := RSCanvas new.
+	canvas color: Color black.
+	canvas clearBackground: false.
 	r := Random new.
 	perlin := TSPerlinNoise2 new.
 	density := 800. maxLife := 10. noiseScale := 800.
-	rect := Rectangle rsCenter: 0@0 extent: World extent.
+	rect := Rectangle rsCenter: 0@0 extent: self currentWorld extent.
 	size := rect width * rect height / density.
 	color := TSScale ordinal rangeFrom: { '6E39CC'. '0799F2'. 'white'}.
 	sc1 := TSScale linear domain: {1. size}; range: #(5 1).
 	sc2 := TSScale linear domain: {1. size}; range: #(1 2).
-	shape := RSShapeBuilder ellipse
-		onMyselfDo: [ :m | [ :e | 
-			e size: (sc2 scale: e index).
-			e attributes
-				at: #flip put: (r next* 2) asInteger * 2 - 1;
-				at: #life put: r next * maxLife;
-				at: #color put: (color scale: (r next * 3) asInteger) ] ];
-		position: [ (r next * rect width)@ (r next * rect height )+ rect origin ].
-	v addAll: (shape elementsOn: (1 to: size)).
-	
-	v newAnimation repeat onStepDo: [ :t |
-		v elements do: [ :e | 
+	canvas addAll: ((1 to: size) collect: [:i |
+		RSEllipse new
+			size: (sc2 scale: i);
+			model: i;
+			attributeAt: #flip put: (r next* 2) asInteger * 2 - 1;
+			attributeAt: #life put: r next * maxLife;
+			attributeAt: #color put: (color scale: (r next * 3) asInteger);
+			position: (r next * rect width)@ (r next * rect height )+ rect origin;
+			yourself.
+		]).
+	canvas newAnimation repeat onStepDo: [ :t |
+		canvas nodes do: [ :e | 
 			| life att p flip iterations respawn case fadeRatio colorCase c |
 			att := e attributes.
 			flip := att at: #flip.
@@ -1572,12 +1587,12 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 			c := att at: #color.
 			life := life - 0.06667.
 			respawn := [
-				shape updateElement: e withCommand: #position:.
+				e position: (r next * rect width)@ (r next * rect height )+ rect origin.
 				life := maxLife. ].
 			life < 0 ifTrue: respawn.
 			att at: #life put: life.
 			p := e position-rect origin.
-			iterations := sc1 scale: e index.
+			iterations := sc1 scale: e model.
 			1 to: iterations do: [ :i| | angle dir |
 				angle := Float twoPi * noiseScale * flip * (perlin 
 					snoise: p x / noiseScale  
@@ -1603,8 +1618,10 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 			c := (colorCase scale: case) value.
 			e color: (c alpha: fadeRatio).
 			 ]. ].
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent rectangle: rect ].
-	^ v
+	canvas 
+		when: RSExtentChangedEvent 
+		do: [ canvas camera zoomToFit: canvas extent rectangle: rect ].
+	^ canvas
 	"morph := v canvas morph.
 	morph extent: 800@500.
 	v2 := RSView new.
@@ -1634,22 +1651,23 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 { #category : #examples }
 RSAnimationExamples >> example28AnimationCircle [
 	<script: 'self new example28AnimationCircle open setLabel: ''Animation Test'''>
-	| v radius line shape elements update points lines sc1 sc2 |
-	v := RSView new.
+	| canvas radius  shapes update points lines sc1 sc2 |
+	canvas := RSCanvas new.
 	radius := 50.
 	lines := 1.
-	v addShape: (RSEllipse new
+	canvas addShape: (RSEllipse new
 		color: Color black;
 		radius: radius).
-	shape := RSShapeBuilder circle
-		color: Color white;
-		onElement;
-		if: [ :e | e index = 1 ] then: [ :s | s color: Color red ];
-		if: [ :e | e index = 2 ] then: [ :s | s color: Color green ].
-	line := RSSingleEdgeBuilder line
-		width: 0.1;
-		color: Color white.
-	elements := shape elementsOn: (1 to: 10).
+	shapes := (1 to: 10) collect: [:i | | e |
+		e := RSEllipse new
+			model: i; 
+			index: i;
+			size: 5;
+			color: Color white;
+			yourself.
+		i = 1 ifTrue: [ e color: Color red ].
+		i = 2 ifTrue: [ e color: Color green ].
+		e ].
 	
 	points := [ :r :i |
 		| a b slice |
@@ -1662,34 +1680,40 @@ RSAnimationExamples >> example28AnimationCircle [
 	update := [ 
 		lines := lines + 1.
 		lines > 10 ifTrue: [ lines := 2 ].
-		v elements copy do: #remove.
-		v edges copy do: #remove.
-		elements do: [ :e | e model: (e index - 1) / (lines*2) ].
+		canvas nodes copy do: #remove.
+		canvas edges copy do: #remove.
+		shapes do: [ :e | e model: (e index - 1) / (lines*2) ].
 		1 to: lines do: [ :i| | ab |
 			ab := points value: radius value: i.
-			v add: (line from: ab key; to: ab value; edge).
-			v add: (elements at: i).
+			canvas add: (
+				RSLine new
+					width: 0.1;
+					color: Color white;
+					startPoint: ab key;
+					endPoint: ab value;
+					yourself).
+			canvas add: (shapes at: i).
 		].
 	].
 	update value.
 	sc1 := TSScale linear range: {0. Float twoPi}.
 	sc2 := TSScale linear domain: #(-1 1).
-	elements do: [ :e | | animation |
-		animation := v newAnimation repeat 
+	shapes do: [ :e | | animation |
+		animation := canvas newAnimation repeat 
 			"easing: TSEasing bounceOut;"
-			duration: 3 seconds; onStepDo: [ :t | 
+			duration: 2 seconds; onStepDo: [ :t | 
 			| val |
 			val := (e model + t)%1.
 			val := (sc1 scale: val) cos.
-			v edges size >= e index ifTrue: [ | ab |
+			canvas edges size >= e index ifTrue: [ | ab |
 				ab := points value: radius - 2.5 value: e index.
 				e position: (sc2 range: { ab key. ab value. };
 					scale: val).
 			] ].
 		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
-	v @ RSCanvasController.
-	^ v
+	canvas @ RSCanvasController.
+	^ canvas
 	
 
 
@@ -1700,114 +1724,127 @@ RSAnimationExamples >> example28AnimationCircle [
 { #category : #lines }
 RSAnimationExamples >> example29Bezier [
 	<script: 'self new example29Bezier open setLabel: ''Bezier Test'''>
-	| v size theta s bezier sc |
-	v := RSView new.
+	| canvas size theta sc borderWhite cpController |
+	canvas := RSCanvas new.
 	size := 50.
 	theta := 0.
-	v color: Color black.
+	canvas color: Color black.
 	sc := TSScale linear domain: #(-1 1); range: #(0 80).
-	bezier := RSSingleEdgeBuilder bezier
-		color: Color white;
-		width: 2;
-		controlPoints: [ :m | 
+	cpController := RSBlockCPController new
+		block: [ :line | 
 			| x1 |
-			x1 := sc scale: (theta + (m * 5)) sin.
+			x1 := sc scale: (theta + (line model * 5)) sin.
 			Array
 				with: x1 @ 0
 				with: 100 @ -100
 				with: 100 @ 50
 				with: 200 @ -120 ];
-		onElement;
-		paint: [ :e| (Color h: 360 / size * e index s: 1 v: 1 alpha: 0.4) ];
-		markerEnd: [ :e | 
-			(RSShapeBuilder triangle
-				extent: 10@20;
-				color: e paint;
-				border: (RSBorder new color: Color white);
-				element) shape asMarker offset: -10 ] .
-	s := RSShapeBuilder composite onMyselfDo: [ :m | [ :e | 
-		| offset b |
-		offset := Float twoPi / size * e index.
-		e matrix rotateByRadians: offset.
-		b := bezier edgeOn: offset index: e index.
-		"b paint:  Variable or expression expected ->."
-		e add: b shape.
-		e attributes
-			at: #update
-			put: [ bezier updateElement: b withCommand: #controlPoints: ] ] ].
-	v addAll: (s elementsOn: (1 to: size)).
-	v newAnimation repeat onStepDo: [ :t | 
+		yourself.
+	borderWhite := RSBorder new
+		color: Color white;
+		yourself.
+	canvas addAll: ((1 to: size) collectWithIndex: [ :m :index | 
+		| com offset edge |
+		com := RSComposite new.
+		offset := Float twoPi / size * index.
+		com matrix rotateByRadians: offset.
+		edge := RSBezier new
+			color: Color white;
+			model: offset;
+			width: 2;
+			controlPointsController: cpController;
+			paint: (Color h: 360 / size * index s: 1 v: 1 alpha: 0.5);
+			yourself.
+		edge 
+			markerEnd: ((RSShapeFactory triangle
+					extent: 10@20;
+					color: edge paint;
+					border: borderWhite;
+					yourself) asMarker 
+				offset: -10;
+				yourself).
+		com add: edge.
+		com ]).
+	canvas newAnimation repeat onStepDo: [ :t | 
 		theta := theta + 0.0523.
-		v elements do: [ :e | (e attributes at: #update) value ] ].
-	v
+		canvas nodes do: [ :com | com shapes first update ] ].
+	canvas
 		when: RSExtentChangedEvent
-		do: [ v camera zoomToFit: v extent extent: 500 @ 500 ].
-	^ v
+		do: [ canvas camera zoomToFit: canvas extent extent: 500 @ 500 ].
+	^ canvas
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example30SVGIcons [
 	<script: 'self new example30SVGIcons open setLabel: ''Icons'''>
-	| v elements s color r theta |
-	v := RSView new.
+	| canvas shapes color r theta |
+	canvas := RSCanvas new.
 	r := Random new.
 	color := RSGradientPalette gradient21.
 	color range at: 1 put: RSGradientPalette trueSunset.
 	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
-	s := RSShapeBuilder svgPath
-		draggable;
-		svgPath: [ :m | self perform: m ];
-		position: [ (r next * 50)@ (r next * 50) - 25 ];
-		color: [:m | | grad |
-			grad := color scale: m.
-			grad start: -20 asPoint; stop: 20 asPoint.
-			grad ].
-	elements := s elementsOn: #(america puzzlePiece supermarketCart).
-	v addAll: elements.
-	v newAnimation repeat onStepDo: [:t | 
-		elements do: [:e | | p ang ext block | 
-			p := e position.
-			ext := e extent / 2.
-			ang := theta at: e index.
+	
+	shapes := #(america puzzlePiece supermarketCart) collectWithIndex: [ :m :index |
+		| grad |
+		grad := (color scale: m)
+			start: -20 asPoint;
+			stop: 20 asPoint.
+		RSSVGPath new
+			draggable;
+			index: index;
+			svgPath: (self perform: m);
+			position: (r next * 50)@ (r next * 50) - 25;
+			color: grad;
+			yourself ].
+	canvas addAll: shapes.
+	canvas newAnimation repeat onStepDo: [:t | 
+		shapes do: [:shape | | p ang ext block | 
+			p := shape position.
+			ext := shape extent / 2.
+			ang := theta at: shape index.
 			block := [ 
 				ang := Float pi / 4 + ang.
-				p := (ang cos@ ang sin) * 1.5 + e position. ].
+				p := (ang cos@ ang sin) * 1.5 + shape position. ].
 			p := (ang cos@ ang sin) * 1.5 + p.
 			(p x + ext x) > 50 ifTrue: block.
 			(p y + ext y)  > 50 ifTrue: block.
 			(p x - ext x) < -50 ifTrue: block.
 			(p y - ext y) < -50 ifTrue: block.
-			theta at: e index put: ang.
-			e position: p.
+			theta at: shape index put: ang.
+			shape position: p.
 			 ] ].
-	v addShape: (RSBox new
+	canvas addShape: (RSBox new
 		extent: 100@100;
 		noPaint;
 		withBorder).
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent extent: 100 asPoint ].
-	^ v
+	canvas 
+		when: RSExtentChangedEvent 
+		do: [ canvas camera zoomToFit: canvas extent extent: 100 asPoint ].
+	^ canvas
 	
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example31Miku [
 	<script: 'self new example31Miku open setLabel: ''Miku'''>
-	| r v lines svg easing |
-	r := Random new.
-	v := RSView new.
+	| random canvas lines easing |
+	random := Random new.
+	canvas := RSCanvas new.
 	lines := RSAnimationExamples new miku lines.
 	lines := (0 to: lines size / 2 - 1)
 		collect: [ :i | (lines at: i * 2 + 1) -> (lines at: i * 2 + 2) ].
-	svg := RSShapeBuilder svgPath
-		draggable;
-		svgPath: #key;
-		color: #value.
-	v addAll: (svg elementsOn: lines).
-	v @ RSCanvasController.
+	canvas addAll: (lines collectWithIndex: [ :line :index |
+		RSSVGPath new
+			draggable;
+			index: index;
+			svgPath: line key;
+			color: line value;
+			yourself ] ).
+	canvas @ RSCanvasController.
 	easing := RSEasing elasticOut.
-	v elements do: [ :e | | position |
-		position := (r next * 1000) @ (r next * 1000) - 100.
-		v newAnimation
+	canvas nodes do: [ :e | | position |
+		position := (random next * 1000) @ (random next * 1000) - 100.
+		canvas newAnimation
 			easing: easing;
 			delay: (e index * 50) milliSeconds;
 			from: position;
@@ -1815,20 +1852,20 @@ RSAnimationExamples >> example31Miku [
 			duration: 5 seconds;
 			on: e shape set: #position:.
 			e position: position ].
-	v addShape: (RSLabel new
+	canvas addShape: (RSLabel new
 		text: 'Roassal';
 		fontName: 'Marker Felt';
 		noPaint;
 		border: (RSBorder new color: Color transparent; width: 1.5);
 		fontSize: 100;
 		position: 320 @ 630).
-	v newAnimation
+	canvas newAnimation
 		delay: 6 seconds;
 		duration: 3 seconds;
 		from: Color transparent;
 		to: Color black;
-		on: v shapes last border set: #color:.
-	^ v
+		on: canvas shapes last border set: #color:.
+	^ canvas
 ]
 
 { #category : #examples }
@@ -1912,53 +1949,54 @@ RSAnimationExamples >> example32RSLocate [
 
 { #category : #perlin }
 RSAnimationExamples >> example33AlteredWorld [
-	<script: 'self new example33AlteredWorld open setLabel: ''Altered World :V'''>
 	"base on Gerard Ferrandez source code"
+
 	"https://codepen.io/ge1doot/details/GQobbq/"
-	| v extent px perlin path r period length |
-	v := RSView new.
+
+	<script:
+	'self new example33AlteredWorld open setLabel: ''Altered World :V'''>
+	| canvas extent px perlin r period length |
+	canvas := RSCanvas new.
 	r := Random new.
-	extent := 500@500.
+	extent := 500 @ 500.
 	period := 0.01.
 	length := 400.
-	v clearBackground: false.
-	v color: Color black.
+	canvas clearBackground: false.
+	canvas color: Color black.
 	px := 0.
 	perlin := TSPerlinNoise3 new octaves: 5.
-	path := RSSingleEdgeBuilder polyline
-		width: 0.5.
-	v addAll: (path edgesOn: (1 to: extent y /6)).
-	v newAnimation
+	canvas addAll: ((1 to: extent y / 6) collect: [ :m | 
+			 RSPolyline new
+				 width: 0.5;
+				 yourself ]).
+	canvas newAnimation
 		loops: extent x;
 		duration: 50 milliSeconds;
-		when: RSAnimationLoopEvent do: [
-			v edges do: [ :e | | x y n points m |
-				x := px.
-				y := extent y * r next.
-				n := perlin noise: x * period and: y * period.
-				e color: ((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
-				
-				points := OrderedCollection new.
-				points add: x@y.
-				m := 0.
-				[ m < length and:  [y >= 0 and: [ y <= extent y ] ]] whileTrue: [ 
+		when: RSAnimationLoopEvent do: [ 
+			canvas edges do: [ :e | 
+					| x y n points m |
+					x := px.
+					y := extent y * r next.
 					n := perlin noise: x * period and: y * period.
-					x := x + (n * 14) cos.
-					y := y + (n * 14) sin.
-					points add: x@y.
-					m := m + 1 ].
-				e shape controlPoints: points.
-				].
-			v signalUpdate.
-			px := px + 1
-			].
-	v when: RSExtentChangedEvent do: [ v camera 
-		zoomToFit: v extent 
-		rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
-	^ v
-	
-
-
+					e color:
+							((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
+					points := OrderedCollection new.
+					points add: x @ y.
+					m := 0.
+					[ m < length and: [ y between: 0 and: extent y ] ] whileTrue: [ 
+							n := perlin noise: x * period and: y * period.
+							x := x + (n * 14) cos.
+							y := y + (n * 14) sin.
+							points add: x @ y.
+							m := m + 1 ].
+					e shape controlPoints: points ].
+			canvas signalUpdate.
+			px := px + 1 ].
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera
+			zoomToFit: canvas extent
+			rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
+	^ canvas
 ]
 
 { #category : #examples }
@@ -2020,68 +2058,72 @@ RSAnimationExamples >> example34Tick [
 { #category : #perlin }
 RSAnimationExamples >> example35Perlin [
 	<script: 'self new example35Perlin open setLabel: ''Perlin :V'''>
-	| v r s frame scIterations scRadius rect extent maxLife perlin noiseScale |
-	r := Random new.
-	v := RSView new.
-	v clearBackground: false.
+	| canvas random frame scIterations scRadius rect extent maxLife perlin noiseScale respawnTop |
+	random := Random new.
+	canvas := RSCanvas new.
+	canvas clearBackground: false.
 	extent := 500@500.
 	rect := Rectangle rsCenter: extent/2 extent: extent.
 	maxLife := 10.
-	perlin := TSPerlinNoise2 new.
-	noiseScale := 160.
-	v color: Color black.
+	perlin := TSPerlinNoise3 new octaves: 3.
+	noiseScale := 80.
+	canvas color: Color black.
 	scIterations := TSScale linear domain: #(0 100); range: #(5 1).
 	scRadius := TSScale linear domain: #(0 100); range: #(1 3).
 	
-	s := RSShapeBuilder circle onMyselfDo: [:i | [:e |
-		| iterations life flip c1 c2 respawnTop color |
-		iterations := scIterations scale: i.
-		e size: (scRadius scale: i).
-		flip := (r next * 2 ) asInteger * 2 - 1. 
-		c1 := c2 :=  Color white.
+	frame := 0.
+	respawnTop := [ :e | 
+		e 
+			attributeAt: #life put: random next* maxLife;
+			position: random next @ 0 * extent ].
 		
-		respawnTop := [
-			life := r next * maxLife.
-			e position: r next @ 0 * extent ].
-		respawnTop value.
-		(r next * 3) asInteger = 1 ifTrue: [ 
+	canvas addAll: ((1 to: 100) collect: [:n | | e c1 c2 |
+		c1 := c2 :=  Color white.
+		(random next * 3) asInteger = 1 ifTrue: [ 
 			c1 := Color purple.
 			c2 := Color cyan ].
+		e := RSEllipse new.
+		e size: (scRadius scale: n).
+		e attributes
+			at: #c1 put: c1;
+			at: #c2 put: c2;
+			at: #iterations put: (scIterations scale: n).
+		respawnTop value: e.
+		e ]).
+	canvas newAnimation repeat onStepDo: [ :t |
+		frame := frame + 1.
 		
-		e attributes at: #update put: [ | p vel heading alpha |
-			(life := life - 0.01666) < 0 ifTrue: respawnTop.
+		canvas nodes do: [ :e |
+			| life p heading vel color alpha |
+			life := e attributeAt: #life.
+			e attributeAt: #life put: (life := life - 0.01666).
+			life < 0 ifTrue: [ respawnTop value: e ].
 			p := e position.
 			vel := 0@0.
-			1 to: iterations do: [ :k | 
+			1 to: (e attributeAt: #iterations) do: [ :k | 
 				| transition angle |
 				transition := p x / extent x.
 				angle := (perlin
-					snoise: p x / noiseScale
+					noise: p x / noiseScale
 					and: p y / noiseScale) * transition * Float twoPi * noiseScale.
 				vel := angle cos @ angle sin * 0.2.
 				p := p + vel. ].
-			(rect containsPoint: p) ifFalse: respawnTop.
+			(rect containsPoint: p) ifFalse: [respawnTop value: e].
 			e position: p.
+			
+			
 			heading := vel angle / Float twoPi.
 			heading < 0 ifTrue: [ heading := heading negated ].
-			color := TSScale linear range: { c1. c2 }; scale: heading.
+			color := TSScale linear 
+				range: { e attributeAt: #c1. e attributeAt: #c2 }; scale: heading.
 			alpha := life * 5 / maxLife min: 1.
 			alpha := (maxLife - life * 5 )/ maxLife min: alpha.
-			color alpha: alpha.
-			e color: color.
-			].
-		 ] ].
-	frame := 0.
-	
-	v addAll: (s elementsOn: (1 to: 100)).
-	v newAnimation repeat onStepDo: [ :t |
-		frame := frame + 1.
-		v elements do: [ :e |
-			(e attributes at:#update) value ]. ].
-	v when: RSExtentChangedEvent do: [ v camera 
-		zoomToFit: v extent
+			e color: (color alpha: alpha).
+			 ]. ].
+	canvas when: RSExtentChangedEvent do: [ canvas camera 
+		zoomToFit: canvas extent
 		rectangle: rect ].
-	^ v
+	^ canvas
 	
 ]
 
@@ -2089,40 +2131,42 @@ RSAnimationExamples >> example35Perlin [
 RSAnimationExamples >> example36RoundRectagles [
 	"example inspired in paper.js"
 	<script: 'self new example36RoundRectagles open setLabel: ''Round Rectangles'''>
-	| v mouse extent s frame scale |
-	v := RSView new.
+	| canvas mouse extent frame scale color |
+	canvas := RSCanvas new.
 	extent := 500@500.
 	mouse := 0@0.
 	scale := [ :i | (1- (i / 25)) * 10 ].
-	s := RSShapeBuilder box
-		size: [:i | 25 * (scale value: i) ];
-		cornerRadius: [:i | 6 * (scale value: i) ];
-		color: RSColorPalette sequential blues9.
-	v addAll: (s elementsOn: (1 to: 25) ).
-	v when: RSExtentChangedEvent do: [ 
-		v camera zoomToFit: v extent extent: extent ].
-	v when: RSMouseMove do: [ :evt | mouse := evt position. ].
+	color := RSColorPalette sequential blues9.
+	canvas addAll:  ((1 to: 25) collect: [ :n |
+		RSBox new
+			size: 25 * (scale value: n);
+			cornerRadius: 6 * (scale value: n);
+			color: (color scale: n);
+			yourself  ] ).
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera zoomToFit: canvas extent extent: extent ].
+	canvas when: RSMouseMove do: [ :evt | mouse := evt position. ].
 	frame := 0.
-	v newAnimation repeat onStepDo: [ :t |
+	canvas newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1.
-		v elements do: [ :e | | pos angle |
-			pos := e position + ((mouse - e position) / (e index + 5)).
+		canvas nodes doWithIndex: [ :e :index | | pos angle |
+			pos := e position + ((mouse - e position) / (index + 5)).
 			angle := e attributes at: #angle ifAbsentPut: [ 0 ].
-			angle := angle +(((frame + e index) / 10) sin * 7).
+			angle := angle +(((frame + index) / 10) sin * 7).
 			e attributes at: #angle put: angle.
 			e matrix 
 				loadIdentity;
 				translation: pos;
 				rotateByDegrees: angle.
 			]].
-	^ v
+	^ canvas
 ]
 
 { #category : #examples }
 RSAnimationExamples >> example37SimpleClock [
 	<script: 'self new example37SimpleClock open setLabel: ''4 gradient corners'''>
-	| v extent half linear color shape label roassal clock location |
-	v := RSView new.
+	| canvas extent half linear color label roassal clock location |
+	canvas := RSCanvas new.
 	extent := 800 @ 600.
 	half := extent / 2.
 	linear := [ :val :a :b | 
@@ -2133,20 +2177,26 @@ RSAnimationExamples >> example37SimpleClock [
 		{(linear value: {0 -> '7D66E9'. 1 -> 'E664AC'} value: -1 @ 1 value: 1 @ -1).
 		(linear value: {0 -> '71C1E2'. 0.9 -> Color transparent} value: -1 @ -1 value: 0 @ 1).
 		(linear value: {0 -> 'EDB259'. 0.9 -> Color transparent} value: 1 @ 1 value: 0 @ -1)}.
-	shape := RSShapeBuilder box
-		draggable;
-		extent: extent;
-		color: color.
-	v addAll: (shape elementsOn: (1 to: 3)).
-	label := RSShapeBuilder label
+
+	canvas addAll: ((1 to: 3) collect: [:i | 
+		RSBox new
+			draggable;
+			extent: extent;
+			color: (color scale: i);
+			yourself
+		]).
+	label := [:t | RSLabel new
 		fontSize: 40;
-		color: Color white.
-	roassal := label elementOn: 'Roassal3 2019'.
-	label fontSize: 100.
-	clock := label elementOn: Time now print24.
-	v add: roassal.
-	v add: clock.
-	v newAnimation
+		color: Color white;
+		text: t;
+		yourself 
+	].
+	roassal := label value: 'Roassal3 2019'.
+	clock := label value: Time now print24.
+	clock fontSize: 100.
+	canvas add: roassal.
+	canvas add: clock.
+	canvas newAnimation
 		duration: 500 milliSeconds;
 		repeat;
 		when: RSAnimationLoopEvent do: [ clock text: Time now print24 ].
@@ -2154,15 +2204,15 @@ RSAnimationExamples >> example37SimpleClock [
 		inner;
 		bottom;
 		offset: 0 @ -15.
-	location move: roassal on: v elements.
-	v
+	location move: roassal on: canvas nodes.
+	canvas
 		addShape: (RSBitmap new form: PolymorphSystemSettings pharoLogoForm).
 	location
 		top;
 		offset: 0 @ 15.
-	location move: v shapes last on: v elements.
-	v @ RSCanvasController.
-	^ v
+	location move: canvas shapes last on: canvas nodes.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
 
 { #category : #examples }
@@ -2260,20 +2310,20 @@ RSAnimationExamples >> example39ForceLayout [
 { #category : #examples }
 RSAnimationExamples >> example40Roassal [
 	<script: 'self new example40Roassal open'>
-	| v points paint fscale timeSize text |
-	v := RSView new.
+	| canvas points paint fscale timeSize text |
+	canvas := RSCanvas new.
 	text := 'Roassal3'.
 	points := RSPolygon 
 		generateUnitNgonPoints: 3
 		rotation: Float pi.
 	
-	v addShape: (RSPolygon new
+	canvas addShape: (RSPolygon new
 		cornerRadii: 5;
 		color: Color red;
 		points: points;
 		size: 300;
 		position: 0@0).
-	v addShape: (RSPolygon new
+	canvas addShape: (RSPolygon new
 		cornerRadii: 5;
 		border: (RSBorder new color: Color white; width: 5);
 		noPaint;
@@ -2296,11 +2346,11 @@ RSAnimationExamples >> example40Roassal [
 			border: (RSBorder new color: Color white; width: 3);
 			paint: paint;
 			fontSize: 130.
-		v newAnimation
+		canvas newAnimation
 			duration: timeSize milliSeconds;
 			delay: ((index - 1) * timeSize) milliSeconds;
 			onStepDo: [ :t |
-				lbl isInACanvas ifFalse: [ v addShape: lbl].
+				lbl isInACanvas ifFalse: [ canvas addShape: lbl].
 				lbl fontSize: (fscale scale: t).
 				paint colorRamp: 
 					{ 0 -> Color white. 
@@ -2309,20 +2359,20 @@ RSAnimationExamples >> example40Roassal [
 					1 -> Color transparent } ];
 			when: RSAnimationEndEvent do: [ lbl remove ].
 		 ].
-	v newAnimation duration: (timeSize * text size) milliSeconds ; when: RSAnimationEndEvent do: [
-		v addShape: (RSLabel new
+	canvas newAnimation duration: (timeSize * text size) milliSeconds ; when: RSAnimationEndEvent do: [
+		canvas addShape: (RSLabel new
 		text:  text;
 		bold;
 		position: 5@ -50;
 		fontName: 'Marker Felt';
 		color: Color white;
 		fontSize: 30).
-		v newAnimation
+		canvas newAnimation
 			easing: RSEasing elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
-			v shapes last matrix shy: t ] ]. 
-	v when: RSExtentChangedEvent do: [ v camera zoomToFit: v extent * 0.8 extent: 300@300 ].
-	^ v
+			canvas shapes last matrix shy: t ] ]. 
+	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent * 0.8 extent: 300@300 ].
+	^ canvas
 ]
 
 { #category : #examples }
@@ -2488,29 +2538,33 @@ RSAnimationExamples >> example42RectangleForceLayout [
 { #category : #perlin }
 RSAnimationExamples >> example43PerlinRose [
 	<script: 'self new example43PerlinRose open extent: 800@600; setLabel: ''Rose'''>
-	| v offset offsetInc inc m s tau perlin polygons |
-	v := RSView new.
+	| canvas offset offsetInc inc m s tau perlin border |
+	canvas := RSCanvas new.
 	offset:= 0@0.			"Perlin offset"
 	offsetInc := 0.006.	"Perlin offset increment"
 	inc := 1. 				"Perlin increment"
 	m := 1.005.				"size multiplier"
 	s := 1.					"Start size of perlin ring"
 	tau := 6.2831855.		"It is the circle constant relating the circumference of a circle to its linear dimension"
-	v color: Color black.
+	canvas color: Color black.
 	perlin := TSPerlinNoise3 new. 
 	perlin octaves: 3.
-	v clearBackground: false.
-	polygons := RSShapeBuilder polygon 
-		noPaint;
-		border: (RSBorder new color: (Color blue alpha: 0.1)).
-	v addAll: (polygons elementsOn: (1 to: 10)).
-	v newAnimation 
+	canvas clearBackground: false.
+	border := RSBorder new
+		color: (Color blue alpha: 0.1);
+		yourself.
+	canvas addAll: ((1 to: 10) collect: [ :i | 
+		RSPolygon new 
+			noPaint
+			border: border;
+			yourself]).
+	canvas newAnimation 
 		loops: 1000;
 		duration: 50 milliSeconds;
 		when: RSAnimationLoopEvent do: [ :evt | 
 			"Create a series of perlin rings from big to small"
 			s < 2000 ifTrue: [ 
-				v elements do: [ :e | | nPoints points |
+				canvas nodes do: [ :e | | nPoints points |
 					nPoints := 2* Float pi * s.
 					nPoints := nPoints min: 500.
 					points := (1 to: nPoints) collect: [ :i | 
@@ -2526,8 +2580,8 @@ RSAnimationExamples >> example43PerlinRose [
 					s := s * m
 				]
 			] ifFalse: [evt animation stop].
-			v signalUpdate. ].
-	^ v
+			canvas signalUpdate. ].
+	^ canvas
 
 
 
@@ -2537,72 +2591,74 @@ RSAnimationExamples >> example43PerlinRose [
 { #category : #perlin }
 RSAnimationExamples >> example44Boat [
 	<script: 'self new example44Boat open'>
-	| v perlin frame scale shape lines boat x pharo |
-	v := RSView new.
-	v color: Color pink.
+	| canvas perlin frame scale lines boat x pharo g updateLines |
+	canvas := RSCanvas new.
+	canvas color: Color pink.
 	perlin := TSPerlinNoise2 new.
 	frame := 0.
 	"perlin octaves: 3."
 	scale := 20.
-	shape := RSSingleEdgeBuilder polyline
-		controlPoints: [ :m | 
-			(1 to: 200) collect: [ :i | | y |
-				y := (perlin snoise: (i+ frame)/scale and: (m + frame) / scale) * 20.
-				i @ (7* m + y) ].
-			];
-		width: #log.
-	lines := shape edgesOn: (1 to: 25).
-	boat := RSShapeBuilder composite shapes: [ | g |
-		g := RSGroup new.
-		g add: (RSSVGPath new
-			svgPath:'M254.4,440.8c0,2.4-2.4,4.8-4.8,4.8l0,0c-2.4,0-4.8-2.4-4.8-4.8V24c0-2.4,2.4-4.8,4.8-4.8l0,0c2.4,0,4.8,2.4,4.8,4.8V440.8z';
-			color: '788787').
-		g add: (RSSVGPath new
-			svgPath: 'M9.6,418.4c10.4,45.6,113.6,80.8,240,80.8s229.6-36,240-80.8H9.6z';
-			color: '9E6226').
-		g add: (RSSVGPath new
-			svgPath: 'M17.6,434.4c4.8,6.4,12,12.8,20,18.4h423.2c8.8-5.6,15.2-12,20-18.4H17.6z';
-			color: 'AF7643').
-		g add: (RSSVGPath new
-			svgPath: 'M367.2,488c24-4.8,44.8-11.2,63.2-18.4H68.8c17.6,7.2,39.2,13.6,63.2,18.4H367.2z';
-			color: 'AF7643').
-		g add: (RSSVGPath new
-			svgPath:'M497.6,414.4c0,2.4-2.4,4.8-4.8,4.8H6.4c-3.2,0-4.8-2.4-4.8-4.8l0,0c0-3.2,2.4-4.8,4.8-4.8H492C495.2,409.6,497.6,411.2,497.6,414.4L497.6,414.4z';
-			color: 'AF7643').
-		g add: (RSEllipse new
-			position: 249.6@ 18.4; radius: 18.4;
-			color: '788787').	
-		g add: (RSSVGPath new
-			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
-			color: '0C91C4').
-		g add: (RSSVGPath new
-			svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6';
-			color: '22B3E0').
-		g add: (RSPolygon new
-			points: {232.8@43.2. 144.8@87.2. 232.8@130.4};
-			color: 'FFAE0B').
-		g add: (RSPolygon new
-			points: {232.8@80.8. 144.8@87.2. 232.8@130.4};
-			color: 'FF860D').
-		g add: (RSPolygon new
-			points: {231.2@144.8. 231.2@363.2. 89.6@363.2};
-			color: 'E00E0E').
-		g add: (RSPolygon new
-			points: {231.2@198.4. 231.2@363.2. 89.6@363.2};
-			color: 'BF1111').
-		g 
-		 ];
-		element.
+	lines := (1 to: 25) collect: [ :i |
+		RSPolyline new
+			"width: i log;"
+			yourself ] as: RSGroup.
+	g := RSGroup new.
+	g add: (RSSVGPath new
+		svgPath:'M254.4,440.8c0,2.4-2.4,4.8-4.8,4.8l0,0c-2.4,0-4.8-2.4-4.8-4.8V24c0-2.4,2.4-4.8,4.8-4.8l0,0c2.4,0,4.8,2.4,4.8,4.8V440.8z';
+		color: '788787').
+	g add: (RSSVGPath new
+		svgPath: 'M9.6,418.4c10.4,45.6,113.6,80.8,240,80.8s229.6-36,240-80.8H9.6z';
+		color: '9E6226').
+	g add: (RSSVGPath new
+		svgPath: 'M17.6,434.4c4.8,6.4,12,12.8,20,18.4h423.2c8.8-5.6,15.2-12,20-18.4H17.6z';
+		color: 'AF7643').
+	g add: (RSSVGPath new
+		svgPath: 'M367.2,488c24-4.8,44.8-11.2,63.2-18.4H68.8c17.6,7.2,39.2,13.6,63.2,18.4H367.2z';
+		color: 'AF7643').
+	g add: (RSSVGPath new
+		svgPath:'M497.6,414.4c0,2.4-2.4,4.8-4.8,4.8H6.4c-3.2,0-4.8-2.4-4.8-4.8l0,0c0-3.2,2.4-4.8,4.8-4.8H492C495.2,409.6,497.6,411.2,497.6,414.4L497.6,414.4z';
+		color: 'AF7643').
+	g add: (RSEllipse new
+		position: 249.6@ 18.4; radius: 18.4;
+		color: '788787').	
+	g add: (RSSVGPath new
+		svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
+		color: '0C91C4').
+	g add: (RSSVGPath new
+		svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6';
+		color: '22B3E0').
+	g add: (RSPolygon new
+		points: {232.8@43.2. 144.8@87.2. 232.8@130.4};
+		color: 'FFAE0B').
+	g add: (RSPolygon new
+		points: {232.8@80.8. 144.8@87.2. 232.8@130.4};
+		color: 'FF860D').
+	g add: (RSPolygon new
+		points: {231.2@144.8. 231.2@363.2. 89.6@363.2};
+		color: 'E00E0E').
+	g add: (RSPolygon new
+		points: {231.2@198.4. 231.2@363.2. 89.6@363.2};
+		color: 'BF1111').
+
+	boat := RSComposite new shapes: g; yourself.
 	x := 1.
-	v newAnimation
+	updateLines := [ 
+		lines doWithIndex: [:line :m |
+			| points |
+			points := (1 to: 200) collect: [ :i | | y |
+				y := (perlin snoise: (i+ frame)/scale and: (m + frame) / scale) * 20.
+				i @ (7* m + y)].
+			line controlPoints: points ] ].
+	updateLines value.
+	canvas newAnimation
 		repeat; 
 		onStepDo: [ :t | 
 			| cp p1 p2 vector |
 			frame := frame + 0.5.
-			shape updateElements: lines.
+			updateLines value.
 			cp := (lines at: lines size / 2) controlPoints.
 			x := x + 0.3.
-			
+		
 			(x between: 1 and: cp size - 1)
 				ifFalse: [ x := cp size - 1 ].
 			p1 := cp at: x.
@@ -2613,28 +2669,28 @@ RSAnimationExamples >> example44Boat [
 				rotateByRadians: vector angle;
 				scaleBy: 0.025;
 				translation: x @ p1 y.
-			v signalUpdate. ].
-	v addAll: lines.
-	pharo := RSShapeBuilder bitmap
+			canvas signalUpdate. ].
+	canvas addAll: lines.
+	pharo := RSBitmap new
 		form: (self iconNamed: #pharo);
-		element.
-	v zoomToFit.
-	v camera scale: 2.5.
-	v add: pharo.
-	v add: boat.
+		yourself.
+	canvas zoomToFit.
+	canvas camera scale: 2.5.
+	canvas add: pharo.
+	canvas add: boat.
 	RSLocation new 
 		inner; bottom; right;
 		move: pharo on: lines.
-	^ v
+	^ canvas
 ]
 
 { #category : #perlin }
 RSAnimationExamples >> example45Duna [
 	<script: 'self new example45Duna  open extent: 1000@700; position: World center - (1000@700 / 2)'>
-	| v extent num color noiseScale perlin c particles |
-	v := RSView new.
+	| canvas extent num color noiseScale perlin c particles |
+	canvas := RSCanvas new.
 	extent := 1000@700.
-	v clearBackground: false.
+	canvas clearBackground: false.
 	num := 1000.
 	color := Color purple.
 	noiseScale := 400. "<<<-- change this"
@@ -2643,14 +2699,15 @@ RSAnimationExamples >> example45Duna [
 	c := TSScale linear 
 		domain: { 0. num/2 };
 		range: { color alpha: 0.8. color alpha: 0 }.
-	particles := RSShapeBuilder ellipse
-		size: 1;
-		isFixed: true;
-		position: [ :n | n @ extent y ];
-		color: [ :n | c scale: (n - (num / 2)) abs ];
-		elementsOn: (1 to: num).
-	v addAll: particles.
-	v newAnimation repeat; onStepDo: [ :t | 
+	particles := (1 to: num) collect: [ :n | 
+		RSEllipse new
+			size: 1;
+			isFixed: true;
+			position: n @ extent y;
+			color: (c scale: (n - (num / 2)) abs);
+			yourself ].
+	canvas addAll: particles.
+	canvas newAnimation repeat; onStepDo: [ :t | 
 		particles do: [ :particle | 
 			| p dir vel  |
 			p := particle position.
@@ -2661,7 +2718,7 @@ RSAnimationExamples >> example45Duna [
 			particle translateBy: vel.
 			 ].
 		 ].
-	^ v
+	^ canvas
 ]
 
 { #category : #'data - svg' }

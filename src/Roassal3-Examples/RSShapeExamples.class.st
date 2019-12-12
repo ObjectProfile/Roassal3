@@ -184,7 +184,7 @@ RSShapeExamples >> example05CapStyles [
 
 { #category : #lines }
 RSShapeExamples >> example06JoinStyles [
-	<script: 'self new example06JoinStyles'>
+	<script: 'self new example06JoinStyles open'>
 	| canvas line path styles |
 	canvas := RSCanvas new.
 	path := [ :aLine | String streamContents: [ :s| 
@@ -222,9 +222,7 @@ RSShapeExamples >> example06JoinStyles [
 		canvas add: line.
 		.
 	].
-	
-	canvas open
-	
+	^ canvas
 ]
 
 { #category : #normalizer }
@@ -259,11 +257,10 @@ RSShapeExamples >> example07NormalizeColor [
 { #category : #shapes }
 RSShapeExamples >> example08Labels [
 	<script: 'self new example08Labels open'>
-	| canvas sb shapes random |
+	| canvas shapes random |
 	canvas := RSCanvas new.
 	random := Random new.
-	sb := RSShapeBuilder label.
-	sb interactionDo: #draggable.
+	
 	shapes := Collection withAllSubclasses collect: [ :cls |
 		RSLabel new
 			draggable;
@@ -461,9 +458,6 @@ RSShapeExamples >> example14Marker [
 	<script: 'self new example14Marker open'>
 	| canvas  shapes line arrow |
 	canvas := RSCanvas new.
-	shapes := RSShapeBuilder ellipse 
-		interactionDo: #draggable;
-		size: 100; elementsOn: (1 to: 2).
 	shapes := (1 to: 2) collect: [ :n |
 		RSEllipse new
 			model: n;
@@ -1107,10 +1101,10 @@ RSShapeExamples >> example31BasicGrapher [
 	line := RSPolyline new 
 		width: 2;
 		controlPoints: { 0@ -600. 0@0. 600@0 };
-		markerStartEnd: (RSShapeBuilder triangle
+		markerStartEnd: (RSShapeFactory triangle
 			size: 20;
 			color: Color black;
-			element);
+			yourself);
 		yourself.
 	
 	color := RSColorPalette sequential orrd9.

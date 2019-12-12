@@ -119,8 +119,9 @@ RSPolygon >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
 	^ (self baseRectangle containsPoint: invertedPoint)
-		ifFalse: [ ^ false ]
-		ifTrue: [(AthensPolygonTester new polygon: points) includesPoint: invertedPoint]
+		ifFalse: [ false ]
+		ifTrue: [(AthensPolygonTester new 
+			polygon: points) includesPoint: invertedPoint]
 ]
 
 { #category : #initialization }
