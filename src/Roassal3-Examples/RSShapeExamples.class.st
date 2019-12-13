@@ -682,7 +682,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 			size: 30;
 			yourself ] as: RSGroup.
 	canvas addAll: boxes.
-	boxes @ RSHighlightable default.
+	boxes @ RSHighlightable defaultRed.
 	RSGridLayout on: boxes.
 	boxes @ (RSMenuActivable new
 		menuDo: [ :menu :box | 

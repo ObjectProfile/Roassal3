@@ -81,7 +81,7 @@ RSColorPaletteChooser >> initializeInteractions [
 		copyKey: #qwer.
 	overHighlight := RSHighlightable new.
 	overHighlight 
-		highlightElements: [ :e | {e children first} ]
+		highlightShapes: [ :e | {e children first} ]
 		butKeep: selectedHighlight.
 	overHighlight highlightShape 
 		paint: ((LinearGradientPaint fromArray:

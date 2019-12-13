@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #accessing }
-RSHighlightable class >> default [
+RSHighlightable class >> defaultRed [
 	| inst |
 	inst := self new.
 	inst highlightColor: Color red.
@@ -93,7 +93,7 @@ RSHighlightable >> doHighlightShapes: shapes [
 		hshapes := self highlightShapesFor: s.
 		hshapes do: [ :hs | self announceHighlight: hs source: s ].
 		hshapes ].
-	shapes first view attributes at: self attributeKey put: allHShapes.
+	shapes first canvas attributes at: self attributeKey put: allHShapes.
 ]
 
 { #category : #actions }
@@ -102,24 +102,17 @@ RSHighlightable >> doUnhighlight: aShape [
 ]
 
 { #category : #public }
-RSHighlightable >> highlightColor: aColor [
+RSHighlightable >> highlightBorder: aBorder [
 	self 
-		when: RSHighlightEvent do: [ :evt | self record: evt shape color: aColor ];
-		when: RSUnHighlightEvent do: [ :evt | self restoreColor: evt shape ].
-	
+		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #border value: aBorder ];
+		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #border ].
 ]
 
-{ #category : #'highlight elements' }
-RSHighlightable >> highlightElements: aBlock butKeep: aRSHilightable [
-	"aBlock recives an element and return a collection of shapes"
-	self highlightShapes: [ :e | 
-		| shapes |
-		shapes := aBlock value: e.
-		e canvas attributes
-			at: aRSHilightable attributeKey
-			ifPresent: [ :hshapes | 
-				shapes reject: [ :hs | hshapes includes: hs ] ]
-			ifAbsent: [ shapes ] ]
+{ #category : #public }
+RSHighlightable >> highlightColor: aColor [
+	self 
+		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ];
+		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ].
 ]
 
 { #category : #accessing }
@@ -130,6 +123,19 @@ RSHighlightable >> highlightShapes [
 { #category : #accessing }
 RSHighlightable >> highlightShapes: aBlock [
 	highlightShapes := aBlock
+]
+
+{ #category : #'highlight shapes' }
+RSHighlightable >> highlightShapes: aBlock butKeep: aRSHilightable [
+	"aBlock recives an element and return a collection of shapes"
+	self highlightShapes: [ :e | 
+		| shapes |
+		shapes := aBlock value: e.
+		e canvas attributes
+			at: aRSHilightable attributeKey
+			ifPresent: [ :hshapes | 
+				shapes reject: [ :hs | hshapes includes: hs ] ]
+			ifAbsent: [ shapes ] ]
 ]
 
 { #category : #'accessing - computed' }
@@ -145,24 +151,18 @@ RSHighlightable >> initialize [
 ]
 
 { #category : #public }
-RSHighlightable >> low: aColorA high: aColorB [
+RSHighlightable >> lowColor: lowColor highColor: highColor [
 	self 
-		when: RSHighlightEvent do: [ :evt | evt shape color: aColorB  ];
-		when: RSUnHighlightEvent do: [ :evt | evt shape color: aColorA ].
+		when: RSHighlightEvent do: [ :evt | evt shape color: highColor  ];
+		when: RSUnHighlightEvent do: [ :evt | evt shape color: lowColor ].
 	
 ]
 
 { #category : #hooks }
 RSHighlightable >> onShape: aShape [
 	aShape
-		when: RSMouseEnter do: [ self doHighlight: aShape. aShape signalUpdate ];
-		when: RSMouseLeave do: [ self doUnhighlight: aShape. aShape signalUpdate ]
-]
-
-{ #category : #private }
-RSHighlightable >> record: aShape color: aColor [
-	self record: aShape key: #color value: aShape color.
-	aShape color: (aColor rsValue: aShape)
+		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
+		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
 { #category : #private }
@@ -170,6 +170,18 @@ RSHighlightable >> record: aShape key: key value: aValue [
 	aShape attributes
 		at: self copyKey, key
 		put: aValue
+]
+
+{ #category : #private }
+RSHighlightable >> record: aShape selector: selector value: anObject [
+	self 
+		record: aShape 
+		key: selector
+		value: (aShape perform: selector).
+		
+	aShape
+		perform: selector, ':' asSymbol 
+		with: (anObject rsValue: aShape)
 ]
 
 { #category : #actions }
@@ -181,10 +193,14 @@ RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
 ]
 
 { #category : #private }
-RSHighlightable >> restoreColor: aShape [
+RSHighlightable >> restore: aShape selector: selector [
 	aShape attributes
-		at: self copyKey, #color
-		ifPresent: [ :color | aShape color: color ]
+		at: self copyKey, selector
+		ifPresent: [ :value | 
+			value traceCr.
+			aShape 
+			perform: selector, ':' asSymbol
+			with: value ]
 ]
 
 { #category : #public }
@@ -241,7 +257,7 @@ RSHighlightable >> when: event do: aBlock [
 	self announcer when: event do: aBlock
 ]
 
-{ #category : #'highlight elements' }
+{ #category : #'highlight shapes' }
 RSHighlightable >> withEdges [
 	self highlightShapes: [ :s | 
 		| list |
@@ -250,7 +266,7 @@ RSHighlightable >> withEdges [
 		list ].
 ]
 
-{ #category : #'highlight elements' }
+{ #category : #'highlight shapes' }
 RSHighlightable >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
@@ -259,7 +275,7 @@ RSHighlightable >> withIncomingEdges [
 		list ].
 ]
 
-{ #category : #'highlight elements' }
+{ #category : #'highlight shapes' }
 RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
