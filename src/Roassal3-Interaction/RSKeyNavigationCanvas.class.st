@@ -38,11 +38,15 @@ RSKeyNavigationCanvas >> onShape: aCanvas [
 RSKeyNavigationCanvas >> processKeyDown: evt [
 	| char rect lastMS |
 	char := evt keyCharacter.
-	char == Character arrowLeft ifTrue: [ steps add: -1@0 ].
-	char == Character arrowRight ifTrue: [ steps add: 1@0 ].
-	char == Character arrowUp ifTrue: [ steps add: 0@ -1 ].
-	char == Character arrowDown ifTrue: [ steps add: 0@ 1 ].
-
+	self configuration hasHorizontalScrolling ifTrue: [ 
+		char == Character arrowLeft ifTrue: [ steps add: -1@0 ].
+		char == Character arrowRight ifTrue: [ steps add: 1@0 ].
+	].
+	self configuration hasVerticalScrolling ifTrue: [ 
+		char == Character arrowUp ifTrue: [ steps add: 0@ -1 ].
+		char == Character arrowDown ifTrue: [ steps add: 0@ 1 ].
+	].
+	
 	speedMult := evt shiftKeyPressed
 		ifTrue: [ 4 ] 
 		ifFalse: [ 1 ].

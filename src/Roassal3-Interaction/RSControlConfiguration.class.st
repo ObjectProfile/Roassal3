@@ -10,10 +10,32 @@ Class {
 		'minScale',
 		'shouldUseBasicZoom',
 		'zoomToFitOnStart',
-		'zoomToFitOnExtent'
+		'zoomToFitOnExtent',
+		'hasHorizontalScrolling',
+		'hasVerticalScrolling'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
+
+{ #category : #'scrollbar managing' }
+RSControlConfiguration >> hasHorizontalScrolling [
+	^ hasHorizontalScrolling
+]
+
+{ #category : #'scrollbar managing' }
+RSControlConfiguration >> hasHorizontalScrolling: aBool [
+	hasHorizontalScrolling := aBool
+]
+
+{ #category : #'scrollbar managing' }
+RSControlConfiguration >> hasVerticalScrolling [
+	^ hasVerticalScrolling
+]
+
+{ #category : #'scrollbar managing' }
+RSControlConfiguration >> hasVerticalScrolling: aBool [
+	hasVerticalScrolling := aBool
+]
 
 { #category : #initialization }
 RSControlConfiguration >> initialize [
@@ -24,7 +46,9 @@ RSControlConfiguration >> initialize [
 		padding: 25;
 		useZoomToFitOnExtendChanged;
 		useZoomToFitOnStart;
-		noBasicZoom.
+		noBasicZoom;
+		hasHorizontalScrolling: true;
+		hasVerticalScrolling: true.
 ]
 
 { #category : #accessing }

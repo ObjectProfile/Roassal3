@@ -7,11 +7,11 @@ Class {
 	#instVars : [
 		'buttons',
 		'colors',
-		'shape',
 		'currentPalette',
 		'selectedHighlight',
 		'buttonElements',
-		'overHighlight'
+		'overHighlight',
+		'boxOver'
 	],
 	#category : #'Roassal3-Examples-Spec'
 }
@@ -24,6 +24,60 @@ RSColorPaletteChooser class >> defaultSpec [
 		add: #colors;
 		yourself
 		
+]
+
+{ #category : #rendering }
+RSColorPaletteChooser >> boxColorFor: color [
+	| label box |
+	
+	box := RSBox new
+		extent: 150 @ 30;
+		color: color;
+		yourself.
+	label := RSLabel new
+		noPaint;
+		text: color asHexString;
+		yourself.
+	^ RSComposite new
+		  @ boxOver;
+		  model: color;
+		  when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model ];
+		  shapes: { box. label};
+		  yourself
+]
+
+{ #category : #rendering }
+RSColorPaletteChooser >> boxesFor: anArray [
+	^ anArray collect: [ :color | self boxColorFor: color ] as: RSGroup
+]
+
+{ #category : #rendering }
+RSColorPaletteChooser >> buttonFor: m [
+	| label box |
+	label := RSLabel new
+		bold;
+		text: m key;
+		color: Color white;
+		yourself.
+	box := RSPolygon new
+		withBorder;
+		cornerRadii: 5;
+		paint: ((LinearGradientPaint fromArray: { 
+				(0 -> 'lightGray').
+				(0.25 -> 'black').
+				(1 -> 'gray') })
+			start: 0 @ -15;
+			stop: 0 @ 15);
+		points: m value;
+		position: 0@0;
+		yourself.
+	^ RSComposite new
+		  model: m;
+		  shapes: { box. label };
+		  @ overHighlight;
+		  when: RSMouseClick
+		  do: [ :evt | self renderColorPalettesFor: evt shape ];
+		  yourself
 ]
 
 { #category : #accessing }
@@ -68,9 +122,9 @@ RSColorPaletteChooser >> copyToClipboard: object [
 { #category : #initialization }
 RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight := RSHighlightable new.
-	selectedHighlight highlightShapes: [ :e | {e children first} ].
-	selectedHighlight highlightShape 
-		paint: ((LinearGradientPaint fromArray:
+	selectedHighlight highlightShapes: [ :e | {e shapes first} ].
+	selectedHighlight highlightColor: (
+		(LinearGradientPaint fromArray:
 			{0->'white'.
 			0.25->'blue'.
 			1 ->'lightGray'})
@@ -81,51 +135,19 @@ RSColorPaletteChooser >> initializeInteractions [
 		copyKey: #qwer.
 	overHighlight := RSHighlightable new.
 	overHighlight 
-		highlightShapes: [ :e | {e children first} ]
+		highlightShapes: [ :e | {e shapes first} ]
 		butKeep: selectedHighlight.
-	overHighlight highlightShape 
-		paint: ((LinearGradientPaint fromArray:
+	overHighlight highlightColor: (
+		(LinearGradientPaint fromArray:
 			{0->'white'.
 			0.25->'black'.
 			1 ->'lightGray'})
 			start: 0@ -15;
 			stop: 0@ 15).
-	
-]
-
-{ #category : #initialization }
-RSColorPaletteChooser >> initializeShape [
-	| lshape bshape bcolor slabel high |
-	lshape := RSShapeBuilder label bold.
-	slabel := RSShapeBuilder label
-		noPaint;
-		text: #asHexString.
-	bshape := RSShapeBuilder box
-		extent: 150@30;
-		color: #yourself.
-	high := RSHighlightable new.
-	high highlightShapes: [ :e | {e children second} ].
-	high highlightShape color: Color black.
-	bcolor := RSShapeBuilder composite
-		addInteraction: high; 
-		when: RSMouseClick do: [ :c | [ self copyToClipboard: c ] ];
-		shapes: [ :c | 
-			RSGroup
-				with: (bshape elementOn: c)
-				with: (slabel elementOn: c) ].
-	shape := RSShapeBuilder composite
-		shapes: [ :m | | shapes scale |
-			scale := (currentPalette perform: m selector). 
-			shapes := bcolor elementsOn: scale range.
-			shapes add: (lshape elementOn: m selector).
-			RSVerticalLineLayout new
-				alignCenter;
-				gapSize: 0; 
-				on: shapes.
-			shapes ];
-		padding: 10 asMargin;
-		border: RSBorder new;
-		when: RSMouseClick do: [:m | [:evt| self copyToClipboard: m] ].
+	"for boxes "
+	boxOver := RSHighlightable new.
+	boxOver highlightShapes: [ :s | { s shapes second } ].
+	boxOver highlightColor: Color black.
 ]
 
 { #category : #initialization }
@@ -135,7 +157,6 @@ RSColorPaletteChooser >> initializeWidgets [
 	buttons script: [ :view | 
 		self renderButtonsOn: view.
 		self renderColorPalettesFor: buttonElements first.].
-	self initializeShape.
 	self initializeInteractions.
 	
 ]
@@ -148,83 +169,107 @@ RSColorPaletteChooser >> initializeWindow: w [
 		centered
 ]
 
+{ #category : #rendering }
+RSColorPaletteChooser >> paletteFor: method [
+	| shapes scale |
+	scale := currentPalette perform: method selector.
+	
+	shapes := self boxesFor: scale range.
+	shapes add: (RSLabel new 
+		bold;
+		text: method selector;
+		yourself).
+	RSVerticalLineLayout new
+		alignCenter;
+		gapSize: 0;
+		on: shapes.
+	^ RSComposite new
+		model: method;
+		shapes: shapes;
+		padding: 10;
+		withBorder;
+		when: RSMouseClick 
+			do: [ :evt | self copyToClipboard: evt shape model].
+		
+]
+
+{ #category : #rendering }
+RSColorPaletteChooser >> palettes [
+	^ (currentPalette class methods sorted: CompiledMethod sortBlock)
+		collect: [ :met | self paletteFor: met ].
+]
+
 { #category : #dependencies }
 RSColorPaletteChooser >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #rendering }
-RSColorPaletteChooser >> renderButtonsOn: view [
-	| data bshape lshape menuButton |
-	view color: '2d5c7f'.
+RSColorPaletteChooser >> renderButtonsOn: canvas [
+	| data |
+	canvas color: '2d5c7f'.
 	data := { 
-		'Diverging' -> { 0@0. 150@0. 130@30. 0@30}.
-		'Qualitative' -> { 20@0. 150@0. 130@30. 0@30 }.
-		'Sequential' -> { 20@0. 150@0. 150@ 30. 0@30 } }.
-	
-	bshape := RSShapeBuilder polygon
-		border: RSBorder new;
-		cornerRadii: 5;
-		paint: ((LinearGradientPaint fromArray:
-			{0->'lightGray'.
-			0.25->'black'.
-			1 ->'gray'})
-			start: 0@ -15;
-			stop: 0@ 15); 
-		points: #value.
-	lshape := RSShapeBuilder label 
-		bold; 
-		text: #key;
-		color: Color white.
-	menuButton := RSShapeBuilder composite
-		addInteraction: overHighlight;
-		shapes: [ :m | | box label |
-			box := bshape elementOn: m.
-			box position: 0@0.
-			label := lshape elementOn: m.
-			RSGroup with: box with: label ];
-		onElement;
-		when: RSMouseClick do: [:e | [ self renderColorPalettesFor: e ] ].
-	buttonElements := menuButton elementsOn: data.
-	RSHorizontalLineLayout new gapSize: -9; on: buttonElements.
-	view addAll: buttonElements.
-	view when: RSExtentChangedEvent do: [ view zoomToFit ].
+		('Diverging' -> { 
+			(0 @ 0).
+			(150 @ 0).
+			(130 @ 30).
+			(0 @ 30) }).
+		('Qualitative' -> {
+			(20 @ 0).
+			(150 @ 0).
+			(130 @ 30).
+			(0 @ 30) }).
+		('Sequential' -> {
+			(20 @ 0).
+			(150 @ 0).
+			(150 @ 30).
+			(0 @ 30) }) }.
+	buttonElements := data collect: [ :m | self buttonFor: m ].
+	RSHorizontalLineLayout new
+		gapSize: -9;
+		on: buttonElements.
+	canvas addAll: buttonElements.
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ]
 ]
 
 { #category : #rendering }
-RSColorPaletteChooser >> renderColorPaletteOn: view [
-	| elements controls |
-	view color: 'f8f9fc'.
-	elements := shape elementsOn: (currentPalette class methods 
-		sorted: [:a :b | a selector <  b selector]).
-	view addAll: elements.
+RSColorPaletteChooser >> renderColorPaletteOn: canvas [
+	| shapes controls |
+	canvas color: 'f8f9fc'.
+	shapes := self palettes.
+	canvas addAll: shapes.
 	
 	controls := RSCanvasController new.
 	controls noLegend.
+	controls interactions removeKey: RSDraggableCanvas.
+	controls interactions at: RSScrollWheelCanvas put: RSScrollWheelCanvas new.
 	controls configuration 
 		noZoomToFitOnStart;
+		padding: 0@ 10;
 		noZoomToFitOnExtendChanged;
 		maxScale: 1;
-		minScale: 1.
-	view when: RSExtentChangedEvent do: [ 
+		minScale: 1;
+		hasHorizontalScrolling: false.
+	
+	canvas when: RSExtentChangedEvent do: [ 
 		RSFlowLayout new
-			maxWidth: view extent;
-			on: elements.
-		view camera translateTo: view extent / 2. ].
-	view @ controls.
+			maxWidth: canvas extent;
+			on: shapes.
+		canvas camera translateTo: canvas extent / 2. ].
+	canvas @ controls.
 	
 	
 ]
 
 { #category : #rendering }
-RSColorPaletteChooser >> renderColorPalettesFor: aElement [
+RSColorPaletteChooser >> renderColorPalettesFor: aShape [
 	| symbol |
-	symbol := aElement model key.
+	symbol := aShape model key.
 	currentPalette := RSColorPalette perform: symbol asLowercase asSymbol.
-	overHighlight doUnhighlight: aElement.
-	selectedHighlight doHighlight: aElement.
-	aElement signalUpdate.
-	colors script: [ :view | self renderColorPaletteOn: view ].
+	overHighlight doUnhighlight: aShape.
+	selectedHighlight doHighlight: aShape.
+	aShape signalUpdate.
+	colors script: [ :canvas | self renderColorPaletteOn: canvas ].
 ]
 
 { #category : #initialization }

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #hooks }
-RSAbstractCanvasInteraction >> onShape: aView [
+RSAbstractCanvasInteraction >> onShape: aCanvas [
 	self subclassResponsibility 
 	
 ]
