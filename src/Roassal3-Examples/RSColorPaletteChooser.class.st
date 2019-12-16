@@ -97,7 +97,7 @@ RSColorPaletteChooser >> clipTextFor: m [
 		ifTrue: [ ^ m asHexString ].
 	selector := currentPalette class name.
 	selector := selector copyFrom: 5 to: selector size.
-	^ 'TSColorPalette ',  selector asLowercase, ' ', m selector 
+	^ RSColorPalette name, ' ',  selector asLowercase, ' ', m selector 
 ]
 
 { #category : #accessing }
@@ -255,7 +255,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 		RSFlowLayout new
 			maxWidth: canvas extent;
 			on: shapes.
-		canvas camera translateTo: canvas extent / 2. ].
+		canvas camera translateTo: canvas extent / 2 + (-20@0). ].
 	canvas @ controls.
 	
 	

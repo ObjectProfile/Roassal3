@@ -52,16 +52,14 @@ RSPieChartExample >> initializeWidgets [
 		display: [ :i | i name ].
 	chart := self instantiate: SpRoassalPresenter.
 	pie := self instantiate: SpRoassalPresenter.
-	droplist
-		whenSelectedItemChangedDo: [ :pkg | 
-			chart
-				script: [ :view | 
-					view
-						when: RSExtentChangedEvent
-						do: [ view edges copy do: #remove.
-							view elements copy do: #remove.
-							self visualizeChart: view package: pkg ] ].
-			pie script: [ :view | self visualizePie: view package: pkg ] ].
+	droplist whenSelectedItemChangedDo: [ :pkg | 
+		chart script: [ :aCanvas | 
+			aCanvas
+				when: RSExtentChangedEvent
+				do: [ aCanvas edges copy do: #remove.
+					aCanvas nodes copy do: #remove.
+					self visualizeChart: aCanvas package: pkg ] ].
+		pie script: [ :view | self visualizePie: view package: pkg ] ].
 	droplist dropList selectIndex: 1
 ]
 
@@ -84,69 +82,68 @@ RSPieChartExample >> run [
 ]
 
 { #category : #initialization }
-RSPieChartExample >> visualizeChart: view package: pkg [
-	| generator result ticks scale bscale  viewRect label box  |
+RSPieChartExample >> visualizeChart: canvas package: pkg [
+	| generator result ticks scale bscale canvasRect box |
 	generator := RSLabelGenerator new.
 	generator setLooseFlag: true.
 	result := generator searchMin: 0 max: totalSum desired: 10.
 	ticks := result min to: result max by: result step.
-	viewRect := Rectangle
+	canvasRect := Rectangle
 		rsCenter: 0@0
-		extent: view extent * 0.9.
+		extent: canvas extent * 0.9.
 	scale := TSScale linear
 		domain: {result min. result max};
-		range: {viewRect bottom. viewRect top }.
+		range: {canvasRect bottom. canvasRect top }.
 	bscale := TSScale linear
 		domain: { 0. totalSum };
-		range: { 0. viewRect height }.
+		range: { 0. canvasRect height }.
 	
-	label := RSShapeBuilder label
-		position: [ :n | 20@(scale scale: n) ];
-		text: [:n | n >= 1000
-			ifTrue: [ ((n / 1000) printShowingDecimalPlaces: 1) ,'K' ]
-			ifFalse: [ n asInteger asString ] ].
-	box := RSShapeBuilder box
+	box := RSBox new
 		color: Color lightGray;
-		extent:  [ :n | 20@ (bscale scale: n) ];
-		onElement;
-		position: [ :e | -10@ ((scale scale: 0) - (e height / 2) )   ].
-	view add: (box elementOn: pkg linesOfCode).
-	view addAll: (label elementsOn: ticks).
-	view add: (RSSingleEdgeBuilder polyline
+		extent: 20@ (bscale scale: pkg linesOfCode);
+		yourself.
+	box position: -10 @ ((scale scale: 0) - (box height /2 )).
+	canvas add: box.
+	canvas addAll: (ticks collect:[:t | 
+		RSLabel new
+			position: 20@ (scale scale: t);
+			text: (t >= 1000
+				ifTrue: [ ((t / 1000) printShowingDecimalPlaces: 1) ,'K' ]
+				ifFalse: [ t asInteger asString ]);
+			yourself ]).
+	
+	canvas add: (RSPolyline new
 		controlPoints: (ticks collect: [:p | -10 @ (scale scale: p)]);
 		marker: (RSBox new extent: 10@2; color: Color black);
-		edge)
+		yourself)
 ]
 
 { #category : #initialization }
-RSPieChartExample >> visualizePie: view package: pkg [
+RSPieChartExample >> visualizePie: canvas package: pkg [
 	| b rect max |
 	b := RSPie new.
-	b container: view.
+	b container: canvas.
 	
-	b shape 
-		interactionDo: [ :i | | popup |
-			popup := i popup.
-			popup multiline.
-			popup label text: [ :cls | cls name, String cr, cls linesOfCode asString, 'LOC' ] ];
+	b sliceShape
 		innerRadius: 70;
 		externalRadius: 150;
-		segmentSpacing: 0.1;
-		color: TSScale google20.
-	b label.
+		segmentSpacing: 0.1.
+	b sliceColor: TSScale google20.
 	b 
 		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;
+		addDecorator: RSRotatedPieLabelDecoration new;
 		build.
-	view addShape: (RSLabel new
+	b shapes @ (RSPopup text: [ :cls | 
+		cls name, String cr, cls linesOfCode asString, 'LOC' ] ).
+	canvas addShape: (RSLabel new
 		text: pkg linesOfCode asString,'LOC').
-	view @ (RSRotatedPieLabel new pieBuilder: b).
-	rect := view encompassingRectangle.
+	rect := canvas encompassingRectangle.
 	max := rect origin x abs max: rect corner x.
-	view when: RSExtentChangedEvent do: [ 
-		view camera 
-			zoomToFit: view extent 
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera 
+			zoomToFit: canvas extent 
 			rectangle: (Rectangle rsCenter: 0@0 extent: max * 2@0).
-		view signalUpdate ].
+		canvas signalUpdate ].
 
 ]

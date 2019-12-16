@@ -171,6 +171,11 @@ RSTransitionAnimation >> step [
 ]
 
 { #category : #accessing }
+RSTransitionAnimation >> stepAction [
+	^ stepAction
+]
+
+{ #category : #accessing }
 RSTransitionAnimation >> to [
 	^ scale range last
 ]
