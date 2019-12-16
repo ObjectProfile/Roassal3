@@ -1,6 +1,6 @@
 Extension { #name : #Class }
 
-{ #category : #'*Roassal3-Scripting' }
+{ #category : #'*Roassal3' }
 Class >> dependentClassesWithOccurences [
 	"Return the list of classes used myself. The result may contains multiple times the same element."
 	
@@ -22,7 +22,7 @@ Class >> dependentClassesWithOccurences [
 	^ cll asArray
 ]
 
-{ #category : #'*Roassal3-Scripting' }
+{ #category : #'*Roassal3' }
 Class >> numberOfVariables [
 	"Return the number of variables"
 	
