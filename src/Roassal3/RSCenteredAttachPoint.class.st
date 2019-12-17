@@ -22,7 +22,7 @@ RSLocation new
 	move: shapes first on: shapes allButFirst.
 shapes @ RSDraggable.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 -=-=-=-=
 "
 Class {
