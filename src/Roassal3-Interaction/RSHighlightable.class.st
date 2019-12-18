@@ -166,18 +166,10 @@ RSHighlightable >> onShape: aShape [
 ]
 
 { #category : #private }
-RSHighlightable >> record: aShape key: key value: aValue [
-	aShape attributes
-		at: self copyKey, key
-		put: aValue
-]
-
-{ #category : #private }
 RSHighlightable >> record: aShape selector: selector value: anObject [
-	self 
-		record: aShape 
-		key: selector
-		value: (aShape perform: selector).
+	aShape attributes
+		at: self copyKey, selector
+		put: (aShape perform: selector).
 		
 	aShape
 		perform: selector, ':' asSymbol 
@@ -194,13 +186,15 @@ RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
 
 { #category : #private }
 RSHighlightable >> restore: aShape selector: selector [
+	| key |
+	key := self copyKey, selector.
 	aShape attributes
-		at: self copyKey, selector
+		at: key
 		ifPresent: [ :value | 
-			value traceCr.
 			aShape 
-			perform: selector, ':' asSymbol
-			with: value ]
+				perform: selector, ':' asSymbol
+				with: value ];
+		removeKey: key ifAbsent: [  ].
 ]
 
 { #category : #public }

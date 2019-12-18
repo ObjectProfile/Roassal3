@@ -129,6 +129,39 @@ RSSunburstExamples >> example06Rotation [
 { #category : #examples }
 RSSunburstExamples >> example07FadeInteraction [
 	<script: 'self new example07FadeInteraction open'>
+	| sb interaction label |
+	sb := RSSunburstBuilder new.
+	sb sliceShape
+		withBorder.
+	sb explore: Collection using:  #subclasses.
+	sb build.
+	sb canvas @ RSCanvasController.
+	interaction := RSSunburstFadeInteraction new
+		builder: sb.
+	label := RSLabel new.
+	label text: 'fooo'.
+	label isFixed: true.
+
+	 sb shapes @ (RSHighlightable new
+		attributeKey: 'text';
+		when: RSHighlightEvent do: [ :evt | 
+			| path |
+			path := (interaction pathFor: evt shape) reverse.
+			path := String streamContents: [:s | 
+				path do: [ :node | s << node model asString ] separatedBy: [ s << '>>' ] ].
+			label text: path; signalUpdate.
+			label position: label extent / 2 ];
+		when: RSUnHighlightEvent do: [ :evt |
+			label text: '' ];
+		yourself).
+	sb shapes @ interaction.
+	sb canvas add: label.
+	^ sb canvas
+]
+
+{ #category : #examples }
+RSSunburstExamples >> example08SunburstExplorer [
+	<script: 'self new example08SunburstExplorer open'>
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb sliceShape

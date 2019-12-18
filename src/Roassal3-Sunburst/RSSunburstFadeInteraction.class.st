@@ -5,16 +5,27 @@ Class {
 	#name : #RSSunburstFadeInteraction,
 	#superclass : #RSHighlightable,
 	#instVars : [
-		'still'
+		'still',
+		'builder'
 	],
 	#category : #'Roassal3-Sunburst'
 }
+
+{ #category : #accessing }
+RSSunburstFadeInteraction >> builder [
+	^ builder
+]
+
+{ #category : #accessing }
+RSSunburstFadeInteraction >> builder: aBuilder [
+	builder := aBuilder
+]
 
 { #category : #initialization }
 RSSunburstFadeInteraction >> highlightShapesFor: shape [
 	| parents |
 	parents := self pathFor: shape.
-	^ shape canvas nodes 
+	^ builder shapes 
 		reject: [ :s | parents includes: s].
 ]
 
