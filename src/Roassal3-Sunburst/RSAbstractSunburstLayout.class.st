@@ -37,7 +37,7 @@ RSAbstractSunburstLayout >> doExecute: shapes [
 	shapes size = 1 ifTrue: [ 
 		^ self layoutSunburst: shapes first ].
 	virtual := RSPieSlice new.
-	virtual children: shapes.
+	virtual schildren: shapes.
 	shapes do: [ :shape | shape sparent: virtual ].
 	virtual sparent: nil.
 	virtual depth: 0.
@@ -88,7 +88,7 @@ RSAbstractSunburstLayout >> setCenterRadius: shape [
 { #category : #hook }
 RSAbstractSunburstLayout >> setChildrenAngles: shape [
 	| children parentAngle angleOffset parentWeight |
-	children := shape children.
+	children := shape schildren.
 	parentAngle := shape alphaAngle.
 	parentWeight := builder weightOf: shape.
 	angleOffset := (shape betaAngle - shape alphaAngle) / parentWeight.

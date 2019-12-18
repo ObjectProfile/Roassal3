@@ -532,7 +532,7 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
 		shape hasChildren ifTrue: [ 
-			shape shapes do: [ :s |
+			shape children do: [ :s |
 				s accept: self ] ]
 		].
 	

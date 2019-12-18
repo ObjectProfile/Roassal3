@@ -67,9 +67,9 @@ RSSunburstExamples >> example05BezierEdges [
 	sb := RSSunburstBuilder new.
 	sb sliceShape
 		withBorder.
-	sb color: [:shape | shape model subclasses 
-		ifEmpty: [ Color purple ]
-		ifNotEmpty: [ Color lightGray ] ].
+	sb sliceColor: [:shape | shape model subclasses isEmpty 
+		ifTrue: [ Color purple ]
+		ifFalse: [ Color lightGray ] ].
 	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
@@ -91,19 +91,29 @@ RSSunburstExamples >> example06Rotation [
 	| sb composite canvas controller |
 	composite := RSComposite new.
 	sb := RSSunburstBuilder new.
+	sb strategy extent: 1000@1000.
 	sb container: composite.
-	sb sliceShape
-		withBorder.
-	sb explore: Collection using:  #subclasses.
+	sb sliceShape withBorder.
+	sb explore: Collection using: #subclasses.
 	sb build.
+	RSNormalizer color
+		from: Color veryLightGray trans;
+		to: Color gray;
+		shapes: (sb shapes reject: #isSLeaf);
+		normalize: #linesOfCode.
+	RSNormalizer color
+		from: (Color colorFrom: '9B366C');
+		to: (Color colorFrom: '563A63');
+		shapes: (sb shapes select: #isSLeaf);
+		normalize: #linesOfCode.
 	composite adjustToChildren.
 	RSEdgeBuilder sunburstBezier
-		width: 2;
-		markerEnd: (RSEllipse new 
-			size: 10;
-			color: Color white;
-			withBorder;
-			yourself);
+		width: 1;
+		markerEnd:
+			(RSEllipse new
+				size: 10;
+				color: Color black;
+				yourself);
 		canvas: composite;
 		connectFrom: #superclass.
 	composite adjustToChildren.
@@ -112,6 +122,20 @@ RSSunburstExamples >> example06Rotation [
 	(controller interactions at: RSDraggableCanvas) right.
 	canvas @ controller.
 	canvas add: composite.
-	composite @ RSRotated. 
+	composite @ RSRotated.
 	^ canvas
+]
+
+{ #category : #examples }
+RSSunburstExamples >> example07FadeInteraction [
+	<script: 'self new example07FadeInteraction open'>
+	| sb |
+	sb := RSSunburstBuilder new.
+	sb sliceShape
+		withBorder.
+	sb explore: Collection using:  #subclasses.
+	sb build.
+	sb canvas @ RSCanvasController.
+	sb shapes @ RSSunburstFadeInteraction new.
+	^ sb canvas
 ]

@@ -55,7 +55,7 @@ RSSunburstBuilder >> initialize [
 	super initialize. 
 	self extentStrategy extent: 500@500.
 	self leafWeight: 1.
-	self color: TSScale category20c.
+	self sliceColor: TSScale category20c.
 	sliceShape := RSPieSlice new.
 	maxLevel := 0.
 ]
@@ -81,6 +81,12 @@ RSSunburstBuilder >> shapeFor: anObject [
 		yourself.
 	slice color: (color rsValue: slice).
 	^ slice 
+]
+
+{ #category : #'public - shape' }
+RSSunburstBuilder >> sliceColor: aBlock [
+	"an object"
+	color := aBlock
 ]
 
 { #category : #accessing }

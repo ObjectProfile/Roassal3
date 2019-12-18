@@ -50,7 +50,7 @@ RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 		e2 := self createElements: child using: ablock depth: depth + 1.
 		e2 sparent: shape.
 		e2 ] as: Array.
-	shape children: children.
+	shape schildren: children.
 	^ shape.
 ]
 
@@ -130,7 +130,7 @@ RSAbstractTreeBuilder >> weight: anObject [
 { #category : #private }
 RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 	| children weightValue |
-	children := shape children.
+	children := shape schildren.
 	weightValue := children
 		ifEmpty: [ aBlock rsValue: shape model ]
 		ifNotEmpty: [ 

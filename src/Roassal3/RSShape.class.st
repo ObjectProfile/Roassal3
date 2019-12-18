@@ -80,15 +80,10 @@ RSShape >> canvas [
 		ifFalse: [ parent ]
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : #accessing }
 RSShape >> children [
-	^ self attributeAt: #children
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> children: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self attributeAt: #children put: anObject
+	"only RSComposite can use children"
+	^ nil
 ]
 
 { #category : #accessing }
@@ -203,6 +198,11 @@ RSShape >> isInACanvas [
 { #category : #testing }
 RSShape >> isNode [
 	^ false
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> isSLeaf [
+	^ self schildren isEmpty
 ]
 
 { #category : #testing }
@@ -325,6 +325,17 @@ RSShape >> resetPath [
 	path := nil
 ]
 
+{ #category : #'accessing - attributes' }
+RSShape >> schildren [
+	^ self attributeAt: #schildren
+]
+
+{ #category : #'accessing - attributes' }
+RSShape >> schildren: anObject [
+	"children is used by tree builders usefull to relationate hierarchy visualizations"
+	self attributeAt: #schildren put: anObject
+]
+
 { #category : #path }
 RSShape >> sessionChanged [
 	self resetPath
@@ -357,12 +368,6 @@ RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
 			ifTrue: [ self ]
 			ifFalse: [ ^ nil ]
-]
-
-{ #category : #accessing }
-RSShape >> shapes [
-	"only TSComposite can use shapes "
-	^ nil
 ]
 
 { #category : #actions }

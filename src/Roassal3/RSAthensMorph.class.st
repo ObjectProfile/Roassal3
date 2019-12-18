@@ -34,7 +34,7 @@ RSAthensMorph >> checkSession [
 	Naturally, you wish to see the visualization again. The session mechanism makes sure that low-level resources that belongs to Cairo are properly recreated"
 	session == Smalltalk session ifTrue: [ ^ self ].
 	surface := nil.
-	self createSurface
+	self createSurface.
 	roassalCanvas shapes do: #sessionChanged.
 	roassalCanvas fixedShapes do: #sessionChanged.
 	

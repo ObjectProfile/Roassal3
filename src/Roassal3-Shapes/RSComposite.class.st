@@ -116,9 +116,9 @@ Class {
 	#traits : 'TContainer',
 	#classTraits : 'TContainer classTrait',
 	#instVars : [
-		'shapes',
 		'nodes',
-		'edges'
+		'edges',
+		'children'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -142,10 +142,10 @@ RSComposite >> addShape: aShape [
 { #category : #public }
 RSComposite >> adjustToChildren [
 	| rect delta |
-	shapes ifNil: [ ^ self ].
-	rect := shapes encompassingRectangle.
+	children ifNil: [ ^ self ].
+	rect := children encompassingRectangle.
 	delta := rect rsCenter negated.
-	shapes do: [ :s | s basicTranslateBy: delta ].
+	children do: [ :s | s basicTranslateBy: delta ].
 	self 
 		extent: rect extent;
 		translateTo: delta.
@@ -156,9 +156,30 @@ RSComposite >> camera [
 	^ parent camera
 ]
 
+{ #category : #accessing }
+RSComposite >> children [
+	^ children ifNil: [ children := RSGroup new ]
+]
+
+{ #category : #accessing }
+RSComposite >> children: aTSGroup [
+	"
+	create a groups of elements or trachel shapes, then added them to this composite shape
+	this method changes the position of the shapes and set the position of this composite shape
+	to the center of the encompassingRectangle.
+	"
+	aTSGroup do: [ :s | 
+		s isInACanvas 
+			ifTrue: [ s remove ] ].
+	self addAll: aTSGroup.
+	self adjustToChildren.
+
+	
+]
+
 { #category : #testing }
 RSComposite >> hasChildren [
-	^ shapes notNil and: [ shapes isNotEmpty ]
+	^ children notNil and: [ children isNotEmpty ]
 ]
 
 { #category : #initialization }
@@ -175,9 +196,9 @@ RSComposite >> padding: anObject [
 	"Shapes should be set in the composite before calling #padding:"
 	
 	| margin rect center temp |
-	temp := shapes 
+	temp := children 
 		ifNil: [ RSGroup new: 0 ]
-		ifNotNil: [shapes].
+		ifNotNil: [children].
 	margin := anObject asMargin. 
 	rect := temp encompassingRectangle.
 	rect := margin expandRectangle: rect.
@@ -210,7 +231,7 @@ RSComposite >> privateNodes: aTSGroup [
 
 { #category : #actions }
 RSComposite >> pushBack: aShape [
-	shapes
+	children
 		remove: aShape;
 		addFirst: aShape
 ]
@@ -218,7 +239,7 @@ RSComposite >> pushBack: aShape [
 { #category : #removing }
 RSComposite >> removeShape: shape [
 	| evt |
-	shapes remove: shape.
+	children remove: shape.
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.
@@ -234,8 +255,8 @@ RSComposite >> resetPath [
 { #category : #path }
 RSComposite >> sessionChanged [
 	self resetPath.
-	shapes ifNil: [ ^ self ].
-	shapes do: #sessionChanged
+	children ifNil: [ ^ self ].
+	children do: #sessionChanged
 ]
 
 { #category : #'accessing - computed' }
@@ -261,30 +282,19 @@ RSComposite >> shapeWithActionForPosition: position [
 
 { #category : #accessing }
 RSComposite >> shapes [
-	^ shapes ifNil: [ shapes := RSGroup new ]
+	^ self children
 ]
 
 { #category : #accessing }
 RSComposite >> shapes: aTSGroup [
-	"
-	create a groups of elements or trachel shapes, then added them to this composite shape
-	this method changes the position of the shapes and set the position of this composite shape
-	to the center of the encompassingRectangle.
-	"
-	aTSGroup do: [ :s | 
-		s isInACanvas 
-			ifTrue: [ s remove ] ].
-	self addAll: aTSGroup.
-	self adjustToChildren.
-
-	
+	self children: aTSGroup
 ]
 
 { #category : #actions }
 RSComposite >> translateTo: position [
 	super translateTo: position.
 	self hasChildren ifFalse: [ ^ self ].
-	shapes do: [ :child | 
+	children do: [ :child | 
 		child isNode
 			ifTrue: [ child updateConnectedEdges] ].
 ]
