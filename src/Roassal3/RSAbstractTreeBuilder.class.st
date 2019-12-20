@@ -56,25 +56,27 @@ RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 
 { #category : #'public - building' }
 RSAbstractTreeBuilder >> explore: atree nesting: block1 leaves: block2 [
+	shapes := RSGroup new.
 	^ (self from: (Array with: atree) nesting: block1 leaves: block2) first
 ]
 
 { #category : #'public - building' }
 RSAbstractTreeBuilder >> explore: atree using: ablock [
+	shapes := RSGroup new.
 	^ (self from: (Array with: atree) using: ablock) first.
 	
 ]
 
 { #category : #'public - building' }
 RSAbstractTreeBuilder >> from: objects nesting: block1 leaves: block2 [
-
+	shapes := RSGroup new.
 	rootNodes := objects collect: [:obj | self createElements: obj nesting: block1 leaves: block2 depth: 1 ].
-	
 	^ rootNodes
 ]
 
 { #category : #'public - building' }
 RSAbstractTreeBuilder >> from: objects using: ablock [
+	shapes := RSGroup new.
 	"This is the main public method. Takes a list of objects, and a block to specify how to recurse"
 	rootNodes := objects collect: [:obj | self createElements: obj using: ablock depth: 1 ].
 	^ rootNodes
@@ -83,7 +85,6 @@ RSAbstractTreeBuilder >> from: objects using: ablock [
 { #category : #initialization }
 RSAbstractTreeBuilder >> initialize [
 	super initialize.
-	shapes := RSGroup new.
 	rootNodes := RSGroup new.
 ]
 

@@ -142,18 +142,16 @@ RSSunburstExamples >> example07FadeInteraction [
 	label text: 'fooo'.
 	label isFixed: true.
 
-	 sb shapes @ (RSHighlightable new
-		attributeKey: 'text';
-		when: RSHighlightEvent do: [ :evt | 
+	 sb shapes 
+		when: RSMouseEnter do: [ :evt | 
 			| path |
 			path := (interaction pathFor: evt shape) reverse.
 			path := String streamContents: [:s | 
 				path do: [ :node | s << node model asString ] separatedBy: [ s << '>>' ] ].
 			label text: path; signalUpdate.
 			label position: label extent / 2 ];
-		when: RSUnHighlightEvent do: [ :evt |
-			label text: '' ];
-		yourself).
+		when: RSMouseLeave do: [ :evt |
+			label text: '' ].
 	sb shapes @ interaction.
 	sb canvas add: label.
 	^ sb canvas
@@ -162,13 +160,97 @@ RSSunburstExamples >> example07FadeInteraction [
 { #category : #examples }
 RSSunburstExamples >> example08SunburstExplorer [
 	<script: 'self new example08SunburstExplorer open'>
-	| sb |
+	| sb canvas newData color newAnimation first interpolate label |
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
+	color := TSScale category20c.
+	newData := nil.
+	newAnimation := [ :from :to |
+		canvas newAnimation
+			"duration: 500 milliSeconds;"
+			easing: RSEasing bounceOut;
+			from: from;
+			to: to;
+			yourself ].
+	
+	interpolate := [ :oldShape :newShape :target |
+		(newAnimation 
+			value: oldShape alphaAngle
+			value: newShape alphaAngle)
+			onStepDo: [ :t | target alphaAngle: t. canvas signalUpdate ].
+		(newAnimation 
+			value: oldShape betaAngle
+			value: newShape betaAngle)
+			onStepDo: [ :t | target betaAngle: t ].
+		(newAnimation 
+			value: oldShape innerRadius
+			value: newShape innerRadius)
+			onStepDo: [ :t | target innerRadius: t ].
+		(newAnimation 
+			value: oldShape externalRadius
+			value: newShape externalRadius)
+			onStepDo: [ :t | target externalRadius: t ];
+			yourself ].
+		
 	sb := RSSunburstBuilder new.
+	sb 
+		container: canvas;
+		sliceColor: [:shape | color scale: shape model category ].
 	sb sliceShape
 		withBorder.
-	sb explore: Collection using:  #subclasses.
-	sb build.
-	sb canvas @ RSCanvasController.
-	sb shapes @ RSSunburstFadeInteraction new.
-	^ sb canvas
+	canvas addShape: (label := RSLabel new 
+		text: '';
+		isFixed: true;
+		yourself).	
+	newData := [ :class | | lastShapes newShapes oshape |
+		lastShapes := canvas shapes copy.
+		sb explore: class using:  #subclasses.
+		sb build.
+		label text: class name.
+		
+		newShapes := sb shapes.
+		first := newShapes first.
+		first when: RSMouseClick do: [ :evt | | cls |
+			cls := evt shape model superclass.
+			cls = Object ifFalse: [ newData value: cls ] ].
+		(newShapes allButFirst reject: #isSLeaf)
+			when: RSMouseClick do: [ :evt | newData value: evt shape model ].
+		
+		newShapes size < lastShapes size ifTrue: [ 
+			newShapes do: [:new | | old |
+				old := lastShapes shapeFromModel: new model.
+				old remove.
+				interpolate value: old value: new value: new].
+			oshape := lastShapes shapeFromModel: class.
+			lastShapes do: [ :old | | new |
+				new := RSPieSlice new.
+				oshape betaAngle < old betaAngle 
+					ifTrue: [ new alphaAngle: 360; betaAngle: 360 ].
+				old depth = 1 ifTrue: [ new alphaAngle: 0; betaAngle: 360 ].
+				(interpolate value: old value: new value: old) 
+					when: RSAnimationLoopEvent do: [ old remove ].
+				 ].
+		] ifFalse: [ 
+			oshape := lastShapes 
+				ifEmpty: [ RSPieSlice new ] 
+				ifNotEmpty: [ newShapes shapeFromModel: lastShapes first model. ].
+			newShapes do: [ :new | | old |
+				old := lastShapes shapeFromModel: new model.
+				old ifNil: [ 
+					old := RSPieSlice new.
+					oshape betaAngle < new betaAngle
+						ifTrue: [ old alphaAngle: 360; betaAngle: 360. ]
+						ifFalse: [ old alphaAngle: 0; betaAngle: 0.]
+					 ].
+				new depth = 1 ifTrue: [ old alphaAngle: 0; betaAngle: 360 ].
+				old remove.
+				interpolate value: old value: new value: new. ].
+		]
+	].
+	canvas 
+		when: RSExtentChangedEvent 
+		do: [ label position: (canvas extent x / 2) @ (canvas extent y - label height) ].
+			
+	newData value: Collection.
+	^ canvas.
 ]
