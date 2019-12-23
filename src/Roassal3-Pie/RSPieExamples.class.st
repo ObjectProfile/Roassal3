@@ -973,6 +973,82 @@ RSPieExamples >> example24ManyPies [
 	^ canvas
 ]
 
+{ #category : #examples }
+RSPieExamples >> example25Massiva [
+	<script: 'self new example25Massiva open'>
+	| pie canvas triangles icons |
+	pie := RSPie new.
+	canvas := pie container.
+	canvas color: '1E2D72'.
+	pie objects: #( 
+		announcement github class pharo komitterSqueakSourceRemote
+		calendar database remove smallFind remote).
+	pie slice: [:m | 1].
+	pie sliceShape 
+		innerRadius: 130;
+		externalRadius: 200;
+		segmentSpacing: 2.
+	pie sliceColor: (TSScale ordinal
+		range: #('ECCD36' '9BCC3E' '218E4D' '365EA6' '64ACDC'
+			'6058A4' '202056' 'EA2230' 'ED6B2F' 'DC417A')).
+		
+	pie build.
+	triangles := pie shapes collect: [ :s | 
+		RSShapeFactory triangle
+			color: s color;
+			extent: 25@20;
+			yourself.
+		 ].
+	icons := pie shapes collect: [ :s |
+		RSBitmap new
+			form: (self iconNamed: s model);
+			scaleBy: 2;
+			yourself].
+	canvas addAll: triangles.
+	canvas addAll: icons.
+	canvas newAnimation
+		repeat;
+		duration: 10 seconds;
+		from: 0;
+		to: 360;
+		onStepDo: [ :t | 
+			pie shapes doWithIndex: [ :s :i|
+				| a b triangle icon |
+				a := s attributeAt: #a ifAbsentPut: [ s alphaAngle ].
+				b := s attributeAt: #b ifAbsentPut: [ s betaAngle ].
+				s 
+					alphaAngle: a +t;
+					betaAngle: b + t.
+				triangle := triangles at: i.
+				a := s middleAngle degreesToRadians.
+				triangle matrix
+					loadIdentity;
+					rotateByRadians: a negated - Float halfPi.
+				triangle position: (a cos @ a sin negated) * (s innerRadius-8).
+				
+				icon := icons at: i.
+				icon position: (s centroid: 0) ] ].
+	canvas add:(RSPolygon new
+		noPaint;
+		border: (RSBorder new width: 5; color: Color white; yourself);
+		points: 
+			{-80 @ -50. 
+			80@ -50. 
+			80@50.
+			0@50.
+			-60@80.
+			-30@50.
+			-80@ 50};
+		position: 0@ 15;
+		cornerRadii: 20;
+		yourself).
+	canvas add: (RSLabel new 
+		text: 'Roassal3';
+		fontSize: 30;
+		color: Color white).
+	^ canvas
+]
+
 { #category : #data }
 RSPieExamples >> usaPopulation [
 	| str |

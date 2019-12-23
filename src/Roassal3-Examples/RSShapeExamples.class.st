@@ -641,7 +641,7 @@ RSShapeExamples >> example19Bitmap [
 			model: icon;
 			popupText: #key;
 			when: RSMouseClick do: [ :evt |
-				Clipboard clipboardText: evt key.
+				Clipboard clipboardText: evt shape model key.
 				self inform: 'Copied icon name' ].  ].
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
