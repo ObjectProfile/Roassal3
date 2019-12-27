@@ -10,13 +10,18 @@ Class {
 	#category : #'Roassal3-Interaction-Popup'
 }
 
+{ #category : #accessing }
+RSMorphicPopup >> backgroundColor [
+	^ Smalltalk ui theme backgroundColor
+]
+
 { #category : #hooks }
 RSMorphicPopup >> createPopupFor: aShape event: event [
 	| popup vertices targetMorph world |
 	targetMorph := self morphBuilder cull: aShape model.
 	vertices := SimpleBalloonMorph getVertices: targetMorph bounds.
 	popup := SimpleBalloonMorph new
-		color: Color white;
+		color: self backgroundColor;
 		addMorph: targetMorph;
 		setTarget: nil;
 		setVertices: vertices.
@@ -66,8 +71,11 @@ RSMorphicPopup >> translatePopup: aMorph event: evt [
 	(position y + aMorph height) > world height 
 		ifTrue: [ ydelta := aMorph height negated ].
 	
-	aMorph lock;
+	aMorph
+		lock;
 		fullBounds;
 		setProperty: #morphicLayerNumber toValue: aMorph morphicLayerNumber.
-	aMorph position: position + (xdelta@ydelta)
+	
+	aMorph position: ((position x + xdelta) max: 0) @ ((position y + ydelta) max: 0)
+
 ]
