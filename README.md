@@ -15,7 +15,7 @@ Metacello new
 
 Once loaded, you can execute in a playground:
 ```Smalltalk
-RSAnimationExamples new example06Atom
+RSAnimationExamples new example06Atom open
 ```
 You should an animated version of:
 
