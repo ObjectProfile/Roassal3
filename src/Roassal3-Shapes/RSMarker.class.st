@@ -9,7 +9,7 @@ Class {
 		'offset',
 		'offsetRatio'
 	],
-	#category : #'Roassal3-Border'
+	#category : #'Roassal3-Shapes-Border'
 }
 
 { #category : #converting }

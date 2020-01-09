@@ -60,7 +60,7 @@ Class {
 	#instVars : [
 		'offset'
 	],
-	#category : #'Roassal3-AttachPoint'
+	#category : #'Roassal3-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }

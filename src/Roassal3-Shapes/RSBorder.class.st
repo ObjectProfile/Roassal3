@@ -53,7 +53,7 @@ Class {
 		'style',
 		'paint'
 	],
-	#category : #'Roassal3-Border'
+	#category : #'Roassal3-Shapes-Border'
 }
 
 { #category : #visiting }

@@ -40,11 +40,6 @@ RSShape >> announce: anEventOrAnEventClass [
 	announcer announce: theEventToSend.
 ]
 
-{ #category : #converting }
-RSShape >> asMarker [
-	^ RSMarker new shape: self
-]
-
 { #category : #border }
 RSShape >> border [
 	^ border
@@ -63,12 +58,6 @@ RSShape >> borderColor [
 { #category : #border }
 RSShape >> borderColor: aColor [
 	self border color: aColor
-]
-
-{ #category : #border }
-RSShape >> borderDo: aBlock [
-	border ifNil: [ border := RSBorder new ].
-	aBlock value: border
 ]
 
 { #category : #'accessing - computed' }
@@ -396,9 +385,4 @@ RSShape >> topParent [
 { #category : #accessing }
 RSShape >> width [
 	^ self extent x
-]
-
-{ #category : #border }
-RSShape >> withBorder [
-	self border: RSBorder new
 ]
