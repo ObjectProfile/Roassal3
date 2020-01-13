@@ -7,7 +7,12 @@ Class {
 		'width',
 		'extent',
 		'plot',
-		'decorations'
+		'decorations',
+		'maxValueX',
+		'maxValueY',
+		'minValueX',
+		'minValueY',
+		'generator'
 	],
 	#category : #'Roassal3-Matplotlib-Core'
 }
@@ -29,7 +34,7 @@ RSChart >> addPlot: aPlot [
 RSChart >> build [
 	canvas := RSCanvas new.
 	canvas @ RSCanvasController.
-	plots, decorations do: [ :e | e beforeRenderingIn: self ].
+	decorations, plots do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: canvas.
 	self renderPlotsIn: canvas
 ]
@@ -79,22 +84,50 @@ RSChart >> initializeDecorations [
 
 { #category : #accessing }
 RSChart >> maxValueX [ 
-	^ (plots collect: #maxValueX) max
+	^ maxValueX ifNil: [ maxValueX := (plots collect: #maxValueX) max ].
+]
+
+{ #category : #accessing }
+RSChart >> maxValueX: aNumber [
+	maxValueX := aNumber
 ]
 
 { #category : #accessing }
 RSChart >> maxValueY [
-	^ (plots collect: #maxValueY) max
+	^ maxValueY ifNil: [  maxValueY := (plots collect: #maxValueY) max ]
+]
+
+{ #category : #accessing }
+RSChart >> maxValueY: aNumber [
+	maxValueY := aNumber
 ]
 
 { #category : #accessing }
 RSChart >> minValueX [ 
-	^ (plots collect: #minValueX) min
+	^ minValueX ifNil: [ minValueX := (plots collect: #minValueX) min ]
+]
+
+{ #category : #accessing }
+RSChart >> minValueX: aNumber [
+	minValueX := aNumber
 ]
 
 { #category : #accessing }
 RSChart >> minValueY [
-	^ (plots collect: #minValueY) min
+	^ minValueY ifNil: [ minValueY := (plots collect: #minValueY) min ]
+]
+
+{ #category : #accessing }
+RSChart >> minValueY:  aNumber [
+	maxValueY := aNumber
+]
+
+{ #category : #accessing }
+RSChart >> niceGenerator [
+	^ generator ifNil: [ 
+		generator := RSLabelGenerator new.
+		generator setLooseFlag: true.
+		generator ].
 ]
 
 { #category : #'as yet unclassified' }

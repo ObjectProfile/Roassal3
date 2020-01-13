@@ -35,13 +35,7 @@ RSNiceLabel >> min: aNumber [
 
 { #category : #accessing }
 RSNiceLabel >> numberOfTicks [
-	| ticks |
-	min < 0 ifTrue: [ 
-		ticks := max < 0 ifTrue: [ (max - min) abs ] ifFalse: [ max+min abs  ]
-		 ] ifFalse: [ 
-		ticks := max - min ].
-	^ (ticks / step).
-	
+	^ self ticks / step.
 ]
 
 { #category : #printing }
@@ -78,4 +72,13 @@ RSNiceLabel >> step [
 { #category : #accessing }
 RSNiceLabel >> step: aNumber [
 	step := aNumber
+]
+
+{ #category : #accessing }
+RSNiceLabel >> ticks [
+	^  min < 0 ifTrue: [ 
+		 max < 0 
+			ifTrue: [ (max - min) abs ] 
+			ifFalse: [ max + min abs  ]
+	] ifFalse: [ max - min ]
 ]

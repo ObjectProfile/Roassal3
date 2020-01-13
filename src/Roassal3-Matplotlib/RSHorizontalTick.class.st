@@ -5,24 +5,34 @@ Class {
 }
 
 { #category : #rendering }
-RSHorizontalTick >> renderIn: canvas [
+RSHorizontalTick >> createNiceLabelIn: aChart [
+	| nice |
+	nice := super createNiceLabelIn: aChart.
+	aChart 
+		minValueX: nice min;
+		maxValueX: nice max.
+	^ nice
+]
 
-	| aTick e1 e2 lbl |
+{ #category : #rendering }
+RSHorizontalTick >> createTickLineFor: aNumber [
+	^ RSLine new
+		startPoint: (xScale scale: aNumber) @ 0;
+		endPoint: (xScale scale: aNumber) @ self tickSize;
+		yourself
+]
 
-	(chart minValueX to: chart maxValueX count: numberOfTicks) do: [ :i |
-		e1 := RSBox new size: 1.
-		e2 := RSBox new size: 1.
-		aTick := RSLine new from: e1; to: e2.
-		aTick attachPoint: (RSCenteredAttachPoint new).
-		canvas add: e1; add: e2; add: aTick.
-		e1 translateTo: (xScale scale: i) @ 0.
-		e2 translateTo: (xScale scale: i) @ self tickSize.
-		
-		shouldHaveLabels ifTrue: [ 
-			lbl := self createLabelFor: i.
-			canvas add: lbl.
-			RSLocation new below; move: lbl on: e2
-			 ]
-		 ]
-	
+{ #category : #'accessing - defaults' }
+RSHorizontalTick >> defaultLabelLocation [
+	^ RSLocation new below
+]
+
+{ #category : #accessing }
+RSHorizontalTick >> maxValue [
+	^ chart maxValueX
+]
+
+{ #category : #accessing }
+RSHorizontalTick >> minValue [
+	^ chart minValueX
 ]
