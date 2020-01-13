@@ -35,35 +35,32 @@ RSScriptOfTheDay >> loadDiscordSt [
 
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> runMe [
-
 	<script: 'self new runMe'>
-	UIManager default edit: '	| v elements |
-	v := RSView new.
-	elements := RSShapeBuilder box
-		size: #numberOfMethods;
-		interactionDo: #draggable;
-		elementsOn: (Collection withAllSubclasses).
-
-	v addAll: elements.
-	RSGridLayout on: elements.
-	v open' label: 'Enter your Roassal3 script' accept: [ :aScript | self sendScript: aScript ]
+	UIManager default edit: '| v nodes |
+c := RSCanvas new.
+nodes := Collection withAllSubclasses collect: [ :cls |
+	RSBox new
+		size: cls numberOfMethods;
+		draggable;
+		yourself ].
+c addAll: nodes.
+RSGridLayout on: nodes.
+c open' label: 'Enter your Roassal3 script' accept: [ :aScript | self sendScript: aScript ]
 ]
 
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> sendScript: aScript [
- 
-| preamble message window morph |
-preamble := 'Here is a new script of the day for _Roassal3_: https://github.com/ObjectProfile/Roassal3'.
-preamble := preamble , String cr , 'Roassal3 is still in an early phase, so the API may evolve.' , String cr.
-message := preamble , String cr, '```Smalltalk' , String cr , aScript , String cr , '```'.
-window := OpalCompiler new
-		source: aScript;
-		evaluate.
+	| preamble message window morph |
+	preamble := 'Here is a new script of the day for _Roassal3_: https://github.com/ObjectProfile/Roassal3'.
+	preamble := preamble , String cr , 'Roassal3 is still in an early phase, so the API may evolve.' , String cr.
+	message := preamble , String cr, '```Smalltalk' , String cr , aScript , String cr , '```'.
+	window := OpalCompiler new
+			source: aScript;
+			evaluate.
 
-morph := window submorphs last.
-morph extent: window extent.
-morph canvas zoomToFit.
-
+	morph := window submorphs last.
+	morph extent: window extent.
+	morph canvas zoomToFit.
 	DSWebhookClient new
 		url: serverName;
 		message: message;
