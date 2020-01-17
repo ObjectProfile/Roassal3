@@ -200,11 +200,12 @@ RSHighlightable >> restore: aShape selector: selector [
 { #category : #public }
 RSHighlightable >> setupAntAnimation [
 	self withEdges.
-
-	self when: RSHighlightEvent do: [ :evt | | shape |
+	self when: RSHighlightEvent do: [ :evt | | shape border |
 		shape := evt shape.
-		shape attributeAt: #ob put: shape border.
-		shape border: (RSBorder new width: 2; color: Color red).
+		border := shape border.
+		shape attributeAt: #ob put: border.
+		border ifNil: [ border := RSBorder new ].
+		shape border: (RSBorder new width: border width * 2; color: border color).
 		shape isNode ifTrue: [ 
 			| array anime |
 			array := #(4).

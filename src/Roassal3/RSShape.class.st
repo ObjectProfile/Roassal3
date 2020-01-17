@@ -26,7 +26,7 @@ RSShape >> addedIn: aCanvas [
 	
 	evt := RSShapeAddedEvent new shape: self.
 	self announce: evt.
-	parent announce: evt.
+	"parent announce: evt."
 ]
 
 { #category : #announcer }
@@ -264,7 +264,7 @@ RSShape >> path: aPath [
 { #category : #copying }
 RSShape >> postCopy [
 	self 
-		parent: nil; 
+		parent: nil;
 		announcer: nil;
 		resetPath;
 		resetBBox
