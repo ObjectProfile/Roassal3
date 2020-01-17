@@ -212,8 +212,9 @@ RSXmasExample >> myIcon [
 { #category : #running }
 RSXmasExample >> run [
 	<script: 'self new run'>
-	| full background tree icon title |
+	| full background tree icon title world |
 	full := Morph new.
+	world := self currentWorld.
 	background := self background createMorph.
 	tree := self tree createMorph.
 	icon := self myIcon createMorph.
@@ -222,14 +223,14 @@ RSXmasExample >> run [
 	full addMorph: tree.
 	full addMorph: icon.
 	full addMorph: title.
-	background extent: self currentWorld extent * 0.8.
+	background extent: world extent * 0.8.
 	tree extent: 500@500.
-	tree position: 0@300.
+	tree position: 0@(background extent y - 500).
 	
-	icon extent: 500@ 400.
-	icon position: 800@0.
+	icon extent: 500@400.
+	icon position: (background extent x - 500)@0.
 	title extent: 600@ 400.
-	title position: 400@200.
+	title position: (background extent / 2) - (title extent / 2).
 	(full openInWindowLabeled: '2020') position: 100 asPoint.
 	
 ]
@@ -243,13 +244,13 @@ RSXmasExample >> title [
 	
 	title := RSLabel new
 		text: 'Happy New Year';
-		fontName: 'Brushcrazy DEMO';
+		"fontName: 'Brushcrazy DEMO';"
 		color: Color white;
 		fontSize: 50;
 		yourself.
 	t2020 := RSLabel new
 		text: '2020!';
-		fontName: 'Brushcrazy DEMO';
+		"fontName: 'Brushcrazy DEMO';"
 		color: Color white;
 		fontSize: 100;
 		yourself.
