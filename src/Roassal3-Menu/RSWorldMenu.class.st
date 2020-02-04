@@ -84,7 +84,7 @@ RSWorldMenu class >> menu05ExamplesOn: aBuilder [
 		order: 5;
 		label: 'Examples';
 		icon: self roassalIcon;
-		action: [ self inform: 'TODO' ]
+		action: [ (RPackageOrganizer default packageNamed: 'Roassal3-Examples') browse ]
 ]
 
 { #category : #menu }
