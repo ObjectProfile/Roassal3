@@ -17,10 +17,10 @@ Class {
 }
 
 { #category : #hooks }
-RSLabeled >> createLabel: anElement [
+RSLabeled >> createLabel: aShape [
 	| label color set targetLabel |
-	label := self shapeBuilder shapeFor: (self modelFor: anElement).
-	location stick: label on: anElement.
+	label := self shapeBuilder shapeFor: (self modelFor: aShape).
+	location stick: label on: aShape.
 	isHighlightable 
 		ifFalse: [ ^ label ].
 	targetLabel := target value: label.
@@ -30,7 +30,7 @@ RSLabeled >> createLabel: anElement [
 		label pushFront.
 		targetLabel color: c.
 		label signalUpdate ].
-	anElement 
+	aShape 
 		when: RSMouseEnter do: [ set value: color ];
 		when: RSMouseLeave do: [ set value: lowColor ];
 		when: RSShapeRemovedEvent do: [ label remove ].
@@ -111,11 +111,11 @@ RSLabeled >> modelFor: anElement [
 
 { #category : #hooks }
 RSLabeled >> onShape: aShape [
-	| block |
-	block := [ self getOrCreateLabel: aShape. ]. 
+	
 	aShape isInACanvas 
-		ifTrue: block
-		ifFalse: [ aShape when: RSShapeAddedEvent do: block ].
+		ifTrue: [ self getOrCreateLabel: aShape ]
+		ifFalse: [ aShape when: RSShapeAddedEvent do: [ :evt | 
+			self getOrCreateLabel: evt shape ] ].
 ]
 
 { #category : #accessing }

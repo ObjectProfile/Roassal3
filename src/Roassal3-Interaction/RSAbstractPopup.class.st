@@ -54,7 +54,7 @@ RSAbstractPopup >> onShape: aShape [
 	self registerRemoveEventsOn: aShape.
 	aShape
 		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: aShape event: evt.
+			popup := self createOrGetPopupOn: evt shape event: evt.
 			self translatePopup: popup event: evt.
 			evt signalUpdate. ]
 

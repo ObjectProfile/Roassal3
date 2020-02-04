@@ -426,16 +426,6 @@ RSCanvas >> transform: aPoint [
 	^ aPoint
 ]
 
-{ #category : #accessing }
-RSCanvas >> view [
-	^ self attributes at:#view
-]
-
-{ #category : #accessing }
-RSCanvas >> view: aRSView [
-	self attributes at: #view put: aRSView
-]
-
 { #category : #camera }
 RSCanvas >> zoomToFit [
 	self camera zoomToFit

@@ -28,22 +28,6 @@ Class {
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #hooks }
-RSMenuActivable >> highlightOn: evt [
- 
-	| att view |
-	view := evt canvas view.
-	view ifNil: [ ^ self ].
-	att := view attributes.
-	
-	"The highlight attribute should contains an array {shape . originalColor}"
-	(att includesKey: #highlight) ifTrue: [ self removeHighlightOn: evt ].
-	
-	att at: #highlight put: (Array with: evt shape with: evt shape color).
-	evt shape color: Color red.
-	view signalUpdate.
-]
-
 { #category : #enumerating }
 RSMenuActivable >> menuDo: block [
 	"a block with two args
