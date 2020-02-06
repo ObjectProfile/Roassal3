@@ -10,7 +10,7 @@ Class {
 		'finished',
 		'thickness'
 	],
-	#category : #'Roassal3-Experimental'
+	#category : #'Roassal3-Experimental-Xmas'
 }
 
 { #category : #accessing }
