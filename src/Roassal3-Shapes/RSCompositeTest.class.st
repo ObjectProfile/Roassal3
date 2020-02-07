@@ -8,6 +8,102 @@ Class {
 }
 
 { #category : #tests }
+RSCompositeTest >> testEdgesCanvasAndComposite01 [
+	"basic case in a canvas"
+	| c b1 b2 e1 |
+	c := RSCanvas new.
+	b1 := RSBox new position: 0@0.
+	b2 := RSBox new position: 100@100.
+	e1 := RSLine new from: b1; to: b2.
+	c addAll: { b1. b2. e1 }.
+	
+	self assert: e1 startPoint equals: b1 position.
+	self assert: e1 endPoint equals: b2 position.
+]
+
+{ #category : #tests }
+RSCompositeTest >> testEdgesCanvasAndComposite02 [
+	"basic example in composite"
+	| c b1 b2 e1 |
+	c := RSComposite new.
+	b1 := RSBox new position: 0@0.
+	b2 := RSBox new position: 100@100.
+	e1 := RSLine new from: b1; to: b2.
+	c shapes: { b1. b2. e1 }.
+	
+	self assert: e1 startPoint equals: b1 position.
+	self assert: e1 endPoint equals: b2 position.
+]
+
+{ #category : #tests }
+RSCompositeTest >> testEdgesCanvasAndComposite03 [
+	"from box to child"
+	| c b1 b2 e1 com |
+	c := RSCanvas new.
+	com := RSComposite new.
+	b1 := RSBox new size: 10; position: 0@0.
+	com add: b1.
+	com adjustToChildren.
+	b1 position: 50@50.
+	com position: 200@0.
+	b2 := RSBox new size: 10; position: 100@100.
+	e1 := RSLine new from: b1; to: b2.
+	c addAll: { com. b2. e1 }.
+	
+	self assert: e1 startPoint equals: com position + b1 position.
+	self assert: e1 endPoint equals: b2 position.
+]
+
+{ #category : #tests }
+RSCompositeTest >> testEdgesCanvasAndComposite04 [
+	"from child to child"
+	| c b1 b2 e1 com1 com2 |
+	c := RSCanvas new.
+	com1 := RSComposite new.
+	b1 := RSBox new size: 10; position: 0@0.
+	com1 add: b1.
+	com1 adjustToChildren.
+	b1 position: 50@50.
+	com1 position: 200@0.
+	
+	com2 := RSComposite new.
+	b2 := RSBox new size: 10.
+	com2 add: b2.
+	com2 adjustToChildren.
+	com2 position: -100@0.
+	b2 position: 100@100.
+	
+	e1 := RSLine new from: b1; to: b2.
+	c addAll: { com1. com2. e1 }.
+	
+	self assert: e1 startPoint equals: com1 position + b1 position.
+	self assert: e1 endPoint equals: com2 position + b2 position.
+]
+
+{ #category : #tests }
+RSCompositeTest >> testEdgesCanvasAndComposite05 [
+	"from child to box, where the edge is with the child"
+	| c b1 b2 e1 com |
+	c := RSCanvas new.
+	com := RSComposite new.
+	b1 := RSBox new size: 10; position: 50@50.
+	com add: b1.
+	com position: 200@0.
+	b2 := RSBox new size: 10; position: 100@100.
+	e1 := RSLine new from: b1; to: b2.
+	
+	com add: e1.
+	com adjustToChildren.
+	c addAll: { com. b2. }.
+	
+	self assert: e1 startPoint equals: b1 position.
+	"but b2 is not in the space of com"
+	self assert: e1 endPoint equals: b2 position.
+	
+	
+]
+
+{ #category : #tests }
 RSCompositeTest >> testHasChildren [
 	| b |
 	b := RSComposite new.

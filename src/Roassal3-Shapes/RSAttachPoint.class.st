@@ -25,6 +25,19 @@ RSAttachPoint >> basicStartingPointOf: anEdge [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #private }
+RSAttachPoint >> commonParents: shape in: anEdge [
+	| current parents |
+	current := shape parent.
+	parents := OrderedCollection new.
+	[ current = anEdge parent ] whileFalse: [ 
+		current ifNil: [ ^ nil ].
+		current parent = current ifTrue: [ ^ nil ].
+		parents add: current.
+		current := current parent ].
+	^ parents
+]
+
 { #category : #'public - hooks' }
 RSAttachPoint >> endingPointOf: aLine [
 	"Return the end point of a line.
@@ -50,10 +63,15 @@ RSAttachPoint >> endingPointOf: aLine [
 => 	50 @ 45
 	"
 	(aLine from = aLine to) 
-		ifTrue: [ ^ self position: aLine from ].
+		ifTrue: [ ^ self positionFor: aLine from in: aLine ].
     ^ inverted
         ifTrue: [ self basicStartingPointOf: aLine ]
         ifFalse: [ self basicEndingPointOf: aLine ]
+]
+
+{ #category : #private }
+RSAttachPoint >> hasParents: shape in: anEdge [
+	^ shape parent notNil and: [ anEdge parent notNil ]
 ]
 
 { #category : #'public - hooks' }
@@ -63,10 +81,30 @@ RSAttachPoint >> initialize [
 ]
 
 { #category : #private }
-RSAttachPoint >> position: aShapeOrAPoint [
-	"Return the position of a shape. Polymorphic to point"
-	aShapeOrAPoint isPoint ifTrue: [ ^ aShapeOrAPoint ].
-	^ self positionFor: aShapeOrAPoint point: aShapeOrAPoint position.
+RSAttachPoint >> matrixFor: commonParents [
+	| matrix |
+	matrix := AthensAffineTransform new.
+	commonParents reverseDo: [ :s | matrix multiplyBy: s matrix ].
+	^ matrix
+]
+
+{ #category : #private }
+RSAttachPoint >> positionFor: shape in: anEdge [
+	shape isPoint ifTrue: [ ^ shape ].
+	^ self positionFor: shape in: anEdge point: shape position
+]
+
+{ #category : #private }
+RSAttachPoint >> positionFor: shape in: anEdge point: pos [
+	| commonParents |
+	shape isPoint ifTrue: [ ^ shape ].
+	(self hasParents: shape in: anEdge) ifFalse: [ ^ pos ].
+	shape parent = anEdge parent ifTrue: [ ^ pos ].
+	
+	"TODO we can cache this info"
+	commonParents := self commonParents: shape in: anEdge.
+	commonParents ifNil: [ ^ pos ].
+	^ (self matrixFor: commonParents) transform: pos. 
 ]
 
 { #category : #private }
@@ -99,7 +137,7 @@ RSAttachPoint >> startingPointOf: aLine [
 => 	30 @ 35
 	"
 	(aLine from = aLine to) 
-		ifTrue: [ ^ self position: aLine from ].
+		ifTrue: [ ^ self positionFor: aLine from in: aLine ].
     ^ inverted
         ifTrue: [ self basicEndingPointOf: aLine ]
         ifFalse: [ self basicStartingPointOf: aLine ]

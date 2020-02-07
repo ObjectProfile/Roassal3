@@ -12,8 +12,8 @@ TContainer >> add: aShape [
 		assert: aShape notNil
 		description: 'Nil cannot be added to a canvas'.
 	aShape 
-		renderOn: self;
-		addedIn: self.
+		addedIn: self;
+		renderOn: self.
 	^ aShape
 ]
 

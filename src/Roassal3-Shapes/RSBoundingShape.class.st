@@ -32,6 +32,13 @@ RSBoundingShape >> baseRectangle [
 	^ baseRectangle
 ]
 
+{ #category : #matrix }
+RSBoundingShape >> basicTranslateBy: delta [
+	self updateEdgesOFF.
+	self position: self position + delta.
+	self updateEdgesON.
+]
+
 { #category : #accessing }
 RSBoundingShape >> computeEncompassingRectangle [
 	| rect points |

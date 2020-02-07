@@ -236,6 +236,14 @@ RSComposite >> pushBack: aShape [
 		addFirst: aShape
 ]
 
+{ #category : #actions }
+RSComposite >> pushFront: shape [
+	children 
+		remove: shape ifAbsent: [];
+		addLast: shape. 
+	
+]
+
 { #category : #removing }
 RSComposite >> removeShape: shape [
 	| evt |

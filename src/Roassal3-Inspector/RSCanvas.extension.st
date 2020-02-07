@@ -7,7 +7,7 @@ RSCanvas >> gtInspectorShapesIn: composite [
 		title: 'Shapes';
 		showOnly: 50;
 		display: [ :each | each shapes ];
-		children: #shapes;
+		children: #children;
 		column: 'Shape' evaluated: [ :each | each asString ];
 		column: 'Model' evaluated: [ :each | each model asString ];
 		column: 'Paint' evaluated: [ :each | each paint asString ];

@@ -33,14 +33,16 @@ Class {
 
 { #category : #'public - hooks' }
 RSHorizontalAttachPoint >> basicEndingPointOf: edge [
-	^ self
-		positionFor: edge to
+	^ self 
+		positionFor: edge to 
+		in: edge 
 		point: edge to encompassingRectangle leftCenter + (endOffset@0)
 ]
 
 { #category : #'public - hooks' }
 RSHorizontalAttachPoint >> basicStartingPointOf: edge [
-	^ self
-		positionFor: edge from 
+	^ self 
+		positionFor: edge from
+		in: edge 
 		point: edge from encompassingRectangle rightCenter + (startOffset@0)
 ]

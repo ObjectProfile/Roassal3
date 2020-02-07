@@ -264,3 +264,83 @@ RSHighlightableExamples >> example07HighlightButtons [
 	
 
 ]
+
+{ #category : #examples }
+RSHighlightableExamples >> example08DependendMethods [
+	<script: 'self new example08DependendMethods open'>
+	| packagesRegExp packages canvas popup label padding high arrow allClasses allMethods |
+	packagesRegExp := { 'Roassal3-Shapes'}.
+	    
+	packages := packagesRegExp flatCollect: [ :regExp | 
+		RPackageOrganizer default packages 
+			select: [ :p | regExp match: p packageName ] ].
+
+	canvas := RSCanvas new.
+	popup := RSPopup new.
+	label := RSLabeled new highlightable.
+	padding := 10 asMargin.
+	high := RSHighlightable new.
+	arrow := RSShapeFactory arrowedLine
+		color: Color blue.
+	packages := packages collect: [ :p | 
+		| classes pkg |
+		classes := p definedClasses collect: [ :cls | | methods |
+			methods := cls methods collect: [ :met |
+				RSBox new
+					extent: 5 @ met linesOfCode;
+					@ popup;
+					@ high;
+					model: met;
+					yourself
+					 ].
+			RSGridLayout on: methods.
+			RSComposite new
+				model: cls;
+				@ label;
+				@ popup;
+				paint: Color white;
+				children: methods;
+				padding: padding;
+				yourself ] as: RSGroup.
+		pkg := RSComposite new
+			children: classes;
+			paint: Color blue trans;
+			model: p;
+			@ popup;
+			draggable;
+			yourself.
+		RSEdgeBuilder orthoVertical 
+			withVerticalAttachPoint;
+			canvas: pkg;
+			shapes: pkg nodes;
+			connectFrom: #superclass.
+		RSTreeLayout on: pkg nodes edges: pkg edges.
+		pkg adjustToChildren;
+			padding: padding.
+		pkg ].
+	canvas addAll: packages.
+	RSGridLayout on: canvas shapes.
+	allClasses := canvas shapes flatCollect: #nodes.
+	allMethods := allClasses flatCollect: #nodes.
+
+	high 
+		when: RSHighlightEvent do: [ :evt | | methods |
+			methods := allClasses flatCollect: [ :class | 
+				(class model 
+					thoroughWhichMethodsReferTo: 
+						evt shape model selector) 
+							collect: [ :method | method ] ].
+			methods := methods collect: [ :met | 
+				arrow copy
+					from: evt shape;
+					to:(allMethods shapeFromModel: met)
+					 ].
+			canvas addAll: methods.
+			canvas attributeAt: #methods put: methods.
+			 ];
+		when: RSUnHighlightEvent do: [ :evt | 
+			(canvas attributeAt: #methods ifAbsent: [ #() ]) do:#remove ].
+
+	canvas @ RSCanvasController.
+	^  canvas 
+]

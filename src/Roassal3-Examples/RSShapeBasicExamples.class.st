@@ -721,3 +721,32 @@ RSShapeBasicExamples >> example32RotateShapeByMouse [
 	s @ RSRotated.
 	^ c
 ]
+
+{ #category : #lines }
+RSShapeBasicExamples >> example33EdgesBetweenChildren [
+	<script: 'self new example33EdgesBetweenChildren open'>
+	| c b1 b2 e1 com1 com2 |
+	c := RSCanvas new.
+	com1 := RSComposite new.
+	com1 paint: Color blue trans.
+	b1 := RSBox new size: 10.
+	com1 add: b1.
+	com1 adjustToChildren.
+	b1 position: 20@20.
+	com1 position: 200@0.
+	
+	com2 := RSComposite new.
+	com2 paint: Color blue trans.
+	b2 := RSBox new size: 10.
+	com2 add: b2.
+	com2 adjustToChildren.
+	b2 position: 50@0.
+	com2 position: -100@0.
+	
+	com1 draggable.
+	com2 draggable.
+	
+	e1 := RSLine new from: b1; to: b2.
+	c addAll: { com1. com2. e1 }.
+	^ c
+]
