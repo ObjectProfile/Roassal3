@@ -167,7 +167,7 @@ eb moveBehind.
 eb 	shapes: characters.
 eb connectToAll: #characters.	
 
-"All the characters are displayed as a grid"
+"The characters are displayed as a force-directed graph"
 RSForceBasedLayout new charge: -1500; on: characters.
 
 "Make each element have a popup text and is draggable"
