@@ -107,11 +107,6 @@ RSAttachPoint >> positionFor: shape in: anEdge point: pos [
 	^ (self matrixFor: commonParents) transform: pos. 
 ]
 
-{ #category : #private }
-RSAttachPoint >> positionFor: aShape point: aPoint [
-	^ aPoint
-]
-
 { #category : #'public - hooks' }
 RSAttachPoint >> startingPointOf: aLine [
 "Return the starting point of a line.

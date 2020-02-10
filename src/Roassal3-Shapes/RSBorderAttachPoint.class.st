@@ -65,41 +65,64 @@ Class {
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicEndingPointOf: anEdge [
-	^ self 
-		positionFor: anEdge to 
-		in: anEdge 
-		point: (self basicPointFrom: anEdge to to: anEdge from of: anEdge offset: endOffset)
+	^ self
+		basicPointFrom: anEdge to
+		to: anEdge from
+		of: anEdge
+		offset: endOffset
 ]
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge offset: aNumber [
 	| source target line shift res vector unit |
-	source := fromShape geometry.
-	target := toShape geometry.
+	source := self geometryFor: fromShape edge: anEdge.
+	target := self geometryFor: toShape edge: anEdge.
 	shift := self offsetNormalFor: anEdge.
 	line := GLineSegment from: source center to: target center.
 	vector := line vector.
 	unit := vector / (vector r max: 1).
-	shift :=  vector normal * shift.
+	shift := vector normal * shift.
 	anEdge from = toShape
 		ifTrue: [ shift := shift * -1 ].
-	line := GLineSegment from: source center + shift to: target center + shift.
+	line := GLineSegment
+		from: source center + shift
+		to: target center + shift.
 	res := self borderPointFrom: source to: target via: line.
-	^ res + (unit * aNumber).
+	^ res + (unit * aNumber)
 ]
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicStartingPointOf: anEdge [
 	^ self 
-		positionFor: anEdge from
-		in: anEdge 
-		point: (self basicPointFrom: anEdge from to: anEdge to of: anEdge offset: startOffset)
+		basicPointFrom: anEdge from 
+		to: anEdge to 
+		of: anEdge 
+		offset: startOffset
 ]
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 	^ ((aLine intersect: aSource) detectMin: [ :p | p dist: aLine to ])
 		ifNil: [ aSource center ]
+]
+
+{ #category : #'public - hooks' }
+RSBorderAttachPoint >> geometryFor: shape edge: anEdge [
+	| g commonParents matrix |
+	g := shape geometry.
+	(self hasParents: shape in: anEdge)
+		ifFalse: [ ^ g ].
+	shape parent = anEdge parent
+		ifTrue: [ ^ g ].
+	commonParents := self commonParents: shape in: anEdge.
+	commonParents ifNil: [ ^ g ].
+	matrix := self matrixFor: commonParents.
+	g class = GEllipse ifTrue: [ 
+		g setCenter: (matrix transform: g center) a: g a b: g b ]
+		ifFalse: [ g := GRectangle 
+			origin: (matrix transform: g origin)
+			corner: (matrix transform: g corner) ].
+	^ g
 ]
 
 { #category : #initialization }
