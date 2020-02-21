@@ -77,10 +77,10 @@ RSKeyNavigationCanvas >> processKeyDown: evt [
 RSKeyNavigationCanvas >> processKeyUp: evt [
 	| key |
 	steps removeAll.
-	key := evt keyValue.
-	key == 34 "$i" ifTrue: [ ^ self zoomIn: evt ].
-	key == 31 "$o" ifTrue: [ ^ self zoomOut: evt ].
-	key == 46 "$m" ifTrue: [ ^ self expandCollapse: evt ].
+	key := evt keyCharacter.
+	key == $I ifTrue: [ ^ self zoomIn: evt ].
+	key == $O ifTrue: [ ^ self zoomOut: evt ].
+	key == $M ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.
 	animation stop.
