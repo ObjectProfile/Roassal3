@@ -88,3 +88,13 @@ RSLinesTest >> testPolyline [
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50).
 ]
+
+{ #category : #running }
+RSLinesTest >> testPolylineBasic [
+	| line |
+	line := RSPolyline new.
+	
+	self deny: (line includesPoint: 500@500).
+	self deny: (line includesPoint: 6@50).
+	self assert: line controlPoints equals: #()
+]

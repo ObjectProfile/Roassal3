@@ -28,7 +28,7 @@ RSPolyline >> cornerRadii: aNumber [
 { #category : #testing }
 RSPolyline >> includesPoint: aPoint [
 	| cp |
-	cp := controlPoints.
+	cp := self controlPoints.
 	1 to: cp size - 1 do: [ :i | | p2 p1|
 		p1 := cp at: i.
 		p2 := cp at: i + 1.
