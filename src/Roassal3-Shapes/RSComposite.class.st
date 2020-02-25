@@ -206,7 +206,7 @@ RSComposite >> padding: anObject [
 	
 	(center := rect rsCenter) = (0@0) ifTrue: [ ^ self ].
 	center := center negated.
-	temp do: [ :s | s translateBy: center ].
+	temp do: [ :s | s basicTranslateBy: center ].
 ]
 
 { #category : #private }
@@ -298,13 +298,13 @@ RSComposite >> shapes: aTSGroup [
 	self children: aTSGroup
 ]
 
-{ #category : #actions }
-RSComposite >> translateTo: position [
-	super translateTo: position.
-	self hasChildren ifFalse: [ ^ self ].
-	children do: [ :child | 
+{ #category : #edges }
+RSComposite >> updateConnectedEdges [
+	self shouldUpdateEdges 
+		ifTrue: [ connectedEdges do: [ :edge | edge update ] ].
+	self children do: [ :child | 
 		child isNode
-			ifTrue: [ child updateConnectedEdges] ].
+			ifTrue: [ child updateConnectedEdges ] ]
 ]
 
 { #category : #accessing }

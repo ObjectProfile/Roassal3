@@ -265,8 +265,9 @@ RSBoundingShape >> translateTo: aPoint [
 
 { #category : #edges }
 RSBoundingShape >> updateConnectedEdges [
-	self shouldUpdateEdges ifFalse: [ ^ self ].
-	self connectedEdges do: [ :edge | edge update ]
+	self shouldUpdateEdges
+		ifFalse: [ ^ self ].
+	self connectedEdges do: [ :edge | edge update ].
 ]
 
 { #category : #edges }
