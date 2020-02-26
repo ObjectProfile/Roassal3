@@ -2,13 +2,13 @@
 I have examples of different ways to inspect views an objects in roassal3
 "
 Class {
-	#name : #TSInspectableExample,
+	#name : #RSInspectableExample,
 	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #examples }
-TSInspectableExample >> example01SimpleExample [
+RSInspectableExample >> example01SimpleExample [
 	<script: 'self new example01SimpleExample open'>
 	| canvas boxes inspectable highligtable |
 	canvas := RSCanvas new.
@@ -42,7 +42,7 @@ TSInspectableExample >> example01SimpleExample [
 ]
 
 { #category : #examples }
-TSInspectableExample >> example02Inspect [
+RSInspectableExample >> example02Inspect [
 	<script: 'self new example02Inspect inspect'>
 	
 	| canvas animation lastSize box color |
@@ -96,7 +96,7 @@ TSInspectableExample >> example02Inspect [
 ]
 
 { #category : #examples }
-TSInspectableExample >> example03Easing [
+RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
 	^ RSEasing bounceOut
 ]
