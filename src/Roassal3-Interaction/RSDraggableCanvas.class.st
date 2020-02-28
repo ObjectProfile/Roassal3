@@ -130,7 +130,7 @@ RSDraggableCanvas >> onShape: aCanvas [
 ]
 
 { #category : #rendering }
-RSDraggableCanvas >> renderOn: lb [
+RSDraggableCanvas >> renderLegendOn: lb [
 	lb text: 'Mouse click' description: 'To move the view''s camera'
 ]
 

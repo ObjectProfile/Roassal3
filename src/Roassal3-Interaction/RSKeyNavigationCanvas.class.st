@@ -88,7 +88,7 @@ RSKeyNavigationCanvas >> processKeyUp: evt [
 ]
 
 { #category : #rendering }
-RSKeyNavigationCanvas >> renderOn: lb [
+RSKeyNavigationCanvas >> renderLegendOn: lb [
 	lb
 		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
 		text: 'Shift + arrows' description: 'Accelerate the move';

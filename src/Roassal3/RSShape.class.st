@@ -16,6 +16,11 @@ Class {
 }
 
 { #category : #adding }
+RSShape >> accept: aVisitor [
+	self subclassResponsibility 
+]
+
+{ #category : #adding }
 RSShape >> addedIn: aCanvas [
 	| evt |
 	self isFixed

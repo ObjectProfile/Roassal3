@@ -47,6 +47,6 @@ RSScrollWheelCanvas >> processEvent: evt [
 ]
 
 { #category : #rendering }
-RSScrollWheelCanvas >> renderOn: aLegendBuilder [
+RSScrollWheelCanvas >> renderLegendOn: aLegendBuilder [
 	
 ]

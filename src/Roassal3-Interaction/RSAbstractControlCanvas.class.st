@@ -97,7 +97,7 @@ RSAbstractControlCanvas >> removeRectanglesFor: aCanvas [
 ]
 
 { #category : #rendering }
-RSAbstractControlCanvas >> renderOn: aLegendBuilder [
+RSAbstractControlCanvas >> renderLegendOn: aLegendBuilder [
 	self subclassResponsibility
 ]
 

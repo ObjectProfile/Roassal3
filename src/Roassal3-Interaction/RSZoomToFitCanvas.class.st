@@ -73,7 +73,7 @@ RSZoomToFitCanvas >> processKeyUp: evt [
 ]
 
 { #category : #rendering }
-RSZoomToFitCanvas >> renderOn: lb [
+RSZoomToFitCanvas >> renderLegendOn: lb [
 	lb text: 'Space' description: 'To zoom to fit the view'.
 ]
 

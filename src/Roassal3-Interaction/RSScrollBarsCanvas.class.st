@@ -130,7 +130,7 @@ RSScrollBarsCanvas >> onShape: aCanvas [
 ]
 
 { #category : #rendering }
-RSScrollBarsCanvas >> renderOn: lb [ 
+RSScrollBarsCanvas >> renderLegendOn: lb [ 
 	lb text: '' description: 'Use scrool bars to navigate'
 ]
 

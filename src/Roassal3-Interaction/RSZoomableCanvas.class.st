@@ -44,6 +44,11 @@ RSZoomableCanvas >> processEvent: evt [
 ]
 
 { #category : #rendering }
+RSZoomableCanvas >> renderLegendOn: lb [
+	lb text: 'Wheel' description: 'To zoom in-out the view'.
+]
+
+{ #category : #rendering }
 RSZoomableCanvas >> renderOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'.
 ]

@@ -81,7 +81,7 @@ RSCanvasController >> renderLegendOn: aCanvas [
 			padding: 10.
 		].
 	lb title: 'Shortcuts'.
-	self interactions do: [ :int | int renderOn: lb ].
+	self interactions do: [ :int | int renderLegendOn: lb ].
 	lb onDemand.
 	lb build.
 ]
