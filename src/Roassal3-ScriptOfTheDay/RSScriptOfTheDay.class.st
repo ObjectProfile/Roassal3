@@ -2,7 +2,8 @@ Class {
 	#name : #RSScriptOfTheDay,
 	#superclass : #Object,
 	#instVars : [
-		'serverName'
+		'serverName',
+		'servers'
 	],
 	#category : #'Roassal3-ScriptOfTheDay'
 }
@@ -19,10 +20,20 @@ RSScriptOfTheDay class >> initialize [
 
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> initialize [
+	
+	| path |
+	path := '/Users/alexandrebergel/Dropbox/Document/discordServers.txt'.
+	path asFileReference contents lines.
+	servers := Dictionary new.
+	
+	(path asFileReference contents lines collect: [ :l | l substrings: ' ' ]) do: [ :ar |
+		servers at: ar first asSymbol put: ar second ].
+
+	self useRealDiscordServer
 	"
 	self useTestDiscordServer.
 	"
-	self useRealDiscordServer
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -73,10 +84,10 @@ RSScriptOfTheDay >> sendScript: aScript [
 
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> useRealDiscordServer [
-	serverName := 'https://discordapp.com/api/webhooks/423098538084270081/YqkIWvxWthFmUGnMDyqtOztpb1ugEPV_YHaCq14O7tae3LlFVhODi6sxC9GSkb77DMpR'
+	serverName := servers at: #real
 ]
 
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> useTestDiscordServer [
-	serverName := 'https://discordapp.com/api/webhooks/310117378774269954/pRZWQ7lVhYMLL-v4bmMzeWQgzSsbnAZZx3uNC920oiPi8B0fMfCWeqNqLQ3-fQ4mMMUZ'
+	serverName := servers at: #test
 ]
