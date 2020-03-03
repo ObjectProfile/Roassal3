@@ -32,7 +32,7 @@ RSScriptOfTheDay >> initialize [
 	self useRealDiscordServer
 	"
 	self useTestDiscordServer.
-	"
+"	
 
 ]
 
