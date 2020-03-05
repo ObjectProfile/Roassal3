@@ -1,3 +1,5 @@
+# Tutorial 01 - Adding Simple Nodes, Edges, and Layout
+
 This super-short tutorial uses the dataset of _Les Miserables_. It can be loaded in Pharo using:
 ```Smalltalk
 Metacello new
