@@ -24,6 +24,7 @@ You should an animated version of:
 ## Tutoriales
 
 [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
+
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
 _____
