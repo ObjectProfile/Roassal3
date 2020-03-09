@@ -1,7 +1,7 @@
 Class {
 	#name : #RSChartExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Matplotlib-Core'
+	#category : #'Roassal3-Matplotlib-Examples'
 }
 
 { #category : #'as yet unclassified' }
@@ -24,9 +24,8 @@ RSChartExample >> example02ScatterPlot [
 RSChartExample >> example03Plot [
 	<script: 'self new example03Plot'>
 
-	| classes plt p x |
+	| plt p x |
 	x := 0.0 to: 2 count: 100.
-	classes := Collection withAllSubclasses.
 	plt := RSChart new.
 	p := RSLinePlot new x: x y: (x raisedTo: 2).
 	plt addPlot: p.
