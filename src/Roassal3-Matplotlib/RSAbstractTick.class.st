@@ -7,7 +7,8 @@ Class {
 		'labelConversion',
 		'labelLocation',
 		'shouldUseNiceLabel',
-		'niceLabel'
+		'niceLabel',
+		'labelRotation'
 	],
 	#category : #'Roassal3-Matplotlib-Core'
 }
@@ -24,7 +25,10 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 RSAbstractTick >> createLabelFor: aValue [
 	"Create a label and returns it."
 
-	^ RSLabel new fontSize: 5; text: (labelConversion value: aValue)
+	^ RSLabel new 
+		fontSize: 5; 
+		text: (labelConversion value: aValue); 
+		rotateByDegrees: self labelRotation
 ]
 
 { #category : #rendering }
@@ -45,6 +49,11 @@ RSAbstractTick >> createTickLineFor: aNumber [
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultLabelLocation [
 	^ self subclassResponsibility
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractTick >> defaultLabelRotation [
+	^ 0
 ]
 
 { #category : #'accessing - defaults' }
@@ -77,9 +86,20 @@ RSAbstractTick >> integer [
 	labelConversion := [ :value | value asInteger ]
 ]
 
+{ #category : #public }
+RSAbstractTick >> integerWithCommas [
+	"Do not convert the value when determining labels"
+	labelConversion := [ :value | value asStringWithCommas ]
+]
+
 { #category : #accessing }
 RSAbstractTick >> labelLocation [
 	^ labelLocation ifNil: [ labelLocation := self defaultLabelLocation ].
+]
+
+{ #category : #accessing }
+RSAbstractTick >> labelRotation [
+	^ labelRotation ifNil: [ labelRotation := self defaultLabelRotation ].
 ]
 
 { #category : #accessing }

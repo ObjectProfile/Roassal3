@@ -88,6 +88,44 @@ RSChartExample >> example06CustomNumberOfTicks [
 ]
 
 { #category : #'as yet unclassified' }
+RSChartExample >> example07Corona [
+	<script: 'self new example07Corona'>
+	"Metacello new
+  baseline: 'DataFrame';
+  repository: 'github://PolyMathOrg/DataFrame:v2.0/src';
+  load."
+
+	| url content dataFrame dataSum indexX columnNames chart |
+	url := 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'.
+	content := (ZnEasy get: url) contents.
+	dataFrame := DataFrame 
+	            readFromCsv: content readStream contents 
+	            withSeparator: $,.
+
+	dataSum := OrderedCollection new.
+	5 to: dataFrame numberOfColumns do: [ :index |
+	    dataSum add: (dataFrame columnAt: index) sum ].
+	indexX := dataSum collectWithIndex: [ :s :i | i ].
+	columnNames := dataFrame columnNames allButFirst: 4.
+
+	chart := RSChart new.
+
+	chart extent: 400@250.
+	chart addPlot:(RSBarPlot new x: indexX y: dataSum).
+	"chart xlabel: 'Time'."
+	chart ylabel: 'Contaminated'.
+	chart title: 'Corona confirmed cases'.
+	chart addDecoration: (RSHorizontalTick new fromNames: columnNames).
+	chart addDecoration: (RSVerticalTick new
+		numberOfTicks: 10;
+		integerWithCommas).
+	chart show.
+	"chart canvas shapes 
+		select: [ :s | s class = RSPolyline ] 
+		thenDo: [ :s | s dashArray: #(5) ]."
+]
+
+{ #category : #'as yet unclassified' }
 RSChartExample >> exampleBasic01 [
 
 "

@@ -44,19 +44,29 @@ RSChart >> canvas [
 	^ canvas
 ]
 
+{ #category : #color }
+RSChart >> colorFor: aRSLinePlot [ 
+	^ self defaultPlotColors scale: aRSLinePlot
+]
+
 { #category : #accessing }
 RSChart >> decorations [
 	^ decorations
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #color }
 RSChart >> defaultPlotColors [
-	^ { Color blue . Color orange . Color green darker }
+	^ TSScale category20c
 ]
 
 { #category : #accessing }
 RSChart >> extent [
 	^ extent
+]
+
+{ #category : #accessing }
+RSChart >> extent: aPoint [
+	extent := aPoint
 ]
 
 { #category : #visualization }
