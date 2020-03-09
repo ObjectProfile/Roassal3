@@ -2768,6 +2768,81 @@ RSAnimationExamples >> example46RoassalIcon [
 	^ c
 ]
 
+{ #category : #examples }
+RSAnimationExamples >> example47Circles [
+	<script: 'self new example47Circles open'>
+	| canvas max min gscale alpha scale circleSize vertexSize updateMouse center getSize color frameCount |
+	canvas := RSCanvas new.
+	canvas color: Color black.
+
+	max := 2500.
+	min := 100.
+	gscale := TSScale linear
+		range: { max@20. min@3 }.
+	alpha := TSScale linear
+		domain: { min. max };
+		range: { 0.6. 0.12 }.
+	scale := 300.
+
+	updateMouse := [ :pos | | offset size |
+		offset := pos abs.
+		gscale domain: { 0@0. canvas extent/2 }.
+		size := gscale scale: offset.
+		circleSize := size x.
+		vertexSize := size y.
+		 ].
+	center := [ :theta :time | 
+		| dir distance |
+		dir := theta cos @ theta sin.
+		distance := 0.6 + (0.2 * (theta * 6 + (theta * 8 + time) cos ) cos ).
+		dir * distance * scale. ].
+
+	getSize := [ :theta :time | 
+		| offset |
+		offset := 0.2 + (0.12 * (theta * 9 - (time * 2) ) cos).
+		scale * offset
+		].
+	color := [ :theta :time |
+		| th |
+		th := 8*theta + (time * 2).
+		Color 
+			r: 0.6 + (0.4 * th cos)
+		 	g: 0.6 + (0.4 * (th - (Float pi / 3) ) cos  )
+			b: 0.6 + (0.4 * (th - (Float pi * 2 / 3) ) cos )
+			alpha: (alpha scale: circleSize) ].
+	canvas 
+		when: RSMouseMove 
+		do: [ :evt | updateMouse value: evt position ].
+	updateMouse value: 0@0.
+	frameCount := 0.
+	canvas newAnimation
+		repeat;
+		onStepDo: [ :t |
+			frameCount := frameCount + 1.
+			canvas shapes copy do: #remove.
+			1 to: circleSize do: [ :ci | 
+				| time thetaC c circleCenter cSize points |
+				time := frameCount / 20.
+				thetaC := ci * Float twoPi / circleSize.
+				circleCenter := center value: thetaC value: time.
+				cSize := getSize value: thetaC value: time.
+				c := color value: thetaC value: time.
+				points := (1 to: vertexSize) collect: [:vi | 
+					| thetaV |
+					thetaV := vi * Float twoPi / vertexSize. 
+				 	(thetaV cos @ thetaV sin) * cSize + circleCenter 
+					].
+					
+				canvas add: (RSPolygon new 
+					noPaint;
+					border: (RSBorder new color: c);
+					points: points;
+					yourself).
+				 ].
+		].
+	^ canvas 
+]
+
 { #category : #'data - svg' }
 RSAnimationExamples >> miku [
 	^ 'm 148.25647,236.39122 -3.89508,14.84999 -14.11966,51.12292 -10.10286,26.9004 -15.70204,33.35162 -14.849996,32.37785 -10.589748,26.90039 -6.207783,20.20573 -5.477456,18.25819 -3.408195,26.77867 0.365164,20.69261 2.556146,18.62335 6.329504,21.42294 1.095491,-13.38934 2.434425,-21.7881 3.89508,-24.34425 7.546717,-21.1795 5.477456,19.84057 7.303275,27.63072 11.92868,23.97908 17.04097,22.8836 9.61598,9.25081 5.84262,-16.43237 6.81639,-24.1008 3.28648,-15.21516 2.3127,-20.57089 2.55615,-15.70204 0.48688,-21.7881 0.60861,-26.90039 3.85187,-84.73722 3.09851,-18.41896 3.09852,-17.73041 7.57415,23.58316 2.23782,-5.85275 8.95127,-21.51748 5.1642,-11.18909 6.71345,27.54237 8.60699,21.34534 3.27066,-26.85381 4.13136,15.83686 4.64777,18.24682 6.88559,16.86971 4.64778,5.33633 -0.17214,-11.87765 0.34428,-15.49258 228.94597,2.23782 2.06568,14.45974 0.8607,18.5911 1.03284,24.616 0.51642,34.08369 0.17214,32.53443 1.54926,22.55031 5.33633,26.3374 2.92638,17.38612 8.43485,32.70657 4.13136,-2.23782 17.55826,-19.62394 15.83687,-20.3125 12.22192,-17.7304 12.22193,-21.34534 9.12341,-22.72246 7.74629,-25.64883 5.68062,17.7304 8.09057,30.12447 4.81992,22.20604 2.40995,18.93538 0.51642,9.29555 2.75424,-7.22987 4.13136,-14.80403 2.58209,-14.80403 -0.86069,-19.10752 -2.75424,-16.52542 -3.4428,-16.18114 -4.99205,-13.25477 -8.26272,-17.55826 -6.19703,-12.73835 -10.84481,-20.82892 -14.63188,-25.4767 -9.4677,-19.96822 -7.05773,-16.35328 -6.36917,-14.97617 -3.95922,-11.18908 -21.87474,-45.37302 -14.3631,-37.73359 -37.73359,15.33688 0.73033,17.28442 -4.86885,6.08606 -0.24344,-23.12704 -60.86062,13.63278 -74.4934,10.22459 -67.92046,-2.19099 -54.77455,-7.30327 z
