@@ -1,5 +1,28 @@
 "
-TODO
+Define a polygon shape, ready to be added to a Roassal canvas.
+
+For example:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+polygon := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: 'FFAE0B'.
+polygon cornerRadii: 5.
+		
+
+polygon2 := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: Color red trans.
+		
+polygon2 rotateByDegrees: 90.
+polygon2 translateBy: 0 @ -50.
+
+c add: polygon.
+c add: polygon2.
+
+c
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSPolygon,
@@ -80,24 +103,49 @@ RSPolygon >> buildPathOn: visitor [
 	visitor buildPolygonPath: self.
 ]
 
-{ #category : #public }
+{ #category : #private }
 RSPolygon >> centerPoints [
+	"Private method, should not be used externally"
+
 	| r center |
 	r := Rectangle encompassing: points.
 	center := r rsCenter.
-	points doWithIndex: [ :p :i | 
-		points at: i put: p - center.
-		 ].
-	^ r.
+	points doWithIndex: [ :p :i | points at: i put: p - center ].
+	^ r
 ]
 
 { #category : #accessing }
 RSPolygon >> cornerRadii [ 
+	"Return the corner radii, indicating how smooth the polygon corners shoulid be"
 	^ radius ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 RSPolygon >> cornerRadii: aNumber [
+	"Set the corner radii. Has the effect to make corners smooth 
+	For example:
+
+c := RSCanvas new.
+
+polygon := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: 'FFAE0B'.
+polygon cornerRadii: 5.
+		
+
+polygon2 := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: Color red trans.
+		
+polygon2 rotateByDegrees: 90.
+polygon2 translateBy: 0 @ -50.
+
+c add: polygon.
+c add: polygon2.
+
+c
+
+	"
 	radius := aNumber abs.
 ]
 
@@ -116,6 +164,7 @@ RSPolygon >> extent: newExtent [
 
 { #category : #testing }
 RSPolygon >> includesPoint: aPoint [
+	"Return true or false if a point is contained in the shape"
 	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
 	^ (self baseRectangle containsPoint: invertedPoint)
@@ -132,11 +181,13 @@ RSPolygon >> initialize [
 
 { #category : #accessing }
 RSPolygon >> points [
+	"Return the points defining the polygon"
 	^ points
 ]
 
 { #category : #accessing }
 RSPolygon >> points: anArray [
+	"Set the points used to draw the polygon."
 	| rec |
 	self privatePoints: anArray.
 	rec := self centerPoints.
@@ -146,5 +197,6 @@ RSPolygon >> points: anArray [
 
 { #category : #private }
 RSPolygon >> privatePoints: anArray [
+	"Private method, should bot be used externally"
 	points := anArray
 ]

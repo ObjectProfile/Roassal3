@@ -800,6 +800,7 @@ RSShapeExamples >> example21SpockLizard [
 { #category : #lines }
 RSShapeExamples >> example22ScaleEvents [
 	<script: 'self new example22ScaleEvents open setLabel: ''Horizontal Tree'''>
+	"Zooming preserve the size of the red arrow"
 	| canvas |
 	canvas := RSCanvas new.
 	canvas addAll: (ArrayedCollection withAllSubclasses collect: [:cls |
@@ -1204,6 +1205,49 @@ RSShapeExamples >> example34MorphicPopup [
 	^ c
 ]
 
+{ #category : #lines }
+RSShapeExamples >> example35Lines [
+	<script: 'self new example35Lines open'>
+	| c circle box dragMeLabel |
+	c := RSCanvas new.
+	circle := RSEllipse new
+		color: Color green;
+		size: 10.
+	box := RSBox new
+		color: Color red;
+		size: 10.
+	c
+		add: circle;
+		add: box.
+	dragMeLabel := RSLabel new text: 'Drag me'.
+	c add: dragMeLabel.
+	RSLocation new
+		above;
+		center;
+		stick: dragMeLabel on: box.
+	c
+		add:
+			(RSLine new
+				color: Color veryVeryLightGray;
+				from: 0 @ -1000;
+				to: 0 @ 1000).
+	c
+		add:
+			(RSLine new
+				color: Color veryVeryLightGray;
+				from: -1000 @ 0;
+				to: 1000 @ 0).
+	box translateBy: 50 @ 50.
+	box @ RSDraggable.
+	c
+		add:
+			(RSLine new
+				color: Color blue;
+				from: box;
+				to: circle).
+	^ c
+]
+
 { #category : #shapes }
 RSShapeExamples >> example35RoassalPackages [
 	<script: 'self new example35RoassalPackages open'>
@@ -1243,6 +1287,50 @@ RSShapeExamples >> example35RoassalPackages [
 	canvas @ (RSForceLayoutStepping new layout: layout).
 	canvas @ RSCanvasController.
 	^ canvas
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example36ShapePosition [
+	<script: 'self new example36ShapePosition open'>
+	| c circle box labelBox dragMeLabel |
+	c := RSCanvas new.
+	circle := RSEllipse new size: 10.
+	box := RSBox new
+		color: Color red;
+		size: 10.
+	c
+		add: circle;
+		add: box.
+	c
+		add:
+			(RSLine new
+				color: Color veryVeryLightGray;
+				from: 0 @ -1000;
+				to: 0 @ 1000).
+	c
+		add:
+			(RSLine new
+				color: Color veryVeryLightGray;
+				from: -1000 @ 0;
+				to: 1000 @ 0).
+	labelBox := RSLabel new text: 'Box'.
+	c add: labelBox.
+	labelBox setAsFixed.
+	labelBox translateBy: 100 @ 50.
+	box @ RSDraggable.
+	box
+		when: RSMouseDragging
+		do: [ :evt | 
+			labelBox
+				text: 'Box position = ' , evt position asIntegerPoint asString ].
+			
+	dragMeLabel := RSLabel new text: 'Drag me'.
+	c add: dragMeLabel.
+	RSLocation new
+		above; center;
+		stick: dragMeLabel on: box.
+	box translateTo: 50 @ 50.
+	^ c
 ]
 
 { #category : #'data - svg' }

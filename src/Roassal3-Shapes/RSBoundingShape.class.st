@@ -221,7 +221,21 @@ RSBoundingShape >> renderOn: aCanvas [
 
 { #category : #matrix }
 RSBoundingShape >> rotateByDegrees: angle [
-	matrix rotateByDegrees: angle.
+	"Rotate the shape. Here is an exanmple:
+-=-=-=
+c := RSCanvas new.
+
+polygon := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: 'FFAE0B'.
+polygon cornerRadii: 5.
+polygon rotateByDegrees: -45.		
+
+c add: polygon.
+c	
+-=-=-=
+	"
+	matrix rotateByDegrees: angle
 ]
 
 { #category : #matrix }
@@ -231,6 +245,22 @@ RSBoundingShape >> scale [
 
 { #category : #matrix }
 RSBoundingShape >> scaleBy: scale [ 
+	"Scale the shape. For example:
+
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+polygon := RSPolygon new
+		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
+		color: 'FFAE0B'.
+polygon cornerRadii: 5.
+polygon rotateByDegrees: -45.		
+polygon scaleBy: 4.
+c add: polygon.
+
+c
+-=-=-=-=-=-=-=-=-=
+	"
 	matrix scaleBy: scale
 ]
 

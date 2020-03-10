@@ -1,5 +1,30 @@
 "
 I represent the abstract lines that have start and end points
+
+For example:
+-=-=-=-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+circle := RSEllipse new color: Color green; size: 10.
+box := RSBox new color: Color red; size: 10.
+c add: circle; add: box.
+
+dragMeLabel := RSLabel new text: 'Drag me'.
+c add: dragMeLabel.
+RSLocation new
+	above; center;
+	stick: dragMeLabel on: box.
+
+c add: (RSLine new color: Color veryVeryLightGray; from: 0 @ -1000; to: 0 @ 1000).
+c add: (RSLine new color: Color veryVeryLightGray; from: -1000 @ 0; to: 1000 @ 0).
+
+box translateBy: 50 @ 50.
+box @ RSDraggable.
+
+c add: (RSLine new color: Color blue; from: box; to: circle).
+
+c
+-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSAbstractLine,
@@ -90,9 +115,9 @@ RSAbstractLine >> from [
 ]
 
 { #category : #accessing }
-RSAbstractLine >> from: aShape [
-	"A line connect two shapes. "
-	from := self setAnchor: from shape: aShape
+RSAbstractLine >> from: aShapeOrAPoint [
+	"Set the end point of the line"
+	from := self setAnchor: from shape: aShapeOrAPoint
 ]
 
 { #category : #testing }
@@ -232,8 +257,9 @@ RSAbstractLine >> to [
 ]
 
 { #category : #accessing }
-RSAbstractLine >> to: aShape [
-	to := self setAnchor: to shape: aShape
+RSAbstractLine >> to: aShapeOrAPoint [
+	"Set the end point of the line"
+	to := self setAnchor: to shape: aShapeOrAPoint
 ]
 
 { #category : #update }
