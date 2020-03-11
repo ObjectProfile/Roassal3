@@ -112,11 +112,12 @@ RSAlignment >> hasShape [
 { #category : #public }
 RSAlignment >> left [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromLeftUsing: self leftMostElement 
+	self alignFromLeftUsing: self leftMostShape 
 ]
 
 { #category : #'accessing - computed' }
-RSAlignment >> leftMostElement [
+RSAlignment >> leftMostShape [
+	"Return the shape that is the located the most on the left hand side"
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle left >= s encompassingRectangle left
@@ -131,6 +132,7 @@ RSAlignment >> right [
 
 { #category : #'accessing - computed' }
 RSAlignment >> rightMostShape [
+	"Return the shape that is the located the most on the right hand side"
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle right <= s encompassingRectangle right

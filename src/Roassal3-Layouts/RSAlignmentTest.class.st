@@ -37,7 +37,43 @@ RSAlignmentTest >> testFromLeft [
 	RSVerticalLineLayout on: es.
 	es second translateBy: -150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 -150.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
-	self assert: align leftMostElement equals: es second.
+	self assert: align leftMostShape equals: es second.
+	align left.
+	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
+"	
+	RSView new addAll: es; inspect.
+	"
+]
+
+{ #category : #tests }
+RSAlignmentTest >> testFromLeftWithAFixShape [
+	| es |
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
+	align shapes: es.
+	RSVerticalLineLayout on: es.
+	es second translateBy: -150 @ 0.
+	align fixedShape: es first.
+	align left.
+	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0)
+"	
+	RSView new addAll: es; inspect.
+	"
+]
+
+{ #category : #tests }
+RSAlignmentTest >> testFromLeftWithFixedShape [
+	| es c |
+	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
+	align shapes: es.
+	RSVerticalLineLayout on: es.
+	es second translateBy: -150 @ 0.
+
+	c := RSCanvas new.
+	c addAll: es.
+	es do: [ :s | s setAsFixed ].
+
+	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 -150.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
+	self assert: align leftMostShape equals: es second.
 	align left.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
 "	
