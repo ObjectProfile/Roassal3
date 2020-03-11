@@ -3,17 +3,14 @@ Define alignment of elements.
 
 For example, inspect the following:
 -=-=-=
-	objects := TSShape withAllSubclasses.
-	v := RSView new.
-	v showEncompassingRectangles.
-	n := TSScale category20c.
-	shape := RSShapeBuilder box color: n; size: [ : c | c numberOfMethods ].
-	es := shape elementsOn: objects.
-	v addAll: es.
-	RSHorizontalLineLayout new gapSize: 0; on: es.
-	RTAlignment new elements: es; bottom.
-	v @ RSControlsView.
-	v open
+c := RSCanvas new.
+es := (1 to: 5) collect: [ :v | RSBox new size: v * 5 ] as: RSGroup.
+RSVerticalLineLayout on: es.
+align := RSAlignment new.
+align shapes: es.
+align right.
+c addAll: es.
+c
 -=-=-=
 "
 Class {
@@ -91,6 +88,16 @@ RSAlignment >> bottomMostShape [
 
 { #category : #public }
 RSAlignment >> center [
+"
+c := RSCanvas new.
+es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
+RSVerticalLineLayout on: es.
+align := RSAlignment new.
+align shapes: es.
+align center.
+c addAll: es.
+c
+"
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromCenterUsing: self centerMostShape
 ]
