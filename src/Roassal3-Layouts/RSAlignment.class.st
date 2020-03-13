@@ -19,7 +19,7 @@ Class {
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
-{ #category : #public }
+{ #category : #alignment }
 RSAlignment >> alignFromBottomUsing: aShape [
 	"The argument aShape is a fix point. It does not move"
 	| topY newY |
@@ -30,19 +30,16 @@ RSAlignment >> alignFromBottomUsing: aShape [
 	]
 ]
 
-{ #category : #public }
+{ #category : #alignment }
 RSAlignment >> alignFromCenterUsing: aShape [
-	| topX newX topY newY |
-	topX := aShape encompassingRectangle center x.
-	topY := aShape encompassingRectangle center y.	
+	| topX |
+	topX := aShape position x.
 	shapes do: [ :s |
-		newX := topX + (s encompassingRectangle width / 2).
-		newY := topY + (s encompassingRectangle height / 2).		
-		s translateTo: newX @ newY
+		s translateTo: topX @ s position y
 	]
 ]
 
-{ #category : #public }
+{ #category : #alignment }
 RSAlignment >> alignFromLeftUsing: aShape [
 	| topX newX |
 	topX := aShape encompassingRectangle topLeft x.
@@ -52,7 +49,16 @@ RSAlignment >> alignFromLeftUsing: aShape [
 	]
 ]
 
-{ #category : #public }
+{ #category : #alignment }
+RSAlignment >> alignFromMiddleUsing: aShape [
+	| topY |
+	topY := aShape position y.	
+	shapes do: [ :s |	
+		s translateTo: s position x @ topY
+	]
+]
+
+{ #category : #alignment }
 RSAlignment >> alignFromRightUsing: aShape [
 	| topX newX |
 	topX := aShape encompassingRectangle topRight x.
@@ -62,7 +68,7 @@ RSAlignment >> alignFromRightUsing: aShape [
 	]
 ]
 
-{ #category : #public }
+{ #category : #alignment }
 RSAlignment >> alignFromTopUsing: aShape [
 	| topY newY |
 	topY := aShape encompassingRectangle topCenter y.
@@ -102,11 +108,11 @@ c
 	self alignFromCenterUsing: self centerMostShape
 ]
 
-{ #category : #public }
+{ #category : #'accessing - computed' }
 RSAlignment >> centerMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
-			maxS encompassingRectangle center <= s encompassingRectangle center
+			maxS encompassingRectangle rsCenter <= s encompassingRectangle rsCenter
 					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
 
@@ -129,6 +135,22 @@ RSAlignment >> leftMostShape [
 	^ shapes inject: shapes first into: [ :maxS :s | 
 			maxS encompassingRectangle left >= s encompassingRectangle left
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
+]
+
+{ #category : #public }
+RSAlignment >> middle [
+"
+c := RSCanvas new.
+es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
+RSVerticalLineLayout on: es.
+align := RSAlignment new.
+align shapes: es.
+align center.
+c addAll: es.
+c
+"
+	self hasShape ifFalse: [ ^ self ].
+	self alignFromMiddleUsing: self centerMostShape
 ]
 
 { #category : #public }
