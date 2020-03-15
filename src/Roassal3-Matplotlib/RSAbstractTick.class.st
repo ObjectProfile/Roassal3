@@ -8,7 +8,8 @@ Class {
 		'labelLocation',
 		'shouldUseNiceLabel',
 		'niceLabel',
-		'labelRotation'
+		'labelRotation',
+		'fontSize'
 	],
 	#category : #'Roassal3-Matplotlib-Core'
 }
@@ -26,7 +27,7 @@ RSAbstractTick >> createLabelFor: aValue [
 	"Create a label and returns it."
 
 	^ RSLabel new 
-		fontSize: 5; 
+		fontSize: fontSize; 
 		text: (labelConversion value: aValue); 
 		rotateByDegrees: self labelRotation
 ]
@@ -73,11 +74,18 @@ RSAbstractTick >> doNotUseNiceLabel [
 	shouldUseNiceLabel := false
 ]
 
+{ #category : #accessing }
+RSAbstractTick >> fontSize: fontSizeToSet [
+	"Set the font size used by the labels associated to ticks"
+	fontSize := fontSizeToSet
+]
+
 { #category : #rendering }
 RSAbstractTick >> initialize [
 	super initialize.
 	numberOfTicks := 5.
 	self withLabels; useNiceLabel; noConvertion.
+	fontSize := 5.
 ]
 
 { #category : #public }

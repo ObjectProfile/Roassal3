@@ -12,7 +12,8 @@ Class {
 		'maxValueY',
 		'minValueX',
 		'minValueY',
-		'generator'
+		'generator',
+		'colors'
 	],
 	#category : #'Roassal3-Matplotlib-Core'
 }
@@ -46,7 +47,19 @@ RSChart >> canvas [
 
 { #category : #color }
 RSChart >> colorFor: aRSLinePlot [ 
-	^ self defaultPlotColors scale: aRSLinePlot
+	^ colors scale: aRSLinePlot
+]
+
+{ #category : #accessing }
+RSChart >> colors [
+	"Return the palette"
+	^ colors
+]
+
+{ #category : #accessing }
+RSChart >> colors: someColors [
+	"Set the palette to be use to plots"
+	colors := someColors
 ]
 
 { #category : #accessing }
@@ -83,7 +96,8 @@ RSChart >> initialize [
 	super initialize.
 	plots := OrderedCollection new.
 	extent := 200 @ 200.
-	self initializeDecorations
+	self initializeDecorations.
+	colors := self defaultPlotColors.
 ]
 
 { #category : #initialization }
