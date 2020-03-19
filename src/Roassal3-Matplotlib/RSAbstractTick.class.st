@@ -97,7 +97,7 @@ RSAbstractTick >> integer [
 { #category : #public }
 RSAbstractTick >> integerWithCommas [
 	"Do not convert the value when determining labels"
-	labelConversion := [ :value | value asStringWithCommas ]
+	labelConversion := [ :value | value asInteger asStringWithCommas ]
 ]
 
 { #category : #accessing }
