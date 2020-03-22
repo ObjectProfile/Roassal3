@@ -27,6 +27,7 @@ You should an animated version of:
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
+[Tutorial 03 - Charting](Charting.md)
 _____
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
