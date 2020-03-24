@@ -1,5 +1,5 @@
 "
-I have instances of linear graient paints
+I have instances of linear gradient paints
 I use the colors from this website https://webgradients.com/
 "
 Class {

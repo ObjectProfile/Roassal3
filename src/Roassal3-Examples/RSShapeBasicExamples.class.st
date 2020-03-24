@@ -750,3 +750,38 @@ RSShapeBasicExamples >> example33EdgesBetweenChildren [
 	c addAll: { com1. com2. e1 }.
 	^ c
 ]
+
+{ #category : #lines }
+RSShapeBasicExamples >> example34PaletteVisualization [
+	<script: 'self new example34PaletteVisualization open'>
+	| c colors shapes compo label composites paletteObject |
+	"Try 
+		RSColorPalette qualitative
+		RSColorPalette sequential
+	"
+	paletteObject := RSColorPalette diverging.
+	
+	c := RSCanvas new.
+	composites := OrderedCollection new.
+	paletteObject class selectors do: [ :selector |
+		colors := paletteObject perform: selector.
+		
+		shapes := RSGroup new.
+		shapes addAll: (colors range collect: [ :aColor | RSBox new size: 20; color: aColor ]).
+		
+		RSHorizontalLineLayout on: shapes.
+		
+		compo := RSComposite new.
+		compo shapes: shapes.
+		c add: compo.
+		composites add: compo.
+		
+		label := RSLabel new text: selector.
+		c add: label.
+		RSLocation new
+			left; outer; stick: label on: compo.
+	].
+	RSVerticalLineLayout on: composites.
+	c @ RSCanvasController.
+	^ c
+]

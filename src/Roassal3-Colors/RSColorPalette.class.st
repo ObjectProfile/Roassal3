@@ -10,8 +10,13 @@ We have three palettes:
 
 More detailed information is on it class comments.
 
+To see the palettes:
+RSShapeBasicExamples new example34PaletteVisualization open
+
 ---Copyright:
 All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania State University.
+Code by Cynthia is under the Apache License 2.0 (https://github.com/axismaps/colorbrewer/blob/master/LICENCE.txt)
+Roassal3 is distributed under the MIT License, which is compatible with Apache License 2.0 
 "
 Class {
 	#name : #RSColorPalette,
@@ -21,17 +26,17 @@ Class {
 
 { #category : #'instance creation' }
 RSColorPalette class >> diverging [
-	^ RSCPDiverging new
+	^ RSDivergingColorPalette new
 ]
 
 { #category : #'instance creation' }
 RSColorPalette class >> qualitative [
-	^ RSCPQualitative new
+	^ RSQualitativeColorPalette new
 ]
 
 { #category : #'instance creation' }
 RSColorPalette class >> sequential [
-	^ RSCPSequential new
+	^ RSSequentialColorPalette new
 ]
 
 { #category : #'instance creation' }

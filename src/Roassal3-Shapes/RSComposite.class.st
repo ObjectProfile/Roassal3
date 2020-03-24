@@ -294,8 +294,8 @@ RSComposite >> shapes [
 ]
 
 { #category : #accessing }
-RSComposite >> shapes: aTSGroup [
-	self children: aTSGroup
+RSComposite >> shapes: aRSGroup [
+	self children: aRSGroup
 ]
 
 { #category : #edges }
