@@ -16,9 +16,13 @@ RSVerticalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSVerticalTick >> createTickLineFor: aNumber [
+	| scaledNumber |
+	scaledNumber := yScale scale: aNumber.
+	self assert: [ scaledNumber isInfinite not ].
+	self assert: [ scaledNumber isNaN not ].
 	^ RSLine new
-		startPoint: 0 @ (yScale scale: aNumber);
-		endPoint: self tickSize negated @ (yScale scale: aNumber);
+		startPoint: 0 @ scaledNumber;
+		endPoint: self tickSize negated @ scaledNumber;
 		yourself
 ]
 

@@ -16,7 +16,7 @@ RSAbstractPlot >> beforeRenderingIn: aChart [
 	self createYScale
 ]
 
-{ #category : #rendering }
+{ #category : #testing }
 RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues notNil and: [ yValues notNil ] ]
@@ -38,28 +38,44 @@ RSAbstractPlot >> initialize [
 	label := ''
 ]
 
+{ #category : #testing }
+RSAbstractPlot >> isPointWellDefined: aPoint [
+	"Indicate whether the point deserves to be displayed"
+	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ])
+		and: [ (aPoint x isNaN not and: [ aPoint y isNaN not ]) ]
+]
+
 { #category : #rendering }
 RSAbstractPlot >> maxValueX [
-	^ xValues max
+	"Return the maximum X value of the plot, excluding NaN and infinite"
+	^ (xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) max
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> maxValueY [
-	^ yValues max
+	"Return the maximum Y value of the plot, excluding NaN and infinite"
+	^ (yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) max
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> minValueX [
-	^ xValues min
+	"Return the minimum X value of the plot, excluding NaN and infinite"
+	^ (xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) min
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> minValueY [
-	^ yValues min
+	"Return the minimum Y value of the plot, excluding NaN and infinite"
+	^ (yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) min
 ]
 
 { #category : #public }
 RSAbstractPlot >> x: aCollection y: aCollection2 [ 
 	xValues := aCollection.
 	yValues := aCollection2.
+]
+
+{ #category : #public }
+RSAbstractPlot >> y: aCollection [
+	self x: (1 to: aCollection size) y: aCollection
 ]

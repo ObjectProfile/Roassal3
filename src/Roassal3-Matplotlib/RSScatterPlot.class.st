@@ -19,7 +19,7 @@ RSScatterPlot >> renderIn: canvas [
 		xt := xValues at: i.
 		yt := yValues at: i.
 		newPoint := (xScale scale: xt) @ (yScale scale: yt).
-		(newPoint x isInfinite not and: [ newPoint x isInfinite not ]) ifTrue: [ 
-			et translateTo: newPoint ] ].
-	elements do: [ :e | canvas addShape: e ]
+		(self isPointWellDefined: newPoint)
+			ifTrue: [ et translateTo: newPoint.
+				canvas addShape: et ] ]
 ]

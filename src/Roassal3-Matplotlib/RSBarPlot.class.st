@@ -9,7 +9,14 @@ Class {
 
 { #category : #accessing }
 RSBarPlot >> barWidth [
+	"Return the width of each bar"
 	^ barWidth ifNil: [ barWidth := 5 ] 
+]
+
+{ #category : #accessing }
+RSBarPlot >> barWidth: aBarWidth [
+	"Set the width of the bar"
+	barWidth := aBarWidth
 ]
 
 { #category : #rendering }
@@ -24,12 +31,13 @@ RSBarPlot >> renderIn: canvas [
 		yt := yValues at: i.
 		origin := (xScale scale: xt) @ (yScale scale: yt).
 		corner := origin x @ (yScale scale: 0).
-		r := Rectangle origin: origin - (width@ 0) corner: corner + (width@0).
-		canvas add: (RSBox new
-			color: color;
-			position: r rsCenter;
-			extent: r extent;
-			yourself).
-		  ].
+		((self isPointWellDefined: origin) and: [ self isPointWellDefined: corner ]) ifTrue: [
+			r := Rectangle origin: origin - (width@ 0) corner: corner + (width@0).
+			canvas add: (RSBox new
+				color: color;
+				position: r rsCenter;
+				extent: r extent;
+				yourself).
+			  ] ].
 
 ]
