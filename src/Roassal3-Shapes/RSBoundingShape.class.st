@@ -178,6 +178,9 @@ RSBoundingShape >> position [
 
 { #category : #matrix }
 RSBoundingShape >> position: aPoint [
+	self 
+		assert: (aPoint x isNaN | aPoint y isNaN) not
+		description: 'you must provide a real point'.
 	matrix translation: aPoint.
 	self resetBBox.
 	self updateConnectedEdges.
