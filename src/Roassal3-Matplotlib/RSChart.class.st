@@ -118,7 +118,7 @@ RSChart >> maxValueX: aNumber [
 
 { #category : #accessing }
 RSChart >> maxValueY [
-	^ maxValueY ifNil: [  maxValueY := (plots collect: #maxValueY) max ]
+	^ maxValueY ifNil: [ maxValueY := (plots collect: #maxValueY) max ]
 ]
 
 { #category : #accessing }
@@ -138,12 +138,13 @@ RSChart >> minValueX: aNumber [
 
 { #category : #accessing }
 RSChart >> minValueY [
+	
 	^ minValueY ifNil: [ minValueY := (plots collect: #minValueY) min ]
 ]
 
 { #category : #accessing }
-RSChart >> minValueY:  aNumber [
-	maxValueY := aNumber
+RSChart >> minValueY: aNumber [
+	minValueY := aNumber
 ]
 
 { #category : #accessing }

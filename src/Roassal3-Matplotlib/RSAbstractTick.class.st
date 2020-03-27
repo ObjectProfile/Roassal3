@@ -62,13 +62,14 @@ RSAbstractTick >> defaultNiceLabel [
 	| nice |
 	nice := RSNiceLabel new.
 	nice
+		score: 0;
 		min: self minValue;
 		max: self maxValue;
 		step: nice ticks / numberOfTicks.
 	^ nice
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 	"Ticks use RSNiceLabelGenerator"
 	shouldUseNiceLabel := false
@@ -135,7 +136,7 @@ RSAbstractTick >> numberOfTicks: aNumber [
 RSAbstractTick >> renderIn: canvas [
 	| aTick lbl |
 	(niceLabel min to: niceLabel max by: niceLabel step) do: [ :i |
-		aTick := self createTickLineFor: i.
+		aTick := self createTickLineFor: i asFloat.
 		canvas addShape: aTick.
 		shouldHaveLabels ifTrue: [ 
 			lbl := self createLabelFor: i.
@@ -152,19 +153,19 @@ RSAbstractTick >> tickSize [
 	^ 3
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RSAbstractTick >> useNiceLabel [
 	"Ticks use RSNiceLabelGenerator"
 	shouldUseNiceLabel := true
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RSAbstractTick >> withLabels [
 	"Make the tick have label"
 	shouldHaveLabels := true
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RSAbstractTick >> withNoLabels [
 	"Ticks have no label"
 	shouldHaveLabels := false
