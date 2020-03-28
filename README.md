@@ -28,6 +28,15 @@ You should an animated version of:
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
 [Tutorial 03 - Charting](Charting.md)
+
+## Roassal3 as a dependent application
+
+If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
+
+```Smalltalk
+spec baseline: 'Roassal3' with: [ 
+				spec repository: 'github://ObjectProfile/Roassal3/src' ].
+```
 _____
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
