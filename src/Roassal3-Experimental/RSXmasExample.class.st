@@ -214,12 +214,13 @@ RSXmasExample >> run [
 	<script: 'self new run'>
 	| full background tree icon title world |
 	full := Morph new.
+	full color: Color black.
 	world := self currentWorld.
 	background := self background createMorph.
 	tree := self tree createMorph.
 	icon := self myIcon createMorph.
 	title := self title createMorph.
-	full addMorph: background.
+	"full addMorph: background."
 	full addMorph: tree.
 	full addMorph: icon.
 	full addMorph: title.
@@ -257,7 +258,7 @@ RSXmasExample >> title [
 	canvas add: title.
 	canvas add: t2020.
 	canvas newAnimation repeat
-		duration: 20 seconds;
+		duration: 10 seconds;
 		scale: (TSScale linear
 			domain: #(0 0.5 1);
 			range: { 0.8. 1. 0.8 } );
