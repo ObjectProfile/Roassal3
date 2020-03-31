@@ -34,6 +34,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3' with: [ spec requires: dep1 asArray ];
 				package: #'Roassal3-Shapes';
 				package: #'Roassal3-Animation' with: [ spec requires: #('NumericScales') ];
+				package: #'Roassal3-Examples';
 				package: #'Roassal3-Matplotlib';
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Legend';
@@ -44,7 +45,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Spec';
 				package: #'Roassal3-Sunburst';
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
-				package: #'Roassal3-Examples';
 				package: #'Roassal3-Menu';
 				package: #'Roassal3-Global-Tests';
 				package: #'Roassal3-Animation-Tests' with: [ spec requires: #('Roassal3-Animation') ];
