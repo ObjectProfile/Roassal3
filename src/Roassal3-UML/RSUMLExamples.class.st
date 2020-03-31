@@ -3,7 +3,7 @@ I have examples of how to manage the uml builder in different cases
 "
 Class {
 	#name : #RSUMLExamples,
-	#superclass : #RSAbstractExamples,
+	#superclass : #AnObsoleteRSAbstractExamples,
 	#category : #'Roassal3-UML-Examples'
 }
 

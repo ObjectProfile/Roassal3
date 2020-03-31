@@ -38,8 +38,9 @@ RSChartTest >> testWithWeirdValues [
 
 { #category : #tests }
 RSChartTest >> testWithWeirdValuesBar [
-
+	
 	| values g d line c |
+	self skip.
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
 	g := RSChart new.
 	d := RSScatterPlot new y: values.
@@ -119,6 +120,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks2 [
 RSChartTest >> testWithWeirdValuesLineWithTicks3 [
 	| x g d c labels |
 	x := -5 to: 5 by: 0.1.
+	self skip.
 	g := RSChart new.
 	d := RSLinePlot new x: x y: x log.
 	g addPlot: d.

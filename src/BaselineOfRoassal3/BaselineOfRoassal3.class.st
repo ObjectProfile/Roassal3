@@ -47,6 +47,12 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Global-Tests';
+				package: 'Roassal3-Shapes-Tests';
+				package: 'Roassal3-Interaction-Tests';
+				package: 'Roassal3-Layouts-Tests';
+				package: 'Roassal3-Matplotlib-Tests';
+				package: 'Roassal3-Spec-Tests';
+				package: 'Roassal3-UML-Tests';
 				package: #'Roassal3-Menu'.
 				
 			spec 
@@ -65,7 +71,15 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Matplotlib'
 					'Roassal3-Menu');
 				group: 'Examples'  with: #('Core' 'Roassal3-Examples');
-				group: 'Tests' with: #('Core' 'Roassal3-Global-Tests' 'Roassal3-Animation-Tests');
+				group: 'Tests' with: #('Core' 
+					'Roassal3-Global-Tests' 
+					'Roassal3-Animation-Tests'
+					'Roassal3-Shapes-Tests'
+					'Roassal3-Interaction-Tests'
+					'Roassal3-Layouts-Tests'
+					'Roassal3-Matplotlib-Tests'
+					'Roassal3-Spec-Tests'
+					'Roassal3-UML-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ].
 
 		
