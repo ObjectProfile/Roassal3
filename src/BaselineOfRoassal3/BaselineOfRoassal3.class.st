@@ -46,14 +46,14 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3-Sunburst';
 				package: #'Roassal3-Inspector' with: [spec requires: dep2 ];
 				package: #'Roassal3-Examples';
+				package: #'Roassal3-Menu';
 				package: #'Roassal3-Global-Tests';
 				package: 'Roassal3-Shapes-Tests';
 				package: 'Roassal3-Interaction-Tests';
 				package: 'Roassal3-Layouts-Tests';
 				package: 'Roassal3-Matplotlib-Tests';
 				package: 'Roassal3-Spec-Tests';
-				package: 'Roassal3-UML-Tests';
-				package: #'Roassal3-Menu'.
+				package: 'Roassal3-UML-Tests'.
 				
 			spec 
 				group: 'Core' with: #(
