@@ -34,11 +34,6 @@ RSGroup >> asGroup [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-RSGroup >> asShape [
-	^ self asShapeFor: nil
-]
-
 { #category : #accessing }
 RSGroup >> encompassingRectangle [
 	^ self
