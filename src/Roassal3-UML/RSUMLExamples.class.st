@@ -3,18 +3,18 @@ I have examples of how to manage the uml builder in different cases
 "
 Class {
 	#name : #RSUMLExamples,
-	#superclass : #AnObsoleteRSAbstractExamples,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-UML-Examples'
 }
 
 { #category : #examples }
-RSUMLExamples >> example01Basic [ 
+RSUMLExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| builder |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
 	builder build.
-	^ builder canvas 
+	^ builder canvas
 ]
 
 { #category : #examples }
@@ -23,7 +23,7 @@ RSUMLExamples >> example02ClassDescriptor [
 	| builder |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAbstractLine withAllSubclasses.
-	
+
 	builder modelDescriptor methodsLimit: 5.
 	builder renderer edgeBuilder
 		cornerRadii: 20.
@@ -41,7 +41,7 @@ RSUMLExamples >> example03DifferentLines [
 		extent: 20@25;
 		noPaint;
 		withBorder) asMarker offset: -7.
-	
+
 	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
 		width: 2;
 		dashArray: #(4);
@@ -61,7 +61,7 @@ RSUMLExamples >> example04Nolines [
 	builder renderer marker: ((RSShapeFactory arrow
 		extent: 20@25;
 		color: Color black) asMarker offset: 25/2).
-	
+
 	builder layout grid.
 	builder build.
 	builder canvas edges copy do: #remove.
@@ -119,7 +119,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	| builder classes |
 	builder := RSUMLClassBuilder new.
 	classes := { 'Roassal3-Layouts'. 'Roassal3' }
-		flatCollect: [:pkgname | (RPackage organizer 
+		flatCollect: [:pkgname | (RPackage organizer
 			packageNamed: pkgname) definedClasses ].
 	builder classes: classes.
 	builder renderer: RSTorchUMLClassRenderer new.
