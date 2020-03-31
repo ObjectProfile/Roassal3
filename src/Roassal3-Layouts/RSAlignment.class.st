@@ -80,6 +80,20 @@ RSAlignment >> alignFromTopUsing: aShape [
 
 { #category : #public }
 RSAlignment >> bottom [
+"
+Align all the shapes on the bottoms of the shapes.
+
+-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
+RSHorizontalLineLayout on: es.
+align := RSAlignment new.
+align shapes: es.
+align bottom.
+c addAll: es.
+c
+-=-=-=-=
+"
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromBottomUsing: self bottomMostShape 
 ]
@@ -95,6 +109,8 @@ RSAlignment >> bottomMostShape [
 { #category : #public }
 RSAlignment >> center [
 "
+Center all the shapes along their X coordinate
+-=-=-=-
 c := RSCanvas new.
 es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
 RSVerticalLineLayout on: es.
@@ -103,6 +119,7 @@ align shapes: es.
 align center.
 c addAll: es.
 c
+-=-=-=-
 "
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromCenterUsing: self centerMostShape
@@ -140,14 +157,17 @@ RSAlignment >> leftMostShape [
 { #category : #public }
 RSAlignment >> middle [
 "
+Center all the shapes along their Y coordinate
+-=-=-=-=-=-=
 c := RSCanvas new.
 es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
-RSVerticalLineLayout on: es.
+RSHorizontalLineLayout on: es.
 align := RSAlignment new.
 align shapes: es.
-align center.
+align middle.
 c addAll: es.
 c
+-=-=-=-=-=-=
 "
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromMiddleUsing: self centerMostShape
