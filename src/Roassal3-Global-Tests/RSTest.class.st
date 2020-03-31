@@ -4,7 +4,7 @@ I am the top class for tests
 Class {
 	#name : #RSTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Tests'
+	#category : #'Roassal3-Global-Tests-Core'
 }
 
 { #category : #testing }

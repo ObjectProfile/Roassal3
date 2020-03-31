@@ -1,6 +1,6 @@
 Extension { #name : #RPackage }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Examples' }
 RPackage >> dependentPackages [
 	"
 	Return the list of packages that I depend on
@@ -10,7 +10,7 @@ RPackage >> dependentPackages [
 	^ (self definedClasses flatCollect: #dependentClasses) collect: #package as: Set
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Examples' }
 RPackage >> dependentPackagesWithOccurences [
 	"
 	Return the list of packages that I depend on. The result may includes several times the same packages. This reflects the number of dependencies.
@@ -20,7 +20,7 @@ RPackage >> dependentPackagesWithOccurences [
 	^ (self definedClasses flatCollect: #dependentClassesWithOccurences as: OrderedCollection) collect: #package
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal3-Examples' }
 RPackage >> numberOfDependenciesToward: anotherPackage [
 	"
 	Return the number of dependencies between mysefl and the package provided as argument

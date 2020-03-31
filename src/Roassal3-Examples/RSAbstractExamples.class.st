@@ -7,7 +7,7 @@ If you wish to add examples to Roassal3, then you need to subclass me.
 Class {
 	#name : #RSAbstractExamples,
 	#superclass : #RSObject,
-	#category : #'Roassal3-ExamplesBase'
+	#category : #'Roassal3-Examples-Core'
 }
 
 { #category : #accessing }
