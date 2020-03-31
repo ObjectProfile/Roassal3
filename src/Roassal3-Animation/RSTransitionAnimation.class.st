@@ -140,7 +140,7 @@ RSTransitionAnimation >> range: aTwoArrayOfNumbers [
 RSTransitionAnimation >> reset [
 	super reset.
 	self duration: 2 asSeconds.
-	easing := TSLinearInterpolator new.
+	easing := RSLinearInterpolator new.
 	scale := NSScale linear.
 ]
 

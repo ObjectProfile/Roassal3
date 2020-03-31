@@ -2,12 +2,12 @@
 I return the linear interpolation
 "
 Class {
-	#name : #TSLinearInterpolator,
+	#name : #RSLinearInterpolator,
 	#superclass : #NSInterpolator,
 	#category : #'Roassal3-Animation-Easing'
 }
 
 { #category : #interpolation }
-TSLinearInterpolator >> interpolate: aNumber [
+RSLinearInterpolator >> interpolate: aNumber [
 	^ aNumber
 ]

@@ -135,7 +135,7 @@ RSEasing class >> expOut [
 
 { #category : #linear }
 RSEasing class >> linear [
-	^ TSLinearInterpolator new
+	^ RSLinearInterpolator new
 ]
 
 { #category : #poly }
