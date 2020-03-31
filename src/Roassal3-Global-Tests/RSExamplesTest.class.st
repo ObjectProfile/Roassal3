@@ -20,9 +20,10 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 { #category : #tests }
 RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
-
+	| clazz |
 	self timeLimit: 4 minutes.
-	RSAbstractExamples subclasses do: [ :cls | 
+	clazz := Smalltalk at: #RSAbstractExamples.
+	clazz subclasses do: [ :cls | 
 		| inst methods |
 		inst := cls new.
 		methods := cls methods 

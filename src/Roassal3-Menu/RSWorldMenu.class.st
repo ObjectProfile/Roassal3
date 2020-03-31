@@ -101,12 +101,14 @@ RSWorldMenu class >> menu06PluginsOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu07PalettesOn: aBuilder [
 	<worldMenu>
+	| cls |
+	cls := Smalltalk at: #RSColorPaletteChooser ifAbsent: [ ^ self ].
 	(aBuilder item: #Roassal3Palettes)
 		parent: #Roassal3;
 		order: 7;
 		label: 'Color palettes';
 		icon: (self iconNamed: 'paint');
-		action: [ RSColorPaletteChooser new openWithSpec ]
+		action: [ cls new openWithSpec ]
 ]
 
 { #category : #menu }
