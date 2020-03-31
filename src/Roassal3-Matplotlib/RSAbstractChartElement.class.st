@@ -26,7 +26,7 @@ RSAbstractChartElement >> chart: aChart [
 
 { #category : #rendering }
 RSAbstractChartElement >> createXScale [
-	xScale ifNil: [ xScale := TSScale linear ].
+	xScale ifNil: [ xScale := NSScale linear ].
 	xScale
 		domain:
 			{chart minValueX.
@@ -38,7 +38,7 @@ RSAbstractChartElement >> createXScale [
 
 { #category : #rendering }
 RSAbstractChartElement >> createYScale [
-	yScale ifNil: [ yScale := TSScale linear ].
+	yScale ifNil: [ yScale := NSScale linear ].
 	yScale
 		domain:
 			{chart minValueY.

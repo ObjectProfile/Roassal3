@@ -91,10 +91,10 @@ RSPieChartExample >> visualizeChart: canvas package: pkg [
 	canvasRect := Rectangle
 		rsCenter: 0@0
 		extent: canvas extent * 0.9.
-	scale := TSScale linear
+	scale := NSScale linear
 		domain: {result min. result max};
 		range: {canvasRect bottom. canvasRect top }.
-	bscale := TSScale linear
+	bscale := NSScale linear
 		domain: { 0. totalSum };
 		range: { 0. canvasRect height }.
 	
@@ -128,7 +128,7 @@ RSPieChartExample >> visualizePie: canvas package: pkg [
 		innerRadius: 70;
 		externalRadius: 150;
 		segmentSpacing: 0.1.
-	b sliceColor: TSScale google20.
+	b sliceColor: NSScale google20.
 	b 
 		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;

@@ -31,8 +31,8 @@ RSZoomableCanvas >> processEvent: evt [
 		inRectangle: (self expandedRectangle: evt)
 		position: camera position + (dist * delta y)
 		scale: sc.
-	scale := TSScale sqrt range: { camera scale. sc }.
-	position := TSScale sqrt range: { camera position. correct }.
+	scale := NSScale sqrt range: { camera scale. sc }.
+	position := NSScale sqrt range: { camera position. correct }.
 	animation := evt canvas newAnimation
 		duration: 200 milliSeconds;
 		onStepDo: [ :t |

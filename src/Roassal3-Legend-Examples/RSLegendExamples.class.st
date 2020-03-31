@@ -85,7 +85,7 @@ RSLegendExamples >> example05Colors [
 	| b color |
 	b := RSLegend new.
 	
-	color := TSScale category20.
+	color := NSScale category20.
 	b 
 		title: 'Mid Heros';
 		text: 'Invoker' withCircleColor: color;
@@ -107,7 +107,7 @@ RSLegendExamples >> example06BoxColors [
 	| b color |
 	b := RSLegend new.
 
-	color := TSScale category20.
+	color := NSScale category20.
 	b 
 		text: 'Invoker' withBoxColor: color;
 		text: 'Shadow Fiend' withBoxColor: color;

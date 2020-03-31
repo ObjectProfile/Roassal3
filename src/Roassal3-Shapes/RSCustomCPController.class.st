@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'models'
 	],
-	#category : #'Roassal3-Shapes-CP'
+	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

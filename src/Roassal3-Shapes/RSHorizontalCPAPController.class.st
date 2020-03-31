@@ -27,7 +27,7 @@ I can return the control points for horizontal lines
 Class {
 	#name : #RSHorizontalCPAPController,
 	#superclass : #RSAbstractCPAPController,
-	#category : #'Roassal3-Shapes-CP'
+	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

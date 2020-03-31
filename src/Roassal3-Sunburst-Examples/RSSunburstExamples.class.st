@@ -163,7 +163,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	| sb canvas newData color newAnimation first interpolate label |
 	canvas := RSCanvas new.
 	canvas @ RSCanvasController.
-	color := TSScale category20c.
+	color := NSScale category20c.
 	newData := nil.
 	newAnimation := [ :from :to |
 		canvas newAnimation

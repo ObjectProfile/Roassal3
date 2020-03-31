@@ -52,7 +52,7 @@ RSGradientPalette class >> fabledSunset [
 
 { #category : #palette }
 RSGradientPalette class >> gradient21 [
-	^ TSScale ordinal range:( 
+	^ NSScale ordinal range:( 
 		#('warmFlame' 
 			'nightFade' 
 			'youngPassion' 

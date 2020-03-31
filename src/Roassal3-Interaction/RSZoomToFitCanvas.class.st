@@ -15,10 +15,10 @@ RSZoomToFitCanvas >> animatedZoomToFit: aCanvas [
 	pos := camera position.
 	aCanvas zoomToFit. 
 	
-	position := TSScale linear
+	position := NSScale linear
 		from: pos;
 		to: camera position.
-	scale := TSScale linear
+	scale := NSScale linear
 		from: sc;
 		to: camera scale.
 	camera translateTo: pos; scale: sc.

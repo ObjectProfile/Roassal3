@@ -242,7 +242,7 @@ RSShapeExamples >> example07NormalizeColor [
 		shapes: shapes;
 		normalize: #numberOfMethods.
 	RSNormalizer size
-		scale: TSScale sqrt;
+		scale: NSScale sqrt;
 		shapes: shapes;
 		normalize: #numberOfMethods.
 
@@ -317,10 +317,10 @@ RSShapeExamples >> example10Donut [
 	"1800 ellipses"
 	data := 0 to: 358 by: 2.
 	canvas := RSCanvas new.
-	radius := TSScale linear
+	radius := NSScale linear
 		domain: #(1 10);
 		range: #(180 240).
-	color := TSScale linear
+	color := NSScale linear
 		domain: #(1 7 10);
 		range: #('brown' '4682b4' 'brown').
 	border := RSBorder new.
@@ -757,7 +757,7 @@ RSShapeExamples >> example21SpockLizard [
 	('paper' -> 'spock').
 	('spock' -> 'rock').
 	('rock' -> 'scissors')}.
-	color := TSScale category20c.
+	color := NSScale category20c.
 	RSEdgeBuilder bezier
 		controlPointsController: (RSBlockCPController new
 			block: [ :aLine | 
@@ -1052,7 +1052,7 @@ RSShapeExamples >> example30EdgesToChildren [
 	
 	| canvas color shape parent1 parent2 edge |
 	canvas := RSCanvas new.
-	color := TSScale category20b.
+	color := NSScale category20b.
 
 	shape := [ :model | 
 		RSComposite new
@@ -1169,7 +1169,7 @@ RSShapeExamples >> example33ColorScaling [
 	classes := RSObject withAllSubclasses.
 	numberOfMethods := classes collect: #numberOfMethods.
 
-	scale := TSScale linear
+	scale := NSScale linear
 		domain: { numberOfMethods min. numberOfMethods max};
 		range: { 'red'. 'blue' }.
 
@@ -1259,7 +1259,7 @@ RSShapeExamples >> example35RoassalPackages [
 	        select: [ :p | regExp match: p packageName ] ].
 	    
 	canvas := RSCanvas new.
-	color := TSScale category20c.
+	color := NSScale category20c.
 	labeled := RSLabeled new.
 	labeled shapeBuilder textBlock: #name.
 	boxes := packages collect: [ :pkg |

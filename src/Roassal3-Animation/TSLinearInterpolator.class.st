@@ -3,7 +3,7 @@ I return the linear interpolation
 "
 Class {
 	#name : #TSLinearInterpolator,
-	#superclass : #TSInterpolator,
+	#superclass : #NSInterpolator,
 	#category : #'Roassal3-Animation-Easing'
 }
 

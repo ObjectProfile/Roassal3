@@ -55,7 +55,7 @@ RSSunburstBuilder >> initialize [
 	super initialize. 
 	self extentStrategy extent: 500@500.
 	self leafWeight: 1.
-	self sliceColor: TSScale category20c.
+	self sliceColor: NSScale category20c.
 	sliceShape := RSPieSlice new.
 	maxLevel := 0.
 ]

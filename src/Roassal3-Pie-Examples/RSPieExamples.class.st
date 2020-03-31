@@ -81,7 +81,7 @@ RSPieExamples >> example03BasicColors [
 		segmentSpacing: 5;
 		externalRadius: 120.
 	pie 
-		sliceColor: TSScale category10;
+		sliceColor: NSScale category10;
 		build.
 	pie canvas zoomToFit.
 	^ pie canvas
@@ -100,7 +100,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 		externalRadius: 200;
 		withBorder.
 	pie
-		sliceColor: TSScale google20;
+		sliceColor: NSScale google20;
 		build.
 	pie canvas newAnimation 
 		repeat;
@@ -129,7 +129,7 @@ RSPieExamples >> example05Smash [
 		innerRadius: 0;
 		externalRadius: 200.
 	pie
-		sliceColor: TSScale category10;
+		sliceColor: NSScale category10;
 		build.
 	pie shapes doWithIndex: [ :shape :index | | a b |
 		a := shape alphaAngle.
@@ -202,7 +202,7 @@ RSPieExamples >> example07Dendi [
 		border: (RSBorder new width: 1.5);
 		externalRadius: 200.
 	pie
-		sliceColor: TSScale category20b;
+		sliceColor: NSScale category20b;
 		build.
 	pie shapes do: [ :shape | | a b |
 		a := shape alphaAngle.
@@ -238,7 +238,7 @@ RSPieExamples >> example08CornerRadii [
 		innerRadius: 220/3;
 		cornerRadii: 30.
 	pie
-		sliceColor: TSScale category20c;
+		sliceColor: NSScale category20c;
 		build.
 	
 	^ pie canvas
@@ -285,7 +285,7 @@ RSPieExamples >> example10CornerRadiiAnimation [
 		sliceColor: nil;
 		build.
 	pie
-		sliceColor: TSScale paired12;
+		sliceColor: NSScale paired12;
 		build.
 	pie canvas newAnimation repeat
 		onStepDo: [ :k |
@@ -312,7 +312,7 @@ RSPieExamples >> example11OpenningAnimation [
 		border: (RSBorder new width: 1.5; color: Color gray);
 		externalRadius: 220;
 		innerRadius: 70.
-	colors := TSScale category20.
+	colors := NSScale category20.
 	pie
 		sliceColor: [:slice | colors scale: slice model ];
 		build.
@@ -355,11 +355,11 @@ RSPieExamples >> example11OpenningAnimation [
 					| angle |
 					angle := (shape alphaAngle + shape betaAngle)/2 + 180.
 					angle := angle degreesToRadians.
-					TSScale linear range: {300*(angle cos@angle sin negated). 0@0 } ].
+					NSScale linear range: {300*(angle cos@angle sin negated). 0@0 } ].
 				a := att at: #alpha ifAbsentPut: [ 
-					TSScale linear range: { shape alphaAngle + 180. shape alphaAngle } ].
+					NSScale linear range: { shape alphaAngle + 180. shape alphaAngle } ].
 				b := att at: #beta ifAbsentPut: [ 
-					TSScale linear from: shape betaAngle + 180; to: shape betaAngle; yourself ].
+					NSScale linear from: shape betaAngle + 180; to: shape betaAngle; yourself ].
 				shape position: (p scale: t).
 				shape alphaAngle: (a scale: t).
 				shape betaAngle: (b scale: t).
@@ -459,7 +459,7 @@ RSPieExamples >> example15Clockwise [
 	b objects: ((1 to: 10) collect: [:e | r next]) sort.
 	b sliceShape externalRadius: 200.
 	b
-		sliceColor: TSScale sky8;
+		sliceColor: NSScale sky8;
 		build.
 	b shapes do: [ :shape | 
 		shape
@@ -478,7 +478,7 @@ RSPieExamples >> example16MyDay [
 		{ 'eat'. 'Sometimes I cook for 4hrs'. 3 }.
 		{ 'work with smalltalk'. 'with Roassal & Carlone 8hrs'. 8 }.
 		{ 'draw and play dota'. 'I draw with manga style and play dota in leyend level 4hrs'. 5} }.
-	color := TSScale ordinal
+	color := NSScale ordinal
 		rangeFrom: { 'ae579c'. 'f28d1b'. 'e21454'. '4cbcec' }.
 	canvas := RSCanvas new.
 	pie := RSPie new
@@ -533,7 +533,7 @@ RSPieExamples >> example17PieLabels [
 		externalRadius: 240;
 		innerRadius: 170;
 		segmentSpacing: 0.4.
-	pie sliceColor: TSScale category20.
+	pie sliceColor: NSScale category20.
 		
 	pieLabel := RSPieLabeled new.
 	pieLabel labelShape fontSize: 13.
@@ -551,7 +551,7 @@ RSPieExamples >> example18ManyPies [
 	<script: 'self new example18ManyPies open setLabel: ''Prizepool in esports :V'''>
 	| data pie color canvas shapes pieLabel pieTitle |
 	data := self esportPrizepool.
-	color := TSScale google20.
+	color := NSScale google20.
 	pie := RSPie new.
 	canvas := pie container.
 	pie sliceShape
@@ -679,7 +679,7 @@ RSPieExamples >> example20AddingRemoving [
 	canvas := pie canvas.
 	pie objects: objects;
 		slice: #linesOfCode.
-	color := TSScale category10.
+	color := NSScale category10.
 	labels := RSGroup new.
 	shapes := nil.
 	updatePie := nil.
@@ -769,7 +769,7 @@ RSPieExamples >> example21ProgressLabel [
 	pie := RSPie new
 		objects: data;
 		slice: #linesOfCode.
-	scale := TSScale eva10.
+	scale := NSScale eva10.
 	pie sliceShape 
 		innerRadius: 50;
 		segmentSpacing: 0.5;
@@ -797,7 +797,7 @@ RSPieExamples >> example22RotatedAnimation [
 		slice: #linesOfCode.
 	canvas := pie canvas.
 	animation := nil.
-	pie sliceColor: TSScale category20b.
+	pie sliceColor: NSScale category20b.
 	pie sliceShape
 		innerRadius: 70;
 		segmentSpacing: 0.5;
@@ -857,7 +857,7 @@ RSPieExamples >> example23RotatedAnimation [
 		segmentSpacing: 0.5;
 		externalRadius: 220.
 	pie
-		sliceColor: TSScale category20b.
+		sliceColor: NSScale category20b.
 	pieLabel := RSPieLabeled new.
 	pieLabel labelText: #basename.
 	pie build.
@@ -928,8 +928,8 @@ RSPieExamples >> example24ManyPies [
 		arr ]) sorted: [:a :b | a first value > b first value ].
 	
 	"the visualization"
-	radius := TSScale sqrt domain: { 0. maxSum }; range: #(0 220).
-	color := TSScale eva10.
+	radius := NSScale sqrt domain: { 0. maxSum }; range: #(0 220).
+	color := NSScale eva10.
 	canvas := RSCanvas new.
 	pie := RSPie new.
 	pie sliceShape segmentSpacing: 0.5.
@@ -988,7 +988,7 @@ RSPieExamples >> example25Massiva [
 		innerRadius: 130;
 		externalRadius: 200;
 		segmentSpacing: 2.
-	pie sliceColor: (TSScale ordinal
+	pie sliceColor: (NSScale ordinal
 		range: #('ECCD36' '9BCC3E' '218E4D' '365EA6' '64ACDC'
 			'6058A4' '202056' 'EA2230' 'ED6B2F' 'DC417A')).
 		

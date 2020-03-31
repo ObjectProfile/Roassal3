@@ -63,7 +63,7 @@ RSGraphCanvasMonitor >> defaultPolyline [
 
 { #category : #initialization }
 RSGraphCanvasMonitor >> initialize [
-	polyScale := TSScale linear
+	polyScale := NSScale linear
 		domain: { 1@0. 100@65 };
 		range: { -50 @ 25. 50@ -25 }.
 	frames := OrderedCollection new.

@@ -23,7 +23,7 @@ RSExpandingBoxes >> close: shape [
 RSExpandingBoxes >> initialize [
 	super initialize.
 	canvas := RSCanvas new.
-	color := TSScale category20b.
+	color := NSScale category20b.
 	base := RSComposite new.
 	base popup.
 	base when: RSMouseClick do: [ :evt | self processEvent: evt ].

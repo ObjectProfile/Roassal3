@@ -17,8 +17,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
-			spec package: 'NumericScales'with: [ 
-				spec repository: 'github://ObjectProfile/NumericScales/src' ].
+			spec baseline: 'NumericScales'with: [ 
+				spec repository: 'github://ObjectProfile/NumericScales' ].
 			dep1 := OrderedCollection new
 				add: 'Athens-SVG';
 				add: 'Geometry';

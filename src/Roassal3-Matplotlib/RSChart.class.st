@@ -69,7 +69,7 @@ RSChart >> decorations [
 
 { #category : #color }
 RSChart >> defaultPlotColors [
-	^ TSScale category20c
+	^ NSScale category20c
 ]
 
 { #category : #accessing }
@@ -189,7 +189,7 @@ RSChart >> title: aTitle [
 
 { #category : #'public - configuration' }
 RSChart >> xLog [
-	self xScale: TSScale log
+	self xScale: NSScale log
 ]
 
 { #category : #'public - configuration' }
@@ -199,7 +199,7 @@ RSChart >> xScale: aScale [
 
 { #category : #'public - configuration' }
 RSChart >> xSqrt [
-	self xScale: TSScale sqrt
+	self xScale: NSScale sqrt
 ]
 
 { #category : #'as yet unclassified' }
@@ -209,7 +209,7 @@ RSChart >> xlabel: aTitle [
 
 { #category : #'public - configuration' }
 RSChart >> yLog [
-	self yScale: TSScale log
+	self yScale: NSScale log
 ]
 
 { #category : #'public - configuration' }
@@ -219,7 +219,7 @@ RSChart >> yScale: aScale [
 
 { #category : #'public - configuration' }
 RSChart >> ySqrt [
-	self yScale: TSScale sqrt
+	self yScale: NSScale sqrt
 ]
 
 { #category : #'as yet unclassified' }

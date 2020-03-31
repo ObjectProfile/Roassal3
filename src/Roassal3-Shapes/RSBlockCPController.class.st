@@ -1,5 +1,5 @@
 "
-I have am useful to define the control points in a fast way, but if you plan to use this controller in many scenarios, try to create a new subclass of RSAbstractCPController and avoid this class
+I have am useful to define the control points in a fast way, but if you plan to use this controller in many scenarios, try to create a new subclass of RSAbstractCPController and avoid to use this class
 "
 Class {
 	#name : #RSBlockCPController,
@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Roassal3-Shapes-CP'
+	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #accessing }

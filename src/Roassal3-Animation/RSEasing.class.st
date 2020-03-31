@@ -5,7 +5,7 @@ I am highli inspired in d3js source code https://github.com/d3/d3-transition and
 "
 Class {
 	#name : #RSEasing,
-	#superclass : #TSInterpolator,
+	#superclass : #NSInterpolator,
 	#instVars : [
 		'useOut',
 		'useIn'

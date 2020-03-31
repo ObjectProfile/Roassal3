@@ -176,7 +176,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		updateLine value ].
 	update := [ 
 		extent := c extent.
-		position := TSScale linear
+		position := NSScale linear
 			range: { extent / 2 negated. extent /2 }.
 		updateLine value.
 		shapes do: [ :e | e translateTo: (position scale: r next@ r next) ].
@@ -185,7 +185,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 	c when: RSExtentChangedEvent do: update.
 	
 	"shadow"
-	alpha := TSScale linear domain: #(1 4); range: #(0.4 0.05).
+	alpha := NSScale linear domain: #(1 4); range: #(0.4 0.05).
 	shapes do: [ :e | | ant |
 		ant := e.
 		1 to: 4 do: [:i | | s |
@@ -282,10 +282,10 @@ RSAnimationExamples >> example07Phyco [
 	slices := 50.
 	unit := Float pi * 2 / slices.
 	"domain: aBoolean, range: aColor"
-	color := TSScale ordinal rangeFrom: { '480D4A'. 'BB1C60' }.
+	color := NSScale ordinal rangeFrom: { '480D4A'. 'BB1C60' }.
 	"input: a number between {-1 1} ouput: a number between 100 and 350"
-	sc1 := TSScale linear domain: #(-1 1);range: { 100. 350 }.
-	sc2 := TSScale linear domain: #(-1 1);range: { 350. 100 }.
+	sc1 := NSScale linear domain: #(-1 1);range: { 100. 350 }.
+	sc2 := NSScale linear domain: #(-1 1);range: { 350. 100 }.
 	"for zoom to fit"
 	canvas add: (RSBox new extent: 800@800; noPaint; yourself).
 	theta := 0.
@@ -343,7 +343,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 		canvas nodes copy do: #remove.
 		c1 := Color r: random next g: random next b: random next.
 		c2 := Color r: random next g: random next b: random next.
-		color := TSScale linear range: { c1. c2 }.
+		color := NSScale linear range: { c1. c2 }.
 		1 to: 10000 do: [ :i | | shape radius ang overlapped |
 			shape := RSEllipse new.
 			shape radius: random next * 30 + 2.
@@ -362,7 +362,7 @@ RSAnimationExamples >> example08ElasticEllipses [
 			easing: RSEasing elasticOut;
 			onStepDo: [ :t |
 				canvas nodes do: [ :shape | | scale |
-					scale := TSScale linear range: { 1. shape attributes at: #radius }.
+					scale := NSScale linear range: { 1. shape attributes at: #radius }.
 					shape radius: (scale scale: t)
 					 ].
 				]
@@ -436,7 +436,7 @@ RSAnimationExamples >> example10CircleParty [
 	x := 1. x2 := 2.
 	speed := 5. speed2 := 10.
 	random := Random new.
-	color := TSScale ordinal rangeFrom: { 
+	color := NSScale ordinal rangeFrom: { 
 		(Color colorFrom: 'B4FA05') alpha: 0.7. 
 		'FF7C7C'.
 		(Color colorFrom: 'EA323E') alpha: 0.5.
@@ -507,8 +507,8 @@ RSAnimationExamples >> example11ArcTree [
 			 ]
 		].
 	newArc value: 0@0 value: 100 value: 5.
-	alpha := TSScale linear range: #(90 0).
-	beta := TSScale linear range: #(90 180).
+	alpha := NSScale linear range: #(90 0).
+	beta := NSScale linear range: #(90 180).
 	canvas showEncompassingRectangles.
 	canvas animationFrom: ((1 to: 5) reverse collect: [ :i| | shapes |
 		shapes := canvas nodes select: [ :e | e index = i ].
@@ -539,7 +539,7 @@ RSAnimationExamples >> example12PerlinParticles [
 	canvas := RSCanvas new.
 	random := Random new.
 	frame := 0.
-	perlin := TSPerlinNoise new.
+	perlin := NSPerlinNoise new.
 	
 	label := RSLabel new
 		color: Color black;
@@ -636,7 +636,7 @@ RSAnimationExamples >> example12b [
 	canvas color: Color black.
 	random := Random new.
 	frame := 0.
-	perlin := TSPerlinNoise new.
+	perlin := NSPerlinNoise new.
 	
 	label := RSLabel new
 		color: Color white;
@@ -655,7 +655,7 @@ RSAnimationExamples >> example12b [
 	changeHue := [
 		hIndex := hIndex + 1.
 		hIndex > 4 ifTrue: [ hIndex := 0 ].
-		hExtent := TSScale linear
+		hExtent := NSScale linear
 			domain: #(0 1 2 3 4);
 			range: { 220@100. 55@0. 100@20. 180@110. 255@150 };
 			scale: hIndex.
@@ -746,7 +746,7 @@ RSAnimationExamples >> example13Arcs [
 	size := 21.
 	canvas := RSCanvas new.
 	canvas color: Color black.
-	beta := TSScale linear
+	beta := NSScale linear
 		domain: #(-1 1);
 		range: #(180 360).
 	shapes := (1 to: size) collect: [ :m | 
@@ -862,7 +862,7 @@ RSAnimationExamples >> example15Sky [
 				start: ext / 2 negated;
 				stop: ext / 2).
 	canvas addShape: box.
-	colors := TSScale linear
+	colors := NSScale linear
 		domain: #(5 15);
 		range: {'6A6569' . 'white'}.
 
@@ -916,8 +916,8 @@ RSAnimationExamples >> example16ArcNoise [
 	frame := 0.
 	canvas := RSCanvas new.
 	canvas color: Color black.
-	perlin := TSPerlinNoise new.
-	radius := TSScale linear domain: #(1 20); range: #(50 250).
+	perlin := NSPerlinNoise new.
+	radius := NSScale linear domain: #(1 20); range: #(50 250).
 	canvas addAll: ((1 to: 20) collect: [:n |
 		| r |
 		r := radius scale: n.
@@ -935,7 +935,7 @@ RSAnimationExamples >> example16ArcNoise [
 		isFixed: true ).
 		
 	points := OrderedCollection new.
-	yscale := TSScale linear domain: #(0 360); range: #(80 5).
+	yscale := NSScale linear domain: #(0 360); range: #(80 5).
 	
 	line := RSPolyline new
 		border: (RSBorder new  
@@ -978,10 +978,10 @@ RSAnimationExamples >> example17Retina [
 	canvas color: Color black.
 	minR := 0.08.
 	side := 900.
-	perlin := TSPerlinNoise new.
+	perlin := NSPerlinNoise new.
 	circleSize := ringSize := 100.
 	random := Random new.
-	angle := TSScale linear domain: { 1. circleSize }; range: {0. 360}.
+	angle := NSScale linear domain: { 1. circleSize }; range: {0. 360}.
 	label := RSLabel new 
 		fontName: 'Source Sans Pro'; 
 		text: 'Now begin!'; 
@@ -1182,10 +1182,10 @@ RSAnimationExamples >> example20Flor [
 	c := RSCanvas new.
 	frame := 0.
 	angleSp := 0.
-	hueS := TSScale linear domain: #(50 200); range: #(250 360).
-	alphaS := TSScale linear domain: #(50 200); range: #(0.3 1).
-	dia1 := TSScale linear domain: #(50 180); range: #(90 1).
-	dia2 := TSScale linear domain: #(-1 1); range: #(5 20).
+	hueS := NSScale linear domain: #(50 200); range: #(250 360).
+	alphaS := NSScale linear domain: #(50 200); range: #(0.3 1).
+	dia1 := NSScale linear domain: #(50 180); range: #(90 1).
+	dia2 := NSScale linear domain: #(-1 1); range: #(5 20).
 	(0 to: 350 by: 60) do: [ :i | 
 		(50 to: 170 by: 10) do: [ :m |  | color |
 			color := Color 
@@ -1254,7 +1254,7 @@ RSAnimationExamples >> example21Rainbow [
 		e].
 	mode := 1.
 	frame := 0.
-	color := TSScale ordinal
+	color := NSScale ordinal
 		domain: #(0 1 2);
 		range:
 			{[ Color black ].
@@ -1317,7 +1317,7 @@ RSAnimationExamples >> example22Stars [
 	| canvas color random stars |
 	canvas := RSCanvas new.
 	random := Random new.
-	color := TSScale linear domain: #(0 10); range: #('black' 'blue').
+	color := NSScale linear domain: #(0 10); range: #('black' 'blue').
 	canvas addAll: ((1 to: 100) collect: [:m | 
 		RSBox new
 			size: 39;
@@ -1508,7 +1508,7 @@ RSAnimationExamples >> example26PerlinNoise [
 	size := 200.
 	noiseScale := 300.
 	canvas clearBackground: false.
-	perlin := TSPerlinNoise2 new.
+	perlin := NSPerlinNoise2 new.
 	canvas color: (Color colorFrom: '150832').
 	c1 := '45217C'. c2 := '0799F2'. c3 := 'white'.
 	
@@ -1561,13 +1561,13 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 	canvas color: Color black.
 	canvas clearBackground: false.
 	r := Random new.
-	perlin := TSPerlinNoise2 new.
+	perlin := NSPerlinNoise2 new.
 	density := 800. maxLife := 10. noiseScale := 800.
 	rect := Rectangle rsCenter: 0@0 extent: self currentWorld extent.
 	size := rect width * rect height / density.
-	color := TSScale ordinal rangeFrom: { '6E39CC'. '0799F2'. 'white'}.
-	sc1 := TSScale linear domain: {1. size}; range: #(5 1).
-	sc2 := TSScale linear domain: {1. size}; range: #(1 2).
+	color := NSScale ordinal rangeFrom: { '6E39CC'. '0799F2'. 'white'}.
+	sc1 := NSScale linear domain: {1. size}; range: #(5 1).
+	sc2 := NSScale linear domain: {1. size}; range: #(1 2).
 	canvas addAll: ((1 to: size) collect: [:i |
 		RSEllipse new
 			size: (sc2 scale: i);
@@ -1607,7 +1607,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 			(rect containsPoint: p) ifFalse: respawn.
 			fadeRatio := (life * 5) min: 1.
 			fadeRatio := fadeRatio min: (maxLife - life)*5 / maxLife .
-			colorCase := TSScale ordinal domain: #(0 1 2); range: { 
+			colorCase := NSScale ordinal domain: #(0 1 2); range: { 
 				[ Color gray: life / maxLife ].
 				[ c ].
 				[ (Color 
@@ -1696,8 +1696,8 @@ RSAnimationExamples >> example28AnimationCircle [
 		].
 	].
 	update value.
-	sc1 := TSScale linear range: {0. Float twoPi}.
-	sc2 := TSScale linear domain: #(-1 1).
+	sc1 := NSScale linear range: {0. Float twoPi}.
+	sc2 := NSScale linear domain: #(-1 1).
 	shapes do: [ :e | | animation |
 		animation := canvas newAnimation repeat 
 			"easing: TSEasing bounceOut;"
@@ -1729,7 +1729,7 @@ RSAnimationExamples >> example29Bezier [
 	size := 50.
 	theta := 0.
 	canvas color: Color black.
-	sc := TSScale linear domain: #(-1 1); range: #(0 80).
+	sc := NSScale linear domain: #(-1 1); range: #(0 80).
 	cpController := RSBlockCPController new
 		block: [ :line | 
 			| x1 |
@@ -1891,7 +1891,7 @@ RSAnimationExamples >> example32RSLocate [
 	movableElement size: 40.
 	movableElement when: RSMouseClick do: [ 
 		canvas newAnimation
-			scale: (TSScale linear 
+			scale: (NSScale linear 
 				domain: #(0 0.5 1); 
 				range: { 0@0. 20@20. 0@0});
 			onStepDo: [ :t | 
@@ -1964,7 +1964,7 @@ RSAnimationExamples >> example33AlteredWorld [
 	canvas clearBackground: false.
 	canvas color: Color black.
 	px := 0.
-	perlin := TSPerlinNoise3 new octaves: 5.
+	perlin := NSPerlinNoise3 new octaves: 5.
 	canvas addAll: ((1 to: extent y / 6) collect: [ :m | 
 			 RSPolyline new
 				 width: 0.5;
@@ -2065,11 +2065,11 @@ RSAnimationExamples >> example35Perlin [
 	extent := 500@500.
 	rect := Rectangle rsCenter: extent/2 extent: extent.
 	maxLife := 10.
-	perlin := TSPerlinNoise3 new octaves: 3.
+	perlin := NSPerlinNoise3 new octaves: 3.
 	noiseScale := 80.
 	canvas color: Color black.
-	scIterations := TSScale linear domain: #(0 100); range: #(5 1).
-	scRadius := TSScale linear domain: #(0 100); range: #(1 3).
+	scIterations := NSScale linear domain: #(0 100); range: #(5 1).
+	scRadius := NSScale linear domain: #(0 100); range: #(1 3).
 	
 	frame := 0.
 	respawnTop := [ :e | 
@@ -2114,7 +2114,7 @@ RSAnimationExamples >> example35Perlin [
 			
 			heading := vel angle / Float twoPi.
 			heading < 0 ifTrue: [ heading := heading negated ].
-			color := TSScale linear 
+			color := NSScale linear 
 				range: { e attributeAt: #c1. e attributeAt: #c2 }; scale: heading.
 			alpha := life * 5 / maxLife min: 1.
 			alpha := (maxLife - life * 5 )/ maxLife min: alpha.
@@ -2173,7 +2173,7 @@ RSAnimationExamples >> example37SimpleClock [
 	(LinearGradientPaint fromArray: val)
 		start: a * half;
 		stop: b * half ].
-	color := TSScale ordinal range:
+	color := NSScale ordinal range:
 		{(linear value: {0 -> '7D66E9'. 1 -> 'E664AC'} value: -1 @ 1 value: 1 @ -1).
 		(linear value: {0 -> '71C1E2'. 0.9 -> Color transparent} value: -1 @ -1 value: 0 @ 1).
 		(linear value: {0 -> 'EDB259'. 0.9 -> Color transparent} value: 1 @ 1 value: 0 @ -1)}.
@@ -2332,7 +2332,7 @@ RSAnimationExamples >> example40Roassal [
 		size: 280).
 	
 	timeSize := 500.
-	fscale := TSScale linear range: #(130 80).
+	fscale := NSScale linear range: #(130 80).
 	paint := LinearGradientPaint new 
 		colorRamp: {0 -> Color white};
 		start: 0@ -100;
@@ -2477,13 +2477,13 @@ for Pharo 7 and Pharo 8.'.
 	lineAnime 
 		value: line1 
 		value: title
-		value: (TSScale linear range: {(p x + (title width/2))@ p y. p })
+		value: (NSScale linear range: {(p x + (title width/2))@ p y. p })
 		value: { 0. 1000 }.
 	p := desc position.
 	lineAnime 
 		value: line2
 		value: desc 
-		value: (TSScale linear range: {(p x - (desc width/2))@ p y. p })
+		value: (NSScale linear range: {(p x - (desc width/2))@ p y. p })
 		value: { 0. 1000 }.
 	c newAnimation
 		delay: 2 seconds;
@@ -2499,7 +2499,7 @@ RSAnimationExamples >> example42RectangleForceLayout [
 	<script: 'self new example42RectangleForceLayout open'>
 	| canvas classes layout color |
 	canvas := RSCanvas new.
-	color := TSScale category20.
+	color := NSScale category20.
 	classes := Collection withAllSubclasses collect: [ :cls |
 		RSBox new
 			model: cls;
@@ -2547,7 +2547,7 @@ RSAnimationExamples >> example43PerlinRose [
 	s := 1.					"Start size of perlin ring"
 	tau := 6.2831855.		"It is the circle constant relating the circumference of a circle to its linear dimension"
 	canvas color: Color black.
-	perlin := TSPerlinNoise3 new. 
+	perlin := NSPerlinNoise3 new. 
 	perlin octaves: 3.
 	canvas clearBackground: false.
 	border := RSBorder new
@@ -2594,7 +2594,7 @@ RSAnimationExamples >> example44Boat [
 	| canvas perlin frame scale lines boat x pharo g updateLines |
 	canvas := RSCanvas new.
 	canvas color: Color pink.
-	perlin := TSPerlinNoise2 new.
+	perlin := NSPerlinNoise2 new.
 	frame := 0.
 	"perlin octaves: 3."
 	scale := 20.
@@ -2694,9 +2694,9 @@ RSAnimationExamples >> example45Duna [
 	num := 1000.
 	color := Color purple.
 	noiseScale := 400. "<<<-- change this"
-	perlin := TSPerlinNoise3 new. 
+	perlin := NSPerlinNoise3 new. 
 	perlin octaves: 2."<<<-- also this :D"
-	c := TSScale linear 
+	c := NSScale linear 
 		domain: { 0. num/2 };
 		range: { color alpha: 0.8. color alpha: 0 }.
 	particles := (1 to: num) collect: [ :n | 
@@ -2777,9 +2777,9 @@ RSAnimationExamples >> example47Circles [
 
 	max := 2500.
 	min := 100.
-	gscale := TSScale linear
+	gscale := NSScale linear
 		range: { max@20. min@3 }.
-	alpha := TSScale linear
+	alpha := NSScale linear
 		domain: { min. max };
 		range: { 0.6. 0.12 }.
 	scale := 300.
@@ -2849,16 +2849,16 @@ RSAnimationExamples >> example48Corona [
 	| canvas extent mainScale curveScale yscale color axis title ytitle xtitle lineTitle line curve normalY spoint |
 	canvas := RSCanvas new.
 	extent := 500@250.
-	mainScale := TSScale linear
+	mainScale := NSScale linear
 		domain: {0@0. 100@100};
 		range: {0@extent y. extent x@ 0}.
-	curveScale := TSScale linear
+	curveScale := NSScale linear
 		domain: #(0 0.5 1);
 		range: #(50 90 50).
-	yscale := TSScale linear
+	yscale := NSScale linear
 		domain: #(40 100);
 		range: #(500 40).
-	color := TSScale linear
+	color := NSScale linear
 		domain: #(40 80 100);
 		range: { Color red. Color orange. Color green }.
 	axis := RSPolyline new

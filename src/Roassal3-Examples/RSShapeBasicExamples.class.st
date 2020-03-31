@@ -278,7 +278,7 @@ RSShapeBasicExamples >> example11ScaleMouseDistance [
 	boxSize := 50.
 	canvasExtent := 500 asPoint.
 	maxDist := 0@0 dist: canvasExtent.
-	scale := TSScale linear 
+	scale := NSScale linear 
 		domain: { 0. maxDist}; 
 		rangeRound: #(80 0).
 	border := RSBorder new.
@@ -286,7 +286,7 @@ RSShapeBasicExamples >> example11ScaleMouseDistance [
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
 		maxDist := 0@0 dist: canvasExtent.
-		scale := TSScale linear 
+		scale := NSScale linear 
 			domain: { 0. maxDist}; 
 			rangeRound: #(80 0).
 		0 to: canvasExtent y/boxSize do: [ :y|

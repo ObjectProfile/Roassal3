@@ -280,7 +280,7 @@ v
 { #category : #initialization }
 RSNormalizer >> initialize [
 	super initialize.
-	scale := TSScale linear.
+	scale := NSScale linear.
 	shapes := #()
 
 ]

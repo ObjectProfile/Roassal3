@@ -34,7 +34,7 @@ RSAnimatedPopup >> translatePopup: popup event: evt [
 	popup translateTo: p.
 	
 	"animation part"
-	pscale := TSScale linear range: { p x @ (p y - (popup height / 2) ) . p }.
+	pscale := NSScale linear range: { p x @ (p y - (popup height / 2) ) . p }.
 	scale := popup matrix sx @ popup matrix sy.
 	evt shape newAnimation 
 		duration: 300 milliSeconds; 

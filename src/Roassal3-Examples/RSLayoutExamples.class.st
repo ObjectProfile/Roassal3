@@ -50,7 +50,7 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 
 	| canvas shapes color |
 	canvas := RSCanvas new.
-	color := TSScale linear
+	color := NSScale linear
 		domain: #(1 20);
 		range: {Color red. Color green}.
 		
@@ -72,7 +72,7 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 
 	| canvas shapes color |
 	canvas := RSCanvas new.
-	color := TSScale linear
+	color := NSScale linear
 		domain: #(1 10 20);
 		range: { Color red. Color green. Color blue }";
 		interpolate: TSColorHSVAInterpolator".
@@ -95,7 +95,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 	| canvas shapes minAndMax color |
 	canvas := RSCanvas new.
 	minAndMax := Collection withAllSubclasses inject: { 10000 . 0 } into: [ :res :cls | {res first min: cls numberOfMethods . res second max: cls numberOfMethods}].
-	color := TSScale linear
+	color := NSScale linear
 		domain: minAndMax;
 		range: { Color green . Color red }.
 
@@ -166,13 +166,13 @@ RSLayoutExamples >> example06Cluster [
 			connectFrom: #superclass.
 		
 		RSNormalizer size
-			scale: (TSScale perform: scale);
+			scale: (NSScale perform: scale);
 			from: 1;
 			to: 30;
 			shapes: shapes;
 			normalize: #numberOfMethods.
 		RSNormalizer color
-			scale: (TSScale perform: scale);
+			scale: (NSScale perform: scale);
 			from: Color blue;
 			to: Color red;
 			shapes: shapes;

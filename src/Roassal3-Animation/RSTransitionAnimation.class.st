@@ -126,7 +126,7 @@ RSTransitionAnimation >> progress [
 
 { #category : #accessing }
 RSTransitionAnimation >> ramp: arrayOfAssociations [
-	scale := TSScale linear
+	scale := NSScale linear
 		domain: (arrayOfAssociations collect: #key);
 		range: (arrayOfAssociations collect: #value)
 ]
@@ -141,7 +141,7 @@ RSTransitionAnimation >> reset [
 	super reset.
 	self duration: 2 asSeconds.
 	easing := TSLinearInterpolator new.
-	scale := TSScale linear.
+	scale := NSScale linear.
 ]
 
 { #category : #accessing }

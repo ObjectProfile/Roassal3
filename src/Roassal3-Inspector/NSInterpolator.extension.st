@@ -1,12 +1,12 @@
-Extension { #name : #TSInterpolator }
+Extension { #name : #NSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
-TSInterpolator >> gtCanvasForInspector [
+NSInterpolator >> gtCanvasForInspector [
 	| canvas theme boxes pos rect line cp label loc s |
  	canvas := RSCanvas new.
 	theme := Smalltalk ui theme.
 	canvas color: theme backgroundColor.
-	s := TSScale linear domain: #(1 100); range: #(0 420).
+	s := NSScale linear domain: #(1 100); range: #(0 420).
 	boxes := (0 to: 99) collect: [ :i |
 		RSBox new
 			size: 40;
@@ -16,7 +16,7 @@ TSInterpolator >> gtCanvasForInspector [
 			resetBBox;
 			yourself ] as: RSGroup.
 	rect := boxes encompassingRectangle.
-	pos := TSScale linear
+	pos := NSScale linear
 		domain: { 0@0. 1@1 };
 		range: { 0 @ rect height. rect width@ 0 }.
 	line := RSPolyline new 
@@ -70,7 +70,7 @@ TSInterpolator >> gtCanvasForInspector [
 ]
 
 { #category : #'*Roassal3-Inspector' }
-TSInterpolator >> gtInspectorCanvasIn: composite [
+NSInterpolator >> gtInspectorCanvasIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
 		title: ['Interpolator'];

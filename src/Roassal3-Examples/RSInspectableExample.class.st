@@ -47,7 +47,7 @@ RSInspectableExample >> example02Inspect [
 	
 	| canvas animation lastSize box color |
 	canvas := RSCanvas new.
-	color := TSScale category20c.
+	color := NSScale category20c.
 	box := [ :model |
 		RSBox new
 			model: model;
