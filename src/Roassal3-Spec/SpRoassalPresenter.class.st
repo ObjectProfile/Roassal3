@@ -15,14 +15,6 @@ SpRoassalPresenter class >> adapterName [
 	^ #SpMorphicAdapter
 ]
 
-{ #category : #specs }
-SpRoassalPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(#SpMorphicAdapter
-		adapt: #(model))
-]
-
 { #category : #'instance creation' }
 SpRoassalPresenter class >> open [
 	<script>
