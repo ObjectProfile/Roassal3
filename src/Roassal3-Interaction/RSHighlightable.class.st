@@ -1,5 +1,47 @@
 "
 I a basic interaction to add highlighting events to elements in view.
+
+Some example:
+-=-=-=-
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSBox new border: (RSBorder new color: Color red; width: 3); model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+RSNormalizer size
+	shapes: shapes;
+	normalize: #yourself.
+
+interaction := RSHighlightable new.
+interaction highlightColor: Color blue.
+interaction highlightBorder: (RSBorder new color: Color black; width: 3).
+shapes @ interaction.
+
+RSGridLayout on: shapes.
+c @ RSCanvasController
+-=-=-=-
+
+Example with edges:
+-=-=-=
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSEllipse new  model: v; size: 10 ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+RSEdgeBuilder line
+	canvas: c;
+	withBorderAttachPoint;
+	connectFrom: [ :v | v // 2 ].
+
+interaction := RSHighlightable new.
+interaction highlightColor: Color blue.
+interaction highlightBorder: (RSBorder new color: Color black; width: 3).
+interaction withEdges.
+shapes @ interaction.
+
+RSTreeLayout on: shapes.
+c @ RSCanvasController
+-=-=-=
 "
 Class {
 	#name : #RSHighlightable,
@@ -103,6 +145,22 @@ RSHighlightable >> doUnhighlight: aShape [
 
 { #category : #public }
 RSHighlightable >> highlightBorder: aBorder [
+	"Set the border. For example:
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=	
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSBox new  size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+interaction := RSHighlightable new.
+interaction highlightBorder: (RSBorder new width: 3; color: Color pink).
+shapes @ interaction.
+
+RSGridLayout on: shapes.
+c @ RSCanvasController
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	"
 	self 
 		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #border value: aBorder ];
 		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #border ].
@@ -110,6 +168,22 @@ RSHighlightable >> highlightBorder: aBorder [
 
 { #category : #public }
 RSHighlightable >> highlightColor: aColor [
+	"Set the highlight color. For example:
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=	
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSBox new  size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+interaction := RSHighlightable new.
+interaction highlightColor: Color blue.
+shapes @ interaction.
+
+RSGridLayout on: shapes.
+c @ RSCanvasController
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	"
 	self 
 		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ];
 		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ].

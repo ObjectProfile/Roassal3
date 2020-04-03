@@ -205,5 +205,27 @@ RSBorder >> width [
 
 { #category : #accessing }
 RSBorder >> width: anInteger [ 
+	"Set the width of the border. 
+	
+For example:
+-=-=-=--=-=-=--=-=-=-
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSBox new border: (RSBorder new color: Color red; width: 3); model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+RSNormalizer size
+	shapes: shapes;
+	normalize: #yourself.
+
+interaction := RSHighlightable new.
+interaction highlightColor: Color blue.
+interaction highlightBorder: (RSBorder new color: Color black; width: 3).
+shapes @ interaction.
+
+RSGridLayout on: shapes.
+c @ RSCanvasController
+-=-=-=--=-=-=--=-=-=-
+	"
 	width := anInteger
 ]
