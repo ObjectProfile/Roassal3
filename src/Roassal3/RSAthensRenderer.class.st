@@ -1,5 +1,9 @@
 "
-I can create a visual components in a athensCanvas surface.
+I am a visitor for RSCanvas.
+
+I visit the canvas and its commponents to draw it in a AthensSurface.
+
+RSAthensMorph uses my class to draw an RSCanvas instance. I visit and draw each shape with vector graphics operations of Athens, this may change with Sparta/Bloc, or with PDF from ArtefactProyect
 "
 Class {
 	#name : #RSAthensRenderer,
