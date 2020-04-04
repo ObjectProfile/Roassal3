@@ -7,6 +7,16 @@ Class {
 	#category : #'Roassal3-Shapes-Tests'
 }
 
+{ #category : #'tests - colors' }
+RSLinesTest >> testColorLineAndMarker [
+	| line |
+	line := RSShapeFactory arrowedLine.
+	line color: Color blue.
+	self 
+		assert: line color equals: Color blue;
+		assert: line markerEnd shape borderColor equals: Color blue.
+]
+
 { #category : #running }
 RSLinesTest >> testDrawBezierLine [
 	c addShape: (RSBezier new

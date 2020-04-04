@@ -275,6 +275,15 @@ RSShape >> postCopy [
 		resetBBox
 ]
 
+{ #category : #printing }
+RSShape >> printOn: stream [
+	| model |
+	super printOn: stream.
+	model := self model.
+	model ifNil: [ ^ self ].
+	stream << '('; << model asString; << ')'.
+]
+
 { #category : #actions }
 RSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"
