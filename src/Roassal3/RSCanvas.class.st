@@ -157,6 +157,7 @@ RSCanvas >> extent: aPoint [
 
 { #category : #accessing }
 RSCanvas >> fixedShapes [
+	"Return the list of shapes that are fixed, i.e., not subjet to the camera"
 	^ fixedShapes 
 ]
 

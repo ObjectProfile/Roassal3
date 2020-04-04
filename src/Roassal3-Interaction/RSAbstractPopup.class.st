@@ -32,12 +32,25 @@ RSAbstractPopup class >> reset [
 
 { #category : #hooks }
 RSAbstractPopup >> createOrGetPopupOn: aShape event: event [
+	"Create a popup and register it"
 	| att popupShape key |
 	att := event canvas attributes.
 	key := self popupKey.
-	att at: key ifPresent: [ :popup | ^ popup ].
+
+
+	"We checked if the very same shape has emitted the popup.
+	If this is the case, then we use the popup previously created, 
+	else, we remove it"
+	((att includesKey: key) and: [ (att includesKey: #shapeWithPopup) ])
+		ifTrue: [ 
+			(att at: #shapeWithPopup) == aShape
+				ifTrue: [ ^ att at: key ]
+				ifFalse: [ self releasePopup: (att at: key) ]
+			 ].
+
 	popupShape := self createPopupFor: aShape event: event.
 	att at: key put: popupShape.
+	att at: #shapeWithPopup put: aShape.
 	^ popupShape
 	
 ]
@@ -70,7 +83,7 @@ RSAbstractPopup >> registerRemoveEventsOn: aShape [
 	self class removeEvents do: [ :clsEvent | 
 		aShape 
 			when: clsEvent
-			do: [:evt | self removePopupOn: evt  ] ]
+			do: [ :evt | self removePopupOn: evt  ] ]
 ]
 
 { #category : #hooks }

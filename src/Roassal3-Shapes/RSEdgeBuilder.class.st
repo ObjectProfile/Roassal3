@@ -24,7 +24,7 @@ RSEdgeBuilder orthoVertical
 	connectFrom: #superclass.
 
 RSTreeLayout on: c nodes.
-c @ RSControlsCanvas.
+c @ RSCanvasController.
 c open
 ```
 

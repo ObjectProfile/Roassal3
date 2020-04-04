@@ -11,9 +11,8 @@ Class {
 }
 
 { #category : #hooks }
-RSSelectionPresentation >> onShape: anElement [
-Halt if: [ anElement isKindOf: RSCanvas ].
-	anElement when: RSMouseClick do: [ self presentation selection: anElement model ]
+RSSelectionPresentation >> onShape: aShape [
+	aShape when: RSMouseClick do: [ self presentation selection: aShape model ]
 	
 ]
 
