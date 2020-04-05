@@ -1,9 +1,30 @@
+"
+I am an option for the canvas controller. 
+You can use me as follows (press the / key and the r key):
+
+-=-=-=
+c := RSCanvas new.
+
+shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+
+c addAll: shapes.
+RSGridLayout on: shapes.
+
+shapes @ RSPopup.
+
+con := RSCanvasController new.
+con addInteraction: RSSearchInCanvas new.
+c @ con.
+-=-=-=
+
+"
 Class {
 	#name : #RSSearchInCanvas,
 	#superclass : #RSAbstractControlCanvas,
 	#instVars : [
 		'highlightedShapes',
-		'canvas'
+		'canvas',
+		'colorToHighlight'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -21,11 +42,17 @@ RSSearchInCanvas >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
+{ #category : #accessing }
+RSSearchInCanvas >> colorToHighlight: aColor [
+	"Set the color to highlight shapes when searching"
+	colorToHighlight := aColor
+]
+
 { #category : #util }
 RSSearchInCanvas >> highlightShape: s [
 	"Highlight a shape. Remember it in case we need to unlighted"
 	highlightedShapes add: s.
-	^ RSHighlightable new record: s selector: #color value: Color red
+	^ RSHighlightable new record: s selector: #color value: colorToHighlight
 ]
 
 { #category : #util }
@@ -38,7 +65,9 @@ RSSearchInCanvas >> initialize [
 	super initialize.
 	
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	highlightedShapes := OrderedCollection new
+	highlightedShapes := OrderedCollection new.
+	
+	colorToHighlight := Color red.
 ]
 
 { #category : #util }

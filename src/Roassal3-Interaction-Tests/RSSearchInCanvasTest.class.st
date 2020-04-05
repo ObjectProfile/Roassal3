@@ -59,3 +59,51 @@ RSSearchInCanvasTest >> testNoSearch [
 
 	self assert: (c shapes allSatisfy: [ :s | s color = Color gray ])
 ]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testWithEdge [
+
+	| l |
+	l := RSLine new.
+	l attachPoint: RSCenteredAttachPoint new.
+	l color: Color black.
+	l from: shapes first.
+	l to: shapes last.
+	c add: l.
+	
+	search searchForShapes: '*5*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*1*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*10*'.
+	self assert: l color equals: Color black
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
+
+	| l interaction |
+	
+	interaction := RSHighlightable new.
+	interaction highlightBorder: (RSBorder new width: 2).
+	interaction withEdges.
+	c shapes @ interaction.
+	
+	l := RSLine new.
+	l attachPoint: RSCenteredAttachPoint new.
+	l color: Color black.
+	l from: shapes first.
+	l to: shapes last.
+	c add: l.
+	
+	search searchForShapes: '*5*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*1*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*10*'.
+	self assert: l color equals: Color black
+]
