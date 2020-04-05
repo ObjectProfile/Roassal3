@@ -241,6 +241,21 @@ RSHighlightable >> onShape: aShape [
 
 { #category : #private }
 RSHighlightable >> record: aShape selector: selector value: anObject [
+	"Main method to change an attribute of a shape (e.g., colors, border)
+	
+For example:
+
+	-=-=-=-=
+	c := RSCanvas new.
+	shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+	c addAll: shapes.
+	RSGridLayout on: shapes.
+	RSHighlightable new record: shapes fifth selector: #color value: Color blue.
+	c
+	-=-=-=-=
+	
+	"
+
 	aShape attributes
 		at: self copyKey, selector
 		put: (aShape perform: selector).
@@ -260,6 +275,18 @@ RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
 
 { #category : #private }
 RSHighlightable >> restore: aShape selector: selector [
+	"Main method to restore the attribute of a shape.
+
+	-=-=-=-=-=-=-=-=-=-=-=-=
+	c := RSCanvas new.
+	shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+	c addAll: shapes.
+	RSGridLayout on: shapes.
+	RSHighlightable new record: shapes fifth selector: #color value: Color blue.
+	RSHighlightable new restore: shapes fifth selector: #color.
+	c
+	-=-=-=-=-=-=-=-=-=-=-=-=
+"
 	| key |
 	key := self copyKey, selector.
 	aShape attributes

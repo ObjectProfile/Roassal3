@@ -14,6 +14,13 @@ Class {
 }
 
 { #category : #accessing }
+RSCanvasController >> addInteraction: anInteractionObject [
+
+	self interactions: (self interactions, (Array with: anInteractionObject class -> anInteractionObject)).
+	anInteractionObject configuration: configuration
+]
+
+{ #category : #accessing }
 RSCanvasController >> configuration [
 	^ configuration
 ]
@@ -21,7 +28,7 @@ RSCanvasController >> configuration [
 { #category : #accessing }
 RSCanvasController >> configuration: aRSControlLimits [
 	configuration := aRSControlLimits.
-	self interactions do: [ :i | i configuration: configuration].
+	self interactions do: [ :i | i configuration: configuration ].
 ]
 
 { #category : #initialization }
