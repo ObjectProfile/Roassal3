@@ -78,9 +78,10 @@ RSCanvasTest >> testElementFromModel [
 	shapes := (1 to: 3) collect: [ :m | RSBox new model: m; yourself ].
 	c addAll: shapes.
 	
-	self assert: (c shapeFromModel: 1) == shapes first.
-	self assert: (c shapeFromModel: 2) == shapes second.
-	self assert: (c shapeFromModel: 3) == shapes third.
+	self assert: (c shapeFromModel: 1) equals: shapes first.
+	self assert: (c shapeFromModel: 2) equals: shapes second.
+	self assert: (c shapeFromModel: 3) equals: shapes third.
+	self assert: (c shapeFromModel: 4) isNil
 ]
 
 { #category : #running }
