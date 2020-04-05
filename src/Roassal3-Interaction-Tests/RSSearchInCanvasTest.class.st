@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 RSSearchInCanvasTest >> setUp [
 	c := RSCanvas new.
-	shapes := (1 to: 10)
+	shapes := (1 to: 10) * 100
 		collect: [ :n | 
 			RSEllipse new
 				size: 20;
@@ -46,6 +46,17 @@ RSSearchInCanvasTest >> testBasic [
 	self assert: shapes fourth color = Color gray.
 	self assert: shapes fifth color = Color gray.
 
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testExactMatch [
+	search useExactMatch.
+	search searchForShapes: '4'.
+	self assert: shapes fourth color equals: Color gray.
+	
+	search doNotUseExactMatch.
+	search searchForShapes: '4'.
+	self assert: shapes fourth color ~= Color gray.
 ]
 
 { #category : #tests }
