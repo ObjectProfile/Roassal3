@@ -414,6 +414,7 @@ RSCanvas >> showRectangles [
 
 { #category : #updating }
 RSCanvas >> signalUpdate [
+	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 	morph changed
 ]
 

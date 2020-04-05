@@ -105,6 +105,8 @@ TContainer >> removeNode: aNode [
 
 { #category : #accessing }
 TContainer >> shapeFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+
 	^ self nodes shapeFromModel: anObject
 ]
 
