@@ -12,11 +12,6 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
-{ #category : #actions }
-RSGroup >> @ int [
-	self do: [ :e | e @ int ].
-]
-
 { #category : #accessing }
 RSGroup >> add: shape [
 	self resetShapeFromModelCache.
