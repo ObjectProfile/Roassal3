@@ -1,7 +1,7 @@
 # Roassal3
 [![Build Status](https://travis-ci.org/ObjectProfile/Roassal3.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal3)
 
-Roassal3 is a new agile visualization engine for Pharo 7, Pharo 8, and Pharo 9. Roassal is made to visualize in an interactive way data. 
+Roassal3 is a new agile visualization engine for Pharo 8 and Pharo 9. Roassal is made to visualize data in an interactive way data. 
 
 
 ## Installation on Pharo
@@ -26,8 +26,6 @@ You should see an animated version of:
 [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
-
-[Tutorial 03 - Charting](Charting.md)
 
 ## Roassal3 as a dependent application
 
