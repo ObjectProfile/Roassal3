@@ -14,6 +14,17 @@ Class {
 	#category : #'Roassal3-Matplotlib-Core'
 }
 
+{ #category : #public }
+RSAbstractTick >> asFloat [
+	self asFloat: 3
+]
+
+{ #category : #public }
+RSAbstractTick >> asFloat: numberOfDecimals [
+	"Do not convert the value when determining labels"
+	labelConversion := [ :value | value asFloat round: numberOfDecimals ]
+]
+
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
 	niceLabel := shouldUseNiceLabel 

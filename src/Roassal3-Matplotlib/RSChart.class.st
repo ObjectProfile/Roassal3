@@ -160,6 +160,28 @@ RSChart >> numberOfPlots [
 	^ plots size
 ]
 
+{ #category : #public }
+RSChart >> open [
+	"Open the chart in a new window. For example
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+x := (-3.14 to: 3.14 by: 0.1).
+y := x sin * 0.22.
+c := RSChart new.
+
+p := RSLinePlot new.
+p x: x y: y.
+c addPlot: p.
+
+c addDecoration: RSHorizontalTick new.
+c addDecoration: (RSVerticalTick new asFloat).
+c open
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	"
+	self build.
+	^ canvas open
+]
+
 { #category : #accessing }
 RSChart >> plots [
 	^ plots
