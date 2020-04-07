@@ -1,5 +1,13 @@
 "
-I have basic information of RSControlsView
+A control configuration is made to set a configuration for the canvas. For example, by modifying a control configuraiton, you can decide if you wish to have an horizontal scrollbar or no, the minimum zoom, or maximum zoom, the padding, ...
+
+For example:
+-=-=--=-=--=-=--=-=-
+c := RSCanvas new. 
+controller := RSCanvasController new.
+controller configuration: (RSControlConfiguration new maxScale: 10).
+c @ controller.
+-=-=--=-=--=-=--=-=-
 "
 Class {
 	#name : #RSControlConfiguration,
