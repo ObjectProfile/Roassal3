@@ -89,6 +89,23 @@ RSAbstractTick >> doNotUseNiceLabel [
 { #category : #accessing }
 RSAbstractTick >> fontSize: fontSizeToSet [
 	"Set the font size used by the labels associated to ticks"
+	
+"
+For example:
+-=-=-=-=-=-=-=-=-=
+x := (-10 to: 10).
+y := x * x.
+
+c := RSChart new.
+d := RSLinePlot new x: x y: y.
+c addPlot: d.
+
+c extent: 400 @ 400.
+c addDecoration: (RSVerticalTick new fontSize: 20).
+c addDecoration: (RSHorizontalTick new fontSize: 20).
+c
+-=-=-=-=-=-=-=-=-=
+"
 	fontSize := fontSizeToSet
 ]
 
