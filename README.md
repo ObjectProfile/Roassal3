@@ -32,8 +32,7 @@ You should see an animated version of:
 If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
 
 ```Smalltalk
-spec baseline: 'Roassal3' with: [ 
-				spec repository: 'github://ObjectProfile/Roassal3/src' ].
+spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src' ].
 ```
 _____
 ## Get in touch
