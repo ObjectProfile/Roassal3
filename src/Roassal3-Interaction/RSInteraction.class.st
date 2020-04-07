@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Roassal3-InteractionBase'
+	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #'instance creation' }

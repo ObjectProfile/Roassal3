@@ -349,6 +349,7 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 		from: source;
 		to: target;
 		yourself.
+	edge border: (self shape border copy).
 	canvas ifNotNil: [ canvas add: edge ].
 	^ edge
 ]

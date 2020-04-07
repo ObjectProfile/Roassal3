@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-AnimationBase'
+	#category : #'Roassal3-Animation-Core'
 }
 
 { #category : #dependencies }
