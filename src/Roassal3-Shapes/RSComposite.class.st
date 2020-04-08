@@ -162,16 +162,16 @@ RSComposite >> children [
 ]
 
 { #category : #accessing }
-RSComposite >> children: aTSGroup [
+RSComposite >> children: aRSGroup [
 	"
 	create a groups of elements or trachel shapes, then added them to this composite shape
 	this method changes the position of the shapes and set the position of this composite shape
 	to the center of the encompassingRectangle.
 	"
-	aTSGroup do: [ :s | 
+	aRSGroup copy do: [ :s | 
 		s isInACanvas 
 			ifTrue: [ s remove ] ].
-	self addAll: aTSGroup.
+	self addAll: aRSGroup.
 	self adjustToChildren.
 
 	
