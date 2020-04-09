@@ -27,6 +27,8 @@ You should see an animated version of:
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
+[Tutorial 02 - Integration in GTInspector](GTInspectorIntegration.md)
+
 ## Roassal3 as a dependent application
 
 If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
