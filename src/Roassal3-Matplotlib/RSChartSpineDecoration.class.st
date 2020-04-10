@@ -24,7 +24,7 @@ Class {
 RSChartSpineDecoration >> renderIn: canvas [
 	shape := RSBox new color: nil; extent: chart extent; withBorder.
 	shape translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
-	canvas addShape: shape
+	canvas add: shape
 ]
 
 { #category : #rendering }

@@ -16,10 +16,9 @@ c
 "
 Class {
 	#name : #RSChart,
-	#superclass : #Object,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'plots',
-		'canvas',
 		'width',
 		'extent',
 		'plot',
@@ -47,20 +46,6 @@ RSChart >> addPlot: aPlot [
 	aPlot chart: self
 ]
 
-{ #category : #building }
-RSChart >> build [
-	canvas := RSCanvas new.
-	canvas @ RSCanvasController.
-	decorations, plots do: [ :e | e beforeRenderingIn: self ].
-	self renderDecorationIn: canvas.
-	self renderPlotsIn: canvas
-]
-
-{ #category : #building }
-RSChart >> canvas [
-	^ canvas
-]
-
 { #category : #color }
 RSChart >> colorFor: aRSLinePlot [ 
 	^ colors scale: aRSLinePlot
@@ -81,6 +66,11 @@ RSChart >> colors: someColors [
 { #category : #accessing }
 RSChart >> decorations [
 	^ decorations
+]
+
+{ #category : #defaults }
+RSChart >> defaultContainer [
+	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #color }
@@ -191,7 +181,7 @@ RSChart >> niceGenerator [
 		generator ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSChart >> numberOfPlots [
 	^ plots size
 ]
@@ -215,7 +205,7 @@ c open
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	"
 	self build.
-	^ canvas open
+	^ self canvas open
 ]
 
 { #category : #accessing }
@@ -228,16 +218,22 @@ RSChart >> renderDecorationIn: aCanvas [
 	decorations do: [ :d | d renderIn: aCanvas ]
 ]
 
+{ #category : #hooks }
+RSChart >> renderIn: aCanvas [
+	decorations, plots do: [ :e | e beforeRenderingIn: self ].
+	self renderDecorationIn: aCanvas.
+	self renderPlotsIn: aCanvas
+]
+
 { #category : #building }
 RSChart >> renderPlotsIn: aCanvas [
-	plots do: [ :p | p renderIn: canvas ].
+	plots do: [ :p | p renderIn: aCanvas ].
 	
 ]
 
 { #category : #building }
 RSChart >> show [
-	self build.
-	^ canvas open
+	^ self open
 ]
 
 { #category : #accessing }
@@ -269,7 +265,7 @@ RSChart >> xSqrt [
 	self xScale: NSScale sqrt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #decoration }
 RSChart >> xlabel: aTitle [
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
@@ -289,7 +285,7 @@ RSChart >> ySqrt [
 	self yScale: NSScale sqrt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #decoration }
 RSChart >> ylabel: aTitle [
 	self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]
