@@ -55,6 +55,11 @@ RSAttributableObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [
 ]
 
 { #category : #attributes }
+RSAttributableObject >> attributeAt: aKey ifPresent: aBlockClosure [ 
+	^ self attributes at: aKey ifPresent: aBlockClosure 
+]
+
+{ #category : #attributes }
 RSAttributableObject >> attributeAt: aKey put: value [
 	^ self attributes at: aKey put: value
 ]

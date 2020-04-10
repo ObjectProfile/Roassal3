@@ -51,6 +51,17 @@ RSCanvas >> addShape: aShape [
 	aShape addedIn: self
 ]
 
+{ #category : #'adding removing shapes' }
+RSCanvas >> addShape: aShape before: otherShape [
+	| col |
+	aShape addedIn: self.
+	col := aShape isFixed
+		ifTrue: [ fixedShapes ]
+		ifFalse: [ shapes ].
+	col remove: aShape.
+	col add: aShape before: otherShape.
+]
+
 { #category : #animations }
 RSCanvas >> animations [
 	^ animations
