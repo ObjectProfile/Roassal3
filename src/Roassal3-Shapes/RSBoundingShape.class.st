@@ -71,6 +71,13 @@ RSBoundingShape >> extent: aPoint [
 		newExtent: extent ]
 ]
 
+{ #category : #initialization }
+RSBoundingShape >> fromRectangle: aRectangle [
+	self 
+		translateTo: aRectangle rsCenter;
+		extent: aRectangle extent
+]
+
 { #category : #geometry }
 RSBoundingShape >> geometry [
 	| rect |

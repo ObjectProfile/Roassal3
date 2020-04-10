@@ -14,7 +14,7 @@ RSYLabelDecoration >> initialize [
 RSYLabelDecoration >> renderIn: canvas [
 	| label |
 	label := self createLabel.
-	canvas addShape: label.
+	canvas add: label.
 	RSLocation new
 		offset: offset;
 		center;

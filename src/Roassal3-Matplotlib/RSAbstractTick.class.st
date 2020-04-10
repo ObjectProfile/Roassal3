@@ -165,7 +165,7 @@ RSAbstractTick >> renderIn: canvas [
 	| aTick lbl |
 	(niceLabel min to: niceLabel max by: niceLabel step) do: [ :i |
 		aTick := self createTickLineFor: i asFloat.
-		canvas addShape: aTick.
+		canvas add: aTick.
 		shouldHaveLabels ifTrue: [ 
 			lbl := self createLabelFor: i.
 			self labelLocation move: lbl on: aTick.

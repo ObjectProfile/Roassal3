@@ -42,14 +42,11 @@ GLMRoassal3Presentation >> renderGlamorouslyOn: aRenderer [
 
 { #category : #initialization }
 GLMRoassal3Presentation >> setUpInteractions [
-	| interaction |
-	interaction := RSSelectionPresentation new
-		presentation: self.
-	self canvas shapes @ interaction.
+	| context |
+	context := self canvas inspectorContext.
+	context presentation: self.
+	self canvas shapes @ context.
 	self canvas
 		when: RSShapeAddedEvent
-		do: [ :evt| evt shape @ interaction ].
-	
-	
-	
+		do: [ :evt | evt shape @ context ].
 ]

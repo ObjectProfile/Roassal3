@@ -19,6 +19,81 @@ RSChartTest >> testBasic [
 ]
 
 { #category : #tests }
+RSChartTest >> testMinMaxValue [
+
+	| y c |
+	y := #(10 13 15).
+	c := RSChart new.
+	c addPlot: (RSLinePlot new y: y).
+	c build.
+	self assert: c minValueX equals: 1.
+	self assert: c maxValueX equals: 3.
+	self assert: c minValueY equals: 10.
+	self assert: c maxValueY equals: 15.
+]
+
+{ #category : #tests }
+RSChartTest >> testMinMaxValue2 [
+
+	| y c x |
+	y := #(-10 -13 -15).
+	x := #(4 6 9).
+	c := RSChart new.
+	c addPlot: (RSLinePlot new x: x y: y).
+	c build.
+	self assert: c minValueX equals: 4.
+	self assert: c maxValueX equals: 9.
+	self assert: c minValueY equals: -15.
+	self assert: c maxValueY equals: -10.
+]
+
+{ #category : #tests }
+RSChartTest >> testMustInclude0 [
+
+	| y c |
+	y := #(10 13 15).
+	c := RSChart new.
+	c addPlot: (RSLinePlot new y: y).
+	c mustInclude0inY.
+	c build.
+	self assert: c minValueX equals: 1.
+	self assert: c maxValueX equals: 3.
+	self assert: c minValueY equals: 0.
+	self assert: c maxValueY equals: 15.
+]
+
+{ #category : #tests }
+RSChartTest >> testMustInclude02 [
+
+	| y c |
+	y := #(-10 -13 -15).
+	c := RSChart new.
+	c addPlot: (RSLinePlot new y: y).
+	c mustInclude0inY.
+	c build.
+	self assert: c minValueX equals: 1.
+	self assert: c maxValueX equals: 3.
+	self assert: c minValueY equals: -15.
+	self assert: c maxValueY equals: 0.
+]
+
+{ #category : #tests }
+RSChartTest >> testMustInclude03 [
+
+	| y c x |
+	y := #(-10 -13 -15).
+	x := #(4 6 9).
+	c := RSChart new.
+	c addPlot: (RSLinePlot new x: x y: y).
+	c mustInclude0inX.
+	c build.
+	self assert: c minValueX equals: 0.
+	self assert: c maxValueX equals: 9.
+	self assert: c minValueY equals: -15.
+	self assert: c maxValueY equals: -10.
+]
+
+{ #category : #tests }
 RSChartTest >> testWithWeirdValues [
 
 	| values g d line c |
