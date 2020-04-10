@@ -326,9 +326,9 @@ RSNormalizer >> scale [
 ]
 
 { #category : #accessing }
-RSNormalizer >> scale: aTSScale [
-	scale ifNotNil: [ aTSScale range: scale range ].
-	scale := aTSScale.
+RSNormalizer >> scale: aNSScale [
+	scale ifNotNil: [ aNSScale range: scale range ].
+	scale := aNSScale.
 	
 ]
 
