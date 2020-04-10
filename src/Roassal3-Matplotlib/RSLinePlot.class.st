@@ -16,7 +16,7 @@ RSLinePlot >> renderIn: canvas [
 			(self isPointWellDefined: xt @ yt)
 				ifTrue: [ controlPoints add: (xScale scale: xt) @ (yScale scale: yt) ] ].
 	
-	canvas addShape: (RSPolyline new
+	canvas add: (RSPolyline new
 		color: (chart colorFor: self);
 		controlPoints: controlPoints;
 		yourself).

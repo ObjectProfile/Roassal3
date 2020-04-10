@@ -20,7 +20,7 @@ RSChartTitleDecoration >> initialize [
 RSChartTitleDecoration >> renderIn: canvas [
 	| label |
 	label := self createLabel.
-	canvas addShape: label.
+	canvas add: label.
 	RSLocation new
 		offset: 1;
 		above; center;

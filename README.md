@@ -27,7 +27,7 @@ You should see an animated version of:
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
-[Tutorial 02 - Integration in GTInspector](GTInspectorIntegration.md)
+[Tutorial 02 - Inspector Integration](GTInspectorIntegration.md)
 
 ## Roassal3 as a dependent application
 

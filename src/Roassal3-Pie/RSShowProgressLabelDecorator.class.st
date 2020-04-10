@@ -3,7 +3,7 @@ I put interactions on the shapes and a label for updating
 "
 Class {
 	#name : #RSShowProgressLabelDecorator,
-	#superclass : #RSAbstractDecorator,
+	#superclass : #RSAbstractPieDecorator,
 	#instVars : [
 		'labelShape',
 		'progressLabel',
