@@ -1,18 +1,47 @@
+"
+I am an option for the canvas controller. 
+You can use me as follows (press the / key and the r key):
+
+-=-=-=
+c := RSCanvas new.
+
+shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+
+c addAll: shapes.
+RSGridLayout on: shapes.
+
+shapes @ RSPopup.
+
+con := RSCanvasController new.
+con addInteraction: RSSearchInCanvas new.
+c @ con.
+-=-=-=
+
+"
 Class {
 	#name : #RSSearchInCanvas,
 	#superclass : #RSAbstractControlCanvas,
 	#instVars : [
 		'highlightedShapes',
-		'canvas'
+		'canvas',
+		'colorToHighlight',
+		'useExactMatch'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
 
+{ #category : #public }
+RSSearchInCanvas >> adjustRegExpIfNecessary: regExp [
+
+	^ useExactMatch ifTrue: [ regExp ] ifFalse: [ '*', regExp, '*' ]
+]
+
 { #category : #util }
 RSSearchInCanvas >> candidateShapes [
-	"Return shapes for which the model has to be matched. Only element having a model may be eligeable"
+	"Return shapes for which the model has to be matched. 
+	 Only shapes that are not a line and having a model may be eligeable to be highligted"
 	self assert: [ canvas notNil ] description: 'Canvas should be set first'.
-	^ canvas shapes select: [ :s | s model notNil ]
+	^ canvas shapes select: [ :s | s model notNil and: [ s isNode ] ]
 ]
 
 { #category : #accessing }
@@ -21,11 +50,23 @@ RSSearchInCanvas >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
+{ #category : #'public - configuration' }
+RSSearchInCanvas >> colorToHighlight: aColor [
+	"Set the color to highlight shapes when searching"
+	colorToHighlight := aColor
+]
+
+{ #category : #'public - configuration' }
+RSSearchInCanvas >> doNotUseExactMatch [
+	"Expect a regular expression as input, but a * is prepended and appended to the regexp"
+	useExactMatch := false
+]
+
 { #category : #util }
 RSSearchInCanvas >> highlightShape: s [
 	"Highlight a shape. Remember it in case we need to unlighted"
 	highlightedShapes add: s.
-	^ RSHighlightable new record: s selector: #color value: Color red
+	^ RSHighlightable new record: s selector: #color value: colorToHighlight
 ]
 
 { #category : #util }
@@ -36,9 +77,11 @@ RSSearchInCanvas >> highlightShapes: shapesToHighlight [
 { #category : #initialization }
 RSSearchInCanvas >> initialize [
 	super initialize.
-	
+
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	highlightedShapes := OrderedCollection new
+	highlightedShapes := OrderedCollection new.
+	colorToHighlight := Color red.
+	self doNotUseExactMatch
 ]
 
 { #category : #util }
@@ -103,12 +146,26 @@ RSSearchInCanvas >> searchForShapes [
 { #category : #public }
 RSSearchInCanvas >> searchForShapes: regExp [
 	"callback called when some shapes have to be search"
+	| shapesToHighlight |
+	shapesToHighlight := self shapesToHighlightUsingRegExp: (self adjustRegExpIfNecessary: regExp).
+		
+	"No need to pursue if we have not found anything"
+	shapesToHighlight ifEmpty: [ ^ self ].
+	
+	self highlightShapes: shapesToHighlight.
+	canvas signalUpdate
+]
+
+{ #category : #util }
+RSSearchInCanvas >> shapesToHighlightUsingRegExp: regExp [
+	"Return the shapes to be highlighted"	
+
 	| candidateShapes shapesToHighlight |
 	candidateShapes := self candidateShapes.
 	shapesToHighlight := candidateShapes
 		select: [ :s | regExp match: s model asString ].
-	self highlightShapes: shapesToHighlight.
-	canvas signalUpdate
+
+	^ shapesToHighlight
 ]
 
 { #category : #util }
@@ -119,4 +176,10 @@ RSSearchInCanvas >> unhighlightShape: s [
 { #category : #util }
 RSSearchInCanvas >> unhighlightShapes: shapesToHighlight [
 	shapesToHighlight do: [ :s | self unhighlightShape: s ]
+]
+
+{ #category : #'public - configuration' }
+RSSearchInCanvas >> useExactMatch [
+	"Expect a regular expression as input"
+	useExactMatch := true
 ]

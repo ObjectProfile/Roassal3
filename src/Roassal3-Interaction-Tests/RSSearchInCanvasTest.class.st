@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 RSSearchInCanvasTest >> setUp [
 	c := RSCanvas new.
-	shapes := (1 to: 10)
+	shapes := (1 to: 10) * 100
 		collect: [ :n | 
 			RSEllipse new
 				size: 20;
@@ -49,6 +49,17 @@ RSSearchInCanvasTest >> testBasic [
 ]
 
 { #category : #tests }
+RSSearchInCanvasTest >> testExactMatch [
+	search useExactMatch.
+	search searchForShapes: '4'.
+	self assert: shapes fourth color equals: Color gray.
+	
+	search doNotUseExactMatch.
+	search searchForShapes: '4'.
+	self assert: shapes fourth color ~= Color gray.
+]
+
+{ #category : #tests }
 RSSearchInCanvasTest >> testIsRegExpValid [
 	self deny: (search isRegExpValid: '').
 	self deny: (search isRegExpValid: nil).
@@ -58,4 +69,52 @@ RSSearchInCanvasTest >> testIsRegExpValid [
 RSSearchInCanvasTest >> testNoSearch [
 
 	self assert: (c shapes allSatisfy: [ :s | s color = Color gray ])
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testWithEdge [
+
+	| l |
+	l := RSLine new.
+	l attachPoint: RSCenteredAttachPoint new.
+	l color: Color black.
+	l from: shapes first.
+	l to: shapes last.
+	c add: l.
+	
+	search searchForShapes: '*5*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*1*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*10*'.
+	self assert: l color equals: Color black
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
+
+	| l interaction |
+	
+	interaction := RSHighlightable new.
+	interaction highlightBorder: (RSBorder new width: 2).
+	interaction withEdges.
+	c shapes @ interaction.
+	
+	l := RSLine new.
+	l attachPoint: RSCenteredAttachPoint new.
+	l color: Color black.
+	l from: shapes first.
+	l to: shapes last.
+	c add: l.
+	
+	search searchForShapes: '*5*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*1*'.
+	self assert: l color equals: Color black.
+	
+	search searchForShapes: '*10*'.
+	self assert: l color equals: Color black
 ]

@@ -1,29 +1,28 @@
 Class {
 	#name : #RSChartTitleDecoration,
-	#superclass : #RSChartDecoration,
-	#instVars : [
-		'title'
-	],
+	#superclass : #RSAbstractLabelDecoration,
 	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }
+RSChartTitleDecoration >> defaultFontSize [
+	^ 15
+]
+
+{ #category : #rendering }
+RSChartTitleDecoration >> initialize [
+	super initialize.
+	self fontSize: self defaultFontSize.
+	self rotationAngle: 0
+]
+
+{ #category : #rendering }
 RSChartTitleDecoration >> renderIn: canvas [
 	| label |
-	label := RSLabel new text: title; color: Color black.
+	label := self createLabel.
 	canvas addShape: label.
 	RSLocation new
 		offset: 1;
 		above; center;
 		stick: label on: self spine.
-]
-
-{ #category : #accessing }
-RSChartTitleDecoration >> title [
-	^ title
-]
-
-{ #category : #accessing }
-RSChartTitleDecoration >> title: aString [
-	title := aString
 ]

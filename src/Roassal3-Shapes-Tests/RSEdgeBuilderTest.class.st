@@ -21,7 +21,7 @@ RSEdgeBuilderTest >> expectedFailures [
 RSEdgeBuilderTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
-	shapes := (1 to: 10) collect: [:n | RSBox new model: n; size: 5; yourself] as: RSGroup.
+	shapes := (1 to: 10) collect: [ :n | RSBox new model: n; size: 5; yourself ] as: RSGroup.
 	canvas addAll: shapes. 
 	b := RSEdgeBuilder line.
 ]
@@ -42,6 +42,18 @@ RSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 	(Smalltalk globals at: #RSGridLayout)  on: canvas nodes.
 	
 	self assert: canvas numberOfEdges equals: 2
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testBorder [
+	| numberOfEdges |
+	b canvas: canvas.
+	b connectFrom: [ :vv | vv // 2 ].
+	
+	numberOfEdges := canvas edges size.
+	self assert: numberOfEdges > 0.
+	
+	self assert: (canvas edges collect: #border) asSet size equals: numberOfEdges
 ]
 
 { #category : #tests }

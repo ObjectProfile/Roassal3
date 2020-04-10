@@ -14,6 +14,17 @@ Class {
 	#category : #'Roassal3-Matplotlib-Core'
 }
 
+{ #category : #public }
+RSAbstractTick >> asFloat [
+	self asFloat: 3
+]
+
+{ #category : #public }
+RSAbstractTick >> asFloat: numberOfDecimals [
+	"Do not convert the value when determining labels"
+	labelConversion := [ :value | value asFloat round: numberOfDecimals ]
+]
+
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
 	niceLabel := shouldUseNiceLabel 
@@ -78,6 +89,23 @@ RSAbstractTick >> doNotUseNiceLabel [
 { #category : #accessing }
 RSAbstractTick >> fontSize: fontSizeToSet [
 	"Set the font size used by the labels associated to ticks"
+	
+"
+For example:
+-=-=-=-=-=-=-=-=-=
+x := (-10 to: 10).
+y := x * x.
+
+c := RSChart new.
+d := RSLinePlot new x: x y: y.
+c addPlot: d.
+
+c extent: 400 @ 400.
+c addDecoration: (RSVerticalTick new fontSize: 20).
+c addDecoration: (RSHorizontalTick new fontSize: 20).
+c
+-=-=-=-=-=-=-=-=-=
+"
 	fontSize := fontSizeToSet
 ]
 

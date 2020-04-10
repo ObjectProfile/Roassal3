@@ -1,7 +1,7 @@
 # Roassal3
 [![Build Status](https://travis-ci.org/ObjectProfile/Roassal3.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal3)
 
-Roassal3 is a new agile visualization engine for Pharo 7, Pharo 8, and Pharo 9. Roassal is made to visualize in an interactive way data. 
+Roassal3 is a new agile visualization engine for Pharo 8 and Pharo 9. Roassal is made to visualize data in an interactive way data. 
 
 
 ## Installation on Pharo
@@ -27,15 +27,14 @@ You should see an animated version of:
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
 
-[Tutorial 03 - Charting](Charting.md)
+[Tutorial 02 - Integration in GTInspector](GTInspectorIntegration.md)
 
 ## Roassal3 as a dependent application
 
 If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
 
 ```Smalltalk
-spec baseline: 'Roassal3' with: [ 
-				spec repository: 'github://ObjectProfile/Roassal3/src' ].
+spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src' ].
 ```
 _____
 ## Get in touch

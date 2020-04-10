@@ -4,24 +4,39 @@ Class {
 	#instVars : [
 		'title',
 		'rotationAngle',
-		'offset'
+		'offset',
+		'fontSize'
 	],
 	#category : #'Roassal3-Matplotlib-Core'
 }
 
 { #category : #rendering }
 RSAbstractLabelDecoration >> createLabel [
+	"Utility method to create a label"
 	^ RSLabel new
 		text: title;
-		fontSize: 10;
+		fontSize: fontSize;
 		color: Color black;
 		rotateByDegrees: rotationAngle
+]
+
+{ #category : #accessing }
+RSAbstractLabelDecoration >> fontSize [
+	"Return the font size to use when generating labels"
+	^ fontSize
+]
+
+{ #category : #accessing }
+RSAbstractLabelDecoration >> fontSize: fontSizeToUse [
+	"Set the font size to use when generating labels"
+	fontSize := fontSizeToUse
 ]
 
 { #category : #initialization }
 RSAbstractLabelDecoration >> initialize [
 	super initialize.
-	rotationAngle := 0
+	rotationAngle := 0.
+	fontSize := 10
 ]
 
 { #category : #accessing }
@@ -55,4 +70,10 @@ RSAbstractLabelDecoration >> title [
 RSAbstractLabelDecoration >> title: aLabelAsString [
 	"This method is useful to set the name of an axis"
 	title := aLabelAsString
+]
+
+{ #category : #accessing }
+RSAbstractLabelDecoration >> vertical [
+	"Set the label vertical"
+	self rotationAngle: -90
 ]

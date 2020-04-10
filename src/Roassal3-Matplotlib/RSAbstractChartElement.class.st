@@ -65,8 +65,18 @@ RSAbstractChartElement >> spine [
 ]
 
 { #category : #accessing }
+RSAbstractChartElement >> xScale [
+	^ xScale
+]
+
+{ #category : #accessing }
 RSAbstractChartElement >> xScale: aScale [
 	xScale := aScale
+]
+
+{ #category : #accessing }
+RSAbstractChartElement >> yScale [
+	^ yScale
 ]
 
 { #category : #accessing }

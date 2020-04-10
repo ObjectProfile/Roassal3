@@ -1,3 +1,19 @@
+"
+I am the main class to build chart.
+
+Here is an example that adjust the font size used for the title, and axis labels:
+-=-=-=-=
+x := -3.14 to: 3.14 by: 0.1.
+y := x sin.
+
+c := RSChart new.
+c addPlot: (RSLinePlot new x: x y: y).
+c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
+c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
+c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; vertical).
+c
+-=-=-=-=
+"
 Class {
 	#name : #RSChart,
 	#superclass : #Object,
@@ -160,6 +176,28 @@ RSChart >> numberOfPlots [
 	^ plots size
 ]
 
+{ #category : #public }
+RSChart >> open [
+	"Open the chart in a new window. For example
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+x := (-3.14 to: 3.14 by: 0.1).
+y := x sin * 0.22.
+c := RSChart new.
+
+p := RSLinePlot new.
+p x: x y: y.
+c addPlot: p.
+
+c addDecoration: RSHorizontalTick new.
+c addDecoration: (RSVerticalTick new asFloat).
+c open
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	"
+	self build.
+	^ canvas open
+]
+
 { #category : #accessing }
 RSChart >> plots [
 	^ plots
@@ -184,6 +222,15 @@ RSChart >> show [
 
 { #category : #accessing }
 RSChart >> title: aTitle [
+	"Set the title of a chart:
+	
+	-=-=-=-=-=-=-=-=
+	c := RSChart new.
+	c addPlot: (RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt).
+	c title: 'Square root'.
+	c
+	-=-=-=-=-=-=-=-=
+	"
 	self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
