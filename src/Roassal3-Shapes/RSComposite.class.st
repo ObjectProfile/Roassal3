@@ -139,6 +139,15 @@ RSComposite >> addShape: aShape [
 	aShape addedIn: self
 ]
 
+{ #category : #adding }
+RSComposite >> addShape: aShape before: otherShape [ 
+	"Add a shape in a composite shape"
+	aShape addedIn: self.
+	self children
+		remove: aShape;
+		add: aShape before: otherShape
+]
+
 { #category : #public }
 RSComposite >> adjustToChildren [
 	| rect delta |
