@@ -163,6 +163,26 @@ RSChart >> minValueY: aNumber [
 	minValueY := aNumber
 ]
 
+{ #category : #'public - configuration' }
+RSChart >> mustInclude0inX [
+	"Make sure that the 0 value is in the chart"
+	((self minValueX to: self maxValueX) includes: 0) ifTrue: [ ^ self ].
+	
+	self maxValueX > 0 
+		ifTrue: [ self minValueX: 0 ]
+		ifFalse: [ self maxValueX: 0 ]
+]
+
+{ #category : #'public - configuration' }
+RSChart >> mustInclude0inY [
+	"Make sure that the 0 value is in the chart"
+	((self minValueY to: self maxValueY) includes: 0) ifTrue: [ ^ self ].
+	
+	self maxValueY > 0 
+		ifTrue: [ self minValueY: 0 ]
+		ifFalse: [ self maxValueY: 0 ]
+]
+
 { #category : #accessing }
 RSChart >> niceGenerator [
 	^ generator ifNil: [ 
