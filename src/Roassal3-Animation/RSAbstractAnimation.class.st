@@ -3,7 +3,7 @@ I am the abstract class that defines animations for roassal3
 "
 Class {
 	#name : #RSAbstractAnimation,
-	#superclass : #RSAnimation,
+	#superclass : #RSObject,
 	#instVars : [
 		'announcer',
 		'isRunning',
@@ -17,7 +17,8 @@ Class {
 		'isPaused',
 		'startPauseTime',
 		'endPauseTime',
-		'pauseTime'
+		'pauseTime',
+		'canvas'
 	],
 	#category : #'Roassal3-Animation-Core'
 }
@@ -36,6 +37,16 @@ RSAbstractAnimation >> announcer [
 { #category : #events }
 RSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
+]
+
+{ #category : #accessing }
+RSAbstractAnimation >> canvas [
+	^ canvas 
+]
+
+{ #category : #accessing }
+RSAbstractAnimation >> canvas: aCanvas [
+	canvas := aCanvas
 ]
 
 { #category : #actions }
@@ -160,6 +171,11 @@ RSAbstractAnimation >> refresh [
 		ifTrue: [ ^ self ].
 	self step.
 	
+]
+
+{ #category : #dependencies }
+RSAbstractAnimation >> release [
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #actions }
