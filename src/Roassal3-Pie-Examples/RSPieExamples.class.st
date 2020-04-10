@@ -776,8 +776,8 @@ RSPieExamples >> example21ProgressLabel [
 		externalRadius: 100.
 	pie 
 		sliceColor: scale;
-		addDecorator: RSShowProgressLabelDecorator new;
-		build.
+		build. 
+	RSShowProgressLabelDecorator on: pie.
 	pie shapes @ (RSPopup text: #name).
 	pie canvas zoomToFit.
 	^ pie canvas

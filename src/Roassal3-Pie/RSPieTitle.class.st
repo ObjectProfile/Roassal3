@@ -3,7 +3,7 @@ I can add a basic title in a pie
 "
 Class {
 	#name : #RSPieTitle,
-	#superclass : #RSInteraction,
+	#superclass : #AnObsoleteRSInteraction,
 	#instVars : [
 		'labelBuilder',
 		'labelText'
