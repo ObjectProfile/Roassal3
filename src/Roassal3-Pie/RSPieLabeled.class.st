@@ -3,7 +3,7 @@ I can create labels for a pie builder and set the position acording to arc
 "
 Class {
 	#name : #RSPieLabeled,
-	#superclass : #AnObsoleteRSInteraction,
+	#superclass : #RSInteraction,
 	#instVars : [
 		'rotated',
 		'offset',

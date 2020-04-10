@@ -5,7 +5,7 @@ My subclasses should override interaction
 "
 Class {
 	#name : #RSAbstractContext,
-	#superclass : #RSInteraction,
+	#superclass : #AnObsoleteRSInteraction,
 	#instVars : [
 		'canvas',
 		'context',

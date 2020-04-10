@@ -9,6 +9,5 @@ Class {
 
 { #category : #hooks }
 RSAbstractCanvasInteraction >> onShape: aCanvas [
-	self subclassResponsibility 
-	
+	self subclassResponsibility
 ]
