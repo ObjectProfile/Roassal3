@@ -5,6 +5,25 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RSRoassal3Test >> testRemoveInteractionIfPresent [
+	| box |
+	box := RSBox new.
+	self deny: (box announcer handleSubscriberClass: RSPopup).
+	box popup.
+	self assert: (box announcer handleSubscriberClass: RSPopup).
+	
+	box removeInteractionIfPresent: RSPopup.
+	self deny: (box announcer handleSubscriberClass: RSPopup).
+	self deny: box hasEventCallback.
+	
+	box := RSBox new.
+	box popup. 
+	self assert: (box announcer handleEventClass: RSMouseMove).
+	box removeInteractionIfPresent: RSMouseMove.
+	self assert: (box announcer handleEventClass: RSMouseMove).
+]
+
+{ #category : #'as yet unclassified' }
 RSRoassal3Test >> testSubscriberClass [
 	| box |
 	box := RSBox new.
