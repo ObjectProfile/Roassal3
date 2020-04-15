@@ -13,6 +13,8 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec
 		for: #common
 		do: [ | core examples tests |
+			"our dependencies"
+			"https://github.com/ObjectProfile/Roassal3"
 			spec package: 'Athens-SVG' with: [
 				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
 			spec package: 'Geometry' with: [ 
@@ -20,8 +22,10 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec baseline: 'NumericScales'with: [ 
 				spec repository: 'github://ObjectProfile/NumericScales' ].
 			
+			"The packages to use, but not load"
 			spec
 				package: #'Roassal3' with: [ spec requires: #('Athens-SVG' 'Geometry' 'NumericScales') ];
+				package: #'Roassal3-Pharo7';
 				package: #'Roassal3-Builders';
 				package: #'Roassal3-Shapes';
 				package: #'Roassal3-Animation';
@@ -53,6 +57,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: 'Roassal3-Chart-Tests';
 				package: 'Roassal3-Spec-Tests';
 				package: 'Roassal3-UML-Tests'.
+				
+			"packages to load"
 			core := #(
 				'Roassal3'
 				'Roassal3-Builders'
