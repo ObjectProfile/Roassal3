@@ -80,7 +80,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				'Roassal3-Legend-Examples'
 				'Roassal3-Chart-Examples'
 				'Roassal3-Pie-Examples'
-				'Roassal3-Spec-Examples'
 				'Roassal3-Sunburst-Examples'
 				'Roassal3-UML-Examples') asOrderedCollection.
 			tests := #(
@@ -91,7 +90,6 @@ BaselineOfRoassal3 >> baseline: spec [
 				'Roassal3-Interaction-Tests'
 				'Roassal3-Layouts-Tests'
 				'Roassal3-Chart-Tests'
-				'Roassal3-Spec-Tests'
 				'Roassal3-UML-Tests') asOrderedCollection.
 				
 			Smalltalk globals at: #SpPresenter ifPresent: [
