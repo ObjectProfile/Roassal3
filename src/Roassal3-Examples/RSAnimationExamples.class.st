@@ -611,7 +611,7 @@ RSAnimationExamples >> example12PerlinParticles [
 		when: RSKeyUp do: [:evt | 
 			evt keyValue = 8 ifTrue: [ 
 				canvas clearBackground: true.
-				canvas nodes do: #remove.
+				canvas nodes copy do: #remove.
 				canvas signalUpdate.
 				canvas newAnimation duration: 200 milliSeconds;
 				when: RSAnimationEndEvent do: [ canvas clearBackground: false ] ] ].

@@ -785,3 +785,22 @@ RSShapeBasicExamples >> example34PaletteVisualization [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #events }
+RSShapeBasicExamples >> example35KeyEvents [
+	<script: 'self new example35KeyEvents open'>
+	| c print down up |
+	c := RSCanvas new.
+	down := RSLabel new model: 'DOWN'; text: ''.
+	up := RSLabel new model: 'UP'; text: ''.
+	c addAll: { down. up }.
+	RSVerticalLineLayout on: c shapes.
+	print := [ :evt :s | 
+		s text: (s model, ': ' , evt keyName,', value: ', evt keyValue asString).
+		evt signalUpdate  ].
+	c 
+		when: RSKeyDown do: [ :evt | print value: evt value: down ];
+		when: RSKeyUp do: [ :evt | print value: evt value: up ].
+
+	^ c
+]

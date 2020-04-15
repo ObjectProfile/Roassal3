@@ -220,7 +220,7 @@ RSHighlightableExamples >> example06IterateNext [
 	"Highlight next number when N key is pressed. Initial is nothing"
 	selectedNumber := 0.
 	canvas when: RSKeyUp do: [ :evt |
-		evt keyValue = 45 ifTrue: [
+		evt keyName = #N ifTrue: [
 			selectedNumber := (selectedNumber \\ numbers size) + 1.
 			highlightBlock value: selectedNumber ] ].
 

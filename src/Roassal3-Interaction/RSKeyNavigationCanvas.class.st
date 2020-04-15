@@ -36,15 +36,15 @@ RSKeyNavigationCanvas >> onShape: aCanvas [
 
 { #category : #events }
 RSKeyNavigationCanvas >> processKeyDown: evt [
-	| char rect lastMS |
-	char := evt keyCharacter.
+	| keyName rect lastMS |
+	keyName := evt keyName.
 	self configuration hasHorizontalScrolling ifTrue: [ 
-		char == Character arrowLeft ifTrue: [ steps add: -1@0 ].
-		char == Character arrowRight ifTrue: [ steps add: 1@0 ].
+		keyName = #KP_LEFT ifTrue: [ steps add: -1@0 ].
+		keyName = #KP_RIGHT ifTrue: [ steps add: 1@0 ].
 	].
 	self configuration hasVerticalScrolling ifTrue: [ 
-		char == Character arrowUp ifTrue: [ steps add: 0@ -1 ].
-		char == Character arrowDown ifTrue: [ steps add: 0@ 1 ].
+		keyName = #KP_UP ifTrue: [ steps add: 0@ -1 ].
+		keyName = #KP_DOWN ifTrue: [ steps add: 0@ 1 ].
 	].
 	
 	speedMult := evt shiftKeyPressed
@@ -75,12 +75,12 @@ RSKeyNavigationCanvas >> processKeyDown: evt [
 
 { #category : #events }
 RSKeyNavigationCanvas >> processKeyUp: evt [
-	| key |
+	| keyName |
 	steps removeAll.
-	key := evt keyValue.
-	key == 34 "$i" ifTrue: [ ^ self zoomIn: evt ].
-	key == 31 "$o" ifTrue: [ ^ self zoomOut: evt ].
-	key == 46 "$m" ifTrue: [ ^ self expandCollapse: evt ].
+	keyName := evt keyName.
+	keyName = #I ifTrue: [ ^ self zoomIn: evt ].
+	keyName = #O ifTrue: [ ^ self zoomOut: evt ].
+	keyName = #M ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.
 	animation stop.

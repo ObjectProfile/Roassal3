@@ -112,11 +112,11 @@ RSSearchInCanvas >> onShape: aCanvas [
 
 { #category : #private }
 RSSearchInCanvas >> processKeyDown: evt [
-	| char |
+	| keyName |
 	self canvas: evt canvas.
-	char := evt keyCharacter.
-	char == $/ ifTrue: [ self searchForShapes ].
-	char == $r ifTrue: [ self resetAllHighlightedShapes ]
+	keyName := evt keyName.
+	keyName == $/ ifTrue: [ self searchForShapes ].
+	keyName = #R ifTrue: [ self resetAllHighlightedShapes ]
 ]
 
 { #category : #rendering }

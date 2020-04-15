@@ -6,9 +6,7 @@ Class {
 	#superclass : #RSUserInputEvent,
 	#instVars : [
 		'keyValue',
-		'symbol',
-		'keyCharacter',
-		'keyCombination'
+		'keyName'
 	],
 	#classVars : [
 		'KeySymbolMap'
@@ -17,10 +15,10 @@ Class {
 }
 
 { #category : #comparing }
-RSKeyboardEvent >> = anotherKeyDown [
+RSKeyboardEvent >> = anotherKeyEvent [
 	"Do we really need this method? It has been imported from Roassal1"
-	(self class == anotherKeyDown) ifFalse: [  ^ false ].
-	^ self keyValue = anotherKeyDown keyValue
+	(self class == anotherKeyEvent) ifFalse: [  ^ false ].
+	^ self keyValue = anotherKeyEvent keyValue
 ]
 
 { #category : #initialize }
@@ -30,23 +28,13 @@ RSKeyboardEvent >> initialize [
 ]
 
 { #category : #accessing }
-RSKeyboardEvent >> keyCharacter [
-	^ keyCharacter
+RSKeyboardEvent >> keyName [
+	^ keyName
 ]
 
 { #category : #accessing }
-RSKeyboardEvent >> keyCharacter: anObject [
-	keyCharacter := anObject
-]
-
-{ #category : #accessing }
-RSKeyboardEvent >> keyCombination [
-	^ keyCombination
-]
-
-{ #category : #accessing }
-RSKeyboardEvent >> keyCombination: aKeyCombination [
-	keyCombination := aKeyCombination
+RSKeyboardEvent >> keyName: aString [
+	keyName := aString
 ]
 
 { #category : #accessing }
