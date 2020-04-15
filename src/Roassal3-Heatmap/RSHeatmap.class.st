@@ -32,13 +32,14 @@ RSHeatmap >> configureScaleFrom: matrix [
 { #category : #initialization }
 RSHeatmap >> initialize [
 	super initialize.
-	canvas := TSCanvas new.
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
 	self initializeScale
 ]
 
 { #category : #showing }
 RSHeatmap >> initializeScale [
-	scale := TSScale linear range: #(black red)
+	scale := NSScale linear range: #(black red)
 ]
 
 { #category : #initialization }
@@ -68,7 +69,7 @@ RSHeatmap >> setXLabelsOn: topMostShapes [
 	self assert: [ xLabels size = topMostShapes size ] description: 'Mismatched collection'.
 	
 	topMostShapes with: xLabels do: [ :s :l |
-		lShape := TSLabel new text: l.
+		lShape := RSLabel new text: l.
 		lShape rotateByDegrees: -90.
 		canvas addShape: lShape.
 		RSLocation new
@@ -86,7 +87,7 @@ RSHeatmap >> setYLabelsOn: leftMostShapes [
 	self assert: [ yLabels size = leftMostShapes size ] description: 'Mismatched collection'.
 	
 	leftMostShapes with: yLabels do: [ :s :l |
-		lShape := TSLabel new text: l.
+		lShape := RSLabel new text: l.
 		canvas addShape: lShape.
 		RSLocation new
 			offset: -10 @ 0;
@@ -106,7 +107,7 @@ RSHeatmap >> show: matrix [
 		doWithIndex: [ :row :ic | 
 			row
 				doWithIndex: [ :v :ir | 
-					box := TSBox new.
+					box := RSBox new.
 					box size: 40.
 					box color: (scale scale: v).
 					canvas addShape: box.

@@ -33,7 +33,7 @@ RSHeatmapExample >> example02WithLabels [
 	<script: 'self new example02WithLabels'>
 	| h |
 	h := RSHeatmap new.
-	h scale: (TSScale linear range: #(purple red)).
+	h scale: (NSScale linear range: #(purple red)).
 	h xLabels: #('A' 'BCDEFBCDEFBCDEFBCDEF').
 	h yLabels: #('A' 'BCDEFBCDEFBCDEFBCDEF').
 	h show: #(#(1 2) #(3 4)).
