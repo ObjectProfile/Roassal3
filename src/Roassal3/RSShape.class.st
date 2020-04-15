@@ -361,9 +361,8 @@ RSShape >> shapeWithAction: eventClass forPosition: position [
 	^ (self hasEventCallback and: [ 
 		(self announcer handleEventClass: eventClass)
 			and: [ self includesPoint: position ] ]) 
-			
 			ifTrue: [ self ]
-			ifFalse: [ ^ nil ]
+			ifFalse: [ nil ]
 ]
 
 { #category : #'accessing - computed' }

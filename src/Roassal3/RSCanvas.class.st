@@ -136,12 +136,12 @@ RSCanvas >> edges [
 			res ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSCanvas >> encompassingRectangle [
 	^ self encompassingRectangleOf: shapes
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSCanvas >> encompassingRectangleOf: aCollectionOfShapes [
 	| r e |
 	r := aCollectionOfShapes
@@ -367,7 +367,7 @@ RSCanvas >> setAsFixed: aShape [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - shapes' }
 RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
@@ -381,7 +381,7 @@ RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - shapes' }
 RSCanvas >> shapeWithActionForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
@@ -406,7 +406,7 @@ RSCanvas >> shapes: aCollection [
 	shapes := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - shapes' }
 RSCanvas >> shapesFromModels: objects [
 	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	^ self nodes shapesFromModels: objects

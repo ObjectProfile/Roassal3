@@ -98,13 +98,14 @@ RSCanvasTest >> testEvent [
 
 { #category : #events }
 RSCanvasTest >> testLowLevelEvent [
-
 	| box |
 	box := RSBox new size: 30.
-	box when: RSMouseDragging do: [ :evt | box  ].
+	box when: RSMouseDragging do: [ :evt | box ].
 	c addShape: box.
-
-	self assert: (c shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250) == box
+	self assert: c extent equals: 500 asPoint.
+	self
+		assert: (c shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250)
+		identicalTo: box
 ]
 
 { #category : #tests }
