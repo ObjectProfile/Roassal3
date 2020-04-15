@@ -1,11 +1,6 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Roassal3' }
-BlockClosure >> onShape: aTSShape [ 
-	self value: aTSShape 
-]
-
-{ #category : #'*Roassal3' }
 BlockClosure >> rsValue: valueOrArray [
 	self numArgs = 0 ifTrue: [ ^ self value ].  
 	self numArgs = 1 ifTrue: [ ^ self value: valueOrArray ].
