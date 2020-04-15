@@ -44,7 +44,7 @@ RSHeatmap >> initializeScale [
 
 { #category : #initialization }
 RSHeatmap >> open [
-	canvas open
+	^ canvas open
 ]
 
 { #category : #accessing }
