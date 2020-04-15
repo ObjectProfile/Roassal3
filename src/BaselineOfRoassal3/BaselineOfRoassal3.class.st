@@ -34,7 +34,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: #'Roassal3' with: [ spec requires: dep1 asArray ];
 				package: #'Roassal3-Shapes';
 				package: #'Roassal3-Animation' with: [ spec requires: #('NumericScales') ];
-				package: #'Roassal3-Matplotlib';
+				package: #'Roassal3-Chart';
 				package: #'Roassal3-Interaction';
 				package: #'Roassal3-Legend';
 				package: #'Roassal3-Pie';
@@ -48,7 +48,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				
 				package: #'Roassal3-Examples';
 				package: #'Roassal3-Legend-Examples';
-				package: #'Roassal3-Matplotlib-Examples';
+				package: #'Roassal3-Chart-Examples';
 				package: #'Roassal3-Pie-Examples';
 				package: #'Roassal3-Spec-Examples';
 				package: #'Roassal3-Sunburst-Examples';
@@ -59,7 +59,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: 'Roassal3-Shapes-Tests';
 				package: 'Roassal3-Interaction-Tests';
 				package: 'Roassal3-Layouts-Tests';
-				package: 'Roassal3-Matplotlib-Tests';
+				package: 'Roassal3-Chart-Tests';
 				package: 'Roassal3-Spec-Tests';
 				package: 'Roassal3-UML-Tests'.
 				
@@ -76,13 +76,13 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Sunburst'
 					'Roassal3-Pie'
 					'Roassal3-Inspector'
-					'Roassal3-Matplotlib'
+					'Roassal3-Chart'
 					'Roassal3-Menu');
 				group: 'Examples'  with: #(
 					'Core' 
 					'Roassal3-Examples'
 					'Roassal3-Legend-Examples'
-					'Roassal3-Matplotlib-Examples'
+					'Roassal3-Chart-Examples'
 					'Roassal3-Pie-Examples'
 					'Roassal3-Spec-Examples'
 					'Roassal3-Sunburst-Examples'
@@ -94,7 +94,7 @@ BaselineOfRoassal3 >> baseline: spec [
 					'Roassal3-Shapes-Tests'
 					'Roassal3-Interaction-Tests'
 					'Roassal3-Layouts-Tests'
-					'Roassal3-Matplotlib-Tests'
+					'Roassal3-Chart-Tests'
 					'Roassal3-Spec-Tests'
 					'Roassal3-UML-Tests');
 				group: 'default' with: #('Core' 'Tests' 'Examples') ].
