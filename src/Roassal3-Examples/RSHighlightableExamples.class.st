@@ -194,7 +194,7 @@ RSHighlightableExamples >> example06IterateNext [
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightable defaultRed.
 	highlightableForLabels := RSHighlightable new
-		attributeKey: #exampleKey;
+		propertyKey: #exampleKey;
 		when: RSHighlightEvent do: [ :evt | evt shape bold ];
 		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
 	highlightBlock := [ :model |
@@ -240,7 +240,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 			ifTrue: [ Color purple ]
 			ifFalse: [ Color blue ] ].
 	"usefull to combine 2 instances of RSHighlightable"
-	selectedButton attributeKey: #buttons.
+	selectedButton propertyKey: #buttons.
 	mouseOver
 		highlightShapes: [ :e | { e } ] 
 		butKeep: selectedButton.
@@ -336,7 +336,7 @@ RSHighlightableExamples >> example08DependendMethods [
 					to:(allMethods shapeFromModel: met)
 					 ].
 			canvas addAll: methods.
-			canvas attributeAt: #methods put: methods.
+			canvas propertyAt: #methods put: methods.
 			 ];
 		when: RSUnHighlightEvent do: [ :evt | 
 			(canvas attributeAt: #methods ifAbsent: [ #() ]) do:#remove ].

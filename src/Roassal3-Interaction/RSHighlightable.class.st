@@ -97,16 +97,6 @@ RSHighlightable >> announcer: anAnnouncer [
 ]
 
 { #category : #'accessing - keys' }
-RSHighlightable >> attributeKey [
-	^ attributeKey ifNil: [ attributeKey := #highlightShapes ].
-]
-
-{ #category : #'accessing - keys' }
-RSHighlightable >> attributeKey: aSymbol [
-	attributeKey := aSymbol.
-]
-
-{ #category : #'accessing - keys' }
 RSHighlightable >> copyKey [
 	^ copyKey ifNil: [ copyKey := #original ].
 ]
@@ -123,7 +113,7 @@ RSHighlightable >> doHighlight: shape [
 	shapes := self highlightShapesFor: shape.
 	shapes do: [ :e | self announceHighlight: e source: shape ].
 	
-	shape topParent attributes at: self attributeKey put: shapes.
+	shape topParent propertyAt: self propertyKey put: shapes.
 ]
 
 { #category : #actions }
@@ -135,7 +125,7 @@ RSHighlightable >> doHighlightShapes: shapes [
 		hshapes := self highlightShapesFor: s.
 		hshapes do: [ :hs | self announceHighlight: hs source: s ].
 		hshapes ].
-	shapes first canvas attributes at: self attributeKey put: allHShapes.
+	shapes first canvas propertyAt: self propertyKey put: allHShapes.
 ]
 
 { #category : #actions }
@@ -205,8 +195,8 @@ RSHighlightable >> highlightShapes: aBlock butKeep: aRSHilightable [
 	self highlightShapes: [ :e | 
 		| shapes |
 		shapes := aBlock value: e.
-		e canvas attributes
-			at: aRSHilightable attributeKey
+		e canvas properties
+			at: aRSHilightable propertyKey
 			ifPresent: [ :hshapes | 
 				shapes reject: [ :hs | hshapes includes: hs ] ]
 			ifAbsent: [ shapes ] ]
@@ -239,6 +229,16 @@ RSHighlightable >> onShape: aShape [
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
+{ #category : #'accessing - keys' }
+RSHighlightable >> propertyKey [
+	^ attributeKey ifNil: [ attributeKey := #highlightShapes ].
+]
+
+{ #category : #'accessing - keys' }
+RSHighlightable >> propertyKey: aSymbol [
+	attributeKey := aSymbol.
+]
+
 { #category : #private }
 RSHighlightable >> record: aShape selector: selector value: anObject [
 	"Main method to change an attribute of a shape (e.g., colors, border)
@@ -256,7 +256,7 @@ For example:
 	
 	"
 
-	aShape attributes
+	aShape properties
 		at: self copyKey, selector
 		put: (aShape perform: selector).
 		
@@ -268,9 +268,9 @@ For example:
 { #category : #actions }
 RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
 	| att |
-	att := shapeOrCanvas topParent attributes.
-	(att includesKey: self attributeKey) ifFalse: [ ^ self ].
-	att removeKey: self attributeKey
+	att := shapeOrCanvas topParent properties.
+	(att includesKey: self propertyKey) ifFalse: [ ^ self ].
+	att removeKey: self propertyKey
 ]
 
 { #category : #private }
@@ -289,7 +289,7 @@ RSHighlightable >> restore: aShape selector: selector [
 "
 	| key |
 	key := self copyKey, selector.
-	aShape attributes
+	aShape properties
 		at: key
 		ifPresent: [ :value | 
 			aShape 
@@ -304,7 +304,7 @@ RSHighlightable >> setupAntAnimation [
 	self when: RSHighlightEvent do: [ :evt | | shape border |
 		shape := evt shape.
 		border := shape border.
-		shape attributeAt: #ob put: border.
+		shape propertyAt: #ob put: border.
 		border ifNil: [ border := RSBorder new ].
 		shape border: (RSBorder new width: border width * 2; color: border color).
 		shape isNode ifTrue: [ 
@@ -322,16 +322,16 @@ RSHighlightable >> setupAntAnimation [
 				onStepDo: [ :t |
 					shape connectedEdges do: [ :ed |ed border dashOffset: t ].
 					shape signalUpdate ].
-			shape topParent attributeAt: #antAnimation put: anime.
+			shape topParent propertyAt: #antAnimation put: anime.
 		].
 	].
 	self when: RSUnHighlightEvent do: [ :evt | 
 		| att shape |
 		shape := evt shape.
-		shape border: (shape attributeAt: #ob).
+		shape border: (shape propertyAt: #ob).
 		shape removeKey: #ob.
 		shape isNode ifTrue: [ 
-			att := shape topParent attributes.
+			att := shape topParent properties.
 			(att at: #antAnimation) stop.
 			att removeKey: #antAnimation.
 		 ]
@@ -340,8 +340,8 @@ RSHighlightable >> setupAntAnimation [
 
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedShapes: shapeOrCanvas [
-	shapeOrCanvas topParent attributes 
-		at: self attributeKey 
+	shapeOrCanvas topParent properties 
+		at: self propertyKey 
 		ifPresent: [ :shapes |
 			shapes do: [ :s | self announceUnHightlight: s source: shapeOrCanvas ].
 		 ].

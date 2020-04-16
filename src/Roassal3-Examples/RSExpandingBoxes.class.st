@@ -61,7 +61,7 @@ RSExpandingBoxes >> processEvent: evt [
 
 { #category : #updating }
 RSExpandingBoxes >> relayout: shape [
-	shape attributeAt: #original put: shape encompassingRectangle.
+	shape propertyAt: #original put: shape encompassingRectangle.
 	
 	shape shapes do: [ :s | self relayout: s ].
 	RSGridLayout on: shape shapes.
@@ -80,16 +80,16 @@ RSExpandingBoxes >> run [
 { #category : #updating }
 RSExpandingBoxes >> saveCurrent: shape [
 	shape children do: [ :s | self saveCurrent: s ].
-	shape attributeAt: #current put: shape encompassingRectangle.
+	shape propertyAt: #current put: shape encompassingRectangle.
 ]
 
 { #category : #updating }
 RSExpandingBoxes >> scale: shape at: t [
 	| rect1 rect2 |
 	shape children do: [ :s | self scale: s at: t ].
-	rect1 := shape attributeAt: #original ifAbsent: [ ^ self].
+	rect1 := shape propertyAt: #original ifAbsent: [ ^ self].
 	
-	rect2 := shape attributeAt: #current.
+	rect2 := shape propertyAt: #current.
 	
 		
 	shape translateTo: (rect1 floatCenter interpolateTo: rect2 floatCenter at: t).

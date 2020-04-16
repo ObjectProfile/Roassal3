@@ -40,7 +40,7 @@ RSLabeled >> createLabel: aShape [
 { #category : #hooks }
 RSLabeled >> getOrCreateLabel: aShape [
 	| label parent |
-	label := aShape attributes 
+	label := aShape properties 
 		at: #RSLabeled
 		ifAbsentPut: [ self createLabel: aShape ].
 	parent :=aShape parent.

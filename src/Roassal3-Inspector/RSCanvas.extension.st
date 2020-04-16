@@ -26,13 +26,13 @@ RSCanvas >> gtInspectorViewIn: composite [
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext [
 	^ self
-		attributeAt: RSAbstractContext name asSymbol
+		propertyAt: RSAbstractContext name asSymbol
 		ifAbsentPut: [ RSInteractiveContext new ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext: aRSContext [
 	^ self
-		attributeAt: RSAbstractContext name asSymbol
+		propertyAt: RSAbstractContext name asSymbol
 		put: aRSContext
 ]

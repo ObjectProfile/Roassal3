@@ -38,7 +38,7 @@ RSSunburstBuilder >> extentStrategy [
 RSSunburstBuilder >> from: objects nesting: block1 leaves: block2 [
 	| r |
 	r := super from: objects nesting: block1 leaves: block2.
-	r do: [ :e | e attributes at: #parent put: nil].
+	r do: [ :e | e propertyAt: #parent put: nil].
 	^ r
 ]
 
@@ -46,7 +46,7 @@ RSSunburstBuilder >> from: objects nesting: block1 leaves: block2 [
 RSSunburstBuilder >> from: objects using: ablock [
 	| r |
 	r := super from: objects using: ablock.
-	r do: [ :e | e attributes at: #parent put: nil].
+	r do: [ :e | e propertyAt: #parent put: nil].
 	^ r
 ]
 

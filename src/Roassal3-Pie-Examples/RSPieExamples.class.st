@@ -322,7 +322,7 @@ RSPieExamples >> example11OpenningAnimation [
 		easing: RSEasing bounceOut;
 		onStepDo: [ :t | 
 		pie shapes do: [ :shape | | beta |
-			beta := shape attributes at: #beta.
+			beta := shape propertyAt: #beta.
 			(t between: shape alphaAngle and: beta)
 				ifTrue: [ shape betaAngle: t ].
 			t >= beta ifTrue: [ shape betaAngle: beta ].
@@ -330,7 +330,7 @@ RSPieExamples >> example11OpenningAnimation [
 			 ] ].
 	bounce when: RSAnimationStartEvent do: [ 
 		pie shapes do: [ :shape |
-			shape attributes at: #beta put: shape betaAngle.
+			shape propertyAt: #beta put: shape betaAngle.
 			shape betaAngle: shape alphaAngle.
 			 ] ].
 	bounce when: RSAnimationEndEvent do: reset.
@@ -350,7 +350,7 @@ RSPieExamples >> example11OpenningAnimation [
 		easing: RSEasing elasticOut;
 		onStepDo: [ :t |
 			pie shapes do: [ :shape | | p a b att |
-				att := shape attributes.
+				att := shape properties.
 				p := att at: #position ifAbsentPut: [ 
 					| angle |
 					angle := (shape alphaAngle + shape betaAngle)/2 + 180.
@@ -812,12 +812,12 @@ RSPieExamples >> example22RotatedAnimation [
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
 			pie shapes do: [ :shape | | att a b l ext ang |
-				att := shape attributes.
+				att := shape properties.
 				a := att at: #a ifAbsentPut: [ shape alphaAngle ].
 				b := att at: #b ifAbsentPut: [ shape betaAngle ].
 				shape alphaAngle: a + t.
 				shape betaAngle: b + t.
-				l := shape attributeAt: pieLabel labelKey.
+				l := shape propertyAt: pieLabel labelKey.
 				ang := ((shape alphaAngle + shape betaAngle)/2) %360.
 				ext := l extent x/2 @ 0.
 				(ang between: 90 and: 270) ifFalse: [ ext := ext negated ].
@@ -879,12 +879,12 @@ RSPieExamples >> example23RotatedAnimation [
 		from: 0; to: 360; repeat; duration: 15 seconds;
 		onStepDo: [ :t | 
 			pie shapes do: [ :shape | | att a b label ext ang x p1 p2 p3 line |
-				att := shape attributes.
+				att := shape properties.
 				a := att at: #a ifAbsentPut: [ shape alphaAngle ].
 				b := att at: #b ifAbsentPut: [ shape betaAngle ].
 				shape alphaAngle: a + t.
 				shape betaAngle: b + t.
-				label := shape attributeAt: pieLabel labelKey.
+				label := shape propertyAt: pieLabel labelKey.
 				ang := ((shape alphaAngle + shape betaAngle)/2) %360.
 				ext := label extent x/2 @ 0.
 				x := -250.
@@ -1014,8 +1014,8 @@ RSPieExamples >> example25Massiva [
 		onStepDo: [ :t | 
 			pie shapes doWithIndex: [ :s :i|
 				| a b triangle icon |
-				a := s attributeAt: #a ifAbsentPut: [ s alphaAngle ].
-				b := s attributeAt: #b ifAbsentPut: [ s betaAngle ].
+				a := s propertyAt: #a ifAbsentPut: [ s alphaAngle ].
+				b := s propertyAt: #b ifAbsentPut: [ s betaAngle ].
 				s 
 					alphaAngle: a +t;
 					betaAngle: b + t.

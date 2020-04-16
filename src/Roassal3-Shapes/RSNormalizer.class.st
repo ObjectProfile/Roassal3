@@ -297,7 +297,7 @@ RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
 	max := SmallInteger minVal.
 	shapes do: [ :shape | | res |
 		res := anOneArgBlockOrSymbol rsValue: shape model.
-		shape attributeAt: self key put: res.
+		shape propertyAt: self key put: res.
 		min := min min: res.
 		max := max max: res ].
 	^ { min. max }.
@@ -313,7 +313,7 @@ RSNormalizer >> normalize: anOneArgBlockOrSymbol [
 	scale domain: minAndMax.
 	shapes do: [ :shape |
 		| scaledValue objectValue |
-		objectValue := shape attributeAt: self key.
+		objectValue := shape propertyAt: self key.
 		scaledValue := scale scale: objectValue.
 		executeBlock value: shape value: scaledValue ]
 

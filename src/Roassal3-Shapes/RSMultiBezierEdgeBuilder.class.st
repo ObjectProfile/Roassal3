@@ -137,7 +137,7 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 RSMultiBezierEdgeBuilder >> following: selector [
 	self shape svgPath: [ :line | [:builder | 
 		| points commonShapes att a b |
-		att := line attributes.
+		att := line properties.
 		a := line startPoint.
 		b := line endPoint.
 		commonShapes := att

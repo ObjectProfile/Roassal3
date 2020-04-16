@@ -179,8 +179,7 @@ RSLegend >> renderOnDemandIn: aView [
 			move: legendLabels 
 				on: aView basicRectangle.
 	].
-	legendLabels := aView attributes 
-		at: #legendLabels
+	legendLabels := aView propertyAt: #legendLabels
 		ifAbsentPut: [ 
 			aView when: RSExtentChangedEvent do: update.
 			RSGroup new: 5 ].

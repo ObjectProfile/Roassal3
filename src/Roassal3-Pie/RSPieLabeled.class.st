@@ -84,7 +84,7 @@ RSPieLabeled >> offset: aNumber [
 RSPieLabeled >> onShape: aShape [
 	| label parent |
 	label := self shapeFor: aShape.
-	aShape attributeAt: self labelKey put: label.
+	aShape propertyAt: self labelKey put: label.
 	parent := aShape parent.
 	parent add: label.
 ]

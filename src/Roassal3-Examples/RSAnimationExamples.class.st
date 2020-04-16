@@ -206,7 +206,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 		onStepDo: [ :t | 
 			shapes do: [ :e |
 				| delta newX |
-				delta := e attributes at: #delta ifAbsentPut: [ 5 ].
+				delta := e propertyAt: #delta ifAbsentPut: [ 5 ].
 				newX := e position x + delta.
 				(newX 
 					between: position from x 
@@ -215,7 +215,7 @@ RSAnimationExamples >> example05BoxesLineCircles [
 					newX := e position x + delta.
 					 ].
 				e translateTo: newX@e position y.
-				e attributes at: #delta put: delta
+				e propertyAt: #delta put: delta
 				].
 			c nodes copy do: [ :e | | cls |
 				cls := e position x > lineX 
@@ -355,14 +355,14 @@ RSAnimationExamples >> example08ElasticEllipses [
 					((shape radius + other radius) * 1.4)  ].
 			overlapped ifFalse: [ 
 				canvas add: shape.
-				shape attributeAt: #radius put: shape radius.
+				shape propertyAt: #radius put: shape radius.
 				shape color: (color scale: (shape position dist: 0@0)/250 ) ].
 		].
 		canvas newAnimation
 			easing: RSEasing elasticOut;
 			onStepDo: [ :t |
 				canvas nodes do: [ :shape | | scale |
-					scale := NSScale linear range: { 1. shape attributes at: #radius }.
+					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
 					shape radius: (scale scale: t)
 					 ].
 				]
@@ -561,7 +561,7 @@ RSAnimationExamples >> example12PerlinParticles [
 			withBorder;
 			position: m key;
 			yourself.
-		att := shape attributes.
+		att := shape properties.
 			
 		ang := random next * Float pi * 2.
 		vel := random next * 5 * (ang cos @ ang sin).
@@ -599,8 +599,8 @@ RSAnimationExamples >> example12PerlinParticles [
 	canvas newAnimation repeat; onStepDo: [ :t| 
 		frame := frame + 30.
 		canvas nodes copy do: [ :e| 
-			(e attributes at: #update) value.
-			(e attributes at: #dead) ifTrue: [ e remove ] ].
+			(e propertyAt: #update) value.
+			(e propertyAt: #dead) ifTrue: [ e remove ] ].
 		canvas signalUpdate ].
 	
 	canvas when: RSMouseDragging do: [ :evt | 
@@ -667,7 +667,7 @@ RSAnimationExamples >> example12b [
 		shape := RSEllipse new
 			position: m key;
 			yourself.
-		att := shape attributes.
+		att := shape properties.
 		
 		ang := random next * Float pi * 2.
 		vel := random next * 5 * (ang cos @ ang sin).
@@ -708,8 +708,8 @@ RSAnimationExamples >> example12b [
 	canvas newAnimation repeat; onStepDo: [ :t| 
 		frame := frame + 30.
 		canvas nodes copy do: [ :e| 
-			(e attributes at: #update) value.
-			(e attributes at: #dead) ifTrue: [ e remove ] ].
+			(e propertyAt: #update) value.
+			(e propertyAt: #dead) ifTrue: [ e remove ] ].
 		canvas signalUpdate ].
 	
 	canvas when: RSMouseDragging do: [ :evt | 
@@ -869,8 +869,8 @@ RSAnimationExamples >> example15Sky [
 	dots := (1 to: 800) collect: [ :n | 
 		| e |
 		e := RSEllipse new
-			attributeAt: #a put: (random rsNext: 0 and: 350);
-			attributeAt: #r put: (random rsNext: 3500 and: 6000);
+			propertyAt: #a put: (random rsNext: 0 and: 350);
+			propertyAt: #r put: (random rsNext: 3500 and: 6000);
 			size: (random rsNext: 5 and: 15);
 			yourself. 
 		e color: ((colors scale: e width) alpha: (random rsNext: 0.1 and: 0.8)).
@@ -886,8 +886,8 @@ RSAnimationExamples >> example15Sky [
 			dots
 				do: [ :e | 
 					| ang radius |
-					ang := ((e attributes at: #a) + frame) degreesToRadians.
-					radius := e attributes at: #r.
+					ang := ((e propertyAt: #a) + frame) degreesToRadians.
+					radius := e propertyAt: #r.
 					e position: ang cos @ ang sin negated * radius + (2500 @ 3000) ] ].
 	(client := ZnEasy client)
 		url:
@@ -1042,7 +1042,7 @@ RSAnimationExamples >> example18SpaceDandy [
 	diagonal := ((extent x * extent x)+ (extent y* extent y)) sqrt / 2.
 	rotation := 0.
 	init := [ :e | | n |
-		e attributes 
+		e properties 
 			at: #l put: 1;
 			at: #n put: (n := random rsNext: 1 and: extent x/2);
 			at: #r put: (random rsNext: Float pi * 2);
@@ -1085,19 +1085,19 @@ RSAnimationExamples >> example18SpaceDandy [
 	canvas newAnimation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
 		shapes do: [ :e | | l o r d off | 
-			l := (e attributeAt: #l)+1.
-			e attributeAt: #l put: l.
-			r := (e attributeAt: #r) + rotation.
-			o := e attributeAt: #o.
-			off := e attributeAt: #off.
-			d := drawDist value: e attributes.
+			l := (e propertyAt: #l)+1.
+			e propertyAt: #l put: l.
+			r := (e propertyAt: #r) + rotation.
+			o := e propertyAt: #o.
+			off := e propertyAt: #off.
+			d := drawDist value: e properties.
 			
-			e color: ((Color h: (e attributes at: #r) radiansToDegrees+off s: 1 v: 0.5) 
+			e color: ((Color h: (e properties at: #r) radiansToDegrees+off s: 1 v: 0.5) 
 				alpha: d / diagonal).
 			e size: extent x/o/8.
 			e position: (r cos @ r sin) * d.
-			e attributes at: #o put: o - 0.07.
-			(drawDist value: e attributes) > diagonal ifTrue: [ init value: e ].
+			e propertyAt: #o put: o - 0.07.
+			(drawDist value: e properties) > diagonal ifTrue: [ init value: e ].
 			].
 		 ].
 	canvas when: RSExtentChangedEvent do: [ 
@@ -1235,7 +1235,7 @@ RSAnimationExamples >> example21Rainbow [
 	shape := [ | e att xs ys  |
 		e := RSEllipse new.
 		e border: border.
-		att := e attributes.
+		att := e properties.
 		xs := random rsNext: -3 and: 3.
 		ys := (xs between: -1 and: 1)
 			ifTrue: [ random next > 0.5
@@ -1258,11 +1258,11 @@ RSAnimationExamples >> example21Rainbow [
 		domain: #(0 1 2);
 		range:
 			{[ Color black ].
-			[ :e | Color h: (e attributes at: #hue) s: 0.7 v: 1 ].
+			[ :e | Color h: (e propertyAt: #hue) s: 0.7 v: 1 ].
 			[ :e | 
 			frame even
 				ifTrue: [ Color black ]
-				ifFalse: [ Color h: (e attributes at: #hue) s: 1 v: 1 ] ]}.
+				ifFalse: [ Color h: (e propertyAt: #hue) s: 1 v: 1 ] ]}.
 	canvas newAnimation repeat
 		onStepDo: [ :k | 
 			| shapes |
@@ -1270,7 +1270,7 @@ RSAnimationExamples >> example21Rainbow [
 			frame := frame + 1.
 			shapes := canvas shapes copy.
 			shapes do: [ :e | | att t s degX degY xs ys hue hue2|
-				att := e attributes.
+				att := e properties.
 				t := att at: #t.
 				s := att at: #s.
 				degX := att at: #degX.
@@ -1400,7 +1400,7 @@ RSAnimationExamples >> example24Lines [
 			com model: m + soffset.
 			ang := m degreesToRadians.
 			a := Float halfPi + ang.
-			com attributeAt: #offset put: a * size.
+			com propertyAt: #offset put: a * size.
 			line := RSLine new
 				width: 1.5;
 				yourself.
@@ -1436,7 +1436,7 @@ RSAnimationExamples >> example24Lines [
 		angleSp := frame / 300 * Float twoPi.
 		hueOffset := hueOffset + 1.
 		shapes do: [ :s | | pos line |
-			pos := (angleSp negated + (s attributeAt: #offset)) cos * 30.
+			pos := (angleSp negated + (s propertyAt: #offset)) cos * 30.
 			line := s shapes first.
 			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
 			line endPoint: 0@ pos ].
@@ -1572,16 +1572,16 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 		RSEllipse new
 			size: (sc2 scale: i);
 			model: i;
-			attributeAt: #flip put: (r next* 2) asInteger * 2 - 1;
-			attributeAt: #life put: r next * maxLife;
-			attributeAt: #color put: (color scale: (r next * 3) asInteger);
+			propertyAt: #flip put: (r next* 2) asInteger * 2 - 1;
+			propertyAt: #life put: r next * maxLife;
+			propertyAt: #color put: (color scale: (r next * 3) asInteger);
 			position: (r next * rect width)@ (r next * rect height )+ rect origin;
 			yourself.
 		]).
 	canvas newAnimation repeat onStepDo: [ :t |
 		canvas nodes do: [ :e | 
 			| life att p flip iterations respawn case fadeRatio colorCase c |
-			att := e attributes.
+			att := e properties.
 			flip := att at: #flip.
 			life := att at: #life.
 			c := att at: #color.
@@ -2074,7 +2074,7 @@ RSAnimationExamples >> example35Perlin [
 	frame := 0.
 	respawnTop := [ :e | 
 		e 
-			attributeAt: #life put: random next* maxLife;
+			propertyAt: #life put: random next* maxLife;
 			position: random next @ 0 * extent ].
 		
 	canvas addAll: ((1 to: 100) collect: [:n | | e c1 c2 |
@@ -2084,7 +2084,7 @@ RSAnimationExamples >> example35Perlin [
 			c2 := Color cyan ].
 		e := RSEllipse new.
 		e size: (scRadius scale: n).
-		e attributes
+		e properties
 			at: #c1 put: c1;
 			at: #c2 put: c2;
 			at: #iterations put: (scIterations scale: n).
@@ -2095,12 +2095,12 @@ RSAnimationExamples >> example35Perlin [
 		
 		canvas nodes do: [ :e |
 			| life p heading vel color alpha |
-			life := e attributeAt: #life.
-			e attributeAt: #life put: (life := life - 0.01666).
+			life := e propertyAt: #life.
+			e propertyAt: #life put: (life := life - 0.01666).
 			life < 0 ifTrue: [ respawnTop value: e ].
 			p := e position.
 			vel := 0@0.
-			1 to: (e attributeAt: #iterations) do: [ :k | 
+			1 to: (e propertyAt: #iterations) do: [ :k | 
 				| transition angle |
 				transition := p x / extent x.
 				angle := (perlin
@@ -2115,7 +2115,7 @@ RSAnimationExamples >> example35Perlin [
 			heading := vel angle / Float twoPi.
 			heading < 0 ifTrue: [ heading := heading negated ].
 			color := NSScale linear 
-				range: { e attributeAt: #c1. e attributeAt: #c2 }; scale: heading.
+				range: { e propertyAt: #c1. e propertyAt: #c2 }; scale: heading.
 			alpha := life * 5 / maxLife min: 1.
 			alpha := (maxLife - life * 5 )/ maxLife min: alpha.
 			e color: (color alpha: alpha).
@@ -2151,9 +2151,9 @@ RSAnimationExamples >> example36RoundRectagles [
 		frame := frame + 1.
 		canvas nodes doWithIndex: [ :e :index | | pos angle |
 			pos := e position + ((mouse - e position) / (index + 5)).
-			angle := e attributes at: #angle ifAbsentPut: [ 0 ].
+			angle := e propertyAt: #angle ifAbsentPut: [ 0 ].
 			angle := angle +(((frame + index) / 10) sin * 7).
-			e attributes at: #angle put: angle.
+			e propertyAt: #angle put: angle.
 			e matrix 
 				loadIdentity;
 				translation: pos;
@@ -2977,7 +2977,7 @@ RSAnimationExamples >> example49River [
 					g: (cScale scale: box position y)
 					b: 255
 					range: 255);
-				attributeAt: #update put: [ | theta p |
+				propertyAt: #update put: [ | theta p |
 					p := box position.
 					theta := (perlin 
 						noise: p x * 0.006 + inc
@@ -2999,7 +2999,7 @@ RSAnimationExamples >> example49River [
 			back color: (Color black alpha: alpha) ].
 	c newAnimation repeat onStepDo: [ :t | 
 		inc := inc + 0.008. 
-		c shapes do: [ :node | (node attributeAt: #update) value ]
+		c shapes do: [ :node | (node propertyAt: #update) value ]
 		].
 	^ c
 ]

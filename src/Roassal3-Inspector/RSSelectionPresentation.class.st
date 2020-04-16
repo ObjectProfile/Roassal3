@@ -42,7 +42,7 @@ RSSelectionPresentation >> putShadowOn: aShape [
 	aShape parent
 		addShape: shadow before: aShape.
 	aShape canvas 
-		attributeAt: self key
+		propertyAt: self key
 		put: shadow
 ]
 
@@ -54,7 +54,7 @@ RSSelectionPresentation >> release [
 { #category : #hooks }
 RSSelectionPresentation >> removeShadowOn: aShape [
 	aShape canvas
-		attributeAt: self key
+		propertyAt: self key
 		ifPresent: [ :shadow |shadow remove ].
 ]
 

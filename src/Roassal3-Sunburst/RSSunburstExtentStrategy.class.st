@@ -41,7 +41,7 @@ RSSunburstExtentStrategy >> setCenterRadius: shape [
 { #category : #hook }
 RSSunburstExtentStrategy >> setNormalRadius: shape [
 	| r1 r2 off depth |
-	depth := shape attributeAt: #depth.
+	depth := shape propertyAt: #depth.
 	off := self radialSpacing * (depth -1 ).
 	r1 := (self radiusForDepth: depth -1) + off.
 	r2 := (self radiusForDepth: depth) + off.

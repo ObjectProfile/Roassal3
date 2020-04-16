@@ -131,7 +131,7 @@ RSColorPaletteChooser >> initializeInteractions [
 			start: 0@ -15;
 			stop: 0@ 15).
 	selectedHighlight 
-		attributeKey: #buttons;
+		propertyKey: #buttons;
 		copyKey: #qwer.
 	overHighlight := RSHighlightable new.
 	overHighlight 

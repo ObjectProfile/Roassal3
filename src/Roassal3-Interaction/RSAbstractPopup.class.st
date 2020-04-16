@@ -34,7 +34,7 @@ RSAbstractPopup class >> reset [
 RSAbstractPopup >> createOrGetPopupOn: aShape event: event [
 	"Create a popup and register it"
 	| att popupShape key |
-	att := event canvas attributes.
+	att := event canvas properties.
 	key := self popupKey.
 
 
@@ -97,7 +97,7 @@ RSAbstractPopup >> removePopupOn: evt [
 	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
 	If the element is not part of a view, then there is nothing to remove, so we exit early."
 	evt canvas ifNil: [ ^ self ].
-	att := evt canvas attributes.
+	att := evt canvas properties.
 	key := self popupKey.
 	(att includesKey: key) ifFalse: [ ^ self ].
 	popup := att at: key.

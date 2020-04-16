@@ -64,7 +64,7 @@ RSInspectableExample >> example02Inspect [
 		onStepDo: [ :t |
 			canvas nodes do: [ :shape |
 				| att a b |
-				att := shape attributes.
+				att := shape properties.
 				a := att at: #old ifAbsentPut: [ shape position ].
 				b := att at: #new ifAbsentPut: [ shape position ].
 				shape translateTo: (a interpolateTo: b at: t ) ].
@@ -82,14 +82,14 @@ RSInspectableExample >> example02Inspect [
 					canvas addAll: children ]. ].
 			
 			canvas edges copy do: #remove.
-			canvas nodes do: [:shape | shape attributeAt: #old put: shape position ].
+			canvas nodes do: [:shape | shape propertyAt: #old put: shape position ].
 			RSEdgeBuilder arrowedLine 
 				canvas: canvas;
 				connectFrom: #superclass.
 			canvas nodes do: #updateEdgesOFF.
 			RSClusterLayout on: canvas nodes.
 			canvas nodes do: #updateEdgesON.
-			canvas nodes do: [:shape | shape attributeAt: #new put: shape position. ].
+			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
 		 ]}.
 	canvas @ RSCanvasController.
 	^ canvas

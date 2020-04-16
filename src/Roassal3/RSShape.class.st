@@ -3,7 +3,7 @@ I am the top class of shapes
 "
 Class {
 	#name : #RSShape,
-	#superclass : #RSAttributableObject,
+	#superclass : #RSPropertableObject,
 	#instVars : [
 		'paint',
 		'path',
@@ -99,13 +99,13 @@ RSShape >> computeEncompassingRectangle [
 
 { #category : #'accessing - attributes' }
 RSShape >> depth [
-	^ self attributeAt: #depth
+	^ self propertyAt: #depth
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> depth: anObject [
 	"depth is used by tree builders usefull to relationate hierarchy visualizations"
-	self attributeAt: #depth put: anObject
+	self propertyAt: #depth put: anObject
 ]
 
 { #category : #accessing }
@@ -153,13 +153,13 @@ RSShape >> includesPoint: aPoint [
 
 { #category : #'accessing - attributes' }
 RSShape >> index [
-	^ self attributeAt: #index
+	^ self propertyAt: #index
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> index: anObject [
 	"the current index of this object in an object collection"
-	self attributeAt: #index put: anObject
+	self propertyAt: #index put: anObject
 ]
 
 { #category : #initialization }
@@ -212,13 +212,13 @@ RSShape >> loadShape: aShape [
 
 { #category : #'accessing - attributes' }
 RSShape >> model [
-	^ self attributeAt: #model
+	^ self propertyAt: #model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
 	"model is used to create popups and other interactions"
-	self attributeAt: #model put: anObject
+	self propertyAt: #model put: anObject
 ]
 
 { #category : #border }
@@ -330,13 +330,13 @@ RSShape >> resetPath [
 
 { #category : #'accessing - attributes' }
 RSShape >> schildren [
-	^ self attributeAt: #schildren
+	^ self propertyAt: #schildren
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> schildren: anObject [
 	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self attributeAt: #schildren put: anObject
+	self propertyAt: #schildren put: anObject
 ]
 
 { #category : #path }
@@ -381,13 +381,13 @@ RSShape >> signalUpdate [
 
 { #category : #'accessing - attributes' }
 RSShape >> sparent [
-	^ self attributeAt: #sparent
+	^ self propertyAt: #sparent
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> sparent: anObject [
 	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self attributeAt: #sparent put: anObject
+	self propertyAt: #sparent put: anObject
 ]
 
 { #category : #accessing }

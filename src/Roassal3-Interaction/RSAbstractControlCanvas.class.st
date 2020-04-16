@@ -73,8 +73,7 @@ RSAbstractControlCanvas >> correctCameraPosition: evt scale: scale [
 
 { #category : #utilities }
 RSAbstractControlCanvas >> encompassingRectangleFor: aCanvas [
-	^ aCanvas attributes 
-		at: #encompassingRectangle 
+	^ aCanvas propertyAt: #encompassingRectangle 
 		ifAbsentPut: [ aCanvas encompassingRectangle  ].
 ]
 
@@ -82,7 +81,7 @@ RSAbstractControlCanvas >> encompassingRectangleFor: aCanvas [
 RSAbstractControlCanvas >> expandedRectangle: evt [
 	| key | 
 	key := #expanedEncompassingRectangle.
-	^ evt canvas attributes at: key ifAbsentPut: [ 
+	^ evt canvas propertyAt: key ifAbsentPut: [ 
 		| rectangle |
 		rectangle := self encompassingRectangleFor: evt canvas.
 		self configuration padding expandRectangle: rectangle ].

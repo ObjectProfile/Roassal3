@@ -19,21 +19,21 @@ RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 de
 	shapes add: e.
 	
 	children := block1 rsValue: atree.
-	e attributes at: #depth put: depth.
+	e properties at: #depth put: depth.
 	children := children collect: [ :child | | e2 |
 		e2 := self createElements: child nesting: block1 
 			leaves: block2 depth: depth + 1.
-		e2 attributes at: #parent put: e.
+		e2 properties at: #parent put: e.
 		e2 ] as: Array.
 	leaves := (block2 rsValue: atree) collect: [:child | | e2 |
 		e2 := self createElements: child nesting: #() 
 			leaves: #() depth: depth +1.
-		e2 attributes at: #parent put: e.
+		e2 properties at: #parent put: e.
 		e2 ] as: Array.
 	nodes := OrderedCollection new: (leaves size + children size).
 	nodes addAll: children; addAll: leaves.
 		
-	e attributes at: self childrenKey put: nodes.
+	e properties at: self childrenKey put: nodes.
 	^ e.
 ]
 
@@ -150,7 +150,7 @@ RSAbstractTreeBuilder >> weightKey [
 { #category : #private }
 RSAbstractTreeBuilder >> weightLeafShape: shape block: aBlock [
 	^ shape
-		attributeAt: self weightKey
+		propertyAt: self weightKey
 		ifAbsentPut: [ 
 			self weightFromChildren: shape block: aBlock ]
 ]

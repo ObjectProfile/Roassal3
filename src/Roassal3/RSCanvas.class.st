@@ -3,7 +3,7 @@ I represent the basic canvas or paint area. I have a collection of shapes
 "
 Class {
 	#name : #RSCanvas,
-	#superclass : #RSAttributableObject,
+	#superclass : #RSPropertableObject,
 	#traits : 'TContainer',
 	#classTraits : 'TContainer classTrait',
 	#instVars : [

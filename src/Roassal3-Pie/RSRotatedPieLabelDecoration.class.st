@@ -56,8 +56,8 @@ RSRotatedPieLabelDecoration >> render [
 RSRotatedPieLabelDecoration >> stepShapes: t [
 	builder shapes doWithIndex: [ :shape :index | 
 		  | a b label ang ext x p1 p2 p3 line |
-		  a := shape attributeAt: #a ifAbsentPut: [ shape alphaAngle ].
-		  b := shape attributeAt: #b ifAbsentPut: [ shape betaAngle ].
+		  a := shape propertyAt: #a ifAbsentPut: [ shape alphaAngle ].
+		  b := shape propertyAt: #b ifAbsentPut: [ shape betaAngle ].
 		  shape
 			  alphaAngle: a + t;
 			  betaAngle: b + t.
