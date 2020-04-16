@@ -109,7 +109,7 @@ RSPolygon >> centerPoints [
 
 	| r center |
 	r := Rectangle encompassing: points.
-	center := r rsCenter.
+	center := r floatCenter.
 	points doWithIndex: [ :p :i | points at: i put: p - center ].
 	^ r
 ]
@@ -191,7 +191,7 @@ RSPolygon >> points: anArray [
 	| rec |
 	self privatePoints: anArray.
 	rec := self centerPoints.
-	self translateTo: rec rsCenter.
+	self translateTo: rec floatCenter.
 	super extent: rec extent
 ]
 

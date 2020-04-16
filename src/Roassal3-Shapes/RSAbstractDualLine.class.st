@@ -42,7 +42,7 @@ RSAbstractDualLine >> initialize [
 
 { #category : #transforming }
 RSAbstractDualLine >> position [
-	^ self encompassingRectangle rsCenter
+	^ self encompassingRectangle floatCenter
 ]
 
 { #category : #accessing }

@@ -153,7 +153,7 @@ RSComposite >> adjustToChildren [
 	| rect delta |
 	children ifNil: [ ^ self ].
 	rect := children encompassingRectangle.
-	delta := rect rsCenter negated.
+	delta := rect floatCenter negated.
 	children do: [ :s | s basicTranslateBy: delta ].
 	self 
 		extent: rect extent;
@@ -213,7 +213,7 @@ RSComposite >> padding: anObject [
 	rect := margin expandRectangle: rect.
 	self extent: rect extent.
 	
-	(center := rect rsCenter) = (0@0) ifTrue: [ ^ self ].
+	(center := rect floatCenter) = (0@0) ifTrue: [ ^ self ].
 	center := center negated.
 	temp do: [ :s | s basicTranslateBy: center ].
 ]

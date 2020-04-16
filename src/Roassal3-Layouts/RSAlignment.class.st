@@ -129,7 +129,7 @@ c
 RSAlignment >> centerMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
-			maxS encompassingRectangle rsCenter <= s encompassingRectangle rsCenter
+			maxS encompassingRectangle floatCenter <= s encompassingRectangle floatCenter
 					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
 

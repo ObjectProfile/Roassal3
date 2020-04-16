@@ -92,7 +92,7 @@ RSExpandingBoxes >> scale: shape at: t [
 	rect2 := shape attributeAt: #current.
 	
 		
-	shape translateTo: (rect1 rsCenter interpolateTo: rect2 rsCenter at: t).
+	shape translateTo: (rect1 floatCenter interpolateTo: rect2 floatCenter at: t).
 	
 	shape extent: (rect1 extent interpolateTo: rect2 extent at: t)
 ]

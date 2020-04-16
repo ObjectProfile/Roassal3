@@ -74,7 +74,7 @@ RSQuadTreeF >> add: aNode [
 RSQuadTreeF >> addChild: aNode [
 	| s origin corner |
 	leaf := false.
-	s := rectangle rsCenter.
+	s := rectangle floatCenter.
 	origin := rectangle origin.
 	corner := rectangle corner.
 

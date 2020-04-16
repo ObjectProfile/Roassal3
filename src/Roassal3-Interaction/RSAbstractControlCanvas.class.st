@@ -35,7 +35,7 @@ RSAbstractControlCanvas >> correctCameraPosition: evt inRectangle: rectangle pos
 	aCanvas := evt canvas.
 	p := position.
 	canvasRect := Rectangle
-		rsCenter: p
+		floatCenter: p
 		extent: aCanvas extent / scale.
 	x := rectangle width <= canvasRect width
 		ifTrue: [rectangle origin x < canvasRect origin x

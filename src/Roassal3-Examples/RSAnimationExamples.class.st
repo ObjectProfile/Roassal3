@@ -1503,7 +1503,7 @@ RSAnimationExamples >> example26PerlinNoise [
 	"inpired by wangyasai Twitter: @yasai_wang"
 	| canvas random c1 c2 c3 size perlin noiseScale rec |
 	canvas := RSCanvas new.
-	rec := Rectangle rsCenter: 0@0 extent: self currentWorld extent.
+	rec := Rectangle floatCenter: 0@0 extent: self currentWorld extent.
 	random := Random new.
 	size := 200.
 	noiseScale := 300.
@@ -1563,7 +1563,7 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 	r := Random new.
 	perlin := NSPerlinNoise2 new.
 	density := 800. maxLife := 10. noiseScale := 800.
-	rect := Rectangle rsCenter: 0@0 extent: self currentWorld extent.
+	rect := Rectangle floatCenter: 0@0 extent: self currentWorld extent.
 	size := rect width * rect height / density.
 	color := NSScale ordinal rangeFrom: { '6E39CC'. '0799F2'. 'white'}.
 	sc1 := NSScale linear domain: {1. size}; range: #(5 1).
@@ -1995,7 +1995,7 @@ RSAnimationExamples >> example33AlteredWorld [
 	canvas when: RSExtentChangedEvent do: [ 
 		canvas camera
 			zoomToFit: canvas extent
-			rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
+			rectangle: (Rectangle floatCenter: extent / 2 extent: extent) ].
 	^ canvas
 ]
 
@@ -2063,7 +2063,7 @@ RSAnimationExamples >> example35Perlin [
 	canvas := RSCanvas new.
 	canvas clearBackground: false.
 	extent := 500@500.
-	rect := Rectangle rsCenter: extent/2 extent: extent.
+	rect := Rectangle floatCenter: extent/2 extent: extent.
 	maxLife := 10.
 	perlin := NSPerlinNoise3 new octaves: 3.
 	noiseScale := 80.

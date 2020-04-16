@@ -35,7 +35,7 @@ RSBarPlot >> renderIn: canvas [
 			r := Rectangle origin: origin - (width@ 0) corner: corner + (width@0).
 			canvas add: (RSBox new
 				color: color;
-				position: r rsCenter;
+				position: r floatCenter;
 				extent: r extent;
 				yourself).
 			  ] ].

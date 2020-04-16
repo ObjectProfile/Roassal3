@@ -132,7 +132,7 @@ RSCamera >> zoomToFit: anExtent [
 RSCamera >> zoomToFit: anExtent extent: otherExtent [
 	self 
 		zoomToFit: anExtent 
-		rectangle: (Rectangle rsCenter: 0@0 extent: otherExtent)
+		rectangle: (Rectangle floatCenter: 0@0 extent: otherExtent)
 	
 ]
 
@@ -142,6 +142,6 @@ RSCamera >> zoomToFit: anExtent rectangle: rect [
 	sc := anExtent / (rect extent max: 1 @ 1).
 	sc := sc x min: sc y.
 	self 
-		translateTo: rect rsCenter;
+		translateTo: rect floatCenter;
 		scale: sc.
 ]

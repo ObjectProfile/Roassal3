@@ -30,9 +30,9 @@ RSConfigurableCamera >> zoomToFit [
 	original := sc x min: sc y.
 	sc := int scaleFor: original.
 	canvasRect := Rectangle 
-		rsCenter: shapesRect rsCenter
+		floatCenter: shapesRect floatCenter
 		extent: canvas extent / 1.
-	self translateTo: shapesRect rsCenter.
+	self translateTo: shapesRect floatCenter.
 	int configuration shouldUseBasicZoom ifTrue: [ 
 		(canvasRect containsRect: shapesRect )
 			ifTrue: [ self scale: 1]

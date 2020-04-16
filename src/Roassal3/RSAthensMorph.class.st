@@ -334,7 +334,7 @@ RSAthensMorph >> drawShapes [
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		canvasRect := Rectangle 
-			rsCenter: roassalCanvas camera position
+			floatCenter: roassalCanvas camera position
 			extent: roassalCanvas extent / camera scale.
 		roassalCanvas shapes do: [ :trachelShape | 
 			(trachelShape encompassingRectangle intersects: canvasRect)

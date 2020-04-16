@@ -398,14 +398,14 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		RSBox new
 			border: (RSBorder new color: Color lightGray trans; width: 0.5);
 			extent: quad rectangle extent;
-			position: quad rectangle rsCenter;
+			position: quad rectangle floatCenter;
 			color: ((colors scale: index) alpha: 0.5 );
 			yourself
 			 ]. 
 	labelBuilder := [ :quad :index |
 		RSLabel new
 			text: (quad charge printShowingDecimalPlaces: 1);
-			position: quad rectangle rsCenter;
+			position: quad rectangle floatCenter;
 			yourself.
 		 ].
 	boxes := #().

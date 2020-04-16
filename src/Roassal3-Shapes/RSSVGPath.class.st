@@ -21,7 +21,7 @@ RSSVGPath >> buildPathOn: visitor [
 RSSVGPath >> centerSegments [
 	| rect absolute position |
 	rect := self segmentsRectangle.
-	position := rect rsCenter.
+	position := rect floatCenter.
 	absolute := true.
 	segments do: [ :segment | 
 		| key args |
@@ -40,7 +40,7 @@ RSSVGPath >> centerSegments [
 			polygon at: index put: point - position ] ].
 	rect := self segmentsRectangle.
 	self position: position.
-	baseRectangle := Rectangle rsCenter: 0@0 extent: rect extent.
+	baseRectangle := Rectangle floatCenter: 0@0 extent: rect extent.
 ]
 
 { #category : #private }

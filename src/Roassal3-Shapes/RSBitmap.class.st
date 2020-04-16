@@ -12,7 +12,7 @@ Class {
 
 { #category : #private }
 RSBitmap >> computeRectangle [
-	baseRectangle := Rectangle rsCenter: 0@0 extent: (form 
+	baseRectangle := Rectangle floatCenter: 0@0 extent: (form 
 		ifNil: [ 0@0 ]
 		ifNotNil: [ form extent ])
 ]

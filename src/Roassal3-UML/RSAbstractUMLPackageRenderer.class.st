@@ -107,7 +107,7 @@ RSAbstractUMLPackageRenderer >> packageBoxFor: title and: classes [
 		color: self packageColor;
 		yourself.
 	boxClasses := RSBox new 
-		position: rect rsCenter;
+		position: rect floatCenter;
 		extent: rect extent+10;
 		cornerRadius: cradius;
 		border: self border;

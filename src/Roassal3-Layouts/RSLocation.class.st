@@ -77,7 +77,7 @@ RSLocation >> bottom [
 
 { #category : #'public - positioning' }
 RSLocation >> center [
-	fixedX := [:rec | rec rsCenter x].
+	fixedX := [:rec | rec floatCenter x].
 	direction := 0@ direction y
 ]
 
@@ -110,7 +110,7 @@ RSLocation >> left [
 
 { #category : #'public - positioning' }
 RSLocation >> middle [
-	fixedY := [ :r | r rsCenter y ].
+	fixedY := [ :r | r floatCenter y ].
 	direction := direction x @ 0
 ]
 

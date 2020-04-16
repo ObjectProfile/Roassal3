@@ -125,7 +125,7 @@ RSGroup >> translateBy: delta [
 { #category : #transforming }
 RSGroup >> translateTo: aPosition [
 	| center |
-	center := self encompassingRectangle rsCenter.
+	center := self encompassingRectangle floatCenter.
 	self translateBy: aPosition - center
 ]
 

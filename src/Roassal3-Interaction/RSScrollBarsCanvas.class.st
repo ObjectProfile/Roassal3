@@ -174,14 +174,14 @@ RSScrollBarsCanvas >> updateBasicScrollbars [
 	canvas := vertical parent.
 	camera := canvas camera. 
 	canvasRect := Rectangle
-		rsCenter: camera position
+		floatCenter: camera position
 		extent: canvas extent / camera scale.
 	shapesRect := self encompassingRectangleFor: canvas.
 	
 	scrollExtent := vertical width @ horizontal height.
 	p := canvas extent - 1 - (scrollExtent / 2).
 	
-	pd := canvas extent * (canvasRect rsCenter - shapesRect origin) / shapesRect extent.
+	pd := canvas extent * (canvasRect floatCenter - shapesRect origin) / shapesRect extent.
 	ext := canvasRect extent * canvas extent / shapesRect extent.
 	vertical position: p x @ pd y ; height: ext y.
 	horizontal position: pd x @ p y; width: ext x.

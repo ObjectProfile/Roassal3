@@ -63,7 +63,7 @@ RSBoundingShape >> extent: aPoint [
 	extent = aPoint ifTrue: [ ^ self ].
 	self assert: aPoint isPoint.
 	oldExtent := extent.
-	baseRectangle := Rectangle rsCenter: 0@0 extent: aPoint.
+	baseRectangle := Rectangle floatCenter: 0@0 extent: aPoint.
 	self resetBBox; resetPath.
 	self announce: [ RSExtentChangedEvent new 
 		shape: self;
@@ -74,7 +74,7 @@ RSBoundingShape >> extent: aPoint [
 { #category : #initialization }
 RSBoundingShape >> fromRectangle: aRectangle [
 	self 
-		translateTo: aRectangle rsCenter;
+		translateTo: aRectangle floatCenter;
 		extent: aRectangle extent
 ]
 

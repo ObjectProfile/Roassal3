@@ -89,7 +89,7 @@ RSPieChartExample >> visualizeChart: canvas package: pkg [
 	result := generator searchMin: 0 max: totalSum desired: 10.
 	ticks := result min to: result max by: result step.
 	canvasRect := Rectangle
-		rsCenter: 0@0
+		floatCenter: 0@0
 		extent: canvas extent * 0.9.
 	scale := NSScale linear
 		domain: {result min. result max};
@@ -143,7 +143,7 @@ RSPieChartExample >> visualizePie: canvas package: pkg [
 	canvas when: RSExtentChangedEvent do: [ 
 		canvas camera 
 			zoomToFit: canvas extent 
-			rectangle: (Rectangle rsCenter: 0@0 extent: max * 2@0).
+			rectangle: (Rectangle floatCenter: 0@0 extent: max * 2@0).
 		canvas signalUpdate ].
 
 ]

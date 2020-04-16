@@ -25,12 +25,12 @@ RSAbstractUMLClassRenderer >> adjustBox: box on: shapes [
 	rect := shapes encompassingRectangle.
 	box
 		extent: rect extent + self classBoxPadding;
-		position: rect rsCenter.
+		position: rect floatCenter.
 ]
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [ 
-	title position: shapes encompassingRectangle rsCenter x @ title position y.
+	title position: shapes encompassingRectangle floatCenter x @ title position y.
 ]
 
 { #category : #layout }
@@ -69,12 +69,13 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
-	| rect ellipsis |
+	| rect ellipsis center |
 	self needsEllipsis ifFalse: [ ^ self ].
 	
 	ellipsis := self ellipsisShape.
 	rect := aGroup encompassingRectangle.
-	ellipsis position: rect rsCenter x @ (rect height / 2 + rect rsCenter y).
+	center := rect floatCenter.
+	ellipsis position: center x @ (rect height / 2 + center y).
 	aGroup add: ellipsis.
 	
 ]
