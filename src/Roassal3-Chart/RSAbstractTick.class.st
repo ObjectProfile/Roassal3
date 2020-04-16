@@ -129,6 +129,30 @@ RSAbstractTick >> integerWithCommas [
 	labelConversion := [ :value | value asInteger asStringWithCommas ]
 ]
 
+{ #category : #public }
+RSAbstractTick >> labelConversion: oneArgBlock [
+	"This method is used to convert numerical values into a label. This is useful to particularlize labels on the X or Y axes. The parameter block accepts one argument, which is a numerical value. The block should return a string or any other object. When displayed, the message asString will be sent to it. 
+	
+	For example:
+-=-=-=-=-=-=-=-=-=
+x := #(-2 -1 0 1 2).
+y := #(5 10 12 14 20).
+
+c := RSChart new.
+d := RSLinePlot new x: x y: y.
+c addPlot: d.
+
+c addDecoration: (RSVerticalTick new).
+c addDecoration: (RSHorizontalTick new 
+							numberOfTicks: x size; 
+							labelConversion: [ :val | Date today addDays: val ] ).
+c mustInclude0inY.
+c
+-=-=-=-=-=-=-=-=-=
+	"
+	labelConversion := oneArgBlock 
+]
+
 { #category : #accessing }
 RSAbstractTick >> labelLocation [
 	^ labelLocation ifNil: [ labelLocation := self defaultLabelLocation ].
