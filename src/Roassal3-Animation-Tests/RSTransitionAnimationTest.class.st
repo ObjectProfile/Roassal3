@@ -72,7 +72,7 @@ RSTransitionAnimationTest >> testStepReset [
 	| animation |
 	animation := canvas newAnimation
 		duration: 100 milliSeconds.
-	self runAnimation: animation threshold: 110.
+	self runAnimation: animation threshold: 500.
 	
 	self deny: animation isRunning.
 	self assert: animation currentLoop equals: nil.
@@ -83,5 +83,5 @@ RSTransitionAnimationTest >> testStepReset [
 	canvas addAnimation: animation.
 	
 	self assert: canvas animations size equals: 1.
-	self runAnimation: animation threshold: 110.
+	self runAnimation: animation threshold: 500.
 ]
