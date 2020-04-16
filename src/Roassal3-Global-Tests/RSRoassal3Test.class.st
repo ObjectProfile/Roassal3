@@ -32,9 +32,7 @@ RSRoassal3Test >> testSubscriberClass [
 	self assert: (box announcer handleSubscriberClass: RSPopup).
 	"but popup adds a lot of events, RSPopup is not an event"
 	self deny: (box announcer handleEventClass: RSPopup).
-	self assert: (box announcer handleEventClass: RSMouseEnter).
-	self assert: (box announcer handleEventClass: RSMouseMove).
-	self assert: (box announcer handleEventClass: RSMouseLeave).
+	{RSPopup activationEvent}, RSPopup removeEvents do: [ :evt | self assert:  (box announcer handleEventClass: evt). ]
 
 ]
 
