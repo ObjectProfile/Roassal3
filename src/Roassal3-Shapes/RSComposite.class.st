@@ -309,14 +309,32 @@ RSComposite >> shapes: aRSGroup [
 
 { #category : #edges }
 RSComposite >> updateConnectedEdges [
+	"Update the edge connected to elements contained in the composite. This happens when a shape is drag and dropped. For example:
+	
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+
+c add: (RSLabel new text: 'I am connected to'; model: 0).
+c shapes first translateBy: -50 @ 50.
+
+g := RSGroup new.
+g add: (RSLabel new text: '1'; model: 1).
+g add: (RSLabel new text: '2'; model: 2).
+RSHorizontalLineLayout on: g.
+composite := g asShape.
+composite color: Color lightBlue.
+c add: composite.
+
+c shapes @ RSDraggable.
+
+c add: (RSLine new color: Color red; from: c shapes first; to: g first).
+c add: (RSLine new color: Color red; from: c shapes first; to: g second).
+c @ RSCanvasController
+-=-=-=-=-=-=-=-=-=
+"
 	self shouldUpdateEdges 
 		ifTrue: [ connectedEdges do: [ :edge | edge update ] ].
 	self children do: [ :child | 
 		child isNode
 			ifTrue: [ child updateConnectedEdges ] ]
-]
-
-{ #category : #accessing }
-RSComposite >> view [
-	^ parent view
 ]
