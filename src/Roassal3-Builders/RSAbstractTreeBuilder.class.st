@@ -8,7 +8,7 @@ Class {
 		'rootNodes',
 		'weight'
 	],
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Builders-Core'
 }
 
 { #category : #private }

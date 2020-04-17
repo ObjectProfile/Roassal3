@@ -250,19 +250,20 @@ RSChart >> title: aTitle [
 	self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> xLog [
 	self xScale: NSScale log
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> xScale: aScale [
 	plots, decorations do: [ :e | e xScale: aScale ].
+	^ aScale
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> xSqrt [
-	self xScale: NSScale sqrt
+	^ self xScale: NSScale sqrt
 ]
 
 { #category : #decoration }
@@ -270,19 +271,20 @@ RSChart >> xlabel: aTitle [
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> yLog [
-	self yScale: NSScale log
+	^ self yScale: NSScale log
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> yScale: aScale [
 	plots, decorations do: [ :e | e yScale: aScale ].
+	^ aScale
 ]
 
-{ #category : #'public - configuration' }
+{ #category : #'public - scales' }
 RSChart >> ySqrt [
-	self yScale: NSScale sqrt
+	^ self yScale: NSScale sqrt
 ]
 
 { #category : #decoration }

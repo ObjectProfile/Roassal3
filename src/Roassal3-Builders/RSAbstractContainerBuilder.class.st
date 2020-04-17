@@ -8,52 +8,39 @@ Methods
 - #container:, to set the container where shapes will be added.
 - #renderIn:, is abstract class and recives a container, usually a canvas.
 
-Example
+Example:
 
 We can define an new calendar builder, that creates a calendar for a given year.
 
 ```Smalltalk
-calendar := RSCalendar new.
-calendar year: 2020.
-calendar build.
-calendar canvas.
+card := RSPunchCardBuilder new.
+card objects: String withAllSubclasses.
+card addMetric: [:cls | cls numberOfMethods] name: 'NOM'.
+card build.
 ```
 
-Then RSCalendar should define 2 methods to run this example `year:` and `renderIn:`
+Then RSPunchCardBuilder should define 2 methods to run this example `objects:` and `renderIn:`. Check 
+RSPunchCardBuilder for more details.
 
-```Smalltalk
-RSAbstractContainerBuilder subclass: #RSCalendar
-	instanceVariableNames: 'year'
-	classVariableNames: ''
-	package: 'MyPackage'
-```
-
-```Smalltalk
-RSCalendar >> year: aNumber
-	year := aNumber
-```
-
-```Smalltalk
-RSCalendar >> renderIn: aCanvas
-   ""TODO""
-```
-
-Then you can use this builder to create a canvas with several years
+Then you can use this builder to create a canvas with several punch cards
 
 ```Smalltalk
 canvas := RSCanvas new.
-calendar := RSCalendar new.
-2016 to: 2020 do: [ :year | 
+card := RSPunchCardBuilder new.
+card addMetric: [:cls | cls numberOfMethods] name: 'NOM'.
+card addMetric: [:cls | cls linesOfCode ] name: 'NLC'.
+card addMetric: [:cls | cls numberOfVariables] name: 'NOV'.
+{ String. Array. StringMorph } do: [ :class | 
 	composite := RSComposite new.
-	calendar 
-		year: year;
+	card 
+		objects: class withAllSubclasses;
 		renderIn: composite.
 	composite adjustToChildren.
 	canvas add: composite.
 	 ].
-RSHorizontalLineLayout on: canvas nodes.
+RSVerticalLineLayout on: canvas nodes.
 ""each node is a calendar for one year""
-canvas 
+canvas @ RSCanvasController
 ```
 "
 Class {
@@ -64,12 +51,13 @@ Class {
 		'shapes',
 		'decorators'
 	],
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Builders-Core'
 }
 
 { #category : #building }
 RSAbstractContainerBuilder >> build [
-	self renderIn: self container
+	self renderIn: self container.
+	^ self container
 ]
 
 { #category : #accessing }
