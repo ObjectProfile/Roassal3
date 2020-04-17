@@ -1,7 +1,7 @@
 "
 I am the base for roassal visualizations. When a user wants to create a new visualization, he will need to create a new subclass of me.
 
-A container builder(RSAbstractBuilder), is an object that creates roassal shapes and put that shapes in a container(RSCanvas or RSComposite), but also the builder can modify the canvas and put in that class new events or interactions.
+A container builder(RSAbstractContainerBuilder), is an object that creates roassal shapes and put that shapes in a container(RSCanvas or RSComposite), but also the builder can modify the canvas and put in that class new events or interactions.
 
 Methods
 - build, because a builder news to build
