@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal3-Global-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSRoassal3Test >> testRemoveInteractionIfPresent [
 	| box |
 	box := RSBox new.
@@ -23,7 +23,7 @@ RSRoassal3Test >> testRemoveInteractionIfPresent [
 	self assert: (box announcer handleEventClass: RSMouseMove).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSRoassal3Test >> testSubscriberClass [
 	| box |
 	box := RSBox new.
@@ -36,7 +36,7 @@ RSRoassal3Test >> testSubscriberClass [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSRoassal3Test >> testsRsValue [
 	| myCutomObjectValueProvider posiblesValuesForRoassal model colors |
 	myCutomObjectValueProvider := NSScale category10.
