@@ -6,7 +6,7 @@ My subclasses needs to implement #objects and: #shapesFor:
 Class {
 	#name : #RSAbstractShapesBuilder,
 	#superclass : #RSAbstractContainerBuilder,
-	#category : #'Roassal3-Builders'
+	#category : #'Roassal3-Builders-Core'
 }
 
 { #category : #hooks }
