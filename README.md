@@ -29,8 +29,11 @@ You should see an animated version of:
 
 [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
 
-## Roassal3 as a dependent application
+## Documentation
+A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
+
+## Roassal3 as a dependent application
 If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
 
 ```Smalltalk
@@ -40,8 +43,6 @@ _____
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
 
-## Difference between Roassal2 and Roassal3
-A list of differences and migration instruction are accessible from the Wiki https://github.com/ObjectProfile/Roassal3/wiki
 
 _____
 ## Developers section
