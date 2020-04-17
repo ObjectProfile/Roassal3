@@ -147,14 +147,14 @@ RSLabel >> initialize [
 	| defaultFont |
 	super initialize.
 	paint := Color black.
-	text := nil.
+	text := 'UNASSIGNED'.
 	defaultFont := self class defaultFont.
 	fontSize := defaultFont pixelSize.
 	emphasis := TextEmphasis normal.
 	
 	self fontName: (defaultFont realFont class == StrikeFont 
 		ifTrue: [ self class familyFontName ]
-		ifFalse: [ defaultFont familyName ]).
+		ifFalse: [ defaultFont familyName ]). 
 ]
 
 { #category : #testing }
