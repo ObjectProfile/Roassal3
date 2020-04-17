@@ -1,16 +1,16 @@
 "
 I am the base for roassal visualizations. When a user wants to create a new visualization, he will need to create a new subclass of me.
 
-A container builder(RSAbstractContainerBuilder), is an object that creates roassal shapes and put that shapes in a container(RSCanvas or RSComposite), but also the builder can modify the canvas and put in that class new events or interactions.
+A container builder(RSAbstractContainerBuilder), is an object that creates roassal shapes and keeps those shapes in a container (which could be either a RSCanvas or a RSComposite). The builder can modify the canvas and register new callbacks for events, as for interactions.
 
 Methods
-- build, because a builder news to build
-- container:, to set the container where shapes will be added.
-- renderIn:, is abstract class and recives a container, usually a canvas.
+- #build, because a builder news to build
+- #container:, to set the container where shapes will be added.
+- #renderIn:, is abstract class and recives a container, usually a canvas.
 
 Example
 
- we can define an new calendar builder, that creates a calendar for a given year.
+We can define an new calendar builder, that creates a calendar for a given year.
 
 ```Smalltalk
 calendar := RSCalendar new.
@@ -22,13 +22,19 @@ calendar canvas.
 Then RSCalendar should define 2 methods to run this example `year:` and `renderIn:`
 
 ```Smalltalk
-RSAbstractContainerBuilder subclass: #RSChart
+RSAbstractContainerBuilder subclass: #RSCalendar
 	instanceVariableNames: 'year'
 	classVariableNames: ''
-	package: 'My-Package'
-RSChart >> year: aNumber
+	package: 'MyPackage'
+```
+
+```Smalltalk
+RSCalendar >> year: aNumber
 	year := aNumber
-RSChart >> renderIn: aCanvas
+```
+
+```Smalltalk
+RSCalendar >> renderIn: aCanvas
    ""TODO""
 ```
 
