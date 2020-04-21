@@ -43,6 +43,11 @@ _____
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
 
+_____
+## Acknowledgement
+
+Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
+Stéphane Ducasse, Martin Días
 
 _____
 ## Developers section
