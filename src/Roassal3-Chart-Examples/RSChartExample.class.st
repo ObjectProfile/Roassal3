@@ -48,16 +48,16 @@ From: https://matplotlib.org/tutorials/introductory/usage.html#sphx-glr-tutorial
 RSChartExample >> example02ScatterPlot [
 	<script: 'self new example02ScatterPlot show'>
 
-	| classes plt p |
+	| classes c p |
 	classes := Collection withAllSubclasses.
-	plt := RSChart new.
+	c := RSChart new.
 	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
-	plt addPlot: p.
+	c addPlot: p.
 	
-	plt xlabel: 'X Axis'.
-	plt ylabel: 'Y Axis'.
-	plt title: 'Hello World'.
-	^ plt
+	c xlabel: 'X Axis'.
+	c ylabel: 'Y Axis'.
+	c title: 'Hello World'.
+	^ c
 ]
 
 { #category : #'as yet unclassified' }
