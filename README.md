@@ -20,6 +20,7 @@ RSChartExample new example01Markers open
 ```
 
 You should see:
+
 <img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
 
 An example of animation may be seen using:
