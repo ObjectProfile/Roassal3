@@ -41,11 +41,11 @@ RSHorizontalTick >> fromNames: aCollectionOfStrings [
 ]
 
 { #category : #accessing }
-RSHorizontalTick >> maxValue [
+RSHorizontalTick >> max [
 	^ chart maxValueX
 ]
 
 { #category : #accessing }
-RSHorizontalTick >> minValue [
+RSHorizontalTick >> min [
 	^ chart minValueX
 ]

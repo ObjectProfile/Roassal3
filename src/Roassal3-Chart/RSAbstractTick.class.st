@@ -47,8 +47,8 @@ RSAbstractTick >> createLabelFor: aValue [
 RSAbstractTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := aChart niceGenerator 
-		searchMin: self minValue
-		max: self maxValue
+		searchMin: self min
+		max: self max
 		desired: numberOfTicks.
 	^ nice
 ]
@@ -74,8 +74,8 @@ RSAbstractTick >> defaultNiceLabel [
 	nice := RSNiceLabel new.
 	nice
 		score: 0;
-		min: self minValue;
-		max: self maxValue;
+		min: self min;
+		max: self max;
 		step: nice ticks / numberOfTicks.
 	^ nice
 ]
@@ -164,12 +164,12 @@ RSAbstractTick >> labelRotation [
 ]
 
 { #category : #accessing }
-RSAbstractTick >> maxValue [
+RSAbstractTick >> max [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-RSAbstractTick >> minValue [
+RSAbstractTick >> min [
 	^ self subclassResponsibility
 ]
 

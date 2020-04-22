@@ -14,6 +14,17 @@ Metacello new
 ``` 
 
 Once loaded, you can execute in a playground:
+
+```Smalltalk
+RSChartExample new example01Markers open
+```
+
+You should see:
+
+<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
+
+An example of animation may be seen using:
+
 ```Smalltalk
 RSAnimationExamples new example06Atom open
 ```
@@ -43,6 +54,11 @@ _____
 ## Get in touch
 Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
 
+_____
+## Acknowledgement
+
+Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
+Stéphane Ducasse, Martin Días
 
 _____
 ## Developers section

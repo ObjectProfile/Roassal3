@@ -32,11 +32,11 @@ RSVerticalTick >> defaultLabelLocation [
 ]
 
 { #category : #accessing }
-RSVerticalTick >> maxValue [
+RSVerticalTick >> max [
 	^ chart maxValueY
 ]
 
 { #category : #accessing }
-RSVerticalTick >> minValue [
+RSVerticalTick >> min [
 	^ chart minValueY
 ]

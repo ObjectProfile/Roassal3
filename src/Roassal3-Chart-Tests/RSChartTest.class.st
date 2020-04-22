@@ -214,3 +214,27 @@ RSChartTest >> testWithWeirdValuesLineWithTicks3 [
 	self assert: labels first position y <= 0
 	
 ]
+
+{ #category : #tests }
+RSChartTest >> testYMarker [
+
+	| x c p1 p2 marker line |
+	x := -3.14 to: 3.14 by: 0.01.
+	c := RSChart new.
+	p1 := RSLinePlot new.
+	p1 x: x y: x sin * 0.22.
+	c addPlot: p1.
+	p2 := RSLinePlot new.
+	p2 x: x y: x cos * 0.18.
+	c addPlot: p2.
+	c addDecoration: RSHorizontalTick new.
+	c addDecoration: RSVerticalTick new asFloat.
+
+	marker := RSYMarkerDecoration new.
+	c addDecoration: marker.
+	c build.
+	
+	line := marker createMarkerLineFromPlot: p2.
+	self assert: line from equals: (0@ -175.0).
+	self assert: line to equals: (200@ -175.0)
+]
