@@ -58,6 +58,9 @@ RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
 { #category : #initialization }
 RSAbstractMarkerDecoration >> initialize [
 	super initialize.
+	
+	"Per default, mark the max value"
+	self max.
 	markerColor := self defaultMarkerColor
 ]
 
@@ -74,6 +77,7 @@ RSAbstractMarkerDecoration >> min [
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
 	| line |
+	
 	chart plots
 		do: [ :p | 
 			line := self createMarkerLineFromPlot: p.
@@ -82,6 +86,7 @@ RSAbstractMarkerDecoration >> renderIn: canvas [
 				color: markerColor;
 				yourself.
 			self addShape: line ]
+
 ]
 
 { #category : #'public - configuration' }

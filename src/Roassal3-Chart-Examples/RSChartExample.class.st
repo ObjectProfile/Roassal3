@@ -7,44 +7,27 @@ Class {
 	#category : #'Roassal3-Chart-Examples'
 }
 
-{ #category : #'as yet unclassified' }
-RSChartExample >> example01Basic [
-"
-This example is not meant to work. It is just the result of a brainstorming
-
-x = np.linspace(0, 2, 100)
-
-plt.plot(x, x, label='linear')
-plt.plot(x, x**2, label='quadratic')
-plt.plot(x, x**3, label='cubic')
-
-plt.xlabel('x label')
-plt.ylabel('y label')
-
-plt.title('Simple Plot')
-plt.legend()
-plt.show()
-
-From: https://matplotlib.org/tutorials/introductory/usage.html#sphx-glr-tutorials-introductory-usage-py
-"
-
-	| plt x |
-	self flag: 'TODO'.
-	true ifTrue: [  ^ nil ].
-	plt := RSChart new.
-	x := (0 to: 2 by: 1 / 100).
-	plt plotX: x y: x label: 'linear'.
-	plt plotX: x y: (x collect: [ :v | v raisedTo: 2 ]) label: 'quadratic'.
-	plt plotX: x y: (x collect: [ :v | v raisedTo: 3 ]) label: 'cubic'.
-		
-	plt xLabel: 'x label'.
-	plt yLabel: 'y label'.
-	plt title: 'Simple plot'.
-	plt legend.
-	plt show
+{ #category : #examples }
+RSChartExample >> example01Markers [
+	<script: 'self new example01Markers open'>
+	| x c p |
+	x := -3.14 to: 3.14 by: 0.01.
+	c := RSChart new.
+	p := RSLinePlot new.
+	p x: x y: x sin * 0.22 + 0.5.
+	c addPlot: p.
+	c addDecoration: RSHorizontalTick new.
+	c addDecoration: RSVerticalTick new asFloat.
+	c addDecoration: RSYMarkerDecoration new average.
+	c addDecoration: RSYMarkerDecoration new min.
+	c addDecoration: RSYMarkerDecoration new max.
+	c addDecoration: RSXMarkerDecoration new max.
+	c addDecoration: RSXMarkerDecoration new min.
+	c addDecoration: (RSXMarkerDecoration new value: 0).
+	c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example02ScatterPlot [
 	<script: 'self new example02ScatterPlot show'>
 
@@ -60,7 +43,7 @@ RSChartExample >> example02ScatterPlot [
 	^ c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example03Plot [
 	<script: 'self new example03Plot show'>
 
@@ -82,7 +65,7 @@ RSChartExample >> example03Plot [
 	^ plt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick show'>
 	| x |
@@ -95,7 +78,7 @@ RSChartExample >> example04WithTick [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example05WithTick [
 	<script: 'self new example05WithTick show'>
 	| x c |
@@ -109,7 +92,7 @@ RSChartExample >> example05WithTick [
 	^ c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example06CustomNumberOfTicks [
 	<script: 'self new example06CustomNumberOfTicks show'>
 	| x |
@@ -127,7 +110,7 @@ RSChartExample >> example06CustomNumberOfTicks [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example07AdjustingFontSize [
 	<script: 'self new example07AdjustingFontSize open'>
 	| x y c |
@@ -142,7 +125,7 @@ RSChartExample >> example07AdjustingFontSize [
 	^ c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSChartExample >> example08TwoCharts [
 	<script: 'self new example08TwoCharts open'>
 	| c g1 c1 g2 c2 |
