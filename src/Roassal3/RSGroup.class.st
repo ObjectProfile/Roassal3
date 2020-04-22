@@ -48,7 +48,7 @@ RSGroup >> height [
 
 { #category : #actions }
 RSGroup >> pushBack [ 
-	self do: #pushBack
+	self do: [:each | each pushBack ]
 ]
 
 { #category : #actions }
