@@ -26,6 +26,18 @@ RSAbstractPlot >> checkAssertion [
 		description: 'X and Y values have not the same size, and they should'
 ]
 
+{ #category : #rendering }
+RSAbstractPlot >> definedValuesX [
+	"Return the list of X values that are defined"
+	^ xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+]
+
+{ #category : #rendering }
+RSAbstractPlot >> definedValuesY [
+	"Return the list Y values that are defined"
+	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+]
+
 { #category : #accessing }
 RSAbstractPlot >> index [
 	"Return the index of the plot within the list of plots to display in the plt object"
@@ -48,34 +60,77 @@ RSAbstractPlot >> isPointWellDefined: aPoint [
 { #category : #rendering }
 RSAbstractPlot >> maxValueX [
 	"Return the maximum X value of the plot, excluding NaN and infinite"
-	^ (xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) max
+
+	^ self definedValuesX max
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> maxValueY [
 	"Return the maximum Y value of the plot, excluding NaN and infinite"
-	^ (yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) max
+
+	^ self definedValuesY max
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> minValueX [
 	"Return the minimum X value of the plot, excluding NaN and infinite"
-	^ (xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) min
+	^ self definedValuesX min
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
-	^ (yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]) min
+	^ self definedValuesY min
 ]
 
 { #category : #public }
 RSAbstractPlot >> x: aCollection y: aCollection2 [ 
+	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
+	
+	For example:
+-=-=-=-=-=-=-=-=-=
+x := (-3.14 to: 3.14 by: 0.01).
+c := RSChart new.
+
+p := RSLinePlot new.
+p x: x y: x sin * 0.22.
+c addPlot: p.
+
+p := RSLinePlot new.
+p x: x y: x cos * 0.18.
+c addPlot: p.
+
+c addDecoration: RSHorizontalTick new.
+c addDecoration: (RSVerticalTick new asFloat).
+c addDecoration: (RSYMarkerDecoration new ).
+c 
+-=-=-=-=-=-=-=-=-=
+	"
 	xValues := aCollection.
-	yValues := aCollection2.
+	yValues := aCollection2
 ]
 
 { #category : #public }
 RSAbstractPlot >> y: aCollection [
+	"Define a plot with only a Y coordinate. The X coordinate is the index of the data point.
+	
+	For example:
+-=-=-=-=-=-=-=-=-=
+x := (-3.14 to: 3.14 by: 0.01).
+c := RSChart new.
+
+p := RSLinePlot new.
+p y: x sin * 0.22.
+c addPlot: p.
+
+p := RSLinePlot new.
+p y: x cos * 0.18.
+c addPlot: p.
+
+c addDecoration: RSHorizontalTick new.
+c addDecoration: (RSVerticalTick new asFloat).
+c 
+-=-=-=-=-=-=-=-=-=
+	"
 	self x: (1 to: aCollection size) y: aCollection
 ]

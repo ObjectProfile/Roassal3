@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #rendering }
+RSAbstractChartElement >> addShape: aShape [
+	"Add a shape to the canvas"
+	chart canvas add: aShape
+]
+
+{ #category : #rendering }
 RSAbstractChartElement >> beforeRenderingIn: aChart [
 	"do nothing here"
 ]
