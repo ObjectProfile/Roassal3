@@ -24,7 +24,7 @@ RSChartExample >> example01Markers [
 	c addDecoration: RSXMarkerDecoration new max.
 	c addDecoration: RSXMarkerDecoration new min.
 	c addDecoration: (RSXMarkerDecoration new value: 0).
-	c
+	^ c
 ]
 
 { #category : #examples }
