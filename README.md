@@ -14,6 +14,15 @@ Metacello new
 ``` 
 
 Once loaded, you can execute in a playground:
+
+```Smalltalk
+RSChartExample new example01Markers open
+```
+
+You should see:
+![chart](screenshots/chartExample.png)
+
+
 ```Smalltalk
 RSAnimationExamples new example06Atom open
 ```
