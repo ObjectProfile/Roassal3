@@ -20,7 +20,7 @@ RSChartExample new example01Markers open
 ```
 
 You should see:
-![chart](screenshots/chartExample.png)
+![chart](screenshots/chartExample.png =250x250)
 
 
 ```Smalltalk
