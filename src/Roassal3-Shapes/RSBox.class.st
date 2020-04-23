@@ -29,11 +29,22 @@ RSBox >> cornerRadius [
 ]
 
 { #category : #accessing }
-RSBox >> cornerRadius: aTSCornerRadius [
-	aTSCornerRadius isNumber ifTrue: [ 
-		cornerRadius := RSCornerRadius new radius: aTSCornerRadius.
+RSBox >> cornerRadius: aRSCornerRadius [
+	"Set the radius of the corners. Accept a number as argument or a RSCornerRadius.
+
+	For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+box := RSBox new extent: 120 @ 180; color: Color gray; cornerRadius: 10.
+c add: box.
+c
+-=-=-=-=-=-=-=-=-=
+"
+
+	aRSCornerRadius isNumber ifTrue: [ 
+		cornerRadius := RSCornerRadius new radius: aRSCornerRadius.
 		^ self	 ].
-	cornerRadius := aTSCornerRadius 
+	cornerRadius := aRSCornerRadius 
 ]
 
 { #category : #testing }

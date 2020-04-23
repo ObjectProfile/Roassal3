@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #testing }
+RSAbstractDualLine class >> isAbstract [
+	^ self = RSAbstractDualLine
+]
+
 { #category : #transforming }
 RSAbstractDualLine >> basicTranslateBy: delta [
 	self translateBy: delta

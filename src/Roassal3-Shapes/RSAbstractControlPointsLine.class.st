@@ -12,6 +12,11 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #testing }
+RSAbstractControlPointsLine class >> isAbstract [
+	^ self =  RSAbstractControlPointsLine
+]
+
 { #category : #actions }
 RSAbstractControlPointsLine >> basicTranslateBy: delta [
 	controlPoints := controlPoints collect: [:p | p + delta ].

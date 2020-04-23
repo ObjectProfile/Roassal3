@@ -10,25 +10,25 @@ Class {
 { #category : #tests }
 RSLabelTest >> testDrawBorderLabel [
 	|  |
-	c addShape: (RSLabel new
+	canvas addShape: (RSLabel new
 		withBorder;
 		color: (Color purple alpha: 0.5);
 		fontName: 'Source Sans Pro';
 		position: -50 @ 0;
 		text: 'Hello world!';
 		yourself).
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }
 RSLabelTest >> testDrawLabel [
 	
-	c addShape: (RSLabel new
+	canvas addShape: (RSLabel new
 		color: (Color purple alpha: 0.5);
 		position: -50 @ 0;
 		text: 'Hello world!';
 		yourself).
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }

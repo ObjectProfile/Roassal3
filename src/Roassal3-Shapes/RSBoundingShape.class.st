@@ -15,6 +15,11 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
+{ #category : #testing }
+RSBoundingShape class >> isAbstract [
+	^ self == RSBoundingShape
+]
+
 { #category : #visiting }
 RSBoundingShape >> accept: visitor [
 	visitor visitBoundingShape: self

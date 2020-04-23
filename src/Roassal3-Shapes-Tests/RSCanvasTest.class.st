@@ -5,7 +5,7 @@ Class {
 	#name : #RSCanvasTest,
 	#superclass : #RSTest,
 	#instVars : [
-		'c'
+		'canvas'
 	],
 	#category : #'Roassal3-Shapes-Tests'
 }
@@ -13,27 +13,27 @@ Class {
 { #category : #running }
 RSCanvasTest >> setUp [
 	super setUp.
-	c := RSCanvas new
+	canvas := RSCanvas new
 ]
 
 { #category : #running }
 RSCanvasTest >> testAddOneShape [
 
-	c addShape: RSBox new.
-	self assert: c numberOfShapes equals: 1.
-	self assert: c numberOfFixedShapes equals: 0
+	canvas addShape: RSBox new.
+	self assert: canvas numberOfShapes equals: 1.
+	self assert: canvas numberOfFixedShapes equals: 0
 ]
 
 { #category : #running }
 RSCanvasTest >> testDrawCanvas [
-	c addShape: (RSBox new
+	canvas addShape: (RSBox new
 		extent: 100@100;
 		yourself).
-	c addShape: (RSEllipse new
+	canvas addShape: (RSEllipse new
 		position: 100@100;
 		extent: 100@100;
 		yourself).
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -47,8 +47,8 @@ RSCanvasTest >> testDrawCanvasWithGroup [
 		position: 100@100;
 		extent: 100@100;
 		yourself).
-	c addShape: g.
-	c createMorph drawOnMockCanvas.
+	canvas addShape: g.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -58,35 +58,35 @@ RSCanvasTest >> testDrawFixed [
 		extent: 100@100;
 		yourself.
 	box isFixed: true.
-	c addShape: box.
+	canvas addShape: box.
 	
 	box := RSBox new
 		extent: 100@100;
 		yourself.
-	c addShape: box.
+	canvas addShape: box.
 	self deny: box isFixed.
 	box setAsFixed.
 	self assert: box isFixed.
-	self assert: c numberOfShapes equals: 0.
-	self assert: c numberOfFixedShapes equals: 2.
-	c createMorph drawOnMockCanvas.
+	self assert: canvas numberOfShapes equals: 0.
+	self assert: canvas numberOfFixedShapes equals: 2.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #tests }
 RSCanvasTest >> testElementFromModel [
 	| shapes |
 	shapes := (1 to: 3) collect: [ :m | RSBox new model: m; yourself ].
-	c addAll: shapes.
+	canvas addAll: shapes.
 	
-	self assert: (c shapeFromModel: 1) equals: shapes first.
-	self assert: (c shapeFromModel: 2) equals: shapes second.
-	self assert: (c shapeFromModel: 3) equals: shapes third.
-	self assert: (c shapeFromModel: 4) isNil
+	self assert: (canvas shapeFromModel: 1) equals: shapes first.
+	self assert: (canvas shapeFromModel: 2) equals: shapes second.
+	self assert: (canvas shapeFromModel: 3) equals: shapes third.
+	self assert: (canvas shapeFromModel: 4) isNil
 ]
 
 { #category : #running }
 RSCanvasTest >> testEmpty [
-	self assert: c numberOfShapes equals: 0
+	self assert: canvas numberOfShapes equals: 0
 ]
 
 { #category : #events }
@@ -101,10 +101,10 @@ RSCanvasTest >> testLowLevelEvent [
 	| box |
 	box := RSBox new size: 30.
 	box when: RSMouseDragging do: [ :evt | box ].
-	c addShape: box.
-	self assert: c extent equals: 500 asPoint.
+	canvas addShape: box.
+	self assert: canvas extent equals: 500 asPoint.
 	self
-		assert: (c shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250)
+		assert: (canvas shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250)
 		identicalTo: box
 ]
 
@@ -113,13 +113,13 @@ RSCanvasTest >> testNestedShape [
 
 	| shape innerShape |
 	shape := RSComposite new.
-	c addShape: shape.
+	canvas addShape: shape.
 	innerShape := RSBox new.
 	shape add: innerShape.
 	
-	self assert: shape canvas equals: c.
+	self assert: shape canvas equals: canvas.
 	self assert: innerShape parent equals: shape.
-	self assert: innerShape canvas equals: c.
+	self assert: innerShape canvas equals: canvas.
 	
 ]
 
@@ -139,15 +139,15 @@ RSCanvasTest >> testNestedShapeNotAddedToACanvas [
 
 { #category : #running }
 RSCanvasTest >> testOpening [
-	c open delete
+	canvas open delete
 ]
 
 { #category : #tests }
 RSCanvasTest >> testRemovingShapes [
 	| e |
 	e := RSEllipse new.
-	c addShape: e.
-	self assert: c shapes size equals: 1.
+	canvas addShape: e.
+	self assert: canvas shapes size equals: 1.
 	e remove.
-	self assert: c shapes size equals: 0.
+	self assert: canvas shapes size equals: 0.
 ]

@@ -19,18 +19,18 @@ RSLinesTest >> testColorLineAndMarker [
 
 { #category : #running }
 RSLinesTest >> testDrawBezierLine [
-	c addShape: (RSBezier new
+	canvas addShape: (RSBezier new
 		strokeColor: Color red;
 		width: 2). 
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
 RSLinesTest >> testDrawLine [
-	c addShape: (RSLine new
+	canvas addShape: (RSLine new
 		strokeColor: Color red;
 		width: 2). 
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
@@ -44,17 +44,17 @@ RSLinesTest >> testDrawMarkers [
 		startPoint: 50@50;
 		endPoint: 250@50.
 	line markerStart: m.
-	c addShape: line.
-	c createMorph drawOnMockCanvas.
+	canvas addShape: line.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }
 RSLinesTest >> testDrawSVGLine [
-	c addShape: (RSSVGPathLine new
+	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [ :aLine | 'M 100 100 L 200 200' ];
 		width: 2). 
-	c addShape: (RSSVGPathLine new
+	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [:aLine | String streamContents: [:stream |
 			| a b |
@@ -74,7 +74,7 @@ RSLinesTest >> testDrawSVGLine [
 		startPoint: 100@100;
 		endPoint: 200@200;
 		width: 2). 
-	c addShape: (RSSVGPathLine new
+	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [ :aLine | [ :canvas| 
 			canvas
@@ -82,7 +82,7 @@ RSLinesTest >> testDrawSVGLine [
 				moveTo: aLine startPoint;
 				lineTo: aLine endPoint. ] ];
 		width: 2). 
-	c createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas.
 ]
 
 { #category : #running }

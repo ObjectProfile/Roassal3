@@ -39,6 +39,11 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #testing }
+RSAbstractLine class >> isAbstract [
+	^ self =  RSAbstractLine
+]
+
 { #category : #visiting }
 RSAbstractLine >> accept: visitor [
 	visitor visitLine: self.
