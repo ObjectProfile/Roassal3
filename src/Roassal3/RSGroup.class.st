@@ -6,7 +6,6 @@ Class {
 	#name : #RSGroup,
 	#superclass : #OrderedCollection,
 	#instVars : [
-		'allMethods',
 		'shapeFromModelCache'
 	],
 	#category : #'Roassal3-Core'
