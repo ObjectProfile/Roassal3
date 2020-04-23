@@ -112,19 +112,6 @@ RSWorldMenu class >> menu07PalettesOn: aBuilder [
 ]
 
 { #category : #menu }
-RSWorldMenu class >> menu10ScriptOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Roassal3Script)
-		parent: #Roassal3;
-		order: 10;
-		label: 'Roassal script of the day';
-		icon: (self iconNamed: 'scriptManager');
-		action: [ self inform: 'TODO' ].
-		
-	
-]
-
-{ #category : #menu }
 RSWorldMenu class >> menu11SelfOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Self)
