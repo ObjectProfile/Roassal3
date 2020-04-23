@@ -1,6 +1,22 @@
 "
-A TSGroup represents collections of Roassal elements. A RTGroup is not designed to contain other things than Roassal elements. 
-A TSGroup is polymorphic to RSElement. When an RSElement is expected, one can provide an TSGroup.
+A RSGroup represents collections of Roassal elements. A RSGroup is not designed to contain other things than Roassal shapes. 
+When an RSShape is expected, one can provide an RSGroup, RSGroup are therefore polymorphic to RSShape.
+
+For example:
+-=-=-=-=-=-=-=-=-=
+m := LMModel new create.
+characters := m characters collect: [ :c | 
+	| g |
+	g := RSGroup new.
+	g add: (RSEllipse new size: c numberOfCoappearances).
+	g add: (RSLabel new text: c name).
+	g asShape ].
+
+c := RSCanvas new.
+c addAll: characters.
+RSFlowLayout on: characters.
+c @ RSCanvasController.
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSGroup,
