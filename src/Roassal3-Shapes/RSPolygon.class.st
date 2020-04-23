@@ -152,14 +152,24 @@ c
 { #category : #private }
 RSPolygon >> extent: newExtent [
 	| min max s extent |
+	self hasPoints 
+		ifFalse: [ ^ self ].
 	extent := baseRectangle extent.
 	extent = newExtent
 		ifTrue: [ ^ self ].
-	min := points min.
-	max := points max.
+	min := Float fmax asPoint.
+	max := Float fmin asPoint.
+	points do: [ :p | 
+		min := min min: p.
+		max := max max: p ].
 	s := newExtent / (max - min).
 	points := points collect: [ :p | p * s ].
 	super extent: newExtent
+]
+
+{ #category : #testing }
+RSPolygon >> hasPoints [
+	^ points notNil and: [ points isNotEmpty ]
 ]
 
 { #category : #testing }

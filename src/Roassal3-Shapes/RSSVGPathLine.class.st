@@ -25,6 +25,12 @@ RSSVGPathLine >> color: aColor [
 	self paint: aColor
 ]
 
+{ #category : #initialization }
+RSSVGPathLine >> initialize [
+	super initialize.
+	self svgPath: [:line |''].
+]
+
 { #category : #accessing }
 RSSVGPathLine >> svgPath [
 	^svgPath

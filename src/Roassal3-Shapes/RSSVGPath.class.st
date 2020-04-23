@@ -99,6 +99,7 @@ RSSVGPath >> computeSegments [
 { #category : #accessing }
 RSSVGPath >> extent: newExtent [
 	| min max s extent |
+	segments ifNil: [ ^ self ].
 	extent := baseRectangle extent.
 	extent = newExtent 
 		ifTrue: [ ^ self ].

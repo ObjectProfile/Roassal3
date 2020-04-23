@@ -106,5 +106,5 @@ RSLinesTest >> testPolylineBasic [
 	
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50).
-	self assert: line controlPoints equals: #()
+	self assert: line controlPoints equals: { 0@0. 0@0 }.
 ]

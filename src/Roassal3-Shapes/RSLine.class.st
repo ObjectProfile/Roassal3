@@ -32,9 +32,6 @@ Adding single line can be complex in some situation. You may want to look at RSE
 Class {
 	#name : #RSLine,
 	#superclass : #RSAbstractDualLine,
-	#instVars : [
-		'markers'
-	],
 	#classInstVars : [
 		'delta'
 	],
@@ -70,14 +67,4 @@ RSLine >> includesPoint: aPoint [
 		to: self endPoint 
 		within: RSLine delta
 	
-]
-
-{ #category : #accessing }
-RSLine >> markers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
-{ #category : #accessing }
-RSLine >> privateMarkers [
-	^ markers
 ]

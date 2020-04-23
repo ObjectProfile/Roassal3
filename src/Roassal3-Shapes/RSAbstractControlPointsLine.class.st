@@ -24,7 +24,7 @@ RSAbstractControlPointsLine >> basicTranslateBy: delta [
 
 { #category : #accessing }
 RSAbstractControlPointsLine >> controlPoints [
-	^ controlPoints ifNil: [ #() ].
+	^ controlPoints ifNil: [ controlPoints := { 0@0. 0@0 } ].
 ]
 
 { #category : #accessing }
