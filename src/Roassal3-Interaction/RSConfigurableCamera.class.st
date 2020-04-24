@@ -26,7 +26,7 @@ RSConfigurableCamera >> zoomToFit [
 	int := self zoomInteraction.
 	shapesRect := int encompassingRectangleFor: canvas.
 	extent := canvas extent * 0.9.
-	sc := extent / (shapesRect extent max: 1 @ 1).
+	sc := extent / (self class maxExtentFor: shapesRect).
 	original := sc x min: sc y.
 	sc := int scaleFor: original.
 	canvasRect := Rectangle 

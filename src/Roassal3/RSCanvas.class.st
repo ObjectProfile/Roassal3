@@ -143,14 +143,13 @@ RSCanvas >> encompassingRectangle [
 
 { #category : #'accessing - computed' }
 RSCanvas >> encompassingRectangleOf: aCollectionOfShapes [
-	| r e |
+	| r |
 	r := aCollectionOfShapes
 		ifEmpty: [ 0@0 corner: 0@0 ]
 		ifNotEmpty: [ Rectangle 
 			merging: (aCollectionOfShapes 
 				collect: [:each | each encompassingRectangle] ) ].
-	e := r extent max: 0.001 @ 0.001.
-	^ r topLeft extent: e
+	^ r topLeft extent: (self camera class maxExtentFor: r)
 ]
 
 { #category : #accessing }

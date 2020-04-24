@@ -27,6 +27,16 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #utilities }
+RSCamera class >> maxExtentFor: rectangle [
+	^ rectangle extent max: self minimumExtent
+]
+
+{ #category : #utilities }
+RSCamera class >> minimumExtent [
+	^ 0.0001 asPoint
+]
+
 { #category : #announce }
 RSCamera >> announce: anEvent [
 	canvas announce: anEvent
@@ -139,7 +149,7 @@ RSCamera >> zoomToFit: anExtent extent: otherExtent [
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
-	sc := anExtent / (rect extent max: 1 @ 1).
+	sc := anExtent / (self class maxExtentFor: rect).
 	sc := sc x min: sc y.
 	self 
 		translateTo: rect floatCenter;

@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Examples-Basic'
 }
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example01BasicBoxes [
 	<script: 'self new example01BasicBoxes open'>
 	| c |
@@ -23,7 +23,7 @@ RSShapeBasicExamples >> example01BasicBoxes [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example02BasicEllipses [
 	<script: 'self new example02BasicEllipses open'>
 
@@ -40,7 +40,7 @@ RSShapeBasicExamples >> example02BasicEllipses [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #composite }
 RSShapeBasicExamples >> example03BasicComposite [
 	<script: 'self new example03BasicComposite open'>
 	| c com |
@@ -69,7 +69,7 @@ RSShapeBasicExamples >> example03BasicComposite [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #composite }
 RSShapeBasicExamples >> example04BasicComposite [
 	<script: 'self new example04BasicComposite open'>
 	| c com |
@@ -100,7 +100,7 @@ RSShapeBasicExamples >> example04BasicComposite [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example05BasicGroup [
 	<script: 'self new example05BasicGroup inspect'>
 	| g |
@@ -186,7 +186,7 @@ RSShapeBasicExamples >> example07EventsMouseMoveDrag [
 	
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example08EllipseBorder [
 	<script: 'self new example08EllipseBorder open'>
 	| c y r |
@@ -357,7 +357,7 @@ RSShapeBasicExamples >> example14BasicBitmap [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example15BasicRoundBoxses [
 	<script: 'self new example15BasicRoundBoxses open'>
 
@@ -532,7 +532,7 @@ RSShapeBasicExamples >> example22BasicPieSlice [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape open'>
 	| c box |
@@ -584,7 +584,7 @@ RSShapeBasicExamples >> example25LabelWithBorder [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #polygons }
 RSShapeBasicExamples >> example26Polygon [
 	<script: 'self new example26Polygon open'>
 	| c |
@@ -666,7 +666,7 @@ RSShapeBasicExamples >> example29PolylineRadius [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #polygons }
 RSShapeBasicExamples >> example30PolygonWithRadius [
 	<script: 'self new example30PolygonWithRadius open'>
 	| c |
@@ -682,7 +682,7 @@ RSShapeBasicExamples >> example30PolygonWithRadius [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #'boxes and ellipses' }
 RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
 	<script: 'self new example31BorderAttachPointWithOffset open'>
 	| c s1 s2|
@@ -708,7 +708,7 @@ RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
 	^ c
 ]
 
-{ #category : #'box and ellipses' }
+{ #category : #events }
 RSShapeBasicExamples >> example32RotateShapeByMouse [
 	<script: 'self new example32RotateShapeByMouse open'>
 	| c s |
@@ -751,7 +751,7 @@ RSShapeBasicExamples >> example33EdgesBetweenChildren [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : #composite }
 RSShapeBasicExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
@@ -788,7 +788,7 @@ RSShapeBasicExamples >> example34PaletteVisualization [
 
 { #category : #events }
 RSShapeBasicExamples >> example35KeyEvents [
-	<script: 'self new example35KeyEvents open'>
+	<script: 'self new example35KeyEvents open setLabel: ''Use the keyboard'''>
 	| c print down up |
 	c := RSCanvas new.
 	down := RSLabel new model: 'DOWN'; text: ''.
@@ -803,4 +803,56 @@ RSShapeBasicExamples >> example35KeyEvents [
 		when: RSKeyUp do: [ :evt | print value: evt value: up ].
 
 	^ c
+]
+
+{ #category : #polygons }
+RSShapeBasicExamples >> example36PolygonAndCanvas [
+	<script: 'self new example36PolygonAndCanvas open setLabel: ''Zoom in or Zoom out'''>
+	| coords canvas int |
+	coords := {(13.3540698 @ 52.5346676).
+	(13.3531445 @ 52.5339734).
+	(13.347075 @ 52.530959).
+	(13.343642 @ 52.531777).
+	(13.3392352 @ 52.5329414).
+	(13.33869 @ 52.531065).
+	(13.337552 @ 52.526725).
+	(13.3278908 @ 52.5276262).
+	(13.327312 @ 52.524392).
+	(13.3268118 @ 52.5234332).
+	(13.326025 @ 52.523974).
+	(13.31646 @ 52.499445).
+	(13.330889 @ 52.500452).
+	(13.331878 @ 52.500556).
+	(13.33527 @ 52.499405).
+	(13.334371 @ 52.498542).
+	(13.335189 @ 52.498098).
+	(13.33451 @ 52.497572).
+	(13.33469 @ 52.495098).
+	(13.336883 @ 52.494522).
+	(13.33899 @ 52.494246).
+	(13.345728 @ 52.494409).
+	(13.345127 @ 52.492168).
+	(13.3453118 @ 52.4866845).
+	(13.3497232 @ 52.4870749).
+	(13.3507406 @ 52.4862916).
+	(13.3527267 @ 52.4846656).
+	(13.3529346 @ 52.4841626).
+	(13.381439 @ 52.4848815).
+	(13.3846565 @ 52.4848903).
+	(13.3860099 @ 52.4846622).
+	(13.386044 @ 52.483165).
+	(13.386408 @ 52.483036).
+	(13.386736 @ 52.483048).
+	(13.386892 @ 52.483063).
+	(13.3540698 @ 52.5346676)}.
+	canvas := RSCanvas new.
+	canvas addShape: (RSPolygon new
+		points: coords;
+		color: Color black).
+	int := RSCanvasController new.
+	int configuration
+		minScale: 1000;
+		maxScale: 10000.
+	canvas @ int.
+	^ canvas
 ]

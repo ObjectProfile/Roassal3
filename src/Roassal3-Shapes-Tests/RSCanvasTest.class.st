@@ -89,6 +89,15 @@ RSCanvasTest >> testEmpty [
 	self assert: canvas numberOfShapes equals: 0
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testEncompassingRectangle [
+	| rect |
+	rect := canvas encompassingRectangle.
+	self assert: rect equals: (Rectangle center: 0@0 extent: RSCamera minimumExtent).
+	
+
+]
+
 { #category : #events }
 RSCanvasTest >> testEvent [ 
 	| box |
