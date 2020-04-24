@@ -251,6 +251,11 @@ RSChart >> title: aTitle [
 ]
 
 { #category : #'public - scales' }
+RSChart >> xLinear [
+	^ self xScale: NSScale linear
+]
+
+{ #category : #'public - scales' }
 RSChart >> xLog [
 	self xScale: NSScale log
 ]
@@ -266,13 +271,24 @@ RSChart >> xSqrt [
 	^ self xScale: NSScale sqrt
 ]
 
+{ #category : #'public - scales' }
+RSChart >> xSymlog [
+	^ self xScale: NSScale symlog
+]
+
 { #category : #decoration }
 RSChart >> xlabel: aTitle [
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
 { #category : #'public - scales' }
+RSChart >> yLinear [
+	^ self yScale: NSScale linear
+]
+
+{ #category : #'public - scales' }
 RSChart >> yLog [
+	"ensure all your data and axis do not contains zero"
 	^ self yScale: NSScale log
 ]
 
@@ -285,6 +301,11 @@ RSChart >> yScale: aScale [
 { #category : #'public - scales' }
 RSChart >> ySqrt [
 	^ self yScale: NSScale sqrt
+]
+
+{ #category : #'public - scales' }
+RSChart >> ySymlog [
+	^ self yScale: NSScale symlog
 ]
 
 { #category : #decoration }
