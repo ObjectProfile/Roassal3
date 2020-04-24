@@ -34,6 +34,7 @@ SpMorphicAdapter >> applyScript [
 { #category : #'scripting actions' }
 SpMorphicAdapter >> basicApplyScript [
 	self model script value: canvas.
+	self model canvas: canvas.
 	self widgetDo: #startStepping.
 	canvas when: RSAbstractMouseEvent do: [ widget takeKeyboardFocus].
 ]
