@@ -4,12 +4,27 @@ When an RSShape is expected, one can provide an RSGroup, RSGroup are therefore p
 
 For example:
 -=-=-=-=-=-=-=-=-=
-m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := (1 to: 20) collect: [ :value | 
 	| g |
 	g := RSGroup new.
-	g add: (RSEllipse new size: c numberOfCoappearances).
-	g add: (RSLabel new text: c name).
+	g add: (RSEllipse new size: 30 atRandom).
+	g add: (RSLabel new text: value).
+	g asShape ].
+
+c := RSCanvas new.
+c addAll: characters.
+RSFlowLayout on: characters.
+c @ RSCanvasController.
+-=-=-=-=-=-=-=-=-=
+
+Layout can also be applied:
+-=-=-=-=-=-=-=-=-=
+characters := (1 to: 20) collect: [ :value | 
+	| g |
+	g := RSGroup new.
+	g add: (RSLabel new text: value).
+	g add: (RSEllipse new size: 30 atRandom).
+	RSVerticalLineLayout new center; gapSize: 0; on: g.
 	g asShape ].
 
 c := RSCanvas new.
