@@ -40,6 +40,8 @@ You should see an animated version of:
 
 [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
 
+[Tutorial 04 - Shape Composition](shapeComposition.md)
+
 ## Documentation
 A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
