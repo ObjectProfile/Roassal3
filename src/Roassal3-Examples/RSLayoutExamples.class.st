@@ -160,7 +160,7 @@ RSLayoutExamples >> example06Cluster [
 				yourself ].
 		group addAll: shapes.
 		RSEdgeBuilder line
-			color: Color blue trans;
+			color: Color blue translucent;
 			canvas: group;
 			shapes: shapes;
 			connectFrom: #superclass.
@@ -179,7 +179,7 @@ RSLayoutExamples >> example06Cluster [
 			normalize: #numberOfMethods.
 		RSClusterLayout on: shapes.
 		RSComposite new
-			color: Color veryLightGray trans;
+			color: Color veryLightGray translucent;
 			model: scale;
 			labeled;
 			draggable;
@@ -325,7 +325,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 				right: 5
 				top: 20
 				bottom: 5);
-			color: Color blue trans;
+			color: Color blue translucent;
 			yourself  ].
 	RSGridLayout on: shapes.
 	canvas addAll: shapes.
@@ -396,7 +396,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	colors := RSColorPalette sequential pubu9.
 	boxBuilder := [ :quad :index |
 		RSBox new
-			border: (RSBorder new color: Color lightGray trans; width: 0.5);
+			border: (RSBorder new color: Color lightGray translucent; width: 0.5);
 			extent: quad rectangle extent;
 			position: quad rectangle floatCenter;
 			color: ((colors scale: index) alpha: 0.5 );

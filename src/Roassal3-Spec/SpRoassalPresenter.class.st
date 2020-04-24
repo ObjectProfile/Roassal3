@@ -5,7 +5,8 @@ Class {
 	#name : #SpRoassalPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'script'
+		'script',
+		'currentCanvas'
 	],
 	#category : #'Roassal3-Spec-Core'
 }
@@ -19,6 +20,16 @@ SpRoassalPresenter class >> adapterName [
 SpRoassalPresenter class >> open [
 	<script>
 	^ self new openWithSpec
+]
+
+{ #category : #accessing }
+SpRoassalPresenter >> canvas [
+	^ currentCanvas
+]
+
+{ #category : #accessing }
+SpRoassalPresenter >> canvas: aRSCanvas [ 
+	currentCanvas := aRSCanvas
 ]
 
 { #category : #initialization }

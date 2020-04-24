@@ -154,8 +154,8 @@ RSColorPaletteChooser >> initializeInteractions [
 RSColorPaletteChooser >> initializeWidgets [
 	buttons := self instantiate: SpRoassalPresenter.
 	colors := self instantiate: SpRoassalPresenter.
-	buttons script: [ :view | 
-		self renderButtonsOn: view.
+	buttons script: [ :canvas | 
+		self renderButtonsOn: canvas.
 		self renderColorPalettesFor: buttonElements first.].
 	self initializeInteractions.
 	
