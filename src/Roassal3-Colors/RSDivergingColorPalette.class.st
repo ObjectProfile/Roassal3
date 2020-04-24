@@ -18,6 +18,11 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
+{ #category : #'as yet unclassified' }
+RSDivergingColorPalette class >> paletteName [
+	^ #diverging
+]
+
 { #category : #palette }
 RSDivergingColorPalette >> brbg10 [
 	^ self fromTriplet: #(#(84 48 5) #(140 81 10) #(191 129 45) #(223 194 125) #(246 232 195) #(199 234 229) #(128 205 193) #(53 151 143) #(1 102 94) #(0 60 48))

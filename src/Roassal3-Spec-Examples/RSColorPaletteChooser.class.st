@@ -95,8 +95,7 @@ RSColorPaletteChooser >> clipTextFor: m [
 	| selector |
 	m isColor 
 		ifTrue: [ ^ m asHexString ].
-	selector := currentPalette class name.
-	selector := selector copyFrom: 5 to: selector size.
+	selector := currentPalette class paletteName.
 	^ RSColorPalette name, ' ',  selector asLowercase, ' ', m selector 
 ]
 

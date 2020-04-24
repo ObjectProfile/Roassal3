@@ -17,6 +17,11 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
+{ #category : #'as yet unclassified' }
+RSQualitativeColorPalette class >> paletteName [
+	^ #qualitative
+]
+
 { #category : #palette }
 RSQualitativeColorPalette >> accent3 [
 	^ self fromTriplet: #(#(127 201 127) #(190 174 212) #(253 192 134))

@@ -15,6 +15,11 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
+{ #category : #'as yet unclassified' }
+RSSequentialColorPalette class >> paletteName [
+	^ #sequential
+]
+
 { #category : #palette }
 RSSequentialColorPalette >> blues3 [
 	^ self fromTriplet: #(#(222 235 247) #(158 202 225) #(49 130 189))
