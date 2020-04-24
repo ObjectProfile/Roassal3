@@ -29,6 +29,11 @@ RSColorPalette class >> diverging [
 	^ RSDivergingColorPalette new
 ]
 
+{ #category : #'as yet unclassified' }
+RSColorPalette class >> paletteName [
+	^ self subclassResponsibility
+]
+
 { #category : #'instance creation' }
 RSColorPalette class >> qualitative [
 	^ RSQualitativeColorPalette new
