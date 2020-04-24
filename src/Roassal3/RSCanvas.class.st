@@ -149,7 +149,7 @@ RSCanvas >> encompassingRectangleOf: aCollectionOfShapes [
 		ifNotEmpty: [ Rectangle 
 			merging: (aCollectionOfShapes 
 				collect: [:each | each encompassingRectangle] ) ].
-	e := r extent max: 1 @ 1.
+	e := r extent max: 0.001 @ 0.001.
 	^ r topLeft extent: e
 ]
 

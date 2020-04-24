@@ -110,7 +110,7 @@ RSPolygon >> centerPoints [
 	| r center |
 	r := Rectangle encompassing: points.
 	center := r floatCenter.
-	points doWithIndex: [ :p :i | points at: i put: p - center ].
+	points := points collect: [ :p | p - center ].
 	^ r
 ]
 
