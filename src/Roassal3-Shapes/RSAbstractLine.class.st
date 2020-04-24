@@ -219,6 +219,7 @@ RSAbstractLine >> resetPath [
 
 { #category : #path }
 RSAbstractLine >> sessionChanged [
+	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath.
 	self hasMarkers ifFalse: [ ^ self ].
 	self markersDo: [ :mark | mark shape sessionChanged ].

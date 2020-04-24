@@ -262,8 +262,8 @@ RSAthensMorph >> checkSession [
 	session == Smalltalk session ifTrue: [ ^ self ].
 	surface := nil.
 	self createSurface.
-	roassalCanvas shapes do: #sessionChanged.
-	roassalCanvas fixedShapes do: #sessionChanged.
+	roassalCanvas shapes do: [ :s | s sessionChanged ].
+	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
 	
 ]
 
