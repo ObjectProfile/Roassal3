@@ -1,5 +1,5 @@
 "
-I represent a marker for TSLine, TSPolygon and TSBezier
+I represent a marker for RSLine, RSPolygon and RSBezier
 "
 Class {
 	#name : #RSMarker,
