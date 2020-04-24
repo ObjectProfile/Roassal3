@@ -271,6 +271,7 @@ RSComposite >> resetPath [
 
 { #category : #path }
 RSComposite >> sessionChanged [
+	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath.
 	children ifNil: [ ^ self ].
 	children do: #sessionChanged

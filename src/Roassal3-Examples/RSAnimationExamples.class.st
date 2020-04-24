@@ -2280,7 +2280,7 @@ RSAnimationExamples >> example39ForceLayout [
 		e := RSEllipse new
 			draggable;
 			model: cls;
-			color: Color purple trans;
+			color: Color purple translucent;
 			size: 10;
 			yourself.
 		cls = Collection ifTrue: [ e color: Color red ].
@@ -2949,7 +2949,7 @@ RSAnimationExamples >> example49River [
 	c color: Color black.
 	r := Random new.
 	back := RSBox new
-		color: Color black trans;
+		color: Color black translucent;
 		extent: extent;
 		yourself.
 	rect := back encompassingRectangle.

@@ -72,6 +72,12 @@ RSPopup >> shapeBuilder: aShapeBuilder [
 	shapeBuilder := aShapeBuilder
 ]
 
+{ #category : #accessing }
+RSPopup >> text: oneArgBlock [
+	"The block is evaluated with the model provided as argument"
+	self shapeBuilder textBlock: oneArgBlock
+]
+
 { #category : #hooks }
 RSPopup >> translatePopup: popup event: evt [ 
 	| p e extent |

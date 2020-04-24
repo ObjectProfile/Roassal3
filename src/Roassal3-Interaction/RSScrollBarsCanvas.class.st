@@ -136,12 +136,12 @@ RSScrollBarsCanvas >> renderLegendOn: lb [
 
 { #category : #accessing }
 RSScrollBarsCanvas >> scrollBorderColor [
-	^ Color lightGray trans
+	^ Color lightGray translucent
 ]
 
 { #category : #accessing }
 RSScrollBarsCanvas >> scrollColor [
-	^ Color lightGray trans.
+	^ Color lightGray translucent.
 ]
 
 { #category : #accessing }

@@ -193,7 +193,7 @@ RSAbstractTick >> renderIn: canvas [
 		shouldHaveLabels ifTrue: [ 
 			lbl := self createLabelFor: i.
 			self labelLocation move: lbl on: aTick.
-			canvas addShape: lbl.
+			canvas add: lbl.
 		]
 	]
 	

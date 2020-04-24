@@ -728,7 +728,7 @@ RSShapeBasicExamples >> example33EdgesBetweenChildren [
 	| c b1 b2 e1 com1 com2 |
 	c := RSCanvas new.
 	com1 := RSComposite new.
-	com1 paint: Color blue trans.
+	com1 paint: Color blue translucent.
 	b1 := RSBox new size: 10.
 	com1 add: b1.
 	com1 adjustToChildren.
@@ -736,7 +736,7 @@ RSShapeBasicExamples >> example33EdgesBetweenChildren [
 	com1 position: 200@0.
 	
 	com2 := RSComposite new.
-	com2 paint: Color blue trans.
+	com2 paint: Color blue translucent.
 	b2 := RSBox new size: 10.
 	com2 add: b2.
 	com2 adjustToChildren.

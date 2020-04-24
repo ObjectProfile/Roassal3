@@ -155,3 +155,25 @@ RSChartExample >> example08TwoCharts [
 	c @ RSCanvasController.
 	^ c 
 ]
+
+{ #category : #examples }
+RSChartExample >> example09LinearSqrtSymlog [
+	<script: 'self new example09LinearSqrtSymlog open'>
+	| c x y |
+	c := RSCanvas new @ RSCanvasController.
+	x := (-5 to: 500 by: 0.1).
+	y := x.
+	#(yLinear ySqrt ySymlog) do: [ :sel | 
+		| chart g |
+		g := RSGroup new.
+		chart := RSChart new.
+		chart container: g.
+		chart addPlot: (RSLinePlot new x: x y: y).
+		chart addDecoration: (RSVerticalTick new asFloat).
+		chart perform: sel.
+		chart title: sel.
+		chart build.
+		c add: g asShape ].
+	RSHorizontalLineLayout on: c shapes.
+	^ c
+]
