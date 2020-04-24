@@ -29,7 +29,6 @@ c @ RSCanvasController
 
 { #category : #'*Roassal3-Shapes' }
 RSGroup >> asShapeFor: model [
-
 	"Convert a RSGroup into a shape, and tis shape has a model. Pretty convenient to create a group of shapes as a composite.
 Consider the following example:
 
@@ -50,9 +49,7 @@ elements @ RSHighlightable defaultRed.
 RSGridLayout on: elements.
 c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=-=-=-=
-
 "
-
 	^ RSComposite new 
 		model: model;
 		shapes: self
