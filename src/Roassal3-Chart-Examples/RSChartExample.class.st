@@ -163,7 +163,7 @@ RSChartExample >> example09LinearSqrtSymlog [
 	c := RSCanvas new @ RSCanvasController.
 	x := (-5 to: 500 by: 0.1).
 	y := x.
-	#(yLinear ySqrt ySymlog) do: [ :sel | 
+	#(yLinear ySqrt yLog) do: [ :sel | 
 		| chart g |
 		g := RSGroup new.
 		chart := RSChart new.
