@@ -18,7 +18,7 @@ A Metric normalizer is made to assign a color, or a particular shape computed fr
 	c addAll: shapes.
 	RSGridLayout on: shapes.
 
-	c @ RSControlsCanvas 
+	c @ RSCanvasController 
 -=-=-=-=
 
 Here is another example:
