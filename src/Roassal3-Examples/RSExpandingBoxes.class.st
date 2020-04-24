@@ -37,7 +37,7 @@ RSExpandingBoxes >> nodeFor: cls [
 	com model: cls.
 	cls subclasses ifNotEmpty: [ com border: border ].
 	com announcer: base announcer.
-	com color: (color scale: cls) trans.
+	com color: (color scale: cls) translucent.
 	^ com
 ]
 

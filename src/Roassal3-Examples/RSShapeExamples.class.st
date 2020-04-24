@@ -593,7 +593,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 			draggable;
 			model: cls;
 			popup;
-			color: Color red trans;
+			color: Color red translucent;
 			yourself]).
 	RSNormalizer size
 		from: 5;
@@ -677,7 +677,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 	canvas := RSCanvas new.
 	boxes := (1 to: 100) collect: [ :n |
 		RSComposite new
-			color: Color blue trans;
+			color: Color blue translucent;
 			shapes: { RSLabel new text: n; yourself };
 			size: 30;
 			yourself ] as: RSGroup.
@@ -890,7 +890,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			 ].
 		RSGridLayout on: shapes.
 		RSComposite new
-			color: Color blue trans;
+			color: Color blue translucent;
 			model: pkg;
 			addInteraction: l;
 			draggable;
@@ -899,7 +899,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			yourself ] as: RSGroup.
 	high := RSHighlightable new.
 	high withEdges.
-	high highlightColor: Color red trans.							
+	high highlightColor: Color red translucent.							
 	packageElements @ high.						
 	canvas := RSCanvas new.
 	canvas addAll: packageElements.
@@ -910,7 +910,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		noBorder;
 		widthFrom:[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
 		widthTo:[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
-		paint: Color blue trans;
+		paint: Color blue translucent;
 		withBorderAttachPoint;
 		connectFrom: #yourself toAll: #dependentPackages.
 	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
@@ -1019,7 +1019,7 @@ RSShapeExamples >> example29AntAnimation [
 				size: met linesOfCode ].
 		RSGridLayout on: methods.
 		RSComposite new
-			color: Color white trans;
+			color: Color white translucent;
 			model: cls;
 			shapes: methods;
 			padding: 10;

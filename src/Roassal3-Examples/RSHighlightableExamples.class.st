@@ -304,7 +304,7 @@ RSHighlightableExamples >> example08DependendMethods [
 				yourself ] as: RSGroup.
 		pkg := RSComposite new
 			children: classes;
-			paint: Color blue trans;
+			paint: Color blue translucent;
 			model: p;
 			@ popup;
 			draggable;

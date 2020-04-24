@@ -18,7 +18,7 @@ Class {
 RSGraphCanvasMonitor >> box [
 	^ RSBox new
 		extent: 100@ 50;
-		color: Color lightGray trans;
+		color: Color lightGray translucent;
 		cornerRadius: 5;
 		yourself.
 ]
@@ -37,9 +37,9 @@ RSGraphCanvasMonitor >> defaultLabel [
 RSGraphCanvasMonitor >> defaultPolygon [
 	^ RSPolygon new
 		paint: ((LinearGradientPaint fromArray:
-				{0  -> Color red trans.
-				0.5 -> Color orange trans.
-				1   -> Color green trans. } )
+				{0  -> Color red translucent.
+				0.5 -> Color orange translucent.
+				1   -> Color green translucent. } )
 			start: 0@25;
 			stop: 0@ -20;
 			yourself);

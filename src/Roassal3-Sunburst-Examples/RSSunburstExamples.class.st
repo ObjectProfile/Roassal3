@@ -97,7 +97,7 @@ RSSunburstExamples >> example06Rotation [
 	sb explore: Collection using: #subclasses.
 	sb build.
 	RSNormalizer color
-		from: Color veryLightGray trans;
+		from: Color veryLightGray translucent;
 		to: Color gray;
 		shapes: (sb shapes reject: #isSLeaf);
 		normalize: #linesOfCode.
