@@ -287,6 +287,11 @@ RSChart >> yLinear [
 ]
 
 { #category : #'public - scales' }
+RSChart >> yLn [
+	^ self yScale: NSLnScale new
+]
+
+{ #category : #'public - scales' }
 RSChart >> yLog [
 	^ self yScale: NSScale symlog
 ]
