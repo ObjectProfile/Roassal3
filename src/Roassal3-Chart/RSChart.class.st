@@ -256,6 +256,11 @@ RSChart >> xLinear [
 ]
 
 { #category : #'public - scales' }
+RSChart >> xLn [
+	^ self xScale: NSScale ln
+]
+
+{ #category : #'public - scales' }
 RSChart >> xLog [
 	^ self xScale: NSScale symlog
 ]
@@ -288,7 +293,7 @@ RSChart >> yLinear [
 
 { #category : #'public - scales' }
 RSChart >> yLn [
-	^ self yScale: NSLnScale new
+	^ self yScale: NSScale ln
 ]
 
 { #category : #'public - scales' }
