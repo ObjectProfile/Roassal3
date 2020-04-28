@@ -13,7 +13,16 @@ Class {
 
 { #category : #interactions }
 RSPropertableObject >> @ anInteractionClassOrInstance [
-	"Add an interaction to the node"
+	"Add an interaction to the canvas or a shape.
+Here is an example that illustrate two interactions, one for a shape and another for the canvas:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+shape := RSEllipse new size: 30; model: 'hello'.
+c add: shape.
+shape @ RSPopup.
+c @ RSCanvasController
+-=-=-=-=-=-=-=-=-=
+	"
 	
 	self addInteraction: anInteractionClassOrInstance
 ]
