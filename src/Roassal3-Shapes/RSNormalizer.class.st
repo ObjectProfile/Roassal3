@@ -70,12 +70,9 @@ RSNormalizer size
 RSNormalizer color
 	shapes: c shapes;
 	normalize: #yourself.
-	
 RSFlowLayout on: c shapes.
-
 c shapes @ RSPopup.
-
-c
+c @ RSCanvasController
 -=-=-=-=
 "
 Class {
