@@ -114,7 +114,7 @@ RSForceBasedLayout >> doExecute: nodeElements [
 	nodes do: [ :e | translator translateTopLeftOf: e to: e position ]
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RSForceBasedLayout >> doNotUseProgressBar [
 	shouldUseProgressBar := false
 ]
@@ -386,7 +386,8 @@ RSForceBasedLayout >> theta: aNumber [
 	theta := aNumber
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RSForceBasedLayout >> useProgressBar [
+	"Public method. Make the layout use a progress bar"
 	shouldUseProgressBar := true
 ]

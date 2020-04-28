@@ -1,5 +1,19 @@
 "
 A layout that packs elements according to their bounding box. Check #gap and #preferredAngle.
+
+Here is an example:
+-=-=-=-=-=-=-=-=-=
+numberOfBoxes := 900.
+r := Random seed: 42.
+shapes := RSGroup new.
+numberOfBoxes timesRepeat: [ 
+	shapes add: (RSBox new width: (r nextInt: 40); height: (r nextInt: 40)) ].
+
+c := RSCanvas new.
+c addAll: shapes.
+RSRectanglePackLayout new useProgressBar; on: shapes.
+c @ RSCanvasController
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSRectanglePackLayout,
@@ -74,7 +88,7 @@ RSRectanglePackLayout >> doExecute: elements [
 
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RSRectanglePackLayout >> doNotUseProgressBar [
 	shouldUseProgressBar := false
 ]
@@ -150,7 +164,8 @@ RSRectanglePackLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RSRectanglePackLayout >> useProgressBar [
+	"Public method. Make the layout use a progress bar"
 	shouldUseProgressBar := true
 ]
