@@ -191,6 +191,30 @@ RSLayoutExamples >> example06Cluster [
 	^ canvas
 ]
 
+{ #category : #layouts }
+RSLayoutExamples >> example07AutomaticLayoutWhenWindowIsResized [
+	<script: 'self new example07AutomaticLayoutWhenWindowIsResized open'>
+	| classes shapes c eb |
+	classes := { 'Roassal3-Layouts'. 'Roassal3' }
+		flatCollect: [:pkgname | (RPackage organizer
+			packageNamed: pkgname) definedClasses ].
+	shapes := RSGroup new.
+	classes do: [ :cls | shapes add: (RSEllipse new model: cls) ].
+
+	c := RSCanvas new.
+	c addAll: shapes.
+
+	eb := RSEdgeBuilder orthoVertical.
+	eb canvas: c.
+	eb connectFrom: #superclass.
+
+	RSNormalizer size
+		shapes: shapes;
+		normalize: [ :cls | cls numberOfMethods + 5 ].
+	RSTreeLayout on: shapes.
+	^ c @ RSCanvasController @ RSHierarchyPacker
+]
+
 { #category : #lines }
 RSLayoutExamples >> example07ForceBasedLayout [
 	<script: 'self new example07ForceBasedLayout open'>

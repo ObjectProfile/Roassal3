@@ -1,5 +1,18 @@
 "
-I am a second different way to draw an UML class, similar to the system Torch
+I am a second different way to draw an UML class, similar to the system Torch.
+
+Here is an example:
+-=-=-=-=-=-=-=-=-=
+builder := RSUMLClassBuilder new.
+classes := { 'Roassal3-Layouts'. 'Roassal3' }
+	flatCollect: [:pkgname | (RPackage organizer
+		packageNamed: pkgname) definedClasses ].
+builder classes: classes.
+builder renderer: RSTorchUMLClassRenderer new.
+builder build.
+builder canvas @ RSHierarchyPacker.
+builder canvas
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSTorchUMLClassRenderer,

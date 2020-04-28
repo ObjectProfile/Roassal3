@@ -1,5 +1,57 @@
 "
 This interaction layouts the connected subgraphs of a view using a rectangle pack layout each time the view changes it's extent (e.g. a window resize).
+
+Adapt the layout based on the window size:
+-=-=-=-=-=-=-=-=-=
+numberOfBoxes := 50.
+r := Random seed: 42.
+shapes := RSGroup new.
+numberOfBoxes timesRepeat: [ 
+    shapes add: (RSBox new width: (r nextInt: 40); height: (r nextInt: 40)) ].
+
+c := RSCanvas new. 
+c addAll: shapes.
+RSRectanglePackLayout new useProgressBar; on: shapes.
+c @ RSCanvasController @ RSHierarchyPacker.
+c open
+-=-=-=-=-=-=-=-=-=
+
+Another example:
+-=-=-=-=-=-=-=-=-=
+""Try resizing the window. Note that it also works in the inspector""
+classes := { 'Roassal3-Layouts'. 'Roassal3' }
+	flatCollect: [:pkgname | (RPackage organizer
+		packageNamed: pkgname) definedClasses ].
+shapes := RSGroup new.
+classes do: [ :c | shapes add: (RSEllipse new model: c) ].
+
+c := RSCanvas new.
+c addAll: shapes.
+
+eb := RSEdgeBuilder orthoVertical.
+eb canvas: c.
+eb connectFrom: #superclass.
+
+RSNormalizer size
+	shapes: shapes;
+	normalize: [ :c | c numberOfMethods + 5 ].
+RSTreeLayout on: shapes.
+c @ RSCanvasController @ RSHierarchyPacker.
+c open
+-=-=-=-=-=-=-=-=-=
+
+Another example:
+-=-=-=-=-=-=-=-=-=
+builder := RSUMLClassBuilder new.
+classes := { 'Roassal3-Layouts'. 'Roassal3' }
+	flatCollect: [:pkgname | (RPackage organizer
+		packageNamed: pkgname) definedClasses ].
+builder classes: classes.
+builder renderer: RSTorchUMLClassRenderer new.
+builder build.
+builder canvas @ RSHierarchyPacker.
+builder canvas open
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSHierarchyPacker,
