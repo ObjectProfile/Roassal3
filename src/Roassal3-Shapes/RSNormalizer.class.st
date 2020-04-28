@@ -1,24 +1,24 @@
 "
 A Metric normalizer is made to assign a color, or a particular shape computed from a group of elements. Consider the following example:
 -=-=-=-=
-	classes := Collection withAllSubclasses.
-	c := RSCanvas new.
-	
-	shapes := classes collect: [ :cls |
-		b := RSBox new.
-		b model: cls.
-		b size: cls numberOfMethods.
-		b @ RSDraggable @ RSPopup.
-		b ].
+classes := Collection withAllSubclasses.
+c := RSCanvas new.
 
-	RSNormalizer color
-		shapes: shapes;
-		normalize: #numberOfMethods.
+shapes := classes collect: [ :cls |
+	b := RSBox new.
+	b model: cls.
+	b size: cls numberOfMethods.
+	b @ RSDraggable @ RSPopup.
+	b ].
 
-	c addAll: shapes.
-	RSGridLayout on: shapes.
+RSNormalizer color
+	shapes: shapes;
+	normalize: #numberOfMethods.
 
-	c @ RSCanvasController 
+c addAll: shapes.
+RSGridLayout on: shapes.
+
+c @ RSCanvasController 
 -=-=-=-=
 
 Here is another example:
@@ -46,13 +46,13 @@ RSNormalizer color
 
 RSEdgeBuilder orthoVertical
     withVerticalAttachPoint;
-    markerStart: (RSPolygon arrow size: 5; color: Color blue);
+    markerStart: (RSShapeFactory arrow size: 5; color: Color blue);
     canvas: canvas;
     shapes: shapes;
     connectFrom: #superclass.
     
 RSTreeLayout on: shapes.
-canvas @ RSControlsCanvas.
+canvas @ RSCanvasController.
 canvas
 -=-=-=-=
 
