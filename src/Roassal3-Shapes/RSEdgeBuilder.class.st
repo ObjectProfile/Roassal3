@@ -50,7 +50,7 @@ RSLocation new
 	move: shapes first on: shapes allButFirst.
 shapes @ RSDraggable.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 ```
 "
 Class {
@@ -508,27 +508,30 @@ RSEdgeBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
 
 { #category : #'public using source' }
 RSEdgeBuilder >> source: objects connectFrom: fromblock to: toBlock [
-	"Define some edges from objects that are not part of the view
-	
-nbOfNodes := 40.
+	"Define some edges from objects that are not part of the canvas"
+	"
+	nbOfNodes := 40.
 nbOfRandomEdges := 40.
 
 nodes := 1 to: nbOfNodes.
 edges := (1 to: nbOfRandomEdges) 
 				collect: [ :notUsed | nodes atRandom -> nodes atRandom ].
 
-b := RTMondrian new.
+b := RSCanvas new .
 
-b shape circle color: (Color black alpha: 0.5).
-b nodes: nodes.
+b addAll: (nodes collect: [ :n|
+	RSEllipse new
+		model: n;
+		size: 5;
+		color: (Color black alpha: 0.5)]).
 
-b shape line color: (Color gray alpha: 0.3).
-b edges
+RSEdgeBuilder line
+	color: (Color gray alpha: 0.3);
+	canvas: b;
 	source: edges connectFrom: #key to: #value.
 
-b layout force.
-b
-	"
+RSForceBasedLayout on: b nodes.
+b"
 	| assocs allObjects |
 	self assert: [ objects notNil ] description: 'Cannot provide a nil value as the source'.
 	self assert: [ objects isCollection ] description: 'Need to provide a collection as the source'.
@@ -555,18 +558,21 @@ nodes := 1 to: nbOfNodes.
 edges := (1 to: nbOfRandomEdges) 
 				collect: [ :notUsed | nodes atRandom -> {nodes atRandom . nodes atRandom} ].
 
-b := RTMondrian new.
+b := RSCanvas new .
 
-b shape circle color: (Color black alpha: 0.5).
-b nodes: nodes.
+b addAll: (nodes collect: [ :n|
+	RSEllipse new
+		model: n;
+		size: 5;
+		color: (Color black alpha: 0.5)]).
 
-b shape line color: (Color gray alpha: 0.3).
-b edges
+RSEdgeBuilder line
+	color: (Color gray alpha: 0.3);
+	canvas: b;
 	source: edges connectFrom: #key toAll: #value.
 
-b layout force.
-b
-	"
+RSForceBasedLayout on: b nodes.
+b"
 	| assocs allObjects |
 	allObjects := Set new.
 
@@ -593,18 +599,21 @@ nodes := 1 to: nbOfNodes.
 edges := (1 to: nbOfRandomEdges) 
 				collect: [ :notUsed | {nodes atRandom . nodes atRandom} -> nodes atRandom ].
 
-b := RTMondrian new.
+b := RSCanvas new .
 
-b shape circle color: (Color black alpha: 0.5).
-b nodes: nodes.
+b addAll: (nodes collect: [ :n|
+	RSEllipse new
+		model: n;
+		size: 5;
+		color: (Color black alpha: 0.5)]).
 
-b shape line color: (Color gray alpha: 0.3).
-b edges
+RSEdgeBuilder line
+	color: (Color gray alpha: 0.3);
+	canvas: b;
 	source: edges connectFromAll: #key to: #value.
 
-b layout force.
-b
-	"
+RSForceBasedLayout on: b nodes.
+b"
 	| assocs allObjects |
 	allObjects := Set new.
 
@@ -665,22 +674,24 @@ RSEdgeBuilder >> useAssociation: assoc [
 
 { #category : #'public associations' }
 RSEdgeBuilder >> useAssociations: associations [
-	"associations have to be between model objects"
-	
-	"
-	Here is an example
-	
-b := RTMondrian new.
-b nodes: (1 to: 3).
-b shape line
-	color: Color red trans;
-	withVerticallAttachPoint.
-b edges noRepetition; useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
-b layout grid.
-b 
+	"associations have to be between model objects
 
-	"
-	
+
+b := RSCanvas  new.
+b addAll: ((1 to: 3) collect: [:i |
+	RSEllipse new
+		model: i;
+		size: 5]).
+
+RSEdgeBuilder line
+	color: Color red translucent;
+	canvas: b;
+	withVerticalAttachPoint;
+	noRepetition;
+	useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
+RSGridLayout on: b nodes.
+b @ RSCanvasController
+"
 	| fromElement toElement |
 	createdEdges := RSGroup new.
 	associations do: [ :assoc |
@@ -722,7 +733,7 @@ to @ RSDraggable.
 
 to translateTo: 50 @ 40.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=-=
 	"
 	self shape width: aNumber
@@ -751,7 +762,7 @@ to @ RSDraggable.
 
 to translateTo: 50 @ 40.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=-=
 	"
 	self attachPoint: RSBorderAttachPoint new.
@@ -780,7 +791,7 @@ to @ RSDraggable.
 
 to translateTo: 50 @ 40.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=-=
 	"
 	self attachPoint: RSHorizontalAttachPoint new.
@@ -809,7 +820,7 @@ to @ RSDraggable.
 
 to translateTo: 50 @ 40.
 
-c @ RSControlsCanvas
+c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=-=
 	"
 	self attachPoint: RSVerticalAttachPoint new.
