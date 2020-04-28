@@ -25,8 +25,8 @@ RSAbstractScaleInteraction >> maxScale [
 ]
 
 { #category : #accessing }
-RSAbstractScaleInteraction >> maxScale: anObject [
-	maxScale := anObject
+RSAbstractScaleInteraction >> maxScale: aNumber [
+	maxScale := aNumber
 ]
 
 { #category : #accessing }
@@ -35,8 +35,8 @@ RSAbstractScaleInteraction >> minScale [
 ]
 
 { #category : #accessing }
-RSAbstractScaleInteraction >> minScale: anObject [
-	minScale := anObject
+RSAbstractScaleInteraction >> minScale: aNumber [
+	minScale := aNumber
 ]
 
 { #category : #accessing }

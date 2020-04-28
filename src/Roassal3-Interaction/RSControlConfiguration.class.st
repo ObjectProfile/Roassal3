@@ -8,6 +8,20 @@ controller := RSCanvasController new.
 controller configuration: (RSControlConfiguration new maxScale: 10).
 c @ controller.
 -=-=--=-=--=-=--=-=-
+
+
+-=-=--=-=--=-=--=-=-
+canvas := RSCanvas new.
+shapes := #('hello' 'world' 'from' 'Roassal3') collect: [ :s | RSLabel new text: s ] as: RSGroup.
+canvas addAll: shapes.
+RSVerticalLineLayout on: shapes.
+int := RSCanvasController new.
+int configuration
+	minScale: 1;
+	maxScale: 3.
+canvas @ int.
+canvas
+-=-=--=-=--=-=--=-=-
 "
 Class {
 	#name : #RSControlConfiguration,
@@ -66,6 +80,7 @@ RSControlConfiguration >> maxScale [
 
 { #category : #accessing }
 RSControlConfiguration >> maxScale: aNum [
+	"Set the maximum scale for the configuration"
 	maxScale := aNum
 ]
 
@@ -76,6 +91,7 @@ RSControlConfiguration >> minScale [
 
 { #category : #accessing }
 RSControlConfiguration >> minScale: aNum [
+	"Set the minimum scale allowed by the configuration."
 	minScale := aNum
 ]
 
