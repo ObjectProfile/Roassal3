@@ -6,6 +6,17 @@ Nice numbers are just step sizes and used for tick spacing. We will use only nic
   	[1] An Extension of Wilkinson's Algorithm for positioning Tick Labels on Axes
   		 				(Justin Talbot, Sharon Lin, Pat Hanrahan)
    [2] Nice Numbers for Graph Labels (Paul S. Heckbert, Graphic Gems I)
+
+Here is an example on how to use it:
+-=-=-=-=-=-=-=-=-=
+nice := RSNiceStepSizeGenerator new.
+lg := RSLabelGenerator nice: nice.
+
+lg setLooseFlag: true.
+label := lg searchMin: -98.0 max: 18.0 desired: 3.
+label asString
+-=-=-=-=-=-=-=-=-=
+This prints  '(Score: 0.14) -100.00	-60.00	-20.00	20.00	'
 "
 Class {
 	#name : #RSNiceStepSizeGenerator,
