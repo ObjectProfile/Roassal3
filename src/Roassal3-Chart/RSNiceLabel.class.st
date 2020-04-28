@@ -1,5 +1,5 @@
 "
-I am an utility class for RTLabelGenerator
+I am an utility class for RSLabelGenerator
 "
 Class {
 	#name : #RSNiceLabel,
