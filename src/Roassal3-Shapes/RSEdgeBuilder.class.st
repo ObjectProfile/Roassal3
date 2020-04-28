@@ -674,9 +674,10 @@ RSEdgeBuilder >> useAssociation: assoc [
 
 { #category : #'public associations' }
 RSEdgeBuilder >> useAssociations: associations [
-	"associations have to be between model objects
-
-
+	"Draw edges between shapes using associations. Each association has to follow the pattern: startmodel -> endmodel
+	
+For example
+-=-=-=-=-=-=-=-=-=
 b := RSCanvas  new.
 b addAll: ((1 to: 3) collect: [:i |
 	RSEllipse new
@@ -691,6 +692,7 @@ RSEdgeBuilder line
 	useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
 RSGridLayout on: b nodes.
 b @ RSCanvasController
+-=-=-=-=-=-=-=-=-=
 "
 	| fromElement toElement |
 	createdEdges := RSGroup new.
