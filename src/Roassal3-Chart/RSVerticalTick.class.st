@@ -19,9 +19,6 @@ RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber |
 	scaledNumber := yScale scale: aNumber.
 	self assert: [ scaledNumber isInfinite not ].
-	scaledNumber isNaN ifTrue: [ 
-		yScale domain: { Float epsilon.  yScale domain second }.
-		scaledNumber := yScale scale: Float epsilon ].
 	self assert: [ scaledNumber isNaN not ].
 	^ RSLine new
 		startPoint: 0 @ scaledNumber;

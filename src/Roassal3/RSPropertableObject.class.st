@@ -95,7 +95,7 @@ RSPropertableObject >> propertiesDo: block [
 
 { #category : #properties }
 RSPropertableObject >> propertyAt: aKey [
-	^ self properties at: aKey ifAbsent: nil
+	^ self properties at: aKey ifAbsent: [ nil ]
 ]
 
 { #category : #properties }

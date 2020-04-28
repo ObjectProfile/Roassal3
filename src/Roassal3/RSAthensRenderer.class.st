@@ -470,13 +470,12 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	| path |
 	path := shape path.
 	path ifNotNil: [ ^ path ].
-	path ifNil: [ 
-		path := athensCanvas
-			createPath: [ :pathBuilder |
-				builder := pathBuilder.
-				shape buildPathOn: self ].
-		builder := nil.
-		shape path: path ].
+	path := athensCanvas
+		createPath: [ :pathBuilder |
+			builder := pathBuilder.
+			shape buildPathOn: self ].
+	builder := nil.
+	shape path: path.
 	^ path
 ]
 

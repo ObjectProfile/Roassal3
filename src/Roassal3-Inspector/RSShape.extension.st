@@ -2,12 +2,12 @@ Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Inspector' }
 RSShape >> gtCanvasForInspector [
-	| view copy |
-	view := RSCanvas new.
+	| canvas copy |
+	canvas := RSCanvas new.
 	copy := self copy.
-	view addShape: copy.
-	view @ RSChessBackground.
-	^ view
+	canvas addShape: copy.
+	canvas @ RSChessBackground.
+	^ canvas
 ]
 
 { #category : #'*Roassal3-Inspector' }

@@ -100,7 +100,7 @@ RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle angle: 
 
 { #category : #visiting }
 RSPolygon >> buildPathOn: visitor [
-	visitor buildPolygonPath: self.
+	visitor buildPolygonPath: self
 ]
 
 { #category : #private }
