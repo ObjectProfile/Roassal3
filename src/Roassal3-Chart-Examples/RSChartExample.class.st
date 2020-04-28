@@ -177,3 +177,27 @@ RSChartExample >> example09LinearSqrtSymlog [
 	RSHorizontalLineLayout on: c shapes.
 	^ c
 ]
+
+{ #category : #examples }
+RSChartExample >> example10BarPlot [
+	<script: 'self new example10BarPlot open'>
+	| plt p x y |
+
+	x := 0.0 to: 2 count: 10.
+	y := (x raisedTo: 2) - 2.
+	plt := RSChart new.
+	p := RSBarPlot new x: x y: y.
+
+
+	plt addPlot: p.
+	plt xlabel: 'X Axis'.
+	plt addDecoration: (RSHorizontalTick new 
+		numberOfTicks: 20;
+		asFloat).
+	plt addDecoration: (RSVerticalTick new 
+		numberOfTicks: 10;
+		asFloat).
+	plt ylabel: 'Y Axis'.
+	plt title: 'Histogram'.
+	^ plt
+]

@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 RSBarPlot >> barWidth [
 	"Return the width of each bar"
-	^ barWidth ifNil: [ barWidth := 5 ] 
+	^ barWidth
 ]
 
 { #category : #accessing }
@@ -20,23 +20,41 @@ RSBarPlot >> barWidth: aBarWidth [
 ]
 
 { #category : #rendering }
+RSBarPlot >> beforeRenderingIn: aChart [
+	self minValueY > 0
+		ifTrue: [ aChart minValueY: 0 ]
+		ifFalse: [ self maxValueY < 0 
+			ifTrue: [ aChart maxValueY: 0 ]].
+	
+	
+	aChart decorations do: [ :e | e beforeRenderingIn: aChart ].
+	super beforeRenderingIn: aChart.
+	
+]
+
+{ #category : #rendering }
 RSBarPlot >> renderIn: canvas [
-	| color width |
+	| color width myScale |
 	self checkAssertion.
 	color := chart colorFor: self.
-	width := self barWidth / 2.
-	1 to: xValues size do: [ :i | 
-		| xt yt origin corner r |
-		xt := xValues at: i.
+	
+	myScale := NSOrdinalScale new 
+		domain: xValues;
+		rangeBands: xScale range padding: 0.1.
+	width := self barWidth.
+	width ifNil: [ width := myScale rangeBand ].
+	xValues doWithIndex: [ :xt : i | 
+		| yt origin corner r |
 		yt := yValues at: i.
-		origin := (xScale scale: xt) @ (yScale scale: yt).
+		origin := (myScale scale: xt) @ (yScale scale: yt).
 		corner := origin x @ (yScale scale: 0).
 		((self isPointWellDefined: origin) and: [ self isPointWellDefined: corner ]) ifTrue: [
-			r := Rectangle origin: origin - (width@ 0) corner: corner + (width@0).
+			r := Rectangle origin: origin corner: corner + (width@0).
 			canvas add: (RSBox new
 				color: color;
-				position: r floatCenter;
-				extent: r extent;
+				model: yt;
+				popup;
+				fromRectangle: r;
 				yourself).
 			  ] ].
 

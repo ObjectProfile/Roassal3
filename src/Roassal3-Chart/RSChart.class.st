@@ -75,7 +75,7 @@ RSChart >> defaultContainer [
 
 { #category : #color }
 RSChart >> defaultPlotColors [
-	^ NSScale category20c
+	^ NSScale category20
 ]
 
 { #category : #accessing }
