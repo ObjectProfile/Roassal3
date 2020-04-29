@@ -13,6 +13,12 @@ Class {
 	#category : #'Roassal3-Chart-Labeling'
 }
 
+{ #category : #initialization }
+RSNiceLabel >> initialize [
+	super initialize.
+	score := 0.
+]
+
 { #category : #accessing }
 RSNiceLabel >> max [
 	^ max
