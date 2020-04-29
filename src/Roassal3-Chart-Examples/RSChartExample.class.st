@@ -181,23 +181,44 @@ RSChartExample >> example09LinearSqrtSymlog [
 { #category : #examples }
 RSChartExample >> example10BarPlot [
 	<script: 'self new example10BarPlot open'>
-	| plt p x y |
+	| c p x y |
 
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	plt := RSChart new.
+	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
 
 
-	plt addPlot: p.
-	plt xlabel: 'X Axis'.
-	plt addDecoration: (RSHorizontalTick new 
+	c addPlot: p.
+	c xlabel: 'X Axis'.
+	c addDecoration: (RSHorizontalTick new 
 		numberOfTicks: 20;
 		asFloat).
-	plt addDecoration: (RSVerticalTick new 
+	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
 		asFloat).
-	plt ylabel: 'Y Axis'.
-	plt title: 'Histogram'.
-	^ plt
+	c ylabel: 'Y Axis'.
+	c title: 'Histogram'.
+	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example11BarplotCombinedWithLine [
+	<script: 'self new example11BarplotCombinedWithLine open'>
+	| c x y |
+	x := 0.0 to: 2 count: 10.
+	y := (x raisedTo: 2) - 2.
+	c := RSChart new.
+
+	c addPlot: (RSBarPlot new x: x y: y).
+	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
+
+	c addDecoration: (RSHorizontalTick new  asFloat).
+	c addDecoration: (RSVerticalTick new 
+		numberOfTicks: 10;
+		asFloat).
+	c xlabel: 'X Axis'.
+	c ylabel: 'Y Axis'.
+	c title: 'Bar char'.
+	^ c
 ]
