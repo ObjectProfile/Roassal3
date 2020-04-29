@@ -50,7 +50,7 @@ RSDelaunayExample >> anime3 [
 	girl := self girl3.
 	canvas addShape: girl.
 	girl position: 10000 asPoint.
-	y := TSScale linear
+	y := NSScale linear
 		domain: #(0 100 200 300 400 500);
 		range: #(250 350 250 350 250 350).
 	^ canvas transitionAnimation

@@ -52,8 +52,6 @@ RSBarPlot >> renderIn: canvas [
 			r := Rectangle origin: origin corner: corner + (width@0).
 			canvas add: (RSBox new
 				color: color;
-				model: yt;
-				popup;
 				fromRectangle: r;
 				yourself).
 			  ] ].

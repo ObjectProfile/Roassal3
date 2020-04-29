@@ -25,7 +25,7 @@ RSParticle >> level: anInteger [
 	level := anInteger.
 	r := SharedRandom globalGenerator.
 	vel := (r next @ r next)* 2 - 1.
-	vel := vel * (TSScale linear domain: #(0 5); range: #(5 2); scale: level).
+	vel := vel * (NSScale linear domain: #(0 5); range: #(5 2); scale: level).
 ]
 
 { #category : #accessing }

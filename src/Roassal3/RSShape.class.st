@@ -31,7 +31,6 @@ RSShape >> addedIn: aCanvas [
 	
 	evt := RSShapeAddedEvent new shape: self.
 	self announce: evt.
-	"parent announce: evt."
 ]
 
 { #category : #announcer }

@@ -19,7 +19,7 @@ RSXmasExample >> background [
 	v clearBackground: false.
 	v color: Color black.
 	px := 0.
-	perlin := TSPerlinNoise3 new octaves: 3.
+	perlin := NSPerlinNoise3 new octaves: 3.
 
 	v addAll: ((1 to: extent y /6) collect: [:n | 
 		RSPolyline new
@@ -200,7 +200,7 @@ RSXmasExample >> myIcon [
 	canvas camera zoomToFit: 400@400.
 	canvas newAnimation
 		duration: 30 seconds;
-		scale: (TSScale linear
+		scale: (NSScale linear
 			domain: #(0 0.5 1);
 			range: { 0@0. 0@ -1500. 0@0});
 		on: c set: #position:.
@@ -259,7 +259,7 @@ RSXmasExample >> title [
 	canvas add: t2020.
 	canvas newAnimation repeat
 		duration: 10 seconds;
-		scale: (TSScale linear
+		scale: (NSScale linear
 			domain: #(0 0.5 1);
 			range: { 0.8. 1. 0.8 } );
 		onStepDo: [:t |
