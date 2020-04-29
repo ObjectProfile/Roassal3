@@ -5,7 +5,20 @@ Roassal3 is a new agile visualization engine for Pharo 8 and Pharo 9. Roassal is
 
 
 ## Installation on Pharo
-Execute the following incantation in a Playground:
+
+### Stable version
+Execute the following code snippet in a Playground:
+
+```Smalltalk
+Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3:v0.9';
+    load.
+``` 
+
+### Latest version
+
+Execute the following code snippet in a Playground:
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
@@ -13,6 +26,7 @@ Metacello new
     load.
 ``` 
 
+### Quick examples
 Once loaded, you can execute in a playground:
 
 ```Smalltalk
@@ -22,6 +36,23 @@ RSChartExample new example01Markers open
 You should see:
 
 <img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
+
+Another example of chart may be seen using:
+```Smalltalk
+RSChartExample new example11BarplotCombinedWithLine open
+```
+
+You should see:
+
+<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample2.png">
+
+
+Visualization of a complex graph:
+```Smalltalk
+RSShapeExamples new example25BisBimetricLineOnLargeExample open
+```
+
+<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/complexGraph.png">
 
 An example of animation may be seen using:
 
@@ -33,6 +64,8 @@ You should see an animated version of:
 ![atom](screenshots/smallAtom.png)
 
 ## Tutoriales
+
+Here is a series of tutoriales. New tutoriales are regularly added.
 
 [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
 

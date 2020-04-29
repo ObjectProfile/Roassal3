@@ -919,6 +919,53 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 ]
 
 { #category : #shapes }
+RSShapeExamples >> example25BisBimetricLineOnLargeExample [
+	<script: 'self new example25BisBimetricLineOnLargeExample open'>
+	"Same than example25BimetricLineOnLargeExample, but with no label"
+	| packagesRegExp packages packageElements high canvas |
+	packagesRegExp := { 'Calypso*' }.
+	
+	packages := packagesRegExp flatCollect: [ :regExp | 
+		RPackageOrganizer default packages 
+			select: [ :p | regExp match: p packageName ] ].
+		
+	packageElements  := packages collect: [ :pkg | | shapes |
+		shapes := pkg definedClasses collect: [ :cls |
+			RSBox new
+				color: Color black;
+				size: cls numberOfMethods sqrt;
+				yourself
+			 ].
+		RSGridLayout on: shapes.
+		RSComposite new
+			color: Color blue translucent;
+			model: pkg;
+			draggable;
+			shapes: shapes;
+			padding: 5;
+			yourself ] as: RSGroup.
+	high := RSHighlightable new.
+	high withEdges.
+	high highlightColor: Color red translucent.							
+	packageElements @ high.						
+	canvas := RSCanvas new.
+	canvas addAll: packageElements.
+
+	RSEdgeBuilder bimetricLine
+		canvas: canvas;
+		objects: packages;
+		noBorder;
+		widthFrom:[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
+		widthTo:[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
+		paint: Color blue translucent;
+		withBorderAttachPoint;
+		connectFrom: #yourself toAll: #dependentPackages.
+	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #shapes }
 RSShapeExamples >> example26AnimatedPopup [
 	<script: 'self new example26AnimatedPopup open'>
 	| canvas interaction s box |
