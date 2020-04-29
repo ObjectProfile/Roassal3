@@ -23,6 +23,23 @@ You should see:
 
 <img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
 
+Another example of chart may be seen using:
+```Smalltalk
+RSChartExample new example11BarplotCombinedWithLine open
+```
+
+You should see:
+
+<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample2.png">
+
+
+Visualization of a complex graph:
+```Smalltalk
+RSShapeExamples new example25BisBimetricLineOnLargeExample open
+```
+
+<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/complexGraph.png">
+
 An example of animation may be seen using:
 
 ```Smalltalk
