@@ -36,7 +36,7 @@ RSBarPlot >> beforeRenderingIn: aChart [
 RSBarPlot >> renderIn: canvas [
 	| color width myScale |
 	self checkAssertion.
-	color := chart colorFor: self.
+	color := self computeColor.
 	
 	myScale := NSOrdinalScale new 
 		domain: xValues;

@@ -47,7 +47,8 @@ RSAbstractPlot >> index [
 { #category : #initialization }
 RSAbstractPlot >> initialize [
 	super initialize.
-	label := ''
+	label := ''.
+	self useColorFromChart
 ]
 
 { #category : #testing }

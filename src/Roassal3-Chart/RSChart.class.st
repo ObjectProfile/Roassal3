@@ -47,8 +47,9 @@ RSChart >> addPlot: aPlot [
 ]
 
 { #category : #color }
-RSChart >> colorFor: aRSLinePlot [ 
-	^ colors scale: aRSLinePlot
+RSChart >> colorFor: aRSPlot [ 
+	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
+	^ colors scale: aRSPlot
 ]
 
 { #category : #accessing }
