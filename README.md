@@ -51,6 +51,8 @@ You should see an animated version of:
 
 ## Tutoriales
 
+Here is a series of tutoriales. New tutoriales are regularly added.
+
 [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
 
 [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
