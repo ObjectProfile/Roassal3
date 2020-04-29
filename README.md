@@ -95,14 +95,3 @@ _____
 Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
 Stéphane Ducasse, Martin Días
 
-_____
-## Developers section
-If you are a regular contributor of Roassal3, you probably wish to have a local clone of it on your local disk. You can load Roassal3 with the following code (assuming that you provide the full path of your clone):
-
-```Smalltalk
-Metacello new
-  baseline: 'Roassal3';
-  repository: 'gitlocal:///Users/alexandrebergel/Dropbox/GitRepos/Roassal3' ;
-  lock;
-  load.
-```
