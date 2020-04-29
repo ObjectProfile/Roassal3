@@ -32,17 +32,17 @@ RSClusterLayout >> computePosition: aNode [
 
 { #category : #hook }
 RSClusterLayout >> doExecute: nodeElements [ 
-	| root gap |
+	| rootNodes gap |
 	"Not much to do if there is only one element"
 	nodeElements size = 1 ifTrue: [ ^ self ].
 	
-	root := self rootNodesFor: nodeElements .
-	root do: [ :e | self initializeNode: e ].
-	root do: [ :e | self computePosition: e ].
+	rootNodes := self rootNodesFor: nodeElements .
+	rootNodes do: [ :e | self initializeNode: e ].
+	rootNodes do: [ :e | self computePosition: e ].
 	
-	maxLayer := (root collect: [ :e | self layerOf: e ]) max.
+	maxLayer := (rootNodes collect: [ :e | self layerOf: e ]) max.
 	
-	(root size > 1) ifTrue: [ maxLayer := maxLayer + 1 ].
+	(rootNodes size > 1) ifTrue: [ maxLayer := maxLayer + 1 ].
 	
 	maxAbcissa := (self xOf: externalLayer last) + horizontalGap .
 	
@@ -50,7 +50,7 @@ RSClusterLayout >> doExecute: nodeElements [
 	
 	verticalGap := verticalGap max: gap.
 	
-	root do: [ :e | self draw: e. self step ].
+	rootNodes do: [ :e | self draw: e. self step ].
 	
 	
 ]
