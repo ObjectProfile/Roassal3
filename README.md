@@ -5,7 +5,20 @@ Roassal3 is a new agile visualization engine for Pharo 8 and Pharo 9. Roassal is
 
 
 ## Installation on Pharo
-Execute the following incantation in a Playground:
+
+### Stable version
+Execute the following code snippet in a Playground:
+
+```Smalltalk
+Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3:v0.9';
+    load.
+``` 
+
+### Latest version
+
+Execute the following code snippet in a Playground:
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
@@ -13,6 +26,7 @@ Metacello new
     load.
 ``` 
 
+### Quick examples
 Once loaded, you can execute in a playground:
 
 ```Smalltalk
