@@ -12,7 +12,7 @@ RSScatterPlot >> renderIn: canvas [
 		collect: [ :notUsed | 
 			RSEllipse new
 				radius: 2;
-				color: (chart colorFor: self) ].
+				color: self computeColor ].
 	1 to: xValues size do: [ :i | 
 		| xt yt et |
 		et := elements at: i.

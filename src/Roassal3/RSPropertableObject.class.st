@@ -55,6 +55,20 @@ RSPropertableObject >> canvas [
 
 { #category : #events }
 RSPropertableObject >> click [
+	"Simulate a click. 
+	
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+box := RSBox new size: 40.
+box when: RSMouseClick do: [ :evt | self inform: 'hello' ].
+c add: box.
+
+box click.
+
+c
+-=-=-=-=-=-=-=-=-=
+"
 	self announcer announce: (RSMouseClick new).
 ]
 
