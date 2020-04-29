@@ -3004,7 +3004,7 @@ RSAnimationExamples >> example49River [
 	^ c
 ]
 
-{ #category : #perlin }
+{ #category : #lines }
 RSAnimationExamples >> example50OneLine [
 	<script: 'self new example50OneLine open extent: 1112@834; setLabel: ''One line'''>
 	| canvas line ang1 ang2 radio x1 y1 x2 y2 |
