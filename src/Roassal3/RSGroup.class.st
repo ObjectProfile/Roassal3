@@ -94,19 +94,19 @@ RSGroup >> resetShapeFromModelCache [
 
 { #category : #accessing }
 RSGroup >> shapeFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	
-	| t key|
-	self shapeFromModelCache at: anObject ifPresent: [ :v |
-		v isCollection ifFalse: [ ^ v ] ].
+	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil"
+	| t |
+	self shapeFromModelCache 
+		at: anObject 
+		ifPresent: [ :v |
+			v isCollection ifFalse: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
 	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
-				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
-	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
-	self shapeFromModelCache at: key put: t.
+		ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
+		ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
+	
+	self shapeFromModelCache at: anObject put: t.
 	^ t
 ]
 
