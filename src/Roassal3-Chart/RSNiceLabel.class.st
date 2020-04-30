@@ -1,5 +1,23 @@
 "
-I am an utility class for RSLabelGenerator
+I am an utility class for RSLabelGenerator.
+
+-=-=-=-=-=-=-=-=-=
+values := #(1 2.3 4.3).
+c := RSChart new.
+d := RSScatterPlot new x: values y: values.
+c addPlot: d.
+c addDecoration: RSHorizontalTick new.
+
+tick := RSVerticalTick new.
+c addDecoration: tick.
+c build.
+
+tick createNiceLabelIn: c 
+-=-=-=-=-=-=-=-=-=
+
+prints the following: ""(Score: 0.75) 1.00	2.00	3.00	4.00	5.00	""
+					
+The min and max represents the range of the ticks
 "
 Class {
 	#name : #RSNiceLabel,
