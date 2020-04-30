@@ -1,6 +1,17 @@
 "
 I am a layout that uses forces in each elements, I have create a light representation of one element.
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
 
+eb := RSEdgeBuilder line.
+eb canvas: c.
+eb connectFrom: [ :v | v // 2 ].
+
+RSForceBasedLayout on: c nodes.
+c
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSForceBasedLayout,
