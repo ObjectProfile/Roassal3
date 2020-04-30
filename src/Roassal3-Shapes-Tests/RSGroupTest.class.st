@@ -56,7 +56,7 @@ RSGroupTest >> testCache02 [
 RSGroupTest >> testCache03 [
 
 	| shapes shape |
-	shapes := #(1 1) collect: [:n | RSBox new model: n; yourself] as: RSGroup..
+	shapes := #(1 1) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
 	
 	shapes shapesFromModel: 1.
 	shape := shapes shapeFromModel: 1.
@@ -92,8 +92,8 @@ RSGroupTest >> testDrawGroup [
 { #category : #tests }
 RSGroupTest >> testElementFromModel [
 	| group |
-	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup..
-	self assert: (group shapeFromModel: 1) == group first.
-	self assert: (group shapeFromModel: 5) == group last.
+	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
+	self assert: (group shapeFromModel: 1) equals: group first.
+	self assert: (group shapeFromModel: 5) equals: group last.
 
 ]
