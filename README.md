@@ -63,9 +63,9 @@ You should see an animated version of:
 
 ![atom](screenshots/smallAtom.png)
 
-## Tutoriales
+## Tutorials
 
-Here is a series of tutoriales. New tutoriales are regularly added.
+Here is a series of tutoriales. New tutorials will be regularly added.
 
 [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
 
