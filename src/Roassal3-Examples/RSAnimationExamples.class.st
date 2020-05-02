@@ -3050,7 +3050,8 @@ RSAnimationExamples >> example51AnimatedSVG [
 		duration: 0.1 seconds;
 		when: RSAnimationLoopEvent
 			do: [ :evt | monster rotateByDegrees: 5 ].
-	c @ RSCanvasController
+	c @ RSCanvasController.
+	^ c
 ]
 
 { #category : #'data - svg' }

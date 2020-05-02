@@ -21,7 +21,7 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
 	| clazz |
-	self timeLimit: 4 minutes.
+	self timeLimit: 10 minutes.
 	clazz := Smalltalk at: #RSAbstractExamples.
 	clazz subclasses do: [ :cls | 
 		| inst methods |
