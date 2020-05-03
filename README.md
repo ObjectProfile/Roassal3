@@ -73,6 +73,7 @@ The documentation of Roassal3 is expanding at a sustained pace.
     - [Tutorial 04 - Shape Composition](ShapeComposition.md)
 - How-to guides (problem-oriented material, centered around practical steps):
     - [How to visualize any arbitrary object?](how-to.md#How-to-visualize-any-arbitrary-object)
+    - [How to create a chart from a list of numbers?](how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
 
 ## Documentation
 A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
