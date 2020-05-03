@@ -81,8 +81,7 @@ The documentation of Roassal3 is expanding at a sustained pace.
 	- [What about the book Agile Visualization?](FAQ.md#What-about-the-book-Agile-Visualization)
 	
 	
-## Documentation
-A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
+A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
 
 ## Roassal3 as a dependent application
