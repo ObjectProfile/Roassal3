@@ -54,7 +54,7 @@ RSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		sinA :=  halfAngle sin.
 		lenOut := sinA = 0 
 			ifTrue: [ Float infinity ]
-			ifFalse: [ (halfAngle cos * radius/ sinA) abs]..
+			ifFalse: [ (halfAngle cos * radius/ sinA) abs].
 		cRadius := radius.
 		lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [ 
 			lenOut := (len1 / 2) min: (len2 / 2).

@@ -73,7 +73,6 @@ RSAbstractTick >> defaultNiceLabel [
 	| nice |
 	nice := RSNiceLabel new.
 	nice
-		score: 0;
 		min: self min;
 		max: self max;
 		step: nice ticks / numberOfTicks.

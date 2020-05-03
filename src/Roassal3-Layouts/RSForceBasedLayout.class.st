@@ -1,6 +1,17 @@
 "
 I am a layout that uses forces in each elements, I have create a light representation of one element.
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
 
+eb := RSEdgeBuilder line.
+eb canvas: c.
+eb connectFrom: [ :v | v // 2 ].
+
+RSForceBasedLayout on: c nodes.
+c
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSForceBasedLayout,
@@ -255,15 +266,9 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 ]
 
 { #category : #hook }
-RSForceBasedLayout >> runLayoutInJob [
-	[ :job | 
-	job
-		title: 'Laying out elements';
-		min: 1 - alpha;
-		max: 1.
-	iterations = 0 ifTrue: [ 
-		
-		[ alpha := alpha * 0.99.
+RSForceBasedLayout >> runLayoutIn: job [
+	iterations isZero ifTrue: [ 
+		[alpha := alpha * 0.99.
 		alpha > 0.005 ] whileTrue: [ 
 			self step.
 			job currentValue: 1 - alpha ] ]
@@ -271,7 +276,17 @@ RSForceBasedLayout >> runLayoutInJob [
 		iterations timesRepeat: [ 
 			alpha := alpha * 0.99.
 			self step.
-		job currentValue: 1 - alpha ] ] ] asJob run
+		job currentValue: 1 - alpha ] ]
+]
+
+{ #category : #hook }
+RSForceBasedLayout >> runLayoutInJob [
+	[ :job | 
+		job
+			title: 'Laying out elements';
+			min: 1 - alpha;
+			max: 1.
+		self runLayoutIn: job ] asJob run
 ]
 
 { #category : #hook }

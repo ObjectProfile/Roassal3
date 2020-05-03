@@ -1,5 +1,12 @@
 "
-I set the drag event for view, I use a basic bars to do that
+I set the drag event for view, I use a basic bars to do that.
+
+Use example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+c add: (RSBox new size: 30).
+c @ RSDraggableCanvas
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RSDraggableCanvas,

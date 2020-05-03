@@ -148,7 +148,7 @@ RSShapeBasicExamples >> example06BasicLabels [
 			ifTrue: [ 180 ]
 			ifFalse: [ 0 ] ).
 		
-		label rotateByDegrees: angle..
+		label rotateByDegrees: angle.
 		label position: p + ((label textWidth/2) * theta).
 		m even
 			ifTrue: [ label bold ]
