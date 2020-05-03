@@ -63,17 +63,14 @@ You should see an animated version of:
 
 ![atom](screenshots/smallAtom.png)
 
-## Tutorials
+## Documentation
+The documentation of Roassal3 is expanding at a sustained pace.
 
-Here is a series of tutoriales. New tutorials will be regularly added.
-
-[Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
-
-[Tutorial 02 - Graph Manipulation](GraphTutorial.md)
-
-[Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
-
-[Tutorial 04 - Shape Composition](ShapeComposition.md)
+- Tutorials (learning-oriented material centered around practical steps):
+    - [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
+    - [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
+    - [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
+    - [Tutorial 04 - Shape Composition](ShapeComposition.md)
 
 ## Documentation
 A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
