@@ -1,6 +1,6 @@
 # How-to guides
 
-This page provides a list of recipes 
+This page provides a list of recipes to solve a particular problem you have. This list will expand from the questions the Roassal community receive. If you wish to have a new how-to, just ask your question in the #Roassal channel on the [Pharo discord server](https://pharo.org/community).
 
 ## How to visualize any arbitrary object
 
