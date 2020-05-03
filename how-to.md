@@ -45,3 +45,36 @@ c
 ```
 
 A chart appears when you evaluate the script.
+
+## How can I use animation to execute a block at a regular pace
+
+Consider the following code:
+
+```Smalltalk
+canvas := RSCanvas new.
+counter := 0.
+canvas add: (label := RSLabel new text: counter).
+canvas newAnimation repeat
+    duration: 1.5 seconds;
+    when: RSAnimationLoopEvent do: [ :evt|
+        label text: (counter := counter + 1) ].
+canvas
+```
+
+The block provided to the message `when:do:` can contains any arbitrary code. The example shows that the visualization can be changed from the block.
+
+
+## How can I draw a SVG path
+
+Roassal offers the class `RSSVGPath`, which is a shape. You can use it as:
+
+```Smalltalk
+svgPath := 'M150 0 L75 200 L225 200 Z'.
+c := RSCanvas new.
+svg := RSSVGPath new color: Color blue; svgPath: svgPath.
+c add: svg.
+c @ RSCanvasController.
+c
+```
+
+
