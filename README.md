@@ -71,6 +71,8 @@ The documentation of Roassal3 is expanding at a sustained pace.
     - [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
     - [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
     - [Tutorial 04 - Shape Composition](ShapeComposition.md)
+- How-to guides (problem-oriented material, centered around practical steps):
+    - [How to visualize any arbitrary object?](how-to.md#how-to-visualize-any-object)
 
 ## Documentation
 A major effort on writing documentation is under construction. The wiki pages is currently the main source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
