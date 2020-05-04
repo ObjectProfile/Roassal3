@@ -15,7 +15,7 @@ BaselineOfRoassal3 >> baseline: spec [
 		do: [ | core examples tests |
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
-			spec package: 'AthensSVG' with: [
+			spec baseline: 'AthensSVG' with: [
 				spec repository: 'github://pharo-contributions/Athen-SVG/src' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
