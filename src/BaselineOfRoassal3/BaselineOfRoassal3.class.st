@@ -107,7 +107,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'Core' with: core asArray;
 				group: 'Examples'  with: examples asArray;
 				group: 'Tests' with: tests asArray;
-				group: 'SVG' with: tests asArray;
+				group: 'SVG' with: svg asArray;
 				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG') ].
 
 		
