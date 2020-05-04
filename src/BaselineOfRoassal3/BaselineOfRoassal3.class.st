@@ -58,7 +58,9 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: 'Roassal3-Spec-Tests';
 				package: 'Roassal3-UML-Tests';
 				
-				package: 'Roassal3-SVG' with: [ spec requires: #('Athens-SVG') ].
+				package: 'Roassal3-SVG' with: [ spec requires: #('Athens-SVG') ];
+				package: 'Roassal3-SVG-Tests' with: [ spec requires: #('Roassal3-SVG' 'Roassal3-Tests') ];
+				package: 'Roassal3-SVG-Examples' with: [ spec requires: #('Roassal3-SVG' 'Roassal3-Examples') ].
 
 			"packages to load"
 			core := #(
