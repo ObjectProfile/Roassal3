@@ -80,15 +80,6 @@ RSBoundingTest >> testDrawRing [
 	canvas createMorph drawOnMockCanvas.
 ]
 
-{ #category : #running }
-RSBoundingTest >> testDrawSVG [
-	canvas addShape: (RSSVGPath new).
-	canvas addShape: (RSSVGPath new
-		svgPath: 'M 100 350 q 150 -300 300 0';
-		yourself).
-	canvas createMorph drawOnMockCanvas.
-]
-
 { #category : #tests }
 RSBoundingTest >> testFromRectangle [
 

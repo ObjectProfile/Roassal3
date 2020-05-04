@@ -567,36 +567,6 @@ RSShapeBasicExamples >> example27Markers [
 	^ c
 ]
 
-{ #category : #svg }
-RSShapeBasicExamples >> example28SVGShape [
-	<script: 'self new example28SVGShape open'>
-	| c |
-	c := RSCanvas new.
-	c addShape: (RSSVGPath new
-		paint: nil;
-		withBorder;
-		svgPath: 'M 100 350 q 150 -300 300 0';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color red);
-		svgPath: 'M 100 350 l 150 -300';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color red);
-		svgPath: 'M 250 50 l 150 300';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color green);
-		svgPath: 'M 175 200 l 150 0';
-		yourself).
-	c showEncompassingRectangles.
-	c zoomToFit.
-	^ c
-]
-
 { #category : #lines }
 RSShapeBasicExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius open '>

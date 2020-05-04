@@ -9,7 +9,7 @@ Class {
 		'segments',
 		'polygons'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : #'Roassal3-SVG'
 }
 
 { #category : #visiting }

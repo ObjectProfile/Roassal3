@@ -1,7 +1,20 @@
-Extension { #name : #RSLinesTest }
+Class {
+	#name : #RSSVGTest,
+	#superclass : #RSCanvasTest,
+	#category : #'Roassal3-SVG-Tests'
+}
 
-{ #category : #'*Roassal3-SVG' }
-RSLinesTest >> testDrawSVGLine [
+{ #category : #'as yet unclassified' }
+RSSVGTest >> testDrawSVG [
+	canvas addShape: (RSSVGPath new).
+	canvas addShape: (RSSVGPath new
+		svgPath: 'M 100 350 q 150 -300 300 0';
+		yourself).
+	canvas createMorph drawOnMockCanvas.
+]
+
+{ #category : #'as yet unclassified' }
+RSSVGTest >> testDrawSVGLine [
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [ :aLine | 'M 100 100 L 200 200' ];

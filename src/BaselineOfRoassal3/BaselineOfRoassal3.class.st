@@ -12,7 +12,7 @@ BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ | core examples tests svg |
+		do: [ | core examples tests svg svgTests svgExamples |
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
 			spec package: 'Athens-SVG' with: [
@@ -96,6 +96,14 @@ BaselineOfRoassal3 >> baseline: spec [
 			svg := #(
 				'Core' 
 				'Roassal3-SVG') asOrderedCollection.
+			svgTests := #(
+				'Core' 
+				'Tests'
+				'Roassal3-SVG-Tests') asOrderedCollection.
+			svgExamples := #(
+				'Core' 
+				'Examples'
+				'Roassal3-SVG-Examples') asOrderedCollection.
 				
 			Smalltalk globals at: #SpPresenter ifPresent: [
 				core add: 'Roassal3-Spec'.
@@ -108,7 +116,8 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'Examples'  with: examples asArray;
 				group: 'Tests' with: tests asArray;
 				group: 'SVG' with: svg asArray;
-				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG') ].
+				group: 'SVGExamples' with: svg asArray;
+				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGExamples') ].
 
 		
 	
