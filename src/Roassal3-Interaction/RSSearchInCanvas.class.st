@@ -90,6 +90,16 @@ RSSearchInCanvas >> isRegExpValid: regExp [
 	^ regExp notNil and: [ regExp notEmpty ]
 ]
 
+{ #category : #configuration }
+RSSearchInCanvas >> keyForReset [
+	^ 'r'
+]
+
+{ #category : #configuration }
+RSSearchInCanvas >> keyForSearch [
+	^ 's'
+]
+
 { #category : #util }
 RSSearchInCanvas >> numberOfHighlightedShapes [
 	"Return the number of shapes that have been highlited"
@@ -115,14 +125,18 @@ RSSearchInCanvas >> processKeyDown: evt [
 	| keyName |
 	self canvas: evt canvas.
 	keyName := evt keyName.
-	keyName == $/ ifTrue: [ self searchForShapes ].
-	keyName = #R ifTrue: [ self resetAllHighlightedShapes ]
+	keyName = self keyForSearch ifTrue: [ self searchForShapes ].
+	keyName = self keyForReset ifTrue: [ self resetAllHighlightedShapes ]
 ]
 
 { #category : #rendering }
 RSSearchInCanvas >> renderLegendOn: aLegendBuilder [
-	aLegendBuilder text: '/' description: 'Search and highlight items'.
-	aLegendBuilder text: 'r' description: 'Unhighlight all items'
+	aLegendBuilder
+		text: self keyForSearch
+		description: 'Search and highlight items'.
+	aLegendBuilder
+		text: self keyForReset
+		description: 'Unhighlight all items'
 ]
 
 { #category : #public }
