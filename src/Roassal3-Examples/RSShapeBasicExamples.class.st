@@ -376,62 +376,6 @@ RSShapeBasicExamples >> example15BasicRoundBoxses [
 	^ c
 ]
 
-{ #category : #lines }
-RSShapeBasicExamples >> example16BasicLinePath [
-	<script: 'self new example16BasicLinePath open'>
-	| c b1 b2 translate l arrowWidth arrowHeight middle |
-	c := RSCanvas new.
-	b1 := RSBox new size: 100@100.
-	b2 := RSBox new size: 100@100; color: Color blue; position: 100@100.
-	c addShape: b1.
-	c addShape: b2.
-	
-	l := RSSVGPathLine new
-		svgPath: [ :aLine |
-			[ :canvas | | vector u unit left right left1 right1 a b |
-			a := aLine startPoint.
-			b := aLine endPoint.
-			arrowWidth := 50.
-			arrowHeight := 30.
-			vector := a-b.
-			u := vector normal.
-			unit := vector / (vector r max: 1).
-			middle := b + (unit* arrowHeight).
-			left := middle - (u * arrowWidth / 4).
-			right := middle + (u * arrowWidth / 4).
-			left1 := middle - (u * arrowWidth / 2).
-			right1 := middle + (u * arrowWidth / 2).
-			
-			canvas
-				absolute;
-				moveTo: a;
-				lineTo: left;
-				lineTo: left1;
-				lineTo: b;
-				lineTo: right1;
-				lineTo: right;
-				close.
-			 ]
-			 ];
-		width: 5;
-		paint: Color yellow;
-		dashArray: { 10. 2 };
-		joinMiter;
-		startPoint: 0@0;
-		endPoint: 100@100.
-	c addShape: l.
-	
-	translate := [ :evt |
-		l 
-			startPoint: b1 position;
-			endPoint: b2 position.
-		evt shape translateBy: evt step.
-		evt signalUpdate ].
-	b1 when: RSMouseDragging do: translate.
-	b2 when: RSMouseDragging do: translate.
-	^ c
-]
-
 { #category : #border }
 RSShapeBasicExamples >> example17Borders [
 	<script: 'self new example17Borders open'>
@@ -620,36 +564,6 @@ RSShapeBasicExamples >> example27Markers [
 	c addShape: axes.
 	c addShape: dataLine.
 	c camera zoomToFit: 250@250.
-	^ c
-]
-
-{ #category : #svg }
-RSShapeBasicExamples >> example28SVGShape [
-	<script: 'self new example28SVGShape open'>
-	| c |
-	c := RSCanvas new.
-	c addShape: (RSSVGPath new
-		paint: nil;
-		withBorder;
-		svgPath: 'M 100 350 q 150 -300 300 0';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color red);
-		svgPath: 'M 100 350 l 150 -300';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color red);
-		svgPath: 'M 250 50 l 150 300';
-		yourself).
-	c addShape: (RSSVGPath new
-		paint: nil;
-		border: (RSBorder new color: Color green);
-		svgPath: 'M 175 200 l 150 0';
-		yourself).
-	c showEncompassingRectangles.
-	c zoomToFit.
 	^ c
 ]
 

@@ -55,11 +55,6 @@ Class {
 	#category : #'Roassal3-Shapes-Graph'
 }
 
-{ #category : #'instance variations' }
-RSMultiBezierEdgeBuilder class >> multiBezier [
-	^ self new: RSSVGPathLine new.
-]
-
 { #category : #private }
 RSMultiBezierEdgeBuilder >> applyTensionOn: points [
 	| n dp p1 ten |

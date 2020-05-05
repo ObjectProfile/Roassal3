@@ -165,11 +165,6 @@ RSShapeFactory class >> star [
 ]
 
 { #category : #shapes }
-RSShapeFactory class >> svgPath [
-	^ RSSVGPath new
-]
-
-{ #category : #shapes }
 RSShapeFactory class >> triangle [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]

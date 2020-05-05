@@ -454,42 +454,6 @@ RSLayoutExamples >> example13VisualizeQuatree [
 ]
 
 { #category : #lines }
-RSLayoutExamples >> example14ClassHierarchy [
-	<script: 'self new example14ClassHierarchy open'>
-	| c classes |
-	c := RSCanvas new.
-
-	classes := (Object withAllSubclasses first: 300)
-		flatCollect: #withAllSuperclasses.
-	classes := classes asSet 
-		collect: [:cls | RSEllipse new draggable; popup; model: cls; yourself] 
-		as: RSGroup.
-	c addAll: classes.
-	RSEdgeBuilder line
-		color: Color gray;
-		canvas: c;
-		shapes: classes;
-		connectFrom: #superclass.
-	RSNormalizer size
-		shapes: classes;
-		to: 20;
-		normalize: #numberOfMethods.
-	RSNormalizer color
-		shapes: classes;
-		normalize: #numberOfMethods.
-	RSClusterLayout on: classes.
-	RSMultiBezierEdgeBuilder multiBezier
-		borderColor: (Color blue alpha: 0.3);
-		canvas: c;
-		shapes: classes;
-		withBorderAttachPoint;
-		following: #superclass;
-		connectToAll: #dependentClasses.
-	c @ RSCanvasController.
-	^ c
-]
-
-{ #category : #lines }
 RSLayoutExamples >> example15SimpleClassHierarchy [
 	<script: 'self new example15SimpleClassHierarchy open'>
 	| c methods |

@@ -80,11 +80,6 @@ RSEdgeBuilder class >> bezier [
 	^ self new: RSBezier new
 ]
 
-{ #category : #'public - specific' }
-RSEdgeBuilder class >> bimetricLine [
-	^ RSBimetricEdgeBuilder new: RSBimetricLine new
-]
-
 { #category : #'instance creation' }
 RSEdgeBuilder class >> horizontalBezier [
 	^ self horizontalLine: RSBezier new
