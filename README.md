@@ -98,5 +98,5 @@ _____
 ## Acknowledgement
 
 Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
-Stéphane Ducasse, Martin Días
+Stéphane Ducasse, Martin Días, Pavel Krivanek
 
