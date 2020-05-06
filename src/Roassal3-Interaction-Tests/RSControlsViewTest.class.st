@@ -6,7 +6,12 @@ Class {
 
 { #category : #tests }
 RSControlsViewTest >> testBasic [
-	| canvas |
+	| canvas controller |
 	canvas := RSCanvas new.
-	canvas @ RSCanvasController
+	canvas @ RSCanvasController.
+	controller := canvas controllerInteraction.
+	self assert: controller class equals: RSCanvasController.
+	canvas @ RSCanvasController.
+	self assert: controller equals: canvas controllerInteraction.
+	
 ]
