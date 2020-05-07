@@ -357,48 +357,28 @@ RSLayoutExamples >> example11PaddingInComposite [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : #animations }
 RSLayoutExamples >> example12AnimatedForceBasedLayout [ 
 	<script: 'self new example12AnimatedForceBasedLayout open'>
-	| canvas shapes layout edges  |
-	canvas := RSCanvas new.
-	shapes := (1 to: 10) collect: [ :m | 
-		RSBox new 
-			size: 30;
-			draggable;
-			labeled;
-			model: m;
-			yourself ].
-	edges := RSEdgeBuilder line
-		shapes: shapes;
-		connectFrom: [ :i | i // 2 ].
-	canvas
-		addAll: edges;
-		addAll: shapes.
-	layout := RSForceBasedLayout new
-		length: 80;
-		charge: -300;
-		nodes: shapes;
-		edges: canvas edges;
-		start;
-		yourself.
+	| c |
+	c := RSCanvas new.
+	c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
 
-	canvas edges do: [ :edge |  (layout mockEdgeAt: edge) length: (edge model key + edge model value) * 10 ].
-	canvas @ RSCanvasController.
-	
-	canvas @ (RSForceLayoutStepping new layout: layout).
-	^ canvas
+	RSEdgeBuilder line
+		canvas: c;
+		connectFrom: [ :v | v // 2 ].
+	c @ RSForceLayoutStepping.
+	^ c
 ]
 
-{ #category : #lines }
+{ #category : #animations }
 RSLayoutExamples >> example13VisualizeQuatree [
 	<script: 'self new example13VisualizeQuatree open'>
-	| canvas shapes layout edges boxBuilder boxes createBoxes colors labelBuilder |
+	| canvas shapes stepping edges newBox boxes createBoxes colors newLabel |
 	canvas := RSCanvas new.
 	shapes := (1 to: 50) collect: [:n | 
 		RSBox new
 			size: 30;
-			draggable; 
 			labeled;
 			model: n;
 			yourself].
@@ -408,17 +388,14 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	layout := RSForceBasedLayout new
+	stepping := RSForceLayoutStepping new.
+	stepping layout
 		length: 80;
-		charge: -300;
-		nodes: shapes;
-		edges: canvas edges;
-		start;
-		yourself.
+		charge: -300.
 	canvas @ RSCanvasController.
-	canvas @ (RSForceLayoutStepping new layout: layout).
+	canvas @ stepping.
 	colors := RSColorPalette sequential pubu9.
-	boxBuilder := [ :quad :index |
+	newBox := [ :quad :index |
 		RSBox new
 			border: (RSBorder new color: Color lightGray translucent; width: 0.5);
 			extent: quad rectangle extent;
@@ -426,7 +403,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			color: ((colors scale: index) alpha: 0.5 );
 			yourself
 			 ]. 
-	labelBuilder := [ :quad :index |
+	newLabel := [ :quad :index |
 		RSLabel new
 			text: (quad charge printShowingDecimalPlaces: 1);
 			position: quad rectangle floatCenter;
@@ -435,8 +412,8 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	boxes := #().
 	createBoxes := nil.
 	createBoxes := [ :quad :lvl | | box label |
-		box := boxBuilder value: quad value: lvl.
-		label := labelBuilder value: quad value: lvl.
+		box := newBox value: quad value: lvl.
+		label := newLabel value: quad value: lvl.
 		quad subQuadsDo: [ :subQuad | createBoxes value: subQuad value: lvl + 1 ].
 		boxes add: box.
 		boxes add: label.
@@ -447,7 +424,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 		when: RSAnimationLoopEvent do: [ :v | 
 			boxes do: #remove.
 			boxes := RSGroup new.
-			createBoxes value: layout currentQuadtree value: 0.
+			createBoxes value: stepping layout currentQuadtree value: 0.
 			canvas addAll: boxes.
 			boxes pushBack ].
 	^ canvas
@@ -515,4 +492,36 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 
 	c @ RSCanvasController.
 	^ c 
+]
+
+{ #category : #animations }
+RSLayoutExamples >> example17ForceBasedLayout [
+	<script: 'self new example17ForceBasedLayout open'>
+	| canvas shapes stepping edges  layout |
+	canvas := RSCanvas new.
+	shapes := (1 to: 10) collect: [ :m | 
+		RSBox new 
+			size: 30;
+			draggable;
+			labeled;
+			model: m;
+			yourself ].
+	edges := RSEdgeBuilder line
+		shapes: shapes;
+		connectFrom: [ :i | i // 2 ].
+	canvas
+		addAll: edges;
+		addAll: shapes.
+	stepping := RSForceLayoutStepping new.
+	
+	(layout := stepping layout)
+		length: 80;
+		charge: -300.
+	canvas @ stepping.
+	canvas edges do: [ :edge | 
+		(layout mockEdgeAt: edge) 
+			length: (edge model key + edge model value) * 10 ].
+	canvas @ RSCanvasController.
+	
+	^ canvas
 ]

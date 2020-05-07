@@ -918,7 +918,7 @@ RSShapeExamples >> example35Lines [
 { #category : #shapes }
 RSShapeExamples >> example35RoassalPackages [
 	<script: 'self new example35RoassalPackages open'>
-	| packagesRegExp packages canvas color labeled boxes layout |
+	| packagesRegExp packages canvas color labeled boxes stepping |
 	packagesRegExp := { 'Roassal3*' }.
 	    
 	packages := packagesRegExp flatCollect: [ :regExp | 
@@ -943,15 +943,11 @@ RSShapeExamples >> example35RoassalPackages [
 	    canvas: canvas;
 	    connectFrom: #yourself toAll: #dependentPackages.
 
-	layout := RSForceBasedLayout new
-	    nodes: boxes;
+	stepping := RSForceLayoutStepping new.
+	stepping layout
 	    length: 300;
-	    charge: -300;
-	    edges: canvas edges;
-	    start;
-	    yourself.
-	canvas nodes @ (RSDraggableForce new layout: layout).
-	canvas @ (RSForceLayoutStepping new layout: layout).
+	    charge: -300.
+	canvas @ stepping.
 	canvas @ RSCanvasController.
 	^ canvas
 ]

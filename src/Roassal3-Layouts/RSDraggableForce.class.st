@@ -23,6 +23,7 @@ RSDraggableForce >> layout: aForceLayout [
 { #category : #hooks }
 RSDraggableForce >> onShape: aShape [
 	| mock |
+	aShape removeInteractionIfPresent: RSDraggable.
 	aShape 
 		when: RSMouseDragStart do: [ :evt | 
 			mock := layout mockElementAt: aShape.

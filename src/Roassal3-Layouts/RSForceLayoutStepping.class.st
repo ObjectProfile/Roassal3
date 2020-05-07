@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'layout',
-		'animation'
+		'animation',
+		'hasDraggable'
 	],
 	#category : #'Roassal3-Layouts-Interactions'
 }
@@ -32,9 +33,35 @@ RSForceLayoutStepping >> alphaRange [
 	^ #(0 0.1)
 ]
 
+{ #category : #hooks }
+RSForceLayoutStepping >> configureLayoutOn: aCanvas [
+	self hasDraggable ifTrue: [
+		aCanvas nodes @ (RSDraggableForce new layout: self layout)].
+	self layout
+		nodes: aCanvas nodes;
+		edges: aCanvas edges;
+		start.
+]
+
+{ #category : #configuration }
+RSForceLayoutStepping >> draggable [
+	hasDraggable := true
+]
+
+{ #category : #testing }
+RSForceLayoutStepping >> hasDraggable [
+	^ hasDraggable
+]
+
+{ #category : #initialization }
+RSForceLayoutStepping >> initialize [
+	super initialize.
+	self draggable.
+]
+
 { #category : #accessing }
 RSForceLayoutStepping >> layout [
-	^ layout
+	^ layout ifNil: [ layout := RSForceBasedLayout new ]
 ]
 
 { #category : #accessing }
@@ -42,11 +69,30 @@ RSForceLayoutStepping >> layout: aRSForceBasedLayout [
 	layout := aRSForceBasedLayout
 ]
 
+{ #category : #configuration }
+RSForceLayoutStepping >> noDraggable [
+	hasDraggable := false.
+]
+
 { #category : #hooks }
 RSForceLayoutStepping >> onShape: aCanvas [
+	self configureLayoutOn: aCanvas.
 	aCanvas nodes do: [ :s | self addEventsTo: s ].
-	self startSimpleAnimation: aCanvas.
+	self startFirstAnimation: aCanvas.
 	aCanvas newAnimation onStepDo: [:t| aCanvas zoomToFit ].
+]
+
+{ #category : #animation }
+RSForceLayoutStepping >> startFirstAnimation: aCanvas [
+	| alpha |
+	animation ifNotNil: #stop.
+	alpha := 1.
+	animation := aCanvas newAnimation
+		repeat;
+		onStepDo: [ :t | layout alpha: alpha; step.
+			alpha := alpha * 0.99.
+			alpha < 0.005 ifTrue: [ animation stop ] ];
+		yourself
 ]
 
 { #category : #animation }
@@ -68,9 +114,9 @@ RSForceLayoutStepping >> startForceAnimation: aView [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startSimpleAnimation: aView [
+RSForceLayoutStepping >> startSimpleAnimation: aCanvas [
 	animation ifNotNil: #stop.
-	animation := aView newAnimation 
+	animation := aCanvas newAnimation 
 		easing: RSEasing cubicInOut;
 		range: self alphaRange reversed;
 		duration: 2 seconds;
