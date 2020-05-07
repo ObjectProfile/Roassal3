@@ -81,9 +81,9 @@ RSEasel >> initializeWidgets [
 	diagram := self instantiate: SpRoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
-	diagram script: [ :canvas | | t |
+	diagram script: [ :canvas |
 		self configure: canvas.
-		t := self textAsCode ]
+		self textAsCode value: canvas  ]
 ]
 
 { #category : #initialization }
@@ -117,6 +117,7 @@ RSEasel >> run [
 RSEasel >> startText [
 	^
 '"[:canvas | ]"
+| box |
 box := RSBox new
 	size: 100;
 	draggable;
