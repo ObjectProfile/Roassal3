@@ -37,10 +37,10 @@ RSSearchInCanvasTest >> testBasic [
 	self assert: shapes fifth color = Color gray.
 	
 	search searchForShapes: '*5*'.
-	self assert: shapes fourth color ~= Color gray.
+	self assert: shapes fourth color == Color gray.
 	self assert: shapes fifth color ~= Color gray.
 	
-	self assert: search numberOfHighlightedShapes equals: 2.
+	self assert: search numberOfHighlightedShapes equals: 1.
 
 	search resetAllHighlightedShapes.
 	self assert: shapes fourth color = Color gray.
