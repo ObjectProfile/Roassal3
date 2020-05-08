@@ -2,18 +2,20 @@
 I am a trait for BoundingShape and Camera since both of them uses an announcement when the position of both changes
 "
 Trait {
-	#name : #TPositionable,
+	#name : #RSTPositionable,
 	#category : #'Roassal3-Core'
 }
 
 { #category : #actions }
-TPositionable >> translateBy: delta [
-	self translateTo: self position + delta.
+RSTPositionable >> translateBy: deltaAsPoint [
+	"Move an element by a delta value, expressed as a point"
+	self translateTo: self position + deltaAsPoint
 	
 ]
 
 { #category : #actions }
-TPositionable >> translateTo: aPoint [
+RSTPositionable >> translateTo: aPoint [
+	"Translate an element to a new position, expressed as a point"
 	| oldPosition |
 	oldPosition := self position.
 	oldPosition = aPoint ifTrue: [ ^ self ].

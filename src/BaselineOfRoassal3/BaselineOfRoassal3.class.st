@@ -15,8 +15,8 @@ BaselineOfRoassal3 >> baseline: spec [
 		do: [ | core examples tests svg svgTests svgExamples |
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
-			spec package: 'Athens-SVG' with: [
-				spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+			spec baseline: 'AthensSVG' with: [
+				spec repository: 'github://pharo-contributions/Athens-SVG' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://TelescopeSt/Geometry:v1.1.0/src' ].
 			spec baseline: 'NumericScales'with: [ 
@@ -58,7 +58,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				package: 'Roassal3-Spec-Tests';
 				package: 'Roassal3-UML-Tests';
 				
-				package: 'Roassal3-SVG' with: [ spec requires: #('Athens-SVG') ];
+				package: 'Roassal3-SVG' with: [ spec requires: #('AthensSVG') ];
 				package: 'Roassal3-SVG-Tests' with: [ spec requires: #('Roassal3-SVG' 'Roassal3-Shapes-Tests') ];
 				package: 'Roassal3-SVG-Examples' with: [ spec requires: #('Roassal3-SVG' 'Roassal3-Examples') ].
 
