@@ -33,57 +33,52 @@ RSEasel class >> open [
 	self new openWithSpec
 ]
 
-{ #category : #accessing }
-RSEasel >> button [
-	^ button
-]
-
-{ #category : #accessing }
-RSEasel >> button: anObject [
-	button := anObject
-]
-
 { #category : #initialization }
 RSEasel >> configure: canvas [
 	canvas @ RSCanvasController.
-	canvas color: (Smalltalk ui theme backgroundColor).
-]
-
-{ #category : #accessing }
-RSEasel >> diagram [
-	^ diagram
-]
-
-{ #category : #accessing }
-RSEasel >> diagram: anObject [
-	diagram := anObject
+	canvas color: self theme backgroundColor.
 ]
 
 { #category : #initialization }
-RSEasel >> initializePresenter [
+RSEasel >> connectPresenters [
 
-	"This causes the diagram's script to be executed again."
-	button action: [ diagram refresh ]
-]
+	label
+		label: 'Enter code below. Both view and canvas are accessible'.
 
-{ #category : #initialization }
-RSEasel >> initializeWidgets [
+	text
+		text: self initialCode;
+		autoAccept: true.
 
-	label := self newLabel.
-	label label: 'Enter code below. Both view and canvas are accessible'.
-	text := self newCode.
-	text text: self startText.
-	text autoAccept: true.
-	
-	button := self newButton.
-	button label: 'Draw this!'.
+	button
+		label: 'Draw this!';
+		action: [ diagram refresh ].
 
-	diagram := self instantiate: SpRoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
 	diagram script: [ :canvas |
 		self configure: canvas.
-		self textAsCode value: canvas ]
+		self textAsBlockClosure value: canvas ]
+
+]
+
+{ #category : #initialization }
+RSEasel >> initialCode [
+	^
+'"[:canvas | ]"
+box := RSBox new
+	size: 100;
+	draggable;
+	yourself.
+canvas add: box.
+'
+]
+
+{ #category : #initialization }
+RSEasel >> initializePresenters [
+	label := self newLabel.
+	text := self newCode.
+	button := self newButton.
+	diagram := self instantiate: SpRoassalPresenter
 ]
 
 { #category : #initialization }
@@ -91,16 +86,6 @@ RSEasel >> initializeWindow: w [
 	w 
 		title: 'Roassal3 Spec';
 		initialExtent: 800@500.
-]
-
-{ #category : #accessing }
-RSEasel >> label [
-	^ label
-]
-
-{ #category : #accessing }
-RSEasel >> label: anObject [
-	label := anObject
 ]
 
 { #category : #dependencies }
@@ -113,35 +98,12 @@ RSEasel >> run [
 	<script: 'self new openWithSpec'>
 ]
 
-{ #category : #initialization }
-RSEasel >> startText [
-	^
-'"[:canvas | ]"
-box := RSBox new
-	size: 100;
-	draggable;
-	yourself.
-canvas add: box.
-canvas.
-'  asText
-]
-
 { #category : #accessing }
-RSEasel >> text [
-	^ text
-]
-
-{ #category : #accessing }
-RSEasel >> text: anObject [
-	text := anObject
-]
-
-{ #category : #accessing }
-RSEasel >> textAsCode [
+RSEasel >> textAsBlockClosure [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 
-	^ OpalCompiler new
-		source: '[:canvas | ' , self text text asString , ']';
+	^ self class compiler
+		source: '[:canvas | ' , text text asString , ']';
 		logged: false;
 		evaluate
 ]
