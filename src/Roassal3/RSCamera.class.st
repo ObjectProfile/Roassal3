@@ -17,8 +17,8 @@ My two main properties are position and scale.
 Class {
 	#name : #RSCamera,
 	#superclass : #RSObject,
-	#traits : 'TPositionable',
-	#classTraits : 'TPositionable classTrait',
+	#traits : 'RSTPositionable',
+	#classTraits : 'RSTPositionable classTrait',
 	#instVars : [
 		'scale',
 		'position',

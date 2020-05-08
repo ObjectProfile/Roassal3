@@ -2,12 +2,12 @@
 My users can have edges and nodes useful to build graphs with roassal
 "
 Trait {
-	#name : #TContainer,
+	#name : #RSTContainer,
 	#category : #'Roassal3-Core'
 }
 
 { #category : #'adding nodes edges' }
-TContainer >> add: aShape [
+RSTContainer >> add: aShape [
 	self
 		assert: aShape notNil
 		description: 'Nil cannot be added to a canvas'.
@@ -18,7 +18,7 @@ TContainer >> add: aShape [
 ]
 
 { #category : #'adding nodes edges' }
-TContainer >> addAll: aCollection [
+RSTContainer >> addAll: aCollection [
 	"Add a collection of shapes to the canvas
 	aCollection of shapes, a shape can be a line or can be a node"
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
@@ -29,19 +29,19 @@ TContainer >> addAll: aCollection [
 ]
 
 { #category : #'adding nodes edges' }
-TContainer >> addEdge: aShape [
+RSTContainer >> addEdge: aShape [
 	self edges add: aShape.
 	^ aShape
 ]
 
 { #category : #'adding nodes edges' }
-TContainer >> addNode: aShape [
+RSTContainer >> addNode: aShape [
 	self nodes add: aShape.
 	^ aShape
 ]
 
 { #category : #accessing }
-TContainer >> edges [
+RSTContainer >> edges [
 	^ self privateEdges
 		ifNil: [ | res |
 			self privateEdges: (res := RSGroup new).
@@ -49,7 +49,7 @@ TContainer >> edges [
 ]
 
 { #category : #accessing }
-TContainer >> nodes [ 
+RSTContainer >> nodes [ 
 	^ self privateNodes
 		ifNil: [ | res |
 			self privateNodes: (res := RSGroup new).
@@ -57,61 +57,61 @@ TContainer >> nodes [
 ]
 
 { #category : #accessing }
-TContainer >> numberOfEdges [
+RSTContainer >> numberOfEdges [
 	^ self privateEdges
 		ifNil: [ 0 ]
 		ifNotNil: [ :edges | edges size ]
 ]
 
 { #category : #private }
-TContainer >> privateEdges [
+RSTContainer >> privateEdges [
 	^ self explicitRequirement
 ]
 
 { #category : #private }
-TContainer >> privateEdges: aTSGroup [
+RSTContainer >> privateEdges: aTSGroup [
 	self explicitRequirement
 ]
 
 { #category : #private }
-TContainer >> privateNodes [
+RSTContainer >> privateNodes [
 	^ self explicitRequirement
 ]
 
 { #category : #private }
-TContainer >> privateNodes: aTSGroup [
+RSTContainer >> privateNodes: aTSGroup [
 	self explicitRequirement
 ]
 
 { #category : #private }
-TContainer >> privateShapes [
+RSTContainer >> privateShapes [
 	^ self explicitRequirement
 ]
 
 { #category : #private }
-TContainer >> privateShapes: aCollection [
+RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
 { #category : #removing }
-TContainer >> removeEdge: anEdge [
+RSTContainer >> removeEdge: anEdge [
 	self edges remove: anEdge ifAbsent: [  ].
 ]
 
 { #category : #removing }
-TContainer >> removeNode: aNode [
+RSTContainer >> removeNode: aNode [
 	self nodes remove: aNode ifAbsent: [  ].
 ]
 
 { #category : #accessing }
-TContainer >> shapeFromModel: anObject [
+RSTContainer >> shapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapeFromModel: anObject
 ]
 
 { #category : #accessing }
-TContainer >> shapes [ 
+RSTContainer >> shapes [ 
 	^ self privateShapes
 		ifNil: [ | res |
 			self privateShapes: (res := RSGroup new).
