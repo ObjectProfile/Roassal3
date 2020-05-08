@@ -4,8 +4,8 @@ My subclasses has an extent and a transformation matrix
 Class {
 	#name : #RSBoundingShape,
 	#superclass : #RSShape,
-	#traits : 'TPositionable',
-	#classTraits : 'TPositionable classTrait',
+	#traits : 'RSTPositionable',
+	#classTraits : 'RSTPositionable classTrait',
 	#instVars : [
 		'baseRectangle',
 		'matrix',

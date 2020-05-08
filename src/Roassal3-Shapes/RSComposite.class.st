@@ -113,8 +113,8 @@ c @ RSControlsCanvas
 Class {
 	#name : #RSComposite,
 	#superclass : #RSBoundingShape,
-	#traits : 'TContainer',
-	#classTraits : 'TContainer classTrait',
+	#traits : 'RSTContainer',
+	#classTraits : 'RSTContainer classTrait',
 	#instVars : [
 		'nodes',
 		'edges',
