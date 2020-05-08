@@ -8,9 +8,9 @@ If you wish to add a new rendering engine (to produce a PDF file or use an alter
 
 `RSAthensRenderer` visits the canvas and its contained shapes to draw it in a AthensSurface.
 
-Responsibility: invoke the low level primitives offered by Athens to render the visual aspect of shapes.
+*Responsibility*: invoke the low level primitives offered by Athens to render the visual aspect of shapes.
 
-Collaborators: `RSAthensMorph` is using the class `RSAthensRenderer` to ""draw"" a `RSCanvas` instance.
+*Collaborators*: `RSAthensMorph` is using the class `RSAthensRenderer` to ""draw"" a `RSCanvas` instance.
 
 "
 Class {
