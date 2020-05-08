@@ -2,7 +2,7 @@
 I am a basic spec example. You can edit a script with roassal then this will be updated on the view
 "
 Class {
-	#name : #RSEaselExample,
+	#name : #RSEasel,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'diagram',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-RSEaselExample class >> defaultSpec [ 
+RSEasel class >> defaultSpec [ 
 	<spec: #default>
 	^ SpPanedLayout newHorizontal 
 		position: 35 percent;
@@ -28,44 +28,49 @@ RSEaselExample class >> defaultSpec [
 ]
 
 { #category : #specs }
-RSEaselExample class >> open [
+RSEasel class >> open [
 	<script>
 	self new openWithSpec
 ]
 
 { #category : #accessing }
-RSEaselExample >> button [
+RSEasel >> button [
 	^ button
 ]
 
 { #category : #accessing }
-RSEaselExample >> button: anObject [
+RSEasel >> button: anObject [
 	button := anObject
 ]
 
+{ #category : #initialization }
+RSEasel >> configure: canvas [
+	canvas @ RSCanvasController.
+	canvas color: (Smalltalk ui theme backgroundColor).
+]
+
 { #category : #accessing }
-RSEaselExample >> diagram [
+RSEasel >> diagram [
 	^ diagram
 ]
 
 { #category : #accessing }
-RSEaselExample >> diagram: anObject [
+RSEasel >> diagram: anObject [
 	diagram := anObject
 ]
 
 { #category : #initialization }
-RSEaselExample >> initializePresenter [
+RSEasel >> initializePresenter [
 
 	"This causes the diagram's script to be executed again."
 	button action: [ diagram refresh ]
 ]
 
 { #category : #initialization }
-RSEaselExample >> initializeWidgets [
+RSEasel >> initializeWidgets [
 
 	label := self newLabel.
-	label label: 'Enter code below. Both view and canvas are accessible' .
-
+	label label: 'Enter code below. Both view and canvas are accessible'.
 	text := self newCode.
 	text text: self startText.
 	text autoAccept: true.
@@ -76,61 +81,63 @@ RSEaselExample >> initializeWidgets [
 	diagram := self instantiate: SpRoassalPresenter.	
 	"This is the code for the Roassal view.
 	The block takes both a view and a canvas."
-	diagram script: [ :canvas | self textAsCode value: canvas ]
+	diagram script: [ :canvas | | t |
+		self configure: canvas.
+		t := self textAsCode ]
 ]
 
 { #category : #initialization }
-RSEaselExample >> initializeWindow: w [
+RSEasel >> initializeWindow: w [
 	w 
 		title: 'Roassal3 Spec';
 		initialExtent: 800@500.
 ]
 
 { #category : #accessing }
-RSEaselExample >> label [
+RSEasel >> label [
 	^ label
 ]
 
 { #category : #accessing }
-RSEaselExample >> label: anObject [
+RSEasel >> label: anObject [
 	label := anObject
 ]
 
 { #category : #dependencies }
-RSEaselExample >> release [
+RSEasel >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #running }
-RSEaselExample >> run [
+RSEasel >> run [
 	<script: 'self new openWithSpec'>
 ]
 
 { #category : #initialization }
-RSEaselExample >> startText [
+RSEasel >> startText [
 	^
-'box := RSBox new
+'"[:canvas | ]"
+box := RSBox new
 	size: 100;
 	draggable;
 	yourself.
 canvas add: box.
-canvas addInteraction: RSCanvasController.
 canvas.
 '  asText
 ]
 
 { #category : #accessing }
-RSEaselExample >> text [
+RSEasel >> text [
 	^ text
 ]
 
 { #category : #accessing }
-RSEaselExample >> text: anObject [
+RSEasel >> text: anObject [
 	text := anObject
 ]
 
 { #category : #accessing }
-RSEaselExample >> textAsCode [
+RSEasel >> textAsCode [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 
 	^ OpalCompiler new

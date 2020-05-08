@@ -66,6 +66,8 @@ RSCanvasController >> noLegend [
 
 { #category : #hooks }
 RSCanvasController >> onShape: aCanvas [
+	aCanvas controllerInteraction ifNotNil: [ ^ self ].
+	aCanvas controllerInteraction: self.
 	self interactions do: [ :int | int onShape: aCanvas ].
 	self renderLegendOn: aCanvas.
 	
