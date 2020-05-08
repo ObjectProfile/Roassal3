@@ -22,10 +22,9 @@ Class {
 	#name : #RSSearchInCanvas,
 	#superclass : #RSAbstractControlCanvas,
 	#instVars : [
-		'highlightedShapes',
 		'canvas',
-		'colorToHighlight',
-		'useExactMatch'
+		'useExactMatch',
+		'highlightable'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -53,7 +52,9 @@ RSSearchInCanvas >> canvas: aCanvas [
 { #category : #'public - configuration' }
 RSSearchInCanvas >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
-	colorToHighlight := aColor
+	highlightable := RSHighlightable new
+		highlightColor: aColor;
+		yourself.
 ]
 
 { #category : #'public - configuration' }
@@ -63,15 +64,13 @@ RSSearchInCanvas >> doNotUseExactMatch [
 ]
 
 { #category : #util }
-RSSearchInCanvas >> highlightShape: s [
-	"Highlight a shape. Remember it in case we need to unlighted"
-	highlightedShapes add: s.
-	^ RSHighlightable new record: s selector: #color value: colorToHighlight
-]
-
-{ #category : #util }
 RSSearchInCanvas >> highlightShapes: shapesToHighlight [
 	shapesToHighlight do: [ :s | self highlightShape: s ]
+]
+
+{ #category : #accessing }
+RSSearchInCanvas >> highlightable [
+	^ highlightable
 ]
 
 { #category : #initialization }
@@ -79,9 +78,9 @@ RSSearchInCanvas >> initialize [
 	super initialize.
 
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	highlightedShapes := OrderedCollection new.
-	colorToHighlight := Color red.
-	self doNotUseExactMatch
+	self 
+		colorToHighlight: Color red;
+		doNotUseExactMatch
 ]
 
 { #category : #util }
@@ -92,18 +91,20 @@ RSSearchInCanvas >> isRegExpValid: regExp [
 
 { #category : #configuration }
 RSSearchInCanvas >> keyForReset [
-	^ 'r'
+	^ 'R'
 ]
 
 { #category : #configuration }
 RSSearchInCanvas >> keyForSearch [
-	^ 's'
+	^ 'S'
 ]
 
 { #category : #util }
 RSSearchInCanvas >> numberOfHighlightedShapes [
 	"Return the number of shapes that have been highlited"
-	^ highlightedShapes size
+	^ (canvas propertyAt: highlightable propertyKey)
+		ifNil: [ 0 ]
+		ifNotNil: [ :col | col size ]
 ]
 
 { #category : #private }
@@ -142,9 +143,8 @@ RSSearchInCanvas >> renderLegendOn: aLegendBuilder [
 { #category : #public }
 RSSearchInCanvas >> resetAllHighlightedShapes [
 	"Restore the colors of all the highlighted shapes"
-	self unhighlightShapes: highlightedShapes.
-	highlightedShapes := OrderedCollection new.
-	canvas signalUpdate
+	highlightable unhighlightRecordedShapes: canvas.
+	canvas signalUpdate.
 ]
 
 { #category : #public }
@@ -166,7 +166,7 @@ RSSearchInCanvas >> searchForShapes: regExp [
 	"No need to pursue if we have not found anything"
 	shapesToHighlight ifEmpty: [ ^ self ].
 	
-	self highlightShapes: shapesToHighlight.
+	highlightable doHighlightShapes: shapesToHighlight.
 	canvas signalUpdate
 ]
 

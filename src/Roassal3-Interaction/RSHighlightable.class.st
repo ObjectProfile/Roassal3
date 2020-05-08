@@ -48,14 +48,14 @@ Class {
 	#superclass : #RSInteraction,
 	#instVars : [
 		'announcer',
-		'attributeKey',
 		'copyKey',
-		'highlightShapes'
+		'highlightShapes',
+		'propertyKey'
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 RSHighlightable class >> defaultRed [
 	| inst |
 	inst := self new.
@@ -190,16 +190,23 @@ RSHighlightable >> highlightShapes: aBlock [
 ]
 
 { #category : #'highlight shapes' }
-RSHighlightable >> highlightShapes: aBlock butKeep: aRSHilightable [
+RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
 	"aBlock recives an element and return a collection of shapes"
 	self highlightShapes: [ :e | 
 		| shapes |
 		shapes := aBlock value: e.
 		e canvas properties
-			at: aRSHilightable propertyKey
+			at: aRSHighlightable propertyKey
 			ifPresent: [ :hshapes | 
 				shapes reject: [ :hs | hshapes includes: hs ] ]
 			ifAbsent: [ shapes ] ]
+]
+
+{ #category : #'highlight shapes' }
+RSHighlightable >> highlightShapesButKeep: aRSHighlightable [
+	self 
+		highlightShapes: [ :e | { e } ]
+		butKeep: aRSHighlightable
 ]
 
 { #category : #'accessing - computed' }
@@ -231,12 +238,12 @@ RSHighlightable >> onShape: aShape [
 
 { #category : #'accessing - keys' }
 RSHighlightable >> propertyKey [
-	^ attributeKey ifNil: [ attributeKey := #highlightShapes ].
+	^ propertyKey ifNil: [ propertyKey := self hash asString ]
 ]
 
 { #category : #'accessing - keys' }
 RSHighlightable >> propertyKey: aSymbol [
-	attributeKey := aSymbol.
+	propertyKey := aSymbol.
 ]
 
 { #category : #private }
