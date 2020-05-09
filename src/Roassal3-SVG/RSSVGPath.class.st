@@ -18,22 +18,41 @@ RSSVGPath >> buildPathOn: visitor [
 ]
 
 { #category : #private }
+RSSVGPath >> centerSegment: segment absolute: absolute position: position [
+	"maybe we can have an iterator with polymorphic objects"
+	| key args |
+	key := segment first.
+	args := segment second.
+	key = #absolute ifTrue: [ ^ true ].
+	key = #relative ifTrue: [ ^ false ].
+	(key = #ellipticalArc:xrot:large:sweep:to:relative:) ifTrue: [ 
+		absolute ifTrue: [ 
+			args at: 5 put: args fifth - position.
+			args at: 6 put: false ].
+		^ absolute ].
+	key = #vLineTo: ifTrue: [ 
+		absolute ifTrue: [ args at: 1 put: args first - position y ]. 
+		^ absolute].
+	key = #hLineTo: ifTrue: [ 
+		absolute ifTrue: [ args at: 1 put: args first - position x ]. 
+		^ absolute].
+	absolute ifTrue: [ 
+		args doWithIndex: [ :point :index | 
+			args at: index put: point - position ] ].
+	^ absolute
+]
+
+{ #category : #private }
 RSSVGPath >> centerSegments [
 	| rect absolute position |
 	rect := self segmentsRectangle.
 	position := rect floatCenter.
 	absolute := true.
 	segments do: [ :segment | 
-		| key args |
-		key := segment first.
-		args := segment second.
-		key = #absolute ifTrue: [ absolute := true ].
-		key = #relative ifTrue: [ absolute := false ].
-		absolute ifTrue: [ 
-			args doWithIndex: [ :point :index | 
-				point isPoint 
-					ifTrue: [ args at: index put: point - position ]
-					ifFalse: [ args at: index put: point - position x ] ] ] ].
+		absolute := self 
+			centerSegment: segment 
+			absolute: absolute 
+			position: position  ].
 				
 	polygons do: [ :polygon |
 		polygon doWithIndex: [ :point :index |
