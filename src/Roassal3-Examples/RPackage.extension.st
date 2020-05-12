@@ -7,7 +7,7 @@ RPackage >> dependentPackages [
 	
 	(RPackageOrganizer default packageNamed: 'Roassal3') dependentPackages
 	"
-	^ (self definedClasses flatCollect: #dependentClasses) collect: #package as: Set
+	^ (self definedClasses flatCollect: #dependentClasses), self extendedClasses collect: #package as: Set
 ]
 
 { #category : #'*Roassal3-Examples' }
