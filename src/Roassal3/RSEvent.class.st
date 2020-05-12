@@ -1,5 +1,16 @@
 "
-TSEvent is the root of all the events handled by Trachel (and therefore Roassal).
+<keyClass>
+`RSEvent` is the root of all the events handled by Roassal. Events are expressed as an instance of a subclass of `RSEvent`. Some events describe the actions made by the users (e.g., `RSMouseDragEnd`), some other event describes some state change of a shape (e.g., `RSShapeAddedEvent`, `RSHighlightEvent`).
+
+*Responsibility*: model an event triggered either by a user action or a state change.
+
+*Collaborators*: events are emitted by `RSAthensMorph` or by some interaction (e.g., `RSHighlightable`)
+
+*Variables*:
+- `canvas`: the `RSCanvas` 
+- `morph`: the `RSAthensMorph` 
+- `shape`: the shape related to the event
+  
 "
 Class {
 	#name : #RSEvent,
@@ -53,6 +64,7 @@ RSEvent >> shape: aTrachelShape [
 
 { #category : #accessing }
 RSEvent >> signalUpdate [
+	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
 	morph notNil ifTrue: [ morph changed ]
 	
 ]

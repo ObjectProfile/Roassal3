@@ -1,5 +1,18 @@
 "
-I am the top class of shapes
+<keyClass>
+`RSShape` is the root of all the Roassal shapes. A shape represents a visual element meant to be inserted in a `RSCanvas`. `RSShape` is an abstract class, not meant to be directly instantiated therefore.
+
+*Responsibility*: A shape, i.e., subclass of the class `RSShape` is responsible to model a visual element. 
+
+*Collaborators*: A shape is meaningful when inserted in a canvas
+
+*Variables*:
+- `paint`: the color of the Athens paint object used to render the visual shape
+- `path`: refers to AthensCairoPath, which is a resource of a foreign object, ie., the cairo on
+- `border`:
+- `parent`: the parent shape
+- `isFixed`: a boolean indicating if the shape is fixed (ie., not subject to the camera position and movement)
+
 "
 Class {
 	#name : #RSShape,
@@ -86,6 +99,20 @@ RSShape >> color [
 
 { #category : #accessing }
 RSShape >> color: aColor [
+	"Set the color of the shape. 
+
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+c add: (RSBox new size: 50; color: #blue).
+c
+-=-=-=-=-=-=-=-=-=
+	
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+c add: (RSBox new size: 50; color: Color blue).
+c
+-=-=-=-=-=-=-=-=-=
+	"
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
 	paint := Color colorFrom: aColor.
@@ -237,6 +264,7 @@ RSShape >> paint [
 
 { #category : #accessing }
 RSShape >> paint: aPaint [
+	"Receive a Color or an Athens paint object"
 	paint := aPaint
 ]
 
@@ -262,6 +290,7 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
+	"Keep a AthensCairoPath"
 	path := aPath
 ]
 

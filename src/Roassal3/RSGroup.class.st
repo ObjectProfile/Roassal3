@@ -1,10 +1,18 @@
 "
-A RSGroup represents collections of Roassal elements. A RSGroup is not designed to contain other things than Roassal shapes. 
-When an RSShape is expected, one can provide an RSGroup, RSGroup are therefore polymorphic to RSShape.
+<keyClass>
+A `RSGroup` represents a collection of Roassal shapes. As soon as one assume a collection contains graphical elements, then it is convenient to be able to perform some operations (e.g., getting the encompassing rectangle of the elements, transforming a collection into a composite shape). `RSGroup` is a subclass of `OrderedCollection`. A `RSGroup` is not designed to contain other things than Roassal shapes. 
 
-For example:
--=-=-=-=-=-=-=-=-=
-characters := (1 to: 20) collect: [ :value | 
+*Responsibility*: handle a collection of graphical shapes in an intuitive and efficient way. A group is also responsible to retrieve shapes from a given model object.
+
+*Collaborators*: `RSGroup` is a central class in Roassal. Shapes are held in instance of `RSGroup`.
+
+*Variables*:
+- `shapeFromModelCache`: a group of shapes must remember the model to speed up the retreival of shapes from a given object model.
+
+
+*Example*:
+```Smalltalk
+shapes := (1 to: 20) collect: [ :value | 
 	| g |
 	g := RSGroup new.
 	g add: (RSEllipse new size: 30 atRandom).
@@ -12,14 +20,14 @@ characters := (1 to: 20) collect: [ :value |
 	g asShape ].
 
 c := RSCanvas new.
-c addAll: characters.
-RSFlowLayout on: characters.
+c addAll: shapes.
+RSFlowLayout on: shapes.
 c @ RSCanvasController.
--=-=-=-=-=-=-=-=-=
+```
 
-Layout can also be applied:
--=-=-=-=-=-=-=-=-=
-characters := (1 to: 20) collect: [ :value | 
+Layout may be applied on a group
+```Smalltalk
+shapes := (1 to: 20) collect: [ :value | 
 	| g |
 	g := RSGroup new.
 	g add: (RSLabel new text: value).
@@ -28,10 +36,18 @@ characters := (1 to: 20) collect: [ :value |
 	g asShape ].
 
 c := RSCanvas new.
-c addAll: characters.
-RSFlowLayout on: characters.
+c addAll: shapes.
+RSFlowLayout on: shapes.
 c @ RSCanvasController.
--=-=-=-=-=-=-=-=-=
+```
+
+```Smalltalk
+g := RSGroup new.
+g add: (RSBox new model: 'hello').
+g add: (RSEllipse new model: 'world').
+g shapeFromModel: 'hello' ""=> a RSBox(hello))""
+```
+
 "
 Class {
 	#name : #RSGroup,
@@ -94,7 +110,17 @@ RSGroup >> resetShapeFromModelCache [
 
 { #category : #accessing }
 RSGroup >> shapeFromModel: anObject [
-	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil"
+	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
+	
+-=-=-=-=-=-=-=-=-=
+g := RSGroup new.
+g add: (RSBox new model: 'hello').
+g add: (RSEllipse new model: 'world').
+g shapeFromModel: 'hello'
+-=-=-=-=-=-=-=-=-=
+=> a RSBox(hello))
+
+	"
 	| t |
 	self shapeFromModelCache 
 		at: anObject 
@@ -119,7 +145,17 @@ RSGroup >> shapeFromModelCache [
 
 { #category : #accessing }
 RSGroup >> shapesFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
+	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil.
+
+For example:
+-=-=-=-=-=-=-=-=-=
+g := RSGroup new.
+g add: (RSBox new model: 'hello').
+g add: (RSEllipse new model: 'world').
+g shapesFromModel: 'hello' 
+-=-=-=-=-=-=-=-=-=
+=> a RSGroup(a RSBox(hello))
+	"	
 
 	| t key |
 	self shapeFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].

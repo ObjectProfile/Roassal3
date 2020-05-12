@@ -38,7 +38,8 @@ RSRDGenerator >> roassal3Methods [
 { #category : #'as yet unclassified' }
 RSRDGenerator >> roassal3Packages [
 	^ RPackageOrganizer default packages
-		select: [ :p | p packageName beginsWith: 'Roassal3' ]
+		select: [ :p | 
+			#('Numeric' 'Roassal3') anySatisfy: [ :r | p packageName beginsWith: r ] ]
 ]
 
 { #category : #'as yet unclassified' }
