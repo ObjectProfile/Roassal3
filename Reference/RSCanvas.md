@@ -18,3 +18,10 @@ Roassal keeps its shapes (i.e., instance of a subclass of `RSShape`) into a canv
 `camera` refers to the camera of the canvas.
 
 `clearBackground` is a boolean indicating whether the background must be cleared at each refresh. This is useful sometime to obtain some interesting visual effects.
+
+*Example*:
+```Smalltalk
+c := RSCanvas new.
+c add: (RSLabel new text: 'Hello from Roassal').
+c
+```
