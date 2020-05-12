@@ -86,12 +86,12 @@ RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 		source: shapeOrCanvas ].
 ]
 
-{ #category : #accessing }
+{ #category : #announce }
 RSHighlightable >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ].
 ]
 
-{ #category : #accessing }
+{ #category : #announce }
 RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
@@ -185,11 +185,12 @@ RSHighlightable >> highlightShapes [
 ]
 
 { #category : #accessing }
-RSHighlightable >> highlightShapes: aBlock [
-	highlightShapes := aBlock
+RSHighlightable >> highlightShapes: aBlockOnArg [
+	"the block should return a collection of shapes"
+	highlightShapes := aBlockOnArg
 ]
 
-{ #category : #'highlight shapes' }
+{ #category : #'public - hooks' }
 RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
 	"aBlock recives an element and return a collection of shapes"
 	self highlightShapes: [ :e | 
@@ -202,14 +203,14 @@ RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
 			ifAbsent: [ shapes ] ]
 ]
 
-{ #category : #'highlight shapes' }
+{ #category : #'public - hooks' }
 RSHighlightable >> highlightShapesButKeep: aRSHighlightable [
 	self 
 		highlightShapes: [ :e | { e } ]
 		butKeep: aRSHighlightable
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : #private }
 RSHighlightable >> highlightShapesFor: aShape [
 	^ highlightShapes rsValue: aShape
 ]
@@ -262,13 +263,14 @@ For example:
 	-=-=-=-=
 	
 	"
-
-	aShape properties
-		at: self copyKey, selector
-		put: (aShape perform: selector).
-		
+	| savedValues |
+	savedValues := aShape properties
+		at: self copyKey , selector
+		ifAbsentPut: [ OrderedCollection new ].
+	savedValues add: (aShape perform: selector).
+	
 	aShape
-		perform: selector, ':' asSymbol 
+		perform: selector asMutator
 		with: (anObject rsValue: aShape)
 ]
 
@@ -294,15 +296,16 @@ RSHighlightable >> restore: aShape selector: selector [
 	c
 	-=-=-=-=-=-=-=-=-=-=-=-=
 "
-	| key |
+	| key savedValues |
 	key := self copyKey, selector.
-	aShape properties
+	savedValues := aShape properties 
 		at: key
-		ifPresent: [ :value | 
-			aShape 
-				perform: selector, ':' asSymbol
-				with: value ];
-		removeKey: key ifAbsent: [  ].
+		ifAbsent: [ ^ self ].
+	aShape
+		perform: selector asMutator
+		with: savedValues removeLast.
+	savedValues ifEmpty: [ aShape properties removeKey: key ]
+	
 ]
 
 { #category : #public }
@@ -360,7 +363,7 @@ RSHighlightable >> when: event do: aBlock [
 	self announcer when: event do: aBlock
 ]
 
-{ #category : #'highlight shapes' }
+{ #category : #'public - hooks' }
 RSHighlightable >> withEdges [
 	self highlightShapes: [ :s | 
 		| list |
@@ -369,7 +372,7 @@ RSHighlightable >> withEdges [
 		list ].
 ]
 
-{ #category : #'highlight shapes' }
+{ #category : #'public - hooks' }
 RSHighlightable >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
@@ -378,7 +381,7 @@ RSHighlightable >> withIncomingEdges [
 		list ].
 ]
 
-{ #category : #'highlight shapes' }
+{ #category : #'public - hooks' }
 RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |

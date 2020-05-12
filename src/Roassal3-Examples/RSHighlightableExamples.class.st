@@ -241,9 +241,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 			ifFalse: [ Color blue ] ].
 	"usefull to combine 2 instances of RSHighlightable"
 	selectedButton propertyKey: #buttons.
-	mouseOver
-		highlightShapes: [ :e | { e } ] 
-		butKeep: selectedButton.
+	mouseOver highlightShapesButKeep: selectedButton.
 		
 	canvas addAll: ((1 to: 10) collect: [ :i |
 		RSBox new
