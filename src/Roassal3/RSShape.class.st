@@ -123,6 +123,35 @@ RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
 ]
 
+{ #category : #copying }
+RSShape >> copyWithAnnouncer [
+	"Answer a copy of this shape that shares the same instance of announcer (The default #postCopy cleans it). 
+	This means that interactions and subscription handlers to any RSEvent will be shared between both instances. 
+	This is useful for optimizations. Senders should be careful! 
+	
+	Example:
+		base := RSBox new
+		    size: 100;
+		    color: Color blue;
+		    popup;
+		    draggable.
+		    
+		shapes := (1 to: 20) collect:[:i | 
+		    base copyWithEvents
+		        model: i;
+		        yourself.
+		    ].
+		c := RSCanvas new.
+		RSHorizontalLineLayout on: shapes.
+		c addAll: shapes.
+		c zoomToFit.
+	"
+
+	^ self copy
+		announcer: announcer;
+		yourself
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
