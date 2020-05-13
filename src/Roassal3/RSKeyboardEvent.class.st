@@ -46,3 +46,28 @@ RSKeyboardEvent >> keyValue [
 RSKeyboardEvent >> keyValue: anObject [
 	keyValue := anObject
 ]
+
+{ #category : #printing }
+RSKeyboardEvent >> printOn: aStream [
+	"Append a sequence of characters to aStream that identify the receiver."
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: ' keyName: ';
+		print: keyName.
+	aStream
+		nextPutAll: ' keyValue: ';
+		print: keyValue.
+	aStream
+		nextPutAll: ' commandKeyPressed: ';
+		print: commandKeyPressed.
+	aStream
+		nextPutAll: ' controlKeyPressed: ';
+		print: controlKeyPressed.
+	aStream
+		nextPutAll: ' optionKeyPressed: ';
+		print: optionKeyPressed.
+	aStream
+		nextPutAll: ' shiftKeyPressed: ';
+		print: shiftKeyPressed
+]
