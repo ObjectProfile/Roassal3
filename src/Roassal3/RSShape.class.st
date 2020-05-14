@@ -16,7 +16,7 @@
 "
 Class {
 	#name : #RSShape,
-	#superclass : #RSPropertableObject,
+	#superclass : #RSObjectWithProperty,
 	#instVars : [
 		'paint',
 		'path',
