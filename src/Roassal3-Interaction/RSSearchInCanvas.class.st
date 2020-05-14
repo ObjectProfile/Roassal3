@@ -2,7 +2,27 @@
 I am an option for the canvas controller. 
 You can use me as follows (press the / key and the r key):
 
--=-=-=
+```Smalltalk
+c := RSCanvas new.
+
+shapes := Collection withAllSubclasses collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+
+c addAll: shapes.
+
+shapes @ RSPopup.
+
+eb := RSEdgeBuilder line.
+eb canvas: c.
+eb connectFrom: #superclass.
+
+RSTreeLayout on: shapes.
+
+con := RSCanvasController new.
+con addInteraction: RSSearchInCanvas new.
+c @ con.
+```
+
+```Smalltalk
 c := RSCanvas new.
 
 shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
@@ -15,7 +35,7 @@ shapes @ RSPopup.
 con := RSCanvasController new.
 con addInteraction: RSSearchInCanvas new.
 c @ con.
--=-=-=
+```
 
 "
 Class {
