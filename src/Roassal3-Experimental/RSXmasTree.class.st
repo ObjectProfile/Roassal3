@@ -18,7 +18,7 @@ Class {
 		'treeSize',
 		'map'
 	],
-	#category : #'Roassal3-Experimental-Xmas'
+	#category : #'Roassal3-Experimental-Xmas2019'
 }
 
 { #category : #initialization }
