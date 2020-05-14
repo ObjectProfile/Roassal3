@@ -4,7 +4,7 @@ I am just a demo
 Class {
 	#name : #RSXmasExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Experimental'
+	#category : #'Roassal3-Experimental-Xmas2019'
 }
 
 { #category : #accessing }

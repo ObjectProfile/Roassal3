@@ -11,7 +11,7 @@ Class {
 		'baseIndex',
 		'dTheta'
 	],
-	#category : #'Roassal3-Experimental-Xmas'
+	#category : #'Roassal3-Experimental-Xmas2019'
 }
 
 { #category : #adding }
