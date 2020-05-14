@@ -24,6 +24,17 @@ RSCanvasTest >> testAddOneShape [
 	self assert: canvas numberOfFixedShapes equals: 0
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testAddShapeBefore [
+	| shape1 shape2 |
+	shape1 := RSBox new size: 20.
+	shape2 := RSEllipse new size: 10.
+	
+	canvas add: shape2.
+	canvas addShape: shape1 before: shape2.
+	self assert: canvas shapes asArray equals: { shape1 . shape2 }
+]
+
 { #category : #running }
 RSCanvasTest >> testDrawCanvas [
 	canvas addShape: (RSBox new
