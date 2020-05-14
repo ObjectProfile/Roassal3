@@ -3,9 +3,17 @@ Test for all shapes with a matrix an one encompassing rectangle
 "
 Class {
 	#name : #RSBoundingTest,
-	#superclass : #RSCanvasTest,
+	#superclass : #RSTest,
+	#instVars : [
+		'canvas'
+	],
 	#category : #'Roassal3-Shapes-Tests'
 }
+
+{ #category : #running }
+RSBoundingTest >> setUp [
+	canvas := RSCanvas new
+]
 
 { #category : #running }
 RSBoundingTest >> testDrawBitmap [

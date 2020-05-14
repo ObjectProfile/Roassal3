@@ -3,9 +3,17 @@ A TSLabelTest is a test class for testing the behavior of TSLabel
 "
 Class {
 	#name : #RSLabelTest,
-	#superclass : #RSCanvasTest,
+	#superclass : #RSTest,
+	#instVars : [
+		'canvas'
+	],
 	#category : #'Roassal3-Shapes-Tests'
 }
+
+{ #category : #running }
+RSLabelTest >> setUp [
+	canvas := RSCanvas new
+]
 
 { #category : #tests }
 RSLabelTest >> testDrawBorderLabel [
