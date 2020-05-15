@@ -1,7 +1,7 @@
-Extension { #name : #RSPropertableObject }
+Extension { #name : #RSObjectWithProperty }
 
 { #category : #'*Roassal3-Inspector' }
-RSPropertableObject >> gtInspectorProperties: composite [
+RSObjectWithProperty >> gtInspectorProperties: composite [
 	<gtInspectorPresentationOrder: 25>
 	self hasProperties ifFalse: [ ^ self ].
 	self properties gtInspectorItemsIn: composite

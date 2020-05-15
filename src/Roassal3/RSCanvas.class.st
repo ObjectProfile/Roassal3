@@ -28,7 +28,7 @@ c
 "
 Class {
 	#name : #RSCanvas,
-	#superclass : #RSPropertableObject,
+	#superclass : #RSObjectWithProperty,
 	#traits : 'RSTContainer',
 	#classTraits : 'RSTContainer classTrait',
 	#instVars : [

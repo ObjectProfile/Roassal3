@@ -2,7 +2,7 @@
 My subclasses has attributes useful to add extra data to each component
 "
 Class {
-	#name : #RSPropertableObject,
+	#name : #RSObjectWithProperty,
 	#superclass : #RSObject,
 	#instVars : [
 		'announcer',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #interactions }
-RSPropertableObject >> @ anInteractionClassOrInstance [
+RSObjectWithProperty >> @ anInteractionClassOrInstance [
 	"Add an interaction to the canvas or a shape.
 Here is an example that illustrate two interactions, one for a shape and another for the canvas:
 -=-=-=-=-=-=-=-=-=
@@ -28,33 +28,33 @@ c @ RSCanvasController
 ]
 
 { #category : #interactions }
-RSPropertableObject >> addInteraction: anInteractionClassOrInstance [
+RSObjectWithProperty >> addInteraction: anInteractionClassOrInstance [
  	anInteractionClassOrInstance onShape: self
 ]
 
 { #category : #announcer }
-RSPropertableObject >> announce: anEventOrAnEventClass [
+RSObjectWithProperty >> announce: anEventOrAnEventClass [
 	"Send an event"
 	self subclassResponsibility
 ]
 
 { #category : #announcer }
-RSPropertableObject >> announcer [ 
+RSObjectWithProperty >> announcer [ 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #announcer }
-RSPropertableObject >> announcer: anAnnouncer [
+RSObjectWithProperty >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
 { #category : #accessing }
-RSPropertableObject >> canvas [
+RSObjectWithProperty >> canvas [
 	^ self subclassResponsibility
 ]
 
 { #category : #events }
-RSPropertableObject >> click [
+RSObjectWithProperty >> click [
 	"Simulate a click. 
 	
 For example:
@@ -73,98 +73,98 @@ c
 ]
 
 { #category : #interactions }
-RSPropertableObject >> getInteractionsForClass: anInteractionClass [
+RSObjectWithProperty >> getInteractionsForClass: anInteractionClass [
 	"Return the Announcement subscriptions for the interaction"
 	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
 ]
 
 { #category : #interactions }
-RSPropertableObject >> hasInteraction: anInteractionClass [
+RSObjectWithProperty >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
 	self announcer subscriptions ifNil: [ ^ false ].
 	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
 ]
 
 { #category : #properties }
-RSPropertableObject >> hasProperties [
+RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]
 ]
 
 { #category : #properties }
-RSPropertableObject >> hasProperty: aKey [ 
+RSObjectWithProperty >> hasProperty: aKey [ 
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
 { #category : #announcer }
-RSPropertableObject >> privateAnnouncer [
+RSObjectWithProperty >> privateAnnouncer [
 	^ announcer
 ]
 
 { #category : #private }
-RSPropertableObject >> privateAttributes [
+RSObjectWithProperty >> privateAttributes [
 	^ properties
 ]
 
 { #category : #properties }
-RSPropertableObject >> properties [
+RSObjectWithProperty >> properties [
 	^ properties ifNil: [ properties := Dictionary new ]
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertiesDo: block [
+RSObjectWithProperty >> propertiesDo: block [
 	self hasProperties ifFalse: [ ^ self ].
 	block value: self properties.
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertyAt: aKey [
+RSObjectWithProperty >> propertyAt: aKey [
 	^ self properties at: aKey ifAbsent: [ nil ]
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertyAt: aKey ifAbsent: aBlockClosure [ 
+RSObjectWithProperty >> propertyAt: aKey ifAbsent: aBlockClosure [ 
 	^ self properties at: aKey ifAbsent: aBlockClosure 
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertyAt: aKey ifAbsentPut: aBlockClosure [ 
+RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: aBlockClosure [ 
 	^ self properties at: aKey ifAbsentPut: aBlockClosure 
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertyAt: aKey ifPresent: aBlockClosure [ 
+RSObjectWithProperty >> propertyAt: aKey ifPresent: aBlockClosure [ 
 	^ self properties at: aKey ifPresent: aBlockClosure 
 ]
 
 { #category : #properties }
-RSPropertableObject >> propertyAt: aKey put: value [
+RSObjectWithProperty >> propertyAt: aKey put: value [
 	^ self properties at: aKey put: value
 ]
 
 { #category : #events }
-RSPropertableObject >> release [
+RSObjectWithProperty >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
 { #category : #properties }
-RSPropertableObject >> removeAttributeAt: aKey [
+RSObjectWithProperty >> removeAttributeAt: aKey [
 	^ self properties removeKey: aKey
 ]
 
 { #category : #properties }
-RSPropertableObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
+RSObjectWithProperty >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 	^ self properties removeKey: aKey ifAbsent: anErrorBlock
 ]
 
 { #category : #interactions }
-RSPropertableObject >> removeInteractionIfPresent: anInteractionClass [
+RSObjectWithProperty >> removeInteractionIfPresent: anInteractionClass [
 	"Remove all the callbacks associated to the interaction."
 	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
 { #category : #properties }
-RSPropertableObject >> removeKey: aKey [
+RSObjectWithProperty >> removeKey: aKey [
 	| att |
 	att := self properties.
 	(att includesKey: aKey) ifFalse: [ ^ self ].
@@ -173,6 +173,6 @@ RSPropertableObject >> removeKey: aKey [
 ]
 
 { #category : #announcer }
-RSPropertableObject >> when: event do: aBlock [
+RSObjectWithProperty >> when: event do: aBlock [
 	self announcer when: event do: aBlock
 ]

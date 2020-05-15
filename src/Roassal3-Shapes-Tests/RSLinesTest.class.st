@@ -3,9 +3,17 @@ Test for all the lines of trachel
 "
 Class {
 	#name : #RSLinesTest,
-	#superclass : #RSCanvasTest,
+	#superclass : #RSTest,
+	#instVars : [
+		'canvas'
+	],
 	#category : #'Roassal3-Shapes-Tests'
 }
+
+{ #category : #running }
+RSLinesTest >> setUp [
+	canvas := RSCanvas new
+]
 
 { #category : #'tests - colors' }
 RSLinesTest >> testColorLineAndMarker [
