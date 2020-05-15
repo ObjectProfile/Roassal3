@@ -116,6 +116,30 @@ RSCanvasTest >> testEvent [
 	box when: RSMouseClick do: [ :evt |  ]
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testEventKnowsItsCanvas [
+
+	| evt t |
+	evt := RSEvent new.
+	t := false.
+	canvas when: RSEvent do: [ :ex | t := true ].
+	canvas announce: evt.
+	self assert: evt canvas equals: canvas.
+	self assert: t.
+]
+
+{ #category : #tests }
+RSCanvasTest >> testEventKnowsItsCanvas02 [
+
+	| evt shape |
+	shape := RSBox new size: 20.
+	canvas add: shape.
+	
+	evt := RSShapeAddedEvent new shape: shape.
+	canvas announce: evt.
+	self assert: evt canvas equals: canvas.
+]
+
 { #category : #events }
 RSCanvasTest >> testLowLevelEvent [
 	| box |
