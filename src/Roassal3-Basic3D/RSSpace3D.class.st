@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'extent',
 		'tmat',
-		'view',
 		'meshes',
-		'elements'
+		'elements',
+		'canvas'
 	],
 	#category : #'Roassal3-Basic3D-Core'
 }
@@ -34,7 +34,7 @@ RSSpace3D >> buildElements [
 	meshes do: [ :mesh | | meshElements |
 		self updateMatrix: mesh.
 		meshElements := mesh elements.
-		view addAll: meshElements.
+		canvas addAll: meshElements.
 		elements at: mesh put: meshElements.
 		mesh update.
 		 ].
@@ -44,10 +44,10 @@ RSSpace3D >> buildElements [
 RSSpace3D >> buildEvents [
 	| prev |
 	prev := nil.
-	view 
-		when: TSMouseDragStart do: [ :evt | 
+	canvas 
+		when: RSMouseDragStart do: [ :evt | 
 			prev := evt positionFromCamera ];
-		when: TSMouseDragging do: [ :evt | | p theta |
+		when: RSMouseDragging do: [ :evt | | p theta |
 			tmat identity.
 			p := evt positionFromCamera.
 			theta := (prev - p )* 360 / extent.
@@ -56,9 +56,19 @@ RSSpace3D >> buildEvents [
 				yrot: theta x degreesToRadians.
 			meshes do: [ :m | m matrix mult: tmat].
 			self draw.
-			view signalUpdate.
+			canvas signalUpdate.
 			prev := p.
 			 ].
+]
+
+{ #category : #accessing }
+RSSpace3D >> canvas [
+	^ canvas
+]
+
+{ #category : #accessing }
+RSSpace3D >> canvas: aRSCanvas [
+	canvas := aRSCanvas
 ]
 
 { #category : #private }
@@ -66,7 +76,7 @@ RSSpace3D >> draw [
 	meshes do: [ :mesh |
 		self updateMatrix: mesh.
 		mesh update ].
-	view signalUpdate.
+	canvas signalUpdate.
 ]
 
 { #category : #accessing }
@@ -89,11 +99,11 @@ RSSpace3D >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
 		title: ['View'];
-		initializeView: [ 
-			view color: Smalltalk ui theme backgroundColor.
-			view when: TSExtentChangedEvent do: [ view zoomToFit ]. 
+		initializeCanvas: [ 
+			canvas color: Smalltalk ui theme backgroundColor.
+			canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ]. 
 			
-			view ].
+			canvas ].
 ]
 
 { #category : #initialization }
@@ -101,7 +111,7 @@ RSSpace3D >> initialize [
 	super initialize.
 	self
 		extent: 400 asPoint;
-		view: RSView new.
+		canvas: RSCanvas new.
 	meshes := OrderedCollection new.
 	tmat := RSMatrix3D new
 ]
@@ -116,14 +126,4 @@ RSSpace3D >> updateMatrix: mesh [
 	mesh
 		transformed: false;
 		transform
-]
-
-{ #category : #accessing }
-RSSpace3D >> view [
-	^ view
-]
-
-{ #category : #accessing }
-RSSpace3D >> view: aView [
-	view := aView
 ]
