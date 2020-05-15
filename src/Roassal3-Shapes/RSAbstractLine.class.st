@@ -134,6 +134,11 @@ RSAbstractLine >> hasMarkers [
 		m anySatisfy: [ :mar | mar notNil ].  ]
 ]
 
+{ #category : #accessing }
+RSAbstractLine >> includedRadius [
+	^ self border width / 2
+]
+
 { #category : #initialization }
 RSAbstractLine >> initialize [ 
 	super initialize.
