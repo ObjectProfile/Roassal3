@@ -1014,18 +1014,33 @@ RSShapeExamples >> example38Resizable [
 	| c |
 	c := RSCanvas new.
 	c add: (RSBox new
-		size: 100;
+		size: 200;
 		withBorder).
 	c add: (RSBox new
-		size: 50;
+		size: 100;
 		cornerRadius: 20;
 		withBorder).
+	
 	c add: (RSEllipse new
-		extent: 100@30;
+		extent: 200@60;
 		withBorder).
+	c add: (RSLabel new
+		fontSize: 100;
+		text: 'Kaguya Sama';
+		yourself).
+	c add: (RSBitmap new
+		form: (self iconNamed: 'pharoBig');
+		yourself).
+	c add: (RSShapeFactory star
+		size: 200;
+		color: 'purple').
+	c add: (self example31BasicGrapher asShape
+		color: Color lightGray translucent).
+	
 	c add: (RSBox new
 		size: 50;
 		color: Color black).
+	
 	c add: (RSLine new
 		withBorderAttachPoint;
 		from: c nodes first;
@@ -1033,8 +1048,10 @@ RSShapeExamples >> example38Resizable [
 	RSGridLayout new
 		gapSize: 50;
 		on: c nodes.
-	c nodes @ RSDraggable.
-	c nodes allButLast @ RSResizable.
+	c nodes do: [ :s | s model: s ].
+	c nodes @ RSDraggable; @ (RSPopup text: [ :m | m class name ] ).
+	
+	c nodes allButLast @ RSTransformable.
 	
 	c @ RSCanvasController. 
 	^ c 
