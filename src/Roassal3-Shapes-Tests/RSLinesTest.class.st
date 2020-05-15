@@ -3,9 +3,17 @@ Test for all the lines of trachel
 "
 Class {
 	#name : #RSLinesTest,
-	#superclass : #RSCanvasTest,
+	#superclass : #RSTest,
+	#instVars : [
+		'canvas'
+	],
 	#category : #'Roassal3-Shapes-Tests'
 }
+
+{ #category : #running }
+RSLinesTest >> setUp [
+	canvas := RSCanvas new
+]
 
 { #category : #'tests - colors' }
 RSLinesTest >> testColorLineAndMarker [
@@ -49,9 +57,27 @@ RSLinesTest >> testDrawMarkers [
 ]
 
 { #category : #running }
-RSLinesTest >> testPolyline [
+RSLinesTest >> testLineIncludesPoint [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 0@100;
+		width: 8;
+		yourself.
+	self assert: (line includesPoint: 0@0).
+	self assert: (line includesPoint: 0@100).
+	self assert: (line includesPoint: 0@50).
+	self assert: (line includesPoint: 4@50).
+	self deny: (line includesPoint: 5@50).
+	self deny: (line includesPoint: 500@500).
+
+]
+
+{ #category : #running }
+RSLinesTest >> testPolylineIncludesPoint [
 	| line |
 	line := RSPolyline new.
+	line width: 10.
 	line controlPoints: { 0@0. 0@100 }.
 	self assert: (line includesPoint: 0@0).
 	self assert: (line includesPoint: 0@100).
@@ -60,14 +86,4 @@ RSLinesTest >> testPolyline [
 	
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50).
-]
-
-{ #category : #running }
-RSLinesTest >> testPolylineBasic [
-	| line |
-	line := RSPolyline new.
-	
-	self deny: (line includesPoint: 500@500).
-	self deny: (line includesPoint: 6@50).
-	self assert: line controlPoints equals: { 0@0. 0@0 }.
 ]

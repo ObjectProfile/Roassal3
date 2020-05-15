@@ -16,7 +16,7 @@
 "
 Class {
 	#name : #RSShape,
-	#superclass : #RSPropertableObject,
+	#superclass : #RSObjectWithProperty,
 	#instVars : [
 		'paint',
 		'path',
@@ -202,7 +202,8 @@ RSShape >> height [
 
 { #category : #testing }
 RSShape >> includesPoint: aPoint [
-	"Return true or false"
+	"Answer whether this shape includes aPoint."
+
 	^ false
 ]
 

@@ -24,6 +24,17 @@ RSCanvasTest >> testAddOneShape [
 	self assert: canvas numberOfFixedShapes equals: 0
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testAddShapeBefore [
+	| shape1 shape2 |
+	shape1 := RSBox new size: 20.
+	shape2 := RSEllipse new size: 10.
+	
+	canvas add: shape2.
+	canvas addShape: shape1 before: shape2.
+	self assert: canvas shapes asArray equals: { shape1 . shape2 }
+]
+
 { #category : #running }
 RSCanvasTest >> testDrawCanvas [
 	canvas addShape: (RSBox new
@@ -103,6 +114,30 @@ RSCanvasTest >> testEvent [
 	| box |
 	box := RSBox new.
 	box when: RSMouseClick do: [ :evt |  ]
+]
+
+{ #category : #tests }
+RSCanvasTest >> testEventKnowsItsCanvas [
+
+	| evt t |
+	evt := RSEvent new.
+	t := false.
+	canvas when: RSEvent do: [ :ex | t := true ].
+	canvas announce: evt.
+	self assert: evt canvas equals: canvas.
+	self assert: t.
+]
+
+{ #category : #tests }
+RSCanvasTest >> testEventKnowsItsCanvas02 [
+
+	| evt shape |
+	shape := RSBox new size: 20.
+	canvas add: shape.
+	
+	evt := RSShapeAddedEvent new shape: shape.
+	canvas announce: evt.
+	self assert: evt canvas equals: canvas.
 ]
 
 { #category : #events }

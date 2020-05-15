@@ -27,12 +27,12 @@ RSRoassal3DExamples >> example01Ball [
 { #category : #examples }
 RSRoassal3DExamples >> example02Rect [
 	<script: 'self new example02Rect inspect'>
-	| space mesh matrix |
+	| space mesh |
 	space := RSSpace3D new.
 	mesh := RSMesh3D cubeWidth: 100 height: 20 depth: 200.
 	space add: mesh.
 	space build.
-	space view newAnimation
+	"space canvas newAnimation
 		duration: 20 seconds;
 		from: 0;
 		to: 360;
@@ -41,7 +41,7 @@ RSRoassal3DExamples >> example02Rect [
 				identity
 				xrot: t degreesToRadians.
 			space draw.
-			space view zoomToFit.
-			 ].
+			space canvas zoomToFit.
+			 ]."
 	^ space
 ]

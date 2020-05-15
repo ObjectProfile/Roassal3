@@ -150,6 +150,23 @@ RSComposite >> addShape: aShape before: otherShape [
 
 { #category : #public }
 RSComposite >> adjustToChildren [
+"Recompute the encompassing rectangle of the composite shape from the positio of the children. 
+
+Consider the following example:
+```Smalltalk
+box := RSBox new size: 20.
+circle := RSEllipse new size: 20.
+g := RSGroup new.
+g add: box; add: circle.
+composite := g asShape.
+composite extent. '=> (20.0@20.0)'
+
+RSVerticalLineLayout on: g.
+composite extent. '=> (20.0@20.0)'
+composite adjustToChildren.
+composite extent '=> (20.0@50.0)'
+```
+"
 	| rect delta |
 	children ifNil: [ ^ self ].
 	rect := children encompassingRectangle.
@@ -202,7 +219,29 @@ RSComposite >> initialize [
 { #category : #accessing }
 RSComposite >> padding: anObject [
 	"anObject can be a number, a point or Margin"
-	"Shapes should be set in the composite before calling #padding:"
+	"Shapes should be set in the composite before calling #padding:
+For example:
+```Smalltalk
+box := RSBox new
+    color: Color blue translucent;
+    fromRectangle: ((-38.5@ -20.0) corner: (38.5@20.0));
+    yourself.
+label := RSLabel new
+    text: 'Smalltalk';
+    yourself.
+g := RSGroup new.
+g add: box.
+g add: label.
+composite := g asShape.
+composite padding: 20.
+composite color: Color red.
+
+c := RSCanvas new.
+c add: composite.
+
+c
+```
+	"
 	
 	| margin rect center temp |
 	temp := children 

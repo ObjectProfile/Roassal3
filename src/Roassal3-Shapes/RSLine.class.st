@@ -32,28 +32,8 @@ Adding single line can be complex in some situation. You may want to look at RSE
 Class {
 	#name : #RSLine,
 	#superclass : #RSAbstractDualLine,
-	#classInstVars : [
-		'delta'
-	],
 	#category : #'Roassal3-Shapes-Lines'
 }
-
-{ #category : #accessing }
-RSLine class >> delta [
-	^ delta ifNil: [ delta := 5 ]
-]
-
-{ #category : #accessing }
-RSLine class >> delta: aNumber [
-	self assert: aNumber >= 0 description: 'The delta for TSLine can not be negative'.
-	delta := aNumber
-]
-
-{ #category : #accessing }
-RSLine class >> reset [
-	<script: 'self reset'>
-	delta := nil.
-]
 
 { #category : #visiting }
 RSLine >> buildPathOn: visitor [
@@ -62,9 +42,10 @@ RSLine >> buildPathOn: visitor [
 
 { #category : #testing }
 RSLine >> includesPoint: aPoint [
+	self hasBorder ifFalse: [ ^ false ].
+	 
 	^ aPoint
 		onLineFrom: self startPoint 
 		to: self endPoint 
-		within: RSLine delta
-	
+		within: self includedRadius
 ]
