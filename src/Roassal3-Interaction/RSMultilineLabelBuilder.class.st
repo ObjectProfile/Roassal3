@@ -20,7 +20,7 @@ RSMultilineLabelBuilder >> compositeLabelFor: lines [
 	self layout on: shapes.
 	^ RSComposite new
 		shapes: shapes;
-		adjustToChildren;
+		position: 0@0;
 		yourself.
 ]
 

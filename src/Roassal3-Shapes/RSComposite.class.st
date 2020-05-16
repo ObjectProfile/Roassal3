@@ -171,10 +171,11 @@ composite extent '=> (20.0@50.0)'
 	children ifNil: [ ^ self ].
 	rect := children encompassingRectangle.
 	delta := rect floatCenter negated.
+	
 	children do: [ :s | s basicTranslateBy: delta ].
 	self 
 		extent: rect extent;
-		translateTo: delta.
+		translateTo: delta negated.
 ]
 
 { #category : #accessing }

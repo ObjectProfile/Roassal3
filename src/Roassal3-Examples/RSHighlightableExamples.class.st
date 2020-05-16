@@ -337,7 +337,7 @@ RSHighlightableExamples >> example08DependendMethods [
 			canvas propertyAt: #methods put: methods.
 			 ];
 		when: RSUnHighlightEvent do: [ :evt | 
-			(canvas attributeAt: #methods ifAbsent: [ #() ]) do:#remove ].
+			(canvas propertyAt: #methods ifAbsent: [ #() ]) do:#remove ].
 
 	canvas @ RSCanvasController.
 	^  canvas 

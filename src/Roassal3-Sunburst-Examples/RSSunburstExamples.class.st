@@ -116,7 +116,6 @@ RSSunburstExamples >> example06Rotation [
 				yourself);
 		canvas: composite;
 		connectFrom: #superclass.
-	composite adjustToChildren.
 	canvas := RSCanvas new.
 	controller := RSCanvasController new.
 	(controller interactions at: RSDraggableCanvas) right.
