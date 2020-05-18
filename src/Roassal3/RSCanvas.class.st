@@ -105,11 +105,22 @@ RSCanvas >> basicRectangle [
 
 { #category : #camera }
 RSCanvas >> camera [
+	"Return the camera used by the canvas:
+
+For example:
+```Smalltalk
+c := RSCanvas new.
+(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
+RSGridLayout on: c shapes.
+c camera translateBy: -30 @ 50.
+c 
+```"
 	^ camera
 ]
 
 { #category : #camera }
 RSCanvas >> camera: aCamera [
+	"Set a new camera for the canvas."
 	camera := aCamera
 ]
 
@@ -120,11 +131,26 @@ RSCanvas >> canvas [
 
 { #category : #testing }
 RSCanvas >> clearBackground [
+	"Return whether the screen must be cleaned at each screen refresh"
 	^ clearBackground
 ]
 
 { #category : #accessing }
 RSCanvas >> clearBackground: aBool [
+	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
+	
+For example, evaluate the following script:
+```Smalltalk
+c := RSCanvas new.
+c clearBackground: false.
+(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
+RSGridLayout on: c shapes.
+c.
+```
+
+And execute the expression `c camera translateBy: 1 @ 1.`
+
+"
 	clearBackground := aBool
 ]
 
@@ -340,6 +366,19 @@ RSCanvas >> privateNodes: aTSGroup [
 
 { #category : #'shapes controling' }
 RSCanvas >> pushBack: aShape [
+	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+
+For example:
+```Smalltalk
+c := RSCanvas new.
+shape1 := RSEllipse new size: 50; color: #red.
+shape2 := RSEllipse new size: 50; color: #blue.
+shape2 translateBy: -25@0.
+c add: shape1; add: shape2.
+c pushFront: shape1.
+c.
+```	
+"
 	| col |
 	col := aShape isFixed 
 		ifTrue: [ fixedShapes ]
@@ -351,6 +390,20 @@ RSCanvas >> pushBack: aShape [
 
 { #category : #'shapes controling' }
 RSCanvas >> pushFront: aShape [
+	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+
+For example:
+```Smalltalk
+c := RSCanvas new.
+shape1 := RSEllipse new size: 50; color: #red.
+shape2 := RSEllipse new size: 50; color: #blue.
+shape2 translateBy: -25@0.
+c add: shape1; add: shape2.
+c pushFront: shape1.
+c.
+```
+The red circle is in front of the blue one, despite the red one is inserted first.
+"
 	| col |
 	col := aShape isFixed 
 		ifTrue: [ fixedShapes ]
