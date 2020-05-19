@@ -97,3 +97,32 @@ RSGroupTest >> testElementFromModel [
 	self assert: (group shapeFromModel: 5) equals: group last.
 
 ]
+
+{ #category : #tests }
+RSGroupTest >> testModels [
+	| g |
+	g := RSGroup new.
+	g add: RSBox new.
+	g add: RSBox new.
+	g add: RSBox new.
+
+	self assert: (g allSatisfy: [ :s | s model isNil ]).
+	g models: #('hello' 'world' 'bonjour').
+	
+	self assert: (g collect: [ :s | s model ]) asArray equals: #('hello' 'world' 'bonjour')
+	 
+]
+
+{ #category : #tests }
+RSGroupTest >> testTranslucent [
+	| g |
+	g := RSGroup new.
+	g add: RSBox new.
+	g add: RSBox new.
+	g add: RSBox new.
+
+	self assert: (g allSatisfy: [ :s | s color alpha = 1 ]).
+	g translucent.
+	self assert: (g allSatisfy: [ :s | s color alpha < 1 ]).
+	 
+]
