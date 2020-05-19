@@ -3,10 +3,9 @@
 Here is another tutorial for [Roassal3](https://github.com/ObjectProfile/Roassal3). 
 
 What you will learn in this tutorial: 
-- create and visualize a chart from a given set of numbers found in a CSV file
-- parse a CSV file using `DataFrame`
-
-The problem we will solve in this tutorial is: _how to draw a chart from a set of values found in a CSV file_
+- the essential features of Chart, the Roassal component to draw charts;
+- create and visualize a chart from a given set of numbers found in a CSV file;
+- parse a CSV file using `DataFrame`.
 
 The topic of this tutorial is charting. It will gently introduce the charting library Roassal3 offers through some contrivied example at first, and then visualize a real dataset.
 
