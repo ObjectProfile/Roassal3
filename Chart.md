@@ -318,11 +318,17 @@ b build.
 b canvas
 ```
 
+The result is:
+![alt text](screenshots/chart10.png)
+
+
 The script uses:
   - a legend to clearly associate the curve to a country,
   - particular font size for the labels on the ticks,
   - labels on the vertical ticks are integer with a comma to separate the group of thousands digit,
   - a square-root normalization on the vertical axis
+
+
 
 # What have we seen in this tutorial?
 

@@ -71,7 +71,7 @@ The documentation of Roassal3 is expanding at a sustained pace.
     - [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
     - [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
     - [Tutorial 04 - Shape Composition](ShapeComposition.md)
-    - [Tutorial 05 - Chart](chart.md)
+    - [Tutorial 05 - Chart](Chart.md)
 - How-to guides (problem-oriented material, centered around practical steps):
     - [How to visualize any arbitrary object?](how-to.md#How-to-visualize-any-arbitrary-object)
     - [How to create a chart from a list of numbers?](how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
