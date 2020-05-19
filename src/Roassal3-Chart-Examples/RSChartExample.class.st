@@ -222,3 +222,40 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	c title: 'Bar char'.
 	^ c
 ]
+
+{ #category : #examples }
+RSChartExample >> example12ScatterPlotAndNormalizer [
+	<script: 'self new example12ScatterPlotAndNormalizer open'>
+	| x y z r c p |
+	x := OrderedCollection new.
+	y := OrderedCollection new.
+	z := OrderedCollection new.
+	r := Random seed: 42.
+	1 to: 100 do: [ :i |
+		x add: i + (r nextInt: 10).
+		y add: i + (r nextInt: 10).
+		z add: i + (r nextInt: 10).
+	].
+
+	c := RSChart new.
+	p := RSScatterPlot new x: x y: y.
+	p color: Color blue translucent.
+	p processBlock: [ :shapes | 
+			shapes models: z.
+			RSNormalizer size
+				shapes: shapes;
+				from: 2;
+				to: 10;
+				normalize: #yourself.
+			RSNormalizer color
+				shapes: shapes;
+				normalize: #yourself.
+			shapes translucent.
+				 ].
+	c addPlot: p.
+	 
+	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
+	c addDecoration: RSVerticalTick new.
+
+	^ c
+]
