@@ -1010,7 +1010,7 @@ RSShapeExamples >> example37PunchCard [
 
 { #category : #shapes }
 RSShapeExamples >> example38Transformable [
-	<script: 'self new example38Resizable open'>
+	<script: 'self new example38Transformable open'>
 	| c |
 	c := RSCanvas new.
 	c add: (RSBox new
