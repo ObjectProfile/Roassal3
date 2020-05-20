@@ -1009,7 +1009,7 @@ RSShapeExamples >> example37PunchCard [
 ]
 
 { #category : #shapes }
-RSShapeExamples >> example38Resizable [
+RSShapeExamples >> example38Transformable [
 	<script: 'self new example38Resizable open'>
 	| c |
 	c := RSCanvas new.
@@ -1030,11 +1030,13 @@ RSShapeExamples >> example38Resizable [
 		yourself).
 	c add: (RSBitmap new
 		form: (self iconNamed: 'pharoBig');
+		
 		yourself).
 	c add: (RSShapeFactory star
 		size: 200;
 		color: 'purple').
 	c add: (self example31BasicGrapher asShape
+		rotateByDegrees: 15;
 		color: Color lightGray translucent).
 	
 	c add: (RSBox new
