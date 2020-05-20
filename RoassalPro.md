@@ -15,6 +15,7 @@ RoassalPro is an organizational program to help you to get the most of Roassal. 
   - *Migrating Roassal*: Roassal is written and developed in Pharo. Roassal can be easy to migrate to another Smalltalk-flavored programming languages. We do have experience in maintaining complex cross-dialect applications.
   
 We do accept donations:
+
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZE7B9WLCSXVQY)
 
 We can emit official invoices and we are entitled to Chilean tax system. You can reach us by [mail](alexandre.bergel@me.com) or by phone (+56 9 913 123 81). 
