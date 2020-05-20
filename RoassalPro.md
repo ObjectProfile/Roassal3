@@ -18,4 +18,6 @@ If you just happy, without having a particular need, we do accept donations:
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZE7B9WLCSXVQY)
 
+The paid services listed above and the donations will be exclusively used to pay salaries of the engineering team in charge of making Roassal the coolest visualization engine on Earth. 
+
 We can emit official invoices and we are entitled to the Chilean tax system. You can reach us by [mail](alexandre.bergel@me.com) or by phone (+56 9 913 123 81). 
