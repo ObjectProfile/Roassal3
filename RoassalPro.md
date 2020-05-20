@@ -1,6 +1,6 @@
 # The RoassalPro Program
 
-The field of visualization is large, and competition is pretty though. Despite the multiple visualization tools and frameworks available, Roassal succeeded in attracting a solid user base. This page describe the plan we have to structure the effort around the development of Roassal.
+The field of visualization is large, and competition is pretty though. Despite the multiple visualization tools and frameworks available, Roassal has succeeded in attracting a solid user base. This page describes the plan we have to structure the effort around the development of Roassal.
 
 Roassal was born in 2007. Since its inception, Roassal was deeply redesigned multiple times. Roassal3, the current version of the Roassal series, culminates from all the previous experiences. 
 
