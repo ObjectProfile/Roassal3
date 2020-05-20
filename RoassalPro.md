@@ -2,7 +2,7 @@
 
 The field of visualization is large, and competition is pretty though. Despite the multiple visualization tools around, Roassal succeeded in attracting a solid user base. This page is about structuring the effort around the development of Roassal.
 
-Roassal was born in 2007. Since its inception, Roassal has been deeply redesigned multiple times. Roassal3, the current version of the Roassal series, culminates from all the previous experiences. 
+Roassal was born in 2007. Since its inception, Roassal was deeply redesigned multiple times. Roassal3, the current version of the Roassal series, culminates from all the previous experiences. 
 
 Roassal is used by many open-source and proprietary software systems. We, the development team behind Roassal, are truly happy about it. We believe Roassal makes Pharo a better Pharo, and the current and future generations of Pharo developers deserve a competitive visualization support. The widespread adoption of Roassal within the Pharo and Smalltalk communities comes with responsibilities. We, the leading development team, are taking these community-emerged responsibilities very seriously: _the Pharo community is putting some trust on us, and we must be up to it_.
 
@@ -18,4 +18,4 @@ We do accept donations:
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZE7B9WLCSXVQY)
 
-We can emit official invoices and we are entitled to Chilean tax system. You can reach us by [mail](alexandre.bergel@me.com) or by phone (+56 9 913 123 81). 
+We can emit official invoices and we are entitled to the Chilean tax system. You can reach us by [mail](alexandre.bergel@me.com) or by phone (+56 9 913 123 81). 
