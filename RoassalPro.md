@@ -1,20 +1,20 @@
 # The RoassalPro Program
 
-The field of visualization is large, and competition is pretty though. Despite the multiple visualization tools around, Roassal succeeded in attracting a solid user base. This page is about structuring the effort around the development of Roassal.
+The field of visualization is large, and competition is pretty though. Despite the multiple visualization tools and frameworks available, Roassal succeeded in attracting a solid user base. This page describe the plan we have to structure the effort around the development of Roassal.
 
 Roassal was born in 2007. Since its inception, Roassal was deeply redesigned multiple times. Roassal3, the current version of the Roassal series, culminates from all the previous experiences. 
 
-Roassal is used by many open-source and proprietary software systems. We, the development team behind Roassal, are truly happy about it. We believe Roassal makes Pharo a better Pharo, and the current and future generations of Pharo developers deserve a competitive visualization support. The widespread adoption of Roassal within the Pharo and Smalltalk communities comes with responsibilities. We, the leading development team, are taking these community-emerged responsibilities very seriously: _the Pharo community is putting some trust on us, and we must be up to it_.
+Roassal is used by many open-source and proprietary software systems. We, the development team behind Roassal, are truly happy about it. We believe Roassal makes Pharo a better Pharo, and the current and future generations of Pharo developers deserve a competitive visualization support. The widespread adoption of Roassal within the Pharo and Smalltalk communities comes with responsibilities. _We, the leading development team, are taking these community-emerged responsibilities very seriously_: the Pharo community is putting some trust on us, and we must be up to it.
 
 Roassal is currently supported by a team of full-time and part-time software engineers dedicated to the development of Roassal. As you can guess, making sure monetary resources can flow is central to cope with increasingly demanding users. 
 
-RoassalPro is an organizational program to help you to get the most of Roassal. RoassalPro is about ensuring particular needs are properly addressed, in a profesional fashion. RoassalPro offers a number of services:
+RoassalPro is an organizational program to help you to get the most of Roassal. RoassalPro is about ensuring particular needs are properly addressed, in a professional fashion. The RoassalPro program offers a number of services:
 
-  - *Custom design and development*: building and evaluating visualization is a difficult activity that involves not only technical skills, but also ability to design and run experiment protocols. We do have a solid experience in building and assessing visualization for complex domain. We do develop Roassal-related applications.
-  - *Roassal extension*: Roassal comes with many features. However, development teams often come with particular requirements. As such, financial support helps boosting the development of Roassal.
-  - *Migrating Roassal*: Roassal is written and developed in Pharo. Roassal can be easy to migrate to another Smalltalk-flavored programming languages. We do have experience in maintaining complex cross-dialect applications.
+  - **Custom design and development**: building and evaluating visualization is a difficult activity that involves not only technical skills, but also ability to design and run experimental protocols. We do have a solid experience in building and assessing visualization for complex domains. We are happy to share our experience by designing and building Roassal-related applications, proprietary or not.
+  - **Roassal extension**: Roassal comes with many features. However, development teams often come with particular requirements. As such, with a financial support, we can develop a particular visualization or extension of Roassal.
+  - **Migrating Roassal**: Roassal is written and developed in Pharo. Roassal can be easy to migrate to another Smalltalk-flavored programming languages. We do have experience in maintaining complex cross-dialect applications.
   
-We do accept donations:
+If you just happy, without having a particular need, we do accept donations:
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZE7B9WLCSXVQY)
 
