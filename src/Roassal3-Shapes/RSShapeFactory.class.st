@@ -24,14 +24,7 @@ RSShapeFactory class >> arrow [
 
 { #category : #lines }
 RSShapeFactory class >> arrowedLine [
-	| marker shape |
-	marker := RSPolygon new
-		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
-		paint: nil;
-		withBorder.
-	shape := RSLine new.
-	shape markerEnd: marker.
-	^ shape
+	^ RSArrowedLine new
 ]
 
 { #category : #shapes }

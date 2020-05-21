@@ -82,7 +82,6 @@ RSAbstractLine >> color [
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
 	self strokePaint: aColor.
-	self markersDo: [ :m | m shape borderColor: aColor ].
 ]
 
 { #category : #accessing }

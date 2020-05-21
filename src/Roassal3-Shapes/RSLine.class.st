@@ -4,6 +4,7 @@ RSLine describes a line. A line typically links two shapes.
 Here is an example:
 
 -=-=-=-=
+| c from to l |
 c := RSCanvas new.
 
 from := RSBox new size: 30.
@@ -23,7 +24,7 @@ c add: l.
 
 to translateBy: 50 @ 40.
 
-c @ RSControlsCanvas.
+c @ RSCanvasController.
 c
 -=-=-=-=
 
