@@ -20,8 +20,8 @@ Class {
 RSLissajous >> build [
 	| rows columns |
 	canvas color: Color black.
-	rows := self createLineWith: [ :n | 0@n ].
-	columns := self createLineWith: [ :n | n @ 0 ].
+	rows := self createCirclesWith: [ :n | 0@n ].
+	columns := self createCirclesWith: [ :n | n @ 0 ].
 	
 	rows do: [ :row |
 		columns do: [ :column |
@@ -76,6 +76,15 @@ RSLissajous >> createBigCircleFor: aPoint [
 	^ shape.
 ]
 
+{ #category : #shapes }
+RSLissajous >> createCirclesWith: aBlockClosure [ 
+	| values shapes |
+	values := (1 to: nCircles) collect: aBlockClosure.
+	shapes := values collect: [ :p | self createBigCircleFor: p ].
+	canvas addAll: shapes.
+	^ shapes.
+]
+
 { #category : #animations }
 RSLissajous >> createDot [
 	^ RSEllipse new
@@ -106,7 +115,7 @@ RSLissajous >> createLineAnimationFor: shape [
 				ifTrue: [ cell * (nCircles + 0.5) @ position y ]
 				ifFalse: [ position x @ (cell * (nCircles + 0.5) ) ].
 			position := (point * cell) + delta.
-			line endPoint: position.
+			line startPoint: position.
 			].
 		
 	
@@ -118,19 +127,10 @@ RSLissajous >> createLineFor: dot [
 	^ RSLine new
 		dashed;
 		color: Color white;
+		from: 0@0;
+		to: dot;
 		width: 0.5;
-		from: dot;
-		to: 100@100;
 		yourself
-]
-
-{ #category : #shapes }
-RSLissajous >> createLineWith: aBlockClosure [ 
-	| values shapes |
-	values := (1 to: nCircles) collect: aBlockClosure.
-	shapes := values collect: [ :p | self createBigCircleFor: p ].
-	canvas addAll: shapes.
-	^ shapes.
 ]
 
 { #category : #initialization }
