@@ -4,7 +4,7 @@ a simple hanoi
 Class {
 	#name : #RSHanoi,
 	#superclass : #Object,
-	#category : #'Roassal3-Experimental-Animations'
+	#category : #'Roassal3-Experimental-Hanoi'
 }
 
 { #category : #hanoi }

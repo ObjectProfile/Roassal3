@@ -105,6 +105,11 @@ RSAbstractLine >> dashArray: arrayOfNumbers [
 	
 ]
 
+{ #category : #'style-dashes' }
+RSAbstractLine >> dashed [
+	self dashArray: #(4).
+]
+
 { #category : #accessing }
 RSAbstractLine >> endPoint [
 	^ self subclassResponsibility
