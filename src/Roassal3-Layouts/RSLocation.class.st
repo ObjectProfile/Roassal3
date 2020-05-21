@@ -1,11 +1,42 @@
 "
-I am iteratively buildable constraint for moving and positioning an element on top of another one.
+<keyClass>
+`RSLocation` locates shapes with respect to other shapes. Shapes can be positioned in a sticky fashion or not. Being sticky means whether the base shapes ""drag"" the sitcky shapes when dragged. `RSLocation` iteratively builds constraint for moving and positioning a shape on top of another one.
 
-!! Usage
+*Responsibility*: locate permanently or not some shapes with respect to other shapes.
 
-The order of configuration message sends is irrelevant, only the last of a group will be used.
+*Collaborators*: closely interact with `RSShape`, `RSExtentChangedEvent`, and `RSPositionChangedEvent`
 
-Here is an example:
+*Variables*:
+- `offset`: offset between the positioned shape and the base shape
+- `orientation`: a value that could be -1, 0, 1 indicating the orientation of the location
+- `direction`: a point indicating the direction of the lcoation
+
+*Example*:
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape, drag me').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	bottom;
+	outer;
+	right;
+	offset: 20;
+	stick: redShape on: baseShape.
+""Try changing stick:on: by move:on. Replacing bottom by top""
+c
+```
+
+A more complex example:
+
 ```Smalltalk
 v := RSCanvas new.
 
@@ -37,7 +68,7 @@ boxes do: [ :b |
 ].
 
 RSTreeLayout on: boxes.
-v @ RSControlsCanvas.
+v @ RSCanvasController.
 v open
 ```
 "
@@ -71,14 +102,37 @@ RSLocation >> border [
 
 { #category : #'public - positioning' }
 RSLocation >> bottom [
+	"Locate the shape at the bottom of the base shape.
+For example:
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	bottom;
+	outer;
+	right;
+	move: redShape on: baseShape.
+c
+```
+	"
 	fixedY := #bottom.
-	direction := direction x@ -1.
+	direction := direction x @ -1.
 ]
 
 { #category : #'public - positioning' }
 RSLocation >> center [
-	fixedX := [:rec | rec floatCenter x].
-	direction := 0@ direction y
+	fixedX := [ :rec | rec floatCenter x ].
+	direction := 0 @ direction y
 ]
 
 { #category : #private }
@@ -89,7 +143,7 @@ RSLocation >> computePosition: movableShape on: fixedShape [
 { #category : #initialization }
 RSLocation >> initialize [
 	super initialize.
-	direction := 0@0.
+	direction := 0 @ 0.
 	self
 		offset: 0;
 		inner;
@@ -104,19 +158,62 @@ RSLocation >> inner [
 
 { #category : #'public - positioning' }
 RSLocation >> left [
+	"Locate the shape on the left of the base shape.
+For example:
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	above;
+	left;
+	move: redShape on: baseShape.
+c
+```"
 	fixedX := #left.
 	direction := 1@ direction y
 ]
 
 { #category : #'public - positioning' }
 RSLocation >> middle [
+	"Locate the shape in the middle of the base shape.
+For example:
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	middle;
+	above;
+	move: redShape on: baseShape.
+c
+```
+	"
 	fixedY := [ :r | r floatCenter y ].
 	direction := direction x @ 0
 ]
 
 { #category : #'public - executing' }
-RSLocation >> move: movableShape on: fixShape [
-	movableShape translateTo: (self computePosition: movableShape on: fixShape).
+RSLocation >> move: movableShape on: baseShape [
+	movableShape translateTo: (self computePosition: movableShape on: baseShape).
 ]
 
 { #category : #'public - modifiers' }
@@ -126,6 +223,30 @@ RSLocation >> offset [
 
 { #category : #'public - modifiers' }
 RSLocation >> offset: aNumber [
+	"Let an offset between the positioned shape and the base shape.
+	
+For example
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	bottom;
+	outer;
+	right;
+	offset: 20;
+	move: redShape on: baseShape.
+c
+```"
 	offset := aNumber asPoint
 ]
 
@@ -144,16 +265,37 @@ RSLocation >> parentPosition: fixedShape [
 
 { #category : #'public - positioning' }
 RSLocation >> right [
+	"Locate the shape on the right of the base shape.
+For example:
+```Smalltalk
+c := RSCanvas new.
+
+g := RSGroup new.
+g add: (RSLabel new text: 'Base shape').
+baseShape := g asShape adjustToChildren.
+baseShape color: #lightBlue.
+baseShape @ RSDraggable.
+c add: baseShape.
+
+redShape := RSBox new extent: 60 @ 30; color: #red.
+c add: redShape.
+
+RSLocation new
+	above;
+	right;
+	move: redShape on: baseShape.
+c
+```"
 	fixedX := #right.
-	direction := -1@direction y.
+	direction := -1 @ direction y.
 ]
 
 { #category : #'public - executing' }
-RSLocation >> stick: movableShape on: fixedShape [
+RSLocation >> stick: movableShape on: baseShape [
 	| block |
-	block := [ self move: movableShape on: fixedShape ].
+	block := [ self move: movableShape on: baseShape ].
 	block value.
-	fixedShape 
+	baseShape 
 		when: RSExtentChangedEvent do: block;
 		when: RSPositionChangedEvent do: block.
 ]
