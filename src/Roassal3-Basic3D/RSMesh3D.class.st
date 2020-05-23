@@ -12,8 +12,7 @@ Class {
 		'transformed',
 		'tvertices',
 		'meshMode',
-		'elements',
-		'polygonBuilder'
+		'shapes'
 	],
 	#category : #'Roassal3-Basic3D-Core'
 }
@@ -178,20 +177,12 @@ RSMesh3D >> cos: a [
 ]
 
 { #category : #private }
-RSMesh3D >> createElements [
-	| p v |
-	polygonBuilder := RSShapeBuilder polygon
-		color: [ :a |
-			v := self getShade: a. 
-			meshMode 
-				ifTrue: [ Color transparent ]
-				ifFalse: [ v ] ];
-		points: [ :a |
-			a key collect: [ :i | 
-				p := tvertices at: i.
-				p first @ p second ] ];
-		border: [ TSBorder new color: v ].
-	elements := polygonBuilder elementsOn: edges.
+RSMesh3D >> createShapes [
+	shapes := edges collect: [:ed | 
+		RSPolygon new 
+			model: ed;
+			yourself  ].
+	self updateShapes.
 	
 	
 ]
@@ -203,9 +194,9 @@ RSMesh3D >> edges [
 
 { #category : #public }
 RSMesh3D >> elements [
-	^ elements ifNil: [ 
-		self createElements.
-		elements. ]
+	^ shapes ifNil: [ 
+		self createShapes.
+		shapes. ]
 ]
 
 { #category : #private }
@@ -271,13 +262,33 @@ RSMesh3D >> tvertices [
 
 { #category : #public }
 RSMesh3D >> update [
-	elements sort: [ :a :b | 
+	shapes sort: [ :a :b | 
 		(self zof: a) < (self zof: b) ].
-	elements do: [ :e | 
+	shapes do: [ :e | 
 		e pushBack.
 		e  ].
-	polygonBuilder updateElements: elements.
+	self updateShapes.
 	^ self.
+]
+
+{ #category : #public }
+RSMesh3D >> updateShapes [
+	shapes do: [ :polygon|
+		| v points p ed |
+		ed := polygon model.
+		v := self getShade: ed.
+		points := ed key collect: [ :i |
+			p := tvertices at: i.
+			p first @ p second ].
+		polygon
+			color: (meshMode 
+				ifTrue: [Color transparent ]
+				ifFalse: [ v ]);
+			points: points;
+			border: (RSBorder new color: v);
+			yourself 
+		 ].
+	
 ]
 
 { #category : #private }

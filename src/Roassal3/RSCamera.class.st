@@ -100,6 +100,16 @@ RSCamera >> initialize [
 
 { #category : #accessing }
 RSCamera >> position [
+	"Return the position of the camera. For example:
+```Smalltalk
+c := RSCanvas new.
+c add: (RSEllipse new size: 30).
+c camera translateBy: 25 @ 15.
+c camera  position
+```
+
+returns the value `25 @ 15`
+"
 	^ position
 ]
 

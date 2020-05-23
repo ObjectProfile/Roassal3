@@ -78,11 +78,13 @@ RSSVGPath >> computePolygons [
 		args := segment second.
 		key = #absolute ifTrue: [ absolute := true ].
 		key = #relative ifTrue: [ absolute := false ].
-		
 		key = #moveTo: ifTrue: [ 
-			subPath ifNotEmpty: [ polygons add: subPath ]. 
+			subPath ifNotEmpty: [ 
+				polygons add: subPath ]. 
 			subPath:= OrderedCollection new.
 			point value: args first ].
+		key = #close ifTrue: [ 
+			position := subPath first ].
 		key = #curveVia:and:to: ifTrue: [ 
 			point value: args third ].
 		key = #curveVia:to: ifTrue: [ 
@@ -91,6 +93,8 @@ RSSVGPath >> computePolygons [
 			point value: args first ].
 		key = #reflectedCurveVia:to: ifTrue: [ 
 			point value: args second ].
+		key = #ellipticalArc:xrot:large:sweep:to:relative: ifTrue: [ 
+			point value: args fifth ].
 		key = #hLineTo: ifTrue: [
 			position := absolute
 				ifTrue: [ args first @ position y ]

@@ -82,7 +82,6 @@ RSAbstractLine >> color [
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
 	self strokePaint: aColor.
-	self markersDo: [ :m | m shape borderColor: aColor ].
 ]
 
 { #category : #accessing }
@@ -103,6 +102,11 @@ RSAbstractLine >> controlPoints [
 RSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
 	
+]
+
+{ #category : #'style-dashes' }
+RSAbstractLine >> dashed [
+	self dashArray: #(4).
 ]
 
 { #category : #accessing }
@@ -132,6 +136,11 @@ RSAbstractLine >> hasMarkers [
 	m := self privateMarkers.
 	^ m notNil and: [ 
 		m anySatisfy: [ :mar | mar notNil ].  ]
+]
+
+{ #category : #accessing }
+RSAbstractLine >> includedRadius [
+	^ self border width / 2
 ]
 
 { #category : #initialization }

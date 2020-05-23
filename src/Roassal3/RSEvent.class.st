@@ -55,11 +55,10 @@ RSEvent >> shape [
 ]
 
 { #category : #accessing }
-RSEvent >> shape: aTrachelShape [
+RSEvent >> shape: aShape [
 	"An event should now the shape to which it is related to. 
-	The shape has to be set before emitting the event. See TSShape>>announce:"
-	"self assert: [ aTrachelShape isKindOf: TSShape ]."
-	shape := aTrachelShape
+	The shape has to be set before emitting the event."
+	shape := aShape
 ]
 
 { #category : #accessing }

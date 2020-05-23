@@ -15,6 +15,32 @@ RSLinesTest >> setUp [
 	canvas := RSCanvas new
 ]
 
+{ #category : #running }
+RSLinesTest >> testArrowedLine [
+	| line head other |
+	line := RSArrowedLine new.
+	line startPoint: 0@0; endPoint: 100@100.
+	head := line markerEnd.
+	self assert: head isNotNil.
+	
+	head := head shape.
+	self assert: head class equals: RSPolygon.
+	line color: Color blue.
+	self assert: line color equals: Color blue.
+	self assert: head border color equals: Color blue.
+	
+	line border: (RSBorder new width: 2; color: Color red).
+	self assert: line border width equals: 2.
+	self assert: line color equals: Color red.
+	self assert: head border width equals: 2.
+	self assert: line color equals: Color red.
+	
+	other := line copy.
+	self deny: other equals: line.
+	self deny: other markerEnd hash equals: line markerEnd hash.
+	
+]
+
 { #category : #'tests - colors' }
 RSLinesTest >> testColorLineAndMarker [
 	| line |
@@ -57,9 +83,27 @@ RSLinesTest >> testDrawMarkers [
 ]
 
 { #category : #running }
-RSLinesTest >> testPolyline [
+RSLinesTest >> testLineIncludesPoint [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 0@100;
+		width: 8;
+		yourself.
+	self assert: (line includesPoint: 0@0).
+	self assert: (line includesPoint: 0@100).
+	self assert: (line includesPoint: 0@50).
+	self assert: (line includesPoint: 4@50).
+	self deny: (line includesPoint: 5@50).
+	self deny: (line includesPoint: 500@500).
+
+]
+
+{ #category : #running }
+RSLinesTest >> testPolylineIncludesPoint [
 	| line |
 	line := RSPolyline new.
+	line width: 10.
 	line controlPoints: { 0@0. 0@100 }.
 	self assert: (line includesPoint: 0@0).
 	self assert: (line includesPoint: 0@100).
@@ -68,14 +112,4 @@ RSLinesTest >> testPolyline [
 	
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50).
-]
-
-{ #category : #running }
-RSLinesTest >> testPolylineBasic [
-	| line |
-	line := RSPolyline new.
-	
-	self deny: (line includesPoint: 500@500).
-	self deny: (line includesPoint: 6@50).
-	self assert: line controlPoints equals: { 0@0. 0@0 }.
 ]

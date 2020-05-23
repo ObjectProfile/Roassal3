@@ -123,7 +123,7 @@ RSBorder >> dashOffset [
 RSBorder >> dashOffset: offset [
 	"Set the offset for the dash. The offset is useful when animating. 
 
-=-=-=-==-=-=-==-=-=-==-=-=-=
+```Smalltalk
 c := RSCanvas new.
 
 b := RSBorder new color: Color blue.
@@ -145,7 +145,7 @@ c newAnimation
 	on: b set: #dashOffset:.
 
 c
-=-=-=-==-=-=-==-=-=-==-=-=-=
+```
 	"
 	self pStyle dashOffset: offset
 ]
@@ -208,7 +208,7 @@ RSBorder >> width: anInteger [
 	"Set the width of the border. 
 	
 For example:
--=-=-=--=-=-=--=-=-=-
+```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 30) collect: [ :v | RSBox new border: (RSBorder new color: Color red; width: 3); model: v ] as: RSGroup.
 c addAll: shapes.
@@ -225,7 +225,7 @@ shapes @ interaction.
 
 RSGridLayout on: shapes.
 c @ RSCanvasController
--=-=-=--=-=-=--=-=-=-
+```
 	"
 	width := anInteger
 ]

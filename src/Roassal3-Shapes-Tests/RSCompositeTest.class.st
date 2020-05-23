@@ -8,6 +8,25 @@ Class {
 }
 
 { #category : #tests }
+RSCompositeTest >> testAdjustChildren [
+
+	| box circle g composite |
+	box := RSBox new size: 20.
+	circle := RSEllipse new size: 20.
+	g := RSGroup new.
+	g add: box; add: circle.
+	composite := g asShape.
+	self assert: composite extent equals: (20 @ 20). 
+
+	RSVerticalLineLayout on: g.
+	self assert: composite extent equals: (20 @ 20).
+	composite adjustToChildren.
+	self assert: composite extent equals: (20 @ 50).
+
+
+]
+
+{ #category : #tests }
 RSCompositeTest >> testEdgesCanvasAndComposite01 [
 	"basic case in a canvas"
 	| c b1 b2 e1 |

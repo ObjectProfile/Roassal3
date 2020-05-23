@@ -1,6 +1,6 @@
 "
-I am an option for the canvas controller. 
-You can use me as follows (press the / key and the r key):
+`RSSearchInCanvas` am an option for the canvas controller. 
+You can use `RSSearchInCanvas` as follows (press the S key and the R key):
 
 ```Smalltalk
 c := RSCanvas new.
@@ -34,6 +34,34 @@ shapes @ RSPopup.
 
 con := RSCanvasController new.
 con addInteraction: RSSearchInCanvas new.
+c @ con.
+```
+
+Another example:
+```Smalltalk
+c := RSCanvas new.
+
+classes := Collection withAllSubclasses.
+elements := classes collect: [ :cls |
+	g := RSGroup new
+		add: (RSLabel new text: cls name);
+		add: (RSEllipse new size: (cls numberOfMethods + 5) sqrt; color: Color blue );
+		yourself.
+	RSVerticalLineLayout new center; on: g.
+	g asShapeFor: cls ] as: RSGroup.
+
+c addAll: elements.
+high := RSHighlightable defaultRed.
+elements @ high.
+RSGridLayout new
+	lineItemsCount: 5;
+	on: elements.
+
+con := RSCanvasController new.
+con addInteraction: (search := RSSearchInCanvas new 
+	colorToHighlight: Color blue translucent;
+	yourself).
+
 c @ con.
 ```
 

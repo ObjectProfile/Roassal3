@@ -13,7 +13,7 @@ Class {
 
 { #category : #specs }
 SpRoassalPresenter class >> adapterName [
-	^ #SpMorphicAdapter
+	^ #SpRoassalMorphicAdapter
 ]
 
 { #category : #'instance creation' }

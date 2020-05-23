@@ -92,6 +92,14 @@ RSGroup >> height [
 	^ self extent y
 ]
 
+{ #category : #accessing }
+RSGroup >> models: someModels [
+	"Set the model of each shapes contained in the collection. The size of the group must be the same than the someModels collection"
+	self assert: [ someModels isCollection ] description: 'Must provide a collection'.
+	self assert: [ self size = someModels size ] description: 'The argument must of the same size then the group'.
+	self with: someModels do: [ :s :m | s model: m ]
+]
+
 { #category : #actions }
 RSGroup >> pushBack [ 
 	self do: [:each | each pushBack ]
@@ -193,6 +201,12 @@ RSGroup >> translateTo: aPosition [
 	| center |
 	center := self encompassingRectangle floatCenter.
 	self translateBy: aPosition - center
+]
+
+{ #category : #converting }
+RSGroup >> translucent [
+	"Make all shapes in the group as translucent"
+	self do: [ :s | s color: s color translucent ]
 ]
 
 { #category : #announcing }
