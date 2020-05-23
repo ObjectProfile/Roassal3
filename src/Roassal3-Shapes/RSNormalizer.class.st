@@ -1,6 +1,37 @@
 "
-A Metric normalizer is made to assign a color, or a particular shape computed from a group of elements. Consider the following example:
--=-=-=-=
+<keyClass>
+A normalizer is made to assign a color for a particual visual cue (e.g., size, color, font size). The normalization is performed using the model of the considered shapes.
+
+Scales can be set, useful for transformation (e.g., logarithmic).
+
+*Responsibility*: normalize a 
+
+*Collaborators*: interact with `RSShape` and the shape's model
+
+*Variables*:
+- `scale`: refers to `NSScale` 
+- `executeBlock`: one-arg block useful to compute a metric or property from the shape model. The block takes a shape model as argument
+- `shapes`: shapes that are normalized
+ 
+*Example*:
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 150) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+
+c addAll: shapes.
+RSGridLayout on: shapes.
+
+RSNormalizer color
+	shapes: shapes;
+	scale: NSScale category20b;
+	normalize: #yourself.
+
+c @ RSCanvasController.
+c
+
+```
+
+```Smalltalk
 classes := Collection withAllSubclasses.
 c := RSCanvas new.
 
@@ -16,13 +47,13 @@ RSNormalizer color
 	normalize: #numberOfMethods.
 
 c addAll: shapes.
-RSGridLayout on: shapes.
+RSFlowLayout on: shapes.
 
 c @ RSCanvasController 
--=-=-=-=
+```
 
-Here is another example:
--=-=-=-=
+
+```Smalltalk
 canvas := RSCanvas new.
 classes := Collection withAllSubclasses.
 shapes := classes collect: [ :cls |
@@ -54,10 +85,9 @@ RSEdgeBuilder orthoVertical
 RSTreeLayout on: shapes.
 canvas @ RSCanvasController.
 canvas
--=-=-=-=
+```
 
-Another example:
--=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 
 (30 to: 100 by: 5) do: [ :nb |
@@ -73,7 +103,7 @@ RSNormalizer color
 RSFlowLayout on: c shapes.
 c shapes @ RSPopup.
 c @ RSCanvasController
--=-=-=-=
+```
 "
 Class {
 	#name : #RSNormalizer,
