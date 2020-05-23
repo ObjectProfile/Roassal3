@@ -806,6 +806,11 @@ RSAthensMorph >> surface [
 	^ surface
 ]
 
+{ #category : #accessing }
+RSAthensMorph >> surface: anAthensCairoSurface [ 
+	surface := anAthensCairoSurface
+]
+
 { #category : #'events-processing' }
 RSAthensMorph >> takesKeyboardFocus [
 	^ true
