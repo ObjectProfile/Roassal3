@@ -342,3 +342,37 @@ RSHighlightableExamples >> example08DependendMethods [
 	canvas @ RSCanvasController.
 	^  canvas 
 ]
+
+{ #category : #examples }
+RSHighlightableExamples >> example09ArrowedLines [
+	<script: 'self new example09ArrowedLines open'>
+	| canvas interaction color shapes |
+	canvas := RSCanvas new.
+	interaction := RSHighlightable new
+		highlightBorder: (RSBorder new
+			width: 2;
+			yourself);
+		withEdges;
+		yourself.
+
+	color := RSColorPalette diverging rdylbu3.
+	shapes := (1 to: 20) collect: [ :i |
+		RSBox new
+			size: 10;
+			model: i;
+			draggable;
+			withBorder;
+			color: (color scale: i) ;
+			yourself ].
+	RSEdgeBuilder arrowedLine
+		withBorderAttachPoint;
+		canvas: canvas;
+		shapes: shapes;
+		connectFrom: [ :n | n // 2 ].
+	canvas addAll: shapes.
+
+	canvas nodes @ interaction.
+	RSClusterLayout on: shapes.
+	canvas zoomToFit.
+	^ canvas
+]
