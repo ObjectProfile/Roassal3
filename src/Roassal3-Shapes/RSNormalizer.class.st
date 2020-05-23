@@ -324,7 +324,24 @@ RSNormalizer >> scale [
 
 { #category : #accessing }
 RSNormalizer >> scale: aNSScale [
-	scale ifNotNil: [ aNSScale range: scale range ].
+	"Set the scale of the normalizer. For example
+	
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 150) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
+
+c addAll: shapes.
+RSGridLayout on: shapes.
+
+RSNormalizer color
+	shapes: shapes;
+	scale: NSScale category20b;
+	normalize: #yourself.
+
+c @ RSCanvasController.
+c
+```
+"
 	scale := aNSScale.
 	
 ]
