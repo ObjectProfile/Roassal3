@@ -220,6 +220,11 @@ RSCanvas >> fixedShapes [
 	^ fixedShapes 
 ]
 
+{ #category : #acccessing }
+RSCanvas >> fixedShapes: aCollection [ 
+	fixedShapes := aCollection
+]
+
 { #category : #matrix }
 RSCanvas >> globalMatrix [
 	^ AthensAffineTransform new
