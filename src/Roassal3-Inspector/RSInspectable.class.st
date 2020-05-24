@@ -10,7 +10,7 @@ Class {
 		'inspectShapeBlock',
 		'selectedShape'
 	],
-	#category : #'Roassal3-Inspector-Interaction'
+	#category : #'Roassal3-Inspector-Interactions'
 }
 
 { #category : #hooks }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'interactions'
 	],
-	#category : #'Roassal3-Inspector-Context'
+	#category : #'Roassal3-Inspector-Contexts'
 }
 
 { #category : #initialization }

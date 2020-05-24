@@ -19,14 +19,8 @@ GLMRoassal3Presentation >> canvas [
 { #category : #initialization }
 GLMRoassal3Presentation >> initialize [
 	super initialize.
-	self 
-		act: [ :presentation | 
-			canvas showRectangles
-			ifTrue:[ canvas hideEncompassingRectangles]
-			ifFalse:[canvas showEncompassingRectangles ].
-			canvas signalUpdate ]
-		icon: (self iconNamed: #smallDebug)
-		entitled: 'Show Encompassing Rectangles'
+		
+	RSAbstractAction registerActionsOn: self.
 ]
 
 { #category : #initialization }
@@ -45,6 +39,7 @@ GLMRoassal3Presentation >> setUpInteractions [
 	| context |
 	context := self canvas inspectorContext.
 	context presentation: self.
+	
 	self canvas shapes @ context.
 	self canvas
 		when: RSShapeAddedEvent

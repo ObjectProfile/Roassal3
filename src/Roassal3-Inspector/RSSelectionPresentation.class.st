@@ -8,7 +8,7 @@ Class {
 		'presentation',
 		'shadowColor'
 	],
-	#category : #'Roassal3-Inspector-Interaction'
+	#category : #'Roassal3-Inspector-Interactions'
 }
 
 { #category : #accessing }

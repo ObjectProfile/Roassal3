@@ -440,6 +440,49 @@ RSAthensRenderer >> builder [
 	^ builder
 ]
 
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> drawPathLabel: label [
+	| utf8String act f stroke |
+	utf8String := label path.
+	utf8String ifNil: [ 
+		act := AthensCairoText new.
+		utf8String := act convertTextUtf8: label text.
+		label path: utf8String.
+	 ].
+	f := CairoScaledFont fromFreetypeFont: label font realFont.
+	
+	athensCanvas newPath.
+	f lock.
+	athensCanvas 
+		setPathMatrix;
+		setScaledFont: f.
+	label paint ifNotNil: [ 
+		(label paint asAthensPaintOn: athensCanvas)"
+			setMatrix: athensCanvas paintTransform inverted;"
+			loadOnCairoCanvas: athensCanvas. ].
+	athensCanvas textPath: utf8String.
+	label paint ifNotNil: [ athensCanvas fillPreserve ].
+	label hasBorder ifTrue: [ 
+		stroke := label border accept: self.
+		stroke prepareForDrawingOn: athensCanvas.
+		athensCanvas stroke.
+	 ].
+	f unlock.
+
+
+]
+
+{ #category : #visiting }
+RSAthensRenderer >> drawSimpleLabel: label [
+	| paint |
+	paint := label paint.
+	paint ifNil: [ ^ self ].
+	athensCanvas 
+		setFont: label font;
+		setPaint: paint;
+		drawString: label text
+]
+
 { #category : #utilities }
 RSAthensRenderer >> geomPolygonIntersectC: c d: d a: a b: b [
 
@@ -536,39 +579,18 @@ RSAthensRenderer >> visitBoundingShape: shape [
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
 	athensCanvas pathTransform restoreAfter: [ 
-		| utf8String act f stroke |
+
 		athensCanvas pathTransform
 			multiplyBy: label matrix asFloatTransform;
 			translateBy: ((label textWidth / -2) @ (label textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ label descent negated) asFloatPoint.
-		
-			utf8String := label path.
-			utf8String ifNil: [ 
-				act := AthensCairoText new.
-				utf8String := act convertTextUtf8: label text.
-				label path: utf8String.
-			 ].
-			f := CairoScaledFont fromFreetypeFont: label font realFont.
 			
-			athensCanvas newPath.
-			f lock.
-			athensCanvas 
-				setPathMatrix;
-				setScaledFont: f.
-			label paint ifNotNil: [ 
-				(label paint asAthensPaintOn: athensCanvas)"
-					setMatrix: athensCanvas paintTransform inverted;"
-					loadOnCairoCanvas: athensCanvas. ].
-			athensCanvas textPath: utf8String.
-			label paint ifNotNil: [ athensCanvas fillPreserve ].
-			label hasBorder ifTrue: [ 
-				stroke := label border accept: self.
-				stroke prepareForDrawingOn: athensCanvas.
-				athensCanvas stroke.
-			 ].
-			f unlock.
-			self visitLabelDecoratorsIfNecessary: label.
-		].
+		label hasBorder
+			ifTrue: [ self drawPathLabel: label  ]
+			ifFalse: [ self drawSimpleLabel: label ].
+		
+		self visitLabelDecoratorsIfNecessary: label.
+	].
 	
 
 ]
