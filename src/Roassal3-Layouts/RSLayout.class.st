@@ -128,7 +128,7 @@ RSLayout >> leftContourOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> modOf: aNode [
-	^ aNode attributeAt: #mod ifAbsent: [ 0 ]
+	^ aNode propertyAt: #mod ifAbsent: [ 0 ]
 
 ]
 
@@ -160,7 +160,7 @@ RSLayout >> pointerOf: aNode put: aValue [
 
 { #category : #utils }
 RSLayout >> rOf: aNode [ 
-	^ aNode attributeAt: #r ifAbsent: [ 0 ]
+	^ aNode propertyAt: #r ifAbsent: [ 0 ]
 	
 ]
 
@@ -185,7 +185,7 @@ RSLayout >> step [
 
 { #category : #utils }
 RSLayout >> thetaOf: aNode [
-	^ aNode attributeAt: #theta ifAbsent: [ ^ 0 ]
+	^ aNode propertyAt: #theta ifAbsent: [ ^ 0 ]
 ]
 
 { #category : #utils }
