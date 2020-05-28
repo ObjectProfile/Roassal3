@@ -43,6 +43,16 @@ RSArrowedLine >> border: aRSBorder [
 ]
 
 { #category : #initialization }
+RSArrowedLine >> copy [
+	| copy head |
+	copy := super copy.
+	head := copy markerEnd shape.
+	copy markerEnd: self markerEnd copy.
+	copy markerEnd shape: head.
+	^ copy
+]
+
+{ #category : #initialization }
 RSArrowedLine >> defaultHead [
 	^ RSPolygon new
 		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
