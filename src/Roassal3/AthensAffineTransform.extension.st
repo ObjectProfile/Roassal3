@@ -17,3 +17,13 @@ AthensAffineTransform >> floatValues [
 	
 	
 ]
+
+{ #category : #'*Roassal3' }
+AthensAffineTransform >> printOn: stream [
+	stream << 'x: '. x printOn: stream.
+	stream << ' y: '. y printOn: stream.
+	stream << ' sx: '. sx printOn: stream.
+	stream << ' sy: '. sy printOn: stream.
+	stream << ' shx: '. shx printOn: stream.
+	stream << ' shy: '. shy printOn: stream.
+]
