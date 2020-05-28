@@ -46,10 +46,20 @@ RSBoundingShape >> basicTranslateBy: delta [
 
 { #category : #accessing }
 RSBoundingShape >> computeEncompassingRectangle [
-	| rect points |
-	rect := self baseRectangle.
+	^ self computeEncompassingRectangleFor: self baseRectangle.
+	
+]
+
+{ #category : #accessing }
+RSBoundingShape >> computeEncompassingRectangleFor: rect [ 
+	^ self computeEncompassingRectangleFor: rect matrix: self matrix
+]
+
+{ #category : #accessing }
+RSBoundingShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
+	| points |
 	points := #(topLeft topRight bottomRight bottomLeft)
-		collect: [ :s | matrix transform: (s value: rect) ].
+		collect: [ :s | aMatrix transform: (s value: rect) ].
 	^ Rectangle encompassing: points.
 	
 ]

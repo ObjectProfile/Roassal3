@@ -1009,27 +1009,54 @@ RSShapeExamples >> example37PunchCard [
 ]
 
 { #category : #shapes }
-RSShapeExamples >> example38YikigeiAnimated [
-	<script: 'self new example38YikigeiAnimated open'>
-	| c size circles posOffset negOffset |
+RSShapeExamples >> example38Transformable [
+	<script: 'self new example38Transformable open'>
+	| c |
 	c := RSCanvas new.
-	size := 200.
-	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
-	    c add: (RSEllipse new
-	        size: size;
-	        color: ((Color perform: sel) alpha: 0.4 );
-	        yourself).
-	    ]).
-	c when: RSMouseMove do: [ :evt | 
-	    posOffset := (evt position distanceTo: 0@0).
-	    negOffset := posOffset negated.
-	    circles first position: posOffset @ 0.
-	    circles second position: 0 @ posOffset.
-	    circles third position: negOffset @ 0.
-	    circles fourth position: 0@negOffset.
-	    c signalUpdate.
-	     ].
-	^ c
+	c add: (RSBox new
+		size: 200;
+		withBorder).
+	c add: (RSBox new
+		size: 100;
+		cornerRadius: 20;
+		withBorder).
+	
+	c add: (RSEllipse new
+		extent: 200@60;
+		withBorder).
+	c add: (RSLabel new
+		fontSize: 100;
+		text: 'Kaguya Sama';
+		yourself).
+	c add: (RSBitmap new
+		form: (self iconNamed: 'pharoBig');
+		
+		yourself).
+	c add: (RSShapeFactory star
+		size: 200;
+		color: 'purple').
+	c add: (self example31BasicGrapher asShape
+		rotateByDegrees: 15;
+		color: Color lightGray translucent).
+	
+	c add: (RSBox new
+		size: 50;
+		color: Color black).
+	
+	c add: (RSLine new
+		withBorderAttachPoint;
+		from: c nodes first;
+		to: c nodes last).
+	RSGridLayout new
+		gapSize: 50;
+		on: c nodes.
+	c nodes do: [ :s | s model: s ].
+	c nodes @ RSDraggable; @ (RSPopup text: [ :m | m class name ] ).
+	
+	c nodes allButLast @ RSTransformable.
+	
+	c @ RSCanvasController. 
+	^ c 
 ]
 
 { #category : #shapes }
@@ -1078,6 +1105,30 @@ RSShapeExamples >> example39Interaction [
 	canvas add: com.
 	canvas @ RSCanvasController.
 	^ canvas
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example39YikigeiAnimated [
+	<script: 'self new example39YikigeiAnimated open'>
+	| c size circles posOffset negOffset |
+	c := RSCanvas new.
+	size := 200.
+	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
+	    c add: (RSEllipse new
+	        size: size;
+	        color: ((Color perform: sel) alpha: 0.4 );
+	        yourself).
+	    ]).
+	c when: RSMouseMove do: [ :evt | 
+	    posOffset := (evt position distanceTo: 0@0).
+	    negOffset := posOffset negated.
+	    circles first position: posOffset @ 0.
+	    circles second position: 0 @ posOffset.
+	    circles third position: negOffset @ 0.
+	    circles fourth position: 0@negOffset.
+	    c signalUpdate.
+	     ].
+	^ c
 ]
 
 { #category : #'data - svg' }
