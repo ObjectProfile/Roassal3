@@ -146,16 +146,6 @@ RSObjectWithProperty >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #properties }
-RSObjectWithProperty >> removeAttributeAt: aKey [
-	^ self properties removeKey: aKey
-]
-
-{ #category : #properties }
-RSObjectWithProperty >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
-	^ self properties removeKey: aKey ifAbsent: anErrorBlock
-]
-
 { #category : #interactions }
 RSObjectWithProperty >> removeInteractionIfPresent: anInteractionClass [
 	"Remove all the callbacks associated to the interaction."
@@ -172,7 +162,22 @@ RSObjectWithProperty >> removeKey: aKey [
 	
 ]
 
+{ #category : #properties }
+RSObjectWithProperty >> removePropertyAt: aKey [
+	^ self properties removeKey: aKey
+]
+
+{ #category : #properties }
+RSObjectWithProperty >> removePropertyAt: aKey ifAbsent: anErrorBlock [
+	^ self properties removeKey: aKey ifAbsent: anErrorBlock
+]
+
 { #category : #announcer }
 RSObjectWithProperty >> when: event do: aBlock [
 	self announcer when: event do: aBlock
+]
+
+{ #category : #announcer }
+RSObjectWithProperty >> when: anAnnouncementClass send: aSelector to: anObject [
+	self announcer when: anAnnouncementClass send: aSelector to: anObject
 ]

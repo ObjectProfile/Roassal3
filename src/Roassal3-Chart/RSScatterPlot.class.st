@@ -1,25 +1,91 @@
+"
+<keyClass>
+`RSScatterPlot` is a scatter plot. Shapes are defined using two components, X and Y. 
+
+*Responsibility*: create shapes that represent a scatter plot.
+
+*Collaborators*: used by `RSChart`
+
+*Variables*:
+- `processBlock`: is either `nil` or refer to a one argument block. This block is used to particularize the shapes.
+
+*Example*:
+```Smalltalk
+x := OrderedCollection new.
+y := OrderedCollection new.
+z := OrderedCollection new.
+r := Random seed: 42.
+1 to: 100 do: [ :i |
+	x add: i + (r nextInt: 10).
+	y add: i + (r nextInt: 10).
+	z add: i + (r nextInt: 10).
+].
+
+c := RSChart new.
+p := RSScatterPlot new x: x y: y.
+p color: Color blue translucent.
+p processBlock: [ :shapes | 
+		shapes models: z.
+		RSNormalizer size
+			shapes: shapes;
+			from: 2;
+			to: 10;
+			normalize: #yourself.
+		RSNormalizer color
+			shapes: shapes;
+			normalize: #yourself.
+			
+			 ].
+c addPlot: p.
+ 
+c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
+c addDecoration: RSVerticalTick new.
+
+c
+```
+
+
+
+"
 Class {
 	#name : #RSScatterPlot,
 	#superclass : #RSAbstractPlot,
+	#instVars : [
+		'processBlock'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #accessing }
+RSScatterPlot >> processBlock [
+	^ processBlock
+]
+
+{ #category : #accessing }
+RSScatterPlot >> processBlock: oneArgBlock [
+	"Set the process block, which is a one-arg block that is executed on the set of shapes after the rendering. It is a hook for particularizing some visual aspects of the plot.
+	"
+	processBlock := oneArgBlock
+]
+
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
-	| elements newPoint |
+	| shapes newPoint |
 	self checkAssertion.
-	elements := (1 to: xValues size)
+	shapes := (1 to: xValues size)
 		collect: [ :notUsed | 
 			RSEllipse new
 				radius: 2;
-				color: self computeColor ].
+				color: self computeColor ] as: RSGroup.
 	1 to: xValues size do: [ :i | 
 		| xt yt et |
-		et := elements at: i.
+		et := shapes at: i.
 		xt := xValues at: i.
 		yt := yValues at: i.
 		newPoint := (xScale scale: xt) @ (yScale scale: yt).
 		(self isPointWellDefined: newPoint)
 			ifTrue: [ et translateTo: newPoint.
-				canvas addShape: et ] ]
+				canvas addShape: et ] ].
+		
+	processBlock rsValue: shapes.
 ]

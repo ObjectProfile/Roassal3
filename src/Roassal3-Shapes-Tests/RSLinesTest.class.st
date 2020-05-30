@@ -15,6 +15,32 @@ RSLinesTest >> setUp [
 	canvas := RSCanvas new
 ]
 
+{ #category : #running }
+RSLinesTest >> testArrowedLine [
+	| line head other |
+	line := RSArrowedLine new.
+	line startPoint: 0@0; endPoint: 100@100.
+	head := line markerEnd.
+	self assert: head isNotNil.
+	
+	head := head shape.
+	self assert: head class equals: RSPolygon.
+	line color: Color blue.
+	self assert: line color equals: Color blue.
+	self assert: head border color equals: Color blue.
+	
+	line border: (RSBorder new width: 2; color: Color red).
+	self assert: line border width equals: 2.
+	self assert: line color equals: Color red.
+	self assert: head border width equals: 2.
+	self assert: line color equals: Color red.
+	
+	other := line copy.
+	self deny: other equals: line.
+	self deny: other markerEnd hash equals: line markerEnd hash.
+	
+]
+
 { #category : #'tests - colors' }
 RSLinesTest >> testColorLineAndMarker [
 	| line |

@@ -108,7 +108,9 @@ RSPolygon >> centerPoints [
 	"Private method, should not be used externally"
 
 	| r center |
-	r := Rectangle encompassing: points.
+	r := points 
+		ifEmpty: [ 0@0 corner: 0@0 ]
+		ifNotEmpty: [ Rectangle encompassing: points ].
 	center := r floatCenter.
 	points := points collect: [ :p | p - center ].
 	^ r

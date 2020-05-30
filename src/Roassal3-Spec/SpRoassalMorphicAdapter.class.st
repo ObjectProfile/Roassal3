@@ -2,7 +2,7 @@
 I am bridging RoassalPresenter and RTView
 "
 Class {
-	#name : #SpMorphicAdapter,
+	#name : #SpRoassalMorphicAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
 	#instVars : [
 		'canvas'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #initialization }
-SpMorphicAdapter >> adapt: aComposableModel [
+SpRoassalMorphicAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
 	canvas := widget roassalCanvas.
 	widget
@@ -22,7 +22,7 @@ SpMorphicAdapter >> adapt: aComposableModel [
 ]
 
 { #category : #'scripting actions' }
-SpMorphicAdapter >> applyScript [
+SpRoassalMorphicAdapter >> applyScript [
 	| extent |
 	extent := canvas extent.
 	self freeCanvas.
@@ -32,7 +32,7 @@ SpMorphicAdapter >> applyScript [
 ]
 
 { #category : #'scripting actions' }
-SpMorphicAdapter >> basicApplyScript [
+SpRoassalMorphicAdapter >> basicApplyScript [
 	self model script value: canvas.
 	self model canvas: canvas.
 	self widgetDo: #startStepping.
@@ -40,12 +40,12 @@ SpMorphicAdapter >> basicApplyScript [
 ]
 
 { #category : #factory }
-SpMorphicAdapter >> buildWidget [
+SpRoassalMorphicAdapter >> buildWidget [
 	^ RSCanvas new createMorph
 ]
 
 { #category : #'scripting actions' }
-SpMorphicAdapter >> freeCanvas [
+SpRoassalMorphicAdapter >> freeCanvas [
 	| temp |
 	temp := self buildWidget.
 	canvas := temp roassalCanvas.
@@ -54,6 +54,6 @@ SpMorphicAdapter >> freeCanvas [
 ]
 
 { #category : #initialization }
-SpMorphicAdapter >> release [
+SpRoassalMorphicAdapter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]

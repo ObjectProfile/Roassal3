@@ -4,7 +4,7 @@ I am a basici class
 Class {
 	#name : #RSChessBackground,
 	#superclass : #RSAbstractCanvasInteraction,
-	#category : #'Roassal3-Inspector-Interaction'
+	#category : #'Roassal3-Inspector-Interactions'
 }
 
 { #category : #hooks }

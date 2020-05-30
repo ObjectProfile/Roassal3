@@ -1,8 +1,22 @@
 "
-I am the main class to build chart.
+<keyClass>
+`RSChart` is the main class to build charts.
 
+*Responsibility*: maintain and render plots
+
+*Collaborators*: a chart closely interact with plots and decorations. 
+
+*Variables*:
+- `plots`: the list of plots 
+- `extent`: size of the produced chart. Note that this extent is for the area on which plots are draw. It does not comprise ticks and axis titles
+- `decorations`: collection of decorations to annotate the chart
+- `generator`: nice label generator, useful to have labels that are visually appealing
+- `colors`: default color palette
+
+*Example*:
 Here is an example that adjust the font size used for the title, and axis labels:
--=-=-=-=
+
+```Smalltalk
 x := -3.14 to: 3.14 by: 0.1.
 y := x sin.
 
@@ -12,16 +26,14 @@ c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
 c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; vertical).
 c
--=-=-=-=
+```
 "
 Class {
 	#name : #RSChart,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'plots',
-		'width',
 		'extent',
-		'plot',
 		'decorations',
 		'maxValueX',
 		'maxValueY',
@@ -35,13 +47,35 @@ Class {
 
 { #category : #adding }
 RSChart >> addDecoration: aDecoration [
-	"Maybe use a double dispatch"
+	"Add a decoration to the chart
+
+For example:
+```Smalltalk
+x := -3.14 to: 3.14 by: 0.1.
+y := x sin.
+c := RSChart new.
+c addPlot: (RSLinePlot new x: x y: y).
+c addDecoration: (RSHorizontalTick new).
+c addDecoration: (RSVerticalTick new).
+c
+```"
 	decorations add: aDecoration.
 	aDecoration chart: self
 ]
 
 { #category : #adding }
 RSChart >> addPlot: aPlot [
+	"Add a plot to the chart.
+	
+For example:
+```Smalltalk
+x := -3.14 to: 3.14 by: 0.1.
+y := x sin.
+c := RSChart new.
+c addPlot: (RSLinePlot new x: x y: y).
+c
+```
+	"
 	plots add: aPlot.
 	aPlot chart: self
 ]
@@ -66,6 +100,7 @@ RSChart >> colors: someColors [
 
 { #category : #accessing }
 RSChart >> decorations [
+	"Return the list of decorations used to annotate plots"
 	^ decorations
 ]
 
@@ -185,6 +220,7 @@ RSChart >> niceGenerator [
 
 { #category : #accessing }
 RSChart >> numberOfPlots [
+	"Return the number of plots contained in the chart"
 	^ plots size
 ]
 
@@ -240,14 +276,14 @@ RSChart >> show [
 
 { #category : #accessing }
 RSChart >> title: aTitle [
-	"Set the title of a chart:
+	"Set the title of a chart. For example:
 	
-	-=-=-=-=-=-=-=-=
-	c := RSChart new.
-	c addPlot: (RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt).
-	c title: 'Square root'.
-	c
-	-=-=-=-=-=-=-=-=
+```Smalltalk
+c := RSChart new.
+c addPlot: (RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt).
+c title: 'Square root'.
+c
+```
 	"
 	self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
