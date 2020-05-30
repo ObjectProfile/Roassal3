@@ -180,6 +180,21 @@ RSAbstractTick >> noConvertion [
 
 { #category : #accessing }
 RSAbstractTick >> numberOfTicks: aNumber [
+	"Set the number of ticks to be used. Can be used with doNotUseNiceLabels or not.
+	
+For example:
+```Smalltalk
+x := (-3.14 to: 3.14 count: 20).
+y := x sin.
+
+c := RSChart new.
+d := RSLinePlot new x: x y: y.
+c addPlot: d.
+c addDecoration: (RSVerticalTick new).
+c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat: 2).
+c
+```Smalltalk
+	"
 	numberOfTicks := aNumber
 ]
 
