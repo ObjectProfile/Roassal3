@@ -211,6 +211,7 @@ RSChart >> mustInclude0inY [
 
 { #category : #accessing }
 RSChart >> niceGenerator [
+	"Produce a generator for nice labels. Whether nice labels are used or not is a choice made by the horizontal or vertical ticks."
 	^ generator ifNil: [ 
 		generator := RSLabelGenerator new.
 		generator setLooseFlag: true.

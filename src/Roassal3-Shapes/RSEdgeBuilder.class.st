@@ -75,6 +75,15 @@ RSEdgeBuilder class >> arrowedLine [
 	^ self new: RSShapeFactory arrowedLine
 ]
 
+{ #category : #'as yet unclassified' }
+RSEdgeBuilder class >> arrowedLineWithOffset: aFloat [
+	"[0 1] value"
+	| inst |
+	inst := self arrowedLine.
+	inst shape markerEnd offsetRatio: aFloat.
+	^ inst
+]
+
 { #category : #'instance creation' }
 RSEdgeBuilder class >> bezier [
 	^ self new: RSBezier new
