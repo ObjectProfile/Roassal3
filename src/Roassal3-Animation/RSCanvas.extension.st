@@ -10,6 +10,12 @@ RSCanvas >> animationFrom: array [
 ]
 
 { #category : #'*Roassal3-Animation' }
+RSCanvas >> currentTime [
+	^ self timer currentTime.
+	
+]
+
+{ #category : #'*Roassal3-Animation' }
 RSCanvas >> newAnimation [
 	"Define a new transition animation, schedule it, and return it (useful to tune it).
 
@@ -31,6 +37,16 @@ RSCanvas >> newAnimation [
 	anime := self transitionAnimation.
 	self addAnimation: anime.
 	^ anime
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> timer [
+	^ self propertyAt: #timer ifAbsentPut: [ RSDefaultTimer new ].
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> timer: aRSAbstractTimer [
+	self propertyAt: #timer put: aRSAbstractTimer
 ]
 
 { #category : #'*Roassal3-Animation' }

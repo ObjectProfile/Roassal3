@@ -64,7 +64,7 @@ RSAbstractAnimation >> currentLoop [
 
 { #category : #private }
 RSAbstractAnimation >> currentTime [
-	^ Time millisecondClockValue 
+	^ canvas currentTime
 ]
 
 { #category : #accessing }
@@ -101,6 +101,7 @@ RSAbstractAnimation >> hasCompleted [
 RSAbstractAnimation >> initialize [
 	super initialize.
 	self reset.
+	canvas := RSDefaultTimer new.
 ]
 
 { #category : #testing }

@@ -8,14 +8,15 @@ Class {
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'shape',
-		'lastFrameEndTime'
+		'lastFrameEndTime',
+		'canvas'
 	],
 	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #accessing }
 RSAbstractCanvasMonitor >> currentTime [
-	 ^ Time microsecondClockValue
+	^ canvas currentTime
 ]
 
 { #category : #initialization }
@@ -35,7 +36,7 @@ RSAbstractCanvasMonitor >> lastFrameCPUConsumption [
 	current := self currentTime.
 	lastFrameEndTime ifNil: [ 
 		lastFrameEndTime := current ].
-	res := (current - lastFrameEndTime) * 1e-6.
+	res := (current - lastFrameEndTime) * 1e-3.
 	lastFrameEndTime := current.
 	^ res
 ]
@@ -54,9 +55,10 @@ RSAbstractCanvasMonitor >> onShape: aCanvas [
 	shape isFixed: true.
 	aCanvas addShape: shape. 
 	location := RSLocation new inner; bottom; left; offset: 10@0.
+	canvas := aCanvas.
 	aCanvas newAnimation
 		repeat;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			self updateShape.
 			location move: shape on: aCanvas basicRectangle ].
 ]
