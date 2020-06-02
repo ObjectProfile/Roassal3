@@ -770,3 +770,61 @@ RSShapeBasicExamples >> example36PolygonAndCanvas [
 	canvas @ int.
 	^ canvas
 ]
+
+{ #category : #polygons }
+RSShapeBasicExamples >> example37AngleDirection [
+	<script: 'self new example37AngleDirection open setLabel: ''Angle direction in RSPieSlice'''>
+	| canvas slice magic |
+	canvas := RSCanvas new.
+	slice := RSPieSlice new.
+	slice 
+		innerRadius: 100;
+		externalRadius: 150;
+		alphaAngle: 15;
+		betaAngle: 180.
+	canvas add: slice.
+
+	canvas add: (RSLine new
+		startPoint: 0@ -200;
+		endPoint: 0 @ 200;
+		dashed;
+		markerStartEnd: (RSShapeFactory arrow
+			size: 10);
+		yourself).
+	canvas add: (RSLine new
+		startPoint: -200@ 0;
+		endPoint: 200 @ 0;
+		dashed;
+		markerStartEnd: (RSShapeFactory arrow
+			size: 10);
+		yourself).
+	canvas add: (RSLabel new
+		text: '0@0';
+		position: 20@10;
+		yourself).
+	magic := 160*0.551784.
+	canvas add: (RSBezier new
+		width: 3;
+		dashed;
+		markerEnd: (RSShapeFactory arrow
+			size: 20;
+			color: Color black);
+		controlPoints: 
+			{160@0. 
+			160@ magic negated. 
+			magic@ -160. 
+			0@ -160  };
+		yourself
+		).
+	canvas add: (RSLabel new
+		text: 'Angle direction';
+		color: 'blue';
+		position: 180@ -130;
+		yourself).
+
+	^ canvas
+
+
+
+
+]
