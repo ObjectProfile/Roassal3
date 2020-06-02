@@ -28,7 +28,7 @@ c @ RSCanvasController.
 
 It shows the following:
 
-![alt](screenshots/Tutorial04-Compositing01.png)
+![alt](../screenshots/Tutorial04-Compositing01.png)
 
 
 ## Naming elements
