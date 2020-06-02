@@ -81,7 +81,7 @@ The documentation of Roassal3 is expanding at a sustained pace.
 - FAQ
 	- [Where is the classes RTView?](FAQ.md#Where-is-the-classes-RTView)
 	- [What about the book Agile Visualization?](FAQ.md#What-about-the-book-Agile-Visualization)
-	
+	- [How to export a visualization to PDF or SVG?](FAQ.md#How-to-export-a-visualization-to-PDF-or-SVG)
 	
 A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
