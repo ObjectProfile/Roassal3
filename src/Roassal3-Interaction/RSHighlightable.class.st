@@ -1,8 +1,40 @@
 "
-I a basic interaction to add highlighting events to elements in view.
+<keyClass>
+`RSHighlightable` is an interaction for shapes to make them highlightable. 
 
-Some example:
--=-=-=-
+*Responsibility*: make shapes highlightable
+
+*Collaborators*: closely colaborate with `RSShape`
+
+*Variables*:
+- `announcer`: highlightable uses announcement to trigger the interaction. 
+- `copyKey`: symbol that is used to keep in the property the previous color. One needs to modity the `copyKey` to avoid conflict between several highlightable interactions.
+- `highlightShapes`: refers to a one-arg-block that takes as parameter a shape and returns the shapes that must be highlighted. 
+- `propertyKey`: symbol that is used in the property of the `RSCanvas` to keep highlighted shapes. This is useful to avoid conflicts between different highlightable.
+   
+
+*Example*:
+```Smalltalk
+c := RSCanvas new.
+
+shapes := (1 to: 10) collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup @ RSDraggable.
+
+RSGridLayout on: shapes.
+
+eb := RSEdgeBuilder arrowedLineWithOffset: 0.5.
+eb canvas: c.
+eb connectTo: [ :v | 1 ].
+
+int := RSHighlightable new withEdges highlightColor: Color red.
+shapes @ int.
+
+c @ RSCanvasController
+```
+
+Another example:
+```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 30) collect: [ :v | RSBox new border: (RSBorder new color: Color red; width: 3); model: v ] as: RSGroup.
 c addAll: shapes.
@@ -19,10 +51,10 @@ shapes @ interaction.
 
 RSGridLayout on: shapes.
 c @ RSCanvasController
--=-=-=-
+```
 
-Example with edges:
--=-=-=
+Another example:
+```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 30) collect: [ :v | RSEllipse new  model: v; size: 10 ] as: RSGroup.
 c addAll: shapes.
@@ -34,14 +66,27 @@ RSEdgeBuilder line
 	connectFrom: [ :v | v // 2 ].
 
 interaction := RSHighlightable new.
-interaction highlightColor: Color blue.
 interaction highlightBorder: (RSBorder new color: Color black; width: 3).
 interaction withEdges.
 shapes @ interaction.
 
 RSTreeLayout on: shapes.
 c @ RSCanvasController
--=-=-=
+```
+
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 30) collect: [ :v | RSBox new  size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup.
+
+interaction := RSHighlightable new.
+interaction highlightBorder: (RSBorder new width: 3; color: Color pink).
+shapes @ interaction.
+
+RSGridLayout on: shapes.
+c @ RSCanvasController
+```
 "
 Class {
 	#name : #RSHighlightable,
@@ -137,7 +182,7 @@ RSHighlightable >> doUnhighlight: aShape [
 RSHighlightable >> highlightBorder: aBorder [
 	"Set the border. For example:
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=	
+```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 30) collect: [ :v | RSBox new  size: 20; model: v ] as: RSGroup.
 c addAll: shapes.
@@ -149,7 +194,7 @@ shapes @ interaction.
 
 RSGridLayout on: shapes.
 c @ RSCanvasController
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 	"
 	self 
 		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #border value: aBorder ];
@@ -160,7 +205,7 @@ c @ RSCanvasController
 RSHighlightable >> highlightColor: aColor [
 	"Set the highlight color. For example:
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=	
+```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 30) collect: [ :v | RSBox new  size: 20; model: v ] as: RSGroup.
 c addAll: shapes.
@@ -172,7 +217,27 @@ shapes @ interaction.
 
 RSGridLayout on: shapes.
 c @ RSCanvasController
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
+
+Here is another example:
+```Smalltalk
+c := RSCanvas new.
+
+shapes := (1 to: 10) collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSPopup @ RSDraggable.
+
+RSGridLayout on: shapes.
+
+eb := RSEdgeBuilder arrowedLineWithOffset: 0.5.
+eb canvas: c.
+eb connectTo: [ :v | 1 ].
+
+int := RSHighlightable new withEdges highlightColor: Color red.
+shapes @ int.
+
+c @ RSCanvasController
+```
 	"
 	self 
 		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ];
