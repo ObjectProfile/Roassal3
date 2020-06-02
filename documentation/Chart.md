@@ -1,8 +1,8 @@
-# Tutorial 05 - Charting 
+# Tutorial 05 - Charting
 
-Here is another tutorial for [Roassal3](https://github.com/ObjectProfile/Roassal3). 
+Here is another tutorial for [Roassal3](https://github.com/ObjectProfile/Roassal3).
 
-What you will learn in this tutorial: 
+What you will learn in this tutorial:
 - the essential features of Chart, the Roassal component to draw charts;
 - create and visualize a chart from a given set of numbers found in a CSV file;
 - parse a CSV file using `DataFrame`.
@@ -25,7 +25,7 @@ c
 ```
 
 The result of the script is given by the figure:
-![alt text](screenshots/chart01.png)
+![alt text](../screenshots/chart01.png)
 
 We will now review the script line by line. The first two lines define the data, expressed with the two variables `x` and `y`, we wish to visualize. Remember that the message `to:count:` defined a collection of 100 numerical values, ranging from `-3.14` to `3.14`.
 
@@ -52,7 +52,7 @@ c
 
 Ultimately, the message `title:`, `xlabel:`, and `ylabel:` make use of `addDecoration:` to decorate the graphic. The last two decoration `RSHorizontalTick` and `RSVerticalTick` add ticks to the two axes.
 
-![alt text](screenshots/chart02.png)
+![alt text](../screenshots/chart02.png)
 
 ## Nice labels
 
@@ -77,9 +77,9 @@ c
 ```
 
 The result of not using nice labels may be seen in:
-![alt text](screenshots/chart03.png)
+![alt text](../screenshots/chart03.png)
 
-The X axis ranges from `-3.14` to `3.14`, however intermediary ticks have unecessary large floating values. 
+The X axis ranges from `-3.14` to `3.14`, however intermediary ticks have unecessary large floating values.
 
 ```Smalltalk
 x := -3.14 to: 3.14 count: 100.
@@ -100,7 +100,7 @@ c
 
 The instruction `asFloat: 3` makes that each value in a tick has at most 3 decimals. The result is:
 
-![alt text](screenshots/chart04.png)
+![alt text](../screenshots/chart04.png)
 
 
 ## Coloring multiple plots
@@ -128,7 +128,7 @@ c
 
 Result is seen in:
 
-![alt text](screenshots/chart05.png)
+![alt text](../screenshots/chart05.png)
 
 
 Colors may be set to each plot. Consider the following example:
@@ -139,7 +139,7 @@ x := -3.14 to: 3.14 count: 100.
 c := RSChart new.
 1 to: 10 do: [ :att |
 	p := RSLinePlot new x: x y: x sin / att.
-	att = 1 
+	att = 1
 		ifTrue: [ p color: Color red ]
 		ifFalse: [ p color: (Color gray: att / 10) ].
 	c addPlot: p.
@@ -158,7 +158,7 @@ c
 
 The result could seen in:
 
-![alt text](screenshots/chart06.png)
+![alt text](../screenshots/chart06.png)
 
 ## Multiple type of plots
 
@@ -183,7 +183,7 @@ c
 
 Result is:
 
-![alt text](screenshots/chart07.png)
+![alt text](../screenshots/chart07.png)
 
 `RSScatterPlot` is another type of plot useful to visualize multiple dimentions. Consider the following example:
 
@@ -202,7 +202,7 @@ c := RSChart new.
 p := RSScatterPlot new x: x y: y.
 p color: Color blue translucent.
 c addPlot: p.
- 
+
 c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
 c addDecoration: RSVerticalTick new.
 
@@ -210,7 +210,7 @@ c
 ```
 
 The result is:
-![alt text](screenshots/chart08.png)
+![alt text](../screenshots/chart08.png)
 
 
 Shapes produced by a chart may be normalized in numerous ways. For example:
@@ -228,7 +228,7 @@ r := Random seed: 42.
 
 c := RSChart new.
 p := RSScatterPlot new x: x y: y.
-p processBlock: [ :shapes | 
+p processBlock: [ :shapes |
 		shapes models: z.
 		RSNormalizer size
 			shapes: shapes;
@@ -241,7 +241,7 @@ p processBlock: [ :shapes |
 		shapes translucent.
 			 ].
 c addPlot: p.
- 
+
 c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
 c addDecoration: RSVerticalTick new.
 
@@ -249,7 +249,7 @@ c
 ```
 
 The result is:
-![alt text](screenshots/chart09.png)
+![alt text](../screenshots/chart09.png)
 
 
 ## Covid dataset
@@ -277,7 +277,7 @@ url := 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_co
 content := (ZnEasy get: url) contents.
 dataFrame := DataFrame readFromCsv: content withSeparator: $,.
 
-nbColumns := ((dataFrame columnAt: dataFrame numberOfColumns) asSet includes: nil) 
+nbColumns := ((dataFrame columnAt: dataFrame numberOfColumns) asSet includes: nil)
 	ifTrue: [ dataFrame numberOfColumns - 1 ]
 	ifFalse: [ dataFrame numberOfColumns ].
 
@@ -318,7 +318,7 @@ b canvas
 ```
 
 The result is:
-![alt text](screenshots/chart10.png)
+![alt text](../screenshots/chart10.png)
 
 
 The script uses:

@@ -14,7 +14,7 @@ Metacello new
     baseline: 'Roassal3';
     repository: 'github://ObjectProfile/Roassal3:v0.9';
     load.
-``` 
+```
 
 ### Latest version
 
@@ -24,7 +24,7 @@ Metacello new
     baseline: 'Roassal3';
     repository: 'github://ObjectProfile/Roassal3';
     load.
-``` 
+```
 
 ### Quick examples
 Once loaded, you can execute in a playground:
@@ -67,22 +67,22 @@ You should see an animated version of:
 The documentation of Roassal3 is expanding at a sustained pace.
 
 - Tutorials (learning-oriented material centered around practical steps):
-    - [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](LesMiserables.md)
-    - [Tutorial 02 - Graph Manipulation](GraphTutorial.md)
-    - [Tutorial 03 - Inspector Integration](GTInspectorIntegration.md)
-    - [Tutorial 04 - Shape Composition](ShapeComposition.md)
-    - [Tutorial 05 - Chart](Chart.md)
+    - [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](documentation/LesMiserables.md)
+    - [Tutorial 02 - Graph Manipulation](documentation/GraphTutorial.md)
+    - [Tutorial 03 - Inspector Integration](documentation/GTInspectorIntegration.md)
+    - [Tutorial 04 - Shape Composition](documentation/ShapeComposition.md)
+    - [Tutorial 05 - Chart](documentation/Chart.md)
 - How-to guides (problem-oriented material, centered around practical steps):
-    - [How to visualize any arbitrary object?](how-to.md#How-to-visualize-any-arbitrary-object)
-    - [How to create a chart from a list of numbers?](how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
-	- [How can I use animation to execute a block at a regular pace?](how-to.md#How-can-I-use-animation-to-execute-a-block-at-a-regular-pace)
-	- [How can I draw a SVG path?](how-to.md#How-can-I-draw-a-SVG-path)
-- [Reference Documentation](Reference/reference.md) (detail about the Roassal machinery and key classes)
+    - [How to visualize any arbitrary object?](documentation/how-to.md#How-to-visualize-any-arbitrary-object)
+    - [How to create a chart from a list of numbers?](documentation/how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
+	- [How can I use animation to execute a block at a regular pace?](documentation/how-to.md#How-can-I-use-animation-to-execute-a-block-at-a-regular-pace)
+	- [How can I draw a SVG path?](documentation/how-to.md#How-can-I-draw-a-SVG-path)
+- [Reference Documentation](documentation/Reference/reference.md) (detail about the Roassal machinery and key classes)
 - FAQ
-	- [Where is the classes RTView?](FAQ.md#Where-is-the-classes-RTView)
-	- [What about the book Agile Visualization?](FAQ.md#What-about-the-book-Agile-Visualization)
-	- [How to export a visualization to PDF or SVG?](FAQ.md#How-to-export-a-visualization-to-PDF-or-SVG)
-	
+	- [Where is the classes RTView?](documentation/FAQ.md#Where-is-the-classes-RTView)
+	- [What about the book Agile Visualization?](documentation/FAQ.md#What-about-the-book-Agile-Visualization)
+	- [How to export a visualization to PDF or SVG?](documentation/FAQ.md#How-to-export-a-visualization-to-PDF-or-SVG)
+
 A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
 
@@ -101,4 +101,3 @@ _____
 
 Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
 Stéphane Ducasse, Martin Días, Pavel Krivanek
-

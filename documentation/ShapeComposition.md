@@ -17,7 +17,7 @@ Execute the following script:
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	RSEllipse new size: c numberOfCoappearances ].
 
 c := RSCanvas new.
@@ -37,7 +37,7 @@ We can combine a label, as an instance of the class `RSLabel`, with a circle for
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	| g |
 	g := RSGroup new.
 	g add: (RSEllipse new size: c numberOfCoappearances).
@@ -52,10 +52,10 @@ c @ RSCanvasController.
 
 The result of this script is:
 
-![alt](screenshots/Tutorial04-Compositing02.png)
+![alt](../screenshots/Tutorial04-Compositing02.png)
 
 
-Each character has now a name. Each character `c` produces a composed shape with the following code: 
+Each character has now a name. Each character `c` produces a composed shape with the following code:
 ```Smalltalk
 	| g |
 	g := RSGroup new.
@@ -66,7 +66,7 @@ Each character has now a name. Each character `c` produces a composed shape with
 
 The variable `g` points to a `RSGroup`, which is a collection of Roassal3 shapes. The class `RSGroup` is a subclass of the standard `OrderedCollection`. It is convenient to have Roassal shapes kepts in a `RSGroup` because of the convenient methods a group offers, such as translating and computing bounding boxes.
 
-The class `RSGroup` offers the method `asShape`, useful to create an instance of the Roassal class `RSComposite`. As such, the expression `g asShape` returns a composite shape. This shape can be added to the canvas using `add:`. 
+The class `RSGroup` offers the method `asShape`, useful to create an instance of the Roassal class `RSComposite`. As such, the expression `g asShape` returns a composite shape. This shape can be added to the canvas using `add:`.
 
 
 ## Layout in a composite shape
@@ -75,7 +75,7 @@ Roassal offers a number of layouts, and all the layouts may be applied to a grou
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	| g |
 	g := RSGroup new.
 	g add: (RSLabel new text: c name).
@@ -98,7 +98,7 @@ A composite dispatch events to its composed shapes. Consider the following scrip
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	| g |
 	g := RSGroup new.
 	g add: (RSLabel new text: c name) .
@@ -112,14 +112,14 @@ RSFlowLayout on: characters.
 c @ RSCanvasController.
 ```
 
-As you may have seen, we used a new method to create a composite. The method `asShapeFor:` takes as argument an object, used as the model of the composite shape. In our case, the model is used by the popup. We also make the composite draggable and highlightable. 
+As you may have seen, we used a new method to create a composite. The method `asShapeFor:` takes as argument an object, used as the model of the composite shape. In our case, the model is used by the popup. We also make the composite draggable and highlightable.
 
 Note that shapes contained in a shape also answer events. The following example ilustrates this:
 
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	| g |
 	g := RSGroup new.
 	g add: (RSLabel new text: c name) .
@@ -135,7 +135,7 @@ c @ RSCanvasController.
 
 Executing this script produces:
 
-![alt](screenshots/Tutorial04-Compositing03.png)
+![alt](../screenshots/Tutorial04-Compositing03.png)
 
 As you can see, the composing shape answer to the highlighting.
 
@@ -145,7 +145,7 @@ Above we have seen the following script:
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	| g |
 	g := RSGroup new.
 	g add: (RSLabel new text: c name).
@@ -163,7 +163,7 @@ As we have seen, this example define a set of composite shapes, which are then p
 
 ```Smalltalk
 m := LMModel new create.
-characters := m characters collect: [ :c | 
+characters := m characters collect: [ :c |
 	RSEllipse new size: c numberOfCoappearances; model: c ] as: RSGroup.
 
 c := RSCanvas new.
@@ -175,7 +175,7 @@ c @ RSCanvasController.
 
 The result is:
 
-![alt](screenshots/Tutorial04-Compositing04.png)
+![alt](../screenshots/Tutorial04-Compositing04.png)
 
 The figure shows that names overlap. When hovering the mouse above a circle, the circle name is highlighted. This variant significantly reduce the amount of wasted space.
 

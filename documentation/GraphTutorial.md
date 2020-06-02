@@ -1,15 +1,15 @@
 # Tutorial 02 - Graph Manipulation
 
-This tutorial is about building a small tool to manipulate graph. It is composed of two main steps: 
+This tutorial is about building a small tool to manipulate graph. It is composed of two main steps:
 
  - Part 1: scripting the graph visualization
  - Part 2: turning our script as a small object-oriented application
 
 ## Part 1: scripting the graph visualization
 
-### A canvas and some nodes 
+### A canvas and some nodes
 
-A playground is a fantastic tool to easily experiment in an incremental fashion. One can easily add a couple of lines of code and immediately enjoy the result. Using the playground is therefore a natural way to experiment. 
+A playground is a fantastic tool to easily experiment in an incremental fashion. One can easily add a couple of lines of code and immediately enjoy the result. Using the playground is therefore a natural way to experiment.
 
 We will visualize dependencies between some Pharo classes. Since a class is an object in Pharo, visualizing class dependencies is very handy since data is ready. No need to rely on an external source of data.
 
@@ -30,14 +30,14 @@ RSGridLayout on: elements.
 c @ RSCanvasController
 ```
 
-The following figure gives the result of the script. 
-![alt text](screenshots/Tutorial02-Figure1.png)
+The following figure gives the result of the script.
+![alt text](../screenshots/Tutorial02-Figure1.png)
 
 The variable `modelElements` contains a list of objects. Our visualization represents a graphical element for each objects contained in this variable. Since we are interested in visualize a few Pharo classes, we assign all the classes defining the collection class hierarchy.
 
 The variable `relation` contains a one argument block that takes a class and returns the list of classes on which the argument depends on. For example, the expression `Array dependentClasses` returns `{ArrayedCollection. WriteStream. DependentsArray. Array class. Array}` which means that the class `Array` depends on the classes `ArrayedCollection`, `WriteStream`, `DependentsArray`, and `Array class` (the metaclass of `Array`).
 
-The variable `elements` contains a list of visual elements. Each class is represented by an ellipse, of a size 10. Each ellipse had an object model, the represented class. This model is necessary for drawing edges between models and for the popup text. The collections needs to be a `RSGroup` class as this class provide convenient methods related to the visual rendering. 
+The variable `elements` contains a list of visual elements. Each class is represented by an ellipse, of a size 10. Each ellipse had an object model, the represented class. This model is necessary for drawing edges between models and for the popup text. The collections needs to be a `RSGroup` class as this class provide convenient methods related to the visual rendering.
 
 The visual elements are added to a canvas. The expression `elements @ RSPopup @ RSDraggable` makes all the visual elements have a popup and are made draggable. For now, we simply use a gridlayout to order the visual elements. We then made the canvas controllable using `c @ RSCanvasController`.
 
@@ -73,9 +73,9 @@ RSForceBasedLayout new charge: -200; on: elements.
 c @ RSCanvasController
 ```
 
-The expression `RSEdgeBuilder line` create an edge builder ready to produce simple straight lines. The expression `eb moveBehind` indicates that the lines have to be added _behind_ the nodes. Often, it is visually pleasant to not have edges that hide the nodes. The expression `eb shape color: Color gray` defines the visual aspect of the line. 
+The expression `RSEdgeBuilder line` create an edge builder ready to produce simple straight lines. The expression `eb moveBehind` indicates that the lines have to be added _behind_ the nodes. Often, it is visually pleasant to not have edges that hide the nodes. The expression `eb shape color: Color gray` defines the visual aspect of the line.
 
-The expression `eb withBorderAttachPoint.` indicates that the attach point of the edge should be the border of the visual element. We need to indicate to the edge builder where to find the elements to connect. We use the expression `eb canvas: c` for that purpose. 
+The expression `eb withBorderAttachPoint.` indicates that the attach point of the edge should be the border of the visual element. We need to indicate to the edge builder where to find the elements to connect. We use the expression `eb canvas: c` for that purpose.
 
 Finally, nodes are connected using the expression `eb connectToAll: relation`. Since the block provided to `relation` returns a collection of model objects, we use `connectToAll:` to connect each visual element to a number of other visual elements.
 
@@ -89,7 +89,7 @@ make the visual elements aware of the mouse movement. If the mouse is above a no
 
 Result of the script is represented below:
 
-![alt text](screenshots/Tutorial02-Figure2.png)
+![alt text](../screenshots/Tutorial02-Figure2.png)
 
 
 ## Part 2: turning our script as a small object-oriented application
@@ -112,7 +112,7 @@ GraphAnalyzer>>initialize
 	super initialize.
 	canvas := RSCanvas new.
 	canvas @ RSCanvasController.
-	layout := RSForceBasedLayout new charge: -200.	
+	layout := RSForceBasedLayout new charge: -200.
 ```
 
 We define a force based layout as a default layout. We define a few methods to configure our graph analyzer. The layout is set using:
@@ -129,7 +129,7 @@ GraphAnalyzer>>models: someObjects
 	models := someObjects.
 	elements := someObjects collect: [ :m | RSEllipse new size: 10; model: m ] as: RSGroup.
 	canvas addAll: elements.
-	
+
 	elements @ RSPopup @ RSDraggable.
 ```
 
@@ -143,7 +143,7 @@ g build
 
 The script produces the following figure:
 
-![alt text](screenshots/Tutorial02-Figure3.png)
+![alt text](../screenshots/Tutorial02-Figure3.png)
 
 We can set the layout using a `layout:` instruction:
 
@@ -154,7 +154,7 @@ g layout: RSGridLayout new.
 g build
 ```
 
-![alt text](screenshots/Tutorial02-Figure4.png)
+![alt text](../screenshots/Tutorial02-Figure4.png)
 
 We can offer a simple way to create edges:
 
@@ -167,7 +167,7 @@ GraphAnalyzer>>relation: aOneArgBlock
 	eb withBorderAttachPoint.
 	eb canvas: canvas.
 	eb connectToAll: aOneArgBlock.
-	
+
 	canvas edges do: #withBorder.
 	canvas edges @ RSHighlightable defaultRed.
 	canvas nodes @ RSHighlightable defaultRed withOutgoingEdges.
@@ -182,7 +182,7 @@ g relation: [ :cls | cls dependentClasses ].
 g build
 ```
 
-![alt text](screenshots/Tutorial02-Figure5.png)
+![alt text](../screenshots/Tutorial02-Figure5.png)
 
 ## Highlight part of the graph
 
@@ -206,7 +206,7 @@ g highlight: 'Dictionary' color: Color yellow.
 g build
 ```
 
-![alt text](screenshots/Tutorial02-Figure6.png)
+![alt text](../screenshots/Tutorial02-Figure6.png)
 
 
 ## Scaling elements
@@ -215,7 +215,7 @@ For now, all the classes have the same size. We can map the size to a given metr
 
 ```Smalltalk
 GraphAnalyzer>>scale: aOneBlockArg
-	RSNormalizer size 
+	RSNormalizer size
 		shapes: elements;
 		from: 8;
 		to: 25;
@@ -224,7 +224,7 @@ GraphAnalyzer>>scale: aOneBlockArg
 
 The figure illustrates the result:
 
-![alt text](screenshots/Tutorial02-Figure7.png)
+![alt text](../screenshots/Tutorial02-Figure7.png)
 
 ## Applying to a different dataset
 
@@ -249,13 +249,13 @@ g build
 
 The script produces the figure:
 
-![alt text](screenshots/Tutorial02-Figure8.png)
+![alt text](../screenshots/Tutorial02-Figure8.png)
 
 
 ## What have we seen in this tutorial?
 
-This tutorial illustrates how to visualize a simple graph model. It further shows how to build a small API, that is independent of the visualized domain. 
+This tutorial illustrates how to visualize a simple graph model. It further shows how to build a small API, that is independent of the visualized domain.
 
-The small `GraphAnalyzer` application may be extended in many different ways. For example, a scaling may be performed on colors. Some particular elements may use a particular layout (e.g., elements that are not connected may be set as a grid, while the connected visual elements may use a force based layout). We leave these possibles extension as an exercise to the readers. 
+The small `GraphAnalyzer` application may be extended in many different ways. For example, a scaling may be performed on colors. Some particular elements may use a particular layout (e.g., elements that are not connected may be set as a grid, while the connected visual elements may use a force based layout). We leave these possibles extension as an exercise to the readers.
 
 Please, share your result on the `#Roassal` [discord channel](https://discord.gg/QewZMZa).

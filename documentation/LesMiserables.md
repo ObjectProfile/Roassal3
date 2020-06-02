@@ -36,7 +36,7 @@ c @ RSCanvasController.
 ```
 
 This produces the following picture:
-![alt text](screenshots/LesMiserables01.png)
+![alt text](../screenshots/LesMiserables01.png)
 
 We can normalize the size of each character based on the number of times she or he coappears:
 
@@ -52,7 +52,7 @@ c := RSCanvas new.
 c addAll: characters.
 
 "We normalize the size of the characters using their coappearances"
-RSNormalizer size 
+RSNormalizer size
 	shapes: characters;
 	normalize: #numberOfCoappearances.
 
@@ -66,7 +66,7 @@ characters @ RSPopup.
 "It can also be navigated using scrollbars"
 c @ RSCanvasController.
 ```
-![alt text](screenshots/LesMiserables02.png)
+![alt text](../screenshots/LesMiserables02.png)
 
 
 We can add edges to indicate coappearances:
@@ -82,12 +82,12 @@ c := RSCanvas new.
 c addAll: characters.
 
 "We normalize the size of the characters using their coappearances"
-RSNormalizer size 
+RSNormalizer size
 	shapes: characters;
 	normalize: #numberOfCoappearances.
 
 "The same normalization using colors"
-RSNormalizer color 
+RSNormalizer color
 	shapes: characters;
 	from: Color gray trans;
 	to: Color red trans;
@@ -98,7 +98,7 @@ eb canvas: c.
 eb color: Color gray.
 eb moveBehind.
 eb 	shapes: characters.
-eb connectToAll: #characters.	
+eb connectToAll: #characters.
 
 "All the characters are displayed as a grid"
 RSForceBasedLayout new charge: -900; on: characters.
@@ -110,7 +110,7 @@ characters @ RSPopup @ RSDraggable.
 "It can also be navigated using scrollbars"
 c @ RSCanvasController.
 ```
-![alt text](screenshots/LesMiserables03.png)
+![alt text](../screenshots/LesMiserables03.png)
 
 Circles can be replaced with labels:
 ```Smalltalk
@@ -119,7 +119,7 @@ m := LMModel new create.
 
 "Each character is represented as a label"
 characters := m characters collect: [ :c | RSLabel
-    new size: 5; 
+    new size: 5;
     text: c;
     model: c ] as: RSGroup.
 
@@ -128,14 +128,14 @@ c := RSCanvas new.
 c addAll: characters.
 
 "We normalize the font size of the characters using their coappearances"
-RSNormalizer fontSize 
+RSNormalizer fontSize
 	shapes: characters;
 	from: 5;
 	to: 50;
 	normalize: #numberOfCoappearances.
 
 "The same normalization using colors"
-RSNormalizer color 
+RSNormalizer color
 	shapes: characters;
 	from: Color gray trans;
 	to: Color red trans;
@@ -146,7 +146,7 @@ eb canvas: c.
 eb color: Color gray trans.
 eb moveBehind.
 eb 	shapes: characters.
-eb connectToAll: #characters.	
+eb connectToAll: #characters.
 
 "The characters are displayed as a force-directed graph"
 RSForceBasedLayout new charge: -1500; on: characters.
@@ -158,7 +158,7 @@ characters @ RSPopup @ RSDraggable.
 "It can also be navigated using scrollbars"
 c @ RSCanvasController.
 ```
-![alt text](screenshots/LesMiserables04.png)
+![alt text](../screenshots/LesMiserables04.png)
 
 So far we interactively built a script to visualize a small dataset. Although a good start, it is not really adequate when extensible and customizable code is expected. A script, such as the one we provided, has the benefit to be consise and self-contained, but it is relatively complex and require an overall understanding to be adapted and extend. We can wrap it into a dedicated class and cut the script into particular methods. As such, we can create the class `LesMiserableVisualization`:
 
@@ -175,11 +175,11 @@ The temporary variables we had in our script are turned into instance variables.
 LesMiserableVisualization>>>initialize
 	super initialize.
 	canvas := RSCanvas new.
-	
+
 	"The canvas can be zoomed in / out using keys I and O"
 	"It can also be navigated using scrollbars"
 	canvas @ RSCanvasController.
-	
+
 	self createModel.
 ```
 
@@ -199,13 +199,13 @@ LesMiserableVisualization>>>createCharacters
 	"Create a visual element for each character of Les Miserables"
 	"Each character is represented as a label"
 	characters := model characters
-		collect: [ :c | 
+		collect: [ :c |
 			RSLabel new size: 5; text: c; model: c ]
 		as: RSGroup.
-	
+
 	"Add the characters to the canvas"
 	canvas addAll: characters.
-	
+
 	"Make each element have a popup text and is draggable"
 	characters @ RSPopup @ RSDraggable.
 ```
@@ -225,7 +225,7 @@ LesMiserableVisualization>>>addLinesColored: aColor
 	eb color: aColor trans.
 	eb moveBehind.
 	eb shapes: characters.
-	eb connectToAll: #characters.	
+	eb connectToAll: #characters.
 ```
 
 Similarly, we can provide the necessary methods to adjust colors of the characters:
@@ -237,7 +237,7 @@ LesMiserableVisualization>>>adjustColor
 ```Smalltalk
 LesMiserableVisualization>>>adjustColorShapeFrom: color1 to: color2
 	"Normalizing the characters"
-	RSNormalizer color 
+	RSNormalizer color
 		shapes: characters;
 		from: color1 trans;
 		to: color2 trans;
@@ -253,7 +253,7 @@ LesMiserableVisualization>>>adjustFontShape
 ```Smalltalk
 LesMiserableVisualization>>>adjustFontShapeFrom: smallFontSize to: bigFontSize
 	"We normalize the font size of the characters using their coappearances"
-	RSNormalizer fontSize 
+	RSNormalizer fontSize
 		shapes: characters;
 		from: smallFontSize;
 		to: bigFontSize;
@@ -263,7 +263,7 @@ LesMiserableVisualization>>>adjustFontShapeFrom: smallFontSize to: bigFontSize
 Layout can be achieved using the following two methods:
 
 ```Smalltalk
-LesMiserableVisualization>>>doLayout 
+LesMiserableVisualization>>>doLayout
 	self doLayout: (RSForceBasedLayout new charge: -1500)
 ```
 
@@ -290,7 +290,7 @@ LesMiserableVisualization new
 ```
 
 to produce:
-![alt text](screenshots/LesMiserables05.png)
+![alt text](../screenshots/LesMiserables05.png)
 
 We can refine the script to have:
 ```Smalltalk
@@ -303,7 +303,7 @@ LesMiserableVisualization new
 ```
 
 to produce:
-![alt text](screenshots/LesMiserables06.png)
+![alt text](../screenshots/LesMiserables06.png)
 
 Variant of the visualization may be easily built:
 
@@ -317,7 +317,7 @@ LesMiserableVisualization new
 ```
 
 to produce:
-![alt text](screenshots/LesMiserables07.png)
+![alt text](../screenshots/LesMiserables07.png)
 
 A new layout may be adopted:
 
@@ -330,4 +330,4 @@ LesMiserableVisualization new
 ```
 
 to produce:
-![alt text](screenshots/LesMiserables08.png)
+![alt text](../screenshots/LesMiserables08.png)
