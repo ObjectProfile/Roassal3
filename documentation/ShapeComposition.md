@@ -1,6 +1,6 @@
 # Tutorial 04 - Shapes compositions
 
-In the previous tutoriales, we have essentially used individual shapes to describes one single domain element. Consider the code we employed in this [tutorial](https://github.com/ObjectProfile/Roassal3/blob/master/LesMiserables.md). Each shape (i.e., visual element) corresponds to one character of the Les Miserables. This tutorial is about composing shapes to create a sophisticated visual glyph.
+In the previous tutoriales, we have essentially used individual shapes to describes one single domain element. Consider the code we employed in this [tutorial](https://github.com/ObjectProfile/Roassal3/blob/master/documentation/LesMiserables.md). Each shape (i.e., visual element) corresponds to one character of the Les Miserables. This tutorial is about composing shapes to create a sophisticated visual glyph.
 
 ## Les Miserable dataset
 
