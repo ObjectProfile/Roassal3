@@ -1,0 +1,82 @@
+"
+TODO
+"
+Class {
+	#name : #RSAreaPlot,
+	#superclass : #RSAbstractPlot,
+	#instVars : [
+		'y2Values'
+	],
+	#category : #'Roassal3-Chart-Core'
+}
+
+{ #category : #rendering }
+RSAreaPlot >> addPointAt: index in: s [
+	| xval y1val y2val |
+	index > xValues size ifTrue: [ ^ self ].
+	s << (index = 1 
+		ifTrue: [ 'M' ]
+		ifFalse: [ 'L' ]).
+	xval := xValues at: index.
+	y1val := yValues at: index.
+	s << (self pointFor: xval@y1val).
+	self addPointAt: index + 1 in: s.
+	s << 'L'.
+	y2val := y2Values at: index.
+	s << (self pointFor: xval@y2val).
+	index = 1 ifTrue: [ s << 'Z' ].
+	
+	
+
+]
+
+{ #category : #rendering }
+RSAreaPlot >> computePath [
+	^ String streamContents: [ :s | 
+		self addPointAt: 1 in: s ].
+]
+
+{ #category : #rendering }
+RSAreaPlot >> definedValuesY [
+	^ yValues , y2Values select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+]
+
+{ #category : #rendering }
+RSAreaPlot >> pointFor: aPoint [
+	| spoint |
+	spoint := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
+	self 
+		assert: (self isPointWellDefined: spoint) 
+		description: 'can not use invalid point to plot the graph'.
+	^ spoint x asFloat printString,' ',spoint y asFloat printString
+	
+	
+]
+
+{ #category : #rendering }
+RSAreaPlot >> renderIn: canvas [
+	canvas add: (RSSVGPath new
+		color: self computeColor;
+		svgPath: self computePath;
+		yourself).
+]
+
+{ #category : #public }
+RSAreaPlot >> x: aCollection1 y1: aCollection2 y2: aCollection3OrNumber [
+	"collections should have the same size"
+	xValues := aCollection1.
+	yValues := aCollection2.
+	y2Values := aCollection3OrNumber.
+	y2Values isNumber ifTrue: [ 
+		y2Values := Array new: xValues size withAll: y2Values ].
+]
+
+{ #category : #public }
+RSAreaPlot >> x: aCollection y: aCollection2 [
+	self shouldNotImplement
+]
+
+{ #category : #public }
+RSAreaPlot >> y: aCollection [
+	self shouldNotImplement
+]

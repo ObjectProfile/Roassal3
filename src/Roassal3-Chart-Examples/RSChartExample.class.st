@@ -121,7 +121,7 @@ RSChartExample >> example07AdjustingFontSize [
 	c addPlot: (RSLinePlot new x: x y: y).
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-	c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; vertical).
+	c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; horizontal).
 	^ c
 ]
 
@@ -258,4 +258,35 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	c addDecoration: RSVerticalTick new.
 
 	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example13AreaPlot [
+	<script: 'self new example13AreaPlot open'>
+	| x y1 y2  c p canvas |
+	x := 0 to: 2 by: 0.01.
+	y1 := (2 * Float pi * x) sin.
+	y2 := 1.2 * (4 * Float pi * x) sin.
+
+	canvas := RSCanvas new.
+	{'Between y1 and 0'-> (y1 -> 0).
+	'Between y2 and 1'-> (y1 -> 1).
+	'Between y1 and y2'-> (y1 -> y2)} do: [ :assoc | | g |
+		g := RSGroup new.
+		c := RSChart new.
+		c container: g.
+		c extent: 500@100.
+		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
+		c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
+		c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
+		c ylabel: assoc key.
+		c build.
+		canvas add: g asShape.
+		].
+	RSVerticalLineLayout on: canvas nodes.
+
+	canvas @ RSCanvasController.
+	^ canvas 
+
+
 ]
