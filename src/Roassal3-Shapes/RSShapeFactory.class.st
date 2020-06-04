@@ -48,26 +48,6 @@ RSShapeFactory class >> composite [
 ]
 
 { #category : #shapes }
-RSShapeFactory class >> cross [
-	| t t1 |
-	t := 2 / 6 asFloat.
-	t1 := t negated.
-	^ self polygonWithPoints:
-		{(-1 @ t1).
-		(t1 @ t1).
-		(t1 @ -1).
-		(t @ -1).
-		(t @ t1).
-		(1 @ t1).
-		(1 @ t).
-		(t @ t).
-		(t @ 1).
-		(t1@ 1).
-		(t1@ t).
-		(-1@ t)}
-]
-
-{ #category : #shapes }
 RSShapeFactory class >> diamond [
 	^ self polygonWithPoints: (Array
 		with: 0 @ 1
@@ -107,6 +87,26 @@ RSShapeFactory class >> pentagon [
 ]
 
 { #category : #shapes }
+RSShapeFactory class >> plus [
+	| t t1 |
+	t := 2 / 6 asFloat.
+	t1 := t negated.
+	^ self polygonWithPoints:
+		{(-1 @ t1).
+		(t1 @ t1).
+		(t1 @ -1).
+		(t @ -1).
+		(t @ t1).
+		(1 @ t1).
+		(1 @ t).
+		(t @ t).
+		(t @ 1).
+		(t1@ 1).
+		(t1@ t).
+		(-1@ t)}
+]
+
+{ #category : #shapes }
 RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
@@ -130,6 +130,23 @@ RSShapeFactory class >> rhomboid [
 		with: 0.333 @ -1
 		with: 1 @ 1
 		with: -0.333 @ 1)
+]
+
+{ #category : #utils }
+RSShapeFactory class >> shapeFromString: aString [
+	"self shapeFromString: 'd'"
+	#(o circle
+	^ arrow
+	s square
+	p pentagon
+	h hexagon
+	+ plus
+	d diamond
+	* star ) pairsDo: [ :k :sel |
+		(aString includesSubstring: k)
+			ifTrue: [ ^ sel value: self ] ].
+	^ nil
+	
 ]
 
 { #category : #shapes }

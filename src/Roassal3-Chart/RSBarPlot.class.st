@@ -61,6 +61,11 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	
 ]
 
+{ #category : #initialization }
+RSBarPlot >> defaultShape [
+	^ RSBox new noPaint
+]
+
 { #category : #rendering }
 RSBarPlot >> renderIn: canvas [
 	| color width myScale |
@@ -79,10 +84,8 @@ RSBarPlot >> renderIn: canvas [
 		corner := origin x @ (yScale scale: 0).
 		((self isPointWellDefined: origin) and: [ self isPointWellDefined: corner ]) ifTrue: [
 			r := Rectangle origin: origin corner: corner + (width@0).
-			canvas add: (RSBox new
+			canvas add: (self shape copy
 				color: color;
-				model: yt;
-				popup;
 				fromRectangle: r;
 				yourself).
 			  ] ].

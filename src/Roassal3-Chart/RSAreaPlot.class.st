@@ -21,10 +21,20 @@ RSAreaPlot >> addPointAt: index in: s [
 	y1val := yValues at: index.
 	s << (self pointFor: xval@y1val).
 	self addPointAt: index + 1 in: s.
-	s << 'L'.
-	y2val := y2Values at: index.
-	s << (self pointFor: xval@y2val).
-	index = 1 ifTrue: [ s << 'Z' ].
+	y2Values isNumber ifTrue: [ 
+		index = 1 ifTrue: [ 
+			s << 'L'.
+			y2val := y2Values.
+			s << (self pointFor: xValues last @ y2val).
+			s << (self pointFor: xValues first @ y2val).
+			s << 'Z'. ]
+	] ifFalse: [ 
+		s << 'L'.
+		y2val := y2Values at: index.
+		s << (self pointFor: xval@y2val).
+		index = 1 ifTrue: [ s << 'Z' ].
+	 ]
+	
 	
 	
 
@@ -36,9 +46,17 @@ RSAreaPlot >> computePath [
 		self addPointAt: 1 in: s ].
 ]
 
+{ #category : #initialization }
+RSAreaPlot >> defaultShape [
+	^ RSSVGPath new noPaint
+]
+
 { #category : #rendering }
 RSAreaPlot >> definedValuesY [
-	^ yValues , y2Values select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+	| temp| 
+	temp := y2Values.
+	temp isNumber ifTrue: [ temp := { temp } ].
+	^ yValues , temp select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
 { #category : #rendering }
@@ -55,7 +73,7 @@ RSAreaPlot >> pointFor: aPoint [
 
 { #category : #rendering }
 RSAreaPlot >> renderIn: canvas [
-	canvas add: (RSSVGPath new
+	canvas add: (self shape
 		color: self computeColor;
 		svgPath: self computePath;
 		yourself).
@@ -66,9 +84,7 @@ RSAreaPlot >> x: aCollection1 y1: aCollection2 y2: aCollection3OrNumber [
 	"collections should have the same size"
 	xValues := aCollection1.
 	yValues := aCollection2.
-	y2Values := aCollection3OrNumber.
-	y2Values isNumber ifTrue: [ 
-		y2Values := Array new: xValues size withAll: y2Values ].
+	y2Values := aCollection3OrNumber
 ]
 
 { #category : #public }

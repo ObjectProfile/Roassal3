@@ -19,7 +19,7 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
-	^ RSLine new
+	^ self shape copy
 		startPoint: (xScale scale: aNumber) @ 0;
 		endPoint: (xScale scale: aNumber) @ self tickSize;
 		yourself

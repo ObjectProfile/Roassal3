@@ -263,15 +263,15 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 { #category : #examples }
 RSChartExample >> example13AreaPlot [
 	<script: 'self new example13AreaPlot open'>
-	| x y1 y2  c p canvas |
+	| x y1 y2  c canvas charts |
 	x := 0 to: 2 by: 0.01.
 	y1 := (2 * Float pi * x) sin.
 	y2 := 1.2 * (4 * Float pi * x) sin.
 
 	canvas := RSCanvas new.
-	{'Between y1 and 0'-> (y1 -> 0).
+	charts := {'Between y1 and 0'-> (y1 -> 0).
 	'Between y2 and 1'-> (y1 -> 1).
-	'Between y1 and y2'-> (y1 -> y2)} do: [ :assoc | | g |
+	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc | | g |
 		g := RSGroup new.
 		c := RSChart new.
 		c container: g.
@@ -281,12 +281,93 @@ RSChartExample >> example13AreaPlot [
 		c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
 		c ylabel: assoc key.
 		c build.
-		canvas add: g asShape.
-		].
-	RSVerticalLineLayout on: canvas nodes.
-
+		g asShape	].
+	RSVerticalLineLayout on: charts.
+	canvas addAll: charts.
 	canvas @ RSCanvasController.
 	^ canvas 
 
 
+]
+
+{ #category : #examples }
+RSChartExample >> example14AreaPlotWithError [
+	<script: 'self new example14AreaPlotWithError open'>
+	| x y polyfit res y_est y_err c |
+	x := 0 to: 10.
+	y := #(3.9 4.4 10.8 10.3 11.2 13.1 14.1 9.9 13.9 15.1 12.5).
+	polyfit := [ :x1 :y1 :n |  
+		"TODO"
+		"Need a real polyfit implementation for any n"
+		"maybe not in roassal3 maybe in polymath"
+		"https://en.wikipedia.org/wiki/Curve_fitting"
+		0.9-> 6].
+	res := polyfit value: x value: y value: 1.
+	y_est := res key * x + res value.
+
+	y_err := x stdev * ( (1/x size) + 
+		(( (x - x average) raisedTo: 2) / 
+		((x - x average) raisedTo: 2) sum) ) sqrt. 
+		
+
+	c := RSChart new.
+	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
+	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
+	c addPlot: (RSScatterPlot new x: x y: y).
+	c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
+	c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
+	^ c 
+]
+
+{ #category : #examples }
+RSChartExample >> example15AreaBox [
+	<script: 'self new example15AreaBox open'>
+	| x y1 y2 c |
+	x := #(0 1 2 3).
+	y1 := #(0.8 0.8 0.2 0.2).
+	y2 := #(0 0 1 1).
+	c := RSChart new.
+	c extent: 150@50.
+	c addPlot: (RSAreaPlot new x: x y1: y1 y2: y2).
+	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; fmt: 's--').
+	c addPlot: (RSLinePlot new x: x y: y2; color: Color orange; fmt: 'o--').
+	c addDecoration: (RSHorizontalTick new numberOfTicks: 7; asFloat).
+	c addDecoration: (RSVerticalTick new asFloat).
+
+	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example16Series [
+	<script: 'self new example16Series open'>
+	| x cumsum c b y error |
+	x := 1 to: 100.
+	cumsum := [:arr | | sum |
+		sum := 0.
+		arr collect: [ :v | sum := sum + v. sum ] ].
+
+	c := RSChart new.
+	c extent: 400@400.
+
+	b := RSLegend new.
+	b container: c canvas.
+	b layout horizontal gapSize: 30.
+	#(
+	series1 red
+	series2 blue) pairsDo: [ :label :color |
+		y := (x collect: [ :i | 50 atRandom - 25 ]).
+		y := cumsum value: y.
+		error := x.
+		
+		c addPlot: (RSAreaPlot new 
+			x: x y1: y + error y2: y - error;
+			color: (color value: Color) translucent).
+		c addPlot: (RSLinePlot new x: x y: y; fmt: 'o';
+			color: (color value: Color)).
+		b text: label withBoxColor: (color value: Color)
+		 ].
+	c build.
+	b build.
+
+	^ c canvas.
 ]

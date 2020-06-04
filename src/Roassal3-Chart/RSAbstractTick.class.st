@@ -82,6 +82,11 @@ RSAbstractTick >> defaultNiceLabel [
 	^ nice
 ]
 
+{ #category : #initialization }
+RSAbstractTick >> defaultShape [
+	^ RSLine new
+]
+
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 	"Ticks use RSNiceLabelGenerator"

@@ -56,6 +56,11 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #initialization }
+RSScatterPlot >> defaultShape [
+	^ RSEllipse new noPaint
+]
+
 { #category : #accessing }
 RSScatterPlot >> processBlock [
 	^ processBlock
@@ -70,13 +75,14 @@ RSScatterPlot >> processBlock: oneArgBlock [
 
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
-	| shapes newPoint |
+	| shapes newPoint color |
+	color := self computeColor.
 	self checkAssertion.
 	shapes := (1 to: xValues size)
 		collect: [ :notUsed | 
-			RSEllipse new
+			self shape copy
 				radius: 2;
-				color: self computeColor ] as: RSGroup.
+				color: color ] as: RSGroup.
 	1 to: xValues size do: [ :i | 
 		| xt yt et |
 		et := shapes at: i.
