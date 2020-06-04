@@ -371,3 +371,60 @@ RSChartExample >> example16Series [
 
 	^ c canvas.
 ]
+
+{ #category : #examples }
+RSChartExample >> example17CLPvsUSD [
+	<script: 'self new example17CLPvsUSD open'>
+	| dates y data x c plot paint |
+	dates := OrderedCollection new.
+	y := OrderedCollection new.
+	data := 
+	{'04-jun-2020'.	769.13.
+	'03-jun-2020'.	782.86.
+	'02-jun-2020'.	796.46.
+	'01-jun-2020'.	806.32.
+	'29-may-2020'.	812.74.
+	'28-may-2020'.	816.47.
+	'27-may-2020'.	802.10.
+	'26-may-2020'.	803.74.
+	'25-may-2020'.	805.75.
+	'22-may-2020'.	806.17.
+	'20-may-2020'.	819.08.
+	'19-may-2020'.	820.65.
+	'18-may-2020'.	823.86.
+	'15-may-2020'.	822.93.
+	'14-may-2020'.	820.38.
+	'13-may-2020'.	821.88.
+	'12-may-2020'.	826.05.
+	'11-may-2020'.	827.65.
+	'08-may-2020'.	836.27.
+	'07-may-2020'.	839.08.
+	'06-may-2020'.	832.84.
+	'05-may-2020'.	838.74.
+	'04-may-2020'.	837.92} reverse.
+		data pairsDo: [ :f :d |
+			dates add: d.
+			y add: f
+			].
+	x := 1 to: dates size.
+	c := RSChart new.
+	c extent: 300@200.
+	plot := RSAreaPlot new x: x y1: y y2: 750.
+	paint := LinearGradientPaint fromArray: 
+		{0-> Color green translucent.
+		0.9 -> Color transparent}.
+	paint start: 0@ -100; stop: 0@ 100.
+	plot shape paint: paint.
+	c addPlot: plot.
+	plot := RSLinePlot new x: x y: y.
+	plot color: Color green muchDarker.
+	plot width: 2.
+	plot capRound.
+	plot markerEnd: (RSEllipse new size: 10).
+	c addPlot: plot.
+
+	c addDecoration: (RSHorizontalTick new fromNames: dates).
+	c addDecoration: (RSVerticalTick new asFloat).
+	c title: 'CLP VS USD'.
+	^ c
+]

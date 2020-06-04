@@ -26,6 +26,7 @@ RSAreaPlot >> addPointAt: index in: s [
 			s << 'L'.
 			y2val := y2Values.
 			s << (self pointFor: xValues last @ y2val).
+			s << 'L'.
 			s << (self pointFor: xValues first @ y2val).
 			s << 'Z'. ]
 	] ifFalse: [ 
