@@ -1,3 +1,6 @@
+"
+TODO
+"
 Class {
 	#name : #RSChartDecoration,
 	#superclass : #RSAbstractChartElement,

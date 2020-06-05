@@ -1,3 +1,6 @@
+"
+TODO
+"
 Class {
 	#name : #RSYLabelDecoration,
 	#superclass : #RSAbstractLabelDecoration,
@@ -7,18 +10,20 @@ Class {
 { #category : #initialization }
 RSYLabelDecoration >> initialize [
 	super initialize.
-	self offset: -5
+	self offset: -5.
+	self vertical.
 ]
 
 { #category : #rendering }
 RSYLabelDecoration >> renderIn: canvas [
 	| label |
 	label := self createLabel.
-	canvas add: label.
+	
 	RSLocation new
 		offset: offset;
 		center;
 		left;
 		outer;
-		stick: label on: self spine
+		move: label on: canvas encompassingRectangle.
+	canvas add: label.
 ]

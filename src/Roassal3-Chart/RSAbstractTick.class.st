@@ -1,3 +1,6 @@
+"
+TODO
+"
 Class {
 	#name : #RSAbstractTick,
 	#superclass : #RSAbstractPlot,
@@ -77,6 +80,11 @@ RSAbstractTick >> defaultNiceLabel [
 		max: self max;
 		step: nice ticks / numberOfTicks.
 	^ nice
+]
+
+{ #category : #initialization }
+RSAbstractTick >> defaultShape [
+	^ RSLine new
 ]
 
 { #category : #public }

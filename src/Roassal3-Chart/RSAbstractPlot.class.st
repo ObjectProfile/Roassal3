@@ -1,10 +1,14 @@
+"
+TODO
+"
 Class {
 	#name : #RSAbstractPlot,
 	#superclass : #RSAbstractChartElement,
 	#instVars : [
 		'label',
 		'xValues',
-		'yValues'
+		'yValues',
+		'shape'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -24,6 +28,21 @@ RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues size = yValues size ]
 		description: 'X and Y values have not the same size, and they should'
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> color [
+	^ self shape color
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> color: aColor [
+	self shape color: aColor
+]
+
+{ #category : #initialization }
+RSAbstractPlot >> defaultShape [
+	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -48,7 +67,7 @@ RSAbstractPlot >> index [
 RSAbstractPlot >> initialize [
 	super initialize.
 	label := ''.
-	self useColorFromChart
+	shape := self defaultShape
 ]
 
 { #category : #testing }
@@ -82,6 +101,16 @@ RSAbstractPlot >> minValueX [
 RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
 	^ self definedValuesY min
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> shape [
+	^ shape
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> shape: aShape [
+	shape := aShape
 ]
 
 { #category : #public }

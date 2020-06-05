@@ -13,6 +13,19 @@ Class {
 	#category : #'Roassal3-Shapes-Border'
 }
 
+{ #category : #'instance creation' }
+RSStrokeStyle class >> fromString: aString [ 
+	| inst |
+	inst := self new.
+	(aString includesSubstring: '--')
+		ifTrue: [ ^ inst dashArray: #(4 2) ].
+	(aString includesSubstring: '-.')
+		ifTrue: [ ^ inst dashArray: #(4 1 1 1) ].
+	(aString includesSubstring: '.')
+		ifTrue: [ ^ inst dashArray: #(1) ].
+	^ nil
+]
+
 { #category : #accessing }
 RSStrokeStyle >> capStyle [
 	^ capStyle

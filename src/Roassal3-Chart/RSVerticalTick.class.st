@@ -1,3 +1,6 @@
+"
+TODO
+"
 Class {
 	#name : #RSVerticalTick,
 	#superclass : #RSAbstractTick,
@@ -20,7 +23,7 @@ RSVerticalTick >> createTickLineFor: aNumber [
 	scaledNumber := yScale scale: aNumber.
 	self assert: [ scaledNumber isInfinite not ].
 	self assert: [ scaledNumber isNaN not ].
-	^ RSLine new
+	^ self shape copy
 		startPoint: 0 @ scaledNumber;
 		endPoint: self tickSize negated @ scaledNumber;
 		yourself

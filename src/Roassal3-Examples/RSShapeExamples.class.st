@@ -284,7 +284,7 @@ RSShapeExamples >> example12Polygons [
 	border := RSBorder new paint: Color black; width: 2.
 	#('diamond' 'square' 'heptagon' 'hexagon' 
 	'octagon' 'pentagon' 'rhomboid' 'star'
-	'triangle' 'vee' 'cross' 'arrow'
+	'triangle' 'vee' 'plus' 'arrow'
 	"not polygons" 'box' 'circle') do: [ :selector| 
 		| shape gradient |
 		gradient := color scale: selector.

@@ -56,6 +56,8 @@ c @ RSCanvasController
 Class {
 	#name : #RSEdgeBuilder,
 	#superclass : #RSObject,
+	#traits : 'RSTEdge',
+	#classTraits : 'RSTEdge classTrait',
 	#instVars : [
 		'shape',
 		'allowRepetition',
@@ -148,11 +150,6 @@ RSEdgeBuilder class >> verticalLine: aShape [
 	
 ]
 
-{ #category : #'public - shape' }
-RSEdgeBuilder >> addInteraction: anInteraction [
-	self shape addInteraction: anInteraction
-]
-
 { #category : #'public repetition' }
 RSEdgeBuilder >> allowRepetition [
 	allowRepetition := true
@@ -174,21 +171,6 @@ RSEdgeBuilder >> beDirectional [
 	beDirectional := true
 ]
 
-{ #category : #'public - shape' }
-RSEdgeBuilder >> border [
-	^ self shape border
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> border: aBorder [
-	self shape border: aBorder
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> borderColor: aColor [
-	self shape borderColor: aColor
-]
-
 { #category : #accessing }
 RSEdgeBuilder >> canvas [
 	^ canvas
@@ -206,16 +188,6 @@ RSEdgeBuilder >> canvasNodes [
 	"Return the nodes of the canvas"
 	canvas ifNil: [ ^ #() ].
 	^ canvas nodes
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> capRound [
-	self shape capRound
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> color: aColor [
-	self shape color: aColor
 ]
 
 { #category : #public }
@@ -317,31 +289,11 @@ RSEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #'public - shape' }
-RSEdgeBuilder >> controlPointsController [
-	^ shape controlPointsController
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> controlPointsController: aCPController [
-	shape controlPointsController: aCPController
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> cornerRadii: aNumber [
-	^ self shape cornerRadii: aNumber
-]
-
 { #category : #'private - utility' }
 RSEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
 	"This is a private method. Create, if necessary, an edge between two elements"
 	(self shouldCreateEdgeFrom: fromElement to: toElement)
 		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> dashArray: anArray [
-	^ self shape dashArray: anArray
 ]
 
 { #category : #'private - utility' }
@@ -404,16 +356,6 @@ RSEdgeBuilder >> isBidirectional [
 	^ beDirectional 
 ]
 
-{ #category : #'public - shape' }
-RSEdgeBuilder >> markerEnd: aMarker [
-	self shape markerEnd: aMarker
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> markerStart: aMarker [
-	self shape markerStart: aMarker
-]
-
 { #category : #accessing }
 RSEdgeBuilder >> moveBehind [
 	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"
@@ -430,11 +372,6 @@ RSEdgeBuilder >> moveBehindIfNecessary: someEdges [
 RSEdgeBuilder >> noBidirectional [
 	"When edges are created, this does not allow for having edges going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
 	beDirectional := false
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> noBorder [
-	self shape noBorder
 ]
 
 { #category : #'public - configuration' }
@@ -466,11 +403,6 @@ RSEdgeBuilder >> objects: someObjectsOrABlock [
 	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> paint: aPaint [
-	self shape paint: aPaint
 ]
 
 { #category : #'private - utility' }
@@ -713,36 +645,6 @@ b @ RSCanvasController
 RSEdgeBuilder >> useElementAssociations: associationsBetweenElements [
 	associationsBetweenElements do: [ :assoc |
 		self edgeFrom: assoc key to: assoc value ]
-]
-
-{ #category : #'public - shape' }
-RSEdgeBuilder >> width: aNumber [
-	"Set the width of the line. For example:
-	
--=-=-=-=-=-=-=-=-=-=
-c := RSCanvas new.
-
-from := RSBox new size: 30; model: 'from'.
-to := RSEllipse new size: 30; model: 'to'.
-
-c add: from.
-c add: to.
-
-RSEdgeBuilder line
-	canvas: c;
-	width: 10;
-	connectFrom: 'from' to: 'to'.
-
-
-from @ RSDraggable.
-to @ RSDraggable.
-
-to translateTo: 50 @ 40.
-
-c @ RSCanvasController
--=-=-=-=-=-=-=-=-=-=
-	"
-	self shape width: aNumber
 ]
 
 { #category : #'public - attach point' }

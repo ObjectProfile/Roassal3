@@ -1,3 +1,6 @@
+"
+TODO
+"
 Class {
 	#name : #RSAbstractLabelDecoration,
 	#superclass : #RSChartDecoration,
@@ -30,6 +33,12 @@ RSAbstractLabelDecoration >> fontSize [
 RSAbstractLabelDecoration >> fontSize: fontSizeToUse [
 	"Set the font size to use when generating labels"
 	fontSize := fontSizeToUse
+]
+
+{ #category : #accessing }
+RSAbstractLabelDecoration >> horizontal [
+	"Set the label horizontal"
+	self rotationAngle: 0
 ]
 
 { #category : #initialization }
