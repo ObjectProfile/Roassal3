@@ -6,3 +6,8 @@ Class {
 	#superclass : #RSAnimationEvent,
 	#category : #'Roassal3-Animation-Events'
 }
+
+{ #category : #accessing }
+RSAnimationLoopEvent >> currentLoop [
+	^ animation currentLoop
+]

@@ -1,73 +1,76 @@
-"
-I have test for sequential animation
-"
 Class {
-	#name : #RSSequentialAnimationTest,
+	#name : #RSParallelAnimationTest,
 	#superclass : #RSAnimationTest,
 	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }
-RSSequentialAnimationTest >> testAddingAnimations [
+RSParallelAnimationTest >> testAddingAnimations [
 	self 
-		addingInComposite: canvas sequentialAnimation
-		duration: 3 second
+		addingInComposite: canvas parallelAnimation
+		duration: 2 second
 ]
 
 { #category : #tests }
-RSSequentialAnimationTest >> testDuration [
+RSParallelAnimationTest >> testDuration [ 
 	| animation |
-	animation := RSSequentialAnimation new.
+	animation := RSParallelAnimation new.
 	self assert: animation duration equals: 0 seconds.
 	
-	animation := RSSequentialAnimation new
+	animation := RSParallelAnimation new
 		add: (RSTransitionAnimation new duration: 2 seconds);
+		add: (RSTransitionAnimation new duration: 4 seconds);
 		yourself.
-	self assert: animation duration equals: 2 seconds.
-	self assert: animation allDuration equals: 2 seconds.
+	self assert: animation duration equals: 4 seconds.
+	self assert: animation allDuration equals: 4 seconds.
 	
-	animation := RSSequentialAnimation new
+	animation := RSParallelAnimation new
 		loops: 5;
 		add: (RSTransitionAnimation new duration: 2 seconds; loops: 5);
+		add: (RSTransitionAnimation new duration: 4 seconds);
 		yourself.
 	self assert: animation duration equals: 10 seconds.
 	self assert: animation allDuration equals: 50 seconds.
 	
-	animation := RSSequentialAnimation new
+	animation := RSParallelAnimation new
 		repeat;
-		add: (RSTransitionAnimation new duration: 2 seconds;  repeat);
+		add: (RSTransitionAnimation new duration: 2 seconds; repeat);
+		add: (RSTransitionAnimation new duration: 4 seconds);
 		yourself.
-	self assert: animation duration equals: 2 seconds.
-	self assert: animation allDuration equals: 2 seconds.
+	self assert: animation duration equals: 4 seconds.
+	self assert: animation allDuration equals: 4 seconds.
 ]
 
 { #category : #tests }
-RSSequentialAnimationTest >> testSequentialAnimationCreation [
+RSParallelAnimationTest >> testParallelAnimationCreation [
 	self 
-		createAnimationWith: [ canvas animationFrom: {} ]
-		animationClass: RSSequentialAnimation.
+		createAnimationWith: [ canvas parallelAnimationFrom: {} ]
+		animationClass: RSParallelAnimation.
+	
 ]
 
 { #category : #tests }
-RSSequentialAnimationTest >> testStep [
+RSParallelAnimationTest >> testStep [
 	| value animation |
 	value := 0.
-	animation := RSSequentialAnimation new
+	animation := RSParallelAnimation new
+		add: (RSTransitionAnimation new 
+			onStepDo: [ :t| value := value + 1 ]);
 		add: (RSTransitionAnimation new 
 			onStepDo: [ :t| value := value + 1 ]);
 		yourself.
 	canvas addAnimation: animation.
 	self assert: value equals: 0.
 	canvas playAnimations.
-	self assert: value equals: 1.
+	self assert: value equals: 2.
 ]
 
 { #category : #tests }
-RSSequentialAnimationTest >> testStepEvent [
+RSParallelAnimationTest >> testStepEvent [
 	| value loop animation |
 	value := nil.
 	loop := 0.
-	animation := RSSequentialAnimation new
+	animation := RSParallelAnimation new
 		loops: 3;
 		add: (RSTransitionAnimation new 
 			duration: 100 milliSeconds;

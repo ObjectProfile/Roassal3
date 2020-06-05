@@ -13,6 +13,11 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
+{ #category : #public }
+RSTransitionAnimation class >> defaultDuration [
+	^ 2 seconds
+]
+
 { #category : #accessing }
 RSTransitionAnimation >> duration [
 	^ Duration milliSeconds: duration
@@ -124,6 +129,15 @@ RSTransitionAnimation >> progress [
 	^ progress
 ]
 
+{ #category : #'accessing - computed' }
+RSTransitionAnimation >> progressValue: progress [
+	| value |
+	"interpolate the progrees"
+	value := easing interpolate: progress.
+	"apply progress to the value"
+	^ self scale scale: value.
+]
+
 { #category : #accessing }
 RSTransitionAnimation >> ramp: arrayOfAssociations [
 	scale := NSScale linear
@@ -139,7 +153,7 @@ RSTransitionAnimation >> range: aTwoArrayOfNumbers [
 { #category : #initialization }
 RSTransitionAnimation >> reset [
 	super reset.
-	self duration: 2 asSeconds.
+	self duration: self class defaultDuration.
 	easing := RSLinearInterpolator new.
 	scale := NSScale linear.
 ]
@@ -156,16 +170,10 @@ RSTransitionAnimation >> scale: aScale [
 
 { #category : #refresing }
 RSTransitionAnimation >> step [ 
-	| progress value |
-	
-	progress := self progress.
-	"interpolate the progrees"
-	progress := easing interpolate: progress.
-	"apply progress to the value"
-	value := self scale scale: progress.
-	
+	| value |
+	value := self progressValue: self progress.
 	stepAction value: value.
-	hasCompleted ifFalse: [ hasCompleted := currentLoop > loops ].
+	self updateHasCompleted
 	
 	
 ]

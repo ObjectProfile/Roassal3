@@ -134,3 +134,54 @@ RSBasicAnimationExamples >> example04DashAnimation [
 	^ c
 
 ]
+
+{ #category : #lines }
+RSBasicAnimationExamples >> example05LoopEvent [
+	<script: 'self new example05LoopEvent open'>
+	| canvas box |
+	canvas := RSCanvas new.
+	canvas clearBackground: false.
+	box := RSComposite new
+		add: (RSLabel new text: '0');
+		adjustToChildren;
+		yourself.
+	(canvas animationFrom: { 
+		canvas transitionAnimation })
+		loops: 3;
+		when: RSAnimationLoopEvent do: [ :evt | 
+			box children first text: evt currentLoop.
+			box position: 0 @ evt currentLoop * 50.
+			canvas signalUpdate].
+	canvas add: box.
+
+	^ canvas
+]
+
+{ #category : #lines }
+RSBasicAnimationExamples >> example06Parallel [
+	<script: 'self new example06Parallel open'>
+	| canvas box1 box2 |
+	canvas := RSCanvas new.
+	box1 := RSBox new size: 50; color: Color red translucent.
+	box2 := RSBox new size: 50; color: Color blue translucent.
+	(canvas animationFrom: { 
+		canvas transitionAnimation
+			from: 0@0;
+			to: 0@ -100;
+			onStepDo: [ :p | box1 position: p. box2 position: p].
+		(canvas parallelAnimation addAll: { 
+			canvas transitionAnimation
+				from: 0@ -100;
+				to: 100@ -100;
+				on: box1 set: #position:.
+			canvas transitionAnimation
+				loops: 2;
+				from: 0@ -100;
+				to: -100@ -100;
+				on: box2 set: #position:.
+			};
+			yourself)
+	}) loops: 2.
+	canvas add: box1; add: box2.
+	^ canvas
+]
