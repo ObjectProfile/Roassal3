@@ -12,7 +12,7 @@ Execute the following code snippet in a Playground:
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9';
+    repository: 'github://ObjectProfile/Roassal3:v0.9.1';
     load.
 ```
 
