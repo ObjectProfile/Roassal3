@@ -2,13 +2,13 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #RSShapeBasicExamples,
+	#name : #RSBasicShapeExamples,
 	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-Examples-Basic'
 }
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example01BasicBoxes [
+RSBasicShapeExamples >> example01BasicBoxes [
 	<script: 'self new example01BasicBoxes open'>
 	| c |
 	c := RSCanvas new.
@@ -24,7 +24,7 @@ RSShapeBasicExamples >> example01BasicBoxes [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example02BasicEllipses [
+RSBasicShapeExamples >> example02BasicEllipses [
 	<script: 'self new example02BasicEllipses open'>
 
 	| c |
@@ -41,7 +41,7 @@ RSShapeBasicExamples >> example02BasicEllipses [
 ]
 
 { #category : #composite }
-RSShapeBasicExamples >> example03BasicComposite [
+RSBasicShapeExamples >> example03BasicComposite [
 	<script: 'self new example03BasicComposite open'>
 	| c com |
 	c := RSCanvas new.
@@ -70,7 +70,7 @@ RSShapeBasicExamples >> example03BasicComposite [
 ]
 
 { #category : #composite }
-RSShapeBasicExamples >> example04BasicComposite [
+RSBasicShapeExamples >> example04BasicComposite [
 	<script: 'self new example04BasicComposite open'>
 	| c com |
 	c := RSCanvas new.
@@ -101,7 +101,7 @@ RSShapeBasicExamples >> example04BasicComposite [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example05BasicGroup [
+RSBasicShapeExamples >> example05BasicGroup [
 	<script: 'self new example05BasicGroup inspect'>
 	| g |
 	g := RSGroup new.
@@ -128,7 +128,7 @@ RSShapeBasicExamples >> example05BasicGroup [
 ]
 
 { #category : #labels }
-RSShapeBasicExamples >> example06BasicLabels [
+RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
@@ -163,7 +163,7 @@ RSShapeBasicExamples >> example06BasicLabels [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example07EventsMouseMoveDrag [
+RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 	<script: 'self new example07EventsMouseMoveDrag open'>
 	| c ellipse update |
 	c := RSCanvas new.
@@ -187,7 +187,7 @@ RSShapeBasicExamples >> example07EventsMouseMoveDrag [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example08EllipseBorder [
+RSBasicShapeExamples >> example08EllipseBorder [
 	<script: 'self new example08EllipseBorder open'>
 	| c y r |
 	c := RSCanvas new.
@@ -215,7 +215,7 @@ RSShapeBasicExamples >> example08EllipseBorder [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example09MouseStep [
+RSBasicShapeExamples >> example09MouseStep [
 	<script: 'self new example09MouseStep open'>
 	|  c e prev dif |
 	c := RSCanvas new.
@@ -239,7 +239,7 @@ RSShapeBasicExamples >> example09MouseStep [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example10EllipseMouseMove [
+RSBasicShapeExamples >> example10EllipseMouseMove [
 	<script: 'self new example10EllipseMouseMove open'>
 	| c border circleResolution angle a b radius p |
 	c := RSCanvas new.
@@ -269,7 +269,7 @@ RSShapeBasicExamples >> example10EllipseMouseMove [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example11ScaleMouseDistance [
+RSBasicShapeExamples >> example11ScaleMouseDistance [
 	<script: 'self new example11ScaleMouseDistance open'>
 	| c easing canvasExtent boxSize zindex maxDist scale border |
 	c := RSCanvas new.
@@ -310,7 +310,7 @@ RSShapeBasicExamples >> example11ScaleMouseDistance [
 ]
 
 { #category : #lines }
-RSShapeBasicExamples >> example12BasicLine [
+RSBasicShapeExamples >> example12BasicLine [
 	<script: 'self new example12BasicLine open'>
 	| c rotate size angle |
 	c := RSCanvas new.
@@ -345,7 +345,7 @@ RSShapeBasicExamples >> example12BasicLine [
 ]
 
 { #category : #bitmap }
-RSShapeBasicExamples >> example14BasicBitmap [
+RSBasicShapeExamples >> example14BasicBitmap [
 	<script: 'self new example14BasicBitmap open'>
 
 	| c |
@@ -358,7 +358,7 @@ RSShapeBasicExamples >> example14BasicBitmap [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example15BasicRoundBoxses [
+RSBasicShapeExamples >> example15BasicRoundBoxses [
 	<script: 'self new example15BasicRoundBoxses open'>
 
 	| c |
@@ -377,7 +377,7 @@ RSShapeBasicExamples >> example15BasicRoundBoxses [
 ]
 
 { #category : #border }
-RSShapeBasicExamples >> example17Borders [
+RSBasicShapeExamples >> example17Borders [
 	<script: 'self new example17Borders open'>
 	| c |
 	c := RSCanvas new.
@@ -403,7 +403,7 @@ RSShapeBasicExamples >> example17Borders [
 ]
 
 { #category : #arcs }
-RSShapeBasicExamples >> example18BasicPieSlice [
+RSBasicShapeExamples >> example18BasicPieSlice [
 	<script: 'self new example18BasicPieSlice open'>
 	| c |
 	c := RSCanvas new.
@@ -419,7 +419,7 @@ RSShapeBasicExamples >> example18BasicPieSlice [
 ]
 
 { #category : #arcs }
-RSShapeBasicExamples >> example19PieSlice [
+RSBasicShapeExamples >> example19PieSlice [
 	<script: 'self new example19PieSlice open'>
 	| c |
 	c := RSCanvas new.
@@ -434,7 +434,7 @@ RSShapeBasicExamples >> example19PieSlice [
 ]
 
 { #category : #arcs }
-RSShapeBasicExamples >> example20Donut [
+RSBasicShapeExamples >> example20Donut [
 	<script: 'self new example20Donut open'>
 	| c |
 	c := RSCanvas new.
@@ -449,7 +449,7 @@ RSShapeBasicExamples >> example20Donut [
 ]
 
 { #category : #arcs }
-RSShapeBasicExamples >> example21CornerRadii [
+RSBasicShapeExamples >> example21CornerRadii [
 	<script: 'self new example21CornerRadii open'>
 	| c |
 	c := RSCanvas new.
@@ -464,7 +464,7 @@ RSShapeBasicExamples >> example21CornerRadii [
 ]
 
 { #category : #arcs }
-RSShapeBasicExamples >> example22BasicPieSlice [
+RSBasicShapeExamples >> example22BasicPieSlice [
 	<script: 'self new example22BasicPieSlice open'>
 	| c |
 	c := RSCanvas new.
@@ -477,7 +477,7 @@ RSShapeBasicExamples >> example22BasicPieSlice [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example23FixedShape [
+RSBasicShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape open'>
 	| c box |
 	c := RSCanvas new.
@@ -498,7 +498,7 @@ RSShapeBasicExamples >> example23FixedShape [
 ]
 
 { #category : #lines }
-RSShapeBasicExamples >> example24Polyline [
+RSBasicShapeExamples >> example24Polyline [
 	<script: 'self new example24Polyline open'>
 	| c |
 	c := RSCanvas new.
@@ -513,7 +513,7 @@ RSShapeBasicExamples >> example24Polyline [
 ]
 
 { #category : #labels }
-RSShapeBasicExamples >> example25LabelWithBorder [
+RSBasicShapeExamples >> example25LabelWithBorder [
 	<script: 'self new example25LabelWithBorder open'>
 	| c |
 	c := RSCanvas new.
@@ -529,7 +529,7 @@ RSShapeBasicExamples >> example25LabelWithBorder [
 ]
 
 { #category : #polygons }
-RSShapeBasicExamples >> example26Polygon [
+RSBasicShapeExamples >> example26Polygon [
 	<script: 'self new example26Polygon open'>
 	| c |
 	c := RSCanvas new.
@@ -544,7 +544,7 @@ RSShapeBasicExamples >> example26Polygon [
 ]
 
 { #category : #lines }
-RSShapeBasicExamples >> example27Markers [
+RSBasicShapeExamples >> example27Markers [
 	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
 	c := RSCanvas new.
@@ -568,7 +568,7 @@ RSShapeBasicExamples >> example27Markers [
 ]
 
 { #category : #lines }
-RSShapeBasicExamples >> example29PolylineRadius [
+RSBasicShapeExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius open '>
 	| c |
 	c := RSCanvas new.
@@ -581,7 +581,7 @@ RSShapeBasicExamples >> example29PolylineRadius [
 ]
 
 { #category : #polygons }
-RSShapeBasicExamples >> example30PolygonWithRadius [
+RSBasicShapeExamples >> example30PolygonWithRadius [
 	<script: 'self new example30PolygonWithRadius open'>
 	| c |
 	c := RSCanvas new.
@@ -597,7 +597,7 @@ RSShapeBasicExamples >> example30PolygonWithRadius [
 ]
 
 { #category : #'boxes and ellipses' }
-RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
+RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 	<script: 'self new example31BorderAttachPointWithOffset open'>
 	| c s1 s2|
 	c := RSCanvas new.
@@ -623,7 +623,7 @@ RSShapeBasicExamples >> example31BorderAttachPointWithOffset [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example32RotateShapeByMouse [
+RSBasicShapeExamples >> example32RotateShapeByMouse [
 	<script: 'self new example32RotateShapeByMouse open'>
 	| c s |
 	c := RSCanvas new.
@@ -637,7 +637,7 @@ RSShapeBasicExamples >> example32RotateShapeByMouse [
 ]
 
 { #category : #lines }
-RSShapeBasicExamples >> example33EdgesBetweenChildren [
+RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	<script: 'self new example33EdgesBetweenChildren open'>
 	| c b1 b2 e1 com1 com2 |
 	c := RSCanvas new.
@@ -666,7 +666,7 @@ RSShapeBasicExamples >> example33EdgesBetweenChildren [
 ]
 
 { #category : #composite }
-RSShapeBasicExamples >> example34PaletteVisualization [
+RSBasicShapeExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
 	"Try 
@@ -701,7 +701,7 @@ RSShapeBasicExamples >> example34PaletteVisualization [
 ]
 
 { #category : #events }
-RSShapeBasicExamples >> example35KeyEvents [
+RSBasicShapeExamples >> example35KeyEvents [
 	<script: 'self new example35KeyEvents open setLabel: ''Use the keyboard'''>
 	| c print down up |
 	c := RSCanvas new.
@@ -720,7 +720,7 @@ RSShapeBasicExamples >> example35KeyEvents [
 ]
 
 { #category : #polygons }
-RSShapeBasicExamples >> example36PolygonAndCanvas [
+RSBasicShapeExamples >> example36PolygonAndCanvas [
 	<script: 'self new example36PolygonAndCanvas open setLabel: ''Zoom in or Zoom out'''>
 	| coords canvas int |
 	coords := {(13.3540698 @ 52.5346676).
@@ -772,7 +772,7 @@ RSShapeBasicExamples >> example36PolygonAndCanvas [
 ]
 
 { #category : #polygons }
-RSShapeBasicExamples >> example37AngleDirection [
+RSBasicShapeExamples >> example37AngleDirection [
 	<script: 'self new example37AngleDirection open setLabel: ''Angle direction in RSPieSlice'''>
 	| canvas slice magic |
 	canvas := RSCanvas new.

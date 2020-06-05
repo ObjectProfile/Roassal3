@@ -404,27 +404,68 @@ RSChartExample >> example17CLPvsUSD [
 	'04-may-2020'.	837.92} reverse.
 		data pairsDo: [ :f :d |
 			dates add: d.
-			y add: f
-			].
+			y add: f ].
 	x := 1 to: dates size.
 	c := RSChart new.
 	c extent: 300@200.
 	plot := RSAreaPlot new x: x y1: y y2: 750.
 	paint := LinearGradientPaint fromArray: 
 		{0-> Color green translucent.
-		0.9 -> Color transparent}.
+		0.8 -> Color transparent}.
 	paint start: 0@ -100; stop: 0@ 100.
 	plot shape paint: paint.
 	c addPlot: plot.
 	plot := RSLinePlot new x: x y: y.
 	plot color: Color green muchDarker.
 	plot width: 2.
-	plot capRound.
+	plot joinRound.
 	plot markerEnd: (RSEllipse new size: 10).
 	c addPlot: plot.
 
 	c addDecoration: (RSHorizontalTick new fromNames: dates).
 	c addDecoration: (RSVerticalTick new asFloat).
-	c title: 'CLP VS USD'.
+	c title: 'CLP vs USD'.
 	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example18Animation [
+	<script: 'self new example18Animation open'>
+	| c canvas line points current lineAnimation area ramp afterline |
+	c := self example17CLPvsUSD.
+	c build.
+	canvas := c canvas.
+	
+	"line"
+	line := canvas shapes detect: [ :s | s class = RSPolyline ].
+	points := line controlPoints.
+	current := OrderedCollection new.
+	current add: points first; add: points second.
+	line controlPoints: current.
+	lineAnimation := (2 to: points size) collect: [ :i |
+		canvas transitionAnimation
+			duration: 100 milliSeconds;
+			from: (points at: i - 1);
+			to: (points at: i);
+			onStepDo: [ :t |
+				current removeLast; add: t.
+				line controlPoints: current.
+				 ];
+			when: RSAnimationEndEvent do: [current add: (points at: i) ].
+	] as: OrderedCollection.
+	"area"
+	area := canvas shapes detect: [ :s | s class = RSSVGPath ].
+	ramp := area paint colorRamp.
+	afterline := canvas parallelAnimation.
+	1 to: ramp size do: [ :i | 
+		afterline add: (canvas transitionAnimation
+			from: Color transparent;
+			to: (ramp at: i) value;
+			onStepDo: [ :col | 
+				ramp at: i put: (ramp at: i) key -> col ]).
+		ramp at: i put: (ramp at: i) key -> Color transparent ].
+	lineAnimation add: afterline.
+	canvas animationFrom: lineAnimation.
+	
+	^ canvas 
 ]

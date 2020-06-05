@@ -8,30 +8,19 @@ Class {
 }
 
 { #category : #tests }
-RSTransitionAnimationTest >> testBasic [ 
-	self basicAnimation: RSTransitionAnimation new
-]
-
-{ #category : #tests }
-RSTransitionAnimationTest >> testBasicCanvas [
-	|  animation |
-	self assert: canvas animations size equals: 0.
-	animation := canvas newAnimation.
-	self assert: canvas animations size equals: 1.
-	
-	self assert: animation isRunning.
-	self assert: animation duration equals: 2 asSeconds.
-]
-
-{ #category : #tests }
-RSTransitionAnimationTest >> testDelay [
+RSTransitionAnimationTest >> testDuration [
 	| animation |
-	animation := canvas newAnimation
-		delay: 100 milliSeconds.
-	self deny: animation isDelayDone.
-	(Delay forMilliseconds: 101) wait.
-	self assert: animation isDelayDone.
+	animation := RSTransitionAnimation new duration: 2 seconds.
+	self assert: animation duration equals: 2 seconds.
+	self assert: animation allDuration equals: 2 seconds.
 	
+	animation := RSTransitionAnimation new duration: 2 seconds; loops: 5.
+	self assert: animation duration equals: 2 seconds.
+	self assert: animation allDuration equals: 10 seconds.
+	
+	animation := RSTransitionAnimation new duration: 2 seconds; repeat.
+	self assert: animation duration equals: 2 seconds.
+	self assert: animation allDuration equals: 2 seconds.
 ]
 
 { #category : #tests }
@@ -49,7 +38,6 @@ RSTransitionAnimationTest >> testStep [
 { #category : #tests }
 RSTransitionAnimationTest >> testStepEvent [
 	| value loop animation |
-	canvas := RSCanvas new.
 	value := nil.
 	loop := 0.
 	animation := canvas newAnimation
@@ -84,4 +72,11 @@ RSTransitionAnimationTest >> testStepReset [
 	
 	self assert: canvas animations size equals: 1.
 	self runAnimation: animation threshold: 500.
+]
+
+{ #category : #tests }
+RSTransitionAnimationTest >> testTransitionAnimationCreation [
+	self 
+		createAnimationWith: [ canvas newAnimation ]
+		animationClass: RSTransitionAnimation.
 ]

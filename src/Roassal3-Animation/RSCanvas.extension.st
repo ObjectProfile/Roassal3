@@ -2,11 +2,15 @@ Extension { #name : #RSCanvas }
 
 { #category : #'*Roassal3-Animation' }
 RSCanvas >> animationFrom: array [
-	| anime |
-	anime := RSSequentialAnimation new.
-	anime addAll: array.
-	self addAnimation: anime.
-	^ anime
+	^ self compositeAnimation: self sequentialAnimation from: array
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> compositeAnimation: aRSCompositeAnimation from: array [
+	aRSCompositeAnimation addAll: array.
+	self addAnimation: aRSCompositeAnimation.
+	^ aRSCompositeAnimation
+	
 ]
 
 { #category : #'*Roassal3-Animation' }
@@ -37,6 +41,22 @@ RSCanvas >> newAnimation [
 	anime := self transitionAnimation.
 	self addAnimation: anime.
 	^ anime
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> parallelAnimation [ 
+	^ RSParallelAnimation new
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> parallelAnimationFrom: array [
+	^ self compositeAnimation: self parallelAnimation from: array
+	
+]
+
+{ #category : #'*Roassal3-Animation' }
+RSCanvas >> sequentialAnimation [ 
+	^ RSSequentialAnimation new
 ]
 
 { #category : #'*Roassal3-Animation' }
