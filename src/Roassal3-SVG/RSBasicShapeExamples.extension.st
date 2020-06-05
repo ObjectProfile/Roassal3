@@ -1,7 +1,7 @@
-Extension { #name : #RSShapeBasicExamples }
+Extension { #name : #RSBasicShapeExamples }
 
 { #category : #'*Roassal3-SVG' }
-RSShapeBasicExamples >> example16BasicLinePath [
+RSBasicShapeExamples >> example16BasicLinePath [
 	<script: 'self new example16BasicLinePath open'>
 	| c b1 b2 translate l arrowWidth arrowHeight middle |
 	c := RSCanvas new.

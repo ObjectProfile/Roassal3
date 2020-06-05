@@ -1,0 +1,136 @@
+"
+I have basic animation examples
+"
+Class {
+	#name : #RSBasicAnimationExamples,
+	#superclass : #RSAbstractExamples,
+	#category : #'Roassal3-Examples-Basic'
+}
+
+{ #category : #examples }
+RSBasicAnimationExamples >> example01Basic [
+	<script: 'self new example01Basic open'>
+	| c b |
+	c := RSCanvas new.
+	b := RSBox new
+		extent: 100@100;
+		withBorder.
+	c addShape: b.
+	
+	c newAnimation 
+		easing: RSEasing bounce;
+		from: -100@ -100;
+		to: 100@100;
+		on: b set: #position:.
+	c newAnimation 
+		from: Color red;
+		to: Color blue;
+		on: b set: #color:.
+	c newAnimation 
+		from: 0;
+		to: 10;
+		on: b border set: 'width:'.
+	c 
+		when:RSMouseClick
+		do: [ c animations do: #pause ];
+		when: RSMouseDoubleClick 
+		do: [ c animations do: #continue ].
+	c clearBackground: false.
+	^ c
+]
+
+{ #category : #examples }
+RSBasicAnimationExamples >> example02Sequential [
+	<script: 'self new example02Sequential open'>
+	| c b animation |
+	c := RSCanvas new.
+	b := RSBox new
+		extent: 100@100;
+		withBorder.
+	c addShape: b.
+	
+	animation := c animationFrom: { 
+		(c transitionAnimation
+			from: -100@ -200;
+			to: 100@130;
+			on: b set: #position:).
+		(c transitionAnimation
+			from: Color red;
+			to: Color blue;
+			on: b set: #color:).
+		(c transitionAnimation 
+			from: 0;
+			to: 10;
+			on: b border set: 'width:')
+	}.
+	animation
+		loops: 2.
+	
+	c 
+		when:RSMouseClick
+		do: [ c animations do: #pause ];
+		when: RSMouseDoubleClick 
+		do: [ c animations do: #continue ].
+	^ c
+]
+
+{ #category : #examples }
+RSBasicAnimationExamples >> example03Ramp [
+	<script: 'self new example03Ramp open'>
+	| c b |
+	c := RSCanvas new.
+	b := RSBox new
+		extent: 100@100;
+		withBorder.
+	c addShape: b.
+	
+	c newAnimation
+		ramp: { 
+		 	0 -> (0@0).
+			0.25 -> (200@180).
+			0.75 -> (-200@ -80).
+			1 -> (200@0)};
+		on: b set: #position:.
+	
+	c 
+		when:RSMouseClick
+		do: [ c animations do: #pause ];
+		when: RSMouseDoubleClick 
+		do: [ c animations do: #continue ].
+	^ c
+]
+
+{ #category : #lines }
+RSBasicAnimationExamples >> example04DashAnimation [
+	<script: 'self new example04DashAnimation open'>
+
+	| c box paint form border animation |
+	c := RSCanvas new.
+	form := self iconNamed: #eyedropper.
+	paint := (AthensCairoPatternSurfacePaint 
+		createForSurface: (AthensCairoSurface 
+			fromForm: form)).
+	paint origin: (form extent / 2) negated.
+	border := RSBorder new
+		color: Color purple;
+		dashArray: #(4).
+	box := RSBox new
+		paint: paint;
+		extent: form extent;
+		border: border;
+		scaleBy: 3.
+	
+	c addShape: box.
+	
+	animation := c newAnimation
+		repeat;
+		from: 0;
+		to: 8;
+		on: border set: #dashOffset:.
+	box when: RSMouseClick do: [ :a |
+		animation isPaused 
+			ifTrue: [ animation continue ]
+			ifFalse: [ animation pause ] ].
+	^ c
+
+]
