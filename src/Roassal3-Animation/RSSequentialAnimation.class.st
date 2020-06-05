@@ -73,8 +73,6 @@ RSSequentialAnimation >> stepCurrent [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].
-	current isRunning ifFalse: [ 
-		current canvas: self canvas.
-		current start. ].
+	self startIfNessesary: current.
 	current refresh.
 ]

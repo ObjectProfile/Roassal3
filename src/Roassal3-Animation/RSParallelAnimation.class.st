@@ -7,10 +7,28 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
+{ #category : #actions }
+RSParallelAnimation >> continue [
+	super continue.
+	animations do: #continue.
+]
+
 { #category : #accessing }
 RSParallelAnimation >> duration [
 	animations ifEmpty: [ ^ 0 asDuration ].
 	^ (animations collect: #allDuration) max
+]
+
+{ #category : #actions }
+RSParallelAnimation >> pause [
+	super pause.
+	animations do: #pause.
+]
+
+{ #category : #actions }
+RSParallelAnimation >> start [
+	super start.
+	animations do: [ :anime | self startIfNessesary: anime ]
 ]
 
 { #category : #refresing }
@@ -20,9 +38,7 @@ RSParallelAnimation >> step [
 	activeAnimations := animations reject: [ :animation | animation hasCompleted ].
 	activeSize := 0.
 	activeAnimations do: [ :animation | 
-		animation isRunning ifFalse: [ 
-			animation canvas: self canvas.
-			animation start ].
+		self startIfNessesary: animation.
 		animation refresh.
 		animation hasCompleted 
 			ifTrue: [ animation remove ]

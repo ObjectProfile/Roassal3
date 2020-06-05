@@ -35,3 +35,10 @@ RSCompositeAnimation >> reset [
 	super reset.
 	animations := OrderedCollection new.
 ]
+
+{ #category : #private }
+RSCompositeAnimation >> startIfNessesary: animation [
+	animation isRunning ifTrue: [ ^ self ].
+	animation canvas: self canvas.
+	animation start
+]

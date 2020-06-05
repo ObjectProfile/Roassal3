@@ -116,6 +116,11 @@ RSTransitionAnimation >> onStepDo: aBlock [
 	stepAction := aBlock
 ]
 
+{ #category : #'action handling' }
+RSTransitionAnimation >> onStepDo: aBlockClosure with: anObject [
+	self onStepDo: [ :t | aBlockClosure value: t value: anObject ]
+]
+
 { #category : #'accessing - computed' }
 RSTransitionAnimation >> progress [ 
 	| progress |
@@ -172,7 +177,7 @@ RSTransitionAnimation >> scale: aScale [
 RSTransitionAnimation >> step [ 
 	| value |
 	value := self progressValue: self progress.
-	stepAction value: value.
+	stepAction cull: value.
 	self updateHasCompleted
 	
 	

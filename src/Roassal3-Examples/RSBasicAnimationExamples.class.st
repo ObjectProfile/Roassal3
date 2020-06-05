@@ -160,28 +160,35 @@ RSBasicAnimationExamples >> example05LoopEvent [
 { #category : #lines }
 RSBasicAnimationExamples >> example06Parallel [
 	<script: 'self new example06Parallel open'>
-	| canvas box1 box2 |
+	| canvas box1 box2 animation updateWithAngle |
 	canvas := RSCanvas new.
-	box1 := RSBox new size: 50; color: Color red translucent.
-	box2 := RSBox new size: 50; color: Color blue translucent.
+	canvas clearBackground: false.
+	box1 := RSBox new size: 50; color: (Color red alpha: 0.02).
+	box2 := RSBox new size: 50; color: (Color blue alpha: 0.02).
+	updateWithAngle := [ :ang :box | | p |
+		p := ang degreesToRadians.
+		p := p cos @ p sin negated * 100.
+		box position: p.
+		].
+	animation := canvas parallelAnimation.
+	animation addAll: { 
+		canvas transitionAnimation
+			from: 90;
+			to: -90;
+			onStepDo: updateWithAngle with: box1.
+		canvas transitionAnimation
+			from: 90;
+			to: 270;
+			onStepDo: updateWithAngle with: box2.
+		}.
 	(canvas animationFrom: { 
 		canvas transitionAnimation
-			from: 0@0;
+			from: 0@100;
 			to: 0@ -100;
 			onStepDo: [ :p | box1 position: p. box2 position: p].
-		(canvas parallelAnimation addAll: { 
-			canvas transitionAnimation
-				from: 0@ -100;
-				to: 100@ -100;
-				on: box1 set: #position:.
-			canvas transitionAnimation
-				loops: 2;
-				from: 0@ -100;
-				to: -100@ -100;
-				on: box2 set: #position:.
-			};
-			yourself)
+		animation
 	}) loops: 2.
 	canvas add: box1; add: box2.
+	canvas when: RSMouseClick do: [ :evt | canvas animations do: #toggle ].
 	^ canvas
 ]
