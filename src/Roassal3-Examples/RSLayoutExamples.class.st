@@ -525,3 +525,14 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	
 	^ canvas
 ]
+
+{ #category : #animations }
+RSLayoutExamples >> example18ForceBased2 [
+	<script: 'self new example18ForceBased2 open'>
+	| b |
+	b := RSForceLayoutInSpaces new.
+	b numberOfSpaces: 4.
+	b objects: Collection withAllSubclasses.
+	b build.
+	^ b canvas 
+]
