@@ -410,7 +410,7 @@ RSChartExample >> example17CLPvsUSD [
 	c extent: 300@200.
 	plot := RSAreaPlot new x: x y1: y y2: 750.
 	paint := LinearGradientPaint fromArray: 
-		{0-> Color green translucent.
+		{0-> (Color green alpha: 0.3).
 		0.8 -> Color transparent}.
 	paint start: 0@ -100; stop: 0@ 100.
 	plot shape paint: paint.
@@ -423,15 +423,15 @@ RSChartExample >> example17CLPvsUSD [
 	c addPlot: plot.
 
 	c addDecoration: (RSHorizontalTick new fromNames: dates).
-	c addDecoration: (RSVerticalTick new asFloat).
+	c addDecoration: (RSVerticalTick new numberOfTicks: 10; asFloat).
 	c title: 'CLP vs USD'.
 	^ c
 ]
 
 { #category : #examples }
 RSChartExample >> example18Animation [
-	<script: 'self new example18Animation open'>
-	| c canvas line points current lineAnimation area ramp afterline |
+	<script: 'self new example18Animation inspect'>
+	| c canvas line points current lineAnimation area paint afterline yticks xticks |
 	c := self example17CLPvsUSD.
 	c build.
 	canvas := c canvas.
@@ -455,17 +455,41 @@ RSChartExample >> example18Animation [
 	] as: OrderedCollection.
 	"area"
 	area := canvas shapes detect: [ :s | s class = RSSVGPath ].
-	ramp := area paint colorRamp.
+	paint := area paint.
+	area noPaint.
 	afterline := canvas parallelAnimation.
-	1 to: ramp size do: [ :i | 
-		afterline add: (canvas transitionAnimation
-			from: Color transparent;
-			to: (ramp at: i) value;
-			onStepDo: [ :col | 
-				ramp at: i put: (ramp at: i) key -> col ]).
-		ramp at: i put: (ramp at: i) key -> Color transparent ].
+	afterline add: (canvas transitionAnimation
+		onStepDo: [ :t |
+			area paint: (Color transparent interpolateTo: paint at: t).
+		]).
 	lineAnimation add: afterline.
 	canvas animationFrom: lineAnimation.
 	
-	^ canvas 
+	"ticks"
+	yticks := canvas shapes select: [ :s | s class = RSLabel ].
+	yticks do: [ :s |  s bold. ].
+	yticks := yticks groupedBy: [ :s | s matrix sy ].
+	xticks := yticks values first.
+	yticks := yticks values second.
+	xticks doWithIndex: [ :s :index | 
+		canvas newAnimation
+			delay: ((index-1) * 100) milliSeconds;
+			duration: 200 milliSeconds;
+			from: Color transparent;
+			to: s color;
+			on: s set: #color:.
+		s color: Color transparent ].
+	yticks doWithIndex: [ :s :index |
+		s noPaint.
+		afterline add: (canvas transitionAnimation
+			delay: (index * 300) milliSeconds;
+			duration: 2 second;
+			easing: RSEasing elasticOut;
+			from: -100@ s position y;
+			to: s position;
+			onStepDo: [:p | 
+				s color: Color black.
+				s position: p]).
+		].
+	^ canvas
 ]
