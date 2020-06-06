@@ -41,7 +41,7 @@ c := RSChart new.
 p := RSLinePlot new x: x y: y.
 c addPlot: p.
 
-c title: 'Sin function'.
+c title: 'Sine function'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -67,7 +67,7 @@ c := RSChart new.
 p := RSLinePlot new x: x y: y.
 c addPlot: p.
 
-c title: 'Sin function'.
+c title: 'Sine function'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -89,7 +89,7 @@ c := RSChart new.
 p := RSLinePlot new x: x y: y.
 c addPlot: p.
 
-c title: 'Sin function'.
+c title: 'Sine function'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -117,7 +117,7 @@ c addPlot: p.
 p := RSLinePlot new x: x y: x cos.
 c addPlot: p.
 
-c title: 'Sin and Cos functions'.
+c title: 'Sine and Cosine functions'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -146,7 +146,7 @@ c := RSChart new.
 ].
 
 
-c title: 'Sin and Cos functions'.
+c title: 'Sine and Cosine functions'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -171,7 +171,7 @@ c := RSChart new.
 c addPlot: (RSBarPlot new x: x y: x cos).
 c addPlot: (RSLinePlot new x: x y: x sin).
 
-c title: 'Sin and Cos functions'.
+c title: 'Sine and Cosine functions'.
 c xlabel: 'X axis'.
 c ylabel: 'Y axis'.
 
@@ -252,9 +252,9 @@ The result is:
 ![alt text](../screenshots/chart09.png)
 
 
-## Covid dataset
+## COVID-19 dataset
 
-As a larger example, we will visualize the Covid-19 dataset provided by the [Johns Hopkins University](https://www.jhu.edu), available [online](https://github.com/CSSEGISandData/COVID-19). To process the dataset, we will use data frame, which is an excellent library to easily process CSV files. Data frame is developed by [Olek](https://github.com/olekscode).
+As a larger example, we will visualize the COVID-19 dataset provided by the [Johns Hopkins University](https://www.jhu.edu), available [online](https://github.com/CSSEGISandData/COVID-19). To process the dataset, we will use data frame, which is an excellent library to easily process CSV files. Data frame is developed by [Olek](https://github.com/olekscode).
 
 To load data frame, you can execute the following script:
 
