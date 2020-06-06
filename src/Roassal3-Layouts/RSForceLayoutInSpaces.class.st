@@ -14,16 +14,32 @@ Class {
 }
 
 { #category : #hooks }
-RSForceLayoutInSpaces >> add: shape inSpace: space [
+RSForceLayoutInSpaces >> abandonLayout: shape [
+	| layout |
+	layout := shape propertyAt: #layout.
+	shape connectedEdges do: [ :ed | layout removeEdge: ed ].
+	layout removeNode: shape
+	
+]
+
+{ #category : #hooks }
+RSForceLayoutInSpaces >> addEdgesOf: shape to: space [
 	| layout edgesToAdd |
 	layout := space propertyAt: #layout.
-	layout addNodes: { shape }.
 	edgesToAdd := shape connectedEdges select: [ :ed | 
 		(ed from propertyAt: #layout) = layout and: [ 
 		(ed to propertyAt: #layout) = layout ] ].
 	layout addEdges: edgesToAdd.
+
+]
+
+{ #category : #hooks }
+RSForceLayoutInSpaces >> addShape: shape to: space [
+	| layout |
+	layout := space propertyAt: #layout.
+	layout addNodes: { shape }.
 	shape removeInteractionIfPresent: RSDraggableForce.
-	shape @ (RSDraggableForce new layout: layout).
+	shape addInteraction: (RSDraggableForce new layout: layout).
 	shape propertyAt: #layout put: layout.
 	
 ]
@@ -68,13 +84,13 @@ RSForceLayoutInSpaces >> dragEnd: evt [
 	pos := shape position.
 	layout := shape propertyAt: #layout.
 	target := spaces detect: [ :s | s includesPoint: pos ] ifNone: [ ^ self ].
-	
 	(target propertyAt: #layout) = layout ifTrue: [ ^ self ].
 	
 	allShapes := self connectedShapesFrom: shape.
-	allShapes do: [ :s | self remove: s. ].
-	allShapes do: [ :s |self add: s inSpace: target ]
-	
+	allShapes do: [ :s | self abandonLayout: s ].
+	allShapes do: [ :s | self addShape: s to: target ].
+	allShapes do: [ :s | self addEdgesOf: s to: target ].
+
 ]
 
 { #category : #hooks }
@@ -110,15 +126,6 @@ RSForceLayoutInSpaces >> numberOfSpaces: anInteger [
 { #category : #accessing }
 RSForceLayoutInSpaces >> objects: aCollection [ 
 	objects := aCollection
-]
-
-{ #category : #hooks }
-RSForceLayoutInSpaces >> remove: shape [
-	| layout |
-	layout := shape propertyAt: #layout.
-	shape connectedEdges do: [ :ed | layout removeEdge: ed ].
-	layout removeNode: shape
-	
 ]
 
 { #category : #hooks }
