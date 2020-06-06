@@ -529,10 +529,30 @@ RSLayoutExamples >> example17ForceBasedLayout [
 { #category : #animations }
 RSLayoutExamples >> example18ForceBased2 [
 	<script: 'self new example18ForceBased2 open'>
-	| b |
+	| b prop r |
 	b := RSForceLayoutInSpaces new.
 	b numberOfSpaces: 4.
 	b objects: Collection withAllSubclasses.
 	b build.
+	prop := 0.1.
+	r := Random new.
+	b canvas newAnimation
+		repeat;
+		onStepDo: [ :t | | s space |
+			r next < 0.01 ifTrue: [ 
+				s := b shapes atRandom.
+				space := b canvas shapeFromModel: (1 to: 4) atRandom.
+				
+				b canvas newAnimation
+					duration: 500 milliSeconds;
+					from: s position;
+					to: space position;
+					on: s set: #position:;
+					when: RSAnimationEndEvent do: [ b dragEnd: s ].
+				].
+			 ].
 	^ b canvas 
+	
+
+
 ]
