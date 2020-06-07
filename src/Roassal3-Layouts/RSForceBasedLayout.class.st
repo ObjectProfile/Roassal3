@@ -72,7 +72,7 @@ RSForceBasedLayout >> addEdges: realEdges [
 RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
-	nodes class = Array ifTrue: [ nodes := OrderedCollection new ].
+	nodes class = Array ifTrue: [ nodes := nodes asOrderedCollection ].
 	nodes addAll: newMockElements.
 	
 ]
