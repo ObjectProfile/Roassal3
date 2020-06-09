@@ -137,7 +137,7 @@ RSTransitionAnimation >> progress [
 { #category : #'accessing - computed' }
 RSTransitionAnimation >> progressValue: progress [
 	| value |
-	"interpolate the progrees"
+	"interpolate the progress"
 	value := easing interpolate: progress.
 	"apply progress to the value"
 	^ self scale scale: value.
