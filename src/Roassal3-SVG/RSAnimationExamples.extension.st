@@ -1,8 +1,8 @@
 Extension { #name : #RSAnimationExamples }
 
 { #category : #'*Roassal3-SVG' }
-RSAnimationExamples >> example07Phyco [
-	<script: 'self new example07Phyco open'>
+RSAnimationExamples >> example04Phyco [
+	<script: 'self new example04Phyco open'>
 	| update canvas theta slices unit color sc1 sc2 |
 	canvas := RSCanvas new.
 	slices := 50.

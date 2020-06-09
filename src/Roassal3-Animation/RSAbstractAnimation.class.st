@@ -23,6 +23,18 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
+{ #category : #public }
+RSAbstractAnimation class >> defaultDuration [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSAbstractAnimation >> allDuration [
+	^  self duration * (self isRepeating
+		ifTrue: [ 1 ]
+		ifFalse: [ self loops ])
+]
+
 { #category : #events }
 RSAbstractAnimation >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
@@ -230,7 +242,7 @@ RSAbstractAnimation >> startPauseTime [
 { #category : #private }
 RSAbstractAnimation >> startStep [
 	currentLoop 
-		ifNil: [ currentLoop := 1 ].
+		ifNil: [ currentLoop := 0 ].
 	startLoopTime 
 		ifNil: [ startLoopTime := self currentTime ].
 ]
@@ -256,6 +268,11 @@ RSAbstractAnimation >> toggle [
 	self isPaused 
 		ifTrue: [ self continue ]
 		ifFalse: [ self pause ]
+]
+
+{ #category : #private }
+RSAbstractAnimation >> updateHasCompleted [
+	hasCompleted ifFalse: [ hasCompleted := currentLoop >= loops ].
 ]
 
 { #category : #events }

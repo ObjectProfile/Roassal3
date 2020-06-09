@@ -13,101 +13,8 @@ RSAnimationExamples >> america [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example01Basic [
-	<script: 'self new example01Basic open'>
-	| c b |
-	c := RSCanvas new.
-	b := RSBox new
-		extent: 100@100;
-		withBorder.
-	c addShape: b.
-	
-	c newAnimation 
-		easing: RSEasing bounce;
-		from: -100@ -100;
-		to: 100@100;
-		on: b set: #position:.
-	c newAnimation 
-		from: Color red;
-		to: Color blue;
-		on: b set: #color:.
-	c newAnimation 
-		from: 0;
-		to: 10;
-		on: b border set: 'width:'.
-	c 
-		when:RSMouseClick
-		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
-		do: [ c animations do: #continue ].
-	c clearBackground: false.
-	^ c
-]
-
-{ #category : #examples }
-RSAnimationExamples >> example02Sequential [
-	<script: 'self new example02Sequential open'>
-	| c b animation |
-	c := RSCanvas new.
-	b := RSBox new
-		extent: 100@100;
-		withBorder.
-	c addShape: b.
-	
-	animation := c animationFrom: { 
-		(c transitionAnimation
-			from: -100@ -200;
-			to: 100@130;
-			on: b set: #position:).
-		(c transitionAnimation
-			from: Color red;
-			to: Color blue;
-			on: b set: #color:).
-		(c transitionAnimation 
-			from: 0;
-			to: 10;
-			on: b border set: 'width:')
-	}.
-	animation
-		loops: 2.
-	
-	c 
-		when:RSMouseClick
-		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
-		do: [ c animations do: #continue ].
-	^ c
-]
-
-{ #category : #examples }
-RSAnimationExamples >> example03Ramp [
-	<script: 'self new example03Ramp open'>
-	| c b |
-	c := RSCanvas new.
-	b := RSBox new
-		extent: 100@100;
-		withBorder.
-	c addShape: b.
-	
-	c newAnimation
-		ramp: { 
-		 	0 -> (0@0).
-			0.25 -> (200@180).
-			0.75 -> (-200@ -80).
-			1 -> (200@0)};
-		on: b set: #position:.
-	
-	c 
-		when:RSMouseClick
-		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
-		do: [ c animations do: #continue ].
-	^ c
-]
-
-{ #category : #examples }
-RSAnimationExamples >> example04BoxWindmill [
-	<script: 'self new example04BoxWindmill open'>
+RSAnimationExamples >> example01BoxWindmill [
+	<script: 'self new example01BoxWindmill open'>
 	| canvas shapes extent points frameCount border |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -140,8 +47,8 @@ RSAnimationExamples >> example04BoxWindmill [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example05BoxesLineCircles [
-	<script: 'self new example05BoxesLineCircles open'>
+RSAnimationExamples >> example02BoxesLineCircles [
+	<script: 'self new example02BoxesLineCircles open'>
 	| c extent r shapes position alpha update updateLine lineX line |
 	c := RSCanvas new.
 	r := Random new.
@@ -228,8 +135,8 @@ RSAnimationExamples >> example05BoxesLineCircles [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example06Atom [
-	<script: 'self new example06Atom open'>
+RSAnimationExamples >> example03Atom [
+	<script: 'self new example03Atom open'>
 	| shapes canvas border extent speed frame |
 	canvas := RSCanvas new.
 	border := RSBorder new width: 4.
@@ -275,8 +182,8 @@ RSAnimationExamples >> example06Atom [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example08ElasticEllipses [
-	<script: 'self new example08ElasticEllipses open'>
+RSAnimationExamples >> example05ElasticEllipses [
+	<script: 'self new example05ElasticEllipses open'>
 	| canvas random mouseClick |
 	canvas := RSCanvas new.
 	random := Random new.
@@ -319,8 +226,8 @@ RSAnimationExamples >> example08ElasticEllipses [
 ]
 
 { #category : #lines }
-RSAnimationExamples >> example09LinePatterns [
-	<script: 'self new example09LinePatterns open'>
+RSAnimationExamples >> example06LinePatterns [
+	<script: 'self new example06LinePatterns open'>
 	| canvas step frame border dot bar radius data update ap |
 	canvas := RSCanvas new.
 	step := 0.
@@ -371,8 +278,8 @@ RSAnimationExamples >> example09LinePatterns [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example10CircleParty [
-	<script: 'self new example10CircleParty open'>
+RSAnimationExamples >> example07CircleParty [
+	<script: 'self new example07CircleParty open'>
 	| canvas x x2 speed speed2 random shape color |
 	canvas := RSCanvas new.
 	x := 1. x2 := 2.
@@ -422,8 +329,8 @@ RSAnimationExamples >> example10CircleParty [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example11ArcTree [
-	<script: 'self new example11ArcTree open'>
+RSAnimationExamples >> example08ArcTree [
+	<script: 'self new example08ArcTree open'>
 	| canvas newArc alpha beta |
 	canvas := RSCanvas new.
 	
@@ -475,8 +382,8 @@ RSAnimationExamples >> example11ArcTree [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example12PerlinParticles [
-	<script: 'self new example12PerlinParticles  open setLabel: ''Particles!!! :V'''>
+RSAnimationExamples >> example09PerlinParticles [
+	<script: 'self new example09PerlinParticles  open setLabel: ''Particles!!! :V'''>
 	| canvas label particle random frame perlin color |
 	canvas := RSCanvas new.
 	random := Random new.
@@ -571,8 +478,8 @@ RSAnimationExamples >> example12PerlinParticles [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example12b [
-	<script: 'self new example12b  open setLabel: ''Particles!!! :V'''>
+RSAnimationExamples >> example09b [
+	<script: 'self new example09b  open setLabel: ''Particles!!! :V'''>
 	| canvas label particle random frame perlin changeHue hIndex hExtent h |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -680,8 +587,8 @@ RSAnimationExamples >> example12b [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example13Arcs [
-	<script: 'self new example13Arcs open setLabel: ''Arc animation'''>
+RSAnimationExamples >> example10Arcs [
+	<script: 'self new example10Arcs open setLabel: ''Arc animation'''>
 	| canvas beta shapes theta step size |
 	theta := 0.
 	step := 12.
@@ -722,44 +629,9 @@ RSAnimationExamples >> example13Arcs [
 	^ canvas
 ]
 
-{ #category : #lines }
-RSAnimationExamples >> example13DashAnimation [
-	<script: 'self new example13DashAnimation open'>
-
-	| c box paint form border animation |
-	c := RSCanvas new.
-	form := self iconNamed: #eyedropper.
-	paint := (AthensCairoPatternSurfacePaint 
-		createForSurface: (AthensCairoSurface 
-			fromForm: form)).
-	paint origin: (form extent / 2) negated.
-	border := RSBorder new
-		color: Color purple;
-		dashArray: #(4).
-	box := RSBox new
-		paint: paint;
-		extent: form extent;
-		border: border;
-		scaleBy: 3.
-	
-	c addShape: box.
-	
-	animation := c newAnimation
-		repeat;
-		from: 0;
-		to: 8;
-		on: border set: #dashOffset:.
-	box when: RSMouseClick do: [ :a |
-		animation isPaused 
-			ifTrue: [ animation continue ]
-			ifFalse: [ animation pause ] ].
-	^ c
-
-]
-
 { #category : #examples }
-RSAnimationExamples >> example14C [
-	<script: 'self new example14C open setLabel: ''C!!!'''>
+RSAnimationExamples >> example11C [
+	<script: 'self new example11C open setLabel: ''C!!!'''>
 	| canvas shapes step theta |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -786,8 +658,8 @@ RSAnimationExamples >> example14C [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example15Sky [
-	<script: 'self new example15Sky open setLabel: ''Star trails'''>
+RSAnimationExamples >> example12Sky [
+	<script: 'self new example12Sky open setLabel: ''Star trails'''>
 	<noTest>
 	| canvas client image ext dots random frame box colors |
 	canvas := RSCanvas new.
@@ -852,8 +724,8 @@ RSAnimationExamples >> example15Sky [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example16ArcNoise [
-	<script: 'self new example16ArcNoise open setLabel: ''Arcs with Perlin noise'''>
+RSAnimationExamples >> example13ArcNoise [
+	<script: 'self new example13ArcNoise open setLabel: ''Arcs with Perlin noise'''>
 	| frame canvas perlin radius line points yscale |
 	frame := 0.
 	canvas := RSCanvas new.
@@ -913,8 +785,8 @@ RSAnimationExamples >> example16ArcNoise [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example17Retina [
-	<script: 'self new example17Retina open setLabel: ''Retina (~o.o)~'''>
+RSAnimationExamples >> example14Retina [
+	<script: 'self new example14Retina open setLabel: ''Retina (~o.o)~'''>
 	| random canvas perlin side angle circleSize ringSize label minR updateValues offset rad val radius |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -976,8 +848,8 @@ RSAnimationExamples >> example17Retina [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example18SpaceDandy [
-	<script: 'self new example18SpaceDandy open setLabel: ''Space :D'''>
+RSAnimationExamples >> example15SpaceDandy [
+	<script: 'self new example15SpaceDandy open setLabel: ''Space :D'''>
 	| random extent diagonal rotation init drawDist canvas shapes |
 	random := Random new.
 	extent := 800@600.
@@ -1050,8 +922,8 @@ RSAnimationExamples >> example18SpaceDandy [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example19Gris [
-	<script: 'self new example19Gris open setLabel: ''Roassal :V'''>
+RSAnimationExamples >> example16Gris [
+	<script: 'self new example16Gris open setLabel: ''Roassal :V'''>
 	| c label shape border r mini animation g|
 	c := RSCanvas new.
 	r := Random new.
@@ -1118,8 +990,8 @@ RSAnimationExamples >> example19Gris [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example20Flor [
-	<script: 'self new example20Flor open setLabel: ''Animation test'''>
+RSAnimationExamples >> example17Flor [
+	<script: 'self new example17Flor open setLabel: ''Animation test'''>
 	| c frame angleSp alphaS hueS dia1 dia2 |
 	c := RSCanvas new.
 	frame := 0.
@@ -1163,8 +1035,8 @@ RSAnimationExamples >> example20Flor [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example21Rainbow [
-	<script: 'self new example21Rainbow open setLabel: ''Worms'''>
+RSAnimationExamples >> example18Rainbow [
+	<script: 'self new example18Rainbow open setLabel: ''Worms'''>
 	| canvas random shape mode color frame border |
 	canvas := RSCanvas new.
 	canvas clearBackground: false.
@@ -1254,8 +1126,8 @@ RSAnimationExamples >> example21Rainbow [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example22Stars [
-	<script: 'self new example22Stars open setLabel: ''Stars'''>
+RSAnimationExamples >> example19Stars [
+	<script: 'self new example19Stars open setLabel: ''Stars'''>
 	| canvas color random stars |
 	canvas := RSCanvas new.
 	random := Random new.
@@ -1285,8 +1157,8 @@ RSAnimationExamples >> example22Stars [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example23CircleWaves [
-	<script: 'self new example23CircleWaves open setLabel: ''Waves'''>
+RSAnimationExamples >> example20CircleWaves [
+	<script: 'self new example20CircleWaves open setLabel: ''Waves'''>
 	| canvas shapes frame |
 	canvas := RSCanvas new.
 	frame := 0.
@@ -1324,8 +1196,8 @@ RSAnimationExamples >> example23CircleWaves [
 ]
 
 { #category : #lines }
-RSAnimationExamples >> example24Lines [
-	<script: 'self new example24Lines open setLabel: ''.=.= Lines =.=.'''>
+RSAnimationExamples >> example21Lines [
+	<script: 'self new example21Lines open setLabel: ''.=.= Lines =.=.'''>
 	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -1388,8 +1260,8 @@ RSAnimationExamples >> example24Lines [
 ]
 
 { #category : #lines }
-RSAnimationExamples >> example25Lines [
-	<script: 'self new example25Lines open setLabel: ''Line patterns'''>
+RSAnimationExamples >> example22Lines [
+	<script: 'self new example22Lines open setLabel: ''Line patterns'''>
 	| canvas radius bar step frame label border |
 	canvas := RSCanvas new.
 	canvas color: (Color colorFrom: 'EEEEEE').
@@ -1440,8 +1312,8 @@ RSAnimationExamples >> example25Lines [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example26PerlinNoise [
-	<script: 'self new example26PerlinNoise open setLabel: ''Perlin Noise'''>
+RSAnimationExamples >> example23PerlinNoise [
+	<script: 'self new example23PerlinNoise open setLabel: ''Perlin Noise'''>
 	"inpired by wangyasai Twitter: @yasai_wang"
 	| canvas random c1 c2 c3 size perlin noiseScale rec |
 	canvas := RSCanvas new.
@@ -1496,8 +1368,8 @@ RSAnimationExamples >> example26PerlinNoise [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example27RoassalPerlinNoise [
-	<script: 'self new example27RoassalPerlinNoise open extent: 800@500; setLabel: ''Roassal'''>
+RSAnimationExamples >> example24RoassalPerlinNoise [
+	<script: 'self new example24RoassalPerlinNoise open extent: 800@500; setLabel: ''Roassal'''>
 	| canvas density rect maxLife size perlin r color noiseScale sc1 sc2 |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -1591,8 +1463,8 @@ RSAnimationExamples >> example27RoassalPerlinNoise [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example28AnimationCircle [
-	<script: 'self new example28AnimationCircle open setLabel: ''Animation Test'''>
+RSAnimationExamples >> example25AnimationCircle [
+	<script: 'self new example25AnimationCircle open setLabel: ''Animation Test'''>
 	| canvas radius  shapes update points lines sc1 sc2 |
 	canvas := RSCanvas new.
 	radius := 50.
@@ -1664,8 +1536,8 @@ RSAnimationExamples >> example28AnimationCircle [
 ]
 
 { #category : #lines }
-RSAnimationExamples >> example29Bezier [
-	<script: 'self new example29Bezier open setLabel: ''Bezier Test'''>
+RSAnimationExamples >> example26Bezier [
+	<script: 'self new example26Bezier open setLabel: ''Bezier Test'''>
 	| canvas size theta sc borderWhite cpController |
 	canvas := RSCanvas new.
 	size := 50.
@@ -1717,8 +1589,8 @@ RSAnimationExamples >> example29Bezier [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example32RSLocate [
-	<script: 'self new example32RSLocate open setLabel: ''RSLocation methods'''>
+RSAnimationExamples >> example27RSLocate [
+	<script: 'self new example27RSLocate open setLabel: ''RSLocation methods'''>
 	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
 	canvas := RSCanvas new.
 	locate := RSLocation new.
@@ -1796,13 +1668,13 @@ RSAnimationExamples >> example32RSLocate [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example33AlteredWorld [
+RSAnimationExamples >> example28AlteredWorld [
 	"base on Gerard Ferrandez source code"
 
 	"https://codepen.io/ge1doot/details/GQobbq/"
 
 	<script:
-	'self new example33AlteredWorld open setLabel: ''Altered World :V'''>
+	'self new example28AlteredWorld open setLabel: ''Altered World :V'''>
 	| canvas extent px perlin r period length |
 	canvas := RSCanvas new.
 	r := Random new.
@@ -1848,8 +1720,8 @@ RSAnimationExamples >> example33AlteredWorld [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example34Tick [
-	<script: 'self new example34Tick open setLabel: ''Can you hear it?'''>
+RSAnimationExamples >> example29Tick [
+	<script: 'self new example29Tick open setLabel: ''Can you hear it?'''>
 	| c slice animation ios g |
 	c := RSCanvas new.
 	c color: Color black.
@@ -1904,8 +1776,8 @@ RSAnimationExamples >> example34Tick [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example35Perlin [
-	<script: 'self new example35Perlin open setLabel: ''Perlin :V'''>
+RSAnimationExamples >> example30Perlin [
+	<script: 'self new example30Perlin open setLabel: ''Perlin :V'''>
 	| canvas random frame scIterations scRadius rect extent maxLife perlin noiseScale respawnTop |
 	random := Random new.
 	canvas := RSCanvas new.
@@ -1976,9 +1848,9 @@ RSAnimationExamples >> example35Perlin [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example36RoundRectagles [
+RSAnimationExamples >> example31RoundRectagles [
 	"example inspired in paper.js"
-	<script: 'self new example36RoundRectagles open setLabel: ''Round Rectangles'''>
+	<script: 'self new example31RoundRectagles open setLabel: ''Round Rectangles'''>
 	| canvas mouse extent frame scale color |
 	canvas := RSCanvas new.
 	extent := 500@500.
@@ -2011,8 +1883,8 @@ RSAnimationExamples >> example36RoundRectagles [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example37SimpleClock [
-	<script: 'self new example37SimpleClock open setLabel: ''4 gradient corners'''>
+RSAnimationExamples >> example32SimpleClock [
+	<script: 'self new example32SimpleClock open setLabel: ''4 gradient corners'''>
 	| canvas extent half linear color label roassal clock location |
 	canvas := RSCanvas new.
 	extent := 800 @ 600.
@@ -2064,8 +1936,8 @@ RSAnimationExamples >> example37SimpleClock [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example38AnimatedLayout [
-	<script: 'self new example38AnimatedLayout open setLabel: ''Layouts'''>
+RSAnimationExamples >> example33AnimatedLayout [
+	<script: 'self new example33AnimatedLayout open setLabel: ''Layouts'''>
 	| c objects layout update labels shapes color |
 	c := RSCanvas new.
 	objects := 1 to: 100.
@@ -2120,8 +1992,8 @@ RSAnimationExamples >> example38AnimatedLayout [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example39ForceLayout [
-	<script: 'self new example39ForceLayout open'>
+RSAnimationExamples >> example34ForceLayout [
+	<script: 'self new example34ForceLayout open'>
 	| c classes layout |
 	c := RSCanvas new.
 	classes := Collection withAllSubclasses collect: [ :cls | | e |
@@ -2156,8 +2028,8 @@ RSAnimationExamples >> example39ForceLayout [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example40Roassal [
-	<script: 'self new example40Roassal open'>
+RSAnimationExamples >> example35Roassal [
+	<script: 'self new example35Roassal open'>
 	| canvas points paint fscale timeSize text |
 	canvas := RSCanvas new.
 	text := 'Roassal3'.
@@ -2224,8 +2096,8 @@ RSAnimationExamples >> example40Roassal [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example41Title [
-	<script: 'self new example41Title open setLabel: ''Basic Animation'''>
+RSAnimationExamples >> example36Title [
+	<script: 'self new example36Title open setLabel: ''Basic Animation'''>
 	| c t1 t2 s line1 line2 line3 line4 title desc r1 r2 pad mid marker sum lineAnime p lblbase |
 	c := RSCanvas new.
 	t1 := 'Roassal3'.
@@ -2343,8 +2215,8 @@ for Pharo 7 and Pharo 8.'.
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example42RectangleForceLayout [
-	<script: 'self new example42RectangleForceLayout open'>
+RSAnimationExamples >> example37RectangleForceLayout [
+	<script: 'self new example37RectangleForceLayout open'>
 	| canvas classes layout color |
 	canvas := RSCanvas new.
 	color := NSScale category20.
@@ -2384,8 +2256,8 @@ RSAnimationExamples >> example42RectangleForceLayout [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example43PerlinRose [
-	<script: 'self new example43PerlinRose open extent: 800@600; setLabel: ''Rose'''>
+RSAnimationExamples >> example38PerlinRose [
+	<script: 'self new example38PerlinRose open extent: 800@600; setLabel: ''Rose'''>
 	| canvas offset offsetInc inc m s tau perlin border |
 	canvas := RSCanvas new.
 	offset:= 0@0.			"Perlin offset"
@@ -2437,8 +2309,8 @@ RSAnimationExamples >> example43PerlinRose [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example45Duna [
-	<script: 'self new example45Duna  open extent: 1000@700; position: World center - (1000@700 / 2)'>
+RSAnimationExamples >> example39Duna [
+	<script: 'self new example39Duna  open extent: 1000@700; position: World center - (1000@700 / 2)'>
 	| canvas extent num color noiseScale perlin c particles |
 	canvas := RSCanvas new.
 	extent := 1000@700.
@@ -2474,8 +2346,8 @@ RSAnimationExamples >> example45Duna [
 ]
 
 { #category : #examples }
-RSAnimationExamples >> example47Circles [
-	<script: 'self new example47Circles open'>
+RSAnimationExamples >> example40Circles [
+	<script: 'self new example40Circles open'>
 	| canvas max min gscale alpha scale circleSize vertexSize updateMouse center getSize color frameCount |
 	canvas := RSCanvas new.
 	canvas color: Color black.
@@ -2549,8 +2421,8 @@ RSAnimationExamples >> example47Circles [
 ]
 
 { #category : #perlin }
-RSAnimationExamples >> example49River [
-	<script: 'self new example49River open setLabel: ''River''; extent: 900@200.'>
+RSAnimationExamples >> example41River [
+	<script: 'self new example41River open setLabel: ''River''; extent: 900@200.'>
 	| extent half c r back rect perlin cScale alphaS inc setParticles |
 	extent := 900@ 200.
 	half := extent / 2.
@@ -2615,8 +2487,8 @@ RSAnimationExamples >> example49River [
 ]
 
 { #category : #lines }
-RSAnimationExamples >> example50OneLine [
-	<script: 'self new example50OneLine open extent: 1112@834; setLabel: ''One line'''>
+RSAnimationExamples >> example42OneLine [
+	<script: 'self new example42OneLine open extent: 1112@834; setLabel: ''One line'''>
 	| canvas line ang1 ang2 radio x1 y1 x2 y2 |
 	canvas := RSCanvas new clearBackground: false.
 	canvas color: Color black.

@@ -3,28 +3,12 @@ I wait until one animation ends to start the another animation
 "
 Class {
 	#name : #RSSequentialAnimation,
-	#superclass : #RSAbstractAnimation,
+	#superclass : #RSCompositeAnimation,
 	#instVars : [
-		'animations',
 		'currentIndex'
 	],
 	#category : #'Roassal3-Animation-Core'
 }
-
-{ #category : #adding }
-RSSequentialAnimation >> add: anAnimation [
-	self animations add: anAnimation 
-]
-
-{ #category : #adding }
-RSSequentialAnimation >> addAll: array [
-	animations addAll: array.
-]
-
-{ #category : #accessing }
-RSSequentialAnimation >> animations [
-	^ animations
-]
 
 { #category : #actions }
 RSSequentialAnimation >> continue [
@@ -55,19 +39,14 @@ RSSequentialAnimation >> currentHasCompleted [
 
 { #category : #accessing }
 RSSequentialAnimation >> duration [
-	^ Duration milliSeconds: (self animations inject: 0 into: [ :sum :a| sum + (a duration asMilliSeconds * a loops) ]).
+	animations ifEmpty: [ ^ 0 asDuration ].
+	^ (animations collect: #allDuration) sum
 ]
 
 { #category : #actions }
 RSSequentialAnimation >> pause [
 	super pause.
 	self currentDo: #pause.
-]
-
-{ #category : #initialization }
-RSSequentialAnimation >> reset [
-	super reset.
-	animations := OrderedCollection new.
 ]
 
 { #category : #actions }
@@ -86,7 +65,7 @@ RSSequentialAnimation >> step [
 	currentIndex > animations size ifTrue: [ 
 		currentIndex := 1.
 		self loopDone ].
-	hasCompleted ifFalse: [ hasCompleted := currentLoop > loops ].
+	self updateHasCompleted.
 ]
 
 { #category : #refresing }
@@ -94,8 +73,6 @@ RSSequentialAnimation >> stepCurrent [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].
-	current isRunning ifFalse: [ 
-		current canvas: self canvas.
-		current start. ].
+	self startIfNessesary: current.
 	current refresh.
 ]
