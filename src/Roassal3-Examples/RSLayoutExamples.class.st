@@ -532,7 +532,7 @@ RSLayoutExamples >> example18ForceBased2 [
 	| b prop r |
 	b := RSForceLayoutInSpaces new.
 	b numberOfSpaces: 4.
-	b objects: Collection withAllSubclasses.
+	b classes: Collection withAllSubclasses.
 	b build.
 	prop := 0.1.
 	r := Random new.
@@ -541,7 +541,7 @@ RSLayoutExamples >> example18ForceBased2 [
 		onStepDo: [ :t | | s space |
 			r next < 0.01 ifTrue: [ 
 				s := b shapes atRandom.
-				space := b canvas shapeFromModel: (1 to: 4) atRandom.
+				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
 				
 				b canvas newAnimation
 					duration: 500 milliSeconds;

@@ -6,9 +6,12 @@ Class {
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'numberOfSpaces',
-		'objects',
-		'color',
-		'spaces'
+		'spaces',
+		'colorForLinesInSameSpace',
+		'colorForLinesInDifferentSpace',
+		'linearScale',
+		'colorScale',
+		'classes'
 	],
 	#category : #'Roassal3-Layouts-Builder'
 }
@@ -26,10 +29,16 @@ RSForceLayoutInSpaces >> abandonLayout: shape [
 RSForceLayoutInSpaces >> addEdgesOf: shape to: space [
 	| layout edgesToAdd |
 	layout := space propertyAt: #layout.
-	edgesToAdd := shape connectedEdges select: [ :ed | 
+	edgesToAdd := shape connectedEdges groupedBy: [ :ed | 
 		(ed from propertyAt: #layout) = layout and: [ 
 		(ed to propertyAt: #layout) = layout ] ].
-	layout addEdges: edgesToAdd.
+
+	(edgesToAdd at: true ifAbsent: [#()]) do: [ :each |
+		each color: colorForLinesInSameSpace ].
+	(edgesToAdd at: false ifAbsent: [#()]) do: [ :each |
+		each color: colorForLinesInDifferentSpace ].
+
+	layout addEdges: (edgesToAdd at: true ifAbsent: [#()]).
 
 ]
 
@@ -44,18 +53,9 @@ RSForceLayoutInSpaces >> addShape: shape to: space [
 	
 ]
 
-{ #category : #shapes }
-RSForceLayoutInSpaces >> boxFor: obj [
-	^ RSBox new
-		model: obj;
-		color: (color scale: obj);
-		size: 10;
-		yourself
-]
-
-{ #category : #hooks }
-RSForceLayoutInSpaces >> connectedShapesFrom: shape [
-	^ shape model withAllSubclasses collect: [ :cls | self canvas shapeFromModel: cls ].
+{ #category : #accessing }
+RSForceLayoutInSpaces >> classes: aCollection [ 
+	classes := aCollection
 ]
 
 { #category : #shapes }
@@ -67,7 +67,7 @@ RSForceLayoutInSpaces >> createSpaceFor: model [
 	space := RSBox new
 		noPaint;
 		model: model;
-		extent: 400@400;
+		extent: 500@500;
 		withBorder;
 		propertyAt: #layout put: layout;
 		yourself.
@@ -78,18 +78,24 @@ RSForceLayoutInSpaces >> createSpaceFor: model [
 
 { #category : #hooks }
 RSForceLayoutInSpaces >> dragEnd: evt [
-	| pos shape target layout allShapes |
-	
-	shape := evt shape.
-	pos := shape position.
-	layout := shape propertyAt: #layout.
-	target := spaces detect: [ :s | s includesPoint: pos ] ifNone: [ ^ self ].
-	(target propertyAt: #layout) = layout ifTrue: [ ^ self ].
-	
-	allShapes := self connectedShapesFrom: shape.
-	allShapes do: [ :s | self abandonLayout: s ].
-	allShapes do: [ :s | self addShape: s to: target ].
-	allShapes do: [ :s | self addEdgesOf: s to: target ].
+	| dropPosition droppedShape targetLayout layout shapesToMove |
+	droppedShape := evt shape.
+	dropPosition := droppedShape position.
+	layout := droppedShape propertyAt: #layout.
+
+	"Find if it was dropped in a space"
+	targetLayout := spaces
+		detect: [ :s | s includesPoint: dropPosition ]
+		ifNone: [ ^ self ].
+
+	"Check if it's a different space"
+	(targetLayout propertyAt: #layout) = layout ifTrue: [ ^ self ].
+
+	"Move shape and company"	
+	shapesToMove := self withShapesThatAccompany: droppedShape.
+	shapesToMove do: [ :s | self abandonLayout: s ].
+	shapesToMove do: [ :s | self addShape: s to: targetLayout ].
+	shapesToMove do: [ :s | self addEdgesOf: s to: targetLayout ].
 
 ]
 
@@ -99,7 +105,7 @@ RSForceLayoutInSpaces >> fill: space with: aCollection [
 	RSEdgeBuilder line
 		canvas: self canvas;
 		shapes: aCollection;
-		color: (Color blue alpha: 0.5);
+		color: colorForLinesInSameSpace;
 		connectFrom: #superclass to: #yourself.
 	self canvas addAll: aCollection.
 	layout := (space propertyAt: #layout)
@@ -115,7 +121,25 @@ RSForceLayoutInSpaces >> fill: space with: aCollection [
 { #category : #initialization }
 RSForceLayoutInSpaces >> initialize [
 	super initialize.
-	color := NSScale category20.
+	colorForLinesInSameSpace := Color blue muchDarker alpha: 0.8.
+	colorForLinesInDifferentSpace := Color blue muchDarker alpha: 0.1.
+	colorScale := NSScale category20.
+	linearScale := NSScale linear domain: #(5 20); range: #(5 10).
+]
+
+{ #category : #shapes }
+RSForceLayoutInSpaces >> newShapeFor: aClass [
+	^ RSEllipse new
+		popup;
+		model: aClass;
+		color: (colorScale scale: aClass package name);
+		size: (linearScale scale: aClass asString size);
+		yourself
+]
+
+{ #category : #accessing }
+RSForceLayoutInSpaces >> numberOfSpaces [
+	^ numberOfSpaces
 ]
 
 { #category : #accessing }
@@ -123,15 +147,10 @@ RSForceLayoutInSpaces >> numberOfSpaces: anInteger [
 	numberOfSpaces := anInteger
 ]
 
-{ #category : #accessing }
-RSForceLayoutInSpaces >> objects: aCollection [ 
-	objects := aCollection
-]
-
 { #category : #hooks }
 RSForceLayoutInSpaces >> renderIn: aCanvas [
 	spaces := (1 to: numberOfSpaces) collect: [ :i | self createSpaceFor: i ].
-	shapes := objects collect: [ :obj | self boxFor: obj ] as: RSGroup.
+	shapes := classes collect: [ :obj | self newShapeFor: obj ] as: RSGroup.
 	self fill: spaces first with: shapes.
 	aCanvas addAll: spaces.
 	RSGridLayout on: spaces.
@@ -146,4 +165,9 @@ RSForceLayoutInSpaces >> updateSpace: space [
 	layout := space propertyAt: #layout.
 	layout center: space position.
 	layout enclosingRectangle: space encompassingRectangle
+]
+
+{ #category : #hooks }
+RSForceLayoutInSpaces >> withShapesThatAccompany: shape [
+	^ shape model withAllSubclasses collect: [ :cls | self canvas shapeFromModel: cls ].
 ]
