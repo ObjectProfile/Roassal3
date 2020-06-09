@@ -26,7 +26,7 @@ c
 Class {
 	#name : #RSYMarkerDecoration,
 	#superclass : #RSAbstractMarkerDecoration,
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Decoration'
 }
 
 { #category : #'public - configuration' }

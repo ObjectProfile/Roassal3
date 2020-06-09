@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSChartDecoration,
 	#superclass : #RSAbstractChartElement,
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Decoration'
 }
 
 { #category : #rendering }

@@ -5,7 +5,6 @@ Class {
 	#name : #RSAbstractPlot,
 	#superclass : #RSAbstractChartElement,
 	#instVars : [
-		'label',
 		'xValues',
 		'yValues',
 		'shape'
@@ -66,7 +65,6 @@ RSAbstractPlot >> index [
 { #category : #initialization }
 RSAbstractPlot >> initialize [
 	super initialize.
-	label := ''.
 	shape := self defaultShape
 ]
 
