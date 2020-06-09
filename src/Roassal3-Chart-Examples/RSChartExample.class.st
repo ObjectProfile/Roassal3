@@ -493,3 +493,29 @@ RSChartExample >> example18Animation [
 		].
 	^ canvas
 ]
+
+{ #category : #examples }
+RSChartExample >> example19PositiveNetagiveBarPlots [
+	<script: 'self new example19PositiveNetagiveBarPlots open'>
+	| c d d2 |
+	
+	c := RSChart new.
+
+	d := RSBarPlot new.
+	d color: Color green darker darker darker translucent.
+	d y: #(4 10 5 9).
+	c addPlot: d.
+
+	d2 := RSBarPlot new.
+	d2 color: Color red darker darker darker translucent.
+	d2 y: #(-5 -6 -3 -3).
+	c addPlot: d2.
+
+	c addDecoration: (RSVerticalTick new integer).
+	c addDecoration: (RSHorizontalTick new).
+
+	c addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
+	c addDecoration: (RSXLabelDecoration new title: 'Evolution').
+
+	^ c 
+]
