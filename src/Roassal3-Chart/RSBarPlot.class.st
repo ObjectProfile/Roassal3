@@ -37,6 +37,13 @@ Class {
 }
 
 { #category : #accessing }
+RSBarPlot >> barScale [
+	^ NSOrdinalScale new 
+		domain: xValues;
+		rangeBands: xScale range padding: 0.1.
+]
+
+{ #category : #accessing }
 RSBarPlot >> barWidth [
 	"Return the width of each bar"
 	^ barWidth
@@ -50,15 +57,12 @@ RSBarPlot >> barWidth: aBarWidth [
 
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
-	self minValueY > 0
-		ifTrue: [ aChart minValueY: 0 ]
-		ifFalse: [ self maxValueY < 0 
-			ifTrue: [ aChart maxValueY: 0 ]].
-	
-	
-	aChart decorations do: [ :e | e beforeRenderingIn: aChart ].
 	super beforeRenderingIn: aChart.
 	
+	aChart xScale: self barScale.
+	"aChart decorations do: [ :e | e beforeRenderingIn: aChart ].
+	
+	"
 ]
 
 { #category : #initialization }
@@ -67,14 +71,18 @@ RSBarPlot >> defaultShape [
 ]
 
 { #category : #rendering }
+RSBarPlot >> definedValuesY [
+	"Return the list Y values that are defined"
+	^ yValues, {0} select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+]
+
+{ #category : #rendering }
 RSBarPlot >> renderIn: canvas [
 	| color width myScale |
 	self checkAssertion.
 	color := self computeColor.
-	
-	myScale := NSOrdinalScale new 
-		domain: xValues;
-		rangeBands: xScale range padding: 0.1.
+"	myScale := self barScale."
+	myScale := xScale.
 	width := self barWidth.
 	width ifNil: [ width := myScale rangeBand ].
 	xValues doWithIndex: [ :xt : i | 

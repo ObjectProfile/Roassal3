@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSHorizontalTick,
 	#superclass : #RSAbstractTick,
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Ticks'
 }
 
 { #category : #rendering }
@@ -21,7 +21,7 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 RSHorizontalTick >> createTickLineFor: aNumber [
 	^ self shape copy
 		startPoint: (xScale scale: aNumber) @ 0;
-		endPoint: (xScale scale: aNumber) @ self tickSize;
+		endPoint: (xScale scale: aNumber) @ self configuration tickSize;
 		yourself
 ]
 
@@ -35,8 +35,8 @@ RSHorizontalTick >> fromNames: aCollectionOfStrings [
 	self
 		doNotUseNiceLabel;
 		numberOfTicks: aCollectionOfStrings size.
-	labelRotation := -45.
-	labelConversion := [ :x | 
+	self labelRotation: -45.
+	self labelConversion: [ :x | 
 		x isZero 
 			ifTrue: [ '' ]
 			ifFalse: [aCollectionOfStrings at: x  ] ].
