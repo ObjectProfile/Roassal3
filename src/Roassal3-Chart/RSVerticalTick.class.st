@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSVerticalTick,
 	#superclass : #RSAbstractTick,
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Ticks'
 }
 
 { #category : #rendering }
@@ -25,7 +25,7 @@ RSVerticalTick >> createTickLineFor: aNumber [
 	self assert: [ scaledNumber isNaN not ].
 	^ self shape copy
 		startPoint: 0 @ scaledNumber;
-		endPoint: self tickSize negated @ scaledNumber;
+		endPoint: self configuration tickSize negated @ scaledNumber;
 		yourself
 ]
 

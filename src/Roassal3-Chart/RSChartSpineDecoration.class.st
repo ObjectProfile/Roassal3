@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'shape'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Decoration'
 }
 
 { #category : #rendering }

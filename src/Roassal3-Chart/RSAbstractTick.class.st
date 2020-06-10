@@ -5,16 +5,13 @@ Class {
 	#name : #RSAbstractTick,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'numberOfTicks',
-		'shouldHaveLabels',
-		'labelConversion',
-		'labelLocation',
-		'shouldUseNiceLabel',
+		'configuration',
 		'niceLabel',
-		'labelRotation',
-		'fontSize'
+		'ticks',
+		'labels',
+		'labelLocation'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Ticks'
 }
 
 { #category : #public }
@@ -25,34 +22,51 @@ RSAbstractTick >> asFloat [
 { #category : #public }
 RSAbstractTick >> asFloat: numberOfDecimals [
 	"Do not convert the value when determining labels"
-	labelConversion := [ :value | value asFloat round: numberOfDecimals ]
+	self labelConversion: [ :value | value asFloat round: numberOfDecimals ]
 ]
 
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
-	niceLabel := shouldUseNiceLabel 
+	niceLabel := self configuration shouldUseNiceLabel 
 		ifTrue: [ self createNiceLabelIn: aChart ]
 		ifFalse: [ self defaultNiceLabel ].
 	super beforeRenderingIn: aChart.
 ]
 
-{ #category : #rendering }
-RSAbstractTick >> createLabelFor: aValue [
-	"Create a label and returns it."
+{ #category : #accessing }
+RSAbstractTick >> configuration [
+	^ configuration ifNil: [ configuration := self defaultConfiguration ]
+]
 
-	^ RSLabel new 
-		fontSize: fontSize; 
-		text: (labelConversion value: aValue); 
-		rotateByDegrees: self labelRotation
+{ #category : #accessing }
+RSAbstractTick >> configuration: aRSTickConfiguration [
+	configuration := aRSTickConfiguration
 ]
 
 { #category : #rendering }
+RSAbstractTick >> createLabelFor: aValue [
+	"Create a label and returns it."
+	^ self configuration createLabelFor: aValue
+]
+
+{ #category : #rendering }
+RSAbstractTick >> createLabelFor: aValue index: index [
+	"Create a label and returns it."
+	| tick lbl |
+	tick := self ticks at: index.
+	lbl := self configuration createLabelFor: aValue.
+	self labelLocation move: lbl on: tick.
+	^ lbl
+	
+]
+
+{ #category : #accessing }
 RSAbstractTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := aChart niceGenerator 
 		searchMin: self min
 		max: self max
-		desired: numberOfTicks.
+		desired: self configuration numberOfTicks.
 	^ nice
 ]
 
@@ -62,13 +76,21 @@ RSAbstractTick >> createTickLineFor: aNumber [
 ]
 
 { #category : #'accessing - defaults' }
-RSAbstractTick >> defaultLabelLocation [
-	^ self subclassResponsibility
+RSAbstractTick >> defaultConfiguration [
+	^ RSTickConfiguration new
+		numberOfTicks: 5;
+		fontSize: 5;
+		labelRotation: 0;
+		shouldHaveLabels: true;
+		shouldUseNiceLabel: true;
+		labelConversion: [ :value | value ] ;
+		tickSize: 3;
+		yourself
 ]
 
 { #category : #'accessing - defaults' }
-RSAbstractTick >> defaultLabelRotation [
-	^ 0
+RSAbstractTick >> defaultLabelLocation [
+	^ self subclassResponsibility
 ]
 
 { #category : #'accessing - defaults' }
@@ -78,7 +100,7 @@ RSAbstractTick >> defaultNiceLabel [
 	nice
 		min: self min;
 		max: self max;
-		step: nice ticks / numberOfTicks.
+		step: nice ticks / self configuration numberOfTicks.
 	^ nice
 ]
 
@@ -90,7 +112,7 @@ RSAbstractTick >> defaultShape [
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 	"Ticks use RSNiceLabelGenerator"
-	shouldUseNiceLabel := false
+	self configuration shouldUseNiceLabel: false
 ]
 
 { #category : #accessing }
@@ -113,27 +135,19 @@ c addDecoration: (RSHorizontalTick new fontSize: 20).
 c
 -=-=-=-=-=-=-=-=-=
 "
-	fontSize := fontSizeToSet
-]
-
-{ #category : #rendering }
-RSAbstractTick >> initialize [
-	super initialize.
-	numberOfTicks := 5.
-	self withLabels; useNiceLabel; noConvertion.
-	fontSize := 5.
+	self configuration fontSize: fontSizeToSet
 ]
 
 { #category : #public }
 RSAbstractTick >> integer [
 	"Do not convert the value when determining labels"
-	labelConversion := [ :value | value asInteger ]
+	self labelConversion: [ :value | value asInteger ]
 ]
 
 { #category : #public }
 RSAbstractTick >> integerWithCommas [
 	"Do not convert the value when determining labels"
-	labelConversion := [ :value | value asInteger asStringWithCommas ]
+	self labelConversion: [ :value | value asInteger asStringWithCommas ]
 ]
 
 { #category : #public }
@@ -157,7 +171,7 @@ c mustInclude0inY.
 c
 -=-=-=-=-=-=-=-=-=
 	"
-	labelConversion := oneArgBlock 
+	self configuration labelConversion: oneArgBlock 
 ]
 
 { #category : #accessing }
@@ -167,7 +181,17 @@ RSAbstractTick >> labelLocation [
 
 { #category : #accessing }
 RSAbstractTick >> labelRotation [
-	^ labelRotation ifNil: [ labelRotation := self defaultLabelRotation ].
+	^ self configuration labelRotation
+]
+
+{ #category : #accessing }
+RSAbstractTick >> labelRotation: aNumber [
+	^ self configuration labelRotation: aNumber
+]
+
+{ #category : #accessing }
+RSAbstractTick >> labels [
+	^ labels
 ]
 
 { #category : #accessing }
@@ -183,7 +207,7 @@ RSAbstractTick >> min [
 { #category : #public }
 RSAbstractTick >> noConvertion [
 	"Do not convert the value when determining labels"
-	labelConversion := [ :value | value ]
+	self labelConversion: [ :value | value ]
 ]
 
 { #category : #accessing }
@@ -203,44 +227,41 @@ c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat: 2).
 c
 ```Smalltalk
 	"
-	numberOfTicks := aNumber
+	self configuration numberOfTicks: aNumber
 ]
 
 { #category : #rendering }
 RSAbstractTick >> renderIn: canvas [
-	| aTick lbl |
-	(niceLabel min to: niceLabel max by: niceLabel step) do: [ :i |
-		aTick := self createTickLineFor: i asFloat.
-		canvas add: aTick.
-		shouldHaveLabels ifTrue: [ 
-			lbl := self createLabelFor: i.
-			self labelLocation move: lbl on: aTick.
-			canvas add: lbl.
-		]
-	]
-	
+	| ticksData |
+	niceLabel step isZero ifTrue: [ niceLabel step: 1 ].
+	ticksData := niceLabel min to: niceLabel max by: niceLabel step. 
+	ticks := ticksData collect: [ :value | self createTickLineFor: value ].
+	canvas addAll: ticks.
+	self configuration shouldHaveLabels ifFalse: [ ^ self ].
+	labels := ticksData collectWithIndex: [ :value :index | 
+		self createLabelFor: value index: index ].
+	canvas addAll: labels.
 ]
 
-{ #category : #rendering }
-RSAbstractTick >> tickSize [
-	"Size of the tick. A constant for now, but can be easily turned into a parameter"
-	^ 3
+{ #category : #accessing }
+RSAbstractTick >> ticks [
+	^ ticks
 ]
 
 { #category : #public }
 RSAbstractTick >> useNiceLabel [
 	"Ticks use RSNiceLabelGenerator"
-	shouldUseNiceLabel := true
+	self configuration shouldUseNiceLabel: true
 ]
 
 { #category : #public }
 RSAbstractTick >> withLabels [
 	"Make the tick have label"
-	shouldHaveLabels := true
+	self configuration shouldHaveLabels: true
 ]
 
 { #category : #public }
 RSAbstractTick >> withNoLabels [
 	"Ticks have no label"
-	shouldHaveLabels := false
+	self configuration shouldHaveLabels: false
 ]
