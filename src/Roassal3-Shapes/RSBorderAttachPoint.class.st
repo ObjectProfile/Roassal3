@@ -78,17 +78,19 @@ RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge offset: 
 	source := self geometryFor: fromShape edge: anEdge.
 	target := self geometryFor: toShape edge: anEdge.
 	shift := self offsetNormalFor: anEdge.
-	line := GLineSegment from: source center to: target center.
-	vector := line vector.
+	line := GLine through: source center and: target center.
+	vector := line v2 asPoint - line v1 asPoint.
+	vector := vector x @ vector y.
 	unit := vector / (vector r max: 1).
 	shift := vector normal * shift.
+	 
 	anEdge from = toShape
 		ifTrue: [ shift := shift * -1 ].
-	line := GLineSegment
-		from: source center + shift
-		to: target center + shift.
+	line := GLine
+		through: source center asPoint + shift
+		and: target center asPoint + shift.
 	res := self borderPointFrom: source to: target via: line.
-	^ res + (unit * aNumber)
+	^ res asPoint + (unit * aNumber)
 ]
 
 { #category : #'public - hooks' }
@@ -102,7 +104,7 @@ RSBorderAttachPoint >> basicStartingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
-	^ ((aLine intersect: aSource) detectMin: [ :p | p dist: aLine to ])
+	^ ((aLine intersectionsWith: aSource) detectMin: [ :p | p asPoint dist: aLine v2 ])
 		ifNil: [ aSource center ]
 ]
 

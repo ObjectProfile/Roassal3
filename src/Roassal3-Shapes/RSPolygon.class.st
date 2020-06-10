@@ -169,6 +169,14 @@ RSPolygon >> extent: newExtent [
 	super extent: newExtent
 ]
 
+{ #category : #geometry }
+RSPolygon >> geometry [
+	| rect |
+	rect := self encompassingRectangle.
+	^ GPolygon
+		vertices: self points + self position
+]
+
 { #category : #testing }
 RSPolygon >> hasPoints [
 	^ points notNil and: [ points isNotEmpty ]
