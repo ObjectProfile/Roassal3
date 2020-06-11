@@ -534,7 +534,7 @@ RSLayoutExamples >> example18ForceBased2 [
 	b numberOfSpaces: 4.
 	b classes: Collection withAllSubclasses.
 	b build.
-	prop := 0.1.
+	"prop := 0.1.
 	r := Random new.
 	b canvas newAnimation
 		repeat;
@@ -550,7 +550,7 @@ RSLayoutExamples >> example18ForceBased2 [
 					on: s set: #position:;
 					when: RSAnimationEndEvent do: [ b dragEnd: s ].
 				].
-			 ].
+			 ]."
 	^ b canvas 
 	
 
