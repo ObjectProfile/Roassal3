@@ -35,7 +35,7 @@ RSChartExample new example01Markers open
 
 You should see:
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
 
 Another example of chart may be seen using:
 ```Smalltalk
@@ -44,7 +44,7 @@ RSChartExample new example11BarplotCombinedWithLine open
 
 You should see:
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample2.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400958-b4051280-abd0-11ea-86e5-6b7e59c8a4fa.png">
 
 
 Visualization of a complex graph:
@@ -52,7 +52,7 @@ Visualization of a complex graph:
 RSShapeExamples new example25BisBimetricLineOnLargeExample open
 ```
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/complexGraph.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84401030-c7b07900-abd0-11ea-81f3-70e09dc163f4.png">
 
 An example of animation may be seen using:
 
@@ -65,7 +65,7 @@ You should see an animated version of:
 
 ## Documentation
 
-Visit the [documentation github page?](https://github.com/ObjectProfile/Roassal3Documentation).
+Visit the [documentation github page](https://github.com/ObjectProfile/Roassal3Documentation)
 
 A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
