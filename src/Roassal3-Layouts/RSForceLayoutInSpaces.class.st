@@ -33,8 +33,11 @@ RSForceLayoutInSpaces >> addEdgesOf: shape to: space [
 		(ed from propertyAt: #layout) = layout and: [ 
 		(ed to propertyAt: #layout) = layout ] ].
 
+	"Edges in the same space"
 	(edgesToAdd at: true ifAbsent: [#()]) do: [ :each |
 		each color: colorForLinesInSameSpace ].
+	
+	"Edges in different spaces"
 	(edgesToAdd at: false ifAbsent: [#()]) do: [ :each |
 		each color: colorForLinesInDifferentSpace ].
 
@@ -101,11 +104,32 @@ RSForceLayoutInSpaces >> dragEnd: evt [
 
 { #category : #hooks }
 RSForceLayoutInSpaces >> fill: space with: aCollection [
-	| layout |
-	RSEdgeBuilder line
+	| layout cpController |
+	cpController := RSBlockCPController new
+		block: [ :edge |
+			| result a b |
+			a := edge from position.
+			b := edge to position.
+			
+			result := OrderedCollection with: a with: b.
+			(edge from propertyAt: #layout) = (edge to propertyAt: #layout) ifFalse: [
+				| vector u d unit middle left right |
+				vector := a - b.
+				u := vector normal.
+				d := a distanceTo: b.
+				unit := vector / (vector r max: 1).
+				middle := b + (unit * d / 2).
+				left := middle - (u * d * 0.15).
+				right := middle + (u * d * 0.15).
+				result add: ({ left. right } detectMax: #y) afterIndex: 1 ].
+			result ];
+		yourself.
+		
+	RSEdgeBuilder bezier
+		controlPointsController: cpController;
 		canvas: self canvas;
-		shapes: aCollection;
 		color: colorForLinesInSameSpace;
+		shapes: aCollection;
 		connectFrom: #superclass to: #yourself.
 	self canvas addAll: aCollection.
 	layout := (space propertyAt: #layout)
