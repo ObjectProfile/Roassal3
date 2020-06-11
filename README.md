@@ -61,27 +61,11 @@ RSAnimationExamples new example06Atom open
 ```
 You should see an animated version of:
 
-![atom](screenshots/smallAtom.png)
+![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
 
 ## Documentation
-The documentation of Roassal3 is expanding at a sustained pace.
 
-- Tutorials (learning-oriented material centered around practical steps):
-    - [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](documentation/LesMiserables.md)
-    - [Tutorial 02 - Graph Manipulation](documentation/GraphTutorial.md)
-    - [Tutorial 03 - Inspector Integration](documentation/GTInspectorIntegration.md)
-    - [Tutorial 04 - Shape Composition](documentation/ShapeComposition.md)
-    - [Tutorial 05 - Chart](documentation/Chart.md)
-- How-to guides (problem-oriented material, centered around practical steps):
-    - [How to visualize any arbitrary object?](documentation/how-to.md#How-to-visualize-any-arbitrary-object)
-    - [How to create a chart from a list of numbers?](documentation/how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
-	- [How can I use animation to execute a block at a regular pace?](documentation/how-to.md#How-can-I-use-animation-to-execute-a-block-at-a-regular-pace)
-	- [How can I draw a SVG path?](documentation/how-to.md#How-can-I-draw-a-SVG-path)
-- [Reference Documentation](documentation/Reference/reference.md) (detail about the Roassal machinery and key classes)
-- FAQ
-	- [Where is the classes RTView?](documentation/FAQ.md#Where-is-the-classes-RTView)
-	- [What about the book Agile Visualization?](documentation/FAQ.md#What-about-the-book-Agile-Visualization)
-	- [How to export a visualization to PDF or SVG?](documentation/FAQ.md#How-to-export-a-visualization-to-PDF-or-SVG)
+Visit the [documentation github page?](https://github.com/ObjectProfile/Roassal3Documentation).
 
 A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
