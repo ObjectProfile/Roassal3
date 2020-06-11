@@ -74,7 +74,6 @@ RSForceLayoutInSpaces >> createSpaceFor: model [
 		withBorder;
 		propertyAt: #layout put: layout;
 		yourself.
-	space when: RSMouseClick do: [ layout inspect ].
 	self canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 	^ space
 ]
