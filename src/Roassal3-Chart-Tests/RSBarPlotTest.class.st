@@ -20,5 +20,7 @@ RSBarPlotTest >> test2BarPlots [
 	vtick := RSVerticalTick new withNoLabels.
 	chart addDecoration: vtick.
 	chart build.
-	self assert: chart canvas encompassingRectangle extent equals: extent+(vtick tickSize @0).
+	self 
+		assert: chart canvas encompassingRectangle extent 
+		equals: extent+(vtick configuration tickSize @0).
 ]

@@ -558,6 +558,7 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 { #category : #visiting }
 RSAthensRenderer >> visitBoundingShape: shape [
 	| path paint |
+	athensCanvas setPathMatrix.
 	path := self getOrCreatePathOf: shape.
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas pathTransform
