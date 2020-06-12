@@ -25,7 +25,7 @@ RSChartTitleDecoration >> renderIn: canvas [
 	label := self createLabel.
 	canvas add: label.
 	RSLocation new
-		offset: 1;
+		offset: 0@ -2;
 		above; center;
 		stick: label on: self spine.
 ]

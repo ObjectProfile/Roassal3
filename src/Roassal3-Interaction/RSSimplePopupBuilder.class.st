@@ -16,7 +16,7 @@ RSSimplePopupBuilder >> boxFor: lbl [
 		color: (Color colorFrom: 'efefef');
 		cornerRadius: 5;
 		border: (RSBorder new color: Color gray);
-		extent: lbl extent + 5;
+		extent: lbl extent + (10@7);
 		yourself
 ]
 

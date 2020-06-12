@@ -1986,7 +1986,9 @@ RSAnimationExamples >> example33AnimatedLayout [
 							interpolateTo: (pos2 at: i) at: t) ].
 					c zoomToFit ] ] ].
 	c addAll: labels.
-	RSHorizontalLineLayout on: labels.
+	RSHorizontalLineLayout new
+		alignCenter;
+		on: labels.
 	^ c
 	
 ]

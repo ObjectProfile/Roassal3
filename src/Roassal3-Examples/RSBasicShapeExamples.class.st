@@ -706,9 +706,8 @@ RSBasicShapeExamples >> example35KeyEvents [
 	| c print down up |
 	c := RSCanvas new.
 	down := RSLabel new model: 'DOWN'; text: ''.
-	up := RSLabel new model: 'UP'; text: ''.
+	up := RSLabel new model: 'UP'; text: ''; position: 0@ 30.
 	c addAll: { down. up }.
-	RSVerticalLineLayout on: c shapes.
 	print := [ :evt :s | 
 		s text: (s model, ': ' , evt keyName,', value: ', evt keyValue asString).
 		evt signalUpdate  ].
