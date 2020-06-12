@@ -1,5 +1,47 @@
 "
-A RSLabeled  adds a label above an element. The label may be particularized using #text: in the default string representation is not sufficient. 
+<keyClass>
+`RSLabeled` adds a label on shape. Per default, it is added on top of the shape. The label may be particularized using #text: in the default string representation is not sufficient. 
+
+*Responsibility*: locate a label on top of a shape.
+
+*Collaborators*: can be added to any Roassal shape
+
+*Variables*:
+- `location`: a `RSLocation` indicating where the label should be located
+- `isHighlightable`: a boolean indicating whether the label should be highlighted
+- `lowColor`: a boolean indicating whether the label should be highlighted
+
+*Example*:
+```Smalltalk
+c := RSCanvas new.
+
+shapes := RSGroup new.
+1 to: 3 do: [ :v |
+	shapes add: (RSBox new model: v) ].
+
+shapes @ (RSLabeled new text: [ :m | 'Value = ', m asString ]).
+
+RSNormalizer size
+	shapes: shapes;
+	from: 20; to: 40;
+	normalize: [ :aModel | aModel ].
+
+c addAll: shapes.
+RSVerticalLineLayout new gapSize: 30; on: shapes.
+c @ RSCanvasController
+```
+
+Another example:
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 10) collect: [ :v | RSBox new model: v; size: 30 ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSLabeled new highlightable.
+RSNormalizer size shapes: shapes; normalize: #yourself.
+RSGridLayout on: shapes.
+c @ RSCanvasController.
+c 
+```
 
 "
 Class {
@@ -52,17 +94,17 @@ RSLabeled >> getOrCreateLabel: aShape [
 { #category : #'public - configuration' }
 RSLabeled >> highlightable [
 	"Make the label highlightable.
-E.g.,
-
-v := RSView new.
-
-els := RSShapeBuilder box elementsOn: (1 to: 10).
-v addAll: els.
-els @ RSLabeled new highlightable.
-RSNormalizer size elements: els; normalize: #yourself.
-RSGridLayout on: els.
-v @ RSControlsView.
-v open
+For example:
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 10) collect: [ :v | RSBox new model: v; size: 30 ] as: RSGroup.
+c addAll: shapes.
+shapes @ RSLabeled new highlightable.
+RSNormalizer size shapes: shapes; normalize: #yourself.
+RSGridLayout on: shapes.
+c @ RSCanvasController.
+c 
+```
 "
 	isHighlightable := true.
 	self 

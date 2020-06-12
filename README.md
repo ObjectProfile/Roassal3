@@ -35,7 +35,7 @@ RSChartExample new example01Markers open
 
 You should see:
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
 
 Another example of chart may be seen using:
 ```Smalltalk
@@ -44,7 +44,7 @@ RSChartExample new example11BarplotCombinedWithLine open
 
 You should see:
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/chartExample2.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400958-b4051280-abd0-11ea-86e5-6b7e59c8a4fa.png">
 
 
 Visualization of a complex graph:
@@ -52,7 +52,7 @@ Visualization of a complex graph:
 RSShapeExamples new example25BisBimetricLineOnLargeExample open
 ```
 
-<img width="250" height="250" alt="portfolio_view" src="https://github.com/ObjectProfile/Roassal3/blob/master/screenshots/complexGraph.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84401030-c7b07900-abd0-11ea-81f3-70e09dc163f4.png">
 
 An example of animation may be seen using:
 
@@ -61,27 +61,11 @@ RSAnimationExamples new example06Atom open
 ```
 You should see an animated version of:
 
-![atom](screenshots/smallAtom.png)
+![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
 
 ## Documentation
-The documentation of Roassal3 is expanding at a sustained pace.
 
-- Tutorials (learning-oriented material centered around practical steps):
-    - [Tutorial 01 - Adding Simple Nodes, Edges, and Layout](documentation/LesMiserables.md)
-    - [Tutorial 02 - Graph Manipulation](documentation/GraphTutorial.md)
-    - [Tutorial 03 - Inspector Integration](documentation/GTInspectorIntegration.md)
-    - [Tutorial 04 - Shape Composition](documentation/ShapeComposition.md)
-    - [Tutorial 05 - Chart](documentation/Chart.md)
-- How-to guides (problem-oriented material, centered around practical steps):
-    - [How to visualize any arbitrary object?](documentation/how-to.md#How-to-visualize-any-arbitrary-object)
-    - [How to create a chart from a list of numbers?](documentation/how-to.md#How-to-create-a-chart-from-a-list-of-numbers)
-	- [How can I use animation to execute a block at a regular pace?](documentation/how-to.md#How-can-I-use-animation-to-execute-a-block-at-a-regular-pace)
-	- [How can I draw a SVG path?](documentation/how-to.md#How-can-I-draw-a-SVG-path)
-- [Reference Documentation](documentation/Reference/reference.md) (detail about the Roassal machinery and key classes)
-- FAQ
-	- [Where is the classes RTView?](documentation/FAQ.md#Where-is-the-classes-RTView)
-	- [What about the book Agile Visualization?](documentation/FAQ.md#What-about-the-book-Agile-Visualization)
-	- [How to export a visualization to PDF or SVG?](documentation/FAQ.md#How-to-export-a-visualization-to-PDF-or-SVG)
+Visit the [documentation github page](https://github.com/ObjectProfile/Roassal3Documentation)
 
 A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
