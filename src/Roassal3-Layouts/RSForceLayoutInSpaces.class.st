@@ -61,23 +61,6 @@ RSForceLayoutInSpaces >> classes: aCollection [
 	classes := aCollection
 ]
 
-{ #category : #shapes }
-RSForceLayoutInSpaces >> createSpaceFor: model [
-	| space layout |
-	layout := RSRectangleForceLayout new
-		start;
-		yourself.
-	space := RSBox new
-		noPaint;
-		model: model;
-		extent: 500@500;
-		withBorder;
-		propertyAt: #layout put: layout;
-		yourself.
-	self canvas newAnimation repeat onStepDo: [ :t | layout step. ].
-	^ space
-]
-
 { #category : #hooks }
 RSForceLayoutInSpaces >> dragEnd: evt [
 	| dropPosition droppedShape targetLayout layout shapesToMove |
@@ -160,6 +143,23 @@ RSForceLayoutInSpaces >> newShapeFor: aClass [
 		yourself
 ]
 
+{ #category : #shapes }
+RSForceLayoutInSpaces >> newSpaceFor: model [
+	| space layout |
+	layout := RSRectangleForceLayout new
+		start;
+		yourself.
+	space := RSBox new
+		noPaint;
+		model: model;
+		extent: 400@400;
+		border: (RSBorder new color: (colorScale scale: model); width: 2; dashArray: #(10); yourself);
+		propertyAt: #layout put: layout;
+		yourself.
+	self canvas newAnimation repeat onStepDo: [ :t | layout step. ].
+	^ space
+]
+
 { #category : #accessing }
 RSForceLayoutInSpaces >> numberOfSpaces [
 	^ numberOfSpaces
@@ -172,11 +172,11 @@ RSForceLayoutInSpaces >> numberOfSpaces: anInteger [
 
 { #category : #hooks }
 RSForceLayoutInSpaces >> renderIn: aCanvas [
-	spaces := (1 to: numberOfSpaces) collect: [ :i | self createSpaceFor: i ].
+	spaces := (1 to: numberOfSpaces) collect: [ :i | self newSpaceFor: i ].
 	shapes := classes collect: [ :obj | self newShapeFor: obj ] as: RSGroup.
 	self fill: spaces first with: shapes.
 	aCanvas addAll: spaces.
-	RSGridLayout on: spaces.
+	(RSGridLayout withGap: 20) on: spaces.
 	spaces do: [ :space | self updateSpace: space. ].
 	aCanvas @ RSSimpleCanvasMonitor.
 	aCanvas @ RSCanvasController.
