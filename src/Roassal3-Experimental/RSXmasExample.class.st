@@ -52,7 +52,7 @@ RSXmasExample >> background [
 
 	v when: RSExtentChangedEvent do: [ v camera 
 		zoomToFit: v extent 
-		rectangle: (Rectangle rsCenter: extent / 2 extent: extent) ].
+		rectangle: (Rectangle floatCenter:  extent / 2 extent: extent) ].
 
 	^ v
 ]
