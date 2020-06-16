@@ -31,3 +31,18 @@ RSAlpharoExample >> example02Classes [
 		do: [ :evt | evt shape model browse ].
 	b canvas inspect
 ]
+
+{ #category : #running }
+RSAlpharoExample >> example03Basic [
+	<script: 'self new example03Basic open
+		position: 0@20;
+		extent: 800@800;
+		color: Color transparent;
+		setLabel: ''Amebas'''>
+	| b |
+	b := RSAlpharo new.
+	b objects:( (1 to: 20) collect: [:i | 'Ameba', i asString]).
+	b build.
+	b canvas color: Color transparent.
+	^ b canvas
+]
