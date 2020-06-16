@@ -170,12 +170,9 @@ RSScrollBarsCanvas >> updateAnimation [
 
 { #category : #hooks }
 RSScrollBarsCanvas >> updateBasicScrollbars [
-	| canvas canvasRect camera shapesRect p pd ext scrollExtent |
+	| canvas canvasRect shapesRect p pd ext scrollExtent |
 	canvas := vertical parent.
-	camera := canvas camera. 
-	canvasRect := Rectangle
-		floatCenter: camera position
-		extent: canvas extent / camera scale.
+	canvasRect := canvas visibleRectangle.
 	shapesRect := self encompassingRectangleFor: canvas.
 	
 	scrollExtent := vertical width @ horizontal height.

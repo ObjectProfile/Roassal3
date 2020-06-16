@@ -220,7 +220,7 @@ RSCanvas >> fixedShapes [
 	^ fixedShapes 
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 RSCanvas >> fixedShapes: aCollection [ 
 	fixedShapes := aCollection
 ]
@@ -517,6 +517,13 @@ RSCanvas >> topParent [
 { #category : #'accessing - computed' }
 RSCanvas >> transform: aPoint [
 	^ aPoint
+]
+
+{ #category : #'accessing - computed' }
+RSCanvas >> visibleRectangle [
+	^ Rectangle 
+		floatCenter: self camera position
+		extent: self extent / self camera scale.
 ]
 
 { #category : #camera }
