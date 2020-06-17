@@ -27,6 +27,7 @@ RSEllipse >> geometry [
 	rect := self encompassingRectangle.
 	e := rect extent / 2.
 	p := self position.
+	e = (0@0) ifTrue: [ ^ p asGPoint ].
 	^ GEllipse 
 		center: p
 		vertex: p + (0@ e y)

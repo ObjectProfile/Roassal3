@@ -279,12 +279,13 @@ RSHighlightableExamples >> example08DependendMethods [
 	padding := 10 asMargin.
 	high := RSHighlightable new.
 	arrow := RSShapeFactory arrowedLine
+		withBorderAttachPoint;
 		color: Color blue.
 	packages := packages collect: [ :p | 
 		| classes pkg |
 		classes := p definedClasses collect: [ :cls | | methods |
 			methods := cls methods collect: [ :met |
-				RSBox new
+				RSEllipse new
 					extent: 5 @ met linesOfCode;
 					@ popup;
 					@ high;

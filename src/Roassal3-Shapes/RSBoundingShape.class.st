@@ -106,8 +106,10 @@ c
 
 { #category : #geometry }
 RSBoundingShape >> geometry [
-	| rect |
+	| rect e |
 	rect := self encompassingRectangle.
+	e := rect extent.
+	e = (0@0) ifTrue: [ ^ rect floatCenter asGPoint ].
 	^ GRectangle
 		origin: rect origin 
 		corner: rect corner

@@ -119,11 +119,7 @@ RSBorderAttachPoint >> geometryFor: shape edge: anEdge [
 	commonParents := self commonParents: shape in: anEdge.
 	commonParents ifNil: [ ^ g ].
 	matrix := self matrixFor: commonParents.
-	g class = GEllipse ifTrue: [ 
-		g setCenter: (matrix transform: g center) a: g a b: g b ]
-		ifFalse: [ g := GRectangle 
-			origin: (matrix transform: g origin)
-			corner: (matrix transform: g corner) ].
+	g := g rsScaleWith: matrix.
 	^ g
 ]
 
