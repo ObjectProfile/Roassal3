@@ -160,6 +160,11 @@ RSSVGPath >> segments [
 ]
 
 { #category : #private }
+RSSVGPath >> segments: aCollection [
+	segments := aCollection
+]
+
+{ #category : #private }
 RSSVGPath >> segmentsRectangle [
 	| allPoints |
 	allPoints := polygons flatCollect: [:poly | poly ].
