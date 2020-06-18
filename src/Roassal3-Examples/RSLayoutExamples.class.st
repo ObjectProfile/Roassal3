@@ -113,8 +113,8 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 ]
 
 { #category : #layouts }
-RSLayoutExamples >> example05TreeLayout [
-	<script: 'self new example05TreeLayout open'>
+RSLayoutExamples >> example06TreeLayout [
+	<script: 'self new example06TreeLayout open'>
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
@@ -141,78 +141,6 @@ RSLayoutExamples >> example05TreeLayout [
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
 	c @ RSDraggableCanvas.
 	^ c
-]
-
-{ #category : #layouts }
-RSLayoutExamples >> example06Cluster [
-	<script: 'self new example06Cluster open'>
-	| canvas shapes |
-	canvas := RSCanvas new.
-	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
-		| group |
-		group := RSGroup new.
-		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
-			RSEllipse new 
-				size: 5;
-				draggable;
-				color: Color red;
-				model: cls;
-				yourself ].
-		group addAll: shapes.
-		RSEdgeBuilder line
-			color: Color blue translucent;
-			canvas: group;
-			shapes: shapes;
-			connectFrom: #superclass.
-		
-		RSNormalizer size
-			scale: (NSScale perform: scale);
-			from: 1;
-			to: 30;
-			shapes: shapes;
-			normalize: #numberOfMethods.
-		RSNormalizer color
-			scale: (NSScale perform: scale);
-			from: Color blue;
-			to: Color red;
-			shapes: shapes;
-			normalize: #numberOfMethods.
-		RSClusterLayout on: shapes.
-		RSComposite new
-			color: Color veryLightGray translucent;
-			model: scale;
-			labeled;
-			draggable;
-			shapes: group;
-			yourself.
-		]).
-	RSGridLayout new gapSize: 20; on: canvas nodes.
-	canvas @ RSCanvasController.
-	^ canvas
-]
-
-{ #category : #layouts }
-RSLayoutExamples >> example07AutomaticLayoutWhenWindowIsResized [
-	<script: 'self new example07AutomaticLayoutWhenWindowIsResized open'>
-	| classes shapes c eb |
-	classes := { 'Roassal3-Layouts'. 'Roassal3' }
-		flatCollect: [:pkgname | (RPackage organizer
-			packageNamed: pkgname) definedClasses ].
-	shapes := RSGroup new.
-	classes do: [ :cls | shapes add: (RSEllipse new model: cls) ].
-
-	c := RSCanvas new.
-	c addAll: shapes.
-
-	eb := RSEdgeBuilder orthoVertical.
-	eb canvas: c.
-	eb connectFrom: #superclass.
-
-	RSNormalizer size
-		shapes: shapes;
-		normalize: [ :cls | cls numberOfMethods + 5 ].
-	RSTreeLayout on: shapes.
-	^ c @ RSCanvasController @ RSHierarchyPacker
 ]
 
 { #category : #lines }
@@ -524,4 +452,76 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	canvas @ RSCanvasController.
 	
 	^ canvas
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example18Cluster [
+	<script: 'self new example18Cluster open'>
+	| canvas shapes |
+	canvas := RSCanvas new.
+	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
+		| group |
+		group := RSGroup new.
+		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+			RSEllipse new 
+				size: 5;
+				draggable;
+				color: Color red;
+				model: cls;
+				yourself ].
+		group addAll: shapes.
+		RSEdgeBuilder line
+			color: Color blue translucent;
+			canvas: group;
+			shapes: shapes;
+			connectFrom: #superclass.
+		
+		RSNormalizer size
+			scale: (NSScale perform: scale);
+			from: 1;
+			to: 30;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSNormalizer color
+			scale: (NSScale perform: scale);
+			from: Color blue;
+			to: Color red;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSClusterLayout on: shapes.
+		RSComposite new
+			color: Color veryLightGray translucent;
+			model: scale;
+			labeled;
+			draggable;
+			shapes: group;
+			yourself.
+		]).
+	RSGridLayout new gapSize: 20; on: canvas nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
+	<script: 'self new example19AutomaticLayoutWhenWindowIsResized open'>
+	| classes shapes c eb |
+	classes := { 'Roassal3-Layouts'. 'Roassal3' }
+		flatCollect: [:pkgname | (RPackage organizer
+			packageNamed: pkgname) definedClasses ].
+	shapes := RSGroup new.
+	classes do: [ :cls | shapes add: (RSEllipse new model: cls) ].
+
+	c := RSCanvas new.
+	c addAll: shapes.
+
+	eb := RSEdgeBuilder orthoVertical.
+	eb canvas: c.
+	eb connectFrom: #superclass.
+
+	RSNormalizer size
+		shapes: shapes;
+		normalize: [ :cls | cls numberOfMethods + 5 ].
+	RSTreeLayout on: shapes.
+	^ c @ RSCanvasController @ RSHierarchyPacker
 ]

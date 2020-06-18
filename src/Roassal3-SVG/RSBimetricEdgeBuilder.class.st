@@ -8,7 +8,7 @@ Class {
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal3-Shapes-Graph'
+	#category : #'Roassal3-SVG'
 }
 
 { #category : #'private - utility' }

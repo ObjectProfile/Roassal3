@@ -52,8 +52,13 @@ Class {
 	#instVars : [
 		'tension'
 	],
-	#category : #'Roassal3-Shapes-Graph'
+	#category : #'Roassal3-SVG'
 }
+
+{ #category : #'as yet unclassified' }
+RSMultiBezierEdgeBuilder class >> multiBezier [
+	^ self new: RSSVGPathLine new.
+]
 
 { #category : #private }
 RSMultiBezierEdgeBuilder >> applyTensionOn: points [

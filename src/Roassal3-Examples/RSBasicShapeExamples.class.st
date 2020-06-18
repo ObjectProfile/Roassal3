@@ -828,3 +828,75 @@ RSBasicShapeExamples >> example37AngleDirection [
 
 
 ]
+
+{ #category : #shapes }
+RSBasicShapeExamples >> example38Interaction [
+	<script: 'self new example38Interaction open'>
+	| c1 c2 com canvas |
+	c1 := RSEllipse new
+		extent: 100 @ 50;
+		withBorder;
+		model: 'Click to remove';
+		popup;
+		color: Color red translucent;
+		yourself.
+	c2 := RSEllipse new
+		extent: 50 @ 100;
+		withBorder;
+		color: Color blue translucent;
+		yourself.
+	com := RSComposite new
+		addAll:
+			{c1.
+			c2};
+		adjustToChildren;
+		model: 'Draggable';
+		popup;
+		draggable;
+		padding: 10;
+		color: Color gray translucent;
+		yourself.
+	c1
+		when: RSMouseClick
+		do: [ :evt | 
+			c1 remove.
+			com removeInteractionIfPresent: RSDraggable.
+			com model: 'Not draggable anymore'.
+			evt signalUpdate ].
+	canvas := RSCanvas new.
+	canvas
+		add:
+			(RSEllipse new
+				color: Color red;
+				model: 'Reference';
+				popup;
+				size: 10;
+				yourself).
+	canvas add: com.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #shapes }
+RSBasicShapeExamples >> example39YikigeiAnimated [
+	<script: 'self new example39YikigeiAnimated open'>
+	| c size circles posOffset negOffset |
+	c := RSCanvas new.
+	size := 200.
+	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
+	    c add: (RSEllipse new
+	        size: size;
+	        color: ((Color perform: sel) alpha: 0.4 );
+	        yourself).
+	    ]).
+	c when: RSMouseMove do: [ :evt | 
+	    posOffset := (evt position distanceTo: 0@0).
+	    negOffset := posOffset negated.
+	    circles first position: posOffset @ 0.
+	    circles second position: 0 @ posOffset.
+	    circles third position: negOffset @ 0.
+	    circles fourth position: 0@negOffset.
+	    c signalUpdate.
+	     ].
+	^ c
+]

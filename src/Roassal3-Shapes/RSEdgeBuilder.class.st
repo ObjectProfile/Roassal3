@@ -77,7 +77,7 @@ RSEdgeBuilder class >> arrowedLine [
 	^ self new: RSShapeFactory arrowedLine
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> arrowedLineWithOffset: aFloat [
 	"[0 1] value"
 	| inst |
