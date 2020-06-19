@@ -140,7 +140,7 @@ RSTorchUMLClassRenderer >> titleBoxColor: aColor [
 RSTorchUMLClassRenderer >> titleFor: aClass [
 	| s |
 	s := super titleFor: aClass.
-	currentTitleWidth := s textWidth.
+	currentTitleWidth := s children first textWidth.
 	^ s
 ]
 

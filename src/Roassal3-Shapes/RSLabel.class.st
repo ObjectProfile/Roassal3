@@ -10,8 +10,7 @@ Class {
 		'fontSize',
 		'font',
 		'emphasis',
-		'cachedHeight',
-		'cachedWidth'
+		'textExtents'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -60,6 +59,17 @@ RSLocate new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis bold.
+]
+
+{ #category : #private }
+RSLabel >> computeTextExtents [
+	| ext |
+	ext := CairoFontMetricsProvider new
+		font: font;
+		extentsOf: text.
+	^ RSTextExtents new
+		from: ext;
+		yourself
 ]
 
 { #category : #accessing }
@@ -217,8 +227,8 @@ RSLabel >> resetCache [
 		pointSize: fontSize.
 	
 	font := font emphasized: emphasis emphasisCode.
-	cachedWidth := nil.
-	cachedHeight := nil.
+	textExtents := nil.
+	
 	self extent: self textWidth @ self textHeight.
 ]
 
@@ -240,23 +250,22 @@ RSLabel >> text: string [
 ]
 
 { #category : #accessing }
+RSLabel >> textExtents [
+	^ textExtents ifNil: [ textExtents := self computeTextExtents ].
+]
+
+{ #category : #accessing }
 RSLabel >> textHeight [
 	"without any transformation"
 
-	^ cachedHeight
-		ifNil: [ [ cachedHeight := font height ]
-				on: Error
-				do: [ :ex | cachedHeight := 10 ] ]
+	^ self textExtents height
 ]
 
 { #category : #accessing }
 RSLabel >> textWidth [
 	"without any transformation"
-	"font widthOfString: is a really expensive operation, so we cache it"
-	^ cachedWidth
-		ifNil: [ [ cachedWidth := font widthOfString: text ]
-				on: Error
-				do: [ :ex | cachedWidth := 5 ] ]
+	
+	^ self textExtents x_advance
 ]
 
 { #category : #'managing font' }
@@ -274,4 +283,9 @@ RSLocate new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis underlined.
+]
+
+{ #category : #accessing }
+RSLabel >> x_bearing [
+	^ self textExtents x_bearing
 ]

@@ -31,7 +31,7 @@ RSVerticalTick >> createTickLineFor: aNumber [
 
 { #category : #'accessing - defaults' }
 RSVerticalTick >> defaultLabelLocation [
-	^ RSLocation new outer; left
+	^ RSLocation new outer; left; offset: -2@0
 ]
 
 { #category : #accessing }
