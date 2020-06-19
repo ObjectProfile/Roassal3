@@ -580,13 +580,13 @@ RSAthensRenderer >> visitBoundingShape: shape [
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
 	athensCanvas pathTransform restoreAfter: [ 
-		| e |
+		| e ybn |
 		e := label textExtents.
+		ybn := e y_bearing negated.
 		athensCanvas pathTransform
 			multiplyBy: label matrix asFloatTransform;
-			translateBy: ((e x_advance / -2) @ (e y_bearing / -2)) asFloatPoint;
-			translateBy: label x_bearing negated @ 0 / 2.
-			
+			translateBy: ((e x_advance + e x_bearing / -2) @ 0);
+			translateBy: 0@((ybn/2)- ((e height- ybn)/2)). 
 		label hasBorder
 			ifTrue: [ self drawPathLabel: label  ]
 			ifFalse: [ self drawSimpleLabel: label ].
