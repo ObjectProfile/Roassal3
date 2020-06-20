@@ -35,7 +35,7 @@ RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [
 
 { #category : #layout }
 RSAbstractUMLClassRenderer >> applyLayoutOn: shapes [
-	RSVerticalLineLayout new gapSize: 0; on: shapes.
+	RSVerticalLineLayout new gapSize: 1.5; on: shapes.
 ]
 
 { #category : #layout }
@@ -69,13 +69,12 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
-	| rect ellipsis center |
+	| rect ellipsis |
 	self needsEllipsis ifFalse: [ ^ self ].
 	
 	ellipsis := self ellipsisShape.
 	rect := aGroup encompassingRectangle.
-	center := rect floatCenter.
-	ellipsis position: center x @ (rect height / 2 + center y).
+	ellipsis position: rect bottomCenter + (0@10).
 	aGroup add: ellipsis.
 	
 ]
@@ -190,7 +189,7 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 		text: (modelDescriptor classname rsValue: model);
 		yourself.
 	label fontSize: label fontSize * 1.2.
-	^ label
+	^ { label } asGroup asShape padding: 0@ 5; yourself
 	
 ]
 
@@ -211,6 +210,7 @@ RSAbstractUMLClassRenderer >> varsFor: model [
 	self applyVLayoutOn: shapes.
 	^ RSComposite new
 		shapes: shapes;
+		padding: (Margin left: 0 right: 0 top: 3  bottom: 8 );
 		yourself
 		
 ]
