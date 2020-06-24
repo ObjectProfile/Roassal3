@@ -58,10 +58,11 @@ RSCat >> addCat [
 	tail position: -12 @3 * pixel.
 	feet := self catFeet.
 	
-	{ -9@7.8. -6@8. 5@7.8. 9@8} with: feet do: [ :pos :foot |
+	{-6@8. -9@7.5. 9@7.5. 5@8.} with: feet do: [ :pos :foot |
 		foot position: pos * pixel ].
-	delta := { -90. -45. -45. -90.  0. -45}.
-	feet, { body. head } with: delta do: [ :part :d| | currentPosition |
+	
+	delta := { -20. -100. -90. -10.   0. -45}.
+	feet, {body. head } with: delta do: [ :part :d| | currentPosition |
 		currentPosition := part position.
 		canvas newAnimation repeat
 			duration: 430 milliSeconds;

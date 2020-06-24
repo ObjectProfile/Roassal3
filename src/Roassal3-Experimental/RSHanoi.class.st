@@ -12,12 +12,10 @@ RSHanoi >> hanoi: anInteger from: a bridge: b to: c [
 	"
 	self new hanoi: 3 from: 'A' bridge: 'B' to: 'C'
 	"
-	anInteger < 1 ifTrue: [ self error: 'invale number of plates' ].
-	anInteger = 1 ifTrue: 
-		[ ^ self moveFrom: a to: c ].
+	anInteger < 1 ifTrue: [ ^ '' ].
 	^ String streamContents: [ :s | 
 		s 
-			<< (self hanoi: anInteger - 1 from: a  bridge: c  to: b); cr;
+			<< (self hanoi: anInteger - 1 from: a  bridge: c  to: b);
 			<< (self moveFrom: a to: c); cr;
 			<< (self hanoi: anInteger - 1 from: b bridge: a to: c)
 		 ].
