@@ -428,13 +428,6 @@ RSAthensRenderer >> buildRingPath: ring [
 	builder close.
 ]
 
-{ #category : #'creating path' }
-RSAthensRenderer >> buildSVGPath: svg [
-	svg segments ifNil: [ ^ self ].
-	svg segments
-		do: [ :each | builder perform: each first withArguments: each second ]
-]
-
 { #category : #accessing }
 RSAthensRenderer >> builder [
 	^ builder

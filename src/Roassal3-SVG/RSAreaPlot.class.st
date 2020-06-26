@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'y2Values'
 	],
-	#category : #'Roassal3-SVG'
+	#category : #'Roassal3-SVG-Chart'
 }
 
 { #category : #rendering }

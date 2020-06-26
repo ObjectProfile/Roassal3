@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'svgPath'
 	],
-	#category : #'Roassal3-SVG'
+	#category : #'Roassal3-SVG-Shapes'
 }
 
 { #category : #visiting }
