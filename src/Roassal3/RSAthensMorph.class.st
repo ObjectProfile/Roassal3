@@ -351,16 +351,14 @@ RSAthensMorph >> drawShapes [
 
 { #category : #'event-processed' }
 RSAthensMorph >> eventKeyDown: aMorphicEvent [
-	| trEvent keyCharacter |
-	keyCharacter := aMorphicEvent keyCharacter.
-	(aMorphicEvent commandKeyPressed and: [ keyCharacter = $w ])
-		ifTrue: [ ^ self root delete ].
+	| trEvent |
 	trEvent := self eventOfClass: RSKeyDown from: aMorphicEvent.
 	trEvent
 		position: (roassalCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
 		keyName: (self class keyNameFor: aMorphicEvent keyValue).
-	trEvent shape announce: trEvent
+	trEvent shape announce: trEvent.
+
 ]
 
 { #category : #'event-processed' }
@@ -563,6 +561,7 @@ RSAthensMorph >> handleKeyUp: anEvent [
 
 { #category : #'event handling' }
 RSAthensMorph >> handleKeystroke: anEvent [
+	super handleKeystroke: anEvent.
 	self eventKeyDown: anEvent.
 ]
 
