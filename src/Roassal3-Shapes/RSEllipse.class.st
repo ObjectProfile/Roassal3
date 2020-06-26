@@ -23,12 +23,15 @@ RSEllipse >> buildPathOn: visitor [
 
 { #category : #geometry }
 RSEllipse >> geometry [ 
-	| rect |
+	| rect e p |
 	rect := self encompassingRectangle.
+	e := rect extent / 2.
+	p := self position.
+	e = (0@0) ifTrue: [ ^ p asGPoint ].
 	^ GEllipse 
-		center: self position 
-		a: rect width / 2 
-		b: rect height / 2
+		center: p
+		vertex: p + (0@ e y)
+		coVertex: p + (e x @ 0)
 ]
 
 { #category : #testing }
