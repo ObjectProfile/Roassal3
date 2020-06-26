@@ -15,10 +15,10 @@ BaselineOfRoassal3 >> baseline: spec [
 		do: [ | core examples tests |
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
-			spec baseline: 'AthensSVGFull' with: [
+			spec baseline: 'AthensSVG' with: [
 				spec repository: 'github://pharo-contributions/Athens-SVG' ].
-			spec baseline: 'AthensSVGMini' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG'; loads: 'PathConverter' ].
+			spec package: 'Athens-SVG-PathConverter' with: [
+				spec repository: 'github://pharo-contributions/Athens-SVG' ].
 			spec package: 'Geometry' with: [ 
 				spec repository: 'github://pharo-contributions/Geometry:v1.1.0' ].
 			spec baseline: 'NumericScales'with: [ 
@@ -131,10 +131,10 @@ BaselineOfRoassal3 >> roassalExamplesIn: spec [
 { #category : #'package management' }
 BaselineOfRoassal3 >> roassalSVGIn: spec [
 	spec		
-		package: 'Roassal3-SVG' with: [ spec requires: #('AthensSVGMini') ];
+		package: 'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
 		package: 'Roassal3-SVG-Tests';
 		package: 'Roassal3-SVG-Examples';
-		package: 'Roassal3-SVG-Importer' with: [ spec requires: #('AthensSVGFull') ].
+		package: 'Roassal3-SVG-Importer' with: [ spec requires: #('AthensSVG') ].
 ]
 
 { #category : #'package management' }
