@@ -38,6 +38,16 @@ RSTextExtents >> height: aNumber [
 	height := aNumber
 ]
 
+{ #category : #printing }
+RSTextExtents >> printOn: s [
+	s << self className; << '('.
+	#(x_bearing y_bearing width height x_advance y_advance) do: [ :sel |
+		s << sel; << ':'; << String tab.
+		(sel value: self) printOn: s.
+		 ] separatedBy: [ s << String crlf ].
+	s << ')'.
+]
+
 { #category : #accessing }
 RSTextExtents >> width [
 	^ width
