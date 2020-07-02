@@ -386,6 +386,7 @@ RSNormalizer >> shapes [
 { #category : #accessing }
 RSNormalizer >> shapes: someShapes [
 	"Set to the normalizer the elements that should be normalized"
+	someShapes ifNil: [ self error: 'Should not provide nil' ].
 	shapes := someShapes
 ]
 
