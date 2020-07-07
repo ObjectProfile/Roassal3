@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+RSParticleForce >> color: aColor [
+	color := aColor
+]
+
+{ #category : #accessing }
 RSParticleForce >> position [
 	^ position
 ]
@@ -28,6 +33,37 @@ RSParticleForce >> renderIn: aCanvas [
 		aCanvas addShape: shape.
 		 ].
 	shape position: position
+]
+
+{ #category : #rendering }
+RSParticleForce >> renderIn: aCanvas perlin: perlin [
+	| period n |
+	shape ifNil: [ 
+		shape := RSEllipse new size: 1.
+		aCanvas addShape: shape.
+		 ].
+	period := 0.005.
+	n := perlin noise: position x * period and: position y * period.
+	color := Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n.
+	shape color: (color alpha: 0.03).
+	shape position: position
+]
+
+{ #category : #rendering }
+RSParticleForce >> renderIn: aCanvas with: colorGenerator [
+	
+	shape ifNil: [ 
+		shape := RSEllipse new size: 1.
+		aCanvas addShape: shape.
+		 ].
+	shape color: (colorGenerator colorFor: self).
+	shape position: position
+	"
+	| period n |period := 0.005.
+	n := perlin noise: position x * period and: position y * period.
+	color := Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n.
+	shape color: (color alpha: 0.03).
+	shape position: position"
 ]
 
 { #category : #updating }

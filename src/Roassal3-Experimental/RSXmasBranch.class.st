@@ -29,12 +29,12 @@ RSXmasBranch >> addThickness: aFloat [
 	thickness add: aFloat
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> baseIndex [
 	^ baseIndex
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSXmasBranch >> branchRotate: index theta: theta position: reference [ 
 	| v |
 	v := positions at: index.
@@ -46,12 +46,12 @@ RSXmasBranch >> branchRotate: index theta: theta position: reference [
 	positions at: index put: v
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> dTheta [
 	^ dTheta
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> dTheta: aCollection [ 
 	dTheta := aCollection
 ]
@@ -65,12 +65,12 @@ RSXmasBranch >> initialize [
 	isCandidate := false.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> isCandidate [
 	^ isCandidate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> isCandidate: aBool [ 
 	isCandidate := aBool
 ]
@@ -80,12 +80,12 @@ RSXmasBranch >> positions [
 	^ positions
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> setLastThickness: aNumber [ 
 	thickness at: thickness size put: aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSXmasBranch >> thickness [
 	^ thickness
 ]

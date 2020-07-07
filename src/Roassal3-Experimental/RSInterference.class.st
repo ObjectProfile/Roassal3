@@ -12,6 +12,11 @@ Class {
 	#category : #'Roassal3-Experimental-Force'
 }
 
+{ #category : #accessing }
+RSInterference >> color: aColor [
+
+]
+
 { #category : #initialization }
 RSInterference >> initialize [
 	| r |

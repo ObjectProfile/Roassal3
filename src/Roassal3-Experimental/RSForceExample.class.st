@@ -28,3 +28,30 @@ RSForceExample >> example02 [
 	c build.
 	^ c canvas
 ]
+
+{ #category : #examples }
+RSForceExample >> example03 [
+	<script: 'self new example03 open'>
+	| c |
+	c := RSForceBuilder new.
+	c particlesSize: 2000.
+	c particlesRadius: 50.
+	c interferencesSize: 200.
+	c interferencesRadius: 200.
+	c build.
+	^ c canvas
+]
+
+{ #category : #examples }
+RSForceExample >> example04 [
+	<script: 'self new example04 open'>
+	| c |
+	c := RSForceBuilder new.
+	c particlesSize: 2000.
+	c particlesRadius: 50.
+	c interferencesSize: 200.
+	c interferencesRadius: 200.
+	c perlin: (NSPerlinNoise3 new octaves: 7).
+	c build.
+	^ c canvas
+]
