@@ -85,6 +85,13 @@ RSBoundingTest >> testDrawRing [
 		alphaAngle: 0;
 		betaAngle: 45;
 		cornerRadii: 20).
+	"same radius"
+	canvas addShape: (RSPieSlice new
+		externalRadius: 100;
+		innerRadius: 100;
+		alphaAngle: 0;
+		betaAngle: 45;
+		cornerRadii: 20).
 	canvas createMorph drawOnMockCanvas.
 ]
 

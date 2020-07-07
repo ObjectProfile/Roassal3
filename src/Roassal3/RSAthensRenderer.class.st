@@ -287,7 +287,8 @@ RSAthensRenderer >> buildPolylinePath: line [
 
 { #category : #'creating path' }
 RSAthensRenderer >> buildRingPath: ring [
-	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2 rp da da0 da1 rc x1 x2 x3 x4 y1 y2 y3 y4 rc0 rc1 t41 t23  t14 t32 |
+	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2 
+	rp da da0 da1 rc x1 x2 x3 x4 y1 y2 y3 y4 rc0 rc1 t41 t23  t14 t32 |
 	epsilon := 1e-12.
 	ap := (ring segmentSpacing / 2) degreesToRadians.
 	aAngle := ring alphaAngle degreesToRadians.
@@ -297,7 +298,9 @@ RSAthensRenderer >> buildRingPath: ring [
 	bAngle2 := bAngle.
 	center := 0@0.
 	i := ring innerRadius asFloat.
-	e := ring externalRadius.
+	e := ring externalRadius asFloat.
+	e < i ifTrue: [ | r0 | 
+		r0 := i. i := e. e := r0. ].
 	
 	builder absolute.
 	"is it a point? "
@@ -330,7 +333,7 @@ RSAthensRenderer >> buildRingPath: ring [
 		da1 := da1 - (p1*2).
 		da1 > epsilon
 			ifTrue: [ aAngle := aAngle + p1. bAngle := bAngle - p1 ]
-			ifFalse: [ aAngle := bAngle := xAngle] ].
+			ifFalse: [ aAngle := bAngle := xAngle ] ].
 	x1 := e*aAngle cos.
 	y1 := e*aAngle sin.
 	x2 := e*bAngle cos.
@@ -343,8 +346,7 @@ RSAthensRenderer >> buildRingPath: ring [
 	"is it small circle part?"
 	(aAngle - bAngle) abs < 0.001 ifTrue: [ 
 		builder 
-			moveTo: (x3@y3) + center;"
-			lineTo: (x2@y2) + center;"
+			moveTo: (x3@y3) + center;
 			close.
 		^ self ].
 	"apply corner radius"
@@ -361,70 +363,86 @@ RSAthensRenderer >> buildRingPath: ring [
 			kc := 1 / (( ((ax*bx) + (ay*by)) /  ( ((ax*ax)+ (ay*ay)) sqrt * ( (bx*bx)+(by*by) ) sqrt ) ) arcCos / 2) sin.
 			lc := ((oc x * oc x) + (oc y*oc y)) sqrt.
 			rc0 := rc0 min: ((e - lc) / (kc + 1)).
-			rc1 := rc1 min: ((i - lc) / (kc - 1)).
-			].
-		].
+			rc1 := rc1 min: ((i - lc) / (kc - 1)) ].
 
-	t41 := self arcCornerTangets: x4@y4 p1: x1@y1 r: e rc: rc0 cw: true.
-	t23 := self arcCornerTangets: x2@y2 p1: x3@y3 r: e rc: rc0 cw: true.
-	builder moveTo: t41 key + center.
-	rc0 == rc ifTrue: [ 
-		builder 
-			ellipticalArc2: rc0@rc0 
-				xrot: 0
-				large: 0
-				sweep: 0
-				to: t41 value + center;
-			ellipticalArc2: e@e
-				xrot: 0
-				large: (self arcSweep: t41 value and: t23 value)
-				sweep: 0
-				to: t23 value + center;
-			ellipticalArc2: rc0@rc0
-				xrot: 0
-				large: 0
-				sweep: 0
-				to: t23 key + center.
-			 ]
-	ifFalse: [ 
-		builder 
-			ellipticalArc2: rc0@rc0 
-				xrot: 0 
-				large: 1 
-				sweep: 0
-				to: t23 key + center ].
-	
-	(x4 isZero & y4 isZero) ifTrue: [ 
-		builder lineTo: center. ]
-	ifFalse: [ 
-		t14 := self arcCornerTangets: x1@y1 p1: x4@y4 r: i rc: rc1 negated cw: true.
-		t32 := self arcCornerTangets: x3@y3 p1: x2@y2 r: i rc: rc1 negated cw: true.
-		builder lineTo: t32 key + center.
-		(rc == rc1 and: [da0 > 0 ]) ifTrue: [ 
+		t41 := self arcCornerTangets: x4@y4 p1: x1@y1 r: e rc: rc0 cw: true.
+		t23 := self arcCornerTangets: x2@y2 p1: x3@y3 r: e rc: rc0 cw: true.
+		builder moveTo: t41 key + center.
+		rc0 == rc ifTrue: [ 
 			builder 
-				ellipticalArc2: rc1@ rc1
+				ellipticalArc2: rc0@rc0 
 					xrot: 0
 					large: 0
 					sweep: 0
-					to: t32 value + center;
-				ellipticalArc2: i@i
+					to: t41 value + center;
+				ellipticalArc2: e@e
 					xrot: 0
-					large: (self arcSweep: t14 value and: t32 value) 
-					sweep: 1
-					to: t14 value + center;
-				ellipticalArc2: rc1@rc1
+					large: (self arcSweep: t41 value and: t23 value)
+					sweep: 0
+					to: t23 value + center;
+				ellipticalArc2: rc0@rc0
 					xrot: 0
 					large: 0
 					sweep: 0
-					to: t14 key + center
-		] ifFalse: [ 
+					to: t23 key + center.
+				 ]
+		ifFalse: [ 
 			builder 
-				ellipticalArc2: rc1@ rc1
-					xrot: 0
-					large: 0
+				ellipticalArc2: rc0@rc0 
+					xrot: 0 
+					large: 1 
 					sweep: 0
-					to: t14 key + center
-	 	] ] .
+					to: t23 key + center ].
+
+		(x4 isZero & y4 isZero) ifTrue: [ 
+			builder lineTo: center. ]
+		ifFalse: [ 
+			t14 := self arcCornerTangets: x1@y1 p1: x4@y4 r: i rc: rc1 negated cw: true.
+			t32 := self arcCornerTangets: x3@y3 p1: x2@y2 r: i rc: rc1 negated cw: true.
+			builder lineTo: t32 key + center.
+			(rc == rc1 and: [da0 > 0 ]) ifTrue: [ 
+				builder 
+					ellipticalArc2: rc1@ rc1
+						xrot: 0
+						large: 0
+						sweep: 0
+						to: t32 value + center;
+					ellipticalArc2: i@i
+						xrot: 0
+						large: (self arcSweep: t14 value and: t32 value) 
+						sweep: 1
+						to: t14 value + center;
+					ellipticalArc2: rc1@rc1
+						xrot: 0
+						large: 0
+						sweep: 0
+						to: t14 key + center
+			] ifFalse: [ 
+				builder 
+					ellipticalArc2: rc1@ rc1
+						xrot: 0
+						large: 0
+						sweep: 0
+						to: t14 key + center
+		 ] ]
+	] ifFalse: [ | l0 l1 |
+		l1 := (bAngle - aAngle) abs <= Float pi ifTrue: [ 0 ] ifFalse: [ 1 ].
+		l0 := (bAngle2 - aAngle2) abs <= Float pi ifTrue: [ 0 ] ifFalse: [ 1 ].
+		
+		builder
+			moveTo: x1 @ y1 negated;
+			ellipticalArc2: e@ e negated
+		 		xrot: 0
+				large: l1
+				sweep: 0
+				to: x2@y2 negated;
+			lineTo: x3@y3 negated;
+			ellipticalArc2: i@i negated
+				xrot: 0
+				large: l0
+				sweep: 1
+				to: x4@y4 negated.
+	].
 	builder close.
 ]
 
