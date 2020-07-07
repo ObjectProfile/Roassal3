@@ -89,7 +89,7 @@ RSPieSlice >> cornerRadii: aNumber [
 
 { #category : #utilities }
 RSPieSlice >> emphasizeWith: anInteger [ 
-	self translateBy: (self centroid: (innerRadius + externalRadius) / -2 + anInteger)
+	self translateBy: (self centroid: anInteger)
 ]
 
 { #category : #accessing }
