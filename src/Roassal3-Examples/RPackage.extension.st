@@ -1,16 +1,6 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Roassal3-Examples' }
-RPackage >> dependentPackages [
-	"
-	Return the list of packages that I depend on
-	
-	(RPackageOrganizer default packageNamed: 'Roassal3') dependentPackages
-	"
-	^ (self definedClasses flatCollect: #dependentClasses), self extendedClasses collect: #package as: Set
-]
-
-{ #category : #'*Roassal3-Examples' }
 RPackage >> dependentPackagesWithOccurences [
 	"
 	Return the list of packages that I depend on. The result may includes several times the same packages. This reflects the number of dependencies.
