@@ -80,6 +80,6 @@ RSPAnimationTest >> testDelay [
 	animation delay: 100 milliSeconds.
 	animation start.
 	self deny: animation isDelayDone.
-	(Delay forMilliseconds: 101) wait.
+	(Delay forMilliseconds: 201) wait.
 	self assert: animation isDelayDone.
 ]
