@@ -1,5 +1,66 @@
 "
-TODO
+<keyClass>
+`RSTickConfiguration` describes a configuration for a vertical or horizontal tick. Note that the same configuration can be shared for the two tick objects.
+
+*Responsibility*: maintain the different configurable attributes for vertical or horizontal tickis.
+
+*Collaborators*: used by `RSAbstractTick`
+
+*Variables*:
+- `numberOfTicks`: number of ticks the tick decoration should have
+- `shouldHaveLabels`: a boolean indicating whether a the tick should have labels or not
+- `labelConversion`: one arg block to transform a value. E.g., `[ :p | 'V', p asString ]`
+- `shouldUseNiceLabel`: a boolean indicating whether the tick should use the nice tick label generator (e.g., `RSNiceLabel`)
+- `labelRotation`: rotation degree of the label
+- `fontSize`: size of the label font
+- `tickSize`: size of the tick, in pixels
+
+*Example*:
+```Smalltalk
+classes := RSObject withAllSubclasses.
+x := classes collect: [ :c | c numberOfMethods ].
+y := classes collect: [ :c | c linesOfCode ].
+
+c := RSChart new.
+
+d := RSScatterPlot new.
+d color: Color blue translucent.
+d x: x y: y.
+c addPlot: d.
+
+tickConfiguration := RSTickConfiguration new
+		numberOfTicks: 5;
+		fontSize: 5;
+		labelRotation: 0;
+		shouldHaveLabels: true;
+		shouldUseNiceLabel: true;
+		labelConversion: [ :value | value ] ;
+		tickSize: 3;
+		yourself.
+c addDecoration: (RSHorizontalTick new configuration: tickConfiguration).
+c addDecoration: (RSVerticalTick new configuration: tickConfiguration).
+c
+```
+
+Another similar example:
+```Smalltalk
+classes := RSObject withAllSubclasses.
+x := classes collect: [ :c | c numberOfMethods ].
+y := classes collect: [ :c | c linesOfCode ].
+
+c := RSChart new.
+
+d := RSScatterPlot new.
+d color: Color blue translucent.
+d x: x y: y.
+c addPlot: d.
+
+tickConfiguration := RSTickConfiguration new.
+tickConfiguration labelConversion: [ :p | 'V', p asString ].
+
+c addDecoration: (RSHorizontalTick new configuration: tickConfiguration).
+c
+```
 "
 Class {
 	#name : #RSTickConfiguration,
@@ -35,6 +96,18 @@ RSTickConfiguration >> fontSize: aNumber [
 	fontSize := aNumber
 ]
 
+{ #category : #initialization }
+RSTickConfiguration >> initialize [
+	super initialize.
+	self numberOfTicks: 5;
+		fontSize: 5;
+		labelRotation: 0;
+		shouldHaveLabels: true;
+		shouldUseNiceLabel: true;
+		labelConversion: [ :value | value ];
+		tickSize: 3
+]
+
 { #category : #accessing }
 RSTickConfiguration >> labelConversion [
 	^ labelConversion
@@ -51,8 +124,8 @@ RSTickConfiguration >> labelRotation [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> labelRotation: anObject [
-	labelRotation := anObject
+RSTickConfiguration >> labelRotation: degreesAsNumber [
+	labelRotation := degreesAsNumber
 ]
 
 { #category : #accessing }
@@ -61,8 +134,8 @@ RSTickConfiguration >> numberOfTicks [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> numberOfTicks: anObject [
-	numberOfTicks := anObject
+RSTickConfiguration >> numberOfTicks: aNumber [
+	numberOfTicks := aNumber
 ]
 
 { #category : #accessing }
@@ -71,8 +144,8 @@ RSTickConfiguration >> shouldHaveLabels [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> shouldHaveLabels: anObject [
-	shouldHaveLabels := anObject
+RSTickConfiguration >> shouldHaveLabels: aBoolean [
+	shouldHaveLabels := aBoolean
 ]
 
 { #category : #accessing }
@@ -81,8 +154,8 @@ RSTickConfiguration >> shouldUseNiceLabel [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> shouldUseNiceLabel: aBool [
-	shouldUseNiceLabel := aBool
+RSTickConfiguration >> shouldUseNiceLabel: aBoolean [
+	shouldUseNiceLabel := aBoolean
 ]
 
 { #category : #accessing }
@@ -91,6 +164,6 @@ RSTickConfiguration >> tickSize [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> tickSize: anObject [
-	tickSize := anObject
+RSTickConfiguration >> tickSize: aNumber [
+	tickSize := aNumber
 ]

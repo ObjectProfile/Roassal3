@@ -139,7 +139,7 @@ RSLayoutExamples >> example06TreeLayout [
 	eb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
-	c @ RSDraggableCanvas.
+	c @ RSCanvasController.
 	^ c
 ]
 
