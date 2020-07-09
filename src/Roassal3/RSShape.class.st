@@ -101,17 +101,17 @@ RSShape >> color [
 RSShape >> color: aColor [
 	"Set the color of the shape. 
 
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 50; color: #blue).
 c
--=-=-=-=-=-=-=-=-=
+```
 	
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 50; color: Color blue).
 c
--=-=-=-=-=-=-=-=-=
+```
 	"
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
