@@ -1,13 +1,37 @@
 "
-I represent a visual component box in a canvas.
+<keyClass>
+`RSBox` represents a box shape, which can be decorated in many ways.
 
-Here is an example:
+*Responsibility*: represents a 2 dimentional box 
+
+*Collaborators*: may interact with many classes covering composite shapes (e.g., `RSComposite`, `RSGroup`), the `RSCanvas` class, and interaction (e.g., `RSDraggable`, `RSPopup`).
+
+*Variables*:
+- `cornerRadius`: angle of the radius. If no radius is applied, the variable is nil
+
+*Example*:
+```Smalltalk
+RSCanvas new
+	add: (RSBox new size: 30);
+	yourself
+```
+
+A slightly more complex example could be:
+
+```Smalltalk
+gradient := LinearGradientPaint new colorRamp: {  0 -> Color red. 1 -> Color black }.
+
+gradient
+			start: -50 asPoint;
+			stop: 50 asPoint.
 c := RSCanvas new.
-(30 to: 150 by: 10) do: [ :nb |
-	b := RSBox new size: nb.
-	c add: b ].
-RSFlowLayout on: c nodes.
-c @ RSControlsCanvas
+s := RSBox new size: 80; cornerRadius: 20.
+s color: gradient.
+c add: s.	
+c
+```
+
+
 "
 Class {
 	#name : #RSBox,
