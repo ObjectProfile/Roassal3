@@ -57,6 +57,15 @@ RSUMLCalypso >> defaultIconName [
 	^#hierarchy
 ]
 
+{ #category : #accessing }
+RSUMLCalypso >> limitedClasses: aCollection [
+	| limit |
+	limit := 100.
+	^ aCollection size < limit 
+		ifTrue: [ aCollection ]
+		ifFalse: [ aCollection copyFrom: 1 to: limit ].
+]
+
 { #category : #initialization }
 RSUMLCalypso >> tabOrder [
 	^ 200

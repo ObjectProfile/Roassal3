@@ -18,7 +18,7 @@ RSUMLPackageCalypso class >> classUmlTapActivation [
 
 { #category : #accessing }
 RSUMLPackageCalypso >> classes [
-	^ packages flatCollect: #classes.
+	^ self limitedClasses: (packages flatCollect: #classes).
 ]
 
 { #category : #defaults }
