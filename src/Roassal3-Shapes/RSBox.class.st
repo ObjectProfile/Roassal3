@@ -65,10 +65,10 @@ c
 -=-=-=-=-=-=-=-=-=
 "
 
-	aRSCornerRadius isNumber ifTrue: [ 
-		cornerRadius := RSCornerRadius new radius: aRSCornerRadius.
-		^ self	 ].
-	cornerRadius := aRSCornerRadius 
+	cornerRadius := aRSCornerRadius isNumber 
+		ifTrue: [ RSCornerRadius new radius: aRSCornerRadius ]
+		ifFalse: [ aRSCornerRadius ].
+	self resetPath.
 ]
 
 { #category : #testing }

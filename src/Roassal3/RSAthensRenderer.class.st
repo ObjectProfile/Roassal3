@@ -170,38 +170,38 @@ RSAthensRenderer >> buildBezierPath: bezier [
 
 { #category : #'creating path' }
 RSAthensRenderer >> buildBoxPath: box [
-	| rectangle simple corner |
-	rectangle := box baseRectangle.
-	simple := [ 
-		builder
-			absolute;
-			moveTo: rectangle topLeft;
-			lineTo: rectangle topRight;
-			lineTo: rectangle bottomRight;
-			lineTo: rectangle bottomLeft;
-			lineTo: rectangle topLeft;
-			closePath ].
-	corner := [ 
-		| c |
-		c := box cornerRadius.
-		builder
-			absolute;
-			moveTo: rectangle topLeft + (c topLeft@0);
-			lineTo: rectangle topRight - (c topRight@0);
-			cwArcTo: rectangle topRight + (0@c topRight) angle: Float halfPi;
-			lineTo: rectangle bottomRight- (0 @ c bottomRight);
-			cwArcTo: rectangle bottomRight - (c bottomRight @ 0) angle: Float halfPi;
-			lineTo: rectangle bottomLeft + (c bottomLeft @ 0);
-			cwArcTo: rectangle bottomLeft - (0@ c bottomLeft) angle: Float halfPi;
-			lineTo: rectangle topLeft + (0@ c topLeft);
-			cwArcTo: rectangle topLeft + (c topLeft@0) angle: Float halfPi;
-			closePath
-		 ].
-
 	box hasCornerRadius 
-		ifTrue: corner
-		ifFalse: simple
+		ifTrue: [ self buildCornerBoxPath: box ]
+		ifFalse: [ self buildSimpleBoxPath: box ]
 	
+]
+
+{ #category : #'creating path' }
+RSAthensRenderer >> buildCornerBoxPath: box [
+	| c rectangle e w2 h2 tl tr bl br min |
+	c := box cornerRadius.
+	rectangle := box baseRectangle.
+	e := rectangle extent.
+	w2 := e x / 2.0.
+	h2 := e y / 2.0.
+	min := w2 min: h2.
+	tl := (c topLeft min: min) max: 0.
+	tr := (c topRight min: min) max: 0.
+	bl := (c bottomLeft min: min) max: 0.
+	br := (c bottomRight min: min) max: 0.
+	
+	builder
+		absolute;
+		moveTo: rectangle topLeft + (tl@0);
+		lineTo: rectangle topRight - (tr@0);
+		cwArcTo: rectangle topRight + (0@tr) angle: Float halfPi;
+		lineTo: rectangle bottomRight- (0 @ br);
+		cwArcTo: rectangle bottomRight - (br @ 0) angle: Float halfPi;
+		lineTo: rectangle bottomLeft + (bl @ 0);
+		cwArcTo: rectangle bottomLeft - (0@ bl) angle: Float halfPi;
+		lineTo: rectangle topLeft + (0@ tl);
+		cwArcTo: rectangle topLeft + (tl @0) angle: Float halfPi;
+		closePath.
 ]
 
 { #category : #'creating path' }
@@ -444,6 +444,20 @@ RSAthensRenderer >> buildRingPath: ring [
 				to: x4@y4 negated.
 	].
 	builder close.
+]
+
+{ #category : #'creating path' }
+RSAthensRenderer >> buildSimpleBoxPath: box [
+	| rectangle |
+	rectangle := box baseRectangle.
+	builder
+		absolute;
+		moveTo: rectangle topLeft;
+		lineTo: rectangle topRight;
+		lineTo: rectangle bottomRight;
+		lineTo: rectangle bottomLeft;
+		lineTo: rectangle topLeft;
+		closePath
 ]
 
 { #category : #accessing }

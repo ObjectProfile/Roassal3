@@ -44,6 +44,19 @@ RSCornerRadius >> initialize [
 	self radius: 0.
 ]
 
+{ #category : #transforming }
+RSCornerRadius >> interpolateTo: other at: t [
+	"other is an instance of RSCornerRadius
+	t is a float between 0 and 1"
+	| |
+	^ self class new
+		topLeft: (self topLeft interpolateTo: other topLeft at: t);
+		topRight: (self topRight interpolateTo: other topRight at: t);
+		bottomLeft: (self bottomLeft interpolateTo: other bottomLeft at: t);
+		bottomRight: (self bottomRight interpolateTo: other bottomRight at: t);
+		yourself
+]
+
 { #category : #accessing }
 RSCornerRadius >> left: aNumber [
 	topLeft := bottomLeft := aNumber

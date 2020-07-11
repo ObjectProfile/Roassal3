@@ -192,3 +192,33 @@ RSBasicAnimationExamples >> example06Parallel [
 	canvas when: RSMouseClick do: [ :evt | canvas animations do: #toggle ].
 	^ canvas
 ]
+
+{ #category : #lines }
+RSBasicAnimationExamples >> example07CornerRadius [
+	<script: 'self new example07CornerRadius open'>
+	| c paint b from to |
+	c := RSCanvas new.
+	paint := LinearGradientPaint fromArray: 
+		{ 0->Color red.
+		1->Color black }.
+	paint start: -100 asPoint; stop: 100 asPoint.
+	b := RSBox new
+		size: 200;
+		paint: paint;
+		cornerRadius: 0;
+		border: (RSBorder new width: 3).
+	c add: b.
+	from := RSCornerRadius new topLeft: 200; bottomRight: 200.
+	to := RSCornerRadius new topRight: 200; bottomLeft: 200.
+	c newAnimation
+		repeat;
+		duration: 4 seconds;
+		scale: (NSScale linear 
+			domain: #(0 0.5 1);
+			range: #(0 1 0));
+		onStepDo: [:t | 
+			b cornerRadius: (from interpolateTo: to at: t).
+			c signalUpdate.
+			].
+	^ c
+]

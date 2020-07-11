@@ -358,8 +358,8 @@ RSBasicShapeExamples >> example14BasicBitmap [
 ]
 
 { #category : #'boxes and ellipses' }
-RSBasicShapeExamples >> example15BasicRoundBoxses [
-	<script: 'self new example15BasicRoundBoxses open'>
+RSBasicShapeExamples >> example15BasicRoundBoxes [
+	<script: 'self new example15BasicRoundBoxes open'>
 
 	| c |
 	c := RSCanvas new.
