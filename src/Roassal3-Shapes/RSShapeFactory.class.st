@@ -27,6 +27,15 @@ RSShapeFactory class >> arrowedLine [
 	^ RSArrowedLine new
 ]
 
+{ #category : #lines }
+RSShapeFactory class >> arrowedLineWithOffset: aFloat [
+	"[0 1] value"
+	| inst |
+	inst := self arrowedLine.
+	inst shape markerEnd offsetRatio: aFloat.
+	^ inst
+]
+
 { #category : #shapes }
 RSShapeFactory class >> bitmap [
 	^ RSBitmap new
