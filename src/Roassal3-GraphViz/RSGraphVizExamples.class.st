@@ -140,3 +140,62 @@ RSGraphVizExamples >> example03Basic [
 
 
 ]
+
+{ #category : #examples }
+RSGraphVizExamples >> example04Layout [
+	<script: 'self new example04Layout'>
+	| canvas node |
+	canvas := RSCanvas new.
+	node := [ :str | | ellipse label |
+		ellipse := RSEllipse new withBorder; noPaint.
+		label := RSLabel new text: str.
+		ellipse extent: label extent + 20.
+		RSComposite new
+			model: str;
+			children: {ellipse. label };
+			yourself ].
+	canvas add: (node value: 'Hello').
+	canvas add: (node value: 'World').
+	canvas nodes @ RSDraggable.
+	canvas add: (RSArrowedLine new
+		withBorderAttachPoint;
+		from: canvas nodes first;
+		to: canvas nodes second;
+		yourself).
+	RSGraphVizLayout on: canvas nodes.
+	canvas open.
+	
+
+
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> example05Layout [
+	<script: 'self new example05Layout'>
+	| canvas node |
+	canvas := RSCanvas new.
+	node := [ :str | | ellipse label |
+		ellipse := RSEllipse new withBorder; noPaint.
+		label := RSLabel new text: str.
+		ellipse extent: label extent + 20.
+		RSComposite new
+			model: str;
+			children: {ellipse. label };
+			draggable;
+			yourself ].
+	Collection withAllSubclassesDo: [ :cls | 
+		canvas add: (node value: cls name).
+		 ].
+	RSEdgeBuilder arrowedLine 
+		canvas: canvas;
+		withBorderAttachPoint;
+		shapes: canvas nodes;
+		connectFrom: [:str | str asClass superclass name ].
+	
+	RSGraphVizLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	canvas open.
+	
+
+
+]
