@@ -94,3 +94,49 @@ fontsize=12;
 "RSGraphVizLayout on: canvas shapes."
 
 ]
+
+{ #category : #examples }
+RSGraphVizExamples >> example03Basic [
+	<script: 'self new example03Basic'>
+	| canvas node converter process |
+	canvas := RSCanvas new.
+	node := [ :str | | ellipse label |
+		ellipse := RSEllipse new withBorder; noPaint.
+		label := RSLabel new text: str.
+		ellipse extent: label extent + 20.
+		RSComposite new
+			model: str;
+			children: {ellipse. label };
+			yourself ].
+	canvas add: (node value: 'Hello').
+	canvas add: (node value: 'World').
+	canvas nodes @ RSDraggable.
+	canvas add: (RSArrowedLine new
+		withBorderAttachPoint;
+		from: canvas nodes first;
+		to: canvas nodes second;
+		yourself).
+	converter := RSDotConverter new.
+	canvas accept: converter.
+	
+	process := OSSUnixSubprocess new
+		command: '/usr/local/bin/dot';
+		arguments: {'-Tsvg'};
+		workingDirectory: FileLocator home fullName;
+		addAllEnvVariablesFromParentWithoutOverride;
+		redirectStdout;
+		redirectStderr;
+		redirectStdin;
+		run.
+
+	process stdinStream
+		nextPutAll: converter stream contents;
+		close.		
+	process waitForExit.
+	process stdoutStream upToEndOfFile inspect.
+	process closeAndCleanStreams.
+	canvas open.
+	
+
+
+]
