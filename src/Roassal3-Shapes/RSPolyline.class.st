@@ -22,7 +22,8 @@ RSPolyline >> cornerRadii [
 
 { #category : #accessing }
 RSPolyline >> cornerRadii: aNumber [
-	radius := aNumber abs
+	radius := aNumber abs.
+	self resetPath.
 ]
 
 { #category : #testing }

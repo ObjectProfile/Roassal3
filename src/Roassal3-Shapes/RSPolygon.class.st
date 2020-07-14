@@ -149,6 +149,7 @@ c
 
 	"
 	radius := aNumber abs.
+	self resetPath.
 ]
 
 { #category : #private }
