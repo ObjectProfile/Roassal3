@@ -171,6 +171,10 @@ RSPolygon >> extent: newExtent [
 
 { #category : #geometry }
 RSPolygon >> geometry [
+	| rect e |
+	rect := self encompassingRectangle.
+	e := rect extent.
+	e = (0@0) ifTrue: [ ^ rect floatCenter asGPoint ].
 	^ GPolygon
 		vertices: self points + self position
 ]
