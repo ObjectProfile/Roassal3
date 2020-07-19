@@ -264,8 +264,8 @@ RSComposite >> privateEdges [
 ]
 
 { #category : #private }
-RSComposite >> privateEdges: aTSGroup [
-	edges := aTSGroup
+RSComposite >> privateEdges: aRSGroup [
+	edges := aRSGroup
 ]
 
 { #category : #private }
@@ -274,8 +274,8 @@ RSComposite >> privateNodes [
 ]
 
 { #category : #private }
-RSComposite >> privateNodes: aTSGroup [
-	nodes := aTSGroup
+RSComposite >> privateNodes: aRSGroup [
+	nodes := aRSGroup
 ]
 
 { #category : #actions }
