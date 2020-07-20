@@ -157,9 +157,9 @@ RSBoundingShape >> initializeMatrix [
 ]
 
 { #category : #edges }
-RSBoundingShape >> isDirectlyConnectedTo: anElement [
+RSBoundingShape >> isDirectlyConnectedTo: aShape [
 	connectedEdges ifNil: [ ^ false ].
-	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
+	^ connectedEdges anySatisfy: [ :edge | edge to == aShape ]
 ]
 
 { #category : #testing }
