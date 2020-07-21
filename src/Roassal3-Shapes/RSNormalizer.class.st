@@ -111,7 +111,8 @@ Class {
 	#instVars : [
 		'scale',
 		'executeBlock',
-		'shapes'
+		'shapes',
+		'minAndMaxBlock'
 	],
 	#category : #'Roassal3-Shapes-Util'
 }
@@ -275,31 +276,30 @@ RSNormalizer >> executeBlock: anOneArgBlock [
 { #category : #accessing }
 RSNormalizer >> from: aValue [
 	"Set the lower limit of the normalized value. For example:
--=-=-=-=-=-=-=-=-=
-v := RSView new.
+
+```Smalltalk
+v := RSCanvas new.
 
 classes := Collection withAllSubclasses.
-es := RSShapeBuilder circle elementsOn: classes.
+es := classes collect: [ :cls | RSEllipse new model: cls ] as: RSGroup.
 
 v addAll: es.
 es @ RSPopup @ RSDraggable.
 
-
 RSNormalizer size
-	elements: es;
-	from: 2;
-	to: 50;
+	shapes: es;
+	from: 5;
+	to: 20;
 	normalize: #numberOfMethods.
 	
 RSNormalizer color
 	shapes: es;
-	from: Color blue;
 	to: Color pink;
 	normalize: #numberOfMethods.
 RSGridLayout on: es.
-v @ RSControlsView.
+v @ RSCanvasController.
 v  
--=-=-=-=-=-=-=-=-=
+```
 "
 	scale from: aValue
 ]
@@ -308,13 +308,19 @@ v
 RSNormalizer >> initialize [
 	super initialize.
 	scale := NSScale linear.
-	shapes := #()
-
+	shapes := #().
+	minAndMaxBlock := #yourself
 ]
 
 { #category : #'private - accessing' }
 RSNormalizer >> key [
 	^ #normalizerValue
+]
+
+{ #category : #accessing }
+RSNormalizer >> minAndMaxBlock: aOneArgBlock [
+	"This method sets the min and the max values for the provided shapes. It is useful to override the value found in the shapes. The argument is evaluated with one argument of a tupple of size 2"
+	minAndMaxBlock := aOneArgBlock
 ]
 
 { #category : #'private - accessing' }
@@ -327,7 +333,7 @@ RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
 		shape propertyAt: self key put: res.
 		min := min min: res.
 		max := max max: res ].
-	^ { min. max }.
+	^ minAndMaxBlock rsValue: { min . max }
 ]
 
 { #category : #normalizer }
@@ -393,29 +399,30 @@ RSNormalizer >> shapes: someShapes [
 { #category : #accessing }
 RSNormalizer >> to: aValue [
 	"Set the upper limit of the normalized value. For example:
--=-=-=-=-=-=-=-=-=
-v := RSView new.
+
+```Smalltalk
+v := RSCanvas new.
 
 classes := Collection withAllSubclasses.
-es := RSShapeBuilder circle elementsOn: classes.
+es := classes collect: [ :cls | RSEllipse new model: cls ] as: RSGroup.
 
 v addAll: es.
 es @ RSPopup @ RSDraggable.
 
 
 RSNormalizer size
-	elements: es;
+	shapes: es;
 	to: 20;
 	normalize: #numberOfMethods.
 	
 RSNormalizer color
-	elements: es;
+	shapes: es;
 	to: Color pink;
 	normalize: #numberOfMethods.
 RSGridLayout on: es.
-v @ RSControlsView.
+v @ RSCanvasController.
 v  
--=-=-=-=-=-=-=-=-=
+```
 "
 	scale to: aValue
 
