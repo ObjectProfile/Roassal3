@@ -172,9 +172,9 @@ RSGraphVizExamples >> example04Layout [
 { #category : #examples }
 RSGraphVizExamples >> example05Layout [
 	<script: 'self new example05Layout'>
-	| canvas node |
+	| canvas node labeled |
 	canvas := RSCanvas new.
-	node := [ :str | | ellipse label |
+	"node := [ :str | | ellipse label |
 		ellipse := RSEllipse new withBorder; noPaint.
 		label := RSLabel new text: str.
 		ellipse extent: label extent + 20.
@@ -182,10 +182,21 @@ RSGraphVizExamples >> example05Layout [
 			model: str;
 			children: {ellipse. label };
 			draggable;
+			yourself ]."
+	node := [ :str | | label |
+		label := RSLabel new text: str.
+		RSEllipse new 
+			model: str;
+			extent: label extent + 20;
+			noPaint;
+			withBorder;
+			draggable;
 			yourself ].
+	
 	Collection withAllSubclassesDo: [ :cls | 
 		canvas add: (node value: cls name).
 		 ].
+	
 	RSEdgeBuilder arrowedLine 
 		canvas: canvas;
 		withBorderAttachPoint;
@@ -193,9 +204,102 @@ RSGraphVizExamples >> example05Layout [
 		connectFrom: [:str | str asClass superclass name ].
 	
 	RSGraphVizLayout on: canvas nodes.
+	labeled := RSLabeled new.
+	labeled location center; middle.
+	canvas nodes @ labeled.
 	canvas @ RSCanvasController.
 	canvas open.
 	
 
 
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> example06UniFamilyTree [
+	<script: 'self new example06UniFamilyTree'>
+	| canvas nodeBlock labeled edges nodes |
+	canvas := RSCanvas new.
+	
+	nodeBlock := [ :str | | label |
+		label := RSLabel new text: str.
+		RSEllipse new 
+			model: str;
+			extent: label extent + 20;
+			noPaint;
+			withBorder;
+			draggable;
+			yourself ].
+	edges := self unixFamilyTree.
+	nodes := (edges collect: [ :asso | asso key ] as: Set).
+	nodes := nodes addAll: (edges collect: [ :asso | asso value ] as: Set).
+	canvas addAll: (nodes collect: nodeBlock).
+	RSEdgeBuilder arrowedLine 
+		canvas: canvas;
+		withBorderAttachPoint;
+		shapes: canvas nodes;
+		useAssociations: edges.
+	
+	RSGraphVizLayout on: canvas nodes.
+	"RSTreeLayout on: canvas nodes."
+	labeled := RSLabeled new.
+	labeled location center; middle.
+	canvas nodes @ labeled.
+	canvas @ RSCanvasController.
+	canvas open.
+	
+
+
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> unixFamilyTree [
+	^ {'5th Edition' -> '6th Edition'.
+	'5th Edition' -> 'PWB 1.0'.
+	'6th Edition' -> 'LSX'.
+	'6th Edition' -> '1 BSD'.
+	'6th Edition' -> 'Mini Unix'.
+	'6th Edition' -> 'Wollongong'.
+	'6th Edition' -> 'Interdata'.
+	'Interdata' -> 'Unix/TS 3.0'.
+	'Interdata' -> 'PWB 2.0'.
+	'Interdata' -> '7th Edition'.
+	'7th Edition' -> '8th Edition'.
+	'7th Edition' -> '32V'.
+	'7th Edition' -> 'V7M'.
+	'7th Edition' -> 'Ultrix-11'.
+	'7th Edition' -> 'Xenix'.
+	'7th Edition' -> 'UniPlus+'.
+	'V7M' -> 'Ultrix-11'.
+	'8th Edition' -> '9th Edition'.
+	'1 BSD' -> '2 BSD'.
+	'2 BSD' -> '2.8 BSD'.
+	'2.8 BSD' -> 'Ultrix-11'.
+	'2.8 BSD' -> '2.9 BSD'.
+	'32V' -> '3 BSD'.
+	'3 BSD' -> '4 BSD'.
+	'4 BSD' -> '4.1 BSD'.
+	'4.1 BSD' -> '4.2 BSD'.
+	'4.1 BSD' -> '2.8 BSD'.
+	'4.1 BSD' -> '8th Edition'.
+	'4.2 BSD' -> '4.3 BSD'.
+	'4.2 BSD' -> 'Ultrix-32'.
+	'PWB 1.0' -> 'PWB 1.2'.
+	'PWB 1.0' -> 'USG 1.0'.
+	'PWB 1.2' -> 'PWB 2.0'.
+	'USG 1.0' -> 'CB Unix 1'.
+	'USG 1.0' -> 'USG 2.0'.
+	'CB Unix 1' -> 'CB Unix 2'.
+	'CB Unix 2' -> 'CB Unix 3'.
+	'CB Unix 3' -> 'Unix/TS++'.
+	'CB Unix 3' -> 'PDP-11 Sys V'.
+	'USG 2.0' -> 'USG 3.0'.
+	'USG 3.0' -> 'Unix/TS 3.0'.
+	'PWB 2.0' -> 'Unix/TS 3.0'.
+	'Unix/TS 1.0' -> 'Unix/TS 3.0'.
+	'Unix/TS 3.0' -> 'TS 4.0'.
+	'Unix/TS++' -> 'TS 4.0'.
+	'CB Unix 3' -> 'TS 4.0'.
+	'TS 4.0' -> 'System V.0'.
+	'System V.0' -> 'System V.2'.
+	'System V.2' -> 'System V.3'}.
 ]

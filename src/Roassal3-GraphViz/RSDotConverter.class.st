@@ -23,7 +23,7 @@ RSDotConverter >> stream [
 
 { #category : #visiting }
 RSDotConverter >> visitBoundingShape: aShape [
-	stream << aShape model
+	stream << '"'; << aShape model; << '"'.
 ]
 
 { #category : #visiting }
@@ -40,7 +40,9 @@ RSDotConverter >> visitCanvas: aCanvas [
 { #category : #visiting }
 RSDotConverter >> visitLine: aLine [
 	stream 
+		<< '"';
 		<< aLine from model;
-		<< ' -> ';
-		<< aLine to model.
+		<< '" -> "';
+		<< aLine to model;
+		<< '"'.
 ]
