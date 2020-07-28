@@ -4,7 +4,8 @@
 Roassal3 is an agile visualization engine for Pharo 8 and Pharo 9. Roassal is made to visualize data in an interactive way data. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
 
 
-## Installation on Pharo
+## Pharo Installations
+Two instalation flavors are available: stable and latest (a.k.a bleeding-edge).
 
 ### Stable version
 Execute the following code snippet in a Playground:
@@ -17,7 +18,6 @@ Metacello new
 ```
 
 ### Latest version
-
 Execute the following code snippet in a Playground:
 ```Smalltalk
 Metacello new
