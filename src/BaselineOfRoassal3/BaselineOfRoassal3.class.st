@@ -23,8 +23,12 @@ BaselineOfRoassal3 >> baseline: spec [
 				spec repository: 'github://pharo-contributions/Geometry' ].
 			spec baseline: 'NumericScales'with: [ 
 				spec repository: 'github://ObjectProfile/NumericScales' ].
-			
+			spec 
+				baseline: 'OSSubprocess'
+				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
+				
 			"The packages to use, but not load"
+			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
 			self
 				roassalCorePackagesIn: spec;
 				roassalExamplesIn: spec;
@@ -50,6 +54,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
 				group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
 				group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
+				group: 'GraphViz' with: #(Core 'Roassal3-GraphViz');
 				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples') ].
 
 		
