@@ -28,12 +28,13 @@ BaselineOfRoassal3 >> baseline: spec [
 				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
 				
 			"The packages to use, but not load"
-			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
+			
 			self
 				roassalCorePackagesIn: spec;
 				roassalExamplesIn: spec;
 				roassalTestsIn: spec;
 				roassalSVGIn: spec.
+			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
 			
 			"packages to load"
 			core := self corePackagesNames.
