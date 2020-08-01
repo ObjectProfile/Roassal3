@@ -14,6 +14,11 @@ RSGraphVizLine >> initialize [
 	
 ]
 
+{ #category : #testing }
+RSGraphVizLine >> intersects: aRectangle [
+	^ true
+]
+
 { #category : #initialization }
 RSGraphVizLine >> manyPointsFor: edge [
 	
@@ -46,6 +51,7 @@ RSGraphVizLine >> setSVGPath [
 { #category : #initialization }
 RSGraphVizLine >> twoPointsFor: edge [
 	| pos1 pos2 |
+	edge from ifNil: [ ^ 'M0 0 L100 100' ].
 	pos1 := edge from position.
 	pos2 := edge to position. 
 	^ 'M {1} {2} L {3} {4}' format: { pos1 x. pos1 y. pos2 x. pos2 y  }. 

@@ -226,6 +226,11 @@ RSShape >> initialize [
 ]
 
 { #category : #testing }
+RSShape >> intersects: aRectangle [
+	^ self encompassingRectangle intersects: aRectangle
+]
+
+{ #category : #testing }
 RSShape >> isEdge [
 	^ false
 ]

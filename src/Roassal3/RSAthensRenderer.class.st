@@ -643,16 +643,17 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 { #category : #visiting }
 RSAthensRenderer >> visitLine: line [
 	| path paint |
-	athensCanvas pathTransform restoreAfter: [ 
-		path := self getOrCreatePathOf: line.
-		paint := line paintOn: self.
-		paint ifNotNil: [ 
-			athensCanvas
-				setPaint: paint;
-				drawShape: path ].
-		self visitBorderIfNecessary: line.
-		self visitMarkersIfNecessary: line.
-		].
+	athensCanvas setPathMatrix.
+	path := self getOrCreatePathOf: line.
+	
+	paint := line paintOn: self.
+	paint ifNotNil: [ 
+		athensCanvas
+			setPaint: paint;
+			drawShape: path ].
+	self visitBorderIfNecessary: line.
+	self visitMarkersIfNecessary: line.
+	
 ]
 
 { #category : #'visiting - helpers' }
