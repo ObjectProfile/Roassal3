@@ -415,8 +415,11 @@ RSHighlightable >> setupAntAnimation [
 
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedShapes: shapeOrCanvas [
-	shapeOrCanvas topParent properties 
-		at: self propertyKey 
+	| top |
+	top := shapeOrCanvas topParent.
+	top ifNil: [ ^ self ].
+	top
+		propertyAt: self propertyKey 
 		ifPresent: [ :shapes |
 			shapes do: [ :s | self announceUnHightlight: s source: shapeOrCanvas ].
 		 ].

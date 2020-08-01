@@ -456,7 +456,7 @@ RSShape >> sparent: anObject [
 
 { #category : #accessing }
 RSShape >> topParent [
-	^ parent topParent
+	^ parent ifNotNil: [ parent topParent ]
 ]
 
 { #category : #accessing }

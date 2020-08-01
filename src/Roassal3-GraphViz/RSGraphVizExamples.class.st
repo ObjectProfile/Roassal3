@@ -218,7 +218,7 @@ RSGraphVizExamples >> example05Layout [
 
 { #category : #examples }
 RSGraphVizExamples >> example06UniFamilyTree [
-	<script: 'self new example06UniFamilyTree'>
+	<script: 'self new example06UniFamilyTree inspect'>
 	| canvas nodeBlock labeled edges nodes baseline |
 	canvas := RSCanvas new.
 	
@@ -246,12 +246,155 @@ RSGraphVizExamples >> example06UniFamilyTree [
 		useAssociations: edges.
 	RSGraphVizLayout on: canvas nodes.
 	canvas @ RSCanvasController.
-	canvas inspect.
+	^ canvas
 ]
 
 { #category : #examples }
-RSGraphVizExamples >> example07RoasalPackages [
-	<script: 'self new example07RoasalPackages'>
+RSGraphVizExamples >> example07UniFamilyTreeAnimated [
+	<script: 'self new example07UniFamilyTreeAnimated'>
+	| canvas nodes com paint base icon show hide animation high labelAnimation force |
+	canvas := self example06UniFamilyTree.
+	nodes := canvas nodes copy.
+	com := RSComposite new.
+	com add: (RSLabel new 
+		fontName: 'Courier';
+		color: Color white;
+		fontSize: 20; 
+		text: 'Roassal layouts').
+	high := RSHighlightable new.
+	labelAnimation := [ :shape :color :delta | | pos |
+		shape color: color.
+		pos := shape 
+			propertyAt: #position 
+			ifAbsentPut: [ shape position ].
+		canvas newAnimation
+			duration: 200 milliSeconds;
+			from: pos;
+			to: pos + delta;
+			on: shape set: #position:.
+		 ].
+	high 
+		when: RSHighlightEvent do: [ :evt | 
+			labelAnimation value: evt shape value: Color black value: -5@0.
+			 ];
+		when: RSUnHighlightEvent do: [:evt |
+			labelAnimation value: evt shape value: Color white value: 5@0. ].
+	force := RSForceBasedLayout new.
+	force charge: -500; doNotUseProgressBar.
+	com addAll: ({RSTreeLayout new. force. RSSugiyamaLayout new. RSGraphVizLayout new } 
+		collect: [ :layout | | name | 
+			name := layout class name.
+			RSLabel new 
+				color: Color white;
+				fontName: 'Courier';
+				when: RSMouseClick do: [ :evt |
+					| fromPos toPos allPoints | 
+					canvas edges do: [ :ed | ed removeKey: #points ].
+					fromPos := nodes collect: #position.
+					layout on: nodes.
+					toPos := nodes collect: #position.
+					allPoints := canvas edges collect: [ :ed | ed propertyAt: #points ].
+					canvas edges do: [ :ed | ed removeKey: #points ].
+					canvas newAnimation
+						duration: 3 seconds;
+						onStepDo: [ :t | 
+							nodes doWithIndex: [ :node :index | | from to |
+								from := fromPos at: index.
+								to := toPos at: index.
+								node translateTo: (from interpolateTo: to at: t)
+								].
+							canvas zoomToFit.
+							].
+					allPoints first ifNotNil: [ 
+						canvas newAnimation
+							delay: 3 seconds;
+							duration: 1 second;
+							onStepDo: [ :t |
+								canvas edges doWithIndex: [ :ed :index| 
+									| newPoints |
+									newPoints := allPoints at: index.
+									newPoints := newPoints collectWithIndex: [ :p :i | 
+										| temp |
+										temp := i >= (newPoints size / 2)
+											ifTrue: [ newPoints last ]
+											ifFalse: [ newPoints first ].
+										temp interpolateTo: p at: t
+										].
+									ed propertyAt: #points put: newPoints.
+									ed resetPath.
+									canvas signalUpdate. ]
+								 ].
+						 ].	
+					 ];
+				@ high;
+				text: (name copyFrom: 3 to: name size - 6).
+		]).
+	RSVerticalLineLayout on: com children.
+	com 
+		adjustToChildren;
+		padding: 20;
+		translateBy: 10; 
+		isFixed: true.
+	paint := LinearGradientPaint fromArray:
+		{0->((Color colorFrom: '30cfd0') alpha: 0.8). 
+		1->((Color colorFrom: '330867') alpha:0.8) }.
+	base := com baseRectangle.
+	paint start: base topCenter; stop: base bottomCenter.
+	com paint: paint.
+	canvas add: com.
+	com propertyAt: #position put: com position.
+	icon := RSBitmap new form: (self iconNamed: #hierarchy).
+	icon translateTo: 10@10.
+	icon isFixed: true.
+	animation :=  [ :pre :order :easing :post|
+		high unhighlightRecordedShapes: canvas.
+		(com hasProperty: #anime) ifFalse: [ 
+			| anime ext pos |
+			pre value.
+			
+			ext := NSScale linear
+				range: (order value: {1@1. icon extent / base extent}).
+			pos := NSScale linear
+				range: (order value: { com propertyAt: #position. icon position }).
+			anime := canvas newAnimation
+				easing: (easing value: RSEasing );
+				duration: 500 milliSeconds;
+				onStepDo: [ :t | | e p |
+					e := ext scale: t.
+					p := pos scale: t.
+					com matrix
+						loadIdentity;
+						scaleBy: e;
+						translation: p.
+					canvas signalUpdate.
+					  ];
+				when: RSAnimationEndEvent do: [
+					post value.
+					com removeKey: #anime ].
+			com propertyAt: #anime put: anime ].
+		 ].
+	show := [ 
+		animation 
+			value: [ icon remove. canvas addShape: com ]
+			value: #reverse
+			value: #backOut
+			value: nil
+		 ].
+	hide := [ 
+		animation
+			value: nil
+			value: #yourself
+			value: #backIn
+			value: [ com remove. canvas addShape: icon ] ].
+	canvas when: RSMouseClick do: hide.
+	com when: RSMouseClick do: hide.
+	icon when: RSMouseClick do: show.
+	canvas open
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> example08RoasalPackages [
+	<script: 'self new example08RoasalPackages'>
 	| canvas nodeBlock labeled packagesRegExp packages baseline |
 	canvas := RSCanvas new.
 	
