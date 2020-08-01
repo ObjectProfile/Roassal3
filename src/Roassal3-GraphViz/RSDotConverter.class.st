@@ -5,15 +5,23 @@ Class {
 	#name : #RSDotConverter,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		'stream',
+		'nodes'
 	],
 	#category : #'Roassal3-GraphViz'
 }
 
 { #category : #visiting }
+RSDotConverter >> idFor: aShape [
+	^ nodes at: aShape ifAbsentPut: [ 
+		(nodes size+1) asString ].
+]
+
+{ #category : #visiting }
 RSDotConverter >> initialize [
 	super initialize.
 	stream := WriteStream on: String new.
+	nodes := Dictionary new.
 ]
 
 { #category : #accessing }
@@ -23,26 +31,33 @@ RSDotConverter >> stream [
 
 { #category : #visiting }
 RSDotConverter >> visitBoundingShape: aShape [
-	stream << '"'; << aShape model; << '"'.
+	stream << (self idFor: aShape); << ' [label="' ; << aShape model asString; << '"]'.
+	
 ]
 
 { #category : #visiting }
 RSDotConverter >> visitCanvas: aCanvas [
-	stream << 'digraph g '.
+	aCanvas shapes accept: self
+]
+
+{ #category : #visiting }
+RSDotConverter >> visitGroup: aRSGroup [
+	stream << 'strict graph '.
 	
 	stream << '{'.
-	aCanvas shapes do: [ :node | node accept: self ]
+	aRSGroup do: [ :node | node accept: self ]
 		separatedBy: [ stream crlf ]. 
 	stream << '}'.
 	stream close.
+	
 ]
 
 { #category : #visiting }
 RSDotConverter >> visitLine: aLine [
 	stream 
 		<< '"';
-		<< aLine from model;
-		<< '" -> "';
-		<< aLine to model;
+		<< (self idFor: aLine from);
+		<< '" -- "';
+		<< (self idFor: aLine to);
 		<< '"'.
 ]

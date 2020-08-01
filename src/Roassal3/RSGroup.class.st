@@ -58,6 +58,11 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #visiting }
+RSGroup >> accept: aVisitor [
+	aVisitor visitGroup: self
+]
+
 { #category : #accessing }
 RSGroup >> add: shape [
 	self resetShapeFromModelCache.

@@ -36,7 +36,7 @@ process := OSSUnixSubprocess new
 
 process stdinStream
 	nextPutAll: '
-digraph digraph G {Hello->World}
+digraph G {Hello->World}
 ';
 	close.		
 process waitForExit.
@@ -47,6 +47,8 @@ process closeAndCleanStreams.
 { #category : #examples }
 RSGraphVizExamples >> example02Basic [
 	<script: 'self new example02Basic'>
+	"this is just an idea for a future example"
+	true ifTrue: [ ^ self ].
 	RSGraphVizExamples fromString: '
 ## "It encodes the so-called philosophers dilemma.  Neato pretty much approximates the way how humans would layout the graph." Contributed by Manfred Jeusfield.
 ## Command to generate the layout: "neato -Tpng thisfile > thisfile.png" 
@@ -217,7 +219,7 @@ RSGraphVizExamples >> example05Layout [
 { #category : #examples }
 RSGraphVizExamples >> example06UniFamilyTree [
 	<script: 'self new example06UniFamilyTree'>
-	| canvas nodeBlock labeled edges nodes |
+	| canvas nodeBlock labeled edges nodes baseline |
 	canvas := RSCanvas new.
 	
 	nodeBlock := [ :str | | label |
@@ -233,22 +235,54 @@ RSGraphVizExamples >> example06UniFamilyTree [
 	nodes := (edges collect: [ :asso | asso key ] as: Set).
 	nodes := nodes addAll: (edges collect: [ :asso | asso value ] as: Set).
 	canvas addAll: (nodes collect: nodeBlock).
-	RSEdgeBuilder arrowedLine 
-		canvas: canvas;
-		withBorderAttachPoint;
-		shapes: canvas nodes;
-		useAssociations: edges.
-	
-	RSGraphVizLayout on: canvas nodes.
-	"RSTreeLayout on: canvas nodes."
 	labeled := RSLabeled new.
 	labeled location center; middle.
 	canvas nodes @ labeled.
-	canvas @ RSCanvasController.
-	canvas open.
+	baseline := RSGraphVizLine new.
 	
+	(RSEdgeBuilder new: baseline)
+		canvas: canvas;
+		shapes: canvas nodes;
+		useAssociations: edges.
+	RSGraphVizLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	canvas inspect.
+]
 
-
+{ #category : #examples }
+RSGraphVizExamples >> example07RoasalPackages [
+	<script: 'self new example07RoasalPackages'>
+	| canvas nodeBlock labeled packagesRegExp packages baseline |
+	canvas := RSCanvas new.
+	
+	nodeBlock := [ :str | | label |
+		label := RSLabel new text: str.
+		RSBox new 
+			model: str;
+			cornerRadius: 30;
+			extent: label extent + 20;
+			color: Color white;
+			withBorder;
+			draggable;
+			yourself ].
+	packagesRegExp := { 'Roassal3*' }.
+	packages := packagesRegExp flatCollect: [ :regExp | 
+	    RPackageOrganizer default packages 
+	        select: [ :p | regExp match: p packageName ] ].
+	canvas addAll: (packages collect: nodeBlock).
+	labeled := RSLabeled new.
+	labeled location center; middle.
+	canvas nodes @ labeled.
+	baseline := RSGraphVizLine new.
+	
+	(RSEdgeBuilder new: baseline)
+		canvas: canvas;
+		shapes: canvas nodes;
+		connectFrom: #yourself toAll: #dependentPackages.
+	canvas edges pushBack.
+	RSGraphVizLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	canvas inspect.
 ]
 
 { #category : #examples }
