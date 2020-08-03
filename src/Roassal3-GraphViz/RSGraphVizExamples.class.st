@@ -227,7 +227,7 @@ RSGraphVizExamples >> example06UniFamilyTree [
 		RSEllipse new 
 			model: str;
 			extent: label extent + 20;
-			noPaint;
+			color: Color white;
 			withBorder;
 			draggable;
 			yourself ].
@@ -255,6 +255,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 	| canvas nodes com paint base icon show hide animation high labelAnimation force |
 	canvas := self example06UniFamilyTree.
 	nodes := canvas nodes copy.
+	canvas edges pushBack.
 	com := RSComposite new.
 	com add: (RSLabel new 
 		fontName: 'Courier';
@@ -269,7 +270,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 			ifAbsentPut: [ shape position ].
 		canvas newAnimation
 			duration: 200 milliSeconds;
-			from: pos;
+			from: shape position;
 			to: pos + delta;
 			on: shape set: #position:.
 		 ].
@@ -278,9 +279,9 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 			labelAnimation value: evt shape value: Color black value: -5@0.
 			 ];
 		when: RSUnHighlightEvent do: [:evt |
-			labelAnimation value: evt shape value: Color white value: 5@0. ].
+			labelAnimation value: evt shape value: Color white value: 0@0. ].
 	force := RSForceBasedLayout new.
-	force charge: -500; doNotUseProgressBar.
+	force charge: -600; length: 100; doNotUseProgressBar.
 	com addAll: ({RSTreeLayout new. force. RSSugiyamaLayout new. RSGraphVizLayout new } 
 		collect: [ :layout | | name | 
 			name := layout class name.
@@ -309,6 +310,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 						canvas newAnimation
 							delay: 3 seconds;
 							duration: 1 second;
+							easing: (RSEasing elasticOut period: 0.30; amplitude: 1.3);
 							onStepDo: [ :t |
 								canvas edges doWithIndex: [ :ed :index| 
 									| newPoints |
@@ -389,7 +391,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 	canvas when: RSMouseClick do: hide.
 	com when: RSMouseClick do: hide.
 	icon when: RSMouseClick do: show.
-	canvas open
+	canvas open extent: 800@600.
 ]
 
 { #category : #examples }
