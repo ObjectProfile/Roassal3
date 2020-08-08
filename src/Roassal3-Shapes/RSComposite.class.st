@@ -317,6 +317,20 @@ RSComposite >> sessionChanged [
 	children do: #sessionChanged
 ]
 
+{ #category : #'as yet unclassified' }
+RSComposite >> shapeFromModel: anObject using: aBlock [
+	^ self model
+		  ifNil: [ 
+			  self nodes do: [ :aShape | 
+				  (aShape shapeFromModel: anObject using: aBlock) ifNotNil: [ 
+					  :found | ^ found ] ].
+			  nil ]
+		  ifNotNil: [ :model | 
+			  (aBlock value: model value: anObject)
+				  ifTrue: [ self ]
+				  ifFalse: [ nil ] ]
+]
+
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |

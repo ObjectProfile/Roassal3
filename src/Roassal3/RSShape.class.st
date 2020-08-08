@@ -415,6 +415,13 @@ RSShape >> shape [
 	^ self
 ]
 
+{ #category : #'as yet unclassified' }
+RSShape >> shapeFromModel: anObject using: aBlock [
+	^ (aBlock value: self model value: anObject)
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
+]
+
 { #category : #'accessing - computed' }
 RSShape >> shapeWithAction: eventClass forPosition: position [
 	^ (self hasEventCallback and: [ 

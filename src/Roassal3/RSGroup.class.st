@@ -129,19 +129,28 @@ g shapeFromModel: 'hello'
 => a RSBox(hello))
 
 	"
+
 	| t |
-	self shapeFromModelCache 
-		at: anObject 
-		ifPresent: [ :v |
-			v isCollection ifFalse: [ ^ v ] ].
+	self shapeFromModelCache
+		at: anObject
+		ifPresent: [ :v | v isCollection ifFalse: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-		ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
-		ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-	
+	t := anObject class == CompiledMethod
+		     ifTrue: [ 
+		     self shapeFromModel: anObject using: [ :a :b | a == b ] ]
+		     ifFalse: [ 
+		     self shapeFromModel: anObject using: [ :a :b | a = b ] ].
 	self shapeFromModelCache at: anObject put: t.
 	^ t
+]
+
+{ #category : #accessing }
+RSGroup >> shapeFromModel: anObject using: aBlock [
+	self do: [ :aShape | 
+		(aShape shapeFromModel: anObject using: aBlock) ifNotNil: [ :found | 
+			^ found ] ].
+	^ nil
 ]
 
 { #category : #accessing }
