@@ -226,6 +226,11 @@ RSShape >> initialize [
 ]
 
 { #category : #testing }
+RSShape >> intersects: aRectangle [
+	^ self encompassingRectangle intersects: aRectangle
+]
+
+{ #category : #testing }
 RSShape >> isEdge [
 	^ false
 ]
@@ -465,7 +470,7 @@ RSShape >> sparent: anObject [
 
 { #category : #accessing }
 RSShape >> topParent [
-	^ parent topParent
+	^ parent ifNotNil: [ parent topParent ]
 ]
 
 { #category : #accessing }
