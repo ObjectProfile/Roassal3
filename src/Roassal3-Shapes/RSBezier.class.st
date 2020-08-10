@@ -66,6 +66,19 @@ RSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
+{ #category : #testing }
+RSBezier >> includesPoint: aPoint [
+	| cp |
+	cp := self controlPoints.
+	cp size = 2 ifTrue: [ 
+		^ aPoint
+			onLineFrom: cp first
+			to: cp second
+			within: self includedRadius
+		 ].
+	^ false
+]
+
 { #category : #initialization }
 RSBezier >> initialize [
 	super initialize.

@@ -30,8 +30,8 @@ RSEllipse >> geometry [
 	e = (0@0) ifTrue: [ ^ p asGPoint ].
 	^ GEllipse 
 		center: p
-		vertex: p + (e x@ 0)
-		coVertex: p + (0@ e y)
+		vertex: p + (0@ e y)
+		coVertex:p + (e x@ 0) 
 ]
 
 { #category : #testing }
