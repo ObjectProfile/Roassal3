@@ -172,20 +172,32 @@ g add: (RSEllipse new model: 'world').
 g shapesFromModel: 'hello' 
 -=-=-=-=-=-=-=-=-=
 => a RSGroup(a RSBox(hello))
-	"	
+	"
 
 	| t key |
-	self shapeFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
+	self shapeFromModelCache
+		at: anObject
+		ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self select: [ :el | el model == anObject ] ]
-				ifFalse: [ self select: [ :el | el model = anObject ] ].
+	t := anObject class == CompiledMethod
+		     ifTrue: [ 
+		     self shapesFromModel: anObject using: [ :a :b | a == b ] ]
+		     ifFalse: [ 
+		     self shapesFromModel: anObject using: [ :a :b | a = b ] ].
+	key := anObject isNil
+		       ifTrue: [ 'KeyForNilObjects' ]
+		       ifFalse: [ anObject ].
 
 	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
-	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
 	self shapeFromModelCache at: key put: t.
 	^ t
+]
+
+{ #category : #accessing }
+RSGroup >> shapesFromModel: anObject using: aBlock [
+	^ self flatCollect: [ :aShape | 
+		  aShape shapesFromModel: anObject using: aBlock ]
 ]
 
 { #category : #accessing }

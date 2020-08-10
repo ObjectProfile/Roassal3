@@ -438,6 +438,13 @@ RSShape >> shapeWithActionForPosition: position [
 			ifFalse: [ ^ nil ]
 ]
 
+{ #category : #'as yet unclassified' }
+RSShape >> shapesFromModel: anObject using: aBlock [
+	^ (aBlock value: self model value: anObject)
+		  ifTrue: [ Array with: self ]
+		  ifFalse: [ Array empty ]
+]
+
 { #category : #actions }
 RSShape >> signalUpdate [
 	"Refresh the canvas"

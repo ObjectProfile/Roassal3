@@ -325,10 +325,7 @@ RSComposite >> shapeFromModel: anObject using: aBlock [
 				  (aShape shapeFromModel: anObject using: aBlock) ifNotNil: [ 
 					  :found | ^ found ] ].
 			  nil ]
-		  ifNotNil: [ :model | 
-			  (aBlock value: model value: anObject)
-				  ifTrue: [ self ]
-				  ifFalse: [ nil ] ]
+		  ifNotNil: [ :model | super shapeFromModel: anObject using: aBlock ]
 ]
 
 { #category : #'accessing - computed' }
@@ -360,6 +357,16 @@ RSComposite >> shapes [
 { #category : #accessing }
 RSComposite >> shapes: aRSGroup [
 	self children: aRSGroup
+]
+
+{ #category : #'as yet unclassified' }
+RSComposite >> shapesFromModel: anObject using: aBlock [
+	^ self model
+		  ifNil: [ 
+			  self nodes flatCollect: [ :aShape | 
+				  aShape shapesFromModel: anObject using: aBlock ] ]
+		  ifNotNil: [ :model | 
+		  super shapesFromModel: anObject using: aBlock ]
 ]
 
 { #category : #edges }
