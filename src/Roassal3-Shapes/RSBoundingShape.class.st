@@ -178,6 +178,11 @@ RSBoundingShape >> loadBoundingShape: aShape [
 		parent: aShape parent.
 ]
 
+{ #category : #matrix }
+RSBoundingShape >> loadIdentity [
+	matrix loadIdentity
+]
+
 { #category : #actions }
 RSBoundingShape >> loadShape: aShape [
 	self loadBoundingShape: aShape.
@@ -274,6 +279,21 @@ c
 -=-=-=
 	"
 	matrix rotateByDegrees: angle
+]
+
+{ #category : #matrix }
+RSBoundingShape >> rotateByRadians: angle [
+	"Rotate the shape. Here is an exanmple:
+-=-=-=
+c := RSCanvas new.
+c add: (RSBox new
+	size: 10;
+	rotateByRadians: Float pi / 3;
+	yourself).
+c
+-=-=-=
+	"
+	matrix rotateByRadians: angle
 ]
 
 { #category : #matrix }
