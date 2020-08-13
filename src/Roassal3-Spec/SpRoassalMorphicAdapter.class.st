@@ -51,6 +51,7 @@ SpRoassalMorphicAdapter >> freeCanvas [
 	canvas := temp roassalCanvas.
 	widget canvas: canvas.
 	canvas morph: widget.
+	canvas extent: widget extent.
 ]
 
 { #category : #initialization }
