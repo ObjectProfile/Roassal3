@@ -21,19 +21,30 @@ Class {
 	#instVars : [
 		'labelShape',
 		'layout',
-		'textBlock'
+		'textBlock',
+		'wrapStrategy'
 	],
-	#category : #'Roassal3-Interaction-Popup'
+	#category : #'Roassal3-Interaction-Text'
 }
 
-{ #category : #accessing }
+{ #category : #hooks }
+RSMultilineLabelBuilder >> basicShapeFor: aString [
+	| lines |
+	lines := aString lines.
+	
+	^ lines size = 1 
+		ifTrue: [ self singleLabelFor: lines first ]
+		ifFalse: [ self compositeLabelFor: lines ]
+]
+
+{ #category : #hooks }
 RSMultilineLabelBuilder >> compositeLabelFor: lines [ 
 	| shapes |
 	shapes := lines collect: [:line | 
-		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ].
+		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ] 
+		as: RSGroup.
 	self layout on: shapes.
-	^ RSComposite new
-		shapes: shapes;
+	^ shapes asShape 
 		position: 0@0;
 		yourself.
 ]
@@ -41,7 +52,8 @@ RSMultilineLabelBuilder >> compositeLabelFor: lines [
 { #category : #initialization }
 RSMultilineLabelBuilder >> initialize [
 	super initialize.
-	self labelShape: RSLabel new; textBlock: #asString
+	self labelShape: RSLabel new; textBlock: #asString.
+	self wrapStrategy: RSNoWrapStrategy new.
 ]
 
 { #category : #accessing }
@@ -62,18 +74,21 @@ RSMultilineLabelBuilder >> layout [
 		yourself ].
 ]
 
+{ #category : #accessing }
+RSMultilineLabelBuilder >> layout: aRSLayout [
+	layout := aRSLayout
+]
+
 { #category : #hooks }
 RSMultilineLabelBuilder >> shapeFor: anObject [
-	| text lines |
+	| text |
 	text := self textFor: anObject.
-	lines := text lines.
-	^ lines size = 1
-		ifTrue: [ self singleLabelFor: text ]
-		ifFalse: [ self compositeLabelFor: lines ]
+	^ wrapStrategy wrapTextFor: text with: self.
+	
 	
 ]
 
-{ #category : #accessing }
+{ #category : #hooks }
 RSMultilineLabelBuilder >> singleLabelFor: text [
 	^ self labelShape copy
 		text: text;
@@ -89,4 +104,14 @@ RSMultilineLabelBuilder >> textBlock: aBlock [
 { #category : #accessing }
 RSMultilineLabelBuilder >> textFor: anObject [
 	^ (textBlock rsValue: anObject) asString
+]
+
+{ #category : #accessing }
+RSMultilineLabelBuilder >> wrapStrategy [
+	^ wrapStrategy
+]
+
+{ #category : #accessing }
+RSMultilineLabelBuilder >> wrapStrategy: aRSWrapStrategy [
+	wrapStrategy := aRSWrapStrategy
 ]

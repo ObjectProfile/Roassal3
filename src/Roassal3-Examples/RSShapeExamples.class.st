@@ -615,18 +615,25 @@ RSShapeExamples >> example26AnimatedPopup [
 { #category : #shapes }
 RSShapeExamples >> example27MultilineLabelBasic [
 	<script: 'self new example27MultilineLabelBasic open'>
-	| canvas shapeBuilder |
+	| canvas shapeBuilder text |
 	canvas := RSCanvas new.
+	text := '"tu est loin, 
+très loin de tous    ces regards vicieux 
+qui s''alimentent de ta lumière"'.
 	shapeBuilder := RSMultilineLabelBuilder new.
 	shapeBuilder labelShape
 		font: 20;
 		italic.
-	canvas add:(shapeBuilder shapeFor: '"tu est loin, 
-très loin de tous ces regards vicieux 
-qui s''alimentent de ta lumière"').
-	canvas nodes when: RSMouseClick do: [ :evt | canvas nodes last inspect ].
+	canvas add:(shapeBuilder shapeFor: text).
+	shapeBuilder wrapStrategy: (RSWrapStrategy new wrapMaxWidth: 200).
+	canvas add:(shapeBuilder shapeFor: text).
+	shapeBuilder wrapStrategy: (RSWrapEllipsisStrategy new wrapMaxWidth: 200).
+	canvas add:(shapeBuilder shapeFor: String loremIpsum).
+	RSFlowLayout  on: canvas nodes.
+	canvas nodes when: RSMouseClick do: [ :evt | evt shape inspect ].
 	canvas showEncompassingRectangles.
-	^ canvas
+	
+	^ canvas zoomToFit 
 ]
 
 { #category : #shapes }
