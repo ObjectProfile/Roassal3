@@ -105,6 +105,11 @@ RSGroup >> models: someModels [
 	self with: someModels do: [ :s :m | s model: m ]
 ]
 
+{ #category : #transforming }
+RSGroup >> position [
+	^ self encompassingRectangle center
+]
+
 { #category : #actions }
 RSGroup >> pushBack [ 
 	self do: [:each | each pushBack ]
