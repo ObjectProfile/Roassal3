@@ -20,7 +20,7 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec package: 'Athens-SVG-PathConverter' with: [
 				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 			spec baseline: 'Geometry' with: [ 
-				spec repository: 'github://pharo-contributions/Geometry:v1.1.2/src' ].
+				spec repository: 'github://pharo-contributions/Geometry/src' ].
 			spec baseline: 'NumericScales'with: [ 
 				spec repository: 'github://ObjectProfile/NumericScales/src' ].
 			spec 
