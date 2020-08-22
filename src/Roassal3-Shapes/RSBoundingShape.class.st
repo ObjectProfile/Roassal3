@@ -122,6 +122,7 @@ RSBoundingShape >> globalMatrix [
 
 { #category : #testing }
 RSBoundingShape >> hasEdges [
+	"Return true if the shape has any outgoing or incoming edge"
 	^ connectedEdges notNil
 ]
 
