@@ -4,7 +4,7 @@
 
 *Responsibility*: maintain and render plots
 
-*Collaborators*: a chart closely interact with plots and decorations. 
+*Collaborators*: a chart closely interacts with plots and decorations. 
 
 *Variables*:
 - `plots`: the list of plots 
