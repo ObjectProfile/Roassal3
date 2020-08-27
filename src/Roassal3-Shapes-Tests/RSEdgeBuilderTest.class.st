@@ -207,7 +207,7 @@ RSEdgeBuilderTest >> testFromObjectsToElements [
 
 { #category : #tests }
 RSEdgeBuilderTest >> testHasEdges [
-	| e s1 s2 |
+	| s1 s2 |
 	s1 := canvas nodes first.
 	s2 := canvas nodes second.
 	self deny: s1 hasEdges.

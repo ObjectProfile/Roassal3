@@ -212,7 +212,7 @@ RSComposite >> hasChildren [
 { #category : #initialization }
 RSComposite >> initialize [
 	super initialize.
-	paint := nil.
+	self paint: nil.
 	self resetPath.
 	
 ]
@@ -276,6 +276,16 @@ RSComposite >> privateNodes [
 { #category : #private }
 RSComposite >> privateNodes: aRSGroup [
 	nodes := aRSGroup
+]
+
+{ #category : #private }
+RSComposite >> privateShapes [
+	^ children
+]
+
+{ #category : #private }
+RSComposite >> privateShapes: aCollection [
+	children := aCollection
 ]
 
 { #category : #actions }

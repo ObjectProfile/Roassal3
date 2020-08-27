@@ -42,6 +42,7 @@ RSTContainer >> addNode: aShape [
 
 { #category : #accessing }
 RSTContainer >> edges [
+	"Return all the lines contained in the canvas."
 	^ self privateEdges
 		ifNil: [ | res |
 			self privateEdges: (res := RSGroup new).
@@ -50,6 +51,7 @@ RSTContainer >> edges [
 
 { #category : #accessing }
 RSTContainer >> nodes [ 
+	"Return all the shapes except lines contained in the canvas."
 	^ self privateNodes
 		ifNil: [ | res |
 			self privateNodes: (res := RSGroup new).

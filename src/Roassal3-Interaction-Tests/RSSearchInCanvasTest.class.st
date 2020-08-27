@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RSSearchInCanvasTest >> setUp [
+	super setUp.
 	c := RSCanvas new.
 	shapes := (1 to: 10) * 100
 		collect: [ :n | 
