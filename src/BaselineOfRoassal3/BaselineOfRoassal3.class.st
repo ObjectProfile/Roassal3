@@ -16,13 +16,13 @@ BaselineOfRoassal3 >> baseline: spec [
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
 			spec baseline: 'AthensSVG' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG' ].
+				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 			spec package: 'Athens-SVG-PathConverter' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG' ].
-			spec package: 'Geometry' with: [ 
-				spec repository: 'github://pharo-contributions/Geometry' ].
+				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+			spec baseline: 'Geometry' with: [ 
+				spec repository: 'github://pharo-contributions/Geometry/src' ].
 			spec baseline: 'NumericScales'with: [ 
-				spec repository: 'github://ObjectProfile/NumericScales' ].
+				spec repository: 'github://ObjectProfile/NumericScales/src' ].
 			spec 
 				baseline: 'OSSubprocess'
 				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].

@@ -48,7 +48,7 @@ RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML [
-	^ methodsLimitUML ifNil: [ methodsLimitUML := 20 ].
+	^ methodsLimitUML ifNil: [ methodsLimitUML := 30 ].
 ]
 
 { #category : #accessing }

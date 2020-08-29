@@ -155,7 +155,6 @@ RSBorder >> initialize [
 	super initialize.
 	paint := Color black.
 	width := 1.
-	style := nil
 ]
 
 { #category : #'style-join' }

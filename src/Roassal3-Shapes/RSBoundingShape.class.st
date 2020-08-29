@@ -339,19 +339,6 @@ RSBoundingShape >> transform: aPoint [
 	^ matrix transform: aPoint
 ]
 
-{ #category : #actions }
-RSBoundingShape >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	oldPosition = aPoint ifTrue: [ ^ self ].
-	self position: aPoint.
-	self announce: [RSPositionChangedEvent new 
-		shape: self; 
-		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
-]
-
 { #category : #edges }
 RSBoundingShape >> updateConnectedEdges [
 	self shouldUpdateEdges

@@ -10,6 +10,7 @@ Class {
 
 { #category : #running }
 RSForceBasedLayoutTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new.
 	classes := Collection withAllSubclasses collect:[:cls |
 		RSBox new model: cls; size: 10; yourself].

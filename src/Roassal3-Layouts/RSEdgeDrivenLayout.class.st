@@ -82,13 +82,6 @@ RSEdgeDrivenLayout >> fromPositions: anArray [
 	fromPositions := anArray
 ]
 
-{ #category : #'initialize-release' }
-RSEdgeDrivenLayout >> initialize [
-	"Initialization"
-	super initialize.
-	edges := nil.
-]
-
 { #category : #testing }
 RSEdgeDrivenLayout >> isEdgeDrivenLayout [
 	^ true

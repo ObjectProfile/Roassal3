@@ -42,7 +42,7 @@ RSArrowedLine >> border: aRSBorder [
 	self markersDo: [ :m | m shape border: aRSBorder ].
 ]
 
-{ #category : #initialization }
+{ #category : #copying }
 RSArrowedLine >> copy [
 	| copy head |
 	copy := super copy.
@@ -66,7 +66,7 @@ RSArrowedLine >> initialize [
 	self markerEnd: self defaultHead.
 ]
 
-{ #category : #initialization }
+{ #category : #copying }
 RSArrowedLine >> postCopy [
 	super postCopy.
 	markers := nil.

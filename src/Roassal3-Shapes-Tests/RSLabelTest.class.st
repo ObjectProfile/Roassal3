@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RSLabelTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new
 ]
 

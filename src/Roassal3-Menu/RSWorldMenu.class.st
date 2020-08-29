@@ -40,6 +40,7 @@ RSWorldMenu class >> menu01ReportABugOn: aBuilder [
 		order: 1;
 		label: 'Report a Bug';
 		icon: (self iconNamed: 'smallDebug');
+		help: 'Will open the github page to report an issue';
 		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/issues/new' ]
 ]
 
@@ -50,6 +51,7 @@ RSWorldMenu class >> menu02GithubOn: aBuilder [
 		parent: #Roassal3;
 		order: 2;
 		label: 'Github';
+		help: 'Open Roassal3 git hubpage';
 		icon: (self iconNamed: 'github');
 		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/' ]
 ]
@@ -61,6 +63,7 @@ RSWorldMenu class >> menu03DiscordOn: aBuilder [
 		parent: #Roassal3;
 		order: 3;
 		label: 'Chat with us';
+		help: 'Will open discord web to chat with us in Pharo server';
 		icon: self discord;
 		action: [ WebBrowser openOn: 'https://discord.gg/YTEaAu6' ]
 ]
@@ -68,10 +71,12 @@ RSWorldMenu class >> menu03DiscordOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #Roassal3Documentation)
 		parent: #Roassal3;
 		order: 4;
 		label: 'Online documentation';
+		help: 'Will open the webpage http://AgileVisualization.com';
 		icon: (self iconNamed: #smallHelp);
 		action: [ WebBrowser openOn: 'http://AgileVisualization.com' ]
 ]
@@ -83,19 +88,21 @@ RSWorldMenu class >> menu05ExamplesOn: aBuilder [
 		parent: #Roassal3;
 		order: 5;
 		label: 'Examples';
+		help: 'Browse examples packages for Roassal3';
 		icon: self roassalIcon;
 		action: [ (RPackageOrganizer default packageNamed: 'Roassal3-Examples') browse ]
 ]
 
 { #category : #menu }
 RSWorldMenu class >> menu06PluginsOn: aBuilder [
-	<worldMenu>
+	"<worldMenu>
 	(aBuilder item: #Roassal3Plugins)
 		parent: #Roassal3;
 		order: 6;
 		label: 'Plugins';
+		help: 'TODO';
 		icon: self roassalIcon;
-		action: [ self inform: 'TODO' ]
+		action: [ self inform: 'TODO' ]"
 ]
 
 { #category : #menu }
@@ -105,6 +112,7 @@ RSWorldMenu class >> menu11SelfOn: aBuilder [
 		parent: #Roassal3;
 		order: 11;
 		label: 'This menu';
+		help: 'Open RSWorldMenu';
 		icon: (self iconNamed: 'smallExport');
 		action: [ self browse ]
 ]

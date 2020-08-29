@@ -10,6 +10,7 @@ Class {
 
 { #category : #running }
 RSTransformableTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new.
 	shapes := (1 to: 5) 
 		collect: [ :i | RSBox new size: 10; position: 10@10 * i]

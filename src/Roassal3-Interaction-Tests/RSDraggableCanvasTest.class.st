@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RSDraggableCanvasTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new.
 	canvas add: (RSEllipse new width: 40; height: 20; yourself).
 	
