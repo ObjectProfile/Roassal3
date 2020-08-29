@@ -109,6 +109,15 @@ RSHighlightable class >> defaultRed [
 	
 ]
 
+{ #category : #'instance creation' }
+RSHighlightable class >> withEdges [
+
+	^ self new
+		  withEdges;
+		  highlightBorder: (RSBorder new
+				   color: Color black)
+]
+
 { #category : #announce }
 RSHighlightable >> announce: anEvent [
 	announcer ifNil: [ ^ self ].
