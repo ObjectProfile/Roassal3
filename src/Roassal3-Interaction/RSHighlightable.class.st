@@ -257,7 +257,7 @@ RSHighlightable >> highlightShapes: aBlockOnArg [
 
 { #category : #'public - hooks' }
 RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
-	"aBlock recives an element and return a collection of shapes"
+	"aBlock receives a shape and returns a collection of shapes"
 	self highlightShapes: [ :e | 
 		| shapes |
 		shapes := aBlock value: e.
