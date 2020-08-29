@@ -115,9 +115,9 @@ RSEdgeBuilder class >> new [
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> new: aTSShape [
+RSEdgeBuilder class >> new: aRSShape [
 	 ^ super new 
-		shape: aTSShape;
+		shape: aRSShape;
 		yourself
 		
 ]
@@ -416,9 +416,10 @@ RSEdgeBuilder >> shape [
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> shape: aTSShape [
-	self assert: aTSShape isEdge.
-	shape := aTSShape
+RSEdgeBuilder >> shape: aRSShape [
+	"Set the shape used to build edges"
+	self assert: aRSShape isEdge.
+	shape := aRSShape
 ]
 
 { #category : #accessing }

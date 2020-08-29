@@ -153,7 +153,7 @@ c
 { #category : #initialization }
 RSBorder >> initialize [
 	super initialize.
-	paint := Color black.
+	paint := Color gray.
 	width := 1.
 ]
 
