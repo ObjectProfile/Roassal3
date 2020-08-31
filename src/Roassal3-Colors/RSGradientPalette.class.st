@@ -140,6 +140,27 @@ RSGradientPalette class >> redSalvation [
 		1->'453a94' }
 ]
 
+{ #category : #view }
+RSGradientPalette class >> roassalCanvas [
+	<example>
+	| canvas gradients |
+	canvas := RSCanvas new.
+	gradients := self class methods select: [ :met | met category = #gradients ].
+	canvas addAll: (gradients collect: [ :met |
+		| paint |
+		paint := met selector value: self.
+		paint start: 0@ -15; stop: 0@15.
+		RSEllipse new 
+			model: met selector;
+			popup;
+			paint: paint;
+			radius: 30.
+		]).
+	RSGridLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	canvas open.
+]
+
 { #category : #gradients }
 RSGradientPalette class >> sunnyMorning [
 	^ LinearGradientPaint fromArray:
