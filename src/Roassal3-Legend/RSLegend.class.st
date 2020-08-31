@@ -176,7 +176,8 @@ RSLegend >> renderOnDemandIn: aView [
 		RSHorizontalLineLayout on: legendLabels.
 		RSLocation new
 			inner; top; right;
-			move: legendLabels 
+			offset: -5 @ 5;
+			move: legendLabels
 				on: aView basicRectangle.
 	].
 	legendLabels := aView propertyAt: #legendLabels
