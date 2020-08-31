@@ -6,10 +6,17 @@ Class {
 	#superclass : #RSInteraction,
 	#instVars : [
 		'presentation',
-		'shadowColor'
+		'shadowColor',
+		'padding'
 	],
 	#category : #'Roassal3-Inspector-Interactions'
 }
+
+{ #category : #initialization }
+RSSelectionPresentation >> initialize [
+	super initialize.
+	self padding: 10.
+]
 
 { #category : #accessing }
 RSSelectionPresentation >> key [
@@ -19,7 +26,23 @@ RSSelectionPresentation >> key [
 { #category : #hooks }
 RSSelectionPresentation >> onShape: aShape [
 	aShape model ifNil: [ ^ self ].
-	aShape when: RSMouseClick do: [ self selection: aShape ]
+	aShape canvas ifNotNil: [ :c | 
+		c removeInteractionIfPresent: self class.
+		c when: RSMouseClick do: [ :evt |
+			self removeShadowOn: evt.
+			evt signalUpdate. ]
+		 ].
+	aShape when: RSMouseClick do: [ :evt | self selection: evt shape ].
+]
+
+{ #category : #accessing }
+RSSelectionPresentation >> padding [
+	^ padding
+]
+
+{ #category : #accessing }
+RSSelectionPresentation >> padding: aNumber [
+	padding := aNumber
 ]
 
 { #category : #accessing }
@@ -34,11 +57,16 @@ RSSelectionPresentation >> presentation: aRSRoassalPresentation [
 
 { #category : #hooks }
 RSSelectionPresentation >> putShadowOn: aShape [
-	| shadow |
+	| shadow pad |
+	pad := self padding / aShape canvas camera scale.
 	shadow := RSBox new
-		fromRectangle: (aShape encompassingRectangle expandBy: aShape extent * 0.05); 
+		fromRectangle: (aShape encompassingRectangle expandBy: pad); 
 		paint: self shadowColor;
+		cornerRadius: pad * 0.75;
 		yourself.
+	aShape removeInteractionIfPresent: RSLocation.
+	RSLocation new
+		stick: shadow on: aShape.
 	aShape parent
 		addShape: shadow before: aShape.
 	aShape canvas 
@@ -55,7 +83,8 @@ RSSelectionPresentation >> release [
 RSSelectionPresentation >> removeShadowOn: aShape [
 	aShape canvas
 		propertyAt: self key
-		ifPresent: [ :shadow |shadow remove ].
+		ifPresent: [ :shadow | shadow remove ].
+	aShape canvas removeKey: self key.
 ]
 
 { #category : #hooks }
