@@ -188,7 +188,7 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 		color: self textColor;
 		text: (modelDescriptor classname rsValue: model);
 		yourself.
-	label fontSize: label fontSize * 1.2.
+	label fontSize: label fontSize.
 	^ { label } asGroup asShape padding: 0@ 5; yourself
 	
 ]

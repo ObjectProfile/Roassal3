@@ -147,8 +147,8 @@ RSLabeled >> model: aBlock [
 ]
 
 { #category : #hooks }
-RSLabeled >> modelFor: anElement [
-	^ modelBlock rsValue: anElement.
+RSLabeled >> modelFor: aRSShape [
+	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }
