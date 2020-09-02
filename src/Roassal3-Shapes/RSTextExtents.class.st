@@ -12,8 +12,28 @@ Class {
 		'x_bearing',
 		'y_bearing'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#classVars : [
+		'empty'
+	],
+	#category : #'Roassal3-Shapes-Text'
 }
+
+{ #category : #requirements }
+RSTextExtents class >> empty [
+	^ empty ifNil: [ empty := self new empty ]
+]
+
+{ #category : #public }
+RSTextExtents >> empty [
+	self 
+		width: 0;
+		height: 0;
+		x_advance: 0;
+		y_advance: 0;
+		x_bearing: 0;
+		y_bearing: 0.
+
+]
 
 { #category : #public }
 RSTextExtents >> from: ref [ 
@@ -46,6 +66,13 @@ RSTextExtents >> printOn: s [
 		(sel value: self) printOn: s.
 		 ] separatedBy: [ s << String crlf ].
 	s << ')'.
+]
+
+{ #category : #public }
+RSTextExtents >> translationPoint [
+	| ybn |
+	ybn := y_bearing negated.
+	^ ((x_advance + x_bearing) / -2 @ 0) + (0@((ybn/2)- ((height- ybn)/2)))
 ]
 
 { #category : #accessing }

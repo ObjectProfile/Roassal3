@@ -15,7 +15,7 @@ Class {
 
 { #category : #'events-processing' }
 RSKeyNavigationCanvas >> expandCollapse: evt [
-	evt canvas morph owner expandBoxHit
+	evt canvas morph window expandBoxHit
 ]
 
 { #category : #initialization }

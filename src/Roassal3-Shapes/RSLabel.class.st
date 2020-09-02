@@ -10,6 +10,7 @@ Class {
 		'fontSize',
 		'font',
 		'emphasis',
+		'metricsProvider',
 		'textExtents'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
@@ -63,13 +64,13 @@ c open
 
 { #category : #private }
 RSLabel >> computeTextExtents [
-	| ext |
-	ext := CairoFontMetricsProvider new
-		font: font;
-		extentsOf: text.
-	^ RSTextExtents new
-		from: ext;
-		yourself
+	text ifNil: [ ^ RSTextExtents empty ].
+	^ self metricsProvider extentsOf: text with: font
+]
+
+{ #category : #accessing }
+RSLabel >> defaultMetricsProvider [
+	^ RSCairoMetricsProvider new
 ]
 
 { #category : #accessing }
@@ -152,12 +153,16 @@ c @ RSControlsCanvas
 	self resetCache
 ]
 
+{ #category : #testing }
+RSLabel >> hasText [
+	^ text notNil and: [ text isNotEmpty ]
+]
+
 { #category : #initialization }
 RSLabel >> initialize [
 	| defaultFont |
 	super initialize.
 	paint := Color black.
-	text := 'UNASSIGNED'.
 	defaultFont := self class defaultFont.
 	fontSize := defaultFont pixelSize.
 	emphasis := TextEmphasis normal.
@@ -213,6 +218,16 @@ RSLocate new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis italic.
+]
+
+{ #category : #accessing }
+RSLabel >> metricsProvider [
+	^ metricsProvider ifNil: [ metricsProvider := self defaultMetricsProvider ].
+]
+
+{ #category : #accessing }
+RSLabel >> metricsProvider: aRSMetricsProvider [
+	metricsProvider := aRSMetricsProvider
 ]
 
 { #category : #'managing font' }
