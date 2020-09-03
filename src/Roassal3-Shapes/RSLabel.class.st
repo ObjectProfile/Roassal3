@@ -11,7 +11,8 @@ Class {
 		'font',
 		'emphasis',
 		'metricsProvider',
-		'textExtents'
+		'textExtents',
+		'cairoGlyphs'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -60,6 +61,16 @@ RSLocate new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis bold.
+]
+
+{ #category : #'managing font' }
+RSLabel >> cairoGlyphs [
+	^ cairoGlyphs
+]
+
+{ #category : #'managing font' }
+RSLabel >> cairoGlyphs: aCairoGlyphsArray [
+	cairoGlyphs := aCairoGlyphsArray
 ]
 
 { #category : #private }
@@ -248,6 +259,18 @@ RSLabel >> resetCache [
 ]
 
 { #category : #'managing font' }
+RSLabel >> resetCairoGlyphs [
+	cairoGlyphs := nil
+]
+
+{ #category : #'managing font' }
+RSLabel >> sessionChanged [
+
+	super sessionChanged.
+	self resetCairoGlyphs
+]
+
+{ #category : #'managing font' }
 RSLabel >> struckOut [
 	self emphasisAdd: TextEmphasis struckOut.
 ]
@@ -280,7 +303,7 @@ RSLabel >> textHeight [
 RSLabel >> textWidth [
 	"without any transformation"
 	
-	^ self textExtents x_advance
+	^ self textExtents width
 ]
 
 { #category : #'managing font' }

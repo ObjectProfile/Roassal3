@@ -499,13 +499,30 @@ RSAthensRenderer >> drawPathLabel: label [
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
-	| paint |
-	paint := label paint.
-	paint ifNil: [ ^ self ].
+	| font |
+	label paint ifNil: [ ^ self ].
+
+	label cairoGlyphs ifNil: [ 
+		label cairoGlyphs: (CairoFontMetricsProvider new
+			font: label font;
+			glyphsOf: label text).
+		].
+	label path ifNil: [
+		label path: (CairoScaledFont fromFreetypeFont: label font realFont) ].
+
+	font := label path.
+	font lock.
+
 	athensCanvas 
-		setFont: label font;
-		setPaint: paint;
-		drawString: label text
+		setPathMatrix;
+		setScaledFont: font.
+	label paint loadOnCairoCanvas: athensCanvas.
+
+	athensCanvas
+		showGlyphs: label cairoGlyphs getHandle
+		size: label cairoGlyphs size.
+
+	font unlock
 ]
 
 { #category : #utilities }
