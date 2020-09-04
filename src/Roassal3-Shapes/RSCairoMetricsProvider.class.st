@@ -12,9 +12,9 @@ RSCairoMetricsProvider >> extentsOf: aRSLabel [
 	| res font h |
 	font := aRSLabel font.
 	res := super extentsOf: aRSLabel.
-	h := font height asFloat.
+	h := font getPreciseHeight asFloat.
 	res
 		height: h;
-		y_bearing: h *2/ -3.
+		y_bearing: font getPreciseAscent negated.
 	^ res
 ]
