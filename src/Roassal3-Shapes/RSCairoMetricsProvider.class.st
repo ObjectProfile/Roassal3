@@ -9,12 +9,12 @@ Class {
 
 { #category : #hooks }
 RSCairoMetricsProvider >> extentsOf: aRSLabel [
-	| res font h|
+	| res font h |
 	font := aRSLabel font.
 	res := super extentsOf: aRSLabel.
 	h := font height asFloat.
 	res
 		height: h;
-		y_bearing: (h / 4) - h.
+		y_bearing: h *2/ -3.
 	^ res
 ]
