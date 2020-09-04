@@ -63,23 +63,32 @@ c open
 	self emphasisAdd: TextEmphasis bold.
 ]
 
-{ #category : #'managing font' }
-RSLabel >> cairoGlyphs [
-	^ cairoGlyphs
+{ #category : #accessing }
+RSLabel >> cairoFont [
+	^ CairoScaledFont fromFreetypeFont: font asFreetypeFont
 ]
 
-{ #category : #'managing font' }
+{ #category : #accessing }
+RSLabel >> cairoGlyphs [
+	^ cairoGlyphs ifNil: [
+		cairoGlyphs := CairoFontMetricsProvider new
+			font: font;
+			glyphsOf: text ].
+]
+
+{ #category : #accessing }
 RSLabel >> cairoGlyphs: aCairoGlyphsArray [
 	cairoGlyphs := aCairoGlyphsArray
 ]
 
-{ #category : #private }
+{ #category : #metrics }
 RSLabel >> computeTextExtents [
-	text ifNil: [ ^ RSTextExtents empty ].
-	^ self metricsProvider extentsOf: text with: font
+	^ self hasText 
+		ifTrue: [ self metricsProvider extentsOf: self ]
+		ifFalse: [ RSTextExtents empty ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSLabel >> defaultMetricsProvider [
 	^ RSCairoMetricsProvider new
 ]
@@ -183,7 +192,7 @@ RSLabel >> initialize [
 		ifFalse: [ defaultFont familyName ]). 
 ]
 
-{ #category : #testing }
+{ #category : #private }
 RSLabel >> is: anInteger [
 	"anInteger is a valid code"
 	^ (emphasis emphasisCode bitAnd: anInteger) > 0
@@ -231,13 +240,14 @@ c open
 	self emphasisAdd: TextEmphasis italic.
 ]
 
-{ #category : #accessing }
+{ #category : #metrics }
 RSLabel >> metricsProvider [
-	^ metricsProvider ifNil: [ metricsProvider := self defaultMetricsProvider ].
+	^ metricsProvider ifNil: [ metricsProvider := RSMetricsProvider default ]
 ]
 
-{ #category : #accessing }
+{ #category : #metrics }
 RSLabel >> metricsProvider: aRSMetricsProvider [
+	"use this methods before use `text:`"
 	metricsProvider := aRSMetricsProvider
 ]
 
@@ -246,7 +256,7 @@ RSLabel >> normal [
 	self emphasis: TextEmphasis normal.
 ]
 
-{ #category : #'managing font' }
+{ #category : #initialization }
 RSLabel >> resetCache [ 
 	font := LogicalFont 
 		familyName: fontName
@@ -254,18 +264,17 @@ RSLabel >> resetCache [
 	
 	font := font emphasized: emphasis emphasisCode.
 	textExtents := nil.
-	
+	self resetCairoGlyphs.
 	self extent: self textWidth @ self textHeight.
 ]
 
-{ #category : #'managing font' }
+{ #category : #initialization }
 RSLabel >> resetCairoGlyphs [
 	cairoGlyphs := nil
 ]
 
-{ #category : #'managing font' }
+{ #category : #path }
 RSLabel >> sessionChanged [
-
 	super sessionChanged.
 	self resetCairoGlyphs
 ]
@@ -321,9 +330,4 @@ RSLocate new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis underlined.
-]
-
-{ #category : #accessing }
-RSLabel >> x_bearing [
-	^ self textExtents x_bearing
 ]

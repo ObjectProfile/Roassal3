@@ -1,3 +1,6 @@
+"
+Old version of metrics provider used in Roassal2 with fonts. It is a little slow
+"
 Class {
 	#name : #RSPharoMetricsProvider,
 	#superclass : #RSMetricsProvider,
@@ -5,8 +8,10 @@ Class {
 }
 
 { #category : #hooks }
-RSPharoMetricsProvider >> extentsOf: text with: font [
-	| w h |
+RSPharoMetricsProvider >> extentsOf: aRSLabel [
+	| w h font text |
+	font := aRSLabel font.
+	text := aRSLabel text.
 	w := (font widthOfString: text) asFloat.
 	h := font height asFloat.
 	^ RSTextExtents new

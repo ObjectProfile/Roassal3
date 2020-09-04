@@ -72,7 +72,7 @@ RSTextExtents >> printOn: s [
 RSTextExtents >> translationPoint [
 	| ybn |
 	ybn := y_bearing negated.
-	^ ((x_advance + x_bearing) / -2 @ 0) + (0@((ybn/2)- ((height- ybn)/2)))
+	^ (((width/ -2) - x_bearing)  @ 0) + (0@((ybn/2)- ((height- ybn)/2)))
 ]
 
 { #category : #accessing }

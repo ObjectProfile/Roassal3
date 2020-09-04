@@ -325,7 +325,8 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
-	"Keep a AthensCairoPath"
+	"-Keeps an AthensCairoPath, 
+	-this value is reset when the image is restarted"
 	path := aPath
 ]
 
