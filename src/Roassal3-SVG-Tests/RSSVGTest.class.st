@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal3-SVG-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSSVGTest >> testBimetricLine [
 	| s1 s2 l |
 	canvas := RSCanvas new.
@@ -32,7 +32,7 @@ RSSVGTest >> testBimetricLine [
 	^ canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSSVGTest >> testDrawSVG [
 	canvas addShape: (RSSVGPath new).
 	canvas addShape: (RSSVGPath new
@@ -41,7 +41,7 @@ RSSVGTest >> testDrawSVG [
 	canvas createMorph drawOnMockCanvas.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RSSVGTest >> testDrawSVGLine [
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
