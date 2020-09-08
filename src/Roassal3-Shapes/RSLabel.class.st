@@ -193,7 +193,7 @@ RSLabel >> fontSize [
 RSLabel >> fontSize: aNumber [
 	"Set the size of the label.
 Here is an example:
--=-=-=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 
 (1 to: 100 by: 5) shuffled do: [ :i |
@@ -202,8 +202,8 @@ c := RSCanvas new.
 	lbl @ RSPopup.
 ].
 RSFlowLayout on: c shapes.
-c @ RSControlsCanvas
--=-=-=-=-=-=
+c @ RSCanvasController
+```
 "
 	fontSize = aNumber ifTrue: [ ^ self ].
 	fontSize := aNumber.
