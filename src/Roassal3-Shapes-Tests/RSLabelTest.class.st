@@ -17,6 +17,16 @@ RSLabelTest >> setUp [
 ]
 
 { #category : #tests }
+RSLabelTest >> testCairoFitMetricsProvider [
+	| label h |
+	label := RSLabel new.
+	label text: '.'.
+	h := label height.
+	label metricsProvider: (RSCairoFitMetricsProvider new).
+	self assert: h > label height.
+]
+
+{ #category : #tests }
 RSLabelTest >> testDrawBorderLabel [
 	|  |
 	canvas addShape: (RSLabel new
