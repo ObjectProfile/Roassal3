@@ -1,5 +1,36 @@
 "
-I represent simple label text
+Instances of RSLabel uses font, text metrics, and a string. These labels can share fonts.
+
+Instance variables:
+- text: a String without character cr or lf or tabs.
+- fontName: a String, the font family name, Eg: `Source Code Pro`.
+- fontSize: a positive number.
+- font: an instance of LogicalFont, Eg: `LogicalFont familyName: 'Source Code Pro' pointSize: 20`
+- emphasis: an instance of TextEmphasis, Eg: `TextEmphasis italic`
+- metricsProvider: an instance of RSMetricProvider. Users of RSLabel can define a subvclass of RSMetricProvider in order to have differnt metrics for this class.
+- textExtents: an instance of RSTextExtents, it has text information of this class.
+- cairoGlyphs: private varible used to compute extents and draw this shape on the canvas
+
+
+```Smalltalk
+| c font words |
+c := RSCanvas new.
+font := LogicalFont familyName: 'Source Code Pro' pointSize: 20.
+words := String loremIpsum splitOn: ' '.
+c addAll: (words collect: [:word | 
+	RSLabel new
+		font: font;
+		text: word;
+		yourself ]).
+c showEncompassingRectangles.
+RSFlowLayout on: c nodes.
+	
+c @ RSCanvasController.
+c
+
+```
+
+For more fonts of your system use: `FreeTypeFontProvider current updateFromSystem`.
 "
 Class {
 	#name : #RSLabel,
@@ -52,12 +83,12 @@ RSLabel >> bold [
 Make the font bold
 
 | c lbl1 lbl2 |
-c := TSCanvas new.
-lbl1 := TSLabel new bold; text: 'hello'.
+c := RSCanvas new.
+lbl1 := RSLabel new bold; text: 'hello'.
 c addShape: lbl1.
-lbl2 := TSLabel new text: 'world'.
+lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
-RSLocate new below; move: lbl2 on: lbl1.
+RSLocation new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis bold.
@@ -65,20 +96,17 @@ c open
 
 { #category : #accessing }
 RSLabel >> cairoFont [
+	"used in drawing and extents computation"
 	^ CairoScaledFont fromFreetypeFont: font asFreetypeFont
 ]
 
 { #category : #accessing }
 RSLabel >> cairoGlyphs [
+	"used in drawing and extents computation"
 	^ cairoGlyphs ifNil: [
 		cairoGlyphs := CairoFontMetricsProvider new
 			font: font;
 			glyphsOf: text ].
-]
-
-{ #category : #accessing }
-RSLabel >> cairoGlyphs: aCairoGlyphsArray [
-	cairoGlyphs := aCairoGlyphsArray
 ]
 
 { #category : #metrics }
@@ -88,39 +116,39 @@ RSLabel >> computeTextExtents [
 		ifFalse: [ RSTextExtents empty ]
 ]
 
-{ #category : #initialization }
-RSLabel >> defaultMetricsProvider [
-	^ RSCairoMetricsProvider new
-]
-
-{ #category : #accessing }
-RSLabel >> descent [
-	^ font descent
+{ #category : #private }
+RSLabel >> createFont [
+	| aFont |
+	aFont := LogicalFont 
+		familyName: fontName
+		pointSize: fontSize.
+	aFont := aFont emphasized: emphasis emphasisCode.
+	^ aFont
 ]
 
 { #category : #accessing }
 RSLabel >> emphasis [
-"
-| c lbl |
-c := TSCanvas new.
-lbl := TSLabel new text: 'hello'.
-c addShape: lbl.
-c open
-"
-
 	^ emphasis
 ]
 
 { #category : #accessing }
-RSLabel >> emphasis: anEmphasis [
-	emphasis := anEmphasis.
-	self resetCache.
+RSLabel >> emphasis: aTextEmphasis [
+"
+| c lbl |
+c := RSCanvas new.
+lbl := RSLabel new text: 'hello'; emphasis: TextEmphasis italic.
+c addShape: lbl.
+c open
+"
+	emphasis = aTextEmphasis ifTrue: [ ^ self ].
+	emphasis := aTextEmphasis.
+	self resetFont.
 ]
 
 { #category : #'managing font' }
 RSLabel >> emphasisAdd: anEmphasis [
 	emphasis add: anEmphasis.
-	self resetCache
+	self resetFont.
 ]
 
 { #category : #accessing }
@@ -129,8 +157,15 @@ RSLabel >> font [
 ]
 
 { #category : #accessing }
-RSLabel >> font: aFont [
-	font := aFont
+RSLabel >> font: aLogicalFont [
+	font = aLogicalFont ifTrue: [ ^ self ].
+	font := aLogicalFont.
+	fontSize := font pointSize.
+	fontName := font familyName.
+	emphasis := TextEmphasis fromCode: font emphasis.
+	self fontName: self privateFontName.
+	self resetCache.
+	
 ]
 
 { #category : #accessing }
@@ -139,12 +174,13 @@ RSLabel >> fontName [
 ]
 
 { #category : #accessing }
-RSLabel >> fontName: string [
+RSLabel >> fontName: aString [
 	"
 	LogicalFontManager current allFamilies inspect
 	"
-	fontName := string.
-	self resetCache.
+	fontName = aString ifTrue: [ ^ self ].
+	fontName := aString.
+	self resetFont.
 	
 ]
 
@@ -154,7 +190,7 @@ RSLabel >> fontSize [
 ]
 
 { #category : #accessing }
-RSLabel >> fontSize: integer [
+RSLabel >> fontSize: aNumber [
 	"Set the size of the label.
 Here is an example:
 -=-=-=-=-=-=
@@ -169,8 +205,9 @@ RSFlowLayout on: c shapes.
 c @ RSControlsCanvas
 -=-=-=-=-=-=
 "
-	fontSize := integer.
-	self resetCache
+	fontSize = aNumber ifTrue: [ ^ self ].
+	fontSize := aNumber.
+	self resetFont.
 ]
 
 { #category : #testing }
@@ -180,16 +217,10 @@ RSLabel >> hasText [
 
 { #category : #initialization }
 RSLabel >> initialize [
-	| defaultFont |
 	super initialize.
 	paint := Color black.
-	defaultFont := self class defaultFont.
-	fontSize := defaultFont pixelSize.
-	emphasis := TextEmphasis normal.
+	self font: self class defaultFont.
 	
-	self fontName: (defaultFont realFont class == StrikeFont 
-		ifTrue: [ self class familyFontName ]
-		ifFalse: [ defaultFont familyName ]). 
 ]
 
 { #category : #private }
@@ -229,12 +260,12 @@ RSLabel >> italic [
 Make the font italic
 
 | c lbl1 lbl2 |
-c := TSCanvas new.
-lbl1 := TSLabel new italic; text: 'hello'.
+c := RSCanvas new.
+lbl1 := RSLabel new italic; text: 'hello'.
 c addShape: lbl1.
-lbl2 := TSLabel new text: 'world'.
+lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
-RSLocate new below; move: lbl2 on: lbl1.
+RSLocation new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis italic.
@@ -247,8 +278,8 @@ RSLabel >> metricsProvider [
 
 { #category : #metrics }
 RSLabel >> metricsProvider: aRSMetricsProvider [
-	"use this methods before use `text:`"
-	metricsProvider := aRSMetricsProvider
+	metricsProvider := aRSMetricsProvider.
+	self resetCache.
 ]
 
 { #category : #'managing font' }
@@ -256,13 +287,18 @@ RSLabel >> normal [
 	self emphasis: TextEmphasis normal.
 ]
 
+{ #category : #private }
+RSLabel >> privateFontName [
+	^ font realFont isTTCFont
+		ifTrue: [ font familyName ] 
+		ifFalse: [ self class familyFontName ]
+	
+]
+
 { #category : #initialization }
 RSLabel >> resetCache [ 
-	font := LogicalFont 
-		familyName: fontName
-		pointSize: fontSize.
+	font ifNil: [ font := self createFont ].
 	
-	font := font emphasized: emphasis emphasisCode.
 	textExtents := nil.
 	self resetCairoGlyphs.
 	self extent: self textWidth @ self textHeight.
@@ -271,6 +307,12 @@ RSLabel >> resetCache [
 { #category : #initialization }
 RSLabel >> resetCairoGlyphs [
 	cairoGlyphs := nil
+]
+
+{ #category : #initialization }
+RSLabel >> resetFont [
+	font := nil.
+	self resetCache.
 ]
 
 { #category : #path }
@@ -321,12 +363,12 @@ RSLabel >> underline [
 Make the font underlined
 
 | c lbl1 lbl2 |
-c := TSCanvas new.
-lbl1 := TSLabel new underline; text: 'hello'.
+c := RSCanvas new.
+lbl1 := RSLabel new underline; text: 'hello'.
 c addShape: lbl1.
-lbl2 := TSLabel new text: 'world'.
+lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
-RSLocate new below; move: lbl2 on: lbl1.
+RSLocation new below; move: lbl2 on: lbl1.
 c open
 "
 	self emphasisAdd: TextEmphasis underlined.

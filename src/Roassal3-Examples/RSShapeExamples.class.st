@@ -622,7 +622,7 @@ très loin de tous    ces regards vicieux
 qui s''alimentent de ta lumière"'.
 	shapeBuilder := RSMultilineLabelBuilder new.
 	shapeBuilder labelShape
-		font: 20;
+		fontSize: 20;
 		italic.
 	canvas add:(shapeBuilder shapeFor: text).
 	shapeBuilder wrapStrategy: (RSWrapStrategy new wrapMaxWidth: 200).

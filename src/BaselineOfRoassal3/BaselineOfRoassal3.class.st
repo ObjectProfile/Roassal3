@@ -115,10 +115,10 @@ BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 		package: #'Roassal3-UML';
 		package: #'Roassal3-Layouts';
 		package: #'Roassal3-Colors';
-		package: #'Roassal3-Spec';
 		package: #'Roassal3-Sunburst';
 		package: #'Roassal3-Inspector';
-		package: #'Roassal3-Menu'
+		package: #'Roassal3-Menu';
+		package: #'Roassal3-Spec'.
 ]
 
 { #category : #'package management' }
