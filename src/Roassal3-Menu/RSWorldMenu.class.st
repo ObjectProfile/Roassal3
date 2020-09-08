@@ -26,7 +26,7 @@ RSWorldMenu class >> menu00RoassalOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3)
 		parent: #Tools;
-		label: 'Roassal';
+		label: 'Roassal3';
 		icon: self roassalIcon;
 		help: 'A visualization engine';
 		order: 777
@@ -71,7 +71,6 @@ RSWorldMenu class >> menu03DiscordOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 	<worldMenu>
-	
 	(aBuilder item: #Roassal3Documentation)
 		parent: #Roassal3;
 		order: 4;
