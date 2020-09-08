@@ -5,6 +5,34 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RSSVGTest >> testBimetricLine [
+	| s1 s2 l |
+	canvas := RSCanvas new.
+	s1 := RSBox new
+		color: Color blue;
+		draggable;
+		size: 100;
+		yourself.
+	s2 := RSBox new
+		translateTo: 400@0;
+		draggable;
+		size: 100;
+		yourself.
+	l := RSBimetricLine new
+		widthFrom: 50;
+		widthTo: 10;
+		paint: Color red;
+		border: nil;
+		withBorderAttachPoint;
+		from: s1;
+		to: s2;
+		yourself.
+	canvas addAll: { s1. s2. l}.
+	canvas @ RSCanvasController. 
+	^ canvas
+]
+
+{ #category : #'as yet unclassified' }
 RSSVGTest >> testDrawSVG [
 	canvas addShape: (RSSVGPath new).
 	canvas addShape: (RSSVGPath new
