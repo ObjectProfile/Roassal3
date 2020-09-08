@@ -219,9 +219,10 @@ RSComposite >> initialize [
 
 { #category : #accessing }
 RSComposite >> padding: anObject [
-	"anObject can be a number, a point or Margin"
-	"Shapes should be set in the composite before calling #padding:
-For example:
+	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
+The argument, anObject can be a number, a point or Margin. Note that the shapes must be added in the composite before calling #padding:
+	
+Here is an example of usage:
 ```Smalltalk
 box := RSBox new
     color: Color blue translucent;
