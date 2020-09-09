@@ -5,7 +5,7 @@ Class {
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #running }

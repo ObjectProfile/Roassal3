@@ -7,7 +7,7 @@ Class {
 		'con',
 		'search'
 	],
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #running }
