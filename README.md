@@ -1,14 +1,15 @@
 # Roassal3
 [![Build Status](https://travis-ci.org/ObjectProfile/Roassal3.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal3)
 
-Roassal3 is an agile visualization engine for Pharo 8 and Pharo 9. Roassal is made to visualize data in an interactive way data. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
+Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal is made to visualize data in an interactive way data. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
 
 
 ## Pharo Installations
+Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.4. 
 Two instalation flavors are available: stable and latest (a.k.a bleeding-edge).
 
 ### Stable version
-Execute the following code snippet in a Playground:
+If you wish to install Roassal in Pharo 8, then execute the following code snippet in a Playground:
 
 ```Smalltalk
 Metacello new
@@ -18,7 +19,7 @@ Metacello new
 ```
 
 ### Latest version
-Execute the following code snippet in a Playground:
+If you wish to have the lastest release of Roassal, then execute the following code snippet in a Playground:
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
@@ -27,6 +28,8 @@ Metacello new
 ```
 
 ### Quick examples
+You can access these examples only if Roassal examples are loaded. Install the full version of Roassal or the bleeding edge version.
+
 Once loaded, you can execute in a playground:
 
 ```Smalltalk
