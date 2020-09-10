@@ -152,6 +152,8 @@ RSComposite >> addShape: aShape before: otherShape [
 RSComposite >> adjustToChildren [
 "Recompute the encompassing rectangle of the composite shape from the positio of the children. 
 
+In case one wishes to have a padding in the composite, the method #padding: must be called _after_ calling #adjustToChildren
+
 Consider the following example:
 ```Smalltalk
 box := RSBox new size: 20.
@@ -220,7 +222,11 @@ RSComposite >> initialize [
 { #category : #accessing }
 RSComposite >> padding: anObject [
 	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
-The argument, anObject can be a number, a point or Margin. Note that the shapes must be added in the composite before calling #padding:
+The argument, anObject can be a number, a point or Margin. 
+
+IMPORTANT:
+- The shapes must be added in the composite before calling #padding:
+- The padding must be set after having performed #adjustToChildren
 	
 Here is an example of usage:
 ```Smalltalk
