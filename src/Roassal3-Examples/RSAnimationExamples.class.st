@@ -2543,3 +2543,80 @@ RSAnimationExamples >> example43Waves [
 			frame := frame + 1. ].
 	^ canvas
 ]
+
+{ #category : #perlin }
+RSAnimationExamples >> example44A [
+	<script: 'self new example44A open'>
+	"
+|c|
+	c := RSCanvas new.
+c add: (RSLabel new
+	border: (RSBorder new color: Color black);
+	paint: Color red;
+	text: 'A';
+	fontSize: 100;
+	yourself).
+c svgExporter export"
+	| canvas addPoint lineTo d curve path current first r frame perlin |
+	canvas := RSCanvas new.
+	r := Random new.
+	path := RSSVGPath new.
+	perlin := NSPerlinNoise3 new octaves: 5.
+	path svgPath: 'M 27.063543 -48.93775 L 22.938543 -35.594001 L 49.204165 -35.594001 L 45.063541 -48.93775 C 43.469791 -53.820562 41.958072 -58.687749 40.532291 -63.531498 C 39.114323 -68.375248 37.692448 -73.328372 36.266667 -78.390872 L 35.735417 -78.390872 C 34.399479 -73.328372 33.020573 -68.375248 31.594792 -63.531498 C 30.176824 -58.687749 28.665105 -53.820562 27.063543 -48.93775 Z M 0.407295 -0.000254728 L 30.001042 -87.468996 L 42.532291 -87.468996 L 72.126038 -0.000254728 L 60.266664 -0.000254728 L 52.00104 -26.672127 L 20.126043 -26.672127 L 11.735419 -0.000254728 Z M 72.532288 -0.000254728'.
+	addPoint := [ :p | 
+		canvas add: (RSEllipse new
+			size: (r next * 1.5 +0.5);
+			position: p;
+			color: Color black;
+			yourself)].
+	lineTo := [ :p1 :p2 |
+		d := p1 dist: p2.
+		
+		0 to: 1 by: (1 / (d*0.5)) do: [ :t |
+			addPoint value: (p1 interpolateTo: p2 at: t). ]
+		 ].
+
+	curve := [ :p :pts |
+		| c b a |
+		c := 3 * (pts first - p).
+		b := 3 * (pts second - pts first) - c.
+		a := pts third - p - c - b.
+		d := p dist: pts third.
+		0 to: 1 by: (1 / (d * 0.5)) do: [ :t | 
+			addPoint value: a* (t raisedTo: 3) + (b * (t * t)) + (c * t) + p. 
+			]
+		].
+	current := nil.
+	first := nil.
+	path segments do: [ :segment | 
+		| type points |
+		type := segment first.
+		points := segment second.
+		type = #moveTo:
+			ifTrue: [ current := first :=  points first ].
+		type = #lineTo: ifTrue: [ 
+			lineTo value: current value: points first.
+			current := points first].
+		type = #curveVia:and:to: ifTrue: [ 
+			curve value: current value: points.
+			current := points third.
+			].
+		type = #close ifTrue: [ 
+			current = first ifFalse: [
+				lineTo value: current value: first ] ]
+	].
+	frame := 0.
+	canvas newAnimation repeat; onStepDo: [ :t |
+		canvas nodes doWithIndex: [ :each :i | 
+			| n |
+			n :=(perlin noise: (each position + frame)* 0.01)- 0.5.
+			each translateBy: n.
+			].
+		frame := frame + 1.
+		canvas signalUpdate.
+		].
+	canvas zoomToFit.
+	^ canvas
+		
+		
+]

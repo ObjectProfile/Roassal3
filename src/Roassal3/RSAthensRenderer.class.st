@@ -474,7 +474,7 @@ RSAthensRenderer >> drawPathLabel: label [
 		utf8String := act convertTextUtf8: label text.
 		label path: utf8String.
 	 ].
-	f := CairoScaledFont fromFreetypeFont: label font realFont.
+	f := label cairoFont.
 	
 	athensCanvas newPath.
 	f lock.
