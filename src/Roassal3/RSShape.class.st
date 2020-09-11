@@ -158,7 +158,12 @@ RSShape >> deepShapeFromModel: anObject result: result [
 ]
 
 { #category : #adding }
-RSShape >> deepShapesFromModel: someObjects result: result [
+RSShape >> deepShapesFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #adding }
+RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
 
