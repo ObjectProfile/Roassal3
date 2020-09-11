@@ -90,15 +90,6 @@ RSGroupTest >> testDrawGroup [
 ]
 
 { #category : #tests }
-RSGroupTest >> testElementFromModel [
-	| group |
-	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
-	self assert: (group shapeFromModel: 1) equals: group first.
-	self assert: (group shapeFromModel: 5) equals: group last.
-
-]
-
-{ #category : #tests }
 RSGroupTest >> testModels [
 	| g |
 	g := RSGroup new.
@@ -111,6 +102,15 @@ RSGroupTest >> testModels [
 	
 	self assert: (g collect: [ :s | s model ]) asArray equals: #('hello' 'world' 'bonjour')
 	 
+]
+
+{ #category : #tests }
+RSGroupTest >> testShapeFromModel [
+	| group |
+	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
+	self assert: (group shapeFromModel: 1) equals: group first.
+	self assert: (group shapeFromModel: 5) equals: group last.
+
 ]
 
 { #category : #tests }
