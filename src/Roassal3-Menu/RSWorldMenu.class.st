@@ -75,9 +75,9 @@ RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 		parent: #Roassal3;
 		order: 4;
 		label: 'Online documentation';
-		help: 'Will open the webpage http://AgileVisualization.com';
+		help: 'Will open the webpage https://github.com/ObjectProfile/Roassal3Documentation';
 		icon: (self iconNamed: #smallHelp);
-		action: [ WebBrowser openOn: 'http://AgileVisualization.com' ]
+		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3Documentation' ]
 ]
 
 { #category : #menu }
