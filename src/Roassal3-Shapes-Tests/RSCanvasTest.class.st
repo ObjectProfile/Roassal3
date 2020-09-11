@@ -205,6 +205,68 @@ RSCanvasTest >> testOpening [
 ]
 
 { #category : #tests }
+RSCanvasTest >> testPush [
+
+	| c blueBox redBox |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	"red is in front of blue"
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+	
+	redBox pushBack.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+	
+	blueBox pushBack.
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+
+	c pushBack: redBox.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+]
+
+{ #category : #tests }
+RSCanvasTest >> testPushFront [
+
+	| c blueBox redBox |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	"red is in front of blue"
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+	
+	blueBox pushFront.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+	
+	redBox pushFront.
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+
+	c pushFront: blueBox.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+]
+
+{ #category : #tests }
 RSCanvasTest >> testRemovingShapes [
 	| e |
 	e := RSEllipse new.
