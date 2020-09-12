@@ -10,63 +10,31 @@ Class {
 { #category : #baselines }
 BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
-	spec
-		for: #common
-		do: [ | core examples tests |
-			"our dependencies"
-			"https://github.com/ObjectProfile/Roassal3"
-			spec baseline: 'AthensSVG' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
-			spec package: 'Athens-SVG-PathConverter' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
-			spec baseline: 'Geometry' with: [ 
-				spec repository: 'github://pharo-contributions/Geometry/src' ].
-			spec baseline: 'NumericScales'with: [ 
-				spec repository: 'github://ObjectProfile/NumericScales/src' ].
-			spec 
-				baseline: 'OSSubprocess'
-				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
-				
-			"The packages to use, but not load"
-			
-			self
-				roassalCorePackagesIn: spec;
-				roassalExamplesIn: spec;
-				roassalTestsIn: spec;
-				roassalSVGIn: spec.
-			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
-			
-			"packages to load"
-			core := self corePackagesNames.
-			examples := self examplePackagesNames.
-			tests := self testPackagesNames.
-				
-			Smalltalk globals at: #SpPresenter ifPresent: [
-				core add: 'Roassal3-Spec'.
-				examples add: 'Roassal3-Spec-Examples'.
-				tests add: 'Roassal3-Spec-Tests'.
-			] ifAbsent: [ "pharo7"
-				core add: 'Roassal3-Pharo7' ].
-			spec 
-				group: 'Core' with: core asArray;
-				group: 'Examples'  with: examples asArray;
-				group: 'Tests' with: tests asArray;
-				group: 'SVG' with: #('Core' 'Roassal3-SVG');
-				group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
-				group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
-				group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
-				group: 'GraphViz' with: #(Core SVG 'Roassal3-GraphViz');
-				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples') ].
+	"https://github.com/ObjectProfile/Roassal3"
+	"pharo7 not supported"
+	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
+	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+]
 
-		
-	
+{ #category : #baselines }
+BaselineOfRoassal3 >> baselineForCommon: spec [
+	"https://github.com/ObjectProfile/Roassal3"
+	self dependencies: spec.
+	spec package: #'Roassal3-Animation-Tests'.
+	self roassalGroup: spec 
+		core: self corePackagesNames
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
+]
 
+{ #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo8: spec [
+	self baselineForCommon: spec
+]
 
-
-
-
-
-
+{ #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo9: spec [
+	self baselineForCommon: spec
 ]
 
 { #category : #'API-packages' }
@@ -85,7 +53,42 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Pie'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
-	'Roassal3-Menu') asOrderedCollection
+	'Roassal3-Menu'
+	'Roassal3-Spec')
+]
+
+{ #category : #baselines }
+BaselineOfRoassal3 >> dependencies: spec [.
+	spec baseline: 'AthensSVG' with: [
+		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+	spec package: 'Athens-SVG-PathConverter' with: [
+		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+	spec baseline: 'Geometry' with: [ 
+		spec repository: 'github://pharo-contributions/Geometry/src' ].
+	spec baseline: 'NumericScales'with: [ 
+		spec repository: 'github://ObjectProfile/NumericScales/src' ].
+	spec 
+		baseline: 'OSSubprocess'
+		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
+		
+	"The packages to use, but not load"
+	
+	self
+		roassalCorePackagesIn: spec;
+		roassalExamplesIn: spec;
+		roassalTestsIn: spec;
+		roassalSVGIn: spec.
+	spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
+	
+
+
+
+
+
+
+
+
+
 ]
 
 { #category : #'API-packages' }
@@ -97,7 +100,8 @@ BaselineOfRoassal3 >> examplePackagesNames [
 	'Roassal3-Chart-Examples'
 	'Roassal3-Pie-Examples'
 	'Roassal3-Sunburst-Examples'
-	'Roassal3-UML-Examples') asOrderedCollection
+	'Roassal3-UML-Examples'
+	'Roassal3-Spec-Examples')
 ]
 
 { #category : #'package management' }
@@ -134,26 +138,49 @@ BaselineOfRoassal3 >> roassalExamplesIn: spec [
 
 ]
 
+{ #category : #baselines }
+BaselineOfRoassal3 >> roassalGroup: spec core: arr1 examples: arr2 tests: arr3 [
+	spec 
+		group: 'Core' with: arr1;
+		group: 'Examples' with: arr2;
+		group: 'Tests' with: arr3;
+		group: 'SVG' with: #('Core' 'Roassal3-SVG');
+		group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
+		group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
+		group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
+		group: 'GraphViz' with: #(Core SVG 'Roassal3-GraphViz');
+		group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples')
+
+
+
+
+
+
+
+
+
+
+]
+
 { #category : #'package management' }
 BaselineOfRoassal3 >> roassalSVGIn: spec [
 	spec		
-		package: 'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
-		package: 'Roassal3-SVG-Tests';
-		package: 'Roassal3-SVG-Examples';
-		package: 'Roassal3-SVG-Importer' with: [ spec requires: #('AthensSVG') ].
+		package: #'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
+		package: #'Roassal3-SVG-Tests';
+		package: #'Roassal3-SVG-Examples';
+		package: #'Roassal3-SVG-Importer' with: [ spec requires: #('AthensSVG') ].
 ]
 
 { #category : #'package management' }
 BaselineOfRoassal3 >> roassalTestsIn: spec [.	
 	spec
 		package: #'Roassal3-Global-Tests';
-		package: #'Roassal3-Animation-Tests';
-		package: 'Roassal3-Shapes-Tests';
-		package: 'Roassal3-Interaction-Tests';
-		package: 'Roassal3-Layouts-Tests';
-		package: 'Roassal3-Chart-Tests';
-		package: 'Roassal3-Spec-Tests';
-		package: 'Roassal3-UML-Tests'.
+		package: #'Roassal3-Shapes-Tests';
+		package: #'Roassal3-Interaction-Tests';
+		package: #'Roassal3-Layouts-Tests';
+		package: #'Roassal3-Chart-Tests';
+		package: #'Roassal3-Spec-Tests';
+		package: #'Roassal3-UML-Tests'.
 ]
 
 { #category : #'API-packages' }
@@ -166,5 +193,6 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Interaction-Tests'
 	'Roassal3-Layouts-Tests'
 	'Roassal3-Chart-Tests'
-	'Roassal3-UML-Tests') asOrderedCollection
+	'Roassal3-UML-Tests'
+	'Roassal3-Spec-Tests')
 ]
