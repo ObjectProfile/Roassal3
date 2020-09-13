@@ -64,8 +64,8 @@ RSLayoutBuilder >> none [
 ]
 
 { #category : #'public layout' }
-RSLayoutBuilder >> on: elements [
-	layout on: elements
+RSLayoutBuilder >> on: shapes [
+	layout on: shapes
 ]
 
 { #category : #'public layout' }
