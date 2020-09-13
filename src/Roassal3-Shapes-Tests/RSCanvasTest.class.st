@@ -224,6 +224,34 @@ RSCanvasTest >> testPush [
 ]
 
 { #category : #'tests - shapes ordering' }
+RSCanvasTest >> testPushBackEdges [
+
+	| c blueBox redBox l |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	l := RSLine new from: blueBox; to: redBox.
+	c add: l.
+	
+	self assert: c shapes asArray equals: { blueBox . redBox . l }.
+	
+	c pushBackEdges.
+	self assert: c shapes asArray equals: { l . blueBox . redBox }.
+	
+]
+
+{ #category : #'tests - shapes ordering' }
 RSCanvasTest >> testPushFront [
 
 	| c blueBox redBox |

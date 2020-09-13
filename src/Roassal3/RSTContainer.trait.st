@@ -155,6 +155,12 @@ RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
+{ #category : #'as yet unclassified' }
+RSTContainer >> pushBackEdges [
+	"Push back all the edges"
+	self edges do: [ :e | e pushBack ]
+]
+
 { #category : #removing }
 RSTContainer >> removeEdge: anEdge [
 	self edges remove: anEdge ifAbsent: [  ].
