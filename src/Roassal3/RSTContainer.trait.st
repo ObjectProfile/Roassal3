@@ -40,6 +40,57 @@ RSTContainer >> addNode: aShape [
 	^ aShape
 ]
 
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapeFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapeFromModel: anObject result: result.
+	result isEmpty ifTrue: [ ^ nil ].
+	^ result first
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapeFromModel: anObject result: result [
+	"Private method"
+	| t |
+	t := self shapeFromModel: anObject.
+	t ifNotNil: [ result add: t ].
+	self nodes do: [ :c | c deepShapeFromModel: anObject result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapesFromModel: anObject result: result.
+	^ result
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModel: anObject result: result [
+	"Private method"
+	self model = anObject ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModel: anObject result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModels: someObjects [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapesFromModels: someObjects result: result.
+	^ result
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	(someObjects includes: self model) ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
+]
+
 { #category : #accessing }
 RSTContainer >> edges [
 	"Return all the lines contained in the canvas."
@@ -105,7 +156,7 @@ RSTContainer >> removeNode: aNode [
 	self nodes remove: aNode ifAbsent: [  ].
 ]
 
-{ #category : #accessing }
+{ #category : #'looking up shapes' }
 RSTContainer >> shapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
@@ -118,4 +169,11 @@ RSTContainer >> shapes [
 		ifNil: [ | res |
 			self privateShapes: (res := RSGroup new).
 			res ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> shapesFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+
+	^ self nodes shapesFromModel: anObject
 ]

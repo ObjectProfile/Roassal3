@@ -130,12 +130,12 @@ RSGroup >> resetShapeFromModelCache [
 RSGroup >> shapeFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
 	
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
 g add: (RSEllipse new model: 'world').
 g shapeFromModel: 'hello'
--=-=-=-=-=-=-=-=-=
+```
 => a RSBox(hello))
 
 	"

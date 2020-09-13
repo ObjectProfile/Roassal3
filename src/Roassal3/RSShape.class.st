@@ -152,6 +152,21 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
+{ #category : #adding }
+RSShape >> deepShapeFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #adding }
+RSShape >> deepShapesFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #adding }
+RSShape >> deepShapesFromModels: someObjects result: result [
+	(someObjects includes: self model) ifTrue: [ result add: self ]
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
@@ -434,7 +449,7 @@ RSShape >> shapeWithAction: eventClass forPosition: position [
 RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
 			ifTrue: [ self ]
-			ifFalse: [ ^ nil ]
+			ifFalse: [ nil ]
 ]
 
 { #category : #actions }
