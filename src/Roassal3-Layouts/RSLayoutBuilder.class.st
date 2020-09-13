@@ -31,6 +31,11 @@ RSLayoutBuilder >> flow [
 ]
 
 { #category : #'public layout' }
+RSLayoutBuilder >> force [
+	^ layout := RSForceBasedLayout new useProgressBar.
+]
+
+{ #category : #'public layout' }
 RSLayoutBuilder >> grid [
 	^ layout := RSGridLayout new.
 ]
