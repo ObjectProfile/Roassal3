@@ -181,6 +181,20 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	^ shapes
 ]
 
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeColor: oneArgBlock [
+	RSNormalizer color
+		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeSize: oneArgBlock [
+	RSNormalizer size
+		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
 { #category : #'instance creation' }
 RSMondrian >> open [
 	self build.
@@ -223,4 +237,9 @@ RSMondrian >> shapesOn: someObjects [
 	ss := shapeBuilder shapesOn: someObjects.
 	ss @ RSPopup @ RSDraggable.
 	^ ss
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> translucentShapes [
+	self canvas shapes do: [ :s | s color: s color translucent ]
 ]
