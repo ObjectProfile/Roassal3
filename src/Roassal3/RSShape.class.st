@@ -23,7 +23,8 @@ Class {
 		'border',
 		'parent',
 		'isFixed',
-		'encompassingRectangle'
+		'encompassingRectangle',
+		'model'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -288,13 +289,13 @@ RSShape >> loadShape: aShape [
 
 { #category : #'accessing - attributes' }
 RSShape >> model [
-	^ self propertyAt: #model
+	^ model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
 	"model is used to create popups and other interactions"
-	self propertyAt: #model put: anObject
+	model := anObject
 ]
 
 { #category : #border }
