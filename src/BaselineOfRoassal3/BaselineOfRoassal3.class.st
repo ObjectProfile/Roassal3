@@ -36,7 +36,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				roassalSVGIn: spec.
 				
 			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
-			spec package: #'Mondrian'.
+			spec package: #'Roassal3-Mondrian'.
 			
 			
 			"packages to load"
@@ -59,7 +59,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
 				group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
 				group: 'GraphViz' with: #(Core SVG 'Roassal3-GraphViz');
-				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples' 'Mondrian') ].
+				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples' 'Roassal3-Mondrian') ].
 
 		
 	
