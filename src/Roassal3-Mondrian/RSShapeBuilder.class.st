@@ -10,6 +10,11 @@ Class {
 	#category : #'Roassal3-Mondrian'
 }
 
+{ #category : #'instance creation' }
+RSShapeBuilder >> arrowedLine [
+	
+]
+
 { #category : #initialization }
 RSShapeBuilder >> box [
 	shapeClass := RSBox.

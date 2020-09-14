@@ -78,8 +78,13 @@ RSEdgeBuilder class >> arrowedLine [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> arrowedLineWithOffset [
+	^ self arrowedLineWithOffset: 0.2
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> arrowedLineWithOffset: aFloat [
-	"[0 1] value"
+	"[0, 1] value"
 	| inst |
 	inst := self arrowedLine.
 	inst shape markerEnd offsetRatio: aFloat.

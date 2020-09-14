@@ -463,6 +463,6 @@ RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s outgoingEdges collect: #yourself as: RSGroup.
-		list add: s.
+		list addAll: (s outgoingEdges collect: #to). 
 		list ].
 ]

@@ -15,9 +15,28 @@ RSMondrian >> applyLayout [
 	layoutBuilder on: canvas nodes
 ]
 
+{ #category : #'building - graph' }
+RSMondrian >> arrowedLine [
+	edgeBuilder := RSEdgeBuilder arrowedLineWithOffset.
+	edgeBuilder canvas: canvas.
+	edgeBuilder shapes: canvas nodes.
+	edgeBuilder withBorderAttachPoint.
+	edgeBuilder color: self defaultLineColor.
+	^ edgeBuilder
+]
+
 { #category : #visualization }
 RSMondrian >> build [
-	self applyLayout
+	| interaction |
+	self applyLayout.
+	
+	interaction := RSHighlightable new.
+	interaction highlightBorder: (RSBorder new color: Color black; width: 2).
+	interaction withOutgoingEdges.
+	self canvas nodes @ interaction.
+	
+	self canvas pushBackEdges.
+		 
 ]
 
 { #category : #accessing }
@@ -28,6 +47,11 @@ RSMondrian >> canvas [
 { #category : #accessing }
 RSMondrian >> canvas: aCanvas [
 	canvas := aCanvas
+]
+
+{ #category : #configuration }
+RSMondrian >> defaultLineColor [
+	^ Color gray translucent
 ]
 
 { #category : #visualization }
@@ -57,6 +81,7 @@ RSMondrian >> line [
 	edgeBuilder := RSEdgeBuilder line.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
+	edgeBuilder color: self defaultLineColor.
 	^ edgeBuilder
 ]
 
@@ -173,6 +198,7 @@ RSMondrian >> orthoHorizontalline [
 	edgeBuilder := RSEdgeBuilder orthoHorizontal.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
+	edgeBuilder color: self defaultLineColor.
 	^ edgeBuilder
 ]
 
@@ -182,6 +208,7 @@ RSMondrian >> orthoVerticalLine [
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
 	edgeBuilder withVerticalAttachPoint.
+	edgeBuilder color: self defaultLineColor.
 	^ edgeBuilder
 ]
 
