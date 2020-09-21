@@ -27,6 +27,14 @@ Metacello new
     load.
 ```
 
+In case you want to get rid of some warning, you may prefer:
+```Smalltalk
+[Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3';
+    load ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
+```   
+
 ### Quick examples
 You can access these examples only if Roassal examples are loaded. Install the full version of Roassal or the bleeding edge version.
 
