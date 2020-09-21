@@ -178,6 +178,9 @@ RSEdgeBuilder >> beDirectional [
 
 { #category : #accessing }
 RSEdgeBuilder >> canvas [
+	"Return the canvas if it was manually set using #canvas: or infer it from the shapes added to the builder"
+	(canvas isNil and: [ fromShapes notNil ]) ifTrue: [ canvas := fromShapes anyOne canvas ].
+	
 	^ canvas
 ]
 
@@ -311,7 +314,7 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 		to: target;
 		yourself.
 	edge border: (self shape border copy).
-	canvas ifNotNil: [ canvas add: edge ].
+	self canvas ifNotNil: [ canvas add: edge ].
 	^ edge
 ]
 

@@ -224,6 +224,45 @@ RSEdgeBuilderTest >> testHasEdges [
 ]
 
 { #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas [
+
+	self assert: b canvas isNil.
+	b toShapes: canvas nodes.
+	self assert: b canvas isNil.
+	
+	b fromShapes: canvas nodes.
+	self assert: b canvas equals: canvas.
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas2 [
+
+	self assert: b canvas isNil.
+	b shapes: canvas nodes.
+	self assert: b canvas equals: canvas.
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas3 [
+
+	| c |
+	c := RSCanvas new.
+	1 to: 100 do: [ :i | 
+		c add: (RSLabel new
+				 text: i;
+				 model: i) ].
+
+	RSEdgeBuilder line
+		shapes: c nodes;
+		connectFrom: [ :i | i // 2 ].
+
+	RSGridLayout on: c nodes.
+	c @ RSCanvasController.
+
+	self assert: c numberOfEdges equals: 99
+]
+
+{ #category : #tests }
 RSEdgeBuilderTest >> testInit [
 	| eb |
 	eb := RSEdgeBuilder line.
