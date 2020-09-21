@@ -178,11 +178,6 @@ RSAbstractLine >> joinRound [
 	self border joinRound
 ]
 
-{ #category : #actions }
-RSAbstractLine >> loadShape: other [
-	self shouldBeImplemented 
-]
-
 { #category : #'event handling' }
 RSAbstractLine >> notifyExtentChanged [
 	self announce: [ RSExtentChangedEvent new 
