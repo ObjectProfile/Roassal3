@@ -29,6 +29,12 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #accessing }
+RSShape class >> model: anObject [
+	"Create an instance of myself with anObject as model"
+	^ self new model: anObject
+]
+
 { #category : #adding }
 RSShape >> accept: aVisitor [
 	self subclassResponsibility 

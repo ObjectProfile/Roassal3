@@ -282,6 +282,13 @@ RSLabel >> metricsProvider: aRSMetricsProvider [
 	self resetCache.
 ]
 
+{ #category : #'accessing - attributes' }
+RSLabel >> model: anObject [
+	"model is used to create popups and other interactions"
+	super model: anObject.
+	text ifNil: [ text := anObject asString ]
+]
+
 { #category : #'managing font' }
 RSLabel >> normal [
 	self emphasis: TextEmphasis normal.

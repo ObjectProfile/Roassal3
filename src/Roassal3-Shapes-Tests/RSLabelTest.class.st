@@ -59,6 +59,19 @@ RSLabelTest >> testHasChildren [
 ]
 
 { #category : #tests }
+RSLabelTest >> testModelWithoutText [
+
+	| l |
+	l := RSLabel new.
+	self assert: l text isNil.
+	self assert: l model isNil.
+	
+	l model: 42.
+	self assert: l model equals: 42.
+	self assert: l text equals: '42'
+]
+
+{ #category : #tests }
 RSLabelTest >> testUnderlineStruckout [
 	| label |
 	label := RSLabel new.
