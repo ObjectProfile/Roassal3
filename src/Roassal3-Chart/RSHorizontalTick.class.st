@@ -34,7 +34,7 @@ RSHorizontalTick >> defaultLabelLocation [
 RSHorizontalTick >> fromNames: aCollectionOfStrings [
 	self
 		doNotUseNiceLabel;
-		numberOfTicks: aCollectionOfStrings size.
+		numberOfTicks: aCollectionOfStrings size-1.
 	self labelRotation: -45.
 	self labelConversion: [ :x | 
 		x isZero 
