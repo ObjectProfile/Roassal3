@@ -119,6 +119,16 @@ RSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
+{ #category : #public }
+RSAbstractLine >> fmt: aString [
+	"format for lines"
+	(RSShapeFactory shapeFromString: aString) 
+		ifNotNil: [ :shape |self shape marker: (shape size: self width * 4) ].
+	(RSStrokeStyle fromString: aString)
+		ifNotNil: [ :style | self shape border style: style ]
+	
+]
+
 { #category : #accessing }
 RSAbstractLine >> from [
 	^ from
