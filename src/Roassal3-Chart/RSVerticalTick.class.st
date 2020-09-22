@@ -21,8 +21,6 @@ RSVerticalTick >> createNiceLabelIn: aChart [
 RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber |
 	scaledNumber := yScale scale: aNumber.
-	self assert: [ scaledNumber isInfinite not ].
-	self assert: [ scaledNumber isNaN not ].
 	^ self shape copy
 		startPoint: 0 @ scaledNumber;
 		endPoint: self configuration tickSize negated @ scaledNumber;

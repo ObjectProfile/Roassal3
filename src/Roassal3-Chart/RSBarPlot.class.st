@@ -60,9 +60,6 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	super beforeRenderingIn: aChart.
 	
 	aChart xScale: self barScale.
-	"aChart decorations do: [ :e | e beforeRenderingIn: aChart ].
-	
-	"
 ]
 
 { #category : #initialization }

@@ -351,3 +351,21 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 
 	^ c 
 ]
+
+{ #category : #examples }
+RSChartExample >> example20Grid [
+	<script: 'self new example20Grid open'>
+	| c x y vertical horizontal |
+	
+	c := RSChart new.
+	x := 0 to: 10.
+	y := x raisedTo: 2.
+	c lineX: x y: y.
+	c addDecoration: (vertical := RSVerticalTick new).
+	vertical configuration tickSize: c extent x negated.
+	c addDecoration: (horizontal := RSHorizontalTick new).
+	horizontal configuration tickSize: c extent y negated.
+	c build.
+	^ c canvas
+	
+]
