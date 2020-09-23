@@ -1,7 +1,7 @@
 # Roassal3
 [![Build Status](https://travis-ci.org/ObjectProfile/Roassal3.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal3)
 
-Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal is made to visualize data in an interactive way data. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
+Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal was created to enable interactive data visualization. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
 
 
 ## Pharo Installations
@@ -27,7 +27,7 @@ Metacello new
     load.
 ```
 
-In case you want to get rid of some warning, you may prefer:
+In order to suppress warnings you may prefer:
 ```Smalltalk
 [Metacello new
     baseline: 'Roassal3';
@@ -36,9 +36,9 @@ In case you want to get rid of some warning, you may prefer:
 ```   
 
 ### Quick examples
-You can access these examples only if Roassal examples are loaded. Install the full version of Roassal or the bleeding edge version.
+In order to run the following examples they must be loaded by installing the full (bleeding edge) version of Roassal.
 
-Once loaded, you can execute in a playground:
+Once loaded, you can execute this in a playground:
 
 ```Smalltalk
 RSChartExample new example01Markers open
@@ -78,11 +78,11 @@ You should see an animated version of:
 
 Visit the [documentation github page](https://github.com/ObjectProfile/Roassal3Documentation)
 
-A major effort on writing documentation is under construction. The wiki pages is yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
+A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
 
 
 ## Roassal3 as a dependent application
-If you wish to set a dependency to Roassal3 in your application, you simply need to add in your baseline:
+If you wish to set a dependency to Roassal3 in your application, you simply need to add the following in your baseline:
 
 ```Smalltalk
 spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src' ].
