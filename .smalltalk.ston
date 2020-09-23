@@ -4,6 +4,7 @@ SmalltalkCISpec {
       #baseline : 'Roassal3',
       #directory : 'src',
       #onConflict : #useIncoming,
+      #onUpgrade : #useIncoming, 
       #platforms : [ #pharo ]
     }
   ],
