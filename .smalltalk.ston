@@ -3,6 +3,7 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #baseline : 'Roassal3',
       #directory : 'src',
+      #onConflict : #useIncoming,
       #platforms : [ #pharo ]
     }
   ],
