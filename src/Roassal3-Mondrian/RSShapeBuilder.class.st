@@ -66,24 +66,34 @@ RSShapeBuilder >> initialize [
 	color := Color gray
 ]
 
+{ #category : #initialization }
+RSShapeBuilder >> label [
+	shapeClass := RSLabel.
+	width := nil.
+	height := nil
+]
+
 { #category : #accessing }
 RSShapeBuilder >> shapeClass [
 	^ shapeClass
 ]
 
 { #category : #accessing }
-RSShapeBuilder >> shapeClass: anObject [
-	shapeClass := anObject
+RSShapeBuilder >> shapeClass: aClass [
+	shapeClass := aClass
 ]
 
 { #category : #'building - graph' }
 RSShapeBuilder >> shapesOn: someObjects [
+	| result |
 	^ someObjects collect: [ :obj | 
-			shapeClass new 
-				model: obj; 
-				width: (width rsValue: obj); 
-				height: (width rsValue: obj);
-				color: (color rsValue: obj) ] as: RSGroup
+			result := shapeClass new 
+							model: obj;
+							yourself.
+			width ifNotNil: [ result width: (width rsValue: obj) ].
+			height ifNotNil: [ result height: (height rsValue: obj) ].
+			result color: (color rsValue: obj) .
+			result ] as: RSGroup
 ]
 
 { #category : #accessing }
