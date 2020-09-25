@@ -72,6 +72,15 @@ RSLabelTest >> testModelWithoutText [
 ]
 
 { #category : #tests }
+RSLabelTest >> testSameSize [
+	| l1 l2 |
+	l1 := RSLabel model: 123.
+	l2 := RSLabel new text: 123.
+	
+	self assert: l1 extent equals: l2 extent
+]
+
+{ #category : #tests }
 RSLabelTest >> testUnderlineStruckout [
 	| label |
 	label := RSLabel new.

@@ -17,10 +17,10 @@ RSMondrianTest >> setUp [
 RSMondrianTest >> testBasic [
 	| pos someNodes |
 	someNodes := m nodes: (1 to: 5).
-	m applyLayout.
+	m build.
 	
 	pos := m canvas shapes collect: #position.
-	self assert: pos asArray equals: { (7.5@7.5). (17.5@7.5). (7.5@17.5). (17.5@17.5). (7.5@27.5) }.
+	self assert: pos asArray equals: {(7.5@7.5). (17.5@7.5). (7.5@17.5). (17.5@17.5). (7.5@27.5)}.
 	
 	self assert: someNodes asArray equals: m canvas shapes asArray
 ]
@@ -29,6 +29,10 @@ RSMondrianTest >> testBasic [
 RSMondrianTest >> testBasic2 [
 	| pos someNodes |
 	m shape size: #yourself.
+	
+	self assert: m shape height equals: #yourself.
+	self assert: m shape width equals: #yourself.
+	
 	someNodes := m nodes: (10 to: 50 by: 10).
 	m applyLayout.
 	
