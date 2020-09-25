@@ -29,42 +29,35 @@ c
 "
 Class {
 	#name : #RSBarPlot,
-	#superclass : #RSAbstractPlot,
-	#instVars : [
-		'barWidth'
-	],
+	#superclass : #RSAbstractBarPlot,
 	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
 RSBarPlot >> barScale [
-	^ NSOrdinalScale new 
-		domain: xValues;
-		rangeBands: xScale range padding: 0.1.
-]
-
-{ #category : #accessing }
-RSBarPlot >> barWidth [
-	"Return the width of each bar"
-	^ barWidth
-]
-
-{ #category : #accessing }
-RSBarPlot >> barWidth: aBarWidth [
-	"Set the width of the bar"
-	barWidth := aBarWidth
+	^ xScale
 ]
 
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
+	| barScale |
 	super beforeRenderingIn: aChart.
-	
-	aChart xScale: self barScale.
+	barScale := NSOrdinalScale new 
+		domain: xValues;
+		rangeBands: xScale range padding: gapRatio.
+	aChart xScale: barScale
 ]
 
-{ #category : #initialization }
-RSBarPlot >> defaultShape [
-	^ RSBox new noPaint
+{ #category : #hooks }
+RSBarPlot >> computeRectagleFor: aPoint [
+	| origin corner sizeOffset offset |
+	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
+	corner := origin x @ (yScale scale: 0).
+	sizeOffset := (self barSize / 2.0) @ 0.
+	offset := self barOffset @ 0.
+	^ Rectangle 
+		origin: origin + offset - sizeOffset
+		corner: corner + offset + sizeOffset
 ]
 
 { #category : #rendering }
@@ -73,26 +66,12 @@ RSBarPlot >> definedValuesY [
 	^ yValues, {0} select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #rendering }
-RSBarPlot >> renderIn: canvas [
-	| color width myScale |
-	self checkAssertion.
-	color := self computeColor.
-"	myScale := self barScale."
-	myScale := xScale.
-	width := self barWidth.
-	width ifNil: [ width := myScale rangeBand ].
-	xValues doWithIndex: [ :xt : i | 
-		| yt origin corner r |
-		yt := yValues at: i.
-		origin := (myScale scale: xt) @ (yScale scale: yt).
-		corner := origin x @ (yScale scale: 0).
-		((self isPointWellDefined: origin) and: [ self isPointWellDefined: corner ]) ifTrue: [
-			r := Rectangle origin: origin corner: corner + (width@0).
-			canvas add: (self shape copy
-				color: color;
-				fromRectangle: r;
-				yourself).
-			  ] ].
+{ #category : #testing }
+RSBarPlot >> isVerticalBarPlot [
+	^ true
+]
 
+{ #category : #hooks }
+RSBarPlot >> modelFor: aPoint [
+	^ aPoint y
 ]

@@ -187,12 +187,14 @@ RSChartExample >> example10BarPlot [
 	y := (x raisedTo: 2) - 2.
 	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
-	self flag: 'TODO'.
+
 	c addPlot: p.
+	
+	c addDecoration: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: x size - 1;
+		asFloat).
 	c xlabel: 'X Axis'.
-	"c addDecoration: (RSHorizontalTick new 
-		numberOfTicks: 20;
-		asFloat)."
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
 		asFloat).
@@ -212,8 +214,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	c addPlot: (RSBarPlot new x: x y: y).
 	self flag: 'TODO'.
 	"c addPlot: (RSLinePlot new x: x y: y; color: Color red)."
-
-	"c addDecoration: (RSHorizontalTick new  asFloat)."
+	c addDecoration: (RSHorizontalTick new asFloat).
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
 		asFloat).
@@ -362,6 +363,7 @@ RSChartExample >> example20Grid [
 	y := x raisedTo: 2.
 	c lineX: x y: y.
 	c addDecoration: (vertical := RSVerticalTick new).
+	vertical shape dashed.
 	vertical configuration tickSize: c extent x negated.
 	c addDecoration: (horizontal := RSHorizontalTick new).
 	horizontal configuration tickSize: c extent y negated.
