@@ -186,7 +186,7 @@ RSAbstractTick >> labelRotation [
 
 { #category : #accessing }
 RSAbstractTick >> labelRotation: aNumber [
-	^ self configuration labelRotation: aNumber
+	self configuration labelRotation: aNumber
 ]
 
 { #category : #accessing }

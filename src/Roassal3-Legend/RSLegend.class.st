@@ -62,7 +62,9 @@ RSLegend >> defaultLabel: aShape [
 
 { #category : #accessing }
 RSLegend >> defaultTitle [
-	^ defaultTitle ifNil: [ defaultTitle := RSLabel new fontSize: 20; bold ].
+	^ defaultTitle ifNil: [ defaultTitle := RSLabel new bold.
+		defaultTitle fontSize: defaultTitle fontSize * 1.2.
+		defaultTitle ].
 ]
 
 { #category : #accessing }
