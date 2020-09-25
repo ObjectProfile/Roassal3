@@ -98,7 +98,7 @@ RSLegend >> legend [
 ]
 
 { #category : #public }
-RSLegend >> leyendDo: aBlock [
+RSLegend >> legendDo: aBlock [
 	legendBlock := aBlock
 ]
 
