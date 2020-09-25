@@ -19,9 +19,11 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
+	| value |
+	value := xScale scale: aNumber.
 	^ self shape copy
-		startPoint: (xScale scale: aNumber) @ 0;
-		endPoint: (xScale scale: aNumber) @ self configuration tickSize;
+		startPoint: value @ 0;
+		endPoint: value @ self configuration tickSize;
 		yourself
 ]
 
@@ -39,7 +41,7 @@ RSHorizontalTick >> fromNames: aCollectionOfStrings [
 	self labelConversion: [ :x | 
 		x isZero 
 			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x  ] ].
+			ifFalse: [aCollectionOfStrings at: x asInteger ] ].
 		
 ]
 

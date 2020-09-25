@@ -51,7 +51,7 @@ RSAnimationExamples >> example02BoxesLineCircles [
 		RSBox new
 			model: r next;
 			noPaint;
-			border: (RSBorder new width: 4);
+			border: (RSBorder new width: 4; color: Color black);
 			yourself].
 	c addAll: shapes.
 	RSNormalizer size
@@ -79,7 +79,7 @@ RSAnimationExamples >> example02BoxesLineCircles [
 	update := [ 
 		extent := c extent.
 		position := NSScale linear
-			range: { extent / 2 negated. extent /2 }.
+			range: { extent / -2. extent /2 }.
 		updateLine value.
 		shapes do: [ :e | e translateTo: (position scale: r next@ r next) ].
 	].
@@ -106,27 +106,31 @@ RSAnimationExamples >> example02BoxesLineCircles [
 			] ] .
 	c newAnimation repeat; 
 		onStepDo: [ :t | 
-			shapes do: [ :e |
+			| round empty |
+			round := RSCornerRadius new radius: 100.
+			empty := RSCornerRadius new.
+			shapes do: [ :shape |
 				| delta newX |
-				delta := e propertyAt: #delta ifAbsentPut: [ 5 ].
-				newX := e position x + delta.
+				delta := shape propertyAt: #delta ifAbsentPut: [ 5 ].
+				newX := shape position x + delta.
 				(newX 
 					between: position from x 
 					and: position to x) ifFalse: [ 
 					delta := delta negated.
-					newX := e position x + delta.
+					newX := shape position x + delta.
 					 ].
-				e translateTo: newX@e position y.
-				e propertyAt: #delta put: delta
+				shape translateTo: newX@shape position y.
+				shape propertyAt: #delta put: delta
 				].
-			c nodes copy do: [ :e | | cls |
-				cls := e position x > lineX 
-					ifTrue: [ RSEllipse ]
-					ifFalse: [ RSBox ].
-				e replaceWith: cls new.
+			c nodes copy do: [ :shape | | corner |
+				corner := shape position x > lineX 
+					ifTrue: [ round ]
+					ifFalse: [ empty ].
+				shape cornerRadius: corner.
 				 ].
 	].
 	^ c
+	
 ]
 
 { #category : #examples }

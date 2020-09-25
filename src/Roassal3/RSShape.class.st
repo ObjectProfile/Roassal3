@@ -288,11 +288,6 @@ RSShape >> isShape [
 	^ true
 ]
 
-{ #category : #actions }
-RSShape >> loadShape: aShape [
-	self subclassResponsibility
-]
-
 { #category : #'accessing - attributes' }
 RSShape >> model [
 	^ model
@@ -393,15 +388,6 @@ RSShape >> remove [
 { #category : #adding }
 RSShape >> renderOn: aCanvas [
 	self subclassResponsibility
-]
-
-{ #category : #actions }
-RSShape >> replaceWith: aShape [
-	parent ifNil: [ ^ self ].
-	aShape loadShape: self.
-	parent shapes replaceAll: self with: aShape.
-	parent nodes replaceAll: self with: aShape.
-	
 ]
 
 { #category : #initialization }

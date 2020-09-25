@@ -128,7 +128,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 	lb := RSLegend new.
 	lb defaultLabel fontSize: 50.
 	lb container: canvas.
-	lb leyendDo: [ :l |l withBorder;padding: 50 ].
+	lb legendDo: [ :l |l withBorder;padding: 50 ].
 	lb
 		text:
 			'... It''s very simple. Scissors cuts paper, paper covers rock, rock crushes lizard, lizard poisons Spock, Spock smashes scissors, ';

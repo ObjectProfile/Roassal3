@@ -109,6 +109,27 @@ RSHighlightable class >> defaultRed [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+RSHighlightable class >> sameModel: aCanvas [
+	"Define an highlight object that is able to highlight the same elements pointed by the mouse.
+	
+For example:
+```Smalltalk
+values := #(1 1 2 2 2 2 3 3 3 4 4 5 5 5 5 ).
+
+c := RSCanvas new.
+boxes := values collect: [ :vv | RSBox new size: 10; model: vv ] as: RSGroup.
+c addAll: boxes.
+boxes @ RSPopup.
+boxes @ (RSHighlightable sameModel: c).
+RSGridLayout on: boxes.
+c @ RSCanvasController
+```"
+	^ self new 
+		highlightBorder: (RSBorder new color: Color yellow; width: 5); 
+		highlightShapes: [ :ss | aCanvas nodes select: [ :sss | (sss model == ss model) and: [ sss ~~ ss ]  ] ]
+]
+
 { #category : #'instance creation' }
 RSHighlightable class >> withEdges [
 

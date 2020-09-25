@@ -286,7 +286,7 @@ RSLabel >> metricsProvider: aRSMetricsProvider [
 RSLabel >> model: anObject [
 	"model is used to create popups and other interactions"
 	super model: anObject.
-	text ifNil: [ text := anObject asString ]
+	self hasText ifFalse: [ self text: anObject asString ]
 ]
 
 { #category : #'managing font' }
@@ -340,6 +340,7 @@ RSLabel >> text [
 
 { #category : #accessing }
 RSLabel >> text: string [
+	"Set the text of a label. do not try to write in the `text` variable directly."
 	text = string ifTrue: [ ^ self ].
 	text := string asString.
 	self resetCache; resetPath.

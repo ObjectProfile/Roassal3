@@ -80,6 +80,13 @@ c
 	aPlot chart: self
 ]
 
+{ #category : #'public - plots' }
+RSChart >> barX: aCollectionX y: aCollectionY [
+	| res |
+	self addPlot: (res := RSBarPlot new x: aCollectionX y: aCollectionY).
+	^ res
+]
+
 { #category : #color }
 RSChart >> colorFor: aRSPlot [ 
 	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
@@ -146,6 +153,13 @@ RSChart >> initialize [
 RSChart >> initializeDecorations [
 	decorations := OrderedCollection new.
 	self addDecoration: RSChartSpineDecoration new.
+]
+
+{ #category : #'public - plots' }
+RSChart >> lineX: aCollectionX y: aCollectionY [
+	| res |
+	self addPlot: (res := RSLinePlot new x: aCollectionX y: aCollectionY).
+	^ res
 ]
 
 { #category : #accessing }

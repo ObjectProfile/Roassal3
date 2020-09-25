@@ -61,6 +61,11 @@ RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]
 
+{ #category : #testing }
+RSScatterPlot >> isScatterPlot [
+	^ true
+]
+
 { #category : #accessing }
 RSScatterPlot >> processBlock [
 	^ processBlock

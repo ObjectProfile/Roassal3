@@ -168,25 +168,9 @@ RSBoundingShape >> isNode [
 	^ true
 ]
 
-{ #category : #actions }
-RSBoundingShape >> loadBoundingShape: aShape [
-	self 
-		extent: aShape extent;
-		matrix: aShape matrix;
-		border: aShape border;
-		paint: aShape paint;
-		announcer: aShape announcer;
-		parent: aShape parent.
-]
-
 { #category : #matrix }
 RSBoundingShape >> loadIdentity [
 	matrix loadIdentity
-]
-
-{ #category : #actions }
-RSBoundingShape >> loadShape: aShape [
-	self loadBoundingShape: aShape.
 ]
 
 { #category : #matrix }

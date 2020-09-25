@@ -42,6 +42,7 @@ RSAbstractChartElement >> computeColor [
 { #category : #rendering }
 RSAbstractChartElement >> createXScale [
 	xScale ifNil: [ xScale := NSScale linear ].
+	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	xScale
 		domain:
 			{chart minValueX.
@@ -54,6 +55,7 @@ RSAbstractChartElement >> createXScale [
 { #category : #rendering }
 RSAbstractChartElement >> createYScale [
 	yScale ifNil: [ yScale := NSScale linear ].
+	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	yScale
 		domain:
 			{chart minValueY.
