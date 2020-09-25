@@ -212,8 +212,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	c := RSChart new.
 
 	c addPlot: (RSBarPlot new x: x y: y).
-	self flag: 'TODO'.
-	"c addPlot: (RSLinePlot new x: x y: y; color: Color red)."
+	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
 	c addDecoration: (RSHorizontalTick new asFloat).
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
