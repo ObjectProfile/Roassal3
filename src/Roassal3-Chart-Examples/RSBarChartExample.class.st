@@ -64,3 +64,20 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	^ c canvas
 	
 ]
+
+{ #category : #examples }
+RSBarChartExample >> example03Heroes [
+	<script: 'self new example03Heroes open'>
+	| experience x c |
+	experience := { 10. 20. 30. 100 }.
+	x := 1 to: 4.
+
+	c := RSChart new.
+	c addPlot: (RSBarPlot new x: x y: experience ).
+	c addDecoration: (RSHorizontalTick new
+		fromNames: #(Kael Legion Luna Ember); 
+		labelRotation: 0;
+		yourself ).
+	c addDecoration: (RSVerticalTick new integer).
+	^ c  
+]
