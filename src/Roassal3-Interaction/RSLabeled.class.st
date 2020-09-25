@@ -209,5 +209,18 @@ RSLabeled >> target: aBlock [
 
 { #category : #'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
+	"Set the label on a shape. The argument is either a block or a symbol, and is used to compute the label to use from the shape model.
+For example:
+```Smalltalk
+someShapes := #(10 20 30) collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c := RSCanvas new.
+c addAll: someShapes.
+
+someShapes @ (RSLabeled new text: [:model | 'Value = ', model asString]).
+RSFlowLayout on: someShapes.
+someShapes @ RSDraggable.
+c @ RSCanvasController
+```
+"
 	shapeBuilder textBlock: aBlockOrSymbol
 ]
