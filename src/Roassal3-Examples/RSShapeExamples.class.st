@@ -1065,3 +1065,39 @@ RSShapeExamples >> example39RoassalPackages [
 	canvas @ RSCanvasController.
 	^ canvas
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example40LabelingLine [
+
+	<script: 'self new example40LabelingLine open'>
+	| c shapeA shapeB line interactionLabel |
+	c := RSCanvas new.
+
+	shapeA := RSLabel model: 'A'.
+	shapeB := RSLabel model: 'B'.
+	c add: shapeA.
+	c add: shapeB.
+	shapeB translateBy: 100 @ 50.
+
+	shapeA @ RSDraggable.
+	shapeB @ RSDraggable.
+
+	line := RSLine new
+		        from: shapeA;
+		        to: shapeB.
+	line attachPoint: RSBorderAttachPoint new.
+	c add: line.
+
+	interactionLabel := RSLabeled new text: [ :notUsed | 
+		                    line from model , ' -> ' , line to model ].
+	interactionLabel shapeBuilder labelShape
+		fontSize: 5;
+		color: #red.
+	interactionLabel location
+		inner;
+		middle.
+	line @ interactionLabel.
+
+	c @ RSCanvasController.
+	^ c
+]

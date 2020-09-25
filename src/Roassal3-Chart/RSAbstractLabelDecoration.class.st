@@ -54,9 +54,9 @@ RSAbstractLabelDecoration >> offset [
 ]
 
 { #category : #accessing }
-RSAbstractLabelDecoration >> offset: aNumber [
+RSAbstractLabelDecoration >> offset: aPointOrNumber [
 	"Set the translation distance to set the label"
-	offset := aNumber
+	offset := aPointOrNumber
 ]
 
 { #category : #accessing }
