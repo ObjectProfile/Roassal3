@@ -46,16 +46,16 @@ RSAbstractBarPlot >> bars [
 ]
 
 { #category : #hooks }
-RSAbstractBarPlot >> computeRectagleFor: aPoint [
+RSAbstractBarPlot >> computeRectagleFor: aPoint index: index [
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
-RSAbstractBarPlot >> createBarFor: aPoint [
+RSAbstractBarPlot >> createBarFor: aPoint index: index [
 	^ self shape copy
 		model: (self modelFor: aPoint);
 		color: self computeColor;
-		fromRectangle: (self computeRectagleFor: aPoint);
+		fromRectangle: (self computeRectagleFor: aPoint index: index);
 		yourself
 ]
 
@@ -95,11 +95,15 @@ RSAbstractBarPlot >> modelFor: aPoint [
 
 { #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
+	| index |
 	self checkAssertion.
-	bars := RSGroup new.
-	xValues with: yValues do: [ :xt :yt |
-		bars add: (self createBarFor: xt@yt).
-		].
+	index := 1.
+	bars := xValues collect: [ :xt | 
+		| yt bar |
+		yt := yValues at: index.
+		bar := self createBarFor: xt@yt index: index.
+		index := index + 1.
+		bar ] as: RSGroup.
 	canvas addAll: bars.
 
 ]

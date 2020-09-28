@@ -81,9 +81,20 @@ c
 ]
 
 { #category : #'public - plots' }
-RSChart >> barX: aCollectionX y: aCollectionY [
+RSChart >> barHeights: aCollectionY [
 	| res |
-	self addPlot: (res := RSBarPlot new x: aCollectionX y: aCollectionY).
+	self addPlot: (res := RSBarPlot new 
+		x: (1 to: aCollectionY size) 
+		y: aCollectionY).
+	^ res
+]
+
+{ #category : #'public - plots' }
+RSChart >> barWidths: aCollectionX [
+	| res |
+	self addPlot: (res := RSHorizontalBarPlot new 
+		x: aCollectionX
+		y: (1 to: aCollectionX size)).
 	^ res
 ]
 

@@ -135,3 +135,87 @@ RSBarChartExample >> example03TilePaint [
 
 	^ c canvas
 ]
+
+{ #category : #examples }
+RSBarChartExample >> example04VerticalStack [
+	<script: 'self new example04VerticalStack open'>
+	| c menMeans womenMeans lb |
+	c := RSChart new.
+	c extent: 300@200.
+	menMeans := #(20 35 30 35 27).
+	womenMeans := #(25 32 34 20 25).
+	c barHeights: menMeans.
+	(c barHeights: womenMeans)
+		bottom: menMeans.
+	c addDecoration: (RSHorizontalTick new fromNames: #(Day1 Day2 Day3 Day4 Day5)).
+	c addDecoration: (RSVerticalTick new integer).
+	c ylabel: 'Scores'.
+	c title: 'Scores by group of gender'.
+	c build.
+	lb := RSLegend new.
+	lb layout horizontal.
+	#(Men Women) doWithIndex: [ :lbl :index | 
+		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
+	lb container: c canvas.
+	lb build.
+	^ c canvas
+]
+
+{ #category : #examples }
+RSBarChartExample >> example05HorizontalStack [
+	<script: 'self new example05HorizontalStack open'>
+	| c menMeans womenMeans lb |
+	c := RSChart new.
+	c extent: 300@200.
+	menMeans := #(20 35 30 35 27).
+	womenMeans := #(25 32 34 20 25).
+	c barWidths: menMeans.
+	(c barWidths: womenMeans)
+		left: menMeans.
+	c addDecoration: (RSHorizontalTick new integer).
+	c addDecoration: (RSVerticalTick new fromNames: #(Day1 Day2 Day3 Day4 Day5)).
+	c xlabel: 'Scores'.
+	c title: 'Scores by group of gender'.
+	c build.
+	lb := RSLegend new.
+	lb layout horizontal.
+	#(Men Women) doWithIndex: [ :lbl :index | 
+		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
+	lb container: c canvas.
+	lb build.
+	^ c canvas
+]
+
+{ #category : #examples }
+RSBarChartExample >> example06BarAnimation [
+	<script: 'self new example06BarAnimation open'>
+	| canvas bars |
+	canvas := self example01TwoBars.
+	bars := canvas shapes select: [ :shape | shape class = RSBox ].
+	bars allButFirst doWithIndex: [ :shape :index | 
+		| rectangle from to |
+		rectangle := shape encompassingRectangle.
+		shape height: 0.
+		shape model > 0 ifTrue: [ 
+			from := rectangle corner y.
+			to := rectangle origin y ]
+		ifFalse: [
+			to := rectangle corner y.
+			from := rectangle origin y
+			].
+		
+		canvas newAnimation
+			easing: RSEasing circleOut;
+			delay: (index * 200) milliSeconds;
+			duration: 1 second;
+			from: from;
+			to: to;
+			onStepDo: [ :t |
+				shape fromRectangle:
+					(shape model > 0 
+						ifTrue: [ rectangle origin x @ t corner: rectangle corner ]
+						ifFalse: [ rectangle origin corner: rectangle corner x @ t ]). ].
+		 ].
+
+	^ canvas
+]

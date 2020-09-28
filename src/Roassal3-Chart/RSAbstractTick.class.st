@@ -139,6 +139,19 @@ c
 ]
 
 { #category : #public }
+RSAbstractTick >> fromNames: aCollectionOfStrings [
+	self
+		doNotUseNiceLabel;
+		numberOfTicks: aCollectionOfStrings size-1.
+	
+	self labelConversion: [ :x | 
+		x isZero 
+			ifTrue: [ '' ]
+			ifFalse: [aCollectionOfStrings at: x asInteger ] ].
+		
+]
+
+{ #category : #public }
 RSAbstractTick >> integer [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value asInteger ]

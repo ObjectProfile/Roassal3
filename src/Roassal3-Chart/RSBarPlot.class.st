@@ -30,6 +30,9 @@ c
 Class {
 	#name : #RSBarPlot,
 	#superclass : #RSAbstractBarPlot,
+	#instVars : [
+		'bottom'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
 
@@ -49,11 +52,26 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	aChart xScale: barScale
 ]
 
+{ #category : #accessing }
+RSBarPlot >> bottom [
+	^ bottom
+]
+
+{ #category : #accessing }
+RSBarPlot >> bottom: aCollection [
+	self 
+		assert: xValues size = aCollection size
+		description: 'Invalid size'.
+	bottom := aCollection
+]
+
 { #category : #hooks }
-RSBarPlot >> computeRectagleFor: aPoint [
-	| origin corner sizeOffset offset |
-	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
-	corner := origin x @ (yScale scale: 0).
+RSBarPlot >> computeRectagleFor: aPoint index: index [
+	| origin corner sizeOffset offset zero |
+	zero := 0.
+	bottom ifNotNil: [ zero := bottom at: index ].
+	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y+zero).
+	corner := origin x @ (yScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	^ Rectangle 
@@ -64,7 +82,10 @@ RSBarPlot >> computeRectagleFor: aPoint [
 { #category : #rendering }
 RSBarPlot >> definedValuesY [
 	"Return the list Y values that are defined"
-	^ yValues, {0} select: [ :v | v isNaN not and: [ v isInfinite not ] ]
+	| res |
+	res := yValues.
+	bottom ifNotNil: [ res := yValues + bottom ].
+	^ res, {0}
 ]
 
 { #category : #testing }

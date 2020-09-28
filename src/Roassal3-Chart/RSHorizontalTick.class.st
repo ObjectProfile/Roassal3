@@ -33,16 +33,9 @@ RSHorizontalTick >> defaultLabelLocation [
 ]
 
 { #category : #public }
-RSHorizontalTick >> fromNames: aCollectionOfStrings [
-	self
-		doNotUseNiceLabel;
-		numberOfTicks: aCollectionOfStrings size-1.
+RSHorizontalTick >> fromNames: aCollection [
+	super fromNames: aCollection.
 	self labelRotation: -45.
-	self labelConversion: [ :x | 
-		x isZero 
-			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x asInteger ] ].
-		
 ]
 
 { #category : #accessing }
