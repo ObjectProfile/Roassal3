@@ -14,14 +14,8 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractCompactTree class >> horizontalGap: anInt [
-
-	| new |
-	
-	new := self new.
-	new horizontalGap: anInt.
-	
-	^ new 
+RSAbstractCompactTree class >> horizontalGap: anInteger [
+	^ self new horizontalGap: anInteger; yourself
 ]
 
 { #category : #testing }
@@ -45,14 +39,8 @@ RSAbstractCompactTree class >> isAbstract [
 ]
 
 { #category : #testing }
-RSAbstractCompactTree class >> verticalGap: anInt [
-
-	| new |
-	
-	new := self new.
-	new verticalGap: anInt.
-	
-	^ new 
+RSAbstractCompactTree class >> verticalGap: anInteger [
+	^ self new verticalGap: anInteger; yourself
 ]
 
 { #category : #private }

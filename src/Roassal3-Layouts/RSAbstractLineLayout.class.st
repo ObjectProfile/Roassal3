@@ -147,6 +147,7 @@ RSAbstractLineLayout >> horizontalGap [
 
 { #category : #accessing }
 RSAbstractLineLayout >> horizontalGap: anInteger [
+	"Set the horizontal space, in pixel, between two neighbors"
 	horizontalGap := anInteger
 ]
 
@@ -174,5 +175,6 @@ RSAbstractLineLayout >> verticalGap [
 
 { #category : #accessing }
 RSAbstractLineLayout >> verticalGap: anInteger [
+	"Set the vertical space, in pixel, between a layer and a children layer"
 	verticalGap := anInteger
 ]

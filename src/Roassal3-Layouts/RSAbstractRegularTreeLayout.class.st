@@ -107,6 +107,7 @@ RSAbstractRegularTreeLayout >> leftGap [
 
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> leftGap: anInteger [
+	"Perform an horizontal translation of the nodes"
 	leftGap := anInteger
 ]
 
@@ -134,6 +135,7 @@ RSAbstractRegularTreeLayout >> topGap [
 
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> topGap: anInteger [
+	"Perform a vertical translation of the nodes"
 	topGap := anInteger
 ]
 
