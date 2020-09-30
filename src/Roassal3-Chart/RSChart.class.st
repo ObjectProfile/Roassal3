@@ -346,6 +346,7 @@ RSChart >> xSqrt [
 
 { #category : #decoration }
 RSChart >> xlabel: aTitle [
+	"Set a label on the horizontal axis"
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
@@ -383,5 +384,6 @@ RSChart >> ySqrt [
 
 { #category : #decoration }
 RSChart >> ylabel: aTitle [
+	"Set a label on the vertical axis"
 	self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]
