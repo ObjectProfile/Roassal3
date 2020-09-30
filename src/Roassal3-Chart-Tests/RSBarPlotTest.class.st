@@ -14,6 +14,7 @@ RSBarPlotTest >> test2BarPlots [
 	| d1 d2 extent vtick |
 	d1 := #(4 10 5 9).
 	d2 := #(-5 -6 -3 -3 ).
+	self skip.
 	extent := chart extent.
 	chart addPlot: (RSBarPlot new y: d1).
 	chart addPlot: (RSBarPlot new y: d2).
