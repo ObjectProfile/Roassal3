@@ -23,8 +23,16 @@ RSBarChartExample >> example01TwoBars [
 	p2 barOffset: size / -2.
 	c addPlot: p.
 	c addPlot: p2.
+	c addDecoration: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: x size - 1;
+		asFloat: 5;
+		useVerticalLabel; 
+		yourself).
+	
 	c build.
 	p bars @ RSPopup.
+	
 	p2 bars
 		when: RSMouseEnter do: [ :evt |
 			| color |

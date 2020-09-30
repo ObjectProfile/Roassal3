@@ -1606,8 +1606,16 @@ RSAnimationExamples >> example27RSLocate [
 			(locate offset y printShowingDecimalPlaces: 1) ].
 	updateText value.
 	fixedElement := newBox value: 1.
-	movableElement := newBox value: 2.
-	movableElement size: 40.
+	"movableElement := newBox value: 2."
+	movableElement := RSComposite new
+		add: (RSLabel new 
+			text: 'foo';
+			rotateByDegrees: -45;
+			yourself);
+		adjustToChildren;
+		color: (color scale: 2);
+		yourself.
+	"movableElement size: 40."
 	movableElement when: RSMouseClick do: [ 
 		canvas newAnimation
 			scale: (NSScale linear 

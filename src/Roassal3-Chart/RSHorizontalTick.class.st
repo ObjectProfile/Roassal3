@@ -32,12 +32,6 @@ RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
 ]
 
-{ #category : #public }
-RSHorizontalTick >> fromNames: aCollection [
-	super fromNames: aCollection.
-	self labelRotation: -45.
-]
-
 { #category : #accessing }
 RSHorizontalTick >> max [
 	^ chart maxValueX
@@ -46,4 +40,15 @@ RSHorizontalTick >> max [
 { #category : #accessing }
 RSHorizontalTick >> min [
 	^ chart minValueX
+]
+
+{ #category : #public }
+RSHorizontalTick >> useDiagonalLabel [
+	self labelRotation: -45.
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+]
+
+{ #category : #public }
+RSHorizontalTick >> useVerticalLabel [
+	self labelRotation: -90.
 ]
