@@ -9,8 +9,7 @@ Class {
 
 { #category : #hooks }
 RSCairoFitMetricsProvider >> extentsOf: aRSLabel [
-	| rawExt text cairoFont glyphs |
-	text := aRSLabel text.
+	| rawExt cairoFont glyphs |
 	cairoFont := aRSLabel cairoFont.
 	glyphs := aRSLabel cairoGlyphs.
 	rawExt := CairoTextExtents new.
