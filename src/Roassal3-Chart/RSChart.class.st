@@ -350,6 +350,12 @@ RSChart >> xlabel: aTitle [
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
+{ #category : #decoration }
+RSChart >> xlabel: aTitle offset: aPointOrANumber [
+	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
+	self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
+]
+
 { #category : #'public - scales' }
 RSChart >> yLinear [
 	^ self yScale: NSScale linear
@@ -386,4 +392,10 @@ RSChart >> ySqrt [
 RSChart >> ylabel: aTitle [
 	"Set a label on the vertical axis"
 	self addDecoration: (RSYLabelDecoration new title: aTitle)
+]
+
+{ #category : #decoration }
+RSChart >> ylabel: aTitle offset: aPointOrANumber [
+	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
+	self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
 ]
