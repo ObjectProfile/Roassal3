@@ -46,7 +46,7 @@ RSChartExample new example01Markers open
 
 You should see:
 
-<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
+f<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
 
 Another example of chart may be seen using:
 ```Smalltalk
@@ -72,7 +72,7 @@ RSAnimationExamples new example06Atom open
 ```
 You should see an animated version of:
 
-![atom](images/example03atom.gif)
+![atom](images/example03atom.gif =250x250)
 
 ![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
 
