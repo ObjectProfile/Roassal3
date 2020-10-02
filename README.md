@@ -48,7 +48,7 @@ You should see:
 
 <img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
 
-Another example of chart may be seen using:
+Another chart example may be seen using:
 ```Smalltalk
 RSChartExample new example11BarplotCombinedWithLine open
 ```
@@ -65,12 +65,12 @@ RSShapeExamples new example25BisBimetricLineOnLargeExample open
 
 <img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84401030-c7b07900-abd0-11ea-81f3-70e09dc163f4.png">
 
-An example of animation may be seen using:
+An example animation may be seen using:
 
 ```Smalltalk
-RSAnimationExamples new example06Atom open
+RSAnimationExamples new example03Atom open
 ```
-You should see an animated version of:
+You should see:
 
 ![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
 
@@ -89,10 +89,10 @@ spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roass
 ```
 _____
 ## Get in touch
-Share your happiness by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
+Share your enthusiasm by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
 
 _____
 ## Acknowledgement
 
 Roassal3 is a community effort, and we are really grateful to a number of people. In no particular order, big thanks to:
-Stéphane Ducasse, Martin Días, Pavel Krivanek, Adrian Sampaleanu
+Stéphane Ducasse, Martin Días, Pavel Krivanek
