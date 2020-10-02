@@ -74,8 +74,6 @@ You should see an animated version of:
 
 <img width="250" height="250" alt="atom" src="https://github.com/ObjectProfile/Roassal3/raw/master/images/example03atom.gif?raw=true">
 
-![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
-
 ## Documentation
 
 Visit the [documentation github page](https://github.com/ObjectProfile/Roassal3Documentation)
