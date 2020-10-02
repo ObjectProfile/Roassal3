@@ -41,6 +41,7 @@ RSUMLClassBuilder >> renderIn: aCanvas [
 		shapes: shapes;
 		connectFrom: modelDescriptor superclass.
 	self layout on: shapes.
+	self renderer renderAssociations.
 	renderer setUpCanvas: aCanvas.
 
 ]
