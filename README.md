@@ -72,6 +72,8 @@ RSAnimationExamples new example06Atom open
 ```
 You should see an animated version of:
 
+![atom](images/example03atom.gif)
+
 ![atom](https://user-images.githubusercontent.com/10532890/84400054-91262e80-abcf-11ea-8cd6-d659d8b3bde3.png)
 
 ## Documentation
