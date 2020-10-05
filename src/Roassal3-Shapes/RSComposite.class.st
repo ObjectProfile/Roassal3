@@ -342,7 +342,7 @@ RSComposite >> sessionChanged [
 	children do: #sessionChanged
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSComposite >> shapeFromModel: anObject using: aBlock [
 	^ self model
 		  ifNil: [ 
@@ -384,7 +384,7 @@ RSComposite >> shapes: aRSGroup [
 	self children: aRSGroup
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSComposite >> shapesFromModel: anObject using: aBlock [
 	^ self model
 		  ifNil: [ 

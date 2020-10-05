@@ -114,6 +114,84 @@ RSGroupTest >> testShapeFromModel [
 ]
 
 { #category : #tests }
+RSGroupTest >> testShapeFromModelNestingWithinRSCompositesWithModels [
+	| group box1 box2 box3 composite |
+	box1 := RSBox new model: 1.
+	box2 := RSBox new model: 2.
+	box3 := RSBox new model: 3.
+	composite := RSComposite new
+		             model: 2;
+		             "shadowing the one within the box."shapes: { 
+				             box1.
+				             box2.
+				             box3 }.
+
+
+	"One nesting level, transparent look up using RSComposite objects."
+	group := RSGroup new
+		         add: composite;
+		         yourself.
+	self assert: (group shapeFromModel: 2) equals: composite.
+
+	"Two nesting level, transparent look up using RSComposite objects."
+	composite := RSComposite new
+		             model: 2;
+		             shapes: { 
+				             box1.
+				             box2 }.
+	group := RSGroup new
+		         add: (RSComposite new
+				          model: 1;
+				          shapes: { 
+						          box3.
+						          composite });
+		         yourself.
+	self assert: (group shapeFromModel: 2) equals: nil.
+
+	"On the other hand, if the outer most composite hasn't a model, 
+	then it became transpart and forward the look up."
+	group := RSGroup new
+		         add: (RSComposite new shapes: { 
+						          box3.
+						          composite });
+		         yourself.
+	self assert: (group shapeFromModel: 2) equals: composite.
+
+	"Looking for a shape from a foreign model."
+	self assert: (group shapeFromModel: 0) equals: nil
+]
+
+{ #category : #tests }
+RSGroupTest >> testShapeFromModelNestingWithinRSCompositesWithoutModels [
+	| group box1 box2 box3 |
+	box1 := RSBox new model: 1.
+	box2 := RSBox new model: 2.
+	box3 := RSBox new model: 3.
+
+	"One nesting level, transparent look up using RSComposite objects."
+	group := RSGroup new
+		         add: (RSComposite new shapes: { 
+						          box1.
+						          box2.
+						          box3 });
+		         yourself.
+	self assert: (group shapeFromModel: 2) equals: box2.
+
+	"Two nesting level, transparent look up using RSComposite objects."
+	group := RSGroup new
+		         add: (RSComposite new shapes: { 
+						          (RSComposite new shapes: { 
+									           box1.
+									           box2 }).
+						          box3 });
+		         yourself.
+	self assert: (group shapeFromModel: 2) equals: box2.
+
+	"Looking for a shape from a foreign model."
+	self assert: (group shapeFromModel: 0) equals: nil
+]
+
+{ #category : #tests }
 RSGroupTest >> testTranslucent [
 	| g |
 	g := RSGroup new.

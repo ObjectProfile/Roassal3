@@ -429,7 +429,7 @@ RSShape >> shape [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSShape >> shapeFromModel: anObject using: aBlock [
 	^ (aBlock value: self model value: anObject)
 		  ifTrue: [ self ]
@@ -452,7 +452,7 @@ RSShape >> shapeWithActionForPosition: position [
 			ifFalse: [ nil ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSShape >> shapesFromModel: anObject using: aBlock [
 	^ (aBlock value: self model value: anObject)
 		  ifTrue: [ Array with: self ]
