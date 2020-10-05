@@ -474,7 +474,7 @@ RSAthensRenderer >> drawPathLabel: label [
 		utf8String := act convertTextUtf8: label text.
 		label path: utf8String.
 	 ].
-	f := CairoScaledFont fromFreetypeFont: label font realFont.
+	f := label cairoFont.
 	
 	athensCanvas newPath.
 	f lock.
@@ -499,13 +499,23 @@ RSAthensRenderer >> drawPathLabel: label [
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
-	| paint |
-	paint := label paint.
-	paint ifNil: [ ^ self ].
-	athensCanvas 
-		setFont: label font;
-		setPaint: paint;
-		drawString: label text
+	| font |
+	(label paint isNil or: [ label cairoGlyphs isNil ]) ifTrue: [ ^ self ].
+	
+	"returns a CairoScaledFont"
+	font := label cairoFont.
+	font lock.
+
+	athensCanvas
+		setPathMatrix;
+		setScaledFont: font.
+	label paint loadOnCairoCanvas: athensCanvas.
+
+	athensCanvas
+		showGlyphs: label cairoGlyphs getHandle
+		size: label cairoGlyphs size.
+
+	font unlock
 ]
 
 { #category : #utilities }
@@ -604,16 +614,13 @@ RSAthensRenderer >> visitBoundingShape: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
+	label hasText ifFalse: [ ^ self ].
 	athensCanvas pathTransform restoreAfter: [ 
-		| e ybn |
-		e := label textExtents.
-		ybn := e y_bearing negated.
 		athensCanvas pathTransform
 			multiplyBy: label matrix asFloatTransform;
-			translateBy: ((e x_advance + e x_bearing / -2) @ 0);
-			translateBy: 0@((ybn/2)- ((e height- ybn)/2)). 
+			translateBy: label textExtents translationPoint. 
 		label hasBorder
-			ifTrue: [ self drawPathLabel: label  ]
+			ifTrue: [ self drawPathLabel: label ]
 			ifFalse: [ self drawSimpleLabel: label ].
 		
 		self visitLabelDecoratorsIfNecessary: label.

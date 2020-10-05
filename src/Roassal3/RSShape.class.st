@@ -23,10 +23,17 @@ Class {
 		'border',
 		'parent',
 		'isFixed',
-		'encompassingRectangle'
+		'encompassingRectangle',
+		'model'
 	],
 	#category : #'Roassal3-Core'
 }
+
+{ #category : #accessing }
+RSShape class >> model: anObject [
+	"Create an instance of myself with anObject as model"
+	^ self new model: anObject
+]
 
 { #category : #adding }
 RSShape >> accept: aVisitor [
@@ -152,6 +159,21 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
+{ #category : #adding }
+RSShape >> deepShapeFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #adding }
+RSShape >> deepShapesFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #adding }
+RSShape >> deepShapesFromModels: someObjects result: result [
+	(someObjects includes: self model) ifTrue: [ result add: self ]
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
@@ -266,20 +288,15 @@ RSShape >> isShape [
 	^ true
 ]
 
-{ #category : #actions }
-RSShape >> loadShape: aShape [
-	self subclassResponsibility
-]
-
 { #category : #'accessing - attributes' }
 RSShape >> model [
-	^ self propertyAt: #model
+	^ model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
 	"model is used to create popups and other interactions"
-	self propertyAt: #model put: anObject
+	model := anObject
 ]
 
 { #category : #border }
@@ -325,7 +342,8 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
-	"Keep a AthensCairoPath"
+	"-Keeps an AthensCairoPath, 
+	-this value is reset when the image is restarted"
 	path := aPath
 ]
 
@@ -370,15 +388,6 @@ RSShape >> remove [
 { #category : #adding }
 RSShape >> renderOn: aCanvas [
 	self subclassResponsibility
-]
-
-{ #category : #actions }
-RSShape >> replaceWith: aShape [
-	parent ifNil: [ ^ self ].
-	aShape loadShape: self.
-	parent shapes replaceAll: self with: aShape.
-	parent nodes replaceAll: self with: aShape.
-	
 ]
 
 { #category : #initialization }
@@ -440,7 +449,7 @@ RSShape >> shapeWithAction: eventClass forPosition: position [
 RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
 			ifTrue: [ self ]
-			ifFalse: [ ^ nil ]
+			ifFalse: [ nil ]
 ]
 
 { #category : #'as yet unclassified' }

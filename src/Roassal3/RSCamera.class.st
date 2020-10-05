@@ -135,19 +135,6 @@ RSCamera >> scale: aNumber [
 		newScale: aNumber ]
 ]
 
-{ #category : #actions }
-RSCamera >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	oldPosition = aPoint ifTrue: [ ^ self ].
-	self position: aPoint.
-	self announce: [RSPositionChangedEvent new 
-		shape: self; 
-		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
-]
-
 { #category : #zoom }
 RSCamera >> zoomToFit [
 	self zoomToFit: canvas extent * 0.9

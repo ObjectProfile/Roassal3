@@ -50,5 +50,6 @@ RSAnimationTest >> runAnimation: animation threshold: threshold [
 
 { #category : #running }
 RSAnimationTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new.
 ]

@@ -79,6 +79,33 @@ RSLabeled >> createLabel: aShape [
 	^ label
 ]
 
+{ #category : #'public - configuration' }
+RSLabeled >> fontSize: fontSizeAsNumber [
+	"Set the font size of the label
+
+```Smalltalk
+c := RSCanvas new.
+
+shapes := (1 to: 100) collect: [ :v |
+	RSBox new model: v.
+] as: RSGroup .
+
+c addAll: shapes.
+RSNormalizer size 
+	shapes: shapes;
+	from: 10;
+	to: 30;
+	normalize: #yourself.
+RSGridLayout on: shapes.
+
+shapes @ (RSLabeled new fontSize: 10).
+
+c @ RSCanvasController.
+```	
+"
+	self shapeBuilder labelShape fontSize: fontSizeAsNumber
+]
+
 { #category : #hooks }
 RSLabeled >> getOrCreateLabel: aShape [
 	| label parent |
@@ -147,8 +174,8 @@ RSLabeled >> model: aBlock [
 ]
 
 { #category : #hooks }
-RSLabeled >> modelFor: anElement [
-	^ modelBlock rsValue: anElement.
+RSLabeled >> modelFor: aRSShape [
+	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }
@@ -182,5 +209,18 @@ RSLabeled >> target: aBlock [
 
 { #category : #'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
+	"Set the label on a shape. The argument is either a block or a symbol, and is used to compute the label to use from the shape model.
+For example:
+```Smalltalk
+someShapes := #(10 20 30) collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c := RSCanvas new.
+c addAll: someShapes.
+
+someShapes @ (RSLabeled new text: [:model | 'Value = ', model asString]).
+RSFlowLayout on: someShapes.
+someShapes @ RSDraggable.
+c @ RSCanvasController
+```
+"
 	shapeBuilder textBlock: aBlockOrSymbol
 ]

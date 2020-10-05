@@ -78,8 +78,13 @@ RSEdgeBuilder class >> arrowedLine [
 ]
 
 { #category : #'instance creation' }
+RSEdgeBuilder class >> arrowedLineWithOffset [
+	^ self arrowedLineWithOffset: 0.2
+]
+
+{ #category : #'instance creation' }
 RSEdgeBuilder class >> arrowedLineWithOffset: aFloat [
-	"[0 1] value"
+	"[0, 1] value"
 	| inst |
 	inst := self arrowedLine.
 	inst shape markerEnd offsetRatio: aFloat.
@@ -115,9 +120,9 @@ RSEdgeBuilder class >> new [
 ]
 
 { #category : #'instance creation' }
-RSEdgeBuilder class >> new: aTSShape [
+RSEdgeBuilder class >> new: aRSShape [
 	 ^ super new 
-		shape: aTSShape;
+		shape: aRSShape;
 		yourself
 		
 ]
@@ -173,6 +178,9 @@ RSEdgeBuilder >> beDirectional [
 
 { #category : #accessing }
 RSEdgeBuilder >> canvas [
+	"Return the canvas if it was manually set using #canvas: or infer it from the shapes added to the builder"
+	(canvas isNil and: [ fromShapes notNil ]) ifTrue: [ canvas := fromShapes anyOne canvas ].
+	
 	^ canvas
 ]
 
@@ -306,7 +314,7 @@ RSEdgeBuilder >> edgeFrom: source to: target [
 		to: target;
 		yourself.
 	edge border: (self shape border copy).
-	canvas ifNotNil: [ canvas add: edge ].
+	self canvas ifNotNil: [ canvas add: edge ].
 	^ edge
 ]
 
@@ -416,9 +424,10 @@ RSEdgeBuilder >> shape [
 ]
 
 { #category : #'public - shape' }
-RSEdgeBuilder >> shape: aTSShape [
-	self assert: aTSShape isEdge.
-	shape := aTSShape
+RSEdgeBuilder >> shape: aRSShape [
+	"Set the shape used to build edges"
+	self assert: aRSShape isEdge.
+	shape := aRSShape
 ]
 
 { #category : #accessing }

@@ -14,7 +14,7 @@ Class {
 RSInteractiveContext >> initialize [
 	super initialize.
 	interactions := OrderedCollection new
-		add: (RSSelectionPresentation new);
+		add: RSSelectionPresentation new;
 		yourself.
 ]
 

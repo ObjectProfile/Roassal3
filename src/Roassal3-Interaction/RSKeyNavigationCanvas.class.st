@@ -15,7 +15,7 @@ Class {
 
 { #category : #'events-processing' }
 RSKeyNavigationCanvas >> expandCollapse: evt [
-	evt canvas morph owner expandBoxHit
+	evt canvas morph window expandBoxHit
 ]
 
 { #category : #initialization }
@@ -38,6 +38,8 @@ RSKeyNavigationCanvas >> onShape: aCanvas [
 RSKeyNavigationCanvas >> processKeyDown: evt [
 	| keyName rect lastMS |
 	keyName := evt keyName.
+	keyName = #I ifTrue: [ ^ self zoomIn: evt ].
+	keyName = #O ifTrue: [ ^ self zoomOut: evt ].
 	self configuration hasHorizontalScrolling ifTrue: [ 
 		keyName = #KP_LEFT ifTrue: [ steps add: -1@0 ].
 		keyName = #KP_RIGHT ifTrue: [ steps add: 1@0 ].
@@ -78,8 +80,8 @@ RSKeyNavigationCanvas >> processKeyUp: evt [
 	| keyName |
 	steps removeAll.
 	keyName := evt keyName.
-	keyName = #I ifTrue: [ ^ self zoomIn: evt ].
-	keyName = #O ifTrue: [ ^ self zoomOut: evt ].
+	"keyName = #I ifTrue: [ ^ self zoomIn: evt ].
+	keyName = #O ifTrue: [ ^ self zoomOut: evt ]."
 	keyName = #M ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.

@@ -23,6 +23,7 @@ RSStrokeStyle class >> fromString: aString [
 		ifTrue: [ ^ inst dashArray: #(4 1 1 1) ].
 	(aString includesSubstring: '.')
 		ifTrue: [ ^ inst dashArray: #(1) ].
+	
 	^ nil
 ]
 

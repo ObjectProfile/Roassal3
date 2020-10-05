@@ -40,8 +40,60 @@ RSTContainer >> addNode: aShape [
 	^ aShape
 ]
 
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapeFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapeFromModel: anObject result: result.
+	result isEmpty ifTrue: [ ^ nil ].
+	^ result first
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapeFromModel: anObject result: result [
+	"Private method"
+	| t |
+	t := self shapeFromModel: anObject.
+	t ifNotNil: [ result add: t ].
+	self nodes do: [ :c | c deepShapeFromModel: anObject result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapesFromModel: anObject result: result.
+	^ result
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModel: anObject result: result [
+	"Private method"
+	self model = anObject ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModel: anObject result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModels: someObjects [
+	"Retreive a shape from a given model. Return nil if not found"
+	| result |
+	result := RSGroup new.
+	self deepShapesFromModels: someObjects result: result.
+	^ result
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	(someObjects includes: self model) ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
+]
+
 { #category : #accessing }
 RSTContainer >> edges [
+	"Return all the lines contained in the canvas."
 	^ self privateEdges
 		ifNil: [ | res |
 			self privateEdges: (res := RSGroup new).
@@ -50,6 +102,7 @@ RSTContainer >> edges [
 
 { #category : #accessing }
 RSTContainer >> nodes [ 
+	"Return all the shapes except lines contained in the canvas."
 	^ self privateNodes
 		ifNil: [ | res |
 			self privateNodes: (res := RSGroup new).
@@ -58,9 +111,18 @@ RSTContainer >> nodes [
 
 { #category : #accessing }
 RSTContainer >> numberOfEdges [
+	"Return the number of edges contained in the container"
 	^ self privateEdges
 		ifNil: [ 0 ]
 		ifNotNil: [ :edges | edges size ]
+]
+
+{ #category : #accessing }
+RSTContainer >> numberOfNodes [
+	"Return the number of nodes contained in the container"
+	^ self privateNodes
+		ifNil: [ 0 ]
+		ifNotNil: [ :nodes | nodes size ]
 ]
 
 { #category : #private }
@@ -93,6 +155,12 @@ RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
+{ #category : #'as yet unclassified' }
+RSTContainer >> pushBackEdges [
+	"Push back all the edges"
+	self edges do: [ :e | e pushBack ]
+]
+
 { #category : #removing }
 RSTContainer >> removeEdge: anEdge [
 	self edges remove: anEdge ifAbsent: [  ].
@@ -103,7 +171,7 @@ RSTContainer >> removeNode: aNode [
 	self nodes remove: aNode ifAbsent: [  ].
 ]
 
-{ #category : #accessing }
+{ #category : #'looking up shapes' }
 RSTContainer >> shapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
@@ -116,4 +184,11 @@ RSTContainer >> shapes [
 		ifNil: [ | res |
 			self privateShapes: (res := RSGroup new).
 			res ]
+]
+
+{ #category : #'looking up shapes' }
+RSTContainer >> shapesFromModel: anObject [
+	"Retreive a shape from a given model. Return nil if not found"
+
+	^ self nodes shapesFromModel: anObject
 ]

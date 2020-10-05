@@ -24,7 +24,7 @@ RSCanvasTest >> testAddOneShape [
 	self assert: canvas numberOfFixedShapes equals: 0
 ]
 
-{ #category : #tests }
+{ #category : #'tests - shapes ordering' }
 RSCanvasTest >> testAddShapeBefore [
 	| shape1 shape2 |
 	shape1 := RSBox new size: 20.
@@ -81,18 +81,6 @@ RSCanvasTest >> testDrawFixed [
 	self assert: canvas numberOfShapes equals: 0.
 	self assert: canvas numberOfFixedShapes equals: 2.
 	canvas createMorph drawOnMockCanvas.
-]
-
-{ #category : #tests }
-RSCanvasTest >> testElementFromModel [
-	| shapes |
-	shapes := (1 to: 3) collect: [ :m | RSBox new model: m; yourself ].
-	canvas addAll: shapes.
-	
-	self assert: (canvas shapeFromModel: 1) equals: shapes first.
-	self assert: (canvas shapeFromModel: 2) equals: shapes second.
-	self assert: (canvas shapeFromModel: 3) equals: shapes third.
-	self assert: (canvas shapeFromModel: 4) isNil
 ]
 
 { #category : #running }
@@ -152,7 +140,7 @@ RSCanvasTest >> testLowLevelEvent [
 		identicalTo: box
 ]
 
-{ #category : #tests }
+{ #category : #'tests - composite' }
 RSCanvasTest >> testNestedShape [
 
 	| shape innerShape |
@@ -167,7 +155,7 @@ RSCanvasTest >> testNestedShape [
 	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - composite' }
 RSCanvasTest >> testNestedShapeNotAddedToACanvas [
 
 	| shape innerShape |
@@ -204,7 +192,97 @@ RSCanvasTest >> testOpening [
 	canvas open delete
 ]
 
-{ #category : #tests }
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testPush [
+
+	| c blueBox redBox |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	"red is in front of blue"
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+	
+	redBox pushBack.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+	
+	blueBox pushBack.
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+
+	c pushBack: redBox.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+]
+
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testPushBackEdges [
+
+	| c blueBox redBox l |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	l := RSLine new from: blueBox; to: redBox.
+	c add: l.
+	
+	self assert: c shapes asArray equals: { blueBox . redBox . l }.
+	
+	c pushBackEdges.
+	self assert: c shapes asArray equals: { l . blueBox . redBox }.
+	
+]
+
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testPushFront [
+
+	| c blueBox redBox |
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	
+	"red is in front of blue"
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+	
+	blueBox pushFront.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+	
+	redBox pushFront.
+	self assert: c shapes asArray equals: { blueBox . redBox }.
+
+	c pushFront: blueBox.
+	self assert: c shapes asArray equals: { redBox . blueBox }.
+]
+
+{ #category : #'tests - shapes ordering' }
 RSCanvasTest >> testRemovingShapes [
 	| e |
 	e := RSEllipse new.
@@ -212,4 +290,92 @@ RSCanvasTest >> testRemovingShapes [
 	self assert: canvas shapes size equals: 1.
 	e remove.
 	self assert: canvas shapes size equals: 0.
+]
+
+{ #category : #tests }
+RSCanvasTest >> testShapeFromModel [
+	| shapes |
+	shapes := (1 to: 3) collect: [ :m | RSBox new model: m; yourself ].
+	canvas addAll: shapes.
+	
+	self assert: (canvas shapeFromModel: 1) equals: shapes first.
+	self assert: (canvas shapeFromModel: 2) equals: shapes second.
+	self assert: (canvas shapeFromModel: 3) equals: shapes third.
+	self assert: (canvas shapeFromModel: 4) isNil
+]
+
+{ #category : #'tests - composite' }
+RSCanvasTest >> testShapeFromModelAndComposite [
+
+	| compo |
+	compo := RSComposite new.
+	compo add: (RSBox new size: 20; model: 42).
+	compo model: 41.
+	
+	canvas add: compo.
+	
+	self assert: canvas numberOfShapes equals: 1.
+	self assert: (canvas shapeFromModel: 41) equals: compo.
+	self assert: (canvas shapeFromModel: 42) isNil.
+	
+	self assert: (canvas deepShapeFromModel: 41) equals: compo.
+	self assert: (canvas deepShapeFromModel: 42) equals: compo children first.
+	
+	self assert: (canvas deepShapeFromModel: 43) isNil
+]
+
+{ #category : #'tests - composite' }
+RSCanvasTest >> testShapeFromModelAndComposite2 [
+
+	| compo compo2 compo3 |
+	compo := RSComposite new.
+	compo add: (RSBox new size: 20; model: 42).
+	compo model: 41.
+	canvas add: compo.
+	
+	compo2 := RSComposite new.
+	compo2 add: (RSBox new size: 20; model: 42).
+	compo2 model: 41.
+	canvas add: compo2.
+	
+	compo3 := RSComposite new.
+	compo3 add: (RSBox new size: 20; model: 2).
+	compo3 model: 1.
+	canvas add: compo3.
+	
+	self assert: canvas numberOfShapes equals: 3.
+	self assert: (canvas shapesFromModel: 41) asArray equals: { compo . compo2 }.
+	self assert: (canvas shapesFromModel: 42) isEmpty.
+	
+	self assert: (canvas deepShapesFromModel: 41) asArray equals: { compo . compo2 }.
+	self assert: (canvas deepShapesFromModel: 42) asArray equals: { compo children first . compo2 children first }. 
+	
+	self assert: (canvas deepShapesFromModel: 2) asArray equals: { compo3 children first }
+]
+
+{ #category : #'tests - composite' }
+RSCanvasTest >> testShapeFromModelAndComposite3 [
+
+	| compo compo2 compo3 |
+	compo := RSComposite new.
+	compo add: (RSBox new size: 20; model: 42).
+	compo model: 41.
+	canvas add: compo.
+	
+	compo2 := RSComposite new.
+	compo2 add: (RSBox new size: 20; model: 42).
+	compo2 model: 41.
+	canvas add: compo2.
+	
+	compo3 := RSComposite new.
+	compo3 add: (RSBox new size: 20; model: 2).
+	compo3 model: 1.
+	canvas add: compo3.
+	
+	self assert: canvas numberOfShapes equals: 3.
+	self assert: (canvas shapesFromModels: #(41 1)) asArray equals: { compo . compo2 . compo3 }.
+	self assert: (canvas shapesFromModels: #(42)) isEmpty.
+	
+	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }. 
+
 ]

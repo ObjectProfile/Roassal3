@@ -152,6 +152,8 @@ RSComposite >> addShape: aShape before: otherShape [
 RSComposite >> adjustToChildren [
 "Recompute the encompassing rectangle of the composite shape from the positio of the children. 
 
+In case one wishes to have a padding in the composite, the method #padding: must be called _after_ calling #adjustToChildren
+
 Consider the following example:
 ```Smalltalk
 box := RSBox new size: 20.
@@ -204,6 +206,13 @@ RSComposite >> children: aRSGroup [
 	
 ]
 
+{ #category : #'looking up shapes' }
+RSComposite >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	(someObjects includes: self model) ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
+]
+
 { #category : #testing }
 RSComposite >> hasChildren [
 	^ children notNil and: [ children isNotEmpty ]
@@ -212,16 +221,21 @@ RSComposite >> hasChildren [
 { #category : #initialization }
 RSComposite >> initialize [
 	super initialize.
-	paint := nil.
+	self paint: nil.
 	self resetPath.
 	
 ]
 
 { #category : #accessing }
 RSComposite >> padding: anObject [
-	"anObject can be a number, a point or Margin"
-	"Shapes should be set in the composite before calling #padding:
-For example:
+	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
+The argument, anObject can be a number, a point or Margin. 
+
+IMPORTANT:
+- The shapes must be added in the composite before calling #padding:
+- The padding must be set after having performed #adjustToChildren
+	
+Here is an example of usage:
 ```Smalltalk
 box := RSBox new
     color: Color blue translucent;
@@ -278,8 +292,19 @@ RSComposite >> privateNodes: aRSGroup [
 	nodes := aRSGroup
 ]
 
+{ #category : #private }
+RSComposite >> privateShapes [
+	^ children
+]
+
+{ #category : #private }
+RSComposite >> privateShapes: aCollection [
+	children := aCollection
+]
+
 { #category : #actions }
 RSComposite >> pushBack: aShape [
+	"Put a shape behind all other shapes"
 	children
 		remove: aShape;
 		addFirst: aShape

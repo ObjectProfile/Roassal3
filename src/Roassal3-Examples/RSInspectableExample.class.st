@@ -100,3 +100,25 @@ RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
 	^ RSEasing bounceOut
 ]
+
+{ #category : #examples }
+RSInspectableExample >> example04ChagingContext [
+	<script: 'self new example04ChagingContext inspect'>
+	| c context int |
+	c := RSCanvas new.
+	1 to: 100 do: [ :i |
+		c add: (RSBox new size: 10; model: i) ].
+	c shapes @ RSDraggable.
+	RSGridLayout on: c shapes.
+	c @ RSCanvasController.
+	
+	"This is the default context for the inspector"
+	context := RSInteractiveContext new.
+	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentation ].
+	int 
+		padding: 5;
+		shadowColor: (Color red alpha: 0.1).
+	c inspectorContext: context.
+	
+	^ c
+]

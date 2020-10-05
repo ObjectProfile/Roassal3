@@ -5,7 +5,8 @@ Class {
 	#name : #RSBasicUMLClassRenderer,
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
-		'classInnerLine'
+		'classInnerLine',
+		'popup'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
@@ -39,6 +40,16 @@ RSBasicUMLClassRenderer >> classInnerLine: aShape [
 ]
 
 { #category : #hooks }
+RSBasicUMLClassRenderer >> initialize [
+	super initialize.
+	popup := RSPopup new model: #yourself.
+	popup shapeBuilder: (RSAdaptativePopup new
+		smallBuilder: popup shapeBuilder;
+		bigBuilder: self;
+		yourself).
+]
+
+{ #category : #hooks }
 RSBasicUMLClassRenderer >> shapeFor: aClass [
 	| shapes box title vars methods |
 	title := self titleFor: aClass.
@@ -56,8 +67,8 @@ RSBasicUMLClassRenderer >> shapeFor: aClass [
 	self adjustBox: box on: shapes.
 	self addLines: shapes title: title.
 	^ RSComposite new
-		popup;
 		draggable;
+		addInteraction: popup;
 		model: aClass;
 		shapes: shapes;
 		yourself.

@@ -206,7 +206,7 @@ RSHighlightableExamples >> example06IterateNext [
 		highlightableForLabels unhighlightRecordedShapes: canvas ].
 
 	"Build a legend with all the numbers"
-	legendBuilder leyendDo: [ :l |l withBorder; padding: 5 ].
+	legendBuilder legendDo: [ :l |l withBorder; padding: 5 ].
 	legendBuilder location 
 		outer; right; offset: 70@ -200.
 	numbers do: [ :e | 

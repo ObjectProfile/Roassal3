@@ -51,7 +51,7 @@ RSAnimationExamples >> example02BoxesLineCircles [
 		RSBox new
 			model: r next;
 			noPaint;
-			border: (RSBorder new width: 4);
+			border: (RSBorder new width: 4; color: Color black);
 			yourself].
 	c addAll: shapes.
 	RSNormalizer size
@@ -79,7 +79,7 @@ RSAnimationExamples >> example02BoxesLineCircles [
 	update := [ 
 		extent := c extent.
 		position := NSScale linear
-			range: { extent / 2 negated. extent /2 }.
+			range: { extent / -2. extent /2 }.
 		updateLine value.
 		shapes do: [ :e | e translateTo: (position scale: r next@ r next) ].
 	].
@@ -106,27 +106,31 @@ RSAnimationExamples >> example02BoxesLineCircles [
 			] ] .
 	c newAnimation repeat; 
 		onStepDo: [ :t | 
-			shapes do: [ :e |
+			| round empty |
+			round := RSCornerRadius new radius: 100.
+			empty := RSCornerRadius new.
+			shapes do: [ :shape |
 				| delta newX |
-				delta := e propertyAt: #delta ifAbsentPut: [ 5 ].
-				newX := e position x + delta.
+				delta := shape propertyAt: #delta ifAbsentPut: [ 5 ].
+				newX := shape position x + delta.
 				(newX 
 					between: position from x 
 					and: position to x) ifFalse: [ 
 					delta := delta negated.
-					newX := e position x + delta.
+					newX := shape position x + delta.
 					 ].
-				e translateTo: newX@e position y.
-				e propertyAt: #delta put: delta
+				shape translateTo: newX@shape position y.
+				shape propertyAt: #delta put: delta
 				].
-			c nodes copy do: [ :e | | cls |
-				cls := e position x > lineX 
-					ifTrue: [ RSEllipse ]
-					ifFalse: [ RSBox ].
-				e replaceWith: cls new.
+			c nodes copy do: [ :shape | | corner |
+				corner := shape position x > lineX 
+					ifTrue: [ round ]
+					ifFalse: [ empty ].
+				shape cornerRadius: corner.
 				 ].
 	].
 	^ c
+	
 ]
 
 { #category : #examples }
@@ -1602,8 +1606,16 @@ RSAnimationExamples >> example27RSLocate [
 			(locate offset y printShowingDecimalPlaces: 1) ].
 	updateText value.
 	fixedElement := newBox value: 1.
-	movableElement := newBox value: 2.
-	movableElement size: 40.
+	"movableElement := newBox value: 2."
+	movableElement := RSComposite new
+		add: (RSLabel new 
+			text: 'foo';
+			rotateByDegrees: -45;
+			yourself);
+		adjustToChildren;
+		color: (color scale: 2);
+		yourself.
+	"movableElement size: 40."
 	movableElement when: RSMouseClick do: [ 
 		canvas newAnimation
 			scale: (NSScale linear 
@@ -2542,4 +2554,54 @@ RSAnimationExamples >> example43Waves [
 				].
 			frame := frame + 1. ].
 	^ canvas
+]
+
+{ #category : #perlin }
+RSAnimationExamples >> example44A [
+	<script: 'self new example44A open'>
+	"
+|c|
+	c := RSCanvas new.
+c add: (RSLabel new
+	border: (RSBorder new color: Color black);
+	paint: Color red;
+	text: 'A';
+	fontSize: 100;
+	yourself).
+c svgExporter export"
+
+	| canvas r path perlin visitor frame |
+	canvas := RSCanvas new.
+	r := Random new.
+	path := RSSVGPath new.
+	perlin := NSPerlinNoise3 new octaves: 5.
+	"generated with https://github.com/ObjectProfile/Roassal3Exporters"
+	path svgPath: 'M 27.063543 -48.93775 L 22.938543 -35.594001 L 49.204165 -35.594001 L 45.063541 -48.93775 C 43.469791 -53.820562 41.958072 -58.687749 40.532291 -63.531498 C 39.114323 -68.375248 37.692448 -73.328372 36.266667 -78.390872 L 35.735417 -78.390872 C 34.399479 -73.328372 33.020573 -68.375248 31.594792 -63.531498 C 30.176824 -58.687749 28.665105 -53.820562 27.063543 -48.93775 Z M 0.407295 -0.000254728 L 30.001042 -87.468996 L 42.532291 -87.468996 L 72.126038 -0.000254728 L 60.266664 -0.000254728 L 52.00104 -26.672127 L 20.126043 -26.672127 L 11.735419 -0.000254728 Z M 72.532288 -0.000254728'.
+	
+	visitor := RSBlockSegmentsVisitor new.
+	visitor simplePoints:[ :segment :current |
+		canvas addAll: ((segment pointsWithStart: current) collect: [:p |
+			(RSEllipse new
+				size: (r next * 1.5 +0.5);
+				position: p;
+				color: Color black;
+				yourself) ]).
+		].
+		
+	path accept: visitor.
+
+	frame := 0.
+	canvas newAnimation repeat; onStepDo: [ :t |
+		canvas nodes doWithIndex: [ :each :i | 
+			| n |
+			n := (perlin noise: (each position + frame)* 0.01)- 0.5.
+			each translateBy: n.
+			].
+		frame := frame + 1.
+		canvas signalUpdate.
+		].
+	canvas zoomToFit.
+	^ canvas
+		
+		
 ]

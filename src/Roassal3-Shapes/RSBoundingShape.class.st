@@ -122,6 +122,7 @@ RSBoundingShape >> globalMatrix [
 
 { #category : #testing }
 RSBoundingShape >> hasEdges [
+	"Return true if the shape has any outgoing or incoming edge"
 	^ connectedEdges notNil
 ]
 
@@ -167,20 +168,9 @@ RSBoundingShape >> isNode [
 	^ true
 ]
 
-{ #category : #actions }
-RSBoundingShape >> loadBoundingShape: aShape [
-	self 
-		extent: aShape extent;
-		matrix: aShape matrix;
-		border: aShape border;
-		paint: aShape paint;
-		announcer: aShape announcer;
-		parent: aShape parent.
-]
-
-{ #category : #actions }
-RSBoundingShape >> loadShape: aShape [
-	self loadBoundingShape: aShape.
+{ #category : #matrix }
+RSBoundingShape >> loadIdentity [
+	matrix loadIdentity
 ]
 
 { #category : #matrix }
@@ -277,6 +267,21 @@ c
 ]
 
 { #category : #matrix }
+RSBoundingShape >> rotateByRadians: angle [
+	"Rotate the shape. Here is an exanmple:
+-=-=-=
+c := RSCanvas new.
+c add: (RSBox new
+	size: 10;
+	rotateByRadians: Float pi / 3;
+	yourself).
+c
+-=-=-=
+	"
+	matrix rotateByRadians: angle
+]
+
+{ #category : #matrix }
 RSBoundingShape >> scale [
 	^ matrix scale
 ]
@@ -316,19 +321,6 @@ RSBoundingShape >> size: anInteger [
 RSBoundingShape >> transform: aPoint [
 	"useful for attachpoints"
 	^ matrix transform: aPoint
-]
-
-{ #category : #actions }
-RSBoundingShape >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	oldPosition = aPoint ifTrue: [ ^ self ].
-	self position: aPoint.
-	self announce: [RSPositionChangedEvent new 
-		shape: self; 
-		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
 ]
 
 { #category : #edges }

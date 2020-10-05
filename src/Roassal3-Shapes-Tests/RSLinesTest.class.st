@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RSLinesTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new
 ]
 

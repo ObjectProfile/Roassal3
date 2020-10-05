@@ -89,7 +89,6 @@ RSLabelGenerator >> flooredMod: a n: num [
 { #category : #initialization }
 RSLabelGenerator >> initialize [
 	super initialize.
-	nice := nil.
 	loose := false.
 	w := #(0.25 0.2 0.5 0.05).
 	self nice: RSNiceStepSizeGenerator new.

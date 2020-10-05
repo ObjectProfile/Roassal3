@@ -33,6 +33,15 @@ RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [
 	title position: shapes encompassingRectangle floatCenter x @ title position y.
 ]
 
+{ #category : #accessing }
+RSAbstractUMLClassRenderer >> aggregationShape [
+	| shape |
+	shape := self compositionShape.
+	
+	shape markerEnd shape color: Color white.
+	^ shape
+]
+
 { #category : #layout }
 RSAbstractUMLClassRenderer >> applyLayoutOn: shapes [
 	RSVerticalLineLayout new gapSize: 1.5; on: shapes.
@@ -65,6 +74,19 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 		cornerRadius: 10;
 		border: self boxBorder;
 		yourself
+]
+
+{ #category : #accessing }
+RSAbstractUMLClassRenderer >> compositionShape [
+	| m |
+	m := RSShapeFactory diamond extent: 10@15.
+	m border: self border; color: self border color.
+	m := m asMarker.
+	m offset: 15 / 2.0.
+	^ RSLine new
+		markerEnd: m;
+		border: self border;
+		yourself.
 ]
 
 { #category : #hooks }
@@ -181,6 +203,22 @@ RSAbstractUMLClassRenderer >> needsEllipsis [
 		
 ]
 
+{ #category : #public }
+RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [ 
+	aCollection ifNil: [ ^ self ].
+	(RSEdgeBuilder new: aRSLine)
+		withBorderAttachPoint;
+		shapes: edgeBuilder fromShapes;
+		useAssociations: aCollection.
+]
+
+{ #category : #public }
+RSAbstractUMLClassRenderer >> renderAssociations [
+	self renderAssociation: self modelDescriptor compositions shape: self compositionShape.
+	self renderAssociation: self modelDescriptor aggregations shape: self aggregationShape.
+	
+]
+
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> titleFor: model [
 	| label |
@@ -188,7 +226,7 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 		color: self textColor;
 		text: (modelDescriptor classname rsValue: model);
 		yourself.
-	label fontSize: label fontSize * 1.2.
+	label fontSize: label fontSize.
 	^ { label } asGroup asShape padding: 0@ 5; yourself
 	
 ]

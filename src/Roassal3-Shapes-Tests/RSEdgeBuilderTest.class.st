@@ -207,7 +207,7 @@ RSEdgeBuilderTest >> testFromObjectsToElements [
 
 { #category : #tests }
 RSEdgeBuilderTest >> testHasEdges [
-	| e s1 s2 |
+	| s1 s2 |
 	s1 := canvas nodes first.
 	s2 := canvas nodes second.
 	self deny: s1 hasEdges.
@@ -221,6 +221,45 @@ RSEdgeBuilderTest >> testHasEdges [
 	self assert: s2 hasEdges.
 	self assert: s1 connectedEdges size equals: 1
 	
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas [
+
+	self assert: b canvas isNil.
+	b toShapes: canvas nodes.
+	self assert: b canvas isNil.
+	
+	b fromShapes: canvas nodes.
+	self assert: b canvas equals: canvas.
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas2 [
+
+	self assert: b canvas isNil.
+	b shapes: canvas nodes.
+	self assert: b canvas equals: canvas.
+]
+
+{ #category : #tests }
+RSEdgeBuilderTest >> testInferCanvas3 [
+
+	| c |
+	c := RSCanvas new.
+	1 to: 100 do: [ :i | 
+		c add: (RSLabel new
+				 text: i;
+				 model: i) ].
+
+	RSEdgeBuilder line
+		shapes: c nodes;
+		connectFrom: [ :i | i // 2 ].
+
+	RSGridLayout on: c nodes.
+	c @ RSCanvasController.
+
+	self assert: c numberOfEdges equals: 99
 ]
 
 { #category : #tests }

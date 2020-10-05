@@ -1,7 +1,7 @@
 Class {
 	#name : #RSControlsViewTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #tests }

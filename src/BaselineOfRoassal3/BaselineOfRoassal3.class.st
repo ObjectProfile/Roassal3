@@ -16,13 +16,13 @@ BaselineOfRoassal3 >> baseline: spec [
 			"our dependencies"
 			"https://github.com/ObjectProfile/Roassal3"
 			spec baseline: 'AthensSVG' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG' ].
+				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 			spec package: 'Athens-SVG-PathConverter' with: [
-				spec repository: 'github://pharo-contributions/Athens-SVG' ].
-			spec package: 'Geometry' with: [ 
-				spec repository: 'github://pharo-contributions/Geometry' ].
+				spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+			spec baseline: 'Geometry' with: [ 
+				spec repository: 'github://pharo-contributions/Geometry/src' ].
 			spec baseline: 'NumericScales'with: [ 
-				spec repository: 'github://ObjectProfile/NumericScales' ].
+				spec repository: 'github://ObjectProfile/NumericScales/src' ].
 			spec 
 				baseline: 'OSSubprocess'
 				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
@@ -34,7 +34,10 @@ BaselineOfRoassal3 >> baseline: spec [
 				roassalExamplesIn: spec;
 				roassalTestsIn: spec;
 				roassalSVGIn: spec.
+				
 			spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
+			spec package: #'Roassal3-Mondrian'.
+			
 			
 			"packages to load"
 			core := self corePackagesNames.
@@ -56,7 +59,7 @@ BaselineOfRoassal3 >> baseline: spec [
 				group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
 				group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
 				group: 'GraphViz' with: #(Core SVG 'Roassal3-GraphViz');
-				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples') ].
+				group: 'default' with: #('Core' 'Tests' 'Examples' 'SVG' 'SVGTests' 'SVGExamples' 'Roassal3-Mondrian') ].
 
 		
 	
@@ -115,10 +118,10 @@ BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 		package: #'Roassal3-UML';
 		package: #'Roassal3-Layouts';
 		package: #'Roassal3-Colors';
-		package: #'Roassal3-Spec';
 		package: #'Roassal3-Sunburst';
 		package: #'Roassal3-Inspector';
-		package: #'Roassal3-Menu'
+		package: #'Roassal3-Menu';
+		package: #'Roassal3-Spec'.
 ]
 
 { #category : #'package management' }

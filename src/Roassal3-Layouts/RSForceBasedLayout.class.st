@@ -84,6 +84,9 @@ RSForceBasedLayout >> alpha [
 
 { #category : #accessing }
 RSForceBasedLayout >> alpha: aFloat [
+	"alpha is a value between 0 and 1.
+	- 1 represents a strong change in nodes position.
+	- 0.01 represents a weak change"
 	alpha := aFloat
 ]
 
@@ -105,7 +108,8 @@ RSForceBasedLayout >> charge [
 
 { #category : #accessing }
 RSForceBasedLayout >> charge: aFloat [
-	"Typically a negative value. E.g., -300"
+	"Typically a negative value. E.g., -300.
+	This value affects new nodes. then you can change charge for each node"
 	charge := aFloat
 ]
 
@@ -137,6 +141,8 @@ RSForceBasedLayout >> friction [
 
 { #category : #accessing }
 RSForceBasedLayout >> friction: aNumber [
+	"usuarly a value between 0 and 1
+	This affects all nodes"
 	friction := aNumber
 ]
 
@@ -147,6 +153,7 @@ RSForceBasedLayout >> gravity [
 
 { #category : #accessing }
 RSForceBasedLayout >> gravity: aNumber [
+	"it is the force from nodes to move around center"
 	gravity := aNumber
 ]
 
@@ -157,6 +164,7 @@ RSForceBasedLayout >> initialLayout [
 
 { #category : #accessing }
 RSForceBasedLayout >> initialLayout: aLayout [
+	"The default layout performed before run this layout"
 	initialLayout := aLayout
 ]
 
@@ -181,6 +189,7 @@ RSForceBasedLayout >> initialize [
 
 { #category : #accessing }
 RSForceBasedLayout >> iterations: aNumber [
+	"aNumber is a 0 positive number used to run this layout aNumber times"
 	iterations := aNumber
 ]
 
@@ -398,6 +407,10 @@ RSForceBasedLayout >> theta [
 
 { #category : #accessing }
 RSForceBasedLayout >> theta: aNumber [
+	"Theta coefficient from Barnes-Hut simulation
+	- Value ranges on [0, 1]
+  	- Performance is better with smaller values
+  	- Very small values may not create enough force to give a good result"
 	theta := aNumber
 ]
 

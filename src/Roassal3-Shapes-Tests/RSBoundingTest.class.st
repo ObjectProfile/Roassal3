@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RSBoundingTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new
 ]
 

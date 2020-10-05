@@ -156,11 +156,21 @@ And execute the expression `c camera translateBy: 1 @ 1.`
 
 { #category : #accessing }
 RSCanvas >> color [ 
+	"Return the color of the canvas background"
 	^ color
 ]
 
 { #category : #accessing }
 RSCanvas >> color: aColor [
+	"Set the color of the canvas background.
+
+```Smalltalk
+c := RSCanvas new .
+c color: Color blue.
+c add: (RSBox new size: 30; color: #red).
+c
+```
+"
 	color := aColor.
 	color isColor ifTrue: [ ^ self ].
 	color := Color colorFrom: aColor.
@@ -175,13 +185,16 @@ RSCanvas >> createMorph [
 	^ morph
 ]
 
-{ #category : #accessing }
-RSCanvas >> edges [
-	"Return all the lines contained in the canvas."
-	^ self privateEdges
-		ifNil: [ | res |
-			self privateEdges: (res := RSGroup new).
-			res ]
+{ #category : #'looking up shapes' }
+RSCanvas >> deepShapesFromModel: someObjects result: result [
+	"Private method"
+	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSCanvas >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
 ]
 
 { #category : #'accessing - computed' }
@@ -281,15 +294,6 @@ RSCanvas >> morph: aMorph [
 	morph := aMorph
 ]
 
-{ #category : #accessing }
-RSCanvas >> nodes [ 
-	"Return all the shapes except lines contained in the canvas."
-	^ self privateNodes
-		ifNil: [ | res |
-			self privateNodes: (res := RSGroup new).
-			res ]
-]
-
 { #category : #animations }
 RSCanvas >> numberOfAnimations [
 	"Return the number of animations contained in the canvas"
@@ -369,6 +373,16 @@ RSCanvas >> privateNodes [
 { #category : #private }
 RSCanvas >> privateNodes: aTSGroup [
 	nodes := aTSGroup
+]
+
+{ #category : #private }
+RSCanvas >> privateShapes [
+	^ shapes
+]
+
+{ #category : #private }
+RSCanvas >> privateShapes: aCollection [
+	shapes := aCollection
 ]
 
 { #category : #'shapes controling' }
@@ -530,5 +544,24 @@ RSCanvas >> visibleRectangle [
 
 { #category : #camera }
 RSCanvas >> zoomToFit [
+	"Adjust the camera to make all the displayed shapes visible.
+
+```Smalltalk
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	c zoomToFit
+```
+"
 	self camera zoomToFit
 ]

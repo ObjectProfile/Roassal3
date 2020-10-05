@@ -7,11 +7,12 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #running }
 RSDraggableCanvasTest >> setUp [
+	super setUp.
 	canvas := RSCanvas new.
 	canvas add: (RSEllipse new width: 40; height: 20; yourself).
 	

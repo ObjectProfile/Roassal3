@@ -14,6 +14,11 @@ RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil.
 ]
 
+{ #category : #testing }
+RSLinePlot >> isLinePlot [
+	^ true
+]
+
 { #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |

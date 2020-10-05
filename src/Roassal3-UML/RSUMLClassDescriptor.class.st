@@ -11,10 +11,22 @@ Class {
 		'instVarSelector',
 		'classname',
 		'superclass',
-		'methodsLimit'
+		'methodsLimit',
+		'aggregations',
+		'compositions'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> aggregations [
+	^ aggregations
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> aggregations: aCollection [
+	aggregations := aCollection
+]
 
 { #category : #accessing }
 RSUMLClassDescriptor >> classname [
@@ -25,6 +37,16 @@ RSUMLClassDescriptor >> classname [
 RSUMLClassDescriptor >> classname: aSymbolOrBlock [
 	"In classname N is because this method does not have relation with className method"
 	classname := aSymbolOrBlock
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> compositions [
+	^ compositions
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> compositions: aCollection [
+	compositions := aCollection
 ]
 
 { #category : #public }
