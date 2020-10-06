@@ -22,7 +22,7 @@ BaselineOfRoassal3 >> baseline: spec [
 			spec baseline: 'Geometry' with: [ 
 				spec repository: 'github://pharo-contributions/Geometry/src' ].
 			spec baseline: 'NumericScales'with: [ 
-				spec repository: 'github://ObjectProfile/NumericScales/src' ].
+				spec repository: 'github://ObjectProfile/NumericScales:v1.0/src' ].
 			spec 
 				baseline: 'OSSubprocess'
 				with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
