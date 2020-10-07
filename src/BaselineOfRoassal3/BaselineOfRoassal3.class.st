@@ -16,15 +16,12 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
 ]
 
-
-		
-
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForCommon: spec [
 	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
-	spec package: #'Roassal3-Animation-Tests'.
-	self roassalGroup: spec 
+	self registerPackages: spec.
+	self roassalGroups: spec 
 		core: self corePackagesNames
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
@@ -54,6 +51,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-UML'
 	'Roassal3-Sunburst'
 	'Roassal3-Pie'
+	'Roassal3-Mondrian'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
 	'Roassal3-Menu'
@@ -73,9 +71,24 @@ BaselineOfRoassal3 >> dependencies: spec [.
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
-		
+]
+
+{ #category : #'API-packages' }
+BaselineOfRoassal3 >> examplePackagesNames [
+	^ #(
+	'Core' 
+	'Roassal3-Examples'
+	'Roassal3-Legend-Examples'
+	'Roassal3-Chart-Examples'
+	'Roassal3-Pie-Examples'
+	'Roassal3-Sunburst-Examples'
+	'Roassal3-UML-Examples'
+	'Roassal3-Spec-Examples')
+]
+
+{ #category : #baselines }
+BaselineOfRoassal3 >> registerPackages: spec [
 	"The packages to use, but not load"
-	
 	self
 		roassalCorePackagesIn: spec;
 		roassalExamplesIn: spec;
@@ -94,19 +107,6 @@ BaselineOfRoassal3 >> dependencies: spec [.
 
 ]
 
-{ #category : #'API-packages' }
-BaselineOfRoassal3 >> examplePackagesNames [
-	^ #(
-	'Core' 
-	'Roassal3-Examples'
-	'Roassal3-Legend-Examples'
-	'Roassal3-Chart-Examples'
-	'Roassal3-Pie-Examples'
-	'Roassal3-Sunburst-Examples'
-	'Roassal3-UML-Examples'
-	'Roassal3-Spec-Examples')
-]
-
 { #category : #'package management' }
 BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 	spec
@@ -123,6 +123,7 @@ BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 		package: #'Roassal3-Layouts';
 		package: #'Roassal3-Colors';
 		package: #'Roassal3-Sunburst';
+		package: #'Roassal3-Mondrian';
 		package: #'Roassal3-Inspector';
 		package: #'Roassal3-Menu';
 		package: #'Roassal3-Spec'.
@@ -142,7 +143,7 @@ BaselineOfRoassal3 >> roassalExamplesIn: spec [
 ]
 
 { #category : #baselines }
-BaselineOfRoassal3 >> roassalGroup: spec core: arr1 examples: arr2 tests: arr3 [
+BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 [
 	spec 
 		group: 'Core' with: arr1;
 		group: 'Examples' with: arr2;
@@ -179,6 +180,7 @@ BaselineOfRoassal3 >> roassalTestsIn: spec [.
 	spec
 		package: #'Roassal3-Global-Tests';
 		package: #'Roassal3-Shapes-Tests';
+		package: #'Roassal3-Animation-Tests';
 		package: #'Roassal3-Interaction-Tests';
 		package: #'Roassal3-Layouts-Tests';
 		package: #'Roassal3-Chart-Tests';
