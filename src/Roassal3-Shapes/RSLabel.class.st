@@ -218,7 +218,7 @@ RSLabel >> hasText [
 { #category : #initialization }
 RSLabel >> initialize [
 	super initialize.
-	paint := Color black.
+	paint := Color gray.
 	self font: self class defaultFont.
 	
 ]
@@ -282,6 +282,13 @@ RSLabel >> metricsProvider: aRSMetricsProvider [
 	self resetCache.
 ]
 
+{ #category : #'accessing - attributes' }
+RSLabel >> model: anObject [
+	"model is used to create popups and other interactions"
+	super model: anObject.
+	self hasText ifFalse: [ self text: anObject asString ]
+]
+
 { #category : #'managing font' }
 RSLabel >> normal [
 	self emphasis: TextEmphasis normal.
@@ -333,6 +340,7 @@ RSLabel >> text [
 
 { #category : #accessing }
 RSLabel >> text: string [
+	"Set the text of a label. do not try to write in the `text` variable directly."
 	text = string ifTrue: [ ^ self ].
 	text := string asString.
 	self resetCache; resetPath.

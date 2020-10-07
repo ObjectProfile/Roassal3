@@ -6,10 +6,9 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'DarkThemeUMLClassColor',
-		'LightThemeUMLClassColor'
-	],
-	#classInstVars : [
-		'methodsLimitUML'
+		'LightThemeUMLClassColor',
+		'MethodsLimitUML',
+		'UseCalypsoUML'
 	],
 	#category : #'Roassal3-UML-Calypso-Settings'
 }
@@ -48,19 +47,19 @@ RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML [
-	^ methodsLimitUML ifNil: [ methodsLimitUML := 30 ].
+	^ MethodsLimitUML ifNil: [ MethodsLimitUML := 30 ].
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
-	methodsLimitUML := aNumber
+	MethodsLimitUML := aNumber
 ]
 
 { #category : #settings }
-RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [ 
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLColors)
-		parent: #CalypsoUML;
+		parent: #useCalypsoUML;
 		label: 'UML Colors' ;  
 		description: 'All settings concerned with the look''n feel of your system';
 		with: [
@@ -76,10 +75,10 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 ]
 
 { #category : #settings }
-RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [ 
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLValues)
-		parent: #CalypsoUML;
+		parent: #useCalypsoUML;
 		label: 'Capypso UML Methods' ;  
 		description: 'All settings concerned with the size of variables to show';
 		with: [
@@ -93,8 +92,20 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [
 { #category : #settings }
 RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 	<systemsettings>
-	(aBuilder group: #CalypsoUML)
+	(aBuilder setting: #useCalypsoUML)
 		label: 'Calypso UML';
 		parent: #Calypso;
-		description: 'Settings related to the UML within Calypso browser'
+		default: true;
+		target: self;
+		description: 'Settings related to the UML within Calypso browser'.
+]
+
+{ #category : #settings }
+RSUMLCalypsoSettings class >> useCalypsoUML [
+	^ UseCalypsoUML ifNil: [ ^ true ].
+]
+
+{ #category : #settings }
+RSUMLCalypsoSettings class >> useCalypsoUML: aBoolean [
+	UseCalypsoUML := aBoolean
 ]

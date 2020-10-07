@@ -80,6 +80,24 @@ c
 	aPlot chart: self
 ]
 
+{ #category : #'public - plots' }
+RSChart >> barHeights: aCollectionY [
+	| res |
+	self addPlot: (res := RSBarPlot new 
+		x: (1 to: aCollectionY size) 
+		y: aCollectionY).
+	^ res
+]
+
+{ #category : #'public - plots' }
+RSChart >> barWidths: aCollectionX [
+	| res |
+	self addPlot: (res := RSHorizontalBarPlot new 
+		x: aCollectionX
+		y: (1 to: aCollectionX size)).
+	^ res
+]
+
 { #category : #color }
 RSChart >> colorFor: aRSPlot [ 
 	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
@@ -146,6 +164,13 @@ RSChart >> initialize [
 RSChart >> initializeDecorations [
 	decorations := OrderedCollection new.
 	self addDecoration: RSChartSpineDecoration new.
+]
+
+{ #category : #'public - plots' }
+RSChart >> lineX: aCollectionX y: aCollectionY [
+	| res |
+	self addPlot: (res := RSLinePlot new x: aCollectionX y: aCollectionY).
+	^ res
 ]
 
 { #category : #accessing }
@@ -321,7 +346,14 @@ RSChart >> xSqrt [
 
 { #category : #decoration }
 RSChart >> xlabel: aTitle [
+	"Set a label on the horizontal axis"
 	self addDecoration: (RSXLabelDecoration new title: aTitle)
+]
+
+{ #category : #decoration }
+RSChart >> xlabel: aTitle offset: aPointOrANumber [
+	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
+	self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
 ]
 
 { #category : #'public - scales' }
@@ -358,5 +390,12 @@ RSChart >> ySqrt [
 
 { #category : #decoration }
 RSChart >> ylabel: aTitle [
+	"Set a label on the vertical axis"
 	self addDecoration: (RSYLabelDecoration new title: aTitle)
+]
+
+{ #category : #decoration }
+RSChart >> ylabel: aTitle offset: aPointOrANumber [
+	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
+	self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
 ]

@@ -19,28 +19,17 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
+	| value |
+	value := xScale scale: aNumber.
 	^ self shape copy
-		startPoint: (xScale scale: aNumber) @ 0;
-		endPoint: (xScale scale: aNumber) @ self configuration tickSize;
+		startPoint: value @ 0;
+		endPoint: value @ self configuration tickSize;
 		yourself
 ]
 
 { #category : #'accessing - defaults' }
 RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
-]
-
-{ #category : #public }
-RSHorizontalTick >> fromNames: aCollectionOfStrings [
-	self
-		doNotUseNiceLabel;
-		numberOfTicks: aCollectionOfStrings size.
-	self labelRotation: -45.
-	self labelConversion: [ :x | 
-		x isZero 
-			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x  ] ].
-		
 ]
 
 { #category : #accessing }
@@ -51,4 +40,15 @@ RSHorizontalTick >> max [
 { #category : #accessing }
 RSHorizontalTick >> min [
 	^ chart minValueX
+]
+
+{ #category : #public }
+RSHorizontalTick >> useDiagonalLabel [
+	self labelRotation: -45.
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+]
+
+{ #category : #public }
+RSHorizontalTick >> useVerticalLabel [
+	self labelRotation: -90.
 ]

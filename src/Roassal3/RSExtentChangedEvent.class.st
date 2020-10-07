@@ -17,8 +17,8 @@ RSExtentChangedEvent >> newExtent [
 ]
 
 { #category : #accessing }
-RSExtentChangedEvent >> newExtent: anObject [
-	newExtent := anObject
+RSExtentChangedEvent >> newExtent: aPoint [
+	newExtent := aPoint
 ]
 
 { #category : #accessing }
@@ -27,6 +27,6 @@ RSExtentChangedEvent >> oldExtent [
 ]
 
 { #category : #accessing }
-RSExtentChangedEvent >> oldExtent: anExtent [
-	oldExtent := anExtent
+RSExtentChangedEvent >> oldExtent: aPoint [
+	oldExtent := aPoint
 ]

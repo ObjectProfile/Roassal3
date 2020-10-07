@@ -1,29 +1,41 @@
 "
-I am a basic uml package browser
+A browser tool for uml with packages and packages tags
 "
 Class {
 	#name : #RSUMLPackageCalypso,
-	#superclass : #RSUMLCalypso,
+	#superclass : #RSAbstractUMLCalypso,
 	#instVars : [
 		'packages'
 	],
 	#category : #'Roassal3-UML-Calypso'
 }
 
-{ #category : #activation }
+{ #category : #'as yet unclassified' }
 RSUMLPackageCalypso class >> classUmlTapActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyPackageContextOfFullBrowser
+	^ ClyTabActivationStrategy for: ClyClassGroup asCalypsoItemContext
+]
+
+{ #category : #'as yet unclassified' }
+RSUMLPackageCalypso class >> classUmlTapActivation2 [
+	<classAnnotation>
+	^ClyTabActivationStrategy for: RPackage asCalypsoItemContext
 ]
 
 { #category : #accessing }
-RSUMLPackageCalypso >> classes [
-	^ self limitedClasses: (packages flatCollect: #classes).
+RSUMLPackageCalypso class >> shouldBeActivatedInContext: aBrowserContext [
+	^aBrowserContext isPackageSelected and: [aBrowserContext isClassSelected not]
 ]
 
-{ #category : #defaults }
-RSUMLPackageCalypso >> defaultIconName [
-	^#package
+{ #category : #accessing }
+RSUMLPackageCalypso class >> tabOrder [
+	^ -10
+]
+
+{ #category : #accessing }
+RSUMLPackageCalypso >> computeClasses [
+	^ self packages flatCollect: #classes.
+	
 ]
 
 { #category : #initialization }
@@ -31,19 +43,25 @@ RSUMLPackageCalypso >> defaultTitle [
 	^'UML-Package'
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RSUMLPackageCalypso >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	^packages = anotherBrowserTool packages
+	^ self packages = anotherBrowserTool packages
 ]
 
 { #category : #accessing }
 RSUMLPackageCalypso >> packages [
-	^ packages 
+	^ packages
+]
+
+{ #category : #accessing }
+RSUMLPackageCalypso >> packages: aCollection [
+	packages := aCollection
 ]
 
 { #category : #initialization }
 RSUMLPackageCalypso >> setUpModelFromContext [
-	super setUpModelFromContext.
-	packages := context selectedPackages
+	self packages: (context isClassTagSelected 
+		ifTrue: [ context selectedClassGroups ]
+		ifFalse: [ context selectedPackages ]).
 ]

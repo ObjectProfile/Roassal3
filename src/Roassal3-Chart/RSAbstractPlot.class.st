@@ -69,10 +69,35 @@ RSAbstractPlot >> initialize [
 ]
 
 { #category : #testing }
+RSAbstractPlot >> isBarPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isHorizontalBarPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isLinePlot [
+	^ false
+]
+
+{ #category : #testing }
 RSAbstractPlot >> isPointWellDefined: aPoint [
 	"Indicate whether the point deserves to be displayed"
 	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ])
 		and: [ (aPoint x isNaN not and: [ aPoint y isNaN not ]) ]
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isScatterPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isVerticalBarPlot [
+	^ false
 ]
 
 { #category : #rendering }

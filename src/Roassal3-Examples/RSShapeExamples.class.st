@@ -1065,3 +1065,111 @@ RSShapeExamples >> example39RoassalPackages [
 	canvas @ RSCanvasController.
 	^ canvas
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example40LabelingLine [
+
+	<script: 'self new example40LabelingLine open'>
+	| c shapeA shapeB line interactionLabel |
+	c := RSCanvas new.
+
+	shapeA := RSLabel model: 'A'.
+	shapeB := RSLabel model: 'B'.
+	c add: shapeA.
+	c add: shapeB.
+	shapeB translateBy: 100 @ 50.
+
+	shapeA @ RSDraggable.
+	shapeB @ RSDraggable.
+
+	line := RSLine new
+		        from: shapeA;
+		        to: shapeB.
+	line attachPoint: RSBorderAttachPoint new.
+	c add: line.
+
+	interactionLabel := RSLabeled new text: [ :notUsed | 
+		                    line from model , ' -> ' , line to model ].
+	interactionLabel shapeBuilder labelShape
+		fontSize: 5;
+		color: #red.
+	interactionLabel location
+		inner;
+		middle.
+	line @ interactionLabel.
+
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example41Butterfly [
+
+	<script: 'self new example41Butterfly open'>
+	| model from to popup canvas com box g column c1 c2 c3 eb h |
+	model := RSCanvas >> #zoomToFit.
+	from := model senders collect: #compiledMethod.
+	to := model implementors collect: #compiledMethod.
+
+	popup := RSPopup text: [ :m | m selector ].
+	canvas := RSCanvas new.
+	box := [ :method | 
+	    com := RSComposite new
+	        model: method;
+	        add: (RSLabel new text: '<<',method methodClass name,'>>'; fontSize: 8);
+	        add: (RSLabel new text: method selector);
+	        @ popup;
+	        yourself.
+	    RSVerticalLineLayout new
+	        gapSize: 0;
+	        alignCenter;
+	        on: com children.
+	    com adjustToChildren.
+	    com padding: 10; withBorder.
+	    com ].
+
+	column := [ :col : align | 
+	    g := col collect: [ :m | 
+	        (box value: m)
+	            scaleBy:((1 / col size) max: 0.2);
+	            yourself.
+	         ] as: RSGroup.
+	    RSVerticalLineLayout new
+	          perform: align;
+	        gapSize: 2;
+	        on: g.
+	    g ].
+
+	c1 := column value: from value: #alignRight.
+	c2 := box value: model.
+	c3 := column value: to value: #alignLeft.
+	RSHorizontalLineLayout new
+	    gapSize: 30;
+	    alignCenter;
+	    on: { c1. c2. c3 }.
+	eb := RSEdgeBuilder horizontalBezier
+	    color: Color lightGray;
+	     controlPointsController: (RSBlockCPController new
+	        block: [:ed | | f t ap |
+	            ap := ed attachPoint.
+	            f := ap startingPointOf: ed.
+	            t := ap endingPointOf: ed.
+	            Array 
+	                with: f
+	                with: t x @ f y
+	                with: f x @ t y
+	                with: t. ]);
+	    canvas: canvas;
+	    withHorizontalAttachPoint;
+	    width: 0.5;
+	    yourself.
+	eb useElementAssociations: (c1 collect: [:c | c -> c2 ]), (c3 collect: [:c | c2-> c ]).
+	h := RSHighlightable new.
+	h withEdges.
+	h highlightBorder: RSBorder new.
+
+	canvas addAll: c1; add: c2; addAll: c3.
+	canvas nodes @ h.
+	canvas @ RSCanvasController.
+	^ canvas
+]

@@ -206,6 +206,13 @@ RSComposite >> children: aRSGroup [
 	
 ]
 
+{ #category : #'looking up shapes' }
+RSComposite >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	(someObjects includes: self model) ifTrue: [ result add: self ].
+	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
+]
+
 { #category : #testing }
 RSComposite >> hasChildren [
 	^ children notNil and: [ children isNotEmpty ]
@@ -297,6 +304,7 @@ RSComposite >> privateShapes: aCollection [
 
 { #category : #actions }
 RSComposite >> pushBack: aShape [
+	"Put a shape behind all other shapes"
 	children
 		remove: aShape;
 		addFirst: aShape

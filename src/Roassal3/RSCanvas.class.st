@@ -156,11 +156,21 @@ And execute the expression `c camera translateBy: 1 @ 1.`
 
 { #category : #accessing }
 RSCanvas >> color [ 
+	"Return the color of the canvas background"
 	^ color
 ]
 
 { #category : #accessing }
 RSCanvas >> color: aColor [
+	"Set the color of the canvas background.
+
+```Smalltalk
+c := RSCanvas new .
+c color: Color blue.
+c add: (RSBox new size: 30; color: #red).
+c
+```
+"
 	color := aColor.
 	color isColor ifTrue: [ ^ self ].
 	color := Color colorFrom: aColor.
@@ -173,6 +183,18 @@ RSCanvas >> createMorph [
 	morph renderer: RSAthensRenderer new.
 	morph canvas: self.
 	^ morph
+]
+
+{ #category : #'looking up shapes' }
+RSCanvas >> deepShapesFromModel: someObjects result: result [
+	"Private method"
+	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
+]
+
+{ #category : #'looking up shapes' }
+RSCanvas >> deepShapesFromModels: someObjects result: result [
+	"Private method"
+	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
 ]
 
 { #category : #'accessing - computed' }
@@ -472,12 +494,18 @@ RSCanvas >> shapeWithActionForPositionInPixels: position [
 
 { #category : #accessing }
 RSCanvas >> shapes [
+	"Return all the shapes added to the canvas. An empty canvas would return an empty collection.
+	
+For example
+```Smalltalk
+s1 := RSBox new.
+s2 := RSEllipse new.
+c := RSCanvas new.
+c add: s1; add: s2.
+```
+The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
+"
 	^ shapes
-]
-
-{ #category : #accessing }
-RSCanvas >> shapes: aCollection [
-	shapes := aCollection
 ]
 
 { #category : #'accessing - shapes' }
@@ -522,5 +550,24 @@ RSCanvas >> visibleRectangle [
 
 { #category : #camera }
 RSCanvas >> zoomToFit [
+	"Adjust the camera to make all the displayed shapes visible.
+
+```Smalltalk
+	c := RSCanvas new.
+
+	blueBox := RSBox new
+		          size: 80;
+		          color: #blue.
+	redBox := RSBox new
+		          size: 80;
+		          color: #red.
+
+	c
+		add: blueBox;
+		add: redBox.
+	blueBox translateBy: 40 @ 20.
+	c zoomToFit
+```
+"
 	self camera zoomToFit
 ]

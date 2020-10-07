@@ -16,6 +16,9 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
 ]
 
+
+		
+
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForCommon: spec [
 	"https://github.com/ObjectProfile/Roassal3"
