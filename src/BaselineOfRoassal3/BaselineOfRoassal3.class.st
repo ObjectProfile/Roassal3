@@ -51,7 +51,6 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-UML'
 	'Roassal3-Sunburst'
 	'Roassal3-Pie'
-	'Roassal3-Mondrian'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
 	'Roassal3-Menu'
@@ -111,7 +110,6 @@ BaselineOfRoassal3 >> registerPackages: spec [
 BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 	spec
 		package: #'Roassal3' with: [ spec requires: #('Geometry' 'NumericScales') ];
-		package: #'Roassal3-Pharo7';
 		package: #'Roassal3-Builders';
 		package: #'Roassal3-Shapes';
 		package: #'Roassal3-Animation';
@@ -123,7 +121,6 @@ BaselineOfRoassal3 >> roassalCorePackagesIn: spec [
 		package: #'Roassal3-Layouts';
 		package: #'Roassal3-Colors';
 		package: #'Roassal3-Sunburst';
-		package: #'Roassal3-Mondrian';
 		package: #'Roassal3-Inspector';
 		package: #'Roassal3-Menu';
 		package: #'Roassal3-Spec'.
