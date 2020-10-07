@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Pharo7-Spec'
+	#category : #'Roassal3-Spec-Core'
 }
 
 { #category : #initialization }
@@ -36,7 +36,7 @@ Sp1MorphicAdapter >> basicApplyScript [
 	self model script value: canvas.
 	self widgetDo: #startStepping.
 	
-	canvas when: RSAbstractMouseEvent do: [ widget takeKeyboardFocus].
+	canvas when: RSMouseEnter do: [ widget takeKeyboardFocus].
 ]
 
 { #category : #initialization }

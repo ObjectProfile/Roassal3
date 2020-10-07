@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'script'
 	],
-	#category : #'Roassal3-Pharo7-Spec'
+	#category : #'Roassal3-Spec-Core'
 }
 
 { #category : #specs }

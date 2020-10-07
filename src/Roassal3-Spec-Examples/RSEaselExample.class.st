@@ -1,5 +1,5 @@
 "
-I am a basic spec example. You can edit a script with roassal then this will be updated on the view
+This example works with Spec1
 "
 Class {
 	#name : #RSEaselExample,
@@ -10,7 +10,7 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Pharo7-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples'
 }
 
 { #category : #specs }
