@@ -123,7 +123,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 	| core |
 	core := #('Core').
 	spec 
-		group: 'Core' with: arr1;
+		group: 'Core' with: #('Roassal3'), arr1;
 		group: 'Examples' with: core, arr2;
 		group: 'Tests' with: core, arr3;
 		group: 'SVG' with: #('Core' 'Roassal3-SVG');
