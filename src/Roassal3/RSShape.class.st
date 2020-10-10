@@ -290,12 +290,13 @@ RSShape >> isShape [
 
 { #category : #'accessing - attributes' }
 RSShape >> model [
+	"Return the model object of the shape. If no model has been set, it return `nil`"
 	^ model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
-	"model is used to create popups and other interactions"
+	"Set the model of the shape. A shape represents a visual description of the model object. In case no model is specified, the value is nil. A model is used when using interaction (e.g., popup, labeled) and normalizations."
 	model := anObject
 ]
 

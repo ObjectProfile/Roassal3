@@ -28,7 +28,7 @@ RSScrollBarsCanvas >> barShapeCopy [
 	^ barShape copy
 		announcer: barShape announcer;
 		border: (RSBorder new
-			color: self scrollBorderColor;
+			color: Color transparent;
 			width: 0.5;
 			yourself);
 		yourself

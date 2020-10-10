@@ -494,12 +494,18 @@ RSCanvas >> shapeWithActionForPositionInPixels: position [
 
 { #category : #accessing }
 RSCanvas >> shapes [
+	"Return all the shapes added to the canvas. An empty canvas would return an empty collection.
+	
+For example
+```Smalltalk
+s1 := RSBox new.
+s2 := RSEllipse new.
+c := RSCanvas new.
+c add: s1; add: s2.
+```
+The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
+"
 	^ shapes
-]
-
-{ #category : #accessing }
-RSCanvas >> shapes: aCollection [
-	shapes := aCollection
 ]
 
 { #category : #'accessing - shapes' }

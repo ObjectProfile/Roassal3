@@ -218,7 +218,7 @@ RSLabel >> hasText [
 { #category : #initialization }
 RSLabel >> initialize [
 	super initialize.
-	paint := Color black.
+	paint := Color gray.
 	self font: self class defaultFont.
 	
 ]

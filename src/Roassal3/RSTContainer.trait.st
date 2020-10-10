@@ -155,7 +155,7 @@ RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RSTContainer >> pushBackEdges [
 	"Push back all the edges"
 	self edges do: [ :e | e pushBack ]

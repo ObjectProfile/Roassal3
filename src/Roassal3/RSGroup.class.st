@@ -221,7 +221,12 @@ RSGroup >> translucent [
 
 { #category : #announcing }
 RSGroup >> when: event do: block [
-	self do: [ :element | element when: event do: block ]
+	self do: [ :shape | shape when: event do: block ]
+]
+
+{ #category : #announcing }
+RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
+	self do: [ :shape | shape when: anAnnouncementClass send: aSelector to: anObject]
 ]
 
 { #category : #accessing }

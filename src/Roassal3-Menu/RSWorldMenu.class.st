@@ -17,15 +17,6 @@ RSWorldMenu class >> areExamplesAlreadyLoaded [
 	^ Smalltalk globals hasClassNamed: #RSAbstractExamples
 ]
 
-{ #category : #utility }
-RSWorldMenu class >> browseExample [
-
-	self areExamplesAlreadyLoaded ifFalse: [ self loadFullStableVersion ].
-
-	^ (RPackageOrganizer default packageNamed: 'Roassal3-Examples')
-		  browse
-]
-
 { #category : #icons }
 RSWorldMenu class >> discord [
 	^ discord ifNil: [ discord := PNGReadWriter formFromStream: self discordPNGByteArray readStream ]
@@ -46,6 +37,14 @@ RSWorldMenu class >> loadFullStableVersion [
 		load ]
 		on: MCMergeOrLoadWarning
 		do: [ :warning | warning load ]
+]
+
+{ #category : #menu }
+RSWorldMenu class >> loadFullVersion [
+	Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3';
+    load.
 ]
 
 { #category : #menu }
@@ -102,22 +101,9 @@ RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 		parent: #Roassal3;
 		order: 4;
 		label: 'Online documentation';
-		help: 'Will open the webpage http://AgileVisualization.com';
+		help: 'Will open the webpage https://github.com/ObjectProfile/Roassal3Documentation';
 		icon: (self iconNamed: #smallHelp);
-		action: [ WebBrowser openOn: 'http://AgileVisualization.com' ]
-]
-
-{ #category : #menu }
-RSWorldMenu class >> menu05ExamplesOn: aBuilder [
-
-	<worldMenu>
-	(aBuilder item: #Roassal3Examples)
-		parent: #Roassal3;
-		order: 5;
-		label: 'Examples';
-		help: 'Browse examples packages for Roassal3';
-		icon: self roassalIcon;
-		action: [ self browseExample ]
+		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3Documentation' ]
 ]
 
 { #category : #menu }
@@ -130,6 +116,19 @@ RSWorldMenu class >> menu06PluginsOn: aBuilder [
 		help: 'TODO';
 		icon: self roassalIcon;
 		action: [ self inform: 'TODO' ]"
+]
+
+{ #category : #menu }
+RSWorldMenu class >> menu07LoadFullVersionOn: aBuilder [
+
+	<worldMenu>
+	(aBuilder item: #Roassal3LoadFullVersion)
+		parent: #Roassal3;
+		order: 5;
+		label: 'Load full version';
+		help: 'Load full version of Roassal';
+		icon: self roassalIcon;
+		action: [ self loadFullVersion ]
 ]
 
 { #category : #menu }
