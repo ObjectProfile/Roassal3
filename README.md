@@ -35,6 +35,14 @@ In order to suppress warnings you may prefer:
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
 ```   
 
+You can load the full version (including Mondrian and experimental packages) using:
+```Smalltalk
+[Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3';
+    load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
+```
+
 ### Quick examples
 In order to run the following examples they must be loaded by installing the full (bleeding edge) version of Roassal.
 
