@@ -95,6 +95,12 @@ If you wish to set a dependency to Roassal3 in your application, you simply need
 ```Smalltalk
 spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src' ].
 ```
+
+To depend on a full version of Roassal3, you may use:
+
+```Smalltalk
+baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src'; loads: #('Full') ];
+```
 _____
 ## Get in touch
 Share your enthusiasm by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
