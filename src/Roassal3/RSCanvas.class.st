@@ -327,14 +327,15 @@ RSCanvas >> open [
 RSCanvas >> openOnce [
 	"Open a visualization and record the position. When #openOnce is called a second time,
 	the new window replace the previous one, at the recorded position. This method is useful when 
-	demoing and scripting."
+	demoing and scripting. Return the open window"
 	| bounds win |
 	bounds := nil. 
 	Smalltalk at: #previousWindow ifPresent: [ :w | bounds := w bounds. w close ].
 	win := self open.
 	Smalltalk at: #previousWindow put: win.
 	bounds ifNotNil: [
-		win bounds: bounds ]
+		win bounds: bounds ].
+	^ win
 ]
 
 { #category : #accessing }
