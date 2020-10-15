@@ -157,5 +157,6 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Layouts-Tests'
 	'Roassal3-Chart-Tests'
 	'Roassal3-UML-Tests'
-	'Roassal3-Spec-Tests')
+	'Roassal3-Spec-Tests'
+	'Roassal3-Inspector-Tests')
 ]

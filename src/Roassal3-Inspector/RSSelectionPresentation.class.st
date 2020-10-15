@@ -1,5 +1,19 @@
 "
-I am used on the inspector for Roassal3, when you select one element the view changes its shapes
+Define the interaction used by the inspector to highlight a selected shape. This is very convenient in the inspector for example. Normally, it should not be invoked directly.
+
+Here is an example:
+
+```Smalltalk
+c := RSCanvas new.
+shapes := (1 to: 100) collect: [ :v | RSBox new model: v ] as: RSGroup.
+c addAll: shapes.
+RSNormalizer size shapes: shapes; normalize: #yourself.
+RSFlowLayout on: shapes.
+shapes @ RSSelectionPresentation.
+c @ RSCanvasController.
+c open
+```
+
 "
 Class {
 	#name : #RSSelectionPresentation,
@@ -11,6 +25,13 @@ Class {
 	],
 	#category : #'Roassal3-Inspector-Interactions'
 }
+
+{ #category : #hooks }
+RSSelectionPresentation >> getScaleFrom: aShape [
+	"Return the scale used by the canvas of the shape"
+	aShape canvas ifNil: [ ^ 1 ].
+	^ aShape canvas camera scale
+]
 
 { #category : #initialization }
 RSSelectionPresentation >> initialize [
@@ -57,21 +78,22 @@ RSSelectionPresentation >> presentation: aRSRoassalPresentation [
 
 { #category : #hooks }
 RSSelectionPresentation >> putShadowOn: aShape [
+
 	| shadow pad |
-	pad := self padding / aShape canvas camera scale.
+	"Make sure that  the size is indenpendent of the camera scale"
+	pad := self padding / (self getScaleFrom: aShape).
 	shadow := RSBox new
-		fromRectangle: (aShape encompassingRectangle expandBy: pad); 
-		paint: self shadowColor;
-		cornerRadius: pad * 0.75;
-		yourself.
+		          fromRectangle:
+			          (aShape encompassingRectangle expandBy: pad);
+		          paint: self shadowColor;
+		          cornerRadius: pad * 0.75;
+		          yourself.
 	aShape removeInteractionIfPresent: RSLocation.
-	RSLocation new
-		stick: shadow on: aShape.
-	aShape parent
-		addShape: shadow before: aShape.
-	aShape canvas 
-		propertyAt: self key
-		put: shadow
+	RSLocation new stick: shadow on: aShape.
+	
+	(aShape parent notNil or: [ aShape canvas ]) ifNil: [ ^ self ].
+	aShape parent addShape: shadow before: aShape.
+	aShape canvas propertyAt: self key put: shadow
 ]
 
 { #category : #dependencies }
@@ -81,6 +103,9 @@ RSSelectionPresentation >> release [
 
 { #category : #hooks }
 RSSelectionPresentation >> removeShadowOn: aShape [
+	"Nothing to do if there is no canvas"
+	aShape canvas ifNil: [ ^ self ].
+	
 	aShape canvas
 		propertyAt: self key
 		ifPresent: [ :shadow | shadow remove ].
@@ -89,10 +114,15 @@ RSSelectionPresentation >> removeShadowOn: aShape [
 
 { #category : #hooks }
 RSSelectionPresentation >> selection: aShape [
-	self presentation selection: aShape model.
+	"The presentation may be nil in case this interaction is not used within a GT Inspector"
+	self presentation ifNotNil: [ 
+		self presentation selection: aShape model ]. 
 	self
 		removeShadowOn: aShape;
 		putShadowOn: aShape.
+		
+	aShape canvas ifNotNil: [ 
+		aShape canvas signalUpdate ]
 ]
 
 { #category : #accessing }
