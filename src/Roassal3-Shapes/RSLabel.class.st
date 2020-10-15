@@ -278,6 +278,25 @@ RSLabel >> metricsProvider [
 
 { #category : #metrics }
 RSLabel >> metricsProvider: aRSMetricsProvider [
+	"Set the way metrics related to the label (e.g., height, width), can be computed. The metric provier per default is RSCairoMetricsProvider.
+	
+	 The argument must be a subclass of RSMetricsProvider.
+	
+	For example:
+```Smalltalk
+metricsProvider := RSCairoMetricsProvider new.
+
+words := (String loremIpsum: 2000) substrings.
+labels := words collect: [ :w | RSLabel new metricsProvider: metricsProvider; text: w ].
+
+c := RSCanvas new.
+c addAll: labels.
+RSFlowLayout on: labels.
+c @ RSCanvasController
+```
+	
+	
+	"
 	metricsProvider := aRSMetricsProvider.
 	self resetCache.
 ]
