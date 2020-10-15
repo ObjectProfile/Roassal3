@@ -7,7 +7,7 @@ Class {
 		'shapeBuilder',
 		'edgeBuilder'
 	],
-	#category : #'Roassal3-Mondrian'
+	#category : #'Roassal3-Mondrian-Core'
 }
 
 { #category : #'building - graph' }
@@ -27,6 +27,7 @@ RSMondrian >> arrowedLine [
 
 { #category : #visualization }
 RSMondrian >> build [
+	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
 	self applyLayout.
 	
@@ -41,6 +42,7 @@ RSMondrian >> build [
 
 { #category : #accessing }
 RSMondrian >> canvas [
+	"Return the canvas that contains the visualization built by Mondrian"
 	^ canvas
 ]
 

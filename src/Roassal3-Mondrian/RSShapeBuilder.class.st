@@ -7,7 +7,7 @@ Class {
 		'width',
 		'height'
 	],
-	#category : #'Roassal3-Mondrian'
+	#category : #'Roassal3-Mondrian-Core'
 }
 
 { #category : #'instance creation' }
