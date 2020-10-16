@@ -15,7 +15,7 @@ RSConnectionTest >> testBasic [
 	connection := RSPopupConnection new.
 	connection doNotOpenWindow.
 	connection inputCanvas: c.
-	connection outputCanvas: [ :inputModel |
+	connection output: [ :inputModel |
 		| c2 |
 		c2 := RSMondrian new.
 		c2 nodes: (1 to: 10).
@@ -37,4 +37,10 @@ RSConnectionTest >> testBasic [
 RSConnectionTest >> testLastwindowIsNil [
 
 	self assert: RSPopupConnection new lastWindow isNil
+]
+
+{ #category : #tests }
+RSConnectionTest >> testNumberOfOutputs [
+
+	self assert: RSPopupConnection new numberOfOutputs equals: 0
 ]
