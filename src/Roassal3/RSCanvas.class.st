@@ -314,28 +314,38 @@ RSCanvas >> numberOfShapes [
 
 { #category : #'morph creation' }
 RSCanvas >> open [
-	| window |
-	self createMorph.
-	window := morph openInWindow.
-	window extent: 500@500.
-	morph privateOwner: window.
-	^ window
-	
+	^ self openWithTitle: 'Roassal'
 ]
 
 { #category : #'morph creation' }
 RSCanvas >> openOnce [
+	^ self openOnceWithTitle: 'Roassal'
+]
+
+{ #category : #'morph creation' }
+RSCanvas >> openOnceWithTitle: aTitle [
 	"Open a visualization and record the position. When #openOnce is called a second time,
 	the new window replace the previous one, at the recorded position. This method is useful when 
 	demoing and scripting. Return the open window"
 	| bounds win |
 	bounds := nil. 
 	Smalltalk at: #previousWindow ifPresent: [ :w | bounds := w bounds. w close ].
-	win := self open.
+	win := self openWithTitle: aTitle.
 	Smalltalk at: #previousWindow put: win.
 	bounds ifNotNil: [
 		win bounds: bounds ].
 	^ win
+]
+
+{ #category : #'morph creation' }
+RSCanvas >> openWithTitle: aTitle [
+	| window |
+	self createMorph.
+	window := morph openInWindowLabeled: aTitle.
+	window extent: 500@500.
+	morph privateOwner: window.
+	^ window
+	
 ]
 
 { #category : #accessing }

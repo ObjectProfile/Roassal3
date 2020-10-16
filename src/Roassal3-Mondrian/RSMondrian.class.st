@@ -25,7 +25,7 @@ RSMondrian >> arrowedLine [
 	^ edgeBuilder
 ]
 
-{ #category : #visualization }
+{ #category : #'public - opening and public' }
 RSMondrian >> build [
 	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
@@ -197,16 +197,30 @@ RSMondrian >> normalizeSize: oneArgBlock [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - opening and public' }
 RSMondrian >> open [
+	"Open the visualization"
 	self build.
 	^ canvas open
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - opening and public' }
 RSMondrian >> openOnce [
 	self build.
 	^ canvas openOnce
+]
+
+{ #category : #'public - opening and public' }
+RSMondrian >> openOnceWithTitle: aTitle [
+	self build.
+	^ canvas openOnceWithTitle: aTitle
+]
+
+{ #category : #'public - opening and public' }
+RSMondrian >> openWithTitle: aTitle [
+	"Open the visualization"
+	self build.
+	^ canvas openWithTitle: aTitle
 ]
 
 { #category : #'building - graph' }
