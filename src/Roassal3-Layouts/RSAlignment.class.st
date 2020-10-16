@@ -156,18 +156,18 @@ RSAlignment >> leftMostShape [
 
 { #category : #public }
 RSAlignment >> middle [
-"
-Center all the shapes along their Y coordinate
--=-=-=-=-=-=
+"Center all the shapes along their Y coordinate
+
+```Smalltalk
 c := RSCanvas new.
-es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
+es := (1 to: 5) collect: [ :v | RSBox new color: Color gray translucent; size: v * 5 ] as: RSGroup.
 RSHorizontalLineLayout on: es.
 align := RSAlignment new.
 align shapes: es.
 align middle.
 c addAll: es.
 c
--=-=-=-=-=-=
+```
 "
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromMiddleUsing: self centerMostShape
