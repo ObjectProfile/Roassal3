@@ -40,6 +40,16 @@ RSAlignment >> alignFromCenterUsing: aShape [
 ]
 
 { #category : #alignment }
+RSAlignment >> alignFromLabelUsing: aRSLabel [
+	| topY yb |
+	topY := aRSLabel encompassingRectangle top.
+	yb := aRSLabel textExtents y_bearing.
+	shapes do: [ :s |	
+		s translateTo: s position x @ (topY + (s extent y / 2.0) + s textExtents y_bearing-yb).
+	]
+]
+
+{ #category : #alignment }
 RSAlignment >> alignFromLeftUsing: aShape [
 	| topX newX |
 	topX := aShape encompassingRectangle topLeft x.
@@ -51,10 +61,10 @@ RSAlignment >> alignFromLeftUsing: aShape [
 
 { #category : #alignment }
 RSAlignment >> alignFromMiddleUsing: aShape [
-	| topY |
-	topY := aShape position y.	
+	| midY |
+	midY := aShape position y.	
 	shapes do: [ :s |	
-		s translateTo: s position x @ topY
+		s translateTo: s position x @ midY
 	]
 ]
 
@@ -102,7 +112,7 @@ c
 RSAlignment >> bottomMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
 	^ shapes inject: shapes first into: [ :maxS :s | 
-			maxS encompassingRectangle top <= s encompassingRectangle top
+			maxS encompassingRectangle bottom <= s encompassingRectangle bottom
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
 ]
 
@@ -137,6 +147,12 @@ RSAlignment >> centerMostShape [
 RSAlignment >> hasShape [
 	"Return true if some shapes have been set"
 	^ (shapes isNil or: [ shapes isEmpty ]) not
+]
+
+{ #category : #public }
+RSAlignment >> label [
+	self hasShape ifFalse: [ ^ self ].
+	self alignFromLabelUsing: self centerMostShape
 ]
 
 { #category : #public }

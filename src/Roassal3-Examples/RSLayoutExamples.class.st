@@ -525,3 +525,84 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	RSTreeLayout on: shapes.
 	^ c @ RSCanvasController @ RSHierarchyPacker
 ]
+
+{ #category : #layouts }
+RSLayoutExamples >> example20FlowLayout [
+	<script: 'self new example20FlowLayout open extent: 700@400'>
+	| words labels canvas menuAnimation high newLabel |
+	words := (String loremIpsum: 100) substrings.
+	labels := words collectWithIndex: [ :word :index |
+		RSLabel new
+			text: word;
+			fontSize: 10 + ((index % 10)*2);
+			underline;
+			yourself.
+		 ].
+
+	RSFlowLayout on: labels.
+	canvas := RSCanvas new.
+	canvas addAll: labels.
+	menuAnimation := [ :s :d |
+		| p |
+		p := s
+			propertyAt: #opos
+			ifAbsentPut: [ s position ].
+		canvas newAnimation
+			duration: 200 milliSeconds;
+			from: s position;
+			to: p + d;
+			on: s set: #position:].
+	high := RSHighlightable new.
+	high 
+		when: RSHighlightEvent do: [ :evt | 
+			evt shape color: Color blue; underline.
+			menuAnimation value: evt shape value: -5@0 ];
+		when: RSUnHighlightEvent do: [ :evt |
+			evt shape color: Color gray; normal.
+			menuAnimation value: evt shape value: 0 ].
+		
+	newLabel := [ :s |
+		canvas add: (RSLabel new
+			text: s;
+			isFixed: true;
+			@ high;
+			yourself) ].
+	{'FlowTop'. RSFlowLayout new.
+	'FlowMiddle'. RSFlowLayout new alignMiddle.
+	'FlowBot'. RSFlowLayout new alignBottom.
+	'FlowLabel'. RSFlowLayout new alignLabel.
+	'FlowLeft'. RSHorizontalFlowLayout new.
+	'FlowCenter'. RSHorizontalFlowLayout new alignCenter.
+	'FlowRight'. RSHorizontalFlowLayout new alignRight.
+	} pairsDo: [:s :layout | 
+		(newLabel value: s)
+			when: RSMouseClick do: [ :evt |
+				| last current |
+				last := labels collect: #position.
+				layout on: labels.
+				current := labels collect: #position.
+				canvas newAnimation
+					duration: 1 second;
+					onStepDo:[:t | 
+						labels doWithIndex: [ :l :i |
+							l translateTo: ((last at: i) interpolateTo: (current at: i) at: t) ].
+						canvas zoomToFit.
+						].
+				 ]
+		].
+	{'Show/Hide Boxes'. [ canvas showRectangles
+		ifTrue: [ canvas hideEncompassingRectangles ]
+		ifFalse: [ canvas showEncompassingRectangles ]  ].
+	'Show/Hide Underlines'. [ labels first isUnderlined
+		ifTrue: [ labels do: #normal ]
+		ifFalse: [ labels do: #underline ] ].
+	} pairsDo: [:s :a |
+		(newLabel value: s)
+			when: RSMouseClick do: [ a value. canvas signalUpdate ].
+		].
+	canvas showEncompassingRectangles.
+	RSVerticalLineLayout new gapSize: 3; on: canvas fixedShapes.
+	canvas fixedShapes translateBy: 7.
+	canvas @ RSCanvasController.
+	^ canvas
+]

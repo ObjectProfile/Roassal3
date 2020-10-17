@@ -27,12 +27,6 @@ RSAlignmentTest >> testCenter [
 ]
 
 { #category : #tests }
-RSAlignmentTest >> testCenter2 [
-	align center.
-
-]
-
-{ #category : #tests }
 RSAlignmentTest >> testFromBottom [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
