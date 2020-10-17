@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'inputCanvas',
-		'outputCanvasBlock',
+		'outputs',
 		'numberOfCreatedCanvases',
 		'lastWindow',
 		'windowOpener'
@@ -14,9 +14,12 @@ Class {
 { #category : #'as yet unclassified' }
 RSAbstractConnection >> clickOnShape: aShape [
 	| win |
-	win := outputCanvasBlock value: aShape model.
-	self processWindow: win.
-	numberOfCreatedCanvases := numberOfCreatedCanvases + 1
+	outputs do: [ :ob |
+		win := ob value: aShape model.
+		self processWindow: win.
+		numberOfCreatedCanvases := numberOfCreatedCanvases + 1	
+	]
+
 ]
 
 { #category : #'windows callback' }
@@ -28,7 +31,8 @@ RSAbstractConnection >> doNotOpenWindow [
 RSAbstractConnection >> initialize [
 	super initialize.
 	numberOfCreatedCanvases := 0.
-	self openWindow
+	outputs := OrderedCollection new.
+	self openWindow.
 ]
 
 { #category : #'as yet unclassified' }
@@ -45,7 +49,19 @@ RSAbstractConnection >> lastWindow [
 
 { #category : #accessing }
 RSAbstractConnection >> numberOfCreatedCanvases [
+	"Return the number of created canvases. Useful for testing"
 	^ numberOfCreatedCanvases
+]
+
+{ #category : #'as yet unclassified' }
+RSAbstractConnection >> numberOfOuputs [
+	"Return the number of ouputs the connection has"
+	^ outputs
+]
+
+{ #category : #'as yet unclassified' }
+RSAbstractConnection >> numberOfOutputs [
+	^ outputs size
 ]
 
 { #category : #'windows callback' }
@@ -55,9 +71,9 @@ RSAbstractConnection >> openWindow [
 ]
 
 { #category : #'as yet unclassified' }
-RSAbstractConnection >> outputCanvas: oneArgBlock [
-	"Set the callback of what to do in case of particular action in the input canvas"
-	outputCanvasBlock := oneArgBlock
+RSAbstractConnection >> output: oneArgBlock [
+	"Add the callback of what to do in case of particular action in the input canvas"
+	outputs add: oneArgBlock
 ]
 
 { #category : #'as yet unclassified' }

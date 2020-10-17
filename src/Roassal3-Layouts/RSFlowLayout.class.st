@@ -15,6 +15,19 @@ RSFlowLayout >> alignBottom [
 
 { #category : #alignment }
 RSFlowLayout >> alignLabel [
+	"Allow to align labels along their baseline.
+	
+```Smalltalk
+words := (String loremIpsum: 100) substrings.
+r := Random new.
+wordShapes := words collect: [ :w | RSLabel new fontSize: (r nextInt: 30); text: w ] as: RSGroup.
+
+c := RSCanvas new.
+c addAll: wordShapes.
+RSFlowLayout new alignLabel; on: wordShapes.
+c @ RSCanvasController
+```
+"
 	alignment := #label
 ]
 
