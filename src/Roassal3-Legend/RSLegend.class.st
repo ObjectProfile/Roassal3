@@ -225,7 +225,7 @@ RSLegend >> text: aString description: desc [
 	text text: aString.
 	d := self defaultLabel copy text: desc.
 	tshapes := RSGroup with: text with: d.
-	l := RSHorizontalLineLayout new center.
+	l := RSHorizontalLineLayout new alignMiddle.
 	l on: tshapes.
 	line := RSComposite new
 		shapes: tshapes;
@@ -264,7 +264,7 @@ RSLegend >> text: aString withShape: aShape [
 	text := self defaultLabel copy.
 	text text: aString.
 	tshapes := RSGroup with: aShape with: text.
-	l := RSHorizontalLineLayout new center.
+	l := RSHorizontalLineLayout new alignMiddle.
 	l on: tshapes.
 	line := RSComposite new
 		shapes: tshapes;

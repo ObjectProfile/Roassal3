@@ -1145,7 +1145,7 @@ RSShapeExamples >> example41Butterfly [
 	c3 := column value: to value: #alignLeft.
 	RSHorizontalLineLayout new
 	    gapSize: 30;
-	    alignCenter;
+	    alignMiddle;
 	    on: { c1. c2. c3 }.
 	eb := RSEdgeBuilder horizontalBezier
 	    color: Color lightGray;

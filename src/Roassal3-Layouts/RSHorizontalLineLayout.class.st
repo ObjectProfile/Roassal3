@@ -7,29 +7,37 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #alignment }
+RSHorizontalLineLayout >> alignBottom [
+	alignment := #bottom
+]
+
+{ #category : #alignment }
+RSHorizontalLineLayout >> alignLabel [
+	"Make the element middle"
+	alignment := #label
+]
+
+{ #category : #alignment }
+RSHorizontalLineLayout >> alignMiddle [
+	"Make the element middle"
+	alignment := #middle
+]
+
+{ #category : #alignment }
+RSHorizontalLineLayout >> alignTop [
+	alignment := #top
+]
+
 { #category : #hook }
 RSHorizontalLineLayout >> deltaFor: aNodeFigure [
 	| delta |
 	delta := 0.
-	self alignment == #bottom ifTrue: [delta := aNodeFigure height].
-	self alignment == #center ifTrue: [delta := aNodeFigure height / 2.0].
-	^0 @ delta
-]
-
-{ #category : #hook }
-RSHorizontalLineLayout >> doCenter: elements [ 
- 	| midTallest step |
-	midTallest := 0.
-	midTallest := elements nodes 
-		inject: 0
-		into: [ :m :el | m max: (el bounds height )].
-	midTallest := midTallest / 2.
-	elements nodes do: [ :node | 
-		step := 0 @ (midTallest - (node bounds height / 2)) asInteger.
-		node bounds origin: (node bounds origin + step).
-		node bounds corner: (node bounds corner + step).
-	] 
-
+	alignment = #bottom ifTrue: [delta := aNodeFigure height].
+	alignment = #middle ifTrue: [delta := aNodeFigure height / 2.0].
+	alignment = #label 
+		ifTrue: [ delta := aNodeFigure textExtents y_bearing negated ].
+	^ 0 @ delta
 ]
 
 { #category : #'initialize-release' }

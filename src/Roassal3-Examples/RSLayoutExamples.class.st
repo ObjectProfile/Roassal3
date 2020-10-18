@@ -528,7 +528,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 
 { #category : #layouts }
 RSLayoutExamples >> example20FlowLayout [
-	<script: 'self new example20FlowLayout open extent: 700@400'>
+	<script: 'self new example20FlowLayout open extent: 700@500'>
 	| words labels canvas menuAnimation high newLabel |
 	words := (String loremIpsum: 100) substrings.
 	labels := words collectWithIndex: [ :word :index |
@@ -567,13 +567,20 @@ RSLayoutExamples >> example20FlowLayout [
 			isFixed: true;
 			@ high;
 			yourself) ].
-	{'FlowTop'. RSFlowLayout new.
+	{'FlowTop'. RSFlowLayout new alignTop.
 	'FlowMiddle'. RSFlowLayout new alignMiddle.
 	'FlowBot'. RSFlowLayout new alignBottom.
 	'FlowLabel'. RSFlowLayout new alignLabel.
-	'FlowLeft'. RSHorizontalFlowLayout new.
+	'FlowLeft'. RSHorizontalFlowLayout new alignLeft.
 	'FlowCenter'. RSHorizontalFlowLayout new alignCenter.
 	'FlowRight'. RSHorizontalFlowLayout new alignRight.
+	'HorizontalTop'. RSHorizontalLineLayout new alignTop.
+	'HorizontalMid'. RSHorizontalLineLayout new alignMiddle.
+	'HorizontalBot'. RSHorizontalLineLayout new alignBottom.
+	'HorizontalLabel'.RSHorizontalLineLayout new alignLabel.
+	'VerticalLeft'. RSVerticalLineLayout new.
+	'VerticalCenter'. RSVerticalLineLayout new alignCenter.
+	'VerticalRight'. RSVerticalLineLayout new alignRight.
 	} pairsDo: [:s :layout | 
 		(newLabel value: s)
 			when: RSMouseClick do: [ :evt |
@@ -598,6 +605,7 @@ RSLayoutExamples >> example20FlowLayout [
 		ifFalse: [ labels do: #underline ] ].
 	} pairsDo: [:s :a |
 		(newLabel value: s)
+			fontSize: 12;
 			when: RSMouseClick do: [ a value. canvas signalUpdate ].
 		].
 	canvas showEncompassingRectangles.

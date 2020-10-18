@@ -1665,7 +1665,7 @@ RSAnimationExamples >> example27RSLocate [
 					on: movableElement shape set: #position: ]
 			] as: RSGroup.
 	RSGridLayout new lineItemsCount: 3; on: buttons.
-	RSVerticalLineLayout new center; gapSize: 30; on: (RSGroup with: canvas nodes with: buttons).
+	RSVerticalLineLayout new alignCenter; gapSize: 30; on: (RSGroup with: canvas nodes with: buttons).
 	canvas addAll: buttons.
 	canvas when: RSExtentChangedEvent do: [ 
 		canvas camera zoomToFit: canvas extent * 0.7.

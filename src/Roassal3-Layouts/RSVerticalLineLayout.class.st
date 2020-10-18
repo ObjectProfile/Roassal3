@@ -7,6 +7,22 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #alignment }
+RSVerticalLineLayout >> alignCenter [
+	"Make the element centered"
+	alignment := #center
+]
+
+{ #category : #alignment }
+RSVerticalLineLayout >> alignLeft [
+	alignment := #left
+]
+
+{ #category : #alignment }
+RSVerticalLineLayout >> alignRight [
+	alignment := #right
+]
+
 { #category : #hook }
 RSVerticalLineLayout >> deltaFor: aNodeFigure [
 	| delta |
@@ -14,21 +30,6 @@ RSVerticalLineLayout >> deltaFor: aNodeFigure [
 	self alignment == #right ifTrue: [delta := aNodeFigure width].
 	self alignment == #center ifTrue: [delta := aNodeFigure width / 2.0].
 	^delta @ 0
-]
-
-{ #category : #hook }
-RSVerticalLineLayout >> doCenter: aGraph [ 
- 	| midWidest step |
-	midWidest := aGraph nodes 
-		inject: 0
-		into: [ :m :el | m max: (el bounds width )].
-	midWidest := midWidest / 2.
-	aGraph nodes do: [ :node | 
-		step := (midWidest - (node bounds width /2)) asInteger @ 0.
-		node bounds origin: (node bounds origin + step).
-		node bounds corner: (node bounds corner + step).
-	] 
-
 ]
 
 { #category : #'initialize-release' }
