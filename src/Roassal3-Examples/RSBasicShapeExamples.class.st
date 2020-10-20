@@ -561,6 +561,10 @@ RSBasicShapeExamples >> example27Markers [
 		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
 	axes markerEnd: (axes markerStart: arrow).
 	dataLine marker: circle.
+	axes model: 'Axes'.
+	axes popup.
+	dataLine model: 'Series'.
+	dataLine popup.
 	c addShape: axes.
 	c addShape: dataLine.
 	c camera zoomToFit: 250@250.

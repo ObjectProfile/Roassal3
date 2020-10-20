@@ -659,67 +659,7 @@ RSAthensRenderer >> visitLine: line [
 			setPaint: paint;
 			drawShape: path ].
 	self visitBorderIfNecessary: line.
-	self visitMarkersIfNecessary: line.
+	line markerShapesInPositionDo: [ :shape | shape accept: self ].
+	"self visitMarkersIfNecessary: line."
 	
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarker: marker to: from vector: vector [
-	| shape angle pos |
-	shape := marker shape.
-	angle := vector angle + Float halfPi.
-	pos := from.
-	shape matrix
-		loadIdentity;
-		rotateByRadians: angle.
-	(marker offset isZero and: [ marker offsetRatio isZero ]) ifFalse: [ 
-		| unit |
-		unit := vector / (vector r max: 1).
-		pos := pos -(vector * marker offsetRatio) - (unit * marker offset)
-		 ].
-	shape
-		position: pos;
-		accept: self.
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerEnd: marker with: controlPoints [
-	| from to |
-	marker ifNil: [ ^ self ].
-	controlPoints size < 2 ifTrue: [ ^ self ].
-	from := controlPoints at: controlPoints size - 1.
-	to := controlPoints last.
-	self visitMarker: marker to: to vector: to-from. 
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerMid: marker with: controlPoints [
-	marker ifNil: [ ^ self ].
-	controlPoints size < 3 ifTrue: [ ^ self ].
-	1 to: controlPoints size -2 do: [ :i | | a b |
-		a := controlPoints at: i.
-		b := controlPoints at: i + 1.
-		self visitMarker: marker to: b vector: b - a. 
-	 ].
-	
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerStart: marker with: controlPoints [
-	| from to |
-	marker ifNil: [ ^ self ].
-	controlPoints size < 2 ifTrue: [ ^ self ].
-	from := controlPoints first.
-	to := controlPoints second.
-	self visitMarker: marker to: from vector: from - to. 
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkersIfNecessary: line [
-	| cp |
-	line hasMarkers ifFalse: [ ^ self ].
-	cp := line controlPoints.
-	self visitMarkerStart: line markerStart with: cp.
-	self visitMarkerMid: line markerMid with: cp.
-	self visitMarkerEnd: line markerEnd with: cp.
 ]

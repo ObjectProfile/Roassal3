@@ -345,7 +345,7 @@ RSComposite >> sessionChanged [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |
-	pos := self matrix inverseTransform: position.
+	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithAction: eventClass forPosition: pos.
 		res ifNotNil: [ ^ res] ].
@@ -356,7 +356,7 @@ RSComposite >> shapeWithAction: eventClass forPosition: position [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithActionForPosition: position [
 	| res pos |
-	pos := self matrix inverseTransform: position.
+	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithActionForPosition: pos.
 		res ifNotNil: [ ^ res] ].
