@@ -1,5 +1,30 @@
 "
 I am an handy class to build legend in a visualization
+
+```Smalltalk
+scale := NSScale ordinalColored: 4.
+
+values := { 'Bonjour' . 'Guten Morgen' . 'Hello' . 'Hola' }.
+c := RSCanvas new.
+c @ RSCanvasController.
+1 to: 20 do: [ :i |
+	txt := values atRandom.
+	c add: (RSLabel new text: txt; color: (scale scale: txt)).
+].
+RSFlowLayout on: c shapes.
+
+
+legend := RSLegend new.
+legend container: c.
+legend title: 'Color legend'.
+legend text: 'French' withBoxColor: (scale scale: values first).
+legend text: 'German' withBoxColor: (scale scale: values second).
+legend text: 'English' withBoxColor: (scale scale: values third).
+legend text: 'Espagnol' withBoxColor: (scale scale: values fourth).
+legend build.
+
+c
+```
 "
 Class {
 	#name : #RSLegend,
