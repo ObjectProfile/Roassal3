@@ -29,12 +29,13 @@ c
 Class {
 	#name : #RSAbstractLine,
 	#superclass : #RSShape,
-	#traits : 'TMarkeable',
-	#classTraits : 'TMarkeable classTrait',
+	#traits : 'RSTMarkeable',
+	#classTraits : 'RSTMarkeable classTrait',
 	#instVars : [
 		'attachPoint',
 		'from',
-		'to'
+		'to',
+		'markers'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -57,6 +58,11 @@ RSAbstractLine >> attachPoint [
 { #category : #'attach point' }
 RSAbstractLine >> attachPoint: ap [
 	attachPoint := ap
+]
+
+{ #category : #testing }
+RSAbstractLine >> basicIncludesPoint: aPoint [
+	^ self
 ]
 
 { #category : #'style-cap' }
@@ -140,17 +146,14 @@ RSAbstractLine >> from: aShapeOrAPoint [
 	from := self setAnchor: from shape: aShapeOrAPoint
 ]
 
-{ #category : #testing }
-RSAbstractLine >> hasMarkers [
-	| m |
-	m := self privateMarkers.
-	^ m notNil and: [ 
-		m anySatisfy: [ :mar | mar notNil ].  ]
-]
-
 { #category : #accessing }
 RSAbstractLine >> includedRadius [
 	^ self border width / 2
+]
+
+{ #category : #testing }
+RSAbstractLine >> includesPoint: aPoint [
+	^ self hasBorder and: [ (self basicIncludesPoint: aPoint) or: [ self markersIncludesPoint: aPoint ] ]
 ]
 
 { #category : #initialization }
@@ -194,11 +197,6 @@ RSAbstractLine >> notifyExtentChanged [
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]
-]
-
-{ #category : #private }
-RSAbstractLine >> privateMarkers [
-	^ nil
 ]
 
 { #category : #adding }

@@ -189,7 +189,7 @@ RSPolygon >> hasPoints [
 RSPolygon >> includesPoint: aPoint [
 	"Return true or false if a point is contained in the shape"
 	| invertedPoint |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	^ (self baseRectangle containsPoint: invertedPoint)
 		ifFalse: [ false ]
 		ifTrue: [(AthensPolygonTester new 

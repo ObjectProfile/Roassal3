@@ -101,6 +101,29 @@ RSLinesTest >> testLineIncludesPoint [
 ]
 
 { #category : #running }
+RSLinesTest >> testMarkersIncludesPoint [
+	| line marker |
+	line := RSLine new
+		startPoint: 0@ 0;
+		endPoint: 200@0;
+		yourself.
+	marker := RSBox new
+		size: 20;
+		asMarker.
+	self assert: (line includesPoint: 0@0).
+	self assert: (line includesPoint: 100@0).
+	self assert: (line includesPoint: 200@0).
+	self deny: (line includesPoint: 210@0).
+	self deny: (line includesPoint: 210@10).
+	self deny: (line includesPoint: 210@ -10).
+	line markerEnd: marker.
+	self assert: (line includesPoint: 210@0).
+	self assert: (line includesPoint: 200@9).
+	self assert: (line includesPoint: 210@ -10).
+	self deny: (line includesPoint: 210@ -11).
+]
+
+{ #category : #running }
 RSLinesTest >> testPolylineIncludesPoint [
 	| line |
 	line := RSPolyline new.

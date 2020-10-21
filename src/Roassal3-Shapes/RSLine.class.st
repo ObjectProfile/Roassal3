@@ -36,17 +36,15 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
-{ #category : #visiting }
-RSLine >> buildPathOn: visitor [
-	visitor buildLinePath: self
-]
-
 { #category : #testing }
-RSLine >> includesPoint: aPoint [
-	self hasBorder ifFalse: [ ^ false ].
-	 
+RSLine >> basicIncludesPoint: aPoint [
 	^ aPoint
 		onLineFrom: self startPoint 
 		to: self endPoint 
 		within: self includedRadius
+]
+
+{ #category : #visiting }
+RSLine >> buildPathOn: visitor [
+	visitor buildLinePath: self
 ]

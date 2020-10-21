@@ -134,7 +134,7 @@ RSBoundingShape >> height: aNumber [
 { #category : #testing }
 RSBoundingShape >> includesPoint: aPoint [
 	| invertedPoint |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	^ self baseRectangle containsPoint: invertedPoint.
 ]
 

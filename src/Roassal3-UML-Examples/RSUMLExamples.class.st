@@ -58,9 +58,6 @@ RSUMLExamples >> example04Nolines [
 	| builder |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
-	builder renderer marker: ((RSShapeFactory arrow
-		extent: 20@25;
-		color: Color black) asMarker offset: 25/2).
 
 	builder layout grid.
 	builder build.

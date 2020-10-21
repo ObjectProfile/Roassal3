@@ -38,7 +38,7 @@ RSEllipse >> geometry [
 RSEllipse >> includesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	rect := self baseRectangle.
 	(rect containsPoint: invertedPoint) ifFalse: [ ^ false ]. "quick elimination"
 	radius := rect height asFloat / 2.

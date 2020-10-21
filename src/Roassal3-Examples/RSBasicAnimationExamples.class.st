@@ -222,3 +222,18 @@ RSBasicAnimationExamples >> example07CornerRadius [
 			].
 	^ c
 ]
+
+{ #category : #lines }
+RSBasicAnimationExamples >> example08PopupAndMarkers [
+	<script: 'self new example08PopupAndMarkers open'>
+	| line marker canvas |
+	line := RSLine new.
+	line startPoint: 300@300; endPoint: 500@300.
+	marker := RSShapeFactory star size: 40.
+	line markerEnd: marker.
+	line @ RSPopup new.
+	line model: 'foo'.
+	canvas := RSCanvas new add: line; yourself.
+	canvas zoomToFit.
+	^ canvas
+]
