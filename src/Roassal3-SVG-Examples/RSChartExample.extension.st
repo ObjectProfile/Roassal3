@@ -51,6 +51,7 @@ RSChartExample >> example14AreaPlotWithError [
 		
 
 	c := RSChart new.
+	c padding: 10@10.
 	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
 	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
 	c addPlot: (RSScatterPlot new x: x y: y).
