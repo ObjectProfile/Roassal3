@@ -30,8 +30,8 @@ RSMarker >> offset [
 ]
 
 { #category : #accessing }
-RSMarker >> offset: anObject [
-	offset := anObject
+RSMarker >> offset: aNumber [
+	offset := aNumber
 ]
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ RSMarker >> offsetRatio: aFloat [
 
 { #category : #public }
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
-	| angle pos |
+	| angle pos off ratio |
 	angle := vector angle.
 	"0.00001 in order to avoid inverseTransform bad result with sx = 0"
 	angle := angle + Float halfPi.
@@ -56,7 +56,11 @@ RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	shape matrix
 		loadIdentity;
 		rotateByRadians: angle.
-	(self offset isZero and: [ self offsetRatio isZero ]).
+	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [ 
+		| unit |
+		unit := vector / (vector r max: 1).
+		pos := pos -(vector * self offsetRatio) - (unit * self offset)
+		 ].
 	shape position: pos.
 	aBlock value: shape
 	

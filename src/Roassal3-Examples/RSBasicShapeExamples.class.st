@@ -903,3 +903,18 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	     ].
 	^ c
 ]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example40PopupAndMarkers [
+	<script: 'self new example40PopupAndMarkers open'>
+	| line marker canvas |
+	line := RSLine new.
+	line startPoint: 300@300; endPoint: 500@300.
+	marker := RSShapeFactory star size: 40.
+	line markerEnd: marker.
+	line @ RSPopup new.
+	line model: 'foo'.
+	canvas := RSCanvas new add: line; yourself.
+	canvas zoomToFit.
+	^ canvas
+]

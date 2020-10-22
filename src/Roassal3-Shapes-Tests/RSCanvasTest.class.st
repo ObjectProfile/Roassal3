@@ -151,7 +151,7 @@ RSCanvasTest >> testMultipleOpenOnce [
 	win2 := c2 openOnce.
 
 	[ 
-		self assert: win1 isDisplayed.
+		self deny: win1 isDisplayed.
 		self assert: win2 isDisplayed
 	] ensure: [ win1 delete. win2 delete. ]
 	 

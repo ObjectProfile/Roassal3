@@ -101,6 +101,24 @@ RSLinesTest >> testLineIncludesPoint [
 ]
 
 { #category : #running }
+RSLinesTest >> testMarkerOffset [
+	| line marker |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	marker := RSBox new size: 20; withBorder; noPaint; asMarker.
+	marker offsetRatio: 0.5.
+	line markerEnd: marker.
+	
+	self assert: (line includesPoint: 50@ 9).
+	marker offset: 20.
+	self deny: (line includesPoint: 50@ 9).
+	self assert: (line includesPoint: 30@ 9).	
+
+]
+
+{ #category : #running }
 RSLinesTest >> testMarkersIncludesPoint [
 	| line marker |
 	line := RSLine new

@@ -224,16 +224,50 @@ RSBasicAnimationExamples >> example07CornerRadius [
 ]
 
 { #category : #lines }
-RSBasicAnimationExamples >> example08PopupAndMarkers [
-	<script: 'self new example08PopupAndMarkers open'>
-	| line marker canvas |
+RSBasicAnimationExamples >> example08Markers [
+	<script: 'self new example08Markers open'>
+	| canvas line radius marker red |
+	canvas := RSCanvas new.
 	line := RSLine new.
-	line startPoint: 300@300; endPoint: 500@300.
-	marker := RSShapeFactory star size: 40.
+	radius := 100.
+	canvas add: line.
+	marker := RSBox new size: 20; withBorder; noPaint; asMarker.
 	line markerEnd: marker.
-	line @ RSPopup new.
-	line model: 'foo'.
-	canvas := RSCanvas new add: line; yourself.
-	canvas zoomToFit.
+	canvas newAnimation
+		duration: 20 seconds;
+		repeat;
+		from: 0;
+		to: Float twoPi;
+		onStepDo: [ :a | | b |
+			b := a + Float pi.
+			line startPoint: (a cos @ a sin) * radius.
+			line endPoint: (b cos @ b sin )* radius ].
+	canvas newAnimation
+		duration: 20 seconds;
+		repeat;
+		from: 1;
+		to: 0;
+		onStepDo: [ :ratio | marker offsetRatio: ratio ].
+	canvas newAnimation
+		duration: 1 seconds;
+		repeat;
+		scale: (NSScale linear
+			domain: #(0 0.5 1);
+			range: #(-30 30 -30) );
+		onStepDo: [ :offset | marker offset: offset asPoint ].
+
+	red := RSLine new yourself.
+	red marker: (RSBox new size: 5; asMarker).
+	red color: Color red.
+	canvas add: red.
+	canvas newAnimation repeat;
+		onStepDo: [ 
+			| vector unit |
+			vector := line endPoint - line startPoint.
+			unit := vector / (vector r max: 1).
+			red startPoint: line endPoint - (vector * marker offsetRatio).
+			red endPoint: red startPoint - (unit * marker offset).
+			 ].
+
 	^ canvas
 ]
