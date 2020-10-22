@@ -84,3 +84,26 @@ RSConnectionExample >> example03Code [
 		q layout tree.
 		q build ]
 ]
+
+{ #category : #examples }
+RSConnectionExample >> example04UML [
+
+	<script: 'self new example04UML'>
+	| classes builder c |
+	classes := Collection withAllSubclasses.
+
+	builder := RSUMLClassBuilder new.
+	builder classes: classes.
+	builder build.
+	builder container open.
+
+	c := RSPopupConnection new.
+	c inputCanvas: builder container.
+	c output: [ :aClass | 
+		| q |
+		q := RSMondrian new.
+		q nodes: aClass methods.
+		q line connectToAll: #dependentMethods.
+		q layout tree.
+		q build ]
+]
