@@ -6,25 +6,38 @@ Class {
 		'outputs',
 		'numberOfCreatedCanvases',
 		'lastWindow',
-		'windowOpener'
+		'windowOpener',
+		'canvasOpenings'
 	],
 	#category : #'Roassal3-Mondrian-Connections'
 }
 
 { #category : #'as yet unclassified' }
 RSAbstractConnection >> clickOnShape: aShape [
-	| win |
-	outputs do: [ :ob |
-		win := ob value: aShape model.
-		self processWindow: win.
+	| c win |
+	outputs with: canvasOpenings do: [ :ob :aCanvasOpening |
+		c := ob value: aShape model.
+		aCanvasOpening canvas: c.
+		
+		win := c open.
+		aCanvasOpening window ifNotNil: [ 
+			aCanvasOpening window delete.
+			win bounds: aCanvasOpening window bounds ].
+		aCanvasOpening window: win.
+		
 		numberOfCreatedCanvases := numberOfCreatedCanvases + 1	
 	]
 
 ]
 
+{ #category : #'as yet unclassified' }
+RSAbstractConnection >> deleteAllWindows [
+	canvasOpenings do: [ :co | co deleteWindow ]
+]
+
 { #category : #'windows callback' }
 RSAbstractConnection >> doNotOpenWindow [
-	windowOpener := [ :canvas | "do nothing" ]
+	windowOpener := [ :window | window delete ]
 ]
 
 { #category : #initialization }
@@ -32,6 +45,7 @@ RSAbstractConnection >> initialize [
 	super initialize.
 	numberOfCreatedCanvases := 0.
 	outputs := OrderedCollection new.
+	canvasOpenings := OrderedCollection new.
 	self openWindow.
 ]
 
@@ -73,7 +87,8 @@ RSAbstractConnection >> openWindow [
 { #category : #'as yet unclassified' }
 RSAbstractConnection >> output: oneArgBlock [
 	"Add the callback of what to do in case of particular action in the input canvas"
-	outputs add: oneArgBlock
+	outputs add: oneArgBlock.
+	canvasOpenings add: RSCanvasOpening new
 ]
 
 { #category : #'as yet unclassified' }
