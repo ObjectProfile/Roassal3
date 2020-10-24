@@ -127,9 +127,38 @@ RSAbstractLine >> endPoint: aPoint [
 
 { #category : #public }
 RSAbstractLine >> fmt: aString [
-	"format for lines"
+	"Format for lines a shortcut to define a line styles, or markers
+	
+	For markers use
+	'o' - circle
+	'^' - arrow
+	's' - square
+	'p' - pentagon
+	'h' - hexagon
+	'+' - plus
+	'd' - diamond
+	'*' - star
+	
+	For stroke styles use:
+	'--' dashed line.
+	'-.' dashed line with small line then point
+	'.' dashed line with points
+	
+	Example
+	```
+	| canvas |
+	canvas := RSCanvas new.
+	canvas add: (RSLine new 
+		startPoint: 0@0;
+		endPoint: 100@0;
+		fmt:'-.*';
+		color: Color red;
+		yourself).
+	canvas @ RSCanvasController.
+	````
+	 "
 	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self width * 4) ].
+		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].
 	(RSStrokeStyle fromString: aString)
 		ifNotNil: [ :style | self shape border style: style ]
 	
