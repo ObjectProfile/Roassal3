@@ -54,3 +54,56 @@ RSConnectionExample >> example02TwoViews [
 		c3 build
 	]
 ]
+
+{ #category : #examples }
+RSConnectionExample >> example03Code [
+
+	<script: 'self new example03Code'>
+	| classes m c |
+	classes := Collection withAllSubclasses.
+
+	m := RSMondrian new.
+	m shape box.
+	m nodes: classes.
+	m line connectFrom: #superclass.
+
+	m normalizeSize: #numberOfMethods.
+	m normalizeColor: #numberOfLinesOfCode.
+
+	m layout tree.
+	m open.
+
+
+	c := RSPopupConnection new.
+	c inputCanvas: m canvas.
+	c output: [ :aClass | 
+		| q |
+		q := RSMondrian new.
+		q nodes: aClass methods.
+		q line connectToAll: #dependentMethods.
+		q layout tree.
+		q build ]
+]
+
+{ #category : #examples }
+RSConnectionExample >> example04UML [
+
+	<script: 'self new example04UML'>
+	| classes builder c |
+	classes := Collection withAllSubclasses.
+
+	builder := RSUMLClassBuilder new.
+	builder classes: classes.
+	builder build.
+	builder container open.
+
+	c := RSPopupConnection new.
+	c inputCanvas: builder container.
+	c output: [ :aClass | 
+		| q |
+		q := RSMondrian new.
+		q nodes: aClass methods.
+		q line connectToAll: #dependentMethods.
+		q layout tree.
+		q build ]
+]

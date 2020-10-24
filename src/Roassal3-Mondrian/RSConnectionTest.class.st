@@ -13,7 +13,6 @@ RSConnectionTest >> testBasic [
 	c build.
 
 	connection := RSPopupConnection new.
-	connection doNotOpenWindow.
 	connection inputCanvas: c.
 	connection output: [ :inputModel |
 		| c2 |
@@ -31,6 +30,8 @@ RSConnectionTest >> testBasic [
 	
 	(c canvas shapeFromModel: 91) announce: RSMouseClick.
 	self assert: connection numberOfCreatedCanvases equals: 3.
+	
+	connection deleteAllWindows.
 ]
 
 { #category : #tests }
