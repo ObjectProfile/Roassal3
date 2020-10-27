@@ -44,7 +44,7 @@ RSMenuActivable >> onShape: aShape [
 	aShape when: RSMouseRightClick do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
-		menuBlock value: menu value: aShape.
+		menuBlock value: menu value: evt shape.
 		menu popUpInWorld ].
 	
 ]
