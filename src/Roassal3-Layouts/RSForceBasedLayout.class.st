@@ -210,8 +210,18 @@ RSForceBasedLayout >> mockEdgeAt: anEdge [
 ]
 
 { #category : #'accessing - model' }
+RSForceBasedLayout >> mockEdgeAt: anEdge ifAbsent: absentBlock [
+	^ edges detect: [ :each | each realEdge == anEdge ] ifNone: absentBlock
+]
+
+{ #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
 	^ nodes detect: [ :each | each realElement == realNode ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockElementAt: realNode ifAbsent: absentBlock [
+	^ nodes detect: [ :each | each realElement == realNode ] ifNone: absentBlock
 ]
 
 { #category : #'private - initialization' }
@@ -252,8 +262,7 @@ RSForceBasedLayout >> nodes: aCollection [
 { #category : #'adding/removing' }
 RSForceBasedLayout >> removeEdge: aRealEdge [
 	| edge |
-	edge := self mockEdgeAt: aRealEdge.
-	edge ifNil: [ ^ self ].
+	edge := self mockEdgeAt: aRealEdge ifAbsent: [ ^ self ].
 	edges remove: edge.
 	
 ]
