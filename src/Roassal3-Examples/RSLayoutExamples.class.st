@@ -614,3 +614,34 @@ RSLayoutExamples >> example20FlowLayout [
 	canvas @ RSCanvasController.
 	^ canvas
 ]
+
+{ #category : #layouts }
+RSLayoutExamples >> example21Spaces [
+	<script: 'self new example21Spaces open'>
+	| b prop r |
+	b := RSForceLayoutInSpaces new.
+	b numberOfSpaces: 4.
+	b classes: Collection withAllSubclasses.
+	b build.
+	prop := 0.1.
+	r := Random new.
+	b canvas newAnimation
+		repeat;
+		onStepDo: [ :t | | s space |
+			r next < 0.01 ifTrue: [ 
+				s := b shapes atRandom.
+				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
+				
+				b canvas newAnimation
+					duration: 500 milliSeconds;
+					from: s position;
+					to: space position;
+					on: s set: #position:;
+					when: RSAnimationEndEvent do: [ b dragEnd: s ].
+				].
+			 ].
+	^ b canvas 
+	
+
+
+]
