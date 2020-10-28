@@ -509,7 +509,8 @@ RSAthensRenderer >> drawSimpleLabel: label [
 	athensCanvas
 		setPathMatrix;
 		setScaledFont: font.
-	label paint loadOnCairoCanvas: athensCanvas.
+	(label paint asAthensPaintOn: athensCanvas)
+		loadOnCairoCanvas: athensCanvas.
 
 	athensCanvas
 		showGlyphs: label cairoGlyphs getHandle
