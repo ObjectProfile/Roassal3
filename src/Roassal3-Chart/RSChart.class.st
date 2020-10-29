@@ -293,6 +293,12 @@ c open
 	^ self canvas open
 ]
 
+{ #category : #public }
+RSChart >> openOnce [
+	self build.
+	^ self canvas openOnce
+]
+
 { #category : #'accessing - extension' }
 RSChart >> padding [
 	^ self chartExtents padding

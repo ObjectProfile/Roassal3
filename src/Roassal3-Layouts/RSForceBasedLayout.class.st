@@ -59,7 +59,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding/removing' }
 RSForceBasedLayout >> addEdges: realEdges [
 	| newMockEdges |
 	newMockEdges := realEdges collect: [ :e | self newMockEdgeFor: e ].
@@ -68,7 +68,7 @@ RSForceBasedLayout >> addEdges: realEdges [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding/removing' }
 RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
@@ -206,12 +206,25 @@ RSForceBasedLayout >> length: aFloat [
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockEdgeAt: anEdge [
-	^ edges detect: [ :each | each realEdge == anEdge ]
+	^ edges detect: [ :each | each realEdge == anEdge ] ifNone: [ nil ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockEdgeAt: anEdge ifPresent: presentBlock [
+	^ edges detect: [ :each | each realEdge == anEdge ] ifFound: presentBlock
 ]
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
 	^ nodes detect: [ :each | each realElement == realNode ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockElementAt: realNode ifPresent: presentBlock [
+
+	^ nodes
+		  detect: [ :each | each realElement == realNode ]
+		  ifFound: presentBlock
 ]
 
 { #category : #'private - initialization' }
@@ -247,6 +260,20 @@ RSForceBasedLayout >> nodes [
 { #category : #'accessing - model' }
 RSForceBasedLayout >> nodes: aCollection [
 	nodes := aCollection
+]
+
+{ #category : #'adding/removing' }
+RSForceBasedLayout >> removeEdge: aRealEdge [
+
+	self mockEdgeAt: aRealEdge ifPresent: [ :edge | edges remove: edge ]
+]
+
+{ #category : #'adding/removing' }
+RSForceBasedLayout >> removeNode: aRealNode [
+	| node |
+	node := self mockElementAt: aRealNode.
+	nodes remove: node.
+	
 ]
 
 { #category : #algorithm }

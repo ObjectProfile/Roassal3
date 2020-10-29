@@ -514,6 +514,11 @@ The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
 	^ shapes
 ]
 
+{ #category : #accessing }
+RSCanvas >> shapes: aRSGroup [
+	shapes := aRSGroup
+]
+
 { #category : #'accessing - shapes' }
 RSCanvas >> shapesFromModels: objects [
 	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
