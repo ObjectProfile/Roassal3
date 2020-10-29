@@ -72,11 +72,6 @@ RSCanvas >> addFixedShape: aShape [
 ]
 
 { #category : #'adding removing shapes' }
-RSCanvas >> addShape: aShape [
-	aShape addedIn: self
-]
-
-{ #category : #'adding removing shapes' }
 RSCanvas >> addShape: aShape before: otherShape [
 	aShape addedIn: self.
 	shapes remove: aShape.

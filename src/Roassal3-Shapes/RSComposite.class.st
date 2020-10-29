@@ -134,12 +134,6 @@ RSComposite >> addFixedShape: aShape [
 ]
 
 { #category : #adding }
-RSComposite >> addShape: aShape [
-	"Add a shape in a composite shape"
-	aShape addedIn: self
-]
-
-{ #category : #adding }
 RSComposite >> addShape: aShape before: otherShape [ 
 	"Add a shape in a composite shape"
 	aShape addedIn: self.
