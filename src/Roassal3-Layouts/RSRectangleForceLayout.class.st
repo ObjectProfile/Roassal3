@@ -19,8 +19,10 @@ RSRectangleForceLayout >> enclosingForce [
 ]
 
 { #category : #accessing }
-RSRectangleForceLayout >> enclosingForce: anObject [
-	enclosingForce := anObject
+RSRectangleForceLayout >> enclosingForce: aNumber [
+	"Establishes the force that is applied to the elements when they are close enough to the enclosing rectangle."
+
+	enclosingForce := aNumber
 ]
 
 { #category : #accessing }
@@ -30,6 +32,8 @@ RSRectangleForceLayout >> enclosingRectangle [
 
 { #category : #accessing }
 RSRectangleForceLayout >> enclosingRectangle: aRectangleInCanvasSpaceCoordinates [
+	"Establishes the rectangle to enclose the elements."
+
 	enclosingRectangle := aRectangleInCanvasSpaceCoordinates
 ]
 
@@ -39,8 +43,10 @@ RSRectangleForceLayout >> enclosingThreshold [
 ]
 
 { #category : #accessing }
-RSRectangleForceLayout >> enclosingThreshold: anObject [
-	enclosingThreshold := anObject
+RSRectangleForceLayout >> enclosingThreshold: aNumber [
+	"Establishes the distance from the enclosing rectangle where the repulsion force applies to elements."
+
+	enclosingThreshold := aNumber
 ]
 
 { #category : #events }
@@ -62,9 +68,10 @@ RSRectangleForceLayout >> step [
 { #category : #events }
 RSRectangleForceLayout >> stepRectangleForces [
 	"Apply a repulsion force to elements that are close to the enclosing rectangle."
+
 	| k |
 	k := enclosingForce * alpha.
-	(k closeTo: 0) ifTrue: [ ^self ].
+	(k closeTo: 0) ifTrue: [ ^ self ].
 	
 	nodes do: [ :each |
 		| eachRect diff |
