@@ -12,6 +12,11 @@ Class {
 	#category : #'Roassal3-Experimental-Delaunay'
 }
 
+{ #category : #adding }
+RSDelaunayExample >> addParticle: aRSParticleD [
+	allParticles add: aRSParticleD
+]
+
 { #category : #girls }
 RSDelaunayExample >> anime1 [
 	| girl |
@@ -69,8 +74,14 @@ RSDelaunayExample >> anime3 [
 RSDelaunayExample >> borderFor: particle [
 	useFill ifTrue: [ ^ nil ].
 	^ RSBorder new
+		width: 0.1;
 		color: (self colorFor: particle);
 		yourself
+]
+
+{ #category : #accessing }
+RSDelaunayExample >> canvas: aCanvas [
+	canvas := aCanvas
 ]
 
 { #category : #running }
@@ -649,6 +660,7 @@ RSDelaunayExample >> hasAreaLessThan: lim p1: p1 p2: p2 p3: p3 [
 RSDelaunayExample >> initialize [
 	super initialize.
 	useFill := false.
+	allParticles := OrderedCollection new.
 ]
 
 { #category : #running }
@@ -661,18 +673,42 @@ RSDelaunayExample >> paintFor: particle [
 RSDelaunayExample >> run [
 	<script: 'self new run'>
 	canvas := RSCanvas new.
+	canvas addShape: (RSBox new color: (Color black alpha: 0.1); size: 777; yourself).
 	canvas color: Color black.
-	allParticles := OrderedCollection new.
-	canvas newAnimation repeat onStepDo: [ :t | self  step ].
+	canvas clearBackground: false.
+	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	"animation for girls"
 	(canvas animationFrom: { self anime1. self anime2. self anime3 }) repeat.
 	
 	canvas when: RSMouseDragging do: [ :evt | 
-		allParticles add: (RSParticle new
+		allParticles add: (RSParticleD new
 			position: evt position;
-			level: 5) ].
+			level: 5;
+			decay: 0.85;
+			yourself) ].
+	canvas when: RSKeyDown do: [ :evt| useFill := useFill not ].
 	canvas open
 		setLabel: 'Delaunay and Chelmico'
+]
+
+{ #category : #running }
+RSDelaunayExample >> run2 [
+	<script: 'self new run2'>
+	| maxLevel |
+	canvas := RSCanvas new.
+	canvas color: Color black.
+	canvas clearBackground: false.
+	canvas newAnimation repeat onStepDo: [ :t | self step ].
+	maxLevel := 3.
+	canvas when: RSMouseDragging do: [ :evt | 
+		allParticles add: (RSParticleD new
+			position: evt position;
+			maxLevel: 3; 
+			level: 3;
+			decay: 1;
+			yourself) ].
+	canvas open
+		setLabel: 'Delaunay'
 ]
 
 { #category : #running }
@@ -700,4 +736,9 @@ RSDelaunayExample >> step [
 		 ].
 	].
 
+]
+
+{ #category : #accessing }
+RSDelaunayExample >> useFill: aBoolean [
+	useFill := aBoolean
 ]
