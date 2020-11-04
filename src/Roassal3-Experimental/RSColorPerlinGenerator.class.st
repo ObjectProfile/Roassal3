@@ -2,18 +2,21 @@
 TODO
 "
 Class {
-	#name : #RSColorGenerator,
+	#name : #RSColorPerlinGenerator,
 	#superclass : #RSAbstractColorGenerator,
+	#instVars : [
+		'perlin'
+	],
 	#category : #'Roassal3-Experimental-Force'
 }
 
 { #category : #accessing }
-RSColorGenerator >> backgroundColor [
+RSColorPerlinGenerator >> backgroundColor [
 	^ Color black
 ]
 
 { #category : #accessing }
-RSColorGenerator >> colorFor: aParticle [
+RSColorPerlinGenerator >> colorFor: aParticle [
 	| period n p color |
 	period := 0.005.
 	p := aParticle position.
@@ -23,12 +26,12 @@ RSColorGenerator >> colorFor: aParticle [
 ]
 
 { #category : #accessing }
-RSColorGenerator >> initialize [
+RSColorPerlinGenerator >> initialize [
 	super initialize.
 	perlin := NSPerlinNoise3 new octaves: 5
 ]
 
 { #category : #accessing }
-RSColorGenerator >> perlin: aNSPerlin [
+RSColorPerlinGenerator >> perlin: aNSPerlin [
 	perlin := aNSPerlin
 ]

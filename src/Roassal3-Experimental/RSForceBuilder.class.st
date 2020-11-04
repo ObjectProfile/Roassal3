@@ -12,10 +12,16 @@ Class {
 		'interferencesSize',
 		'interferencesRadius',
 		'particlesRadius',
-		'random'
+		'random',
+		'colorGenerator'
 	],
 	#category : #'Roassal3-Experimental-Force'
 }
+
+{ #category : #accessing }
+RSForceBuilder >> colorGenerator: aRSColorGenerator [
+	colorGenerator := aRSColorGenerator
+]
 
 { #category : #private }
 RSForceBuilder >> createObjects: amt radius: radius class: cls [
@@ -44,10 +50,16 @@ RSForceBuilder >> initialize [
 	random := Random new.
 	self 
 		force: 10;
+		colorGenerator: RSColorMonoGenerator new;
 		particlesSize: 1000;
 		particlesRadius: 100;
 		interferencesSize: 100;
 		interferencesRadius: 100.
+]
+
+{ #category : #accessing }
+RSForceBuilder >> interferences [
+	^ interferences
 ]
 
 { #category : #accessing }
@@ -68,6 +80,11 @@ RSForceBuilder >> interferencesSize [
 { #category : #accessing }
 RSForceBuilder >> interferencesSize: anInteger [ 
 	interferencesSize := anInteger
+]
+
+{ #category : #accessing }
+RSForceBuilder >> particles [
+	^ particles
 ]
 
 { #category : #accessing }
@@ -92,7 +109,7 @@ RSForceBuilder >> particlesSize: anInteger [
 
 { #category : #hooks }
 RSForceBuilder >> renderIn: aCanvas [
-	aCanvas color: Color white.
+	aCanvas color: colorGenerator backgroundColor.
 	self reset.
 	aCanvas when: RSMouseClick send: #reset to: self.
 	aCanvas newAnimation repeat; onStepDo: [ self update: self force ].
@@ -136,5 +153,5 @@ RSForceBuilder >> update: aFloat [
 	c := self canvas.
 	interferences do: [ :i |
 		particles do: [ :p | p update: i with: aFloat ] ].
-	particles do: [ :p | p renderIn: c ]
+	particles do: [ :p | p renderIn: c with: colorGenerator ]
 ]
