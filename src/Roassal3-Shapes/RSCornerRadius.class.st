@@ -20,6 +20,7 @@ RSCornerRadius >> bottom: aNumber [
 
 { #category : #accessing }
 RSCornerRadius >> bottomLeft [ 
+	"Define the bottom left of the radius"
 	^ bottomLeft
 ]
 
@@ -35,6 +36,7 @@ RSCornerRadius >> bottomRight [
 
 { #category : #accessing }
 RSCornerRadius >> bottomRight: aNumber [
+	"Example of value could be 200"
 	bottomRight := aNumber
 ]
 

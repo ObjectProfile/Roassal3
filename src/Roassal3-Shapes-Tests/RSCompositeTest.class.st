@@ -31,8 +31,8 @@ RSCompositeTest >> testEdgesCanvasAndComposite01 [
 	"basic case in a canvas"
 	| c b1 b2 e1 |
 	c := RSCanvas new.
-	b1 := RSBox new position: 0@0.
-	b2 := RSBox new position: 100@100.
+	b1 := RSBox new position: 0 @ 0.
+	b2 := RSBox new position: 100 @ 100.
 	e1 := RSLine new from: b1; to: b2.
 	c addAll: { b1. b2. e1 }.
 	
