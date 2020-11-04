@@ -4,9 +4,6 @@ TODO
 Class {
 	#name : #RSAbstractColorGenerator,
 	#superclass : #RSObject,
-	#instVars : [
-		'perlin'
-	],
 	#category : #'Roassal3-Experimental-Force'
 }
 
