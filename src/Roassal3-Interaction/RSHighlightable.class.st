@@ -91,6 +91,8 @@ c @ RSCanvasController
 Class {
 	#name : #RSHighlightable,
 	#superclass : #RSInteraction,
+	#traits : 'RSTAnnounceable',
+	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
 		'announcer',
 		'copyKey',
@@ -139,13 +141,7 @@ RSHighlightable class >> withEdges [
 				   color: Color black)
 ]
 
-{ #category : #announce }
-RSHighlightable >> announce: anEvent [
-	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent value
-]
-
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
 	self announce: [ RSHighlightEvent new
 		interaction: self;
@@ -153,7 +149,7 @@ RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
 		source: shapeOrCanvas ].
 ]
 
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 	self announce: [ RSUnHighlightEvent new
 		interaction: self;
@@ -161,12 +157,7 @@ RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 		source: shapeOrCanvas ].
 ]
 
-{ #category : #announce }
-RSHighlightable >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ].
-]
-
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
@@ -332,6 +323,11 @@ RSHighlightable >> onShape: aShape [
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
+{ #category : #announcer }
+RSHighlightable >> privateAnnouncer [
+	^ announcer
+]
+
 { #category : #'accessing - keys' }
 RSHighlightable >> propertyKey [
 	^ propertyKey ifNil: [ propertyKey := self hash asString ]
@@ -454,11 +450,6 @@ RSHighlightable >> unhighlightRecordedShapes: shapeOrCanvas [
 			shapes do: [ :s | self announceUnHightlight: s source: shapeOrCanvas ].
 		 ].
 	self resetHighlightedShapes: shapeOrCanvas
-]
-
-{ #category : #announcing }
-RSHighlightable >> when: event do: aBlock [
-	self announcer when: event do: aBlock
 ]
 
 { #category : #'public - hooks' }

@@ -4,6 +4,8 @@ I am the abstract class that defines animations for roassal3
 Class {
 	#name : #RSAbstractAnimation,
 	#superclass : #RSObject,
+	#traits : 'RSTAnnounceable',
+	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
 		'announcer',
 		'isRunning',
@@ -35,18 +37,7 @@ RSAbstractAnimation >> allDuration [
 		ifFalse: [ self loops ])
 ]
 
-{ #category : #events }
-RSAbstractAnimation >> announce: anEvent [
-	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent value
-]
-
-{ #category : #events }
-RSAbstractAnimation >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : #events }
+{ #category : #announcer }
 RSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
@@ -174,6 +165,11 @@ RSAbstractAnimation >> pauseTime [
 	^ pauseTime
 ]
 
+{ #category : #announcer }
+RSAbstractAnimation >> privateAnnouncer [
+	^ announcer
+]
+
 { #category : #refresing }
 RSAbstractAnimation >> refresh [
 	self hasCompleted
@@ -273,9 +269,4 @@ RSAbstractAnimation >> toggle [
 { #category : #private }
 RSAbstractAnimation >> updateHasCompleted [
 	hasCompleted ifFalse: [ hasCompleted := currentLoop >= loops ].
-]
-
-{ #category : #events }
-RSAbstractAnimation >> when: event do: aBlock [
-	self announcer when: event do: aBlock
 ]

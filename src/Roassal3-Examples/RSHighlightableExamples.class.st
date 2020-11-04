@@ -377,3 +377,37 @@ RSHighlightableExamples >> example09ArrowedLines [
 	canvas zoomToFit.
 	^ canvas
 ]
+
+{ #category : #elastic }
+RSHighlightableExamples >> example10ElasticBox [
+	<script: 'self new example10ElasticBox open'>
+	| canvas color shapes high elastic |
+	canvas := RSCanvas new.
+	
+	color := RSColorPalette diverging rdylbu3.
+	shapes := (1 to: 20) collect: [ :i |
+		RSBox new
+			size: 10;
+			model: i;
+			draggable;
+			withBorder;
+			color: (color scale: i) ;
+			yourself ].
+	RSEdgeBuilder line
+		shapes: shapes;
+		canvas: canvas;
+		connectFrom: [ :n | n // 2 ].
+	canvas addAll: shapes.
+	RSClusterLayout on: shapes.
+	high := RSHighlightable defaultRed.
+	elastic := RSElasticBox new.
+	elastic
+		when: RSSelectionStartEvent do: [ :evt |
+			high unhighlightRecordedShapes: evt canvas ];
+		when: RSSelectionChangedEvent do: [ :evt |
+			high doHighlightShapes: evt selectedShapes ].
+	canvas @ RSCanvasController.
+	elastic targetShapes: canvas shapes.
+	canvas @ elastic.
+	^ canvas
+]

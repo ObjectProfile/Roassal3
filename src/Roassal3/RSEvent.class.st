@@ -34,9 +34,8 @@ RSEvent >> canvas [
 ]
 
 { #category : #accessing }
-RSEvent >> canvas: aTrachelCanvas [
-	"Set the Trachel canvas"
-	canvas := aTrachelCanvas
+RSEvent >> canvas: aRSCanvas [
+	canvas := aRSCanvas
 ]
 
 { #category : #accessing }
@@ -55,10 +54,10 @@ RSEvent >> shape [
 ]
 
 { #category : #accessing }
-RSEvent >> shape: aShape [
+RSEvent >> shape: aRSShape [
 	"An event should now the shape to which it is related to. 
 	The shape has to be set before emitting the event."
-	shape := aShape
+	shape := aRSShape
 ]
 
 { #category : #accessing }
