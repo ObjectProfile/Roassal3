@@ -108,8 +108,13 @@ RSAbstractUMLClassRenderer >> defaultClassBoxPadding [
 
 { #category : #defaults }
 RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
+	| offset |
+	offset := -2.5.
 	^ RSEdgeBuilder orthoVertical
-		attachPoint: (RSVerticalAttachPoint new startOffset: 11);
+		attachPoint: (RSVerticalAttachPoint new 
+			startOffset: 11 - offset;
+			endOffset: offset;
+			yourself);
 		border: self border;
 		markerStart: self marker;
 		yourself

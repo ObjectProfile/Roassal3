@@ -13,17 +13,18 @@ Class {
 
 { #category : #hooks }
 RSBasicUMLClassRenderer >> addLines: group title: title [ 
-	| line rec |
+	| line rec offset |
 	line := self classInnerLine.
 	rec := group encompassingRectangle.
+	offset := 2.5.
 	group size > 2 ifTrue: [ 
 		group add: (line copy
-			startPoint: rec origin x @ title height;
-			endPoint: rec corner x @ title height) ].
+			startPoint: (rec origin x + offset) @ title height;
+			endPoint: (rec corner x - offset) @ title height) ].
 	group size > 4 ifTrue: [ 
 		group add: (line copy
-			startPoint: rec origin x @ (title height + group third height);
-			endPoint: rec corner x @ (title height + group third height)) ].
+			startPoint: (rec origin x + offset) @ (title height + group third height);
+			endPoint: (rec corner x - offset) @ (title height + group third height)) ].
 ]
 
 { #category : #'accessing - shapes' }
