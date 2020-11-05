@@ -432,6 +432,10 @@ RSEdgeBuilder >> shape: aRSShape [
 
 { #category : #accessing }
 RSEdgeBuilder >> shapes: someShapes [
+	"This method is used to provide a set of Roassal shapes. Models will be looked up in these elements"
+	self assert: [ someShapes isCollection ] description: 'Must provide a collection'.
+	self assert: [ someShapes allSatisfy: [ :obj | obj class inheritsFrom: RSShape ] ] description: 'Must provide a collection of Roassal shapes'.
+	 
 	self toShapes: someShapes.
 	self fromShapes: someShapes
 ]

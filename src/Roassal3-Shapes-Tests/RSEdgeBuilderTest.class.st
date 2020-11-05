@@ -157,6 +157,16 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	self assert: edges first to equals: es2 first.
 ]
 
+{ #category : #'tests error' }
+RSEdgeBuilderTest >> testErrors [
+	| eb |
+	eb := RSEdgeBuilder line.
+	
+	self should: [ eb shapes: #(1 2 3) ] raise: AssertionFailure.
+	self should: [ eb shapes: 'hello world' ] raise: AssertionFailure.
+	self should: [ eb shapes: 42 ] raise: AssertionFailure.
+]
+
 { #category : #tests }
 RSEdgeBuilderTest >> testFromObjects [
 	| edges |
