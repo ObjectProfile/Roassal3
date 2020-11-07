@@ -62,7 +62,7 @@ RSAbstractLine >> attachPoint: ap [
 
 { #category : #testing }
 RSAbstractLine >> basicIncludesPoint: aPoint [
-	^ self
+	^ false
 ]
 
 { #category : #'style-cap' }

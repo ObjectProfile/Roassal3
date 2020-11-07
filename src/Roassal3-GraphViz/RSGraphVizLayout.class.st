@@ -4,19 +4,48 @@ TODO
 Class {
 	#name : #RSGraphVizLayout,
 	#superclass : #RSEdgeDrivenLayout,
+	#instVars : [
+		'dotConverter'
+	],
 	#category : #'Roassal3-GraphViz'
 }
 
+{ #category : #'instance creation' }
+RSGraphVizLayout class >> digraph [
+	^ self new 
+		dotConverter: RSDigraphDotConverter new;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSGraphVizLayout class >> neato [
+	^ self new 
+		dotConverter: RSNeatoDotConverter new;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSGraphVizLayout class >> strict [
+	^ self new 
+		dotConverter: RSStrictDotConverter new;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSGraphVizLayout class >> twoPi [
+	^ self new 
+		dotConverter: RSTwoPiDotConverter new;
+		yourself
+]
+
 { #category : #hook }
 RSGraphVizLayout >> doExecute: elements [
-	| converter process group | 
+	| process group string | 
 	group := elements asGroup.
-	converter := RSDotConverter new.
-	group, edges accept: converter.
+	group, edges accept: self dotConverter.
 	
 	process := OSSUnixSubprocess new
 		command: '/usr/local/bin/dot';
-		"arguments: {'-Tjson0'};"
 		arguments: { '-Tplain-ext' };
 		workingDirectory: FileLocator home fullName;
 		addAllEnvVariablesFromParentWithoutOverride;
@@ -26,11 +55,29 @@ RSGraphVizLayout >> doExecute: elements [
 		run.
 
 	process stdinStream
-		nextPutAll: converter stream contents;
+		nextPutAll: dotConverter stream contents;
 		close.
 	process waitForExit.
-	self positionShapes: group with: process stdoutStream upToEndOfFile.
+	string := process stdoutStream upToEndOfFile.
+	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
+	self positionShapes: group with: string.
 	process closeAndCleanStreams.
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> dotConverter [
+	^ dotConverter
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> dotConverter: aRSDotConverter [
+	dotConverter := aRSDotConverter
+]
+
+{ #category : #'initialize-release' }
+RSGraphVizLayout >> initialize [
+	super initialize.
+	self dotConverter: RSStrictDotConverter new
 ]
 
 { #category : #hook }
@@ -40,6 +87,8 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 	edgeIndex := nodeIndex := 1.
 	transform := [ :p | 
 		p * (scale negated) ].
+	string ifEmpty: [ self error: 'Error in Dot converter' ].
+	
 	string linesDo: [ :l | 
 		| line type |
 		line := (' ' split: l) readStream.
