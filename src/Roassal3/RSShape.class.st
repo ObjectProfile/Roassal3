@@ -81,6 +81,7 @@ RSShape >> borderColor [
 
 { #category : #border }
 RSShape >> borderColor: aColor [
+	border ifNil: [ self withBorder ].
 	self border color: aColor
 ]
 

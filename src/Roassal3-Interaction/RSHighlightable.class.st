@@ -103,6 +103,18 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSHighlightable class >> defaultBlueLabel [
+	| inst |
+	inst := self new.
+	inst highlightColor: Color blue.
+	inst 
+		when: RSHighlightEvent do: [ :evt | evt shape underline ];
+		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
+	^ inst
+	
+]
+
+{ #category : #'instance creation' }
 RSHighlightable class >> defaultRed [
 	| inst |
 	inst := self new.

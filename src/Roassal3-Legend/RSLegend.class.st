@@ -191,10 +191,10 @@ RSLegend >> renderIn: aCanvas [
 ]
 
 { #category : #hooks }
-RSLegend >> renderOnDemandIn: aView [
+RSLegend >> renderOnDemandIn: aCanvas [
 	| i legendLabels update |
 	menuShape isFixed: true.
-	aView addShape: menuShape.
+	aCanvas addShape: menuShape.
 	i := RSAnimatedPopup new.
 	i shapeBuilder: [ self legend ].
 	menuShape @ i.
@@ -205,11 +205,11 @@ RSLegend >> renderOnDemandIn: aView [
 			inner; top; right;
 			offset: -5 @ 5;
 			move: legendLabels
-				on: aView basicRectangle.
+				on: aCanvas basicRectangle.
 	].
-	legendLabels := aView propertyAt: #legendLabels
+	legendLabels := aCanvas propertyAt: #legendLabels
 		ifAbsentPut: [ 
-			aView when: RSExtentChangedEvent do: update.
+			aCanvas when: RSExtentChangedEvent do: update.
 			RSGroup new: 5 ].
 	legendLabels add: menuShape.
 	update value.
