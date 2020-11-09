@@ -72,6 +72,11 @@ RSLabel class >> familyFontName [
 	^  StandardFonts defaultFont familyName 
 ]
 
+{ #category : #accessing }
+RSLabel class >> text: aText [
+	^ self new text: aText
+]
+
 { #category : #visiting }
 RSLabel >> accept: visitor [
 	visitor visitLabel: self.
