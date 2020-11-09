@@ -12,6 +12,27 @@
 - `direction`: a point indicating the direction of the lcoation
 
 *Example*:
+Here is a simple example:
+```Smalltalk
+c := RSCanvas new.
+
+box1 := RSBox new size: 50; color: Color gray translucent.
+box2 := RSBox new size: 30; color: Color gray translucent.
+box1 @ RSDraggable.
+box2 @ RSDraggable.
+c add: box1; add: box2.
+
+box1 translateBy: 150 @ -40.
+
+label := RSLabel new text: 'Move the mouse above me'.
+c add: label.
+RSLocation new 
+	above;
+	stick: label on: box1.
+c
+```
+
+
 ```Smalltalk
 c := RSCanvas new.
 
