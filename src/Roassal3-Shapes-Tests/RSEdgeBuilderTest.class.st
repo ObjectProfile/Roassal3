@@ -14,7 +14,7 @@ Class {
 
 { #category : #tests }
 RSEdgeBuilderTest >> expectedFailures [
-	^ #(#testFromAll #testUseInLayout #testWithMoveBehind #testWithMoveBehind02)
+	^ #(#testFromAll #testUseInLayout #testWithMoveBehind)
 ]
 
 { #category : #running }
@@ -496,7 +496,7 @@ RSEdgeBuilderTest >> testToObjects [
 RSEdgeBuilderTest >> testWithMoveBehind [
 
 	RSEdgeBuilder new
-		view: canvas;
+		canvas: canvas;
 		moveBehind;
 		useAssociations: (Array 
 									with: 1 -> 2
@@ -508,8 +508,8 @@ RSEdgeBuilderTest >> testWithMoveBehind [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind02 [
 
-	RSEdgeBuilder new
-		view: canvas;
+	RSEdgeBuilder line
+		canvas: canvas;
 		moveBehind;
 		connectFrom: [ :v | v - 1 ].
 	self assert: (canvas canvas shapes collect: [ :c | c class name ]) asArray equals: #(#RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox)
