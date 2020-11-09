@@ -196,6 +196,7 @@ RSHighlightable >> doHighlight: shape [
 
 { #category : #actions }
 RSHighlightable >> doHighlightShapes: shapes [
+	"Assuming all the shapes belongs to the same canvas"
 	| allHShapes |
 	shapes ifEmpty: [ ^ self ].
 	self unhighlightRecordedShapes: shapes first.
@@ -275,11 +276,6 @@ c @ RSCanvasController
 	self 
 		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ];
 		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ].
-]
-
-{ #category : #accessing }
-RSHighlightable >> highlightShapes [
-	^ highlightShapes
 ]
 
 { #category : #accessing }
@@ -378,9 +374,16 @@ For example:
 ]
 
 { #category : #actions }
-RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
-	| att |
-	att := shapeOrCanvas topParent properties.
+RSHighlightable >> resetHighlightedShapes: shapeOrGroupOrCanvas [
+	| att top |
+	(shapeOrGroupOrCanvas class == RSGroup)
+		ifTrue: [ 
+			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
+			top := shapeOrGroupOrCanvas anyOne canvas ]
+		ifFalse: [
+			top := shapeOrGroupOrCanvas topParent ]. 
+		
+	att := top properties.
 	(att includesKey: self propertyKey) ifFalse: [ ^ self ].
 	att removeKey: self propertyKey
 ]
@@ -452,16 +455,22 @@ RSHighlightable >> setupAntAnimation [
 ]
 
 { #category : #actions }
-RSHighlightable >> unhighlightRecordedShapes: shapeOrCanvas [
+RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 	| top |
-	top := shapeOrCanvas topParent.
+	(shapeOrGroupOrCanvas class == RSGroup)
+		ifTrue: [ 
+			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
+			top := shapeOrGroupOrCanvas anyOne canvas ]
+		ifFalse: [
+			top := shapeOrGroupOrCanvas topParent ]. 
+		
 	top ifNil: [ ^ self ].
 	top
 		propertyAt: self propertyKey 
 		ifPresent: [ :shapes |
-			shapes do: [ :s | self announceUnHightlight: s source: shapeOrCanvas ].
+			shapes do: [ :s | self announceUnHightlight: s source: shapeOrGroupOrCanvas ].
 		 ].
-	self resetHighlightedShapes: shapeOrCanvas
+	self resetHighlightedShapes: shapeOrGroupOrCanvas
 ]
 
 { #category : #'public - hooks' }
