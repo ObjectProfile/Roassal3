@@ -13,7 +13,7 @@ RSScriptOfTheDay class >> initialize [
 	(Smalltalk includesKey: #DSWebhookClient) ifFalse: [ 
 		Metacello new
 		    baseline: #DiscordSt;
-		    repository: 'github://JurajKubelka/DiscordSt/src';
+		    repository: 'github://bergel/DiscordSt/src';
 		    load: #webhook ]. 
 	
 ]
