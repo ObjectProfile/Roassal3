@@ -38,3 +38,43 @@ connection build.
 
 c open
 ]
+
+{ #category : #examples }
+RSChannelExample >> exampleBasic2 [
+	<script: 'self new exampleBasic2'>
+	| c m mondrianNodes oddLabel evenLabel g channel |
+	c := RSCanvas new.
+
+	m := RSMondrian new.
+	m canvas: c.
+	m nodes: (1 to: 30).
+	m build.
+
+	mondrianNodes := c nodes copy.
+
+
+	oddLabel := RSLabel text: 'Odd'.
+	evenLabel := RSLabel text: 'Label'.
+
+	c add: oddLabel; add: evenLabel.
+
+	g := { oddLabel . evenLabel } asGroup.
+
+	RSHorizontalLineLayout on: g.
+	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
+
+	"-------" 
+	channel := RSChannel new.
+	channel input: { oddLabel }.
+	channel output: (mondrianNodes select: [ :e | e model odd ]).
+	channel build.
+	"-------"
+	channel := RSChannel new.
+	channel input: { evenLabel }.
+	channel output: (mondrianNodes select: [ :e | e model even ]).
+	channel build.
+	"-------"
+
+	c @ RSCanvasController.
+	c open
+]
