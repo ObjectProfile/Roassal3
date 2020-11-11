@@ -5,6 +5,45 @@ Class {
 }
 
 { #category : #examples }
+RSChannelExample >> example3 [
+	<script: 'self new example3'>
+	| c names labels classes classeShapes eb channel |
+	c := RSCanvas new.
+	names := #('Set' 'Array' 'Hash' 'Dictionary').
+	labels := names collect: [ :aName | RSLabel new fontSize: 20; text: aName ] as: RSGroup.
+	c addAll: labels.
+	RSHorizontalLineLayout on: labels.
+
+	classes := Collection withAllSubclasses.
+	classeShapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
+	classeShapes @ RSPopup.
+	c addAll: classeShapes.
+	eb := RSEdgeBuilder orthoVertical.
+	eb withVerticalAttachPoint.
+	eb shapes: classeShapes.
+	eb connectFrom: #superclass.
+
+	RSNormalizer size 
+		shapes: classeShapes;
+		normalize: #numberOfMethods.
+
+	RSTreeLayout on: classeShapes.
+
+	RSVerticalLineLayout new alignCenter; on: (RSGroup with: labels with: classeShapes).
+
+	"-------"
+	labels do: [ :l |
+		channel := RSChannel new.
+		channel input: { l }.
+		channel output: (classeShapes select: [ :s | ('*', l text, '*') match: s model name ]).
+		channel build.
+	].
+	"-------"
+	c @ RSCanvasController.
+	c open
+]
+
+{ #category : #examples }
 RSChannelExample >> exampleBasic [
 	<script: 'self new exampleBasic'>
 
