@@ -41,10 +41,8 @@ Class {
 
 { #category : #hooks }
 RSCairoCachedMetricsProvider >> dictionaryFor: font [
-	| table |
-	table := Dictionary new.
-	1 to: 255 do: [ :i | self widthOf: (Character value: i) map: table font: font ].
-	^ table
+	^ Dictionary new.
+	
 ]
 
 { #category : #hooks }
