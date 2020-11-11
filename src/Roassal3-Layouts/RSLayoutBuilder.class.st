@@ -32,7 +32,7 @@ RSLayoutBuilder >> flow [
 
 { #category : #'public layout' }
 RSLayoutBuilder >> force [
-	^ layout := RSForceBasedLayout new useProgressBar.
+	^ layout := RSSimpleForceBasedLayout new
 ]
 
 { #category : #'public layout' }
@@ -76,6 +76,11 @@ RSLayoutBuilder >> on: shapes [
 { #category : #'public layout' }
 RSLayoutBuilder >> radial [
 	^ layout := RSRadialTreeLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> rawForce [
+	^ layout := RSForceBasedLayout new useProgressBar.
 ]
 
 { #category : #'public layout' }
