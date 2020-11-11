@@ -132,6 +132,14 @@ RSObjectWithProperty >> propertyAt: aKey ifPresent: aBlockClosure [
 
 { #category : #properties }
 RSObjectWithProperty >> propertyAt: aKey put: value [
+	"Keep a value under a key. The key is usually a symbol.
+For example:
+```
+RSBox new propertyAt: #hello put: 'World'; propertyAt: #hello 
+```
+return World
+	"
+
 	^ self properties at: aKey put: value
 ]
 
