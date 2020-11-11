@@ -411,3 +411,46 @@ RSHighlightableExamples >> example10ElasticBox [
 	canvas @ elastic.
 	^ canvas
 ]
+
+{ #category : #elastic }
+RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
+	<script: 'self new example11ElasticBoxWithCustomDraggable open'>
+	| canvas color shapes high elastic selectedShapes |
+	canvas := RSCanvas new.
+	
+	color := RSColorPalette diverging rdylbu3.
+	shapes := (1 to: 20) collect: [ :i |
+		RSBox new
+			size: 10;
+			model: i;
+			withBorder;
+			color: (color scale: i) ;
+			yourself ].
+	RSEdgeBuilder line
+		shapes: shapes;
+		canvas: canvas;
+		connectFrom: [ :n | n // 2 ].
+	canvas addAll: shapes.
+	RSClusterLayout on: shapes.
+	high := RSHighlightable defaultRed.
+	selectedShapes := #().
+	elastic := RSElasticBox new.
+	elastic
+		when: RSSelectionStartEvent do: [ :evt |
+			high unhighlightRecordedShapes: evt canvas ];
+		when: RSSelectionChangedEvent do: [ :evt |
+			high doHighlightShapes: evt selectedShapes ];
+		when: RSSelectionEndEvent do: [:evt | selectedShapes := evt selectedShapes ].
+	canvas nodes when: RSMouseDragging do: [ :evt |
+		| d |
+		d := evt camera distanceFromPixelToSpace: evt step.
+		(selectedShapes includes: evt shape)
+			ifTrue: [ selectedShapes translateBy: d ]
+			ifFalse: [ evt shape translateBy: d ].
+		
+		evt signalUpdate ].
+	canvas @ RSCanvasController.
+	elastic targetShapes: canvas nodes.
+	canvas @ elastic.
+	^ canvas
+]
