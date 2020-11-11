@@ -12,24 +12,23 @@ Class {
 }
 
 { #category : #accessing }
-RSChannel >> build [	
+RSChannel >> build [
+
 	inputGroup when: RSMouseEnter do: [ :evt | 
-		highlightable doHighlightShapes: outputGroup. 
+		isClicked ifFalse: [ self doHighlight ].
 		evt signalUpdate ].
 	inputGroup @ (RSHighlightable new highlightColor: Color blue).
-	
+
 	inputGroup when: RSMouseLeave do: [ :evt | 
-		highlightable unhighlightRecordedShapes: outputGroup. 
+		isClicked ifFalse: [ self doUnhighlight ].
 		evt signalUpdate ].
-	
+
 	inputGroup when: RSMouseClick do: [ :evt | 
-		isClicked 
-			ifTrue: [ highlightable unhighlightRecordedShapes: outputGroup ] 
-			ifFalse: [ highlightable doHighlightShapes: outputGroup ].
+		isClicked
+			ifTrue: [ self unmark: evt shape. self doUnhighlight ]
+			ifFalse: [ self mark: evt shape. self doHighlight ].
 		isClicked := isClicked not.
-		evt signalUpdate ].
-	
-		
+		evt signalUpdate ]
 ]
 
 { #category : #accessing }
@@ -41,6 +40,18 @@ RSChannel >> color: aColor [
 { #category : #accessing }
 RSChannel >> defaultColor [
 	^ Color blue
+]
+
+{ #category : #accessing }
+RSChannel >> doHighlight [
+
+	highlightable doHighlightShapes: outputGroup
+]
+
+{ #category : #accessing }
+RSChannel >> doUnhighlight [
+
+	highlightable unhighlightRecordedShapes: outputGroup
 ]
 
 { #category : #accessing }
@@ -58,7 +69,29 @@ RSChannel >> input: aCollection [
 ]
 
 { #category : #accessing }
+RSChannel >> isMarked: shape [
+	^ shape hasProperty: #mark 
+]
+
+{ #category : #accessing }
+RSChannel >> mark: shape [
+	| aMark |
+	aMark := RSBox new height: 3; width: shape width; color: Color red.
+	shape canvas add: aMark.
+	RSLocation new below; outer; stick: aMark on: shape.
+	shape propertyAt: #mark put: aMark.
+
+]
+
+{ #category : #accessing }
 RSChannel >> output: aCollection [
 	self assert: [ aCollection isCollection ] description: 'Should provide a collection'.
 	outputGroup := aCollection asGroup
+]
+
+{ #category : #accessing }
+RSChannel >> unmark: shape [
+	
+	(shape propertyAt: #mark) remove.
+	shape removeKey: #previousColor
 ]
