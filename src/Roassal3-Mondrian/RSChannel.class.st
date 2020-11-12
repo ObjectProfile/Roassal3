@@ -97,10 +97,19 @@ RSChannel >> isMarked: shape [
 
 { #category : #'private - highlight' }
 RSChannel >> mark: shape [
-	| aMark |
+	| aMark position parentPosition |
 	aMark := RSBox new height: 5; width: shape width; color: self color.
 	shape canvas add: aMark.
-	RSLocation new below; outer; stick: aMark on: shape.
+	
+	"Kind of buggy"
+	"RSLocation new below; outer; stick: aMark on: shape."
+	
+	parentPosition := (shape parent class == RSCanvas) 
+								ifTrue: [ 0 @ 0 ] ifFalse: [ shape parent position ].
+	position := shape position + (0 @ (shape height / 2)) + parentPosition.
+	aMark translateTo: position.
+	
+	
 	shape propertyAt: self symbolMarker put: aMark.
 
 ]
