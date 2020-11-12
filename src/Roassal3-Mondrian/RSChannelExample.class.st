@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 RSChannelExample >> example3 [
 	<script: 'self new example3'>
-	| c names labels classes classeShapes eb channel |
+	| c names labels classes classeShapes eb channel scale |
 	c := RSCanvas new.
 	names := #('Set' 'Array' 'Hash' 'Dictionary').
 	labels := names collect: [ :aName | RSLabel new fontSize: 20; text: aName ] as: RSGroup.
@@ -32,8 +32,10 @@ RSChannelExample >> example3 [
 	RSVerticalLineLayout new alignCenter; on: (RSGroup with: labels with: classeShapes).
 
 	"-------"
-	labels do: [ :l |
+	scale := NSScale ordinalColored: labels size.
+	labels doWithIndex: [ :l :i |
 		channel := RSChannel new.
+		channel color: Color random"(scale scale: i)".
 		channel input: { l }.
 		channel output: (classeShapes select: [ :s | ('*', l text, '*') match: s model name ]).
 		channel build.
@@ -81,12 +83,14 @@ c open
 { #category : #examples }
 RSChannelExample >> exampleBasic2 [
 	<script: 'self new exampleBasic2'>
-	| c m mondrianNodes oddLabel evenLabel g channel |
+	| c m mondrianNodes oddLabel evenLabel g channel smallLabel bigLabel |
 	c := RSCanvas new.
 
 	m := RSMondrian new.
 	m canvas: c.
+	m shape box size: 40.
 	m nodes: (1 to: 30).
+	m layout flow gapSize: 20.
 	m build.
 
 	mondrianNodes := c nodes copy.
@@ -94,23 +98,37 @@ RSChannelExample >> exampleBasic2 [
 
 	oddLabel := RSLabel text: 'Odd'.
 	evenLabel := RSLabel text: 'Label'.
+	smallLabel := RSLabel text: 'Small'.
+	bigLabel := RSLabel text: 'Big'.
 
-	c add: oddLabel; add: evenLabel.
-
-	g := { oddLabel . evenLabel } asGroup.
-
+	g := { oddLabel . evenLabel . smallLabel . bigLabel } asGroup.
+	c addAll: g.
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
 
 	"-------" 
 	channel := RSChannel new.
+	channel color: Color green.
 	channel input: { oddLabel }.
 	channel output: (mondrianNodes select: [ :e | e model odd ]).
 	channel build.
 	"-------"
 	channel := RSChannel new.
+	channel color: Color red.
 	channel input: { evenLabel }.
 	channel output: (mondrianNodes select: [ :e | e model even ]).
+	channel build.
+	"-------"
+	channel := RSChannel new.
+	channel color: Color blue.
+	channel input: { smallLabel }.
+	channel output: (mondrianNodes select: [ :e | e model < 15 ]).
+	channel build.
+	"-------"
+	channel := RSChannel new.
+	channel color: Color purple.
+	channel input: { bigLabel }.
+	channel output: (mondrianNodes select: [ :e | e model >= 15 ]).
 	channel build.
 	"-------"
 

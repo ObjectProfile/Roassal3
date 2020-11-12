@@ -59,4 +59,7 @@ RSChannelTest >> testBasic [
 	self assert: mondrianNodes first color equals: Color blue.
 	oddLabel announce: RSMouseLeave.
 	self assert: mondrianNodes first color equals: Color gray.
+	
+
+	oddLabel announce: RSMouseClick.
 ]
