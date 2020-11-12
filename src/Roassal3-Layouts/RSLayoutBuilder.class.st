@@ -50,6 +50,14 @@ RSLayoutBuilder >> horizontalTree [
 	^ layout := RSHorizontalTreeLayout new.
 ]
 
+{ #category : #'public layout' }
+RSLayoutBuilder >> ifConnected: aLayout [
+
+	^ layout := RSConditionalLayout new
+					 ifNotConnectedThen: RSGridLayout new;
+					 else: aLayout
+]
+
 { #category : #initialization }
 RSLayoutBuilder >> initialize [
 	super initialize.
