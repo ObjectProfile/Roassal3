@@ -163,12 +163,14 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	shapes := RSGroup new.
 	objects do: [ : obj |
 		previousShapeBuilder := shapeBuilder.
-		shapeBuilder := RSShapeBuilder new.
+		
 		compo := RSComposite new.
 		compo color: shapeBuilder color.
 		compo model: obj.
 		old := self canvas.
 		self canvas: compo.
+		
+		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
 		shapes add: compo.
 		self build.
