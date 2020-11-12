@@ -904,6 +904,38 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	^ c
 ]
 
+{ #category : #shapes }
+RSBasicShapeExamples >> example40ColorScale [
+	<script: 'self new example40ColorScale open'>
+	| color canvas popup shapes |
+	color := NSScale linear
+	    domain: { 1. 200. 400 };
+	    range: #(white gray red).
+	    
+	canvas := RSCanvas new.
+	popup := RSPopup text: [ :cls | 
+	    cls name, String crlf, 
+	    'Nro Methods: ', cls numberOfMethods asString, String crlf,
+	    'Lines of Code: ', cls linesOfCode asString ].
+	shapes := Collection withAllSubclasses collect: [ :cls |
+	    RSBox new
+	        model: cls;
+	        @ popup;
+	        draggable;
+	        color:( color scale: cls numberOfMethods );
+	        size: cls linesOfCode sqrt + 10;
+	        yourself
+	     ].
+	canvas addAll: shapes.
+	RSEdgeBuilder orthoVertical
+	    withVerticalAttachPoint;
+	    shapes: shapes;
+	    connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
 { #category : #lines }
 RSBasicShapeExamples >> example40PopupAndMarkers [
 	<script: 'self new example40PopupAndMarkers open'>
