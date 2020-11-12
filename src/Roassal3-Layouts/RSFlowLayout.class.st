@@ -68,20 +68,20 @@ RSFlowLayout >> isAlignTop [
 ]
 
 { #category : #hook }
-RSFlowLayout >> linesFor: elements [
+RSFlowLayout >> linesFor: shapes [
 	| x y maxLastLineHeight nextElement maxWidthFloat lines currentLine gap |
 	gap := self gapSize.
 	x := y := gap.
 	maxLastLineHeight := 0.
-	maxWidthFloat := self maxWidth rsValue: elements.
+	maxWidthFloat := self maxWidth rsValue: shapes.
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
-	elements doWithIndex: [ :element :index |
+	shapes doWithIndex: [ :element :index |
 		element position: (x @ y) + (element extent / 2.0).
 		currentLine add: element.
 		x := x + element width + gap.
 		maxLastLineHeight := maxLastLineHeight max: element height.
-		nextElement := elements at: (index + 1 min: elements size).
+		nextElement := shapes at: (index + 1 min: shapes size).
 		(x + nextElement width) > maxWidthFloat ifTrue: [
 			
 			lines add: currentLine.
