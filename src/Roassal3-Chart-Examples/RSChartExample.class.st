@@ -370,3 +370,42 @@ RSChartExample >> example20Grid [
 	^ c canvas
 	
 ]
+
+{ #category : #examples }
+RSChartExample >> example21Popup [
+	<script: 'self new example21Popup open'>
+	| x cumsum c  y error popup |
+	x := 1 to: 100.
+	cumsum := [:arr | | sum |
+		sum := 0.
+		arr collect: [ :v | sum := sum + v. sum ] ].
+
+	c := RSChart new.
+	c extent: 800@400.
+
+	popup := RSPopupDecoration new.
+	c addDecoration: popup.
+
+	#(
+	series1 red
+	series2 blue) pairsDo: [ :label :color |
+		| col plot |
+		y := (x collect: [ :i | 50 atRandom - 25 ]).
+		y := cumsum value: y.
+		error := x.
+		col := color value: Color.
+		
+		c addPlot: (RSAreaPlot new 
+			x: x y1: y + error y2: y - error;
+			color: col translucent).
+		c addPlot: (plot := RSLinePlot new x: x y: y; fmt: 'o';
+			color: col;
+			yourself).
+		popup chartPopupBuilder
+			for: plot text: label color: col.
+		 ].
+
+	c build.
+
+	^ c canvas.
+]

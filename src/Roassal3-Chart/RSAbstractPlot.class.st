@@ -163,6 +163,11 @@ c
 	yValues := aCollection2
 ]
 
+{ #category : #accessing }
+RSAbstractPlot >> xValues [
+	^ xValues
+]
+
 { #category : #public }
 RSAbstractPlot >> y: aCollection [
 	"Define a plot with only a Y coordinate. The X coordinate is the index of the data point.
@@ -186,4 +191,9 @@ c
 -=-=-=-=-=-=-=-=-=
 	"
 	self x: (1 to: aCollection size) y: aCollection
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> yValues [
+	^ yValues
 ]
