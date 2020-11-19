@@ -63,7 +63,21 @@ RSCanvas >> addBasicShape: aShape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> addFixedShape: aShape [
-	fixedShapes add: aShape.
+	"Add a shape and make the shape fixed. It is therefore not subject to the camera.
+```
+c := RSCanvas new.
+
+lbl := RSLabel text: 'Fixed Label'.
+c addFixedShape: lbl.
+lbl translateBy: 100 @ 20.
+
+lbl := RSLabel text: 'Unfixed Label'.
+c addShape: lbl.
+
+c @ RSCanvasController.
+```
+"
+	fixedShapes add: aShape
 ]
 
 { #category : #'adding removing shapes' }
