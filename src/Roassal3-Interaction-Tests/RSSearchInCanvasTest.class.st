@@ -98,6 +98,15 @@ RSSearchInCanvasTest >> testFixedShapes [
 ]
 
 { #category : #tests }
+RSSearchInCanvasTest >> testFixedShapesAndPopup [
+
+	| lbl |
+	search searchForShapes: '4'.
+	lbl := search fixedLabels first.
+	lbl announce: RSMouseEnter new.
+]
+
+{ #category : #tests }
 RSSearchInCanvasTest >> testIsRegExpValid [
 	self deny: (search isRegExpValid: '').
 	self deny: (search isRegExpValid: nil).

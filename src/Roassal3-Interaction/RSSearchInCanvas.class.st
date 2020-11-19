@@ -149,6 +149,12 @@ RSSearchInCanvas >> doUnhighlightShapes [
 ]
 
 { #category : #accessing }
+RSSearchInCanvas >> fixedLabels [
+	"Return the label that are created when a search is performed"
+	^ fixedLabels
+]
+
+{ #category : #accessing }
 RSSearchInCanvas >> highlightable [
 	^ highlightable
 ]
@@ -265,10 +271,12 @@ RSSearchInCanvas >> searchForShapes: regExp [
 	shapesToHighlight ifEmpty: [ ^ self ].
 	self doHighlightShapes: shapesToHighlight.
 
-	lbl := RSLabel text: regExp.
+	lbl := RSLabel text: regExp model: shapesToHighlight size asString, ' elements'.
 	lbl fontSize: 14.
+	lbl @ RSPopup.
 	lbl color: self colorToUseToHighlight.
-	canvas addFixedShape: lbl.
+	canvas add: lbl.
+	lbl setAsFixed.
 	fixedLabels add: lbl.
 	RSHorizontalLineLayout on: fixedLabels.
 	fixedLabels translateTo: fixedLabels extent / 2 + (5 @ 5).
