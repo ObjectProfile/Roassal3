@@ -149,7 +149,9 @@ RSBoundingShape >> incomingEdges [
 RSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix; updateEdgesON.
+	
 	baseRectangle := 0@0 corner: 0@0.
+	self extent: 5 @ 5.
 ]
 
 { #category : #initialization }
