@@ -83,6 +83,7 @@ RSBorder >> color [
 
 { #category : #accessing }
 RSBorder >> color: aColor [
+	"Set a color to the border. The color is provided as argument, and can be either a color object (e.g., `Color red`) or a symbol (e.g., `#yellow`)."
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
 	paint := Color colorFrom: aColor.
