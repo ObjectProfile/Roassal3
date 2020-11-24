@@ -52,9 +52,14 @@ RSLayoutBuilder >> horizontalTree [
 
 { #category : #'public layout' }
 RSLayoutBuilder >> ifConnected: aLayout [
+	^ self ifConnected: aLayout ifNotConnected: RSGridLayout new
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> ifConnected: aLayout ifNotConnected: anotherLayout [
 
 	^ layout := RSConditionalLayout new
-					 ifNotConnectedThen: RSGridLayout new;
+					 ifNotConnectedThen: anotherLayout;
 					 else: aLayout
 ]
 
