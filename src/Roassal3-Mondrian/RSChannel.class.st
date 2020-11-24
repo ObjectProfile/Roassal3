@@ -76,6 +76,12 @@ RSChannel >> doUnmark [
 	outputGroup do: [ :e | self unmark: e ]
 ]
 
+{ #category : #'private - highlight' }
+RSChannel >> getAllMarksFrom: aShape [
+	"Return all the marks from a shape"
+	^ aShape properties associations select: [ :ass | ass key beginsWith: #mark ] thenCollect: #value
+]
+
 { #category : #initialization }
 RSChannel >> initialize [
 	super initialize.
@@ -97,21 +103,40 @@ RSChannel >> isMarked: shape [
 
 { #category : #'private - highlight' }
 RSChannel >> mark: shape [
-	| aMark position parentPosition |
-	aMark := RSBox new height: 5; width: shape width; color: self color.
+
+	"Mark a shape by locating below it a red bar. Bars can be stacked in case several marks are on the same shape"
+
+	| aMark position parentPosition deltaY |
+	aMark := RSBox new
+		         height: self markHeight;
+		         width: shape width;
+		         color: self color.
 	shape canvas add: aMark.
-	
+
 	"Kind of buggy"
 	"RSLocation new below; outer; stick: aMark on: shape."
-	
-	parentPosition := (shape parent class == RSCanvas) 
-								ifTrue: [ 0 @ 0 ] ifFalse: [ shape parent position ].
-	position := shape position + (0 @ (shape height / 2)) + parentPosition.
-	aMark translateTo: position.
-	
-	
-	shape propertyAt: self symbolMarker put: aMark.
 
+	parentPosition := shape parent class == RSCanvas
+		                  ifTrue: [ 0 @ 0 ]
+		                  ifFalse: [ shape parent position ].
+	position := shape position + (0 @ (shape height / 2))
+	            + parentPosition.
+
+	"We compute the vertical delta of the mark to be added, based on the existing marks" 
+	deltaY := self markHeight * (self getAllMarksFrom: shape) size.
+	
+	"We must not forget the first mark, half must be added, to have exactly the mark below the shape (not overlapping)"
+	deltaY := deltaY + (self markHeight / 2).
+	aMark translateTo: position + (0 @ deltaY).
+
+	"Register the mark in the shape"
+	shape propertyAt: self symbolMarker put: aMark
+]
+
+{ #category : #'private - highlight' }
+RSChannel >> markHeight [
+
+	^ 5
 ]
 
 { #category : #public }
