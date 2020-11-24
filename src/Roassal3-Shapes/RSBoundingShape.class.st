@@ -325,6 +325,23 @@ RSBoundingShape >> transform: aPoint [
 	^ matrix transform: aPoint
 ]
 
+{ #category : #actions }
+RSBoundingShape >> translateTopLeftTo: aPosition [
+	"Translate the shape to make the top left corner at a given position
+
+```
+c := RSCanvas new.
+lbl := RSLabel text: 'Top left corner'.
+c add: lbl.
+lbl setAsFixed.
+lbl translateTopLeftTo: 0 @ 0.
+c open
+```
+	
+"
+	self translateTo: aPosition + (self extent / 2)
+]
+
 { #category : #edges }
 RSBoundingShape >> updateConnectedEdges [
 	self shouldUpdateEdges

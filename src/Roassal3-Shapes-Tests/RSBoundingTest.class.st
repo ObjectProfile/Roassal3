@@ -126,3 +126,15 @@ RSBoundingTest >> testPosition [
 	self assert: b position equals: 0@0.
 	b position: 0@0.
 ]
+
+{ #category : #tests }
+RSBoundingTest >> testTranslateTopLeftTo [
+
+	| b |
+	b := RSBox new size: 10.
+	b translateTopLeftTo: 0 @ 0.
+	self assert: b position equals: 5 @ 5.
+	
+	b translateTopLeftTo: 10 @ 50.
+	self assert: b position equals: 15 @ 55.
+]
