@@ -102,7 +102,7 @@ RSBoundingTest >> testFromRectangle [
 	| box |
 	box := RSBox new.
 	self assert: box position equals: 0 @ 0.
-	self assert: box extent equals: 0 @ 0.
+	self assert: box extent > (0 @ 0).
 	box fromRectangle: (10 @ 10 corner: 50 @ 40).
 	self assert: box position equals: 30 @ 25.
 	self assert: box extent equals: 40 @ 30.
