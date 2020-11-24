@@ -180,9 +180,9 @@ c
 	color := Color colorFrom: aColor.
 ]
 
-{ #category : #'morph creation' }
+{ #category : #opening }
 RSCanvas >> createMorph [
-	"Create a Morph that contains myself."
+	"Create a Morph that contains myself. This is a private method"
 	morph := RSAthensMorph new. 
 	morph renderer: RSAthensRenderer new.
 	morph canvas: self.
@@ -316,17 +316,17 @@ RSCanvas >> numberOfShapes [
 	^ shapes size
 ]
 
-{ #category : #'morph creation' }
+{ #category : #opening }
 RSCanvas >> open [
 	^ self openWithTitle: 'Roassal'
 ]
 
-{ #category : #'morph creation' }
+{ #category : #opening }
 RSCanvas >> openOnce [
 	^ self openOnceWithTitle: 'Roassal'
 ]
 
-{ #category : #'morph creation' }
+{ #category : #opening }
 RSCanvas >> openOnceWithTitle: aTitle [
 	"Open a visualization and record the position. When #openOnce is called a second time,
 	the new window replace the previous one, at the recorded position. This method is useful when 
@@ -341,12 +341,13 @@ RSCanvas >> openOnceWithTitle: aTitle [
 	^ win
 ]
 
-{ #category : #'morph creation' }
-RSCanvas >> openWithTitle: aTitle [
+{ #category : #opening }
+RSCanvas >> openWithTitle: aTitleAsString [
+	"Open a canvas with a given title"
 	| window |
 	self createMorph.
-	window := morph openInWindowLabeled: aTitle.
-	window extent: 500@500.
+	window := morph openInWindowLabeled: aTitleAsString.
+	window extent: 500 @ 500.
 	morph privateOwner: window.
 	^ window
 	
