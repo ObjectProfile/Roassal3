@@ -149,7 +149,9 @@ RSChannel >> symbolMarker [
 
 { #category : #'private - highlight' }
 RSChannel >> unmark: shape [
-	
-	(shape propertyAt: self symbolMarker) remove.
+	| mark |
+	mark := shape propertyAt: self symbolMarker.
+	mark ifNil: [ ^ self ].
+	mark remove.
 	shape removeKey: self symbolMarker
 ]
