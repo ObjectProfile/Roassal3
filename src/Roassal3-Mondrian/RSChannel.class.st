@@ -17,20 +17,17 @@ RSChannel >> build [
 
 	inputGroup when: RSMouseEnter do: [ :evt | 
 		self doHighlight.
-		"isClicked ifFalse: [ self doHighlight ]."
 		evt signalUpdate ].
 	inputGroup @ (RSHighlightable new highlightColor: self color).
 
 	inputGroup when: RSMouseLeave do: [ :evt | 
 		self doUnhighlight.
-		"isClicked ifFalse: [ self doUnhighlight ]."
 		evt signalUpdate ].
 
 	inputGroup when: RSMouseClick do: [ :evt | 
-		"self doUnhighlight."
 		isClicked
-			ifTrue: [ self unmark: evt shape. self doUnmark "doUnhighlight" ]
-			ifFalse: [ self mark: evt shape. self doMark "doHighlight" ].
+			ifTrue: [ self unmark: evt shape. self doUnmark ]
+			ifFalse: [ self mark: evt shape. self doMark ].
 		isClicked := isClicked not.
 		evt signalUpdate ]
 ]
@@ -87,7 +84,7 @@ RSChannel >> initialize [
 	super initialize.
 	isClicked := false.
 	highlightable := RSHighlightable new.
-	self color: self defaultColor
+	self color: self defaultColor.
 ]
 
 { #category : #public }
