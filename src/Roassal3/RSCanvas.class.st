@@ -521,7 +521,7 @@ c add: s1; add: s2.
 ```
 The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
 "
-	^ shapes
+	^ shapes copy
 ]
 
 { #category : #accessing }
