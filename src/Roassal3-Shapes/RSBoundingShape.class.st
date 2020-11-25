@@ -89,15 +89,14 @@ RSBoundingShape >> extent: aPoint [
 { #category : #initialization }
 RSBoundingShape >> fromRectangle: aRectangle [
 	"Set the position and extent of the shape, using a rectangle as argument.
-	For example:
-	
--=-=-=-=-=-=-=-=-=	
+For example:	
+```
 c := RSCanvas new.
 box := RSBox new.
 box fromRectangle: (10 @ 10 corner: 50 @ 40).
 c add: box.
 c
--=-=-=-=-=-=-=-=-=
+```
 "
 	self 
 		translateTo: aRectangle floatCenter;
