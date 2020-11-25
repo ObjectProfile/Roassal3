@@ -46,7 +46,7 @@ process closeAndCleanStreams.
 
 { #category : #examples }
 RSGraphVizExamples >> example02Basic [
-	<script: 'self new example02Basic'>
+	"<script: 'self new example02Basic'>"
 	"this is just an idea for a future example"
 	true ifTrue: [ ^ self ].
 	RSGraphVizExamples fromString: '
@@ -118,7 +118,7 @@ RSGraphVizExamples >> example03Basic [
 		from: canvas nodes first;
 		to: canvas nodes second;
 		yourself).
-	converter := RSDotConverter new.
+	converter := RSAbstractDotConverter new.
 	canvas accept: converter.
 	
 	process := OSSUnixSubprocess new
@@ -176,18 +176,10 @@ RSGraphVizExamples >> example05Layout [
 	<script: 'self new example05Layout'>
 	| canvas node labeled |
 	canvas := RSCanvas new.
-	"node := [ :str | | ellipse label |
-		ellipse := RSEllipse new withBorder; noPaint.
-		label := RSLabel new text: str.
-		ellipse extent: label extent + 20.
-		RSComposite new
-			model: str;
-			children: {ellipse. label };
-			draggable;
-			yourself ]."
+
 	node := [ :str | | label |
 		label := RSLabel new text: str.
-		RSEllipse new 
+		RSBox new 
 			model: str;
 			extent: label extent + 20;
 			noPaint;
@@ -203,9 +195,9 @@ RSGraphVizExamples >> example05Layout [
 		canvas: canvas;
 		withBorderAttachPoint;
 		shapes: canvas nodes;
-		connectFrom: [:str | str asClass superclass name ].
+		connectFrom: [:str | (Smalltalk globals at: str asSymbol) superclass name ].
 	
-	RSGraphVizLayout on: canvas nodes.
+	RSGraphVizLayout twoPi on: canvas nodes.
 	labeled := RSLabeled new.
 	labeled location center; middle.
 	canvas nodes @ labeled.
@@ -282,9 +274,17 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 			labelAnimation value: evt shape value: Color white value: 0@0. ].
 	force := RSForceBasedLayout new.
 	force charge: -600; length: 100; doNotUseProgressBar.
-	com addAll: ({RSTreeLayout new. force. RSSugiyamaLayout new. RSGraphVizLayout new } 
-		collect: [ :layout | | name | 
-			name := layout class name.
+	com addAll: ({
+		'Tree' -> RSTreeLayout new. 
+		'Force Based' -> force.
+		'Sugiyama' -> RSSugiyamaLayout new.
+		'GraphViz strict' -> RSGraphVizLayout strict.
+		'GraphViz neato' -> RSGraphVizLayout neato.
+		'GraphViz digraph' -> RSGraphVizLayout digraph.
+		'GraphViz twoPi' -> RSGraphVizLayout twoPi.  }
+		collect: [ :assoc | | name layout | 
+			layout := assoc value.
+			name := assoc key.
 			RSLabel new 
 				color: Color white;
 				fontName: 'Courier';
@@ -329,7 +329,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 						 ].	
 					 ];
 				@ high;
-				text: (name copyFrom: 3 to: name size - 6).
+				text: name.
 		]).
 	RSVerticalLineLayout on: com children.
 	com 
@@ -395,8 +395,8 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 ]
 
 { #category : #examples }
-RSGraphVizExamples >> example08RoasalPackages [
-	<script: 'self new example08RoasalPackages'>
+RSGraphVizExamples >> example08RoassalPackages [
+	<script: 'self new example08RoassalPackages'>
 	| canvas nodeBlock labeled packagesRegExp packages baseline |
 	canvas := RSCanvas new.
 	

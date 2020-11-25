@@ -17,6 +17,27 @@ RSLabelTest >> setUp [
 ]
 
 { #category : #tests }
+RSLabelTest >> testBuilding [
+
+	| l |
+	l := RSLabel text: 'Hello'.
+	self assert: l class equals: RSLabel.
+	self assert: l text equals: 'Hello'
+	
+]
+
+{ #category : #tests }
+RSLabelTest >> testBuilding2 [
+
+	| l |
+	l := RSLabel text: 'Hello' model: 42.
+	self assert: l class equals: RSLabel.
+	self assert: l text equals: 'Hello'.
+	self assert: l model equals: 42.
+	
+]
+
+{ #category : #tests }
 RSLabelTest >> testCairoFitMetricsProvider [
 	| label h |
 	label := RSLabel new.

@@ -134,12 +134,6 @@ RSComposite >> addFixedShape: aShape [
 ]
 
 { #category : #adding }
-RSComposite >> addShape: aShape [
-	"Add a shape in a composite shape"
-	aShape addedIn: self
-]
-
-{ #category : #adding }
 RSComposite >> addShape: aShape before: otherShape [ 
 	"Add a shape in a composite shape"
 	aShape addedIn: self.
@@ -356,7 +350,7 @@ RSComposite >> shapeFromModel: anObject using: aBlock [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |
-	pos := self matrix inverseTransform: position.
+	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithAction: eventClass forPosition: pos.
 		res ifNotNil: [ ^ res] ].
@@ -367,7 +361,7 @@ RSComposite >> shapeWithAction: eventClass forPosition: position [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithActionForPosition: position [
 	| res pos |
-	pos := self matrix inverseTransform: position.
+	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithActionForPosition: pos.
 		res ifNotNil: [ ^ res] ].

@@ -140,6 +140,23 @@ RSCanvasTest >> testLowLevelEvent [
 		identicalTo: box
 ]
 
+{ #category : #'tests - opening' }
+RSCanvasTest >> testMultipleOpenOnce [
+
+	| c1 c2 win1 win2 |
+	c1 := RSCanvas new.
+	win1 := c1 openOnce.
+
+	c2 := RSCanvas new.
+	win2 := c2 openOnce.
+
+	[ 
+		self deny: win1 isDisplayed.
+		self assert: win2 isDisplayed
+	] ensure: [ win1 delete. win2 delete. ]
+	 
+]
+
 { #category : #'tests - composite' }
 RSCanvasTest >> testNestedShape [
 
@@ -185,6 +202,30 @@ RSCanvasTest >> testNodesShapesAndEdges [
 
 	self assert: canvas nodes equals: nodes asGroup.
 	self assert: canvas edges size equals: 3.
+]
+
+{ #category : #'tests - opening' }
+RSCanvasTest >> testOpen [
+
+	| c win |
+	c := RSCanvas new.
+	win := c open.
+	self assert: win class equals: SystemWindow.
+	win delete.
+]
+
+{ #category : #'tests - opening' }
+RSCanvasTest >> testOpenOnce [
+
+	| c win morph |
+	c := RSCanvas new.
+	win := c openOnce.
+	self assert: win class equals: SystemWindow.
+	
+	morph := win findDeeplyA: RSAthensMorph.
+	self assert: morph class equals: RSAthensMorph.
+	self assert: morph canvas equals: c.
+	win delete.
 ]
 
 { #category : #running }

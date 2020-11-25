@@ -118,7 +118,25 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSNormalizer class >> color [ 
+RSNormalizer class >> color [
+	"Define a linear color normalizer. For example:
+	
+```Smalltalk
+values := 1 to: 5.
+
+c := RSCanvas new.
+shapes := values collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+
+shapes @ RSPopup.
+
+RSNormalizer color
+	shapes: shapes;
+	normalize: #yourself.
+RSFlowLayout on: shapes.
+c
+```
+"
 	| n |
 	n := self new.
 	n from: Color green.

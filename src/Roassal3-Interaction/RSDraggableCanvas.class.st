@@ -2,11 +2,11 @@
 I set the drag event for view, I use a basic bars to do that.
 
 Use example:
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 30).
 c @ RSDraggableCanvas
--=-=-=-=-=-=-=-=-=
+```
 "
 Class {
 	#name : #RSDraggableCanvas,
@@ -87,6 +87,7 @@ RSDraggableCanvas >> mouseEnd: evt [
 		ifTrue: [ ^ self checkCamera: aCanvas ].
 		
 	delta := lastStep * 2.5.
+	lastStep := nil.
 	camera translateBy: delta.
 	correct := self correctCameraPosition: evt.
 	camera translateBy: delta negated.
@@ -107,6 +108,11 @@ RSDraggableCanvas >> mouseEnd: evt [
 { #category : #mouse }
 RSDraggableCanvas >> mouseEvent [
 	^ mouseEvent
+]
+
+{ #category : #mouse }
+RSDraggableCanvas >> mouseEvent: aRSMouseDragEvent [
+	mouseEvent := aRSMouseDragEvent
 ]
 
 { #category : #events }
@@ -131,9 +137,9 @@ RSDraggableCanvas >> mouseStart: evt [
 { #category : #hooks }
 RSDraggableCanvas >> onShape: aCanvas [
 	aCanvas 
-		when: self mouseEvent do: [ :evt | self mouseStart: evt ];
-		when: RSMouseDragging do: [ :evt | self mouseMove: evt ];
-		when: RSMouseDragEnd do: [ :evt | self mouseEnd: evt ].
+		when: self mouseEvent send: #mouseStart: to: self;
+		when: RSMouseDragging send: #mouseMove: to: self;
+		when: RSMouseDragEnd send: #mouseEnd: to: self.
 ]
 
 { #category : #rendering }

@@ -38,21 +38,6 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 		yourself
 ]
 
-{ #category : #alignment }
-RSAbstractFlowLayout >> alignBottom [
-	alignment := #bottom
-]
-
-{ #category : #alignment }
-RSAbstractFlowLayout >> alignCenter [
-	alignment := #center
-]
-
-{ #category : #alignment }
-RSAbstractFlowLayout >> alignTop [
-	alignment := #top
-]
-
 { #category : #configuration }
 RSAbstractFlowLayout >> defaultGapSize [
 	^ 5
@@ -66,6 +51,21 @@ RSAbstractFlowLayout >> defaultMaxWidth [
 			((((elements collect: [ :each | each width * each height]) * 2) sum) + (elements size * (gapSize squared))) sqrt ceiling truncated.
 			]
 		]
+]
+
+{ #category : #hook }
+RSAbstractFlowLayout >> doExecute: elements [
+
+	| lines align |
+	elements ifEmpty: [ ^ self ].
+	lines := self linesFor: elements.
+	align := RSAlignment new.
+	lines do: [ :line | 
+		align shapes: line.
+		alignment value: align.
+		 ].
+	
+	
 ]
 
 { #category : #accessing }
@@ -85,22 +85,12 @@ RSAbstractFlowLayout >> initialize [
 	gapSize := self defaultGapSize.
 ]
 
-{ #category : #testing }
-RSAbstractFlowLayout >> isAlignBottom [
-	^ alignment = #bottom
+{ #category : #hook }
+RSAbstractFlowLayout >> linesFor: elements [ 
+	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-RSAbstractFlowLayout >> isAlignCenter [
-	^ alignment = #center
-]
-
-{ #category : #testing }
-RSAbstractFlowLayout >> isAlignTop [
-	^ alignment = #top
-]
-
-{ #category : #private }
+{ #category : #accessing }
 RSAbstractFlowLayout >> maxWidth [
 	^ maxWidth
 ]

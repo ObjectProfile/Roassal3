@@ -32,7 +32,7 @@ RSLayoutBuilder >> flow [
 
 { #category : #'public layout' }
 RSLayoutBuilder >> force [
-	^ layout := RSForceBasedLayout new useProgressBar.
+	^ layout := RSSimpleForceBasedLayout new
 ]
 
 { #category : #'public layout' }
@@ -48,6 +48,19 @@ RSLayoutBuilder >> horizontal [
 { #category : #'public layout' }
 RSLayoutBuilder >> horizontalTree [
 	^ layout := RSHorizontalTreeLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> ifConnected: aLayout [
+	^ self ifConnected: aLayout ifNotConnected: RSGridLayout new
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> ifConnected: aLayout ifNotConnected: anotherLayout [
+
+	^ layout := RSConditionalLayout new
+					 ifNotConnectedThen: anotherLayout;
+					 else: aLayout
 ]
 
 { #category : #initialization }
@@ -76,6 +89,11 @@ RSLayoutBuilder >> on: shapes [
 { #category : #'public layout' }
 RSLayoutBuilder >> radial [
 	^ layout := RSRadialTreeLayout new.
+]
+
+{ #category : #'public layout' }
+RSLayoutBuilder >> rawForce [
+	^ layout := RSForceBasedLayout new useProgressBar.
 ]
 
 { #category : #'public layout' }

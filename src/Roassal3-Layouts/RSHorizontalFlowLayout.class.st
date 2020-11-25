@@ -1,5 +1,5 @@
 "
-A RTHorizontalFlowLayout is a FlowLayout horizontaly arranged,  right queued at default.
+A RTHorizontalFlowLayout is a FlowLayout horizontaly arranged, right queued at default.
 
 "
 Class {
@@ -8,72 +8,67 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #hook }
-RSHorizontalFlowLayout >> doExecute: elements [ 
-	| x y maxLastLineWidth nextElement maxNextLineWidth|
-	x := self gapSize.
-	y := self gapSize.
-	maxLastLineWidth := 0.
-	maxNextLineWidth := 0.
-	
-	elements do:
-		[ :anElement | 
-		
-		(anElement = elements last) ifFalse:  [nextElement := (elements after: anElement)] ifTrue: [nextElement := anElement].
-		
-		self isAlignBottom ifTrue: [ 
-			translator translate: anElement to: ((x @ y) + ((anElement width / -2) @ (anElement height / 2))).	
-			y := y + anElement height + (self gapSize).
-			((y > (self maxWidth rsValue: elements)) | ((y + nextElement height) > (self maxWidth rsValue: elements) ))ifTrue: 
-				[ y := self gapSize.
-				maxNextLineWidth := self maxNextLineWidthFrom: nextElement for: elements.
-				x := x + (1 * self gapSize) + maxNextLineWidth.
-				maxNextLineWidth := 0.
-				maxLastLineWidth := 0.
-				]
-		].
-	
-	self isAlignCenter ifTrue: [ 
-		translator translate: anElement to: ((x @ y) + (0 @ (anElement width / 2))).
-			y := y + anElement height + (self gapSize).
-			maxLastLineWidth := maxLastLineWidth max: (anElement width).
-			((y > (self maxWidth rsValue: elements)) | ((y + nextElement height) > (self maxWidth rsValue: elements) ))ifTrue: 
-				[ y := self gapSize.
-				maxNextLineWidth := self maxNextLineWidthFrom: nextElement for: elements.
-				x := x + (self gapSize) + (maxNextLineWidth /2) + (maxLastLineWidth /2).
-				maxNextLineWidth := 0.
-				maxLastLineWidth := 0.
-				]
-			].	
-			
-		self isAlignTop ifTrue: [ 
-			translator translateTopLeftOf: anElement to: x @ y.
-			y := y + anElement height + (self gapSize).
-			maxLastLineWidth := maxLastLineWidth max: (anElement width ).
-			((y > (self maxWidth rsValue: elements)) | ((y + nextElement height) > (self maxWidth rsValue: elements) ))ifTrue: 
-				[ y := self gapSize.
-				x := x + (self gapSize) + maxLastLineWidth.
-				maxLastLineWidth := 0 ] 
-			].
-		].
+{ #category : #alignment }
+RSHorizontalFlowLayout >> alignCenter [
+	alignment := #center
+]
+
+{ #category : #alignment }
+RSHorizontalFlowLayout >> alignLeft [
+	alignment := #left
+]
+
+{ #category : #alignment }
+RSHorizontalFlowLayout >> alignRight [
+	alignment := #right
 ]
 
 { #category : #'initialize-release' }
 RSHorizontalFlowLayout >> initialize [
 	super initialize.
-	self alignTop.
+	self alignLeft.
 ]
 
-{ #category : #utility }
-RSHorizontalFlowLayout >> maxNextLineWidthFrom: ele for: elements [
-	| nextLineY maxNextLineWidth anElement |
-	anElement := ele.
-	maxNextLineWidth := 0.
-	nextLineY := self gapSize.
-	[ nextLineY < (self maxWidth rsValue: elements) ] whileTrue: [
-		nextLineY := nextLineY + (self gapSize) + (anElement height).
-		maxNextLineWidth := maxNextLineWidth max: (anElement width).	
-		(anElement = elements last) ifFalse:  [anElement := (elements after: anElement)]
+{ #category : #testing }
+RSHorizontalFlowLayout >> isAlignCenter [
+	^ alignment = #center
+]
+
+{ #category : #testing }
+RSHorizontalFlowLayout >> isAlignLeft [
+	^ alignment = #left
+]
+
+{ #category : #testing }
+RSHorizontalFlowLayout >> isAlignRight [
+	^ alignment = #right
+]
+
+{ #category : #hook }
+RSHorizontalFlowLayout >> linesFor: elements [
+	| gap y x maxLastLineWidth lines currentLine maxHeight nextElement |
+	gap := self gapSize.
+	x := y := gap.
+	maxLastLineWidth := 0.
+	maxHeight := self maxWidth rsValue: elements.
+	lines := OrderedCollection new.
+	currentLine := OrderedCollection new.
+	elements doWithIndex: [ :element :index |
+		element position: (x @ y) + (element extent / 2.0).
+		currentLine add: element.
+		y := y + element height + gap.
+		maxLastLineWidth := maxLastLineWidth max: element width.
+		nextElement := elements at: (index + 1 min: elements size).
+		(y + nextElement height) > maxHeight ifTrue: [
+			
+			lines add: currentLine.
+			y := gap.
+			x := x + maxLastLineWidth + gap.
+			currentLine := OrderedCollection new.
+			maxLastLineWidth := 0.
 		].
-	^ maxNextLineWidth
+		
+	].
+	currentLine ifNotEmpty: [ lines add: currentLine ].
+	^ lines
 ]

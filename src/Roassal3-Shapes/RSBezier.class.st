@@ -51,6 +51,19 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #testing }
+RSBezier >> basicIncludesPoint: aPoint [
+	| cp |
+	cp := self controlPoints.
+	cp size = 2 ifTrue: [ 
+		^ aPoint
+			onLineFrom: cp first
+			to: cp second
+			within: self includedRadius
+		 ].
+	^ false
+]
+
 { #category : #visiting }
 RSBezier >> buildPathOn: visitor [
 	visitor buildBezierPath: self.
@@ -64,19 +77,6 @@ RSBezier >> controlPoints: anArrayOfPoints [
 		assert: (anArrayOfPoints size between: 2 and: 4)
 		description: 'The array size must be between 2 and 4 points'.
 	super controlPoints: anArrayOfPoints
-]
-
-{ #category : #testing }
-RSBezier >> includesPoint: aPoint [
-	| cp |
-	cp := self controlPoints.
-	cp size = 2 ifTrue: [ 
-		^ aPoint
-			onLineFrom: cp first
-			to: cp second
-			within: self includedRadius
-		 ].
-	^ false
 ]
 
 { #category : #initialization }

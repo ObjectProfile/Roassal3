@@ -83,21 +83,6 @@ RSAbstractUMLCalypso >> limitedClasses: aCollection [
 		ifFalse: [ aCollection copyFrom: 1 to: limit ].
 ]
 
-{ #category : #'public - hooks' }
-RSAbstractUMLCalypso >> rebuild: evt [
-	| builder |
-	evt canvas nodes, evt canvas edges do: #remove.
-	RSPopup new removePopupOn: evt.
-	builder := RSUMLClassBuilder new.
-	builder container: evt canvas.
-	self applyTheme: builder.
-	builder classes: evt shape model umlClasses.
-	builder build.
-	builder shapes do: #browseable.
-	evt canvas removeKey: #encompassingRectangle.
-	evt canvas zoomToFit.
-]
-
 { #category : #building }
 RSAbstractUMLCalypso >> umlBuilder [
 	| builder |

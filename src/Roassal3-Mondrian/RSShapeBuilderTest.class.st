@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal3-Mondrian'
+	#category : #'Roassal3-Mondrian-Tests'
 }
 
 { #category : #running }

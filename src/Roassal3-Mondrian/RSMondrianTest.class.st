@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'm'
 	],
-	#category : #'Roassal3-Mondrian'
+	#category : #'Roassal3-Mondrian-Tests'
 }
 
 { #category : #tests }
@@ -43,6 +43,20 @@ RSMondrianTest >> testBasic2 [
 	self assert: pos asArray equals: {(10.0@10.0). (30.0@15.0). (60.0@20.0). (25.0@60.0). (75.0@65.0)}.
 	
 	self assert: someNodes asArray equals: m canvas shapes asArray
+]
+
+{ #category : #tests }
+RSMondrianTest >> testColoredNodesForEach [
+
+	m shape color: Color blue.
+	m nodes: (1 to: 2) forEach: [ :v |
+		m shape color: Color red.
+		m nodes: #(3 4) ].
+	m build.
+	
+	self assert: m canvas nodes size equals: 2.
+	self assert: (m canvas nodes allSatisfy: [ :e | e color = Color blue ]).
+	self assert: (m canvas nodes flatCollect: [ :e | e children collect: #color ]) asSet asArray equals: { Color red }
 ]
 
 { #category : #tests }

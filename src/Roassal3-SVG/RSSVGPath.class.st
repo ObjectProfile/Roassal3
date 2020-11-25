@@ -144,7 +144,7 @@ RSSVGPath >> extent: newExtent [
 { #category : #testing }
 RSSVGPath >> includesPoint: aPoint [
 	| invertedPoint |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	
 	^ (self baseRectangle containsPoint: invertedPoint)
 		ifFalse: [ false ]

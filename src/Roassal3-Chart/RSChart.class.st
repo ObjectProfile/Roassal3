@@ -33,12 +33,8 @@ Class {
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'plots',
-		'extent',
 		'decorations',
-		'maxValueX',
-		'maxValueY',
-		'minValueX',
-		'minValueY',
+		'extents',
 		'generator',
 		'colors'
 	],
@@ -98,6 +94,16 @@ RSChart >> barWidths: aCollectionX [
 	^ res
 ]
 
+{ #category : #'accessing - extension' }
+RSChart >> chartExtents [
+	^ extents ifNil: [ extents := RSChartExtents new ]
+]
+
+{ #category : #'accessing - extension' }
+RSChart >> chartExtents: aRSChartExtents [
+	extents := aRSChartExtents
+]
+
 { #category : #color }
 RSChart >> colorFor: aRSPlot [ 
 	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
@@ -132,14 +138,14 @@ RSChart >> defaultPlotColors [
 	^ NSScale category20
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> extent [
-	^ extent
+	^ self chartExtents extent
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> extent: aPoint [
-	extent := aPoint
+	self chartExtents extent: aPoint
 ]
 
 { #category : #visualization }
@@ -155,7 +161,7 @@ RSChart >> gtInspectorViewIn: composite [
 RSChart >> initialize [
 	super initialize.
 	plots := OrderedCollection new.
-	extent := 200 @ 200.
+	self extent: 200 @ 200.
 	self initializeDecorations.
 	colors := self defaultPlotColors.
 ]
@@ -173,45 +179,61 @@ RSChart >> lineX: aCollectionX y: aCollectionY [
 	^ res
 ]
 
-{ #category : #accessing }
-RSChart >> maxValueX [ 
-	^ maxValueX ifNil: [ maxValueX := (plots collect: #maxValueX) max ].
+{ #category : #'accessing - extension' }
+RSChart >> maxValueX [
+	^ self chartExtents maxValueX
+		ifNil: [ | res |
+			self chartExtents maxValueX: (res := (plots collect: #maxValueX) max).
+			res ]
+		ifNotNil: [:res | res ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> maxValueX: aNumber [
-	maxValueX := aNumber
+	self chartExtents maxValueX: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> maxValueY [
-	^ maxValueY ifNil: [ maxValueY := (plots collect: #maxValueY) max ]
+	^ self chartExtents maxValueY
+		ifNil: [ | res |
+			self chartExtents maxValueY: (res := (plots collect: #maxValueY) max).
+			res ]
+		ifNotNil: [:res | res ].
+		
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> maxValueY: aNumber [
-	maxValueY := aNumber
+	self chartExtents maxValueY: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> minValueX [ 
-	^ minValueX ifNil: [ minValueX := (plots collect: #minValueX) min ]
+	^ self chartExtents minValueX
+		ifNil: [ | res |
+			self chartExtents minValueX: (res := (plots collect: #minValueX) min).
+			res ]
+		ifNotNil: [:res | res ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> minValueX: aNumber [
-	minValueX := aNumber
+	self chartExtents minValueX: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> minValueY [
-	
-	^ minValueY ifNil: [ minValueY := (plots collect: #minValueY) min ]
+	^ self chartExtents minValueY
+		ifNil: [ | res |
+			self chartExtents minValueY: (res := (plots collect: #minValueY) min).
+			res ]
+		ifNotNil: [:res | res ].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - extension' }
 RSChart >> minValueY: aNumber [
-	minValueY := aNumber
+	self chartExtents minValueY: aNumber
 ]
 
 { #category : #'public - configuration' }
@@ -269,6 +291,26 @@ c open
 	"
 	self build.
 	^ self canvas open
+]
+
+{ #category : #public }
+RSChart >> openOnce [
+	self build.
+	^ self canvas openOnce
+]
+
+{ #category : #'accessing - extension' }
+RSChart >> padding [
+	^ self chartExtents padding
+		ifNil: [ | res |
+			self chartExtents padding: (res := 0@0).
+			res ]
+		ifNotNil: [:res | res ].
+]
+
+{ #category : #'accessing - extension' }
+RSChart >> padding: aPoint [
+	self chartExtents padding: aPoint asPoint
 ]
 
 { #category : #accessing }

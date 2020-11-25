@@ -29,12 +29,13 @@ c
 Class {
 	#name : #RSAbstractLine,
 	#superclass : #RSShape,
-	#traits : 'TMarkeable',
-	#classTraits : 'TMarkeable classTrait',
+	#traits : 'RSTMarkeable',
+	#classTraits : 'RSTMarkeable classTrait',
 	#instVars : [
 		'attachPoint',
 		'from',
-		'to'
+		'to',
+		'markers'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -57,6 +58,11 @@ RSAbstractLine >> attachPoint [
 { #category : #'attach point' }
 RSAbstractLine >> attachPoint: ap [
 	attachPoint := ap
+]
+
+{ #category : #testing }
+RSAbstractLine >> basicIncludesPoint: aPoint [
+	^ false
 ]
 
 { #category : #'style-cap' }
@@ -121,9 +127,38 @@ RSAbstractLine >> endPoint: aPoint [
 
 { #category : #public }
 RSAbstractLine >> fmt: aString [
-	"format for lines"
+	"Format for lines a shortcut to define a line styles, or markers
+	
+	For markers use
+	'o' - circle
+	'^' - arrow
+	's' - square
+	'p' - pentagon
+	'h' - hexagon
+	'+' - plus
+	'd' - diamond
+	'*' - star
+	
+	For stroke styles use:
+	'--' dashed line.
+	'-.' dashed line with small line then point
+	'.' dashed line with points
+	
+	Example
+	```
+	| canvas |
+	canvas := RSCanvas new.
+	canvas add: (RSLine new 
+		startPoint: 0@0;
+		endPoint: 100@0;
+		fmt:'-.*';
+		color: Color red;
+		yourself).
+	canvas @ RSCanvasController.
+	````
+	 "
 	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self width * 4) ].
+		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].
 	(RSStrokeStyle fromString: aString)
 		ifNotNil: [ :style | self shape border style: style ]
 	
@@ -140,17 +175,14 @@ RSAbstractLine >> from: aShapeOrAPoint [
 	from := self setAnchor: from shape: aShapeOrAPoint
 ]
 
-{ #category : #testing }
-RSAbstractLine >> hasMarkers [
-	| m |
-	m := self privateMarkers.
-	^ m notNil and: [ 
-		m anySatisfy: [ :mar | mar notNil ].  ]
-]
-
 { #category : #accessing }
 RSAbstractLine >> includedRadius [
 	^ self border width / 2
+]
+
+{ #category : #testing }
+RSAbstractLine >> includesPoint: aPoint [
+	^ self hasBorder and: [ (self basicIncludesPoint: aPoint) or: [ self markersIncludesPoint: aPoint ] ]
 ]
 
 { #category : #initialization }
@@ -194,11 +226,6 @@ RSAbstractLine >> notifyExtentChanged [
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]
-]
-
-{ #category : #private }
-RSAbstractLine >> privateMarkers [
-	^ nil
 ]
 
 { #category : #adding }

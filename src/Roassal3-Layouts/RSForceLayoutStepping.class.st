@@ -96,18 +96,18 @@ RSForceLayoutStepping >> startFirstAnimation: aCanvas [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startForceAnimation: aView [
+RSForceLayoutStepping >> startForceAnimation: aCanvas [
 	animation ifNotNil: #stop.
-	animation := aView animationFrom: {
+	animation := aCanvas animationFrom: {
 		"Start smoothly"
-		aView transitionAnimation
+		aCanvas transitionAnimation
 			easing: RSEasing cubicOut;
 			duration: 500 milliSeconds;
 			range: self alphaRange;
 			onStepDo: [ :t | layout alpha: t; step ].
 
 		"Continue on max alpha undefinitely"
-		aView transitionAnimation
+		aCanvas transitionAnimation
 			repeat;
 			onStepDo: [ :t | layout step ] }.
 

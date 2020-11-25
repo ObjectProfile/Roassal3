@@ -72,6 +72,17 @@ RSLabel class >> familyFontName [
 	^  StandardFonts defaultFont familyName 
 ]
 
+{ #category : #accessing }
+RSLabel class >> text: aText [
+	^ self new text: aText
+]
+
+{ #category : #accessing }
+RSLabel class >> text: aText model: aModelObject [
+	"Initialize a label with a text and a model"
+	^ self new text: aText; model: aModelObject
+]
+
 { #category : #visiting }
 RSLabel >> accept: visitor [
 	visitor visitLabel: self.
@@ -218,7 +229,7 @@ RSLabel >> hasText [
 { #category : #initialization }
 RSLabel >> initialize [
 	super initialize.
-	paint := Color black.
+	paint := Color gray.
 	self font: self class defaultFont.
 	
 ]
@@ -278,6 +289,25 @@ RSLabel >> metricsProvider [
 
 { #category : #metrics }
 RSLabel >> metricsProvider: aRSMetricsProvider [
+	"Set the way metrics related to the label (e.g., height, width), can be computed. The metric provier per default is RSCairoMetricsProvider.
+	
+	 The argument must be a subclass of RSMetricsProvider.
+	
+	For example:
+```Smalltalk
+metricsProvider := RSCairoMetricsProvider new.
+
+words := (String loremIpsum: 2000) substrings.
+labels := words collect: [ :w | RSLabel new metricsProvider: metricsProvider; text: w ].
+
+c := RSCanvas new.
+c addAll: labels.
+RSFlowLayout on: labels.
+c @ RSCanvasController
+```
+	
+	
+	"
 	metricsProvider := aRSMetricsProvider.
 	self resetCache.
 ]

@@ -7,7 +7,7 @@ Class {
 		'shapeBuilder',
 		'edgeBuilder'
 	],
-	#category : #'Roassal3-Mondrian'
+	#category : #'Roassal3-Mondrian-Core'
 }
 
 { #category : #'building - graph' }
@@ -25,8 +25,9 @@ RSMondrian >> arrowedLine [
 	^ edgeBuilder
 ]
 
-{ #category : #visualization }
+{ #category : #'public - opening and public' }
 RSMondrian >> build [
+	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
 	self applyLayout.
 	
@@ -41,6 +42,7 @@ RSMondrian >> build [
 
 { #category : #accessing }
 RSMondrian >> canvas [
+	"Return the canvas that contains the visualization built by Mondrian"
 	^ canvas
 ]
 
@@ -161,12 +163,14 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	shapes := RSGroup new.
 	objects do: [ : obj |
 		previousShapeBuilder := shapeBuilder.
-		shapeBuilder := RSShapeBuilder new.
+		
 		compo := RSComposite new.
 		compo color: shapeBuilder color.
 		compo model: obj.
 		old := self canvas.
 		self canvas: compo.
+		
+		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
 		shapes add: compo.
 		self build.
@@ -189,22 +193,50 @@ RSMondrian >> normalizeColor: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeHeight: oneArgBlock [
+	RSNormalizer height
+		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeSize: oneArgBlock [
 	RSNormalizer size
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeWidth: oneArgBlock [
+	RSNormalizer width
+		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - opening and public' }
 RSMondrian >> open [
+	"Open the visualization"
 	self build.
 	^ canvas open
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - opening and public' }
 RSMondrian >> openOnce [
 	self build.
 	^ canvas openOnce
+]
+
+{ #category : #'public - opening and public' }
+RSMondrian >> openOnceWithTitle: aTitle [
+	self build.
+	^ canvas openOnceWithTitle: aTitle
+]
+
+{ #category : #'public - opening and public' }
+RSMondrian >> openWithTitle: aTitle [
+	"Open the visualization"
+	self build.
+	^ canvas openWithTitle: aTitle
 ]
 
 { #category : #'building - graph' }

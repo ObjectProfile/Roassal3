@@ -6,8 +6,7 @@ Class {
 	#superclass : #RSAbstractLine,
 	#instVars : [
 		'startPoint',
-		'endPoint',
-		'markers'
+		'endPoint'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -46,11 +45,6 @@ RSAbstractDualLine >> initialize [
 	endPoint := 100@100.
 ]
 
-{ #category : #'accessing - markers' }
-RSAbstractDualLine >> markers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
 { #category : #transforming }
 RSAbstractDualLine >> position [
 	^ self encompassingRectangle floatCenter
@@ -58,7 +52,7 @@ RSAbstractDualLine >> position [
 
 { #category : #private }
 RSAbstractDualLine >> privateMarkers [
-	^ markers
+	^ markers ifNil: [ markers := Array new: 3 ].
 ]
 
 { #category : #accessing }

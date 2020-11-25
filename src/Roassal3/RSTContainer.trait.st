@@ -28,6 +28,13 @@ RSTContainer >> addAll: aCollection [
 	aCollection do: [ :aShape | self add: aShape ]
 ]
 
+{ #category : #adding }
+RSTContainer >> addAllShapes: aCollection [
+	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
+	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
+	aCollection do: [ :shape | self addShape: shape ].
+]
+
 { #category : #'adding nodes edges' }
 RSTContainer >> addEdge: aShape [
 	self edges add: aShape.
@@ -38,6 +45,11 @@ RSTContainer >> addEdge: aShape [
 RSTContainer >> addNode: aShape [
 	self nodes add: aShape.
 	^ aShape
+]
+
+{ #category : #adding }
+RSTContainer >> addShape: aShape [
+	aShape addedIn: self
 ]
 
 { #category : #'looking up shapes' }
@@ -155,7 +167,7 @@ RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RSTContainer >> pushBackEdges [
 	"Push back all the edges"
 	self edges do: [ :e | e pushBack ]

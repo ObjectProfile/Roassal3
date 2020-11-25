@@ -35,7 +35,7 @@ RSUMLCalypsoRenderer >> methodFor: method [
 		add: label;
 		yourself.	
 	RSHorizontalLineLayout new 
-		alignCenter; 
+		alignMiddle; 
 		gapSize: label fontSize / 3; 
 		on: com children.
 	com adjustToChildren.

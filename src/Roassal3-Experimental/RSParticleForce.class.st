@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'position',
-		'shape'
+		'shape',
+		'color'
 	],
 	#category : #'Roassal3-Experimental-Force'
 }
@@ -58,12 +59,7 @@ RSParticleForce >> renderIn: aCanvas with: colorGenerator [
 		 ].
 	shape color: (colorGenerator colorFor: self).
 	shape position: position
-	"
-	| period n |period := 0.005.
-	n := perlin noise: position x * period and: position y * period.
-	color := Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n.
-	shape color: (color alpha: 0.03).
-	shape position: position"
+	
 ]
 
 { #category : #updating }

@@ -91,6 +91,8 @@ c @ RSCanvasController
 Class {
 	#name : #RSHighlightable,
 	#superclass : #RSInteraction,
+	#traits : 'RSTAnnounceable',
+	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
 		'announcer',
 		'copyKey',
@@ -99,6 +101,18 @@ Class {
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
+
+{ #category : #'instance creation' }
+RSHighlightable class >> defaultBlueLabel [
+	| inst |
+	inst := self new.
+	inst highlightColor: Color blue.
+	inst 
+		when: RSHighlightEvent do: [ :evt | evt shape underline ];
+		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
+	^ inst
+	
+]
 
 { #category : #'instance creation' }
 RSHighlightable class >> defaultRed [
@@ -139,13 +153,7 @@ RSHighlightable class >> withEdges [
 				   color: Color black)
 ]
 
-{ #category : #announce }
-RSHighlightable >> announce: anEvent [
-	announcer ifNil: [ ^ self ].
-	announcer announce: anEvent value
-]
-
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
 	self announce: [ RSHighlightEvent new
 		interaction: self;
@@ -153,7 +161,7 @@ RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
 		source: shapeOrCanvas ].
 ]
 
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 	self announce: [ RSUnHighlightEvent new
 		interaction: self;
@@ -161,12 +169,7 @@ RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 		source: shapeOrCanvas ].
 ]
 
-{ #category : #announce }
-RSHighlightable >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ].
-]
-
-{ #category : #announce }
+{ #category : #announcer }
 RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
@@ -193,6 +196,7 @@ RSHighlightable >> doHighlight: shape [
 
 { #category : #actions }
 RSHighlightable >> doHighlightShapes: shapes [
+	"Assuming all the shapes belongs to the same canvas"
 	| allHShapes |
 	shapes ifEmpty: [ ^ self ].
 	self unhighlightRecordedShapes: shapes first.
@@ -275,11 +279,6 @@ c @ RSCanvasController
 ]
 
 { #category : #accessing }
-RSHighlightable >> highlightShapes [
-	^ highlightShapes
-]
-
-{ #category : #accessing }
 RSHighlightable >> highlightShapes: aBlockOnArg [
 	"the block should return a collection of shapes"
 	highlightShapes := aBlockOnArg
@@ -332,6 +331,11 @@ RSHighlightable >> onShape: aShape [
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
+{ #category : #announcer }
+RSHighlightable >> privateAnnouncer [
+	^ announcer
+]
+
 { #category : #'accessing - keys' }
 RSHighlightable >> propertyKey [
 	^ propertyKey ifNil: [ propertyKey := self hash asString ]
@@ -370,9 +374,16 @@ For example:
 ]
 
 { #category : #actions }
-RSHighlightable >> resetHighlightedShapes: shapeOrCanvas [
-	| att |
-	att := shapeOrCanvas topParent properties.
+RSHighlightable >> resetHighlightedShapes: shapeOrGroupOrCanvas [
+	| att top |
+	(shapeOrGroupOrCanvas class == RSGroup)
+		ifTrue: [ 
+			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
+			top := shapeOrGroupOrCanvas anyOne canvas ]
+		ifFalse: [
+			top := shapeOrGroupOrCanvas topParent ]. 
+		
+	att := top properties.
 	(att includesKey: self propertyKey) ifFalse: [ ^ self ].
 	att removeKey: self propertyKey
 ]
@@ -444,21 +455,22 @@ RSHighlightable >> setupAntAnimation [
 ]
 
 { #category : #actions }
-RSHighlightable >> unhighlightRecordedShapes: shapeOrCanvas [
+RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 	| top |
-	top := shapeOrCanvas topParent.
+	(shapeOrGroupOrCanvas class == RSGroup)
+		ifTrue: [ 
+			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
+			top := shapeOrGroupOrCanvas anyOne canvas ]
+		ifFalse: [
+			top := shapeOrGroupOrCanvas topParent ]. 
+		
 	top ifNil: [ ^ self ].
 	top
 		propertyAt: self propertyKey 
 		ifPresent: [ :shapes |
-			shapes do: [ :s | self announceUnHightlight: s source: shapeOrCanvas ].
+			shapes do: [ :s | self announceUnHightlight: s source: shapeOrGroupOrCanvas ].
 		 ].
-	self resetHighlightedShapes: shapeOrCanvas
-]
-
-{ #category : #announcing }
-RSHighlightable >> when: event do: aBlock [
-	self announcer when: event do: aBlock
+	self resetHighlightedShapes: shapeOrGroupOrCanvas
 ]
 
 { #category : #'public - hooks' }

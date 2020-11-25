@@ -12,11 +12,6 @@ Class {
 	#category : #'Roassal3-Shapes-Tests'
 }
 
-{ #category : #tests }
-RSEdgeBuilderTest >> expectedFailures [
-	^ #(#testFromAll #testUseInLayout #testWithMoveBehind #testWithMoveBehind02)
-]
-
 { #category : #running }
 RSEdgeBuilderTest >> setUp [
 	super setUp.
@@ -155,6 +150,16 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	
 	self assert: edges first from equals: es1 first.
 	self assert: edges first to equals: es2 first.
+]
+
+{ #category : #'tests error' }
+RSEdgeBuilderTest >> testErrors [
+	| eb |
+	eb := RSEdgeBuilder line.
+	
+	self should: [ eb shapes: #(1 2 3) ] raise: AssertionFailure.
+	self should: [ eb shapes: 'hello world' ] raise: AssertionFailure.
+	self should: [ eb shapes: 42 ] raise: AssertionFailure.
 ]
 
 { #category : #tests }
@@ -485,8 +490,8 @@ RSEdgeBuilderTest >> testToObjects [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind [
 
-	RSEdgeBuilder new
-		view: canvas;
+	RSEdgeBuilder line
+		canvas: canvas;
 		moveBehind;
 		useAssociations: (Array 
 									with: 1 -> 2
@@ -498,8 +503,8 @@ RSEdgeBuilderTest >> testWithMoveBehind [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind02 [
 
-	RSEdgeBuilder new
-		view: canvas;
+	RSEdgeBuilder line
+		canvas: canvas;
 		moveBehind;
 		connectFrom: [ :v | v - 1 ].
 	self assert: (canvas canvas shapes collect: [ :c | c class name ]) asArray equals: #(#RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox)

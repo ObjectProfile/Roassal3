@@ -1,5 +1,20 @@
 "
 <keyClass>
+A shape is a visual element meant to be displayed. Roassal offers numerous shapes, themselves highly configurable. The class `RSShape` is the root of all the Roassal shapes, and a shape is typically created by instantiating a subclass of `RSShape`. For example, a box is defined by instantiating `RSBox`. 
+
+For example, a colored box with a thick border may be defined as:
+
+```Smalltalk
+box := RSBox new
+			size: 80;
+			color: #yellow;
+			border: (RSBorder new color: #blue; width: 10).
+```
+
+Colors may be provided either as a color object (e.g., `Color blue` or `Color r: 0 g: 0 b: 1.0`) or as a symbol (e.g., `#yellow`). In case a symbol is provided, it is converted to a color object using `Color>>colorFrom:`, as in `Color>>colorFrom: #yellow`. 
+
+Although most of the configuration may be carried out by directly sending an object with a literal (e.g., `size: 80`), part of the configuration of the shape may involve dedicated objects, such as `RSBorder`.
+
 `RSShape` is the root of all the Roassal shapes. A shape represents a visual element meant to be inserted in a `RSCanvas`. `RSShape` is an abstract class, not meant to be directly instantiated therefore.
 
 *Responsibility*: A shape, i.e., subclass of the class `RSShape` is responsible to model a visual element. 
@@ -54,11 +69,11 @@ RSShape >> addedIn: aCanvas [
 ]
 
 { #category : #announcer }
-RSShape >> announce: anEventOrAnEventClass [
-	"Send an event"
+RSShape >> announce: anEventOrAnEventClassOrABlock [
+	"Send an event. The event is provided as argument, and may be either an event object, an event class, or a block (taking no argument) that returns an event object. These different way of specifying events addresses some performance concern."
 	| theEventToSend |
 	announcer ifNil: [ ^ self ].
-	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend := anEventOrAnEventClassOrABlock value asAnnouncement.
 	theEventToSend canvas: self canvas.
 	theEventToSend shape: self.
 	announcer announce: theEventToSend.
@@ -81,6 +96,7 @@ RSShape >> borderColor [
 
 { #category : #border }
 RSShape >> borderColor: aColor [
+	border ifNil: [ self withBorder ].
 	self border color: aColor
 ]
 
@@ -290,12 +306,13 @@ RSShape >> isShape [
 
 { #category : #'accessing - attributes' }
 RSShape >> model [
+	"Return the model object of the shape. If no model has been set, it return `nil`"
 	^ model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
-	"model is used to create popups and other interactions"
+	"Set the model of the shape. A shape represents a visual description of the model object. In case no model is specified, the value is nil. A model is used when using interaction (e.g., popup, labeled) and normalizations."
 	model := anObject
 ]
 

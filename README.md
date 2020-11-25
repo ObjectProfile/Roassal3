@@ -14,7 +14,7 @@ If you wish to install Roassal in Pharo 8, then execute the following code snipp
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9.4';
+    repository: 'github://ObjectProfile/Roassal3:v0.9.5';
     load.
 ```
 
@@ -34,6 +34,14 @@ In order to suppress warnings you may prefer:
     repository: 'github://ObjectProfile/Roassal3';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
 ```   
+
+You can load the full version (including Mondrian and experimental packages) using:
+```Smalltalk
+[Metacello new
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3';
+    load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
+```
 
 ### Quick examples
 In order to run the following examples they must be loaded by installing the full (bleeding edge) version of Roassal.
@@ -86,6 +94,12 @@ If you wish to set a dependency to Roassal3 in your application, you simply need
 
 ```Smalltalk
 spec baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src' ].
+```
+
+To depend on a full version of Roassal3, you may use:
+
+```Smalltalk
+baseline: 'Roassal3' with: [ spec repository: 'github://ObjectProfile/Roassal3/src'; loads: #('Full') ];
 ```
 _____
 ## Get in touch

@@ -4,6 +4,8 @@ My subclasses has attributes useful to add extra data to each component
 Class {
 	#name : #RSObjectWithProperty,
 	#superclass : #RSObject,
+	#traits : 'RSTAnnounceable',
+	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
 		'announcer',
 		'properties'
@@ -30,17 +32,6 @@ c @ RSCanvasController
 { #category : #interactions }
 RSObjectWithProperty >> addInteraction: anInteractionClassOrInstance [
  	anInteractionClassOrInstance onShape: self
-]
-
-{ #category : #announcer }
-RSObjectWithProperty >> announce: anEventOrAnEventClass [
-	"Send an event"
-	self subclassResponsibility
-]
-
-{ #category : #announcer }
-RSObjectWithProperty >> announcer [ 
-	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #announcer }
@@ -141,6 +132,14 @@ RSObjectWithProperty >> propertyAt: aKey ifPresent: aBlockClosure [
 
 { #category : #properties }
 RSObjectWithProperty >> propertyAt: aKey put: value [
+	"Keep a value under a key. The key is usually a symbol.
+For example:
+```
+RSBox new propertyAt: #hello put: 'World'; propertyAt: #hello 
+```
+return World
+	"
+
 	^ self properties at: aKey put: value
 ]
 
@@ -173,14 +172,4 @@ RSObjectWithProperty >> removePropertyAt: aKey [
 { #category : #properties }
 RSObjectWithProperty >> removePropertyAt: aKey ifAbsent: anErrorBlock [
 	^ self properties removeKey: aKey ifAbsent: anErrorBlock
-]
-
-{ #category : #announcer }
-RSObjectWithProperty >> when: event do: aBlock [
-	self announcer when: event do: aBlock
-]
-
-{ #category : #announcer }
-RSObjectWithProperty >> when: anAnnouncementClass send: aSelector to: anObject [
-	self announcer when: anAnnouncementClass send: aSelector to: anObject
 ]
