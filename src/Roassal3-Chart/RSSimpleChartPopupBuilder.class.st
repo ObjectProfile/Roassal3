@@ -48,17 +48,25 @@ c build.
 "
 Class {
 	#name : #RSSimpleChartPopupBuilder,
-	#superclass : #RSAbstractChartPopupBuilder,
+	#superclass : #RSLineChartPopupBuilder,
 	#instVars : [
 		'labels',
-		'colors'
+		'icons'
 	],
 	#category : #'Roassal3-Chart-Popup'
 }
 
 { #category : #public }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot color: aColor [
-	colors at: aRSLinePlot put: aColor
+	self for: aRSLinePlot icon: (RSEllipse new 
+		size: 10; 
+		color: aColor;
+		yourself)
+]
+
+{ #category : #public }
+RSSimpleChartPopupBuilder >> for: aRSLinePlot icon: aRSShape [
+	icons at: aRSLinePlot put: aRSShape
 ]
 
 { #category : #public }
@@ -77,48 +85,19 @@ RSSimpleChartPopupBuilder >> for: aRSLinePlot text: aString color: aColor [
 RSSimpleChartPopupBuilder >> initialize [
 	super initialize.
 	labels := Dictionary new.
-	colors := Dictionary new.
+	icons := Dictionary new.
 ]
 
 { #category : #hooks }
-RSSimpleChartPopupBuilder >> rowShapeFor: aRSLinePlot [
-	"override this method to get different results"
-	| valuePoint group |
-	valuePoint := self valuePointFor: aRSLinePlot.
-	valuePoint ifNil: [ ^ nil ].
+RSSimpleChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
+	| group |
 	group := RSGroup new.
 	
-	colors at: aRSLinePlot ifPresent: [ :color |
-		group add: (RSEllipse new color: color; size: 10) ].
+	icons at: aRSLinePlot ifPresent: [ :icon |
+		group add: icon copy ].
 	labels at: aRSLinePlot ifPresent: [ :label |
 		group add: (RSLabel new text: label) ].
-	group add: (RSLabel new text: valuePoint y).
+	group add: (RSLabel new text: aPoint y).
 	RSHorizontalLineLayout new gapSize: 5; alignMiddle; on: group.
 	^ group asShape
-		 
-]
-
-{ #category : #hooks }
-RSSimpleChartPopupBuilder >> shapeFor: aRSChart [
-	| plots |
-	plots := aRSChart plots select: #isLinePlot.
-	plots := plots 
-		collect: [ :plot | self rowShapeFor: plot ]
-		as: RSGroup.
-	plots := plots reject: #isNil.
-	RSVerticalLineLayout new gapSize: 0; on: plots.
-	^ plots asShape
-		padding: 10;
-		color: (Color white alpha: 0.8);
-		withBorder;
-		yourself.
-]
-
-{ #category : #hooks }
-RSSimpleChartPopupBuilder >> valuePointFor: aRSLinePlot [
-	| xValue yValue |
-	xValue := (aRSLinePlot xScale invert: position x) asInteger.
-	yValue := aRSLinePlot yValues at: xValue.
-	^ xValue @ yValue
-	
 ]
