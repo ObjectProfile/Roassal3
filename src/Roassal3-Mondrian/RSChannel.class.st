@@ -42,6 +42,7 @@ RSChannel >> color [
 { #category : #accessing }
 RSChannel >> color: aColor [
 	color := aColor.
+	highlightable := RSHighlightable new.
 	highlightable highlightColor: aColor
 
 ]
@@ -53,7 +54,6 @@ RSChannel >> defaultColor [
 
 { #category : #'private - highlight' }
 RSChannel >> doHighlight [
-	highlightable highlightColor: self color.
 	highlightable doHighlightShapes: outputGroup
 ]
 
@@ -85,7 +85,7 @@ RSChannel >> getAllMarksFrom: aShape [
 RSChannel >> initialize [
 	super initialize.
 	isClicked := false.
-	highlightable := RSHighlightable new.
+	isClickable := true.
 	self color: self defaultColor.
 ]
 
@@ -98,6 +98,11 @@ RSChannel >> input: aCollection [
 { #category : #accessing }
 RSChannel >> isMarked: shape [
 	^ shape hasProperty: self symbolMarker
+]
+
+{ #category : #public }
+RSChannel >> makeNotClickable [
+	isClickable := false
 ]
 
 { #category : #'private - highlight' }

@@ -5,6 +5,25 @@ Class {
 }
 
 { #category : #tests }
+RSChannelTest >> testAnnouncement [
+
+	| c start end channel |
+	c := RSCanvas new.
+	start := RSLabel text: 'Start'.
+	end := RSLabel text: 'End'.
+	c add: start; add: end.
+	
+	self assert: start announcer numberOfSubscriptions equals: 0.
+
+	channel := RSChannel new.
+	channel input: { start }.
+	channel output: { end }.
+	channel build.
+	
+	self assert: start announcer numberOfSubscriptions equals: 5.
+]
+
+{ #category : #tests }
 RSChannelTest >> testBasic [
 
 	| c m mondrianNodes oddLabel evenLabel bigLabel smallLabel g channel |
@@ -59,7 +78,6 @@ RSChannelTest >> testBasic [
 	self assert: mondrianNodes first color equals: Color blue.
 	oddLabel announce: RSMouseLeave.
 	self assert: mondrianNodes first color equals: Color gray.
-	
 
 	oddLabel announce: RSMouseClick.
 ]
