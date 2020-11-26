@@ -7,7 +7,8 @@ Class {
 		'effect',
 		'isClicked',
 		'highlightable',
-		'color'
+		'color',
+		'isClickable'
 	],
 	#category : #'Roassal3-Mondrian-Connections'
 }
@@ -24,6 +25,7 @@ RSChannel >> build [
 		self doUnhighlight.
 		evt signalUpdate ].
 
+	isClickable ifFalse: [ ^ self ].
 	inputGroup when: RSMouseClick do: [ :evt | 
 		isClicked
 			ifTrue: [ self unmark: evt shape. self doUnmark ]
