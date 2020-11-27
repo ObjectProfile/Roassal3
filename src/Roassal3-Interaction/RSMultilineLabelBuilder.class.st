@@ -5,14 +5,14 @@ I am a builder that can create labels with multiline in roassal3 from objects
 canvas := RSCanvas new.
 shapeBuilder := RSMultilineLabelBuilder new.
 shapeBuilder labelShape
-	font: 20;
-	italic.
+ fontSize: 20;
+ italic.
 canvas add:(shapeBuilder shapeFor: '""tu est loin, 
 très loin de tous ces regards vicieux 
 qui s''alimentent de ta lumière""').
 canvas nodes when: RSMouseClick do: [ :evt | canvas nodes last inspect ].
 canvas showEncompassingRectangles.
-canvas
+canvas @ RSCanvasController
 ```
 "
 Class {
