@@ -10,6 +10,34 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
+{ #category : #'events-processing' }
+RSScrollWheelCanvas >> move: aCanvas delta: delta [
+
+	| correct p |
+	correct := self correctCameraPosition: aCanvas.
+	p := (correct - aCanvas camera position) abs max: 1@1.
+	p := p x sqrt @ p y sqrt.
+	aCanvas camera translateBy: (0@ delta)/p.
+	aCanvas signalUpdate.
+	
+	animation ifNotNil: [ animation stop ].
+	animation := aCanvas newAnimation
+		duration: 300 milliSeconds;
+		onStepDo: [ :t | aCanvas signalUpdate ];
+		when: RSAnimationLoopEvent do: [ :e | 
+			aCanvas newAnimation
+				duration: 200 milliSeconds;
+				from: aCanvas camera position;
+				to: (self correctCameraPosition: aCanvas);
+				onStepDo: [ :t | 
+					aCanvas camera translateTo: t.
+					aCanvas signalUpdate ].
+			].
+	
+	
+	
+]
+
 { #category : #hooks }
 RSScrollWheelCanvas >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
@@ -17,33 +45,12 @@ RSScrollWheelCanvas >> onShape: aCanvas [
 
 { #category : #'events-processing' }
 RSScrollWheelCanvas >> processEvent: evt [
-	| delta correct p |
+	| delta |
 	delta := (evt isUp
 		ifTrue: [ -1]
 		ifFalse: [ 1 ]) * 30.
-	correct := self correctCameraPosition: evt.
-	p := (correct - evt camera position) abs max: 1@1.
-	p := p x sqrt @ p y sqrt.
-	evt camera translateBy: (0@ delta)/p.
-	evt signalUpdate.
-	
-	animation ifNotNil: [ animation stop ].
-	animation := evt canvas newAnimation
-		duration: 300 milliSeconds;
-		onStepDo: [ :t | evt canvas signalUpdate ];
-		when: RSAnimationLoopEvent do: [ :e | 
-			evt canvas newAnimation
-				duration: 200 milliSeconds;
-				from: evt camera position;
-				to: (self correctCameraPosition: evt);
-				onStepDo: [ :t | 
-					evt camera translateTo: t.
-					evt signalUpdate
-					 ].
-			].
-	
-	
-	
+		
+	self move: evt canvas delta: delta.
 ]
 
 { #category : #rendering }
