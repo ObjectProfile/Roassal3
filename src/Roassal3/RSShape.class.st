@@ -50,6 +50,13 @@ RSShape class >> model: anObject [
 	^ self new model: anObject
 ]
 
+{ #category : #accessing }
+RSShape class >> models: someObjects [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
+	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+
+]
+
 { #category : #adding }
 RSShape >> accept: aVisitor [
 	self subclassResponsibility 
