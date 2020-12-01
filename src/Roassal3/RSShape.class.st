@@ -301,11 +301,6 @@ RSShape >> isNode [
 	^ false
 ]
 
-{ #category : #'accessing - attributes' }
-RSShape >> isSLeaf [
-	^ self schildren isEmpty
-]
-
 { #category : #testing }
 RSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
@@ -424,17 +419,6 @@ RSShape >> resetPath [
 	path := nil
 ]
 
-{ #category : #'accessing - attributes' }
-RSShape >> schildren [
-	^ self propertyAt: #schildren
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> schildren: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #schildren put: anObject
-]
-
 { #category : #path }
 RSShape >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
@@ -474,17 +458,6 @@ RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> sparent [
-	^ self propertyAt: #sparent
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> sparent: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #sparent put: anObject
 ]
 
 { #category : #accessing }
