@@ -131,6 +131,7 @@ RSCanvas >> camera: aCamera [
 
 { #category : #accessing }
 RSCanvas >> canvas [
+	"Useful method to have it polymorphic with shapes"
 	^ self
 ]
 
@@ -145,7 +146,7 @@ RSCanvas >> clearBackground: aBool [
 	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
 	
 For example, evaluate the following script:
-```Smalltalk
+```
 c := RSCanvas new.
 c clearBackground: false.
 (1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
@@ -225,6 +226,7 @@ RSCanvas >> extent [
 
 { #category : #accessing }
 RSCanvas >> extent: aPoint [
+	"Set the extent of the canvas. This method is called when a window is resized. An event is raised when the extension happens. "
 	| evt |
 	evt := RSExtentChangedEvent new
 		shape: self;
