@@ -435,7 +435,7 @@ shape1 := RSEllipse new size: 50; color: #red.
 shape2 := RSEllipse new size: 50; color: #blue.
 shape2 translateBy: -25@0.
 c add: shape1; add: shape2.
-c pushFront: shape1.
+c pushBack: shape2.
 c.
 ```	
 "
