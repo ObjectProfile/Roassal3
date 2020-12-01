@@ -36,10 +36,31 @@ Class {
 }
 
 { #category : #accessing }
-RSPopup class >> text: anObject [
+RSPopup class >> text: aStringOrOneArgBlock [
+	"Define a Popup interaction with a particular text. The argument can either be a text, a symbol, or a one-argument block that is evaluated on the model object of the shape. For example:
+```
+canvas := RSCanvas new.
+
+someColors := { Color red . Color blue . Color green }.
+shapes := RSGroup new.
+someColors do: [ :aColor | 
+	shapes add: (RSEllipse new size: 30; model: aColor; color: aColor) ].
+
+canvas addAll: shapes.
+
+shapes @ RSDraggable.
+shapes @ RSLabeled highlightable.
+shapes @ (RSPopup text: [ :aColor | 'My color is ', aColor asString]).
+
+RSHorizontalLineLayout on: shapes.
+
+canvas @ RSCanvasController.
+canvas open.
+```
+	"
 	| inst |
 	inst := self new.
-	inst shapeBuilder textBlock: anObject.
+	inst shapeBuilder textBlock: aStringOrOneArgBlock.
 	^ inst
 ]
 
