@@ -104,6 +104,7 @@ RSCanvas >> announce: anEventOrAnEventClass [
 
 { #category : #accessing }
 RSCanvas >> basicRectangle [
+	"Return a rectangle encompassing all the elements"
 	^ Rectangle origin: 0@0 extent: self extent
 ]
 
