@@ -47,6 +47,22 @@ RSCanvas >> accept: visitor [
 	visitor visitCanvas: self
 ]
 
+{ #category : #'adding nodes edges' }
+RSCanvas >> add: aShape [
+	"Main method to add a shape to a shape to a canvas"
+	self
+		assert: aShape notNil
+		description: 'Nil cannot be added to a canvas'.
+		
+	self 
+		assert: (aShape class inheritsFrom: RSShape)
+		description: 'A shape must be provided'.
+	aShape 
+		addedIn: self;
+		renderOn: self.
+	^ aShape
+]
+
 { #category : #animations }
 RSCanvas >> addAnimation: anAnimation [
 	"Schedule an animation, and run it until its completion"
@@ -182,7 +198,7 @@ c
 	color := Color colorFrom: aColor.
 ]
 
-{ #category : #opening }
+{ #category : #private }
 RSCanvas >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
 	morph := RSAthensMorph new. 

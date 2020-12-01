@@ -19,8 +19,7 @@ RSTContainer >> add: aShape [
 
 { #category : #'adding nodes edges' }
 RSTContainer >> addAll: aCollection [
-	"Add a collection of shapes to the canvas
-	aCollection of shapes, a shape can be a line or can be a node"
+	"Add a collection of shapes to the canvas. The argument is a collection of shapes."
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
 	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
 	
