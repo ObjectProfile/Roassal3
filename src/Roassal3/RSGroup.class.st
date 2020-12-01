@@ -112,7 +112,8 @@ RSGroup >> position [
 
 { #category : #actions }
 RSGroup >> pushBack [ 
-	self do: [:each | each pushBack ]
+	"Push back all the shapes contained in the group"
+	self do: [ :each | each pushBack ]
 ]
 
 { #category : #actions }

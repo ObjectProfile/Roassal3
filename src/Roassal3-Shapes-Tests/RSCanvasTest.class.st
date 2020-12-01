@@ -321,6 +321,9 @@ RSCanvasTest >> testPushFront [
 
 	c pushFront: blueBox.
 	self assert: c shapes asArray equals: { redBox . blueBox }.
+	
+	c pushBack: blueBox.
+	self assert: c shapes asArray equals: { blueBox . redBox }.
 ]
 
 { #category : #'tests - shapes ordering' }

@@ -79,7 +79,8 @@ RSCanvas >> addBasicShape: aShape [
 
 { #category : #'adding removing shapes' }
 RSCanvas >> addFixedShape: aShape [
-	"Add a shape and make the shape fixed. It is therefore not subject to the camera.
+	"This is a private method. Should not be called directly (use RSShape>>setAsFixed instead). 
+Add a shape and make the shape fixed. It is therefore not subject to the camera.
 ```
 c := RSCanvas new.
 
@@ -423,7 +424,7 @@ RSCanvas >> privateShapes: aCollection [
 	shapes := aCollection
 ]
 
-{ #category : #'shapes controling' }
+{ #category : #'shapes ordering' }
 RSCanvas >> pushBack: aShape [
 	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
 
@@ -447,7 +448,7 @@ c.
 		addFirst: aShape.
 ]
 
-{ #category : #'shapes controling' }
+{ #category : #'shapes ordering' }
 RSCanvas >> pushFront: aShape [
 	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
 
