@@ -89,7 +89,7 @@ RSDraggableCanvas >> mouseEnd: evt [
 	delta := lastStep * 2.5.
 	lastStep := nil.
 	camera translateBy: delta.
-	correct := self correctCameraPosition: evt.
+	correct := self correctCameraPosition: aCanvas.
 	camera translateBy: delta negated.
 			
 	p := (correct - camera position) abs max: 1@1.
@@ -121,7 +121,7 @@ RSDraggableCanvas >> mouseMove: evt [
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
 	lastStep := evt step negated / camera scale.
-	correct  := self correctCameraPosition: evt.
+	correct  := self correctCameraPosition: evt canvas.
 	p := (correct - camera position) abs max: 1@1.
 	p := p x sqrt @ p y sqrt.
 	camera translateBy: lastStep/ p.

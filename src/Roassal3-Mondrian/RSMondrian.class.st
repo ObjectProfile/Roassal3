@@ -193,6 +193,15 @@ RSMondrian >> normalizeColor: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeColor: oneArgBlock from: fromColor to: toColor [
+	RSNormalizer color
+		shapes: self canvas nodes;
+		from: fromColor;
+		to: toColor;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeHeight: oneArgBlock [
 	RSNormalizer height
 		shapes: self canvas nodes;

@@ -21,18 +21,17 @@ RSAbstractControlCanvas >> configuration: aRSControlLimits [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: evt [ 
+RSAbstractControlCanvas >> correctCameraPosition: aCanvas [ 
 	^ self 
-		correctCameraPosition: evt
-		inRectangle: (self expandedRectangle: evt)
-		position: evt camera position
-		scale: evt camera scale
+		correctCameraPosition: aCanvas
+		inRectangle: (self expandedRectangle: aCanvas)
+		position: aCanvas camera position
+		scale: aCanvas camera scale
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: evt inRectangle: rectangle position: position scale: scale [
-	| aCanvas canvasRect x y p |
-	aCanvas := evt canvas.
+RSAbstractControlCanvas >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
+	| canvasRect x y p |
 	p := position.
 	canvasRect := Rectangle
 		floatCenter: p
@@ -63,11 +62,11 @@ RSAbstractControlCanvas >> correctCameraPosition: evt inRectangle: rectangle pos
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: evt scale: scale [
+RSAbstractControlCanvas >> correctCameraPosition: aCanvas scale: scale [
 	^ self 
-		correctCameraPosition: evt
-		inRectangle: (self expandedRectangle: evt)
-		position: evt camera position
+		correctCameraPosition: aCanvas
+		inRectangle: (self expandedRectangle: aCanvas)
+		position: aCanvas camera position
 		scale: scale
 ]
 
@@ -78,12 +77,12 @@ RSAbstractControlCanvas >> encompassingRectangleFor: aCanvas [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> expandedRectangle: evt [
+RSAbstractControlCanvas >> expandedRectangle: aCanvas [
 	| key | 
 	key := #expanedEncompassingRectangle.
-	^ evt canvas propertyAt: key ifAbsentPut: [ 
+	^ aCanvas propertyAt: key ifAbsentPut: [ 
 		| rectangle |
-		rectangle := self encompassingRectangleFor: evt canvas.
+		rectangle := self encompassingRectangleFor: aCanvas.
 		self configuration padding expandRectangle: rectangle ].
 	
 ]

@@ -16,6 +16,15 @@ RSBoundingTest >> setUp [
 	canvas := RSCanvas new
 ]
 
+{ #category : #tests }
+RSBoundingTest >> testCreating [
+	| values boxes |
+	values := #(20 30 40 50 10).
+	boxes := RSBox models: values.
+	self assert: boxes class equals: RSGroup.
+	self assert: (boxes allSatisfy: [ :s | s class == RSBox ])
+]
+
 { #category : #running }
 RSBoundingTest >> testDrawBitmap [
 	canvas addShape: (RSBitmap new

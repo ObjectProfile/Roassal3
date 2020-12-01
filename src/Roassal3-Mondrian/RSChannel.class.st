@@ -8,7 +8,8 @@ Class {
 		'isClicked',
 		'highlightable',
 		'color',
-		'isClickable'
+		'isClickable',
+		'marksGoUpward'
 	],
 	#category : #'Roassal3-Mondrian-Connections'
 }
@@ -87,6 +88,9 @@ RSChannel >> initialize [
 	isClicked := false.
 	isClickable := true.
 	self color: self defaultColor.
+	
+	"Marks must go downward"
+	marksGoUpward := false.
 ]
 
 { #category : #public }
@@ -131,10 +135,17 @@ RSChannel >> mark: shape [
 	
 	"We must not forget the first mark, half must be added, to have exactly the mark below the shape (not overlapping)"
 	deltaY := deltaY + (self markHeight / 2).
+	marksGoUpward ifTrue: [ deltaY := deltaY negated ].
 	aMark translateTo: position + (0 @ deltaY).
 
 	"Register the mark in the shape"
 	shape propertyAt: self symbolMarker put: aMark
+]
+
+{ #category : #accessing }
+RSChannel >> markGoUp [
+
+	marksGoUpward := true
 ]
 
 { #category : #'private - highlight' }
