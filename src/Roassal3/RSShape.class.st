@@ -62,8 +62,9 @@ RSShape >> accept: aVisitor [
 	self subclassResponsibility 
 ]
 
-{ #category : #adding }
+{ #category : #'private - adding' }
 RSShape >> addedIn: aCanvas [
+	"This is a private method"
 	| evt |
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
@@ -182,17 +183,17 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapeFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapesFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
@@ -366,8 +367,7 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
-	"-Keeps an AthensCairoPath, 
-	-this value is reset when the image is restarted"
+	"Set the path of the shape. It set an AthensCairoPath. Note that this value is set to nil when the Pharo image is restarted"
 	path := aPath
 ]
 

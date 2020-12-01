@@ -293,11 +293,13 @@ RSCanvas >> isShape [
 
 { #category : #accessing }
 RSCanvas >> morph [
+	"Return the Athens morph used by the canvas to render the visualization"
 	^ morph
 ]
 
 { #category : #accessing }
 RSCanvas >> morph: aMorph [
+	"Set the RSAthensMorph. The canvas will directly render in the morph"
 	morph := aMorph
 ]
 
@@ -358,6 +360,7 @@ RSCanvas >> openWithTitle: aTitleAsString [
 
 { #category : #accessing }
 RSCanvas >> parent [
+	"A canvas has no parent. Shapes may have a parent other than the canvas when they are nested"
 	^ self
 ]
 
@@ -527,11 +530,6 @@ The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
 	^ shapes copy
 ]
 
-{ #category : #accessing }
-RSCanvas >> shapes: aRSGroup [
-	shapes := aRSGroup
-]
-
 { #category : #'accessing - shapes' }
 RSCanvas >> shapesFromModels: objects [
 	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
@@ -557,6 +555,7 @@ RSCanvas >> signalUpdate [
 
 { #category : #accessing }
 RSCanvas >> topParent [
+	"A top parent is a canvas"
 	^ self
 ]
 
