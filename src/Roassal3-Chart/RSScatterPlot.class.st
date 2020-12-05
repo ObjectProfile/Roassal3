@@ -96,7 +96,7 @@ RSScatterPlot >> renderIn: canvas [
 		newPoint := (xScale scale: xt) @ (yScale scale: yt).
 		(self isPointWellDefined: newPoint)
 			ifTrue: [ et translateTo: newPoint.
-				canvas addShape: et ] ].
+				canvas add: et ] ].
 		
 	processBlock rsValue: shapes.
 ]
