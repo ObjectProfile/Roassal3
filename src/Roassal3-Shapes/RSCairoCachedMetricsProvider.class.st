@@ -53,10 +53,11 @@ RSCairoCachedMetricsProvider >> extentsOf: aRSLabel [
 		at: font 
 		ifAbsentPut: [ self dictionaryFor: font ].
 	"this need to calculate the x_bearing and the kerning between characters"
-	
-	w := (aRSLabel text
-		collect: [ :char | self widthOf: char map: map font: font ] 
-		as: Array) sum asFloat.
+	w := aRSLabel text 
+		ifEmpty: [ 0 ]
+	 	ifNotEmpty: [ (aRSLabel text
+			collect: [ :char | self widthOf: char map: map font: font ] 
+			as: Array) sum asFloat ].
 	h := font getPreciseHeight asFloat.
 	
 	^ RSTextExtents new
