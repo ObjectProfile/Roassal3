@@ -125,7 +125,7 @@ RSTContainer >> numberOfEdges [
 	"Return the number of edges contained in the container"
 	^ self privateEdges
 		ifNil: [ 0 ]
-		ifNotNil: [ :edges | edges size ]
+		ifNotNil: [ :aGroupOfEdges | aGroupOfEdges size ]
 ]
 
 { #category : #accessing }
@@ -133,7 +133,7 @@ RSTContainer >> numberOfNodes [
 	"Return the number of nodes contained in the container"
 	^ self privateNodes
 		ifNil: [ 0 ]
-		ifNotNil: [ :nodes | nodes size ]
+		ifNotNil: [ :aGroupOfNodes | aGroupOfNodes size ]
 ]
 
 { #category : #private }

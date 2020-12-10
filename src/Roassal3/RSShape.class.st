@@ -377,9 +377,7 @@ RSShape >> postCopy [
 
 { #category : #printing }
 RSShape >> printOn: stream [
-	| model |
 	super printOn: stream.
-	model := self model.
 	model ifNil: [ ^ self ].
 	stream << '('; << model asString; << ')'.
 ]
