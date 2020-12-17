@@ -2,22 +2,15 @@
 With the mouse right click event I show a basic popup
 
 Example:
--=-=-=-=
-v := RSView new.
+```Smalltalk
+m := RSMondrian new.
+m nodes: (1 to: 10).
+m build.
 
-boxes := RSShapeBuilder composite
-				color: Color blue trans;
-				shapes: [ :nb | 
-					TSGroup with: (RSShapeBuilder label elementOn: nb)
-					 ]; 
-				size: 30;
-				elementsOn: (1 to: 100).
-v addAll: boxes.
-RSGridLayout on: boxes.
-boxes @ (RSMenuActivable new menuDo: [ :menu :element | menu add: 'Inspect' target: element model selector: #inspect ]).
-v @ RSControlsView.
-v open
--=-=-=-=
+m canvas nodes @ (RSMenuActivable new menuDo: [ :menu :element | menu add: 'Inspect' target: element model selector: #inspect ]).
+
+m open
+```
 "
 Class {
 	#name : #RSMenuActivable,
