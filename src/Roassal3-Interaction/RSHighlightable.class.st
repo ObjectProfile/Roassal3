@@ -87,6 +87,62 @@ shapes @ interaction.
 RSGridLayout on: shapes.
 c @ RSCanvasController
 ```
+
+Example of multiple selections:
+```Smalltalk
+classes := Collection withAllSubclasses.
+
+c := RSCanvas new.
+shapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
+
+c addAll: shapes.
+RSNormalizer size shapes: shapes; normalize: #numberOfMethods.
+RSFlowLayout on: shapes.
+
+shapes @ RSPopup.
+
+
+buttonReset := RSLabel text: 'Reset'.
+c add: buttonReset.
+buttonReset setAsFixed.
+buttonReset @ (RSHighlightable defaultRed).
+buttonReset when: RSMouseClick do: [ :evt | 
+	selectedShapes do: [ :s | highlightable restore: s selector: #color ].
+	selectedShapes := RSGroup new.
+	lbl text: ''.
+	c signalUpdate. ].
+
+buttonInspect := RSLabel text: 'Inspect'.
+c add: buttonInspect.
+buttonInspect setAsFixed.
+buttonInspect @ (RSHighlightable defaultRed).
+buttonInspect when: RSMouseClick do: [ :evt | selectedShapes inspect ].
+
+lbl := RSLabel new.
+c add: lbl.
+lbl setAsFixed.
+lbl translateTo: 90 @ 30.
+
+g := {buttonReset . buttonInspect } asGroup.
+RSHorizontalLineLayout on: g.
+g translateTo: g extent / 2 + (10 @ 10).
+
+selectedShapes := RSGroup new.
+highlightable := RSHighlightable new.
+shapes when: RSMouseClick do: [ :evt |
+	(selectedShapes includes: evt shape) 
+		ifFalse: [ selectedShapes add: evt shape ].
+	highlightable
+			record: evt shape
+			selector: #color
+			value: Color red.
+	lbl text: selectedShapes size asString, ' selected shapes'.
+	c signalUpdate.
+		 ].
+
+c @ RSCanvasController.
+c openOnce
+```
 "
 Class {
 	#name : #RSHighlightable,
