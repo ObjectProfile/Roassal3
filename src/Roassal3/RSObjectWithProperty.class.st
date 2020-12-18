@@ -1,5 +1,12 @@
 "
-My subclasses has attributes useful to add extra data to each component
+This class has a set of properties useful to contains some meta-information.
+Properties may be added, removed, and tested.
+Furthermore, `RSObjectWithProperty` has an announcer and offers some abilities to handle event with interactions. 
+My subclasses have attributes useful to add extra data to each component
+
+*Responsibility*: support properties defined in terms of pairs key->values, and can do some event handling.
+
+*Collaborators*: subclasses
 "
 Class {
 	#name : #RSObjectWithProperty,
@@ -92,11 +99,6 @@ RSObjectWithProperty >> hasProperty: aKey [
 { #category : #announcer }
 RSObjectWithProperty >> privateAnnouncer [
 	^ announcer
-]
-
-{ #category : #private }
-RSObjectWithProperty >> privateAttributes [
-	^ properties
 ]
 
 { #category : #properties }

@@ -1,5 +1,5 @@
 "
-Root of most of the Trachel classes.
+Root of most of the Roassal classes.
 "
 Class {
 	#name : #RSObject,
