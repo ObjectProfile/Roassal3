@@ -18,5 +18,7 @@ RSShapeTest >> testTranslateMiddleRightTo [
 	c add: lbl.
 	lbl translateMiddleRightTo: 0 @ 0.
 	
-	self assert: (lbl position closeTo: (-52.40666 @ 0))
+	self assert: (lbl position x < 0).
+	self assert: (lbl position y = 0).
+	
 ]
