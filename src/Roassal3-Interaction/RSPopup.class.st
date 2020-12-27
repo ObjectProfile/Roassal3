@@ -2,28 +2,28 @@
 I can add a popup on an element when a move over event occurs.
 
 Here is an example:
--=-=-=-=
+```
 c := RSCanvas new.
 
 classes := RSObject withAllSubclasses.
 
-scale := TSScale linear
-	domain: { (classes collect: #numberOfMethods) min . (classes collect: #numberOfMethods) max};
-	range: { 'red'. 'blue' }.
+scale := NSScale linear
+domain: { (classes collect: #numberOfMethods) min . (classes collect: #numberOfMethods) max};
+range: { 'red'. 'blue' }.
 
 classes do: [ :cls |
-	| b |
-	b := RSEllipse new.
-	b size: cls numberOfMethods.
-	b color: (scale scale: cls numberOfMethods).
-	b model: cls.
-	b @ RSPopup.
-	c add: b ].
+| b |
+b := RSEllipse new.
+b size: cls numberOfMethods.
+b color: (scale scale: cls numberOfMethods).
+b model: cls.
+b @ RSPopup.
+c add: b ].
 
 RSFlowLayout on: c shapes.
 
-c @ RSControlsCanvas
--=-=-=-=
+c @ RSCanvasController
+```
 "
 Class {
 	#name : #RSPopup,
@@ -36,10 +36,31 @@ Class {
 }
 
 { #category : #accessing }
-RSPopup class >> text: anObject [
+RSPopup class >> text: aStringOrOneArgBlock [
+	"Define a Popup interaction with a particular text. The argument can either be a text, a symbol, or a one-argument block that is evaluated on the model object of the shape. For example:
+```
+canvas := RSCanvas new.
+
+someColors := { Color red . Color blue . Color green }.
+shapes := RSGroup new.
+someColors do: [ :aColor | 
+	shapes add: (RSEllipse new size: 30; model: aColor; color: aColor) ].
+
+canvas addAll: shapes.
+
+shapes @ RSDraggable.
+shapes @ RSLabeled highlightable.
+shapes @ (RSPopup text: [ :aColor | 'My color is ', aColor asString]).
+
+RSHorizontalLineLayout on: shapes.
+
+canvas @ RSCanvasController.
+canvas open.
+```
+	"
 	| inst |
 	inst := self new.
-	inst shapeBuilder textBlock: anObject.
+	inst shapeBuilder textBlock: aStringOrOneArgBlock.
 	^ inst
 ]
 

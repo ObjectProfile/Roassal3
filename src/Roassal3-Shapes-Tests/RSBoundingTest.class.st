@@ -16,6 +16,15 @@ RSBoundingTest >> setUp [
 	canvas := RSCanvas new
 ]
 
+{ #category : #tests }
+RSBoundingTest >> testCreating [
+	| values boxes |
+	values := #(20 30 40 50 10).
+	boxes := RSBox models: values.
+	self assert: boxes class equals: RSGroup.
+	self assert: (boxes allSatisfy: [ :s | s class == RSBox ])
+]
+
 { #category : #running }
 RSBoundingTest >> testDrawBitmap [
 	canvas addShape: (RSBitmap new
@@ -102,7 +111,7 @@ RSBoundingTest >> testFromRectangle [
 	| box |
 	box := RSBox new.
 	self assert: box position equals: 0 @ 0.
-	self assert: box extent equals: 0 @ 0.
+	self assert: box extent > (0 @ 0).
 	box fromRectangle: (10 @ 10 corner: 50 @ 40).
 	self assert: box position equals: 30 @ 25.
 	self assert: box extent equals: 40 @ 30.
@@ -125,4 +134,16 @@ RSBoundingTest >> testPosition [
 	b := RSBox new.
 	self assert: b position equals: 0@0.
 	b position: 0@0.
+]
+
+{ #category : #tests }
+RSBoundingTest >> testTranslateTopLeftTo [
+
+	| b |
+	b := RSBox new size: 10.
+	b translateTopLeftTo: 0 @ 0.
+	self assert: b position equals: 5 @ 5.
+	
+	b translateTopLeftTo: 10 @ 50.
+	self assert: b position equals: 15 @ 55.
 ]

@@ -27,6 +27,29 @@ RSLabelTest >> testBuilding [
 ]
 
 { #category : #tests }
+RSLabelTest >> testBuilding2 [
+
+	| l |
+	l := RSLabel text: 'Hello' model: 42.
+	self assert: l class equals: RSLabel.
+	self assert: l text equals: 'Hello'.
+	self assert: l model equals: 42.
+	
+]
+
+{ #category : #tests }
+RSLabelTest >> testCairoCachedMetricProvider [
+	| label provider |
+	label := RSLabel new.
+	label text: ''.
+	provider := RSCairoCachedMetricsProvider new.
+	label metricsProvider: provider.
+	
+	self assert: label extent class equals: Point.
+	self assert: (provider extentsOf: label) class equals: RSTextExtents.
+]
+
+{ #category : #tests }
 RSLabelTest >> testCairoFitMetricsProvider [
 	| label h |
 	label := RSLabel new.

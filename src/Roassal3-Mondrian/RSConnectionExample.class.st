@@ -27,8 +27,8 @@ RSConnectionExample >> example01Basic [
 
 { #category : #examples }
 RSConnectionExample >> example02TwoViews [
+
 	<script: 'self new example02TwoViews'>
-	
 	| c connection d |
 	c := RSMondrian new.
 	c nodes: (1 to: 100 by: 10).
@@ -36,23 +36,23 @@ RSConnectionExample >> example02TwoViews [
 
 	connection := RSPopupConnection new.
 	connection inputCanvas: c.
-	connection output: [ :inputModel |
+	connection output: [ :inputModel | 
 		| c2 |
 		c2 := RSMondrian new.
 		c2 nodes: (1 to: inputModel).
 		c2 line connectFrom: [ :vv | vv // 2 ].
 		c2 layout cluster.
-		c2 build.
-	].
+		c2 build ].
 
-	connection output: [ :inputModel |
+	connection output: [ :inputModel | 
 		| c3 |
 		c3 := RSChart new.
 		d := RSLinePlot new.
-		d y: (((1 to: inputModel) collect: [ :v | Random new nextInt: 42 ]) sortedAs: #yourself).
+		d y:
+			(((1 to: inputModel) collect: [ :v | Random new nextInteger: 42 ]) 
+				 sortedAs: #yourself).
 		c3 addPlot: d.
-		c3 build
-	]
+		c3 build ]
 ]
 
 { #category : #examples }

@@ -33,8 +33,8 @@ RSShapeBuilder >> color [
 ]
 
 { #category : #accessing }
-RSShapeBuilder >> color: anObject [
-	color := anObject
+RSShapeBuilder >> color: aOneArgBlockOrAValue [
+	color := aOneArgBlockOrAValue
 ]
 
 { #category : #initialization }
@@ -57,6 +57,15 @@ RSShapeBuilder >> height [
 { #category : #accessing }
 RSShapeBuilder >> height: anObject [
 	height := anObject
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
+	| aColor |
+	aColor := color.
+	self color: [ :obj | (oneArgBlock rsValue: obj) 
+											ifTrue: [ aOneArgBlockOrAValue rsValue: obj ]
+											ifFalse: [ aColor rsValue: obj ] ]
 ]
 
 { #category : #initialization }

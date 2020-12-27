@@ -3,6 +3,8 @@
 
 Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal was created to enable interactive data visualization. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
 
+Roassal3 is free and open source, but backed by Object Profile. Commercial support offerings are available, including training and custom consultancy services. Check [RoassalPro](https://github.com/ObjectProfile/Roassal3Documentation/blob/6bbc6a4cb36914e1f79b3a038c32984673a1384f/documentation/RoassalPro.md) for more information.
+
 
 ## Pharo Installations
 Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.4. 

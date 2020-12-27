@@ -106,6 +106,11 @@ Class {
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
+{ #category : #'as yet unclassified' }
+RSLocation class >> move: aShapeOrAGroup1 above: aShapeOrAGroup2 [
+	self new above; move: aShapeOrAGroup1 on: aShapeOrAGroup2
+]
+
 { #category : #'public - positioning shorcuts' }
 RSLocation >> above [ 
 	self top; outer.
@@ -234,6 +239,7 @@ c
 
 { #category : #'public - executing' }
 RSLocation >> move: movableShape on: baseShape [
+	"Utility method"
 	movableShape translateTo: (self computePosition: movableShape on: baseShape).
 ]
 

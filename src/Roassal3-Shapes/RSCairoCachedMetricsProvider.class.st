@@ -41,10 +41,8 @@ Class {
 
 { #category : #hooks }
 RSCairoCachedMetricsProvider >> dictionaryFor: font [
-	| table |
-	table := Dictionary new.
-	1 to: 255 do: [ :i | self widthOf: (Character value: i) map: table font: font ].
-	^ table
+	^ Dictionary new.
+	
 ]
 
 { #category : #hooks }
@@ -55,9 +53,11 @@ RSCairoCachedMetricsProvider >> extentsOf: aRSLabel [
 		at: font 
 		ifAbsentPut: [ self dictionaryFor: font ].
 	"this need to calculate the x_bearing and the kerning between characters"
-	w := (aRSLabel text 
-		collect: [ :char | self widthOf: char map: map font: font ] 
-		as: Array ) sum asFloat.
+	w := aRSLabel text 
+		ifEmpty: [ 0 ]
+	 	ifNotEmpty: [ (aRSLabel text
+			collect: [ :char | self widthOf: char map: map font: font ] 
+			as: Array) sum asFloat ].
 	h := font getPreciseHeight asFloat.
 	
 	^ RSTextExtents new
@@ -65,7 +65,7 @@ RSCairoCachedMetricsProvider >> extentsOf: aRSLabel [
 		height: h;
 		x_advance: 0;
 		y_advance: 0;
-		x_bearing: 0.5;
+		x_bearing: 0;
 		y_bearing: font getPreciseAscent negated;
 		yourself.
 
@@ -80,11 +80,13 @@ RSCairoCachedMetricsProvider >> initialize [
 RSCairoCachedMetricsProvider >> widthOf: char map: map font: aLogicalFont [
 	^ map at: char
 		ifAbsentPut: [ 
-			aLogicalFont getGlyphWidth: char
-			"| ext |
-			ext := CairoFontMetricsProvider new
+			| glyphs rawExt cairoFont |
+			glyphs := CairoFontMetricsProvider new
 				font: aLogicalFont;
-				extentsOf: char asString.
-			ext width."
-			 ].
+				glyphsOf: char asString.
+			rawExt := CairoTextExtents new.
+			cairoFont := CairoScaledFont fromFreetypeFont: aLogicalFont asFreetypeFont.
+			cairoFont getExtentsOfGlyphs: glyphs getHandle ofLength: glyphs size into: rawExt.
+			rawExt x_advance
+			].
 ]

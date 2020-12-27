@@ -89,15 +89,14 @@ RSBoundingShape >> extent: aPoint [
 { #category : #initialization }
 RSBoundingShape >> fromRectangle: aRectangle [
 	"Set the position and extent of the shape, using a rectangle as argument.
-	For example:
-	
--=-=-=-=-=-=-=-=-=	
+For example:	
+```
 c := RSCanvas new.
 box := RSBox new.
 box fromRectangle: (10 @ 10 corner: 50 @ 40).
 c add: box.
 c
--=-=-=-=-=-=-=-=-=
+```
 "
 	self 
 		translateTo: aRectangle floatCenter;
@@ -149,7 +148,9 @@ RSBoundingShape >> incomingEdges [
 RSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix; updateEdgesON.
+	
 	baseRectangle := 0@0 corner: 0@0.
+	self extent: 5 @ 5.
 ]
 
 { #category : #initialization }
@@ -321,6 +322,45 @@ RSBoundingShape >> size: anInteger [
 RSBoundingShape >> transform: aPoint [
 	"useful for attachpoints"
 	^ matrix transform: aPoint
+]
+
+{ #category : #actions }
+RSBoundingShape >> translateMiddleRightTo: aPosition [
+	"Translate the shape to make the middle right position at a given position
+
+```
+c := RSCanvas new.
+
+center := RSEllipse new size: 2; color: Color red.
+c add: center.
+center translateTo: 0 @ 0.
+
+lbl := RSLabel text: 'Middle right corner'.
+c add: lbl.
+lbl translateMiddleRightTo: 0 @ 0.
+c @ RSCanvasController.
+c open
+```
+	
+"
+	self translateTo: aPosition - ((self extent x / 2) @ 0)
+]
+
+{ #category : #actions }
+RSBoundingShape >> translateTopLeftTo: aPosition [
+	"Translate the shape to make the top left corner at a given position
+
+```
+c := RSCanvas new.
+lbl := RSLabel text: 'Top left corner'.
+c add: lbl.
+lbl setAsFixed.
+lbl translateTopLeftTo: 0 @ 0.
+c open
+```
+	
+"
+	self translateTo: aPosition + (self extent / 2)
 ]
 
 { #category : #edges }

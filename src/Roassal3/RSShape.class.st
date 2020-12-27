@@ -1,5 +1,20 @@
 "
 <keyClass>
+A shape is a visual element meant to be displayed. Roassal offers numerous shapes, themselves highly configurable. The class `RSShape` is the root of all the Roassal shapes, and a shape is typically created by instantiating a subclass of `RSShape`. For example, a box is defined by instantiating `RSBox`. 
+
+For example, a colored box with a thick border may be defined as:
+
+```Smalltalk
+box := RSBox new
+			size: 80;
+			color: #yellow;
+			border: (RSBorder new color: #blue; width: 10).
+```
+
+Colors may be provided either as a color object (e.g., `Color blue` or `Color r: 0 g: 0 b: 1.0`) or as a symbol (e.g., `#yellow`). In case a symbol is provided, it is converted to a color object using `Color>>colorFrom:`, as in `Color>>colorFrom: #yellow`. 
+
+Although most of the configuration may be carried out by directly sending an object with a literal (e.g., `size: 80`), part of the configuration of the shape may involve dedicated objects, such as `RSBorder`.
+
 `RSShape` is the root of all the Roassal shapes. A shape represents a visual element meant to be inserted in a `RSCanvas`. `RSShape` is an abstract class, not meant to be directly instantiated therefore.
 
 *Responsibility*: A shape, i.e., subclass of the class `RSShape` is responsible to model a visual element. 
@@ -35,13 +50,21 @@ RSShape class >> model: anObject [
 	^ self new model: anObject
 ]
 
+{ #category : #accessing }
+RSShape class >> models: someObjects [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
+	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+
+]
+
 { #category : #adding }
 RSShape >> accept: aVisitor [
 	self subclassResponsibility 
 ]
 
-{ #category : #adding }
+{ #category : #'private - adding' }
 RSShape >> addedIn: aCanvas [
+	"This is a private method"
 	| evt |
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
@@ -54,11 +77,11 @@ RSShape >> addedIn: aCanvas [
 ]
 
 { #category : #announcer }
-RSShape >> announce: anEventOrAnEventClass [
-	"Send an event"
+RSShape >> announce: anEventOrAnEventClassOrABlock [
+	"Send an event. The event is provided as argument, and may be either an event object, an event class, or a block (taking no argument) that returns an event object. These different way of specifying events addresses some performance concern."
 	| theEventToSend |
 	announcer ifNil: [ ^ self ].
-	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend := anEventOrAnEventClassOrABlock value asAnnouncement.
 	theEventToSend canvas: self canvas.
 	theEventToSend shape: self.
 	announcer announce: theEventToSend.
@@ -160,17 +183,17 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapeFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapesFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #adding }
+{ #category : #'looking up shapes' }
 RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
@@ -278,11 +301,6 @@ RSShape >> isNode [
 	^ false
 ]
 
-{ #category : #'accessing - attributes' }
-RSShape >> isSLeaf [
-	^ self schildren isEmpty
-]
-
 { #category : #testing }
 RSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
@@ -344,8 +362,7 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
-	"-Keeps an AthensCairoPath, 
-	-this value is reset when the image is restarted"
+	"Set the path of the shape. It set an AthensCairoPath. Note that this value is set to nil when the Pharo image is restarted"
 	path := aPath
 ]
 
@@ -360,9 +377,7 @@ RSShape >> postCopy [
 
 { #category : #printing }
 RSShape >> printOn: stream [
-	| model |
 	super printOn: stream.
-	model := self model.
 	model ifNil: [ ^ self ].
 	stream << '('; << model asString; << ')'.
 ]
@@ -400,17 +415,6 @@ RSShape >> resetBBox [
 { #category : #path }
 RSShape >> resetPath [
 	path := nil
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> schildren [
-	^ self propertyAt: #schildren
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> schildren: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #schildren put: anObject
 ]
 
 { #category : #path }
@@ -452,17 +456,6 @@ RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> sparent [
-	^ self propertyAt: #sparent
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> sparent: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #sparent put: anObject
 ]
 
 { #category : #accessing }

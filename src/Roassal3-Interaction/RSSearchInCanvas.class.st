@@ -4,34 +4,22 @@ You can use `RSSearchInCanvas` as follows (press the S key and the R key):
 
 ```Smalltalk
 c := RSCanvas new.
-
 shapes := Collection withAllSubclasses collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
-
 c addAll: shapes.
-
 shapes @ RSPopup.
-
 eb := RSEdgeBuilder line.
 eb canvas: c.
 eb connectFrom: #superclass.
-
 RSTreeLayout on: shapes.
-
-con := RSCanvasController new.
-con addInteraction: RSSearchInCanvas new.
-c @ con.
+c @ RSCanvasController.
 ```
 
 ```Smalltalk
 c := RSCanvas new.
-
 shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
-
 c addAll: shapes.
 RSGridLayout on: shapes.
-
 shapes @ RSPopup.
-
 con := RSCanvasController new.
 con addInteraction: RSSearchInCanvas new.
 c @ con.
@@ -72,7 +60,10 @@ Class {
 	#instVars : [
 		'canvas',
 		'useExactMatch',
-		'highlightable'
+		'highlightable',
+		'fixedLabels',
+		'highlightesShapes',
+		'colorsToUse'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -97,6 +88,13 @@ RSSearchInCanvas >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
+{ #category : #public }
+RSSearchInCanvas >> cleanAndResetFixedshapes [
+
+	fixedLabels do: [ :s | canvas removeFixedShape: s ].
+	self resetFixedShapes
+]
+
 { #category : #'public - configuration' }
 RSSearchInCanvas >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
@@ -105,15 +103,43 @@ RSSearchInCanvas >> colorToHighlight: aColor [
 		yourself.
 ]
 
+{ #category : #public }
+RSSearchInCanvas >> colorToUseToHighlight [
+
+	^ colorsToUse scale: self numberOfPerformedSearches
+]
+
+{ #category : #public }
+RSSearchInCanvas >> doHighlightShapes: shapesToHighlight [
+
+	shapesToHighlight do: [ :s | 
+		highlightable
+			record: s
+			selector: #color
+			value: self colorToUseToHighlight ].
+
+	"We record the highlighted shapes"
+	highlightesShapes addAll: shapesToHighlight
+]
+
 { #category : #'public - configuration' }
 RSSearchInCanvas >> doNotUseExactMatch [
 	"Expect a regular expression as input, but a * is prepended and appended to the regexp"
 	useExactMatch := false
 ]
 
-{ #category : #util }
-RSSearchInCanvas >> highlightShapes: shapesToHighlight [
-	shapesToHighlight do: [ :s | self highlightShape: s ]
+{ #category : #public }
+RSSearchInCanvas >> doUnhighlightShapes [
+
+	highlightesShapes do: [ :s | highlightable restore: s selector: #color ].
+	highlightesShapes := RSGroup new.
+
+]
+
+{ #category : #accessing }
+RSSearchInCanvas >> fixedLabels [
+	"Return the label that are created when a search is performed"
+	^ fixedLabels
 ]
 
 { #category : #accessing }
@@ -123,10 +149,14 @@ RSSearchInCanvas >> highlightable [
 
 { #category : #initialization }
 RSSearchInCanvas >> initialize [
-	super initialize.
 
+	super initialize.
+	self resetFixedShapes.
+	highlightesShapes := RSGroup new.
+	
+	colorsToUse := NSScale ordinalColored: 7.
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	self 
+	self
 		colorToHighlight: Color red;
 		doNotUseExactMatch
 ]
@@ -150,9 +180,13 @@ RSSearchInCanvas >> keyForSearch [
 { #category : #util }
 RSSearchInCanvas >> numberOfHighlightedShapes [
 	"Return the number of shapes that have been highlited"
-	^ (canvas propertyAt: highlightable propertyKey)
-		ifNil: [ 0 ]
-		ifNotNil: [ :col | col size ]
+	^ highlightesShapes size
+]
+
+{ #category : #accessing }
+RSSearchInCanvas >> numberOfPerformedSearches [
+	"Return the number of searches that have been done since the last reset. This number is the same than the number of fixed labels that were already set."
+	^ fixedLabels size
 ]
 
 { #category : #private }
@@ -190,9 +224,17 @@ RSSearchInCanvas >> renderLegendOn: aLegendBuilder [
 
 { #category : #public }
 RSSearchInCanvas >> resetAllHighlightedShapes [
-	"Restore the colors of all the highlighted shapes"
-	highlightable unhighlightRecordedShapes: canvas.
-	canvas signalUpdate.
+
+	"Restore the colors of all the highlighted shapes. This method is called whtn keyForReset is pressed"
+
+	self cleanAndResetFixedshapes.
+	self doUnhighlightShapes.
+	canvas signalUpdate
+]
+
+{ #category : #initialization }
+RSSearchInCanvas >> resetFixedShapes [
+	fixedLabels := RSGroup new
 ]
 
 { #category : #public }
@@ -208,13 +250,26 @@ RSSearchInCanvas >> searchForShapes [
 { #category : #public }
 RSSearchInCanvas >> searchForShapes: regExp [
 	"callback called when some shapes have to be search"
-	| shapesToHighlight |
-	shapesToHighlight := self shapesToHighlightUsingRegExp: (self adjustRegExpIfNecessary: regExp).
-		
+
+	| shapesToHighlight lbl |
+	shapesToHighlight := self shapesToHighlightUsingRegExp:
+		                     (self adjustRegExpIfNecessary: regExp).
+
 	"No need to pursue if we have not found anything"
 	shapesToHighlight ifEmpty: [ ^ self ].
-	
-	highlightable doHighlightShapes: shapesToHighlight.
+	self doHighlightShapes: shapesToHighlight.
+
+	lbl := RSLabel text: regExp model: shapesToHighlight size asString, ' elements'.
+	lbl fontSize: 14.
+	lbl @ RSPopup.
+	lbl color: self colorToUseToHighlight.
+	canvas add: lbl.
+	lbl setAsFixed.
+	fixedLabels add: lbl.
+	RSHorizontalLineLayout on: fixedLabels.
+	fixedLabels translateTo: fixedLabels extent / 2 + (5 @ 5).
+
+
 	canvas signalUpdate
 ]
 

@@ -12,11 +12,6 @@ Class {
 	#category : #'Roassal3-Shapes-Tests'
 }
 
-{ #category : #tests }
-RSEdgeBuilderTest >> expectedFailures [
-	^ #(#testFromAll #testUseInLayout #testWithMoveBehind)
-]
-
 { #category : #running }
 RSEdgeBuilderTest >> setUp [
 	super setUp.
@@ -495,7 +490,7 @@ RSEdgeBuilderTest >> testToObjects [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind [
 
-	RSEdgeBuilder new
+	RSEdgeBuilder line
 		canvas: canvas;
 		moveBehind;
 		useAssociations: (Array 

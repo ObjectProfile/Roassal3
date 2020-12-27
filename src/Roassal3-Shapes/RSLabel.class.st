@@ -77,6 +77,12 @@ RSLabel class >> text: aText [
 	^ self new text: aText
 ]
 
+{ #category : #accessing }
+RSLabel class >> text: aText model: aModelObject [
+	"Initialize a label with a text and a model"
+	^ self new text: aText; model: aModelObject
+]
+
 { #category : #visiting }
 RSLabel >> accept: visitor [
 	visitor visitLabel: self.

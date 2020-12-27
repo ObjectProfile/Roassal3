@@ -20,7 +20,7 @@ RSHighlightableTest >> testBasic [
 	RSHighlightable new record: shapes fifth selector: #color value: Color blue.
 	self assert: shapes fifth color equals: Color blue.
 	
-	RSHighlightable new restore: shapes fifth selector: #color .
+	RSHighlightable new restore: shapes fifth selector: #color.
 	self assert: shapes fifth color equals: previousColor.
 ]
 

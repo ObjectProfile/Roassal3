@@ -24,7 +24,31 @@ RSCanvas >> gtInspectorViewIn: composite [
 ]
 
 { #category : #'*Roassal3-Inspector' }
+RSCanvas >> inspectorCanvas [
+	<inspectorPresentationOrder: 90 title: 'Canvas'>
+	^ SpMorphPresenter new
+		morph: self createMorph;
+		yourself
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext [
+	"Return the context used in the canvas. The inspector context contains all the registration that is added to a canvas per default, when being used in the GTInspector. Registrations can be easily diseabled, for example, in case one wishes to disable the opening of a new inspector pane by clicking on an object using:
+```
+c inspectorContext interactionsToBeRegistered removeAll.
+```
+`c`, being a canvas.
+
+Here is an example:
+```
+c := RSCanvas new.
+c addAll: ((1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ]).
+RSFlowLayout on: c nodes.
+c inspectorContext interactionsToBeRegistered removeAll.
+c
+```
+In the example given above, clicking on a circle does not open a new pane in the GT inspector.
+	"
 	^ self
 		propertyAt: RSAbstractContext name asSymbol
 		ifAbsentPut: [ RSInteractiveContext new ]
