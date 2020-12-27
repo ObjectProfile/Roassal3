@@ -47,7 +47,15 @@ RSScriptOfTheDay >> loadDiscordSt [
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> runMe [
 	<script: 'self new runMe'>
-	UIManager default edit: '| v nodes |
+	UIManager default edit: '"Script of the day: Rotating labels
+
+All the previous Script of the Day may be found online on:
+https://twitter.com/Roassal1
+
+More information about Roassal:
+https://github.com/ObjectProfile/Roassal3
+"
+| v nodes |
 c := RSCanvas new.
 nodes := Collection withAllSubclasses collect: [ :cls |
 	RSBox new
