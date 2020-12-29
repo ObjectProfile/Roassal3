@@ -7,7 +7,7 @@ A same border can be shared amoung different shapes. Here is an example:
 c := RSCanvas new.
 
 b := RSBorder new color: Color blue.
-(30 to: 60) do: [ :nb |
+(30 to: 50 by: 5) do: [ :nb |
 	box := RSBox new size: nb.
 	ellipse := RSEllipse new width: nb; height: nb + 10.
 	box border: b.
@@ -16,8 +16,8 @@ b := RSBorder new color: Color blue.
 	 ].
 
 RSFlowLayout on: c shapes.
-c @ RSControlsCanvas.
-c
+c @ RSCanvasController.
+c open
 ```
 
 Another example, using animation: 
@@ -27,21 +27,21 @@ c := RSCanvas new.
 b := RSBorder new color: Color blue.
 b dashArray: #(5 1 5).
 (30 to: 60) do: [ :nb |
-	box := RSBox new size: nb.
-	ellipse := RSEllipse new width: nb; height: nb + 10.
-	box border: b.
-	ellipse border: b.
-	c add: box; add: ellipse.
-	 ].
+ box := RSBox new size: nb.
+ ellipse := RSEllipse new width: nb; height: nb + 10.
+ box border: b.
+ ellipse border: b.
+ c add: box; add: ellipse.
+  ].
 
 RSFlowLayout on: c shapes.
-c @ RSControlsCanvas.
+c @ RSCanvasController.
 
 c newAnimation 
-	from: 0;
-	to: 40;
-	on: b set: #dashOffset:.
-c
+ from: 0;
+ to: 40;
+ on: b set: #dashOffset:.
+c open
 ```
 
 "

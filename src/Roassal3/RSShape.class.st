@@ -104,6 +104,21 @@ RSShape >> borderColor [
 
 { #category : #border }
 RSShape >> borderColor: aColor [
+	"Set a border with the provided color. For example:
+
+```
+c := RSCanvas new.
+r := Random seed: 42.
+40 timesRepeat: [
+	box := RSBox new width: (r nextInteger: 80); height: (r nextInteger: 80); color: Color gray; cornerRadius: 10.
+	box borderColor: #black.
+	box color: Color random translucent.
+	box translateTo: (r nextInteger: 200) @ (r nextInteger: 200).
+	c add: box.
+].
+c @ RSCanvasController.
+c open
+```"
 	border ifNil: [ self withBorder ].
 	self border color: aColor
 ]
