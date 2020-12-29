@@ -81,6 +81,12 @@ canvas @ RSCanvasController
 	^ self new highlightable
 ]
 
+{ #category : #accessing }
+RSLabeled class >> text: aText [
+	"Utility method to define a labeled interaction with a text"
+	^ self new text: aText
+]
+
 { #category : #hooks }
 RSLabeled >> createLabel: aShape [
 	| label color set targetLabel |
