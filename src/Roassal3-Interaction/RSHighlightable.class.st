@@ -159,7 +159,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSHighlightable class >> defaultBlueLabel [
+RSHighlightable class >> blue [
 	| inst |
 	inst := self new.
 	inst highlightColor: Color blue.
@@ -171,7 +171,7 @@ RSHighlightable class >> defaultBlueLabel [
 ]
 
 { #category : #'instance creation' }
-RSHighlightable class >> defaultRed [
+RSHighlightable class >> red [
 	| inst |
 	inst := self new.
 	inst highlightColor: Color red.

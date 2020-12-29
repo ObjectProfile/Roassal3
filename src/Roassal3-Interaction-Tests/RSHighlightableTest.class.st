@@ -61,7 +61,7 @@ RSHighlightableTest >> testWithEdges [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable defaultRed.
+	interaction := RSHighlightable red.
 	interaction withEdges.
 	shapes @ interaction.
 	
