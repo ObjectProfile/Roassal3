@@ -328,6 +328,46 @@ RSBoundingShape >> transform: aPoint [
 ]
 
 { #category : #actions }
+RSBoundingShape >> translateBottomLeftTo: aPositionAsPoint [
+	"Translate the shape to make the top left corner at a given position
+
+```
+c := RSCanvas new.
+lbl := RSLabel text: 'Top left corner'.
+c add: lbl.
+lbl translateBottomLeftTo: 0 @ 0.
+
+dot := RSCircle new.
+c add: dot.
+c zoomToFit.
+c open
+```
+	
+"
+	self translateTo: aPositionAsPoint + ((self extent / 2) * (1 @ -1))
+]
+
+{ #category : #actions }
+RSBoundingShape >> translateBottomRightTo: aPositionAsPoint [
+	"Translate the shape to make the top left corner at a given position
+
+```
+c := RSCanvas new.
+lbl := RSLabel text: 'Top left corner'.
+c add: lbl.
+lbl translateBottomRightTo: 0 @ 0.
+
+dot := RSCircle new.
+c add: dot.
+c zoomToFit.
+c open
+```
+	
+"
+	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ -1))
+]
+
+{ #category : #actions }
 RSBoundingShape >> translateMiddleRightTo: aPositionAsPoint [
 	"Translate the shape to make the middle right position at a given position
 
@@ -364,6 +404,26 @@ c open
 	
 "
 	self translateTo: aPositionAsPoint + (self extent / 2)
+]
+
+{ #category : #actions }
+RSBoundingShape >> translateTopRightTo: aPositionAsPoint [
+	"Translate the shape to make the top left corner at a given position
+
+```
+c := RSCanvas new.
+lbl := RSLabel text: 'Top right corner'.
+c add: lbl.
+lbl translateTopRightTo: 0 @ 0.
+
+dot := RSCircle new.
+c add: dot.
+c zoomToFit.
+c open
+```
+	
+"
+	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ 1))
 ]
 
 { #category : #edges }
