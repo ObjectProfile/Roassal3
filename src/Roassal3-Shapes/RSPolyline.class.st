@@ -1,5 +1,15 @@
 "
-TODO
+`RSPolyline` represents a line joining a number of points
+
+```
+c := RSCanvas new.
+
+polyline := RSPolyline new.
+polyline controlPoints: { 0@0 . 20@30 . 100@40 }.
+c add: polyline.
+
+c open
+```
 "
 Class {
 	#name : #RSPolyline,

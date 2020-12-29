@@ -44,6 +44,37 @@ Another example:
 	v add: l.
 	v open
 ```
+
+Here is an example of a bezier line with a marker
+```
+b := RSCanvas  new.
+b addAll: ((1 to: 3) collect: [:i |
+	RSEllipse new
+		model: i;
+		size: 5]).
+
+b nodes @ RSDraggable.
+
+marker := RSPolygon new
+		points: { -5@5. 0@0. 5@5. 0@0 };
+		extent: 2 @ 2;
+		color: Color red;
+		withBorder;
+		asMarker.
+
+RSEdgeBuilder verticalBezier
+	color: Color red translucent;
+	canvas: b;
+	withVerticalAttachPoint;
+	noRepetition;
+	markerEnd: marker;
+	useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
+	
+RSVerticalLineLayout on: b nodes.
+
+b @ RSCanvasController.
+b open
+```
 "
 Class {
 	#name : #RSBezier,
