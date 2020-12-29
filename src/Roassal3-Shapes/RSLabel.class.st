@@ -30,7 +30,7 @@ c
 
 ```
 
-For more fonts of your system use: `FreeTypeFontProvider current updateFromSystem`.
+For more fonts of your system use: `FreeTypeFontProvider current updateFromSystem families`.
 "
 Class {
 	#name : #RSLabel,

@@ -2,7 +2,7 @@
 I am a composite shapes. I can therefore contain other shapes.
 
 Here is a simple example:
--=-=-=
+```
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
@@ -13,15 +13,15 @@ composite shapes: { label . box }.
 composite @ RSDraggable.
 
 c add: composite.
-c
--=-=-=
+c open
+```
 
 A composite can also have a background color. Simply use #color: for this:
--=-=-=
+```
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
-label := RSLabel new text: 'Hello Roassal3'.
+label := RSLabel new color: Color black; text: 'Hello Roassal3'.
 RSLocation new above; move: box on: label.
 composite := RSComposite new.
 composite color: Color gray.
@@ -29,16 +29,16 @@ composite shapes: { label . box }.
 composite @ RSDraggable.
 
 c add: composite.
-c
--=-=-=
+c open
+```
 
 A padding describes a space between the border of the composite element and the inner shapes. It can be adjusted using the message #padding:
 
--=-=-=
+```
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
-label := RSLabel new text: 'Hello Roassal3'.
+label := RSLabel new color: Color black; text: 'Hello Roassal3'.
 RSLocation new above; move: box on: label.
 composite := RSComposite new.
 composite color: Color gray.
@@ -47,11 +47,11 @@ composite @ RSDraggable.
 composite padding: 10.
 
 c add: composite.
-c
--=-=-=
+c open
+```
 
 Inner nodes can be layouted:
--=-=-=
+```
 classes := RSObject withAllSubclasses.
 
 c := RSCanvas new.
@@ -74,11 +74,12 @@ classes do: [ :cls |
 
 RSFlowLayout on: c shapes.
 
-c @ RSControlsCanvas
--=-=-=
+c @ RSCanvasController.
+c open
+```
 
 Lines can be added between composite. Here is an example:
--=-=-=
+```
 classes := RSObject withAllSubclasses.
 
 c := RSCanvas new.
@@ -107,8 +108,9 @@ RSEdgeBuilder orthoVertical
 
 RSTreeLayout on: c nodes.
 
-c @ RSControlsCanvas
--=-=-=
+c @ RSCanvasController.
+c open.
+```
 "
 Class {
 	#name : #RSComposite,
