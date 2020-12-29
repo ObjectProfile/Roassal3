@@ -1,5 +1,5 @@
 "
-RSEdgeBuilder offers an API to easily build edges.
+`RSLineBuilder` offers an API to easily build lines.
 
 Here is an example:
 ```Smalltalk
@@ -32,9 +32,7 @@ Another example:
 ```Smalltalk
 c := RSCanvas new.
 
-shapes := (30 to: 50) collect: [ :nb |
-	RSEllipse new size: nb; model: nb; yourself.
-	 ] as: RSGroup.
+shapes := RSCircle models: (30 to: 50) size: [ :nb | nb ]. 
 
 c addAll: shapes.
 
@@ -50,7 +48,8 @@ RSLocation new
 	move: shapes first on: shapes allButFirst.
 shapes @ RSDraggable.
 
-c @ RSCanvasController
+c @ RSCanvasController.
+c open
 ```
 "
 Class {
@@ -206,21 +205,21 @@ RSLineBuilder >> connectFrom: aBlockOrASymbol [
 
 { #category : #public }
 RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
-	| toElement fromElement |
+	| toShape fromShape |
 	self resetCreatedEdges.
 	self fromShapes copy do: [ :e | 
-			fromElement := self fromShapes shapeFromModel: (aFromBlock rsValue: e model).
-			toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
-			toElement ifNotNil: [ self createEdgeIfNecessaryFrom: fromElement to: toElement ] ].
+			fromShape := self fromShapes shapeFromModel: (aFromBlock rsValue: e model).
+			toShape := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
+			toShape ifNotNil: [ self createEdgeIfNecessaryFrom: fromShape to: toShape ] ].
 	self moveBehindIfNecessary: createdEdges.
 	^ createdEdges
 ]
 
 { #category : #public }
 RSLineBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
-	"Define edges from a particular element to another set of elements. For example:
+	"Define edges from a particular shape to another set of shapes. For example:
 
--=-=-=-=-=-=-=-=-=-=-=-=
+```
 c := RSCanvas new.
 
 shapes := (30 to: 50) collect: [ :nb |
@@ -241,8 +240,9 @@ RSLocation new
 	move: shapes first on: shapes allButFirst.
 shapes @ RSDraggable.
 
-c @ RSControlsCanvas
--=-=-=-=-=-=-=-=-=-=-=-=
+c @ RSCanvasController.
+c open
+```
 	"
 
 	| fromElement tes |
