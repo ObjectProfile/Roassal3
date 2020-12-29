@@ -100,7 +100,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 	('spock' -> 'rock').
 	('rock' -> 'scissors')}.
 	color := NSScale category20c.
-	RSEdgeBuilder bezier
+	RSLineBuilder bezier
 		controlPointsController: (RSBlockCPController new
 			block: [ :aLine | 
 				| vec f t a b |

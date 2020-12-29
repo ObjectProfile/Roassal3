@@ -42,7 +42,7 @@ RSUMLExamples >> example03DifferentLines [
 		noPaint;
 		withBorder) asMarker offset: -7.
 
-	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
+	builder renderer edgeBuilder: (RSLineBuilder verticalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;
@@ -75,7 +75,7 @@ RSUMLExamples >> example05Horizontal [
 		extent: 20@25;
 		noPaint;
 		withBorder) asMarker offset: -7.
-	builder renderer edgeBuilder: (RSEdgeBuilder horizontalBezier
+	builder renderer edgeBuilder: (RSLineBuilder horizontalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;

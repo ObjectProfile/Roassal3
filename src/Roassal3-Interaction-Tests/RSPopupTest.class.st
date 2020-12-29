@@ -46,7 +46,7 @@ RSPopupTest >> testPopup [
 	shapes @ RSPopup.
 	c addAll: shapes.
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 	    canvas: c;
 	    withBorderAttachPoint;
 	    connectFrom: [ :v | v // 2 ].
@@ -105,7 +105,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 	shapes @ RSPopup.
 	c addAll: shapes.
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 	    canvas: c;
 	    withBorderAttachPoint;
 	    connectFrom: [ :v | v // 2 ].

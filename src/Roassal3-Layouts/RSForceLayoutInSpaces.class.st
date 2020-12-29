@@ -107,7 +107,7 @@ RSForceLayoutInSpaces >> fill: space with: aCollection [
 			result ];
 		yourself.
 		
-	RSEdgeBuilder bezier
+	RSLineBuilder bezier
 		controlPointsController: cpController;
 		canvas: self canvas;
 		color: colorForLinesInSameSpace;

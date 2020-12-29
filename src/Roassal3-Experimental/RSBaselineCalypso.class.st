@@ -29,7 +29,7 @@ RSBaselineCalypso >> addEdgesOn: canvas [
 	arrow := (RSShapeFactory arrow size: 10; color: Color red translucent) asMarker.
 	arrow offset: 0.
 	
-	RSEdgeBuilder line
+	RSLineBuilder line
 		markerEnd: arrow;
 		canvas: canvas;
 		attachPoint: (RSBorderAttachPoint new endOffset: 5);

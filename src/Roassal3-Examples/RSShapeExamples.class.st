@@ -265,7 +265,7 @@ RSShapeExamples >> example11ClassTree [
 			popup;
 			yourself  ].
 	canvas addAll: shapes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		objects: Collection withAllSubclasses;
 		connectFrom: #superclass.
@@ -534,7 +534,7 @@ RSShapeExamples >> example22ScaleEvents [
 			yourself]).
 	
 	canvas @ RSCanvasController.
-	RSEdgeBuilder orthoHorizontal
+	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 6;
 			shape: (RSShapeFactory triangle 
@@ -660,7 +660,7 @@ RSShapeExamples >> example28MultilineLabel [
 			draggable; 
 			popup;
 			yourself ].
-	RSEdgeBuilder orthoVertical
+	RSLineBuilder orthoVertical
 		withVerticalAttachPoint;
 		canvas: canvas;
 		shapes: shapes;
@@ -706,7 +706,7 @@ RSShapeExamples >> example29AntAnimation [
 	
 	canvas addAll: shapes.
 	
-	RSEdgeBuilder line
+	RSLineBuilder line
 		color: Color white;
 		withVerticalAttachPoint;
 		canvas: canvas;
@@ -1052,7 +1052,7 @@ RSShapeExamples >> example39RoassalPackages [
 	        yourself  ].
 	canvas addAll: boxes.
 	canvas nodes @ (RSPopup text: #name).
-	RSEdgeBuilder arrowedLine
+	RSLineBuilder arrowedLine
 	    withBorderAttachPoint;
 	    canvas: canvas;
 	    connectFrom: #yourself toAll: #dependentPackages.
@@ -1147,7 +1147,7 @@ RSShapeExamples >> example41Butterfly [
 	    gapSize: 30;
 	    alignMiddle;
 	    on: { c1. c2. c3 }.
-	eb := RSEdgeBuilder horizontalBezier
+	eb := RSLineBuilder horizontalBezier
 	    color: Color lightGray;
 	     controlPointsController: (RSBlockCPController new
 	        block: [:ed | | f t ap |

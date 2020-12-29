@@ -19,7 +19,7 @@ RSInspectableExample >> example01SimpleExample [
 			height: (cls numberOfMethods max: 5);
 			yourself] as: RSGroup.
 	canvas addAll: boxes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		shapes: boxes;
 		withVerticalAttachPoint;
@@ -83,7 +83,7 @@ RSInspectableExample >> example02Inspect [
 			
 			canvas edges copy do: #remove.
 			canvas nodes do: [:shape | shape propertyAt: #old put: shape position ].
-			RSEdgeBuilder arrowedLine 
+			RSLineBuilder arrowedLine 
 				canvas: canvas;
 				connectFrom: #superclass.
 			canvas nodes do: #updateEdgesOFF.

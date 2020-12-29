@@ -194,7 +194,7 @@ RSCanvasTest >> testNodesShapesAndEdges [
 	n3 := RSEllipse new size: 10; model: 3.
 	nodes := Array with: n1 with: n2 with: n3.
 	canvas addAll: nodes.
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb canvas: canvas.
 	eb useAssociations: (Array with: (1 -> 2) with: (2 -> 3) with: (3 -> 1)).
 	self assert: canvas shapes size equals: 6.

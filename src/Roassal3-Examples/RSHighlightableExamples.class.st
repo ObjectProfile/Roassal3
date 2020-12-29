@@ -23,7 +23,7 @@ RSHighlightableExamples >> example01Basic [
 			color: (color scale: m);
 			yourself.
 		 ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -52,7 +52,7 @@ RSHighlightableExamples >> example02ElementEdges [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -80,7 +80,7 @@ RSHighlightableExamples >> example03Interactive [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -114,7 +114,7 @@ RSHighlightableExamples >> example04Interactive [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -148,7 +148,7 @@ RSHighlightableExamples >> example05Border [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -175,7 +175,7 @@ RSHighlightableExamples >> example06IterateNext [
 			size: 30;
 			labeled;
 			yourself ] as: RSGroup.
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 		shapes: numbers;
 		connectFrom: [ :i | i // 2 ].
 	canvas
@@ -308,7 +308,7 @@ RSHighlightableExamples >> example08DependendMethods [
 			@ popup;
 			draggable;
 			yourself.
-		RSEdgeBuilder orthoVertical 
+		RSLineBuilder orthoVertical 
 			withVerticalAttachPoint;
 			canvas: pkg;
 			shapes: pkg nodes;
@@ -365,7 +365,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder arrowedLine
+	RSLineBuilder arrowedLine
 		withBorderAttachPoint;
 		canvas: canvas;
 		shapes: shapes;
@@ -393,7 +393,7 @@ RSHighlightableExamples >> example10ElasticBox [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -426,7 +426,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 			withBorder;
 			color: (color scale: i) ;
 			yourself ].
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].

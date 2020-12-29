@@ -110,7 +110,7 @@ RSAbstractUMLClassRenderer >> defaultClassBoxPadding [
 RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 	| offset |
 	offset := -2.5.
-	^ RSEdgeBuilder orthoVertical
+	^ RSLineBuilder orthoVertical
 		attachPoint: (RSVerticalAttachPoint new 
 			startOffset: 11 - offset;
 			endOffset: offset;
@@ -211,7 +211,7 @@ RSAbstractUMLClassRenderer >> needsEllipsis [
 { #category : #public }
 RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [ 
 	aCollection ifNil: [ ^ self ].
-	(RSEdgeBuilder new: aRSLine)
+	(RSLineBuilder new: aRSLine)
 		withBorderAttachPoint;
 		shapes: edgeBuilder fromShapes;
 		useAssociations: aCollection.

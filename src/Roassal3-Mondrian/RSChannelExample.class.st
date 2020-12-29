@@ -18,7 +18,7 @@ RSChannelExample >> example3 [
 	classeShapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
 	classeShapes @ RSPopup.
 	c addAll: classeShapes.
-	eb := RSEdgeBuilder orthoVertical.
+	eb := RSLineBuilder orthoVertical.
 	eb withVerticalAttachPoint.
 	eb shapes: classeShapes.
 	eb connectFrom: #superclass.

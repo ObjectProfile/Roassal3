@@ -18,7 +18,7 @@ RSEdgeBuilderTest >> setUp [
 	canvas := RSCanvas new.
 	shapes := (1 to: 10) collect: [ :n | RSBox new model: n; size: 5; yourself ] as: RSGroup.
 	canvas addAll: shapes. 
-	b := RSEdgeBuilder line.
+	b := RSLineBuilder line.
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ RSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 	canvas := RSCanvas new.
 	canvas addAll: ((1 to: 3) collect: [ :n | RSBox new model: n; yourself] ).
 
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb canvas: canvas.
 	eb color: (Color red alpha: 0.5).
 	eb noRepetition.
@@ -73,7 +73,7 @@ RSEdgeBuilderTest >> testConnectFromAll [
 	c addAll: es.
 	
 	self assert: c edges size equals: 0.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		objects: (1 to: 2);
 		connectFromAll: (Array with: 1) to: 2.
@@ -123,7 +123,7 @@ RSEdgeBuilderTest >> testDefault [
 RSEdgeBuilderTest >> testElements [
 
 	| es |
-	b := RSEdgeBuilder line.
+	b := RSLineBuilder line.
 	b canvas: canvas.
 	self assert: b fromShapes equals: canvas nodes.
 	
@@ -141,7 +141,7 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	c := RSCanvas new.
 	c addAll: es1.
 	c addAll: es2.
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 					canvas: c;
 					fromShapes: es1;
 					toShapes: es2;
@@ -155,7 +155,7 @@ RSEdgeBuilderTest >> testElementsToLookup [
 { #category : #'tests error' }
 RSEdgeBuilderTest >> testErrors [
 	| eb |
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	
 	self should: [ eb shapes: #(1 2 3) ] raise: AssertionFailure.
 	self should: [ eb shapes: 'hello world' ] raise: AssertionFailure.
@@ -196,7 +196,7 @@ view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
 	view addAll: elements. 
 	b := RTEdgeBuilder new."
-	self should: [ RSEdgeBuilder new  fromObjects: #(1 2) ] raise: Error
+	self should: [ RSLineBuilder new  fromObjects: #(1 2) ] raise: Error
 ]
 
 { #category : #tests }
@@ -257,7 +257,7 @@ RSEdgeBuilderTest >> testInferCanvas3 [
 				 text: i;
 				 model: i) ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: c nodes;
 		connectFrom: [ :i | i // 2 ].
 
@@ -270,7 +270,7 @@ RSEdgeBuilderTest >> testInferCanvas3 [
 { #category : #tests }
 RSEdgeBuilderTest >> testInit [
 	| eb |
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	self deny: eb shouldAllowRepetition.
 	eb allowRepetition.
 	self assert: eb shouldAllowRepetition.
@@ -278,7 +278,7 @@ RSEdgeBuilderTest >> testInit [
 
 { #category : #tests }
 RSEdgeBuilderTest >> testNoMoveBehind [
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		useAssociations: (Array 
 									with: 1 -> 2
@@ -373,13 +373,13 @@ RSEdgeBuilderTest >> testShouldNotAllowBidirection [
 { #category : #tests }
 RSEdgeBuilderTest >> testShouldNotInstantiate [
 
-	self should: [ RSEdgeBuilder new ] raise: Error
+	self should: [ RSLineBuilder new ] raise: Error
 ]
 
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		useElementAssociations: (Array 
 									with: shapes first -> shapes second
@@ -390,7 +390,7 @@ RSEdgeBuilderTest >> testSimple [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple2 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		useAssociations: (Array 
 									with: 1 -> 2
@@ -402,7 +402,7 @@ RSEdgeBuilderTest >> testSimple2 [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple3 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		fromObjects: #(1 2 3 6);
 		toObjects: (1 to: 10);
@@ -414,7 +414,7 @@ RSEdgeBuilderTest >> testSimple3 [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple4 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		fromObjects: #(1 2 3 6);
 		toObjects: #(1 2 3 6);
@@ -426,7 +426,7 @@ RSEdgeBuilderTest >> testSimple4 [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple5 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		fromObjects: #(1 2 3 6);
 		connectFrom: #yourself toAll: [ :v | Array with: v + 1 with: v + 2 ].
@@ -438,7 +438,7 @@ RSEdgeBuilderTest >> testSimple5 [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple6 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		fromObjects: (Array with: 2);
 		connectFromAll: (Array with: 2) to: 3.
@@ -449,7 +449,7 @@ RSEdgeBuilderTest >> testSimple6 [
 { #category : #tests }
 RSEdgeBuilderTest >> testSimple7 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		useAssociation: 1 -> 2;
 		useAssociation: 2 -> 3;
@@ -465,7 +465,7 @@ RSEdgeBuilderTest >> testSource [
 	es := #(1 2 3) collect: [:n | RSBox new model: n; yourself]. 
 	c addAll: es.
 	
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb canvas: c.
 	
 	col := OrderedCollection new.
@@ -490,7 +490,7 @@ RSEdgeBuilderTest >> testToObjects [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		moveBehind;
 		useAssociations: (Array 
@@ -503,7 +503,7 @@ RSEdgeBuilderTest >> testWithMoveBehind [
 { #category : #tests }
 RSEdgeBuilderTest >> testWithMoveBehind02 [
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		moveBehind;
 		connectFrom: [ :v | v - 1 ].
@@ -518,7 +518,7 @@ RSEdgeBuilderTest >> testconnectFromToAll [
 	es2 := #(1 2 3) collect: [:n | RSBox new model: n; yourself].
 	c := RSCanvas new.
 	c addAll: es1; addAll: es2.
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 					canvas: c;
 					fromShapes: es1;
 					toShapes: es2;

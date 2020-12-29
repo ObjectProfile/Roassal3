@@ -233,9 +233,9 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	z := OrderedCollection new.
 	r := Random seed: 42.
 	1 to: 100 do: [ :i | 
-		x add: i + (r nextInt: 10).
-		y add: i + (r nextInt: 10).
-		z add: i + (r nextInt: 10) ].
+		x add: i + (r nextInteger: 10).
+		y add: i + (r nextInteger: 10).
+		z add: i + (r nextInteger: 10) ].
 
 	c := RSChart new.
 	p := RSScatterPlot new x: x y: y.

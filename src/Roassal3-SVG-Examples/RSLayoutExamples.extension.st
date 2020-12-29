@@ -12,7 +12,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 		collect: [:cls | RSEllipse new draggable; popup; model: cls; yourself] 
 		as: RSGroup.
 	c addAll: classes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		color: Color gray;
 		canvas: c;
 		shapes: classes;

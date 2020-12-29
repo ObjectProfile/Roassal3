@@ -134,7 +134,7 @@ RSLayoutExamples >> example06TreeLayout [
 	RSNormalizer size
 		shapes: shapes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb canvas: c.
 	eb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
@@ -164,7 +164,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		to: (Color red alpha: 0.5);
 		shapes: c nodes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb
 		canvas: c;
 		moveBehind;
@@ -199,7 +199,7 @@ RSLayoutExamples >> example08HorizontalTree [
 			yourself ].
 	c addAll: shapes.
 	c @ RSCanvasController.
-	RSEdgeBuilder orthoHorizontal
+	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
 			shape: (RSShapeFactory triangle 
@@ -222,7 +222,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	shapes := RSShape withAllSubclasses collect: [ :cls | 
 		RSShapeFactory square size: 30; draggable; model: cls; yourself ].
 	c addAll: shapes.
-	RSEdgeBuilder arrowedLine 
+	RSLineBuilder arrowedLine 
 		withBorderAttachPoint;
 		canvas: c;
 		connectFrom: #superclass.
@@ -292,7 +292,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	c := RSCanvas new.
 	c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		connectFrom: [ :v | v // 2 ].
 	c @ RSForceLayoutStepping.
@@ -310,7 +310,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			labeled;
 			model: n;
 			yourself].
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
 	canvas
@@ -381,7 +381,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		composite padding: 10.
 		c add: composite ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -410,7 +410,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 		c add: box.
 		 ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -434,7 +434,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 			labeled;
 			model: m;
 			yourself ].
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
 	canvas
@@ -470,7 +470,7 @@ RSLayoutExamples >> example18Cluster [
 				model: cls;
 				yourself ].
 		group addAll: shapes.
-		RSEdgeBuilder line
+		RSLineBuilder line
 			color: Color blue translucent;
 			canvas: group;
 			shapes: shapes;
@@ -515,7 +515,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	c := RSCanvas new.
 	c addAll: shapes.
 
-	eb := RSEdgeBuilder orthoVertical.
+	eb := RSLineBuilder orthoVertical.
 	eb canvas: c.
 	eb connectFrom: #superclass.
 

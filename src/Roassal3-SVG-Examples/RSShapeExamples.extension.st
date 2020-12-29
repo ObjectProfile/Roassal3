@@ -154,7 +154,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		to: 50;
 		shapes: canvas nodes;
 		normalize: #numberOfMethods.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		color: Color lightGray;
 		shapes: canvas nodes;
 		canvas: canvas;
@@ -217,7 +217,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 	canvas := RSCanvas new.
 	canvas addAll: packageElements.
 
-	RSEdgeBuilder bimetricLine
+	RSLineBuilder bimetricLine
 		canvas: canvas;
 		objects: packages;
 		noBorder;
@@ -264,7 +264,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 	canvas := RSCanvas new.
 	canvas addAll: packageElements.
 
-	RSEdgeBuilder bimetricLine
+	RSLineBuilder bimetricLine
 		canvas: canvas;
 		objects: packages;
 		noBorder;

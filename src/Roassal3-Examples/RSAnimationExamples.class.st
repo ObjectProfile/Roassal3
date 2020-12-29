@@ -1958,7 +1958,7 @@ RSAnimationExamples >> example33AnimatedLayout [
 			model: m;
 		yourself ].
 	c addAll: shapes.
-	RSEdgeBuilder line 
+	RSLineBuilder line 
 		canvas: c;
 		objects: objects;
 		connectFrom: [ :value | value //2 ] to: #yourself.
@@ -2014,7 +2014,7 @@ RSAnimationExamples >> example34ForceLayout [
 		e
 		 ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		shapes: classes;
 		color: (Color purple alpha: 0.2);
@@ -2233,7 +2233,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 			color: (color scale: cls);
 			size: 10;
 			yourself ] as: RSGroup.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		shapes: classes;
 		color: (Color blue alpha: 0.5);

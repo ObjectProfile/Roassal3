@@ -927,7 +927,7 @@ RSBasicShapeExamples >> example40ColorScale [
 	        yourself
 	     ].
 	canvas addAll: shapes.
-	RSEdgeBuilder orthoVertical
+	RSLineBuilder orthoVertical
 	    withVerticalAttachPoint;
 	    shapes: shapes;
 	    connectFrom: #superclass.

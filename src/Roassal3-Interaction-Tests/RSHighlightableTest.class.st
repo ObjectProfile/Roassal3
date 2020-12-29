@@ -53,7 +53,7 @@ RSHighlightableTest >> testWithEdges [
 			withBorder;
 			yourself ].
 	shapes := shapes asGroup.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
@@ -91,7 +91,7 @@ RSHighlightableTest >> testWithEdges2 [
 			withBorder;
 			yourself ].
 	shapes := shapes asGroup.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].

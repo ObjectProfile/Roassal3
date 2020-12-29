@@ -182,7 +182,7 @@ RSLegendExamples >> example10Location [
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;
@@ -233,7 +233,7 @@ RSLegendExamples >> example11OnDemand [
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;

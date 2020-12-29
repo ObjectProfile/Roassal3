@@ -17,7 +17,7 @@ RSMondrian >> applyLayout [
 
 { #category : #'building - graph' }
 RSMondrian >> arrowedLine [
-	edgeBuilder := RSEdgeBuilder arrowedLineWithOffset.
+	edgeBuilder := RSLineBuilder arrowedLineWithOffset.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
 	edgeBuilder withBorderAttachPoint.
@@ -80,7 +80,7 @@ RSMondrian >> layout [
 
 { #category : #'building - graph' }
 RSMondrian >> line [
-	edgeBuilder := RSEdgeBuilder line.
+	edgeBuilder := RSLineBuilder line.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
 	edgeBuilder color: self defaultLineColor.
@@ -250,7 +250,7 @@ RSMondrian >> openWithTitle: aTitle [
 
 { #category : #'building - graph' }
 RSMondrian >> orthoHorizontalline [
-	edgeBuilder := RSEdgeBuilder orthoHorizontal.
+	edgeBuilder := RSLineBuilder orthoHorizontal.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
 	edgeBuilder color: self defaultLineColor.
@@ -259,7 +259,7 @@ RSMondrian >> orthoHorizontalline [
 
 { #category : #'building - graph' }
 RSMondrian >> orthoVerticalLine [
-	edgeBuilder := RSEdgeBuilder orthoVertical.
+	edgeBuilder := RSLineBuilder orthoVertical.
 	edgeBuilder canvas: canvas.
 	edgeBuilder shapes: canvas nodes.
 	edgeBuilder withVerticalAttachPoint.
