@@ -25,7 +25,8 @@ wordShapes := words collect: [ :w | RSLabel new fontSize: (r nextInt: 30); text:
 c := RSCanvas new.
 c addAll: wordShapes.
 RSFlowLayout new alignLabel; on: wordShapes.
-c @ RSCanvasController
+c @ RSCanvasController.
+c open
 ```
 "
 	alignment := #label
