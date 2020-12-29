@@ -90,9 +90,8 @@ RSLabel >> accept: visitor [
 
 { #category : #'managing font' }
 RSLabel >> bold [
-"
-Make the font bold
-
+"Make the label bold
+```
 | c lbl1 lbl2 |
 c := RSCanvas new.
 lbl1 := RSLabel new bold; text: 'hello'.
@@ -101,6 +100,7 @@ lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
 RSLocation new below; move: lbl2 on: lbl1.
 c open
+```
 "
 	self emphasisAdd: TextEmphasis bold.
 ]
@@ -268,9 +268,8 @@ RSLabel >> isUnderlined [
 
 { #category : #'managing font' }
 RSLabel >> italic [
-"
-Make the font italic
-
+	"Make the label italic
+```
 | c lbl1 lbl2 |
 c := RSCanvas new.
 lbl1 := RSLabel new italic; text: 'hello'.
@@ -278,7 +277,9 @@ c addShape: lbl1.
 lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
 RSLocation new below; move: lbl2 on: lbl1.
+c @ RSCanvasController.
 c open
+```
 "
 	self emphasisAdd: TextEmphasis italic.
 ]
@@ -412,7 +413,7 @@ RSLabel >> textWidth [
 
 { #category : #'managing font' }
 RSLabel >> underline [
-	"Make the font underlined
+	"Make the label underlined
 ```
 | c lbl1 lbl2 |
 c := RSCanvas new.
