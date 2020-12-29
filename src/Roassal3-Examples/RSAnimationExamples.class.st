@@ -2109,7 +2109,7 @@ RSAnimationExamples >> example36Title [
 	c := RSCanvas new.
 	t1 := 'Roassal3'.
 	t2 := 'It is a new agile visualization engine
-for Pharo 7 and Pharo 8.'.
+for Pharo 8 and Pharo 9.'.
 	lblbase := RSLabel new
 		color: Color white;
 		fontSize: 30;
