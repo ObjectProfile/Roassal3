@@ -49,7 +49,7 @@ RSConnectionExample >> example02TwoViews [
 		c3 := RSChart new.
 		d := RSLinePlot new.
 		d y:
-			(((1 to: inputModel) collect: [ :v | Random new nextInteger: 42 ]) 
+			(((1 to: inputModel) collect: [ :v | Random new nextInt: 42 ]) 
 				 sortedAs: #yourself).
 		c3 addPlot: d.
 		c3 build ]
