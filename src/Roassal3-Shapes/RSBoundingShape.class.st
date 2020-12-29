@@ -132,6 +132,7 @@ RSBoundingShape >> height: aNumber [
 
 { #category : #testing }
 RSBoundingShape >> includesPoint: aPoint [
+	"Return true if the provided point is included in the encompassing rectangle of the shape."
 	| invertedPoint |
 	invertedPoint := matrix rsInverseTransform: aPoint.
 	^ self baseRectangle containsPoint: invertedPoint.
@@ -204,6 +205,7 @@ RSBoundingShape >> position [
 
 { #category : #matrix }
 RSBoundingShape >> position: aPoint [
+	"This method is private. Use #translateTo: instead."
 	self 
 		assert: [ (aPoint x isNaN | aPoint y isNaN) not ]
 		description: 'you must provide a real point'.
@@ -310,6 +312,7 @@ c
 
 { #category : #testing }
 RSBoundingShape >> shouldUpdateEdges [
+	"Moving a shape around usually involve recomputing the original of the connected egdes. This may be disabled. This method indicates whether edges are updated when the shape is moved."
 	^ shouldUpdateEdges and: [ connectedEdges notNil ]
 ]
 
@@ -325,7 +328,7 @@ RSBoundingShape >> transform: aPoint [
 ]
 
 { #category : #actions }
-RSBoundingShape >> translateMiddleRightTo: aPosition [
+RSBoundingShape >> translateMiddleRightTo: aPositionAsPoint [
 	"Translate the shape to make the middle right position at a given position
 
 ```
@@ -343,11 +346,11 @@ c open
 ```
 	
 "
-	self translateTo: aPosition - ((self extent x / 2) @ 0)
+	self translateTo: aPositionAsPoint - ((self extent x / 2) @ 0)
 ]
 
 { #category : #actions }
-RSBoundingShape >> translateTopLeftTo: aPosition [
+RSBoundingShape >> translateTopLeftTo: aPositionAsPoint [
 	"Translate the shape to make the top left corner at a given position
 
 ```
@@ -360,7 +363,7 @@ c open
 ```
 	
 "
-	self translateTo: aPosition + (self extent / 2)
+	self translateTo: aPositionAsPoint + (self extent / 2)
 ]
 
 { #category : #edges }
