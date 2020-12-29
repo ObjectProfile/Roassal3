@@ -150,7 +150,7 @@ RSBoundingShape >> initialize [
 	self initializeMatrix; updateEdgesON.
 	
 	baseRectangle := 0@0 corner: 0@0.
-	self extent: 5 @ 5.
+	self extent: 10 @ 10.
 ]
 
 { #category : #initialization }
@@ -205,7 +205,7 @@ RSBoundingShape >> position [
 { #category : #matrix }
 RSBoundingShape >> position: aPoint [
 	self 
-		assert: (aPoint x isNaN | aPoint y isNaN) not
+		assert: [ (aPoint x isNaN | aPoint y isNaN) not ]
 		description: 'you must provide a real point'.
 	matrix translation: aPoint.
 	self resetBBox.
@@ -387,12 +387,12 @@ RSBoundingShape >> width: aNumber [
 
 { #category : #matrix }
 RSBoundingShape >> x: aNumber [
-	"recibes a number"
+	"Set the x position"
 	self position: aNumber @ self position y
 ]
 
 { #category : #matrix }
 RSBoundingShape >> y: aNumber [
-	"recibes a number"
+	"Set the y position"
 	self position: self position x @ aNumber
 ]
