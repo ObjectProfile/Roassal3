@@ -24,6 +24,12 @@ RSCircle >> buildPathOn: visitor [
 	visitor buildEllipsePath: self
 ]
 
+{ #category : #accessing }
+RSCircle >> extent: aPoint [
+	self assert: [ aPoint x = aPoint y ] description: 'Width and height should have the same value'.
+	super extent: aPoint
+]
+
 { #category : #geometry }
 RSCircle >> geometry [ 
 	| rect e p |
@@ -35,6 +41,11 @@ RSCircle >> geometry [
 		center: p
 		vertex: p + (0@ e y)
 		coVertex:p + (e x@ 0) 
+]
+
+{ #category : #matrix }
+RSCircle >> height: anInteger [
+	self error: 'Should not be performed'
 ]
 
 { #category : #testing }
@@ -61,4 +72,19 @@ RSCircle >> radius [
 { #category : #accessing }
 RSCircle >> radius: integer [
 	self extent: integer * 2 asPoint
+]
+
+{ #category : #matrix }
+RSCircle >> width: anInteger [
+	self error: 'Should not be performed'
+]
+
+{ #category : #matrix }
+RSCircle >> x: anInteger [
+	self error: 'Should not be performed'
+]
+
+{ #category : #matrix }
+RSCircle >> y: anInteger [
+	self error: 'Should not be performed'
 ]
