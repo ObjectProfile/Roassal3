@@ -149,6 +149,7 @@ RSLabel >> emphasis: aTextEmphasis [
 c := RSCanvas new.
 lbl := RSLabel new text: 'hello'; emphasis: TextEmphasis italic.
 c addShape: lbl.
+c @ RSCanvasController.
 c open
 "
 	emphasis = aTextEmphasis ifTrue: [ ^ self ].
@@ -294,6 +295,7 @@ RSLabel >> metricsProvider: aRSMetricsProvider [
 	 The argument must be a subclass of RSMetricsProvider.
 	
 	For example:
+	
 ```Smalltalk
 metricsProvider := RSCairoMetricsProvider new.
 
@@ -304,9 +306,8 @@ c := RSCanvas new.
 c addAll: labels.
 RSFlowLayout on: labels.
 c @ RSCanvasController
+c open
 ```
-	
-	
 	"
 	metricsProvider := aRSMetricsProvider.
 	self resetCache.
@@ -360,6 +361,20 @@ RSLabel >> sessionChanged [
 
 { #category : #'managing font' }
 RSLabel >> struckOut [
+	"Make the label strickethrough
+	
+```
+| c lbl1 lbl2 |
+c := RSCanvas new.
+lbl1 := RSLabel new struckOut; text: 'hello'.
+c addShape: lbl1.
+lbl2 := RSLabel new text: 'world'.
+c addShape: lbl2.
+RSLocation new below; move: lbl2 on: lbl1.
+c @ RSCanvasController.
+c open
+```
+"
 	self emphasisAdd: TextEmphasis struckOut.
 ]
 
@@ -397,9 +412,8 @@ RSLabel >> textWidth [
 
 { #category : #'managing font' }
 RSLabel >> underline [
-"
-Make the font underlined
-
+	"Make the font underlined
+```
 | c lbl1 lbl2 |
 c := RSCanvas new.
 lbl1 := RSLabel new underline; text: 'hello'.
@@ -407,7 +421,9 @@ c addShape: lbl1.
 lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
 RSLocation new below; move: lbl2 on: lbl1.
+c @ RSCanvasController.
 c open
+```
 "
 	self emphasisAdd: TextEmphasis underlined.
 ]
