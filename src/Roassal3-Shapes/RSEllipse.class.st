@@ -15,7 +15,7 @@ c open
 "
 Class {
 	#name : #RSEllipse,
-	#superclass : #RSCircular,
+	#superclass : #RSCircularShape,
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
