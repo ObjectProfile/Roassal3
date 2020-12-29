@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Shapes-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #readme }
 RSEdgeBuilder >> README [
 	"This class is voluntarily empty" 
 ]

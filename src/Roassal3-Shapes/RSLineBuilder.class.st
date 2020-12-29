@@ -51,6 +51,34 @@ shapes @ RSDraggable.
 c @ RSCanvasController.
 c open
 ```
+
+Another example:
+```
+classes := Collection withAllSubclasses.
+
+c := RSCanvas new.
+
+boxes := RSCircle models: classes.
+c addAll: boxes. 
+RSFlowLayout on: c shapes.
+
+lb := RSLineBuilder orthoVertical.
+lb withVerticalAttachPoint.
+lb capRound.
+lb shapes: boxes.
+lb connectFrom: #superclass.
+
+RSTreeLayout on: c nodes.
+
+boxes @ RSPopup.
+RSNormalizer color
+	shapes: boxes;
+	from: #gray; to: #red;
+	normalize: #numberOfMethods.
+
+c @ RSCanvasController.
+c open
+```
 "
 Class {
 	#name : #RSLineBuilder,
@@ -195,6 +223,31 @@ RSLineBuilder >> canvasNodes [
 	"Return the nodes of the canvas"
 	canvas ifNil: [ ^ #() ].
 	^ canvas nodes
+]
+
+{ #category : #'public - shape' }
+RSLineBuilder >> capRound [
+	"Make the corner rounded. For example
+```
+classes := Collection withAllSubclasses.
+
+c := RSCanvas new.
+
+boxes := RSBox models: classes.
+c addAll: boxes. 
+RSFlowLayout on: c shapes.
+
+lb := RSLineBuilder orthoVertical.
+lb withVerticalAttachPoint.
+lb capRound.
+lb shapes: boxes.
+lb connectFrom: #superclass.
+
+RSTreeLayout on: c nodes.
+c @ RSCanvasController.
+c open
+```"
+	self shape capRound
 ]
 
 { #category : #public }
@@ -626,12 +679,9 @@ RSLineBuilder >> useAssociations: associations [
 	"Draw edges between shapes using associations. Each association has to follow the pattern: startmodel -> endmodel
 	
 For example
--=-=-=-=-=-=-=-=-=
+```
 b := RSCanvas  new.
-b addAll: ((1 to: 3) collect: [:i |
-	RSEllipse new
-		model: i;
-		size: 5]).
+b addAll: (RSCircle models: (1 to: 3)).
 
 RSEdgeBuilder line
 	color: Color red translucent;
@@ -639,9 +689,11 @@ RSEdgeBuilder line
 	withVerticalAttachPoint;
 	noRepetition;
 	useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
-RSGridLayout on: b nodes.
-b @ RSCanvasController
--=-=-=-=-=-=-=-=-=
+RSForceBasedLayout on: b nodes.
+
+b @ RSCanvasController.
+b open
+```
 "
 	| fromElement toElement |
 	createdEdges := RSGroup new.
