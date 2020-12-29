@@ -14,7 +14,7 @@ RSHorizontalLineLayout >> alignBottom [
 
 { #category : #alignment }
 RSHorizontalLineLayout >> alignLabel [
-	"Make the element middle"
+	"Align shapes along the label baseline. It is here assumed that shapes are labels"
 	alignment := #label
 ]
 
