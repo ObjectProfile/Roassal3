@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #tests }
+RSShapeTest >> testModels [
+
+	| shapes |
+	shapes := RSCircle models: (1 to: 10).
+	self assert: shapes isCollection.
+	self assert: shapes class equals: RSGroup.
+	self assert: (shapes allSatisfy: [ :s | s class == RSCircle ]).
+	self assert: (shapes collect: #width) asSet asArray equals: #(10)
+]
+
+{ #category : #tests }
+RSShapeTest >> testModelsSize [
+
+	| shapes |
+	shapes := RSCircle models: (1 to: 10) size: #yourself.
+	self assert: shapes isCollection.
+	self assert: shapes class equals: RSGroup.
+	self assert: (shapes allSatisfy: [ :s | s class == RSCircle ]).
+	self assert: (shapes collect: #width) asArray equals: (1 to: 10) asArray.
+	self assert: (shapes collect: #height) asArray equals: (1 to: 10) asArray
+]
+
+{ #category : #tests }
 RSShapeTest >> testTranslateMiddleRightTo [
 
 	| c center lbl |
