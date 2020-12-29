@@ -8,14 +8,14 @@ Trait {
 
 { #category : #actions }
 RSTPositionable >> translateBy: deltaAsPoint [
-	"Move an element by a delta value, expressed as a point"
+	"Move a shape by a delta value, expressed as a point"
 	self translateTo: self position + deltaAsPoint
 	
 ]
 
 { #category : #actions }
 RSTPositionable >> translateTo: aPoint [
-	"Translate an element to a new position, expressed as a point"
+	"Translate a shape to a new position, expressed as a point"
 	| oldPosition |
 	oldPosition := self position.
 	oldPosition = aPoint ifTrue: [ ^ self ].
