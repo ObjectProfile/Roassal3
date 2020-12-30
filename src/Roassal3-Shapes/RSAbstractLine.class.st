@@ -144,18 +144,19 @@ RSAbstractLine >> fmt: aString [
 	'-.' dashed line with small line then point
 	'.' dashed line with points
 	
-	Example
-	```
-	| canvas |
-	canvas := RSCanvas new.
-	canvas add: (RSLine new 
-		startPoint: 0@0;
-		endPoint: 100@0;
-		fmt:'-.*';
-		color: Color red;
-		yourself).
-	canvas @ RSCanvasController.
-	````
+	Example:
+```
+| canvas |
+canvas := RSCanvas new.
+canvas add: (RSLine new 
+	startPoint: 0@0;
+	endPoint: 100@0;
+	fmt:'-.*';
+	color: Color red;
+	yourself).
+canvas @ RSCanvasController.
+canvas open
+````
 	 "
 	(RSShapeFactory shapeFromString: aString) 
 		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].

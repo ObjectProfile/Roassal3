@@ -45,7 +45,7 @@ RSTMarkeable >> markerMid [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerMid: marker [
-	| m| 
+	| m | 
 	m := marker asMarker.
 	self markers at: 2 put: m.
 	^ m
@@ -67,7 +67,7 @@ RSTMarkeable >> markerStart [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerStart: marker [
-	| m| 
+	| m | 
 	m := marker asMarker.
 	self markers at: 1 put: m.
 	^ m
