@@ -20,6 +20,41 @@ RSBoundingShape class >> isAbstract [
 	^ self == RSBoundingShape
 ]
 
+{ #category : #accessing }
+RSBoundingShape class >> models: someObjects size: aOneArgBlockOrSymbol [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model and a size.
+
+For example:
+```
+c := RSCanvas new.
+
+shapes := RSCircle models: (30 to: 50) size: [ :nb | nb ]. 
+
+c addAll: shapes.
+
+lines := RSEdgeBuilder line
+	canvas: c;
+	connectFrom: 30 toAll: (31 to: 50).
+
+lines do: [ :l | l attachPoint: (RSHorizontalAttachPoint new) ].
+
+RSGridLayout on: shapes. 
+RSLocation new
+	above;
+	move: shapes first on: shapes allButFirst.
+shapes @ RSDraggable.
+
+c @ RSCanvasController.
+c open
+```	
+"
+
+	^ someObjects
+		  collect: [ :obj | 
+		  (self model: obj) size: (aOneArgBlockOrSymbol rsValue: obj) ]
+		  as: RSGroup
+]
+
 { #category : #visiting }
 RSBoundingShape >> accept: visitor [
 	visitor visitBoundingShape: self
