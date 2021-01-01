@@ -125,6 +125,68 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
+{ #category : #'public - creation' }
+RSComposite class >> model: anObject forIt: twoArgsBlock [
+	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock. 
+	
+For example:
+```
+c := RSCanvas new.
+
+compoShape := RSComposite model: 'Hello' forIt: [ :title :composite |
+	composite add: (RSLabel text: title).
+	composite add: (RSCircle new size: 20).
+	RSVerticalLineLayout new alignCenter; on: composite shapes.
+	composite @ RSDraggable ].
+c add: compoShape.
+
+c open 
+```	
+"
+
+	^ (self models: (Array with: anObject) forEach: twoArgsBlock) first
+]
+
+{ #category : #'public - creation' }
+RSComposite class >> models: someObjects forEach: twoArgsBlock [
+	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock. 
+	
+For example:
+```
+classes := ByteArray withAllSubclasses.
+
+c := RSCanvas new.
+
+boxes := RSComposite models: classes forEach: [ :cls :c |
+	c add: (RSLabel new text: cls name).
+	c add: (RSBox new size: cls numberOfLinesOfCode sqrt).
+	c model: cls.
+	RSVerticalLineLayout new alignCenter; on: c shapes.
+	c @ RSDraggable.
+].
+
+c addAll: boxes. 
+RSFlowLayout on: c shapes.
+
+lb := RSLineBuilder line.
+lb withVerticalAttachPoint.
+lb shapes: boxes.
+lb connectFrom: #superclass.
+
+RSTreeLayout on: c nodes.
+c @ RSCanvasController.
+c open
+```	
+"
+
+	^ someObjects
+		  collect: [ :obj | 
+				| t |
+		  		t := twoArgsBlock valueWithArguments: (Array with: obj with: (self model: obj)).
+				t adjustToChildren ]
+		  as: RSGroup
+]
+
 { #category : #adding }
 RSComposite >> addBasicShape: aShape [
 	self shapes add: aShape
