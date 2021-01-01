@@ -127,7 +127,7 @@ Class {
 
 { #category : #'public - creation' }
 RSComposite class >> model: anObject forIt: twoArgsBlock [
-	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock. 
+	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the twoArgsBlock. The variable twoArgsBlock points to a two argument block. The first argument is the object model, and the second argument is the composite.
 	
 For example:
 ```
