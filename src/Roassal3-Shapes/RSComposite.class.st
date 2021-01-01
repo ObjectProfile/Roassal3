@@ -146,7 +146,7 @@ RSComposite >> addShape: aShape before: otherShape [
 
 { #category : #public }
 RSComposite >> adjustToChildren [
-"Recompute the encompassing rectangle of the composite shape from the positio of the children. 
+"Recompute the encompassing rectangle of the composite shape from the position of the children. 
 
 In case one wishes to have a padding in the composite, the method #padding: must be called _after_ calling #adjustToChildren
 
