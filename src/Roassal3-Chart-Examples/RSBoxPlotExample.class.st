@@ -8,18 +8,18 @@ Class {
 RSBoxPlotExample >> example01 [
 	"A simple boxplot"
 	<script: 'self new example01 open'>
-	| c p x y bottom |
-	x := 0.0 to: 2 count: 10.
-	y := (x raisedTo: 2) + 2.
-	bottom := x + 2. 
+	| c p y |
+	
+	y := { { 1. 2. 3. 4. 5. } asSortedCollection. 
+			 { 5. 6. 7. 5. 10. } asSortedCollection . 
+			 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
 	c := RSChart new.
-	p := RSBoxPlot new x: x y: y.
-	p bottom: bottom.
+	p := RSBoxPlot new y: y.
 	
 	c addPlot: p.
 	
 	c addDecoration: (RSHorizontalTick new 
-		numberOfTicks: x size).
+		numberOfTicks: y size).
 	c xlabel: 'X Axis'.
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;

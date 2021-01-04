@@ -1,6 +1,9 @@
 Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractBoxPlot,
+	#instVars : [
+		'boxAndWhisker'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
 
@@ -20,26 +23,53 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 	aChart xScale: barScale
 ]
 
-{ #category : #hooks }
-RSBoxPlot >> computeRectagleFor: aPoint index: index [
-	| origin corner sizeOffset offset zero |
-	zero := 0.
-	bottom ifNotNil: [ zero := bottom at: index ].
-	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y+zero).
-	corner := origin x @ (yScale scale: zero ).
-	sizeOffset := (self barSize / 2.0) @ 0.
-	offset := self barOffset @ 0.
-	^ Rectangle 
-		origin: origin + offset - sizeOffset
-		corner: corner + offset + sizeOffset
+{ #category : #private }
+RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
+	"Converts a 2D collection of data points into the poisition of the 1 and 3 quartile, the whiskers, and outlieing points.
+	
+	Returns an array with the following:
+	1. An array of the lower outlying data
+	2. The y value of the bottom whisker 
+	3. The y value of the bottom of the box 
+	4. The y value of the median
+	5. The y value of the top of the box 
+	6. The y value of the top whisker
+	7. An array of the upper outlying data
+	"
+	boxAndWhisker := aCollection collect: [ :i |
+		|quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers |
+		minVal := i min.
+		maxVal := i max.
+		quartile1 := i quantile: 0.25.
+		quartile3 := i quantile: 0.75.
+		iqr := quartile3 - quartile1 .
+		
+		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
+		bottomWhiskerExtent < minVal 
+			ifTrue: [ bottomWhiskerExtent := minVal. bottomOutliers := Array new ]
+			ifFalse: [ bottomOutliers := i select: [ :j | j < bottomWhiskerExtent  ] ].
+		
+		topWhiskerExtent := quartile3 + (iqr * 1.5).
+		topWhiskerExtent > maxVal 
+			ifTrue: [ topWhiskerExtent := maxVal. topOutliers := Array new ]
+			ifFalse: [ topOutliers := i select: [ :j | j > topWhiskerExtent  ] ].
+			
+		{ bottomOutliers . bottomWhiskerExtent . quartile1. i median. quartile3. topWhiskerExtent . topOutliers  }
+	].
+
 ]
 
-{ #category : #rendering }
-RSBoxPlot >> computeWhiskersFor: aPoint index: index [
-	| origin sizeOffset offset zero topLeft topCenter bottomLeft bottomCenter bottomRight bottomWhiskerExtent topWhiskerExtent |
-	zero := 0.
-	bottom ifNotNil: [ zero := bottom at: index ].
-	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y+zero).
+{ #category : #hooks }
+RSBoxPlot >> computeRectagleAndLinesFor: index [
+   "Convert the box and whisker extents to their positions in the plot using the scale"
+	| box boxAndWhis origin corner sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomCenter topCenter bottomWhiskerExtent topWhiskerExtent |
+	
+	boxAndWhis := boxAndWhisker at: index.
+	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
+	zero := boxAndWhis at: 3.
+	"origin is the top left of the rectangle"
+	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y + zero).
+	corner := origin x @ (yScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	
@@ -50,20 +80,23 @@ RSBoxPlot >> computeWhiskersFor: aPoint index: index [
 	bottomCenter := (bottomRight x + origin x / 2) @ bottomRight y.
 	topCenter := bottomCenter x @ (topLeft y).
 	
-	bottomWhiskerExtent := bottomCenter x @ (yScale scale: zero - 2).
-	topWhiskerExtent := bottomCenter x @ (yScale scale: aPoint y + zero + 2).
-	^{RSLine new startPoint: bottomCenter; endPoint: bottomWhiskerExtent . RSLine new startPoint: topCenter; endPoint: topWhiskerExtent}
+	bottomWhiskerExtent := bottomCenter x @ (yScale scale: (boxAndWhis at: 2)).
+	topWhiskerExtent := topCenter x @ (yScale scale: (boxAndWhis at: 6)).
 	
-		
-		
+	box := self shape copy
+		model: (self modelFor: aPoint);
+		color: self computeColor;
+		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
+		yourself.
+	
+	^{RSLine new startPoint: bottomCenter; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: topCenter; endPoint: topWhiskerExtent}.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> definedValuesY [
 	"Return the list Y values that are defined"
 	| res |
-	res := yValues.
-	bottom ifNotNil: [ res := yValues + bottom ].
+	res := yValues flatCollect: [ :i | i]. 
 	^ res, {0}
 ]
 
@@ -74,25 +107,22 @@ RSBoxPlot >> modelFor: aPoint [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	| index whiskers |
+	| index |
 	self checkAssertion.
 	index := 1.
-	bars := xValues collect: [ :xt | 
-		| yt bar |
-		yt := yValues at: index.
-		bar := self createBarFor: xt@yt index: index.
+	bars := xValues flatCollect: [ :xt | 
+		| bar |
+		bar := self computeRectagleAndLinesFor: index.
 		index := index + 1.
 		bar ] as: RSGroup.
-	
-	index := 1.
-	whiskers := xValues flatCollect: [:xt | 
-		|yt whis|
-		yt := yValues at: index.
-		whis := self computeWhiskersFor: xt@yt index: index. 
-		index := index + 1.
-		whis
-		] as: RSGroup.
 	canvas addAll: bars.
-	canvas addAll: whiskers .
 
+
+]
+
+{ #category : #public }
+RSBoxPlot >> x: aCollection y: aCollection2 [
+	xValues := aCollection.
+	yValues := aCollection2.
+	self computeBoxAndWhiskerExtent: aCollection2.
 ]

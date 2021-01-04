@@ -89,15 +89,6 @@ RSAbstractBoxPlot >> computeRectagleFor: aPoint index: index [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
-RSAbstractBoxPlot >> createBarFor: aPoint index: index [
-	^ self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (self computeRectagleFor: aPoint index: index);
-		yourself
-]
-
 { #category : #initialization }
 RSAbstractBoxPlot >> defaultShape [
 	^ RSBox new noPaint
