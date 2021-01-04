@@ -93,6 +93,8 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 
 { #category : #rendering }
 RSBoxPlot >> computeOutliersFor: points at: xValue [
+
+	"Translates a collection of points to the plot coordinates and returns a collection of RSEllipse"
 	
 	^points collect: [ :i |
 		| newPoint |
