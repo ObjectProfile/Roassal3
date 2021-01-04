@@ -1,3 +1,35 @@
+"
+I am a box and whisker plot. 
+
+I am responsible for calculating the extent of the box and whisker parts of the plot, and determining the outliers.
+
+```
+| c p y |
+""The inner collections must respond to quantile: which is added to added to SortedCollection by PolyMath""
+y := { { 1. 2. 3. 4. 5. } asSortedCollection. 
+		 { 5. 6. 7. 5. 10. } asSortedCollection .
+		 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
+c := RSChart new.
+p := RSBoxPlot new y: y.
+	
+c addPlot: p.
+	
+c addDecoration: (RSHorizontalTick new 
+		numberOfTicks: y size).
+c xlabel: 'X Axis'.
+c addDecoration: (RSVerticalTick new 
+		numberOfTicks: 10;
+		asFloat).
+c ylabel: 'Y Axis'.
+c title: 'Box Plot'.
+c openOnce.
+```
+
+My input must be a 2D collection; the first dimension will be an individual box and whisker and the second 
+dimension is a collection of points. This inner collection must respond to a `quantile:` message, which 
+is used to calculate the first and third quartiles. Currently this method can be loaded onto `SortedCollection`
+as part of the `Math-Quantile` package that is part of PolyMath.
+"
 Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractBoxPlot,
@@ -59,10 +91,23 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 
 ]
 
-{ #category : #hooks }
-RSBoxPlot >> computeRectagleAndLinesFor: index [
+{ #category : #rendering }
+RSBoxPlot >> computeOutliersFor: points at: xValue [
+	
+	^points collect: [ :i |
+		| newPoint |
+		newPoint := (xScale scale: xValue) @ (yScale scale: i).
+		RSEllipse new
+				radius: 2;
+				color: self computeColor;
+				translateTo: newPoint .
+	].
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeRectagleAndLinesFor: index [ 
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| box boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
+	| lowerOutliers upperOutliers box boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
 	
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
@@ -72,6 +117,8 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	corner := origin x @ (yScale scale: zero ).
 	
 	
+	lowerOutliers := self computeOutliersFor: (boxAndWhis at: 1) at: (xValues at: index)	.
+	upperOutliers := self computeOutliersFor: (boxAndWhis at: 7) at: (xValues at: index). 
 	
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
@@ -92,7 +139,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
 	
-	^{RSLine new startPoint: center @ corner y; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: center @ origin y; endPoint: topWhiskerExtent}.
+	^{RSLine new startPoint: center @ corner y; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: center @ origin y; endPoint: topWhiskerExtent}, lowerOutliers, upperOutliers.
 ]
 
 { #category : #rendering }
