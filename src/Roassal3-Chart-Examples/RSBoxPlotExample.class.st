@@ -11,7 +11,7 @@ RSBoxPlotExample >> example01 [
 	| c p y |
 	
 	y := { { 1. 2. 3. 4. 5. } asSortedCollection. 
-			 { 5. 6. 7. 5. 10. } asSortedCollection . 
+			 { 5. 6. 7. 5. 10. } asSortedCollection .
 			 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
 	c := RSChart new.
 	p := RSBoxPlot new y: y.

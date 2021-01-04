@@ -45,12 +45,12 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 		iqr := quartile3 - quartile1 .
 		
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
-		bottomWhiskerExtent < minVal 
+		bottomWhiskerExtent <= minVal 
 			ifTrue: [ bottomWhiskerExtent := minVal. bottomOutliers := Array new ]
 			ifFalse: [ bottomOutliers := i select: [ :j | j < bottomWhiskerExtent  ] ].
 		
 		topWhiskerExtent := quartile3 + (iqr * 1.5).
-		topWhiskerExtent > maxVal 
+		topWhiskerExtent >= maxVal 
 			ifTrue: [ topWhiskerExtent := maxVal. topOutliers := Array new ]
 			ifFalse: [ topOutliers := i select: [ :j | j > topWhiskerExtent  ] ].
 			
@@ -62,26 +62,29 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 { #category : #hooks }
 RSBoxPlot >> computeRectagleAndLinesFor: index [
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| box boxAndWhis origin corner sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomCenter topCenter bottomWhiskerExtent topWhiskerExtent |
+	| box boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
 	
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
 	zero := boxAndWhis at: 3.
 	"origin is the top left of the rectangle"
-	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y + zero).
+	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
 	corner := origin x @ (yScale scale: zero ).
+	
+	
+	
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	
 	topLeft := origin + offset - sizeOffset.
 	bottomLeft := topLeft x @ (yScale scale: zero ).
 	
-	bottomRight := bottomLeft + offset + sizeOffset.
-	bottomCenter := (bottomRight x + origin x / 2) @ bottomRight y.
-	topCenter := bottomCenter x @ (topLeft y).
+	bottomRight := corner + offset + sizeOffset.
 	
-	bottomWhiskerExtent := bottomCenter x @ (yScale scale: (boxAndWhis at: 2)).
-	topWhiskerExtent := topCenter x @ (yScale scale: (boxAndWhis at: 6)).
+	center := (topLeft x + bottomRight x) / 2.
+	
+	bottomWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 2)).
+	topWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 6)).
 	
 	box := self shape copy
 		model: (self modelFor: aPoint);
@@ -89,7 +92,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
 	
-	^{RSLine new startPoint: bottomCenter; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: topCenter; endPoint: topWhiskerExtent}.
+	^{RSLine new startPoint: center @ corner y; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: center @ origin y; endPoint: topWhiskerExtent}.
 ]
 
 { #category : #rendering }
