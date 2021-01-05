@@ -1,14 +1,18 @@
 "
-I am a box and whisker plot. 
+I am a box and whisker plot used for comparing the distributions of datasets.
 
-I am responsible for calculating the extent of the box and whisker parts of the plot, and determining the outliers.
+I require a 2D collection where the first dimension are the individual box-and-whisker and the inner 
+collection are the data points. The inner collection must respond to `quantile:` for the calculation of 
+the first and third quartiles to generate the box. Currently this message is implemented as part of the
+`Math-Quantile` package in `PolyMath` for sorted collections. 
 
 ```
 | c p y |
-""The inner collections must respond to quantile: which is added to added to SortedCollection by PolyMath""
+
+""With PolyMath loaded SortedCollection responds to the quantile: message""
 y := { { 1. 2. 3. 4. 5. } asSortedCollection. 
-		 { 5. 6. 7. 5. 10. } asSortedCollection .
-		 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
+			 { 5. 6. 7. 5. 10. } asSortedCollection .
+			 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
 c := RSChart new.
 p := RSBoxPlot new y: y.
 	
@@ -24,24 +28,50 @@ c ylabel: 'Y Axis'.
 c title: 'Box Plot'.
 c openOnce.
 ```
-
-My input must be a 2D collection; the first dimension will be an individual box and whisker and the second 
-dimension is a collection of points. This inner collection must respond to a `quantile:` message, which 
-is used to calculate the first and third quartiles. Currently this method can be loaded onto `SortedCollection`
-as part of the `Math-Quantile` package that is part of PolyMath.
 "
 Class {
 	#name : #RSBoxPlot,
-	#superclass : #RSAbstractBoxPlot,
+	#superclass : #RSAbstractPlot,
 	#instVars : [
+		'barSize',
+		'bars',
+		'gapRatio',
+		'barOffset',
 		'boxAndWhisker'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
+RSBoxPlot >> barOffset [
+	^ barOffset
+]
+
+{ #category : #accessing }
+RSBoxPlot >> barOffset: aNumber [
+	barOffset := aNumber
+]
+
+{ #category : #accessing }
 RSBoxPlot >> barScale [
 	^ xScale.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> barSize [
+	"Return the width of each bar"
+	^ barSize ifNil: [ self barScale rangeBand ]
+]
+
+{ #category : #accessing }
+RSBoxPlot >> barSize: aBarWidth [
+	"Set the width of the bar"
+	barSize := aBarWidth
+]
+
+{ #category : #accessing }
+RSBoxPlot >> bars [
+	^ bars
 ]
 
 { #category : #rendering }
@@ -95,10 +125,11 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 RSBoxPlot >> computeOutliersFor: points at: xValue [
 
 	"Translates a collection of points to the plot coordinates and returns a collection of RSEllipse"
+	"xValue has already been converted into the xscale but points are still in the original data scale"
 	
 	^points collect: [ :i |
 		| newPoint |
-		newPoint := (xScale scale: xValue) @ (yScale scale: i).
+		newPoint := xValue @ (yScale scale: i).
 		RSEllipse new
 				radius: 2;
 				color: self computeColor;
@@ -109,7 +140,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 { #category : #rendering }
 RSBoxPlot >> computeRectagleAndLinesFor: index [ 
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| lowerOutliers upperOutliers box boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
+	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
 	
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
@@ -118,30 +149,44 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
 	corner := origin x @ (yScale scale: zero ).
 	
-	
-	lowerOutliers := self computeOutliersFor: (boxAndWhis at: 1) at: (xValues at: index)	.
-	upperOutliers := self computeOutliersFor: (boxAndWhis at: 7) at: (xValues at: index). 
-	
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	
 	topLeft := origin + offset - sizeOffset.
-	bottomLeft := topLeft x @ (yScale scale: zero ).
 	
 	bottomRight := corner + offset + sizeOffset.
 	
 	center := (topLeft x + bottomRight x) / 2.
 	
+	"These are a collection of RSEllipse for the outlying points of the dataset"
+	lowerOutliers := self computeOutliersFor: (boxAndWhis at: 1) at: center.
+	upperOutliers := self computeOutliersFor: (boxAndWhis at: 7) at: center. 
+	
 	bottomWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 2)).
 	topWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 6)).
 	
-	box := self shape copy
+	
+	^{ 	self shape copy
 		model: (self modelFor: aPoint);
 		color: self computeColor;
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
-	
-	^{RSLine new startPoint: center @ corner y; endPoint: bottomWhiskerExtent . box. RSLine new startPoint: center @ origin y; endPoint: topWhiskerExtent}, lowerOutliers, upperOutliers.
+		RSLine new 
+			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4))); 
+			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4))).
+		RSLine new 
+			startPoint: center @ corner y; 
+			endPoint: bottomWhiskerExtent .  
+		RSLine new 
+			startPoint: center @ origin y; 
+			endPoint: topWhiskerExtent}, 
+		lowerOutliers, 
+		upperOutliers.
+]
+
+{ #category : #initialization }
+RSBoxPlot >> defaultShape [
+	^ RSBox new noPaint
 ]
 
 { #category : #rendering }
@@ -150,6 +195,30 @@ RSBoxPlot >> definedValuesY [
 	| res |
 	res := yValues flatCollect: [ :i | i]. 
 	^ res, {0}
+]
+
+{ #category : #accessing }
+RSBoxPlot >> gapRatio [
+	^ gapRatio
+]
+
+{ #category : #accessing }
+RSBoxPlot >> gapRatio: aNumber [
+	"aNumber between 0 and 1"
+	gapRatio := aNumber
+]
+
+{ #category : #initialization }
+RSBoxPlot >> initialize [
+	super initialize.
+	self
+		gapRatio: 0.1;
+		barOffset: 0.
+]
+
+{ #category : #testing }
+RSBoxPlot >> isBoxPlot [
+	^ true
 ]
 
 { #category : #hooks }
