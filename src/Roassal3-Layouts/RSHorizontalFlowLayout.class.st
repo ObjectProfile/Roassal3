@@ -54,13 +54,13 @@ RSHorizontalFlowLayout >> linesFor: elements [
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
 	elements doWithIndex: [ :element :index |
-		element position: (x @ y) + (element extent / 2.0).
+		"maybe we need to use a mock element in all layouts"
+		element translateTo: (x @ y) + (element extent / 2.0).
 		currentLine add: element.
 		y := y + element height + gap.
 		maxLastLineWidth := maxLastLineWidth max: element width.
 		nextElement := elements at: (index + 1 min: elements size).
 		(y + nextElement height) > maxHeight ifTrue: [
-			
 			lines add: currentLine.
 			y := gap.
 			x := x + maxLastLineWidth + gap.

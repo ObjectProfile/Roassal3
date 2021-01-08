@@ -78,7 +78,7 @@ RSFlowLayout >> linesFor: shapes [
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
 	shapes doWithIndex: [ :element :index |
-		element position: (x @ y) + (element extent / 2.0).
+		element translateTo: (x @ y) + (element extent / 2.0).
 		currentLine add: element.
 		x := x + element width + gap.
 		maxLastLineHeight := maxLastLineHeight max: element height.
