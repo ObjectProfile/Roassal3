@@ -24,7 +24,9 @@ RSUMLPackageCalypso class >> classUmlTapActivation2 [
 
 { #category : #accessing }
 RSUMLPackageCalypso class >> shouldBeActivatedInContext: aBrowserContext [
-	^aBrowserContext isPackageSelected and: [aBrowserContext isClassSelected not]
+	^ RSUMLCalypsoSettings useCalypsoUML
+		and: [ aBrowserContext isPackageSelected 
+			and: [aBrowserContext isClassSelected not]]
 ]
 
 { #category : #accessing }
