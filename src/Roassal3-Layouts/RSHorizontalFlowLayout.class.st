@@ -45,21 +45,21 @@ RSHorizontalFlowLayout >> isAlignRight [
 ]
 
 { #category : #hook }
-RSHorizontalFlowLayout >> linesFor: elements [
+RSHorizontalFlowLayout >> linesFor: shapes [
 	| gap y x maxLastLineWidth lines currentLine maxHeight nextElement |
 	gap := self gapSize.
 	x := y := gap.
 	maxLastLineWidth := 0.
-	maxHeight := self maxWidth rsValue: elements.
+	maxHeight := self maxWidth rsValue: shapes.
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
-	elements doWithIndex: [ :element :index |
+	shapes doWithIndex: [ :element :index |
 		"maybe we need to use a mock element in all layouts"
 		element translateTo: (x @ y) + (element extent / 2.0).
 		currentLine add: element.
 		y := y + element height + gap.
 		maxLastLineWidth := maxLastLineWidth max: element width.
-		nextElement := elements at: (index + 1 min: elements size).
+		nextElement := shapes at: (index + 1 min: shapes size).
 		(y + nextElement height) > maxHeight ifTrue: [
 			lines add: currentLine.
 			y := gap.
