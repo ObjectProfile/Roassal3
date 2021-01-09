@@ -6,18 +6,19 @@ Class {
 
 { #category : #examples }
 RSFlowCanvasExample >> example01 [
-	| c shapes f |
-	c := RSCanvas new.
-	shapes := RSCircle models: (1 to: 20).
-	c addAll: shapes.
-	shapes @ RSLabeled @ RSPopup @ RSDraggable.
-	RSNormalizer size
-		shapes: shapes;
-		normalize: #yourself.
-	RSFlowLayout on: shapes.
-	c @ RSCanvasController.
+	| shapes f |
 
 	f := RSFlowCanvas new.
-	f canvas: c.
+	f when: SmallInteger visualize: [ :canvas :number |
+		shapes := RSCircle models: (1 to: number).
+		canvas addAll: shapes.
+		shapes @ RSLabeled @ RSPopup @ RSDraggable.
+		RSNormalizer size
+			shapes: shapes;
+			normalize: #yourself.
+		RSFlowLayout on: shapes.
+		canvas @ RSCanvasController.
+	].
+	f clickOnModel: 20.
 	f open
 ]
