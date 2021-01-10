@@ -252,7 +252,7 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 		ifTrue: [ 1 ]
 		ifFalse: [ p min: aSortedCollection size ].
 	^ p truncated = p
-		ifTrue: [ aSortedCollection at: p ]
+		ifTrue: [ aSortedCollection at: p asInteger ]
 		ifFalse: [ (f := aSortedCollection at: p floor)
 				+ (((aSortedCollection at: p ceiling) - f) * (p fractionPart * d + c)) ]
 	
