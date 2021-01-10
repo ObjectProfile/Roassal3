@@ -2,17 +2,15 @@
 I am a box and whisker plot used for comparing the distributions of datasets.
 
 I require a 2D collection where the first dimension are the individual box-and-whisker and the inner 
-collection are the data points. The inner collection must respond to `quantile:` for the calculation of 
-the first and third quartiles to generate the box. Currently this message is implemented as part of the
-`Math-Quantile` package in `PolyMath` for sorted collections. 
+collection are the data points. 
 
 ```
 | c p y |
 
 ""With PolyMath loaded SortedCollection responds to the quantile: message""
-y := { { 1. 2. 3. 4. 5. } asSortedCollection. 
-			 { 5. 6. 7. 5. 10. } asSortedCollection .
-			 { 12. 12. 13. 14. 15. 24. } asSortedCollection }. 
+y := { { 1. 2. 3. 4. 5. } . 
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }. 
 c := RSChart new.
 p := RSBoxPlot new y: y.
 	
@@ -99,11 +97,14 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	7. An array of the upper outlying data
 	"
 	boxAndWhisker := aCollection collect: [ :i |
-		|quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers |
-		minVal := i min.
-		maxVal := i max.
-		quartile1 := i quantile: 0.25.
-		quartile3 := i quantile: 0.75.
+		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers |
+		
+		iSort := i asSortedCollection .
+		
+		minVal := iSort min.
+		maxVal := iSort max.
+		quartile1 := self quantile: 0.25 for: iSort.
+		quartile3 := self quantile: 0.75 for: iSort.
 		iqr := quartile3 - quartile1 .
 		
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
@@ -116,7 +117,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 			ifTrue: [ topWhiskerExtent := maxVal. topOutliers := Array new ]
 			ifFalse: [ topOutliers := i select: [ :j | j > topWhiskerExtent  ] ].
 			
-		{ bottomOutliers . bottomWhiskerExtent . quartile1. i median. quartile3. topWhiskerExtent . topOutliers  }
+		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers  }
 	].
 
 ]
@@ -221,9 +222,40 @@ RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
+{ #category : #'math functions' }
+RSBoxPlot >> modeBased [
+	"Initialize the quantile calculation with this input"
+	^ Array with: 1 with: -1 with: 0 with: 1
+]
+
 { #category : #hooks }
 RSBoxPlot >> modelFor: aPoint [
 	^ aPoint y
+]
+
+{ #category : #'math functions' }
+RSBoxPlot >> quantile: aProbability for: aSortedCollection [
+	"returns the expected quantile only, if I use my standard initialization method"
+
+	^ self quantile: aProbability for: aSortedCollection withProbs: self modeBased.
+]
+
+{ #category : #'math functions' }
+RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
+	| a b c d p f |
+	a := anArray at: 1.
+	b := anArray at: 2.
+	c := anArray at: 3.
+	d := anArray at: 4.
+	p := (aSortedCollection size + b) * aProbability + a.
+	p := p < 1
+		ifTrue: [ 1 ]
+		ifFalse: [ p min: aSortedCollection size ].
+	^ p truncated = p
+		ifTrue: [ aSortedCollection at: p ]
+		ifFalse: [ (f := aSortedCollection at: p floor)
+				+ (((aSortedCollection at: p ceiling) - f) * (p fractionPart * d + c)) ]
+	
 ]
 
 { #category : #rendering }
