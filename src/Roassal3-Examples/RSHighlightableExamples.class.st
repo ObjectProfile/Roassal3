@@ -454,3 +454,45 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 	canvas @ elastic.
 	^ canvas
 ]
+
+{ #category : #elastic }
+RSHighlightableExamples >> example12ShowingEdges [
+	<script: 'self new example12ShowingEdges open'>
+	| canvas shapes color interaction connectBlock cpController|
+	canvas := RSCanvas new.
+
+	color := RSColorPalette sequential bupu3.
+	shapes := (1 to: 20) collect: [ :m |
+		RSBox new
+			size: 10;
+			model: m;
+			draggable;
+			withBorder;
+			color: (color scale: m);
+			yourself.
+		 ].
+	
+	RSLineBuilder line
+		canvas: canvas;
+		shapes: shapes;
+		connectFrom: [ :n | n // 2 ].
+	canvas addAll: shapes.
+	cpController := RSBlockCPController new
+		block: [ :line | 
+			Array
+				with: line from position
+				with: 0 @ 0
+				with: line to position ];
+		yourself.
+	interaction := RSHighlightable 
+		showEdges: [:model | {model + 1. model + 2. model + 3} ] 
+		using: (RSBezier new
+			color: Color red;
+			width: 2;
+			controlPointsController: cpController
+			yourself	).
+	canvas nodes @ interaction.
+	RSClusterLayout on: shapes.
+	canvas zoomToFit.
+	^ canvas 
+]
