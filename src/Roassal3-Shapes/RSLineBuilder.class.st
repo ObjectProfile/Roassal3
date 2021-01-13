@@ -401,18 +401,6 @@ RSLineBuilder >> fromShapes: someShapes [
 	fromShapes := someShapes asGroup
 ]
 
-{ #category : #initialization }
-RSLineBuilder >> initialize [
-	super initialize.
-	self noRepetition.
-	shouldMoveBehind := false.
-	
-	"The view has to be explicitly set by the end-user"
-	canvasHasBeenManuallySet := false.
-	"We could have edges from A to B, and from B to A"
-	self beDirectional.
-]
-
 { #category : #testing }
 RSLineBuilder >> isBidirectional [
 	"Return true or false, indicating whether the edge builder is bidirectional or not (i.e., if 
