@@ -62,7 +62,7 @@ RSMondrianTest >> testColoredNodesForEach [
 { #category : #tests }
 RSMondrianTest >> testComposingMondrian [
 
-	| c compo m2 |
+	| c compo m2 nodes |
 	c := RSCanvas new.
 	compo := RSComposite new.
 
@@ -82,13 +82,14 @@ RSMondrianTest >> testComposingMondrian [
 
 	m2 := RSMondrian new.
 	m2 canvas: c.
-	m2 nodes: (1 to: 4).
+	nodes := m2 nodes: (1 to: 4).
 	m2 line connectFrom: [ :v | v // 2 ].
 	m2 build.
 
 	self assert: c numberOfEdges equals: 3.
 	self assert: c numberOfNodes equals: 5.
-
+	
+	self assert: (nodes collect: #position) asArray equals:  {(7.5@7.5). (7.5@17.5). (7.5@27.5). (7.5@37.5)}.
 ]
 
 { #category : #tests }

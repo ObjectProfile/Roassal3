@@ -5,14 +5,15 @@ Class {
 		'canvas',
 		'layoutBuilder',
 		'shapeBuilder',
-		'edgeBuilder'
+		'edgeBuilder',
+		'createdNodes'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
 
 { #category : #'building - graph' }
 RSMondrian >> applyLayout [
-	layoutBuilder on: canvas nodes
+	layoutBuilder on: createdNodes "canvas nodes"
 ]
 
 { #category : #'building - graph' }
@@ -70,7 +71,8 @@ RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.
 	layoutBuilder := RSLayoutBuilder new.
-	canvas := RSCanvas new @ RSCanvasController
+	canvas := RSCanvas new @ RSCanvasController.
+	createdNodes := RSGroup new
 ]
 
 { #category : #'building - graph' }
@@ -117,16 +119,17 @@ RSMondrian >> nodes: objects [
 	b open
 	"
 	
-	| shapes |
+	| nodes |
 	self assert: [ objects isCollection ] description: 'You need to provide a collection to #nodes:'.
-	shapes := self shapesOn: objects.
-	canvas addAll: shapes.
+	nodes := self shapesOn: objects.
+	canvas addAll: nodes.
 "	self currentFrame addShapes: els.
 	canvas addAll: els.
 	self resetShapeBuilder.
 	self resetLayoutBuilder.
 	self resetInteraction."
-	^ shapes
+	createdNodes addAll: nodes.
+	^ nodes
 ]
 
 { #category : #'building - graph' }
@@ -159,8 +162,8 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	b open
 	"
 	
-	| shapes compo old previousShapeBuilder |
-	shapes := RSGroup new.
+	| nodes compo old previousShapeBuilder |
+	nodes := RSGroup new.
 	objects do: [ : obj |
 		previousShapeBuilder := shapeBuilder.
 		
@@ -172,7 +175,7 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 		
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
-		shapes add: compo.
+		nodes add: compo.
 		self build.
 		compo adjustToChildren.
 		compo padding: 5.
@@ -180,9 +183,10 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 		self canvas: old.
 		shapeBuilder := previousShapeBuilder.
 	].
-	canvas addAll: shapes.
-	shapes @ RSPopup @ RSDraggable.
-	^ shapes
+	canvas addAll: nodes.
+	nodes @ RSPopup @ RSDraggable.
+	createdNodes addAll: nodes.
+	^ nodes
 ]
 
 { #category : #'public - normalizer' }
