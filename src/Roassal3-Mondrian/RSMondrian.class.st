@@ -13,7 +13,7 @@ Class {
 
 { #category : #'building - graph' }
 RSMondrian >> applyLayout [
-	layoutBuilder on: nodesForLayout" canvas nodes"
+	layoutBuilder on: nodesForLayout
 ]
 
 { #category : #'building - graph' }
