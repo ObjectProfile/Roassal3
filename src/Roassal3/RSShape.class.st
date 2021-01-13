@@ -256,6 +256,12 @@ RSShape >> hasEventCallback [
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
+{ #category : #testing }
+RSShape >> hasModel [
+	"Return true if a model is set in the shape. Return false otherwise"
+	^ model notNil
+]
+
 { #category : #accessing }
 RSShape >> height [
 	^ self extent y

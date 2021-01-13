@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+RSShapeTest >> testHasModel [
+
+	self deny: RSCircle new hasModel.
+	self assert: (RSShape new model: 52) hasModel.
+	self assert: (RSLine new model: 52) hasModel.
+	self deny: RSLine new hasModel.
+]
+
+{ #category : #tests }
 RSShapeTest >> testModels [
 
 	| shapes |
