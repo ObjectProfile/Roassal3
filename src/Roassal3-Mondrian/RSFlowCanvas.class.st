@@ -82,8 +82,9 @@ RSFlowCanvas >> setBreadcrumbsLabel: aString [
 RSFlowCanvas >> setOnCanvas: aCanvas [
 
 	| relevantShapes |
+	self assert: [ aCanvas class == RSCanvas ] description: 'Must provide a canvas'.
 	canvas := aCanvas.
-	relevantShapes := aCanvas nodes select: [ :s | s model notNil ].
+	relevantShapes := (aCanvas deepNodes select: [ :s | s model notNil ]) asGroup.
 	relevantShapes when: RSMouseClick do: [ :evt |
 		self clickOnModel: evt shape model ].
 	
@@ -107,6 +108,7 @@ RSFlowCanvas >> updateBreadcrumbs [
 			
 			self clickOnModel: lbl model ].
 	].
+self assert: [ canvas class == RSCanvas ].
    canvas addAll: breadcrumbsLabels.
    breadcrumbsLabels do: #setAsFixed.
    RSHorizontalLineLayout on: breadcrumbsLabels.

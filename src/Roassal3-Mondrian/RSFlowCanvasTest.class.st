@@ -51,7 +51,7 @@ RSFlowCanvasTest >> testNestedNodes [
 	c add: compo.
 	 
 	f := RSFlowCanvas new.
-	f setOnCanvas: compo.
+	f setOnCanvas: c.
 	f when: String visualize: [ :canvas :str | nb := nb + 1 ].
 	f when: Object visualize: [ :canvas :str | nb := nb + 10 ].
 
