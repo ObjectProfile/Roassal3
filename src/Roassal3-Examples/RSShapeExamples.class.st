@@ -682,7 +682,7 @@ RSShapeExamples >> example29AntAnimation [
 			color: Color white; 
 			text: model;
 			yourself ].
-	highInt := RSHighlightable new setupAntAnimation yourself.
+	highInt := RSHighlightable withAntAnimation.
 	popupMethod := RSPopup text: #selector.
 	shapes := String withAllSubclasses collect: [ :cls | | methods |
 		methods := cls methods collect: [ :met |

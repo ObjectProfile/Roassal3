@@ -179,7 +179,7 @@ RSHighlightable class >> red [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSHighlightable class >> sameModel: aCanvas [
 	"Define an highlight object that is able to highlight the same elements pointed by the mouse.
 	
@@ -198,6 +198,73 @@ c @ RSCanvasController
 	^ self new 
 		highlightBorder: (RSBorder new color: Color yellow; width: 5); 
 		highlightShapes: [ :ss | aCanvas nodes select: [ :sss | (sss model == ss model) and: [ sss ~~ ss ]  ] ]
+]
+
+{ #category : #'instance creation' }
+RSHighlightable class >> showEdges: aBlock using: aRSLine [
+	| i |
+	i := self new.
+	i 
+		when: RSHighlightEvent do: [ :evt | 
+			| models shape lines shapes |
+			shape := evt shape.
+			models := aBlock value: evt shape model.
+			shapes := evt shape parent shapesFromModels: models.
+			lines := shapes collect: [:s | 
+				aRSLine copy
+					from: shape;
+					to: s;
+					yourself].
+			shape parent addAll: lines.
+			shape parent propertyAt: #lines put: lines.
+		];
+		when: RSUnHighlightEvent do: [:evt |
+			evt shape parent propertyAt: #lines ifPresent: [:lines | lines do: #remove ].
+		].
+	^ i 
+]
+
+{ #category : #public }
+RSHighlightable class >> withAntAnimation [
+	| i |
+	i := self new.
+	i withEdges.
+	i when: RSHighlightEvent do: [ :evt | | shape border |
+		shape := evt shape.
+		border := shape border.
+		shape propertyAt: #ob put: border.
+		border ifNil: [ border := RSBorder new ].
+		shape border: (RSBorder new width: border width * 2; color: border color).
+		shape isNode ifTrue: [ 
+			| array anime |
+			array := #(4).
+			shape connectedEdges do: [ :edge | edge border 
+				color: Color blue; 
+				width: 2;
+				dashArray: array. ].
+			anime := shape newAnimation
+				repeat;
+				from: 0;
+				to: -8;
+				duration: 1 second;
+				onStepDo: [ :t |
+					shape connectedEdges do: [ :ed |ed border dashOffset: t ].
+					shape signalUpdate ].
+			shape topParent propertyAt: #antAnimation put: anime.
+		].
+	].
+	i when: RSUnHighlightEvent do: [ :evt | 
+		| att shape |
+		shape := evt shape.
+		shape border: (shape propertyAt: #ob).
+		shape removeKey: #ob.
+		shape isNode ifTrue: [ 
+			att := shape topParent properties.
+			(att at: #antAnimation) stop.
+			att removeKey: #antAnimation.
+		 ]
+	].
+	^ i
 ]
 
 { #category : #'instance creation' }
@@ -468,46 +535,6 @@ RSHighlightable >> restore: aShape selector: selector [
 		with: savedValues removeLast.
 	savedValues ifEmpty: [ aShape properties removeKey: key ]
 	
-]
-
-{ #category : #public }
-RSHighlightable >> setupAntAnimation [
-	self withEdges.
-	self when: RSHighlightEvent do: [ :evt | | shape border |
-		shape := evt shape.
-		border := shape border.
-		shape propertyAt: #ob put: border.
-		border ifNil: [ border := RSBorder new ].
-		shape border: (RSBorder new width: border width * 2; color: border color).
-		shape isNode ifTrue: [ 
-			| array anime |
-			array := #(4).
-			shape connectedEdges do: [ :edge | edge border 
-				color: Color blue; 
-				width: 2;
-				dashArray: array. ].
-			anime := shape newAnimation
-				repeat;
-				from: 0;
-				to: -8;
-				duration: 1 second;
-				onStepDo: [ :t |
-					shape connectedEdges do: [ :ed |ed border dashOffset: t ].
-					shape signalUpdate ].
-			shape topParent propertyAt: #antAnimation put: anime.
-		].
-	].
-	self when: RSUnHighlightEvent do: [ :evt | 
-		| att shape |
-		shape := evt shape.
-		shape border: (shape propertyAt: #ob).
-		shape removeKey: #ob.
-		shape isNode ifTrue: [ 
-			att := shape topParent properties.
-			(att at: #antAnimation) stop.
-			att removeKey: #antAnimation.
-		 ]
-	].
 ]
 
 { #category : #actions }
