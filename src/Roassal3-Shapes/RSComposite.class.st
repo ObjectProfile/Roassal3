@@ -198,6 +198,12 @@ RSComposite >> addFixedShape: aShape [
 ]
 
 { #category : #adding }
+RSComposite >> addRecursivelyIn: aCollection [
+	super addRecursivelyIn: aCollection.
+	self shapes do: [ :n | n addRecursivelyIn: aCollection ]
+]
+
+{ #category : #adding }
 RSComposite >> addShape: aShape before: otherShape [ 
 	"Add a shape in a composite shape"
 	aShape addedIn: self.
