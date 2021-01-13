@@ -35,6 +35,28 @@ RSCanvasTest >> testAddShapeBefore [
 	self assert: canvas shapes asArray equals: { shape1 . shape2 }
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testDeepNodes [
+
+	| c compo box |
+	c := RSCanvas new.
+
+	compo := RSComposite new.
+	box := RSBox new.
+	compo addShape: box.
+	compo adjustToChildren.
+
+	c add: compo.
+
+	self assert: c numberOfNodes equals: 1.
+	self assert: c numberOfDeepNodes equals: 2.
+
+	self assert: c deepNodes size equals: 2.
+	self assert: (c deepNodes includesAll: { 
+				 box.
+				 compo })
+]
+
 { #category : #running }
 RSCanvasTest >> testDrawCanvas [
 	canvas addShape: (RSBox new

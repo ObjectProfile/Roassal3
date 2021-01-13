@@ -62,6 +62,11 @@ RSShape >> accept: aVisitor [
 	self subclassResponsibility 
 ]
 
+{ #category : #adding }
+RSShape >> addRecursivelyIn: aCollection [
+	aCollection add: self
+]
+
 { #category : #'private - adding' }
 RSShape >> addedIn: aCanvas [
 	"This is a private method"

@@ -208,6 +208,16 @@ RSCanvas >> createMorph [
 	^ morph
 ]
 
+{ #category : #accessing }
+RSCanvas >> deepNodes [
+	"Return the list of all the nodes contained in the visualization"
+	| result |
+	result := OrderedCollection new. 
+	self nodes do: [ :n |
+		n addRecursivelyIn: result ].
+	^ result
+]
+
 { #category : #'looking up shapes' }
 RSCanvas >> deepShapesFromModel: someObjects result: result [
 	"Private method"
@@ -324,6 +334,11 @@ RSCanvas >> morph: aMorph [
 RSCanvas >> numberOfAnimations [
 	"Return the number of animations contained in the canvas"
 	^ animations size
+]
+
+{ #category : #'accessing - computed' }
+RSCanvas >> numberOfDeepNodes [
+	^ self deepNodes size
 ]
 
 { #category : #accessing }
