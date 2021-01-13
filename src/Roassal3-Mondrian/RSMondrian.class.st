@@ -82,7 +82,7 @@ RSMondrian >> layout [
 RSMondrian >> line [
 	edgeBuilder := RSLineBuilder line.
 	edgeBuilder canvas: canvas.
-	edgeBuilder shapes: canvas nodes.
+	edgeBuilder shapes: (canvas nodes select: #hasModel).
 	edgeBuilder color: self defaultLineColor.
 	^ edgeBuilder
 ]

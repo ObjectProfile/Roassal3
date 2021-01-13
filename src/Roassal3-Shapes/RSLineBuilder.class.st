@@ -389,12 +389,15 @@ RSLineBuilder >> fromObjects: someObjectsOrABlock [
 
 { #category : #accessing }
 RSLineBuilder >> fromShapes [
-	fromShapes ifNil: [ ^ self canvasNodes ].
+	fromShapes ifNil: [ ^ self canvasNodes select: #hasModel ].
 	^ fromShapes
 ]
 
 { #category : #accessing }
 RSLineBuilder >> fromShapes: someShapes [
+	self assert: [ someShapes isCollection ].
+	self assert: [ someShapes allSatisfy: [ :s | s class inheritsFrom: RSShape ] ] description: 'Need to provide a collection of RSShape'.
+	self assert: [ someShapes allSatisfy: #hasModel ] description: 'All shapes must have a model, else lines cannot be properly defined' ].
 	fromShapes := someShapes asGroup
 ]
 
@@ -488,6 +491,7 @@ RSLineBuilder >> shapes: someShapes [
 	"This method is used to provide a set of Roassal shapes. Models will be looked up in these elements"
 	self assert: [ someShapes isCollection ] description: 'Must provide a collection'.
 	self assert: [ someShapes allSatisfy: [ :obj | obj class inheritsFrom: RSShape ] ] description: 'Must provide a collection of Roassal shapes'.
+	self assert: [ someShapes allSatisfy: #hasModel ] description: 'All shapes must have a model'.
 	 
 	self toShapes: someShapes.
 	self fromShapes: someShapes

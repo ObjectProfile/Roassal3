@@ -60,6 +60,38 @@ RSMondrianTest >> testColoredNodesForEach [
 ]
 
 { #category : #tests }
+RSMondrianTest >> testComposingMondrian [
+
+	| c compo m2 |
+	c := RSCanvas new.
+	compo := RSComposite new.
+
+	m := RSMondrian new.
+	m canvas: compo.
+	m shape box size: 10.
+	m nodes: (1 to: 9).
+	m build.
+
+	c add: compo.
+
+	compo color: Color blue.
+	compo adjustToChildren.
+	compo padding: 10.
+
+	compo setAsFixed.
+
+	m2 := RSMondrian new.
+	m2 canvas: c.
+	m2 nodes: (1 to: 4).
+	m2 line connectFrom: [ :v | v // 2 ].
+	m2 build.
+
+	self assert: c numberOfEdges equals: 3.
+	self assert: c numberOfNodes equals: 5.
+
+]
+
+{ #category : #tests }
 RSMondrianTest >> testEdges [
 
 	m nodes: (1 to: 100).
@@ -98,4 +130,46 @@ RSMondrianTest >> testNodesForEachAndLAyout [
 		{ m canvas shapes first . m canvas shapes first children first . m canvas shapes first children second }.
 		
 	self assert: m canvas shapes first children first position ~= m canvas shapes first children second position
+]
+
+{ #category : #tests }
+RSMondrianTest >> testWithNullElement [
+
+	| c lb shape nodes |
+	c := RSCanvas new.
+	shape := RSCircle new.
+	c add: shape.
+	shape setAsFixed.
+	
+	m := RSMondrian new.
+	m canvas: c.
+	nodes := m nodes: (1 to: 2).
+	lb := m line.
+	lb connectFrom: [ :v | v // 2 ].
+	m build.
+	
+	self assert: lb fromShapes size equals: 2.
+	self assert: lb fromShapes asArray equals: nodes asArray.
+	self assert: (lb fromShapes noneSatisfy: [ :s | s model isNil ])
+]
+
+{ #category : #tests }
+RSMondrianTest >> testWithNullElementWithFixed [
+
+	| c shape lb nodes |
+	c := RSCanvas new.
+	shape := RSCircle new.
+	c add: shape.
+	shape setAsFixed.
+	
+	m := RSMondrian new.
+	m canvas: c.
+	nodes := m nodes: (1 to: 2).
+	lb := m line.
+	lb connectFrom: [ :v | v // 2 ].
+	m build.
+	
+	self assert: lb fromShapes size equals: 2.
+	self assert: lb fromShapes asArray equals: nodes asArray.
+	self assert: (lb fromShapes noneSatisfy: [ :s | s model isNil ])
 ]
