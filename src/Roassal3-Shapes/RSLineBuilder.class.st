@@ -397,15 +397,7 @@ RSLineBuilder >> fromShapes [
 RSLineBuilder >> fromShapes: someShapes [
 	self assert: [ someShapes isCollection ].
 	self assert: [ someShapes allSatisfy: [ :s | s class inheritsFrom: RSShape ] ] description: 'Need to provide a collection of RSShape'.
-	self assert: [ someShapes allSatisfy: #hasModel ] description: 'All shapes must have a model, else lines cannot be properly defined' ].
-	fromShapes := someShapes asGroup
-]
-
-{ #category : #testing }
-RSLineBuilder >> isBidirectional [
-	"Return true or false, indicating whether the edge builder is bidirectional or not (i.e., if 
-	edges from A to B, __and__ B to A can be created"
-	^ beDirectional 
+	self assert: [ someShapes allSatisfy: #hasModel ] description: 'All shapes must have a model, else lines cannot be properly defined'
 ]
 
 { #category : #accessing }
