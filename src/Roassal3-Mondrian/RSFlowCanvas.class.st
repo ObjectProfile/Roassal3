@@ -3,10 +3,12 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'breadcrumbs',
+		'breadcrumbsLabels',
 		'canvas',
-		'mapping'
+		'mapping',
+		'breadcrumbsLabel'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : #'Roassal3-Mondrian-Flow'
 }
 
 { #category : #accessing }
@@ -33,20 +35,41 @@ RSFlowCanvas >> clickOnModel: aModel [
 			 ].
 	canvas signalUpdate.
 	
-	breadcrumbs add: aModel
+	breadcrumbs add: aModel.
+	self updateBreadcrumbs
 ]
 
 { #category : #initialization }
 RSFlowCanvas >> initialize [
+
 	super initialize.
-	canvas := RSCanvas new.
+	self initializeCanvas.
 	mapping := Dictionary new.
-	breadcrumbs := OrderedCollection new.
+	breadcrumbsLabels := RSGroup new.
+	breadcrumbs := OrderedCollection new
+]
+
+{ #category : #initialization }
+RSFlowCanvas >> initializeCanvas [
+
+	canvas := RSCanvas new.
+	breadcrumbsLabel := RSLabel new.
+	canvas add: breadcrumbsLabel.
+	breadcrumbsLabel setAsFixed.
+"	self setBreadcrumbsLabel: '/'
+"	
+
 ]
 
 { #category : #'instance creation' }
 RSFlowCanvas >> open [
 	^ canvas open
+]
+
+{ #category : #initialization }
+RSFlowCanvas >> setBreadcrumbsLabel: aString [
+	breadcrumbsLabel text: aString.
+	breadcrumbsLabel translateTopLeftTo: 0 @ 0.
 ]
 
 { #category : #initialization }
@@ -56,7 +79,33 @@ RSFlowCanvas >> setOnCanvas: aCanvas [
 	canvas := aCanvas.
 	relevantShapes := aCanvas nodes select: [ :s | s model notNil ].
 	relevantShapes when: RSMouseClick do: [ :evt |
-		self clickOnModel: evt shape model ]
+		self clickOnModel: evt shape model ].
+	
+
+]
+
+{ #category : #initialization }
+RSFlowCanvas >> updateBreadcrumbs [
+
+   breadcrumbsLabels do: #remove.
+   breadcrumbsLabels := RSGroup new.
+   breadcrumbs do: [ :obj |
+	   | lbl |
+	   lbl := RSLabel text: obj asString, '/ ' model: obj.
+		breadcrumbsLabels add: lbl.
+		lbl @ RSHighlightable red. 
+		lbl when: RSMouseClick do: [ :evt | 
+			| i |
+			i := breadcrumbsLabels indexOf: lbl.
+			breadcrumbs := breadcrumbs first: i - 1.
+			
+			self clickOnModel: lbl model ].
+	].
+   canvas addAll: breadcrumbsLabels.
+   breadcrumbsLabels do: #setAsFixed.
+   RSHorizontalLineLayout on: breadcrumbsLabels.
+
+	breadcrumbsLabel translateTopLeftTo: 0 @ 0.
 ]
 
 { #category : #initialization }

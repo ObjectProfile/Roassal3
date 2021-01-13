@@ -6,7 +6,7 @@ Class {
 		'shapes',
 		'f'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : #'Roassal3-Mondrian-Flow'
 }
 
 { #category : #running }
@@ -31,8 +31,8 @@ RSFlowCanvasTest >> testBreadcrumbs [
 
 	self assert: f breadcrumbs isEmpty.
 	
-	self assert: f canvas numberOfNodes equals: 0.
+	self assert: f canvas numberOfNodes equals: 1.
 	f clickOnModel: 20.
 	self assert: f breadcrumbs equals: { 20 }.
-	self assert: f canvas numberOfNodes equals: 20.
+	self assert: f canvas numberOfNodes equals: 22.
 ]
