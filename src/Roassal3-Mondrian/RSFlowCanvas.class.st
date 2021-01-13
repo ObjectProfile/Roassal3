@@ -23,16 +23,22 @@ RSFlowCanvas >> canvas [
 
 { #category : #initialization }
 RSFlowCanvas >> clickOnModel: aModel [
-
-	"relevantSelectors := aModel class selectors select: [ :sel | sel beginsWith: 'visualize' ]."
-	
 	(mapping includesKey: aModel class) 
 		ifTrue: [
 			canvas shapes do: #remove.
 			(mapping at: aModel class) value: canvas value: aModel.
 			self setOnCanvas: canvas.
 			
-			 ].
+			 ]
+		ifFalse: [ 		
+			mapping associationsDo: [ :assoc |
+				(aModel class inheritsFrom: assoc key)
+					ifTrue: [
+						canvas shapes do: #remove.
+						assoc value value: canvas value: aModel.
+						self setOnCanvas: canvas ]
+			]
+		].
 	canvas signalUpdate.
 	
 	breadcrumbs add: aModel.
