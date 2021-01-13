@@ -6,14 +6,14 @@ Class {
 		'layoutBuilder',
 		'shapeBuilder',
 		'edgeBuilder',
-		'createdNodes'
+		'nodesForLayout'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
 
 { #category : #'building - graph' }
 RSMondrian >> applyLayout [
-	layoutBuilder on: createdNodes "canvas nodes"
+	layoutBuilder on: nodesForLayout" canvas nodes"
 ]
 
 { #category : #'building - graph' }
@@ -72,7 +72,7 @@ RSMondrian >> initialize [
 	shapeBuilder := RSShapeBuilder new.
 	layoutBuilder := RSLayoutBuilder new.
 	canvas := RSCanvas new @ RSCanvasController.
-	createdNodes := RSGroup new
+	nodesForLayout := RSGroup new
 ]
 
 { #category : #'building - graph' }
@@ -128,7 +128,7 @@ RSMondrian >> nodes: objects [
 	self resetShapeBuilder.
 	self resetLayoutBuilder.
 	self resetInteraction."
-	createdNodes addAll: nodes.
+	nodesForLayout addAll: nodes.
 	^ nodes
 ]
 
@@ -162,7 +162,7 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	b open
 	"
 	
-	| nodes compo old previousShapeBuilder |
+	| nodes compo old previousShapeBuilder oldNodesToLayout |
 	nodes := RSGroup new.
 	objects do: [ : obj |
 		previousShapeBuilder := shapeBuilder.
@@ -171,12 +171,15 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 		compo color: shapeBuilder color.
 		compo model: obj.
 		old := self canvas.
+		oldNodesToLayout := nodesForLayout.
+		nodesForLayout := RSGroup new.
 		self canvas: compo.
 		
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
 		nodes add: compo.
 		self build.
+		nodesForLayout := oldNodesToLayout.
 		compo adjustToChildren.
 		compo padding: 5.
 		compo pushBackEdges.
@@ -185,7 +188,7 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	].
 	canvas addAll: nodes.
 	nodes @ RSPopup @ RSDraggable.
-	createdNodes addAll: nodes.
+	nodesForLayout addAll: nodes.
 	^ nodes
 ]
 

@@ -105,6 +105,30 @@ RSMondrianTest >> testEdges [
 ]
 
 { #category : #tests }
+RSMondrianTest >> testNesting [
+
+	| c firstNode subNodes |
+	m := RSMondrian new.
+
+	m nodes: (1 to: 4) forEach: [ :v | 
+		m shape box color: Color blue.
+		m nodes: (1 to: 9) ].
+
+	m build.
+	
+	c := m canvas.
+	
+	self assert: c numberOfNodes equals: 4.
+	
+	firstNode := c nodes first.
+	self assert: firstNode numberOfNodes equals: 9.
+	
+	subNodes := firstNode nodes.
+	self assert: subNodes size equals: 9.
+	self assert: (subNodes collect: #position) asArray equals:  {(-5.0@ -20.0). (5.0@ -20.0). (-5.0@ -10.0). (5.0@ -10.0). (-5.0@0.0). (5.0@0.0). (-5.0@10.0). (5.0@10.0). (-5.0@20.0)}
+]
+
+{ #category : #tests }
 RSMondrianTest >> testNodesForEach [
 
 	m nodes: (1 to: 2) forEach: [ :v |
