@@ -100,6 +100,22 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSLineBuilder class >> arrowedDirectedBezier [
+	| marker ext |
+	ext := 15 @ 20.
+	marker := RSShapeFactory triangle
+		extent: ext;
+		withBorder;
+		asMarker.
+	marker offset: ext y / 2.
+	
+	^ self directedBezier
+		markerEnd: marker;
+		attachPoint: (RSBorderAttachPoint new endOffset: 0);
+		yourself
+]
+
+{ #category : #'instance creation' }
 RSLineBuilder class >> arrowedLine [
 	^ self new: RSShapeFactory arrowedLine
 ]
@@ -121,6 +137,13 @@ RSLineBuilder class >> arrowedLineWithOffset: aFloat [
 { #category : #'instance creation' }
 RSLineBuilder class >> bezier [
 	^ self new: RSBezier new
+]
+
+{ #category : #'instance creation' }
+RSLineBuilder class >> directedBezier [
+	^ (self new: RSBezier new)
+		controlPointsController: RSDirectedBezierCPAPController new;
+		yourself
 ]
 
 { #category : #'instance creation' }

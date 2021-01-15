@@ -671,7 +671,7 @@ RSShapeExamples >> example28MultilineLabel [
 	^ canvas.
 ]
 
-{ #category : #shapes }
+{ #category : #lines }
 RSShapeExamples >> example29AntAnimation [
 	<script: 'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
 	| canvas shapes labelInt highInt popupMethod |
@@ -1066,7 +1066,7 @@ RSShapeExamples >> example39RoassalPackages [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : #lines }
 RSShapeExamples >> example40LabelingLine [
 
 	<script: 'self new example40LabelingLine open'>
@@ -1172,4 +1172,31 @@ RSShapeExamples >> example41Butterfly [
 	canvas nodes @ h.
 	canvas @ RSCanvasController.
 	^ canvas
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example42DirectedBezier [
+	<script: 'self new example42DirectedBezier open'>
+	| c shapes |
+	c := RSCanvas new.
+	shapes := {-200@ -50. 200@100. -200@ 150. 200@300 } collect: [:p |
+		RSEllipse new
+			withBorder;
+			color: Color white;
+			size: 150;
+			position: p;
+			yourself] as: RSGroup.
+	shapes doWithIndex: [:s :i | s model: i ].
+	shapes @ RSDraggable.
+	c addAll: shapes.
+	RSLineBuilder directedBezier
+		canvas: c;
+		shapes: shapes;
+		useAssociations: { 1 -> 2 }.
+	RSLineBuilder arrowedDirectedBezier
+		canvas: c;
+		shapes: shapes;
+		useAssociations: { 4 -> 3}.
+	c @ RSCanvasController.
+	^ c
 ]
