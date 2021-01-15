@@ -645,3 +645,38 @@ RSLayoutExamples >> example21Spaces [
 
 
 ]
+
+{ #category : #layouts }
+RSLayoutExamples >> example22TreeLayoutEllipses [
+	<script: 'self new example22TreeLayoutEllipses open'>
+	| c shapes eb |
+	c := RSCanvas new.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSEllipse new
+			model: cls;
+			draggable;
+			size: 5;
+			yourself
+		 ].
+	
+	c addAll: shapes.
+	RSNormalizer color
+		from: (Color gray alpha: 0.5);
+		to: (Color red alpha: 0.5);
+		shapes: shapes;
+		normalize: #numberOfMethods.
+	RSNormalizer height
+		shapes: shapes;
+		normalize: #numberOfMethods.
+	RSNormalizer width
+		shapes: shapes;
+		normalize: [:cls | cls numberOfVariables].
+	eb := RSLineBuilder line.
+	eb withBorderAttachPoint.
+	eb canvas: c.
+	eb connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	shapes do: [ :e | e translateBy: 0 @ 0 ].
+	c @ RSCanvasController.
+	^ c
+]
