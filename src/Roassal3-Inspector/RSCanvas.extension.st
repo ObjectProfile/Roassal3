@@ -26,8 +26,8 @@ RSCanvas >> gtInspectorViewIn: composite [
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
-	^ SpMorphPresenter new
-		morph: self createMorph;
+	^ SpRoassal3InspectorPresenter new
+		canvas: self;
 		yourself
 ]
 

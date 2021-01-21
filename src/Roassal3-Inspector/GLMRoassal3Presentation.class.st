@@ -36,12 +36,13 @@ GLMRoassal3Presentation >> renderGlamorouslyOn: aRenderer [
 
 { #category : #initialization }
 GLMRoassal3Presentation >> setUpInteractions [
-	| context |
+	"consider remove this class"
+	"| context |
 	context := self canvas inspectorContext.
 	context presentation: self.
 	
 	self canvas shapes @ context.
 	self canvas
 		when: RSShapeAddedEvent
-		do: [ :evt | evt shape @ context ].
+		do: [ :evt | evt shape @ context ]."
 ]

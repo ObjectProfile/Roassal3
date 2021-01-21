@@ -48,10 +48,12 @@ RSSelectionPresentation >> key [
 RSSelectionPresentation >> onShape: aShape [
 	aShape model ifNil: [ ^ self ].
 	aShape canvas ifNotNil: [ :c | 
-		c removeInteractionIfPresent: self class.
-		c when: RSMouseClick do: [ :evt |
-			self removeShadowOn: evt.
-			evt signalUpdate. ]
+		c propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
+			c removeInteractionIfPresent: self class.
+			c when: RSMouseClick do: [ :evt |
+				self removeShadowOn: evt.
+				evt signalUpdate. ].
+			1 ].
 		 ].
 	aShape when: RSMouseClick do: [ :evt | self selection: evt shape ].
 ]
@@ -114,9 +116,8 @@ RSSelectionPresentation >> removeShadowOn: aShape [
 
 { #category : #hooks }
 RSSelectionPresentation >> selection: aShape [
-	"The presentation may be nil in case this interaction is not used within a GT Inspector"
 	self presentation ifNotNil: [ 
-		self presentation selection: aShape model ]. 
+		self presentation value: (SpWrappedItem new selectedItem: aShape model) ]. 
 	self
 		removeShadowOn: aShape;
 		putShadowOn: aShape.

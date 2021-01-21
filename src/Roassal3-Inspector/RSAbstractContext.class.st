@@ -29,10 +29,9 @@ RSAbstractContext >> interactionsToBeRegistered [
 { #category : #hooks }
 RSAbstractContext >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
-	self interactionsToBeRegistered 
-		do: [ :i | 
-			i presentation: self presentation.
-			aShape addInteraction: i].
+	self interactionsToBeRegistered do: [ :i | 
+		i presentation: self presentation.
+		aShape addInteraction: i ].
 	self propagateToChildren ifFalse: [ ^ self ].
 	aShape children ifNil: [ ^ self ].
 	
