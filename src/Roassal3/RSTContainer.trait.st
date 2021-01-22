@@ -41,6 +41,12 @@ RSTContainer >> addEdge: aShape [
 ]
 
 { #category : #'adding nodes edges' }
+RSTContainer >> addLine: aShape [
+	self lines add: aShape.
+	^ aShape
+]
+
+{ #category : #'adding nodes edges' }
 RSTContainer >> addNode: aShape [
 	self nodes add: aShape.
 	^ aShape
@@ -104,6 +110,15 @@ RSTContainer >> deepShapesFromModels: someObjects result: result [
 
 { #category : #accessing }
 RSTContainer >> edges [
+	"Return all the lines contained in the canvas."
+	^ self privateEdges
+		ifNil: [ | res |
+			self privateEdges: (res := RSGroup new).
+			res ]
+]
+
+{ #category : #accessing }
+RSTContainer >> lines [
 	"Return all the lines contained in the canvas."
 	^ self privateEdges
 		ifNil: [ | res |

@@ -800,7 +800,7 @@ c @ RSCanvasController
 { #category : #'public - attach point' }
 RSLineBuilder >> withVerticalAttachPoint [
 	"Make the produced line use a vertical attach point. For example:
--=-=-=-=-=-=-=-=-=-=
+```
 c := RSCanvas new.
 
 from := RSBox new size: 30; model: 'from'.
@@ -821,7 +821,7 @@ to @ RSDraggable.
 to translateTo: 50 @ 40.
 
 c @ RSCanvasController
--=-=-=-=-=-=-=-=-=-=
+```
 	"
 	self attachPoint: RSVerticalAttachPoint new.
 ]
