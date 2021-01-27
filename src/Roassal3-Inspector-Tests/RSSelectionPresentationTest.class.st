@@ -22,6 +22,15 @@ RSSelectionPresentationTest >> testBasic [
 ]
 
 { #category : #tests }
+RSSelectionPresentationTest >> testCanvasInspect [
+	| c  window |
+	c := RSCanvas new.
+	c add: RSBox new.
+	window := c inspect.
+	window delete.
+]
+
+{ #category : #tests }
 RSSelectionPresentationTest >> testWithNoCanvas [
 
 	| shapes |
