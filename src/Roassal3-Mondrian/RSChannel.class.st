@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'inputGroup',
 		'outputGroup',
-		'effect',
 		'isClicked',
 		'highlightable',
 		'color',

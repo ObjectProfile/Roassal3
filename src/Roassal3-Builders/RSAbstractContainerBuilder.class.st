@@ -48,8 +48,7 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'container',
-		'shapes',
-		'decorators'
+		'shapes'
 	],
 	#category : #'Roassal3-Builders-Core'
 }
