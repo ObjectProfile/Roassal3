@@ -7,7 +7,7 @@ Roassal3 is free and open source, but backed by Object Profile. Commercial suppo
 
 
 ## Pharo Installations
-Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.4. 
+Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.6. 
 Two instalation flavors are available: stable and latest (a.k.a bleeding-edge).
 
 ### Stable version
@@ -16,7 +16,7 @@ If you wish to install Roassal in Pharo 8, then execute the following code snipp
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9.5';
+    repository: 'github://ObjectProfile/Roassal3:v0.9.6';
     load.
 ```
 
