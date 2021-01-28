@@ -137,29 +137,33 @@ RSMondrian >> nodes: objects forEach: oneArgBlock [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
 	
 	For example:
-	b := RTMondrian new.
-	b nodes: (1 to: 10).
-	b layout force.
-	b open
-	
-	
-	Another example:
-	b := RTMondrian new.
-	b shape box size: #numberOfMethods.
-	b nodes: Collection withAllSubclasses.
-	b layout flow.
-	b open
+```
+b := RSMondrian new.
+b nodes: (1 to: 10).
+b layout force.
+b open
+```	
 	
 	Another example:
-	b := RTMondrian new.
-	b shape box size: #numberOfMethods.
-	b nodes: Collection withAllSubclasses.
-	b edges connectFrom: #superclass.
-	b normalizer 
-		normalizeSize: #numberOfMethods;
-		normalizeColor: #numberOfMethods.
-	b layout cluster.
-	b open
+```
+b := RSMondrian new.
+b shape box size: #numberOfMethods.
+b nodes: Collection withAllSubclasses.
+b layout flow.
+b open
+```
+	
+	Another example:
+```
+b := RSMondrian new.
+b shape box size: #numberOfMethods.
+b nodes: Collection withAllSubclasses.
+b line connectFrom: #superclass.
+b normalizeSize: #numberOfMethods.
+b normalizeColor: #numberOfMethods.
+b layout cluster.
+b open
+```
 	"
 	
 	| nodes compo old previousShapeBuilder oldNodesToLayout |
