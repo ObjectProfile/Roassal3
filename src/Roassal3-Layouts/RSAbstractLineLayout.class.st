@@ -43,8 +43,6 @@ Class {
 		'gapSize',
 		'horizontalGap',
 		'verticalGap',
-		'horizontalOutGap',
-		'verticalOutGap',
 		'alignment'
 	],
 	#category : #'Roassal3-Layouts-Core'

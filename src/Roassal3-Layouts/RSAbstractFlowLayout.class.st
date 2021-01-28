@@ -9,10 +9,6 @@ Class {
 		'gapSize',
 		'alignment'
 	],
-	#classInstVars : [
-		'aBlock',
-		'maxWithBlock'
-	],
 	#category : #'Roassal3-Layouts-Core'
 }
 

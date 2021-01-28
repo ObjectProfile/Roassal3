@@ -68,7 +68,7 @@ RSZoomToFitCanvas >> onShape: aCanvas [
 
 { #category : #'private - events' }
 RSZoomToFitCanvas >> processKeyUp: evt [
-	evt keyName = #KP_SPACE ifFalse:  [ ^ self ].
+	evt keyName = #SPACE ifFalse:  [ ^ self ].
 	self animatedZoomToFit: evt canvas
 ]
 

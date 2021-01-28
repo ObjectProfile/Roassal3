@@ -747,6 +747,12 @@ RSAthensMorph >> roassalCanvas [
 	^ roassalCanvas
 ]
 
+{ #category : #public }
+RSAthensMorph >> setTakeKeyboardFocus [
+	self takeKeyboardFocus.
+	roassalCanvas when: RSUserInputEvent do: [ self takeKeyboardFocus ].
+]
+
 { #category : #'event-processed' }
 RSAthensMorph >> shapeForEvent: anEvent [
 	"Return the Trachel shape for the event provided as argument"

@@ -62,8 +62,6 @@ RSKeyNavigationCanvas >> processKeyUp: evt [
 	| keyName |
 	steps removeAll.
 	keyName := evt keyName.
-	"keyName = #I ifTrue: [ ^ self zoomIn: evt ].
-	keyName = #O ifTrue: [ ^ self zoomOut: evt ]."
 	keyName = #M ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.

@@ -7,7 +7,6 @@ Class {
 	#name : #RSAbstractContext,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'canvas',
 		'context',
 		'presentation',
 		'propagateToChildren'
