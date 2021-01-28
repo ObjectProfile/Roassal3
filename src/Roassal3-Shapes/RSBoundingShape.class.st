@@ -273,6 +273,12 @@ RSBoundingShape >> outgoingLines [
 	^ self connectedLines select: [ :e | e from == self ]
 ]
 
+{ #category : #lines }
+RSBoundingShape >> outgoingShapes [
+	"Return the shapes that are connected to me."
+	^ self outgoingLines collect: #to
+]
+
 { #category : #matrix }
 RSBoundingShape >> position [ 
 	^ matrix translation
