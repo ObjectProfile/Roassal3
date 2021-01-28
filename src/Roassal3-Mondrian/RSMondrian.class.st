@@ -5,8 +5,9 @@ Class {
 		'canvas',
 		'layoutBuilder',
 		'shapeBuilder',
-		'edgeBuilder',
-		'nodesForLayout'
+		'nodesForLayout',
+		'lineBuilder',
+		'depth'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
@@ -18,12 +19,12 @@ RSMondrian >> applyLayout [
 
 { #category : #'building - graph' }
 RSMondrian >> arrowedLine [
-	edgeBuilder := RSLineBuilder arrowedLineWithOffset.
-	edgeBuilder canvas: canvas.
-	edgeBuilder shapes: canvas nodes.
-	edgeBuilder withBorderAttachPoint.
-	edgeBuilder color: self defaultLineColor.
-	^ edgeBuilder
+	lineBuilder := RSLineBuilder arrowedLineWithOffset.
+	lineBuilder canvas: canvas.
+	lineBuilder shapes: canvas nodes.
+	lineBuilder withBorderAttachPoint.
+	lineBuilder color: self defaultLineColor.
+	^ lineBuilder
 ]
 
 { #category : #'public - opening and public' }
@@ -72,7 +73,8 @@ RSMondrian >> initialize [
 	shapeBuilder := RSShapeBuilder new.
 	layoutBuilder := RSLayoutBuilder new.
 	canvas := RSCanvas new @ RSCanvasController.
-	nodesForLayout := RSGroup new
+	nodesForLayout := RSGroup new.
+	depth := 0
 ]
 
 { #category : #'building - graph' }
@@ -82,11 +84,11 @@ RSMondrian >> layout [
 
 { #category : #'building - graph' }
 RSMondrian >> line [
-	edgeBuilder := RSLineBuilder line.
-	edgeBuilder canvas: canvas.
-	edgeBuilder shapes: (canvas nodes select: #hasModel).
-	edgeBuilder color: self defaultLineColor.
-	^ edgeBuilder
+	lineBuilder := RSLineBuilder line.
+	lineBuilder canvas: canvas.
+	lineBuilder shapes: (canvas nodes select: #hasModel).
+	lineBuilder color: self defaultLineColor.
+	^ lineBuilder
 ]
 
 { #category : #'building - graph' }
@@ -179,6 +181,8 @@ b open
 		nodesForLayout := RSGroup new.
 		self canvas: compo.
 		
+		depth := depth + 1.
+		
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
 		nodes add: compo.
@@ -189,9 +193,11 @@ b open
 		compo pushBackEdges.
 		self canvas: old.
 		shapeBuilder := previousShapeBuilder.
+		depth := depth - 1
 	].
 	canvas addAll: nodes.
-	nodes @ RSPopup @ RSDraggable.
+	nodes @ RSPopup.
+	depth = 0 ifTrue: [ nodes @ RSDraggable ].
 	nodesForLayout addAll: nodes.
 	^ nodes
 ]
@@ -261,21 +267,21 @@ RSMondrian >> openWithTitle: aTitle [
 
 { #category : #'building - graph' }
 RSMondrian >> orthoHorizontalline [
-	edgeBuilder := RSLineBuilder orthoHorizontal.
-	edgeBuilder canvas: canvas.
-	edgeBuilder shapes: canvas nodes.
-	edgeBuilder color: self defaultLineColor.
-	^ edgeBuilder
+	lineBuilder := RSLineBuilder orthoHorizontal.
+	lineBuilder canvas: canvas.
+	lineBuilder shapes: canvas nodes.
+	lineBuilder color: self defaultLineColor.
+	^ lineBuilder
 ]
 
 { #category : #'building - graph' }
 RSMondrian >> orthoVerticalLine [
-	edgeBuilder := RSLineBuilder orthoVertical.
-	edgeBuilder canvas: canvas.
-	edgeBuilder shapes: canvas nodes.
-	edgeBuilder withVerticalAttachPoint.
-	edgeBuilder color: self defaultLineColor.
-	^ edgeBuilder
+	lineBuilder := RSLineBuilder orthoVertical.
+	lineBuilder canvas: canvas.
+	lineBuilder shapes: canvas nodes.
+	lineBuilder withVerticalAttachPoint.
+	lineBuilder color: self defaultLineColor.
+	^ lineBuilder
 ]
 
 { #category : #accessing }
@@ -287,7 +293,8 @@ RSMondrian >> shape [
 RSMondrian >> shapesOn: someObjects [
 	| ss |
 	ss := shapeBuilder shapesOn: someObjects.
-	ss @ RSPopup @ RSDraggable.
+	depth = 0 ifTrue: [ ss @ RSDraggable ].
+	ss @ RSPopup.
 	^ ss
 ]
 
