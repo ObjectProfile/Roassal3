@@ -41,7 +41,7 @@ GLMRoassal3Presentation >> setUpInteractions [
 	c := self canvas.
 	context := c inspectorContext.
 	context presentation: self.
-	c morph setTakeKeyboardFocus.
+	c createMorph setTakeKeyboardFocus.
 	
 	c shapes @ context.
 	c

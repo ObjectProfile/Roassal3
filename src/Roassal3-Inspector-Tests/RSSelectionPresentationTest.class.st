@@ -27,7 +27,10 @@ RSSelectionPresentationTest >> testCanvasInspect [
 	c := RSCanvas new.
 	c add: RSBox new.
 	window := c inspect.
-	window delete.
+	window class = RSCanvas 
+		ifTrue: [ c morph window delete ]
+		ifFalse: [ window delete ]
+	
 ]
 
 { #category : #tests }
