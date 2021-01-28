@@ -1,13 +1,78 @@
+"
+Set the colors on a tree, based on the number of leaves
+
+```
+c := RSCanvas new.
+nodes := RSBox models: (1 to: 10).
+c addAll: nodes.
+nodes @ RSPopup.
+lb := RSLineBuilder orthoVertical.
+lb withVerticalAttachPoint.
+lb shapes: nodes.
+lb connectFrom: [ :nb | nb // 2 ].
+
+RSTreeLayout on: nodes.
+
+c @ RSCanvasController.
+
+ctp := RSColoredTreePalette new.
+ctp shapes: c nodes.
+ctp assignColor.
+
+c.
+```
+
+```
+m := RSMondrian new.
+m nodes: Collection withAllSubclasses.
+
+m orthoVerticalLine 
+	connectFrom: #superclass.
+m layout tree.
+m normalizeSize: #numberOfLinesOfCode.
+m build.
+
+ctp := RSColoredTreePalette new.
+ctp shapes: m canvas nodes.
+ctp assignColor.
+
+m canvas
+```
+
+
+"
 Class {
 	#name : #RSColoredTreePalette,
 	#superclass : #RSObject,
 	#instVars : [
-		'shapes'
+		'shapes',
+		'totalNumberOfLeaves'
 	],
 	#category : #'Roassal3-Colors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [ 
+
+	| c |
+	c := OrderedCollection new.
+	self allLeavesAccessibleFrom: aRootShape in: c.
+	^ c size
+]
+
+{ #category : #private }
+RSColoredTreePalette >> allLeavesAccessibleFrom: aShape in: result [
+
+	aShape numberOfOutgoingLines = 0 
+		ifTrue: [
+			result add: self ]
+		ifFalse: [ 
+			 (aShape outgoingLines collect: #to) do: [ :s | self allLeavesAccessibleFrom: s in: result ]
+			 ]
+
+]
+
+{ #category : #public }
 RSColoredTreePalette >> assignColor [
 
 	| roots |
@@ -15,31 +80,34 @@ RSColoredTreePalette >> assignColor [
 	roots do: [ :r | self assignColorToRoot: r ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RSColoredTreePalette >> assignColorToChildren: children low: low high: high [
 	| step hs |
 	step := high - low / children size.
 	hs := low to: high count: children size.
+	
+"self halt."
 	children with: hs do: [ :s :h |
-		self assignColorToRoot: s h: (h min: 1 max: 0)
+		self assignColorToRoot: s h: (h min: 360 max: 0)
 	]
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RSColoredTreePalette >> assignColorToRoot: aRootShape [
-	self assignColorToRoot: aRootShape h: 0.5
+	self assignColorToRoot: aRootShape h: 360 / 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RSColoredTreePalette >> assignColorToRoot: aRootShape h: h [
-	| children |
-	"Halt if: [ aRootShape color = RSBox new color ]."
+	| children span |
 	
 	aRootShape color: (Color h: h s: 1 v: 1).
-	children := aRootShape outgoingLines collect: #to.
+
+	children := aRootShape outgoingShapes.
 	children ifEmpty: [ ^ self ].
-	self assignColorToChildren: children low: h - 0.01 high: h + 0.01.
+	span := (self allLeavesAccessibleFrom: aRootShape) * 360 / (totalNumberOfLeaves * 2).
+	self assignColorToChildren: children low: h - (span / 2) high: h + (span / 2).
 ]
 
 { #category : #accessing }
@@ -50,6 +118,16 @@ RSColoredTreePalette >> shapes [
 
 { #category : #accessing }
 RSColoredTreePalette >> shapes: someShapes [
+	"Set the shapes (the nodes) that must be colored"
+	shapes := someShapes.
+	totalNumberOfLeaves := 0.
+	(someShapes select: [ :s | s numberOfIncomingLines = 0 ]) do: [ :s | 
+		totalNumberOfLeaves := totalNumberOfLeaves + (self allLeavesAccessibleFrom: s)
+	]
+]
 
-	shapes := someShapes
+{ #category : #accessing }
+RSColoredTreePalette >> totalNumberOfLeaves [
+	"Return the total number of leaves"
+	^ totalNumberOfLeaves
 ]
