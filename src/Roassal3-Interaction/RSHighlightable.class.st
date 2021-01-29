@@ -293,6 +293,11 @@ RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 ]
 
 { #category : #announcer }
+RSHighlightable >> announcementClasses [
+	^ RSHighlightableEvent subclasses
+]
+
+{ #category : #announcer }
 RSHighlightable >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]

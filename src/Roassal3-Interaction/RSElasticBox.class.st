@@ -23,6 +23,11 @@ Class {
 }
 
 { #category : #announcer }
+RSElasticBox >> announcementClasses [
+	^ RSSelectionEvent subclasses
+]
+
+{ #category : #announcer }
 RSElasticBox >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]

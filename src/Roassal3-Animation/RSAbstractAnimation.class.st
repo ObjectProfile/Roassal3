@@ -38,6 +38,11 @@ RSAbstractAnimation >> allDuration [
 ]
 
 { #category : #announcer }
+RSAbstractAnimation >> announcementClasses [
+	^ RSAnimationEvent subclasses
+]
+
+{ #category : #announcer }
 RSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]

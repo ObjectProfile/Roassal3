@@ -15,6 +15,12 @@ RSTAnnounceable >> announce: anEvent [
 ]
 
 { #category : #announcer }
+RSTAnnounceable >> announcementClasses [
+	"must return a collection of Announcement classes"
+	^ self explicitRequirement
+]
+
+{ #category : #announcer }
 RSTAnnounceable >> announcer [
 	^ self privateAnnouncer ifNil: [ 
 		| a |

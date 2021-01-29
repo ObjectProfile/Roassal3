@@ -119,6 +119,14 @@ RSCanvas >> announce: anEventOrAnEventClass [
 	announcer announce: theEventToSend.
 ]
 
+{ #category : #announcer }
+RSCanvas >> announcementClasses [
+	^ {RSCanvasEvent. RSShapeEvent} 
+		flatCollect: [ :cls | 
+			cls withAllSubclasses reject: [ :subcls|
+				subcls hasSubclasses ] ]
+]
+
 { #category : #accessing }
 RSCanvas >> basicRectangle [
 	"Return a rectangle encompassing all the elements"

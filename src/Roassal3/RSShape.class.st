@@ -92,6 +92,12 @@ RSShape >> announce: anEventOrAnEventClassOrABlock [
 	announcer announce: theEventToSend.
 ]
 
+{ #category : #announcer }
+RSShape >> announcementClasses [
+	^ RSShapeEvent withAllSubclasses 
+		reject: [ :subcls| subcls hasSubclasses ]
+]
+
 { #category : #border }
 RSShape >> border [
 	^ border

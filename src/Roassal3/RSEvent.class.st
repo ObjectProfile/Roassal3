@@ -18,7 +18,8 @@ Class {
 	#instVars : [
 		'canvas',
 		'morph',
-		'shape'
+		'shape',
+		'timeStamp'
 	],
 	#category : #'Roassal3-Events'
 }
@@ -36,6 +37,12 @@ RSEvent >> canvas [
 { #category : #accessing }
 RSEvent >> canvas: aRSCanvas [
 	canvas := aRSCanvas
+]
+
+{ #category : #initialization }
+RSEvent >> initialize [
+	super initialize.
+	self timeStamp
 ]
 
 { #category : #accessing }
@@ -65,4 +72,15 @@ RSEvent >> signalUpdate [
 	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
 	morph notNil ifTrue: [ morph changed ]
 	
+]
+
+{ #category : #accessing }
+RSEvent >> timeStamp [
+	"Return the millisecond clock value at which the event was generated"
+	^ timeStamp ifNil:[ timeStamp := Time millisecondClockValue ]
+]
+
+{ #category : #accessing }
+RSEvent >> timeStamp: stamp [
+	timeStamp := stamp
 ]
