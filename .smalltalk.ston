@@ -6,5 +6,10 @@ SmalltalkCISpec {
       #directory : 'src',
       #platforms : [ #pharo ]
     }
-  ]
+  ],
+  #testing : {
+    #coverage : {
+      #packages : [ 'Roassal3*' ]
+    }
+  }
 }
