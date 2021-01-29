@@ -41,12 +41,12 @@ RSKeyNavigationCanvas >> processKeyDown: evt [
 	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
 	keyName = #O ifTrue: [ ^ self zoomOut: evt canvas ].
 	self configuration hasHorizontalScrolling ifTrue: [ 
-		keyName = #KP_LEFT ifTrue: [ steps add: -1@0 ].
-		keyName = #KP_RIGHT ifTrue: [ steps add: 1@0 ].
+		keyName = #LEFT ifTrue: [ steps add: -1@0 ].
+		keyName = #RIGHT ifTrue: [ steps add: 1@0 ].
 	].
 	self configuration hasVerticalScrolling ifTrue: [ 
-		keyName = #KP_UP ifTrue: [ steps add: 0@ -1 ].
-		keyName = #KP_DOWN ifTrue: [ steps add: 0@ 1 ].
+		keyName = #UP ifTrue: [ steps add: 0@ -1 ].
+		keyName = #DOWN ifTrue: [ steps add: 0@ 1 ].
 	].
 	
 	speedMult := evt shiftKeyPressed

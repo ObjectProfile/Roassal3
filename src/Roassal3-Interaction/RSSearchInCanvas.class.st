@@ -200,11 +200,11 @@ RSSearchInCanvas >> obtainRegExpToHighlight [
 { #category : #public }
 RSSearchInCanvas >> onShape: aCanvas [
 	aCanvas 
-		when: RSKeyDown do: [ :evt | self processKeyDown: evt ]
+		when: RSKeyUp do: [ :evt | self processKeyUp: evt ]
 ]
 
 { #category : #private }
-RSSearchInCanvas >> processKeyDown: evt [
+RSSearchInCanvas >> processKeyUp: evt [
 	| keyName |
 	self canvas: evt canvas.
 	keyName := evt keyName.

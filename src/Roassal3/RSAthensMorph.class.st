@@ -15,235 +15,8 @@ Class {
 		'lastMousePosition',
 		'roassalCanvas'
 	],
-	#classVars : [
-		'KeyTable'
-	],
 	#category : #'Roassal3-Morph'
 }
-
-{ #category : #initialization }
-RSAthensMorph class >> initializeKeyTable [
-	KeyTable := Dictionary new.
-	#(
-		16r08f6 Function "XK_function"
-		16rff08 BackSpace "XK_BackSpace"
-		9 Tab "XK_Tab"
-		16rff0a Linefeed "XK_Linefeed"
-		16rff0b Clear "XK_Clear"
-		13 Return "XK_Return"
-		16rff13 Pause "XK_Pause"
-		16rff14 Scroll_Lock "XK_Scroll_Lock"
-		16rff15 Sys_Req "XK_Sys_Req"
-		16rff1b Escape "XK_Escape"
-		8 Delete "XK_Delete"
-		16rff50 Home "XK_Home"
-		16rff51 Left "XK_Left"
-		16rff52 Up "XK_Up"
-		16rff53 Right "XK_Right"
-		16rff54 Down "XK_Down"
-		16rfe03 Level3Shift "XK_ISO_Level3_Shift"
-		16r00a1 ExclamationDown "XK_exclamdown"
-		16r00bf QuestionDown "XK_questiondown"
-		16r00f1 NTilde "XK_ntilde"
-		16r00d1 CapitalNTilde "XK_ntilde"
-		16r00ba Masculine "XK_masculine"
-		16r00e7 CCedilla "XK_ccedilla"
-		16r00c7 CapitalCCedilla "XK_ccedilla"
-		16r00aa FeminineOrdinal "XK_ordfeminine"
-		16r00b7 MiddlePoint "XK_periodcentered"
-		"16rff55 Prior ""XK_Prior"
-		16rff55 Page_Up "XK_Page_Up"
-		"16rff56 Next" "XK_Next"
-		16rff56 Page_Down "XK_Page_Down"
-		16rff57 End "XK_End"
-		16rff58 Begin "XK_Begin"
-		32 KP_Space "XK_KP_Space"
-		16rff89 KP_Tab "XK_KP_Tab"
-		16rff8d KP_Enter "XK_KP_Enter"
-		16rff91 KP_F1 "XK_KP_F1"
-		16rff92 KP_F2 "XK_KP_F2"
-		16rff93 KP_F3 "XK_KP_F3"
-		16rff94 KP_F4 "XK_KP_F4"
-		16rff95 KP_Home "XK_KP_Home"
-		28 KP_Left "XK_KP_Left"
-		30 KP_Up "XK_KP_Up"
-		29 KP_Right "XK_KP_Right"
-		31 KP_Down "XK_KP_Down"
-		16rff9a KP_Prior "XK_KP_Prior"
-		16rff9a KP_Page_Up "XK_KP_Page_Up"
-		16rff9b KP_Next "XK_KP_Next"
-		16rff9b KP_Page_Down "XK_KP_Page_Down"
-		16rff9c KP_End "XK_KP_End"
-		16rff9d KP_Begin "XK_KP_Begin"
-		16rff9e KP_Insert "XK_KP_Insert"
-		16rff9f KP_Delete "XK_KP_Delete"
-		24 KP_Equal "XK_KP_Equal"
-		16rffaa KP_Multiply "XK_KP_Multiply"
-		16rffab KP_Add "XK_KP_Add"
-		16rffac KP_Separator "XK_KP_Separator"
-		16rffad KP_Subtract "XK_KP_Subtract"
-		16rffae KP_Decimal "XK_KP_Decimal"
-		16rffaf KP_Divide "XK_KP_Divide"
-		16rffb0 KP_0 "XK_KP_0"
-		16rffb1 KP_1 "XK_KP_1"
-		16rffb2 KP_2 "XK_KP_2"
-		16rffb3 KP_3 "XK_KP_3"
-		16rffb4 KP_4 "XK_KP_4"
-		16rffb5 KP_5 "XK_KP_5"
-		16rffb6 KP_6 "XK_KP_6"
-		16rffb7 KP_7 "XK_KP_7"
-		16rffb8 KP_8 "XK_KP_8"
-		16rffb9 KP_9 "XK_KP_9"
-		16rffbe F1 "XK_F1"
-		16rffbf F2 "XK_F2"
-		16rffc0 F3 "XK_F3"
-		16rffc1 F4 "XK_F4"
-		16rffc2 F5 "XK_F5"
-		16rffc3 F6 "XK_F6"
-		16rffc4 F7 "XK_F7"
-		16rffc5 F8 "XK_F8"
-		16rffc6 F9 "XK_F9"
-		16rffc7 F10 "XK_F10"
-		16rffc8 F11 "XK_F11"
-		16rffc9 F12 "XK_F12"
-		16rffe1 Shift_L "XK_Shift_L"
-		16rffe2 Shift_R "XK_Shift_R"
-		16rffe3 Control_L "XK_Control_L"
-		16rffe4 Control_R "XK_Control_R"
-		16rffe5 Caps_Lock "XK_Caps_Lock"
-		16rffe6 Shift_Lock "XK_Shift_Lock"
-		16rffe7 Meta_L "XK_Meta_L"
-		16rffe8 Meta_R "XK_Meta_R"
-		16rffe9 Alt_L "XK_Alt_L"
-		16rffea Alt_R "XK_Alt_R"
-		16rffeb Super_L "XK_Super_L"
-		16rffec Super_R "XK_Super_R"
-		16rffed Hyper_L "XK_Hyper_L"
-		16rffee Hyper_R "XK_Hyper_R"
-		16rfe50 dead_grave "XK_dead_grave"
-		16rfe51 dead_acute "XK_dead_acute"
-		16rfe52 dead_circumflex "XK_dead_circumflex"
-		16rfe53 dead_tilde "XK_dead_tilde"
-		16rfe53 dead_perispomeni "XK_dead_perispomeni"
-		16rfe54 dead_macron "XK_dead_macron"
-		16rfe55 dead_breve "XK_dead_breve"
-		16rfe56 dead_abovedot "XK_dead_abovedot"
-		16rfe57 dead_diaeresis "XK_dead_diaeresis"
-		16rfe58 dead_abovering "XK_dead_abovering"
-		16rfe59 dead_doubleacute "XK_dead_doubleacute"
-		16rfe5a dead_caron "XK_dead_caron"
-		16rfe5b dead_cedilla "XK_dead_cedilla"
-		16rfe5c dead_ogonek "XK_dead_ogonek"
-		16rfe5d dead_iota "XK_dead_iota"
-		16rfe5e dead_voiced_sound "XK_dead_voiced_sound"
-		16rfe5f dead_semivoiced_sound "XK_dead_semivoiced_sound"
-		16rfe60 dead_belowdot "XK_dead_belowdot"
-		16rfe61 dead_hook "XK_dead_hook"
-		16rfe62 dead_horn "XK_dead_horn"
-		16rfe63 dead_stroke "XK_dead_stroke"
-		16rfe64 dead_abovecomma "XK_dead_abovecomma"
-		16rfe64 dead_psili "XK_dead_psili"
-		16rfe65 dead_abovereversedcomma "XK_dead_abovereversedcomma"
-		16rfe65 dead_dasia "XK_dead_dasia"
-		16rfe66 dead_doublegrave "XK_dead_doublegrave"
-		16rfe67 dead_belowring "XK_dead_belowring"
-		16rfe68 dead_belowmacron "XK_dead_belowmacron"
-		16rfe69 dead_belowcircumflex "XK_dead_belowcircumflex"
-		16rfe6a dead_belowtilde "XK_dead_belowtilde"
-		16rfe6b dead_belowbreve "XK_dead_belowbreve"
-		16rfe6c dead_belowdiaeresis "XK_dead_belowdiaeresis"
-		16rfe6d dead_invertedbreve "XK_dead_invertedbreve"
-		16rfe6e dead_belowcomma "XK_dead_belowcomma"
-		16rfe6f dead_currency "XK_dead_currency"
-		16r0020 space "XK_space"
-		16r0021 exclam "XK_exclam"
-		16r0022 quotedbl "XK_quotedbl"
-		16r0023 numbersign "XK_numbersign"
-		16r0024 dollar "XK_dollar"
-		16r0025 percent "XK_percent"
-		16r0026 ampersand "XK_ampersand"
-		16r0027 apostrophe "XK_apostrophe"
-		"16r0027 quoteright" "XK_quoteright"
-		16r0028 parenleft "XK_parenleft"
-		16r0029 parenright "XK_parenright"
-		16r002a asterisk "XK_asterisk"
-		16r002b plus "XK_plus"
-		16r002c comma "XK_comma"
-		39 minus "XK_minus"
-		16r002e period "XK_period"
-		45 slash "XK_slash"
-		16r0030 zero "XK_0"
-		16r0031 one "XK_1"
-		16r0032 two "XK_2"
-		16r0033 three "XK_3"
-		16r0034 four "XK_4"
-		16r0035 five "XK_5"
-		16r0036 six "XK_6"
-		16r0037 seven "XK_7"
-		16r0038 eight "XK_8"
-		16r0039 nine "XK_9"
-		16r003a colon "XK_colon"
-		16r003b semicolon "XK_semicolon"
-		16r003c less "XK_less"
-		193 equal "XK_equal"
-		16r003e greater "XK_greater"
-		16r003f question "XK_question"
-		16r0040 at "XK_at"
-		97 A "XK_A"
-		98 B "XK_B"
-		99 C "XK_C"
-		100 D "XK_D"
-		101 E "XK_E"
-		102 F "XK_F"
-		103 G "XK_G"
-		104 H "XK_H"
-		105 I "XK_I"
-		106 J "XK_J"
-		107 K "XK_K"
-		108 L "XK_L"
-		109 M "XK_M"
-		110 N "XK_N"
-		111 O "XK_O"
-		112 P "XK_P"
-		113 Q "XK_Q"
-		114 R "XK_R"
-		115 S "XK_S"
-		116 T "XK_T"
-		117 U "XK_U"
-		118 V "XK_V"
-		119 W "XK_W"
-		120 X "XK_X"
-		121 Y "XK_Y"
-		122 Z "XK_Z"
-		16r005b bracketleft "XK_bracketleft"
-		16r005c backslash "XK_backslash"
-		16r005d bracketright "XK_bracketright"
-		16r005e asciicircum "XK_asciicircum"
-		16r005f underscore "XK_underscore"
-		16r0060 grave "XK_grave"
-		"16r0060 quoteleft" "XK_quoteleft"
-		16r007b braceleft "XK_braceleft"
-		16r007c bar "XK_bar"
-		16r007d braceright "XK_braceright"
-		16r007e asciitilde "XK_asciitilde")
-			pairsDo: [ :keyCode :keyname | KeyTable at: keyCode put: keyname asUppercase].
-]
-
-{ #category : #public }
-RSAthensMorph class >> keyNameFor: code [
-	"
-	self keyNameFor: Character space charCode
-	"
-	
-	KeyTable ifNil: [ self initializeKeyTable ].
-	^ KeyTable at: code ifAbsent: [ code asString ].
-]
-
-{ #category : #initialization }
-RSAthensMorph class >> reset [
-	<script: 'self reset'>
-	KeyTable := nil.
-]
 
 { #category : #accessing }
 RSAthensMorph >> canvas [
@@ -357,7 +130,7 @@ RSAthensMorph >> eventKeyDown: aMorphicEvent [
 	trEvent
 		position: (roassalCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
-		keyName: (self class keyNameFor: aMorphicEvent keyValue).
+		keyName: aMorphicEvent key name. "(self class keyNameFor: aMorphicEvent keyValue)".
 	trEvent shape announce: trEvent.
 
 ]
@@ -554,16 +327,17 @@ RSAthensMorph >> fullDrawOnAthensCanvas: aCanvas [
 		isDrawing := false ]
 ]
 
+{ #category : #'event handling' }
+RSAthensMorph >> handleKeyDown: anEvent [
+	
+	super handleKeyDown: anEvent.
+	self eventKeyDown: anEvent.
+]
+
 { #category : #'events-processing' }
 RSAthensMorph >> handleKeyUp: anEvent [
 	super handleKeyUp: anEvent.
 	self eventKeyUp: anEvent
-]
-
-{ #category : #'event handling' }
-RSAthensMorph >> handleKeystroke: anEvent [
-	super handleKeystroke: anEvent.
-	self eventKeyDown: anEvent.
 ]
 
 { #category : #'events-processing' }
