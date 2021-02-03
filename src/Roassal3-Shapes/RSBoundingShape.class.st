@@ -345,8 +345,8 @@ RSBoundingShape >> renderOn: aCanvas [
 
 { #category : #matrix }
 RSBoundingShape >> rotateByDegrees: angle [
-	"Rotate the shape. Here is an exanmple:
--=-=-=
+	"Rotate the shape. Here is an example:
+```
 c := RSCanvas new.
 
 polygon := RSPolygon new
@@ -357,7 +357,7 @@ polygon rotateByDegrees: -45.
 
 c add: polygon.
 c	
--=-=-=
+```
 	"
 	matrix rotateByDegrees: angle
 ]
