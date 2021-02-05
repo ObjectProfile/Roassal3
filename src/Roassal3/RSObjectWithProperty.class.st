@@ -42,6 +42,12 @@ RSObjectWithProperty >> addInteraction: anInteractionClassOrInstance [
 ]
 
 { #category : #announcer }
+RSObjectWithProperty >> announcementClasses [
+	"must return a collection of Announcement classes"
+	^ self subclassResponsibility
+]
+
+{ #category : #announcer }
 RSObjectWithProperty >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
