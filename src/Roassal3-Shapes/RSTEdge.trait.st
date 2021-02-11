@@ -83,6 +83,11 @@ RSTEdge >> joinRound [
 ]
 
 { #category : #'public - shape' }
+RSTEdge >> marker: aMarker [
+	self shape marker: aMarker
+]
+
+{ #category : #'public - shape' }
 RSTEdge >> markerEnd: aMarker [
 	self shape markerEnd: aMarker
 ]

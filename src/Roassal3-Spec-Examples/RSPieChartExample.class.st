@@ -37,7 +37,7 @@ RSPieChartExample >> droplist [
 ]
 
 { #category : #initialization }
-RSPieChartExample >> initializeWidgets [
+RSPieChartExample >> initializePresenters [
 	| org |
 	droplist := self instantiate: SpLabelledDropList.
 	org := RPackage organizer.
