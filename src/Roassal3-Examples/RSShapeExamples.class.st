@@ -1199,3 +1199,27 @@ RSShapeExamples >> example42DirectedBezier [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example43KeepLabelSize [
+	<script: 'self new example43KeepLabelSize open
+		setLabel: #''Use the wheel'' '>
+	| canvas labels |
+	canvas := RSCanvas new.
+	
+	labels := RSLabel models: String withAllSubclasses.
+	RSNormalizer fontSize
+		shapes: labels;
+		normalize: [ :cls | cls linesOfCode ln +5 ].
+	
+	RSLineBuilder line
+		color: Color red;
+		canvas: canvas;
+		shapes: labels;
+		connectFrom: #superclass.
+	canvas addAll: labels.
+	RSTreeLayout on: labels.
+	labels @ RSKeepFontSizeRatio.
+	canvas @ RSCanvasController.
+	^ canvas
+]
