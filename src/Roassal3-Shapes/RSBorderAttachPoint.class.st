@@ -103,7 +103,7 @@ RSBorderAttachPoint >> basicStartingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
-	^ ((aLine intersectionsWith: aSource) detectMin: [ :p | p asPoint dist: aLine v2 ])
+	^ ((aLine intersectionsWith: aSource) detectMin: [ :p | p asPoint distanceTo: aLine v2 ])
 		ifNil: [ aSource center ]
 ]
 

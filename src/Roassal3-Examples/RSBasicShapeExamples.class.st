@@ -277,7 +277,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	easing := 0@0.
 	boxSize := 50.
 	canvasExtent := 500 asPoint.
-	maxDist := 0@0 dist: canvasExtent.
+	maxDist := 0@0 distanceTo: canvasExtent.
 	scale := NSScale linear 
 		domain: { 0. maxDist}; 
 		rangeRound: #(80 0).
@@ -285,7 +285,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	c when: RSExtentChangedEvent do: [ 
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
-		maxDist := 0@0 dist: canvasExtent.
+		maxDist := 0@0 distanceTo: canvasExtent.
 		scale := NSScale linear 
 			domain: { 0. maxDist}; 
 			rangeRound: #(80 0).
@@ -301,7 +301,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	c when: RSMouseMove do: [ :evt | 
 		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
-			zindex := scale scale: (easing dist: s position).
+			zindex := scale scale: (easing distanceTo: s position).
 			s extent: boxSize * (zindex /100) asPoint ].
 		c signalUpdate.
 	].

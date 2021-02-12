@@ -3,7 +3,7 @@ Extension { #name : #AthensLineSegment }
 { #category : #'*Roassal3-SVG' }
 AthensLineSegment >> durationFor: aPoint [
 	| d |
-	d := aPoint dist: point.
+	d := aPoint distanceTo: point.
 	^ 1 / (d*0.5)
 ]
 

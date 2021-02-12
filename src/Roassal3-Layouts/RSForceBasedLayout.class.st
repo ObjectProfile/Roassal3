@@ -370,7 +370,7 @@ RSForceBasedLayout >> stepEdgeForces [
 		fp := from position.
 		tp := to position.
 		pd := tp - fp.
-		len := tp dist: fp.
+		len := tp distanceTo: fp.
 		(len closeTo: 0) ifFalse: [
 			len := alpha * (each strength) * (len - (each length)) / len.
 			pd := pd * len.

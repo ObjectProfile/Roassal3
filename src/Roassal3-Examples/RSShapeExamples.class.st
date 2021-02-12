@@ -541,14 +541,13 @@ RSShapeExamples >> example22ScaleEvents [
 				color: Color red;
 				size: 10;
 				yourself));
-		attachPoint: RSHorizontalAttachPoint new; 
-		border: (RSBorder new);
+		attachPoint: RSHorizontalAttachPoint new;
 		canvas: canvas;
 		shapes: canvas nodes;
 		connectFrom: #superclass.
 
-	canvas edges first @ RSKeepBorderWidthRatio. 
-	canvas edges first @ RSKeepMarkersSizeRatio.
+	canvas edges @ RSKeepBorderWidthRatio. 
+	canvas edges @ RSKeepMarkersSizeRatio.
 	RSHorizontalTreeLayout new on: canvas nodes.
 	^ canvas
 ]

@@ -199,12 +199,12 @@ RSAnimationExamples >> example05ElasticEllipses [
 			ang := random next * Float pi * 2.
 			shape position: radius * (ang cos @ ang sin).
 			overlapped := canvas nodes anySatisfy: [ :other |
-				(other position dist: shape position) < 
+				(other position distanceTo: shape position) < 
 					((shape radius + other radius) * 1.4)  ].
 			overlapped ifFalse: [ 
 				canvas add: shape.
 				shape propertyAt: #radius put: shape radius.
-				shape color: (color scale: (shape position dist: 0@0)/250 ) ].
+				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
 		].
 		canvas newAnimation
 			easing: RSEasing elasticOut;
@@ -1021,7 +1021,7 @@ RSAnimationExamples >> example17Flor [
 			m := s model value.
 			angle := (i + (angleSp sin * m)) degreesToRadians.
 			s position: m * (angle cos @ angle sin).
-			dist := s position dist: 0@0.
+			dist := s position distanceTo: 0@0.
 			diameter := dia2 scale: (dia1 scale: dist) sin.
 			s extent: diameter asPoint.
 	 	].

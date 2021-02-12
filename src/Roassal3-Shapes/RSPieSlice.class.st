@@ -116,7 +116,7 @@ RSPieSlice >> includesPoint: aPoint [
 		ifFalse: [ ^ false ].
 	i := innerRadius.
 	e := externalRadius.
-	d := invertedPoint dist: 0 @ 0.
+	d := invertedPoint distanceTo: 0 @ 0.
 	(d between: i and: e)
 		ifFalse: [ ^ false ].
 	n := invertedPoint angle negated radiansToDegrees.

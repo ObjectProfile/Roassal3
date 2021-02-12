@@ -43,7 +43,6 @@ Class {
 
 { #category : #hooks }
 RSKeepBorderWidthRatio >> onShape: aShape [
-
 	| width |
 	aShape isInACanvas ifFalse: [ self error: 'aShape needs to be part of one canvas' ].
 	width := aShape border width.

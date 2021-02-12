@@ -83,7 +83,7 @@ RSDraggableCanvas >> mouseEnd: evt [
 	aCanvas := evt canvas.
 	camera := evt camera.
 	threshold := 4.
-	(lastStep dist: 0@0) < threshold
+	(lastStep distanceTo: 0@0) < threshold
 		ifTrue: [ ^ self checkCamera: aCanvas ].
 		
 	delta := lastStep * 2.5.
