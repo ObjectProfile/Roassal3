@@ -33,6 +33,7 @@ RSAbstractRegularTreeLayout >> doExecute: elements [
 	| rootNodes |
 	alreadyLayoutedNodes := OrderedCollection new.
 	rootNodes := self rootNodesFor: elements.
+	self validateCachedParents.
 	nodesByLayer := OrderedCollection new.
 	self
 		layout: rootNodes

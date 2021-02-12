@@ -231,13 +231,26 @@ RSAbstractGraphLayout >> parentsFor: aNode [
 RSAbstractGraphLayout >> rootNodesFor: aCollection [
 	^ aCollection select: [:node | 
 		(self parentsFor: node) isEmpty ].
-	
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	aNode translateBy: aPoint.
 	(self childrenFor: aNode) do: [:child | self shiftTree: child by: aPoint]
+]
+
+{ #category : #private }
+RSAbstractGraphLayout >> validateCachedParents [
+	self cachedParents keys do: [ :node | self validateCycleFor: node path: Set new ].
+]
+
+{ #category : #private }
+RSAbstractGraphLayout >> validateCycleFor: node path: aSet [
+	(aSet includes: node)
+		ifTrue: [ self error: 'cycle with: ', aSet asString ].
+	aSet add: node.
+	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ].
+	
 ]
 
 { #category : #accessing }
