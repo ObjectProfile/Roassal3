@@ -46,7 +46,8 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'shapes',
-		'totalNumberOfLeaves'
+		'totalNumberOfLeaves',
+		'alpha'
 	],
 	#category : #'Roassal3-Colors'
 }
@@ -72,6 +73,12 @@ RSColoredTreePalette >> allLeavesAccessibleFrom: aShape in: result [
 
 ]
 
+{ #category : #accessing }
+RSColoredTreePalette >> alpha: alphaValueAsFloat [
+	"Set the transparency of the colors. Take as argument a number between 0.0 and 1.0"
+	alpha := alphaValueAsFloat
+]
+
 { #category : #public }
 RSColoredTreePalette >> assignColor [
 
@@ -85,8 +92,7 @@ RSColoredTreePalette >> assignColorToChildren: children low: low high: high [
 	| step hs |
 	step := high - low / children size.
 	hs := low to: high count: children size.
-	
-"self halt."
+
 	children with: hs do: [ :s :h |
 		self assignColorToRoot: s h: (h min: 360 max: 0)
 	]
@@ -102,12 +108,18 @@ RSColoredTreePalette >> assignColorToRoot: aRootShape [
 RSColoredTreePalette >> assignColorToRoot: aRootShape h: h [
 	| children span |
 	
-	aRootShape color: (Color h: h s: 1 v: 1).
+	aRootShape color: ((Color h: h s: 1 v: 1) alpha: alpha).
 
 	children := aRootShape outgoingShapes.
 	children ifEmpty: [ ^ self ].
 	span := (self allLeavesAccessibleFrom: aRootShape) * 360 / (totalNumberOfLeaves * 2).
 	self assignColorToChildren: children low: h - (span / 2) high: h + (span / 2).
+]
+
+{ #category : #initialization }
+RSColoredTreePalette >> initialize [
+	super initialize.
+	alpha := 1.0
 ]
 
 { #category : #accessing }
