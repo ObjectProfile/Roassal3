@@ -149,26 +149,23 @@ c
 { #category : #'instance creation' }
 RSNormalizer class >> fontSize [ 
 "Here is example
--=-=-=-=-=-=-=
-v := RSView new.
-v @ RSControlsView.
+```
+v := RSCanvas new.
+v @ RSCanvasController.
 
-sb := RSShapeBuilder label.
-sb interactionDo: #draggable.
-sb text: #asString.
-elements := sb elementsOn: (Collection withAllSubclasses).
+shapes := RSLabel models: (Collection withAllSubclasses).
 
-elements do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
-v addAll: elements.
+shapes do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
+v addAll: shapes.
 
 RSNormalizer fontSize
-	elements: elements;
+	shapes: shapes;
 	to: 30;
 	normalize: #numberOfMethods.
 
 v zoomToFit.
 v open
--=-=-=-=-=-=-=
+```
 "
 
 	| n |
