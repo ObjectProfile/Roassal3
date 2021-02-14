@@ -1,3 +1,14 @@
+"
+```
+m := RSMondrian new.
+m shape label color: Color blue translucent.
+m nodes: Collection withAllSubclasses.
+m line connectToAll: #dependentClasses.
+m normalizeFontSize: #numberOfMethods.
+m layout force.
+m  
+```
+"
 Class {
 	#name : #RSMondrian,
 	#superclass : #Object,
@@ -231,6 +242,13 @@ RSMondrian >> normalizeColor: oneArgBlock from: fromColor to: toColor [
 		shapes: self canvas nodes;
 		from: fromColor;
 		to: toColor;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeFontSize: oneArgBlock [
+	RSNormalizer fontSize
+		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
