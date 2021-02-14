@@ -77,6 +77,22 @@ RSMondrian >> initialize [
 	depth := 0
 ]
 
+{ #category : #visualization }
+RSMondrian >> inspectorVisualization [
+	<inspectorPresentationOrder: 90 title: 'Mondrian'>
+	self build.
+	^ SpRoassal3InspectorPresenter new
+		canvas: self canvas;
+		yourself
+
+]
+
+{ #category : #visualization }
+RSMondrian >> inspectorVisualizationContext: aContext [
+  
+  aContext withoutEvaluator
+]
+
 { #category : #'building - graph' }
 RSMondrian >> layout [
 	^ layoutBuilder
