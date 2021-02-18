@@ -458,7 +458,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 { #category : #elastic }
 RSHighlightableExamples >> example12ShowingEdges [
 	<script: 'self new example12ShowingEdges open'>
-	| canvas shapes color interaction connectBlock cpController|
+	| canvas shapes color interaction cpController|
 	canvas := RSCanvas new.
 
 	color := RSColorPalette sequential bupu3.
