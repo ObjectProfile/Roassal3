@@ -170,6 +170,21 @@ RSHighlightable class >> blue [
 	
 ]
 
+{ #category : #'public - lines' }
+RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine from: aRSGroup [
+	| models lines shapes parent |
+	models := aBlock value: aShape model.
+	parent := aShape parent.
+	shapes := parent shapesFromModels: models.
+	lines := shapes collect: [:s | 
+		aRSLine copy
+			from: aShape;
+			to: s;
+			yourself ].
+	parent addAll: lines.
+	^ lines
+]
+
 { #category : #'instance creation' }
 RSHighlightable class >> red [
 	| inst |
@@ -200,23 +215,24 @@ c @ RSCanvasController
 		highlightShapes: [ :ss | aCanvas nodes select: [ :sss | (sss model == ss model) and: [ sss ~~ ss ]  ] ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'public - lines' }
 RSHighlightable class >> showEdges: aBlock using: aRSLine [
+	^ self showEdges: aBlock using: aRSLine from: [ :aShape | aShape parent shapes ] 
+]
+
+{ #category : #'public - lines' }
+RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 	| i |
 	i := self new.
 	i 
 		when: RSHighlightEvent do: [ :evt | 
-			| models shape lines shapes |
-			shape := evt shape.
-			models := aBlock value: evt shape model.
-			shapes := evt shape parent shapesFromModels: models.
-			lines := shapes collect: [:s | 
-				aRSLine copy
-					from: shape;
-					to: s;
-					yourself].
-			shape parent addAll: lines.
-			shape parent propertyAt: #lines put: lines.
+			evt canvas
+				propertyAt: #lines 
+				put: (self 
+					createEdgesWith: aBlock 
+					shape: evt shape 
+					using: aRSLine 
+					from: aRSGroup).
 		];
 		when: RSUnHighlightEvent do: [:evt |
 			evt shape parent propertyAt: #lines ifPresent: [:lines | lines do: #remove ].
@@ -359,7 +375,8 @@ c @ RSCanvasController
 ```
 	"
 	self 
-		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #border value: aBorder ];
+		when: RSHighlightEvent do: [ :evt | 
+			self record: evt shape selector: #border value: aBorder ];
 		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #border ].
 ]
 
