@@ -11,7 +11,7 @@ Class {
 
 { #category : #running }
 RSFlowCanvasTest >> setUp [
-
+	super setUp.
 	f := RSFlowCanvas new.
 	f when: SmallInteger visualize: [ :canvas :number |
 		shapes := RSCircle models: (1 to: number).

@@ -10,9 +10,10 @@ Class {
 	#category : #'Roassal3-Interaction-Tests-ElasticBox'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RSElasticBoxTest >> setUp [
 	| shapes |
+	super setUp.
 	canvas := RSCanvas new.
 	shapes := (1 to: 10) collect: [ :i | RSBox new size: 5; yourself ].
 	RSGridLayout on: shapes.

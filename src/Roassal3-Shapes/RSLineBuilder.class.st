@@ -248,31 +248,6 @@ RSLineBuilder >> canvasNodes [
 	^ canvas nodes
 ]
 
-{ #category : #'public - shape' }
-RSLineBuilder >> capRound [
-	"Make the corner rounded. For example
-```
-classes := Collection withAllSubclasses.
-
-c := RSCanvas new.
-
-boxes := RSBox models: classes.
-c addAll: boxes. 
-RSFlowLayout on: c shapes.
-
-lb := RSLineBuilder orthoVertical.
-lb withVerticalAttachPoint.
-lb capRound.
-lb shapes: boxes.
-lb connectFrom: #superclass.
-
-RSTreeLayout on: c nodes.
-c @ RSCanvasController.
-c open
-```"
-	self shape capRound
-]
-
 { #category : #public }
 RSLineBuilder >> connectFrom: aBlockOrASymbol [
 	"Connect each shapes with the shapes for which the model matches aBlockOrASymbol"

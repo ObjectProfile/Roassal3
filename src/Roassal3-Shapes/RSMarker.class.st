@@ -47,7 +47,7 @@ RSMarker >> offsetRatio: aFloat [
 
 { #category : #public }
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
-	| angle pos off ratio |
+	| angle pos |
 	angle := vector angle.
 	"0.00001 in order to avoid inverseTransform bad result with sx = 0"
 	angle := angle + Float halfPi.

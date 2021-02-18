@@ -188,6 +188,16 @@ RSBorder >> paint: aPaint [
 	paint := aPaint
 ]
 
+{ #category : #printing }
+RSBorder >> printOn: stream [
+	width printOn: stream.
+	stream nextPutAll: ', '.
+	paint printOn: stream.
+	style ifNil: [ ^ self ].
+	stream nextPutAll: ', '.
+	style printOn: stream.
+]
+
 { #category : #accessing }
 RSBorder >> style [
 	^style

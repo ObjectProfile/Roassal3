@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Mondrian-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RSMondrianTest >> setUp [
 	super setUp.
 	m := RSMondrian new.
