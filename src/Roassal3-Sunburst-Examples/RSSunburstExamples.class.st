@@ -75,6 +75,7 @@ RSSunburstExamples >> example05BezierEdges [
 	sb canvas @ RSCanvasController.
 	RSLineBuilder sunburstBezier
 		width: 2;
+		color: Color black;
 		markerEnd: (RSEllipse new 
 			size: 10;
 			color: Color white;
