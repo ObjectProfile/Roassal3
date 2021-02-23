@@ -160,7 +160,7 @@ RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
 	
 	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new width: 2).
-	interaction withEdges.
+	interaction withLines.
 	c shapes @ interaction.
 	
 	l := RSLine new.

@@ -211,7 +211,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			padding: 5;
 			yourself ] as: RSGroup.
 	high := RSHighlightable new.
-	high withEdges.
+	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
 	canvas := RSCanvas new.
@@ -258,7 +258,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 			padding: 5;
 			yourself ] as: RSGroup.
 	high := RSHighlightable new.
-	high withEdges.
+	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
 	canvas := RSCanvas new.

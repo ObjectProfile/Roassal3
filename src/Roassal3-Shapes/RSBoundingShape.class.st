@@ -109,8 +109,7 @@ RSBoundingShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
 { #category : #'edges - deprecated' }
 RSBoundingShape >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
-	connectedLines ifNil: [ connectedLines := RSGroup new ].
-	^ connectedLines
+	^ self connectedLines
 ]
 
 { #category : #lines }

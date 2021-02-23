@@ -244,7 +244,7 @@ RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 RSHighlightable class >> withAntAnimation [
 	| i |
 	i := self new.
-	i withEdges.
+	i withLines.
 	i when: RSHighlightEvent do: [ :evt | | shape border |
 		shape := evt shape.
 		border := shape border.
@@ -283,11 +283,17 @@ RSHighlightable class >> withAntAnimation [
 	^ i
 ]
 
-{ #category : #'instance creation' }
+{ #category : #obsolete }
 RSHighlightable class >> withEdges [
 
+	^ self withLines
+]
+
+{ #category : #'instance creation' }
+RSHighlightable class >> withLines [
+
 	^ self new
-		  withEdges;
+		  withLines;
 		  highlightBorder: (RSBorder new
 				   color: Color black)
 ]
@@ -587,7 +593,7 @@ RSHighlightable >> withEdges [
 		list ].
 ]
 
-{ #category : #'public - hooks' }
+{ #category : #obsolete }
 RSHighlightable >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
@@ -597,10 +603,37 @@ RSHighlightable >> withIncomingEdges [
 ]
 
 { #category : #'public - hooks' }
+RSHighlightable >> withIncomingLines [
+	self highlightShapes: [ :s | 
+		| list |
+		list := s incomingLines collect: #yourself as: RSGroup.
+		list add: s.
+		list ].
+]
+
+{ #category : #'public - hooks' }
+RSHighlightable >> withLines [
+	self highlightShapes: [ :s | 
+		| list |
+		list := s connectedLines copy.
+		list add: s.
+		list ].
+]
+
+{ #category : #obsolete }
 RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s outgoingEdges collect: #yourself as: RSGroup.
 		list addAll: (s outgoingEdges collect: #to). 
+		list ].
+]
+
+{ #category : #'public - hooks' }
+RSHighlightable >> withOutgoingLines [
+	self highlightShapes: [ :s | 
+		| list |
+		list := s outgoingLines collect: #yourself as: RSGroup.
+		list addAll: (s outgoingLines collect: #to). 
 		list ].
 ]

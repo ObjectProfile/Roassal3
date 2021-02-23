@@ -62,7 +62,7 @@ RSHighlightableTest >> testWithEdges [
 	RSClusterLayout on: shapes.
 	
 	interaction := RSHighlightable red.
-	interaction withEdges.
+	interaction withLines.
 	shapes @ interaction.
 	
 	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
@@ -99,7 +99,7 @@ RSHighlightableTest >> testWithEdges2 [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable withEdges.
+	interaction := RSHighlightable withLines.
 	shapes @ interaction.
 	
 	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.

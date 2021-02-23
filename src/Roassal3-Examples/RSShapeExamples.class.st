@@ -1164,7 +1164,7 @@ RSShapeExamples >> example41Butterfly [
 	    yourself.
 	eb useElementAssociations: (c1 collect: [:c | c -> c2 ]), (c3 collect: [:c | c2-> c ]).
 	h := RSHighlightable new.
-	h withEdges.
+	h withLines.
 	h highlightBorder: RSBorder new.
 
 	canvas addAll: c1; add: c2; addAll: c3.

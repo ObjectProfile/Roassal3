@@ -41,7 +41,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	| canvas shapes interaction color |
 	canvas := RSCanvas new.
 	interaction := RSHighlightable red
-		withEdges;
+		withLines;
 		yourself.
 	color := RSColorPalette diverging rdylbu3.
 	shapes := (1 to: 20) collect: [ :i |
@@ -89,7 +89,7 @@ RSHighlightableExamples >> example03Interactive [
 	RSClusterLayout on: shapes.
 	
 	interaction := RSHighlightable red.
-	interaction withEdges.
+	interaction withLines.
 	update := [ interaction doHighlight: shapes atRandom ].
 	update value.
 	canvas newAnimation repeat when: RSAnimationLoopEvent do: update.
@@ -353,7 +353,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 		highlightBorder: (RSBorder new
 			width: 2;
 			yourself);
-		withEdges;
+		withLines;
 		yourself.
 
 	color := RSColorPalette diverging rdylbu3.
