@@ -172,6 +172,21 @@ RSChart >> initializeDecorations [
 	self addDecoration: RSChartSpineDecoration new.
 ]
 
+{ #category : #inspector }
+RSChart >> inspectorCanvas [
+	<inspectorPresentationOrder: 90 title: 'Canvas'>
+	self build. 
+	^ SpRoassal3InspectorPresenter new
+		canvas: self canvas;
+		yourself
+]
+
+{ #category : #inspector }
+RSChart >> inspectorCanvasContext: aContext [
+  
+  aContext withoutEvaluator
+]
+
 { #category : #'public - plots' }
 RSChart >> lineX: aCollectionX y: aCollectionY [
 	| res |
@@ -275,7 +290,7 @@ RSChart >> numberOfPlots [
 RSChart >> open [
 	"Open the chart in a new window. For example
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 x := (-3.14 to: 3.14 by: 0.1).
 y := x sin * 0.22.
 c := RSChart new.
@@ -287,7 +302,7 @@ c addPlot: p.
 c addDecoration: RSHorizontalTick new.
 c addDecoration: (RSVerticalTick new asFloat).
 c open
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 	"
 	self build.
 	^ self canvas open
