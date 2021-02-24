@@ -51,9 +51,42 @@ RSShape class >> model: anObject [
 ]
 
 { #category : #accessing }
+RSShape class >> model: anObject forIt: aOneArgBlock [
+	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
+	| r |
+	r := self new.
+	r model: anObject.
+	aOneArgBlock rsValue: r.
+	^ r
+]
+
+{ #category : #accessing }
 RSShape class >> models: someObjects [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
 	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+
+]
+
+{ #category : #accessing }
+RSShape class >> models: someObjects forEach: twoArgBlock [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model. The second argument is used to initialize the shape.
+	
+	For example:
+```
+c := RSCanvas new.
+
+classes := RSCircle models: Collection withAllSubclasses forEach: [ :aShape :aClass | aShape size: aClass numberOfMethods ].
+
+c addAll: classes.
+RSFlowLayout on: classes.
+c @ RSCanvasController
+```
+	"
+
+	| r |
+	r := someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+	r with: someObjects do: [ :aShape :anObject | twoArgBlock value: aShape value: anObject ].
+	^ r
 
 ]
 
