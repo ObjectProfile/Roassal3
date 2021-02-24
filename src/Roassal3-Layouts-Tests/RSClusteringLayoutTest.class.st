@@ -68,3 +68,33 @@ RSClusteringLayoutTest >> testBasic [
 				 at: 41 put: 91.0 @ 57.5;
 				 yourself)
 ]
+
+{ #category : #tests }
+RSClusteringLayoutTest >> testBasic2 [
+
+	| m nodes clusters |
+	m := RSMondrian new.
+	m nodes: (10 to: 50).
+	m line connectFrom: [ :nb | nb // 2 ].
+	m build.
+
+	nodes := m canvas nodes.
+
+	clusters := RSClusteringLayout new getClusterFor: nodes.
+	self assert: clusters size equals: 10.
+]
+
+{ #category : #tests }
+RSClusteringLayoutTest >> testBasic3 [
+
+	| m nodes clusters |
+	m := RSMondrian new.
+	m nodes: (1 to: 50).
+	m line connectFrom: [ :nb | nb // 2 ].
+	m build.
+
+	nodes := m canvas nodes.
+
+	clusters := RSClusteringLayout new getClusterFor: nodes.
+	self assert: clusters size equals: 1.
+]

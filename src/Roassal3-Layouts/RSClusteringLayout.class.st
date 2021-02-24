@@ -68,19 +68,8 @@ RSClusteringLayout >> doExecute: shapes [
 	"Performs the layout"
 
 	"A collection of collections"
-	| clusters groupToBeIncluded g |
-	clusters := RSGroup new.
-	
-	shapes do: [ :s |
-		groupToBeIncluded := s incomingShapes 
-									ifEmpty: [ nil ]
-									ifNotEmpty: [
-			 									clusters detect: [ :group | group includes: s incomingShapes anyOne ] ifNone: [ nil ] ].
-		groupToBeIncluded 
-			ifNil: [ g := RSGroup new. g add: s. clusters add: g ]
-			ifNotNil: [ groupToBeIncluded add: s ]. 
-		].
-
+	| clusters |
+	clusters := self getClusterFor: shapes.
 	clusters do: [ :group | forEachLayout on: group ].
 	clustersLayout on: clusters  
 ]
@@ -95,6 +84,25 @@ RSClusteringLayout >> forEachLayout [
 RSClusteringLayout >> forEachLayout: anObject [
 
 	forEachLayout := anObject
+]
+
+{ #category : #hook }
+RSClusteringLayout >> getClusterFor: shapes [
+	| clusters groupToBeIncluded g |
+	clusters := RSGroup new.
+	
+	shapes do: [ :s |
+		groupToBeIncluded := s incomingShapes 
+									ifEmpty: [ nil ]
+									ifNotEmpty: [
+			 									clusters detect: [ :group | group includes: s incomingShapes anyOne ] ifNone: [ nil ] ].
+		groupToBeIncluded 
+			ifNil: [ g := RSGroup new. g add: s. clusters add: g ]
+			ifNotNil: [ groupToBeIncluded add: s ]. 
+		].
+	
+	self assert: ((clusters collect: #size) sum = (clusters collect: #yourself as: Set) size).
+	^ clusters
 ]
 
 { #category : #'initialize-release' }
