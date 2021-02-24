@@ -70,7 +70,7 @@ RSConditionalLayout >> doExecute: shapes [
 	"Performs the layout"
 
 	| thenShapes elseShapes |
-	thenShapes := (shapes select: if ) asGroup.
+	thenShapes := (shapes select: if) asGroup.
 	elseShapes := (shapes reject: if) asGroup.
 	thenLayout on: thenShapes.
 	elseLayout on: elseShapes.
