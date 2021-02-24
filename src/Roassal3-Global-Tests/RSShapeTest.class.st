@@ -14,6 +14,34 @@ RSShapeTest >> testHasModel [
 ]
 
 { #category : #tests }
+RSShapeTest >> testIncomingAndOutgoingShapes [
+
+	| c shapes lb node1 node5 |
+	c := RSCanvas new.
+	shapes := RSBox models: (1 to: 10).
+	c addAll: shapes.
+	lb := RSLineBuilder line.
+	lb canvas: c.
+	lb connectFrom: [ :nb | nb // 2 ].
+	
+	node1 := c shapeFromModel: 1.
+	self assert: node1 model equals: 1.
+	
+	self assert: node1 outgoingLines size equals: 2.
+	self assert: node1 outgoingShapes size equals: 2.
+	self assert: node1 outgoingShapes equals: (c shapesFromModels: #(2 3)).
+	
+	self assert: node1 incomingLines isEmpty.
+	self assert: node1 incomingShapes isEmpty.
+	
+	node5 := c shapeFromModel: 5.
+	self assert: node5 incomingShapes equals: (c shapesFromModels: #(2)).
+	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11)).
+	
+	
+]
+
+{ #category : #tests }
 RSShapeTest >> testModels [
 
 	| shapes |

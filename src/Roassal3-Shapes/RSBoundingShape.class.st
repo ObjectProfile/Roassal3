@@ -200,6 +200,12 @@ RSBoundingShape >> incomingLines [
 	^ self connectedLines select: [ :e | e to == self ]
 ]
 
+{ #category : #lines }
+RSBoundingShape >> incomingShapes [
+	"Return the shapes that goes to the shape"
+	^ self incomingLines collect: #from
+]
+
 { #category : #initialization }
 RSBoundingShape >> initialize [
 	super initialize.
@@ -274,7 +280,7 @@ RSBoundingShape >> outgoingLines [
 
 { #category : #lines }
 RSBoundingShape >> outgoingShapes [
-	"Return the shapes that are connected to me."
+	"Return the shapes that leaves the shape"
 	^ self outgoingLines collect: #to
 ]
 
