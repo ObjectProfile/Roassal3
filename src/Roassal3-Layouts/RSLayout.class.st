@@ -57,7 +57,7 @@ RSLayout >> applyOn: elements [
 ]
 
 { #category : #hook }
-RSLayout >> doExecute: elements [
+RSLayout >> doExecute: shapes [
 	"Performs the layout"
 
 	self subclassResponsibility
