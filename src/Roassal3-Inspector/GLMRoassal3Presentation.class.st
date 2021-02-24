@@ -51,5 +51,5 @@ GLMRoassal3Presentation >> setUpInteractions [
 
 { #category : #rendering }
 GLMRoassal3Presentation >> value: aSpWrappedItem [
-	self selection: aSpWrappedItem item
+	self selection: aSpWrappedItem selectedItem
 ]

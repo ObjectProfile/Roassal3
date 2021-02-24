@@ -126,6 +126,11 @@ RSAbstractPlot >> minValueY [
 	^ self definedValuesY min
 ]
 
+{ #category : #'accessing - computed' }
+RSAbstractPlot >> scalePoint: aPoint [
+	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+]
+
 { #category : #'public - shape' }
 RSAbstractPlot >> shape [
 	^ shape

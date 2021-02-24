@@ -147,7 +147,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
 	zero := boxAndWhis at: 3.
 	"origin is the top left of the rectangle"
-	origin := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
+	origin := self scalePoint: aPoint.
 	corner := origin x @ (yScale scale: zero ).
 	
 	sizeOffset := (self barSize / 2.0) @ 0.

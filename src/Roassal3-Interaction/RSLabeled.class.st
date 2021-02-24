@@ -183,6 +183,11 @@ RSLabeled >> location [
 ]
 
 { #category : #accessing }
+RSLabeled >> locationDo: aBlock [
+	aBlock value: location
+]
+
+{ #category : #accessing }
 RSLabeled >> lowColor [
 	^ lowColor
 ]
