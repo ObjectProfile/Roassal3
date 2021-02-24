@@ -32,6 +32,12 @@ RSCanvas >> inspectorCanvas [
 ]
 
 { #category : #'*Roassal3-Inspector' }
+RSCanvas >> inspectorCanvasContext: aContext [
+  
+  aContext withoutEvaluator
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext [
 	"Return the context used in the canvas. The inspector context contains all the registration that is added to a canvas per default, when being used in the GTInspector. Registrations can be easily diseabled, for example, in case one wishes to disable the opening of a new inspector pane by clicking on an object using:
 ```
