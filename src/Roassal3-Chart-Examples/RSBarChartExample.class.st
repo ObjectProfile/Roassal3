@@ -227,3 +227,28 @@ RSBarChartExample >> example06BarAnimation [
 
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBarChartExample >> example07DoubleBar [
+	<script: 'self new example07DoubleBar open'>
+	| c classes x1 x2 y plot |
+	
+	c := RSChart new.
+	classes := RSShape withAllSubclasses asOrderedCollection 
+		sorted: [:a :b | a name<b name ].
+	x1 := classes collect: #numberOfMethods.
+	x2 := classes collect: #numberOfVariables.
+	y := 1 to: classes size.
+	c addPlot: (plot := RSDoubleBarPlot new
+		x1: x1 x2: x2 y: y;
+		yourself).
+	
+	c addDecoration: (RSVerticalTick new fromNames: (classes collect: #name)).
+	c addDecoration: (RSHorizontalTick new numberOfTicks: 10).
+	c addDecoration: (RSTopHorizontalTick new values: x2; numberOfTicks: 10).
+	c ylabel: 'Classes'.
+	c xlabel: 'Number Of Methods'.
+	c build.
+	(plot bars, plot bars2) @ RSPopup.
+	^ c canvas
+]

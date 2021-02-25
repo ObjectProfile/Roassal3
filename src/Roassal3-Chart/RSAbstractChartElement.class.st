@@ -33,12 +33,6 @@ RSAbstractChartElement >> chart: aChart [
 	chart := aChart
 ]
 
-{ #category : #public }
-RSAbstractChartElement >> computeColor [
-	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
-	^ self color ifNil: [ chart colorFor: self ].
-]
-
 { #category : #rendering }
 RSAbstractChartElement >> createXScale [
 	| padding |

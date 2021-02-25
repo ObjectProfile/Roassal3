@@ -39,6 +39,12 @@ RSAbstractPlot >> color: aColor [
 	self shape color: aColor
 ]
 
+{ #category : #public }
+RSAbstractPlot >> computeColor [
+	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
+	^ self color ifNil: [ chart colorFor: self ].
+]
+
 { #category : #initialization }
 RSAbstractPlot >> defaultShape [
 	^ self subclassResponsibility

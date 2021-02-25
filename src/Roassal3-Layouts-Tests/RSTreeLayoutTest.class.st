@@ -71,5 +71,6 @@ RSTreeLayoutTest >> testCycles [
 			$c -> $d.
 			$d -> $a}. "cycle"
 	self should: [RSTreeLayout on: shapes] raise: Error.
+	RSTreeLayout new doNotValidateCycles; on: shapes
 	
 ]
