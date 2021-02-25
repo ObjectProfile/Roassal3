@@ -1,5 +1,5 @@
 "
-TODO
+I define basic configuration for ticks, my subclasses creates lines and labels for each defined axis
 "
 Class {
 	#name : #RSAbstractTick,
