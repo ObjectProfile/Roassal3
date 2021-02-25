@@ -75,6 +75,28 @@ RSBoundingShape >> addConnectedLine: aLine [
 ]
 
 { #category : #accessing }
+RSBoundingShape >> allRecursiveConnectedShapes [
+	"Return the set of all recursively connected shapes."
+	| r |
+	r := Set new.
+	self allRecursiveConnectedShapesIn: r.
+	^ r
+]
+
+{ #category : #private }
+RSBoundingShape >> allRecursiveConnectedShapesIn: aCollection [
+	"Private method"
+	
+	"If we already went through me, there is nothing to do"
+	(aCollection includes: self) ifTrue: [ ^ self ].
+	
+	"Else, we add it and we do the recursion"
+	aCollection add: self.
+	self incomingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ].
+	self outgoingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ].
+]
+
+{ #category : #accessing }
 RSBoundingShape >> baseRectangle [
 	^ baseRectangle
 ]
