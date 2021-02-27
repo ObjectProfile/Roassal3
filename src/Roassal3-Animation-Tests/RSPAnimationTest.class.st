@@ -83,3 +83,19 @@ RSPAnimationTest >> testDelay [
 	(Delay forMilliseconds: 201) wait.
 	self assert: animation isDelayDone.
 ]
+
+{ #category : #tests }
+RSPAnimationTest >> testError [
+
+	| c shape ani |
+	c := RSCanvas new.
+
+	shape := RSCircle new color: Color gray.
+	c add: shape.
+
+	ani := c newAnimation
+				from: -50 @ -50;
+				to: 100 @ 0.
+	self should: [ ani on: shape set: #position ] raise: AssertionFailure.
+	
+]

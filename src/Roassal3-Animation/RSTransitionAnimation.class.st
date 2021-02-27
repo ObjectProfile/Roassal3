@@ -99,6 +99,7 @@ c
 	"
 	| sel |
 	sel := setSelector asSymbol.
+	self assert: [ sel numArgs = 1 ] description: [ 'The selector ', sel, ' should accept one argument' ].
 	self 
 		assert: (object class canUnderstand: sel) 
 		description: 'Invalid input'.
