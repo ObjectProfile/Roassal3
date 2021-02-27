@@ -15,7 +15,7 @@ c
 "
 Class {
 	#name : #RSAlignment,
-	#superclass : #RSAbstractElementHandling,
+	#superclass : #RSAbstractShapeHandling,
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 

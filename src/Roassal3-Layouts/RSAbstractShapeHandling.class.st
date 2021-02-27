@@ -2,7 +2,7 @@
 I am base class for RSAlignment and RSResize
 "
 Class {
-	#name : #RSAbstractElementHandling,
+	#name : #RSAbstractShapeHandling,
 	#superclass : #RSObject,
 	#instVars : [
 		'shapes',
@@ -12,27 +12,27 @@ Class {
 }
 
 { #category : #accessing }
-RSAbstractElementHandling >> fixedShape [
+RSAbstractShapeHandling >> fixedShape [
 	^ fixedShape
 ]
 
 { #category : #accessing }
-RSAbstractElementHandling >> fixedShape: aShape [
+RSAbstractShapeHandling >> fixedShape: aShape [
 	"Designate a particular shape for which all the other will be aligned against"
 	fixedShape := aShape
 ]
 
 { #category : #'private - configuration' }
-RSAbstractElementHandling >> ifNoFixedShapeThen: aBlock [
+RSAbstractShapeHandling >> ifNoFixedShapeThen: aBlock [
 	fixedShape ifNil: [ aBlock value  ]
 ]
 
 { #category : #accessing }
-RSAbstractElementHandling >> shapes [
+RSAbstractShapeHandling >> shapes [
 	^ shapes
 ]
 
 { #category : #accessing }
-RSAbstractElementHandling >> shapes: someShapes [
+RSAbstractShapeHandling >> shapes: someShapes [
 	shapes := someShapes asGroup
 ]
