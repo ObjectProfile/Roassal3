@@ -1513,7 +1513,6 @@ RSAnimationExamples >> example25AnimationCircle [
 	sc2 := NSScale linear domain: #(-1 1).
 	shapes do: [ :e | | animation |
 		animation := canvas newAnimation repeat 
-			"easing: TSEasing bounceOut;"
 			duration: 2 seconds; onStepDo: [ :t | 
 			| val |
 			val := (e model + t)%1.
