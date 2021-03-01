@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSGraphVizLayout,
-	#superclass : #RSEdgeDrivenLayout,
+	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'dotConverter'
 	],

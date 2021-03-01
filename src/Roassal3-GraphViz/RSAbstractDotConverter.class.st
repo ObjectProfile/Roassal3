@@ -55,6 +55,12 @@ RSAbstractDotConverter >> visitGroup: aRSGroup [
 ]
 
 { #category : #visiting }
+RSAbstractDotConverter >> visitLabel: aShape [
+	^ self visitBoundingShape: aShape
+
+]
+
+{ #category : #visiting }
 RSAbstractDotConverter >> visitLine: aLine [
 	stream 
 		<< '"';
