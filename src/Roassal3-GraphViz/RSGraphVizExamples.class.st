@@ -118,7 +118,7 @@ RSGraphVizExamples >> example03Basic [
 		from: canvas nodes first;
 		to: canvas nodes second;
 		yourself).
-	converter := RSAbstractDotConverter new.
+	converter := RSNeatoDotConverter new.
 	canvas accept: converter.
 	
 	process := OSSUnixSubprocess new
