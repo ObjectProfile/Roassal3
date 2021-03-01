@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSAbstractGraphLayout,
-	#superclass : #RSEdgeDrivenLayout,
+	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'verticalGap',
 		'horizontalGap',

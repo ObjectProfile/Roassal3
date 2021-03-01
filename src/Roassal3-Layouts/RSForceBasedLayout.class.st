@@ -15,7 +15,7 @@ c
 "
 Class {
 	#name : #RSForceBasedLayout,
-	#superclass : #RSEdgeDrivenLayout,
+	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'iterations',
 		'nodes',

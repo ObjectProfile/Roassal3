@@ -2,7 +2,7 @@
 TODO
 "
 Class {
-	#name : #RSEdgeDrivenLayout,
+	#name : #RSLineDrivenLayout,
 	#superclass : #RSLayout,
 	#instVars : [
 		'edges',
@@ -14,39 +14,39 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RSEdgeDrivenLayout class >> isAbstract [
-	^ self = RSEdgeDrivenLayout
+RSLineDrivenLayout class >> isAbstract [
+	^ self = RSLineDrivenLayout
 ]
 
 { #category : #public }
-RSEdgeDrivenLayout class >> on: elements edges: edges [
+RSLineDrivenLayout class >> on: elements edges: edges [
 	^ self new on: elements edges: edges
 ]
 
 { #category : #'instance creation' }
-RSEdgeDrivenLayout class >> withEdges: aCollection [
+RSLineDrivenLayout class >> withEdges: aCollection [
 	
 	^self new initialize userDefinedEdges: aCollection
 ]
 
 { #category : #hook }
-RSEdgeDrivenLayout >> doExecute: elements [
+RSLineDrivenLayout >> doExecute: elements [
 	self subclassResponsibility
 ]
 
 { #category : #hook }
-RSEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
+RSLineDrivenLayout >> doIncrementallyExecute: anElementNode [
 	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
 	self doExecute: anElementNode
 ]
 
 { #category : #private }
-RSEdgeDrivenLayout >> edges [
+RSLineDrivenLayout >> edges [
 	^ edges
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> edges: aCollection [
+RSLineDrivenLayout >> edges: aCollection [
 	"Set the list of edges that should be considered for the layout.
 	If none is specified (i.e., if this method is not called), then the 
 	edges are infered."
@@ -54,7 +54,7 @@ RSEdgeDrivenLayout >> edges: aCollection [
 ]
 
 { #category : #iterator }
-RSEdgeDrivenLayout >> edgesDo: aBlock [
+RSLineDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
 	edges ifNil: [ ^ self ].
 	edges do: aBlock
@@ -62,7 +62,7 @@ RSEdgeDrivenLayout >> edgesDo: aBlock [
 ]
 
 { #category : #hook }
-RSEdgeDrivenLayout >> executeOnElements: elements [
+RSLineDrivenLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
 	self userDefinedEdges
 		ifNil: [ self setEdgesFromElements: elements ]
@@ -78,17 +78,17 @@ RSEdgeDrivenLayout >> executeOnElements: elements [
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> fromPositions: anArray [
+RSLineDrivenLayout >> fromPositions: anArray [
 	fromPositions := anArray
 ]
 
 { #category : #testing }
-RSEdgeDrivenLayout >> isEdgeDrivenLayout [
+RSLineDrivenLayout >> isEdgeDrivenLayout [
 	^ true
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> setEdgesFromElements: elements [
+RSLineDrivenLayout >> setEdgesFromElements: elements [
 	elements isEmpty ifTrue: [ ^ self ].
 	
 	^ self edges:
@@ -98,17 +98,17 @@ RSEdgeDrivenLayout >> setEdgesFromElements: elements [
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> toPositions: anArray [
+RSLineDrivenLayout >> toPositions: anArray [
 	toPositions := anArray
 ]
 
 { #category : #private }
-RSEdgeDrivenLayout >> userDefinedEdges [
+RSLineDrivenLayout >> userDefinedEdges [
 	^ userDefinedEdges
 ]
 
 { #category : #accessing }
-RSEdgeDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
+RSLineDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
 	"useful to tell to the layout which edges have to be used for the layout"
 	userDefinedEdges := aCollectionOfEdges.
 	
