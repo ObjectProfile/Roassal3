@@ -5,7 +5,8 @@ Class {
 	#name : #RSGraphVizLayout,
 	#superclass : #RSLineDrivenLayout,
 	#instVars : [
-		'dotConverter'
+		'dotConverter',
+		'scale'
 	],
 	#category : #'Roassal3-GraphViz'
 }
@@ -77,17 +78,19 @@ RSGraphVizLayout >> dotConverter: aRSDotConverter [
 { #category : #'initialize-release' }
 RSGraphVizLayout >> initialize [
 	super initialize.
-	self dotConverter: RSStrictDotConverter new
+	self dotConverter: RSStrictDotConverter new.
+	self scale: 70
 ]
 
 { #category : #hook }
 RSGraphVizLayout >> positionShapes: elements with: string [
-	| scale nodeIndex edgeIndex transform |
-	scale := 70.
+	| nodeIndex edgeIndex transform |
+	string ifEmpty: [ self error: 'Error in Dot converter' ].
 	edgeIndex := nodeIndex := 1.
+	
 	transform := [ :p | 
 		p * (scale negated) ].
-	string ifEmpty: [ self error: 'Error in Dot converter' ].
+	
 	
 	string linesDo: [ :l | 
 		| line type |
@@ -116,4 +119,14 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			edgeIndex := edgeIndex + 1.
 			 ].
 		 ].
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> scale [
+	^ scale
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> scale: aNumber [
+	scale := aNumber
 ]
