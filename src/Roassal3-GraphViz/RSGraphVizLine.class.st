@@ -8,6 +8,16 @@ Class {
 }
 
 { #category : #initialization }
+RSGraphVizLine >> color [
+	^ self border color
+]
+
+{ #category : #initialization }
+RSGraphVizLine >> color: aColor [
+	self strokeColor: aColor
+]
+
+{ #category : #initialization }
 RSGraphVizLine >> initialize [
 	super initialize.
 	self setSVGPath.

@@ -83,14 +83,23 @@ RSGraphVizLayout >> initialize [
 ]
 
 { #category : #hook }
+RSGraphVizLayout >> pointsFor: line [
+	| points n |
+	n := line next asNumber.
+	points := (1 to: n) collect: [ :i | 
+		| x y |
+		x := line next asNumber.
+		y := line next asNumber.
+		self transform: x@y.
+		] as: Array.
+	^ points
+]
+
+{ #category : #hook }
 RSGraphVizLayout >> positionShapes: elements with: string [
-	| nodeIndex edgeIndex transform |
+	| nodeIndex edgeIndex  |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
 	edgeIndex := nodeIndex := 1.
-	
-	transform := [ :p | 
-		p * (scale negated) ].
-	
 	
 	string linesDo: [ :l | 
 		| line type |
@@ -102,20 +111,15 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			x := line next asNumber.
 			y := line next asNumber.
 			
-			(elements at: nodeIndex) translateTo: (transform value: x@y).
+			(elements at: nodeIndex) translateTo: (self transform: x@y).
 			nodeIndex := nodeIndex + 1.
 			 ].
 		type = #edge ifTrue: [
-			| n points x y |
+			| points |
 			line next."tail"
 			line next."head"
-			n := line next asNumber.
-			points := Array new: n.
-			1 to: n do: [ :i | 
-				x := line next asNumber.
-				y := line next asNumber.
-				points at: i put: (transform value: x@y) ].
-			(edges at: edgeIndex) propertyAt: #points put: points .
+			points := self pointsFor: line.
+			(edges at: edgeIndex) propertyAt: #points put: points.
 			edgeIndex := edgeIndex + 1.
 			 ].
 		 ].
@@ -129,4 +133,9 @@ RSGraphVizLayout >> scale [
 { #category : #accessing }
 RSGraphVizLayout >> scale: aNumber [
 	scale := aNumber
+]
+
+{ #category : #hook }
+RSGraphVizLayout >> transform: aPoint [
+	^ aPoint * scale
 ]
