@@ -17,3 +17,12 @@ RSShape >> gtInspectorCanvasIn: composite [
 		title: ['Shape'];
 		initializeCanvas: [ self gtCanvasForInspector ]
 ]
+
+{ #category : #'*Roassal3-Inspector' }
+RSShape >> inspectorShape [
+	<inspectorPresentationOrder: 90 title: 'Shape'>
+
+	^ SpRoassal3InspectorPresenter new
+		canvas: self gtCanvasForInspector;
+		yourself
+]
