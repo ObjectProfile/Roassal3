@@ -79,7 +79,7 @@ RSGraphVizLayout >> dotConverter: aRSDotConverter [
 RSGraphVizLayout >> initialize [
 	super initialize.
 	self dotConverter: RSStrictDotConverter new.
-	self scale: 70
+	self scale: 70 negated
 ]
 
 { #category : #hook }
