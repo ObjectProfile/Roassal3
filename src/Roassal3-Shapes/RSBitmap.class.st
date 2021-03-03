@@ -14,7 +14,8 @@ Class {
 RSBitmap >> computeRectangle [
 	baseRectangle := Rectangle floatCenter: 0@0 extent: (form 
 		ifNil: [ 0@0 ]
-		ifNotNil: [ form extent ])
+		ifNotNil: [ form extent ]).
+	encompassingRectangle := nil
 ]
 
 { #category : #accessing }
