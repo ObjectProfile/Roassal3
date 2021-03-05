@@ -56,7 +56,7 @@ RSGraphVizLayout >> doExecute: elements [
 		run.
 
 	process stdinStream
-		nextPutAll: dotConverter stream contents;
+		nextPutAll: dotConverter stream contents utf8Encoded;
 		close.
 	process waitForExit.
 	string := process stdoutStream upToEndOfFile.
