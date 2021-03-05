@@ -97,9 +97,9 @@ RSGraphVizLayout >> pointsFor: line [
 
 { #category : #hook }
 RSGraphVizLayout >> positionShapes: elements with: string [
-	| nodeIndex edgeIndex  |
+	| nodeIndex |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
-	edgeIndex := nodeIndex := 1.
+	nodeIndex := 1.
 	
 	string linesDo: [ :l | 
 		| line type |
@@ -115,12 +115,15 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			nodeIndex := nodeIndex + 1.
 			 ].
 		type = #edge ifTrue: [
-			| points |
-			line next."tail"
-			line next."head"
+			| points tail head edge |
+			tail := line next asNumber.
+			head := line next asNumber.
+			tail := elements at: tail.
+			head := elements at: head.
 			points := self pointsFor: line.
-			(edges at: edgeIndex) propertyAt: #points put: points.
-			edgeIndex := edgeIndex + 1.
+			edge := tail connectedEdges detect: [ :ed | ed to = head ].
+			edge attachPoint: (RSGraphVizAttachPoint new points: points).
+			edge propertyAt: #points put: points.
 			 ].
 		 ].
 ]

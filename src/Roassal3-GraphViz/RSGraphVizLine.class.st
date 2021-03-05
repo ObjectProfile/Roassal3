@@ -17,6 +17,11 @@ RSGraphVizLine >> color: aColor [
 	self strokeColor: aColor
 ]
 
+{ #category : #accessing }
+RSGraphVizLine >> controlPoints [ 
+	^ self propertyAt: #points ifAbsent: [ super controlPoints ]
+]
+
 { #category : #initialization }
 RSGraphVizLine >> initialize [
 	super initialize.

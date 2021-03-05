@@ -431,6 +431,28 @@ RSGraphVizExamples >> example08RoassalPackages [
 ]
 
 { #category : #examples }
+RSGraphVizExamples >> example09Arrows [
+	<script: 'self new example09Arrows'>
+	| c shapes lb |
+	c := RSCanvas new.
+
+	shapes := RSLabel models: Collection withAllSubclasses.
+	c addAll: shapes.
+	shapes @ RSDraggable.
+
+	lb := RSLineBuilder new: RSGraphVizLine new.
+	lb shapes: shapes.
+	lb markerEnd: (RSShapeFactory arrow size: 10; color: Color red).
+	lb connectToAll: #dependentClasses.
+
+	RSGraphVizLayout twoPi on: shapes.
+
+	shapes @ (RSHighlightable red withEdges).
+	c @ RSCanvasController.
+	c openOnce
+]
+
+{ #category : #examples }
 RSGraphVizExamples >> unixFamilyTree [
 	^ {'5th Edition' -> '6th Edition'.
 	'5th Edition' -> 'PWB 1.0'.
