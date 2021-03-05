@@ -56,7 +56,8 @@ c addDecoration: (RSVerticalTick new).
 c
 ```"
 	decorations add: aDecoration.
-	aDecoration chart: self
+	aDecoration chart: self.
+	^ aDecoration
 ]
 
 { #category : #adding }
@@ -367,7 +368,7 @@ c title: 'Square root'.
 c
 ```
 	"
-	self addDecoration: (RSChartTitleDecoration new title: aTitle)
+	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
 { #category : #'public - scales' }
@@ -404,13 +405,19 @@ RSChart >> xSqrt [
 { #category : #decoration }
 RSChart >> xlabel: aTitle [
 	"Set a label on the horizontal axis"
-	self addDecoration: (RSXLabelDecoration new title: aTitle)
+	^ self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
 { #category : #decoration }
 RSChart >> xlabel: aTitle offset: aPointOrANumber [
 	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
-	self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
+	^ self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
+]
+
+{ #category : #decoration }
+RSChart >> xlabelTop: aTitle [
+	"Set a label on the horizontal top axis"
+	^ self addDecoration: (RSXLabelDecoration new title: aTitle; above).
 ]
 
 { #category : #'public - scales' }
@@ -448,11 +455,17 @@ RSChart >> ySqrt [
 { #category : #decoration }
 RSChart >> ylabel: aTitle [
 	"Set a label on the vertical axis"
-	self addDecoration: (RSYLabelDecoration new title: aTitle)
+	^ self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]
 
 { #category : #decoration }
 RSChart >> ylabel: aTitle offset: aPointOrANumber [
 	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
-	self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
+	^ self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
+]
+
+{ #category : #decoration }
+RSChart >> ylabelRight: aTitle [
+	"Set a label on the vertical axis"
+	^ self addDecoration: (RSYLabelDecoration new title: aTitle; right; yourself)
 ]

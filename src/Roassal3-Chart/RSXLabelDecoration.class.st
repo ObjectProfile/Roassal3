@@ -25,20 +25,24 @@ Class {
 	#category : #'Roassal3-Chart-Decoration'
 }
 
+{ #category : #'public - positioning shorcuts' }
+RSXLabelDecoration >> above [
+	self location 
+		offset: 0@ -5;
+		above;
+		center
+]
+
+{ #category : #'public - positioning shorcuts' }
+RSXLabelDecoration >> below [
+	self location 
+		offset: 0@5;
+		below;
+		center
+]
+
 { #category : #initialization }
 RSXLabelDecoration >> initialize [
 	super initialize.
-	self offset: 5
-]
-
-{ #category : #rendering }
-RSXLabelDecoration >> renderIn: canvas [
-	| label |
-	label := self createLabel.
-	RSLocation new
-		offset: offset;
-		below;
-		center;
-		move: label on: canvas encompassingRectangle.
-	canvas add: label.
+	self below.
 ]

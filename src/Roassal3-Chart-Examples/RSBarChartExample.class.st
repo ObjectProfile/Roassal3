@@ -231,7 +231,7 @@ RSBarChartExample >> example06BarAnimation [
 { #category : #examples }
 RSBarChartExample >> example07DoubleBar [
 	<script: 'self new example07DoubleBar open'>
-	| c classes x1 x2 y plot |
+	| c classes x1 x2 y plot title |
 	
 	c := RSChart new.
 	classes := RSShape withAllSubclasses asOrderedCollection 
@@ -243,12 +243,30 @@ RSBarChartExample >> example07DoubleBar [
 		x1: x1 x2: x2 y: y;
 		yourself).
 	
-	c addDecoration: (RSVerticalTick new fromNames: (classes collect: #name)).
 	c addDecoration: (RSHorizontalTick new numberOfTicks: 10).
-	c addDecoration: (RSTopHorizontalTick new values: x2; numberOfTicks: 10).
-	c ylabel: 'Classes'.
+	c addDecoration: (RSHorizontalTopTick new values: x2; numberOfTicks: 10).
+	
 	c xlabel: 'Number Of Methods'.
+	c xlabelTop: 'Number Of Variables'.
+	
+	c addDecoration: (RSVerticalTick new fromNames: (classes collect: #name)).
+	c addDecoration: (RSVerticalRightTick new 
+		values: (1 to: classes size);
+		numberOfTicks: 10;
+		fromNames: (classes collect: #linesOfCode)).
+	
+	c ylabel: 'Classes'.
+	c ylabelRight: 'Number of lines Of code'.
+	title := c title: 'RSShape withAllSubclasses'.
+	title baseShape
+		bold;
+		noPaint;
+		withBorder.
+		
 	c build.
 	(plot bars, plot bars2) @ RSPopup.
+	title label 
+		addInteraction: (RSPopup text: 'Click to inspect');
+		when: RSMouseClick do: [ :evt | classes inspect ].
 	^ c canvas
 ]

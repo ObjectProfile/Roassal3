@@ -28,20 +28,24 @@ Class {
 { #category : #initialization }
 RSYLabelDecoration >> initialize [
 	super initialize.
-	self offset: -5.
 	self vertical.
+	self left
 ]
 
-{ #category : #rendering }
-RSYLabelDecoration >> renderIn: canvas [
-	| label |
-	label := self createLabel.
-	
-	RSLocation new
-		offset: offset;
-		center;
+{ #category : #accessing }
+RSYLabelDecoration >> left [
+	self location 
+		offset: -5 @ 0;
 		left;
 		outer;
-		move: label on: canvas encompassingRectangle.
-	canvas add: label.
+		middle
+]
+
+{ #category : #accessing }
+RSYLabelDecoration >> right [
+	self location 
+		offset: 5 @ 0;
+		right;
+		outer;
+		middle
 ]

@@ -32,17 +32,8 @@ RSChartTitleDecoration >> defaultFontSize [
 { #category : #rendering }
 RSChartTitleDecoration >> initialize [
 	super initialize.
-	self fontSize: self defaultFontSize.
-	self rotationAngle: 0
-]
-
-{ #category : #rendering }
-RSChartTitleDecoration >> renderIn: canvas [
-	| label |
-	label := self createLabel.
-	canvas add: label.
-	RSLocation new
+	self fontSize: 15.
+	location
 		offset: 0@ -2;
-		above; center;
-		stick: label on: self spine.
+		above; center.
 ]
