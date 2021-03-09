@@ -42,7 +42,7 @@ RSUMLExamples >> example03DifferentLines [
 		noPaint;
 		withBorder) asMarker offset: -7.
 
-	builder renderer edgeBuilder: (RSEdgeBuilder verticalBezier
+	builder renderer edgeBuilder: (RSLineBuilder verticalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;
@@ -58,9 +58,6 @@ RSUMLExamples >> example04Nolines [
 	| builder |
 	builder := RSUMLClassBuilder new.
 	builder classes: RSAttachPoint withAllSubclasses.
-	builder renderer marker: ((RSShapeFactory arrow
-		extent: 20@25;
-		color: Color black) asMarker offset: 25/2).
 
 	builder layout grid.
 	builder build.
@@ -78,7 +75,7 @@ RSUMLExamples >> example05Horizontal [
 		extent: 20@25;
 		noPaint;
 		withBorder) asMarker offset: -7.
-	builder renderer edgeBuilder: (RSEdgeBuilder horizontalBezier
+	builder renderer edgeBuilder: (RSLineBuilder horizontalBezier
 		width: 2;
 		dashArray: #(4);
 		capRound;
@@ -134,6 +131,26 @@ RSUMLExamples >> example09Package [
 	| builder |
 	builder := RSUMLPackageBuilder new.
 	builder packages: { self class package}.
+	builder build.
+	^ builder canvas
+]
+
+{ #category : #examples }
+RSUMLExamples >> example10AggregationComposition [
+	<script: 'self new example10AggregationComposition open'>
+	| builder |
+	builder := RSUMLClassBuilder new.
+	
+	builder classes: #(Band Musician Catalog Product Building Room).
+	builder modelDescriptor
+		classname: #yourself;
+		instVars: #();
+		methods: #();
+		superclass: nil;
+		aggregations: { #Musician -> #Band. #Product -> #Catalog };
+		compositions: { #Room -> #Building }.
+		
+	builder renderer layout flow gapSize: 30.
 	builder build.
 	^ builder canvas
 ]

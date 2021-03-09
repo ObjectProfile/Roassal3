@@ -6,9 +6,33 @@ os:
   - linux
 
 smalltalk:
-  - Pharo64-7.0
   - Pharo64-8.0
   - Pharo64-9.0
 
 matrix:
   fast_finish: true
+  include: 
+      - smalltalk: Pharo64-8.0
+        smalltalk_config: .smalltalk.ston
+        os: osx
+      - smalltalk: Pharo64-9.0
+        smalltalk_config: .smalltalk.ston
+        os: osx
+      - smalltalk: Pharo64-8.0
+        smalltalk_config: .smalltalk_pharo9.ston
+        os: osx
+      - smalltalk: Pharo64-9.0
+        smalltalk_config: .smalltalk_pharo9.ston
+        os: osx
+      - smalltalk: Pharo64-8.0
+        smalltalk_config: .smalltalk.ston
+        os: linux
+      - smalltalk: Pharo64-9.0
+        smalltalk_config: .smalltalk.ston
+        os: linux
+      - smalltalk: Pharo64-8.0
+        smalltalk_config: .smalltalk_pharo9.ston
+        os: linux
+      - smalltalk: Pharo64-9.0
+        smalltalk_config: .smalltalk_pharo9.ston
+        os: linux

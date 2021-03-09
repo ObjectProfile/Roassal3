@@ -5,7 +5,7 @@ Class {
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #running }
@@ -46,7 +46,7 @@ RSPopupTest >> testPopup [
 	shapes @ RSPopup.
 	c addAll: shapes.
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 	    canvas: c;
 	    withBorderAttachPoint;
 	    connectFrom: [ :v | v // 2 ].
@@ -105,7 +105,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 	shapes @ RSPopup.
 	c addAll: shapes.
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 	    canvas: c;
 	    withBorderAttachPoint;
 	    connectFrom: [ :v | v // 2 ].

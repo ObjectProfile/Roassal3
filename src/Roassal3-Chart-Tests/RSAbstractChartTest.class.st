@@ -17,7 +17,7 @@ RSAbstractChartTest >> classToTest [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : #running }
 RSAbstractChartTest >> setUp [ 
 	super setUp.
 	chart := RSChart new.

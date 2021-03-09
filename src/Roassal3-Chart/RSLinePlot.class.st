@@ -14,6 +14,11 @@ RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil.
 ]
 
+{ #category : #testing }
+RSLinePlot >> isLinePlot [
+	^ true
+]
+
 { #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
@@ -24,7 +29,7 @@ RSLinePlot >> renderIn: canvas [
 			xt := xValues at: i.
 			yt := yValues at: i.
 			(self isPointWellDefined: xt @ yt)
-				ifTrue: [ controlPoints add: (xScale scale: xt) @ (yScale scale: yt) ] ].
+				ifTrue: [ controlPoints add: (self scalePoint: xt @ yt) ] ].
 	canvas add: (self shape
 		color: self computeColor;
 		controlPoints: controlPoints;

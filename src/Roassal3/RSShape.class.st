@@ -1,5 +1,20 @@
 "
 <keyClass>
+A shape is a visual element meant to be displayed. Roassal offers numerous shapes, themselves highly configurable. The class `RSShape` is the root of all the Roassal shapes, and a shape is typically created by instantiating a subclass of `RSShape`. For example, a box is defined by instantiating `RSBox`. 
+
+For example, a colored box with a thick border may be defined as:
+
+```Smalltalk
+box := RSBox new
+			size: 80;
+			color: #yellow;
+			border: (RSBorder new color: #blue; width: 10).
+```
+
+Colors may be provided either as a color object (e.g., `Color blue` or `Color r: 0 g: 0 b: 1.0`) or as a symbol (e.g., `#yellow`). In case a symbol is provided, it is converted to a color object using `Color>>colorFrom:`, as in `Color>>colorFrom: #yellow`. 
+
+Although most of the configuration may be carried out by directly sending an object with a literal (e.g., `size: 80`), part of the configuration of the shape may involve dedicated objects, such as `RSBorder`.
+
 `RSShape` is the root of all the Roassal shapes. A shape represents a visual element meant to be inserted in a `RSCanvas`. `RSShape` is an abstract class, not meant to be directly instantiated therefore.
 
 *Responsibility*: A shape, i.e., subclass of the class `RSShape` is responsible to model a visual element. 
@@ -23,10 +38,57 @@ Class {
 		'border',
 		'parent',
 		'isFixed',
-		'encompassingRectangle'
+		'encompassingRectangle',
+		'model'
 	],
 	#category : #'Roassal3-Core'
 }
+
+{ #category : #accessing }
+RSShape class >> model: anObject [
+	"Create an instance of myself with anObject as model"
+	^ self new model: anObject
+]
+
+{ #category : #accessing }
+RSShape class >> model: anObject forIt: aOneArgBlock [
+	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
+	| r |
+	r := self new.
+	r model: anObject.
+	aOneArgBlock rsValue: r.
+	^ r
+]
+
+{ #category : #accessing }
+RSShape class >> models: someObjects [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
+	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+
+]
+
+{ #category : #accessing }
+RSShape class >> models: someObjects forEach: twoArgBlock [
+	"Create a RSGroup made of shapes. Each shape has an element of the argument as model. The second argument is used to initialize the shape.
+	
+	For example:
+```
+c := RSCanvas new.
+
+classes := RSCircle models: Collection withAllSubclasses forEach: [ :aShape :aClass | aShape size: aClass numberOfMethods ].
+
+c addAll: classes.
+RSFlowLayout on: classes.
+c @ RSCanvasController
+```
+	"
+
+	| r |
+	r := someObjects collect: [ :obj | self model: obj ] as: RSGroup.
+	r with: someObjects do: [ :aShape :anObject | twoArgBlock value: aShape value: anObject ].
+	^ r
+
+]
 
 { #category : #adding }
 RSShape >> accept: aVisitor [
@@ -34,7 +96,13 @@ RSShape >> accept: aVisitor [
 ]
 
 { #category : #adding }
+RSShape >> addRecursivelyIn: aCollection [
+	aCollection add: self
+]
+
+{ #category : #'private - adding' }
 RSShape >> addedIn: aCanvas [
+	"This is a private method"
 	| evt |
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
@@ -47,14 +115,20 @@ RSShape >> addedIn: aCanvas [
 ]
 
 { #category : #announcer }
-RSShape >> announce: anEventOrAnEventClass [
-	"Send an event"
+RSShape >> announce: anEventOrAnEventClassOrABlock [
+	"Send an event. The event is provided as argument, and may be either an event object, an event class, or a block (taking no argument) that returns an event object. These different way of specifying events addresses some performance concern."
 	| theEventToSend |
 	announcer ifNil: [ ^ self ].
-	theEventToSend := anEventOrAnEventClass value asAnnouncement.
+	theEventToSend := anEventOrAnEventClassOrABlock value asAnnouncement.
 	theEventToSend canvas: self canvas.
 	theEventToSend shape: self.
 	announcer announce: theEventToSend.
+]
+
+{ #category : #announcer }
+RSShape >> announcementClasses [
+	^ RSShapeEvent withAllSubclasses 
+		reject: [ :subcls| subcls hasSubclasses ]
 ]
 
 { #category : #border }
@@ -74,6 +148,22 @@ RSShape >> borderColor [
 
 { #category : #border }
 RSShape >> borderColor: aColor [
+	"Set a border with the provided color. For example:
+
+```
+c := RSCanvas new.
+r := Random seed: 42.
+40 timesRepeat: [
+	box := RSBox new width: (r nextInteger: 80); height: (r nextInteger: 80); color: Color gray; cornerRadius: 10.
+	box borderColor: #black.
+	box color: Color random translucent.
+	box translateTo: (r nextInteger: 200) @ (r nextInteger: 200).
+	c add: box.
+].
+c @ RSCanvasController.
+c open
+```"
+	border ifNil: [ self withBorder ].
 	self border color: aColor
 ]
 
@@ -152,6 +242,21 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
+{ #category : #'looking up shapes' }
+RSShape >> deepShapeFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #'looking up shapes' }
+RSShape >> deepShapesFromModel: anObject result: result [
+	self model = anObject ifTrue: [ result add: self ]
+]
+
+{ #category : #'looking up shapes' }
+RSShape >> deepShapesFromModels: someObjects result: result [
+	(someObjects includes: self model) ifTrue: [ result add: self ]
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
@@ -195,6 +300,12 @@ RSShape >> hasEventCallback [
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
+{ #category : #testing }
+RSShape >> hasModel [
+	"Return true if a model is set in the shape. Return false otherwise"
+	^ model notNil
+]
+
 { #category : #accessing }
 RSShape >> height [
 	^ self extent y
@@ -226,6 +337,11 @@ RSShape >> initialize [
 ]
 
 { #category : #testing }
+RSShape >> intersects: aRectangle [
+	^ self encompassingRectangle intersects: aRectangle
+]
+
+{ #category : #testing }
 RSShape >> isEdge [
 	^ false
 ]
@@ -250,31 +366,22 @@ RSShape >> isNode [
 	^ false
 ]
 
-{ #category : #'accessing - attributes' }
-RSShape >> isSLeaf [
-	^ self schildren isEmpty
-]
-
 { #category : #testing }
 RSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
 	^ true
 ]
 
-{ #category : #actions }
-RSShape >> loadShape: aShape [
-	self subclassResponsibility
-]
-
 { #category : #'accessing - attributes' }
 RSShape >> model [
-	^ self propertyAt: #model
+	"Return the model object of the shape. If no model has been set, it return `nil`"
+	^ model
 ]
 
 { #category : #'accessing - attributes' }
 RSShape >> model: anObject [
-	"model is used to create popups and other interactions"
-	self propertyAt: #model put: anObject
+	"Set the model of the shape. A shape represents a visual description of the model object. In case no model is specified, the value is nil. A model is used when using interaction (e.g., popup, labeled) and normalizations."
+	model := anObject
 ]
 
 { #category : #border }
@@ -320,7 +427,7 @@ RSShape >> path [
 
 { #category : #path }
 RSShape >> path: aPath [
-	"Keep a AthensCairoPath"
+	"Set the path of the shape. It set an AthensCairoPath. Note that this value is set to nil when the Pharo image is restarted"
 	path := aPath
 ]
 
@@ -335,9 +442,7 @@ RSShape >> postCopy [
 
 { #category : #printing }
 RSShape >> printOn: stream [
-	| model |
 	super printOn: stream.
-	model := self model.
 	model ifNil: [ ^ self ].
 	stream << '('; << model asString; << ')'.
 ]
@@ -367,15 +472,6 @@ RSShape >> renderOn: aCanvas [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
-RSShape >> replaceWith: aShape [
-	parent ifNil: [ ^ self ].
-	aShape loadShape: self.
-	parent shapes replaceAll: self with: aShape.
-	parent nodes replaceAll: self with: aShape.
-	
-]
-
 { #category : #initialization }
 RSShape >> resetBBox [
 	encompassingRectangle := nil.
@@ -384,17 +480,6 @@ RSShape >> resetBBox [
 { #category : #path }
 RSShape >> resetPath [
 	path := nil
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> schildren [
-	^ self propertyAt: #schildren
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> schildren: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #schildren put: anObject
 ]
 
 { #category : #path }
@@ -428,7 +513,7 @@ RSShape >> shapeWithAction: eventClass forPosition: position [
 RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
 			ifTrue: [ self ]
-			ifFalse: [ ^ nil ]
+			ifFalse: [ nil ]
 ]
 
 { #category : #actions }
@@ -438,20 +523,9 @@ RSShape >> signalUpdate [
 	parent signalUpdate
 ]
 
-{ #category : #'accessing - attributes' }
-RSShape >> sparent [
-	^ self propertyAt: #sparent
-]
-
-{ #category : #'accessing - attributes' }
-RSShape >> sparent: anObject [
-	"children is used by tree builders usefull to relationate hierarchy visualizations"
-	self propertyAt: #sparent put: anObject
-]
-
 { #category : #accessing }
 RSShape >> topParent [
-	^ parent topParent
+	^ parent ifNotNil: [ parent topParent ]
 ]
 
 { #category : #accessing }

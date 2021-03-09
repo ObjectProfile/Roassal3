@@ -58,6 +58,11 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #visiting }
+RSGroup >> accept: aVisitor [
+	aVisitor visitGroup: self
+]
+
 { #category : #accessing }
 RSGroup >> add: shape [
 	self resetShapeFromModelCache.
@@ -100,9 +105,15 @@ RSGroup >> models: someModels [
 	self with: someModels do: [ :s :m | s model: m ]
 ]
 
+{ #category : #transforming }
+RSGroup >> position [
+	^ self encompassingRectangle center
+]
+
 { #category : #actions }
 RSGroup >> pushBack [ 
-	self do: [:each | each pushBack ]
+	"Push back all the shapes contained in the group"
+	self do: [ :each | each pushBack ]
 ]
 
 { #category : #actions }
@@ -120,12 +131,12 @@ RSGroup >> resetShapeFromModelCache [
 RSGroup >> shapeFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
 	
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
 g add: (RSEllipse new model: 'world').
 g shapeFromModel: 'hello'
--=-=-=-=-=-=-=-=-=
+```
 => a RSBox(hello))
 
 	"
@@ -211,7 +222,12 @@ RSGroup >> translucent [
 
 { #category : #announcing }
 RSGroup >> when: event do: block [
-	self do: [ :element | element when: event do: block ]
+	self do: [ :shape | shape when: event do: block ]
+]
+
+{ #category : #announcing }
+RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
+	self do: [ :shape | shape when: anAnnouncementClass send: aSelector to: anObject]
 ]
 
 { #category : #accessing }

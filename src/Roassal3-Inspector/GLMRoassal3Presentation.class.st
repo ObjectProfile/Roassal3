@@ -36,12 +36,20 @@ GLMRoassal3Presentation >> renderGlamorouslyOn: aRenderer [
 
 { #category : #initialization }
 GLMRoassal3Presentation >> setUpInteractions [
-	| context |
-	context := self canvas inspectorContext.
+	"consider remove this class"
+	| context c |
+	c := self canvas.
+	context := c inspectorContext.
 	context presentation: self.
+	c createMorph setTakeKeyboardFocus.
 	
-	self canvas shapes @ context.
-	self canvas
+	c shapes @ context.
+	c
 		when: RSShapeAddedEvent
 		do: [ :evt | evt shape @ context ].
+]
+
+{ #category : #rendering }
+GLMRoassal3Presentation >> value: aSpWrappedItem [
+	self selection: aSpWrappedItem selectedItem
 ]

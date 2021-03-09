@@ -7,7 +7,7 @@ A same border can be shared amoung different shapes. Here is an example:
 c := RSCanvas new.
 
 b := RSBorder new color: Color blue.
-(30 to: 60) do: [ :nb |
+(30 to: 50 by: 5) do: [ :nb |
 	box := RSBox new size: nb.
 	ellipse := RSEllipse new width: nb; height: nb + 10.
 	box border: b.
@@ -16,8 +16,8 @@ b := RSBorder new color: Color blue.
 	 ].
 
 RSFlowLayout on: c shapes.
-c @ RSControlsCanvas.
-c
+c @ RSCanvasController.
+c open
 ```
 
 Another example, using animation: 
@@ -27,21 +27,21 @@ c := RSCanvas new.
 b := RSBorder new color: Color blue.
 b dashArray: #(5 1 5).
 (30 to: 60) do: [ :nb |
-	box := RSBox new size: nb.
-	ellipse := RSEllipse new width: nb; height: nb + 10.
-	box border: b.
-	ellipse border: b.
-	c add: box; add: ellipse.
-	 ].
+ box := RSBox new size: nb.
+ ellipse := RSEllipse new width: nb; height: nb + 10.
+ box border: b.
+ ellipse border: b.
+ c add: box; add: ellipse.
+  ].
 
 RSFlowLayout on: c shapes.
-c @ RSControlsCanvas.
+c @ RSCanvasController.
 
 c newAnimation 
-	from: 0;
-	to: 40;
-	on: b set: #dashOffset:.
-c
+ from: 0;
+ to: 40;
+ on: b set: #dashOffset:.
+c open
 ```
 
 "
@@ -83,6 +83,7 @@ RSBorder >> color [
 
 { #category : #accessing }
 RSBorder >> color: aColor [
+	"Set a color to the border. The color is provided as argument, and can be either a color object (e.g., `Color red`) or a symbol (e.g., `#yellow`)."
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
 	paint := Color colorFrom: aColor.
@@ -153,9 +154,8 @@ c
 { #category : #initialization }
 RSBorder >> initialize [
 	super initialize.
-	paint := Color black.
+	paint := Color gray.
 	width := 1.
-	style := nil
 ]
 
 { #category : #'style-join' }
@@ -186,6 +186,16 @@ RSBorder >> paint [
 { #category : #accessing }
 RSBorder >> paint: aPaint [
 	paint := aPaint
+]
+
+{ #category : #printing }
+RSBorder >> printOn: stream [
+	width printOn: stream.
+	stream nextPutAll: ', '.
+	paint printOn: stream.
+	style ifNil: [ ^ self ].
+	stream nextPutAll: ', '.
+	style printOn: stream.
 ]
 
 { #category : #accessing }

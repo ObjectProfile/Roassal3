@@ -8,9 +8,6 @@ Class {
 		'keyValue',
 		'keyName'
 	],
-	#classVars : [
-		'KeySymbolMap'
-	],
 	#category : #'Roassal3-Events'
 }
 

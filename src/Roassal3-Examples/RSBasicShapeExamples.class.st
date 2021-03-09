@@ -277,7 +277,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	easing := 0@0.
 	boxSize := 50.
 	canvasExtent := 500 asPoint.
-	maxDist := 0@0 dist: canvasExtent.
+	maxDist := 0@0 distanceTo: canvasExtent.
 	scale := NSScale linear 
 		domain: { 0. maxDist}; 
 		rangeRound: #(80 0).
@@ -285,7 +285,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	c when: RSExtentChangedEvent do: [ 
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
-		maxDist := 0@0 dist: canvasExtent.
+		maxDist := 0@0 distanceTo: canvasExtent.
 		scale := NSScale linear 
 			domain: { 0. maxDist}; 
 			rangeRound: #(80 0).
@@ -301,7 +301,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	c when: RSMouseMove do: [ :evt | 
 		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
-			zindex := scale scale: (easing dist: s position).
+			zindex := scale scale: (easing distanceTo: s position).
 			s extent: boxSize * (zindex /100) asPoint ].
 		c signalUpdate.
 	].
@@ -561,6 +561,10 @@ RSBasicShapeExamples >> example27Markers [
 		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
 	axes markerEnd: (axes markerStart: arrow).
 	dataLine marker: circle.
+	axes model: 'Axes'.
+	axes popup.
+	dataLine model: 'Series'.
+	dataLine popup.
 	c addShape: axes.
 	c addShape: dataLine.
 	c camera zoomToFit: 250@250.
@@ -898,4 +902,51 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	    c signalUpdate.
 	     ].
 	^ c
+]
+
+{ #category : #shapes }
+RSBasicShapeExamples >> example40ColorScale [
+	<script: 'self new example40ColorScale open'>
+	| color canvas popup shapes |
+	color := NSScale linear
+	    domain: { 1. 200. 400 };
+	    range: #(white gray red).
+	    
+	canvas := RSCanvas new.
+	popup := RSPopup text: [ :cls | 
+	    cls name, String crlf, 
+	    'Nro Methods: ', cls numberOfMethods asString, String crlf,
+	    'Lines of Code: ', cls linesOfCode asString ].
+	shapes := Collection withAllSubclasses collect: [ :cls |
+	    RSBox new
+	        model: cls;
+	        @ popup;
+	        draggable;
+	        color:( color scale: cls numberOfMethods );
+	        size: cls linesOfCode sqrt + 10;
+	        yourself
+	     ].
+	canvas addAll: shapes.
+	RSLineBuilder orthoVertical
+	    withVerticalAttachPoint;
+	    shapes: shapes;
+	    connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example40PopupAndMarkers [
+	<script: 'self new example40PopupAndMarkers open'>
+	| line marker canvas |
+	line := RSLine new.
+	line startPoint: 300@300; endPoint: 500@300.
+	marker := RSShapeFactory star size: 40.
+	line markerEnd: marker.
+	line @ RSPopup new.
+	line model: 'foo'.
+	canvas := RSCanvas new add: line; yourself.
+	canvas zoomToFit.
+	^ canvas
 ]

@@ -265,7 +265,7 @@ RSShapeExamples >> example11ClassTree [
 			popup;
 			yourself  ].
 	canvas addAll: shapes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		objects: Collection withAllSubclasses;
 		connectFrom: #superclass.
@@ -499,7 +499,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 			size: 30;
 			yourself ] as: RSGroup.
 	canvas addAll: boxes.
-	boxes @ RSHighlightable defaultRed.
+	boxes @ RSHighlightable red.
 	RSGridLayout on: boxes.
 	boxes @ (RSMenuActivable new
 		menuDo: [ :menu :box | 
@@ -534,21 +534,20 @@ RSShapeExamples >> example22ScaleEvents [
 			yourself]).
 	
 	canvas @ RSCanvasController.
-	RSEdgeBuilder orthoHorizontal
+	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 6;
 			shape: (RSShapeFactory triangle 
 				color: Color red;
 				size: 10;
 				yourself));
-		attachPoint: RSHorizontalAttachPoint new; 
-		border: (RSBorder new);
+		attachPoint: RSHorizontalAttachPoint new;
 		canvas: canvas;
 		shapes: canvas nodes;
 		connectFrom: #superclass.
 
-	canvas edges first @ RSKeepBorderWidthRatio. 
-	canvas edges first @ RSKeepMarkersSizeRatio.
+	canvas edges @ RSKeepBorderWidthRatio. 
+	canvas edges @ RSKeepMarkersSizeRatio.
 	RSHorizontalTreeLayout new on: canvas nodes.
 	^ canvas
 ]
@@ -615,18 +614,25 @@ RSShapeExamples >> example26AnimatedPopup [
 { #category : #shapes }
 RSShapeExamples >> example27MultilineLabelBasic [
 	<script: 'self new example27MultilineLabelBasic open'>
-	| canvas shapeBuilder |
+	| canvas shapeBuilder text |
 	canvas := RSCanvas new.
+	text := '"tu est loin, 
+très loin de tous    ces regards vicieux 
+qui s''alimentent de ta lumière"'.
 	shapeBuilder := RSMultilineLabelBuilder new.
 	shapeBuilder labelShape
-		font: 20;
+		fontSize: 20;
 		italic.
-	canvas add:(shapeBuilder shapeFor: '"tu est loin, 
-très loin de tous ces regards vicieux 
-qui s''alimentent de ta lumière"').
-	canvas nodes when: RSMouseClick do: [ :evt | canvas nodes last inspect ].
+	canvas add:(shapeBuilder shapeFor: text).
+	shapeBuilder wrapStrategy: (RSWrapStrategy new wrapMaxWidth: 200).
+	canvas add:(shapeBuilder shapeFor: text).
+	shapeBuilder wrapStrategy: (RSWrapEllipsisStrategy new wrapMaxWidth: 200).
+	canvas add:(shapeBuilder shapeFor: String loremIpsum).
+	RSFlowLayout  on: canvas nodes.
+	canvas nodes when: RSMouseClick do: [ :evt | evt shape inspect ].
 	canvas showEncompassingRectangles.
-	^ canvas
+	
+	^ canvas zoomToFit 
 ]
 
 { #category : #shapes }
@@ -653,7 +659,7 @@ RSShapeExamples >> example28MultilineLabel [
 			draggable; 
 			popup;
 			yourself ].
-	RSEdgeBuilder orthoVertical
+	RSLineBuilder orthoVertical
 		withVerticalAttachPoint;
 		canvas: canvas;
 		shapes: shapes;
@@ -664,7 +670,7 @@ RSShapeExamples >> example28MultilineLabel [
 	^ canvas.
 ]
 
-{ #category : #shapes }
+{ #category : #lines }
 RSShapeExamples >> example29AntAnimation [
 	<script: 'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
 	| canvas shapes labelInt highInt popupMethod |
@@ -675,7 +681,7 @@ RSShapeExamples >> example29AntAnimation [
 			color: Color white; 
 			text: model;
 			yourself ].
-	highInt := RSHighlightable new setupAntAnimation yourself.
+	highInt := RSHighlightable withAntAnimation.
 	popupMethod := RSPopup text: #selector.
 	shapes := String withAllSubclasses collect: [ :cls | | methods |
 		methods := cls methods collect: [ :met |
@@ -699,7 +705,7 @@ RSShapeExamples >> example29AntAnimation [
 	
 	canvas addAll: shapes.
 	
-	RSEdgeBuilder line
+	RSLineBuilder line
 		color: Color white;
 		withVerticalAttachPoint;
 		canvas: canvas;
@@ -1045,7 +1051,7 @@ RSShapeExamples >> example39RoassalPackages [
 	        yourself  ].
 	canvas addAll: boxes.
 	canvas nodes @ (RSPopup text: #name).
-	RSEdgeBuilder arrowedLine
+	RSLineBuilder arrowedLine
 	    withBorderAttachPoint;
 	    canvas: canvas;
 	    connectFrom: #yourself toAll: #dependentPackages.
@@ -1055,6 +1061,165 @@ RSShapeExamples >> example39RoassalPackages [
 	    length: 300;
 	    charge: -300.
 	canvas @ stepping.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #lines }
+RSShapeExamples >> example40LabelingLine [
+
+	<script: 'self new example40LabelingLine open'>
+	| c shapeA shapeB line interactionLabel |
+	c := RSCanvas new.
+
+	shapeA := RSLabel model: 'A'.
+	shapeB := RSLabel model: 'B'.
+	c add: shapeA.
+	c add: shapeB.
+	shapeB translateBy: 100 @ 50.
+
+	shapeA @ RSDraggable.
+	shapeB @ RSDraggable.
+
+	line := RSLine new
+		        from: shapeA;
+		        to: shapeB.
+	line attachPoint: RSBorderAttachPoint new.
+	c add: line.
+
+	interactionLabel := RSLabeled new text: [ :notUsed | 
+		                    line from model , ' -> ' , line to model ].
+	interactionLabel shapeBuilder labelShape
+		fontSize: 5;
+		color: #red.
+	interactionLabel location
+		inner;
+		middle.
+	line @ interactionLabel.
+
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example41Butterfly [
+
+	<script: 'self new example41Butterfly open'>
+	| model from to popup canvas com box g column c1 c2 c3 eb h |
+	model := RSCanvas >> #zoomToFit.
+	from := model senders collect: #compiledMethod.
+	to := model implementors collect: #compiledMethod.
+
+	popup := RSPopup text: [ :m | m selector ].
+	canvas := RSCanvas new.
+	box := [ :method | 
+	    com := RSComposite new
+	        model: method;
+	        add: (RSLabel new text: '<<',method methodClass name,'>>'; fontSize: 8);
+	        add: (RSLabel new text: method selector);
+	        @ popup;
+	        yourself.
+	    RSVerticalLineLayout new
+	        gapSize: 0;
+	        alignCenter;
+	        on: com children.
+	    com adjustToChildren.
+	    com padding: 10; withBorder.
+	    com ].
+
+	column := [ :col : align | 
+	    g := col collect: [ :m | 
+	        (box value: m)
+	            scaleBy:((1 / col size) max: 0.2);
+	            yourself.
+	         ] as: RSGroup.
+	    RSVerticalLineLayout new
+	          perform: align;
+	        gapSize: 2;
+	        on: g.
+	    g ].
+
+	c1 := column value: from value: #alignRight.
+	c2 := box value: model.
+	c3 := column value: to value: #alignLeft.
+	RSHorizontalLineLayout new
+	    gapSize: 30;
+	    alignMiddle;
+	    on: { c1. c2. c3 }.
+	eb := RSLineBuilder horizontalBezier
+	    color: Color lightGray;
+	     controlPointsController: (RSBlockCPController new
+	        block: [:ed | | f t ap |
+	            ap := ed attachPoint.
+	            f := ap startingPointOf: ed.
+	            t := ap endingPointOf: ed.
+	            Array 
+	                with: f
+	                with: t x @ f y
+	                with: f x @ t y
+	                with: t. ]);
+	    canvas: canvas;
+	    withHorizontalAttachPoint;
+	    width: 0.5;
+	    yourself.
+	eb useElementAssociations: (c1 collect: [:c | c -> c2 ]), (c3 collect: [:c | c2-> c ]).
+	h := RSHighlightable new.
+	h withLines.
+	h highlightBorder: RSBorder new.
+
+	canvas addAll: c1; add: c2; addAll: c3.
+	canvas nodes @ h.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example42DirectedBezier [
+	<script: 'self new example42DirectedBezier open'>
+	| c shapes |
+	c := RSCanvas new.
+	shapes := {-200@ -50. 200@100. -200@ 150. 200@300 } collect: [:p |
+		RSEllipse new
+			withBorder;
+			color: Color white;
+			size: 150;
+			position: p;
+			yourself] as: RSGroup.
+	shapes doWithIndex: [:s :i | s model: i ].
+	shapes @ RSDraggable.
+	c addAll: shapes.
+	RSLineBuilder directedBezier
+		canvas: c;
+		shapes: shapes;
+		useAssociations: { 1 -> 2 }.
+	RSLineBuilder arrowedDirectedBezier
+		canvas: c;
+		shapes: shapes;
+		useAssociations: { 4 -> 3}.
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example43KeepLabelSize [
+	<script: 'self new example43KeepLabelSize open
+		setLabel: #''Use the wheel'' '>
+	| canvas labels |
+	canvas := RSCanvas new.
+	
+	labels := RSLabel models: String withAllSubclasses.
+	RSNormalizer fontSize
+		shapes: labels;
+		normalize: [ :cls | cls linesOfCode ln +5 ].
+	
+	RSLineBuilder line
+		color: Color red;
+		canvas: canvas;
+		shapes: labels;
+		connectFrom: #superclass.
+	canvas addAll: labels.
+	RSTreeLayout on: labels.
+	labels @ RSKeepFontSizeRatio.
 	canvas @ RSCanvasController.
 	^ canvas
 ]

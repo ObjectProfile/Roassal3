@@ -5,7 +5,8 @@ Class {
 	#name : #RSMorphicPopup,
 	#superclass : #RSAbstractPopup,
 	#instVars : [
-		'morphBuilder'
+		'morphBuilder',
+		'gapFromPointer'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
@@ -32,10 +33,21 @@ RSMorphicPopup >> createPopupFor: aShape event: event [
 	^ popup
 ]
 
+{ #category : #accessing }
+RSMorphicPopup >> gapFromPointer [
+	^ gapFromPointer
+]
+
+{ #category : #accessing }
+RSMorphicPopup >> gapFromPointer: aPoint [
+	gapFromPointer := aPoint
+]
+
 { #category : #initialization }
 RSMorphicPopup >> initialize [
 	super initialize.
 	self morphBuilder: [ :model | model asString asTextMorph ].
+	gapFromPointer := 0@0.
 ]
 
 { #category : #accessing }
@@ -64,12 +76,13 @@ RSMorphicPopup >> translatePopup: aMorph event: evt [
 	cMorph := evt canvas morph.
 	world := cMorph world.
 	position := (evt camera fromSpaceToPixel: evt position) + cMorph position.
-	xdelta := ydelta := 0.
+	xdelta := gapFromPointer x.
+	ydelta := gapFromPointer y.
 	
 	(position x + aMorph width) > world width 
-		ifTrue: [ xdelta := aMorph width negated ].
-	(position y + aMorph height) > world height 
-		ifTrue: [ ydelta := aMorph height negated ].
+		ifTrue: [ xdelta := xdelta negated - aMorph width ].
+	(position y + aMorph height) > world height
+		ifTrue: [ ydelta := ydelta negated - aMorph height ].
 	
 	aMorph
 		lock;

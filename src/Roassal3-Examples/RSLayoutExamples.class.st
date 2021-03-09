@@ -134,7 +134,7 @@ RSLayoutExamples >> example06TreeLayout [
 	RSNormalizer size
 		shapes: shapes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb canvas: c.
 	eb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
@@ -164,7 +164,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		to: (Color red alpha: 0.5);
 		shapes: c nodes;
 		normalize: #numberOfMethods.
-	eb := RSEdgeBuilder line.
+	eb := RSLineBuilder line.
 	eb
 		canvas: c;
 		moveBehind;
@@ -199,7 +199,7 @@ RSLayoutExamples >> example08HorizontalTree [
 			yourself ].
 	c addAll: shapes.
 	c @ RSCanvasController.
-	RSEdgeBuilder orthoHorizontal
+	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
 			shape: (RSShapeFactory triangle 
@@ -222,7 +222,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	shapes := RSShape withAllSubclasses collect: [ :cls | 
 		RSShapeFactory square size: 30; draggable; model: cls; yourself ].
 	c addAll: shapes.
-	RSEdgeBuilder arrowedLine 
+	RSLineBuilder arrowedLine 
 		withBorderAttachPoint;
 		canvas: c;
 		connectFrom: #superclass.
@@ -292,7 +292,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	c := RSCanvas new.
 	c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		connectFrom: [ :v | v // 2 ].
 	c @ RSForceLayoutStepping.
@@ -310,7 +310,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			labeled;
 			model: n;
 			yourself].
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
 	canvas
@@ -381,7 +381,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		composite padding: 10.
 		c add: composite ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -410,7 +410,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 		c add: box.
 		 ].
 
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: c;
 		withVerticalAttachPoint;
 		color: Color blue;
@@ -434,7 +434,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 			labeled;
 			model: m;
 			yourself ].
-	edges := RSEdgeBuilder line
+	edges := RSLineBuilder line
 		shapes: shapes;
 		connectFrom: [ :i | i // 2 ].
 	canvas
@@ -470,7 +470,7 @@ RSLayoutExamples >> example18Cluster [
 				model: cls;
 				yourself ].
 		group addAll: shapes.
-		RSEdgeBuilder line
+		RSLineBuilder line
 			color: Color blue translucent;
 			canvas: group;
 			shapes: shapes;
@@ -515,7 +515,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	c := RSCanvas new.
 	c addAll: shapes.
 
-	eb := RSEdgeBuilder orthoVertical.
+	eb := RSLineBuilder orthoVertical.
 	eb canvas: c.
 	eb connectFrom: #superclass.
 
@@ -524,4 +524,159 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 		normalize: [ :cls | cls numberOfMethods + 5 ].
 	RSTreeLayout on: shapes.
 	^ c @ RSCanvasController @ RSHierarchyPacker
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example20FlowLayout [
+	<script: 'self new example20FlowLayout open extent: 700@500'>
+	| words labels canvas menuAnimation high newLabel |
+	words := (String loremIpsum: 100) substrings.
+	labels := words collectWithIndex: [ :word :index |
+		RSLabel new
+			text: word;
+			fontSize: 10 + ((index % 10)*2);
+			underline;
+			yourself.
+		 ].
+
+	RSFlowLayout on: labels.
+	canvas := RSCanvas new.
+	canvas addAll: labels.
+	menuAnimation := [ :s :d |
+		| p |
+		p := s
+			propertyAt: #opos
+			ifAbsentPut: [ s position ].
+		canvas newAnimation
+			duration: 200 milliSeconds;
+			from: s position;
+			to: p + d;
+			on: s set: #position:].
+	high := RSHighlightable new.
+	high 
+		when: RSHighlightEvent do: [ :evt | 
+			evt shape color: Color blue; underline.
+			menuAnimation value: evt shape value: -5@0 ];
+		when: RSUnHighlightEvent do: [ :evt |
+			evt shape color: Color gray; normal.
+			menuAnimation value: evt shape value: 0 ].
+		
+	newLabel := [ :s |
+		canvas add: (RSLabel new
+			text: s;
+			isFixed: true;
+			@ high;
+			yourself) ].
+	{'FlowTop'. RSFlowLayout new alignTop.
+	'FlowMiddle'. RSFlowLayout new alignMiddle.
+	'FlowBot'. RSFlowLayout new alignBottom.
+	'FlowLabel'. RSFlowLayout new alignLabel.
+	'FlowLeft'. RSHorizontalFlowLayout new alignLeft.
+	'FlowCenter'. RSHorizontalFlowLayout new alignCenter.
+	'FlowRight'. RSHorizontalFlowLayout new alignRight.
+	'HorizontalTop'. RSHorizontalLineLayout new alignTop.
+	'HorizontalMid'. RSHorizontalLineLayout new alignMiddle.
+	'HorizontalBot'. RSHorizontalLineLayout new alignBottom.
+	'HorizontalLabel'.RSHorizontalLineLayout new alignLabel.
+	'VerticalLeft'. RSVerticalLineLayout new.
+	'VerticalCenter'. RSVerticalLineLayout new alignCenter.
+	'VerticalRight'. RSVerticalLineLayout new alignRight.
+	} pairsDo: [:s :layout | 
+		(newLabel value: s)
+			when: RSMouseClick do: [ :evt |
+				| last current |
+				last := labels collect: #position.
+				layout on: labels.
+				current := labels collect: #position.
+				canvas newAnimation
+					duration: 1 second;
+					onStepDo:[:t | 
+						labels doWithIndex: [ :l :i |
+							l translateTo: ((last at: i) interpolateTo: (current at: i) at: t) ].
+						canvas zoomToFit.
+						].
+				 ]
+		].
+	{'Show/Hide Boxes'. [ canvas showRectangles
+		ifTrue: [ canvas hideEncompassingRectangles ]
+		ifFalse: [ canvas showEncompassingRectangles ]  ].
+	'Show/Hide Underlines'. [ labels first isUnderlined
+		ifTrue: [ labels do: #normal ]
+		ifFalse: [ labels do: #underline ] ].
+	} pairsDo: [:s :a |
+		(newLabel value: s)
+			fontSize: 12;
+			when: RSMouseClick do: [ a value. canvas signalUpdate ].
+		].
+	canvas showEncompassingRectangles.
+	RSVerticalLineLayout new gapSize: 3; on: canvas fixedShapes.
+	canvas fixedShapes translateBy: 7.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example21Spaces [
+	<script: 'self new example21Spaces open'>
+	| b prop r |
+	b := RSForceLayoutInSpaces new.
+	b numberOfSpaces: 4.
+	b classes: Collection withAllSubclasses.
+	b build.
+	prop := 0.1.
+	r := Random new.
+	b canvas newAnimation
+		repeat;
+		onStepDo: [ :t | | s space |
+			r next < 0.01 ifTrue: [ 
+				s := b shapes atRandom.
+				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
+				
+				b canvas newAnimation
+					duration: 500 milliSeconds;
+					from: s position;
+					to: space position;
+					on: s set: #position:;
+					when: RSAnimationEndEvent do: [ b dragEnd: s ].
+				].
+			 ].
+	^ b canvas 
+	
+
+
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example22TreeLayoutEllipses [
+	<script: 'self new example22TreeLayoutEllipses open'>
+	| c shapes eb |
+	c := RSCanvas new.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		RSEllipse new
+			model: cls;
+			draggable;
+			size: 5;
+			yourself
+		 ].
+	
+	c addAll: shapes.
+	RSNormalizer color
+		from: (Color gray alpha: 0.5);
+		to: (Color red alpha: 0.5);
+		shapes: shapes;
+		normalize: #numberOfMethods.
+	RSNormalizer height
+		shapes: shapes;
+		normalize: #numberOfMethods.
+	RSNormalizer width
+		shapes: shapes;
+		normalize: [:cls | cls numberOfVariables].
+	eb := RSLineBuilder line.
+	eb withBorderAttachPoint.
+	eb canvas: c.
+	eb connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	shapes do: [ :e | e translateBy: 0 @ 0 ].
+	c @ RSCanvasController.
+	^ c
 ]

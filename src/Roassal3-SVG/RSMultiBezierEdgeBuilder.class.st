@@ -48,7 +48,7 @@ v
 "
 Class {
 	#name : #RSMultiBezierEdgeBuilder,
-	#superclass : #RSEdgeBuilder,
+	#superclass : #RSLineBuilder,
 	#instVars : [
 		'tension'
 	],

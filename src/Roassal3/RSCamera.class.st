@@ -101,11 +101,11 @@ RSCamera >> initialize [
 { #category : #accessing }
 RSCamera >> position [
 	"Return the position of the camera. For example:
-```Smalltalk
+```
 c := RSCanvas new.
 c add: (RSEllipse new size: 30).
 c camera translateBy: 25 @ 15.
-c camera  position
+c camera position
 ```
 
 returns the value `25 @ 15`
@@ -115,6 +115,7 @@ returns the value `25 @ 15`
 
 { #category : #accessing }
 RSCamera >> position: aPoint [
+	"Set the camera position"
  	position := aPoint
 ]
 
@@ -133,19 +134,6 @@ RSCamera >> scale: aNumber [
 		canvas: self canvas;
 		oldScale: oldScale;
 		newScale: aNumber ]
-]
-
-{ #category : #actions }
-RSCamera >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	oldPosition = aPoint ifTrue: [ ^ self ].
-	self position: aPoint.
-	self announce: [RSPositionChangedEvent new 
-		shape: self; 
-		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
 ]
 
 { #category : #zoom }

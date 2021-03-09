@@ -57,12 +57,18 @@ RSBox >> cornerRadius: aRSCornerRadius [
 	"Set the radius of the corners. Accept a number as argument or a RSCornerRadius.
 
 	For example:
--=-=-=-=-=-=-=-=-=
+```
 c := RSCanvas new.
-box := RSBox new extent: 120 @ 180; color: Color gray; cornerRadius: 10.
-c add: box.
-c
--=-=-=-=-=-=-=-=-=
+r := Random seed: 42.
+40 timesRepeat: [
+	box := RSBox new extent: (r nextInteger: 80) @ (r nextInteger: 80); color: Color gray; cornerRadius: 10.
+	box color: Color random translucent.
+	box translateTo: (r nextInteger: 200) @ (r nextInteger: 200).
+	c add: box.
+].
+c @ RSCanvasController.
+c open
+```
 "
 
 	cornerRadius := aRSCornerRadius isNumber 

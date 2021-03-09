@@ -51,6 +51,7 @@ RSChartExample >> example14AreaPlotWithError [
 		
 
 	c := RSChart new.
+	c padding: 10@10.
 	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
 	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
 	c addPlot: (RSScatterPlot new x: x y: y).
@@ -115,7 +116,7 @@ RSChartExample >> example16Series [
 { #category : #'*Roassal3-SVG-Examples' }
 RSChartExample >> example17CLPvsUSD [
 	<script: 'self new example17CLPvsUSD open'>
-	| dates y data x c plot paint |
+	| dates y data x c plot paint horizontal |
 	dates := OrderedCollection new.
 	y := OrderedCollection new.
 	data := 
@@ -162,7 +163,9 @@ RSChartExample >> example17CLPvsUSD [
 	plot markerEnd: (RSEllipse new size: 10).
 	c addPlot: plot.
 
-	c addDecoration: (RSHorizontalTick new fromNames: dates).
+	c addDecoration: (horizontal := RSHorizontalTick new fromNames: dates; yourself).
+	horizontal configuration fontSize: 4.
+	horizontal useDiagonalLabel.
 	c addDecoration: (RSVerticalTick new numberOfTicks: 10; asFloat).
 	c title: 'CLP vs USD'.
 	^ c

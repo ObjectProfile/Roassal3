@@ -274,7 +274,7 @@ RSTransformable >> updateCurrentShape: evt [
 	| handle  newRec scale pos rect  e |
 	currentShape ifNil: [ ^ self ].
 	handle := evt shape.
-	pos := currentMatrix inverseTransform: handle position.
+	pos := currentMatrix rsInverseTransform: handle position.
 	newRec := self 
 		perform: (handle model key, ':rectangle:') asSymbol
 		withArguments: { pos. baseRectangle}.

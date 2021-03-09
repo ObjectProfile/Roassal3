@@ -1,5 +1,22 @@
 "
-TODO
+<keyClass>
+`RSHorizontalTick` defines ticks for the horizontal axis. It is a decoration that can be added to a `RSChart`.
+
+*Responsibility*: define, customize, and render ticks
+
+*Collaborators*: `RSHorizontalTick` is added to `RSChart`
+
+*Example*:
+```Smalltalk
+	x := -3.14 to: 3.14 by: 0.01.
+	c := RSChart new.
+	p := RSLinePlot new.
+	p x: x y: x sin * 0.22 + 0.5.
+	c addPlot: p.
+	c addDecoration: RSHorizontalTick new.
+	c addDecoration: RSVerticalTick new asFloat.
+	c
+```
 "
 Class {
 	#name : #RSHorizontalTick,
@@ -19,28 +36,17 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
+	| value |
+	value := xScale scale: aNumber.
 	^ self shape copy
-		startPoint: (xScale scale: aNumber) @ 0;
-		endPoint: (xScale scale: aNumber) @ self configuration tickSize;
+		startPoint: value @ 0;
+		endPoint: value @ self configuration tickSize;
 		yourself
 ]
 
 { #category : #'accessing - defaults' }
 RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
-]
-
-{ #category : #public }
-RSHorizontalTick >> fromNames: aCollectionOfStrings [
-	self
-		doNotUseNiceLabel;
-		numberOfTicks: aCollectionOfStrings size.
-	self labelRotation: -45.
-	self labelConversion: [ :x | 
-		x isZero 
-			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x  ] ].
-		
 ]
 
 { #category : #accessing }
@@ -51,4 +57,15 @@ RSHorizontalTick >> max [
 { #category : #accessing }
 RSHorizontalTick >> min [
 	^ chart minValueX
+]
+
+{ #category : #public }
+RSHorizontalTick >> useDiagonalLabel [
+	self labelRotation: -45.
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+]
+
+{ #category : #public }
+RSHorizontalTick >> useVerticalLabel [
+	self labelRotation: -90.
 ]

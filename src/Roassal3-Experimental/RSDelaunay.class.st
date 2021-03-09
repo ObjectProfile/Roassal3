@@ -1,5 +1,5 @@
 "
-I am basic
+based on https://cdn.rawgit.com/ironwallaby/delaunay/master/delaunay.js
 "
 Class {
 	#name : #RSDelaunay,
@@ -25,22 +25,23 @@ RSDelaunay class >> circumCircle: particles indices: in [
 	y12 := y12 < EPSILON.
 	y23 := y23 < EPSILON.
 	
+	(y12 and: [y23] )ifTrue: [ self error: 'Eek coicident points' ].
+	
 	y12 ifTrue: [ 
-		y23 ifTrue: [ ^ nil ].
-		m2 := (x3 - x2) / (y3 - y2) negated.
+		m2 := ((x3 - x2) / (y3 - y2)) negated.
 		mx2 := (x2 + x3) / 2.
 		my2 := (y2 + y3) / 2.
 		xc := (x2 + x1) / 2.
 		yc := m2 * (xc - mx2 ) + my2.
 	] ifFalse: [
-		m1 := (x2 - x1) / (y2 - y1) negated.
+		m1 := ((x2 - x1) / (y2 - y1)) negated.
 		y23 ifTrue: [ 
 			mx1 := (x1 + x2) / 2.
 			my1 := (y1 + y2) / 2.
 			xc := (x3 + x2) / 2.
 			yc := m1 * (xc - mx1) + my1.
 		] ifFalse: [ 
-			m2 := (x3 - x2)/ (y3 - y2) negated.
+			m2 := ((x3 - x2)/ (y3 - y2)) negated.
 			mx1 := (x1 + x2) / 2.
 			mx2 := (x2 + x3) / 2.
 			my1 := (y1 + y2) / 2.
@@ -49,6 +50,7 @@ RSDelaunay class >> circumCircle: particles indices: in [
 			xc := m1 = m2 
 				ifTrue: [ Float infinity ]
 				ifFalse: [((m1 * mx1) - (m2 * mx2) + my2 - my1 ) / (m1 - m2)].
+			
 			yc := flag 
 				ifTrue: [ m1 * (xc - mx1) + my1 ] 
 				ifFalse: [ m2 * (xc - mx2) + my2 ].
@@ -66,8 +68,9 @@ RSDelaunay class >> circumCircle: particles indices: in [
 
 { #category : #initialization }
 RSDelaunay class >> dedup: edges [
-	| i j a b m n break |
+	| i j a b m n break before |
 	j := edges size.
+	before := edges copy.
 	[ j > 0 ] whileTrue: [ 
 		b := edges at: j.
 		j := j - 1.
@@ -120,12 +123,12 @@ RSDelaunay class >> generateEdge: open closed: closed vertices: vertices c: c j:
 { #category : #initialization }
 RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices [
 	| open closed edges size |
-	size := vertices size - 3.
+	size := vertices size-3.
 	open := OrderedCollection with: circCircle.
 	closed := OrderedCollection new.
 	edges := OrderedCollection new.
 	"incrementally add each vertex to the mesh"
-	indices reverseDo: [ :i | | a b c k |
+	indices reverseDo: [ :i | | c k |
 		c := indices at: i.
 		(1 to: open size) reverseDo: [ :j | 
 			self
@@ -140,11 +143,13 @@ RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices 
 		"Add a new triangle for each edge"
 		k := edges size.
 		[ k > 0 ] whileTrue: [ 
-			a := edges at: k.
-			k := k - 1.
+			| a b |
 			b := edges at: k.
 			k := k - 1.
+			a := edges at: k.
+			k := k - 1.
 			open add: (self circumCircle: vertices indices: {a. b. c}) ].
+		
 		edges removeAll ].
 	"Copy any remaining open triangles to the closed list, and then
 	remove any triangles that share a vertex with the supertriangle,
@@ -159,7 +164,7 @@ RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices 
 
 { #category : #'class initialization' }
 RSDelaunay class >> initialize [
-	EPSILON := 0.0001
+	EPSILON := 1.0 / 1048576.0
 ]
 
 { #category : #initialization }
@@ -187,22 +192,22 @@ RSDelaunay class >> supertriangle: vertices [
 
 { #category : #initialization }
 RSDelaunay class >> triangulate: particles [
-	| indices st circCircle size vertices |
-	size := particles size.
-	size < 3 ifTrue: [ ^ #() ].
+	| indices st circCircle nsize vertices |
+	nsize := particles size.
+	nsize < 3 ifTrue: [ ^ #() ].
 	"create indices sorted by x value"
 	vertices := particles copy.
 	indices := 1 to: vertices size.
 	
-	indices sorted: [ :a :b | 
-		(particles at: a) x < (particles at: b) x ].
+	indices := indices sorted: [ :a :b | 
+		((particles at: a) x < (particles at: b) x)].
 	"Next, find the vertices of the supertriangle (which contains all other
     triangles), and append them onto the end of a (copy of) the vertex
     array."
 	st := self supertriangle: vertices.
 	vertices addAll: st.
-	circCircle := self circumCircle: vertices indices: {size+1. size+2. size + 3}.
-	circCircle ifNil: [ ^ #() ].
+	circCircle := self circumCircle: vertices indices: {nsize + 1. nsize + 2. nsize + 3}.
+	"circCircle ifNil: [ ^ #() ]."
 	
 	^ self generateMesh: indices circle: circCircle vertices: vertices
 

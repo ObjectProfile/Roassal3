@@ -39,6 +39,12 @@ RSAbstractPlot >> color: aColor [
 	self shape color: aColor
 ]
 
+{ #category : #public }
+RSAbstractPlot >> computeColor [
+	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
+	^ self color ifNil: [ chart colorFor: self ].
+]
+
 { #category : #initialization }
 RSAbstractPlot >> defaultShape [
 	^ self subclassResponsibility
@@ -69,10 +75,35 @@ RSAbstractPlot >> initialize [
 ]
 
 { #category : #testing }
+RSAbstractPlot >> isBarPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isHorizontalBarPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isLinePlot [
+	^ false
+]
+
+{ #category : #testing }
 RSAbstractPlot >> isPointWellDefined: aPoint [
 	"Indicate whether the point deserves to be displayed"
 	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ])
 		and: [ (aPoint x isNaN not and: [ aPoint y isNaN not ]) ]
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isScatterPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isVerticalBarPlot [
+	^ false
 ]
 
 { #category : #rendering }
@@ -101,6 +132,11 @@ RSAbstractPlot >> minValueY [
 	^ self definedValuesY min
 ]
 
+{ #category : #'accessing - computed' }
+RSAbstractPlot >> scalePoint: aPoint [
+	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+]
+
 { #category : #'public - shape' }
 RSAbstractPlot >> shape [
 	^ shape
@@ -116,7 +152,7 @@ RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
 	
 	For example:
--=-=-=-=-=-=-=-=-=
+```
 x := (-3.14 to: 3.14 by: 0.01).
 c := RSChart new.
 
@@ -129,13 +165,22 @@ p x: x y: x cos * 0.18.
 c addPlot: p.
 
 c addDecoration: RSHorizontalTick new.
-c addDecoration: (RSVerticalTick new asFloat).
-c addDecoration: (RSYMarkerDecoration new ).
+c addDecoration: RSVerticalTick new asFloat.
+c addDecoration: RSYMarkerDecoration new.
 c 
--=-=-=-=-=-=-=-=-=
+```
 	"
+	self assert: [ aCollection notNil ] description: 'Cannot be nil'.
+	self assert: [ aCollection2 notNil ] description: 'Cannot be nil'.
+	self assert: [ aCollection size = aCollection2 size ] description: 'The two collections must have the same size'.
+ 	
 	xValues := aCollection.
 	yValues := aCollection2
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> xValues [
+	^ xValues
 ]
 
 { #category : #public }
@@ -161,4 +206,9 @@ c
 -=-=-=-=-=-=-=-=-=
 	"
 	self x: (1 to: aCollection size) y: aCollection
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> yValues [
+	^ yValues
 ]

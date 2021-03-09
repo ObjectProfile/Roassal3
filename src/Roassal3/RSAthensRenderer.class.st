@@ -474,7 +474,7 @@ RSAthensRenderer >> drawPathLabel: label [
 		utf8String := act convertTextUtf8: label text.
 		label path: utf8String.
 	 ].
-	f := CairoScaledFont fromFreetypeFont: label font realFont.
+	f := label cairoFont.
 	
 	athensCanvas newPath.
 	f lock.
@@ -499,13 +499,24 @@ RSAthensRenderer >> drawPathLabel: label [
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
-	| paint |
-	paint := label paint.
-	paint ifNil: [ ^ self ].
-	athensCanvas 
-		setFont: label font;
-		setPaint: paint;
-		drawString: label text
+	| font |
+	(label paint isNil or: [ label cairoGlyphs isNil ]) ifTrue: [ ^ self ].
+	
+	"returns a CairoScaledFont"
+	font := label cairoFont.
+	font lock.
+
+	athensCanvas
+		setPathMatrix;
+		setScaledFont: font.
+	(label paint asAthensPaintOn: athensCanvas)
+		loadOnCairoCanvas: athensCanvas.
+
+	athensCanvas
+		showGlyphs: label cairoGlyphs getHandle
+		size: label cairoGlyphs size.
+
+	font unlock
 ]
 
 { #category : #utilities }
@@ -604,16 +615,13 @@ RSAthensRenderer >> visitBoundingShape: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
+	label hasText ifFalse: [ ^ self ].
 	athensCanvas pathTransform restoreAfter: [ 
-		| e ybn |
-		e := label textExtents.
-		ybn := e y_bearing negated.
 		athensCanvas pathTransform
 			multiplyBy: label matrix asFloatTransform;
-			translateBy: ((e x_advance + e x_bearing / -2) @ 0);
-			translateBy: 0@((ybn/2)- ((e height- ybn)/2)). 
+			translateBy: label textExtents translationPoint. 
 		label hasBorder
-			ifTrue: [ self drawPathLabel: label  ]
+			ifTrue: [ self drawPathLabel: label ]
 			ifFalse: [ self drawSimpleLabel: label ].
 		
 		self visitLabelDecoratorsIfNecessary: label.
@@ -643,75 +651,16 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 { #category : #visiting }
 RSAthensRenderer >> visitLine: line [
 	| path paint |
-	athensCanvas pathTransform restoreAfter: [ 
-		path := self getOrCreatePathOf: line.
-		paint := line paintOn: self.
-		paint ifNotNil: [ 
-			athensCanvas
-				setPaint: paint;
-				drawShape: path ].
-		self visitBorderIfNecessary: line.
-		self visitMarkersIfNecessary: line.
-		].
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarker: marker to: from vector: vector [
-	| shape angle pos |
-	shape := marker shape.
-	angle := vector angle + Float halfPi.
-	pos := from.
-	shape matrix
-		loadIdentity;
-		rotateByRadians: angle.
-	(marker offset isZero and: [ marker offsetRatio isZero ]) ifFalse: [ 
-		| unit |
-		unit := vector / (vector r max: 1).
-		pos := pos -(vector * marker offsetRatio) - (unit * marker offset)
-		 ].
-	shape
-		position: pos;
-		accept: self.
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerEnd: marker with: controlPoints [
-	| from to |
-	marker ifNil: [ ^ self ].
-	controlPoints size < 2 ifTrue: [ ^ self ].
-	from := controlPoints at: controlPoints size - 1.
-	to := controlPoints last.
-	self visitMarker: marker to: to vector: to-from. 
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerMid: marker with: controlPoints [
-	marker ifNil: [ ^ self ].
-	controlPoints size < 3 ifTrue: [ ^ self ].
-	1 to: controlPoints size -2 do: [ :i | | a b |
-		a := controlPoints at: i.
-		b := controlPoints at: i + 1.
-		self visitMarker: marker to: b vector: b - a. 
-	 ].
+	athensCanvas setPathMatrix.
+	path := self getOrCreatePathOf: line.
 	
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkerStart: marker with: controlPoints [
-	| from to |
-	marker ifNil: [ ^ self ].
-	controlPoints size < 2 ifTrue: [ ^ self ].
-	from := controlPoints first.
-	to := controlPoints second.
-	self visitMarker: marker to: from vector: from - to. 
-]
-
-{ #category : #'visiting - helpers' }
-RSAthensRenderer >> visitMarkersIfNecessary: line [
-	| cp |
-	line hasMarkers ifFalse: [ ^ self ].
-	cp := line controlPoints.
-	self visitMarkerStart: line markerStart with: cp.
-	self visitMarkerMid: line markerMid with: cp.
-	self visitMarkerEnd: line markerEnd with: cp.
+	paint := line paintOn: self.
+	paint ifNotNil: [ 
+		athensCanvas
+			setPaint: paint;
+			drawShape: path ].
+	self visitBorderIfNecessary: line.
+	line markerShapesInPositionDo: [ :shape | shape accept: self ].
+	"self visitMarkersIfNecessary: line."
+	
 ]

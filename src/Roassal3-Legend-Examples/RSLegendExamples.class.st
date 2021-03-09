@@ -28,7 +28,7 @@ RSLegendExamples >> example02Border [
 	b := RSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
-	b leyendDo: [ :l | 
+	b legendDo: [ :l | 
 		l 
 			withBorder;
 			padding: 50 ].
@@ -49,7 +49,7 @@ RSLegendExamples >> example03Vertical [
 		text: 'Tinker';
 		text: 'Meepo'.
 	b layout vertical gapSize: 20.
-	b leyendDo: [ :l | 
+	b legendDo: [ :l | 
 		l 
 			withBorder;
 			padding: (Margin left: 50 right: 10 top: 10  bottom: 50) ].
@@ -68,7 +68,7 @@ RSLegendExamples >> example04Horizontal [
 		text: 'Shadow Fiend';
 		text: 'Tinker';
 		text: 'Meepo'.
-	b leyendDo: [ :l | 
+	b legendDo: [ :l | 
 		l
 			withBorder;
 			padding: 10 ].
@@ -92,7 +92,7 @@ RSLegendExamples >> example05Colors [
 		text: 'Shadow Fiend' withCircleColor: color;
 		text: 'Tinker' withCircleColor: color;
 		text: 'Meepo' withCircleColor: Color black.
-	b leyendDo: [ :l |
+	b legendDo: [ :l |
 		l
 			withBorder;
 			padding: 20 ].
@@ -113,7 +113,7 @@ RSLegendExamples >> example06BoxColors [
 		text: 'Shadow Fiend' withBoxColor: color;
 		text: 'Tinker' withBoxColor: color;
 		text: 'Meepo' withBoxColor: color.
-	b leyendDo: [ :l | 
+	b legendDo: [ :l | 
 		l
 			withBorder;
 			padding: 20 ].
@@ -130,7 +130,7 @@ RSLegendExamples >> example07BoxFading [
 	b := RSLegend new.
 	b title: 'Legend'.
 	b text: 'Number of lines of code' withFadingRamp: {0->'black'. 1->'red'}.
-	b leyendDo: [:l | l withBorder; padding: 10 ].
+	b legendDo: [:l | l withBorder; padding: 10 ].
 	b build.
 	b canvas @ RSCanvasController.
 	^ b canvas
@@ -182,7 +182,7 @@ RSLegendExamples >> example10Location [
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;
@@ -202,7 +202,7 @@ RSLegendExamples >> example10Location [
 		polymetricWidth: 'number of methods' 
 			height: 'lines of code'
 			box: 'a Pharo class'.
-	b leyendDo: [ :s | 
+	b legendDo: [ :s | 
 		s
 			draggable;
 			border:(RSBorder new
@@ -233,7 +233,7 @@ RSLegendExamples >> example11OnDemand [
 			height: cls numberOfMethods;
 			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
 	canvas addAll: classes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		withVerticalAttachPoint;
 		width: 0.1;
 		canvas: canvas;
@@ -253,7 +253,7 @@ RSLegendExamples >> example11OnDemand [
 		polymetricWidth: 'number of methods' 
 			height: 'lines of code'
 			box: 'a Pharo class'.
-	b leyendDo: [ :s | 
+	b legendDo: [ :s | 
 		s
 			draggable;
 			border:(RSBorder new

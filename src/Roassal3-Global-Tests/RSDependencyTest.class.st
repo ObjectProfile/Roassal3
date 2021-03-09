@@ -47,7 +47,6 @@ RSDependencyTest >> testDependencies [
 
 	"Chart uses RSLocation from Layouts"
 	self assertPackage: 'Roassal3-Chart' dependOn: 'Roassal3-Layouts'.
-	"not a core package then we can not depent on this package"
-	(self hasPackage: 'Roassal3-Spec-Examples') ifFalse: [ ^ self ].
-	self assertPackage: 'Roassal3-Spec-Examples' dependOn: 'Roassal3-Menu'.
+	
+	self assertPackage: 'Roassal3' dependOn: 'Announcements-Core'.
 ]

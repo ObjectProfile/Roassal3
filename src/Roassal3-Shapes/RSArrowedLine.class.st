@@ -1,9 +1,9 @@
 "
-RSArrowedLine describes a line with a head or marker. 
+`RSArrowedLine` describes a line with a head or marker. 
 
 Here is an example:
 
--=-=-=-=
+```
 | c from to l |
 c := RSCanvas new.
 
@@ -25,10 +25,10 @@ c add: l.
 to translateBy: 50 @ 40.
 
 c @ RSCanvasController.
-c
--=-=-=-=
+c open
+```
 
-Adding single line can be complex in some situation. You may want to look at RSEdgeBuilder arrowedLine
+Adding single line can be complex in some situation. You may want to look at RSLineBuilder arrowedLine
 "
 Class {
 	#name : #RSArrowedLine,
@@ -42,7 +42,7 @@ RSArrowedLine >> border: aRSBorder [
 	self markersDo: [ :m | m shape border: aRSBorder ].
 ]
 
-{ #category : #initialization }
+{ #category : #copying }
 RSArrowedLine >> copy [
 	| copy head |
 	copy := super copy.
@@ -66,7 +66,7 @@ RSArrowedLine >> initialize [
 	self markerEnd: self defaultHead.
 ]
 
-{ #category : #initialization }
+{ #category : #copying }
 RSArrowedLine >> postCopy [
 	super postCopy.
 	markers := nil.

@@ -43,8 +43,6 @@ Class {
 		'gapSize',
 		'horizontalGap',
 		'verticalGap',
-		'horizontalOutGap',
-		'verticalOutGap',
 		'alignment'
 	],
 	#category : #'Roassal3-Layouts-Core'
@@ -64,32 +62,6 @@ RSAbstractLineLayout class >> withGap: anInteger [
 ]
 
 { #category : #accessing }
-RSAbstractLineLayout >> alignBottom [
-	alignment := #bottom
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> alignCenter [
-	"Make the element centered"
-	alignment := #center
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> alignLeft [
-	alignment := #left
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> alignRight [
-	alignment := #right
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> alignTop [
-	alignment := #top
-]
-
-{ #category : #accessing }
 RSAbstractLineLayout >> alignment [
 	^ alignment
 ]
@@ -99,19 +71,9 @@ RSAbstractLineLayout >> alignment: anObject [
 	alignment := anObject
 ]
 
-{ #category : #configuration }
-RSAbstractLineLayout >> center [
-	self alignment: #center
-]
-
 { #category : #hook }
 RSAbstractLineLayout >> deltaFor: aNodeFigure [
 	^ self subclassResponsibility
-]
-
-{ #category : #hook }
-RSAbstractLineLayout >> doCenter: aGraph [
-	self subclassResponsibility 
 ]
 
 { #category : #hook }
@@ -124,7 +86,7 @@ RSAbstractLineLayout >> doExecute: elements [
 		pointer := self 
 			movePointer: pointer
 			accordingToFigure: element.
-		self step ].
+		].
 ]
 
 { #category : #accessing }
@@ -147,6 +109,7 @@ RSAbstractLineLayout >> horizontalGap [
 
 { #category : #accessing }
 RSAbstractLineLayout >> horizontalGap: anInteger [
+	"Set the horizontal space, in pixel, between two neighbors"
 	horizontalGap := anInteger
 ]
 
@@ -174,5 +137,6 @@ RSAbstractLineLayout >> verticalGap [
 
 { #category : #accessing }
 RSAbstractLineLayout >> verticalGap: anInteger [
+	"Set the vertical space, in pixel, between a layer and a children layer"
 	verticalGap := anInteger
 ]

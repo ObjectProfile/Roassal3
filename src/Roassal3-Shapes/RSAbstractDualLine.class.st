@@ -6,8 +6,7 @@ Class {
 	#superclass : #RSAbstractLine,
 	#instVars : [
 		'startPoint',
-		'endPoint',
-		'markers'
+		'endPoint'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -46,11 +45,6 @@ RSAbstractDualLine >> initialize [
 	endPoint := 100@100.
 ]
 
-{ #category : #'accessing - markers' }
-RSAbstractDualLine >> markers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
 { #category : #transforming }
 RSAbstractDualLine >> position [
 	^ self encompassingRectangle floatCenter
@@ -58,7 +52,7 @@ RSAbstractDualLine >> position [
 
 { #category : #private }
 RSAbstractDualLine >> privateMarkers [
-	^ markers
+	^ markers ifNil: [ markers := Array new: 3 ].
 ]
 
 { #category : #accessing }
@@ -90,7 +84,7 @@ RSAbstractDualLine >> translateTo: delta [
 { #category : #update }
 RSAbstractDualLine >> update [
 	"Note that before calling this method, an attach point has to be set. Consider the following example:
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=	
+```
 b1 := RSBox new size: 20.
 b2 := RSBox new size: 20.
 b1 translateTo: 20 @ 30.
@@ -99,7 +93,7 @@ b2 translateTo: 40 @ 50.
 l := RSLine new from: b1; to: b2.
 l attachPoint: RSBorderAttachPoint new .
 l update.
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 
 Removing the call to #attachPoint: raised an error
 	"

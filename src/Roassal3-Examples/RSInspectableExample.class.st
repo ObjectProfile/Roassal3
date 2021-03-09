@@ -19,7 +19,7 @@ RSInspectableExample >> example01SimpleExample [
 			height: (cls numberOfMethods max: 5);
 			yourself] as: RSGroup.
 	canvas addAll: boxes.
-	RSEdgeBuilder line
+	RSLineBuilder line
 		canvas: canvas;
 		shapes: boxes;
 		withVerticalAttachPoint;
@@ -83,7 +83,7 @@ RSInspectableExample >> example02Inspect [
 			
 			canvas edges copy do: #remove.
 			canvas nodes do: [:shape | shape propertyAt: #old put: shape position ].
-			RSEdgeBuilder arrowedLine 
+			RSLineBuilder arrowedLine 
 				canvas: canvas;
 				connectFrom: #superclass.
 			canvas nodes do: #updateEdgesOFF.
@@ -99,4 +99,26 @@ RSInspectableExample >> example02Inspect [
 RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
 	^ RSEasing bounceOut
+]
+
+{ #category : #examples }
+RSInspectableExample >> example04ChagingContext [
+	<script: 'self new example04ChagingContext inspect'>
+	| c context int |
+	c := RSCanvas new.
+	1 to: 100 do: [ :i |
+		c add: (RSBox new size: 10; model: i) ].
+	c shapes @ RSDraggable.
+	RSGridLayout on: c shapes.
+	c @ RSCanvasController.
+	
+	"This is the default context for the inspector"
+	context := RSInteractiveContext new.
+	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentation ].
+	int 
+		padding: 5;
+		shadowColor: (Color red alpha: 0.1).
+	c inspectorContext: context.
+	
+	^ c
 ]

@@ -17,8 +17,8 @@ RSPositionChangedEvent >> newPosition [
 ]
 
 { #category : #accessing }
-RSPositionChangedEvent >> newPosition: anObject [
-	newPosition := anObject
+RSPositionChangedEvent >> newPosition: aPoint [
+	newPosition := aPoint
 ]
 
 { #category : #accessing }
@@ -27,6 +27,6 @@ RSPositionChangedEvent >> oldPosition [
 ]
 
 { #category : #accessing }
-RSPositionChangedEvent >> oldPosition: anObject [
-	oldPosition := anObject
+RSPositionChangedEvent >> oldPosition: aPoint [
+	oldPosition := aPoint
 ]

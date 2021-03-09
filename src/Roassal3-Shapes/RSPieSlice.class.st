@@ -111,12 +111,12 @@ RSPieSlice >> externalRadius: eR [
 { #category : #testing }
 RSPieSlice >> includesPoint: aPoint [
 	| invertedPoint a b i e n d |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	(self baseRectangle containsPoint: invertedPoint)
 		ifFalse: [ ^ false ].
 	i := innerRadius.
 	e := externalRadius.
-	d := invertedPoint dist: 0 @ 0.
+	d := invertedPoint distanceTo: 0 @ 0.
 	(d between: i and: e)
 		ifFalse: [ ^ false ].
 	n := invertedPoint angle negated radiansToDegrees.

@@ -7,11 +7,12 @@ Class {
 		'con',
 		'search'
 	],
-	#category : #'Roassal3-Interaction-Tests'
+	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
 { #category : #running }
 RSSearchInCanvasTest >> setUp [
+	super setUp.
 	c := RSCanvas new.
 	shapes := (1 to: 10) * 100
 		collect: [ :n | 
@@ -37,14 +38,38 @@ RSSearchInCanvasTest >> testBasic [
 	self assert: shapes fifth color = Color gray.
 	
 	search searchForShapes: '*5*'.
-	self assert: shapes fourth color == Color gray.
+	self assert: shapes fourth color ~= Color gray.
 	self assert: shapes fifth color ~= Color gray.
 	
-	self assert: search numberOfHighlightedShapes equals: 1.
+	self assert: search numberOfHighlightedShapes equals: 2.
 
 	search resetAllHighlightedShapes.
-	self assert: shapes fourth color = Color gray.
+	self assert: shapes fourth color equals: Color gray.
+	self assert: shapes fifth color equals: Color gray.
+
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testColor [
+	self assert: search numberOfPerformedSearches equals: 0.
+	
+	search searchForShapes: '4'.
+	self assert: shapes fourth color ~= Color gray.
 	self assert: shapes fifth color = Color gray.
+	self assert: search numberOfPerformedSearches equals: 1.
+	
+	search searchForShapes: '5'.
+	self assert: shapes fourth color ~= Color gray.
+	self assert: shapes fifth color ~= Color gray.
+	self assert: shapes fifth color ~= shapes fourth color.
+	self assert: search numberOfPerformedSearches equals: 2.
+	
+	self assert: search numberOfHighlightedShapes equals: 2.
+
+	search resetAllHighlightedShapes.
+	self assert: shapes fourth color equals: Color gray.
+	self assert: shapes fifth color equals: Color gray.
+	self assert: search numberOfPerformedSearches equals: 0.
 
 ]
 
@@ -60,6 +85,28 @@ RSSearchInCanvasTest >> testExactMatch [
 ]
 
 { #category : #tests }
+RSSearchInCanvasTest >> testFixedShapes [
+
+	self assert: c numberOfFixedShapes equals: 3.
+	search searchForShapes: '4'.
+	self assert: c numberOfFixedShapes equals: 4.
+	search searchForShapes: '5'.
+	self assert: c numberOfFixedShapes equals: 5.
+	
+	search resetAllHighlightedShapes.
+	self assert: c numberOfFixedShapes equals: 3.
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testFixedShapesAndPopup [
+
+	| lbl |
+	search searchForShapes: '4'.
+	lbl := search fixedLabels first.
+	lbl announce: RSMouseEnter new.
+]
+
+{ #category : #tests }
 RSSearchInCanvasTest >> testIsRegExpValid [
 	self deny: (search isRegExpValid: '').
 	self deny: (search isRegExpValid: nil).
@@ -69,6 +116,20 @@ RSSearchInCanvasTest >> testIsRegExpValid [
 RSSearchInCanvasTest >> testNoSearch [
 
 	self assert: (c shapes allSatisfy: [ :s | s color = Color gray ])
+]
+
+{ #category : #tests }
+RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
+	self assert: search numberOfHighlightedShapes equals: 0.
+	search searchForShapes: '4'.
+	self assert: search numberOfHighlightedShapes equals: 1.
+	search searchForShapes: '5'.
+	self assert: search numberOfHighlightedShapes equals: 2.
+	search searchForShapes: '3'.
+	self assert: search numberOfHighlightedShapes equals: 3.
+	
+	search resetAllHighlightedShapes.
+	self assert: search numberOfHighlightedShapes equals: 0.
 ]
 
 { #category : #tests }
@@ -99,7 +160,7 @@ RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
 	
 	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new width: 2).
-	interaction withEdges.
+	interaction withLines.
 	c shapes @ interaction.
 	
 	l := RSLine new.

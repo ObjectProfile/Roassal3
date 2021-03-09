@@ -3,16 +3,19 @@ I am an ellipse shape
 
 Here an example:
 
+```Smalltalk
 c := RSCanvas new.
 (30 to: 150 by: 10) do: [ :nb |
-	b := RSBox new size: nb.
-	c add: b ].
+b := RSEllipse new width: nb; height: nb / 2.
+c add: b ].
 RSFlowLayout on: c nodes.
-c @ RSControlsCanvas
+c @ RSCanvasController.
+c open
+```
 "
 Class {
 	#name : #RSEllipse,
-	#superclass : #RSBoundingShape,
+	#superclass : #RSCircularShape,
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
@@ -38,7 +41,7 @@ RSEllipse >> geometry [
 RSEllipse >> includesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
-	invertedPoint := matrix inverseTransform: aPoint.
+	invertedPoint := matrix rsInverseTransform: aPoint.
 	rect := self baseRectangle.
 	(rect containsPoint: invertedPoint) ifFalse: [ ^ false ]. "quick elimination"
 	radius := rect height asFloat / 2.

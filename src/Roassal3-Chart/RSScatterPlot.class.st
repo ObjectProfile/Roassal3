@@ -61,6 +61,11 @@ RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]
 
+{ #category : #testing }
+RSScatterPlot >> isScatterPlot [
+	^ true
+]
+
 { #category : #accessing }
 RSScatterPlot >> processBlock [
 	^ processBlock
@@ -88,10 +93,10 @@ RSScatterPlot >> renderIn: canvas [
 		et := shapes at: i.
 		xt := xValues at: i.
 		yt := yValues at: i.
-		newPoint := (xScale scale: xt) @ (yScale scale: yt).
+		newPoint := self scalePoint: xt @ yt.
 		(self isPointWellDefined: newPoint)
 			ifTrue: [ et translateTo: newPoint.
-				canvas addShape: et ] ].
+				canvas add: et ] ].
 		
 	processBlock rsValue: shapes.
 ]

@@ -33,34 +33,34 @@ RSAbstractChartElement >> chart: aChart [
 	chart := aChart
 ]
 
-{ #category : #public }
-RSAbstractChartElement >> computeColor [
-	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
-	^ self color ifNil:  [ chart colorFor: self ].
-]
-
 { #category : #rendering }
 RSAbstractChartElement >> createXScale [
+	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
+	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
+	padding := chart padding x.
 	xScale
 		domain:
 			{chart minValueX.
 			chart maxValueX};
 		range:
-			{0.
-			chart extent x}
+			{0 + padding.
+			chart extent x - padding}
 ]
 
 { #category : #rendering }
 RSAbstractChartElement >> createYScale [
+	| padding |
 	yScale ifNil: [ yScale := NSScale linear ].
+	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
+	padding := chart padding y.
 	yScale
 		domain:
 			{chart minValueY.
 			chart maxValueY};
 		range:
-			{0.
-			chart extent y negated}
+			{0 - padding.
+			chart extent y negated + padding }
 
 ]
 

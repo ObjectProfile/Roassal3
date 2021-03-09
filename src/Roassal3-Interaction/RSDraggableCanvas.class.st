@@ -2,11 +2,11 @@
 I set the drag event for view, I use a basic bars to do that.
 
 Use example:
--=-=-=-=-=-=-=-=-=
+```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 30).
 c @ RSDraggableCanvas
--=-=-=-=-=-=-=-=-=
+```
 "
 Class {
 	#name : #RSDraggableCanvas,
@@ -83,12 +83,13 @@ RSDraggableCanvas >> mouseEnd: evt [
 	aCanvas := evt canvas.
 	camera := evt camera.
 	threshold := 4.
-	(lastStep dist: 0@0) < threshold
+	(lastStep distanceTo: 0@0) < threshold
 		ifTrue: [ ^ self checkCamera: aCanvas ].
 		
 	delta := lastStep * 2.5.
+	lastStep := nil.
 	camera translateBy: delta.
-	correct := self correctCameraPosition: evt.
+	correct := self correctCameraPosition: aCanvas.
 	camera translateBy: delta negated.
 			
 	p := (correct - camera position) abs max: 1@1.
@@ -109,13 +110,18 @@ RSDraggableCanvas >> mouseEvent [
 	^ mouseEvent
 ]
 
+{ #category : #mouse }
+RSDraggableCanvas >> mouseEvent: aRSMouseDragEvent [
+	mouseEvent := aRSMouseDragEvent
+]
+
 { #category : #events }
 RSDraggableCanvas >> mouseMove: evt [
 	| camera p correct |
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
 	lastStep := evt step negated / camera scale.
-	correct  := self correctCameraPosition: evt.
+	correct  := self correctCameraPosition: evt canvas.
 	p := (correct - camera position) abs max: 1@1.
 	p := p x sqrt @ p y sqrt.
 	camera translateBy: lastStep/ p.
@@ -131,9 +137,9 @@ RSDraggableCanvas >> mouseStart: evt [
 { #category : #hooks }
 RSDraggableCanvas >> onShape: aCanvas [
 	aCanvas 
-		when: self mouseEvent do: [ :evt | self mouseStart: evt ];
-		when: RSMouseDragging do: [ :evt | self mouseMove: evt ];
-		when: RSMouseDragEnd do: [ :evt | self mouseEnd: evt ].
+		when: self mouseEvent send: #mouseStart: to: self;
+		when: RSMouseDragging send: #mouseMove: to: self;
+		when: RSMouseDragEnd send: #mouseEnd: to: self.
 ]
 
 { #category : #rendering }

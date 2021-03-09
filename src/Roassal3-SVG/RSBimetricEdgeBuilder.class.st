@@ -3,7 +3,7 @@ I am an edge builder for bimetric lines
 "
 Class {
 	#name : #RSBimetricEdgeBuilder,
-	#superclass : #RSEdgeBuilder,
+	#superclass : #RSLineBuilder,
 	#instVars : [
 		'widthFrom',
 		'widthTo'

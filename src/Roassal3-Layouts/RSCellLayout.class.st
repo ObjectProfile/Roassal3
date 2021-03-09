@@ -28,9 +28,9 @@ RSCellLayout >> centered [
 ]
 
 { #category : #hook }
-RSCellLayout >> doExecute: elements [ 
+RSCellLayout >> doExecute: shapes [ 
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
-	lineItemSize := self lineItemsCountBlock rsValue: elements.
+	lineItemSize := self lineItemsCountBlock rsValue: shapes.
 
 	"We compute the size of the grid"
 	columnCount := 1.
@@ -38,7 +38,7 @@ RSCellLayout >> doExecute: elements [
 	maxHeight := 0.
 	columnsWidths := OrderedCollection new.
 	rowHeights := OrderedCollection new.
-	elements do: [ :e |
+	shapes do: [ :e |
 		columnsWidths size < columnCount ifTrue: [ columnsWidths add: 0 ].
 		columnsWidths at: columnCount put: ((columnsWidths at: columnCount) max: e extent x).		
 		maxHeight := maxHeight max: e extent y.
@@ -57,7 +57,7 @@ RSCellLayout >> doExecute: elements [
 	columnCount := 1.
 	rowCount := 1.
 	pointer := (((columnsWidths at: 1) / 2) @ ((rowHeights at: 1) / 2)).
-	elements do: [ :e | 
+	shapes do: [ :e | 
 		e translateTo: pointer.
 		pointer := pointer + (self gapSize * 2 @ 0) + (((columnsWidths at: columnCount) / 2) @ 0).
 

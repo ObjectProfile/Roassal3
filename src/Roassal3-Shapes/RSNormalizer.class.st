@@ -118,7 +118,25 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSNormalizer class >> color [ 
+RSNormalizer class >> color [
+	"Define a linear color normalizer. For example:
+	
+```Smalltalk
+values := 1 to: 5.
+
+c := RSCanvas new.
+shapes := values collect: [ :v | RSEllipse new size: 20; model: v ] as: RSGroup.
+c addAll: shapes.
+
+shapes @ RSPopup.
+
+RSNormalizer color
+	shapes: shapes;
+	normalize: #yourself.
+RSFlowLayout on: shapes.
+c
+```
+"
 	| n |
 	n := self new.
 	n from: Color green.
@@ -131,26 +149,23 @@ RSNormalizer class >> color [
 { #category : #'instance creation' }
 RSNormalizer class >> fontSize [ 
 "Here is example
--=-=-=-=-=-=-=
-v := RSView new.
-v @ RSControlsView.
+```
+v := RSCanvas new.
+v @ RSCanvasController.
 
-sb := RSShapeBuilder label.
-sb interactionDo: #draggable.
-sb text: #asString.
-elements := sb elementsOn: (Collection withAllSubclasses).
+shapes := RSLabel models: (Collection withAllSubclasses).
 
-elements do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
-v addAll: elements.
+shapes do: [ :e | e translateTo: (Random new nextInt: 300) @ (Random new nextInt: 300) ].
+v addAll: shapes.
 
 RSNormalizer fontSize
-	elements: elements;
+	shapes: shapes;
 	to: 30;
 	normalize: #numberOfMethods.
 
 v zoomToFit.
 v open
--=-=-=-=-=-=-=
+```
 "
 
 	| n |
@@ -337,9 +352,67 @@ RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
 ]
 
 { #category : #normalizer }
+RSNormalizer >> normalize [
+	"Normalize the shapes assuming that each shape refers to a number
+```Smalltalk
+values := #(20 30 40 50 10).
+
+c := RSCanvas new.
+shapes := RSEllipse models: values.
+shapes @ RSPopup.
+c addAll: shapes.
+
+RSNormalizer size
+	shapes: shapes;
+	from: 20;
+	to: 30;
+	normalize. 
+
+RSNormalizer color
+	shapes: shapes;
+	normalize. 
+	
+RSGridLayout new gapSize: 40; on: shapes.
+shapes @ RSLabeled.
+
+c @ RSCanvasController.
+c openOnce
+```
+"
+	self normalize: #yourself
+]
+
+{ #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [
 	"Trigger the normalization using a particular metric to normalize.
-	The metric is computed on each model of the shapes that are considered.
+The metric is computed on each model of the shapes that are considered.
+
+For example:
+```Smalltalk
+values := #(20 30 40 50 10).
+
+c := RSCanvas new.
+shapes := RSEllipse models: values.
+shapes @ RSPopup.
+c addAll: shapes.
+
+RSNormalizer size
+	shapes: shapes;
+	from: 20;
+	to: 30;
+	normalize: #yourself. 
+
+RSNormalizer color
+	shapes: shapes;
+	normalize: #yourself. 
+	
+RSGridLayout new gapSize: 40; on: shapes.
+shapes @ RSLabeled.
+
+c @ RSCanvasController.
+c openOnce
+```	
+
 	"
 	| minAndMax |
 	minAndMax := self minAndMaxFor: anOneArgBlockOrSymbol.

@@ -15,7 +15,7 @@ c
 "
 Class {
 	#name : #RSForceBasedLayout,
-	#superclass : #RSEdgeDrivenLayout,
+	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'iterations',
 		'nodes',
@@ -59,7 +59,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding/removing' }
 RSForceBasedLayout >> addEdges: realEdges [
 	| newMockEdges |
 	newMockEdges := realEdges collect: [ :e | self newMockEdgeFor: e ].
@@ -68,7 +68,7 @@ RSForceBasedLayout >> addEdges: realEdges [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding/removing' }
 RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
@@ -84,6 +84,9 @@ RSForceBasedLayout >> alpha [
 
 { #category : #accessing }
 RSForceBasedLayout >> alpha: aFloat [
+	"alpha is a value between 0 and 1.
+	- 1 represents a strong change in nodes position.
+	- 0.01 represents a weak change"
 	alpha := aFloat
 ]
 
@@ -105,7 +108,8 @@ RSForceBasedLayout >> charge [
 
 { #category : #accessing }
 RSForceBasedLayout >> charge: aFloat [
-	"Typically a negative value. E.g., -300"
+	"Typically a negative value. E.g., -300.
+	This value affects new nodes. then you can change charge for each node"
 	charge := aFloat
 ]
 
@@ -115,14 +119,16 @@ RSForceBasedLayout >> currentQuadtree [
 ]
 
 { #category : #hook }
-RSForceBasedLayout >> doExecute: nodeElements [
-	self nodes: nodeElements.
+RSForceBasedLayout >> doExecute: nodeShapes [
+	nodeShapes do: [ :n | n updateLinesOFF ].
+	self nodes: nodeShapes.
 	self start.
 	self shouldUseProgressBar
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
-	nodes do: [ :e | translator translateTopLeftOf: e to: e position ]
+	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
+	nodeShapes do: [ :n | n updateLinesON. n connectedLines do: #update ].
 ]
 
 { #category : #'public - configuration' }
@@ -137,6 +143,8 @@ RSForceBasedLayout >> friction [
 
 { #category : #accessing }
 RSForceBasedLayout >> friction: aNumber [
+	"usuarly a value between 0 and 1
+	This affects all nodes"
 	friction := aNumber
 ]
 
@@ -147,6 +155,7 @@ RSForceBasedLayout >> gravity [
 
 { #category : #accessing }
 RSForceBasedLayout >> gravity: aNumber [
+	"it is the force from nodes to move around center"
 	gravity := aNumber
 ]
 
@@ -157,6 +166,7 @@ RSForceBasedLayout >> initialLayout [
 
 { #category : #accessing }
 RSForceBasedLayout >> initialLayout: aLayout [
+	"The default layout performed before run this layout"
 	initialLayout := aLayout
 ]
 
@@ -181,6 +191,7 @@ RSForceBasedLayout >> initialize [
 
 { #category : #accessing }
 RSForceBasedLayout >> iterations: aNumber [
+	"aNumber is a 0 positive number used to run this layout aNumber times"
 	iterations := aNumber
 ]
 
@@ -197,12 +208,25 @@ RSForceBasedLayout >> length: aFloat [
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockEdgeAt: anEdge [
-	^ edges detect: [ :each | each realEdge == anEdge ]
+	^ edges detect: [ :each | each realEdge == anEdge ] ifNone: [ nil ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockEdgeAt: anEdge ifPresent: presentBlock [
+	^ edges detect: [ :each | each realEdge == anEdge ] ifFound: presentBlock
 ]
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
 	^ nodes detect: [ :each | each realElement == realNode ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockElementAt: realNode ifPresent: presentBlock [
+
+	^ nodes
+		  detect: [ :each | each realElement == realNode ]
+		  ifFound: presentBlock
 ]
 
 { #category : #'private - initialization' }
@@ -238,6 +262,20 @@ RSForceBasedLayout >> nodes [
 { #category : #'accessing - model' }
 RSForceBasedLayout >> nodes: aCollection [
 	nodes := aCollection
+]
+
+{ #category : #'adding/removing' }
+RSForceBasedLayout >> removeEdge: aRealEdge [
+
+	self mockEdgeAt: aRealEdge ifPresent: [ :edge | edges remove: edge ]
+]
+
+{ #category : #'adding/removing' }
+RSForceBasedLayout >> removeNode: aRealNode [
+	| node |
+	node := self mockElementAt: aRealNode.
+	nodes remove: node.
+	
 ]
 
 { #category : #algorithm }
@@ -334,7 +372,7 @@ RSForceBasedLayout >> stepEdgeForces [
 		fp := from position.
 		tp := to position.
 		pd := tp - fp.
-		len := tp dist: fp.
+		len := tp distanceTo: fp.
 		(len closeTo: 0) ifFalse: [
 			len := alpha * (each strength) * (len - (each length)) / len.
 			pd := pd * len.
@@ -398,6 +436,10 @@ RSForceBasedLayout >> theta [
 
 { #category : #accessing }
 RSForceBasedLayout >> theta: aNumber [
+	"Theta coefficient from Barnes-Hut simulation
+	- Value ranges on [0, 1]
+  	- Performance is better with smaller values
+  	- Very small values may not create enough force to give a good result"
 	theta := aNumber
 ]
 

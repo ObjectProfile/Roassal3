@@ -33,6 +33,7 @@ RSAbstractRegularTreeLayout >> doExecute: elements [
 	| rootNodes |
 	alreadyLayoutedNodes := OrderedCollection new.
 	rootNodes := self rootNodesFor: elements.
+	self validateCachedParents.
 	nodesByLayer := OrderedCollection new.
 	self
 		layout: rootNodes
@@ -107,6 +108,7 @@ RSAbstractRegularTreeLayout >> leftGap [
 
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> leftGap: anInteger [
+	"Perform an horizontal translation of the nodes"
 	leftGap := anInteger
 ]
 
@@ -134,6 +136,7 @@ RSAbstractRegularTreeLayout >> topGap [
 
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> topGap: anInteger [
+	"Perform a vertical translation of the nodes"
 	topGap := anInteger
 ]
 

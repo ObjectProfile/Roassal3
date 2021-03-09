@@ -15,7 +15,7 @@ Class {
 
 { #category : #'events-processing' }
 RSKeyNavigationCanvas >> expandCollapse: evt [
-	evt canvas morph owner expandBoxHit
+	evt canvas morph window expandBoxHit
 ]
 
 { #category : #initialization }
@@ -36,15 +36,17 @@ RSKeyNavigationCanvas >> onShape: aCanvas [
 
 { #category : #events }
 RSKeyNavigationCanvas >> processKeyDown: evt [
-	| keyName rect lastMS |
+	| keyName |
 	keyName := evt keyName.
+	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
+	keyName = #O ifTrue: [ ^ self zoomOut: evt canvas ].
 	self configuration hasHorizontalScrolling ifTrue: [ 
-		keyName = #KP_LEFT ifTrue: [ steps add: -1@0 ].
-		keyName = #KP_RIGHT ifTrue: [ steps add: 1@0 ].
+		keyName = #LEFT ifTrue: [ steps add: -1@0 ].
+		keyName = #RIGHT ifTrue: [ steps add: 1@0 ].
 	].
 	self configuration hasVerticalScrolling ifTrue: [ 
-		keyName = #KP_UP ifTrue: [ steps add: 0@ -1 ].
-		keyName = #KP_DOWN ifTrue: [ steps add: 0@ 1 ].
+		keyName = #UP ifTrue: [ steps add: 0@ -1 ].
+		keyName = #DOWN ifTrue: [ steps add: 0@ 1 ].
 	].
 	
 	speedMult := evt shiftKeyPressed
@@ -52,25 +54,7 @@ RSKeyNavigationCanvas >> processKeyDown: evt [
 		ifFalse: [ 1 ].
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].
-	rect := self encompassingRectangleFor: evt canvas.
-	speed := (rect width min: rect height) * 0.0005.
-	animation := nil.
-	lastMS := nil.
-	animation := evt canvas newAnimation repeat onStepDo: [ :t |
-		| step camera correct position deltaMS current |
-		current := animation currentTime.
-		lastMS ifNil: [ lastMS := current-1 ].
-		deltaMS := current - lastMS.
-		lastMS := current.
-		step := steps inject: 0@0 into: [:p :s |p+s ].
-		camera := evt camera.
-		camera translateBy: step / (evt canvas camera scale / (speed * speedMult * deltaMS)).
-		position := camera position.
-		correct := self correctCameraPosition: evt.
-		correct = position 
-			ifFalse: [ camera position: correct ].
-		evt signalUpdate.
-		].
+	self processStepsOn: evt canvas
 ]
 
 { #category : #events }
@@ -78,13 +62,36 @@ RSKeyNavigationCanvas >> processKeyUp: evt [
 	| keyName |
 	steps removeAll.
 	keyName := evt keyName.
-	keyName = #I ifTrue: [ ^ self zoomIn: evt ].
-	keyName = #O ifTrue: [ ^ self zoomOut: evt ].
 	keyName = #M ifTrue: [ ^ self expandCollapse: evt ].
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.
 	animation stop.
 	animation := nil.
+]
+
+{ #category : #events }
+RSKeyNavigationCanvas >> processStepsOn: aCanvas [
+
+	| rect lastMS |
+	rect := self encompassingRectangleFor: aCanvas.
+	speed := (rect width min: rect height) * 0.0005.
+	animation := nil.
+	lastMS := nil.
+	animation := aCanvas newAnimation repeat onStepDo: [ :t |
+		| step camera correct position deltaMS current |
+		current := animation currentTime.
+		lastMS ifNil: [ lastMS := current-1 ].
+		deltaMS := current - lastMS.
+		lastMS := current.
+		step := steps inject: 0@0 into: [:p :s |p+s ].
+		camera := aCanvas camera.
+		camera translateBy: step / (aCanvas camera scale / (speed * speedMult * deltaMS)).
+		position := camera position.
+		correct := self correctCameraPosition: aCanvas.
+		correct = position 
+			ifFalse: [ camera position: correct ].
+		aCanvas signalUpdate.
+		].
 ]
 
 { #category : #rendering }
@@ -98,27 +105,27 @@ RSKeyNavigationCanvas >> renderLegendOn: lb [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomIn: evt [
-	self zoomMove: evt delta: 1.5
+RSKeyNavigationCanvas >> zoomIn: aCanvas [
+	self zoomMove: aCanvas delta: 1.5
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomMove: evt delta: delta [
+RSKeyNavigationCanvas >> zoomMove: aCanvas delta: delta [
 	| scale camera newScale correct |
-	camera := evt camera.
+	camera := aCanvas camera.
 	scale := camera scale.
 	newScale := self scaleFor: delta * scale. 
-	evt canvas newAnimation 
+	aCanvas newAnimation 
 		easing: RSEasing backOut;
 		duration: 200 milliSeconds;
 		from: scale;
 		to: newScale;
 		on: camera set: #scale:.
 	correct := self 
-		correctCameraPosition: evt
+		correctCameraPosition: aCanvas
 		scale: newScale.
 	correct = camera position ifTrue: [ ^ self ].
-	evt canvas newAnimation 
+	aCanvas newAnimation 
 		easing: RSEasing backOut;
 		duration: 200 milliSeconds;
 		from: camera position;
@@ -127,7 +134,7 @@ RSKeyNavigationCanvas >> zoomMove: evt delta: delta [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomOut: evt [
-	self zoomMove: evt delta: 0.5.
+RSKeyNavigationCanvas >> zoomOut: aCanvas [
+	self zoomMove: aCanvas delta: 0.5.
 	
 ]

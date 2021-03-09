@@ -16,8 +16,8 @@ RSShapeEvent >> position [
 ]
 
 { #category : #accessing }
-RSShapeEvent >> position: anObject [
-	position := anObject 
+RSShapeEvent >> position: aPoint [
+	position := aPoint 
 ]
 
 { #category : #accessing }

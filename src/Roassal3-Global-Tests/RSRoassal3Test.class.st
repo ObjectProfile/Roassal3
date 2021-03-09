@@ -5,6 +5,24 @@ Class {
 }
 
 { #category : #tests }
+RSRoassal3Test >> testOpen [
+
+	| v |
+	v := RSCanvas new open.
+	self assert: v class == SystemWindow.
+	v delete.
+]
+
+{ #category : #tests }
+RSRoassal3Test >> testOpenOnce [
+
+	| v |
+	v := RSCanvas new openOnce.
+	self assert: v class == SystemWindow.
+	v delete.
+]
+
+{ #category : #tests }
 RSRoassal3Test >> testRemoveInteractionIfPresent [
 	| box |
 	box := RSBox new.

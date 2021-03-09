@@ -187,12 +187,14 @@ RSChartExample >> example10BarPlot [
 	y := (x raisedTo: 2) - 2.
 	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
-	self flag: 'TODO'.
+
 	c addPlot: p.
+	
+	c addDecoration: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: x size - 1;
+		asFloat).
 	c xlabel: 'X Axis'.
-	"c addDecoration: (RSHorizontalTick new 
-		numberOfTicks: 20;
-		asFloat)."
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
 		asFloat).
@@ -210,10 +212,8 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	c := RSChart new.
 
 	c addPlot: (RSBarPlot new x: x y: y).
-	self flag: 'TODO'.
-	"c addPlot: (RSLinePlot new x: x y: y; color: Color red)."
-
-	"c addDecoration: (RSHorizontalTick new  asFloat)."
+	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
+	c addDecoration: (RSHorizontalTick new asFloat).
 	c addDecoration: (RSVerticalTick new 
 		numberOfTicks: 10;
 		asFloat).
@@ -225,35 +225,34 @@ RSChartExample >> example11BarplotCombinedWithLine [
 
 { #category : #examples }
 RSChartExample >> example12ScatterPlotAndNormalizer [
+
 	<script: 'self new example12ScatterPlotAndNormalizer open'>
 	| x y z r c p |
 	x := OrderedCollection new.
 	y := OrderedCollection new.
 	z := OrderedCollection new.
 	r := Random seed: 42.
-	1 to: 100 do: [ :i |
-		x add: i + (r nextInt: 10).
-		y add: i + (r nextInt: 10).
-		z add: i + (r nextInt: 10).
-	].
+	1 to: 100 do: [ :i | 
+		x add: i + (r next * 10 + 1) asInteger.
+		y add: i + (r next * 10 + 1) asInteger.
+		z add: i + (r next * 10 + 1) asInteger. ].
 
 	c := RSChart new.
 	p := RSScatterPlot new x: x y: y.
 	p color: Color blue translucent.
 	p processBlock: [ :shapes | 
-			shapes models: z.
-			RSNormalizer size
-				shapes: shapes;
-				from: 2;
-				to: 10;
-				normalize: #yourself.
-			RSNormalizer color
-				shapes: shapes;
-				normalize: #yourself.
-			shapes translucent.
-				 ].
+		shapes models: z.
+		RSNormalizer size
+			shapes: shapes;
+			from: 2;
+			to: 10;
+			normalize: #yourself.
+		RSNormalizer color
+			shapes: shapes;
+			normalize: #yourself.
+		shapes translucent ].
 	c addPlot: p.
-	 
+
 	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
 	c addDecoration: RSVerticalTick new.
 
@@ -350,4 +349,134 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	c addDecoration: (RSXLabelDecoration new title: 'Evolution').
 
 	^ c 
+]
+
+{ #category : #examples }
+RSChartExample >> example20Grid [
+	<script: 'self new example20Grid open'>
+	| c x y vertical horizontal |
+	
+	c := RSChart new.
+	x := 0 to: 10.
+	y := x raisedTo: 2.
+	c lineX: x y: y.
+	c addDecoration: (vertical := RSVerticalTick new).
+	vertical shape dashed.
+	vertical configuration tickSize: c extent x negated.
+	c addDecoration: (horizontal := RSHorizontalTick new).
+	horizontal configuration tickSize: c extent y negated.
+	c build.
+	^ c canvas
+	
+]
+
+{ #category : #examples }
+RSChartExample >> example21Popup [
+	<script: 'self new example21Popup open'>
+	| x cumsum c  y error popup |
+	x := 1 to: 100.
+	cumsum := [:arr | | sum |
+		sum := 0.
+		arr collect: [ :v | sum := sum + v. sum ] ].
+
+	c := RSChart new.
+	c extent: 800@400.
+
+	popup := RSPopupDecoration new.
+	c addDecoration: popup.
+
+	#(
+	series1 red
+	series2 blue) pairsDo: [ :label :color |
+		| col plot |
+		y := (x collect: [ :i | 50 atRandom - 25 ]).
+		y := cumsum value: y.
+		error := x.
+		col := color value: Color.
+		
+		c addPlot: (RSAreaPlot new 
+			x: x y1: y + error y2: y - error;
+			color: col translucent).
+		c addPlot: (plot := RSLinePlot new x: x y: y; fmt: 'o';
+			color: col;
+			yourself).
+		popup chartPopupBuilder
+			for: plot text: label color: col.
+		 ].
+
+	c build.
+
+	^ c canvas.
+]
+
+{ #category : #examples }
+RSChartExample >> example22CustomPopup [
+	<script: 'self new example22CustomPopup open'>
+	| values names x y popup c value date group |
+	values := {
+	'25-nov-2020' -> 772.83.
+	'24-nov-2020' -> 765.96.
+	'23-nov-2020' -> 761.55.
+	'20-nov-2020' -> 758.62.
+	'19-nov-2020' -> 758.10.
+	'18-nov-2020' -> 767.05.
+	'17-nov-2020' -> 767.86.
+	'16-nov-2020' -> 766.70.
+	'13-nov-2020' -> 757.43.
+	'12-nov-2020' -> 757.42.
+	'11-nov-2020' -> 760.90.
+	'10-nov-2020' -> 753.75.
+	'09-nov-2020' -> 759.25.
+	'06-nov-2020' -> 752.01.
+	'05-nov-2020' -> 757.16.
+	'04-nov-2020' -> 758.53.
+	'03-nov-2020' -> 769.17.
+	'02-nov-2020' -> 771.92.
+	'30-oct-2020' -> 770.45.
+	'29-oct-2020' -> 775.56.
+	'28-oct-2020' -> 772.05.
+	'27-oct-2020' -> 779.57.
+	'26-oct-2020' -> 777.72.
+	'23-oct-2020' -> 781.41.
+	'22-oct-2020' -> 784.07.
+	'21-oct-2020' -> 786.66.
+	'20-oct-2020' -> 788.27.
+	'19-oct-2020' -> 795.68.
+	'16-oct-2020' -> 801.91.
+	'15-oct-2020' -> 798.56.
+	'14-oct-2020' -> 797.66.
+	'13-oct-2020' -> 796.05.
+	'09-oct-2020' -> 797.25.
+	'08-oct-2020' -> 795.05.
+	'07-oct-2020' -> 797.35.
+	 } reversed.
+	names := values collect: #key.
+	x := 1 to: values size.
+	y := values collect: #value.
+	popup := RSPopupDecoration new.
+	c := RSChart new.
+	c extent: 400@ 150.
+	c addPlot: (RSAreaPlot new
+		x: x y1: y y2: 750;
+		color: ((LinearGradientPaint fromArray: {
+				0 -> Color green translucent.
+				0.75 -> Color transparent
+			 })
+			start: 0@ -100;
+			stop: 0@100;
+			yourself)).
+	(c lineX: x y: y) color: Color gray.
+
+	c addDecoration: (RSVerticalTick new).
+	c addDecoration: (RSHorizontalTick new fromNames: names; useDiagonalLabel).
+	c addDecoration: popup.
+	popup chartPopupBuilder: (RSBlockChartPopupBuilder new
+		rowShapeBlock: [:plot :point |
+			value := RSLabel new text: point y; bold.
+			date := RSLabel new text: (names at: point x).
+			group := { value. date } asGroup.
+			RSHorizontalLineLayout on: group.
+			group asShape
+			 ]).
+	^ c
 ]

@@ -53,7 +53,7 @@ RSSunburstExamples >> example04Edges [
 	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
-	RSEdgeBuilder arrowedLine
+	RSLineBuilder arrowedLine
 		attachPoint: RSSunburstAttachPoint new;
 		canvas: sb canvas;
 		connectFrom: #superclass.
@@ -73,8 +73,9 @@ RSSunburstExamples >> example05BezierEdges [
 	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
-	RSEdgeBuilder sunburstBezier
+	RSLineBuilder sunburstBezier
 		width: 2;
+		color: Color black;
 		markerEnd: (RSEllipse new 
 			size: 10;
 			color: Color white;
@@ -107,7 +108,7 @@ RSSunburstExamples >> example06Rotation [
 		shapes: (sb shapes select: #isSLeaf);
 		normalize: #linesOfCode.
 	composite adjustToChildren.
-	RSEdgeBuilder sunburstBezier
+	RSLineBuilder sunburstBezier
 		width: 1;
 		markerEnd:
 			(RSEllipse new

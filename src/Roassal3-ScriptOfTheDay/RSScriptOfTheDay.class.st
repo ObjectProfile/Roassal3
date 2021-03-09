@@ -13,7 +13,7 @@ RSScriptOfTheDay class >> initialize [
 	(Smalltalk includesKey: #DSWebhookClient) ifFalse: [ 
 		Metacello new
 		    baseline: #DiscordSt;
-		    repository: 'github://JurajKubelka/DiscordSt/src';
+		    repository: 'github://bergel/DiscordSt/src';
 		    load: #webhook ]. 
 	
 ]
@@ -47,7 +47,12 @@ RSScriptOfTheDay >> loadDiscordSt [
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> runMe [
 	<script: 'self new runMe'>
-	UIManager default edit: '| v nodes |
+	UIManager default edit: '"Script of the day: XXXXXXX
+
+https://github.com/ObjectProfile/Roassal3
+https://twitter.com/Roassal1
+"
+| v nodes |
 c := RSCanvas new.
 nodes := Collection withAllSubclasses collect: [ :cls |
 	RSBox new

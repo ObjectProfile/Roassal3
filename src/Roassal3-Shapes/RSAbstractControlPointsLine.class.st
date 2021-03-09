@@ -6,7 +6,6 @@ Class {
 	#superclass : #RSAbstractLine,
 	#instVars : [
 		'controlPoints',
-		'markers',
 		'controlPointsController'
 	],
 	#category : #'Roassal3-Shapes-Lines'
@@ -62,13 +61,8 @@ RSAbstractControlPointsLine >> isControlPointsLine [
 ]
 
 { #category : #'accessing - markers' }
-RSAbstractControlPointsLine >> markers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
-{ #category : #'accessing - markers' }
 RSAbstractControlPointsLine >> privateMarkers [
-	^ markers
+	^ markers ifNil: [ markers := Array new: 3 ].
 ]
 
 { #category : #accessing }

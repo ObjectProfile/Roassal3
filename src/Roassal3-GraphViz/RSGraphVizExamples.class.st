@@ -36,7 +36,7 @@ process := OSSUnixSubprocess new
 
 process stdinStream
 	nextPutAll: '
-digraph digraph G {Hello->World}
+digraph G {Hello->World}
 ';
 	close.		
 process waitForExit.
@@ -46,7 +46,9 @@ process closeAndCleanStreams.
 
 { #category : #examples }
 RSGraphVizExamples >> example02Basic [
-	<script: 'self new example02Basic'>
+	"<script: 'self new example02Basic'>"
+	"this is just an idea for a future example"
+	true ifTrue: [ ^ self ].
 	RSGraphVizExamples fromString: '
 ## "It encodes the so-called philosophers dilemma.  Neato pretty much approximates the way how humans would layout the graph." Contributed by Manfred Jeusfield.
 ## Command to generate the layout: "neato -Tpng thisfile > thisfile.png" 
@@ -116,7 +118,7 @@ RSGraphVizExamples >> example03Basic [
 		from: canvas nodes first;
 		to: canvas nodes second;
 		yourself).
-	converter := RSDotConverter new.
+	converter := RSNeatoDotConverter new.
 	canvas accept: converter.
 	
 	process := OSSUnixSubprocess new
@@ -174,18 +176,10 @@ RSGraphVizExamples >> example05Layout [
 	<script: 'self new example05Layout'>
 	| canvas node labeled |
 	canvas := RSCanvas new.
-	"node := [ :str | | ellipse label |
-		ellipse := RSEllipse new withBorder; noPaint.
-		label := RSLabel new text: str.
-		ellipse extent: label extent + 20.
-		RSComposite new
-			model: str;
-			children: {ellipse. label };
-			draggable;
-			yourself ]."
+
 	node := [ :str | | label |
 		label := RSLabel new text: str.
-		RSEllipse new 
+		RSBox new 
 			model: str;
 			extent: label extent + 20;
 			noPaint;
@@ -201,9 +195,9 @@ RSGraphVizExamples >> example05Layout [
 		canvas: canvas;
 		withBorderAttachPoint;
 		shapes: canvas nodes;
-		connectFrom: [:str | str asClass superclass name ].
+		connectFrom: [:str | (Smalltalk globals at: str asSymbol) superclass name ].
 	
-	RSGraphVizLayout on: canvas nodes.
+	RSGraphVizLayout twoPi on: canvas nodes.
 	labeled := RSLabeled new.
 	labeled location center; middle.
 	canvas nodes @ labeled.
@@ -216,8 +210,8 @@ RSGraphVizExamples >> example05Layout [
 
 { #category : #examples }
 RSGraphVizExamples >> example06UniFamilyTree [
-	<script: 'self new example06UniFamilyTree'>
-	| canvas nodeBlock labeled edges nodes |
+	<script: 'self new example06UniFamilyTree inspect'>
+	| canvas nodeBlock labeled edges nodes baseline |
 	canvas := RSCanvas new.
 	
 	nodeBlock := [ :str | | label |
@@ -225,7 +219,7 @@ RSGraphVizExamples >> example06UniFamilyTree [
 		RSEllipse new 
 			model: str;
 			extent: label extent + 20;
-			noPaint;
+			color: Color white;
 			withBorder;
 			draggable;
 			yourself ].
@@ -233,22 +227,229 @@ RSGraphVizExamples >> example06UniFamilyTree [
 	nodes := (edges collect: [ :asso | asso key ] as: Set).
 	nodes := nodes addAll: (edges collect: [ :asso | asso value ] as: Set).
 	canvas addAll: (nodes collect: nodeBlock).
-	RSEdgeBuilder arrowedLine 
-		canvas: canvas;
-		withBorderAttachPoint;
-		shapes: canvas nodes;
-		useAssociations: edges.
-	
-	RSGraphVizLayout on: canvas nodes.
-	"RSTreeLayout on: canvas nodes."
 	labeled := RSLabeled new.
 	labeled location center; middle.
 	canvas nodes @ labeled.
-	canvas @ RSCanvasController.
-	canvas open.
+	baseline := RSGraphVizLine new.
 	
+	(RSEdgeBuilder new: baseline)
+		canvas: canvas;
+		shapes: canvas nodes;
+		useAssociations: edges.
+	RSGraphVizLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
 
+{ #category : #examples }
+RSGraphVizExamples >> example07UniFamilyTreeAnimated [
+	<script: 'self new example07UniFamilyTreeAnimated'>
+	| canvas nodes com paint base icon show hide animation high labelAnimation force |
+	canvas := self example06UniFamilyTree.
+	nodes := canvas nodes copy.
+	canvas edges pushBack.
+	com := RSComposite new.
+	com add: (RSLabel new 
+		fontName: 'Courier';
+		color: Color white;
+		fontSize: 20; 
+		text: 'Roassal layouts').
+	high := RSHighlightable new.
+	labelAnimation := [ :shape :color :delta | | pos |
+		shape color: color.
+		pos := shape 
+			propertyAt: #position 
+			ifAbsentPut: [ shape position ].
+		canvas newAnimation
+			duration: 200 milliSeconds;
+			from: shape position;
+			to: pos + delta;
+			on: shape set: #position:.
+		 ].
+	high 
+		when: RSHighlightEvent do: [ :evt | 
+			labelAnimation value: evt shape value: Color black value: -5@0.
+			 ];
+		when: RSUnHighlightEvent do: [:evt |
+			labelAnimation value: evt shape value: Color white value: 0@0. ].
+	force := RSForceBasedLayout new.
+	force charge: -600; length: 100; doNotUseProgressBar.
+	com addAll: ({
+		'Tree' -> RSTreeLayout new. 
+		'Force Based' -> force.
+		'Sugiyama' -> RSSugiyamaLayout new.
+		'GraphViz strict' -> RSGraphVizLayout strict.
+		'GraphViz neato' -> RSGraphVizLayout neato.
+		'GraphViz digraph' -> RSGraphVizLayout digraph.
+		'GraphViz twoPi' -> RSGraphVizLayout twoPi.  }
+		collect: [ :assoc | | name layout | 
+			layout := assoc value.
+			name := assoc key.
+			RSLabel new 
+				color: Color white;
+				fontName: 'Courier';
+				when: RSMouseClick do: [ :evt |
+					| fromPos toPos allPoints | 
+					canvas edges do: [ :ed | ed removeKey: #points ].
+					fromPos := nodes collect: #position.
+					layout on: nodes.
+					toPos := nodes collect: #position.
+					allPoints := canvas edges collect: [ :ed | ed propertyAt: #points ].
+					canvas edges do: [ :ed | ed removeKey: #points ].
+					canvas newAnimation
+						duration: 3 seconds;
+						onStepDo: [ :t | 
+							nodes doWithIndex: [ :node :index | | from to |
+								from := fromPos at: index.
+								to := toPos at: index.
+								node translateTo: (from interpolateTo: to at: t)
+								].
+							canvas zoomToFit.
+							].
+					allPoints first ifNotNil: [ 
+						canvas newAnimation
+							delay: 3 seconds;
+							duration: 1 second;
+							easing: (RSEasing elasticOut period: 0.30; amplitude: 1.3);
+							onStepDo: [ :t |
+								canvas edges doWithIndex: [ :ed :index| 
+									| newPoints |
+									newPoints := allPoints at: index.
+									newPoints := newPoints collectWithIndex: [ :p :i | 
+										| temp |
+										temp := i >= (newPoints size / 2)
+											ifTrue: [ newPoints last ]
+											ifFalse: [ newPoints first ].
+										temp interpolateTo: p at: t
+										].
+									ed propertyAt: #points put: newPoints.
+									ed resetPath.
+									canvas signalUpdate. ]
+								 ].
+						 ].	
+					 ];
+				@ high;
+				text: name.
+		]).
+	RSVerticalLineLayout on: com children.
+	com 
+		adjustToChildren;
+		padding: 20;
+		translateBy: 10; 
+		isFixed: true.
+	paint := LinearGradientPaint fromArray:
+		{0->((Color colorFrom: '30cfd0') alpha: 0.8). 
+		1->((Color colorFrom: '330867') alpha:0.8) }.
+	base := com baseRectangle.
+	paint start: base topCenter; stop: base bottomCenter.
+	com paint: paint.
+	canvas add: com.
+	com propertyAt: #position put: com position.
+	icon := RSBitmap new form: (self iconNamed: #hierarchy).
+	icon translateTo: 10@10.
+	icon isFixed: true.
+	animation :=  [ :pre :order :easing :post|
+		high unhighlightRecordedShapes: canvas.
+		(com hasProperty: #anime) ifFalse: [ 
+			| anime ext pos |
+			pre value.
+			
+			ext := NSScale linear
+				range: (order value: {1@1. icon extent / base extent}).
+			pos := NSScale linear
+				range: (order value: { com propertyAt: #position. icon position }).
+			anime := canvas newAnimation
+				easing: (easing value: RSEasing );
+				duration: 500 milliSeconds;
+				onStepDo: [ :t | | e p |
+					e := ext scale: t.
+					p := pos scale: t.
+					com matrix
+						loadIdentity;
+						scaleBy: e;
+						translation: p.
+					canvas signalUpdate.
+					  ];
+				when: RSAnimationEndEvent do: [
+					post value.
+					com removeKey: #anime ].
+			com propertyAt: #anime put: anime ].
+		 ].
+	show := [ 
+		animation 
+			value: [ icon remove. canvas addShape: com ]
+			value: #reverse
+			value: #backOut
+			value: nil
+		 ].
+	hide := [ 
+		animation
+			value: nil
+			value: #yourself
+			value: #backIn
+			value: [ com remove. canvas addShape: icon ] ].
+	canvas when: RSMouseClick do: hide.
+	com when: RSMouseClick do: hide.
+	icon when: RSMouseClick do: show.
+	canvas open extent: 800@600.
+]
 
+{ #category : #examples }
+RSGraphVizExamples >> example08RoassalPackages [
+	<script: 'self new example08RoassalPackages'>
+	| canvas nodeBlock labeled packagesRegExp packages baseline |
+	canvas := RSCanvas new.
+	
+	nodeBlock := [ :str | | label |
+		label := RSLabel new text: str.
+		RSBox new 
+			model: str;
+			cornerRadius: 30;
+			extent: label extent + 20;
+			color: Color white;
+			withBorder;
+			draggable;
+			yourself ].
+	packagesRegExp := { 'Roassal3*' }.
+	packages := packagesRegExp flatCollect: [ :regExp | 
+	    RPackageOrganizer default packages 
+	        select: [ :p | regExp match: p packageName ] ].
+	canvas addAll: (packages collect: nodeBlock).
+	labeled := RSLabeled new.
+	labeled location center; middle.
+	canvas nodes @ labeled.
+	baseline := RSGraphVizLine new.
+	
+	(RSEdgeBuilder new: baseline)
+		canvas: canvas;
+		shapes: canvas nodes;
+		connectFrom: #yourself toAll: #dependentPackages.
+	canvas edges pushBack.
+	RSGraphVizLayout on: canvas nodes.
+	canvas @ RSCanvasController.
+	canvas inspect.
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> example09Arrows [
+	<script: 'self new example09Arrows'>
+	| c shapes lb |
+	c := RSCanvas new.
+
+	shapes := RSLabel models: Collection withAllSubclasses.
+	c addAll: shapes.
+	shapes @ RSDraggable.
+
+	lb := RSLineBuilder new: RSGraphVizLine new.
+	lb shapes: shapes.
+	lb markerEnd: (RSShapeFactory arrow size: 10; color: Color red).
+	lb connectToAll: #dependentClasses.
+
+	RSGraphVizLayout twoPi on: shapes.
+
+	shapes @ (RSHighlightable red withEdges).
+	c @ RSCanvasController.
+	c openOnce
 ]
 
 { #category : #examples }

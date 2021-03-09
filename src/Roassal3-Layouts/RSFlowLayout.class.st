@@ -8,56 +8,38 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #hook }
-RSFlowLayout >> doExecute: elements [ 
-	| x y maxLastLineHeight maxNextLineHeight  nextElement |
-	
-	x := self gapSize.
-	y := self gapSize.
-	maxLastLineHeight := 0.
-	maxNextLineHeight := 0.
-	nextElement := elements first.
-	
- 	elements do:
-		[ :anElement | 
-		(anElement = elements last) ifFalse:  [nextElement := (elements after: anElement)] ifTrue: [nextElement := anElement].	
+{ #category : #alignment }
+RSFlowLayout >> alignBottom [
+	alignment := #bottom
+]
 
-		self isAlignBottom ifTrue: [ 
-			translator translateBottomLeftOf: anElement to: x @ y.
-			x := x + anElement width + (self gapSize).
-			((x > (self maxWidth rsValue: elements)) | ((x + nextElement width) > (self maxWidth rsValue: elements) )) ifTrue:
-				[ x := self gapSize.
-				maxNextLineHeight := self maxNextLineHeightFrom: nextElement for: elements.
-				y := y + (self gapSize) + maxNextLineHeight.
-				maxNextLineHeight := 0.
-				]
-			].
-		
-		self isAlignCenter ifTrue: [ 
-			translator translateCenterLeftOf: anElement to: x @ y.
-					
-			x := x + (anElement width) +(self gapSize).
-			maxLastLineHeight := maxLastLineHeight max: (anElement height).
-			((x > (self maxWidth rsValue: elements)) | ((x + nextElement width) > (self maxWidth rsValue: elements) )) ifTrue: 
-				[ x := self gapSize.
-				maxNextLineHeight := self maxNextLineHeightFrom: nextElement for: elements.
-				y := y + (self gapSize) + (maxNextLineHeight / 2) + (maxLastLineHeight / 2).
-				maxNextLineHeight := 0.
-				maxLastLineHeight := 0.
-				]
-			].
-		
-		self isAlignTop ifTrue: [ 
-			translator translateTopLeftOf: anElement to: (x @ y).
-			x := x + anElement width + (self gapSize).
-			maxLastLineHeight := maxLastLineHeight max: (anElement height ).
-			( (x > (self maxWidth rsValue: elements)) | ((x + nextElement width) > (self maxWidth rsValue: elements) ))ifTrue: 
-				[ x := self gapSize.
-				y := y + (self gapSize) + maxLastLineHeight.
-				maxLastLineHeight := 0. 
-				]
-		] 
-	]
+{ #category : #alignment }
+RSFlowLayout >> alignLabel [
+	"Allow to align labels along their baseline.
+	
+```Smalltalk
+words := (String loremIpsum: 100) substrings.
+r := Random new.
+wordShapes := words collect: [ :w | RSLabel new fontSize: (r nextInt: 30); text: w ] as: RSGroup.
+
+c := RSCanvas new.
+c addAll: wordShapes.
+RSFlowLayout new alignLabel; on: wordShapes.
+c @ RSCanvasController.
+c open
+```
+"
+	alignment := #label
+]
+
+{ #category : #alignment }
+RSFlowLayout >> alignMiddle [
+	alignment := #middle
+]
+
+{ #category : #alignment }
+RSFlowLayout >> alignTop [
+	alignment := #top
 ]
 
 { #category : #'initialize-release' }
@@ -66,17 +48,51 @@ RSFlowLayout >> initialize [
 	self alignTop.
 ]
 
-{ #category : #utility }
-RSFlowLayout >> maxNextLineHeightFrom: ele for: elements [
-	| nextLineX maxNextLineHeight anElement |
-	maxNextLineHeight := 0.
-	nextLineX := self gapSize.
-	anElement := ele.
-	[ nextLineX < (self maxWidth rsValue: elements) ] whileTrue: [
-		nextLineX := nextLineX + (self gapSize) + (anElement width).
-		maxNextLineHeight := maxNextLineHeight max: (anElement height).	
-		(anElement = elements last) ifFalse:  [anElement := (elements after: anElement) ].
+{ #category : #testing }
+RSFlowLayout >> isAlignBottom [
+	^ alignment = #bottom
+]
+
+{ #category : #testing }
+RSFlowLayout >> isAlignLabel [
+	^ alignment = #label
+]
+
+{ #category : #testing }
+RSFlowLayout >> isAlignMiddle [
+	^ alignment = #middle
+]
+
+{ #category : #testing }
+RSFlowLayout >> isAlignTop [
+	^ alignment = #top
+]
+
+{ #category : #hook }
+RSFlowLayout >> linesFor: shapes [
+	| x y maxLastLineHeight nextElement maxWidthFloat lines currentLine gap |
+	gap := self gapSize.
+	x := y := gap.
+	maxLastLineHeight := 0.
+	maxWidthFloat := self maxWidth rsValue: shapes.
+	lines := OrderedCollection new.
+	currentLine := OrderedCollection new.
+	shapes doWithIndex: [ :element :index |
+		element translateTo: (x @ y) + (element extent / 2.0).
+		currentLine add: element.
+		x := x + element width + gap.
+		maxLastLineHeight := maxLastLineHeight max: element height.
+		nextElement := shapes at: (index + 1 min: shapes size).
+		(x + nextElement width) > maxWidthFloat ifTrue: [
+			
+			lines add: currentLine.
+			x := gap.
+			y := y + maxLastLineHeight + gap.
+			currentLine := OrderedCollection new.
+			maxLastLineHeight := 0.
 		].
-	^ maxNextLineHeight
-				
+		
+	].
+	currentLine ifNotEmpty: [ lines add: currentLine ].
+	^ lines
 ]

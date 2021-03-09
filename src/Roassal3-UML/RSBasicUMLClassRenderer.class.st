@@ -5,24 +5,26 @@ Class {
 	#name : #RSBasicUMLClassRenderer,
 	#superclass : #RSAbstractUMLClassRenderer,
 	#instVars : [
-		'classInnerLine'
+		'classInnerLine',
+		'popup'
 	],
 	#category : #'Roassal3-UML-Rendering'
 }
 
 { #category : #hooks }
 RSBasicUMLClassRenderer >> addLines: group title: title [ 
-	| line rec |
+	| line rec offset |
 	line := self classInnerLine.
 	rec := group encompassingRectangle.
+	offset := 2.5.
 	group size > 2 ifTrue: [ 
 		group add: (line copy
-			startPoint: rec origin x @ title height;
-			endPoint: rec corner x @ title height) ].
+			startPoint: (rec origin x + offset) @ title height;
+			endPoint: (rec corner x - offset) @ title height) ].
 	group size > 4 ifTrue: [ 
 		group add: (line copy
-			startPoint: rec origin x @ (title height + group third height);
-			endPoint: rec corner x @ (title height + group third height)) ].
+			startPoint: (rec origin x + offset) @ (title height + group third height);
+			endPoint: (rec corner x - offset) @ (title height + group third height)) ].
 ]
 
 { #category : #'accessing - shapes' }
@@ -36,6 +38,16 @@ RSBasicUMLClassRenderer >> classInnerLine [
 { #category : #'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine: aShape [
 	classInnerLine := aShape
+]
+
+{ #category : #hooks }
+RSBasicUMLClassRenderer >> initialize [
+	super initialize.
+	popup := RSPopup new model: #yourself.
+	popup shapeBuilder: (RSAdaptativePopup new
+		smallBuilder: popup shapeBuilder;
+		bigBuilder: self;
+		yourself).
 ]
 
 { #category : #hooks }
@@ -56,8 +68,8 @@ RSBasicUMLClassRenderer >> shapeFor: aClass [
 	self adjustBox: box on: shapes.
 	self addLines: shapes title: title.
 	^ RSComposite new
-		popup;
 		draggable;
+		addInteraction: popup;
 		model: aClass;
 		shapes: shapes;
 		yourself.

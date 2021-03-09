@@ -63,12 +63,7 @@ RSTEdge >> dashed [
 
 { #category : #'public - shape' }
 RSTEdge >> fmt: aString [
-	"format for lines"
-	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self width * 4) ].
-	(RSStrokeStyle fromString: aString)
-		ifNotNil: [ :style | self shape border style: style ]
-	
+	self shape fmt: aString.
 ]
 
 { #category : #'public - shape' }
@@ -85,6 +80,11 @@ RSTEdge >> format: aString [
 { #category : #'public - shape' }
 RSTEdge >> joinRound [
 	self shape joinRound
+]
+
+{ #category : #'public - shape' }
+RSTEdge >> marker: aMarker [
+	self shape marker: aMarker
 ]
 
 { #category : #'public - shape' }

@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #hook }
-RSGridLayout >> doExecute: elements [
+RSGridLayout >> doExecute: shapes [
 	| pointer lineItemCount lineItemSize maxLastLineHeight originalGapLeft originalGapTop |
 	originalGapLeft := 0.
 	originalGapTop := 0.
 	
 	pointer := originalGapLeft @ originalGapTop.
-	lineItemSize := self lineItemsCountBlock rsValue: elements.
+	lineItemSize := self lineItemsCountBlock rsValue: shapes.
 	lineItemCount := 0.
 	maxLastLineHeight := 0.
 
-	elements
+	shapes
 		do: [ :element | 
 			translator translateTopLeftOf: element to: pointer.
 			pointer := (pointer x + element width + self gapSize) @ pointer y.

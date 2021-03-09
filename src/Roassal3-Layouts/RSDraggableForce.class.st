@@ -22,19 +22,23 @@ RSDraggableForce >> layout: aForceLayout [
 
 { #category : #hooks }
 RSDraggableForce >> onShape: aShape [
-	| mock |
+
 	aShape removeInteractionIfPresent: RSDraggable.
 	aShape 
 		when: RSMouseDragStart do: [ :evt | 
-			mock := layout mockElementAt: evt shape.
-			mock isFixed: true. ];
+			layout
+				mockElementAt: evt shape
+				ifPresent: [ :mock | mock isFixed: true ] ];
 		when: RSMouseDragging do: [ :evt |
 			| d |
 			d := evt shape parent camera distanceFromPixelToSpace: evt step.
 			evt shape translateBy: d.
-			mock fixPosition: evt shape position.
+			layout
+				mockElementAt: evt shape
+				ifPresent: [ :mock | mock fixPosition: evt shape position ].
 			evt shape signalUpdate ];
 		when: RSMouseDragEnd do:[:evt | 
-			mock isFixed: false.
-			mock := nil ].
+			layout
+				mockElementAt: evt shape
+				ifPresent: [ :mock | mock isFixed: false ] ].
 ]

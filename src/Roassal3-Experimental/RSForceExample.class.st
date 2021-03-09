@@ -51,7 +51,7 @@ RSForceExample >> example04 [
 	c particlesRadius: 50.
 	c interferencesSize: 200.
 	c interferencesRadius: 200.
-	c perlin: (NSPerlinNoise3 new octaves: 7).
+	c colorGenerator: RSColorPerlinGenerator new.
 	c build.
 	^ c canvas
 ]
