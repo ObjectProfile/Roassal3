@@ -147,6 +147,7 @@ RSUMLExamples >> example10AggregationComposition [
 		instVars: #();
 		methods: #();
 		superclass: nil;
+		isAbstract: false;
 		aggregations: { #Musician -> #Band. #Product -> #Catalog };
 		compositions: { #Room -> #Building }.
 		

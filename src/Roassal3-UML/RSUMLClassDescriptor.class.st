@@ -13,7 +13,8 @@ Class {
 		'superclass',
 		'methodsLimit',
 		'aggregations',
-		'compositions'
+		'compositions',
+		'isAbstract'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -55,6 +56,7 @@ RSUMLClassDescriptor >> forPharo [
 		classname: #name;
 		instVars: [:cls | cls instVarNames sorted ];
 		methods: [ :cls | cls methods sorted: CompiledMethod sortBlock ];
+		isAbstract: #isAbstract;
 		superclass: #superclass;
 		methodSelector: #selector;
 		instVarSelector: #yourself;
@@ -80,6 +82,16 @@ RSUMLClassDescriptor >> instVars [
 { #category : #accessing }
 RSUMLClassDescriptor >> instVars: aSymbolOrBlock [
 	instVars := aSymbolOrBlock
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> isAbstract [
+	^ isAbstract
+]
+
+{ #category : #accessing }
+RSUMLClassDescriptor >> isAbstract: aBlockOrString [
+	isAbstract := aBlockOrString
 ]
 
 { #category : #accessing }
