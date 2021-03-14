@@ -135,6 +135,50 @@ RSHistogramExample >> example07Shortcut [
 	^ self randomValues rsHistogram
 ]
 
+{ #category : #examples }
+RSHistogramExample >> example08Strategies [
+	<script: 'self new example08Strategies open'>
+	| x y canvas shapes |
+	"Do we need a binning strat?"
+	x := 1 to: 100.
+	canvas := RSCanvas new.
+	shapes := { 
+		RSDefaultBinning new.
+		RSRiceBinning new.
+		RSSturgesBinning new.
+	 } collect: [ :strat | | g c plot |
+		g := RSGroup new.
+		c := RSChart new.
+		c container: g.
+		y := x collect: [ :v | strat computeSizeFor: (Array new: v) ].
+		plot := RSLinePlot new x: x y: y.
+		c addPlot: plot.
+		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
+		c addDecoration: RSHorizontalTick new.
+		c title: strat class name. 
+		c build.
+		g asShapeFor: strat.
+		 ].
+	canvas addAll: shapes.
+	RSGridLayout on: canvas shapes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #examples }
+RSHistogramExample >> example09BinsCollection [
+	<script: 'self new example09BinsCollection open'>
+	| values c plot |
+	values := self randomValues.
+	c := RSChart new.
+	plot := RSHistogramPlot new x: values.
+	plot bins: #(100 150 155 180 200).
+	c addPlot: plot.
+	c addDecoration: RSVerticalTick new.
+	c addDecoration: RSHorizontalTick new.
+	^ c
+]
+
 { #category : #computing }
 RSHistogramExample >> normal: x mean: mean stdDev: std [
 	^ (-0.5 * Float twoPi log - std log -
