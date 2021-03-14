@@ -91,11 +91,6 @@ RSAbstractLabelDecoration >> renderIn: canvas [
 ]
 
 { #category : #accessing }
-RSAbstractLabelDecoration >> rotationAngle [
-	^ rotationAngle
-]
-
-{ #category : #accessing }
 RSAbstractLabelDecoration >> rotationAngle: anAngleAsFloat [
 	"Set the rotation the label should have"
 	^ baseShape rotateByDegrees: anAngleAsFloat

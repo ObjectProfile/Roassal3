@@ -83,7 +83,7 @@ RSAbstractTick >> defaultConfiguration [
 		labelRotation: 0;
 		shouldHaveLabels: true;
 		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value ] ;
+		labelConversion: [ :value | value asFloat round: 3 ] ;
 		tickSize: 3;
 		yourself
 ]
