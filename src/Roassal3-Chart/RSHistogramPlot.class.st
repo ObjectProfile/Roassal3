@@ -1,5 +1,23 @@
 "
-TODO
+Histogram Plot for Roassal
+```
+| values c plot |
+values := #(0.5 0.5 0.3 -0.2 1.6 0 0.1 0.1 0.6 0.4).
+c := RSChart new.
+plot := RSHistogramPlot new x: values; bins: #(-0.5 0 0.5 1 0.5 1 1.5 2).
+c addPlot: plot.
+c addDecoration: RSVerticalTick new.
+c addDecoration: RSHorizontalTick new doNotUseNiceLabel.
+^ c
+```
+
+- Bins, can be a number or array of sorted numbers.
+- By default bins is 10.
+- For the previous example bins are `#(-0.5 0 0.5 1 0.5 1 1.5 2)`.
+- First bin is #(-0.5 0), second bin is #(0 0.5), etc.
+- All bins but last use this expression to calculate the number of values in each bin: `start <= n and: [n < end]`
+- Last bin uses this expression `n between: start and: end`
+- `binningStrategy:` allows to the user define different strategies to calculate the size for bins. Check `RSBinningStrategy`
 "
 Class {
 	#name : #RSHistogramPlot,
@@ -43,16 +61,13 @@ RSHistogramPlot >> bins: aCollectionOrNumber [
 
 { #category : #private }
 RSHistogramPlot >> computeBins [
-	| binsSize first delta |
+	| binsSize |
 	(bins notNil and:[bins isCollection ]) ifTrue: [ ^ bins ].
 	binsSize := bins.
 	binsSize
 		ifNil: [ binsSize := binningStrategy computeSizeFor: x. ].
-	binsSize := binsSize +1.
-	delta := (x last - x first) / binsSize.
-	first := x first.
-	bins := (1 to: binsSize) collect: [ :i |
-		delta * (i - 1) + first ].
+	binsSize := binsSize + 1.
+	bins := x first to: x last count: binsSize.
 	^ bins
 ]
 
@@ -66,8 +81,9 @@ RSHistogramPlot >> computeXYValues [
 		| val2 condition |
 		val2 := bins at: index + 1.
 		condition := index + 1 = bins size 
-			ifTrue: [  [ :value | value between: val1 and: val2 ] ]
+			ifTrue: [ [ :value | value between: val1 and: val2 ] ]
 			ifFalse: [ [ :value | val1 <= value and: [ value < val2 ] ] ].
+		"TODO"
 		(x select: condition ) size.
 	].
 	
