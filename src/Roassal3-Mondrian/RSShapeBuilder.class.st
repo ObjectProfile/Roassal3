@@ -5,7 +5,9 @@ Class {
 		'shapeClass',
 		'color',
 		'width',
-		'height'
+		'height',
+		'borderColor',
+		'borderWidth'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
@@ -13,6 +15,30 @@ Class {
 { #category : #'instance creation' }
 RSShapeBuilder >> arrowedLine [
 	
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> borderColor [
+
+	^ borderColor
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> borderColor: aColorOrASymbolOrOneArgBlock [
+
+	borderColor := aColorOrASymbolOrOneArgBlock
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> borderWidth [
+
+	^ borderWidth
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> borderWidth: anIntegerOrASymbolOrOneArgBlock [
+
+	borderWidth := anIntegerOrASymbolOrOneArgBlock
 ]
 
 { #category : #initialization }
@@ -55,8 +81,8 @@ RSShapeBuilder >> height [
 ]
 
 { #category : #accessing }
-RSShapeBuilder >> height: anObject [
-	height := anObject
+RSShapeBuilder >> height: aValueOrAOneArgBlock [
+	height := aValueOrAOneArgBlock
 ]
 
 { #category : #accessing }
@@ -101,6 +127,8 @@ RSShapeBuilder >> shapesOn: someObjects [
 							yourself.
 			width ifNotNil: [ result width: (width rsValue: obj) ].
 			height ifNotNil: [ result height: (height rsValue: obj) ].
+			(borderColor notNil and: [ borderWidth notNil ]) 
+				ifTrue: [ result border: (RSBorder new color: (borderColor rsValue: obj); width: (borderWidth rsValue: obj)) ].
 			result color: (color rsValue: obj) .
 			result ] as: RSGroup
 ]
@@ -117,6 +145,12 @@ RSShapeBuilder >> width [
 ]
 
 { #category : #accessing }
-RSShapeBuilder >> width: anObject [
-	width := anObject
+RSShapeBuilder >> width: aValueOrAOneArgBlock [
+	width := aValueOrAOneArgBlock
+]
+
+{ #category : #initialization }
+RSShapeBuilder >> withBorder [
+	self borderColor: Color black.
+	self borderWidth: 3
 ]
