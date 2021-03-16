@@ -438,6 +438,9 @@ RSGraphVizExamples >> example09Arrows [
 
 	shapes := RSLabel models: Collection withAllSubclasses.
 	c addAll: shapes.
+	RSNormalizer fontSize
+		shapes: shapes;
+		normalize: [:cls | cls linesOfCode sqrt + 5 ].
 	shapes @ RSDraggable.
 
 	lb := RSLineBuilder new: RSGraphVizLine new.
@@ -445,7 +448,9 @@ RSGraphVizExamples >> example09Arrows [
 	lb markerEnd: (RSShapeFactory arrow size: 10; color: Color red).
 	lb connectToAll: #dependentClasses.
 
-	RSGraphVizLayout twoPi on: shapes.
+	RSGraphVizLayout twoPi
+		scale: -100;
+		on: shapes.
 
 	shapes @ (RSHighlightable red withEdges).
 	c @ RSCanvasController.

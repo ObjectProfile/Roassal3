@@ -16,8 +16,6 @@ Class {
 RSGraphVizAttachPoint >> basicEndingPointOf: anEdge [
 	| p |
 	p := anEdge to position.
-	endDistance
-		ifNil: [ endDistance := points last - p ].
 	points at: points size put: p + endDistance.
 	^ points last
 ]
@@ -26,8 +24,7 @@ RSGraphVizAttachPoint >> basicEndingPointOf: anEdge [
 RSGraphVizAttachPoint >> basicStartingPointOf: anEdge [
 	| p |
 	p := anEdge from position.
-	startDistance
-		ifNil: [ startDistance := points first - p].
+	
 	points at: 1 put: p + startDistance.
 	^ points first
 ]
@@ -38,7 +35,13 @@ RSGraphVizAttachPoint >> points [
 ]
 
 { #category : #accessing }
-RSGraphVizAttachPoint >> points: aCollection [
+RSGraphVizAttachPoint >> points: aCollection edge: anEdge [
+	|p1 p2 | 
 	self assert: aCollection isNotEmpty description: 'Can not be empty'.
+	
 	points := aCollection.
+	p1 := anEdge from position.
+	p2 := anEdge to position.
+	startDistance := points first - p1.
+	endDistance := points last - p2.
 ]

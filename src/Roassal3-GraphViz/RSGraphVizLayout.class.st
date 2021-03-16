@@ -122,7 +122,7 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			head := elements at: head.
 			points := self pointsFor: line.
 			edge := tail connectedEdges detect: [ :ed | ed to = head ].
-			edge attachPoint: (RSGraphVizAttachPoint new points: points).
+			edge attachPoint: (RSGraphVizAttachPoint new points: points edge: edge).
 			edge propertyAt: #points put: points.
 			 ].
 		 ].

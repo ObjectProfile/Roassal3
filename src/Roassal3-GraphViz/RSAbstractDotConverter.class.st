@@ -30,7 +30,16 @@ RSAbstractDotConverter >> stream [
 
 { #category : #visiting }
 RSAbstractDotConverter >> visitBoundingShape: aShape [
-	stream << (self idFor: aShape); << ' [label="' ; << aShape model asString; << '"]'.
+	"http://www.graphviz.org/doc/info/attrs.html#d:height"
+	| s |
+	s := 0.01.
+	stream 
+		<< (self idFor: aShape); 
+		<< ' [label="' ; 
+		<< aShape model asString; 
+		<< '", height=';
+		<< (aShape height * s) asFloat asString;
+		<< ']'.
 	
 ]
 
