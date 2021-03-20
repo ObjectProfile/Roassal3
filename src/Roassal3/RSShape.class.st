@@ -490,6 +490,9 @@ RSShape >> sessionChanged [
 
 { #category : #actions }
 RSShape >> setAsFixed [
+	"Per default, a shape is subject to the camera mouvement. If the camera is relocated, shapes appears to be relocated. This behavior can be avoided by sending the message #setAsFixed to a shape, which makes the shape fixed in the canvas. This is useful to define menus.
+	
+	The message setAsFixed must be send after being added to a canvas"
 	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
 	parent setAsFixed: self.
 	isFixed := true.
