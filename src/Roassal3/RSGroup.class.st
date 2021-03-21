@@ -80,6 +80,11 @@ RSGroup >> asGroup [
 	^ self
 ]
 
+{ #category : #'public - forwarding' }
+RSGroup >> color: aColor [
+	self do: [ :s | s color: aColor ]
+]
+
 { #category : #accessing }
 RSGroup >> encompassingRectangle [
 	^ self
