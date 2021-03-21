@@ -110,13 +110,13 @@ RSGroup >> position [
 	^ self encompassingRectangle center
 ]
 
-{ #category : #actions }
+{ #category : #'public - forwarding' }
 RSGroup >> pushBack [ 
 	"Push back all the shapes contained in the group"
 	self do: [ :each | each pushBack ]
 ]
 
-{ #category : #actions }
+{ #category : #'public - forwarding' }
 RSGroup >> pushFront [
 	self do: #pushFront
 ]
@@ -202,6 +202,21 @@ RSGroup >> shapesFromModels: objects [
 	^ answer
 ]
 
+{ #category : #'public - forwarding' }
+RSGroup >> size: aNumber [
+	"Convenient method. For example:
+```
+c := RSCanvas new.
+shapes := RSCircle models: (1 to: 9).
+shapes size: 30.
+c addAll: shapes.
+RSGridLayout on: shapes.
+c @ RSCanvasController
+```"
+	self do: [ :s | s size: aNumber ]
+	
+]
+
 { #category : #transforming }
 RSGroup >> translateBy: delta [
 	self do: [ :e | e translateBy: delta ]
@@ -214,18 +229,28 @@ RSGroup >> translateTo: aPosition [
 	self translateBy: aPosition - center
 ]
 
-{ #category : #converting }
+{ #category : #'public - forwarding' }
 RSGroup >> translucent [
 	"Make all shapes in the group as translucent"
 	self do: [ :s | s color: s color translucent ]
 ]
 
-{ #category : #announcing }
-RSGroup >> when: event do: block [
-	self do: [ :shape | shape when: event do: block ]
+{ #category : #'public - forwarding' }
+RSGroup >> when: event do: aOneArgBlock [
+	"Define a callback for each of the shape contained in the group. For example:
+```
+c := RSCanvas new.
+shapes := RSCircle models: (1 to: 9).
+shapes size: 30.
+c addAll: shapes.
+RSGridLayout on: shapes.
+shapes when: RSMouseClick do: [ :evt | evt shape @ RSBlink ].
+c @ RSCanvasController
+```"
+	self do: [ :shape | shape when: event do: aOneArgBlock ]
 ]
 
-{ #category : #announcing }
+{ #category : #'public - forwarding' }
 RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 	self do: [ :shape | shape when: anAnnouncementClass send: aSelector to: anObject]
 ]
