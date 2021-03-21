@@ -21,6 +21,12 @@ RSCanvasController >> addInteraction: anInteractionObject [
 ]
 
 { #category : #accessing }
+RSCanvasController >> addInteractionClass: anInteractionClass [
+	"This method is commanded for public use."
+	self addInteraction: anInteractionClass new
+]
+
+{ #category : #accessing }
 RSCanvasController >> configuration [
 	^ configuration
 ]
@@ -33,7 +39,7 @@ RSCanvasController >> configuration: aRSControlLimits [
 
 { #category : #initialization }
 RSCanvasController >> defaultInteractions [
-	"create a subclass of RSControslView and define your own custom interactions for your views :V"
+	"create a subclass of RSControslView and define your own custom interactions for your canvas"
 	^ { RSDraggableCanvas. RSKeyNavigationCanvas. RSZoomToFitCanvas. RSZoomableCanvas. RSScrollBarsCanvas . RSSearchInCanvas }
 ]
 
