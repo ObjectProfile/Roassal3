@@ -413,7 +413,7 @@ RSBoundingShape >> scale [
 RSBoundingShape >> scaleBy: scale [ 
 	"Scale the shape. For example:
 
--=-=-=-=-=-=-=-=-=
+```
 c := RSCanvas new.
 
 polygon := RSPolygon new
@@ -423,9 +423,8 @@ polygon cornerRadii: 5.
 polygon rotateByDegrees: -45.		
 polygon scaleBy: 4.
 c add: polygon.
-
 c
--=-=-=-=-=-=-=-=-=
+```
 	"
 	matrix scaleBy: scale
 ]
@@ -444,6 +443,7 @@ RSBoundingShape >> shouldUpdateLines [
 
 { #category : #accessing }
 RSBoundingShape >> size: anInteger [
+	"Set the size of the shape by providing a number."
 	self extent: anInteger asPoint
 ]
 
