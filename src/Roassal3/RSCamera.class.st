@@ -125,15 +125,16 @@ RSCamera >> scale [
 ]
 
 { #category : #accessing }
-RSCamera >> scale: aNumber [
+RSCamera >> scale: aFloatNumber [
+	"Set the scaling factor applied by the camera. A factor of 1.0 means that no zooming is applied. if the factor is < 1, then the perceived effect is a zoom out. If the factor is > 1, then the effect is a zoom out."
 	| oldScale |
-	scale = aNumber ifTrue: [ ^ self ].
+	scale = aFloatNumber ifTrue: [ ^ self ].
 	oldScale := scale.
-	scale := aNumber.
+	scale := aFloatNumber.
 	self canvas announce: [ RSScaleChangedEvent new
 		canvas: self canvas;
 		oldScale: oldScale;
-		newScale: aNumber ]
+		newScale: aFloatNumber ]
 ]
 
 { #category : #zoom }
