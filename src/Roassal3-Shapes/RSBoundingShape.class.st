@@ -385,6 +385,22 @@ polygon rotateByDegrees: -45.
 c add: polygon.
 c	
 ```
+
+Another example:
+```
+c := RSCanvas new.
+
+(0 to: 90 count: 10) do: [ :rotation |
+	lbl := RSLabel text: 'Hello world'.
+	lbl color: Color gray translucent.
+	lbl rotateByDegrees: rotation.
+	lbl @ RSHighlightable red.
+	lbl translateTopLeftTo: 0 @ 0.
+	c add: lbl
+	 ].
+c @ RSCanvasController.
+c open
+```
 	"
 	matrix rotateByDegrees: angle
 ]
