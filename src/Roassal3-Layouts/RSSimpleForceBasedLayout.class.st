@@ -7,6 +7,7 @@ Class {
 { #category : #hook }
 RSSimpleForceBasedLayout >> doExecute: shapes [
 	| layout es |
+	shapes do: [ :n | n updateLinesOFF ].
 	layout := RSForceBasedLayout new.
 	layout nodes: shapes.
 	es := shapes flatCollect: #outgoingEdges.
@@ -19,4 +20,5 @@ RSSimpleForceBasedLayout >> doExecute: shapes [
 		strength: 1;
 		length: (edge from width + edge to width) ].
 	layout runLayoutSimply.
+	shapes do: [ :n | n updateLinesON. n connectedLines do: #update ].
 ]
