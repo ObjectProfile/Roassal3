@@ -253,6 +253,15 @@ RSMondrian >> normalizeFontSize: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeFontSize: oneArgBlock from: fromNumber to: toNumber [
+	RSNormalizer fontSize
+		shapes: self canvas nodes;
+		from: fromNumber;
+		to: toNumber;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeHeight: oneArgBlock [
 	RSNormalizer height
 		shapes: self canvas nodes;
