@@ -302,3 +302,14 @@ RSLegend >> text: aString withShape: aShape [
 RSLegend >> title: aString [
 	^ self customText: aString shape: self defaultTitle
 ]
+
+{ #category : #public }
+RSLegend >> withFrame [
+	"Set a frame around the legend"
+	self legendDo: [ :l |
+		l 
+			border: RSBorder new;
+			color: (Color white alpha: 0.8);
+			padding: 10.
+		].
+]
