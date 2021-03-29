@@ -317,7 +317,7 @@ RSCanvas >> initialize [
 	camera := RSCamera new
 		canvas: self;
 		yourself.
-	host := "RSMorphicHost" RSBlocHost new canvas: self; yourself.
+	host := RSMorphicHost new canvas: self; yourself.
 ]
 
 { #category : #testing }
