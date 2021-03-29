@@ -8,35 +8,23 @@ Class {
 }
 
 { #category : #opening }
-RSBlocHost >> newElementForShape: aShape [
-
-	^ BlElement new
-		  relocate: aShape position + ((canvas extent - aShape extent) / 2);
-		  geometry: BlRectangleGeometry new;
-"		  border: (BlBorder paint: Color black width: 1);"
-		  background: aShape paint;
-		  size: aShape extent;
-		  yourself
-]
-
-{ #category : #opening }
 RSBlocHost >> newMainBlocElement [
 
 	| children |
-	children := canvas shapes collect: [:each |
-		self newElementForShape: each ].
-
-
-"
-			translateBy: (self extent / 2) asFloatPoint;
-			scaleBy: camera scale asFloat;
-			translateBy: camera position negated asFloatPoint.
-"	
+	children := canvas shapes collect: [:each | each asBlElement ].
 
 	^ RSCanvasElement new
+"		  border: (BlBorder paint: Color black width: 1);	"
+		clipChildren: false;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ];
+		transformDo: [ :aBuilder |
+			aBuilder
+				translateBy: (canvas extent / 2) asFloatPoint;
+				scaleBy: canvas camera scale asFloat;
+				translateBy: canvas camera position negated asFloatPoint.
+			 ];
 		addChildren: children;
 		yourself
 ]
@@ -50,7 +38,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		extent: canvas extent;
 		title: aTitleAsString;
 		yourself.
-	space root background: (canvas color).
+	space root background: canvas color.
 	space show.
 	^ space
 
