@@ -240,23 +240,23 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	c := RSChart new.
 	p := RSScatterPlot new x: x y: y.
 	p color: Color blue translucent.
-	p processBlock: [ :shapes | 
-		shapes models: z.
-		RSNormalizer size
-			shapes: shapes;
-			from: 2;
-			to: 10;
-			normalize: #yourself.
-		RSNormalizer color
-			shapes: shapes;
-			normalize: #yourself.
-		shapes translucent ].
+
 	c addPlot: p.
 
 	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
 	c addDecoration: RSVerticalTick new.
-
-	^ c
+	c build.
+	p ellipses models: z.
+		RSNormalizer size
+			shapes: p ellipses;
+			from: 2;
+			to: 10;
+			normalize: #yourself.
+		RSNormalizer color
+			shapes: p ellipses;
+			normalize: #yourself.
+	p ellipses translucent.
+	^ c canvas
 ]
 
 { #category : #examples }
@@ -479,4 +479,17 @@ RSChartExample >> example22CustomPopup [
 			group asShape
 			 ]).
 	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example23PopupInScatterPlot [
+	<script: 'self new example23PopupInScatterPlot open'>
+	| chart plot data |
+	chart := RSChart new.
+	data := #(1 2 3).
+	plot := RSScatterPlot new y: data.
+	chart addPlot: plot.
+	chart build.
+	plot ellipses @ (RSPopup text: [:point | 'My data: ', point y asString ]).
+	^ chart
 ]
