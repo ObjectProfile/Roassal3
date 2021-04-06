@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #opening }
-RSBlocHost >> newMainBlocElement [
+RSBlocHost >> newCanvasElement [
 
 	| children |
 	children := canvas shapes collect: [:each | each asBlElement ].
@@ -34,7 +34,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
 	space := BlSpace new
-		addChild: self newMainBlocElement;
+		addChild: self newCanvasElement;
 		extent: canvas extent;
 		title: aTitleAsString;
 		yourself.
@@ -53,7 +53,7 @@ RSBlocHost >> signalUpdate [
 
 	space root
 		removeChildren;
-		addChild: self newMainBlocElement.
+		addChild: self newCanvasElement.
 
 
 ]
