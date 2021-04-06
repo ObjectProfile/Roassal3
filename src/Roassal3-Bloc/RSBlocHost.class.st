@@ -38,8 +38,22 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		extent: canvas extent;
 		title: aTitleAsString;
 		yourself.
-	space root background: canvas color.
+
+	space root
+		background: canvas color;
+		addEventHandler: (RSEventListener newForHost: self).
+
 	space show.
 	^ space
+
+]
+
+{ #category : #opening }
+RSBlocHost >> signalUpdate [
+
+	space root
+		removeChildren;
+		addChild: self newMainBlocElement.
+
 
 ]
