@@ -82,6 +82,11 @@ canvas @ RSCanvasController
 ]
 
 { #category : #accessing }
+RSLabeled class >> middle [
+	^ self new middle
+]
+
+{ #category : #accessing }
 RSLabeled class >> text: aText [
 	"Utility method to define a labeled interaction with a text"
 	^ self new text: aText
@@ -195,6 +200,11 @@ RSLabeled >> lowColor [
 { #category : #accessing }
 RSLabeled >> lowColor: aColor [
 	lowColor := aColor
+]
+
+{ #category : #'public - configuration' }
+RSLabeled >> middle [
+	self location middle
 ]
 
 { #category : #accessing }
