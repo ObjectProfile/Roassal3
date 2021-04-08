@@ -56,8 +56,8 @@ RSAbstractLine >> attachPoint [
 ]
 
 { #category : #'attach point' }
-RSAbstractLine >> attachPoint: ap [
-	attachPoint := ap
+RSAbstractLine >> attachPoint: anAttachPoint [
+	attachPoint := anAttachPoint
 ]
 
 { #category : #testing }

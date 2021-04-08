@@ -21,7 +21,7 @@ RSMarker >> asMarker [
 RSMarker >> initialize [
 	super initialize.
 	offset := 0.
-	offsetRatio :=0.
+	offsetRatio := 0.
 ]
 
 { #category : #accessing }
@@ -31,6 +31,30 @@ RSMarker >> offset [
 
 { #category : #accessing }
 RSMarker >> offset: aNumber [
+	"Set the offset in pixel. Consider:
+```
+c := RSCanvas new.
+
+box := RSBox new.
+circle := RSCircle new.
+
+c add: box; add: circle.
+box @ RSDraggable.
+circle @ RSDraggable.
+
+circle translateTo: 50 @ 40.
+
+line := RSLine new.
+line withBorderAttachPoint.
+marker := (RSCircle new size: 5; color: #red) asMarker.
+marker offset: 10.
+line marker: marker.
+line from: box.
+line to: circle.
+c add: line.
+c zoomToFit.
+c open
+```"
 	offset := aNumber
 ]
 
@@ -41,7 +65,32 @@ RSMarker >> offsetRatio [
 
 { #category : #accessing }
 RSMarker >> offsetRatio: aFloat [
-	"[0 1] value"
+	"Set the offset ratio of the marker. The argument is a float and has to range from 0 to 1.
+	
+```
+c := RSCanvas new.
+
+box := RSBox new.
+circle := RSCircle new.
+
+c add: box; add: circle.
+box @ RSDraggable.
+circle @ RSDraggable.
+
+circle translateTo: 50 @ 40.
+
+line := RSLine new.
+line withBorderAttachPoint.
+marker := (RSCircle new size: 5; color: #red) asMarker.
+marker offsetRatio: 0.7.
+line marker: marker.
+line from: box.
+line to: circle.
+c add: line.
+c zoomToFit.
+c open
+```
+"
 	offsetRatio := aFloat
 ]
 
