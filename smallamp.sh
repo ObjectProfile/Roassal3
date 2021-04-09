@@ -15,7 +15,7 @@ pharoEvalCommand(){
    local args=$1
    local resolved_vm="${SMALLTALK_CI_VM}"
    local resolved_image="${SMALLTALK_CI_IMAGE}"
-   local cmd="${resolved_vm} ${resolved_image} --no-default-preferences eval ${vm_flags} ${script}"
+   local cmd="${resolved_vm} ${resolved_image} --no-default-preferences eval ${vm_flags} \"${script}\""
    $cmd
 }
 
@@ -23,7 +23,7 @@ pharoSmallAmpCommand(){
    local args=$1
    local resolved_vm="${SMALLTALK_CI_VM}"
    local resolved_image="${SMALLTALK_CI_IMAGE}"
-   local cmd="${resolved_vm} ${resolved_image} --no-default-preferences smallamp ${args}" 
+   local cmd="${resolved_vm} ${resolved_image} --no-default-preferences smallamp \"${args}\"" 
    $cmd
 } 
 
@@ -49,6 +49,7 @@ runAmp(){
    input="${getImageDirName}/todo.txt"
    while IFS= read -r line
    do
+       print_info "Amplifying ${line}"
        pharoEvalCommand "SmallAmp initializeDefault testCase: ${line}; amplifyEval"
    done < "$input"
 
