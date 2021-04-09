@@ -5,6 +5,8 @@ name: SmallAmpCI
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  reponame: ${{github.event.repository.name}}
+
 
 # Controls when the action will run. 
 on:
@@ -34,5 +36,5 @@ jobs:
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
-      - run: env
+      - run: ./smallamp.sh
         shell: bash
