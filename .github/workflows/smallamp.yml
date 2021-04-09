@@ -37,5 +37,7 @@ jobs:
         shell: bash
         timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
+      - run: ls /home/runner/.smalltalkCI/_builds
+        shell: bash
       - run: smallAmpCI
         shell: bash    
