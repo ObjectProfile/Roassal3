@@ -18,19 +18,13 @@ pharoSmallAmpCommand(){
 
 installSmallAmp(){
    print_info "Installing SmallAmp in the image:"
-   pharo::run_script "
-    | smalltalkCI |
-    $(conditional_debug_halt)
-    [ Metacello new
+   pharo::run_script "[ Metacello new
         baseline: 'SmallAmp';
         repository: 'github://mabdi/small-amp/src';
         onUpgrade: [ :ex | ex useIncoming ];
         onConflictUseIncoming;
-        load ] on: Warning do: [ :w | w resume ].
-    
-    (smalltalkCI isHeadless or: [smalltalkCI promptToProceed])
-      ifTrue: [ smalltalkCI saveAndQuitImage ]
-  "
+        load ] on: Warning do: [ :w | w resume ].  
+        Smalltalk snapshot: false andQuit: true"
 }
 
 makeStatFile(){
