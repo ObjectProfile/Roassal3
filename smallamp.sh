@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-
+source "${SMALLTALK_CI_HOME}/helpers.sh"
+source "${SMALLTALK_CI_HOME}/run.sh"
 source "${SMALLTALK_CI_HOME}/pharo/run.sh"
 
 getImageDirName(){
    # https://stackoverflow.com/a/15137779/1016452
    local resolved_image="$(resolve_path "${config_image:-${SMALLTALK_CI_IMAGE}}")"
+
    echo ${resolved_image%/*}
 }
 
@@ -13,7 +15,7 @@ pharoSmallAmpCommand(){
    local args=$1
    local resolved_vm="${config_vm:-${SMALLTALK_CI_VM}}"
    local resolved_image="$(resolve_path "${config_image:-${SMALLTALK_CI_IMAGE}}")"
-   travis_wait "${resolved_vm}" "${resolved_image}" --no-default-preferences smallamp ${args}" 
+   travis_wait "${resolved_vm}" "${resolved_image}" --no-default-preferences smallamp "${args}" 
 } 
 
 installSmallAmp(){
@@ -48,6 +50,7 @@ smallAmpMain(){
    installSmallAmp
    makeStatFile
    print_info "smallAmp main finished"
+   exit 0
 }
 
 smallAmpMain
