@@ -34,5 +34,5 @@ jobs:
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
-      - uses: mabdi/smallamp-action@v0
+      - uses: mabdi/smallamp-action@v0.1
         id: samllamp
