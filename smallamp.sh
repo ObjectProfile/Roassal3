@@ -50,4 +50,4 @@ smallAmpMain(){
    print_info "smallAmp main finished"
 }
 
-smallAmpMain "$@"
+smallAmpMain
