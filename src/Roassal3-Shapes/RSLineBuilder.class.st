@@ -205,7 +205,7 @@ RSLineBuilder class >> verticalLine: aShape [
 	
 ]
 
-{ #category : #'public repetition' }
+{ #category : #'public - repetition' }
 RSLineBuilder >> allowRepetition [
 	allowRepetition := true
 ]
@@ -378,7 +378,7 @@ RSLineBuilder >> fromObjects [
 { #category : #accessing }
 RSLineBuilder >> fromObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
+	self assert: [ canvasHasBeenManuallySet ] description: 'A canvas has to be set, please use #canvas: before'.
 	 
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
 		ifTrue: [ self fromShapes: (canvas shapesFromModels: someObjectsOrABlock) ]
@@ -495,7 +495,7 @@ RSLineBuilder >> shapes: someShapes [
 	self fromShapes: someShapes
 ]
 
-{ #category : #'public repetition' }
+{ #category : #'public - repetition' }
 RSLineBuilder >> shouldAllowRepetition [
 	^ allowRepetition
 ]
@@ -510,7 +510,7 @@ RSLineBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
 	^ true
 ]
 
-{ #category : #'public using source' }
+{ #category : #'public - source' }
 RSLineBuilder >> source: objects connectFrom: fromblock to: toBlock [
 	"Define some edges from objects that are not part of the canvas"
 	"
@@ -551,7 +551,7 @@ b"
 	^ self useAssociations: assocs
 ]
 
-{ #category : #'public using source' }
+{ #category : #'public - source' }
 RSLineBuilder >> source: objects connectFrom: fromblock toAll: toBlock [
 	"Define some edges from objects that are not part of the view
 	
@@ -592,7 +592,7 @@ b"
 	^ self useAssociations: assocs
 ]
 
-{ #category : #'public using source' }
+{ #category : #'public - source' }
 RSLineBuilder >> source: objects connectFromAll: fromBlock to: toBlock [
 	"Define some edges from objects that are not part of the view
 	
@@ -665,7 +665,7 @@ RSLineBuilder >> toShapes: someShapes [
 	toShapes := someShapes asGroup
 ]
 
-{ #category : #'public associations' }
+{ #category : #'public - associations' }
 RSLineBuilder >> useAssociation: assoc [
 	"assoc have to be between model objects"
 	| result |
@@ -676,7 +676,7 @@ RSLineBuilder >> useAssociation: assoc [
 	^ result first
 ]
 
-{ #category : #'public associations' }
+{ #category : #'public - associations' }
 RSLineBuilder >> useAssociations: associations [
 	"Draw edges between shapes using associations. Each association has to follow the pattern: startmodel -> endmodel
 	
@@ -708,7 +708,7 @@ b open
 	^ createdEdges
 ]
 
-{ #category : #'public associations' }
+{ #category : #'public - associations' }
 RSLineBuilder >> useElementAssociations: associationsBetweenElements [
 	associationsBetweenElements do: [ :assoc |
 		self edgeFrom: assoc key to: assoc value ]
