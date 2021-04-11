@@ -222,7 +222,7 @@ RSLineBuilder >> attachPoint: anAttachPoint [
 
 { #category : #'public - configuration' }
 RSLineBuilder >> beDirectional [
-	"When edges are created, this allow for having edges going from A to B, and from B to A"
+	"When lines are created, this allow for having lines going from A to B, and from B to A"
 	beDirectional := true
 ]
 
@@ -418,6 +418,12 @@ RSLineBuilder >> isBidirectional [
 	^ beDirectional 
 ]
 
+{ #category : #'public - configuration' }
+RSLineBuilder >> makeBidirectional [
+	"When lines are created, this method does not allow for having lines going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
+	beDirectional := false
+]
+
 { #category : #accessing }
 RSLineBuilder >> moveBehind [
 	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"
@@ -432,24 +438,26 @@ RSLineBuilder >> moveBehindIfNecessary: someEdges [
 
 { #category : #'public - configuration' }
 RSLineBuilder >> noBidirectional [
-	"When edges are created, this does not allow for having edges going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
+	"When lines are created, this method does not allow for having lines going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
 	beDirectional := false
 ]
 
 { #category : #'public - configuration' }
 RSLineBuilder >> noRepetition [
-	"
-	Avoid having more than one edge between two elements
+	"Avoid having more than one edge between two elements
 
-	b := RTMondrian new.
-	b nodes: (1 to: 3).
-	b shape line
-		color: Color red trans;
-		withVerticallAttachPoint.
-	b edges noRepetition; useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
-	b layout grid.
-	b build.
-	b view numberOfEdges
+```
+b := RSMondrian new.
+b nodes: (1 to: 3).
+b line
+		color: Color red translucent;
+		withVerticalAttachPoint;
+		noRepetition; 
+		useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
+b layout grid.
+b build.
+b canvas numberOfEdges
+```
 	"
 	allowRepetition := false
 ]
@@ -685,7 +693,7 @@ For example
 b := RSCanvas  new.
 b addAll: (RSCircle models: (1 to: 3)).
 
-RSEdgeBuilder line
+RSLineBuilder line
 	color: Color red translucent;
 	canvas: b;
 	withVerticalAttachPoint;
