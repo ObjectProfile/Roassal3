@@ -16,33 +16,34 @@ Here is an example:
 
 Another example:
 ```Smalltalk
-	v := RSCanvas new.
-	
-	e1 := RSBox new size: 100; color: Color blue.
-	e2 := RSBox new size: 100; color: Color red.
-	e1 translateTo: 100 @ -200.
+canvas := RSCanvas new.
+ 
+box1 := RSBox new color: Color blue.
+box2 := RSBox new color: Color red.
+box2 translateTo: 100 @ -200.
 
-	e1 @ RSDraggable.
-	e2 @ RSDraggable.
-	v
-		add: e1;
-		add: e2.
-	
-	l := RSBezier new
-		withVerticalAttachPoint;
-		from: e1;
-		to: e2;
-		controlPointsBlock: [ :a :b | 
-			| mid |
-			mid := (a + b) / 2.
-			Array
-				with: a
-				with: a x @ mid y
-				with: b x @ mid y
-				with: b ];
-		yourself.
-	v add: l.
-	v open
+box1 @ RSDraggable.
+box2 @ RSDraggable.
+canvas add: box1; add: box2.
+ 
+bezierLine := RSBezier new
+	withVerticalAttachPoint;
+	from: box1;
+	to: box2;
+	controlPointsController: (
+			RSBlockCPController new
+				block: [ :aLine |
+					| mid |
+   					mid := (box1 position + box2 position) / 2.
+					{(box1 position) . 
+					(box1 position x @ mid y) .
+					(box2 position x @ mid y) .
+					(box2 position)} ];
+				yourself);
+  yourself.
+canvas add: bezierLine.
+canvas zoomToFit.
+canvas open
 ```
 
 Here is an example of a bezier line with a marker
