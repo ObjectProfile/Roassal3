@@ -182,7 +182,7 @@ c open
 	^ someObjects
 		  collect: [ :obj | 
 				| t |
-		  		t := twoArgsBlock valueWithArguments: (Array with: obj with: (self model: obj)).
+		  		t := twoArgsBlock valueWithArguments: (Array with: (self model: obj) with: obj).
 				t adjustToChildren ]
 		  as: RSGroup
 ]
