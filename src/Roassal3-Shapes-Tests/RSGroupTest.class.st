@@ -105,6 +105,18 @@ RSGroupTest >> testModels [
 ]
 
 { #category : #tests }
+RSGroupTest >> testNodesAndLines [
+
+	| g |
+	g := RSGroup new.
+	g addAll: (RSCircle models: (1 to: 10)).
+	g addAll: (RSLine models: (1 to: 5)). 
+	
+	self assert: g nodes size equals: 10.
+	self assert: g lines size equals: 5.
+]
+
+{ #category : #tests }
 RSGroupTest >> testShapeFromModel [
 	| group |
 	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.

@@ -488,7 +488,7 @@ RSLineBuilder >> shape [
 { #category : #'public - shape' }
 RSLineBuilder >> shape: aRSShape [
 	"Set the shape used to build edges"
-	self assert: aRSShape isEdge.
+	self assert: [ aRSShape isLine ] description: 'Only a line can be provided to a line builder'.
 	shape := aRSShape
 ]
 

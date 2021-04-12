@@ -206,6 +206,11 @@ RSAbstractLine >> isEdge [
 	^ true
 ]
 
+{ #category : #testing }
+RSAbstractLine >> isLine [
+	^ true
+]
+
 { #category : #'style-join' }
 RSAbstractLine >> joinBevel [
 	self border joinBevel

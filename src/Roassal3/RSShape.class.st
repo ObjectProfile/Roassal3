@@ -362,6 +362,11 @@ RSShape >> isInACanvas [
 ]
 
 { #category : #testing }
+RSShape >> isLine [
+	^ false
+]
+
+{ #category : #testing }
 RSShape >> isNode [
 	^ false
 ]

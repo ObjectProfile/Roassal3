@@ -69,7 +69,7 @@ RSBoundingShape >> addConnectedEdge: anEdge [
 
 { #category : #lines }
 RSBoundingShape >> addConnectedLine: aLine [
-	self assert: aLine isEdge.
+	self assert: [ aLine isLine ] description: 'Only a line can be added'.
 	(self connectedLines includes: aLine) 
 		ifFalse: [ self connectedLines add: aLine ]
 ]
@@ -355,7 +355,7 @@ RSBoundingShape >> removeConnectedEdges [
 
 { #category : #lines }
 RSBoundingShape >> removeConnectedLine: aLine [
-	[  aLine isEdge ] assert.
+	self assert: [  aLine isLine ].
 	self connectedLines remove: aLine ifAbsent: [ ]
 ]
 

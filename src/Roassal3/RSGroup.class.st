@@ -103,11 +103,23 @@ RSGroup >> height [
 ]
 
 { #category : #accessing }
+RSGroup >> lines [
+	"Return the nodes (i.e., shapes that are not lines) contained in a group"
+	^ self select: #isLine
+]
+
+{ #category : #accessing }
 RSGroup >> models: someModels [
 	"Set the model of each shapes contained in the collection. The size of the group must be the same than the someModels collection"
 	self assert: [ someModels isCollection ] description: 'Must provide a collection'.
 	self assert: [ self size = someModels size ] description: 'The argument must of the same size then the group'.
 	self with: someModels do: [ :s :m | s model: m ]
+]
+
+{ #category : #accessing }
+RSGroup >> nodes [
+	"Return the nodes (i.e., shapes that are not lines) contained in a group"
+	^ self select: #isNode
 ]
 
 { #category : #transforming }
