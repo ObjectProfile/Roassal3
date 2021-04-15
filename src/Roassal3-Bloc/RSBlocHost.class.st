@@ -21,9 +21,10 @@ RSBlocHost >> newCanvasElement [
 			c vertical matchParent ];
 		transformDo: [ :aBuilder |
 			aBuilder
+				centerOrigin;
 				translateBy: (canvas extent / 2) asFloatPoint;
-				scaleBy: canvas camera scale asFloat;
-				translateBy: canvas camera position negated asFloatPoint.
+				translateBy: canvas camera position negated asFloatPoint;
+				scaleBy: canvas camera scale asFloat.
 			 ];
 		addChildren: children;
 		yourself
@@ -43,6 +44,10 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		background: canvas color;
 		addEventHandler: (RSEventListener newForHost: self).
 
+	space
+		when: BlSpaceResizedEvent
+		do: [ :evt | canvas extent: evt extent ].
+
 	space show.
 	^ space
 
@@ -51,9 +56,8 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 { #category : #opening }
 RSBlocHost >> signalUpdate [
 
+	space ifNil: [ ^ self ].
 	space root
 		removeChildren;
-		addChild: self newCanvasElement.
-
-
+		addChild: self newCanvasElement
 ]

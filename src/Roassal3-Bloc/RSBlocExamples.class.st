@@ -200,3 +200,58 @@ RSBlocExamples >> example07MouseMove [
 	c open.
 
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
+	<script: 'self new example08ZoomToFitWhenExtentChangedEvent'>
+
+	| canvas |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	canvas add: (RSBox new
+			 color: Color blue;
+			 position: 100 asPoint;
+			 size: 5000@3000;
+			 yourself).
+
+	canvas when: RSExtentChangedEvent do: [ :event |
+		canvas zoomToFit.
+		canvas signalUpdate ].
+	
+	canvas open
+]
+
+{ #category : #examples }
+RSBlocExamples >> example09HierarchyWithCanvasController [
+	<script: 'self new example09HierarchyWithCanvasController'>
+
+	| canvas color shapes |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	color := NSScale linear
+	    domain: { 1. 200. 400 };
+	    range: #(white gray red).
+
+	shapes := String withAllSubclasses collect: [ :cls |
+	    RSBox new
+	        model: cls;
+	        color:( color scale: cls numberOfMethods );
+	        size: cls linesOfCode sqrt + 10;
+	        yourself
+	     ].
+	canvas addAll: shapes.
+
+	RSLineBuilder orthoVertical
+	    withVerticalAttachPoint;
+	    shapes: shapes;
+	    connectFrom: #superclass.
+
+	RSTreeLayout on: shapes.
+
+	canvas addInteraction: RSCanvasController new.
+	canvas open.
+
+
+]
