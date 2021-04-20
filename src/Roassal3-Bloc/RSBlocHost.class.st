@@ -48,6 +48,9 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		when: BlSpaceResizedEvent
 		do: [ :evt | canvas extent: evt extent ].
 
+"
+	space host: BlOSWindowSDL2Host new.
+"
 	space show.
 	^ space
 
@@ -60,4 +63,10 @@ RSBlocHost >> signalUpdate [
 	space root
 		removeChildren;
 		addChild: self newCanvasElement
+]
+
+{ #category : #accessing }
+RSBlocHost >> space [
+
+	^ space
 ]

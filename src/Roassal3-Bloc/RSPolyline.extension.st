@@ -3,8 +3,7 @@ Extension { #name : #RSPolyline }
 { #category : #'*Roassal3-Bloc' }
 RSPolyline >> asBlElement [
 
-	^ BlElement new
-		  geometry: self asBlGeometry;
+	^ self asBlGeometry asElement
 		  size: self encompassingRectangle extent;
 		  border: self blBorder;
 		  background: self blBackground;

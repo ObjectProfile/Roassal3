@@ -163,7 +163,7 @@ RSBlocExamples >> example06Polyline [
 		joinRound;"joinBevel; joinMiter"
 		color: Color blue;
 		controlPoints: { 50@300. 150@300. 150@200. 250@200. 250@100. 350@100};
-		basicTranslateBy: -150 @ -150;
+		basicTranslateBy: -250 @ -250;
 		yourself).
 
 
@@ -234,7 +234,7 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 	    domain: { 1. 200. 400 };
 	    range: #(white gray red).
 
-	shapes := String withAllSubclasses collect: [ :cls |
+	shapes := Collection withAllSubclasses collect: [ :cls |
 	    RSBox new
 	        model: cls;
 	        color:( color scale: cls numberOfMethods );
