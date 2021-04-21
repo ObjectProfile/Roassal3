@@ -57,7 +57,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 ]
 
 { #category : #baselines }
-BaselineOfRoassal3 >> dependencies: spec [.
+BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
