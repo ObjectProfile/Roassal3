@@ -255,3 +255,205 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 
 
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example10BasicComposite [
+	<script: 'self new example10BasicComposite open'>
+
+	| c com |
+	c := RSCanvas new.
+	c useBlocHost.
+	
+	com := RSComposite new.
+	com add: (RSBox new
+		color: (Color gray alpha: 0.4);
+		extent: 100@100;
+		yourself).
+	com add: (RSBox new
+		position: 100@100;
+		color: (Color red alpha: 0.4);
+		extent: 100@100;
+		yourself).
+		
+	c addShape: com.	
+	c addShape: (RSEllipse new
+		color: (Color gray alpha: 0.4);
+		extent: 100@100;
+		yourself).
+	c addShape: (RSEllipse new
+		position: 100@100;
+		color: (Color red alpha: 0.4);
+		extent: 100@100;
+		yourself).
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example11SimpleClassHierarchy [
+	<script: 'self new example11SimpleClassHierarchy open'>
+
+	| c methods |
+	c := RSCanvas new.
+
+	String withAllSubclassesDo: [ :cls |
+		| composite |
+		methods := cls methods collect: [ :m | RSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
+
+		RSGridLayout on: methods.
+		composite := RSComposite new.
+		composite shapes:  methods.
+		
+		composite color: Color gray.
+		composite model: cls.
+		composite padding: 30.
+		c add: composite ].
+
+	RSLineBuilder line
+		canvas: c;
+		withVerticalAttachPoint;
+		color: Color blue;
+		connectFrom: #superclass.
+
+	RSTreeLayout on: c nodes.
+
+	"Making sure we have zooming"
+	c @ RSCanvasController.
+	
+"	c open."
+	c useBlocHost.
+	^ c 
+]
+
+{ #category : #examples }
+RSBlocExamples >> example12Donna [
+    <script: 'self new example12Donna open'>
+
+    | text canvas horizontal vertical groups count |
+    text := 'La donna è mobile
+Qual piuma al vento
+Muta d''accento
+E di pensiero
+
+Sempre un amabile
+Leggiadro viso
+In pianto o in riso
+È menzognero
+
+La donna è mobile
+Qual piuma al vento
+Muta d''accento
+E di pensier
+E di pensier
+E di pensier
+
+È sempre misero
+Chi a lei s''affida
+Chi le confida
+Mal cauto il core
+
+Pur mai non sentesi
+Felice appieno
+Chi su quel seno
+Non liba amore
+
+La donna è mobile
+Qual piuma al vento
+Muta d''accento
+E di pensier
+E di pensier
+E di pensier
+'.
+    count := 0.
+    vertical := RSVerticalLineLayout new gapSize: 0.
+    horizontal := RSHorizontalLineLayout new alignLabel.
+    groups := (text splitOn: String cr,String cr) collect: [ :p | 
+        | lines |
+        lines := p lines collect: [ :line |
+            | words |
+            words := (line splitOn: ' ') collect: [ :word | 
+                RSLabel new
+                    text: word;
+                    ifNotNil: [ :lbl |
+                        word = 'donna' 
+                            ifTrue: [ lbl bold; fontSize: 14 ].
+                        word = 'misero' 
+                            ifTrue: [ lbl fontSize: 20; color: 'red' ].
+                        word = 'pensier'
+                            ifTrue: [ 
+                                lbl italic; underline; color: 'blue'; fontSize: (count*4)+10.
+                                count := count+1.  ]
+                         ];
+                    yourself
+                ].
+            horizontal on: words.
+            words asGroup asShape
+             ].
+        vertical on: lines.
+        
+        lines asGroup asShape.
+        ].
+
+    canvas := RSCanvas new.
+    canvas addAll: groups.
+    RSHorizontalFlowLayout new
+        gapSize: 30;
+        on: groups.
+    canvas @ RSCanvasController.
+
+	canvas open.
+
+	canvas useBlocHost.
+    ^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example13Cluster [
+	<script: 'self new example13Cluster open'>
+
+	| canvas shapes |
+	canvas := RSCanvas new.
+
+	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
+		| group |
+		group := RSGroup new.
+		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+			RSEllipse new 
+				size: 5;
+				draggable;
+				color: Color red;
+				model: cls;
+				yourself ].
+		group addAll: shapes.
+		RSLineBuilder line
+			color: Color blue translucent;
+			canvas: group;
+			shapes: shapes;
+			connectFrom: #superclass.
+		
+		RSNormalizer size
+			scale: (NSScale perform: scale);
+			from: 1;
+			to: 30;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSNormalizer color
+			scale: (NSScale perform: scale);
+			from: Color blue;
+			to: Color red;
+			shapes: shapes;
+			normalize: #numberOfMethods.
+		RSClusterLayout on: shapes.
+		RSComposite new
+			color: Color veryLightGray translucent;
+			model: scale;
+			labeled;
+			draggable;
+			shapes: group;
+			yourself.
+		]).
+	RSGridLayout new gapSize: 20; on: canvas nodes.
+	canvas @ RSCanvasController.
+
+	canvas useBlocHost.
+	^ canvas
+]
