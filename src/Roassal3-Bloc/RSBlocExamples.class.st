@@ -484,3 +484,63 @@ RSBlocExamples >> example14LabelExtent [
 	^ canvas
 
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example15BarPlot [
+	<script: 'self new example15BarPlot open'>
+
+	| c p x y |
+	x := 0.0 to: 2 count: 10.
+	y := (x raisedTo: 2) - 2.
+	c := RSChart new.
+	p := RSBarPlot new x: x y: y.
+
+	c addPlot: p.
+	
+	c addDecoration: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: x size - 1;
+		asFloat).
+	c xlabel: 'X Axis'.
+	c addDecoration: (RSVerticalTick new 
+		numberOfTicks: 10;
+		asFloat).
+	c ylabel: 'Y Axis'.
+	c title: 'Histogram'.
+
+	c canvas useBlocHost.
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example16Histogram [
+	<script: 'self new example16Histogram open'>
+
+	| x y canvas shapes |
+	"Do we need a binning strat?"
+	x := 1 to: 100.
+	canvas := RSCanvas new.
+	shapes := { 
+		RSDefaultBinning new.
+		RSRiceBinning new.
+		RSSturgesBinning new.
+	 } collect: [ :strat | | g c plot |
+		g := RSGroup new.
+		c := RSChart new.
+		c container: g.
+		y := x collect: [ :v | strat computeSizeFor: (Array new: v) ].
+		plot := RSLinePlot new x: x y: y.
+		c addPlot: plot.
+		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
+		c addDecoration: RSHorizontalTick new.
+		c title: strat class name. 
+		c build.
+		g asShapeFor: strat.
+		].
+	canvas addAll: shapes.
+	RSGridLayout on: canvas shapes.
+	canvas @ RSCanvasController.
+
+"	canvas useBlocHost."
+	^ canvas
+]
