@@ -457,3 +457,30 @@ RSBlocExamples >> example13Cluster [
 	canvas useBlocHost.
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example14LabelExtent [
+	<script: 'self new example14LabelExtent open'>
+
+	| canvas aString aLabel |
+	canvas := RSCanvas new.
+
+	aString := (String loremIpsum: 40) trimBoth.
+
+	aLabel := RSLabel new
+		fontName: 'Courier';
+		text: aString;
+		color: Color black;
+		yourself.
+	canvas addShape: aLabel.
+	canvas addShape: (RSBox new 
+		color: Color cyan translucent;
+		extent: aLabel extent;
+		yourself).
+
+	canvas @ RSCanvasController.
+	canvas useBlocHost.
+
+	^ canvas
+
+]

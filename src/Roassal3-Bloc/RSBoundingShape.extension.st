@@ -11,7 +11,6 @@ RSBoundingShape >> asBlElement [
 					  ((BlMatrixTransformation matrix: self matrix asBlMatrix) 
 						   origin: BlAffineTransformationCenterOrigin new).
 			  aBuilder
-					topLeftOrigin;
 					translateBy: self baseRectangle extent / -2 ];
 		  border: self blBorder;
 		  background: self blBackground;
