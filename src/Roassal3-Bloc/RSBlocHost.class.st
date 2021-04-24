@@ -7,6 +7,12 @@ Class {
 	#category : #'Roassal3-Bloc'
 }
 
+{ #category : #accessing }
+RSBlocHost >> defaultWindowTitle [
+
+	^ super defaultWindowTitle , ' - Bloc'
+]
+
 { #category : #opening }
 RSBlocHost >> newCanvasElement [
 
