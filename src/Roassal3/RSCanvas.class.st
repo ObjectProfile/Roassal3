@@ -367,7 +367,7 @@ RSCanvas >> numberOfShapes [
 
 { #category : #opening }
 RSCanvas >> open [
-	^ self openWithTitle: 'Roassal'
+	^ self openWithTitle: host defaultWindowTitle
 ]
 
 { #category : #opening }

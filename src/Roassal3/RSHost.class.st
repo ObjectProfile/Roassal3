@@ -19,6 +19,12 @@ RSHost >> canvas: anObject [
 	canvas := anObject
 ]
 
+{ #category : #accessing }
+RSHost >> defaultWindowTitle [
+
+	^ 'Roassal'
+]
+
 { #category : #opening }
 RSHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
