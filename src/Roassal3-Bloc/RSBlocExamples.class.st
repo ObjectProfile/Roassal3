@@ -94,6 +94,7 @@ RSBlocExamples >> example04RotatedLabels [
 			theta := angle cos @ angle sin.
 			p := theta * 100.
 			label := RSLabel new
+				metricsProvider: RSBlocMetricProvider new;
 				color: (Color purple alpha: 0.5);
 				fontName: 'Arial';
 				fontSize: 40;
@@ -328,7 +329,7 @@ RSBlocExamples >> example11SimpleClassHierarchy [
 RSBlocExamples >> example12Donna [
     <script: 'self new example12Donna open'>
 
-    | text canvas horizontal vertical groups count |
+    | text canvas horizontal vertical groups count metricsProvider |
     text := 'La donna è mobile
 Qual piuma al vento
 Muta d''accento
@@ -366,6 +367,7 @@ E di pensier
     count := 0.
     vertical := RSVerticalLineLayout new gapSize: 0.
     horizontal := RSHorizontalLineLayout new alignLabel.
+    metricsProvider := RSBlocMetricProvider new.
     groups := (text splitOn: String cr,String cr) collect: [ :p | 
         | lines |
         lines := p lines collect: [ :line |
@@ -373,6 +375,7 @@ E di pensier
             words := (line splitOn: ' ') collect: [ :word | 
                 RSLabel new
                     text: word;
+						  metricsProvider: metricsProvider;
                     ifNotNil: [ :lbl |
                         word = 'donna' 
                             ifTrue: [ lbl bold; fontSize: 14 ].
@@ -399,9 +402,6 @@ E di pensier
         gapSize: 30;
         on: groups.
     canvas @ RSCanvasController.
-
-	canvas open.
-
 	canvas useBlocHost.
     ^ canvas
 ]
@@ -471,6 +471,7 @@ RSBlocExamples >> example14LabelExtent [
 		fontName: 'Courier';
 		text: aString;
 		color: Color black;
+		metricsProvider: RSBlocMetricProvider new;
 		yourself.
 	canvas addShape: aLabel.
 	canvas addShape: (RSBox new 
