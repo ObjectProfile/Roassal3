@@ -41,5 +41,9 @@ RSLabel >> blRopedText [
 	self isItalic ifTrue: [ 
 		result italic ].
 	
+	self isUnderlined ifTrue: [ 
+		result underline.
+		result underlineColor: self color ].
+	
 	^ result
 ]

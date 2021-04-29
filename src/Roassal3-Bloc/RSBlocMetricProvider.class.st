@@ -20,6 +20,6 @@ RSBlocMetricProvider >> extentsOf: aRSLabel [
 		x_advance: line advance;
 		y_advance: 0;
 		x_bearing: 0;
-		y_bearing: (line height - line descent) negated;
+		y_bearing: line top;
 		yourself.
 ]
