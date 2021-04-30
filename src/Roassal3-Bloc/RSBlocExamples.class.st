@@ -462,25 +462,31 @@ RSBlocExamples >> example13Cluster [
 RSBlocExamples >> example14LabelExtent [
 	<script: 'self new example14LabelExtent open'>
 
-	| canvas aString aLabel |
+	| canvas aString metricsProvider |
 	canvas := RSCanvas new.
-
+	canvas useBlocHost.
+	metricsProvider := RSBlocMetricProvider new.
 	aString := (String loremIpsum: 40) trimBoth.
 
-	aLabel := RSLabel new
-		fontName: 'Courier';
-		text: aString;
-		color: Color black;
-		metricsProvider: RSBlocMetricProvider new;
-		yourself.
-	canvas addShape: (RSComposite new 
-		color: Color cyan translucent;
-		extent: aLabel extent;
-		addShape: aLabel;
-		yourself).
+	10 to: 100 by: 5 do: [ :each |
+		| aLabel |
+		aLabel := RSLabel new
+			fontName: 'Courier';
+			fontSize: each;
+			text: aString;
+			color: Color black;
+			metricsProvider: metricsProvider;
+			yourself.
+		canvas addShape: (RSComposite new 
+			color: Color cyan translucent;
+			extent: aLabel extent;
+			addShape: aLabel;
+			yourself).
 
+	].
+
+	RSVerticalLineLayout on: canvas shapes.
 	canvas @ RSCanvasController.
-	canvas useBlocHost.
 
 	^ canvas
 
