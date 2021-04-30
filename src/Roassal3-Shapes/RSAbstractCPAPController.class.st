@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #hooks }
-RSAbstractCPAPController >> controlPointsFor: anEdge [
+RSAbstractCPAPController >> controlPointsFor: aLine [
 	| ap |
-	ap := anEdge attachPoint.
+	ap := aLine attachPoint.
 	^ self
-		controlPointsFrom: (ap startingPointOf: anEdge)
-		to: (ap endingPointOf: anEdge).
+		controlPointsFrom: (ap startingPointOf: aLine)
+		to: (ap endingPointOf: aLine).
 ]
 
 { #category : #hooks }

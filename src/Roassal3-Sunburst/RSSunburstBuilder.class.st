@@ -65,11 +65,6 @@ RSSunburstBuilder >> maxLevel [
 	^ maxLevel
 ]
 
-{ #category : #public }
-RSSunburstBuilder >> open [
-	^ self canvas open
-]
-
 { #category : #hooks }
 RSSunburstBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
