@@ -473,10 +473,10 @@ RSBlocExamples >> example14LabelExtent [
 		color: Color black;
 		metricsProvider: RSBlocMetricProvider new;
 		yourself.
-	canvas addShape: aLabel.
-	canvas addShape: (RSBox new 
+	canvas addShape: (RSComposite new 
 		color: Color cyan translucent;
 		extent: aLabel extent;
+		addShape: aLabel;
 		yourself).
 
 	canvas @ RSCanvasController.
