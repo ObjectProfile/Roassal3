@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #hooks }
-RSAbstractCPController >> controlPointsFor: anEdge [
+RSAbstractCPController >> controlPointsFor: aLine [
 	"return an array of points generated from the edge"
 	^ self subclassResponsibility 
 ]

@@ -13,9 +13,8 @@ RSSunburstExamples >> example01Basic [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: String using: #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -28,9 +27,8 @@ RSSunburstExamples >> example02MultipleRoots [
 		withBorder;
 		segmentSpacing: 1.
 	sb from: { String. RSEvent. RSShape } using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -40,9 +38,8 @@ RSSunburstExamples >> example03ConstantStrategy [
 	sb := RSSunburstBuilder new.
 	sb constantWidthStrategy arcWidth: 25.
 	sb explore: Collection using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -51,8 +48,8 @@ RSSunburstExamples >> example04Edges [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: Collection using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
+	sb build.
 	RSLineBuilder arrowedLine
 		attachPoint: RSSunburstAttachPoint new;
 		canvas: sb canvas;

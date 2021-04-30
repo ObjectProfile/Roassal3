@@ -85,15 +85,28 @@ Class {
 
 { #category : #testing }
 RSBezier >> basicIncludesPoint: aPoint [
-	| cp |
+	"Not perfect but close enough"
+	| cp lines ir |
 	cp := self controlPoints.
+	ir := self includedRadius.
 	cp size = 2 ifTrue: [ 
 		^ aPoint
 			onLineFrom: cp first
 			to: cp second
-			within: self includedRadius
+			within: ir
 		 ].
-	^ false
+	lines := self lines.
+	lines ifNil: [ ^ false ].
+	^ (1 to: lines size - 1) anySatisfy: [ :i |
+		| p1 p2 |
+		p1 := lines at: i.
+		p2 := lines at: i + 1.
+		(aPoint 
+			onLineFrom: p1
+			to: p2
+			within: ir )
+		 ].
+	
 ]
 
 { #category : #visiting }
@@ -115,4 +128,24 @@ RSBezier >> controlPoints: anArrayOfPoints [
 RSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }.
+]
+
+{ #category : #private }
+RSBezier >> lines [
+	| c b a via1 via2 start end cp |
+	cp := controlPoints.
+	cp size <3 ifTrue: [ ^ nil ].
+	start := cp first.
+	via1 := cp second.
+	via2 := cp third.
+	end := cp size = 3 
+		ifTrue: [ via2 ]
+		ifFalse: [ cp fourth ].
+	c := 3 * (via1 - start).
+	b := 3 * (via2 - via1) - c.
+	a := end - start - c - b.
+
+	^ (0 to: 1 by: 0.2) collect: [ :t | 
+		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start. 
+		]
 ]
