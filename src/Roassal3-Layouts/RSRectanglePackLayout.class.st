@@ -2,7 +2,7 @@
 A layout that packs elements according to their bounding box. Check #gap and #preferredAngle.
 
 Here is an example:
--=-=-=-=-=-=-=-=-=
+```
 numberOfBoxes := 900.
 r := Random seed: 42.
 shapes := RSGroup new.
@@ -13,7 +13,24 @@ c := RSCanvas new.
 c addAll: shapes.
 RSRectanglePackLayout new useProgressBar; on: shapes.
 c @ RSCanvasController
--=-=-=-=-=-=-=-=-=
+```
+
+Another example:
+```
+nodes := (1 to: 20) asArray shuffleBy: (Random seed: 42).
+
+canvas := RSCanvas new.
+shapes := RSCircle models: nodes.
+shapes size: 30.
+canvas addAll: shapes.
+RSNormalizer size
+    shapes: shapes;
+    normalize.
+
+RSRectanglePackLayout on: shapes.
+canvas zoomToFit.
+canvas open
+```
 "
 Class {
 	#name : #RSRectanglePackLayout,

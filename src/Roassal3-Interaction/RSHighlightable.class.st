@@ -430,9 +430,28 @@ c @ RSCanvasController
 ]
 
 { #category : #accessing }
-RSHighlightable >> highlightShapes: aBlockOnArg [
-	"the block should return a collection of shapes"
-	highlightShapes := aBlockOnArg
+RSHighlightable >> highlightShapes: aOneArgBlock [
+	"the block accepts a shape (the one selected) should return a collection of shapes. Consider the example:
+```	
+canvas := RSCanvas new.
+
+shapes := RSEllipse models: (1 to: 30).
+shapes @ RSPopup @ RSDraggable.
+canvas addAll: shapes.
+
+highlightable := RSHighlightable new.
+highlightable highlightColor: Color green.
+highlightable highlightShapes: [ :aShape | 
+	shapes select: [ :s | (-1 to: 1) includes: (s model - aShape model)  ] ].
+shapes @ highlightable.
+RSGridLayout on: shapes.
+
+canvas @ RSCanvasController.
+
+canvas open
+```
+	"
+	highlightShapes := aOneArgBlock
 ]
 
 { #category : #'public - hooks' }
@@ -582,6 +601,59 @@ RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 			shapes do: [ :s | self announceUnHightlight: s source: shapeOrGroupOrCanvas ].
 		 ].
 	self resetHighlightedShapes: shapeOrGroupOrCanvas
+]
+
+{ #category : #'public - hooks' }
+RSHighlightable >> withConnectedShapes [
+	"Highlight shapes that are connected to the pointed shape. For example:
+```
+numberOfNodes := 25. 
+numberOfLines := 90.
+r := Random seed: 42.
+graph := Dictionary new.
+
+1 to: numberOfNodes do: [ :aNode |
+	graph at: aNode put: Set new ].
+
+numberOfLines timesRepeat: [ 
+	fromNode := r nextInteger: numberOfNodes.
+	toNode := r nextInteger: numberOfNodes.
+	(graph at: fromNode) add: toNode ].
+
+canvas := RSCanvas new.
+nodes := RSCircle models: (1 to: numberOfNodes).
+nodes @ RSDraggable @ RSPopup. 
+canvas addAll: nodes.
+
+highlightable := RSHighlightable new.
+highlightable highlightColor: Color red.
+highlightable withEdges.
+nodes @ highlightable.
+
+highlightable2 := RSHighlightable new.
+highlightable2 highlightColor: Color blue.
+highlightable2 withConnectedShapes.
+nodes @ highlightable2.
+
+lb := RSLineBuilder line.
+lb canvas: canvas.
+lb withBorderAttachPoint.
+lb makeBidirectional.
+lb moveBehind.
+lb objects: (1 to: numberOfNodes).
+lb connectToAll: [ :aNumber | graph at: aNumber ].
+
+RSForceBasedLayout new charge: -300; on: nodes.
+canvas @ RSCanvasController.
+canvas open
+```
+	"
+
+	self highlightShapes: [ :s | 
+		| listIncoming listOutgoing |
+		listIncoming := s incomingEdges collect: [ :anEdge | anEdge from ] as: RSGroup.
+		listOutgoing := s outgoingEdges collect: [ :anEdge | anEdge to ] as: RSGroup.
+		listIncoming, listOutgoing ].
 ]
 
 { #category : #'public - hooks' }
