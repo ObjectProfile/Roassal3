@@ -2,7 +2,7 @@ Class {
 	#name : #GtkRoassalDrawingArea,
 	#superclass : #GtkAthensDrawingArea,
 	#instVars : [
-		'trachelCanvas',
+		'canvas',
 		'renderer',
 		'isDrawing'
 	],
@@ -12,6 +12,20 @@ Class {
 { #category : #private }
 GtkRoassalDrawingArea class >> drawingAreaNew [
 	^ self ffiCall: #( #GtkRoassalDrawingArea *gtk_drawing_area_new () )
+]
+
+{ #category : #accessing }
+GtkRoassalDrawingArea >> canvas [
+	^ canvas
+]
+
+{ #category : #accessing }
+GtkRoassalDrawingArea >> canvas: anObject [
+	canvas := anObject.
+	canvas morph: self.
+	
+	activeSurface := self newCairoSurface.
+	self repaint
 ]
 
 { #category : #drawing }
@@ -29,7 +43,7 @@ GtkRoassalDrawingArea >> drawOnAthensCanvas: aCanvas [
 		aCanvas setPaint: trachelCanvas color.
 		aCanvas setPaint: Color red.
 		trachelCanvas playAnimations.
-	"	self drawShapesWithBackground: trachelCanvas color.
+	"	self drawShapesWithBackground: canvas color.
 "		activeSurface hasBeenFreed ifTrue: [ self createSurface ].	
 "
 		aCanvas pathTransform restoreAfter: [
@@ -43,56 +57,34 @@ GtkRoassalDrawingArea >> drawOnAthensCanvas: aCanvas [
 ]
 
 { #category : #drawing }
-GtkRoassalDrawingArea >> drawOnAthensCanvasOld: aCanvas [
-
-	aCanvas surface clear: Color white.
-
-	"We display the elements that are subject to the camera"
-	aCanvas pathTransform
-		scaleBy: trachelCanvas camera scale asFloat;
-		translateBy: trachelCanvas camera position negated asFloatPoint.
-	trachelCanvas
-		shapes do: [ :trachelShape | 
-			(self shouldRender: trachelShape in: trachelCanvas)
-				ifTrue: [ trachelShape drawOn: aCanvas ] ].
-
-	"We display the elements that are _NOT_ subject to the camera"
-	aCanvas pathTransform loadIdentity scaleBy: 1.001.
-	"trachelCanvas
-		fixedShapesDo: [ :trachelShape | 
-			trachelShape isMarkedAsVisible
-				ifTrue: [ trachelShape drawOn: aCanvas ] ]"
-]
-
-{ #category : #drawing }
 GtkRoassalDrawingArea >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	
 	activeSurface drawDuring: [ :athensCanvas | 
 		| camera canvasRect |
-		trachelCanvas clearBackground
+		canvas clearBackground
 			ifTrue: [ activeSurface clear: Color white ].
 		"We display the elements that are subject to the camera"
-		camera := trachelCanvas camera.
+		camera := canvas camera.
 		athensCanvas pathTransform
 			"translateBy: (self extent / 2) asFloatPoint;"
 			scaleBy: camera scale asFloat;
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		canvasRect := Rectangle 
-			origin: trachelCanvas camera position
-			extent: trachelCanvas extent / camera scale.
-		trachelCanvas shapes do: [ :trachelShape | 
+			origin: canvas camera position
+			extent: canvas extent / camera scale.
+		canvas shapes do: [ :trachelShape | 
 			(trachelShape encompassingRectangle intersects: canvasRect)
 				ifTrue: [ 
 					trachelShape accept: renderer ] ].
-		self showRectanglesIfNecessary: trachelCanvas shapes.
+		self showRectanglesIfNecessary: canvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-		trachelCanvas fixedShapes do: [ :trachelShape | 
+		canvas fixedShapes do: [ :trachelShape | 
 			trachelShape accept: renderer ].
 		"debug mode to show encompassingRectangles"
-		self showRectanglesIfNecessary: trachelCanvas fixedShapes. ]
+		self showRectanglesIfNecessary: canvas fixedShapes. ]
 		
 
 ]
@@ -103,29 +95,29 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 	
 	activeSurface drawDuring: [ :athensCanvas | 
 		| camera canvasRect |
-		trachelCanvas clearBackground
+		canvas clearBackground
 			ifTrue: [ activeSurface clear: backgroundColor ].
 		"We display the elements that are subject to the camera"
-		camera := trachelCanvas camera.
+		camera := canvas camera.
 		athensCanvas pathTransform
 			"translateBy: (self extent / 2) asFloatPoint;"
 			scaleBy: camera scale asFloat;
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		canvasRect := Rectangle 
-			origin: trachelCanvas camera position
-			extent: trachelCanvas extent / camera scale.
-		trachelCanvas shapes do: [ :trachelShape | 
+			origin: canvas camera position
+			extent: canvas extent / camera scale.
+		canvas shapes do: [ :trachelShape | 
 			((trachelShape encompassingRectangle) intersects: canvasRect)
 				ifTrue: [ 
 					trachelShape accept: renderer ] ].
-		self showRectanglesIfNecessary: trachelCanvas shapes.
+		self showRectanglesIfNecessary: canvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-		trachelCanvas fixedShapes do: [ :trachelShape | 
+		canvas fixedShapes do: [ :trachelShape | 
 			trachelShape accept: renderer ].
 		"debug mode to show encompassingRectangles"
-		self showRectanglesIfNecessary: trachelCanvas fixedShapes. ]
+		self showRectanglesIfNecessary: canvas fixedShapes. ]
 		
 
 ]
@@ -133,7 +125,7 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 { #category : #drawing }
 GtkRoassalDrawingArea >> extent [
 
-	^ self trachelCanvas extent
+	^ self canvas extent
 ]
 
 { #category : #drawing }
@@ -159,7 +151,7 @@ GtkRoassalDrawingArea >> shouldRender: aShape in: aTrachelCanvas [
 
 { #category : #drawing }
 GtkRoassalDrawingArea >> showRectanglesIfNecessary: shapes [
-	trachelCanvas showRectangles ifFalse: [ ^ self ].
+	canvas showRectangles ifFalse: [ ^ self ].
 	
 	renderer canvas setPaint: (Color blue alpha: 0.2).
 	shapes do: [ :shape |
@@ -171,20 +163,4 @@ GtkRoassalDrawingArea >> showRectanglesIfNecessary: shapes [
 GtkRoassalDrawingArea >> sizeRequest: aPoint [
 
 	self setSizeRequestWidth: aPoint x height: aPoint y
-]
-
-{ #category : #accessing }
-GtkRoassalDrawingArea >> trachelCanvas [
-	^ trachelCanvas
-]
-
-{ #category : #accessing }
-GtkRoassalDrawingArea >> trachelCanvas: anObject [
-	trachelCanvas := anObject.
-	trachelCanvas morph: self.
-	
-	activeSurface := self newCairoSurface.
-	self repaint
-	
-"	self sizeRequest: trachelCanvas extent"
 ]

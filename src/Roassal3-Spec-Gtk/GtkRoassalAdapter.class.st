@@ -279,9 +279,9 @@ GtkRoassalAdapter >> mouseWheel: evt [
 GtkRoassalAdapter >> newWidget [
 
 	trachelCanvas := model canvas.
-	^ GtkScrollableTrachel new 
+	^ GtkRoassalDrawingAreaBox new 
 		adapter: self;
-		trachelCanvas: model canvas.		
+		canvas: model canvas.		
 	
 ]
 
