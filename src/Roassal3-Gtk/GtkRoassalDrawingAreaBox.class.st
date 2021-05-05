@@ -2,7 +2,7 @@ Class {
 	#name : #GtkRoassalDrawingAreaBox,
 	#superclass : #GtkBox,
 	#instVars : [
-		'gtkTrachel',
+		'drawingArea',
 		'horizontalScrollbar',
 		'verticalScrollbar',
 		'verticalAdjustment',
@@ -36,7 +36,7 @@ GtkRoassalDrawingAreaBox class >> new [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> adapter: anAdapter [
 
-	gtkTrachel adapter: anAdapter
+	drawingArea adapter: anAdapter
 ]
 
 { #category : #accessing }
@@ -60,7 +60,7 @@ GtkRoassalDrawingAreaBox >> canvas [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> canvas: aCanvas [
 
-	gtkTrachel canvas: aCanvas.
+	drawingArea canvas: aCanvas.
 
 ]
 
@@ -68,24 +68,24 @@ GtkRoassalDrawingAreaBox >> canvas: aCanvas [
 GtkRoassalDrawingAreaBox >> encompassingRectangle [
 
 	| anEncompassingRectangle |
-	anEncompassingRectangle := gtkTrachel canvas encompassingRectangle.
+	anEncompassingRectangle := drawingArea canvas encompassingRectangle.
 	^ (0@0 min: anEncompassingRectangle topLeft) corner: (anEncompassingRectangle bottomRight) 
 ]
 
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> extent [
 
-	^ gtkTrachel trachelCanvas extent
+	^ drawingArea trachelCanvas extent
 ]
 
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> gtkTrachel [
-	^ gtkTrachel
+	^ drawingArea
 ]
 
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> gtkTrachel: anObject [
-	gtkTrachel := anObject.
+	drawingArea := anObject.
 
 ]
 
@@ -97,12 +97,12 @@ GtkRoassalDrawingAreaBox >> inPlaceEditConnector [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> initialize [
 
-	| horizontalOrientation verticalOrientation vbox overlay |
+	| horizontalOrientation verticalOrientation vbox  |
 
 	super initialize.
-	gtkTrachel := GtkRoassalDrawingArea new.
+	drawingArea := GtkRoassalDrawingArea new.
 	
-	gtkTrachel addDependent: self.
+	drawingArea addDependent: self.
 
 	horizontalOrientation := GtkOrientation GTK_ORIENTATION_HORIZONTAL.
 	horizontalAdjustment := GtkAdjustment newDefault.
@@ -117,7 +117,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 
 	vbox := GtkBox newVertical.
 	overlay := GtkOverlay new.
-	overlay add: gtkTrachel.
+	overlay add: drawingArea.
 	vbox add: overlay.
 	vbox
 		packEnd: horizontalScrollbar
@@ -131,7 +131,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 		fill: false
 		padding: 0.
 		
-	gtkTrachel connectSizeAllocate: [ :aRect | self sizeChangedTo: aRect ].
+	drawingArea connectSizeAllocate: [ :aRect | self sizeChangedTo: aRect ].
 
 	(GtkScrollBarValueChangedCallback
 		do: [ :anAdjustment|	
@@ -144,7 +144,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 			(self canvas camera position y - y) abs <= 1.0 ifFalse: [ 
 				"prevent loops caused by rounding errors"
 				self canvas camera translateTo: self canvas camera position x @ ((anAdjustment value))] .  
-			gtkTrachel changed]) connectTo: verticalAdjustment.
+			drawingArea changed]) connectTo: verticalAdjustment.
 
 	(GtkScrollBarValueChangedCallback
 		do: [ :anAdjustment | 
@@ -154,7 +154,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 			x := anAdjustment value.
 			(self canvas camera position x - x) abs <= 1.0 ifFalse: [ 
 				self canvas camera translateTo: (anAdjustment value) @ self canvas camera position y.].
-			gtkTrachel changed ]) connectTo: horizontalAdjustment.
+			drawingArea changed ]) connectTo: horizontalAdjustment.
 	
 	self initializeTextEditorIn: overlay.
 		
@@ -272,8 +272,8 @@ GtkRoassalDrawingAreaBox >> scale [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> sizeChangedTo: aRect [ 
 
-	gtkTrachel canvas extent: aRect extent.
-	gtkTrachel resetSurface.
+	drawingArea canvas extent: aRect extent.
+	drawingArea resetSurface.
 
 	self recalculateScrollbars: true.
 ]
@@ -281,7 +281,7 @@ GtkRoassalDrawingAreaBox >> sizeChangedTo: aRect [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> sizeRequest: aPoint [
 
-	gtkTrachel setSizeRequestWidth: aPoint x height: aPoint y
+	drawingArea setSizeRequestWidth: aPoint x height: aPoint y
 ]
 
 { #category : #accessing }
@@ -293,7 +293,7 @@ GtkRoassalDrawingAreaBox >> stepIncrement [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> trachelCanvas: aCanvas [
 
-	gtkTrachel canvas: aCanvas.
+	drawingArea canvas: aCanvas.
 
 ]
 
