@@ -76,6 +76,16 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 ]
 
 { #category : #tests }
+RSShapeTest >> testModelForIt [
+
+	| s |
+	s := RSBox model: 42 forIt: [ :ss :object | ss color: Color pink ].
+	self assert: s class equals: RSBox.
+	self assert: s model equals: 42.
+	self assert: s color equals: Color pink
+]
+
+{ #category : #tests }
 RSShapeTest >> testModels [
 
 	| shapes |

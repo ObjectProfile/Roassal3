@@ -133,7 +133,7 @@ For example:
 ```
 c := RSCanvas new.
 
-compoShape := RSComposite model: 'Hello' forIt: [ :title :composite |
+compoShape := RSComposite model: 'Hello' forIt: [ :composite :title |
 	composite add: (RSLabel text: title).
 	composite add: (RSCircle new size: 20).
 	RSVerticalLineLayout new alignCenter; on: composite shapes.
