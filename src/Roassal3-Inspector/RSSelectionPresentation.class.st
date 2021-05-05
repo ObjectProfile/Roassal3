@@ -26,13 +26,6 @@ Class {
 	#category : #'Roassal3-Inspector-Interactions'
 }
 
-{ #category : #hooks }
-RSSelectionPresentation >> getScaleFrom: aShape [
-	"Return the scale used by the canvas of the shape"
-	aShape canvas ifNil: [ ^ 1 ].
-	^ aShape canvas camera scale
-]
-
 { #category : #initialization }
 RSSelectionPresentation >> initialize [
 	super initialize.
@@ -83,7 +76,7 @@ RSSelectionPresentation >> putShadowOn: aShape [
 
 	| shadow pad |
 	"Make sure that  the size is indenpendent of the camera scale"
-	pad := self padding / (self getScaleFrom: aShape).
+	pad := self padding / (self scaleFrom: aShape).
 	shadow := RSBox new
 		          fromRectangle:
 			          (aShape encompassingRectangle expandBy: pad);
@@ -112,6 +105,13 @@ RSSelectionPresentation >> removeShadowOn: aShape [
 		propertyAt: self key
 		ifPresent: [ :shadow | shadow remove ].
 	aShape canvas removeKey: self key.
+]
+
+{ #category : #hooks }
+RSSelectionPresentation >> scaleFrom: aShape [
+	"Return the scale used by the canvas of the shape"
+	aShape canvas ifNil: [ ^ 1 ].
+	^ aShape canvas camera scale
 ]
 
 { #category : #hooks }

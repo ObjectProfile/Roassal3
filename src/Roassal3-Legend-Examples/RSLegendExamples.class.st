@@ -222,7 +222,7 @@ RSLegendExamples >> example10Location [
 
 { #category : #examples }
 RSLegendExamples >> example11OnDemand [
-	<script: 'self new example11OnDemand open setLabel: ''TSShape withAllSubclasses'''>
+	<script: 'self new example11OnDemand open setLabel: ''RSShape withAllSubclasses'''>
 	| canvas classes b |
 	canvas := RSCanvas new.
 	classes := RSShape withAllSubclasses collect: [ :cls | 
@@ -262,11 +262,59 @@ RSLegendExamples >> example11OnDemand [
 			scaleBy: 0.5;
 			padding: 15 ].
 	b location right middle.
-	b onDemand; build.
+	b onDemand: 'Legend'; build.
 	canvas @ RSCanvasController.
 	^ canvas.
 	
 
 
 
+]
+
+{ #category : #examples }
+RSLegendExamples >> example12OnPopup [
+	<script: 'self new example12OnPopup open'>
+	| canvas shapes interaction popup |
+	canvas := RSCanvas new.
+	shapes := GoferOperation withAllSubclasses collect: [ :cls | 
+		| boxes | 
+		boxes := RSBox models: cls methods forEach: [:box :met | 
+			box size: met linesOfCode*0.5+2; color: Color lightGray
+			].
+		RSGridLayout on: boxes.
+		(boxes asShapeFor: cls)
+			color: Color white;
+			withBorder;
+			padding: 5.
+		] as: RSGroup.
+	RSLineBuilder orthoVertical
+		withVerticalAttachPoint;
+		canvas: canvas;
+		shapes: shapes;
+		connectFrom: #superclass.
+	interaction := RSLabeled new.
+	interaction shapeBuilder labelShape fontSize: 5.
+	popup := RSPopup new.
+	popup shapeBuilder: [ :cls |"move this content to a class method"
+		| composite lb colors |
+		composite := RSComposite new.
+		colors := NSScale category20c.
+		lb := RSLegend new.
+		lb container: composite.
+		lb title: cls name.
+		cls methods 
+			do: [ :met | lb text: met selector withCircleColor: (colors scale: met selector) ].
+		lb build.
+		composite adjustToChildren.
+		composite
+			color: Color white;
+			withBorder;
+			padding: 5;
+			yourself.
+		 ].
+	shapes @ interaction; @ popup; @ RSDraggable.
+	RSTreeLayout on: shapes.
+	canvas addAll: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
 ]
