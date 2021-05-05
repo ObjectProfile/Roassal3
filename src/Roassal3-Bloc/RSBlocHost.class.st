@@ -14,6 +14,16 @@ RSBlocHost >> defaultWindowTitle [
 ]
 
 { #category : #opening }
+RSBlocHost >> newAnimation [
+	^ BlNumberTransition new
+		from: 0; to: 1;
+		onStepDo: [ :t | 
+			canvas playAnimations ];
+		beInfinite;
+		yourself.
+]
+
+{ #category : #opening }
 RSBlocHost >> newCanvasElement [
 
 	| children |
@@ -48,6 +58,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 
 	space root
 		background: canvas color;
+		addAnimation: self newAnimation;
 		addEventHandler: (RSEventListener newForHost: self).
 
 	space

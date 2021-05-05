@@ -527,6 +527,7 @@ RSBlocExamples >> example16Histogram [
 	"Do we need a binning strat?"
 	x := 1 to: 100.
 	canvas := RSCanvas new.
+	
 	shapes := { 
 		RSDefaultBinning new.
 		RSRiceBinning new.
@@ -548,6 +549,386 @@ RSBlocExamples >> example16Histogram [
 	RSGridLayout on: canvas shapes.
 	canvas @ RSCanvasController.
 
-"	canvas useBlocHost."
+	canvas useBlocHost.
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example17MouseMoveEllipse [
+	<script: 'self new example17MouseMoveEllipse open'>
+	| c border circleResolution angle a b radius p |
+	c := RSCanvas new.
+	c useBlocHost.
+	c color: Color white.
+	border := RSBorder new color: (Color colorFrom: '002800').
+	b := 1.
+	radius := 200.
+	c when: RSMouseMove do: [ :evt | 
+		circleResolution := b.
+		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
+		angle := Float twoPi / circleResolution.
+		p := evt position abs.
+		a := 175 * p x / c extent x.
+		b := 200 * p y / c extent y.
+		c shapes copy do: #remove.
+		0 to: circleResolution do: [ :i |
+			c addShape: (RSEllipse new 
+				color: Color transparent;
+				rotateByDegrees: 45;
+				border: border;
+				extent: ((angle * i) cos @ (angle * i) sin) * radius + a
+			)].
+		
+		c signalUpdate.
+		 ].
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example18MouseMoveLine [
+	<script: 'self new example18MouseMoveLine open'>
+ 	| c rotate size angle |
+	c := RSCanvas new.
+	c useBlocHost.
+	angle := 0.
+	size := 0.
+	rotate := [ :point | | cos sin p |
+		cos := angle cos.
+		sin := angle sin.
+		"origin"
+		p := point - ((size @ size)/2).
+		"rotated"
+		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
+	].
+	c when: RSMouseMove do: [ :evt | 
+		size := evt position distanceTo: 0@0.
+		angle := evt position angle + 135 degreesToRadians.
+		c shapes copy do: #remove.
+		size := size asInteger.
+		(0 to: size by: 3) do: [ :k |
+			| a b |
+			a := rotate value: k @ 0.
+			b := rotate value: 0 @ (size - k).
+			c addShape: (RSLine new
+				startPoint: a;
+				endPoint: b;
+				yourself).
+		 ].
+		c signalUpdate.
+	].
+	
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example19Animation [
+	<script: 'self new example19Animation open'>
+	| c b |
+	c := RSCanvas new.
+	c useBlocHost.
+	b := RSBox new
+		extent: 100@100;
+		withBorder.
+	c addShape: b.
+	
+	c newAnimation
+		ramp: { 
+		 	0 -> (0@0).
+			0.25 -> (200@180).
+			0.75 -> (-200@ -80).
+			1 -> (200@0)};
+		on: b set: #position:.
+	
+	c 
+		when:RSMouseClick
+		do: [ c animations do: #pause ];
+		when: RSMouseDoubleClick 
+		do: [ c animations do: #continue ].
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example20BoxWindmill [
+	<script: 'self new example20BoxWindmill open'>
+	| canvas shapes extent points frameCount border |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+	canvas color: Color black.
+	extent := 1920@1080.
+	points := (0 to: extent x by: 50) flatCollect: [ :x |
+		(0 to: extent y by: 50) collect: [ :y | (x@y)- (extent/2) ] ].
+	border := RSBorder new
+		color: (Color gray alpha: 0.5);
+		yourself.
+		
+	shapes := points collect: [ :p | 
+		RSBox new
+			extent: 140@40;
+			model: p;
+			color: Color white;
+			border: border;
+			yourself  ].
+	canvas addAll: shapes.
+	frameCount := 0.
+	canvas newAnimation repeat;
+		onStepDo: [ :t |
+			shapes do: [ :s | 
+				s matrix 
+					loadIdentity;
+					translateBy: s model;
+					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
+			frameCount := frameCount + 1. ].
+	canvas @ RSGraphCanvasMonitor.
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example21BoxesLineCircles [
+	<script: 'self new example21BoxesLineCircles open'>
+	| c extent r shapes position alpha update updateLine lineX line |
+	c := RSCanvas new.
+	c useBlocHost.
+	r := Random new.
+	shapes := (1 to: 12) collect: [ :i | 
+		RSBox new
+			model: r next;
+			noPaint;
+			border: (RSBorder new width: 4; color: Color black);
+			yourself].
+	c addAll: shapes.
+	RSNormalizer size
+		from: 30;
+		to: 100;
+		shapes: shapes;
+		normalize: #yourself.
+	lineX := 0.
+	line := RSLine new
+		color: Color red;
+		width: 8;
+		yourself;
+		startPoint: 1@0;
+		endPoint: 0@0;
+		yourself.
+	c add: line. 
+	position := nil.
+	updateLine := [
+		line 
+			startPoint: lineX@position from y;
+			endPoint: lineX@position to y. ].
+	c when: RSMouseMove do: [ :ev | 
+		lineX := ev position x.
+		updateLine value ].
+	update := [ 
+		extent := c extent.
+		position := NSScale linear
+			range: { extent / -2. extent /2 }.
+		updateLine value.
+		shapes do: [ :e | e translateTo: (position scale: r next@ r next) ].
+	].
+	update value.
+	c when: RSExtentChangedEvent do: update.
+	
+	"shadow"
+	alpha := NSScale linear domain: #(1 4); range: #(0.4 0.05).
+	shapes do: [ :e | | ant |
+		ant := e.
+		1 to: 4 do: [:i | | s |
+			s := RSBox new 
+				noPaint;
+				position: e position;
+				extent: e extent;
+				border: (RSBorder new
+					width: 6;
+					color: (e border color alpha: (alpha scale: i)));
+				yourself.
+			ant when: RSPositionChangedEvent do: [ :evt | 
+				s translateTo: evt oldPosition ].
+			ant := s.
+			c add: s
+			] ] .
+	c newAnimation repeat; 
+		onStepDo: [ :t | 
+			| round empty |
+			round := RSCornerRadius new radius: 100.
+			empty := RSCornerRadius new.
+			shapes do: [ :shape |
+				| delta newX |
+				delta := shape propertyAt: #delta ifAbsentPut: [ 5 ].
+				newX := shape position x + delta.
+				(newX 
+					between: position from x 
+					and: position to x) ifFalse: [ 
+					delta := delta negated.
+					newX := shape position x + delta.
+					 ].
+				shape translateTo: newX@shape position y.
+				shape propertyAt: #delta put: delta
+				].
+			c nodes copy do: [ :shape | | corner |
+				corner := shape position x > lineX 
+					ifTrue: [ round ]
+					ifFalse: [ empty ].
+				shape cornerRadius: corner.
+				 ].
+		c signalUpdate
+	].
+	^ c
+	
+]
+
+{ #category : #examples }
+RSBlocExamples >> example22ElasticEllipses [
+	<script: 'self new example22ElasticEllipses open'>
+	| canvas random mouseClick |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+	random := Random new.
+	
+	mouseClick := [ | c1 c2 color  |
+		canvas nodes copy do: #remove.
+		c1 := Color r: random next g: random next b: random next.
+		c2 := Color r: random next g: random next b: random next.
+		color := NSScale linear range: { c1. c2 }.
+		1 to: 10000 do: [ :i | | shape radius ang overlapped |
+			shape := RSEllipse new.
+			shape radius: random next * 30 + 2.
+			radius := random next * 250.
+			ang := random next * Float pi * 2.
+			shape position: radius * (ang cos @ ang sin).
+			overlapped := canvas nodes anySatisfy: [ :other |
+				(other position distanceTo: shape position) < 
+					((shape radius + other radius) * 1.4)  ].
+			overlapped ifFalse: [ 
+				canvas add: shape.
+				shape propertyAt: #radius put: shape radius.
+				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
+		].
+		canvas newAnimation
+			easing: RSEasing elasticOut;
+			onStepDo: [ :t |
+				canvas nodes do: [ :shape | | scale |
+					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
+					shape radius: (scale scale: t)
+					 ].
+				canvas signalUpdate.
+				]
+	].
+	mouseClick value.
+	
+	canvas 
+		when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit ];
+		when: RSMouseClick do: mouseClick.
+	^ canvas
+
+]
+
+{ #category : #examples }
+RSBlocExamples >> example23Flor [
+	<script: 'self new example23Flor open'>
+	| c frame angleSp alphaS hueS dia1 dia2 |
+	c := RSCanvas new.
+	c useBlocHost.
+	frame := 0.
+	angleSp := 0.
+	hueS := NSScale linear domain: #(50 200); range: #(250 360).
+	alphaS := NSScale linear domain: #(50 200); range: #(0.3 1).
+	dia1 := NSScale linear domain: #(50 180); range: #(90 1).
+	dia2 := NSScale linear domain: #(-1 1); range: #(5 20).
+	(0 to: 350 by: 60) do: [ :i | 
+		(50 to: 170 by: 10) do: [ :m |  | color |
+			color := Color 
+				h: (hueS scale: m)
+				s: 0.8 
+				v: 1 
+				alpha: (alphaS scale: m).
+			c addShape: (RSEllipse new
+				color: color;
+				model: i -> m;
+				yourself).
+			 ].
+		 ].
+	c newAnimation repeat onStepDo: [ :t | 
+		frame := frame + 1.
+		angleSp := frame / 250.0 * (Float pi * 2).
+		c shapes do: [ :s | 
+			| angle i m dist diameter |
+			i := s model key.
+			m := s model value.
+			angle := (i + (angleSp sin * m)) degreesToRadians.
+			s position: m * (angle cos @ angle sin).
+			dist := s position distanceTo: 0@0.
+			diameter := dia2 scale: (dia1 scale: dist) sin.
+			s extent: diameter asPoint.
+	 	].
+		c signalUpdate.
+		].
+	c when: RSExtentChangedEvent do: [ 
+		c camera zoomToFit: c extent extent: 500 asPoint ].
+	^ c
+	
+]
+
+{ #category : #examples }
+RSBlocExamples >> example24AnimationLinesInComposite [
+	<script: 'self new example24AnimationLinesInComposite open'>
+	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+	canvas color: Color black.
+	frame := 0.
+	radius := 200.
+	hueOffset := 0.
+	angleSp := 0.
+	"<globals>"
+	soffset := nil. size := nil. mult := 0.
+	"</globals>"
+	shape := [ :array |
+		array collect: [ :m | | com ang a line |
+			com := RSComposite new.
+			com model: m + soffset.
+			ang := m degreesToRadians.
+			a := Float halfPi + ang.
+			com propertyAt: #offset put: a * size.
+			line := RSLine new
+				width: 1.5;
+				yourself.
+				
+			com add: line.
+			com translateTo: ang cos @ ang sin * radius * mult.
+			com matrix rotateByRadians: a.
+			com ] ].
+	
+	soffset := 0. size := 12. mult := 1.
+	shapes := shape value: (0 to: 359 by: 12).
+	canvas addAll: shapes.
+	
+	soffset := 180. size := 8. mult := 0.5.
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes.
+	
+	soffset := 120. size := 4. mult := 0.5@0.75.
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes."
+	
+	"soffset := 240. size := 4. mult := 0.75@0.5.
+	shapes := shape value: (0 to: 359 by: 5).
+	canvas addAll: shapes.
+	shapes := canvas nodes.
+	canvas addShape: (RSLabel new 
+		text: 'Roassal';
+		fontSize: 30;
+		border: (RSBorder new color: Color white);
+		color: nil).
+	canvas newAnimation repeat onStepDo: [ :t |
+		frame := frame + 1. 
+		angleSp := frame / 300 * Float twoPi.
+		hueOffset := hueOffset + 1.
+		shapes do: [ :s | | pos line |
+			pos := (angleSp negated + (s propertyAt: #offset)) cos * 30.
+			line := s shapes first.
+			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
+			line endPoint: 0@ pos ].
+		 ].
+	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
 	^ canvas
 ]
