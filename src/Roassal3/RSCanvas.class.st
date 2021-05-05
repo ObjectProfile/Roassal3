@@ -418,6 +418,12 @@ RSCanvas >> playAnimations [
 ]
 
 { #category : #private }
+RSCanvas >> privExtent: aRect [
+
+	extent := aRect
+]
+
+{ #category : #private }
 RSCanvas >> privateEdges [
 	^ edges
 ]

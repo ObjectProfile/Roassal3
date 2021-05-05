@@ -4,16 +4,18 @@ I am a basic presenter for widgets in roassal with the Spec system
 Class {
 	#name : #SpRoassalPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
+	#traits : 'SpTContextMenu',
+	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
-		'script',
-		'currentCanvas'
+		'#script',
+		'#currentCanvas'
 	],
 	#category : #'Roassal3-Spec-Core'
 }
 
 { #category : #specs }
 SpRoassalPresenter class >> adapterName [
-	^ #SpRoassalMorphicAdapter
+	^ #RoassalAdapter
 ]
 
 { #category : #'instance creation' }
@@ -39,6 +41,14 @@ SpRoassalPresenter >> initialize [
 	script whenChangedDo: [ :s | self refresh ].
 ]
 
+{ #category : #initialization }
+SpRoassalPresenter >> initializePrivateHooks [
+
+	currentCanvas ifNil: [ currentCanvas := RSCanvas new ].
+	
+	super initializePrivateHooks
+]
+
 { #category : #public }
 SpRoassalPresenter >> refresh [ 
 	self changed: #applyScript with: #()
@@ -57,4 +67,12 @@ SpRoassalPresenter >> script [
 { #category : #accessing }
 SpRoassalPresenter >> script: anObject [
 	script value: anObject
+]
+
+{ #category : #accessing }
+SpRoassalPresenter >> whenPresenterResized: aBlock [
+
+	self announcer 
+		when: PresenterResized 
+		do: [ :ann | aBlock cull: ann extent ]
 ]

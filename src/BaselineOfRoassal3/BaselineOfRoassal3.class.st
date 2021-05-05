@@ -53,7 +53,10 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
 	'Roassal3-Menu'
-	'Roassal3-Spec')
+	'Roassal3-Spec'
+	'Roassal3-Spec-Morphic'
+	'Roassal3-Spec-Obsolete'
+	)
 ]
 
 { #category : #baselines }
