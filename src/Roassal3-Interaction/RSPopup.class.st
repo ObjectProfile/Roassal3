@@ -136,6 +136,30 @@ RSPopup >> shapeBuilder [
 
 { #category : #accessing }
 RSPopup >> shapeBuilder: aShapeBuilder [
+	"Let one customize the way the popup is generated. The method accept a shape builder or a one-argument-block. For example:
+	
+```
+canvas := RSCanvas new.
+
+shapes := RSLabel models: (1 to: 10).
+canvas addAll: shapes.
+RSGridLayout on: shapes.
+
+popup := RSPopup new.
+popup shapeBuilder: [ :aNumber |
+	| g |
+	g := RSGroup new.
+	g addAll: (RSCircle models: (1 to: aNumber)).
+	RSGridLayout on: g.
+	g asShape 
+		color: Color white darker darker;
+		padding: 5.
+].
+shapes @ popup.
+
+canvas zoomToFit.
+canvas open
+```"
 	shapeBuilder := aShapeBuilder
 ]
 
