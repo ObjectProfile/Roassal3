@@ -29,6 +29,10 @@ GtkRoassalDrawingArea >> canvas: anObject [
 ]
 
 { #category : #drawing }
+GtkRoassalDrawingArea >> checkSession [
+]
+
+{ #category : #drawing }
 GtkRoassalDrawingArea >> drawOnAthensCanvas: aCanvas [
 
 	aCanvas surface clear: Color white.
@@ -37,15 +41,13 @@ GtkRoassalDrawingArea >> drawOnAthensCanvas: aCanvas [
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true.
 	[  
-		"self checkSession."
-		"self recreateSurfaceIfNecessary."
-"		
-		aCanvas setPaint: trachelCanvas color.
-		aCanvas setPaint: Color red.
-		trachelCanvas playAnimations.
-	"	self drawShapesWithBackground: canvas color.
-"		activeSurface hasBeenFreed ifTrue: [ self createSurface ].	
-"
+		self checkSession.
+		
+		aCanvas setPaint: canvas color.
+		canvas playAnimations.
+	
+		self drawShapesWithBackground: canvas color.
+
 		aCanvas pathTransform restoreAfter: [
 			aCanvas pathTransform loadIdentity.
 			aCanvas paintMode restoreAfter: [
@@ -100,7 +102,7 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 		"We display the elements that are subject to the camera"
 		camera := canvas camera.
 		athensCanvas pathTransform
-			"translateBy: (self extent / 2) asFloatPoint;"
+			translateBy: (self extent / 2) asFloatPoint;
 			scaleBy: camera scale asFloat;
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
