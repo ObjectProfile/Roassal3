@@ -142,7 +142,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 				self canvas camera translateTo: self canvas camera position x @ ((anAdjustment value))] .  
 			drawingArea changed]) connectTo: verticalAdjustment.
 
-	(GtkScrollBarValueChangedCallback
+	(GtkAdjustmentValueChangedCallback
 		do: [ :anAdjustment | 
 			| x |
 			anAdjustment pinInMemory.
