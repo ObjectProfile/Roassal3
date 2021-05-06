@@ -19,6 +19,16 @@ SpRoassalPresenter class >> adapterName [
 ]
 
 { #category : #'instance creation' }
+SpRoassalPresenter class >> on: anOwningPresenter withCanvas: aTrachelCanvas [
+
+	^ self basicNew
+		owner: anOwningPresenter;
+		canvas: aTrachelCanvas;
+		initialize;
+		yourself
+]
+
+{ #category : #'instance creation' }
 SpRoassalPresenter class >> open [
 	<script>
 	^ self new openWithSpec
