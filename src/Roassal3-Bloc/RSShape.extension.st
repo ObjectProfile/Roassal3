@@ -7,14 +7,14 @@ RSShape >> asBlElement [
 ]
 
 { #category : #'*Roassal3-Bloc' }
-RSShape >> blBackground [
-
-	^ self paint ifNil: [ Color transparent ]
-]
-
-{ #category : #'*Roassal3-Bloc' }
 RSShape >> blBorder [
 
 	^ self border ifNotNil: [ :b | 
 		  BlBorder paint: b paint width: b width ]
+]
+
+{ #category : #'*Roassal3-Bloc' }
+RSShape >> blPaint [
+
+	^ self paint ifNil: [ Color transparent ]
 ]

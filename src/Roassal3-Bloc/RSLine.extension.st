@@ -6,7 +6,7 @@ RSLine >> asBlElement [
 	^ self asBlGeometry asElement
 		  size: self encompassingRectangle extent;
 		  border: self blBorder;
-		  background: self blBackground;
+		  background: self blPaint;
 		  yourself
 ]
 

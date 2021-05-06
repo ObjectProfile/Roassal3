@@ -13,7 +13,7 @@ RSBoundingShape >> asBlElement [
 			  aBuilder
 					translateBy: self baseRectangle extent / -2 ];
 		  border: self blBorder;
-		  background: self blBackground;
+		  background: self blPaint;
 		  yourself
 ]
 
