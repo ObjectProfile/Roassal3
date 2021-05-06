@@ -33,62 +33,28 @@ GtkRoassalDrawingArea >> checkSession [
 ]
 
 { #category : #drawing }
-GtkRoassalDrawingArea >> drawOnAthensCanvas: aCanvas [
+GtkRoassalDrawingArea >> drawOnAthensCanvas: anAthensCanvas [
 
-	aCanvas surface clear: Color white.
-
+	anAthensCanvas surface clear: canvas color.
 
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true.
 	[  
 		self checkSession.
 		
-		aCanvas setPaint: canvas color.
+		anAthensCanvas setPaint: canvas color.
 		canvas playAnimations.
 	
 		self drawShapesWithBackground: canvas color.
 
-		aCanvas pathTransform restoreAfter: [
-			aCanvas pathTransform loadIdentity.
-			aCanvas paintMode restoreAfter: [
-				aCanvas 
+		anAthensCanvas pathTransform restoreAfter: [
+			anAthensCanvas pathTransform loadIdentity.
+			anAthensCanvas paintMode restoreAfter: [
+				anAthensCanvas 
 					setPaint: activeSurface;
 					drawShape: (0@0 extent: self extent) ] ] ]
 	ensure: [ 
 		isDrawing := false ]
-]
-
-{ #category : #drawing }
-GtkRoassalDrawingArea >> drawShapes [
-	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	
-	activeSurface drawDuring: [ :athensCanvas | 
-		| camera canvasRect |
-		canvas clearBackground
-			ifTrue: [ activeSurface clear: Color white ].
-		"We display the elements that are subject to the camera"
-		camera := canvas camera.
-		athensCanvas pathTransform
-			"translateBy: (self extent / 2) asFloatPoint;"
-			scaleBy: camera scale asFloat;
-			translateBy: camera position negated asFloatPoint.
-		renderer canvas: athensCanvas.
-		canvasRect := Rectangle 
-			origin: canvas camera position
-			extent: canvas extent / camera scale.
-		canvas shapes do: [ :trachelShape | 
-			(trachelShape encompassingRectangle intersects: canvasRect)
-				ifTrue: [ 
-					trachelShape accept: renderer ] ].
-		self showRectanglesIfNecessary: canvas shapes.
-		"We display the elements that are _NOT_ subject to the camera"
-		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-		canvas fixedShapes do: [ :trachelShape | 
-			trachelShape accept: renderer ].
-		"debug mode to show encompassingRectangles"
-		self showRectanglesIfNecessary: canvas fixedShapes. ]
-		
-
 ]
 
 { #category : #drawing }
