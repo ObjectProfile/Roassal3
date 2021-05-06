@@ -36,7 +36,8 @@ Class {
 		'scale',
 		'position',
 		'canvas',
-		'extent'
+		'extent',
+		'originMode'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -103,6 +104,21 @@ RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
 	scale := 1.0000001.
+	originMode := #center.
+]
+
+{ #category : #accessing }
+RSCamera >> originMode [ 
+
+	"#center or #topLeft"
+
+	^ originMode
+]
+
+{ #category : #accessing }
+RSCamera >> originMode: anObject [
+
+	originMode := anObject
 ]
 
 { #category : #accessing }

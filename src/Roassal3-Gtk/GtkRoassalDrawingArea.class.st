@@ -70,8 +70,11 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 			ifTrue: [ activeSurface clear: backgroundColor ].
 		"We display the elements that are subject to the camera"
 		camera := canvas camera.
+
+		camera originMode = #center ifTrue: [ 
+			athensCanvas pathTransform translateBy: (self extent / 2) asFloatPoint ].
+		
 		athensCanvas pathTransform
-			translateBy: (self extent / 2) asFloatPoint;
 			scaleBy: camera scale asFloat;
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
