@@ -917,8 +917,7 @@ RSBlocExamples >> example24AnimationLinesInComposite [
 	canvas addShape: (RSLabel new 
 		text: 'Roassal';
 		fontSize: 30;
-		border: (RSBorder new color: Color white);
-		color: nil).
+		color: Color white).
 	canvas newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1. 
 		angleSp := frame / 300 * Float twoPi.
