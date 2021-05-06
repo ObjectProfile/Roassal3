@@ -133,7 +133,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 		
 	drawingArea connectSizeAllocate: [ :aRect | self sizeChangedTo: aRect ].
 
-	(GtkScrollBarValueChangedCallback
+	(GtkAdjustmentValueChangedCallback
 		do: [ :anAdjustment|	
 			| y |		
 			anAdjustment pinInMemory.
@@ -166,37 +166,12 @@ GtkRoassalDrawingAreaBox >> initialize [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> initializeTextEditorIn: overlayLayout [
 
-	| fixed provider context | 
+	| fixed | 
 
 	textEditor := GtkEntry new.
 			
 	fixed := GtkFixed new.
-	fixed add: textEditor.
-	fixed moveChild: textEditor to: (5@5).
 	overlayLayout addOverlay: fixed.
-
-	textEditor setSizeRequestWidth: -1 height: -1.
-
-	provider := GtkCssProvider
-		newFromString: '* {border: none; padding: 1px;  min-height: 0px;  min-width: 0px; }
-		*:active
-{
-    border: none;
-    border-style: none;
-}
-
-*:focus
-{
-    border: none;
-    border-style: none; 
-}'.
-	context := textEditor styleContext.
-	context addProvider: provider.
-	textEditor connectKeyPressEvent: [ :event | 
-		event isEscape ifTrue: [ self inPlaceEditConnector leftWithEscape ]. 
-		event isReturn ifTrue: [ self inPlaceEditConnector leftWithReturn ]. 
-		textEditor imContextFilterKeypress: event.
-	].
 
 	overlayLayout setOverlayPassThrougth: true child: fixed.
 	
@@ -204,7 +179,6 @@ GtkRoassalDrawingAreaBox >> initializeTextEditorIn: overlayLayout [
 	overlay 
 		overlay: overlayLayout;
 		fixed: fixed;
-		content: textEditor;
 		position: 0@0;
 		extent: 0@0
 		
@@ -261,7 +235,7 @@ GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 		pageIncrement: cameraRect width asInteger
 		pageSize: cameraRect width asInteger.
 		
-	overlay fixed moveChild: overlay content to: overlay position - self camera position.
+	"overlay fixed moveChild: overlay content to: overlay position - self camera position."
 ]
 
 { #category : #accessing }
