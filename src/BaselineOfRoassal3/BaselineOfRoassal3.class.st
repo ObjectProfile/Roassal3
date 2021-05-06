@@ -110,7 +110,8 @@ BaselineOfRoassal3 >> registerPackages: spec [
 		
 	spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
 	
-
+	spec package: #'Roassal3-Gtk'.
+	spec package: #'Roassal3-Spec-Gtk'.
 
 
 
