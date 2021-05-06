@@ -134,6 +134,16 @@ RSCompositeTest >> testHasChildren [
 ]
 
 { #category : #tests }
+RSCompositeTest >> testModelForIt [
+
+	| s |
+	s := RSComposite model: 42 forIt: [ :ss :obj | ss model: (obj + 1). ss color: Color pink ].
+	self assert: s class equals: RSComposite.
+	self assert: s model equals: 43.
+	self assert: s color equals: Color pink
+]
+
+{ #category : #tests }
 RSCompositeTest >> testPaddingOkay [
 	"No error should be raised"
 	
