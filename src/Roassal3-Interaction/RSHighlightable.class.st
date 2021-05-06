@@ -186,6 +186,15 @@ RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine fr
 ]
 
 { #category : #'instance creation' }
+RSHighlightable class >> green [
+	| inst |
+	inst := self new.
+	inst highlightColor: Color green.
+	^ inst
+	
+]
+
+{ #category : #'instance creation' }
 RSHighlightable class >> red [
 	| inst |
 	inst := self new.
@@ -479,6 +488,12 @@ RSHighlightable >> highlightShapesFor: aShape [
 	^ highlightShapes rsValue: aShape
 ]
 
+{ #category : #'public - hooks' }
+RSHighlightable >> incomingLines [
+	self highlightShapes: [ :s | 
+		s incomingLines collect: #yourself as: RSGroup ].
+]
+
 { #category : #initialization }
 RSHighlightable >> initialize [
 	super initialize.
@@ -499,6 +514,12 @@ RSHighlightable >> onShape: aShape [
 	aShape
 		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
+]
+
+{ #category : #'public - hooks' }
+RSHighlightable >> outgoingLines [
+	self highlightShapes: [ :s | 
+		s outgoingLines collect: #yourself as: RSGroup ].
 ]
 
 { #category : #announcer }

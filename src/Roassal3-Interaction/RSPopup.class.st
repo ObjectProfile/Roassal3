@@ -49,6 +49,56 @@ shapes @ popup.
 canvas zoomToFit.
 ```
 
+Anoter example, more complex:
+
+```
+packages := RPackageOrganizer default packages select: [ :rPak | rPak packageName beginsWith: 'Roassal3' ].
+
+canvas := RSCanvas new.
+shapes := RSBox models: packages.
+canvas addAll: shapes.
+
+shapes @ RSDraggable.
+
+RSNormalizer size
+	shapes: shapes;
+	from: 5; to: 20;
+	normalize: [ :rPackage | rPackage definedClasses size ].
+
+lb := RSLineBuilder line.
+lb shape color: Color gray translucent.
+lb moveBehind.
+lb shapes: shapes.
+lb connectToAll: #dependentPackages.
+
+popup := RSPopup new.
+popup shapeBuilder: [ :package |
+	| g nodes lbl |
+	g := RSGroup new.
+	nodes := RSBox models: package definedClasses.
+	nodes color: Color blue.
+	g addAll: nodes.
+	tlb := RSLineBuilder orthoVertical.
+	tlb canvas: g.
+	tlb shapes: nodes.
+	tlb connectFrom: #superclass.
+	RSTreeLayout on: nodes.
+	lbl := RSLabel text: package packageName.
+	g add: lbl.
+	RSLocation move: lbl above: nodes.
+	g asShape 
+		color: Color white darker translucent; 
+		borderColor: #black;
+		padding: 3.
+].
+shapes @ popup.
+
+shapes @ RSHighlightable red withOutgoingLines.
+shapes @ RSHighlightable green incomingLines.
+
+RSForceBasedLayout new charge: -800; on: shapes.
+canvas @ RSCanvasController.
+```
 "
 Class {
 	#name : #RSPopup,
