@@ -63,7 +63,9 @@ Class {
 		'highlightable',
 		'fixedLabels',
 		'highlightesShapes',
-		'colorsToUse'
+		'colorsToUse',
+		'aShape',
+		'highlightableLabels'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -72,6 +74,17 @@ Class {
 RSSearchInCanvas >> adjustRegExpIfNecessary: regExp [
 
 	^ useExactMatch ifTrue: [ regExp ] ifFalse: [ '*', regExp, '*' ]
+]
+
+{ #category : #'private - events' }
+RSSearchInCanvas >> animateShadowPosition: shadow [
+	(canvas visibleRectangle containsRect: shadow encompassingRectangle)
+		ifTrue: [ ^ self ].
+	canvas newAnimation
+		duration: 500 milliSeconds;
+		from: canvas camera position;
+		to: shadow position;
+		on: canvas camera set: #position:.
 ]
 
 { #category : #util }
@@ -95,6 +108,25 @@ RSSearchInCanvas >> cleanAndResetFixedshapes [
 	self resetFixedShapes
 ]
 
+{ #category : #'private - events' }
+RSSearchInCanvas >> click: evt [
+	| shapes label index shadow nextShadow |
+	label := evt shape.
+	shapes := label propertyAt: #shapesToHighlight.
+	(shapes isNil or: [shapes isEmpty]) ifTrue: [ ^ self ].
+	index := label propertyAt: #index ifAbsent: [ 1 ].
+	shadow := (shapes at: index) propertyAt: #shadow.
+	shadow color: label color.
+	
+	index := evt class == RSMouseLeftClick 
+		ifTrue: [ index % shapes size + 1]
+		ifFalse: [ index - 1 ].
+	index = 0 ifTrue: [ index := shapes size ].
+	label propertyAt: #index put: index.
+	nextShadow := (shapes at: index) propertyAt: #shadow.
+	self animateShadowPosition: nextShadow.
+]
+
 { #category : #'public - configuration' }
 RSSearchInCanvas >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
@@ -113,10 +145,23 @@ RSSearchInCanvas >> colorToUseToHighlight [
 RSSearchInCanvas >> doHighlightShapes: shapesToHighlight [
 
 	shapesToHighlight do: [ :s | 
-		highlightable
+		| shadow pad |
+		pad := 5/ (self scaleFrom: s).
+		shadow := RSBox new
+			fromRectangle: (s encompassingRectangle expandBy: pad);
+			paint: self colorToUseToHighlight;
+			cornerRadius: pad * 0.75;
+			yourself.
+		RSLocation new move: shadow on: s.
+		s parent ifNotNil: [ s parent addShape: shadow before: s ].
+		s propertyAt: #shadow
+			ifPresent: [ :oldShadow | oldShadow remove ].
+			
+		s propertyAt: #shadow put: shadow.
+		"highlightable
 			record: s
 			selector: #color
-			value: self colorToUseToHighlight ].
+			value: self colorToUseToHighlight" ].
 
 	"We record the highlighted shapes"
 	highlightesShapes addAll: shapesToHighlight
@@ -131,7 +176,11 @@ RSSearchInCanvas >> doNotUseExactMatch [
 { #category : #public }
 RSSearchInCanvas >> doUnhighlightShapes [
 
-	highlightesShapes do: [ :s | highlightable restore: s selector: #color ].
+	highlightesShapes do: [ :s | 
+		s propertyAt: #shadow ifPresent: [ :shadow | 
+			shadow remove.
+			s removeKey: #shadow.
+			]. ].
 	highlightesShapes := RSGroup new.
 
 ]
@@ -140,6 +189,24 @@ RSSearchInCanvas >> doUnhighlightShapes [
 RSSearchInCanvas >> fixedLabels [
 	"Return the label that are created when a search is performed"
 	^ fixedLabels
+]
+
+{ #category : #'private - events' }
+RSSearchInCanvas >> hideCurrentShadow: evt [
+	| shapes label index shadow anime |
+	label := evt shape.
+	shapes := label propertyAt: #shapesToHighlight.
+	anime := label propertyAt: #animation.
+	anime ifNotNil: [ 
+		anime stop.
+		label removeKey: #animation ].
+	(shapes isNil or: [shapes isEmpty]) ifTrue: [ ^ self ].
+	index := label propertyAt: #index ifAbsent: [ 1 ].
+	
+	shadow := (shapes at: index) propertyAt: #shadow.
+	shadow color: label color.
+	
+	
 ]
 
 { #category : #accessing }
@@ -155,6 +222,12 @@ RSSearchInCanvas >> initialize [
 	highlightesShapes := RSGroup new.
 	
 	colorsToUse := NSScale ordinalColored: 7.
+	highlightableLabels := RSHighlightable new
+		when: RSHighlightEvent send: #showCurrentShadow: to: self;
+		when: RSUnHighlightEvent send: #hideCurrentShadow: to: self;
+		yourself.
+	
+		
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
 	self
 		colorToHighlight: Color red;
@@ -203,7 +276,7 @@ RSSearchInCanvas >> onShape: aCanvas [
 		when: RSKeyUp do: [ :evt | self processKeyUp: evt ]
 ]
 
-{ #category : #private }
+{ #category : #'private - events' }
 RSSearchInCanvas >> processKeyUp: evt [
 	| keyName |
 	self canvas: evt canvas.
@@ -237,6 +310,13 @@ RSSearchInCanvas >> resetFixedShapes [
 	fixedLabels := RSGroup new
 ]
 
+{ #category : #private }
+RSSearchInCanvas >> scaleFrom: s [
+	"Return the scale used by the canvas of the shape"
+	s canvas ifNil: [ ^ 1 ].
+	^ s canvas camera scale
+]
+
 { #category : #public }
 RSSearchInCanvas >> searchForShapes [
 	"callback called when some shapes have to be search"
@@ -260,8 +340,11 @@ RSSearchInCanvas >> searchForShapes: regExp [
 	self doHighlightShapes: shapesToHighlight.
 
 	lbl := RSLabel text: regExp model: shapesToHighlight size asString, ' elements'.
+	lbl propertyAt: #shapesToHighlight put: shapesToHighlight.
+	
 	lbl fontSize: 14.
-	lbl @ RSPopup.
+	lbl @ RSPopup; @ highlightableLabels.
+	lbl when: RSMouseClick send: #click: to: self.
 	lbl color: self colorToUseToHighlight.
 	canvas add: lbl.
 	lbl setAsFixed.
@@ -283,6 +366,35 @@ RSSearchInCanvas >> shapesToHighlightUsingRegExp: regExp [
 		select: [ :s | regExp match: s model asString ].
 
 	^ shapesToHighlight
+]
+
+{ #category : #'private - events' }
+RSSearchInCanvas >> showCurrentShadow: evt [
+	| shapes label anime index shadow |
+	label := evt shape.
+	shapes := label propertyAt: #shapesToHighlight.
+	anime := label propertyAt: #animation.
+	anime ifNotNil: [ anime stop ].
+	(shapes isNil or: [shapes isEmpty]) ifTrue: [ ^ self ].
+	index := label propertyAt: #index ifAbsent: [ 1 ].
+	shadow := (shapes at: index) propertyAt: #shadow.
+	self animateShadowPosition: shadow.
+	anime := label newAnimation
+		repeat;
+		duration: 1 second;
+		scale: (NSScale linear
+			domain: #(0 0.5 1);
+			range: {label color. label color muchDarker. label color});
+		onStepDo: [:newColor | 
+			
+			index := label propertyAt: #index ifAbsent: [ 1 ].
+			shadow := (shapes at: index) propertyAt: #shadow.
+			shadow color: newColor.
+			shadow signalUpdate.
+			].
+	label propertyAt: #animation put: anime.
+	
+	
 ]
 
 { #category : #util }

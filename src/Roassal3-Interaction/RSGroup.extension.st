@@ -18,3 +18,8 @@ c
 "
 	self do: [ :e | e @ interaction ].
 ]
+
+{ #category : #'*Roassal3-Interaction' }
+RSGroup >> addInteraction: interaction [
+	self do: [ :e | e addInteraction: interaction ].
+]
