@@ -1,3 +1,6 @@
+"
+Gtk Athens drawing area with an associated Roassal canvas
+"
 Class {
 	#name : #GtkRoassalDrawingArea,
 	#superclass : #GtkAthensDrawingArea,
@@ -28,7 +31,7 @@ GtkRoassalDrawingArea >> canvas: anObject [
 	self repaint
 ]
 
-{ #category : #drawing }
+{ #category : #private }
 GtkRoassalDrawingArea >> checkSession [
 ]
 
@@ -79,7 +82,6 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 			((trachelShape encompassingRectangle) intersects: canvasRect)
 				ifTrue: [ 
 					trachelShape accept: renderer ] ].
-		self showRectanglesIfNecessary: canvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
 		canvas fixedShapes do: [ :trachelShape | 
@@ -90,13 +92,13 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 
 ]
 
-{ #category : #drawing }
+{ #category : #accessing }
 GtkRoassalDrawingArea >> extent [
 
 	^ self canvas extent
 ]
 
-{ #category : #drawing }
+{ #category : #initialization }
 GtkRoassalDrawingArea >> initialize [
 
 	super initialize.

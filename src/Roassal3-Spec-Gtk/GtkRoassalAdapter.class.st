@@ -2,7 +2,7 @@ Class {
 	#name : #GtkRoassalAdapter,
 	#superclass : #GtkAdapter,
 	#instVars : [
-		'trachelCanvas',
+		'roassalCanvas',
 		'drawingArea',
 		'anyButtonPressed',
 		'eventBeginingDragging',
@@ -17,6 +17,22 @@ Class {
 	#category : #'Roassal3-Spec-Gtk'
 }
 
+{ #category : #examples }
+GtkRoassalAdapter class >> example [ 
+
+	<example>
+	
+	| app presenter box | 
+
+	app := SpApplication new.
+	app useBackend: #Gtk.
+	presenter := SpRoassalPresenter newApplication: app.
+	box := RSBox new size: 200.
+	presenter openWithSpec.
+	presenter canvas addShape: box.
+	presenter canvas signalUpdate
+]
+
 { #category : #'instance creation' }
 GtkRoassalAdapter class >> trachelCanvas: aCanvas [
 
@@ -25,307 +41,69 @@ GtkRoassalAdapter class >> trachelCanvas: aCanvas [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 GtkRoassalAdapter >> addModelTo: gtkWidget [
 
 	widget := gtkWidget.
 	
-	self addModelToTrachelWidget: self innerWidget.
+	self addModelToDrawingArea: self innerWidget.
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> addModelToTrachelWidget: trWidget [
+{ #category : #building }
+GtkRoassalAdapter >> addModelToDrawingArea: aGtkRoassalDrawingArea [
 
-	trWidget events: GDK_ALL_EVENTS_MASK value.
+	aGtkRoassalDrawingArea events: GDK_ALL_EVENTS_MASK value.
 	
 	self model contextMenu ifNotNil: [ 
 		self updateMenu ].
 
 	"widget connectClicked: [ self inspect ]."
-	trWidget connectKeyPressEvent:  [ :event | self inform: event type asString. true ].
+	aGtkRoassalDrawingArea connectKeyPressEvent:  [ :event | 
+		self inform: event type asString. true ].
 	
-	trWidget connectButtonPressEvent:  [ :event | 
+	aGtkRoassalDrawingArea connectButtonPressEvent:  [ :event | 
 		event isDoubleClick 
 			ifTrue: [ self mouseDoubleClick: event ]
 			ifFalse: [ self mouseDown: event. true ] .		
 		true ].
-	trWidget connectButtonReleaseEvent:  [ :event | self mouseUp: event. true ].
-	trWidget connectMotionNotify: [ :event | self mouseMove: event. true ].
-	trWidget connectEnterNotify: [ :event | self mouseEnter: event. true ].
-	trWidget connectLeaveNotify: [ :event | self mouseLeave: event. true ].
-	trWidget connectSizeAllocate: [ :aRect | self resizeTo: aRect ].
-
+	aGtkRoassalDrawingArea connectButtonReleaseEvent:  [ :event | self mouseUp: event. true ].
+	aGtkRoassalDrawingArea connectMotionNotify: [ :event | self mouseMove: event. true ].
+	aGtkRoassalDrawingArea connectEnterNotify: [ :event | self mouseEnter: event. true ].
+	aGtkRoassalDrawingArea connectLeaveNotify: [ :event | self mouseLeave: event. true ].
+	aGtkRoassalDrawingArea connectSizeAllocate: [ :aRect | self resizeTo: aRect ].
 	
+	aGtkRoassalDrawingArea connectScroll: [ :event | self mouseWheel: event. true ].
+
 "	widtrWidgetget connectMotionNotify: [ :arg | self inform: arg x asString. false ].
-"	trWidget connectScroll: [ :event | self mouseWheel: event. true ].
-"	trWidget connect: 'button_press_event' do: [ #down logCr ].	
+	trWidget connect: 'button_press_event' do: [ #down logCr ].	
 	trWidget connect: 'button_release_event' do: [ #up logCr ].
 	trWidget connect: 'key_press_event' do: [ #keyPress logCr ].
 	trWidget connect: 'key_release_event' do: [ #keyRelease logCr ].
 	trWidget connect: 'key_press_event' do: [ #keyPress logCr ].
-"
-"	trWidget connect: 'enter-notify-event' do: [ #enter logCr ].
+	trWidget connect: 'enter-notify-event' do: [ #enter logCr ].
 	trWidget connect: 'leave-notify-event' do: [ #leave logCr ].
 "
 
 ]
 
-{ #category : #accessing }
+{ #category : #'events support' }
 GtkRoassalAdapter >> announceToEventOverseer: evt [
-	"self eventOverseer ifNil: [ ^ self ].
-	self eventOverseer firedEvent: evt "
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
-	| relativePosition trEvent shape |
-	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
-
-	trEvent := anEventClass fromGtkEvent: aMorphicEvent.
-	trEvent
-		morph: self;
-		canvas: trachelCanvas;
-		shape: shape;
-		position: relativePosition.
-	^ trEvent
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent under: aShape [
-	| relativePosition shape |
-	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self
-		shapeWithAction: anActionClass
-		forPositionInPixels: relativePosition
-		under: aShape.
-	^ (anEventClass fromGtkEvent: aMorphicEvent)
-		morph: self;
-		canvas: trachelCanvas;
-		shape: shape;
-		position: relativePosition;
-		yourself
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> eventOfClass: anEventClass from: aMorphicEvent [
-	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> eventOfClass: anEventClass shape: aShape from: aMorphicEvent [
-	| relativePosition trEvent |
-	relativePosition := self relativePositionFor: aMorphicEvent.
-
-	trEvent := anEventClass fromGtkEvent: aMorphicEvent.
-	trEvent
-		morph: self;
-		canvas: trachelCanvas;
-		shape: aShape;
-		position: relativePosition.
-	^ trEvent
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> eventOverseer [
-	^ trachelCanvas eventOverseer
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> handleMouseOver: aMorphicEvent [
-	| currentElement trEvent |
-
-	self isDragging
-		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
-	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
-	currentElement := self shapeForEvent: aMorphicEvent.
-	currentElement == shapeBeingPointed
-		ifTrue: [ ^ self ].
-	trEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
-	trEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: trEvent.
-	shapeBeingPointed := currentElement.
-	self trMouseEnter: aMorphicEvent
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> initialize [ 
-	
-	super initialize.
-	
-	anyButtonPressed := false.
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> innerWidget [ 
-
-	^ widget children first children first children first.
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> isDragging [
-	^ eventBeginingDragging notNil
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseDoubleClick: evt [
-
-	| trEvent evtClass |
-	
-	eventBeginingDragging := nil.
-	anyButtonPressed := false.
-	clickEventClone := nil.
-
-	evtClass := 	nil.
-	evt isPrimaryButton ifTrue: [ evtClass := RSMouseDoubleLeftClick ].
-	evt isSecondaryButton  ifTrue: [ evtClass := RSMouseDoubleRightClick ].
-
-	trEvent := self eventOfClass: evtClass actionClass: evtClass from: evt.
-	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
-	self announceToEventOverseer: trEvent
 
 ]
 
 { #category : #accessing }
-GtkRoassalAdapter >> mouseDown: evt [
-
-	anyButtonPressed := true.
-	
-	clickEventClone := evt copyInMemory.
-	
-	"TRMouseLeftClick"
-	
-"	self inform: 'evt: ', (evt position) asString.
-	self inform: 'point: ', (self relativePositionFor: evt) asString.
-"	
-"	self trMouseDragStart: evt.	
-"
-
-
-"	eventBeginingDragging
-		ifNil:
-			[ evt hand
-				waitForClicksOrDrag: self
-				event: evt
-				selectors: {#trMouseClick:. #trMouseDoubleClick:. nil. #trMouseDragStart:. }
-				threshold: 5.
-			^ self ]."
-
-"	evt anyButtonPressed
-		ifTrue: [ self trMouseDragging: evt ].
-	evt wasHandled: true"
+GtkRoassalAdapter >> canvas [
+	^ roassalCanvas
 ]
 
 { #category : #accessing }
-GtkRoassalAdapter >> mouseEnter: evt [
-	anyButtonPressed
-		ifFalse: [ self trMouseEnter: evt ].
+GtkRoassalAdapter >> canvas: anObject [
+	roassalCanvas := anObject.
 
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aMorphicEvent [
-	| trEventClass |
-	trEventClass := defaultClass.
-	aMorphicEvent redButtonChanged
-		ifTrue: [ trEventClass := leftButtonClass ].
-	aMorphicEvent yellowButtonChanged
-		ifTrue: [ trEventClass := rightButtonClass ].
-	^ self eventOfClass: trEventClass actionClass: defaultClass from: aMorphicEvent
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseLeave: evt [
-	anyButtonPressed
-		ifFalse: [ self trMouseLeave: evt ].
-
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseMove: evt [
-	clickEventClone
-		ifNil: [ anyButtonPressed
-				ifTrue: [ self trMouseDragging: evt ]
-				ifFalse: [ self trMouseMove: evt ].
-			"emulate mouse over"
-			self handleMouseOver: evt ].
-	(clickEventClone notNil
-		and: [ (evt position distanceTo: clickEventClone position) > 5 ])
-		ifTrue: [
-			self trMouseDragStart: clickEventClone.
-			clickEventClone := nil ]
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseUp: evt [
-
-	clickEventClone := nil.
-
-	self isDragging
-		ifTrue: [ 
-			self trMouseDragEnd: evt ]
-		ifFalse: [ 
-			self trMouseClick: evt ]
-
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> mouseWheel: evt [
-	self trMouseWheel: evt
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> newWidget [
-
-	trachelCanvas := model canvas.
-	^ GtkRoassalDrawingAreaBox new 
-		adapter: self;
-		canvas: model canvas.		
-	
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> relativePositionFor: evt [
-	"Return the position within the window"
-			
-	^ "trachelCanvas camera fromPixelToSpace: "evt position
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> resizeTo: aRect [
-
-	trachelCanvas extent: aRect extent.
-	model announcer announce: (PresenterResized new extent: aRect extent).
-	self innerWidget repaint.
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> shapeForEvent: anEvent [
-	"Return the Trachel shape for the event provided as argument"
-	^ self shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> shapeWithAction: eventClass forPositionInPixels: position [
-	"Return the shape with event handler located that contains point"
-	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> shapeWithAction: eventClass forPositionInPixels: position under: aShape [
-	"Return the shape with event handler located that contains point"
-	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position under: aShape
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> shapeWithActionForPositionInPixels: point [
-	"Return the shape with event handler located that contains point"
-	 ^ trachelCanvas shapeWithActionForPositionInPixels: point
-]
-
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseClick: aMorphicEvent [
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseClick: aMorphicEvent [
 	| trEvent evtClass |
 	
 	evtClass := RSMouseClick.
@@ -345,14 +123,14 @@ GtkRoassalAdapter >> trMouseClick: aMorphicEvent [
 		ifLeftButton: TRMouseLeftClick
 		ifRightButton: TRMouseRightClick
 		from: aMorphicEvent."
-	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
 	trEvent shape announce: trEvent.
 	self announceToEventOverseer: trEvent
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseDragEnd: aMorphicEvent [
-	| trEvent dropEvent |
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseDragEnd: aMorphicEvent [
+	| trEvent |
 	trEvent := self eventOfClass: RSMouseDragEnd from: aMorphicEvent.
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
@@ -370,12 +148,12 @@ GtkRoassalAdapter >> trMouseDragEnd: aMorphicEvent [
 	shapeUnderDrag := nil.
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseDragStart: aGdkEventButton [
-	| trEvent trEventClass trUnderDragEvent |
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseDragStart: aGdkEventButton [
+	| trEvent trEventClass |
 	eventBeginingDragging := aGdkEventButton copy.
 	
-	trEventClass := TRMouseDragStart.
+	trEventClass := RSMouseDragStart.
 	aGdkEventButton button = 1
 		ifTrue: [ trEventClass := RSMouseLeftDragStart ].
 	aGdkEventButton button = 2
@@ -398,9 +176,9 @@ GtkRoassalAdapter >> trMouseDragStart: aGdkEventButton [
 	
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseDragging: aMorphicEvent [
-	| trEvent step underShape trUnderDragEvent overEvent |
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseDragging: aMorphicEvent [
+	| trEvent step |
 	eventBeginingDragging ifNil: [ ^ self ].
 	step := aMorphicEvent position - eventBeginingDragging position.
 
@@ -444,58 +222,293 @@ GtkRoassalAdapter >> trMouseDragging: aMorphicEvent [
 	"
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseEnter: aMorphicEvent [
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseEnter: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseEnter from: aMorphicEvent.
 	trEvent shape announce: trEvent.
 	self announceToEventOverseer: trEvent
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseLeave: aMorphicEvent [
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseLeave: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
 	trEvent shape announce: trEvent.
 	self announceToEventOverseer: trEvent
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseMove: aMorphicEvent [
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseMove: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseMove from: aMorphicEvent.
-	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
 	trEvent shape announce: trEvent.
 	self announceToEventOverseer: trEvent
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trMouseWheel: aMorphicEvent [
+{ #category : #events }
+GtkRoassalAdapter >> eventMouseWheel: aMorphicEvent [
 	| trEvent |
 
 	trEvent := self eventOfClass: RSMouseWheelEvent from: aMorphicEvent.
 	trEvent
 		direction: aMorphicEvent direction;
-		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
+		position: (roassalCanvas camera fromPixelToSpace: trEvent position);
 		controlKeyPressed: (aMorphicEvent state & GdkModifierType GDK_CONTROL_MASK value = GdkModifierType GDK_CONTROL_MASK value).
 		
 	trEvent shape announce: trEvent.
 	self announceToEventOverseer: trEvent
 ]
 
-{ #category : #accessing }
-GtkRoassalAdapter >> trachelCanvas [
-	^ trachelCanvas
+{ #category : #'events support' }
+GtkRoassalAdapter >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
+	| relativePosition trEvent shape |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
+
+	trEvent := anEventClass fromGtkEvent: aMorphicEvent.
+	trEvent
+		morph: self;
+		canvas: roassalCanvas;
+		shape: shape;
+		position: relativePosition.
+	^ trEvent
+]
+
+{ #category : #'events support' }
+GtkRoassalAdapter >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent under: aShape [
+	| relativePosition shape |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	shape := self
+		shapeWithAction: anActionClass
+		forPositionInPixels: relativePosition
+		under: aShape.
+	^ (anEventClass fromGtkEvent: aMorphicEvent)
+		morph: self;
+		canvas: roassalCanvas;
+		shape: shape;
+		position: relativePosition;
+		yourself
+]
+
+{ #category : #'events support' }
+GtkRoassalAdapter >> eventOfClass: anEventClass from: aMorphicEvent [
+	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
+]
+
+{ #category : #'events support' }
+GtkRoassalAdapter >> eventOfClass: anEventClass shape: aShape from: aMorphicEvent [
+	| relativePosition trEvent |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+
+	trEvent := anEventClass fromGtkEvent: aMorphicEvent.
+	trEvent
+		morph: self;
+		canvas: roassalCanvas;
+		shape: aShape;
+		position: relativePosition.
+	^ trEvent
+]
+
+{ #category : #'events support' }
+GtkRoassalAdapter >> eventOverseer [
+	^ roassalCanvas eventOverseer
+]
+
+{ #category : #events }
+GtkRoassalAdapter >> handleMouseOver: aMorphicEvent [
+	| currentElement trEvent |
+
+	self isDragging
+		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
+	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
+	currentElement := self shapeForEvent: aMorphicEvent.
+	currentElement == shapeBeingPointed
+		ifTrue: [ ^ self ].
+	trEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
+	trEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: trEvent.
+	shapeBeingPointed := currentElement.
+	self eventMouseEnter: aMorphicEvent
+]
+
+{ #category : #initialization }
+GtkRoassalAdapter >> initialize [ 
+	
+	super initialize.
+	
+	anyButtonPressed := false.
+]
+
+{ #category : #'private accessing' }
+GtkRoassalAdapter >> innerWidget [ 
+
+	^ widget children first children first children first.
+]
+
+{ #category : #testing }
+GtkRoassalAdapter >> isDragging [
+	^ eventBeginingDragging notNil
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseDoubleClick: evt [
+
+	| trEvent evtClass |
+	
+	eventBeginingDragging := nil.
+	anyButtonPressed := false.
+	clickEventClone := nil.
+
+	evtClass := 	nil.
+	evt isPrimaryButton ifTrue: [ evtClass := RSMouseDoubleLeftClick ].
+	evt isSecondaryButton  ifTrue: [ evtClass := RSMouseDoubleRightClick ].
+
+	trEvent := self eventOfClass: evtClass actionClass: evtClass from: evt.
+	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseDown: evt [
+
+	anyButtonPressed := true.
+	
+	clickEventClone := evt copyInMemory.
+	
+	"TRMouseLeftClick"
+	
+"	self inform: 'evt: ', (evt position) asString.
+	self inform: 'point: ', (self relativePositionFor: evt) asString.
+"	
+"	self trMouseDragStart: evt.	
+"
+
+
+"	eventBeginingDragging
+		ifNil:
+			[ evt hand
+				waitForClicksOrDrag: self
+				event: evt
+				selectors: {#trMouseClick:. #trMouseDoubleClick:. nil. #trMouseDragStart:. }
+				threshold: 5.
+			^ self ]."
+
+"	evt anyButtonPressed
+		ifTrue: [ self trMouseDragging: evt ].
+	evt wasHandled: true"
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseEnter: evt [
+	anyButtonPressed
+		ifFalse: [ self eventMouseEnter: evt ].
+
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aMorphicEvent [
+	| trEventClass |
+	trEventClass := defaultClass.
+	aMorphicEvent redButtonChanged
+		ifTrue: [ trEventClass := leftButtonClass ].
+	aMorphicEvent yellowButtonChanged
+		ifTrue: [ trEventClass := rightButtonClass ].
+	^ self eventOfClass: trEventClass actionClass: defaultClass from: aMorphicEvent
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseLeave: evt [
+	anyButtonPressed
+		ifFalse: [ self eventMouseLeave: evt ].
+
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseMove: evt [
+	clickEventClone
+		ifNil: [ anyButtonPressed
+				ifTrue: [ self eventMouseDragging: evt ]
+				ifFalse: [ self eventMouseMove: evt ].
+			"emulate mouse over"
+			self handleMouseOver: evt ].
+	(clickEventClone notNil
+		and: [ (evt position distanceTo: clickEventClone position) > 5 ])
+		ifTrue: [
+			self eventMouseDragStart: clickEventClone.
+			clickEventClone := nil ]
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseUp: evt [
+
+	clickEventClone := nil.
+
+	self isDragging
+		ifTrue: [ 
+			self eventMouseDragEnd: evt ]
+		ifFalse: [ 
+			self eventMouseClick: evt ]
+
+]
+
+{ #category : #'gtk events' }
+GtkRoassalAdapter >> mouseWheel: evt [
+	self eventMouseWheel: evt
+]
+
+{ #category : #building }
+GtkRoassalAdapter >> newWidget [
+
+	roassalCanvas := model canvas.
+	^ GtkRoassalDrawingAreaBox new 
+		adapter: self;
+		canvas: model canvas.		
+	
 ]
 
 { #category : #accessing }
-GtkRoassalAdapter >> trachelCanvas: anObject [
-	trachelCanvas := anObject.
+GtkRoassalAdapter >> relativePositionFor: evt [
+	"Return the position within the window"
+			
+	^ evt position
+]
 
+{ #category : #protocol }
+GtkRoassalAdapter >> removeSubWidgets [
 ]
 
 { #category : #accessing }
-GtkRoassalAdapter >> unsubscribe [
+GtkRoassalAdapter >> resizeTo: aRect [
 
-	super unsubscribe
+	roassalCanvas extent: aRect extent.
+	model announcer announce: (PresenterResized new extent: aRect extent).
+	self innerWidget repaint.
+]
+
+{ #category : #accessing }
+GtkRoassalAdapter >> shapeForEvent: anEvent [
+	"Return the Trachel shape for the event provided as argument"
+	^ self shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
+]
+
+{ #category : #accessing }
+GtkRoassalAdapter >> shapeWithAction: eventClass forPositionInPixels: position [
+	"Return the shape with event handler located that contains point"
+	 ^ roassalCanvas shapeWithAction: eventClass forPositionInPixels: position
+]
+
+{ #category : #accessing }
+GtkRoassalAdapter >> shapeWithAction: eventClass forPositionInPixels: position under: aShape [
+	"Return the shape with event handler located that contains point"
+	 ^ roassalCanvas shapeWithAction: eventClass forPositionInPixels: position under: aShape
+]
+
+{ #category : #accessing }
+GtkRoassalAdapter >> shapeWithActionForPositionInPixels: point [
+	"Return the shape with event handler located that contains point"
+	 ^ roassalCanvas shapeWithActionForPositionInPixels: point
 ]

@@ -1,3 +1,6 @@
+"
+Gtk drawing area with an Athens canvas
+"
 Class {
 	#name : #GtkAthensDrawingArea,
 	#superclass : #GtkDrawingArea,
