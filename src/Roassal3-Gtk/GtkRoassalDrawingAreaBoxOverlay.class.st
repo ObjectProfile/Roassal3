@@ -1,3 +1,6 @@
+"
+Store information about the overlay of the GtkRoassalDrawingAreaBox
+"
 Class {
 	#name : #GtkRoassalDrawingAreaBoxOverlay,
 	#superclass : #Object,

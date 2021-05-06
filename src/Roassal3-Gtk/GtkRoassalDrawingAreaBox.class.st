@@ -1,3 +1,6 @@
+"
+Gtk Roassal canvas drawing area with scrollbars and overlay for putting Gtk elements into the canvas.
+"
 Class {
 	#name : #GtkRoassalDrawingAreaBox,
 	#superclass : #GtkBox,
@@ -74,7 +77,7 @@ GtkRoassalDrawingAreaBox >> encompassingRectangle [
 { #category : #accessing }
 GtkRoassalDrawingAreaBox >> extent [
 
-	^ drawingArea trachelCanvas extent
+	^ drawingArea canvas extent
 ]
 
 { #category : #accessing }
@@ -185,6 +188,12 @@ GtkRoassalDrawingAreaBox >> minSize [
 ]
 
 { #category : #accessing }
+GtkRoassalDrawingAreaBox >> recalculateOverlay [
+
+	"do nothing here. Override in subclasses"
+]
+
+{ #category : #accessing }
 GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 	| vScrollbarPosition needsUpdate cameraRect contentRect |
 	needsUpdate := forceUpdate.
@@ -222,7 +231,7 @@ GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 		pageIncrement: cameraRect width asInteger
 		pageSize: cameraRect width asInteger.
 		
-	"overlay fixed moveChild: overlay content to: overlay position - self camera position."
+	self recalculateOverlay.
 ]
 
 { #category : #accessing }
