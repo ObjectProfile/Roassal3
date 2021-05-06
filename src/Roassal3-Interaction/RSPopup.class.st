@@ -24,6 +24,31 @@ RSFlowLayout on: c shapes.
 
 c @ RSCanvasController
 ```
+
+Per default, `RSPopup` gives a label as a popup. However, it may be easily customized by using `shapeBuilder:`, which takes a one-argument-block and must return a shape or a composite shape. Consider: 
+
+```
+canvas := RSCanvas new.
+
+shapes := RSLabel models: (1 to: 10).
+canvas addAll: shapes.
+RSGridLayout on: shapes.
+
+popup := RSPopup new.
+popup shapeBuilder: [ :aNumber |
+	| g |
+	g := RSGroup new.
+	g addAll: (RSCircle models: (1 to: aNumber)).
+	RSGridLayout on: g.
+	g asShape 
+		color: Color white darker darker;
+		padding: 5.
+].
+shapes @ popup.
+
+canvas zoomToFit.
+```
+
 "
 Class {
 	#name : #RSPopup,
