@@ -71,6 +71,12 @@ GtkAthensDrawingArea >> drawOnAthensCanvas: aCanvas [
 ]
 
 { #category : #drawing }
+GtkAthensDrawingArea >> extent [ 
+
+	^ 100@100
+]
+
+{ #category : #drawing }
 GtkAthensDrawingArea >> initialize [
 
 	super initialize.

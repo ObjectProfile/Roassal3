@@ -12,8 +12,7 @@ Class {
 		'lastVAdjustment',
 		'lastCameraPosition',
 		'lastScale',
-		'textEditor',
-		'overlay'
+		'overlayInfo'
 	],
 	#pools : [
 		'GdkEventMask'
@@ -90,11 +89,6 @@ GtkRoassalDrawingAreaBox >> gtkTrachel: anObject [
 ]
 
 { #category : #accessing }
-GtkRoassalDrawingAreaBox >> inPlaceEditConnector [
-	^self canvas inPlaceEditConnector
-]
-
-{ #category : #accessing }
 GtkRoassalDrawingAreaBox >> initialize [
 
 	| horizontalOrientation verticalOrientation vbox  |
@@ -116,9 +110,8 @@ GtkRoassalDrawingAreaBox >> initialize [
 	verticalScrollbar := GtkScrollBar orientation: verticalOrientation adjustment: verticalAdjustment.
 
 	vbox := GtkBox newVertical.
-	overlay := GtkOverlay new.
-	overlay add: drawingArea.
-	vbox add: overlay.
+	self initializeOverlayInfo.
+	vbox add: overlayInfo overlay.
 	vbox
 		packEnd: horizontalScrollbar
 		expand: false
@@ -155,8 +148,6 @@ GtkRoassalDrawingAreaBox >> initialize [
 			(self canvas camera position x - x) abs <= 1.0 ifFalse: [ 
 				self canvas camera translateTo: (anAdjustment value) @ self canvas camera position y.].
 			drawingArea changed ]) connectTo: horizontalAdjustment.
-	
-	self initializeTextEditorIn: overlay.
 		
 	self showAll.
 	
@@ -164,23 +155,25 @@ GtkRoassalDrawingAreaBox >> initialize [
 ]
 
 { #category : #accessing }
-GtkRoassalDrawingAreaBox >> initializeTextEditorIn: overlayLayout [
+GtkRoassalDrawingAreaBox >> initializeOverlayInfo [
 
-	| fixed | 
-
-	textEditor := GtkEntry new.
+	| fixed  overlayContainer | 
 			
+	overlayContainer := GtkOverlay new.
 	fixed := GtkFixed new.
-	overlayLayout addOverlay: fixed.
+	overlayContainer add: drawingArea.
+	overlayContainer addOverlay: fixed.
 
-	overlayLayout setOverlayPassThrougth: true child: fixed.
+	overlayContainer setOverlayPassThrougth: true child: fixed.
 	
-	overlay := GtkRoassalDrawingAreaBoxOverlay new.
-	overlay 
-		overlay: overlayLayout;
+	overlayInfo := GtkRoassalDrawingAreaBoxOverlay new.
+	overlayInfo 
+		overlay: overlayContainer;
 		fixed: fixed;
 		position: 0@0;
-		extent: 0@0
+		extent: 0@0.
+		
+	^ overlayInfo
 		
 
 ]
@@ -192,12 +185,6 @@ GtkRoassalDrawingAreaBox >> minSize [
 ]
 
 { #category : #accessing }
-GtkRoassalDrawingAreaBox >> overlay [
-
-	^ overlay
-]
-
-{ #category : #accessing }
 GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 	| vScrollbarPosition needsUpdate cameraRect contentRect |
 	needsUpdate := forceUpdate.
@@ -206,7 +193,7 @@ GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 	lastScale := self canvas camera scale.
 	contentRect := self encompassingRectangle.
 	cameraRect := self cameraRectangle.
-	"self canvas camera privExtent: cameraRect extent floor."
+	self canvas camera privExtent: cameraRect extent floor.
 	vScrollbarPosition := self camera position = lastCameraPosition
 		ifTrue: [ verticalAdjustment value asFloat ]
 		ifFalse: [ needsUpdate := true.

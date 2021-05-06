@@ -139,17 +139,6 @@ GtkRoassalDrawingArea >> initialize [
 ]
 
 { #category : #drawing }
-GtkRoassalDrawingArea >> shouldRender: aShape in: aTrachelCanvas [
-
-	| shapeRectangle cameraRectangle |
-
-	cameraRectangle := (aTrachelCanvas camera position extent: (aTrachelCanvas extent / aTrachelCanvas camera scale)).
-	shapeRectangle := aShape encompassingRectangle.
-	
-	^ true "aShape isVisible isMarkedAsVisible and: [ (cameraRectangle intersects: shapeRectangle)]"
-]
-
-{ #category : #drawing }
 GtkRoassalDrawingArea >> showRectanglesIfNecessary: shapes [
 	canvas showRectangles ifFalse: [ ^ self ].
 	

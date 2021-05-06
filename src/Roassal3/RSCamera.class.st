@@ -35,7 +35,8 @@ Class {
 	#instVars : [
 		'scale',
 		'position',
-		'canvas'
+		'canvas',
+		'extent'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -68,6 +69,12 @@ RSCamera >> canvas: aCanvas [
 { #category : #convertion }
 RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
+]
+
+{ #category : #accessing }
+RSCamera >> extent [ 
+
+	^ extent
 ]
 
 { #category : #convertion }
@@ -117,6 +124,12 @@ returns the value `25 @ 15`
 RSCamera >> position: aPoint [
 	"Set the camera position"
  	position := aPoint
+]
+
+{ #category : #private }
+RSCamera >> privExtent: aRect [
+
+	extent := aRect
 ]
 
 { #category : #accessing }
