@@ -261,13 +261,6 @@ GtkRoassalDrawingAreaBox >> stepIncrement [
 ]
 
 { #category : #accessing }
-GtkRoassalDrawingAreaBox >> trachelCanvas: aCanvas [
-
-	drawingArea canvas: aCanvas.
-
-]
-
-{ #category : #accessing }
 GtkRoassalDrawingAreaBox >> update: anAspect [
 
 	self recalculateScrollbars: false.
