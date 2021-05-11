@@ -18,7 +18,7 @@ Class {
 { #category : #activation }
 RSUMLClassCalypso class >> classUmlTapActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }

@@ -13,13 +13,13 @@ Class {
 { #category : #'as yet unclassified' }
 RSUMLPackageCalypso class >> classUmlTapActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyClassGroup asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
 ]
 
 { #category : #'as yet unclassified' }
 RSUMLPackageCalypso class >> classUmlTapActivation2 [
 	<classAnnotation>
-	^ClyTabActivationStrategy for: RPackage asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
 ]
 
 { #category : #accessing }
