@@ -29,7 +29,14 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
-	self baselineForCommon: spec
+	"https://github.com/ObjectProfile/Roassal3"
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo8'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo8')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
 ]
 
 { #category : #baselines }
