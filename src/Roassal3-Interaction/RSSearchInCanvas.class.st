@@ -60,11 +60,9 @@ Class {
 	#instVars : [
 		'canvas',
 		'useExactMatch',
-		'highlightable',
 		'fixedLabels',
 		'highlightesShapes',
 		'colorsToUse',
-		'aShape',
 		'highlightableLabels'
 	],
 	#category : #'Roassal3-Interaction-Controls'
@@ -130,9 +128,7 @@ RSSearchInCanvas >> click: evt [
 { #category : #'public - configuration' }
 RSSearchInCanvas >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
-	highlightable := RSHighlightable new
-		highlightColor: aColor;
-		yourself.
+	colorsToUse range at: 1 put: aColor.
 ]
 
 { #category : #public }
@@ -142,27 +138,13 @@ RSSearchInCanvas >> colorToUseToHighlight [
 ]
 
 { #category : #public }
+RSSearchInCanvas >> colorsToUse: aNSOrdinalScale [
+	colorsToUse := aNSOrdinalScale
+]
+
+{ #category : #public }
 RSSearchInCanvas >> doHighlightShapes: shapesToHighlight [
-
-	shapesToHighlight do: [ :s | 
-		| shadow pad |
-		pad := 5/ (self scaleFrom: s).
-		shadow := RSBox new
-			fromRectangle: (s encompassingRectangle expandBy: pad);
-			paint: self colorToUseToHighlight;
-			cornerRadius: pad * 0.75;
-			yourself.
-		RSLocation new move: shadow on: s.
-		s parent ifNotNil: [ s parent addShape: shadow before: s ].
-		s propertyAt: #shadow
-			ifPresent: [ :oldShadow | oldShadow remove ].
-			
-		s propertyAt: #shadow put: shadow.
-		"highlightable
-			record: s
-			selector: #color
-			value: self colorToUseToHighlight" ].
-
+	shapesToHighlight do: [ :s | self putShadowOn: s ].
 	"We record the highlighted shapes"
 	highlightesShapes addAll: shapesToHighlight
 ]
@@ -209,11 +191,6 @@ RSSearchInCanvas >> hideCurrentShadow: evt [
 	
 ]
 
-{ #category : #accessing }
-RSSearchInCanvas >> highlightable [
-	^ highlightable
-]
-
 { #category : #initialization }
 RSSearchInCanvas >> initialize [
 
@@ -227,11 +204,8 @@ RSSearchInCanvas >> initialize [
 		when: RSUnHighlightEvent send: #hideCurrentShadow: to: self;
 		yourself.
 	
-		
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	self
-		colorToHighlight: Color red;
-		doNotUseExactMatch
+	self doNotUseExactMatch
 ]
 
 { #category : #util }
@@ -283,6 +257,28 @@ RSSearchInCanvas >> processKeyUp: evt [
 	keyName := evt keyName.
 	keyName = self keyForSearch ifTrue: [ self searchForShapes ].
 	keyName = self keyForReset ifTrue: [ self resetAllHighlightedShapes ]
+]
+
+{ #category : #public }
+RSSearchInCanvas >> putShadowOn: shape [
+	| shadow pad |
+	pad := 5/ (self scaleFrom: shape).
+	shadow := RSBox new
+		fromRectangle: (shape encompassingRectangle expandBy: pad);
+		paint: self colorToUseToHighlight;
+		cornerRadius: pad * 0.75;
+		yourself.
+	
+	shape removeInteractionIfPresent: self class.
+	shape 
+		when: RSPositionChangedEvent do: [ RSLocation new move: shadow on: shape ];
+		when: RSExtentChangedEvent do: [ RSLocation new move: shadow on: shape ].
+	
+	shape parent ifNotNil: [ shape parent addShape: shadow before: shape ].
+	shape propertyAt: #shadow
+		ifPresent: [ :oldShadow | oldShadow remove ].
+		
+	shape propertyAt: #shadow put: shadow.
 ]
 
 { #category : #rendering }
