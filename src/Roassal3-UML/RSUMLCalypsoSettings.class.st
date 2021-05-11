@@ -4,7 +4,8 @@ Settings for UML use within Calypso
 Class {
 	#name : #RSUMLCalypsoSettings,
 	#superclass : #Object,
-	#classVars : [
+	#classInstVars : [
+		'initialSelectionClass',
 		'DarkThemeUMLClassColor',
 		'LightThemeUMLClassColor',
 		'MethodsLimitUML',
@@ -33,6 +34,16 @@ RSUMLCalypsoSettings class >> defaultDarkThemeColorUMLClass [
 RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 	^Color colorFrom: 'ffffce'
+]
+
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> initialSelectionClass [
+	^ initialSelectionClass
+]
+
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> initialSelectionClass: aClass [
+	initialSelectionClass := aClass.
 ]
 
 { #category : #accessing }
@@ -72,6 +83,18 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 				target: self;
 				label: 'Dark Theme UML Class color';
 				default: self defaultDarkThemeColorUMLClass	 ]
+]
+
+{ #category : #settings }
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLInitialSelectionOn: aBuilder [
+	<systemsettings>
+	(aBuilder pickOne: #initialSelectionClass)
+		parent: #useCalypsoUML;
+		label: 'UML initial selection' ;  
+		description: 'Selected a strategy when you open a class with the uml';
+		target: self;
+		domainValues: RSInitialSelection allSubclasses;
+		default: RSDancingSelection
 ]
 
 { #category : #settings }
