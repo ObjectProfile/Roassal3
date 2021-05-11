@@ -641,6 +641,18 @@ b"
 	^ self useAssociations: assocs
 ]
 
+{ #category : #'attach point' }
+RSLineBuilder >> startAttachPoint: startAttachPoint endAttachPoint: endAttachPoint [
+
+	| controller |
+	controller := RSStartEndCPAPController new
+		              controller: self controlPointsController;
+		              startAttachPoint: startAttachPoint;
+		              endAttachPoint: endAttachPoint;
+		              yourself.
+	self controlPointsController: controller
+]
+
 { #category : #accessing }
 RSLineBuilder >> toObject: anObject [
 	^ self toObjects: (Array with: anObject)
