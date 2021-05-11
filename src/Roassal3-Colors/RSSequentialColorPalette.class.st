@@ -15,7 +15,7 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSSequentialColorPalette class >> paletteName [
 	^ #sequential
 ]

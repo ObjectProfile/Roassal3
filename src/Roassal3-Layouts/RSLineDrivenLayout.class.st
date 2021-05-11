@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RSLineDrivenLayout class >> isAbstract [
 	^ self = RSLineDrivenLayout
 ]

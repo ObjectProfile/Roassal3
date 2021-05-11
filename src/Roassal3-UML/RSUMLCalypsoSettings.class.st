@@ -6,22 +6,22 @@ Class {
 	#superclass : #Object,
 	#classInstVars : [
 		'initialSelectionClass',
-		'DarkThemeUMLClassColor',
-		'LightThemeUMLClassColor',
-		'MethodsLimitUML',
-		'UseCalypsoUML'
+		'darkThemeUMLClassColor',
+		'lightThemeUMLClassColor',
+		'methodsLimitUML',
+		'useCalypsoUML'
 	],
 	#category : #'Roassal3-UML-Calypso-Settings'
 }
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor [
-	^ DarkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
+	^ darkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor: aColor [
-	DarkThemeUMLClassColor := aColor
+	darkThemeUMLClassColor := aColor
 ]
 
 { #category : #defaults }
@@ -43,27 +43,27 @@ RSUMLCalypsoSettings class >> initialSelectionClass [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> initialSelectionClass: aClass [
-	initialSelectionClass := aClass.
+	initialSelectionClass := aClass
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor [
-	^LightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
+	^ lightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
-	LightThemeUMLClassColor := aColor
+	lightThemeUMLClassColor := aColor
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML [
-	^ MethodsLimitUML ifNil: [ MethodsLimitUML := 30 ].
+	^ methodsLimitUML ifNil: [ methodsLimitUML := 30 ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
-	MethodsLimitUML := aNumber
+	methodsLimitUML := aNumber
 ]
 
 { #category : #settings }
@@ -125,10 +125,10 @@ RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 
 { #category : #settings }
 RSUMLCalypsoSettings class >> useCalypsoUML [
-	^ UseCalypsoUML ifNil: [ ^ true ].
+	^ useCalypsoUML ifNil: [ ^ true ]
 ]
 
 { #category : #settings }
 RSUMLCalypsoSettings class >> useCalypsoUML: aBoolean [
-	UseCalypsoUML := aBoolean
+	useCalypsoUML := aBoolean
 ]

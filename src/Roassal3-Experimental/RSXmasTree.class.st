@@ -124,7 +124,7 @@ RSXmasTree >> initializeBraches [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSXmasTree >> renderIn: canvas [
 	| color |
 	color := (Color r: 80 g: 0 b: 50 range: 255) alpha: 0.4.
@@ -149,7 +149,7 @@ RSXmasTree >> renderIn: canvas [
 		 ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSXmasTree >> swing [
 	1 to: 3 do: [ :i | | t |
 		t := twigs at: (candidateIndex at: i).
@@ -182,7 +182,7 @@ RSXmasTree >> swing [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSXmasTree >> updateCanvas: canvas [
 	
 	2 to: treeSize do: [ :index | | t mi |

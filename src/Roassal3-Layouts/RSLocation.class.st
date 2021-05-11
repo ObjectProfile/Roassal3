@@ -106,7 +106,7 @@ Class {
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSLocation class >> move: aShapeOrAGroup1 above: aShapeOrAGroup2 [
 	self new above; move: aShapeOrAGroup1 on: aShapeOrAGroup2
 ]
