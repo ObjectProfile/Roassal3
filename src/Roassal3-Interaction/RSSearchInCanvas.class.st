@@ -255,6 +255,7 @@ RSSearchInCanvas >> processKeyUp: evt [
 	| keyName |
 	self canvas: evt canvas.
 	keyName := evt keyName.
+	evt anyModifierKeyPressed ifTrue: [ ^ self ].
 	keyName = self keyForSearch ifTrue: [ self searchForShapes ].
 	keyName = self keyForReset ifTrue: [ self resetAllHighlightedShapes ]
 ]
