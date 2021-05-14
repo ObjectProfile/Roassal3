@@ -36,7 +36,8 @@ RSClusterLayout >> doExecute: nodeElements [
 	"Not much to do if there is only one element"
 	nodeElements size = 1 ifTrue: [ ^ self ].
 	
-	rootNodes := self rootNodesFor: nodeElements .
+	rootNodes := self rootNodesFor: nodeElements.
+	self validateCachedParents.
 	rootNodes do: [ :e | self initializeNode: e ].
 	rootNodes do: [ :e | self computePosition: e ].
 	

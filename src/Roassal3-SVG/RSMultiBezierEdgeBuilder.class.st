@@ -55,7 +55,7 @@ Class {
 	#category : #'Roassal3-SVG-Edges'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSMultiBezierEdgeBuilder class >> multiBezier [
 	^ self new: RSSVGPathLine new.
 ]

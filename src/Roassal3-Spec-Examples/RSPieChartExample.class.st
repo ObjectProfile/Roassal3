@@ -39,7 +39,7 @@ RSPieChartExample >> droplist [
 { #category : #initialization }
 RSPieChartExample >> initializePresenters [
 	| org |
-	droplist := self instantiate: SpLabelledDropList.
+	droplist := self instantiate: SpDropListPresenter.
 	org := RPackage organizer.
 	packages := (org packageNames
 		select: [ :s | '*Roassal3*' match: s ]
@@ -47,7 +47,7 @@ RSPieChartExample >> initializePresenters [
 		sorted: [ :a :b | a linesOfCode > b linesOfCode ].
 	totalSum := packages max: #linesOfCode.
 	droplist
-		label: 'Roassal Packages';
+		"label: 'Roassal Packages';"
 		items: packages;
 		display: [ :i | i name ].
 	chart := self instantiate: SpRoassalPresenter.
@@ -60,7 +60,7 @@ RSPieChartExample >> initializePresenters [
 					aCanvas nodes copy do: #remove.
 					self visualizeChart: aCanvas package: pkg ] ].
 		pie script: [ :view | self visualizePie: view package: pkg ] ].
-	droplist dropList selectIndex: 1
+	droplist selectIndex: 1
 ]
 
 { #category : #initialization }

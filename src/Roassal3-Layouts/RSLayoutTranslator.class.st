@@ -23,7 +23,7 @@ RSLayoutTranslator class >> defaultClass [
 	^ self allSubclasses detect: #isDefault
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RSLayoutTranslator class >> isDefault [
 	^ false
 ]

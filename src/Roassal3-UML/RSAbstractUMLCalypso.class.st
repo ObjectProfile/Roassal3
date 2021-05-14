@@ -11,6 +11,19 @@ Class {
 }
 
 { #category : #building }
+RSAbstractUMLCalypso >> addClassInteractions: builder [
+	builder canvas nodes 
+		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
+		when: RSMouseRightClick do: [ :evt | 
+			| menu |
+			menu := CmdContextMenuActivation 
+				buildContextMenuFor: evt canvas morph 
+				inContext: context.
+			menu popUpInWorld: self currentWorld
+			].
+]
+
+{ #category : #building }
 RSAbstractUMLCalypso >> applyTheme: builder [
 	| theme renderer |
 	theme := Smalltalk ui theme.
@@ -41,6 +54,8 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 	builder classes: self classesToShow.
 	builder canvas @ self canvasController.
 	builder build.
+	self addClassInteractions: builder.
+	
 	^ builder canvas
 ]
 

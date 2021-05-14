@@ -35,7 +35,9 @@ Class {
 	#instVars : [
 		'scale',
 		'position',
-		'canvas'
+		'canvas',
+		'extent',
+		'originMode'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -70,6 +72,12 @@ RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
 ]
 
+{ #category : #accessing }
+RSCamera >> extent [ 
+
+	^ extent
+]
+
 { #category : #convertion }
 RSCamera >> fromPixelToSpace: aPoint [
 
@@ -96,6 +104,21 @@ RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
 	scale := 1.0000001.
+	originMode := #center.
+]
+
+{ #category : #accessing }
+RSCamera >> originMode [ 
+
+	"#center or #topLeft"
+
+	^ originMode
+]
+
+{ #category : #accessing }
+RSCamera >> originMode: anObject [
+
+	originMode := anObject
 ]
 
 { #category : #accessing }
@@ -117,6 +140,12 @@ returns the value `25 @ 15`
 RSCamera >> position: aPoint [
 	"Set the camera position"
  	position := aPoint
+]
+
+{ #category : #private }
+RSCamera >> privExtent: aRect [
+
+	extent := aRect
 ]
 
 { #category : #accessing }

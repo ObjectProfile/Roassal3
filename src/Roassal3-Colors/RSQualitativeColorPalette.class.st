@@ -17,7 +17,7 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSQualitativeColorPalette class >> paletteName [
 	^ #qualitative
 ]

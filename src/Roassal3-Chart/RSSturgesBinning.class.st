@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Chart-Strategy'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RSSturgesBinning >> computeSizeFor: values [
 	^ (values size log / 2 log) ceiling + 1
 ]

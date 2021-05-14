@@ -5,7 +5,7 @@ Class {
 	#name : #RSDelaunay,
 	#superclass : #RSObject,
 	#classInstVars : [
-		'EPSILON'
+		'epsilon'
 	],
 	#category : #'Roassal3-Experimental-Delaunay'
 }
@@ -22,8 +22,8 @@ RSDelaunay class >> circumCircle: particles indices: in [
 	y12 := (y1 - y2) abs.
 	y23 := (y2 - y3) abs.
 	flag := y12 > y23.
-	y12 := y12 < EPSILON.
-	y23 := y23 < EPSILON.
+	y12 := y12 < epsilon.
+	y23 := y23 < epsilon.
 	
 	(y12 and: [y23] )ifTrue: [ self error: 'Eek coicident points' ].
 	
@@ -111,7 +111,7 @@ RSDelaunay class >> generateEdge: open closed: closed vertices: vertices c: c j:
 		^ self ].
 	"If we're outside the circumcircle, skip this triangle."
 	dy := vertex y - circ y.
-	((dx * dx) + (dy * dy) - circ radius) > EPSILON 
+	((dx * dx) + (dy * dy) - circ radius) > epsilon 
 		ifTrue: [ ^ self ].
 	edges addAll: 
 		{circ i. circ j.
@@ -164,7 +164,7 @@ RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices 
 
 { #category : #'class initialization' }
 RSDelaunay class >> initialize [
-	EPSILON := 1.0 / 1048576.0
+	epsilon := 1.0 / 1048576.0
 ]
 
 { #category : #initialization }

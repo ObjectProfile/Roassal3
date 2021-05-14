@@ -69,8 +69,8 @@ RSSVGTest >> testDrawSVGLine [
 		width: 2). 
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
-		svgPath: [ :aLine | [ :canvas| 
-			canvas
+		svgPath: [ :aLine | [ :aCanvas| 
+			aCanvas
 				absolute;
 				moveTo: aLine startPoint;
 				lineTo: aLine endPoint. ] ];

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'myMorph'
 	],
-	#category : #'Roassal3-Inspector-GT'
+	#category : #'Roassal3-Pharo8'
 }
 
 { #category : #rendering }

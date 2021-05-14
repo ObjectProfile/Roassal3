@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal3-Inspector-Actions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSAbstractAction class >> registerActionsOn: presentation [
 	| instances |
 	instances := self allSubclasses reject: #hasAbstractMethods.

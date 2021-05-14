@@ -1,5 +1,5 @@
 "
-Experimental class to visualize dependencies of instances of BaselineOf
+This class visualize dependencies of instances of BaselineOf
 "
 Class {
 	#name : #RSBaselineCalypso,
@@ -12,7 +12,7 @@ Class {
 		'highMenu',
 		'isUsingPackageSize'
 	],
-	#category : #'Roassal3-Experimental-Baseline'
+	#category : #'Roassal3-UML-Calypso'
 }
 
 { #category : #testing }

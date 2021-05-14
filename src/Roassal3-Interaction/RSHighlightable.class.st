@@ -158,14 +158,17 @@ Class {
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'instance colors' }
 RSHighlightable class >> blue [
+	^ self color: Color blue
+	
+]
+
+{ #category : #'instance colors' }
+RSHighlightable class >> color: aColor [
 	| inst |
 	inst := self new.
-	inst highlightColor: Color blue.
-	inst 
-		when: RSHighlightEvent do: [ :evt | evt shape underline ];
-		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
+	inst highlightColor: aColor.
 	^ inst
 	
 ]
@@ -185,22 +188,14 @@ RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine fr
 	^ lines
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'instance colors' }
 RSHighlightable class >> green [
-	| inst |
-	inst := self new.
-	inst highlightColor: Color green.
-	^ inst
-	
+	^ self color: Color green
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'instance colors' }
 RSHighlightable class >> red [
-	| inst |
-	inst := self new.
-	inst highlightColor: Color red.
-	^ inst
-	
+	^ self color: Color red
 ]
 
 { #category : #'instance creation' }

@@ -4,24 +4,24 @@ Class {
 	#category : #'Roassal3-Chart-Tests'
 }
 
-{ #category : #'as yet unclassified' }
-RSNumberTest >> testtoCount [
+{ #category : #tests }
+RSNumberTest >> testToCount [
 
 	| c |
 	c := 1 to: 10 count: 5.
 	self assert: c size equals: 5
 ]
 
-{ #category : #'as yet unclassified' }
-RSNumberTest >> testtoCount2 [
+{ #category : #tests }
+RSNumberTest >> testToCount2 [
 
 	| c |
 	c := 1 to: 10 count: 2.
 	self assert: c size equals: 2
 ]
 
-{ #category : #'as yet unclassified' }
-RSNumberTest >> testtoCount3 [
+{ #category : #tests }
+RSNumberTest >> testToCount3 [
 
 	| c |
 	c := 1 to: 10 count: 1.

@@ -29,7 +29,7 @@ RSColorPalette class >> diverging [
 	^ RSDivergingColorPalette new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSColorPalette class >> paletteName [
 	^ self subclassResponsibility
 ]
