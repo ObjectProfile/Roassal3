@@ -101,6 +101,29 @@ RSLayoutBuilder >> sugiyama [
 	^ layout := RSSugiyamaLayout new.
 ]
 
+{ #category : #'as yet unclassified' }
+RSLayoutBuilder >> tidyTree [
+	"For example:
+	
+```
+packages := RPackage organizer packages select: [ :pak | pak packageName beginsWith: 'Roassal3' ].
+classes := packages flatCollect: #definedClasses.
+
+m := RSMondrian new.
+m nodes: classes.
+m line connectFrom: #superclass.
+m layout tidyTree.
+m 
+```"
+
+
+	^ layout := RSConditionalLayout new
+					 ifNotConnectedThen: RSGridLayout new;
+					 else: (RSClusteringLayout new 
+					    clustersLayout: RSFlowLayout new;
+					    forEachLayout: RSTreeLayout new)
+]
+
 { #category : #'public layout' }
 RSLayoutBuilder >> tree [
 	^ layout := RSTreeLayout new.
