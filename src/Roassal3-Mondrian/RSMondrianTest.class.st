@@ -105,6 +105,86 @@ RSMondrianTest >> testEdges [
 ]
 
 { #category : #tests }
+RSMondrianTest >> testLabeledOuterShapes01 [
+
+	| shape |
+	m := RSMondrian new.
+	m nodes: #(42).
+	m build.
+	self assert: m canvas shapes size equals: 1.
+	shape := m canvas shapes first.
+	self assert: shape class equals: RSBox.
+]
+
+{ #category : #tests }
+RSMondrianTest >> testLabeledOuterShapes02 [
+
+	| shape |
+	m := RSMondrian new.
+	m nodes: #(42) forEach: [ :nb | m nodes: #(42) ].
+	m build.
+	self assert: m canvas shapes size equals: 1.
+	shape := m canvas shapes first.
+	self assert: shape class equals: RSComposite.
+	self assert: shape children size equals: 1.
+	self assert: shape children first class equals: RSBox.
+]
+
+{ #category : #tests }
+RSMondrianTest >> testLabeledOuterShapes03 [
+
+	| shape |
+	m := RSMondrian new.
+	m shape labeled.
+	m nodes: #(42) forEach: [ :nb | m nodes: #(42) ].
+	m build.
+	self assert: m canvas shapes size equals: 1.
+	shape := m canvas shapes first.
+	self assert: shape class equals: RSComposite.
+	self assert: shape children size equals: 2.
+	self assert: shape children first class equals: RSBox.
+	self assert: shape children second class equals: RSLabel.
+]
+
+{ #category : #tests }
+RSMondrianTest >> testLabeledOuterShapes04 [
+
+	| shape |
+	m := RSMondrian new.
+	m shape labeled color: Color white.
+	m nodes: #(42) forEach: [ :nb | m nodes: #(42) ].
+	m build.
+	self assert: m canvas shapes size equals: 1.
+	shape := m canvas shapes first.
+	self assert: shape class equals: RSComposite.
+	self assert: shape color equals: Color white.
+	
+	self assert: shape children size equals: 2.
+	self assert: shape children first class equals: RSBox.
+	self assert: shape children second class equals: RSLabel.
+]
+
+{ #category : #tests }
+RSMondrianTest >> testLabeledOuterShapes05 [
+
+	| shape |
+	m := RSMondrian new.
+	m shape labeled color: Color white; borderWidth: 2.
+	m nodes: #(42) forEach: [ :nb | m nodes: #(42) ].
+	m build.
+	self assert: m canvas shapes size equals: 1.
+	shape := m canvas shapes first.
+	self assert: shape class equals: RSComposite.
+	self assert: shape color equals: Color white.
+	self assert: shape border notNil.
+	self assert: shape border width equals: 2.
+	
+	self assert: shape children size equals: 2.
+	self assert: shape children first class equals: RSBox.
+	self assert: shape children second class equals: RSLabel.
+]
+
+{ #category : #tests }
 RSMondrianTest >> testNesting [
 
 	| c firstNode subNodes |

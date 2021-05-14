@@ -71,6 +71,26 @@ RSShapeBuilderTest >> testLabel2 [
 ]
 
 { #category : #tests }
+RSShapeBuilderTest >> testLabeled [
+
+	| shape |
+	b box.
+	self deny: b doesUseLabel.
+	shape := b shapeOn: #(1).
+	self assert: shape class equals: RSBox.
+	
+	b labeled.
+	self assert: b doesUseLabel.
+	b box.	
+	shape := b shapeOn: #(1).
+	self assert: shape class equals: RSComposite.
+	self assert: shape children size equals: 2.
+	self assert: shape children first class equals: RSLabel.
+	self assert: shape children second class equals: RSBox.
+	
+]
+
+{ #category : #tests }
 RSShapeBuilderTest >> testWithBorder [
 
 	| result shape |

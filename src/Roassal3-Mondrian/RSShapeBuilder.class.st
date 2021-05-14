@@ -7,7 +7,8 @@ Class {
 		'width',
 		'height',
 		'borderColor',
-		'borderWidth'
+		'borderWidth',
+		'doesUseLabel'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
@@ -23,10 +24,11 @@ RSShapeBuilder >> borderColor [
 	^ borderColor
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> borderColor: aColorOrASymbolOrOneArgBlock [
 
-	borderColor := aColorOrASymbolOrOneArgBlock
+	borderColor := aColorOrASymbolOrOneArgBlock.
+	borderWidth ifNil: [ borderWidth := 2 ]
 ]
 
 { #category : #accessing }
@@ -35,19 +37,20 @@ RSShapeBuilder >> borderWidth [
 	^ borderWidth
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> borderWidth: anIntegerOrASymbolOrOneArgBlock [
 
-	borderWidth := anIntegerOrASymbolOrOneArgBlock
+	borderWidth := anIntegerOrASymbolOrOneArgBlock.
+	borderColor ifNil: [ borderColor := Color black ]
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> box [
 	shapeClass := RSBox.
 	self extent: 5 @ 5.
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> circle [
 	shapeClass := RSEllipse.
 	self extent: 5 @ 5.
@@ -58,18 +61,49 @@ RSShapeBuilder >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> color: aOneArgBlockOrAValue [
 	color := aOneArgBlockOrAValue
 ]
 
-{ #category : #initialization }
+{ #category : #'building - graph' }
+RSShapeBuilder >> configureShape: aShape [
+	"Configure the shape. Note that it returns the same shape, or a different one (in case a composite has to be built)"
+	| newResult result model |
+	self assert: [ aShape model notNil ] description: 'Must have a model set'.
+
+	result := aShape.
+	model := aShape model.
+	width ifNotNil: [ aShape width: (width rsValue: model) ].
+	height ifNotNil: [ aShape height: (height rsValue: model) ].
+	(borderColor notNil and: [ borderWidth notNil ]) ifTrue: [ 
+		aShape border: (RSBorder new
+				 color: (borderColor rsValue: model);
+				 width: (borderWidth rsValue: model)) ].
+	aShape color: (color rsValue: model).
+
+	doesUseLabel notNil ifTrue: [ 
+		newResult := RSComposite new.
+		newResult children: { 
+				(RSLabel text: (doesUseLabel rsValue: model)).
+				aShape }.
+		result := newResult ].
+	^ result
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> doesUseLabel [
+	"Return true or false on whether the shape builder has to label the created shapes"
+	^ doesUseLabel notNil
+]
+
+{ #category : #'public - configuration' }
 RSShapeBuilder >> ellipse [
 	shapeClass := RSEllipse.
 	self extent: 5 @ 5.
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> extent: aPoint [
 	width := aPoint x.
 	height := aPoint y
@@ -80,12 +114,12 @@ RSShapeBuilder >> height [
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> height: aValueOrAOneArgBlock [
 	height := aValueOrAOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 	| aColor |
 	aColor := color.
@@ -98,14 +132,26 @@ RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 RSShapeBuilder >> initialize [
 	super initialize.
 	self box.
-	color := Color gray
+	color := Color gray.
+	doesUseLabel := nil
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> label [
 	shapeClass := RSLabel.
 	width := nil.
 	height := nil
+]
+
+{ #category : #'public - configuration' }
+RSShapeBuilder >> labeled [
+	self labeled: #asString
+]
+
+{ #category : #'public - configuration' }
+RSShapeBuilder >> labeled: aOneArgBlock [
+	"The block takes a model object as argument and must return a string"
+	doesUseLabel := aOneArgBlock
 ]
 
 { #category : #accessing }
@@ -119,21 +165,22 @@ RSShapeBuilder >> shapeClass: aClass [
 ]
 
 { #category : #'building - graph' }
-RSShapeBuilder >> shapesOn: someObjects [
-	| result |
-	^ someObjects collect: [ :obj | 
-			result := shapeClass new 
-							model: obj;
-							yourself.
-			width ifNotNil: [ result width: (width rsValue: obj) ].
-			height ifNotNil: [ result height: (height rsValue: obj) ].
-			(borderColor notNil and: [ borderWidth notNil ]) 
-				ifTrue: [ result border: (RSBorder new color: (borderColor rsValue: obj); width: (borderWidth rsValue: obj)) ].
-			result color: (color rsValue: obj) .
-			result ] as: RSGroup
+RSShapeBuilder >> shapeOn: anObject [
+	"Return a new shape from the specified configuration"
+	| aShape |
+	aShape := shapeClass new
+		          model: anObject;
+		          yourself.
+	^ self configureShape: aShape.
 ]
 
-{ #category : #accessing }
+{ #category : #'building - graph' }
+RSShapeBuilder >> shapesOn: someObjects [
+
+	^ someObjects collect: [ :obj | self shapeOn: obj ] as: RSGroup
+]
+
+{ #category : #'public - configuration' }
 RSShapeBuilder >> size: integerOrBlockOrSymbol [
 	self width: integerOrBlockOrSymbol.
 	self height: integerOrBlockOrSymbol
@@ -144,12 +191,12 @@ RSShapeBuilder >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> width: aValueOrAOneArgBlock [
 	width := aValueOrAOneArgBlock
 ]
 
-{ #category : #initialization }
+{ #category : #'public - configuration' }
 RSShapeBuilder >> withBorder [
 	self borderColor: Color black.
 	self borderWidth: 3

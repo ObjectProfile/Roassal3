@@ -195,14 +195,16 @@ b open
 ```
 	"
 	
-	| nodes compo old previousShapeBuilder oldNodesToLayout |
+	| nodes compo old previousShapeBuilder oldNodesToLayout lbl |
 	nodes := RSGroup new.
-	objects do: [ : obj |
+	objects do: [ :obj |
 		previousShapeBuilder := shapeBuilder.
 		
 		compo := RSComposite new.
-		compo color: shapeBuilder color.
+		"compo color: shapeBuilder color."
 		compo model: obj.
+		shapeBuilder configureShape: compo.
+		
 		old := self canvas.
 		oldNodesToLayout := nodesForLayout.
 		nodesForLayout := RSGroup new.
@@ -212,8 +214,15 @@ b open
 		
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
+		
 		nodes add: compo.
 		self build.
+		
+		previousShapeBuilder doesUseLabel ifTrue: [ 
+			lbl := RSLabel new text: obj asString.
+			RSLocation move: lbl above: compo children.
+			compo add: lbl ]. 
+		
 		nodesForLayout := oldNodesToLayout.
 		compo adjustToChildren.
 		compo padding: 5.
@@ -269,6 +278,15 @@ RSMondrian >> normalizeHeight: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeHeight: oneArgBlock from: fromValue to: toValue [
+	RSNormalizer height
+		shapes: self canvas nodes;
+		from: fromValue;
+		to: toValue;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeSize: oneArgBlock [
 	RSNormalizer size
 		shapes: self canvas nodes;
@@ -279,6 +297,15 @@ RSMondrian >> normalizeSize: oneArgBlock [
 RSMondrian >> normalizeWidth: oneArgBlock [
 	RSNormalizer width
 		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeWidth: oneArgBlock from: fromValue to: toValue [
+	RSNormalizer width
+		shapes: self canvas nodes;
+		from: fromValue;
+		to: toValue;
 		normalize: oneArgBlock
 ]
 
@@ -306,6 +333,14 @@ RSMondrian >> openWithTitle: aTitle [
 	"Open the visualization"
 	self build.
 	^ canvas openWithTitle: aTitle
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> ordinalColor: oneArgBlock [
+	| numberOfDifferentColors scale |
+	numberOfDifferentColors := (self canvas nodes collect: [ :aShape | oneArgBlock rsValue: aShape model ] as: Set) size.
+	scale := NSScale ordinalColored: numberOfDifferentColors.
+	self canvas nodes do: [ :aShape | aShape color: (scale scale: (oneArgBlock rsValue: aShape model)) ]
 ]
 
 { #category : #'building - graph' }
