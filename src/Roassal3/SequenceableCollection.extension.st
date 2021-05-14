@@ -6,6 +6,16 @@ SequenceableCollection >> asGroup [
 ]
 
 { #category : #'*Roassal3' }
+SequenceableCollection >> max: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) max
+]
+
+{ #category : #'*Roassal3' }
+SequenceableCollection >> min: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) min
+]
+
+{ #category : #'*Roassal3' }
 SequenceableCollection >> reverseSortedAs: aSortBlockOrSymbol [
 	"Answer a SortedCollection whose elements are the elements of the 
 	receiver. The sort order is defined by the argument, aSortBlock."
