@@ -349,10 +349,10 @@ RSLineBuilder >> connectToAll: aBlockOrASymbol [
 ]
 
 { #category : #'private - utility' }
-RSLineBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
+RSLineBuilder >> createEdgeIfNecessaryFrom: fromShape to: toShape [
 	"This is a private method. Create, if necessary, an edge between two elements"
-	(self shouldCreateEdgeFrom: fromElement to: toElement)
-		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
+	(self shouldCreateEdgeFrom: fromShape to: toShape)
+		ifTrue: [ createdEdges add: (self edgeFrom: fromShape to: toShape) ]
 ]
 
 { #category : #'private - utility' }
@@ -509,12 +509,12 @@ RSLineBuilder >> shouldAllowRepetition [
 ]
 
 { #category : #testing }
-RSLineBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
+RSLineBuilder >> shouldCreateEdgeFrom: fromShape to: toShape [
 	"Return true if an edge has to be created"
-	fromElement == toElement ifTrue: [ ^ false ].
-	(fromElement isNil or: [ toElement isNil ]) ifTrue: [ ^ false ].
-	beDirectional ifFalse: [ ^ (toElement isDirectlyConnectedTo: fromElement) not ].
-	allowRepetition ifFalse: [ ^ fromElement outgoingEdges noneSatisfy: [ :edge | edge to == toElement ] ].
+	fromShape == toShape ifTrue: [ ^ false ].
+	(fromShape isNil or: [ toShape isNil ]) ifTrue: [ ^ false ].
+	beDirectional ifFalse: [ ^ (toShape isDirectlyConnectedTo: fromShape) not ].
+	allowRepetition ifFalse: [ ^ fromShape outgoingEdges noneSatisfy: [ :edge | edge to == toShape ] ].
 	^ true
 ]
 
