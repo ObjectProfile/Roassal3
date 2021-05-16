@@ -7,17 +7,47 @@ I am an abstract class for tidy algorithms that arrange trees lying on the conce
 Class {
 	#name : #RSHorizontalWalkBasedTreeLayout,
 	#superclass : #RSHorizontalTreeLayout,
-	#instVars : [
-		'marginAfterRightmostSibling',
-		'marginBetweenAdjacentLayers',
-		'marginBetweenAdjacentSiblings'
-	],
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> descriptor [
-	self subclassResponsibility
+{ #category : #hook }
+RSHorizontalWalkBasedTreeLayout >> doExecute: elements [
+
+	super doExecute: elements
+]
+
+{ #category : #hook }
+RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
+
+	| hierarchy |
+	super doInitialize: elements.
+
+	hierarchy := IdentityDictionary new.
+
+	self edgesDo: [ :anEdge | 
+		| children child father |
+		father := anEdge from.
+		child := anEdge to.
+
+		children := hierarchy
+			            at: father
+			            ifAbsentPut: [ 
+			            self childrenOf: father put: OrderedCollection new ].
+
+		children add: child.
+
+		self
+			fatherOf: child put: father;
+			indexInFatherOf: child put: children size;
+			siblingsOf: child put: children ].
+
+	elements do: [ :each | self initDescriptor: each ]
+]
+
+{ #category : #hook }
+RSHorizontalWalkBasedTreeLayout >> doPost: elements [
+
+	super doPost: elements
 ]
 
 { #category : #accessing }
@@ -27,22 +57,20 @@ RSHorizontalWalkBasedTreeLayout >> firstWalk: aRootItemDescriptor [
 
 { #category : #'initialize - release' }
 RSHorizontalWalkBasedTreeLayout >> initDescriptor: aDescriptor [
-	self subclassResponsibility
+
+	(self childrenOf: aDescriptor) ifNil: [ 
+		self childrenOf: aDescriptor put: OrderedCollection new ]
 ]
 
-{ #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> marginAfterRightmostSibling: anObject [
-	marginAfterRightmostSibling := anObject
-]
+{ #category : #hook }
+RSHorizontalWalkBasedTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
-{ #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> marginBetweenAdjacentLayers: anObject [
-	marginBetweenAdjacentLayers := anObject
-]
+	rootNodes inject: aPoint into: [ :currentPoint :aRootShape | 
+		self
+			firstWalk: aRootShape;
+			secondWalk: aRootShape x: currentPoint x y: currentPoint y.
 
-{ #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> marginBetweenAdjacentSiblings: anObject [
-	marginBetweenAdjacentSiblings := anObject
+		currentPoint x @ nil ]
 ]
 
 { #category : #algorithm }
@@ -52,55 +80,6 @@ RSHorizontalWalkBasedTreeLayout >> secondWalk: v x: n y: m [
 
 { #category : #accessing }
 RSHorizontalWalkBasedTreeLayout >> spacing: aHierarchyItem [
-	^ aHierarchyItem isRightMostSibling
-		ifTrue: [ marginAfterRightmostSibling ]
-		ifFalse: [ marginBetweenAdjacentSiblings ]
-]
 
-{ #category : #API }
-RSHorizontalWalkBasedTreeLayout >> walkPreOrderVisited: aSequenceableOfAssociations [
-	| aRootItemDescriptor descriptor aSequenceableOfHierarchyItems |
-	"Initialize the dictionary that will be returned eventually."
-	descriptor := IdentityDictionary new.
-
-	"Build descriptors corresponding to hierarchy items."
-	aSequenceableOfHierarchyItems := aSequenceableOfAssociations
-		collect: [ :anAssociation | 
-			| aDescriptor extent aHierarchyItem |
-			"Get the original extent with respect to 0 @ 0."
-			aHierarchyItem := anAssociation key.
-			extent := anAssociation value.
-
-			"Build and return the descriptor associated to item v."
-			aDescriptor := self descriptor
-				hierarchyItem: aHierarchyItem;
-				containedIn: descriptor;
-				width: extent x;
-				height: extent y;
-				yourself.
-
-			"Initialize the descriptor's fields according to the algorithm needs. "
-			self initDescriptor: aDescriptor.
-
-			"Finally return the initialized descriptor."
-			descriptor at: aHierarchyItem put: aDescriptor ].
-
-	"Retrieve the descriptor for the root item"
-	aRootItemDescriptor := aSequenceableOfHierarchyItems first.
-
-	"Start the algorithm."
-	self
-		zeroWalk: aSequenceableOfHierarchyItems;
-		firstWalk: aRootItemDescriptor;
-		secondWalk: aRootItemDescriptor x: 0 y: 0.
-
-	"Finally return the mapping"
-	^ descriptor
-]
-
-{ #category : #algorithm }
-RSHorizontalWalkBasedTreeLayout >> zeroWalk: aSequenceableOfHierarchyItems [
-	"Auxiliary walk message not present in the published implementations."
-
-	
+	^ self verticalGap
 ]
