@@ -8,7 +8,7 @@ Class {
 		'height',
 		'borderColor',
 		'borderWidth',
-		'doesUseLabel'
+		'labelBlock'
 	],
 	#category : #'Roassal3-Mondrian-Core'
 }
@@ -82,10 +82,10 @@ RSShapeBuilder >> configureShape: aShape [
 				 width: (borderWidth rsValue: model)) ].
 	aShape color: (color rsValue: model).
 
-	doesUseLabel notNil ifTrue: [ 
+	labelBlock notNil ifTrue: [ 
 		newResult := RSComposite new.
 		newResult children: { 
-				(RSLabel text: (doesUseLabel rsValue: model)).
+				(RSLabel text: (labelBlock rsValue: model)).
 				aShape }.
 		result := newResult ].
 	^ result
@@ -94,7 +94,7 @@ RSShapeBuilder >> configureShape: aShape [
 { #category : #accessing }
 RSShapeBuilder >> doesUseLabel [
 	"Return true or false on whether the shape builder has to label the created shapes"
-	^ doesUseLabel notNil
+	^ labelBlock notNil
 ]
 
 { #category : #'public - configuration' }
@@ -133,7 +133,7 @@ RSShapeBuilder >> initialize [
 	super initialize.
 	self box.
 	color := Color gray.
-	doesUseLabel := nil
+	labelBlock := nil
 ]
 
 { #category : #'public - configuration' }
@@ -141,6 +141,12 @@ RSShapeBuilder >> label [
 	shapeClass := RSLabel.
 	width := nil.
 	height := nil
+]
+
+{ #category : #accessing }
+RSShapeBuilder >> labelBlock [
+	"Could be nil if the shape builder must not label"
+	^ labelBlock
 ]
 
 { #category : #'public - configuration' }
@@ -151,7 +157,7 @@ RSShapeBuilder >> labeled [
 { #category : #'public - configuration' }
 RSShapeBuilder >> labeled: aOneArgBlock [
 	"The block takes a model object as argument and must return a string"
-	doesUseLabel := aOneArgBlock
+	labelBlock := aOneArgBlock
 ]
 
 { #category : #accessing }

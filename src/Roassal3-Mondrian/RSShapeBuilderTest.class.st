@@ -91,6 +91,42 @@ RSShapeBuilderTest >> testLabeled [
 ]
 
 { #category : #tests }
+RSShapeBuilderTest >> testLabeled02 [
+
+	| shape lbl |
+	b box.	
+	b labeled: 42.
+	shape := b shapeOn: #(1).
+	self assert: shape class equals: RSComposite.
+	self assert: shape children size equals: 2.
+	
+	lbl := shape children first.
+	self assert: lbl class equals: RSLabel.
+	self assert: lbl text equals: '42'.
+	
+	self assert: shape children second class equals: RSBox.
+	
+]
+
+{ #category : #tests }
+RSShapeBuilderTest >> testLabeled03 [
+
+	| shape lbl |
+	b box.	
+	b labeled: #squared.
+	shape := b shapeOn: 3.
+	self assert: shape class equals: RSComposite.
+	self assert: shape children size equals: 2.
+	
+	lbl := shape children first.
+	self assert: lbl class equals: RSLabel.
+	self assert: lbl text equals: '9'.
+	
+	self assert: shape children second class equals: RSBox.
+	
+]
+
+{ #category : #tests }
 RSShapeBuilderTest >> testWithBorder [
 
 	| result shape |

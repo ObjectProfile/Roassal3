@@ -104,6 +104,42 @@ RSMondrianTest >> testEdges [
 	self assert: m canvas numberOfEdges equals: 99.
 ]
 
+{ #category : #'tests - labeled shape' }
+RSMondrianTest >> testLabeled01 [
+
+	| shape |
+	m shape box labeled.
+	m nodes: #(42).
+	m build.
+	
+	self assert: m canvas numberOfNodes equals: 1.
+	shape := m canvas nodes first.
+	self assert: shape class equals: RSComposite.
+
+	self assert: shape nodes size equals: 2.
+	self assert: shape nodes first class equals: RSLabel.
+	self assert: shape nodes second class equals: RSBox.
+	self assert: shape nodes first text equals: '42'.
+]
+
+{ #category : #'tests - labeled shape' }
+RSMondrianTest >> testLabeled02 [
+
+	| shape |
+	m shape box labeled.
+	m nodes: #(42) forEach: [ :nb | m nodes: { nb + 1 } ].
+	m build.
+	
+	self assert: m canvas numberOfNodes equals: 1.
+	shape := m canvas nodes first.
+	self assert: shape class equals: RSComposite.
+
+	self assert: shape nodes size equals: 2.
+	self assert: shape nodes first class equals: RSLabel.
+	self assert: shape nodes second class equals: RSBox.
+	self assert: shape nodes first text equals: '42'.
+]
+
 { #category : #tests }
 RSMondrianTest >> testLabeledOuterShapes01 [
 

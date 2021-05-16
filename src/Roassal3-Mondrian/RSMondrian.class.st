@@ -201,7 +201,6 @@ b open
 		previousShapeBuilder := shapeBuilder.
 		
 		compo := RSComposite new.
-		"compo color: shapeBuilder color."
 		compo model: obj.
 		shapeBuilder configureShape: compo.
 		
@@ -219,7 +218,7 @@ b open
 		self build.
 		
 		previousShapeBuilder doesUseLabel ifTrue: [ 
-			lbl := RSLabel new text: obj asString.
+			lbl := RSLabel new text: (previousShapeBuilder labelBlock rsValue: obj).
 			RSLocation move: lbl above: compo children.
 			compo add: lbl ]. 
 		
