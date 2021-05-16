@@ -180,9 +180,23 @@ RSLayout >> is: aShape ifLeaf: lBlock ifNotLeaf: nlBlock [
 ]
 
 { #category : #utils }
+RSLayout >> is: aShape ifRightMostSibling: rBlock ifNotRightMostSibling: nrBlock [
+
+	^ (self siblingsOf: aShape) last == aShape
+		  ifTrue: rBlock
+		  ifFalse: nrBlock
+]
+
+{ #category : #utils }
 RSLayout >> is: aShape siblingOf: anotherShape [
 
-	^ (self fatherOf: aShape) == (self fatherOf: anotherShape)
+	^ (self fatherOf: aShape)
+		  ifNil: [ Error signal: 'Logical inconsistency' ]
+		  ifNotNil: [ :aShapeFather | 
+			  (self fatherOf: anotherShape)
+				  ifNil: [ Error signal: 'Logical inconsistency' ]
+				  ifNotNil: [ :anotherShapeFather | 
+				  aShapeFather == anotherShapeFather ] ]
 ]
 
 { #category : #testing }

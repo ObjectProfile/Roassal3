@@ -11,12 +11,6 @@ Class {
 }
 
 { #category : #hook }
-RSHorizontalWalkBasedTreeLayout >> doExecute: elements [
-
-	super doExecute: elements
-]
-
-{ #category : #hook }
 RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 
 	| hierarchy |
@@ -42,12 +36,6 @@ RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 			siblingsOf: child put: children ].
 
 	elements do: [ :each | self initDescriptor: each ]
-]
-
-{ #category : #hook }
-RSHorizontalWalkBasedTreeLayout >> doPost: elements [
-
-	super doPost: elements
 ]
 
 { #category : #accessing }
@@ -79,7 +67,10 @@ RSHorizontalWalkBasedTreeLayout >> secondWalk: v x: n y: m [
 ]
 
 { #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> spacing: aHierarchyItem [
+RSHorizontalWalkBasedTreeLayout >> spacing: aShape [
 
-	^ self verticalGap
+	^ self
+		  is: aShape
+		  ifRightMostSibling: [ Float goldenRatio double ]
+		  ifNotRightMostSibling: [ self verticalGap ]
 ]

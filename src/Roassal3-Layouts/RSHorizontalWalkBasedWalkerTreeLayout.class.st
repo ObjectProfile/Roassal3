@@ -31,13 +31,12 @@ RSHorizontalWalkBasedWalkerTreeLayout >> ancestor: v_left_i v: v default: defaul
 { #category : #algorithm }
 RSHorizontalWalkBasedWalkerTreeLayout >> apportion: v ancestor: defaultAncestor [
 
-	| vHasLeftSibling anAncestor i |
+	| anAncestor i |
 	i := self indexInFatherOf: v.
 	anAncestor := defaultAncestor.
-	vHasLeftSibling := i > 1.
-	vHasLeftSibling ifTrue: [ 
+	i > 1 ifTrue: [ 
 		| w vSiblings v_left_i v_left_o v_right_i v_right_o s_left_i s_left_o s_right_i s_right_o |
-		"First, set siblings."
+		"Here `v` has a left sibling.""First, set siblings."
 		vSiblings := self siblingsOf: v.
 		w := vSiblings at: i - 1.
 
@@ -155,7 +154,7 @@ RSHorizontalWalkBasedWalkerTreeLayout >> firstWalk: v [
 					| w prelim |
 					w := (self siblingsOf: v) at: i - 1.
 					prelim := self prelimOf: v put: (self prelimOf: w) + w height.
-					v mod: prelim - midpoint ]
+					self modOf: v put: prelim - midpoint ]
 				ifFalse: [ self prelimOf: v put: midpoint ] ]
 ]
 
@@ -225,7 +224,7 @@ RSHorizontalWalkBasedWalkerTreeLayout >> secondWalk: v x: n y: m [
 	"Set absolute vertical and horizontal coordinates, depending on the node meter."
 	positionOffset := self prelimOffsetOfHierarchyItem: v.
 
-	v position: (n @ m + positionOffset) + (v extent / 2).
+	v position: n @ m + positionOffset + (v extent / 2).
 
 	"Put additional spacing if needed (by my subclasses perhaps)."
 	self addChildSpacing: v.
