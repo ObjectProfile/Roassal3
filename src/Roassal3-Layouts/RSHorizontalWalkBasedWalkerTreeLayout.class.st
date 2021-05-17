@@ -224,7 +224,7 @@ RSHorizontalWalkBasedWalkerTreeLayout >> secondWalk: v x: n y: m [
 	"Set absolute vertical and horizontal coordinates, depending on the node meter."
 	positionOffset := self prelimOffsetOfHierarchyItem: v.
 
-	v position: n @ m + positionOffset + (v extent / 2).
+	v position: n @ m + positionOffset.
 
 	"Put additional spacing if needed (by my subclasses perhaps)."
 	self addChildSpacing: v.

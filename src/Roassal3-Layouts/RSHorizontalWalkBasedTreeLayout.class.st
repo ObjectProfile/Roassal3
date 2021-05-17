@@ -53,12 +53,13 @@ RSHorizontalWalkBasedTreeLayout >> initDescriptor: aDescriptor [
 { #category : #hook }
 RSHorizontalWalkBasedTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
-	rootNodes inject: aPoint into: [ :currentPoint :aRootShape | 
-		self
-			firstWalk: aRootShape;
-			secondWalk: aRootShape x: currentPoint x y: currentPoint y.
+	^ (rootNodes inject: aPoint into: [ :currentPoint :aRootShape | 
+		   | y |
+		   y := self
+			        firstWalk: aRootShape;
+			        secondWalk: aRootShape x: currentPoint x y: currentPoint y.
 
-		currentPoint x @ nil ]
+		   currentPoint x @ y ]) y
 ]
 
 { #category : #algorithm }
@@ -71,6 +72,6 @@ RSHorizontalWalkBasedTreeLayout >> spacing: aShape [
 
 	^ self
 		  is: aShape
-		  ifRightMostSibling: [ Float goldenRatio double ]
+		  ifRightMostSibling: [ Float goldenRatio ]
 		  ifNotRightMostSibling: [ self verticalGap ]
 ]
