@@ -6,7 +6,7 @@ I am a refinement of the Walker algorithm described in the publication ""Drawing
 "
 Class {
 	#name : #RSHorizontalWalkBasedVanDerPloegTreeLayout,
-	#superclass : #RSHorizontalWalkBasedWalkerTreeLayout,
+	#superclass : #RSHorizontalWalkBasedTreeLayout,
 	#category : #'Roassal3-Layouts-Core'
 }
 
@@ -88,16 +88,19 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> initDescriptor: aShape [
 	super initDescriptor: aShape.
 
 	self
+		modOf: aShape put: 0;
+		changeOf: aShape put: 0;
+		shiftOf: aShape put: 0;
+		prelimOf: aShape put: 0;
+		threadOf: aShape put: nil;
 		rthreadOf: aShape put: nil;
 		elOf: aShape put: nil;
 		erOf: aShape put: nil;
 		mselOf: aShape put: 0;
 		mserOf: aShape put: 0.
 
-	x := (self fatherOf: aShape)
-		     ifNil: [ 0 ]
-		     ifNotNil: [ :hierarchyParent | 
-			     (self bottom: hierarchyParent) + self horizontalGap ].
+	x := self is: aShape ifRoot: [ 0 ] ifNotRoot: [ :hierarchyParent | 
+		     (self bottom: hierarchyParent) + self horizontalGap ].
 
 	self xOf: aShape put: x
 ]
@@ -172,8 +175,8 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> secondWalk: v x: n y: m [
 	mNext := m + (self modOf: v).
 
 	"Set absolute vertical and horizontal coordinates, depending on the node meter."
-	y := (self prelimOf: v) + mNext.
-	v position: n + (self xOf: v) @ y.
+	y := (self prelimOf: v) + mNext + (v height / 2).
+	v position: n + (self xOf: v) + (v width / 2) @ y.
 
 	"Put additional spacing if needed (by my subclasses perhaps)."
 	children := self childrenOf: v.

@@ -66,12 +66,3 @@ RSHorizontalWalkBasedTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aL
 RSHorizontalWalkBasedTreeLayout >> secondWalk: v x: n y: m [
 	self subclassResponsibility
 ]
-
-{ #category : #accessing }
-RSHorizontalWalkBasedTreeLayout >> spacing: aShape [
-
-	^ self
-		  is: aShape
-		  ifRightMostSibling: [ Float goldenRatio ]
-		  ifNotRightMostSibling: [ self verticalGap ]
-]
