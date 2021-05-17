@@ -44,10 +44,14 @@ RSHorizontalWalkBasedTreeLayout >> firstWalk: aRootItemDescriptor [
 ]
 
 { #category : #'initialize - release' }
-RSHorizontalWalkBasedTreeLayout >> initDescriptor: aDescriptor [
+RSHorizontalWalkBasedTreeLayout >> initDescriptor: aShape [
 
-	(self childrenOf: aDescriptor) ifNil: [ 
-		self childrenOf: aDescriptor put: OrderedCollection new ]
+	aShape
+		propertyAt: #father
+		ifAbsent: [ aShape propertyAt: #father put: nil ].
+
+	(self childrenOf: aShape) ifNil: [ 
+		self childrenOf: aShape put: OrderedCollection new ]
 ]
 
 { #category : #hook }

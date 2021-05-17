@@ -190,11 +190,7 @@ RSLayout >> is: aShape ifRightMostSibling: rBlock ifNotRightMostSibling: nrBlock
 { #category : #utils }
 RSLayout >> is: aShape ifRoot: rBlock ifNotRoot: nrBlock [
 
-	| father |
-	father := aShape
-		          propertyAt: #father
-		          ifAbsent: [ aShape propertyAt: #father put: nil ].
-	^ father ifNil: rBlock ifNotNil: nrBlock
+	^ (aShape propertyAt: #father) ifNil: rBlock ifNotNil: nrBlock
 ]
 
 { #category : #utils }

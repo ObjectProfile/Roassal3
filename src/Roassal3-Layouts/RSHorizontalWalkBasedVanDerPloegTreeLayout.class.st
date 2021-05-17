@@ -171,21 +171,25 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> positionRoot: v leftMostChild: lef
 { #category : #algorithm }
 RSHorizontalWalkBasedVanDerPloegTreeLayout >> secondWalk: v x: n y: m [
 
-	| mNext children y |
+	| mNext children x y |
 	mNext := m + (self modOf: v).
 
-	"Set absolute vertical and horizontal coordinates, depending on the node meter."
-	y := (self prelimOf: v) + mNext + (v height / 2).
-	v position: n + (self xOf: v) + (v width / 2) @ y.
+	x := n + (self xOf: v).
+	y := (self prelimOf: v) + mNext.
 
-	"Put additional spacing if needed (by my subclasses perhaps)."
+	v position: x @ y + (v extent / 2).
+
 	children := self childrenOf: v.
+	
 	self addChildSpacing: children.
 
 	"Recur over my onw children."
 	^ children inject: y into: [ :maxY :hierarchyChild | 
 		  | curY |
-		  curY := self secondWalk: hierarchyChild x: n y: mNext.
+		  curY := self
+			          secondWalk: hierarchyChild
+			          x: n
+			          y: mNext + self verticalGap.
 		  maxY max: curY ]
 ]
 
