@@ -49,18 +49,6 @@ RSLayout class >> onView: aRoassalView [
 	^ self on: aRoassalView elements
 ]
 
-{ #category : #utils }
-RSLayout >> ancestorOf: aNode [
-
-	^ aNode propertyAt: #ancestor
-]
-
-{ #category : #utils }
-RSLayout >> ancestorOf: aNode put: aFloat [
-
-	aNode propertyAt: #ancestor put: aFloat
-]
-
 { #category : #hook }
 RSLayout >> applyOn: elements [
 	"Return quickly if there is nothing to do"
