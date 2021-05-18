@@ -11,7 +11,9 @@ fi
 cat $FILE
 RES = `grep ERROR $FILE`
 
-if [ -n "$RES" ]; then
+#if [ -n "$RES" ]; then
+if grep -q ERROR "$FILE"; then
+		echo "SOME ERRORS!"
 		exit 1
 else
 		echo "ALL TEST PASSED"
