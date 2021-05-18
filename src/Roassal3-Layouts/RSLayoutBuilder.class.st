@@ -101,7 +101,7 @@ RSLayoutBuilder >> sugiyama [
 	^ layout := RSSugiyamaLayout new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public layout' }
 RSLayoutBuilder >> tidyTree [
 	"For example:
 	
