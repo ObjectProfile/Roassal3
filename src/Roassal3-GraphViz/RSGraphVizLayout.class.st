@@ -41,11 +41,28 @@ RSGraphVizLayout class >> twoPi [
 
 { #category : #hook }
 RSGraphVizLayout >> doExecute: elements [
-	| process group string | 
+	| group fr str frOutput | 
 	group := elements asGroup.
 	group, edges accept: self dotConverter.
 	
-	process := OSSUnixSubprocess new
+	
+	
+	
+	self halt.
+	fr := '/tmp/description.dot' asFileReference.
+ 	fr exists ifTrue: [ fr delete ].
+	str := fr writeStream.
+	str nextPutAll: dotConverter stream contents "utf8Encoded".
+	str close. 
+	
+	frOutput := '/tmp/result.txt' asFileReference.
+	frOutput exists ifTrue: [ frOutput delete ].
+	
+	self runningGraphvizInputFilename: '/tmp/description.dot' outputFilename: '/tmp/result.txt'.
+	
+	self positionShapes: group with: '/tmp/description.dot' asFileReference contents.
+	
+"	process := OSSUnixSubprocess new
 		command: '/usr/local/bin/dot';
 		arguments: { '-Tplain-ext' };
 		workingDirectory: FileLocator home fullName;
@@ -62,7 +79,7 @@ RSGraphVizLayout >> doExecute: elements [
 	string := process stdoutStream upToEndOfFile.
 	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
 	self positionShapes: group with: string.
-	process closeAndCleanStreams.
+	process closeAndCleanStreams."
 ]
 
 { #category : #accessing }
@@ -126,6 +143,15 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			edge propertyAt: #points put: points.
 			 ].
 		 ].
+]
+
+{ #category : #hook }
+RSGraphVizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: filenameOutput [
+	"
+	self new runningGraphvizInputFilename: 'hello.dot' outputFilename: 'myresult.txt'
+	"
+	
+	^ self ffiCall: #( int runGraphviz ( char * filenameInput , char* filenameOutput) ) library: GraphvizFFILibrary
 ]
 
 { #category : #accessing }
