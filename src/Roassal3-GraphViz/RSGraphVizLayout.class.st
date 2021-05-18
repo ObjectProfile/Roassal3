@@ -13,29 +13,28 @@ Class {
 
 { #category : #'instance creation' }
 RSGraphVizLayout class >> digraph [
-	^ self new 
-		dotConverter: RSDigraphDotConverter new;
-		yourself
+	^ self new digraph
 ]
 
 { #category : #'instance creation' }
 RSGraphVizLayout class >> neato [
-	^ self new 
-		dotConverter: RSNeatoDotConverter new;
-		yourself
+	^ self new neato
 ]
 
 { #category : #'instance creation' }
 RSGraphVizLayout class >> strict [
-	^ self new 
-		dotConverter: RSStrictDotConverter new;
-		yourself
+	^ self new strict
 ]
 
 { #category : #'instance creation' }
 RSGraphVizLayout class >> twoPi [
-	^ self new 
-		dotConverter: RSTwoPiDotConverter new;
+	^ self new twoPi
+]
+
+{ #category : #'public - configuration' }
+RSGraphVizLayout >> digraph [
+	^ self 
+		dotConverter: RSDigraphDotConverter new;
 		yourself
 ]
 
@@ -97,6 +96,13 @@ RSGraphVizLayout >> initialize [
 	super initialize.
 	self dotConverter: RSStrictDotConverter new.
 	self scale: 70 negated
+]
+
+{ #category : #'public - configuration' }
+RSGraphVizLayout >> neato [
+	^ self 
+		dotConverter: RSNeatoDotConverter new;
+		yourself
 ]
 
 { #category : #hook }
@@ -164,7 +170,21 @@ RSGraphVizLayout >> scale: aNumber [
 	scale := aNumber
 ]
 
+{ #category : #'public - configuration' }
+RSGraphVizLayout >> strict [
+	^ self 
+		dotConverter: RSStrictDotConverter new;
+		yourself
+]
+
 { #category : #hook }
 RSGraphVizLayout >> transform: aPoint [
 	^ aPoint * scale
+]
+
+{ #category : #'public - configuration' }
+RSGraphVizLayout >> twoPi [
+	^ self 
+		dotConverter: RSTwoPiDotConverter new;
+		yourself
 ]
