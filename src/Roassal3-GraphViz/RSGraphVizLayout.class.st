@@ -41,18 +41,17 @@ RSGraphVizLayout class >> twoPi [
 
 { #category : #hook }
 RSGraphVizLayout >> doExecute: elements [
-	| group fr str frOutput | 
+	| group fr str frOutput process string | 
 	group := elements asGroup.
 	group, edges accept: self dotConverter.
 	
 	
 	
-	
-	self halt.
+"
 	fr := '/tmp/description.dot' asFileReference.
  	fr exists ifTrue: [ fr delete ].
 	str := fr writeStream.
-	str nextPutAll: dotConverter stream contents "utf8Encoded".
+	str nextPutAll: dotConverter stream contents ""utf8Encoded"".
 	str close. 
 	
 	frOutput := '/tmp/result.txt' asFileReference.
@@ -61,8 +60,9 @@ RSGraphVizLayout >> doExecute: elements [
 	self runningGraphvizInputFilename: '/tmp/description.dot' outputFilename: '/tmp/result.txt'.
 	
 	self positionShapes: group with: '/tmp/description.dot' asFileReference contents.
+"	
 	
-"	process := OSSUnixSubprocess new
+	process := OSSUnixSubprocess new
 		command: '/usr/local/bin/dot';
 		arguments: { '-Tplain-ext' };
 		workingDirectory: FileLocator home fullName;
@@ -79,7 +79,7 @@ RSGraphVizLayout >> doExecute: elements [
 	string := process stdoutStream upToEndOfFile.
 	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
 	self positionShapes: group with: string.
-	process closeAndCleanStreams."
+	process closeAndCleanStreams.
 ]
 
 { #category : #accessing }
