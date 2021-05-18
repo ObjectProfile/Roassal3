@@ -9,7 +9,7 @@ fi
 
 
 cat $FILE
-set RES = `grep ERROR $FILE`
+RES = `grep ERROR $FILE`
 
 if [ -n "$RES" ]; then
 		exit 1
