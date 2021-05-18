@@ -15,11 +15,17 @@ RSAbstractUMLCalypso >> addClassInteractions: builder [
 	builder canvas nodes 
 		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
 		when: RSMouseRightClick do: [ :evt | 
-			| menu |
+			| menu newContext tool |
+			tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
+			tool 
+				prepareInitialStateBy: [ :b | b selectClass: evt shape model ].
+			"newContext := ClyFullBrowserClassContext for: tool."
+			newContext := context copy.
+			newContext tool: tool.
 			menu := CmdContextMenuActivation 
 				buildContextMenuFor: evt canvas morph 
-				inContext: context.
-			menu popUpInWorld: self currentWorld
+				inContext: newContext.
+			menu popUpInWorld: self currentWorld.
 			].
 ]
 
