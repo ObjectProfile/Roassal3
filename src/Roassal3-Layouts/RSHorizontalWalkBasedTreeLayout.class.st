@@ -13,25 +13,18 @@ Class {
 { #category : #hook }
 RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 
-	| hierarchy levels |
+	| hierarchy roots |
 	super doInitialize: elements.
 
 	hierarchy := IdentityDictionary new.
-	levels := IdentityDictionary new.
+	roots := IdentitySet withAll: elements.
 
 	self edgesDo: [ :anEdge | 
 		| children child father |
 		father := anEdge from.
 		child := anEdge to.
 
-		levels
-			at: father
-			ifPresent: [ :level | 
-				levels
-					at: child
-					ifPresent: [ Error signal: 'Duplicate edge.' ]
-					ifAbsentPut: [ level + 1 ] ]
-			ifAbsentPut: [ (levels at: child ifAbsentPut: [ 2 ]) - 1 ].
+		roots remove: child.
 
 		children := hierarchy
 			            at: father
@@ -45,11 +38,10 @@ RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 			indexInFatherOf: child put: children size;
 			siblingsOf: child put: children ].
 
-	elements
-		sort: [ :aShape :anotherShape | 
-			(levels at: aShape ifAbsent: [ -1 ])
-			<= (levels at: anotherShape ifAbsent: [ -1 ]) ];
-		do: [ :each | self initDescriptor: each ]
+	roots do: [ :each | 
+		self
+			assert: (each propertyAt: #father) isNil;
+			initDescriptor: each ]
 ]
 
 { #category : #accessing }
@@ -60,12 +52,11 @@ RSHorizontalWalkBasedTreeLayout >> firstWalk: aRootItemDescriptor [
 { #category : #'initialize - release' }
 RSHorizontalWalkBasedTreeLayout >> initDescriptor: aShape [
 
-	aShape
-		propertyAt: #father
-		ifAbsent: [ aShape propertyAt: #father put: nil ].
+	| children |
+	children := (self childrenOf: aShape) ifNil: [ 
+		            self childrenOf: aShape put: OrderedCollection new ].
 
-	(self childrenOf: aShape) ifNil: [ 
-		self childrenOf: aShape put: OrderedCollection new ]
+	children do: [ :each | self initDescriptor: each ]
 ]
 
 { #category : #hook }

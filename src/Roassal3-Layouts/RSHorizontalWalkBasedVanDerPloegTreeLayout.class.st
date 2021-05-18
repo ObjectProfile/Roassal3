@@ -85,8 +85,6 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> indexOfIYL: aValueLink [
 RSHorizontalWalkBasedVanDerPloegTreeLayout >> initDescriptor: aShape [
 
 	| x |
-	super initDescriptor: aShape.
-
 	self
 		modOf: aShape put: 0;
 		changeOf: aShape put: 0;
@@ -102,7 +100,9 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> initDescriptor: aShape [
 	x := self is: aShape ifRoot: [ 0 ] ifNotRoot: [ :hierarchyParent | 
 		     (self bottom: hierarchyParent) + self horizontalGap ].
 
-	self xOf: aShape put: x
+	self xOf: aShape put: x.
+
+	super initDescriptor: aShape
 ]
 
 { #category : #algorithm }
