@@ -135,9 +135,10 @@ RSMondrianTest >> testLabeled02 [
 	self assert: shape class equals: RSComposite.
 
 	self assert: shape nodes size equals: 2.
-	self assert: shape nodes first class equals: RSLabel.
-	self assert: shape nodes second class equals: RSBox.
-	self assert: shape nodes first text equals: '42'.
+	self assert: shape nodes second class equals: RSLabel.
+	self assert: shape nodes second text equals: '42'.
+	self assert: shape nodes first class equals: RSBox.
+	
 ]
 
 { #category : #tests }
