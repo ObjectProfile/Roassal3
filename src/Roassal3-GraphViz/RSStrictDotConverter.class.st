@@ -24,7 +24,7 @@ strict graph ip_map {
 Class {
 	#name : #RSStrictDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #visiting }

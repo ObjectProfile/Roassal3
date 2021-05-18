@@ -6,7 +6,7 @@ https://graphviz.org/
 Class {
 	#name : #RSGraphVizExamples,
 	#superclass : #Object,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Example'
 }
 
 { #category : #examples }

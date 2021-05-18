@@ -8,7 +8,7 @@ Class {
 		'dotConverter',
 		'scale'
 	],
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #'instance creation' }

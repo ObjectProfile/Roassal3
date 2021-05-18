@@ -9,7 +9,7 @@ Class {
 		'nodes',
 		'dotMode'
 	],
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #accessing }

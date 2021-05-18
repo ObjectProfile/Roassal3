@@ -7,7 +7,7 @@ digraph G {Hello->World}
 Class {
 	#name : #RSDigraphDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #visiting }
