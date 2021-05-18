@@ -92,12 +92,12 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> initDescriptor: aShape [
 		changeOf: aShape put: 0;
 		shiftOf: aShape put: 0;
 		prelimOf: aShape put: 0;
+		mselOf: aShape put: 0;
+		mserOf: aShape put: 0;
 		threadOf: aShape put: nil;
 		rthreadOf: aShape put: nil;
 		elOf: aShape put: nil;
-		erOf: aShape put: nil;
-		mselOf: aShape put: 0;
-		mserOf: aShape put: 0.
+		erOf: aShape put: nil.
 
 	x := self is: aShape ifRoot: [ 0 ] ifNotRoot: [ :hierarchyParent | 
 		     (self bottom: hierarchyParent) + self horizontalGap ].
@@ -180,16 +180,13 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> secondWalk: v x: n y: m [
 	v position: x @ y + (v extent / 2).
 
 	children := self childrenOf: v.
-	
+
 	self addChildSpacing: children.
 
 	"Recur over my onw children."
-	^ children inject: y into: [ :maxY :hierarchyChild | 
+	^ children inject: y into: [ :maxY :aChild | 
 		  | curY |
-		  curY := self
-			          secondWalk: hierarchyChild
-			          x: n
-			          y: mNext + self verticalGap.
+		  curY := self secondWalk: aChild x: n y: mNext.
 		  maxY max: curY ]
 ]
 
@@ -213,7 +210,7 @@ RSHorizontalWalkBasedVanDerPloegTreeLayout >> separate: v children: children at:
 			ih := ih nextLink ].
 
 		"How far to the left of the right side of sr is the left side of cl?"
-		dist := mssr + (self prelimOf: sr) + sr height
+		dist := mssr + (self prelimOf: sr) + sr height + self verticalGap
 		        - (mscl + (self prelimOf: cl)).
 
 		dist > 0 ifTrue: [ 

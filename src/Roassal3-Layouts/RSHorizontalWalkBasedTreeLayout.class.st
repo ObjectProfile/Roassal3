@@ -13,15 +13,25 @@ Class {
 { #category : #hook }
 RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 
-	| hierarchy |
+	| hierarchy levels |
 	super doInitialize: elements.
 
 	hierarchy := IdentityDictionary new.
+	levels := IdentityDictionary new.
 
 	self edgesDo: [ :anEdge | 
 		| children child father |
 		father := anEdge from.
 		child := anEdge to.
+
+		levels
+			at: father
+			ifPresent: [ :level | 
+				levels
+					at: child
+					ifPresent: [ Error signal: 'Duplicate edge.' ]
+					ifAbsentPut: [ level + 1 ] ]
+			ifAbsentPut: [ (levels at: child ifAbsentPut: [ 2 ]) - 1 ].
 
 		children := hierarchy
 			            at: father
@@ -35,7 +45,11 @@ RSHorizontalWalkBasedTreeLayout >> doInitialize: elements [
 			indexInFatherOf: child put: children size;
 			siblingsOf: child put: children ].
 
-	elements do: [ :each | self initDescriptor: each ]
+	elements
+		sort: [ :aShape :anotherShape | 
+			(levels at: aShape ifAbsent: [ -1 ])
+			<= (levels at: anotherShape ifAbsent: [ -1 ]) ];
+		do: [ :each | self initDescriptor: each ]
 ]
 
 { #category : #accessing }
