@@ -1,7 +1,7 @@
 # Roassal3
 [![CI](https://github.com/ObjectProfile/Roassal3/actions/workflows/blank.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/blank.yml) ![Discord](https://img.shields.io/discord/223421264751099906)
 
-[*Chat with us*](https://discord.gg/QewZMZa)
+[*Chat with us on #Roassal*](https://discord.gg/QewZMZa)
 
 <!-- [![SmalltalkCI](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml) -->
 
