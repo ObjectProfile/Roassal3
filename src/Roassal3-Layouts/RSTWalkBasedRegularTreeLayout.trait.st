@@ -200,7 +200,7 @@ RSTWalkBasedRegularTreeLayout >> initDescriptor: aShape fathers: fathers [
 { #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
-	| hierarchy roots fathers |
+	| hierarchy roots fathers root |
 	hierarchy := IdentityDictionary new.
 	roots := IdentitySet withAll: elements.
 	fathers := IdentityDictionary new.
@@ -220,10 +220,25 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
 		children add: child ].
 
-	roots do: [ :each | 
-		self
-			assert: (fathers includesKey: each) not;
-			initDescriptor: each fathers: fathers ]
+	root := roots size > 1
+		        ifTrue: [ 
+			        | children rootBox |
+			        rootBox := RSBox new.
+			        children := self
+				                    childrenOf: rootBox
+				                    put: OrderedCollection new.
+
+			        roots do: [ :each | 
+				        self assert: (fathers includesKey: each) not.
+				        children add: each.
+				        fathers at: each put: rootBox ].
+
+			        rootBox ]
+		        ifFalse: [ roots anyOne ].
+
+	self initDescriptor: root fathers: fathers.
+
+	^ root
 ]
 
 { #category : #'layout-properties' }
@@ -233,15 +248,11 @@ RSTWalkBasedRegularTreeLayout >> is: aShape ifLeaf: lBlock ifNotLeaf: nlBlock [
 ]
 
 { #category : #API }
-RSTWalkBasedRegularTreeLayout >> layout: rootNodes atPoint: aPoint [
+RSTWalkBasedRegularTreeLayout >> layout: aRootShape atPoint: aPoint [
 
-	^ (rootNodes inject: aPoint into: [ :currentPoint :aRootShape | 
-		   | y |
-		   y := self
-			        firstWalk: aRootShape;
-			        secondWalk: aRootShape depth: currentPoint x breadth: currentPoint y.
-
-		   currentPoint x @ y ]) y
+	self
+		firstWalk: aRootShape;
+		secondWalk: aRootShape depth: aPoint x breadth: aPoint y
 ]
 
 { #category : #algorithm }

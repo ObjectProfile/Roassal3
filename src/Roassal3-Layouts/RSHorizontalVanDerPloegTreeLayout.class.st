@@ -9,6 +9,9 @@ Class {
 	#superclass : #RSHorizontalTreeLayout,
 	#traits : 'RSTWalkBasedRegularTreeLayout',
 	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait',
+	#instVars : [
+		'root'
+	],
 	#category : #'Roassal3-Layouts-Core'
 }
 
@@ -41,13 +44,13 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	self initialize: elements edges: self edges
+	root := self initialize: elements edges: self edges
 ]
 
 { #category : #hook }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
-	^ self layout: rootNodes atPoint: aPoint
+	^ self layout: root atPoint: aPoint
 ]
 
 { #category : #algorithm }
