@@ -56,30 +56,6 @@ RSLayout >> applyOn: elements [
 	self executeOnElements: elements
 ]
 
-{ #category : #utils }
-RSLayout >> changeOf: aNode [
-
-	^ aNode propertyAt: #change
-]
-
-{ #category : #utils }
-RSLayout >> changeOf: aNode put: aFloat [
-
-	aNode propertyAt: #change put: aFloat
-]
-
-{ #category : #utils }
-RSLayout >> childrenOf: aNode [
-
-	^ aNode propertyAt: #children
-]
-
-{ #category : #utils }
-RSLayout >> childrenOf: aNode put: aValue [
-
-	^ aNode propertyAt: #children put: aValue
-]
-
 { #category : #hook }
 RSLayout >> doExecute: shapes [
 	"Performs the layout"
@@ -97,30 +73,6 @@ RSLayout >> doInitialize: elements [
 RSLayout >> doPost: elements [
 	"Method executed after performing the layout"
 
-]
-
-{ #category : #utils }
-RSLayout >> elOf: aNode [
-
-	^ aNode propertyAt: #el
-]
-
-{ #category : #utils }
-RSLayout >> elOf: aNode put: aFloat [
-
-	^ aNode propertyAt: #el put: aFloat
-]
-
-{ #category : #utils }
-RSLayout >> erOf: aNode [
-
-	^ aNode propertyAt: #er
-]
-
-{ #category : #utils }
-RSLayout >> erOf: aNode put: aFloat [
-
-	^ aNode propertyAt: #er put: aFloat
 ]
 
 { #category : #hook }
@@ -143,54 +95,10 @@ RSLayout >> fatherOf: aNode put: aValue [
 	aNode propertyAt: #father put: aValue
 ]
 
-{ #category : #utils }
-RSLayout >> indexInFatherOf: aNode [
-
-	^ aNode propertyAt: #indexInFather
-]
-
-{ #category : #utils }
-RSLayout >> indexInFatherOf: aNode put: anInteger [
-
-	^ aNode propertyAt: #indexInFather put: anInteger
-]
-
 { #category : #'initialize-release' }
 RSLayout >> initialize [
 	super initialize.
 	translator := RSLayoutTranslator default
-]
-
-{ #category : #utils }
-RSLayout >> is: aShape ifLeaf: lBlock ifNotLeaf: nlBlock [
-
-	^ (self childrenOf: aShape) ifEmpty: lBlock ifNotEmpty: nlBlock
-]
-
-{ #category : #utils }
-RSLayout >> is: aShape ifRightMostSibling: rBlock ifNotRightMostSibling: nrBlock [
-
-	^ (self siblingsOf: aShape) last == aShape
-		  ifTrue: rBlock
-		  ifFalse: nrBlock
-]
-
-{ #category : #utils }
-RSLayout >> is: aShape ifRoot: rBlock ifNotRoot: nrBlock [
-
-	^ (aShape propertyAt: #father) ifNil: rBlock ifNotNil: nrBlock
-]
-
-{ #category : #utils }
-RSLayout >> is: aShape siblingOf: anotherShape [
-
-	^ (self fatherOf: aShape)
-		  ifNil: [ Error signal: 'Logical inconsistency' ]
-		  ifNotNil: [ :aShapeFather | 
-			  (self fatherOf: anotherShape)
-				  ifNil: [ Error signal: 'Logical inconsistency' ]
-				  ifNotNil: [ :anotherShapeFather | 
-				  aShapeFather == anotherShapeFather ] ]
 ]
 
 { #category : #testing }
@@ -230,30 +138,6 @@ RSLayout >> modOf: aNode put: aFloat [
 
 ]
 
-{ #category : #utils }
-RSLayout >> mselOf: aNode [
-
-	^ aNode propertyAt: #msel
-]
-
-{ #category : #utils }
-RSLayout >> mselOf: aNode put: aFloat [
-
-	aNode propertyAt: #msel put: aFloat
-]
-
-{ #category : #utils }
-RSLayout >> mserOf: aNode [
-
-	^ aNode propertyAt: #mser
-]
-
-{ #category : #utils }
-RSLayout >> mserOf: aNode put: aFloat [
-
-	aNode propertyAt: #mser put: aFloat
-]
-
 { #category : #hook }
 RSLayout >> on: elements [
 	self applyOn: elements
@@ -272,18 +156,6 @@ RSLayout >> pointerOf: aNode [
 { #category : #utils }
 RSLayout >> pointerOf: aNode put: aValue [
 	^ aNode propertyAt: #pointer put: aValue
-]
-
-{ #category : #utils }
-RSLayout >> prelimOf: aNode [
-
-	^ aNode propertyAt: #prelim
-]
-
-{ #category : #utils }
-RSLayout >> prelimOf: aNode put: aFloat [
-
-	^ aNode propertyAt: #prelim put: aFloat
 ]
 
 { #category : #utils }
@@ -307,42 +179,6 @@ RSLayout >> rightContourOf: aNode put: aValue [
 	aNode propertyAt: #rightContour put: aValue
 ]
 
-{ #category : #utils }
-RSLayout >> rthreadOf: aNode [
-
-	^ aNode propertyAt: #rthread
-]
-
-{ #category : #utils }
-RSLayout >> rthreadOf: aNode put: aFloat [
-
-	aNode propertyAt: #rthread put: aFloat
-]
-
-{ #category : #utils }
-RSLayout >> shiftOf: aNode [
-
-	^ aNode propertyAt: #shift
-]
-
-{ #category : #utils }
-RSLayout >> shiftOf: aNode put: aFloat [
-
-	aNode propertyAt: #shift put: aFloat
-]
-
-{ #category : #utils }
-RSLayout >> siblingsOf: aNode [
-
-	^ aNode propertyAt: #siblings
-]
-
-{ #category : #utils }
-RSLayout >> siblingsOf: aNode put: aCollection [
-
-	^ aNode propertyAt: #siblings put: aCollection
-]
-
 { #category : #events }
 RSLayout >> step [
 ]
@@ -355,18 +191,6 @@ RSLayout >> thetaOf: aNode [
 { #category : #utils }
 RSLayout >> thetaOf: aNode put: aValue [
 	^ aNode propertyAt: #theta put: aValue
-]
-
-{ #category : #utils }
-RSLayout >> threadOf: aNode [
-
-	^ aNode propertyAt: #thread
-]
-
-{ #category : #utils }
-RSLayout >> threadOf: aNode put: aFloat [
-
-	aNode propertyAt: #thread put: aFloat
 ]
 
 { #category : #accessing }
