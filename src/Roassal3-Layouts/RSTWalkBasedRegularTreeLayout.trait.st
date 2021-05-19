@@ -170,7 +170,7 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 { #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initDescriptor: aShape fathers: fathers [
 
-	| x children |
+	| depth children |
 	self
 		modOf: aShape put: 0;
 		changeOf: aShape put: 0;
@@ -183,13 +183,13 @@ RSTWalkBasedRegularTreeLayout >> initDescriptor: aShape fathers: fathers [
 		elOf: aShape put: nil;
 		erOf: aShape put: nil.
 
-	x := fathers
+	depth := fathers
 		     at: aShape
 		     ifPresent: [ :hierarchyParent | 
 			     (self depthBoundOf: hierarchyParent) + self depthGap ]
 		     ifAbsent: [ 0 ].
 
-	self depthOf: aShape put: x.
+	self depthOf: aShape put: depth.
 
 	children := (self childrenOf: aShape) ifNil: [ 
 		            self childrenOf: aShape put: OrderedCollection new ].
