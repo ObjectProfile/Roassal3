@@ -430,10 +430,8 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 	self addChildSpacing: children.
 
 	"Recur over my onw children."
-	^ children inject: breadth into: [ :maxY :aChild | 
-		  | curY |
-		  curY := self secondWalk: aChild depth: n breadth: mNext.
-		  maxY max: curY ]
+	children do: [ :aChild | 
+		self secondWalk: aChild depth: n breadth: mNext ]
 ]
 
 { #category : #algorithm }
