@@ -1,6 +1,6 @@
 # Roassal3
 [![CI](https://github.com/ObjectProfile/Roassal3/actions/workflows/blank.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/blank.yml)
-[![SmalltalkCI](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml)
+<!-- [![SmalltalkCI](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml) -->
 ![Discord](https://img.shields.io/discord/223421264751099906)
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal3?branch=master) -->
