@@ -443,7 +443,7 @@ RSGraphVizExamples >> example09Arrows [
 		normalize: [:cls | cls linesOfCode sqrt + 5 ].
 	shapes @ RSDraggable.
 
-	lb := RSLineBuilder new: RSGraphVizLine new.
+	lb := RSLineBuilder graphviz.
 	lb shapes: shapes.
 	lb markerEnd: (RSShapeFactory arrow size: 10; color: Color red).
 	lb connectToAll: #dependentClasses.

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'dotConverter',
 		'scale',
-		'dotDescription'
+		'dotDescription',
+		'graphvizResult'
 	],
 	#category : #'Roassal3-GraphViz-Core'
 }
@@ -41,7 +42,7 @@ RSGraphVizLayout >> digraph [
 
 { #category : #hook }
 RSGraphVizLayout >> doExecute: shapes [
-	| group process string | 
+	| group process | 
 	group := shapes asGroup.
 	dotDescription := self dotDescriptionOf: shapes.
 	
@@ -76,9 +77,9 @@ RSGraphVizLayout >> doExecute: shapes [
 		nextPutAll: dotDescription;
 		close.
 	process waitForExit.
-	string := process stdoutStream upToEndOfFile.
-	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
-	self positionShapes: group with: string.
+	graphvizResult := process stdoutStream upToEndOfFile.
+	graphvizResult ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
+	self positionShapes: group with: graphvizResult.
 	process closeAndCleanStreams.
 ]
 
@@ -105,6 +106,12 @@ RSGraphVizLayout >> dotDescriptionOf: shapes [
 	group := shapes asGroup.
 	group, edges accept: dotConverter.
 	^ dotConverter stream contents utf8Encoded
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> graphvizResult [
+	"Return the graphviz result"
+	^ graphvizResult
 ]
 
 { #category : #'initialize-release' }
