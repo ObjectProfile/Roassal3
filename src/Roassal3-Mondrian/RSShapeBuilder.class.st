@@ -66,27 +66,39 @@ RSShapeBuilder >> color: aOneArgBlockOrAValue [
 	color := aOneArgBlockOrAValue
 ]
 
-{ #category : #'building - graph' }
-RSShapeBuilder >> configureShape: aShape [
-	"Configure the shape. Note that it returns the same shape, or a different one (in case a composite has to be built)"
-	| newResult result model |
-	self assert: [ aShape model notNil ] description: 'Must have a model set'.
+{ #category : #building }
+RSShapeBuilder >> configureNotCompositeShape: aShape model: model [
 
-	result := aShape.
-	model := aShape model.
 	width ifNotNil: [ aShape width: (width rsValue: model) ].
 	height ifNotNil: [ aShape height: (height rsValue: model) ].
 	(borderColor notNil and: [ borderWidth notNil ]) ifTrue: [ 
 		aShape border: (RSBorder new
 				 color: (borderColor rsValue: model);
 				 width: (borderWidth rsValue: model)) ].
-	aShape color: (color rsValue: model).
+	aShape color: (color rsValue: model)
+]
 
+{ #category : #building }
+RSShapeBuilder >> configureShape: aShape [
+
+	"Configure the shape. Note that it returns the same shape, or a different one (in case a composite has to be built)"
+
+	| newResult result model |
+	"The composite shape must have the model, and not the inner shape"
+	self
+		assert: [ aShape model notNil ]
+		description: 'Must have a model set'.
+	result := aShape.
+	model := aShape model.
+	self configureNotCompositeShape: aShape model: model.
 	labelBlock notNil ifTrue: [ 
-		newResult := RSComposite new.
+		newResult := RSComposite model: aShape model.
+		aShape model: nil.
 		newResult children: { 
-				(RSLabel text: (labelBlock rsValue: model)).
-				aShape }.
+				aShape.
+				(RSLabel new
+					 text: (labelBlock rsValue: model);
+					 color: Color black) }.
 		result := newResult ].
 	^ result
 ]
@@ -170,7 +182,7 @@ RSShapeBuilder >> shapeClass: aClass [
 	shapeClass := aClass
 ]
 
-{ #category : #'building - graph' }
+{ #category : #building }
 RSShapeBuilder >> shapeOn: anObject [
 	"Return a new shape from the specified configuration"
 	| aShape |
@@ -180,7 +192,7 @@ RSShapeBuilder >> shapeOn: anObject [
 	^ self configureShape: aShape.
 ]
 
-{ #category : #'building - graph' }
+{ #category : #building }
 RSShapeBuilder >> shapesOn: someObjects [
 
 	^ someObjects collect: [ :obj | self shapeOn: obj ] as: RSGroup
