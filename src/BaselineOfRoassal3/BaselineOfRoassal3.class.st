@@ -141,11 +141,11 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
 		group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
 		group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
-		group: 'GraphViz' with: #('SVG' 'Roassal3-GraphViz');
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
 		
 		group: 'Mini' with: #('SVGTests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
+		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
 		group: 'default' with: #('Core' 'Mini')
 
 
