@@ -6,7 +6,9 @@ Class {
 	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'dotConverter',
-		'scale'
+		'scale',
+		'dotDescription',
+		'graphvizResult'
 	],
 	#category : #'Roassal3-GraphViz-Core'
 }
@@ -39,10 +41,10 @@ RSGraphVizLayout >> digraph [
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> doExecute: elements [
-	| group fr str frOutput process string | 
-	group := elements asGroup.
-	group, edges accept: self dotConverter.
+RSGraphVizLayout >> doExecute: shapes [
+	| group process | 
+	group := shapes asGroup.
+	dotDescription := self dotDescriptionOf: shapes.
 	
 	
 	
@@ -72,12 +74,12 @@ RSGraphVizLayout >> doExecute: elements [
 		run.
 
 	process stdinStream
-		nextPutAll: dotConverter stream contents utf8Encoded;
+		nextPutAll: dotDescription;
 		close.
 	process waitForExit.
-	string := process stdoutStream upToEndOfFile.
-	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
-	self positionShapes: group with: string.
+	graphvizResult := process stdoutStream upToEndOfFile.
+	graphvizResult ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
+	self positionShapes: group with: graphvizResult.
 	process closeAndCleanStreams.
 ]
 
@@ -89,6 +91,27 @@ RSGraphVizLayout >> dotConverter [
 { #category : #accessing }
 RSGraphVizLayout >> dotConverter: aRSDotConverter [
 	dotConverter := aRSDotConverter
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> dotDescription [
+	"Return the dot description, after the doExecute: is executed"
+	^ dotDescription asString
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> dotDescriptionOf: shapes [
+
+	| group |
+	group := shapes asGroup.
+	group, edges accept: dotConverter.
+	^ dotConverter stream contents utf8Encoded
+]
+
+{ #category : #accessing }
+RSGraphVizLayout >> graphvizResult [
+	"Return the graphviz result"
+	^ graphvizResult
 ]
 
 { #category : #'initialize-release' }

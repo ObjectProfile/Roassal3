@@ -8,6 +8,18 @@ m normalizeFontSize: #numberOfMethods.
 m layout force.
 m  
 ```
+
+Another example with inner boxes:
+```
+m := RSMondrian new.
+m shape box labeled.
+m nodes: #(1 2 3 4) forEach: [ :nb | 
+	m shape box labeled; size: 20; color: Color blue.
+	m nodes: #(10 20) forEach: [ :nb2 | 
+		m nodes: #(100 200) ] ].
+m line connectTo: [ :nb | nb + 1 ].
+m
+```
 "
 Class {
 	#name : #RSMondrian,
@@ -202,7 +214,8 @@ b open
 		
 		compo := RSComposite new.
 		compo model: obj.
-		shapeBuilder configureShape: compo.
+		shapeBuilder configureNotCompositeShape: compo model: obj.
+		"compo := shapeBuilder configureShape: compo."
 		
 		old := self canvas.
 		oldNodesToLayout := nodesForLayout.
@@ -218,7 +231,7 @@ b open
 		self build.
 		
 		previousShapeBuilder doesUseLabel ifTrue: [ 
-			lbl := RSLabel new text: (previousShapeBuilder labelBlock rsValue: obj).
+			lbl := RSLabel new color: Color black; text: (previousShapeBuilder labelBlock rsValue: obj).
 			RSLocation move: lbl above: compo children.
 			compo add: lbl ]. 
 		

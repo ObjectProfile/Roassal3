@@ -85,8 +85,8 @@ RSShapeBuilderTest >> testLabeled [
 	shape := b shapeOn: #(1).
 	self assert: shape class equals: RSComposite.
 	self assert: shape children size equals: 2.
-	self assert: shape children first class equals: RSLabel.
-	self assert: shape children second class equals: RSBox.
+	self assert: shape children second class equals: RSLabel.
+	self assert: shape children first class equals: RSBox.
 	
 ]
 
@@ -100,11 +100,11 @@ RSShapeBuilderTest >> testLabeled02 [
 	self assert: shape class equals: RSComposite.
 	self assert: shape children size equals: 2.
 	
-	lbl := shape children first.
+	lbl := shape children second.
 	self assert: lbl class equals: RSLabel.
 	self assert: lbl text equals: '42'.
 	
-	self assert: shape children second class equals: RSBox.
+	self assert: shape children first class equals: RSBox.
 	
 ]
 
@@ -118,11 +118,11 @@ RSShapeBuilderTest >> testLabeled03 [
 	self assert: shape class equals: RSComposite.
 	self assert: shape children size equals: 2.
 	
-	lbl := shape children first.
+	lbl := shape children second.
 	self assert: lbl class equals: RSLabel.
 	self assert: lbl text equals: '9'.
 	
-	self assert: shape children second class equals: RSBox.
+	self assert: shape children first class equals: RSBox.
 	
 ]
 

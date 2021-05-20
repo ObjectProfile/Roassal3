@@ -248,13 +248,13 @@ RSLineBuilder >> canvasNodes [
 	^ canvas nodes
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aBlockOrASymbol [
 	"Connect each shapes with the shapes for which the model matches aBlockOrASymbol"
 	^ self connectFrom: aBlockOrASymbol to: [ :each | each ]
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	| toShape fromShape |
 	self resetCreatedEdges.
@@ -266,7 +266,7 @@ RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 	"Define edges from a particular shape to another set of shapes. For example:
 
@@ -308,13 +308,13 @@ c open
 	^ createdEdges 
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol [
 	^ self connectFromAll: aFromBlockOrSymbol to: [ :each | each ]
 
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 	| toElement tfromElements |
@@ -329,12 +329,12 @@ RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectTo: aBlockOrASymbol [
 	^ self connectFrom: [ :each | each ] to: aBlockOrASymbol
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectToAll: aBlockOrASymbol [
 	"Should this method use connectFrom:ToAll: ?????"
 	| tmptoElements |
