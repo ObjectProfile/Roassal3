@@ -210,6 +210,12 @@ RSLineBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
+{ #category : #'public - line' }
+RSLineBuilder >> arrowMarkerEnd [
+
+	self markerEnd: (RSShapeFactory arrow size: 10; color: self shape color)
+]
+
 { #category : #'public - attach point' }
 RSLineBuilder >> attachPoint [
 	^ self shape attachPoint
