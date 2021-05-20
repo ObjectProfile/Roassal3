@@ -458,6 +458,22 @@ RSGraphVizExamples >> example09Arrows [
 ]
 
 { #category : #examples }
+RSGraphVizExamples >> example10Mondrian [
+	<script: 'self new example10Mondrian'>
+
+	| m layout |
+	m := RSMondrian new.
+	"m shape box size: 30."
+	m shape box size: 30; "width: 30; height: 20;" labeled .
+	m nodes: 'abcde'.
+	m graphvizLine 
+		arrowMarkerEnd;
+		useAssociations: { $a -> $b . $b -> $c . $a -> $c . $d -> $c . $e -> $c . $e -> $a }.
+	layout := m layout graphviz digraph.
+	m open
+]
+
+{ #category : #examples }
 RSGraphVizExamples >> unixFamilyTree [
 	^ {'5th Edition' -> '6th Edition'.
 	'5th Edition' -> 'PWB 1.0'.
