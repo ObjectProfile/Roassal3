@@ -194,6 +194,13 @@ RSGraphVizLayout >> scale: aNumber [
 ]
 
 { #category : #'public - configuration' }
+RSGraphVizLayout >> sfdp [
+	^ self 
+		dotConverter: RSSFDPConverter new;
+		yourself
+]
+
+{ #category : #'public - configuration' }
 RSGraphVizLayout >> strict [
 	^ self 
 		dotConverter: RSStrictDotConverter new;
