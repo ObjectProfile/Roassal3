@@ -3,9 +3,9 @@ unitTestsBefore := TestCase withAllSubclasses.
 
 "We load the application software analyzer"
 [ Metacello new
-    baseline: 'SoftwareAnalyzer';
-    repository: 'github://ObjectProfile/SoftwareAnalyzer';
-    load. ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
+    baseline: 'Roassal3';
+    repository: 'github://ObjectProfile/Roassal3';
+    load: 'GraphViz' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ]
 
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses copyWithoutAll: unitTestsBefore) sorted: [ :c1 :c2 | c1 name < c2 name ].
