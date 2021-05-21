@@ -22,9 +22,10 @@ unitTests do: [ :unitTestClass |
 
 stream crlf.
 stream nextPutAll: 'NUMBER OF UNIT TESTS=', unitTests size asString; crlf.
-stream nextPutAll: 'NUMBER OF TEST METHODS=', (unitTests flatCollect: #tests) size asString; crlf.
+stream nextPutAll: 'NUMBER OF TEST METHODS=', (unitTests flatCollect: [ :cls | cls buildSuite tests ]) size asString; crlf.
 
 
 "We close the stream and quit Pharo"
 stream close.
+
 SmalltalkImage current quitPrimitive
