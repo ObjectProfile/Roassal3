@@ -1,5 +1,5 @@
-sudo apt update
-sudo apt install graphviz
+#sudo apt update
+#sudo apt install graphviz
 
 
 curl -L https://get.pharo.org/64/alpha+vm | bash
