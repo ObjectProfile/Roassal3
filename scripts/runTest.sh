@@ -7,6 +7,11 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
+if ! grep -q END "$FILE"; then
+    echo "Did not end properly"
+    exit 1
+fi	
+
 
 cat $FILE
 #RES = `grep ERROR $FILE`
