@@ -12,16 +12,19 @@ path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
+numberOfPassed := 0.
 "We run the unit tests"
 unitTests do: [ :unitTestClass |
 	res := unitTestClass buildSuite run.
 	(res hasFailures or: [ res hasErrors ]) ifTrue: [ stream nextPutAll: 'ERROR: ' ].
 	stream nextPutAll: unitTestClass name, ' ', res asString.
-	stream crlf
+	stream crlf.
+	numberOfPassed := numberOfPassed + res passed size.
 ].
 
 stream crlf.
 stream nextPutAll: 'NUMBER OF UNIT TESTS=', unitTests size asString; crlf.
+stream nextPutAll: 'NUMBER OF PASSED TEST METHODS=', numberOfPassed asString; crlf.
 stream nextPutAll: 'NUMBER OF TEST METHODS=', (unitTests flatCollect: [ :cls | cls buildSuite tests ]) size asString; crlf.
 stream nextPutAll: 'END'; crlf.
 
