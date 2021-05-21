@@ -24,7 +24,7 @@ stream crlf.
 stream nextPutAll: 'NUMBER OF UNIT TESTS=', unitTests size asString; crlf.
 stream nextPutAll: 'NUMBER OF TEST METHODS=', (unitTests flatCollect: [ :cls | cls buildSuite tests ]) size asString; crlf.
 
-#Debugging
+"Debugging!!!!!!"
 [RSGraphVizLayoutTest new testBasic] on: Error do: [:ex | stream nextPutAll: ex printString].
 
 "We close the stream and quit Pharo"
