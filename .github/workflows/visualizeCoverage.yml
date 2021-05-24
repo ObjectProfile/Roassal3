@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir -p ci_data
           cd ci_data
-          mv coverage.png ci_data
+          mv ../coverage.png .
           git add coverage.png
           cat /tmp/ratio
           wget "https://img.shields.io/badge/Coverage-`cat /tmp/ratio`-green"
