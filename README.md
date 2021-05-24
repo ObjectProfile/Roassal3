@@ -3,6 +3,7 @@
 ![Discord](https://img.shields.io/discord/223421264751099906)
 
 [*Chat with us on #Roassal*](https://discord.gg/QewZMZa)
+
 [Visualize the test coverage of Roassal3](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
 
 <!-- [![SmalltalkCI](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml) -->
