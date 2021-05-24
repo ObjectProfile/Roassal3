@@ -34,6 +34,12 @@ lbl := RSLabel text: 'Ratio of covered methods = ', (profiler coverage asString)
 RSLocation move: lbl above: m canvas nodes.
 m canvas add: lbl.
 
+fileCoverageResult := '/tmp/ratio' asFileReference.
+fileCoverageResult exists ifTrue: [ fileCoverageResult delete ].
+str := fileCoverageResult writeStream.
+str nextPutAll: profiler coverage asString.
+str close.
+
 m canvas extent: 1000 @ 1000.
 RSPNGExporter new
 	canvas: m canvas;
