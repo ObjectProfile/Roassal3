@@ -30,6 +30,10 @@ m nodes: profiler packages forEach: [ :pak |
 ].
 m build.
 
+lbl := RSLabel text: 'Ratio of covered methods = ', (profiler coverage asString), ' %'. 
+RSLocation move: lbl above: m canvas nodes.
+m canvas add: lbl.
+
 m canvas extent: 1000 @ 1000.
 RSPNGExporter new
 	canvas: m canvas;
