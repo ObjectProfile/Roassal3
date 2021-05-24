@@ -43,6 +43,7 @@ jobs:
           mkdir ci_data 2> /dev/null
           mv coverage.png ci_data
           git add ci_data/coverage.png
+          cat /tmp/ratio
 
       - name: Commit files
         run: |
