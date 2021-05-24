@@ -47,7 +47,7 @@ jobs:
           cat /tmp/ratio
           wget "https://img.shields.io/badge/Coverage-`cat /tmp/ratio`-green"
           mv "Coverage-`cat /tmp/ratio`-green" coverageBadge.svg
-          git add coverageBadge.png
+          git add coverageBadge.svg
 
       - name: Commit files
         run: |
