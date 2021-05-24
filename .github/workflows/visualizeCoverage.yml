@@ -45,8 +45,8 @@ jobs:
           mv coverage.png ci_data
           git add coverage.png
           cat /tmp/ratio
-          wget "https://raster.shields.io/badge/Coverage-`cat /tmp/ratio`-green"
-          mv "Coverage-`cat /tmp/ratio`-green" coverageBadge.png
+          wget "https://img.shields.io/badge/Coverage-`cat /tmp/ratio`-green"
+          mv "Coverage-`cat /tmp/ratio`-green" coverageBadge.svg
           git add coverageBadge.png
 
       - name: Commit files
