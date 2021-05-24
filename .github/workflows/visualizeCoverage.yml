@@ -41,9 +41,13 @@ jobs:
       - name: Push the picture
         run: |
           mkdir -p ci_data
+          cd ci_data
           mv coverage.png ci_data
-          git add ci_data/coverage.png
+          git add coverage.png
           cat /tmp/ratio
+          wget "https://raster.shields.io/badge/Coverage-`cat /tmp/ratio`-green"
+          mv "Coverage-`cat /tmp/ratio`-green" coverageBadge.png
+          git add coverageBadge.png
 
       - name: Commit files
         run: |
