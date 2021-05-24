@@ -13,6 +13,7 @@
     repository: 'github://ObjectProfile/Roassal3Exporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 
+(Delay forSeconds: 2) wait.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
 
 classSizeScale := 'NSScale' asClass linear range: #(5 30); domain: { 0 . (profiler allClasses max: #numberOfMethods) }.
