@@ -40,7 +40,7 @@ jobs:
 
       - name: Push the picture
         run: |
-          mkdir ci_data 2> /dev/null
+          mkdir -p ci_data
           mv coverage.png ci_data
           git add ci_data/coverage.png
           cat /tmp/ratio
