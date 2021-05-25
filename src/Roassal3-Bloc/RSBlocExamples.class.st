@@ -931,3 +931,27 @@ RSBlocExamples >> example24AnimationLinesInComposite [
 	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example25Bitmap [
+	<script: 'self new example25Bitmap open'>
+
+	| canvas shapes iconAssociations |
+	iconAssociations := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key].
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	shapes := iconAssociations collect: [ :each |
+		RSBitmap new
+			form: each value;
+			model: each;
+			popupText: #key;
+			when: RSMouseClick do: [ :evt |
+				Clipboard clipboardText: evt shape model key.
+				self inform: 'Copied icon name' ] ].
+
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
