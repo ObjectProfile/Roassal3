@@ -28,7 +28,7 @@ RSTransitionAnimationTest >> testStep [
 	| value |
 	value := 0.
 	canvas newAnimation
-		onStepDo: [ :t| value := value + 1 ].
+		onStepDo: [ :t | value := value + 1 ].
 		
 	self assert: value equals: 0.
 	canvas playAnimations.
