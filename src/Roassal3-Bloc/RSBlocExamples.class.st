@@ -163,6 +163,7 @@ RSBlocExamples >> example06Polyline [
 		width: 30;
 		joinRound;"joinBevel; joinMiter"
 		color: Color blue;
+		paint: Color green translucent;
 		controlPoints: { 50@300. 150@300. 150@200. 250@200. 250@100. 350@100};
 		basicTranslateBy: -250 @ -250;
 		yourself).
@@ -954,5 +955,125 @@ RSBlocExamples >> example25Bitmap [
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
 	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example26Bezier [
+	<script: 'self new example26Bezier open'>
+
+	| canvas |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+	
+	canvas addShape: (RSBezier new
+		color: Color red;
+		paint: Color blue translucent;
+		controlPoints:
+			{(0 @ 0).
+			(50 @ 50).
+			(150 @ 0).
+			(150 @ 50)};
+		yourself).
+	
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example27BezierAttachPoints [
+	<script: 'self new example27BezierAttachPoints open'>
+
+	| canvas box1 box2 line |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+	
+	canvas addShape: (RSBezier new
+		color: Color red;
+		controlPoints:
+			{(0 @ 0).
+			(100 @ 100).
+			(200 @ 0).
+			(300 @ 100)};
+		yourself).
+	box1 := RSBox new 
+		draggable; 
+		size: 100; 
+		color: Color blue;
+		translateTo: 100@ -200; 
+		yourself.
+	box2 := RSBox new
+		draggable;
+		size: 100;
+		yourself.
+	canvas
+		add: box1;
+		add: box2.
+		
+	line := RSBezier new
+		withVerticalAttachPoint;
+		from: box1;
+		controlPointsController: RSVerticalCPAPController new;
+		to: box2;
+		yourself.
+	canvas add: line.
+	
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example28BezierWithAnimation [
+	<script: 'self new example28BezierWithAnimation open'>
+
+	| canvas size theta sc borderWhite cpController |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	size := 50.
+	theta := 0.
+	canvas color: Color black.
+	sc := NSScale linear domain: #(-1 1); range: #(0 80).
+	cpController := RSBlockCPController new
+		block: [ :line | 
+			| x1 |
+			x1 := sc scale: (theta + (line model * 5)) sin.
+			Array
+				with: x1 @ 0
+				with: 100 @ -100
+				with: 100 @ 50
+				with: 200 @ -120 ];
+		yourself.
+	borderWhite := RSBorder new
+		color: Color white;
+		yourself.
+	canvas addAll: ((1 to: size) collectWithIndex: [ :m :index | 
+		| com offset edge |
+		com := RSComposite new.
+		offset := Float twoPi / size * index.
+		com matrix rotateByRadians: offset.
+		edge := RSBezier new
+			color: Color white;
+			model: offset;
+			width: 2;
+			controlPointsController: cpController;
+			paint: (Color h: 360 / size * index s: 1 v: 1 alpha: 0.5);
+			yourself.
+		edge 
+			markerEnd: ((RSShapeFactory triangle
+					extent: 10@20;
+					color: edge paint;
+					border: borderWhite;
+					yourself) asMarker 
+				offset: -10;
+				yourself).
+		com add: edge.
+		com ]).
+	canvas newAnimation repeat onStepDo: [ :t | 
+		theta := theta + 0.0523.
+		canvas nodes do: [ :com | com shapes first update ].
+		canvas signalUpdate ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [ canvas camera zoomToFit: canvas extent extent: 500 @ 500 ].
+
 	^ canvas
 ]
