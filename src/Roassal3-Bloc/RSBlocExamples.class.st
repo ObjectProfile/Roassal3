@@ -937,7 +937,7 @@ RSBlocExamples >> example25Bitmap [
 	<script: 'self new example25Bitmap open'>
 
 	| canvas shapes iconAssociations |
-	iconAssociations := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key].
+	iconAssociations := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key ].
 	canvas := RSCanvas new.
 	canvas useBlocHost.
 
@@ -945,6 +945,7 @@ RSBlocExamples >> example25Bitmap [
 		RSBitmap new
 			form: each value;
 			model: each;
+			rotateByDegrees: 45;
 			popupText: #key;
 			when: RSMouseClick do: [ :evt |
 				Clipboard clipboardText: evt shape model key.
