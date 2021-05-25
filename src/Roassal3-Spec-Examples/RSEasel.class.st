@@ -14,17 +14,19 @@ Class {
 }
 
 { #category : #specs }
-RSEasel class >> defaultSpec [ 
+RSEasel class >> defaultSpec [
+
 	<spec: #default>
-	^ SpPanedLayout newHorizontal 
-		position: 35 percent;
-		add: (SpBoxLayout newVertical
-			add: #label withConstraints: [ :c | c height: self toolbarHeight ];
-			add: #text;
-			add: #button withConstraints: [ :c | c height: self toolbarHeight ]
-			);
-		add: #diagram ;
-		yourself
+	^ SpPanedLayout newHorizontal
+		  positionOfSlider: 35 percent;
+		  add: (SpBoxLayout newVertical
+				   add: #label
+				   withConstraints: [ :c | c height: self toolbarHeight ];
+				   add: #text;
+				   add: #button
+				   withConstraints: [ :c | c height: self toolbarHeight ]);
+		  add: #diagram;
+		  yourself
 ]
 
 { #category : #specs }
