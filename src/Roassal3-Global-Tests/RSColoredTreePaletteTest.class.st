@@ -68,3 +68,10 @@ RSColoredTreePaletteTest >> testLeaves [
 	
 	self assert: ctp totalNumberOfLeaves equals: 5
 ]
+
+{ #category : #tests }
+RSColoredTreePaletteTest >> testPalettes [
+
+	RSColorPalette subclasses do: [ :cls |
+		cls selectors do: [ :sel | cls new perform: sel ] ]
+]
