@@ -33,7 +33,7 @@ RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 de
 	nodes := OrderedCollection new: (leaves size + children size).
 	nodes addAll: children; addAll: leaves.
 		
-	e properties at: self childrenKey put: nodes.
+	e schildren: nodes.
 	^ e.
 ]
 
@@ -98,6 +98,11 @@ RSAbstractTreeBuilder >> minWeightValue [
 	^ 1
 ]
 
+{ #category : #weight }
+RSAbstractTreeBuilder >> modelWeight: anObject [
+	self weight: [ :shape | anObject rsValue: shape model ].
+]
+
 { #category : #hooks }
 RSAbstractTreeBuilder >> renderIn: aCanvas [
 	aCanvas addAll: self shapes
@@ -125,6 +130,7 @@ RSAbstractTreeBuilder >> weight [
 
 { #category : #weight }
 RSAbstractTreeBuilder >> weight: anObject [
+	"one arg block, example [:aRoassalShape | ]"
 	weight := anObject
 ]
 
