@@ -1,3 +1,11 @@
+"
+I am the tree layout algorithm described in the publication ""Drawing non-layered tidy trees in linear time"" by Atze van der Ploeg [1] (companion repo at [2]).
+
+I encode the main algorithm leaving objects that use my behavior to fullfil some explicit requirements concerning the dimension the tree will grow toward to.
+
+[1]: https://www.semanticscholar.org/paper/Drawing-non-layered-tidy-trees-in-linear-time-Ploeg/d45f66231e053590c64c9d901fb7b028dbc5c923
+[2]: https://github.com/cwi-swat/non-layered-tidy-trees
+"
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayout,
 	#category : #'Roassal3-Layouts-Core'
@@ -168,36 +176,6 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initDescriptor: aShape fathers: fathers [
-
-	| depth children |
-	self
-		modOf: aShape put: 0;
-		changeOf: aShape put: 0;
-		shiftOf: aShape put: 0;
-		prelimOf: aShape put: 0;
-		mselOf: aShape put: 0;
-		mserOf: aShape put: 0;
-		threadOf: aShape put: nil;
-		rthreadOf: aShape put: nil;
-		elOf: aShape put: nil;
-		erOf: aShape put: nil.
-
-	depth := fathers
-		     at: aShape
-		     ifPresent: [ :hierarchyParent | 
-			     (self depthBoundOf: hierarchyParent) + self depthGap ]
-		     ifAbsent: [ 0 ].
-
-	self depthOf: aShape put: depth.
-
-	children := (self childrenOf: aShape) ifNil: [ 
-		            self childrenOf: aShape put: OrderedCollection new ].
-
-	children do: [ :each | self initDescriptor: each fathers: fathers ]
-]
-
-{ #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
 	| hierarchy roots fathers root |
@@ -236,9 +214,39 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 			        rootBox ]
 		        ifFalse: [ roots anyOne ].
 
-	self initDescriptor: root fathers: fathers.
+	self initializeForShape: root fathers: fathers.
 
 	^ root
+]
+
+{ #category : #initialization }
+RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
+
+	| depth children |
+	self
+		modOf: aShape put: 0;
+		changeOf: aShape put: 0;
+		shiftOf: aShape put: 0;
+		prelimOf: aShape put: 0;
+		mselOf: aShape put: 0;
+		mserOf: aShape put: 0;
+		threadOf: aShape put: nil;
+		rthreadOf: aShape put: nil;
+		elOf: aShape put: nil;
+		erOf: aShape put: nil.
+
+	depth := fathers
+		     at: aShape
+		     ifPresent: [ :hierarchyParent | 
+			     (self depthBoundOf: hierarchyParent) + self depthGap ]
+		     ifAbsent: [ 0 ].
+
+	self depthOf: aShape put: depth.
+
+	children := (self childrenOf: aShape) ifNil: [ 
+		            self childrenOf: aShape put: OrderedCollection new ].
+
+	children do: [ :each | self initializeForShape: each fathers: fathers ]
 ]
 
 { #category : #'layout-properties' }
@@ -362,7 +370,7 @@ RSTWalkBasedRegularTreeLayout >> nextRightContour: v [
 ]
 
 { #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> positionAtDepth: depth atBreadth: breadth [
+RSTWalkBasedRegularTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	self explicitRequirement
 ]
@@ -422,7 +430,7 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 	breadth := (self prelimOf: aShape) + mNext.
 
 	aShape position:
-		(self positionAtDepth: depth atBreadth: breadth)
+		(self positionOfShape: aShape atDepth: depth atBreadth: breadth)
 		+ (aShape extent / 2).
 
 	children := self childrenOf: aShape.
