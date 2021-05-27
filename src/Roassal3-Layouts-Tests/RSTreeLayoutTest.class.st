@@ -80,17 +80,20 @@ RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 
 	| icerepo commits edges dict assocs |
 	icerepo := IceRepository registry detect: [ :each | 
-		           each name = 'Containers-Essentials' ].
+		           each name = 'Roassal3' ].
+	"Containers-Essentials"
 
 	dict := Dictionary new.
 
-	icerepo newCommitWalk fromHead commits do: [ :aCommit | 
-		dict at: aCommit id put: (RSCircle new
-				 model: aCommit id asSymbol;
-				 propertyAt: #gitCommit put: aCommit;
-				 color: Color white;
-				 withBorder;
-				 yourself) ].
+	icerepo localBranches do: [ :aBranch | 
+		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit | 
+			dict at: aCommit id put: (RSCircle new
+					 model: aCommit id asSymbol;
+					 propertyAt: #gitCommit put: aCommit;
+					 color: Color white;
+					 draggable;
+					 withBorder;
+					 yourself) ] ].
 
 	commits := dict values.
 
