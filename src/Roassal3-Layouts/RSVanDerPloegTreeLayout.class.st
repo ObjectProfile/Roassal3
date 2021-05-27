@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #algorithm }
-RSVanDerPloegTreeLayout >> breadthGap [
+RSVanDerPloegTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
 	^ self horizontalGap
 ]
@@ -30,7 +30,7 @@ RSVanDerPloegTreeLayout >> breadthMeasureOf: aShape [
 ]
 
 { #category : #algorithm }
-RSVanDerPloegTreeLayout >> depthGap [
+RSVanDerPloegTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
 	^ self verticalGap
 ]

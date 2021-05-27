@@ -24,7 +24,7 @@ RSTWalkBasedRegularTreeLayout >> addChildSpacing: children [
 ]
 
 { #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> breadthGap [
+RSTWalkBasedRegularTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
 	self explicitRequirement
 ]
@@ -72,7 +72,7 @@ RSTWalkBasedRegularTreeLayout >> depthBoundOf: aShape [
 ]
 
 { #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> depthGap [
+RSTWalkBasedRegularTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
 	self explicitRequirement
 ]
@@ -236,17 +236,19 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 		erOf: aShape put: nil.
 
 	depth := fathers
-		     at: aShape
-		     ifPresent: [ :hierarchyParent | 
-			     (self depthBoundOf: hierarchyParent) + self depthGap ]
-		     ifAbsent: [ 0 ].
+		         at: aShape
+		         ifPresent: [ :aShapeParent | 
+			         (self depthBoundOf: aShapeParent)
+			         + (self depthGapAmong: aShapeParent and: aShape) ]
+		         ifAbsent: [ 0 ].
 
 	self depthOf: aShape put: depth.
 
 	children := (self childrenOf: aShape) ifNil: [ 
 		            self childrenOf: aShape put: OrderedCollection new ].
 
-	children do: [ :each | self initializeForShape: each fathers: fathers ]
+	children do: [ :each | 
+		self initializeForShape: each fathers: fathers ]
 ]
 
 { #category : #'layout-properties' }
@@ -463,7 +465,8 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 
 		"How far to the left of the right side of sr is the left side of cl?"
 		dist := mssr + (self prelimOf: sr) + (self breadthMeasureOf: sr)
-		        + self breadthGap - mscl - (self prelimOf: cl).
+		        + (self breadthGapAmong: sr and: cl) - mscl
+		        - (self prelimOf: cl).
 
 		dist > 0 ifTrue: [ 
 			mscl := mscl + dist.
