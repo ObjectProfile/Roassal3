@@ -184,19 +184,24 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 	fathers := IdentityDictionary new.
 
 	edges do: [ :anEdge | 
-		| children child father |
+		| children child father multipleParents |
 		father := anEdge from.
 		child := anEdge to.
 
-		roots remove: child.
-		fathers at: child put: father.
+		multipleParents := false.
+		roots remove: child ifAbsent: [ multipleParents := true ].
 
-		children := hierarchy
-			            at: father
-			            ifAbsentPut: [ 
-			            self childrenOf: father put: OrderedCollection new ].
+		multipleParents
+			ifTrue: [  ]
+			ifFalse: [ 
+				fathers at: child put: father.
 
-		children add: child ].
+				children := hierarchy
+					            at: father
+					            ifAbsentPut: [ 
+					            self childrenOf: father put: OrderedCollection new ].
+
+				children add: child ] ].
 
 	root := roots size > 1
 		        ifTrue: [ 

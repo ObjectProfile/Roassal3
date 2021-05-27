@@ -74,3 +74,48 @@ RSTreeLayoutTest >> testCycles [
 	RSTreeLayout new doNotValidateCycles; on: shapes
 	
 ]
+
+{ #category : #tests }
+RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
+
+	| icerepo commits edges dict assocs |
+	icerepo := IceRepository registry detect: [ :each | 
+		           each name = 'Containers-Essentials' ].
+
+	dict := Dictionary new.
+
+	icerepo newCommitWalk fromHead commits do: [ :aCommit | 
+		dict at: aCommit id put: (RSCircle new
+				 model: aCommit id asSymbol;
+				 propertyAt: #gitCommit put: aCommit;
+				 color: Color white;
+				 withBorder;
+				 yourself) ].
+
+	commits := dict values.
+
+	assocs := dict values flatCollect: [ :aShape | 
+		          (aShape propertyAt: #gitCommit) ancestorIds collect: [ :id | 
+			          aShape -> (dict at: id) ] ].
+
+	edges := RSLineBuilder verticalBezier
+		         shapes: commits;
+		         withVerticalAttachPoint;
+		         connectToAll: [ :aCommitId | "useAssociations: assocs" 
+			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
+
+	RSVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		verticalGap: [ :parent :child | 
+			| duration |
+			duration := (parent propertyAt: #gitCommit) datetime
+			            - (child propertyAt: #gitCommit) datetime.
+
+			(duration asMinutes max: Float goldenRatio) log: Float goldenRatio ];
+		on: commits edges: edges.
+
+	RSCanvas new
+		addAll: commits , edges;
+		@ RSCanvasController;
+		open
+]

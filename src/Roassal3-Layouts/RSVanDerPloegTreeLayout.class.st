@@ -20,7 +20,9 @@ Class {
 { #category : #algorithm }
 RSVanDerPloegTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
-	^ self horizontalGap
+	^ [ self horizontalGap value: aShapeParent value: aShape ]
+		  onDNU: #value:value:
+		  do: [ self horizontalGap ]
 ]
 
 { #category : #algorithm }
@@ -32,7 +34,9 @@ RSVanDerPloegTreeLayout >> breadthMeasureOf: aShape [
 { #category : #algorithm }
 RSVanDerPloegTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
-	^ self verticalGap
+	^ [ self verticalGap value: aShapeParent value: aShape ]
+		  onDNU: #value:value:
+		  do: [ self verticalGap ]
 ]
 
 { #category : #algorithm }
