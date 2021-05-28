@@ -27,7 +27,7 @@ c
 ```
 "
 Class {
-	#name : #RSLegend,
+	#name : #RSLegendBuilder,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'layout',
@@ -44,7 +44,7 @@ Class {
 }
 
 { #category : #hooks }
-RSLegend >> basicRenderIn: aCanvas [
+RSLegendBuilder >> basicRenderIn: aCanvas [
 	| legend |
 	legend := self legend.
 	location move: legend on: aCanvas shapes.
@@ -52,7 +52,7 @@ RSLegend >> basicRenderIn: aCanvas [
 ]
 
 { #category : #'public - specific' }
-RSLegend >> customText: anObject shape: aShape [
+RSLegendBuilder >> customText: anObject shape: aShape [
 	| shape |
 	"general propuse, you can add and define anything in aShape to be a legend"
 	shape := aShape copy text: anObject.
@@ -61,60 +61,60 @@ RSLegend >> customText: anObject shape: aShape [
 ]
 
 { #category : #accessing }
-RSLegend >> defaultBoldText [
+RSLegendBuilder >> defaultBoldText [
 	^ defaultBoldText ifNil: [ defaultBoldText := RSLabel new bold ].
 ]
 
 { #category : #accessing }
-RSLegend >> defaultBox [
+RSLegendBuilder >> defaultBox [
 	^ defaultBox ifNil: [ defaultBox := RSBox new size: 15 ].
 ]
 
 { #category : #accessing }
-RSLegend >> defaultCircle [
+RSLegendBuilder >> defaultCircle [
 	^ defaultCircle ifNil: [ defaultCircle := RSEllipse new size: 15. ]
 ]
 
 { #category : #accessing }
-RSLegend >> defaultLabel [
+RSLegendBuilder >> defaultLabel [
 	^ defaultLabel ifNil: [ defaultLabel := RSLabel new ].
 ]
 
 { #category : #accessing }
-RSLegend >> defaultLabel: aShape [
+RSLegendBuilder >> defaultLabel: aShape [
 	defaultLabel := aShape
 ]
 
 { #category : #accessing }
-RSLegend >> defaultTitle [
+RSLegendBuilder >> defaultTitle [
 	^ defaultTitle ifNil: [ defaultTitle := RSLabel new bold.
 		defaultTitle fontSize: defaultTitle fontSize * 1.2.
 		defaultTitle ].
 ]
 
 { #category : #accessing }
-RSLegend >> defaultTitle: aShape [
+RSLegendBuilder >> defaultTitle: aShape [
 	defaultTitle := aShape
 ]
 
 { #category : #initialization }
-RSLegend >> initialize [
+RSLegendBuilder >> initialize [
 	super initialize.
 	self reset.
 ]
 
 { #category : #testing }
-RSLegend >> isOnDemand [
+RSLegendBuilder >> isOnDemand [
 	^ menuShape notNil
 ]
 
 { #category : #layout }
-RSLegend >> layout [ 
+RSLegendBuilder >> layout [ 
 	^ layout
 ]
 
 { #category : #accessing }
-RSLegend >> legend [
+RSLegendBuilder >> legend [
 	| legend |
 	layout on: self shapes.
 	legend := RSComposite new
@@ -125,27 +125,27 @@ RSLegend >> legend [
 ]
 
 { #category : #public }
-RSLegend >> legendDo: aBlock [
+RSLegendBuilder >> legendDo: aBlock [
 	legendBlock := aBlock
 ]
 
 { #category : #accessing }
-RSLegend >> location [
+RSLegendBuilder >> location [
 	^ location
 ]
 
 { #category : #accessing }
-RSLegend >> menuShape [
+RSLegendBuilder >> menuShape [
 	^ menuShape
 ]
 
 { #category : #public }
-RSLegend >> onDemand [
+RSLegendBuilder >> onDemand [
 	^ self onDemand: 'Help'.
 ]
 
 { #category : #public }
-RSLegend >> onDemand: text [
+RSLegendBuilder >> onDemand: text [
 	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
@@ -154,7 +154,7 @@ RSLegend >> onDemand: text [
 ]
 
 { #category : #'public - specific' }
-RSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
+RSLegendBuilder >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	"very very specific shape"
 	| box s marker line g l1 l2 l3 line1 line2  |
 	box := RSBox new
@@ -183,7 +183,7 @@ RSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 ]
 
 { #category : #hooks }
-RSLegend >> renderIn: aCanvas [
+RSLegendBuilder >> renderIn: aCanvas [
 	self isOnDemand 
 		ifTrue: [ self renderOnDemandIn: aCanvas ]
 		ifFalse: [self basicRenderIn: aCanvas ].
@@ -191,7 +191,7 @@ RSLegend >> renderIn: aCanvas [
 ]
 
 { #category : #hooks }
-RSLegend >> renderOnDemandIn: aCanvas [
+RSLegendBuilder >> renderOnDemandIn: aCanvas [
 	| i legendLabels update |
 	menuShape isFixed: true.
 	aCanvas addShape: menuShape.
@@ -218,7 +218,7 @@ RSLegend >> renderOnDemandIn: aCanvas [
 ]
 
 { #category : #initialization }
-RSLegend >> reset [
+RSLegendBuilder >> reset [
 	legendBlock := [ :l | l draggable ].
 	shapes := RSGroup new.
 	location := RSLocation new below.
@@ -231,7 +231,7 @@ RSLegend >> reset [
 ]
 
 { #category : #utilities }
-RSLegend >> shape: aShape withColor: color [
+RSLegendBuilder >> shape: aShape withColor: color [
 	| copy |
 	copy := aShape copy.
 	copy color: (color rsValue: copy).
@@ -239,12 +239,12 @@ RSLegend >> shape: aShape withColor: color [
 ]
 
 { #category : #public }
-RSLegend >> text: aString [
+RSLegendBuilder >> text: aString [
 	^ self customText: aString shape: self defaultLabel
 ]
 
 { #category : #public }
-RSLegend >> text: aString description: desc [
+RSLegendBuilder >> text: aString description: desc [
 	| text tshapes line l d|
 	text := self defaultBoldText copy.
 	text text: aString.
@@ -260,17 +260,17 @@ RSLegend >> text: aString description: desc [
 ]
 
 { #category : #public }
-RSLegend >> text: aString withBoxColor: color [
+RSLegendBuilder >> text: aString withBoxColor: color [
 	^ self text: aString withShape: (self shape: self defaultBox withColor: color).
 ]
 
 { #category : #public }
-RSLegend >> text: aString withCircleColor: color [
+RSLegendBuilder >> text: aString withCircleColor: color [
 	^ self text: aString withShape: (self shape: self defaultCircle withColor: color).
 ]
 
 { #category : #'public - specific' }
-RSLegend >> text: aString withFadingRamp: ramp [
+RSLegendBuilder >> text: aString withFadingRamp: ramp [
 	| gradient s |
 	"very specific shape"
 	gradient := LinearGradientPaint fromArray: ramp.
@@ -284,7 +284,7 @@ RSLegend >> text: aString withFadingRamp: ramp [
 ]
 
 { #category : #public }
-RSLegend >> text: aString withShape: aShape [
+RSLegendBuilder >> text: aString withShape: aShape [
 	| text tshapes line l |
 	text := self defaultLabel copy.
 	text text: aString.
@@ -299,12 +299,12 @@ RSLegend >> text: aString withShape: aShape [
 ]
 
 { #category : #public }
-RSLegend >> title: aString [
+RSLegendBuilder >> title: aString [
 	^ self customText: aString shape: self defaultTitle
 ]
 
 { #category : #public }
-RSLegend >> withFrame [
+RSLegendBuilder >> withFrame [
 	"Set a frame around the legend"
 	self legendDo: [ :l |
 		l 

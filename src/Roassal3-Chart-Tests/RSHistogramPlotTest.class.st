@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSHistogramPlotTest >> testBasic [
 	| c values plot |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	values := #(1 2 3 4 5 6 7 8 9 10).
 	c addPlot: (plot := RSHistogramPlot new x: values).
 	c build.
@@ -20,7 +20,7 @@ RSHistogramPlotTest >> testBasic [
 { #category : #tests }
 RSHistogramPlotTest >> testBins [
 	| c values plot |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	values := #(1 2 3 4 5 6 7 8 9 10).
 	c addPlot: (plot := RSHistogramPlot new x: values; bins: 2).
 	c build.
@@ -33,7 +33,7 @@ RSHistogramPlotTest >> testBins [
 { #category : #tests }
 RSHistogramPlotTest >> testBinsCollection [
 	| c values plot |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	values := #(1 2 3 4 5 6 7 8 9 10).
 	c addPlot: (plot := RSHistogramPlot new x: values; bins: #(1 5 8 10)).
 	c build.
@@ -46,7 +46,7 @@ RSHistogramPlotTest >> testBinsCollection [
 { #category : #tests }
 RSHistogramPlotTest >> testBinsStrat [
 	| c values plot |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	values := (1 to: 100) shuffled.
 	c addPlot: (plot := RSHistogramPlot new x: values; binningStrategy: RSSturgesBinning new).
 	c build.

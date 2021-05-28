@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic [
 	| c title label |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	title := c title: 'hello'.
 	title baseShape
 		color: Color blue.
@@ -23,7 +23,7 @@ RSChartTitleDecorationTest >> testBasic [
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic2 [
 	| c |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c build.
 	 
