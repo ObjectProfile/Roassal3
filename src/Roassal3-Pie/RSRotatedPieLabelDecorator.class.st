@@ -2,7 +2,7 @@
 I am a specific interaction based on the example23RotatedAnimation
 "
 Class {
-	#name : #RSRotatedPieLabelDecoration,
+	#name : #RSRotatedPieLabelDecorator,
 	#superclass : #RSAbstractPieDecorator,
 	#instVars : [
 		'labels',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #rendering }
-RSRotatedPieLabelDecoration >> createAnimation [
+RSRotatedPieLabelDecorator >> createAnimation [
 	animation := builder container newAnimation
 		from: 0;
 		to: 360;
@@ -23,7 +23,7 @@ RSRotatedPieLabelDecoration >> createAnimation [
 ]
 
 { #category : #rendering }
-RSRotatedPieLabelDecoration >> createLabels [
+RSRotatedPieLabelDecorator >> createLabels [
 	labels := builder objects collect: [ :obj |
 		RSLabel new
 			text: obj;
@@ -31,7 +31,7 @@ RSRotatedPieLabelDecoration >> createLabels [
 ]
 
 { #category : #rendering }
-RSRotatedPieLabelDecoration >> createLines [
+RSRotatedPieLabelDecorator >> createLines [
 	lines := builder objects collect: [ :obj | 
 		RSPolyline new
 			dashArray: #( 4 );
@@ -39,7 +39,7 @@ RSRotatedPieLabelDecoration >> createLines [
 ]
 
 { #category : #rendering }
-RSRotatedPieLabelDecoration >> render [
+RSRotatedPieLabelDecorator >> render [
 	| container |
 	self createLabels.
 	self createLines.
@@ -53,7 +53,7 @@ RSRotatedPieLabelDecoration >> render [
 ]
 
 { #category : #rendering }
-RSRotatedPieLabelDecoration >> stepShapes: t [
+RSRotatedPieLabelDecorator >> stepShapes: t [
 	builder shapes doWithIndex: [ :shape :index | 
 		  | a b label ang ext x p1 p2 p3 line |
 		  a := shape propertyAt: #a ifAbsentPut: [ shape alphaAngle ].
