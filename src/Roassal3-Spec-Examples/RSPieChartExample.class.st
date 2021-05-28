@@ -133,7 +133,7 @@ RSPieChartExample >> visualizePie: canvas package: pkg [
 		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;
 		build.
-	RSRotatedPieLabelDecoration on: b.
+	RSRotatedPieLabelDecorator on: b.
 	b shapes @ (RSPopup text: [ :cls | 
 		cls name, String cr, cls linesOfCode asString, 'LOC' ] ).
 	canvas addShape: (RSLabel new
