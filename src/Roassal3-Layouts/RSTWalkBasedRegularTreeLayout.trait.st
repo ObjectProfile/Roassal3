@@ -178,7 +178,7 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 { #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
-	| hierarchy roots fathers root |
+	| hierarchy roots fathers root level |
 	hierarchy := IdentityDictionary new.
 	roots := IdentitySet withAll: elements.
 	fathers := IdentityDictionary new.
@@ -191,21 +191,20 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 		multipleParents := false.
 		roots remove: child ifAbsent: [ multipleParents := true ].
 
-		multipleParents
-			ifTrue: [  ]
-			ifFalse: [ 
-				fathers at: child put: father.
+		multipleParents ifFalse: [ 
+			fathers at: child put: father.
 
-				children := hierarchy
-					            at: father
-					            ifAbsentPut: [ 
-					            self childrenOf: father put: OrderedCollection new ].
+			children := hierarchy
+				            at: father
+				            ifAbsentPut: [ 
+				            self childrenOf: father put: OrderedCollection new ].
 
-				children add: child ] ].
+			children add: child ] ].
 
 	root := roots size > 1
 		        ifTrue: [ 
 			        | children rootBox |
+			        level := -1.
 			        rootBox := RSBox new.
 			        children := self
 				                    childrenOf: rootBox
@@ -213,21 +212,23 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
 			        roots do: [ :each | 
 				        self assert: (fathers includesKey: each) not.
-				        children add: each.
-				        fathers at: each put: rootBox ].
+				        children add: each
+				        "fathers at: each put: rootBox" ].
 
 			        rootBox ]
-		        ifFalse: [ roots anyOne ].
+		        ifFalse: [ 
+			        level := 0.
+			        roots anyOne ].
 
-	self initializeForShape: root fathers: fathers.
+	self initializeForShape: root atLevel: level fathers: fathers.
 
 	^ root
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
+RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape atLevel: aLevel fathers: fathers [
 
-	| depth children |
+	| depth |
 	self
 		modOf: aShape put: 0;
 		changeOf: aShape put: 0;
@@ -249,11 +250,11 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 
 	self depthOf: aShape put: depth.
 
-	children := (self childrenOf: aShape) ifNil: [ 
-		            self childrenOf: aShape put: OrderedCollection new ].
-
-	children do: [ :each | 
-		self initializeForShape: each fathers: fathers ]
+	(self childrenOf: aShape)
+		ifNil: [ self childrenOf: aShape put: OrderedCollection new ]
+		ifNotNil: [ :children | 
+			children do: [ :each | 
+				self initializeForShape: each atLevel: aLevel + 1 fathers: fathers ] ]
 ]
 
 { #category : #'layout-properties' }

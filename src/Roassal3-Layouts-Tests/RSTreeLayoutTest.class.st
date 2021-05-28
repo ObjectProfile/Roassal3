@@ -78,47 +78,77 @@ RSTreeLayoutTest >> testCycles [
 { #category : #tests }
 RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 
-	| icerepo commits edges dict assocs |
+	| icerepo commits edges dict |
 	icerepo := IceRepository registry detect: [ :each | 
 		           each name = 'Roassal3' ].
 	"Containers-Essentials"
 
 	dict := Dictionary new.
 
-	icerepo localBranches do: [ :aBranch | 
+	icerepo allBranches do: [ :aBranch | 
 		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit | 
-			dict at: aCommit id put: (RSCircle new
-					 model: aCommit id asSymbol;
-					 propertyAt: #gitCommit put: aCommit;
-					 color: Color white;
-					 draggable;
-					 withBorder;
-					 yourself) ] ].
+			| circle |
+			circle := dict at: aCommit id put: (RSCircle new
+					           model: aCommit id asSymbol;
+					           "radius:
+						           ((aCommit changesTo: aCommit parent) size / Float pi)
+							           sqrt;"
+					           propertyAt: #gitCommit
+					           put: aCommit;
+					           color: Color white;
+					           draggable;
+					           addInteraction: (RSPopup new text: [ 
+								            String streamContents: [ :aStream | 
+										            aStream
+											            nextPutAll: aCommit comment;
+											            cr;
+											            cr;
+											            nextPutAll: aCommit shortId;
+											            nextPutAll: '  -- by ';
+											            nextPutAll: aCommit author;
+											            nextPutAll: ' at ';
+											            nextPutAll: aCommit datetime asLocalStringYMDHM;
+											            nextPutAll: '.' ] ]);
+					           withBorder;
+					           yourself).
+
+			aCommit isMergeCommit ifTrue: [ circle color: circle border color ] ] ].
 
 	commits := dict values.
-
-	assocs := dict values flatCollect: [ :aShape | 
-		          (aShape propertyAt: #gitCommit) ancestorIds collect: [ :id | 
-			          aShape -> (dict at: id) ] ].
 
 	edges := RSLineBuilder verticalBezier
 		         shapes: commits;
 		         withVerticalAttachPoint;
-		         connectToAll: [ :aCommitId | "useAssociations: assocs" 
+		         connectToAll: [ :aCommitId | 
 			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
 
+	edges sort: [ :a :b | 
+		(a from propertyAt: #gitCommit) datetime
+		> (b from propertyAt: #gitCommit) datetime ].
+
+	[ 
 	RSVanDerPloegTreeLayout new
 		doNotValidateCycles;
 		verticalGap: [ :parent :child | 
 			| duration |
 			duration := (parent propertyAt: #gitCommit) datetime
 			            - (child propertyAt: #gitCommit) datetime.
-
-			(duration asMinutes max: Float goldenRatio) log: Float goldenRatio ];
+			self assert: duration asSeconds >= 0.
+			((duration asMinutes max: Float goldenRatio) log: Float goldenRatio)
+			* Float goldenRatio ];
 		on: commits edges: edges.
+
+	edges do: [ :each | 
+		each to encompassingRectangle top
+		< each from encompassingRectangle bottom ifTrue: [ 
+			each
+				dashArray: #( 4 );
+				color: each color translucent ] ].
 
 	RSCanvas new
 		addAll: commits , edges;
 		@ RSCanvasController;
-		open
+		zoomToFit;
+		exportToSVG;
+		open ] timeToRun inspect
 ]
