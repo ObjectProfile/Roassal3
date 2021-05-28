@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSSturgesBinning,
-	#superclass : #RSBinningStrategy,
+	#superclass : #RSAbstractBinning,
 	#category : #'Roassal3-Chart-Strategy'
 }
 
