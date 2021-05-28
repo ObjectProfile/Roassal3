@@ -174,7 +174,7 @@ RSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSTransitionAnimation >> step [ 
 	| value |
 	value := self progressValue: self progress.
