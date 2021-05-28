@@ -2,7 +2,7 @@
 TODO
 "
 Class {
-	#name : #RSAbstractCompactTree,
+	#name : #RSAbstractCompactTreeLayout,
 	#superclass : #RSAbstractGraphLayout,
 	#instVars : [
 		'sonsDictionary',
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractCompactTree class >> horizontalGap: anInteger [
+RSAbstractCompactTreeLayout class >> horizontalGap: anInteger [
 	^ self new horizontalGap: anInteger; yourself
 ]
 
 { #category : #testing }
-RSAbstractCompactTree class >> horizontalGap: anInt verticalGap: another [
+RSAbstractCompactTreeLayout class >> horizontalGap: anInt verticalGap: another [
 
 	| new |
 	
@@ -32,38 +32,38 @@ RSAbstractCompactTree class >> horizontalGap: anInt verticalGap: another [
 ]
 
 { #category : #testing }
-RSAbstractCompactTree class >> isAbstract [
-	^ self name = #RSAbstractCompactTree
+RSAbstractCompactTreeLayout class >> isAbstract [
+	^ self name = #RSAbstractCompactTreeLayout
 
 
 ]
 
 { #category : #testing }
-RSAbstractCompactTree class >> verticalGap: anInteger [
+RSAbstractCompactTreeLayout class >> verticalGap: anInteger [
 	^ self new verticalGap: anInteger; yourself
 ]
 
 { #category : #private }
-RSAbstractCompactTree >> childrenFor: aNode [ 
+RSAbstractCompactTreeLayout >> childrenFor: aNode [ 
 	^ sonsDictionary isEmpty 
 		ifTrue: [ super childrenFor: aNode ] 
 		ifFalse: [ sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> compareContourOf: aNode with: another [
+RSAbstractCompactTreeLayout >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
 	self subclassResponsibility
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> computePosition: aNode [
+RSAbstractCompactTreeLayout >> computePosition: aNode [
 "compute the position of the given node and of his sons recursively"
 	self subclassResponsibility.
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> followLeftContour: aNode toLayer: anInteger [
+RSAbstractCompactTreeLayout >> followLeftContour: aNode toLayer: anInteger [
 	"return the last node in the left contour begining at anode"
 	
 	((self layerOf: aNode) = anInteger ) ifTrue: [^ aNode  ].
@@ -76,7 +76,7 @@ RSAbstractCompactTree >> followLeftContour: aNode toLayer: anInteger [
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> followRightContour: aNode toLayer: anInteger [
+RSAbstractCompactTreeLayout >> followRightContour: aNode toLayer: anInteger [
 	"return the node in the right contour begining at anode in layer anInteger"
 
 	((self layerOf: aNode) = anInteger ) ifTrue: [^ aNode  ].
@@ -89,7 +89,7 @@ RSAbstractCompactTree >> followRightContour: aNode toLayer: anInteger [
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
+RSAbstractCompactTreeLayout >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
 	| node x |
 	
 	(anInteger < 0) ifTrue: [^ self getAbcissaOf: aNode inSubtreeFromLayer: 0 ].
@@ -108,16 +108,16 @@ RSAbstractCompactTree >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTree >> greedyCycleRemoval: aGraph [
+RSAbstractCompactTreeLayout >> greedyCycleRemoval: aGraph [
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTree >> initialLayout: aLayout [
+RSAbstractCompactTreeLayout >> initialLayout: aLayout [
 	initialLayout := aLayout 
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTree >> initialize [ 
+RSAbstractCompactTreeLayout >> initialize [ 
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 30.
@@ -126,7 +126,7 @@ RSAbstractCompactTree >> initialize [
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTree >> initialize: aNode whoseFatherIs: another [ 
+RSAbstractCompactTreeLayout >> initialize: aNode whoseFatherIs: another [ 
 	self fatherOf: aNode put: another.
 	
 	another isNil ifTrue: [ self layerOf: aNode put: 0 ] ifFalse: [ self layerOf: aNode put: (self layerOf: another) + 1 ] .
@@ -135,7 +135,7 @@ RSAbstractCompactTree >> initialize: aNode whoseFatherIs: another [
 ]
 
 { #category : #algorithm }
-RSAbstractCompactTree >> leftSiblingOf: aNode [
+RSAbstractCompactTreeLayout >> leftSiblingOf: aNode [
 	"return the left sibling of the given node "
 	| children |
 
@@ -146,6 +146,6 @@ RSAbstractCompactTree >> leftSiblingOf: aNode [
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTree >> root: aNode [ 
+RSAbstractCompactTreeLayout >> root: aNode [ 
 	root := aNode 
 ]
