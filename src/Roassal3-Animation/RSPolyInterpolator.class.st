@@ -15,7 +15,7 @@ Symmetric polynomial easing; scales polyIn for t in [0, 0.5] and polyOut for t i
 "
 Class {
 	#name : #RSPolyInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolation,
 	#instVars : [
 		'exponent'
 	],

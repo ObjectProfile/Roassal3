@@ -11,7 +11,7 @@ Symmetric bounce easing; scales bounceIn for t in [0, 0.5] and bounceOut for t i
 "
 Class {
 	#name : #RSBounceInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolation,
 	#instVars : [
 		'b1',
 		'b2',

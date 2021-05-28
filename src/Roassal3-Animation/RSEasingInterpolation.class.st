@@ -4,7 +4,7 @@ Given the specified normalized time t, typically in the range [0,1], returns the
 I am highly inspired from d3js source code https://github.com/d3/d3-transition and from the base animation of Bloc https://github.com/pharo-graphics/Bloc
 "
 Class {
-	#name : #RSEasing,
+	#name : #RSEasingInterpolation,
 	#superclass : #NSInterpolator,
 	#instVars : [
 		'useOut',
@@ -14,229 +14,229 @@ Class {
 }
 
 { #category : #back }
-RSEasing class >> back [
+RSEasingInterpolation class >> back [
 	^ self backInOut
 ]
 
 { #category : #back }
-RSEasing class >> backIn [
+RSEasingInterpolation class >> backIn [
 	^ RSBackInterpolator new in
 ]
 
 { #category : #back }
-RSEasing class >> backInOut [
+RSEasingInterpolation class >> backInOut [
 	^ RSBackInterpolator new
 ]
 
 { #category : #back }
-RSEasing class >> backOut [
+RSEasingInterpolation class >> backOut [
 	^ RSBackInterpolator new out
 ]
 
 { #category : #bounce }
-RSEasing class >> bounce [
+RSEasingInterpolation class >> bounce [
 	^ self bounceOut
 ]
 
 { #category : #bounce }
-RSEasing class >> bounceIn [
+RSEasingInterpolation class >> bounceIn [
 	^ RSBounceInterpolator new in
 ]
 
 { #category : #bounce }
-RSEasing class >> bounceInOut [
+RSEasingInterpolation class >> bounceInOut [
 	^ RSBounceInterpolator new
 ]
 
 { #category : #bounce }
-RSEasing class >> bounceOut [
+RSEasingInterpolation class >> bounceOut [
 	^ RSBounceInterpolator new out
 ]
 
 { #category : #circle }
-RSEasing class >> circle [
+RSEasingInterpolation class >> circle [
 	^ self circleInOut
 ]
 
 { #category : #circle }
-RSEasing class >> circleIn [
+RSEasingInterpolation class >> circleIn [
 	^ RSCircleInterpolator new in
 ]
 
 { #category : #circle }
-RSEasing class >> circleInOut [
+RSEasingInterpolation class >> circleInOut [
 	^ RSCircleInterpolator new
 ]
 
 { #category : #circle }
-RSEasing class >> circleOut [
+RSEasingInterpolation class >> circleOut [
 	^ RSCircleInterpolator new out
 ]
 
 { #category : #cubic }
-RSEasing class >> cubic [
+RSEasingInterpolation class >> cubic [
 	^ self cubicInOut
 ]
 
 { #category : #cubic }
-RSEasing class >> cubicIn [
+RSEasingInterpolation class >> cubicIn [
 	^ RSCubicInterpolator new in
 ]
 
 { #category : #cubic }
-RSEasing class >> cubicInOut [
+RSEasingInterpolation class >> cubicInOut [
 	^ RSCubicInterpolator new
 ]
 
 { #category : #cubic }
-RSEasing class >> cubicOut [
+RSEasingInterpolation class >> cubicOut [
 	^ RSCubicInterpolator new out
 ]
 
 { #category : #elastic }
-RSEasing class >> elastic [
+RSEasingInterpolation class >> elastic [
 	^ self elasticInOut
 ]
 
 { #category : #elastic }
-RSEasing class >> elasticIn [
+RSEasingInterpolation class >> elasticIn [
 	^ RSElasticInterpolator new in
 ]
 
 { #category : #elastic }
-RSEasing class >> elasticInOut [
+RSEasingInterpolation class >> elasticInOut [
 	^ RSElasticInterpolator new
 ]
 
 { #category : #elastic }
-RSEasing class >> elasticOut [
+RSEasingInterpolation class >> elasticOut [
 	^ RSElasticInterpolator new out
 ]
 
 { #category : #exp }
-RSEasing class >> exp [
+RSEasingInterpolation class >> exp [
 	^ self expInOut
 ]
 
 { #category : #exp }
-RSEasing class >> expIn [
+RSEasingInterpolation class >> expIn [
 	^ RSExpInterpolator new in
 ]
 
 { #category : #exp }
-RSEasing class >> expInOut [
+RSEasingInterpolation class >> expInOut [
 	^ RSExpInterpolator new
 ]
 
 { #category : #exp }
-RSEasing class >> expOut [
+RSEasingInterpolation class >> expOut [
 	^ RSExpInterpolator new out
 ]
 
 { #category : #linear }
-RSEasing class >> linear [
+RSEasingInterpolation class >> linear [
 	^ RSLinearInterpolator new
 ]
 
 { #category : #poly }
-RSEasing class >> poly [
+RSEasingInterpolation class >> poly [
 	^ self polyInOut
 ]
 
 { #category : #poly }
-RSEasing class >> polyIn [
+RSEasingInterpolation class >> polyIn [
 	^ RSPolyInterpolator new in
 ]
 
 { #category : #poly }
-RSEasing class >> polyInOut [
+RSEasingInterpolation class >> polyInOut [
 	^ RSPolyInterpolator new.
 ]
 
 { #category : #poly }
-RSEasing class >> polyOut [
+RSEasingInterpolation class >> polyOut [
 	^ RSPolyInterpolator new out
 ]
 
 { #category : #quad }
-RSEasing class >> quad [
+RSEasingInterpolation class >> quad [
 	^ self quadInOut
 ]
 
 { #category : #quad }
-RSEasing class >> quadIn [
+RSEasingInterpolation class >> quadIn [
 	^ RSQuadInterpolator new in
 ]
 
 { #category : #quad }
-RSEasing class >> quadInOut [
+RSEasingInterpolation class >> quadInOut [
 	^ RSQuadInterpolator new
 ]
 
 { #category : #quad }
-RSEasing class >> quadOut [
+RSEasingInterpolation class >> quadOut [
 	^ RSQuadInterpolator new out
 ]
 
 { #category : #sin }
-RSEasing class >> sin [
+RSEasingInterpolation class >> sin [
 	^ self sinInOut
 ]
 
 { #category : #sin }
-RSEasing class >> sinIn [
+RSEasingInterpolation class >> sinIn [
 	^ RSSinInterpolator new in
 ]
 
 { #category : #sin }
-RSEasing class >> sinInOut [
+RSEasingInterpolation class >> sinInOut [
 	^ RSSinInterpolator new
 ]
 
 { #category : #sin }
-RSEasing class >> sinOut [
+RSEasingInterpolation class >> sinOut [
 	^ RSSinInterpolator new out
 ]
 
 { #category : #actions }
-RSEasing >> in [
+RSEasingInterpolation >> in [
 	useIn := true.
 ]
 
 { #category : #actions }
-RSEasing >> inOut [
+RSEasingInterpolation >> inOut [
 	useIn := useOut := false
 ]
 
 { #category : #initialization }
-RSEasing >> initialize [
+RSEasingInterpolation >> initialize [
 	super initialize.
 	self inOut.
 ]
 
 { #category : #interpolation }
-RSEasing >> interpolate: t [
+RSEasingInterpolation >> interpolate: t [
 	useIn ifTrue: [ ^ self interpolateIn: t ].
 	useOut ifTrue: [ ^ self interpolateOut: t ].
 	^ self interpolateInOut: t.
 ]
 
 { #category : #interpolation }
-RSEasing >> interpolateIn: t [
+RSEasingInterpolation >> interpolateIn: t [
 	^ self subclassResponsibility
 ]
 
 { #category : #interpolation }
-RSEasing >> interpolateInOut: t [
+RSEasingInterpolation >> interpolateInOut: t [
 	^ self subclassResponsibility 
 ]
 
 { #category : #interpolation }
-RSEasing >> interpolateOut: t [
+RSEasingInterpolation >> interpolateOut: t [
 	^ self subclassResponsibility
 ]
 
 { #category : #actions }
-RSEasing >> out [ 
+RSEasingInterpolation >> out [ 
 	useOut := true.
 ]

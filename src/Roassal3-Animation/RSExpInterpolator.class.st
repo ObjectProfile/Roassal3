@@ -11,7 +11,7 @@ Symmetric exponential easing; scales expIn for t in [0, 0.5] and expOut for t in
 "
 Class {
 	#name : #RSExpInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolation,
 	#category : #'Roassal3-Animation-Easing'
 }
 

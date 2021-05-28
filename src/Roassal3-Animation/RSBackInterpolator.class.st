@@ -11,7 +11,7 @@ Symmetric anticipatory easing; scales backIn for t in [0, 0.5] and backOut for t
 "
 Class {
 	#name : #RSBackInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolation,
 	#instVars : [
 		'overshoot'
 	],
