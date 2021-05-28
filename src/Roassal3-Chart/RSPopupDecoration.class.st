@@ -25,7 +25,7 @@ RSPopupDecoration >> initialize [
 	super initialize.
 	popup := RSPopupChart new
 		chartPopupBuilder: RSSimpleChartPopupBuilder new;
-		markersPopupBuilder: RSSimpleMarkerPopup new;
+		markersPopupBuilder: RSSimpleMarkerPopupBuilder new;
 		yourself.
 ]
 
