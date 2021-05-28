@@ -1,15 +1,15 @@
 Class {
-	#name : #RSEasingTest,
+	#name : #RSEasingInterpolatorTest,
 	#superclass : #TestCase,
 	#category : #'Roassal3-Animation-Tests'
 }
 
 { #category : #tests }
-RSEasingTest >> testAllEasing [
+RSEasingInterpolatorTest >> testAllEasing [
 	"Simply check if no error is raised"
 	| someX |
 	someX := (0 to: 1 by: 0.01).
-	RSEasing allSubclassesDo: [ :cls |
+	RSEasingInterpolator allSubclassesDo: [ :cls |
 		someX collect: [ :v | cls new interpolate: v; interpolateOut: v ].
 	]
 
