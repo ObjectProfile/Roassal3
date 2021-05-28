@@ -1077,3 +1077,106 @@ RSBlocExamples >> example28BezierWithAnimation [
 
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example29Polygon [
+
+	<script: 'self new example29Polygon open'>
+	| canvas |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	canvas add: (RSBox new
+			 position: 0 @ 0;
+			 size: 200;
+			 color: Color green muchDarker;
+			 yourself).
+
+	canvas add: (RSPolygon new
+			 points: { 
+					 (100 @ 0).
+					 (200 @ 100).
+					 (160 @ 100).
+					 (160 @ 250).
+					 (40 @ 250).
+					 (40 @ 100).
+					 (0 @ 100) };
+			 cornerRadii: 7;
+			 position: 0 @ 0;
+			 color: Color blue;
+			 yourself).
+
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example30EllipseWithLinearGradient [
+	<script: 'self new example30EllipseWithLinearGradient open'>
+
+	| canvas gradient |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	gradient := (LinearGradientPaint fromArray:
+			{0 -> Color red muchDarker.
+			1 -> Color red muchLighter })
+		start: -100 asPoint;
+		stop: 100 asPoint;
+		yourself.
+		
+	canvas add: (RSEllipse new "RSShapeFactory square"
+			 position: 0 @ 0;
+			 size: 200;
+			 paint: gradient;
+			 yourself).
+
+	^ canvas
+]
+
+{ #category : #examples }
+RSBlocExamples >> example31PolygonWithLinearGradient [
+	<script: 'self new example31PolygonWithLinearGradient open'>
+
+	| canvas polygon labels paint |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	paint := (LinearGradientPaint fromArray:
+			{0 -> 'CC2A49'.
+			0.25 -> 'F99E4C'.
+			0.50 -> 'F36F38'.
+			0.75 -> 'EF4648'.
+			1 -> '582841'})
+		start: -125 asPoint;
+		stop: 125 asPoint;
+		yourself.
+	
+	polygon := RSPolygon new
+		points: 
+			{100@0. 200@100. 
+			160@100. 160@ 250.
+			40@ 250. 40@100.
+			0@ 100
+			};
+		cornerRadii: 7.77;
+		paint: paint;
+		yourself.
+	canvas add: polygon.
+	
+	labels := #('Keep' 'calm' 'and' 'roassal' 'on') collectWithIndex: [ :t :index |
+		RSLabel new
+			fontSize: (index = 3 ifTrue: 10 ifFalse: [ 20 ]);
+			bold;
+			color: Color white;
+			text: t asUppercase;
+			yourself
+		].
+	canvas addAll: labels.
+
+	RSVerticalLineLayout new alignCenter on: labels.
+
+	labels asGroup translateBy: 50@50.
+	canvas @ RSCanvasController.
+
+	^ canvas
+]
