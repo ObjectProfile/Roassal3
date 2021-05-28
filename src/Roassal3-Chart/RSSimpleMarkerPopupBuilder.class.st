@@ -2,13 +2,13 @@
 I create markers in the visualization
 "
 Class {
-	#name : #RSSimpleMarkerPopup,
+	#name : #RSSimpleMarkerPopupBuilder,
 	#superclass : #RSAbstractChartPopupBuilder,
 	#category : #'Roassal3-Chart-Popup'
 }
 
 { #category : #hooks }
-RSSimpleMarkerPopup >> shapeFor: aRSChart [
+RSSimpleMarkerPopupBuilder >> shapeFor: aRSChart [
 	| line box |
 	line := RSLine new dashArray: #(3).
 	box := aRSChart decorations first shape encompassingRectangle.
