@@ -247,7 +247,7 @@ RSForceBasedLayout >> newMockEdgeFor: e [
 
 { #category : #'private - initialization' }
 RSForceBasedLayout >> newMockElementFor: e [
-	^ RSMockElement new
+	^ RSMockShape new
 		realElement: e;
 		charge: charge;
 		weight: 0;
