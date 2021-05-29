@@ -12,7 +12,7 @@ RSShapeTest >> testAllConnectedShapes [
 
 	shapes := RSLabel models: (1 to: 6).
 	c addAll: shapes.
-	shapes @ RSDraggable.
+	shapes @ RSDraggableInteraction.
 	lb := RSLineBuilder arrowedLine.
 	lb withBorderAttachPoint.
 	lb shapes: shapes.

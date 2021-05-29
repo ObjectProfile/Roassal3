@@ -16,13 +16,13 @@ c @ RSCanvasController
 ```
 "
 Class {
-	#name : #RSBlink,
+	#name : #RSBlinkInteraction,
 	#superclass : #RSInteraction,
 	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #hooks }
-RSBlink >> onShape: aShape [
+RSBlinkInteraction >> onShape: aShape [
 	| canvas previousColor |
 	canvas := aShape canvas.
 	previousColor := aShape color.

@@ -377,7 +377,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		
 		composite color: Color gray.
 		composite model: cls.
-		composite @ RSAnimatedPopup @ RSDraggable.
+		composite @ RSAnimatedPopup @ RSDraggableInteraction.
 		composite padding: 10.
 		c add: composite ].
 
@@ -406,7 +406,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 		box model: cls.
 		box height: (cls numberOfMethods max: 5).
 		box width: ((cls instVarNames size * 4) max: 5).
-		box @ RSPopup @ RSDraggable.
+		box @ RSPopup @ RSDraggableInteraction.
 		c add: box.
 		 ].
 
@@ -619,7 +619,7 @@ RSLayoutExamples >> example20FlowLayout [
 RSLayoutExamples >> example21Spaces [
 	<script: 'self new example21Spaces open'>
 	| b prop r |
-	b := RSForceLayoutInSpaces new.
+	b := RSForceLayoutInSpacesBuilder new.
 	b numberOfSpaces: 4.
 	b classes: Collection withAllSubclasses.
 	b build.

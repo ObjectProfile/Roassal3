@@ -2,7 +2,7 @@
 TODO
 "
 Class {
-	#name : #RSAbstractChartElement,
+	#name : #RSAbstractChartPlot,
 	#superclass : #Object,
 	#instVars : [
 		'chart',
@@ -13,28 +13,28 @@ Class {
 }
 
 { #category : #rendering }
-RSAbstractChartElement >> addShape: aShape [
+RSAbstractChartPlot >> addShape: aShape [
 	"Add a shape to the canvas"
 	chart canvas add: aShape
 ]
 
 { #category : #rendering }
-RSAbstractChartElement >> beforeRenderingIn: aChart [
+RSAbstractChartPlot >> beforeRenderingIn: aChart [
 	"do nothing here"
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> chart [
+RSAbstractChartPlot >> chart [
 	^ chart
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> chart: aChart [
+RSAbstractChartPlot >> chart: aChart [
 	chart := aChart
 ]
 
 { #category : #rendering }
-RSAbstractChartElement >> createXScale [
+RSAbstractChartPlot >> createXScale [
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
@@ -49,7 +49,7 @@ RSAbstractChartElement >> createXScale [
 ]
 
 { #category : #rendering }
-RSAbstractChartElement >> createYScale [
+RSAbstractChartPlot >> createYScale [
 	| padding |
 	yScale ifNil: [ yScale := NSScale linear ].
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
@@ -65,13 +65,13 @@ RSAbstractChartElement >> createYScale [
 ]
 
 { #category : #rendering }
-RSAbstractChartElement >> renderIn: canvas [
+RSAbstractChartPlot >> renderIn: canvas [
 	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"
 	self subclassResponsibility
 ]
 
 { #category : #rendering }
-RSAbstractChartElement >> spine [
+RSAbstractChartPlot >> spine [
 	"Return the Trachel shape that describe the spine"
 	^ (chart decorations
 		detect: [ :d | d class == RSChartSpineDecoration ]
@@ -80,21 +80,21 @@ RSAbstractChartElement >> spine [
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> xScale [
+RSAbstractChartPlot >> xScale [
 	^ xScale
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> xScale: aScale [
+RSAbstractChartPlot >> xScale: aScale [
 	xScale := aScale
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> yScale [
+RSAbstractChartPlot >> yScale [
 	^ yScale
 ]
 
 { #category : #accessing }
-RSAbstractChartElement >> yScale: aScale [
+RSAbstractChartPlot >> yScale: aScale [
 	yScale := aScale
 ]

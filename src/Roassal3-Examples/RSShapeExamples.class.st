@@ -111,7 +111,7 @@ RSShapeExamples >> example05CapStyles [
 		line perform: style asSymbol.
 		canvas add: line; add: d1; add: d2.
 		 ].
-	canvas nodes first @ RSDraggable.
+	canvas nodes first @ RSDraggableInteraction.
 	ann := canvas nodes first announcer.
 	canvas nodes do: [ :s | s announcer: ann ].
 	^ canvas
@@ -873,7 +873,7 @@ RSShapeExamples >> example34MorphicPopup [
 			yourself) ].
 	RSGridLayout on: c nodes.
 	c @ RSCanvasController.
-	c nodes @ (RSMorphicPopup new
+	c nodes @ (RSMorphicPopupInteraction new
 		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
 	^ c
 ]
@@ -911,7 +911,7 @@ RSShapeExamples >> example35Lines [
 				from: -1000 @ 0;
 				to: 1000 @ 0).
 	box translateBy: 50 @ 50.
-	box @ RSDraggable.
+	box @ RSDraggableInteraction.
 	c
 		add:
 			(RSLine new
@@ -949,7 +949,7 @@ RSShapeExamples >> example36ShapePosition [
 	c add: labelBox.
 	labelBox setAsFixed.
 	labelBox translateBy: 100 @ 50.
-	box @ RSDraggable.
+	box @ RSDraggableInteraction.
 	box
 		when: RSMouseDragging
 		do: [ :evt | 
@@ -1020,7 +1020,7 @@ RSShapeExamples >> example38Transformable [
 		gapSize: 50;
 		on: c nodes.
 	c nodes do: [ :s | s model: s ].
-	c nodes @ RSDraggable; @ (RSPopup text: [ :m | m class name ] ).
+	c nodes @ RSDraggableInteraction; @ (RSPopup text: [ :m | m class name ] ).
 	
 	c nodes allButLast @ RSTransformable.
 	
@@ -1078,8 +1078,8 @@ RSShapeExamples >> example40LabelingLine [
 	c add: shapeB.
 	shapeB translateBy: 100 @ 50.
 
-	shapeA @ RSDraggable.
-	shapeB @ RSDraggable.
+	shapeA @ RSDraggableInteraction.
+	shapeB @ RSDraggableInteraction.
 
 	line := RSLine new
 		        from: shapeA;
@@ -1186,7 +1186,7 @@ RSShapeExamples >> example42DirectedBezier [
 			position: p;
 			yourself] as: RSGroup.
 	shapes doWithIndex: [:s :i | s model: i ].
-	shapes @ RSDraggable.
+	shapes @ RSDraggableInteraction.
 	c addAll: shapes.
 	RSLineBuilder directedBezier
 		canvas: c;

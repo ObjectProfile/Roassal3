@@ -23,7 +23,7 @@ RSDraggableForce >> layout: aForceLayout [
 { #category : #hooks }
 RSDraggableForce >> onShape: aShape [
 
-	aShape removeInteractionIfPresent: RSDraggable.
+	aShape removeInteractionIfPresent: RSDraggableInteraction.
 	aShape 
 		when: RSMouseDragStart do: [ :evt | 
 			layout

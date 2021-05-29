@@ -79,7 +79,7 @@ RSSVGAnimationExamples >> example02Miku [
 			color: line value;
 			yourself ] ).
 	canvas @ RSCanvasController.
-	easing := RSEasing elasticOut.
+	easing := RSEasingInterpolator elasticOut.
 	canvas nodes do: [ :e | | position |
 		position := (random next * 1000) @ (random next * 1000) - 100.
 		canvas newAnimation
@@ -239,7 +239,7 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 				c newAnimation
 					from: 0;
 					to: 20.4;
-					easing: RSEasing elasticOut;
+					easing: RSEasingInterpolator elasticOut;
 					on: shape set: #radius:.  ] ].
 	eAnimation value: 1 value: c shapes second.
 	eAnimation value: 2000 value: c shapes third.

@@ -60,7 +60,7 @@ RSInspectableExample >> example02Inspect [
 	animation := nil.
 	animation := canvas animationFrom: { 
 		canvas transitionAnimation repeat
-		easing: RSEasing backOut;
+		easing: RSEasingInterpolator backOut;
 		onStepDo: [ :t |
 			canvas nodes do: [ :shape |
 				| att a b |
@@ -98,7 +98,7 @@ RSInspectableExample >> example02Inspect [
 { #category : #examples }
 RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
-	^ RSEasing bounceOut
+	^ RSEasingInterpolator bounceOut
 ]
 
 { #category : #examples }
@@ -108,7 +108,7 @@ RSInspectableExample >> example04ChagingContext [
 	c := RSCanvas new.
 	1 to: 100 do: [ :i |
 		c add: (RSBox new size: 10; model: i) ].
-	c shapes @ RSDraggable.
+	c shapes @ RSDraggableInteraction.
 	RSGridLayout on: c shapes.
 	c @ RSCanvasController.
 	

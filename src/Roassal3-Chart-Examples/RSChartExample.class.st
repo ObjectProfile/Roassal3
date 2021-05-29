@@ -315,7 +315,7 @@ RSChartExample >> example18Animation [
 		afterline add: (canvas transitionAnimation
 			delay: (index * 300) milliSeconds;
 			duration: 2 second;
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			from: -100@ s position y;
 			to: s position;
 			onStepDo: [:p | 
@@ -382,7 +382,7 @@ RSChartExample >> example21Popup [
 	c := RSChart new.
 	c extent: 800@400.
 
-	popup := RSPopupDecoration new.
+	popup := RSChartPopupDecoration new.
 	c addDecoration: popup.
 
 	#(
@@ -453,7 +453,7 @@ RSChartExample >> example22CustomPopup [
 	names := values collect: #key.
 	x := 1 to: values size.
 	y := values collect: #value.
-	popup := RSPopupDecoration new.
+	popup := RSChartPopupDecoration new.
 	c := RSChart new.
 	c extent: 400@ 150.
 	c addPlot: (RSAreaPlot new

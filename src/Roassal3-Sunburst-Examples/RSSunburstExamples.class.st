@@ -165,7 +165,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	newAnimation := [ :from :to |
 		canvas newAnimation
 			"duration: 500 milliSeconds;"
-			easing: RSEasing bounceOut;
+			easing: RSEasingInterpolator bounceOut;
 			from: from;
 			to: to;
 			yourself ].
