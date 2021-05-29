@@ -50,8 +50,8 @@ RSForceLayoutInSpaces >> addShape: shape to: space [
 	| layout |
 	layout := space propertyAt: #layout.
 	layout addNodes: { shape }.
-	shape removeInteractionIfPresent: RSDraggableForce.
-	shape addInteraction: (RSDraggableForce new layout: layout).
+	shape removeInteractionIfPresent: RSDraggableForceInteraction.
+	shape addInteraction: (RSDraggableForceInteraction new layout: layout).
 	shape propertyAt: #layout put: layout.
 	
 ]
@@ -119,7 +119,7 @@ RSForceLayoutInSpaces >> fill: space with: aCollection [
 		edges: self canvas edges;
 		start.
 	aCollection do: [ :s | s propertyAt: #layout put: layout ].
-	aCollection @ (RSDraggableForce new layout: layout).
+	aCollection @ (RSDraggableForceInteraction new layout: layout).
 	aCollection do:[ :s | s when: RSMouseDragEnd send: #dragEnd: to: self ]
 
 ]
