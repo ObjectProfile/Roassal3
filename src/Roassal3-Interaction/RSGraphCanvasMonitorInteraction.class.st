@@ -2,7 +2,7 @@
 I have a canvas monitor
 "
 Class {
-	#name : #RSGraphCanvasMonitor,
+	#name : #RSGraphCanvasMonitorInteraction,
 	#superclass : #RSAbstractCanvasMonitor,
 	#instVars : [
 		'polyline',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #accessing }
-RSGraphCanvasMonitor >> box [
+RSGraphCanvasMonitorInteraction >> box [
 	^ RSBox new
 		extent: 100@ 50;
 		color: Color lightGray translucent;
@@ -24,7 +24,7 @@ RSGraphCanvasMonitor >> box [
 ]
 
 { #category : #defaults }
-RSGraphCanvasMonitor >> defaultLabel [
+RSGraphCanvasMonitorInteraction >> defaultLabel [
 	^ RSLabel new
 		bold;
 		text: '';
@@ -34,7 +34,7 @@ RSGraphCanvasMonitor >> defaultLabel [
 ]
 
 { #category : #defaults }
-RSGraphCanvasMonitor >> defaultPolygon [
+RSGraphCanvasMonitorInteraction >> defaultPolygon [
 	^ RSPolygon new
 		paint: ((LinearGradientPaint fromArray:
 				{0  -> Color red translucent.
@@ -48,7 +48,7 @@ RSGraphCanvasMonitor >> defaultPolygon [
 ]
 
 { #category : #defaults }
-RSGraphCanvasMonitor >> defaultPolyline [
+RSGraphCanvasMonitorInteraction >> defaultPolyline [
 	^ RSPolyline new
 		controlPoints: #();
 		border: (RSBorder new
@@ -62,7 +62,7 @@ RSGraphCanvasMonitor >> defaultPolyline [
 ]
 
 { #category : #initialization }
-RSGraphCanvasMonitor >> initialize [
+RSGraphCanvasMonitorInteraction >> initialize [
 	polyScale := NSScale linear
 		domain: { 1@0. 100@65 };
 		range: { -50 @ 25. 50@ -25 }.
@@ -73,7 +73,7 @@ RSGraphCanvasMonitor >> initialize [
 ]
 
 { #category : #initialization }
-RSGraphCanvasMonitor >> initializeShape [
+RSGraphCanvasMonitorInteraction >> initializeShape [
 	shape := RSShapeFactory composite
 		noPaint;
 		shapes: { self box. self polygon. self  polyline. self label};
@@ -82,22 +82,22 @@ RSGraphCanvasMonitor >> initializeShape [
 ]
 
 { #category : #accessing }
-RSGraphCanvasMonitor >> label [
+RSGraphCanvasMonitorInteraction >> label [
 	^ label ifNil: [ label := self defaultLabel ]
 ]
 
 { #category : #accessing }
-RSGraphCanvasMonitor >> polygon [
+RSGraphCanvasMonitorInteraction >> polygon [
 	^ polygon ifNil: [ polygon := self defaultPolygon ]
 ]
 
 { #category : #accessing }
-RSGraphCanvasMonitor >> polyline [
+RSGraphCanvasMonitorInteraction >> polyline [
 	^ polyline ifNil: [ polyline := self defaultPolyline ]
 ]
 
 { #category : #update }
-RSGraphCanvasMonitor >> updateShape [
+RSGraphCanvasMonitorInteraction >> updateShape [
 	| cp |
 	frames add: self lastFramePerSecond.
 	
