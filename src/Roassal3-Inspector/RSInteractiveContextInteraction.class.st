@@ -2,7 +2,7 @@
 I put a default interaction for each shape in the canvas
 "
 Class {
-	#name : #RSInteractiveContext,
+	#name : #RSInteractiveContextInteraction,
 	#superclass : #RSAbstractContextInteraction,
 	#instVars : [
 		'interactions'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #initialization }
-RSInteractiveContext >> initialize [
+RSInteractiveContextInteraction >> initialize [
 	super initialize.
 	interactions := OrderedCollection new
 		add: RSSelectionPresentation new;
@@ -19,6 +19,6 @@ RSInteractiveContext >> initialize [
 ]
 
 { #category : #hooks }
-RSInteractiveContext >> interactionsToBeRegistered [
+RSInteractiveContextInteraction >> interactionsToBeRegistered [
 	^ interactions
 ]

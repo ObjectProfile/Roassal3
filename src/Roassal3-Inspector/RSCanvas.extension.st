@@ -57,7 +57,7 @@ In the example given above, clicking on a circle does not open a new pane in the
 	"
 	^ self
 		propertyAt: RSAbstractContextInteraction name asSymbol
-		ifAbsentPut: [ RSInteractiveContext new ]
+		ifAbsentPut: [ RSInteractiveContextInteraction new ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
