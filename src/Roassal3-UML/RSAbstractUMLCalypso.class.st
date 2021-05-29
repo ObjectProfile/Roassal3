@@ -68,7 +68,7 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 { #category : #'public - hooks' }
 RSAbstractUMLCalypso >> canvasController [
 	| controls |
-	controls := RSCanvasController new.
+	controls := RSCanvasControllerInteraction new.
 	controls configuration 
 		useBasicZoom;
 		maxScale: 2.

@@ -179,7 +179,7 @@ RSForceLayoutInSpaces >> renderIn: aCanvas [
 	(RSGridLayout withGap: 20) on: spaces.
 	spaces do: [ :space | self updateSpace: space. ].
 	aCanvas @ RSSimpleCanvasMonitor.
-	aCanvas @ RSCanvasController.
+	aCanvas @ RSCanvasControllerInteraction.
 ]
 
 { #category : #hooks }

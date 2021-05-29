@@ -65,7 +65,7 @@ NSInterpolator >> gtCanvasForInspector [
 	canvas addShape: (label value: 'X').
 	loc bottom; right;
 		move: canvas shapes last on: rect.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

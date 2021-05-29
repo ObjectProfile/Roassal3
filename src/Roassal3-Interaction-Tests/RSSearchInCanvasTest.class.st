@@ -24,7 +24,7 @@ RSSearchInCanvasTest >> setUp [
 	c addAll: shapes.
 	RSGridLayout on: shapes.
 	shapes @ RSPopup.
-	con := RSCanvasController new.
+	con := RSCanvasControllerInteraction new.
 	search := RSSearchInCanvas new.
 	con addInteraction: search.
 	search canvas: c.
