@@ -2,7 +2,7 @@
 I can rotate one shape on its parent
 "
 Class {
-	#name : #RSRotated,
+	#name : #RSRotatedInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'drag',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : #hooks }
-RSRotated >> dragEnd: evt [
+RSRotatedInteraction >> dragEnd: evt [
 	drag := false.
 	prevAngle := nil.
 ]
 
 { #category : #hooks }
-RSRotated >> dragStart: evt [
+RSRotatedInteraction >> dragStart: evt [
 	drag := true.
 ]
 
 { #category : #hooks }
-RSRotated >> dragging: evt [
+RSRotatedInteraction >> dragging: evt [
 	| angle |
 	drag ifFalse: [ ^ self ].
 	angle := evt position angle.
@@ -40,13 +40,13 @@ RSRotated >> dragging: evt [
 ]
 
 { #category : #initialization }
-RSRotated >> initialize [
+RSRotatedInteraction >> initialize [
 	super initialize.
 	drag := false.
 ]
 
 { #category : #hooks }
-RSRotated >> onShape: aShape [
+RSRotatedInteraction >> onShape: aShape [
 	targetShape := aShape.
 	aShape parent
 		when: RSMouseLeftDragStart do: [ :evt|  self dragStart: evt ];
