@@ -65,6 +65,12 @@ RSTWalkBasedRegularTreeLayout >> childrenOf: aNode put: aValue [
 	^ aNode propertyAt: #children put: aValue
 ]
 
+{ #category : #'layout-properties' }
+RSTWalkBasedRegularTreeLayout >> completedInitializationOf: aNode [
+
+	^ aNode propertyAt: #vdpInitialized put: true
+]
+
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> depthBoundOf: aShape [
 
@@ -167,6 +173,12 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: v [
 				rightMostChild: rightMostChild ]
 ]
 
+{ #category : #'layout-properties' }
+RSTWalkBasedRegularTreeLayout >> hasBeenInitializedOf: aNode [
+
+	^ aNode propertyAt: #vdpInitialized ifAbsent: [ false ]
+]
+
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 
@@ -178,51 +190,57 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 { #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 
-	| hierarchy roots fathers root level |
+	| hierarchy roots fathers root leaves |
 	hierarchy := IdentityDictionary new.
 	roots := IdentitySet withAll: elements.
+	leaves := IdentitySet withAll: elements.
 	fathers := IdentityDictionary new.
 
 	edges do: [ :anEdge | 
-		| children child father multipleParents |
+		| children child father multipleParents fathersOfChild |
 		father := anEdge from.
 		child := anEdge to.
 
 		multipleParents := false.
 		roots remove: child ifAbsent: [ multipleParents := true ].
 
-		multipleParents ifFalse: [ 
-			fathers at: child put: father.
+		leaves
+			remove: father
+			ifAbsent: [ "is it okay to try to remove father more than one time"
+			 ].
 
-			children := hierarchy
-				            at: father
-				            ifAbsentPut: [ 
-				            self childrenOf: father put: OrderedCollection new ].
+		fathersOfChild := fathers
+			                  at: child
+			                  ifAbsentPut: [ OrderedCollection new ].
 
-			children add: child ] ].
+		fathersOfChild add: father.
+
+		children := hierarchy
+			            at: father
+			            ifAbsentPut: [ 
+			            self childrenOf: father put: OrderedCollection new ].
+
+		multipleParents ifFalse: [ children add: child ] ].
 
 	root := roots size > 1
 		        ifTrue: [ 
-			        | children rootBox |
-			        level := -1.
-			        rootBox := RSBox new.
-			        children := self
-				                    childrenOf: rootBox
-				                    put: OrderedCollection new.
+			        roots collect: [ :each | 
+				        self assert: (fathers includesKey: each) not
+				        "fathers at: each put: { rootBox }" ].
 
-			        roots do: [ :each | 
-				        self assert: (fathers includesKey: each) not.
-				        children add: each
-				        "fathers at: each put: rootBox" ].
+			        RSComposite new
+				        in: [ :aRootShape | 
+					        self childrenOf: aRootShape put: roots asArray ];
+				        yourself ]
+		        ifFalse: [ roots anyOne ].
 
-			        rootBox ]
-		        ifFalse: [ 
-			        level := 0.
-			        roots anyOne ].
+	leaves do: [ :each | 
+		self
+			assert: (self childrenOf: each) isNil;
+			childrenOf: each put: Array empty;
+			initializeForShape: each atLevel: -1 fathers: fathers ].
 
-	self initializeForShape: root atLevel: level fathers: fathers.
-
-	^ root
+	^ self initializeForShape: root atLevel: -1 fathers: fathers
 ]
 
 { #category : #initialization }
@@ -243,18 +261,31 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape atLevel: aLevel fath
 
 	depth := fathers
 		         at: aShape
-		         ifPresent: [ :aShapeParent | 
-			         (self depthBoundOf: aShapeParent)
-			         + (self depthGapAmong: aShapeParent and: aShape) ]
-		         ifAbsent: [ 0 ].
+		         ifPresent: [ :parents | 
+			         | level |
+			         parents
+				         reject: [ :each | self hasBeenInitializedOf: each ]
+				         thenDo: [ :each | 
+					         self
+						         initializeForShape: each
+						         atLevel: aLevel - 1
+						         fathers: fathers ].
 
-	self depthOf: aShape put: depth.
+			         level := (parents collect: [ :each | self levelOf: each ])
+				                  max.
 
-	(self childrenOf: aShape)
-		ifNil: [ self childrenOf: aShape put: OrderedCollection new ]
-		ifNotNil: [ :children | 
-			children do: [ :each | 
-				self initializeForShape: each atLevel: aLevel + 1 fathers: fathers ] ]
+			         self levelOf: aShape put: level + 1.
+
+			         (parents collect: [ :aShapeParent | 
+				          (self depthBoundOf: aShapeParent)
+				          + (self depthGapAmong: aShapeParent and: aShape) ]) max ]
+		         ifAbsent: [ self levelOf: aShape put: 0 ].
+
+	self
+		depthOf: aShape put: depth;
+		completedInitializationOf: aShape.
+
+	^ aShape
 ]
 
 { #category : #'layout-properties' }
@@ -269,6 +300,18 @@ RSTWalkBasedRegularTreeLayout >> layout: aRootShape atPoint: aPoint [
 	self
 		firstWalk: aRootShape;
 		secondWalk: aRootShape depth: aPoint x breadth: aPoint y
+]
+
+{ #category : #'layout-properties' }
+RSTWalkBasedRegularTreeLayout >> levelOf: aNode [
+
+	^ aNode propertyAt: #vdpLevel
+]
+
+{ #category : #'layout-properties' }
+RSTWalkBasedRegularTreeLayout >> levelOf: aNode put: aFloat [
+
+	^ aNode propertyAt: #vdpLevel put: aFloat
 ]
 
 { #category : #algorithm }

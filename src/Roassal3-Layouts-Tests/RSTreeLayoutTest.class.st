@@ -78,7 +78,7 @@ RSTreeLayoutTest >> testCycles [
 { #category : #tests }
 RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 
-	| icerepo commits edges dict |
+	| icerepo commits edges dict aCanvas |
 	icerepo := IceRepository registry detect: [ :each | 
 		           each name = 'Roassal3' ].
 	"Containers-Essentials"
@@ -138,17 +138,23 @@ RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 			* Float goldenRatio ];
 		on: commits edges: edges.
 
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
 	edges do: [ :each | 
-		each to encompassingRectangle top
-		< each from encompassingRectangle bottom ifTrue: [ 
+		self deny: each to encompassingRectangle top
+			< each from encompassingRectangle bottom.
+
+		(each to propertyAt: #vdpLevel) - (each from propertyAt: #vdpLevel)
+		> 1 ifTrue: [ 
 			each
 				dashArray: #( 4 );
-				color: each color translucent ] ].
+				color: each color translucent;
+				pushBack ] ].
 
-	RSCanvas new
-		addAll: commits , edges;
+	aCanvas
 		@ RSCanvasController;
 		zoomToFit;
-		exportToSVG;
-		open ] timeToRun inspect
+		open ] timeToRun
 ]
