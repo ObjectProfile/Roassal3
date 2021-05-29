@@ -4,7 +4,7 @@ A context is very usefull to describe de default interactions for a canvas.
 My subclasses should override interaction
 "
 Class {
-	#name : #RSAbstractContext,
+	#name : #RSAbstractContextInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'context',
@@ -15,18 +15,18 @@ Class {
 }
 
 { #category : #initialization }
-RSAbstractContext >> initialize [
+RSAbstractContextInteraction >> initialize [
 	super initialize.
 	self propagateToChildren: true.
 ]
 
 { #category : #hooks }
-RSAbstractContext >> interactionsToBeRegistered [
+RSAbstractContextInteraction >> interactionsToBeRegistered [
 	^ self subclassResponsibility
 ]
 
 { #category : #hooks }
-RSAbstractContext >> onShape: aShape [
+RSAbstractContextInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
 	self interactionsToBeRegistered do: [ :i | 
 		i presentation: self presentation.
@@ -41,21 +41,21 @@ RSAbstractContext >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSAbstractContext >> presentation [
+RSAbstractContextInteraction >> presentation [
 	^ presentation
 ]
 
 { #category : #accessing }
-RSAbstractContext >> presentation: aGlamourPresentation [
+RSAbstractContextInteraction >> presentation: aGlamourPresentation [
 	presentation := aGlamourPresentation
 ]
 
 { #category : #accessing }
-RSAbstractContext >> propagateToChildren [
+RSAbstractContextInteraction >> propagateToChildren [
 	^ propagateToChildren
 ]
 
 { #category : #accessing }
-RSAbstractContext >> propagateToChildren: bool [
+RSAbstractContextInteraction >> propagateToChildren: bool [
 	propagateToChildren := bool
 ]
