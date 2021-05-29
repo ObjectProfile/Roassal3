@@ -32,6 +32,6 @@ RSLayoutExamples >> example14ClassHierarchy [
 		withBorderAttachPoint;
 		following: #superclass;
 		connectToAll: #dependentClasses.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]

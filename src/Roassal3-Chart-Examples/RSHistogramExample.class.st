@@ -53,7 +53,7 @@ RSHistogramExample >> example03Bins [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -82,7 +82,7 @@ RSHistogramExample >> example04BinningStrat [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -161,7 +161,7 @@ RSHistogramExample >> example08Strategies [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

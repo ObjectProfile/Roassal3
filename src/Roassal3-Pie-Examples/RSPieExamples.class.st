@@ -593,7 +593,7 @@ RSPieExamples >> example18ManyPies [
 	canvas showEncompassingRectangles.
 	RSGridLayout on: canvas nodes.
 	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -618,7 +618,7 @@ RSPieExamples >> example19Buttons [
 
 	canvas camera position: canvas shapes encompassingRectangle center.
 	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit; signalUpdate ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	
 	pie := RSPie new.
 	pie 
@@ -825,7 +825,7 @@ RSPieExamples >> example22RotatedAnimation [
 			]
 		].
 	canvas add:(RSLabel new text: pie totalSum asString, ' LOC').
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -969,7 +969,7 @@ RSPieExamples >> example24ManyPies [
 			yourself.
 		]).
 	RSFlowLayout on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

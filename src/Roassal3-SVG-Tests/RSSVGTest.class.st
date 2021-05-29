@@ -28,7 +28,7 @@ RSSVGTest >> testBimetricLine [
 		to: s2;
 		yourself.
 	canvas addAll: { s1. s2. l}.
-	canvas @ RSCanvasController. 
+	canvas @ RSCanvasControllerInteraction. 
 	^ canvas
 ]
 

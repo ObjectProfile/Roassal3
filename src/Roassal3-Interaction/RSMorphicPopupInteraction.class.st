@@ -2,8 +2,8 @@
 I am a popup that uses Morphic and can be visible outside of the RSCanvas.
 "
 Class {
-	#name : #RSMorphicPopup,
-	#superclass : #RSAbstractPopup,
+	#name : #RSMorphicPopupInteraction,
+	#superclass : #RSAbstractPopupInteraction,
 	#instVars : [
 		'morphBuilder',
 		'gapFromPointer'
@@ -12,12 +12,12 @@ Class {
 }
 
 { #category : #accessing }
-RSMorphicPopup >> backgroundColor [
+RSMorphicPopupInteraction >> backgroundColor [
 	^ Smalltalk ui theme backgroundColor
 ]
 
 { #category : #hooks }
-RSMorphicPopup >> createPopupFor: aShape event: event [
+RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	| popup vertices targetMorph world |
 	targetMorph := self morphBuilder cull: aShape model.
 	vertices := SimpleBalloonMorph getVertices: targetMorph bounds.
@@ -34,44 +34,44 @@ RSMorphicPopup >> createPopupFor: aShape event: event [
 ]
 
 { #category : #accessing }
-RSMorphicPopup >> gapFromPointer [
+RSMorphicPopupInteraction >> gapFromPointer [
 	^ gapFromPointer
 ]
 
 { #category : #accessing }
-RSMorphicPopup >> gapFromPointer: aPoint [
+RSMorphicPopupInteraction >> gapFromPointer: aPoint [
 	gapFromPointer := aPoint
 ]
 
 { #category : #initialization }
-RSMorphicPopup >> initialize [
+RSMorphicPopupInteraction >> initialize [
 	super initialize.
 	self morphBuilder: [ :model | model asString asTextMorph ].
 	gapFromPointer := 0@0.
 ]
 
 { #category : #accessing }
-RSMorphicPopup >> morphBuilder [
+RSMorphicPopupInteraction >> morphBuilder [
 	^ morphBuilder
 ]
 
 { #category : #accessing }
-RSMorphicPopup >> morphBuilder: aBlock [
+RSMorphicPopupInteraction >> morphBuilder: aBlock [
 	morphBuilder := aBlock
 ]
 
 { #category : #hooks }
-RSMorphicPopup >> popupKey [
+RSMorphicPopupInteraction >> popupKey [
 	^ #popupMorph
 ]
 
 { #category : #hooks }
-RSMorphicPopup >> releasePopup: popup [
+RSMorphicPopupInteraction >> releasePopup: popup [
 	popup delete
 ]
 
 { #category : #hooks }
-RSMorphicPopup >> translatePopup: aMorph event: evt [ 
+RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [ 
 	| position xdelta ydelta cMorph world |
 	cMorph := evt canvas morph.
 	world := cMorph world.

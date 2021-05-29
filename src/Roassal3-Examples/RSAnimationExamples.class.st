@@ -1524,7 +1524,7 @@ RSAnimationExamples >> example25AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 	
 
@@ -1937,7 +1937,7 @@ RSAnimationExamples >> example32SimpleClock [
 		top;
 		offset: 0 @ 15.
 	location move: canvas shapes last on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

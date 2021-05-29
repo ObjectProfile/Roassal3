@@ -17,7 +17,7 @@ RSFlowCanvasExample >> example01 [
 			shapes: shapes;
 			normalize: #yourself.
 		RSFlowLayout on: shapes.
-		canvas @ RSCanvasController.
+		canvas @ RSCanvasControllerInteraction.
 	].
 	f clickOnModel: 20.
 	f open

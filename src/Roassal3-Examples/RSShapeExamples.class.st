@@ -171,7 +171,7 @@ RSShapeExamples >> example08Labels [
 		shapes: shapes;
 		normalize: #numberOfMethods.
 
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -228,7 +228,7 @@ RSShapeExamples >> example10Donut [
 				position: (radius scale: i) * (d cos @ d sin);
 				yourself ]).
 		 ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -271,7 +271,7 @@ RSShapeExamples >> example11ClassTree [
 		connectFrom: #superclass.
 	canvas edges pushBack.
 	RSTreeLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -301,7 +301,7 @@ RSShapeExamples >> example12Polygons [
 		 ].
 
 	RSGridLayout new gapSize: 50; on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -342,7 +342,7 @@ RSShapeExamples >> example13Arrow [
 	canvas addAll: labels.
 	RSVerticalLineLayout new alignCenter on: labels.
 	labels asGroup translateBy: 50@50.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -442,7 +442,7 @@ RSShapeExamples >> example17Labeled [
 		to: e2;
 		yourself.
 	canvas add: e1; add: e2; add: line.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -462,7 +462,7 @@ RSShapeExamples >> example19Bitmap [
 				self inform: 'Copied icon name' ].  ].
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -483,7 +483,7 @@ RSShapeExamples >> example20Highlightable [
 			yourself ].
 	canvas addAll: shapes.
 	RSHorizontalLineLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -508,7 +508,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 				target: box
 				selector: #inspect
 				argument: #() ]).
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -533,7 +533,7 @@ RSShapeExamples >> example22ScaleEvents [
 			shapes: {box. label};
 			yourself]).
 	
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 6;
@@ -546,8 +546,8 @@ RSShapeExamples >> example22ScaleEvents [
 		shapes: canvas nodes;
 		connectFrom: #superclass.
 
-	canvas edges @ RSKeepBorderWidthRatio. 
-	canvas edges @ RSKeepMarkersSizeRatio.
+	canvas edges @ RSKeepBorderWidthRatioInteraction. 
+	canvas edges @ RSKeepMarkersSizeRatioInteraction.
 	RSHorizontalTreeLayout new on: canvas nodes.
 	^ canvas
 ]
@@ -580,7 +580,7 @@ RSShapeExamples >> example24Highlightable [
 			yourself ].
 	canvas addAll: shapes.
 	RSHorizontalLineLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -666,7 +666,7 @@ RSShapeExamples >> example28MultilineLabel [
 		connectFrom: #superclass.
 	canvas addAll: shapes.
 	RSTreeLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas.
 ]
 
@@ -714,7 +714,7 @@ RSShapeExamples >> example29AntAnimation [
 	RSTreeLayout new 
 		verticalGap: 100;
 		on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
 	^ canvas
 ]
@@ -803,7 +803,7 @@ RSShapeExamples >> example31BasicGrapher [
 		to: 600@ -600;
 		shapes: shapes;
 		normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -829,7 +829,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	canvas nodes first
 		scaleBy: 0.5@ 1;
 		rotateByDegrees: 45.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -857,7 +857,7 @@ RSShapeExamples >> example33ColorScaling [
 
 	RSFlowLayout on: c shapes.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -872,8 +872,8 @@ RSShapeExamples >> example34MorphicPopup [
 			size: 10;
 			yourself) ].
 	RSGridLayout on: c nodes.
-	c @ RSCanvasController.
-	c nodes @ (RSMorphicPopup new
+	c @ RSCanvasControllerInteraction.
+	c nodes @ (RSMorphicPopupInteraction new
 		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
 	^ c
 ]
@@ -1024,7 +1024,7 @@ RSShapeExamples >> example38Transformable [
 	
 	c nodes allButLast @ RSTransformableInteraction.
 	
-	c @ RSCanvasController. 
+	c @ RSCanvasControllerInteraction. 
 	^ c 
 ]
 
@@ -1056,12 +1056,12 @@ RSShapeExamples >> example39RoassalPackages [
 	    canvas: canvas;
 	    connectFrom: #yourself toAll: #dependentPackages.
 
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	stepping layout
 	    length: 300;
 	    charge: -300.
 	canvas @ stepping.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -1097,7 +1097,7 @@ RSShapeExamples >> example40LabelingLine [
 		middle.
 	line @ interactionLabel.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -1169,7 +1169,7 @@ RSShapeExamples >> example41Butterfly [
 
 	canvas addAll: c1; add: c2; addAll: c3.
 	canvas nodes @ h.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -1196,7 +1196,7 @@ RSShapeExamples >> example42DirectedBezier [
 		canvas: c;
 		shapes: shapes;
 		useAssociations: { 4 -> 3}.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -1219,8 +1219,8 @@ RSShapeExamples >> example43KeepLabelSize [
 		connectFrom: #superclass.
 	canvas addAll: labels.
 	RSTreeLayout on: labels.
-	labels @ RSKeepFontSizeRatio.
-	canvas @ RSCanvasController.
+	labels @ RSKeepFontSizeRatioInteraction.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -1297,7 +1297,7 @@ E di pensier
 	RSHorizontalFlowLayout new
 		gapSize: 30;
 		on: groups.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 
 ]

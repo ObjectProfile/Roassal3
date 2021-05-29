@@ -40,7 +40,7 @@ RSBaselineCalypso >> addEdgesOn: canvas [
 { #category : #building }
 RSBaselineCalypso >> applyControlsOn: canvas [
 	| controller |
-	controller := RSCanvasController new.
+	controller := RSCanvasControllerInteraction new.
 	controller addInteraction: (RSSearchInCanvas new
 		colorToHighlight: Color yellow;
 		yourself).
@@ -50,7 +50,7 @@ RSBaselineCalypso >> applyControlsOn: canvas [
 { #category : #building }
 RSBaselineCalypso >> applyLayoutOn: canvas [
 	| interaction layout |
-	interaction := RSForceLayoutStepping new.
+	interaction := RSForceLayoutSteppingInteraction new.
 	layout := RSRectangleForceLayout new.
 	interaction layout: layout.
 	layout 

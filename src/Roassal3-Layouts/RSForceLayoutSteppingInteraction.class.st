@@ -2,7 +2,7 @@
 Hi!, I can control the RSForceBaseLayout step method, in order to use it only when it needs
 "
 Class {
-	#name : #RSForceLayoutStepping,
+	#name : #RSForceLayoutSteppingInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'layout',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #hooks }
-RSForceLayoutStepping >> addEventsTo: shape [
+RSForceLayoutSteppingInteraction >> addEventsTo: shape [
 	| mock |
 	shape 
 		when: RSMouseDragStart do: [ :evt | 
@@ -29,12 +29,12 @@ RSForceLayoutStepping >> addEventsTo: shape [
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> alphaRange [
+RSForceLayoutSteppingInteraction >> alphaRange [
 	^ #(0 0.1)
 ]
 
 { #category : #hooks }
-RSForceLayoutStepping >> configureLayoutOn: aCanvas [
+RSForceLayoutSteppingInteraction >> configureLayoutOn: aCanvas [
 	self hasDraggable ifTrue: [
 		aCanvas nodes @ (RSDraggableForceInteraction new layout: self layout)].
 	self layout
@@ -44,38 +44,38 @@ RSForceLayoutStepping >> configureLayoutOn: aCanvas [
 ]
 
 { #category : #configuration }
-RSForceLayoutStepping >> draggable [
+RSForceLayoutSteppingInteraction >> draggable [
 	hasDraggable := true
 ]
 
 { #category : #testing }
-RSForceLayoutStepping >> hasDraggable [
+RSForceLayoutSteppingInteraction >> hasDraggable [
 	^ hasDraggable
 ]
 
 { #category : #initialization }
-RSForceLayoutStepping >> initialize [
+RSForceLayoutSteppingInteraction >> initialize [
 	super initialize.
 	self draggable.
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> layout [
+RSForceLayoutSteppingInteraction >> layout [
 	^ layout ifNil: [ layout := RSForceBasedLayout new ]
 ]
 
 { #category : #accessing }
-RSForceLayoutStepping >> layout: aRSForceBasedLayout [
+RSForceLayoutSteppingInteraction >> layout: aRSForceBasedLayout [
 	layout := aRSForceBasedLayout
 ]
 
 { #category : #configuration }
-RSForceLayoutStepping >> noDraggable [
+RSForceLayoutSteppingInteraction >> noDraggable [
 	hasDraggable := false.
 ]
 
 { #category : #hooks }
-RSForceLayoutStepping >> onShape: aCanvas [
+RSForceLayoutSteppingInteraction >> onShape: aCanvas [
 	self configureLayoutOn: aCanvas.
 	aCanvas nodes do: [ :s | self addEventsTo: s ].
 	self startFirstAnimation: aCanvas.
@@ -83,7 +83,7 @@ RSForceLayoutStepping >> onShape: aCanvas [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startFirstAnimation: aCanvas [
+RSForceLayoutSteppingInteraction >> startFirstAnimation: aCanvas [
 	| alpha |
 	animation ifNotNil: #stop.
 	alpha := 1.
@@ -96,7 +96,7 @@ RSForceLayoutStepping >> startFirstAnimation: aCanvas [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startForceAnimation: aCanvas [
+RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 	animation ifNotNil: #stop.
 	animation := aCanvas animationFrom: {
 		"Start smoothly"
@@ -114,7 +114,7 @@ RSForceLayoutStepping >> startForceAnimation: aCanvas [
 ]
 
 { #category : #animation }
-RSForceLayoutStepping >> startSimpleAnimation: aCanvas [
+RSForceLayoutSteppingInteraction >> startSimpleAnimation: aCanvas [
 	animation ifNotNil: #stop.
 	animation := aCanvas newAnimation 
 		easing: RSEasing cubicInOut;
