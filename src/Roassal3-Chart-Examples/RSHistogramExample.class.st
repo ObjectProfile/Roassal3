@@ -120,7 +120,7 @@ RSHistogramExample >> example06Animations [
 			].
 		 ].
 	p bars 
-		@ (RSHighlightable new highlightBorder: (RSBorder new color: Color black));
+		@ (RSHighlightableInteraction new highlightBorder: (RSBorder new color: Color black));
 		@ (RSPopup text: [:assoc | 
 			"TODO create an object to define the model for each bin"
 			'From: ', (assoc key key round: 3) asString, String cr, 

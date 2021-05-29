@@ -120,7 +120,7 @@ RSColorPaletteChooser >> copyToClipboard: object [
 
 { #category : #initialization }
 RSColorPaletteChooser >> initializeInteractions [
-	selectedHighlight := RSHighlightable new.
+	selectedHighlight := RSHighlightableInteraction new.
 	selectedHighlight highlightShapes: [ :e | {e shapes first} ].
 	selectedHighlight highlightColor: (
 		(LinearGradientPaint fromArray:
@@ -132,7 +132,7 @@ RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight 
 		propertyKey: #buttons;
 		copyKey: #qwer.
-	overHighlight := RSHighlightable new.
+	overHighlight := RSHighlightableInteraction new.
 	overHighlight 
 		highlightShapes: [ :e | {e shapes first} ]
 		butKeep: selectedHighlight.
@@ -144,7 +144,7 @@ RSColorPaletteChooser >> initializeInteractions [
 			start: 0@ -15;
 			stop: 0@ 15).
 	"for boxes "
-	boxOver := RSHighlightable new.
+	boxOver := RSHighlightableInteraction new.
 	boxOver highlightShapes: [ :s | { s shapes second } ].
 	boxOver highlightColor: Color black.
 ]

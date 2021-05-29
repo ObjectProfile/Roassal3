@@ -13,7 +13,7 @@ RSSelectionPresentationTest >> testBasic [
 	c addAll: shapes.
 	RSNormalizer size shapes: shapes; normalize: #yourself.
 	RSFlowLayout on: shapes.
-	shapes @ RSSelectionPresentation.
+	shapes @ RSSelectionPresentationInteraction.
 	c @ RSCanvasController.
 
 	"make sure there is no error when clicking on an element, while being outside the GTInspector"
@@ -38,6 +38,6 @@ RSSelectionPresentationTest >> testWithNoCanvas [
 
 	| shapes |
 	shapes := (1 to: 100) collect: [ :v | RSBox new model: v ] as: RSGroup.
-	shapes @ RSSelectionPresentation.
+	shapes @ RSSelectionPresentationInteraction.
 	shapes first announce: RSMouseClick
 ]

@@ -552,7 +552,7 @@ RSLayoutExamples >> example20FlowLayout [
 			from: s position;
 			to: p + d;
 			on: s set: #position:].
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	high 
 		when: RSHighlightEvent do: [ :evt | 
 			evt shape color: Color blue; underline.

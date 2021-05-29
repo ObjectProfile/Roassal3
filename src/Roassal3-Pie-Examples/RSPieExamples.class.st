@@ -492,7 +492,7 @@ RSPieExamples >> example16MyDay [
 		segmentSpacing: 1.
 	pie sliceColor: color.
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelShape
 		fontSize: 16;
 		fontName: 'Source Code Pro'.
@@ -501,7 +501,7 @@ RSPieExamples >> example16MyDay [
 		labelText: [ :obj | (obj third * 100 / pie totalSum) rounded asString, '%' ];
 		rotated;
 		offset: 60.
-	pieTitle := RSPieTitle new.
+	pieTitle := RSPieTitleInteraction new.
 	pieTitle labelShape
 		fontSize: 30;
 		color: Color white.
@@ -535,7 +535,7 @@ RSPieExamples >> example17PieLabels [
 		segmentSpacing: 0.4.
 	pie sliceColor: NSScale category20.
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelShape fontSize: 13.
 	pieLabel labelText: [ :obj |
 		obj key, (obj value * 100 / pie totalSum) rounded asString, ' %' ].
@@ -560,11 +560,11 @@ RSPieExamples >> example18ManyPies [
 		segmentSpacing: 0.5.
 	pie sliceColor: [ :shape | color scale: shape index ].
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel
 		labelText: #key;
 		rotated.
-	pieTitle := RSPieTitle new.
+	pieTitle := RSPieTitleInteraction new.
 	pieTitle labelShape
 		bold;
 		fontSize: 20.
@@ -803,7 +803,7 @@ RSPieExamples >> example22RotatedAnimation [
 		segmentSpacing: 0.5;
 		externalRadius: 220;
 		when: RSMouseClick do: [ [ animation toggle ] ].
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelText: #name.
 	pie build.
 	pie shapes @ (RSPopup text: [:obj | obj linesOfCode asString, 'LOC']).
@@ -858,7 +858,7 @@ RSPieExamples >> example23RotatedAnimation [
 		externalRadius: 220.
 	pie
 		sliceColor: NSScale category20b.
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelText: #basename.
 	pie build.
 	pie shapes 

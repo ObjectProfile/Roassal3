@@ -13,7 +13,7 @@ m open
 ```
 "
 Class {
-	#name : #RSMenuActivable,
+	#name : #RSMenuActivableInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'menuBlock'
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #enumerating }
-RSMenuActivable >> menuDo: block [
+RSMenuActivableInteraction >> menuDo: block [
 	"a block with two args
 	first arg, a MenuMorph
 	second arg, a RSElement or RSView
@@ -31,7 +31,7 @@ RSMenuActivable >> menuDo: block [
 ]
 
 { #category : #hooks }
-RSMenuActivable >> onShape: aShape [
+RSMenuActivableInteraction >> onShape: aShape [
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
 	aShape when: RSMouseRightClick do: [ :evt | 

@@ -193,7 +193,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		RPackageOrganizer default packages 
 			select: [ :p | regExp match: p packageName ] ].
 		
-	l := RSLabeled new text: [ :model | model packageName ].
+	l := RSLabeledInteraction new text: [ :model | model packageName ].
 	packageElements  := packages collect: [ :pkg | | shapes |
 		shapes := pkg definedClasses collect: [ :cls |
 			RSBox new
@@ -210,7 +210,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
@@ -257,7 +257,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						

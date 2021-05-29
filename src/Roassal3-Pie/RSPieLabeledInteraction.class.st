@@ -2,7 +2,7 @@
 I can create labels for a pie builder and set the position acording to arc
 "
 Class {
-	#name : #RSPieLabeled,
+	#name : #RSPieLabeledInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'rotated',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #initialization }
-RSPieLabeled >> initialize [
+RSPieLabeledInteraction >> initialize [
 	super initialize.
 	self labelShape: RSLabel new.
 	self labelColor: Color black.
@@ -24,17 +24,17 @@ RSPieLabeled >> initialize [
 ]
 
 { #category : #testing }
-RSPieLabeled >> isRotated [
+RSPieLabeledInteraction >> isRotated [
 	^ rotated
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelColor [
+RSPieLabeledInteraction >> labelColor [
 	^ labelColor
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelColor: aColor [
+RSPieLabeledInteraction >> labelColor: aColor [
 	"can be a color, a block or color scale"
 	"self labelColor: Color white"
 	"self labelColor: [:model | model modelColor ]"
@@ -43,27 +43,27 @@ RSPieLabeled >> labelColor: aColor [
 ]
 
 { #category : #'accessing - keys' }
-RSPieLabeled >> labelKey [
-	^ #RSPieLabeled
+RSPieLabeledInteraction >> labelKey [
+	^ #RSPieLabeledInteraction
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelShape [
+RSPieLabeledInteraction >> labelShape [
 	^ labelShape
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelShape: aLabel [
+RSPieLabeledInteraction >> labelShape: aLabel [
 	labelShape := aLabel
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelText [
+RSPieLabeledInteraction >> labelText [
 	^ labelText
 ]
 
 { #category : #accessing }
-RSPieLabeled >> labelText: anObject [
+RSPieLabeledInteraction >> labelText: anObject [
 	"can be an object or block"
 	"self labelText: 'Hi'"
 	"self labelText: [:model | 'The model: ', model asString]"
@@ -71,17 +71,17 @@ RSPieLabeled >> labelText: anObject [
 ]
 
 { #category : #accessing }
-RSPieLabeled >> offset [
+RSPieLabeledInteraction >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-RSPieLabeled >> offset: aNumber [
+RSPieLabeledInteraction >> offset: aNumber [
 	offset := aNumber
 ]
 
 { #category : #hooks }
-RSPieLabeled >> onShape: aShape [
+RSPieLabeledInteraction >> onShape: aShape [
 	| label parent |
 	label := self shapeFor: aShape.
 	aShape propertyAt: self labelKey put: label.
@@ -90,12 +90,12 @@ RSPieLabeled >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSPieLabeled >> rotated [
+RSPieLabeledInteraction >> rotated [
 	rotated := true.
 ]
 
 { #category : #hooks }
-RSPieLabeled >> shapeFor: aPieSliceShape [
+RSPieLabeledInteraction >> shapeFor: aPieSliceShape [
 	| res arc ang |
 	arc := aPieSliceShape.
 	res := labelShape copy

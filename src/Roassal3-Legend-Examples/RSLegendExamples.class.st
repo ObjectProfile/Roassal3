@@ -292,7 +292,7 @@ RSLegendExamples >> example12OnPopup [
 		canvas: canvas;
 		shapes: shapes;
 		connectFrom: #superclass.
-	interaction := RSLabeled new.
+	interaction := RSLabeledInteraction new.
 	interaction shapeBuilder labelShape fontSize: 5.
 	popup := RSPopup new.
 	popup shapeBuilder: [ :cls |"move this content to a class method"

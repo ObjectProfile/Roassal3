@@ -119,7 +119,7 @@ RSSunburstExamples >> example06Rotation [
 	(controller interactions at: RSDraggableCanvasInteraction) right.
 	canvas @ controller.
 	canvas add: composite.
-	composite @ RSRotated.
+	composite @ RSRotatedInteraction.
 	^ canvas
 ]
 

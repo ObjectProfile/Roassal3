@@ -20,14 +20,14 @@ RSTransformableTest >> setUp [
 
 { #category : #running }
 RSTransformableTest >> testBasic [
-	shapes @ RSTransformable.
+	shapes @ RSTransformableInteraction.
 	
 ]
 
 { #category : #running }
 RSTransformableTest >> testBasic02 [
 	| s interaction handles |
-	interaction := RSTransformable new.
+	interaction := RSTransformableInteraction new.
 	shapes @ interaction .
 	s := shapes first.
 	s announce: RSMouseLeftClick new.
@@ -49,7 +49,7 @@ RSTransformableTest >> testBasic02 [
 { #category : #running }
 RSTransformableTest >> testCornerDirections [
 	| interaction base new |
-	interaction := RSTransformable new.
+	interaction := RSTransformableInteraction new.
 	base := 20@20 corner: 100@100.
 	
 	new := interaction bottomRight: 10@120 rectangle: base.
@@ -80,7 +80,7 @@ RSTransformableTest >> testCornerDirections [
 { #category : #running }
 RSTransformableTest >> testDrag [
 	| s interaction |
-	interaction := RSTransformable new.
+	interaction := RSTransformableInteraction new.
 	shapes @ interaction .
 	s := shapes first.
 	s announce: RSMouseLeftClick new.
@@ -94,7 +94,7 @@ RSTransformableTest >> testDrag [
 { #category : #running }
 RSTransformableTest >> testDrag2 [
 	| s interaction |
-	interaction := RSTransformable new.
+	interaction := RSTransformableInteraction new.
 	shapes @ interaction .
 	s := shapes first.
 	s announce: RSMouseDragStart new.
@@ -106,7 +106,7 @@ RSTransformableTest >> testDrag2 [
 { #category : #running }
 RSTransformableTest >> testUpdateShape [
 	| s interaction rect handles |
-	interaction := RSTransformable new.
+	interaction := RSTransformableInteraction new.
 	shapes @ interaction .
 	s := shapes first.
 	s announce: RSMouseLeftClick new.

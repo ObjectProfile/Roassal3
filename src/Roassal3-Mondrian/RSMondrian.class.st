@@ -56,7 +56,7 @@ RSMondrian >> build [
 	| interaction |
 	self applyLayout.
 	
-	interaction := RSHighlightable new.
+	interaction := RSHighlightableInteraction new.
 	interaction highlightBorder: (RSBorder new color: Color black; width: 2).
 	interaction withOutgoingEdges.
 	self canvas nodes @ interaction.

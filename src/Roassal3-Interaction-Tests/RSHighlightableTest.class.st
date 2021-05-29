@@ -14,13 +14,13 @@ RSHighlightableTest >> testBasic [
 	RSGridLayout on: shapes.
 
 	previousColor := shapes fifth color.
-	RSHighlightable new doHighlight: shapes fifth.
+	RSHighlightableInteraction new doHighlight: shapes fifth.
 	self assert: shapes fifth color equals: previousColor.
 	
-	RSHighlightable new record: shapes fifth selector: #color value: Color blue.
+	RSHighlightableInteraction new record: shapes fifth selector: #color value: Color blue.
 	self assert: shapes fifth color equals: Color blue.
 	
-	RSHighlightable new restore: shapes fifth selector: #color.
+	RSHighlightableInteraction new restore: shapes fifth selector: #color.
 	self assert: shapes fifth color equals: previousColor.
 ]
 
@@ -34,7 +34,7 @@ RSHighlightableTest >> testSameModel [
 	boxes := values collect: [ :vv | RSBox new size: 10; model: vv ] as: RSGroup.
 	c addAll: boxes.
 	boxes @ RSPopup.
-	boxes @ (RSHighlightable sameModel: c).
+	boxes @ (RSHighlightableInteraction sameModel: c).
 	RSGridLayout on: boxes.
 	c @ RSCanvasController.
 	
@@ -61,7 +61,7 @@ RSHighlightableTest >> testWithEdges [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable red.
+	interaction := RSHighlightableInteraction red.
 	interaction withLines.
 	shapes @ interaction.
 	
@@ -99,7 +99,7 @@ RSHighlightableTest >> testWithEdges2 [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable withLines.
+	interaction := RSHighlightableInteraction withLines.
 	shapes @ interaction.
 	
 	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
