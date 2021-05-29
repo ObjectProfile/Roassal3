@@ -11,7 +11,7 @@ Symmetric elastic easing; scales elasticIn for t in [0, 0.5] and elasticOut for 
 "
 Class {
 	#name : #RSElasticInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolator,
 	#instVars : [
 		'tau',
 		'amplitude',
