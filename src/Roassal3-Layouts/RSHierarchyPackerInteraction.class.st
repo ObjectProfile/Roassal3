@@ -54,7 +54,7 @@ builder canvas open
 -=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSHierarchyPacker,
+	#name : #RSHierarchyPackerInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'rectanglePackLayout'
@@ -63,14 +63,14 @@ Class {
 }
 
 { #category : #private }
-RSHierarchyPacker >> fill: group with: aShape [
+RSHierarchyPackerInteraction >> fill: group with: aShape [
 	group add: aShape.
 	aShape outgoingEdges do: [ :ed | 
 		self fill: group with: ed to ].
 ]
 
 { #category : #private }
-RSHierarchyPacker >> initialize [
+RSHierarchyPackerInteraction >> initialize [
 	super initialize.
 	
 	rectanglePackLayout := RSRectanglePackLayout new
@@ -79,7 +79,7 @@ RSHierarchyPacker >> initialize [
 ]
 
 { #category : #private }
-RSHierarchyPacker >> onShape: aCanvas [
+RSHierarchyPackerInteraction >> onShape: aCanvas [
 	| layout connectedAsGroups connected isolated all |
 	layout := RSTreeLayout new
 		edges: aCanvas edges.
@@ -104,11 +104,11 @@ RSHierarchyPacker >> onShape: aCanvas [
 ]
 
 { #category : #accessing }
-RSHierarchyPacker >> rectanglePackLayout [
+RSHierarchyPackerInteraction >> rectanglePackLayout [
 	^ rectanglePackLayout
 ]
 
 { #category : #accessing }
-RSHierarchyPacker >> rectanglePackLayout: anObject [
+RSHierarchyPackerInteraction >> rectanglePackLayout: anObject [
 	rectanglePackLayout := anObject
 ]
