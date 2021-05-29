@@ -238,13 +238,13 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 		self
 			assert: (self childrenOf: each) isNil;
 			childrenOf: each put: Array empty;
-			initializeForShape: each atLevel: -1 fathers: fathers ].
+			initializeForShape: each fathers: fathers ].
 
-	^ self initializeForShape: root atLevel: -1 fathers: fathers
+	^ self initializeForShape: root fathers: fathers
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape atLevel: aLevel fathers: fathers [
+RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 
 	| depth |
 	self
@@ -266,10 +266,7 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape atLevel: aLevel fath
 			         parents
 				         reject: [ :each | self hasBeenInitializedOf: each ]
 				         thenDo: [ :each | 
-					         self
-						         initializeForShape: each
-						         atLevel: aLevel - 1
-						         fathers: fathers ].
+				         self initializeForShape: each fathers: fathers ].
 
 			         level := (parents collect: [ :each | self levelOf: each ])
 				                  max.
