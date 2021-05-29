@@ -193,7 +193,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		RPackageOrganizer default packages 
 			select: [ :p | regExp match: p packageName ] ].
 		
-	l := RSLabeled new text: [ :model | model packageName ].
+	l := RSLabeledInteraction new text: [ :model | model packageName ].
 	packageElements  := packages collect: [ :pkg | | shapes |
 		shapes := pkg definedClasses collect: [ :cls |
 			RSBox new

@@ -36,7 +36,7 @@ RSForceLayoutStepping >> alphaRange [
 { #category : #hooks }
 RSForceLayoutStepping >> configureLayoutOn: aCanvas [
 	self hasDraggable ifTrue: [
-		aCanvas nodes @ (RSDraggableForce new layout: self layout)].
+		aCanvas nodes @ (RSDraggableForceInteraction new layout: self layout)].
 	self layout
 		nodes: aCanvas nodes;
 		edges: aCanvas edges;

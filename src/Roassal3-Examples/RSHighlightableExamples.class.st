@@ -189,7 +189,7 @@ RSHighlightableExamples >> example06IterateNext [
 		start;
 		yourself.
 	canvas newAnimation repeat onStepDo: [ :t | layout step ].
-	numbers @ (RSDraggableForce new layout: layout).
+	numbers @ (RSDraggableForceInteraction new layout: layout).
 
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightable red.
@@ -275,7 +275,7 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
-	label := RSLabeled new highlightable.
+	label := RSLabeledInteraction new highlightable.
 	padding := 10 asMargin.
 	high := RSHighlightable new.
 	arrow := RSShapeFactory arrowedLine

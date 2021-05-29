@@ -1640,7 +1640,7 @@ RSAnimationExamples >> example27RSLocate [
 		1 ->'gray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	labeled := RSLabeled new.
+	labeled := RSLabeledInteraction new.
 	labeled shapeBuilder: [ :m | RSLabel new text: m asString; color: Color white ].
 	labeled location middle.
 	buttons :=  #(outer border inner left center right top middle bottom) collect: [ :t |
@@ -2255,7 +2255,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 		corner := camera fromPixelToSpace: canvas canvas extent.
 		layout enclosingRectangle: (origin corner: corner).
 	].
-	classes @ (RSDraggableForce new layout: layout).
+	classes @ (RSDraggableForceInteraction new layout: layout).
 
 	canvas camera scale: 2.
 	^ canvas

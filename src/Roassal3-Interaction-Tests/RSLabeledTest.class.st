@@ -27,7 +27,7 @@ RSLabeledTest >> testFontSize [
 
 	self assert: c numberOfShapes equals: 100.
 
-	shapes @ (RSLabeled new fontSize: 8).
+	shapes @ (RSLabeledInteraction new fontSize: 8).
 	self assert: c numberOfShapes equals: 200.
 	
 	"We check the size of the labels"

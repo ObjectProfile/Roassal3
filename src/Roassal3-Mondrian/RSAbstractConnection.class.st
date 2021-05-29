@@ -96,7 +96,7 @@ RSAbstractConnection >> prepareInputCanvas [
 	inputCanvas nodes when: RSMouseClick do: [ :event |
 		self clickOnShape: event shape ].
 	
-	inputCanvas nodes @ RSSelectionPresentation
+	inputCanvas nodes @ RSSelectionPresentationInteraction
 ]
 
 { #category : #'as yet unclassified' }

@@ -2,7 +2,7 @@
 I am a special case to drag elements with the draggable interaction and the RSForceBasedLayout
 "
 Class {
-	#name : #RSDraggableForce,
+	#name : #RSDraggableForceInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'layout'
@@ -11,19 +11,19 @@ Class {
 }
 
 { #category : #hooks }
-RSDraggableForce >> layout [
+RSDraggableForceInteraction >> layout [
 	^ layout
 ]
 
 { #category : #hooks }
-RSDraggableForce >> layout: aForceLayout [
+RSDraggableForceInteraction >> layout: aForceLayout [
 	layout := aForceLayout
 ]
 
 { #category : #hooks }
-RSDraggableForce >> onShape: aShape [
+RSDraggableForceInteraction >> onShape: aShape [
 
-	aShape removeInteractionIfPresent: RSDraggable.
+	aShape removeInteractionIfPresent: RSDraggableInteraction.
 	aShape 
 		when: RSMouseDragStart do: [ :evt | 
 			layout

@@ -25,8 +25,8 @@ RSInspectableExample >> example01SimpleExample [
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
 	RSTreeLayout on: boxes.
-	RSInspectable reset.
-	inspectable := RSInspectable new.
+	RSInspectableInteraction reset.
+	inspectable := RSInspectableInteraction new.
 	highligtable := inspectable highlightable.
 	highligtable highlightColor: Color green.
 	inspectable inspectShapeBlock: [ :cls | 
@@ -108,13 +108,13 @@ RSInspectableExample >> example04ChagingContext [
 	c := RSCanvas new.
 	1 to: 100 do: [ :i |
 		c add: (RSBox new size: 10; model: i) ].
-	c shapes @ RSDraggable.
+	c shapes @ RSDraggableInteraction.
 	RSGridLayout on: c shapes.
 	c @ RSCanvasController.
 	
 	"This is the default context for the inspector"
 	context := RSContextInteraction new.
-	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentation ].
+	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentationInteraction ].
 	int 
 		padding: 5;
 		shadowColor: (Color red alpha: 0.1).

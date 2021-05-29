@@ -621,7 +621,7 @@ RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 		from: s1;
 		to: s2;
 		yourself).
-	c nodes @ RSDraggable.
+	c nodes @ RSDraggableInteraction.
 	c @ RSCanvasController.
 	^ c
 ]
@@ -636,7 +636,7 @@ RSBasicShapeExamples >> example32RotateShapeByMouse [
 		draggable;
 		yourself.
 	c add: s.
-	s @ RSRotated.
+	s @ RSRotatedInteraction.
 	^ c
 ]
 
@@ -863,7 +863,7 @@ RSBasicShapeExamples >> example38Interaction [
 		when: RSMouseClick
 		do: [ :evt | 
 			c1 remove.
-			com removeInteractionIfPresent: RSDraggable.
+			com removeInteractionIfPresent: RSDraggableInteraction.
 			com model: 'Not draggable anymore'.
 			evt signalUpdate ].
 	canvas := RSCanvas new.

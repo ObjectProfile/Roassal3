@@ -45,7 +45,7 @@ c
 
 "
 Class {
-	#name : #RSLabeled,
+	#name : #RSLabeledInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'location',
@@ -59,7 +59,7 @@ Class {
 }
 
 { #category : #accessing }
-RSLabeled class >> highlightable [
+RSLabeledInteraction class >> highlightable [
 	"Create a label interaction that is highligtable
 ```
 canvas := RSCanvas new.
@@ -82,18 +82,18 @@ canvas @ RSCanvasController
 ]
 
 { #category : #accessing }
-RSLabeled class >> middle [
+RSLabeledInteraction class >> middle [
 	^ self new middle
 ]
 
 { #category : #accessing }
-RSLabeled class >> text: aText [
+RSLabeledInteraction class >> text: aText [
 	"Utility method to define a labeled interaction with a text"
 	^ self new text: aText
 ]
 
 { #category : #hooks }
-RSLabeled >> createLabel: aShape [
+RSLabeledInteraction >> createLabel: aShape [
 	| label color set targetLabel |
 	label := self shapeBuilder shapeFor: (self modelFor: aShape).
 	location stick: label on: aShape.
@@ -114,7 +114,7 @@ RSLabeled >> createLabel: aShape [
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> fontSize: fontSizeAsNumber [
+RSLabeledInteraction >> fontSize: fontSizeAsNumber [
 	"Set the font size of the label
 
 ```Smalltalk
@@ -141,10 +141,10 @@ c @ RSCanvasController.
 ]
 
 { #category : #hooks }
-RSLabeled >> getOrCreateLabel: aShape [
+RSLabeledInteraction >> getOrCreateLabel: aShape [
 	| label parent |
 	label := aShape properties 
-		at: #RSLabeled
+		at: #RSLabeledInteraction
 		ifAbsentPut: [ self createLabel: aShape ].
 	parent :=aShape parent.
 	(label isInACanvas not and: [parent notNil ]) 
@@ -153,7 +153,7 @@ RSLabeled >> getOrCreateLabel: aShape [
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> highlightable [
+RSLabeledInteraction >> highlightable [
 	"Make the label highlightable.
 For example:
 ```Smalltalk
@@ -174,7 +174,7 @@ c
 ]
 
 { #category : #initialization }
-RSLabeled >> initialize [ 
+RSLabeledInteraction >> initialize [ 
 	super initialize.
 	self shapeBuilder: RSMultilineLabelBuilder new.
 	self model: #model.
@@ -183,47 +183,47 @@ RSLabeled >> initialize [
 ]
 
 { #category : #accessing }
-RSLabeled >> location [
+RSLabeledInteraction >> location [
 	^ location
 ]
 
 { #category : #accessing }
-RSLabeled >> locationDo: aBlock [
+RSLabeledInteraction >> locationDo: aBlock [
 	aBlock value: location
 ]
 
 { #category : #accessing }
-RSLabeled >> lowColor [
+RSLabeledInteraction >> lowColor [
 	^ lowColor
 ]
 
 { #category : #accessing }
-RSLabeled >> lowColor: aColor [
+RSLabeledInteraction >> lowColor: aColor [
 	lowColor := aColor
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> middle [
+RSLabeledInteraction >> middle [
 	self location middle
 ]
 
 { #category : #accessing }
-RSLabeled >> model [
+RSLabeledInteraction >> model [
 	^ modelBlock
 ]
 
 { #category : #accessing }
-RSLabeled >> model: aBlock [
+RSLabeledInteraction >> model: aBlock [
 	modelBlock := aBlock
 ]
 
 { #category : #hooks }
-RSLabeled >> modelFor: aRSShape [
+RSLabeledInteraction >> modelFor: aRSShape [
 	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }
-RSLabeled >> onShape: aShape [
+RSLabeledInteraction >> onShape: aShape [
 	
 	aShape isInACanvas 
 		ifTrue: [ self getOrCreateLabel: aShape ]
@@ -232,27 +232,27 @@ RSLabeled >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSLabeled >> shapeBuilder [
+RSLabeledInteraction >> shapeBuilder [
 	^ shapeBuilder
 ]
 
 { #category : #accessing }
-RSLabeled >> shapeBuilder: aShapeBuilder [
+RSLabeledInteraction >> shapeBuilder: aShapeBuilder [
 	shapeBuilder := aShapeBuilder
 ]
 
 { #category : #accessing }
-RSLabeled >> target [
+RSLabeledInteraction >> target [
 	^ target
 ]
 
 { #category : #accessing }
-RSLabeled >> target: aBlock [
+RSLabeledInteraction >> target: aBlock [
 	target := aBlock
 ]
 
 { #category : #'public - configuration' }
-RSLabeled >> text: aBlockOrSymbol [
+RSLabeledInteraction >> text: aBlockOrSymbol [
 	"Set the label on a shape. The argument is either a block or a symbol, and is used to compute the label to use from the shape model.
 For example:
 ```Smalltalk
