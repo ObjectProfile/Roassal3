@@ -3,7 +3,7 @@ I am a popup that uses Morphic and can be visible outside of the RSCanvas.
 "
 Class {
 	#name : #RSMorphicPopup,
-	#superclass : #RSAbstractPopup,
+	#superclass : #RSAbstractPopupInteraction,
 	#instVars : [
 		'morphBuilder',
 		'gapFromPointer'
