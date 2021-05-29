@@ -2,13 +2,13 @@
 I am a basici class
 "
 Class {
-	#name : #RSChessBackground,
+	#name : #RSChessBackgroundInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#category : #'Roassal3-Inspector-Interactions'
 }
 
 { #category : #hooks }
-RSChessBackground >> onShape: aCanvas [
+RSChessBackgroundInteraction >> onShape: aCanvas [
 	| boxes theme color |
 	theme := Smalltalk ui theme.
 	aCanvas color: theme backgroundColor.
