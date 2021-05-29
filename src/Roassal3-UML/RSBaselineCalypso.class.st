@@ -50,7 +50,7 @@ RSBaselineCalypso >> applyControlsOn: canvas [
 { #category : #building }
 RSBaselineCalypso >> applyLayoutOn: canvas [
 	| interaction layout |
-	interaction := RSForceLayoutStepping new.
+	interaction := RSForceLayoutSteppingInteraction new.
 	layout := RSRectangleForceLayout new.
 	interaction layout: layout.
 	layout 
