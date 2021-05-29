@@ -24,7 +24,7 @@ RSSunburstBuilder >> color: aBlock [
 
 { #category : #strategry }
 RSSunburstBuilder >> constantWidthStrategy [
-	self strategy: RSSunburstConstantWidthStrategy new.
+	self strategy: RSSunburstConstantWidthLayout new.
 	^ strategy
 ]
 
