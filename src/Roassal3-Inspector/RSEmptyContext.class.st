@@ -3,7 +3,7 @@ I do not register any interaction to the RSCanvas and its shapes
 "
 Class {
 	#name : #RSEmptyContext,
-	#superclass : #RSAbstractContext,
+	#superclass : #RSAbstractContextInteraction,
 	#category : #'Roassal3-Inspector-Contexts'
 }
 

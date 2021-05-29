@@ -56,14 +56,14 @@ c
 In the example given above, clicking on a circle does not open a new pane in the GT inspector.
 	"
 	^ self
-		propertyAt: RSAbstractContext name asSymbol
+		propertyAt: RSAbstractContextInteraction name asSymbol
 		ifAbsentPut: [ RSInteractiveContext new ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext: aRSContext [
 	^ self
-		propertyAt: RSAbstractContext name asSymbol
+		propertyAt: RSAbstractContextInteraction name asSymbol
 		put: aRSContext
 ]
 

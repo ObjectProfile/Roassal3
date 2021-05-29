@@ -3,7 +3,7 @@ I put a default interaction for each shape in the canvas
 "
 Class {
 	#name : #RSInteractiveContext,
-	#superclass : #RSAbstractContext,
+	#superclass : #RSAbstractContextInteraction,
 	#instVars : [
 		'interactions'
 	],
