@@ -40,7 +40,7 @@ RSCanvasController >> configuration: aRSControlLimits [
 { #category : #initialization }
 RSCanvasController >> defaultInteractions [
 	"create a subclass of RSControslView and define your own custom interactions for your canvas"
-	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvas. RSZoomToFitCanvas. RSZoomableCanvas. RSScrollBarsCanvas . RSSearchInCanvas }
+	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvasInteraction. RSZoomToFitCanvas. RSZoomableCanvas. RSScrollBarsCanvas . RSSearchInCanvas }
 ]
 
 { #category : #initialization }
