@@ -340,7 +340,7 @@ RSSearchInCanvas >> searchForShapes: regExp [
 	lbl propertyAt: #shapesToHighlight put: shapesToHighlight.
 	
 	lbl fontSize: 14.
-	lbl @ RSPopup; @ highlightableLabels.
+	lbl @ RSPopupInteraction; @ highlightableLabels.
 	lbl when: RSMouseClick send: #click: to: self.
 	lbl color: self colorToUseToHighlight.
 	canvas add: lbl.

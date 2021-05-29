@@ -228,7 +228,7 @@ RSBaselineCalypso >> layoutMenu: menus [
 
 { #category : #accessing }
 RSBaselineCalypso >> loadedPopup [
-	^ loadedPopup ifNil: [ loadedPopup := RSPopup new ]
+	^ loadedPopup ifNil: [ loadedPopup := RSPopupInteraction new ]
 ]
 
 { #category : #'building - menus' }
@@ -245,7 +245,7 @@ RSBaselineCalypso >> menuAnimationFor: shape to: delta [
 { #category : #accessing }
 RSBaselineCalypso >> notLoadedPopup [
 	^ notLoadedPopup ifNil: [ notLoadedPopup := 
-		RSPopup text: [ :name | name, String crlf, '--Not loaded--' ].
+		RSPopupInteraction text: [ :name | name, String crlf, '--Not loaded--' ].
 		notLoadedPopup shapeBuilder labelBuilder 
 			layout: (RSVerticalLineLayout new gapSize: 0; alignCenter; yourself).
 		notLoadedPopup ]

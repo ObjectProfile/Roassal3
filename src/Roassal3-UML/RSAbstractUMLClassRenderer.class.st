@@ -155,7 +155,7 @@ RSAbstractUMLClassRenderer >> ellipsisShape [
 	^ RSLabel new
 		text: '...';
 		color: self textColor;
-		addInteraction: (RSPopup text: 'This class has more methods.' )
+		addInteraction: (RSPopupInteraction text: 'This class has more methods.' )
 		yourself
 ]
 

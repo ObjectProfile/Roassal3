@@ -195,7 +195,7 @@ RSLegend >> renderOnDemandIn: aCanvas [
 	| i legendLabels update |
 	menuShape isFixed: true.
 	aCanvas addShape: menuShape.
-	i := RSAnimatedPopup new.
+	i := RSAnimatedPopupInteraction new.
 	i shapeBuilder: [ self legend ].
 	menuShape @ i.
 	legendLabels := nil.

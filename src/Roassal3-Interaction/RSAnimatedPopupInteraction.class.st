@@ -2,24 +2,24 @@
 I am a basic popup for animated content in a view of roassal3
 "
 Class {
-	#name : #RSAnimatedPopup,
-	#superclass : #RSPopup,
+	#name : #RSAnimatedPopupInteraction,
+	#superclass : #RSPopupInteraction,
 	#category : #'Roassal3-Interaction-Popup'
 }
 
 { #category : #accessing }
-RSAnimatedPopup class >> activationEvent [
+RSAnimatedPopupInteraction class >> activationEvent [
 	^ RSMouseEnter
 ]
 
 { #category : #accessing }
-RSAnimatedPopup class >> removeEvents [
+RSAnimatedPopupInteraction class >> removeEvents [
 	^ removeEvents ifNil: [ 
 		removeEvents := { RSMouseClick. RSMouseLeave. RSMouseDragging } ]
 ]
 
 { #category : #hooks }
-RSAnimatedPopup >> translatePopup: popup event: evt [ 
+RSAnimatedPopupInteraction >> translatePopup: popup event: evt [ 
 	| p pscale canvasExtent side scale |
 	p := evt shape positionInCanvas.
 	evt shape isFixed

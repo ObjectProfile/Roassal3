@@ -43,7 +43,7 @@ RSBasicUMLClassRenderer >> classInnerLine: aShape [
 { #category : #hooks }
 RSBasicUMLClassRenderer >> initialize [
 	super initialize.
-	popup := RSPopup new model: #yourself.
+	popup := RSPopupInteraction new model: #yourself.
 	popup shapeBuilder: (RSAdaptativePopup new
 		smallBuilder: popup shapeBuilder;
 		bigBuilder: self;

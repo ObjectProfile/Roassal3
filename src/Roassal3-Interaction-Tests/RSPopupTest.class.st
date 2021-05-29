@@ -22,7 +22,7 @@ bar';
 
 { #category : #tests }
 RSPopupTest >> testMultiline [
-	shapes @ RSPopup.
+	shapes @ RSPopupInteraction.
 	self assert: canvas fixedShapes size equals: 0 .
 	
 	shapes last announce: RSMouseMove.
@@ -43,7 +43,7 @@ RSPopupTest >> testPopup [
 	| c |
 	c := RSCanvas new.
 	shapes := (1 to: 30) collect: [ :v | RSEllipse new  model: v; size: 10 ] as: RSGroup.
-	shapes @ RSPopup.
+	shapes @ RSPopupInteraction.
 	c addAll: shapes.
 
 	RSLineBuilder line
@@ -74,7 +74,7 @@ RSPopupTest >> testPopup [
 RSPopupTest >> testPopupOnElementNotAddedToAView [
 	| b |
 	b := RSBox new.
-	b @ RSPopup.
+	b @ RSPopupInteraction.
 	b announce: RSMouseEnter.
 	"Should not produce an error"
 ]
@@ -84,7 +84,7 @@ RSPopupTest >> testPopupSimple [
 	| c s |
 	c := RSCanvas new.
 	s := RSEllipse new size: 10; model: 42.
-	s @ RSPopup.
+	s @ RSPopupInteraction.
 	c add: s.
 
 	self assert: c numberOfShapes equals: 1.
@@ -102,7 +102,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 	| c |
 	c := RSCanvas new.
 	shapes := (1 to: 30) collect: [ :v | RSEllipse new  model: v; size: 10 ] as: RSGroup.
-	shapes @ RSPopup.
+	shapes @ RSPopupInteraction.
 	c addAll: shapes.
 
 	RSLineBuilder line
@@ -130,7 +130,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 
 { #category : #tests }
 RSPopupTest >> testWithPopup [
-	shapes @ RSPopup.
+	shapes @ RSPopupInteraction.
 	self assert: canvas fixedShapes size equals: 0 .
 	
 	shapes first announce: RSMouseMove.

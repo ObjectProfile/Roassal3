@@ -101,7 +101,7 @@ canvas @ RSCanvasController.
 ```
 "
 Class {
-	#name : #RSPopup,
+	#name : #RSPopupInteraction,
 	#superclass : #RSAbstractPopupInteraction,
 	#instVars : [
 		'shapeBuilder',
@@ -111,7 +111,7 @@ Class {
 }
 
 { #category : #accessing }
-RSPopup class >> text: aStringOrOneArgBlock [
+RSPopupInteraction class >> text: aStringOrOneArgBlock [
 	"Define a Popup interaction with a particular text. The argument can either be a text, a symbol, or a one-argument block that is evaluated on the model object of the shape. For example:
 ```
 canvas := RSCanvas new.
@@ -140,7 +140,7 @@ canvas open.
 ]
 
 { #category : #hooks }
-RSPopup >> createPopupFor: aShape event: event [
+RSPopupInteraction >> createPopupFor: aShape event: event [
 	| popupShape |
 	popupShape := shapeBuilder shapeFor: (self modelFor: aShape).
 	popupShape isFixed: true.
@@ -149,19 +149,19 @@ RSPopup >> createPopupFor: aShape event: event [
 ]
 
 { #category : #initialization }
-RSPopup >> initialize [
+RSPopupInteraction >> initialize [
 	super initialize.
 	self model: #model.
 	shapeBuilder := RSSimplePopupBuilder new.
 ]
 
 { #category : #accessing }
-RSPopup >> model [
+RSPopupInteraction >> model [
 	^ modelBlock
 ]
 
 { #category : #accessing }
-RSPopup >> model: anObject [
+RSPopupInteraction >> model: anObject [
 	"
 	- can be a one arg BlockClosure 
 	- can be a ByteString
@@ -170,22 +170,22 @@ RSPopup >> model: anObject [
 ]
 
 { #category : #accessing }
-RSPopup >> modelFor: aRSShape [
+RSPopupInteraction >> modelFor: aRSShape [
 	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }
-RSPopup >> releasePopup: popup [
+RSPopupInteraction >> releasePopup: popup [
 	popup remove
 ]
 
 { #category : #accessing }
-RSPopup >> shapeBuilder [
+RSPopupInteraction >> shapeBuilder [
 	^ shapeBuilder
 ]
 
 { #category : #accessing }
-RSPopup >> shapeBuilder: aShapeBuilder [
+RSPopupInteraction >> shapeBuilder: aShapeBuilder [
 	"Let one customize the way the popup is generated. The method accept a shape builder or a one-argument-block. For example:
 	
 ```
@@ -214,13 +214,13 @@ canvas open
 ]
 
 { #category : #accessing }
-RSPopup >> text: oneArgBlock [
+RSPopupInteraction >> text: oneArgBlock [
 	"The block is evaluated with the model provided as argument"
 	self shapeBuilder textBlock: oneArgBlock
 ]
 
 { #category : #hooks }
-RSPopup >> translatePopup: popup event: evt [ 
+RSPopupInteraction >> translatePopup: popup event: evt [ 
 	| p e extent |
 	p := evt camera fromSpaceToPixel: evt position.
 	extent := popup canvas extent.

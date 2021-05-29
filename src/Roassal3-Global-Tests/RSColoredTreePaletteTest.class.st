@@ -11,7 +11,7 @@ RSColoredTreePaletteTest >> testBasic [
 	c := RSCanvas new.
 	nodes := RSBox models: (1 to: 10).
 	c addAll: nodes.
-	nodes @ RSPopup.
+	nodes @ RSPopupInteraction.
 	lb := RSLineBuilder orthoVertical.
 	lb withVerticalAttachPoint.
 	lb shapes: nodes.
@@ -47,7 +47,7 @@ RSColoredTreePaletteTest >> testLeaves [
 	c := RSCanvas new.
 	nodes := RSBox models: (1 to: 10).
 	c addAll: nodes.
-	nodes @ RSPopup.
+	nodes @ RSPopupInteraction.
 	lb := RSLineBuilder orthoVertical.
 	lb withVerticalAttachPoint.
 	lb shapes: nodes.

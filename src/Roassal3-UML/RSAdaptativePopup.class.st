@@ -22,7 +22,7 @@ RSAdaptativePopup >> bigBuilder: aRSBuilder [
 RSAdaptativePopup >> bigShapeFor: aRSShape [
 	| popup |
 	popup := bigBuilder shapeFor: aRSShape model.
-	popup removeInteractionIfPresent: RSPopup.
+	popup removeInteractionIfPresent: RSPopupInteraction.
 	^ popup
 ]
 

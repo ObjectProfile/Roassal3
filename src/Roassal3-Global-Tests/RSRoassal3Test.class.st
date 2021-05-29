@@ -26,12 +26,12 @@ RSRoassal3Test >> testOpenOnce [
 RSRoassal3Test >> testRemoveInteractionIfPresent [
 	| box |
 	box := RSBox new.
-	self deny: (box announcer handleSubscriberClass: RSPopup).
+	self deny: (box announcer handleSubscriberClass: RSPopupInteraction).
 	box popup.
-	self assert: (box announcer handleSubscriberClass: RSPopup).
+	self assert: (box announcer handleSubscriberClass: RSPopupInteraction).
 	
-	box removeInteractionIfPresent: RSPopup.
-	self deny: (box announcer handleSubscriberClass: RSPopup).
+	box removeInteractionIfPresent: RSPopupInteraction.
+	self deny: (box announcer handleSubscriberClass: RSPopupInteraction).
 	self deny: box hasEventCallback.
 	
 	box := RSBox new.
@@ -45,12 +45,12 @@ RSRoassal3Test >> testRemoveInteractionIfPresent [
 RSRoassal3Test >> testSubscriberClass [
 	| box |
 	box := RSBox new.
-	self deny: (box announcer handleSubscriberClass: RSPopup).
+	self deny: (box announcer handleSubscriberClass: RSPopupInteraction).
 	box popup.
-	self assert: (box announcer handleSubscriberClass: RSPopup).
+	self assert: (box announcer handleSubscriberClass: RSPopupInteraction).
 	"but popup adds a lot of events, RSPopup is not an event"
-	self deny: (box announcer handleEventClass: RSPopup).
-	{RSPopup activationEvent}, RSPopup removeEvents do: [ :evt | self assert:  (box announcer handleEventClass: evt). ]
+	self deny: (box announcer handleEventClass: RSPopupInteraction).
+	{RSPopupInteraction activationEvent}, RSPopupInteraction removeEvents do: [ :evt | self assert:  (box announcer handleEventClass: evt). ]
 
 ]
 

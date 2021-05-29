@@ -33,7 +33,7 @@ RSHighlightableTest >> testSameModel [
 	c := RSCanvas new.
 	boxes := values collect: [ :vv | RSBox new size: 10; model: vv ] as: RSGroup.
 	c addAll: boxes.
-	boxes @ RSPopup.
+	boxes @ RSPopupInteraction.
 	boxes @ (RSHighlightable sameModel: c).
 	RSGridLayout on: boxes.
 	c @ RSCanvasController.

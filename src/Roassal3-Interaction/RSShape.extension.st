@@ -12,10 +12,10 @@ RSShape >> labeled [
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> popup [
-	self @ RSPopup.
+	self @ RSPopupInteraction.
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> popupText: aBlock [
-	self @ (RSPopup text: aBlock).
+	self @ (RSPopupInteraction text: aBlock).
 ]
