@@ -30,7 +30,7 @@ RSSunburstBuilder >> constantWidthStrategy [
 
 { #category : #strategry }
 RSSunburstBuilder >> extentStrategy [
-	self strategy: RSSunburstExtentStrategy new.
+	self strategy: RSSunburstExtentLayout new.
 	^ strategy
 ]
 
