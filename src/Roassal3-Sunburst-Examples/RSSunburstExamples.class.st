@@ -116,7 +116,7 @@ RSSunburstExamples >> example06Rotation [
 		connectFrom: #superclass.
 	canvas := RSCanvas new.
 	controller := RSCanvasController new.
-	(controller interactions at: RSDraggableCanvas) right.
+	(controller interactions at: RSDraggableCanvasInteraction) right.
 	canvas @ controller.
 	canvas add: composite.
 	composite @ RSRotated.

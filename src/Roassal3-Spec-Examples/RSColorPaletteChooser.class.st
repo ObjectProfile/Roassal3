@@ -240,7 +240,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 	
 	controls := RSCanvasController new.
 	controls noLegend.
-	controls interactions removeKey: RSDraggableCanvas.
+	controls interactions removeKey: RSDraggableCanvasInteraction.
 	controls interactions at: RSScrollWheelCanvas put: RSScrollWheelCanvas new.
 	controls configuration 
 		noZoomToFitOnStart;

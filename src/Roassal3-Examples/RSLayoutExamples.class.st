@@ -108,7 +108,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
-	canvas @ RSDraggableCanvas .
+	canvas @ RSDraggableCanvasInteraction.
 	^ canvas
 ]
 
@@ -523,7 +523,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 		shapes: shapes;
 		normalize: [ :cls | cls numberOfMethods + 5 ].
 	RSTreeLayout on: shapes.
-	^ c @ RSCanvasController @ RSHierarchyPacker
+	^ c @ RSCanvasController @ RSHierarchyPackerInteraction
 ]
 
 { #category : #layouts }
