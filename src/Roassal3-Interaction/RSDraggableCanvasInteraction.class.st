@@ -9,8 +9,8 @@ c @ RSDraggableCanvas
 ```
 "
 Class {
-	#name : #RSDraggableCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#name : #RSDraggableCanvasInteraction,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'mouseEvent',
 		'isMoving',
@@ -20,28 +20,28 @@ Class {
 }
 
 { #category : #accessing }
-RSDraggableCanvas class >> left [
+RSDraggableCanvasInteraction class >> left [
 	^ self new left
 ]
 
 { #category : #accessing }
-RSDraggableCanvas class >> middle [
+RSDraggableCanvasInteraction class >> middle [
 	^ self new middle
 ]
 
 { #category : #accessing }
-RSDraggableCanvas class >> right [
+RSDraggableCanvasInteraction class >> right [
 	^ self new right
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> all [
+RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
 	mouseEvent := RSMouseDragStart.
 ]
 
 { #category : #computing }
-RSDraggableCanvas >> checkCamera: aCanvas [
+RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	| camera p correct |
 	camera := aCanvas camera.
 	p := camera position.
@@ -59,24 +59,24 @@ RSDraggableCanvas >> checkCamera: aCanvas [
 ]
 
 { #category : #initialize }
-RSDraggableCanvas >> initialize [
+RSDraggableCanvasInteraction >> initialize [
 	super initialize.
 	self all.
 	isMoving := false.
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> left [
+RSDraggableCanvasInteraction >> left [
 	mouseEvent := RSMouseLeftDragStart
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> middle [
+RSDraggableCanvasInteraction >> middle [
 	mouseEvent := RSMouseMiddleDragStart
 ]
 
 { #category : #events }
-RSDraggableCanvas >> mouseEnd: evt [
+RSDraggableCanvasInteraction >> mouseEnd: evt [
 	| threshold aCanvas camera delta p correct |
 	isMoving := false.
 	lastStep ifNil: [ ^ self ].
@@ -106,17 +106,17 @@ RSDraggableCanvas >> mouseEnd: evt [
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> mouseEvent [
+RSDraggableCanvasInteraction >> mouseEvent [
 	^ mouseEvent
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> mouseEvent: aRSMouseDragEvent [
+RSDraggableCanvasInteraction >> mouseEvent: aRSMouseDragEvent [
 	mouseEvent := aRSMouseDragEvent
 ]
 
 { #category : #events }
-RSDraggableCanvas >> mouseMove: evt [
+RSDraggableCanvasInteraction >> mouseMove: evt [
 	| camera p correct |
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
@@ -129,13 +129,13 @@ RSDraggableCanvas >> mouseMove: evt [
 ]
 
 { #category : #events }
-RSDraggableCanvas >> mouseStart: evt [
+RSDraggableCanvasInteraction >> mouseStart: evt [
 	isMoving := true.
 	lastStep := nil.
 ]
 
 { #category : #hooks }
-RSDraggableCanvas >> onShape: aCanvas [
+RSDraggableCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
 		when: self mouseEvent send: #mouseStart: to: self;
 		when: RSMouseDragging send: #mouseMove: to: self;
@@ -143,11 +143,11 @@ RSDraggableCanvas >> onShape: aCanvas [
 ]
 
 { #category : #rendering }
-RSDraggableCanvas >> renderLegendOn: lb [
+RSDraggableCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Mouse click' description: 'To move the view''s camera'
 ]
 
 { #category : #mouse }
-RSDraggableCanvas >> right [
+RSDraggableCanvasInteraction >> right [
 	mouseEvent := RSMouseRightDragStart.
 ]

@@ -3,7 +3,7 @@ I add an interaction for the view
 "
 Class {
 	#name : #RSZoomToFitCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#category : #'Roassal3-Interaction-Controls'
 }
 

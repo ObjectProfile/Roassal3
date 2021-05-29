@@ -3,7 +3,7 @@ I put a scrool shapes to the view when the view moves
 "
 Class {
 	#name : #RSScrollBarsCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'barShape',
 		'vertical',

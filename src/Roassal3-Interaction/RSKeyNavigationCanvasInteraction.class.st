@@ -2,8 +2,8 @@
 I add key events to the view to move it, zoom it with the key board
 "
 Class {
-	#name : #RSKeyNavigationCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#name : #RSKeyNavigationCanvasInteraction,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'steps',
 		'speed',
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> expandCollapse: evt [
+RSKeyNavigationCanvasInteraction >> expandCollapse: evt [
 	evt canvas morph window expandBoxHit
 ]
 
 { #category : #initialization }
-RSKeyNavigationCanvas >> initialize [
+RSKeyNavigationCanvasInteraction >> initialize [
 	super initialize.
 	steps := Set new.
 	speed := 1.
@@ -28,14 +28,14 @@ RSKeyNavigationCanvas >> initialize [
 ]
 
 { #category : #hooks }
-RSKeyNavigationCanvas >> onShape: aCanvas [
+RSKeyNavigationCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
 		when: RSKeyDown do: [ :evt | self processKeyDown: evt ];
 		when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
 ]
 
 { #category : #events }
-RSKeyNavigationCanvas >> processKeyDown: evt [
+RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	| keyName |
 	keyName := evt keyName.
 	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
@@ -58,7 +58,7 @@ RSKeyNavigationCanvas >> processKeyDown: evt [
 ]
 
 { #category : #events }
-RSKeyNavigationCanvas >> processKeyUp: evt [
+RSKeyNavigationCanvasInteraction >> processKeyUp: evt [
 	| keyName |
 	steps removeAll.
 	keyName := evt keyName.
@@ -70,7 +70,7 @@ RSKeyNavigationCanvas >> processKeyUp: evt [
 ]
 
 { #category : #events }
-RSKeyNavigationCanvas >> processStepsOn: aCanvas [
+RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 
 	| rect lastMS |
 	rect := self encompassingRectangleFor: aCanvas.
@@ -95,7 +95,7 @@ RSKeyNavigationCanvas >> processStepsOn: aCanvas [
 ]
 
 { #category : #rendering }
-RSKeyNavigationCanvas >> renderLegendOn: lb [
+RSKeyNavigationCanvasInteraction >> renderLegendOn: lb [
 	lb
 		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
 		text: 'Shift + arrows' description: 'Accelerate the move';
@@ -105,12 +105,12 @@ RSKeyNavigationCanvas >> renderLegendOn: lb [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomIn: aCanvas [
+RSKeyNavigationCanvasInteraction >> zoomIn: aCanvas [
 	self zoomMove: aCanvas delta: 1.5
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomMove: aCanvas delta: delta [
+RSKeyNavigationCanvasInteraction >> zoomMove: aCanvas delta: delta [
 	| scale camera newScale correct |
 	camera := aCanvas camera.
 	scale := camera scale.
@@ -134,7 +134,7 @@ RSKeyNavigationCanvas >> zoomMove: aCanvas delta: delta [
 ]
 
 { #category : #'events-processing' }
-RSKeyNavigationCanvas >> zoomOut: aCanvas [
+RSKeyNavigationCanvasInteraction >> zoomOut: aCanvas [
 	self zoomMove: aCanvas delta: 0.5.
 	
 ]
