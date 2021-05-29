@@ -10,7 +10,7 @@ c @ RSDraggableCanvas
 "
 Class {
 	#name : #RSDraggableCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'mouseEvent',
 		'isMoving',

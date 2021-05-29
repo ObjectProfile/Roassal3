@@ -3,7 +3,7 @@ I am a interaction for translate the canvas in vertical position with the mouse 
 "
 Class {
 	#name : #RSScrollWheelCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'animation'
 	],

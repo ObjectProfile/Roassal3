@@ -3,7 +3,7 @@ I handle the zoom interaction with mouse wheel event, also I handle all the zoom
 "
 Class {
 	#name : #RSZoomableCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'animation'
 	],

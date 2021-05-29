@@ -3,7 +3,7 @@ I add key events to the view to move it, zoom it with the key board
 "
 Class {
 	#name : #RSKeyNavigationCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'steps',
 		'speed',

@@ -2,7 +2,7 @@
 I interact with RSControlsView. my subclasses are added to the controls
 "
 Class {
-	#name : #RSAbstractControlCanvas,
+	#name : #RSAbstractControlCanvasInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'limits'
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #accessing }
-RSAbstractControlCanvas >> configuration [
+RSAbstractControlCanvasInteraction >> configuration [
 	^ limits ifNil: [ limits := RSControlConfiguration new ]
 ]
 
 { #category : #accessing }
-RSAbstractControlCanvas >> configuration: aRSControlLimits [
+RSAbstractControlCanvasInteraction >> configuration: aRSControlLimits [
 	limits := aRSControlLimits
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: aCanvas [ 
+RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas [ 
 	^ self 
 		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
@@ -30,7 +30,7 @@ RSAbstractControlCanvas >> correctCameraPosition: aCanvas [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
+RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
 	| canvasRect x y p |
 	p := position.
 	canvasRect := Rectangle
@@ -62,7 +62,7 @@ RSAbstractControlCanvas >> correctCameraPosition: aCanvas inRectangle: rectangle
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> correctCameraPosition: aCanvas scale: scale [
+RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas scale: scale [
 	^ self 
 		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
@@ -71,13 +71,13 @@ RSAbstractControlCanvas >> correctCameraPosition: aCanvas scale: scale [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> encompassingRectangleFor: aCanvas [
+RSAbstractControlCanvasInteraction >> encompassingRectangleFor: aCanvas [
 	^ aCanvas propertyAt: #encompassingRectangle 
 		ifAbsentPut: [ aCanvas encompassingRectangle  ].
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> expandedRectangle: aCanvas [
+RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
 	| key | 
 	key := #expanedEncompassingRectangle.
 	^ aCanvas propertyAt: key ifAbsentPut: [ 
@@ -88,19 +88,19 @@ RSAbstractControlCanvas >> expandedRectangle: aCanvas [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> removeRectanglesFor: aCanvas [
+RSAbstractControlCanvasInteraction >> removeRectanglesFor: aCanvas [
 	aCanvas 
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]
 
 { #category : #rendering }
-RSAbstractControlCanvas >> renderLegendOn: aLegendBuilder [
+RSAbstractControlCanvasInteraction >> renderLegendOn: aLegendBuilder [
 	self subclassResponsibility
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvas >> scaleFor: aScale [
+RSAbstractControlCanvasInteraction >> scaleFor: aScale [
 	| l |
 	l := self configuration.
 	^ (l maxScale min: aScale ) max: l minScale

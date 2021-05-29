@@ -56,7 +56,7 @@ c @ con.
 "
 Class {
 	#name : #RSSearchInCanvas,
-	#superclass : #RSAbstractControlCanvas,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'canvas',
 		'useExactMatch',
