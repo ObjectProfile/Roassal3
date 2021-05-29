@@ -104,7 +104,7 @@ RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 											            cr;
 											            cr;
 											            nextPutAll: aCommit shortId;
-											            nextPutAll: '  -- by ';
+											            nextPutAll: ' -- by ';
 											            nextPutAll: aCommit author;
 											            nextPutAll: ' at ';
 											            nextPutAll: aCommit datetime asLocalStringYMDHM;
@@ -123,8 +123,17 @@ RSTreeLayoutTest >> testRoassal3CommitsWithTimeGaps [
 			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
 
 	edges sort: [ :a :b | 
-		(a from propertyAt: #gitCommit) datetime
-		> (b from propertyAt: #gitCommit) datetime ].
+		| aTime bTime |
+		aTime := (a to propertyAt: #gitCommit) datetime.
+		bTime := (b to propertyAt: #gitCommit) datetime.
+		aTime > bTime
+			ifTrue: [ true ]
+			ifFalse: [ 
+				aTime = bTime
+					ifTrue: [ 
+						(a from propertyAt: #gitCommit) datetime
+						> (b from propertyAt: #gitCommit) datetime ]
+					ifFalse: [ false ] ] ].
 
 	[ 
 	RSVanDerPloegTreeLayout new
