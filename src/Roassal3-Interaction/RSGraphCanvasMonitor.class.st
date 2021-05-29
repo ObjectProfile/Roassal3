@@ -3,7 +3,7 @@ I have a canvas monitor
 "
 Class {
 	#name : #RSGraphCanvasMonitor,
-	#superclass : #RSAbstractCanvasMonitor,
+	#superclass : #RSAbstractCanvasMonitorInteraction,
 	#instVars : [
 		'polyline',
 		'label',

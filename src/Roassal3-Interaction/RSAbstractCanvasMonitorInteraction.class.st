@@ -4,7 +4,7 @@ I am an interaction for RSView, I can add to the a fixed shape that contains bas
 Frames per second, this number show the quantity of frames rendered. useful to debug animations
 "
 Class {
-	#name : #RSAbstractCanvasMonitor,
+	#name : #RSAbstractCanvasMonitorInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'shape',
@@ -15,23 +15,23 @@ Class {
 }
 
 { #category : #accessing }
-RSAbstractCanvasMonitor >> currentTime [
+RSAbstractCanvasMonitorInteraction >> currentTime [
 	^ canvas currentTime
 ]
 
 { #category : #initialization }
-RSAbstractCanvasMonitor >> initialize [
+RSAbstractCanvasMonitorInteraction >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSAbstractCanvasMonitor >> initializeShape [
+RSAbstractCanvasMonitorInteraction >> initializeShape [
 	self subclassResponsibility.
 ]
 
 { #category : #accessing }
-RSAbstractCanvasMonitor >> lastFrameCPUConsumption [
+RSAbstractCanvasMonitorInteraction >> lastFrameCPUConsumption [
 	| res current |
 	current := self currentTime.
 	lastFrameEndTime ifNil: [ 
@@ -42,14 +42,14 @@ RSAbstractCanvasMonitor >> lastFrameCPUConsumption [
 ]
 
 { #category : #accessing }
-RSAbstractCanvasMonitor >> lastFramePerSecond [
+RSAbstractCanvasMonitorInteraction >> lastFramePerSecond [
 	| delta |
 	delta := self lastFrameCPUConsumption.
 	^ (1.0 / (delta max: 0.001) ) asInteger
 ]
 
 { #category : #hooks }
-RSAbstractCanvasMonitor >> onShape: aCanvas [
+RSAbstractCanvasMonitorInteraction >> onShape: aCanvas [
 	| location |
 	self assert: shape notNil description: 'Define your monitor shape'.
 	shape isFixed: true.
@@ -64,16 +64,16 @@ RSAbstractCanvasMonitor >> onShape: aCanvas [
 ]
 
 { #category : #accessing }
-RSAbstractCanvasMonitor >> shape [
+RSAbstractCanvasMonitorInteraction >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSAbstractCanvasMonitor >> shape: aShape [
+RSAbstractCanvasMonitorInteraction >> shape: aShape [
 	shape := aShape
 ]
 
 { #category : #update }
-RSAbstractCanvasMonitor >> updateShape [
+RSAbstractCanvasMonitorInteraction >> updateShape [
 	self subclassResponsibility
 ]

@@ -3,7 +3,7 @@ I am a simple monitor
 "
 Class {
 	#name : #RSSimpleCanvasMonitor,
-	#superclass : #RSAbstractCanvasMonitor,
+	#superclass : #RSAbstractCanvasMonitorInteraction,
 	#category : #'Roassal3-Interaction-Extra'
 }
 
