@@ -16,7 +16,7 @@ c open
 
 "
 Class {
-	#name : #RSSelectionPresentation,
+	#name : #RSSelectionPresentationInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'presentation',
@@ -27,18 +27,18 @@ Class {
 }
 
 { #category : #initialization }
-RSSelectionPresentation >> initialize [
+RSSelectionPresentationInteraction >> initialize [
 	super initialize.
 	self padding: 10.
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> key [
+RSSelectionPresentationInteraction >> key [
 	^ self class name
 ]
 
 { #category : #hooks }
-RSSelectionPresentation >> onShape: aShape [
+RSSelectionPresentationInteraction >> onShape: aShape [
 	aShape model ifNil: [ ^ self ].
 	aShape canvas ifNotNil: [ :c | 
 		c propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
@@ -52,27 +52,27 @@ RSSelectionPresentation >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> padding [
+RSSelectionPresentationInteraction >> padding [
 	^ padding
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> padding: aNumber [
+RSSelectionPresentationInteraction >> padding: aNumber [
 	padding := aNumber
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> presentation [
+RSSelectionPresentationInteraction >> presentation [
 	^ presentation
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> presentation: aRSRoassalPresentation [
+RSSelectionPresentationInteraction >> presentation: aRSRoassalPresentation [
 	presentation := aRSRoassalPresentation
 ]
 
 { #category : #hooks }
-RSSelectionPresentation >> putShadowOn: aShape [
+RSSelectionPresentationInteraction >> putShadowOn: aShape [
 
 	| shadow pad |
 	"Make sure that  the size is indenpendent of the camera scale"
@@ -92,12 +92,12 @@ RSSelectionPresentation >> putShadowOn: aShape [
 ]
 
 { #category : #dependencies }
-RSSelectionPresentation >> release [
+RSSelectionPresentationInteraction >> release [
 	presentation := nil
 ]
 
 { #category : #hooks }
-RSSelectionPresentation >> removeShadowOn: aShape [
+RSSelectionPresentationInteraction >> removeShadowOn: aShape [
 	"Nothing to do if there is no canvas"
 	aShape canvas ifNil: [ ^ self ].
 	
@@ -108,14 +108,14 @@ RSSelectionPresentation >> removeShadowOn: aShape [
 ]
 
 { #category : #hooks }
-RSSelectionPresentation >> scaleFrom: aShape [
+RSSelectionPresentationInteraction >> scaleFrom: aShape [
 	"Return the scale used by the canvas of the shape"
 	aShape canvas ifNil: [ ^ 1 ].
 	^ aShape canvas camera scale
 ]
 
 { #category : #hooks }
-RSSelectionPresentation >> selection: aShape [
+RSSelectionPresentationInteraction >> selection: aShape [
 	self presentation ifNotNil: [ 
 		self presentation value: (SpWrappedItem new selectedItem: aShape model) ]. 
 	self
@@ -127,11 +127,11 @@ RSSelectionPresentation >> selection: aShape [
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> shadowColor [
+RSSelectionPresentationInteraction >> shadowColor [
 	^ shadowColor ifNil: [ shadowColor := Color blue alpha: 0.3 ]
 ]
 
 { #category : #accessing }
-RSSelectionPresentation >> shadowColor: aColor [
+RSSelectionPresentationInteraction >> shadowColor: aColor [
 	shadowColor := aColor
 ]

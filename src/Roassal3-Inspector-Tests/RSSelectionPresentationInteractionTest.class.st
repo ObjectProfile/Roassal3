@@ -1,11 +1,11 @@
 Class {
-	#name : #RSSelectionPresentationTest,
+	#name : #RSSelectionPresentationInteractionTest,
 	#superclass : #RSTest,
 	#category : #'Roassal3-Inspector-Tests'
 }
 
 { #category : #tests }
-RSSelectionPresentationTest >> testBasic [
+RSSelectionPresentationInteractionTest >> testBasic [
 
 	| c shapes |
 	c := RSCanvas new.
@@ -13,7 +13,7 @@ RSSelectionPresentationTest >> testBasic [
 	c addAll: shapes.
 	RSNormalizer size shapes: shapes; normalize: #yourself.
 	RSFlowLayout on: shapes.
-	shapes @ RSSelectionPresentation.
+	shapes @ RSSelectionPresentationInteraction.
 	c @ RSCanvasController.
 
 	"make sure there is no error when clicking on an element, while being outside the GTInspector"
@@ -22,7 +22,7 @@ RSSelectionPresentationTest >> testBasic [
 ]
 
 { #category : #tests }
-RSSelectionPresentationTest >> testCanvasInspect [
+RSSelectionPresentationInteractionTest >> testCanvasInspect [
 	| c  window |
 	c := RSCanvas new.
 	c add: RSBox new.
@@ -34,10 +34,10 @@ RSSelectionPresentationTest >> testCanvasInspect [
 ]
 
 { #category : #tests }
-RSSelectionPresentationTest >> testWithNoCanvas [
+RSSelectionPresentationInteractionTest >> testWithNoCanvas [
 
 	| shapes |
 	shapes := (1 to: 100) collect: [ :v | RSBox new model: v ] as: RSGroup.
-	shapes @ RSSelectionPresentation.
+	shapes @ RSSelectionPresentationInteraction.
 	shapes first announce: RSMouseClick
 ]
