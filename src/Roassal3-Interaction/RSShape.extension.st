@@ -7,7 +7,7 @@ RSShape >> draggable [
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> labeled [
-	self @ RSLabeled.
+	self @ RSLabeledInteraction.
 ]
 
 { #category : #'*Roassal3-Interaction' }
