@@ -113,7 +113,7 @@ RSInspectableExample >> example04ChagingContext [
 	c @ RSCanvasController.
 	
 	"This is the default context for the inspector"
-	context := RSInteractiveContext new.
+	context := RSContextInteraction new.
 	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentation ].
 	int 
 		padding: 5;
