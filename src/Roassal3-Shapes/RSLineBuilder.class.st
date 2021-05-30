@@ -520,7 +520,7 @@ RSLineBuilder >> shouldCreateEdgeFrom: fromShape to: toShape [
 	fromShape == toShape ifTrue: [ ^ false ].
 	(fromShape isNil or: [ toShape isNil ]) ifTrue: [ ^ false ].
 	beDirectional ifFalse: [ ^ (toShape isDirectlyConnectedTo: fromShape) not ].
-	allowRepetition ifFalse: [ ^ fromShape outgoingEdges noneSatisfy: [ :edge | edge to == toShape ] ].
+	allowRepetition ifFalse: [ ^ fromShape outgoingLines noneSatisfy: [ :edge | edge to == toShape ] ].
 	^ true
 ]
 

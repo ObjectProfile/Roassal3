@@ -65,7 +65,7 @@ Class {
 { #category : #private }
 RSHierarchyPackerInteraction >> fill: group with: aShape [
 	group add: aShape.
-	aShape outgoingEdges do: [ :ed | 
+	aShape outgoingLines do: [ :ed | 
 		self fill: group with: ed to ].
 ]
 

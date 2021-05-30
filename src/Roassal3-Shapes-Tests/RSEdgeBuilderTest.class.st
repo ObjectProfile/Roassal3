@@ -224,7 +224,7 @@ RSEdgeBuilderTest >> testHasEdges [
 	
 	self assert: s1 hasEdges.
 	self assert: s2 hasEdges.
-	self assert: s1 connectedEdges size equals: 1
+	self assert: s1 connectedLines size equals: 1
 	
 ]
 

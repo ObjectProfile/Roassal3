@@ -92,7 +92,7 @@ RSLineDrivenLayout >> setEdgesFromElements: elements [
 	elements isEmpty ifTrue: [ ^ self ].
 	
 	^ self edges:
-		((elements flatCollect: #incomingEdges)
+		((elements flatCollect: #incomingLines)
 			select: [ :anEdge |elements includes: anEdge from])
 
 ]

@@ -10,7 +10,7 @@ RSSimpleForceBasedLayout >> doExecute: shapes [
 	shapes do: [ :n | n updateLinesOFF ].
 	layout := RSForceBasedLayout new.
 	layout nodes: shapes.
-	es := shapes flatCollect: #outgoingEdges.
+	es := shapes flatCollect: #outgoingLines.
 	layout edges: es.
 	layout start.
 	shapes do: [ :node | (layout mockElementAt: node)

@@ -65,16 +65,16 @@ RSHighlightableTest >> testWithEdges [
 	interaction withLines.
 	shapes @ interaction.
 	
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color gray.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 	
 	shapes second announce: RSMouseEnter.
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color red.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color red.
 	
 	shapes second announce: RSMouseLeave.
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color gray.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 
 
 ]
@@ -102,16 +102,16 @@ RSHighlightableTest >> testWithEdges2 [
 	interaction := RSHighlightable withLines.
 	shapes @ interaction.
 	
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color gray.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 	
 	shapes second announce: RSMouseEnter.
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color black.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color black.
 	
 	shapes second announce: RSMouseLeave.
-	self assert: (shapes second outgoingEdges collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingEdges collect: #color) anyOne equals: Color gray.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 
 	
 ]

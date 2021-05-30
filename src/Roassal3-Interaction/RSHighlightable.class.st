@@ -258,7 +258,7 @@ RSHighlightable class >> withAntAnimation [
 		shape isNode ifTrue: [ 
 			| array anime |
 			array := #(4).
-			shape connectedEdges do: [ :edge | edge border 
+			shape connectedLines do: [ :edge | edge border 
 				color: Color blue; 
 				width: 2;
 				dashArray: array. ].
@@ -268,7 +268,7 @@ RSHighlightable class >> withAntAnimation [
 				to: -8;
 				duration: 1 second;
 				onStepDo: [ :t |
-					shape connectedEdges do: [ :ed |ed border dashOffset: t ].
+					shape connectedLines do: [ :ed |ed border dashOffset: t ].
 					shape signalUpdate ].
 			shape topParent propertyAt: #antAnimation put: anime.
 		].
@@ -667,8 +667,8 @@ canvas open
 
 	self highlightShapes: [ :s | 
 		| listIncoming listOutgoing |
-		listIncoming := s incomingEdges collect: [ :anEdge | anEdge from ] as: RSGroup.
-		listOutgoing := s outgoingEdges collect: [ :anEdge | anEdge to ] as: RSGroup.
+		listIncoming := s incomingLines collect: [ :aLine | aLine from ] as: RSGroup.
+		listOutgoing := s outgoingLines collect: [ :aLine | aLine to ] as: RSGroup.
 		listIncoming, listOutgoing ].
 ]
 
@@ -676,7 +676,7 @@ canvas open
 RSHighlightable >> withEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s connectedEdges copy.
+		list := s connectedLines copy.
 		list add: s.
 		list ].
 ]
@@ -685,7 +685,7 @@ RSHighlightable >> withEdges [
 RSHighlightable >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s incomingEdges collect: #yourself as: RSGroup.
+		list := s incomingLines collect: #yourself as: RSGroup.
 		list add: s.
 		list ].
 ]
@@ -712,8 +712,8 @@ RSHighlightable >> withLines [
 RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s outgoingEdges collect: #yourself as: RSGroup.
-		list addAll: (s outgoingEdges collect: #to). 
+		list := s outgoingLines collect: #yourself as: RSGroup.
+		list addAll: (s outgoingLines collect: #to). 
 		list ].
 ]
 

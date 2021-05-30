@@ -248,7 +248,7 @@ RSAbstractLine >> remove [
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
 	aShape isPoint ifTrue: [ ^ self ].
-	aShape connectedEdges remove: self ifAbsent: [  ].
+	aShape connectedLines remove: self ifAbsent: [  ].
 
 ]
 
@@ -275,8 +275,8 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
-	anObject isPoint ifFalse: [ anObject addConnectedEdge: self ].
+	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
 

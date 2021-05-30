@@ -116,8 +116,8 @@ RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	[ to == ancestor ] whileFalse: [ 
 		shapes add: to afterIndex: index.
 		to := search value: to model ].
-	shapes do: [ :e | (e connectedEdges includes: edge)
-		ifFalse: [ e addConnectedEdge: edge ] ].
+	shapes do: [ :e | (e connectedLines includes: edge)
+		ifFalse: [ e addConnectedLine: edge ] ].
 	^ shapes.
 	
 ]

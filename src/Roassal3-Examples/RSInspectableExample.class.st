@@ -76,7 +76,7 @@ RSInspectableExample >> example02Inspect [
 				self inform: 'Done :V!!!' ].
 			lastSize := canvas nodes size.
 			canvas nodes do: [ :shape |
-				shape outgoingEdges ifEmpty: [ | children |
+				shape outgoingLines ifEmpty: [ | children |
 					children := shape model subclasses collect: [:cls | box value: cls ].
 					children do: [ :child | child position: shape position ].
 					canvas addAll: children ]. ].
@@ -86,9 +86,9 @@ RSInspectableExample >> example02Inspect [
 			RSLineBuilder arrowedLine 
 				canvas: canvas;
 				connectFrom: #superclass.
-			canvas nodes do: #updateEdgesOFF.
+			canvas nodes do: #updateLinesOFF.
 			RSClusterLayout on: canvas nodes.
-			canvas nodes do: #updateEdgesON.
+			canvas nodes do: #updateLinesON.
 			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
 		 ]}.
 	canvas @ RSCanvasController.

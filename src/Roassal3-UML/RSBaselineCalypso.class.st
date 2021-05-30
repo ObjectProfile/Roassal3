@@ -267,7 +267,7 @@ RSBaselineCalypso >> resizeNodes: evt [
 	
 	evt canvas nodes do: [ :node |
 		node size: minSize + (node propertyAt: propertyKey).
-		node updateConnectedEdges ].
+		node updateConnectedLines ].
 	evt shape text: newText.
 	evt signalUpdate.
 ]

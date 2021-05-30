@@ -20,7 +20,7 @@ Class {
 RSForceLayoutInSpaces >> abandonLayout: shape [
 	| layout |
 	layout := shape propertyAt: #layout.
-	shape connectedEdges do: [ :ed | layout removeEdge: ed ].
+	shape connectedLines do: [ :ed | layout removeEdge: ed ].
 	layout removeNode: shape
 	
 ]
@@ -29,7 +29,7 @@ RSForceLayoutInSpaces >> abandonLayout: shape [
 RSForceLayoutInSpaces >> addEdgesOf: shape to: space [
 	| layout edgesToAdd |
 	layout := space propertyAt: #layout.
-	edgesToAdd := shape connectedEdges groupedBy: [ :ed | 
+	edgesToAdd := shape connectedLines groupedBy: [ :ed | 
 		(ed from propertyAt: #layout) = layout and: [ 
 		(ed to propertyAt: #layout) = layout ] ].
 

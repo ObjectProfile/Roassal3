@@ -103,9 +103,9 @@ RSBoundingShape >> baseRectangle [
 
 { #category : #matrix }
 RSBoundingShape >> basicTranslateBy: delta [
-	self updateEdgesOFF.
+	self updateLinesOFF.
 	self position: self position + delta.
-	self updateEdgesON.
+	self updateLinesON.
 ]
 
 { #category : #accessing }
@@ -277,13 +277,13 @@ RSBoundingShape >> matrixDo: aBlock [
 { #category : #metrics }
 RSBoundingShape >> numberOfIncomingLines [
 	"Return the number of lines incoming to the shape"
-	^ self incomingEdges size
+	^ self incomingLines size
 ]
 
 { #category : #metrics }
 RSBoundingShape >> numberOfOutgoingLines [
 	"Return the number of lines incoming to the shape"
-	^ self outgoingEdges size
+	^ self outgoingLines size
 ]
 
 { #category : #'edges - deprecated' }
@@ -319,7 +319,7 @@ RSBoundingShape >> position: aPoint [
 		description: 'you must provide a real point'.
 	matrix translation: aPoint.
 	self resetBBox.
-	self updateConnectedEdges.
+	self updateConnectedLines.
 ]
 
 { #category : #accessing }
@@ -337,7 +337,7 @@ RSBoundingShape >> postCopy [
 RSBoundingShape >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeNode: self.
-	self removeConnectedEdges.
+	self removeConnectedLines.
 	super remove
 ]
 
@@ -575,7 +575,7 @@ RSBoundingShape >> updateConnectedEdges [
 	self connectedEdges do: [ :edge | edge update ].
 ]
 
-{ #category : #'edges - deprecated' }
+{ #category : #lines }
 RSBoundingShape >> updateConnectedLines [
 	self shouldUpdateLines
 		ifFalse: [ ^ self ].
