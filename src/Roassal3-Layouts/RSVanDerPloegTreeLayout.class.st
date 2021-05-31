@@ -56,7 +56,7 @@ RSVanDerPloegTreeLayout >> doInitialize: elements [
 { #category : #'hook-private' }
 RSVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
-	^ self layout: root atPoint: aPoint
+	^ self layout: root depth: aPoint y breadth: aPoint x
 ]
 
 { #category : #algorithm }

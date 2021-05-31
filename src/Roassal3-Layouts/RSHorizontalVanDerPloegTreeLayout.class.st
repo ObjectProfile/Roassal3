@@ -56,7 +56,7 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 { #category : #hook }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
-	^ self layout: root atPoint: aPoint
+	^ self layout: root depth: aPoint x breadth: aPoint y
 ]
 
 { #category : #algorithm }

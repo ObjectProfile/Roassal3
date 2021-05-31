@@ -292,11 +292,11 @@ RSTWalkBasedRegularTreeLayout >> is: aShape ifLeaf: lBlock ifNotLeaf: nlBlock [
 ]
 
 { #category : #API }
-RSTWalkBasedRegularTreeLayout >> layout: aRootShape atPoint: aPoint [
+RSTWalkBasedRegularTreeLayout >> layout: aRootShape depth: aDepth breadth: aBreadth [
 
 	self
 		firstWalk: aRootShape;
-		secondWalk: aRootShape depth: aPoint x breadth: aPoint y
+		secondWalk: aRootShape depth: aDepth breadth: aBreadth
 ]
 
 { #category : #'layout-properties' }
