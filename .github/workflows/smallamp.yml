@@ -1,43 +1,112 @@
-# This is a basic workflow to help you get started with Actions
-
 name: SmallAmpCI
-
-
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
 
-
-# Controls when the action will run. 
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    inputs:
+      iteration:
+        description: 'Maximum number of transformations applied to an original test method.'
+        required: true
+        default: '3'
+      maxInputs:
+        description: 'maximum number of inputs selected by the reducer'
+        required: true
+        default: '10'
+      mode:
+        description: 'Mode (possible values: snapshot, dspot)'
+        required: true
+        default: 'snapshot'
+        
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  TestAmplification:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        portion: [0,1,2,3,4,5,6,7,8,9]
+        portion: [0,1,2,3,4,5,6,7,8,9] # the content of array is not important, just the length
     name: Job number ${{ strategy.job-index }}
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-9.0
+          smalltalk-version: Pharo64-8.0
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
-      - run: smallAmpCI
-        shell: bash    
+      - run: smallAmpCI 
+        shell: bash
         env:
-          # you can also use: ${{ matrix.portion }}
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
+          SMALLAMP_iteration: ${{ github.event.inputs.iteration }}
+          SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
+          SMALLAMP_mode: ${{ github.event.inputs.mode }}
+
+  TestAmplificationPush:
+    runs-on: ubuntu-latest
+    needs: TestAmplification
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - uses: actions/checkout@v2
+        with:
+           fetch-depth: 0
+      - run: git checkout -b "SmallAmp-${{github.run_number}}"
+        shell: bash
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+      - uses: mabdi/smallamp-action@main
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: cd smallAmp-results*; find . -name "*.zip" -exec unzip {} \;; rm *.zip; mv * ..
+        shell: bash 
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: python3 runner.py -r amp -d ${{ env.SMALLTALK_CI_BUILD_BASE }} -p ${{ env.reponame }} > overview-amp.txt
+        shell: bash
+        working-directory: ${{env.SMALLAMP_CI_HOME}}
+      - run: python3 runner.py -r sum -d ${{ env.SMALLTALK_CI_BUILD_BASE }} -p ${{ env.reponame }} > overview-sum.txt
+        shell: bash
+        working-directory: ${{env.SMALLAMP_CI_HOME}}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "smallAmp-overview-${{ env.reponame }}-run${{github.run_number}}"
+          path: ${{env.SMALLAMP_CI_HOME}}/overview-*.txt
+      - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
+        shell: bash 
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
+        shell: bash
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: git status
+        shell: bash  
+      - run: git branch 
+        shell: bash
+      - run: |
+          git config user.name mabdi
+          git add '*.st'
+          git commit -m '[SmallAmp] amplified tests added'
+          git push -u origin HEAD
+      - uses: actions/github-script@v4
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.pulls.create({
+                owner: "mabdi",
+                repo: '${{ env.reponame }}',
+                title: "[SmallAmp] amplified tests for action number ${{github.run_number}}",
+                head: "SmallAmp-${{github.run_number}}",
+                base: "${{ steps.extract_branch.outputs.branch }}",
+                body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
+            });
