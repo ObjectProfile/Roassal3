@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'space'
 	],
-	#category : #'Roassal3-Bloc'
+	#category : #'Roassal3-Bloc-Core'
 }
 
 { #category : #accessing }
