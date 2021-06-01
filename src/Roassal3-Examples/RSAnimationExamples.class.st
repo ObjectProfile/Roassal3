@@ -2604,3 +2604,153 @@ c svgExporter export"
 		
 		
 ]
+
+{ #category : #perlin }
+RSAnimationExamples >> example45Beziers [
+	<script: 'self new example45Beziers open'>
+	| c allPoints graphs color |
+	c := RSCanvas new.
+
+	allPoints := { 
+		'2 Points' -> { 0@0.  100@ -100 }.
+		'3 Points' -> { 0@0. 50@ -100.  100@ 0. }.
+		'4 Points' -> { 0@0. 50@ 0.  50@ -100. 100@ -100}.
+		'curve like y = 1/t' -> { 0@0. 0@ -70.  30@ -100. 100@ -100}.
+		'Zig Zag' -> { 0@0. 100@ -50.  0@ -50. 100@ -100}.
+		'Loop' -> { 0@0. 100@ -50.  0@ -100. 50@ 0}.
+		'Non smooth bezier' -> { 0@0. 100@ -100.  0@ -100. 100@ 0}.
+		'More than 4' -> { 0@0. 50@ -100.  100@ 0. 150@ -100. 200@ 0. 250 @ -100}.
+	}.
+	color := NSScale category20.
+	graphs := allPoints collect: [ :assoc |
+		| comp dots points bezier label button icon lines labelT |
+		comp := RSComposite new.
+		points := assoc value.
+		dots := (1 to: points size) collect: [ :i |
+			RSEllipse new
+				model: i;
+				size: 5;
+				withBorder;
+				position: (points at: i);
+				draggable;
+				noPaint;
+				yourself
+		] as: RSGroup.
+		dots @ RSLabeled.
+
+		lines := (2 to: dots size) collect: [ :index |
+			RSLine new
+				withBorderAttachPoint;
+				from: (dots at: index -1);
+				to: (dots at: index);
+				yourself ].
+		comp addAll: lines.
+		comp addAll: dots.
+		
+		bezier := points size > 4 
+			ifTrue: [ RSPolyline new
+				in: [ :poly | dots do: [ :dot | dot addConnectedLine: poly] ];
+				controlPointsController: (RSBlockCPController new block: [:line | 
+					(0 to: 1 by: 0.05) collect: [ :t | 
+						| n r |
+						r := 0@0.
+						n := dots size - 1.
+						dots doWithIndex: [ :dot :k | | point bez i |
+							point := dot position.
+							i := k -1.
+							bez := n factorial / (i factorial * ((n - i) factorial)) * (t raisedTo: i) * (1 - t raisedTo: n-i ).
+							r := point * bez + r].
+						r ] .
+					])]
+			ifFalse: [ RSBezier new controlPointsController: (RSCustomCPController new models: dots)].
+		bezier color: Color red.
+
+		comp add: bezier.
+		comp
+			adjustToChildren;
+			padding: 10;
+			withBorder.
+		label := RSLabel text: assoc key.
+		RSLocation new above; offset: 0@ -30; move: label on: dots.
+		comp add: label.
+		
+		labelT := RSLabel text: 'T='.
+		RSLocation new below; offset: 0@10; move: labelT on: dots.
+		comp add: labelT.
+		
+		icon := RSBitmap new form: (self iconNamed: #smallDoIt).
+		button := { icon } asShape.
+		button 
+			when: RSMouseEnter do: [button color: Color lightGray; signalUpdate ];
+			when: RSMouseLeave do: [button color: nil; signalUpdate ];
+			when: RSMouseClick do: [
+				comp 
+					propertyAt: #anime
+					ifPresent: [:anime |
+						anime toggle.
+						icon form: (self iconNamed: 
+							(anime isPaused
+								ifTrue: [#smallDoIt]
+								ifFalse: [ #protocolPrivate ]));
+							signalUpdate. ]
+					ifAbsent: [ 
+						| anime newShapes |
+						icon form: (self iconNamed: #protocolPrivate); signalUpdate.
+						newShapes := RSGroup new.
+						anime := comp newAnimation	
+							duration: 5 seconds;
+							onStepDo: [ :t |
+								| currentLines last |
+								newShapes do: #remove.
+								labelT text: 'T=', (t printShowingDecimalPlaces: 3).
+								newShapes removeAll.
+								currentLines := lines.
+
+								[currentLines notEmpty ] whileTrue: [ 
+									| newLines lcolor |
+									lcolor := color scale: currentLines size.
+									newLines := (2 to: currentLines size) collect: [ :i | 
+										| l1 l2 |
+										l1 := currentLines at: i - 1.
+										l2 := currentLines at: i.
+										RSLine new
+											startPoint: (l1 startPoint interpolateTo: l1 endPoint at: t);
+											endPoint: (l2 startPoint interpolateTo: l2 endPoint at: t);
+											color: lcolor;
+											yourself
+										 ].
+									currentLines size = 1 ifTrue: [ | l1 |
+										l1 := currentLines first.
+										newShapes add: (RSEllipse new
+											color: Color red;
+											size: 5;
+											position: (l1 startPoint interpolateTo: l1 endPoint at: t);
+											yourself )].
+									newShapes addAll: newLines.
+									currentLines := newLines.
+								].
+								
+								comp addAll: newShapes.
+								comp signalUpdate ];
+							when: RSAnimationEndEvent do: [:evt | 
+								comp removeKey: #anime.
+								newShapes do: #remove.
+								icon form: (self iconNamed: #smallDoIt).
+								].
+						comp propertyAt: #anime put: anime
+						 ].
+			].
+		RSLocation new outer; left; offset: -5@0; move: button on: label.
+		comp add: button.
+		comp.
+	].
+
+	RSGridLayout new
+		lineItemsCount: 4;
+		gapSize: 50; 
+		on: graphs.
+	c addAll: graphs.
+	c @ RSCanvasController.
+	^ c
+
+]
