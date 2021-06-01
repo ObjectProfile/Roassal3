@@ -30,6 +30,20 @@ RSEventListener >> clickEvent: anEvent [
 
 ]
 
+{ #category : #'mouse handlers' }
+RSEventListener >> doubleClickEvent: anEvent [
+
+	| aRSEvent |
+	aRSEvent := dispatcher
+		mouseEventOfClass: RSMouseDoubleClick
+		ifLeftButton: RSMouseDoubleLeftClick
+		ifRightButton: RSMouseDoubleRightClick
+		from: anEvent.
+	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
+	aRSEvent shape announce: aRSEvent.
+
+]
+
 { #category : #initialization }
 RSEventListener >> initializeForHost: aRSHost [ 
 	
