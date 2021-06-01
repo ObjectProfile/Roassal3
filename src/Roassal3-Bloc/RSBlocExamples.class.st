@@ -188,6 +188,7 @@ RSBlocExamples >> example07MouseMove [
 	        color: ((Color perform: sel) alpha: 0.4 );
 	        yourself).
 	    ]).
+
 	c when: RSMouseMove do: [ :evt | 
 		| posOffset negOffset |
 	    posOffset := (evt position distanceTo: 0@0).
@@ -624,28 +625,43 @@ RSBlocExamples >> example18MouseMoveLine [
 { #category : #examples }
 RSBlocExamples >> example19Animation [
 	<script: 'self new example19Animation open'>
-	| c b |
-	c := RSCanvas new.
-	c useBlocHost.
-	b := RSBox new
-		extent: 100@100;
+
+	| canvas label continueMessage pauseMessage |
+	continueMessage := 'Click to pause'.
+	pauseMessage := 'Double-click to continue'.
+
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	label := RSLabel new
+		text: continueMessage;
+		fontSize: 40;
 		withBorder.
-	c addShape: b.
+	canvas addShape: label.
 	
-	c newAnimation
+	canvas newAnimation
+		repeat;
 		ramp: { 
 		 	0 -> (0@0).
 			0.25 -> (200@180).
 			0.75 -> (-200@ -80).
-			1 -> (200@0)};
-		on: b set: #position:.
+			1 -> (0@0)};
+		on: label set: #position:.
 	
-	c 
-		when:RSMouseClick
-		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
-		do: [ c animations do: #continue ].
-	^ c
+	canvas 
+		when: RSMouseClick
+		do: [
+			canvas animations do: #pause.
+			label
+				text: pauseMessage.
+			canvas signalUpdate ];
+		when: RSMouseDoubleClick
+		do: [
+			canvas animations do: #continue.
+			label text: continueMessage.
+			canvas signalUpdate  ].
+
+	^ canvas
 ]
 
 { #category : #examples }
@@ -678,8 +694,11 @@ RSBlocExamples >> example20BoxWindmill [
 					loadIdentity;
 					translateBy: s model;
 					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
-			frameCount := frameCount + 1. ].
-	canvas @ RSGraphCanvasMonitor.
+			frameCount := frameCount + 1.
+			canvas signalUpdate ].
+
+	canvas @ RSTranscriptCanvasMonitor.
+
 	^ canvas
 ]
 

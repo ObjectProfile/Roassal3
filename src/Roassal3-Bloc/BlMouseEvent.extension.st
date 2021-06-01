@@ -1,8 +1,9 @@
-Extension { #name : #BlMouseMoveEvent }
+Extension { #name : #BlMouseEvent }
 
-{ #category : #'*Roassal3-Animation' }
-BlMouseMoveEvent >> roassalFill: aRSMouseMove [ 
+{ #category : #'*Roassal3-Bloc' }
+BlMouseEvent >> roassalFill: aRSMouseMove [ 
 	
+	self flag: #todo.
 "	aRSMouseMove 
 		commandKeyPressed: aUserInputEvent commandKeyPressed;
 		controlKeyPressed: aUserInputEvent controlKeyPressed;

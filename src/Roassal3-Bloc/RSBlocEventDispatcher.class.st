@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'roassalCanvas'
 	],
-	#category : #'Roassal3-Bloc'
+	#category : #'Roassal3-Bloc-Events'
 }
 
 { #category : #'event-processed' }
@@ -31,6 +31,19 @@ RSBlocEventDispatcher >> eventOfClass: anEventClass from: aMorphicEvent [
 		  eventOfClass: anEventClass
 		  actionClass: anEventClass
 		  from: aMorphicEvent
+]
+
+{ #category : #'event-processed' }
+RSBlocEventDispatcher >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aBlClickEvent [
+	"Translate a Bloc click event to a Roassal click event."
+
+	| roassalEventClass |
+	roassalEventClass := defaultClass.
+	aBlClickEvent primaryButtonPressed
+		ifTrue: [ roassalEventClass := leftButtonClass ].
+	aBlClickEvent secondaryButtonPressed
+		ifTrue: [ roassalEventClass := rightButtonClass ].
+	^ self eventOfClass: roassalEventClass actionClass: defaultClass from: aBlClickEvent
 ]
 
 { #category : #'event-processed' }
