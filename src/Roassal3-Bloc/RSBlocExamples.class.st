@@ -797,8 +797,9 @@ RSBlocExamples >> example21BoxesLineCircles [
 ]
 
 { #category : #examples }
-RSBlocExamples >> example22ElasticEllipses [
-	<script: 'self new example22ElasticEllipses open'>
+RSBlocExamples >> example22AnimationOnRightClick [
+	<script: 'self new example22AnimationOnRightClick open'>
+
 	| canvas random mouseClick |
 	canvas := RSCanvas new.
 	canvas useBlocHost.
@@ -830,14 +831,13 @@ RSBlocExamples >> example22ElasticEllipses [
 					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
 					shape radius: (scale scale: t)
 					 ].
-				canvas signalUpdate.
-				]
+				canvas signalUpdate ]
 	].
 	mouseClick value.
 	
 	canvas 
 		when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit ];
-		when: RSMouseClick do: mouseClick.
+		when: RSMouseRightClick do: mouseClick.
 	^ canvas
 
 ]
