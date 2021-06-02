@@ -36,7 +36,7 @@ SpRoassalPresenter class >> open [
 
 { #category : #accessing }
 SpRoassalPresenter >> canvas [
-	^ currentCanvas
+	^ currentCanvas ifNil: [ currentCanvas := RSCanvas new ]
 ]
 
 { #category : #accessing }
@@ -44,19 +44,16 @@ SpRoassalPresenter >> canvas: aRSCanvas [
 	currentCanvas := aRSCanvas
 ]
 
-{ #category : #initialization }
-SpRoassalPresenter >> initialize [
-	super initialize.
-	script := [ :v | ] asValueHolder.
-	script whenChangedDo: [ :s | self refresh ].
+{ #category : #accessing }
+SpRoassalPresenter >> currentCanvas [
+	^ currentCanvas
 ]
 
 { #category : #initialization }
-SpRoassalPresenter >> initializePrivateHooks [
-
-	currentCanvas ifNil: [ currentCanvas := RSCanvas new ].
-	
-	super initializePrivateHooks
+SpRoassalPresenter >> initialize [
+	super initialize.
+	script := [ :aCanvas | ] asValueHolder.
+	script whenChangedDo: [ :s | self refresh ].
 ]
 
 { #category : #public }
