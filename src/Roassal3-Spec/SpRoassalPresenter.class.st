@@ -40,7 +40,7 @@ SpRoassalPresenter >> canvas [
 ]
 
 { #category : #accessing }
-SpRoassalPresenter >> canvas: aRSCanvas [ 
+SpRoassalPresenter >> canvas: aRSCanvas [
 	currentCanvas := aRSCanvas
 ]
 
