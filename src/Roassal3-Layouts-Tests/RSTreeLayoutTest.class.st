@@ -11,7 +11,6 @@ RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 	| icerepo commits edges dict aCanvas |
 	icerepo := IceRepository registry detect: [ :each | 
 		           each name = 'Roassal3' ].
-	"Containers-Essentials"
 
 	dict := Dictionary new.
 
@@ -69,12 +68,13 @@ RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 	RSVanDerPloegTreeLayout new
 		doNotValidateCycles;
 		verticalGap: [ :parent :child | 
-			| duration |
+			| duration goldenRatio |
+			goldenRatio := 1.61803398875.
 			duration := (parent propertyAt: #gitCommit) datetime
 			            - (child propertyAt: #gitCommit) datetime.
 			self assert: duration asSeconds >= 0.
-			((duration asMinutes max: Float goldenRatio) log: Float goldenRatio)
-			* Float goldenRatio ];
+			((duration asMinutes max: goldenRatio) log: goldenRatio)
+			* goldenRatio ];
 		on: commits edges: edges.
 
 	aCanvas := RSCanvas new
@@ -94,7 +94,6 @@ RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 
 	aCanvas
 		zoomToFit;
-		exportToSVG;
 		@ RSCanvasController;
 		open ] timeToRun inspect
 ]
