@@ -619,7 +619,7 @@ RSLayoutExamples >> example20FlowLayout [
 RSLayoutExamples >> example21Spaces [
 	<script: 'self new example21Spaces open'>
 	| b prop r |
-	b := RSForceLayoutInSpaces new.
+	b := RSForceLayoutInSpacesBuilder new.
 	b numberOfSpaces: 4.
 	b classes: Collection withAllSubclasses.
 	b build.

@@ -2,7 +2,7 @@
 I am a popup decoration for instances of line Plots in RSChart by default but you can customize this popup decoration with differents shapebuilders, or popups
 "
 Class {
-	#name : #RSPopupDecoration,
+	#name : #RSChartPopupDecoration,
 	#superclass : #RSChartDecoration,
 	#instVars : [
 		'popup'
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #accessing }
-RSPopupDecoration >> chartPopupBuilder [
+RSChartPopupDecoration >> chartPopupBuilder [
 	^ self popup chartPopupBuilder
 ]
 
 { #category : #accessing }
-RSPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
+RSChartPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
 	self popup chartPopupBuilder: aRSAbstractChartPopupBuilder
 ]
 
 { #category : #initialization }
-RSPopupDecoration >> initialize [
+RSChartPopupDecoration >> initialize [
 	super initialize.
 	popup := RSPopupChart new
 		chartPopupBuilder: RSSimpleChartPopupBuilder new;
@@ -30,17 +30,17 @@ RSPopupDecoration >> initialize [
 ]
 
 { #category : #accessing }
-RSPopupDecoration >> popup [
+RSChartPopupDecoration >> popup [
 	^ popup
 ]
 
 { #category : #accessing }
-RSPopupDecoration >> popup: aRSPopup [
+RSChartPopupDecoration >> popup: aRSPopup [
 	popup := aRSPopup
 ]
 
 { #category : #rendering }
-RSPopupDecoration >> renderIn: canvas [
+RSChartPopupDecoration >> renderIn: canvas [
 	| box |
 	box := chart decorations first shape.
 	popup chart: chart.

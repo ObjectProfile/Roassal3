@@ -29,7 +29,7 @@ c
 ```
 "
 Class {
-	#name : #RSChart,
+	#name : #RSChartBuilder,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'plots',
@@ -42,7 +42,7 @@ Class {
 }
 
 { #category : #adding }
-RSChart >> addDecoration: aDecoration [
+RSChartBuilder >> addDecoration: aDecoration [
 	"Add a decoration to the chart
 
 For example:
@@ -61,7 +61,7 @@ c
 ]
 
 { #category : #adding }
-RSChart >> addPlot: aPlot [
+RSChartBuilder >> addPlot: aPlot [
 	"Add a plot to the chart.
 	
 For example:
@@ -78,7 +78,7 @@ c
 ]
 
 { #category : #'public - plots' }
-RSChart >> barHeights: aCollectionY [
+RSChartBuilder >> barHeights: aCollectionY [
 	| res |
 	self addPlot: (res := RSBarPlot new 
 		x: (1 to: aCollectionY size) 
@@ -87,7 +87,7 @@ RSChart >> barHeights: aCollectionY [
 ]
 
 { #category : #'public - plots' }
-RSChart >> barWidths: aCollectionX [
+RSChartBuilder >> barWidths: aCollectionX [
 	| res |
 	self addPlot: (res := RSHorizontalBarPlot new 
 		x: aCollectionX
@@ -96,61 +96,61 @@ RSChart >> barWidths: aCollectionX [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> chartExtents [
+RSChartBuilder >> chartExtents [
 	^ extents ifNil: [ extents := RSChartExtents new ]
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> chartExtents: aRSChartExtents [
+RSChartBuilder >> chartExtents: aRSChartExtents [
 	extents := aRSChartExtents
 ]
 
 { #category : #color }
-RSChart >> colorFor: aRSPlot [ 
+RSChartBuilder >> colorFor: aRSPlot [ 
 	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
 	^ colors scale: aRSPlot
 ]
 
 { #category : #accessing }
-RSChart >> colors [
+RSChartBuilder >> colors [
 	"Return the palette"
 	^ colors
 ]
 
 { #category : #accessing }
-RSChart >> colors: someColors [
+RSChartBuilder >> colors: someColors [
 	"Set the palette to be use to plots"
 	colors := someColors
 ]
 
 { #category : #accessing }
-RSChart >> decorations [
+RSChartBuilder >> decorations [
 	"Return the list of decorations used to annotate plots"
 	^ decorations
 ]
 
 { #category : #defaults }
-RSChart >> defaultContainer [
+RSChartBuilder >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #color }
-RSChart >> defaultPlotColors [
+RSChartBuilder >> defaultPlotColors [
 	^ NSScale category20
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> extent [
+RSChartBuilder >> extent [
 	^ self chartExtents extent
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> extent: aPoint [
+RSChartBuilder >> extent: aPoint [
 	self chartExtents extent: aPoint
 ]
 
 { #category : #visualization }
-RSChart >> gtInspectorViewIn: composite [
+RSChartBuilder >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
 		title: ['Canvas'];
@@ -159,7 +159,7 @@ RSChart >> gtInspectorViewIn: composite [
 ]
 
 { #category : #initialization }
-RSChart >> initialize [
+RSChartBuilder >> initialize [
 	super initialize.
 	plots := OrderedCollection new.
 	self extent: 200 @ 200.
@@ -168,13 +168,13 @@ RSChart >> initialize [
 ]
 
 { #category : #initialization }
-RSChart >> initializeDecorations [
+RSChartBuilder >> initializeDecorations [
 	decorations := OrderedCollection new.
 	self addDecoration: RSChartSpineDecoration new.
 ]
 
 { #category : #inspector }
-RSChart >> inspectorCanvas [
+RSChartBuilder >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	self build. 
 	^ SpRoassal3InspectorPresenter new
@@ -183,20 +183,20 @@ RSChart >> inspectorCanvas [
 ]
 
 { #category : #inspector }
-RSChart >> inspectorCanvasContext: aContext [
+RSChartBuilder >> inspectorCanvasContext: aContext [
   
   aContext withoutEvaluator
 ]
 
 { #category : #'public - plots' }
-RSChart >> lineX: aCollectionX y: aCollectionY [
+RSChartBuilder >> lineX: aCollectionX y: aCollectionY [
 	| res |
 	self addPlot: (res := RSLinePlot new x: aCollectionX y: aCollectionY).
 	^ res
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> maxValueX [
+RSChartBuilder >> maxValueX [
 	^ self chartExtents maxValueX
 		ifNil: [ | res |
 			self chartExtents maxValueX: (res := (plots collect: #maxValueX) max).
@@ -205,12 +205,12 @@ RSChart >> maxValueX [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> maxValueX: aNumber [
+RSChartBuilder >> maxValueX: aNumber [
 	self chartExtents maxValueX: aNumber
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> maxValueY [
+RSChartBuilder >> maxValueY [
 	^ self chartExtents maxValueY
 		ifNil: [ | res |
 			self chartExtents maxValueY: (res := (plots collect: #maxValueY) max).
@@ -220,12 +220,12 @@ RSChart >> maxValueY [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> maxValueY: aNumber [
+RSChartBuilder >> maxValueY: aNumber [
 	self chartExtents maxValueY: aNumber
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> minValueX [ 
+RSChartBuilder >> minValueX [ 
 	^ self chartExtents minValueX
 		ifNil: [ | res |
 			self chartExtents minValueX: (res := (plots collect: #minValueX) min).
@@ -234,12 +234,12 @@ RSChart >> minValueX [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> minValueX: aNumber [
+RSChartBuilder >> minValueX: aNumber [
 	self chartExtents minValueX: aNumber
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> minValueY [
+RSChartBuilder >> minValueY [
 	^ self chartExtents minValueY
 		ifNil: [ | res |
 			self chartExtents minValueY: (res := (plots collect: #minValueY) min).
@@ -248,12 +248,12 @@ RSChart >> minValueY [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> minValueY: aNumber [
+RSChartBuilder >> minValueY: aNumber [
 	self chartExtents minValueY: aNumber
 ]
 
 { #category : #'public - configuration' }
-RSChart >> mustInclude0inX [
+RSChartBuilder >> mustInclude0inX [
 	"Make sure that the 0 value is in the chart"
 	((self minValueX to: self maxValueX) includes: 0) ifTrue: [ ^ self ].
 	
@@ -263,7 +263,7 @@ RSChart >> mustInclude0inX [
 ]
 
 { #category : #'public - configuration' }
-RSChart >> mustInclude0inY [
+RSChartBuilder >> mustInclude0inY [
 	"Make sure that the 0 value is in the chart"
 	((self minValueY to: self maxValueY) includes: 0) ifTrue: [ ^ self ].
 	
@@ -273,7 +273,7 @@ RSChart >> mustInclude0inY [
 ]
 
 { #category : #accessing }
-RSChart >> niceGenerator [
+RSChartBuilder >> niceGenerator [
 	"Produce a generator for nice labels. Whether nice labels are used or not is a choice made by the horizontal or vertical ticks."
 	^ generator ifNil: [ 
 		generator := RSLabelGenerator new.
@@ -282,19 +282,19 @@ RSChart >> niceGenerator [
 ]
 
 { #category : #accessing }
-RSChart >> numberOfPlots [
+RSChartBuilder >> numberOfPlots [
 	"Return the number of plots contained in the chart"
 	^ plots size
 ]
 
 { #category : #public }
-RSChart >> openOnce [
+RSChartBuilder >> openOnce [
 	self build.
 	^ self canvas openOnce
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> padding [
+RSChartBuilder >> padding [
 	^ self chartExtents padding
 		ifNil: [ | res |
 			self chartExtents padding: (res := 0@0).
@@ -303,40 +303,40 @@ RSChart >> padding [
 ]
 
 { #category : #'accessing - extension' }
-RSChart >> padding: aPoint [
+RSChartBuilder >> padding: aPoint [
 	self chartExtents padding: aPoint asPoint
 ]
 
 { #category : #accessing }
-RSChart >> plots [
+RSChartBuilder >> plots [
 	^ plots
 ]
 
 { #category : #building }
-RSChart >> renderDecorationIn: aCanvas [
+RSChartBuilder >> renderDecorationIn: aCanvas [
 	decorations do: [ :d | d renderIn: aCanvas ]
 ]
 
 { #category : #hooks }
-RSChart >> renderIn: aCanvas [
+RSChartBuilder >> renderIn: aCanvas [
 	decorations, plots do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: aCanvas.
 	self renderPlotsIn: aCanvas
 ]
 
 { #category : #building }
-RSChart >> renderPlotsIn: aCanvas [
+RSChartBuilder >> renderPlotsIn: aCanvas [
 	plots do: [ :p | p renderIn: aCanvas ].
 	
 ]
 
 { #category : #building }
-RSChart >> show [
+RSChartBuilder >> show [
 	^ self open
 ]
 
 { #category : #accessing }
-RSChart >> title: aTitle [
+RSChartBuilder >> title: aTitle [
 	"Set the title of a chart. For example:
 	
 ```Smalltalk
@@ -350,100 +350,100 @@ c
 ]
 
 { #category : #'public - scales' }
-RSChart >> xLinear [
+RSChartBuilder >> xLinear [
 	^ self xScale: NSScale linear
 ]
 
 { #category : #'public - scales' }
-RSChart >> xLn [
+RSChartBuilder >> xLn [
 	^ self xScale: NSScale ln
 ]
 
 { #category : #'public - scales' }
-RSChart >> xLog [
+RSChartBuilder >> xLog [
 	^ self xScale: NSScale symlog
 ]
 
 { #category : #'public - scales' }
-RSChart >> xRawLog [
+RSChartBuilder >> xRawLog [
 	self xScale: NSScale log
 ]
 
 { #category : #'public - scales' }
-RSChart >> xScale: aScale [
+RSChartBuilder >> xScale: aScale [
 	plots, decorations do: [ :e | e xScale: aScale ].
 	^ aScale
 ]
 
 { #category : #'public - scales' }
-RSChart >> xSqrt [
+RSChartBuilder >> xSqrt [
 	^ self xScale: NSScale sqrt
 ]
 
 { #category : #decoration }
-RSChart >> xlabel: aTitle [
+RSChartBuilder >> xlabel: aTitle [
 	"Set a label on the horizontal axis"
 	^ self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
 { #category : #decoration }
-RSChart >> xlabel: aTitle offset: aPointOrANumber [
+RSChartBuilder >> xlabel: aTitle offset: aPointOrANumber [
 	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
 	^ self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
 ]
 
 { #category : #decoration }
-RSChart >> xlabelTop: aTitle [
+RSChartBuilder >> xlabelTop: aTitle [
 	"Set a label on the horizontal top axis"
 	^ self addDecoration: (RSXLabelDecoration new title: aTitle; above).
 ]
 
 { #category : #'public - scales' }
-RSChart >> yLinear [
+RSChartBuilder >> yLinear [
 	^ self yScale: NSScale linear
 ]
 
 { #category : #'public - scales' }
-RSChart >> yLn [
+RSChartBuilder >> yLn [
 	^ self yScale: NSScale ln
 ]
 
 { #category : #'public - scales' }
-RSChart >> yLog [
+RSChartBuilder >> yLog [
 	^ self yScale: NSScale symlog
 ]
 
 { #category : #'public - scales' }
-RSChart >> yRawLog [
+RSChartBuilder >> yRawLog [
 	"ensure all your data and axis do not contains zero"
 	^ self yScale: NSScale log
 ]
 
 { #category : #'public - scales' }
-RSChart >> yScale: aScale [
+RSChartBuilder >> yScale: aScale [
 	plots, decorations do: [ :e | e yScale: aScale ].
 	^ aScale
 ]
 
 { #category : #'public - scales' }
-RSChart >> ySqrt [
+RSChartBuilder >> ySqrt [
 	^ self yScale: NSScale sqrt
 ]
 
 { #category : #decoration }
-RSChart >> ylabel: aTitle [
+RSChartBuilder >> ylabel: aTitle [
 	"Set a label on the vertical axis"
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]
 
 { #category : #decoration }
-RSChart >> ylabel: aTitle offset: aPointOrANumber [
+RSChartBuilder >> ylabel: aTitle offset: aPointOrANumber [
 	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
 ]
 
 { #category : #decoration }
-RSChart >> ylabelRight: aTitle [
+RSChartBuilder >> ylabelRight: aTitle [
 	"Set a label on the vertical axis"
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle; right; yourself)
 ]

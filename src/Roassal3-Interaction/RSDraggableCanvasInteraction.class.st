@@ -51,7 +51,7 @@ RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	self removeRectanglesFor: aCanvas.
 	
 	aCanvas newAnimation
-		easing: RSEasing cubicIn;
+		easing: RSEasingInterpolator cubicIn;
 		duration: 200 milliSeconds;
 		from: p;
 		to: correct;
@@ -96,7 +96,7 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	p := p x sqrt @ p y sqrt.
 	
 	aCanvas newAnimation 
-		easing: RSEasing cubicOut;
+		easing: RSEasingInterpolator cubicOut;
 		duration: 200 milliSeconds;
 		from: camera position; to: camera position + (delta / p);
 		on: camera set: #translateTo:;

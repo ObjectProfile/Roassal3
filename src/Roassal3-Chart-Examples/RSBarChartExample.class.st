@@ -13,7 +13,7 @@ RSBarChartExample >> example01TwoBars [
 	| c p p2 x y size |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSBarPlot new x: x y: y.
 	size := 6.
 	p barSize: size.
@@ -49,7 +49,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	| c p p2 x y size lb |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSHorizontalBarPlot new x: y y: x.
 	size := 5.
 	p barSize: size.
@@ -61,7 +61,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	c addPlot: p2.
 	c build.
 	p bars , p2 bars @ RSPopup.
-	lb := RSLegend new.
+	lb := RSLegendBuilder new.
 	lb container: c canvas.
 	lb text: 'Series1' withBoxColor: p computeColor.
 	lb text: 'Series2' withBoxColor: p2 computeColor.
@@ -108,9 +108,9 @@ RSBarChartExample >> example03TilePaint [
 		paint repeat.
 		paint ].
 
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c extent: 300@ 200.
-	lb := RSLegend new.
+	lb := RSLegendBuilder new.
 	lb container: c canvas.
 	size := 25.
 
@@ -148,7 +148,7 @@ RSBarChartExample >> example03TilePaint [
 RSBarChartExample >> example04VerticalStack [
 	<script: 'self new example04VerticalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
@@ -160,7 +160,7 @@ RSBarChartExample >> example04VerticalStack [
 	c ylabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
-	lb := RSLegend new.
+	lb := RSLegendBuilder new.
 	lb layout horizontal.
 	#(Men Women) doWithIndex: [ :lbl :index | 
 		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
@@ -173,7 +173,7 @@ RSBarChartExample >> example04VerticalStack [
 RSBarChartExample >> example05HorizontalStack [
 	<script: 'self new example05HorizontalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
@@ -185,7 +185,7 @@ RSBarChartExample >> example05HorizontalStack [
 	c xlabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
-	lb := RSLegend new.
+	lb := RSLegendBuilder new.
 	lb layout horizontal.
 	#(Men Women) doWithIndex: [ :lbl :index | 
 		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
@@ -213,7 +213,7 @@ RSBarChartExample >> example06BarAnimation [
 			].
 		
 		canvas newAnimation
-			easing: RSEasing circleOut;
+			easing: RSEasingInterpolator circleOut;
 			delay: (index * 200) milliSeconds;
 			duration: 1 second;
 			from: from;
@@ -233,7 +233,7 @@ RSBarChartExample >> example07DoubleBar [
 	<script: 'self new example07DoubleBar open'>
 	| c classes x1 x2 y plot title |
 	
-	c := RSChart new.
+	c := RSChartBuilder new.
 	classes := RSShape withAllSubclasses asOrderedCollection 
 		sorted: [:a :b | a name<b name ].
 	x1 := classes collect: #numberOfMethods.

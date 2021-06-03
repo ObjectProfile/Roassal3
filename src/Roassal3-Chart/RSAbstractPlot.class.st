@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartElement,
+	#superclass : #RSAbstractChartPlot,
 	#instVars : [
 		'xValues',
 		'yValues',
