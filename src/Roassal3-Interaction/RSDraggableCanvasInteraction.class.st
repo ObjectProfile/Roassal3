@@ -37,7 +37,7 @@ RSDraggableCanvasInteraction class >> right [
 { #category : #mouse }
 RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
-	mouseEvent := RSMouseDragStart.
+	mouseEvent := RSMouseDragStartEvent.
 ]
 
 { #category : #computing }
@@ -67,12 +67,12 @@ RSDraggableCanvasInteraction >> initialize [
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> left [
-	mouseEvent := RSMouseLeftDragStart
+	mouseEvent := RSMouseLeftDragStartEvent
 ]
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> middle [
-	mouseEvent := RSMouseMiddleDragStart
+	mouseEvent := RSMouseMiddleDragStartEvent
 ]
 
 { #category : #events }
@@ -138,8 +138,8 @@ RSDraggableCanvasInteraction >> mouseStart: evt [
 RSDraggableCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
 		when: self mouseEvent send: #mouseStart: to: self;
-		when: RSMouseDragging send: #mouseMove: to: self;
-		when: RSMouseDragEnd send: #mouseEnd: to: self.
+		when: RSMouseDraggingEvent send: #mouseMove: to: self;
+		when: RSMouseDragEndEvent send: #mouseEnd: to: self.
 ]
 
 { #category : #rendering }
@@ -149,5 +149,5 @@ RSDraggableCanvasInteraction >> renderLegendOn: lb [
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> right [
-	mouseEvent := RSMouseRightDragStart.
+	mouseEvent := RSMouseRightDragStartEvent.
 ]

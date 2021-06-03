@@ -2,7 +2,7 @@
 Common event for mouse right clicks
 "
 Class {
-	#name : #RSMouseRightClick,
-	#superclass : #RSMouseClick,
+	#name : #RSMouseRightClickEvent,
+	#superclass : #RSMouseClickEvent,
 	#category : #'Roassal3-Events'
 }

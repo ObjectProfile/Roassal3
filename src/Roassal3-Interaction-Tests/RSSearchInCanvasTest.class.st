@@ -79,7 +79,7 @@ RSSearchInCanvasTest >> testFixedShapesAndPopup [
 	| lbl |
 	search searchForShapes: '4'.
 	lbl := search fixedLabels first.
-	lbl announce: RSMouseEnter new.
+	lbl announce: RSMouseEnterEvent new.
 ]
 
 { #category : #tests }

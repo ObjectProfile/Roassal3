@@ -27,7 +27,7 @@ RSAlpharoExample >> example02Classes [
 	b objects: classes.
 	b build.
 	(b shapes collect: [ :s | s children first ]) 
-		when:RSMouseClick 
+		when:RSMouseClickEvent 
 		do: [ :evt | evt shape model browse ].
 	b canvas inspect
 ]

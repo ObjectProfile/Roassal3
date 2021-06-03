@@ -123,7 +123,7 @@ RSCanvasTest >> testEncompassingRectangle [
 RSCanvasTest >> testEvent [ 
 	| box |
 	box := RSBox new.
-	box when: RSMouseClick do: [ :evt |  ]
+	box when: RSMouseClickEvent do: [ :evt |  ]
 ]
 
 { #category : #tests }
@@ -154,11 +154,11 @@ RSCanvasTest >> testEventKnowsItsCanvas02 [
 RSCanvasTest >> testLowLevelEvent [
 	| box |
 	box := RSBox new size: 30.
-	box when: RSMouseDragging do: [ :evt | box ].
+	box when: RSMouseDraggingEvent do: [ :evt | box ].
 	canvas addShape: box.
 	self assert: canvas extent equals: 500 asPoint.
 	self
-		assert: (canvas shapeWithAction: RSMouseDragging forPositionInPixels: 250 @ 250)
+		assert: (canvas shapeWithAction: RSMouseDraggingEvent forPositionInPixels: 250 @ 250)
 		identicalTo: box
 ]
 

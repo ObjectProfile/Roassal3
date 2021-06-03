@@ -3,7 +3,7 @@ When: during dragging of the element
 Target: dragged element
 "
 Class {
-	#name : #RSMouseDragging,
+	#name : #RSMouseDraggingEvent,
 	#superclass : #RSAbstractMouseEvent,
 	#instVars : [
 		'step'
@@ -12,22 +12,22 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSMouseDragging class >> step: aStepAsPoint [
+RSMouseDraggingEvent class >> step: aStepAsPoint [
 	^ self new step: aStepAsPoint
 ]
 
 { #category : #'initialize - release' }
-RSMouseDragging >> initialize [
+RSMouseDraggingEvent >> initialize [
 	super initialize.
 	step := 0 @ 0.
 ]
 
 { #category : #accessing }
-RSMouseDragging >> step [
+RSMouseDraggingEvent >> step [
 	^ step
 ]
 
 { #category : #accessing }
-RSMouseDragging >> step: aPoint [
+RSMouseDraggingEvent >> step: aPoint [
 	step := aPoint
 ]

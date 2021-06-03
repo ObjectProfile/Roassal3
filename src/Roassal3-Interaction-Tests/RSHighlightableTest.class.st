@@ -38,7 +38,7 @@ RSHighlightableTest >> testSameModel [
 	RSGridLayout on: boxes.
 	c @ RSCanvasController.
 	
-	c nodes first announce: RSMouseEnter
+	c nodes first announce: RSMouseEnterEvent
 ]
 
 { #category : #tests }
@@ -68,11 +68,11 @@ RSHighlightableTest >> testWithEdges [
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 	
-	shapes second announce: RSMouseEnter.
+	shapes second announce: RSMouseEnterEvent.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color red.
 	
-	shapes second announce: RSMouseLeave.
+	shapes second announce: RSMouseLeaveEvent.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 
@@ -105,11 +105,11 @@ RSHighlightableTest >> testWithEdges2 [
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 	
-	shapes second announce: RSMouseEnter.
+	shapes second announce: RSMouseEnterEvent.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color black.
 	
-	shapes second announce: RSMouseLeave.
+	shapes second announce: RSMouseLeaveEvent.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 

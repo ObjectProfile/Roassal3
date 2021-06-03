@@ -2,5 +2,5 @@ Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-UML' }
 RSShape >> browseable [
-	self when: RSMouseClick do: [ self model browse  ].
+	self when: RSMouseClickEvent do: [ self model browse  ].
 ]

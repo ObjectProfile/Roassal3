@@ -583,7 +583,7 @@ RSLayoutExamples >> example20FlowLayout [
 	'VerticalRight'. RSVerticalLineLayout new alignRight.
 	} pairsDo: [:s :layout | 
 		(newLabel value: s)
-			when: RSMouseClick do: [ :evt |
+			when: RSMouseClickEvent do: [ :evt |
 				| last current |
 				last := labels collect: #position.
 				layout on: labels.
@@ -606,7 +606,7 @@ RSLayoutExamples >> example20FlowLayout [
 	} pairsDo: [:s :a |
 		(newLabel value: s)
 			fontSize: 12;
-			when: RSMouseClick do: [ a value. canvas signalUpdate ].
+			when: RSMouseClickEvent do: [ a value. canvas signalUpdate ].
 		].
 	canvas showEncompassingRectangles.
 	RSVerticalLineLayout new gapSize: 3; on: canvas fixedShapes.

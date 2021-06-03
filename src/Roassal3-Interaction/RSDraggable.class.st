@@ -15,7 +15,7 @@ RSDraggable class >> wantsUniqueInstance [
 { #category : #hooks }
 RSDraggable >> onShape: aShape [
 	aShape
-		when: RSMouseDragging
+		when: RSMouseDraggingEvent
 		do: [ :evt | 
 			| d |
 			d := evt camera distanceFromPixelToSpace: evt step.

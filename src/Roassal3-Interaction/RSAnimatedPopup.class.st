@@ -9,13 +9,13 @@ Class {
 
 { #category : #accessing }
 RSAnimatedPopup class >> activationEvent [
-	^ RSMouseEnter
+	^ RSMouseEnterEvent
 ]
 
 { #category : #accessing }
 RSAnimatedPopup class >> removeEvents [
 	^ removeEvents ifNil: [ 
-		removeEvents := { RSMouseClick. RSMouseLeave. RSMouseDragging } ]
+		removeEvents := { RSMouseClickEvent. RSMouseLeaveEvent. RSMouseDraggingEvent } ]
 ]
 
 { #category : #hooks }

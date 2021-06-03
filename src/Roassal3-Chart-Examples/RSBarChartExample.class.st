@@ -34,7 +34,7 @@ RSBarChartExample >> example01TwoBars [
 	p bars @ RSPopup.
 	
 	p2 bars
-		when: RSMouseEnter do: [ :evt |
+		when: RSMouseEnterEvent do: [ :evt |
 			| color |
 			color := Color random.
 			p2 bars do: [ :shape | shape color: color ].
@@ -267,6 +267,6 @@ RSBarChartExample >> example07DoubleBar [
 	(plot bars, plot bars2) @ RSPopup.
 	title label 
 		addInteraction: (RSPopup text: 'Click to inspect');
-		when: RSMouseClick do: [ :evt | classes inspect ].
+		when: RSMouseClickEvent do: [ :evt | classes inspect ].
 	^ c canvas
 ]

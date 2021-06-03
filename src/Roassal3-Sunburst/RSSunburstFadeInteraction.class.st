@@ -38,11 +38,11 @@ RSSunburstFadeInteraction >> initialize [
 { #category : #initialization }
 RSSunburstFadeInteraction >> onShape: aShape [
 	aShape
-		when: RSMouseEnter do: [ :evt | 
+		when: RSMouseEnterEvent do: [ :evt | 
 			still := true.
 			self doHighlight: evt shape.
 			evt signalUpdate ];
-		when: RSMouseLeave do: [ :evt | 
+		when: RSMouseLeaveEvent do: [ :evt | 
 			still := false.
 			evt canvas newAnimation
 				duration: 300 milliSeconds; 

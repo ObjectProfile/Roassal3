@@ -152,7 +152,7 @@ RSAlpharo >> renderIn: aCanvas [
 	self setAnimationsIn: aCanvas.
 	aCanvas addAll: shapes.
 	aCanvas add: self jar.
-	aCanvas when: RSMouseClick send: #removeJar to: self.
+	aCanvas when: RSMouseClickEvent send: #removeJar to: self.
 ]
 
 { #category : #hooks }

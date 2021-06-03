@@ -648,14 +648,14 @@ RSPieExamples >> example19Buttons [
 			position: 50 asPoint;
 			shiftAngles: 45/ -2;
 			setAsFixed;
-			when: RSMouseEnter do: [ 
+			when: RSMouseEnterEvent do: [ 
 				move := shape model.
 				canvas newAnimation 
 					duration: 1 second;
 					easing: RSEasing backOut;
 					from: 40; to: 50;
 					on: shape shape set: #externalRadius:. ];
-			when: RSMouseLeave do: [ 
+			when: RSMouseLeaveEvent do: [ 
 				move := 0@0.
 				canvas newAnimation 
 					duration: 1 second;
@@ -697,7 +697,7 @@ RSPieExamples >> example20AddingRemoving [
 	pie
 		sliceColor: [:slice | color scale: slice model ];
 		build.
-	pieClick := [ pie shapes when: RSMouseClick do: [ :evt |
+	pieClick := [ pie shapes when: RSMouseClickEvent do: [ :evt |
 		objects remove: evt shape model.
 		removed add: evt shape model.
 		update value.
@@ -744,7 +744,7 @@ RSPieExamples >> example20AddingRemoving [
 				model: m;
 				text: m;
 				position: index * (0@30) +  (300@0);
-				when: RSMouseClick do: [ :evt | | model |
+				when: RSMouseClickEvent do: [ :evt | | model |
 					model := evt shape model.
 					objects add: model.
 					removed remove: model.
@@ -802,7 +802,7 @@ RSPieExamples >> example22RotatedAnimation [
 		innerRadius: 70;
 		segmentSpacing: 0.5;
 		externalRadius: 220;
-		when: RSMouseClick do: [ [ animation toggle ] ].
+		when: RSMouseClickEvent do: [ [ animation toggle ] ].
 	pieLabel := RSPieLabeled new.
 	pieLabel labelText: #name.
 	pie build.
@@ -866,7 +866,7 @@ RSPieExamples >> example23RotatedAnimation [
 			obj basename, String cr,
 			(directorySize value: obj) humanReadableSIByteSize ]);
 		@ pieLabel;
-		when: RSMouseClick do: [ animation toggle ].
+		when: RSMouseClickEvent do: [ animation toggle ].
 	
 	lines := pie shapes collect: [:s | RSPolyline new
 		border: (RSBorder new dashArray: #(3));

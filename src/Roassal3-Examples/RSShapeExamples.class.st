@@ -457,7 +457,7 @@ RSShapeExamples >> example19Bitmap [
 			form: icon value;
 			model: icon;
 			popupText: #key;
-			when: RSMouseClick do: [ :evt |
+			when: RSMouseClickEvent do: [ :evt |
 				Clipboard clipboardText: evt shape model key.
 				self inform: 'Copied icon name' ].  ].
 	canvas addAll: shapes.
@@ -629,7 +629,7 @@ qui s''alimentent de ta lumière"'.
 	shapeBuilder wrapStrategy: (RSWrapEllipsisStrategy new wrapMaxWidth: 200).
 	canvas add:(shapeBuilder shapeFor: String loremIpsum).
 	RSFlowLayout  on: canvas nodes.
-	canvas nodes when: RSMouseClick do: [ :evt | evt shape inspect ].
+	canvas nodes when: RSMouseClickEvent do: [ :evt | evt shape inspect ].
 	canvas showEncompassingRectangles.
 	
 	^ canvas zoomToFit 
@@ -647,7 +647,7 @@ RSShapeExamples >> example28MultilineLabel [
 				model: met;
 				size: 20;
 				popup;
-				when: RSMouseClick do: [ :evt | evt shape inspect ];
+				when: RSMouseClickEvent do: [ :evt | evt shape inspect ];
 				yourself
 			 ].
 		RSGridLayout on: methods.
@@ -951,7 +951,7 @@ RSShapeExamples >> example36ShapePosition [
 	labelBox translateBy: 100 @ 50.
 	box @ RSDraggable.
 	box
-		when: RSMouseDragging
+		when: RSMouseDraggingEvent
 		do: [ :evt | 
 			labelBox
 				text: 'Box position = ' , evt position asIntegerPoint asString ].

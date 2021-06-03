@@ -29,7 +29,7 @@ RSCat >> addAnimationSlider [
 		move: label on: slider.
 	ps := NSScale linear domain: #(0 1); range: {0. 6 }.
 	durations := canvas animations collect: [ :a | a duration ].
-	slider when: RSMouseClick do: [ :evt | | p |
+	slider when: RSMouseClickEvent do: [ :evt | | p |
 		p := evt camera fromSpaceToPixel: evt position.
 		p := p x / slider width.
 		red width: p * slider width.

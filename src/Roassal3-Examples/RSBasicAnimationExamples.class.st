@@ -31,9 +31,9 @@ RSBasicAnimationExamples >> example01Basic [
 		to: 10;
 		on: b border set: 'width:'.
 	c 
-		when:RSMouseClick
+		when:RSMouseClickEvent
 		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
+		when: RSMouseDoubleClickEvent 
 		do: [ c animations do: #continue ].
 	c clearBackground: false.
 	^ c
@@ -67,9 +67,9 @@ RSBasicAnimationExamples >> example02Sequential [
 		loops: 2.
 	
 	c 
-		when:RSMouseClick
+		when:RSMouseClickEvent
 		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
+		when: RSMouseDoubleClickEvent 
 		do: [ c animations do: #continue ].
 	^ c
 ]
@@ -93,9 +93,9 @@ RSBasicAnimationExamples >> example03Ramp [
 		on: b set: #position:.
 	
 	c 
-		when:RSMouseClick
+		when:RSMouseClickEvent
 		do: [ c animations do: #pause ];
-		when: RSMouseDoubleClick 
+		when: RSMouseDoubleClickEvent 
 		do: [ c animations do: #continue ].
 	^ c
 ]
@@ -127,7 +127,7 @@ RSBasicAnimationExamples >> example04DashAnimation [
 		from: 0;
 		to: 8;
 		on: border set: #dashOffset:.
-	box when: RSMouseClick do: [ :a |
+	box when: RSMouseClickEvent do: [ :a |
 		animation isPaused 
 			ifTrue: [ animation continue ]
 			ifFalse: [ animation pause ] ].
@@ -189,7 +189,7 @@ RSBasicAnimationExamples >> example06Parallel [
 		animation
 	}) loops: 2.
 	canvas add: box1; add: box2.
-	canvas when: RSMouseClick do: [ :evt | canvas animations do: #toggle ].
+	canvas when: RSMouseClickEvent do: [ :evt | canvas animations do: #toggle ].
 	^ canvas
 ]
 

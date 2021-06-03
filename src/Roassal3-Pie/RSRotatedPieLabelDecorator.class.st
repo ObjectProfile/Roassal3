@@ -47,7 +47,7 @@ RSRotatedPieLabelDecorator >> render [
 	container
 		addAll: lines;
 		addAll: labels.
-	builder shapes when: RSMouseClick do: [ animation toggle ].
+	builder shapes when: RSMouseClickEvent do: [ animation toggle ].
 	self createAnimation.
 	self stepShapes: 0
 ]

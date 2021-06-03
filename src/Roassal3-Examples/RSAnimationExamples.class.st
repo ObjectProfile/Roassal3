@@ -73,7 +73,7 @@ RSAnimationExamples >> example02BoxesLineCircles [
 		line 
 			startPoint: lineX@position from y;
 			endPoint: lineX@position to y. ].
-	c when: RSMouseMove do: [ :ev | 
+	c when: RSMouseMoveEvent do: [ :ev | 
 		lineX := ev position x.
 		updateLine value ].
 	update := [ 
@@ -219,7 +219,7 @@ RSAnimationExamples >> example05ElasticEllipses [
 	
 	canvas 
 		when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit ];
-		when: RSMouseClick do: mouseClick.
+		when: RSMouseClickEvent do: mouseClick.
 	^ canvas
 
 ]
@@ -269,7 +269,7 @@ RSAnimationExamples >> example06LinePatterns [
 	].
 	canvas 
 		when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit ];
-		when: RSMouseClick do: [ 
+		when: RSMouseClickEvent do: [ 
 			step := step +1.
 			step > 20 ifTrue: [ step := 0 ] ].
 	^ canvas
@@ -451,12 +451,12 @@ RSAnimationExamples >> example09PerlinParticles [
 			(e propertyAt: #dead) ifTrue: [ e remove ] ].
 		canvas signalUpdate ].
 	
-	canvas when: RSMouseDragging do: [ :evt | 
+	canvas when: RSMouseDraggingEvent do: [ :evt | 
 		1 to: 10 do: [ :i | | p |
 			p := (particle value: evt position->(i+canvas nodes size)).
 			canvas add: p ].
 		canvas signalUpdate ];
-		when: RSKeyUp do: [:evt | 
+		when: RSKeyUpEvent do: [:evt | 
 			evt keyValue = 8 ifTrue: [ 
 				canvas clearBackground: true.
 				canvas nodes copy do: #remove.
@@ -560,12 +560,12 @@ RSAnimationExamples >> example09b [
 			(e propertyAt: #dead) ifTrue: [ e remove ] ].
 		canvas signalUpdate ].
 	
-	canvas when: RSMouseDragging do: [ :evt | 
+	canvas when: RSMouseDraggingEvent do: [ :evt | 
 		1 to: 10 do: [ :i | | p |
 			p := (particle value: evt position-> (i+canvas nodes size) ).
 			canvas add: p ].
 		canvas signalUpdate ];
-		when: RSKeyUp do: [:evt | 
+		when: RSKeyUpEvent do: [:evt | 
 			evt keyValue = 8 ifTrue: [ 
 				canvas clearBackground: true.
 				canvas nodes copy do: #remove.
@@ -1118,7 +1118,7 @@ RSAnimationExamples >> example18Rainbow [
 	canvas
 		when: RSExtentChangedEvent
 		do: [ canvas camera zoomToFit: canvas extent extent: canvas extent ];
-		when: RSMouseClick do: [ 
+		when: RSMouseClickEvent do: [ 
 			mode := mode +1.
 			mode > 2 ifTrue: [mode := 0] ].
 	^ canvas
@@ -1299,7 +1299,7 @@ RSAnimationExamples >> example22Lines [
 	canvas addShape: label.
 	canvas newAnimation repeat from: 0; to: 8; on: label border set: #dashOffset:.
 	
-	canvas when: RSMouseClick do: [
+	canvas when: RSMouseClickEvent do: [
 		step := step + 0.5.
 		step > 11 ifTrue: [ step := 1 ] ].
 	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 640@640 ].
@@ -1615,7 +1615,7 @@ RSAnimationExamples >> example27RSLocate [
 		color: (color scale: 2);
 		yourself.
 	"movableElement size: 40."
-	movableElement when: RSMouseClick do: [ 
+	movableElement when: RSMouseClickEvent do: [ 
 		canvas newAnimation
 			scale: (NSScale linear 
 				domain: #(0 0.5 1); 
@@ -1651,9 +1651,9 @@ RSAnimationExamples >> example27RSLocate [
 			paint: grad1;
 			model: t;
 			addInteraction: labeled;
-			when: RSMouseEnter do: [:evt | evt shape paint: grad2; signalUpdate ]; 
-			when: RSMouseLeave do: [:evt | evt shape paint: grad1; signalUpdate ];
-			when: RSMouseClick do: [:evt | | p |
+			when: RSMouseEnterEvent do: [:evt | evt shape paint: grad2; signalUpdate ]; 
+			when: RSMouseLeaveEvent do: [:evt | evt shape paint: grad1; signalUpdate ];
+			when: RSMouseClickEvent do: [:evt | | p |
 				evt shape model value: locate.
 				p := movableElement position.
 				locate move: movableElement on: fixedElement.
@@ -1871,7 +1871,7 @@ RSAnimationExamples >> example31RoundRectagles [
 			yourself  ] ).
 	canvas when: RSExtentChangedEvent do: [ 
 		canvas camera zoomToFit: canvas extent extent: extent ].
-	canvas when: RSMouseMove do: [ :evt | mouse := evt position. ].
+	canvas when: RSMouseMoveEvent do: [ :evt | mouse := evt position. ].
 	frame := 0.
 	canvas newAnimation repeat onStepDo: [ :t |
 		frame := frame + 1.
@@ -1974,15 +1974,15 @@ RSAnimationExamples >> example33AnimatedLayout [
 		RSLabel new
 			isFixed: true;
 			text: sel capitalized;
-			when: RSMouseLeave do: [ :evt | evt shape 
+			when: RSMouseLeaveEvent do: [ :evt | evt shape 
 				color: Color black; 
 				normal;
 				signalUpdate ];
-			when: RSMouseEnter do: [ :evt | evt shape 
+			when: RSMouseEnterEvent do: [ :evt | evt shape 
 				color: Color blue; 
 				underline;
 				signalUpdate ];
-			when: RSMouseClick do: [ :evt | | pos1 pos2 |
+			when: RSMouseClickEvent do: [ :evt | | pos1 pos2 |
 				pos1 := shapes collect: #position.
 				update value: sel.
 				pos2 := shapes collect: #position.
@@ -2394,7 +2394,7 @@ RSAnimationExamples >> example40Circles [
 			b: 0.6 + (0.4 * (th - (Float pi * 2 / 3) ) cos )
 			alpha: (alpha scale: circleSize) ].
 	canvas 
-		when: RSMouseMove 
+		when: RSMouseMoveEvent 
 		do: [ :evt | updateMouse value: evt position ].
 	updateMouse value: 0@0.
 	frameCount := 0.
@@ -2481,8 +2481,8 @@ RSAnimationExamples >> example41River [
 			])  ].
 	setParticles value.
 	c
-		when: RSMouseClick do: setParticles;
-		when: RSMouseMove do: [ :evt | | alpha |
+		when: RSMouseClickEvent do: setParticles;
+		when: RSMouseMoveEvent do: [ :evt | | alpha |
 			alpha := alphaS scale: evt position x.
 			back color: (Color black alpha: alpha) ].
 	c newAnimation repeat onStepDo: [ :t | 
@@ -2681,9 +2681,9 @@ RSAnimationExamples >> example45Beziers [
 		icon := RSBitmap new form: (self iconNamed: #smallDoIt).
 		button := { icon } asShape.
 		button 
-			when: RSMouseEnter do: [button color: Color lightGray; signalUpdate ];
-			when: RSMouseLeave do: [button color: nil; signalUpdate ];
-			when: RSMouseClick do: [
+			when: RSMouseEnterEvent do: [button color: Color lightGray; signalUpdate ];
+			when: RSMouseLeaveEvent do: [button color: nil; signalUpdate ];
+			when: RSMouseClickEvent do: [
 				comp 
 					propertyAt: #anime
 					ifPresent: [:anime |

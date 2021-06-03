@@ -93,7 +93,7 @@ RSAbstractConnection >> output: oneArgBlock [
 
 { #category : #'as yet unclassified' }
 RSAbstractConnection >> prepareInputCanvas [
-	inputCanvas nodes when: RSMouseClick do: [ :event |
+	inputCanvas nodes when: RSMouseClickEvent do: [ :event |
 		self clickOnShape: event shape ].
 	
 	inputCanvas nodes @ RSSelectionPresentation

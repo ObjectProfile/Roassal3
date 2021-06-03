@@ -16,13 +16,13 @@ Class {
 RSForceLayoutStepping >> addEventsTo: shape [
 	| mock |
 	shape 
-		when: RSMouseDragStart do: [ :evt | 
+		when: RSMouseDragStartEvent do: [ :evt | 
 			mock := layout mockElementAt: evt shape.
 			mock isFixed: true.
 			self startForceAnimation: evt canvas ];
-		when: RSMouseDragging do: [ :evt |
+		when: RSMouseDraggingEvent do: [ :evt |
 			mock fixPosition: evt shape position ];
-		when: RSMouseDragEnd do:[:evt | 
+		when: RSMouseDragEndEvent do:[:evt | 
 			mock isFixed: false.
 			mock := nil.
 			self startSimpleAnimation: evt canvas ].

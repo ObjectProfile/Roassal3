@@ -51,7 +51,7 @@ RSBasicShapeExamples >> example16BasicLinePath [
 			endPoint: b2 position.
 		evt shape translateBy: evt step.
 		evt signalUpdate ].
-	b1 when: RSMouseDragging do: translate.
-	b2 when: RSMouseDragging do: translate.
+	b1 when: RSMouseDraggingEvent do: translate.
+	b2 when: RSMouseDraggingEvent do: translate.
 	^ c
 ]

@@ -43,12 +43,12 @@ RSSelectionPresentation >> onShape: aShape [
 	aShape canvas ifNotNil: [ :c | 
 		c propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
 			c removeInteractionIfPresent: self class.
-			c when: RSMouseClick do: [ :evt |
+			c when: RSMouseClickEvent do: [ :evt |
 				self removeShadowOn: evt.
 				evt signalUpdate. ].
 			1 ].
 		 ].
-	aShape when: RSMouseClick do: [ :evt | self selection: evt shape ].
+	aShape when: RSMouseClickEvent do: [ :evt | self selection: evt shape ].
 ]
 
 { #category : #accessing }

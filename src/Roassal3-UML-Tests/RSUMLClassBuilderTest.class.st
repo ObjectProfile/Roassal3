@@ -23,7 +23,7 @@ RSUMLClassBuilderTest >> testBasic [
 RSUMLClassBuilderTest >> testJustClassName [
 	| builder shape  |
 	builder := self classToTest new.
-	builder classes: {RSMouseMove}.
+	builder classes: {RSMouseMoveEvent}.
 	builder build.
 	shape := builder shapes first.
 	self assert: shape shapes size equals: 2.
@@ -31,7 +31,7 @@ RSUMLClassBuilderTest >> testJustClassName [
 	self assert: shape shapes second class equals: RSComposite.
 	
 	builder := self classToTest new.
-	builder classes: {RSMouseMove}.
+	builder classes: {RSMouseMoveEvent}.
 	builder renderer: RSTorchUMLClassRenderer new.
 	builder build.
 	shape := builder shapes first.

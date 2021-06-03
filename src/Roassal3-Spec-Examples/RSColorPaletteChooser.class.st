@@ -41,7 +41,7 @@ RSColorPaletteChooser >> boxColorFor: color [
 	^ RSComposite new
 		  @ boxOver;
 		  model: color;
-		  when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model ];
+		  when: RSMouseClickEvent do: [ :evt | self copyToClipboard: evt shape model ];
 		  shapes: { box. label};
 		  yourself
 ]
@@ -75,7 +75,7 @@ RSColorPaletteChooser >> buttonFor: m [
 		  model: m;
 		  shapes: { box. label };
 		  @ overHighlight;
-		  when: RSMouseClick
+		  when: RSMouseClickEvent
 		  do: [ :evt | self renderColorPalettesFor: evt shape ];
 		  yourself
 ]
@@ -187,7 +187,7 @@ RSColorPaletteChooser >> paletteFor: method [
 		shapes: shapes;
 		padding: 10;
 		withBorder;
-		when: RSMouseClick 
+		when: RSMouseClickEvent 
 			do: [ :evt | self copyToClipboard: evt shape model].
 		
 ]

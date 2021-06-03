@@ -1,9 +1,9 @@
 "
-When: when a mouse cursor left an element
+When: when a mouse cursor entered an element
 Target: entered element
 "
 Class {
-	#name : #RSMouseLeave,
+	#name : #RSMouseEnterEvent,
 	#superclass : #RSAbstractMouseEvent,
 	#category : #'Roassal3-Events'
 }

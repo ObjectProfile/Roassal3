@@ -116,7 +116,7 @@ RSSearchInCanvas >> click: evt [
 	shadow := (shapes at: index) propertyAt: #shadow.
 	shadow color: label color.
 	
-	index := evt class == RSMouseLeftClick 
+	index := evt class == RSMouseLeftClickEvent 
 		ifTrue: [ index % shapes size + 1]
 		ifFalse: [ index - 1 ].
 	index = 0 ifTrue: [ index := shapes size ].
@@ -247,7 +247,7 @@ RSSearchInCanvas >> obtainRegExpToHighlight [
 { #category : #public }
 RSSearchInCanvas >> onShape: aCanvas [
 	aCanvas 
-		when: RSKeyUp do: [ :evt | self processKeyUp: evt ]
+		when: RSKeyUpEvent do: [ :evt | self processKeyUp: evt ]
 ]
 
 { #category : #'private - events' }
@@ -341,7 +341,7 @@ RSSearchInCanvas >> searchForShapes: regExp [
 	
 	lbl fontSize: 14.
 	lbl @ RSPopup; @ highlightableLabels.
-	lbl when: RSMouseClick send: #click: to: self.
+	lbl when: RSMouseClickEvent send: #click: to: self.
 	lbl color: self colorToUseToHighlight.
 	canvas add: lbl.
 	lbl setAsFixed.

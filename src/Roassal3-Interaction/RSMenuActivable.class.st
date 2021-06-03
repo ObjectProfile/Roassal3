@@ -34,7 +34,7 @@ RSMenuActivable >> menuDo: block [
 RSMenuActivable >> onShape: aShape [
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].
-	aShape when: RSMouseRightClick do: [ :evt | 
+	aShape when: RSMouseRightClickEvent do: [ :evt | 
 		| menu |
 		menu := MenuMorph new.
 		menuBlock value: menu value: evt shape.
