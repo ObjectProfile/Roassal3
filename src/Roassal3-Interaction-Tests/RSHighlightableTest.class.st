@@ -36,7 +36,7 @@ RSHighlightableTest >> testSameModel [
 	boxes @ RSPopup.
 	boxes @ (RSHighlightableInteraction sameModel: c).
 	RSGridLayout on: boxes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	
 	c nodes first announce: RSMouseEnter
 ]

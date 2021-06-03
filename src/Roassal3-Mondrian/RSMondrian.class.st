@@ -95,7 +95,7 @@ RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.
 	layoutBuilder := RSLayoutBuilder new.
-	canvas := RSCanvas new @ RSCanvasController.
+	canvas := RSCanvas new @ RSCanvasControllerInteraction.
 	nodesForLayout := RSGroup new.
 	depth := 0
 ]

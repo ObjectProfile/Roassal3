@@ -2,13 +2,13 @@
 I add an interaction for the view
 "
 Class {
-	#name : #RSZoomToFitCanvas,
+	#name : #RSZoomToFitCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#category : #'Roassal3-Interaction-Controls'
 }
 
 { #category : #'zoom animation' }
-RSZoomToFitCanvas >> animatedZoomToFit: aCanvas [
+RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	| sc position scale camera pos |
 	camera := aCanvas camera.
 	sc := camera scale.
@@ -50,7 +50,7 @@ RSZoomToFitCanvas >> animatedZoomToFit: aCanvas [
 ]
 
 { #category : #hooks }
-RSZoomToFitCanvas >> cameraFor: aCanvas [
+RSZoomToFitCanvasInteraction >> cameraFor: aCanvas [
 	^ RSConfigurableCamera new
 		canvas: aCanvas;
 		zoomInteraction: self;
@@ -58,7 +58,7 @@ RSZoomToFitCanvas >> cameraFor: aCanvas [
 ]
 
 { #category : #hooks }
-RSZoomToFitCanvas >> onShape: aCanvas [
+RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
 	aCanvas when: RSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
 	aCanvas camera: (self cameraFor: aCanvas). 
@@ -67,18 +67,18 @@ RSZoomToFitCanvas >> onShape: aCanvas [
 ]
 
 { #category : #'private - events' }
-RSZoomToFitCanvas >> processKeyUp: evt [
+RSZoomToFitCanvasInteraction >> processKeyUp: evt [
 	evt keyName = #SPACE ifFalse:  [ ^ self ].
 	self animatedZoomToFit: evt canvas
 ]
 
 { #category : #rendering }
-RSZoomToFitCanvas >> renderLegendOn: lb [
+RSZoomToFitCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Space' description: 'To zoom to fit the view'.
 ]
 
 { #category : #'zoom animation' }
-RSZoomToFitCanvas >> zoomToFitIfNecessary: aCanvas [
+RSZoomToFitCanvasInteraction >> zoomToFitIfNecessary: aCanvas [
 	self configuration shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
 	aCanvas zoomToFit
 ]

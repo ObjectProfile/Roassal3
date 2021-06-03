@@ -36,13 +36,13 @@ Here is an example:
 	v open setLabel: 'Horizontal Tree'
 "
 Class {
-	#name : #RSKeepBorderWidthRatio,
+	#name : #RSKeepBorderWidthRatioInteraction,
 	#superclass : #RSAbstractScaleInteraction,
 	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #hooks }
-RSKeepBorderWidthRatio >> onShape: aShape [
+RSKeepBorderWidthRatioInteraction >> onShape: aShape [
 	| width |
 	aShape isInACanvas ifFalse: [ self error: 'aShape needs to be part of one canvas' ].
 	width := aShape border width.

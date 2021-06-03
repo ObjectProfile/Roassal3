@@ -139,7 +139,7 @@ RSLayoutExamples >> example06TreeLayout [
 	eb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -173,7 +173,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		doNotUseProgressBar; 
 		charge: -350;
 		on: c nodes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	c zoomToFit.
 	^ c
 ]
@@ -198,7 +198,7 @@ RSLayoutExamples >> example08HorizontalTree [
 			shapes: (RSGroup with: box with: lbl );
 			yourself ].
 	c addAll: shapes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	RSLineBuilder orthoHorizontal
 		markerEnd: (RSMarker new 
 			offset: 2;
@@ -229,7 +229,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	RSForceBasedLayout new 
 		charge: -500; 
 		on: c nodes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -255,7 +255,7 @@ RSLayoutExamples >> example10Locate [
 		left;
 		stick: e2 on: e1.
 	canvas addAll:{e1. e2}.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -281,7 +281,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 			yourself  ].
 	RSGridLayout on: shapes.
 	canvas addAll: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -295,7 +295,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	RSLineBuilder line
 		canvas: c;
 		connectFrom: [ :v | v // 2 ].
-	c @ RSForceLayoutStepping.
+	c @ RSForceLayoutSteppingInteraction.
 	^ c
 ]
 
@@ -316,11 +316,11 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	stepping layout
 		length: 80;
 		charge: -300.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	canvas @ stepping.
 	colors := RSColorPalette sequential pubu9.
 	newBox := [ :quad :index |
@@ -390,7 +390,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 	RSTreeLayout on: c nodes.
 
 	"Making sure we have zooming"
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c 
 ]
 
@@ -418,7 +418,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 
 	RSTreeLayout on: c nodes.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c 
 ]
 
@@ -440,7 +440,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	
 	(layout := stepping layout)
 		length: 80;
@@ -449,7 +449,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	canvas edges do: [ :edge | 
 		(layout mockEdgeAt: edge) 
 			length: (edge model key + edge model value) * 10 ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	
 	^ canvas
 ]
@@ -498,7 +498,7 @@ RSLayoutExamples >> example18Cluster [
 			yourself.
 		]).
 	RSGridLayout new gapSize: 20; on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -523,7 +523,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 		shapes: shapes;
 		normalize: [ :cls | cls numberOfMethods + 5 ].
 	RSTreeLayout on: shapes.
-	^ c @ RSCanvasController @ RSHierarchyPackerInteraction
+	^ c @ RSCanvasControllerInteraction @ RSHierarchyPackerInteraction
 ]
 
 { #category : #layouts }
@@ -611,7 +611,7 @@ RSLayoutExamples >> example20FlowLayout [
 	canvas showEncompassingRectangles.
 	RSVerticalLineLayout new gapSize: 3; on: canvas fixedShapes.
 	canvas fixedShapes translateBy: 7.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -677,6 +677,6 @@ RSLayoutExamples >> example22TreeLayoutEllipses [
 	eb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]

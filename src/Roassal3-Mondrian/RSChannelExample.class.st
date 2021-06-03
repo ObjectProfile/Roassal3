@@ -41,7 +41,7 @@ RSChannelExample >> example3 [
 		channel build.
 	].
 	"-------"
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	c open
 ]
 
@@ -138,7 +138,7 @@ RSChannelExample >> exampleBasic2 [
 	channel build.
 	"-------"
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	c open
 ]
 
@@ -224,6 +224,6 @@ RSChannelExample >> exampleBasic3 [
 	
 	
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	c open
 ]

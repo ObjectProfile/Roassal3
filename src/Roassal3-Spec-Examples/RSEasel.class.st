@@ -37,7 +37,7 @@ RSEasel class >> open [
 
 { #category : #initialization }
 RSEasel >> configure: canvas [
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	canvas color: self theme backgroundColor.
 ]
 

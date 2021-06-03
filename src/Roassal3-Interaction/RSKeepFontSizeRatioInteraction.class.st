@@ -2,13 +2,13 @@
 Interaction for RSLabels, modify the font size based on the scale of the canvas
 "
 Class {
-	#name : #RSKeepFontSizeRatio,
+	#name : #RSKeepFontSizeRatioInteraction,
 	#superclass : #RSAbstractScaleInteraction,
 	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #hooks }
-RSKeepFontSizeRatio >> onShape: aLabel [
+RSKeepFontSizeRatioInteraction >> onShape: aLabel [
 	| fontSize |
 	aLabel isInACanvas ifFalse: [ self error: 'add this label to a canvas first' ].
 	fontSize := aLabel fontSize.

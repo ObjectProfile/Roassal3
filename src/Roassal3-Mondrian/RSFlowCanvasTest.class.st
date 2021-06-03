@@ -21,7 +21,7 @@ RSFlowCanvasTest >> setUp [
 			shapes: shapes;
 			normalize: #yourself.
 		RSFlowLayout on: shapes.
-		canvas @ RSCanvasController.
+		canvas @ RSCanvasControllerInteraction.
 	].
 	
 ]

@@ -23,7 +23,7 @@ RSPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
 { #category : #initialization }
 RSPopupDecoration >> initialize [
 	super initialize.
-	popup := RSPopupChart new
+	popup := RSChartPopup new
 		chartPopupBuilder: RSSimpleChartPopupBuilder new;
 		markersPopupBuilder: RSSimpleMarkerPopupBuilder new;
 		yourself.

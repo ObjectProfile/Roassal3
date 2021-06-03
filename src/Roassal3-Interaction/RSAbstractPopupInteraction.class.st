@@ -4,7 +4,7 @@ I defined basic behaviors about popups in general, my subclasses needs to overri
 *
 "
 Class {
-	#name : #RSAbstractPopup,
+	#name : #RSAbstractPopupInteraction,
 	#superclass : #RSInteraction,
 	#classVars : [
 		'removeEvents'
@@ -13,25 +13,25 @@ Class {
 }
 
 { #category : #accessing }
-RSAbstractPopup class >> activationEvent [
+RSAbstractPopupInteraction class >> activationEvent [
 	^ RSMouseMove
 ]
 
 { #category : #accessing }
-RSAbstractPopup class >> removeEvents [
+RSAbstractPopupInteraction class >> removeEvents [
 	^ removeEvents ifNil: [ 
 		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
 ]
 
 { #category : #'instance creation' }
-RSAbstractPopup class >> reset [
+RSAbstractPopupInteraction class >> reset [
 	<script: 'self reset'>
 	super reset.
 	removeEvents := nil.
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> createOrGetPopupOn: aShape event: event [
+RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	"Create a popup and register it"
 	| prop popupShape key |
 	prop := event canvas properties.
@@ -55,12 +55,12 @@ RSAbstractPopup >> createOrGetPopupOn: aShape event: event [
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> createPopupFor: aShape event: event [
+RSAbstractPopupInteraction >> createPopupFor: aShape event: event [
 	^ self subclassResponsibility
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> onShape: aShape [
+RSAbstractPopupInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
 	
 	self registerRemoveEventsOn: aShape.
@@ -73,12 +73,12 @@ RSAbstractPopup >> onShape: aShape [
 ]
 
 { #category : #accessing }
-RSAbstractPopup >> popupKey [
+RSAbstractPopupInteraction >> popupKey [
 	^ #popup
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> registerRemoveEventsOn: aShape [
+RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
 	self class removeEvents do: [ :clsEvent | 
 		aShape 
 			when: clsEvent
@@ -86,12 +86,12 @@ RSAbstractPopup >> registerRemoveEventsOn: aShape [
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> releasePopup: popup [
+RSAbstractPopupInteraction >> releasePopup: popup [
 	self subclassResponsibility
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> removePopupOn: evt [
+RSAbstractPopupInteraction >> removePopupOn: evt [
 	| att popup key |
 	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
 	If the element is not part of a view, then there is nothing to remove, so we exit early."
@@ -106,6 +106,6 @@ RSAbstractPopup >> removePopupOn: evt [
 ]
 
 { #category : #hooks }
-RSAbstractPopup >> translatePopup: popup event: evt [
+RSAbstractPopupInteraction >> translatePopup: popup event: evt [
 	self subclassResponsibility
 ]

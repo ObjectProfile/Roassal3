@@ -189,7 +189,7 @@ RSHighlightableExamples >> example06IterateNext [
 		start;
 		yourself.
 	canvas newAnimation repeat onStepDo: [ :t | layout step ].
-	numbers @ (RSDraggableForce new layout: layout).
+	numbers @ (RSDraggableForceInteraction new layout: layout).
 
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightableInteraction red.
@@ -257,7 +257,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 
 	selectedButton doHighlight: canvas nodes first.
 	RSVerticalLineLayout on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 	
 
@@ -340,7 +340,7 @@ RSHighlightableExamples >> example08DependendMethods [
 		when: RSUnHighlightEvent do: [ :evt | 
 			(canvas propertyAt: #methods ifAbsent: [ #() ]) do:#remove ].
 
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^  canvas 
 ]
 
@@ -400,13 +400,13 @@ RSHighlightableExamples >> example10ElasticBox [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	high := RSHighlightableInteraction red.
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];
 		when: RSSelectionChangedEvent do: [ :evt |
 			high doHighlightShapes: evt selectedShapes ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	elastic targetShapes: canvas shapes.
 	canvas @ elastic.
 	^ canvas
@@ -434,7 +434,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 	RSClusterLayout on: shapes.
 	high := RSHighlightableInteraction red.
 	selectedShapes := #().
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];
@@ -449,7 +449,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 			ifFalse: [ evt shape translateBy: d ].
 		
 		evt signalUpdate ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	elastic targetShapes: canvas nodes.
 	canvas @ elastic.
 	^ canvas

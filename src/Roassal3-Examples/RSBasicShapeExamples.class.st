@@ -622,7 +622,7 @@ RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 		to: s2;
 		yourself).
 	c nodes @ RSDraggableInteraction.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -700,7 +700,7 @@ RSBasicShapeExamples >> example34PaletteVisualization [
 			left; outer; stick: label on: compo.
 	].
 	RSVerticalLineLayout on: composites.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 ]
 
@@ -766,7 +766,7 @@ RSBasicShapeExamples >> example36PolygonAndCanvas [
 	canvas addShape: (RSPolygon new
 		points: coords;
 		color: Color black).
-	int := RSCanvasController new.
+	int := RSCanvasControllerInteraction new.
 	int configuration
 		minScale: 1000;
 		maxScale: 10000.
@@ -876,7 +876,7 @@ RSBasicShapeExamples >> example38Interaction [
 				size: 10;
 				yourself).
 	canvas add: com.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -932,7 +932,7 @@ RSBasicShapeExamples >> example40ColorScale [
 	    shapes: shapes;
 	    connectFrom: #superclass.
 	RSTreeLayout on: shapes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
