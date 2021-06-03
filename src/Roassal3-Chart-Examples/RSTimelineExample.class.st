@@ -69,7 +69,7 @@ RSTimelineExample >> example02Labeled [
 		p bars
 			@ (RSPopup text: [ :assoc | 
 				(names at: index), String cr, assoc asString ]);
-			@ (RSLabeled new 
+			@ (RSLabeledInteraction new 
 				text: [ names at: index ];
 				lowColor: Color black;
 				highlightable;

@@ -12,7 +12,7 @@ RSFlowCanvasExample >> example01 [
 	f when: SmallInteger visualize: [ :canvas :number |
 		shapes := RSCircle models: (1 to: number).
 		canvas addAll: shapes.
-		shapes @ RSLabeled @ RSPopup @ RSDraggable.
+		shapes @ RSLabeledInteraction @ RSPopup @ RSDraggable.
 		RSNormalizer size
 			shapes: shapes;
 			normalize: #yourself.

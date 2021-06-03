@@ -636,7 +636,7 @@ RSBasicShapeExamples >> example32RotateShapeByMouse [
 		draggable;
 		yourself.
 	c add: s.
-	s @ RSRotated.
+	s @ RSRotatedInteraction.
 	^ c
 ]
 

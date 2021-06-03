@@ -275,7 +275,7 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
-	label := RSLabeled new highlightable.
+	label := RSLabeledInteraction new highlightable.
 	padding := 10 asMargin.
 	high := RSHighlightable new.
 	arrow := RSShapeFactory arrowedLine

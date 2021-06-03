@@ -87,7 +87,7 @@ RSBaselineCalypso >> border [
 RSBaselineCalypso >> buildLegendOn: canvas [
 	| b miniGraph interaction arrow |
 	miniGraph := RSComposite new.
-	interaction  := RSLabeled new.
+	interaction  := RSLabeledInteraction new.
 	interaction location middle.
 	miniGraph add: (RSEllipse new size: 20; model: 'A').
 	miniGraph add: (RSEllipse new size: 20; model: 'B').
@@ -303,20 +303,20 @@ RSBaselineCalypso >> shapeFor: assoc [
 { #category : #'building - menus' }
 RSBaselineCalypso >> showHideNames: evt [
 	| label textColor |
-	label := evt canvas nodes first propertyAt: #RSLabeled.
+	label := evt canvas nodes first propertyAt: #RSLabeledInteraction.
 	textColor :=  Smalltalk ui theme textColor.
 	label ifNil: [ 
 		| labeled |
-		labeled := RSLabeled new highlightable.
+		labeled := RSLabeledInteraction new highlightable.
 		labeled shapeBuilder: [ :m | RSLabel new color: textColor; text: m ].
 		labeled lowColor: textColor translucent.
 		evt canvas nodes @ labeled.
 		evt shape text: 'Hide names' ]
 	ifNotNil: [ 
 		evt canvas nodes do: [ :node | 
-			(node propertyAt: #RSLabeled) remove.
-			node removeKey: #RSLabeled.
-			node removeInteractionIfPresent: RSLabeled. ].
+			(node propertyAt: #RSLabeledInteraction) remove.
+			node removeKey: #RSLabeledInteraction.
+			node removeInteractionIfPresent: RSLabeledInteraction. ].
 		evt shape text: 'Show names' ].
 	evt signalUpdate
 ]
