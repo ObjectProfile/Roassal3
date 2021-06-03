@@ -3,7 +3,7 @@ I define a new basic highlight interaction
 "
 Class {
 	#name : #RSSunburstFadeInteraction,
-	#superclass : #RSHighlightable,
+	#superclass : #RSHighlightableInteraction,
 	#instVars : [
 		'still',
 		'builder'

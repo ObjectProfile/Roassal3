@@ -200,7 +200,7 @@ RSBaselineCalypso >> dependenciesOf: name [
 { #category : #building }
 RSBaselineCalypso >> highlightable [
 	^ high ifNil: [ 
-		high := RSHighlightable new withOutgoingEdges.
+		high := RSHighlightableInteraction new withOutgoingEdges.
 		high highlightBorder: (RSBorder new color: Smalltalk ui theme selectionColor; width: 2).
 		high ]
 ]
@@ -208,7 +208,7 @@ RSBaselineCalypso >> highlightable [
 { #category : #'building - menus' }
 RSBaselineCalypso >> highlightableMenu [
 	^ highMenu ifNil: [ 
-		highMenu := RSHighlightable new.
+		highMenu := RSHighlightableInteraction new.
 		highMenu 
 			when: RSHighlightEvent do: [ :evt |
 				evt shape color: Color blue; underline.

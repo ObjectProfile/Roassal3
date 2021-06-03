@@ -312,7 +312,7 @@ RSLegendExamples >> example12OnPopup [
 			padding: 5;
 			yourself.
 		 ].
-	shapes @ interaction; @ popup; @ RSDraggable.
+	shapes @ interaction; @ popup; @ RSDraggableInteraction.
 	RSTreeLayout on: shapes.
 	canvas addAll: shapes.
 	canvas @ RSCanvasController.

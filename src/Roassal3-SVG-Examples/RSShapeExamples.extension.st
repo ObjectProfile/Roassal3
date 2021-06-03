@@ -210,7 +210,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
@@ -257,7 +257,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
