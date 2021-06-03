@@ -57,7 +57,7 @@ RSFlowCanvasTest >> testNestedNodes [
 
 	self assert: nb equals: 0.
 	
-	box announce: RSMouseClick.
+	box announce: RSMouseClickEvent.
 	self assert: nb equals: 10.
 ]
 

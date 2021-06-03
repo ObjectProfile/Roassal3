@@ -151,7 +151,7 @@ RSElasticBox >> initialize [
 
 { #category : #public }
 RSElasticBox >> leftRight [
-	events := { RSMouseLeftDragStart. RSMouseRightDragStart }.
+	events := { RSMouseLeftDragStartEvent. RSMouseRightDragStartEvent }.
 ]
 
 { #category : #public }
@@ -167,8 +167,8 @@ RSElasticBox >> onShape: aCanvas [
 	aCanvas
 		when: self dragStartEvent send: #enableDrag: to: self;
 		when: self boxStartEvent send: #disableDrag: to: self;
-		when: RSMouseDragging send: #processDrag: to: self;
-		when: RSMouseDragEnd send: #processDragEnd: to: self
+		when: RSMouseDraggingEvent send: #processDrag: to: self;
+		when: RSMouseDragEndEvent send: #processDragEnd: to: self
 ]
 
 { #category : #announcer }
@@ -192,7 +192,7 @@ RSElasticBox >> processDragEnd: event [
 
 { #category : #public }
 RSElasticBox >> rightLeft [
-	events := { RSMouseRightDragStart. RSMouseLeftDragStart }.
+	events := { RSMouseRightDragStartEvent. RSMouseLeftDragStartEvent }.
 ]
 
 { #category : #accessing }

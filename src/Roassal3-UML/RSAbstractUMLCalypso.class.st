@@ -13,8 +13,8 @@ Class {
 { #category : #building }
 RSAbstractUMLCalypso >> addClassInteractions: builder [
 	builder canvas nodes 
-		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
-		when: RSMouseRightClick do: [ :evt | 
+		when: RSMouseDoubleClickEvent do: [ :evt | evt shape model browse ];
+		when: RSMouseRightClickEvent do: [ :evt | 
 			| menu newContext tool |
 			tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
 			tool 
@@ -49,7 +49,7 @@ RSAbstractUMLCalypso >> build [
 	morph := canvas createMorph.
 	morph onAnnouncement: MorphDeleted 
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
-	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus].
+	canvas when: RSMouseEnterEvent do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 

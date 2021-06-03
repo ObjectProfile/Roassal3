@@ -81,15 +81,15 @@ RSScrollBarsCanvas >> initializeShape [
 		size: 10;
 		noPaint;
 		isFixed: true;
-		when: RSMouseDragging do: [:evt| self moveScroll: evt ];
-		when: RSMouseEnter do: [ :evt| | shape |
+		when: RSMouseDraggingEvent do: [:evt| self moveScroll: evt ];
+		when: RSMouseEnterEvent do: [ :evt| | shape |
 			self updateScrollbars.
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: (self scrollColor alpha: 1) ].
 			animation stop.
 			hideAnimation stop ];
-		when: RSMouseLeave do: [ :evt| | shape |
+		when: RSMouseLeaveEvent do: [ :evt| | shape |
 			shape := evt shape.
 			shape color isTransparent 
 				ifFalse: [ shape color: self scrollColor ].

@@ -140,14 +140,14 @@ RSSunburstExamples >> example07FadeInteraction [
 	label isFixed: true.
 
 	 sb shapes 
-		when: RSMouseEnter do: [ :evt | 
+		when: RSMouseEnterEvent do: [ :evt | 
 			| path |
 			path := (interaction pathFor: evt shape) reverse.
 			path := String streamContents: [:s | 
 				path do: [ :node | s << node model asString ] separatedBy: [ s << '>>' ] ].
 			label text: path; signalUpdate.
 			label position: label extent / 2 ];
-		when: RSMouseLeave do: [ :evt |
+		when: RSMouseLeaveEvent do: [ :evt |
 			label text: '' ].
 	sb shapes @ interaction.
 	sb canvas add: label.
@@ -207,11 +207,11 @@ RSSunburstExamples >> example08SunburstExplorer [
 		
 		newShapes := sb shapes.
 		first := newShapes first.
-		first when: RSMouseClick do: [ :evt | | cls |
+		first when: RSMouseClickEvent do: [ :evt | | cls |
 			cls := evt shape model superclass.
 			cls = Object ifFalse: [ newData value: cls ] ].
 		(newShapes allButFirst reject: #isSLeaf)
-			when: RSMouseClick do: [ :evt | newData value: evt shape model ].
+			when: RSMouseClickEvent do: [ :evt | newData value: evt shape model ].
 		
 		newShapes size < lastShapes size ifTrue: [ 
 			newShapes do: [:new | | old |

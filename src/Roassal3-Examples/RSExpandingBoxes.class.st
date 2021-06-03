@@ -26,7 +26,7 @@ RSExpandingBoxes >> initialize [
 	color := NSScale category20b.
 	base := RSComposite new.
 	base popup.
-	base when: RSMouseClick do: [ :evt | self processEvent: evt ].
+	base when: RSMouseClickEvent do: [ :evt | self processEvent: evt ].
 	border := RSBorder new.
 ]
 

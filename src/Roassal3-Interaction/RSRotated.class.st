@@ -49,7 +49,7 @@ RSRotated >> initialize [
 RSRotated >> onShape: aShape [
 	targetShape := aShape.
 	aShape parent
-		when: RSMouseLeftDragStart do: [ :evt|  self dragStart: evt ];
-		when: RSMouseDragging do: [ :evt | self dragging: evt ];
-		when: RSMouseDragEnd do: [ :evt | self dragEnd: evt ].
+		when: RSMouseLeftDragStartEvent do: [ :evt|  self dragStart: evt ];
+		when: RSMouseDraggingEvent do: [ :evt | self dragging: evt ];
+		when: RSMouseDragEndEvent do: [ :evt | self dragEnd: evt ].
 ]

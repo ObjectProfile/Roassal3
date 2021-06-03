@@ -85,7 +85,7 @@ RSFlowCanvas >> setOnCanvas: aCanvas [
 	self assert: [ aCanvas class == RSCanvas ] description: 'Must provide a canvas'.
 	canvas := aCanvas.
 	relevantShapes := (aCanvas deepNodes select: [ :s | s model notNil ]) asGroup.
-	relevantShapes when: RSMouseClick do: [ :evt |
+	relevantShapes when: RSMouseClickEvent do: [ :evt |
 		self clickOnModel: evt shape model ].
 	
 
@@ -101,7 +101,7 @@ RSFlowCanvas >> updateBreadcrumbs [
 	   lbl := RSLabel text: obj asString, '/ ' model: obj.
 		breadcrumbsLabels add: lbl.
 		lbl @ RSHighlightable red. 
-		lbl when: RSMouseClick do: [ :evt | 
+		lbl when: RSMouseClickEvent do: [ :evt | 
 			| i |
 			i := breadcrumbsLabels indexOf: lbl.
 			breadcrumbs := breadcrumbs first: i - 1.

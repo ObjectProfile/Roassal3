@@ -107,8 +107,8 @@ RSLabeled >> createLabel: aShape [
 		targetLabel color: c.
 		label signalUpdate ].
 	aShape 
-		when: RSMouseEnter do: [ set value: color ];
-		when: RSMouseLeave do: [ set value: lowColor ];
+		when: RSMouseEnterEvent do: [ set value: color ];
+		when: RSMouseLeaveEvent do: [ set value: lowColor ];
 		when: RSShapeRemovedEvent do: [ label remove ].
 	^ label
 ]

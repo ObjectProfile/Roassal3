@@ -680,13 +680,13 @@ RSDelaunayExample >> run [
 	"animation for girls"
 	(canvas animationFrom: { self anime1. self anime2. self anime3 }) repeat.
 	
-	canvas when: RSMouseDragging do: [ :evt | 
+	canvas when: RSMouseDraggingEvent do: [ :evt | 
 		allParticles add: (RSParticleD new
 			position: evt position;
 			level: 5;
 			decay: 0.85;
 			yourself) ].
-	canvas when: RSKeyDown do: [ :evt| useFill := useFill not ].
+	canvas when: RSKeyDownEvent do: [ :evt| useFill := useFill not ].
 	canvas open
 		setLabel: 'Delaunay and Chelmico'
 ]
@@ -700,7 +700,7 @@ RSDelaunayExample >> run2 [
 	canvas clearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	maxLevel := 3.
-	canvas when: RSMouseDragging do: [ :evt | 
+	canvas when: RSMouseDraggingEvent do: [ :evt | 
 		allParticles add: (RSParticleD new
 			position: evt position;
 			maxLevel: 3; 

@@ -111,7 +111,7 @@ RSForceBuilder >> particlesSize: anInteger [
 RSForceBuilder >> renderIn: aCanvas [
 	aCanvas color: colorGenerator backgroundColor.
 	self reset.
-	aCanvas when: RSMouseClick send: #reset to: self.
+	aCanvas when: RSMouseClickEvent send: #reset to: self.
 	aCanvas newAnimation repeat; onStepDo: [ self update: self force ].
 ]
 

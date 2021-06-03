@@ -2,7 +2,7 @@
 Event for mouse up right
 "
 Class {
-	#name : #RSMouseUpRight,
-	#superclass : #RSMouseUp,
+	#name : #RSMouseUpRightEvent,
+	#superclass : #RSMouseUpEvent,
 	#category : #'Roassal3-Events'
 }

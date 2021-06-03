@@ -131,7 +131,7 @@ RSBaselineCalypso >> buildMenuOn: canvas [
 			text: name;
 			isFixed: true;
 			@ self highlightableMenu;
-			when: RSMouseClick send: action asSymbol to: self;
+			when: RSMouseClickEvent send: action asSymbol to: self;
 			yourself.
 		label when: RSExtentChangedEvent do: [ :evt |
 			self layoutMenu: menus.
@@ -282,7 +282,7 @@ RSBaselineCalypso >> shapeFor: assoc [
 		model: assoc key;
 		yourself.
 	shape
-		when: RSMouseDoubleClick
+		when: RSMouseDoubleClickEvent
 		do: [ :evt | (self class environment at: evt shape model) browse ].
 	assoc value ifNil: [ 
 		shape @ self notLoadedPopup.

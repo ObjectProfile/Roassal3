@@ -30,13 +30,13 @@ RSTransformableTest >> testBasic02 [
 	interaction := RSTransformable new.
 	shapes @ interaction .
 	s := shapes first.
-	s announce: RSMouseLeftClick new.
+	s announce: RSMouseLeftClickEvent new.
 	self assert: canvas shapes size > shapes size.
 	handles := canvas propertyAt: interaction key.
 	self assert: handles notNil.
 	self assert: handles isNotEmpty.
 	
-	canvas announce: RSMouseClick new.
+	canvas announce: RSMouseClickEvent new.
 	
 	self assert: canvas shapes size equals: shapes size.
 	handles := canvas propertyAt: interaction key.
@@ -83,11 +83,11 @@ RSTransformableTest >> testDrag [
 	interaction := RSTransformable new.
 	shapes @ interaction .
 	s := shapes first.
-	s announce: RSMouseLeftClick new.
+	s announce: RSMouseLeftClickEvent new.
 	self assert: (canvas propertyAt: interaction key) notNil.
-	s announce: RSMouseDragStart new.
+	s announce: RSMouseDragStartEvent new.
 	self assert: (canvas propertyAt: interaction key) isNil.
-	s announce: RSMouseDragEnd new.
+	s announce: RSMouseDragEndEvent new.
 	self assert: (canvas propertyAt: interaction key) notNil.
 ]
 
@@ -97,9 +97,9 @@ RSTransformableTest >> testDrag2 [
 	interaction := RSTransformable new.
 	shapes @ interaction .
 	s := shapes first.
-	s announce: RSMouseDragStart new.
+	s announce: RSMouseDragStartEvent new.
 	self assert: (canvas propertyAt: interaction key) isNil.
-	s announce: RSMouseDragEnd new.
+	s announce: RSMouseDragEndEvent new.
 	self assert: (canvas propertyAt: interaction key) isNil.
 ]
 
@@ -109,7 +109,7 @@ RSTransformableTest >> testUpdateShape [
 	interaction := RSTransformable new.
 	shapes @ interaction .
 	s := shapes first.
-	s announce: RSMouseLeftClick new.
+	s announce: RSMouseLeftClickEvent new.
 	rect := s encompassingRectangle.
 	handles := (canvas propertyAt: interaction key).
 	self assert: handles first class equals: RSPolygon.

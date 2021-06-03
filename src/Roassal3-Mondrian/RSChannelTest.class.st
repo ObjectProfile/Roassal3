@@ -71,15 +71,15 @@ RSChannelTest >> testBasic [
 	"-------"
 
 	self assert: mondrianNodes first color equals: Color gray.
-	mondrianNodes first announce: RSMouseEnter.
+	mondrianNodes first announce: RSMouseEnterEvent.
 	self assert: mondrianNodes first color equals: Color gray.
 	
-	oddLabel announce: RSMouseEnter.
+	oddLabel announce: RSMouseEnterEvent.
 	self assert: mondrianNodes first color equals: Color blue.
-	oddLabel announce: RSMouseLeave.
+	oddLabel announce: RSMouseLeaveEvent.
 	self assert: mondrianNodes first color equals: Color gray.
 
-	oddLabel announce: RSMouseClick.
+	oddLabel announce: RSMouseClickEvent.
 ]
 
 { #category : #tests }
@@ -133,19 +133,19 @@ RSChannelTest >> testBasicWithCallbacks [
 	"-------"
 
 	self assert: mondrianNodes first color equals: Color gray.
-	mondrianNodes first announce: RSMouseEnter.
+	mondrianNodes first announce: RSMouseEnterEvent.
 	self assert: mondrianNodes first color equals: Color gray.
 
 	
-	oddLabel announce: RSMouseEnter.
+	oddLabel announce: RSMouseEnterEvent.
 	self assert: mondrianNodes first color equals: Color blue.
-	oddLabel announce: RSMouseLeave.
+	oddLabel announce: RSMouseLeaveEvent.
 	self assert: mondrianNodes first color equals: Color gray.
 
 	self assert: value isEmpty.
-	oddLabel announce: RSMouseClick.
+	oddLabel announce: RSMouseClickEvent.
 	self assert: value asArray equals: #('ONOdd').
-	oddLabel announce: RSMouseClick.
+	oddLabel announce: RSMouseClickEvent.
 	self assert: value asArray equals: #('ONOdd' 'OFFOdd').
 ]
 
@@ -182,7 +182,7 @@ RSChannelTest >> testLocationsOfUnderlines [
 	self assert: (channel1 getAllMarksFrom: box) isEmpty.
 	self assert: box properties size equals: 0.
 
-	lbl1 announce: RSMouseClick.
+	lbl1 announce: RSMouseClickEvent.
 	self assert: c numberOfShapes equals: 5.
 
 	self assert: (channel1 getAllMarksFrom: box) size equals: 1.
@@ -192,7 +192,7 @@ RSChannelTest >> testLocationsOfUnderlines [
 	self assert: markBlue color equals: Color blue.
 	self assert: (channel1 getAllMarksFrom: box) anyOne equals: markBlue.
 
-	lbl2 announce: RSMouseClick.
+	lbl2 announce: RSMouseClickEvent.
 	self assert: c numberOfShapes equals: 7.
 	self assert: box properties size equals: 2.
 	markRed := (box properties values copyWithout: markBlue) anyOne.

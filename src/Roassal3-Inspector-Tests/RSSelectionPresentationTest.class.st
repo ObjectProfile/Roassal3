@@ -17,7 +17,7 @@ RSSelectionPresentationTest >> testBasic [
 	c @ RSCanvasController.
 
 	"make sure there is no error when clicking on an element, while being outside the GTInspector"
-	c nodes first announce: RSMouseClick
+	c nodes first announce: RSMouseClickEvent
 
 ]
 
@@ -39,5 +39,5 @@ RSSelectionPresentationTest >> testWithNoCanvas [
 	| shapes |
 	shapes := (1 to: 100) collect: [ :v | RSBox new model: v ] as: RSGroup.
 	shapes @ RSSelectionPresentation.
-	shapes first announce: RSMouseClick
+	shapes first announce: RSMouseClickEvent
 ]

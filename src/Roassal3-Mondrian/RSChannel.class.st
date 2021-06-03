@@ -18,17 +18,17 @@ Class {
 { #category : #public }
 RSChannel >> build [
 
-	inputGroup when: RSMouseEnter do: [ :evt | 
+	inputGroup when: RSMouseEnterEvent do: [ :evt | 
 		self doHighlight.
 		evt signalUpdate ].
 	inputGroup @ (RSHighlightable new highlightColor: self color).
 
-	inputGroup when: RSMouseLeave do: [ :evt | 
+	inputGroup when: RSMouseLeaveEvent do: [ :evt | 
 		self doUnhighlight.
 		evt signalUpdate ].
 
 	isClickable ifFalse: [ ^ self ].
-	inputGroup when: RSMouseClick do: [ :evt | 
+	inputGroup when: RSMouseClickEvent do: [ :evt | 
 		isClicked
 			ifTrue: [ self unmark: evt shape. 
 						self doUnmark. 	

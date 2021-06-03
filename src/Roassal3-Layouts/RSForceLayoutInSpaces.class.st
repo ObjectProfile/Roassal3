@@ -120,7 +120,7 @@ RSForceLayoutInSpaces >> fill: space with: aCollection [
 		start.
 	aCollection do: [ :s | s propertyAt: #layout put: layout ].
 	aCollection @ (RSDraggableForce new layout: layout).
-	aCollection do:[ :s | s when: RSMouseDragEnd send: #dragEnd: to: self ]
+	aCollection do:[ :s | s when: RSMouseDragEndEvent send: #dragEnd: to: self ]
 
 ]
 

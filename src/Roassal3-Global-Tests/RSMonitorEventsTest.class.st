@@ -18,8 +18,8 @@ RSMonitorEventsTest >> testBasic [
 		timeStamp := evt timeStamp.
 	].
 	
-	canvas announce: RSMouseLeftClick new.
-	self assert: eventClass equals: RSMouseLeftClick.
+	canvas announce: RSMouseLeftClickEvent new.
+	self assert: eventClass equals: RSMouseLeftClickEvent.
 	self assert: timeStamp isNumber.
 	
 	monitor unRegister.

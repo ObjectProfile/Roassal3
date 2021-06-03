@@ -211,15 +211,15 @@ RSHighlightableExamples >> example06IterateNext [
 		outer; right; offset: 70@ -200.
 	numbers do: [ :e | 
 		(legendBuilder text: e model) model: e model  ].
-	numbers, legendBuilder shapes when: RSMouseClick do: [ :evt | highlightBlock value: evt shape model ].
+	numbers, legendBuilder shapes when: RSMouseClickEvent do: [ :evt | highlightBlock value: evt shape model ].
 	legendBuilder build.
 
 	"Unhighlight all when clicking on background."
-	canvas when: RSMouseClick do: unhighlightAllBlock.
+	canvas when: RSMouseClickEvent do: unhighlightAllBlock.
 
 	"Highlight next number when N key is pressed. Initial is nothing"
 	selectedNumber := 0.
-	canvas when: RSKeyUp do: [ :evt |
+	canvas when: RSKeyUpEvent do: [ :evt |
 		evt keyName = #N ifTrue: [
 			selectedNumber := (selectedNumber \\ numbers size) + 1.
 			highlightBlock value: selectedNumber ] ].
@@ -249,7 +249,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 			@ mouseOver; 
 			extent: 120@30;
 			cornerRadius: 3;
-			when: RSMouseClick do: [ :evt |
+			when: RSMouseClickEvent do: [ :evt |
 				mouseOver doUnhighlight: evt shape.
 				selectedButton doHighlight: evt shape.
 				evt signalUpdate ];
@@ -441,7 +441,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 		when: RSSelectionChangedEvent do: [ :evt |
 			high doHighlightShapes: evt selectedShapes ];
 		when: RSSelectionEndEvent do: [:evt | selectedShapes := evt selectedShapes ].
-	canvas nodes when: RSMouseDragging do: [ :evt |
+	canvas nodes when: RSMouseDraggingEvent do: [ :evt |
 		| d |
 		d := evt camera distanceFromPixelToSpace: evt step.
 		(selectedShapes includes: evt shape)

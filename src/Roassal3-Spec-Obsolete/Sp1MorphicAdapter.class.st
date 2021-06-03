@@ -36,7 +36,7 @@ Sp1MorphicAdapter >> basicApplyScript [
 	self model script value: canvas.
 	self widgetDo: #startStepping.
 	
-	canvas when: RSMouseEnter do: [ widget takeKeyboardFocus].
+	canvas when: RSMouseEnterEvent do: [ widget takeKeyboardFocus].
 ]
 
 { #category : #initialization }

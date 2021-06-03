@@ -22,13 +22,13 @@ RSConnectionTest >> testBasic [
 	].
 	
 	self assert: connection numberOfCreatedCanvases equals: 0.
-	(c canvas shapeFromModel: 1) announce: RSMouseClick.
+	(c canvas shapeFromModel: 1) announce: RSMouseClickEvent.
 	self assert: connection numberOfCreatedCanvases equals: 1.
 	
-	(c canvas shapeFromModel: 1) announce: RSMouseClick.
+	(c canvas shapeFromModel: 1) announce: RSMouseClickEvent.
 	self assert: connection numberOfCreatedCanvases equals: 2.
 	
-	(c canvas shapeFromModel: 91) announce: RSMouseClick.
+	(c canvas shapeFromModel: 91) announce: RSMouseClickEvent.
 	self assert: connection numberOfCreatedCanvases equals: 3.
 	
 	connection deleteAllWindows.

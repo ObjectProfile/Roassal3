@@ -25,7 +25,7 @@ RSPopupTest >> testMultiline [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
 	
-	shapes last announce: RSMouseMove.
+	shapes last announce: RSMouseMoveEvent.
 	self assert: canvas numberOfShapes equals: shapes size.
 	self assert: canvas fixedShapes size equals: 1.
 	self assert: canvas fixedShapes first shapes second shapes size equals: 2
@@ -33,7 +33,7 @@ RSPopupTest >> testMultiline [
 
 { #category : #tests }
 RSPopupTest >> testNoPopup [
-	shapes first announce: RSMouseEnter.
+	shapes first announce: RSMouseEnterEvent.
 	self assert: canvas numberOfShapes equals: shapes size.
 ]
 
@@ -57,15 +57,15 @@ RSPopupTest >> testPopup [
 
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 3.
-	shapes first announce: RSMouseMove.
+	shapes first announce: RSMouseMoveEvent.
 	self assert: shapes first model equals: 1.
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 4.
 	self assert: c fixedShapes last children last text equals: '1'.
 	
-	shapes first announce: RSMouseLeave.
+	shapes first announce: RSMouseLeaveEvent.
 	
-	shapes second announce: RSMouseMove.
+	shapes second announce: RSMouseMoveEvent.
 	self assert: c fixedShapes size equals: 4.
 	self assert: c fixedShapes last children last text equals: '2'.
 ]
@@ -75,7 +75,7 @@ RSPopupTest >> testPopupOnElementNotAddedToAView [
 	| b |
 	b := RSBox new.
 	b @ RSPopup.
-	b announce: RSMouseEnter.
+	b announce: RSMouseEnterEvent.
 	"Should not produce an error"
 ]
 
@@ -89,7 +89,7 @@ RSPopupTest >> testPopupSimple [
 
 	self assert: c numberOfShapes equals: 1.
 	self assert: c fixedShapes isEmpty.
-	c shapes first announce: RSMouseMove.
+	c shapes first announce: RSMouseMoveEvent.
 	self assert: c shapes first model equals: 42.
 	self assert: c numberOfShapes equals: 1.
 	self assert: c fixedShapes size equals: 1.
@@ -116,14 +116,14 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 3.
-	shapes first announce: RSMouseMove.
+	shapes first announce: RSMouseMoveEvent.
 	self assert: shapes first model equals: 1.
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 4.
 	self assert: c fixedShapes last children last text equals: '1'.
 	
 	"Note that we do not announce RSMouseLeave"
-	shapes second announce: RSMouseMove.
+	shapes second announce: RSMouseMoveEvent.
 	self assert: c fixedShapes size equals: 4.
 	self assert: c fixedShapes last children last text equals: '2'.
 ]
@@ -133,7 +133,7 @@ RSPopupTest >> testWithPopup [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
 	
-	shapes first announce: RSMouseMove.
+	shapes first announce: RSMouseMoveEvent.
 	self assert: canvas numberOfShapes equals: shapes size.
 	self assert: canvas fixedShapes size equals: 1.
 ]

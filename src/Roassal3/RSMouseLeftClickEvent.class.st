@@ -2,7 +2,7 @@
 Common event for mouse left click
 "
 Class {
-	#name : #RSMouseLeftClick,
-	#superclass : #RSMouseClick,
+	#name : #RSMouseLeftClickEvent,
+	#superclass : #RSMouseClickEvent,
 	#category : #'Roassal3-Events'
 }

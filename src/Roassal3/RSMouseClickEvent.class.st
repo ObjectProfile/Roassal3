@@ -2,7 +2,7 @@
 Common event for mouse clicks
 "
 Class {
-	#name : #RSMouseClick,
-	#superclass : #RSAbstractMouseClick,
+	#name : #RSMouseClickEvent,
+	#superclass : #RSAbstractMouseClickEvent,
 	#category : #'Roassal3-Events'
 }

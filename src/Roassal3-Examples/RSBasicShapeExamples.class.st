@@ -177,9 +177,9 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 			position: evt position;
 			signalUpdate].
 	c
-		when: RSMouseDragging do: [ :evt | 
+		when: RSMouseDraggingEvent do: [ :evt | 
 			update value: evt value: (Color colorFrom: '12A288')];
-		when: RSMouseMove do: [ :evt | 
+		when: RSMouseMoveEvent do: [ :evt | 
 			update value: evt value: (Color colorFrom: 'AB2567') ].
 	c clearBackground: false.
 	^ c
@@ -225,7 +225,7 @@ RSBasicShapeExamples >> example09MouseStep [
 		radius: 0.
 	c addShape: e.
 	prev := 0.
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMoveEvent do: [ :evt | 
 		dif := (evt position x - prev) abs.
 		prev := evt position x.
 		e 
@@ -247,7 +247,7 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 	border := RSBorder new color: (Color colorFrom: '002800').
 	b := 1.
 	radius := 200.
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMoveEvent do: [ :evt | 
 		circleResolution := b.
 		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
 		angle := Float twoPi / circleResolution.
@@ -298,7 +298,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 					border: border )
 				] ]
 		].
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMoveEvent do: [ :evt | 
 		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
 			zindex := scale scale: (easing distanceTo: s position).
@@ -324,7 +324,7 @@ RSBasicShapeExamples >> example12BasicLine [
 		"rotated"
 		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
 	].
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMoveEvent do: [ :evt | 
 		size := evt position distanceTo: 0@0.
 		angle := evt position angle + 135 degreesToRadians.
 		c shapes copy do: #remove.
@@ -538,7 +538,7 @@ RSBasicShapeExamples >> example26Polygon [
 		yourself).
 	c shapes first translateTo: 0@0.
 	c showEncompassingRectangles.
-	c shapes first when: RSMouseDragging do: [:evt |
+	c shapes first when: RSMouseDraggingEvent do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
 	^ c
 ]
@@ -595,7 +595,7 @@ RSBasicShapeExamples >> example30PolygonWithRadius [
 		yourself).
 	c shapes first translateTo: 0@0.
 	c showEncompassingRectangles.
-	c shapes first when: RSMouseDragging do: [:evt |
+	c shapes first when: RSMouseDraggingEvent do: [:evt |
 		evt shape translateBy: evt step; signalUpdate].
 	^ c
 ]
@@ -716,8 +716,8 @@ RSBasicShapeExamples >> example35KeyEvents [
 		s text: (s model, ': ' , evt keyName,', value: ', evt keyValue asString).
 		evt signalUpdate  ].
 	c 
-		when: RSKeyDown do: [ :evt | print value: evt value: down ];
-		when: RSKeyUp do: [ :evt | print value: evt value: up ].
+		when: RSKeyDownEvent do: [ :evt | print value: evt value: down ];
+		when: RSKeyUpEvent do: [ :evt | print value: evt value: up ].
 
 	^ c
 ]
@@ -860,7 +860,7 @@ RSBasicShapeExamples >> example38Interaction [
 		color: Color gray translucent;
 		yourself.
 	c1
-		when: RSMouseClick
+		when: RSMouseClickEvent
 		do: [ :evt | 
 			c1 remove.
 			com removeInteractionIfPresent: RSDraggable.
@@ -892,7 +892,7 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	        color: ((Color perform: sel) alpha: 0.4 );
 	        yourself).
 	    ]).
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMoveEvent do: [ :evt | 
 	    posOffset := (evt position distanceTo: 0@0).
 	    negOffset := posOffset negated.
 	    circles first position: posOffset @ 0.

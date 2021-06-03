@@ -72,9 +72,9 @@ RSTransformable >> createHandleFor: association [
 		draggable;
 		yourself.
 	handle announcer
-		when: RSMouseEnter send: #showCursor: to: self;
-		when: RSMouseLeave send: #removeCursor to: self;
-		when: RSMouseDragStart send: #saveCurrentShapeState to: self;
+		when: RSMouseEnterEvent send: #showCursor: to: self;
+		when: RSMouseLeaveEvent send: #removeCursor to: self;
+		when: RSMouseDragStartEvent send: #saveCurrentShapeState to: self;
 		when: RSPositionChangedEvent send: #updateCurrentShape: to: self.
 	^ handle
 ]
@@ -139,9 +139,9 @@ RSTransformable >> leftCenter: position rectangle: rectangle [
 RSTransformable >> onShape: aShape [
 	aShape isNode ifFalse: [ ^ self ].
 	aShape announcer
-		when: RSMouseLeftClick send: #showHandles: to: self;
-		when: RSMouseDragStart send: #disableHandles: to: self;
-		when: RSMouseDragEnd send: #enableHandles: to: self.
+		when: RSMouseLeftClickEvent send: #showHandles: to: self;
+		when: RSMouseDragStartEvent send: #disableHandles: to: self;
+		when: RSMouseDragEndEvent send: #enableHandles: to: self.
 ]
 
 { #category : #private }
@@ -150,7 +150,7 @@ RSTransformable >> registerCanvasEventsIfNecessary: evt [
 	canvas := evt canvas.
 	(canvas hasInteraction: self class) ifTrue: [ ^ self ].
 	canvas announcer
-		when: RSMouseClick 
+		when: RSMouseClickEvent 
 		send: #removeHandles:
 		to: self
 ]
@@ -186,8 +186,8 @@ RSTransformable >> rotationShape [
 	^ RSBitmap new
 		form: (self iconNamed: #smallUpdate);
 		scaleBy: 2;
-		when: RSMouseEnter send: #showRotationCursor to: self;
-		when: RSMouseLeave send: #removeCursor to: self;
+		when: RSMouseEnterEvent send: #showRotationCursor to: self;
+		when: RSMouseLeaveEvent send: #removeCursor to: self;
 		yourself
 ]
 

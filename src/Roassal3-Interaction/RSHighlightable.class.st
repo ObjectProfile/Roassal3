@@ -507,8 +507,8 @@ RSHighlightable >> lowColor: lowColor highColor: highColor [
 { #category : #hooks }
 RSHighlightable >> onShape: aShape [
 	aShape
-		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
-		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
+		when: RSMouseEnterEvent do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
+		when: RSMouseLeaveEvent do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
 { #category : #'public - hooks' }

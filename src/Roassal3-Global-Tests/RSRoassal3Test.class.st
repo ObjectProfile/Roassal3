@@ -36,9 +36,9 @@ RSRoassal3Test >> testRemoveInteractionIfPresent [
 	
 	box := RSBox new.
 	box popup. 
-	self assert: (box announcer handleEventClass: RSMouseMove).
-	box removeInteractionIfPresent: RSMouseMove.
-	self assert: (box announcer handleEventClass: RSMouseMove).
+	self assert: (box announcer handleEventClass: RSMouseMoveEvent).
+	box removeInteractionIfPresent: RSMouseMoveEvent.
+	self assert: (box announcer handleEventClass: RSMouseMoveEvent).
 ]
 
 { #category : #tests }

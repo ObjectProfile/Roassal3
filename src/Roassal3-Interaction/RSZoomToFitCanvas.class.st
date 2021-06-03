@@ -59,7 +59,7 @@ RSZoomToFitCanvas >> cameraFor: aCanvas [
 
 { #category : #hooks }
 RSZoomToFitCanvas >> onShape: aCanvas [
-	aCanvas when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
+	aCanvas when: RSKeyUpEvent do: [ :evt | self processKeyUp: evt ].
 	aCanvas when: RSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
 	aCanvas camera: (self cameraFor: aCanvas). 
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].

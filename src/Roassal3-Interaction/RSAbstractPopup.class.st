@@ -14,13 +14,13 @@ Class {
 
 { #category : #accessing }
 RSAbstractPopup class >> activationEvent [
-	^ RSMouseMove
+	^ RSMouseMoveEvent
 ]
 
 { #category : #accessing }
 RSAbstractPopup class >> removeEvents [
 	^ removeEvents ifNil: [ 
-		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
+		removeEvents := { RSMouseClickEvent. RSMouseEnterEvent. RSMouseLeaveEvent. RSMouseDraggingEvent } ]
 ]
 
 { #category : #'instance creation' }

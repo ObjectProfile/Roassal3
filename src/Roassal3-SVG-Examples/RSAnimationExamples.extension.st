@@ -49,7 +49,7 @@ RSAnimationExamples >> example04Phyco [
 			canvas add: line.
 		].
 	].
-	canvas when: RSMouseClick do: [ :evt | canvas edges inspect ].
+	canvas when: RSMouseClickEvent do: [ :evt | canvas edges inspect ].
 	canvas newAnimation repeat onStepDo: [ :t |
 		update value.
 		theta := theta + 0.0523 ].
