@@ -145,7 +145,7 @@ c openOnce
 ```
 "
 Class {
-	#name : #RSHighlightable,
+	#name : #RSHighlightableInteraction,
 	#superclass : #RSInteraction,
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
@@ -159,13 +159,13 @@ Class {
 }
 
 { #category : #'instance colors' }
-RSHighlightable class >> blue [
+RSHighlightableInteraction class >> blue [
 	^ self color: Color blue
 	
 ]
 
 { #category : #'instance colors' }
-RSHighlightable class >> color: aColor [
+RSHighlightableInteraction class >> color: aColor [
 	| inst |
 	inst := self new.
 	inst highlightColor: aColor.
@@ -174,7 +174,7 @@ RSHighlightable class >> color: aColor [
 ]
 
 { #category : #'public - lines' }
-RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine from: aRSGroup [
+RSHighlightableInteraction class >> createEdgesWith: aBlock shape: aShape using: aRSLine from: aRSGroup [
 	| models lines shapes parent |
 	models := aBlock value: aShape model.
 	parent := aShape parent.
@@ -189,17 +189,17 @@ RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine fr
 ]
 
 { #category : #'instance colors' }
-RSHighlightable class >> green [
+RSHighlightableInteraction class >> green [
 	^ self color: Color green
 ]
 
 { #category : #'instance colors' }
-RSHighlightable class >> red [
+RSHighlightableInteraction class >> red [
 	^ self color: Color red
 ]
 
 { #category : #'instance creation' }
-RSHighlightable class >> sameModel: aCanvas [
+RSHighlightableInteraction class >> sameModel: aCanvas [
 	"Define an highlight object that is able to highlight the same elements pointed by the mouse.
 	
 For example:
@@ -220,12 +220,12 @@ c @ RSCanvasController
 ]
 
 { #category : #'public - lines' }
-RSHighlightable class >> showEdges: aBlock using: aRSLine [
+RSHighlightableInteraction class >> showEdges: aBlock using: aRSLine [
 	^ self showEdges: aBlock using: aRSLine from: [ :aShape | aShape parent shapes ] 
 ]
 
 { #category : #'public - lines' }
-RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
+RSHighlightableInteraction class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 	| i |
 	i := self new.
 	i 
@@ -245,7 +245,7 @@ RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 ]
 
 { #category : #public }
-RSHighlightable class >> withAntAnimation [
+RSHighlightableInteraction class >> withAntAnimation [
 	| i |
 	i := self new.
 	i withLines.
@@ -288,13 +288,13 @@ RSHighlightable class >> withAntAnimation [
 ]
 
 { #category : #obsolete }
-RSHighlightable class >> withEdges [
+RSHighlightableInteraction class >> withEdges [
 
 	^ self withLines
 ]
 
 { #category : #'instance creation' }
-RSHighlightable class >> withLines [
+RSHighlightableInteraction class >> withLines [
 
 	^ self new
 		  withLines;
@@ -303,7 +303,7 @@ RSHighlightable class >> withLines [
 ]
 
 { #category : #announcer }
-RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
+RSHighlightableInteraction >> announceHighlight: shape source: shapeOrCanvas [
 	self announce: [ RSHighlightEvent new
 		interaction: self;
 		shape: shape;
@@ -311,7 +311,7 @@ RSHighlightable >> announceHighlight: shape source: shapeOrCanvas [
 ]
 
 { #category : #announcer }
-RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
+RSHighlightableInteraction >> announceUnHightlight: shape source: shapeOrCanvas [
 	self announce: [ RSUnHighlightEvent new
 		interaction: self;
 		shape: shape;
@@ -319,27 +319,27 @@ RSHighlightable >> announceUnHightlight: shape source: shapeOrCanvas [
 ]
 
 { #category : #announcer }
-RSHighlightable >> announcementClasses [
+RSHighlightableInteraction >> announcementClasses [
 	^ RSHighlightableEvent subclasses
 ]
 
 { #category : #announcer }
-RSHighlightable >> announcer: anAnnouncer [
+RSHighlightableInteraction >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
 { #category : #'accessing - keys' }
-RSHighlightable >> copyKey [
+RSHighlightableInteraction >> copyKey [
 	^ copyKey ifNil: [ copyKey := #original ].
 ]
 
 { #category : #'accessing - keys' }
-RSHighlightable >> copyKey: aSymbol [
+RSHighlightableInteraction >> copyKey: aSymbol [
 	copyKey := aSymbol
 ]
 
 { #category : #actions }
-RSHighlightable >> doHighlight: shape [
+RSHighlightableInteraction >> doHighlight: shape [
 	| shapes |
 	self unhighlightRecordedShapes: shape.
 	shapes := self highlightShapesFor: shape.
@@ -349,7 +349,7 @@ RSHighlightable >> doHighlight: shape [
 ]
 
 { #category : #actions }
-RSHighlightable >> doHighlightShapes: shapes [
+RSHighlightableInteraction >> doHighlightShapes: shapes [
 	"Assuming all the shapes belongs to the same canvas"
 	| allHShapes |
 	shapes ifEmpty: [ ^ self ].
@@ -362,12 +362,12 @@ RSHighlightable >> doHighlightShapes: shapes [
 ]
 
 { #category : #actions }
-RSHighlightable >> doUnhighlight: aShape [
+RSHighlightableInteraction >> doUnhighlight: aShape [
 	self unhighlightRecordedShapes: aShape
 ]
 
 { #category : #public }
-RSHighlightable >> highlightBorder: aBorder [
+RSHighlightableInteraction >> highlightBorder: aBorder [
 	"Set the border. For example:
 
 ```Smalltalk
@@ -391,7 +391,7 @@ c @ RSCanvasController
 ]
 
 { #category : #public }
-RSHighlightable >> highlightColor: aColor [
+RSHighlightableInteraction >> highlightColor: aColor [
 	"Set the highlight color. For example:
 
 ```Smalltalk
@@ -434,7 +434,7 @@ c @ RSCanvasController
 ]
 
 { #category : #accessing }
-RSHighlightable >> highlightShapes: aOneArgBlock [
+RSHighlightableInteraction >> highlightShapes: aOneArgBlock [
 	"the block accepts a shape (the one selected) should return a collection of shapes. Consider the example:
 ```	
 canvas := RSCanvas new.
@@ -459,7 +459,7 @@ canvas open
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
+RSHighlightableInteraction >> highlightShapes: aBlock butKeep: aRSHighlightable [
 	"aBlock receives a shape and returns a collection of shapes"
 	self highlightShapes: [ :e | 
 		| shapes |
@@ -472,32 +472,32 @@ RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> highlightShapesButKeep: aRSHighlightable [
+RSHighlightableInteraction >> highlightShapesButKeep: aRSHighlightable [
 	self 
 		highlightShapes: [ :e | { e } ]
 		butKeep: aRSHighlightable
 ]
 
 { #category : #private }
-RSHighlightable >> highlightShapesFor: aShape [
+RSHighlightableInteraction >> highlightShapesFor: aShape [
 	^ highlightShapes rsValue: aShape
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> incomingLines [
+RSHighlightableInteraction >> incomingLines [
 	self highlightShapes: [ :s | 
 		s incomingLines collect: #yourself as: RSGroup ].
 ]
 
 { #category : #initialization }
-RSHighlightable >> initialize [
+RSHighlightableInteraction >> initialize [
 	super initialize.
 	self highlightShapes: [ :shape | Array with: shape ].
 
 ]
 
 { #category : #public }
-RSHighlightable >> lowColor: lowColor highColor: highColor [
+RSHighlightableInteraction >> lowColor: lowColor highColor: highColor [
 	self 
 		when: RSHighlightEvent do: [ :evt | evt shape color: highColor  ];
 		when: RSUnHighlightEvent do: [ :evt | evt shape color: lowColor ].
@@ -505,35 +505,35 @@ RSHighlightable >> lowColor: lowColor highColor: highColor [
 ]
 
 { #category : #hooks }
-RSHighlightable >> onShape: aShape [
+RSHighlightableInteraction >> onShape: aShape [
 	aShape
 		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> outgoingLines [
+RSHighlightableInteraction >> outgoingLines [
 	self highlightShapes: [ :s | 
 		s outgoingLines collect: #yourself as: RSGroup ].
 ]
 
 { #category : #announcer }
-RSHighlightable >> privateAnnouncer [
+RSHighlightableInteraction >> privateAnnouncer [
 	^ announcer
 ]
 
 { #category : #'accessing - keys' }
-RSHighlightable >> propertyKey [
+RSHighlightableInteraction >> propertyKey [
 	^ propertyKey ifNil: [ propertyKey := self hash asString ]
 ]
 
 { #category : #'accessing - keys' }
-RSHighlightable >> propertyKey: aSymbol [
+RSHighlightableInteraction >> propertyKey: aSymbol [
 	propertyKey := aSymbol.
 ]
 
 { #category : #private }
-RSHighlightable >> record: aShape selector: selector value: anObject [
+RSHighlightableInteraction >> record: aShape selector: selector value: anObject [
 	"Main method to change an attribute of a shape (e.g., colors, border)
 	
 For example:
@@ -560,7 +560,7 @@ For example:
 ]
 
 { #category : #actions }
-RSHighlightable >> resetHighlightedShapes: shapeOrGroupOrCanvas [
+RSHighlightableInteraction >> resetHighlightedShapes: shapeOrGroupOrCanvas [
 	| att top |
 	(shapeOrGroupOrCanvas class == RSGroup)
 		ifTrue: [ 
@@ -575,7 +575,7 @@ RSHighlightable >> resetHighlightedShapes: shapeOrGroupOrCanvas [
 ]
 
 { #category : #private }
-RSHighlightable >> restore: aShape selector: selector [
+RSHighlightableInteraction >> restore: aShape selector: selector [
 	"Main method to restore the attribute of a shape.
 
 	-=-=-=-=-=-=-=-=-=-=-=-=
@@ -601,7 +601,7 @@ RSHighlightable >> restore: aShape selector: selector [
 ]
 
 { #category : #actions }
-RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
+RSHighlightableInteraction >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 	| top |
 	(shapeOrGroupOrCanvas class == RSGroup)
 		ifTrue: [ 
@@ -620,7 +620,7 @@ RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> withConnectedShapes [
+RSHighlightableInteraction >> withConnectedShapes [
 	"Highlight shapes that are connected to the pointed shape. For example:
 ```
 numberOfNodes := 25. 
@@ -673,7 +673,7 @@ canvas open
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> withEdges [
+RSHighlightableInteraction >> withEdges [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s connectedLines copy.
@@ -682,7 +682,7 @@ RSHighlightable >> withEdges [
 ]
 
 { #category : #obsolete }
-RSHighlightable >> withIncomingEdges [
+RSHighlightableInteraction >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s incomingLines collect: #yourself as: RSGroup.
@@ -691,7 +691,7 @@ RSHighlightable >> withIncomingEdges [
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> withIncomingLines [
+RSHighlightableInteraction >> withIncomingLines [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s incomingLines collect: #yourself as: RSGroup.
@@ -700,7 +700,7 @@ RSHighlightable >> withIncomingLines [
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> withLines [
+RSHighlightableInteraction >> withLines [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s connectedLines copy.
@@ -709,7 +709,7 @@ RSHighlightable >> withLines [
 ]
 
 { #category : #obsolete }
-RSHighlightable >> withOutgoingEdges [
+RSHighlightableInteraction >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s outgoingLines collect: #yourself as: RSGroup.
@@ -718,7 +718,7 @@ RSHighlightable >> withOutgoingEdges [
 ]
 
 { #category : #'public - hooks' }
-RSHighlightable >> withOutgoingLines [
+RSHighlightableInteraction >> withOutgoingLines [
 	self highlightShapes: [ :s | 
 		| list |
 		list := s outgoingLines collect: #yourself as: RSGroup.

@@ -292,7 +292,7 @@ RSLegendExamples >> example12OnPopup [
 		canvas: canvas;
 		shapes: shapes;
 		connectFrom: #superclass.
-	interaction := RSLabeled new.
+	interaction := RSLabeledInteraction new.
 	interaction shapeBuilder labelShape fontSize: 5.
 	popup := RSPopup new.
 	popup shapeBuilder: [ :cls |"move this content to a class method"
@@ -312,7 +312,7 @@ RSLegendExamples >> example12OnPopup [
 			padding: 5;
 			yourself.
 		 ].
-	shapes @ interaction; @ popup; @ RSDraggable.
+	shapes @ interaction; @ popup; @ RSDraggableInteraction.
 	RSTreeLayout on: shapes.
 	canvas addAll: shapes.
 	canvas @ RSCanvasController.

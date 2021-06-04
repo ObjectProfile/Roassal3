@@ -1640,7 +1640,7 @@ RSAnimationExamples >> example27RSLocate [
 		1 ->'gray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	labeled := RSLabeled new.
+	labeled := RSLabeledInteraction new.
 	labeled shapeBuilder: [ :m | RSLabel new text: m asString; color: Color white ].
 	labeled location middle.
 	buttons :=  #(outer border inner left center right top middle bottom) collect: [ :t |
@@ -2636,7 +2636,7 @@ RSAnimationExamples >> example45Beziers [
 				noPaint;
 				yourself
 		] as: RSGroup.
-		dots @ RSLabeled.
+		dots @ RSLabeledInteraction.
 
 		lines := (2 to: dots size) collect: [ :index |
 			RSLine new

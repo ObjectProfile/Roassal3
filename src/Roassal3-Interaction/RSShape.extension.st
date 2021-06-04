@@ -2,12 +2,12 @@ Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> draggable [
-	self @ RSDraggable.
+	self @ RSDraggableInteraction.
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> labeled [
-	self @ RSLabeled.
+	self @ RSLabeledInteraction.
 ]
 
 { #category : #'*Roassal3-Interaction' }

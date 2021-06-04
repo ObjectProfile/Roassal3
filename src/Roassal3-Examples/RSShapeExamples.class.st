@@ -111,7 +111,7 @@ RSShapeExamples >> example05CapStyles [
 		line perform: style asSymbol.
 		canvas add: line; add: d1; add: d2.
 		 ].
-	canvas nodes first @ RSDraggable.
+	canvas nodes first @ RSDraggableInteraction.
 	ann := canvas nodes first announcer.
 	canvas nodes do: [ :s | s announcer: ann ].
 	^ canvas
@@ -432,7 +432,7 @@ RSShapeExamples >> example17Labeled [
 	e2 := s value: 'world'.
 	e2 translateTo: 60@80.
 	
-	label := RSLabeled new.
+	label := RSLabeledInteraction new.
 	label location inner; middle.
 	label shapeBuilder textBlock: 'lining up!'.
 	line := RSShapeFactory arrowedLine
@@ -471,7 +471,7 @@ RSShapeExamples >> example20Highlightable [
 	<script: 'self new example20Highlightable open'>
 	| canvas shapes labeled |
 	canvas := RSCanvas new.
-	labeled := RSLabeled new.
+	labeled := RSLabeledInteraction new.
 	labeled highlightable.
 	shapes := #('Hello' 'World') collect: [ :m | 
 		RSEllipse new
@@ -499,9 +499,9 @@ RSShapeExamples >> example21MenuActivableOnElement [
 			size: 30;
 			yourself ] as: RSGroup.
 	canvas addAll: boxes.
-	boxes @ RSHighlightable red.
+	boxes @ RSHighlightableInteraction red.
 	RSGridLayout on: boxes.
-	boxes @ (RSMenuActivable new
+	boxes @ (RSMenuActivableInteraction new
 		menuDo: [ :menu :box | 
 			menu 
 				add: 'Inspect'
@@ -557,7 +557,7 @@ RSShapeExamples >> example24Highlightable [
 	<script: 'self new example24Highlightable open'>
 	| canvas shapes interaction |
 	canvas := RSCanvas new.
-	interaction := RSLabeled new.
+	interaction := RSLabeledInteraction new.
 	interaction shapeBuilder: [:str | 
 		| g title box |
 		title := RSLabel new text: str; yourself.
@@ -675,13 +675,13 @@ RSShapeExamples >> example29AntAnimation [
 	<script: 'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
 	| canvas shapes labelInt highInt popupMethod |
 	canvas := RSCanvas new.
-	labelInt := RSLabeled new.
+	labelInt := RSLabeledInteraction new.
 	labelInt shapeBuilder: [ :model |
 		 RSLabel new 
 			color: Color white; 
 			text: model;
 			yourself ].
-	highInt := RSHighlightable withAntAnimation.
+	highInt := RSHighlightableInteraction withAntAnimation.
 	popupMethod := RSPopup text: #selector.
 	shapes := String withAllSubclasses collect: [ :cls | | methods |
 		methods := cls methods collect: [ :met |
@@ -812,7 +812,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	<script: 'self new example32RSLabeledOnComposite open'>
 	| canvas shapes labeled |
 	canvas := RSCanvas new.
-	labeled := RSLabeled new.
+	labeled := RSLabeledInteraction new.
 	labeled location middle.
 	shapes := (1 to: 20) collect: [:n| 
 		RSBox new
@@ -911,7 +911,7 @@ RSShapeExamples >> example35Lines [
 				from: -1000 @ 0;
 				to: 1000 @ 0).
 	box translateBy: 50 @ 50.
-	box @ RSDraggable.
+	box @ RSDraggableInteraction.
 	c
 		add:
 			(RSLine new
@@ -949,7 +949,7 @@ RSShapeExamples >> example36ShapePosition [
 	c add: labelBox.
 	labelBox setAsFixed.
 	labelBox translateBy: 100 @ 50.
-	box @ RSDraggable.
+	box @ RSDraggableInteraction.
 	box
 		when: RSMouseDragging
 		do: [ :evt | 
@@ -1020,9 +1020,9 @@ RSShapeExamples >> example38Transformable [
 		gapSize: 50;
 		on: c nodes.
 	c nodes do: [ :s | s model: s ].
-	c nodes @ RSDraggable; @ (RSPopup text: [ :m | m class name ] ).
+	c nodes @ RSDraggableInteraction; @ (RSPopup text: [ :m | m class name ] ).
 	
-	c nodes allButLast @ RSTransformable.
+	c nodes allButLast @ RSTransformableInteraction.
 	
 	c @ RSCanvasController. 
 	^ c 
@@ -1040,7 +1040,7 @@ RSShapeExamples >> example39RoassalPackages [
 	    
 	canvas := RSCanvas new.
 	color := NSScale category20c.
-	labeled := RSLabeled new.
+	labeled := RSLabeledInteraction new.
 	labeled shapeBuilder textBlock: #name.
 	boxes := packages collect: [ :pkg |
 	    RSBox new
@@ -1078,8 +1078,8 @@ RSShapeExamples >> example40LabelingLine [
 	c add: shapeB.
 	shapeB translateBy: 100 @ 50.
 
-	shapeA @ RSDraggable.
-	shapeB @ RSDraggable.
+	shapeA @ RSDraggableInteraction.
+	shapeB @ RSDraggableInteraction.
 
 	line := RSLine new
 		        from: shapeA;
@@ -1087,7 +1087,7 @@ RSShapeExamples >> example40LabelingLine [
 	line attachPoint: RSBorderAttachPoint new.
 	c add: line.
 
-	interactionLabel := RSLabeled new text: [ :notUsed | 
+	interactionLabel := RSLabeledInteraction new text: [ :notUsed | 
 		                    line from model , ' -> ' , line to model ].
 	interactionLabel shapeBuilder labelShape
 		fontSize: 5;
@@ -1163,7 +1163,7 @@ RSShapeExamples >> example41Butterfly [
 	    width: 0.5;
 	    yourself.
 	eb useElementAssociations: (c1 collect: [:c | c -> c2 ]), (c3 collect: [:c | c2-> c ]).
-	h := RSHighlightable new.
+	h := RSHighlightableInteraction new.
 	h withLines.
 	h highlightBorder: RSBorder new.
 
@@ -1186,7 +1186,7 @@ RSShapeExamples >> example42DirectedBezier [
 			position: p;
 			yourself] as: RSGroup.
 	shapes doWithIndex: [:s :i | s model: i ].
-	shapes @ RSDraggable.
+	shapes @ RSDraggableInteraction.
 	c addAll: shapes.
 	RSLineBuilder directedBezier
 		canvas: c;

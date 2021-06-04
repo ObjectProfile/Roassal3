@@ -192,7 +192,7 @@ RSSankey >> extent: anObject [
 RSSankey >> initialize [
 	super initialize.
 	boxShape := RSBox new.
-	boxShape @ RSDraggable.
+	boxShape @ RSDraggableInteraction.
 	labelShape := RSLabel new.
 	lineShape := RSBezier new.
 	lineShape color: Color lightGray translucent.

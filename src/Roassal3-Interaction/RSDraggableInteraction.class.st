@@ -2,18 +2,18 @@
 I can move an element from its position
 "
 Class {
-	#name : #RSDraggable,
+	#name : #RSDraggableInteraction,
 	#superclass : #RSInteraction,
 	#category : #'Roassal3-Interaction-Core'
 }
 
 { #category : #'instance creation' }
-RSDraggable class >> wantsUniqueInstance [
+RSDraggableInteraction class >> wantsUniqueInstance [
 	^ true
 ]
 
 { #category : #hooks }
-RSDraggable >> onShape: aShape [
+RSDraggableInteraction >> onShape: aShape [
 	aShape
 		when: RSMouseDragging
 		do: [ :evt | 

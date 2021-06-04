@@ -149,7 +149,7 @@ RSLegend >> onDemand: text [
 	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
-		@ (RSHighlightable new lowColor: Color lightGray highColor: Color blue);
+		@ (RSHighlightableInteraction new lowColor: Color lightGray highColor: Color blue);
 		yourself
 ]
 

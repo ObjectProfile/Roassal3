@@ -108,7 +108,7 @@ RSInspectableExample >> example04ChagingContext [
 	c := RSCanvas new.
 	1 to: 100 do: [ :i |
 		c add: (RSBox new size: 10; model: i) ].
-	c shapes @ RSDraggable.
+	c shapes @ RSDraggableInteraction.
 	RSGridLayout on: c shapes.
 	c @ RSCanvasController.
 	

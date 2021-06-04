@@ -29,7 +29,7 @@ RSHighlightableExamples >> example01Basic [
 		connectFrom: [ :n | n // 2 ].
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
-	canvas shapes @ RSHighlightable red.
+	canvas shapes @ RSHighlightableInteraction red.
 	RSClusterLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
@@ -40,7 +40,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges open'>
 	| canvas shapes interaction color |
 	canvas := RSCanvas new.
-	interaction := RSHighlightable red
+	interaction := RSHighlightableInteraction red
 		withLines;
 		yourself.
 	color := RSColorPalette diverging rdylbu3.
@@ -58,7 +58,7 @@ RSHighlightableExamples >> example02ElementEdges [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	canvas edges do: #withBorder.
-	canvas edges @ RSHighlightable red.
+	canvas edges @ RSHighlightableInteraction red.
 	canvas nodes @ interaction.
 	RSClusterLayout on: shapes.
 	canvas zoomToFit.
@@ -88,7 +88,7 @@ RSHighlightableExamples >> example03Interactive [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable red.
+	interaction := RSHighlightableInteraction red.
 	interaction withLines.
 	update := [ interaction doHighlight: shapes atRandom ].
 	update value.
@@ -121,7 +121,7 @@ RSHighlightableExamples >> example04Interactive [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable red.
+	interaction := RSHighlightableInteraction red.
 	bool := true.
 	update := [
 		interaction doHighlightShapes: (shapes select: [ :e | bool = e model even ]).
@@ -152,7 +152,7 @@ RSHighlightableExamples >> example05Border [
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
-	interaction := RSHighlightable new.
+	interaction := RSHighlightableInteraction new.
 	interaction highlightBorder: (RSBorder new width: 2).
 	canvas addAll: shapes.
 	canvas nodes @ interaction.
@@ -192,8 +192,8 @@ RSHighlightableExamples >> example06IterateNext [
 	numbers @ (RSDraggableForce new layout: layout).
 
 	"Set up highlighting interactions"
-	highlightableForBoxes := RSHighlightable red.
-	highlightableForLabels := RSHighlightable new
+	highlightableForBoxes := RSHighlightableInteraction red.
+	highlightableForLabels := RSHighlightableInteraction new
 		propertyKey: #exampleKey;
 		when: RSHighlightEvent do: [ :evt | evt shape bold ];
 		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
@@ -232,9 +232,9 @@ RSHighlightableExamples >> example07HighlightButtons [
 	<script: 'self new example07HighlightButtons open'>
 	| canvas mouseOver selectedButton |
 	canvas := RSCanvas new.
-	selectedButton := RSHighlightable red.
+	selectedButton := RSHighlightableInteraction red.
 
-	mouseOver:= RSHighlightable new.
+	mouseOver:= RSHighlightableInteraction new.
 	mouseOver highlightColor: [ :shape | 
 		shape model > 5
 			ifTrue: [ Color purple ]
@@ -275,9 +275,9 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
-	label := RSLabeled new highlightable.
+	label := RSLabeledInteraction new highlightable.
 	padding := 10 asMargin.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	arrow := RSShapeFactory arrowedLine
 		withBorderAttachPoint;
 		color: Color blue.
@@ -349,7 +349,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 	<script: 'self new example09ArrowedLines open'>
 	| canvas interaction color shapes |
 	canvas := RSCanvas new.
-	interaction := RSHighlightable new
+	interaction := RSHighlightableInteraction new
 		highlightBorder: (RSBorder new
 			width: 2;
 			yourself);
@@ -399,7 +399,7 @@ RSHighlightableExamples >> example10ElasticBox [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
-	high := RSHighlightable red.
+	high := RSHighlightableInteraction red.
 	elastic := RSElasticBox new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
@@ -432,7 +432,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
-	high := RSHighlightable red.
+	high := RSHighlightableInteraction red.
 	selectedShapes := #().
 	elastic := RSElasticBox new.
 	elastic
@@ -484,7 +484,7 @@ RSHighlightableExamples >> example12ShowingEdges [
 				with: 0 @ 0
 				with: line to position ];
 		yourself.
-	interaction := RSHighlightable 
+	interaction := RSHighlightableInteraction 
 		showEdges: [:model | {model + 1. model + 2. model + 3} ] 
 		using: (RSBezier new
 			color: Color red;
