@@ -49,7 +49,7 @@ RSTreeMapExamples >> example03Labels [
 	b from: labels using: [ #() ].
 	b modelWeight: [ :n | n size ].
 	b build.
-	b shapes @ (RSLabeled new
+	b shapes @ (RSLabeledInteraction new
 		in: [ :lbl | lbl location middle ];
 		yourself).
 	^ b canvas
