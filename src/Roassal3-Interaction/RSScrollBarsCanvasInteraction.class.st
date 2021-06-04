@@ -2,7 +2,7 @@
 I put a scrool shapes to the view when the view moves
 "
 Class {
-	#name : #RSScrollBarsCanvas,
+	#name : #RSScrollBarsCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'barShape',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #hooks }
-RSScrollBarsCanvas >> addScrollBars: aCanvas [
+RSScrollBarsCanvasInteraction >> addScrollBars: aCanvas [
 	vertical := self barShapeCopy.
 	horizontal := self barShapeCopy.
 	
@@ -24,7 +24,7 @@ RSScrollBarsCanvas >> addScrollBars: aCanvas [
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> barShapeCopy [
+RSScrollBarsCanvasInteraction >> barShapeCopy [
 	^ barShape copy
 		announcer: barShape announcer;
 		border: (RSBorder new
@@ -35,7 +35,7 @@ RSScrollBarsCanvas >> barShapeCopy [
 ]
 
 { #category : #private }
-RSScrollBarsCanvas >> color: color1 border: color2 [
+RSScrollBarsCanvasInteraction >> color: color1 border: color2 [
 	| c1 c2 extent |
 	c1 := color1.
 	c2 := color2.
@@ -55,13 +55,13 @@ RSScrollBarsCanvas >> color: color1 border: color2 [
 ]
 
 { #category : #initialization }
-RSScrollBarsCanvas >> initialize [
+RSScrollBarsCanvasInteraction >> initialize [
 	super initialize.
 	self initializeShape.
 ]
 
 { #category : #initialization }
-RSScrollBarsCanvas >> initializeHideAnimation [
+RSScrollBarsCanvasInteraction >> initializeHideAnimation [
 	| sc1 sc2 |
 	sc1 := NSScale linear range: { self scrollColor. Color transparent }.
 	sc2 := NSScale linear range: { self scrollBorderColor. Color transparent }.
@@ -75,7 +75,7 @@ RSScrollBarsCanvas >> initializeHideAnimation [
 ]
 
 { #category : #initialization }
-RSScrollBarsCanvas >> initializeShape [
+RSScrollBarsCanvasInteraction >> initializeShape [
 	barShape := RSBox new
 		cornerRadius: (RSCornerRadius new radius: 5);
 		size: 10;
@@ -99,7 +99,7 @@ RSScrollBarsCanvas >> initializeShape [
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> moveScroll: evt [
+RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	| shape delta position camera canvasExtent shapesRect correct |
 	shape := evt shape.
 	delta := evt step.
@@ -122,7 +122,7 @@ RSScrollBarsCanvas >> moveScroll: evt [
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> onShape: aCanvas [
+RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 	self addScrollBars: aCanvas.
 	
 	aCanvas when: RSPositionChangedEvent do: [ self updateScrollbars ].
@@ -130,27 +130,27 @@ RSScrollBarsCanvas >> onShape: aCanvas [
 ]
 
 { #category : #rendering }
-RSScrollBarsCanvas >> renderLegendOn: lb [ 
+RSScrollBarsCanvasInteraction >> renderLegendOn: lb [ 
 	lb text: '' description: 'Use scrool bars to navigate'
 ]
 
 { #category : #accessing }
-RSScrollBarsCanvas >> scrollBorderColor [
+RSScrollBarsCanvasInteraction >> scrollBorderColor [
 	^ Color lightGray translucent
 ]
 
 { #category : #accessing }
-RSScrollBarsCanvas >> scrollColor [
+RSScrollBarsCanvasInteraction >> scrollColor [
 	^ Color lightGray translucent.
 ]
 
 { #category : #accessing }
-RSScrollBarsCanvas >> shape [
+RSScrollBarsCanvasInteraction >> shape [
 	^ barShape
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> updateAnimation [
+RSScrollBarsCanvasInteraction >> updateAnimation [
 	| canvas |
 	canvas := vertical parent.
 	hideAnimation 
@@ -169,7 +169,7 @@ RSScrollBarsCanvas >> updateAnimation [
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> updateBasicScrollbars [
+RSScrollBarsCanvasInteraction >> updateBasicScrollbars [
 	| canvas canvasRect shapesRect p pd ext scrollExtent |
 	canvas := vertical parent.
 	canvasRect := canvas visibleRectangle.
@@ -185,7 +185,7 @@ RSScrollBarsCanvas >> updateBasicScrollbars [
 ]
 
 { #category : #hooks }
-RSScrollBarsCanvas >> updateScrollbars [
+RSScrollBarsCanvasInteraction >> updateScrollbars [
 	self updateBasicScrollbars.
 	self color: self scrollColor border: self scrollBorderColor.
 	self updateAnimation.

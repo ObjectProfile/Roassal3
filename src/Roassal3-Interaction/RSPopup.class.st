@@ -102,7 +102,7 @@ canvas @ RSCanvasController.
 "
 Class {
 	#name : #RSPopup,
-	#superclass : #RSAbstractPopup,
+	#superclass : #RSAbstractPopupInteraction,
 	#instVars : [
 		'shapeBuilder',
 		'modelBlock'

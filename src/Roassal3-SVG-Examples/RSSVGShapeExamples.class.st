@@ -135,7 +135,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 		text:
 			'scissors decapitates lizard, lizard eats paper, paper disproves Spock, Spock vaporizes rock, and, as it always has, rock crushes scissors';
 		build.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

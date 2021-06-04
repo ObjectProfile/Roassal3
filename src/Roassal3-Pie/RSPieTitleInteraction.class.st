@@ -2,7 +2,7 @@
 I can add a basic title in a pie
 "
 Class {
-	#name : #RSPieTitle,
+	#name : #RSPieTitleInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'labelBuilder',
@@ -12,29 +12,29 @@ Class {
 }
 
 { #category : #initialization }
-RSPieTitle >> initialize [
+RSPieTitleInteraction >> initialize [
 	super initialize.
 	labelBuilder := RSMultilineLabelBuilder new.
 	labelBuilder layout alignCenter.
 ]
 
 { #category : #accessing }
-RSPieTitle >> labelShape [
+RSPieTitleInteraction >> labelShape [
 	^ labelBuilder labelShape
 ]
 
 { #category : #accessing }
-RSPieTitle >> labelText [
+RSPieTitleInteraction >> labelText [
 	^ labelText
 ]
 
 { #category : #accessing }
-RSPieTitle >> labelText: aString [
+RSPieTitleInteraction >> labelText: aString [
 	labelText := aString
 ]
 
 { #category : #hooks }
-RSPieTitle >> onShape: aCanvas [
+RSPieTitleInteraction >> onShape: aCanvas [
 	| label |
 	label := labelBuilder shapeFor: self labelText.
 	aCanvas add: label.

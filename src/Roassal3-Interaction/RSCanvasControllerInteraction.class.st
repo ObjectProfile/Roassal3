@@ -3,7 +3,7 @@ I the main interaction that handles roassal3 general control about a view.
 I interact with the Abstract class RSAbstractControlView. I creates instances of all subclasses of RSAbstractControlsView 
 "
 Class {
-	#name : #RSCanvasController,
+	#name : #RSCanvasControllerInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#instVars : [
 		'interactions',
@@ -14,37 +14,37 @@ Class {
 }
 
 { #category : #accessing }
-RSCanvasController >> addInteraction: anInteractionObject [
+RSCanvasControllerInteraction >> addInteraction: anInteractionObject [
 
 	self interactions: (self interactions, (Array with: anInteractionObject class -> anInteractionObject)).
 	anInteractionObject configuration: configuration
 ]
 
 { #category : #accessing }
-RSCanvasController >> addInteractionClass: anInteractionClass [
+RSCanvasControllerInteraction >> addInteractionClass: anInteractionClass [
 	"This method is commanded for public use."
 	self addInteraction: anInteractionClass new
 ]
 
 { #category : #accessing }
-RSCanvasController >> configuration [
+RSCanvasControllerInteraction >> configuration [
 	^ configuration
 ]
 
 { #category : #accessing }
-RSCanvasController >> configuration: aRSControlLimits [
+RSCanvasControllerInteraction >> configuration: aRSControlLimits [
 	configuration := aRSControlLimits.
 	self interactions do: [ :i | i configuration: configuration ].
 ]
 
 { #category : #initialization }
-RSCanvasController >> defaultInteractions [
+RSCanvasControllerInteraction >> defaultInteractions [
 	"create a subclass of RSControslView and define your own custom interactions for your canvas"
-	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvasInteraction. RSZoomToFitCanvas. RSZoomableCanvas. RSScrollBarsCanvas . RSSearchInCanvas }
+	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvasInteraction. RSZoomToFitCanvasInteraction. RSZoomableCanvasInteraction. RSScrollBarsCanvasInteraction . RSSearchInCanvasInteraction }
 ]
 
 { #category : #initialization }
-RSCanvasController >> initialize [
+RSCanvasControllerInteraction >> initialize [
 	super initialize.
 	self interactions: (self defaultInteractions collect: #new).
 	self
@@ -53,12 +53,12 @@ RSCanvasController >> initialize [
 ]
 
 { #category : #accessing }
-RSCanvasController >> interactions [
+RSCanvasControllerInteraction >> interactions [
 	^ interactions
 ]
 
 { #category : #accessing }
-RSCanvasController >> interactions: aCollectionOfInteractions [
+RSCanvasControllerInteraction >> interactions: aCollectionOfInteractions [
 	interactions := OrderedDictionary new.
 	aCollectionOfInteractions do: [ :int |
 		interactions at: int class put: int ].
@@ -66,12 +66,12 @@ RSCanvasController >> interactions: aCollectionOfInteractions [
 ]
 
 { #category : #configuration }
-RSCanvasController >> noLegend [
+RSCanvasControllerInteraction >> noLegend [
 	withLegend := false
 ]
 
 { #category : #hooks }
-RSCanvasController >> onShape: aCanvas [
+RSCanvasControllerInteraction >> onShape: aCanvas [
 	aCanvas controllerInteraction ifNotNil: [ ^ self ].
 	aCanvas controllerInteraction: self.
 	self interactions do: [ :int | int onShape: aCanvas ].
@@ -80,7 +80,7 @@ RSCanvasController >> onShape: aCanvas [
 ]
 
 { #category : #hooks }
-RSCanvasController >> renderLegendOn: aCanvas [
+RSCanvasControllerInteraction >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
 	lb := RSLegend new 
@@ -102,11 +102,11 @@ RSCanvasController >> renderLegendOn: aCanvas [
 ]
 
 { #category : #testing }
-RSCanvasController >> shouldShowLegend [
+RSCanvasControllerInteraction >> shouldShowLegend [
 	^ withLegend
 ]
 
 { #category : #configuration }
-RSCanvasController >> withLegend [
+RSCanvasControllerInteraction >> withLegend [
 	withLegend := true
 ]

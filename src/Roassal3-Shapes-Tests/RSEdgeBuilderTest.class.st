@@ -262,7 +262,7 @@ RSEdgeBuilderTest >> testInferCanvas3 [
 		connectFrom: [ :i | i // 2 ].
 
 	RSGridLayout on: c nodes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 	self assert: c numberOfEdges equals: 99
 ]

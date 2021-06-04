@@ -238,10 +238,10 @@ RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 	shapes := self palettes.
 	canvas addAll: shapes.
 	
-	controls := RSCanvasController new.
+	controls := RSCanvasControllerInteraction new.
 	controls noLegend.
 	controls interactions removeKey: RSDraggableCanvasInteraction.
-	controls interactions at: RSScrollWheelCanvas put: RSScrollWheelCanvas new.
+	controls interactions at: RSScrollWheelCanvasInteraction put: RSScrollWheelCanvasInteraction new.
 	controls configuration 
 		noZoomToFitOnStart;
 		padding: 0@ 10;

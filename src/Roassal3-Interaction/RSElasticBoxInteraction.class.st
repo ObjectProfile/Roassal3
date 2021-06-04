@@ -5,7 +5,7 @@ this interaction works with an announcer. with this events `RSSelectionChangedEv
 
 "
 Class {
-	#name : #RSElasticBox,
+	#name : #RSElasticBoxInteraction,
 	#superclass : #RSAbstractCanvasInteraction,
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
@@ -23,22 +23,22 @@ Class {
 }
 
 { #category : #announcer }
-RSElasticBox >> announcementClasses [
+RSElasticBoxInteraction >> announcementClasses [
 	^ RSSelectionEvent subclasses
 ]
 
 { #category : #announcer }
-RSElasticBox >> announcer: anAnnouncer [
+RSElasticBoxInteraction >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
 { #category : #public }
-RSElasticBox >> box [
+RSElasticBoxInteraction >> box [
 	^ baseBox
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> boxEnded: event [
+RSElasticBoxInteraction >> boxEnded: event [
 	| boxEvent |
 	boxEvent := self createEvent: RSSelectionEndEvent with: event.
 	boxEvent shape remove.
@@ -49,13 +49,13 @@ RSElasticBox >> boxEnded: event [
 ]
 
 { #category : #accessing }
-RSElasticBox >> boxStartEvent [
+RSElasticBoxInteraction >> boxStartEvent [
 	"return the activation box start event"
 	^ self events second
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> boxStarted: event [
+RSElasticBoxInteraction >> boxStarted: event [
 	| boxEvent |
 	boxEvent := self createEvent: RSSelectionStartEvent with: event.
 	boxEvent selectedShapes: (selectedShapes := RSGroup new).
@@ -64,7 +64,7 @@ RSElasticBox >> boxStarted: event [
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> boxUpdated: event [
+RSElasticBoxInteraction >> boxUpdated: event [
 	| boxEvent newSelectedShapes |
 	boxEvent := self createEvent: RSSelectionChangedEvent with: event.
 	self updateBoxRectangle: boxEvent shape with: event.
@@ -82,7 +82,7 @@ RSElasticBox >> boxUpdated: event [
 ]
 
 { #category : #helper }
-RSElasticBox >> createElasticBox: event [
+RSElasticBoxInteraction >> createElasticBox: event [
 	| canvas elasticBox |
 	canvas := event canvas.
 	elasticBox := self box copy.
@@ -91,7 +91,7 @@ RSElasticBox >> createElasticBox: event [
 ]
 
 { #category : #helper }
-RSElasticBox >> createEvent: clazzEvent with: originalEvent [
+RSElasticBoxInteraction >> createEvent: clazzEvent with: originalEvent [
 	^ clazzEvent new
 		canvas: originalEvent canvas;
 		shape: (self getOrCreateElasticBox: originalEvent);
@@ -99,7 +99,7 @@ RSElasticBox >> createEvent: clazzEvent with: originalEvent [
 ]
 
 { #category : #initialization }
-RSElasticBox >> defaultBox [
+RSElasticBoxInteraction >> defaultBox [
 	| color |
 	color := Color colorFrom: '3399FF'.
 	^ RSBox new 
@@ -109,37 +109,37 @@ RSElasticBox >> defaultBox [
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> disableDrag: event [
+RSElasticBoxInteraction >> disableDrag: event [
 	draggingCanvas := false.
 	self boxStarted: event.
 ]
 
 { #category : #accessing }
-RSElasticBox >> dragStartEvent [
+RSElasticBoxInteraction >> dragStartEvent [
 	"return the drag activation event for RSDraggableCanvas"
 	^ self events first
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> enableDrag: event [
+RSElasticBoxInteraction >> enableDrag: event [
 	draggingCanvas := true.
 ]
 
 { #category : #accessing }
-RSElasticBox >> events [
+RSElasticBoxInteraction >> events [
 	"return an array with 2 elements the `boxStartEvent` and `dragStartEvent` "
 	^ events
 ]
 
 { #category : #helper }
-RSElasticBox >> getOrCreateElasticBox: event [
+RSElasticBoxInteraction >> getOrCreateElasticBox: event [
 	^ event canvas 
 		propertyAt: self className
 		ifAbsentPut: [ self createElasticBox: event ]
 ]
 
 { #category : #initialization }
-RSElasticBox >> initialize [
+RSElasticBoxInteraction >> initialize [
 	super initialize.
 	self leftRight.
 	baseBox := self defaultBox.
@@ -150,17 +150,17 @@ RSElasticBox >> initialize [
 ]
 
 { #category : #public }
-RSElasticBox >> leftRight [
+RSElasticBoxInteraction >> leftRight [
 	events := { RSMouseLeftDragStart. RSMouseRightDragStart }.
 ]
 
 { #category : #public }
-RSElasticBox >> noNegativeBox [
+RSElasticBoxInteraction >> noNegativeBox [
 	shouldUseNegativeBox := false.
 ]
 
 { #category : #hooks }
-RSElasticBox >> onShape: aCanvas [
+RSElasticBoxInteraction >> onShape: aCanvas [
 	aCanvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	aCanvas addInteraction: (RSDraggableCanvasInteraction new 
 		mouseEvent: self dragStartEvent).
@@ -172,18 +172,18 @@ RSElasticBox >> onShape: aCanvas [
 ]
 
 { #category : #announcer }
-RSElasticBox >> privateAnnouncer [
+RSElasticBoxInteraction >> privateAnnouncer [
 	^ announcer
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> processDrag: event [
+RSElasticBoxInteraction >> processDrag: event [
 	draggingCanvas ifTrue: [ ^ self ].
 	self boxUpdated: event
 ]
 
 { #category : #'event processing' }
-RSElasticBox >> processDragEnd: event [
+RSElasticBoxInteraction >> processDragEnd: event [
 	draggingCanvas
 		ifTrue: [ draggingCanvas := false ]
 		ifFalse: [ self boxEnded: event ]
@@ -191,18 +191,18 @@ RSElasticBox >> processDragEnd: event [
 ]
 
 { #category : #public }
-RSElasticBox >> rightLeft [
+RSElasticBoxInteraction >> rightLeft [
 	events := { RSMouseRightDragStart. RSMouseLeftDragStart }.
 ]
 
 { #category : #accessing }
-RSElasticBox >> selectedShapes [
+RSElasticBoxInteraction >> selectedShapes [
 	"return the current selected shapes"
 	^ selectedShapes
 ]
 
 { #category : #helper }
-RSElasticBox >> selectedShapesWith: shape [
+RSElasticBoxInteraction >> selectedShapesWith: shape [
 	| rect |
 	rect := shape encompassingRectangle.
 	
@@ -211,18 +211,18 @@ RSElasticBox >> selectedShapesWith: shape [
 ]
 
 { #category : #testing }
-RSElasticBox >> shouldUseNegativeBox [
+RSElasticBoxInteraction >> shouldUseNegativeBox [
 	^ shouldUseNegativeBox
 ]
 
 { #category : #accessing }
-RSElasticBox >> targetShapes [
+RSElasticBoxInteraction >> targetShapes [
 	"Return the targetShapes, usually a collection where the elasticbox with intersets its encompassing rectangle"
 	^ targetShapes
 ]
 
 { #category : #accessing }
-RSElasticBox >> targetShapes: anObject [
+RSElasticBoxInteraction >> targetShapes: anObject [
 	"
 	Expermode related to read documentation of `rsValue:`
 	targetShapes is used to intersect it with the `elastic box`.
@@ -240,7 +240,7 @@ RSElasticBox >> targetShapes: anObject [
 ]
 
 { #category : #helper }
-RSElasticBox >> updateBoxRectangle: shape with: event [
+RSElasticBoxInteraction >> updateBoxRectangle: shape with: event [
 	| corner |
 	corner := event position.
 	((corner x < startPosition x or: [ corner y < startPosition y ])
@@ -250,6 +250,6 @@ RSElasticBox >> updateBoxRectangle: shape with: event [
 ]
 
 { #category : #public }
-RSElasticBox >> useNegativeBox [
+RSElasticBoxInteraction >> useNegativeBox [
 	shouldUseNegativeBox := true.
 ]

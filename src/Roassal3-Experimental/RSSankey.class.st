@@ -173,7 +173,7 @@ RSSankey >> createLines [
 
 { #category : #defaults }
 RSSankey >> defaultContainer [
-	^ RSCanvas new @ RSCanvasController 
+	^ RSCanvas new @ RSCanvasControllerInteraction 
 ]
 
 { #category : #accessing }

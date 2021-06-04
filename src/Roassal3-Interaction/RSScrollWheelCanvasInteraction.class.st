@@ -2,7 +2,7 @@
 I am a interaction for translate the canvas in vertical position with the mouse wheel
 "
 Class {
-	#name : #RSScrollWheelCanvas,
+	#name : #RSScrollWheelCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'animation'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'events-processing' }
-RSScrollWheelCanvas >> move: aCanvas delta: delta [
+RSScrollWheelCanvasInteraction >> move: aCanvas delta: delta [
 
 	| correct p |
 	correct := self correctCameraPosition: aCanvas.
@@ -39,12 +39,12 @@ RSScrollWheelCanvas >> move: aCanvas delta: delta [
 ]
 
 { #category : #hooks }
-RSScrollWheelCanvas >> onShape: aCanvas [
+RSScrollWheelCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
 { #category : #'events-processing' }
-RSScrollWheelCanvas >> processEvent: evt [
+RSScrollWheelCanvasInteraction >> processEvent: evt [
 	| delta |
 	delta := (evt isUp
 		ifTrue: [ -1]
@@ -54,6 +54,6 @@ RSScrollWheelCanvas >> processEvent: evt [
 ]
 
 { #category : #rendering }
-RSScrollWheelCanvas >> renderLegendOn: aLegendBuilder [
+RSScrollWheelCanvasInteraction >> renderLegendOn: aLegendBuilder [
 	
 ]

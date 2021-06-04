@@ -55,7 +55,7 @@ c @ con.
 
 "
 Class {
-	#name : #RSSearchInCanvas,
+	#name : #RSSearchInCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'canvas',
@@ -69,13 +69,13 @@ Class {
 }
 
 { #category : #public }
-RSSearchInCanvas >> adjustRegExpIfNecessary: regExp [
+RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 
 	^ useExactMatch ifTrue: [ regExp ] ifFalse: [ '*', regExp, '*' ]
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvas >> animateShadowPosition: shadow [
+RSSearchInCanvasInteraction >> animateShadowPosition: shadow [
 	(canvas visibleRectangle containsRect: shadow encompassingRectangle)
 		ifTrue: [ ^ self ].
 	canvas newAnimation
@@ -86,7 +86,7 @@ RSSearchInCanvas >> animateShadowPosition: shadow [
 ]
 
 { #category : #util }
-RSSearchInCanvas >> candidateShapes [
+RSSearchInCanvasInteraction >> candidateShapes [
 	"Return shapes for which the model has to be matched. 
 	 Only shapes that are not a line and having a model may be eligeable to be highligted"
 	self assert: [ canvas notNil ] description: 'Canvas should be set first'.
@@ -94,20 +94,20 @@ RSSearchInCanvas >> candidateShapes [
 ]
 
 { #category : #accessing }
-RSSearchInCanvas >> canvas: aCanvas [
+RSSearchInCanvasInteraction >> canvas: aCanvas [
 	"Set the canvas from which shapes should be searched in"
 	canvas := aCanvas
 ]
 
 { #category : #public }
-RSSearchInCanvas >> cleanAndResetFixedshapes [
+RSSearchInCanvasInteraction >> cleanAndResetFixedshapes [
 
 	fixedLabels do: [ :s | canvas removeFixedShape: s ].
 	self resetFixedShapes
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvas >> click: evt [
+RSSearchInCanvasInteraction >> click: evt [
 	| shapes label index shadow nextShadow |
 	label := evt shape.
 	shapes := label propertyAt: #shapesToHighlight.
@@ -126,37 +126,37 @@ RSSearchInCanvas >> click: evt [
 ]
 
 { #category : #'public - configuration' }
-RSSearchInCanvas >> colorToHighlight: aColor [
+RSSearchInCanvasInteraction >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
 	colorsToUse range at: 1 put: aColor.
 ]
 
 { #category : #public }
-RSSearchInCanvas >> colorToUseToHighlight [
+RSSearchInCanvasInteraction >> colorToUseToHighlight [
 
 	^ colorsToUse scale: self numberOfPerformedSearches
 ]
 
 { #category : #public }
-RSSearchInCanvas >> colorsToUse: aNSOrdinalScale [
+RSSearchInCanvasInteraction >> colorsToUse: aNSOrdinalScale [
 	colorsToUse := aNSOrdinalScale
 ]
 
 { #category : #public }
-RSSearchInCanvas >> doHighlightShapes: shapesToHighlight [
+RSSearchInCanvasInteraction >> doHighlightShapes: shapesToHighlight [
 	shapesToHighlight do: [ :s | self putShadowOn: s ].
 	"We record the highlighted shapes"
 	highlightesShapes addAll: shapesToHighlight
 ]
 
 { #category : #'public - configuration' }
-RSSearchInCanvas >> doNotUseExactMatch [
+RSSearchInCanvasInteraction >> doNotUseExactMatch [
 	"Expect a regular expression as input, but a * is prepended and appended to the regexp"
 	useExactMatch := false
 ]
 
 { #category : #public }
-RSSearchInCanvas >> doUnhighlightShapes [
+RSSearchInCanvasInteraction >> doUnhighlightShapes [
 
 	highlightesShapes do: [ :s | 
 		s propertyAt: #shadow ifPresent: [ :shadow | 
@@ -168,13 +168,13 @@ RSSearchInCanvas >> doUnhighlightShapes [
 ]
 
 { #category : #accessing }
-RSSearchInCanvas >> fixedLabels [
+RSSearchInCanvasInteraction >> fixedLabels [
 	"Return the label that are created when a search is performed"
 	^ fixedLabels
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvas >> hideCurrentShadow: evt [
+RSSearchInCanvasInteraction >> hideCurrentShadow: evt [
 	| shapes label index shadow anime |
 	label := evt shape.
 	shapes := label propertyAt: #shapesToHighlight.
@@ -192,7 +192,7 @@ RSSearchInCanvas >> hideCurrentShadow: evt [
 ]
 
 { #category : #initialization }
-RSSearchInCanvas >> initialize [
+RSSearchInCanvasInteraction >> initialize [
 
 	super initialize.
 	self resetFixedShapes.
@@ -209,35 +209,35 @@ RSSearchInCanvas >> initialize [
 ]
 
 { #category : #util }
-RSSearchInCanvas >> isRegExpValid: regExp [
+RSSearchInCanvasInteraction >> isRegExpValid: regExp [
 	"Is the regular expression relevant to be processed"
 	^ regExp notNil and: [ regExp notEmpty ]
 ]
 
 { #category : #configuration }
-RSSearchInCanvas >> keyForReset [
+RSSearchInCanvasInteraction >> keyForReset [
 	^ 'R'
 ]
 
 { #category : #configuration }
-RSSearchInCanvas >> keyForSearch [
+RSSearchInCanvasInteraction >> keyForSearch [
 	^ 'S'
 ]
 
 { #category : #util }
-RSSearchInCanvas >> numberOfHighlightedShapes [
+RSSearchInCanvasInteraction >> numberOfHighlightedShapes [
 	"Return the number of shapes that have been highlited"
 	^ highlightesShapes size
 ]
 
 { #category : #accessing }
-RSSearchInCanvas >> numberOfPerformedSearches [
+RSSearchInCanvasInteraction >> numberOfPerformedSearches [
 	"Return the number of searches that have been done since the last reset. This number is the same than the number of fixed labels that were already set."
 	^ fixedLabels size
 ]
 
 { #category : #private }
-RSSearchInCanvas >> obtainRegExpToHighlight [
+RSSearchInCanvasInteraction >> obtainRegExpToHighlight [
 	"Open a UI"
 	^ UIManager default
 		request: 'Enter a reg exp to search for an item'
@@ -245,13 +245,13 @@ RSSearchInCanvas >> obtainRegExpToHighlight [
 ]
 
 { #category : #public }
-RSSearchInCanvas >> onShape: aCanvas [
+RSSearchInCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
 		when: RSKeyUp do: [ :evt | self processKeyUp: evt ]
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvas >> processKeyUp: evt [
+RSSearchInCanvasInteraction >> processKeyUp: evt [
 	| keyName |
 	self canvas: evt canvas.
 	keyName := evt keyName.
@@ -261,7 +261,7 @@ RSSearchInCanvas >> processKeyUp: evt [
 ]
 
 { #category : #public }
-RSSearchInCanvas >> putShadowOn: shape [
+RSSearchInCanvasInteraction >> putShadowOn: shape [
 	| shadow pad |
 	pad := 5/ (self scaleFrom: shape).
 	shadow := RSBox new
@@ -283,7 +283,7 @@ RSSearchInCanvas >> putShadowOn: shape [
 ]
 
 { #category : #rendering }
-RSSearchInCanvas >> renderLegendOn: aLegendBuilder [
+RSSearchInCanvasInteraction >> renderLegendOn: aLegendBuilder [
 	aLegendBuilder
 		text: self keyForSearch
 		description: 'Search and highlight items'.
@@ -293,7 +293,7 @@ RSSearchInCanvas >> renderLegendOn: aLegendBuilder [
 ]
 
 { #category : #public }
-RSSearchInCanvas >> resetAllHighlightedShapes [
+RSSearchInCanvasInteraction >> resetAllHighlightedShapes [
 
 	"Restore the colors of all the highlighted shapes. This method is called whtn keyForReset is pressed"
 
@@ -303,19 +303,19 @@ RSSearchInCanvas >> resetAllHighlightedShapes [
 ]
 
 { #category : #initialization }
-RSSearchInCanvas >> resetFixedShapes [
+RSSearchInCanvasInteraction >> resetFixedShapes [
 	fixedLabels := RSGroup new
 ]
 
 { #category : #private }
-RSSearchInCanvas >> scaleFrom: s [
+RSSearchInCanvasInteraction >> scaleFrom: s [
 	"Return the scale used by the canvas of the shape"
 	s canvas ifNil: [ ^ 1 ].
 	^ s canvas camera scale
 ]
 
 { #category : #public }
-RSSearchInCanvas >> searchForShapes [
+RSSearchInCanvasInteraction >> searchForShapes [
 	"callback called when some shapes have to be search"
 	| regExp |
 	regExp := self obtainRegExpToHighlight.
@@ -325,7 +325,7 @@ RSSearchInCanvas >> searchForShapes [
 ]
 
 { #category : #public }
-RSSearchInCanvas >> searchForShapes: regExp [
+RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	"callback called when some shapes have to be search"
 
 	| shapesToHighlight lbl |
@@ -354,7 +354,7 @@ RSSearchInCanvas >> searchForShapes: regExp [
 ]
 
 { #category : #util }
-RSSearchInCanvas >> shapesToHighlightUsingRegExp: regExp [
+RSSearchInCanvasInteraction >> shapesToHighlightUsingRegExp: regExp [
 	"Return the shapes to be highlighted"	
 
 	| candidateShapes shapesToHighlight |
@@ -366,7 +366,7 @@ RSSearchInCanvas >> shapesToHighlightUsingRegExp: regExp [
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvas >> showCurrentShadow: evt [
+RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 	| shapes label anime index shadow |
 	label := evt shape.
 	shapes := label propertyAt: #shapesToHighlight.
@@ -395,17 +395,17 @@ RSSearchInCanvas >> showCurrentShadow: evt [
 ]
 
 { #category : #util }
-RSSearchInCanvas >> unhighlightShape: s [
+RSSearchInCanvasInteraction >> unhighlightShape: s [
 	^ RSHighlightableInteraction new restore: s selector: #color
 ]
 
 { #category : #util }
-RSSearchInCanvas >> unhighlightShapes: shapesToHighlight [
+RSSearchInCanvasInteraction >> unhighlightShapes: shapesToHighlight [
 	shapesToHighlight do: [ :s | self unhighlightShape: s ]
 ]
 
 { #category : #'public - configuration' }
-RSSearchInCanvas >> useExactMatch [
+RSSearchInCanvasInteraction >> useExactMatch [
 	"Expect a regular expression as input"
 	useExactMatch := true
 ]

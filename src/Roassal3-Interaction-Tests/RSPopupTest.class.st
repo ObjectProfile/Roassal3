@@ -53,7 +53,7 @@ RSPopupTest >> testPopup [
 
 	RSTreeLayout on: shapes.
 "	c edges pushBack."
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 3.
@@ -112,7 +112,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 
 	RSTreeLayout on: shapes.
 "	c edges pushBack."
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 3.

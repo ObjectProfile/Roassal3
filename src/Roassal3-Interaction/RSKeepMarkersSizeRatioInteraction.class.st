@@ -39,13 +39,13 @@ Example:
 	
 "
 Class {
-	#name : #RSKeepMarkersSizeRatio,
+	#name : #RSKeepMarkersSizeRatioInteraction,
 	#superclass : #RSAbstractScaleInteraction,
 	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #hooks }
-RSKeepMarkersSizeRatio >> onShape: anEdge [
+RSKeepMarkersSizeRatioInteraction >> onShape: anEdge [
 	| markers sizes offsets |
 	anEdge isInACanvas ifFalse: [ self error: 'add this edge to a canvas first' ].
 	markers := anEdge markers select: #notNil.

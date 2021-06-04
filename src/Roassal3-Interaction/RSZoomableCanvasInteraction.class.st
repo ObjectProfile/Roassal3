@@ -2,7 +2,7 @@
 I handle the zoom interaction with mouse wheel event, also I handle all the zoom process
 "
 Class {
-	#name : #RSZoomableCanvas,
+	#name : #RSZoomableCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'animation'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'events-processing' }
-RSZoomableCanvas >> move: aCanvas evtPosition: evtPosition delta: delta [
+RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: delta [
 
 	| camera sc dist correct scale position |
 	camera := aCanvas camera.
@@ -36,12 +36,12 @@ RSZoomableCanvas >> move: aCanvas evtPosition: evtPosition delta: delta [
 ]
 
 { #category : #hooks }
-RSZoomableCanvas >> onShape: aCanvas [
+RSZoomableCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
 { #category : #'events-processing' }
-RSZoomableCanvas >> processEvent: evt [
+RSZoomableCanvasInteraction >> processEvent: evt [
 	| delta |
 	animation ifNotNil: [ ^ self ].
 	delta := evt isUp
@@ -51,11 +51,11 @@ RSZoomableCanvas >> processEvent: evt [
 ]
 
 { #category : #rendering }
-RSZoomableCanvas >> renderLegendOn: lb [
+RSZoomableCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'.
 ]
 
 { #category : #rendering }
-RSZoomableCanvas >> renderOn: lb [
+RSZoomableCanvasInteraction >> renderOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'.
 ]

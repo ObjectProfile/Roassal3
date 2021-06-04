@@ -131,7 +131,7 @@ RSChart >> decorations [
 
 { #category : #defaults }
 RSChart >> defaultContainer [
-	^ RSCanvas new @ RSCanvasController
+	^ RSCanvas new @ RSCanvasControllerInteraction
 ]
 
 { #category : #color }

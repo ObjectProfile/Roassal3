@@ -37,7 +37,7 @@ RSAnimationExamples >> example01BoxWindmill [
 					translateBy: s model;
 					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
-	canvas @ RSGraphCanvasMonitor.
+	canvas @ RSGraphCanvasMonitorInteraction.
 	^ canvas
 ]
 
@@ -1524,7 +1524,7 @@ RSAnimationExamples >> example25AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 	
 
@@ -1937,7 +1937,7 @@ RSAnimationExamples >> example32SimpleClock [
 		top;
 		offset: 0 @ 15.
 	location move: canvas shapes last on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -1967,7 +1967,7 @@ RSAnimationExamples >> example33AnimatedLayout [
 		layout on: shapes.
 		 ].
 	update value: #tree.
-	RSZoomToFitCanvas new animatedZoomToFit: c.
+	RSZoomToFitCanvasInteraction new animatedZoomToFit: c.
 
 	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	labels := labels collect: [ :sel |
@@ -2244,7 +2244,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 		edges: canvas edges;
 		start;
 		yourself.
-	canvas @ RSSimpleCanvasMonitor.
+	canvas @ RSSimpleCanvasMonitorInteraction.
 	canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
@@ -2255,7 +2255,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 		corner := camera fromPixelToSpace: canvas canvas extent.
 		layout enclosingRectangle: (origin corner: corner).
 	].
-	classes @ (RSDraggableForce new layout: layout).
+	classes @ (RSDraggableForceInteraction new layout: layout).
 
 	canvas camera scale: 2.
 	^ canvas
@@ -2750,7 +2750,7 @@ RSAnimationExamples >> example45Beziers [
 		gapSize: 50; 
 		on: graphs.
 	c addAll: graphs.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c
 
 ]
