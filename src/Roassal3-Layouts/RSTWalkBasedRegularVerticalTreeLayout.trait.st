@@ -42,5 +42,7 @@ RSTWalkBasedRegularVerticalTreeLayout >> depthMeasureOf: aShape [
 { #category : #positioning }
 RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
-	^ breadth @ depth
+	| shift |
+	shift := aShape extent / 2.
+	^ breadth @ depth + shift
 ]

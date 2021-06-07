@@ -485,17 +485,17 @@ RSTWalkBasedRegularTreeLayout >> rthreadOf: aNode put: aFloat [
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 
-	| mNext children depth breadth |
+	| mNext children depth breadth position |
 	mNext := m + (self modOf: aShape).
 
 	depth := n + (self depthOf: aShape).
 	breadth := (self prelimOf: aShape) + mNext.
 
-	self
-		positionOf: aShape
-		put:
-			(self positionOfShape: aShape atDepth: depth atBreadth: breadth)
-			+ (aShape extent / 2).
+	position := self
+		            positionOfShape: aShape
+		            atDepth: depth
+		            atBreadth: breadth.
+	self positionOf: aShape put: position.
 
 	children := self childrenOf: aShape.
 
