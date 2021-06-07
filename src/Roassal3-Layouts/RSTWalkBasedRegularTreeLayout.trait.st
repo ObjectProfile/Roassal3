@@ -417,6 +417,12 @@ RSTWalkBasedRegularTreeLayout >> nextRightContour: v [
 		  ifNotLeaf: [ (self childrenOf: v) last ]
 ]
 
+{ #category : #'layout-properties' }
+RSTWalkBasedRegularTreeLayout >> positionOf: aShape put: aPoint [
+
+	^ aShape position: aPoint
+]
+
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
@@ -477,9 +483,11 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 	depth := n + (self depthOf: aShape).
 	breadth := (self prelimOf: aShape) + mNext.
 
-	aShape position:
-		(self positionOfShape: aShape atDepth: depth atBreadth: breadth)
-		+ (aShape extent / 2).
+	self
+		positionOf: aShape
+		put:
+			(self positionOfShape: aShape atDepth: depth atBreadth: breadth)
+			+ (aShape extent / 2).
 
 	children := self childrenOf: aShape.
 
