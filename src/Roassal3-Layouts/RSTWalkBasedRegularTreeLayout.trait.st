@@ -23,13 +23,13 @@ RSTWalkBasedRegularTreeLayout >> addChildSpacing: children [
 		  newPoint ]
 ]
 
-{ #category : #algorithm }
+{ #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
 	self explicitRequirement
 ]
 
-{ #category : #algorithm }
+{ #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> breadthMeasureOf: aShape [
 
 	self explicitRequirement
@@ -38,13 +38,13 @@ RSTWalkBasedRegularTreeLayout >> breadthMeasureOf: aShape [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> changeOf: aNode [
 
-	^ aNode propertyAt: #change
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> changeOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #change put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -56,19 +56,19 @@ RSTWalkBasedRegularTreeLayout >> changeOf: aNode update: aBlock [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> childrenOf: aNode [
 
-	^ aNode propertyAt: #children
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> childrenOf: aNode put: aValue [
 
-	^ aNode propertyAt: #children put: aValue
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> completedInitializationOf: aNode [
 
-	^ aNode propertyAt: #vdpInitialized put: true
+	self explicitRequirement
 ]
 
 { #category : #algorithm }
@@ -77,13 +77,13 @@ RSTWalkBasedRegularTreeLayout >> depthBoundOf: aShape [
 	^ (self depthOf: aShape) + (self depthMeasureOf: aShape)
 ]
 
-{ #category : #algorithm }
+{ #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
 	self explicitRequirement
 ]
 
-{ #category : #algorithm }
+{ #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> depthMeasureOf: aShape [
 
 	self explicitRequirement
@@ -92,37 +92,37 @@ RSTWalkBasedRegularTreeLayout >> depthMeasureOf: aShape [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> depthOf: aNode [
 
-	^ aNode propertyAt: #depth
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> depthOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #depth put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> elOf: aNode [
 
-	^ aNode propertyAt: #el
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> elOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #el put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> erOf: aNode [
 
-	^ aNode propertyAt: #er
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> erOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #er put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #algorithm }
@@ -176,7 +176,7 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: v [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> hasBeenInitializedOf: aNode [
 
-	^ aNode propertyAt: #vdpInitialized ifAbsent: [ false ]
+	self explicitRequirement
 ]
 
 { #category : #algorithm }
@@ -188,7 +188,7 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
+RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associations [
 
 	| hierarchy roots fathers root leaves |
 	hierarchy := IdentityDictionary new.
@@ -196,10 +196,10 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 	leaves := IdentitySet withAll: elements.
 	fathers := IdentityDictionary new.
 
-	edges do: [ :anEdge | 
+	associations do: [ :anAssociation | 
 		| children child father multipleParents fathersOfChild |
-		father := anEdge from.
-		child := anEdge to.
+		father := anAssociation key.
+		child := anAssociation value.
 
 		multipleParents := false.
 		roots remove: child ifAbsent: [ multipleParents := true ].
@@ -241,6 +241,14 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements edges: edges [
 			initializeForShape: each fathers: fathers ].
 
 	^ self initializeForShape: root fathers: fathers
+]
+
+{ #category : #initialization }
+RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: lines [
+
+	| associations |
+	associations := lines collect: [ :each | each from -> each to ].
+	^ self initialize: elements associationEdges: associations
 ]
 
 { #category : #initialization }
@@ -302,13 +310,13 @@ RSTWalkBasedRegularTreeLayout >> layout: aRootShape depth: aDepth breadth: aBrea
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> levelOf: aNode [
 
-	^ aNode propertyAt: #vdpLevel
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> levelOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #vdpLevel put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #algorithm }
@@ -322,13 +330,13 @@ RSTWalkBasedRegularTreeLayout >> lowYofIYL: aValueLink [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> modOf: aNode [
 
-	^ aNode propertyAt: #mod
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> modOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #mod put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -366,13 +374,13 @@ RSTWalkBasedRegularTreeLayout >> moveSubtree: children at: i other: si distance:
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> mselOf: aNode [
 
-	^ aNode propertyAt: #msel
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> mselOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #msel put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -384,13 +392,13 @@ RSTWalkBasedRegularTreeLayout >> mselOf: aNode update: aBlock [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> mserOf: aNode [
 
-	^ aNode propertyAt: #mser
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> mserOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #mser put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -420,10 +428,10 @@ RSTWalkBasedRegularTreeLayout >> nextRightContour: v [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> positionOf: aShape put: aPoint [
 
-	^ aShape position: aPoint
+	self explicitRequirement
 ]
 
-{ #category : #algorithm }
+{ #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	self explicitRequirement
@@ -447,13 +455,13 @@ RSTWalkBasedRegularTreeLayout >> positionRoot: v leftMostChild: leftMostChild ri
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> prelimOf: aNode [
 
-	^ aNode propertyAt: #prelim
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> prelimOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #prelim put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -465,13 +473,13 @@ RSTWalkBasedRegularTreeLayout >> prelimOf: aNode update: aBlock [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> rthreadOf: aNode [
 
-	^ aNode propertyAt: #rthread
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> rthreadOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #rthread put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #algorithm }
@@ -624,13 +632,13 @@ RSTWalkBasedRegularTreeLayout >> setRightThread: v previousChild: previousChild 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> shiftOf: aNode [
 
-	^ aNode propertyAt: #shift
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> shiftOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #shift put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #'updating properties' }
@@ -642,13 +650,13 @@ RSTWalkBasedRegularTreeLayout >> shiftOf: aNode update: aBlock [
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> threadOf: aNode [
 
-	^ aNode propertyAt: #thread
+	self explicitRequirement
 ]
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> threadOf: aNode put: aFloat [
 
-	^ aNode propertyAt: #thread put: aFloat
+	self explicitRequirement
 ]
 
 { #category : #algorithm }

@@ -9,58 +9,24 @@ I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and ful
 Class {
 	#name : #RSHorizontalVanDerPloegTreeLayout,
 	#superclass : #RSHorizontalTreeLayout,
-	#traits : 'RSTWalkBasedRegularTreeLayout',
-	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait',
+	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularHorizontalTreeLayout',
+	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularHorizontalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #algorithm }
-RSHorizontalVanDerPloegTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
-
-	^ [ self verticalGap value: aShapeParent value: aShape ]
-		  onDNU: #value:value:
-		  do: [ self verticalGap ]
-]
-
-{ #category : #algorithm }
-RSHorizontalVanDerPloegTreeLayout >> breadthMeasureOf: aShape [
-
-	^ aShape height
-]
-
-{ #category : #algorithm }
-RSHorizontalVanDerPloegTreeLayout >> depthGapAmong: aShapeParent and: aShape [
-
-	^ [ self horizontalGap value: aShapeParent value: aShape ]
-		  onDNU: #value:value:
-		  do: [ self horizontalGap ]
-]
-
-{ #category : #algorithm }
-RSHorizontalVanDerPloegTreeLayout >> depthMeasureOf: aShape [
-
-	^ aShape width
-]
-
 { #category : #hook }
 RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	root := self initialize: elements edges: self edges
+	root := self initialize: elements lineEdges: self edges
 ]
 
 { #category : #hook }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint x breadth: aPoint y
-]
-
-{ #category : #algorithm }
-RSHorizontalVanDerPloegTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
-
-	^ depth @ breadth
 ]
