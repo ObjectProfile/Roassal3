@@ -100,7 +100,6 @@ RSAttachPoint >> positionFor: shape in: anEdge point: pos [
 	shape isPoint ifTrue: [ ^ shape ].
 	(self hasParents: shape in: anEdge) ifFalse: [ ^ pos ].
 	shape parent = anEdge parent ifTrue: [ ^ pos ].
-	
 	"TODO we can cache this info"
 	commonParents := self commonParents: shape in: anEdge.
 	commonParents ifNil: [ ^ pos ].

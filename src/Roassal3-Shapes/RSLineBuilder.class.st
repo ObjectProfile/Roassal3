@@ -364,15 +364,19 @@ RSLineBuilder >> createEdgeIfNecessaryFrom: fromShape to: toShape [
 { #category : #'private - utility' }
 RSLineBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
-	| edge |
-	edge := self shape copy
+	| line |
+	line := self shape copy
 		model: source model -> target model;
 		from: source;
 		to: target;
+		resetMarkers;
+		markerStart: self shape markerStart copy;
+		markerMid: self shape markerMid copy;
+		markerEnd: self shape markerEnd copy;
+		border: self shape border copy;
 		yourself.
-	edge border: (self shape border copy).
-	self canvas ifNotNil: [ canvas add: edge ].
-	^ edge
+	self canvas ifNotNil: [ canvas add: line ].
+	^ line
 ]
 
 { #category : #accessing }

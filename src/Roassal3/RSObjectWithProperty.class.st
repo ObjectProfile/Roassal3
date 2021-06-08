@@ -79,19 +79,6 @@ c
 		yourself).
 ]
 
-{ #category : #interactions }
-RSObjectWithProperty >> getInteractionsForClass: anInteractionClass [
-	"Return the Announcement subscriptions for the interaction"
-	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
-]
-
-{ #category : #interactions }
-RSObjectWithProperty >> hasInteraction: anInteractionClass [
-	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
-	self announcer subscriptions ifNil: [ ^ false ].
-	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
-]
-
 { #category : #properties }
 RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]
@@ -164,13 +151,6 @@ return World
 { #category : #events }
 RSObjectWithProperty >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
-]
-
-{ #category : #interactions }
-RSObjectWithProperty >> removeInteractionIfPresent: anInteractionClass [
-	"Remove all the callbacks associated to the interaction."
-	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
-	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
 { #category : #properties }

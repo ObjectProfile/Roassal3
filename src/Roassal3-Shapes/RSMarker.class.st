@@ -94,6 +94,11 @@ c open
 	offsetRatio := aFloat
 ]
 
+{ #category : #copying }
+RSMarker >> postCopy [
+	shape := shape copy
+]
+
 { #category : #public }
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	| angle pos |

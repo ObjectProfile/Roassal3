@@ -60,11 +60,6 @@ RSAbstractControlPointsLine >> isControlPointsLine [
 	^ true
 ]
 
-{ #category : #'accessing - markers' }
-RSAbstractControlPointsLine >> privateMarkers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
 { #category : #accessing }
 RSAbstractControlPointsLine >> startPoint [
 	^ self controlPoints first

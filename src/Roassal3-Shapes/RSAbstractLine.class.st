@@ -234,6 +234,16 @@ RSAbstractLine >> notifyExtentChanged [
 		newExtent: self controlPoints first - self controlPoints last ]
 ]
 
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers [
+	^ markers
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers: array [ 
+	markers := array
+]
+
 { #category : #adding }
 RSAbstractLine >> remove [
 	parent ifNil: [ ^ self ].
