@@ -25,12 +25,13 @@ RSBlocHost >> newAnimation [
 
 { #category : #opening }
 RSBlocHost >> newCanvasElement [
+	"The shapes of a RSCanvas must be translated and scaled according to the camera."
 
 	| children |
 	children := canvas shapes collect: [:each | each asBlElement ].
 
-	^ RSCanvasElement new
-"		  border: (BlBorder paint: Color black width: 1);	"
+	^ BlElement new
+"		border: (BlBorder paint: Color blue translucent width: 10);"
 		clipChildren: false;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
@@ -40,8 +41,26 @@ RSBlocHost >> newCanvasElement [
 				centerOrigin;
 				translateBy: (canvas extent / 2) asFloatPoint;
 				translateBy: canvas camera position negated asFloatPoint;
-				scaleBy: canvas camera scale asFloat.
+				scaleBy: canvas camera scale asFloat;
+				yourself.
 			 ];
+		addChildren: children;
+		yourself
+]
+
+{ #category : #opening }
+RSBlocHost >> newFixedShapesElement [
+	"The fixedShapes of a RSCanvas are not affected by camera transformations. This is useful for toolbar buttons or legends, for example."
+
+	| children |
+	children := canvas fixedShapes collect: [:each | each asBlElement ].
+
+	^ BlElement new
+"		border: (BlBorder paint: Color green translucent width: 10);	"
+		clipChildren: false;
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
 		addChildren: children;
 		yourself
 ]
@@ -51,10 +70,12 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
 	space := BlSpace new
-		addChild: self newCanvasElement;
 		extent: canvas extent;
 		title: aTitleAsString;
 		yourself.
+
+	"This will add the shapes"
+	self signalUpdate.
 
 	space root
 		background: canvas color;
@@ -65,9 +86,6 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		when: BlSpaceResizedEvent
 		do: [ :evt | canvas extent: evt extent ].
 
-"
-	space host: BlOSWindowSDL2Host new.
-"
 	space show.
 	^ space
 
@@ -79,7 +97,9 @@ RSBlocHost >> signalUpdate [
 	space ifNil: [ ^ self ].
 	space root
 		removeChildren;
-		addChild: self newCanvasElement
+		addChild: self newCanvasElement;
+		addChild: self newFixedShapesElement
+
 ]
 
 { #category : #accessing }

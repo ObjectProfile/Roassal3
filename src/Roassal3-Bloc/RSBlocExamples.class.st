@@ -1199,3 +1199,81 @@ RSBlocExamples >> example31PolygonWithLinearGradient [
 
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example32FixedShape [
+	<script: 'self new example32FixedShape open'>
+
+	| c box |
+	c := RSCanvas new.
+	c useBlocHost.
+	
+	box := RSBox new
+		extent: 100 asPoint;
+		position: 100 asPoint;
+		color: Color blue;
+		isFixed: true;
+		yourself.
+	c addShape: box.
+	
+	box := RSBox new
+		extent: 100 asPoint;
+		yourself.
+	c addShape: box.
+
+	c camera scale: 2.
+
+	^ c
+]
+
+{ #category : #examples }
+RSBlocExamples >> example33AnimatedLayout [
+	<script: 'self new example33AnimatedLayout open'>
+
+	| c objects layout update labels shapes color |
+	c := RSCanvas new.
+	c  useBlocHost.
+
+	objects := 1 to: 100.
+	
+	color := RSColorPalette sequential ylorrd9.
+	shapes := objects collect: [ :m |
+		RSBox new
+			border: RSBorder new;
+			color: (color scale: m);
+			size: 10;
+			model: m;
+		yourself ].
+	c addAll: shapes.
+	RSLineBuilder line 
+		canvas: c;
+		objects: objects;
+		connectFrom: [ :value | value //2 ] to: #yourself.
+	layout := RSLayoutBuilder new.
+	update := [ :sel | 
+		layout perform: sel asSymbol.
+		layout on: shapes.
+		 ].
+	update value: #tree.
+	RSZoomToFitCanvas new animatedZoomToFit: c.
+
+	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
+	labels := labels collect: [ :sel |
+		RSLabel new
+			isFixed: true;
+			text: sel capitalized;
+			when: RSMouseClick do: [ :evt | | pos1 pos2 |
+				pos1 := shapes collect: #position.
+				update value: sel.
+				pos2 := shapes collect: #position.
+				c newAnimation onStepDo: [ :t |
+					shapes doWithIndex: [ :e :i |
+						e translateTo: ((pos1 at: i) 
+							interpolateTo: (pos2 at: i) at: t) ].
+					c zoomToFit; signalUpdate ] ] ].
+	c addAll: labels.
+	RSHorizontalLineLayout on: labels.
+
+	^ c
+
+]
