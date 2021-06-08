@@ -101,7 +101,7 @@ RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 	animation := aCanvas animationFrom: {
 		"Start smoothly"
 		aCanvas transitionAnimation
-			easing: RSEasing cubicOut;
+			easing: RSEasingInterpolator cubicOut;
 			duration: 500 milliSeconds;
 			range: self alphaRange;
 			onStepDo: [ :t | layout alpha: t; step ].
@@ -117,7 +117,7 @@ RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 RSForceLayoutSteppingInteraction >> startSimpleAnimation: aCanvas [
 	animation ifNotNil: #stop.
 	animation := aCanvas newAnimation 
-		easing: RSEasing cubicInOut;
+		easing: RSEasingInterpolator cubicInOut;
 		range: self alphaRange reversed;
 		duration: 2 seconds;
 		onStepDo: [ :t | layout alpha: t; step  ];

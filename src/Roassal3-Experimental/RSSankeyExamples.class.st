@@ -94,7 +94,7 @@ RSSankeyExamples >> example05Animation [
 	b canvas newAnimation
 		repeat;
 		duration: 3 seconds;
-		easing: RSEasing circleOut;
+		easing: RSEasingInterpolator circleOut;
 		onStepDo: [ :t | 
 			b lines do: [ :line | 
 				| paint |

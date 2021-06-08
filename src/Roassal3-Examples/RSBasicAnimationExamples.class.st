@@ -18,7 +18,7 @@ RSBasicAnimationExamples >> example01Basic [
 	c addShape: b.
 	
 	c newAnimation 
-		easing: RSEasing bounce;
+		easing: RSEasingInterpolator bounce;
 		from: -100@ -100;
 		to: 100@100;
 		on: b set: #position:.

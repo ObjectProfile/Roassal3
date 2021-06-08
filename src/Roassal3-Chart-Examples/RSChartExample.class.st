@@ -315,7 +315,7 @@ RSChartExample >> example18Animation [
 		afterline add: (canvas transitionAnimation
 			delay: (index * 300) milliSeconds;
 			duration: 2 second;
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			from: -100@ s position y;
 			to: s position;
 			onStepDo: [:p | 

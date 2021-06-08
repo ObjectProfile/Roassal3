@@ -112,7 +112,7 @@ RSHistogramExample >> example06Animations [
 		shape newAnimation
 			from: zeroPoint;
 			to: originalPoint;
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			onStepDo: [ :newPoint | 
 				shape
 					fromRectangle: (newPoint corner: rect corner);

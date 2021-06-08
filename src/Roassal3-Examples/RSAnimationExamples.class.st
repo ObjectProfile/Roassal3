@@ -207,7 +207,7 @@ RSAnimationExamples >> example05ElasticEllipses [
 				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
 		].
 		canvas newAnimation
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			onStepDo: [ :t |
 				canvas nodes do: [ :shape | | scale |
 					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
@@ -362,7 +362,7 @@ RSAnimationExamples >> example08ArcTree [
 		shapes := canvas nodes select: [ :e | e index = i ].
 		canvas transitionAnimation 
 			duration: 1 seconds;
-			easing: RSEasing bounceOut;
+			easing: RSEasingInterpolator bounceOut;
 			onStepDo: [ :t |
 			shapes do: [ :e |
 				e 
@@ -1760,7 +1760,7 @@ RSAnimationExamples >> example29Tick [
 	(c nodes at: 3) remove.
 	animation := [:a :b :k | c transitionAnimation 
 		duration: 700 milliSeconds;
-		easing: RSEasing bounceOut;
+		easing: RSEasingInterpolator bounceOut;
 		from: a;
 		to: b;
 		onStepDo: [ :t | | s |
@@ -2094,7 +2094,7 @@ RSAnimationExamples >> example35Roassal [
 		color: Color white;
 		fontSize: 30).
 		canvas newAnimation
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
 			canvas shapes last matrix shy: t ] ]. 
 	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent * 0.8 extent: 300@300 ].
