@@ -90,7 +90,7 @@ RSChartExample >> example16Series [
 	c := RSChart new.
 	c extent: 400@400.
 
-	b := RSLegend new.
+	b := RSLegendBuilder new.
 	b container: c canvas.
 	b layout horizontal gapSize: 30.
 	#(

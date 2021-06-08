@@ -166,7 +166,7 @@ RSHighlightableExamples >> example06IterateNext [
 	<script: 'self new example06IterateNext open'>
 	| canvas numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	canvas := RSCanvas new.
-	legendBuilder := RSLegend new container: canvas. 
+	legendBuilder := RSLegendBuilder new container: canvas. 
 
 	"Create the view with numbers as elements."
 	numbers := (1 to: 10) collect: [ :i |
