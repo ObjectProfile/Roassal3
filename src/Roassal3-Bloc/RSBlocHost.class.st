@@ -14,16 +14,6 @@ RSBlocHost >> defaultWindowTitle [
 ]
 
 { #category : #opening }
-RSBlocHost >> newAnimation [
-	^ BlNumberTransition new
-		from: 0; to: 1;
-		onStepDo: [ :t | 
-			canvas playAnimations ];
-		beInfinite;
-		yourself.
-]
-
-{ #category : #opening }
 RSBlocHost >> newCanvasElement [
 	"The shapes of a RSCanvas must be translated and scaled according to the camera."
 
@@ -66,6 +56,17 @@ RSBlocHost >> newFixedShapesElement [
 ]
 
 { #category : #opening }
+RSBlocHost >> newInfiniteCanvasAnimation [
+
+	^ BlNumberTransition new
+		from: 0; to: 1;
+		onStepDo: [ :t | 
+			canvas playAnimations ];
+		beInfinite;
+		yourself.
+]
+
+{ #category : #opening }
 RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
@@ -74,12 +75,11 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		title: aTitleAsString;
 		yourself.
 
-	"This will add the shapes"
 	self signalUpdate.
 
 	space root
 		background: canvas color;
-		addAnimation: self newAnimation;
+		addAnimation: self newInfiniteCanvasAnimation;
 		addEventHandler: (RSEventListener newForHost: self).
 
 	space
@@ -87,12 +87,14 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		do: [ :evt | canvas extent: evt extent ].
 
 	space show.
+
 	^ space
 
 ]
 
 { #category : #opening }
 RSBlocHost >> signalUpdate [
+	"Removes everything and re-adds fresh."
 
 	space ifNil: [ ^ self ].
 	space root
