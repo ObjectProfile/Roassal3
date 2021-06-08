@@ -10,7 +10,7 @@ RSChartTest >> testBasic [
 	| x |
 	x := -10.0 to: 20.0 count: 100.
 
-	RSChart new
+	RSChartBuilder new
     addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
     addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 	addDecoration: RSHorizontalTick new;
@@ -23,7 +23,7 @@ RSChartTest >> testMinMaxValue [
 
 	| y c |
 	y := #(10 13 15).
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new y: y).
 	c build.
 	self assert: c minValueX equals: 1.
@@ -38,7 +38,7 @@ RSChartTest >> testMinMaxValue2 [
 	| y c x |
 	y := #(-10 -13 -15).
 	x := #(4 6 9).
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new x: x y: y).
 	c build.
 	self assert: c minValueX equals: 4.
@@ -52,7 +52,7 @@ RSChartTest >> testMustInclude0 [
 
 	| y c |
 	y := #(10 13 15).
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new y: y).
 	c mustInclude0inY.
 	c build.
@@ -67,7 +67,7 @@ RSChartTest >> testMustInclude02 [
 
 	| y c |
 	y := #(-10 -13 -15).
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new y: y).
 	c mustInclude0inY.
 	c build.
@@ -83,7 +83,7 @@ RSChartTest >> testMustInclude03 [
 	| y c x |
 	y := #(-10 -13 -15).
 	x := #(4 6 9).
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new x: x y: y).
 	c mustInclude0inX.
 	c build.
@@ -98,7 +98,7 @@ RSChartTest >> testWithWeirdValues [
 
 	| values g d line c |
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
+	g := RSChartBuilder new.
 	d := RSLinePlot new y: values.
 	g addPlot: d.
 	g build.
@@ -116,7 +116,7 @@ RSChartTest >> testWithWeirdValuesLine [
 
 	| values g d line c |
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
+	g := RSChartBuilder new.
 	d := RSLinePlot new y: values.
 	g addPlot: d.
 	g build.
@@ -134,7 +134,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks [
 
 	| values g d line c |
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
+	g := RSChartBuilder new.
 	d := RSLinePlot new y: values.
 	g addPlot: d.
 	g addDecoration: RSHorizontalTick new.
@@ -153,7 +153,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks [
 RSChartTest >> testWithWeirdValuesLineWithTicks2 [
 	| x g d c labels |
 	x := { -5 . 0 . 1 . 2 }.
-	g := RSChart new.
+	g := RSChartBuilder new.
 	d := RSLinePlot new x: x y: x log.
 	g addPlot: d.
 	g addDecoration: RSVerticalTick new.
@@ -177,7 +177,7 @@ RSChartTest >> testYMarker [
 
 	| x c p1 p2 marker line |
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p1 := RSLinePlot new.
 	p1 x: x y: x sin * 0.22.
 	c addPlot: p1.
