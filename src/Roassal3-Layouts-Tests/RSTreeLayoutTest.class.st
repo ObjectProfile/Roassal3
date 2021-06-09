@@ -30,6 +30,7 @@ RSTreeLayoutTest >> exampleClassHierarchies: aCollection [
 				           aStream nextPut: (RSComposite new
 						            model: aSubClass;
 						            shapes: (Array with: box with: label);
+						            draggable;
 						            when: RSMouseLeftClick
 						            do: [ :ev | aSubClass browse ];
 						            yourself) ] ] ].
@@ -154,6 +155,58 @@ RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 		zoomToFit;
 		@ RSCanvasController;
 		open ] timeToRun inspect
+]
+
+{ #category : #tests }
+RSTreeLayoutTest >> exampleTraitsHierarchies [
+
+	<script: 'RSTreeLayoutTest new exampleTraitsHierarchies'>
+	| commits edges aCanvas gr |
+	gr := 1.61803398875.
+	commits := (Smalltalk allTraits sorted: [ :a :b | a name < b name ]) 
+		           collect: [ :aTrait | 
+			           | label box |
+			           label := RSLabel new text: aTrait name.
+			           box := RSBox new
+				                  color: Color white;
+				                  withBorder;
+				                  cornerRadius: gr double;
+				                  extent: label extent + gr double double asPoint;
+				                  yourself.
+			           RSLocation new center stick: label on: box.
+			           RSComposite new
+				           model: aTrait;
+				           draggable;
+				           shapes: (Array with: box with: label);
+				           when: RSMouseLeftClick do: [ :ev | aTrait browse ];
+				           yourself ].
+
+	edges := RSLineBuilder horizontalBezier
+		         shapes: commits;
+		         withHorizontalAttachPoint;
+		         connectFromAll: [ :aTrait | aTrait traits ].
+
+	edges sort: [ :a :b | 
+		| aName bName |
+		aName := a from model name.
+		bName := b from model name.
+		aName = bName
+			ifTrue: [ a to model name < b to model name ]
+			ifFalse: [ aName < bName ] ].
+
+	RSHorizontalVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	aCanvas
+		zoomToFit;
+		exportToSVG;
+		@ RSCanvasController;
+		open
 ]
 
 { #category : #tests }
