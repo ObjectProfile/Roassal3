@@ -42,7 +42,8 @@ str := fileCoverageResult writeStream.
 str nextPutAll: profiler coverage asString.
 str close.
 
-m canvas extent: (800 @ 800).
+"m canvas extent: (800 @ 800)."
+m canvas zoomToFit.
 RSPNGExporter new
 	canvas: m canvas;
 	exportToFile: 'coverage.png' asFileReference.
