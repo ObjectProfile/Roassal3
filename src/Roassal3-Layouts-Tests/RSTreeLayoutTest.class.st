@@ -5,6 +5,64 @@ Class {
 }
 
 { #category : #tests }
+RSTreeLayoutTest >> exampleClassHierarchies: aCollection [
+
+	<script:
+	'RSTreeLayoutTest new exampleClassHierarchies: { Collection . Magnitude . RSObject . RBNode }'>
+	| commits edges aCanvas gr |
+	gr := 1.61803398875.
+	commits := Array streamContents: [ :aStream | 
+		           aCollection do: [ :aClass | 
+			           aClass withAllSubclassesDo: [ :aSubClass | 
+				           | label box |
+				           label := RSLabel new text: aSubClass name.
+				           aSubClass isAbstract ifTrue: [ 
+					           label
+						           bold;
+						           italic ].
+				           box := RSBox new
+					                  color: Color white;
+					                  withBorder;
+					                  cornerRadius: gr double;
+					                  extent: label extent + gr double double asPoint;
+					                  yourself.
+				           RSLocation new center stick: label on: box.
+				           aStream nextPut: (RSComposite new
+						            model: aSubClass;
+						            shapes: (Array with: box with: label);
+						            when: RSMouseLeftClick
+						            do: [ :ev | aSubClass browse ];
+						            yourself) ] ] ].
+
+	edges := RSLineBuilder horizontalBezier
+		         shapes: commits;
+		         withHorizontalAttachPoint;
+		         connectToAll: [ :aSubClass | aSubClass subclasses ].
+
+	edges sort: [ :a :b | 
+		| aName bName |
+		aName := a from model name.
+		bName := b from model name.
+		aName = bName
+			ifTrue: [ a to model name < b to model name ]
+			ifFalse: [ aName < bName ] ].
+
+	RSHorizontalVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	aCanvas
+		zoomToFit;
+		exportToSVG;
+		@ RSCanvasController;
+		open
+]
+
+{ #category : #tests }
 RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 
 	<script: 'RSTreeLayoutTest new exampleRoassal3CommitsWithTimeGaps'>
