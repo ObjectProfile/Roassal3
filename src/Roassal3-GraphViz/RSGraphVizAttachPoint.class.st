@@ -9,7 +9,7 @@ Class {
 		'startDistance',
 		'endDistance'
 	],
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #'public - hooks' }

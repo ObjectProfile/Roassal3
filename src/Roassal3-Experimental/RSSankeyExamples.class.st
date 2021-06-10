@@ -94,7 +94,7 @@ RSSankeyExamples >> example05Animation [
 	b canvas newAnimation
 		repeat;
 		duration: 3 seconds;
-		easing: RSEasing circleOut;
+		easing: RSEasingInterpolator circleOut;
 		onStepDo: [ :t | 
 			b lines do: [ :line | 
 				| paint |
@@ -118,7 +118,7 @@ RSSankeyExamples >> example05Animation [
 { #category : #examples }
 RSSankeyExamples >> example06Gradient [
 	<script: 'self new example06Gradient open'>
-	| b blue blue2 |
+	| b |
 	b := self example04Popup.
 	b build.
 	b lines do: [ :line |

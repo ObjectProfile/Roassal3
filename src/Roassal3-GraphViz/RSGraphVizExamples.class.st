@@ -6,7 +6,7 @@ https://graphviz.org/
 Class {
 	#name : #RSGraphVizExamples,
 	#superclass : #Object,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Example'
 }
 
 { #category : #examples }
@@ -443,7 +443,7 @@ RSGraphVizExamples >> example09Arrows [
 		normalize: [:cls | cls linesOfCode sqrt + 5 ].
 	shapes @ RSDraggable.
 
-	lb := RSLineBuilder new: RSGraphVizLine new.
+	lb := RSLineBuilder graphviz.
 	lb shapes: shapes.
 	lb markerEnd: (RSShapeFactory arrow size: 10; color: Color red).
 	lb connectToAll: #dependentClasses.
@@ -455,6 +455,22 @@ RSGraphVizExamples >> example09Arrows [
 	shapes @ (RSHighlightable red withEdges).
 	c @ RSCanvasController.
 	c openOnce
+]
+
+{ #category : #examples }
+RSGraphVizExamples >> example10Mondrian [
+	<script: 'self new example10Mondrian'>
+
+	| m layout |
+	m := RSMondrian new.
+	"m shape box size: 30."
+	m shape box size: 30; "width: 30; height: 20;" labeled .
+	m nodes: 'abcde'.
+	m graphvizLine 
+		arrowMarkerEnd;
+		useAssociations: { $a -> $b . $b -> $c . $a -> $c . $d -> $c . $e -> $c . $e -> $a }.
+	layout := m layout graphviz digraph.
+	m open
 ]
 
 { #category : #examples }

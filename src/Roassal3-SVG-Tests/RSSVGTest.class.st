@@ -28,7 +28,7 @@ RSSVGTest >> testBimetricLine [
 		to: s2;
 		yourself.
 	canvas addAll: { s1. s2. l}.
-	canvas @ RSCanvasController. 
+	canvas @ RSCanvasControllerInteraction. 
 	^ canvas
 ]
 
@@ -69,8 +69,8 @@ RSSVGTest >> testDrawSVGLine [
 		width: 2). 
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
-		svgPath: [ :aLine | [ :canvas| 
-			canvas
+		svgPath: [ :aLine | [ :aCanvas| 
+			aCanvas
 				absolute;
 				moveTo: aLine startPoint;
 				lineTo: aLine endPoint. ] ];

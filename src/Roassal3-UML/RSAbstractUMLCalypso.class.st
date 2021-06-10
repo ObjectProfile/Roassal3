@@ -11,6 +11,25 @@ Class {
 }
 
 { #category : #building }
+RSAbstractUMLCalypso >> addClassInteractions: builder [
+	builder canvas nodes 
+		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
+		when: RSMouseRightClick do: [ :evt | 
+			| menu newContext tool |
+			tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
+			tool 
+				prepareInitialStateBy: [ :b | b selectClass: evt shape model ].
+			"newContext := ClyFullBrowserClassContext for: tool."
+			newContext := context copy.
+			newContext tool: tool.
+			menu := CmdContextMenuActivation 
+				buildContextMenuFor: evt canvas morph 
+				inContext: newContext.
+			menu popUpInWorld: self currentWorld.
+			].
+]
+
+{ #category : #building }
 RSAbstractUMLCalypso >> applyTheme: builder [
 	| theme renderer |
 	theme := Smalltalk ui theme.
@@ -41,13 +60,15 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 	builder classes: self classesToShow.
 	builder canvas @ self canvasController.
 	builder build.
+	self addClassInteractions: builder.
+	
 	^ builder canvas
 ]
 
 { #category : #'public - hooks' }
 RSAbstractUMLCalypso >> canvasController [
 	| controls |
-	controls := RSCanvasController new.
+	controls := RSCanvasControllerInteraction new.
 	controls configuration 
 		useBasicZoom;
 		maxScale: 2.

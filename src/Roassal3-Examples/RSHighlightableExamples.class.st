@@ -29,7 +29,7 @@ RSHighlightableExamples >> example01Basic [
 		connectFrom: [ :n | n // 2 ].
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
-	canvas shapes @ RSHighlightable red.
+	canvas shapes @ RSHighlightableInteraction red.
 	RSClusterLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
@@ -40,7 +40,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges open'>
 	| canvas shapes interaction color |
 	canvas := RSCanvas new.
-	interaction := RSHighlightable red
+	interaction := RSHighlightableInteraction red
 		withLines;
 		yourself.
 	color := RSColorPalette diverging rdylbu3.
@@ -58,7 +58,7 @@ RSHighlightableExamples >> example02ElementEdges [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	canvas edges do: #withBorder.
-	canvas edges @ RSHighlightable red.
+	canvas edges @ RSHighlightableInteraction red.
 	canvas nodes @ interaction.
 	RSClusterLayout on: shapes.
 	canvas zoomToFit.
@@ -88,7 +88,7 @@ RSHighlightableExamples >> example03Interactive [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable red.
+	interaction := RSHighlightableInteraction red.
 	interaction withLines.
 	update := [ interaction doHighlight: shapes atRandom ].
 	update value.
@@ -121,7 +121,7 @@ RSHighlightableExamples >> example04Interactive [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	
-	interaction := RSHighlightable red.
+	interaction := RSHighlightableInteraction red.
 	bool := true.
 	update := [
 		interaction doHighlightShapes: (shapes select: [ :e | bool = e model even ]).
@@ -152,7 +152,7 @@ RSHighlightableExamples >> example05Border [
 		shapes: shapes;
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
-	interaction := RSHighlightable new.
+	interaction := RSHighlightableInteraction new.
 	interaction highlightBorder: (RSBorder new width: 2).
 	canvas addAll: shapes.
 	canvas nodes @ interaction.
@@ -166,7 +166,7 @@ RSHighlightableExamples >> example06IterateNext [
 	<script: 'self new example06IterateNext open'>
 	| canvas numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	canvas := RSCanvas new.
-	legendBuilder := RSLegend new container: canvas. 
+	legendBuilder := RSLegendBuilder new container: canvas. 
 
 	"Create the view with numbers as elements."
 	numbers := (1 to: 10) collect: [ :i |
@@ -189,11 +189,11 @@ RSHighlightableExamples >> example06IterateNext [
 		start;
 		yourself.
 	canvas newAnimation repeat onStepDo: [ :t | layout step ].
-	numbers @ (RSDraggableForce new layout: layout).
+	numbers @ (RSDraggableForceInteraction new layout: layout).
 
 	"Set up highlighting interactions"
-	highlightableForBoxes := RSHighlightable red.
-	highlightableForLabels := RSHighlightable new
+	highlightableForBoxes := RSHighlightableInteraction red.
+	highlightableForLabels := RSHighlightableInteraction new
 		propertyKey: #exampleKey;
 		when: RSHighlightEvent do: [ :evt | evt shape bold ];
 		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
@@ -232,9 +232,9 @@ RSHighlightableExamples >> example07HighlightButtons [
 	<script: 'self new example07HighlightButtons open'>
 	| canvas mouseOver selectedButton |
 	canvas := RSCanvas new.
-	selectedButton := RSHighlightable red.
+	selectedButton := RSHighlightableInteraction red.
 
-	mouseOver:= RSHighlightable new.
+	mouseOver:= RSHighlightableInteraction new.
 	mouseOver highlightColor: [ :shape | 
 		shape model > 5
 			ifTrue: [ Color purple ]
@@ -257,7 +257,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 
 	selectedButton doHighlight: canvas nodes first.
 	RSVerticalLineLayout on: canvas nodes.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 	
 
@@ -275,9 +275,9 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
-	label := RSLabeled new highlightable.
+	label := RSLabeledInteraction new highlightable.
 	padding := 10 asMargin.
-	high := RSHighlightable new.
+	high := RSHighlightableInteraction new.
 	arrow := RSShapeFactory arrowedLine
 		withBorderAttachPoint;
 		color: Color blue.
@@ -340,7 +340,7 @@ RSHighlightableExamples >> example08DependendMethods [
 		when: RSUnHighlightEvent do: [ :evt | 
 			(canvas propertyAt: #methods ifAbsent: [ #() ]) do:#remove ].
 
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^  canvas 
 ]
 
@@ -349,7 +349,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 	<script: 'self new example09ArrowedLines open'>
 	| canvas interaction color shapes |
 	canvas := RSCanvas new.
-	interaction := RSHighlightable new
+	interaction := RSHighlightableInteraction new
 		highlightBorder: (RSBorder new
 			width: 2;
 			yourself);
@@ -399,14 +399,14 @@ RSHighlightableExamples >> example10ElasticBox [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
-	high := RSHighlightable red.
-	elastic := RSElasticBox new.
+	high := RSHighlightableInteraction red.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];
 		when: RSSelectionChangedEvent do: [ :evt |
 			high doHighlightShapes: evt selectedShapes ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	elastic targetShapes: canvas shapes.
 	canvas @ elastic.
 	^ canvas
@@ -432,9 +432,9 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
-	high := RSHighlightable red.
+	high := RSHighlightableInteraction red.
 	selectedShapes := #().
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];
@@ -449,7 +449,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 			ifFalse: [ evt shape translateBy: d ].
 		
 		evt signalUpdate ].
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	elastic targetShapes: canvas nodes.
 	canvas @ elastic.
 	^ canvas
@@ -484,7 +484,7 @@ RSHighlightableExamples >> example12ShowingEdges [
 				with: 0 @ 0
 				with: line to position ];
 		yourself.
-	interaction := RSHighlightable 
+	interaction := RSHighlightableInteraction 
 		showEdges: [:model | {model + 1. model + 2. model + 3} ] 
 		using: (RSBezier new
 			color: Color red;

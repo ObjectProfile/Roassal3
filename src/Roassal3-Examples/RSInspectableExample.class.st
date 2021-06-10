@@ -25,8 +25,8 @@ RSInspectableExample >> example01SimpleExample [
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
 	RSTreeLayout on: boxes.
-	RSInspectable reset.
-	inspectable := RSInspectable new.
+	RSInspectableInteraction reset.
+	inspectable := RSInspectableInteraction new.
 	highligtable := inspectable highlightable.
 	highligtable highlightColor: Color green.
 	inspectable inspectShapeBlock: [ :cls | 
@@ -37,7 +37,7 @@ RSInspectableExample >> example01SimpleExample [
 		builder canvas open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	boxes @ inspectable.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
@@ -60,7 +60,7 @@ RSInspectableExample >> example02Inspect [
 	animation := nil.
 	animation := canvas animationFrom: { 
 		canvas transitionAnimation repeat
-		easing: RSEasing backOut;
+		easing: RSEasingInterpolator backOut;
 		onStepDo: [ :t |
 			canvas nodes do: [ :shape |
 				| att a b |
@@ -76,7 +76,7 @@ RSInspectableExample >> example02Inspect [
 				self inform: 'Done :V!!!' ].
 			lastSize := canvas nodes size.
 			canvas nodes do: [ :shape |
-				shape outgoingEdges ifEmpty: [ | children |
+				shape outgoingLines ifEmpty: [ | children |
 					children := shape model subclasses collect: [:cls | box value: cls ].
 					children do: [ :child | child position: shape position ].
 					canvas addAll: children ]. ].
@@ -86,19 +86,19 @@ RSInspectableExample >> example02Inspect [
 			RSLineBuilder arrowedLine 
 				canvas: canvas;
 				connectFrom: #superclass.
-			canvas nodes do: #updateEdgesOFF.
+			canvas nodes do: #updateLinesOFF.
 			RSClusterLayout on: canvas nodes.
-			canvas nodes do: #updateEdgesON.
+			canvas nodes do: #updateLinesON.
 			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
 		 ]}.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 
 { #category : #examples }
 RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
-	^ RSEasing bounceOut
+	^ RSEasingInterpolator bounceOut
 ]
 
 { #category : #examples }
@@ -108,13 +108,13 @@ RSInspectableExample >> example04ChagingContext [
 	c := RSCanvas new.
 	1 to: 100 do: [ :i |
 		c add: (RSBox new size: 10; model: i) ].
-	c shapes @ RSDraggable.
+	c shapes @ RSDraggableInteraction.
 	RSGridLayout on: c shapes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	
 	"This is the default context for the inspector"
-	context := RSInteractiveContext new.
-	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentation ].
+	context := RSContextInteraction new.
+	int := context interactionsToBeRegistered detect: [ :i | i class = RSSelectionPresentationInteraction ].
 	int 
 		padding: 5;
 		shadowColor: (Color red alpha: 0.1).

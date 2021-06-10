@@ -1,24 +1,10 @@
-"
-I can move an element from its position
-"
 Class {
 	#name : #RSDraggable,
-	#superclass : #RSInteraction,
-	#category : #'Roassal3-Interaction-Core'
+	#superclass : #RSDraggableInteraction,
+	#category : #'Roassal3-Interaction-Deprecated'
 }
 
-{ #category : #'instance creation' }
-RSDraggable class >> wantsUniqueInstance [
+{ #category : #testing }
+RSDraggable class >> isDeprecated [
 	^ true
-]
-
-{ #category : #hooks }
-RSDraggable >> onShape: aShape [
-	aShape
-		when: RSMouseDragging
-		do: [ :evt | 
-			| d |
-			d := evt camera distanceFromPixelToSpace: evt step.
-			evt shape translateBy: d.
-			evt signalUpdate ]
 ]

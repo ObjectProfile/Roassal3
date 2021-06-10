@@ -1,8 +1,17 @@
 # Roassal3
-[![.github/workflows/main.yml](https://github.com/ObjectProfile/Roassal3/workflows/CI/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions)
-[![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal3?branch=master)
+[![CI](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml)
+![Discord](https://img.shields.io/discord/223421264751099906)
+[![Coverage](https://raw.githubusercontent.com/ObjectProfile/Roassal3/master/ci_data/coverageBadge.svg)](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
 
-Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal was created to enable interactive data visualization. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters)
+[*Chat with us on #Roassal*](https://discord.gg/QewZMZa)
+
+[*Visualize the test coverage of Roassal3*](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
+
+<!-- [![SmalltalkCI](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/main.yml) -->
+
+<!-- [![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal3?branch=master) -->
+
+Roassal3 is an agile visualization engine for [Pharo 8 and Pharo 9](http://pharo.org). Roassal was created to enable interactive data visualization. Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters).
 
 Roassal3 is free and open source, but backed by Object Profile. Commercial support offerings are available, including training and custom consultancy services. Check [RoassalPro](https://github.com/ObjectProfile/Roassal3Documentation/blob/6bbc6a4cb36914e1f79b3a038c32984673a1384f/documentation/RoassalPro.md) for more information.
 
@@ -17,7 +26,7 @@ If you wish to install Roassal in Pharo 8, then execute the following code snipp
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9.7b';
+    repository: 'github://ObjectProfile/Roassal3:v0.9.8';
     load.
 ```
 

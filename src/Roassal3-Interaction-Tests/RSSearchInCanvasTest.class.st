@@ -24,8 +24,8 @@ RSSearchInCanvasTest >> setUp [
 	c addAll: shapes.
 	RSGridLayout on: shapes.
 	shapes @ RSPopup.
-	con := RSCanvasController new.
-	search := RSSearchInCanvas new.
+	con := RSCanvasControllerInteraction new.
+	search := RSSearchInCanvasInteraction new.
 	con addInteraction: search.
 	search canvas: c.
 	c @ con
@@ -34,42 +34,18 @@ RSSearchInCanvasTest >> setUp [
 { #category : #tests }
 RSSearchInCanvasTest >> testBasic [
 	search searchForShapes: '*4*'.
-	self assert: shapes fourth color ~= Color gray.
-	self assert: shapes fifth color = Color gray.
+	self assert: (shapes fourth hasProperty: #shadow).
+	self deny: (shapes fifth hasProperty: #shadow).
 	
 	search searchForShapes: '*5*'.
-	self assert: shapes fourth color ~= Color gray.
-	self assert: shapes fifth color ~= Color gray.
+	self assert: (shapes fourth hasProperty: #shadow).
+	self assert: (shapes fifth hasProperty: #shadow).
 	
 	self assert: search numberOfHighlightedShapes equals: 2.
 
 	search resetAllHighlightedShapes.
-	self assert: shapes fourth color equals: Color gray.
-	self assert: shapes fifth color equals: Color gray.
-
-]
-
-{ #category : #tests }
-RSSearchInCanvasTest >> testColor [
-	self assert: search numberOfPerformedSearches equals: 0.
-	
-	search searchForShapes: '4'.
-	self assert: shapes fourth color ~= Color gray.
-	self assert: shapes fifth color = Color gray.
-	self assert: search numberOfPerformedSearches equals: 1.
-	
-	search searchForShapes: '5'.
-	self assert: shapes fourth color ~= Color gray.
-	self assert: shapes fifth color ~= Color gray.
-	self assert: shapes fifth color ~= shapes fourth color.
-	self assert: search numberOfPerformedSearches equals: 2.
-	
-	self assert: search numberOfHighlightedShapes equals: 2.
-
-	search resetAllHighlightedShapes.
-	self assert: shapes fourth color equals: Color gray.
-	self assert: shapes fifth color equals: Color gray.
-	self assert: search numberOfPerformedSearches equals: 0.
+	self deny: (shapes fourth hasProperty: #shadow).
+	self deny: (shapes fifth hasProperty: #shadow).
 
 ]
 
@@ -77,11 +53,11 @@ RSSearchInCanvasTest >> testColor [
 RSSearchInCanvasTest >> testExactMatch [
 	search useExactMatch.
 	search searchForShapes: '4'.
-	self assert: shapes fourth color equals: Color gray.
+	self deny: (shapes fourth hasProperty: #shadow).
 	
 	search doNotUseExactMatch.
 	search searchForShapes: '4'.
-	self assert: shapes fourth color ~= Color gray.
+	self assert: (shapes fourth hasProperty: #shadow).
 ]
 
 { #category : #tests }
@@ -133,6 +109,32 @@ RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
 ]
 
 { #category : #tests }
+RSSearchInCanvasTest >> testShadow [
+	self assert: search numberOfPerformedSearches equals: 0.
+	
+	search searchForShapes: '4'.
+	self assert: (shapes fourth hasProperty: #shadow).
+	self deny: (shapes fifth hasProperty: #shadow).
+	self assert: search numberOfPerformedSearches equals: 1.
+	
+	search searchForShapes: '5'.
+	self assert: (shapes fourth hasProperty: #shadow).
+	self assert: (shapes fifth hasProperty: #shadow).
+	self 
+		deny: (shapes fourth propertyAt: #shadow) color 
+		equals: (shapes fifth propertyAt: #shadow) color.
+	self assert: search numberOfPerformedSearches equals: 2.
+	
+	self assert: search numberOfHighlightedShapes equals: 2.
+
+	search resetAllHighlightedShapes.
+	self deny: (shapes fourth hasProperty: #shadow).
+	self deny: (shapes fifth hasProperty: #shadow).
+	self assert: search numberOfPerformedSearches equals: 0.
+
+]
+
+{ #category : #tests }
 RSSearchInCanvasTest >> testWithEdge [
 
 	| l |
@@ -158,7 +160,7 @@ RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
 
 	| l interaction |
 	
-	interaction := RSHighlightable new.
+	interaction := RSHighlightableInteraction new.
 	interaction highlightBorder: (RSBorder new width: 2).
 	interaction withLines.
 	c shapes @ interaction.

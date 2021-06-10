@@ -121,7 +121,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	builder classes: classes.
 	builder renderer: RSTorchUMLClassRenderer new.
 	builder build.
-	builder canvas @ RSHierarchyPacker.
+	builder canvas @ RSHierarchyPackerInteraction.
 	^ builder canvas.
 ]
 

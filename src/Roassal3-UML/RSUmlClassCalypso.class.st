@@ -18,7 +18,7 @@ Class {
 { #category : #activation }
 RSUMLClassCalypso class >> classUmlTapActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }
@@ -40,27 +40,13 @@ RSUMLClassCalypso >> activationPriority [
 ]
 
 { #category : #building }
-RSUMLClassCalypso >> addAnimationToCanvas: canvas [
-	| shape p d|
-	shape := canvas shapeFromModel: self targetClass.
-	(shape isNil or: [ canvas nodes size < 3 ]) ifTrue: [ ^ self ].
-	p := shape position.
-	d := 20.
-	canvas newAnimation
-		duration: 1 second;
-		scale: (NSScale linear 
-			domain: #(0 0.25 0.5 0.75 1);
-			range: {p. p+d. p. p+d. p});
-		on: shape set: #translateTo: . 
-	
-]
-
-{ #category : #building }
 RSUMLClassCalypso >> buildUmlCanvas [
 	| canvas |
 	canvas := self targetClass buildUMLCanvasWithBrowserTool: self.
 	canvas ifNil: [ canvas := super buildUmlCanvas ].
-	self addAnimationToCanvas: canvas.
+	RSUMLCalypsoSettings initialSelectionClass new 
+		targetClass: self targetClass;
+		on: canvas.
 	^ canvas
 ]
 

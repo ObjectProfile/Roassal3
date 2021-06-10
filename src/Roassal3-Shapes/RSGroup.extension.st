@@ -52,6 +52,6 @@ c @ RSCanvasController
 "
 	^ RSComposite new 
 		model: model;
-		shapes: self
+		shapes: self;
 		yourself
 ]

@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSRadialTreeLayout,
-	#superclass : #RSAbstractCompactTree,
+	#superclass : #RSAbstractCompactTreeLayout,
 	#category : #'Roassal3-Layouts-Core'
 }
 

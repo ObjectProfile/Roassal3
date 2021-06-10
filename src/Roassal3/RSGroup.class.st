@@ -276,3 +276,8 @@ RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 RSGroup >> width [ 
 	^ self extent x
 ]
+
+{ #category : #'public - forwarding' }
+RSGroup >> withBorder [
+	self do: #withBorder
+]

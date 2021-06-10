@@ -51,12 +51,12 @@ RSShape class >> model: anObject [
 ]
 
 { #category : #accessing }
-RSShape class >> model: anObject forIt: aOneArgBlock [
+RSShape class >> model: anObject forIt: aTwoArgBlock [
 	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
 	| r |
 	r := self new.
 	r model: anObject.
-	aOneArgBlock rsValue: r.
+	aTwoArgBlock value: r value: anObject.
 	^ r
 ]
 

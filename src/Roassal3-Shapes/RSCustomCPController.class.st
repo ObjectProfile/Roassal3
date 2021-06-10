@@ -12,18 +12,12 @@ Class {
 }
 
 { #category : #hooks }
-RSCustomCPController >> controlPointFor: model [
-	
-	
-]
-
-{ #category : #hooks }
 RSCustomCPController >> controlPointFor: model at: aLine [
 	| point |
 	model isPoint ifTrue: [ ^ model ].
 	point  := model value.
 	(model isKindOf: RSShape) ifTrue: [ 
-		model addConnectedEdge: aLine.
+		model addConnectedLine: aLine.
 		point := model position ].
 	^ point
 ]

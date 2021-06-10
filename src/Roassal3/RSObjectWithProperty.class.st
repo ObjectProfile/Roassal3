@@ -79,19 +79,6 @@ c
 		yourself).
 ]
 
-{ #category : #interactions }
-RSObjectWithProperty >> getInteractionsForClass: anInteractionClass [
-	"Return the Announcement subscriptions for the interaction"
-	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
-]
-
-{ #category : #interactions }
-RSObjectWithProperty >> hasInteraction: anInteractionClass [
-	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
-	self announcer subscriptions ifNil: [ ^ false ].
-	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
-]
-
 { #category : #properties }
 RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]
@@ -124,18 +111,28 @@ RSObjectWithProperty >> propertyAt: aKey [
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifAbsent: aBlockClosure [ 
-	^ self properties at: aKey ifAbsent: aBlockClosure 
+RSObjectWithProperty >> propertyAt: aKey ifAbsent: anAbsentBlock [ 
+	^ self properties at: aKey ifAbsent: anAbsentBlock 
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: aBlockClosure [ 
-	^ self properties at: aKey ifAbsentPut: aBlockClosure 
+RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: anAbsentBlock [ 
+	^ self properties at: aKey ifAbsentPut: anAbsentBlock 
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifPresent: aBlockClosure [ 
-	^ self properties at: aKey ifPresent: aBlockClosure 
+RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock [ 
+	^ self properties at: aKey ifPresent: aPresentBlock 
+]
+
+{ #category : #properties }
+RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	^ self properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock
+]
+
+{ #category : #properties }
+RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
+	^ self properties at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock
 ]
 
 { #category : #properties }
@@ -156,19 +153,13 @@ RSObjectWithProperty >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #interactions }
-RSObjectWithProperty >> removeInteractionIfPresent: anInteractionClass [
-	"Remove all the callbacks associated to the interaction."
-	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
-	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
-]
-
 { #category : #properties }
 RSObjectWithProperty >> removeKey: aKey [
-	| att |
-	att := self properties.
-	(att includesKey: aKey) ifFalse: [ ^ self ].
-	att removeKey: aKey.
+	| prop |
+	prop := self properties.
+	(prop includesKey: aKey) ifFalse: [ ^ self ].
+	prop removeKey: aKey.
+	prop ifEmpty: [ prop := nil ]
 	
 ]
 

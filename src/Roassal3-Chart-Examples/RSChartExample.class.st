@@ -12,7 +12,7 @@ RSChartExample >> example01Markers [
 	<script: 'self new example01Markers open'>
 	| x c p |
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
 	c addPlot: p.
@@ -33,7 +33,7 @@ RSChartExample >> example02ScatterPlot [
 
 	| classes c p |
 	classes := Collection withAllSubclasses.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
 	c addPlot: p.
 	
@@ -49,7 +49,7 @@ RSChartExample >> example03Plot [
 
 	| plt p x |
 	x := 0.0 to: 2 count: 100.
-	plt := RSChart new.
+	plt := RSChartBuilder new.
 	p := RSLinePlot new x: x y: (x raisedTo: 2).
 	plt addPlot: p.
 
@@ -70,7 +70,7 @@ RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick show'>
 	| x |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	^ RSChartBuilder new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 		addDecoration: RSHorizontalTick new integer;
@@ -83,7 +83,7 @@ RSChartExample >> example05WithTick [
 	<script: 'self new example05WithTick show'>
 	| x c |
 	x := 0.0 to: 14 count: 100.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	1 to: 7 do: [ :i |
 		c addPlot: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
 	].
@@ -97,7 +97,7 @@ RSChartExample >> example06CustomNumberOfTicks [
 	<script: 'self new example06CustomNumberOfTicks show'>
 	| x |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	^ RSChartBuilder new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 		addDecoration: (RSHorizontalTick new 
@@ -117,7 +117,7 @@ RSChartExample >> example07AdjustingFontSize [
 	x := -3.14 to: 3.14 by: 0.1.
 	y := x sin.
 
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c addPlot: (RSLinePlot new x: x y: y).
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
@@ -132,7 +132,7 @@ RSChartExample >> example08TwoCharts [
 	c := RSCanvas new.
 
 	g1 := RSGroup new.
-	c1 := RSChart new.
+	c1 := RSChartBuilder new.
 	c1 container: g1.
 	c1 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) sqrt).
 	c1 title: 'squared root'.
@@ -141,7 +141,7 @@ RSChartExample >> example08TwoCharts [
 	c1 build.
 
 	g2 := RSGroup new.
-	c2 := RSChart new.
+	c2 := RSChartBuilder new.
 	c2 container: g2.
 	c2 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) squared).
 	c2 title: '^ 2'.
@@ -152,7 +152,7 @@ RSChartExample >> example08TwoCharts [
 	c add: g1 asShape; add: g2 asShape.
 	RSHorizontalLineLayout on: c shapes.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	^ c 
 ]
 
@@ -160,13 +160,13 @@ RSChartExample >> example08TwoCharts [
 RSChartExample >> example09LinearSqrtSymlog [
 	<script: 'self new example09LinearSqrtSymlog open'>
 	| c x y |
-	c := RSCanvas new @ RSCanvasController.
+	c := RSCanvas new @ RSCanvasControllerInteraction.
 	x := (-5 to: 500 by: 0.1).
 	y := x.
 	#(yLinear ySqrt yLog) do: [ :sel | 
 		| chart g |
 		g := RSGroup new.
-		chart := RSChart new.
+		chart := RSChartBuilder new.
 		chart container: g.
 		chart addPlot: (RSLinePlot new x: x y: y).
 		chart addDecoration: (RSVerticalTick new asFloat).
@@ -185,7 +185,7 @@ RSChartExample >> example10BarPlot [
 
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSBarPlot new x: x y: y.
 
 	c addPlot: p.
@@ -209,7 +209,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	| c x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSChartBuilder new.
 
 	c addPlot: (RSBarPlot new x: x y: y).
 	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
@@ -237,7 +237,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 		y add: i + (r next * 10 + 1) asInteger.
 		z add: i + (r next * 10 + 1) asInteger. ].
 
-	c := RSChart new.
+	c := RSChartBuilder new.
 	p := RSScatterPlot new x: x y: y.
 	p color: Color blue translucent.
 
@@ -315,7 +315,7 @@ RSChartExample >> example18Animation [
 		afterline add: (canvas transitionAnimation
 			delay: (index * 300) milliSeconds;
 			duration: 2 second;
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			from: -100@ s position y;
 			to: s position;
 			onStepDo: [:p | 
@@ -330,7 +330,7 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	<script: 'self new example19PositiveNetagiveBarPlots open'>
 	| c d d2 |
 	
-	c := RSChart new.
+	c := RSChartBuilder new.
 
 	d := RSBarPlot new.
 	d color: Color green darker darker darker translucent.
@@ -356,7 +356,7 @@ RSChartExample >> example20Grid [
 	<script: 'self new example20Grid open'>
 	| c x y vertical horizontal |
 	
-	c := RSChart new.
+	c := RSChartBuilder new.
 	x := 0 to: 10.
 	y := x raisedTo: 2.
 	c lineX: x y: y.
@@ -379,7 +379,7 @@ RSChartExample >> example21Popup [
 		sum := 0.
 		arr collect: [ :v | sum := sum + v. sum ] ].
 
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c extent: 800@400.
 
 	popup := RSPopupDecoration new.
@@ -454,7 +454,7 @@ RSChartExample >> example22CustomPopup [
 	x := 1 to: values size.
 	y := values collect: #value.
 	popup := RSPopupDecoration new.
-	c := RSChart new.
+	c := RSChartBuilder new.
 	c extent: 400@ 150.
 	c addPlot: (RSAreaPlot new
 		x: x y1: y y2: 750;
@@ -485,7 +485,7 @@ RSChartExample >> example22CustomPopup [
 RSChartExample >> example23PopupInScatterPlot [
 	<script: 'self new example23PopupInScatterPlot open'>
 	| chart plot data |
-	chart := RSChart new.
+	chart := RSChartBuilder new.
 	data := #(1 2 3).
 	plot := RSScatterPlot new y: data.
 	chart addPlot: plot.

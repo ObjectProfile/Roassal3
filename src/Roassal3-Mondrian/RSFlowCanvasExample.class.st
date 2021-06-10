@@ -12,12 +12,12 @@ RSFlowCanvasExample >> example01 [
 	f when: SmallInteger visualize: [ :canvas :number |
 		shapes := RSCircle models: (1 to: number).
 		canvas addAll: shapes.
-		shapes @ RSLabeled @ RSPopup @ RSDraggable.
+		shapes @ RSLabeledInteraction @ RSPopup @ RSDraggableInteraction.
 		RSNormalizer size
 			shapes: shapes;
 			normalize: #yourself.
 		RSFlowLayout on: shapes.
-		canvas @ RSCanvasController.
+		canvas @ RSCanvasControllerInteraction.
 	].
 	f clickOnModel: 20.
 	f open

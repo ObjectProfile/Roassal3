@@ -125,7 +125,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 				yourself) asMarker
 				offset: -90;
 				yourself)  ].  
-	lb := RSLegend new.
+	lb := RSLegendBuilder new.
 	lb defaultLabel fontSize: 50.
 	lb container: canvas.
 	lb legendDo: [ :l |l withBorder;padding: 50 ].
@@ -135,7 +135,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 		text:
 			'scissors decapitates lizard, lizard eats paper, paper disproves Spock, Spock vaporizes rock, and, as it always has, rock crushes scissors';
 		build.
-	canvas @ RSCanvasController.
+	canvas @ RSCanvasControllerInteraction.
 	^ canvas
 ]
 

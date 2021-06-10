@@ -6,7 +6,7 @@ RSShape >> gtCanvasForInspector [
 	canvas := RSCanvas new.
 	copy := self copy.
 	canvas addShape: copy.
-	canvas @ RSChessBackground.
+	canvas @ RSChessBackgroundInteraction.
 	^ canvas
 ]
 

@@ -12,7 +12,7 @@ Also equivalent to TSEasing poly exponent: 2.
 "
 Class {
 	#name : #RSQuadInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolator,
 	#category : #'Roassal3-Animation-Easing'
 }
 

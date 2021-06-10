@@ -21,7 +21,7 @@ RSChannel >> build [
 	inputGroup when: RSMouseEnter do: [ :evt | 
 		self doHighlight.
 		evt signalUpdate ].
-	inputGroup @ (RSHighlightable new highlightColor: self color).
+	inputGroup @ (RSHighlightableInteraction new highlightColor: self color).
 
 	inputGroup when: RSMouseLeave do: [ :evt | 
 		self doUnhighlight.
@@ -50,7 +50,7 @@ RSChannel >> color [
 { #category : #accessing }
 RSChannel >> color: aColor [
 	color := aColor.
-	highlightable := RSHighlightable new.
+	highlightable := RSHighlightableInteraction new.
 	highlightable highlightColor: aColor
 
 ]

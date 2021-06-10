@@ -12,13 +12,13 @@ RSShapeTest >> testAllConnectedShapes [
 
 	shapes := RSLabel models: (1 to: 6).
 	c addAll: shapes.
-	shapes @ RSDraggable.
+	shapes @ RSDraggableInteraction.
 	lb := RSLineBuilder arrowedLine.
 	lb withBorderAttachPoint.
 	lb shapes: shapes.
 	lb useAssociations: { 1 -> 3 . 3 -> 2 . 3 -> 4 . 5 -> 6. }.
 	RSForceBasedLayout on: shapes.
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	
 	node1 := c shapeFromModel: 1.
 	node2 := c shapeFromModel: 2.
@@ -73,6 +73,16 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11)).
 	
 	
+]
+
+{ #category : #tests }
+RSShapeTest >> testModelForIt [
+
+	| s |
+	s := RSBox model: 42 forIt: [ :ss :object | ss color: Color pink ].
+	self assert: s class equals: RSBox.
+	self assert: s model equals: 42.
+	self assert: s color equals: Color pink
 ]
 
 { #category : #tests }

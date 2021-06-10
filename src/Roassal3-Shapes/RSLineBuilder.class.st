@@ -210,6 +210,12 @@ RSLineBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
+{ #category : #'public - line' }
+RSLineBuilder >> arrowMarkerEnd [
+
+	self markerEnd: (RSShapeFactory arrow size: 10; color: self shape color)
+]
+
 { #category : #'public - attach point' }
 RSLineBuilder >> attachPoint [
 	^ self shape attachPoint
@@ -248,13 +254,13 @@ RSLineBuilder >> canvasNodes [
 	^ canvas nodes
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aBlockOrASymbol [
 	"Connect each shapes with the shapes for which the model matches aBlockOrASymbol"
 	^ self connectFrom: aBlockOrASymbol to: [ :each | each ]
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	| toShape fromShape |
 	self resetCreatedEdges.
@@ -266,7 +272,7 @@ RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 	"Define edges from a particular shape to another set of shapes. For example:
 
@@ -308,13 +314,13 @@ c open
 	^ createdEdges 
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol [
 	^ self connectFromAll: aFromBlockOrSymbol to: [ :each | each ]
 
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 	| toElement tfromElements |
@@ -329,12 +335,12 @@ RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectTo: aBlockOrASymbol [
 	^ self connectFrom: [ :each | each ] to: aBlockOrASymbol
 ]
 
-{ #category : #public }
+{ #category : #'public - line' }
 RSLineBuilder >> connectToAll: aBlockOrASymbol [
 	"Should this method use connectFrom:ToAll: ?????"
 	| tmptoElements |
@@ -349,24 +355,28 @@ RSLineBuilder >> connectToAll: aBlockOrASymbol [
 ]
 
 { #category : #'private - utility' }
-RSLineBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
+RSLineBuilder >> createEdgeIfNecessaryFrom: fromShape to: toShape [
 	"This is a private method. Create, if necessary, an edge between two elements"
-	(self shouldCreateEdgeFrom: fromElement to: toElement)
-		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
+	(self shouldCreateEdgeFrom: fromShape to: toShape)
+		ifTrue: [ createdEdges add: (self edgeFrom: fromShape to: toShape) ]
 ]
 
 { #category : #'private - utility' }
 RSLineBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
-	| edge |
-	edge := self shape copy
+	| line |
+	line := self shape copy
 		model: source model -> target model;
 		from: source;
 		to: target;
+		resetMarkers;
+		markerStart: self shape markerStart copy;
+		markerMid: self shape markerMid copy;
+		markerEnd: self shape markerEnd copy;
+		border: self shape border copy;
 		yourself.
-	edge border: (self shape border copy).
-	self canvas ifNotNil: [ canvas add: edge ].
-	^ edge
+	self canvas ifNotNil: [ canvas add: line ].
+	^ line
 ]
 
 { #category : #accessing }
@@ -509,12 +519,12 @@ RSLineBuilder >> shouldAllowRepetition [
 ]
 
 { #category : #testing }
-RSLineBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
+RSLineBuilder >> shouldCreateEdgeFrom: fromShape to: toShape [
 	"Return true if an edge has to be created"
-	fromElement == toElement ifTrue: [ ^ false ].
-	(fromElement isNil or: [ toElement isNil ]) ifTrue: [ ^ false ].
-	beDirectional ifFalse: [ ^ (toElement isDirectlyConnectedTo: fromElement) not ].
-	allowRepetition ifFalse: [ ^ fromElement outgoingEdges noneSatisfy: [ :edge | edge to == toElement ] ].
+	fromShape == toShape ifTrue: [ ^ false ].
+	(fromShape isNil or: [ toShape isNil ]) ifTrue: [ ^ false ].
+	beDirectional ifFalse: [ ^ (toShape isDirectlyConnectedTo: fromShape) not ].
+	allowRepetition ifFalse: [ ^ fromShape outgoingLines noneSatisfy: [ :edge | edge to == toShape ] ].
 	^ true
 ]
 

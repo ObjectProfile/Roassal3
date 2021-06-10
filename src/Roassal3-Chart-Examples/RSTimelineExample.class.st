@@ -19,7 +19,7 @@ RSTimelineExample >> example01Gantt [
 		#(5 10)
 		#(5 8)).
 	names := #(c1 c2 c3 c4 c5).
-	chart := RSChart new.
+	chart := RSChartBuilder new.
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
@@ -51,7 +51,7 @@ RSTimelineExample >> example02Labeled [
 		#(5 10)
 		#(5 8)).
 	names := #(c1 c2 c3 c4 c5).
-	chart := RSChart new.
+	chart := RSChartBuilder new.
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
@@ -69,7 +69,7 @@ RSTimelineExample >> example02Labeled [
 		p bars
 			@ (RSPopup text: [ :assoc | 
 				(names at: index), String cr, assoc asString ]);
-			@ (RSLabeled new 
+			@ (RSLabeledInteraction new 
 				text: [ names at: index ];
 				lowColor: Color black;
 				highlightable;

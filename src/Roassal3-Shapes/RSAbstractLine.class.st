@@ -234,6 +234,16 @@ RSAbstractLine >> notifyExtentChanged [
 		newExtent: self controlPoints first - self controlPoints last ]
 ]
 
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers [
+	^ markers
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers: array [ 
+	markers := array
+]
+
 { #category : #adding }
 RSAbstractLine >> remove [
 	parent ifNil: [ ^ self ].
@@ -248,7 +258,7 @@ RSAbstractLine >> remove [
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
 	aShape isPoint ifTrue: [ ^ self ].
-	aShape connectedEdges remove: self ifAbsent: [  ].
+	aShape connectedLines remove: self ifAbsent: [  ].
 
 ]
 
@@ -275,8 +285,8 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
-	anObject isPoint ifFalse: [ anObject addConnectedEdge: self ].
+	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
 

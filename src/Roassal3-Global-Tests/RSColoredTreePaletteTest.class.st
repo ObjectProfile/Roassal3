@@ -19,7 +19,7 @@ RSColoredTreePaletteTest >> testBasic [
 
 	RSTreeLayout on: nodes.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	
 	node1 := c shapeFromModel: 1. "The root"
 	node2 := c shapeFromModel: 2. "Right below 1"
@@ -55,7 +55,7 @@ RSColoredTreePaletteTest >> testLeaves [
 
 	RSTreeLayout on: nodes.
 
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 	
 	node1 := c shapeFromModel: 1. "The root"
 	node2 := c shapeFromModel: 2. "Right below 1"
@@ -67,4 +67,11 @@ RSColoredTreePaletteTest >> testLeaves [
 	ctp assignColor.
 	
 	self assert: ctp totalNumberOfLeaves equals: 5
+]
+
+{ #category : #tests }
+RSColoredTreePaletteTest >> testPalettes [
+
+	RSColorPalette subclasses do: [ :cls |
+		cls selectors do: [ :sel | cls new perform: sel ] ]
 ]

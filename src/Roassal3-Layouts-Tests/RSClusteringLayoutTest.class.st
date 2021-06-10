@@ -17,7 +17,7 @@ RSClusteringLayoutTest >> testBasic [
 	lb := RSLineBuilder line.
 	lb shapes: shapes.
 	lb connectFrom: [ :nb | nb // 2 ].
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 
 	nodes := c nodes.
@@ -47,7 +47,7 @@ RSClusteringLayoutTest >> testBasic2 [
 	lb := RSLineBuilder line.
 	lb shapes: shapes.
 	lb connectFrom: [ :nb | nb // 2 ].
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 
 	nodes := c nodes.
@@ -69,10 +69,44 @@ RSClusteringLayoutTest >> testBasic3 [
 	lb := RSLineBuilder line.
 	lb shapes: shapes.
 	lb connectFrom: [ :nb | nb // 2 ].
-	c @ RSCanvasController.
+	c @ RSCanvasControllerInteraction.
 
 	nodes := c nodes.
 
 	clusters := RSClusteringLayout new getClusterFor: nodes.
 	self assert: clusters size equals: 1.
+]
+
+{ #category : #tests }
+RSClusteringLayoutTest >> testCycles [ 
+	| chars canvas shapes |
+	canvas := RSCanvas new.
+	chars := $a to: $e.
+	shapes := RSComposite models: chars forEach: [ :composite :char |
+		| box label |
+		label := RSLabel text: char.
+		box := RSBox new 
+			position: label position;
+			extent: label extent + 10;
+			yourself.
+		
+		composite 
+			draggable;
+			add: box;
+			add: label;
+			yourself.
+		].
+
+	canvas addAll: shapes.
+	RSLineBuilder arrowedLine
+		canvas: canvas;
+		withVerticalAttachPoint;
+		useAssociations: 
+			{$a -> $b.
+			$a -> $e.
+			$b -> $c.
+			$c -> $d.
+			$d -> $a}. "cycle"
+	self should: [RSClusterLayout on: shapes] raise: Error.
+	
 ]

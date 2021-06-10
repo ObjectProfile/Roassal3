@@ -175,7 +175,7 @@ RSAbstractAnimation >> privateAnnouncer [
 	^ announcer
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSAbstractAnimation >> refresh [
 	self hasCompleted
 		ifTrue: [ ^ self ].
@@ -253,7 +253,7 @@ RSAbstractAnimation >> startTime [
 	^ startTime 
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSAbstractAnimation >> step [
 	self subclassResponsibility
 ]
