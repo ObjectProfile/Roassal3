@@ -1277,3 +1277,96 @@ RSBlocExamples >> example33AnimatedLayout [
 	^ c
 
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example34RSLocateWithMouseEvents [
+	<script: 'self new example34RSLocateWithMouseEvents open'>
+	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	locate := RSLocation new.
+	color := RSColorPalette qualitative paired3.
+	newBox := [ :m | RSBox new
+			size: 200;
+			color: (color scale: m);
+			yourself. ].
+
+	label := RSLabel new.
+	updateText := [ 
+		label text: 'Offset:', 
+			(locate offset x printShowingDecimalPlaces: 1),'@',
+			(locate offset y printShowingDecimalPlaces: 1) ].
+	updateText value.
+	fixedElement := newBox value: 1.
+	"movableElement := newBox value: 2."
+	movableElement := RSComposite new
+		add: (RSLabel new 
+			text: 'foo';
+			rotateByDegrees: -45;
+			yourself);
+		adjustToChildren;
+		color: (color scale: 2);
+		yourself.
+	"movableElement size: 40."
+	movableElement when: RSMouseClick do: [ 
+		canvas newAnimation
+			scale: (NSScale linear 
+				domain: #(0 0.5 1); 
+				range: { 0@0. 20@20. 0@0});
+			onStepDo: [ :t | 
+				locate offset: t.
+				locate move: movableElement on: fixedElement.
+				updateText value.
+				label signalUpdate.
+				 ]  ].
+	
+	canvas add: fixedElement; add: movableElement; add: label.
+	grad2 := (LinearGradientPaint fromArray: 
+		{0->'white'.
+		0.25->'black'.
+		1 ->'lightGray'})
+		start: 0@ -15;
+		stop: 0@ 15.
+	grad1 := (LinearGradientPaint fromArray:
+		{0->'lightGray'.
+		0.25->'black'.
+		1 ->'gray'})
+		start: 0@ -15;
+		stop: 0@ 15.
+	labeled := RSLabeled new.
+	labeled shapeBuilder: [ :m | RSLabel new text: m asString; color: Color white ].
+	labeled location middle.
+	buttons :=  #(outer border inner left center right top middle bottom) collect: [ :t |
+		RSBox new
+			border: (RSBorder new color: Color lightGray; yourself);
+			cornerRadius: 5;
+			extent: 60@30;
+			paint: grad1;
+			model: t;
+			addInteraction: labeled;
+			when: RSMouseEnter do: [:evt | evt traceCr. evt shape paint: grad2; signalUpdate ]; 
+			when: RSMouseLeave do: [:evt | evt traceCr. evt shape paint: grad1; signalUpdate ];
+			when: RSMouseClick do: [:evt | | p |
+				evt shape model value: locate.
+				p := movableElement position.
+				locate move: movableElement on: fixedElement.
+"				movableElement shape position: p.
+				canvas signalUpdate"
+				canvas newAnimation
+					from: p;
+					duration: 200 milliSeconds;
+					to: movableElement position;
+					on: movableElement shape set: #position: ]
+			] as: RSGroup.
+
+	RSGridLayout new lineItemsCount: 3; on: buttons.
+	RSVerticalLineLayout new alignCenter; gapSize: 30; on: (RSGroup with: canvas nodes with: buttons).
+	canvas addAll: buttons.
+
+	canvas when: RSExtentChangedEvent do: [ 
+		canvas camera zoomToFit: canvas extent * 0.7.
+		canvas signalUpdate ].
+	
+	^ canvas
+]

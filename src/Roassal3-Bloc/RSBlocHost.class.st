@@ -2,7 +2,8 @@ Class {
 	#name : #RSBlocHost,
 	#superclass : #RSHost,
 	#instVars : [
-		'space'
+		'space',
+		'elementListener'
 	],
 	#category : #'Roassal3-Bloc-Core'
 }
@@ -18,7 +19,9 @@ RSBlocHost >> newCanvasElement [
 	"The shapes of a RSCanvas must be translated and scaled according to the camera."
 
 	| children |
-	children := canvas shapes collect: [:each | each asBlElement ].
+	children := canvas shapes collect: [:each | each asBlElement
+		addEventHandler: elementListener;
+		yourself ].
 
 	^ BlElement new
 "		border: (BlBorder paint: Color blue translucent width: 10);"
@@ -39,20 +42,13 @@ RSBlocHost >> newCanvasElement [
 ]
 
 { #category : #opening }
-RSBlocHost >> newFixedShapesElement [
+RSBlocHost >> newFixedShapeElements [
 	"The fixedShapes of a RSCanvas are not affected by camera transformations. This is useful for toolbar buttons or legends, for example."
 
-	| children |
-	children := canvas fixedShapes collect: [:each | each asBlElement ].
-
-	^ BlElement new
-"		border: (BlBorder paint: Color green translucent width: 10);	"
-		clipChildren: false;
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		addChildren: children;
-		yourself
+	^ canvas fixedShapes collect: [ :each | 
+		  each asBlElement
+			  addEventHandler: elementListener;
+			  yourself ]
 ]
 
 { #category : #opening }
@@ -70,6 +66,8 @@ RSBlocHost >> newInfiniteCanvasAnimation [
 RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
+	elementListener := RSBlocEventListener newForHost: self.
+
 	space := BlSpace new
 		extent: canvas extent;
 		title: aTitleAsString;
@@ -80,7 +78,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 	space root
 		background: canvas color;
 		addAnimation: self newInfiniteCanvasAnimation;
-		addEventHandler: (RSEventListener newForHost: self).
+		addEventHandler: elementListener.
 
 	space
 		when: BlSpaceResizedEvent
