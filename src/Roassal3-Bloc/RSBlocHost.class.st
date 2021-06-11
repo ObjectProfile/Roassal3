@@ -95,10 +95,15 @@ RSBlocHost >> signalUpdate [
 	"Removes everything and re-adds fresh."
 
 	space ifNil: [ ^ self ].
+	
+	"TODO"
+	space root
+		allChildrenDepthFirstDo: [ :each | each removeEventHandler: elementListener ].
+	
 	space root
 		removeChildren;
 		addChild: self newCanvasElement;
-		addChild: self newFixedShapesElement
+		addChildren: self newFixedShapeElements.
 
 ]
 
