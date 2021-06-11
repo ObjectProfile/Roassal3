@@ -59,7 +59,7 @@ RSTreeLayoutTest >> exampleClassHierarchies: aCollection [
 	aCanvas
 		zoomToFit;
 		exportToSVG;
-		@ RSCanvasController;
+		@ RSCanvasControllerInteraction;
 		open
 ]
 
@@ -153,7 +153,7 @@ RSTreeLayoutTest >> exampleRoassal3CommitsWithTimeGaps [
 
 	aCanvas
 		zoomToFit;
-		@ RSCanvasController;
+		@ RSCanvasControllerInteraction;
 		open ] timeToRun inspect
 ]
 
@@ -205,7 +205,7 @@ RSTreeLayoutTest >> exampleTraitsHierarchies [
 	aCanvas
 		zoomToFit;
 		exportToSVG;
-		@ RSCanvasController;
+		@ RSCanvasControllerInteraction;
 		open
 ]
 
