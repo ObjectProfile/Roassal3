@@ -245,6 +245,17 @@ composite extent '=> (20.0@50.0)'
 ]
 
 { #category : #accessing }
+RSComposite >> allChildren [
+	| allChildren index |
+	index := 1.
+	allChildren := OrderedCollection withAll: self children.
+	[ index <= allChildren size ] whileTrue: [ 
+		allChildren addAll: ((allChildren at: index) children ifNil: [#()]).
+		index := index + 1 ].
+	^ allChildren
+]
+
+{ #category : #accessing }
 RSComposite >> camera [
 	^ parent camera
 ]
@@ -499,4 +510,11 @@ c @ RSCanvasController
 	self children do: [ :child | 
 		child isNode
 			ifTrue: [ child updateConnectedLines ] ]
+]
+
+{ #category : #accessing }
+RSComposite >> withAllChildren [
+	^ self allChildren
+		add: self;
+		yourself
 ]
