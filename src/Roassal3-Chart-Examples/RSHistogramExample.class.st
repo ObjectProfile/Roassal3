@@ -53,7 +53,7 @@ RSHistogramExample >> example03Bins [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -82,7 +82,7 @@ RSHistogramExample >> example04BinningStrat [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -120,7 +120,7 @@ RSHistogramExample >> example06Animations [
 			].
 		 ].
 	p bars 
-		@ (RSHighlightableInteraction new highlightBorder: (RSBorder new color: Color black));
+		@ (RSHighlightable new highlightBorder: (RSBorder new color: Color black));
 		@ (RSPopup text: [:assoc | 
 			"TODO create an object to define the model for each bin"
 			'From: ', (assoc key key round: 3) asString, String cr, 
@@ -161,7 +161,7 @@ RSHistogramExample >> example08Strategies [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 

@@ -37,7 +37,7 @@ RSInspectableExample >> example01SimpleExample [
 		builder canvas open ].
 	"inspectable inspectElementBlock: [ :cls | GTInspector openOn: cls ]."
 	boxes @ inspectable.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -91,7 +91,7 @@ RSInspectableExample >> example02Inspect [
 			canvas nodes do: #updateLinesON.
 			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
 		 ]}.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -108,9 +108,9 @@ RSInspectableExample >> example04ChagingContext [
 	c := RSCanvas new.
 	1 to: 100 do: [ :i |
 		c add: (RSBox new size: 10; model: i) ].
-	c shapes @ RSDraggableInteraction.
+	c shapes @ RSDraggable.
 	RSGridLayout on: c shapes.
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	
 	"This is the default context for the inspector"
 	context := RSContextInteraction new.

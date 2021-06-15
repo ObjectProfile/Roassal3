@@ -120,7 +120,7 @@ RSColorPaletteChooser >> copyToClipboard: object [
 
 { #category : #initialization }
 RSColorPaletteChooser >> initializeInteractions [
-	selectedHighlight := RSHighlightableInteraction new.
+	selectedHighlight := RSHighlightable new.
 	selectedHighlight highlightShapes: [ :e | {e shapes first} ].
 	selectedHighlight highlightColor: (
 		(LinearGradientPaint fromArray:
@@ -132,7 +132,7 @@ RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight 
 		propertyKey: #buttons;
 		copyKey: #qwer.
-	overHighlight := RSHighlightableInteraction new.
+	overHighlight := RSHighlightable new.
 	overHighlight 
 		highlightShapes: [ :e | {e shapes first} ]
 		butKeep: selectedHighlight.
@@ -144,7 +144,7 @@ RSColorPaletteChooser >> initializeInteractions [
 			start: 0@ -15;
 			stop: 0@ 15).
 	"for boxes "
-	boxOver := RSHighlightableInteraction new.
+	boxOver := RSHighlightable new.
 	boxOver highlightShapes: [ :s | { s shapes second } ].
 	boxOver highlightColor: Color black.
 ]
@@ -238,7 +238,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 	shapes := self palettes.
 	canvas addAll: shapes.
 	
-	controls := RSCanvasControllerInteraction new.
+	controls := RSCanvasController new.
 	controls noLegend.
 	controls interactions removeKey: RSDraggableCanvasInteraction.
 	controls interactions at: RSScrollWheelCanvasInteraction put: RSScrollWheelCanvasInteraction new.

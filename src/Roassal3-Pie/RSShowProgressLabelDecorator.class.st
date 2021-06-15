@@ -16,7 +16,7 @@ Class {
 RSShowProgressLabelDecorator >> initialize [
 	super initialize.
 	labelShape := RSLabel new.
-	highlight := RSHighlightableInteraction new.
+	highlight := RSHighlightable new.
 	highlight 
 		highlightColor: [ :shape | shape color adjustBrightness: 0.08 ]; 
 		when: RSHighlightEvent do: [ :evt | self updateLabel: evt shape ];

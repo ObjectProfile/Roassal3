@@ -24,7 +24,7 @@ RSSearchInCanvasTest >> setUp [
 	c addAll: shapes.
 	RSGridLayout on: shapes.
 	shapes @ RSPopup.
-	con := RSCanvasControllerInteraction new.
+	con := RSCanvasController new.
 	search := RSSearchInCanvasInteraction new.
 	con addInteraction: search.
 	search canvas: c.
@@ -160,7 +160,7 @@ RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
 
 	| l interaction |
 	
-	interaction := RSHighlightableInteraction new.
+	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new width: 2).
 	interaction withLines.
 	c shapes @ interaction.

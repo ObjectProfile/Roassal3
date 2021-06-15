@@ -13,7 +13,7 @@ RSSunburstExamples >> example01Basic [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: String using: #subclasses.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	^ sb
 ]
 
@@ -27,7 +27,7 @@ RSSunburstExamples >> example02MultipleRoots [
 		withBorder;
 		segmentSpacing: 1.
 	sb from: { String. RSEvent. RSShape } using:  #subclasses.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	^ sb
 ]
 
@@ -38,7 +38,7 @@ RSSunburstExamples >> example03ConstantStrategy [
 	sb := RSSunburstBuilder new.
 	sb constantWidthStrategy arcWidth: 25.
 	sb explore: Collection using:  #subclasses.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	^ sb
 ]
 
@@ -48,7 +48,7 @@ RSSunburstExamples >> example04Edges [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: Collection using:  #subclasses.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	sb build.
 	RSLineBuilder arrowedLine
 		attachPoint: RSSunburstAttachPoint new;
@@ -69,7 +69,7 @@ RSSunburstExamples >> example05BezierEdges [
 		ifFalse: [ Color lightGray ] ].
 	sb explore: Collection using:  #subclasses.
 	sb build.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	RSLineBuilder sunburstBezier
 		width: 2;
 		color: Color black;
@@ -115,11 +115,11 @@ RSSunburstExamples >> example06Rotation [
 		canvas: composite;
 		connectFrom: #superclass.
 	canvas := RSCanvas new.
-	controller := RSCanvasControllerInteraction new.
+	controller := RSCanvasController new.
 	(controller interactions at: RSDraggableCanvasInteraction) right.
 	canvas @ controller.
 	canvas add: composite.
-	composite @ RSRotatedInteraction.
+	composite @ RSRotated.
 	^ canvas
 ]
 
@@ -132,7 +132,7 @@ RSSunburstExamples >> example07FadeInteraction [
 		withBorder.
 	sb explore: Collection using:  #subclasses.
 	sb build.
-	sb canvas @ RSCanvasControllerInteraction.
+	sb canvas @ RSCanvasController.
 	interaction := RSSunburstFadeInteraction new
 		builder: sb.
 	label := RSLabel new.
@@ -159,7 +159,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	<script: 'self new example08SunburstExplorer open'>
 	| sb canvas newData color newAnimation first interpolate label |
 	canvas := RSCanvas new.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	color := NSScale category20c.
 	newData := nil.
 	newAnimation := [ :from :to |

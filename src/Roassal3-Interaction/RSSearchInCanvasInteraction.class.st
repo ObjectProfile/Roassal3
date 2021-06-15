@@ -199,7 +199,7 @@ RSSearchInCanvasInteraction >> initialize [
 	highlightesShapes := RSGroup new.
 	
 	colorsToUse := NSScale ordinalColored: 7.
-	highlightableLabels := RSHighlightableInteraction new
+	highlightableLabels := RSHighlightable new
 		when: RSHighlightEvent send: #showCurrentShadow: to: self;
 		when: RSUnHighlightEvent send: #hideCurrentShadow: to: self;
 		yourself.
@@ -396,7 +396,7 @@ RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 
 { #category : #util }
 RSSearchInCanvasInteraction >> unhighlightShape: s [
-	^ RSHighlightableInteraction new restore: s selector: #color
+	^ RSHighlightable new restore: s selector: #color
 ]
 
 { #category : #util }

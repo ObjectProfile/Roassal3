@@ -157,7 +157,7 @@ RSGradientPalette class >> roassalCanvas [
 			radius: 30.
 		]).
 	RSGridLayout on: canvas nodes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	canvas open.
 ]
 

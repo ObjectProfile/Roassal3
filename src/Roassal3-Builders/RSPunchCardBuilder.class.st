@@ -19,7 +19,7 @@ RSPunchCardBuilder >> addMetric: aRoassalValue name: name [
 
 { #category : #defaults }
 RSPunchCardBuilder >> defaultContainer [
-	^ RSCanvas new @ RSCanvasControllerInteraction
+	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #initialization }

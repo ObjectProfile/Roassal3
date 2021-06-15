@@ -24,7 +24,7 @@ RSChartExample >> example13AreaPlot [
 		g asShape	].
 	RSVerticalLineLayout on: charts.
 	canvas addAll: charts.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas 
 
 

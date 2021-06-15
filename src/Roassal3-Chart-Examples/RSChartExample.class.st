@@ -152,7 +152,7 @@ RSChartExample >> example08TwoCharts [
 	c add: g1 asShape; add: g2 asShape.
 	RSHorizontalLineLayout on: c shapes.
 
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	^ c 
 ]
 
@@ -160,7 +160,7 @@ RSChartExample >> example08TwoCharts [
 RSChartExample >> example09LinearSqrtSymlog [
 	<script: 'self new example09LinearSqrtSymlog open'>
 	| c x y |
-	c := RSCanvas new @ RSCanvasControllerInteraction.
+	c := RSCanvas new @ RSCanvasController.
 	x := (-5 to: 500 by: 0.1).
 	y := x.
 	#(yLinear ySqrt yLog) do: [ :sel | 
