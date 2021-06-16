@@ -66,7 +66,7 @@ RSChartExample new example01Markers open
 
 You should see:
 
-f<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
+<img width="250" height="250" alt="portfolio_view" src="https://user-images.githubusercontent.com/10532890/84400888-9afc6180-abd0-11ea-8258-4bbcbee7bd15.png">
 
 Another chart example may be seen using:
 ```Smalltalk
