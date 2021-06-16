@@ -100,7 +100,7 @@ RSFlowCanvas >> updateBreadcrumbs [
 	   | lbl |
 	   lbl := RSLabel text: obj asString, '/ ' model: obj.
 		breadcrumbsLabels add: lbl.
-		lbl @ RSHighlightableInteraction red. 
+		lbl @ RSHighlightable red. 
 		lbl when: RSMouseClick do: [ :evt | 
 			| i |
 			i := breadcrumbsLabels indexOf: lbl.
