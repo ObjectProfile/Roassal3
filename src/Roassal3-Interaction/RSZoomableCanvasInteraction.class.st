@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: delta [
 
 	| camera sc dist correct scale position |
@@ -40,7 +40,7 @@ RSZoomableCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 RSZoomableCanvasInteraction >> processEvent: evt [
 	| delta |
 	animation ifNotNil: [ ^ self ].

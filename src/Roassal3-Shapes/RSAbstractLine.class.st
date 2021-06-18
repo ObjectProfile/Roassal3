@@ -65,17 +65,17 @@ RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capButt [
 	self border capButt
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capRound [
 	self border capRound
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capSquare [
 	self border capSquare
 ]
@@ -104,13 +104,13 @@ RSAbstractLine >> controlPoints [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
 	
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashed [
 	self dashArray: #(4).
 ]
@@ -211,17 +211,17 @@ RSAbstractLine >> isLine [
 	^ true
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinBevel [
 	self border joinBevel
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinMiter [
 	self border joinMiter
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinRound [
 	self border joinRound
 ]

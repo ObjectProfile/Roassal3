@@ -96,7 +96,7 @@ RSAbstractRegularTreeLayout >> layered [
 	self isLayered: true
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractRegularTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: anObject [
 	self subclassResponsibility
 ]

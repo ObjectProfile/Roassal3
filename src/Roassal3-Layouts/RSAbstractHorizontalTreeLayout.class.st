@@ -12,7 +12,7 @@ RSAbstractHorizontalTreeLayout class >> isAbstract [
 	^ self = RSAbstractHorizontalTreeLayout
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractHorizontalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
@@ -24,7 +24,7 @@ RSAbstractHorizontalTreeLayout >> initialize [
 	horizontalGap := 20
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractHorizontalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
 	aNodeCollection isEmpty ifTrue: [ ^ 0 ].

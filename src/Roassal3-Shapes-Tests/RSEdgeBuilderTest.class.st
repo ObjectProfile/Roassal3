@@ -152,7 +152,7 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	self assert: edges first to equals: es2 first.
 ]
 
-{ #category : #'tests error' }
+{ #category : #'tests - error' }
 RSEdgeBuilderTest >> testErrors [
 	| eb |
 	eb := RSLineBuilder line.

@@ -120,7 +120,7 @@ RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSShapeFactory class >> polygonWithPoints: points [
 	^ self polygon
 		privatePoints: points;
@@ -141,7 +141,7 @@ RSShapeFactory class >> rhomboid [
 		with: -0.333 @ 1)
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSShapeFactory class >> shapeFromString: aString [
 	"self shapeFromString: 'd'"
 	#(o circle

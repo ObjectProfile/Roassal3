@@ -1,7 +1,7 @@
 Class {
 	#name : #RSBarPlotTest,
 	#superclass : #RSAbstractChartTest,
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #tests }

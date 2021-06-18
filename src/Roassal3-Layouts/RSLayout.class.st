@@ -85,12 +85,12 @@ RSLayout >> executeOnElements: elements [
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> fatherOf: aNode [
 	^ aNode propertyAt: #father
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> fatherOf: aNode put: aValue [
 	aNode propertyAt: #father put: aValue
 ]
@@ -106,33 +106,33 @@ RSLayout >> isEdgeDrivenLayout [
 	^ false
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> layerOf: aNode [
 	^ aNode propertyAt: #layout
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> layerOf: aNode put: aValue [
 	aNode propertyAt: #layout put: aValue
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> leftContourOf: aNode [
 	^ aNode propertyAt: #leftContour
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> leftContourOf: aNode put: aValue [
 	aNode propertyAt: #leftContour put: aValue
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> modOf: aNode [
 	^ aNode propertyAt: #mod ifAbsent: [ 0 ]
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> modOf: aNode put: aFloat [
 	aNode propertyAt: #mod put: aFloat
 
@@ -148,33 +148,33 @@ RSLayout >> on: elements edges: edges [
 	self applyOn: elements
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> pointerOf: aNode [
 	^ aNode propertyAt: #pointer
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> pointerOf: aNode put: aValue [
 	^ aNode propertyAt: #pointer put: aValue
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> rOf: aNode [ 
 	^ aNode propertyAt: #r ifAbsent: [ 0 ]
 	
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> rOf: aNode put: aValue [
 	^ aNode propertyAt: #r put: aValue
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> rightContourOf: aNode [
 	^ aNode propertyAt: #rightContour
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> rightContourOf: aNode put: aValue [
 	aNode propertyAt: #rightContour put: aValue
 ]
@@ -183,12 +183,12 @@ RSLayout >> rightContourOf: aNode put: aValue [
 RSLayout >> step [
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> thetaOf: aNode [
 	^ aNode propertyAt: #theta ifAbsent: [ ^ 0 ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> thetaOf: aNode put: aValue [
 	^ aNode propertyAt: #theta put: aValue
 ]
@@ -208,12 +208,12 @@ RSLayout >> userDefinedEdges: edges [
 	"Do nothing"
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> xOf: aNode [ 
 	^ aNode propertyAt: #x ifAbsent: [ 0 ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSLayout >> xOf: aNode put: aValue [
 	aNode propertyAt: #x put: aValue
 ]

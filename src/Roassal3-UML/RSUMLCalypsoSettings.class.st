@@ -24,13 +24,13 @@ RSUMLCalypsoSettings class >> darkThemeUMLClassColor: aColor [
 	darkThemeUMLClassColor := aColor
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultDarkThemeColorUMLClass [
 
 	^Color colorFrom: '2C3E50'
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 	^Color colorFrom: 'ffffce'

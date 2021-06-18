@@ -15,6 +15,12 @@ RSAttachPoint class >> centered [
 	^ RSCenteredAttachPoint new
 ]
 
+{ #category : #testing }
+RSAttachPoint class >> isAbstract [ 
+
+	^ self == RSAttachPoint
+]
+
 { #category : #'public - hooks' }
 RSAttachPoint >> basicEndingPointOf: anEdge [
 	^ self subclassResponsibility 

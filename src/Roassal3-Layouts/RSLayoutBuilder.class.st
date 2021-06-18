@@ -10,52 +10,52 @@ Class {
 	#category : #'Roassal3-Layouts-Builder'
 }
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> cell [
 	^ layout := RSCellLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> circle [
 	^ layout := RSCircleLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> cluster [
 	^ layout := RSClusterLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> flow [
 	^ layout := RSFlowLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> force [
 	^ layout := RSSimpleForceBasedLayout new
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> grid [
 	^ layout := RSGridLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> horizontal [
 	^ layout := RSHorizontalLineLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> horizontalTree [
 	^ layout := RSHorizontalTreeLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> ifConnected: aLayout [
 	^ self ifConnected: aLayout ifNotConnected: RSGridLayout new
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> ifConnected: aLayout ifNotConnected: anotherLayout [
 
 	^ layout := RSConditionalLayout new
@@ -75,33 +75,33 @@ RSLayoutBuilder >> layout [
 	^ layout 
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> none [
 	layout := RSNoLayout new.
 	^ layout
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> on: shapes [
 	layout on: shapes
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> radial [
 	^ layout := RSRadialTreeLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> rawForce [
 	^ layout := RSForceBasedLayout new useProgressBar.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> sugiyama [
 	^ layout := RSSugiyamaLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> tidyTree [
 	"For example:
 	
@@ -124,12 +124,12 @@ m
 					    forEachLayout: RSTreeLayout new)
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> tree [
 	^ layout := RSTreeLayout new.
 ]
 
-{ #category : #'public layout' }
+{ #category : #'public - layout' }
 RSLayoutBuilder >> vertical [
 	^ layout := RSVerticalLineLayout new.
 ]

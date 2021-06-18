@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
-{ #category : #public }
+{ #category : #'accessing - defaults' }
 RSTransitionAnimation class >> defaultDuration [
 	^ 2 seconds
 ]
