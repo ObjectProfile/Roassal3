@@ -697,7 +697,7 @@ RSBlocExamples >> example20BoxWindmill [
 			frameCount := frameCount + 1.
 			canvas signalUpdate ].
 
-	canvas @ RSTranscriptCanvasMonitor.
+	canvas @ RSSimpleCanvasMonitor.
 
 	^ canvas
 ]
