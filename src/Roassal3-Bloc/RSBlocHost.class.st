@@ -93,23 +93,34 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 
 { #category : #opening }
 RSBlocHost >> signalUpdate [
-	"Removes everything and re-adds fresh."
+	"Request a redraw on the canvas. Do nothing if the canvas is still not open (space is nil)."
 
 	space ifNil: [ ^ self ].
-	
-	"TODO"
-	space root
-		allChildrenDepthFirstDo: [ :each | each removeEventHandler: elementListener ].
-	
-	space root
-		removeChildren;
-		addChild: self newCanvasElement;
-		addChildren: self newFixedShapeElements.
 
+	signalUpdateRequested := true.
+	space enqueueTask: (BlTaskAction new
+			 action: [ 
+				 signalUpdateRequested ifTrue: [ self syncSignalUpdate ].
+				 signalUpdateRequested := false ];
+			 yourself)
 ]
 
 { #category : #accessing }
 RSBlocHost >> space [
 
 	^ space
+]
+
+{ #category : #opening }
+RSBlocHost >> syncSignalUpdate [
+	"Removes everything and re-adds fresh."
+
+	self flag: #todo.
+	space root allChildrenDepthFirstDo: [ :each | 
+		each removeEventHandler: elementListener ].
+
+	space root
+		removeChildren;
+		addChild: self newCanvasElement;
+		addChildren: self newFixedShapeElements
 ]
