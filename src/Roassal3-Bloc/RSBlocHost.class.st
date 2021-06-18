@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSHost,
 	#instVars : [
 		'space',
-		'elementListener'
+		'elementListener',
+		'signalUpdateRequested'
 	],
 	#category : #'Roassal3-Bloc-Core'
 }
@@ -80,9 +81,9 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		addAnimation: self newInfiniteCanvasAnimation;
 		addEventHandler: elementListener.
 
-	space
-		when: BlSpaceResizedEvent
-		do: [ :evt | canvas extent: evt extent ].
+	space root
+		when: BlElementExtentChangedEvent
+		do: [ :evt | canvas extent: evt source extent ].
 
 	space show.
 
