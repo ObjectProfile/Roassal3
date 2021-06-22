@@ -20,6 +20,7 @@ RSBlocEventListener class >> newForHost: aRSHost [
 RSBlocEventListener >> clickEvent: anEvent [
 
 	| aRSEvent |
+	anEvent consumed: true.
 	aRSEvent := dispatcher 
 		mouseEventOfClass: RSMouseClick
 		ifLeftButton: RSMouseLeftClick
@@ -34,6 +35,7 @@ RSBlocEventListener >> clickEvent: anEvent [
 RSBlocEventListener >> doubleClickEvent: anEvent [
 
 	| aRSEvent |
+	anEvent consumed: true.
 	aRSEvent := dispatcher
 		mouseEventOfClass: RSMouseDoubleClick
 		ifLeftButton: RSMouseDoubleLeftClick
@@ -47,7 +49,7 @@ RSBlocEventListener >> doubleClickEvent: anEvent [
 { #category : #'mouse handlers' }
 RSBlocEventListener >> dragStartEvent: anEvent [
 "	anEvent consumed: true."
-	#dragStartEvent: traceCr.
+"	#dragStartEvent: traceCr."
 ]
 
 { #category : #initialization }
