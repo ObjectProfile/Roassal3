@@ -947,6 +947,7 @@ RSBlocExamples >> example24AnimationLinesInComposite [
 			line := s shapes first.
 			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
 			line endPoint: 0@ pos ].
+			canvas signalUpdate.
 		 ].
 	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
 	^ canvas
