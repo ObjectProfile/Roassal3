@@ -14,8 +14,8 @@ RSExamplesBrowserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newLeftToRight
 		  borderWidth: 10;
-		  add: #examplesList;
 		  add: #visualization;
+		  add: #examplesList;
 		  yourself
 ]
 
