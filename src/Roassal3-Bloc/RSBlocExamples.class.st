@@ -6,7 +6,7 @@ Class {
 
 { #category : #examples }
 RSBlocExamples >> example01Boxes [
-	<script: 'self new example01Boxes'>
+	<script: 'self new example01Boxes open'>
 	
 	| c |
 	c := RSCanvas new.
@@ -21,13 +21,12 @@ RSBlocExamples >> example01Boxes [
 		extent: 100@100;
 		yourself).
 
-	c open.
-
+	^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example02Ellipse [
-	<script: 'self new example02Ellipse'>
+	<script: 'self new example02Ellipse open'>
 
 	| c |
 	c := RSCanvas new.
@@ -42,12 +41,12 @@ RSBlocExamples >> example02Ellipse [
 			 extent: 100 @ 100;
 			 yourself).
 
-	c open
+	^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example03RotatedBoxes [
-	<script: 'self new example03RotatedBoxes'>
+	<script: 'self new example03RotatedBoxes open'>
 
 	| c |
 	c := RSCanvas new.
@@ -76,13 +75,13 @@ RSBlocExamples >> example03RotatedBoxes [
 		withBorder;
 		radius: 90).
 
-	c open.
+	^ c
 
 ]
 
 { #category : #examples }
 RSBlocExamples >> example04RotatedLabels [
-	<script: 'self new example04RotatedLabels'>
+	<script: 'self new example04RotatedLabels open'>
 
 	| c |
 	c := RSCanvas new.
@@ -117,13 +116,12 @@ RSBlocExamples >> example04RotatedLabels [
 			withBorder;
 			radius: 90).
 
-	c open.
-
+	^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example05Ellipses [
-	<script: 'self new example05Ellipses'>
+	<script: 'self new example05Ellipses open'>
 
 	| c r y |
 	c := RSCanvas new.
@@ -147,13 +145,12 @@ RSBlocExamples >> example05Ellipses [
 		 ].
 
 
-	c open.
-
+	^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example06Polyline [
-	<script: 'self new example06Polyline'>
+	<script: 'self new example06Polyline open'>
 
 	| c |
 	c := RSCanvas new.
@@ -169,13 +166,13 @@ RSBlocExamples >> example06Polyline [
 		yourself).
 
 
-	c open.
+	^ c
 
 ]
 
 { #category : #examples }
 RSBlocExamples >> example07MouseMove [
-	<script: 'self new example07MouseMove'>
+	<script: 'self new example07MouseMove open'>
 
 	| c size circles |
 	c := RSCanvas new.
@@ -200,13 +197,13 @@ RSBlocExamples >> example07MouseMove [
 
 		c signalUpdate ].
 		
-	c open.
+	^ c
 
 ]
 
 { #category : #examples }
 RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
-	<script: 'self new example08ZoomToFitWhenExtentChangedEvent'>
+	<script: 'self new example08ZoomToFitWhenExtentChangedEvent open'>
 
 	| canvas |
 	canvas := RSCanvas new.
@@ -222,12 +219,12 @@ RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
 		canvas zoomToFit.
 		canvas signalUpdate ].
 	
-	canvas open
+	^ canvas
 ]
 
 { #category : #examples }
 RSBlocExamples >> example09HierarchyWithCanvasController [
-	<script: 'self new example09HierarchyWithCanvasController'>
+	<script: 'self new example09HierarchyWithCanvasController open'>
 
 	| canvas color shapes |
 	canvas := RSCanvas new.
@@ -254,7 +251,7 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 	RSTreeLayout on: shapes.
 
 	canvas addInteraction: RSCanvasController new.
-	canvas open.
+	^ canvas
 
 
 ]
