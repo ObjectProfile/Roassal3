@@ -515,7 +515,7 @@ RSBlocExamples >> example15BarPlot [
 	c title: 'Histogram'.
 
 	c canvas useBlocHost.
-	^ c
+	^ c canvas
 ]
 
 { #category : #examples }
