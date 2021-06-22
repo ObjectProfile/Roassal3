@@ -56,7 +56,7 @@ RSClusterLayout >> doExecute: nodeElements [
 	
 ]
 
-{ #category : #'drawing-general' }
+{ #category : #'drawing - general' }
 RSClusterLayout >> draw: aNode [
 	(self childrenFor: aNode) do: [ :e | self draw: e ].
 	translator 

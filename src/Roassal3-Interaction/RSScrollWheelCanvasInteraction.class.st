@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 RSScrollWheelCanvasInteraction >> move: aCanvas delta: delta [
 
 	| correct p |
@@ -43,7 +43,7 @@ RSScrollWheelCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 RSScrollWheelCanvasInteraction >> processEvent: evt [
 	| delta |
 	delta := (evt isUp

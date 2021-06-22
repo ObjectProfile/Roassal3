@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal3-Global-Tests-Infrastructure'
 }
 
-{ #category : #tests }
+{ #category : #'private - asserting' }
 RSDependencyTest >> assertPackage: p1Name dependOn: p2Name [
 
 	| p1 p2 |
@@ -13,7 +13,7 @@ RSDependencyTest >> assertPackage: p1Name dependOn: p2Name [
 	self assert: (p1 dependentPackages includes: p2).
 ]
 
-{ #category : #tests }
+{ #category : #'private - asserting' }
 RSDependencyTest >> assertPackage: p1Name doesNotDependOn: p2Name [
 
 	| p1 p2 |
@@ -28,7 +28,7 @@ RSDependencyTest >> hasPackage: aString [
 	^ (self packageNamed: aString) notNil.
 ]
 
-{ #category : #tests }
+{ #category : #'private - accessing' }
 RSDependencyTest >> packageNamed: aSymbol [
 	^ RPackageOrganizer default packageNamed: aSymbol 
 		ifAbsent: [ nil ]

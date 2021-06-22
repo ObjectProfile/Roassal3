@@ -1,7 +1,7 @@
 Class {
 	#name : #RSChartTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #tests }

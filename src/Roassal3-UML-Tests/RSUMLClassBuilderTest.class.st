@@ -4,8 +4,9 @@ Class {
 	#category : #'Roassal3-UML-Tests'
 }
 
-{ #category : #tests }
+{ #category : #accessing }
 RSUMLClassBuilderTest >> classToTest [
+
 	^ RSUMLClassBuilder
 ]
 

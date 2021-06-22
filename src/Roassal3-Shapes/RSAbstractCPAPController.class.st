@@ -9,6 +9,12 @@ Class {
 	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
+{ #category : #testing }
+RSAbstractCPAPController class >> isAbstract [
+
+	^ self == RSAbstractCPAPController
+]
+
 { #category : #hooks }
 RSAbstractCPAPController >> controlPointsFor: aLine [
 	| ap |

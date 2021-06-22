@@ -74,7 +74,7 @@ RSAbstractContainerBuilder >> container: aTContainer [
 	container := aTContainer
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSAbstractContainerBuilder >> defaultContainer [
 	^ RSCanvas new
 ]

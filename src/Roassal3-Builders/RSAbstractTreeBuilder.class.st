@@ -93,7 +93,7 @@ RSAbstractTreeBuilder >> leafWeight: block [
 	self weight: [ :shape | self weightLeafShape: shape block: block ].
 ]
 
-{ #category : #default }
+{ #category : #'accessing - defaults' }
 RSAbstractTreeBuilder >> minWeightValue [
 	^ 1
 ]

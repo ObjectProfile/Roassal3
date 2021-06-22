@@ -61,17 +61,17 @@ RSBorder >> accept: visitor [
 	^ visitor visitBorder: self
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSBorder >> capButt [
 	self pStyle capStyle: #capButt.
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSBorder >> capRound [
 	self pStyle capStyle: #capRound.
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSBorder >> capSquare [
 	self pStyle capStyle: #capSquare.
 ]
@@ -89,7 +89,7 @@ RSBorder >> color: aColor [
 	paint := Color colorFrom: aColor.
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSBorder >> dashArray: arrayOfNumbers [
 	"Set the pattern for the dash. For example:
 -=-=-=-=-=-=-=-=-=-=-=-=
@@ -158,17 +158,17 @@ RSBorder >> initialize [
 	width := 1.
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSBorder >> joinBevel [
 	self pStyle joinStyle: #joinBevel
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSBorder >> joinMiter [
 	self pStyle joinStyle: #joinMiter
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSBorder >> joinRound [
 	self pStyle joinStyle: #joinRound
 ]

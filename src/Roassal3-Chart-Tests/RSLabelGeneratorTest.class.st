@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'lg'
 	],
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #running }

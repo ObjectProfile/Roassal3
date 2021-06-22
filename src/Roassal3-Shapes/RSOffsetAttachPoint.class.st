@@ -11,6 +11,12 @@ Class {
 	#category : #'Roassal3-Shapes-AttachPoint'
 }
 
+{ #category : #testing }
+RSOffsetAttachPoint class >> isAbstract [ 
+
+	^ self == RSOffsetAttachPoint
+]
+
 { #category : #accessing }
 RSOffsetAttachPoint >> endOffset [
 	^ endOffset

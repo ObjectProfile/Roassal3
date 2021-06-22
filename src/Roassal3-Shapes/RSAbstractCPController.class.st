@@ -9,6 +9,12 @@ Class {
 	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
+{ #category : #testing }
+RSAbstractCPController class >> isAbstract [
+
+	^ self == RSAbstractCPController
+]
+
 { #category : #hooks }
 RSAbstractCPController >> controlPointsFor: aLine [
 	"return an array of points generated from the edge"
