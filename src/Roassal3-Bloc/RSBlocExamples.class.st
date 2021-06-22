@@ -4,6 +4,13 @@ Class {
 	#category : #'Roassal3-Bloc-Examples'
 }
 
+{ #category : #accessing }
+RSBlocExamples class >> allExampleSelectors [
+
+	^ (self selectors select: [ :each | each beginsWith: 'example' ])
+		  sorted
+]
+
 { #category : #examples }
 RSBlocExamples >> example01Boxes [
 	<script: 'self new example01Boxes open'>
