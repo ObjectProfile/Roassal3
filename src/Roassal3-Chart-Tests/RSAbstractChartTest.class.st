@@ -20,7 +20,7 @@ RSAbstractChartTest >> classToTest [
 { #category : #running }
 RSAbstractChartTest >> setUp [ 
 	super setUp.
-	chart := RSChartBuilder new.
+	chart := RSChart new.
 	
 ]
 
@@ -44,7 +44,7 @@ RSAbstractChartTest >> testEmptyPlot [
 { #category : #tests }
 RSAbstractChartTest >> testOpening [
 	| x |
-	chart := RSChartBuilder new.
+	chart := RSChart new.
 	x := 0 to: 2 by: 1 / 100.
 	chart addPlot: (self classToTest new x: x y: x).
 	chart addPlot: (self classToTest new x: x y: (x collect: #squared)).

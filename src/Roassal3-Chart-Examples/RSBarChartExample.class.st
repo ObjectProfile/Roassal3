@@ -13,7 +13,7 @@ RSBarChartExample >> example01TwoBars [
 	| c p p2 x y size |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
 	size := 6.
 	p barSize: size.
@@ -49,7 +49,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	| c p p2 x y size lb |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSHorizontalBarPlot new x: y y: x.
 	size := 5.
 	p barSize: size.
@@ -108,7 +108,7 @@ RSBarChartExample >> example03TilePaint [
 		paint repeat.
 		paint ].
 
-	c := RSChartBuilder new.
+	c := RSChart new.
 	c extent: 300@ 200.
 	lb := RSLegendBuilder new.
 	lb container: c canvas.
@@ -148,7 +148,7 @@ RSBarChartExample >> example03TilePaint [
 RSBarChartExample >> example04VerticalStack [
 	<script: 'self new example04VerticalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChartBuilder new.
+	c := RSChart new.
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
@@ -173,7 +173,7 @@ RSBarChartExample >> example04VerticalStack [
 RSBarChartExample >> example05HorizontalStack [
 	<script: 'self new example05HorizontalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChartBuilder new.
+	c := RSChart new.
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
@@ -233,7 +233,7 @@ RSBarChartExample >> example07DoubleBar [
 	<script: 'self new example07DoubleBar open'>
 	| c classes x1 x2 y plot title |
 	
-	c := RSChartBuilder new.
+	c := RSChart new.
 	classes := RSShape withAllSubclasses asOrderedCollection 
 		sorted: [:a :b | a name<b name ].
 	x1 := classes collect: #numberOfMethods.
