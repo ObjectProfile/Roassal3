@@ -1,7 +1,7 @@
 Class {
 	#name : #RSChartTickTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #tests }
@@ -9,7 +9,7 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	| x c numberOfTicks vertical |
 	x := -10.0 to: 20.0 count: 100.
 	numberOfTicks := 2.
-	c := RSChartBuilder new
+	c := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 		addDecoration: (RSHorizontalTick new 
@@ -37,7 +37,7 @@ RSChartTickTest >> testFromNames [
 			dates add: d.
 			y add: f ].
 	x := 1 to: dates size.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	c extent: 300@200.
 	
 	c addPlot: (RSLinePlot new x: x y: y).

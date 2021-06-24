@@ -56,7 +56,7 @@ RSMondrian >> build [
 	| interaction |
 	self applyLayout.
 	
-	interaction := RSHighlightableInteraction new.
+	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new color: Color black; width: 2).
 	interaction withOutgoingEdges.
 	self canvas nodes @ interaction.
@@ -95,7 +95,7 @@ RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.
 	layoutBuilder := RSLayoutBuilder new.
-	canvas := RSCanvas new @ RSCanvasControllerInteraction.
+	canvas := RSCanvas new @ RSCanvasController.
 	nodesForLayout := RSGroup new.
 	depth := 0
 ]
@@ -245,7 +245,7 @@ b open
 	].
 	canvas addAll: nodes.
 	nodes @ RSPopup.
-	depth = 0 ifTrue: [ nodes @ RSDraggableInteraction ].
+	depth = 0 ifTrue: [ nodes @ RSDraggable ].
 	nodesForLayout addAll: nodes.
 	^ nodes
 ]
@@ -383,7 +383,7 @@ RSMondrian >> shape [
 RSMondrian >> shapesOn: someObjects [
 	| ss |
 	ss := shapeBuilder shapesOn: someObjects.
-	depth = 0 ifTrue: [ ss @ RSDraggableInteraction ].
+	depth = 0 ifTrue: [ ss @ RSDraggable ].
 	ss @ RSPopup.
 	^ ss
 ]

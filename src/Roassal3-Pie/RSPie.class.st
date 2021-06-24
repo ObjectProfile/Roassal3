@@ -18,7 +18,7 @@ b open
 .=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
 "
 Class {
-	#name : #RSPieBuilder,
+	#name : #RSPie,
 	#superclass : #RSAbstractShapesBuilder,
 	#instVars : [
 		'objects',
@@ -32,18 +32,18 @@ Class {
 }
 
 { #category : #'accessing - computed' }
-RSPieBuilder >> alphaAngleFor: aShape [
+RSPie >> alphaAngleFor: aShape [
 	values ifNil: [ self slice: #yourself ].
 	^ (sumValues at: aShape index) * 360 / totalSum.
 ]
 
 { #category : #'accessing - computed' }
-RSPieBuilder >> betaAngleFor: aShape [
+RSPie >> betaAngleFor: aShape [
 	^ ((sumValues at: aShape index) + (values at: aShape index )) * 360 / totalSum.
 ]
 
 { #category : #initialization }
-RSPieBuilder >> initialize [
+RSPie >> initialize [
 	super initialize.
 	self sliceColor: [ :slice | 
 		slice index even 
@@ -57,17 +57,17 @@ RSPieBuilder >> initialize [
 ]
 
 { #category : #accessing }
-RSPieBuilder >> objects [
+RSPie >> objects [
 	^ objects
 ]
 
 { #category : #accessing }
-RSPieBuilder >> objects: someObjects [
+RSPie >> objects: someObjects [
 	objects := someObjects
 ]
 
 { #category : #hooks }
-RSPieBuilder >> shapeFor: anObject [
+RSPie >> shapeFor: anObject [
 	| slice |
 	slice := self sliceShape copy.
 	slice
@@ -80,7 +80,7 @@ RSPieBuilder >> shapeFor: anObject [
 ]
 
 { #category : #hooks }
-RSPieBuilder >> shapeFor: anObject index: index [
+RSPie >> shapeFor: anObject index: index [
 	| slice |
 	slice := self sliceShape copy.
 	slice
@@ -94,7 +94,7 @@ RSPieBuilder >> shapeFor: anObject index: index [
 ]
 
 { #category : #public }
-RSPieBuilder >> slice: aBlockOrASymbol [
+RSPie >> slice: aBlockOrASymbol [
 	"Set the way we give a pie share for each element."
 	| tempSum |
 	values := objects collect: [:m | aBlockOrASymbol value: m value ] as: Array.
@@ -108,30 +108,30 @@ RSPieBuilder >> slice: aBlockOrASymbol [
 ]
 
 { #category : #accessing }
-RSPieBuilder >> sliceColor [
+RSPie >> sliceColor [
 	^ sliceColor
 ]
 
 { #category : #accessing }
-RSPieBuilder >> sliceColor: anObject [
+RSPie >> sliceColor: anObject [
 	"a block or object that can anwser rsValue:"
 	sliceColor := anObject 
 	
 ]
 
 { #category : #accessing }
-RSPieBuilder >> sliceShape [
+RSPie >> sliceShape [
 	"you can modify with simples values all atributes of slices except color and angles"
 	"review #sliceColor and #slice:"
 	^ sliceShape
 ]
 
 { #category : #'accessing - computed' }
-RSPieBuilder >> totalSum [
+RSPie >> totalSum [
 	^ totalSum
 ]
 
 { #category : #accessing }
-RSPieBuilder >> values [
+RSPie >> values [
 	^ values
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSBarPlotTest,
 	#superclass : #RSAbstractChartTest,
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #tests }
@@ -30,7 +30,7 @@ RSBarPlotTest >> testHorizontalBar [
 	| c p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSHorizontalBarPlot new x: x y: y.
 	
 	self deny: p isVerticalBarPlot.
@@ -48,7 +48,7 @@ RSBarPlotTest >> testVerticalBar [
 	| c p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
 	
 	self assert: p isVerticalBarPlot.

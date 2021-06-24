@@ -41,7 +41,7 @@ RSChannelExample >> example3 [
 		channel build.
 	].
 	"-------"
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	c open
 ]
 
@@ -58,8 +58,8 @@ RSChannelExample >> exampleBasic [
 	box2 := RSBox new
 		        size: 30;
 		        color: Color gray translucent.
-	box1 @ RSDraggableInteraction.
-	box2 @ RSDraggableInteraction.
+	box1 @ RSDraggable.
+	box2 @ RSDraggable.
 	c
 		add: box1;
 		add: box2.
@@ -138,7 +138,7 @@ RSChannelExample >> exampleBasic2 [
 	channel build.
 	"-------"
 
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	c open
 ]
 
@@ -220,10 +220,6 @@ RSChannelExample >> exampleBasic3 [
 	channel output: { bigLabel }.
 	channel build.
 	"-------"
-	
-	
-	
-
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	c open
 ]

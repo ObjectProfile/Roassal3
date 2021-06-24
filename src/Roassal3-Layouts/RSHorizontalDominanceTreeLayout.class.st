@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSHorizontalDominanceTreeLayout >> computeChildrenFor: aNode [
 	^ self childrenWithHighestNestingLevelFor: aNode
 ]

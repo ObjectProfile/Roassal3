@@ -12,7 +12,7 @@ RSHistogramExample >> example01RandomValues [
 	<script: 'self new example01RandomValues open'>
 	| c p values |
 	values := self randomValues.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSLinePlot new x:(1 to: values size) y: values.
 	c addPlot: p.
 	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel).
@@ -25,7 +25,7 @@ RSHistogramExample >> example02Histogram [
 	<script: 'self new example02Histogram open'>
 	| values c plot |
 	values := self randomValues.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	plot := RSHistogramPlot new x: values.
 	c addPlot: plot.
 	c addDecoration: RSVerticalTick new.
@@ -41,7 +41,7 @@ RSHistogramExample >> example03Bins [
 	canvas := RSCanvas new.
 	shapes := #(3 5 10 20) collect: [ :numberOfBins| | g c plot |
 		g := RSGroup new.
-		c := RSChartBuilder new.
+		c := RSChart new.
 		c container: g.
 		plot := RSHistogramPlot new x: values; bins: numberOfBins.
 		c addPlot: plot.
@@ -53,7 +53,7 @@ RSHistogramExample >> example03Bins [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -70,7 +70,7 @@ RSHistogramExample >> example04BinningStrat [
 		RSSturgesBinning new.
 	 } collect: [ :strat | | g c plot |
 		g := RSGroup new.
-		c := RSChartBuilder new.
+		c := RSChart new.
 		c container: g.
 		plot := RSHistogramPlot new x: values; binningStrategy: strat.
 		c addPlot: plot.
@@ -82,7 +82,7 @@ RSHistogramExample >> example04BinningStrat [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -120,7 +120,7 @@ RSHistogramExample >> example06Animations [
 			].
 		 ].
 	p bars 
-		@ (RSHighlightableInteraction new highlightBorder: (RSBorder new color: Color black));
+		@ (RSHighlightable new highlightBorder: (RSBorder new color: Color black));
 		@ (RSPopup text: [:assoc | 
 			"TODO create an object to define the model for each bin"
 			'From: ', (assoc key key round: 3) asString, String cr, 
@@ -148,7 +148,7 @@ RSHistogramExample >> example08Strategies [
 		RSSturgesBinning new.
 	 } collect: [ :strat | | g c plot |
 		g := RSGroup new.
-		c := RSChartBuilder new.
+		c := RSChart new.
 		c container: g.
 		y := x collect: [ :v | strat computeSizeFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
@@ -161,7 +161,7 @@ RSHistogramExample >> example08Strategies [
 		 ].
 	canvas addAll: shapes.
 	RSGridLayout on: canvas shapes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -170,7 +170,7 @@ RSHistogramExample >> example09BinsCollection [
 	<script: 'self new example09BinsCollection open'>
 	| values c plot |
 	values := self randomValues.
-	c := RSChartBuilder new.
+	c := RSChart new.
 	plot := RSHistogramPlot new x: values.
 	plot bins: #(100 150 155 180 200).
 	c addPlot: plot.

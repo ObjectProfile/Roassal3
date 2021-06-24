@@ -40,7 +40,7 @@ RSBaselineCalypso >> addEdgesOn: canvas [
 { #category : #building }
 RSBaselineCalypso >> applyControlsOn: canvas [
 	| controller |
-	controller := RSCanvasControllerInteraction new.
+	controller := RSCanvasController new.
 	controller addInteraction: (RSSearchInCanvasInteraction new
 		colorToHighlight: Color yellow;
 		yourself).
@@ -87,7 +87,7 @@ RSBaselineCalypso >> border [
 RSBaselineCalypso >> buildLegendOn: canvas [
 	| b miniGraph interaction arrow |
 	miniGraph := RSComposite new.
-	interaction  := RSLabeledInteraction new.
+	interaction  := RSLabeled new.
 	interaction location middle.
 	miniGraph add: (RSEllipse new size: 20; model: 'A').
 	miniGraph add: (RSEllipse new size: 20; model: 'B').
@@ -200,7 +200,7 @@ RSBaselineCalypso >> dependenciesOf: name [
 { #category : #building }
 RSBaselineCalypso >> highlightable [
 	^ high ifNil: [ 
-		high := RSHighlightableInteraction new withOutgoingEdges.
+		high := RSHighlightable new withOutgoingEdges.
 		high highlightBorder: (RSBorder new color: Smalltalk ui theme selectionColor; width: 2).
 		high ]
 ]
@@ -208,7 +208,7 @@ RSBaselineCalypso >> highlightable [
 { #category : #'building - menus' }
 RSBaselineCalypso >> highlightableMenu [
 	^ highMenu ifNil: [ 
-		highMenu := RSHighlightableInteraction new.
+		highMenu := RSHighlightable new.
 		highMenu 
 			when: RSHighlightEvent do: [ :evt |
 				evt shape color: Color blue; underline.
@@ -303,20 +303,20 @@ RSBaselineCalypso >> shapeFor: assoc [
 { #category : #'building - menus' }
 RSBaselineCalypso >> showHideNames: evt [
 	| label textColor |
-	label := evt canvas nodes first propertyAt: #RSLabeledInteraction.
+	label := evt canvas nodes first propertyAt: #RSLabeled.
 	textColor :=  Smalltalk ui theme textColor.
 	label ifNil: [ 
 		| labeled |
-		labeled := RSLabeledInteraction new highlightable.
+		labeled := RSLabeled new highlightable.
 		labeled shapeBuilder: [ :m | RSLabel new color: textColor; text: m ].
 		labeled lowColor: textColor translucent.
 		evt canvas nodes @ labeled.
 		evt shape text: 'Hide names' ]
 	ifNotNil: [ 
 		evt canvas nodes do: [ :node | 
-			(node propertyAt: #RSLabeledInteraction) remove.
-			node removeKey: #RSLabeledInteraction.
-			node removeInteractionIfPresent: RSLabeledInteraction. ].
+			(node propertyAt: #RSLabeled) remove.
+			node removeKey: #RSLabeled.
+			node removeInteractionIfPresent: RSLabeled. ].
 		evt shape text: 'Show names' ].
 	evt signalUpdate
 ]

@@ -78,7 +78,7 @@ RSSVGAnimationExamples >> example02Miku [
 			svgPath: line key;
 			color: line value;
 			yourself ] ).
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	easing := RSEasingInterpolator elasticOut.
 	canvas nodes do: [ :e | | position |
 		position := (random next * 1000) @ (random next * 1000) - 100.
@@ -245,7 +245,7 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 	eAnimation value: 2000 value: c shapes third.
 	eAnimation value: 2500 value: c shapes fourth.
 	eAnimation value: 7500 value: c shapes fifth.
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	^ c
 ]
 
@@ -339,7 +339,7 @@ RSSVGAnimationExamples >> example05Corona [
 	canvas add: curve. 
 	canvas add: line.
 	canvas add: lineTitle.
-	canvas @RSCanvasControllerInteraction.
+	canvas @RSCanvasController.
 	^ canvas
 
 ]
@@ -366,7 +366,7 @@ RSSVGAnimationExamples >> example06AnimatedSVG [
 		duration: 0.1 seconds;
 		when: RSAnimationLoopEvent
 			do: [ :evt | monster rotateByDegrees: 5 ].
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	^ c
 ]
 

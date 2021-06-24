@@ -16,7 +16,7 @@ RSBoxPlotExample >> example01 [
 	y := { { 1. 2. 3. 4. 5. } . 
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }. 
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSBoxPlot new y: y.
 	
 	c addPlot: p.
@@ -51,7 +51,7 @@ RSBoxPlotExample >> example02 [
 			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
 			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
 
-	c := RSChartBuilder new.
+	c := RSChart new.
 	p := RSBoxPlot new y: y.
 	
 	"size controls the width of the bars"

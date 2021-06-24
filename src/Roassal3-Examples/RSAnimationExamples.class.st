@@ -1524,7 +1524,7 @@ RSAnimationExamples >> example25AnimationCircle [
 			] ].
 		e index = 1 ifTrue:[ animation when: RSAnimationLoopEvent do: update ] ].
 	
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 	
 
@@ -1640,7 +1640,7 @@ RSAnimationExamples >> example27RSLocate [
 		1 ->'gray'})
 		start: 0@ -15;
 		stop: 0@ 15.
-	labeled := RSLabeledInteraction new.
+	labeled := RSLabeled new.
 	labeled shapeBuilder: [ :m | RSLabel new text: m asString; color: Color white ].
 	labeled location middle.
 	buttons :=  #(outer border inner left center right top middle bottom) collect: [ :t |
@@ -1937,7 +1937,7 @@ RSAnimationExamples >> example32SimpleClock [
 		top;
 		offset: 0 @ 15.
 	location move: canvas shapes last on: canvas nodes.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -2636,7 +2636,7 @@ RSAnimationExamples >> example45Beziers [
 				noPaint;
 				yourself
 		] as: RSGroup.
-		dots @ RSLabeledInteraction.
+		dots @ RSLabeled.
 
 		lines := (2 to: dots size) collect: [ :index |
 			RSLine new
@@ -2750,7 +2750,7 @@ RSAnimationExamples >> example45Beziers [
 		gapSize: 50; 
 		on: graphs.
 	c addAll: graphs.
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 	^ c
 
 ]

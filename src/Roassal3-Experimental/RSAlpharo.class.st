@@ -140,7 +140,7 @@ RSAlpharo >> removeJar [
 
 { #category : #hooks }
 RSAlpharo >> renderIn: aCanvas [
-	aCanvas inspectorContext: RSEmptyContext new.
+	aCanvas inspectorContext: RSEmptyContextInteraction new.
 	amebas := objects collect: [ :obj | 
 		RSAmeba new 
 			model: obj; 

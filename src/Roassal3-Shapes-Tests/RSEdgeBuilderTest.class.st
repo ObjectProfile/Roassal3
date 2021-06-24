@@ -152,7 +152,7 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	self assert: edges first to equals: es2 first.
 ]
 
-{ #category : #'tests error' }
+{ #category : #'tests - error' }
 RSEdgeBuilderTest >> testErrors [
 	| eb |
 	eb := RSLineBuilder line.
@@ -262,7 +262,7 @@ RSEdgeBuilderTest >> testInferCanvas3 [
 		connectFrom: [ :i | i // 2 ].
 
 	RSGridLayout on: c nodes.
-	c @ RSCanvasControllerInteraction.
+	c @ RSCanvasController.
 
 	self assert: c numberOfEdges equals: 99
 ]

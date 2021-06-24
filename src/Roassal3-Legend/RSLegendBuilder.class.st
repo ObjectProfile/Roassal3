@@ -149,7 +149,7 @@ RSLegendBuilder >> onDemand: text [
 	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
-		@ (RSHighlightableInteraction new lowColor: Color lightGray highColor: Color blue);
+		@ (RSHighlightable new lowColor: Color lightGray highColor: Color blue);
 		yourself
 ]
 

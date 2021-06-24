@@ -1,10 +1,36 @@
+"
+Make the shape blink.
+
+For example:
+
+```
+c := RSCanvas new.
+shapes := RSCircle models: (1 to: 9).
+shapes size: 30.
+c addAll: shapes.
+RSGridLayout on: shapes.
+shapes when: RSMouseClick do: [ :evt | evt shape @ RSBlink ].
+
+shapes fifth @ RSBlink.
+c @ RSCanvasController
+```
+"
 Class {
 	#name : #RSBlink,
-	#superclass : #RSBlinkInteraction,
-	#category : #'Roassal3-Interaction-Deprecated'
+	#superclass : #RSInteraction,
+	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #testing }
-RSBlink class >> isDeprecated [
-	^ true
+{ #category : #hooks }
+RSBlink >> onShape: aShape [
+	| canvas previousColor |
+	canvas := aShape canvas.
+	previousColor := aShape color.
+	aShape color: Color red.
+	canvas signalUpdate.
+	canvas newAnimation
+				duration: 0.5 second;
+				when: RSAnimationEndEvent do: [ :evt | 
+					aShape color: previousColor.
+					canvas signalUpdate. ]
 ]

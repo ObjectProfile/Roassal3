@@ -173,7 +173,7 @@ RSSankey >> createLines [
 
 { #category : #defaults }
 RSSankey >> defaultContainer [
-	^ RSCanvas new @ RSCanvasControllerInteraction 
+	^ RSCanvas new @ RSCanvasController 
 ]
 
 { #category : #accessing }
@@ -192,7 +192,7 @@ RSSankey >> extent: anObject [
 RSSankey >> initialize [
 	super initialize.
 	boxShape := RSBox new.
-	boxShape @ RSDraggableInteraction.
+	boxShape @ RSDraggable.
 	labelShape := RSLabel new.
 	lineShape := RSBezier new.
 	lineShape color: Color lightGray translucent.

@@ -53,7 +53,7 @@ RSTriangle3D >> v1 [
 
 { #category : #accessing }
 RSTriangle3D >> v1: a3dPoint [
-	v1 := a3dPoint
+	v1 := a3dPoint asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -63,7 +63,7 @@ RSTriangle3D >> v2 [
 
 { #category : #accessing }
 RSTriangle3D >> v2: a3dPoint [
-	v2 := a3dPoint
+	v2 := a3dPoint asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -73,5 +73,5 @@ RSTriangle3D >> v3 [
 
 { #category : #accessing }
 RSTriangle3D >> v3: a3dPoint [
-	v3 := a3dPoint
+	v3 := a3dPoint asOrderedCollection
 ]

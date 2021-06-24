@@ -132,7 +132,7 @@ RSShapeExamples >> example15BimetricLine [
 		to: s2;
 		yourself.
 	canvas addAll: { s1. s2. l}.
-	canvas @ RSCanvasControllerInteraction. 
+	canvas @ RSCanvasController. 
 	^ canvas
 ]
 
@@ -179,7 +179,7 @@ blue links = dependencies; layout = force based layout on the inheritance links'
 		offset: 10;
 		move: legend on: canvas nodes.
 	canvas add: legend.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -193,7 +193,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		RPackageOrganizer default packages 
 			select: [ :p | regExp match: p packageName ] ].
 		
-	l := RSLabeledInteraction new text: [ :model | model packageName ].
+	l := RSLabeled new text: [ :model | model packageName ].
 	packageElements  := packages collect: [ :pkg | | shapes |
 		shapes := pkg definedClasses collect: [ :cls |
 			RSBox new
@@ -210,7 +210,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightableInteraction new.
+	high := RSHighlightable new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
@@ -227,7 +227,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		withBorderAttachPoint;
 		connectFrom: #yourself toAll: #dependentPackages.
 	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -257,7 +257,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 			shapes: shapes;
 			padding: 5;
 			yourself ] as: RSGroup.
-	high := RSHighlightableInteraction new.
+	high := RSHighlightable new.
 	high withLines.
 	high highlightColor: Color red translucent.							
 	packageElements @ high.						
@@ -274,6 +274,6 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 		withBorderAttachPoint;
 		connectFrom: #yourself toAll: #dependentPackages.
 	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
-	canvas @ RSCanvasControllerInteraction.
+	canvas @ RSCanvasController.
 	^ canvas
 ]

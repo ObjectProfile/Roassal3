@@ -1,13 +1,13 @@
 Class {
 	#name : #RSChartTitleDecorationTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Chart-Tests'
+	#category : #'Roassal3-Chart-Tests-Base'
 }
 
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic [
 	| c title label |
-	c := RSChartBuilder new.
+	c := RSChart new.
 	title := c title: 'hello'.
 	title baseShape
 		color: Color blue.
@@ -23,7 +23,7 @@ RSChartTitleDecorationTest >> testBasic [
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic2 [
 	| c |
-	c := RSChartBuilder new.
+	c := RSChart new.
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c build.
 	 

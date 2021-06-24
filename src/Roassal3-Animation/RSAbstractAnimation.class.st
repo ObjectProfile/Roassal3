@@ -25,7 +25,7 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
-{ #category : #public }
+{ #category : #'accessing - defaults' }
 RSAbstractAnimation class >> defaultDuration [
 	^ self subclassResponsibility
 ]

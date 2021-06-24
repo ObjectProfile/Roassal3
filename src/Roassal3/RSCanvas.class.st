@@ -47,7 +47,7 @@ RSCanvas >> accept: visitor [
 	visitor visitCanvas: self
 ]
 
-{ #category : #'adding nodes edges' }
+{ #category : #'adding - nodes edges' }
 RSCanvas >> add: aShape [
 	"Main method to add a shape to a shape to a canvas"
 	self
@@ -72,12 +72,12 @@ RSCanvas >> addAnimation: anAnimation [
 	self signalUpdate
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> addBasicShape: aShape [
 	shapes add: aShape
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> addFixedShape: aShape [
 	"This is a private method. Should not be called directly (use RSShape>>setAsFixed instead). 
 Add a shape and make the shape fixed. It is therefore not subject to the camera.
@@ -97,7 +97,7 @@ c @ RSCanvasController.
 	fixedShapes add: aShape
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> addShape: aShape before: otherShape [
 	aShape addedIn: self.
 	shapes remove: aShape.
@@ -502,12 +502,12 @@ The red circle is in front of the blue one, despite the red one is inserted firs
 		addLast: aShape.
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> removeFixedShape: aShape [
 	fixedShapes remove: aShape
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> removeShape: shape [
 	| evt index |
 	index := shapes indexOf: shape.
@@ -523,7 +523,7 @@ RSCanvas >> removeShape: shape [
 	
 ]
 
-{ #category : #'adding removing shapes' }
+{ #category : #'adding - removing shapes' }
 RSCanvas >> setAsFixed: aShape [
 	self removeShape: aShape.
 	aShape isFixed: true.
