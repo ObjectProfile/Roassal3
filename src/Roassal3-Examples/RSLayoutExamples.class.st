@@ -651,10 +651,10 @@ RSLayoutExamples >> example21TreeLayoutEllipses [
 ]
 
 { #category : #tests }
-RSLayoutExamples >> exampleClassHierarchies: aCollection [
+RSLayoutExamples >> example22ClassHierarchies: aCollection [
 
 	<script:
-	'RSTreeLayoutTest new exampleClassHierarchies: { Collection  . Magnitude . RSObject . RBNode }'>
+	'RSLayoutExamples new example22ClassHierarchies: { Collection  . Magnitude . RSObject . RBNode }'>
 	| commits edges aCanvas gr |
 	gr := 1.61803398875.
 	commits := Array streamContents: [ :aStream | 
@@ -710,9 +710,9 @@ RSLayoutExamples >> exampleClassHierarchies: aCollection [
 ]
 
 { #category : #tests }
-RSLayoutExamples >> exampleRoassal3CommitsWithTimeGaps [
+RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 
-	<script: 'RSTreeLayoutTest new exampleRoassal3CommitsWithTimeGaps'>
+	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps'>
 	| icerepo commits edges dict aCanvas |
 	icerepo := IceRepository registry detect: [ :each | 
 		           each name = 'Roassal3' ].
@@ -722,31 +722,33 @@ RSLayoutExamples >> exampleRoassal3CommitsWithTimeGaps [
 	icerepo allBranches do: [ :aBranch | 
 		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit | 
 			| circle |
-			circle := dict at: aCommit id put: (RSCircle new
-					           model: aCommit id asSymbol;
-					           "radius:
+			circle := RSCircle new
+				          model: aCommit id asSymbol;
+				          "radius:
 						           ((aCommit changesTo: aCommit parent) size / Float pi)
 							           sqrt;"
-					           propertyAt: #gitCommit
-					           put: aCommit;
-					           color: Color white;
-					           draggable;
-					           addInteraction: (RSPopup new text: [ 
-								            String streamContents: [ :aStream | 
-										            aStream
-											            nextPutAll: aCommit comment;
-											            cr;
-											            cr;
-											            nextPutAll: aCommit shortId;
-											            nextPutAll: ' -- by ';
-											            nextPutAll: aCommit author;
-											            nextPutAll: ' at ';
-											            nextPutAll: aCommit datetime asLocalStringYMDHM;
-											            nextPutAll: '.' ] ]);
-					           withBorder;
-					           yourself).
+				          color: Color white;
+				          draggable;
+				          addInteraction: (RSPopup new text: [ 
+							           String streamContents: [ :aStream | 
+									           aStream
+										           nextPutAll: aCommit comment;
+										           cr;
+										           cr;
+										           nextPutAll: aCommit shortId;
+										           nextPutAll: ' -- by ';
+										           nextPutAll: aCommit author;
+										           nextPutAll: ' at ';
+										           nextPutAll: aCommit datetime asLocalStringYMDHM;
+										           nextPutAll: '.' ] ]);
+				          withBorder;
+				          yourself.
 
-			aCommit isMergeCommit ifTrue: [ circle color: circle border color ] ] ].
+			circle propertyAt: #gitCommit put: aCommit.
+
+			aCommit isMergeCommit ifTrue: [ circle color: circle border color ].
+
+			dict at: aCommit id put: circle ] ].
 
 	commits := dict values.
 
@@ -769,7 +771,6 @@ RSLayoutExamples >> exampleRoassal3CommitsWithTimeGaps [
 						> (b from propertyAt: #gitCommit) datetime ]
 					ifFalse: [ false ] ] ].
 
-	[ 
 	RSVanDerPloegTreeLayout new
 		doNotValidateCycles;
 		verticalGap: [ :parent :child | 
@@ -787,8 +788,8 @@ RSLayoutExamples >> exampleRoassal3CommitsWithTimeGaps [
 		           yourself.
 
 	edges do: [ :each | 
-		self deny: each to encompassingRectangle top
-			< each from encompassingRectangle bottom.
+		self assert: each to encompassingRectangle top
+			>= each from encompassingRectangle bottom.
 
 		(each to propertyAt: #vdpLevel) - (each from propertyAt: #vdpLevel)
 		> 1 ifTrue: [ 
@@ -800,5 +801,5 @@ RSLayoutExamples >> exampleRoassal3CommitsWithTimeGaps [
 	aCanvas
 		zoomToFit;
 		@ RSCanvasController;
-		open ] timeToRun inspect
+		open
 ]
