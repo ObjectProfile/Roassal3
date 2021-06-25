@@ -49,7 +49,10 @@ RSBlocEventDispatcher >> mouseEventOfClass: defaultClass ifLeftButton: leftButto
 { #category : #'event-processed' }
 RSBlocEventDispatcher >> relativePositionFor: evt [
 
-	^ evt position
+	| positionOfCanvasInSpace |
+	positionOfCanvasInSpace := roassalCanvas host mainElement bounds inSpace position.
+
+	^ evt position - positionOfCanvasInSpace
 ]
 
 { #category : #accessing }

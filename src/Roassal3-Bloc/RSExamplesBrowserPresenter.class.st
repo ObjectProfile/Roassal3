@@ -15,9 +15,9 @@ RSExamplesBrowserPresenter class >> defaultSpec [
 	^ SpBoxLayout newLeftToRight
 		  borderWidth: 10;
 		  add: (SpPanedLayout newHorizontal
-			  positionOfSlider: 67 percent;
-			  add: #visualization;
+			  positionOfSlider: 33 percent;
 			  add: #examplesList;
+			  add: #visualization;
 			  yourself);
 		  yourself
 ]

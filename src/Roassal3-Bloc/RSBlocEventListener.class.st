@@ -65,12 +65,12 @@ RSBlocEventListener >> initializeForHost: aRSHost [
 { #category : #'mouse handlers' }
 RSBlocEventListener >> mouseEnterEvent: anEvent [
 
-	| aRSEvent |
-"	anEvent consumed: true.
-"	
+	"| aRSEvent |
+	anEvent consumed: true.
+	
 	aRSEvent := dispatcher eventOfClass: RSMouseEnter from: anEvent.
 	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
-	aRSEvent shape announce: aRSEvent.
+	aRSEvent shape announce: aRSEvent."
 ]
 
 { #category : #'mouse handlers' }
@@ -88,8 +88,8 @@ RSBlocEventListener >> mouseLeaveEvent: anEvent [
 RSBlocEventListener >> mouseMoveEvent: anEvent [
 
 	| aRSEvent |
-"	anEvent consumed: true.
-"
+	anEvent consumed: true.
+
 	aRSEvent := dispatcher eventOfClass: RSMouseMove from: anEvent.
 	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
 	aRSEvent shape announce: aRSEvent.
