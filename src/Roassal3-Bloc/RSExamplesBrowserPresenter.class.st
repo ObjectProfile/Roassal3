@@ -14,8 +14,11 @@ RSExamplesBrowserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newLeftToRight
 		  borderWidth: 10;
-		  add: #visualization;
-		  add: #examplesList;
+		  add: (SpPanedLayout newHorizontal
+			  positionOfSlider: 67 percent;
+			  add: #visualization;
+			  add: #examplesList;
+			  yourself);
 		  yourself
 ]
 
@@ -57,7 +60,7 @@ RSExamplesBrowserPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title: 'Roassal3 Examples Browser - ', examplesClass name;
-		initialExtent: 600 @ 800;
+		initialExtent: 800 @ 600;
 		centered
 ]
 
