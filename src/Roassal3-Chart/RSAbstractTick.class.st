@@ -44,17 +44,12 @@ RSAbstractTick >> configuration: aRSTickConfiguration [
 ]
 
 { #category : #rendering }
-RSAbstractTick >> createLabelFor: aValue [
-	"Create a label and returns it."
-	^ self configuration createLabelFor: aValue
-]
-
-{ #category : #rendering }
 RSAbstractTick >> createLabelFor: aValue index: index [
 	"Create a label and returns it."
 	| tick lbl |
 	tick := self ticks at: index.
 	lbl := self configuration createLabelFor: aValue.
+	self color ifNotNil: [ lbl color: self color ].
 	self labelLocation move: lbl on: tick.
 	^ lbl
 	
