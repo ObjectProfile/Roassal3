@@ -704,7 +704,6 @@ RSLayoutExamples >> example22ClassHierarchies: aCollection [
 
 	aCanvas
 		zoomToFit;
-		exportToSVG;
 		@ RSCanvasController;
 		open
 ]
@@ -773,7 +772,7 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 
 	RSVanDerPloegTreeLayout new
 		doNotValidateCycles;
-		verticalGap: [ :parent :child | 
+		verticalGap: [ :parent :child :default | 
 			| duration goldenRatio |
 			goldenRatio := 1.61803398875.
 			duration := (parent propertyAt: #gitCommit) datetime

@@ -11,8 +11,12 @@ RSTWalkBasedRegularHorizontalTreeLayout >> breadthGapAmong: aShapeParent and: aS
 	| gap |
 	gap := self verticalGap.
 
-	^ [ gap value: aShapeParent value: aShape ]
-		  onDNU: #value:value:
+	^ [ 
+	  gap
+		  value: aShapeParent
+		  value: aShape
+		  value: RSAbstractGraphLayout verticalGap ]
+		  onDNU: #value:value:value:
 		  do: [ gap ]
 ]
 
@@ -27,9 +31,13 @@ RSTWalkBasedRegularHorizontalTreeLayout >> depthGapAmong: aShapeParent and: aSha
 
 	| gap |
 	gap := self horizontalGap.
-	
-	^ [ gap value: aShapeParent value: aShape ]
-		  onDNU: #value:value:
+
+	^ [ 
+	  gap
+		  value: aShapeParent
+		  value: aShape
+		  value: RSAbstractGraphLayout horizontalGap ]
+		  onDNU: #value:value:value:
 		  do: [ gap ]
 ]
 
