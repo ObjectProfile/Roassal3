@@ -8,16 +8,10 @@ Trait {
 { #category : #positioning }
 RSTWalkBasedRegularHorizontalTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
-	| gap |
-	gap := self verticalGap.
-
-	^ [ 
-	  gap
-		  value: aShapeParent
-		  value: aShape
-		  value: RSAbstractGraphLayout verticalGap ]
-		  onDNU: #value:value:value:
-		  do: [ gap ]
+	^ self
+		  verticalGapAmong: aShapeParent
+		  and: aShape
+		  default: RSAbstractGraphLayout verticalGap
 ]
 
 { #category : #positioning }
@@ -29,16 +23,10 @@ RSTWalkBasedRegularHorizontalTreeLayout >> breadthMeasureOf: aShape [
 { #category : #positioning }
 RSTWalkBasedRegularHorizontalTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
-	| gap |
-	gap := self horizontalGap.
-
-	^ [ 
-	  gap
-		  value: aShapeParent
-		  value: aShape
-		  value: RSAbstractGraphLayout horizontalGap ]
-		  onDNU: #value:value:value:
-		  do: [ gap ]
+	^ self
+		  horizontalGapAmong: aShapeParent
+		  and: aShape
+		  default: RSAbstractGraphLayout horizontalGap
 ]
 
 { #category : #positioning }
