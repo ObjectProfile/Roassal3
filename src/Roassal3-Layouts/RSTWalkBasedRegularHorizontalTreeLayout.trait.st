@@ -11,7 +11,7 @@ RSTWalkBasedRegularHorizontalTreeLayout >> breadthGapAmong: aShapeParent and: aS
 	^ self
 		  verticalGapAmong: aShapeParent
 		  and: aShape
-		  default: RSAbstractGraphLayout verticalGap
+		  default: RSAbstractGraphLayout horizontalGap
 ]
 
 { #category : #positioning }
@@ -26,7 +26,7 @@ RSTWalkBasedRegularHorizontalTreeLayout >> depthGapAmong: aShapeParent and: aSha
 	^ self
 		  horizontalGapAmong: aShapeParent
 		  and: aShape
-		  default: RSAbstractGraphLayout horizontalGap
+		  default: RSAbstractGraphLayout verticalGap
 ]
 
 { #category : #positioning }
