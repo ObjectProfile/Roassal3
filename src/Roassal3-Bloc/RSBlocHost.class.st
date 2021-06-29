@@ -39,9 +39,11 @@ RSBlocHost >> defaultWindowTitle [
 
 { #category : #accessing }
 RSBlocHost >> mainElement [
+	"Analog to RSCanvas>>createMorph"
 
 	^ mainElement ifNil: [ 
 		self createMainElement.
+		"signalUpdateRequested := false."
 		self signalUpdate.
 		mainElement ]
 ]
@@ -123,15 +125,22 @@ RSBlocHost >> signalUpdate [
 	Note 2:	
 	As an optimization, multiple signalUpdate requests may be converted as a single redraw."
 
-	self flag: #todo. "Check if this check is still needed"
+
+	"Skip it if the canvas was already opened."
 	mainElement ifNil: [ ^ self ].
 
+	self syncSignalUpdate.
+
+	"Skip if the request is already done."
+"	signalUpdateRequested ifTrue: [ ^ self ].
 	signalUpdateRequested := true.
+	
 	mainElement enqueueTask: (BlTaskAction new
 			 action: [ 
-				 signalUpdateRequested ifTrue: [ self syncSignalUpdate ].
+				 self syncSignalUpdate.
 				 signalUpdateRequested := false ];
 			 yourself)
+"
 ]
 
 { #category : #accessing }
@@ -145,11 +154,9 @@ RSBlocHost >> space [
 RSBlocHost >> syncSignalUpdate [
 	"Removes everything and re-adds fresh."
 
-	self flag: #todo.
-	mainElement allChildrenDepthFirstDo: [ :each | 
-		each removeEventHandler: elementListener ].
-
 	mainElement
+		allChildrenDepthFirstDo: [ :each | 
+			each removeEventHandler: elementListener ];
 		removeChildren;
 		addChild: self newCanvasElement;
 		addChildren: self newFixedShapeElements
