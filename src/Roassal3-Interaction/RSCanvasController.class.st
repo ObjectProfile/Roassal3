@@ -83,7 +83,7 @@ RSCanvasController >> onShape: aCanvas [
 RSCanvasController >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
-	lb := RSLegendBuilder new 
+	lb := RSLegend new 
 		container: aCanvas;
 		yourself.
 	lb defaultTitle fontSize: 12.

@@ -102,7 +102,7 @@ RSBaselineCalypso >> buildLegendOn: canvas [
 	RSHorizontalLineLayout new gapSize: 10; on: miniGraph nodes.
 	miniGraph adjustToChildren.
 	
-	b := RSLegendBuilder new.
+	b := RSLegend new.
 	b container: canvas.
 	b title: 'Dependencies of ', self targetClass name.
 	b text: 'A loaded baseline' withCircleColor: Color gray.
