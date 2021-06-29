@@ -937,8 +937,8 @@ RSBasicShapeExamples >> example40ColorScale [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example40PopupAndMarkers [
-	<script: 'self new example40PopupAndMarkers open'>
+RSBasicShapeExamples >> example41PopupAndMarkers [
+	<script: 'self new example41PopupAndMarkers open'>
 	| line marker canvas |
 	line := RSLine new.
 	line startPoint: 300@300; endPoint: 500@300.
@@ -948,5 +948,27 @@ RSBasicShapeExamples >> example40PopupAndMarkers [
 	line model: 'foo'.
 	canvas := RSCanvas new add: line; yourself.
 	canvas zoomToFit.
+	^ canvas
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example42GhostDraggable [
+	<script: 'self new example42GhostDraggable open'>
+	| canvas b1 b2 |
+	canvas := RSCanvas new.
+	canvas add: (b1:=RSBox new
+		color: Color green translucent;
+		size: 100;
+		yourself).
+	canvas add: (b2:=RSBox new
+		size: 100;
+		position: 150 asPoint;
+		color: Color purple translucent;
+		yourself).
+	canvas shapes addInteraction: RSGhostDraggable new.
+	canvas add: (RSLine new
+		from: b1;
+		to: b2;
+		yourself).
 	^ canvas
 ]
