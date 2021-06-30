@@ -32,20 +32,22 @@ RSBlocExamples >> example01Boxes [
 ]
 
 { #category : #examples }
-RSBlocExamples >> example02Ellipse [
-	<script: 'self new example02Ellipse open'>
+RSBlocExamples >> example02EllipseAndCircle [
+	<script: 'self new example02EllipseAndCircle open'>
 
 	| c |
 	c := RSCanvas new.
 	c useBlocHost.
 
 	c addShape: (RSEllipse new
-			 extent: 100 @ 100;
+			 color: Color green translucent;
+			 extent: 100 asPoint;
+			 position: -25 asPoint;
 			 yourself).
-	c addShape: (RSEllipse new
-			 position: 100 @ 100;
-			 color: Color red;
-			 extent: 100 @ 100;
+	c addShape: (RSCircle new
+			 color: Color red translucent;
+			 extent: 100 asPoint;
+			 position: 25 asPoint;
 			 yourself).
 
 	^ c
