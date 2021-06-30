@@ -85,6 +85,20 @@ RSObjectWithProperty >> getInteractionsForClass: anInteractionClass [
 	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
 ]
 
+{ #category : #testing }
+RSObjectWithProperty >> handlesEventClass: aRSEventClass [
+
+	^ self hasEventCallback and: [ 
+		  self announcer handleEventClass: aRSEventClass ]
+]
+
+{ #category : #testing }
+RSObjectWithProperty >> hasEventCallback [
+	"Return true if at least one event callback has been added to the shape"
+
+	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
+]
+
 { #category : #interactions }
 RSObjectWithProperty >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"

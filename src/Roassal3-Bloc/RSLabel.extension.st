@@ -5,6 +5,7 @@ RSLabel >> asBlElement [
 
 	| result |
 	result := BlTextElement new
+				    roassalShape: self;
 		          text: self blRopedText;
 		          background: Color transparent;
 		          yourself.

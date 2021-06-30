@@ -4,6 +4,7 @@ Extension { #name : #RSLine }
 RSLine >> asBlElement [
 
 	^ self asBlGeometry asElement
+		  roassalShape: self;
 		  size: self encompassingRectangle extent;
 		  border: self blBorder;
 		  background: self blPaint;

@@ -6,95 +6,25 @@ Class {
 	#superclass : #RSHost,
 	#instVars : [
 		'space',
-		'elementListener',
-		'signalUpdateRequested',
-		'mainElement'
+		'canvasElement'
 	],
 	#category : #'Roassal3-Bloc-Core'
 }
 
 { #category : #opening }
-RSBlocHost >> createMainElement [
+RSBlocHost >> canvasElement [
+	"Analog to RSCanvas>>createMorph"
 
-	elementListener := RSBlocEventListener newForHost: self.
-
-	mainElement := BlElement new
-		background: canvas color;
-		addAnimation: self newInfiniteCanvasAnimation;
-		addEventHandler: elementListener;
-		when: BlElementExtentChangedEvent
-			do: [ :evt | canvas extent: evt source extent ];
-		constraintsDo:[ :c |
-			c horizontal matchParent.
-			c vertical matchParent ]
-		yourself.
-
+	^ canvasElement ifNil: [
+		canvasElement := RSCanvasElement newWithCanvas: canvas.
+		canvasElement signalUpdate.
+		canvasElement ]
 ]
 
 { #category : #accessing }
 RSBlocHost >> defaultWindowTitle [
 
 	^ super defaultWindowTitle , ' - Bloc'
-]
-
-{ #category : #accessing }
-RSBlocHost >> mainElement [
-	"Analog to RSCanvas>>createMorph"
-
-	^ mainElement ifNil: [ 
-		self createMainElement.
-		"signalUpdateRequested := false."
-		self signalUpdate.
-		mainElement ]
-]
-
-{ #category : #opening }
-RSBlocHost >> newCanvasElement [
-	"Answer a collection of BlElement instances that represent the regular RSShapes of a RSCanvas. These are the regular shapes, that must be translated and scaled according to the camera."
-
-	| children |
-	children := canvas shapes collect: [:each | each asBlElement
-		addEventHandler: elementListener;
-		yourself ].
-
-	^ BlElement new
-"		border: (BlBorder paint: Color blue translucent width: 10);"
-		clipChildren: false;
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical matchParent ];
-		transformDo: [ :aBuilder |
-			aBuilder
-				centerOrigin;
-				translateBy: (canvas extent / 2) asFloatPoint;
-				translateBy: canvas camera position negated asFloatPoint;
-				scaleBy: canvas camera scale asFloat;
-				yourself.
-			 ];
-		addChildren: children;
-		yourself
-]
-
-{ #category : #opening }
-RSBlocHost >> newFixedShapeElements [
-	"Answer a collection of BlElement instances that represent the #fixedShapes. The fixedShapes of a RSCanvas are shapes that are not affected by camera transformations. They are useful for toolbar buttons or legends, for example."
-
-	^ canvas fixedShapes collect: [ :each | 
-		  each asBlElement
-			  addEventHandler: elementListener;
-			  yourself ]
-]
-
-{ #category : #opening }
-RSBlocHost >> newInfiniteCanvasAnimation [
-	"Answer a new Bloc animation that infinitely runs any available Roassal animation (in the canvas)."
-
-	^ BlNumberTransition new
-		from: 0; to: 1;
-		onStepDo: [ :t | 
-			canvas playAnimations ];
-		beInfinite;
-		yourself.
 ]
 
 { #category : #opening }
@@ -106,41 +36,20 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		title: aTitleAsString;
 		yourself.
 
-	space addChild: self mainElement.
+	space addChild: self canvasElement.
 	space show.
 
 	^ space
 
 ]
 
-{ #category : #opening }
+{ #category : #refreshing }
 RSBlocHost >> signalUpdate [
-	"Request a redraw on the canvas. 
-	
-	Note 1: 
-	The redraw is not executed immediately/syncronously but instead, it's enqueued as a task in the mainElement. There are two cases then:
-	- If the mainElement has already been added as a child in a BlSpace, the task will be run in next universe pulse. 
-	- If it wasn't added to a space, the task will be enqueued in an internal BlTaskQueue until the element is added as a child in a BlSpace, and then first option will have course.
-
-	Note 2:	
-	As an optimization, multiple signalUpdate requests may be converted as a single redraw."
-
+	"Request a redraw on the canvas."
 
 	"Skip it if the canvas was already opened."
-	mainElement ifNil: [ ^ self ].
-
-	self syncSignalUpdate.
-
-	"Skip if the request is already done."
-"	signalUpdateRequested ifTrue: [ ^ self ].
-	signalUpdateRequested := true.
-	
-	mainElement enqueueTask: (BlTaskAction new
-			 action: [ 
-				 self syncSignalUpdate.
-				 signalUpdateRequested := false ];
-			 yourself)
-"
+	canvasElement ifNil: [ ^ self ].
+	canvasElement signalUpdate
 ]
 
 { #category : #accessing }
@@ -148,16 +57,4 @@ RSBlocHost >> space [
 	"Answer the BlSpace where the the canvas has been opened. If it wasn't opened, the answer is nil."
 
 	^ space
-]
-
-{ #category : #opening }
-RSBlocHost >> syncSignalUpdate [
-	"Removes everything and re-adds fresh."
-
-	mainElement
-		allChildrenDepthFirstDo: [ :each | 
-			each removeEventHandler: elementListener ];
-		removeChildren;
-		addChild: self newCanvasElement;
-		addChildren: self newFixedShapeElements
 ]

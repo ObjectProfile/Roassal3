@@ -8,29 +8,27 @@ Class {
 }
 
 { #category : #'event-processed' }
-RSBlocEventDispatcher >> eventOfClass: aRSEventClass actionClass: anActionClass from: anEvent [
-	| relativePosition aRSEvent shape |
-	relativePosition := self relativePositionFor: anEvent.
-	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition. 
-	
-	aRSEvent := aRSEventClass new.
-	anEvent roassalFill: aRSEvent.
+RSBlocEventDispatcher >> eventOfClass: aRSEventClass actionClass: anActionClass from: aBlEvent [
 
-	aRSEvent
-"		morph: self;"
+	| targetShape |
+	targetShape := aBlEvent target roassalShape.
+
+	self flag: #todo. "anActionClass is ignored"
+
+	^ aRSEventClass new
 		canvas: roassalCanvas;
-		shape: shape;
-		position: relativePosition.
-	^ aRSEvent
+		shape: targetShape;
+		position: (self roassalPositionFor: aBlEvent);
+		yourself
 ]
 
 { #category : #'event-processed' }
-RSBlocEventDispatcher >> eventOfClass: anEventClass from: aMorphicEvent [
+RSBlocEventDispatcher >> eventOfClass: aRSEventClass from: aBlEvent [
 
 	^ self
-		  eventOfClass: anEventClass
-		  actionClass: anEventClass
-		  from: aMorphicEvent
+		  eventOfClass: aRSEventClass
+		  actionClass: aRSEventClass
+		  from: aBlEvent
 ]
 
 { #category : #'event-processed' }
@@ -43,16 +41,8 @@ RSBlocEventDispatcher >> mouseEventOfClass: defaultClass ifLeftButton: leftButto
 		ifTrue: [ roassalEventClass := leftButtonClass ].
 	aBlClickEvent secondaryButtonPressed
 		ifTrue: [ roassalEventClass := rightButtonClass ].
+
 	^ self eventOfClass: roassalEventClass actionClass: defaultClass from: aBlClickEvent
-]
-
-{ #category : #'event-processed' }
-RSBlocEventDispatcher >> relativePositionFor: evt [
-
-	| positionOfCanvasInSpace |
-	positionOfCanvasInSpace := roassalCanvas host mainElement bounds inSpace position.
-
-	^ evt position - positionOfCanvasInSpace
 ]
 
 { #category : #accessing }
@@ -62,16 +52,18 @@ RSBlocEventDispatcher >> roassalCanvas [
 ]
 
 { #category : #accessing }
-RSBlocEventDispatcher >> roassalCanvas: anObject [
+RSBlocEventDispatcher >> roassalCanvas: aRSCanvas [
 
-	roassalCanvas := anObject
+	roassalCanvas := aRSCanvas
 ]
 
 { #category : #'event-processed' }
-RSBlocEventDispatcher >> shapeWithAction: eventClass forPositionInPixels: position [
-	"Return the shape with event handler located that contains point"
+RSBlocEventDispatcher >> roassalPositionFor: aBlEvent [
+	"Answer the position of the event translated to a RSCanvas space position as callbacks expect it (where '0@0' is the center of the canvas)."
 
-	^ roassalCanvas
-		  shapeWithAction: eventClass
-		  forPositionInPixels: position
+	| positionOfCanvasInSpace positionOfEventInCanvas |
+	positionOfCanvasInSpace := roassalCanvas host canvasElement positionInSpace.
+	positionOfEventInCanvas := aBlEvent position - positionOfCanvasInSpace.
+	^ roassalCanvas camera fromPixelToSpace: positionOfEventInCanvas
+
 ]

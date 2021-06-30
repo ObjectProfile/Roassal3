@@ -102,6 +102,6 @@ RSExamplesBrowserPresenter >> showVisualizationFor: aSelector [
 	| aRSCanvas |
 	aRSCanvas := examplesClass new perform: aSelector.
 	aRSCanvas useBlocHost.
-	visualization element: aRSCanvas host mainElement.
+	visualization element: aRSCanvas host canvasElement.
 
 ]

@@ -2,31 +2,31 @@ Class {
 	#name : #RSBlocEventListener,
 	#superclass : #BlEventListener,
 	#instVars : [
-		'host',
-		'dispatcher'
+		'dispatcher',
+		'roassalCanvas'
 	],
 	#category : #'Roassal3-Bloc-Events'
 }
 
 { #category : #'instance creation' }
-RSBlocEventListener class >> newForHost: aRSHost [ 
+RSBlocEventListener class >> newForCanvas: aRSHost [ 
 	
 	^ self basicNew
-		initializeForHost: aRSHost;
+		initializeForCanvas: aRSHost;
 		yourself
 ]
 
 { #category : #'mouse handlers' }
-RSBlocEventListener >> clickEvent: anEvent [
+RSBlocEventListener >> clickEvent: aBlEvent [
 
 	| aRSEvent |
-	anEvent consumed: true.
+	aBlEvent consumed: true.
 	aRSEvent := dispatcher 
 		mouseEventOfClass: RSMouseClick
 		ifLeftButton: RSMouseLeftClick
 		ifRightButton: RSMouseRightClick
-		from: anEvent.
-	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
+		from: aBlEvent.
+
 	aRSEvent shape announce: aRSEvent.
 
 ]
@@ -41,7 +41,7 @@ RSBlocEventListener >> doubleClickEvent: anEvent [
 		ifLeftButton: RSMouseDoubleLeftClick
 		ifRightButton: RSMouseDoubleRightClick
 		from: anEvent.
-	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
+
 	aRSEvent shape announce: aRSEvent.
 
 ]
@@ -53,44 +53,68 @@ RSBlocEventListener >> dragStartEvent: anEvent [
 ]
 
 { #category : #initialization }
-RSBlocEventListener >> initializeForHost: aRSHost [ 
+RSBlocEventListener >> initializeForCanvas: aRSCanvas [ 
 	
 	self initialize.
-	host := aRSHost.
+	roassalCanvas := aRSCanvas.
 	dispatcher := RSBlocEventDispatcher new
-		roassalCanvas: aRSHost canvas;
+		roassalCanvas: aRSCanvas;
 		yourself.
 ]
 
 { #category : #'mouse handlers' }
-RSBlocEventListener >> mouseEnterEvent: anEvent [
+RSBlocEventListener >> mouseEnterEvent: aBlEvent [
 
-	"| aRSEvent |
-	anEvent consumed: true.
-	
-	aRSEvent := dispatcher eventOfClass: RSMouseEnter from: anEvent.
-	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
-	aRSEvent shape announce: aRSEvent."
-]
-
-{ #category : #'mouse handlers' }
-RSBlocEventListener >> mouseLeaveEvent: anEvent [
-
-	| aRSEvent |
-"	anEvent consumed: true.
+	| shape aRSEvent |
+	shape := aBlEvent target roassalShape.
+"	#mouseEnterEvent: trace.
+	(shape handlesEventClass: RSMouseEnter)
+		ifFalse: [
+			#No traceCr.
+			^ self ]
+		ifTrue: [
+			#Yes traceCr ].	
 "
-	aRSEvent := dispatcher eventOfClass: RSMouseLeave from: anEvent.
-	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
-	aRSEvent shape announce: aRSEvent.
+	aBlEvent consumed: true.
+	aRSEvent := dispatcher eventOfClass: RSMouseEnter from: aBlEvent.
+
+	shape announce: aRSEvent
 ]
 
 { #category : #'mouse handlers' }
-RSBlocEventListener >> mouseMoveEvent: anEvent [
+RSBlocEventListener >> mouseLeaveEvent: aBlEvent [
 
-	| aRSEvent |
-	anEvent consumed: true.
+	| shape aRSEvent |
+	shape := aBlEvent target roassalShape.
+"	#mouseLeaveEvent: trace.
+	(shape handlesEventClass: RSMouseLeave)
+		ifFalse: [
+			#No traceCr.		
+			^ self ]
+		ifTrue: [
+			#Yes traceCr ].	
+"	
+	aBlEvent consumed: true.
+	aRSEvent := dispatcher eventOfClass: RSMouseLeave from: aBlEvent.
+	
+	shape announce: aRSEvent
+]
 
-	aRSEvent := dispatcher eventOfClass: RSMouseMove from: anEvent.
-	aRSEvent position: (host canvas camera fromPixelToSpace: aRSEvent position).
-	aRSEvent shape announce: aRSEvent.
+{ #category : #'mouse handlers' }
+RSBlocEventListener >> mouseMoveEvent: aBlEvent [
+
+	| shape aRSEvent |
+	shape := aBlEvent target roassalShape.
+"	#mouseMoveEvent: trace.
+	(shape handlesEventClass: RSMouseMove)
+		ifFalse: [
+			#No traceCr.		
+			^ self ]
+		ifTrue: [
+			#Yes traceCr ].
+"
+	aBlEvent consumed: true.
+	aRSEvent := dispatcher eventOfClass: RSMouseMove from: aBlEvent.
+	
+	shape announce: aRSEvent
 ]

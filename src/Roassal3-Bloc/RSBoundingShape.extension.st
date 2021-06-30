@@ -4,6 +4,7 @@ Extension { #name : #RSBoundingShape }
 RSBoundingShape >> asBlElement [
 
 	^ BlElement new
+		  roassalShape: self;
 		  geometry: self asBlGeometry;
 		  size: self baseRectangle extent;
 		  transformDo: [ :aBuilder | 

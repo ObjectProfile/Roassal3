@@ -295,12 +295,6 @@ RSShape >> hasChildren [
 ]
 
 { #category : #testing }
-RSShape >> hasEventCallback [
-	"Return true if at least one event callback has been added to the shape"
-	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
-]
-
-{ #category : #testing }
 RSShape >> hasModel [
 	"Return true if a model is set in the shape. Return false otherwise"
 	^ model notNil
