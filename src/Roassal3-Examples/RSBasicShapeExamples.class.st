@@ -972,3 +972,28 @@ RSBasicShapeExamples >> example42GhostDraggable [
 		yourself).
 	^ canvas
 ]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example43GhostDraggable [
+
+	<script: 'self new example43GhostDraggable open'>
+	| c lb |
+	c := RSCanvas new.
+
+	c addAll: (RSBox
+			 models: Collection withAllSubclasses
+			 forEach: [ :s :o | s size: 30 ]).
+	c shapes @ RSGhostDraggable.
+
+	c shapes @ RSHighlightable red withLines.
+
+	lb := RSLineBuilder line.
+	lb shapes: c shapes.
+	lb connectToAll: #dependentClasses.
+
+	RSForceBasedLayout new
+		charge: -400;
+		on: c nodes.
+
+	^ c @ RSCanvasController
+]
