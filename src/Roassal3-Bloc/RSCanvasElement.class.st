@@ -51,10 +51,7 @@ RSCanvasElement >> newCameraElement [
 RSCanvasElement >> newFixedShapeElements [
 	"Answer a collection of BlElement instances that represent the #fixedShapes. The fixedShapes of a RSCanvas are shapes that are not affected by camera transformations. They are useful for toolbar buttons or legends, for example."
 
-	^ roassalCanvas fixedShapes collect: [ :each | 
-		  each asBlElement
-			  addEventHandler: elementListener;
-			  yourself ]
+	^ roassalCanvas fixedShapes collect: [ :each | each asBlElement ]
 ]
 
 { #category : #'refreshing - private' }
@@ -73,10 +70,7 @@ RSCanvasElement >> newInfiniteCanvasAnimation [
 RSCanvasElement >> newRegularShapeElements [
 	"Answer a collection of BlElement instances that represent the regular RSShapes of a RSCanvas. These are the regular shapes, that must be translated and scaled according to the camera."
 
-	^ roassalCanvas shapes collect: [ :each | 
-		  each asBlElement
-			  addEventHandler: elementListener;
-			  yourself ]
+	^ roassalCanvas shapes collect: [ :each | each asBlElement ]
 ]
 
 { #category : #accessing }
@@ -122,5 +116,7 @@ RSCanvasElement >> syncSignalUpdate [
 			each removeEventHandler: elementListener ];
 		removeChildren;
 		addChild: self newCameraElement;
-		addChildren: self newFixedShapeElements
+		addChildren: self newFixedShapeElements;
+		allChildrenDepthFirstDo: [ :each |
+			each addEventHandler: elementListener ]
 ]
