@@ -42,3 +42,10 @@ RSCameraElement >> roassalShape [
 
 	^ roassalCanvas
 ]
+
+{ #category : #accessing }
+RSCameraElement >> updateFromRoassalShape [
+	"The difference with the inherited implementation is avoid updating the shape and only do it on children."
+
+	self childrenDo: [ :each | each updateFromRoassalShape ]
+]

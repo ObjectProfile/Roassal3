@@ -32,8 +32,8 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 			do: [ :evt | aRSCanvas extent: evt source extent ];
 		constraintsDo:[ :c |
 			c horizontal matchParent.
-			c vertical matchParent ]
-		yourself.
+			c vertical matchParent ];
+		syncSignalUpdateFirstTime.
 
 ]
 
@@ -92,7 +92,7 @@ RSCanvasElement >> signalUpdate [
 	As an optimization, multiple signalUpdate requests may be converted as a single redraw."
 
 
-	self syncSignalUpdate.
+	self syncSignalUpdateSecondTimeAndLater.
 
 	"Skip if the request is already done."
 "	signalUpdateRequested ifTrue: [ ^ self ].
@@ -108,15 +108,17 @@ RSCanvasElement >> signalUpdate [
 ]
 
 { #category : #refreshing }
-RSCanvasElement >> syncSignalUpdate [
-	"Removes everything and re-adds fresh."
+RSCanvasElement >> syncSignalUpdateFirstTime [
 
 	self
-		allChildrenDepthFirstDo: [ :each | 
-			each removeEventHandler: elementListener ];
-		removeChildren;
 		addChild: self newCameraElement;
 		addChildren: self newFixedShapeElements;
 		allChildrenDepthFirstDo: [ :each |
 			each addEventHandler: elementListener ]
+]
+
+{ #category : #refreshing }
+RSCanvasElement >> syncSignalUpdateSecondTimeAndLater [
+
+	self updateFromRoassalShape
 ]

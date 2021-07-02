@@ -1,18 +1,13 @@
 Extension { #name : #RSLine }
 
 { #category : #'*Roassal3-Bloc' }
-RSLine >> asBlElement [
-
-	^ self asBlGeometry asElement
-		  roassalShape: self;
-		  size: self encompassingRectangle extent;
-		  border: self blBorder;
-		  background: self blPaint;
-		  yourself
+RSLine >> asBlGeometry [
+	
+	^ BlLineGeometry new
 ]
 
 { #category : #'*Roassal3-Bloc' }
-RSLine >> asBlGeometry [
-	
-	^ BlLineGeometry from: self startPoint to: self endPoint
+RSLine >> updateBlGeometry: aBlGeometry [
+
+	aBlGeometry from: self startPoint to: self endPoint
 ]

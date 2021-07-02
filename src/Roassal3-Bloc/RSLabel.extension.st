@@ -3,23 +3,11 @@ Extension { #name : #RSLabel }
 { #category : #'*Roassal3-Bloc' }
 RSLabel >> asBlElement [
 
-	| result |
-	result := BlTextElement new
-				    roassalShape: self;
-		          text: self blRopedText;
-		          background: Color transparent;
-		          yourself.
-
-	"Force calculation of the extent"
-	result computeLayout.
-
-	result transformDo: [ :aBuilder | 
-		aBuilder transformation addTransformation:
-			((BlMatrixTransformation matrix: self matrix asBlMatrix) origin:
-				 BlAffineTransformationCenterOrigin new).
-		aBuilder translateBy: result extent / -2 ].
-
-	^ result
+	^ BlTextElement new
+		  roassalShape: self;
+		  background: Color transparent;
+		  in: [ :e | self updateBlElement: e ];
+		  yourself
 ]
 
 { #category : #'*Roassal3-Bloc' }
@@ -47,4 +35,21 @@ RSLabel >> blRopedText [
 		result underlineColor: self blPaint ].
 	
 	^ result
+]
+
+{ #category : #'*Roassal3-Bloc' }
+RSLabel >> updateBlElement: aBlElement [
+
+	aBlElement text: self blRopedText.
+
+	"Force calculation of the extent"
+	aBlElement computeLayout.
+
+	aBlElement transformDo: [ :aBuilder | 
+		aBuilder transformation addTransformation:
+			((BlMatrixTransformation matrix: self matrix asBlMatrix) origin:
+				 BlAffineTransformationCenterOrigin new).
+		aBuilder translateBy: aBlElement extent / -2 ].
+
+	^ aBlElement
 ]

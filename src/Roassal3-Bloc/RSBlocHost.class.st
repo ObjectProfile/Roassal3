@@ -17,7 +17,6 @@ RSBlocHost >> canvasElement [
 
 	^ canvasElement ifNil: [
 		canvasElement := RSCanvasElement newWithCanvas: canvas.
-		canvasElement signalUpdate.
 		canvasElement ]
 ]
 

@@ -8,14 +8,18 @@ RSBezier >> asBlElement [
 		  roassalShape: self;
 		  geometry: self asBlGeometry;
 		  outskirts: BlOutskirts centered;
-		  size: self encompassingRectangle extent;
-		  border: self blBorder;
-		  background: self blPaint;
+		  in: [ :e | self updateBlElement: e ];
 		  yourself
 ]
 
 { #category : #'*Roassal3-Bloc' }
 RSBezier >> asBlGeometry [
 
-	^ BlBezierCurveGeometry controlPoints: self controlPoints
+	^ BlBezierCurveGeometry new
+]
+
+{ #category : #'*Roassal3-Bloc' }
+RSBezier >> updateBlGeometry: aBlGeometry [
+
+	aBlGeometry controlPoints: self controlPoints
 ]
