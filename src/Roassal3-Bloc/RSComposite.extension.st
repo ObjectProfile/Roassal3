@@ -12,8 +12,6 @@ RSComposite >> asBlElement [
 		| newChild |
 		newChild := each asBlElement.
 		newChild relocate: newChild position + (self baseRectangle extent / 2).
-"		newChild transformDo: [ :aBuilder |
-			aBuilder  topLeftOrigin ; translateBy: self baseRectangle extent / 2 ]."
 		container addChild: newChild ].
 
 	^ container
