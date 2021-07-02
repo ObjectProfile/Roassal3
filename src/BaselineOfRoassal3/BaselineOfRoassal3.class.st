@@ -106,7 +106,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	self extraPackagesNames do: [ :name | spec package: name ].
 	
 	spec		
-		package: #'Roassal3-Bloc' with: [ spec requires: #('NewBloc') ];
+		package: #'Roassal3-Bloc' with: [ spec requires: #('SpecBrick') ];
 
 		package: #'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
 		package: #'Roassal3-SVG-Tests';
