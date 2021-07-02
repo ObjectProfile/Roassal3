@@ -23,18 +23,12 @@ RSCameraElement >> initializeWithCanvas: aRSCanvas [
 	roassalCanvas := aRSCanvas.
 
 	self
-"		border: (BlBorder builder paint: Color blue translucent; width: 1; dashArray: #(3 3); build);"
+		border: (BlBorder builder paint: Color blue translucent; width: 1; dashArray: #(3 3); build);
 		clipChildren: false;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ];
-		transformDo: [ :aBuilder |
-			aBuilder
-				centerOrigin;
-				translateBy: (roassalCanvas extent / 2) asFloatPoint;
-				translateBy: roassalCanvas camera position negated asFloatPoint;
-				scaleBy: roassalCanvas camera scale asFloat;
-				yourself ]
+		updateFromCanvasCamera.
 ]
 
 { #category : #accessing }
@@ -44,8 +38,21 @@ RSCameraElement >> roassalShape [
 ]
 
 { #category : #accessing }
-RSCameraElement >> updateFromRoassalShape [
-	"The difference with the inherited implementation is avoid updating the shape and only do it on children."
+RSCameraElement >> updateFromCanvasCamera [
 
+	self transformDo: [ :aBuilder | 
+		aBuilder
+			centerOrigin;
+			translateBy: (roassalCanvas extent / 2) asFloatPoint;
+			translateBy: roassalCanvas camera position negated asFloatPoint;
+			scaleBy: roassalCanvas camera scale asFloat;
+			yourself ]
+]
+
+{ #category : #accessing }
+RSCameraElement >> updateFromRoassalShape [
+	"The difference with the inherited implementation is to update the camera instead of a shape."
+	
+	self updateFromCanvasCamera.
 	self childrenDo: [ :each | each updateFromRoassalShape ]
 ]
