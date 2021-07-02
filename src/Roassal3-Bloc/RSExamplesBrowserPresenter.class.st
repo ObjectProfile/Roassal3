@@ -39,9 +39,12 @@ RSExamplesBrowserPresenter class >> exampleOpenRSBlocExamples [
 RSExamplesBrowserPresenter >> connectPresenters [
 
 	super connectPresenters.
-	
-	examplesList whenSelectionChangedDo: [ :aSelection |
-		self refreshAccordingToSelectedExample ]
+
+	examplesList
+		whenSelectionChangedDo: [ :aSelection | 
+			self refreshAccordingToSelectedExample ];
+		whenActivatedDo: [ :aSelection | 
+			(examplesClass >> aSelection selectedItem) browse ]
 ]
 
 { #category : #initialization }
@@ -83,9 +86,9 @@ RSExamplesBrowserPresenter >> refreshAccordingToSelectedExample [
 ]
 
 { #category : #initialization }
-RSExamplesBrowserPresenter >> setModelBeforeInitialization: aExamplesModel [
+RSExamplesBrowserPresenter >> setModelBeforeInitialization: aClass [
 
-	examplesClass := aExamplesModel
+	examplesClass := aClass
 ]
 
 { #category : #initialization }
