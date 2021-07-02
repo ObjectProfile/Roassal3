@@ -1389,3 +1389,43 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 	
 	^ canvas
 ]
+
+{ #category : #examples }
+RSBlocExamples >> example35MouseEnterMouseLeave [
+	<script: 'self new example35MouseEnterMouseLeave open'>
+	"Open Transcript to see the traced events. Blue ellipse is over the box. Red circle doesn''t listen, so mouse events should reach the other shapes or the canvas."
+
+	| canvas |
+	canvas := RSCanvas new.
+	canvas useBlocHost.
+
+	canvas addShape: (RSBox new
+			color: Color orange translucent;
+			extent: 100 asPoint;
+			yourself).
+	canvas addShape: (RSEllipse new
+			position: 25 asPoint;
+			color: Color blue translucent;
+			extent: 100 asPoint;
+			yourself).
+
+	(canvas shapes, { canvas }) asGroup
+		when: RSMouseClick
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+		when: RSMouseMove
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+		when: RSMouseDoubleClick
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+		when: RSMouseEnter
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+		when: RSMouseLeave
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ].
+
+	canvas addShape: (RSCircle new
+			position: 50 @ -25;
+			color: Color red translucent;
+			extent: 100 asPoint;
+			yourself).
+
+	^ canvas
+]
