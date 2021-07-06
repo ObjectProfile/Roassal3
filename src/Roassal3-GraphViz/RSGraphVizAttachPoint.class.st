@@ -2,7 +2,7 @@
 This attach point is used only by graphviz layout with graphviz line
 "
 Class {
-	#name : #RSGraphVizAttachPoint,
+	#name : #RSGraphvizAttachPoint,
 	#superclass : #RSAttachPoint,
 	#instVars : [
 		'points',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'public - hooks' }
-RSGraphVizAttachPoint >> basicEndingPointOf: anEdge [
+RSGraphvizAttachPoint >> basicEndingPointOf: anEdge [
 	| p |
 	p := anEdge to position.
 	points at: points size put: p + endDistance.
@@ -21,7 +21,7 @@ RSGraphVizAttachPoint >> basicEndingPointOf: anEdge [
 ]
 
 { #category : #'public - hooks' }
-RSGraphVizAttachPoint >> basicStartingPointOf: anEdge [
+RSGraphvizAttachPoint >> basicStartingPointOf: anEdge [
 	| p |
 	p := anEdge from position.
 	
@@ -30,12 +30,12 @@ RSGraphVizAttachPoint >> basicStartingPointOf: anEdge [
 ]
 
 { #category : #accessing }
-RSGraphVizAttachPoint >> points [
+RSGraphvizAttachPoint >> points [
 	^ points
 ]
 
 { #category : #accessing }
-RSGraphVizAttachPoint >> points: aCollection edge: anEdge [
+RSGraphvizAttachPoint >> points: aCollection edge: anEdge [
 	|p1 p2 | 
 	self assert: aCollection isNotEmpty description: 'Can not be empty'.
 	
