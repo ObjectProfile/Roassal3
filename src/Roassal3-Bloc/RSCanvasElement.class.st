@@ -110,11 +110,20 @@ RSCanvasElement >> signalUpdate [
 { #category : #refreshing }
 RSCanvasElement >> syncSignalUpdateFirstTime [
 
+	| cameraElement fixedElements |
+	roassalCanvas
+		when: RSShapeAddedEvent do: [ :evt | RSShapeAddedEvent trace.  evt shape traceCr ];
+		when: RSShapeRemovedEvent do: [ :evt | RSShapeRemovedEvent trace. evt shape traceCr ].
+	cameraElement := self newCameraElement.
+	fixedElements := self newFixedShapeElements.
+
 	self
-		addChild: self newCameraElement;
-		addChildren: self newFixedShapeElements;
+		addChild: cameraElement;
+		addChildren: fixedElements;
 		allChildrenDepthFirstDo: [ :each |
-			each addEventHandler: elementListener ]
+			self flag: #todo. "Workaround until camera element is converted into a layout "
+			each == cameraElement ifFalse: [
+				each addEventHandler: elementListener] ]
 ]
 
 { #category : #refreshing }
