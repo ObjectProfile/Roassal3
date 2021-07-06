@@ -404,6 +404,11 @@ RSComposite >> removeShape: shape [
 	
 ]
 
+{ #category : #public }
+RSComposite >> resetChildren [
+	children := nil.
+]
+
 { #category : #path }
 RSComposite >> resetPath [
 	path := baseRectangle

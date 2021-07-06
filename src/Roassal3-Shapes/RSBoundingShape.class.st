@@ -141,6 +141,11 @@ RSBoundingShape >> connectedLines [
 	^ connectedLines
 ]
 
+{ #category : #lines }
+RSBoundingShape >> connectedLines: aCollection [
+	connectedLines := aCollection
+]
+
 { #category : #accessing }
 RSBoundingShape >> extent: aPoint [
 	| oldExtent extent |
