@@ -14,15 +14,22 @@ Class {
 RSGhostDraggable >> createGhost: evt [
 	| shape |
 	shape := evt shape.
-	ghost := RSBox new
+	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
 		border: (RSBorder new joinMiter; color: Color gray; dashArray: #(7 5));
+		connectedLines: nil;
+		resetChildren;
 		noPaint;
 		yourself.
 		
 	shape parent add: ghost.
 
 	
+]
+
+{ #category : #accessing }
+RSGhostDraggable >> ghost [
+	^ ghost
 ]
 
 { #category : #hooks }

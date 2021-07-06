@@ -980,9 +980,9 @@ RSBasicShapeExamples >> example43GhostDraggable [
 	| c lb |
 	c := RSCanvas new.
 
-	c addAll: (RSBox
+	c addAll: (RSPolygon
 			 models: Collection withAllSubclasses
-			 forEach: [ :s :o | s size: 30 ]).
+			 forEach: [ :s :o | s points: RSShapeFactory star points; size: 30 ]).
 	c shapes @ RSGhostDraggable.
 
 	c shapes @ RSHighlightable red withLines.
