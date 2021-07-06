@@ -19,11 +19,10 @@ RSBlocEventListener class >> newForCanvas: aRSHost [
 RSBlocEventListener >> announceEventOfClass: aRSEventClass actionClass: anActionClass from: aBlEvent [
 
 	| targetShape aRSEvent |
-	self flag: #todo. "anActionClass is ignored"
-
 	targetShape := aBlEvent target roassalShape.
 
-	(targetShape handlesEventClass: aRSEventClass) ifFalse:[ ^ self ].
+	((targetShape handlesEventClass: anActionClass) or: [
+		(targetShape handlesEventClass: aRSEventClass)]) ifFalse:[ ^ self ].
 
 	aBlEvent consumed: true.
 
