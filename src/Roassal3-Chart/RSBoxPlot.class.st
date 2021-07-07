@@ -185,6 +185,11 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 		upperOutliers.
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> createdShapes [
+	^ bars
+]
+
 { #category : #initialization }
 RSBoxPlot >> defaultShape [
 	^ RSBox new noPaint

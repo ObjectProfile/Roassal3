@@ -91,6 +91,11 @@ RSHistogramPlot >> computeXYValues [
 	
 ]
 
+{ #category : #accessing }
+RSHistogramPlot >> createdShapes [
+	^ bars
+]
+
 { #category : #initialization }
 RSHistogramPlot >> defaultShape [
 	^ RSBox new noPaint

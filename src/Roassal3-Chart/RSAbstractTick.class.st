@@ -70,6 +70,11 @@ RSAbstractTick >> createTickLineFor: aNumber [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+RSAbstractTick >> createdShapes [
+	^ labels, ticks
+]
+
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultConfiguration [
 	^ RSTickConfiguration new
@@ -244,7 +249,9 @@ RSAbstractTick >> renderIn: canvas [
 	ticksData := self ticksData.
 	ticks := ticksData collect: [ :value | self createTickLineFor: value ].
 	canvas addAll: ticks.
-	self configuration shouldHaveLabels ifFalse: [ ^ self ].
+	self configuration shouldHaveLabels ifFalse: [
+		labels := #().
+		 ^ self ].
 	labels := ticksData collectWithIndex: [ :value :index | 
 		self createLabelFor: value index: index ].
 	canvas addAll: labels.

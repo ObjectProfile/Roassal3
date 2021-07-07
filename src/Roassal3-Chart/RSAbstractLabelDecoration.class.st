@@ -33,6 +33,11 @@ RSAbstractLabelDecoration >> createLabel [
 ]
 
 { #category : #accessing }
+RSAbstractLabelDecoration >> createdShapes [
+	^ { label }
+]
+
+{ #category : #accessing }
 RSAbstractLabelDecoration >> fontSize [
 	"Return the font size to use when generating labels"
 	^ baseShape fontSize

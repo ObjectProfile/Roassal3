@@ -64,6 +64,11 @@ RSAbstractChartPlot >> createYScale [
 
 ]
 
+{ #category : #accessing }
+RSAbstractChartPlot >> createdShapes [
+	^ self subclassResponsibility
+]
+
 { #category : #rendering }
 RSAbstractChartPlot >> renderIn: canvas [
 	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"
