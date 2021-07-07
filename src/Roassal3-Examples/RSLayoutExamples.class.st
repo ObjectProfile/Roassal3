@@ -669,8 +669,8 @@ RSLayoutExamples >> example22ClassHierarchies: aCollection [
 				           box := RSBox new
 					                  color: Color white;
 					                  withBorder;
-					                  cornerRadius: gr double;
-					                  extent: label extent + gr double double asPoint;
+					                  cornerRadius: gr * 2;
+					                  extent: label extent + (gr * 4) asPoint;
 					                  yourself.
 				           RSLocation new center stick: label on: box.
 				           aStream nextPut: (RSComposite new
