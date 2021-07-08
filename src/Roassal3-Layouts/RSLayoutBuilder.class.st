@@ -26,6 +26,12 @@ RSLayoutBuilder >> cluster [
 ]
 
 { #category : #'public - layout' }
+RSLayoutBuilder >> compactTree [
+
+	^ layout := RSVanDerPloegTreeLayout new
+]
+
+{ #category : #'public - layout' }
 RSLayoutBuilder >> flow [
 	^ layout := RSFlowLayout new.
 ]
@@ -43,6 +49,12 @@ RSLayoutBuilder >> grid [
 { #category : #'public - layout' }
 RSLayoutBuilder >> horizontal [
 	^ layout := RSHorizontalLineLayout new.
+]
+
+{ #category : #'public - layout' }
+RSLayoutBuilder >> horizontalCompactTree [
+
+	^ layout := RSHorizontalVanDerPloegTreeLayout new
 ]
 
 { #category : #'public - layout' }
