@@ -239,11 +239,12 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> varFor: model [
+
 	^ RSLabel new
-		model: model;
-		color: self textColor;
-		text: model;
-		yourself
+		  model: model;
+		  color: self textColor;
+		  text: (modelDescriptor instVarSelector rsValue: model);
+		  yourself
 ]
 
 { #category : #hooks }
