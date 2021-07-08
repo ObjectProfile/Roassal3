@@ -61,7 +61,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	c addPlot: p2.
 	c build.
 	p bars , p2 bars @ RSPopup.
-	lb := RSLegendBuilder new.
+	lb := RSLegend new.
 	lb container: c canvas.
 	lb text: 'Series1' withBoxColor: p computeColor.
 	lb text: 'Series2' withBoxColor: p2 computeColor.
@@ -110,7 +110,7 @@ RSBarChartExample >> example03TilePaint [
 
 	c := RSChart new.
 	c extent: 300@ 200.
-	lb := RSLegendBuilder new.
+	lb := RSLegend new.
 	lb container: c canvas.
 	size := 25.
 
@@ -160,7 +160,7 @@ RSBarChartExample >> example04VerticalStack [
 	c ylabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
-	lb := RSLegendBuilder new.
+	lb := RSLegend new.
 	lb layout horizontal.
 	#(Men Women) doWithIndex: [ :lbl :index | 
 		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
@@ -185,7 +185,7 @@ RSBarChartExample >> example05HorizontalStack [
 	c xlabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
-	lb := RSLegendBuilder new.
+	lb := RSLegend new.
 	lb layout horizontal.
 	#(Men Women) doWithIndex: [ :lbl :index | 
 		lb text: lbl withBoxColor: (c plots at:index) computeColor ].

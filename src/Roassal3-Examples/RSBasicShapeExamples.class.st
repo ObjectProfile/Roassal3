@@ -937,8 +937,8 @@ RSBasicShapeExamples >> example40ColorScale [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example40PopupAndMarkers [
-	<script: 'self new example40PopupAndMarkers open'>
+RSBasicShapeExamples >> example41PopupAndMarkers [
+	<script: 'self new example41PopupAndMarkers open'>
 	| line marker canvas |
 	line := RSLine new.
 	line startPoint: 300@300; endPoint: 500@300.
@@ -949,4 +949,51 @@ RSBasicShapeExamples >> example40PopupAndMarkers [
 	canvas := RSCanvas new add: line; yourself.
 	canvas zoomToFit.
 	^ canvas
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example42GhostDraggable [
+	<script: 'self new example42GhostDraggable open'>
+	| canvas b1 b2 |
+	canvas := RSCanvas new.
+	canvas add: (b1:=RSBox new
+		color: Color green translucent;
+		size: 100;
+		yourself).
+	canvas add: (b2:=RSBox new
+		size: 100;
+		position: 150 asPoint;
+		color: Color purple translucent;
+		yourself).
+	canvas shapes addInteraction: RSGhostDraggable new.
+	canvas add: (RSLine new
+		from: b1;
+		to: b2;
+		yourself).
+	^ canvas
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example43GhostDraggable [
+
+	<script: 'self new example43GhostDraggable open'>
+	| c lb |
+	c := RSCanvas new.
+
+	c addAll: (RSPolygon
+			 models: Collection withAllSubclasses
+			 forEach: [ :s :o | s points: RSShapeFactory star points; size: 30 ]).
+	c shapes @ RSGhostDraggable.
+
+	c shapes @ RSHighlightable red withLines.
+
+	lb := RSLineBuilder line.
+	lb shapes: c shapes.
+	lb connectToAll: #dependentClasses.
+
+	RSForceBasedLayout new
+		charge: -400;
+		on: c nodes.
+
+	^ c @ RSCanvasController
 ]

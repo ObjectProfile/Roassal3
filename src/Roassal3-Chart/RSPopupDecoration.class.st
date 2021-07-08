@@ -20,6 +20,11 @@ RSPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
 	self popup chartPopupBuilder: aRSAbstractChartPopupBuilder
 ]
 
+{ #category : #accessing }
+RSPopupDecoration >> createdShapes [
+	^ #()
+]
+
 { #category : #initialization }
 RSPopupDecoration >> initialize [
 	super initialize.

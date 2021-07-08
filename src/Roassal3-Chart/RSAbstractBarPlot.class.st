@@ -59,6 +59,11 @@ RSAbstractBarPlot >> createBarFor: aPoint index: index [
 		yourself
 ]
 
+{ #category : #accessing }
+RSAbstractBarPlot >> createdShapes [
+	^ bars
+]
+
 { #category : #initialization }
 RSAbstractBarPlot >> defaultShape [
 	^ RSBox new noPaint

@@ -482,6 +482,11 @@ RSShape >> resetBBox [
 	encompassingRectangle := nil.
 ]
 
+{ #category : #accessing }
+RSShape >> resetChildren [
+	
+]
+
 { #category : #path }
 RSShape >> resetPath [
 	path := nil

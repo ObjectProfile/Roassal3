@@ -321,7 +321,9 @@ RSChart >> renderDecorationIn: aCanvas [
 RSChart >> renderIn: aCanvas [
 	decorations, plots do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: aCanvas.
-	self renderPlotsIn: aCanvas
+	self renderPlotsIn: aCanvas.
+	shapes := decorations, plots flatCollect: [ :element | 
+		element createdShapes ] as: RSGroup.
 ]
 
 { #category : #building }

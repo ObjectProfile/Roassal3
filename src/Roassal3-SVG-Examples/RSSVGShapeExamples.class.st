@@ -125,7 +125,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 				yourself) asMarker
 				offset: -90;
 				yourself)  ].  
-	lb := RSLegendBuilder new.
+	lb := RSLegend new.
 	lb defaultLabel fontSize: 50.
 	lb container: canvas.
 	lb legendDo: [ :l |l withBorder;padding: 50 ].

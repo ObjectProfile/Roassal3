@@ -5,7 +5,8 @@ Class {
 	#name : #RSAreaPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'y2Values'
+		'y2Values',
+		'area'
 	],
 	#category : #'Roassal3-SVG-Chart'
 }
@@ -41,10 +42,20 @@ RSAreaPlot >> addPointAt: index in: s [
 
 ]
 
+{ #category : #accessing }
+RSAreaPlot >> area [
+	^ area
+]
+
 { #category : #rendering }
 RSAreaPlot >> computePath [
 	^ String streamContents: [ :s | 
 		self addPointAt: 1 in: s ].
+]
+
+{ #category : #accessing }
+RSAreaPlot >> createdShapes [
+	^ {area}
 ]
 
 { #category : #initialization }
@@ -74,7 +85,7 @@ RSAreaPlot >> pointFor: aPoint [
 
 { #category : #rendering }
 RSAreaPlot >> renderIn: canvas [
-	canvas add: (self shape
+	canvas add: (area := self shape copy
 		color: self computeColor;
 		svgPath: self computePath;
 		yourself).

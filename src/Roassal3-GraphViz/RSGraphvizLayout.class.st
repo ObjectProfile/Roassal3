@@ -2,7 +2,7 @@
 TODO
 "
 Class {
-	#name : #RSGraphVizLayout,
+	#name : #RSGraphvizLayout,
 	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'dotConverter',
@@ -14,34 +14,34 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSGraphVizLayout class >> digraph [
+RSGraphvizLayout class >> digraph [
 	^ self new digraph
 ]
 
 { #category : #'instance creation' }
-RSGraphVizLayout class >> neato [
+RSGraphvizLayout class >> neato [
 	^ self new neato
 ]
 
 { #category : #'instance creation' }
-RSGraphVizLayout class >> strict [
+RSGraphvizLayout class >> strict [
 	^ self new strict
 ]
 
 { #category : #'instance creation' }
-RSGraphVizLayout class >> twoPi [
+RSGraphvizLayout class >> twoPi [
 	^ self new twoPi
 ]
 
 { #category : #'public - configuration' }
-RSGraphVizLayout >> digraph [
+RSGraphvizLayout >> digraph [
 	^ self 
 		dotConverter: RSDigraphDotConverter new;
 		yourself
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> doExecute: shapes [
+RSGraphvizLayout >> doExecute: shapes [
 	| group process | 
 	group := shapes asGroup.
 	dotDescription := self dotDescriptionOf: shapes.
@@ -84,23 +84,23 @@ RSGraphVizLayout >> doExecute: shapes [
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotConverter [
+RSGraphvizLayout >> dotConverter [
 	^ dotConverter
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotConverter: aRSDotConverter [
+RSGraphvizLayout >> dotConverter: aRSDotConverter [
 	dotConverter := aRSDotConverter
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotDescription [
+RSGraphvizLayout >> dotDescription [
 	"Return the dot description, after the doExecute: is executed"
 	^ dotDescription asString
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotDescriptionOf: shapes [
+RSGraphvizLayout >> dotDescriptionOf: shapes [
 
 	| group |
 	group := shapes asGroup.
@@ -109,27 +109,27 @@ RSGraphVizLayout >> dotDescriptionOf: shapes [
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> graphvizResult [
+RSGraphvizLayout >> graphvizResult [
 	"Return the graphviz result"
 	^ graphvizResult
 ]
 
 { #category : #'initialize-release' }
-RSGraphVizLayout >> initialize [
+RSGraphvizLayout >> initialize [
 	super initialize.
 	self dotConverter: RSStrictDotConverter new.
 	self scale: 70 negated
 ]
 
 { #category : #'public - configuration' }
-RSGraphVizLayout >> neato [
+RSGraphvizLayout >> neato [
 	^ self 
 		dotConverter: RSNeatoDotConverter new;
 		yourself
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> pointsFor: line [
+RSGraphvizLayout >> pointsFor: line [
 	| points n |
 	n := line next asNumber.
 	points := (1 to: n) collect: [ :i | 
@@ -142,7 +142,7 @@ RSGraphVizLayout >> pointsFor: line [
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> positionShapes: elements with: string [
+RSGraphvizLayout >> positionShapes: elements with: string [
 	| nodeIndex |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
 	nodeIndex := 1.
@@ -168,14 +168,14 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			head := elements at: head.
 			points := self pointsFor: line.
 			edge := tail connectedEdges detect: [ :ed | ed to = head ].
-			edge attachPoint: (RSGraphVizAttachPoint new points: points edge: edge).
+			edge attachPoint: (RSGraphvizAttachPoint new points: points edge: edge).
 			edge propertyAt: #points put: points.
 			 ].
 		 ].
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: filenameOutput [
+RSGraphvizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: filenameOutput [
 	"
 	self new runningGraphvizInputFilename: 'hello.dot' outputFilename: 'myresult.txt'
 	"
@@ -184,36 +184,36 @@ RSGraphVizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: 
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> scale [
+RSGraphvizLayout >> scale [
 	^ scale
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> scale: aNumber [
+RSGraphvizLayout >> scale: aNumber [
 	scale := aNumber
 ]
 
 { #category : #'public - configuration' }
-RSGraphVizLayout >> sfdp [
+RSGraphvizLayout >> sfdp [
 	^ self 
 		dotConverter: RSSFDPConverter new;
 		yourself
 ]
 
 { #category : #'public - configuration' }
-RSGraphVizLayout >> strict [
+RSGraphvizLayout >> strict [
 	^ self 
 		dotConverter: RSStrictDotConverter new;
 		yourself
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> transform: aPoint [
+RSGraphvizLayout >> transform: aPoint [
 	^ aPoint * scale
 ]
 
 { #category : #'public - configuration' }
-RSGraphVizLayout >> twoPi [
+RSGraphvizLayout >> twoPi [
 	^ self 
 		dotConverter: RSTwoPiDotConverter new;
 		yourself

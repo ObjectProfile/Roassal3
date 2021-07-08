@@ -56,6 +56,11 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #accessing }
+RSScatterPlot >> createdShapes [
+	^ ellipses
+]
+
 { #category : #initialization }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
