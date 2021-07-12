@@ -111,6 +111,7 @@ RSShape >> addedIn: aCanvas [
 	parent := aCanvas.
 	
 	evt := RSShapeAddedEvent new shape: self.
+	aCanvas announce: evt.
 	self announce: evt.
 ]
 
