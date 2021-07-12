@@ -651,11 +651,11 @@ RSLayoutExamples >> example21TreeLayoutEllipses [
 ]
 
 { #category : #tests }
-RSLayoutExamples >> example22ClassHierarchies: aCollection [
+RSLayoutExamples >> example22ClassHierarchies [
+	<script: 'RSLayoutExamples new example22ClassHierarchies open'>
 
-	<script:
-	'RSLayoutExamples new example22ClassHierarchies: { Collection  . Magnitude . RSObject . RBNode }'>
-	| commits edges aCanvas gr |
+	| commits edges aCanvas gr aCollection |
+	aCollection := { Collection. Magnitude. RSObject. RBNode }.
 	gr := 1.61803398875.
 	commits := Array streamContents: [ :aStream | 
 		           aCollection do: [ :aClass | 
@@ -702,10 +702,10 @@ RSLayoutExamples >> example22ClassHierarchies: aCollection [
 		           addAll: commits , edges;
 		           yourself.
 
-	aCanvas
+	^ aCanvas
 		zoomToFit;
 		@ RSCanvasController;
-		open
+		yourself 
 ]
 
 { #category : #tests }
