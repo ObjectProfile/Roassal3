@@ -651,11 +651,14 @@ RSLayoutExamples >> example21TreeLayoutEllipses [
 ]
 
 { #category : #tests }
-RSLayoutExamples >> example22ClassHierarchies: aCollection [
+RSLayoutExamples >> example22ClassHierarchies [
 
 	<script:
-	'RSLayoutExamples new example22ClassHierarchies: { Collection  . Magnitude . RSObject . RBNode }'>
-	| commits edges aCanvas gr |
+	'RSLayoutExamples new example22ClassHierarchies open'>
+	| commits edges aCanvas gr aCollection |
+	
+	aCollection := { Collection  . Magnitude . RSObject . RBNode }.
+	
 	gr := 1.61803398875.
 	commits := Array streamContents: [ :aStream | 
 		           aCollection do: [ :aClass | 
@@ -702,16 +705,15 @@ RSLayoutExamples >> example22ClassHierarchies: aCollection [
 		           addAll: commits , edges;
 		           yourself.
 
-	aCanvas
+	^ aCanvas
 		zoomToFit;
-		@ RSCanvasController;
-		open
+		@ RSCanvasController
 ]
 
 { #category : #tests }
 RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 
-	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps'>
+	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps open'>
 	| icerepo commits edges dict aCanvas |
 	icerepo := IceRepository registry detect: [ :each | 
 		           each name = 'Roassal3' ].
@@ -797,8 +799,7 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 				color: each color translucent;
 				pushBack ] ].
 
-	aCanvas
+	^ aCanvas
 		zoomToFit;
-		@ RSCanvasController;
-		open
+		@ RSCanvasController
 ]
