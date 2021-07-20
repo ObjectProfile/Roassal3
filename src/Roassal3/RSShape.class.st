@@ -215,6 +215,15 @@ RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
+	| groupOfPoints |
+	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
+		collect: [ :s | aMatrix transform: (s value: rect) ].
+	^ Rectangle encompassing: groupOfPoints.
+	
+]
+
 { #category : #copying }
 RSShape >> copyWithAnnouncer [
 	"Answer a copy of this shape that shares the same instance of announcer (The default #postCopy cleans it). 
@@ -340,7 +349,10 @@ RSShape >> initialize [
 
 { #category : #testing }
 RSShape >> intersects: aRectangle [
-	^ self encompassingRectangle intersects: aRectangle
+	"used in drawing operation
+	aRectangle is the visible rectangle of the canvas, then this method is used
+	to draw or not this shape"
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
