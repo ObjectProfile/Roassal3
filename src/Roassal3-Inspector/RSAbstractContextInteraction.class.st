@@ -7,7 +7,6 @@ Class {
 	#name : #RSAbstractContextInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'context',
 		'presentation',
 		'propagateToChildren'
 	],
@@ -37,7 +36,7 @@ RSAbstractContextInteraction >> onShape: aShape [
 	aShape children do: [ :child | child addInteraction: self ].
 	aShape
 		when: RSShapeAddedEvent
-		do: [ :evt | evt shape @ context ].
+		do: [ :evt | evt shape @ self ].
 ]
 
 { #category : #accessing }
