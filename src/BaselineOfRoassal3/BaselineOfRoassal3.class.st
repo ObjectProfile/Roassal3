@@ -47,10 +47,12 @@ BaselineOfRoassal3 >> baselineForPharo9: spec [
 { #category : #'API-packages' }
 BaselineOfRoassal3 >> corePackagesNames [
 	^ #(
+	'Roassal3-Event'
 	'Roassal3-Builders'
 	'Roassal3-Shapes'
 	'Roassal3-Animation'
 	'Roassal3-Interaction'
+	'Roassal3-Layouts-Util'
 	'Roassal3-Layouts'
 	'Roassal3-Colors'
 	'Roassal3-Legend'

@@ -119,15 +119,6 @@ RSBoundingShape >> computeEncompassingRectangleFor: rect [
 	^ self computeEncompassingRectangleFor: rect matrix: self matrix
 ]
 
-{ #category : #accessing }
-RSBoundingShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
-	| points |
-	points := #(topLeft topRight bottomRight bottomLeft)
-		collect: [ :s | aMatrix transform: (s value: rect) ].
-	^ Rectangle encompassing: points.
-	
-]
-
 { #category : #'edges - deprecated' }
 RSBoundingShape >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
@@ -245,6 +236,15 @@ RSBoundingShape >> initialize [
 { #category : #initialization }
 RSBoundingShape >> initializeMatrix [
 	matrix := AthensAffineTransform new
+]
+
+{ #category : #testing }
+RSBoundingShape >> intersects: aRectangle [
+	| rect |
+	rect := self 
+		computeEncompassingRectangleFor: self baseRectangle 
+		matrix: self globalMatrix.
+	^ rect intersects: aRectangle
 ]
 
 { #category : #lines }

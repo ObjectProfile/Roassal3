@@ -606,11 +606,19 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
-		shape hasChildren ifTrue: [ 
-			shape children do: [ :s |
-				s accept: self ] ]
+		self visitChildrenIfNecessary: shape.
 		].
 	
+]
+
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> visitChildrenIfNecessary: shape [
+	| canvasRect | 
+	shape hasChildren ifFalse: [ ^ self ].
+	canvasRect := shape canvas visibleRectangle.
+	shape children 
+		select: [ :child | child intersects: canvasRect ]
+		thenDo: [ :child | child accept: self ].
 ]
 
 { #category : #visiting }

@@ -197,6 +197,25 @@ RSAbstractLine >> initialize [
 ]
 
 { #category : #testing }
+RSAbstractLine >> intersects: aRectangle [
+	| rect res globalMatrix |
+	globalMatrix := self parent globalMatrix.
+	rect := self 
+		computeEncompassingRectangleFor: self encompassingRectangle 
+		matrix: globalMatrix.
+	res := rect intersects: aRectangle.
+	res ifTrue: [ ^ true ].
+	self hasMarkers ifFalse: [ ^ false ].
+	self markerShapesInPositionDo: [ :m |
+		rect := self 
+			computeEncompassingRectangleFor: m shape encompassingRectangle
+			matrix: globalMatrix.
+		(rect intersects: aRectangle) ifTrue: [ ^ true ].
+		 ].
+	^ false.
+]
+
+{ #category : #testing }
 RSAbstractLine >> isControlPointsLine [
 	^ false
 ]
