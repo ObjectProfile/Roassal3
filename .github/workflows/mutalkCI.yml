@@ -38,7 +38,7 @@ jobs:
         shell: bash
         timeout-minutes: 15
 
-      - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
+      - run: pharo eval --save "x"
         shell: bash
       
       - run: pharo mutalk --project=${{github.event.repository.name}} --diff
