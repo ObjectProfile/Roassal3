@@ -38,10 +38,10 @@ jobs:
         shell: bash
         timeout-minutes: 15
 
-      - run: pharo eval --save "x"
+      - run: ${{env.SMALLTALK_CI_VM}} eval --save "x"
         shell: bash
       
-      - run: pharo mutalk --project=${{github.event.repository.name}} --diff
+      - run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} --diff
         shell: bash
         
   manual:
@@ -59,17 +59,17 @@ jobs:
         shell: bash
         timeout-minutes: 15
         
-      - run: pharo eval --save "M"
+      - run: ${{env.SMALLTALK_CI_VM}} eval --save "M"
         shell: bash
 
       - name: full mutation testing
         if: github.event.inputs.mode == 'full'
-        run: pharo mutalk --project=${{github.event.repository.name}} 
+        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} 
 
       - name: diff mutation testing
         if: github.event.inputs.mode == 'diff'
-        run: pharo mutalk --project=${{github.event.repository.name}}  --diff
+        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}}  --diff
 
       - name: commit mutation testing
         if: github.event.inputs.mode == 'commit'
-        run: pharo mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
+        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
