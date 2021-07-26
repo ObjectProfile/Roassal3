@@ -38,10 +38,10 @@ jobs:
         shell: bash
         timeout-minutes: 15
 
-      - run: ${{env.SMALLTALK_CI_VM}} eval --save "x"
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} eval --save "x"
         shell: bash
       
-      - run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} --diff
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --diff
         shell: bash
         
   manual:
@@ -59,17 +59,17 @@ jobs:
         shell: bash
         timeout-minutes: 15
         
-      - run: ${{env.SMALLTALK_CI_VM}} eval --save "M"
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} eval --save "M"
         shell: bash
 
       - name: full mutation testing
         if: github.event.inputs.mode == 'full'
-        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} 
+        run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} 
 
       - name: diff mutation testing
         if: github.event.inputs.mode == 'diff'
-        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}}  --diff
+        run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}}  --diff
 
       - name: commit mutation testing
         if: github.event.inputs.mode == 'commit'
-        run: ${{env.SMALLTALK_CI_VM}} mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
+        run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
