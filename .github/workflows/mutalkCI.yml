@@ -1,0 +1,76 @@
+name: MutalkCI
+
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '**.st'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '**.st'
+
+  workflow_dispatch:
+    inputs:
+        mode:
+          description: 'modes: full (run on all project), diff (run on the last commit diff), commit (especify a commit to calculate diff)'
+          required: true
+          default: 'diff'
+        commit:
+          description: 'If mode == commit, here you enter the Commid id/name/shortId to evaluate the diff'
+          required: false
+          default: ''
+
+jobs:
+  eventBased:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-stable
+
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+
+      - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
+        shell: bash
+      
+      - run: pharo mutalk --project=${{github.event.repository.name}} --diff
+        shell: bash
+        
+  manual:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-stable
+
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+        
+      - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
+        shell: bash
+
+      - name: full mutation testing
+        if: github.event.inputs.mode == 'full'
+        run: pharo mutalk --project=${{github.event.repository.name}} 
+
+      - name: diff mutation testing
+        if: github.event.inputs.mode == 'diff'
+        run: pharo mutalk --project=${{github.event.repository.name}}  --diff
+
+      - name: commit mutation testing
+        if: github.event.inputs.mode == 'commit'
+        run: pharo mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
+{"mode":"full","isActive":false}
