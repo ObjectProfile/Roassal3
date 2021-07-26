@@ -73,4 +73,3 @@ jobs:
       - name: commit mutation testing
         if: github.event.inputs.mode == 'commit'
         run: pharo mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
-{"mode":"full","isActive":false}
