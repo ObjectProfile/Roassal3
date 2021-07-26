@@ -43,7 +43,12 @@ jobs:
       
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --diff
         shell: bash
-        
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: mutation-testing-output
+          path: ${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json
+
   manual:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
@@ -73,3 +78,8 @@ jobs:
       - name: commit mutation testing
         if: github.event.inputs.mode == 'commit'
         run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: mutation-testing-output
+          path: ${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json
