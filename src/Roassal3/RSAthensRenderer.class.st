@@ -615,6 +615,9 @@ RSAthensRenderer >> visitBoundingShape: shape [
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
 	| canvasRect | 
 	shape hasChildren ifFalse: [ ^ self ].
+	shape isFixed ifTrue: [ 
+		shape children do: [ :child | child accept: self ].
+		^ self ].
 	canvasRect := shape canvas visibleRectangle.
 	shape children 
 		select: [ :child | child intersects: canvasRect ]
