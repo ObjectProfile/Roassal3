@@ -5,10 +5,23 @@ Class {
 	#name : #RSGhostDraggable,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'ghost'
+		'ghost',
+		'color'
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
+
+{ #category : #accessing }
+RSGhostDraggable >> color [
+
+	^ color
+]
+
+{ #category : #accessing }
+RSGhostDraggable >> color: anObject [
+
+	color := anObject
+]
 
 { #category : #hooks }
 RSGhostDraggable >> createGhost: evt [
@@ -16,7 +29,7 @@ RSGhostDraggable >> createGhost: evt [
 	shape := evt shape.
 	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
-		border: (RSBorder new joinMiter; color: Color gray; dashArray: #(7 5));
+		border: (RSBorder new joinMiter; color: color; dashArray: #(7 5));
 		connectedLines: nil;
 		resetChildren;
 		noPaint;
