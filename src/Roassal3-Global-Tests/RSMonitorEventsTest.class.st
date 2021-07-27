@@ -36,7 +36,7 @@ RSMonitorEventsTest >> testNoTarget [
 
 { #category : #tests }
 RSMonitorEventsTest >> testWriteToFile [
-	| canvas monitor events box fileName fileReference |
+	| canvas monitor events box fileName fileReference storage |
 	canvas := RSCanvas new.
 	box := RSBox new size: 20; yourself.
 	monitor := RSMonitorEvents new.
@@ -47,8 +47,8 @@ RSMonitorEventsTest >> testWriteToFile [
 	self assert: events isNotEmpty.
 	
 	fileName := Time microsecondClockValue asString, '.fuel'.
-	FLSerializer serialize: events toFileNamed: fileName.
-	fileReference := fileName asFileReference.
-	self assert: fileReference exists.
-	fileReference delete.
+	
+	storage := FLSerializer serializeToByteArray: events.
+	self assert: storage size > 100.
+	
 ]
