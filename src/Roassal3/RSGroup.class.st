@@ -246,6 +246,13 @@ RSGroup >> translateTo: aPosition [
 	self translateBy: aPosition - center
 ]
 
+{ #category : #transforming }
+RSGroup >> translateTopLeftTo: aPosition [
+	| center |
+	center := self encompassingRectangle topLeft.
+	self translateBy: aPosition - center
+]
+
 { #category : #'public - forwarding' }
 RSGroup >> translucent [
 	"Make all shapes in the group as translucent"
