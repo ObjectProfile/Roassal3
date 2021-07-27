@@ -13,8 +13,7 @@ Class {
 
 { #category : #accessing }
 RSGhostDraggable >> color [
-
-	^ color
+	^ color ifNil: [ color := Color gray ].
 ]
 
 { #category : #accessing }
@@ -29,7 +28,7 @@ RSGhostDraggable >> createGhost: evt [
 	shape := evt shape.
 	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
-		border: (RSBorder new joinMiter; color: color; dashArray: #(7 5));
+		border: (RSBorder new joinMiter; color: self color; dashArray: #(7 5));
 		connectedLines: nil;
 		resetChildren;
 		noPaint;
