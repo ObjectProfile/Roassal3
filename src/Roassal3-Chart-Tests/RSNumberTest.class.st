@@ -28,3 +28,13 @@ RSNumberTest >> testToCount3 [
 	self assert: c size equals: 1.
 	self assert: c equals: (Array with: 1)
 ]
+
+{ #category : #tests }
+RSNumberTest >> testToCount4 [
+
+	| c |
+	c := 0.02 to: 1.0 count: 120.
+	self assert: c first equals: 0.02.
+	self assert: c last equals: 1.0.
+	self assert: c size equals: 120
+]
