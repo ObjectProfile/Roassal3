@@ -38,7 +38,7 @@ jobs:
         shell: bash
         timeout-minutes: 15
 
-      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://pavel-krivanek/mutalk/src" BaselineOfMuTalk
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://pavel-krivanek/mutalk:mutalkCI/src" BaselineOfMuTalk
         shell: bash
       
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --diff
@@ -64,7 +64,7 @@ jobs:
         shell: bash
         timeout-minutes: 15
         
-      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://pavel-krivanek/mutalk/src" BaselineOfMuTalk
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://pavel-krivanek/mutalk:mutalkCI/src" BaselineOfMuTalk
         shell: bash
 
       - name: full mutation testing
