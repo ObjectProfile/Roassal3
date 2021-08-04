@@ -41,10 +41,14 @@ RSWorldMenu class >> loadFullStableVersion [
 
 { #category : #menu }
 RSWorldMenu class >> loadFullVersion [
-	Metacello new
-    baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3';
-    load.
+	" Load the full version of Roassal 3 unattended mode (without confirm dialogs) "
+
+	EpMonitor disableDuring: [ 
+		Metacello new
+			baseline: 'Roassal3';
+			onConflictUseIncoming;
+			repository: 'github://ObjectProfile/Roassal3';
+			load ].
 ]
 
 { #category : #menu }
