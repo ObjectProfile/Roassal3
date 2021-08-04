@@ -46,9 +46,10 @@ RSWorldMenu class >> loadFullVersion [
 	EpMonitor disableDuring: [ 
 		Metacello new
 			baseline: 'Roassal3';
-			onConflictUseIncoming;
+			onWarningLog;
 			repository: 'github://ObjectProfile/Roassal3';
 			load ].
+	self inform: 'Finished loading full version of Roassal 3'
 ]
 
 { #category : #menu }
