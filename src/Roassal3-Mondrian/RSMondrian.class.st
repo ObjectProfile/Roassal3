@@ -306,6 +306,15 @@ RSMondrian >> normalizeSize: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeSize: oneArgBlock from: aSmallSize to: aLargeSize [
+	RSNormalizer size
+		shapes: self canvas nodes;
+		from: aSmallSize;
+		to: aLargeSize;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeWidth: oneArgBlock [
 	RSNormalizer width
 		shapes: self canvas nodes;
