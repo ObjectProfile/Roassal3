@@ -414,6 +414,12 @@ RSComposite >> resetPath [
 	path := baseRectangle
 ]
 
+{ #category : #public }
+RSComposite >> resizeWithChildrenTo: aPointExtent [
+	self scaleBy: aPointExtent / self baseRectangle extent
+	
+]
+
 { #category : #path }
 RSComposite >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"

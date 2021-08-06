@@ -11,13 +11,6 @@ Class {
 	#category : #'Roassal3-Event'
 }
 
-{ #category : #comparing }
-RSKeyboardEvent >> = anotherKeyEvent [
-	"Do we really need this method? It has been imported from Roassal1"
-	(self class == anotherKeyEvent) ifFalse: [  ^ false ].
-	^ self keyValue = anotherKeyEvent keyValue
-]
-
 { #category : #initialize }
 RSKeyboardEvent >> initialize [
 	super initialize.
