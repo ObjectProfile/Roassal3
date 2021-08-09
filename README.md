@@ -18,7 +18,7 @@ Roassal3 is free and open source, but backed by Object Profile. Commercial suppo
 
 ## Pharo Installations
 Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.6b.
-Two instalation flavors are available: stable and latest (a.k.a bleeding-edge).
+Two installation flavors are available: stable and latest (a.k.a bleeding-edge).
 
 ### Stable version
 If you wish to install Roassal in Pharo 8, then execute the following code snippet in a Playground:
