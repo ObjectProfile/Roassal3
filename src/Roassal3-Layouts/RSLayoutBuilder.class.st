@@ -38,7 +38,7 @@ RSLayoutBuilder >> flow [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> force [
-	^ layout := RSSimpleForceBasedLayout new
+	^ layout := RSForceBasedLayout new
 ]
 
 { #category : #'public - layout' }
