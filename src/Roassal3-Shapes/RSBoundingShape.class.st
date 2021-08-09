@@ -241,6 +241,7 @@ RSBoundingShape >> initializeMatrix [
 { #category : #testing }
 RSBoundingShape >> intersects: aRectangle [
 	| rect |
+	self isInACanvas ifFalse: [ ^ false ].
 	rect := self 
 		computeEncompassingRectangleFor: self baseRectangle 
 		matrix: self globalMatrix.
