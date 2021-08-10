@@ -16,9 +16,20 @@ numberOfPassed := 0.
 "We run the unit tests"
 unitTests do: [ :unitTestClass |
 	res := unitTestClass buildSuite run.
-	(res hasFailures or: [ res hasErrors ]) ifTrue: [ stream nextPutAll: 'ERROR: ' ].
-	stream nextPutAll: unitTestClass name, ' ', res asString.
-	stream crlf.
+	(res hasFailures or: [ res hasErrors ]) ifTrue: [ 
+
+		stream 
+			nextPutAll: 'ERROR: ';
+			nextPutAll: unitTestClass name; space;
+			nextPutAll: res asString;
+			crlf.
+		unitTestClass name = #RSExamplesTest ifTrue: [
+			[RSExamplesTest new testExamples]
+			on: Error 
+			do: [ :ex | ex signalContext shortDebugStackOn: stream ].
+			stream nextPutAll: '-:V-';crlf.
+		] 
+	].
 	numberOfPassed := numberOfPassed + res passed size.
 ].
 
