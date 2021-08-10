@@ -9,12 +9,9 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 	| res |
 	res := exampleClass perform: method selector.
 	self
-		  deny: res = exampleClass
-		  description: [ 
-		  '''' , method selector, ''', should return a canvas or view.'
-			"
-			method browse
-			" ]
+		deny: res = exampleClass
+		description: '''' , method selector, ''', should return a canvas or view.'
+		
 ]
 
 { #category : #tests }
