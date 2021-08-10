@@ -462,7 +462,7 @@ RSLayoutExamples >> example18Cluster [
 	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
 		| group |
 		group := RSGroup new.
-		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+		shapes := Morph withAllSubclasses collect: [ :cls |
 			RSEllipse new 
 				size: 5;
 				draggable;
