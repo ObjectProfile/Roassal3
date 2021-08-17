@@ -34,6 +34,15 @@ RSTAnnounceable >> announcer: anAnnouncer [
 	self explicitRequirement
 ]
 
+{ #category : #public }
+RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
+	| ann |
+	ann := self privateAnnouncer.
+	self announcer: nil.
+	aBlock value.
+	self announcer: ann.
+]
+
 { #category : #announcer }
 RSTAnnounceable >> getInteractionsForClass: anInteractionClass [
 	"Return the Announcement subscriptions for the interaction"
