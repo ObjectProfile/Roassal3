@@ -1301,3 +1301,28 @@ E di pensier
 	^ canvas
 
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example45CompositeDragResize [
+	<script: 'self new example45CompositeDragResize open'>
+	| c nodes |
+	c := RSCanvas new.
+	nodes := RSComposite models: Array withAllSubclasses,{RSRiceBinning} forEach: [ :compCls :cls| 
+		compCls addAll: (RSComposite models: cls methods forEach: [:compMet :met| 
+			compMet addAll: (RSBox models: (1 to: 4)).
+			RSGridLayout on: compMet children.
+			compMet color: Color red translucent.
+			compMet ]).
+		compCls children do: [ :child | child padding: 10 ].
+		RSGridLayout on: compCls children.
+		compCls color: Color blue translucent.
+		compCls 
+		 ].
+	nodes do: [ :n | n padding: 10 ].
+	RSGridLayout on: nodes.
+	c addAll: nodes.
+	c allChildren do: [ :node | node @ RSDraggable ].
+	c @ RSResizeParentWhenChildMoves.
+	c @ RSCanvasController.
+	^ c
+]
