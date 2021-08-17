@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'presentation'
 	],
-	#category : #'Roassal3-Inspector-Actions'
+	#category : #'Roassal3-Pharo8'
 }
 
 { #category : #public }
