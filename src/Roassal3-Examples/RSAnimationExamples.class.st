@@ -2754,3 +2754,92 @@ RSAnimationExamples >> example45Beziers [
 	^ c
 
 ]
+
+{ #category : #perlin }
+RSAnimationExamples >> example46Lines [
+	<script: 'self new example46Lines open'>
+	| c r line duration easing palette dots newDots rect |
+	c := RSCanvas new.
+	r := 50.
+	{ -60@0. 0@0. 60@0. 0@0 } doWithIndex: [:p :i | 
+		c add:(RSEllipse new
+			color: Color black;
+			model: i;
+			position: p;
+			yourself).
+		].
+	RSLineBuilder line
+		canvas: c;
+		useAssociations: { 1->2. 3->4. 2->4 }.
+	line := RSLine new.
+	c add: line.
+	duration := 10 seconds.
+	easing := RSEasingInterpolator sinOut.
+	c newAnimation
+		repeat;
+		easing: easing;
+		duration: duration;
+		from: 0;
+		to: Float twoPi negated;
+		onStepDo: [ :t |
+			c nodes second position: (t cos @ t sin) * r + (-60@0).
+			 ].
+	c newAnimation
+		repeat;
+		easing: easing;
+		duration: duration;
+		from: 0;
+		to: Float twoPi;
+		onStepDo: [ :t |
+			c nodes fourth position: (t cos @ t sin) * r + (60@0).
+			 ].
+	palette := NSScale ordinal range: (Color wheel: 20).
+	dots := (1 to: 20) collect: [ :i | 
+		RSEllipse new
+			color: (palette scale: i);
+			border: (RSBorder new color: Color black);
+			yourself ] as: RSGroup.
+	c addAll: dots.
+	newDots := RSGroup new.
+	c newAnimation
+		repeat;
+		duration: duration;
+		onStepDo: [ :t |
+			 | from to vector u unit middle left right stepDots |
+			from := c nodes second position.
+			to := c nodes fourth position.
+			
+			vector := to - from.
+			u := vector normal.
+			unit := vector / (vector r max: 1).
+			middle := from + (vector * 0.5).
+			left := middle - (u * 800).
+			right := middle + (u * 800).
+			
+			dots doWithIndex: [ :dot :i | 
+				dot position: middle + ( (i - 10) * 25 * u ) ].
+			stepDots := dots collect: [:d | 
+				RSEllipse new
+					size: 3;
+					color: d color;
+					position: d position;
+					yourself ].
+			
+			c addAll: stepDots.
+			stepDots pushBack.
+			newDots addAll: stepDots.
+			line startPoint: left.
+			line endPoint: right.
+			 ];
+		when: RSAnimationLoopEvent do: [:evt | 
+			newDots do: #remove.
+			newDots removeAll. ].
+	rect := 300.
+	c camera zoomToFit: 500 asPoint rectangle: (rect negated asPoint corner: rect asPoint).
+	^ c
+
+
+
+
+
+]
