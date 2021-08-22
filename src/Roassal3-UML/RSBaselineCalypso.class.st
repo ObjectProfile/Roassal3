@@ -109,6 +109,12 @@ RSBaselineCalypso >> buildLegendOn: canvas [
 	b text: self targetClass name withCircleColor: Color blue.
 	b text: 'Not loaded baseline' withCircleColor: Color red.
 	b text: 'A depends on B' withShape: miniGraph.
+	b 
+		text: 'Error in baseline' 
+		withShape: (RSShapeFactory star 
+			size: 20; 
+			color: Color red; 
+			yourself).
 	b text: ' '.
 	b title: 'Interactions on nodes'.
 	b text: '-Double click to open class'.
@@ -168,9 +174,14 @@ RSBaselineCalypso >> collectAllProjects [
 
 { #category : #accessing }
 RSBaselineCalypso >> collectAllProjectsIn: projects class: clazz level: level [
+	| version |
+	version := nil.
 	projects at: clazz name asSymbol put: clazz.
+	[ version := clazz version ] on: Error do: [ :ex | 
+		^ self ].
 	"This is baseline"
-	(clazz version projects collect: #constructClassName)
+	
+	(version projects collect: #constructClassName)
 		select: [ :name | name notNil ]
 	 	thenDo: [ :name |
 			Smalltalk globals at: name asSymbol
@@ -193,7 +204,8 @@ RSBaselineCalypso >> defaultTitle [
 RSBaselineCalypso >> dependenciesOf: name [
 	^ Smalltalk globals at: name
 		ifPresent: [ :cls |
-			cls version projects collect: #constructClassName ]
+			
+			[cls version projects collect: #constructClassName] on: Error do: [ :ex | #() ] ]
 		ifAbsent: [ #() ]
 ]
 
@@ -294,9 +306,24 @@ RSBaselineCalypso >> shapeFor: assoc [
 		assoc key = self targetClass name
 			ifTrue: [ shape color: Color blue ].
 		shape @ self loadedPopup.
+		
 		shape propertyAt: #linesOfCode put: cls linesOfCode sqrt*2.
-		shape propertyAt: #packagesSize put: cls version packages size.
-		shape size: minSize + cls version packages size ].
+		
+		[| size |
+		size := cls version packages size.
+		shape propertyAt: #packagesSize put: size.
+		shape size: minSize + size. ] on: Error do: [ :ex | 
+			| newShape |
+			newShape := RSShapeFactory star.
+			newShape announcer: shape announcer.
+			newShape properties addAll: shape properties.
+			newShape model: shape model.
+			newShape color: Color red.
+			shape := newShape.
+			shape propertyAt: #packagesSize put: 0.
+			shape size: minSize.
+		 ].
+	].
 	^ shape
 ]
 
