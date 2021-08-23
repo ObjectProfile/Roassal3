@@ -4,6 +4,7 @@ env:
   reponame: ${{github.event.repository.name}}
   project_baseline: Roassal3 # I'm important. change me in each repo
   project_directory: src
+  parallel_jobs: 8
   iteration: 3
   maxInputs: 10
   mode: dspotFast
@@ -17,11 +18,20 @@ on:
         default: ''
         
 jobs:
+  MatrixBuild:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          matrix=$(python -c "print(list(range($parallel_x)))")
+          echo "::set-output name=matrix::$matrix"
+
   TestAmplification:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        portion: [1]
+      matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
 #        portion: [1 , 2, 3, 4, 5, 6, 7, 8] # Change me if you like to run in parallel. The content of array is not important, just the length
     name: Job number ${{ strategy.job-index }}
     steps:
