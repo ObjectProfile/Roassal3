@@ -12,7 +12,7 @@ Class {
 	#category : #'Roassal3-Mondrian-Connections'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSAbstractConnection >> clickOnShape: aShape [
 	| c win |
 	outputs with: canvasOpenings do: [ :ob :aCanvasOpening |
@@ -30,7 +30,7 @@ RSAbstractConnection >> clickOnShape: aShape [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'windows callback' }
 RSAbstractConnection >> deleteAllWindows [
 	canvasOpenings do: [ :co | co deleteWindow ]
 ]
@@ -49,13 +49,13 @@ RSAbstractConnection >> initialize [
 	self openWindow.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSAbstractConnection >> inputCanvas: aCanvasOrBuilder [
 	inputCanvas := aCanvasOrBuilder canvas.
 	self prepareInputCanvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSAbstractConnection >> lastWindow [
 	"Return a reference to the last window open. If none have been open, then it returns nil"
 	^ lastWindow
@@ -67,13 +67,13 @@ RSAbstractConnection >> numberOfCreatedCanvases [
 	^ numberOfCreatedCanvases
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSAbstractConnection >> numberOfOuputs [
 	"Return the number of ouputs the connection has"
 	^ outputs
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSAbstractConnection >> numberOfOutputs [
 	^ outputs size
 ]
@@ -84,14 +84,14 @@ RSAbstractConnection >> openWindow [
 	windowOpener := [ :canvas | canvas openOnce ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSAbstractConnection >> output: oneArgBlock [
 	"Add the callback of what to do in case of particular action in the input canvas"
 	outputs add: oneArgBlock.
 	canvasOpenings add: RSCanvasOpening new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RSAbstractConnection >> prepareInputCanvas [
 	inputCanvas nodes when: RSMouseClick do: [ :event |
 		self clickOnShape: event shape ].
@@ -99,7 +99,7 @@ RSAbstractConnection >> prepareInputCanvas [
 	inputCanvas nodes @ RSSelectionPresentationInteraction
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'windows callback' }
 RSAbstractConnection >> processWindow: aWindow [
 	lastWindow := aWindow.
 	windowOpener value: aWindow
