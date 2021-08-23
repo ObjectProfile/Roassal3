@@ -422,10 +422,10 @@ RSBlocExamples >> example13Cluster [
 	| canvas shapes |
 	canvas := RSCanvas new.
 
-	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
+	canvas addAll: (#(linear sqrt) collect: [ :scale | 
 		| group |
 		group := RSGroup new.
-		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+		shapes :=  Collection withAllSubclasses collect: [ :cls |
 			RSEllipse new 
 				size: 5;
 				draggable;
