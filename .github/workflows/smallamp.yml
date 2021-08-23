@@ -35,7 +35,7 @@ jobs:
     needs: MatrixBuild
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.MatrixBuild.outputs.matrix)}}
 #        portion: [1 , 2, 3, 4, 5, 6, 7, 8] # Change me if you like to run in parallel. The content of array is not important, just the length
     name: Job number ${{ strategy.job-index }}
     steps:
