@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
     inputs:
       testClasses:
-        description: 'TestClasses to amplify (test class[:class under test][,]) empty-> all'
-        required: true
+        description: 'TestClasses to amplify (comma separated) empty-> all'
+        required: false
         default: ''
         
 jobs:
