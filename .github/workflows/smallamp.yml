@@ -4,7 +4,6 @@ env:
   reponame: ${{github.event.repository.name}}
   project_baseline: Roassal3 # I'm important. change me in each repo
   project_directory: src
-  parallel_jobs: 8
   iteration: 3
   maxInputs: 10
   mode: dspotFast
@@ -16,7 +15,10 @@ on:
         description: 'TestClasses to amplify (comma separated) empty-> all'
         required: false
         default: ''
-        
+      parallel_jobs:         
+        description: 'Number of all parallel jobs'
+        required: true
+        default: '8'
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
@@ -24,7 +26,8 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-#        run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+        env:
+          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
         run: |
           matrix=$(python -c "import json;print(json.dumps({'jobs':[{'a':x} for x in range($parallel_jobs)]}))")
           echo "::set-output name=matrix::$matrix"
