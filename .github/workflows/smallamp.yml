@@ -25,7 +25,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          matrix=$(python -c "print(list(range($parallel_x)))")
+          matrix=$(python -c "print(list(range($parallel_jobs)))")
           echo "::set-output name=matrix::$matrix"
 
   TestAmplification:
