@@ -31,7 +31,8 @@ jobs:
         # echo "setting output {\"include\":$matrix}"
         #  echo "::set-output name=matrix::{\"include\":$matrix}"
 
-  TestAmplification:
+  TestAmplification: 
+    needs: MatrixBuild
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
