@@ -26,7 +26,8 @@ jobs:
       - id: set-matrix
         run: |
           matrix=$(python -c "print(list(range($parallel_jobs)))")
-          echo "::set-output name=matrix::$matrix"
+          echo "setting output {\"include\":$matrix}"
+          echo "::set-output name=matrix::{\"include\":$matrix}"
 
   TestAmplification:
     runs-on: ubuntu-latest
