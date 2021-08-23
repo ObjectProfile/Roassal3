@@ -1,112 +1,63 @@
-name: SmallAmpCI
+name: SmallAmp
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
+  project_baseline: Roassal3 # I'm important. change me in each repo
+  project_directory: src
+  iteration: 3
+  maxInputs: 10
+  mode: dspotFast
 
 on:
   workflow_dispatch:
     inputs:
-      iteration:
-        description: 'Maximum number of transformations applied to an original test method.'
+      testClasses:
+        description: 'TestClasses to amplify (test class[:class under test][,]) empty-> all'
         required: true
-        default: '3'
-      maxInputs:
-        description: 'maximum number of inputs selected by the reducer'
-        required: true
-        default: '10'
-      mode:
-        description: 'Mode (possible values: dspotSnapshots, dspot, diffSnapshots, diff)'
-        required: true
-        default: 'diff'
+        default: ''
         
 jobs:
   TestAmplification:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        portion: [0,1,2,3,4,5,6,7,8,9] # the content of array is not important, just the length
+        portion: [1]
+#        portion: [1 , 2, 3, 4, 5, 6, 7, 8] # Change me if you like to run in parallel. The content of array is not important, just the length
     name: Job number ${{ strategy.job-index }}
     steps:
       - uses: actions/checkout@v2
-      - uses: hpi-swa/setup-smalltalkCI@v1
-        id: smalltalkci
         with:
-          smalltalk-version: Pharo64-8.0
-      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
+           fetch-depth: 0
       - uses: mabdi/smallamp-action@main
-      - run: smallAmpCI 
-        shell: bash
+        with:
+          action: setup
+      - uses: mabdi/smallamp-action@main
+        with:
+          action: amplify
         env:
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
-          SMALLAMP_iteration: ${{ github.event.inputs.iteration }}
-          SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
-          SMALLAMP_mode: ${{ github.event.inputs.mode }}
+          SMALLAMP_iteration: ${{ env.iteration }}
+          SMALLAMP_maxInputs: ${{ env.maxInputs }}
+          SMALLAMP_mode: ${{ env.mode }}  
+          SMALLAMP_testClasses: ${{ github.event.inputs.testClasses }}
 
   TestAmplificationPush:
     runs-on: ubuntu-latest
     needs: TestAmplification
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - run: git checkout -b "SmallAmp-${{github.run_number}}"
-        shell: bash
-      - uses: hpi-swa/setup-smalltalkCI@v1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-8.0
-      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
+        with:
+          action: setup
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: cd smallAmp-results*; find . -name "*.zip" -exec unzip {} \;; rm *.zip; mv * ..
-        shell: bash 
-        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: python3 runner.py -r amp -d ${{ env.SMALLTALK_CI_BUILD_BASE }} -p ${{ env.reponame }} > overview-amp.txt
-        shell: bash
-        working-directory: ${{env.SMALLAMP_CI_HOME}}
-      - run: python3 runner.py -r sum -d ${{ env.SMALLTALK_CI_BUILD_BASE }} -p ${{ env.reponame }} > overview-sum.txt
-        shell: bash
-        working-directory: ${{env.SMALLAMP_CI_HOME}}
-      - uses: actions/upload-artifact@v2
+          path: ${{ env.PHARO_HOME }}
+      - uses: mabdi/smallamp-action@main
         with:
-          name: "smallAmp-overview-${{ env.reponame }}-run${{github.run_number}}"
-          path: ${{env.SMALLAMP_CI_HOME}}/overview-*.txt
-      - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
-        shell: bash 
-        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
-        shell: bash
-        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: git status
-        shell: bash  
-      - run: git branch 
-        shell: bash
-      - run: |
-          git config user.name mabdi
-          git add '*.st'
-          git commit -m '[SmallAmp] amplified tests added'
-          git push -u origin HEAD
-      - uses: actions/github-script@v4
-        with:
+          action: push
           github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.pulls.create({
-                owner: "mabdi",
-                repo: '${{ env.reponame }}',
-                title: "[SmallAmp] amplified tests for action number ${{github.run_number}}",
-                head: "SmallAmp-${{github.run_number}}",
-                base: "${{ steps.extract_branch.outputs.branch }}",
-                body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
-            });
+          
