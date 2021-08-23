@@ -27,12 +27,15 @@ RSTMarkeable >> marker: aMarker [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerEnd [
-	^ self markers third.
+	^ self markers 
+		ifNil: [ nil ]
+		ifNotNil: [ :m | m third ] 
 ]
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerEnd: marker [
-	| m| 
+	| m |
+	marker ifNil: [ ^ nil ].
 	m := marker asMarker.
 	self markers at: 3 put: m.
 	^ m
@@ -40,12 +43,15 @@ RSTMarkeable >> markerEnd: marker [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerMid [
-	^ self markers second.
+	^ self markers 
+		ifNil: [ nil ]
+		ifNotNil: [ :m | m second ] 
 ]
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerMid: marker [
-	| m | 
+	| m |
+	marker ifNil: [ ^ nil ].
 	m := marker asMarker.
 	self markers at: 2 put: m.
 	^ m
@@ -62,12 +68,15 @@ RSTMarkeable >> markerShapesInPositionDo: aBlock [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerStart [ 
-	^ self markers first.
+	^ self markers 
+		ifNil: [ nil ]
+		ifNotNil: [ :m | m first ] 
 ]
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markerStart: marker [
-	| m | 
+	| m |
+	marker ifNil: [ ^ nil ].
 	m := marker asMarker.
 	self markers at: 1 put: m.
 	^ m
@@ -85,7 +94,11 @@ RSTMarkeable >> markerStartEnd: aMarker [
 
 { #category : #'accessing - markers' }
 RSTMarkeable >> markers [
-	^ self privateMarkers
+	^ self privateMarkers 
+		ifNil: [ | array |
+			array := Array new: 3.
+			self privateMarkers: array.
+			array ]
 ]
 
 { #category : #'accessing - markers' }
@@ -105,4 +118,14 @@ RSTMarkeable >> markersIncludesPoint: aPoint [
 { #category : #'accessing - markers' }
 RSTMarkeable >> privateMarkers [
 	^ self explicitRequirement
+]
+
+{ #category : #'accessing - markers' }
+RSTMarkeable >> privateMarkers: array [
+	 self explicitRequirement
+]
+
+{ #category : #public }
+RSTMarkeable >> resetMarkers [
+	self privateMarkers: nil
 ]

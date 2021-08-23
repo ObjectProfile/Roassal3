@@ -2,7 +2,6 @@ Class {
 	#name : #SpRoassal3InspectorPresenter,
 	#superclass : #SpMorphPresenter,
 	#instVars : [
-		'activationBlock',
 		'canvas'
 	],
 	#category : #'Roassal3-Inspector-SP2'

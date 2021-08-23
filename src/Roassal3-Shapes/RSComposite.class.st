@@ -133,7 +133,7 @@ For example:
 ```
 c := RSCanvas new.
 
-compoShape := RSComposite model: 'Hello' forIt: [ :title :composite |
+compoShape := RSComposite model: 'Hello' forIt: [ :composite :title |
 	composite add: (RSLabel text: title).
 	composite add: (RSCircle new size: 20).
 	RSVerticalLineLayout new alignCenter; on: composite shapes.
@@ -182,7 +182,7 @@ c open
 	^ someObjects
 		  collect: [ :obj | 
 				| t |
-		  		t := twoArgsBlock valueWithArguments: (Array with: obj with: (self model: obj)).
+		  		t := twoArgsBlock valueWithArguments: (Array with: (self model: obj) with: obj).
 				t adjustToChildren ]
 		  as: RSGroup
 ]
@@ -393,9 +393,20 @@ RSComposite >> removeShape: shape [
 	
 ]
 
+{ #category : #public }
+RSComposite >> resetChildren [
+	children := nil.
+]
+
 { #category : #path }
 RSComposite >> resetPath [
 	path := baseRectangle
+]
+
+{ #category : #public }
+RSComposite >> resizeWithChildrenTo: aPointExtent [
+	self scaleBy: aPointExtent / self baseRectangle extent
+	
 ]
 
 { #category : #path }

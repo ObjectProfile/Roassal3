@@ -12,7 +12,7 @@ RSAbstractVerticalTreeLayout class >> isAbstract [
 	^ self = RSAbstractVerticalTreeLayout
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
@@ -24,7 +24,7 @@ RSAbstractVerticalTreeLayout >> initialize [
 	horizontalGap := 3
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
 	aNodeCollection isEmpty ifTrue: [ ^ 0 ].
@@ -62,7 +62,7 @@ RSAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 		cursor := cursor + layerDepthSize + self verticalGap ]
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractVerticalTreeLayout >> translate: aNodeCollection by: delta [
 	aNodeCollection ifEmpty: [ ^ self ].
 	aNodeCollection do: [ :each | 

@@ -10,16 +10,16 @@ Class {
 	#category : #'Roassal3-UML-Calypso'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #activation }
 RSUMLPackageCalypso class >> classUmlTapActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategy for: ClyClassGroup asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #activation }
 RSUMLPackageCalypso class >> classUmlTapActivation2 [
 	<classAnnotation>
-	^ClyTabActivationStrategy for: RPackage asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
 ]
 
 { #category : #accessing }

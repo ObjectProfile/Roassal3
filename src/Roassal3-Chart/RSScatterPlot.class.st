@@ -51,14 +51,24 @@ Class {
 	#name : #RSScatterPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'processBlock'
+		'ellipses'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #accessing }
+RSScatterPlot >> createdShapes [
+	^ ellipses
+]
+
 { #category : #initialization }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
+]
+
+{ #category : #accessing }
+RSScatterPlot >> ellipses [
+	^ ellipses
 ]
 
 { #category : #testing }
@@ -66,37 +76,26 @@ RSScatterPlot >> isScatterPlot [
 	^ true
 ]
 
-{ #category : #accessing }
-RSScatterPlot >> processBlock [
-	^ processBlock
-]
-
-{ #category : #accessing }
-RSScatterPlot >> processBlock: oneArgBlock [
-	"Set the process block, which is a one-arg block that is executed on the set of shapes after the rendering. It is a hook for particularizing some visual aspects of the plot.
-	"
-	processBlock := oneArgBlock
-]
-
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
-	| shapes newPoint color |
+	| newPoint color |
 	color := self computeColor.
 	self checkAssertion.
-	shapes := (1 to: xValues size)
+	ellipses := (1 to: xValues size)
 		collect: [ :notUsed | 
 			self shape copy
 				radius: 2;
 				color: color ] as: RSGroup.
-	1 to: xValues size do: [ :i | 
-		| xt yt et |
-		et := shapes at: i.
-		xt := xValues at: i.
+	xValues doWithIndex: [ :xt :i | 
+		| yt et |
+		et := ellipses at: i.
 		yt := yValues at: i.
 		newPoint := self scalePoint: xt @ yt.
 		(self isPointWellDefined: newPoint)
-			ifTrue: [ et translateTo: newPoint.
+			ifTrue: [ 
+				et model: xt @ yt.
+				et translateTo: newPoint.
 				canvas add: et ] ].
 		
-	processBlock rsValue: shapes.
+	
 ]

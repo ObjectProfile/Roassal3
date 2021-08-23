@@ -70,7 +70,7 @@ RSBarPlot >> computeRectagleFor: aPoint index: index [
 	| origin corner sizeOffset offset zero |
 	zero := 0.
 	bottom ifNotNil: [ zero := bottom at: index ].
-	origin := self scalePoint: aPoint.
+	origin := self scalePoint: aPoint + (0@ zero).
 	corner := origin x @ (yScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.

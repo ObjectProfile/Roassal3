@@ -35,7 +35,9 @@ Class {
 	#instVars : [
 		'scale',
 		'position',
-		'canvas'
+		'canvas',
+		'extent',
+		'originMode'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -70,6 +72,12 @@ RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
 ]
 
+{ #category : #accessing }
+RSCamera >> extent [ 
+
+	^ extent
+]
+
 { #category : #convertion }
 RSCamera >> fromPixelToSpace: aPoint [
 
@@ -96,6 +104,21 @@ RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
 	scale := 1.0000001.
+	originMode := #center.
+]
+
+{ #category : #accessing }
+RSCamera >> originMode [ 
+
+	"#center or #topLeft"
+
+	^ originMode
+]
+
+{ #category : #accessing }
+RSCamera >> originMode: anObject [
+
+	originMode := anObject
 ]
 
 { #category : #accessing }
@@ -119,21 +142,28 @@ RSCamera >> position: aPoint [
  	position := aPoint
 ]
 
+{ #category : #private }
+RSCamera >> privExtent: aRect [
+
+	extent := aRect
+]
+
 { #category : #accessing }
 RSCamera >> scale [
 	^ scale
 ]
 
 { #category : #accessing }
-RSCamera >> scale: aNumber [
+RSCamera >> scale: aFloatNumber [
+	"Set the scaling factor applied by the camera. A factor of 1.0 means that no zooming is applied. if the factor is < 1, then the perceived effect is a zoom out. If the factor is > 1, then the effect is a zoom out."
 	| oldScale |
-	scale = aNumber ifTrue: [ ^ self ].
+	scale = aFloatNumber ifTrue: [ ^ self ].
 	oldScale := scale.
-	scale := aNumber.
+	scale := aFloatNumber.
 	self canvas announce: [ RSScaleChangedEvent new
 		canvas: self canvas;
 		oldScale: oldScale;
-		newScale: aNumber ]
+		newScale: aFloatNumber ]
 ]
 
 { #category : #zoom }

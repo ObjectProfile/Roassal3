@@ -20,6 +20,11 @@ Class {
 	#category : #'Roassal3-Chart-Decoration'
 }
 
+{ #category : #accessing }
+RSChartSpineDecoration >> createdShapes [
+	^ { shape }
+]
+
 { #category : #rendering }
 RSChartSpineDecoration >> renderIn: canvas [
 	shape := RSBox new color: nil; extent: chart extent; withBorder.

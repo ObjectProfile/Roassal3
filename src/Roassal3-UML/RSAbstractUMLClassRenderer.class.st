@@ -71,7 +71,6 @@ RSAbstractUMLClassRenderer >> classBoxPadding: aPoint [
 RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [ 
 	^ RSBox new
 		paint: self boxColor;
-		cornerRadius: 10;
 		border: self boxBorder;
 		yourself
 ]
@@ -231,6 +230,8 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 		color: self textColor;
 		text: (modelDescriptor classname rsValue: model);
 		yourself.
+	(modelDescriptor isAbstract rsValue: model) ifTrue: [ 
+		label italic ].
 	label fontSize: label fontSize.
 	^ { label } asGroup asShape padding: 0@ 5; yourself
 	
@@ -238,11 +239,12 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> varFor: model [
+
 	^ RSLabel new
-		model: model;
-		color: self textColor;
-		text: model;
-		yourself
+		  model: model;
+		  color: self textColor;
+		  text: (modelDescriptor instVarSelector rsValue: model);
+		  yourself
 ]
 
 { #category : #hooks }

@@ -34,9 +34,38 @@ RSTAnnounceable >> announcer: anAnnouncer [
 	self explicitRequirement
 ]
 
+{ #category : #public }
+RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
+	| ann |
+	ann := self privateAnnouncer.
+	self announcer: nil.
+	aBlock value.
+	self announcer: ann.
+]
+
+{ #category : #announcer }
+RSTAnnounceable >> getInteractionsForClass: anInteractionClass [
+	"Return the Announcement subscriptions for the interaction"
+	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
+]
+
+{ #category : #testing }
+RSTAnnounceable >> hasInteraction: anInteractionClass [
+	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
+	self announcer subscriptions ifNil: [ ^ false ].
+	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
+]
+
 { #category : #announcer }
 RSTAnnounceable >> privateAnnouncer [
 	^ self explicitRequirement
+]
+
+{ #category : #removing }
+RSTAnnounceable >> removeInteractionIfPresent: anInteractionClass [
+	"Remove all the callbacks associated to the interaction."
+	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
+	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
 { #category : #announcer }

@@ -50,11 +50,6 @@ RSAbstractDualLine >> position [
 	^ self encompassingRectangle floatCenter
 ]
 
-{ #category : #private }
-RSAbstractDualLine >> privateMarkers [
-	^ markers ifNil: [ markers := Array new: 3 ].
-]
-
 { #category : #accessing }
 RSAbstractDualLine >> startPoint [ 
 	^ startPoint

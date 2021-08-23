@@ -55,7 +55,7 @@ Class {
 	#category : #'Roassal3-SVG-Edges'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSMultiBezierEdgeBuilder class >> multiBezier [
 	^ self new: RSSVGPathLine new.
 ]
@@ -116,8 +116,8 @@ RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	[ to == ancestor ] whileFalse: [ 
 		shapes add: to afterIndex: index.
 		to := search value: to model ].
-	shapes do: [ :e | (e connectedEdges includes: edge)
-		ifFalse: [ e addConnectedEdge: edge ] ].
+	shapes do: [ :e | (e connectedLines includes: edge)
+		ifFalse: [ e addConnectedLine: edge ] ].
 	^ shapes.
 	
 ]

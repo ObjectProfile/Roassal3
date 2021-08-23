@@ -37,7 +37,7 @@ RSAnimationExamples >> example01BoxWindmill [
 					translateBy: s model;
 					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
 			frameCount := frameCount + 1. ].
-	canvas @ RSGraphCanvasMonitor.
+	canvas @ RSGraphCanvasMonitorInteraction.
 	^ canvas
 ]
 
@@ -207,7 +207,7 @@ RSAnimationExamples >> example05ElasticEllipses [
 				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
 		].
 		canvas newAnimation
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			onStepDo: [ :t |
 				canvas nodes do: [ :shape | | scale |
 					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
@@ -362,7 +362,7 @@ RSAnimationExamples >> example08ArcTree [
 		shapes := canvas nodes select: [ :e | e index = i ].
 		canvas transitionAnimation 
 			duration: 1 seconds;
-			easing: RSEasing bounceOut;
+			easing: RSEasingInterpolator bounceOut;
 			onStepDo: [ :t |
 			shapes do: [ :e |
 				e 
@@ -1760,7 +1760,7 @@ RSAnimationExamples >> example29Tick [
 	(c nodes at: 3) remove.
 	animation := [:a :b :k | c transitionAnimation 
 		duration: 700 milliSeconds;
-		easing: RSEasing bounceOut;
+		easing: RSEasingInterpolator bounceOut;
 		from: a;
 		to: b;
 		onStepDo: [ :t | | s |
@@ -1967,7 +1967,7 @@ RSAnimationExamples >> example33AnimatedLayout [
 		layout on: shapes.
 		 ].
 	update value: #tree.
-	RSZoomToFitCanvas new animatedZoomToFit: c.
+	RSZoomToFitCanvasInteraction new animatedZoomToFit: c.
 
 	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	labels := labels collect: [ :sel |
@@ -2094,7 +2094,7 @@ RSAnimationExamples >> example35Roassal [
 		color: Color white;
 		fontSize: 30).
 		canvas newAnimation
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			from: -1; to: 0; onStepDo: [ :t |
 			canvas shapes last matrix shy: t ] ]. 
 	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent * 0.8 extent: 300@300 ].
@@ -2244,7 +2244,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 		edges: canvas edges;
 		start;
 		yourself.
-	canvas @ RSSimpleCanvasMonitor.
+	canvas @ RSSimpleCanvasMonitorInteraction.
 	canvas newAnimation repeat onStepDo: [ :t | layout step. ].
 
 	"Apply forces from the window borders to the elements."
@@ -2255,7 +2255,7 @@ RSAnimationExamples >> example37RectangleForceLayout [
 		corner := camera fromPixelToSpace: canvas canvas extent.
 		layout enclosingRectangle: (origin corner: corner).
 	].
-	classes @ (RSDraggableForce new layout: layout).
+	classes @ (RSDraggableForceInteraction new layout: layout).
 
 	canvas camera scale: 2.
 	^ canvas
@@ -2603,4 +2603,243 @@ c svgExporter export"
 	^ canvas
 		
 		
+]
+
+{ #category : #perlin }
+RSAnimationExamples >> example45Beziers [
+	<script: 'self new example45Beziers open'>
+	| c allPoints graphs color |
+	c := RSCanvas new.
+
+	allPoints := { 
+		'2 Points' -> { 0@0.  100@ -100 }.
+		'3 Points' -> { 0@0. 50@ -100.  100@ 0. }.
+		'4 Points' -> { 0@0. 50@ 0.  50@ -100. 100@ -100}.
+		'curve like y = 1/t' -> { 0@0. 0@ -70.  30@ -100. 100@ -100}.
+		'Zig Zag' -> { 0@0. 100@ -50.  0@ -50. 100@ -100}.
+		'Loop' -> { 0@0. 100@ -50.  0@ -100. 50@ 0}.
+		'Non smooth bezier' -> { 0@0. 100@ -100.  0@ -100. 100@ 0}.
+		'More than 4' -> { 0@0. 50@ -100.  100@ 0. 150@ -100. 200@ 0. 250 @ -100}.
+	}.
+	color := NSScale category20.
+	graphs := allPoints collect: [ :assoc |
+		| comp dots points bezier label button icon lines labelT |
+		comp := RSComposite new.
+		points := assoc value.
+		dots := (1 to: points size) collect: [ :i |
+			RSEllipse new
+				model: i;
+				size: 5;
+				withBorder;
+				position: (points at: i);
+				draggable;
+				noPaint;
+				yourself
+		] as: RSGroup.
+		dots @ RSLabeled.
+
+		lines := (2 to: dots size) collect: [ :index |
+			RSLine new
+				withBorderAttachPoint;
+				from: (dots at: index -1);
+				to: (dots at: index);
+				yourself ].
+		comp addAll: lines.
+		comp addAll: dots.
+		
+		bezier := points size > 4 
+			ifTrue: [ RSPolyline new
+				in: [ :poly | dots do: [ :dot | dot addConnectedLine: poly] ];
+				controlPointsController: (RSBlockCPController new block: [:line | 
+					(0 to: 1 by: 0.05) collect: [ :t | 
+						| n r |
+						r := 0@0.
+						n := dots size - 1.
+						dots doWithIndex: [ :dot :k | | point bez i |
+							point := dot position.
+							i := k -1.
+							bez := n factorial / (i factorial * ((n - i) factorial)) * (t raisedTo: i) * (1 - t raisedTo: n-i ).
+							r := point * bez + r].
+						r ] .
+					])]
+			ifFalse: [ RSBezier new controlPointsController: (RSCustomCPController new models: dots)].
+		bezier color: Color red.
+
+		comp add: bezier.
+		comp
+			adjustToChildren;
+			padding: 10;
+			withBorder.
+		label := RSLabel text: assoc key.
+		RSLocation new above; offset: 0@ -30; move: label on: dots.
+		comp add: label.
+		
+		labelT := RSLabel text: 'T='.
+		RSLocation new below; offset: 0@10; move: labelT on: dots.
+		comp add: labelT.
+		
+		icon := RSBitmap new form: (self iconNamed: #smallDoIt).
+		button := { icon } asShape.
+		button 
+			when: RSMouseEnter do: [button color: Color lightGray; signalUpdate ];
+			when: RSMouseLeave do: [button color: nil; signalUpdate ];
+			when: RSMouseClick do: [
+				comp 
+					propertyAt: #anime
+					ifPresent: [:anime |
+						anime toggle.
+						icon form: (self iconNamed: 
+							(anime isPaused
+								ifTrue: [#smallDoIt]
+								ifFalse: [ #protocolPrivate ]));
+							signalUpdate. ]
+					ifAbsent: [ 
+						| anime newShapes |
+						icon form: (self iconNamed: #protocolPrivate); signalUpdate.
+						newShapes := RSGroup new.
+						anime := comp newAnimation	
+							duration: 5 seconds;
+							onStepDo: [ :t |
+								| currentLines last |
+								newShapes do: #remove.
+								labelT text: 'T=', (t printShowingDecimalPlaces: 3).
+								newShapes removeAll.
+								currentLines := lines.
+
+								[currentLines notEmpty ] whileTrue: [ 
+									| newLines lcolor |
+									lcolor := color scale: currentLines size.
+									newLines := (2 to: currentLines size) collect: [ :i | 
+										| l1 l2 |
+										l1 := currentLines at: i - 1.
+										l2 := currentLines at: i.
+										RSLine new
+											startPoint: (l1 startPoint interpolateTo: l1 endPoint at: t);
+											endPoint: (l2 startPoint interpolateTo: l2 endPoint at: t);
+											color: lcolor;
+											yourself
+										 ].
+									currentLines size = 1 ifTrue: [ | l1 |
+										l1 := currentLines first.
+										newShapes add: (RSEllipse new
+											color: Color red;
+											size: 5;
+											position: (l1 startPoint interpolateTo: l1 endPoint at: t);
+											yourself )].
+									newShapes addAll: newLines.
+									currentLines := newLines.
+								].
+								
+								comp addAll: newShapes.
+								comp signalUpdate ];
+							when: RSAnimationEndEvent do: [:evt | 
+								comp removeKey: #anime.
+								newShapes do: #remove.
+								icon form: (self iconNamed: #smallDoIt).
+								].
+						comp propertyAt: #anime put: anime
+						 ].
+			].
+		RSLocation new outer; left; offset: -5@0; move: button on: label.
+		comp add: button.
+		comp.
+	].
+
+	RSGridLayout new
+		lineItemsCount: 4;
+		gapSize: 50; 
+		on: graphs.
+	c addAll: graphs.
+	c @ RSCanvasController.
+	^ c
+
+]
+
+{ #category : #perlin }
+RSAnimationExamples >> example46Lines [
+	<script: 'self new example46Lines open'>
+	| c r line duration easing palette dots newDots rect |
+	c := RSCanvas new.
+	r := 50.
+	{ -60@0. 0@0. 60@0. 0@0 } doWithIndex: [:p :i | 
+		c add:(RSEllipse new
+			color: Color black;
+			model: i;
+			position: p;
+			yourself).
+		].
+	RSLineBuilder line
+		canvas: c;
+		useAssociations: { 1->2. 3->4. 2->4 }.
+	line := RSLine new.
+	c add: line.
+	duration := 10 seconds.
+	easing := RSEasingInterpolator sinOut.
+	c newAnimation
+		repeat;
+		easing: easing;
+		duration: duration;
+		from: 0;
+		to: Float twoPi negated;
+		onStepDo: [ :t |
+			c nodes second position: (t cos @ t sin) * r + (-60@0).
+			 ].
+	c newAnimation
+		repeat;
+		easing: easing;
+		duration: duration;
+		from: 0;
+		to: Float twoPi;
+		onStepDo: [ :t |
+			c nodes fourth position: (t cos @ t sin) * r + (60@0).
+			 ].
+	palette := NSScale ordinal range: (Color wheel: 20).
+	dots := (1 to: 20) collect: [ :i | 
+		RSEllipse new
+			color: (palette scale: i);
+			border: (RSBorder new color: Color black);
+			yourself ] as: RSGroup.
+	c addAll: dots.
+	newDots := RSGroup new.
+	c newAnimation
+		repeat;
+		duration: duration;
+		onStepDo: [ :t |
+			 | from to vector u unit middle left right stepDots |
+			from := c nodes second position.
+			to := c nodes fourth position.
+			
+			vector := to - from.
+			u := vector normal.
+			unit := vector / (vector r max: 1).
+			middle := from + (vector * 0.5).
+			left := middle - (u * 800).
+			right := middle + (u * 800).
+			
+			dots doWithIndex: [ :dot :i | 
+				dot position: middle + ( (i - 10) * 25 * u ) ].
+			stepDots := dots collect: [:d | 
+				RSEllipse new
+					size: 3;
+					color: d color;
+					position: d position;
+					yourself ].
+			
+			c addAll: stepDots.
+			stepDots pushBack.
+			newDots addAll: stepDots.
+			line startPoint: left.
+			line endPoint: right.
+			 ];
+		when: RSAnimationLoopEvent do: [:evt | 
+			newDots do: #remove.
+			newDots removeAll. ].
+	rect := 300.
+	c camera zoomToFit: 500 asPoint rectangle: (rect negated asPoint corner: rect asPoint).
+	^ c
+
+
+
+
+
 ]

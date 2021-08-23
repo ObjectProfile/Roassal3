@@ -2,48 +2,66 @@
 TODO
 "
 Class {
-	#name : #RSGraphVizLayout,
+	#name : #RSGraphvizLayout,
 	#superclass : #RSLineDrivenLayout,
 	#instVars : [
 		'dotConverter',
-		'scale'
+		'scale',
+		'dotDescription',
+		'graphvizResult'
 	],
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #'instance creation' }
-RSGraphVizLayout class >> digraph [
-	^ self new 
+RSGraphvizLayout class >> digraph [
+	^ self new digraph
+]
+
+{ #category : #'instance creation' }
+RSGraphvizLayout class >> neato [
+	^ self new neato
+]
+
+{ #category : #'instance creation' }
+RSGraphvizLayout class >> strict [
+	^ self new strict
+]
+
+{ #category : #'instance creation' }
+RSGraphvizLayout class >> twoPi [
+	^ self new twoPi
+]
+
+{ #category : #'public - configuration' }
+RSGraphvizLayout >> digraph [
+	^ self 
 		dotConverter: RSDigraphDotConverter new;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-RSGraphVizLayout class >> neato [
-	^ self new 
-		dotConverter: RSNeatoDotConverter new;
-		yourself
-]
-
-{ #category : #'instance creation' }
-RSGraphVizLayout class >> strict [
-	^ self new 
-		dotConverter: RSStrictDotConverter new;
-		yourself
-]
-
-{ #category : #'instance creation' }
-RSGraphVizLayout class >> twoPi [
-	^ self new 
-		dotConverter: RSTwoPiDotConverter new;
-		yourself
-]
-
 { #category : #hook }
-RSGraphVizLayout >> doExecute: elements [
-	| process group string | 
-	group := elements asGroup.
-	group, edges accept: self dotConverter.
+RSGraphvizLayout >> doExecute: shapes [
+	| group process | 
+	group := shapes asGroup.
+	dotDescription := self dotDescriptionOf: shapes.
+	
+	
+	
+"
+	fr := '/tmp/description.dot' asFileReference.
+ 	fr exists ifTrue: [ fr delete ].
+	str := fr writeStream.
+	str nextPutAll: dotConverter stream contents ""utf8Encoded"".
+	str close. 
+	
+	frOutput := '/tmp/result.txt' asFileReference.
+	frOutput exists ifTrue: [ frOutput delete ].
+	
+	self runningGraphvizInputFilename: '/tmp/description.dot' outputFilename: '/tmp/result.txt'.
+	
+	self positionShapes: group with: '/tmp/description.dot' asFileReference contents.
+"	
 	
 	process := OSSUnixSubprocess new
 		command: '/usr/local/bin/dot';
@@ -56,34 +74,62 @@ RSGraphVizLayout >> doExecute: elements [
 		run.
 
 	process stdinStream
-		nextPutAll: dotConverter stream contents utf8Encoded;
+		nextPutAll: dotDescription;
 		close.
 	process waitForExit.
-	string := process stdoutStream upToEndOfFile.
-	string ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
-	self positionShapes: group with: string.
+	graphvizResult := process stdoutStream upToEndOfFile.
+	graphvizResult ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
+	self positionShapes: group with: graphvizResult.
 	process closeAndCleanStreams.
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotConverter [
+RSGraphvizLayout >> dotConverter [
 	^ dotConverter
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> dotConverter: aRSDotConverter [
+RSGraphvizLayout >> dotConverter: aRSDotConverter [
 	dotConverter := aRSDotConverter
 ]
 
+{ #category : #accessing }
+RSGraphvizLayout >> dotDescription [
+	"Return the dot description, after the doExecute: is executed"
+	^ dotDescription asString
+]
+
+{ #category : #accessing }
+RSGraphvizLayout >> dotDescriptionOf: shapes [
+
+	| group |
+	group := shapes asGroup.
+	group, edges accept: dotConverter.
+	^ dotConverter stream contents utf8Encoded
+]
+
+{ #category : #accessing }
+RSGraphvizLayout >> graphvizResult [
+	"Return the graphviz result"
+	^ graphvizResult
+]
+
 { #category : #'initialize-release' }
-RSGraphVizLayout >> initialize [
+RSGraphvizLayout >> initialize [
 	super initialize.
 	self dotConverter: RSStrictDotConverter new.
 	self scale: 70 negated
 ]
 
+{ #category : #'public - configuration' }
+RSGraphvizLayout >> neato [
+	^ self 
+		dotConverter: RSNeatoDotConverter new;
+		yourself
+]
+
 { #category : #hook }
-RSGraphVizLayout >> pointsFor: line [
+RSGraphvizLayout >> pointsFor: line [
 	| points n |
 	n := line next asNumber.
 	points := (1 to: n) collect: [ :i | 
@@ -96,7 +142,7 @@ RSGraphVizLayout >> pointsFor: line [
 ]
 
 { #category : #hook }
-RSGraphVizLayout >> positionShapes: elements with: string [
+RSGraphvizLayout >> positionShapes: elements with: string [
 	| nodeIndex |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
 	nodeIndex := 1.
@@ -122,23 +168,53 @@ RSGraphVizLayout >> positionShapes: elements with: string [
 			head := elements at: head.
 			points := self pointsFor: line.
 			edge := tail connectedEdges detect: [ :ed | ed to = head ].
-			edge attachPoint: (RSGraphVizAttachPoint new points: points).
+			edge attachPoint: (RSGraphvizAttachPoint new points: points edge: edge).
 			edge propertyAt: #points put: points.
 			 ].
 		 ].
 ]
 
+{ #category : #hook }
+RSGraphvizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: filenameOutput [
+	"
+	self new runningGraphvizInputFilename: 'hello.dot' outputFilename: 'myresult.txt'
+	"
+	
+	^ self ffiCall: #( int runGraphviz ( char * filenameInput , char* filenameOutput) ) library: GraphvizFFILibrary
+]
+
 { #category : #accessing }
-RSGraphVizLayout >> scale [
+RSGraphvizLayout >> scale [
 	^ scale
 ]
 
 { #category : #accessing }
-RSGraphVizLayout >> scale: aNumber [
+RSGraphvizLayout >> scale: aNumber [
 	scale := aNumber
 ]
 
+{ #category : #'public - configuration' }
+RSGraphvizLayout >> sfdp [
+	^ self 
+		dotConverter: RSSFDPConverter new;
+		yourself
+]
+
+{ #category : #'public - configuration' }
+RSGraphvizLayout >> strict [
+	^ self 
+		dotConverter: RSStrictDotConverter new;
+		yourself
+]
+
 { #category : #hook }
-RSGraphVizLayout >> transform: aPoint [
+RSGraphvizLayout >> transform: aPoint [
 	^ aPoint * scale
+]
+
+{ #category : #'public - configuration' }
+RSGraphvizLayout >> twoPi [
+	^ self 
+		dotConverter: RSTwoPiDotConverter new;
+		yourself
 ]

@@ -62,6 +62,11 @@ RSDoubleBarPlot >> createXScale [
 			chart extent x - padding}
 ]
 
+{ #category : #accessing }
+RSDoubleBarPlot >> createdShapes [
+	^ bars, bars2
+]
+
 { #category : #rendering }
 RSDoubleBarPlot >> renderIn: canvas [
 	| index |

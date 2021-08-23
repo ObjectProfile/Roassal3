@@ -82,6 +82,11 @@ canvas @ RSCanvasController
 ]
 
 { #category : #accessing }
+RSLabeled class >> middle [
+	^ self new middle
+]
+
+{ #category : #accessing }
 RSLabeled class >> text: aText [
 	"Utility method to define a labeled interaction with a text"
 	^ self new text: aText
@@ -142,6 +147,7 @@ RSLabeled >> getOrCreateLabel: aShape [
 		at: #RSLabeled
 		ifAbsentPut: [ self createLabel: aShape ].
 	parent :=aShape parent.
+	aShape when: RSShapeRemovedEvent send: #remove to: label.
 	(label isInACanvas not and: [parent notNil ]) 
 		ifTrue: [ parent addShape: label shape ].
 	^ label
@@ -195,6 +201,11 @@ RSLabeled >> lowColor [
 { #category : #accessing }
 RSLabeled >> lowColor: aColor [
 	lowColor := aColor
+]
+
+{ #category : #'public - configuration' }
+RSLabeled >> middle [
+	self location middle
 ]
 
 { #category : #accessing }

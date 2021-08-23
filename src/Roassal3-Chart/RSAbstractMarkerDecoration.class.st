@@ -24,7 +24,8 @@ Class {
 	#superclass : #RSChartDecoration,
 	#instVars : [
 		'markerColor',
-		'getRelevantValueBlock'
+		'getRelevantValueBlock',
+		'line'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
@@ -38,6 +39,11 @@ RSAbstractMarkerDecoration >> average [
 RSAbstractMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	"This method should be overriden to produce a line"
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSAbstractMarkerDecoration >> createdShapes [
+	^ { line }
 ]
 
 { #category : #rendering }
@@ -64,6 +70,11 @@ RSAbstractMarkerDecoration >> initialize [
 	markerColor := self defaultMarkerColor
 ]
 
+{ #category : #accessing }
+RSAbstractMarkerDecoration >> line [
+	^ line
+]
+
 { #category : #'public - configuration' }
 RSAbstractMarkerDecoration >> max [
 	self subclassResponsibility
@@ -76,8 +87,6 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-	| line |
-	
 	chart plots
 		do: [ :p | 
 			line := self createMarkerLineFromPlot: p.

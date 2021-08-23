@@ -22,15 +22,15 @@ RSSunburstBuilder >> color: aBlock [
 	color := aBlock
 ]
 
-{ #category : #strategry }
+{ #category : #strategy }
 RSSunburstBuilder >> constantWidthStrategy [
-	self strategy: RSSunburstConstantWidthStrategy new.
+	self strategy: RSSunburstConstantWidthLayout new.
 	^ strategy
 ]
 
-{ #category : #strategry }
+{ #category : #strategy }
 RSSunburstBuilder >> extentStrategy [
-	self strategy: RSSunburstExtentStrategy new.
+	self strategy: RSSunburstExtentLayout new.
 	^ strategy
 ]
 
@@ -63,11 +63,6 @@ RSSunburstBuilder >> initialize [
 { #category : #accessing }
 RSSunburstBuilder >> maxLevel [
 	^ maxLevel
-]
-
-{ #category : #public }
-RSSunburstBuilder >> open [
-	^ self canvas open
 ]
 
 { #category : #hooks }

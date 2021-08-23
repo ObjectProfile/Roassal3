@@ -12,7 +12,7 @@ Hello->World
 Class {
 	#name : #RSTwoPiDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #visiting }

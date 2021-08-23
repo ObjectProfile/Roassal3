@@ -108,7 +108,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
-	canvas @ RSDraggableCanvas .
+	canvas @ RSDraggableCanvasInteraction.
 	^ canvas
 ]
 
@@ -295,7 +295,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	RSLineBuilder line
 		canvas: c;
 		connectFrom: [ :v | v // 2 ].
-	c @ RSForceLayoutStepping.
+	c @ RSForceLayoutSteppingInteraction.
 	^ c
 ]
 
@@ -316,7 +316,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	stepping layout
 		length: 80;
 		charge: -300.
@@ -440,7 +440,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	
 	(layout := stepping layout)
 		length: 80;
@@ -462,7 +462,7 @@ RSLayoutExamples >> example18Cluster [
 	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
 		| group |
 		group := RSGroup new.
-		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
+		shapes := Morph withAllSubclasses collect: [ :cls |
 			RSEllipse new 
 				size: 5;
 				draggable;
@@ -523,7 +523,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 		shapes: shapes;
 		normalize: [ :cls | cls numberOfMethods + 5 ].
 	RSTreeLayout on: shapes.
-	^ c @ RSCanvasController @ RSHierarchyPacker
+	^ c @ RSCanvasController @ RSHierarchyPackerInteraction
 ]
 
 { #category : #layouts }
@@ -616,39 +616,8 @@ RSLayoutExamples >> example20FlowLayout [
 ]
 
 { #category : #layouts }
-RSLayoutExamples >> example21Spaces [
-	<script: 'self new example21Spaces open'>
-	| b prop r |
-	b := RSForceLayoutInSpaces new.
-	b numberOfSpaces: 4.
-	b classes: Collection withAllSubclasses.
-	b build.
-	prop := 0.1.
-	r := Random new.
-	b canvas newAnimation
-		repeat;
-		onStepDo: [ :t | | s space |
-			r next < 0.01 ifTrue: [ 
-				s := b shapes atRandom.
-				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
-				
-				b canvas newAnimation
-					duration: 500 milliSeconds;
-					from: s position;
-					to: space position;
-					on: s set: #position:;
-					when: RSAnimationEndEvent do: [ b dragEnd: s ].
-				].
-			 ].
-	^ b canvas 
-	
-
-
-]
-
-{ #category : #layouts }
-RSLayoutExamples >> example22TreeLayoutEllipses [
-	<script: 'self new example22TreeLayoutEllipses open'>
+RSLayoutExamples >> example21TreeLayoutEllipses [
+	<script: 'self new example21TreeLayoutEllipses open'>
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
@@ -679,4 +648,158 @@ RSLayoutExamples >> example22TreeLayoutEllipses [
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
 	c @ RSCanvasController.
 	^ c
+]
+
+{ #category : #tests }
+RSLayoutExamples >> example22ClassHierarchies [
+
+	<script:
+	'RSLayoutExamples new example22ClassHierarchies open'>
+	| commits edges aCanvas gr aCollection |
+	
+	aCollection := { Collection  . Magnitude . RSObject . RBNode }.
+	
+	gr := 1.61803398875.
+	commits := Array streamContents: [ :aStream | 
+		           aCollection do: [ :aClass | 
+			           aClass withAllSubclassesDo: [ :aSubClass | 
+				           | label box |
+				           label := RSLabel new text: aSubClass name.
+				           aSubClass isAbstract ifTrue: [ 
+					           label
+						           bold;
+						           italic ].
+				           box := RSBox new
+					                  color: Color white;
+					                  withBorder;
+					                  cornerRadius: gr * 2;
+					                  extent: label extent + (gr * 4) asPoint;
+					                  yourself.
+				           RSLocation new center stick: label on: box.
+				           aStream nextPut: (RSComposite new
+						            model: aSubClass;
+						            shapes: (Array with: box with: label);
+						            draggable;
+						            when: RSMouseLeftClick
+						            do: [ :ev | aSubClass browse ];
+						            yourself) ] ] ].
+
+	edges := RSLineBuilder horizontalBezier
+		         shapes: commits;
+		         withHorizontalAttachPoint;
+		         connectToAll: [ :aSubClass | aSubClass subclasses ].
+
+	edges sort: [ :a :b | 
+		| aName bName |
+		aName := a from model name.
+		bName := b from model name.
+		aName = bName
+			ifTrue: [ a to model name < b to model name ]
+			ifFalse: [ aName < bName ] ].
+
+	RSHorizontalVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	^ aCanvas
+		zoomToFit;
+		@ RSCanvasController
+]
+
+{ #category : #tests }
+RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
+
+	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps open'>
+	| icerepo commits edges dict aCanvas |
+	icerepo := IceRepository registry detect: [ :each | 
+		           each name = 'Roassal3' ].
+
+	dict := Dictionary new.
+
+	icerepo allBranches do: [ :aBranch | 
+		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit | 
+			| circle |
+			circle := RSCircle new
+				          model: aCommit id asSymbol;
+				          "radius:
+						           ((aCommit changesTo: aCommit parent) size / Float pi)
+							           sqrt;"
+				          color: Color white;
+				          draggable;
+				          addInteraction: (RSPopup new text: [ 
+							           String streamContents: [ :aStream | 
+									           aStream
+										           nextPutAll: aCommit comment;
+										           cr;
+										           cr;
+										           nextPutAll: aCommit shortId;
+										           nextPutAll: ' -- by ';
+										           nextPutAll: aCommit author;
+										           nextPutAll: ' at ';
+										           nextPutAll: aCommit datetime asLocalStringYMDHM;
+										           nextPutAll: '.' ] ]);
+				          withBorder;
+				          yourself.
+
+			circle propertyAt: #gitCommit put: aCommit.
+
+			aCommit isMergeCommit ifTrue: [ circle color: circle border color ].
+
+			dict at: aCommit id put: circle ] ].
+
+	commits := dict values.
+
+	edges := RSLineBuilder verticalBezier
+		         shapes: commits;
+		         withVerticalAttachPoint;
+		         connectToAll: [ :aCommitId | 
+			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
+
+	edges sort: [ :a :b | 
+		| aTime bTime |
+		aTime := (a to propertyAt: #gitCommit) datetime.
+		bTime := (b to propertyAt: #gitCommit) datetime.
+		aTime > bTime
+			ifTrue: [ true ]
+			ifFalse: [ 
+				aTime = bTime
+					ifTrue: [ 
+						(a from propertyAt: #gitCommit) datetime
+						> (b from propertyAt: #gitCommit) datetime ]
+					ifFalse: [ false ] ] ].
+
+	RSVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		verticalGap: [ :parent :child :default | 
+			| duration goldenRatio |
+			goldenRatio := 1.61803398875.
+			duration := (parent propertyAt: #gitCommit) datetime
+			            - (child propertyAt: #gitCommit) datetime.
+			self assert: duration asSeconds >= 0.
+			((duration asMinutes max: goldenRatio) log: goldenRatio)
+			* goldenRatio ];
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	edges do: [ :each | 
+		self assert: each to encompassingRectangle top
+			>= each from encompassingRectangle bottom.
+
+		(each to propertyAt: #vdpLevel) - (each from propertyAt: #vdpLevel)
+		> 1 ifTrue: [ 
+			each
+				dashArray: #( 4 );
+				color: each color translucent;
+				pushBack ] ].
+
+	^ aCanvas
+		zoomToFit;
+		@ RSCanvasController
 ]

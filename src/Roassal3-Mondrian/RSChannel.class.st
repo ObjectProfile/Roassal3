@@ -8,7 +8,9 @@ Class {
 		'highlightable',
 		'color',
 		'isClickable',
-		'marksGoUpward'
+		'marksGoUpward',
+		'toggleOnCallback',
+		'toggleOffCallback'
 	],
 	#category : #'Roassal3-Mondrian-Connections'
 }
@@ -28,8 +30,14 @@ RSChannel >> build [
 	isClickable ifFalse: [ ^ self ].
 	inputGroup when: RSMouseClick do: [ :evt | 
 		isClicked
-			ifTrue: [ self unmark: evt shape. self doUnmark ]
-			ifFalse: [ self mark: evt shape. self doMark ].
+			ifTrue: [ self unmark: evt shape. 
+						self doUnmark. 	
+						"We give the possibility to execute a callback"
+						toggleOffCallback rsValue: evt shape. ]
+			ifFalse: [ self mark: evt shape. 
+						self doMark.
+						"We give the possibility to execute a callback"
+						toggleOnCallback rsValue: evt shape. ].
 		isClicked := isClicked not.
 		evt signalUpdate ]
 ]
@@ -90,6 +98,9 @@ RSChannel >> initialize [
 	
 	"Marks must go downward"
 	marksGoUpward := false.
+	
+	toggleOnCallback := toggleOffCallback := [ :aShape | "Do nothing for now" ].
+
 ]
 
 { #category : #public }
@@ -138,7 +149,8 @@ RSChannel >> mark: shape [
 	aMark translateTo: position + (0 @ deltaY).
 
 	"Register the mark in the shape"
-	shape propertyAt: self symbolMarker put: aMark
+	shape propertyAt: self symbolMarker put: aMark.
+
 ]
 
 { #category : #accessing }
@@ -164,11 +176,36 @@ RSChannel >> symbolMarker [
 	^ #mark, self hash asString asSymbol
 ]
 
+{ #category : #accessing }
+RSChannel >> toggleOffCallback [
+
+	^ toggleOffCallback
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOffCallback: anObject [
+
+	toggleOffCallback := anObject
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOnCallback [
+
+	^ toggleOnCallback
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOnCallback: anObject [
+
+	toggleOnCallback := anObject
+]
+
 { #category : #'private - highlight' }
 RSChannel >> unmark: shape [
 	| mark |
 	mark := shape propertyAt: self symbolMarker.
 	mark ifNil: [ ^ self ].
 	mark remove.
-	shape removeKey: self symbolMarker
+	shape removeKey: self symbolMarker.
+
 ]

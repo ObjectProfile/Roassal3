@@ -25,13 +25,13 @@ RSDraggableCanvasTest >> testDefault [
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeLeft [
-	canvas @ RSDraggableCanvas left.
+	canvas @ RSDraggableCanvasInteraction left.
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	canvas removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	
-	canvas @ RSDraggableCanvas left.
+	canvas @ RSDraggableCanvasInteraction left.
 	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas ).
 	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
@@ -47,13 +47,13 @@ RSDraggableCanvasTest >> testDraggingModeLeft [
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeMiddle [
-	canvas @ RSDraggableCanvas middle.
+	canvas @ RSDraggableCanvasInteraction middle.
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	canvas removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	
-	canvas @ RSDraggableCanvas middle.
+	canvas @ RSDraggableCanvasInteraction middle.
 	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
@@ -69,13 +69,13 @@ RSDraggableCanvasTest >> testDraggingModeMiddle [
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingModeRight [
-	canvas @ RSDraggableCanvas right.
+	canvas @ RSDraggableCanvasInteraction right.
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	self assert: (canvas canvas camera position closeTo: (0 @ 0)).
 	
-	canvas removeInteractionIfPresent: RSDraggableCanvas.
+	canvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	
-	canvas @ RSDraggableCanvas right.
+	canvas @ RSDraggableCanvasInteraction right.
 	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).
@@ -91,7 +91,7 @@ RSDraggableCanvasTest >> testDraggingModeRight [
 
 { #category : #tests }
 RSDraggableCanvasTest >> testDraggingOnDraggable [
-	canvas @ RSDraggableCanvas.
+	canvas @ RSDraggableCanvasInteraction.
 	canvas canvas announce: (RSMouseDragStart new canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragging new step: 10 @ 5; canvas: canvas canvas).
 	canvas canvas announce: (RSMouseDragEnd new canvas: canvas canvas).

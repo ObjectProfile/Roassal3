@@ -31,7 +31,7 @@ RSParallelAnimation >> start [
 	animations do: [ :anime | self startIfNessesary: anime ]
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSParallelAnimation >> step [
 	| activeAnimations activeSize |
 	self startStep.

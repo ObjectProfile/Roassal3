@@ -17,7 +17,8 @@ Class {
 	#name : #RSAthensRenderer,
 	#superclass : #RSRenderer,
 	#instVars : [
-		'builder'
+		'builder',
+		'isFixedChildren'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -550,6 +551,16 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	^ path
 ]
 
+{ #category : #accessing }
+RSAthensRenderer >> isFixedChildren [
+	^ isFixedChildren
+]
+
+{ #category : #accessing }
+RSAthensRenderer >> isFixedChildren: aBoolean [
+	isFixedChildren := aBoolean
+]
+
 { #category : #paint }
 RSAthensRenderer >> paintFor: shape form: form [
 	form isForm ifFalse: [ ^ form ].
@@ -606,11 +617,22 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
-		shape hasChildren ifTrue: [ 
-			shape children do: [ :s |
-				s accept: self ] ]
+		self visitChildrenIfNecessary: shape.
 		].
 	
+]
+
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> visitChildrenIfNecessary: shape [
+	| canvasRect | 
+	shape hasChildren ifFalse: [ ^ self ].
+	self isFixedChildren ifTrue: [ 
+		shape children do: [ :child | child accept: self ].
+		^ self ].
+	canvasRect := shape canvas visibleRectangle.
+	shape children 
+		select: [ :child | child intersects: canvasRect ]
+		thenDo: [ :child | child accept: self ].
 ]
 
 { #category : #visiting }

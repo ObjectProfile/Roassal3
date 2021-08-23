@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSHorizontalTreeLayout >> computeChildrenFor: aNode [
 	^ self childrenFor: aNode except: alreadyLayoutedNodes
 ]

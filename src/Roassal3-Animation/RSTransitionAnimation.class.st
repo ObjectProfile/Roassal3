@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
-{ #category : #public }
+{ #category : #'accessing - defaults' }
 RSTransitionAnimation class >> defaultDuration [
 	^ 2 seconds
 ]
@@ -174,7 +174,7 @@ RSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSTransitionAnimation >> step [ 
 	| value |
 	value := self progressValue: self progress.

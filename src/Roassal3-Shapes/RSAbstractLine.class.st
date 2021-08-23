@@ -56,8 +56,8 @@ RSAbstractLine >> attachPoint [
 ]
 
 { #category : #'attach point' }
-RSAbstractLine >> attachPoint: ap [
-	attachPoint := ap
+RSAbstractLine >> attachPoint: anAttachPoint [
+	attachPoint := anAttachPoint
 ]
 
 { #category : #testing }
@@ -65,17 +65,17 @@ RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capButt [
 	self border capButt
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capRound [
 	self border capRound
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capSquare [
 	self border capSquare
 ]
@@ -104,13 +104,13 @@ RSAbstractLine >> controlPoints [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
 	
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashed [
 	self dashArray: #(4).
 ]
@@ -197,6 +197,26 @@ RSAbstractLine >> initialize [
 ]
 
 { #category : #testing }
+RSAbstractLine >> intersects: aRectangle [
+	| rect res globalMatrix |
+	self isInACanvas ifFalse: [ ^ false ].
+	globalMatrix := self parent globalMatrix.
+	rect := self 
+		computeEncompassingRectangleFor: self encompassingRectangle 
+		matrix: globalMatrix.
+	res := rect intersects: aRectangle.
+	res ifTrue: [ ^ true ].
+	self hasMarkers ifFalse: [ ^ false ].
+	self markerShapesInPositionDo: [ :m |
+		rect := self 
+			computeEncompassingRectangleFor: m shape encompassingRectangle
+			matrix: globalMatrix.
+		(rect intersects: aRectangle) ifTrue: [ ^ true ].
+		 ].
+	^ false.
+]
+
+{ #category : #testing }
 RSAbstractLine >> isControlPointsLine [
 	^ false
 ]
@@ -206,17 +226,22 @@ RSAbstractLine >> isEdge [
 	^ true
 ]
 
-{ #category : #'style-join' }
+{ #category : #testing }
+RSAbstractLine >> isLine [
+	^ true
+]
+
+{ #category : #'style - join' }
 RSAbstractLine >> joinBevel [
 	self border joinBevel
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinMiter [
 	self border joinMiter
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinRound [
 	self border joinRound
 ]
@@ -227,6 +252,16 @@ RSAbstractLine >> notifyExtentChanged [
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers [
+	^ markers
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers: array [ 
+	markers := array
 ]
 
 { #category : #adding }
@@ -243,7 +278,7 @@ RSAbstractLine >> remove [
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
 	aShape isPoint ifTrue: [ ^ self ].
-	aShape connectedEdges remove: self ifAbsent: [  ].
+	aShape connectedLines remove: self ifAbsent: [  ].
 
 ]
 
@@ -270,8 +305,8 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
-	anObject isPoint ifFalse: [ anObject addConnectedEdge: self ].
+	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
 

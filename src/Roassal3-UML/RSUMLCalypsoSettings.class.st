@@ -4,55 +4,66 @@ Settings for UML use within Calypso
 Class {
 	#name : #RSUMLCalypsoSettings,
 	#superclass : #Object,
-	#classVars : [
-		'DarkThemeUMLClassColor',
-		'LightThemeUMLClassColor',
-		'MethodsLimitUML',
-		'UseCalypsoUML'
+	#classInstVars : [
+		'initialSelectionClass',
+		'darkThemeUMLClassColor',
+		'lightThemeUMLClassColor',
+		'methodsLimitUML',
+		'useCalypsoUML'
 	],
 	#category : #'Roassal3-UML-Calypso-Settings'
 }
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor [
-	^ DarkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
+	^ darkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor: aColor [
-	DarkThemeUMLClassColor := aColor
+	darkThemeUMLClassColor := aColor
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultDarkThemeColorUMLClass [
 
 	^Color colorFrom: '2C3E50'
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 	^Color colorFrom: 'ffffce'
 ]
 
 { #category : #accessing }
+RSUMLCalypsoSettings class >> initialSelectionClass [
+	^ initialSelectionClass
+]
+
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> initialSelectionClass: aClass [
+	initialSelectionClass := aClass
+]
+
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor [
-	^LightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
+	^ lightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
-	LightThemeUMLClassColor := aColor
+	lightThemeUMLClassColor := aColor
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML [
-	^ MethodsLimitUML ifNil: [ MethodsLimitUML := 30 ].
+	^ methodsLimitUML ifNil: [ methodsLimitUML := 30 ]
 ]
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
-	MethodsLimitUML := aNumber
+	methodsLimitUML := aNumber
 ]
 
 { #category : #settings }
@@ -72,6 +83,18 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 				target: self;
 				label: 'Dark Theme UML Class color';
 				default: self defaultDarkThemeColorUMLClass	 ]
+]
+
+{ #category : #settings }
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLInitialSelectionOn: aBuilder [
+	<systemsettings>
+	(aBuilder pickOne: #initialSelectionClass)
+		parent: #useCalypsoUML;
+		label: 'UML initial selection' ;  
+		description: 'Selected a strategy when you open a class with the uml';
+		target: self;
+		domainValues: RSInitialSelection allSubclasses;
+		default: RSDancingSelection
 ]
 
 { #category : #settings }
@@ -102,10 +125,10 @@ RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 
 { #category : #settings }
 RSUMLCalypsoSettings class >> useCalypsoUML [
-	^ UseCalypsoUML ifNil: [ ^ true ].
+	^ useCalypsoUML ifNil: [ ^ true ]
 ]
 
 { #category : #settings }
 RSUMLCalypsoSettings class >> useCalypsoUML: aBoolean [
-	UseCalypsoUML := aBoolean
+	useCalypsoUML := aBoolean
 ]

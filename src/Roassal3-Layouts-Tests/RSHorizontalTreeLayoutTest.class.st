@@ -45,7 +45,7 @@ RSHorizontalTreeLayoutTest >> testCycles [
 	| chars |
 	canvas := RSCanvas new.
 	chars := $a to: $e.
-	shapes := RSComposite models: chars forEach: [ :char :composite |
+	shapes := RSComposite models: chars forEach: [ :composite :char |
 		| box label |
 		label := RSLabel text: char.
 		box := RSBox new 

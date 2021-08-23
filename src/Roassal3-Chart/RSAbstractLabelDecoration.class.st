@@ -33,6 +33,11 @@ RSAbstractLabelDecoration >> createLabel [
 ]
 
 { #category : #accessing }
+RSAbstractLabelDecoration >> createdShapes [
+	^ { label }
+]
+
+{ #category : #accessing }
 RSAbstractLabelDecoration >> fontSize [
 	"Return the font size to use when generating labels"
 	^ baseShape fontSize
@@ -88,11 +93,6 @@ RSAbstractLabelDecoration >> renderIn: canvas [
 	label := self createLabel.
 	location move: label on: canvas encompassingRectangle.
 	canvas add: label
-]
-
-{ #category : #accessing }
-RSAbstractLabelDecoration >> rotationAngle [
-	^ rotationAngle
 ]
 
 { #category : #accessing }

@@ -104,7 +104,7 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 		build.
 	pie canvas newAnimation 
 		repeat;
-		easing: RSEasing sinIn;
+		easing: RSEasingInterpolator sinIn;
 		duration: 5 seconds;
 		from: 0; 
 		to: 180;
@@ -137,7 +137,7 @@ RSPieExamples >> example05Smash [
 		pie canvas animationFrom: { 
 			(pie canvas transitionAnimation 
 				duration: 2 seconds;
-				easing: RSEasing bounceOut;
+				easing: RSEasingInterpolator bounceOut;
 				onStepDo: [ :t |
 					shape 
 						alphaAngle: a * t;
@@ -145,7 +145,7 @@ RSPieExamples >> example05Smash [
 			(pie canvas transitionAnimation 
 				delay: (50 * index) milliSeconds;
 				duration: 750 milliSecond;
-				easing: RSEasing elasticOut;
+				easing: RSEasingInterpolator elasticOut;
 				from: 0;
 				to: 120;
 				on: shape shape set: #innerRadius: ) }. ].
@@ -173,7 +173,7 @@ RSPieExamples >> example06SmashHSL [
 		pie canvas animationFrom: { 
 			(pie canvas transitionAnimation 
 				duration: 2 seconds;
-				easing: RSEasing bounceOut;
+				easing: RSEasingInterpolator bounceOut;
 				onStepDo: [ :t |
 					shape 
 						alphaAngle: a * t;
@@ -181,7 +181,7 @@ RSPieExamples >> example06SmashHSL [
 			(pie canvas transitionAnimation 
 				delay: (10 * index) milliSeconds;
 				duration: 2 seconds;
-				easing: (RSEasing elasticOut period: 0.30; amplitude: 0.8) ;
+				easing: (RSEasingInterpolator elasticOut period: 0.30; amplitude: 0.8) ;
 				from: 0;
 				to: 120;
 				on: shape shape set: #innerRadius: ) }. ].
@@ -209,14 +209,14 @@ RSPieExamples >> example07Dendi [
 		b := shape betaAngle.
 		pie canvas animationFrom: { 
 			(pie canvas transitionAnimation 
-				easing: RSEasing bounce;
+				easing: RSEasingInterpolator bounce;
 				onStepDo: [ :t |
 					shape 
 						alphaAngle: a * t;
 						betaAngle: b * t ]).
 			(pie canvas transitionAnimation 
 				delay: 3 seconds;
-				easing: RSEasing  bounce;
+				easing: RSEasingInterpolator  bounce;
 				onStepDo: [:t | 
 					shape
 						alphaAngle: a + ((360 - a) * t);
@@ -261,7 +261,7 @@ RSPieExamples >> example09TickAnimation [
 		repeat; 
 		from: 0; 
 		to: 500;
-		easing: RSEasing elasticOut;
+		easing: RSEasingInterpolator elasticOut;
 		onStepDo: [ :t |
 			pie shapes do: [ :s |
 				s color: (Color h: s model  + t s: 1 l: 0.5) ] ].
@@ -319,7 +319,7 @@ RSPieExamples >> example11OpenningAnimation [
 	reset := [ pie shapes do: #remove. pie build. pie canvas signalUpdate ].
 	
 	bounce := pie canvas transitionAnimation from: 0; to: 360; 
-		easing: RSEasing bounceOut;
+		easing: RSEasingInterpolator bounceOut;
 		onStepDo: [ :t | 
 		pie shapes do: [ :shape | | beta |
 			beta := shape propertyAt: #beta.
@@ -337,7 +337,7 @@ RSPieExamples >> example11OpenningAnimation [
 	
 	inout := pie canvas transitionAnimation 
 		delay: 1 second;
-		easing: RSEasing backOut;
+		easing: RSEasingInterpolator backOut;
 		onStepDo: [ :t |
 			pie shapes do: [ :shape |
 				shape innerRadius: 70 * t.
@@ -347,7 +347,7 @@ RSPieExamples >> example11OpenningAnimation [
 	
 	outin := pie canvas transitionAnimation
 		delay: 1 second;
-		easing: RSEasing elasticOut;
+		easing: RSEasingInterpolator elasticOut;
 		onStepDo: [ :t |
 			pie shapes do: [ :shape | | p a b att |
 				att := shape properties.
@@ -492,7 +492,7 @@ RSPieExamples >> example16MyDay [
 		segmentSpacing: 1.
 	pie sliceColor: color.
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelShape
 		fontSize: 16;
 		fontName: 'Source Code Pro'.
@@ -501,7 +501,7 @@ RSPieExamples >> example16MyDay [
 		labelText: [ :obj | (obj third * 100 / pie totalSum) rounded asString, '%' ];
 		rotated;
 		offset: 60.
-	pieTitle := RSPieTitle new.
+	pieTitle := RSPieTitleInteraction new.
 	pieTitle labelShape
 		fontSize: 30;
 		color: Color white.
@@ -535,7 +535,7 @@ RSPieExamples >> example17PieLabels [
 		segmentSpacing: 0.4.
 	pie sliceColor: NSScale category20.
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelShape fontSize: 13.
 	pieLabel labelText: [ :obj |
 		obj key, (obj value * 100 / pie totalSum) rounded asString, ' %' ].
@@ -560,11 +560,11 @@ RSPieExamples >> example18ManyPies [
 		segmentSpacing: 0.5.
 	pie sliceColor: [ :shape | color scale: shape index ].
 		
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel
 		labelText: #key;
 		rotated.
-	pieTitle := RSPieTitle new.
+	pieTitle := RSPieTitleInteraction new.
 	pieTitle labelShape
 		bold;
 		fontSize: 20.
@@ -652,14 +652,14 @@ RSPieExamples >> example19Buttons [
 				move := shape model.
 				canvas newAnimation 
 					duration: 1 second;
-					easing: RSEasing backOut;
+					easing: RSEasingInterpolator backOut;
 					from: 40; to: 50;
 					on: shape shape set: #externalRadius:. ];
 			when: RSMouseLeave do: [ 
 				move := 0@0.
 				canvas newAnimation 
 					duration: 1 second;
-					easing: RSEasing backOut;
+					easing: RSEasingInterpolator backOut;
 					from: 50; to: 40;
 					on: shape shape set: #externalRadius:. ] ] .
 	^ canvas
@@ -715,7 +715,7 @@ RSPieExamples >> example20AddingRemoving [
 				detect: [ :e1 | e1 model = shape model ]
 				ifFound: [ :e1|
 					canvas newAnimation 
-						easing: RSEasing quad;
+						easing: RSEasingInterpolator quad;
 						onStepDo: [:t |
 							shape 
 								alphaAngle: (e1 alphaAngle interpolateTo: x at: t);
@@ -729,7 +729,7 @@ RSPieExamples >> example20AddingRemoving [
 			shape := pie shapes last.
 			x := shape alphaAngle.
 			canvas newAnimation
-				easing: RSEasing quad;
+				easing: RSEasingInterpolator quad;
 				onStepDo: [ :t |
 					shape 
 						alphaAngle: (shape betaAngle interpolateTo: x at: t);
@@ -803,7 +803,7 @@ RSPieExamples >> example22RotatedAnimation [
 		segmentSpacing: 0.5;
 		externalRadius: 220;
 		when: RSMouseClick do: [ [ animation toggle ] ].
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelText: #name.
 	pie build.
 	pie shapes @ (RSPopup text: [:obj | obj linesOfCode asString, 'LOC']).
@@ -858,7 +858,7 @@ RSPieExamples >> example23RotatedAnimation [
 		externalRadius: 220.
 	pie
 		sliceColor: NSScale category20b.
-	pieLabel := RSPieLabeled new.
+	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelText: #basename.
 	pie build.
 	pie shapes 

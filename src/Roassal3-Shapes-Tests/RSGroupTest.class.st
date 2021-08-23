@@ -105,12 +105,37 @@ RSGroupTest >> testModels [
 ]
 
 { #category : #tests }
+RSGroupTest >> testNodesAndLines [
+
+	| g |
+	g := RSGroup new.
+	g addAll: (RSCircle models: (1 to: 10)).
+	g addAll: (RSLine models: (1 to: 5)). 
+	
+	self assert: g nodes size equals: 10.
+	self assert: g lines size equals: 5.
+]
+
+{ #category : #tests }
 RSGroupTest >> testShapeFromModel [
 	| group |
 	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
 	self assert: (group shapeFromModel: 1) equals: group first.
 	self assert: (group shapeFromModel: 5) equals: group last.
 
+]
+
+{ #category : #tests }
+RSGroupTest >> testTranslateTopLeftTo [ 
+	| g |
+	g := RSBox models: #(1 2).
+	RSHorizontalLineLayout on: g.
+	self assert: (g collect: #position as: Array) equals: {(5.0@5.0). (25.0@5.0)}.
+	self assert: g position equals: 15 @ 5.
+	
+	g translateTopLeftTo: 40 @ 42.
+	self assert: (g collect: #position as: Array) equals: {(45.0@47.0). (65.0@47.0)}.
+	self assert: g position equals: 55 @ 47.
 ]
 
 { #category : #tests }

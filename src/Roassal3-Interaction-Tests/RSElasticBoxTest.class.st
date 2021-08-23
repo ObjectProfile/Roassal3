@@ -22,13 +22,13 @@ RSElasticBoxTest >> setUp [
 
 { #category : #tests }
 RSElasticBoxTest >> testBasic [
-	canvas @ RSElasticBox
+	canvas @ RSElasticBoxInteraction
 ]
 
 { #category : #tests }
 RSElasticBoxTest >> testEvents [
 	| number elastic |
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	number := nil.
 	elastic 
 		when: RSSelectionStartEvent do: [ :evt | number := 0 ];
@@ -46,7 +46,7 @@ RSElasticBoxTest >> testEvents [
 { #category : #tests }
 RSElasticBoxTest >> testEventsDraggableCanvas [
 	| elastic number |
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic rightLeft.
 	canvas @ elastic.
 	number := nil.

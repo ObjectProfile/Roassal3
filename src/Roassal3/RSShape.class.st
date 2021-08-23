@@ -51,12 +51,12 @@ RSShape class >> model: anObject [
 ]
 
 { #category : #accessing }
-RSShape class >> model: anObject forIt: aOneArgBlock [
+RSShape class >> model: anObject forIt: aTwoArgBlock [
 	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
 	| r |
 	r := self new.
 	r model: anObject.
-	aOneArgBlock rsValue: r.
+	aTwoArgBlock value: r value: anObject.
 	^ r
 ]
 
@@ -111,7 +111,9 @@ RSShape >> addedIn: aCanvas [
 	parent := aCanvas.
 	
 	evt := RSShapeAddedEvent new shape: self.
+	aCanvas announce: evt.
 	self announce: evt.
+
 ]
 
 { #category : #announcer }
@@ -211,6 +213,15 @@ c
 { #category : #accessing }
 RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
+	| groupOfPoints |
+	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
+		collect: [ :s | aMatrix transform: (s value: rect) ].
+	^ Rectangle encompassing: groupOfPoints.
+	
 ]
 
 { #category : #copying }
@@ -338,7 +349,10 @@ RSShape >> initialize [
 
 { #category : #testing }
 RSShape >> intersects: aRectangle [
-	^ self encompassingRectangle intersects: aRectangle
+	"used in drawing operation
+	aRectangle is the visible rectangle of the canvas, then this method is used
+	to draw or not this shape"
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -359,6 +373,11 @@ RSShape >> isFixed: aBool [
 { #category : #testing }
 RSShape >> isInACanvas [
 	^ parent notNil
+]
+
+{ #category : #testing }
+RSShape >> isLine [
+	^ false
 ]
 
 { #category : #testing }
@@ -477,6 +496,11 @@ RSShape >> resetBBox [
 	encompassingRectangle := nil.
 ]
 
+{ #category : #accessing }
+RSShape >> resetChildren [
+	
+]
+
 { #category : #path }
 RSShape >> resetPath [
 	path := nil
@@ -490,6 +514,9 @@ RSShape >> sessionChanged [
 
 { #category : #actions }
 RSShape >> setAsFixed [
+	"Per default, a shape is subject to the camera mouvement. If the camera is relocated, shapes appears to be relocated. This behavior can be avoided by sending the message #setAsFixed to a shape, which makes the shape fixed in the canvas. This is useful to define menus.
+	
+	The message setAsFixed must be send after being added to a canvas"
 	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
 	parent setAsFixed: self.
 	isFixed := true.

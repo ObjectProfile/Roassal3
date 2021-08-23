@@ -57,6 +57,22 @@ RSTContainer >> addShape: aShape [
 	aShape addedIn: self
 ]
 
+{ #category : #accessing }
+RSTContainer >> allChildren [
+	| allChildren index |
+	index := 1.
+	allChildren := OrderedCollection withAll: self children.
+	[ index <= allChildren size ] whileTrue: [ 
+		allChildren addAll: ((allChildren at: index) children ifNil: [#()]).
+		index := index + 1 ].
+	^ allChildren
+]
+
+{ #category : #accessing }
+RSTContainer >> children [
+	^ self nodes
+]
+
 { #category : #'looking up shapes' }
 RSTContainer >> deepShapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
@@ -217,4 +233,11 @@ RSTContainer >> shapesFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapesFromModel: anObject
+]
+
+{ #category : #accessing }
+RSTContainer >> withAllChildren [
+	^ self allChildren
+		add: self;
+		yourself
 ]

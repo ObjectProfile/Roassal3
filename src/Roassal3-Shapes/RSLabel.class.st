@@ -99,6 +99,7 @@ c addShape: lbl1.
 lbl2 := RSLabel new text: 'world'.
 c addShape: lbl2.
 RSLocation new below; move: lbl2 on: lbl1.
+c @ RSCanvasController.
 c open
 ```
 "

@@ -173,7 +173,7 @@ RSForceBasedLayout >> initialLayout: aLayout [
 { #category : #'initialize-release' }
 RSForceBasedLayout >> initialize [
 	super initialize.
-	random := Random new.
+	random := Random seed: 42.
 	self
 		iterations: 0;
 		edges: #();
@@ -247,7 +247,7 @@ RSForceBasedLayout >> newMockEdgeFor: e [
 
 { #category : #'private - initialization' }
 RSForceBasedLayout >> newMockElementFor: e [
-	^ RSMockElement new
+	^ RSMockShape new
 		realElement: e;
 		charge: charge;
 		weight: 0;
@@ -305,6 +305,7 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutIn: job [
+	"Central method"
 	iterations isZero ifTrue: [ 
 		[alpha := alpha * 0.99.
 		alpha > 0.005 ] whileTrue: [ 
@@ -329,13 +330,14 @@ RSForceBasedLayout >> runLayoutInJob [
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutSimply [
-	iterations = 0 ifTrue: [ 
+	self runLayoutIn: Job new.
+	"iterations = 0 ifTrue: [ 
 		[ alpha := alpha * 0.99.
 		alpha > 0.005 ] whileTrue: [ self step ] ]
 	ifFalse: [ 
 		iterations timesRepeat: [ 
 			alpha := alpha * 0.99.
-			self step ] ]
+			self step ] ]"
 ]
 
 { #category : #testing }
@@ -349,7 +351,8 @@ RSForceBasedLayout >> start [
 	initialLayout on: nodes.
 	nodes := nodes collect: [ :node | self newMockElementFor: node ].
 	edges := edges collect: [ :e | self newMockEdgeFor: e ].
-	alpha :=  0.1.
+	
+	alpha ifNil: [ alpha :=  0.1 ]
 ]
 
 { #category : #events }

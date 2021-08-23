@@ -6,8 +6,16 @@ Class {
 	#superclass : #RSAbstractPlot,
 	#traits : 'RSTEdge',
 	#classTraits : 'RSTEdge classTrait',
+	#instVars : [
+		'line'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #accessing }
+RSLinePlot >> createdShapes [
+	^ { line }
+]
 
 { #category : #initialization }
 RSLinePlot >> defaultShape [
@@ -17,6 +25,11 @@ RSLinePlot >> defaultShape [
 { #category : #testing }
 RSLinePlot >> isLinePlot [
 	^ true
+]
+
+{ #category : #accessing }
+RSLinePlot >> line [
+	^ line
 ]
 
 { #category : #rendering }
@@ -30,7 +43,7 @@ RSLinePlot >> renderIn: canvas [
 			yt := yValues at: i.
 			(self isPointWellDefined: xt @ yt)
 				ifTrue: [ controlPoints add: (self scalePoint: xt @ yt) ] ].
-	canvas add: (self shape
+	canvas add: (line := self shape copy
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself).

@@ -13,9 +13,8 @@ RSSunburstExamples >> example01Basic [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: String using: #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -28,9 +27,8 @@ RSSunburstExamples >> example02MultipleRoots [
 		withBorder;
 		segmentSpacing: 1.
 	sb from: { String. RSEvent. RSShape } using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -40,9 +38,8 @@ RSSunburstExamples >> example03ConstantStrategy [
 	sb := RSSunburstBuilder new.
 	sb constantWidthStrategy arcWidth: 25.
 	sb explore: Collection using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
-	^ sb canvas
+	^ sb
 ]
 
 { #category : #examples }
@@ -51,8 +48,8 @@ RSSunburstExamples >> example04Edges [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb explore: Collection using:  #subclasses.
-	sb build.
 	sb canvas @ RSCanvasController.
+	sb build.
 	RSLineBuilder arrowedLine
 		attachPoint: RSSunburstAttachPoint new;
 		canvas: sb canvas;
@@ -119,7 +116,7 @@ RSSunburstExamples >> example06Rotation [
 		connectFrom: #superclass.
 	canvas := RSCanvas new.
 	controller := RSCanvasController new.
-	(controller interactions at: RSDraggableCanvas) right.
+	(controller interactions at: RSDraggableCanvasInteraction) right.
 	canvas @ controller.
 	canvas add: composite.
 	composite @ RSRotated.
@@ -168,7 +165,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	newAnimation := [ :from :to |
 		canvas newAnimation
 			"duration: 500 milliSeconds;"
-			easing: RSEasing bounceOut;
+			easing: RSEasingInterpolator bounceOut;
 			from: from;
 			to: to;
 			yourself ].

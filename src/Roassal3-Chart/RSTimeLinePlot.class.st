@@ -46,6 +46,11 @@ RSTimeLinePlot >> beforeRenderingIn: aChart [
 	aChart yScale: barScale
 ]
 
+{ #category : #accessing }
+RSTimeLinePlot >> createdShapes [
+	^ bars
+]
+
 { #category : #initialization }
 RSTimeLinePlot >> defaultShape [
 	^ RSBox new noPaint

@@ -213,7 +213,7 @@ RSBarChartExample >> example06BarAnimation [
 			].
 		
 		canvas newAnimation
-			easing: RSEasing circleOut;
+			easing: RSEasingInterpolator circleOut;
 			delay: (index * 200) milliSeconds;
 			duration: 1 second;
 			from: from;

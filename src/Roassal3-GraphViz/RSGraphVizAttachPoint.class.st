@@ -2,43 +2,46 @@
 This attach point is used only by graphviz layout with graphviz line
 "
 Class {
-	#name : #RSGraphVizAttachPoint,
+	#name : #RSGraphvizAttachPoint,
 	#superclass : #RSAttachPoint,
 	#instVars : [
 		'points',
 		'startDistance',
 		'endDistance'
 	],
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #'public - hooks' }
-RSGraphVizAttachPoint >> basicEndingPointOf: anEdge [
+RSGraphvizAttachPoint >> basicEndingPointOf: anEdge [
 	| p |
 	p := anEdge to position.
-	endDistance
-		ifNil: [ endDistance := points last - p ].
 	points at: points size put: p + endDistance.
 	^ points last
 ]
 
 { #category : #'public - hooks' }
-RSGraphVizAttachPoint >> basicStartingPointOf: anEdge [
+RSGraphvizAttachPoint >> basicStartingPointOf: anEdge [
 	| p |
 	p := anEdge from position.
-	startDistance
-		ifNil: [ startDistance := points first - p].
+	
 	points at: 1 put: p + startDistance.
 	^ points first
 ]
 
 { #category : #accessing }
-RSGraphVizAttachPoint >> points [
+RSGraphvizAttachPoint >> points [
 	^ points
 ]
 
 { #category : #accessing }
-RSGraphVizAttachPoint >> points: aCollection [
+RSGraphvizAttachPoint >> points: aCollection edge: anEdge [
+	|p1 p2 | 
 	self assert: aCollection isNotEmpty description: 'Can not be empty'.
+	
 	points := aCollection.
+	p1 := anEdge from position.
+	p2 := anEdge to position.
+	startDistance := points first - p1.
+	endDistance := points last - p2.
 ]

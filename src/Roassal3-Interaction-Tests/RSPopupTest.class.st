@@ -21,7 +21,7 @@ bar';
 ]
 
 { #category : #tests }
-RSPopupTest >> testMultiline [.
+RSPopupTest >> testMultiline [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
 	

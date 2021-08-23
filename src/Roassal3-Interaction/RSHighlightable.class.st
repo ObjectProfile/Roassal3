@@ -158,14 +158,17 @@ Class {
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'instance colors' }
 RSHighlightable class >> blue [
+	^ self color: Color blue
+	
+]
+
+{ #category : #'instance colors' }
+RSHighlightable class >> color: aColor [
 	| inst |
 	inst := self new.
-	inst highlightColor: Color blue.
-	inst 
-		when: RSHighlightEvent do: [ :evt | evt shape underline ];
-		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
+	inst highlightColor: aColor.
 	^ inst
 	
 ]
@@ -185,13 +188,14 @@ RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine fr
 	^ lines
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'instance colors' }
+RSHighlightable class >> green [
+	^ self color: Color green
+]
+
+{ #category : #'instance colors' }
 RSHighlightable class >> red [
-	| inst |
-	inst := self new.
-	inst highlightColor: Color red.
-	^ inst
-	
+	^ self color: Color red
 ]
 
 { #category : #'instance creation' }
@@ -254,7 +258,7 @@ RSHighlightable class >> withAntAnimation [
 		shape isNode ifTrue: [ 
 			| array anime |
 			array := #(4).
-			shape connectedEdges do: [ :edge | edge border 
+			shape connectedLines do: [ :edge | edge border 
 				color: Color blue; 
 				width: 2;
 				dashArray: array. ].
@@ -264,7 +268,7 @@ RSHighlightable class >> withAntAnimation [
 				to: -8;
 				duration: 1 second;
 				onStepDo: [ :t |
-					shape connectedEdges do: [ :ed |ed border dashOffset: t ].
+					shape connectedLines do: [ :ed |ed border dashOffset: t ].
 					shape signalUpdate ].
 			shape topParent propertyAt: #antAnimation put: anime.
 		].
@@ -430,9 +434,28 @@ c @ RSCanvasController
 ]
 
 { #category : #accessing }
-RSHighlightable >> highlightShapes: aBlockOnArg [
-	"the block should return a collection of shapes"
-	highlightShapes := aBlockOnArg
+RSHighlightable >> highlightShapes: aOneArgBlock [
+	"the block accepts a shape (the one selected) should return a collection of shapes. Consider the example:
+```	
+canvas := RSCanvas new.
+
+shapes := RSEllipse models: (1 to: 30).
+shapes @ RSPopup @ RSDraggable.
+canvas addAll: shapes.
+
+highlightable := RSHighlightable new.
+highlightable highlightColor: Color green.
+highlightable highlightShapes: [ :aShape | 
+	shapes select: [ :s | (-1 to: 1) includes: (s model - aShape model)  ] ].
+shapes @ highlightable.
+RSGridLayout on: shapes.
+
+canvas @ RSCanvasController.
+
+canvas open
+```
+	"
+	highlightShapes := aOneArgBlock
 ]
 
 { #category : #'public - hooks' }
@@ -460,6 +483,12 @@ RSHighlightable >> highlightShapesFor: aShape [
 	^ highlightShapes rsValue: aShape
 ]
 
+{ #category : #'public - hooks' }
+RSHighlightable >> incomingLines [
+	self highlightShapes: [ :s | 
+		s incomingLines collect: #yourself as: RSGroup ].
+]
+
 { #category : #initialization }
 RSHighlightable >> initialize [
 	super initialize.
@@ -480,6 +509,12 @@ RSHighlightable >> onShape: aShape [
 	aShape
 		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
 		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
+]
+
+{ #category : #'public - hooks' }
+RSHighlightable >> outgoingLines [
+	self highlightShapes: [ :s | 
+		s outgoingLines collect: #yourself as: RSGroup ].
 ]
 
 { #category : #announcer }
@@ -585,10 +620,63 @@ RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 ]
 
 { #category : #'public - hooks' }
+RSHighlightable >> withConnectedShapes [
+	"Highlight shapes that are connected to the pointed shape. For example:
+```
+numberOfNodes := 25. 
+numberOfLines := 90.
+r := Random seed: 42.
+graph := Dictionary new.
+
+1 to: numberOfNodes do: [ :aNode |
+	graph at: aNode put: Set new ].
+
+numberOfLines timesRepeat: [ 
+	fromNode := r nextInteger: numberOfNodes.
+	toNode := r nextInteger: numberOfNodes.
+	(graph at: fromNode) add: toNode ].
+
+canvas := RSCanvas new.
+nodes := RSCircle models: (1 to: numberOfNodes).
+nodes @ RSDraggable @ RSPopup. 
+canvas addAll: nodes.
+
+highlightable := RSHighlightable new.
+highlightable highlightColor: Color red.
+highlightable withEdges.
+nodes @ highlightable.
+
+highlightable2 := RSHighlightable new.
+highlightable2 highlightColor: Color blue.
+highlightable2 withConnectedShapes.
+nodes @ highlightable2.
+
+lb := RSLineBuilder line.
+lb canvas: canvas.
+lb withBorderAttachPoint.
+lb makeBidirectional.
+lb moveBehind.
+lb objects: (1 to: numberOfNodes).
+lb connectToAll: [ :aNumber | graph at: aNumber ].
+
+RSForceBasedLayout new charge: -300; on: nodes.
+canvas @ RSCanvasController.
+canvas open
+```
+	"
+
+	self highlightShapes: [ :s | 
+		| listIncoming listOutgoing |
+		listIncoming := s incomingLines collect: [ :aLine | aLine from ] as: RSGroup.
+		listOutgoing := s outgoingLines collect: [ :aLine | aLine to ] as: RSGroup.
+		listIncoming, listOutgoing ].
+]
+
+{ #category : #'public - hooks' }
 RSHighlightable >> withEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s connectedEdges copy.
+		list := s connectedLines copy.
 		list add: s.
 		list ].
 ]
@@ -597,7 +685,7 @@ RSHighlightable >> withEdges [
 RSHighlightable >> withIncomingEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s incomingEdges collect: #yourself as: RSGroup.
+		list := s incomingLines collect: #yourself as: RSGroup.
 		list add: s.
 		list ].
 ]
@@ -624,8 +712,8 @@ RSHighlightable >> withLines [
 RSHighlightable >> withOutgoingEdges [
 	self highlightShapes: [ :s | 
 		| list |
-		list := s outgoingEdges collect: #yourself as: RSGroup.
-		list addAll: (s outgoingEdges collect: #to). 
+		list := s outgoingLines collect: #yourself as: RSGroup.
+		list addAll: (s outgoingLines collect: #to). 
 		list ].
 ]
 

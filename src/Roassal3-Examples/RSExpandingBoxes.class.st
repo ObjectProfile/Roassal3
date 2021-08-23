@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Examples-Experimental'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> close: shape [
 	shape children copy do: #remove.
 	self update.
@@ -41,7 +41,7 @@ RSExpandingBoxes >> nodeFor: cls [
 	^ com
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> open: shape [
 	| children |
 	children := shape model subclasses 
@@ -50,7 +50,7 @@ RSExpandingBoxes >> open: shape [
 	self update.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> processEvent: evt [
 	| shape |
 	shape := evt shape.

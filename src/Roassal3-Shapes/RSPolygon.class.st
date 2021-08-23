@@ -2,7 +2,7 @@
 Define a polygon shape, ready to be added to a Roassal canvas.
 
 For example:
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 c := RSCanvas new.
 
 polygon := RSPolygon new
@@ -13,7 +13,7 @@ polygon cornerRadii: 5.
 
 polygon2 := RSPolygon new
 		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
-		color: Color red trans.
+		color: Color red translucent.
 		
 polygon2 rotateByDegrees: 90.
 polygon2 translateBy: 0 @ -50.
@@ -22,7 +22,7 @@ c add: polygon.
 c add: polygon2.
 
 c
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+```
 "
 Class {
 	#name : #RSPolygon,

@@ -19,6 +19,12 @@ Class {
 	#category : #'Roassal3-Sunburst'
 }
 
+{ #category : #testing }
+RSAbstractSunburstLayout class >> isAbstract [
+
+	^ self == RSAbstractSunburstLayout
+]
+
 { #category : #accessing }
 RSAbstractSunburstLayout >> builder [
 	^ builder

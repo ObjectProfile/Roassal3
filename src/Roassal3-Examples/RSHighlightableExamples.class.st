@@ -189,7 +189,7 @@ RSHighlightableExamples >> example06IterateNext [
 		start;
 		yourself.
 	canvas newAnimation repeat onStepDo: [ :t | layout step ].
-	numbers @ (RSDraggableForce new layout: layout).
+	numbers @ (RSDraggableForceInteraction new layout: layout).
 
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightable red.
@@ -400,7 +400,7 @@ RSHighlightableExamples >> example10ElasticBox [
 	canvas addAll: shapes.
 	RSClusterLayout on: shapes.
 	high := RSHighlightable red.
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];
@@ -434,7 +434,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 	RSClusterLayout on: shapes.
 	high := RSHighlightable red.
 	selectedShapes := #().
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic
 		when: RSSelectionStartEvent do: [ :evt |
 			high unhighlightRecordedShapes: evt canvas ];

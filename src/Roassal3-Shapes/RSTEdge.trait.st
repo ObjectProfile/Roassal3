@@ -98,6 +98,11 @@ RSTEdge >> markerStart: aMarker [
 ]
 
 { #category : #'public - shape' }
+RSTEdge >> markerStartEnd: aMarker [
+	self shape markerStartEnd: aMarker
+]
+
+{ #category : #'public - shape' }
 RSTEdge >> noBorder [
 	self shape noBorder
 ]

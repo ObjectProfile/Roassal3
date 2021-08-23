@@ -152,7 +152,7 @@ RSEdgeBuilderTest >> testElementsToLookup [
 	self assert: edges first to equals: es2 first.
 ]
 
-{ #category : #'tests error' }
+{ #category : #'tests - error' }
 RSEdgeBuilderTest >> testErrors [
 	| eb |
 	eb := RSLineBuilder line.
@@ -224,7 +224,7 @@ RSEdgeBuilderTest >> testHasEdges [
 	
 	self assert: s1 hasEdges.
 	self assert: s2 hasEdges.
-	self assert: s1 connectedEdges size equals: 1
+	self assert: s1 connectedLines size equals: 1
 	
 ]
 

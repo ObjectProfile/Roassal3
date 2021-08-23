@@ -288,28 +288,6 @@ RSChart >> numberOfPlots [
 ]
 
 { #category : #public }
-RSChart >> open [
-	"Open the chart in a new window. For example
-
-```
-x := (-3.14 to: 3.14 by: 0.1).
-y := x sin * 0.22.
-c := RSChart new.
-
-p := RSLinePlot new.
-p x: x y: y.
-c addPlot: p.
-
-c addDecoration: RSHorizontalTick new.
-c addDecoration: (RSVerticalTick new asFloat).
-c open
-```
-	"
-	self build.
-	^ self canvas open
-]
-
-{ #category : #public }
 RSChart >> openOnce [
 	self build.
 	^ self canvas openOnce
@@ -343,7 +321,9 @@ RSChart >> renderDecorationIn: aCanvas [
 RSChart >> renderIn: aCanvas [
 	decorations, plots do: [ :e | e beforeRenderingIn: self ].
 	self renderDecorationIn: aCanvas.
-	self renderPlotsIn: aCanvas
+	self renderPlotsIn: aCanvas.
+	shapes := decorations, plots flatCollect: [ :element | 
+		element createdShapes ] as: RSGroup.
 ]
 
 { #category : #building }

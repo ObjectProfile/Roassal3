@@ -14,7 +14,7 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 RSSugiyamaLayout class >> sortBlock [
 	
 	^ RSSortBlock new
