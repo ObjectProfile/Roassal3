@@ -26,7 +26,7 @@ jobs:
       - id: set-matrix
 #        run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
         run: |
-          matrix=$(python -c "print(list(range($parallel_jobs)))")
+          matrix=$(python -c "print(['{\"a\":\"a\"}' for x in range($parallel_jobs)])")
           echo "setting output {\"include\":$matrix}"
           echo "::set-output name=matrix::{\"include\":$matrix}"
 
