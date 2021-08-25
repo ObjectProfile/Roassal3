@@ -37,7 +37,8 @@ jobs:
               if (process.env.testClasses.split(',').length < l )
                 l = process.env.testClasses.split(',').length
             }
-            var o = {jobs:[{a:x} for x in range(l)]};
+            a = Array.from({length: l}, (x, i) => {a:i});
+            var o = {jobs: a};
             return o
           
   TestAmplification: 
