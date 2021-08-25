@@ -23,16 +23,23 @@ jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.result }}
     steps:
       - id: set-matrix
+        uses: actions/github-script@v4
         env:
           testClasses: ${{ github.event.inputs.testClasses }}
-          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}          
-        run: |
-          matrix=$(python -c "import json;print(json.dumps({'jobs':[{'a':x} for x in range(min($parallel_jobs,len('$testClasses'.split(','))))]}))")
-          echo "::set-output name=matrix::$matrix"
-
+          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
+        with:
+          script: |
+            l = parseInt(github.event.inputs.parallel_jobs)
+            if(process.env.testClasses){
+              if (process.env.testClasses.split(',').length < l )
+                l = process.env.testClasses.split(',').length
+            }
+            var o = {jobs:[{a:x} for x in range(l)]};
+            return o
+          
   TestAmplification: 
     needs: MatrixBuild
     runs-on: ubuntu-latest
