@@ -5,7 +5,7 @@ env:
   project_baseline: Roassal3 # I'm important. change me in each repo
   project_directory: src
   iteration: 3
-  maxInputs: 10
+  maxInputs: 100
   mode: dspotFast
 
 on:
