@@ -27,9 +27,10 @@ jobs:
     steps:
       - id: set-matrix
         env:
-          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
+          testClasses: ${{ github.event.inputs.testClasses }}
+          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}          
         run: |
-          matrix=$(python -c "import json;print(json.dumps({'jobs':[{'a':x} for x in range($parallel_jobs)]}))")
+          matrix=$(python -c "import json;print(json.dumps({'jobs':[{'a':x} for x in range(min($parallel_jobs,len('$testClasses'.split(','))))]}))")
           echo "::set-output name=matrix::$matrix"
 
   TestAmplification: 
