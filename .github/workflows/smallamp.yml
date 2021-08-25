@@ -32,7 +32,7 @@ jobs:
           parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
         with:
           script: |
-            l = parseInt(github.event.inputs.parallel_jobs)
+            l = parseInt(process.env.parallel_jobs)
             if(process.env.testClasses){
               if (process.env.testClasses.split(',').length < l )
                 l = process.env.testClasses.split(',').length
