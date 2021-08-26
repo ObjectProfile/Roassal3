@@ -5,7 +5,6 @@ env:
   project_baseline: Roassal3 # I'm important. change me in each repo
   project_directory: src
   iteration: 3
-  maxInputs: 100
   mode: dspotFast
 
 on:
@@ -16,9 +15,13 @@ on:
         required: false
         default: ''
       parallel_jobs:         
-        description: 'Number of all parallel jobs'
+        description: 'Max number of all parallel jobs'
         required: true
         default: '8'
+      maxInputs:
+        description: 'Number of test variant per original test'
+        required: true
+        default: '10'
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
@@ -62,7 +65,7 @@ jobs:
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
           SMALLAMP_iteration: ${{ env.iteration }}
-          SMALLAMP_maxInputs: ${{ env.maxInputs }}
+          SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
           SMALLAMP_mode: ${{ env.mode }}  
           SMALLAMP_testClasses: ${{ github.event.inputs.testClasses }}
 
