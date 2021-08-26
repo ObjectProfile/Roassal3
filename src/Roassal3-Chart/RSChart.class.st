@@ -265,7 +265,7 @@ RSChart >> mustInclude0inX [
 { #category : #'public - configuration' }
 RSChart >> mustInclude0inY [
 	"Make sure that the 0 value is in the chart"
-	((self minValueY to: self maxValueY) includes: 0) ifTrue: [ ^ self ].
+	(self minValueY <= 0 and: [ 0 <= self maxValueY ]) ifTrue: [ ^ self ].
 	
 	self maxValueY > 0 
 		ifTrue: [ self minValueY: 0 ]
