@@ -14,9 +14,11 @@
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 
 
-packageName := 'ReinforcementLearning'.
+packageNameRegExp := 'Roassal3*'.
+packages := RPackageOrganizer default packages select: [ :p | packageNameRegExp matches: p packageName ].
+allClasses := packages flatCollect: #definedClasses.
 uml := RSUMLClassBuilder new.
-uml classes: (RPackageOrganizer default packageNamed: packageName) definedClasses.
+uml classes: allClasses.
 uml build.
 
 uml canvas extent: 1000 @ 1000.
