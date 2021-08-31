@@ -21,7 +21,8 @@ uml := RSUMLClassBuilder new.
 uml classes: allClasses.
 uml build.
 
-uml canvas extent: 2000 @ 800.
+uml canvas extent: 5000 @ 800.
+
 RSPNGExporter new
   canvas: uml canvas;
   exportToFile: 'uml.png' asFileReference.
