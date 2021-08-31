@@ -127,6 +127,25 @@ RSChartTest >> testMustInclude05 [
 ]
 
 { #category : #tests }
+RSChartTest >> testSameMinMax [
+
+	| c plot |
+	c := RSChart new.
+	plot := RSLinePlot new.
+	plot y: #( 2 2 ).
+	c addPlot: plot.
+
+	c addDecoration: (RSChartTitleDecoration new
+			 title: 'Reward evolution';
+			 fontSize: 20).
+	c xlabel: 'Episode' offset: 0 @ 10.
+	c ylabel: 'Reward' offset: -20 @ 0.
+	c addDecoration: RSHorizontalTick new.
+	c addDecoration: RSVerticalTick new.
+	c build
+]
+
+{ #category : #tests }
 RSChartTest >> testWithWeirdValues [
 
 	| values g d line c |
