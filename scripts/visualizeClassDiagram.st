@@ -15,7 +15,7 @@
 
 
 packageNameRegExp := 'Roassal3*'.
-packages := RPackageOrganizer default packages select: [ :p | packageNameRegExp matches: p packageName ].
+packages := RPackageOrganizer default packages select: [ :p | packageNameRegExp match: p packageName ].
 allClasses := packages flatCollect: #definedClasses.
 uml := RSUMLClassBuilder new.
 uml classes: allClasses.
