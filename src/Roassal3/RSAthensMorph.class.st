@@ -107,7 +107,7 @@ RSAthensMorph >> drawShapes [
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		canvasRect := roassalCanvas visibleRectangle.
-		renderer isFixedChildren: false.
+		renderer isFixedShapesDrawing: false.
 		roassalCanvas shapes
 			select: [ :roassalShape | roassalShape intersects: canvasRect ]
 			thenDo: [ :roassalShape | roassalShape accept: renderer ].
@@ -115,7 +115,7 @@ RSAthensMorph >> drawShapes [
 		self showRectanglesIfNecessary: roassalCanvas shapes.
 		"We display the elements that are _NOT_ subject to the camera"
 		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-		renderer isFixedChildren: true.
+		renderer isFixedShapesDrawing: true.
 		roassalCanvas fixedShapes do: [ :roassalShape | 
 			roassalShape accept: renderer ].
 		"debug mode to show encompassingRectangles"
