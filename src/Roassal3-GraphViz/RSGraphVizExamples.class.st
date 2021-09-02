@@ -474,6 +474,26 @@ RSGraphVizExamples >> example10Mondrian [
 ]
 
 { #category : #examples }
+RSGraphVizExamples >> example11RSObjectWithAllSubclasses [
+	<script: 'self new example11RSObjectWithAllSubclasses open'>
+	| c shapes lb |
+	c := RSCanvas new.
+
+	shapes := RSLabel models: RSObject withAllSubclasses.
+	c addAll: shapes.
+	shapes @ RSDraggable.
+
+	lb := RSLineBuilder graphviz.
+	lb shapes: shapes.
+	"lb connectFrom: #superclass."
+	lb connectToAll: #dependentClasses.
+
+	RSGraphvizLayout on: shapes.
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #examples }
 RSGraphVizExamples >> unixFamilyTree [
 	^ {'5th Edition' -> '6th Edition'.
 	'5th Edition' -> 'PWB 1.0'.
