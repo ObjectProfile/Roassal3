@@ -82,6 +82,7 @@ RSGroup >> asGroup [
 
 { #category : #'public - forwarding' }
 RSGroup >> color: aColor [
+	"Give the same color to all the shapes"
 	self do: [ :s | s color: aColor ]
 ]
 
