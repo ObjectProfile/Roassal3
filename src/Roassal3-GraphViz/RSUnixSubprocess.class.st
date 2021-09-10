@@ -1,4 +1,6 @@
 "
+This class was obtained from Feenk code. We are very grateful to this wonderful team!
+
 PBUnixSubprocess is a convenience wrapper around OSSUnixSubprocess for the common case of executing a command and capturing stdout and stderr, which are strings and are larger than one OS buffer, but small enough to fit in RAM.
 Typical usage is: 
 ``` 
