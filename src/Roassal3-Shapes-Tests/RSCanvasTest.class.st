@@ -35,6 +35,20 @@ RSCanvasTest >> testAddShapeBefore [
 	self assert: canvas shapes asArray equals: { shape1 . shape2 }
 ]
 
+{ #category : #'tests - converting' }
+RSCanvasTest >> testAsShapeModel [
+
+	| c compositeShape |
+	c :=RSCanvas new.
+	c addAll: (RSBox models: (1 to: 20)).
+	RSGridLayout on: c shapes.
+	
+	compositeShape := c asShapeModel: 'Hello'.
+	self assert: compositeShape class equals: RSComposite.
+	self assert: compositeShape model equals: 'Hello'.
+	self assert: compositeShape children size equals: 20
+]
+
 { #category : #tests }
 RSCanvasTest >> testDeepNodes [
 
