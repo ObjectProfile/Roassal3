@@ -5,10 +5,10 @@ Class {
 	#name : #RSLineDrivenLayout,
 	#superclass : #RSLayout,
 	#instVars : [
-		'edges',
 		'userDefinedEdges',
 		'fromPositions',
-		'toPositions'
+		'toPositions',
+		'lines'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -42,7 +42,7 @@ RSLineDrivenLayout >> doIncrementallyExecute: anElementNode [
 
 { #category : #private }
 RSLineDrivenLayout >> edges [
-	^ edges
+	^ lines
 ]
 
 { #category : #accessing }
@@ -50,14 +50,14 @@ RSLineDrivenLayout >> edges: aCollection [
 	"Set the list of edges that should be considered for the layout.
 	If none is specified (i.e., if this method is not called), then the 
 	edges are infered."
-	edges := aCollection
+	lines := aCollection
 ]
 
 { #category : #iterator }
 RSLineDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
-	edges ifNil: [ ^ self ].
-	edges do: aBlock
+	lines ifNil: [ ^ self ].
+	lines do: aBlock
 
 ]
 

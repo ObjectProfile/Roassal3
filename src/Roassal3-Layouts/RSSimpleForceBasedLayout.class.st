@@ -16,7 +16,7 @@ RSSimpleForceBasedLayout >> doExecute: shapes [
 	shapes do: [ :node | (layout mockElementAt: node)
 		charge: node width * -10;
 		weight: node width ].
-	es do: [ :edge | (layout mockEdgeAt: edge)
+	es do: [ :edge | (layout mockLineAt: edge)
 		strength: 1;
 		length: (edge from width + edge to width) ].
 	layout runLayoutSimply.

@@ -2,64 +2,64 @@
 TODO
 "
 Class {
-	#name : #RSMockEdge,
+	#name : #RSMockLine,
 	#superclass : #RSObject,
 	#instVars : [
 		'from',
 		'to',
-		'realEdge',
 		'strength',
-		'length'
+		'length',
+		'realLine'
 	],
 	#category : #'Roassal3-Layouts-Util'
 }
 
 { #category : #accessing }
-RSMockEdge >> from [
+RSMockLine >> from [
 	^ from
 ]
 
 { #category : #accessing }
-RSMockEdge >> from: aMockElement [
+RSMockLine >> from: aMockElement [
 	from := aMockElement
 ]
 
 { #category : #accessing }
-RSMockEdge >> length [
+RSMockLine >> length [
 	^ length
 ]
 
 { #category : #accessing }
-RSMockEdge >> length: aNumber [
+RSMockLine >> length: aNumber [
 	length := aNumber
 ]
 
 { #category : #accessing }
-RSMockEdge >> realEdge [
-	^ realEdge
+RSMockLine >> realLine [
+	^ realLine
 ]
 
 { #category : #accessing }
-RSMockEdge >> realEdge: anObject [
-	realEdge := anObject
+RSMockLine >> realLine: anRSLine [
+	realLine := anRSLine
 ]
 
 { #category : #accessing }
-RSMockEdge >> strength [ 
+RSMockLine >> strength [ 
 	^ strength
 ]
 
 { #category : #accessing }
-RSMockEdge >> strength: aNumber [
+RSMockLine >> strength: aNumber [
 	strength := aNumber
 ]
 
 { #category : #accessing }
-RSMockEdge >> to [
+RSMockLine >> to [
 	^ to
 ]
 
 { #category : #accessing }
-RSMockEdge >> to: aMockElement [
+RSMockLine >> to: aMockElement [
 	to := aMockElement
 ]
