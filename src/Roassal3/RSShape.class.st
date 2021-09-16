@@ -95,6 +95,21 @@ RSShape >> accept: aVisitor [
 	self subclassResponsibility 
 ]
 
+{ #category : #'private - adding' }
+RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
+	| key myAnimations parentAnimations |
+	key := #todoAnimations.
+	(self hasProperty: key) ifFalse: [ ^ self ].
+	myAnimations := self propertyAt: key.
+	aShapeOrCanvas isShape ifTrue: [ 
+		parentAnimations := parent propertyAt: key ifAbsentPut: [ OrderedCollection new ].
+		parentAnimations addAll: myAnimations.
+	] ifFalse: [ 
+		myAnimations do: [:anime| 
+			aShapeOrCanvas addAnimation: anime ] ].
+	self removeKey: key.
+]
+
 { #category : #adding }
 RSShape >> addRecursivelyIn: aCollection [
 	aCollection add: self
@@ -109,6 +124,7 @@ RSShape >> addedIn: aCanvas [
 		ifFalse: [ aCanvas addBasicShape: self ].
 	parent ifNotNil: [ self remove ].
 	parent := aCanvas.
+	self addPendingAnimationsIn: parent.
 	
 	evt := RSShapeAddedEvent new shape: self.
 	aCanvas announce: evt.
