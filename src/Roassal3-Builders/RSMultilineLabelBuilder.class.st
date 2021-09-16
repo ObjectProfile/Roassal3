@@ -24,7 +24,7 @@ Class {
 		'textBlock',
 		'wrapStrategy'
 	],
-	#category : #'Roassal3-Interaction-Text'
+	#category : #'Roassal3-Builders-Text'
 }
 
 { #category : #hooks }

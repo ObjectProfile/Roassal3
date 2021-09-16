@@ -4,7 +4,7 @@ Basic ellipsis for a single line text
 Class {
 	#name : #RSWrapEllipsisStrategy,
 	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal3-Interaction-Text'
+	#category : #'Roassal3-Builders-Text'
 }
 
 { #category : #accessing }
