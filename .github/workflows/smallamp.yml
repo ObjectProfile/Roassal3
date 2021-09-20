@@ -22,6 +22,10 @@ on:
         description: 'Number of test variant per original test'
         required: true
         default: '10'
+      timeBudget:
+        description: 'Number of minutes as time budget (empty means no limit)'
+        required: false
+        default: ''        
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
@@ -67,6 +71,7 @@ jobs:
           SMALLAMP_iteration: ${{ env.iteration }}
           SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
           SMALLAMP_mode: ${{ env.mode }}  
+          SMALLAMP_timeBudget: ${{ github.event.inputs.timeBudget }}
           SMALLAMP_testClasses: ${{ github.event.inputs.testClasses }}
 
   TestAmplificationPush:
