@@ -126,51 +126,80 @@ RSTWalkBasedRegularTreeLayout >> erOf: aNode put: aFloat [
 ]
 
 { #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> firstWalk: v [
+RSTWalkBasedRegularTreeLayout >> extremesOfLeaf: aShape [
 
 	self
-		is: v
-		ifLeaf: [ self setExtremesOfLeaf: v ]
+		elOf: aShape put: aShape;
+		erOf: aShape put: aShape;
+		mselOf: aShape put: 0;
+		mserOf: aShape put: 0
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> extremesOfNonLeaf: parent leftMostChild: leftMostChild rightMostChild: rightMostChild [
+
+	self
+		elOf: parent put: (self elOf: leftMostChild);
+		erOf: parent put: (self erOf: rightMostChild);
+		mselOf: parent put: (self mselOf: leftMostChild);
+		mserOf: parent put: (self mserOf: rightMostChild)
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> firstWalk: aShape [
+
+	self
+		is: aShape
+		ifLeaf: [ self extremesOfLeaf: aShape ]
 		ifNotLeaf: [ :children | 
-			| leftMostChild rightMostChild chain bound |
+			| leftMostChild rightMostChild |
 			leftMostChild := children first.
 			rightMostChild := children last.
 
-			"Recur down on v's leftmost child."
-			self firstWalk: leftMostChild.
-
-			"Create siblings in contour minimal vertical coordinate and index list."
-			bound := self depthBoundOf: (self elOf: leftMostChild).
-
-			chain := (2 to: children size)
-				         inject: (self updateIYL: bound at: 1 rest: nil)
-				         into: [ :ih :i | 
-					         | child |
-					         child := children at: i.
-
-					         self firstWalk: child.
-
-					         bound := self depthBoundOf: (self erOf: child).
-
-					         "/Store lowest vertical coordinate while extreme nodes still point in current subtree."
-					         self
-						         separate: v
-						         children: children
-						         at: i
-						         rest: ih.
-
-					         "Update data about the widths"
-					         self updateIYL: bound at: i rest: ih ].
+			self firstWalk: aShape children: children.
 
 			self
-				positionRoot: v
+				positionNonLeaf: aShape
 				leftMostChild: leftMostChild
 				rightMostChild: rightMostChild.
 
 			self
-				setExtremesOfNonLeaf: v
+				extremesOfNonLeaf: aShape
 				leftMostChild: leftMostChild
 				rightMostChild: rightMostChild ]
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> firstWalk: parent children: children [
+
+	| leftMostChild bound |
+	leftMostChild := children first.
+
+	"Recur down on v's leftmost child."
+	self firstWalk: leftMostChild.
+
+	"Create siblings in contour minimal vertical coordinate and index list."
+	bound := self depthBoundOf: (self elOf: leftMostChild).
+
+	(2 to: children size)
+		inject: (self updateIYL: bound at: 1 rest: nil)
+		into: [ :ih :i | 
+			| child |
+			child := children at: i.
+
+			self firstWalk: child.
+
+			bound := self depthBoundOf: (self erOf: child).
+
+			"/Store lowest vertical coordinate while extreme nodes still point in current subtree."
+			self
+				separate: parent
+				children: children
+				at: i
+				rest: ih.
+
+			"Update data about the widths"
+			self updateIYL: bound at: i rest: ih ]
 ]
 
 { #category : #properties }
@@ -188,71 +217,70 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associations [
+RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations [
 
-	| hierarchy roots fathers rootNode leaves |
+	| hierarchy roots allParents rootNode leaves |
 	hierarchy := IdentityDictionary new.
 	roots := IdentitySet withAll: elements.
 	leaves := IdentitySet withAll: elements.
-	fathers := IdentityDictionary new.
+	allParents := IdentityDictionary new.
 
 	associations do: [ :anAssociation | 
-		| children child father multipleParents fathersOfChild |
-		father := anAssociation key.
+		| children child parent multipleParents parents |
+		parent := anAssociation key.
 		child := anAssociation value.
 
 		multipleParents := false.
 		roots remove: child ifAbsent: [ multipleParents := true ].
 
 		leaves
-			remove: father
-			ifAbsent: [ "is it okay to try to remove father more than one time"
+			remove: parent
+			ifAbsent: [ "is it okay to try to remove `parent` more than one time."
 			 ].
 
-		fathersOfChild := fathers
-			                  at: child
-			                  ifAbsentPut: [ OrderedCollection new ].
+		parents := allParents
+			           at: child
+			           ifAbsentPut: [ OrderedCollection new ].
 
-		fathersOfChild add: father.
+		parents add: parent.
 
 		children := hierarchy
-			            at: father
+			            at: parent
 			            ifAbsentPut: [ 
-			            self childrenOf: father put: OrderedCollection new ].
+			            self childrenOf: parent put: OrderedCollection new ].
 
 		multipleParents ifFalse: [ children add: child ] ].
 
 	rootNode := roots size > 1
-		        ifTrue: [ 
-			        roots collect: [ :each | 
-				        self assert: (fathers includesKey: each) not
-				        "fathers at: each put: { rootBox }" ].
+		            ifTrue: [ 
+			            roots collect: [ :each | 
+				            self assert: (allParents includesKey: each) not ].
 
-			        RSComposite new
-				        in: [ :aRootShape | 
-					        self childrenOf: aRootShape put: roots asArray ];
-				        yourself ]
-		        ifFalse: [ roots anyOne ].
+			            RSComposite new
+				            in: [ :aRootShape | 
+					            self childrenOf: aRootShape put: roots asArray ];
+				            yourself ]
+		            ifFalse: [ roots anyOne ].
 
 	leaves do: [ :each | 
 		self
 			assert: (self childrenOf: each) isNil;
 			childrenOf: each put: Array empty;
-			initializeForShape: each fathers: fathers ].
+			initializeShape: each allParents: allParents ].
 
-	^ self initializeForShape: rootNode fathers: fathers
+	^ self initializeShape: rootNode allParents: allParents
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: lines [
+RSTWalkBasedRegularTreeLayout >> initialize: elements lines: lines [
 
 	| associations |
 	associations := lines collect: [ :each | each from -> each to ].
-	^ self initialize: elements associationEdges: associations
+	^ self initialize: elements associations: associations
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
+RSTWalkBasedRegularTreeLayout >> initializeShape: aShape allParents: allParents [
 
 	| depth |
 	self
@@ -267,23 +295,23 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 		elOf: aShape put: nil;
 		erOf: aShape put: nil.
 
-	depth := fathers
+	depth := allParents
 		         at: aShape
 		         ifPresent: [ :parents | 
 			         | level |
 			         parents
 				         reject: [ :each | self hasBeenInitializedOf: each ]
 				         thenDo: [ :each | 
-				         self initializeForShape: each fathers: fathers ].
+				         self initializeShape: each allParents: allParents ].
 
 			         level := (parents collect: [ :each | self levelOf: each ])
 				                  max.
 
 			         self levelOf: aShape put: level + 1.
 
-			         (parents collect: [ :aShapeParent | 
-				          (self depthBoundOf: aShapeParent)
-				          + (self depthGapAmong: aShapeParent and: aShape) ]) max ]
+			         parents max: [ :aShapeParent | 
+				         (self depthBoundOf: aShapeParent)
+				         + (self depthGapAmong: aShapeParent and: aShape) ] ]
 		         ifAbsent: [ self levelOf: aShape put: 0 ].
 
 	self
@@ -305,6 +333,26 @@ RSTWalkBasedRegularTreeLayout >> layout: aRootShape depth: aDepth breadth: aBrea
 	self
 		firstWalk: aRootShape;
 		secondWalk: aRootShape depth: aDepth breadth: aBreadth
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> leftMostChild: leftMostChild currentChild: child child: cl acc: mscl [
+
+	| li diff |
+	li := self elOf: leftMostChild.
+	self threadOf: li put: cl.
+
+	"Change mod so that the sum of modifier after following thread is correct."
+	diff := mscl - (self modOf: cl) - (self mselOf: leftMostChild).
+	self modOf: li update: [ :mod | mod + diff ].
+
+	"Change preliminary x coordinate so that the node does not move."
+	self prelimOf: li update: [ :prelim | prelim - diff ].
+
+	"Update extreme node and its sum of modifiers."
+	self
+		elOf: leftMostChild put: (self elOf: child);
+		mselOf: leftMostChild put: (self mselOf: child)
 ]
 
 { #category : #properties }
@@ -413,7 +461,7 @@ RSTWalkBasedRegularTreeLayout >> nextLeftContour: v [
 	^ self
 		  is: v
 		  ifLeaf: [ self threadOf: v ]
-		  ifNotLeaf: [ (self childrenOf: v) first ]
+		  ifNotLeaf: [ :children | children first ]
 ]
 
 { #category : #algorithm }
@@ -422,7 +470,22 @@ RSTWalkBasedRegularTreeLayout >> nextRightContour: v [
 	^ self
 		  is: v
 		  ifLeaf: [ self rthreadOf: v ]
-		  ifNotLeaf: [ (self childrenOf: v) last ]
+		  ifNotLeaf: [ :children | children last ]
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> positionNonLeaf: parent leftMostChild: leftMostChild rightMostChild: rightMostChild [
+
+	| childrenPrelim |
+	"Set the prelim for hierarchy item v."
+	childrenPrelim := (self prelimOf: leftMostChild)
+	                  + (self modOf: leftMostChild)
+	                  + (self prelimOf: rightMostChild)
+	                  + (self modOf: rightMostChild)
+	                  + (self breadthMeasureOf: rightMostChild)
+	                  - (self breadthMeasureOf: parent).
+
+	self prelimOf: parent put: childrenPrelim / 2
 ]
 
 { #category : #properties }
@@ -435,21 +498,6 @@ RSTWalkBasedRegularTreeLayout >> positionOf: aShape put: aPoint [
 RSTWalkBasedRegularTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	self explicitRequirement
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> positionRoot: v leftMostChild: leftMostChild rightMostChild: rightMostChild [
-
-	| childrenPrelim |
-	"Set the prelim for hierarchy item v."
-	childrenPrelim := (self prelimOf: leftMostChild)
-	                  + (self modOf: leftMostChild)
-	                  + (self prelimOf: rightMostChild)
-	                  + (self modOf: rightMostChild)
-	                  + (self breadthMeasureOf: rightMostChild)
-	                  - (self breadthMeasureOf: v).
-
-	self prelimOf: v put: childrenPrelim / 2
 ]
 
 { #category : #properties }
@@ -468,6 +516,26 @@ RSTWalkBasedRegularTreeLayout >> prelimOf: aNode put: aFloat [
 RSTWalkBasedRegularTreeLayout >> prelimOf: aNode update: aBlock [
 
 	^ self prelimOf: aNode put: (aBlock value: (self prelimOf: aNode))
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> previousChild: previousChild currentChild: currentChild child: sr acc: mssr [
+
+	| ri diff |
+	ri := self erOf: currentChild.
+	self rthreadOf: ri put: sr.
+
+	"Change mod so that the sum of modifier after following thread is correct."
+	diff := mssr - (self modOf: sr) - (self mserOf: currentChild).
+	self modOf: ri update: [ :mod | mod + diff ].
+
+	"Change preliminary x coordinate so that the node does not move."
+	self prelimOf: ri update: [ :prelim | prelim - diff ].
+
+	"Update extreme node and its sum of modifiers."
+	self
+		erOf: currentChild put: (self erOf: previousChild);
+		mserOf: currentChild put: (self mserOf: previousChild)
 ]
 
 { #category : #properties }
@@ -554,7 +622,6 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 	(sr isNil and: [ cl isNotNil ])
 		ifTrue: [ "the current subtree must be taller than the left siblings."
 			self
-				setLeftThread: v
 				leftMostChild: children first
 				currentChild: (children at: i)
 				child: cl
@@ -562,71 +629,10 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 		ifFalse: [ "the left siblings must be taller than the current subtree."
 			(sr isNotNil and: [ cl isNil ]) ifTrue: [ 
 				self
-					setRightThread: v
 					previousChild: (children at: i - 1)
 					currentChild: (children at: i)
 					child: sr
 					acc: mssr ] ]
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> setExtremesOfLeaf: v [
-
-	self
-		elOf: v put: v;
-		erOf: v put: v;
-		mselOf: v put: 0;
-		mserOf: v put: 0
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> setExtremesOfNonLeaf: v leftMostChild: leftMostChild rightMostChild: rightMostChild [
-
-	self
-		elOf: v put: (self elOf: leftMostChild);
-		erOf: v put: (self erOf: rightMostChild);
-		mselOf: v put: (self mselOf: leftMostChild);
-		mserOf: v put: (self mserOf: rightMostChild)
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> setLeftThread: v leftMostChild: leftMostChild currentChild: child child: cl acc: mscl [
-
-	| li diff |
-	li := self elOf: leftMostChild.
-	self threadOf: li put: cl.
-
-	"Change mod so that the sum of modifier after following thread is correct."
-	diff := mscl - (self modOf: cl) - (self mselOf: leftMostChild).
-	self modOf: li update: [ :mod | mod + diff ].
-
-	"Change preliminary x coordinate so that the node does not move."
-	self prelimOf: li update: [ :prelim | prelim - diff ].
-
-	"Update extreme node and its sum of modifiers."
-	self
-		elOf: leftMostChild put: (self elOf: child);
-		mselOf: leftMostChild put: (self mselOf: child)
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> setRightThread: v previousChild: previousChild currentChild: currentChild child: sr acc: mssr [
-
-	| ri diff |
-	ri := self erOf: currentChild.
-	self rthreadOf: ri put: sr.
-
-	"Change mod so that the sum of modifier after following thread is correct."
-	diff := mssr - (self modOf: sr) - (self mserOf: currentChild).
-	self modOf: ri update: [ :mod | mod + diff ].
-
-	"Change preliminary x coordinate so that the node does not move."
-	self prelimOf: ri update: [ :prelim | prelim - diff ].
-
-	"Update extreme node and its sum of modifiers."
-	self
-		erOf: currentChild put: (self erOf: previousChild);
-		mserOf: currentChild put: (self mserOf: previousChild)
 ]
 
 { #category : #properties }

@@ -22,7 +22,7 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	root := self initialize: elements lineEdges: self edges
+	root := self initialize: elements lines: self edges
 ]
 
 { #category : #hook }
