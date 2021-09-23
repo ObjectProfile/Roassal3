@@ -23,7 +23,7 @@ RSAbstractPopupInteraction class >> removeEvents [
 		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 RSAbstractPopupInteraction class >> reset [
 	<script: 'self reset'>
 	super reset.
