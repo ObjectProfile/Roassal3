@@ -19,13 +19,6 @@ RSAbstractPopupInteraction class >> removeEvents [
 	^ { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging }
 ]
 
-{ #category : #'class initialization' }
-RSAbstractPopupInteraction class >> reset [
-	<script: 'self reset'>
-	super reset.
-	removeEvents := nil.
-]
-
 { #category : #hooks }
 RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	"Create a popup and register it"

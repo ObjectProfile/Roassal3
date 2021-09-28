@@ -244,10 +244,10 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associat
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: lines [
+RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: aGroupOfLines [
 
 	| associations |
-	associations := lines collect: [ :each | each from -> each to ].
+	associations := aGroupOfLines collect: [ :line | line from -> line to ].
 	^ self initialize: elements associationEdges: associations
 ]
 
