@@ -166,6 +166,13 @@ RSCamera >> scale: aFloatNumber [
 		newScale: aFloatNumber ]
 ]
 
+{ #category : #accessing }
+RSCamera >> visibleRectangle [
+	^ Rectangle 
+		floatCenter: self position
+		extent: self canvas extent / self scale.
+]
+
 { #category : #zoom }
 RSCamera >> zoomToFit [
 	self zoomToFit: canvas extent * 0.9
