@@ -612,9 +612,7 @@ RSCanvas >> transform: aPoint [
 
 { #category : #'accessing - computed' }
 RSCanvas >> visibleRectangle [
-	^ Rectangle 
-		floatCenter: self camera position
-		extent: self extent / self camera scale.
+	^ self camera visibleRectangle
 ]
 
 { #category : #camera }

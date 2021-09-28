@@ -34,7 +34,7 @@ RSInteraction class >> onShape: aShape [
 	^ inst
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 RSInteraction class >> reset [
 	<script: 'self reset'>
 	instance := nil
