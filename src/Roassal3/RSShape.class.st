@@ -311,6 +311,11 @@ RSShape >> extent [
 	^ self encompassingRectangle extent
 ]
 
+{ #category : #accessing }
+RSShape >> globalEncompassingRectangle [
+	^ self encompassingRectangle
+]
+
 { #category : #testing }
 RSShape >> hasBorder [
 	^ border notNil and: [ border width > 0 ].

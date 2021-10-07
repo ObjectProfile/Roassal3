@@ -1,3 +1,6 @@
+"
+You can combine different attach points
+"
 Class {
 	#name : #RSStartEndAttachPoint,
 	#superclass : #RSAttachPoint,

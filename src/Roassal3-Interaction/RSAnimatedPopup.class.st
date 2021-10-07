@@ -30,9 +30,7 @@ RSAnimatedPopup >> translatePopup: popup event: evt [
 		p := rect floatCenter.
 		p := p + (0@(shape height + popup height + 10 / 2)).
 	] ifFalse: [ 
-		rect := shape 
-			computeEncompassingRectangleFor: shape baseRectangle 
-			matrix: shape globalMatrix.
+		rect := shape globalEncompassingRectangle.
 		p := (canvas camera 
 			fromSpaceToPixel: rect bottomCenter)+(0@(popup height +	10/ 2)).
 	 ].
