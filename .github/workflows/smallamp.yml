@@ -2,7 +2,7 @@ name: SmallAmp
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
-  project_baseline: Roassal3 # I'm important. change me in each repo
+  project_baseline: Roassal3
   project_directory: src
   iteration: 3
   mode: dspotFast
@@ -23,9 +23,9 @@ on:
         required: true
         default: '10'
       timeBudget:
-        description: 'Number of minutes as time budget (empty means no limit)'
-        required: false
-        default: ''        
+        description: 'Number of minutes as time budget (0 means no limit)'
+        required: true
+        default: '0'        
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
