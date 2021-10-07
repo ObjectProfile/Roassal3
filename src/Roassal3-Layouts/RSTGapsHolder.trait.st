@@ -9,7 +9,7 @@ RSTGapsHolder >> horizontalGap [
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #gap }
 RSTGapsHolder >> horizontalGapAmong: aShapeParent and: aShape default: anObject [
 
 	| gap |
@@ -26,7 +26,7 @@ RSTGapsHolder >> verticalGap [
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #gap }
 RSTGapsHolder >> verticalGapAmong: aShapeParent and: aShape default: anObject [
 
 	| gap |

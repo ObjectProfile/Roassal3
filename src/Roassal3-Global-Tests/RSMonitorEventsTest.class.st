@@ -36,7 +36,7 @@ RSMonitorEventsTest >> testNoTarget [
 
 { #category : #tests }
 RSMonitorEventsTest >> testWriteToFile [
-	| canvas monitor events box fileName fileReference storage |
+	| canvas monitor events box fileName storage |
 	canvas := RSCanvas new.
 	box := RSBox new size: 20; yourself.
 	monitor := RSMonitorEvents new.

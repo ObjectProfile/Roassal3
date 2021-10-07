@@ -447,7 +447,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 		charge: -300.
 	canvas @ stepping.
 	canvas edges do: [ :edge | 
-		(layout mockEdgeAt: edge) 
+		(layout mockLineAt: edge) 
 			length: (edge model key + edge model value) * 10 ].
 	canvas @ RSCanvasController.
 	

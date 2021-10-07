@@ -111,6 +111,11 @@ RSLocation class >> move: aShapeOrAGroup1 above: aShapeOrAGroup2 [
 	self new above; move: aShapeOrAGroup1 on: aShapeOrAGroup2
 ]
 
+{ #category : #public }
+RSLocation class >> move: aShapeOrAGroup1 below: aShapeOrAGroup2 [
+	self new below; move: aShapeOrAGroup1 on: aShapeOrAGroup2
+]
+
 { #category : #'public - positioning shorcuts' }
 RSLocation >> above [ 
 	self top; outer.

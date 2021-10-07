@@ -4,7 +4,7 @@ This uses a wrapMaxWidth and creates a multiline label
 Class {
 	#name : #RSWrapStrategy,
 	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal3-Interaction-Text'
+	#category : #'Roassal3-Builders-Text'
 }
 
 { #category : #hooks }

@@ -51,7 +51,9 @@ RSLinePlot >> renderIn: canvas [
 
 { #category : #'public - shape' }
 RSLinePlot >> shape [
-	^ shape
+	| lineShape |
+	lineShape := super shape.
+	^ lineShape
 ]
 
 { #category : #'public - shape' }

@@ -94,6 +94,58 @@ RSChartTest >> testMustInclude03 [
 ]
 
 { #category : #tests }
+RSChartTest >> testMustInclude04 [
+
+	| y c |
+	y := OrderedCollection new.
+	-3.14 to: 3.14 by: 0.1 do: [ :x |
+		y add: x sin ].
+	
+	c := RSChart new.
+	c addPlot: (RSLinePlot new y: y).
+	c build.
+	
+	self assert: c minValueY equals: -0.9995258306054791.
+	self assert: c maxValueY equals: 0.9999417202299663.
+]
+
+{ #category : #tests }
+RSChartTest >> testMustInclude05 [
+
+	| y c |
+	y := OrderedCollection new.
+	-3.14 to: 3.14 by: 0.1 do: [ :x |
+		y add: x sin ].
+	
+	c := RSChart new.
+	c addPlot: (RSLinePlot new y: y).
+	c mustInclude0inY.
+	c build.
+	
+	self assert: c minValueY equals: -0.9995258306054791.
+	self assert: c maxValueY equals: 0.9999417202299663.
+]
+
+{ #category : #tests }
+RSChartTest >> testSameMinMax [
+
+	| c plot |
+	c := RSChart new.
+	plot := RSLinePlot new.
+	plot y: #( 2 2 ).
+	c addPlot: plot.
+
+	c addDecoration: (RSChartTitleDecoration new
+			 title: 'Reward evolution';
+			 fontSize: 20).
+	c xlabel: 'Episode' offset: 0 @ 10.
+	c ylabel: 'Reward' offset: -20 @ 0.
+	c addDecoration: RSHorizontalTick new.
+	c addDecoration: RSVerticalTick new.
+	c build
+]
+
+{ #category : #tests }
 RSChartTest >> testWithWeirdValues [
 
 	| values g d line c |

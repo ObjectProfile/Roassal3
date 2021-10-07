@@ -82,6 +82,7 @@ RSGroup >> asGroup [
 
 { #category : #'public - forwarding' }
 RSGroup >> color: aColor [
+	"Give the same color to all the shapes"
 	self do: [ :s | s color: aColor ]
 ]
 
@@ -281,10 +282,22 @@ RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 
 { #category : #accessing }
 RSGroup >> width [ 
+	"Return the width of the encompassing rectangle of the group"
 	^ self extent x
 ]
 
 { #category : #'public - forwarding' }
 RSGroup >> withBorder [
+	"Makes all the shapes having a border
+```
+c := RSCanvas new.
+circles := RSCircle models: (1 to: 20).
+circles size: 20.
+circles withBorder.
+c addAll: circles.
+RSGridLayout on: circles.
+c 
+```
+	"
 	self do: #withBorder
 ]

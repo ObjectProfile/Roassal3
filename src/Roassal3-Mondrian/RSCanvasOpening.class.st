@@ -18,7 +18,7 @@ RSCanvasOpening >> canvas: anObject [
 	canvas := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deleting }
 RSCanvasOpening >> deleteWindow [
 	window ifNil: [ ^ self ].
 	window delete

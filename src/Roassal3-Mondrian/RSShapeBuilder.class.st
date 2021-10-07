@@ -145,7 +145,6 @@ RSShapeBuilder >> initialize [
 	super initialize.
 	self box.
 	color := Color gray.
-	labelBlock := nil
 ]
 
 { #category : #'public - configuration' }

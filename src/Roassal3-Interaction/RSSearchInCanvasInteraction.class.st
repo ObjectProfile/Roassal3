@@ -90,7 +90,7 @@ RSSearchInCanvasInteraction >> candidateShapes [
 	"Return shapes for which the model has to be matched. 
 	 Only shapes that are not a line and having a model may be eligeable to be highligted"
 	self assert: [ canvas notNil ] description: 'Canvas should be set first'.
-	^ canvas shapes select: [ :s | s model notNil and: [ s isNode ] ]
+	^ canvas allChildren select: [ :child | child model notNil and: [ child isNode ] ]
 ]
 
 { #category : #accessing }
@@ -101,8 +101,7 @@ RSSearchInCanvasInteraction >> canvas: aCanvas [
 
 { #category : #public }
 RSSearchInCanvasInteraction >> cleanAndResetFixedshapes [
-
-	fixedLabels do: [ :s | canvas removeFixedShape: s ].
+	fixedLabels do: [ :s | s remove ].
 	self resetFixedShapes
 ]
 
@@ -262,24 +261,25 @@ RSSearchInCanvasInteraction >> processKeyUp: evt [
 
 { #category : #public }
 RSSearchInCanvasInteraction >> putShadowOn: shape [
-	| shadow pad |
+	| shadow pad key |
 	pad := 5/ (self scaleFrom: shape).
+	key := #shadow.
 	shadow := RSBox new
 		fromRectangle: (shape encompassingRectangle expandBy: pad);
 		paint: self colorToUseToHighlight;
 		cornerRadius: pad * 0.75;
 		yourself.
-	
+	shape identityHash traceCr.
 	shape removeInteractionIfPresent: self class.
 	shape 
 		when: RSPositionChangedEvent do: [ RSLocation new move: shadow on: shape ];
 		when: RSExtentChangedEvent do: [ RSLocation new move: shadow on: shape ].
 	
 	shape parent ifNotNil: [ shape parent addShape: shadow before: shape ].
-	shape propertyAt: #shadow
+	shape propertyAt: key
 		ifPresent: [ :oldShadow | oldShadow remove ].
 		
-	shape propertyAt: #shadow put: shadow.
+	shape propertyAt: key put: shadow.
 ]
 
 { #category : #rendering }
@@ -343,7 +343,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	lbl @ RSPopup; @ highlightableLabels.
 	lbl when: RSMouseClick send: #click: to: self.
 	lbl color: self colorToUseToHighlight.
-	canvas add: lbl.
+	canvas addShape: lbl.
 	lbl setAsFixed.
 	fixedLabels add: lbl.
 	RSHorizontalLineLayout on: fixedLabels.

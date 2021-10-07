@@ -14,19 +14,29 @@ RSAnimatedPopup class >> activationEvent [
 
 { #category : #accessing }
 RSAnimatedPopup class >> removeEvents [
-	^ removeEvents ifNil: [ 
-		removeEvents := { RSMouseClick. RSMouseLeave. RSMouseDragging } ]
+	^ { RSMouseClick. RSMouseLeave. RSMouseDragging }
 ]
 
 { #category : #hooks }
 RSAnimatedPopup >> translatePopup: popup event: evt [ 
-	| p pscale canvasExtent side scale |
-	p := evt shape positionInCanvas.
-	evt shape isFixed
-		ifFalse: [ p := evt canvas camera fromSpaceToPixel: p ].
+	| p pscale canvasExtent side scale rect shape canvas |
+	canvas := evt canvas.
+	shape := evt shape.
+	canvasExtent := canvas extent.
+	
 	popup translateTo: 0@0.
-	p := p + (0@(evt shape height + popup height + 10 / 2)).
-	canvasExtent := evt shape canvas extent.
+	shape isFixed ifTrue: [ 
+		rect := shape encompassingRectangle.
+		p := rect floatCenter.
+		p := p + (0@(shape height + popup height + 10 / 2)).
+	] ifFalse: [ 
+		rect := shape 
+			computeEncompassingRectangleFor: shape baseRectangle 
+			matrix: shape globalMatrix.
+		p := (canvas camera 
+			fromSpaceToPixel: rect bottomCenter)+(0@(popup height +	10/ 2)).
+	 ].
+	
 	side := popup width / 2.
 	p x + side > canvasExtent x
 		ifTrue: [ p := (canvasExtent x - side - 5)@ p y ].
@@ -45,6 +55,6 @@ RSAnimatedPopup >> translatePopup: popup event: evt [
 				loadIdentity;
 				translation: (pscale scale: t);
 				scaleBy: (1@t) * scale.
-			popup signalUpdate.
+			evt signalUpdate.
 			].
 ]

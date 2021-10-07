@@ -190,7 +190,7 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 { #category : #initialization }
 RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associations [
 
-	| hierarchy roots fathers root leaves |
+	| hierarchy roots fathers rootNode leaves |
 	hierarchy := IdentityDictionary new.
 	roots := IdentitySet withAll: elements.
 	leaves := IdentitySet withAll: elements.
@@ -222,7 +222,7 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associat
 
 		multipleParents ifFalse: [ children add: child ] ].
 
-	root := roots size > 1
+	rootNode := roots size > 1
 		        ifTrue: [ 
 			        roots collect: [ :each | 
 				        self assert: (fathers includesKey: each) not
@@ -240,14 +240,14 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associat
 			childrenOf: each put: Array empty;
 			initializeForShape: each fathers: fathers ].
 
-	^ self initializeForShape: root fathers: fathers
+	^ self initializeForShape: rootNode fathers: fathers
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: lines [
+RSTWalkBasedRegularTreeLayout >> initialize: elements lineEdges: aGroupOfLines [
 
 	| associations |
-	associations := lines collect: [ :each | each from -> each to ].
+	associations := aGroupOfLines collect: [ :line | line from -> line to ].
 	^ self initialize: elements associationEdges: associations
 ]
 

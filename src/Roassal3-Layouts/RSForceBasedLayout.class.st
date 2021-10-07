@@ -30,7 +30,8 @@ Class {
 		'alpha',
 		'shouldUseProgressBar',
 		'random',
-		'quadtree'
+		'quadtree',
+		'autoRepulse'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -60,11 +61,11 @@ RSForceBasedLayout >> accumulate: aQuad [
 ]
 
 { #category : #'adding/removing' }
-RSForceBasedLayout >> addEdges: realEdges [
-	| newMockEdges |
-	newMockEdges := realEdges collect: [ :e | self newMockEdgeFor: e ].
-	edges class = Array ifTrue: [ edges := OrderedCollection new ].
-	edges addAll: newMockEdges.
+RSForceBasedLayout >> addLines: realLines [
+	| newMockLines |
+	newMockLines := realLines collect: [ :e | self newMockLineFor: e ].
+	lines class = Array ifTrue: [ lines := OrderedCollection new ].
+	lines addAll: newMockLines.
 
 ]
 
@@ -88,6 +89,39 @@ RSForceBasedLayout >> alpha: aFloat [
 	- 1 represents a strong change in nodes position.
 	- 0.01 represents a weak change"
 	alpha := aFloat
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> autoRepulse [
+	^ autoRepulse
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> autoRepulse: aBoolean [
+	autoRepulse := aBoolean 
+]
+
+{ #category : #hook }
+RSForceBasedLayout >> calculateAutoRepulse [
+	lines do: [ :line | self calculateAutoRepulseFor: line ].
+	nodes do: [ :node | | e |
+		e := node extent.
+		e := e x max: e y.
+		node charge: e * -2 ].
+	
+]
+
+{ #category : #hook }
+RSForceBasedLayout >> calculateAutoRepulseFor: line [
+	| e1 e2 n |
+	e1 := line from extent.
+	e2 := line to extent.
+	e1 := e1 x max: e1 y.
+	e2 := e2 x max: e2 y.
+	n := (e1 + e2) * 0.7.
+	line length: n.
+		
+	
 ]
 
 { #category : #accessing }
@@ -175,6 +209,7 @@ RSForceBasedLayout >> initialize [
 	super initialize.
 	random := Random seed: 42.
 	self
+		autoRepulse: false;
 		iterations: 0;
 		edges: #();
 		nodes: #();
@@ -207,50 +242,50 @@ RSForceBasedLayout >> length: aFloat [
 ]
 
 { #category : #'accessing - model' }
-RSForceBasedLayout >> mockEdgeAt: anEdge [
-	^ edges detect: [ :each | each realEdge == anEdge ] ifNone: [ nil ]
-]
-
-{ #category : #'accessing - model' }
-RSForceBasedLayout >> mockEdgeAt: anEdge ifPresent: presentBlock [
-	^ edges detect: [ :each | each realEdge == anEdge ] ifFound: presentBlock
-]
-
-{ #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
-	^ nodes detect: [ :each | each realElement == realNode ]
+	^ nodes detect: [ :each | each realShape == realNode ]
 ]
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode ifPresent: presentBlock [
 
 	^ nodes
-		  detect: [ :each | each realElement == realNode ]
+		  detect: [ :each | each realShape == realNode ]
 		  ifFound: presentBlock
 ]
 
-{ #category : #'private - initialization' }
-RSForceBasedLayout >> newMockEdgeFor: e [
-	| from to |
-	from := self mockElementAt: e from.
-	to := self mockElementAt: e to.
-	from addWeight.
-	to addWeight.
-	^ RSMockEdge new
-		from: from;
-		to: to;
-		strength: strength;
-		length: length;
-		realEdge: e;
-		yourself
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockLineAt: anEdge [
+	^ lines detect: [ :each | each realLine == anEdge ] ifNone: [ nil ]
+]
+
+{ #category : #'accessing - model' }
+RSForceBasedLayout >> mockLineAt: anEdge ifPresent: presentBlock [
+	^ lines detect: [ :each | each realLine == anEdge ] ifFound: presentBlock
 ]
 
 { #category : #'private - initialization' }
 RSForceBasedLayout >> newMockElementFor: e [
 	^ RSMockShape new
-		realElement: e;
+		realShape: e;
 		charge: charge;
 		weight: 0;
+		yourself
+]
+
+{ #category : #'private - initialization' }
+RSForceBasedLayout >> newMockLineFor: e [
+	| from to |
+	from := self mockElementAt: e from.
+	to := self mockElementAt: e to.
+	from addWeight.
+	to addWeight.
+	^ RSMockLine new
+		from: from;
+		to: to;
+		strength: strength;
+		length: length;
+		realLine: e;
 		yourself
 ]
 
@@ -267,7 +302,7 @@ RSForceBasedLayout >> nodes: aCollection [
 { #category : #'adding/removing' }
 RSForceBasedLayout >> removeEdge: aRealEdge [
 
-	self mockEdgeAt: aRealEdge ifPresent: [ :edge | edges remove: edge ]
+	self mockLineAt: aRealEdge ifPresent: [ :edge | lines remove: edge ]
 ]
 
 { #category : #'adding/removing' }
@@ -350,8 +385,10 @@ RSForceBasedLayout >> start [
 	"mandatory for animations"
 	initialLayout on: nodes.
 	nodes := nodes collect: [ :node | self newMockElementFor: node ].
-	edges := edges collect: [ :e | self newMockEdgeFor: e ].
-	
+	lines := lines collect: [ :e | self newMockLineFor: e ].
+	self autoRepulse ifTrue: [ 
+		self calculateAutoRepulse.
+		 ].
 	alpha ifNil: [ alpha :=  0.1 ]
 ]
 
@@ -368,7 +405,7 @@ RSForceBasedLayout >> step [
 { #category : #events }
 RSForceBasedLayout >> stepEdgeForces [
 	"Apply forces of edges."
-	edges do: [ :each | 
+	lines do: [ :each | 
 		| from to fp tp len k pd |
 		from := each from.
 		to := each to.

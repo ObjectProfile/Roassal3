@@ -6,9 +6,6 @@ I defined basic behaviors about popups in general, my subclasses needs to overri
 Class {
 	#name : #RSAbstractPopupInteraction,
 	#superclass : #RSInteraction,
-	#classVars : [
-		'removeEvents'
-	],
 	#category : #'Roassal3-Interaction-Popup'
 }
 
@@ -19,15 +16,7 @@ RSAbstractPopupInteraction class >> activationEvent [
 
 { #category : #accessing }
 RSAbstractPopupInteraction class >> removeEvents [
-	^ removeEvents ifNil: [ 
-		removeEvents := { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging } ]
-]
-
-{ #category : #'instance creation' }
-RSAbstractPopupInteraction class >> reset [
-	<script: 'self reset'>
-	super reset.
-	removeEvents := nil.
+	^ { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging }
 ]
 
 { #category : #hooks }
@@ -82,7 +71,8 @@ RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
 	self class removeEvents do: [ :clsEvent | 
 		aShape 
 			when: clsEvent
-			do: [ :evt | self removePopupOn: evt  ] ]
+			do: [ :evt |
+				self removePopupOn: evt ] ]
 ]
 
 { #category : #hooks }

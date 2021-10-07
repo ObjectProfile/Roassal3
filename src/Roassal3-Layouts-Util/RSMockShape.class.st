@@ -5,13 +5,13 @@ Class {
 	#name : #RSMockShape,
 	#superclass : #RSObject,
 	#instVars : [
-		'realElement',
 		'position',
 		'weight',
 		'oldPosition',
 		'isFixed',
 		'fixPosition',
-		'charge'
+		'charge',
+		'realShape'
 	],
 	#category : #'Roassal3-Layouts-Util'
 }
@@ -24,12 +24,12 @@ RSMockShape >> addWeight [
 { #category : #actions }
 RSMockShape >> applyToRealElement [
 	isFixed ifTrue: [ ^ self ].
-	realElement translateTo: position 
+	realShape translateTo: position 
 ]
 
 { #category : #accessing }
 RSMockShape >> canvas [
-	^ realElement canvas
+	^ realShape canvas
 ]
 
 { #category : #accessing }
@@ -44,12 +44,12 @@ RSMockShape >> charge: aNum [
 
 { #category : #accessing }
 RSMockShape >> encompassingRectangle [ 
-	^ realElement encompassingRectangle
+	^ realShape encompassingRectangle
 ]
 
 { #category : #accessing }
 RSMockShape >> extent [
-	^ realElement extent
+	^ realShape extent
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ RSMockShape >> fixPosition: aPoint [
 
 { #category : #accessing }
 RSMockShape >> height [
-	^ realElement height
+	^ realShape height
 ]
 
 { #category : #actions }
@@ -99,13 +99,13 @@ RSMockShape >> position [
 ]
 
 { #category : #accessing }
-RSMockShape >> realElement [
-	^ realElement
+RSMockShape >> realShape [
+	^ realShape
 ]
 
 { #category : #accessing }
-RSMockShape >> realElement: rtElement [
-	realElement := rtElement.
+RSMockShape >> realShape: rtElement [
+	realShape := rtElement.
 	position := rtElement position.
 	self oldPosition: position.
 ]
@@ -127,5 +127,5 @@ RSMockShape >> weight: aNumber [
 
 { #category : #accessing }
 RSMockShape >> width [
-	^ realElement width
+	^ realShape width
 ]

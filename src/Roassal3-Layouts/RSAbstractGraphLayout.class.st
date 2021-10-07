@@ -136,7 +136,7 @@ RSAbstractGraphLayout >> horizontalGap: anInteger [
 { #category : #'initialize-release' }
 RSAbstractGraphLayout >> initialize [
 	super initialize.
-	self validateCycles.
+	self doNotValidateCycles.
 ]
 
 { #category : #private }

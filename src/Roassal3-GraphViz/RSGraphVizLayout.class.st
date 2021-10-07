@@ -63,22 +63,21 @@ RSGraphvizLayout >> doExecute: shapes [
 	self positionShapes: group with: '/tmp/description.dot' asFileReference contents.
 "	
 	
-	process := OSSUnixSubprocess new
+	process := RSUnixSubprocess new
 		command: '/usr/local/bin/dot';
 		arguments: { '-Tplain-ext' };
 		workingDirectory: FileLocator home fullName;
 		addAllEnvVariablesFromParentWithoutOverride;
-		redirectStdout;
+		terminateOnShutdown;
+		"redirectStdout;
 		redirectStderr;
-		redirectStdin;
-		run.
+		redirectStdin;"
+		yourself.
 
-	process stdinStream
-		nextPutAll: dotDescription;
-		close.
-	process waitForExit.
-	graphvizResult := process stdoutStream upToEndOfFile.
-	graphvizResult ifEmpty: [ self error: process stderrStream upToEndOfFile. ].
+	process stdin: dotDescription.
+	process runAndWait.
+	graphvizResult := process stdout.
+	graphvizResult ifEmpty: [ self error: process stderr. ].
 	self positionShapes: group with: graphvizResult.
 	process closeAndCleanStreams.
 ]

@@ -70,6 +70,6 @@ RSHorizontalTreeLayoutTest >> testCycles [
 			$b -> $c.
 			$c -> $d.
 			$d -> $a}. "cycle"
-	self should: [RSHorizontalTreeLayout on: shapes] raise: Error.
-	
+	self shouldnt: [RSHorizontalTreeLayout on: shapes] raise: Error.
+	self should: [RSHorizontalTreeLayout new validateCycles; on: shapes] raise: Error.
 ]

@@ -27,6 +27,11 @@ RSAbstractTick >> asFloat: numberOfDecimals [
 
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
+	self min = self max 
+		ifTrue: [ 
+			niceLabel := self defaultNiceLabel.
+			^ super beforeRenderingIn: aChart. ].
+		
 	niceLabel := self configuration shouldUseNiceLabel 
 		ifTrue: [ self createNiceLabelIn: aChart ]
 		ifFalse: [ self defaultNiceLabel ].

@@ -38,7 +38,7 @@ RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> initialSelectionClass [
-	^ initialSelectionClass
+	^ initialSelectionClass ifNil: [ RSDancingSelection ].
 ]
 
 { #category : #accessing }
