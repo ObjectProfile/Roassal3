@@ -5,7 +5,7 @@ env:
   project_baseline: Roassal3
   project_directory: src
   iteration: 3
-  mode: dspotFast
+
 
 on:
   workflow_dispatch:
@@ -14,6 +14,10 @@ on:
         description: 'TestClasses to amplify (comma separated) empty-> all'
         required: false
         default: ''
+      mode:
+        description: 'mode (dspot, dspotFast, dspotFastRank)'
+        required: true
+        default: 'dspotFast'
       parallel_jobs:         
         description: 'Max number of all parallel jobs'
         required: true
@@ -32,6 +36,13 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.result }}
     steps:
+      - name: configurations 
+        run: | 
+          echo "testClasses -> ${{github.event.inputs.testClasses}}"
+          echo "mode -> ${{github.event.inputs.mode}}"
+          echo "parallel_jobs -> ${{github.event.inputs.parallel_jobs}}"
+          echo "maxInputs -> ${{github.event.inputs.maxInputs}}"
+          echo "timeBudget -> ${{github.event.inputs.timeBudget}}"          
       - id: set-matrix
         uses: actions/github-script@v4
         env:
@@ -70,7 +81,7 @@ jobs:
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
           SMALLAMP_iteration: ${{ env.iteration }}
           SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
-          SMALLAMP_mode: ${{ env.mode }}  
+          SMALLAMP_mode: ${{ github.event.inputs.mode }}  
           SMALLAMP_timeBudget: ${{ github.event.inputs.timeBudget }}
           SMALLAMP_testClasses: ${{ github.event.inputs.testClasses }}
 
