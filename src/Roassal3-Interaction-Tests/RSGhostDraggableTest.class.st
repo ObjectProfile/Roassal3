@@ -19,12 +19,12 @@ RSGhostDraggableTest >> testBasic [
 	interaction := RSGhostDraggable new.
 	
 	shape @ interaction.
-	self assert: interaction ghost isNil.
+	self assert: (shape propertyAt: #ghost) isNil.
 	shape announce: RSMouseDragStart new.
-	self assert: interaction ghost notNil.
-	self assert: interaction ghost class equals: RSPolygon.
+	self assert: (shape propertyAt: #ghost) notNil.
+	self assert: (shape propertyAt: #ghost) class equals: RSPolygon.
 	shape announce: RSMouseDragEnd new.
-	self assert: interaction ghost isNil.
+	self assert: (shape propertyAt: #ghost) isNil.
 		
 
 ]
@@ -47,11 +47,11 @@ RSGhostDraggableTest >> testComposite [
 	
 	shape @ interaction.
 	shape announce: RSMouseDragStart new.
-	self assert: interaction ghost notNil.
-	self assert: interaction ghost class equals: RSComposite.
-	self assert: interaction ghost privateShapes isNil.
+	self assert: (shape propertyAt: #ghost) notNil.
+	self assert: (shape propertyAt: #ghost) class equals: RSComposite.
+	self assert: (shape propertyAt: #ghost) privateShapes isNil.
 	shape announce: RSMouseDragEnd new.
-	self assert: interaction ghost isNil.
+	self assert: (shape propertyAt: #ghost) isNil.
 		
 
 ]

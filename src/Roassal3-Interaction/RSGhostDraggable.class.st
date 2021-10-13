@@ -5,7 +5,6 @@ Class {
 	#name : #RSGhostDraggable,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'ghost',
 		'color'
 	],
 	#category : #'Roassal3-Interaction-Core'
@@ -24,7 +23,7 @@ RSGhostDraggable >> color: anObject [
 
 { #category : #hooks }
 RSGhostDraggable >> createGhost: evt [
-	| shape |
+	| shape ghost |
 	shape := evt shape.
 	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
@@ -33,15 +32,10 @@ RSGhostDraggable >> createGhost: evt [
 		resetChildren;
 		noPaint;
 		yourself.
-		
+	shape propertyAt: #ghost put: ghost.
 	shape parent add: ghost.
 
 	
-]
-
-{ #category : #accessing }
-RSGhostDraggable >> ghost [
-	^ ghost
 ]
 
 { #category : #hooks }
@@ -54,9 +48,11 @@ RSGhostDraggable >> onShape: aShape [
 
 { #category : #hooks }
 RSGhostDraggable >> removeGhost: evt [
+	| ghost |
+	ghost := evt shape propertyAt: #ghost.
 	ghost remove.
 	evt shape translateTo: ghost position.
-	ghost := nil.
+	evt shape removeKey: #ghost.
 	evt signalUpdate.
 ]
 
@@ -64,6 +60,6 @@ RSGhostDraggable >> removeGhost: evt [
 RSGhostDraggable >> updateGhost: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
-	ghost translateBy: d.
+	(evt shape propertyAt: #ghost) translateBy: d.
 	evt signalUpdate 
 ]

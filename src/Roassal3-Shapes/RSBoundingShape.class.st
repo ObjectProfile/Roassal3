@@ -180,6 +180,13 @@ RSBoundingShape >> geometry [
 		corner: rect corner
 ]
 
+{ #category : #accessing }
+RSBoundingShape >> globalEncompassingRectangle [
+	^ self 
+		computeEncompassingRectangleFor: self baseRectangle 
+		matrix: self globalMatrix.
+]
+
 { #category : #matrix }
 RSBoundingShape >> globalMatrix [
 	^ parent globalMatrix multiplyBy: matrix.
@@ -242,9 +249,7 @@ RSBoundingShape >> initializeMatrix [
 RSBoundingShape >> intersects: aRectangle [
 	| rect |
 	self isInACanvas ifFalse: [ ^ false ].
-	rect := self 
-		computeEncompassingRectangleFor: self baseRectangle 
-		matrix: self globalMatrix.
+	rect := self globalEncompassingRectangle.
 	^ rect intersects: aRectangle
 ]
 
