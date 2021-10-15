@@ -76,12 +76,14 @@ RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 
 { #category : #'private - events' }
 RSSearchInCanvasInteraction >> animateShadowPosition: shadow [
-	(canvas visibleRectangle containsRect: shadow encompassingRectangle)
+	| rect |
+	rect := shadow globalEncompassingRectangle.
+	(canvas visibleRectangle containsRect: rect)
 		ifTrue: [ ^ self ].
 	canvas newAnimation
 		duration: 500 milliSeconds;
 		from: canvas camera position;
-		to: shadow position;
+		to: rect floatCenter;
 		on: canvas camera set: #position:.
 ]
 
@@ -106,7 +108,7 @@ RSSearchInCanvasInteraction >> cleanAndResetFixedshapes [
 ]
 
 { #category : #'private - events' }
-RSSearchInCanvasInteraction >> click: evt [
+RSSearchInCanvasInteraction >> clickOnLabel: evt [
 	| shapes label index shadow nextShadow |
 	label := evt shape.
 	shapes := label propertyAt: #shapesToHighlight.
@@ -261,25 +263,22 @@ RSSearchInCanvasInteraction >> processKeyUp: evt [
 
 { #category : #public }
 RSSearchInCanvasInteraction >> putShadowOn: shape [
-	| shadow pad key |
-	pad := 5/ (self scaleFrom: shape).
+	| shadow key |
 	key := #shadow.
 	shadow := RSBox new
-		fromRectangle: (shape encompassingRectangle expandBy: pad);
 		paint: self colorToUseToHighlight;
-		cornerRadius: pad * 0.75;
 		yourself.
-	shape identityHash traceCr.
 	shape removeInteractionIfPresent: self class.
 	shape 
-		when: RSPositionChangedEvent do: [ RSLocation new move: shadow on: shape ];
-		when: RSExtentChangedEvent do: [ RSLocation new move: shadow on: shape ].
+		when: RSPositionChangedEvent send: #updateShadow: to: self;
+		when: RSExtentChangedEvent send: #updateShadow: to: self.
 	
 	shape parent ifNotNil: [ shape parent addShape: shadow before: shape ].
 	shape propertyAt: key
 		ifPresent: [ :oldShadow | oldShadow remove ].
 		
 	shape propertyAt: key put: shadow.
+	self updateShadow: shape.
 ]
 
 { #category : #rendering }
@@ -341,7 +340,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	
 	lbl fontSize: 14.
 	lbl @ RSPopup; @ highlightableLabels.
-	lbl when: RSMouseClick send: #click: to: self.
+	lbl when: RSMouseClick send: #clickOnLabel: to: self.
 	lbl color: self colorToUseToHighlight.
 	canvas addShape: lbl.
 	lbl setAsFixed.
@@ -402,6 +401,18 @@ RSSearchInCanvasInteraction >> unhighlightShape: s [
 { #category : #util }
 RSSearchInCanvasInteraction >> unhighlightShapes: shapesToHighlight [
 	shapesToHighlight do: [ :s | self unhighlightShape: s ]
+]
+
+{ #category : #public }
+RSSearchInCanvasInteraction >> updateShadow: evt [
+	| shadow shape pad |
+	shape := evt shape.
+	shadow := shape propertyAt: #shadow.
+	shadow ifNil: [ ^ self ].
+	pad := 5/ (self scaleFrom: shape).
+	shadow
+		fromRectangle: (shape encompassingRectangle expandBy: pad);
+		cornerRadius: pad * 0.75.
 ]
 
 { #category : #'public - configuration' }

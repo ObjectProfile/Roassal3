@@ -124,9 +124,10 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 { #category : #hooks }
 RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 	self addScrollBars: aCanvas.
-	
-	aCanvas when: RSPositionChangedEvent do: [ self updateScrollbars ].
-	aCanvas when: RSScaleChangedEvent do: [ self updateScrollbars ].
+	aCanvas 
+		when: RSPositionChangedEvent send: #updateScrollbars to: self;
+		when: RSScaleChangedEvent send: #updateScrollbars to: self;
+		when: RSExtentChangedEvent send: #updateScrollbars to: self.
 ]
 
 { #category : #rendering }

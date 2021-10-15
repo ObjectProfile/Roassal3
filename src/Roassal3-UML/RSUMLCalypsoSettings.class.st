@@ -9,7 +9,8 @@ Class {
 		'darkThemeUMLClassColor',
 		'lightThemeUMLClassColor',
 		'methodsLimitUML',
-		'useCalypsoUML'
+		'useCalypsoUML',
+		'useAnimationInCalypsoBaseline'
 	],
 	#category : #'Roassal3-UML-Calypso-Settings'
 }
@@ -67,6 +68,17 @@ RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
 ]
 
 { #category : #settings }
+RSUMLCalypsoSettings class >> settingsForCalypsoUMLAnimationInBaseline: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #useAnimationInCalypsoBaseline)
+		parent: #useCalypsoUML;
+		label: 'Use animation in calypso baseline';
+		description: 'Enable or disable the animation for the Baseline-Graph';
+		default: true;
+		target: self
+]
+
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLColors)
@@ -90,7 +102,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLInitialSelectionOn: aBuilder 
 	<systemsettings>
 	(aBuilder pickOne: #initialSelectionClass)
 		parent: #useCalypsoUML;
-		label: 'UML initial selection' ;  
+		label: 'UML initial selection' ;
 		description: 'Selected a strategy when you open a class with the uml';
 		target: self;
 		domainValues: RSInitialSelection allSubclasses;
@@ -123,12 +135,22 @@ RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 		description: 'Settings related to the UML within Calypso browser'.
 ]
 
-{ #category : #settings }
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> useAnimationInCalypsoBaseline [
+	^ useAnimationInCalypsoBaseline ifNil: [ ^ true ]
+]
+
+{ #category : #accessing }
+RSUMLCalypsoSettings class >> useAnimationInCalypsoBaseline: aBoolean [
+	useAnimationInCalypsoBaseline := aBoolean
+]
+
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useCalypsoUML [
 	^ useCalypsoUML ifNil: [ ^ true ]
 ]
 
-{ #category : #settings }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useCalypsoUML: aBoolean [
 	useCalypsoUML := aBoolean
 ]
