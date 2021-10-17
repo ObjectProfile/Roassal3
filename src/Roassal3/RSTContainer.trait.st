@@ -153,6 +153,13 @@ RSTContainer >> nodes [
 
 { #category : #accessing }
 RSTContainer >> numberOfEdges [
+	"OBSOLETE. USE #numberOfLines INSTEAD"
+	"Return the number of edges contained in the container"
+	^ self numberOfLines
+]
+
+{ #category : #accessing }
+RSTContainer >> numberOfLines [
 	"Return the number of edges contained in the container"
 	^ self privateEdges
 		ifNil: [ 0 ]
