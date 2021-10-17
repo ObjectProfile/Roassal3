@@ -109,6 +109,11 @@ RSLayoutBuilder >> rawForce [
 ]
 
 { #category : #'public - layout' }
+RSLayoutBuilder >> simpleForce [
+	^ layout := RSSimpleForceBasedLayout new
+]
+
+{ #category : #'public - layout' }
 RSLayoutBuilder >> sugiyama [
 	^ layout := RSSugiyamaLayout new.
 ]
