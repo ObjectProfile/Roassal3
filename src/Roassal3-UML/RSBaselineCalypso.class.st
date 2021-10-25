@@ -10,7 +10,7 @@ Class {
 		'loadedPopup',
 		'high',
 		'highMenu',
-		'isUsingPackageSize'
+		'nodeSizeOption'
 	],
 	#category : #'Roassal3-UML-Calypso'
 }
@@ -65,7 +65,12 @@ RSBaselineCalypso >> applyLayoutOn: canvas [
 			duration: 2 seconds;
 			onStepDo: [ canvas zoomToFit ].
 		 ].
-	canvas @ interaction.
+	RSUMLCalypsoSettings useAnimationInCalypsoBaseline
+		ifTrue: [ canvas @ interaction ]
+		ifFalse: [
+			layout on: canvas nodes.
+			canvas nodes @ RSDraggable ]
+	
 	
 ]
 
@@ -126,12 +131,34 @@ RSBaselineCalypso >> buildLegendOn: canvas [
 ]
 
 { #category : #'building - menus' }
+RSBaselineCalypso >> buildMenuMorphSize: evt [
+	| menu options |
+	menu := MenuMorph new.
+	nodeSizeOption ifNil: [ nodeSizeOption := 1 ].
+	options := { 
+		#resizeLinesOfCode: -> 'Change node size using lines of code of each baseline class'.
+		#resizePackagesSize: -> 'Change node size using number of packages'.
+		#resizeLevel: -> 'Change node size using level'}.
+	options doWithIndex: [ :a :index |
+		(menu 
+			add: a value
+			target: self
+			selector: a key
+			argumentList: (Array with: evt))
+			icon: (self iconNamed:(index = nodeSizeOption 
+				ifTrue: [ #radioButtonOn ]
+				ifFalse: [ #radioButtonOff ]))
+		 ].
+	menu popUpInWorld
+]
+
+{ #category : #'building - menus' }
 RSBaselineCalypso >> buildMenuOn: canvas [
 	
 	| menus |
 	menus := RSGroup new.
 	#('Show names' 'showHideNames:'
-	'Change node size using number of packages' 'resizeNodes:') pairsDo: [ :name :action | 
+	'Change node size using...' 'buildMenuMorphSize:') pairsDo: [ :name :action | 
 		| label |
 		label := RSLabel new
 			text: name;
@@ -156,6 +183,14 @@ RSBaselineCalypso >> buildUmlCanvas [
 	allProjects := self collectAllProjects.
 	canvas addAll: (allProjects associations collect: [:asso | self shapeFor: asso ]).
 	self addEdgesOn: canvas.
+	
+	self 
+		setLevels: (canvas nodes 
+			detect: [ :node| node color = Color blue ]
+			ifNone: [ nil ])
+		in: Set new
+		level: 0.
+	
 	self applyLayoutOn: canvas.
 	self applyControlsOn: canvas.
 	self applyTheme: canvas.
@@ -264,24 +299,41 @@ RSBaselineCalypso >> notLoadedPopup [
 ]
 
 { #category : #'building - menus' }
-RSBaselineCalypso >> resizeNodes: evt [
-	| minSize newText propertyKey |
-	isUsingPackageSize ifNil: [ isUsingPackageSize := true ].
+RSBaselineCalypso >> resizeLevel: evt [
+	nodeSizeOption := 3.
+	self resizeNodes: evt key: #level.
+]
+
+{ #category : #'building - menus' }
+RSBaselineCalypso >> resizeLinesOfCode: evt [
+	nodeSizeOption := 1.
+	self resizeNodes: evt key: #linesOfCode.
+]
+
+{ #category : #'building - menus' }
+RSBaselineCalypso >> resizeNodes: evt key: propertyKey [
+	| minSize|
 	minSize := 15.
-	isUsingPackageSize ifTrue: [ 
-		isUsingPackageSize := false.
-		newText := 'Change node size using number of packages'.
-		propertyKey := #linesOfCode.
-	] ifFalse: [ 
-		isUsingPackageSize := true.
-		propertyKey := #packagesSize.
-		newText := 'Change node size using lines of code of each baseline class' ].
-	
 	evt canvas nodes do: [ :node |
 		node size: minSize + (node propertyAt: propertyKey).
 		node updateConnectedLines ].
-	evt shape text: newText.
-	evt signalUpdate.
+	evt signalUpdate
+]
+
+{ #category : #'building - menus' }
+RSBaselineCalypso >> resizePackagesSize: evt [
+	nodeSizeOption := 2.
+	self resizeNodes: evt key: #packagesSize.
+]
+
+{ #category : #building }
+RSBaselineCalypso >> setLevels: node in: set level: level [
+	node ifNil: [ ^ self ].
+	(set includes: node) ifTrue: [ ^ self ].
+	set add: node.
+	node propertyAt: #level put: level.
+	node outgoingShapes do: [ :shape |
+		self setLevels: shape in: set level: level + 10 ].
 ]
 
 { #category : #building }
@@ -296,12 +348,14 @@ RSBaselineCalypso >> shapeFor: assoc [
 	shape
 		when: RSMouseDoubleClick
 		do: [ :evt | (self class environment at: evt shape model) browse ].
+	shape propertyAt: #level put: 0.
 	assoc value ifNil: [ 
-		shape @ self notLoadedPopup.
-		shape color: Color red.
-		shape propertyAt: #linesOfCode put: 0.
-		shape propertyAt: #packagesSize put: 0.
-		shape size: minSize ]
+		shape 
+			@ self notLoadedPopup;
+			color: Color red;
+			propertyAt: #linesOfCode put: 0;
+			propertyAt: #packagesSize put: 0;
+			size: minSize ]
 	ifNotNil: [ :cls | 
 		assoc key = self targetClass name
 			ifTrue: [ shape color: Color blue ].
