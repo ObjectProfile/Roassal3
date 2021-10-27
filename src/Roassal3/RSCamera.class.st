@@ -103,7 +103,7 @@ RSCamera >> fromSpaceToPixel: aPoint [
 RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
-	scale := 1.0000001.
+	scale := 1.000000.
 	originMode := #center.
 ]
 
