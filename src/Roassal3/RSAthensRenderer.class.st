@@ -675,7 +675,6 @@ RSAthensRenderer >> visitLine: line [
 	| path paint |
 	athensCanvas setPathMatrix.
 	path := self getOrCreatePathOf: line.
-	
 	paint := line paintOn: self.
 	paint ifNotNil: [ 
 		athensCanvas
@@ -683,6 +682,5 @@ RSAthensRenderer >> visitLine: line [
 			drawShape: path ].
 	self visitBorderIfNecessary: line.
 	line markerShapesInPositionDo: [ :shape | shape accept: self ].
-	"self visitMarkersIfNecessary: line."
 	
 ]
