@@ -253,6 +253,11 @@ RSLabel >> isItalic [
 ]
 
 { #category : #testing }
+RSLabel >> isLabel [
+	^ true
+]
+
+{ #category : #testing }
 RSLabel >> isNormal [
 	^ emphasis emphasisCode = 0
 ]
