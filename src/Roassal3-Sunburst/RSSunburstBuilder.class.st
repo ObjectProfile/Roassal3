@@ -16,12 +16,6 @@ Class {
 	#category : #'Roassal3-Sunburst'
 }
 
-{ #category : #'public - shape' }
-RSSunburstBuilder >> color: aBlock [
-	"an object"
-	color := aBlock
-]
-
 { #category : #strategy }
 RSSunburstBuilder >> constantWidthStrategy [
 	self strategy: RSSunburstConstantWidthLayout new.
