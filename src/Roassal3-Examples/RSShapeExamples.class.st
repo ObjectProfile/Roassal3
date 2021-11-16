@@ -1326,3 +1326,38 @@ RSShapeExamples >> example45CompositeDragResize [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example46Popups [
+	<script: 'self new example46Popups open'>
+	| c shapes color |
+	c := RSCanvas new.
+	color := NSScale linear
+		from: Color gray;
+		to: Color blue.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		| computedColor |
+		computedColor := color scale: cls numberOfMethods.
+		RSBox new
+			model: cls;
+			draggable;
+			@ (RSPopup new in: [ :popup | 
+				| sb |
+				sb := popup shapeBuilder.
+				sb boxBuilder 
+					color: computedColor;
+					border: (RSBorder new color: Color black; width: 2).
+				sb labelBuilder labelShape color: Color white.
+				popup]);
+			color: computedColor;
+			size: cls linesOfCode sqrt + 10;
+			yourself ].
+	c addAll: shapes.
+	RSLineBuilder orthoVertical
+		withVerticalAttachPoint;
+		shapes: shapes;
+		connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	c @ RSCanvasController.
+	^ c
+]
