@@ -28,7 +28,9 @@ RSSunburstExamples >> example02MultipleRoots [
 		segmentSpacing: 1.
 	sb from: { String. RSEvent. RSShape } using:  #subclasses.
 	sb canvas @ RSCanvasController.
-	^ sb
+	sb build.
+	sb shapes @ RSPopup.
+	^ sb canvas
 ]
 
 { #category : #examples }
@@ -39,7 +41,9 @@ RSSunburstExamples >> example03ConstantStrategy [
 	sb constantWidthStrategy arcWidth: 25.
 	sb explore: Collection using:  #subclasses.
 	sb canvas @ RSCanvasController.
-	^ sb
+	sb build.
+	sb shapes @ RSPopup.
+	^ sb canvas
 ]
 
 { #category : #examples }
@@ -50,6 +54,7 @@ RSSunburstExamples >> example04Edges [
 	sb explore: Collection using:  #subclasses.
 	sb canvas @ RSCanvasController.
 	sb build.
+	sb shapes @ RSPopup.
 	RSLineBuilder arrowedLine
 		attachPoint: RSSunburstAttachPoint new;
 		canvas: sb canvas;
@@ -70,6 +75,7 @@ RSSunburstExamples >> example05BezierEdges [
 	sb explore: Collection using:  #subclasses.
 	sb build.
 	sb canvas @ RSCanvasController.
+	sb shapes @ RSPopup.
 	RSLineBuilder sunburstBezier
 		width: 2;
 		color: Color black;
@@ -94,6 +100,7 @@ RSSunburstExamples >> example06Rotation [
 	sb sliceShape withBorder.
 	sb explore: Collection using: #subclasses.
 	sb build.
+	sb shapes @ RSPopup.
 	RSNormalizer color
 		from: Color veryLightGray translucent;
 		to: Color gray;
@@ -203,6 +210,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 		lastShapes := canvas shapes copy.
 		sb explore: class using:  #subclasses.
 		sb build.
+		sb shapes @ RSPopup.
 		label text: class name.
 		
 		newShapes := sb shapes.

@@ -70,8 +70,6 @@ RSSunburstBuilder >> shapeFor: anObject [
 	| slice |
 	slice := self sliceShape copy
 		model: anObject;
-		popup;
-		draggable;
 		yourself.
 	slice color: (color rsValue: slice).
 	^ slice 
