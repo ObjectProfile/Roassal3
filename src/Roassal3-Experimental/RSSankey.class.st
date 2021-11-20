@@ -50,46 +50,49 @@ RSSankey >> centerOf: box [
 
 { #category : #private }
 RSSankey >> computeBoxesBreadths [
+
 	| remainingBoxes nextBoxes x kx |
 	x := 0.
 	remainingBoxes := boxes.
-	[ remainingBoxes size isZero ] whileFalse: [ 
+	[ remainingBoxes notEmpty and: [ x < boxes size ] ] whileTrue: [ 
 		nextBoxes := OrderedCollection new.
-		remainingBoxes do: [ :box |
+		remainingBoxes do: [ :box | 
 			box propertyAt: #x put: x.
-			nextBoxes addAll: ((box propertyAt: #sourceLinks) collect: #to) ].
+			nextBoxes addAll: ((box propertyAt: #sourceLinks)
+					 collect: #to
+					 thenReject: [ :each | nextBoxes includes: each ]) ].
 		remainingBoxes := nextBoxes.
-		x := x + 1.
-	 ].
-	
+		x := x + 1 ].
+
 	kx := extent x / (x - 1).
-	boxes do: [ :box | | x1 |
+	boxes do: [ :box | 
+		| x1 |
 		(box propertyAt: #sourceLinks) ifEmpty: [ 
-			box propertyAt: #x put: x - 1.
-			 ].
+			box propertyAt: #x put: x - 1 ].
 		x1 := box propertyAt: #x.
-		box propertyAt: #x put: x1 * kx
-		 ]
+		box propertyAt: #x put: x1 * kx ]
 ]
 
 { #category : #private }
 RSSankey >> computeBoxesDepths [
+
 	| boxesByBreadth alpha |
 	boxesByBreadth := boxes groupedBy: [ :e | e propertyAt: #x ].
-	boxesByBreadth := boxesByBreadth keysSortedSafely 
-		collect: [:k | boxesByBreadth at: k ].
+	boxesByBreadth := boxesByBreadth keysSortedSafely collect: [ :k | 
+		                  boxesByBreadth at: k ].
 	boxesByBreadth ifEmpty: [ ^ self ].
-	boxesByBreadth last do: [ :e |
-		e propertyAt: #last put: true ].
+	boxesByBreadth last do: [ :e | e propertyAt: #last put: true ].
 	self setupBoxesDepth: boxesByBreadth.
 	self resolveCollisions: boxesByBreadth.
+	self computeLinesDepths.
 	alpha := 1.
-	1 to: iterations do: [ :i |
-		self relaxRightToLeft: (alpha := alpha *0.99) boxes: boxesByBreadth.
+	1 to: iterations do: [ :i | 
+		self relaxRightToLeft: (alpha := alpha * 0.99) boxes: boxesByBreadth.
 		self resolveCollisions: boxesByBreadth.
+		self computeLinesDepths.
 		self relaxLeftToRight: alpha boxes: boxesByBreadth.
-		self resolveCollisions: boxesByBreadth.]
-	
+		self resolveCollisions: boxesByBreadth.
+		self computeLinesDepths ]
 ]
 
 { #category : #private }
@@ -103,22 +106,21 @@ RSSankey >> computeBoxesValues [
 
 { #category : #private }
 RSSankey >> computeLinesDepths [
-	boxes do: [ :box |
-		(box propertyAt: #sourceLinks) sort: [:a :b | 
-			(a to propertyAt: #y) < (b from propertyAt: #y) ].
-		(box propertyAt: #targetLinks) sort:  [ :a :b | 
-			(a from propertyAt: #y) < (b to propertyAt: #y) ].
-		 ].
-	boxes do: [ :box | | sy ty|
+
+	boxes do: [ :box | 
+		(box propertyAt: #sourceLinks) sort: [ :a :b | 
+			(a to propertyAt: #y) < (b to propertyAt: #y) ].
+		(box propertyAt: #targetLinks) sort: [ :a :b | 
+			(a from propertyAt: #y) < (b from propertyAt: #y) ] ].
+	boxes do: [ :box | 
+		| sy ty |
 		sy := ty := 0.
-		(box propertyAt: #sourceLinks) do: [ :line |
+		(box propertyAt: #sourceLinks) do: [ :line | 
 			line propertyAt: #sy put: sy.
 			sy := sy + (line propertyAt: #dy) ].
-		(box propertyAt: #targetLinks) do: [ :line |
+		(box propertyAt: #targetLinks) do: [ :line | 
 			line propertyAt: #ty put: ty.
-			ty := ty + (line propertyAt: #dy) ].
-		 ].
-	
+			ty := ty + (line propertyAt: #dy) ] ]
 ]
 
 { #category : #private }
