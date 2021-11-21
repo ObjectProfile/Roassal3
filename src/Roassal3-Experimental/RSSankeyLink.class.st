@@ -1,5 +1,5 @@
 "
-TODO
+I represent links between sankey charts nodes
 "
 Class {
 	#name : #RSSankeyLink,
@@ -22,6 +22,14 @@ RSSankeyLink class >> on: anAssociation [
 		  yourself
 ]
 
+{ #category : #comparing }
+RSSankeyLink >> = anObject [
+
+	^ anObject class == self class and: [ 
+		  anObject from = self from and: [ 
+			  anObject to = self to and: [ anObject value = self value ] ] ]
+]
+
 { #category : #accessing }
 RSSankeyLink >> from [
 
@@ -32,6 +40,12 @@ RSSankeyLink >> from [
 RSSankeyLink >> from: anObject [
 
 	from := anObject
+]
+
+{ #category : #comparing }
+RSSankeyLink >> hash [
+
+	^ self from hash xor: (self to hash xor: self value hash)
 ]
 
 { #category : #printing }
