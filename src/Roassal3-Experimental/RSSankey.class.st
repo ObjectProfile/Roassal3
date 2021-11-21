@@ -21,6 +21,26 @@ Class {
 	#category : #'Roassal3-Experimental-Sankey'
 }
 
+{ #category : #'instance creation' }
+RSSankey class >> withAllAssociations: aCollection [
+
+	^ self withAllLinks: (aCollection collect: [ :eachAssociation | 
+			   RSSankeyLink on: eachAssociation ])
+]
+
+{ #category : #'instance creation' }
+RSSankey class >> withAllLinks: aCollection [
+
+	^ self new
+		  links: aCollection;
+		  nodes: (aCollection
+				   flatCollect: [ :eachLink | 
+					   { 
+						   eachLink from.
+						   eachLink to } ]
+				   as: OrderedCollection) removeDuplicates
+]
+
 { #category : #accessing }
 RSSankey >> boxColor [
 

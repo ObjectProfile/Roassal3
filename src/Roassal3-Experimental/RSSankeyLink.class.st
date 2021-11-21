@@ -12,6 +12,16 @@ Class {
 	#category : #'Roassal3-Experimental-Sankey'
 }
 
+{ #category : #'instance creation' }
+RSSankeyLink class >> on: anAssociation [
+
+	^ self new
+		  from: anAssociation key key;
+		  to: anAssociation value;
+		  value: anAssociation key value;
+		  yourself
+]
+
 { #category : #accessing }
 RSSankeyLink >> from [
 
