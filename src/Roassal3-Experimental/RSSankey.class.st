@@ -1,5 +1,9 @@
 "
-I represent a Sankey chart
+I represent a Sankey chart.
+
+I am reimplemented the sankey code from D3 for smalltalk-pharo and some of their examples.
+
+https://www.d3-graph-gallery.com/sankey
 "
 Class {
 	#name : #RSSankey,
