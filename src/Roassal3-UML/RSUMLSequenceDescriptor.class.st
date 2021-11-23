@@ -256,7 +256,7 @@ RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timesp
 		  ifNotSelfSend: [ 
 			  RSComposite new
 				  shapes: {  };
-				  extent: Point zero;
+				  extent: 0 @ 0;
 				  yourself ]
 ]
 
