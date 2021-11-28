@@ -45,7 +45,7 @@ RSSankeyLink >> from: anObject [
 { #category : #comparing }
 RSSankeyLink >> hash [
 
-	^ self from hash xor: (self to hash xor: self value hash)
+	^ self from hash bitXor: (self to hash bitXor: self value hash)
 ]
 
 { #category : #printing }
