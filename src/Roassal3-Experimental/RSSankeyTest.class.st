@@ -88,6 +88,16 @@ RSSankeyTest >> testBoxY [
 ]
 
 { #category : #tests }
+RSSankeyTest >> testGenerateSankey [
+
+	RSSankey withAllAssociations: { 
+			(#Source1 -> 5 -> #Target1).
+			(#Source2 -> 1 -> #Target1).
+			(#Target1 -> 2 -> #Target2).
+			(#Target1 -> 4 -> #Target3) } asSet
+]
+
+{ #category : #tests }
 RSSankeyTest >> testLineDy [
 
 	self assert: (sankey lines at: 1) dy equals: 1225 / 3.
