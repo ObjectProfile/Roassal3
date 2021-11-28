@@ -88,7 +88,7 @@ RSSankeyTest >> testBoxY [
 ]
 
 { #category : #tests }
-RSSankeyTest >> testGenerateSankey [
+RSSankeyTest >> testGenerateSankeyUsingSet [
 
 	RSSankey withAllAssociations: { 
 			(#Source1 -> 5 -> #Target1).
