@@ -61,7 +61,7 @@ RSTContainer >> addShape: aShape [
 RSTContainer >> allChildren [
 	| allChildren index |
 	index := 1.
-	allChildren := OrderedCollection withAll: self children.
+	allChildren := OrderedCollection withAll: self shapes.
 	[ index <= allChildren size ] whileTrue: [ 
 		allChildren addAll: ((allChildren at: index) children ifNil: [#()]).
 		index := index + 1 ].

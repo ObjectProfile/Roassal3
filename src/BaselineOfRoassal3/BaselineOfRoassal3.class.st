@@ -58,6 +58,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Legend'
 	'Roassal3-UML'
 	'Roassal3-Sunburst'
+	'Roassal3-FlameGraph'
 	'Roassal3-Pie'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
@@ -91,6 +92,7 @@ BaselineOfRoassal3 >> examplePackagesNames [
 	'Roassal3-Chart-Examples'
 	'Roassal3-Pie-Examples'
 	'Roassal3-Sunburst-Examples'
+	'Roassal3-FlameGraph-Examples'
 	'Roassal3-UML-Examples'
 	'Roassal3-Spec-Examples')
 ]
