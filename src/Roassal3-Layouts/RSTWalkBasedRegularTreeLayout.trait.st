@@ -508,14 +508,15 @@ RSTWalkBasedRegularTreeLayout >> positionNonLeaf: parent leftMostChild: leftMost
 	                  + (self prelimOf: rightMostChild)
 	                  + (self modOf: rightMostChild)
 	                  + (self breadthMeasureOf: rightMostChild)
+"	                  + (self breadthMeasureOf: leftMostChild)"
 	                  - (self breadthMeasureOf: parent).
 
-	"self
+	self
 		prelimOf: parent
 		put:
-		(self prelimOf: leftMostChild) - (self breadthMeasureOf: parent)"
+		(self prelimOf: leftMostChild).
 
-	self prelimOf: parent put: childrenPrelim / 2
+		self prelimOf: parent put: childrenPrelim / 2
 ]
 
 { #category : #properties }
