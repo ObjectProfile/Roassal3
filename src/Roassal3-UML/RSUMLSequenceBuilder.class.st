@@ -63,17 +63,12 @@ RSUMLSequenceBuilder >> initialize [
 						          ifFalse: [ anObject ]);
 				         yourself.
 
-			box := RSBox new
-				       color: Color veryVeryLightGray translucent;
-				       cornerRadius: Float platinumRatio;
-				       extent: label extent;
-				       yourself.
-
 			RSComposite new
-				shapes: { 
-						box.
-						label };
-				padding: Float platinumRatio;
+				shapes:
+					{ ((label boxedWithPad: Float goldenPlatinumRatio) yourself: [ 
+							 :aBoxed | 
+							 aBoxed shapes first color:
+									 aBoxed shapes first borderColor lighter lighter lighter ]) };
 				when: RSMouseLeftClick do: [ :ev | anObject inspect ];
 				yourself ]
 ]

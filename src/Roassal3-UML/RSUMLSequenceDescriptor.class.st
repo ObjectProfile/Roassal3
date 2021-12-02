@@ -17,7 +17,8 @@ Class {
 		'circles',
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
-		'lastSends'
+		'lastSends',
+		'returnShapes'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -230,34 +231,10 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 { #category : #shapes }
 RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timespan: aTimespan selectorShape: aShape [
 
-	^ aMessageSend
-		  ifSelfSend: [ 
-			  | durationShape returnShape shapes |
-			  durationShape := self
-				                   durationShapeOfMessageSend: aMessageSend key
-				                   timespan: aTimespan
-				                   selectorShape: aShape.
-			  returnShape := self
-				                 nicknameOf: aMessageSend return
-				                 ifAbsent: [ 
-				                 receiverArgumentsShape value: aMessageSend return ].
-
-			  shapes := { 
-				            durationShape.
-				            returnShape }.
-
-			  RSVerticalLineLayoutWithGoldenGaps new
-				  alignCenter;
-				  on: shapes.
-
-			  RSComposite new
-				  shapes: shapes;
-				  yourself ]
-		  ifNotSelfSend: [ 
-			  RSComposite new
-				  shapes: {  };
-				  extent: 0 @ 0;
-				  yourself ]
+	^ RSComposite new
+		  shapes: {  };
+		  extent: 0 @ 0;
+		  yourself
 ]
 
 { #category : #API }
@@ -362,19 +339,11 @@ RSUMLSequenceDescriptor >> nicknameOf: anObject ifAbsent: aBlock [
 			  | nicknameShape |
 			  nicknameShape := RSLabel new
 				                   text: index asStringaz asUppercase;
-				                   paddedWithGoldenRatio.
+				                   boxedWithPad: Float goldenPlatinumRatio.
 
-			  ^ RSComposite new
-				    shapes: { 
-						    (RSBox new
-							     cornerRadius: Float platinumRatio;
-							     extent: nicknameShape extent;
-							     color: Color white;
-							     withBorder;
-							     yourself).
-						    nicknameShape shapes first };
-				    when: RSMouseLeftClick do: [ :ev | anObject inspect ];
-				    yourself ]
+			  nicknameShape
+				  when: RSMouseLeftClick do: [ :ev | anObject inspect ];
+				  yourself ]
 		  ifAbsent: aBlock
 ]
 
@@ -407,6 +376,7 @@ RSUMLSequenceDescriptor >> refresh [
 	columns := IdentityDictionary new.
 	indexes := IdentityDictionary new.
 	lastSends := IdentityDictionary new.
+	returnShapes := IdentityDictionary new.
 	widths := OrderedCollection new.
 
 	maxLabelHeight := 0.
@@ -545,15 +515,16 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 
-	^ aMessageSend
-		  ifSelfSend: [ self selectorShapeOfMessageSend: aMessageSend key ]
-		  ifNotSelfSend: [ 
-			  | return |
-			  return := aMessageSend return.
+	| return shape |
+	return := aMessageSend return.
 
-			  self
-				  nicknameOf: return
-				  ifAbsent: [ receiverArgumentsShape value: return ] ]
+	shape := self
+		         nicknameOf: return
+		         ifAbsent: [ receiverArgumentsShape value: return ].
+
+	returnShapes at: return put: shape.
+
+	^ shape
 ]
 
 { #category : #API }
