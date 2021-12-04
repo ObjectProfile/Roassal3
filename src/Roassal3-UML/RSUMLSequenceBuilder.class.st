@@ -10,7 +10,8 @@ Class {
 		'previousHeaders',
 		'greatestCommonIndex',
 		'receiverArgumentsShape',
-		'objectsSeenSoFar'
+		'objectsSeenSoFar',
+		'levels'
 	],
 	#category : #'Roassal3-UML-Builder'
 }
@@ -22,6 +23,7 @@ RSUMLSequenceBuilder >> build [
 		messagesSends: messagesSends;
 		receiverArgumentsShape: receiverArgumentsShape;
 		objectsSeenSoFar: objectsSeenSoFar;
+		levels: levels;
 		refresh.
 
 	^ super build
@@ -73,16 +75,51 @@ RSUMLSequenceBuilder >> initialize [
 				yourself ]
 ]
 
+{ #category : #accessing }
+RSUMLSequenceBuilder >> levels: anObject [
+
+	levels := anObject
+]
+
 { #category : #'as yet unclassified' }
 RSUMLSequenceBuilder >> lifeLines [
 
 	| lb yStart yEnd descriptor commonIndex transparentHeaders minTopHeader lifelines |
-	lb := RSLineBuilder line
-		      withBorderAttachPoint;
-		      yourself.
-
 	descriptor := self modelDescriptor.
 
+	lb := RSLineBuilder line
+		      withBorderAttachPoint;
+		      "controlPointsController: (RSBlockCPController new
+				       block: [ :aLine | 
+					       | selfSends |
+					       selfSends := descriptor selfMessageSends
+						                    at: aLine from model
+						                    ifAbsent: [ {  } ].
+
+					       Array streamContents: [ :aStream | 
+							       aStream nextPut: aLine startPoint.
+
+							       selfSends do: [ :anAssoc | 
+									       | level x y direction |
+									       level := levels at: anAssoc.
+									       x := descriptor xStartOf: anAssoc.
+									       y := descriptor yStartOf: anAssoc.
+									       direction := anAssoc value
+										                    ifMessageSend: [ 
+											                    aStream
+												                    nextPut: level * 50 + x @ y;
+												                    nextPut: level + 1 * 50 + x @ y ]
+										                    ifReturnMessageSend: [ 
+											                    aStream
+												                    nextPut: level + 1 * 50 + x @ y;
+												                    nextPut: level * 50 + x @ y ] ].
+
+							       aStream nextPut: aLine endPoint ] ];
+				       yourself);"
+			      yourself.
+
+	"lb shape cornerRadii: Float goldenPlatinumRatio.
+"
 	yStart := descriptor yStart.
 	yEnd := descriptor yEnd.
 
@@ -114,7 +151,6 @@ RSUMLSequenceBuilder >> lifeLines [
 			             @
 			             (yStart - (headerShape height / 2)
 			              - (descriptor radius * 4)).
-
 
 		             minTopHeader := minTopHeader
 			                             ifNil: [ headerShape ]
@@ -158,6 +194,52 @@ RSUMLSequenceBuilder >> lifeLines [
 		shape first position: shape first position x @ y ].
 
 	^ lifelines collect: [ :each | 
+		  | aLine newLine xx |
+		  xx := each first position x.
+
+		  aLine := each third.
+
+		  newLine := descriptor selfMessageSends
+			             at: aLine from model
+			             ifPresent: [ :selfSends | 
+				             | controlPoints |
+				             controlPoints := Array streamContents: [ :aStream | 
+					                              aStream nextPut:
+						                              xx
+						                              @
+						                              each first encompassingRectangle
+							                              bottom.
+
+					                              selfSends do: [ :anAssoc | 
+						                              | level x y |
+						                              level := levels at: anAssoc.
+						                              x := descriptor xStartOf: anAssoc.
+						                              y := descriptor yStartOf: anAssoc.
+						                              anAssoc value
+							                              ifMessageSend: [ 
+								                              aStream
+									                              nextPut: level * 50 + x @ y;
+									                              nextPut: level + 1 * 50 + x @ y ]
+							                              ifReturnMessageSend: [ 
+								                              aStream
+									                              nextPut: level + 1 * 50 + x @ y;
+									                              nextPut: level * 50 + x @ y ] ].
+
+					                              aStream nextPut:
+						                              xx
+						                              @
+						                              each second encompassingRectangle
+							                              top ].
+
+				             RSPolyline new
+					             cornerRadii: Float goldenPlatinumRatio;
+					             controlPoints: controlPoints;
+					             dotted;
+					             yourself ]
+			             ifAbsent: [ aLine ].
+
+		  each at: 3 put: newLine.
+
 		  RSComposite new
 			  shapes: each;
 			  yourself ]

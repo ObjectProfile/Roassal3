@@ -55,6 +55,20 @@ RSReturnMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 	^ self key ifSelfSend: sBlock ifNotSelfSend: nsBlock
 ]
 
+{ #category : #printing }
+RSReturnMessageSend >> printOn: aStream [
+
+	aStream
+		nextPutAll: self className;
+		nextPut: $(.
+
+	super printOn: aStream.
+
+	aStream nextPutAll: ') → '.
+	
+	return printOn: aStream
+]
+
 { #category : #accessing }
 RSReturnMessageSend >> receiver [
 

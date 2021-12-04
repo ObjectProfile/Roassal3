@@ -13,12 +13,13 @@ Class {
 		'headers',
 		'widths',
 		'maxLabelHeight',
-		'orderedHeaders',
 		'circles',
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
 		'lastSends',
-		'returnShapes'
+		'returnShapes',
+		'selfMessageSends',
+		'levels'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -120,7 +121,9 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMes
 { #category : #API }
 RSUMLSequenceDescriptor >> columnIndex: anIndex anotherColumnIndex: anotherIndex width: wrtWidth [
 
-	| i j width |
+	| i j width orderedHeaders |
+	orderedHeaders := self orderedHeaders.
+
 	i := anIndex min: anotherIndex.
 	j := anIndex max: anotherIndex.
 
@@ -142,22 +145,6 @@ RSUMLSequenceDescriptor >> columnIndex: anIndex anotherColumnIndex: anotherIndex
 		w := wrtWidth - width / (j - i).
 		i to: j - 1 do: [ :each | 
 		widths at: each put: (widths at: each) + w ] ]
-]
-
-{ #category : #API }
-RSUMLSequenceDescriptor >> columnIndexOf: anObject [
-
-	^ columns at: anObject ifAbsentPut: [ 
-		  | h |
-		  objectsSeenSoFar
-			  at: anObject
-			  ifAbsentPut: [ objectsSeenSoFar size + 1 ].
-
-		  h := headers at: anObject put: (self headerShapeOf: anObject).
-
-		  orderedHeaders add: h.
-
-		  columns size + 1 ]
 ]
 
 { #category : #accessing }
@@ -191,7 +178,9 @@ RSUMLSequenceDescriptor >> createCircles [
 { #category : #API }
 RSUMLSequenceDescriptor >> cumulateWidths [
 
-	| cumulatedWidth |
+	| cumulatedWidth orderedHeaders |
+	orderedHeaders := self orderedHeaders.
+
 	cumulatedWidth := 0.
 	1 to: widths size do: [ :i | 
 		| w |
@@ -231,10 +220,16 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 { #category : #shapes }
 RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timespan: aTimespan selectorShape: aShape [
 
-	^ RSComposite new
-		  shapes: {  };
-		  extent: 0 @ 0;
-		  yourself
+	| return shape |
+	return := aMessageSend return.
+
+	shape := self
+		         nicknameOf: return
+		         ifAbsent: [ receiverArgumentsShape value: return ].
+
+	returnShapes at: return put: shape.
+
+	^ shape
 ]
 
 { #category : #API }
@@ -252,9 +247,26 @@ RSUMLSequenceDescriptor >> forPharo [
 ]
 
 { #category : #API }
+RSUMLSequenceDescriptor >> headerIfAbsentCreateAt: anObject [
+
+	^ headers
+		  at: anObject
+		  ifPresent: [ :anAssoc | anAssoc key ]
+		  ifAbsent: [ 
+			  | headerShape index |
+			  headerShape := self headerShapeOf: anObject.
+
+			  index := headers size + 1.
+
+			  headers at: anObject put: headerShape -> index.
+
+			  headerShape ]
+]
+
+{ #category : #API }
 RSUMLSequenceDescriptor >> headerOf: anObject [
 
-	^ headers at: anObject
+	^ (headers at: anObject) key
 ]
 
 { #category : #shapes }
@@ -305,6 +317,7 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 		stick: nicknameShape on: box.
 
 	^ RSComposite new
+		  model: anObject;
 		  shapes: (Array with: box with: nicknameShape);
 		  yourself
 ]
@@ -316,6 +329,12 @@ RSUMLSequenceDescriptor >> labelShapeOfString: aString [
 		  fontName: 'Source Code Pro';
 		  text: aString;
 		  yourself
+]
+
+{ #category : #accessing }
+RSUMLSequenceDescriptor >> levels: anObject [
+
+	levels := anObject
 ]
 
 { #category : #API }
@@ -354,6 +373,18 @@ RSUMLSequenceDescriptor >> objectsSeenSoFar: aDictionary [
 ]
 
 { #category : #API }
+RSUMLSequenceDescriptor >> orderedHeaders [
+
+	| orderedHeaders |
+	orderedHeaders := Array new: headers size.
+
+	headers valuesDo: [ :anAssoc | 
+		orderedHeaders at: anAssoc value put: anAssoc key ].
+
+	^ orderedHeaders
+]
+
+{ #category : #API }
 RSUMLSequenceDescriptor >> radius [
 
 	  ^ maxLabelHeight / 2 * Float silverRatio
@@ -369,7 +400,6 @@ RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
 RSUMLSequenceDescriptor >> refresh [
 
 	| maxHeightSeenSoFar |
-	orderedHeaders := OrderedCollection new.
 	headers := IdentityDictionary new.
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
@@ -377,6 +407,8 @@ RSUMLSequenceDescriptor >> refresh [
 	indexes := IdentityDictionary new.
 	lastSends := IdentityDictionary new.
 	returnShapes := IdentityDictionary new.
+	selfMessageSends := IdentityDictionary new.
+
 	widths := OrderedCollection new.
 
 	maxLabelHeight := 0.
@@ -384,16 +416,34 @@ RSUMLSequenceDescriptor >> refresh [
 
 	messagesSends withIndexDo: [ :anAssoc :index | 
 		| selectorLabel durationLabel fullMessageSend columnIndexOfClient columnIndexOfReceiver client receiver |
-		indexes at: anAssoc put: index.
-
 		fullMessageSend := anAssoc value.
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
 
+		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
+		indexes at: anAssoc put: index.
+
+		"For each `client` we record the self sends that occur to be connected by life lines."
+		fullMessageSend
+			ifSelfSend: [ 
+			selfMessageSends at: client inOrderedCollectionAdd: anAssoc ]
+			ifNotSelfSend: [  ].
+
+		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, to record the 'last'
+		 send for the pair (client, receiver)."
 		fullMessageSend recordReturnSend: anAssoc inDictionary: lastSends.
 
-		columnIndexOfClient := self columnIndexOf: client.
-		columnIndexOfReceiver := self columnIndexOf: receiver.
+		"Stick an alias."
+		objectsSeenSoFar
+			ifAbsentPutOrderAt: client;
+			ifAbsentPutOrderAt: receiver.
+
+		self
+			headerIfAbsentCreateAt: client;
+			headerIfAbsentCreateAt: receiver.
+
+		columnIndexOfClient := columns ifAbsentPutOrderAt: client.
+		columnIndexOfReceiver := columns ifAbsentPutOrderAt: receiver.
 
 		selectorLabel := fullMessageSend 
 			                 dispatchSelectorShapeOnSequenceDescritor: self.
@@ -515,16 +565,16 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 
-	| return shape |
-	return := aMessageSend return.
+	^ RSComposite new
+		  shapes: {  };
+		  extent: 0 @ 0;
+		  yourself
+]
 
-	shape := self
-		         nicknameOf: return
-		         ifAbsent: [ receiverArgumentsShape value: return ].
+{ #category : #accessing }
+RSUMLSequenceDescriptor >> selfMessageSends [
 
-	returnShapes at: return put: shape.
-
-	^ shape
+	^ selfMessageSends
 ]
 
 { #category : #API }
