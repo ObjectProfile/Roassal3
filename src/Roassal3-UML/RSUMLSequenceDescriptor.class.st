@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'messagesSends',
 		'maxHeight',
-		'columns',
 		'indexes',
 		'labels',
 		'headers',
@@ -147,6 +146,12 @@ RSUMLSequenceDescriptor >> columnIndex: anIndex anotherColumnIndex: anotherIndex
 		widths at: each put: (widths at: each) + w ] ]
 ]
 
+{ #category : #API }
+RSUMLSequenceDescriptor >> columnIndexOf: anObject [
+
+	^ (headers at: anObject) value
+]
+
 { #category : #accessing }
 RSUMLSequenceDescriptor >> columns [
 
@@ -157,8 +162,10 @@ RSUMLSequenceDescriptor >> columns [
 RSUMLSequenceDescriptor >> columnsWithIndexCollect: aBlock [
 
 	| array |
-	array := Array new: columns size.
-	columns keysAndValuesDo: [ :anObject :index | 
+	array := Array new: headers size.
+	headers keysAndValuesDo: [ :anObject :anAssoc | 
+		| index |
+		index := anAssoc value.
 		array at: index put: (aBlock value: anObject value: index) ].
 	^ array
 ]
@@ -403,7 +410,6 @@ RSUMLSequenceDescriptor >> refresh [
 	headers := IdentityDictionary new.
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
-	columns := IdentityDictionary new.
 	indexes := IdentityDictionary new.
 	lastSends := IdentityDictionary new.
 	returnShapes := IdentityDictionary new.
@@ -415,7 +421,7 @@ RSUMLSequenceDescriptor >> refresh [
 	maxHeightSeenSoFar := 0.
 
 	messagesSends withIndexDo: [ :anAssoc :index | 
-		| selectorLabel durationLabel fullMessageSend columnIndexOfClient columnIndexOfReceiver client receiver |
+		| selectorLabel durationLabel fullMessageSend client receiver |
 		fullMessageSend := anAssoc value.
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
@@ -442,9 +448,6 @@ RSUMLSequenceDescriptor >> refresh [
 			headerIfAbsentCreateAt: client;
 			headerIfAbsentCreateAt: receiver.
 
-		columnIndexOfClient := columns ifAbsentPutOrderAt: client.
-		columnIndexOfReceiver := columns ifAbsentPutOrderAt: receiver.
-
 		selectorLabel := fullMessageSend 
 			                 dispatchSelectorShapeOnSequenceDescritor: self.
 
@@ -454,8 +457,8 @@ RSUMLSequenceDescriptor >> refresh [
 			                 onSequenceDescritor: self.
 
 		self
-			columnIndex: columnIndexOfClient
-			anotherColumnIndex: columnIndexOfReceiver
+			columnIndex: (self columnIndexOf: client)
+			anotherColumnIndex: (self columnIndexOf: receiver)
 			width: (selectorLabel width max: durationLabel width).
 
 		maxLabelHeight := maxLabelHeight max: selectorLabel height.
@@ -593,7 +596,7 @@ RSUMLSequenceDescriptor >> widthsAmongHeader: anHeader andHeader: anotherHeader 
 { #category : #API }
 RSUMLSequenceDescriptor >> xEndOf: anObject [
 
-	^ self xOfColumn: (columns at: anObject value receiver)
+	^ self xOfColumn: (headers at: anObject value receiver) value
 ]
 
 { #category : #API }
@@ -605,7 +608,7 @@ RSUMLSequenceDescriptor >> xOfColumn: aColumnIndex [
 { #category : #API }
 RSUMLSequenceDescriptor >> xStartOf: anObject [
 
-	^ self xOfColumn: (columns at: anObject value client)
+	^ self xOfColumn: (headers at: anObject value client) value
 ]
 
 { #category : #API }
