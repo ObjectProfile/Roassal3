@@ -208,6 +208,15 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 	widths add: cumulatedWidth
 ]
 
+{ #category : #API }
+RSUMLSequenceDescriptor >> currentLevelOfClient: anObject [
+
+	^ selfMessageSends
+		  at: anObject
+		  ifPresent: [ :aCollection | aCollection size * 50 ]
+		  ifAbsent: [ 0 ]
+]
+
 { #category : #accessing }
 RSUMLSequenceDescriptor >> durationLabelOf: anAssociation [
 
@@ -338,12 +347,6 @@ RSUMLSequenceDescriptor >> labelShapeOfString: aString [
 		  yourself
 ]
 
-{ #category : #accessing }
-RSUMLSequenceDescriptor >> levels: anObject [
-
-	levels := anObject
-]
-
 { #category : #API }
 RSUMLSequenceDescriptor >> maxHeight: aNumber [
 
@@ -411,6 +414,7 @@ RSUMLSequenceDescriptor >> refresh [
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
 	indexes := IdentityDictionary new.
+	levels := IdentityDictionary new.
 	lastSends := IdentityDictionary new.
 	returnShapes := IdentityDictionary new.
 	selfMessageSends := IdentityDictionary new.
@@ -421,13 +425,18 @@ RSUMLSequenceDescriptor >> refresh [
 	maxHeightSeenSoFar := 0.
 
 	messagesSends withIndexDo: [ :anAssoc :index | 
-		| selectorLabel durationLabel fullMessageSend client receiver |
+		| selectorLabel durationLabel fullMessageSend client receiver clientLevel width |
 		fullMessageSend := anAssoc value.
+
+		"Bind client and receiver."
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
 
 		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
 		indexes at: anAssoc put: index.
+
+		"For each association record the indentation of its client."
+		clientLevel := self currentLevelOfClient: client.
 
 		"For each `client` we record the self sends that occur to be connected by life lines."
 		fullMessageSend
@@ -456,10 +465,16 @@ RSUMLSequenceDescriptor >> refresh [
 			                 selectorShape: selectorLabel
 			                 onSequenceDescritor: self.
 
+		width := selectorLabel width max: durationLabel width.
+
+		levels
+			at: anAssoc
+			put: clientLevel @ (self currentLevelOfClient: receiver) -> width.
+
 		self
 			columnIndex: (self columnIndexOf: client)
 			anotherColumnIndex: (self columnIndexOf: receiver)
-			width: (selectorLabel width max: durationLabel width).
+			width: width + clientLevel.
 
 		maxLabelHeight := maxLabelHeight max: selectorLabel height.
 
@@ -594,9 +609,10 @@ RSUMLSequenceDescriptor >> widthsAmongHeader: anHeader andHeader: anotherHeader 
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> xEndOf: anObject [
+RSUMLSequenceDescriptor >> xEndOf: anAssoc [
 
-	^ self xOfColumn: (headers at: anObject value receiver) value
+	^ (self xOfColumn: (headers at: anAssoc value receiver) value)
+	  + (levels at: anAssoc) key y
 ]
 
 { #category : #API }
@@ -606,9 +622,10 @@ RSUMLSequenceDescriptor >> xOfColumn: aColumnIndex [
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> xStartOf: anObject [
+RSUMLSequenceDescriptor >> xStartOf: anAssoc [
 
-	^ self xOfColumn: (headers at: anObject value client) value
+	^ (self xOfColumn: (headers at: anAssoc value client) value)
+	  + (levels at: anAssoc) key x
 ]
 
 { #category : #API }

@@ -23,7 +23,6 @@ RSUMLSequenceBuilder >> build [
 		messagesSends: messagesSends;
 		receiverArgumentsShape: receiverArgumentsShape;
 		objectsSeenSoFar: objectsSeenSoFar;
-		levels: levels;
 		refresh.
 
 	^ super build
