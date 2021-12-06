@@ -11,7 +11,8 @@ Class {
 		'greatestCommonIndex',
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
-		'levels'
+		'levels',
+		'edges'
 	],
 	#category : #'Roassal3-UML-Builder'
 }
@@ -52,11 +53,13 @@ RSUMLSequenceBuilder >> initialize [
 
 	super initialize.
 
+	edges := IdentityDictionary new.
+
 	self
 		modelDescriptor: RSUMLSequenceDescriptor new;
 		renderer: RSBasicUMLSequenceRenderer new;
 		receiverArgumentsShape: [ :anObject | 
-			| label box |
+			| label |
 			label := RSLabel new
 				         model: anObject;
 				         text: (anObject isBlock
@@ -81,44 +84,17 @@ RSUMLSequenceBuilder >> levels: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-RSUMLSequenceBuilder >> lifeLines [
+RSUMLSequenceBuilder >> lifeLines: selfLines [
 
-	| lb yStart yEnd descriptor commonIndex transparentHeaders minTopHeader lifelines |
+	| lb yStart yEnd descriptor commonIndex transparentHeaders minTopHeader lifelines selfMessageSends |
 	descriptor := self modelDescriptor.
+	selfMessageSends := descriptor selfMessageSends.
 
 	lb := RSLineBuilder line
+		      dashArray: { 1. Float goldenPlatinumRatio  };
 		      withBorderAttachPoint;
-		      "controlPointsController: (RSBlockCPController new
-				       block: [ :aLine | 
-					       | selfSends |
-					       selfSends := descriptor selfMessageSends
-						                    at: aLine from model
-						                    ifAbsent: [ {  } ].
+		      yourself.
 
-					       Array streamContents: [ :aStream | 
-							       aStream nextPut: aLine startPoint.
-
-							       selfSends do: [ :anAssoc | 
-									       | level x y direction |
-									       level := levels at: anAssoc.
-									       x := descriptor xStartOf: anAssoc.
-									       y := descriptor yStartOf: anAssoc.
-									       direction := anAssoc value
-										                    ifMessageSend: [ 
-											                    aStream
-												                    nextPut: level * 50 + x @ y;
-												                    nextPut: level + 1 * 50 + x @ y ]
-										                    ifReturnMessageSend: [ 
-											                    aStream
-												                    nextPut: level + 1 * 50 + x @ y;
-												                    nextPut: level * 50 + x @ y ] ].
-
-							       aStream nextPut: aLine endPoint ] ];
-				       yourself);"
-			      yourself.
-
-	"lb shape cornerRadii: Float goldenPlatinumRatio.
-"
 	yStart := descriptor yStart.
 	yEnd := descriptor yEnd.
 
@@ -130,7 +106,7 @@ RSUMLSequenceBuilder >> lifeLines [
 	minTopHeader := nil.
 
 	lifelines := descriptor columnsWithIndexCollect: [ :each :index | 
-		             | end edge x headerShape isShared |
+		             | end x headerShape isShared |
 		             x := descriptor xOfColumn: index.
 
 		             headerShape := descriptor headerOf: each.
@@ -158,6 +134,7 @@ RSUMLSequenceBuilder >> lifeLines [
 				                             headerTop := headerShape
 					                                          encompassingRectangle
 					                                          top.
+
 				                             minTop := minTopHeader
 					                                       encompassingRectangle top.
 
@@ -176,72 +153,62 @@ RSUMLSequenceBuilder >> lifeLines [
 					                         ifAbsent: [ yEnd ].
 				                    b position: x @ y ].
 
+		             (selfMessageSends at: each ifAbsent: [ {  } ]) 
+			             ifNotEmpty: [ :associations | 
+				             associations withIndexDo: [ :anAssoc :i | "
 
-		             edge := (lb edgeFrom: headerShape to: end)
-			                     dotted;
-			                     yourself.
+					             associations overlappingPairsDo: [ 
+						             :anAssoc 
+						             :anotherAssoc | 
+						             aStream nextPut: ((lb
+								               edgeFrom:
+									               ((edges at: anAssoc) propertyAt:
+											                #UMLSequenceDiagramCircles) value
+								               to:
+									               ((edges at: anotherAssoc) propertyAt:
+											                #UMLSequenceDiagramCircles) key)
+								              dotted;
+								              yourself) ].
+"" aStream nextPut: ((lb
+							               edgeFrom:
+								               ((edges at: associations last) propertyAt:
+										                #UMLSequenceDiagramCircles) value
+							               to: end)
+							              dotted;
+							              yourself)"
+					             anAssoc value
+						             ifMessageSend: [ 
+							             | returnSend |
+							             returnSend := associations at:
+								                           associations size - i + 1.
 
-		             { 
-			             headerShape.
-			             end.
-			             edge } ].
+							             self assert: returnSend value key == anAssoc value.
+
+							             selfLines add: (lb
+									              edgeFrom: (descriptor endCircleOf: anAssoc)
+									              to: (descriptor startCircleOf: returnSend)) ]
+						             ifReturnMessageSend: [  ] ] ].
+
+		             Array streamContents: [ :aStream | 
+			             aStream
+				             nextPut: headerShape;
+				             nextPut: end.
+
+			             aStream nextPut: (lb edgeFrom: headerShape to: end) ] ].
 
 	transparentHeaders do: [ :each | 
-		| y shape |
-		shape := lifelines at: each.
+		| y anArray |
+		anArray := lifelines at: each.
 		y := minTopHeader position y - minTopHeader height.
-		shape first position: shape first position x @ y ].
+		anArray first position: anArray first position x @ y ].
 
-	^ lifelines collect: [ :each | 
-		  | aLine newLine xx |
-		  xx := each first position x.
-
-		  aLine := each third.
-
-		  newLine := descriptor selfMessageSends
-			             at: aLine from model
-			             ifPresent: [ :selfSends | 
-				             | controlPoints |
-				             controlPoints := Array streamContents: [ :aStream | 
-					                              aStream nextPut:
-						                              xx
-						                              @
-						                              each first encompassingRectangle
-							                              bottom.
-
-					                              selfSends do: [ :anAssoc | 
-						                              | level x y |
-						                              level := levels at: anAssoc.
-						                              x := descriptor xStartOf: anAssoc.
-						                              y := descriptor yStartOf: anAssoc.
-						                              anAssoc value
-							                              ifMessageSend: [ 
-								                              aStream
-									                              nextPut: level * 50 + x @ y;
-									                              nextPut: level + 1 * 50 + x @ y ]
-							                              ifReturnMessageSend: [ 
-								                              aStream
-									                              nextPut: level + 1 * 50 + x @ y;
-									                              nextPut: level * 50 + x @ y ] ].
-
-					                              aStream nextPut:
-						                              xx
-						                              @
-						                              each second encompassingRectangle
-							                              top ].
-
-				             RSPolyline new
-					             cornerRadii: Float goldenPlatinumRatio;
-					             controlPoints: controlPoints;
-					             dotted;
-					             yourself ]
-			             ifAbsent: [ aLine ].
-
-		  each at: 3 put: newLine.
-
-		  RSComposite new
-			  shapes: each;
-			  yourself ]
+	^ RSGroup new
+		  addAll: (lifelines collect: [ :anArray | 
+					   RSComposite new
+						   shapes: anArray;
+						   yourself ]);
+		  "addAll: selfLines;"
+		  yourself
 ]
 
 { #category : #accessing }
@@ -289,7 +256,13 @@ RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 				  shapes: {  };
 				  extent: 0 @ 0;
 				  yourself ]
-		  ifFalse: [ super shapeFor: anObject index: anIndex ]
+		  ifFalse: [ 
+			  | aShape |
+			  aShape := super shapeFor: anObject index: anIndex.
+
+			  edges at: anObject put: aShape.
+
+			  aShape ]
 ]
 
 { #category : #hooks }
@@ -302,7 +275,10 @@ RSUMLSequenceBuilder >> shapesFor: aCollection [
 	^ greatestCommonIndex = messagesSends size
 		  ifTrue: [ RSGroup new ]
 		  ifFalse: [ 
-			  (self lifeLines as: RSGroup)
+			  | selfLines |
+			  selfLines := OrderedCollection new.
+			  (self lifeLines: selfLines)
 				  addAll: (super shapesFor: aCollection);
+				  addAll: selfLines;
 				  yourself ]
 ]

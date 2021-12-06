@@ -15,13 +15,15 @@ RSBasicUMLSequenceRenderer >> initialize [
 
 	super initialize.
 
-	lineBuilder := RSLineBuilder arrowedLine yourself
+	lineBuilder := RSLineBuilder arrowedLine
+		               attachPoint: RSCenteredAttachPoint new;
+		               yourself
 ]
 
 { #category : #hooks }
 RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 
-	| descriptor startCircle shapes selectorLabel durationLabel edge goingLine endCircle |
+	| descriptor startCircle shapes selectorLabel durationLabel goingLine endCircle |
 	descriptor := self modelDescriptor.
 
 	startCircle := descriptor startCircleOf: anAssociation.
@@ -41,13 +43,7 @@ RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 		          add: durationLabel;
 		          yourself.
 
-	edge := anAssociation value
-		        ifSelfSend: [ endCircle -> startCircle ]
-		        ifNotSelfSend: [ startCircle -> endCircle ].
-
-	goingLine := lineBuilder
-		             attachPoint: RSCenteredAttachPoint new;
-		             edgeFrom: edge key to: edge value.
+	goingLine := lineBuilder edgeFrom: startCircle to: endCircle.
 
 	anAssociation value styleLine: goingLine.
 
@@ -60,9 +56,12 @@ RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 		add: endCircle;
 		add: goingLine.
 
-
 	^ RSComposite new
 		  model: anAssociation;
 		  shapes: shapes;
+		  propertyAt: #UMLSequenceDiagramCircles
+		  put:
+			  (startCircle propertyAt: #UMLSequenceDiagramStartCircle)
+			  -> endCircle;
 		  yourself
 ]

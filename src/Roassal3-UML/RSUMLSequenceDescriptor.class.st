@@ -28,7 +28,12 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSe
 
 	| xStart yStart xEnd startCircle endCircle clientShape composite startShapes radius |
 	xStart := self xStartOf: anAssociation.
-	xEnd := self xEndOf: anAssociation.
+	xEnd := aMessageSend
+		        ifSelfSend: [ 
+			        | pointWidthAssoc |
+			        pointWidthAssoc := levels at: anAssociation.
+			        pointWidthAssoc key x + pointWidthAssoc value ]
+		        ifNotSelfSend: [ self xEndOf: anAssociation ].
 	yStart := self yStartOf: anAssociation.
 
 	clientShape := self
@@ -69,6 +74,8 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSe
 		             shapes: startShapes;
 		             padding: Float platinumRatio;
 		             position: xStart - radius @ yStart;
+		             propertyAt: #UMLSequenceDiagramStartCircle
+		             put: startCircle;
 		             yourself.
 
 	endCircle := RSCircle new
@@ -76,15 +83,13 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSe
 		             noPaint;
 		             yourself.
 
-	^ { 
-		  composite.
-		  endCircle }
+	^ composite -> endCircle
 ]
 
 { #category : #shapes }
 RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMessageSend [
 
-	^ aMessageSend
+	"^ aMessageSend
 		  ifSelfSend: [ 
 			  | pair startCircle |
 			  pair := self
@@ -93,7 +98,9 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMes
 
 			  startCircle := pair second.
 			  startCircle position: startCircle position
-				  + ((self selectorLabelOf: anAssociation) encompassingRectangle right @ 0).
+				  +
+				  ((self selectorLabelOf: anAssociation) encompassingRectangle
+					   right @ 0).
 
 			  pair ]
 		  ifNotSelfSend: [ 
@@ -112,9 +119,33 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMes
 				               noPaint;
 				               yourself.
 
-			  { 
-				  startCircle.
-				  endCircle } ]
+
+			  startCircle -> endCircle ]"
+
+	| xStart yStart xEnd startCircle endCircle |
+	xStart := self xStartOf: anAssociation.
+	xEnd := self xEndOf: anAssociation.
+	yStart := self yStartOf: anAssociation.
+
+	anAssociation value
+		ifSelfSend: [ xEnd := xEnd - (levels at: anAssociation) value ]
+		ifNotSelfSend: [  ].
+
+	startCircle := RSCircle new
+		               position: xStart @ yStart;
+		               noPaint;
+		               yourself.
+
+	startCircle
+		propertyAt: #UMLSequenceDiagramStartCircle
+		put: startCircle.
+
+	endCircle := RSCircle new
+		             position: xEnd @ yStart;
+		             noPaint;
+		             yourself.
+
+	^ startCircle -> endCircle
 ]
 
 { #category : #API }
@@ -174,12 +205,9 @@ RSUMLSequenceDescriptor >> columnsWithIndexCollect: aBlock [
 RSUMLSequenceDescriptor >> createCircles [
 
 	messagesSends do: [ :anAssoc | 
-		| circleShapes |
-		circleShapes := anAssoc value
-			                dispatchCircleShapesOf: anAssoc
-			                onSequenceDescritor: self.
-
-		circles at: anAssoc put: circleShapes first -> circleShapes second ]
+		circles at: anAssoc put: (anAssoc value
+				 dispatchCircleShapesOf: anAssoc
+				 onSequenceDescritor: self) ]
 ]
 
 { #category : #API }
@@ -206,6 +234,19 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 		cumulatedWidth := cumulatedWidth + w ].
 
 	widths add: cumulatedWidth
+]
+
+{ #category : #API }
+RSUMLSequenceDescriptor >> currentIndentOf: anObject in: indentations [
+
+	| link indent |
+	link := indentations at: anObject ifAbsent: [ nil ].
+
+	indent := 0.
+	link do: [ :messageSendWidthAssoc | 
+		indent := indent + messageSendWidthAssoc value ].
+
+	^ indent
 ]
 
 { #category : #API }
@@ -236,16 +277,10 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 { #category : #shapes }
 RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timespan: aTimespan selectorShape: aShape [
 
-	| return shape |
-	return := aMessageSend return.
-
-	shape := self
-		         nicknameOf: return
-		         ifAbsent: [ receiverArgumentsShape value: return ].
-
-	returnShapes at: return put: shape.
-
-	^ shape
+	^ RSComposite new
+		  shapes: {  };
+		  extent: 0 @ 0;
+		  yourself
 ]
 
 { #category : #API }
@@ -409,7 +444,7 @@ RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
 { #category : #API }
 RSUMLSequenceDescriptor >> refresh [
 
-	| maxHeightSeenSoFar |
+	| maxHeightSeenSoFar indentations |
 	headers := IdentityDictionary new.
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
@@ -418,6 +453,7 @@ RSUMLSequenceDescriptor >> refresh [
 	lastSends := IdentityDictionary new.
 	returnShapes := IdentityDictionary new.
 	selfMessageSends := IdentityDictionary new.
+	indentations := IdentityDictionary new.
 
 	widths := OrderedCollection new.
 
@@ -425,7 +461,7 @@ RSUMLSequenceDescriptor >> refresh [
 	maxHeightSeenSoFar := 0.
 
 	messagesSends withIndexDo: [ :anAssoc :index | 
-		| selectorLabel durationLabel fullMessageSend client receiver clientLevel width |
+		| selectorLabel durationLabel fullMessageSend client receiver width indent levelAssoc |
 		fullMessageSend := anAssoc value.
 
 		"Bind client and receiver."
@@ -434,15 +470,6 @@ RSUMLSequenceDescriptor >> refresh [
 
 		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
 		indexes at: anAssoc put: index.
-
-		"For each association record the indentation of its client."
-		clientLevel := self currentLevelOfClient: client.
-
-		"For each `client` we record the self sends that occur to be connected by life lines."
-		fullMessageSend
-			ifSelfSend: [ 
-			selfMessageSends at: client inOrderedCollectionAdd: anAssoc ]
-			ifNotSelfSend: [  ].
 
 		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, to record the 'last'
 		 send for the pair (client, receiver)."
@@ -467,14 +494,34 @@ RSUMLSequenceDescriptor >> refresh [
 
 		width := selectorLabel width max: durationLabel width.
 
-		levels
-			at: anAssoc
-			put: clientLevel @ (self currentLevelOfClient: receiver) -> width.
+		indent := self currentIndentOf: client in: indentations.
+
+		levelAssoc := levels at: anAssoc put: indent @ -1 -> width.
 
 		self
 			columnIndex: (self columnIndexOf: client)
 			anotherColumnIndex: (self columnIndexOf: receiver)
-			width: width + clientLevel.
+			width: width + indent.
+
+		"For each `client` we record the self sends that occur to be connected by life lines."
+		fullMessageSend
+			ifSelfSend: [ 
+				| link |
+				"Save the current message send in the sequence for `client`."
+				selfMessageSends at: client inOrderedCollectionAdd: anAssoc.
+
+				"Get the current indentation for `client`."
+				link := indentations at: client ifAbsent: [ nil ].
+
+				"Push or pop according to send or return."
+				indentations at: client put: (fullMessageSend
+						 ifMessageSend: [ anAssoc -> width ~~> link ]
+						 ifReturnMessageSend: [ link nextLink ]) ]
+			ifNotSelfSend: [  ].
+
+		levelAssoc key:
+			levelAssoc key x
+			@ (self currentIndentOf: receiver in: indentations).
 
 		maxLabelHeight := maxLabelHeight max: selectorLabel height.
 
@@ -583,10 +630,16 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 
-	^ RSComposite new
-		  shapes: {  };
-		  extent: 0 @ 0;
-		  yourself
+	| return shape |
+	return := aMessageSend return.
+
+	shape := self
+		         nicknameOf: return
+		         ifAbsent: [ receiverArgumentsShape value: return ].
+
+	returnShapes at: return put: shape.
+
+	^ shape
 ]
 
 { #category : #accessing }
