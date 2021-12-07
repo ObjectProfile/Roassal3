@@ -74,8 +74,6 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSe
 		             shapes: startShapes;
 		             padding: Float platinumRatio;
 		             position: xStart - radius @ yStart;
-		             propertyAt: #UMLSequenceDiagramStartCircle
-		             put: startCircle;
 		             yourself.
 
 	endCircle := RSCircle new
@@ -89,56 +87,15 @@ RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSe
 { #category : #shapes }
 RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMessageSend [
 
-	"^ aMessageSend
-		  ifSelfSend: [ 
-			  | pair startCircle |
-			  pair := self
-				          circleShapesOf: anAssociation
-				          messageSend: aMessageSend key.
-
-			  startCircle := pair second.
-			  startCircle position: startCircle position
-				  +
-				  ((self selectorLabelOf: anAssociation) encompassingRectangle
-					   right @ 0).
-
-			  pair ]
-		  ifNotSelfSend: [ 
-			  | xStart yStart xEnd startCircle endCircle |
-			  xStart := self xStartOf: anAssociation.
-			  xEnd := self xEndOf: anAssociation.
-			  yStart := self yStartOf: anAssociation.
-
-			  startCircle := RSCircle new
-				                 position: xStart @ yStart;
-				                 noPaint;
-				                 yourself.
-
-			  endCircle := RSCircle new
-				               position: xEnd @ yStart;
-				               noPaint;
-				               yourself.
-
-
-			  startCircle -> endCircle ]"
-
 	| xStart yStart xEnd startCircle endCircle |
 	xStart := self xStartOf: anAssociation.
 	xEnd := self xEndOf: anAssociation.
 	yStart := self yStartOf: anAssociation.
 
-	anAssociation value
-		ifSelfSend: [ xEnd := xEnd - (levels at: anAssociation) value ]
-		ifNotSelfSend: [  ].
-
 	startCircle := RSCircle new
 		               position: xStart @ yStart;
 		               noPaint;
 		               yourself.
-
-	startCircle
-		propertyAt: #UMLSequenceDiagramStartCircle
-		put: startCircle.
 
 	endCircle := RSCircle new
 		             position: xEnd @ yStart;
@@ -587,7 +544,7 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 		            RSLocation new
 			            outer;
 			            left;
-			            offset: Float platinumRatio negated @ 0;
+			            offset: Float goldenPlatinumRatio negated @ 0;
 			            stick: label on: argumentShape.
 
 
@@ -616,7 +573,7 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 			ifFalse: [ layout alignTop ].
 
 		layout
-			horizontalGap: Float platinumRatio;
+			horizontalGap: Float goldenPlatinumRatio;
 			on: shapes ].
 
 	^ RSComposite new

@@ -40,25 +40,6 @@ RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
-RSUMLSequenceBuilder >> greatest: aCollection commonIndex: anotherCollection [
-
-	  | index stop |
-	  stop := false.
-	  index := 1.
-
-	  [ 
-	  stop or: [ 
-		  index > aCollection size or: [ index > anotherCollection size ] ] ] 
-		  whileFalse: [ 
-			  (aCollection at: index) 
-			  == (anotherCollection at: index) 
-				  ifTrue: [ index := index + 1 ]
-				  ifFalse: [ stop := true ] ].
-
-	  ^ index - 1
-]
-
 { #category : #initialization }
 RSUMLSequenceBuilder >> initialize [
 
@@ -103,7 +84,7 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 
 	lb := RSLineBuilder line
 		      dashArray: { 
-				      1.
+				      Float silverRatio.
 				      Float goldenPlatinumRatio };
 		      withBorderAttachPoint;
 		      yourself.
@@ -111,15 +92,14 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 	yStart := descriptor yStart.
 	yEnd := descriptor yEnd.
 
-	commonIndex := self
-		               greatest: previousHeaders
-		               commonIndex: descriptor columns.
+	commonIndex := previousHeaders greatestCommonIndex:
+		               descriptor columns.
 
 	transparentHeaders := OrderedCollection new.
 	minTopHeader := nil.
 
 	lifelines := descriptor columnsWithIndexCollect: [ :each :index | 
-		             | end x headerShape isShared yHeader |
+		             | endShape x headerShape isShared yHeader |
 		             x := descriptor xOfColumn: index.
 
 		             headerShape := descriptor headerOf: each.
@@ -145,55 +125,25 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 			                             min: [ :aShape | 
 			                             aShape encompassingRectangle top ].
 
-		             end := self
-			                    endShapeWithX: x
-			                    andY:
-			                    (descriptor
-				                     yEndOfHeader: each
-				                     ifAbsent: [ yEnd ]).
+		             endShape := self
+			                         endShapeWithX: x
+			                         andY:
+			                         (descriptor
+				                          yEndOfHeader: each
+				                          ifAbsent: [ yEnd ]).
 
-		             (selfMessageSends at: each ifAbsent: [ {  } ]) 
-			             ifNotEmpty: [ :associations | 
-				             associations withIndexDo: [ :anAssoc :i | "
+		             self
+			             lifeLines: selfLines
+			             selfMessageSends:
+			             (selfMessageSends at: each ifAbsent: [ {  } ])
+			             lineBuilder: lb
+			             descriptor: descriptor
+			             startShape: headerShape
+			             endShape: endShape.
 
-					             associations overlappingPairsDo: [ 
-						             :anAssoc 
-						             :anotherAssoc | 
-						             aStream nextPut: ((lb
-								               edgeFrom:
-									               ((edges at: anAssoc) propertyAt:
-											                #UMLSequenceDiagramCircles) value
-								               to:
-									               ((edges at: anotherAssoc) propertyAt:
-											                #UMLSequenceDiagramCircles) key)
-								              dotted;
-								              yourself) ].
-"" aStream nextPut: ((lb
-							               edgeFrom:
-								               ((edges at: associations last) propertyAt:
-										                #UMLSequenceDiagramCircles) value
-							               to: end)
-							              dotted;
-							              yourself)"
-					             anAssoc value
-						             ifMessageSend: [ 
-							             | returnSend |
-							             returnSend := associations at:
-								                           associations size - i + 1.
-
-							             "self assert: returnSend value key == anAssoc value.
-"
-							             selfLines add: (lb
-									              edgeFrom: (descriptor endCircleOf: anAssoc)
-									              to: (descriptor startCircleOf: returnSend)) ]
-						             ifReturnMessageSend: [  ] ] ].
-
-		             Array streamContents: [ :aStream | 
-			             aStream
-				             nextPut: headerShape;
-				             nextPut: end.
-
-			             aStream nextPut: (lb edgeFrom: headerShape to: end) ] ].
+		             { 
+			             headerShape.
+			             endShape } ].
 
 	transparentHeaders do: [ :each | 
 		| y anArray |
@@ -207,6 +157,28 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 				  shapes: anArray;
 				  yourself ]
 		  as: RSGroup
+]
+
+{ #category : #'as yet unclassified' }
+RSUMLSequenceBuilder >> lifeLines: selfLines selfMessageSends: selfSends lineBuilder: lb descriptor: descriptor startShape: startShape endShape: endShape [
+
+	selfSends
+		ifEmpty: [ selfLines add: (lb edgeFrom: startShape to: endShape) ]
+		ifNotEmpty: [ :associations | "The first segment."
+			selfLines add: (lb
+					 edgeFrom: startShape
+					 to: (descriptor startCircleOf: associations first)).
+
+			associations overlappingPairsDo: [ :anAssoc :anotherAssoc | 
+				selfLines add: (lb
+						 edgeFrom: (descriptor endCircleOf: anAssoc)
+						 to: (descriptor startCircleOf: anotherAssoc)) ].
+
+			"The last segment."
+			selfLines add:
+				(lb
+					 edgeFrom: (descriptor endCircleOf: associations last)
+					 to: endShape) ]
 ]
 
 { #category : #accessing }
@@ -279,9 +251,8 @@ RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: headerShape min: aBlock 
 { #category : #hooks }
 RSUMLSequenceBuilder >> shapesFor: aCollection [
 
-	greatestCommonIndex := self
-		                       greatest: previousMessagesSends
-		                       commonIndex: messagesSends.
+	greatestCommonIndex := previousMessagesSends greatestCommonIndex:
+		                       messagesSends.
 
 	^ greatestCommonIndex = messagesSends size
 		  ifTrue: [ RSGroup new ]

@@ -59,9 +59,5 @@ RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 	^ RSComposite new
 		  model: anAssociation;
 		  shapes: shapes;
-		  propertyAt: #UMLSequenceDiagramCircles
-		  put:
-			  (startCircle propertyAt: #UMLSequenceDiagramStartCircle)
-			  -> endCircle;
 		  yourself
 ]
