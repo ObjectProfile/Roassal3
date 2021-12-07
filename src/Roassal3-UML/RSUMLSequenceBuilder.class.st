@@ -30,6 +30,17 @@ RSUMLSequenceBuilder >> build [
 ]
 
 { #category : #'as yet unclassified' }
+RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
+
+	^ RSBox new
+		  noPaint;
+		  color: Color transparent;
+		  extent: 0 @ 0;
+		  position: x @ y;
+		  yourself
+]
+
+{ #category : #'as yet unclassified' }
 RSUMLSequenceBuilder >> greatest: aCollection commonIndex: anotherCollection [
 
 	  | index stop |
@@ -91,7 +102,9 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 	selfMessageSends := descriptor selfMessageSends.
 
 	lb := RSLineBuilder line
-		      dashArray: { 1. Float goldenPlatinumRatio  };
+		      dashArray: { 
+				      1.
+				      Float goldenPlatinumRatio };
 		      withBorderAttachPoint;
 		      yourself.
 
@@ -106,7 +119,7 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 	minTopHeader := nil.
 
 	lifelines := descriptor columnsWithIndexCollect: [ :each :index | 
-		             | end x headerShape isShared |
+		             | end x headerShape isShared yHeader |
 		             x := descriptor xOfColumn: index.
 
 		             headerShape := descriptor headerOf: each.
@@ -121,37 +134,23 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 
 			             transparentHeaders add: index ].
 
-		             headerShape position:
-			             x
-			             @
-			             (yStart - (headerShape height / 2)
-			              - (descriptor radius * 4)).
+		             yHeader := yStart - (headerShape height / 2)
+		                        - (descriptor radius * 4).
 
-		             minTopHeader := minTopHeader
-			                             ifNil: [ headerShape ]
-			                             ifNotNil: [ 
-				                             | headerTop minTop |
-				                             headerTop := headerShape
-					                                          encompassingRectangle
-					                                          top.
+		             headerShape position: x @ yHeader.
 
-				                             minTop := minTopHeader
-					                                       encompassingRectangle top.
+		             minTopHeader := self
+			                             shapeOrNil: minTopHeader
+			                             shape: headerShape
+			                             min: [ :aShape | 
+			                             aShape encompassingRectangle top ].
 
-				                             headerTop < minTop
-					                             ifTrue: [ headerShape ]
-					                             ifFalse: [ minTopHeader ] ].
-
-		             end := RSBox new
-			                    noPaint;
-			                    extent: 0 @ 0;
-			                    yourself: [ :b | 
-				                    | y |
-				                    self assert: b height isZero.
-				                    y := descriptor
-					                         yEndOfHeader: each
-					                         ifAbsent: [ yEnd ].
-				                    b position: x @ y ].
+		             end := self
+			                    endShapeWithX: x
+			                    andY:
+			                    (descriptor
+				                     yEndOfHeader: each
+				                     ifAbsent: [ yEnd ]).
 
 		             (selfMessageSends at: each ifAbsent: [ {  } ]) 
 			             ifNotEmpty: [ :associations | 
@@ -182,8 +181,8 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 							             returnSend := associations at:
 								                           associations size - i + 1.
 
-							             self assert: returnSend value key == anAssoc value.
-
+							             "self assert: returnSend value key == anAssoc value.
+"
 							             selfLines add: (lb
 									              edgeFrom: (descriptor endCircleOf: anAssoc)
 									              to: (descriptor startCircleOf: returnSend)) ]
@@ -202,13 +201,12 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 		y := minTopHeader position y - minTopHeader height.
 		anArray first position: anArray first position x @ y ].
 
-	^ RSGroup new
-		  addAll: (lifelines collect: [ :anArray | 
-					   RSComposite new
-						   shapes: anArray;
-						   yourself ]);
-		  "addAll: selfLines;"
-		  yourself
+	^ lifelines
+		  collect: [ :anArray | 
+			  RSComposite new
+				  shapes: anArray;
+				  yourself ]
+		  as: RSGroup
 ]
 
 { #category : #accessing }
@@ -263,6 +261,19 @@ RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 			  edges at: anObject put: aShape.
 
 			  aShape ]
+]
+
+{ #category : #'as yet unclassified' }
+RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: headerShape min: aBlock [
+
+	^ minTopHeader ifNil: [ headerShape ] ifNotNil: [ 
+		  | headerTop minTop |
+		  headerTop := aBlock value: headerShape.
+		  minTop := aBlock value: minTopHeader.
+
+		  headerTop < minTop
+			  ifTrue: [ headerShape ]
+			  ifFalse: [ minTopHeader ] ]
 ]
 
 { #category : #hooks }
