@@ -11,7 +11,6 @@ Class {
 		'greatestCommonIndex',
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
-		'levels',
 		'edges'
 	],
 	#category : #'Roassal3-UML-Builder'
@@ -67,12 +66,6 @@ RSUMLSequenceBuilder >> initialize [
 									 aBoxed shapes first borderColor lighter lighter lighter ]) };
 				when: RSMouseLeftClick do: [ :ev | anObject inspect ];
 				yourself ]
-]
-
-{ #category : #accessing }
-RSUMLSequenceBuilder >> levels: anObject [
-
-	levels := anObject
 ]
 
 { #category : #'as yet unclassified' }
