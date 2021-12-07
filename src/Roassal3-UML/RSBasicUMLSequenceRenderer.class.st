@@ -21,16 +21,16 @@ RSBasicUMLSequenceRenderer >> initialize [
 ]
 
 { #category : #hooks }
-RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
+RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 
 	| descriptor startCircle shapes selectorLabel durationLabel goingLine endCircle |
 	descriptor := self modelDescriptor.
 
-	startCircle := descriptor startCircleOf: anAssociation.
-	endCircle := descriptor endCircleOf: anAssociation.
+	startCircle := descriptor startCircleOf: timedMessageSend.
+	endCircle := descriptor endCircleOf: timedMessageSend.
 
-	selectorLabel := descriptor selectorLabelOf: anAssociation.
-	durationLabel := descriptor durationLabelOf: anAssociation.
+	selectorLabel := descriptor selectorLabelOf: timedMessageSend.
+	durationLabel := descriptor durationLabelOf: timedMessageSend.
 
 	RSLocation new
 		outer;
@@ -45,7 +45,7 @@ RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 
 	goingLine := lineBuilder edgeFrom: startCircle to: endCircle.
 
-	anAssociation value styleLine: goingLine.
+	timedMessageSend messageSend styleLine: goingLine.
 
 	RSLocation new above
 		top;
@@ -57,7 +57,7 @@ RSBasicUMLSequenceRenderer >> shapeFor: anAssociation [
 		add: goingLine.
 
 	^ RSComposite new
-		  model: anAssociation;
+		  model: timedMessageSend;
 		  shapes: shapes;
 		  yourself
 ]

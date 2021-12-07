@@ -24,33 +24,36 @@ Class {
 }
 
 { #category : #shapes }
-RSUMLSequenceDescriptor >> circleShapesOf: anAssociation messageSend: aMessageSend [
+RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessageSend [
 
 	| xStart yStart xEnd startCircle endCircle clientShape composite startShapes radius |
-	xStart := self xStartOf: anAssociation.
+	xStart := self xStartOf: timedMessageSend.
+
 	xEnd := aMessageSend
 		        ifSelfSend: [ 
 			        | pointWidthAssoc |
-			        pointWidthAssoc := levels at: anAssociation.
+			        pointWidthAssoc := levels at: timedMessageSend.
 			        pointWidthAssoc key x + pointWidthAssoc value ]
-		        ifNotSelfSend: [ self xEndOf: anAssociation ].
-	yStart := self yStartOf: anAssociation.
+		        ifNotSelfSend: [ self xEndOf: timedMessageSend ].
+
+	yStart := self yStartOf: timedMessageSend.
 
 	clientShape := self
-		               nicknameOf: anAssociation value client
+		               nicknameOf: timedMessageSend messageSend client
 		               ifAbsent: [ Error signal ].
 
 	radius := clientShape width / 2.
 
 	startCircle := RSCircle new
-		               model: anAssociation;
+		               model: timedMessageSend;
 		               radius: radius;
 		               withBorder;
 		               sameColorAsBorderColor;
 		               when: RSMouseLeftClick do: [ 
-			               (anAssociation value client class lookupSelector:
-					                anAssociation value callerSelector) ifNotNil: [ 
-					               :cm | cm browse ] ];
+			               (timedMessageSend messageSend client class 
+				                lookupSelector:
+					                timedMessageSend messageSend callerSelector) 
+				               ifNotNil: [ :cm | cm browse ] ];
 		               yourself.
 
 	startShapes := aMessageSend
@@ -161,9 +164,9 @@ RSUMLSequenceDescriptor >> columnsWithIndexCollect: aBlock [
 { #category : #API }
 RSUMLSequenceDescriptor >> createCircles [
 
-	messagesSends do: [ :anAssoc | 
-		circles at: anAssoc put: (anAssoc value
-				 dispatchCircleShapesOf: anAssoc
+	messagesSends do: [ :timedMessageSend | 
+		circles at: timedMessageSend put: (timedMessageSend messageSend
+				 dispatchCircleShapesOf: timedMessageSend
 				 onSequenceDescritor: self) ]
 ]
 
@@ -417,20 +420,22 @@ RSUMLSequenceDescriptor >> refresh [
 	maxLabelHeight := 0.
 	maxHeightSeenSoFar := 0.
 
-	messagesSends withIndexDo: [ :anAssoc :index | 
+	messagesSends withIndexDo: [ :timedMessageSend :index | 
 		| selectorLabel durationLabel fullMessageSend client receiver width indent levelAssoc |
-		fullMessageSend := anAssoc value.
+		fullMessageSend := timedMessageSend messageSend.
 
 		"Bind client and receiver."
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
 
 		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
-		indexes at: anAssoc put: index.
+		indexes at: timedMessageSend put: index.
 
 		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, to record the 'last'
 		 send for the pair (client, receiver)."
-		fullMessageSend recordReturnSend: anAssoc inDictionary: lastSends.
+		fullMessageSend
+			recordReturnSend: timedMessageSend
+			inDictionary: lastSends.
 
 		"Stick an alias."
 		objectsSeenSoFar
@@ -445,7 +450,7 @@ RSUMLSequenceDescriptor >> refresh [
 			                 dispatchSelectorShapeOnSequenceDescritor: self.
 
 		durationLabel := fullMessageSend
-			                 dispatchTimespan: anAssoc key
+			                 dispatchTimespan: timedMessageSend timespan
 			                 selectorShape: selectorLabel
 			                 onSequenceDescritor: self.
 
@@ -453,7 +458,7 @@ RSUMLSequenceDescriptor >> refresh [
 
 		indent := self currentIndentOf: client in: indentations.
 
-		levelAssoc := levels at: anAssoc put: indent @ -1 -> width.
+		levelAssoc := levels at: timedMessageSend put: indent @ -1 -> width.
 
 		self
 			columnIndex: (self columnIndexOf: client)
@@ -465,14 +470,16 @@ RSUMLSequenceDescriptor >> refresh [
 			ifSelfSend: [ 
 				| link |
 				"Save the current message send in the sequence for `client`."
-				selfMessageSends at: client inOrderedCollectionAdd: anAssoc.
+				selfMessageSends
+					at: client
+					inOrderedCollectionAdd: timedMessageSend.
 
 				"Get the current indentation for `client`."
 				link := indentations at: client ifAbsent: [ nil ].
 
 				"Push or pop according to send or return."
 				indentations at: client put: (fullMessageSend
-						 ifMessageSend: [ anAssoc -> width ~~> link ]
+						 ifMessageSend: [ timedMessageSend -> width ~~> link ]
 						 ifReturnMessageSend: [ link nextLink ]) ]
 			ifNotSelfSend: [  ].
 
@@ -485,7 +492,7 @@ RSUMLSequenceDescriptor >> refresh [
 		maxHeightSeenSoFar := maxHeightSeenSoFar max:
 			                      selectorLabel height + durationLabel height.
 
-		labels at: anAssoc put: selectorLabel -> durationLabel ].
+		labels at: timedMessageSend put: selectorLabel -> durationLabel ].
 
 	"Final adjustments."
 	self
@@ -619,10 +626,11 @@ RSUMLSequenceDescriptor >> widthsAmongHeader: anHeader andHeader: anotherHeader 
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> xEndOf: anAssoc [
+RSUMLSequenceDescriptor >> xEndOf: timedMessageSend [
 
-	^ (self xOfColumn: (headers at: anAssoc value receiver) value)
-	  + (levels at: anAssoc) key y
+	^ (self xOfColumn:
+		   (headers at: timedMessageSend messageSend receiver) value)
+	  + (levels at: timedMessageSend) key y
 ]
 
 { #category : #API }
@@ -632,10 +640,11 @@ RSUMLSequenceDescriptor >> xOfColumn: aColumnIndex [
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> xStartOf: anAssoc [
+RSUMLSequenceDescriptor >> xStartOf: timedMessageSend [
 
-	^ (self xOfColumn: (headers at: anAssoc value client) value)
-	  + (levels at: anAssoc) key x
+	^ (self xOfColumn:
+		   (headers at: timedMessageSend messageSend client) value)
+	  + (levels at: timedMessageSend) key x
 ]
 
 { #category : #API }
