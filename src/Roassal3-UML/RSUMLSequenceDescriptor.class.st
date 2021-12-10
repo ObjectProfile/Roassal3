@@ -41,7 +41,8 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 		               nicknameOf: timedMessageSend messageSend client
 		               ifAbsent: [ Error signal ].
 
-	radius := (clientShape encompassingRectangle area / Float pi) sqrt.
+	"radius := (clientShape encompassingRectangle area / Float pi) sqrt."
+	radius := clientShape width / 2.
 
 	startCircle := RSCircle new
 		               model: timedMessageSend;
@@ -295,11 +296,11 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 
 	composite := RSComposite new
 		             shapes: shapes;
-		             paddedWithGoldenRatio.
+		             yourself.
 
 	box := RSBox new
 		       color: Color veryVeryLightGray translucent;
-		       cornerRadius: Float platinumRatio;
+		       cornerRadius: Float goldenPlatinumRatio;
 		       extent: composite extent;
 		       yourself.
 

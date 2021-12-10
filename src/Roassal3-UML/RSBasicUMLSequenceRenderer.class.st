@@ -49,8 +49,8 @@ RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 
 	RSLocation new above
 		top;
-		offset: startCircle width / 2 @ 0;
-		stick: selectorLabel on: goingLine.
+		"offset: startCircle width / 2 @ 0;
+		"stick: selectorLabel on: goingLine.
 
 	shapes
 		add: endCircle;
