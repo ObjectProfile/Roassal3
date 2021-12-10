@@ -276,7 +276,7 @@ RSUMLSequenceDescriptor >> headerOf: anObject [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 
-	| split composite shapes box nicknameShape |
+	| split composite shapes nicknameShape |
 	split := anObject class name splitOn: ' class'.
 
 	shapes := split first splitCamelCase collect: [ :each | 
@@ -296,33 +296,21 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 
 	composite := RSComposite new
 		             shapes: shapes;
-		             yourself.
-
-	box := RSBox new
-		       color: Color veryVeryLightGray translucent;
-		       cornerRadius: Float goldenPlatinumRatio;
-		       extent: composite extent;
-		       yourself.
-
-	RSLocation new
-		inner;
-		center;
-		stick: composite on: box.
-
-	box := RSComposite new
-		       when: RSMouseLeftClick do: [ anObject class browse ];
-		       shapes: (Array with: box with: composite);
-		       yourself.
+		             when: RSMouseLeftClick do: [ anObject class browse ];
+		             padded: Float goldenPlatinumRatio
+		             withBoxDo: [ :box | 
+			             box borderDo: [ :border | 
+					             box color: border color translucent ] ].
 
 	nicknameShape := self nicknameOf: anObject ifAbsent: [ Error signal ].
 
 	RSLocation new
 		below;
-		stick: nicknameShape on: box.
+		stick: nicknameShape on: composite.
 
 	^ RSComposite new
 		  model: anObject;
-		  shapes: (Array with: box with: nicknameShape);
+		  shapes: (Array with: composite with: nicknameShape);
 		  yourself
 ]
 
