@@ -10,8 +10,7 @@ Class {
 		'previousHeaders',
 		'greatestCommonIndex',
 		'receiverArgumentsShape',
-		'objectsSeenSoFar',
-		'edges'
+		'objectsSeenSoFar'
 	],
 	#category : #'Roassal3-UML-Builder'
 }
@@ -43,8 +42,6 @@ RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 RSUMLSequenceBuilder >> initialize [
 
 	super initialize.
-
-	edges := IdentityDictionary new.
 
 	self
 		modelDescriptor: RSUMLSequenceDescriptor new;
@@ -219,13 +216,7 @@ RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 				  shapes: {  };
 				  extent: 0 @ 0;
 				  yourself ]
-		  ifFalse: [ 
-			  | aShape |
-			  aShape := super shapeFor: anObject index: anIndex.
-
-			  edges at: anObject put: aShape.
-
-			  aShape ]
+		  ifFalse: [ super shapeFor: anObject index: anIndex ]
 ]
 
 { #category : #'as yet unclassified' }

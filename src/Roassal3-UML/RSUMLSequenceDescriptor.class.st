@@ -32,7 +32,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 		        ifSelfSend: [ :messageSend | 
 			        | width |
 			        width := (levels at: messageSend) third.
-			        (self xStartOf: timedMessageSend) + width ]
+			        xStart + width ]
 		        ifNotSelfSend: [ self xEndOf: timedMessageSend ].
 
 	yStart := self yStartOf: timedMessageSend.
@@ -41,7 +41,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 		               nicknameOf: timedMessageSend messageSend client
 		               ifAbsent: [ Error signal ].
 
-	radius := clientShape width / 2.
+	radius := (clientShape encompassingRectangle area / Float pi) sqrt.
 
 	startCircle := RSCircle new
 		               model: timedMessageSend;
@@ -86,12 +86,19 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 ]
 
 { #category : #shapes }
-RSUMLSequenceDescriptor >> circleShapesOf: anAssociation returnMessageSend: aMessageSend [
+RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: aMessageSend [
 
 	| xStart yStart xEnd startCircle endCircle |
-	xStart := self xStartOf: anAssociation.
-	xEnd := self xEndOf: anAssociation.
-	yStart := self yStartOf: anAssociation.
+	xStart := self xStartOf: timedMessageSend.
+
+	xEnd := timedMessageSend messageSend
+		        ifSelfSend: [ :messageSend | 
+			        | width |
+			        width := (levels at: messageSend) third.
+			        xStart - width ]
+		        ifNotSelfSend: [ self xEndOf: timedMessageSend ].
+
+	yStart := self yStartOf: timedMessageSend.
 
 	startCircle := RSCircle new
 		               position: xStart @ yStart;
@@ -204,15 +211,6 @@ RSUMLSequenceDescriptor >> currentIndentOfLink: aLink [
 	link do: [ :anArray | indent := indent + anArray third ].
 
 	^ indent
-]
-
-{ #category : #API }
-RSUMLSequenceDescriptor >> currentLevelOfClient: anObject [
-
-	^ selfMessageSends
-		  at: anObject
-		  ifPresent: [ :aCollection | aCollection size * 50 ]
-		  ifAbsent: [ 0 ]
 ]
 
 { #category : #accessing }
