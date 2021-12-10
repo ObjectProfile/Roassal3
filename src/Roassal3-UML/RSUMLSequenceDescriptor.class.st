@@ -16,7 +16,6 @@ Class {
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
 		'lastSends',
-		'returnShapes',
 		'selfMessageSends',
 		'levels'
 	],
@@ -29,11 +28,11 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 	| xStart yStart xEnd startCircle endCircle clientShape composite startShapes radius |
 	xStart := self xStartOf: timedMessageSend.
 
-	xEnd := aMessageSend
-		        ifSelfSend: [ 
-			        | pointWidthAssoc |
-			        pointWidthAssoc := levels at: timedMessageSend.
-			        pointWidthAssoc key x + pointWidthAssoc value ]
+	xEnd := timedMessageSend messageSend
+		        ifSelfSend: [ :messageSend | 
+			        | width |
+			        width := (levels at: messageSend) third.
+			        (self xStartOf: timedMessageSend) + width ]
 		        ifNotSelfSend: [ self xEndOf: timedMessageSend ].
 
 	yStart := self yStartOf: timedMessageSend.
@@ -75,7 +74,6 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 
 	composite := RSComposite new
 		             shapes: startShapes;
-		             padding: Float platinumRatio;
 		             position: xStart - radius @ yStart;
 		             yourself.
 
@@ -197,14 +195,13 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> currentIndentOf: anObject in: indentations [
+RSUMLSequenceDescriptor >> currentIndentOfLink: aLink [
 
 	| link indent |
-	link := indentations at: anObject ifAbsent: [ nil ].
+	link := aLink.
 
 	indent := 0.
-	link do: [ :messageSendWidthAssoc | 
-		indent := indent + messageSendWidthAssoc value ].
+	link do: [ :anArray | indent := indent + anArray third ].
 
 	^ indent
 ]
@@ -231,7 +228,8 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 		  when: RSMouseClick do: [ aTimespan inspect ];
 		  text: aTimespan duration asStringScaledUptoHours;
 		  italic;
-		  yourself: [ :l | l fontSize: l fontSize * Float silverRatio ]
+		  fontSizeSilverRatio;
+		  yourself
 ]
 
 { #category : #shapes }
@@ -260,18 +258,14 @@ RSUMLSequenceDescriptor >> forPharo [
 { #category : #API }
 RSUMLSequenceDescriptor >> headerIfAbsentCreateAt: anObject [
 
-	^ headers
-		  at: anObject
-		  ifPresent: [ :anAssoc | anAssoc key ]
-		  ifAbsent: [ 
-			  | headerShape index |
-			  headerShape := self headerShapeOf: anObject.
+	| anAssoc |
+	anAssoc := headers at: anObject ifAbsentPut: [ 
+		           | headerShape index |
+		           headerShape := self headerShapeOf: anObject.
+		           index := headers size + 1.
+		           headerShape -> index ].
 
-			  index := headers size + 1.
-
-			  headers at: anObject put: headerShape -> index.
-
-			  headerShape ]
+	^ anAssoc key
 ]
 
 { #category : #API }
@@ -411,7 +405,6 @@ RSUMLSequenceDescriptor >> refresh [
 	indexes := IdentityDictionary new.
 	levels := IdentityDictionary new.
 	lastSends := IdentityDictionary new.
-	returnShapes := IdentityDictionary new.
 	selfMessageSends := IdentityDictionary new.
 	indentations := IdentityDictionary new.
 
@@ -421,7 +414,7 @@ RSUMLSequenceDescriptor >> refresh [
 	maxHeightSeenSoFar := 0.
 
 	messagesSends withIndexDo: [ :timedMessageSend :index | 
-		| selectorLabel durationLabel fullMessageSend client receiver width indent levelAssoc |
+		| selectorLabel durationLabel fullMessageSend client receiver width levelArray clientLink receiverLink |
 		fullMessageSend := timedMessageSend messageSend.
 
 		"Bind client and receiver."
@@ -456,36 +449,40 @@ RSUMLSequenceDescriptor >> refresh [
 
 		width := selectorLabel width max: durationLabel width.
 
-		indent := self currentIndentOf: client in: indentations.
+		"Get the current indentation for `client`."
+		clientLink := indentations at: client ifAbsent: [ nil ].
+		receiverLink := indentations at: receiver ifAbsent: [ nil ].
 
-		levelAssoc := levels at: timedMessageSend put: indent @ -1 -> width.
+		levelArray := levels at: timedMessageSend messageSend put: { 
+				              clientLink.
+				              receiverLink.
+				              width }.
+
+		fullMessageSend ifMessageSend: [  ] ifReturnMessageSend: [ 
+			| maxWidth sendArray |
+			sendArray := levels at: fullMessageSend key.
+			maxWidth := (levelArray at: 3) max: (sendArray at: 3).
+			sendArray at: 3 put: maxWidth.
+			levelArray at: 3 put: maxWidth.
+			width := maxWidth ].
 
 		self
 			columnIndex: (self columnIndexOf: client)
 			anotherColumnIndex: (self columnIndexOf: receiver)
-			width: width + indent.
+			width: width + (self currentIndentOfLink: clientLink).
 
 		"For each `client` we record the self sends that occur to be connected by life lines."
 		fullMessageSend
-			ifSelfSend: [ 
-				| link |
-				"Save the current message send in the sequence for `client`."
+			ifSelfSend: [ "Save the current message send in the sequence for `client`."
 				selfMessageSends
 					at: client
 					inOrderedCollectionAdd: timedMessageSend.
 
-				"Get the current indentation for `client`."
-				link := indentations at: client ifAbsent: [ nil ].
-
 				"Push or pop according to send or return."
 				indentations at: client put: (fullMessageSend
-						 ifMessageSend: [ timedMessageSend -> width ~~> link ]
-						 ifReturnMessageSend: [ link nextLink ]) ]
+						 ifMessageSend: [ levelArray ~~> clientLink ]
+						 ifReturnMessageSend: [ clientLink nextLink ]) ]
 			ifNotSelfSend: [  ].
-
-		levelAssoc key:
-			levelAssoc key x
-			@ (self currentIndentOf: receiver in: indentations).
 
 		maxLabelHeight := maxLabelHeight max: selectorLabel height.
 
@@ -601,8 +598,6 @@ RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 		         nicknameOf: return
 		         ifAbsent: [ receiverArgumentsShape value: return ].
 
-	returnShapes at: return put: shape.
-
 	^ shape
 ]
 
@@ -628,9 +623,13 @@ RSUMLSequenceDescriptor >> widthsAmongHeader: anHeader andHeader: anotherHeader 
 { #category : #API }
 RSUMLSequenceDescriptor >> xEndOf: timedMessageSend [
 
+	| indent |
+	indent := self currentIndentOfLink:
+		          (levels at: timedMessageSend messageSend) second.
+
 	^ (self xOfColumn:
 		   (headers at: timedMessageSend messageSend receiver) value)
-	  + (levels at: timedMessageSend) key y
+	  + indent
 ]
 
 { #category : #API }
@@ -642,9 +641,12 @@ RSUMLSequenceDescriptor >> xOfColumn: aColumnIndex [
 { #category : #API }
 RSUMLSequenceDescriptor >> xStartOf: timedMessageSend [
 
+	| indent |
+	indent := self currentIndentOfLink:
+		          (levels at: timedMessageSend messageSend) first.
+		
 	^ (self xOfColumn:
-		   (headers at: timedMessageSend messageSend client) value)
-	  + (levels at: timedMessageSend) key x
+		   (headers at: timedMessageSend messageSend client) value) + indent
 ]
 
 { #category : #API }

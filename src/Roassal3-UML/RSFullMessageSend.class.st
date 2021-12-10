@@ -89,8 +89,8 @@ RSFullMessageSend >> ifMessageSend: msBlock ifReturnMessageSend: rBlock [
 RSFullMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 
 	^ self client == self receiver
-		  ifTrue: sBlock
-		  ifFalse: nsBlock
+		  ifTrue: [ sBlock cull: self ]
+		  ifFalse: [ nsBlock cull: self ]
 ]
 
 { #category : #'as yet unclassified' }
