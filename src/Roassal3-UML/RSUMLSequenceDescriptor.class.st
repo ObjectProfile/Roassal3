@@ -6,18 +6,17 @@ Class {
 	#superclass : #RSUMLAbstractModelDescriptor,
 	#instVars : [
 		'messagesSends',
-		'maxHeight',
 		'indexes',
 		'labels',
 		'headers',
 		'widths',
-		'maxLabelHeight',
 		'circles',
 		'receiverArgumentsShape',
 		'objectsSeenSoFar',
 		'lastSends',
 		'selfMessageSends',
-		'levels'
+		'levels',
+		'heights'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -177,6 +176,19 @@ RSUMLSequenceDescriptor >> createCircles [
 ]
 
 { #category : #API }
+RSUMLSequenceDescriptor >> cumulateHeights [
+
+	heights := Array new: indexes size.
+
+	indexes keysAndValuesDo: [ :aMessageSend :anAssociation | 
+		heights
+			at: anAssociation key
+			put: anAssociation value * Float goldenRatio ].
+
+	heights := heights scan: [ :acc :each | acc + each ] init: 0
+]
+
+{ #category : #API }
 RSUMLSequenceDescriptor >> cumulateWidths [
 
 	| cumulatedWidth orderedHeaders |
@@ -318,15 +330,9 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 RSUMLSequenceDescriptor >> labelShapeOfString: aString [
 
 	^ RSLabel new
-		  fontName: 'Source Code Pro';
+		  useCodeFont;
 		  text: aString;
 		  yourself
-]
-
-{ #category : #API }
-RSUMLSequenceDescriptor >> maxHeight: aNumber [
-
-	maxHeight := aNumber * Float goldenRatio
 ]
 
 { #category : #API }
@@ -370,12 +376,6 @@ RSUMLSequenceDescriptor >> orderedHeaders [
 	^ orderedHeaders
 ]
 
-{ #category : #API }
-RSUMLSequenceDescriptor >> radius [
-
-	  ^ maxLabelHeight / 2 * Float silverRatio
-]
-
 { #category : #accessing }
 RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
 
@@ -385,7 +385,7 @@ RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
 { #category : #API }
 RSUMLSequenceDescriptor >> refresh [
 
-	| maxHeightSeenSoFar indentations |
+	| indentations |
 	headers := IdentityDictionary new.
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
@@ -397,9 +397,6 @@ RSUMLSequenceDescriptor >> refresh [
 
 	widths := OrderedCollection new.
 
-	maxLabelHeight := 0.
-	maxHeightSeenSoFar := 0.
-
 	messagesSends withIndexDo: [ :timedMessageSend :index | 
 		| selectorLabel durationLabel fullMessageSend client receiver width levelArray clientLink receiverLink |
 		fullMessageSend := timedMessageSend messageSend.
@@ -407,9 +404,6 @@ RSUMLSequenceDescriptor >> refresh [
 		"Bind client and receiver."
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
-
-		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
-		indexes at: timedMessageSend put: index.
 
 		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, to record the 'last'
 		 send for the pair (client, receiver)."
@@ -433,6 +427,11 @@ RSUMLSequenceDescriptor >> refresh [
 			                 dispatchTimespan: timedMessageSend timespan
 			                 selectorShape: selectorLabel
 			                 onSequenceDescritor: self.
+
+		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
+		indexes
+			at: timedMessageSend
+			put: index -> (selectorLabel height + durationLabel height).
 
 		width := selectorLabel width max: durationLabel width.
 
@@ -471,16 +470,11 @@ RSUMLSequenceDescriptor >> refresh [
 						 ifReturnMessageSend: [ clientLink nextLink ]) ]
 			ifNotSelfSend: [  ].
 
-		maxLabelHeight := maxLabelHeight max: selectorLabel height.
-
-		maxHeightSeenSoFar := maxHeightSeenSoFar max:
-			                      selectorLabel height + durationLabel height.
-
 		labels at: timedMessageSend put: selectorLabel -> durationLabel ].
 
 	"Final adjustments."
 	self
-		maxHeight: maxHeightSeenSoFar;
+		cumulateHeights;
 		cumulateWidths;
 		createCircles
 ]
@@ -660,5 +654,5 @@ RSUMLSequenceDescriptor >> yStart [
 { #category : #API }
 RSUMLSequenceDescriptor >> yStartOf: anAssociation [
 
-	  ^ (indexes at: anAssociation) * maxHeight
+	^ heights at: (indexes at: anAssociation) key + 1
 ]

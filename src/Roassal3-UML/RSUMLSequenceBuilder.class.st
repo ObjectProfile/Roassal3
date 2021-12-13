@@ -102,7 +102,7 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 			             transparentHeaders add: index ].
 
 		             yHeader := yStart - (headerShape height / 2)
-		                        - (descriptor radius * 4).
+		                        - descriptor yStart.
 
 		             headerShape position: x @ yHeader.
 
