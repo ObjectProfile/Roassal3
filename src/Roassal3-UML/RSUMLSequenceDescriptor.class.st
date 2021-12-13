@@ -41,8 +41,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 		               nicknameOf: timedMessageSend messageSend client
 		               ifAbsent: [ Error signal ].
 
-	"radius := (clientShape encompassingRectangle area / Float pi) sqrt."
-	radius := clientShape width / 2.
+	radius := (clientShape encompassingRectangle area / Float pi) sqrt.
 
 	startCircle := RSCircle new
 		               model: timedMessageSend;
@@ -61,6 +60,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 			               radius := 0.
 			               Array with: startCircle ]
 		               ifNotSelfSend: [ 
+			               radius := clientShape width / 2.
 			               xStart < xEnd
 				               ifTrue: [ 
 				               Array with: clientShape with: startCircle ]
