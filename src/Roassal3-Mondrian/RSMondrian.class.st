@@ -123,6 +123,11 @@ RSMondrian >> layout [
 
 { #category : #'building - graph' }
 RSMondrian >> line [
+	^ self lines
+]
+
+{ #category : #'building - graph' }
+RSMondrian >> lines [
 	lineBuilder := RSLineBuilder line.
 	lineBuilder canvas: canvas.
 	lineBuilder shapes: (canvas nodes select: #hasModel).
