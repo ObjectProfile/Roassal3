@@ -210,7 +210,8 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 		  text: aTimespan duration asStringScaledUptoHours;
 		  italic;
 		  fontSizeSilverRatio;
-		  yourself
+		  padded: Float goldenPlatinumRatio
+		  withBoxDo: [ :box | box color: Color transparent ]
 ]
 
 { #category : #shapes }
@@ -356,7 +357,7 @@ RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
 { #category : #API }
 RSUMLSequenceDescriptor >> refresh [
 
-	| indentations |
+	| indentations refMessageSends |
 	headers := IdentityDictionary new.
 	circles := IdentityDictionary new.
 	labels := IdentityDictionary new.
@@ -365,11 +366,14 @@ RSUMLSequenceDescriptor >> refresh [
 	lastSends := IdentityDictionary new.
 	selfMessageSends := IdentityDictionary new.
 	indentations := IdentityDictionary new.
+	refMessageSends := IdentityDictionary new.
 
 	messagesSends withIndexDo: [ :timedMessageSend :index | 
 		| selectorShape durationShape fullMessageSend client receiver width height levelArray clientLink receiverLink |
 		"Unpack the message send, heavily referred in what follows."
 		fullMessageSend := timedMessageSend messageSend.
+
+		refMessageSends at: fullMessageSend put: timedMessageSend.
 
 		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, 
 		 to record the 'last' send for the pair (client, receiver)."
@@ -398,11 +402,6 @@ RSUMLSequenceDescriptor >> refresh [
 			                 selectorShape: selectorShape
 			                 onSequenceDescritor: self.
 
-		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
-		height := selectorShape height + durationShape height
-		          * Float goldenRatio.
-		indexes at: timedMessageSend put: index -> height.
-
 		"Get the current indentation for `client`."
 		clientLink := indentations at: client ifAbsent: [ nil ].
 		receiverLink := indentations at: receiver ifAbsent: [ nil ].
@@ -416,12 +415,22 @@ RSUMLSequenceDescriptor >> refresh [
 				              receiverLink.
 				              width }.
 
+		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
+		height := selectorShape height + durationShape height.
+
 		fullMessageSend ifMessageSend: [  ] ifReturnMessageSend: [ 
 			| sendArray |
 			sendArray := levels at: fullMessageSend key.
 			width := (levelArray at: 3) max: (sendArray at: 3).
 			sendArray at: 3 put: width.
-			levelArray at: 3 put: width ].
+			levelArray at: 3 put: width.
+
+			height := height
+			          +
+				          (self durationLabelOf:
+					           (refMessageSends at: fullMessageSend key)) height ].
+
+		indexes at: timedMessageSend put: index -> height.
 
 		"For each `client` we record the self sends that occur to be connected by life lines."
 		fullMessageSend
