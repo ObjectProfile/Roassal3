@@ -114,35 +114,6 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: a
 ]
 
 { #category : #API }
-RSUMLSequenceDescriptor >> columnIndex: anIndex anotherColumnIndex: anotherIndex width: wrtWidth [
-
-	| i j width orderedHeaders |
-	orderedHeaders := self orderedHeaders.
-
-	i := anIndex min: anotherIndex.
-	j := anIndex max: anotherIndex.
-
-	i = j ifTrue: [ j := j + 1 ].
-
-	width := 0.
-	i to: j - 1 do: [ :each | 
-		| w |
-		w := widths at: each ifAbsentPut: [ 
-			     | nextHeader |
-			     nextHeader := orderedHeaders at: each + 1 ifAbsent: [ nil ].
-			     self
-				     widthsAmongHeader: (orderedHeaders at: each)
-				     andHeader: nextHeader ].
-		width := width + w ].
-
-	width < wrtWidth ifTrue: [ 
-		| w |
-		w := wrtWidth - width / (j - i).
-		i to: j - 1 do: [ :each | 
-		widths at: each put: (widths at: each) + w ] ]
-]
-
-{ #category : #API }
 RSUMLSequenceDescriptor >> columnIndexOf: anObject [
 
 	^ (headers at: anObject) value
@@ -181,9 +152,7 @@ RSUMLSequenceDescriptor >> cumulateHeights [
 	heights := Array new: indexes size.
 
 	indexes keysAndValuesDo: [ :aMessageSend :anAssociation | 
-		heights
-			at: anAssociation key
-			put: anAssociation value * Float goldenRatio ].
+		heights at: anAssociation key put: anAssociation value ].
 
 	heights := heights scan: [ :acc :each | acc + each ] init: 0
 ]
@@ -191,27 +160,28 @@ RSUMLSequenceDescriptor >> cumulateHeights [
 { #category : #API }
 RSUMLSequenceDescriptor >> cumulateWidths [
 
-	| cumulatedWidth orderedHeaders |
-	orderedHeaders := self orderedHeaders.
+	| cumulateWidths |
+	widths := IdentityDictionary new.
 
-	cumulatedWidth := 0.
-	1 to: widths size do: [ :i | 
-		| w |
-		w := (widths at: i) ifNil: [ 
-			     | missingWidth nextHeader |
-			     nextHeader := orderedHeaders at: i + 1 ifAbsent: [ nil ].
-			     missingWidth := self
-				                     widthsAmongHeader: (orderedHeaders at: i)
-				                     andHeader: nextHeader.
-			     widths at: i put: missingWidth ].
+	levels keysAndValuesDo: [ :aMessageSend :anArray | 
+		| width client |
+		client := aMessageSend client.
 
-		w := w * Float goldenRatio.
+		width := widths at: client ifAbsent: [ 
+			         (headers at: client) key width
+			         + (headers at: aMessageSend receiver) key width / 2 ].
 
-		widths at: i put: cumulatedWidth.
+		width := width max:
+			         (self currentIndentOfLink: anArray first) + anArray third.
 
-		cumulatedWidth := cumulatedWidth + w ].
+		widths at: client put: width ].
 
-	widths add: cumulatedWidth
+	cumulateWidths := Array new: headers size.
+
+	headers keysAndValuesDo: [ :anObject :anAssoc | 
+		cumulateWidths at: anAssoc value put: (widths at: anObject) ].
+
+	widths := cumulateWidths scan: [ :acc :each | acc + each ] init: 0
 ]
 
 { #category : #API }
@@ -330,7 +300,7 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 RSUMLSequenceDescriptor >> labelShapeOfString: aString [
 
 	^ RSLabel new
-		  useCodeFont;
+		  useDefaultCodeFont;
 		  text: aString;
 		  yourself
 ]
@@ -349,6 +319,7 @@ RSUMLSequenceDescriptor >> nicknameOf: anObject ifAbsent: aBlock [
 		  ifPresent: [ :index | 
 			  | nicknameShape |
 			  nicknameShape := RSLabel new
+				                   useDefaultCodeFont;
 				                   text: index asStringaz asUppercase;
 				                   boxedWithPad: Float goldenPlatinumRatio.
 
@@ -395,21 +366,20 @@ RSUMLSequenceDescriptor >> refresh [
 	selfMessageSends := IdentityDictionary new.
 	indentations := IdentityDictionary new.
 
-	widths := OrderedCollection new.
-
 	messagesSends withIndexDo: [ :timedMessageSend :index | 
-		| selectorLabel durationLabel fullMessageSend client receiver width levelArray clientLink receiverLink |
+		| selectorShape durationShape fullMessageSend client receiver width height levelArray clientLink receiverLink |
+		"Unpack the message send, heavily referred in what follows."
 		fullMessageSend := timedMessageSend messageSend.
+
+		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, 
+		 to record the 'last' send for the pair (client, receiver)."
+		fullMessageSend
+			recordReturnSend: timedMessageSend
+			inDictionary: lastSends.
 
 		"Bind client and receiver."
 		client := fullMessageSend client.
 		receiver := fullMessageSend receiver.
-
-		"Dispatch instead of #ifMessageSend:ifReturnMessageSend:, to record the 'last'
-		 send for the pair (client, receiver)."
-		fullMessageSend
-			recordReturnSend: timedMessageSend
-			inDictionary: lastSends.
 
 		"Stick an alias."
 		objectsSeenSoFar
@@ -420,24 +390,26 @@ RSUMLSequenceDescriptor >> refresh [
 			headerIfAbsentCreateAt: client;
 			headerIfAbsentCreateAt: receiver.
 
-		selectorLabel := fullMessageSend 
+		selectorShape := fullMessageSend 
 			                 dispatchSelectorShapeOnSequenceDescritor: self.
 
-		durationLabel := fullMessageSend
+		durationShape := fullMessageSend
 			                 dispatchTimespan: timedMessageSend timespan
-			                 selectorShape: selectorLabel
+			                 selectorShape: selectorShape
 			                 onSequenceDescritor: self.
 
 		"Record the `index` of the current send, it is computed in #withIndexDo: then save it."
-		indexes
-			at: timedMessageSend
-			put: index -> (selectorLabel height + durationLabel height).
-
-		width := selectorLabel width max: durationLabel width.
+		height := selectorShape height + durationShape height
+		          * Float goldenRatio.
+		indexes at: timedMessageSend put: index -> height.
 
 		"Get the current indentation for `client`."
 		clientLink := indentations at: client ifAbsent: [ nil ].
 		receiverLink := indentations at: receiver ifAbsent: [ nil ].
+
+		"Golden proportion for the width."
+		width := (selectorShape width max: durationShape width)
+		         * Float goldenRatio.
 
 		levelArray := levels at: timedMessageSend messageSend put: { 
 				              clientLink.
@@ -445,17 +417,11 @@ RSUMLSequenceDescriptor >> refresh [
 				              width }.
 
 		fullMessageSend ifMessageSend: [  ] ifReturnMessageSend: [ 
-			| maxWidth sendArray |
+			| sendArray |
 			sendArray := levels at: fullMessageSend key.
-			maxWidth := (levelArray at: 3) max: (sendArray at: 3).
-			sendArray at: 3 put: maxWidth.
-			levelArray at: 3 put: maxWidth.
-			width := maxWidth ].
-
-		self
-			columnIndex: (self columnIndexOf: client)
-			anotherColumnIndex: (self columnIndexOf: receiver)
-			width: width + (self currentIndentOfLink: clientLink).
+			width := (levelArray at: 3) max: (sendArray at: 3).
+			sendArray at: 3 put: width.
+			levelArray at: 3 put: width ].
 
 		"For each `client` we record the self sends that occur to be connected by life lines."
 		fullMessageSend
@@ -470,7 +436,7 @@ RSUMLSequenceDescriptor >> refresh [
 						 ifReturnMessageSend: [ clientLink nextLink ]) ]
 			ifNotSelfSend: [  ].
 
-		labels at: timedMessageSend put: selectorLabel -> durationLabel ].
+		labels at: timedMessageSend put: selectorShape -> durationShape ].
 
 	"Final adjustments."
 	self
@@ -592,13 +558,6 @@ RSUMLSequenceDescriptor >> selfMessageSends [
 RSUMLSequenceDescriptor >> startCircleOf: anAssociation [
 
 	^ (circles at: anAssociation) key
-]
-
-{ #category : #accessing }
-RSUMLSequenceDescriptor >> widthsAmongHeader: anHeader andHeader: anotherHeader [
-
-	^ anHeader width / 2
-	  + (anotherHeader ifNil: [ 0 ] ifNotNil: [ :r | r width / 2 ])
 ]
 
 { #category : #API }

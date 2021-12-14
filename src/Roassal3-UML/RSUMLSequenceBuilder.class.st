@@ -47,19 +47,17 @@ RSUMLSequenceBuilder >> initialize [
 		modelDescriptor: RSUMLSequenceDescriptor new;
 		renderer: RSBasicUMLSequenceRenderer new;
 		receiverArgumentsShape: [ :anObject | 
-			| aShape box |
-			aShape := RSLabel new
-				          model: anObject;
-				          text: (anObject isBlock
-						           ifTrue: [ '[ ... ]' ]
-						           ifFalse: [ anObject ]);
-				          when: RSMouseLeftClick do: [ :ev | anObject inspect ];
-				          boxedWithPad: Float goldenPlatinumRatio.
-
-			box := aShape shapes first.
-			box color: box borderColor lighter lighter lighter.
-
-			aShape ]
+			RSLabel new
+				model: anObject;
+				text: (anObject isBlock
+						 ifTrue: [ '[ ... ]' ]
+						 ifFalse: [ anObject ]);
+				useDefaultCodeFont;
+				when: RSMouseLeftClick do: [ :ev | anObject inspect ];
+				padded: Float goldenPlatinumRatio withBoxDo: [ :box | 
+					box
+						withBorder;
+						color: box borderColor lighter lighter lighter translucent ] ]
 ]
 
 { #category : #'as yet unclassified' }
