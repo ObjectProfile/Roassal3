@@ -164,15 +164,18 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 	widths := IdentityDictionary new.
 
 	levels keysAndValuesDo: [ :aMessageSend :anArray | 
-		| width client |
+		| width client indent |
 		client := aMessageSend client.
 
 		width := widths at: client ifAbsent: [ 
-			         (headers at: client) key width
-			         + (headers at: aMessageSend receiver) key width / 2 ].
+			         | clientHeader receiverHeader |
+			         clientHeader := (headers at: client) key.
+			         receiverHeader := (headers at: aMessageSend receiver) key.
+			         clientHeader width + receiverHeader width / 2 ].
 
-		width := width max:
-			         (self currentIndentOfLink: anArray first) + anArray third.
+		indent := self currentIndentOfLink: anArray first.
+		width := width max: indent + anArray third
+			         + (aMessageSend ifSelfSend: [ 0 ] ifNotSelfSend: [ 0 ]).
 
 		widths at: client put: width ].
 
@@ -419,16 +422,15 @@ RSUMLSequenceDescriptor >> refresh [
 		height := selectorShape height + durationShape height.
 
 		fullMessageSend ifMessageSend: [  ] ifReturnMessageSend: [ 
-			| sendArray |
+			| sendArray refDurationShape |
 			sendArray := levels at: fullMessageSend key.
-			width := (levelArray at: 3) max: (sendArray at: 3).
-			sendArray at: 3 put: width.
-			levelArray at: 3 put: width.
 
-			height := height
-			          +
-				          (self durationLabelOf:
-					           (refMessageSends at: fullMessageSend key)) height ].
+			sendArray at: 3 update: [ :currentWidth | currentWidth max: width ].
+
+			refDurationShape := self durationLabelOf:
+				                    (refMessageSends at: fullMessageSend key).
+
+			height := height + refDurationShape height ].
 
 		indexes at: timedMessageSend put: index -> height.
 
