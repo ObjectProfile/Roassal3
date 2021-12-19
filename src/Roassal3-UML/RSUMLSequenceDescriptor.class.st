@@ -74,13 +74,11 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 
 	composite := RSComposite new
 		             shapes: startShapes;
+		             adjustToChildren;
 		             position: xStart - radius @ yStart;
 		             yourself.
 
-	endCircle := RSCircle new
-		             position: xEnd @ yStart;
-		             noPaint;
-		             yourself.
+	endCircle := self invisibleCircleAtPoint: xEnd @ yStart.
 
 	^ composite -> endCircle
 ]
@@ -100,15 +98,9 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: a
 
 	yStart := self yStartOf: timedMessageSend.
 
-	startCircle := RSCircle new
-		               position: xStart @ yStart;
-		               noPaint;
-		               yourself.
+	startCircle := self invisibleCircleAtPoint: xStart @ yStart.
 
-	endCircle := RSCircle new
-		             position: xEnd @ yStart;
-		             noPaint;
-		             yourself.
+	endCircle := self invisibleCircleAtPoint: xEnd @ yStart.
 
 	^ startCircle -> endCircle
 ]
@@ -297,6 +289,16 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 	^ RSComposite new
 		  model: anObject;
 		  shapes: (Array with: composite with: nicknameShape);
+		  yourself
+]
+
+{ #category : #shapes }
+RSUMLSequenceDescriptor >> invisibleCircleAtPoint: aPoint [
+
+	^ RSCircle new
+		  position: aPoint;
+		  extent: 0 @ 0;
+		  noPaint;
 		  yourself
 ]
 
@@ -508,7 +510,6 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 			            left;
 			            offset: Float goldenPlatinumRatio negated @ 0;
 			            stick: label on: argumentShape.
-
 
 		            aligningShapes add: argumentShape.
 

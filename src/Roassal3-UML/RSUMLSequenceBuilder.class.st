@@ -51,7 +51,7 @@ RSUMLSequenceBuilder >> initialize [
 				model: anObject;
 				text: (anObject isBlock
 						 ifTrue: [ '[ ... ]' ]
-						 ifFalse: [ anObject ]);
+						 ifFalse: [ anObject asString ]);
 				useDefaultCodeFont;
 				when: RSMouseLeftClick do: [ :ev | anObject inspect ];
 				padded: Float goldenPlatinumRatio withBoxDo: [ :box | 
