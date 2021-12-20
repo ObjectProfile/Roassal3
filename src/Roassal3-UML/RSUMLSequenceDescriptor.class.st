@@ -57,25 +57,24 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 	startShapes := aMessageSend
 		               ifSelfSend: [ 
 			               radius := 0.
-			               Array with: startCircle ]
+			               RSGroup with: startCircle ]
 		               ifNotSelfSend: [ 
 			               radius := clientShape width / 2.
 			               xStart < xEnd
 				               ifTrue: [ 
-				               Array with: clientShape with: startCircle ]
+				               RSGroup with: clientShape with: startCircle ]
 				               ifFalse: [ 
 					               radius := radius negated.
-					               Array with: startCircle with: clientShape ] ].
+					               RSGroup with: startCircle with: clientShape ] ].
 
 	RSHorizontalLineLayout new
 		horizontalGap: 0;
 		alignMiddle;
 		on: startShapes.
 
-	composite := RSComposite new
-		             shapes: startShapes;
-		             adjustToChildren;
+	composite := startShapes asShape
 		             position: xStart - radius @ yStart;
+		             propertyAt: #startCircle put: startCircle;
 		             yourself.
 
 	endCircle := self invisibleCircleAtPoint: xEnd @ yStart.
@@ -99,6 +98,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: a
 	yStart := self yStartOf: timedMessageSend.
 
 	startCircle := self invisibleCircleAtPoint: xStart @ yStart.
+	startCircle propertyAt: #startCircle put: startCircle.
 
 	endCircle := self invisibleCircleAtPoint: xEnd @ yStart.
 
@@ -152,31 +152,80 @@ RSUMLSequenceDescriptor >> cumulateHeights [
 { #category : #API }
 RSUMLSequenceDescriptor >> cumulateWidths [
 
-	| cumulateWidths |
-	widths := IdentityDictionary new.
+	| orderedHeaders |
+	orderedHeaders := self orderedHeaders.
+
+	widths := Array streamContents: [ :aStream | 
+		          orderedHeaders overlappingPairsDo: [ 
+			          :anHeader 
+			          :anotherHeader | 
+			          aStream nextPut: anHeader width + anotherHeader width / 2 ].
+
+		          aStream nextPut: orderedHeaders last width / 2 ].
+
+	self assert: widths size = orderedHeaders size.
 
 	levels keysAndValuesDo: [ :aMessageSend :anArray | 
-		| width client indent |
-		client := aMessageSend client.
+		aMessageSend
+			ifMessageSend: [ 
+				| client clientIndex receiverIndex clientIndent receiver messageWidth |
+				client := aMessageSend client.
+				receiver := aMessageSend receiver.
 
-		width := widths at: client ifAbsent: [ 
-			         | clientHeader receiverHeader |
-			         clientHeader := (headers at: client) key.
-			         receiverHeader := (headers at: aMessageSend receiver) key.
-			         clientHeader width + receiverHeader width / 2 ].
+				"Get the corresponding indexes."
+				clientIndex := (headers at: client) value.
+				receiverIndex := (headers at: receiver) value.
 
-		indent := self currentIndentOfLink: anArray first.
-		width := width max: indent + anArray third
-			         + (aMessageSend ifSelfSend: [ 0 ] ifNotSelfSend: [ 0 ]).
+				"Indent of the client due to nested self sends."
+				clientIndent := self currentIndentOfLink: anArray first.
 
-		widths at: client put: width ].
+				"Absolute width for the current message send."
+				messageWidth := clientIndent + anArray third.
 
-	cumulateWidths := Array new: headers size.
+				aMessageSend
+					ifSelfSend: [ "Everything has to fit in just one 'column' of the current 'client'."
+						widths at: clientIndex update: [ :currentWidth | 
+							currentWidth max:
+								messageWidth + (anArray third * Float bronzeRatio) ] ]
+					ifNotSelfSend: [ 
+						| width |
+						width := widths
+							         at: clientIndex
+							         update: [ :currentWidth | 
+							         currentWidth max: clientIndent ].
 
-	headers keysAndValuesDo: [ :anObject :anAssoc | 
-		cumulateWidths at: anAssoc value put: (widths at: anObject) ].
+						clientIndex < receiverIndex
+							ifTrue: [ "forward case"
+								| start end |
+								width := width + (self currentIndentOfLink: anArray second).
 
-	widths := cumulateWidths scan: [ :acc :each | acc + each ] init: 0
+								(start := clientIndex + 1) to: (end := receiverIndex - 1) do: [ 
+								:i | width := width + (widths at: i) ].
+
+								width < messageWidth ifTrue: [ 
+									| dist |
+									dist := messageWidth - width / (end - start max: 1).
+
+									start - 1 to: end do: [ :i | 
+									widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ]
+							ifFalse: [ "backward case"
+								| start end |
+								width := width - (self currentIndentOfLink: anArray second).
+
+								(start := receiverIndex) to: (end := clientIndex - 1) do: [ :i | 
+								width := width + (widths at: i) ].
+
+								width < messageWidth ifTrue: [ 
+									| dist |
+									dist := messageWidth - width / (end - start max: 1).
+
+									start to: end do: [ :i | 
+									widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ] ] ]
+			ifReturnMessageSend: [ "Ignore this case because we take care of max 
+				of corresponding sends already in `#refresh`"
+				 ] ].
+
+	widths := widths scan: [ :acc :each | acc + each ] init: 0
 ]
 
 { #category : #API }
@@ -412,8 +461,8 @@ RSUMLSequenceDescriptor >> refresh [
 		receiverLink := indentations at: receiver ifAbsent: [ nil ].
 
 		"Golden proportion for the width."
-		width := (selectorShape width max: durationShape width)
-		         * Float goldenRatio.
+		width := selectorShape width max: durationShape width.
+		"* Float goldenRatio"
 
 		levelArray := levels at: timedMessageSend messageSend put: { 
 				              clientLink.
@@ -540,10 +589,10 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 			on: shapes ].
 
 	^ RSComposite new
+		  shapes: shapes;
 		  when: RSMouseLeftClick do: [ 
 			  (aMessageSend receiver class lookupSelector:
 					   aMessageSend selector) ifNotNil: [ :cm | cm browse ] ];
-		  shapes: shapes;
 		  yourself
 ]
 

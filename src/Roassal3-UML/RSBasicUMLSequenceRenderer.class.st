@@ -16,7 +16,7 @@ RSBasicUMLSequenceRenderer >> initialize [
 	super initialize.
 
 	lineBuilder := RSLineBuilder arrowedLine
-		               attachPoint: RSBorderAttachPoint new;
+		               attachPoint: RSCenteredAttachPoint new;
 		               yourself
 ]
 
@@ -32,7 +32,9 @@ RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 	selectorLabel := descriptor selectorLabelOf: timedMessageSend.
 	durationLabel := descriptor durationLabelOf: timedMessageSend.
 
-	goingLine := lineBuilder edgeFrom: startCircle to: endCircle.
+	goingLine := lineBuilder
+		             edgeFrom: (startCircle propertyAt: #startCircle)
+		             to: endCircle.
 
 	timedMessageSend messageSend styleLine: goingLine.
 
@@ -41,15 +43,13 @@ RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 		stick: durationLabel on: selectorLabel.
 
 	RSLocation new
-		above;center;
+		above;
 		stick: selectorLabel on: goingLine.
 
-	^ RSComposite new
-		  shapes: { 
-				  startCircle.
-				  selectorLabel.
-				  durationLabel.
-				  endCircle.
-				  goingLine };
-		  yourself
+	^ (RSGroup withAll: { 
+			   startCircle.
+			   selectorLabel.
+			   durationLabel.
+			   endCircle.
+			   goingLine }) asShape
 ]
