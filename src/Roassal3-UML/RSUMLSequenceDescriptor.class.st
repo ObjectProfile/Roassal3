@@ -165,10 +165,14 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 
 	self assert: widths size = orderedHeaders size.
 
-	levels keysAndValuesDo: [ :aMessageSend :anArray | 
+	messagesSends do: [ :aTimedMessageSend | 
+		| anArray aMessageSend |
+		aMessageSend := aTimedMessageSend messageSend.
+		anArray := levels at: aMessageSend.
+
 		aMessageSend
 			ifMessageSend: [ 
-				| client clientIndex receiverIndex clientIndent receiver messageWidth |
+				| client clientIndex receiverIndex clientIndent receiverIndent receiver messageWidth |
 				client := aMessageSend client.
 				receiver := aMessageSend receiver.
 
@@ -178,6 +182,7 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 
 				"Indent of the client due to nested self sends."
 				clientIndent := self currentIndentOfLink: anArray first.
+				receiverIndent := self currentIndentOfLink: anArray second.
 
 				"Absolute width for the current message send."
 				messageWidth := clientIndent + anArray third.
@@ -188,39 +193,24 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 							currentWidth max:
 								messageWidth + (anArray third * Float bronzeRatio) ] ]
 					ifNotSelfSend: [ 
-						| width |
-						width := widths
-							         at: clientIndex
-							         update: [ :currentWidth | 
-							         currentWidth max: clientIndent ].
+						| width start end dist |
+						widths
+							at: clientIndex
+							update: [ :currentWidth | currentWidth max: clientIndent ].
 
-						clientIndex < receiverIndex
-							ifTrue: [ "forward case"
-								| start end |
-								width := width + (self currentIndentOfLink: anArray second).
+						start := clientIndex min: receiverIndex.
+						end := (clientIndex max: receiverIndex) - 1.
 
-								(start := clientIndex + 1) to: (end := receiverIndex - 1) do: [ 
-								:i | width := width + (widths at: i) ].
+						width := receiverIndent * (clientIndex < receiverIndex
+							          ifTrue: [ "Toward right (forward) case" 1 ]
+							          ifFalse: [ "Toward left (backward) case" -1 ]).
 
-								width < messageWidth ifTrue: [ 
-									| dist |
-									dist := messageWidth - width / (end - start max: 1).
+						start to: end do: [ :i | width := width + (widths at: i) ].
 
-									start - 1 to: end do: [ :i | 
-									widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ]
-							ifFalse: [ "backward case"
-								| start end |
-								width := width - (self currentIndentOfLink: anArray second).
+						dist := messageWidth - width / (end - start + 1) max: 0.
 
-								(start := receiverIndex) to: (end := clientIndex - 1) do: [ :i | 
-								width := width + (widths at: i) ].
-
-								width < messageWidth ifTrue: [ 
-									| dist |
-									dist := messageWidth - width / (end - start max: 1).
-
-									start to: end do: [ :i | 
-									widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ] ] ]
+						start to: end do: [ :i | 
+						widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ]
 			ifReturnMessageSend: [ "Ignore this case because we take care of max 
 				of corresponding sends already in `#refresh`"
 				 ] ].
@@ -461,8 +451,8 @@ RSUMLSequenceDescriptor >> refresh [
 		receiverLink := indentations at: receiver ifAbsent: [ nil ].
 
 		"Golden proportion for the width."
-		width := selectorShape width max: durationShape width.
-		"* Float goldenRatio"
+		width := (selectorShape width max: durationShape width)
+		         "* Float goldenRatio".
 
 		levelArray := levels at: timedMessageSend messageSend put: { 
 				              clientLink.
