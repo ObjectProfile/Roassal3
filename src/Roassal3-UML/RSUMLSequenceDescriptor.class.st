@@ -405,7 +405,7 @@ RSUMLSequenceDescriptor >> refresh [
 
 		"Golden proportion for the width."
 		width := (selectorShape width max: durationShape width)
-		         "* Float goldenRatio".
+		         * Float goldenRatio.
 
 		levelArray := levels at: timedMessageSend messageSend put: { 
 				              clientLink.
