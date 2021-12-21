@@ -39,12 +39,12 @@ RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 	timedMessageSend messageSend styleLine: goingLine.
 
 	RSLocation new
-		below;
-		stick: durationLabel on: selectorLabel.
-
-	RSLocation new
 		above;
 		stick: selectorLabel on: goingLine.
+
+	RSLocation new
+		below;
+		stick: durationLabel on: selectorLabel.
 
 	^ (RSGroup withAll: { 
 			   startCircle.
