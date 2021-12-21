@@ -10,6 +10,7 @@ Class {
 		'previousHeaders',
 		'greatestCommonIndex',
 		'receiverArgumentsShape',
+		'headerShape',
 		'objectsSeenSoFar'
 	],
 	#category : #'Roassal3-UML-Builder'
@@ -19,8 +20,8 @@ Class {
 RSUMLSequenceBuilder >> build [
 
 	self modelDescriptor
+		umlBuilder: self;
 		messagesSends: messagesSends;
-		receiverArgumentsShape: receiverArgumentsShape;
 		objectsSeenSoFar: objectsSeenSoFar;
 		refresh.
 
@@ -38,6 +39,18 @@ RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 		  yourself
 ]
 
+{ #category : #accessing }
+RSUMLSequenceBuilder >> headerShape: aBlock [
+
+	headerShape := aBlock
+]
+
+{ #category : #shapes }
+RSUMLSequenceBuilder >> headerShapeOf: anObject [
+
+	^ headerShape value: anObject
+]
+
 { #category : #initialization }
 RSUMLSequenceBuilder >> initialize [
 
@@ -46,6 +59,30 @@ RSUMLSequenceBuilder >> initialize [
 	self
 		modelDescriptor: RSUMLSequenceDescriptor new;
 		renderer: RSBasicUMLSequenceRenderer new;
+		headerShape: [ :anObject | 
+			| split camelShapes |
+			split := anObject class name splitOn: ' class'.
+
+			camelShapes := split first splitCamelCase collect: [ :each | 
+					               (self labelShapeOfString: each)
+						               bold;
+						               yourself ].
+
+			split size = 2 ifTrue: [ 
+				camelShapes add: ((self labelShapeOfString: '(class)')
+						 italic;
+						 yourself) ].
+
+			RSVerticalLineLayout new
+				alignCenter;
+				verticalGap: 0;
+				on: camelShapes.
+
+			RSComposite new
+				shapes: camelShapes;
+				when: RSMouseLeftClick do: [ anObject class browse ];
+				padded: Float goldenPlatinumRatio withBoxDo: [ :box | 
+					box borderDo: [ :border | box color: border color translucent ] ] ];
 		receiverArgumentsShape: [ :anObject | 
 			RSLabel new
 				model: anObject;
@@ -58,6 +95,15 @@ RSUMLSequenceBuilder >> initialize [
 					box
 						withBorder;
 						color: box borderColor lighter lighter lighter translucent ] ]
+]
+
+{ #category : #shapes }
+RSUMLSequenceBuilder >> labelShapeOfString: aString [
+
+	^ RSLabel new
+		  useDefaultCodeFont;
+		  text: aString;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }
@@ -200,6 +246,12 @@ RSUMLSequenceBuilder >> previousMessagesSends: anObject [
 RSUMLSequenceBuilder >> receiverArgumentsShape: anObject [
 
 	receiverArgumentsShape := anObject
+]
+
+{ #category : #accessing }
+RSUMLSequenceBuilder >> receiverArgumentsShapeOf: anObject [
+
+	^ receiverArgumentsShape value: anObject
 ]
 
 { #category : #hooks }

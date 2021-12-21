@@ -11,12 +11,12 @@ Class {
 		'headers',
 		'widths',
 		'circles',
-		'receiverArgumentsShape',
 		'objectsSeenSoFar',
 		'lastSends',
 		'selfMessageSends',
 		'levels',
-		'heights'
+		'heights',
+		'umlBuilder'
 	],
 	#category : #'Roassal3-UML-Descriptor'
 }
@@ -153,7 +153,10 @@ RSUMLSequenceDescriptor >> cumulateHeights [
 RSUMLSequenceDescriptor >> cumulateWidths [
 
 	| orderedHeaders |
-	orderedHeaders := self orderedHeaders.
+	orderedHeaders := Array new: headers size.
+
+	headers valuesDo: [ :anAssoc | 
+		orderedHeaders at: anAssoc value put: anAssoc key ].
 
 	widths := Array streamContents: [ :aStream | 
 		          orderedHeaders overlappingPairsDo: [ 
@@ -177,8 +180,8 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 				receiver := aMessageSend receiver.
 
 				"Get the corresponding indexes."
-				clientIndex := (headers at: client) value.
-				receiverIndex := (headers at: receiver) value.
+				clientIndex := self columnIndexOf: client.
+				receiverIndex := self columnIndexOf: receiver.
 
 				"Indent of the client due to nested self sends."
 				clientIndent := self currentIndentOfLink: anArray first.
@@ -293,41 +296,18 @@ RSUMLSequenceDescriptor >> headerOf: anObject [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 
-	| split composite shapes nicknameShape |
-	split := anObject class name splitOn: ' class'.
-
-	shapes := split first splitCamelCase collect: [ :each | 
-		          (self labelShapeOfString: each)
-			          bold;
-			          yourself ].
-
-	split size = 2 ifTrue: [ 
-		shapes add: ((self labelShapeOfString: '(class)')
-				 italic;
-				 yourself) ].
-
-	RSVerticalLineLayout new
-		alignCenter;
-		verticalGap: 0;
-		on: shapes.
-
-	composite := RSComposite new
-		             shapes: shapes;
-		             when: RSMouseLeftClick do: [ anObject class browse ];
-		             padded: Float goldenPlatinumRatio
-		             withBoxDo: [ :box | 
-			             box borderDo: [ :border | 
-					             box color: border color translucent ] ].
+	| aShape nicknameShape |
+	aShape := umlBuilder headerShapeOf: anObject.
 
 	nicknameShape := self nicknameOf: anObject ifAbsent: [ Error signal ].
 
 	RSLocation new
 		below;
-		stick: nicknameShape on: composite.
+		stick: nicknameShape on: aShape.
 
 	^ RSComposite new
 		  model: anObject;
-		  shapes: (Array with: composite with: nicknameShape);
+		  shapes: (Array with: aShape with: nicknameShape);
 		  yourself
 ]
 
@@ -338,15 +318,6 @@ RSUMLSequenceDescriptor >> invisibleCircleAtPoint: aPoint [
 		  position: aPoint;
 		  extent: 0 @ 0;
 		  noPaint;
-		  yourself
-]
-
-{ #category : #shapes }
-RSUMLSequenceDescriptor >> labelShapeOfString: aString [
-
-	^ RSLabel new
-		  useDefaultCodeFont;
-		  text: aString;
 		  yourself
 ]
 
@@ -378,24 +349,6 @@ RSUMLSequenceDescriptor >> nicknameOf: anObject ifAbsent: aBlock [
 RSUMLSequenceDescriptor >> objectsSeenSoFar: aDictionary [
 
 	objectsSeenSoFar := aDictionary
-]
-
-{ #category : #API }
-RSUMLSequenceDescriptor >> orderedHeaders [
-
-	| orderedHeaders |
-	orderedHeaders := Array new: headers size.
-
-	headers valuesDo: [ :anAssoc | 
-		orderedHeaders at: anAssoc value put: anAssoc key ].
-
-	^ orderedHeaders
-]
-
-{ #category : #accessing }
-RSUMLSequenceDescriptor >> receiverArgumentsShape: aBlock [
-
-	receiverArgumentsShape := aBlock
 ]
 
 { #category : #API }
@@ -517,13 +470,14 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 	receiverShape := aMessageSend receiver in: [ :recv | 
 		                 self
 			                 nicknameOf: recv
-			                 ifAbsent: [ receiverArgumentsShape value: recv ] ].
+			                 ifAbsent: [ 
+			                 umlBuilder receiverArgumentsShapeOf: recv ] ].
 
 	aligningShapes := OrderedCollection new.
 
 	keywords := split withIndexCollect: [ :each :index | 
 		            | label argument argumentShape |
-		            label := (self labelShapeOfString: each)
+		            label := (umlBuilder labelShapeOfString: each)
 			                     bold;
 			                     yourself.
 
@@ -541,8 +495,8 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 				                             self
 					                             nicknameOf: argument
 					                             ifAbsent: [ 
-					                             receiverArgumentsShape value:
-						                             argument ] ].
+					                             umlBuilder 
+						                             receiverArgumentsShapeOf: argument ] ].
 
 		            RSLocation new
 			            outer;
@@ -589,14 +543,12 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 
-	| return shape |
+	| return |
 	return := aMessageSend return.
 
-	shape := self
-		         nicknameOf: return
-		         ifAbsent: [ receiverArgumentsShape value: return ].
-
-	^ shape
+	^ self
+		  nicknameOf: return
+		  ifAbsent: [ umlBuilder receiverArgumentsShapeOf: return ]
 ]
 
 { #category : #accessing }
@@ -609,6 +561,12 @@ RSUMLSequenceDescriptor >> selfMessageSends [
 RSUMLSequenceDescriptor >> startCircleOf: anAssociation [
 
 	^ (circles at: anAssociation) key
+]
+
+{ #category : #accessing }
+RSUMLSequenceDescriptor >> umlBuilder: aBuilder [
+
+	umlBuilder := aBuilder
 ]
 
 { #category : #API }
