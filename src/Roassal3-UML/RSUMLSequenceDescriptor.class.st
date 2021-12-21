@@ -199,17 +199,17 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 							update: [ :currentWidth | currentWidth max: clientIndent ].
 
 						start := clientIndex min: receiverIndex.
-						end := (clientIndex max: receiverIndex) - 1.
+						end := clientIndex max: receiverIndex.
 
 						width := receiverIndent * (clientIndex < receiverIndex
 							          ifTrue: [ "Toward right (forward) case" 1 ]
 							          ifFalse: [ "Toward left (backward) case" -1 ]).
 
-						start to: end do: [ :i | width := width + (widths at: i) ].
+						start to: end - 1 do: [ :i | width := width + (widths at: i) ].
 
-						dist := messageWidth - width / (end - start + 1) max: 0.
+						dist := messageWidth - width / (end - start) max: 0.
 
-						start to: end do: [ :i | 
+						start to: end - 1 do: [ :i | 
 						widths at: i update: [ :currentWidth | currentWidth + dist ] ] ] ]
 			ifReturnMessageSend: [ "Ignore this case because we take care of max 
 				of corresponding sends already in `#refresh`"

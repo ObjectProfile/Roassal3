@@ -104,5 +104,5 @@ RSReturnMessageSend >> selector [
 { #category : #'as yet unclassified' }
 RSReturnMessageSend >> styleLine: aLine [
 
-	aLine dashed
+	aLine dashArray: { Float goldenPlatinumRatio }
 ]
