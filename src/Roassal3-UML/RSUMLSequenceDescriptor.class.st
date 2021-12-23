@@ -461,7 +461,13 @@ RSUMLSequenceDescriptor >> selectorLabelOf: anAssociation [
 { #category : #shapes }
 RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 
-	| split shapes aligningShapes keywords receiverShape |
+	| split shapes aligningShapes keywords receiverShape leftLocation |
+	leftLocation := RSLocation new
+		                outer;
+		                left;
+		                offset: Float goldenPlatinumRatio negated @ 0;
+		                yourself.
+
 	"Get the keywords of the selector."
 	split := aMessageSend selector splitOn: $:.
 
@@ -491,7 +497,7 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 			                             ifNil: [ 
 				                             RSComposite new
 					                             shapes: {  };
-					                             extent: receiverShape extent;
+					                             extent: 0 @ 0;
 					                             yourself ]
 			                             ifNotNil: [ 
 				                             self
@@ -500,11 +506,7 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 					                             umlBuilder 
 						                             receiverArgumentsShapeOf: argument ] ].
 
-		            RSLocation new
-			            outer;
-			            left;
-			            offset: Float goldenPlatinumRatio negated @ 0;
-			            stick: label on: argumentShape.
+		            leftLocation stick: label on: argumentShape.
 
 		            aligningShapes add: argumentShape.
 
@@ -515,6 +517,8 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 		verticalGap: 0;
 		on: aligningShapes.
 
+	leftLocation stick: receiverShape on: keywords first key.
+
 	shapes := { 
 		          receiverShape.
 		          (RSComposite new
@@ -524,15 +528,6 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 								            (Array with: anAssoc key with: anAssoc value);
 							            yourself ]);
 			           yourself) }.
-
-	RSHorizontalLineLayout new in: [ :layout | 
-		keywords size = 1
-			ifTrue: [ layout alignMiddle ]
-			ifFalse: [ layout alignTop ].
-
-		layout
-			horizontalGap: Float goldenPlatinumRatio;
-			on: shapes ].
 
 	^ RSComposite new
 		  shapes: shapes;
