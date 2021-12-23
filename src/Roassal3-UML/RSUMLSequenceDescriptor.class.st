@@ -162,7 +162,9 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 		          orderedHeaders overlappingPairsDo: [ 
 			          :anHeader 
 			          :anotherHeader | 
-			          aStream nextPut: anHeader width + anotherHeader width / 2 ].
+			          aStream nextPut:
+				          anHeader width + anotherHeader width / 2
+				          * Float goldenRatio ].
 
 		          aStream nextPut: orderedHeaders last width / 2 ].
 
