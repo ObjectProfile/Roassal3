@@ -22,15 +22,18 @@ RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	targetMorph := self morphBuilder cull: aShape model.
 	vertices := SimpleBalloonMorph getVertices: targetMorph bounds.
 	popup := SimpleBalloonMorph new
-		color: self backgroundColor;
+		"color: self backgroundColor;"
+		
 		addMorph: targetMorph;
 		setTarget: nil;
-		setVertices: vertices.
+		setVertices: vertices;
+		borderColor: Color transparent;
+		color: Color transparent.
 	world := event canvas morph world.
 	world ifNil: [ ^ popup ].
 	world addMorphFront: popup.
 	world activeHand balloonHelp: popup.
-	^ popup
+	^ popup 
 ]
 
 { #category : #accessing }
@@ -75,7 +78,7 @@ RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [
 	| position xdelta ydelta cMorph world |
 	cMorph := evt canvas morph.
 	world := cMorph world.
-	position := (evt camera fromSpaceToPixel: evt position) + cMorph position.
+	position := (evt camera fromSpaceToPixel: evt position) + cMorph positionInWorld.
 	xdelta := gapFromPointer x.
 	ydelta := gapFromPointer y.
 	
