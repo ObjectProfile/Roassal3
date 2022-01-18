@@ -59,6 +59,8 @@ RSUMLSequenceBuilder >> initialize [
 	self
 		modelDescriptor: RSUMLSequenceDescriptor new;
 		renderer: RSBasicUMLSequenceRenderer new;
+		previousHeaders: OrderedCollection new;
+		previousMessagesSends: OrderedCollection new;
 		headerShape: [ :anObject | 
 			| split camelShapes |
 			split := anObject class name splitOn: ' class'.
