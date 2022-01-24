@@ -33,6 +33,7 @@ BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
+	spec package: #'Roassal3-Spec-Obsolete'.
 	self roassalGroups: spec 
 		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
 		examples: self examplePackagesNames
