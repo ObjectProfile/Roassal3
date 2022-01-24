@@ -247,8 +247,7 @@ RSSearchInCanvasInteraction >> obtainRegExpToHighlight [
 
 { #category : #public }
 RSSearchInCanvasInteraction >> onShape: aCanvas [
-	aCanvas 
-		when: RSKeyUp do: [ :evt | self processKeyUp: evt ]
+	aCanvas when: RSKeyUp send: #processKeyUp: to: self
 ]
 
 { #category : #'private - events' }
