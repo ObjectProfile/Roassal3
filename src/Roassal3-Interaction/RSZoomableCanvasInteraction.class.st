@@ -37,7 +37,7 @@ RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: del
 
 { #category : #hooks }
 RSZoomableCanvasInteraction >> onShape: aCanvas [
-	aCanvas when: RSMouseWheelEvent do: [ :evt | self processEvent: evt ]
+	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self.
 ]
 
 { #category : #'events - processing' }
