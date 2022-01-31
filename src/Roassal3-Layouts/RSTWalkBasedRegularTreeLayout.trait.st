@@ -23,15 +23,6 @@ RSTWalkBasedRegularTreeLayout >> addChildSpacing: children [
 		  newPoint ]
 ]
 
-{ #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> announceOngoingDepthAndBreadthOf: aShape [
-
-	self
-		ongoing: aShape
-		depth: (self depthOf: aShape)
-		breadth: (self prelimOf: aShape)
-]
-
 { #category : #positioning }
 RSTWalkBasedRegularTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
 
@@ -352,8 +343,6 @@ RSTWalkBasedRegularTreeLayout >> initializeShape: aShape allParents: allParents 
 		depthOf: aShape put: depth;
 		completedInitializationOf: aShape.
 
-	self announceOngoingDepthAndBreadthOf: aShape.
-
 	^ aShape
 ]
 
@@ -384,8 +373,6 @@ RSTWalkBasedRegularTreeLayout >> leftMostChild: leftMostChild currentChild: chil
 
 	"Change preliminary x coordinate so that the node does not move."
 	self prelimOf: li update: [ :prelim | prelim - diff ].
-
-	self announceOngoingDepthAndBreadthOf: li.
 
 	"Update extreme node and its sum of modifiers."
 	self
@@ -534,7 +521,10 @@ RSTWalkBasedRegularTreeLayout >> positionNonLeaf: parent leftMostChild: leftMost
 
 	self prelimOf: parent put: childrenPrelim / 2.
 
-	self announceOngoingDepthAndBreadthOf: parent
+	self
+		ongoing: parent
+		depth: (self depthOf: parent)
+		breadth: (self prelimOf: parent)
 ]
 
 { #category : #properties }
@@ -581,8 +571,6 @@ RSTWalkBasedRegularTreeLayout >> previousChild: previousChild currentChild: curr
 	"Change preliminary x coordinate so that the node does not move."
 	self prelimOf: ri update: [ :prelim | prelim - diff ].
 
-	self announceOngoingDepthAndBreadthOf: ri.
-
 	"Update extreme node and its sum of modifiers."
 	self
 		erOf: currentChild put: (self erOf: previousChild);
@@ -616,6 +604,8 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 		            atBreadth: breadth.
 
 	self positionOf: aShape put: position.
+
+	self ongoing: aShape depth: depth breadth: breadth.
 
 	children := self childrenOf: aShape.
 
