@@ -1361,3 +1361,43 @@ RSShapeExamples >> example46Popups [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example47CompositeClipChildren [
+	<script: 'self new example47CompositeClipChildren open'>
+	| boxes containers c |
+	containers := { RSShape. String. RSEvent } collect: [ :rootCls |
+		| container |
+		container := RSComposite new.
+		boxes := RSBox models: rootCls withAllSubclasses 
+			forEach: [ :box :cls | box size: cls linesOfCode sqrt + 5 ].
+		container addAll: boxes.
+		RSLineBuilder line
+			canvas: container;
+			withVerticalAttachPoint;
+			shapes: boxes;
+			connectFrom: #superclass.
+		RSTreeLayout on: boxes.
+		
+		container
+			model: rootCls;
+			adjustToChildren;
+			padding: 10;
+			labeled;
+			border: (RSBorder new color: Color black; joinMiter);
+			clipChildren: true;
+			when: RSMouseDragging do: [ :evt | | d |
+				d := evt camera distanceFromPixelToSpace: evt step.
+				evt shape nodes do: [ :child |
+					child translateBy: d ].
+				evt signalUpdate.
+				 ]
+			yourself
+		 ].
+
+	c := RSCanvas new.
+	c addAll: containers.
+	RSFlowLayout on: containers.
+	c @ RSCanvasController.
+	^ c
+]
