@@ -624,15 +624,21 @@ RSAthensRenderer >> visitBoundingShape: shape [
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
-	| canvasRect | 
+	| canvasRect draw | 
 	shape hasChildren ifFalse: [ ^ self ].
-	self isFixedShapesDrawing ifTrue: [ 
-		shape children do: [ :child | child accept: self ].
-		^ self ].
-	canvasRect := shape canvas visibleRectangle.
-	shape children 
-		select: [ :child | child intersects: canvasRect ]
-		thenDo: [ :child | child accept: self ].
+	
+	draw := [
+		self isFixedShapesDrawing ifTrue: [ 
+			shape children do: [ :child | child accept: self ].
+			^ self ].
+		canvasRect := shape canvas visibleRectangle.
+		shape children 
+			select: [ :child | child intersects: canvasRect ]
+			thenDo: [ :child | child accept: self ]
+		].
+	shape clipChildren 
+		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
+		ifFalse: [ draw value ].
 ]
 
 { #category : #visiting }
