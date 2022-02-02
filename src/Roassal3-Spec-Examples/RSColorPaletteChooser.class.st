@@ -16,8 +16,8 @@ Class {
 	#category : #'Roassal3-Spec-Examples'
 }
 
-{ #category : #specs }
-RSColorPaletteChooser class >> defaultSpec [ 
+{ #category : #layout }
+RSColorPaletteChooser class >> defaultLayout [ 
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #buttons withConstraints: [ :c | c height: self toolbarHeight ];
