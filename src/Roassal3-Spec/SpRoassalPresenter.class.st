@@ -31,7 +31,7 @@ SpRoassalPresenter class >> on: anOwningPresenter withCanvas: aTrachelCanvas [
 { #category : #'instance creation' }
 SpRoassalPresenter class >> open [
 	<script>
-	^ self new openWithSpec
+	^ self new open
 ]
 
 { #category : #accessing }
