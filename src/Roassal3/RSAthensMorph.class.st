@@ -94,32 +94,20 @@ v canvas buildMorph drawOnMockCanvas
 { #category : #drawing }
 RSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	
 	surface drawDuring: [ :athensCanvas | 
-		| camera canvasRect |
+		| camera |
 		roassalCanvas clearBackground
 			ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
 		camera := roassalCanvas camera.
+		
 		athensCanvas pathTransform
 			translateBy: (self extent / 2) asFloatPoint;
 			scaleBy: camera scale asFloat;
 			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
-		canvasRect := roassalCanvas visibleRectangle.
-		renderer isFixedShapesDrawing: false.
-		roassalCanvas shapes
-			select: [ :roassalShape | roassalShape intersects: canvasRect ]
-			thenDo: [ :roassalShape | roassalShape accept: renderer ].
-		
-		self showRectanglesIfNecessary: roassalCanvas shapes.
-		"We display the elements that are _NOT_ subject to the camera"
-		athensCanvas pathTransform loadIdentity scaleBy: 1.0001.
-		renderer isFixedShapesDrawing: true.
-		roassalCanvas fixedShapes do: [ :roassalShape | 
-			roassalShape accept: renderer ].
-		"debug mode to show encompassingRectangles"
-		self showRectanglesIfNecessary: roassalCanvas fixedShapes. ]
+		roassalCanvas accept: renderer.
+	]
 		
 
 ]
@@ -550,18 +538,6 @@ RSAthensMorph >> shapeWithAction: eventClass forPositionInPixels: position [
 RSAthensMorph >> shapeWithActionForPositionInPixels: point [
 	"Return the shape with event handler located that contains point"
 	 ^ roassalCanvas shapeWithActionForPositionInPixels: point
-]
-
-{ #category : #drawing }
-RSAthensMorph >> showRectanglesIfNecessary: shapes [
-	roassalCanvas showRectangles ifFalse: [ ^ self ].
-	
-	renderer canvas setPaint: (Color blue alpha: 0.2).
-	shapes do: [ :shape | | r |
-		r := shape encompassingRectangle.
-		r := r origin asFloatPoint corner: r corner asFloatPoint.
-		renderer canvas drawShape: r.
-		].
 ]
 
 { #category : #signaling }
