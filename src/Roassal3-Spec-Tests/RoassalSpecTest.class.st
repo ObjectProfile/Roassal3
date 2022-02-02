@@ -12,7 +12,7 @@ RoassalSpecTest >> testBasic [
 		ifPresent: [:cls | cls new]
 		ifAbsent: [^ self ].
 	self assert: spec class equals: SpRoassalPresenter.
-	window := spec open.
+	window := spec asWindow open.
 	value := 0.
 	
 	spec script: [ :view | view addShape: RSBox new. value := value + 1 ].
