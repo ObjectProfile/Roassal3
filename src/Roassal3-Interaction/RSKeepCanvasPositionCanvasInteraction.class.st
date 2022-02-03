@@ -4,9 +4,6 @@ The intent of this interaction is to be like a scroll from pharo
 Class {
 	#name : #RSKeepCanvasPositionCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
-	#instVars : [
-		'animation'
-	],
 	#category : #'Roassal3-Interaction-Controls'
 }
 

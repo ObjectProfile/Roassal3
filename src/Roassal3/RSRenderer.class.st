@@ -39,6 +39,6 @@ RSRenderer >> canvas: aCanvas [
 	athensCanvas := aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
 RSRenderer >> visitCanvas: canvas [
 ]

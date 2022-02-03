@@ -14,8 +14,8 @@ Class {
 	#category : #'Roassal3-Spec-Examples'
 }
 
-{ #category : #specs }
-RSPieChartExample class >> defaultSpec [ 
+{ #category : #layout }
+RSPieChartExample class >> defaultLayout [ 
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #droplist withConstraints: [ :c | c height: self toolbarHeight ];
