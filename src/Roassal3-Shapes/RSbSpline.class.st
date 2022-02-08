@@ -11,26 +11,25 @@ Class {
 { #category : #accessing }
 RSbSpline >> controlPoints: aCollectionOfPoints [
 
-	| n associations |
+	| n |
 	n := aCollectionOfPoints size.
 
-	associations := aCollectionOfPoints collect: [ :each | 
-		                each asReflexiveAssociation ].
+	param ifNil: [ self samples: n * 10 ].
 
 	points := Array new: param size.
 
 	param withIndexDo: [ :t :index | 
+		| workingPoints |
+		workingPoints := aCollectionOfPoints copy.
+
 		1 to: n do: [ :k | 
 			1 to: n - k do: [ :i | 
 				| aPoint nextPoint |
-				aPoint := 1 - t * (associations at: i) value.
-				nextPoint := t * (associations at: i + 1) value.
-				(associations at: i) value: aPoint + nextPoint ] ].
+				aPoint := 1 - t * (workingPoints at: i).
+				nextPoint := t * (workingPoints at: i + 1).
+				workingPoints at: i put: aPoint + nextPoint ] ].
 
-		points at: index put: (associations at: 1) value.
-
-		associations := aCollectionOfPoints collect: [ :each | 
-			                each asReflexiveAssociation ] ].
+		points at: index put: (workingPoints at: 1) ].
 
 	^ super controlPoints: points
 ]

@@ -1009,20 +1009,27 @@ RSBasicShapeExamples >> example44bSpline [
 		          (5 @ 6).
 		          (7 @ 8).
 		          (10 @ 2).
-		          (1 @ 1) }.
+		          (1 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSCanvas new
+		  addAll: (points collect: [ :each | 
+					   RSCircle new
+						   model: each;
+						   color: Color transparent;
+						   radius: Float platinumRatio;
+						   position: each;
+						   withBorder;
+						   labeled;
+						   yourself ]);
 		  addShape: (RSPolyline new
 				   controlPoints: points;
-				   width: 1;
 				   dotted;
 				   yourself);
 		  addShape: (RSbSpline new
-				   samples: 100;
-				   width: 1;
 				   controlPoints: points;
 				   yourself);
 		  zoomToFit;
+		  addInteraction: RSCanvasController new;
 		  yourself
 ]
 
@@ -1032,22 +1039,33 @@ RSBasicShapeExamples >> example45bSpline [
 	<script: 'self new example45bSpline open'>
 	| points |
 	points := { 
-		          (1 @ 0).
 		          (3 / 4 @ 0).
+		          (1 @ 0).
 		          (2 @ 0).
-		          (3 @ 1) }.
+		          (3 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSCanvas new
+		  addAll: (points collect: [ :each | 
+					   RSCircle new
+						   model: each;
+						   color: Color transparent;
+						   radius: Float platinumRatio;
+						   position: each;
+						   withBorder;
+						   labeled;
+						   yourself ]);
 		  addShape: (RSPolyline new
 				   controlPoints: points;
-				   width: 1;
 				   dotted;
 				   yourself);
 		  addShape: (RSbSpline new
-				   samples: 100;
-				   width: 1;
+				   controlPoints: points;
+				   yourself);
+		  addShape: (RSBezier new
+				   color: Color red;
 				   controlPoints: points;
 				   yourself);
 		  zoomToFit;
+		  addInteraction: RSCanvasController new;
 		  yourself
 ]
