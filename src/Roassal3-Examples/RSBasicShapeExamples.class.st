@@ -997,3 +997,57 @@ RSBasicShapeExamples >> example43GhostDraggable [
 
 	^ c @ RSCanvasController
 ]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44bSpline [
+
+	<script: 'self new example44bSpline open'>
+	| points |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ 8).
+		          (10 @ 2).
+		          (1 @ 1) }.
+
+	^ RSCanvas new
+		  addShape: (RSPolyline new
+				   controlPoints: points;
+				   width: 1;
+				   dotted;
+				   yourself);
+		  addShape: (RSbSpline new
+				   samples: 100;
+				   width: 1;
+				   controlPoints: points;
+				   yourself);
+		  zoomToFit;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example45bSpline [
+
+	<script: 'self new example45bSpline open'>
+	| points |
+	points := { 
+		          (1 @ 0).
+		          (3 / 4 @ 0).
+		          (2 @ 0).
+		          (3 @ 1) }.
+
+	^ RSCanvas new
+		  addShape: (RSPolyline new
+				   controlPoints: points;
+				   width: 1;
+				   dotted;
+				   yourself);
+		  addShape: (RSbSpline new
+				   samples: 100;
+				   width: 1;
+				   controlPoints: points;
+				   yourself);
+		  zoomToFit;
+		  yourself
+]
