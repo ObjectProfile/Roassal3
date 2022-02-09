@@ -1071,6 +1071,55 @@ RSBasicShapeExamples >> example44bSplineClosedControlPoints [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44bSplineRepeatedControlPoint [
+
+	<script: 'self new example44bSplineRepeatedControlPoint open'>
+	| simpleControlPoints repetitionControlPoints aPoint |
+	aPoint := 10 @ 1.
+
+	simpleControlPoints := { 
+		                       (2 @ 4).
+		                       (6 @ 12).
+		                       aPoint.
+		                       (12 @ 12) } collect: [ :each | each * 100 ].
+
+	repetitionControlPoints := { 
+		                           (2 @ 4).
+		                           (6 @ 12).
+		                           aPoint.
+		                           aPoint.
+		                           aPoint.
+		                           aPoint.
+		                           (12 @ 12) } collect: [ :each | 
+		                           each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (simpleControlPoints collect: [ :each | 
+					   RSCircle new
+						   model: each;
+						   color: Color transparent;
+						   radius: Float platinumRatio;
+						   position: each;
+						   withBorder;
+						   labeled;
+						   yourself ]);
+		  addShape: (RSPolyline new
+				   controlPoints: simpleControlPoints;
+				   yourself);
+		  addShape: (RSbSpline new
+				   controlPoints: simpleControlPoints;
+				   color: Color red;
+				   yourself);
+		  addShape: (RSbSpline new
+				   controlPoints: repetitionControlPoints;
+				   color: Color blue;
+				   yourself);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44bSplineSplitAt [
 
 	<script: 'self new example44bSplineSplitAt open'>
