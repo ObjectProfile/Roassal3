@@ -1004,6 +1004,43 @@ RSBasicShapeExamples >> example44bSpline [
 	<script: 'self new example44bSpline open'>
 	| points |
 	points := { 
+		          (1 @ 0).
+		          (4 / 3 @ 0).
+		          (2 @ 0).
+		          (3 @ 1) } collect: [ :each | each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (points collect: [ :each | 
+					   RSCircle new
+						   model: each;
+						   color: Color transparent;
+						   radius: Float platinumRatio;
+						   position: each;
+						   withBorder;
+						   labeled;
+						   yourself ]);
+		  addShape: (RSPolyline new
+				   controlPoints: points;
+				   dotted;
+				   yourself);
+		  addShape: (RSbSpline new
+				   controlPoints: points;
+				   yourself);
+		  addShape: (RSBezier new
+				   color: Color red;
+				   controlPoints: points;
+				   yourself);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44bSplineClosedControlPoints [
+
+	<script: 'self new example44bSplineClosedControlPoints open'>
+	| points |
+	points := { 
 		          (1 @ 1).
 		          (3 @ 4).
 		          (5 @ 6).
@@ -1034,15 +1071,29 @@ RSBasicShapeExamples >> example44bSpline [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example45bSpline [
+RSBasicShapeExamples >> example44bSplineSplitAt [
 
-	<script: 'self new example45bSpline open'>
-	| points |
+	<script: 'self new example44bSplineSplitAt open'>
+	| points bspline leftSpline rightSpline |
 	points := { 
-		          (3 / 4 @ 0).
-		          (1 @ 0).
-		          (2 @ 0).
-		          (3 @ 1) } collect: [ :each | each * 100 ].
+		          (0 @ 0).
+		          (1 @ 3).
+		          (2.5 @ 4).
+		          (5 @ 4.5).
+		          (4.5 @ 2.5).
+		          (6 @ 1) } collect: [ :each | each * 100 ].
+
+	bspline := RSbSpline new
+		           controlPoints: points;
+		           splitAt: 1 / 4 in: [ :left :right :original | 
+			           leftSpline := left
+				                         color: Color red translucent;
+				                         yourself.
+
+			           rightSpline := right
+				                          color: Color blue translucent;
+				                          yourself.
+			           original ].
 
 	^ RSCanvas new
 		  addAll: (points collect: [ :each | 
@@ -1058,13 +1109,9 @@ RSBasicShapeExamples >> example45bSpline [
 				   controlPoints: points;
 				   dotted;
 				   yourself);
-		  addShape: (RSbSpline new
-				   controlPoints: points;
-				   yourself);
-		  addShape: (RSBezier new
-				   color: Color red;
-				   controlPoints: points;
-				   yourself);
+		  addShape: bspline;
+		  addShape: leftSpline;
+		  addShape: rightSpline;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
