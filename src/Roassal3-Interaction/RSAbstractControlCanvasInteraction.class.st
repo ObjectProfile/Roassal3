@@ -16,8 +16,8 @@ RSAbstractControlCanvasInteraction >> configuration [
 ]
 
 { #category : #accessing }
-RSAbstractControlCanvasInteraction >> configuration: aRSControlLimits [
-	limits := aRSControlLimits
+RSAbstractControlCanvasInteraction >> configuration: aRSControlConfiguration [
+	limits := aRSControlConfiguration
 ]
 
 { #category : #utilities }
