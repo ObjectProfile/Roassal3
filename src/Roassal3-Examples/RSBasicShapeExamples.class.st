@@ -1071,6 +1071,36 @@ RSBasicShapeExamples >> example44bSplineClosedControlPoints [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44bSplineDegreeElevation [
+
+	<script: 'self new example44bSplineDegreeElevation open'>
+	| points bspline |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ (3 / 2)).
+		          (10 @ 2) } collect: [ :each | each * 100 ].
+
+	bspline := RSbSpline new
+		           controlPoints: points;
+		           yourself.
+
+	^ RSCanvas new
+		  add: (bspline asShapeWithControlNetColoured: Color gray);
+		  add: (bspline increment asShapeWithControlNetColoured: Color red);
+		  add:
+			  (bspline increment increment asShapeWithControlNetColoured:
+					   Color blue);
+		  add:
+			  (bspline increment increment increment 
+				   asShapeWithControlNetColoured: Color brown);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44bSplineRepeatedControlPoint [
 
 	<script: 'self new example44bSplineRepeatedControlPoint open'>

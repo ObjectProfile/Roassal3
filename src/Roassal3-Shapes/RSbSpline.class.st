@@ -8,6 +8,57 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #converting }
+RSbSpline >> asShapeWithControlNet [
+
+	^ self asShapeWithControlNet: [ :bspline :circles :line |  ]
+]
+
+{ #category : #converting }
+RSbSpline >> asShapeWithControlNet: aBlock [
+
+	| circles polyline |
+	polyline := RSPolyline new
+		            controlPoints: points;
+		            dotted;
+		            yourself.
+
+	circles := points withIndexCollect: [ :each :index | 
+		           RSCircle new
+			           model: each;
+			           color: Color transparent;
+			           radius: polyline border width * 2;
+			           position: each;
+			           when: RSPositionChangedEvent do: [ :ev | 
+				           points at: index put: ev newPosition.
+				           polyline controlPoints: points.
+				           self controlPoints: points ];
+			           draggable;
+			           labeled;
+			           withBorder;
+			           yourself ].
+
+	polyline color: polyline color translucent.
+	self color: self color translucent.
+
+	aBlock value: self value: circles value: polyline.
+
+	^ RSComposite new
+		  shapes: circles , { 
+					  polyline.
+					  self };
+		  yourself
+]
+
+{ #category : #converting }
+RSbSpline >> asShapeWithControlNetColoured: aColor [
+
+	^ self asShapeWithControlNet: [ :bspline :circles :line | 
+		  bspline color: aColor.
+		  line color: aColor translucent.
+		  circles do: [ :each | each color: aColor translucent ] ]
+]
+
 { #category : #accessing }
 RSbSpline >> controlPoints: aCollectionOfPoints [
 
@@ -53,6 +104,39 @@ RSbSpline >> deCasteljau: workingPoints at: t [
 			last at: k + 1 put: (workingPoints at: n - k) ] ].
 
 	^ Array with: workingPoints first with: diagonal with: last
+]
+
+{ #category : #accessing }
+RSbSpline >> increment [
+
+	| incremented n sandbox |
+	n := points size.
+
+	sandbox := Array new: n + 2.
+
+	sandbox
+		replaceFrom: 2
+		to: n + 1
+		with: points
+		startingAt: 1.
+
+	sandbox
+		at: 1 put: 0 @ 0;
+		at: n + 2 put: 0 @ 0.
+
+	incremented := Array new: n + 1.
+
+	1 to: n + 1 do: [ :i | 
+		| t |
+		t := i - 1 / n.
+
+		incremented
+			at: i
+			put: t * (sandbox at: i) + (1 - t * (sandbox at: i + 1)) ].
+
+	^ self class new
+		  controlPoints: incremented;
+		  yourself
 ]
 
 { #category : #'accessing - structure variables' }
