@@ -11,40 +11,67 @@ Class {
 { #category : #converting }
 RSbSpline >> asShapeWithControlNet [
 
-	^ self asShapeWithControlNet: [ :bspline :circles :line |  ]
+	^ self asShapeWithControlNetColoured: Color gray
 ]
 
 { #category : #converting }
 RSbSpline >> asShapeWithControlNet: aBlock [
 
-	| circles polyline |
+	| circles polyline labels location |
 	polyline := RSPolyline new
 		            controlPoints: points;
 		            dotted;
 		            yourself.
 
-	circles := points withIndexCollect: [ :each :index | 
-		           RSCircle new
-			           model: each;
-			           color: Color transparent;
-			           radius: polyline border width * 2;
-			           position: each;
-			           when: RSPositionChangedEvent do: [ :ev | 
-				           points at: index put: ev newPosition.
-				           polyline controlPoints: points.
-				           self controlPoints: points ];
-			           draggable;
-			           labeled;
-			           withBorder;
-			           yourself ].
+	circles := Array new: points size.
+	labels := Array new: points size.
+
+	location := RSLocation new
+		            above;
+		            yourself.
+
+	points withIndexCollect: [ :each :index | 
+		| circle label |
+		circle := RSCircle new
+			          model: each;
+			          color: Color transparent;
+			          radius: polyline border width * 2;
+			          draggable;
+			          withBorder;
+			          position: each;
+			          yourself.
+
+		label := RSLabel new
+			         useDefaultCodeFont;
+			         text: (circle position asFloatPointRound: 3);
+			         yourself.
+
+		location stick: label on: circle.
+
+		circle when: RSPositionChangedEvent do: [ :ev | 
+			circle model: ev newPosition.
+			label text: (ev newPosition asFloatPointRound: 3).
+
+			points at: index put: ev newPosition.
+			polyline controlPoints: points.
+
+			self controlPoints: points ].
+
+
+		circles at: index put: circle.
+		labels at: index put: label ].
 
 	polyline color: polyline color translucent.
 	self color: self color translucent.
 
-	aBlock value: self value: circles value: polyline.
+	aBlock
+		value: self
+		value: circles
+		value: labels
+		value: polyline.
 
-	^ RSComposite new
-		  shapes: circles , { 
+	^ RSGroup new
+		  addAll: circles , labels , { 
 					  polyline.
 					  self };
 		  yourself
@@ -53,10 +80,12 @@ RSbSpline >> asShapeWithControlNet: aBlock [
 { #category : #converting }
 RSbSpline >> asShapeWithControlNetColoured: aColor [
 
-	^ self asShapeWithControlNet: [ :bspline :circles :line | 
+	^ self asShapeWithControlNet: [ :bspline :circles :labels :line | 
 		  bspline color: aColor.
 		  line color: aColor translucent.
-		  circles do: [ :each | each color: aColor translucent ] ]
+		  circles with: labels do: [ :circle :label | 
+			  circle border color: aColor translucent.
+			  label color: aColor translucent ] ]
 ]
 
 { #category : #accessing }
