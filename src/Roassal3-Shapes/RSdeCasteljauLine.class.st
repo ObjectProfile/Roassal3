@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : #converting }
-RSdeCasteljauLine >> asShapeWithControlNet [
+RSdeCasteljauLine >> asGroupWithControlNet [
 
-	^ self asShapeWithControlNetColoured: Color gray
+	^ self asGroupWithControlNetColoured: Color gray
 ]
 
 { #category : #converting }
-RSdeCasteljauLine >> asShapeWithControlNet: aBlock [
+RSdeCasteljauLine >> asGroupWithControlNet: aBlock [
 
 	| circles polyline labels location |
 	polyline := RSPolyline new
@@ -81,9 +81,9 @@ RSdeCasteljauLine >> asShapeWithControlNet: aBlock [
 ]
 
 { #category : #converting }
-RSdeCasteljauLine >> asShapeWithControlNetColoured: aColor [
+RSdeCasteljauLine >> asGroupWithControlNetColoured: aColor [
 
-	^ self asShapeWithControlNet: [ :bspline :circles :labels :line | 
+	^ self asGroupWithControlNet: [ :bspline :circles :labels :line | 
 		  bspline color: aColor.
 		  line color: aColor translucent.
 		  circles with: labels do: [ :circle :label | 

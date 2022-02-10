@@ -1012,7 +1012,7 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
 				   controlPoints: points;
-				   asShapeWithControlNet);
+				   asGroupWithControlNet);
 		  addShape: (RSBezier new
 				   color: Color red;
 				   controlPoints: points;
@@ -1038,7 +1038,7 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
 				   controlPoints: points;
-				   asShapeWithControlNet);
+				   asGroupWithControlNet);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1065,10 +1065,10 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 	bspline4 := bspline3 increment.
 
 	^ RSCanvas new
-		  addAll: (bspline1 asShapeWithControlNetColoured: Color gray);
-		  addAll: (bspline2 asShapeWithControlNetColoured: Color red);
-		  addAll: (bspline3 asShapeWithControlNetColoured: Color blue);
-		  addAll: (bspline4 asShapeWithControlNetColoured: Color brown);
+		  addAll: (bspline1 asGroupWithControlNetColoured: Color gray);
+		  addAll: (bspline2 asGroupWithControlNetColoured: Color red);
+		  addAll: (bspline3 asGroupWithControlNetColoured: Color blue);
+		  addAll: (bspline4 asGroupWithControlNetColoured: Color brown);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1100,10 +1100,10 @@ RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
 				   controlPoints: simpleControlPoints;
-				   asShapeWithControlNet);
+				   asGroupWithControlNetColoured: Color red);
 		  addAll: (RSdeCasteljauLine new
 				   controlPoints: repetitionControlPoints;
-				   asShapeWithControlNetColoured: Color blue);
+				   asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1126,9 +1126,9 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 		  controlPoints: points;
 		  splitAt: 1 / 4 in: [ :leftSpline :rightSpline :bspline | 
 			  RSCanvas new
-				  addAll: (bspline asShapeWithControlNetColoured: Color gray);
-				  addAll: (leftSpline asShapeWithControlNetColoured: Color red);
-				  addAll: (rightSpline asShapeWithControlNetColoured: Color blue);
+				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
+				  addAll: (leftSpline asGroupWithControlNetColoured: Color red);
+				  addAll: (rightSpline asGroupWithControlNetColoured: Color blue);
 				  zoomToFit;
 				  addInteraction: RSCanvasController new;
 				  yourself ]
