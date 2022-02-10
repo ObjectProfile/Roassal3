@@ -74,21 +74,22 @@ RSPunchCardBuilder >> renderDots: aCanvas [
 
 { #category : #hooks }
 RSPunchCardBuilder >> renderIn: aCanvas [
-	self 
-	renderDots: aCanvas;
-	renderXAxis: aCanvas;
-	renderYAxis: aCanvas.
+
+	self
+		renderDots: aCanvas;
+		renderXAxis: aCanvas;
+		renderYAxis: aCanvas
 ]
 
 { #category : #hooks }
 RSPunchCardBuilder >> renderXAxis: aCanvas [
+
 	| labels |
-	labels := objects
-		collectWithIndex: [ :cls :x | 
-			| label |
-			label := (self labelFor: cls) rotateByDegrees: -90.
-			label position: x @ 0 * size.
-			label ].
+	labels := objects collectWithIndex: [ :cls :x | 
+		          | label |
+		          label := (self labelFor: cls) rotateByDegrees: -90.
+		          label position: x @ 0 * size.
+		          label ].
 	RSAlignment new
 		shapes: labels;
 		bottom.
@@ -97,11 +98,12 @@ RSPunchCardBuilder >> renderXAxis: aCanvas [
 
 { #category : #hooks }
 RSPunchCardBuilder >> renderYAxis: aCanvas [
+
 	| labels |
-	labels := metrics keys collectWithIndex: [ :k :i |
-		(self labelFor: k)
-			position: 0@ i * size;
-			yourself ].
+	labels := metrics keys collectWithIndex: [ :k :i | 
+		          (self labelFor: k)
+			          position: 0 @ i * size;
+			          yourself ].
 	RSAlignment new
 		shapes: labels;
 		right.
