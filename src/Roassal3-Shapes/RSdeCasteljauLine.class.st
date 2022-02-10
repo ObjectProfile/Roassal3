@@ -91,6 +91,12 @@ RSdeCasteljauLine >> asGroupWithControlNetColoured: aColor [
 			  label color: aColor translucent ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> binomial: n choose: i at: t [
+
+	^ (n choose: i) * (t raisedTo: i) * (1 - t raisedTo: n - i)
+]
+
 { #category : #accessing }
 RSdeCasteljauLine >> controlPoints: aCollectionOfPoints [
 
@@ -139,6 +145,32 @@ RSdeCasteljauLine >> deCasteljau: workingPoints at: t [
 ]
 
 { #category : #accessing }
+RSdeCasteljauLine >> derivative [
+
+	^ RSdeCasteljauDerivativeLine new
+		  controlPoints: points;
+		  yourself
+]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> difference [
+
+	| diffPoints size |
+	size := points size - 1.
+
+	diffPoints := Array new: size.
+
+	1 to: size do: [ :i | 
+		| aPoint |
+		aPoint := (points at: i + 1) - (points at: i).
+		diffPoints at: i put: aPoint ].
+
+	^ self class new
+		  controlPoints: diffPoints;
+		  yourself
+]
+
+{ #category : #accessing }
 RSdeCasteljauLine >> increment [
 
 	| incremented n sandbox |
@@ -172,6 +204,38 @@ RSdeCasteljauLine >> increment [
 ]
 
 { #category : #accessing }
+RSdeCasteljauLine >> junction: aCollectionOfPoints left: aBlock [
+
+	^ self
+		  junction: 1
+		  to: 1
+		  left: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
+			  | bsplineContinuity bsplineTangent bsplineObsculator |
+			  bsplineContinuity := self class new
+				                       controlPoints:
+					                       aCollectionOfPoints , { continuityPoint };
+				                       yourself.
+
+			  bsplineTangent := self class new
+				                    controlPoints: aCollectionOfPoints , { 
+							                    tangentPoint.
+							                    continuityPoint };
+				                    yourself.
+
+			  bsplineObsculator := self class new
+				                       controlPoints: aCollectionOfPoints , { 
+							                       obsculatorPoint.
+							                       tangentPoint.
+							                       continuityPoint };
+				                       yourself.
+
+			  aBlock
+				  value: bsplineContinuity
+				  value: bsplineTangent
+				  value: bsplineObsculator ]
+]
+
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: aCollectionOfPoints right: aBlock [
 
 	^ self
@@ -201,6 +265,40 @@ RSdeCasteljauLine >> junction: aCollectionOfPoints right: aBlock [
 				  value: bsplineContinuity
 				  value: bsplineTangent
 				  value: bsplineObsculator ]
+]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> junction: h_i to: h_succ_i left: aBlock [
+
+	| continuityPoint secondControlPoint thirdControlPoint tangentPoint intervalLengthSum obsculatorPoint a_succ_i ratio ratioInverted |
+	continuityPoint := points at: 1.
+	secondControlPoint := points at: 2.
+	thirdControlPoint := points at: 3.
+
+	ratio := h_succ_i / h_i.
+	ratioInverted := h_i / h_succ_i.
+
+	intervalLengthSum := h_i + h_succ_i.
+
+	tangentPoint := continuityPoint
+	                - (h_i / intervalLengthSum * secondControlPoint)
+	                * (intervalLengthSum / h_succ_i).
+
+	obsculatorPoint := tangentPoint * (1 + (h_succ_i / h_i))
+	                   - secondControlPoint
+	                   -
+	                   (h_i / h_succ_i
+	                    * (secondControlPoint - thirdControlPoint)).
+
+	obsculatorPoint := ratioInverted * obsculatorPoint.
+
+	a_succ_i := tangentPoint + (ratio * (tangentPoint - obsculatorPoint)).
+
+	^ aBlock
+		  value: continuityPoint
+		  value: tangentPoint
+		  value: obsculatorPoint
+		  value: a_succ_i
 ]
 
 { #category : #accessing }

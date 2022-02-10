@@ -1075,6 +1075,86 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineDerivative [
+
+	<script: 'self new example44deCasteljauLineDerivative open'>
+	| points |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ 8).
+		          (10 @ 2).
+		          (1 @ 1) } collect: [ :each | each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (RSdeCasteljauLine new
+				   controlPoints: points;
+				   yourself) difference derivative asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineDifference [
+
+	<script: 'self new example44deCasteljauLineDifference open'>
+	| points |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ 8).
+		          (10 @ 2).
+		          (1 @ 1) } collect: [ :each | each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (RSdeCasteljauLine new
+				   controlPoints: points;
+				   difference) asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
+
+	<script: 'self new example44deCasteljauLineJunctionLeft open'>
+	| points otherControlPoints bspline |
+	points := { 
+		          (10 @ 12).
+		          (13 @ 8.5).
+		          (16 @ -2).
+		          (26 @ 0) } collect: [ :each | each * 100].
+
+	otherControlPoints := { 
+		                      (0 @ 3).
+		                      (1 @ -4).
+		                      (5 @ 0) } collect: [ :each | each * 100 ].
+
+	bspline := RSdeCasteljauLine new
+		           controlPoints: points;
+		           yourself.
+
+	^ bspline
+		  junction: otherControlPoints
+		  left: [ :bsplineContinuity :bsplineTangent :bsplineObsculator | 
+			  RSCanvas new
+				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
+				  addAll:
+					  (bsplineContinuity asGroupWithControlNetColoured: Color red);
+				  addAll:
+					  (bsplineTangent asGroupWithControlNetColoured: Color blue);
+				  addAll:
+					  (bsplineObsculator asGroupWithControlNetColoured: Color green);
+				  zoomToFit;
+				  addInteraction: RSCanvasController new;
+				  yourself ]
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 
 	<script: 'self new example44deCasteljauLineJunctionRight open'>
