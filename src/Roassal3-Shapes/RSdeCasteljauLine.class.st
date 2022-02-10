@@ -334,6 +334,14 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 		  value: a_succ_i
 ]
 
+{ #category : #accessing }
+RSdeCasteljauLine >> polar [
+
+	^ RSdeCasteljauPolarLine new
+		  controlPoints: points;
+		  yourself
+]
+
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
 

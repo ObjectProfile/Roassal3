@@ -1194,6 +1194,29 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePolar [
+
+	<script: 'self new example44deCasteljauLinePolar open'>
+	| points |
+	points := { 
+		          (0 @ 0).
+		          (0 @ 4).
+		          (2 @ 4).
+		          (1 @ 2) } collect: [ :each | each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (RSdeCasteljauLine new
+				   controlPoints: points;
+				   asGroupWithControlNetColoured: Color red);
+		  addAll: (RSdeCasteljauLine new
+				   controlPoints: points;
+				   yourself) difference polar asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
 	<script: 'self new example44deCasteljauLineRepeatedControlPoint open'>
