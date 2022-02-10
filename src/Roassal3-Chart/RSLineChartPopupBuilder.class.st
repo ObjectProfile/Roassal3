@@ -39,7 +39,7 @@ RSLineChartPopupBuilder >> shapeFor: aRSChart [
 { #category : #hooks }
 RSLineChartPopupBuilder >> valuePointFor: aRSLinePlot [
 	| xValue yValue |
-	xValue := (aRSLinePlot xScale invert: position x) asInteger.
+	xValue := (aRSLinePlot xScale invert: position x) roundTo: 1.
 	(xValue between: 1 and: aRSLinePlot yValues size)
 		ifFalse: [ ^ nil ].
 	yValue := aRSLinePlot yValues at: xValue.

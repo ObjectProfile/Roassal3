@@ -6,6 +6,9 @@ I defined basic behaviors about popups in general, my subclasses needs to overri
 Class {
 	#name : #RSAbstractPopupInteraction,
 	#superclass : #RSInteraction,
+	#instVars : [
+		'modelBlock'
+	],
 	#category : #'Roassal3-Interaction-Popup'
 }
 
@@ -46,6 +49,31 @@ RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 { #category : #hooks }
 RSAbstractPopupInteraction >> createPopupFor: aShape event: event [
 	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+RSAbstractPopupInteraction >> initialize [
+	super initialize.
+	self model: #model.
+]
+
+{ #category : #accessing }
+RSAbstractPopupInteraction >> model [
+	^ modelBlock
+]
+
+{ #category : #accessing }
+RSAbstractPopupInteraction >> model: anObject [
+	"
+	- can be a one arg BlockClosure 
+	- can be a ByteString
+	"
+	modelBlock := anObject.
+]
+
+{ #category : #accessing }
+RSAbstractPopupInteraction >> modelFor: aRSShape [
+	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }

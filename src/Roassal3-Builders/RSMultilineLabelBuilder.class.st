@@ -44,6 +44,8 @@ RSMultilineLabelBuilder >> compositeLabelFor: lines [
 		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ] 
 		as: RSGroup.
 	self layout on: shapes.
+	shapes do: [ :s |
+		s translateBy: s textExtents x_bearing @ 0].
 	^ shapes asShape 
 		position: 0@0;
 		yourself.

@@ -19,7 +19,7 @@ RSMorphicPopupInteraction >> backgroundColor [
 { #category : #hooks }
 RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	| popup vertices targetMorph world |
-	targetMorph := self morphBuilder cull: aShape model.
+	targetMorph := self morphBuilder cull: (self modelFor: aShape).
 	vertices := SimpleBalloonMorph getVertices: targetMorph bounds.
 	popup := SimpleBalloonMorph new
 		"color: self backgroundColor;"
