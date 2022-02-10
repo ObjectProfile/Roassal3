@@ -1075,6 +1075,45 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
+
+	<script: 'self new example44deCasteljauLineJunctionRight open'>
+	| points otherControlPoints bspline |
+	points := { 
+		          (0 @ 0).
+		          (1 @ 2).
+		          (3 @ 2).
+		          (6 @ -1) } collect: [ :each | each * 100 ].
+
+	otherControlPoints := { 
+		                      (15 @ 3).
+		                      (15 @ 3).
+		                      (15 @ 3).
+		                      (15 @ 3).
+		                      (23 @ -4).
+		                      (24 @ 0) } collect: [ :each | each * 100 ].
+
+	bspline := RSdeCasteljauLine new
+		           controlPoints: points;
+		           yourself.
+
+	^ bspline
+		  junction: otherControlPoints
+		  right: [ :bsplineContinuity :bsplineTangent :bsplineObsculator | 
+			  RSCanvas new
+				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
+				  addAll:
+					  (bsplineContinuity asGroupWithControlNetColoured: Color red);
+				  addAll:
+					  (bsplineTangent asGroupWithControlNetColoured: Color blue);
+				  addAll:
+					  (bsplineObsculator asGroupWithControlNetColoured: Color green);
+				  zoomToFit;
+				  addInteraction: RSCanvasController new;
+				  yourself ]
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
 	<script: 'self new example44deCasteljauLineRepeatedControlPoint open'>

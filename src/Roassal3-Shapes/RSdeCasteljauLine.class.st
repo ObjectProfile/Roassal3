@@ -171,6 +171,71 @@ RSdeCasteljauLine >> increment [
 		  yourself
 ]
 
+{ #category : #accessing }
+RSdeCasteljauLine >> junction: aCollectionOfPoints right: aBlock [
+
+	^ self
+		  junction: 1
+		  to: 1
+		  right: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
+			  | bsplineContinuity bsplineTangent bsplineObsculator |
+			  bsplineContinuity := self class new
+				                       controlPoints:
+					                       { continuityPoint } , aCollectionOfPoints;
+				                       yourself.
+
+			  bsplineTangent := self class new
+				                    controlPoints: { 
+						                    continuityPoint.
+						                    tangentPoint } , aCollectionOfPoints;
+				                    yourself.
+
+			  bsplineObsculator := self class new
+				                       controlPoints: { 
+						                       continuityPoint.
+						                       tangentPoint.
+						                       obsculatorPoint } , aCollectionOfPoints;
+				                       yourself.
+
+			  aBlock
+				  value: bsplineContinuity
+				  value: bsplineTangent
+				  value: bsplineObsculator ]
+]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
+
+	| continuityPoint lastButOneControlPoint lastButTwoControlPoint tangentPoint intervalLengthSum obsculatorPoint a_succ_i ratio ratioInverted offset |
+	continuityPoint := points atLast: 1.
+	lastButOneControlPoint := points atLast: 2.
+	lastButTwoControlPoint := points atLast: 3.
+
+	ratio := h_succ_i / h_i.
+	ratioInverted := h_i / h_succ_i.
+
+	offset := ratio * (lastButOneControlPoint - lastButTwoControlPoint).
+
+	intervalLengthSum := h_i + h_succ_i.
+
+	tangentPoint := intervalLengthSum * continuityPoint
+	                - (h_succ_i * lastButOneControlPoint) / h_i.
+
+	obsculatorPoint := tangentPoint - lastButOneControlPoint.
+	obsculatorPoint := obsculatorPoint - offset.
+	obsculatorPoint := obsculatorPoint + (ratioInverted * tangentPoint).
+	obsculatorPoint := ratio * obsculatorPoint.
+
+	a_succ_i := tangentPoint
+	            + (ratioInverted * (tangentPoint - obsculatorPoint)).
+
+	^ aBlock
+		  value: continuityPoint
+		  value: tangentPoint
+		  value: obsculatorPoint
+		  value: a_succ_i
+]
+
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
 
