@@ -999,9 +999,9 @@ RSBasicShapeExamples >> example43GhostDraggable [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44bSpline [
+RSBasicShapeExamples >> example44deCasteljauLine [
 
-	<script: 'self new example44bSpline open'>
+	<script: 'self new example44deCasteljauLine open'>
 	| points |
 	points := { 
 		          (1 @ 0).
@@ -1010,7 +1010,7 @@ RSBasicShapeExamples >> example44bSpline [
 		          (3 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSCanvas new
-		  addAll: (RSbSpline new
+		  addAll: (RSdeCasteljauLine new
 				   controlPoints: points;
 				   asShapeWithControlNet);
 		  addShape: (RSBezier new
@@ -1023,9 +1023,9 @@ RSBasicShapeExamples >> example44bSpline [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44bSplineClosedControlPoints [
+RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 
-	<script: 'self new example44bSplineClosedControlPoints open'>
+	<script: 'self new example44deCasteljauLineClosedControlPoints open'>
 	| points |
 	points := { 
 		          (1 @ 1).
@@ -1036,7 +1036,7 @@ RSBasicShapeExamples >> example44bSplineClosedControlPoints [
 		          (1 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSCanvas new
-		  addAll: (RSbSpline new
+		  addAll: (RSdeCasteljauLine new
 				   controlPoints: points;
 				   asShapeWithControlNet);
 		  zoomToFit;
@@ -1045,9 +1045,9 @@ RSBasicShapeExamples >> example44bSplineClosedControlPoints [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44bSplineDegreeElevation [
+RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 
-	<script: 'self new example44bSplineDegreeElevation open'>
+	<script: 'self new example44deCasteljauLineDegreeElevation open'>
 	| points bspline1 bspline2 bspline3 bspline4 |
 	points := { 
 		          (1 @ 1).
@@ -1056,7 +1056,7 @@ RSBasicShapeExamples >> example44bSplineDegreeElevation [
 		          (7 @ (3 / 2)).
 		          (10 @ 2) } collect: [ :each | each * 100 ].
 
-	bspline1 := RSbSpline new
+	bspline1 := RSdeCasteljauLine new
 		            controlPoints: points;
 		            yourself.
 
@@ -1075,9 +1075,9 @@ RSBasicShapeExamples >> example44bSplineDegreeElevation [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44bSplineRepeatedControlPoint [
+RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
-	<script: 'self new example44bSplineRepeatedControlPoint open'>
+	<script: 'self new example44deCasteljauLineRepeatedControlPoint open'>
 	| simpleControlPoints repetitionControlPoints aPoint |
 	aPoint := 10 @ 1.
 
@@ -1098,10 +1098,10 @@ RSBasicShapeExamples >> example44bSplineRepeatedControlPoint [
 		                           each * 100 ].
 
 	^ RSCanvas new
-		  addAll: (RSbSpline new
+		  addAll: (RSdeCasteljauLine new
 				   controlPoints: simpleControlPoints;
 				   asShapeWithControlNet);
-		  addAll: (RSbSpline new
+		  addAll: (RSdeCasteljauLine new
 				   controlPoints: repetitionControlPoints;
 				   asShapeWithControlNetColoured: Color blue);
 		  zoomToFit;
@@ -1110,9 +1110,9 @@ RSBasicShapeExamples >> example44bSplineRepeatedControlPoint [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44bSplineSplitAt [
+RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 
-	<script: 'self new example44bSplineSplitAt open'>
+	<script: 'self new example44deCasteljauLineSplitAt open'>
 	| points |
 	points := { 
 		          (0 @ 0).
@@ -1122,7 +1122,7 @@ RSBasicShapeExamples >> example44bSplineSplitAt [
 		          (4.5 @ 2.5).
 		          (6 @ 1) } collect: [ :each | each * 100 ].
 
-	^ RSbSpline new
+	^ RSdeCasteljauLine new
 		  controlPoints: points;
 		  splitAt: 1 / 4 in: [ :leftSpline :rightSpline :bspline | 
 			  RSCanvas new

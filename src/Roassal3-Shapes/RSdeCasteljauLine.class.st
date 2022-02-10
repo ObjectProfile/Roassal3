@@ -1,5 +1,8 @@
+"
+I am a generalized implementation of Bezier lines.
+"
 Class {
-	#name : #RSbSpline,
+	#name : #RSdeCasteljauLine,
 	#superclass : #RSPolyline,
 	#instVars : [
 		'param',
@@ -9,13 +12,13 @@ Class {
 }
 
 { #category : #converting }
-RSbSpline >> asShapeWithControlNet [
+RSdeCasteljauLine >> asShapeWithControlNet [
 
 	^ self asShapeWithControlNetColoured: Color gray
 ]
 
 { #category : #converting }
-RSbSpline >> asShapeWithControlNet: aBlock [
+RSdeCasteljauLine >> asShapeWithControlNet: aBlock [
 
 	| circles polyline labels location |
 	polyline := RSPolyline new
@@ -35,7 +38,7 @@ RSbSpline >> asShapeWithControlNet: aBlock [
 		circle := RSCircle new
 			          model: each;
 			          color: Color transparent;
-			          radius: polyline border width * 2;
+			          radius: polyline border width * Float platinumRatio;
 			          draggable;
 			          withBorder;
 			          position: each;
@@ -78,7 +81,7 @@ RSbSpline >> asShapeWithControlNet: aBlock [
 ]
 
 { #category : #converting }
-RSbSpline >> asShapeWithControlNetColoured: aColor [
+RSdeCasteljauLine >> asShapeWithControlNetColoured: aColor [
 
 	^ self asShapeWithControlNet: [ :bspline :circles :labels :line | 
 		  bspline color: aColor.
@@ -89,7 +92,7 @@ RSbSpline >> asShapeWithControlNetColoured: aColor [
 ]
 
 { #category : #accessing }
-RSbSpline >> controlPoints: aCollectionOfPoints [
+RSdeCasteljauLine >> controlPoints: aCollectionOfPoints [
 
 	| n workingPoints |
 	n := aCollectionOfPoints size.
@@ -110,7 +113,7 @@ RSbSpline >> controlPoints: aCollectionOfPoints [
 ]
 
 { #category : #accessing }
-RSbSpline >> deCasteljau: workingPoints at: t [
+RSdeCasteljauLine >> deCasteljau: workingPoints at: t [
 
 	| n diagonal last |
 	n := workingPoints size.
@@ -136,7 +139,7 @@ RSbSpline >> deCasteljau: workingPoints at: t [
 ]
 
 { #category : #accessing }
-RSbSpline >> increment [
+RSdeCasteljauLine >> increment [
 
 	| incremented n sandbox |
 	n := points size.
@@ -169,13 +172,13 @@ RSbSpline >> increment [
 ]
 
 { #category : #'accessing - structure variables' }
-RSbSpline >> samples: n [
+RSdeCasteljauLine >> samples: n [
 
 	param := (0 to: 1) linspace: n
 ]
 
 { #category : #accessing }
-RSbSpline >> splitAt: aParam in: aBlock [
+RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 	| triple left right |
 	triple := self deCasteljau: points copy at: (aParam min: 1 max: 0).
