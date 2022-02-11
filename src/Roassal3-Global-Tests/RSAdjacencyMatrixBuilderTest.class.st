@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal3-Global-Tests-Examples'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RSAdjacencyMatrixBuilderTest >> setUp [
 
 	super setUp.
