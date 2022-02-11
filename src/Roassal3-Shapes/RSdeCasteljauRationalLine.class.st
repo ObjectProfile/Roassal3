@@ -10,20 +10,22 @@ Class {
 { #category : #accessing }
 RSdeCasteljauRationalLine >> deCasteljau: diffPoints at: t [
 
-	| aPoint n quo |
+	| mappedPoints triple factor n |
+	mappedPoints := Array new: diffPoints size.
+
 	n := diffPoints size.
-	aPoint := 0 @ 0.
-	quo := 0.
+	factor := 0.
 
-	diffPoints withIndexDo: [ :each :i | 
-		| weight bernstein factor |
-		weight := weights at: i.
-		bernstein := self bernstein: n - 1 choose: i - 1 at: t.
-		factor := weight * bernstein.
-		quo := quo + factor.
-		aPoint := aPoint + (each * factor) ].
+	weights withIndexDo: [ :each :i | 
+		| aPoint |
+		aPoint := diffPoints at: i.
+		mappedPoints at: i put: aPoint * each.
+		factor := factor
+		          + (each * (self bernstein: n - 1 choose: i - 1 at: t)) ].
 
-	^ { (aPoint / quo) }
+	triple := super deCasteljau: mappedPoints at: t.
+
+	^ triple collect: [ :each | each / factor ]
 ]
 
 { #category : #accessing }
