@@ -1323,6 +1323,47 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
+
+	<script:
+	'self new example44deCasteljauRationalLineClosedControlPoints open'>
+	| points bezier |
+	points := { 
+		          (0 @ 0).
+		          (1 / 2 @ 2).
+		          (3 @ 2).
+		          (3 / 2 @ 1) } collect: [ :each | each * 100 ].
+
+	bezier := RSdeCasteljauLine new
+		          samples: 50;
+		          controlPoints: points;
+		          yourself.
+
+	^ RSCanvas new
+		  addAll:
+			  ((bezier weighted: #( 1 1 0 1 )) asGroupWithControlNetColoured:
+					   Color red);
+		  addAll:
+			  ((bezier weighted: #( 1 1 0.5 1 )) 
+				   asGroupWithControlNetColoured: Color blue);
+		  addAll:
+			  ((bezier weighted: #( 1 1 1 1 )) asGroupWithControlNetColoured:
+					   Color brown);
+		  addAll:
+			  ((bezier weighted: #( 1 1 2 1 )) asGroupWithControlNetColoured:
+					   Color magenta);
+		  addAll:
+			  ((bezier weighted: #( 1 1 5 1 )) asGroupWithControlNetColoured:
+					   Color pink);
+		  addAll:
+			  ((bezier weighted: #( 1 1 10 1 )) asGroupWithControlNetColoured:
+					   Color orange);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example45Parametric [
 
 	<script: 'self new example45Parametric open'>

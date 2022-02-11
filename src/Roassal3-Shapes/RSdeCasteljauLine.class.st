@@ -287,3 +287,13 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 	^ aBlock value: left value: right value: self
 ]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> weighted: aCollection [
+
+	^ RSdeCasteljauRationalLine new
+		  samples: param size;
+		  weights: aCollection;
+		  controlPoints: points;
+		  yourself
+]
