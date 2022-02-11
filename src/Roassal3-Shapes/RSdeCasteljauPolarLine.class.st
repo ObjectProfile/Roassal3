@@ -1,6 +1,9 @@
 Class {
 	#name : #RSdeCasteljauPolarLine,
 	#superclass : #RSdeCasteljauLine,
+	#instVars : [
+		'ratio'
+	],
 	#category : #'Roassal3-Shapes-Lines'
 }
 
@@ -15,10 +18,17 @@ RSdeCasteljauPolarLine >> deCasteljau: diffPoints at: t [
 		| each p |
 		each := diffPoints at: i.
 
-		p := 1 - t * (diffPoints at: i) + (t * (diffPoints at: i + 1))
+		p := 1 - ratio * (diffPoints at: i)
+		     + (ratio * (diffPoints at: i + 1))
 		     * (self binomial: n - 1 choose: i - 1 at: t).
 
 		aPoint := aPoint + p ].
 
 	^ { aPoint }
+]
+
+{ #category : #accessing }
+RSdeCasteljauPolarLine >> ratio: anObject [
+
+	ratio := anObject
 ]

@@ -1078,7 +1078,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 
 	<script: 'self new example44deCasteljauLineDerivative open'>
-	| points |
+	| points bezier |
 	points := { 
 		          (1 @ 1).
 		          (3 @ 4).
@@ -1087,10 +1087,15 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 		          (10 @ 2).
 		          (1 @ 1) } collect: [ :each | each * 100 ].
 
+	bezier := RSdeCasteljauLine new
+		          controlPoints: points;
+		          yourself.
+
 	^ RSCanvas new
-		  addAll: (RSdeCasteljauLine new
-				   controlPoints: points;
-				   yourself) difference derivative asGroupWithControlNet;
+		  addAll: (bezier asGroupWithControlNetColoured: Color red);
+		  addAll:
+			  (bezier difference derivative asGroupWithControlNetColoured:
+					   Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1100,7 +1105,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 RSBasicShapeExamples >> example44deCasteljauLineDifference [
 
 	<script: 'self new example44deCasteljauLineDifference open'>
-	| points |
+	| points bezier |
 	points := { 
 		          (1 @ 1).
 		          (3 @ 4).
@@ -1109,10 +1114,14 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 		          (10 @ 2).
 		          (1 @ 1) } collect: [ :each | each * 100 ].
 
+	bezier := RSdeCasteljauLine new
+		          controlPoints: points;
+		          yourself.
+
 	^ RSCanvas new
-		  addAll: (RSdeCasteljauLine new
-				   controlPoints: points;
-				   difference) asGroupWithControlNet;
+		  addAll: (bezier asGroupWithControlNetColoured: Color blue);
+		  addAll:
+			  (bezier difference asGroupWithControlNetColoured: Color red);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1197,20 +1206,22 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 RSBasicShapeExamples >> example44deCasteljauLinePolar [
 
 	<script: 'self new example44deCasteljauLinePolar open'>
-	| points |
+	| points bezier |
 	points := { 
 		          (0 @ 0).
 		          (0 @ 4).
 		          (2 @ 4).
 		          (1 @ 2) } collect: [ :each | each * 100 ].
 
+	bezier := RSdeCasteljauLine new
+		          controlPoints: points;
+		          yourself.
+
 	^ RSCanvas new
-		  addAll: (RSdeCasteljauLine new
-				   controlPoints: points;
-				   asGroupWithControlNetColoured: Color red);
-		  addAll: (RSdeCasteljauLine new
-				   controlPoints: points;
-				   yourself) difference polar asGroupWithControlNet;
+		  addAll: (bezier asGroupWithControlNetColoured: Color red);
+		  addAll: ((RSdeCasteljauLine new
+				    controlPoints: points;
+				    polar: 1 / 2) asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself

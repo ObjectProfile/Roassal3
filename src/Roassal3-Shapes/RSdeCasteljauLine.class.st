@@ -38,7 +38,7 @@ RSdeCasteljauLine >> asGroupWithControlNet: aBlock [
 		circle := RSCircle new
 			          model: each;
 			          color: Color transparent;
-			          radius: polyline border width * Float platinumRatio;
+			          radius: polyline border width * Float goldenPlatinumRatio;
 			          draggable;
 			          withBorder;
 			          position: each;
@@ -335,9 +335,10 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> polar [
+RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
+		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
 ]
