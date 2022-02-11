@@ -20,7 +20,7 @@ RSdeCasteljauPolarLine >> deCasteljau: diffPoints at: t [
 
 		p := 1 - ratio * (diffPoints at: i)
 		     + (ratio * (diffPoints at: i + 1))
-		     * (self binomial: n - 1 choose: i - 1 at: t).
+		     * (self bernstein: n - 1 choose: i - 1 at: t).
 
 		aPoint := aPoint + p ].
 

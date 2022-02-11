@@ -1011,12 +1011,36 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
 				   controlPoints: points;
 				   asGroupWithControlNet);
 		  addShape: (RSBezier new
 				   color: Color red;
 				   controlPoints: points;
 				   yourself);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
+
+	<script: 'self new example44deCasteljauLineBernsteinBase open'>
+	| points |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ 8).
+		          (10 @ 2).
+		          (1 @ 1) } collect: [ :each | each * 100 ].
+
+	^ RSCanvas new
+		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
+				   controlPoints: points;
+				   asGroupBernsteinBase);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1037,6 +1061,7 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
 				   controlPoints: points;
 				   asGroupWithControlNet);
 		  zoomToFit;
@@ -1057,6 +1082,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 		          (10 @ 2) } collect: [ :each | each * 100 ].
 
 	bspline1 := RSdeCasteljauLine new
+		            samples: 50;
 		            controlPoints: points;
 		            yourself.
 
@@ -1088,6 +1114,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 		          (1 @ 1) } collect: [ :each | each * 100 ].
 
 	bezier := RSdeCasteljauLine new
+		          samples: 50;
 		          controlPoints: points;
 		          yourself.
 
@@ -1115,6 +1142,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 		          (1 @ 1) } collect: [ :each | each * 100 ].
 
 	bezier := RSdeCasteljauLine new
+		          samples: 50;
 		          controlPoints: points;
 		          yourself.
 
@@ -1136,7 +1164,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 		          (10 @ 12).
 		          (13 @ 8.5).
 		          (16 @ -2).
-		          (26 @ 0) } collect: [ :each | each * 100].
+		          (26 @ 0) } collect: [ :each | each * 100 ].
 
 	otherControlPoints := { 
 		                      (0 @ 3).
@@ -1144,6 +1172,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 		                      (5 @ 0) } collect: [ :each | each * 100 ].
 
 	bspline := RSdeCasteljauLine new
+		           samples: 50;
 		           controlPoints: points;
 		           yourself.
 
@@ -1183,6 +1212,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 		                      (24 @ 0) } collect: [ :each | each * 100 ].
 
 	bspline := RSdeCasteljauLine new
+		           samples: 50;
 		           controlPoints: points;
 		           yourself.
 
@@ -1214,12 +1244,14 @@ RSBasicShapeExamples >> example44deCasteljauLinePolar [
 		          (1 @ 2) } collect: [ :each | each * 100 ].
 
 	bezier := RSdeCasteljauLine new
+		          samples: 50;
 		          controlPoints: points;
 		          yourself.
 
 	^ RSCanvas new
 		  addAll: (bezier asGroupWithControlNetColoured: Color red);
 		  addAll: ((RSdeCasteljauLine new
+				    samples: 50;
 				    controlPoints: points;
 				    polar: 1 / 2) asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
@@ -1252,9 +1284,11 @@ RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
 				   controlPoints: simpleControlPoints;
 				   asGroupWithControlNetColoured: Color red);
 		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
 				   controlPoints: repetitionControlPoints;
 				   asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
@@ -1276,6 +1310,7 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 		          (6 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSdeCasteljauLine new
+		  samples: 50;
 		  controlPoints: points;
 		  splitAt: 1 / 4 in: [ :leftSpline :rightSpline :bspline | 
 			  RSCanvas new
@@ -1285,4 +1320,19 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 				  zoomToFit;
 				  addInteraction: RSCanvasController new;
 				  yourself ]
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example45Parametric [
+
+	<script: 'self new example45Parametric open'>
+	^ RSCanvas new
+		  add: (RSParametricLineXY new
+				   samples: 50;
+				   x: [ :t | t * 100 ]
+				   y: [ :t | 3 * (t ** 2) + (4 * t) - 2 * 100 ];
+				   yourself);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
 ]

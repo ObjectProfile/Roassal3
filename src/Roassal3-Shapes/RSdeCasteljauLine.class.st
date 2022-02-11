@@ -3,119 +3,35 @@ I am a generalized implementation of Bezier lines.
 "
 Class {
 	#name : #RSdeCasteljauLine,
-	#superclass : #RSPolyline,
-	#instVars : [
-		'param',
-		'points'
-	],
+	#superclass : #RSParametricLine,
 	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #converting }
-RSdeCasteljauLine >> asGroupWithControlNet [
+RSdeCasteljauLine >> asGroupBernsteinBase [
 
-	^ self asGroupWithControlNetColoured: Color gray
-]
-
-{ #category : #converting }
-RSdeCasteljauLine >> asGroupWithControlNet: aBlock [
-
-	| circles polyline labels location |
-	polyline := RSPolyline new
-		            controlPoints: points;
-		            dotted;
-		            yourself.
-
-	circles := Array new: points size.
-	labels := Array new: points size.
-
-	location := RSLocation new
-		            above;
-		            yourself.
-
-	points withIndexCollect: [ :each :index | 
-		| circle label |
-		circle := RSCircle new
-			          model: each;
-			          color: Color transparent;
-			          radius: polyline border width * Float goldenPlatinumRatio;
-			          draggable;
-			          withBorder;
-			          position: each;
-			          yourself.
-
-		label := RSLabel new
-			         useDefaultCodeFont;
-			         text: (circle position asFloatPointRound: 3);
-			         yourself.
-
-		location stick: label on: circle.
-
-		circle when: RSPositionChangedEvent do: [ :ev | 
-			circle model: ev newPosition.
-			label text: (ev newPosition asFloatPointRound: 3).
-
-			points at: index put: ev newPosition.
-			polyline controlPoints: points.
-
-			self controlPoints: points ].
-
-
-		circles at: index put: circle.
-		labels at: index put: label ].
-
-	polyline color: polyline color translucent.
-	self color: self color translucent.
-
-	aBlock
-		value: self
-		value: circles
-		value: labels
-		value: polyline.
-
-	^ RSGroup new
-		  addAll: circles , labels , { 
-					  polyline.
-					  self };
-		  yourself
-]
-
-{ #category : #converting }
-RSdeCasteljauLine >> asGroupWithControlNetColoured: aColor [
-
-	^ self asGroupWithControlNet: [ :bspline :circles :labels :line | 
-		  bspline color: aColor.
-		  line color: aColor translucent.
-		  circles with: labels do: [ :circle :label | 
-			  circle border color: aColor translucent.
-			  label color: aColor translucent ] ]
+	| n |
+	n := points size - 1.
+	^ (0 to: n)
+		  collect: [ :each | 
+			  RSParametricLineXY new
+				  samples: param size;
+				  x: [ :t | t * 100 ]
+				  y: [ :t | (self bernstein: n choose: each at: t) * 100 ];
+				  yourself ]
+		  as: RSGroup
 ]
 
 { #category : #'as yet unclassified' }
-RSdeCasteljauLine >> binomial: n choose: i at: t [
+RSdeCasteljauLine >> bernstein: n choose: i at: t [
 
 	^ (n choose: i) * (t raisedTo: i) * (1 - t raisedTo: n - i)
 ]
 
-{ #category : #accessing }
-RSdeCasteljauLine >> controlPoints: aCollectionOfPoints [
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 
-	| n workingPoints |
-	n := aCollectionOfPoints size.
-
-	param ifNil: [ self samples: n * 10 ].
-
-	workingPoints := Array new: param size.
-
-	points := aCollectionOfPoints.
-
-	param withIndexDo: [ :t :index | 
-		| triple |
-		triple := self deCasteljau: points copy at: t.
-
-		workingPoints at: index put: triple first ].
-
-	^ super controlPoints: workingPoints
+	^ (self deCasteljau: aSequenceableOfPoints at: t) first
 ]
 
 { #category : #accessing }
@@ -148,6 +64,7 @@ RSdeCasteljauLine >> deCasteljau: workingPoints at: t [
 RSdeCasteljauLine >> derivative [
 
 	^ RSdeCasteljauDerivativeLine new
+		  samples: param size;
 		  controlPoints: points;
 		  yourself
 ]
@@ -166,6 +83,7 @@ RSdeCasteljauLine >> difference [
 		diffPoints at: i put: aPoint ].
 
 	^ self class new
+		  samples: param size;
 		  controlPoints: diffPoints;
 		  yourself
 ]
@@ -199,6 +117,7 @@ RSdeCasteljauLine >> increment [
 			put: t * (sandbox at: i) + (1 - t * (sandbox at: i + 1)) ].
 
 	^ self class new
+		  samples: param size;
 		  controlPoints: incremented;
 		  yourself
 ]
@@ -212,17 +131,20 @@ RSdeCasteljauLine >> junction: aCollectionOfPoints left: aBlock [
 		  left: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
 			  | bsplineContinuity bsplineTangent bsplineObsculator |
 			  bsplineContinuity := self class new
+				                       samples: param size;
 				                       controlPoints:
 					                       aCollectionOfPoints , { continuityPoint };
 				                       yourself.
 
 			  bsplineTangent := self class new
+				                    samples: param size;
 				                    controlPoints: aCollectionOfPoints , { 
 							                    tangentPoint.
 							                    continuityPoint };
 				                    yourself.
 
 			  bsplineObsculator := self class new
+				                       samples: param size;
 				                       controlPoints: aCollectionOfPoints , { 
 							                       obsculatorPoint.
 							                       tangentPoint.
@@ -244,17 +166,20 @@ RSdeCasteljauLine >> junction: aCollectionOfPoints right: aBlock [
 		  right: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
 			  | bsplineContinuity bsplineTangent bsplineObsculator |
 			  bsplineContinuity := self class new
+				                       samples: param size;
 				                       controlPoints:
 					                       { continuityPoint } , aCollectionOfPoints;
 				                       yourself.
 
 			  bsplineTangent := self class new
+				                    samples: param size;
 				                    controlPoints: { 
 						                    continuityPoint.
 						                    tangentPoint } , aCollectionOfPoints;
 				                    yourself.
 
 			  bsplineObsculator := self class new
+				                       samples: param size;
 				                       controlPoints: { 
 						                       continuityPoint.
 						                       tangentPoint.
@@ -338,15 +263,10 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
+		  samples: param size;
 		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
-]
-
-{ #category : #'accessing - structure variables' }
-RSdeCasteljauLine >> samples: n [
-
-	param := (0 to: 1) linspace: n
 ]
 
 { #category : #accessing }
@@ -356,10 +276,12 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 	triple := self deCasteljau: points copy at: (aParam min: 1 max: 0).
 
 	left := self class new
+		        samples: param size;
 		        controlPoints: triple second;
 		        yourself.
 
 	right := self class new
+		         samples: param size;
 		         controlPoints: triple third;
 		         yourself.
 

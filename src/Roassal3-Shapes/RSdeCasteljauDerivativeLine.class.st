@@ -12,7 +12,7 @@ RSdeCasteljauDerivativeLine >> deCasteljau: diffPoints at: t [
 	aPoint := 0 @ 0.
 
 	diffPoints withIndexDo: [ :each :i | 
-		aPoint := aPoint + (each * (self binomial: n choose: i at: t)) ].
+		aPoint := aPoint + (each * (self bernstein: n choose: i at: t)) ].
 
 	^ { (n + 1 * aPoint) }
 ]
