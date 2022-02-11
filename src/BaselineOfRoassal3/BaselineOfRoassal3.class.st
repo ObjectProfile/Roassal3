@@ -14,6 +14,7 @@ BaselineOfRoassal3 >> baseline: spec [
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
 { #category : #baselines }
