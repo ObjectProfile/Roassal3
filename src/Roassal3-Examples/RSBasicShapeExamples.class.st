@@ -1233,6 +1233,29 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
+
+	<script: 'self new example44deCasteljauLineNoteBox open'>
+	| points |
+	points := { 
+		          (0 @ 0).
+		          (1 @ 0).
+		          (1 @ 1).
+		          (0 @ 1).
+		          (0 @ 0).
+		           } collect: [ :each | each * 300 ].
+
+	^ RSCanvas new
+		  addAll: (RSdeCasteljauLine new
+				   samples: 50;
+				   controlPoints: points;
+				   elevate: 20) asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLinePolar [
 
 	<script: 'self new example44deCasteljauLinePolar open'>

@@ -91,6 +91,17 @@ RSdeCasteljauLine >> difference [
 		  yourself
 ]
 
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> elevate: n [
+
+	| line |
+	line := self.
+
+	n timesRepeat: [ line := line increment ].
+
+	^ line
+]
+
 { #category : #accessing }
 RSdeCasteljauLine >> increment [
 
