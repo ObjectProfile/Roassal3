@@ -113,8 +113,8 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - structure variables' }
-RSParametricLine >> samples: n [
+{ #category : #accessing }
+RSParametricLine >> param: anInterval [
 
-	param := (0 to: 1) linspace: n
+	param := anInterval
 ]

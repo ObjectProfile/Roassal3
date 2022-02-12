@@ -31,7 +31,10 @@ RSdeCasteljauLine >> bernstein: n choose: i at: t [
 { #category : #'as yet unclassified' }
 RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 
-	^ (self deCasteljau: aSequenceableOfPoints at: t) first
+	| tUnit |
+	tUnit := param unitAt: t.
+
+	^ (self deCasteljau: aSequenceableOfPoints at: tUnit) first
 ]
 
 { #category : #accessing }
@@ -267,6 +270,12 @@ RSdeCasteljauLine >> polar: ratio [
 		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
+]
+
+{ #category : #'accessing - structure variables' }
+RSdeCasteljauLine >> samples: n [
+
+	self param: ((0 to: 1) linspace: n)
 ]
 
 { #category : #accessing }
