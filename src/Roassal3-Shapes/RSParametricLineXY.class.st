@@ -3,8 +3,7 @@ Class {
 	#superclass : #RSParametricLine,
 	#instVars : [
 		'x',
-		'y',
-		'scale'
+		'y'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -12,21 +11,24 @@ Class {
 { #category : #'as yet unclassified' }
 RSParametricLineXY >> controlPoints: aSequenceableOfPoints at: t [
 
-	^ (x value: t) @ (y value: t) * scale
+	^ (x value: t) @ (y value: t)
+]
+
+{ #category : #accessing }
+RSParametricLineXY >> scale: aScale [
+
+	^ self class new
+		  param: param;
+		  x: [ :t | (x value: t) * aScale ]
+		  y: [ :t | (y value: t) * aScale ];
+		  yourself
 ]
 
 { #category : #'instance creation' }
 RSParametricLineXY >> x: xBlock y: yBlock [
 
-	self x: xBlock y: yBlock scale: 1
-]
-
-{ #category : #'instance creation' }
-RSParametricLineXY >> x: xBlock y: yBlock scale: aScale [
-
 	x := xBlock.
 	y := yBlock.
-	scale := aScale.
 
 	self controlPoints: {  }
 ]
