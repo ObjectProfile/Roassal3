@@ -15,10 +15,9 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 	^ (0 to: n)
 		  collect: [ :each | 
 			  RSParametricLineXY new
-				  samples: param size;
-				  x: [ :t | t * 100 ]
-				  y: [ :t | (self bernstein: n choose: each at: t) * 100 ];
-				  yourself ]
+				  param: param;
+				  x: [ :t | t ] y: [ :t | self bernstein: n choose: each at: t ];
+				  scale: 100 ]
 		  as: RSGroup
 ]
 

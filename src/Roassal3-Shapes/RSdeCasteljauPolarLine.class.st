@@ -27,6 +27,14 @@ RSdeCasteljauPolarLine >> deCasteljau: diffPoints at: t [
 	^ { aPoint }
 ]
 
+{ #category : #'instance creation' }
+RSdeCasteljauPolarLine >> newLine [
+
+	^ super newLine
+		  ratio: ratio;
+		  yourself
+]
+
 { #category : #accessing }
 RSdeCasteljauPolarLine >> ratio: anObject [
 

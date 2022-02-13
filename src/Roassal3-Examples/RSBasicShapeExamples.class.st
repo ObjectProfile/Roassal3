@@ -1034,7 +1034,7 @@ RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 		          (5 @ 6).
 		          (7 @ 8).
 		          (10 @ 2).
-		          (1 @ 1) } collect: [ :each | each * 100 ].
+		          (1 @ 1) }.
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
@@ -1057,13 +1057,13 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 		          (5 @ 6).
 		          (7 @ 8).
 		          (10 @ 2).
-		          (1 @ 1) } collect: [ :each | each * 100 ].
+		          (1 @ 1) }.
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
 				   samples: 50;
 				   controlPoints: points;
-				   asGroupWithControlNet);
+				   scale: 100) asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1079,12 +1079,12 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 		          (3 @ 4).
 		          (5 @ 6).
 		          (7 @ (3 / 2)).
-		          (10 @ 2) } collect: [ :each | each * 100 ].
+		          (10 @ 2) }.
 
 	bspline1 := RSdeCasteljauLine new
 		            samples: 50;
 		            controlPoints: points;
-		            yourself.
+		            scale: 100.
 
 	bspline2 := bspline1 increment.
 	bspline3 := bspline2 increment.
@@ -1111,12 +1111,12 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 		          (5 @ 6).
 		          (7 @ 8).
 		          (10 @ 2).
-		          (1 @ 1) } collect: [ :each | each * 100 ].
+		          (1 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
 		          samples: 50;
 		          controlPoints: points;
-		          yourself.
+		          scale: 100.
 
 	^ RSCanvas new
 		  addAll: (bezier asGroupWithControlNetColoured: Color red);
@@ -1139,12 +1139,12 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 		          (5 @ 6).
 		          (7 @ 8).
 		          (10 @ 2).
-		          (1 @ 1) } collect: [ :each | each * 100 ].
+		          (1 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
 		          samples: 50;
 		          controlPoints: points;
-		          yourself.
+		          scale: 100.
 
 	^ RSCanvas new
 		  addAll: (bezier asGroupWithControlNetColoured: Color blue);
@@ -1288,19 +1288,17 @@ RSBasicShapeExamples >> example44deCasteljauLinePolar [
 		          (0 @ 0).
 		          (0 @ 4).
 		          (2 @ 4).
-		          (1 @ 2) } collect: [ :each | each * 100 ].
+		          (1 @ 2) }.
 
 	bezier := RSdeCasteljauLine new
 		          samples: 50;
 		          controlPoints: points;
-		          yourself.
+		          scale: 100.
 
 	^ RSCanvas new
 		  addAll: (bezier asGroupWithControlNetColoured: Color red);
-		  addAll: ((RSdeCasteljauLine new
-				    samples: 50;
-				    controlPoints: points;
-				    polar: 1 / 2) asGroupWithControlNetColoured: Color blue);
+		  addAll:
+			  ((bezier polar: 1 / 2) asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1354,12 +1352,14 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 		          (2.5 @ 4).
 		          (5 @ 4.5).
 		          (4.5 @ 2.5).
-		          (6 @ 1) } collect: [ :each | each * 100 ].
+		          (6 @ 1) }.
 
-	^ RSdeCasteljauLine new
-		  samples: 50;
-		  controlPoints: points;
-		  splitAt: 1 / 4 in: [ :leftSpline :rightSpline :bspline | 
+	^ (RSdeCasteljauLine new
+		   samples: 50;
+		   controlPoints: points;
+		   scale: 100)
+		  splitAt: 1 / 4
+		  in: [ :leftSpline :rightSpline :bspline | 
 			  RSCanvas new
 				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
 				  addAll: (leftSpline asGroupWithControlNetColoured: Color red);
@@ -1379,12 +1379,12 @@ RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
 		          (0 @ 0).
 		          (1 / 2 @ 2).
 		          (3 @ 2).
-		          (3 / 2 @ 1) } collect: [ :each | each * 100 ].
+		          (3 / 2 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
 		          samples: 50;
 		          controlPoints: points;
-		          yourself.
+		          scale: 100.
 
 	^ RSCanvas new
 		  addAll:
@@ -1419,13 +1419,11 @@ RSBasicShapeExamples >> example45ParametricButterfly [
 				   param: ((0 to: Float π * 12) linspace: 10000);
 				   x: [ :t | 
 					   t sin
-					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5))
-					   * 100 ]
+					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
 				   y: [ :t | 
 					   t cos
-					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5))
-					   * 100 ];
-				   yourself);
+					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
+				   scale: 100);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1446,9 +1444,9 @@ RSBasicShapeExamples >> example45ParametricHypotrochoid [
 	^ RSCanvas new
 		  add: (RSParametricLineXY new
 				   param: ((-10 to: 10) linspace: 10000);
-				   x: [ :t | a * t cos + (d * (b * t) cos) * 100 ]
-				   y: [ :t | a * t sin - (d * (b * t) sin) * 100 ];
-				   yourself);
+				   x: [ :t | a * t cos + (d * (b * t) cos) ]
+				   y: [ :t | a * t sin - (d * (b * t) sin) ];
+				   scale: 100);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1461,8 +1459,8 @@ RSBasicShapeExamples >> example45ParametricLissajous [
 	^ RSCanvas new
 		  add: (RSParametricLineXY new
 				   param: ((0 to: Float π * 2) linspace: 1000);
-				   x: [ :t | (3 * t) cos * 100 ] y: [ :t | (2 * t) sin * 100 ];
-				   yourself);
+				   x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
+				   scale: 100);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1475,9 +1473,8 @@ RSBasicShapeExamples >> example45ParametricNeil [
 	^ RSCanvas new
 		  add: (RSParametricLineXY new
 				   param: ((-2 to: 2) linspace: 100);
-				   x: [ :t | (t raisedTo: 2) * 10 ]
-				   y: [ :t | (t raisedTo: 3) - t * 10 ];
-				   yourself);
+				   x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
+				   scale: 10);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1505,8 +1502,8 @@ RSBasicShapeExamples >> example45ParametricUnitCircle [
 	^ RSCanvas new
 		  add: (RSParametricLineXY new
 				   param: ((0 to: Float π * 2) linspace: 100);
-				   x: [ :t | t cos * 100 ] y: [ :t | t sin * 100 ];
-				   yourself);
+				   x: [ :t | t cos ] y: [ :t | t sin ];
+				   scale: 100);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1521,7 +1518,7 @@ RSBasicShapeExamples >> example46Note [
 				   text: (String loremIpsum: 50);
 				   useDefaultCodeFont;
 				   padded: Float goldenPlatinumRatio
-				   withBoxDo: [ :aBox | aBox color: Color yellow translucent   ]);
+				   withNoteDo: [ :aBox | aBox color: Color yellow translucent ]);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself

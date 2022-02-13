@@ -28,6 +28,14 @@ RSdeCasteljauRationalLine >> deCasteljau: diffPoints at: t [
 	^ triple collect: [ :each | each / factor ]
 ]
 
+{ #category : #'instance creation' }
+RSdeCasteljauRationalLine >> newLine [
+
+	^ super newLine
+		  weights: weights;
+		  yourself
+]
+
 { #category : #accessing }
 RSdeCasteljauRationalLine >> weights: anObject [
 

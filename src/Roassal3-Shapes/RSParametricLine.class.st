@@ -113,8 +113,24 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 	self subclassResponsibility
 ]
 
+{ #category : #'instance creation' }
+RSParametricLine >> newLine [
+
+	^ self class new
+		  param: param;
+		  yourself
+]
+
 { #category : #accessing }
 RSParametricLine >> param: anInterval [
 
 	param := anInterval
+]
+
+{ #category : #accessing }
+RSParametricLine >> scale: factor [
+
+	^ self newLine
+		  controlPoints: (points collect: [ :each | each * factor ]);
+		  yourself
 ]

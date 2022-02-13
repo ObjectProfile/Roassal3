@@ -15,12 +15,11 @@ RSParametricLineXY >> controlPoints: aSequenceableOfPoints at: t [
 ]
 
 { #category : #accessing }
-RSParametricLineXY >> scale: aScale [
+RSParametricLineXY >> scale: factor [
 
-	^ self class new
-		  param: param;
-		  x: [ :t | (x value: t) * aScale ]
-		  y: [ :t | (y value: t) * aScale ];
+	^ self newLine
+		  x: [ :t | (x value: t) * factor ]
+		  y: [ :t | (y value: t) * factor ];
 		  yourself
 ]
 
