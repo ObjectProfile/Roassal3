@@ -1236,20 +1236,44 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 
 	<script: 'self new example44deCasteljauLineNoteBox open'>
-	| points |
+	| points line |
 	points := { 
 		          (0 @ 0).
-		          (1 @ 0).
-		          (1 @ 1).
-		          (0 @ 1).
-		          (0 @ 0).
-		           } collect: [ :each | each * 300 ].
+		          (8.461 @ 36.411).
+		          (0.6 @ 129.887).
+		          (25.3 @ 195.304).
+		          (-67.3 @ 222.719).
+		          (16.72 @ 245.576).
+		          (-55.8 @ 178.406).
+		          (60 @ 136.3).
+		          (136 @ 136).
+		          (142.2 @ 222.332).
+		          (393.292 @ 192.739).
+		          (247.8 @ 244.8).
+		          (179.5 @ 201.105).
+		          (221.9 @ 163.04).
+		          (200 @ 125.8).
+		          (204.4 @ 101.697).
+		          (210.405 @ 85.124).
+		          (217.89 @ 18.03).
+		          (151.73 @ 29.54).
+		          (244.5 @ -26.58).
+		          (318.633 @ -42.131).
+		          (145.27 @ 1.9).
+		          (52.05 @ 8.718).
+		          (0 @ 0) }.
+
+	line := RSdeCasteljauLine new
+		        samples: 50;
+		        controlPoints: points;
+		        yourself.
+
+	self assert: (Rectangle encompassing: line controlPoints)
+		= (-4.381590877489069 @ -7.793939601397815 corner:
+				 218.57105173675455 @ 189.47681084770576).
 
 	^ RSCanvas new
-		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
-				   controlPoints: points;
-				   elevate: 20) asGroupWithControlNet;
+		  addAll: line asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1483,6 +1507,21 @@ RSBasicShapeExamples >> example45ParametricUnitCircle [
 				   param: ((0 to: Float π * 2) linspace: 100);
 				   x: [ :t | t cos * 100 ] y: [ :t | t sin * 100 ];
 				   yourself);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example46Note [
+
+	<script: 'self new example46Note open'>
+	^ RSCanvas new
+		  add: (RSLabel new
+				   text: (String loremIpsum: 50);
+				   useDefaultCodeFont;
+				   padded: Float goldenPlatinumRatio
+				   withBoxDo: [ :aBox | aBox color: Color yellow translucent   ]);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself

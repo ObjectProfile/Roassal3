@@ -245,6 +245,64 @@ RSAthensRenderer >> buildLinePath: line [
 ]
 
 { #category : #'creating path' }
+RSAthensRenderer >> buildNotePath: note [
+
+	| rectangle refRectangle points random offsetPoint ratioPoint |
+	points := { 
+		          (0 @ 0).
+		          (8.461 @ 36.411).
+		          (0.6 @ 129.887).
+		          (25.3 @ 195.304).
+		          (-67.3 @ 222.719).
+		          (16.72 @ 245.576).
+		          (-55.8 @ 178.406).
+		          (60 @ 136.3).
+		          (136 @ 136).
+		          (142.2 @ 222.332).
+		          (393.292 @ 192.739).
+		          (247.8 @ 244.8).
+		          (179.5 @ 201.105).
+		          (221.9 @ 163.04).
+		          (200 @ 125.8).
+		          (204.4 @ 101.697).
+		          (210.405 @ 85.124).
+		          (217.89 @ 18.03).
+		          (151.73 @ 29.54).
+		          (244.5 @ -26.58).
+		          (318.633 @ -42.131).
+		          (145.27 @ 1.9).
+		          (52.05 @ 8.718).
+		          (0 @ 0) }.
+
+	offsetPoint := 2 @ 2 * Float goldenRatio.
+
+	refRectangle := -4.381590877489069 @ -7.793939601397815 + offsetPoint 
+		                corner:
+		                218.57105173675455 @ 189.47681084770576
+		                - offsetPoint.
+
+	rectangle := note baseRectangle.
+
+	random := RandomBoxMullerBivariateGaussian new.
+
+	ratioPoint := rectangle topLeft
+	              / (refRectangle topLeft - refRectangle center).
+
+	points := points collect: [ :each | 
+		          each - refRectangle center * ratioPoint + random next ].
+
+	points atLast: 1 put: points first.
+
+	"	rectangle origin / refRectangle origin. ""(11.411380340615732@12.830481773564856)""
+	rectangle corner / refRectangle corner. ""(0.22875856433275368@0.5277690686929293)""
+"
+	self buildPolylinePath: (RSdeCasteljauQuickLine new
+			 samples: 50;
+			 controlPoints: points;
+			 yourself)
+]
+
+{ #category : #'creating path' }
 RSAthensRenderer >> buildPolygonPath: polygon [
 	| first radius cp |
 	builder absolute.
