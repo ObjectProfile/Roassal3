@@ -64,26 +64,26 @@ Class {
 }
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicEndingPointOf: anEdge [
+RSBorderAttachPoint >> basicEndingPointOf: aLine [
 	^ self
-		basicPointFrom: anEdge to
-		to: anEdge from
-		of: anEdge
+		basicPointFrom: aLine to
+		to: aLine from
+		of: aLine
 		offset: endOffset
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge offset: aNumber [
+RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: aLine offset: aNumber [
 	| source target line shift res vector unit |
-	source := self geometryFor: fromShape edge: anEdge.
-	target := self geometryFor: toShape edge: anEdge.
-	shift := self offsetNormalFor: anEdge.
+	source := self geometryFor: fromShape edge: aLine.
+	target := self geometryFor: toShape edge: aLine.
+	shift := self offsetNormalFor: aLine.
 	line := GLine through: source center and: target center.
 	vector := line v2 asPoint - line v1 asPoint.
 	vector := vector x @ vector y.
 	unit := vector / (vector r max: 1).
 	shift := vector normal * shift.
-	anEdge from = toShape
+	aLine from = toShape
 		ifTrue: [ shift := shift * -1 ].
 	line := GLine
 		through: source center asPoint + shift
@@ -93,11 +93,11 @@ RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: anEdge offset: 
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> basicStartingPointOf: anEdge [
+RSBorderAttachPoint >> basicStartingPointOf: aLine [
 	^ self 
-		basicPointFrom: anEdge from 
-		to: anEdge to 
-		of: anEdge 
+		basicPointFrom: aLine from 
+		to: aLine to 
+		of: aLine 
 		offset: startOffset
 ]
 
@@ -108,14 +108,14 @@ RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> geometryFor: shape edge: anEdge [
+RSBorderAttachPoint >> geometryFor: shape edge: aLine [
 	| g commonParents matrix |
 	g := shape geometry.
-	(self hasParents: shape in: anEdge)
+	(self hasParents: shape in: aLine)
 		ifFalse: [ ^ g ].
-	shape parent = anEdge parent
+	shape parent = aLine parent
 		ifTrue: [ ^ g ].
-	commonParents := self commonParents: shape in: anEdge.
+	commonParents := self commonParents: shape in: aLine.
 	commonParents ifNil: [ ^ g ].
 	matrix := self matrixFor: commonParents.
 	g := g rsScaleWith: matrix.
@@ -139,21 +139,21 @@ RSBorderAttachPoint >> offset: aNumber [
 ]
 
 { #category : #'public - hooks' }
-RSBorderAttachPoint >> offsetNormalFor: anEdge [
+RSBorderAttachPoint >> offsetNormalFor: aLine [
 	"Return the offset in case of multiple edges with the same starting and ending points"
 
-	| indexOfEdge multipleEdges |
-	multipleEdges := OrderedCollection new.
-	multipleEdges
+	| indexOfEdge multipleLines |
+	multipleLines := OrderedCollection new.
+	multipleLines
 		addAll:
-			(anEdge to connectedLines
-				select: [ :e | e from == anEdge from and: [ e to == anEdge to ] ]).
-	multipleEdges
+			(aLine to connectedLines
+				select: [ :e | e from == aLine from and: [ e to == aLine to ] ]).
+	multipleLines
 		addAll:
-			(anEdge to connectedLines
-				select: [ :e | e to == anEdge from and: [ e from == anEdge to ] ]).
-	multipleEdges size <= 1
+			(aLine to connectedLines
+				select: [ :e | e to == aLine from and: [ e from == aLine to ] ]).
+	multipleLines size <= 1
 		ifTrue: [ ^ 0 @ 0 ].
-	indexOfEdge := multipleEdges indexOf: anEdge.
-	^ (indexOfEdge - 1 - (multipleEdges size / 2)) * offset
+	indexOfEdge := multipleLines indexOf: aLine.
+	^ (indexOfEdge - 1 - (multipleLines size / 2)) * offset
 ]

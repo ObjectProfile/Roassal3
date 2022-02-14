@@ -1,25 +1,25 @@
 "
 A metric provider returns an instance of RSTextExtents, used by RSLabel.
-Users can propose a different RSMetricProvider. RSLabel uses by default `RSMetricProvider defaultProvider`
+Users can propose a different RSMetricProvider. RSLabel uses by default `RSMetricsProvider default`
 
 "
 Class {
 	#name : #RSMetricsProvider,
 	#superclass : #RSObject,
 	#classVars : [
-		'default'
+		'Default'
 	],
 	#category : #'Roassal3-Shapes-Text'
 }
 
 { #category : #accessing }
 RSMetricsProvider class >> default [
-	^ default ifNil: [ default := RSCairoMetricsProvider new ].
+	^ Default ifNil: [ Default := RSCairoMetricsProvider new ].
 ]
 
 { #category : #accessing }
 RSMetricsProvider class >> default: aRSMetricsProvider [
-	default := aRSMetricsProvider
+	Default := aRSMetricsProvider
 ]
 
 { #category : #hooks }

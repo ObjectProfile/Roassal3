@@ -146,37 +146,13 @@ RSTWalkBasedRegularTreeLayout >> extremesOfNonLeaf: parent leftMostChild: leftMo
 ]
 
 { #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> firstWalk: aShape [
-
-	self
-		is: aShape
-		ifLeaf: [ self extremesOfLeaf: aShape ]
-		ifNotLeaf: [ :children | 
-			| leftMostChild rightMostChild |
-			leftMostChild := children first.
-			rightMostChild := children last.
-
-			self firstWalk: aShape children: children.
-
-			self
-				positionNonLeaf: aShape
-				leftMostChild: leftMostChild
-				rightMostChild: rightMostChild.
-
-			self
-				extremesOfNonLeaf: aShape
-				leftMostChild: leftMostChild
-				rightMostChild: rightMostChild ]
-]
-
-{ #category : #algorithm }
-RSTWalkBasedRegularTreeLayout >> firstWalk: parent children: children [
+RSTWalkBasedRegularTreeLayout >> firstWalk: parent children: children depth: aDepth breadth: aBreadth [
 
 	| leftMostChild bound |
 	leftMostChild := children first.
 
 	"Recur down on v's leftmost child."
-	self firstWalk: leftMostChild.
+	self firstWalk: leftMostChild depth: aDepth breadth: aBreadth.
 
 	"Create siblings in contour minimal vertical coordinate and index list."
 	bound := self depthBoundOf: (self elOf: leftMostChild).
@@ -187,7 +163,7 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: parent children: children [
 			| child |
 			child := children at: i.
 
-			self firstWalk: child.
+			self firstWalk: child depth: aDepth breadth: aBreadth.
 
 			bound := self depthBoundOf: (self erOf: child).
 
@@ -200,6 +176,39 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: parent children: children [
 
 			"Update data about the widths"
 			self updateIYL: bound at: i rest: ih ]
+]
+
+{ #category : #algorithm }
+RSTWalkBasedRegularTreeLayout >> firstWalk: aShape depth: aDepth breadth: aBreadth [
+
+	self
+		is: aShape
+		ifLeaf: [ self extremesOfLeaf: aShape ]
+		ifNotLeaf: [ :children | 
+			| leftMostChild rightMostChild |
+			leftMostChild := children first.
+			rightMostChild := children last.
+
+			self
+				firstWalk: aShape
+				children: children
+				depth: aDepth
+				breadth: aBreadth.
+
+			self
+				positionNonLeaf: aShape
+				leftMostChild: leftMostChild
+				rightMostChild: rightMostChild.
+
+			self
+				ongoing: aShape
+				depth: (self depthOf: aShape) + aDepth
+				breadth: (self prelimOf: aShape) + aBreadth.
+
+			self
+				extremesOfNonLeaf: aShape
+				leftMostChild: leftMostChild
+				rightMostChild: rightMostChild ]
 ]
 
 { #category : #properties }
@@ -221,46 +230,71 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations
 
 	| hierarchy roots allParents rootNode leaves |
 	hierarchy := IdentityDictionary new.
-	roots := IdentitySet withAll: elements.
-	leaves := IdentitySet withAll: elements.
+	roots := IdentityDictionary new.
+	leaves := IdentitySet new.
 	allParents := IdentityDictionary new.
 
-	associations do: [ :anAssociation | 
-		| children child parent multipleParents parents |
-		parent := anAssociation key.
-		child := anAssociation value.
+	elements do: [ :each | 
+		leaves add: each.
 
-		multipleParents := false.
-		roots remove: child ifAbsent: [ multipleParents := true ].
+		roots
+			at: each
+			ifPresent: [ Warning signal: 'Duplicate shape detected.' ]
+			ifAbsentPut: [ roots size + 1 ] ].
 
-		leaves
-			remove: parent
-			ifAbsent: [ "is it okay to try to remove `parent` more than one time."
-			 ].
+	associations
+		select: [ :anAssociation | anAssociation key ~~ anAssociation value ]
+		thenDo: [ :anAssociation | 
+			| children child parent multipleParents parents |
+			parent := anAssociation key.
+			child := anAssociation value.
 
-		parents := allParents
-			           at: child
-			           ifAbsentPut: [ OrderedCollection new ].
+			multipleParents := false.
+			roots removeKey: child ifAbsent: [ multipleParents := true ].
 
-		parents add: parent.
+			leaves
+				remove: parent
+				ifAbsent: [ "It is okay to try to remove `parent` more than one time because
+								 two or more associations can share `parent` in the key slot."
+					 ].
 
-		children := hierarchy
-			            at: parent
-			            ifAbsentPut: [ 
-			            self childrenOf: parent put: OrderedCollection new ].
+			parents := allParents
+				           at: child
+				           ifAbsentPut: [ OrderedCollection new ].
 
-		multipleParents ifFalse: [ children add: child ] ].
+			parents add: parent.
+
+			children := hierarchy
+				            at: parent
+				            ifAbsentPut: [ OrderedCollection new ].
+
+			self childrenOf: parent put: children.
+
+			multipleParents ifFalse: [ children add: child ] ].
 
 	rootNode := roots size > 1
 		            ifTrue: [ 
-			            roots collect: [ :each | 
-				            self assert: (allParents includesKey: each) not ].
+			            | orderedRoots aRootShape |
+			            orderedRoots := roots associations sorted: [ 
+				                            :anAssoc 
+				                            :anotherAssoc | 
+				                            anAssoc value < anotherAssoc value ].
 
-			            RSComposite new
-				            in: [ :aRootShape | 
-					            self childrenOf: aRootShape put: roots asArray ];
-				            yourself ]
-		            ifFalse: [ roots anyOne ].
+			            orderedRoots := orderedRoots collect: [ :anAssoc | 
+				                            | aRoot |
+				                            aRoot := anAssoc key.
+
+				                            self assert:
+					                            (allParents includesKey: aRoot) not.
+
+				                            aRoot ].
+
+			            aRootShape := RSComposite new.
+
+			            self childrenOf: aRootShape put: orderedRoots.
+
+			            aRootShape ]
+		            ifFalse: [ roots keys anyOne ].
 
 	leaves do: [ :each | 
 		self
@@ -331,7 +365,7 @@ RSTWalkBasedRegularTreeLayout >> is: aShape ifLeaf: lBlock ifNotLeaf: nlBlock [
 RSTWalkBasedRegularTreeLayout >> layout: aRootShape depth: aDepth breadth: aBreadth [
 
 	self
-		firstWalk: aRootShape;
+		firstWalk: aRootShape depth: aDepth breadth: aBreadth;
 		secondWalk: aRootShape depth: aDepth breadth: aBreadth
 ]
 
@@ -473,6 +507,12 @@ RSTWalkBasedRegularTreeLayout >> nextRightContour: v [
 		  ifNotLeaf: [ :children | children last ]
 ]
 
+{ #category : #positioning }
+RSTWalkBasedRegularTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
+
+	self explicitRequirement
+]
+
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> positionNonLeaf: parent leftMostChild: leftMostChild rightMostChild: rightMostChild [
 
@@ -484,6 +524,9 @@ RSTWalkBasedRegularTreeLayout >> positionNonLeaf: parent leftMostChild: leftMost
 	                  + (self modOf: rightMostChild)
 	                  + (self breadthMeasureOf: rightMostChild)
 	                  - (self breadthMeasureOf: parent).
+	"	                  + (self breadthMeasureOf: leftMostChild)"
+
+	self prelimOf: parent put: (self prelimOf: leftMostChild).
 
 	self prelimOf: parent put: childrenPrelim / 2
 ]
@@ -563,7 +606,10 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 		            positionOfShape: aShape
 		            atDepth: depth
 		            atBreadth: breadth.
+
 	self positionOf: aShape put: position.
+
+	self ongoing: aShape depth: depth breadth: breadth.
 
 	children := self childrenOf: aShape.
 

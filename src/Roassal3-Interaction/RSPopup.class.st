@@ -104,8 +104,7 @@ Class {
 	#name : #RSPopup,
 	#superclass : #RSAbstractPopupInteraction,
 	#instVars : [
-		'shapeBuilder',
-		'modelBlock'
+		'shapeBuilder'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
@@ -151,27 +150,7 @@ RSPopup >> createPopupFor: aShape event: event [
 { #category : #initialization }
 RSPopup >> initialize [
 	super initialize.
-	self model: #model.
 	shapeBuilder := RSSimplePopupBuilder new.
-]
-
-{ #category : #accessing }
-RSPopup >> model [
-	^ modelBlock
-]
-
-{ #category : #accessing }
-RSPopup >> model: anObject [
-	"
-	- can be a one arg BlockClosure 
-	- can be a ByteString
-	"
-	modelBlock := anObject.
-]
-
-{ #category : #accessing }
-RSPopup >> modelFor: aRSShape [
-	^ modelBlock rsValue: aRSShape
 ]
 
 { #category : #hooks }

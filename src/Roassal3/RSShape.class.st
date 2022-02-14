@@ -377,6 +377,11 @@ RSShape >> intersects: aRectangle [
 ]
 
 { #category : #testing }
+RSShape >> isComposite [
+	^ false
+]
+
+{ #category : #testing }
 RSShape >> isEdge [
 	^ false
 ]

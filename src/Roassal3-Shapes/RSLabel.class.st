@@ -413,7 +413,6 @@ RSLabel >> textHeight [
 { #category : #accessing }
 RSLabel >> textWidth [
 	"without any transformation"
-	
 	^ self textExtents width
 ]
 

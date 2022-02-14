@@ -8,6 +8,34 @@ Class {
 }
 
 { #category : #examples }
+RSLegendExamples >> canvasExample [
+	| canvas classes |
+	canvas := RSCanvas new.
+	classes := RSShape withAllSubclasses collect: [ :cls | 
+		RSBox new
+			draggable;
+			popup;
+			model: cls;
+			height: cls numberOfMethods;
+			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
+	canvas addAll: classes.
+	RSLineBuilder line
+		withVerticalAttachPoint;
+		width: 0.5;
+		canvas: canvas;
+		capRound;
+		shapes: classes;
+		connectFrom: #superclass.
+	RSNormalizer color
+		from: Color black;
+		to: Color red;
+		shapes: classes;
+		normalize: #numberOfMethods.
+	RSTreeLayout on: classes.
+	^ canvas
+]
+
+{ #category : #examples }
 RSLegendExamples >> example01Basic [ 
 	<script: 'self new example01Basic open'>
 	| b |
@@ -223,43 +251,23 @@ RSLegendExamples >> example10Location [
 { #category : #examples }
 RSLegendExamples >> example11OnDemand [
 	<script: 'self new example11OnDemand open setLabel: ''RSShape withAllSubclasses'''>
-	| canvas classes b |
-	canvas := RSCanvas new.
-	classes := RSShape withAllSubclasses collect: [ :cls | 
-		RSBox new
-			draggable;
-			popup;
-			model: cls;
-			height: cls numberOfMethods;
-			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
-	canvas addAll: classes.
-	RSLineBuilder line
-		withVerticalAttachPoint;
-		width: 0.1;
-		canvas: canvas;
-		shapes: classes;
-		connectFrom: #superclass.
-	RSNormalizer color
-		from: Color black;
-		to: Color red;
-		shapes: classes;
-		normalize: #numberOfMethods.
-	RSTreeLayout on: classes.
+	| b canvas |
+	canvas := self canvasExample.
 	b := RSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.
 	b 
-		polymetricWidth: 'number of methods' 
-			height: 'lines of code'
-			box: 'a Pharo class'.
+		polymetricWidth: 'Number of attributes'
+			height: 'Number of methods'
+			box: 'a Roassal class'.
 	b legendDo: [ :s | 
 		s
 			draggable;
 			border:(RSBorder new
 				color: Color red;
 				dashArray: #(4));
-			scaleBy: 0.5;
+			scaleBy: 0.75;
 			padding: 15 ].
 	b location right middle.
 	b onDemand: 'Legend'; build.
@@ -317,4 +325,31 @@ RSLegendExamples >> example12OnPopup [
 	canvas addAll: shapes.
 	canvas @ RSCanvasController.
 	^ canvas
+]
+
+{ #category : #examples }
+RSLegendExamples >> example13LinesOfCode [
+	<script: 'self new example13LinesOfCode open'>
+	| canvas |
+	canvas := self canvasExample.
+	RSLegend new
+		container: canvas;
+		boxWidthText: 'Instance variables';
+		boxHeightText: 'Number of methods';
+		legendDo: [ :s | 
+			s
+				color: (Color white alpha: 0.85);
+				border:(RSBorder new
+					color: Color gray;
+					dashArray: #(1));
+				scaleBy: 1.5;
+				padding: 10 ];
+		beFixedWithTitle: 'Legend';
+		build.
+	canvas @ RSCanvasController simple.
+	^ canvas
+	
+
+
+
 ]

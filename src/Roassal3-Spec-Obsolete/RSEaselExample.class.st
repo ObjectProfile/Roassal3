@@ -10,7 +10,7 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Obsolete'
 }
 
 { #category : #specs }

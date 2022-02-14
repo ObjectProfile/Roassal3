@@ -30,3 +30,9 @@ RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: 
 
 	^ self layout: root depth: aPoint x breadth: aPoint y
 ]
+
+{ #category : #positioning }
+RSHorizontalVanDerPloegTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
+
+	
+]

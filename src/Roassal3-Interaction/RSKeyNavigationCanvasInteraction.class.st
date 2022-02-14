@@ -30,8 +30,8 @@ RSKeyNavigationCanvasInteraction >> initialize [
 { #category : #hooks }
 RSKeyNavigationCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
-		when: RSKeyDown do: [ :evt | self processKeyDown: evt ];
-		when: RSKeyUp do: [ :evt | self processKeyUp: evt ].
+		when: RSKeyDown send: #processKeyDown: to: self;
+		when: RSKeyUp send: #processKeyUp: to: self.
 ]
 
 { #category : #events }

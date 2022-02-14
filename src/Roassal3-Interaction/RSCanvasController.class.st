@@ -13,6 +13,20 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
+{ #category : #'instance creation' }
+RSCanvasController class >> simple [
+	| inst |
+	inst := self new.
+	inst noLegend.
+	inst configuration
+		noZoomToFitOnStart;
+		noZoomToFitOnExtendChanged.
+	inst interactions removeKey: RSZoomToFitCanvasInteraction.
+	"this interaction works better when the visualization has already been created"
+	inst addInteractionClass: RSKeepCanvasPositionCanvasInteraction.
+	^ inst
+]
+
 { #category : #accessing }
 RSCanvasController >> addInteraction: anInteractionObject [
 

@@ -13,8 +13,8 @@ Class {
 	#category : #'Roassal3-Spec-Examples'
 }
 
-{ #category : #specs }
-RSEasel class >> defaultSpec [
+{ #category : #layout }
+RSEasel class >> defaultLayout [
 
 	<spec: #default>
 	^ SpPanedLayout newHorizontal

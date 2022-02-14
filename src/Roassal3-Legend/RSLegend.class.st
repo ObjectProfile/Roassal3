@@ -38,7 +38,9 @@ Class {
 		'location',
 		'menuShape',
 		'defaultBoldText',
-		'legendBlock'
+		'legendBlock',
+		'isFixed',
+		'isOnDemand'
 	],
 	#category : #'Roassal3-Legend-Core'
 }
@@ -49,6 +51,85 @@ RSLegend >> basicRenderIn: aCanvas [
 	legend := self legend.
 	location move: legend on: aCanvas shapes.
 	aCanvas addShape: legend.
+]
+
+{ #category : #public }
+RSLegend >> beFixedWithTitle: aString [
+	isFixed := true.
+	^ menuShape := self defaultTitle copy
+		text: aString;
+		yourself.
+]
+
+{ #category : #'public - specific' }
+RSLegend >> boxHeightIcon [
+	| box marker arrow icon |
+	box := RSBox new
+		border: (RSBorder new color: Color black; width: 2);
+		extent: 15@15;
+		color: Color white;
+		yourself.
+	marker := RSShapeFactory arrow
+		size: 10;
+		color: Color black;
+		yourself.
+	arrow := RSLine new
+		startPoint: 0@0;
+		endPoint: 0 @ box height;
+		color: Color black;
+		marker: marker;
+		yourself.
+	icon := { arrow. box }.
+	RSHorizontalLineLayout new gapSize: 5; on: icon.
+	^ icon asGroup asShape.
+	
+]
+
+{ #category : #'public - specific' }
+RSLegend >> boxHeightText: aString [
+	^ self boxText: aString icon: self boxHeightIcon
+]
+
+{ #category : #'public - specific' }
+RSLegend >> boxText: aString icon: aShape [
+	| group row |
+	group := { aShape. self defaultLabel copy text: aString }.
+	RSHorizontalLineLayout new gapSize: 5; on: group.
+	row := group asGroup asShape.
+	row padding: (Margin fromPoint: 0@5).
+	shapes add: row.
+	^ row
+	 
+		
+]
+
+{ #category : #'public - specific' }
+RSLegend >> boxWidthIcon [
+	| box marker arrow icon |
+	box := RSBox new
+		border: (RSBorder new color: Color black; width: 2);
+		extent: 25@15;
+		color: Color white;
+		yourself.
+	marker := RSShapeFactory arrow
+		size: 10;
+		color: Color black;
+		yourself.
+	arrow := RSLine new
+		startPoint: 0@0;
+		endPoint: box width @ 0;
+		color: Color black;
+		marker: marker;
+		yourself.
+	icon := { box. arrow }.
+	RSVerticalLineLayout new gapSize: 5; on: icon.
+	^ icon asGroup asShape.
+	
+]
+
+{ #category : #'public - specific' }
+RSLegend >> boxWidthText: aString [
+	^ self boxText: aString icon: self boxWidthIcon
 ]
 
 { #category : #'public - specific' }
@@ -104,8 +185,18 @@ RSLegend >> initialize [
 ]
 
 { #category : #testing }
+RSLegend >> isFixed [
+	^ isFixed
+]
+
+{ #category : #testing }
 RSLegend >> isOnDemand [
-	^ menuShape notNil
+	^ isOnDemand
+]
+
+{ #category : #utilities }
+RSLegend >> key [
+	^ #legendLabels	
 ]
 
 { #category : #layout }
@@ -129,6 +220,13 @@ RSLegend >> legendDo: aBlock [
 	legendBlock := aBlock
 ]
 
+{ #category : #private }
+RSLegend >> legendLabelsIn: aCanvas [
+	^ aCanvas propertyAt: self key ifAbsentPut: [ 
+		aCanvas when: RSExtentChangedEvent send: #updateLegendLabels: to: self.
+		RSGroup new: 5 ]
+]
+
 { #category : #accessing }
 RSLegend >> location [
 	^ location
@@ -146,6 +244,7 @@ RSLegend >> onDemand [
 
 { #category : #public }
 RSLegend >> onDemand: text [
+	isOnDemand := true.
 	^ menuShape := RSLabel new
 		text: text;
 		color: Color lightGray;
@@ -178,43 +277,60 @@ RSLegend >> polymetricWidth: labelWidth height: labelHeight box: labelBox [
 	s := RSComposite new
 		shapes: g.
 	self shapes add: s.
-	
+	^ s
 
+]
+
+{ #category : #hooks }
+RSLegend >> renderFixedOn: aCanvas [
+	| legend legendLabels originalShapes flag |
+	shapes addFirst: menuShape.
+	originalShapes := shapes copy.
+	legend := self legend.
+	legend isFixed: true.
+	aCanvas addShape: legend.
+	legendLabels := self legendLabelsIn: aCanvas.
+	legendLabels add: legend.
+	self updateLegendLabels: aCanvas.
+	flag := true.
+	legend when: RSMouseClick do: [ :evt |
+		legend remove.
+		legendLabels remove: legend.
+		shapes := flag 
+			ifTrue: [ { menuShape } ]
+			ifFalse: [ originalShapes ].
+		flag := flag not.
+		legend := self legend.
+		legend isFixed: true.
+		legend announcer: evt shape announcer.
+		aCanvas addShape: legend.
+		legendLabels add: legend.
+		self updateLegendLabels: aCanvas.
+		evt signalUpdate ].
 ]
 
 { #category : #hooks }
 RSLegend >> renderIn: aCanvas [
 	self isOnDemand 
 		ifTrue: [ self renderOnDemandIn: aCanvas ]
-		ifFalse: [self basicRenderIn: aCanvas ].
+		ifFalse: [ 
+			self isFixed
+				ifTrue: [ self renderFixedOn: aCanvas ]
+				ifFalse: [self basicRenderIn: aCanvas ] ].
 	
 ]
 
 { #category : #hooks }
 RSLegend >> renderOnDemandIn: aCanvas [
-	| i legendLabels update |
+	| i legendLabels |
 	menuShape isFixed: true.
 	aCanvas addShape: menuShape.
 	i := RSAnimatedPopup new.
 	i shapeBuilder: [ self legend ].
 	menuShape @ i.
-	legendLabels := nil.
-	update := [ 
-		RSHorizontalLineLayout on: legendLabels.
-		RSLocation new
-			inner; top; right;
-			offset: -5 @ 5;
-			move: legendLabels
-				on: aCanvas basicRectangle.
-	].
-	legendLabels := aCanvas propertyAt: #legendLabels
-		ifAbsentPut: [ 
-			aCanvas when: RSExtentChangedEvent do: update.
-			RSGroup new: 5 ].
+	legendLabels := self legendLabelsIn: aCanvas.
 	legendLabels add: menuShape.
-	update value.
-
-	
+	self updateLegendLabels: aCanvas.
 ]
 
 { #category : #initialization }
@@ -224,6 +340,8 @@ RSLegend >> reset [
 	location := RSLocation new below.
 	layout := RSLayoutBuilder new.
 	layout vertical gapSize: 0.
+	isFixed := false.
+	isOnDemand := false.
 	defaultBox := defaultCircle := defaultLabel := defaultTitle := nil.
 	
 		
@@ -301,6 +419,17 @@ RSLegend >> text: aString withShape: aShape [
 { #category : #public }
 RSLegend >> title: aString [
 	^ self customText: aString shape: self defaultTitle
+]
+
+{ #category : #private }
+RSLegend >> updateLegendLabels: evt [
+	| legendLabels |
+	legendLabels := self legendLabelsIn: evt canvas.
+	RSHorizontalLineLayout on: legendLabels.
+	RSLocation new
+		inner; top; right;
+		offset: -5 @ 5;
+		move: legendLabels on: evt canvas basicRectangle.
 ]
 
 { #category : #public }

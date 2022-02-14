@@ -1326,3 +1326,103 @@ RSShapeExamples >> example45CompositeDragResize [
 	c @ RSCanvasController.
 	^ c
 ]
+
+{ #category : #shapes }
+RSShapeExamples >> example46Popups [
+	<script: 'self new example46Popups open'>
+	| c shapes color |
+	c := RSCanvas new.
+	color := NSScale linear
+		from: Color gray;
+		to: Color blue.
+	shapes := Collection withAllSubclasses collect: [ :cls |
+		| computedColor |
+		computedColor := color scale: cls numberOfMethods.
+		RSBox new
+			model: cls;
+			draggable;
+			@ (RSPopup new in: [ :popup | 
+				| sb |
+				sb := popup shapeBuilder.
+				sb boxBuilder 
+					color: computedColor;
+					border: (RSBorder new color: Color black; width: 2).
+				sb labelBuilder labelShape color: Color white.
+				popup]);
+			color: computedColor;
+			size: cls linesOfCode sqrt + 10;
+			yourself ].
+	c addAll: shapes.
+	RSLineBuilder orthoVertical
+		withVerticalAttachPoint;
+		shapes: shapes;
+		connectFrom: #superclass.
+	RSTreeLayout on: shapes.
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example47CompositeClipChildren [
+	<script: 'self new example47CompositeClipChildren open'>
+	| boxes containers c |
+	containers := { RSShape. String. RSEvent } collect: [ :rootCls |
+		| container |
+		container := RSComposite new.
+		boxes := RSBox models: rootCls withAllSubclasses 
+			forEach: [ :box :cls | box size: cls linesOfCode sqrt + 5 ].
+		container addAll: boxes.
+		RSLineBuilder line
+			canvas: container;
+			withVerticalAttachPoint;
+			shapes: boxes;
+			connectFrom: #superclass.
+		RSTreeLayout on: boxes.
+		
+		container
+			model: rootCls;
+			adjustToChildren;
+			padding: 10;
+			labeled;
+			border: (RSBorder new color: Color black; joinMiter);
+			clipChildren: true;
+			when: RSMouseDragging do: [ :evt | | d |
+				d := evt camera distanceFromPixelToSpace: evt step.
+				evt shape nodes do: [ :child |
+					child translateBy: d ].
+				evt signalUpdate.
+				 ]
+			yourself
+		 ].
+
+	c := RSCanvas new.
+	c addAll: containers.
+	c nodes @ (RSPopup text: 'drag me!').
+	RSFlowLayout on: containers.
+	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example48GhostDraggable [
+
+	<script: 'self new example48GhostDraggable open'>
+	| c lb |
+	c := RSCanvas new.
+
+	c addAll: (RSPolygon
+			 models: String withAllSubclasses
+			 forEach: [ :s :o | s points: RSShapeFactory star points; size: 30 ]).
+	c shapes @ RSGhostDraggable.
+
+	c shapes @ RSHighlightable red withLines.
+
+	lb := RSLineBuilder line.
+	lb shapes: c shapes.
+	lb connectToAll: #dependentClasses.
+	RSGridLayout on: c nodes.
+	c nodes translateBy: 100 asPoint.
+	RSSimpleForceBasedLayout on: (c nodes copyFrom: 1 to: 4).
+
+	^ c @ RSCanvasController simple
+]

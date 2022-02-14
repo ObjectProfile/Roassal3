@@ -14,6 +14,7 @@ BaselineOfRoassal3 >> baseline: spec [
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
 { #category : #baselines }
@@ -33,8 +34,9 @@ BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
+	spec package: #'Roassal3-Spec-Obsolete'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo8')
+		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
@@ -58,13 +60,13 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Legend'
 	'Roassal3-UML'
 	'Roassal3-Sunburst'
+	'Roassal3-FlameGraph'
 	'Roassal3-Pie'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
 	'Roassal3-Menu'
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
-	'Roassal3-Spec-Obsolete'
 	)
 ]
 
@@ -91,6 +93,7 @@ BaselineOfRoassal3 >> examplePackagesNames [
 	'Roassal3-Chart-Examples'
 	'Roassal3-Pie-Examples'
 	'Roassal3-Sunburst-Examples'
+	'Roassal3-FlameGraph-Examples'
 	'Roassal3-UML-Examples'
 	'Roassal3-Spec-Examples')
 ]

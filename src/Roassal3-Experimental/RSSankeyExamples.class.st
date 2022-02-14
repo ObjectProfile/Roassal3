@@ -12,7 +12,7 @@ RSSankeyExamples >> example01 [
 	<script: 'self new example01 open'>
 	| data b nodes links |
 	data := self sankeyData.
-	
+	 
 	nodes := data at: 'nodes'.
 	links := (data at: 'links') collect: [ :dict | 
 		RSSankeyLink new
@@ -22,7 +22,7 @@ RSSankeyExamples >> example01 [
 			yourself
 		].
 	
-	b := RSSankey new.
+	b := RSSankey withAllLinks: links.
 	b boxShape
 		withBorder;
 		borderColor: Color black;
@@ -31,9 +31,7 @@ RSSankeyExamples >> example01 [
 	b
 		extent: 960@500;
 		iterations: 32;
-		nodePadding: 10;
-		nodes: nodes;
-		links: links.
+		nodePadding: 10.
 		
 	^ b
 ]
@@ -260,4 +258,31 @@ RSSankeyExamples >> sankeyData [
 			add: (Dictionary new at: 'source' put: 47; at: 'target' put: 15; at: 'value' put: 289.366; yourself);
 			yourself);
 		yourself
+]
+
+{ #category : #examples }
+RSSankeyExamples >> smallExample [
+
+	<script: 'self new smallExample open'>
+	| b |
+	b := RSSankey withAllAssociations: { 
+			     (#Wages -> 2500 -> #Budget).
+			     (#Interest -> 25 -> #Budget).
+			     (#Budget -> 1000 -> #Taxes).
+			     (#Budget -> 450 -> #Housing).
+			     (#Budget -> 310 -> #Food).
+			     (#Budget -> 205 -> #Transportation).
+			     (#Budget -> 400 -> #'Health Care').
+			     (#Budget -> 160 -> #'Other Necessities') }.
+	b boxShape
+		withBorder;
+		borderColor: Color black;
+		width: 15.
+
+	b
+		extent: 960 @ 500;
+		iterations: 32;
+		nodePadding: 10.
+
+	^ b
 ]

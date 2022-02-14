@@ -120,7 +120,8 @@ Class {
 	#instVars : [
 		'nodes',
 		'edges',
-		'children'
+		'children',
+		'clipChildren'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -270,6 +271,16 @@ RSComposite >> children: aRSGroup [
 	
 ]
 
+{ #category : #accessing }
+RSComposite >> clipChildren [
+	^ clipChildren
+]
+
+{ #category : #accessing }
+RSComposite >> clipChildren: aBoolean [
+	clipChildren := aBoolean
+]
+
 { #category : #'looking up shapes' }
 RSComposite >> deepShapesFromModels: someObjects result: result [
 	"Private method"
@@ -286,8 +297,14 @@ RSComposite >> hasChildren [
 RSComposite >> initialize [
 	super initialize.
 	self paint: nil.
+	self clipChildren: false.
 	self resetPath.
 	
+]
+
+{ #category : #testing }
+RSComposite >> isComposite [
+	^ true
 ]
 
 { #category : #accessing }

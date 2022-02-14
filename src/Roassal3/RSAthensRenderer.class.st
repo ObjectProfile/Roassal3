@@ -18,7 +18,9 @@ Class {
 	#superclass : #RSRenderer,
 	#instVars : [
 		'builder',
-		'fixedShapesDrawing'
+		'matrix',
+		'canvasRect',
+		'showRectangles'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -240,6 +242,64 @@ RSAthensRenderer >> buildLinePath: line [
 		absolute;
 		moveTo: line startPoint;
 		lineTo: line endPoint.
+]
+
+{ #category : #'creating path' }
+RSAthensRenderer >> buildNotePath: note [
+
+	| rectangle refRectangle points random offsetPoint ratioPoint |
+	points := { 
+		          (0 @ 0).
+		          (8.461 @ 36.411).
+		          (0.6 @ 129.887).
+		          (25.3 @ 195.304).
+		          (-67.3 @ 222.719).
+		          (16.72 @ 245.576).
+		          (-55.8 @ 178.406).
+		          (60 @ 136.3).
+		          (136 @ 136).
+		          (142.2 @ 222.332).
+		          (393.292 @ 192.739).
+		          (247.8 @ 244.8).
+		          (179.5 @ 201.105).
+		          (221.9 @ 163.04).
+		          (200 @ 125.8).
+		          (204.4 @ 101.697).
+		          (210.405 @ 85.124).
+		          (217.89 @ 18.03).
+		          (151.73 @ 29.54).
+		          (244.5 @ -26.58).
+		          (318.633 @ -42.131).
+		          (145.27 @ 1.9).
+		          (52.05 @ 8.718).
+		          (0 @ 0) }.
+
+	offsetPoint := 2 @ 2 * Float goldenRatio.
+
+	refRectangle := -4.381590877489069 @ -7.793939601397815 + offsetPoint 
+		                corner:
+		                218.57105173675455 @ 189.47681084770576
+		                - offsetPoint.
+
+	rectangle := note baseRectangle.
+
+	random := RandomBoxMullerBivariateGaussian new.
+
+	ratioPoint := rectangle topLeft
+	              / (refRectangle topLeft - refRectangle center).
+
+	points := points collect: [ :each | 
+		          each - refRectangle center * ratioPoint + random next ].
+
+	points atLast: 1 put: points first.
+
+	"	rectangle origin / refRectangle origin. ""(11.411380340615732@12.830481773564856)""
+	rectangle corner / refRectangle corner. ""(0.22875856433275368@0.5277690686929293)""
+"
+	self buildPolylinePath: (RSdeCasteljauQuickLine new
+			 samples: 50;
+			 controlPoints: points;
+			 yourself)
 ]
 
 { #category : #'creating path' }
@@ -499,6 +559,15 @@ RSAthensRenderer >> drawPathLabel: label [
 ]
 
 { #category : #'visiting - helpers' }
+RSAthensRenderer >> drawShadowRectangle: rect [
+	| r |
+	athensCanvas setPaint: (Color blue alpha: 0.1).
+	r := rect origin asFloatPoint corner: rect corner asFloatPoint.
+	athensCanvas drawShape: r
+	
+]
+
+{ #category : #'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
 	| font |
 	(label paint isNil or: [ label cairoGlyphs isNil ]) ifTrue: [ ^ self ].
@@ -551,16 +620,6 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	^ path
 ]
 
-{ #category : #accessing }
-RSAthensRenderer >> isFixedShapesDrawing [
-	^ fixedShapesDrawing
-]
-
-{ #category : #accessing }
-RSAthensRenderer >> isFixedShapesDrawing: aBoolean [
-	fixedShapesDrawing := aBoolean
-]
-
 { #category : #paint }
 RSAthensRenderer >> paintFor: shape form: form [
 	form isForm ifFalse: [ ^ form ].
@@ -604,50 +663,74 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitBoundingShape: shape [
-	| path paint |
-	athensCanvas setPathMatrix.
-	path := self getOrCreatePathOf: shape.
-	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas pathTransform
-			multiplyBy: shape matrix asFloatTransform.
-		paint := shape paintOn: self.
-		paint ifNotNil: [ 
-			athensCanvas 
-				fillRuleEvenOdd;
-				setPaint: paint;
-				drawShape: path ].
-		self visitBorderIfNecessary: shape.
-		self visitChildrenIfNecessary: shape.
-		].
+	self visitShapeIfNecessary: shape block: [ :shapeMatrix | 
+		| path paint |
+		athensCanvas setPathMatrix.
+		path := self getOrCreatePathOf: shape.
+		athensCanvas pathTransform restoreAfter: [ 
+			athensCanvas pathTransform multiplyBy: shapeMatrix.
+			paint := shape paintOn: self.
+			paint ifNotNil: [ 
+				athensCanvas 
+					fillRuleEvenOdd;
+					setPaint: paint;
+					drawShape: path ].
+			self visitBorderIfNecessary: shape.
+			self visitChildrenIfNecessary: shape.
+			self visitShadowRectangleIfNecessary: shape.
+		]	
+	]
 	
+	
+]
+
+{ #category : #visiting }
+RSAthensRenderer >> visitCanvas: aRSCanvas [
+	matrix := AthensAffineTransform new.
+	canvasRect := aRSCanvas visibleRectangle.
+	showRectangles := aRSCanvas showRectangles.
+	aRSCanvas shapes accept: self.
+	"We display the elements that are _NOT_ subject to the camera"
+	athensCanvas pathTransform loadIdentity.
+	canvasRect := 0@0 extent: aRSCanvas extent.
+	aRSCanvas fixedShapes accept: self.
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
-	| canvasRect | 
+	| draw | 
 	shape hasChildren ifFalse: [ ^ self ].
-	self isFixedShapesDrawing ifTrue: [ 
-		shape children do: [ :child | child accept: self ].
-		^ self ].
-	canvasRect := shape canvas visibleRectangle.
-	shape children 
-		select: [ :child | child intersects: canvasRect ]
-		thenDo: [ :child | child accept: self ].
+	draw := [ shape children accept: self ].
+	shape clipChildren 
+		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
+		ifFalse: [ draw value ].
+]
+
+{ #category : #visiting }
+RSAthensRenderer >> visitGroup: aRSGroup [
+	aRSGroup do: [ :roassalShape | roassalShape accept: self ].
 ]
 
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
 	label hasText ifFalse: [ ^ self ].
-	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas pathTransform
-			multiplyBy: label matrix asFloatTransform;
-			translateBy: label textExtents translationPoint. 
-		label hasBorder
-			ifTrue: [ self drawPathLabel: label ]
-			ifFalse: [ self drawSimpleLabel: label ].
-		
-		self visitLabelDecoratorsIfNecessary: label.
-	].
+	self visitShapeIfNecessary: label block: [ :shapeMatrix |
+		athensCanvas pathTransform restoreAfter: [ 
+			| lbtranslation |
+			lbtranslation := label textExtents translationPoint.
+			athensCanvas pathTransform
+				multiplyBy: label matrix asFloatTransform;
+				translateBy: lbtranslation.
+			label hasBorder
+				ifTrue: [ self drawPathLabel: label ]
+				ifFalse: [ self drawSimpleLabel: label ].
+			
+			self visitLabelDecoratorsIfNecessary: label.
+			athensCanvas pathTransform translateBy: lbtranslation negated.
+			self visitShadowRectangleIfNecessary: label.
+		]
+	]
+	
 	
 
 ]
@@ -673,14 +756,46 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 { #category : #visiting }
 RSAthensRenderer >> visitLine: line [
 	| path paint |
+	(line intersects: canvasRect) ifFalse: [ ^ self ].
+	
 	athensCanvas setPathMatrix.
 	path := self getOrCreatePathOf: line.
 	paint := line paintOn: self.
+	
 	paint ifNotNil: [ 
 		athensCanvas
 			setPaint: paint;
 			drawShape: path ].
 	self visitBorderIfNecessary: line.
 	line markerShapesInPositionDo: [ :shape | shape accept: self ].
+	self visitShadowRectLineIfNecessary: line.
+	
+]
+
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> visitShadowRectLineIfNecessary: line [
+	showRectangles ifFalse: [ ^ self ].
+	self drawShadowRectangle: line encompassingRectangle
+	
+]
+
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
+	showRectangles ifFalse: [ ^ self ].
+	self drawShadowRectangle: shape baseRectangle.
+]
+
+{ #category : #'visiting - helpers' }
+RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
+	matrix restoreAfter: [ 
+		| shapeMatrix rect |
+		shapeMatrix := shape matrix asFloatTransform.
+		matrix multiplyBy: shapeMatrix.
+		rect := shape 
+			computeEncompassingRectangleFor: shape baseRectangle
+			matrix: matrix.
+		(rect intersects: canvasRect) ifFalse: [ ^ self ].
+		aBlock value: shapeMatrix.
+	]
 	
 ]

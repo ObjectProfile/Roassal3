@@ -82,10 +82,12 @@ RSChartPopupDecoration >> updateMarkers: evt [
 { #category : #hooks }
 RSChartPopupDecoration >> updatePopup: popup event: evt [
 	"we recreate the popup content each time, since the popup should show the nodes change"
-	| builder |
+	| builder rect |
 	popup children do: #remove. "we recreate the popup content each time, since the popup should show the nodes change"
 	builder := self chartPopupBuilder.
-	builder position: evt position.
+	rect := evt shape globalEncompassingRectangle.
+	builder position: evt position - rect origin.
+	
 	popup addShape: (builder shapeFor: self chart).
 	popup adjustToChildren.
 	
