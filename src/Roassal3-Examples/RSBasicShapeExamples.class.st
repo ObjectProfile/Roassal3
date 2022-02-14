@@ -1067,20 +1067,9 @@ RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 
 	<script: 'self new example44deCasteljauLineClosedControlPoints open'>
-	| points |
-	points := { 
-		          (1 @ 1).
-		          (3 @ 4).
-		          (5 @ 6).
-		          (7 @ 8).
-		          (10 @ 2).
-		          (1 @ 1) }.
-
 	^ RSCanvas new
-		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
-				   controlPoints: points;
-				   scale: 100) asGroupWithControlNet;
+		  addAll:
+			  self lineDeCasteljauLineClosedControlPoints asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1090,31 +1079,19 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 
 	<script: 'self new example44deCasteljauLineDegreeElevation open'>
-	| points bspline1 bspline2 bspline3 bspline4 |
-	points := { 
-		          (1 @ 1).
-		          (3 @ 4).
-		          (5 @ 6).
-		          (7 @ (3 / 2)).
-		          (10 @ 2) }.
-
-	bspline1 := RSdeCasteljauLine new
-		            samples: 50;
-		            controlPoints: points;
-		            scale: 100.
-
-	bspline2 := bspline1 increment.
-	bspline3 := bspline2 increment.
-	bspline4 := bspline3 increment.
-
-	^ RSCanvas new
-		  addAll: (bspline1 asGroupWithControlNetColoured: Color gray);
-		  addAll: (bspline2 asGroupWithControlNetColoured: Color red);
-		  addAll: (bspline3 asGroupWithControlNetColoured: Color blue);
-		  addAll: (bspline4 asGroupWithControlNetColoured: Color brown);
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
+	^ self linesDeCasteljauLineDegreeElevation bind: [ 
+		  :bspline1 
+		  :bspline2 
+		  :bspline3 
+		  :bspline4 | 
+		  RSCanvas new
+			  addAll: (bspline1 asGroupWithControlNetColoured: Color gray);
+			  addAll: (bspline2 asGroupWithControlNetColoured: Color red);
+			  addAll: (bspline3 asGroupWithControlNetColoured: Color blue);
+			  addAll: (bspline4 asGroupWithControlNetColoured: Color brown);
+			  zoomToFit;
+			  addInteraction: RSCanvasController new;
+			  yourself ]
 ]
 
 { #category : #lines }
@@ -1253,37 +1230,8 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 
 	<script: 'self new example44deCasteljauLineNoteBox open'>
-	| points line |
-	points := { 
-		          (0 @ 0).
-		          (8.461 @ 36.411).
-		          (0.6 @ 129.887).
-		          (25.3 @ 195.304).
-		          (-67.3 @ 222.719).
-		          (16.72 @ 245.576).
-		          (-55.8 @ 178.406).
-		          (60 @ 136.3).
-		          (136 @ 136).
-		          (142.2 @ 222.332).
-		          (393.292 @ 192.739).
-		          (247.8 @ 244.8).
-		          (179.5 @ 201.105).
-		          (221.9 @ 163.04).
-		          (200 @ 125.8).
-		          (204.4 @ 101.697).
-		          (210.405 @ 85.124).
-		          (217.89 @ 18.03).
-		          (151.73 @ 29.54).
-		          (244.5 @ -26.58).
-		          (318.633 @ -42.131).
-		          (145.27 @ 1.9).
-		          (52.05 @ 8.718).
-		          (0 @ 0) }.
-
-	line := RSdeCasteljauLine new
-		        samples: 50;
-		        controlPoints: points;
-		        yourself.
+	| line |
+	line := self lineDeCasteljauLineNoteBox.
 
 	self assert: (Rectangle encompassing: line controlPoints)
 		= (-4.381590877489069 @ -7.793939601397815 corner:
@@ -1520,17 +1468,78 @@ RSBasicShapeExamples >> example45ParametricUnitCircle [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example46Note [
+RSBasicShapeExamples >> example46NoteInteger [
 
-	<script: 'self new example46Note open'>
+	<script: 'self new example46NoteInteger open'>
 	^ RSCanvas new
-		  add: (RSLabel new
-				   text: (String loremIpsum: 50);
-				   useDefaultCodeFont;
-				   padded: Float goldenPlatinumRatio
-				   withNoteDo: [ :aBox | aBox color: Color yellow translucent ]);
+		  add: self noteInteger;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example46NoteLoremIpsum [
+
+	<script: 'self new example46NoteLoremIpsum open'>
+	^ RSCanvas new
+		  add: self noteLoremIpsum;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
+
+	| points |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ 8).
+		          (10 @ 2).
+		          (1 @ 1) }.
+
+	^ RSdeCasteljauLine new
+		  samples: 50;
+		  controlPoints: points;
+		  scale: 100
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
+
+	| points |
+	points := { 
+		          (0 @ 0).
+		          (8.461 @ 36.411).
+		          (0.6 @ 129.887).
+		          (25.3 @ 195.304).
+		          (-67.3 @ 222.719).
+		          (16.72 @ 245.576).
+		          (-55.8 @ 178.406).
+		          (60 @ 136.3).
+		          (136 @ 136).
+		          (142.2 @ 222.332).
+		          (393.292 @ 192.739).
+		          (247.8 @ 244.8).
+		          (179.5 @ 201.105).
+		          (221.9 @ 163.04).
+		          (200 @ 125.8).
+		          (204.4 @ 101.697).
+		          (210.405 @ 85.124).
+		          (217.89 @ 18.03).
+		          (151.73 @ 29.54).
+		          (244.5 @ -26.58).
+		          (318.633 @ -42.131).
+		          (145.27 @ 1.9).
+		          (52.05 @ 8.718).
+		          (0 @ 0) }.
+
+	^ RSdeCasteljauLine new
+		  samples: 50;
+		  controlPoints: points;
 		  yourself
 ]
 
@@ -1600,4 +1609,50 @@ RSBasicShapeExamples >> lineParametricUnitCircle [
 		  param: ((0 to: Float pi * 2) linspace: 100);
 		  x: [ :t | t cos ] y: [ :t | t sin ];
 		  scale: 100
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
+
+	| points bspline1 bspline2 bspline3 bspline4 |
+	points := { 
+		          (1 @ 1).
+		          (3 @ 4).
+		          (5 @ 6).
+		          (7 @ (3 / 2)).
+		          (10 @ 2) }.
+
+	bspline1 := RSdeCasteljauLine new
+		            samples: 50;
+		            controlPoints: points;
+		            scale: 100.
+
+	bspline2 := bspline1 increment.
+	bspline3 := bspline2 increment.
+	bspline4 := bspline3 increment.
+
+	^ RSGroup
+		  with: bspline1
+		  with: bspline2
+		  with: bspline3
+		  with: bspline4
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> noteInteger [
+
+	^ RSLabel new
+		  model: 541;
+		  useDefaultCodeFont;
+		  notedWithPad: Float goldenPlatinumRatio
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> noteLoremIpsum [
+
+	^ RSLabel new
+		  text: (String loremIpsum: 50);
+		  useDefaultCodeFont;
+		  padded: Float goldenPlatinumRatio
+		  withNoteDo: [ :aBox | aBox color: Color yellow translucent ]
 ]
