@@ -246,7 +246,7 @@ RSAnimationExamples >> example06LinePatterns [
 	update := [ 
 		canvas nodes copy do: #remove.
 		canvas addAll: (data collect: [ :radian | | matrix line d1 d2 |
-			"edges do not handle matrix"
+			"lines do not handle matrix"
 			matrix := AthensAffineTransform new.
 			matrix translateBy: radius * (radian cos @ radian sin);
 				rotateByRadians: radian + (radian * step * 5) + (frame *0.02).
@@ -1556,26 +1556,26 @@ RSAnimationExamples >> example26Bezier [
 		color: Color white;
 		yourself.
 	canvas addAll: ((1 to: size) collectWithIndex: [ :m :index | 
-		| com offset edge |
+		| com offset line |
 		com := RSComposite new.
 		offset := Float twoPi / size * index.
 		com matrix rotateByRadians: offset.
-		edge := RSBezier new
+		line := RSBezier new
 			color: Color white;
 			model: offset;
 			width: 2;
 			controlPointsController: cpController;
 			paint: (Color h: 360 / size * index s: 1 v: 1 alpha: 0.5);
 			yourself.
-		edge 
+		line 
 			markerEnd: ((RSShapeFactory triangle
 					extent: 10@20;
-					color: edge paint;
+					color: line paint;
 					border: borderWhite;
 					yourself) asMarker 
 				offset: -10;
 				yourself).
-		com add: edge.
+		com add: line.
 		com ]).
 	canvas newAnimation repeat onStepDo: [ :t | 
 		theta := theta + 0.0523.

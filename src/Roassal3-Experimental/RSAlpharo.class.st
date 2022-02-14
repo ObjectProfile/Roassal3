@@ -24,7 +24,7 @@ RSAlpharo >> addGravityAnimation [
 	layout length: 100.
 	layout alpha: 0.005.
 	layout addNodes: { box }.
-	layout addEdges: edges.
+	layout addLines: edges.
 	mock := layout mockElementAt: box.
 	mock isFixed: true.
 	mock fixPosition: 0@0.

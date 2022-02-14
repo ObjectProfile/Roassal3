@@ -302,6 +302,11 @@ RSComposite >> initialize [
 	
 ]
 
+{ #category : #testing }
+RSComposite >> isComposite [
+	^ true
+]
+
 { #category : #accessing }
 RSComposite >> padding: anObject [
 	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.

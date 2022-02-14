@@ -15,11 +15,12 @@ RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 
 { #category : #'events - processing' }
 RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
-	| canvas camera |
+	| canvas camera r |
 	self removeRectanglesFor: evt canvas.
 	camera := evt camera.
 	canvas := evt canvas.
-	camera position: (camera fromSpaceToPixel: evt camera position).
+	r := self expandedRectangle: canvas.
+	camera position: ((camera fromSpaceToPixel: evt camera position)+r origin) / camera scale.
 	self removeRectanglesFor: evt canvas.
 	evt signalUpdate.
 ]

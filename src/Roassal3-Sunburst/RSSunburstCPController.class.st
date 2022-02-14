@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #hooks }
-RSSunburstCPController >> controlPointsFor: anEdge [
+RSSunburstCPController >> controlPointsFor: aLine [
 	| cp1 cp2 cp3 cp4 from to width1 width2 |
-	from := anEdge from.
-	to := anEdge to.
+	from := aLine from.
+	to := aLine to.
 	width1 := (from externalRadius - from innerRadius)/2.
 	from innerRadius isZero ifTrue: [ width1 := 0 ].
 	cp1 := from centroid: width1 negated.

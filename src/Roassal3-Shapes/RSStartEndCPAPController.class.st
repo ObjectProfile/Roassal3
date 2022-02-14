@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : #hooks }
-RSStartEndCPAPController >> controlPointsFor: anEdge [
+RSStartEndCPAPController >> controlPointsFor: aLine [
 
 	| ap sp ep |
-	ap := anEdge attachPoint.
+	ap := aLine attachPoint.
 	sp := startAttachPoint ifNil: [ ap ].
 	ep := endAttachPoint ifNil: [ ap ].
 	^ self
-		  controlPointsFrom: (sp startingPointOf: anEdge)
-		  to: (ep endingPointOf: anEdge)
+		  controlPointsFrom: (sp startingPointOf: aLine)
+		  to: (ep endingPointOf: aLine)
 ]
 
 { #category : #hooks }
