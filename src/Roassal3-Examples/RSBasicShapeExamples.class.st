@@ -1297,6 +1297,32 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt [
+
+	<script: 'self new example44deCasteljauLineNoteBoxAttempt open'>
+	| points |
+	points := { 
+		          (0 @ 0).
+		          (Float goldenRatio @ 0).
+		          (Float goldenRatio @ 1).
+		          (0 @ 1).
+		          (0 @ 0) }.
+
+	^ ((RSdeCasteljauLine new
+		    samples: 50;
+		    controlPoints: points;
+		    scale: 300) elevate: 10)
+		  splitAt: 1 / 2
+		  in: [ :left :right :whole | 
+			  RSCanvas new
+				  addAll: (left asGroupWithControlNetColoured: Color red);
+				  addAll: (right asGroupWithControlNetColoured: Color blue);
+				  zoomToFit;
+				  addInteraction: RSCanvasController new;
+				  yourself ]
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLinePolar [
 
 	<script: 'self new example44deCasteljauLinePolar open'>
@@ -1432,15 +1458,7 @@ RSBasicShapeExamples >> example45ParametricButterfly [
 
 	<script: 'self new example45ParametricButterfly open'>
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((0 to: Float π * 12) linspace: 10000);
-				   x: [ :t | 
-					   t sin
-					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
-				   y: [ :t | 
-					   t cos
-					   * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
-				   scale: 100);
+		  add: self lineParametricButterfly;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1450,20 +1468,8 @@ RSBasicShapeExamples >> example45ParametricButterfly [
 RSBasicShapeExamples >> example45ParametricHypotrochoid [
 
 	<script: 'self new example45ParametricHypotrochoid open'>
-	| s r d a b |
-	s := 5.
-	r := 3.
-	d := 5.
-
-	a := s - r.
-	b := a / r.
-
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((-10 to: 10) linspace: 10000);
-				   x: [ :t | a * t cos + (d * (b * t) cos) ]
-				   y: [ :t | a * t sin - (d * (b * t) sin) ];
-				   scale: 100);
+		  add: self lineParametricHypotrochoid;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1474,10 +1480,7 @@ RSBasicShapeExamples >> example45ParametricLissajous [
 
 	<script: 'self new example45ParametricLissajous open'>
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((0 to: Float π * 2) linspace: 1000);
-				   x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
-				   scale: 100);
+		  add: self lineParametricLissajous;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1488,10 +1491,7 @@ RSBasicShapeExamples >> example45ParametricNeil [
 
 	<script: 'self new example45ParametricNeil open'>
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((-2 to: 2) linspace: 100);
-				   x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
-				   scale: 10);
+		  add: self lineParametricNeil;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1502,11 +1502,7 @@ RSBasicShapeExamples >> example45ParametricTrochoid [
 
 	<script: 'self new example45ParametricTrochoid open'>
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((0 to: Float π) linspace: 100);
-				   x: [ :t | t cos * (3 * t) cos ]
-				   y: [ :t | t sin * (3 * t) cos ];
-				   scale: 100);
+		  add: self lineParametricTrochoid;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1517,10 +1513,7 @@ RSBasicShapeExamples >> example45ParametricUnitCircle [
 
 	<script: 'self new example45ParametricUnitCircle open'>
 	^ RSCanvas new
-		  add: (RSParametricLineXY new
-				   param: ((0 to: Float π * 2) linspace: 100);
-				   x: [ :t | t cos ] y: [ :t | t sin ];
-				   scale: 100);
+		  add: self lineParametricUnitCircle;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1539,4 +1532,72 @@ RSBasicShapeExamples >> example46Note [
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricButterfly [
+
+	^ RSParametricLineXY new
+		  param: ((0 to: Float pi * 12) linspace: 10000);
+		  x: [ :t | 
+			  t sin
+			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
+		  y: [ :t | 
+			  t cos
+			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
+		  scale: 30
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricHypotrochoid [
+
+	| s r d a b |
+	s := 5.
+	r := 3.
+	d := 5.
+
+	a := s - r.
+	b := a / r.
+
+	^ RSParametricLineXY new
+		  param: ((-10 to: 10) linspace: 10000);
+		  x: [ :t | a * t cos + (d * (b * t) cos) ]
+		  y: [ :t | a * t sin - (d * (b * t) sin) ];
+		  scale: 10
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricLissajous [
+
+	^ RSParametricLineXY new
+		  param: ((0 to: Float pi * 2) linspace: 1000);
+		  x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
+		  scale: 100
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricNeil [
+
+	^ RSParametricLineXY new
+		  param: ((-2 to: 2) linspace: 100);
+		  x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
+		  scale: 10
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricTrochoid [
+
+	^ RSParametricLineXY new
+		  param: ((0 to: Float pi) linspace: 100);
+		  x: [ :t | t cos * (3 * t) cos ] y: [ :t | t sin * (3 * t) cos ];
+		  scale: 100
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricUnitCircle [
+
+	^ RSParametricLineXY new
+		  param: ((0 to: Float pi * 2) linspace: 100);
+		  x: [ :t | t cos ] y: [ :t | t sin ];
+		  scale: 100
 ]
