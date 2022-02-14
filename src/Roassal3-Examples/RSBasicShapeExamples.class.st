@@ -974,26 +974,43 @@ RSBasicShapeExamples >> example42GhostDraggable [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example43GhostDraggable [
-
-	<script: 'self new example43GhostDraggable open'>
-	| c lb |
-	c := RSCanvas new.
-
-	c addAll: (RSPolygon
-			 models: Collection withAllSubclasses
-			 forEach: [ :s :o | s points: RSShapeFactory star points; size: 30 ]).
-	c shapes @ RSGhostDraggable.
-
-	c shapes @ RSHighlightable red withLines.
-
-	lb := RSLineBuilder line.
-	lb shapes: c shapes.
-	lb connectToAll: #dependentClasses.
-
-	RSForceBasedLayout new
-		charge: -400;
-		on: c nodes.
-
-	^ c @ RSCanvasController
+RSBasicShapeExamples >> example43ShortestAttachPoint [
+	<script: 'self new example43ShortestAttachPoint open'>
+	| canvas numbers marker |
+	canvas := RSCanvas new.
+	numbers := (1 to: 10) shuffled collect: [ :n |
+		({ RSLabel text: n } asGroup asShapeFor: n)
+			color: Color white;
+			withBorder;
+			padding: 10;
+			yourself ] as: RSGroup.
+	numbers @ RSDraggable new.
+	canvas addAll: numbers.
+	marker := (RSShapeFactory arrow 
+		size: 10;
+		asMarker)
+		offset: 5;
+		yourself.
+	RSLineBuilder line
+		attachPoint: (RSShortestVerticalAttachPoint new
+			"endOffset: 5;"
+			yourself);
+		canvas: canvas;
+		markerEnd: marker;
+		color: Color gray translucent;
+		fromShapes: (numbers select: [:each | each model even]);
+		toShapes: numbers;
+		connectTo: [ :n | n + 1 ].
+	RSLineBuilder line
+		attachPoint: (RSShortestHorizontalAttachPoint new
+			"endOffset: 5;"
+			yourself);
+		canvas: canvas;
+		markerEnd: marker;
+		color: Color gray translucent;
+		fromShapes: (numbers select: [:each | each model odd]);
+		toShapes: numbers;
+		connectTo: [ :n | n + 1 ].
+	RSSimpleForceBasedLayout on: numbers.
+	^ canvas @ RSCanvasController simple
 ]

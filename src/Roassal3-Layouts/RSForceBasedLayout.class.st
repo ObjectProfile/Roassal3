@@ -63,7 +63,9 @@ RSForceBasedLayout >> accumulate: aQuad [
 { #category : #'adding/removing' }
 RSForceBasedLayout >> addLines: realLines [
 	| newMockLines |
-	newMockLines := realLines collect: [ :e | self newMockLineFor: e ].
+	newMockLines := realLines
+		collect: [ :e | self newMockLineFor: e ]
+		thenReject: [:e | e isNil ].
 	lines class = Array ifTrue: [ lines := OrderedCollection new ].
 	lines addAll: newMockLines.
 
@@ -243,7 +245,7 @@ RSForceBasedLayout >> length: aFloat [
 
 { #category : #'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
-	^ nodes detect: [ :each | each realShape == realNode ]
+	^ nodes detect: [ :each | each realShape == realNode ] ifNone: [ nil ]
 ]
 
 { #category : #'accessing - model' }
@@ -278,6 +280,7 @@ RSForceBasedLayout >> newMockLineFor: e [
 	| from to |
 	from := self mockElementAt: e from.
 	to := self mockElementAt: e to.
+	(from isNil or: [to isNil]) ifTrue: [ ^ nil ].
 	from addWeight.
 	to addWeight.
 	^ RSMockLine new
@@ -385,7 +388,9 @@ RSForceBasedLayout >> start [
 	"mandatory for animations"
 	initialLayout on: nodes.
 	nodes := nodes collect: [ :node | self newMockElementFor: node ].
-	lines := lines collect: [ :e | self newMockLineFor: e ].
+	lines := lines 
+		collect: [ :e | self newMockLineFor: e ]
+		thenReject: [:e | e isNil ].
 	self autoRepulse ifTrue: [ 
 		self calculateAutoRepulse.
 		 ].

@@ -1,20 +1,20 @@
 "
-I am similar to RSHorizontalAttachPoint, with the different that I want to find the shortests distance
+I am similar to RSVerticalAttachPoint, but I find the shortest line between each shape bounding box.
 "
 Class {
-	#name : #RSShortestHorizontalAttachPoint,
+	#name : #RSShortestVerticalAttachPoint,
 	#superclass : #RSOffsetAttachPoint,
 	#category : #'Roassal3-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }
-RSShortestHorizontalAttachPoint >> basicEndingPointOf: aLine [
+RSShortestVerticalAttachPoint >> basicEndingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.
 	r2 := aLine to globalEncompassingRectangle.
-	off := endOffset@0.
-	p1 := r2 rightCenter + off.
-	p2 := r2 leftCenter - off.
+	off := 0@endOffset.
+	p1 := r2 topCenter - off.
+	p2 := r2 bottomCenter + off.
 	center := r1 floatCenter.
 	^ (p1 distanceTo: center) < (p2 distanceTo: center)
 		ifTrue: [ p1 ]
@@ -22,13 +22,13 @@ RSShortestHorizontalAttachPoint >> basicEndingPointOf: aLine [
 ]
 
 { #category : #'public - hooks' }
-RSShortestHorizontalAttachPoint >> basicStartingPointOf: aLine [
+RSShortestVerticalAttachPoint >> basicStartingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.
 	r2 := aLine to globalEncompassingRectangle.
-	off := startOffset@0.
-	p1 := r1 rightCenter + off.
-	p2 := r1 leftCenter - off.
+	off := 0@startOffset.
+	p1 := r1 topCenter - off.
+	p2 := r1 bottomCenter + off.
 	center := r2 floatCenter.
 	^ (p1 distanceTo: center) < (p2 distanceTo: center)
 		ifTrue: [ p1 ]

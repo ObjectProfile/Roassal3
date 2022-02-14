@@ -1397,7 +1397,32 @@ RSShapeExamples >> example47CompositeClipChildren [
 
 	c := RSCanvas new.
 	c addAll: containers.
+	c nodes @ (RSPopup text: 'drag me!').
 	RSFlowLayout on: containers.
 	c @ RSCanvasController.
 	^ c
+]
+
+{ #category : #shapes }
+RSShapeExamples >> example48GhostDraggable [
+
+	<script: 'self new example48GhostDraggable open'>
+	| c lb |
+	c := RSCanvas new.
+
+	c addAll: (RSPolygon
+			 models: String withAllSubclasses
+			 forEach: [ :s :o | s points: RSShapeFactory star points; size: 30 ]).
+	c shapes @ RSGhostDraggable.
+
+	c shapes @ RSHighlightable red withLines.
+
+	lb := RSLineBuilder line.
+	lb shapes: c shapes.
+	lb connectToAll: #dependentClasses.
+	RSGridLayout on: c nodes.
+	c nodes translateBy: 100 asPoint.
+	RSSimpleForceBasedLayout on: (c nodes copyFrom: 1 to: 4).
+
+	^ c @ RSCanvasController simple
 ]
