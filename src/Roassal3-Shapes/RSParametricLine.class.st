@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'param',
 		'points',
-		'sandboxControlPoints'
+		'sandboxControlPoints',
+		'pointsSize',
+		'paramSize'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -24,8 +26,8 @@ RSParametricLine >> asGroupWithControlNet: aBlock [
 		            dotted;
 		            yourself.
 
-	circles := Array new: points size.
-	labels := Array new: points size.
+	circles := Array new: pointsSize.
+	labels := Array new: pointsSize.
 
 	location := RSLocation new
 		            above;
@@ -96,8 +98,12 @@ RSParametricLine >> asGroupWithControlNetColoured: aColor [
 RSParametricLine >> controlPoints: aCollectionOfPoints [
 
 	points := aCollectionOfPoints.
-	sandboxControlPoints := Array new: points size.
-	controlPoints := Array new: param size.
+
+	pointsSize := points size.
+	paramSize := param size.
+
+	sandboxControlPoints := Array new: pointsSize.
+	controlPoints := Array new: paramSize.
 
 	self resetPath
 ]
@@ -125,14 +131,11 @@ RSParametricLine >> param: anInterval [
 { #category : #accessing }
 RSParametricLine >> resetPath [
 
-	| size |
-	size := points size.
-
 	param withIndexDo: [ :t :index | 
 		| aPoint |
 		sandboxControlPoints
 			replaceFrom: 1
-			to: size
+			to: pointsSize
 			with: points
 			startingAt: 1.
 

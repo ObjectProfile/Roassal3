@@ -13,8 +13,7 @@ RSdeCasteljauQuickLine >> deCasteljau: aSequenceableOfPoints at: t [
 	n := aSequenceableOfPoints size.
 
 	aSequenceableOfPoints withIndexDo: [ :each :i | 
-		aPoint := each * (self bernstein: n - 1 choose: i - 1 at: t) asPoint
-		          + aPoint ].
+		aPoint := each * (t bernstein: n - 1 choose: i - 1) asPoint + aPoint ].
 
 	^ { aPoint }
 ]

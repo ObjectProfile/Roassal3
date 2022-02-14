@@ -28,8 +28,7 @@ RSdeCasteljauRationalLine >> deCasteljau: aSequenceableOfPoints at: t [
 		aPoint := aSequenceableOfPoints at: i.
 		mappedPoints at: i put: aPoint * each asPoint.
 
-		factor := factor
-		          + (each * (self bernstein: n - 1 choose: i - 1 at: t)) ].
+		factor := factor + (each * (t bernstein: n - 1 choose: i - 1)) ].
 
 	triple := super deCasteljau: mappedPoints at: t.
 

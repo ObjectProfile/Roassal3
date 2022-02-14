@@ -20,7 +20,7 @@ RSdeCasteljauPolarLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 		p := 1 - ratio * (aSequenceableOfPoints at: i)
 		     + (ratio * (aSequenceableOfPoints at: i + 1))
-		     * (self bernstein: n - 1 choose: i - 1 at: t) asPoint.
+		     * (t bernstein: n - 1 choose: i - 1) asPoint.
 
 		aPoint := aPoint + p ].
 

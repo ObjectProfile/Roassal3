@@ -11,20 +11,15 @@ Class {
 RSdeCasteljauLine >> asGroupBernsteinBase [
 
 	| n |
-	n := points size - 1.
+	n := pointsSize - 1.
+
 	^ (0 to: n)
 		  collect: [ :each | 
 			  RSParametricLineXY new
 				  param: param;
-				  x: [ :t | t ] y: [ :t | self bernstein: n choose: each at: t ];
+				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
 				  scale: 100 ]
 		  as: RSGroup
-]
-
-{ #category : #'as yet unclassified' }
-RSdeCasteljauLine >> bernstein: n choose: i at: t [
-
-	^ (n choose: i) * (t raisedTo: i) * (1 - t raisedTo: n - i)
 ]
 
 { #category : #'as yet unclassified' }
@@ -39,25 +34,26 @@ RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 { #category : #accessing }
 RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 
-	| n diagonal last |
-	n := aSequenceableOfPoints size.
-
-	diagonal := Array new: n.
-	last := Array new: n.
+	| diagonal last |
+	diagonal := Array new: pointsSize.
+	last := Array new: pointsSize.
 
 	diagonal at: 1 put: aSequenceableOfPoints first.
 	last at: 1 put: aSequenceableOfPoints last.
 
-	1 to: n do: [ :k | 
-		1 to: n - k do: [ :i | 
+	1 to: pointsSize do: [ :k | 
+		| delta |
+		delta := pointsSize - k.
+
+		1 to: delta do: [ :i | 
 			| aPoint nextPoint |
 			aPoint := 1 - t * (aSequenceableOfPoints at: i).
 			nextPoint := t * (aSequenceableOfPoints at: i + 1).
 			aSequenceableOfPoints at: i put: aPoint + nextPoint ].
 
-		k < n ifTrue: [ 
+		k < pointsSize ifTrue: [ 
 			diagonal at: k + 1 put: aSequenceableOfPoints first.
-			last at: k + 1 put: (aSequenceableOfPoints at: n - k) ] ].
+			last at: k + 1 put: (aSequenceableOfPoints at: delta) ] ].
 
 	^ Array with: aSequenceableOfPoints first with: diagonal with: last
 ]
@@ -66,7 +62,7 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 RSdeCasteljauLine >> derivative [
 
 	^ RSdeCasteljauDerivativeLine new
-		  samples: param size;
+		  param: param;
 		  controlPoints: points;
 		  yourself
 ]
@@ -75,7 +71,7 @@ RSdeCasteljauLine >> derivative [
 RSdeCasteljauLine >> difference [
 
 	| diffPoints size |
-	size := points size - 1.
+	size := pointsSize - 1.
 
 	diffPoints := Array new: size.
 
@@ -85,7 +81,7 @@ RSdeCasteljauLine >> difference [
 		diffPoints at: i put: aPoint ].
 
 	^ self class new
-		  samples: param size;
+		  param: param;
 		  controlPoints: diffPoints;
 		  yourself
 ]
@@ -104,26 +100,24 @@ RSdeCasteljauLine >> elevate: n [
 { #category : #accessing }
 RSdeCasteljauLine >> increment [
 
-	| incremented n sandbox |
-	n := points size.
-
-	sandbox := Array new: n + 2.
+	| incremented sandbox |
+	sandbox := Array new: pointsSize + 2.
 
 	sandbox
 		replaceFrom: 2
-		to: n + 1
+		to: pointsSize + 1
 		with: points
 		startingAt: 1.
 
 	sandbox
 		at: 1 put: 0 @ 0;
-		at: n + 2 put: 0 @ 0.
+		at: pointsSize + 2 put: 0 @ 0.
 
-	incremented := Array new: n + 1.
+	incremented := Array new: pointsSize + 1.
 
-	1 to: n + 1 do: [ :i | 
+	1 to: pointsSize + 1 do: [ :i | 
 		| t |
-		t := i - 1 / n.
+		t := i - 1 / pointsSize.
 
 		incremented
 			at: i
@@ -276,7 +270,7 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
-		  samples: param size;
+		  param: param;
 		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
@@ -292,15 +286,23 @@ RSdeCasteljauLine >> samples: n [
 RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 	| triple left right |
-	triple := self deCasteljau: points copy at: (aParam min: 1 max: 0).
+	sandboxControlPoints
+		replaceFrom: 1
+		to: pointsSize
+		with: points
+		startingAt: 1.
+
+	triple := self
+		          deCasteljau: sandboxControlPoints
+		          at: (aParam min: 1 max: 0).
 
 	left := self class new
-		        samples: param size;
+		        samples: paramSize;
 		        controlPoints: triple second;
 		        yourself.
 
 	right := self class new
-		         samples: param size;
+		         samples: paramSize;
 		         controlPoints: triple third;
 		         yourself.
 
@@ -311,7 +313,7 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 RSdeCasteljauLine >> weighted: aCollection [
 
 	^ RSdeCasteljauRationalLine new
-		  samples: param size;
+		  param: param;
 		  weights: aCollection;
 		  controlPoints: points;
 		  yourself
