@@ -46,10 +46,12 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 		delta := pointsSize - k.
 
 		1 to: delta do: [ :i | 
-			| aPoint nextPoint |
-			aPoint := 1 - t * (aSequenceableOfPoints at: i).
-			nextPoint := t * (aSequenceableOfPoints at: i + 1).
-			aSequenceableOfPoints at: i put: aPoint + nextPoint ].
+			| aPoint |
+			aPoint := (aSequenceableOfPoints at: i)
+				          unitAffine: (aSequenceableOfPoints at: i + 1)
+				          at: 1 - t.
+
+			aSequenceableOfPoints at: i put: aPoint ].
 
 		k < pointsSize ifTrue: [ 
 			diagonal at: k + 1 put: aSequenceableOfPoints first.
@@ -80,8 +82,7 @@ RSdeCasteljauLine >> difference [
 		aPoint := (points at: i + 1) - (points at: i).
 		diffPoints at: i put: aPoint ].
 
-	^ self class new
-		  param: param;
+	^ self newLine
 		  controlPoints: diffPoints;
 		  yourself
 ]
@@ -116,15 +117,14 @@ RSdeCasteljauLine >> increment [
 	incremented := Array new: pointsSize + 1.
 
 	1 to: pointsSize + 1 do: [ :i | 
-		| t |
+		| t aPoint |
 		t := i - 1 / pointsSize.
 
-		incremented
-			at: i
-			put: t * (sandbox at: i) + (1 - t * (sandbox at: i + 1)) ].
+		aPoint := (sandbox at: i) unitAffine: (sandbox at: i + 1) at: t.
 
-	^ self class new
-		  samples: param size;
+		incremented at: i put: aPoint ].
+
+	^ self newLine
 		  controlPoints: incremented;
 		  yourself
 ]
@@ -296,13 +296,11 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 		          deCasteljau: sandboxControlPoints
 		          at: (aParam min: 1 max: 0).
 
-	left := self class new
-		        samples: paramSize;
+	left := self newLine
 		        controlPoints: triple second;
 		        yourself.
 
-	right := self class new
-		         samples: paramSize;
+	right := self newLine
 		         controlPoints: triple third;
 		         yourself.
 

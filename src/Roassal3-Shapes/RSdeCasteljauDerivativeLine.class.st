@@ -7,12 +7,12 @@ Class {
 { #category : #accessing }
 RSdeCasteljauDerivativeLine >> deCasteljau: aSequenceableOfPoints at: t [
 
-	| aPoint n |
-	n := aSequenceableOfPoints size.
+	| aPoint |
 	aPoint := 0 @ 0.
 
 	aSequenceableOfPoints withIndexDo: [ :each :i | 
-		aPoint := aPoint + (each * (t bernstein: n choose: i) asPoint) ].
+		aPoint := aPoint
+		          + (each * (t bernstein: pointsSize choose: i) asPoint) ].
 
-	^ { (n + 1 * aPoint) }
+	^ { (pointsSize + 1 * aPoint) }
 ]

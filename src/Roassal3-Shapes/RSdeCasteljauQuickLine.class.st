@@ -10,10 +10,10 @@ RSdeCasteljauQuickLine >> deCasteljau: aSequenceableOfPoints at: t [
 	| aPoint n |
 	aPoint := 0 @ 0.
 
-	n := aSequenceableOfPoints size.
+	n := pointsSize - 1.
 
 	aSequenceableOfPoints withIndexDo: [ :each :i | 
-		aPoint := each * (t bernstein: n - 1 choose: i - 1) asPoint + aPoint ].
+		aPoint := each * (t bernstein: n choose: i - 1) asPoint + aPoint ].
 
 	^ { aPoint }
 ]
