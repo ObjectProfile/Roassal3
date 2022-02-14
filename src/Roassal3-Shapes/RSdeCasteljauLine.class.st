@@ -37,29 +37,29 @@ RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> deCasteljau: workingPoints at: t [
+RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| n diagonal last |
-	n := workingPoints size.
+	n := aSequenceableOfPoints size.
 
 	diagonal := Array new: n.
 	last := Array new: n.
 
-	diagonal at: 1 put: workingPoints first.
-	last at: 1 put: workingPoints last.
+	diagonal at: 1 put: aSequenceableOfPoints first.
+	last at: 1 put: aSequenceableOfPoints last.
 
 	1 to: n do: [ :k | 
 		1 to: n - k do: [ :i | 
 			| aPoint nextPoint |
-			aPoint := 1 - t * (workingPoints at: i).
-			nextPoint := t * (workingPoints at: i + 1).
-			workingPoints at: i put: aPoint + nextPoint ].
+			aPoint := 1 - t * (aSequenceableOfPoints at: i).
+			nextPoint := t * (aSequenceableOfPoints at: i + 1).
+			aSequenceableOfPoints at: i put: aPoint + nextPoint ].
 
 		k < n ifTrue: [ 
-			diagonal at: k + 1 put: workingPoints first.
-			last at: k + 1 put: (workingPoints at: n - k) ] ].
+			diagonal at: k + 1 put: aSequenceableOfPoints first.
+			last at: k + 1 put: (aSequenceableOfPoints at: n - k) ] ].
 
-	^ Array with: workingPoints first with: diagonal with: last
+	^ Array with: aSequenceableOfPoints first with: diagonal with: last
 ]
 
 { #category : #accessing }

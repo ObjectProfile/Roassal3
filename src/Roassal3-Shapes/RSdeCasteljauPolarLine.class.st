@@ -8,19 +8,19 @@ Class {
 }
 
 { #category : #accessing }
-RSdeCasteljauPolarLine >> deCasteljau: diffPoints at: t [
+RSdeCasteljauPolarLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint n |
-	n := diffPoints size - 1.
+	n := aSequenceableOfPoints size - 1.
 	aPoint := 0 @ 0.
 
 	1 to: n do: [ :i | 
 		| each p |
-		each := diffPoints at: i.
+		each := aSequenceableOfPoints at: i.
 
-		p := 1 - ratio * (diffPoints at: i)
-		     + (ratio * (diffPoints at: i + 1))
-		     * (self bernstein: n - 1 choose: i - 1 at: t).
+		p := 1 - ratio * (aSequenceableOfPoints at: i)
+		     + (ratio * (aSequenceableOfPoints at: i + 1))
+		     * (self bernstein: n - 1 choose: i - 1 at: t) asPoint.
 
 		aPoint := aPoint + p ].
 

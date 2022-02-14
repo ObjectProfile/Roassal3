@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSPolyline,
 	#instVars : [
 		'param',
-		'points'
+		'points',
+		'sandboxControlPoints'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -81,30 +82,24 @@ RSParametricLine >> asGroupWithControlNet: aBlock [
 RSParametricLine >> asGroupWithControlNetColoured: aColor [
 
 	^ self asGroupWithControlNet: [ :bspline :circles :labels :line | 
+		  | translucentColor |
+		  translucentColor := aColor translucent.
+
 		  bspline color: aColor.
-		  line color: aColor translucent.
+		  line color: translucentColor.
 		  circles with: labels do: [ :circle :label | 
-			  circle border color: aColor translucent.
-			  label color: aColor translucent ] ]
+			  circle border color: translucentColor.
+			  label color: translucentColor ] ]
 ]
 
 { #category : #accessing }
 RSParametricLine >> controlPoints: aCollectionOfPoints [
 
-	| n workingPoints |
-	n := aCollectionOfPoints size.
-
 	points := aCollectionOfPoints.
+	sandboxControlPoints := Array new: points size.
+	controlPoints := Array new: param size.
 
-	workingPoints := Array new: param size.
-
-	param withIndexDo: [ :t :index | 
-		| aPoint |
-		aPoint := self controlPoints: points copy at: t.
-
-		workingPoints at: index put: aPoint ].
-
-	^ super controlPoints: workingPoints
+	self resetPath
 ]
 
 { #category : #converting }
@@ -125,6 +120,27 @@ RSParametricLine >> newLine [
 RSParametricLine >> param: anInterval [
 
 	param := anInterval
+]
+
+{ #category : #accessing }
+RSParametricLine >> resetPath [
+
+	| size |
+	size := points size.
+
+	param withIndexDo: [ :t :index | 
+		| aPoint |
+		sandboxControlPoints
+			replaceFrom: 1
+			to: size
+			with: points
+			startingAt: 1.
+
+		aPoint := self controlPoints: sandboxControlPoints at: t.
+
+		controlPoints at: index put: aPoint asFloatPoint ].
+
+	super resetPath
 ]
 
 { #category : #accessing }

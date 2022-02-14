@@ -5,14 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-RSdeCasteljauDerivativeLine >> deCasteljau: diffPoints at: t [
+RSdeCasteljauDerivativeLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint n |
-	n := diffPoints size.
+	n := aSequenceableOfPoints size.
 	aPoint := 0 @ 0.
 
-	diffPoints withIndexDo: [ :each :i | 
-		aPoint := aPoint + (each * (self bernstein: n choose: i at: t)) ].
+	aSequenceableOfPoints withIndexDo: [ :each :i | 
+		aPoint := aPoint
+		          + (each * (self bernstein: n choose: i at: t) asPoint) ].
 
 	^ { (n + 1 * aPoint) }
 ]

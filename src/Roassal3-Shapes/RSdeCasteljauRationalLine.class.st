@@ -2,24 +2,32 @@ Class {
 	#name : #RSdeCasteljauRationalLine,
 	#superclass : #RSdeCasteljauLine,
 	#instVars : [
-		'weights'
+		'weights',
+		'mappedPoints'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #accessing }
-RSdeCasteljauRationalLine >> deCasteljau: diffPoints at: t [
+RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
 
-	| mappedPoints triple factor n |
-	mappedPoints := Array new: diffPoints size.
+	mappedPoints := Array new: aSequenceableOfPoints size.
 
-	n := diffPoints size.
+	super controlPoints: aSequenceableOfPoints
+]
+
+{ #category : #accessing }
+RSdeCasteljauRationalLine >> deCasteljau: aSequenceableOfPoints at: t [
+
+	| triple factor n |
+	n := aSequenceableOfPoints size.
 	factor := 0.
 
 	weights withIndexDo: [ :each :i | 
 		| aPoint |
-		aPoint := diffPoints at: i.
-		mappedPoints at: i put: aPoint * each.
+		aPoint := aSequenceableOfPoints at: i.
+		mappedPoints at: i put: aPoint * each asPoint.
+
 		factor := factor
 		          + (each * (self bernstein: n - 1 choose: i - 1 at: t)) ].
 
