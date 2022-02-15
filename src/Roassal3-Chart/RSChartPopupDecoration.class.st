@@ -66,12 +66,11 @@ RSChartPopupDecoration >> translatePopup: popup event: evt [
 
 { #category : #hooks }
 RSChartPopupDecoration >> updateMarkers: evt [
-
 	| markers key container builder |
 	builder := self markersPopupBuilder.
 	builder position: evt position.
 	markers := builder shapeFor: self chart.
-	container := self chart container.
+	container := self chart container canvas.
 	key := #popupMarkers.
 	container propertyAt: key ifPresent: [ :old | old remove ].
 	container addShape: markers.
