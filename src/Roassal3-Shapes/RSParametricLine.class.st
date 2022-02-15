@@ -114,12 +114,6 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
-RSParametricLine >> designPoints [
-
-	^ points
-]
-
 { #category : #'instance creation' }
 RSParametricLine >> newLine [
 

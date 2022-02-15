@@ -1541,11 +1541,12 @@ RSBasicShapeExamples >> example47BaricentricCoordinatesTriangle [
 { #category : #lines }
 RSBasicShapeExamples >> groupBaricentricCoordinates [
 
-	| aPoint anotherPoint group baricentricPoint aCircle anotherCircle baricentricCircle line |
+	| aPoint anotherPoint group baricentricPoint aCircle anotherCircle baricentricCircle line param |
 	aPoint := 100 @ 100.
 	anotherPoint := 300 @ 400.
+	param := 1 / 4.
 
-	baricentricPoint := aPoint unitAffine: anotherPoint at: 1 / 4.
+	baricentricPoint := aPoint unitAffine: anotherPoint at: param.
 
 	group := RSGroup new.
 
@@ -1554,6 +1555,7 @@ RSBasicShapeExamples >> groupBaricentricCoordinates [
 		           position: aPoint;
 		           color: Color transparent;
 		           withBorder;
+		           draggable;
 		           labeled;
 		           yourself.
 	anotherCircle := RSCircle new
@@ -1561,6 +1563,7 @@ RSBasicShapeExamples >> groupBaricentricCoordinates [
 		                 position: anotherPoint;
 		                 color: Color transparent;
 		                 withBorder;
+		                 draggable;
 		                 labeled;
 		                 yourself.
 	baricentricCircle := RSCircle new
@@ -1571,6 +1574,19 @@ RSBasicShapeExamples >> groupBaricentricCoordinates [
 		                     sameColorAsBorderColor;
 		                     labeled;
 		                     yourself.
+
+	aCircle when: RSPositionChangedEvent do: [ :ev | 
+		baricentricPoint := ev newPosition
+			                    unitAffine: anotherCircle position
+			                    at: param.
+		baricentricCircle position: baricentricPoint ].
+
+	anotherCircle when: RSPositionChangedEvent do: [ :ev | 
+		baricentricPoint := aCircle position
+			                    unitAffine: ev newPosition
+			                    at: param.
+		baricentricCircle position: baricentricPoint ].
+
 	line := RSLine new
 		        from: aCircle;
 		        to: anotherCircle;
