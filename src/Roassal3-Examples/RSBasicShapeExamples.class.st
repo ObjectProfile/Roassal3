@@ -1022,8 +1022,8 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 	| points |
 	points := { 
 		          (1 @ 0).
-		          (4 / 3 @ 0).
-		          (2 @ 0).
+		          (1.66575 @ -0.49197).
+		          (3.07038 @ -0.1196).
 		          (3 @ 1) } collect: [ :each | each * 100 ].
 
 	^ RSCanvas new
@@ -1248,26 +1248,53 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt [
 
 	<script: 'self new example44deCasteljauLineNoteBoxAttempt open'>
-	| points |
-	points := { 
-		          (0 @ 0).
-		          (Float goldenRatio @ 0).
-		          (Float goldenRatio @ 1).
-		          (0 @ 1).
-		          (0 @ 0) }.
-
-	^ ((RSdeCasteljauLine new
-		    samples: 50;
-		    controlPoints: points;
-		    scale: 300) elevate: 10)
+	^ self lineDeCasteljauLineNoteBox
 		  splitAt: 1 / 2
-		  in: [ :left :right :whole | 
+		  in: [ :first :second :whole | 
+			  first splitAt: 1 / 2 in: [ :left :bottom :w | 
+				  second splitAt: 1 / 2 in: [ :top :right :r | 
+					  RSCanvas new
+						  addAll: (left asGroupWithControlNetColoured: Color red);
+						  addAll: (bottom asGroupWithControlNetColoured: Color blue);
+						  addAll: (right asGroupWithControlNetColoured: Color magenta);
+						  addAll: (top asGroupWithControlNetColoured: Color green);
+						  zoomToFit;
+						  addInteraction: RSCanvasController new;
+						  yourself ] ] ]
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt1 [
+
+	<script: 'self new example44deCasteljauLineNoteBoxAttempt1 open'>
+	^ (self lineDeCasteljauLineNoteBox elevate: 10)
+		  
+		  in: [ :whole | 
 			  RSCanvas new
-				  addAll: (left asGroupWithControlNetColoured: Color red);
-				  addAll: (right asGroupWithControlNetColoured: Color blue);
+				  addAll: (whole asGroupWithControlNetColoured: Color red);
 				  zoomToFit;
 				  addInteraction: RSCanvasController new;
 				  yourself ]
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt2 [
+
+	<script: 'self new example44deCasteljauLineNoteBoxAttempt2 open'>
+	^ ((RSdeCasteljauLine new
+		    samples: 50;
+		    controlPoints: { 
+				    (0 @ 0).
+				    (Float goldenRatio @ 0).
+				    (Float goldenRatio @ 1).
+				    (0 @ 1).
+				    (0 @ 0) };
+		    scale: 300) weighted: { 2. 10. 10. 2. 1 }) in: [ :whole | 
+		  RSCanvas new
+			  addAll: (whole asGroupWithControlNetColoured: Color red);
+			  zoomToFit;
+			  addInteraction: RSCanvasController new;
+			  yourself ]
 ]
 
 { #category : #lines }
@@ -1490,6 +1517,160 @@ RSBasicShapeExamples >> example46NoteLoremIpsum [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example47BaricentricCoordinates [
+
+	<script: 'self new example47BaricentricCoordinates open'>
+	^ RSCanvas new
+		  addAll: self groupBaricentricCoordinates;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example47BaricentricCoordinatesTriangle [
+
+	<script: 'self new example47BaricentricCoordinatesTriangle open'>
+	^ RSCanvas new
+		  addAll: self groupBaricentricCoordinatesTriangle;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> groupBaricentricCoordinates [
+
+	| aPoint anotherPoint group baricentricPoint aCircle anotherCircle baricentricCircle line |
+	aPoint := 100 @ 100.
+	anotherPoint := 300 @ 400.
+
+	baricentricPoint := aPoint unitAffine: anotherPoint at: 1 / 4.
+
+	group := RSGroup new.
+
+	aCircle := RSCircle new
+		           model: aPoint;
+		           position: aPoint;
+		           color: Color transparent;
+		           withBorder;
+		           labeled;
+		           yourself.
+	anotherCircle := RSCircle new
+		                 model: anotherPoint;
+		                 position: anotherPoint;
+		                 color: Color transparent;
+		                 withBorder;
+		                 labeled;
+		                 yourself.
+	baricentricCircle := RSCircle new
+		                     model: baricentricPoint;
+		                     position: baricentricPoint;
+		                     color: Color transparent;
+		                     withBorder;
+		                     sameColorAsBorderColor;
+		                     labeled;
+		                     yourself.
+	line := RSLine new
+		        from: aCircle;
+		        to: anotherCircle;
+		        dotted;
+		        yourself.
+
+	^ group
+		  add: aCircle;
+		  add: anotherCircle;
+		  add: baricentricCircle;
+		  add: line;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> groupBaricentricCoordinatesTriangle [
+
+	| aPoint anotherPoint thirdPoint group baricentricPoint aCircle anotherCircle baricentricCircle line thirdCircle w r |
+	aPoint := 100 @ 100.
+	anotherPoint := 300 @ 400.
+	thirdPoint := -100 @ 250.
+
+	w := 1 / 6.
+	r := 1 / 2.
+
+	baricentricPoint := aPoint
+		                    unitAffine: anotherPoint
+		                    at: w
+		                    and: thirdPoint
+		                    at: r.
+
+	group := RSGroup new.
+
+	aCircle := RSCircle new
+		           model: aPoint;
+		           position: aPoint;
+		           color: Color transparent;
+		           withBorder;
+		           labeled;
+		           yourself.
+
+	anotherCircle := RSCircle new
+		                 model: anotherPoint;
+		                 position: anotherPoint;
+		                 color: Color transparent;
+		                 withBorder;
+		                 labeled;
+		                 yourself.
+
+	thirdCircle := RSCircle new
+		               model: thirdPoint;
+		               position: thirdPoint;
+		               color: Color transparent;
+		               withBorder;
+		               labeled;
+		               yourself.
+
+	baricentricCircle := RSCircle new
+		                     model: baricentricPoint;
+		                     position: baricentricPoint;
+		                     color: Color transparent;
+		                     withBorder;
+		                     sameColorAsBorderColor;
+		                     labeled;
+		                     yourself.
+
+	line := RSPolyline new
+		        controlPoints: { 
+				        aPoint.
+				        anotherPoint.
+				        thirdPoint.
+				        aPoint };
+		        dotted;
+		        yourself.
+
+	^ group
+		  add: aCircle;
+		  add: anotherCircle;
+		  add: thirdCircle;
+		  add: baricentricCircle;
+		  add: line;
+		  add: (RSLine new
+				   from: (aPoint unitAffine: thirdPoint at: w);
+				   to: (aPoint unitAffine: anotherPoint at: w);
+				   dashed;
+				   yourself);
+		  add: (RSLine new
+				   from: (anotherPoint unitAffine: aPoint at: r);
+				   to: (anotherPoint unitAffine: thirdPoint at: r);
+				   dashed;
+				   yourself);
+		  add: (RSLine new
+				   from: (thirdPoint unitAffine: aPoint at: 1 - w - r);
+				   to: (thirdPoint unitAffine: anotherPoint at: 1 - w - r);
+				   dashed;
+				   yourself);
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 
 	| points |
@@ -1510,36 +1691,33 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 { #category : #lines }
 RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 
-	| points |
-	points := { 
-		          (0 @ 0).
-		          (8.461 @ 36.411).
-		          (0.6 @ 129.887).
-		          (25.3 @ 195.304).
-		          (-67.3 @ 222.719).
-		          (16.72 @ 245.576).
-		          (-55.8 @ 178.406).
-		          (60 @ 136.3).
-		          (136 @ 136).
-		          (142.2 @ 222.332).
-		          (393.292 @ 192.739).
-		          (247.8 @ 244.8).
-		          (179.5 @ 201.105).
-		          (221.9 @ 163.04).
-		          (200 @ 125.8).
-		          (204.4 @ 101.697).
-		          (210.405 @ 85.124).
-		          (217.89 @ 18.03).
-		          (151.73 @ 29.54).
-		          (244.5 @ -26.58).
-		          (318.633 @ -42.131).
-		          (145.27 @ 1.9).
-		          (52.05 @ 8.718).
-		          (0 @ 0) }.
-
 	^ RSdeCasteljauLine new
 		  samples: 50;
-		  controlPoints: points;
+		  controlPoints: { 
+				  (0 @ 0).
+				  (8.461 @ 36.411).
+				  (0.6 @ 129.887).
+				  (25.3 @ 195.304).
+				  (-67.3 @ 222.719).
+				  (16.72 @ 245.576).
+				  (-55.8 @ 178.406).
+				  (60 @ 136.3).
+				  (136 @ 136).
+				  (142.2 @ 222.332).
+				  (393.292 @ 192.739).
+				  (247.8 @ 244.8).
+				  (179.5 @ 201.105).
+				  (221.9 @ 163.04).
+				  (200 @ 125.8).
+				  (204.4 @ 101.697).
+				  (210.405 @ 85.124).
+				  (217.89 @ 18.03).
+				  (151.73 @ 29.54).
+				  (244.5 @ -26.58).
+				  (318.633 @ -42.131).
+				  (145.27 @ 1.9).
+				  (52.05 @ 8.718).
+				  (0 @ 0) };
 		  yourself
 ]
 

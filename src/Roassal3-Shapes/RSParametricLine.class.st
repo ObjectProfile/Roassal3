@@ -114,12 +114,28 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+RSParametricLine >> designPoints [
+
+	^ points
+]
+
 { #category : #'instance creation' }
 RSParametricLine >> newLine [
 
 	^ self class new
 		  param: param;
 		  yourself
+]
+
+{ #category : #'event handling' }
+RSParametricLine >> notifyExtentChanged [
+
+	self announce: [ 
+		RSExtentChangedEvent new
+			shape: self;
+			oldExtent: nil;
+			newExtent: (Rectangle encompassing: self controlPoints) extent ]
 ]
 
 { #category : #accessing }
