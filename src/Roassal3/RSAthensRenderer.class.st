@@ -247,81 +247,74 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: note [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin |
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples point finalLine |
 	rectangle := note baseRectangle.
+
 	random := RandomBoxMullerBivariateGaussian new.
+
 	coin := RandomBernoulli new
-		        p: 1;
+		        p: 0.8;
 		        yourself.
 
-	n := 5.
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+
+	samples := 20.
+
+	m := n := 10.
 
 	lPoints := Array new: n.
-	bPoints := Array new: n.
 	rPoints := Array new: n.
-	tPoints := Array new: n.
+	bPoints := Array new: m.
+	tPoints := Array new: m.
 
-	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
-		:each 
-		:index | 
-		lPoints at: index put: rectangle left @ each + random next.
-		rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+	point := random next.
 
-	((rectangle left to: rectangle right) linspace: n) withIndexDo: [ 
-		:each 
-		:index | 
-		bPoints at: index put: each @ rectangle bottom + random next.
-		tPoints at: n - index + 1 put: each @ rectangle top + random next ].
+	((rectangle top + point x to: rectangle bottom + point y) linspace: n) 
+		withIndexDo: [ :each :index | 
+			lPoints at: index put: rectangle left @ each + random next.
+			rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+
+	point := random next.
+	((rectangle left + point x to: rectangle right + point y) linspace: m) 
+		withIndexDo: [ :each :index | 
+			bPoints at: index put: each @ rectangle bottom + random next.
+			tPoints at: m - index + 1 put: each @ rectangle top + random next ].
 
 	left := RSdeCasteljauLine new
-		        samples: 50;
+		        samples: samples;
 		        controlPoints: lPoints;
 		        yourself.
 
 	bottom := RSdeCasteljauLine new
-		          samples: 50;
+		          samples: samples;
 		          controlPoints: bPoints;
 		          yourself.
 
-	leftBottom := left
-		              junction: bottom
-		              right: [ :c0 :c1 :c2 | 
-		              coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	leftBottom := left junction: bottom right: block.
 
 	right := RSdeCasteljauLine new
-		         samples: 50;
+		         samples: samples;
 		         controlPoints: rPoints;
 		         yourself.
 
-	bottomRight := leftBottom
-		               junction: right
-		               right: [ :c0 :c1 :c2 | 
-		               coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	bottomRight := leftBottom junction: right right: block.
 
 	top := RSdeCasteljauLine new
-		       samples: 50;
+		       samples: samples;
 		       controlPoints: tPoints;
 		       yourself.
 
-	rightTop := bottomRight
-		            junction: top
-		            right: [ :c0 :c1 :c2 | 
-		            coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	rightTop := bottomRight junction: top right: block.
 
-	topLeft := rightTop
-		           junction: left
-		           right: [ :c0 :c1 :c2 | 
-		           coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	topLeft := rightTop junction: left right: block.
 
-	"self
-		buildPolylinePath: topLeft;
-		buildPolylinePath: leftBottom;
-		buildPolylinePath: bottomRight;
-		buildPolylinePath: rightTop"
-	self buildPolylinePath: (RSPolyline new
-			 controlPoints: topLeft controlPoints , leftBottom controlPoints
-				 , bottomRight controlPoints , rightTop controlPoints;
-			 yourself)
+	finalLine := RSPolyline new
+		             controlPoints:
+			             topLeft controlPoints , leftBottom controlPoints
+			             , bottomRight controlPoints , rightTop controlPoints;
+		             yourself.
+
+	self buildPolylinePath: finalLine
 ]
 
 { #category : #'creating path' }

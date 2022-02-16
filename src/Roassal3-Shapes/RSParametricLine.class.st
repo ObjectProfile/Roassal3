@@ -97,7 +97,7 @@ RSParametricLine >> asGroupWithControlNetColoured: aColor [
 { #category : #accessing }
 RSParametricLine >> controlPoints: aCollectionOfPoints [
 
-	points := aCollectionOfPoints.
+	points := aCollectionOfPoints collect: [ :each | each asFloatPoint ].
 
 	pointsSize := points size.
 	paramSize := param size.
