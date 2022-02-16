@@ -247,70 +247,81 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: note [
 
-	| rectangle refRectangle points random offsetPoint ratioPoint line |
-	points := { 
-		          (0 @ 0).
-		          (8.461 @ 36.411).
-		          (0.6 @ 129.887).
-		          (25.3 @ 195.304).
-		          (-67.3 @ 222.719).
-		          (16.72 @ 245.576).
-		          (-55.8 @ 178.406).
-		          (60 @ 136.3).
-		          (136 @ 136).
-		          (142.2 @ 222.332).
-		          (393.292 @ 192.739).
-		          (247.8 @ 244.8).
-		          (179.5 @ 201.105).
-		          (221.9 @ 163.04).
-		          (200 @ 125.8).
-		          (204.4 @ 101.697).
-		          (210.405 @ 85.124).
-		          (217.89 @ 18.03).
-		          (151.73 @ 29.54).
-		          (244.5 @ -26.58).
-		          (318.633 @ -42.131).
-		          (145.27 @ 1.9).
-		          (52.05 @ 8.718).
-		          (0 @ 0) }.
-
-	line := RSdeCasteljauLine new
-		        samples: 50;
-		        controlPoints: points;
-		        yourself.
-
-	refRectangle := Rectangle encompassing: line controlPoints.
-
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin |
 	rectangle := note baseRectangle.
-
-	offsetPoint := 6 asPoint * Float goldenRatio.
-
-	"rectangle height / rectangle width > (3 / 2) ifTrue: [ 
-		refRectangle := refRectangle
-			                rotateBy: #right
-			                centerAt: refRectangle center.
-
-		offsetPoint := 12 asPoint * Float goldenRatio ]."
-
-	refRectangle := refRectangle topLeft + offsetPoint corner:
-		                refRectangle bottomRight - offsetPoint.
-
 	random := RandomBoxMullerBivariateGaussian new.
-
-	ratioPoint := rectangle topLeft
-	              / (refRectangle topLeft - refRectangle center).
-
-	points := points collect: [ :each | 
-		          each - refRectangle center * ratioPoint + random next ].
-
-	points atLast: 1 put: points first.
-
-	line := RSdeCasteljauLine new
-		        samples: 50;
-		        controlPoints: points;
+	coin := RandomBernoulli new
+		        p: 1;
 		        yourself.
 
-	self buildPolylinePath: line
+	n := 5.
+
+	lPoints := Array new: n.
+	bPoints := Array new: n.
+	rPoints := Array new: n.
+	tPoints := Array new: n.
+
+	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
+		:each 
+		:index | 
+		lPoints at: index put: rectangle left @ each + random next.
+		rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+
+	((rectangle left to: rectangle right) linspace: n) withIndexDo: [ 
+		:each 
+		:index | 
+		bPoints at: index put: each @ rectangle bottom + random next.
+		tPoints at: n - index + 1 put: each @ rectangle top + random next ].
+
+	left := RSdeCasteljauLine new
+		        samples: 50;
+		        controlPoints: lPoints;
+		        yourself.
+
+	bottom := RSdeCasteljauLine new
+		          samples: 50;
+		          controlPoints: bPoints;
+		          yourself.
+
+	leftBottom := left
+		              junction: bottom
+		              right: [ :c0 :c1 :c2 | 
+		              coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+
+	right := RSdeCasteljauLine new
+		         samples: 50;
+		         controlPoints: rPoints;
+		         yourself.
+
+	bottomRight := leftBottom
+		               junction: right
+		               right: [ :c0 :c1 :c2 | 
+		               coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+
+	top := RSdeCasteljauLine new
+		       samples: 50;
+		       controlPoints: tPoints;
+		       yourself.
+
+	rightTop := bottomRight
+		            junction: top
+		            right: [ :c0 :c1 :c2 | 
+		            coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+
+	topLeft := rightTop
+		           junction: left
+		           right: [ :c0 :c1 :c2 | 
+		           coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+
+	"self
+		buildPolylinePath: topLeft;
+		buildPolylinePath: leftBottom;
+		buildPolylinePath: bottomRight;
+		buildPolylinePath: rightTop"
+	self buildPolylinePath: (RSPolyline new
+			 controlPoints: topLeft controlPoints , leftBottom controlPoints
+				 , bottomRight controlPoints , rightTop controlPoints;
+			 yourself)
 ]
 
 { #category : #'creating path' }

@@ -1153,77 +1153,71 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 
 	<script: 'self new example44deCasteljauLineJunctionLeft open'>
-	| points otherControlPoints bspline |
-	points := { 
-		          (10 @ 12).
-		          (13 @ 8.5).
-		          (16 @ -2).
-		          (26 @ 0) } collect: [ :each | each * 100 ].
+	| line anotherLine |
+	line := RSdeCasteljauLine new
+		        samples: 50;
+		        controlPoints: { 
+				        (10 @ 12).
+				        (13 @ 8.5).
+				        (16 @ -2).
+				        (26 @ 0) };
+		        scale: 100.
 
-	otherControlPoints := { 
-		                      (0 @ 3).
-		                      (1 @ -4).
-		                      (5 @ 0) } collect: [ :each | each * 100 ].
+	anotherLine := RSdeCasteljauLine new
+		               samples: 50;
+		               controlPoints: { 
+				               (0 @ 3).
+				               (1 @ -4).
+				               (5 @ 0) };
+		               scale: 100.
 
-	bspline := RSdeCasteljauLine new
-		           samples: 50;
-		           controlPoints: points;
-		           yourself.
-
-	^ bspline
-		  junction: otherControlPoints
-		  left: [ :bsplineContinuity :bsplineTangent :bsplineObsculator | 
-			  RSCanvas new
-				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
-				  addAll:
-					  (bsplineContinuity asGroupWithControlNetColoured: Color red);
-				  addAll:
-					  (bsplineTangent asGroupWithControlNetColoured: Color blue);
-				  addAll:
-					  (bsplineObsculator asGroupWithControlNetColoured: Color green);
-				  zoomToFit;
-				  addInteraction: RSCanvasController new;
-				  yourself ]
+	^ line junction: anotherLine left: [ :lineC0 :lineC1 :lineC2 | 
+		  RSCanvas new
+			  addAll: (line asGroupWithControlNetColoured: Color gray);
+			  addAll: (anotherLine asGroupWithControlNetColoured: Color brown);
+			  addAll: (lineC0 asGroupWithControlNetColoured: Color red);
+			  addAll: (lineC1 asGroupWithControlNetColoured: Color blue);
+			  addAll: (lineC2 asGroupWithControlNetColoured: Color green);
+			  zoomToFit;
+			  addInteraction: RSCanvasController new;
+			  yourself ]
 ]
 
 { #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 
 	<script: 'self new example44deCasteljauLineJunctionRight open'>
-	| points otherControlPoints bspline |
-	points := { 
-		          (0 @ 0).
-		          (1 @ 2).
-		          (3 @ 2).
-		          (6 @ -1) } collect: [ :each | each * 100 ].
+	| aLine anotherLine |
+	aLine := RSdeCasteljauLine new
+		         samples: 50;
+		         controlPoints: { 
+				         (0 @ 0).
+				         (1 @ 2).
+				         (3 @ 2).
+				         (6 @ -1) };
+		         scale: 100.
 
-	otherControlPoints := { 
-		                      (15 @ 3).
-		                      (15 @ 3).
-		                      (15 @ 3).
-		                      (15 @ 3).
-		                      (23 @ -4).
-		                      (24 @ 0) } collect: [ :each | each * 100 ].
+	anotherLine := RSdeCasteljauLine new
+		               samples: 50;
+		               controlPoints: { 
+				               (15 @ 3).
+				               (15 @ 3).
+				               (15 @ 3).
+				               (15 @ 3).
+				               (17 @ -4).
+				               (17 @ 0) };
+		               scale: 100.
 
-	bspline := RSdeCasteljauLine new
-		           samples: 50;
-		           controlPoints: points;
-		           yourself.
-
-	^ bspline
-		  junction: otherControlPoints
-		  right: [ :bsplineContinuity :bsplineTangent :bsplineObsculator | 
-			  RSCanvas new
-				  addAll: (bspline asGroupWithControlNetColoured: Color gray);
-				  addAll:
-					  (bsplineContinuity asGroupWithControlNetColoured: Color red);
-				  addAll:
-					  (bsplineTangent asGroupWithControlNetColoured: Color blue);
-				  addAll:
-					  (bsplineObsculator asGroupWithControlNetColoured: Color green);
-				  zoomToFit;
-				  addInteraction: RSCanvasController new;
-				  yourself ]
+	^ aLine junction: anotherLine right: [ :lineC0 :lineC1 :lineC2 | 
+		  RSCanvas new
+			  addAll: (aLine asGroupWithControlNetColoured: Color gray);
+			  addAll: (anotherLine asGroupWithControlNetColoured: Color brown);
+			  addAll: (lineC0 asGroupWithControlNetColoured: Color red);
+			  addAll: (lineC1 asGroupWithControlNetColoured: Color blue);
+			  addAll: (lineC2 asGroupWithControlNetColoured: Color green);
+			  zoomToFit;
+			  addInteraction: RSCanvasController new;
+			  yourself ]
 ]
 
 { #category : #lines }
@@ -1248,19 +1242,113 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt [
 
 	<script: 'self new example44deCasteljauLineNoteBoxAttempt open'>
-	^ self lineDeCasteljauLineNoteBox
-		  splitAt: 1 / 2
-		  in: [ :first :second :whole | 
-			  first splitAt: 1 / 2 in: [ :left :bottom :w | 
-				  second splitAt: 1 / 2 in: [ :top :right :r | 
-					  RSCanvas new
-						  addAll: (left asGroupWithControlNetColoured: Color red);
-						  addAll: (bottom asGroupWithControlNetColoured: Color blue);
-						  addAll: (right asGroupWithControlNetColoured: Color magenta);
-						  addAll: (top asGroupWithControlNetColoured: Color green);
-						  zoomToFit;
-						  addInteraction: RSCanvasController new;
-						  yourself ] ] ]
+	| left bottom right top leftBottom rightTop bottomRight topLeft |
+	left := RSdeCasteljauLine new
+		        samples: 50;
+		        controlPoints: { 
+				        (0 @ 0).
+				        (-1.143 @ 17).
+				        (0 @ 39.19).
+				        (0.429 @ 59.429).
+				        (-1.143 @ 70.095).
+				        (-2.597 @ 86.21).
+				        (0 @ 100) };
+		        yourself.
+
+	bottom := RSdeCasteljauLine new
+		          samples: 50;
+		          controlPoints: { 
+				          (0 @ 100).
+				          (33.024 @ 105.286).
+				          (51.077 @ 90.71).
+				          (81.187 @ 102.83).
+				          (113.583 @ 105.57).
+				          (137.6 @ 103.85).
+				          (Float goldenRatio @ 1 * 100) };
+		          yourself.
+
+	leftBottom := left junction: bottom right: [ :c0 :c1 :c2 | c1 ].
+
+	right := RSdeCasteljauLine new
+		         samples: 50;
+		         controlPoints: ({ 
+				          (0 @ 0).
+				          (-1.143 @ 17).
+				          (0 @ 39.19).
+				          (0.429 @ 59.429).
+				          (-1.143 @ 70.095).
+				          (-2.597 @ 86.21).
+				          (0 @ 100) } reversed collect: [ :each | 
+					          each x + (Float goldenRatio * 100) @ each y ]);
+		         yourself.
+
+	bottomRight := leftBottom junction: right right: [ :c0 :c1 :c2 | c1 ].
+
+	top := RSdeCasteljauLine new
+		       samples: 50;
+		       controlPoints: ({ 
+				        (0 @ 100).
+				        (33.024 @ 105.286).
+				        (51.077 @ 90.71).
+				        (81.187 @ 102.83).
+				        (113.583 @ 105.57).
+				        (137.6 @ 103.85).
+				        (Float goldenRatio * 100 @ 100) } reversed collect: [ 
+					        :each | each x @ (each y - 100) ]);
+		       yourself.
+
+	rightTop := bottomRight junction: top right: [ :c0 :c1 :c2 | c1 ].
+
+	topLeft := rightTop junction: left right: [ :c0 :c1 :c2 | c1 ].
+
+	self assert: topLeft designPoints , leftBottom designPoints
+		, bottomRight designPoints , rightTop designPoints = { 
+			(0 @ 0).
+			(-33.024 @ -5.286000000000001).
+			(0 @ 0).
+			(-1.143 @ 17).
+			(0 @ 39.19).
+			(0.429 @ 59.429).
+			(-1.143 @ 70.095).
+			(-2.597 @ 86.21).
+			(0 @ 100).
+			(0 @ 100).
+			(2.597 @ 113.79).
+			(0 @ 100).
+			(33.024 @ 105.286).
+			(51.077 @ 90.71).
+			(81.187 @ 102.83).
+			(113.583 @ 105.57).
+			(137.6 @ 103.85).
+			(161.80339887498948 @ 100).
+			(161.80339887498948 @ 100).
+			(186.00679774997897 @ 96.15).
+			(161.80339887498948 @ 100).
+			(159.20639887498947 @ 86.21).
+			(160.66039887498948 @ 70.095).
+			(162.23239887498949 @ 59.429).
+			(161.80339887498948 @ 39.19).
+			(160.66039887498948 @ 17).
+			(161.80339887498948 @ 0).
+			(161.80339887498948 @ 0).
+			(162.94639887498948 @ -17).
+			(161.80339887498948 @ 0).
+			(137.6 @ 3.8499999999999943).
+			(113.583 @ 5.569999999999993).
+			(81.187 @ 2.8299999999999983).
+			(51.077 @ -9.290000000000006).
+			(33.024 @ 5.286000000000001).
+			(0 @ 0) }.
+
+
+	^ RSCanvas new
+		  addAll: (topLeft asGroupWithControlNetColoured: Color red);
+		  addAll: (leftBottom asGroupWithControlNetColoured: Color blue);
+		  addAll: (bottomRight asGroupWithControlNetColoured: Color magenta);
+		  addAll: (rightTop asGroupWithControlNetColoured: Color green);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
 ]
 
 { #category : #lines }

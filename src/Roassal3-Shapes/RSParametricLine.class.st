@@ -114,6 +114,12 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+RSParametricLine >> designPoints [
+
+	^ points
+]
+
 { #category : #'instance creation' }
 RSParametricLine >> newLine [
 
@@ -154,6 +160,14 @@ RSParametricLine >> resetPath [
 		controlPoints at: index put: aPoint asFloatPoint ].
 
 	super resetPath
+]
+
+{ #category : #converting }
+RSParametricLine >> reversed [
+
+	^ self newLine
+		  controlPoints: points reversed;
+		  yourself
 ]
 
 { #category : #accessing }

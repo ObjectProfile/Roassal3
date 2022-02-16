@@ -54,8 +54,10 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 			aSequenceableOfPoints at: i put: aPoint ].
 
 		k < pointsSize ifTrue: [ 
-			diagonal at: k + 1 put: aSequenceableOfPoints first.
-			last at: k + 1 put: (aSequenceableOfPoints at: delta) ] ].
+			| kSucc |
+			kSucc := k + 1.
+			diagonal at: kSucc put: aSequenceableOfPoints first.
+			last at: kSucc put: (aSequenceableOfPoints at: delta) ] ].
 
 	^ Array with: aSequenceableOfPoints first with: diagonal with: last
 ]
@@ -130,73 +132,81 @@ RSdeCasteljauLine >> increment [
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> junction: aCollectionOfPoints left: aBlock [
+RSdeCasteljauLine >> junction: aLine left: aBlock [
 
 	^ self
 		  junction: 1
 		  to: 1
 		  left: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
-			  | bsplineContinuity bsplineTangent bsplineObsculator |
-			  bsplineContinuity := self class new
-				                       samples: param size;
-				                       controlPoints:
-					                       aCollectionOfPoints , { continuityPoint };
-				                       yourself.
-
-			  bsplineTangent := self class new
-				                    samples: param size;
-				                    controlPoints: aCollectionOfPoints , { 
-							                    tangentPoint.
-							                    continuityPoint };
-				                    yourself.
-
-			  bsplineObsculator := self class new
-				                       samples: param size;
-				                       controlPoints: aCollectionOfPoints , { 
-							                       obsculatorPoint.
-							                       tangentPoint.
-							                       continuityPoint };
-				                       yourself.
-
-			  aBlock
-				  value: bsplineContinuity
-				  value: bsplineTangent
-				  value: bsplineObsculator ]
+			  aLine
+				  junction: self
+				  left: aBlock
+				  c0: continuityPoint
+				  c1: tangentPoint
+				  c2: obsculatorPoint ]
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> junction: aCollectionOfPoints right: aBlock [
+RSdeCasteljauLine >> junction: aLine left: aBlock c0: continuityPoint c1: tangentPoint c2: obsculatorPoint [
+
+	| lineC0 lineC1 lineC2 |
+	lineC0 := self newLine
+		          controlPoints: points , { continuityPoint };
+		          yourself.
+
+	lineC1 := self newLine
+		          controlPoints: points , { 
+					          tangentPoint.
+					          continuityPoint };
+		          yourself.
+
+	lineC2 := self newLine
+		          controlPoints: points , { 
+					          obsculatorPoint.
+					          tangentPoint.
+					          continuityPoint };
+		          yourself.
+
+	^ aBlock value: lineC0 value: lineC1 value: lineC2
+]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> junction: aLine right: aBlock [
 
 	^ self
 		  junction: 1
 		  to: 1
 		  right: [ :continuityPoint :tangentPoint :obsculatorPoint :a_succ_i | 
-			  | bsplineContinuity bsplineTangent bsplineObsculator |
-			  bsplineContinuity := self class new
-				                       samples: param size;
-				                       controlPoints:
-					                       { continuityPoint } , aCollectionOfPoints;
-				                       yourself.
+			  aLine
+				  junction: self
+				  right: aBlock
+				  c0: continuityPoint
+				  c1: tangentPoint
+				  c2: obsculatorPoint ]
+]
 
-			  bsplineTangent := self class new
-				                    samples: param size;
-				                    controlPoints: { 
-						                    continuityPoint.
-						                    tangentPoint } , aCollectionOfPoints;
-				                    yourself.
+{ #category : #accessing }
+RSdeCasteljauLine >> junction: aLine right: aBlock c0: continuityPoint c1: tangentPoint c2: obsculatorPoint [
 
-			  bsplineObsculator := self class new
-				                       samples: param size;
-				                       controlPoints: { 
-						                       continuityPoint.
-						                       tangentPoint.
-						                       obsculatorPoint } , aCollectionOfPoints;
-				                       yourself.
+	| lineC0 lineC1 lineC2 |
+	lineC0 := self newLine
+		          controlPoints: { continuityPoint } , points;
+		          yourself.
 
-			  aBlock
-				  value: bsplineContinuity
-				  value: bsplineTangent
-				  value: bsplineObsculator ]
+	lineC1 := self newLine
+		          controlPoints: { 
+				          continuityPoint.
+				          tangentPoint } , points;
+		          yourself.
+
+	lineC2 := self newLine
+		          controlPoints: { 
+				          continuityPoint.
+				          tangentPoint.
+				          obsculatorPoint } , points;
+		          yourself.
+
+	^ aBlock value: lineC0 value: lineC1 value: lineC2
 ]
 
 { #category : #accessing }
