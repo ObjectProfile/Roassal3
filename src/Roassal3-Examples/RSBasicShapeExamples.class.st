@@ -1448,6 +1448,31 @@ RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineReversed [
+
+	<script: 'self new example44deCasteljauLineReversed open'>
+	| points line |
+	points := { 
+		          (1 @ 0).
+		          (1.66575 @ -0.49197).
+		          (3.07038 @ -0.1196).
+		          (3 @ 1) } collect: [ :each | each * 100 ].
+
+	line := RSdeCasteljauLine new
+		        samples: 50;
+		        controlPoints: points;
+		        yourself.
+
+	^ RSCanvas new
+		  addAll: (line asGroupWithControlNetColoured: Color red);
+		  addAll:
+			  (line reversed asGroupWithControlNetColoured: Color blue);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 
 	<script: 'self new example44deCasteljauLineSplitAt open'>
