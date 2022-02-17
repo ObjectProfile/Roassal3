@@ -33,7 +33,6 @@ jobs:
           git branch uml master
           git checkout uml
           git merge origin/master
-          git push origin uml
       - name: Producing class diagram
         run: bash ./scripts/visualizeClassDiagram.sh
       - name: Push the picture
