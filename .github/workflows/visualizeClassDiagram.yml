@@ -28,6 +28,12 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
+      - name: change branch to UML
+        run: |
+          git branch uml master
+          git checkout uml
+          git merge origin/master
+          git push origin uml
       - name: Producing class diagram
         run: bash ./scripts/visualizeClassDiagram.sh
       - name: Push the picture
@@ -42,7 +48,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || git commit -m "Add changes" -a
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@uml
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
