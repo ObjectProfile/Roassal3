@@ -1239,9 +1239,23 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt [
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxDegreeElevation [
 
-	<script: 'self new example44deCasteljauLineNoteBoxAttempt open'>
+	<script: 'self new example44deCasteljauLineNoteBoxDegreeElevation open'>
+	^ (self lineDeCasteljauLineNoteBox elevate: 10)
+		  
+		  in: [ :whole | 
+			  RSCanvas new
+				  addAll: (whole asGroupWithControlNetColoured: Color red);
+				  zoomToFit;
+				  addInteraction: RSCanvasController new;
+				  yourself ]
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
+
+	<script: 'self new example44deCasteljauLineNoteBoxJunctionOfFourBeziers open'>
 	| left bottom right top leftBottom rightTop bottomRight topLeft |
 	left := RSdeCasteljauLine new
 		        samples: 50;
@@ -1352,37 +1366,38 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt1 [
+RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 
-	<script: 'self new example44deCasteljauLineNoteBoxAttempt1 open'>
-	^ (self lineDeCasteljauLineNoteBox elevate: 10)
-		  
-		  in: [ :whole | 
-			  RSCanvas new
-				  addAll: (whole asGroupWithControlNetColoured: Color red);
-				  zoomToFit;
-				  addInteraction: RSCanvasController new;
-				  yourself ]
-]
+	<script: 'self new example44deCasteljauLineNoteBoxTopLeftCornerJunction open'>
+	| aLine anotherLine random juncted offsetPoint |
+	random := RandomBoxMullerBivariateGaussian new.
 
-{ #category : #lines }
-RSBasicShapeExamples >> example44deCasteljauLineNoteBoxAttempt2 [
+	offsetPoint := 5 @ -5 * 5.
 
-	<script: 'self new example44deCasteljauLineNoteBoxAttempt2 open'>
-	^ ((RSdeCasteljauLine new
-		    samples: 50;
-		    controlPoints: { 
-				    (0 @ 0).
-				    (Float goldenRatio @ 0).
-				    (Float goldenRatio @ 1).
-				    (0 @ 1).
-				    (0 @ 0) };
-		    scale: 300) weighted: { 2. 10. 10. 2. 1 }) in: [ :whole | 
-		  RSCanvas new
-			  addAll: (whole asGroupWithControlNetColoured: Color red);
-			  zoomToFit;
-			  addInteraction: RSCanvasController new;
-			  yourself ]
+	aLine := RSdeCasteljauLine new
+		         samples: 50;
+		         controlPoints: { 
+				         (0 @ 0 - offsetPoint).
+				         (0 @ 300) };
+		         elevate: 5.
+
+
+	anotherLine := RSdeCasteljauLine new
+		               samples: 50;
+		               controlPoints: { 
+				               (300 @ 0).
+				               (0 @ 0 + offsetPoint) };
+		               elevate: 5.
+
+	juncted := anotherLine junction: aLine right: [ :c0 :c1 :c2 | c1 ].
+
+	^ RSCanvas new
+		  addAll: (aLine asGroupWithControlNetColoured: Color red);
+		  addAll: (anotherLine asGroupWithControlNetColoured: Color blue);
+		  addAll: (juncted asGroupWithControlNetColoured: Color green);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
 ]
 
 { #category : #lines }
