@@ -1260,7 +1260,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	left := RSdeCasteljauLine new
 		        samples: 50;
 		        controlPoints: { 
-				        (0 @ 0).
+				       " (0 @ 0)."
 				        (-1.143 @ 17).
 				        (0 @ 39.19).
 				        (0.429 @ 59.429).
@@ -1272,7 +1272,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	bottom := RSdeCasteljauLine new
 		          samples: 50;
 		          controlPoints: { 
-				          (0 @ 100).
+				          "(0 @ 100)".
 				          (33.024 @ 105.286).
 				          (51.077 @ 90.71).
 				          (81.187 @ 102.83).
@@ -1307,7 +1307,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 				        (81.187 @ 102.83).
 				        (113.583 @ 105.57).
 				        (137.6 @ 103.85).
-				        (Float goldenRatio * 100 @ 100) } reversed collect: [ 
+				       " (Float goldenRatio * 100 @ 100)" } reversed collect: [ 
 					        :each | each x @ (each y - 100) ]);
 		       yourself.
 

@@ -247,38 +247,44 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: note [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples point finalLine |
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples finalLine |
 	rectangle := note baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
 
 	coin := RandomBernoulli new
-		        p: 0.8;
+		        p: 8 / 10;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c2 ] ].
 
 	samples := 20.
 
 	m := n := 10.
+
+	"	n := (rectangle height log: 2) ceiling max: 6."
 
 	lPoints := Array new: n.
 	rPoints := Array new: n.
 	bPoints := Array new: m.
 	tPoints := Array new: m.
 
-	point := random next.
+	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
+		:each 
+		:index | 
+		lPoints at: index put: rectangle left @ each + random next.
+		rPoints at: n - index + 1 put: rectangle right @ each + random next ].
 
-	((rectangle top + point x to: rectangle bottom + point y) linspace: n) 
-		withIndexDo: [ :each :index | 
-			lPoints at: index put: rectangle left @ each + random next.
-			rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+	((rectangle left to: rectangle right) linspace: m) withIndexDo: [ 
+		:each 
+		:index | 
+		bPoints at: index put: each @ rectangle bottom + random next.
+		tPoints at: m - index + 1 put: each @ rectangle top + random next ].
 
-	point := random next.
-	((rectangle left + point x to: rectangle right + point y) linspace: m) 
-		withIndexDo: [ :each :index | 
-			bPoints at: index put: each @ rectangle bottom + random next.
-			tPoints at: m - index + 1 put: each @ rectangle top + random next ].
+	lPoints := lPoints allButFirst.
+	rPoints := rPoints allButFirst.
+	bPoints := bPoints allButFirst.
+	tPoints := tPoints allButFirst.
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
