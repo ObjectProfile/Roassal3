@@ -1401,6 +1401,112 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenC [
+
+	<script: 'self new example44deCasteljauLinePenC open'>
+	| b1 |
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 25 @ 50;
+				      addPoint: 150 @ 50 via: 25 @ 100 via: 150 @ 100 ].
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenQ [
+
+	<script: 'self new example44deCasteljauLinePenQ open'>
+	| b1 |
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 25 @ 75;
+				      addPoint: 75 @ 100 via: 50 @ 150 ].
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenQuote [
+
+	<script: 'self new example44deCasteljauLinePenQuote open'>
+	| b1 |
+	b1 := RSdeCasteljauLine new
+		      samples: 100;
+		      pen: [ :aBezier | 
+			      | base |
+			      base := 300 @ 419.7.
+			      aBezier addPoint: base.
+			      aBezier
+				      addPoint: 0 @ -290
+				      via: 0 @ 0
+				      via: 224.2 @ -246.7
+				      relativeTo: base.
+			      aBezier
+				      addBezierPoint: 300 @ 262.4 via: 197 @ 338;
+				      addBezierPoint: 300 @ 419.7 via: 242 @ 498.2 ];
+		      yourself.
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenS [
+
+	<script: 'self new example44deCasteljauLinePenS open'>
+	| b1 |
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 25 @ 50;
+				      addPoint: 150 @ 50 via: 25 @ 100 via: 150 @ 100;
+				      addBezierPoint: 300 @ 25 via: 175 @ -50 ].
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenT [
+
+	<script: 'self new example44deCasteljauLinePenT open'>
+	| b1 |
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 25 @ 75;
+				      addPoint: 75 @ 100 via: 50 @ 150;
+				      addBezierPoint: 150 @ 150 ].
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLinePolar [
 
 	<script: 'self new example44deCasteljauLinePolar open'>
@@ -1423,6 +1529,39 @@ RSBasicShapeExamples >> example44deCasteljauLinePolar [
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineReflection [
+
+	<script: 'self new example44deCasteljauLineReflection open'>
+	| b1 b2 b3 b4 p1 p2 p3 p4 p5 p6 |
+	p1 := 200 @ 100.
+	p2 := 0 @ 200.
+	p3 := p2 reflectedAbout: p1.
+
+	p4 := 600 @ 300.
+	p5 := 800 @ 100.
+	p6 := p5 reflectedAbout: p4.
+
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      controlPoints: { 
+				      p1.
+				      p2.
+				      p3.
+				      p4.
+				      p5.
+				      p6 };
+		      yourself.
+
+	^ RSCanvas new
+		  addAll: (b1 asGroupWithControlNetColoured: Color green);
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  " addAll: (b1 asGroupWithControlNetColoured: Color red);
+		  addAll: (b2 asGroupWithControlNetColoured: Color blue);"
+			  yourself
 ]
 
 { #category : #lines }
@@ -1595,6 +1734,17 @@ RSBasicShapeExamples >> example45ParametricNeil [
 	<script: 'self new example45ParametricNeil open'>
 	^ RSCanvas new
 		  add: self lineParametricNeil;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example45ParametricNeil2 [
+
+	<script: 'self new example45ParametricNeil2 open'>
+	^ RSCanvas new
+		  add: self lineParametricNeil2;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1908,6 +2058,15 @@ RSBasicShapeExamples >> lineParametricLissajous [
 
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricNeil [
+
+	^ RSParametricLineXY new
+		  param: ((-2 to: 2) linspace: 100);
+		  x: [ :t | t raisedTo: 2 ] y: [ :t | t raisedTo: 3 ];
+		  scale: 10
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> lineParametricNeil2 [
 
 	^ RSParametricLineXY new
 		  param: ((-2 to: 2) linspace: 100);

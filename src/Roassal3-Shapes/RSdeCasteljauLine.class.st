@@ -7,6 +7,54 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addBezierPoint: aPoint [
+
+	| firstPoint |
+	firstPoint := points lastButOne reflectedAbout: points last.
+
+	self addPoint: aPoint via: firstPoint
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
+
+	| firstPoint |
+	firstPoint := points lastButOne reflectedAbout: points last.
+
+	self addPoint: aPoint via: firstPoint via: secondPoint
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addPoint: aPoint [
+
+	points add: aPoint
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addPoint: aPoint via: anotherPoint [
+
+	self addPoint: aPoint via: anotherPoint via: anotherPoint
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint [
+
+	points
+		add: firstPoint;
+		add: secondPoint;
+		add: aPoint
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeTo: basePoint [
+
+	self
+		addPoint: aPoint + basePoint
+		via: firstPoint + basePoint
+		via: secondPoint + basePoint
+]
+
 { #category : #converting }
 RSdeCasteljauLine >> asGroupBernsteinBase [
 
@@ -274,6 +322,16 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 		  value: tangentPoint
 		  value: obsculatorPoint
 		  value: a_succ_i
+]
+
+{ #category : #'as yet unclassified' }
+RSdeCasteljauLine >> pen: aBlock [
+
+	points := OrderedCollection new.
+
+	aBlock value: self.
+
+	self controlPoints: points
 ]
 
 { #category : #accessing }
