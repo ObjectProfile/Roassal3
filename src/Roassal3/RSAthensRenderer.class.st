@@ -252,17 +252,15 @@ RSAthensRenderer >> buildNotePath: note [
 
 	random := RandomBoxMullerBivariateGaussian new.
 
-	coin := RandomBernoulli new
-		        p: 8 / 10;
-		        yourself.
+	coin := RandomBernoulli new.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c2 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c1 ] ].
 
-	samples := 20.
+	samples := rectangle area sqrt floor.
 
 	m := n := 10.
 
-	"	n := (rectangle height log: 2) ceiling max: 6."
+	m := n := 6. "rectangle height ln ceiling max: 6"
 
 	lPoints := Array new: n.
 	rPoints := Array new: n.
@@ -281,10 +279,10 @@ RSAthensRenderer >> buildNotePath: note [
 		bPoints at: index put: each @ rectangle bottom + random next.
 		tPoints at: m - index + 1 put: each @ rectangle top + random next ].
 
-	lPoints := lPoints allButFirst.
+	"lPoints := lPoints allButFirst.
 	rPoints := rPoints allButFirst.
 	bPoints := bPoints allButFirst.
-	tPoints := tPoints allButFirst.
+	tPoints := tPoints allButFirst."
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
