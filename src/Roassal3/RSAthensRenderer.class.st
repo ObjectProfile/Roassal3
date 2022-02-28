@@ -245,18 +245,22 @@ RSAthensRenderer >> buildLinePath: line [
 ]
 
 { #category : #'creating path' }
-RSAthensRenderer >> buildNotePath: note [
+RSAthensRenderer >> buildNotePath: aNoteShape [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples finalLine |
-	rectangle := note baseRectangle.
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples finalLine radius |
+	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
 
 	coin := RandomBernoulli new.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c0 ] ].
 
 	samples := rectangle area sqrt floor.
+
+	radius := aNoteShape hasCornerRadius
+		          ifTrue: [ aNoteShape cornerRadius ]
+		          ifFalse: [ 0 ].
 
 	m := n := 10.
 
@@ -267,17 +271,15 @@ RSAthensRenderer >> buildNotePath: note [
 	bPoints := Array new: m.
 	tPoints := Array new: m.
 
-	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
-		:each 
-		:index | 
-		lPoints at: index put: rectangle left @ each + random next.
-		rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+	((rectangle top + radius to: rectangle bottom - radius) linspace: n) 
+		withIndexDo: [ :each :index | 
+			lPoints at: index put: rectangle left @ each + random next.
+			rPoints at: n - index + 1 put: rectangle right @ each + random next ].
 
-	((rectangle left to: rectangle right) linspace: m) withIndexDo: [ 
-		:each 
-		:index | 
-		bPoints at: index put: each @ rectangle bottom + random next.
-		tPoints at: m - index + 1 put: each @ rectangle top + random next ].
+	((rectangle left + radius to: rectangle right - radius) linspace: m) 
+		withIndexDo: [ :each :index | 
+			bPoints at: index put: each @ rectangle bottom + random next.
+			tPoints at: m - index + 1 put: each @ rectangle top + random next ].
 
 	"lPoints := lPoints allButFirst.
 	rPoints := rPoints allButFirst.

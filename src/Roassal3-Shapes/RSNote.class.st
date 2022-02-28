@@ -1,6 +1,6 @@
 Class {
 	#name : #RSNote,
-	#superclass : #RSBoundingShape,
+	#superclass : #RSBox,
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
