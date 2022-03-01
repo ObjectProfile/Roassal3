@@ -185,17 +185,6 @@ RSPolygon >> hasPoints [
 	^ points notNil and: [ points isNotEmpty ]
 ]
 
-{ #category : #testing }
-RSPolygon >> includesPoint: aPoint [
-	"Return true or false if a point is contained in the shape"
-	| invertedPoint |
-	invertedPoint := matrix rsInverseTransform: aPoint.
-	^ (self baseRectangle containsPoint: invertedPoint)
-		ifFalse: [ false ]
-		ifTrue: [(AthensPolygonTester new 
-			polygon: points) includesPoint: invertedPoint]
-]
-
 { #category : #initialization }
 RSPolygon >> initialize [
 	super initialize.
@@ -216,6 +205,17 @@ RSPolygon >> points: anArray [
 	rec := self centerPoints.
 	self translateTo: rec floatCenter.
 	super extent: rec extent
+]
+
+{ #category : #testing }
+RSPolygon >> preciseIncludesPoint: aPoint [
+	"Return true or false if a point is contained in the shape"
+	| invertedPoint |
+	invertedPoint := matrix rsInverseTransform: aPoint.
+	^ (self baseRectangle containsPoint: invertedPoint)
+		ifFalse: [ false ]
+		ifTrue: [(AthensPolygonTester new 
+			polygon: points) includesPoint: invertedPoint]
 ]
 
 { #category : #private }
