@@ -256,35 +256,50 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c0 ] ].
 
-	samples := rectangle area sqrt floor.
+	samples := rectangle area sqrt ceiling.
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
-		          ifFalse: [ 0 ].
+		          ifFalse: [ 
+			          RSCornerRadius new
+				          radius: 0;
+				          yourself ].
 
-	m := n := 10.
+	n := ((rectangle height max: 1) log: 2) ceiling max: 5.
+	m := ((rectangle width max: 1) log: 2) ceiling max: 5.
 
-	m := n := 6. "rectangle height ln ceiling max: 6"
+	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
 
 	lPoints := Array new: n.
 	rPoints := Array new: n.
 	bPoints := Array new: m.
 	tPoints := Array new: m.
 
-	((rectangle top + radius to: rectangle bottom - radius) linspace: n) 
-		withIndexDo: [ :each :index | 
-			lPoints at: index put: rectangle left @ each + random next.
-			rPoints at: n - index + 1 put: rectangle right @ each + random next ].
+	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
+		:each 
+		:index | 
+		lPoints at: index put: rectangle left @ each + random next.
+		rPoints atLast: index put: rectangle right @ each + random next ].
 
-	((rectangle left + radius to: rectangle right - radius) linspace: m) 
-		withIndexDo: [ :each :index | 
-			bPoints at: index put: each @ rectangle bottom + random next.
-			tPoints at: m - index + 1 put: each @ rectangle top + random next ].
+	((rectangle left to: rectangle right) linspace: m) withIndexDo: [ 
+		:each 
+		:index | 
+		bPoints at: index put: each @ rectangle bottom + random next.
+		tPoints atLast: index put: each @ rectangle top + random next ].
 
-	"lPoints := lPoints allButFirst.
-	rPoints := rPoints allButFirst.
-	bPoints := bPoints allButFirst.
-	tPoints := tPoints allButFirst."
+	lPoints at: 1 put: rectangle topLeft + (0 @ radius topLeft).
+	lPoints atLast: 1 put: rectangle bottomLeft - (0 @ radius bottomLeft).
+
+	rPoints atLast: 1 put: rectangle topRight + (0 @ radius topRight).
+	rPoints at: 1 put: rectangle bottomRight - (0 @ radius bottomRight).
+
+	bPoints at: 1 put: rectangle bottomLeft + (radius bottomLeft @ 0).
+	bPoints
+		atLast: 1
+		put: rectangle bottomRight - (radius bottomRight @ 0).
+
+	tPoints atLast: 1 put: rectangle topLeft + (radius topLeft @ 0).
+	tPoints at: 1 put: rectangle topRight - (radius topRight @ 0).
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
