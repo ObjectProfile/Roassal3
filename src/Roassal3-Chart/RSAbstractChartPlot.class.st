@@ -77,11 +77,8 @@ RSAbstractChartPlot >> renderIn: canvas [
 
 { #category : #rendering }
 RSAbstractChartPlot >> spine [
-	"Return the Trachel shape that describe the spine"
-	^ (chart decorations
-		detect: [ :d | d class == RSChartSpineDecoration ]
-		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
-		shape
+	"Return the roassal shape that describes the spine"
+	^ chart spine
 ]
 
 { #category : #accessing }

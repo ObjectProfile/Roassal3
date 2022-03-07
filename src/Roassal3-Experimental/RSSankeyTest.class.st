@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Experimental-Sankey'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RSSankeyTest >> setUp [
 
 	super setUp.

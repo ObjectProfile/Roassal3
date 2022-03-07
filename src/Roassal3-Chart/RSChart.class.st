@@ -77,6 +77,15 @@ c
 	aPlot chart: self
 ]
 
+{ #category : #converting }
+RSChart >> asShape [
+	| shape |
+	shape := self container asShape.
+	self container: shape.
+	^ shape
+	
+]
+
 { #category : #'public - plots' }
 RSChart >> barHeights: aCollectionY [
 	| res |
@@ -335,6 +344,14 @@ RSChart >> renderPlotsIn: aCanvas [
 { #category : #building }
 RSChart >> show [
 	^ self open
+]
+
+{ #category : #accessing }
+RSChart >> spine [
+	^ (self decorations
+		detect: [ :d | d class == RSChartSpineDecoration ]
+		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
+		shape
 ]
 
 { #category : #accessing }
