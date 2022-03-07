@@ -378,7 +378,7 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 { #category : #accessing }
 RSdeCasteljauLine >> weighted: aCollection [
 
-	^ RSdeCasteljauRationalLine new
+	^ RSdeCasteljauRationalWoznyChudyLine new
 		  param: param;
 		  weights: aCollection;
 		  controlPoints: points;

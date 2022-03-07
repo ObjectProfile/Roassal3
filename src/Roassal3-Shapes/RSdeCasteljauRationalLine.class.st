@@ -13,6 +13,9 @@ RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
 
 	mappedPoints := Array new: aSequenceableOfPoints size.
 
+	weights ifNil: [ 
+		weights := Array new: aSequenceableOfPoints size withAll: 1 ].
+
 	super controlPoints: aSequenceableOfPoints
 ]
 
