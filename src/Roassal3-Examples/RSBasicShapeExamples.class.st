@@ -2019,7 +2019,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricButterfly [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((0 to: Float pi * 12) linspace: 10000);
 		  x: [ :t | 
 			  t sin
@@ -2041,7 +2041,7 @@ RSBasicShapeExamples >> lineParametricHypotrochoid [
 	a := s - r.
 	b := a / r.
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((-10 to: 10) linspace: 10000);
 		  x: [ :t | a * t cos + (d * (b * t) cos) ]
 		  y: [ :t | a * t sin - (d * (b * t) sin) ];
@@ -2051,7 +2051,7 @@ RSBasicShapeExamples >> lineParametricHypotrochoid [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricLissajous [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((0 to: Float pi * 2) linspace: 1000);
 		  x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
 		  scale: 100
@@ -2060,7 +2060,7 @@ RSBasicShapeExamples >> lineParametricLissajous [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricNeil [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((-2 to: 2) linspace: 100);
 		  x: [ :t | t raisedTo: 2 ] y: [ :t | t raisedTo: 3 ];
 		  scale: 10
@@ -2069,7 +2069,7 @@ RSBasicShapeExamples >> lineParametricNeil [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricNeil2 [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((-2 to: 2) linspace: 100);
 		  x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
 		  scale: 10
@@ -2078,7 +2078,7 @@ RSBasicShapeExamples >> lineParametricNeil2 [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricTrochoid [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((0 to: Float pi) linspace: 100);
 		  x: [ :t | t cos * (3 * t) cos ] y: [ :t | t sin * (3 * t) cos ];
 		  scale: 100
@@ -2087,7 +2087,7 @@ RSBasicShapeExamples >> lineParametricTrochoid [
 { #category : #lines }
 RSBasicShapeExamples >> lineParametricUnitCircle [
 
-	^ RSParametricLineXY new
+	^ RSParametricXYLine new
 		  param: ((0 to: Float pi * 2) linspace: 100);
 		  x: [ :t | t cos ] y: [ :t | t sin ];
 		  scale: 100

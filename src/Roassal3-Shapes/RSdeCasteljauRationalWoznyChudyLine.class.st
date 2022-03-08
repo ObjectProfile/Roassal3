@@ -8,8 +8,8 @@ Class {
 RSdeCasteljauRationalWoznyChudyLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| h u qPoint |
-	h := 1.
-	u := 1 - t.
+	h := 1.0.
+	u := h - t.
 	qPoint := aSequenceableOfPoints first.
 
 	1 to: pointsSize - 1 do: [ :k | 

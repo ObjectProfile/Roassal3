@@ -1,5 +1,5 @@
 Class {
-	#name : #RSParametricLineXY,
+	#name : #RSParametricXYLine,
 	#superclass : #RSParametricLine,
 	#instVars : [
 		'x',
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RSParametricLineXY >> controlPoints: aSequenceableOfPoints at: t [
+RSParametricXYLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ (x value: t) @ (y value: t)
 ]
 
 { #category : #accessing }
-RSParametricLineXY >> scale: factor [
+RSParametricXYLine >> scale: factor [
 
 	^ self newLine
 		  x: [ :t | (x value: t) * factor ]
@@ -24,7 +24,7 @@ RSParametricLineXY >> scale: factor [
 ]
 
 { #category : #'instance creation' }
-RSParametricLineXY >> x: xBlock y: yBlock [
+RSParametricXYLine >> x: xBlock y: yBlock [
 
 	x := xBlock.
 	y := yBlock.

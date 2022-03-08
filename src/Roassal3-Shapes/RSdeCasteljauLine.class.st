@@ -63,7 +63,7 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 
 	^ (0 to: n)
 		  collect: [ :each | 
-			  RSParametricLineXY new
+			  RSParametricXYLine new
 				  param: param;
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
 				  scale: 100 ]
