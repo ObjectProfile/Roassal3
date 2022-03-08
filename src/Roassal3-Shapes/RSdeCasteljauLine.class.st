@@ -376,6 +376,12 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 ]
 
 { #category : #accessing }
+RSdeCasteljauLine >> weighted [
+
+	^ self weighted: (Array new: pointsSize withAll: 1)
+]
+
+{ #category : #accessing }
 RSdeCasteljauLine >> weighted: aCollection [
 
 	^ RSdeCasteljauRationalWoznyChudyLine new

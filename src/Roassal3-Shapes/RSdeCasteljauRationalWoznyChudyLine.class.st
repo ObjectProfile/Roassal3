@@ -1,6 +1,6 @@
 Class {
 	#name : #RSdeCasteljauRationalWoznyChudyLine,
-	#superclass : #RSdeCasteljauRationalLine,
+	#superclass : #RSdeCasteljauWeightedLine,
 	#category : #'Roassal3-Shapes-Lines'
 }
 
@@ -15,10 +15,10 @@ RSdeCasteljauRationalWoznyChudyLine >> deCasteljau: aSequenceableOfPoints at: t 
 	1 to: pointsSize - 1 do: [ :k | 
 		| hPoint i |
 		i := k + 1.
-		h := h * t * (pointsSize - k) * (weights at: i).
+		h := h * t * (pointsSize - k) * (weights at: i) max: Float epsilon.
 		h := h / (k * u * (weights at: k) + h).
 		hPoint := h * (aSequenceableOfPoints at: i).
-		qPoint := 1 - h * qPoint + hPoint ].
+		qPoint := qPoint * (1 - h) + hPoint ].
 
 	^ { qPoint }
 ]

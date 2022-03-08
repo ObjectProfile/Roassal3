@@ -1,8 +1,7 @@
 Class {
 	#name : #RSdeCasteljauRationalLine,
-	#superclass : #RSdeCasteljauLine,
+	#superclass : #RSdeCasteljauWeightedLine,
 	#instVars : [
-		'weights',
 		'mappedPoints'
 	],
 	#category : #'Roassal3-Shapes-Lines'
@@ -10,9 +9,6 @@ Class {
 
 { #category : #accessing }
 RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
-
-	weights ifNil: [ 
-		weights := Array new: aSequenceableOfPoints size withAll: 1 ].
 
 	mappedPoints := Array streamContents: [ :aStream | 
 		                weights withIndexDo: [ :each :i | 
@@ -36,18 +32,4 @@ RSdeCasteljauRationalLine >> deCasteljau: aSequenceableOfPoints at: t [
 	triple := super deCasteljau: mappedPoints at: t.
 
 	^ triple collect: [ :each | each / factor ]
-]
-
-{ #category : #'instance creation' }
-RSdeCasteljauRationalLine >> newLine [
-
-	^ super newLine
-		  weights: weights;
-		  yourself
-]
-
-{ #category : #accessing }
-RSdeCasteljauRationalLine >> weights: anObject [
-
-	weights := anObject
 ]

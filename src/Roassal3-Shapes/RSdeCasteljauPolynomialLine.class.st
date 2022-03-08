@@ -1,11 +1,11 @@
 Class {
-	#name : #RSdeCasteljauQuickLine,
+	#name : #RSdeCasteljauPolynomialLine,
 	#superclass : #RSdeCasteljauLine,
 	#category : #'Roassal3-Shapes-Lines'
 }
 
 { #category : #accessing }
-RSdeCasteljauQuickLine >> deCasteljau: aSequenceableOfPoints at: t [
+RSdeCasteljauPolynomialLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint n |
 	aPoint := 0 @ 0.
