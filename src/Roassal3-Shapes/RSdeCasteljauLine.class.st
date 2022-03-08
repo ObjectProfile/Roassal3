@@ -76,7 +76,7 @@ RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 	| tUnit |
 	tUnit := param unitAt: t.
 
-	^ (self deCasteljau: aSequenceableOfPoints at: tUnit) first
+	^ (self deCasteljau: aSequenceableOfPoints at: tUnit asFloat) first
 ]
 
 { #category : #accessing }
