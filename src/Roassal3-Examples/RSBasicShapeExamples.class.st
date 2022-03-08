@@ -1796,17 +1796,6 @@ RSBasicShapeExamples >> example46NoteLoremIpsum [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example47BaricentricCoordinates [
-
-	<script: 'self new example47BaricentricCoordinates open'>
-	^ RSCanvas new
-		  addAll: self groupBaricentricCoordinates;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
 RSBasicShapeExamples >> example47BaricentricCoordinatesTriangle [
 
 	<script: 'self new example47BaricentricCoordinatesTriangle open'>
@@ -1814,69 +1803,6 @@ RSBasicShapeExamples >> example47BaricentricCoordinatesTriangle [
 		  addAll: self groupBaricentricCoordinatesTriangle;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> groupBaricentricCoordinates [
-
-	| aPoint anotherPoint group baricentricPoint aCircle anotherCircle baricentricCircle line param |
-	aPoint := 100 @ 100.
-	anotherPoint := 300 @ 400.
-	param := 1 / 4.
-
-	baricentricPoint := aPoint unitAffine: anotherPoint at: param.
-
-	group := RSGroup new.
-
-	aCircle := RSCircle new
-		           model: aPoint;
-		           position: aPoint;
-		           color: Color transparent;
-		           withBorder;
-		           draggable;
-		           labeled;
-		           yourself.
-	anotherCircle := RSCircle new
-		                 model: anotherPoint;
-		                 position: anotherPoint;
-		                 color: Color transparent;
-		                 withBorder;
-		                 draggable;
-		                 labeled;
-		                 yourself.
-	baricentricCircle := RSCircle new
-		                     model: baricentricPoint;
-		                     position: baricentricPoint;
-		                     color: Color transparent;
-		                     withBorder;
-		                     sameColorAsBorderColor;
-		                     labeled;
-		                     yourself.
-
-	aCircle when: RSPositionChangedEvent do: [ :ev | 
-		baricentricPoint := ev newPosition
-			                    unitAffine: anotherCircle position
-			                    at: param.
-		baricentricCircle position: baricentricPoint ].
-
-	anotherCircle when: RSPositionChangedEvent do: [ :ev | 
-		baricentricPoint := aCircle position
-			                    unitAffine: ev newPosition
-			                    at: param.
-		baricentricCircle position: baricentricPoint ].
-
-	line := RSLine new
-		        from: aCircle;
-		        to: anotherCircle;
-		        dotted;
-		        yourself.
-
-	^ group
-		  add: aCircle;
-		  add: anotherCircle;
-		  add: baricentricCircle;
-		  add: line;
 		  yourself
 ]
 
