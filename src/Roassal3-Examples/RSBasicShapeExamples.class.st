@@ -1068,10 +1068,8 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 
 	<script: 'self new example44deCasteljauLineClosedControlPoints open'>
 	^ RSCanvas new
-		  addAll: (self lineDeCasteljauLineClosedControlPoints 
-				   asGroupWithControlNetColoured: Color red);
-		  addAll: (self lineDeCasteljauLineClosedControlPoints weighted
-				   asGroupWithControlNetColoured: Color blue);
+		  addAll:
+			  self lineDeCasteljauLineClosedControlPoints asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1245,9 +1243,9 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxDegreeElevation [
 
 	<script:
 	'self new example44deCasteljauLineNoteBoxDegreeElevation open'>
-	^ (self lineDeCasteljauLineNoteBox elevate: 10) in: [ :whole | 
+	^ (self lineDeCasteljauLineNoteBox elevate: 100) in: [ :whole | 
 		  RSCanvas new
-			  addAll: whole weighted asGroupWithControlNet;
+			  addAll: whole asGroupWithControlNet;
 			  zoomToFit;
 			  addInteraction: RSCanvasController new;
 			  yourself ]
@@ -1817,7 +1815,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 
 	^ RSdeCasteljauLine new
-		  samples: 50;
+		  samples: 100;
 		  controlPoints: { 
 				  (0 @ 0).
 				  (8.461 @ 36.411).

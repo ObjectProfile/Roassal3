@@ -32,5 +32,5 @@ RSdeCasteljauRationalWoznyChudyStableLine >> deCasteljau: aSequenceableOfPoints 
 				hPoint := h * (aSequenceableOfPoints at: i).
 				qPoint := 1 - h * qPoint + hPoint ] ].
 
-	^ { qPoint }
+	^ qPoint
 ]

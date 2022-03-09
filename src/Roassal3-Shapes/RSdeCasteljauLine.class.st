@@ -76,38 +76,27 @@ RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 	| tUnit |
 	tUnit := param unitAt: t.
 
-	^ (self deCasteljau: aSequenceableOfPoints at: tUnit asFloat) first
+	^ self deCasteljau: aSequenceableOfPoints at: tUnit asFloat
 ]
 
 { #category : #accessing }
 RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 
-	| diagonal last |
-	diagonal := Array new: pointsSize.
-	last := Array new: pointsSize.
+	| h u qPoint |
+	h := 1.0.
+	u := h - t.
+	qPoint := aSequenceableOfPoints first.
 
-	diagonal at: 1 put: aSequenceableOfPoints first.
-	last at: 1 put: aSequenceableOfPoints last.
+	1 to: pointsSize - 1 do: [ :k | 
+		| hPoint i |
+		i := k + 1.
+		h := (self weight: h * t * (pointsSize - k) atIndex: i) max:
+			     Float epsilon.
+		h := h / ((self weight: k * u atIndex: k) + h).
+		hPoint := h * (aSequenceableOfPoints at: i).
+		qPoint := qPoint * (1 - h) + hPoint ].
 
-	1 to: pointsSize do: [ :k | 
-		| delta |
-		delta := pointsSize - k.
-
-		1 to: delta do: [ :i | 
-			| aPoint |
-			aPoint := (aSequenceableOfPoints at: i)
-				          unitAffine: (aSequenceableOfPoints at: i + 1)
-				          at: 1 - t.
-
-			aSequenceableOfPoints at: i put: aPoint ].
-
-		k < pointsSize ifTrue: [ 
-			| kSucc |
-			kSucc := k + 1.
-			diagonal at: kSucc put: aSequenceableOfPoints first.
-			last at: kSucc put: (aSequenceableOfPoints at: delta) ] ].
-
-	^ Array with: aSequenceableOfPoints first with: diagonal with: last
+	^ qPoint
 ]
 
 { #category : #accessing }
@@ -353,32 +342,54 @@ RSdeCasteljauLine >> samples: n [
 { #category : #accessing }
 RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
-	| triple left right |
+	| left right diagonal last t |
 	sandboxControlPoints
 		replaceFrom: 1
 		to: pointsSize
 		with: points
 		startingAt: 1.
 
-	triple := self
-		          deCasteljau: sandboxControlPoints
-		          at: (aParam min: 1 max: 0).
+	diagonal := Array new: pointsSize.
+	last := Array new: pointsSize.
+
+	diagonal at: 1 put: sandboxControlPoints first.
+	last at: 1 put: sandboxControlPoints last.
+
+	t := param unitAt: aParam.
+
+	1 to: pointsSize do: [ :k | 
+		| delta |
+		delta := pointsSize - k.
+
+		1 to: delta do: [ :i | 
+			| aPoint |
+			aPoint := (sandboxControlPoints at: i)
+				          unitAffine: (sandboxControlPoints at: i + 1)
+				          at: 1 - t.
+
+			sandboxControlPoints at: i put: aPoint ].
+
+		k < pointsSize ifTrue: [ 
+			| kSucc |
+			kSucc := k + 1.
+			diagonal at: kSucc put: sandboxControlPoints first.
+			last at: kSucc put: (sandboxControlPoints at: delta) ] ].
 
 	left := self newLine
-		        controlPoints: triple second;
+		        controlPoints: diagonal;
 		        yourself.
 
 	right := self newLine
-		         controlPoints: triple third;
+		         controlPoints: last;
 		         yourself.
 
 	^ aBlock value: left value: right value: self
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> weighted [
+RSdeCasteljauLine >> weight: aNumber atIndex: anIndex [
 
-	^ self weighted: (Array new: pointsSize withAll: 1)
+	^ aNumber
 ]
 
 { #category : #accessing }

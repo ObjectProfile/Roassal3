@@ -24,7 +24,7 @@ RSdeCasteljauPolarLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 		aPoint := aPoint + p ].
 
-	^ { aPoint }
+	^ aPoint
 ]
 
 { #category : #'instance creation' }

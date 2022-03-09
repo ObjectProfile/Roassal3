@@ -14,5 +14,5 @@ RSdeCasteljauDerivativeLine >> deCasteljau: aSequenceableOfPoints at: t [
 		aPoint := aPoint
 		          + (each * (t bernstein: pointsSize choose: i) asPoint) ].
 
-	^ { (pointsSize + 1 * aPoint) }
+	^ pointsSize + 1 * aPoint
 ]

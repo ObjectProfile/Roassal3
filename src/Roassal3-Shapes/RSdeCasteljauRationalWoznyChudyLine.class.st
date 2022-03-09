@@ -5,20 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-RSdeCasteljauRationalWoznyChudyLine >> deCasteljau: aSequenceableOfPoints at: t [
+RSdeCasteljauRationalWoznyChudyLine >> weight: aNumber atIndex: anIndex [
 
-	| h u qPoint |
-	h := 1.0.
-	u := h - t.
-	qPoint := aSequenceableOfPoints first.
-
-	1 to: pointsSize - 1 do: [ :k | 
-		| hPoint i |
-		i := k + 1.
-		h := h * t * (pointsSize - k) * (weights at: i) max: Float epsilon.
-		h := h / (k * u * (weights at: k) + h).
-		hPoint := h * (aSequenceableOfPoints at: i).
-		qPoint := qPoint * (1 - h) + hPoint ].
-
-	^ { qPoint }
+	^ (super weight: aNumber atIndex: anIndex) * (weights at: anIndex)
 ]

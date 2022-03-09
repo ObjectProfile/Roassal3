@@ -22,14 +22,12 @@ RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
 { #category : #accessing }
 RSdeCasteljauRationalLine >> deCasteljau: aSequenceableOfPoints at: t [
 
-	| triple factor n |
+	| factor n |
 	n := pointsSize - 1.
-	factor := 0.
+	factor := 0.0.
 
 	weights withIndexDo: [ :each :i | 
 		factor := factor + (each * (t bernstein: n choose: i - 1)) ].
 
-	triple := super deCasteljau: mappedPoints at: t.
-
-	^ triple collect: [ :each | each / factor ]
+	^ (super deCasteljau: mappedPoints at: t) / factor
 ]

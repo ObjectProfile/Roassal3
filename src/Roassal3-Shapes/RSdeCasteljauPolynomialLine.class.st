@@ -15,5 +15,5 @@ RSdeCasteljauPolynomialLine >> deCasteljau: aSequenceableOfPoints at: t [
 	aSequenceableOfPoints withIndexDo: [ :each :i | 
 		aPoint := each * (t bernstein: n choose: i - 1) asPoint + aPoint ].
 
-	^ { aPoint }
+	^ aPoint
 ]
