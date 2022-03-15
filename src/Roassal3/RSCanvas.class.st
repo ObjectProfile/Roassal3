@@ -599,12 +599,6 @@ RSCanvas >> signalUpdate [
 	morph changed
 ]
 
-{ #category : #accessing }
-RSCanvas >> topParent [
-	"A top parent is a canvas"
-	^ self
-]
-
 { #category : #'accessing - computed' }
 RSCanvas >> transform: aPoint [
 	^ aPoint
