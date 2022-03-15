@@ -60,7 +60,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RSForceBasedLayout >> addLines: realLines [
 	| newMockLines |
 	newMockLines := realLines
@@ -71,7 +71,7 @@ RSForceBasedLayout >> addLines: realLines [
 
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
@@ -302,13 +302,13 @@ RSForceBasedLayout >> nodes: aCollection [
 	nodes := aCollection
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RSForceBasedLayout >> removeEdge: aRealEdge [
 
 	self mockLineAt: aRealEdge ifPresent: [ :edge | lines remove: edge ]
 ]
 
-{ #category : #'adding/removing' }
+{ #category : #'adding-removing' }
 RSForceBasedLayout >> removeNode: aRealNode [
 	| node |
 	node := self mockElementAt: aRealNode.
