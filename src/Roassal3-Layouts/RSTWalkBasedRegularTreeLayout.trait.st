@@ -226,7 +226,7 @@ RSTWalkBasedRegularTreeLayout >> indexOfIYL: aValueLink [
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations [
+RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations ifMultipleRoots: mrBlocks [
 
 	| hierarchy roots allParents rootNode leaves |
 	hierarchy := IdentityDictionary new.
@@ -289,7 +289,7 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations
 
 				                            aRoot ].
 
-			            aRootShape := RSComposite new.
+			            aRootShape := mrBlocks value: orderedRoots.
 
 			            self childrenOf: aRootShape put: orderedRoots.
 
@@ -306,11 +306,14 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations
 ]
 
 { #category : #initialization }
-RSTWalkBasedRegularTreeLayout >> initialize: elements lines: lines [
+RSTWalkBasedRegularTreeLayout >> initialize: elements lines: lines ifMultipleRoots: mrBlocks [
 
 	| associations |
 	associations := lines collect: [ :each | each from -> each to ].
-	^ self initialize: elements associations: associations
+	^ self
+		  initialize: elements
+		  associations: associations
+		  ifMultipleRoots: mrBlocks
 ]
 
 { #category : #initialization }

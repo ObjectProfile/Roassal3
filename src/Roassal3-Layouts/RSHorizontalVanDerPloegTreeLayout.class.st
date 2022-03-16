@@ -22,7 +22,10 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	root := self initialize: elements lines: self edges
+	root := self
+		        initialize: elements
+		        lines: self edges
+		        ifMultipleRoots: [ :roots | RSComposite new ]
 ]
 
 { #category : #hook }
