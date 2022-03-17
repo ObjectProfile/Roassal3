@@ -108,28 +108,6 @@ RSPieSlice >> externalRadius: eR [
 	self extent: (eR * 2) asPoint.
 ]
 
-{ #category : #testing }
-RSPieSlice >> includesPoint: aPoint [
-	| invertedPoint a b i e n d |
-	invertedPoint := matrix rsInverseTransform: aPoint.
-	(self baseRectangle containsPoint: invertedPoint)
-		ifFalse: [ ^ false ].
-	i := innerRadius.
-	e := externalRadius.
-	d := invertedPoint distanceTo: 0 @ 0.
-	(d between: i and: e)
-		ifFalse: [ ^ false ].
-	n := invertedPoint angle negated radiansToDegrees.
-	a := alphaAngle.
-	b := betaAngle.
-	n := (360 + (n % 360)) % 360.
-	a := (3600000 + a) % 360.
-	b := (3600000 + b) % 360.
-	^ a < b
-		ifTrue: [ n between: a and: b ]
-		ifFalse: [ a <= n | (n <= b) ]
-]
-
 { #category : #initialization }
 RSPieSlice >> initialize [
 	super initialize.
@@ -154,6 +132,28 @@ RSPieSlice >> innerRadius: iR [
 { #category : #accessing }
 RSPieSlice >> middleAngle [
 	^ (alphaAngle + betaAngle) / 2
+]
+
+{ #category : #testing }
+RSPieSlice >> preciseIncludesPoint: aPoint [
+	| invertedPoint a b i e n d |
+	invertedPoint := matrix rsInverseTransform: aPoint.
+	(self baseRectangle containsPoint: invertedPoint)
+		ifFalse: [ ^ false ].
+	i := innerRadius.
+	e := externalRadius.
+	d := invertedPoint distanceTo: 0 @ 0.
+	(d between: i and: e)
+		ifFalse: [ ^ false ].
+	n := invertedPoint angle negated radiansToDegrees.
+	a := alphaAngle.
+	b := betaAngle.
+	n := (360 + (n % 360)) % 360.
+	a := (3600000 + a) % 360.
+	b := (3600000 + b) % 360.
+	^ a < b
+		ifTrue: [ n between: a and: b ]
+		ifFalse: [ a <= n | (n <= b) ]
 ]
 
 { #category : #accessing }

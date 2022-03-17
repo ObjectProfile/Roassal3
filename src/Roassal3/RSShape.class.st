@@ -582,11 +582,6 @@ RSShape >> signalUpdate [
 ]
 
 { #category : #accessing }
-RSShape >> topParent [
-	^ parent ifNotNil: [ parent topParent ]
-]
-
-{ #category : #accessing }
 RSShape >> width [
 	^ self extent x
 ]

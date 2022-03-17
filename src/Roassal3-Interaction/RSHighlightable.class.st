@@ -270,7 +270,7 @@ RSHighlightable class >> withAntAnimation [
 				onStepDo: [ :t |
 					shape connectedLines do: [ :ed |ed border dashOffset: t ].
 					shape signalUpdate ].
-			shape topParent propertyAt: #antAnimation put: anime.
+			shape canvas propertyAt: #antAnimation put: anime.
 		].
 	].
 	i when: RSUnHighlightEvent do: [ :evt | 
@@ -279,7 +279,7 @@ RSHighlightable class >> withAntAnimation [
 		shape border: (shape propertyAt: #ob).
 		shape removeKey: #ob.
 		shape isNode ifTrue: [ 
-			att := shape topParent properties.
+			att := shape canvas properties.
 			(att at: #antAnimation) stop.
 			att removeKey: #antAnimation.
 		 ]
@@ -345,7 +345,7 @@ RSHighlightable >> doHighlight: shape [
 	shapes := self highlightShapesFor: shape.
 	shapes do: [ :e | self announceHighlight: e source: shape ].
 	
-	shape topParent propertyAt: self propertyKey put: shapes.
+	shape canvas propertyAt: self propertyKey put: shapes.
 ]
 
 { #category : #actions }
@@ -561,15 +561,15 @@ For example:
 
 { #category : #actions }
 RSHighlightable >> resetHighlightedShapes: shapeOrGroupOrCanvas [
-	| att top |
+	| att canvas |
 	(shapeOrGroupOrCanvas class == RSGroup)
 		ifTrue: [ 
 			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
-			top := shapeOrGroupOrCanvas anyOne canvas ]
+			canvas := shapeOrGroupOrCanvas anyOne canvas ]
 		ifFalse: [
-			top := shapeOrGroupOrCanvas topParent ]. 
+			canvas := shapeOrGroupOrCanvas canvas ]. 
 		
-	att := top properties.
+	att := canvas properties.
 	(att includesKey: self propertyKey) ifFalse: [ ^ self ].
 	att removeKey: self propertyKey
 ]
@@ -608,7 +608,7 @@ RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
 			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
 			top := shapeOrGroupOrCanvas anyOne canvas ]
 		ifFalse: [
-			top := shapeOrGroupOrCanvas topParent ]. 
+			top := shapeOrGroupOrCanvas canvas ]. 
 		
 	top ifNil: [ ^ self ].
 	top
