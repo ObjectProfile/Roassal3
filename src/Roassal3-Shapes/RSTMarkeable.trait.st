@@ -110,7 +110,7 @@ RSTMarkeable >> markersDo: block [
 RSTMarkeable >> markersIncludesPoint: aPoint [ 
 	self hasMarkers ifFalse: [ ^ false ].
 	self markerShapesInPositionDo: [ :m | 
-		(m shape includesPoint: aPoint) 
+		(m shape preciseIncludesPoint: aPoint) 
 			ifTrue: [ ^ true ] ].
 	^ false
 ]
