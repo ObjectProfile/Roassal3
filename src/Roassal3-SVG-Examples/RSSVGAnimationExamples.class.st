@@ -174,13 +174,13 @@ RSSVGAnimationExamples >> example03Boat [
 			| cp p1 p2 vector |
 			frame := frame + 0.5.
 			updateLines value.
-			cp := (lines at: lines size / 2) controlPoints.
+			cp := (lines at: (lines size / 2) asInteger) controlPoints.
 			x := x + 0.3.
 		
 			(x between: 1 and: cp size - 1)
 				ifFalse: [ x := cp size - 1 ].
-			p1 := cp at: x.
-			p2 := cp at: x + 1.
+			p1 := cp at: x asInteger.
+			p2 := cp at: (x + 1) asInteger.
 			vector := p2 - p1.
 			boat matrix
 				loadIdentity;

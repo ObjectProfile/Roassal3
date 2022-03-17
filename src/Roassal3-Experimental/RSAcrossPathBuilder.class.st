@@ -13,6 +13,7 @@ Class {
 
 { #category : #examples }
 RSAcrossPathBuilder >> example01Labels [
+
 	<script: 'self new example01Labels open'>
 	| path |
 	self fromString: 'Roassal3 across the path'.
@@ -21,10 +22,74 @@ RSAcrossPathBuilder >> example01Labels [
              C 500 200 600 300 700 200
              C 800 100 900 100 900 100'.
 	path := 'M10,90 Q90,90 90,45 Q90,10 50,10 Q10,10 10,40 Q10,70 45,70 Q70,70 75,50'.
+	path := 'M-100 -100 L 100 100'.
 	self svgShape: (RSSVGPath new
-		svgPath: 'M0 0 L -100 -100';
-		border: (RSBorder new width: 3; color: 'blue');
-		yourself).
+			 svgPath: path;
+			 noPaint;
+			 border: (RSBorder new
+					  width: 3;
+					  color: 'blue');
+			 yourself).
+	self build.
+	self canvas zoomToFit.
+	^ self canvas
+]
+
+{ #category : #examples }
+RSAcrossPathBuilder >> example02Labels [
+
+	<script: 'self new example02Labels open'>
+	| path |
+	self fromString: 'Roassal3 across the path'.
+	path := 'M -50 -50 L 50 -50 L 50 50'.
+	self svgShape: (RSSVGPath new
+			 svgPath: path;
+			 noPaint;
+			 border: (RSBorder new
+					  width: 3;
+					  color: 'blue';
+					  joinMiter);
+			 yourself).
+	self build.
+	self canvas zoomToFit.
+	^ self canvas
+]
+
+{ #category : #examples }
+RSAcrossPathBuilder >> example03Labels [
+
+	<script: 'self new example03Labels open'>
+	| path |
+	self fromString: 'Roassal3 across the path'.
+	path := 'M 0 0 L 100 0 L 100 100'.
+	self svgShape: (RSSVGPath new
+			 svgPath: path;
+			 noPaint;
+			 border: (RSBorder new
+					  width: 3;
+					  color: 'blue';
+					  joinMiter);
+			 yourself).
+	self build.
+	self canvas zoomToFit.
+	^ self canvas
+]
+
+{ #category : #examples }
+RSAcrossPathBuilder >> example04Labels [
+
+	<script: 'self new example04Labels open'>
+	| path |
+	self fromString: 'Roassal3 across the path'.
+	path := 'M20,20 L40,25 L60,40 L80,120 L120,140 L200,180'.
+	self svgShape: (RSSVGPath new
+			 svgPath: path;
+			 noPaint;
+			 border: (RSBorder new
+					  width: 3;
+					  color: 'blue';
+					  joinMiter);
+			 yourself).
 	self build.
 	self canvas zoomToFit.
 	^ self canvas
@@ -58,11 +123,12 @@ RSAcrossPathBuilder >> renderIn: aCanvas [
 	| visitor |
 	aCanvas addAll: shapesToLayout.
 	aCanvas add: svgShape.
-	visitor := RSBlockSegmentsVisitor new
-		simplePoints: [ :segment :current |
-			segment consumeShapes: (RSGroup withAll: shapesToLayout) current: current
-			 ].
+	shapes := RSGroup withAll: shapesToLayout.
+	visitor := RSBlockSegmentsVisitor new 
+		simplePoints: [ :segment :current | 
+			segment consumeShapes: shapes current: current delta: svgShape position ].
 	svgShape accept: visitor.
+	[ shapes isEmpty ] whileFalse: [ shapes removeFirst remove ]
 ]
 
 { #category : #accessing }
