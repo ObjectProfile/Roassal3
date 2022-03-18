@@ -179,6 +179,7 @@ RSQuadTreeF >> visibleShapesFrom: aRectangle [
 { #category : #'as yet unclassified' }
 RSQuadTreeF >> visibleShapesFrom: aRectangle list: listResult [
 
+	(self rectangle intersects: aRectangle) ifFalse: [ ^ self ].
 	self isLeaf
 		ifTrue: [ 
 			(self soleChild encompassingRectangle intersects: aRectangle) 
