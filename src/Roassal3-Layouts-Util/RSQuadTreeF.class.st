@@ -166,3 +166,24 @@ RSQuadTreeF >> subQuadsDo: aBlockClosure [
   southEastQuad ifNotNil: aBlockClosure.
 
 ]
+
+{ #category : #'as yet unclassified' }
+RSQuadTreeF >> visibleShapesFrom: aRectangle [
+
+	| listResult |
+	listResult := OrderedCollection new.
+	self visibleShapesFrom: aRectangle list: listResult.
+	^ listResult
+]
+
+{ #category : #'as yet unclassified' }
+RSQuadTreeF >> visibleShapesFrom: aRectangle list: listResult [
+
+	self isLeaf
+		ifTrue: [ 
+			(self soleChild encompassingRectangle intersects: aRectangle) 
+				ifTrue: [ listResult add: self soleChild ] ]
+		ifFalse: [ 
+			self subQuadsDo: [ :aQuad | 
+				aQuad visibleShapesFrom: aRectangle list: listResult ] ]
+]
