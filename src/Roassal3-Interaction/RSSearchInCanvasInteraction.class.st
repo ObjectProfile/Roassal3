@@ -385,14 +385,14 @@ RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 			domain: #(0 0.5 1);
 			range: {label color. label color muchDarker. label color});
 		onStepDo: [:newColor | 
-			
-			index := label propertyAt: #index ifAbsent: [ 1 ].
-			shadow := (shapes at: index) propertyAt: #shadow.
-			shadow color: newColor.
-			shadow signalUpdate.
-			].
+			shadow ifNotNil: [ 
+				index := label propertyAt: #index ifAbsent: [ 1 ].
+				shadow := (shapes at: index) propertyAt: #shadow.
+				shadow color: newColor.
+				shadow signalUpdate.
+			 ]
+		].
 	label propertyAt: #animation put: anime.
-	
 	
 ]
 
