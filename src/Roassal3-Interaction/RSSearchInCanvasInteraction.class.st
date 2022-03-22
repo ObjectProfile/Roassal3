@@ -198,15 +198,19 @@ RSSearchInCanvasInteraction >> initialize [
 	super initialize.
 	self resetFixedShapes.
 	highlightesShapes := RSGroup new.
-	
+
 	colorsToUse := NSScale ordinalColored: 7.
 	highlightableLabels := RSHighlightable new
-		when: RSHighlightEvent send: #showCurrentShadow: to: self;
-		when: RSUnHighlightEvent send: #hideCurrentShadow: to: self;
-		yourself.
-	
+		                       when: RSHighlightEvent
+		                       send: #showCurrentShadow:
+		                       to: self;
+		                       when: RSUnHighlightEvent
+		                       send: #hideCurrentShadow:
+		                       to: self;
+		                       yourself.
+
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	self doNotUseExactMatch
+	self useExactMatch
 ]
 
 { #category : #util }

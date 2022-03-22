@@ -64,9 +64,9 @@ RSSearchInCanvasTest >> testExactMatch [
 RSSearchInCanvasTest >> testFixedShapes [
 
 	self assert: c numberOfFixedShapes equals: 3.
-	search searchForShapes: '4'.
+	search searchForShapes: '*4*'.
 	self assert: c numberOfFixedShapes equals: 4.
-	search searchForShapes: '5'.
+	search searchForShapes: '*5*'.
 	self assert: c numberOfFixedShapes equals: 5.
 	
 	search resetAllHighlightedShapes.
@@ -77,7 +77,7 @@ RSSearchInCanvasTest >> testFixedShapes [
 RSSearchInCanvasTest >> testFixedShapesAndPopup [
 
 	| lbl |
-	search searchForShapes: '4'.
+	search searchForShapes: '*4*'.
 	lbl := search fixedLabels first.
 	lbl announce: RSMouseEnter new.
 ]
@@ -97,11 +97,11 @@ RSSearchInCanvasTest >> testNoSearch [
 { #category : #tests }
 RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
 	self assert: search numberOfHighlightedShapes equals: 0.
-	search searchForShapes: '4'.
+	search searchForShapes: '*4*'.
 	self assert: search numberOfHighlightedShapes equals: 1.
-	search searchForShapes: '5'.
+	search searchForShapes: '*5*'.
 	self assert: search numberOfHighlightedShapes equals: 2.
-	search searchForShapes: '3'.
+	search searchForShapes: '*3*'.
 	self assert: search numberOfHighlightedShapes equals: 3.
 	
 	search resetAllHighlightedShapes.
@@ -112,12 +112,12 @@ RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
 RSSearchInCanvasTest >> testShadow [
 	self assert: search numberOfPerformedSearches equals: 0.
 	
-	search searchForShapes: '4'.
+	search searchForShapes: '*4*'.
 	self assert: (shapes fourth hasProperty: #shadow).
 	self deny: (shapes fifth hasProperty: #shadow).
 	self assert: search numberOfPerformedSearches equals: 1.
 	
-	search searchForShapes: '5'.
+	search searchForShapes: '*5*'.
 	self assert: (shapes fourth hasProperty: #shadow).
 	self assert: (shapes fifth hasProperty: #shadow).
 	self 
