@@ -496,3 +496,50 @@ RSHighlightableExamples >> example12ShowingEdges [
 	canvas zoomToFit.
 	^ canvas 
 ]
+
+{ #category : #elastic }
+RSHighlightableExamples >> example13Click [
+	<script: 'self new example13Click open'>
+	| canvas shapes color interaction selectedItems interaction2 |
+	canvas := RSCanvas new.
+
+	color := RSColorPalette sequential bupu3.
+	shapes := (1 to: 20) collect: [ :m |
+		RSBox new
+			size: 10;
+			model: m;
+			draggable;
+			withBorder;
+			color: (color scale: m);
+			yourself.
+		 ].
+	
+	RSLineBuilder line
+		canvas: canvas;
+		shapes: shapes;
+		connectFrom: [ :n | n // 2 ].
+	canvas addAll: shapes.
+	
+	selectedItems := OrderedCollection new.
+
+	interaction := RSHighlightable red withLines.
+	canvas nodes
+		when: RSMouseLeftClick do: [ :evt | | shape|
+			shape := evt shape.
+			(selectedItems includes: shape) 
+				ifTrue: [ selectedItems remove: shape ]
+				ifFalse: [ selectedItems add: shape ].
+			interaction doHighlightShapes: selectedItems.
+			evt signalUpdate.
+	].
+	canvas
+		when: RSMouseClick do: [ :evt | 
+			selectedItems removeAll.
+			interaction unhighlightRecordedShapes: evt.
+			evt signalUpdate ].
+	interaction2 := RSHighlightable red withLines.
+	canvas nodes @ interaction2.
+	RSClusterLayout on: shapes.
+	canvas zoomToFit.
+	^ canvas 
+]
