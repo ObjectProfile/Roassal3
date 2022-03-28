@@ -71,6 +71,33 @@ RSExamplesBrowser >> defaultClass [
 	
 ]
 
+{ #category : #'initialization - deprecated' }
+RSExamplesBrowser >> initializePresenter [
+
+	classesList := self newDropList.
+	classesList
+		help: 'Select the example to view';
+		items: self classes;
+		display: [ :cls | cls name ];
+		displayIcon: [ :cls | cls systemIcon ];
+		whenSelectedItemChangedDo: [ :cls | self classChanged: cls  ].
+
+	examples := self computeExamples.
+	index := 1.
+	leftButton := self newButton.
+	leftButton label: '<'.
+	leftButton action: [ self shiftLeft ].
+	roassalCanvas := self instantiate: SpRoassalPresenter.
+	codeEditor := self newCode
+		              withSyntaxHighlight;
+		              withScrollBars;
+		              yourself.
+	rightButton := self newButton.
+	rightButton label: '>'.
+	rightButton action: [ self shiftRight ].
+	self updateCanvas
+]
+
 { #category : #initialization }
 RSExamplesBrowser >> initializeWindow: window [
 	window title: (examples at: index) selector.
@@ -93,4 +120,30 @@ RSExamplesBrowser >> shiftRight [
 	index = examples size ifTrue: [ ^ self ].
 	index := index + 1.
 	self updateCanvas.
+]
+
+{ #category : #updated }
+RSExamplesBrowser >> updateCanvas [
+	| current canvas |
+	current := examples at: index.
+	self withWindowDo: [ :window | self initializeWindow: window ].
+	codeEditor text: current sourceCode.
+	codeEditor behavior: selectedClass.
+	[
+		canvas :=  current selector value: selectedClass new.
+		canvas class = RSCanvas ifFalse: [ 
+			canvas := canvas build; canvas
+			 ].
+		roassalCanvas currentCanvas 
+			ifNil: [ roassalCanvas canvas: canvas ]
+			ifNotNil: [ :aCanvas | 
+				| widget |
+				widget := aCanvas morph.
+				widget canvas: canvas.
+				canvas morph: widget.
+				canvas extent: widget extent.
+				canvas signalUpdate.
+				].
+	] onErrorDo: [ :ex | ex traceCr ]	
+		
 ]
