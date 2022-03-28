@@ -339,23 +339,29 @@ RSAthensMorph >> handleMouseMove: anEvent [
 
 { #category : #'events - processing' }
 RSAthensMorph >> handleMouseOver: aMorphicEvent [
-	| currentElement trEvent |
-	super handleMouseOver: aMorphicEvent.
+	| currentElement rsEvent "ime times" |
+	self window = SystemWindow topWindow
+		ifFalse: [ ^ self ].
 	aMorphicEvent wasHandled
 		ifTrue: [ ^ self ].	"Do nothing if it was already handled"
 	self isDragging
 		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
 	lastMousePosition = aMorphicEvent position 
 		ifTrue: [ ^ self].		"Do nothing if it is in the same position"
-	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
+	shapeBeingPointed ifNil: [
+		shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
 	
+	"time := [currentElement := self shapeForEvent: aMorphicEvent] timeToRun.
+	times := roassalCanvas propertyAt: #times ifAbsentPut: [ OrderedCollection new ].
+	times add: time.
+	times average traceCr."
 	currentElement := self shapeForEvent: aMorphicEvent.
 	lastMousePosition := aMorphicEvent position.
 	currentElement == shapeBeingPointed 
 		ifTrue: [ ^ self ].
-	trEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
-	trEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: trEvent.
+	rsEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
+	rsEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: rsEvent.
 	shapeBeingPointed := currentElement.
 	self eventMouseEnter: aMorphicEvent.
 ]
@@ -518,7 +524,7 @@ RSAthensMorph >> setTakeKeyboardFocus [
 
 { #category : #'events - processed' }
 RSAthensMorph >> shapeForEvent: anEvent [
-	"Return the Trachel shape for the event provided as argument"
+	"Return the roassal shape for the event provided as argument"
 	^ self shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
