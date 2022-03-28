@@ -198,15 +198,19 @@ RSSearchInCanvasInteraction >> initialize [
 	super initialize.
 	self resetFixedShapes.
 	highlightesShapes := RSGroup new.
-	
+
 	colorsToUse := NSScale ordinalColored: 7.
 	highlightableLabels := RSHighlightable new
-		when: RSHighlightEvent send: #showCurrentShadow: to: self;
-		when: RSUnHighlightEvent send: #hideCurrentShadow: to: self;
-		yourself.
-	
+		                       when: RSHighlightEvent
+		                       send: #showCurrentShadow:
+		                       to: self;
+		                       when: RSUnHighlightEvent
+		                       send: #hideCurrentShadow:
+		                       to: self;
+		                       yourself.
+
 	"The variable highlightedShapes contains the shapes that have been searched and therefore highlighted"
-	self doNotUseExactMatch
+	self useExactMatch
 ]
 
 { #category : #util }
@@ -381,14 +385,14 @@ RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 			domain: #(0 0.5 1);
 			range: {label color. label color muchDarker. label color});
 		onStepDo: [:newColor | 
-			
-			index := label propertyAt: #index ifAbsent: [ 1 ].
-			shadow := (shapes at: index) propertyAt: #shadow.
-			shadow color: newColor.
-			shadow signalUpdate.
-			].
+			shadow ifNotNil: [ 
+				index := label propertyAt: #index ifAbsent: [ 1 ].
+				shadow := (shapes at: index) propertyAt: #shadow.
+				shadow color: newColor.
+				shadow signalUpdate.
+			 ]
+		].
 	label propertyAt: #animation put: anime.
-	
 	
 ]
 

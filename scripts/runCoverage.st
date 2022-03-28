@@ -1,3 +1,5 @@
+| profiler classSizeScale classColorCoverage m lbl fileCoverageResult str |
+   
 [ Metacello new 
 	baseline: 'Spy2'; 
 	repository: 'github://ObjectProfile/Spy2'; 
@@ -14,7 +16,8 @@
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 
 WorldMorph doOneCycle.
-"(Delay forSeconds: 2) wait."
+(Delay forSeconds: 5) wait.
+WorldMorph doOneCycle.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
 
 classSizeScale := 'NSScale' asClass linear range: #(5 30); domain: { 0 . (profiler allClasses max: #numberOfMethods) }.
@@ -44,8 +47,6 @@ str close.
 
 m canvas extent: (1500 @ 1500).
 "m canvas zoomToFit."
-RSPNGExporter new
+'RSPNGExporter' asClass new
 	canvas: m canvas;
 	exportToFile: 'coverage.png' asFileReference.
-
-SmalltalkImage current quitPrimitive
