@@ -54,7 +54,10 @@ RSAthensMorph >> drawOn: aCanvas [
 	[ 
 		self checkSession.
 		self recreateSurfaceIfNecessary.
-		aCanvas fillRectangle: bounds color: roassalCanvas color.
+		aCanvas 
+			fillRectangle: self bounds 
+			fillStyle: roassalCanvas color 
+			borderStyle: self borderStyle.
 		roassalCanvas playAnimations.
 		self drawShapes.
 
@@ -66,9 +69,8 @@ RSAthensMorph >> drawOn: aCanvas [
 			sourceRect: (0 @ 0 extent: surface extent)
 			rule: 34 ]
 		on: Exception
-		do: [ :ex |  ] ] 
-	ensure: [ 
-		isDrawing := false ]
+		do: [ :ex | ex traceCr ]
+	] ensure: [ isDrawing := false ]
 ]
 
 { #category : #drawing }
