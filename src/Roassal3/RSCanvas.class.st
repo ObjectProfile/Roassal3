@@ -555,7 +555,12 @@ RSCanvas >> shapeWithActionForPositionInPixels: position [
 			shape := s shapeWithActionForPosition: pos.
 			shape ifNotNil: [^ shape ] ] ].
 	block value: fixedShapes value: position.
+	"| shape |
+	shape := self quadTree shapeWithActionForPosition: (self camera fromPixelToSpace: position).
+	"
 	block value: shapes value: (self camera fromPixelToSpace: position).
+	"shape ifNil: [ shape := self ].
+	^ shape"
 	^ self
 	
 ]
