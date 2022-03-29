@@ -167,7 +167,7 @@ RSQuadTreeF >> subQuadsDo: aBlockClosure [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSQuadTreeF >> visibleShapesFrom: aRectangle [
 
 	| listResult |
@@ -176,7 +176,7 @@ RSQuadTreeF >> visibleShapesFrom: aRectangle [
 	^ listResult
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RSQuadTreeF >> visibleShapesFrom: aRectangle list: listResult [
 
 	(self rectangle intersects: aRectangle) ifFalse: [ ^ self ].

@@ -52,6 +52,11 @@ RSCamera class >> minimumExtent [
 	^ 0.0001 asPoint
 ]
 
+{ #category : #visiting }
+RSCamera >> accept: visitor [
+	visitor visitCamera: self
+]
+
 { #category : #announce }
 RSCamera >> announce: anEvent [
 	canvas announce: anEvent

@@ -97,16 +97,10 @@ v canvas buildMorph drawOnMockCanvas
 RSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [ :athensCanvas | 
-		| camera |
 		roassalCanvas clearBackground
 			ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
-		camera := roassalCanvas camera.
 		
-		athensCanvas pathTransform
-			translateBy: (self extent / 2) asFloatPoint;
-			scaleBy: camera scale asFloat;
-			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		roassalCanvas accept: renderer.
 	]

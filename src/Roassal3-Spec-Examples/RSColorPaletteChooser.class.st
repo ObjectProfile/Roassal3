@@ -273,5 +273,5 @@ RSColorPaletteChooser >> renderColorPalettesFor: aShape [
 
 { #category : #initialization }
 RSColorPaletteChooser >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]

@@ -82,3 +82,10 @@ RSBox >> hasCornerRadius [
 	^ cornerRadius notNil
 		and: [ cornerRadius max > 0 and: [ cornerRadius min >= 0 ] ]
 ]
+
+{ #category : #path }
+RSBox >> resetPath [
+	path := self hasCornerRadius
+		ifTrue: [ nil ]
+		ifFalse: [ baseRectangle ]
+]
