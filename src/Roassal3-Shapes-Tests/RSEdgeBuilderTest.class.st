@@ -48,7 +48,7 @@ RSEdgeBuilderTest >> testBorder [
 	numberOfEdges := canvas edges size.
 	self assert: numberOfEdges > 0.
 	
-	self assert: (canvas edges collect: #border) asSet size equals: numberOfEdges
+	self assert: (canvas edges collect: #border) asSet size equals: 1
 ]
 
 { #category : #tests }

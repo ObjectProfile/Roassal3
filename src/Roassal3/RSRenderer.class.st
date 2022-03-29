@@ -40,5 +40,30 @@ RSRenderer >> canvas: aCanvas [
 ]
 
 { #category : #visiting }
+RSRenderer >> visitBorder: border [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitBoundingShape: shape [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitCamera: camera [
+]
+
+{ #category : #visiting }
 RSRenderer >> visitCanvas: canvas [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitGroup: aGroup [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitLabel: label [
+
+]
+
+{ #category : #visiting }
+RSRenderer >> visitLine: line [
 ]

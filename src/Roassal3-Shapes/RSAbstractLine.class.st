@@ -45,9 +45,9 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
-{ #category : #visiting }
+{ #category : #adding }
 RSAbstractLine >> accept: visitor [
-	visitor visitLine: self.
+	visitor visitLine: self
 ]
 
 { #category : #'attach point' }

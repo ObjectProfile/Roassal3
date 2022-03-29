@@ -67,6 +67,7 @@ RSEasel >> connectPresenters [
 RSEasel >> initialCode [
 	^
 '"[:canvas | ]"
+| box |
 box := RSBox new
 	size: 100;
 	draggable;
@@ -97,7 +98,7 @@ RSEasel >> release [
 
 { #category : #running }
 RSEasel >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]
 
 { #category : #accessing }

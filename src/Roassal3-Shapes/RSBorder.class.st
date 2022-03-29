@@ -56,6 +56,14 @@ Class {
 	#category : #'Roassal3-Shapes-Border'
 }
 
+{ #category : #comparing }
+RSBorder >> = anObject [
+	^ self == anObject or: [ 
+		width = anObject width and: [ 
+			paint = anObject paint and: [ 
+				style = anObject style ] ] ].
+]
+
 { #category : #visiting }
 RSBorder >> accept: visitor [
 	^ visitor visitBorder: self
@@ -151,6 +159,11 @@ c
 	self pStyle dashOffset: offset
 ]
 
+{ #category : #comparing }
+RSBorder >> hash [
+	^ (width hash bitXor: paint hash) bitXor: style hash
+]
+
 { #category : #initialization }
 RSBorder >> initialize [
 	super initialize.
@@ -200,7 +213,7 @@ RSBorder >> printOn: stream [
 
 { #category : #accessing }
 RSBorder >> style [
-	^style
+	^ style
 ]
 
 { #category : #accessing }

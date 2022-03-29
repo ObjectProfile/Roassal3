@@ -20,7 +20,8 @@ Class {
 		'builder',
 		'matrix',
 		'canvasRect',
-		'showRectangles'
+		'showRectangles',
+		'strokeCache'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -173,10 +174,7 @@ RSAthensRenderer >> buildBezierPath: bezier [
 
 { #category : #'creating path' }
 RSAthensRenderer >> buildBoxPath: box [
-	box hasCornerRadius 
-		ifTrue: [ self buildCornerBoxPath: box ]
-		ifFalse: [ self buildSimpleBoxPath: box ]
-	
+	self buildCornerBoxPath: box
 ]
 
 { #category : #'creating path' }
@@ -449,23 +447,26 @@ RSAthensRenderer >> buildRingPath: ring [
 	builder close.
 ]
 
-{ #category : #'creating path' }
-RSAthensRenderer >> buildSimpleBoxPath: box [
-	| rectangle |
-	rectangle := box baseRectangle.
-	builder
-		absolute;
-		moveTo: rectangle topLeft;
-		lineTo: rectangle topRight;
-		lineTo: rectangle bottomRight;
-		lineTo: rectangle bottomLeft;
-		lineTo: rectangle topLeft;
-		closePath
-]
-
 { #category : #accessing }
 RSAthensRenderer >> builder [
 	^ builder
+]
+
+{ #category : #utilities }
+RSAthensRenderer >> createStrokePaintFor: border [
+	| stroke style |
+	stroke := (border paint asAthensPaintOn: athensCanvas) asStrokePaintOn: athensCanvas.
+	stroke width: border width asFloat.
+	style := border style.
+	style ifNil: [ ^ stroke ].
+	style dashArray 
+		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
+		
+	style capStyle
+		ifNotNil: [:s | s value: stroke ].
+	style joinStyle
+		ifNotNil: [:s | s value: stroke ].
+	^ stroke
 ]
 
 { #category : #'visiting - helpers' }
@@ -553,6 +554,7 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	| path |
 	path := shape path.
 	path ifNotNil: [ ^ path ].
+	athensCanvas setPathMatrix.
 	path := athensCanvas
 		createPath: [ :pathBuilder |
 			builder := pathBuilder.
@@ -577,22 +579,17 @@ RSAthensRenderer >> paintFor: shape form: form [
 			paint ]
 ]
 
+{ #category : #accessing }
+RSAthensRenderer >> strokeCache [
+	^ strokeCache ifNil: [ strokeCache := LRUCache new maximumWeight: 100 ]
+]
+
 { #category : #visiting }
 RSAthensRenderer >> visitBorder: border [
-	| stroke style |
-	stroke := athensCanvas setStrokePaint: border paint.
-	stroke width: border width asFloat.
-	style := border style.
-	style ifNil: [ ^ stroke ].
-	style dashArray 
-		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
-		
-	style capStyle
-		ifNotNil: [:s | stroke perform: s].
-	style joinStyle
-		ifNotNil: [:s | stroke perform: s].
-	^ stroke.
-	
+	| stroke |
+	stroke := self strokeCache at: border ifAbsentPut: [ self createStrokePaintFor: border ].
+	athensCanvas privatePaint: stroke.
+	^ stroke
 ]
 
 { #category : #'visiting - helpers' }
@@ -600,21 +597,19 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 	shape hasBorder ifFalse: [ ^ self ].
 	athensCanvas setShape: shape path.
 	shape border accept: self.
-	athensCanvas draw.
+	athensCanvas draw
 ]
 
 { #category : #visiting }
 RSAthensRenderer >> visitBoundingShape: shape [
 	self visitShapeIfNecessary: shape block: [ :shapeMatrix | 
 		| path paint |
-		athensCanvas setPathMatrix.
 		path := self getOrCreatePathOf: shape.
 		athensCanvas pathTransform restoreAfter: [ 
 			athensCanvas pathTransform multiplyBy: shapeMatrix.
 			paint := shape paintOn: self.
 			paint ifNotNil: [ 
 				athensCanvas 
-					fillRuleEvenOdd;
 					setPaint: paint;
 					drawShape: path ].
 			self visitBorderIfNecessary: shape.
@@ -627,11 +622,22 @@ RSAthensRenderer >> visitBoundingShape: shape [
 ]
 
 { #category : #visiting }
+RSAthensRenderer >> visitCamera: camera [
+	athensCanvas pathTransform
+		translateBy: (camera canvas extent / 2) asFloatPoint;
+		scaleBy: camera scale asFloat;
+		translateBy: camera position negated asFloatPoint.
+]
+
+{ #category : #visiting }
 RSAthensRenderer >> visitCanvas: aRSCanvas [
 	matrix := AthensAffineTransform new.
 	canvasRect := aRSCanvas visibleRectangle.
 	showRectangles := aRSCanvas showRectangles.
+	athensCanvas fillRuleEvenOdd.
+	aRSCanvas camera accept: self.
 	aRSCanvas shapes accept: self.
+	
 	"We display the elements that are _NOT_ subject to the camera"
 	athensCanvas pathTransform loadIdentity.
 	canvasRect := 0@0 extent: aRSCanvas extent.
@@ -700,7 +706,6 @@ RSAthensRenderer >> visitLine: line [
 	| path paint |
 	(line intersects: canvasRect) ifFalse: [ ^ self ].
 	
-	athensCanvas setPathMatrix.
 	path := self getOrCreatePathOf: line.
 	paint := line paintOn: self.
 	

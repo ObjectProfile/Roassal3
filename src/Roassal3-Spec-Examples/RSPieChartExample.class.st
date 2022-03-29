@@ -78,7 +78,7 @@ RSPieChartExample >> pie [
 
 { #category : #running }
 RSPieChartExample >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]
 
 { #category : #initialization }
