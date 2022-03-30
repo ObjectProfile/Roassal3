@@ -42,13 +42,13 @@ jobs:
           cd ci_data
           mv ../uml.png .
           git add uml.png
+          git checkout --ours -- uml.png
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || git commit -m "Add changes" -a
-          git checkout --ours -- ci_data/uml.png
-          git pull origin uml --rebase
+          git pull origin uml --rebase --continue
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
