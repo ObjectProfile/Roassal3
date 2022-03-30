@@ -33,7 +33,7 @@ jobs:
           git branch uml master
           git checkout uml
           git fetch
-          git pull origin uml --rebase
+          git pull --rebase
       - name: Producing class diagram
         run: bash ./scripts/visualizeClassDiagram.sh
       - name: Push the picture
