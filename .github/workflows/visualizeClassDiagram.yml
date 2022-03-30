@@ -40,7 +40,6 @@ jobs:
         run: |
           mkdir -p ci_data
           cd ci_data
-          git pull origin uml --rebase
           mv ../uml.png .
           git add uml.png
       - name: Commit files
@@ -48,6 +47,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || git commit -m "Add changes" -a
+          git pull origin uml --rebase
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
