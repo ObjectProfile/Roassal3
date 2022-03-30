@@ -33,7 +33,9 @@ jobs:
           git branch uml master
           git checkout uml
           git fetch
-          git rebase origin/master
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git pull origin uml --rebase
       - name: Producing class diagram
         run: bash ./scripts/visualizeClassDiagram.sh
       - name: Push the picture
@@ -42,12 +44,10 @@ jobs:
           cd ci_data
           mv ../uml.png .
           git add uml.png
-      - name: Commit files
+          git checkout --ours -- uml.png
+      - name: Commit changes
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || git commit -m "Add changes" -a
-          git pull origin uml --rebase
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
