@@ -48,7 +48,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git diff-index --quiet HEAD || git commit -m "Add changes" -a
           git checkout --ours -- ci_data/uml.png
-          
+          git pull origin uml --rebase
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
