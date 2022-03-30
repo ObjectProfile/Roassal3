@@ -14,10 +14,11 @@
     baseline: 'Roassal3Exporters';
     repository: 'github://ObjectProfile/Roassal3Exporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
-
+'Packages loaded' traceCr.
 WorldMorph doOneCycle.
 (Delay forSeconds: 5) wait.
 WorldMorph doOneCycle.
+'Starting with Hapao' traceCr.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
 
 classSizeScale := 'NSScale' asClass linear range: #(5 30); domain: { 0 . (profiler allClasses max: #numberOfMethods) }.
