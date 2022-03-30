@@ -632,6 +632,9 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	canvasRect := aRSCanvas visibleRectangle.
 	showRectangles := aRSCanvas showRectangles.
 	athensCanvas fillRuleEvenOdd.
+	"athensCanvas setAA: 1."
+	"athensCanvas setTolerance: 7."
+	
 	aRSCanvas camera accept: self.
 	aRSCanvas shapes accept: self.
 	
@@ -738,9 +741,10 @@ RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
 			originMatrix multiplyBy: shapeMatrix.
 			rect := shape 
 				computeEncompassingRectangleFor: shape baseRectangle
-				matrix: originMatrix. ].
+				matrix: originMatrix.
+			(rect intersects: canvasRect) ifFalse: [ ^ self ].
+				aBlock value ].
 		
-		(rect intersects: canvasRect) ifFalse: [ ^ self ].
-		aBlock value
+		
 	]
 ]
