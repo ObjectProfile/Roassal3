@@ -21,9 +21,10 @@ Class {
 		'matrix',
 		'canvasRect',
 		'showRectangles',
-		'strokeCache'
+		'strokeCache',
+		'originMatrix'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Rendering'
 }
 
 { #category : #utilities }
@@ -581,7 +582,7 @@ RSAthensRenderer >> paintFor: shape form: form [
 
 { #category : #accessing }
 RSAthensRenderer >> strokeCache [
-	^ strokeCache ifNil: [ strokeCache := LRUCache new maximumWeight: 100 ]
+	^ strokeCache ifNil: [ strokeCache := RSLRUCache new maximumWeight: 100 ]
 ]
 
 { #category : #visiting }
@@ -602,20 +603,18 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitBoundingShape: shape [
-	self visitShapeIfNecessary: shape block: [ :shapeMatrix | 
+	self visitShapeIfNecessary: shape block: [ 
 		| path paint |
+		athensCanvas pathTransform loadAffineTransform: matrix.
 		path := self getOrCreatePathOf: shape.
-		athensCanvas pathTransform restoreAfter: [ 
-			athensCanvas pathTransform multiplyBy: shapeMatrix.
-			paint := shape paintOn: self.
-			paint ifNotNil: [ 
-				athensCanvas 
-					setPaint: paint;
-					drawShape: path ].
-			self visitBorderIfNecessary: shape.
-			self visitChildrenIfNecessary: shape.
-			self visitShadowRectangleIfNecessary: shape.
-		]	
+		paint := shape paintOn: self.
+		paint ifNotNil: [ 
+			athensCanvas 
+				setPaint: paint;
+				drawShape: path ].
+		self visitBorderIfNecessary: shape.
+		self visitChildrenIfNecessary: shape.
+		self visitShadowRectangleIfNecessary: shape.
 	]
 	
 	
@@ -623,15 +622,13 @@ RSAthensRenderer >> visitBoundingShape: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitCamera: camera [
-	athensCanvas pathTransform
-		translateBy: (camera canvas extent / 2) asFloatPoint;
-		scaleBy: camera scale asFloat;
-		translateBy: camera position negated asFloatPoint.
+	camera setMatrix: matrix
 ]
 
 { #category : #visiting }
 RSAthensRenderer >> visitCanvas: aRSCanvas [
 	matrix := AthensAffineTransform new.
+	originMatrix := matrix copy.
 	canvasRect := aRSCanvas visibleRectangle.
 	showRectangles := aRSCanvas showRectangles.
 	athensCanvas fillRuleEvenOdd.
@@ -639,7 +636,8 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	aRSCanvas shapes accept: self.
 	
 	"We display the elements that are _NOT_ subject to the camera"
-	athensCanvas pathTransform loadIdentity.
+	matrix loadIdentity.
+	originMatrix loadIdentity.
 	canvasRect := 0@0 extent: aRSCanvas extent.
 	aRSCanvas fixedShapes accept: self.
 ]
@@ -662,21 +660,18 @@ RSAthensRenderer >> visitGroup: aRSGroup [
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
 	label hasText ifFalse: [ ^ self ].
-	self visitShapeIfNecessary: label block: [ :shapeMatrix |
-		athensCanvas pathTransform restoreAfter: [ 
-			| lbtranslation |
-			lbtranslation := label textExtents translationPoint.
-			athensCanvas pathTransform
-				multiplyBy: label matrix asFloatTransform;
-				translateBy: lbtranslation.
-			label hasBorder
-				ifTrue: [ self drawPathLabel: label ]
-				ifFalse: [ self drawSimpleLabel: label ].
-			
-			self visitLabelDecoratorsIfNecessary: label.
-			athensCanvas pathTransform translateBy: lbtranslation negated.
-			self visitShadowRectangleIfNecessary: label.
-		]
+	self visitShapeIfNecessary: label block: [ 
+		| lbtranslation |
+		lbtranslation := label textExtents translationPoint asFloatPoint.
+		matrix translateBy: lbtranslation.
+		athensCanvas pathTransform loadAffineTransform: matrix.
+		label hasBorder
+			ifTrue: [ self drawPathLabel: label ]
+			ifFalse: [ self drawSimpleLabel: label ].
+		
+		self visitLabelDecoratorsIfNecessary: label.
+		athensCanvas pathTransform translateBy: lbtranslation negated.
+		self visitShadowRectangleIfNecessary: label
 	]
 	
 	
@@ -705,7 +700,7 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 RSAthensRenderer >> visitLine: line [
 	| path paint |
 	(line intersects: canvasRect) ifFalse: [ ^ self ].
-	
+	athensCanvas pathTransform loadAffineTransform: matrix .
 	path := self getOrCreatePathOf: line.
 	paint := line paintOn: self.
 	
@@ -735,14 +730,17 @@ RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
 	matrix restoreAfter: [ 
-		| shapeMatrix rect |
+		| rect shapeMatrix |
 		shapeMatrix := shape matrix asFloatTransform.
 		matrix multiplyBy: shapeMatrix.
-		rect := shape 
-			computeEncompassingRectangleFor: shape baseRectangle
-			matrix: matrix.
+		rect := nil.
+		originMatrix restoreAfter: [ 
+			originMatrix multiplyBy: shapeMatrix.
+			rect := shape 
+				computeEncompassingRectangleFor: shape baseRectangle
+				matrix: originMatrix. ].
+		
 		(rect intersects: canvasRect) ifFalse: [ ^ self ].
-		aBlock value: shapeMatrix.
+		aBlock value
 	]
-	
 ]
