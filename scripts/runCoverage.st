@@ -51,4 +51,4 @@ m canvas extent: (1500 @ 1500).
 'RSPNGExporter' asClass new
 	canvas: m canvas;
 	exportToFile: 'coverage.png' asFileReference.
-'coverage.png created!'
+'coverage.png created' traceCr.
