@@ -630,9 +630,9 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	matrix := AthensAffineTransform new.
 	originMatrix := matrix copy.
 	canvasRect := aRSCanvas visibleRectangle.
-	showRectangles := aRSCanvas showRectangles.
+	showRectangles := aRSCanvas shouldShowRectangles.
 	athensCanvas fillRuleEvenOdd.
-	"athensCanvas setAA: 1."
+	athensCanvas setAA: aRSCanvas antialiasing.
 	"athensCanvas setTolerance: 7."
 	
 	aRSCanvas camera accept: self.
@@ -733,18 +733,16 @@ RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
 	matrix restoreAfter: [ 
-		| rect shapeMatrix |
+		| shapeMatrix |
 		shapeMatrix := shape matrix asFloatTransform.
 		matrix multiplyBy: shapeMatrix.
-		rect := nil.
 		originMatrix restoreAfter: [ 
+			| rect | 
 			originMatrix multiplyBy: shapeMatrix.
 			rect := shape 
 				computeEncompassingRectangleFor: shape baseRectangle
 				matrix: originMatrix.
 			(rect intersects: canvasRect) ifFalse: [ ^ self ].
 				aBlock value ].
-		
-		
 	]
 ]

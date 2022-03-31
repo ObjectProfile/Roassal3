@@ -675,7 +675,7 @@ RSDelaunayExample >> run [
 	canvas := RSCanvas new.
 	canvas addShape: (RSBox new color: (Color black alpha: 0.1); size: 777; yourself).
 	canvas color: Color black.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	"animation for girls"
 	(canvas animationFrom: { self anime1. self anime2. self anime3 }) repeat.
@@ -697,7 +697,7 @@ RSDelaunayExample >> run2 [
 	| maxLevel |
 	canvas := RSCanvas new.
 	canvas color: Color black.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	maxLevel := 3.
 	canvas when: RSMouseDragging do: [ :evt | 

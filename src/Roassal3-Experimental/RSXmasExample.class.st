@@ -16,7 +16,7 @@ RSXmasExample >> background [
 	extent := self currentWorld extent * 0.79.
 	period := 0.001.
 	length := 700.
-	v clearBackground: false.
+	v shouldClearBackground: false.
 	v color: Color black.
 	px := 0.
 	perlin := NSPerlinNoise3 new octaves: 3.

@@ -12,6 +12,7 @@ RSAnimationExamples >> example01BoxWindmill [
 	<script: 'self new example01BoxWindmill open'>
 	| canvas shapes extent points frameCount border |
 	canvas := RSCanvas new.
+	canvas aaNone.
 	canvas color: Color black.
 	extent := 1920@1080.
 	points := (0 to: extent x by: 50) flatCollect: [ :x |
@@ -399,7 +400,7 @@ RSAnimationExamples >> example09PerlinParticles [
 		to: Color transparent; 
 		on: label set: #color:;
 		when: RSAnimationEndEvent do: [ 
-			canvas clearBackground: false.
+			canvas shouldClearBackground: false.
 			label remove. ].
 	color := RSGradientPalette fabledSunset asScale.
 	color domain: color domain reverse.
@@ -457,12 +458,12 @@ RSAnimationExamples >> example09PerlinParticles [
 			canvas add: p ].
 		canvas signalUpdate ];
 		when: RSKeyUp do: [:evt | 
-			evt keyValue = 8 ifTrue: [ 
-				canvas clearBackground: true.
+			evt keyName = 'C' ifTrue: [ 
+				canvas shouldClearBackground: true.
 				canvas nodes copy do: #remove.
 				canvas signalUpdate.
 				canvas newAnimation duration: 200 milliSeconds;
-				when: RSAnimationEndEvent do: [ canvas clearBackground: false ] ] ].
+				when: RSAnimationEndEvent do: [ canvas shouldClearBackground: false ] ] ].
 
 	^ canvas
 
@@ -496,7 +497,7 @@ RSAnimationExamples >> example09b [
 		to: Color transparent; 
 		on: label set: #color:;
 		when: RSAnimationEndEvent do: [ 
-			canvas clearBackground: false.
+			canvas shouldClearBackground: false.
 			label remove. ].
 		
 	hIndex := 4.
@@ -566,12 +567,12 @@ RSAnimationExamples >> example09b [
 			canvas add: p ].
 		canvas signalUpdate ];
 		when: RSKeyUp do: [:evt | 
-			evt keyValue = 8 ifTrue: [ 
-				canvas clearBackground: true.
+			evt keyName = 'C' ifTrue: [ 
+				canvas shouldClearBackground: true.
 				canvas nodes copy do: #remove.
 				canvas signalUpdate.
 				canvas newAnimation duration: 200 milliSeconds;
-				when: RSAnimationEndEvent do: [ canvas clearBackground: false ] ]
+				when: RSAnimationEndEvent do: [ canvas shouldClearBackground: false ] ]
 			ifFalse: changeHue ].
 
 	^ canvas
@@ -690,7 +691,7 @@ RSAnimationExamples >> example12Sky [
 		e ].
 	canvas addAll: dots.
 	frame := 0.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	(canvas newAnimation duration: 5 seconds;onStepDo: [ :t| ])
 		when: RSAnimationEndEvent do: [ box remove ].
 	canvas newAnimation repeat
@@ -811,7 +812,7 @@ RSAnimationExamples >> example14Retina [
 		from: Color white; to: Color transparent;
 		on: label set: #color:) when: RSAnimationEndEvent do: [
 			label remove.
-			canvas clearBackground: false].
+			canvas shouldClearBackground: false].
 	updateValues := [ 
 		offset := random rsNext: 90.
 		rad := random rsNext: minR*side and: 1/ 2 sqrt*side.
@@ -894,7 +895,7 @@ RSAnimationExamples >> example15SpaceDandy [
 	canvas newAnimation 
 		repeat;
 		duration: 5 seconds; 
-		when: RSAnimationLoopEvent do: [ :e| canvas clearBackground: e animation currentLoop odd  ].
+		when: RSAnimationLoopEvent do: [ :e| canvas shouldClearBackground: e animation currentLoop odd  ].
 	canvas newAnimation repeat onStepDo: [ :t|
 		rotation := rotation - 0.002.
 		shapes do: [ :e | | l o r d off | 
@@ -1038,7 +1039,7 @@ RSAnimationExamples >> example18Rainbow [
 	<script: 'self new example18Rainbow open setLabel: ''Worms'''>
 	| canvas random shape mode color frame border |
 	canvas := RSCanvas new.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas color: Color black.
 	random := Random new.
 	
@@ -1320,7 +1321,7 @@ RSAnimationExamples >> example23PerlinNoise [
 	random := Random new.
 	size := 200.
 	noiseScale := 300.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	perlin := NSPerlinNoise2 new.
 	canvas color: (Color colorFrom: '150832').
 	c1 := '45217C'. c2 := '0799F2'. c3 := 'white'.
@@ -1372,7 +1373,7 @@ RSAnimationExamples >> example24RoassalPerlinNoise [
 	| canvas density rect maxLife size perlin r color noiseScale sc1 sc2 |
 	canvas := RSCanvas new.
 	canvas color: Color black.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	r := Random new.
 	perlin := NSPerlinNoise2 new.
 	density := 800. maxLife := 10. noiseScale := 800.
@@ -1687,7 +1688,7 @@ RSAnimationExamples >> example28AlteredWorld [
 	extent := 500 @ 500.
 	period := 0.01.
 	length := 400.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas color: Color black.
 	px := 0.
 	perlin := NSPerlinNoise3 new octaves: 5.
@@ -1787,7 +1788,7 @@ RSAnimationExamples >> example30Perlin [
 	| canvas random frame scIterations scRadius rect extent maxLife perlin noiseScale respawnTop |
 	random := Random new.
 	canvas := RSCanvas new.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	extent := 500@500.
 	rect := Rectangle floatCenter: extent/2 extent: extent.
 	maxLife := 10.
@@ -2275,7 +2276,7 @@ RSAnimationExamples >> example38PerlinRose [
 	canvas color: Color black.
 	perlin := NSPerlinNoise3 new. 
 	perlin octaves: 3.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	border := RSBorder new
 		color: (Color blue alpha: 0.1);
 		yourself.
@@ -2320,7 +2321,7 @@ RSAnimationExamples >> example39Duna [
 	| canvas extent num color noiseScale perlin c particles |
 	canvas := RSCanvas new.
 	extent := 1000@700.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	num := 1000.
 	color := Color purple.
 	noiseScale := 400. "<<<-- change this"
@@ -2433,7 +2434,7 @@ RSAnimationExamples >> example41River [
 	extent := 900@ 200.
 	half := extent / 2.
 	c := RSCanvas new.
-	c clearBackground: false.
+	c shouldClearBackground: false.
 	c color: Color black.
 	r := Random new.
 	back := RSBox new
@@ -2496,7 +2497,7 @@ RSAnimationExamples >> example41River [
 RSAnimationExamples >> example42OneLine [
 	<script: 'self new example42OneLine open extent: 1112@834; setLabel: ''One line'''>
 	| canvas line ang1 ang2 radio x1 y1 x2 y2 |
-	canvas := RSCanvas new clearBackground: false.
+	canvas := RSCanvas new shouldClearBackground: false.
 	canvas color: Color black.
 	canvas add: (line := RSLine new).
 	ang1 := 0. ang2 := 0.radio := 200. 
