@@ -87,7 +87,7 @@ RSAbstractLine >> color [
 
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
-	self strokePaint: aColor
+	self strokePaint: (Color colorFrom: aColor)
 ]
 
 { #category : #accessing }

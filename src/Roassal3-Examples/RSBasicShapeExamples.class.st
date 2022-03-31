@@ -169,7 +169,8 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 	c := RSCanvas new.
 	ellipse := RSEllipse new
 		radius: 40;
-		withBorder.
+		border: (RSBorder new color: 'black');
+		yourself.
 	c addShape: ellipse.
 	update := [ :evt :color |
 		ellipse 
@@ -181,7 +182,7 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 			update value: evt value: (Color colorFrom: '12A288')];
 		when: RSMouseMove do: [ :evt | 
 			update value: evt value: (Color colorFrom: 'AB2567') ].
-	c clearBackground: false.
+	c shouldClearBackground: false.
 	^ c
 	
 ]
@@ -234,7 +235,7 @@ RSBasicShapeExamples >> example09MouseStep [
 			size: dif.
 		c signalUpdate.
 		 ].
-	c clearBackground: false.
+	c shouldClearBackground: false.
 	^ c
 ]
 
@@ -305,7 +306,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 			s extent: boxSize * (zindex /100) asPoint ].
 		c signalUpdate.
 	].
-	c clearBackground: false.
+	c shouldClearBackground: false.
 	^ c
 ]
 
@@ -1013,4 +1014,32 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 		connectTo: [ :n | n + 1 ].
 	RSSimpleForceBasedLayout on: numbers.
 	^ canvas @ RSCanvasController simple
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44AA [
+	<script: 'self new example44AA open'>
+	| canvas |
+	canvas := RSCanvas new.
+	canvas
+		add: (RSBox new size: 30; color: 'blue'; yourself);
+		add: (RSLine new width: 0.5; startPoint: 0@0; endPoint: 50 asPoint; color: 'black'; yourself);
+		add: (RSEllipse new extent: 40@50; color: 'gray'; yourself);
+		add: (RSLabel new text: 'AA enabled'; color: 'black'; yourself).
+	RSGridLayout on: canvas shapes.
+	canvas zoomToFit.
+	canvas newAnimation
+		repeat;
+		onStepDo: [ :t | 
+			canvas shapes last text: (canvas hasAntialiasing
+				ifTrue: ['AA enabled']
+				ifFalse: [ 'AA disabled' ] ).
+			canvas signalUpdate ];
+		when: RSAnimationLoopEvent do: [ :evt | 
+			canvas hasAntialiasing
+				ifTrue: [ canvas disableAntialiasing ]
+				ifFalse: [ canvas enableAntialiasing ].
+			canvas signalUpdate.
+			 ].
+	^ canvas
 ]

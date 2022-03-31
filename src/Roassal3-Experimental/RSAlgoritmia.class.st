@@ -105,7 +105,7 @@ RSAlgoritmia >> initialize [
 RSAlgoritmia >> initializeCanvas [
 
 	canvas := RSCanvas new.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	animation := canvas newAnimation
 		repeat;
 		onStepDo: [:t | self step ].
