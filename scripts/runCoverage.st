@@ -49,7 +49,7 @@ str close.
 m canvas extent: (1500 @ 1500).
 
 'RSPNGExporter' asClass new
-  canvas: uml canvas;
+  canvas: m canvas;
   exportToFile: 'coverage.png' asFileReference.
 
 'coverage.png created' traceCr.
