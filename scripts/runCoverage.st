@@ -47,8 +47,10 @@ str nextPutAll: profiler coverage asString.
 str close.
 'Ratio created' traceCr.
 m canvas extent: (1500 @ 1500).
-"m canvas zoomToFit."
+
 'RSPNGExporter' asClass new
-	canvas: m canvas;
-	exportToFile: 'coverage.png' asFileReference.
+  canvas: uml canvas;
+  exportToFile: 'coverage.png' asFileReference.
+
 'coverage.png created' traceCr.
+SmalltalkImage current quitPrimitive
