@@ -147,17 +147,18 @@ RSParametricLine >> param: anInterval [
 { #category : #accessing }
 RSParametricLine >> resetPath [
 
-	param withIndexDo: [ :t :index | 
-		| aPoint |
-		sandboxControlPoints
-			replaceFrom: 1
-			to: pointsSize
-			with: points
-			startingAt: 1.
+	controlPoints ifNotNil: [ 
+		param withIndexDo: [ :t :index | 
+			| aPoint |
+			sandboxControlPoints
+				replaceFrom: 1
+				to: pointsSize
+				with: points
+				startingAt: 1.
 
-		aPoint := self controlPoints: sandboxControlPoints at: t.
+			aPoint := self controlPoints: sandboxControlPoints at: t.
 
-		controlPoints at: index put: aPoint asFloatPoint ].
+			controlPoints at: index put: aPoint asFloatPoint ] ].
 
 	super resetPath
 ]
