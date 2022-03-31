@@ -45,7 +45,7 @@ fileCoverageResult exists ifTrue: [ fileCoverageResult delete ].
 str := fileCoverageResult writeStream.
 str nextPutAll: profiler coverage asString.
 str close.
-'ratio created!' traceCr.
+'Ratio created' traceCr.
 m canvas extent: (1500 @ 1500).
 "m canvas zoomToFit."
 'RSPNGExporter' asClass new
