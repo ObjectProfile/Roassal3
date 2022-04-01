@@ -1,5 +1,5 @@
 Class {
-	#name : #RSdeCasteljauSegmentedLine,
+	#name : #RSSegmentedPolyline,
 	#superclass : #RSPolyline,
 	#instVars : [
 		'samples',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #accessing }
-RSdeCasteljauSegmentedLine >> continuityLineSelectionBlock: anObject [
+RSSegmentedPolyline >> continuityLineSelectionBlock: anObject [
 
 	continuityLineSelectionBlock := anObject
 ]
 
 { #category : #accessing }
-RSdeCasteljauSegmentedLine >> controlPoints: aCollectionOfArrays [
+RSSegmentedPolyline >> controlPoints: aCollectionOfArrays [
 
 	| lines aLine points |
 	lines := aCollectionOfArrays collect: lineBlock.
@@ -34,7 +34,7 @@ RSdeCasteljauSegmentedLine >> controlPoints: aCollectionOfArrays [
 ]
 
 { #category : #initialization }
-RSdeCasteljauSegmentedLine >> initialize [
+RSSegmentedPolyline >> initialize [
 
 	super initialize.
 
@@ -42,7 +42,7 @@ RSdeCasteljauSegmentedLine >> initialize [
 ]
 
 { #category : #accessing }
-RSdeCasteljauSegmentedLine >> lineBlock: anObject [
+RSSegmentedPolyline >> lineBlock: anObject [
 
 	lineBlock := anObject
 ]

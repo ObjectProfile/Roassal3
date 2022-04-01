@@ -154,7 +154,7 @@ RSLineBuilder class >> horizontalBezier [
 { #category : #'instance creation' }
 RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 
-	^ self horizontalSegmentedLine: (RSdeCasteljauSegmentedLine new
+	^ self horizontalSegmentedLine: (RSSegmentedPolyline new
 			   lineBlock: [ :anArrayOfPoints | 
 				   RSdeCasteljauLine new
 					   samples: 50;
