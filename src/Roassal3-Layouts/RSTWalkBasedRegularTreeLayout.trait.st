@@ -54,6 +54,18 @@ RSTWalkBasedRegularTreeLayout >> changeOf: aNode update: aBlock [
 ]
 
 { #category : #properties }
+RSTWalkBasedRegularTreeLayout >> childIndexOf: aShape [
+
+	self explicitRequirement
+]
+
+{ #category : #properties }
+RSTWalkBasedRegularTreeLayout >> childIndexOf: aShape put: anInteger [
+
+	self explicitRequirement
+]
+
+{ #category : #properties }
 RSTWalkBasedRegularTreeLayout >> childrenOf: aNode [
 
 	self explicitRequirement
@@ -270,7 +282,11 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associations: associations
 
 			self childrenOf: parent put: children.
 
-			multipleParents ifFalse: [ children add: child ] ].
+			multipleParents ifFalse: [ 
+				children add: child.
+				self
+					childIndexOf: child put: children size;
+					siblingsOf: child put: children ] ].
 
 	rootNode := roots size > 1
 		            ifTrue: [ 
@@ -700,6 +716,18 @@ RSTWalkBasedRegularTreeLayout >> shiftOf: aNode put: aFloat [
 RSTWalkBasedRegularTreeLayout >> shiftOf: aNode update: aBlock [
 
 	^ self shiftOf: aNode put: (aBlock value: (self shiftOf: aNode))
+]
+
+{ #category : #properties }
+RSTWalkBasedRegularTreeLayout >> siblingsOf: aShape [
+
+	self explicitRequirement
+]
+
+{ #category : #properties }
+RSTWalkBasedRegularTreeLayout >> siblingsOf: aShape put: aCollection [
+
+	self explicitRequirement
 ]
 
 { #category : #properties }
