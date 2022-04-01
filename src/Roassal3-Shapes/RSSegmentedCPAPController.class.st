@@ -1,21 +1,29 @@
 Class {
-	#name : #RSHorizontalSegmentedCPAPController,
-	#superclass : #RSHorizontalCPAPController,
+	#name : #RSSegmentedCPAPController,
+	#superclass : #RSAbstractCPAPController,
 	#instVars : [
-		'maxDistanceForLinearize'
+		'maxDistanceForLinearize',
+		'controlPointsController'
 	],
 	#category : #'Roassal3-Shapes-ControlPoints'
 }
 
+{ #category : #accessing }
+RSSegmentedCPAPController >> controlPointsController: anObject [
+
+	controlPointsController := anObject
+]
+
 { #category : #hooks }
-RSHorizontalSegmentedCPAPController >> controlPointsFrom: from to: to [
+RSSegmentedCPAPController >> controlPointsFrom: from to: to [
 
 	| random anArray |
 	random := RandomBoxMullerBivariateGaussian new.
 
 	anArray := (from distanceTo: to) < maxDistanceForLinearize
 		           ifTrue: [ Array with: from with: to ]
-		           ifFalse: [ super controlPointsFrom: from to: to ].
+		           ifFalse: [ 
+		           controlPointsController controlPointsFrom: from to: to ].
 
 	anArray := anArray overlappingPairsCollect: [ :aPoint :anotherPoint | 
 		           | samples distance |
@@ -37,7 +45,7 @@ RSHorizontalSegmentedCPAPController >> controlPointsFrom: from to: to [
 ]
 
 { #category : #accessing }
-RSHorizontalSegmentedCPAPController >> initialize [
+RSSegmentedCPAPController >> initialize [
 
 	super initialize.
 
@@ -45,7 +53,7 @@ RSHorizontalSegmentedCPAPController >> initialize [
 ]
 
 { #category : #accessing }
-RSHorizontalSegmentedCPAPController >> maxDistanceForLinearize: aNumber [
+RSSegmentedCPAPController >> maxDistanceForLinearize: aNumber [
 
 	maxDistanceForLinearize := aNumber
 ]

@@ -155,7 +155,9 @@ RSLineBuilder class >> horizontalBezier [
 RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 
 	^ (self new: RSdeCasteljauSegmentedLine new)
-		  controlPointsController: RSHorizontalSegmentedCPAPController new;
+		  controlPointsController: (RSSegmentedCPAPController new
+				   controlPointsController: RSHorizontalCPAPController new;
+				   yourself);
 		  yourself
 ]
 
