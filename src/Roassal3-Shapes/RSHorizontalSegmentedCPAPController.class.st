@@ -13,17 +13,9 @@ RSHorizontalSegmentedCPAPController >> controlPointsFrom: from to: to [
 	| random anArray |
 	random := RandomBoxMullerBivariateGaussian new.
 
-	anArray := anArray := (from distanceTo: to) < maxDistanceForLinearize
-		                      ifTrue: [ Array with: from with: to ]
-		                      ifFalse: [ 
-			                      (from y - to y) abs < 50
-				                      ifTrue: [ 
-				                      Array
-					                      with: from
-					                      with: (from unitAffine: to at: 1 / 2)
-					                      with: to ]
-				                      ifFalse: [ 
-				                      super controlPointsFrom: from to: to ] ].
+	anArray := (from distanceTo: to) < maxDistanceForLinearize
+		           ifTrue: [ Array with: from with: to ]
+		           ifFalse: [ super controlPointsFrom: from to: to ].
 
 	anArray := anArray overlappingPairsCollect: [ :aPoint :anotherPoint | 
 		           | samples distance |
@@ -49,7 +41,7 @@ RSHorizontalSegmentedCPAPController >> initialize [
 
 	super initialize.
 
-	self maxDistanceForLinearize: 100
+	self maxDistanceForLinearize: 25
 ]
 
 { #category : #accessing }

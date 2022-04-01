@@ -152,6 +152,14 @@ RSLineBuilder class >> horizontalBezier [
 ]
 
 { #category : #'instance creation' }
+RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
+
+	^ (self new: RSdeCasteljauSegmentedLine new)
+		  controlPointsController: RSHorizontalSegmentedCPAPController new;
+		  yourself
+]
+
+{ #category : #'instance creation' }
 RSLineBuilder class >> horizontalLine: aShape [
 	^ (self new: aShape)
 		controlPointsController: RSHorizontalCPAPController new;
