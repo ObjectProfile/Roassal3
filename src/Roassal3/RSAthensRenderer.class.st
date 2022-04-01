@@ -254,7 +254,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	coin := RandomBernoulli new.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c0 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
 
 	samples := rectangle area sqrt ceiling.
 

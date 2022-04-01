@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSPolyline,
 	#instVars : [
 		'samples',
-		'continuityLineSelectionBlock'
+		'continuityLineSelectionBlock',
+		'lineBlock'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -17,20 +18,17 @@ RSdeCasteljauSegmentedLine >> continuityLineSelectionBlock: anObject [
 { #category : #accessing }
 RSdeCasteljauSegmentedLine >> controlPoints: aCollectionOfArrays [
 
-	| beziers aBezier points |
-	beziers := aCollectionOfArrays collect: [ :anArrayOfPoints | 
-		           RSdeCasteljauLine new
-			           samples: samples;
-			           controlPoints: anArrayOfPoints;
-			           yourself ].
+	| lines aLine points |
+	lines := aCollectionOfArrays collect: lineBlock.
 
-	aBezier := beziers first.
+	aLine := lines first.
 
-	points := aBezier controlPoints.
+	points := aLine controlPoints.
 
-	beziers allButFirstDo: [ :each | 
-		aBezier := aBezier junction: each right: continuityLineSelectionBlock.
-		points := points , aBezier controlPoints ].
+	lines allButFirstDo: [ :each | 
+		aLine := aLine junction: each right: continuityLineSelectionBlock.
+
+		points := points , aLine controlPoints ].
 
 	^ super controlPoints: points
 ]
@@ -40,13 +38,11 @@ RSdeCasteljauSegmentedLine >> initialize [
 
 	super initialize.
 
-	self
-		samples: 50;
-		continuityLineSelectionBlock: [ :c0 :c1 :c2 | c1 ]
+	self continuityLineSelectionBlock: [ :c0 :c1 :c2 | c1 ]
 ]
 
 { #category : #accessing }
-RSdeCasteljauSegmentedLine >> samples: anObject [
+RSdeCasteljauSegmentedLine >> lineBlock: anObject [
 
-	samples := anObject
+	lineBlock := anObject
 ]

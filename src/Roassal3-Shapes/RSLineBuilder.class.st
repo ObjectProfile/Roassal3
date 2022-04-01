@@ -154,11 +154,13 @@ RSLineBuilder class >> horizontalBezier [
 { #category : #'instance creation' }
 RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 
-	^ (self new: RSdeCasteljauSegmentedLine new)
-		  controlPointsController: (RSSegmentedCPAPController new
-				   controlPointsController: RSHorizontalCPAPController new;
-				   yourself);
-		  yourself
+	^ self horizontalSegmentedLine: (RSdeCasteljauSegmentedLine new
+			   lineBlock: [ :anArrayOfPoints | 
+				   RSdeCasteljauLine new
+					   samples: 50;
+					   controlPoints: anArrayOfPoints;
+					   yourself ];
+			   yourself)
 ]
 
 { #category : #'instance creation' }
@@ -167,6 +169,21 @@ RSLineBuilder class >> horizontalLine: aShape [
 		controlPointsController: RSHorizontalCPAPController new;
 		yourself.
 	
+]
+
+{ #category : #'instance creation' }
+RSLineBuilder class >> horizontalSegmentedLine: aLine [
+
+	^ (self new: aLine)
+		  controlPointsController: (RSSegmentedCPAPController new
+				   controlPointsController: RSHorizontalCPAPController new;
+				   linearizationPredicate: [ :from :to | 
+					   | distance |
+					   distance := 50.
+					   (from distanceTo: to) < distance or: [ 
+							   (from y - to y) abs < distance ] ];
+				   yourself);
+		  yourself
 ]
 
 { #category : #'instance creation' }
