@@ -2,8 +2,8 @@ Class {
 	#name : #RSSegmentedCPAPController,
 	#superclass : #RSAbstractCPAPController,
 	#instVars : [
-		'maxDistanceForLinearize',
-		'controlPointsController'
+		'controlPointsController',
+		'linearizationPredicate'
 	],
 	#category : #'Roassal3-Shapes-ControlPoints'
 }
@@ -20,7 +20,7 @@ RSSegmentedCPAPController >> controlPointsFrom: from to: to [
 	| random anArray |
 	random := RandomBoxMullerBivariateGaussian new.
 
-	anArray := (maxDistanceForLinearize value: from value: to)
+	anArray := (linearizationPredicate value: from value: to)
 		           ifTrue: [ Array with: from with: to ]
 		           ifFalse: [ 
 		           controlPointsController controlPointsFrom: from to: to ].
@@ -54,5 +54,5 @@ RSSegmentedCPAPController >> initialize [
 { #category : #accessing }
 RSSegmentedCPAPController >> linearizationPredicate: aBlock [
 
-	maxDistanceForLinearize := aBlock
+	linearizationPredicate := aBlock
 ]
