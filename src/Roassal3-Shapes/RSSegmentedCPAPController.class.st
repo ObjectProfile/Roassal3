@@ -52,6 +52,12 @@ RSSegmentedCPAPController >> initialize [
 ]
 
 { #category : #accessing }
+RSSegmentedCPAPController >> linearizationPredicate [
+
+	^ linearizationPredicate
+]
+
+{ #category : #accessing }
 RSSegmentedCPAPController >> linearizationPredicate: aBlock [
 
 	linearizationPredicate := aBlock

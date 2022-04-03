@@ -178,15 +178,20 @@ RSLineBuilder class >> horizontalLine: aShape [
 { #category : #'instance creation' }
 RSLineBuilder class >> horizontalSegmentedLine: aLine [
 
+	| controller predicate |
+	controller := RSSegmentedCPAPController new
+		              controlPointsController:
+			              RSHorizontalCPAPController new;
+		              yourself.
+
+	"Keep a reference to the original predicate."
+	predicate := controller linearizationPredicate.
+
+	controller linearizationPredicate: [ :from :to | 
+		(predicate value: from value: to) or: [ (from y - to y) abs <= 10 ] ].
+
 	^ (self new: aLine)
-		  controlPointsController: (RSSegmentedCPAPController new
-				   controlPointsController: RSHorizontalCPAPController new;
-				   linearizationPredicate: [ :from :to | 
-					   | distance |
-					   distance := 50.
-					   (from distanceTo: to) < distance or: [ 
-							   (from y - to y) abs < distance ] ];
-				   yourself);
+		  controlPointsController: controller;
 		  yourself
 ]
 
