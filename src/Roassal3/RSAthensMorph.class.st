@@ -189,7 +189,6 @@ RSAthensMorph >> eventMouseDragging: aMorphicEvent [
 	| trEvent step |
 	eventBeginingDragging ifNil: [ ^ self ].
 	step := aMorphicEvent position - eventBeginingDragging position.
-
 	trEvent := self eventOfClass: RSMouseDragging from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
 	trEvent step: step.
@@ -457,10 +456,7 @@ RSAthensMorph >> mouseLeave: evt [
 
 { #category : #'event handling' }
 RSAthensMorph >> mouseMove: evt [
-	evt anyButtonPressed
-		ifTrue: [ self eventMouseDragging: evt ]
-		ifFalse: [ self eventMouseMove: evt ].
-	evt wasHandled: true
+	evt anyButtonPressed ifTrue: [ self eventMouseDragging: evt ]
 ]
 
 { #category : #'event handling' }
