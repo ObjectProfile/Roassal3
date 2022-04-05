@@ -588,7 +588,9 @@ RSAthensRenderer >> strokeCache [
 { #category : #visiting }
 RSAthensRenderer >> visitBorder: border [
 	| stroke |
-	stroke := self strokeCache at: border ifAbsentPut: [ self createStrokePaintFor: border ].
+	stroke := border useCache 
+		ifTrue: [ self strokeCache at: border ifAbsentPut: [ self createStrokePaintFor: border ] ]
+		ifFalse: [ self createStrokePaintFor: border ].
 	athensCanvas privatePaint: stroke.
 	^ stroke
 ]
