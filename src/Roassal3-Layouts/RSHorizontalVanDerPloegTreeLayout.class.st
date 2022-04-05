@@ -28,6 +28,12 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 		        ifMultipleRoots: [ :roots | RSComposite new ]
 ]
 
+{ #category : #accessing }
+RSHorizontalVanDerPloegTreeLayout >> horizontalGapAmongParent: aShapeParent andChild: aShape [
+
+	^ self horizontalGap
+]
+
 { #category : #hook }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
@@ -38,4 +44,10 @@ RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: 
 RSHorizontalVanDerPloegTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
 
 	
+]
+
+{ #category : #accessing }
+RSHorizontalVanDerPloegTreeLayout >> verticalGapAmong: aShapeParent and: aShape [
+
+	^ self verticalGap
 ]

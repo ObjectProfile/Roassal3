@@ -1,17 +1,12 @@
 Trait {
 	#name : #RSTWalkBasedRegularVerticalTreeLayout,
-	#traits : 'RSTGapsHolder',
-	#classTraits : 'RSTGapsHolder classTrait',
 	#category : #'Roassal3-Layouts-Core'
 }
 
 { #category : #positioning }
-RSTWalkBasedRegularVerticalTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
+RSTWalkBasedRegularVerticalTreeLayout >> breadthGapAmong: aShape and: anotherShape [
 
-	^ self
-		  horizontalGapAmong: aShapeParent
-		  and: aShape
-		  default: RSAbstractGraphLayout horizontalGap
+	^ self horizontalGapAmong: aShape and: anotherShape
 ]
 
 { #category : #positioning }
@@ -23,10 +18,7 @@ RSTWalkBasedRegularVerticalTreeLayout >> breadthMeasureOf: aShape [
 { #category : #positioning }
 RSTWalkBasedRegularVerticalTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
-	^ self
-		  verticalGapAmong: aShapeParent
-		  and: aShape
-		  default: RSAbstractGraphLayout verticalGap
+	^ self verticalGapAmongParent: aShapeParent andChild: aShape
 ]
 
 { #category : #positioning }
@@ -36,9 +28,22 @@ RSTWalkBasedRegularVerticalTreeLayout >> depthMeasureOf: aShape [
 ]
 
 { #category : #positioning }
+RSTWalkBasedRegularVerticalTreeLayout >> horizontalGapAmong: aShapeParent and: aShape [
+
+	self explicitRequirement
+]
+
+{ #category : #positioning }
 RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	| shift |
 	shift := aShape extent / 2.
+
 	^ breadth @ depth + shift
+]
+
+{ #category : #positioning }
+RSTWalkBasedRegularVerticalTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
+
+	self explicitRequirement
 ]
