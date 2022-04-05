@@ -365,6 +365,11 @@ RSCanvas >> morph: aMorph [
 	morph := aMorph
 ]
 
+{ #category : #actions }
+RSCanvas >> notifyExtentChanged [
+	self extent: self extent
+]
+
 { #category : #animations }
 RSCanvas >> numberOfAnimations [
 	"Return the number of animations contained in the canvas"
