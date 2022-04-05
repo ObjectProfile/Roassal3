@@ -29,11 +29,12 @@ RSStrokeStyle class >> fromString: aString [
 
 { #category : #comparing }
 RSStrokeStyle >> = anObject [
-	^ self == anObject or: [ 
-		capStyle = anObject capStyle and: [ 
-			joinStyle = anObject joinStyle and: [ 
-				dashOffset = anObject dashOffset and: [ 
-					dashArray = anObject dashArray ] ] ] ].
+	^self == anObject or: [ 
+		anObject notNil and: [ 
+			capStyle = anObject capStyle and: [ 
+				joinStyle = anObject joinStyle and: [ 
+					dashOffset = anObject dashOffset and: [ 
+						dashArray = anObject dashArray ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -69,7 +70,7 @@ RSStrokeStyle >> dashOffset: aNumber [
 
 { #category : #comparing }
 RSStrokeStyle >> hash [
-	^ (capStyle hash bitXor: joinStyle hash)+ (dashArray hash bitXor: dashOffset hash)
+	^ (capStyle hash bitXor: joinStyle hash) + (dashOffset hash bitXor: dashArray hash)
 ]
 
 { #category : #initialization }

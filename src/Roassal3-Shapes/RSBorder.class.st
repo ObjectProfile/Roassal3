@@ -51,7 +51,8 @@ Class {
 	#instVars : [
 		'width',
 		'style',
-		'paint'
+		'paint',
+		'useCache'
 	],
 	#category : #'Roassal3-Shapes-Border'
 }
@@ -59,9 +60,10 @@ Class {
 { #category : #comparing }
 RSBorder >> = anObject [
 	^ self == anObject or: [ 
-		width = anObject width and: [ 
-			paint = anObject paint and: [ 
-				style = anObject style ] ] ].
+		anObject notNil and: [ 
+			width = anObject width and: [ 
+				paint = anObject paint and: [ 
+					style = anObject style ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -119,7 +121,8 @@ c
 -=-=-=-=-=-=-=-=-=-=-=-=
 
 	"
-	self pStyle dashArray: arrayOfNumbers
+	self pStyle dashArray: arrayOfNumbers.
+	self doNotUseCache.
 	
 ]
 
@@ -159,6 +162,11 @@ c
 	self pStyle dashOffset: offset
 ]
 
+{ #category : #configuration }
+RSBorder >> doNotUseCache [
+	self useCache: false
+]
+
 { #category : #comparing }
 RSBorder >> hash [
 	^ (width hash bitXor: paint hash) bitXor: style hash
@@ -169,6 +177,7 @@ RSBorder >> initialize [
 	super initialize.
 	paint := Color gray.
 	width := 1.
+	useCache := true.
 ]
 
 { #category : #'style - join' }
@@ -219,6 +228,16 @@ RSBorder >> style [
 { #category : #accessing }
 RSBorder >> style: aStyle [
 	style := aStyle
+]
+
+{ #category : #accessing }
+RSBorder >> useCache [
+	^ useCache
+]
+
+{ #category : #accessing }
+RSBorder >> useCache: aBoolean [
+	useCache := aBoolean
 ]
 
 { #category : #accessing }
