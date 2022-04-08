@@ -256,7 +256,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		        p: 0.6;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c0 ] ].
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
@@ -264,14 +264,6 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 			          RSCornerRadius new
 				          radius: 0;
 				          yourself ].
-			
-			radius := RSCornerRadius new
-				          radius: 0;
-				          yourself.
-
-	"	n := ((rectangle height max: 1) log: 2) ceiling max: 4.
-	m := ((rectangle width max: 1) log: 2) ceiling max: 4.
-"
 
 	n := rectangle height.
 	m := rectangle width.
