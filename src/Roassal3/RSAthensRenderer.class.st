@@ -247,16 +247,16 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: aNoteShape [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom leftBottom right bottomRight top rightTop topLeft coin block m samples finalLine radius |
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m samples finalLine radius |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
 
-	coin := RandomBernoulli new.
+	coin := RandomBernoulli new
+		        p: 0.6;
+		        yourself.
 
 	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
-
-	samples := rectangle area sqrt ceiling.
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
@@ -264,42 +264,53 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 			          RSCornerRadius new
 				          radius: 0;
 				          yourself ].
+			
+			radius := RSCornerRadius new
+				          radius: 0;
+				          yourself.
 
-	n := ((rectangle height max: 1) log: 2) ceiling max: 5.
-	m := ((rectangle width max: 1) log: 2) ceiling max: 5.
+	"	n := ((rectangle height max: 1) log: 2) ceiling max: 4.
+	m := ((rectangle width max: 1) log: 2) ceiling max: 4.
+"
+
+	n := rectangle height.
+	m := rectangle width.
+
+	n > m
+		ifTrue: [ 
+			n := n quo: m.
+			m := ((m max: 1) log: 2) ceiling max: 4.
+			n := n * m ]
+		ifFalse: [ 
+			m := m quo: n.
+			n := ((n max: 1) log: 2) ceiling max: 4.
+			m := m * n ].
 
 	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
 
 	lPoints := Array new: n.
 	rPoints := Array new: n.
 	bPoints := Array new: m.
-	tPoints := Array new: m.
+	tPoints := OrderedCollection new: m.
 
-	((rectangle top to: rectangle bottom) linspace: n) withIndexDo: [ 
+	((rectangle top + radius topLeft to:
+	  rectangle bottom - radius bottomLeft) linspace: n) withIndexDo: [ 
 		:each 
 		:index | 
 		lPoints at: index put: rectangle left @ each + random next.
 		rPoints atLast: index put: rectangle right @ each + random next ].
 
-	((rectangle left to: rectangle right) linspace: m) withIndexDo: [ 
+	((rectangle left + radius bottomLeft to:
+	  rectangle right - radius bottomRight) linspace: m) withIndexDo: [ 
 		:each 
 		:index | 
 		bPoints at: index put: each @ rectangle bottom + random next.
-		tPoints atLast: index put: each @ rectangle top + random next ].
+		tPoints addFirst: each @ rectangle top + random next ].
 
-	lPoints at: 1 put: rectangle topLeft + (0 @ radius topLeft).
-	lPoints atLast: 1 put: rectangle bottomLeft - (0 @ radius bottomLeft).
-
-	rPoints atLast: 1 put: rectangle topRight + (0 @ radius topRight).
-	rPoints at: 1 put: rectangle bottomRight - (0 @ radius bottomRight).
-
-	bPoints at: 1 put: rectangle bottomLeft + (radius bottomLeft @ 0).
-	bPoints
-		atLast: 1
-		put: rectangle bottomRight - (radius bottomRight @ 0).
-
-	tPoints atLast: 1 put: rectangle topLeft + (radius topLeft @ 0).
-	tPoints at: 1 put: rectangle topRight - (radius topRight @ 0).
+	lPoints := lPoints allButLast.
+	bPoints := bPoints allButLast.
+	rPoints := rPoints allButLast.
+	tPoints := tPoints allButLast.
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
@@ -311,28 +322,25 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		          controlPoints: bPoints;
 		          yourself.
 
-	leftBottom := left junction: bottom right: block.
-
 	right := RSdeCasteljauLine new
 		         samples: samples;
 		         controlPoints: rPoints;
 		         yourself.
-
-	bottomRight := leftBottom junction: right right: block.
 
 	top := RSdeCasteljauLine new
 		       samples: samples;
 		       controlPoints: tPoints;
 		       yourself.
 
-	rightTop := bottomRight junction: top right: block.
-
-	topLeft := rightTop junction: left right: block.
+	bottom := left junction: bottom right: block.
+	right := bottom junction: right right: block.
+	top := right junction: top right: block.
+	left := top junction: left right: block.
 
 	finalLine := RSPolyline new
 		             controlPoints:
-			             topLeft controlPoints , leftBottom controlPoints
-			             , bottomRight controlPoints , rightTop controlPoints;
+			             left controlPoints , bottom controlPoints
+			             , right controlPoints , top controlPoints;
 		             yourself.
 
 	self buildPolylinePath: finalLine
