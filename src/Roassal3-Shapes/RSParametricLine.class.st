@@ -6,10 +6,26 @@ Class {
 		'points',
 		'sandboxControlPoints',
 		'pointsSize',
-		'paramSize'
+		'paramSize',
+		'cumulativeArcLengths'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
+
+{ #category : #accessing }
+RSParametricLine >> arcLengthParameterized [
+
+	^ RSArcLengthParametricLine new
+		  param: param
+		  cumulativeArcLengths:
+			  ((SortedCollection sortBlock: [ :aFloat :anotherFloat | 
+					    aFloat < anotherFloat ])
+				   addAll: cumulativeArcLengths;
+				   yourself);
+		  line: self;
+		  controlPoints: points;
+		  yourself
+]
 
 { #category : #converting }
 RSParametricLine >> asGroupWithControlNet [
@@ -147,7 +163,22 @@ RSParametricLine >> param: anInterval [
 { #category : #accessing }
 RSParametricLine >> resetPath [
 
+	cumulativeArcLengths := FloatArray new: paramSize.
+
 	controlPoints ifNotNil: [ 
+		| lastPoint arcLength |
+		arcLength := 0.0.
+
+		sandboxControlPoints
+			replaceFrom: 1
+			to: pointsSize
+			with: points
+			startingAt: 1.
+
+		lastPoint := (self
+			              controlPoints: sandboxControlPoints
+			              at: param first) asFloatPoint.
+
 		param withIndexDo: [ :t :index | 
 			| aPoint |
 			sandboxControlPoints
@@ -156,9 +187,16 @@ RSParametricLine >> resetPath [
 				with: points
 				startingAt: 1.
 
-			aPoint := self controlPoints: sandboxControlPoints at: t.
+			aPoint := (self controlPoints: sandboxControlPoints at: t)
+				          asFloatPoint.
 
-			controlPoints at: index put: aPoint asFloatPoint ] ].
+			arcLength := arcLength + (lastPoint distanceTo: aPoint).
+
+			cumulativeArcLengths at: index put: arcLength.
+
+			controlPoints at: index put: aPoint.
+
+			lastPoint := aPoint ] ].
 
 	super resetPath
 ]

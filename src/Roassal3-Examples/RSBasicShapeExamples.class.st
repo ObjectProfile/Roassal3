@@ -1076,6 +1076,20 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineClosedControlPointsArcLengthParameterized [
+
+	<script:
+	'self new example44deCasteljauLineClosedControlPointsArcLengthParameterized open'>
+	^ RSCanvas new
+		  addAll:
+			  self lineDeCasteljauLineClosedControlPoints
+				  arcLengthParameterized asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 
 	<script: 'self new example44deCasteljauLineDegreeElevation open'>
