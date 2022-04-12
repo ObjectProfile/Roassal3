@@ -7,34 +7,32 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #accessing }
+RSArcLengthParametricLine >> controlPoints: aCollectionOfPoints [
+
+	super controlPoints: aCollectionOfPoints.
+
+	self cumulativeArcLengths: cumulativeArcLengths
+]
+
 { #category : #converting }
 RSArcLengthParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ line controlPoints: aSequenceableOfPoints at: t
 ]
 
-{ #category : #accessing }
-RSArcLengthParametricLine >> line [
-
-	^ line
-]
-
-{ #category : #accessing }
-RSArcLengthParametricLine >> line: aLine [
-
-	line := aLine
-]
-
 { #category : #initializing }
-RSArcLengthParametricLine >> param: aParam cumulativeArcLengths: aCollection [
+RSArcLengthParametricLine >> cumulativeArcLengths: aCollection [
 
-	| size newParam arcLengths |
+	| size newParam arcLengths aParam |
 	arcLengths := (SortedCollection sortBlock: [ :aFloat :anotherFloat | 
 			               aFloat < anotherFloat ])
 		              addAll: aCollection;
 		              yourself.
 
 	size := arcLengths size - 1.
+
+	aParam := (0 to: 1) linspace: aCollection size.
 
 	newParam := aParam collect: [ :u | 
 		            | arcLength index before after ratio |
@@ -52,4 +50,16 @@ RSArcLengthParametricLine >> param: aParam cumulativeArcLengths: aCollection [
 		            ratio + index - 1 / size ].
 
 	self param: newParam
+]
+
+{ #category : #accessing }
+RSArcLengthParametricLine >> line [
+
+	^ line
+]
+
+{ #category : #accessing }
+RSArcLengthParametricLine >> line: aLine [
+
+	line := aLine
 ]

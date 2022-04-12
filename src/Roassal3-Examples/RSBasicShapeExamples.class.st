@@ -1820,7 +1820,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 		          (1 @ 1) }.
 
 	^ RSdeCasteljauLine new
-		  samples: 100;
+		  samples: 50;
 		  controlPoints: points;
 		  scale: 100
 ]

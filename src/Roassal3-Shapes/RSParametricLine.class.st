@@ -22,7 +22,7 @@ RSParametricLine >> arcLength [
 RSParametricLine >> arcLengthParameterized [
 
 	^ RSArcLengthParametricLine new
-		  param: param cumulativeArcLengths: cumulativeArcLengths;
+		  cumulativeArcLengths: cumulativeArcLengths;
 		  line: self;
 		  controlPoints: points;
 		  yourself
@@ -121,6 +121,7 @@ RSParametricLine >> controlPoints: aCollectionOfPoints [
 
 	sandboxControlPoints := Array new: pointsSize.
 	controlPoints := Array new: paramSize.
+	cumulativeArcLengths := FloatArray new: paramSize.
 
 	self resetPath
 ]
@@ -175,8 +176,6 @@ RSParametricLine >> pointsSize [
 
 { #category : #accessing }
 RSParametricLine >> resetPath [
-
-	cumulativeArcLengths := FloatArray new: paramSize.
 
 	controlPoints ifNotNil: [ 
 		| lastPoint arcLength |
