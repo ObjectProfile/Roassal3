@@ -12,16 +12,17 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #'as yet unclassified' }
+RSParametricLine >> arcLength [
+
+	^ cumulativeArcLengths last
+]
+
 { #category : #accessing }
 RSParametricLine >> arcLengthParameterized [
 
 	^ RSArcLengthParametricLine new
-		  param: param
-		  cumulativeArcLengths:
-			  ((SortedCollection sortBlock: [ :aFloat :anotherFloat | 
-					    aFloat < anotherFloat ])
-				   addAll: cumulativeArcLengths;
-				   yourself);
+		  param: param cumulativeArcLengths: cumulativeArcLengths;
 		  line: self;
 		  controlPoints: points;
 		  yourself
@@ -158,6 +159,18 @@ RSParametricLine >> notifyExtentChanged [
 RSParametricLine >> param: anInterval [
 
 	param := anInterval
+]
+
+{ #category : #accessing }
+RSParametricLine >> paramSize [
+
+	^ paramSize
+]
+
+{ #category : #accessing }
+RSParametricLine >> pointsSize [
+
+	^ pointsSize
 ]
 
 { #category : #accessing }

@@ -8,33 +8,15 @@ Class {
 }
 
 { #category : #converting }
-RSArcLengthParametricLine >> controlPoints1: aSequenceableOfPoints at: u [
-
-	| arcLength index j |
-	arcLength := arcLenghts last * u.
-
-	index := (arcLenghts indexForInserting: arcLength) - 1 max: 1.
-
-	j := (arcLength closeTo: (arcLenghts at: index))
-		     ifTrue: [ index ]
-		     ifFalse: [ 
-			     | before after ratio |
-			     before := arcLenghts at: index.
-			     after := arcLenghts at: index + 1.
-
-			     ratio := arcLength - before / (after - before).
-
-			     index + ratio ].
-
-	^ line
-		  controlPoints: aSequenceableOfPoints
-		  at: j - 1 / (arcLenghts size - 1)
-]
-
-{ #category : #converting }
 RSArcLengthParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ line controlPoints: aSequenceableOfPoints at: t
+]
+
+{ #category : #accessing }
+RSArcLengthParametricLine >> line [
+
+	^ line
 ]
 
 { #category : #accessing }
@@ -43,24 +25,31 @@ RSArcLengthParametricLine >> line: aLine [
 	line := aLine
 ]
 
-{ #category : #'as yet unclassified' }
-RSArcLengthParametricLine >> param: aParam cumulativeArcLengths: arcLenghts [
+{ #category : #initializing }
+RSArcLengthParametricLine >> param: aParam cumulativeArcLengths: aCollection [
 
-	| size |
-	size := arcLenghts size - 1.
+	| size newParam arcLengths |
+	arcLengths := (SortedCollection sortBlock: [ :aFloat :anotherFloat | 
+			               aFloat < anotherFloat ])
+		              addAll: aCollection;
+		              yourself.
 
-	self param: (aParam collect: [ :u | 
-			 | arcLength index before after ratio |
-			 arcLength := arcLenghts last * u.
+	size := arcLengths size - 1.
 
-			 index := (arcLenghts indexForInserting: arcLength) - 1
-				          min: size
-				          max: 1.
+	newParam := aParam collect: [ :u | 
+		            | arcLength index before after ratio |
+		            arcLength := arcLengths last * u.
 
-			 before := arcLenghts at: index.
-			 after := arcLenghts at: index + 1.
+		            index := (arcLengths indexForInserting: arcLength) - 1
+			                     min: size
+			                     max: 1.
 
-			 ratio := arcLength - before / (after - before).
+		            before := arcLengths at: index.
+		            after := arcLengths at: index + 1.
 
-			 index + ratio - 1 / size ])
+		            ratio := arcLength - before / (after - before).
+
+		            ratio + index - 1 / size ].
+
+	self param: newParam
 ]
