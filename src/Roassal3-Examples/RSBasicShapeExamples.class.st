@@ -1080,10 +1080,10 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPointsArcLengthPara
 
 	<script:
 	'self new example44deCasteljauLineClosedControlPointsArcLengthParameterized open'>
-	^ RSCanvas new
+	^ RSCanvas new halt;
 		  addAll:
 			  self lineDeCasteljauLineClosedControlPoints
-				  arcLengthParameterized asGroupWithControlNet;
+				  arcLengthParameterization asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1820,7 +1820,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 		          (1 @ 1) }.
 
 	^ RSdeCasteljauLine new
-		  samples: 50;
+		  samples: 20;
 		  controlPoints: points;
 		  scale: 100
 ]
@@ -1862,7 +1862,9 @@ RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 RSBasicShapeExamples >> lineParametricButterfly [
 
 	^ RSParametricXYLine new
-		  param: ((0 to: Float pi * 12) linspace: 10000);
+		  parameterization: (RSLinspaceParameterization new
+				   from: 0 to: Float pi * 12 samples: 10000;
+				   yourself);
 		  x: [ :t | 
 			  t sin
 			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
@@ -1884,7 +1886,9 @@ RSBasicShapeExamples >> lineParametricHypotrochoid [
 	b := a / r.
 
 	^ RSParametricXYLine new
-		  param: ((-10 to: 10) linspace: 10000);
+		  parameterization: (RSLinspaceParameterization new
+				   from: -10 to: 10 samples: 10000;
+				   yourself);
 		  x: [ :t | a * t cos + (d * (b * t) cos) ]
 		  y: [ :t | a * t sin - (d * (b * t) sin) ];
 		  scale: 10
@@ -1894,7 +1898,9 @@ RSBasicShapeExamples >> lineParametricHypotrochoid [
 RSBasicShapeExamples >> lineParametricLissajous [
 
 	^ RSParametricXYLine new
-		  param: ((0 to: Float pi * 2) linspace: 1000);
+		  parameterization: (RSLinspaceParameterization new
+				   from: 0 to: Float pi * 2 samples: 1000;
+				   yourself);
 		  x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
 		  scale: 100
 ]
@@ -1903,7 +1909,9 @@ RSBasicShapeExamples >> lineParametricLissajous [
 RSBasicShapeExamples >> lineParametricNeil [
 
 	^ RSParametricXYLine new
-		  param: ((-2 to: 2) linspace: 100);
+		  parameterization: (RSLinspaceParameterization new
+				   from: -2 to: 2 samples: 100;
+				   yourself);
 		  x: [ :t | t raisedTo: 2 ] y: [ :t | t raisedTo: 3 ];
 		  scale: 10
 ]
@@ -1912,7 +1920,9 @@ RSBasicShapeExamples >> lineParametricNeil [
 RSBasicShapeExamples >> lineParametricNeil2 [
 
 	^ RSParametricXYLine new
-		  param: ((-2 to: 2) linspace: 100);
+		  parameterization: (RSLinspaceParameterization new
+				   from: -2 to: 2 samples: 100;
+				   yourself);
 		  x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
 		  scale: 10
 ]
@@ -1921,7 +1931,9 @@ RSBasicShapeExamples >> lineParametricNeil2 [
 RSBasicShapeExamples >> lineParametricTrochoid [
 
 	^ RSParametricXYLine new
-		  param: ((0 to: Float pi) linspace: 100);
+		  parameterization: (RSLinspaceParameterization new
+				   from: 0 to: Float pi samples: 100;
+				   yourself);
 		  x: [ :t | t cos * (3 * t) cos ] y: [ :t | t sin * (3 * t) cos ];
 		  scale: 100
 ]
@@ -1930,7 +1942,9 @@ RSBasicShapeExamples >> lineParametricTrochoid [
 RSBasicShapeExamples >> lineParametricUnitCircle [
 
 	^ RSParametricXYLine new
-		  param: ((0 to: Float pi * 2) linspace: 100);
+		  parameterization: (RSLinspaceParameterization new
+				   from: 0 to: Float pi * 2 samples: 100;
+				   yourself);
 		  x: [ :t | t cos ] y: [ :t | t sin ];
 		  scale: 100
 ]

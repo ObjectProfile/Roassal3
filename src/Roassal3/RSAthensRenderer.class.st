@@ -256,7 +256,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		        p: 0.6;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c0 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
@@ -264,6 +264,9 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 			          RSCornerRadius new
 				          radius: 0;
 				          yourself ].
+	radius := RSCornerRadius new
+		          radius: 0;
+		          yourself.
 
 	n := rectangle height.
 	m := rectangle width.
@@ -280,23 +283,23 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
 
-	lPoints := Array new: n.
-	rPoints := Array new: n.
-	bPoints := Array new: m.
+	lPoints := OrderedCollection new: n.
+	rPoints := OrderedCollection new: n.
+	bPoints := OrderedCollection new: m.
 	tPoints := OrderedCollection new: m.
 
 	((rectangle top + radius topLeft to:
 	  rectangle bottom - radius bottomLeft) linspace: n) withIndexDo: [ 
 		:each 
 		:index | 
-		lPoints at: index put: rectangle left @ each + random next.
-		rPoints atLast: index put: rectangle right @ each + random next ].
+		lPoints add: rectangle left @ each + random next.
+		rPoints addFirst: rectangle right @ each + random next ].
 
 	((rectangle left + radius bottomLeft to:
 	  rectangle right - radius bottomRight) linspace: m) withIndexDo: [ 
 		:each 
 		:index | 
-		bPoints at: index put: each @ rectangle bottom + random next.
+		bPoints add: each @ rectangle bottom + random next.
 		tPoints addFirst: each @ rectangle top + random next ].
 
 	lPoints := lPoints allButLast.

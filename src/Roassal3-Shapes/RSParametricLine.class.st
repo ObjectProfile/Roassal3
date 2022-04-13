@@ -11,20 +11,14 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
-{ #category : #'as yet unclassified' }
-RSParametricLine >> arcLength [
-
-	^ cumulativeArcLengths last
-]
-
 { #category : #accessing }
-RSParametricLine >> arcLengthParameterized [
+RSParametricLine >> arcLengthParameterization [
 
-	^ RSArcLengthParametricLine new
-		  cumulativeArcLengths: cumulativeArcLengths;
-		  line: self;
-		  controlPoints: points;
-		  yourself
+	param := RSArcLengthParameterization new
+		         parameterization: param;
+		         yourself.
+
+	self resetPath
 ]
 
 { #category : #converting }
@@ -152,7 +146,7 @@ RSParametricLine >> designPoints [
 RSParametricLine >> newLine [
 
 	^ self class new
-		  param: param;
+		  parameterization: param;
 		  yourself
 ]
 
@@ -167,21 +161,23 @@ RSParametricLine >> notifyExtentChanged [
 ]
 
 { #category : #accessing }
-RSParametricLine >> param: anInterval [
-
-	| size |
-	param := anInterval.
-
-	size := self paramSize.
-
-	controlPoints := Array new: size.
-	cumulativeArcLengths := FloatArray new: size
-]
-
-{ #category : #accessing }
 RSParametricLine >> paramSize [
 
 	^ param size
+]
+
+{ #category : #'as yet unclassified' }
+RSParametricLine >> parameterization [
+
+	^ param
+]
+
+{ #category : #accessing }
+RSParametricLine >> parameterization: anInterval [
+
+	param := anInterval.
+
+	controlPoints := Array new: self paramSize
 ]
 
 { #category : #accessing }
@@ -204,23 +200,13 @@ RSParametricLine >> refreshSandboxPoints [
 RSParametricLine >> resetPath [
 
 	controlPoints ifNotNil: [ 
-		| lastPoint arcLength |
-		arcLength := 0.0.
-
-		lastPoint := self controlPointsAt: param first.
-
 		param withIndexDo: [ :t :index | 
 			| aPoint |
 			aPoint := self controlPointsAt: t.
-
-			"`arcLength` receives the #+ in order to have a floating addition."
-			arcLength := arcLength + (lastPoint distanceTo: aPoint).
-
-			cumulativeArcLengths at: index put: arcLength.
-
 			controlPoints at: index put: aPoint.
 
-			lastPoint := aPoint ] ].
+			"Ensure to return the point on the curve."
+			aPoint ] ].
 
 	super resetPath
 ]

@@ -64,7 +64,7 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 	^ (0 to: n)
 		  collect: [ :each | 
 			  RSParametricXYLine new
-				  param: param;
+				  parameterization: param;
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
 				  scale: 100 ]
 		  as: RSGroup
@@ -73,10 +73,7 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 { #category : #'as yet unclassified' }
 RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 
-	| tUnit |
-	tUnit := param unitAt: t.
-
-	^ self deCasteljau: aSequenceableOfPoints at: tUnit asFloat
+	^ self deCasteljau: aSequenceableOfPoints at: t asFloat
 ]
 
 { #category : #accessing }
@@ -103,7 +100,7 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 RSdeCasteljauLine >> derivative [
 
 	^ RSdeCasteljauDerivativeLine new
-		  param: param;
+		  parameterization: param;
 		  controlPoints: points;
 		  yourself
 ]
@@ -327,7 +324,7 @@ RSdeCasteljauLine >> pen: aBlock [
 RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
-		  param: param;
+		  parameterization: param;
 		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
@@ -336,7 +333,12 @@ RSdeCasteljauLine >> polar: ratio [
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
 
-	self param: ((0 to: 1) linspace: n)
+	| parameterization |
+	parameterization := RSUnaryLinspaceParameterization new
+		                    samples: n;
+		                    yourself.
+
+	self parameterization: parameterization
 ]
 
 { #category : #accessing }
@@ -396,7 +398,7 @@ RSdeCasteljauLine >> weight: aNumber atIndex: anIndex [
 RSdeCasteljauLine >> weighted: aCollection [
 
 	^ RSdeCasteljauRationalWoznyChudyLine new
-		  param: param;
+		  parameterization: param;
 		  weights: aCollection;
 		  controlPoints: points;
 		  yourself
