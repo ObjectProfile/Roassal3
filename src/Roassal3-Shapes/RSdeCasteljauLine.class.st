@@ -343,7 +343,7 @@ RSdeCasteljauLine >> samples: n [
 RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 	| left right diagonal last t |
-	sandboxControlPoints
+	sandboxPoints
 		replaceFrom: 1
 		to: pointsSize
 		with: points
@@ -352,8 +352,8 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 	diagonal := Array new: pointsSize.
 	last := Array new: pointsSize.
 
-	diagonal at: 1 put: sandboxControlPoints first.
-	last at: 1 put: sandboxControlPoints last.
+	diagonal at: 1 put: sandboxPoints first.
+	last at: 1 put: sandboxPoints last.
 
 	t := param unitAt: aParam.
 
@@ -363,17 +363,17 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 		1 to: delta do: [ :i | 
 			| aPoint |
-			aPoint := (sandboxControlPoints at: i)
-				          unitAffine: (sandboxControlPoints at: i + 1)
+			aPoint := (sandboxPoints at: i)
+				          unitAffine: (sandboxPoints at: i + 1)
 				          at: 1 - t.
 
-			sandboxControlPoints at: i put: aPoint ].
+			sandboxPoints at: i put: aPoint ].
 
 		k < pointsSize ifTrue: [ 
 			| kSucc |
 			kSucc := k + 1.
-			diagonal at: kSucc put: sandboxControlPoints first.
-			last at: kSucc put: (sandboxControlPoints at: delta) ] ].
+			diagonal at: kSucc put: sandboxPoints first.
+			last at: kSucc put: (sandboxPoints at: delta) ] ].
 
 	left := self newLine
 		        controlPoints: diagonal;

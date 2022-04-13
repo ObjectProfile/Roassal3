@@ -4,10 +4,9 @@ Class {
 	#instVars : [
 		'param',
 		'points',
-		'sandboxControlPoints',
 		'pointsSize',
-		'paramSize',
-		'cumulativeArcLengths'
+		'cumulativeArcLengths',
+		'sandboxPoints'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -112,16 +111,19 @@ RSParametricLine >> asGroupWithControlNetColoured: aColor [
 ]
 
 { #category : #accessing }
-RSParametricLine >> controlPoints: aCollectionOfPoints [
+RSParametricLine >> controlPoints: aSequenceableOfPoints [
 
-	points := aCollectionOfPoints collect: [ :each | each asFloatPoint ].
+	pointsSize := aSequenceableOfPoints size.
 
-	pointsSize := points size.
-	paramSize := param size.
+	points := Array new: pointsSize.
+	sandboxPoints := Array new: pointsSize.
 
-	sandboxControlPoints := Array new: pointsSize.
-	controlPoints := Array new: paramSize.
-	cumulativeArcLengths := FloatArray new: paramSize.
+	aSequenceableOfPoints withIndexDo: [ :each :index | 
+		| aPoint |
+		aPoint := each asFloatPoint.
+
+		points at: index put: aPoint.
+		sandboxPoints at: index put: aPoint ].
 
 	self resetPath
 ]
@@ -130,6 +132,14 @@ RSParametricLine >> controlPoints: aCollectionOfPoints [
 RSParametricLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSParametricLine >> controlPointsAt: t [
+
+	self refreshSandboxPoints.
+
+	^ (self controlPoints: sandboxPoints at: t) asFloatPoint
 ]
 
 { #category : #'as yet unclassified' }
@@ -159,13 +169,19 @@ RSParametricLine >> notifyExtentChanged [
 { #category : #accessing }
 RSParametricLine >> param: anInterval [
 
-	param := anInterval
+	| size |
+	param := anInterval.
+
+	size := param size.
+
+	controlPoints := Array new: size.
+	cumulativeArcLengths := FloatArray new: size
 ]
 
 { #category : #accessing }
 RSParametricLine >> paramSize [
 
-	^ paramSize
+	^ param size
 ]
 
 { #category : #accessing }
@@ -175,32 +191,27 @@ RSParametricLine >> pointsSize [
 ]
 
 { #category : #accessing }
+RSParametricLine >> refreshSandboxPoints [
+
+	sandboxPoints
+		replaceFrom: 1
+		to: pointsSize
+		with: points
+		startingAt: 1
+]
+
+{ #category : #accessing }
 RSParametricLine >> resetPath [
 
 	controlPoints ifNotNil: [ 
 		| lastPoint arcLength |
 		arcLength := 0.0.
 
-		sandboxControlPoints
-			replaceFrom: 1
-			to: pointsSize
-			with: points
-			startingAt: 1.
-
-		lastPoint := (self
-			              controlPoints: sandboxControlPoints
-			              at: param first) asFloatPoint.
+		lastPoint := self controlPointsAt: param first.
 
 		param withIndexDo: [ :t :index | 
 			| aPoint |
-			sandboxControlPoints
-				replaceFrom: 1
-				to: pointsSize
-				with: points
-				startingAt: 1.
-
-			aPoint := (self controlPoints: sandboxControlPoints at: t)
-				          asFloatPoint.
+			aPoint := self controlPointsAt: t.
 
 			arcLength := arcLength + (lastPoint distanceTo: aPoint).
 
