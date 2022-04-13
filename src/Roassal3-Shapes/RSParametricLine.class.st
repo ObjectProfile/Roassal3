@@ -2,11 +2,11 @@ Class {
 	#name : #RSParametricLine,
 	#superclass : #RSPolyline,
 	#instVars : [
-		'param',
 		'points',
 		'pointsSize',
 		'cumulativeArcLengths',
-		'sandboxPoints'
+		'sandboxPoints',
+		'parameterization'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -14,8 +14,8 @@ Class {
 { #category : #accessing }
 RSParametricLine >> arcLengthParameterization [
 
-	param := RSArcLengthParameterization new
-		         parameterization: param;
+	parameterization := RSArcLengthParameterization new
+		         parameterization: parameterization;
 		         yourself.
 
 	self resetPath
@@ -146,7 +146,7 @@ RSParametricLine >> designPoints [
 RSParametricLine >> newLine [
 
 	^ self class new
-		  parameterization: param;
+		  parameterization: parameterization;
 		  yourself
 ]
 
@@ -163,19 +163,19 @@ RSParametricLine >> notifyExtentChanged [
 { #category : #accessing }
 RSParametricLine >> paramSize [
 
-	^ param size
+	^ parameterization size
 ]
 
 { #category : #'as yet unclassified' }
 RSParametricLine >> parameterization [
 
-	^ param
+	^ parameterization
 ]
 
 { #category : #accessing }
-RSParametricLine >> parameterization: anInterval [
+RSParametricLine >> parameterization: anObject [
 
-	param := anInterval.
+	parameterization := anObject.
 
 	controlPoints := Array new: self paramSize
 ]
@@ -200,7 +200,7 @@ RSParametricLine >> refreshSandboxPoints [
 RSParametricLine >> resetPath [
 
 	controlPoints ifNotNil: [ 
-		param withIndexDo: [ :t :index | 
+		parameterization withIndexDo: [ :t :index | 
 			| aPoint |
 			aPoint := self controlPointsAt: t.
 			controlPoints at: index put: aPoint.

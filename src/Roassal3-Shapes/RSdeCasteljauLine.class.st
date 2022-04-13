@@ -102,7 +102,7 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 RSdeCasteljauLine >> derivative [
 
 	^ RSdeCasteljauDerivativeLine new
-		  parameterization: param;
+		  parameterization: parameterization;
 		  controlPoints: points;
 		  yourself
 ]
@@ -326,7 +326,7 @@ RSdeCasteljauLine >> pen: aBlock [
 RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
-		  parameterization: param;
+		  parameterization: parameterization;
 		  ratio: ratio;
 		  controlPoints: points;
 		  yourself
@@ -359,7 +359,7 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 	diagonal at: 1 put: sandboxPoints first.
 	last at: 1 put: sandboxPoints last.
 
-	t := param unitAt: aParam.
+	t := parameterization unitAt: aParam.
 
 	1 to: pointsSize do: [ :k | 
 		| delta |
@@ -400,7 +400,7 @@ RSdeCasteljauLine >> weight: aNumber atIndex: anIndex [
 RSdeCasteljauLine >> weighted: aCollection [
 
 	^ RSdeCasteljauRationalWoznyChudyLine new
-		  parameterization: param;
+		  parameterization: parameterization;
 		  weights: aCollection;
 		  controlPoints: points;
 		  yourself
