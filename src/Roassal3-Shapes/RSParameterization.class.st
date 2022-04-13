@@ -27,6 +27,12 @@ RSParameterization >> cumulativeArcLengths [
 ]
 
 { #category : #accessing }
+RSParameterization >> domain [
+
+	^ domain
+]
+
+{ #category : #accessing }
 RSParameterization >> size [
 
 	^ domain size

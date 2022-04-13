@@ -2,7 +2,7 @@ Class {
 	#name : #RSArcLengthParameterization,
 	#superclass : #RSParameterization,
 	#instVars : [
-		'parameterization'
+		'sourceDomain'
 	],
 	#category : #'Roassal3-Shapes-Util'
 }
@@ -10,9 +10,9 @@ Class {
 { #category : #accessing }
 RSArcLengthParameterization >> parameterization: aParameterization [
 
-	parameterization := aParameterization.
+	sourceDomain := aParameterization domain.
 
-	cumulativeArcLengths := parameterization cumulativeArcLengths.
+	cumulativeArcLengths := aParameterization cumulativeArcLengths copy.
 
 	self updateDomain
 ]
@@ -30,7 +30,7 @@ RSArcLengthParameterization >> updateDomain [
 
 	size := arcLengths size - 1.
 
-	domain := parameterization collect: [ :u | 
+	domain := sourceDomain collect: [ :u | 
 		          | arcLength index before after ratio |
 		          arcLength := totalArcLength * u.
 
@@ -49,7 +49,7 @@ RSArcLengthParameterization >> updateDomain [
 { #category : #enumerating }
 RSArcLengthParameterization >> withIndexDo: aBlock [
 
-	self cumulativeArcLengths.
+	super withIndexDo: aBlock.
 
-	super withIndexDo: aBlock
+	self updateDomain
 ]

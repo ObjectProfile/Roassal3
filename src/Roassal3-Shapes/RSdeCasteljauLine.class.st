@@ -64,9 +64,11 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 	^ (0 to: n)
 		  collect: [ :each | 
 			  RSParametricXYLine new
-				  parameterization: param;
+				  parameterization: (RSUnaryLinspaceParameterization new
+						   samples: 100;
+						   yourself);
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
-				  scale: 100 ]
+				  scale: 150 ]
 		  as: RSGroup
 ]
 
