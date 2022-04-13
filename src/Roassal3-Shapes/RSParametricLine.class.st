@@ -172,7 +172,7 @@ RSParametricLine >> param: anInterval [
 	| size |
 	param := anInterval.
 
-	size := param size.
+	size := self paramSize.
 
 	controlPoints := Array new: size.
 	cumulativeArcLengths := FloatArray new: size
@@ -213,6 +213,7 @@ RSParametricLine >> resetPath [
 			| aPoint |
 			aPoint := self controlPointsAt: t.
 
+			"`arcLength` receives the #+ in order to have a floating addition."
 			arcLength := arcLength + (lastPoint distanceTo: aPoint).
 
 			cumulativeArcLengths at: index put: arcLength.
