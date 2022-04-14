@@ -43,7 +43,11 @@ RSArcLengthParameterization >> updateDomain [
 
 		          ratio := arcLength - before / (after - before).
 
-		          ratio + index - 1 / size ]
+		          ratio + index - 1 / size ].
+
+	domain
+		at: 1 put: 0.0;
+		atLast: 1 put: 1.0
 ]
 
 { #category : #enumerating }

@@ -14,9 +14,17 @@ Class {
 { #category : #accessing }
 RSParametricLine >> arcLengthParameterization [
 
+	self arcLengthParameterizationInitIterations: 5
+]
+
+{ #category : #accessing }
+RSParametricLine >> arcLengthParameterizationInitIterations: iterations [
+
 	parameterization := RSArcLengthParameterization new
-		         parameterization: parameterization;
-		         yourself.
+		                    parameterization: parameterization;
+		                    yourself.
+
+	iterations timesRepeat: [ self refreshControlPoints ].
 
 	self resetPath
 ]
@@ -119,7 +127,9 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints [
 		points at: index put: aPoint.
 		sandboxPoints at: index put: aPoint ].
 
-	self resetPath
+	self
+		refreshControlPoints;
+		resetPath
 ]
 
 { #category : #converting }
@@ -134,6 +144,12 @@ RSParametricLine >> controlPointsAt: t [
 	self refreshSandboxPoints.
 
 	^ (self controlPoints: sandboxPoints at: t) asFloatPoint
+]
+
+{ #category : #accessing }
+RSParametricLine >> controlPointsSize [
+
+	^ pointsSize
 ]
 
 { #category : #'as yet unclassified' }
@@ -160,12 +176,6 @@ RSParametricLine >> notifyExtentChanged [
 			newExtent: (Rectangle encompassing: self controlPoints) extent ]
 ]
 
-{ #category : #accessing }
-RSParametricLine >> paramSize [
-
-	^ parameterization size
-]
-
 { #category : #'as yet unclassified' }
 RSParametricLine >> parameterization [
 
@@ -177,13 +187,19 @@ RSParametricLine >> parameterization: anObject [
 
 	parameterization := anObject.
 
-	controlPoints := Array new: self paramSize
+	controlPoints := Array new: parameterization size
 ]
 
 { #category : #accessing }
-RSParametricLine >> pointsSize [
+RSParametricLine >> refreshControlPoints [
 
-	^ pointsSize
+	parameterization withIndexDo: [ :t :index | 
+		| aPoint |
+		aPoint := self controlPointsAt: t.
+		controlPoints at: index put: aPoint.
+
+		"Ensure to return the point on the curve."
+		aPoint ]
 ]
 
 { #category : #accessing }
@@ -194,21 +210,6 @@ RSParametricLine >> refreshSandboxPoints [
 		to: pointsSize
 		with: points
 		startingAt: 1
-]
-
-{ #category : #accessing }
-RSParametricLine >> resetPath [
-
-	controlPoints ifNotNil: [ 
-		parameterization withIndexDo: [ :t :index | 
-			| aPoint |
-			aPoint := self controlPointsAt: t.
-			controlPoints at: index put: aPoint.
-
-			"Ensure to return the point on the curve."
-			aPoint ] ].
-
-	super resetPath
 ]
 
 { #category : #converting }

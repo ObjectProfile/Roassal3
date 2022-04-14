@@ -256,7 +256,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		        p: 0.6;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c0 ] ].
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]

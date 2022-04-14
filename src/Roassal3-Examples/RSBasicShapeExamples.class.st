@@ -1080,10 +1080,10 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPointsArcLengthPara
 
 	<script:
 	'self new example44deCasteljauLineClosedControlPointsArcLengthParameterized open'>
-	^ RSCanvas new halt;
-		  addAll:
-			  self lineDeCasteljauLineClosedControlPoints
-				  arcLengthParameterization asGroupWithControlNet;
+	^ RSCanvas new
+		  addAll: (self lineDeCasteljauLineClosedControlPoints
+				   arcLengthParameterization;
+				   asGroupWithControlNet);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
@@ -1820,7 +1820,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 		          (1 @ 1) }.
 
 	^ RSdeCasteljauLine new
-		  samples: 10;
+		  samples: 100;
 		  controlPoints: points;
 		  scale: 100
 ]
