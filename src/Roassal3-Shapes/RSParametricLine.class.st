@@ -14,19 +14,15 @@ Class {
 { #category : #accessing }
 RSParametricLine >> arcLengthParameterization [
 
-	self arcLengthParameterizationInitIterations: 5
+	self arcLengthParameterization: (RSArcLengthParameterization new
+			 initIterations: 5;
+			 yourself)
 ]
 
 { #category : #accessing }
-RSParametricLine >> arcLengthParameterizationInitIterations: iterations [
+RSParametricLine >> arcLengthParameterization: aParameterization [
 
-	parameterization := RSArcLengthParameterization new
-		                    parameterization: parameterization;
-		                    yourself.
-
-	iterations timesRepeat: [ self refreshControlPoints ].
-
-	self resetPath
+	self parameterization: aParameterization
 ]
 
 { #category : #converting }
@@ -162,7 +158,9 @@ RSParametricLine >> designPoints [
 RSParametricLine >> newLine [
 
 	^ self class new
-		  parameterization: parameterization;
+		  parameterization: (RSUnaryLinspaceParameterization new
+				   samples: parameterization size;
+				   yourself);
 		  yourself
 ]
 
@@ -185,8 +183,25 @@ RSParametricLine >> parameterization [
 { #category : #accessing }
 RSParametricLine >> parameterization: anObject [
 
-	parameterization := anObject.
+	anObject parameterize_RSParametricLine: self
+]
 
+{ #category : #accessing }
+RSParametricLine >> parameterized_RSArcLengthParameterization: aParameterization [
+
+	parameterization := aParameterization
+		                    parameterization: parameterization;
+		                    yourself.
+
+	parameterization initDo: [ self refreshControlPoints ].
+
+	self resetPath
+]
+
+{ #category : #accessing }
+RSParametricLine >> parameterized_RSLinspaceParameterization: aParameterization [
+
+	parameterization := aParameterization.
 	controlPoints := Array new: parameterization size
 ]
 

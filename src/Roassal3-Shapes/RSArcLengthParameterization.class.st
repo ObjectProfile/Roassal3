@@ -2,10 +2,23 @@ Class {
 	#name : #RSArcLengthParameterization,
 	#superclass : #RSParameterization,
 	#instVars : [
-		'sourceDomain'
+		'sourceDomain',
+		'initIterations'
 	],
 	#category : #'Roassal3-Shapes-Util'
 }
+
+{ #category : #'as yet unclassified' }
+RSArcLengthParameterization >> initDo: aBlock [
+
+	initIterations timesRepeat: aBlock
+]
+
+{ #category : #accessing }
+RSArcLengthParameterization >> initIterations: anObject [
+
+	initIterations := anObject
+]
 
 { #category : #accessing }
 RSArcLengthParameterization >> parameterization: aParameterization [
@@ -15,6 +28,12 @@ RSArcLengthParameterization >> parameterization: aParameterization [
 	cumulativeArcLengths := aParameterization cumulativeArcLengths copy.
 
 	self updateDomain
+]
+
+{ #category : #'as yet unclassified' }
+RSArcLengthParameterization >> parameterize_RSParametricLine: aLine [
+
+	aLine parameterized_RSArcLengthParameterization: self
 ]
 
 { #category : #accessing }

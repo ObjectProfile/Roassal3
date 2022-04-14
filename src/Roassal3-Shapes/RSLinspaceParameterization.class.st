@@ -11,3 +11,9 @@ RSLinspaceParameterization >> from: from to: to samples: samples [
 
 	cumulativeArcLengths := Array new: samples
 ]
+
+{ #category : #'as yet unclassified' }
+RSLinspaceParameterization >> parameterize_RSParametricLine: aLine [
+
+	aLine parameterized_RSLinspaceParameterization: self
+]

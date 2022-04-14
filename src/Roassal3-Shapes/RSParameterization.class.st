@@ -32,6 +32,12 @@ RSParameterization >> domain [
 	^ domain
 ]
 
+{ #category : #'as yet unclassified' }
+RSParameterization >> parameterize_RSParametricLine: aLine [
+
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 RSParameterization >> size [
 

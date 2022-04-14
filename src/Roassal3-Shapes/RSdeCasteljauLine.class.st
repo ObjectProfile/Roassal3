@@ -58,17 +58,19 @@ RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeT
 { #category : #converting }
 RSdeCasteljauLine >> asGroupBernsteinBase [
 
-	| n |
+	| n scale |
 	n := pointsSize - 1.
+
+	scale := Float goldenRatio * (pointsSize max: 100).
 
 	^ (0 to: n)
 		  collect: [ :each | 
 			  RSParametricXYLine new
 				  parameterization: (RSUnaryLinspaceParameterization new
-						   samples: 100;
+						   samples: scale ceiling;
 						   yourself);
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
-				  scale: 150 ]
+				  scale: scale ]
 		  as: RSGroup
 ]
 
@@ -335,12 +337,9 @@ RSdeCasteljauLine >> polar: ratio [
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
 
-	| parameterization |
-	parameterization := RSUnaryLinspaceParameterization new
-		                    samples: n;
-		                    yourself.
-
-	self parameterization: parameterization
+	self parameterization: (RSUnaryLinspaceParameterization new
+			 samples: n;
+			 yourself)
 ]
 
 { #category : #accessing }
