@@ -265,9 +265,9 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 				          radius: 0;
 				          yourself ].
 
-	"radius := RSCornerRadius new
+	radius := RSCornerRadius new
 		          radius: 0;
-		          yourself."
+		          yourself.
 
 	n := rectangle height.
 	m := rectangle width.
@@ -303,10 +303,10 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		bPoints add: each @ rectangle bottom + random next.
 		tPoints addFirst: each @ rectangle top + random next ].
 
-	lPoints := lPoints allButLast.
+	"lPoints := lPoints allButLast.
 	bPoints := bPoints allButLast.
 	rPoints := rPoints allButLast.
-	tPoints := tPoints allButLast.
+	tPoints := tPoints allButLast."
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
