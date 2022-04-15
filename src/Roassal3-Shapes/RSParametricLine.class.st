@@ -14,15 +14,7 @@ Class {
 { #category : #accessing }
 RSParametricLine >> arcLengthParameterization [
 
-	self arcLengthParameterization: (RSArcLengthParameterization new
-			 initIterations: 5;
-			 yourself)
-]
-
-{ #category : #accessing }
-RSParametricLine >> arcLengthParameterization: aParameterization [
-
-	self parameterization: aParameterization
+	self parameterization: RSArcLengthParameterization new
 ]
 
 { #category : #converting }
@@ -193,9 +185,9 @@ RSParametricLine >> parameterized_RSArcLengthParameterization: aParameterization
 		                    parameterization: parameterization;
 		                    yourself.
 
-	parameterization initDo: [ self refreshControlPoints ].
-
-	self resetPath
+	self
+		refreshControlPoints;
+		resetPath
 ]
 
 { #category : #accessing }

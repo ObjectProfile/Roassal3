@@ -2,35 +2,37 @@ Class {
 	#name : #RSArcLengthParameterization,
 	#superclass : #RSParameterization,
 	#instVars : [
-		'sourceDomain',
-		'initIterations'
+		'parameterization'
 	],
 	#category : #'Roassal3-Shapes-Util'
 }
 
-{ #category : #'as yet unclassified' }
-RSArcLengthParameterization >> initDo: aBlock [
+{ #category : #sorting }
+RSArcLengthParameterization >> indexForInserting: newObject into: aSequenceable [
 
-	initIterations timesRepeat: aBlock
-]
+	"Very similar to SortedCollection>>#indexForInserting: with #< as sorting block."
 
-{ #category : #accessing }
-RSArcLengthParameterization >> initIterations: anObject [
+	| index low high |
+	low := 1.
+	high := aSequenceable size.
 
-	initIterations := anObject
+	[ 
+	index := high + low // 2.
+	low > high ] whileFalse: [ 
+		(aSequenceable at: index) < newObject
+			ifTrue: [ low := index + 1 ]
+			ifFalse: [ high := index - 1 ] ].
+
+	^ low
 ]
 
 { #category : #accessing }
 RSArcLengthParameterization >> parameterization: aParameterization [
 
-	sourceDomain := aParameterization domain.
-
-	cumulativeArcLengths := aParameterization cumulativeArcLengths copy.
-
-	self updateDomain
+	parameterization := aParameterization
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #dispatching }
 RSArcLengthParameterization >> parameterize_RSParametricLine: aLine [
 
 	aLine parameterized_RSArcLengthParameterization: self
@@ -39,31 +41,29 @@ RSArcLengthParameterization >> parameterize_RSParametricLine: aLine [
 { #category : #accessing }
 RSArcLengthParameterization >> updateDomain [
 
-	| size totalArcLength arcLengths |
-	arcLengths := (SortedCollection sortBlock: [ :aFloat :anotherFloat | 
-			               aFloat < anotherFloat ])
-		              addAll: cumulativeArcLengths;
-		              yourself.
+	| size totalArcLength |
+	totalArcLength := cumulativeArcLengths last.
 
-	totalArcLength := arcLengths last.
+	size := cumulativeArcLengths size - 1.
 
-	size := arcLengths size - 1.
-
-	domain := sourceDomain collect: [ :u | 
+	domain := parameterization collect: [ :u | 
 		          | arcLength index before after ratio |
 		          arcLength := totalArcLength * u.
 
-		          index := (arcLengths indexForInserting: arcLength) - 1
-			                   min: size
-			                   max: 1.
+		          index := (self
+			                    indexForInserting: arcLength
+			                    into: cumulativeArcLengths) - 1.
 
-		          before := arcLengths at: index.
-		          after := arcLengths at: index + 1.
+		          index := index min: size max: 1.
+
+		          before := cumulativeArcLengths at: index.
+		          after := cumulativeArcLengths at: index + 1.
 
 		          ratio := arcLength - before / (after - before).
 
 		          ratio + index - 1 / size ].
 
+	"to ensure interpolation on the first and last control points."
 	domain
 		at: 1 put: 0.0;
 		atLast: 1 put: 1.0
@@ -72,7 +72,19 @@ RSArcLengthParameterization >> updateDomain [
 { #category : #enumerating }
 RSArcLengthParameterization >> withIndexDo: aBlock [
 
+	"First, cumulate arc lengths using the original parameterization."
+
+	cumulativeArcLengths := parameterization withIndexDo: aBlock.
+
+	"Second, prepare the domain to be consistent according to arc length parameterization."
+	self updateDomain.
+
+	"Third, evaluate according to the new parameterization"
 	super withIndexDo: aBlock.
 
-	self updateDomain
+	"Fourth, update again the domain after new arc lengths have been computed."
+	self updateDomain.
+
+	"Finally, return the new arc length to be consistent with my super class."
+	^ cumulativeArcLengths
 ]

@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal3-Shapes-Util'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSParameterization >> arcLength [
 
 	^ cumulativeArcLengths last
@@ -17,22 +17,12 @@ RSParameterization >> arcLength [
 { #category : #enumerating }
 RSParameterization >> collect: aBlock [
 
+	"I enumerate the domain, just avoid to expose it through an accessor."
+
 	^ domain collect: aBlock
 ]
 
-{ #category : #accessing }
-RSParameterization >> cumulativeArcLengths [
-
-	^ cumulativeArcLengths
-]
-
-{ #category : #accessing }
-RSParameterization >> domain [
-
-	^ domain
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #dispatching }
 RSParameterization >> parameterize_RSParametricLine: aLine [
 
 	self subclassResponsibility
@@ -63,5 +53,7 @@ RSParameterization >> withIndexDo: aBlock [
 
 		cumulativeArcLengths at: index put: arcLength.
 
-		lastPoint := aPoint ]
+		lastPoint := aPoint ].
+
+	^ cumulativeArcLengths
 ]

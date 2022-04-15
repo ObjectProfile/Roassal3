@@ -1259,7 +1259,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxDegreeElevation [
 	'self new example44deCasteljauLineNoteBoxDegreeElevation open'>
 	^ (self lineDeCasteljauLineNoteBox elevate: 100) in: [ :whole | 
 		  RSCanvas new
-			  addAll: whole asGroupWithControlNet;
+			  addAll: whole arcLengthParameterization asGroupWithControlNet;
 			  zoomToFit;
 			  addInteraction: RSCanvasController new;
 			  yourself ]
