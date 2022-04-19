@@ -174,15 +174,19 @@ RSLineBuilder class >> horizontalDovetailSegmentedLine: aLine [
 		  horizontalSegmentedLine: aLine
 		  controlPointsController: (RSHorizontalMidBlockCPAPController new
 				   midPointBlock: [ :from :to :points | 
-					   | childIndex siblings index size |
-					   childIndex := (to propertyAt: #childIndex) ifNil: [ 1 ].
-					   siblings := (from propertyAt: #children) ifNil: [ { to } ].
+					   | childIndex siblings index size parentShape |
+					   parentShape := to.
+					   [ parentShape propertyAt: #childIndex ] whileNil: [ 
+							   parentShape := parentShape parent ].
 
-					   index := to position y > from position y
+					   childIndex := parentShape propertyAt: #childIndex.
+					   siblings := parentShape propertyAt: #siblings.
+
+					   index := points last y > points first y
 						            ifTrue: [ siblings size - childIndex + 1 ]
 						            ifFalse: [ childIndex ].
 
-					   size := ((to propertyAt: #siblings) ifNil: [ { to } ]) size.
+					   size := siblings size.
 					   index / (size >> 1 + 3 - size odd asBit) ];
 				   yourself)
 ]
