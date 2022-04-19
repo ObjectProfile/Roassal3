@@ -280,22 +280,35 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
 
-	lPoints := ((rectangle top + radius topLeft to:
-	             rectangle bottom - radius bottomLeft) linspace: n) 
-		           collect: [ :each | rectangle left @ each + random next ].
+	lPoints := ((rectangle top to: rectangle bottom "- radius bottomLeft") 
+		            linspace: n) collect: [ :each | 
+		           rectangle left @ each + random next ]. "+ radius topLeft"
 
-	rPoints := ((rectangle bottom - radius bottomRight to:
-	             rectangle top + radius topRight) linspace: n) collect: [ 
-		           :each | rectangle right @ each + random next ].
+	rPoints := ((rectangle bottom to: rectangle top "+ radius topRight") 
+		            linspace: n) collect: [ :each | 
+		           rectangle right @ each + random next ]. "- radius bottomRight"
 
-	bPoints := ((rectangle left + radius bottomLeft to:
-	             rectangle right - radius bottomRight) linspace: m) 
-		           collect: [ :each | each @ rectangle bottom + random next ].
+	bPoints := ((rectangle left to: rectangle right "- radius bottomRight") 
+		            linspace: m) collect: [ :each | 
+		           each @ rectangle bottom + random next ]. "+ radius bottomLeft"
 
-	tPoints := ((rectangle right - radius topLeft to:
-	             rectangle left + radius topLeft) linspace: m) collect: [ 
-		           :each | each @ rectangle top + random next ].
+	tPoints := ((rectangle right to: rectangle left "+ radius topLeft") 
+		            linspace: m) collect: [ :each | 
+		           each @ rectangle top + random next ]. "- radius topLeft"
 
+	lPoints
+		atLast: 1
+		put: lPoints last - (0 @ radius bottomLeft * Float goldenRatio).
+	bPoints
+		atLast: 1
+		put: bPoints last - (radius bottomRight * Float goldenRatio @ 0).
+	rPoints
+		atLast: 1
+		put: rPoints last + (0 @ radius topRight * Float goldenRatio).
+	tPoints
+		atLast: 1
+		put: tPoints last + (radius topLeft * Float goldenRatio @ 0).
+		
 	"lPoints := lPoints allButLast.
 	bPoints := bPoints allButFirst.
 	rPoints := rPoints allButLast.
@@ -321,10 +334,11 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		       controlPoints: tPoints;
 		       yourself.
 
-	bottom := left junction: bottom right: [ :c0 :c1 :c2 | c0 ].
-	right := bottom junction: right right: [ :c0 :c1 :c2 | c1 ].
-	top := right junction: top right: [ :c0 :c1 :c2 | c1 ].
-	left := top junction: left right: [ :c0 :c1 :c2 | c0 ].
+
+	bottom := left junction: bottom right: block.
+	right := bottom junction: right right: block.
+	top := right junction: top right: block.
+	left := top junction: left right: block.
 
 	finalLine := RSPolyline new
 		             controlPoints:
