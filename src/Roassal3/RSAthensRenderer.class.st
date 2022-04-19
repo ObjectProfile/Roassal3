@@ -334,7 +334,6 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		       controlPoints: tPoints;
 		       yourself.
 
-
 	bottom := left junction: bottom right: block.
 	right := bottom junction: right right: block.
 	top := right junction: top right: block.

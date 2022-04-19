@@ -15,15 +15,18 @@ RSSegmentedCPAPController >> controlPointsController: anObject [
 ]
 
 { #category : #hooks }
-RSSegmentedCPAPController >> controlPointsFrom: from to: to [
+RSSegmentedCPAPController >> controlPointsFor: aLine [
 
-	| random anArray |
+	| random anArray from to |
 	random := RandomBoxMullerBivariateGaussian new.
 
-	anArray := (linearizationPredicate value: from value: to)
-		           ifTrue: [ Array with: from with: to ]
-		           ifFalse: [ 
-		           controlPointsController controlPointsFrom: from to: to ].
+	anArray := controlPointsController controlPointsFor: aLine.
+
+	from := anArray first.
+	to := anArray last.
+
+	(linearizationPredicate value: from value: to) ifTrue: [ 
+		anArray := Array with: from with: to ].
 
 	anArray := anArray overlappingPairsCollect: [ :aPoint :anotherPoint | 
 		           | samples distance |
@@ -40,6 +43,12 @@ RSSegmentedCPAPController >> controlPointsFrom: from to: to [
 	anArray atLast: 1 put: anArray last , { (random next + to) }.
 
 	^ anArray
+]
+
+{ #category : #hooks }
+RSSegmentedCPAPController >> controlPointsFrom: from to: to [
+
+	self halt
 ]
 
 { #category : #hooks }

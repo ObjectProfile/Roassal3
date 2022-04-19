@@ -14,4 +14,5 @@ RSHorizontalWithPyramidalWidthsVanDerPloegTreeLayout >> horizontalGapAmongParent
 		  andChild: aShape
 		  default:
 		  (super horizontalGapAmongParent: aShapeParent andChild: aShape)
+		  layout: self
 ]

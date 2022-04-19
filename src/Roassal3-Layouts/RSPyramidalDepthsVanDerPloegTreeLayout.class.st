@@ -14,4 +14,5 @@ RSPyramidalDepthsVanDerPloegTreeLayout >> verticalGapAmongParent: aShapeParent a
 		  andChild: aShape
 		  default:
 		  (self verticalGapAmongParent: aShapeParent andChild: aShape)
+		  layout: self
 ]

@@ -181,7 +181,20 @@ RSLineBuilder class >> horizontalSegmentedLine: aLine [
 	| controller predicate |
 	controller := RSSegmentedCPAPController new
 		              controlPointsController:
-			              RSHorizontalCPAPController new;
+			              (RSHorizontalMidBlockCPAPController new
+				               midPointBlock: [ :from :to :points | 
+					               | childIndex siblings index size |
+					               childIndex := to propertyAt: #childIndex.
+					               siblings := from propertyAt: #children.
+
+					               index := to position y > from position y
+						                        ifTrue: [ 
+							                        siblings size - childIndex + 1 ]
+						                        ifFalse: [ childIndex ].
+
+					               size := (to propertyAt: #siblings) size.
+					               index / (size >> 1 + 3 - size odd asBit) ];
+				               yourself);
 		              yourself.
 
 	"Keep a reference to the original predicate."

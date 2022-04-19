@@ -4,7 +4,7 @@ Trait {
 }
 
 { #category : #gap }
-RSTWalkBasedRegularTreeGapsPyramidalDepth >> gapAmongParent: aParent andChild: aChild default: aGap [
+RSTWalkBasedRegularTreeGapsPyramidalDepth >> gapAmongParent: aParent andChild: aChild default: aGap layout: layout [
 
 	| childrenSize i j |
 	i := self childIndexOf: aChild.
