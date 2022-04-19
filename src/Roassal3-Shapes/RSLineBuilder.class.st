@@ -154,7 +154,7 @@ RSLineBuilder class >> horizontalBezier [
 { #category : #'instance creation' }
 RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 
-	^ self horizontalSegmentedLine: (RSSegmentedPolyline new
+	^ self horizontalDovetailSegmentedLine: (RSSegmentedPolyline new
 			   lineBlock: [ :anArrayOfPoints | 
 				   RSdeCasteljauLine new
 					   samples: anArrayOfPoints size * 10;
@@ -168,6 +168,26 @@ RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 ]
 
 { #category : #'instance creation' }
+RSLineBuilder class >> horizontalDovetailSegmentedLine: aLine [
+
+	^ self
+		  horizontalSegmentedLine: aLine
+		  controlPointsController: (RSHorizontalMidBlockCPAPController new
+				   midPointBlock: [ :from :to :points | 
+					   | childIndex siblings index size |
+					   childIndex := (to propertyAt: #childIndex) ifNil: [ 1 ].
+					   siblings := (from propertyAt: #children) ifNil: [ { to } ].
+
+					   index := to position y > from position y
+						            ifTrue: [ siblings size - childIndex + 1 ]
+						            ifFalse: [ childIndex ].
+
+					   size := ((to propertyAt: #siblings) ifNil: [ { to } ]) size.
+					   index / (size >> 1 + 3 - size odd asBit) ];
+				   yourself)
+]
+
+{ #category : #'instance creation' }
 RSLineBuilder class >> horizontalLine: aShape [
 	^ (self new: aShape)
 		controlPointsController: RSHorizontalCPAPController new;
@@ -178,23 +198,17 @@ RSLineBuilder class >> horizontalLine: aShape [
 { #category : #'instance creation' }
 RSLineBuilder class >> horizontalSegmentedLine: aLine [
 
+	^ self
+		  horizontalSegmentedLine: aLine
+		  controlPointsController: RSHorizontalCPAPController new
+]
+
+{ #category : #'instance creation' }
+RSLineBuilder class >> horizontalSegmentedLine: aLine controlPointsController: cpapController [
+
 	| controller predicate |
 	controller := RSSegmentedCPAPController new
-		              controlPointsController:
-			              (RSHorizontalMidBlockCPAPController new
-				               midPointBlock: [ :from :to :points | 
-					               | childIndex siblings index size |
-					               childIndex := to propertyAt: #childIndex.
-					               siblings := from propertyAt: #children.
-
-					               index := to position y > from position y
-						                        ifTrue: [ 
-							                        siblings size - childIndex + 1 ]
-						                        ifFalse: [ childIndex ].
-
-					               size := (to propertyAt: #siblings) size.
-					               index / (size >> 1 + 3 - size odd asBit) ];
-				               yourself);
+		              controlPointsController: cpapController;
 		              yourself.
 
 	"Keep a reference to the original predicate."
