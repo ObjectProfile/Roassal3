@@ -253,7 +253,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 	random := RandomBoxMullerBivariateGaussian new.
 
 	coin := RandomBernoulli new
-		        p: 0.6;
+		        p: 0.5;
 		        yourself.
 
 	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
@@ -264,10 +264,6 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 			          RSCornerRadius new
 				          radius: 0;
 				          yourself ].
-
-	radius := RSCornerRadius new
-		          radius: 0;
-		          yourself.
 
 	n := rectangle height.
 	m := rectangle width.
@@ -284,29 +280,26 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
 
-	lPoints := OrderedCollection new: n.
-	rPoints := OrderedCollection new: n.
-	bPoints := OrderedCollection new: m.
-	tPoints := OrderedCollection new: m.
+	lPoints := ((rectangle top + radius topLeft to:
+	             rectangle bottom - radius bottomLeft) linspace: n) 
+		           collect: [ :each | rectangle left @ each + random next ].
 
-	((rectangle top + radius topLeft to:
-	  rectangle bottom - radius bottomLeft) linspace: n) withIndexDo: [ 
-		:each 
-		:index | 
-		lPoints add: rectangle left @ each + random next.
-		rPoints addFirst: rectangle right @ each + random next ].
+	rPoints := ((rectangle bottom - radius bottomRight to:
+	             rectangle top + radius topRight) linspace: n) collect: [ 
+		           :each | rectangle right @ each + random next ].
 
-	((rectangle left + radius bottomLeft to:
-	  rectangle right - radius bottomRight) linspace: m) withIndexDo: [ 
-		:each 
-		:index | 
-		bPoints add: each @ rectangle bottom + random next.
-		tPoints addFirst: each @ rectangle top + random next ].
+	bPoints := ((rectangle left + radius bottomLeft to:
+	             rectangle right - radius bottomRight) linspace: m) 
+		           collect: [ :each | each @ rectangle bottom + random next ].
+
+	tPoints := ((rectangle right - radius topLeft to:
+	             rectangle left + radius topLeft) linspace: m) collect: [ 
+		           :each | each @ rectangle top + random next ].
 
 	"lPoints := lPoints allButLast.
-	bPoints := bPoints allButLast.
+	bPoints := bPoints allButFirst.
 	rPoints := rPoints allButLast.
-	tPoints := tPoints allButLast."
+	tPoints := tPoints allButFirst."
 
 	left := RSdeCasteljauLine new
 		        samples: samples;
@@ -328,10 +321,10 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		       controlPoints: tPoints;
 		       yourself.
 
-	bottom := left junction: bottom right: block.
-	right := bottom junction: right right: block.
-	top := right junction: top right: block.
-	left := top junction: left right: block.
+	bottom := left junction: bottom right: [ :c0 :c1 :c2 | c0 ].
+	right := bottom junction: right right: [ :c0 :c1 :c2 | c1 ].
+	top := right junction: top right: [ :c0 :c1 :c2 | c1 ].
+	left := top junction: left right: [ :c0 :c1 :c2 | c0 ].
 
 	finalLine := RSPolyline new
 		             controlPoints:
