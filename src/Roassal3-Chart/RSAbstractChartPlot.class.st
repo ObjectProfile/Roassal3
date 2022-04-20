@@ -1,5 +1,5 @@
 "
-TODO
+Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
