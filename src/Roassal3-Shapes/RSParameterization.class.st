@@ -22,6 +22,12 @@ RSParameterization >> collect: aBlock [
 	^ domain collect: aBlock
 ]
 
+{ #category : #'instance creation' }
+RSParameterization >> from [
+
+	^ domain first
+]
+
 { #category : #dispatching }
 RSParameterization >> parameterize_RSParametricLine: aLine [
 
@@ -32,6 +38,12 @@ RSParameterization >> parameterize_RSParametricLine: aLine [
 RSParameterization >> size [
 
 	^ domain size
+]
+
+{ #category : #'instance creation' }
+RSParameterization >> to [
+
+	^ domain last
 ]
 
 { #category : #enumerating }

@@ -150,10 +150,6 @@ RSParametricLine >> designPoints [
 RSParametricLine >> newLine [
 
 	^ self class new
-		  parameterization: (RSUnaryLinspaceParameterization new
-				   samples: parameterization size;
-				   yourself);
-		  yourself
 ]
 
 { #category : #'event handling' }

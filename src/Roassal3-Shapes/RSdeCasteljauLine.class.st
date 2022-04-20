@@ -314,6 +314,16 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 		  value: a_succ_i
 ]
 
+{ #category : #'instance creation' }
+RSdeCasteljauLine >> newLine [
+
+	^ super newLine
+		  parameterization: (RSUnaryLinspaceParameterization new
+				   samples: parameterization size;
+				   yourself);
+		  yourself
+]
+
 { #category : #'as yet unclassified' }
 RSdeCasteljauLine >> pen: aBlock [
 

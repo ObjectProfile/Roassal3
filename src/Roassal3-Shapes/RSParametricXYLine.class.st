@@ -14,6 +14,18 @@ RSParametricXYLine >> controlPoints: aSequenceableOfPoints at: t [
 	^ (x value: t) @ (y value: t)
 ]
 
+{ #category : #'instance creation' }
+RSParametricXYLine >> newLine [
+
+	^ super newLine
+		  parameterization: (RSLinspaceParameterization new
+				   from: parameterization from
+				   to: parameterization to
+				   samples: parameterization size;
+				   yourself);
+		  yourself
+]
+
 { #category : #accessing }
 RSParametricXYLine >> scale: factor [
 
