@@ -6,10 +6,5 @@ Trait {
 { #category : #gap }
 RSTWalkBasedRegularTreeGapsChildrenSizeDepth >> gapAmongParent: aParent andChild: aChild default: aGap layout: layout [
 
-	| size |
-	size := (layout childrenOf: aParent) size.
-
-	size := size >> 1 + 2 - size odd asBit.
-
-	^ size * aGap
+	^ (layout childrenOf: aParent) size + 1 * aGap
 ]

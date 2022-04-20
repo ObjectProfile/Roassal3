@@ -48,7 +48,7 @@ RSSegmentedCPAPController >> controlPointsFor: aLine [
 { #category : #hooks }
 RSSegmentedCPAPController >> controlPointsFrom: from to: to [
 
-	self halt
+	self shouldNotImplement
 ]
 
 { #category : #hooks }

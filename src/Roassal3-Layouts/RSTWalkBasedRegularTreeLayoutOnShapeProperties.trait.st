@@ -4,6 +4,18 @@ Trait {
 }
 
 { #category : #properties }
+RSTWalkBasedRegularTreeLayoutOnShapeProperties >> breakingDepthIndexOf: aShape [
+
+	^ aShape propertyAt: #breakingDepthIndex
+]
+
+{ #category : #properties }
+RSTWalkBasedRegularTreeLayoutOnShapeProperties >> breakingDepthIndexOf: aShape put: aNumber [
+
+	^ aShape propertyAt: #breakingDepthIndex put: aNumber
+]
+
+{ #category : #properties }
 RSTWalkBasedRegularTreeLayoutOnShapeProperties >> changeOf: aNode [
 
 	^ aNode propertyAt: #change

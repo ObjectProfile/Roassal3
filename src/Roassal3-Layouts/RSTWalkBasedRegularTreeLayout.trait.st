@@ -36,6 +36,18 @@ RSTWalkBasedRegularTreeLayout >> breadthMeasureOf: aShape [
 ]
 
 { #category : #properties }
+RSTWalkBasedRegularTreeLayout >> breakingDepthIndexOf: aNode [
+
+	self explicitRequirement
+]
+
+{ #category : #properties }
+RSTWalkBasedRegularTreeLayout >> breakingDepthIndexOf: aNode put: aNumber [
+
+	self explicitRequirement
+]
+
+{ #category : #properties }
 RSTWalkBasedRegularTreeLayout >> changeOf: aNode [
 
 	self explicitRequirement
@@ -615,7 +627,7 @@ RSTWalkBasedRegularTreeLayout >> rthreadOf: aNode put: aFloat [
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 
-	| mNext children depth breadth position |
+	| mNext children depth breadth position breakingDepthIndex |
 	mNext := m + (self modOf: aShape).
 
 	depth := n + (self depthOf: aShape).
@@ -635,8 +647,25 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 	self addChildSpacing: children.
 
 	"Recur over my onw children."
+	breakingDepthIndex := 0.
+
 	children do: [ :aChild | 
-		self secondWalk: aChild depth: n breadth: mNext ]
+		| childPosition bit |
+		childPosition := self secondWalk: aChild depth: n breadth: mNext.
+
+		bit := self
+			       updateDepthBreakingIndexOfParent: aShape
+			       at: position
+			       amongChild: aChild
+			       at: childPosition.
+
+		breakingDepthIndex := breakingDepthIndex + bit ].
+
+	self
+		breakingDepthIndexOf: aShape
+		put: (breakingDepthIndex max: children size - breakingDepthIndex).
+
+	^ position
 ]
 
 { #category : #algorithm }
@@ -738,6 +767,12 @@ RSTWalkBasedRegularTreeLayout >> threadOf: aNode [
 
 { #category : #properties }
 RSTWalkBasedRegularTreeLayout >> threadOf: aNode put: aFloat [
+
+	self explicitRequirement
+]
+
+{ #category : #positioning }
+RSTWalkBasedRegularTreeLayout >> updateDepthBreakingIndexOfParent: aShape at: position amongChild: aChild at: childPosition [
 
 	self explicitRequirement
 ]

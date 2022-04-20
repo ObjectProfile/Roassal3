@@ -43,6 +43,12 @@ RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth 
 ]
 
 { #category : #positioning }
+RSTWalkBasedRegularVerticalTreeLayout >> updateDepthBreakingIndexOfParent: aShape at: position amongChild: aChild at: childPosition [
+
+	^ (position x > childPosition x) asBit
+]
+
+{ #category : #positioning }
 RSTWalkBasedRegularVerticalTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
 
 	self explicitRequirement

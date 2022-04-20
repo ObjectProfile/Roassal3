@@ -41,6 +41,12 @@ RSTWalkBasedRegularHorizontalTreeLayout >> positionOfShape: aShape atDepth: dept
 	^ depth @ breadth + shift
 ]
 
+{ #category : #positioning }
+RSTWalkBasedRegularHorizontalTreeLayout >> updateDepthBreakingIndexOfParent: aShape at: position amongChild: aChild at: childPosition [
+
+	^ (position y > childPosition y) asBit
+]
+
 { #category : #accessing }
 RSTWalkBasedRegularHorizontalTreeLayout >> verticalGapAmong: aShapeParent and: aShape [
 
