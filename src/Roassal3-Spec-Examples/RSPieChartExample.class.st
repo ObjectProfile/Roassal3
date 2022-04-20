@@ -50,8 +50,8 @@ RSPieChartExample >> initializePresenters [
 		"label: 'Roassal Packages';"
 		items: packages;
 		display: [ :i | i name ].
-	chart := self instantiate: SpRoassalPresenter.
-	pie := self instantiate: SpRoassalPresenter.
+	chart := self newRoassal.
+	pie := self newRoassal.
 	droplist whenSelectedItemChangedDo: [ :pkg | 
 		chart script: [ :aCanvas | 
 			aCanvas
