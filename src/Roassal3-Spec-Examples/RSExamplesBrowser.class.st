@@ -87,7 +87,7 @@ RSExamplesBrowser >> initializePresenter [
 	leftButton := self newButton.
 	leftButton label: '<'.
 	leftButton action: [ self shiftLeft ].
-	roassalCanvas := self instantiate: SpRoassalPresenter.
+	roassalCanvas := self newRoassal.
 	codeEditor := self newCode
 		              withSyntaxHighlight;
 		              withScrollBars;

@@ -21,7 +21,7 @@ RSBasicSpecExample class >> defaultLayout [
 
 { #category : #initialization }
 RSBasicSpecExample >> initializePresenters [
-	roassalSpec := self instantiate: SpRoassalPresenter.
+	roassalSpec := self newRoassal.
 	self initializeRoassal3: roassalSpec canvas.
 ]
 

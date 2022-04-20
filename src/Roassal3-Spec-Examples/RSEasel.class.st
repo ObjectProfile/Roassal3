@@ -81,7 +81,7 @@ RSEasel >> initializePresenters [
 	label := self newLabel.
 	text := self newCode.
 	button := self newButton.
-	diagram := self instantiate: SpRoassalPresenter
+	diagram := self newRoassal.
 ]
 
 { #category : #initialization }
