@@ -663,7 +663,7 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 
 	self
 		breakingDepthIndexOf: aShape
-		put: (breakingDepthIndex max: children size - breakingDepthIndex).
+		put: (breakingDepthIndex max: children size - breakingDepthIndex + 1).
 
 	^ position
 ]
