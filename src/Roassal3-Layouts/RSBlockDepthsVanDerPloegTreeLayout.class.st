@@ -13,6 +13,6 @@ RSBlockDepthsVanDerPloegTreeLayout >> verticalGapAmongParent: aShapeParent andCh
 		  gapAmongParent: aShapeParent
 		  andChild: aShape
 		  default:
-		  (self verticalGapAmongParent: aShapeParent andChild: aShape)
+		  (super verticalGapAmongParent: aShapeParent andChild: aShape)
 		  layout: self
 ]
