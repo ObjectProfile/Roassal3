@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'line'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
@@ -47,16 +47,4 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself).
-]
-
-{ #category : #'public - shape' }
-RSLinePlot >> shape [
-	| lineShape |
-	lineShape := super shape.
-	^ lineShape
-]
-
-{ #category : #'public - shape' }
-RSLinePlot >> shape: aShape [
-	self shouldNotImplement
 ]

@@ -10,7 +10,7 @@ Class {
 		'x2Scale',
 		'bars2'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }

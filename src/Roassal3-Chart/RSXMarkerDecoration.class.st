@@ -40,7 +40,7 @@ RSXMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	| value |
 	value := self getValueToBeMarkedFromPlot: aPlot.
 
-	^ RSLine new
+	^ self shape copy
 			from: (aPlot xScale scale: value) @ 0;
 			to: (aPlot xScale scale: value) @ chart extent y negated
 ]
