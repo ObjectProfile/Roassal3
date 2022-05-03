@@ -9,7 +9,7 @@ RSChartTitleDecorationTest >> testBasic [
 	| c title label |
 	c := RSChart new.
 	title := c title: 'hello'.
-	title baseShape
+	title shape
 		color: Color blue.
 	c build.
 	

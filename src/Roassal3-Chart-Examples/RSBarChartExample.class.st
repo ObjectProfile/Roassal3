@@ -258,7 +258,7 @@ RSBarChartExample >> example07DoubleBar [
 	c ylabel: 'Classes'.
 	c ylabelRight: 'Number of lines Of code'.
 	title := c title: 'RSShape withAllSubclasses'.
-	title baseShape
+	title shape
 		bold;
 		noPaint;
 		withBorder.
