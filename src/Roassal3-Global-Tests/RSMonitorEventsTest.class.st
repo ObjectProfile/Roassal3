@@ -47,14 +47,18 @@ RSMonitorEventsTest >> testWriteToFile [
 	self assert: events isNotEmpty.
 	
 	fileName := Time microsecondClockValue asString, '.fuel'.
-	
-	storage := ByteArray
-		new: 100
-		streamContents: [ :stream |
-			FLSerializer new
-				onStream: stream;
-				object: events;
-				serialize ].
+	storage := (FLSerializer class canUnderstand: #serializeToByteArray:)
+		ifTrue: [ FLSerializer serializeToByteArray: events. ]
+		ifFalse: [ 
+			ByteArray
+				new: 100
+				streamContents: [ :stream |
+					| serializer |
+					serializer := FLSerializer new.
+					serializer 
+						perform: #onStream: with: stream;
+						perform: #object: with: events.
+					#serialize value: serializer ] ].
 	self assert: storage size > 100
 	
 ]
