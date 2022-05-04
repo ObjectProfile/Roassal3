@@ -119,7 +119,7 @@ RSNiceStepSizeGenerator >> qvar [
 	^ qvar
 ]
 
-{ #category : #public }
+{ #category : #initialization }
 RSNiceStepSizeGenerator >> reset [
 	resetRequired ifFalse: [ ^ self ].
 	i := 0.

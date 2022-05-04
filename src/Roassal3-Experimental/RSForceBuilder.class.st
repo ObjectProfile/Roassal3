@@ -115,7 +115,7 @@ RSForceBuilder >> renderIn: aCanvas [
 	aCanvas newAnimation repeat; onStepDo: [ self update: self force ].
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 RSForceBuilder >> reset [
 	| c |
 	c := self canvas.
