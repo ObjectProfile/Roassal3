@@ -265,10 +265,6 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 				          radius: 0;
 				          yourself ].
 
-	radius := RSCornerRadius new
-		          radius: 0;
-		          yourself.
-
 	n := rectangle height max: 1.
 	m := rectangle width max: 1.
 
