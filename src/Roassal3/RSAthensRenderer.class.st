@@ -247,7 +247,7 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: aNoteShape [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m samples finalLine radius |
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m nSamples mSamples finalLine radius |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
@@ -256,7 +256,7 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 		        p: 0.5;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c0 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c1 ] ].
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
@@ -278,59 +278,44 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 			n := ((n max: 1) log: 2) ceiling max: 4.
 			m := m * n ].
 
-	samples := ((n max: m) * Float goldenPlatinumRatio) ceiling.
+	nSamples := 2 raisedTo: n.
+	mSamples := 2 raisedTo: m.
 
-	lPoints := ((rectangle top to: rectangle bottom "- radius bottomLeft") 
-		            linspace: n) collect: [ :each | 
-		           rectangle left @ each + random next ]. "+ radius topLeft"
+	self halt.
 
-	rPoints := ((rectangle bottom to: rectangle top "+ radius topRight") 
-		            linspace: n) collect: [ :each | 
-		           rectangle right @ each + random next ]. "- radius bottomRight"
+	lPoints := ((rectangle top + radius topLeft to:
+	             rectangle bottom - radius bottomLeft) chebyshev: n) 
+		           collect: [ :each | rectangle left @ each + random next ].
 
-	bPoints := ((rectangle left to: rectangle right "- radius bottomRight") 
-		            linspace: m) collect: [ :each | 
-		           each @ rectangle bottom + random next ]. "+ radius bottomLeft"
+	rPoints := ((rectangle bottom - radius bottomRight to:
+	             rectangle top + radius topRight) chebyshev: n) collect: [ 
+		           :each | rectangle right @ each + random next ].
 
-	tPoints := ((rectangle right to: rectangle left "+ radius topLeft") 
-		            linspace: m) collect: [ :each | 
-		           each @ rectangle top + random next ]. "- radius topLeft"
+	bPoints := ((rectangle left + radius bottomLeft to:
+	             rectangle right - radius bottomRight) chebyshev: m) 
+		           collect: [ :each | each @ rectangle bottom + random next ].
 
-	lPoints
-		atLast: 1
-		put: lPoints last - (0 @ radius bottomLeft * Float goldenRatio).
-	bPoints
-		atLast: 1
-		put: bPoints last - (radius bottomRight * Float goldenRatio @ 0).
-	rPoints
-		atLast: 1
-		put: rPoints last + (0 @ radius topRight * Float goldenRatio).
-	tPoints
-		atLast: 1
-		put: tPoints last + (radius topLeft * Float goldenRatio @ 0).
-		
-	"lPoints := lPoints allButLast.
-	bPoints := bPoints allButFirst.
-	rPoints := rPoints allButLast.
-	tPoints := tPoints allButFirst."
+	tPoints := ((rectangle right - radius topRight to:
+	             rectangle left + radius topLeft) chebyshev: m) collect: [ 
+		           :each | each @ rectangle top + random next ].
 
 	left := RSdeCasteljauLine new
-		        samples: samples;
+		        samples: nSamples;
 		        controlPoints: lPoints;
 		        yourself.
 
 	bottom := RSdeCasteljauLine new
-		          samples: samples;
+		          samples: mSamples;
 		          controlPoints: bPoints;
 		          yourself.
 
 	right := RSdeCasteljauLine new
-		         samples: samples;
+		         samples: nSamples;
 		         controlPoints: rPoints;
 		         yourself.
 
 	top := RSdeCasteljauLine new
-		       samples: samples;
+		       samples: mSamples;
 		       controlPoints: tPoints;
 		       yourself.
 

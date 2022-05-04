@@ -187,7 +187,7 @@ RSParametricLine >> parameterized_RSArcLengthParameterization: aParameterization
 ]
 
 { #category : #accessing }
-RSParametricLine >> parameterized_RSLinspaceParameterization: aParameterization [
+RSParametricLine >> parameterized_RSIntervalParameterization: aParameterization [
 
 	parameterization := aParameterization.
 	controlPoints := Array new: parameterization size

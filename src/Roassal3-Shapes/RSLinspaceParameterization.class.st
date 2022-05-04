@@ -1,6 +1,6 @@
 Class {
 	#name : #RSLinspaceParameterization,
-	#superclass : #RSParameterization,
+	#superclass : #RSIntervalParameterization,
 	#category : #'Roassal3-Shapes-Util'
 }
 
@@ -9,11 +9,5 @@ RSLinspaceParameterization >> from: from to: to samples: samples [
 
 	domain := (from to: to) linspace: samples.
 
-	cumulativeArcLengths := Array new: samples
-]
-
-{ #category : #dispatching }
-RSLinspaceParameterization >> parameterize_RSParametricLine: aLine [
-
-	aLine parameterized_RSLinspaceParameterization: self
+	super from: from to: to samples: samples
 ]

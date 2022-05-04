@@ -318,8 +318,8 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 RSdeCasteljauLine >> newLine [
 
 	^ super newLine
-		  parameterization: (RSUnaryLinspaceParameterization new
-				   samples: parameterization size;
+		  parameterization: (RSChebyshevParameterization new
+				   from: 0 to: 1 samples: parameterization size;
 				   yourself);
 		  yourself
 ]
@@ -347,8 +347,8 @@ RSdeCasteljauLine >> polar: ratio [
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
 
-	self parameterization: (RSUnaryLinspaceParameterization new
-			 samples: n;
+	self parameterization: (RSChebyshevParameterization new
+			 from: 0 to: 1 samples: n;
 			 yourself)
 ]
 
