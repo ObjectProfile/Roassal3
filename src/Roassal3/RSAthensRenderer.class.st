@@ -265,23 +265,21 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 				          radius: 0;
 				          yourself ].
 
-	n := rectangle height.
-	m := rectangle width.
+	n := rectangle height max: 1.
+	m := rectangle width max: 1.
 
 	n > m
 		ifTrue: [ 
 			n := n quo: m.
-			m := ((m max: 1) log: 2) ceiling max: 4.
+			m := (m log: 2) ceiling max: 4.
 			n := n * m ]
 		ifFalse: [ 
 			m := m quo: n.
-			n := ((n max: 1) log: 2) ceiling max: 4.
+			n := (n log: 2) ceiling max: 4.
 			m := m * n ].
 
-	nSamples := 2 raisedTo: n.
-	mSamples := 2 raisedTo: m.
-
-	self halt.
+	nSamples := n << 2.
+	mSamples := m << 2.
 
 	lPoints := ((rectangle top + radius topLeft to:
 	             rectangle bottom - radius bottomLeft) chebyshev: n) 
