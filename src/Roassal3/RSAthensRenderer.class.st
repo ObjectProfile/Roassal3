@@ -247,16 +247,16 @@ RSAthensRenderer >> buildLinePath: line [
 { #category : #'creating path' }
 RSAthensRenderer >> buildNotePath: aNoteShape [
 
-	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m nSamples mSamples finalLine radius |
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m nSamples mSamples finalLine radius ratio |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomGaussian new.
 
 	coin := RandomBernoulli new
-		        p: 0.5;
+		        p: 0.6;
 		        yourself.
 
-	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c1 ] ].
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c2 ] ].
 
 	radius := aNoteShape hasCornerRadius
 		          ifTrue: [ aNoteShape cornerRadius ]
@@ -270,13 +270,13 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 
 	n > m
 		ifTrue: [ 
-			n := (n / m) ceiling.
+			ratio := n / m.
 			m := (m log: 2) ceiling max: 4.
-			n := n * m ]
+			n := ratio ceiling * m ]
 		ifFalse: [ 
-			m := (m / n) ceiling.
+			ratio := m / n.
 			n := (n log: 2) ceiling max: 4.
-			m := m * n ].
+			m := ratio ceiling * n ].
 
 	lPoints := ((rectangle top + radius topLeft to:
 	             rectangle bottom - radius bottomLeft) chebyshev: n) 
