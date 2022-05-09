@@ -169,7 +169,7 @@ RSBorder >> doNotUseCache [
 
 { #category : #comparing }
 RSBorder >> hash [
-	^ (width hash bitXor: paint hash) bitXor: style hash
+	^ (width hash hashMultiply + paint hash) hashMultiply + style hash
 ]
 
 { #category : #initialization }
