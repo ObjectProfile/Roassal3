@@ -29,7 +29,7 @@ RSStrokeStyle class >> fromString: aString [
 
 { #category : #comparing }
 RSStrokeStyle >> = anObject [
-	^self == anObject or: [ 
+	^ self == anObject or: [ 
 		anObject notNil and: [ 
 			capStyle = anObject capStyle and: [ 
 				joinStyle = anObject joinStyle and: [ 
@@ -70,7 +70,8 @@ RSStrokeStyle >> dashOffset: aNumber [
 
 { #category : #comparing }
 RSStrokeStyle >> hash [
-	^ (capStyle hash bitXor: joinStyle hash) + (dashOffset hash bitXor: dashArray hash)
+	^ ((capStyle hash hashMultiply + joinStyle hash) hashMultiply +
+	  (dashOffset hash hashMultiply + dashArray hash)) hashMultiply
 ]
 
 { #category : #initialization }
