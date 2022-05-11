@@ -154,9 +154,31 @@ RSQuadTree >> subQuadsDo: aBlockClosure [
 
 ]
 
+{ #category : #private }
+RSQuadTree >> visibleShapeContains: aPoint list: listResult [
+	(self rectangle containsPoint: aPoint) ifFalse: [ ^ self ].
+	self isLeaf ifTrue: [
+		(self soleChild encompassingRectangle containsPoint: aPoint)
+			ifTrue: [ listResult add: self soleChild ]
+	] ifFalse: [ 
+		self subQuadsDo: [ :aQuad |
+			aQuad visibleShapeContains: aPoint list: listResult ]
+	]
+]
+
+{ #category : #'finding/searching' }
+RSQuadTree >> visibleShapeContainsPoint: aPoint [
+
+	| listResult |
+	listResult := OrderedCollection new.
+	self visibleShapeContains: aPoint list: listResult.
+	^ listResult size = 1
+		ifTrue: [ listResult first ]
+		ifFalse: [ nil ]
+]
+
 { #category : #'finding/searching' }
 RSQuadTree >> visibleShapesFrom: aRectangle [
-
 	| listResult |
 	listResult := OrderedCollection new.
 	self visibleShapesFrom: aRectangle list: listResult.
@@ -165,13 +187,12 @@ RSQuadTree >> visibleShapesFrom: aRectangle [
 
 { #category : #private }
 RSQuadTree >> visibleShapesFrom: aRectangle list: listResult [
-
 	(self rectangle intersects: aRectangle) ifFalse: [ ^ self ].
-	self isLeaf
-		ifTrue: [ 
-			(self soleChild encompassingRectangle intersects: aRectangle) 
-				ifTrue: [ listResult add: self soleChild ] ]
-		ifFalse: [ 
-			self subQuadsDo: [ :aQuad | 
-				aQuad visibleShapesFrom: aRectangle list: listResult ] ]
+	self isLeaf ifTrue: [
+		(self soleChild encompassingRectangle intersects: aRectangle) 
+			ifTrue: [ listResult add: self soleChild ]
+	] ifFalse: [
+		self subQuadsDo: [ :aQuad |
+			aQuad visibleShapesFrom: aRectangle list: listResult ]
+	]
 ]
