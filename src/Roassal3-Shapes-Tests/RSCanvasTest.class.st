@@ -50,6 +50,15 @@ RSCanvasTest >> testAntialiasing [
 	canvas aaDefault.
 ]
 
+{ #category : #'tests - composite' }
+RSCanvasTest >> testAsForm [
+	| form |
+	canvas add: RSBox new.
+	form := canvas asForm.
+	self assert: form isForm.
+	
+]
+
 { #category : #'tests - converting' }
 RSCanvasTest >> testAsShapeModel [
 

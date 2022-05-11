@@ -164,6 +164,16 @@ RSCanvas >> antialiasing [
 	
 ]
 
+{ #category : #converting }
+RSCanvas >> asForm [
+	| canvas |
+	canvas := FormCanvas extent: self extent.
+	(self morph ifNil: [ self createMorph ])
+		extent: self extent;
+		drawOn: canvas.
+	^ canvas form
+]
+
 { #category : #accessing }
 RSCanvas >> basicRectangle [
 	"Return a rectangle encompassing all the elements"
