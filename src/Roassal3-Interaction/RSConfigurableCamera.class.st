@@ -5,7 +5,8 @@ Class {
 	#name : #RSConfigurableCamera,
 	#superclass : #RSCamera,
 	#instVars : [
-		'zoomInteraction'
+		'zoomInteraction',
+		'zoomRatio'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
@@ -20,16 +21,26 @@ RSConfigurableCamera >> zoomInteraction: anInteraction [
 	zoomInteraction := anInteraction
 ]
 
+{ #category : #accessing }
+RSConfigurableCamera >> zoomRatio [
+	^ zoomRatio ifNil: [ 0.9 ]
+]
+
+{ #category : #accessing }
+RSConfigurableCamera >> zoomRatio: aNumber [
+	zoomRatio := aNumber
+]
+
 { #category : #zoom }
 RSConfigurableCamera >> zoomToFit [
 	| shapesRect canvasExtent sc canvasRect original int |
 	int := self zoomInteraction.
 	shapesRect := int encompassingRectangleFor: canvas.
-	canvasExtent := canvas extent * 0.9.
+	canvasExtent := canvas extent * self zoomRatio.
 	sc := canvasExtent / (self class maxExtentFor: shapesRect).
 	original := sc x min: sc y.
 	sc := int scaleFor: original.
-	canvasRect := Rectangle 
+	canvasRect := Rectangle
 		floatCenter: shapesRect floatCenter
 		extent: canvas extent / 1.
 	self translateTo: shapesRect floatCenter.
