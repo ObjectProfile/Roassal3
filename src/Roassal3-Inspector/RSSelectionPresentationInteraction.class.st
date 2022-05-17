@@ -78,11 +78,10 @@ RSSelectionPresentationInteraction >> putShadowOn: aShape [
 	"Make sure that  the size is indenpendent of the camera scale"
 	pad := self padding / (self scaleFrom: aShape).
 	shadow := RSBox new
-		          fromRectangle:
-			          (aShape encompassingRectangle expandBy: pad);
-		          paint: self shadowColor;
-		          cornerRadius: pad * 0.75;
-		          yourself.
+		fromRectangle: (aShape encompassingRectangle expandBy: pad);
+		paint: self shadowColor;
+		cornerRadius: pad * 0.75;
+		yourself.
 	aShape removeInteractionIfPresent: RSLocation.
 	RSLocation new stick: shadow on: aShape.
 	
@@ -111,6 +110,7 @@ RSSelectionPresentationInteraction >> removeShadowOn: aShape [
 RSSelectionPresentationInteraction >> scaleFrom: aShape [
 	"Return the scale used by the canvas of the shape"
 	aShape canvas ifNil: [ ^ 1 ].
+	aShape isFixed ifTrue: [ ^ 1 ].
 	^ aShape canvas camera scale
 ]
 
