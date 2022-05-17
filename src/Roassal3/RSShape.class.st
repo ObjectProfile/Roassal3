@@ -269,6 +269,11 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
+{ #category : #copying }
+RSShape >> copyWithoutAnnouncer [
+	^ self copy
+]
+
 { #category : #'looking up shapes' }
 RSShape >> deepShapeFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
