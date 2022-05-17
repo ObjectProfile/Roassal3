@@ -354,7 +354,6 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			boxes := RSGroup new.
 			createBoxes value: stepping layout currentQuadtree value: 0.
 			canvas addAll: boxes.
-			(stepping layout currentQuadtree visibleShapesFrom: canvas visibleRectangle) size traceCr.
 			boxes pushBack ].
 	^ canvas
 ]
