@@ -372,13 +372,13 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		
 		RSGridLayout on: methods.
 		composite := RSComposite new.
-		label := RSLabel new text: cls name.
+		label := RSLabel new text: cls name; color: 'black'; yourself.
 		RSLocation new above; move: label on: methods.
 		composite shapes:  methods, { label }.
 		
-		composite color: Color gray.
+		composite color: Color lightGray.
 		composite model: cls.
-		composite @ RSAnimatedPopup @ RSDraggable.
+		composite @ RSAnimatedPopup; @ RSDraggable.
 		composite padding: 10.
 		c add: composite ].
 

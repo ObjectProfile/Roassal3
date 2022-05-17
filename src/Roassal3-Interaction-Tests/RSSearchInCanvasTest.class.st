@@ -135,6 +135,19 @@ RSSearchInCanvasTest >> testShadow [
 ]
 
 { #category : #tests }
+RSSearchInCanvasTest >> testUpdateShadowSize [
+	| shadow extent |
+	self assert: search numberOfPerformedSearches equals: 0.
+	c camera scale: 2.
+	
+	search searchForShapes: '*4*'.
+	shadow := shapes fourth propertyAt: #shadow.
+	extent := shadow extent.
+	c camera scale: 3.
+	self assert: shadow extent < extent.
+]
+
+{ #category : #tests }
 RSSearchInCanvasTest >> testWithEdge [
 
 	| l |
