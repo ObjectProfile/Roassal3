@@ -803,3 +803,40 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 		zoomToFit;
 		@ RSCanvasController
 ]
+
+{ #category : #'as yet unclassified' }
+RSLayoutExamples >> example24SmartHorizontalTree [
+	<script: 'self new example24SmartHorizontalTree open setLabel: ''Horizontal Tree'''>
+	| c shapes |
+	c := RSCanvas new.
+	
+	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := RSLabel new
+			text: cls;
+			yourself.
+		box := RSBox new
+			withBorder;
+			cornerRadius: (RSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		RSComposite new
+			draggable;
+			model: cls;
+			shapes: (RSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ RSCanvasController.
+	RSLineBuilder orthoHorizontal
+		controlPointsController: RSSmartHorizontalCPController new;
+		markerEnd: (RSMarker new 
+			offset: 2;
+			shape: (RSShapeFactory triangle 
+				color: Color black;
+				size: 5;
+				yourself));
+		attachPoint: RSHorizontalAttachPoint new; 
+		canvas: c;
+		shapes: c nodes;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new on: c nodes.
+	^ c
+]
