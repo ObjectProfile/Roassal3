@@ -3,7 +3,7 @@ I am an abstract class for dependency structural matrices
 "
 Class {
 	#name : #RSAbstractDSM,
-	#superclass : #RSAbstractBuilder,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'objectsX',
 		'objectsY',

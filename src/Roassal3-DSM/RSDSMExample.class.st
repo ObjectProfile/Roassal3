@@ -42,7 +42,7 @@ RTDSMExample new installTitle: 'EvolutionDSM'
 "
 Class {
 	#name : #RSDSMExample,
-	#superclass : #Object,
+	#superclass : #RSAbstractExamples,
 	#category : #'Roassal3-DSM'
 }
 
@@ -309,86 +309,77 @@ RSDSMExample class >> gtinspector [
 
 { #category : #sources }
 RSDSMExample >> exampleClasses [
-	<script: 'self new exampleClasses'>
+	<script: 'self new exampleClasses open'>
 	| dsm |
-	dsm := RSDSM new.
-	dsm objects: TSShape withAllSubclasses.
+	dsm := RSDSM2 new.
+	dsm objects: RSShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
-	dsm build.
-	^ dsm open
+	^ dsm 
 
 ]
 
 { #category : #sources }
 RSDSMExample >> exampleNumbers [
-	<script: 'self new exampleNumbers'>
+	<script: 'self new exampleNumbers open'>
 	| dsm |
-	dsm := RSDSM new.
+	dsm := RSDSM2 new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
-	dsm build.
-	dsm open
+	^ dsm
 
 ]
 
 { #category : #sources }
 RSDSMExample >> exampleNumbers02 [
-	<script: 'self new exampleNumbers02'>
+	<script: 'self new exampleNumbers02 open'>
 	| dsm |
-	dsm := RSDSM new.
+	dsm := RSDSM2 new.
 	dsm objectsX: (1 to: 10).
 	dsm objectsY: (1 to: 10 by: 2).
 	dsm dependency: [ :aValue | aValue // 2 ].
-	dsm build.
-	dsm open
+	^ dsm
 
 
 ]
 
 { #category : #sources }
 RSDSMExample >> exampleToken [
-	<script: 'self new exampleToken'>
+	<script: 'self new exampleToken open'>
 	
 	| packageRegExp packages getKeywordsFromClass rawKeywords top10Keywords dsm |
 	packageRegExp := { 'Roassal3-*'  }.
-	packages := RPackageOrganizer default packages select: [ :p | packageRegExp anySatisfy: [ :r | r match: p packageName ] ].
+	packages := RPackageOrganizer default packages select: [ :p | 
+		packageRegExp anySatisfy: [ :r | r match: p packageName ] ].
 	
-	getKeywordsFromClass := [ :cls | (cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k | k substrings: ':' ] ) flatCollect: #cutCamelCase))) collect: #asLowercase ].
+	getKeywordsFromClass := [ :cls | 
+		(cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k | 
+			k substrings: ':' ] ) flatCollect: #cutCamelCase))) collect: #asLowercase ].
+	
 	rawKeywords := (packages flatCollect: #definedClasses) flatCollect: getKeywordsFromClass.
 	
-	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b | a value size > b value size ]) first: 70) collect: #key.
+	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b |
+		a value size > b value size ]) first: 70) collect: #key.
 	
-	dsm := RSDSM new.
-	dsm objectsX: top10Keywords .
+	dsm := RSDSM2 new.
+	dsm objectsX: top10Keywords.
 	dsm objectsY: packages.
-	dsm labelShapeY text: #packageName.
-"	dsm setShouldFeedY."
+	dsm setShouldFeedY.
+	dsm labelShapeY textBlock: #packageName.
 	dsm dependency: [ :pak | pak definedClasses flatCollect: getKeywordsFromClass ].
-	dsm build.
-	dsm open
-
-
-
+	^ dsm
 ]
 
 { #category : #sources }
 RSDSMExample >> exampleTopLabelRotation [
-	<script: 'self new exampleTopLabelRotation'>
+	<script: 'self new exampleTopLabelRotation open'>
 	| dsm v keys |
 	v := Array 
 		with: (#A -> (Array with: #B with: #C)) 
 		with: (#B -> (Array with: #A) ).
 	keys := #(A B C).
-	dsm := RSDSM new.
+	dsm := RSDSM2 new.
 	dsm rotation: 0.
 	dsm objects: keys.
 	dsm dependency: [ :k  | v asDictionary at: k ifAbsent: #() ].
-	dsm build.
-	dsm open 
-
-]
-
-{ #category : #accessing }
-RSDSMExample >> label [
-	^ 'Dependency Structural Matrix'
+	^ dsm
 ]
