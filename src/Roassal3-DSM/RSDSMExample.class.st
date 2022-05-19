@@ -313,6 +313,7 @@ RSDSMExample >> exampleClasses [
 	| dsm |
 	dsm := RSDSM new.
 	dsm objects: RSShape withAllSubclasses.
+	dsm setShouldFeedY.
 	dsm dependency: #dependentClasses.
 	^ dsm 
 
@@ -373,13 +374,16 @@ RSDSMExample >> exampleToken [
 RSDSMExample >> exampleTopLabelRotation [
 	<script: 'self new exampleTopLabelRotation open'>
 	| dsm v keys |
-	v := Array 
-		with: (#A -> (Array with: #B with: #C)) 
-		with: (#B -> (Array with: #A) ).
+	v := Dictionary new 
+		at: #A put: #(B C);
+		at: #B put: #(A C);
+		"at: #C put: #(A);"
+		yourself.
 	keys := #(A B C).
 	dsm := RSDSM new.
 	dsm rotation: 0.
 	dsm objects: keys.
-	dsm dependency: [ :k  | v asDictionary at: k ifAbsent: #() ].
+	dsm setShouldFeedY.
+	dsm dependency: [ :k  | v at: k ifAbsent: #() ].
 	^ dsm
 ]

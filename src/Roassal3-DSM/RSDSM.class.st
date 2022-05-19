@@ -248,7 +248,7 @@ RSDSM >> labelsY [
 { #category : #hooks }
 RSDSM >> layoutShapes: aGroup [
 	RSGridLayout new
-		gapSize: 1;
+		gapSize: 0;
 		lineItemsCount: objectsX size;
 		on: aGroup
 ]
@@ -292,11 +292,25 @@ RSDSM >> objectsY: someObjects [
 
 { #category : #hooks }
 RSDSM >> renderIn: aCanvas [
+	| g groups |
 	shapes := self createShapes.
 	aCanvas addAll: shapes.
 	self layoutShapes: shapes.
 	self addLabelsIfNecessary: aCanvas.
-	
+	g := RSDSMGraph new: objectsX size.
+	shapes do: [ :s |
+		s color = Color veryVeryLightGray ifFalse: [ 
+			| pos |
+			pos := s propertyAt: #matrixIndex.
+			g addEdge: pos y to: pos x ] 
+	].
+	groups := g computeSCCs.
+	groups do: [ :group |
+		group do: [ :index | | o |
+			o := objectsX at: index.
+			o trace. ' ' trace.].
+		''traceCr.
+	].
 ]
 
 { #category : #accessing }
