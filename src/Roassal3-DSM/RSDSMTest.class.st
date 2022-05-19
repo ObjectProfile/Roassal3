@@ -8,7 +8,7 @@ Class {
 RSDSMTest >> testDefault [
 
 	| dsm |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	self assert: dsm numberOfObjects equals: 0
 ]
 
@@ -16,7 +16,7 @@ RSDSMTest >> testDefault [
 RSDSMTest >> testDep [
 
 	| dsm v ts |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm hideLabels.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
@@ -32,7 +32,7 @@ RSDSMTest >> testDep [
 { #category : #tests }
 RSDSMTest >> testExample01 [
 	| dsm |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objects: RSShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
 	dsm build
@@ -42,7 +42,7 @@ RSDSMTest >> testExample01 [
 RSDSMTest >> testExample02 [
 
 	| dsm shapes column5 row5 |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	dsm build.
@@ -68,7 +68,7 @@ RSDSMTest >> testExample02 [
 { #category : #tests }
 RSDSMTest >> testLabelShapeColor [
 	| b shapes |
-	b := RSDSM2 new.
+	b := RSDSM new.
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.
@@ -86,7 +86,7 @@ RSDSMTest >> testLabelShapeColor [
 { #category : #tests }
 RSDSMTest >> testLabelShapeHeight [
 	| b |
-	b := RSDSM2 new.
+	b := RSDSM new.
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.
@@ -97,7 +97,7 @@ RSDSMTest >> testLabelShapeHeight [
 { #category : #tests }
 RSDSMTest >> testLabelsLeftPosition [
 	| b shapes firstColumn |
-	b := RSDSM2 new.
+	b := RSDSM new.
 	b objectsX: (1 to: 3).
 	b objectsY: #(#a #b #c).
 	b dependency: [ :aValue | aValue + 1 ].
@@ -112,7 +112,7 @@ RSDSMTest >> testLabelsLeftPosition [
 { #category : #tests }
 RSDSMTest >> testLabelsTopPosition [
 	| b labels firstRow |
-	b := RSDSM2 new.
+	b := RSDSM new.
 	b objectsY: #(#a #b #c).
 	b objectsX: (1 to: 3).
 	b dependency: [ :aValue | aValue + 1 ].
@@ -133,7 +133,7 @@ RSDSMTest >> testLabelsTopPosition [
 RSDSMTest >> testUsingXAndY [
 	| b |
 
-	b := RSDSM2 new.
+	b := RSDSM new.
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.

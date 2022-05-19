@@ -311,7 +311,7 @@ RSDSMExample class >> gtinspector [
 RSDSMExample >> exampleClasses [
 	<script: 'self new exampleClasses open'>
 	| dsm |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objects: RSShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
 	^ dsm 
@@ -322,7 +322,7 @@ RSDSMExample >> exampleClasses [
 RSDSMExample >> exampleNumbers [
 	<script: 'self new exampleNumbers open'>
 	| dsm |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	^ dsm
@@ -333,7 +333,7 @@ RSDSMExample >> exampleNumbers [
 RSDSMExample >> exampleNumbers02 [
 	<script: 'self new exampleNumbers02 open'>
 	| dsm |
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objectsX: (1 to: 10).
 	dsm objectsY: (1 to: 10 by: 2).
 	dsm dependency: [ :aValue | aValue // 2 ].
@@ -360,7 +360,7 @@ RSDSMExample >> exampleToken [
 	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b |
 		a value size > b value size ]) first: 70) collect: #key.
 	
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm objectsX: top10Keywords.
 	dsm objectsY: packages.
 	dsm setShouldFeedY.
@@ -377,7 +377,7 @@ RSDSMExample >> exampleTopLabelRotation [
 		with: (#A -> (Array with: #B with: #C)) 
 		with: (#B -> (Array with: #A) ).
 	keys := #(A B C).
-	dsm := RSDSM2 new.
+	dsm := RSDSM new.
 	dsm rotation: 0.
 	dsm objects: keys.
 	dsm dependency: [ :k  | v asDictionary at: k ifAbsent: #() ].
