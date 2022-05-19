@@ -5,7 +5,6 @@ Class {
 	#name : #RSDSMGraph,
 	#superclass : #Object,
 	#instVars : [
-		'v',
 		'graph',
 		'numberOfVertices'
 	],
@@ -116,8 +115,8 @@ RSDSMGraph >> fillOrder: index visited: visited stack: stack [
 RSDSMGraph >> getTranspose [
 	| g |
 	g := self class new: numberOfVertices.
-	graph keys do: [ :k | 
-		(graph at: k) do: [ :j |
+	graph keysAndValuesDo: [ :k :value |
+		value do: [ :j |
 			g addEdge: j to: k ]
 		 ].
 	^ g
