@@ -35,8 +35,7 @@ RSAthensMorph >> checkSession [
 	session == Smalltalk session ifTrue: [ ^ self ].
 	surface := nil.
 	self createSurface.
-	roassalCanvas shapes do: [ :s | s sessionChanged ].
-	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
+	self sessionChanged
 	
 ]
 
@@ -506,6 +505,14 @@ RSAthensMorph >> renderer: aRenderer [
 RSAthensMorph >> roassalCanvas [
 	"Return the Roassal canvas that I have to render"
 	^ roassalCanvas
+]
+
+{ #category : #'session management' }
+RSAthensMorph >> sessionChanged [
+
+	roassalCanvas shapes do: [ :s | s sessionChanged ].
+	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
+	roassalCanvas extent: self extent
 ]
 
 { #category : #public }
