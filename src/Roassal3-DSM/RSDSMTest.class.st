@@ -1,6 +1,6 @@
 Class {
 	#name : #RSDSMTest,
-	#superclass : #TSTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-DSM'
 }
 
@@ -17,24 +17,23 @@ RSDSMTest >> testDep [
 
 	| dsm v ts |
 	dsm := RSDSM new.
-	dsm doNotShowLabels.
+	dsm hideLabels.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	dsm build.
-	v := dsm view.
+	v := dsm canvas.
 	self assert: v shapes size equals: 100.
 	
-	ts := v elements collect: #color as: Set.
+	ts := v shapes collect: #color as: Set.
 	self assert: ts size equals: 2 
 
 ]
 
 { #category : #tests }
 RSDSMTest >> testExample01 [
-
 	| dsm |
 	dsm := RSDSM new.
-	dsm objects: TSShape withAllSubclasses.
+	dsm objects: RSShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
 	dsm build
 ]
@@ -42,91 +41,92 @@ RSDSMTest >> testExample01 [
 { #category : #tests }
 RSDSMTest >> testExample02 [
 
-	| dsm es column5 row5 |
+	| dsm shapes column5 row5 |
 	dsm := RSDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	dsm build.
 	
-	es := dsm elements.
-	self assert: es size equals: 100.
-	self assert: (dsm elementAt: 1 @ 1) model equals: 1 -> 1.
-	self assert: (dsm elementAt: 3 @ 1) model equals: 1 -> 3.
-	self assert: (dsm elementAt: 10 @ 10) model equals: 10 -> 10.
-	self assert: (dsm elementAt: 5 @ 2) model equals: 2 -> 5.
+	shapes := dsm shapes.
+	self assert: shapes size equals: 100.
+	self assert: (dsm shapeAt: 1 @ 1) model equals: 1 -> 1.
+	self assert: (dsm shapeAt: 3 @ 1) model equals: 1 -> 3.
+	self assert: (dsm shapeAt: 10 @ 10) model equals: 10 -> 10.
+	self assert: (dsm shapeAt: 5 @ 2) model equals: 2 -> 5.
 	
 	column5 := dsm columnAt: 5.
 	self assert: column5 size equals: 10.
-	self assert: column5 first model equals: 1 -> 5.
+	self assert: column5 first model equals: 5 -> 1.
 	
 	row5 := dsm rowAt: 5.
 	self assert: row5 size equals: 10.
-	self assert: row5 first model equals: 5 -> 1.
+	self assert: row5 first model equals: 1 -> 5.
 	
-	column5 first announce: (TSMouseEnter new shape: column5 first trachelShape)
-]
-
-{ #category : #tests }
-RSDSMTest >> testHightlightElements [
-	| b elements |
-	b := RSDSM new.
-	b objects: (1 to: 3).
-	b dependency: [ :aValue | aValue + 1 ].
-	b shape color: Color blue.
-	b build.
-	b highlightElements.
-	elements := b view elements select: [ :e| e trachelShape class = TSBox ].
-	self assert: elements first color equals: (Color blue).
-	b unhighlightElements.
-	self assert: elements first color equals: (Color blue).
-		
-	
+	column5 first announce: (RSMouseEnter new shape: column5 first)
 ]
 
 { #category : #tests }
 RSDSMTest >> testLabelShapeColor [
-	| b elements |
+	| b shapes |
 	b := RSDSM new.
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
-	b labelShapeX 
-		color: [ :n | n even ifTrue: [ Color red ] ifFalse: [ Color veryVeryLightGray ] ].
 	b build.
-	elements := b view elements select: [ :e | 
-		e trachelShape class = TSLabel and: [ e model isKindOf: Number ] ].
-	self assert: elements first model equals: 1.
-	self assert: elements second color equals: Color red
+	b labelsX do: [ :label | 
+		label color: (label model even
+			ifTrue: [ Color red ]
+			ifFalse: [ Color veryVeryLightGray ]) ].
+	shapes := b labelsX.
+	self assert: shapes first model equals: 1.
+	self assert: shapes second color equals: Color red
 		
 	
 ]
 
 { #category : #tests }
 RSDSMTest >> testLabelShapeHeight [
-	| b elements |
+	| b |
 	b := RSDSM new.
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
-	b labelShapesDo: [ :l| l height: 30; color: Color blue ].
 	b build.
-	elements := b view elements select: [ :e | 
-		e trachelShape class = TSLabel ].
-	self assert: elements first color equals: Color blue.
-	"self assert: elements first height > TSLabel defaultFontSize."
+	b labels do: [ :l | l fontSize: 30; color: Color blue ].
+	self assert: b labelsX first color equals: Color blue.
+]
+
+{ #category : #tests }
+RSDSMTest >> testLabelsLeftPosition [
+	| b shapes firstColumn |
+	b := RSDSM new.
+	b objectsX: (1 to: 3).
+	b objectsY: #(#a #b #c).
+	b dependency: [ :aValue | aValue + 1 ].
+	b build.
+	shapes := b labelsY.
+	self assert: shapes isNotEmpty.
+	firstColumn := b columnAt: 1.
+	firstColumn with: shapes do: [ :box :label | 
+		self assert: box position y equals: label position y  ].
 ]
 
 { #category : #tests }
 RSDSMTest >> testLabelsTopPosition [
-	| b elements firstRow|
+	| b labels firstRow |
 	b := RSDSM new.
-	b objectsY: (1 to: 3).
-	b objectsX: #(#a #b #c).
+	b objectsY: #(#a #b #c).
+	b objectsX: (1 to: 3).
 	b dependency: [ :aValue | aValue + 1 ].
 	b build.
-	elements := b view elements select: [ :e | 
-		e trachelShape class = TSLabel and: [ e model isString ] ]. 
+	labels := b labelsX.
+	self assert: labels isNotEmpty.
 	firstRow := b rowAt: 1.
-	firstRow doWithIndex: [ :e :i | 
-		self assert: e position x equals: (elements at: i) position x ].
+	firstRow with: labels do: [ :box : label | 
+		| x x1 x2 |
+		x := label encompassingRectangle bottomRight x.
+		x1 := box encompassingRectangle topLeft x.
+		x2 := box encompassingRectangle topRight x.
+		self assert: (x between: x1 and: x2)
+		 ].
 ]
 
 { #category : #tests }
