@@ -1,4 +1,5 @@
 "
+I am a class used to find strong connections beteween objects
 based on https://www.geeksforgeeks.org/strongly-connected-components/
 "
 Class {
@@ -8,7 +9,7 @@ Class {
 		'graph',
 		'numberOfVertices'
 	],
-	#category : #'Roassal3-DSM'
+	#category : #'Roassal3-DSM-Variations'
 }
 
 { #category : #'instance creation' }

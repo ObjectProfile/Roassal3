@@ -151,7 +151,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		
 		group: 'Mini' with: #('SVGTests' 'SVGExamples');
 		group: 'GraphViz' with: #('Mini' 'Roassal3-GraphViz');
-		group: 'Full' with: #('GraphViz'), self extraPackagesNames;
+		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'default' with: #('Core' 'Mini')
 
 

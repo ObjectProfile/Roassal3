@@ -19,7 +19,7 @@ Class {
 		'labelsY',
 		'labelsX'
 	],
-	#category : #'Roassal3-DSM'
+	#category : #'Roassal3-DSM-Core'
 }
 
 { #category : #'hooks - labels' }
@@ -56,8 +56,8 @@ RSDSM >> columnAt: aNumber [
 { #category : #hooks }
 RSDSM >> computeColor: tuple [
 	^ (self isAssocDependent: tuple)
-		ifTrue: [ Color colorFrom: '#4d79ff' ]
-		ifFalse: [ Color veryVeryLightGray ]
+		ifTrue: [ self selectedColor ]
+		ifFalse: [ self unSelectedColor ]
 ]
 
 { #category : #'hooks - labels' }
@@ -292,25 +292,10 @@ RSDSM >> objectsY: someObjects [
 
 { #category : #hooks }
 RSDSM >> renderIn: aCanvas [
-	| g groups |
 	shapes := self createShapes.
 	aCanvas addAll: shapes.
 	self layoutShapes: shapes.
 	self addLabelsIfNecessary: aCanvas.
-	g := RSDSMGraph new: objectsX size.
-	shapes do: [ :s |
-		s color = Color veryVeryLightGray ifFalse: [ 
-			| pos |
-			pos := s propertyAt: #matrixIndex.
-			g addEdge: pos y to: pos x ] 
-	].
-	groups := g computeSCCs.
-	groups do: [ :group |
-		group do: [ :index | | o |
-			o := objectsX at: index.
-			o trace. ' ' trace.].
-		''traceCr.
-	].
 ]
 
 { #category : #accessing }
@@ -326,6 +311,11 @@ RSDSM >> rotation: aNumberInDegrees [
 { #category : #'accessing - computed' }
 RSDSM >> rowAt: aNumber [
 	^ matrix atColumn: aNumber
+]
+
+{ #category : #accessing }
+RSDSM >> selectedColor [
+	^ Color colorFrom: '#4d79ff'
 ]
 
 { #category : #configuration }
@@ -351,6 +341,11 @@ RSDSM >> shapeAt: aPoint [
 { #category : #configuration }
 RSDSM >> showLabels [
 	wantsLabels := true
+]
+
+{ #category : #accessing }
+RSDSM >> unSelectedColor [
+	^ Color veryVeryLightGray
 ]
 
 { #category : #highlighting }

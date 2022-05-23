@@ -75,12 +75,10 @@ RSDSMTest >> testLabelShapeColor [
 	b labelsX do: [ :label | 
 		label color: (label model even
 			ifTrue: [ Color red ]
-			ifFalse: [ Color veryVeryLightGray ]) ].
+			ifFalse: [ Color gray ]) ].
 	shapes := b labelsX.
 	self assert: shapes first model equals: 1.
 	self assert: shapes second color equals: Color red
-		
-	
 ]
 
 { #category : #tests }
