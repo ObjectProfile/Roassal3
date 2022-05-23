@@ -150,8 +150,8 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
 		
 		group: 'Mini' with: #('SVGTests' 'SVGExamples');
-		group: 'GraphViz' with: #('Mini' 'Roassal3-GraphViz');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
+		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
 		group: 'default' with: #('Core' 'Mini')
 
 
