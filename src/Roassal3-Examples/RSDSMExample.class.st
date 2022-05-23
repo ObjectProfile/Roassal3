@@ -308,20 +308,8 @@ RSDSMExample class >> gtinspector [
 ]
 
 { #category : #sources }
-RSDSMExample >> exampleClasses [
-	<script: 'self new exampleClasses open'>
-	| dsm |
-	dsm := RSDSM new.
-	dsm objects: RSShape withAllSubclasses.
-	dsm setShouldFeedY.
-	dsm dependency: #dependentClasses.
-	^ dsm 
-
-]
-
-{ #category : #sources }
-RSDSMExample >> exampleNumbers [
-	<script: 'self new exampleNumbers open'>
+RSDSMExample >> example01Numbers [
+	<script: 'self new example01Numbers open'>
 	| dsm |
 	dsm := RSDSM new.
 	dsm objects: (1 to: 10).
@@ -331,8 +319,8 @@ RSDSMExample >> exampleNumbers [
 ]
 
 { #category : #sources }
-RSDSMExample >> exampleNumbers02 [
-	<script: 'self new exampleNumbers02 open'>
+RSDSMExample >> example02Numbers [
+	<script: 'self new example02Numbers open'>
 	| dsm |
 	dsm := RSDSM new.
 	dsm objectsX: (1 to: 10).
@@ -344,8 +332,20 @@ RSDSMExample >> exampleNumbers02 [
 ]
 
 { #category : #sources }
-RSDSMExample >> exampleToken [
-	<script: 'self new exampleToken open'>
+RSDSMExample >> example03Classes [
+	<script: 'self new example03Classes open'>
+	| dsm |
+	dsm := RSDSM new.
+	dsm objects: RSShape withAllSubclasses.
+	dsm setShouldFeedY.
+	dsm dependency: #dependentClasses.
+	^ dsm 
+
+]
+
+{ #category : #sources }
+RSDSMExample >> example04Token [
+	<script: 'self new example04Token open'>
 	
 	| packageRegExp packages getKeywordsFromClass rawKeywords top10Keywords dsm |
 	packageRegExp := { 'Roassal3-*'  }.
@@ -371,17 +371,16 @@ RSDSMExample >> exampleToken [
 ]
 
 { #category : #sources }
-RSDSMExample >> exampleTopLabelRotation [
-	<script: 'self new exampleTopLabelRotation open'>
+RSDSMExample >> example05TopLabelRotation [
+	<script: 'self new example05TopLabelRotation open'>
 	| dsm v keys |
 	v := Dictionary new 
 		at: #A put: #(B C);
 		at: #B put: #(A C);
-		"at: #C put: #(A);"
+		at: #C put: #(A);
 		yourself.
-	keys := #(A B C).
-	dsm := RSDSM new.
-	dsm rotation: 0.
+	keys := #(9 A B C D).
+	dsm := RSDSMStronglyConnected new.
 	dsm objects: keys.
 	dsm setShouldFeedY.
 	dsm dependency: [ :k  | v at: k ifAbsent: #() ].
