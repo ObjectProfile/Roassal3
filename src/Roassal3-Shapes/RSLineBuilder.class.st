@@ -744,6 +744,19 @@ RSLineBuilder >> useElementAssociations: associationsBetweenElements [
 		self edgeFrom: assoc key to: assoc value ]
 ]
 
+{ #category : #'instance creation' }
+RSLineBuilder >> verticalBezier [
+	^ self verticalLine: RSBezier new
+]
+
+{ #category : #'instance creation' }
+RSLineBuilder >> verticalLine: aShape [
+	^ (self shape: aShape)
+		controlPointsController: RSVerticalCPAPController new;
+		yourself.
+	
+]
+
 { #category : #'public - attach point' }
 RSLineBuilder >> withBorderAttachPoint [
 	"Make the produced line use a border attach point. For example:
