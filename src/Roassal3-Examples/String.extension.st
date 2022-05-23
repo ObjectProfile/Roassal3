@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
-{ #category : #'*Roassal3-DSM' }
+{ #category : #'*Roassal3-Examples' }
 String >> cutCamelCase [
 	"Breaks apart words written in camel case.
 	

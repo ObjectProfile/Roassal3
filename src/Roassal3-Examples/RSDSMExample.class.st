@@ -43,7 +43,7 @@ RTDSMExample new installTitle: 'EvolutionDSM'
 Class {
 	#name : #RSDSMExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-DSM'
+	#category : #'Roassal3-Examples-DSM'
 }
 
 { #category : #'example-data' }
