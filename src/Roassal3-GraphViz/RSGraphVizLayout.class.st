@@ -1,5 +1,5 @@
 "
-TODO
+This layout uses unix process to run dot commands, the command input is build based on roassal3 shapes
 "
 Class {
 	#name : #RSGraphvizLayout,
@@ -10,12 +10,35 @@ Class {
 		'dotDescription',
 		'graphvizResult'
 	],
+	#classInstVars : [
+		'commandLocation'
+	],
 	#category : #'Roassal3-GraphViz-Core'
 }
+
+{ #category : #public }
+RSGraphvizLayout class >> commandLocation [
+	^ commandLocation ifNil: [ commandLocation := self findCommand ].
+]
 
 { #category : #'instance creation' }
 RSGraphvizLayout class >> digraph [
 	^ self new digraph
+]
+
+{ #category : #public }
+RSGraphvizLayout class >> findCommand [
+	| process |
+	process := RSUnixSubprocess new
+		command: '/usr/bin/which';
+		arguments: { 'dot' };
+		workingDirectory: FileLocator home fullName;
+		addAllEnvVariablesFromParentWithoutOverride;
+		terminateOnShutdown;
+		yourself.
+	process stdin: 'dot' utf8Encoded.
+	process runAndWait.
+	^ process stdout trimBoth 
 ]
 
 { #category : #'instance creation' }
@@ -46,32 +69,12 @@ RSGraphvizLayout >> doExecute: shapes [
 	group := shapes asGroup.
 	dotDescription := self dotDescriptionOf: shapes.
 	
-	
-	
-"
-	fr := '/tmp/description.dot' asFileReference.
- 	fr exists ifTrue: [ fr delete ].
-	str := fr writeStream.
-	str nextPutAll: dotConverter stream contents ""utf8Encoded"".
-	str close. 
-	
-	frOutput := '/tmp/result.txt' asFileReference.
-	frOutput exists ifTrue: [ frOutput delete ].
-	
-	self runningGraphvizInputFilename: '/tmp/description.dot' outputFilename: '/tmp/result.txt'.
-	
-	self positionShapes: group with: '/tmp/description.dot' asFileReference contents.
-"	
-	
 	process := RSUnixSubprocess new
-		command: '/usr/local/bin/dot';
+		command: self class commandLocation;
 		arguments: { '-Tplain-ext' };
 		workingDirectory: FileLocator home fullName;
 		addAllEnvVariablesFromParentWithoutOverride;
 		terminateOnShutdown;
-		"redirectStdout;
-		redirectStderr;
-		redirectStdin;"
 		yourself.
 
 	process stdin: dotDescription.
@@ -103,7 +106,7 @@ RSGraphvizLayout >> dotDescriptionOf: shapes [
 
 	| group |
 	group := shapes asGroup.
-	group, edges accept: dotConverter.
+	group, lines accept: dotConverter.
 	^ dotConverter stream contents utf8Encoded
 ]
 
