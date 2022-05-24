@@ -17,7 +17,8 @@ Class {
 		'labelShapeY',
 		'labelShapeX',
 		'labelsY',
-		'labelsX'
+		'labelsX',
+		'colorBlock'
 	],
 	#category : #'Roassal3-DSM-Core'
 }
@@ -46,6 +47,16 @@ RSDSM >> addLabelsTop: aRSCanvas [
 	| row |
 	row := self rowAt: 1.
 	aRSCanvas addAll: (labelsX := row collect: [ :s | self createLabelShapeX: s ]).
+]
+
+{ #category : #accessing }
+RSDSM >> color [
+	^ colorBlock
+]
+
+{ #category : #accessing }
+RSDSM >> color: aBlock [
+	colorBlock := aBlock
 ]
 
 { #category : #'accessing - computed' }
@@ -99,7 +110,7 @@ RSDSM >> createLabelShapeY: aRSBox [
 RSDSM >> createShape: tuple [
 	^ shape copy
 		model: tuple;
-		color: (self computeColor: tuple);
+		color: (self color cull: tuple);
 		yourself
 ]
 
@@ -206,6 +217,7 @@ RSDSM >> initialize [
 		rotation: 45;
 		showLabels;
 		setShouldFeedX;
+		color: [ :tuple | self computeColor: tuple ];
 		dependency: #yourself;
 		objects: #()
 ]
