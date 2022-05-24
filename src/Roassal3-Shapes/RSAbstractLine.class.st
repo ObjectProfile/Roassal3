@@ -305,7 +305,7 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	ref ifNotNil: [ ref removeConnectedLine: self ].
 	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
