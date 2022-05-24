@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #tests }
+RSDSMTest >> testColor [
+	| b |
+
+	b := RSDSM new.
+	b objectsX: #(1 2 3 4).
+	b objectsY: #( 'A' 'B' 'C' ).
+	b color: [ :tuple | Color random ].
+	b build.
+	
+]
+
+{ #category : #tests }
 RSDSMTest >> testDefault [
 
 	| dsm |
