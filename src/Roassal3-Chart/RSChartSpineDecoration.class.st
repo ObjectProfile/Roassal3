@@ -21,6 +21,11 @@ Class {
 }
 
 { #category : #accessing }
+RSChartSpineDecoration >> box [
+	^ box
+]
+
+{ #category : #accessing }
 RSChartSpineDecoration >> createdShapes [
 	^ { box }
 ]
