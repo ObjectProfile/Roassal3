@@ -1433,6 +1433,38 @@ RSBasicShapeExamples >> example44deCasteljauLinePenC [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenOrthogonalHorizontalLine [
+
+	<script:
+	'self new example44deCasteljauLinePenOrthogonalHorizontalLine open'>
+	| b1 random |
+	random := RandomBoxMullerBivariateGaussian seed: 541.
+
+	b1 := RSdeCasteljauLine new
+		      samples: 100;
+		      pen: [ :aBezier | 
+			      | a  c |
+			      a := 100.
+			      c := a + 100.
+			      aBezier
+				      addPoint: 0 @ 0 + random next;
+				      addPoint: a @ 0 + random next;"
+				      addPoint: b @ 0 + random next;"
+				      addBezierPoint: c @ 100 + random next;
+				      addPoint: c @ 200 + random next;
+				      addBezierPoint: c + 100 @ 300 + random next;
+				      addPoint: c + 200 @ 300 + random next";
+				      addPoint: c + 300 @ 300 + random next" ];
+		      yourself.
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLinePenQ [
 
 	<script: 'self new example44deCasteljauLinePenQ open'>
@@ -1514,6 +1546,46 @@ RSBasicShapeExamples >> example44deCasteljauLinePenT [
 
 	^ RSCanvas new
 		  addAll: b1 asGroupWithControlNet;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLinePenTwoLines [
+
+	<script: 'self new example44deCasteljauLinePenTwoLines open'>
+	| b1 b2 b3 |
+	b1 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 25 @ 50;
+				      addPoint: 150 @ 50 via: 25 @ 100 via: 150 @ 100 ].
+
+	b2 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: b1 designPoints last;
+				      addPoint: 250 @ 25
+				      via:
+					      (b1 designPoints lastButOne reflectedAbout:
+							       b1 designPoints last)
+				      via: 200 @ 0 ].
+
+	b3 := RSdeCasteljauLine new
+		      samples: 50;
+		      pen: [ :aBezier | 
+			      aBezier
+				      addPoint: 200 @ 0;
+				      addPoint: 250 @ 25 ].
+
+	^ RSCanvas new
+		  addAll: b1 asGroupWithControlNet;
+		  addAll: (b2 asGroupWithControlNetColoured: Color red);
+		  addAll: ((b1 junction: b3 right: [ :c0 :c1 :c2 | c1 ]) 
+				   asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself

@@ -103,17 +103,31 @@ RSParametricLine >> asGroupWithControlNetColoured: aColor [
 { #category : #accessing }
 RSParametricLine >> controlPoints: aSequenceableOfPoints [
 
+	| controlPolygonLength lastPoint |
 	pointsSize := aSequenceableOfPoints size.
 
 	points := Array new: pointsSize.
 	sandboxPoints := Array new: pointsSize.
 
+	controlPolygonLength := 0.0.
+	lastPoint := aSequenceableOfPoints
+		             ifEmpty: [ nil ]
+		             ifNotEmpty: [ aSequenceableOfPoints first ].
+
 	aSequenceableOfPoints withIndexDo: [ :each :index | 
 		| aPoint |
 		aPoint := each asFloatPoint.
 
+		controlPolygonLength := controlPolygonLength
+		                        + (lastPoint distanceTo: each).
+		lastPoint := each.
+
 		points at: index put: aPoint.
 		sandboxPoints at: index put: aPoint ].
+
+	"parameterization
+		controlPointsChanged: points
+		approxArcLength: controlPolygonLength."
 
 	self
 		refreshControlPoints;

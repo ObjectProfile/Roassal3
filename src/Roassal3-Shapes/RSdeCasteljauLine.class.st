@@ -318,9 +318,7 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 RSdeCasteljauLine >> newLine [
 
 	^ super newLine
-		  parameterization: (RSChebyshevParameterization new
-				   from: 0 to: 1 samples: parameterization size;
-				   yourself);
+		  samples: parameterization size;
 		  yourself
 ]
 
