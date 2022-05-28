@@ -325,6 +325,8 @@ RSdeCasteljauLine >> newLine [
 { #category : #'as yet unclassified' }
 RSdeCasteljauLine >> pen: aBlock [
 
+	"Inspired by https://css-tricks.com/svg-path-syntax-illustrated-guide/"
+
 	points := OrderedCollection new.
 
 	aBlock value: self.
