@@ -345,6 +345,11 @@ RSDSM >> setUpShape: box [
 	box announcer: shape announcer.
 ]
 
+{ #category : #accessing }
+RSDSM >> shape [
+	^ shape
+]
+
 { #category : #'accessing - computed' }
 RSDSM >> shapeAt: aPoint [ 
 	^ matrix at: aPoint y at: aPoint x
