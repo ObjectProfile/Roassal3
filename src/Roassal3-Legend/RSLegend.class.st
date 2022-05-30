@@ -214,7 +214,7 @@ RSLegend >> layout [
 	^ layout
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
 RSLegend >> legend [
 	^ currentLegend
 ]
