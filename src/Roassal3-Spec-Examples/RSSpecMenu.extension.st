@@ -1,7 +1,7 @@
 Extension { #name : #RSSpecMenu }
 
 { #category : #'*Roassal3-Spec-Examples' }
-RSSpecMenu class >> menu07PalettesOn: aBuilder [
+RSSpecMenu classSide >> menu07PalettesOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Palettes)
 		parent: #Roassal3;
@@ -13,7 +13,7 @@ RSSpecMenu class >> menu07PalettesOn: aBuilder [
 ]
 
 { #category : #'*Roassal3-Spec-Examples' }
-RSSpecMenu class >> menu12PalettesOn: aBuilder [
+RSSpecMenu classSide >> menu12PalettesOn: aBuilder [
 
 	<worldMenu>
 	(aBuilder item: #Roassal3Palettes)
