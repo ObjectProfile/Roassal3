@@ -64,6 +64,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Pie'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
+	'Roassal3-DSM'
 	'Roassal3-Menu'
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
@@ -138,7 +139,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 [
 	| core |
 	core := #('Core').
-	spec 
+	spec
 		group: 'Core' with: #('Roassal3'), arr1;
 		group: 'Examples' with: core, arr2;
 		group: 'Tests' with: core, arr3;
@@ -151,15 +152,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Mini' with: #('SVGTests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
-		group: 'Graphviz' with: #('Full' 'Roassal3-GraphViz');
 		group: 'default' with: #('Core' 'Mini')
-
-
-
-
-
-
-
 
 
 

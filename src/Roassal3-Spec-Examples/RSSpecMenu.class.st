@@ -21,6 +21,7 @@ RSSpecMenu class >> menu07PalettesOn: aBuilder [
 
 { #category : #'*Roassal3-Spec-Examples' }
 RSSpecMenu class >> menu12PalettesOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Roassal3Palettes)
 		parent: #Roassal3;
@@ -28,5 +29,5 @@ RSSpecMenu class >> menu12PalettesOn: aBuilder [
 		label: 'Easel';
 		help: 'Open a basic window to edit a roassal3 script';
 		icon: (self iconNamed: 'haloPaint');
-		action: [ RSEasel new openWithSpec ]
+		action: [ RSEasel new open ]
 ]

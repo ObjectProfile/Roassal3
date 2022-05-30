@@ -36,7 +36,7 @@ Class {
 		'decorations',
 		'extents',
 		'generator',
-		'colors'
+		'colorPalette'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -77,6 +77,15 @@ c
 	aPlot chart: self
 ]
 
+{ #category : #converting }
+RSChart >> asShape [
+	| shape |
+	shape := self container asShape.
+	self container: shape.
+	^ shape
+	
+]
+
 { #category : #'public - plots' }
 RSChart >> barHeights: aCollectionY [
 	| res |
@@ -108,19 +117,19 @@ RSChart >> chartExtents: aRSChartExtents [
 { #category : #color }
 RSChart >> colorFor: aRSPlot [ 
 	"Return a color for the given plot. Colors are defined as in #defaultPlotColors"
-	^ colors scale: aRSPlot
+	^ colorPalette scale: aRSPlot
 ]
 
 { #category : #accessing }
 RSChart >> colors [
 	"Return the palette"
-	^ colors
+	^ colorPalette
 ]
 
 { #category : #accessing }
 RSChart >> colors: someColors [
 	"Set the palette to be use to plots"
-	colors := someColors
+	colorPalette := someColors
 ]
 
 { #category : #accessing }
@@ -164,7 +173,7 @@ RSChart >> initialize [
 	plots := OrderedCollection new.
 	self extent: 200 @ 200.
 	self initializeDecorations.
-	colors := self defaultPlotColors.
+	colorPalette := self defaultPlotColors.
 ]
 
 { #category : #initialization }
@@ -313,14 +322,14 @@ RSChart >> plots [
 ]
 
 { #category : #building }
-RSChart >> renderDecorationIn: aCanvas [
+RSChart >> renderDecorationsIn: aCanvas [
 	decorations do: [ :d | d renderIn: aCanvas ]
 ]
 
 { #category : #hooks }
 RSChart >> renderIn: aCanvas [
 	decorations, plots do: [ :e | e beforeRenderingIn: self ].
-	self renderDecorationIn: aCanvas.
+	self renderDecorationsIn: aCanvas.
 	self renderPlotsIn: aCanvas.
 	shapes := decorations, plots flatCollect: [ :element | 
 		element createdShapes ] as: RSGroup.
@@ -335,6 +344,14 @@ RSChart >> renderPlotsIn: aCanvas [
 { #category : #building }
 RSChart >> show [
 	^ self open
+]
+
+{ #category : #accessing }
+RSChart >> spine [
+	^ (self decorations
+		detect: [ :d | d class == RSChartSpineDecoration ]
+		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
+		shape
 ]
 
 { #category : #accessing }

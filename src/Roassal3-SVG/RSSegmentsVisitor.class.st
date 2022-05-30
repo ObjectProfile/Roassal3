@@ -36,3 +36,7 @@ RSSegmentsVisitor >> visitLineSegment: aSegment [
 RSSegmentsVisitor >> visitMoveSegment: aSegment [
 	
 ]
+
+{ #category : #visiting }
+RSSegmentsVisitor >> visitQuadSegment: aSegment [
+]

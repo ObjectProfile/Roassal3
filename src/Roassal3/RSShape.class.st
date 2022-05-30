@@ -269,6 +269,11 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
+{ #category : #copying }
+RSShape >> copyWithoutAnnouncer [
+	^ self copy
+]
+
 { #category : #'looking up shapes' }
 RSShape >> deepShapeFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
@@ -374,6 +379,11 @@ RSShape >> intersects: aRectangle [
 	aRectangle is the visible rectangle of the canvas, then this method is used
 	to draw or not this shape"
 	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+RSShape >> isComposite [
+	^ false
 ]
 
 { #category : #testing }
@@ -574,11 +584,6 @@ RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
-]
-
-{ #category : #accessing }
-RSShape >> topParent [
-	^ parent ifNotNil: [ parent topParent ]
 ]
 
 { #category : #accessing }

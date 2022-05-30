@@ -10,8 +10,8 @@ Class {
 	#category : #'Roassal3-Spec-Examples'
 }
 
-{ #category : #specs }
-RSBasicSpecExample class >> defaultSpec [
+{ #category : #layout }
+RSBasicSpecExample class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #roassalSpec;
@@ -21,7 +21,7 @@ RSBasicSpecExample class >> defaultSpec [
 
 { #category : #initialization }
 RSBasicSpecExample >> initializePresenters [
-	roassalSpec := self instantiate: SpRoassalPresenter.
+	roassalSpec := self newRoassal.
 	self initializeRoassal3: roassalSpec canvas.
 ]
 
@@ -86,5 +86,5 @@ RSBasicSpecExample >> initializeWindow: w [
 
 { #category : #running }
 RSBasicSpecExample >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]

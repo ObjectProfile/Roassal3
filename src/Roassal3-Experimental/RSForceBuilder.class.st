@@ -115,18 +115,18 @@ RSForceBuilder >> renderIn: aCanvas [
 	aCanvas newAnimation repeat; onStepDo: [ self update: self force ].
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 RSForceBuilder >> reset [
 	| c |
 	c := self canvas.
 	c shapes copy do: #remove.
-	c clearBackground: true.
+	c shouldClearBackground: true.
 	c newAnimation
 		duration: 500 milliSeconds;
 		when: RSAnimationEndEvent do: [ 
 			self setParticles.
 			self setInterferences.
-			c clearBackground: false.
+			c shouldClearBackground: false.
 			 ].
 	
 ]

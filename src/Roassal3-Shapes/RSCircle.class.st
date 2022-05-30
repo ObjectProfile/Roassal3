@@ -49,7 +49,7 @@ RSCircle >> height: anInteger [
 ]
 
 { #category : #testing }
-RSCircle >> includesPoint: aPoint [
+RSCircle >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
 	invertedPoint := matrix rsInverseTransform: aPoint.

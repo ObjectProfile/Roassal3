@@ -371,13 +371,13 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		
 		RSGridLayout on: methods.
 		composite := RSComposite new.
-		label := RSLabel new text: cls name.
+		label := RSLabel new text: cls name; color: 'black'; yourself.
 		RSLocation new above; move: label on: methods.
 		composite shapes:  methods, { label }.
 		
-		composite color: Color gray.
+		composite color: Color lightGray.
 		composite model: cls.
-		composite @ RSAnimatedPopup @ RSDraggable.
+		composite @ RSAnimatedPopup; @ RSDraggable.
 		composite padding: 10.
 		c add: composite ].
 
@@ -802,4 +802,41 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 	^ aCanvas
 		zoomToFit;
 		@ RSCanvasController
+]
+
+{ #category : #'as yet unclassified' }
+RSLayoutExamples >> example24SmartHorizontalTree [
+	<script: 'self new example24SmartHorizontalTree open setLabel: ''Horizontal Tree'''>
+	| c shapes |
+	c := RSCanvas new.
+	
+	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := RSLabel new
+			text: cls;
+			yourself.
+		box := RSBox new
+			withBorder;
+			cornerRadius: (RSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		RSComposite new
+			draggable;
+			model: cls;
+			shapes: (RSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ RSCanvasController.
+	RSLineBuilder orthoHorizontal
+		controlPointsController: RSSmartHorizontalCPController new;
+		markerEnd: (RSMarker new 
+			offset: 2;
+			shape: (RSShapeFactory triangle 
+				color: Color black;
+				size: 5;
+				yourself));
+		attachPoint: RSHorizontalAttachPoint new; 
+		canvas: c;
+		shapes: c nodes;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new on: c nodes.
+	^ c
 ]

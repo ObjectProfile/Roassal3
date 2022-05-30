@@ -205,10 +205,13 @@ RSBoundingShape >> height: aNumber [
 
 { #category : #testing }
 RSBoundingShape >> includesPoint: aPoint [
-	"Return true if the provided point is included in the encompassing rectangle of the shape."
-	| invertedPoint |
-	invertedPoint := matrix rsInverseTransform: aPoint.
-	^ self baseRectangle containsPoint: invertedPoint.
+	"Return true if the provided point is included in the shape"	
+
+	"First we check if the encompassingRectangle has the point. If the point is outside, there is not need to transform the point"
+	(self encompassingRectangle containsPoint: aPoint)
+		ifFalse: [ ^ false ].
+	
+	^ self preciseIncludesPoint: aPoint
 ]
 
 { #category : #'edges - deprecated' }
@@ -342,6 +345,17 @@ RSBoundingShape >> positionInCanvas [
 RSBoundingShape >> postCopy [
 	super postCopy.
 	self matrix: self matrix copy
+]
+
+{ #category : #testing }
+RSBoundingShape >> preciseIncludesPoint: aPoint [
+	
+	"Return true if the provided point is precisily included in the shape. Taking care of the transformation (aka scaling, position, rotation)"
+	
+	| invertedPoint |
+		
+	invertedPoint := matrix rsInverseTransform: aPoint.
+	^ self baseRectangle containsPoint: invertedPoint.
 ]
 
 { #category : #actions }

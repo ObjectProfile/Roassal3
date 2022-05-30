@@ -39,7 +39,7 @@ Class {
 		'extent',
 		'originMode'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Camera'
 }
 
 { #category : #utilities }
@@ -50,6 +50,11 @@ RSCamera class >> maxExtentFor: rectangle [
 { #category : #utilities }
 RSCamera class >> minimumExtent [
 	^ 0.0001 asPoint
+]
+
+{ #category : #visiting }
+RSCamera >> accept: visitor [
+	visitor visitCamera: self
 ]
 
 { #category : #announce }
@@ -164,6 +169,14 @@ RSCamera >> scale: aFloatNumber [
 		canvas: self canvas;
 		oldScale: oldScale;
 		newScale: aFloatNumber ]
+]
+
+{ #category : #public }
+RSCamera >> setMatrix: anAthensAffineTransform [
+	anAthensAffineTransform
+		translateBy: (self canvas extent / 2) asFloatPoint;
+		scaleBy: self scale asFloat;
+		translateBy: self position negated asFloatPoint.
 ]
 
 { #category : #accessing }

@@ -174,13 +174,13 @@ RSSVGAnimationExamples >> example03Boat [
 			| cp p1 p2 vector |
 			frame := frame + 0.5.
 			updateLines value.
-			cp := (lines at: lines size / 2) controlPoints.
+			cp := (lines at: (lines size / 2) asInteger) controlPoints.
 			x := x + 0.3.
 		
 			(x between: 1 and: cp size - 1)
 				ifFalse: [ x := cp size - 1 ].
-			p1 := cp at: x.
-			p2 := cp at: x + 1.
+			p1 := cp at: x asInteger.
+			p2 := cp at: (x + 1) asInteger.
 			vector := p2 - p1.
 			boat matrix
 				loadIdentity;
@@ -218,7 +218,7 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 	c 
 		addShape: (RSSVGPath new 
 			noPaint;
-			border: (RSBorder new paint: paint; width: 21);
+			border: (RSBorder new paint: paint; width: 21; capRound);
 			svgPath: 'M77,24.4v243.9
 			M264.2,232.3c0,0-24.1,30-51.7,30C144.3,262.3,174,113,77,113c-18.5,0-37.6,12.6-37.6,30
 		c0,16,11.8,28,38.3,28s115.7-10.7,115.7-77.1c0-53.9-45.7-69.5-116.5-69.5c-11.8,0-21.8,1.4-30.1,3.4c-4.6,1.1-8.7,2.4-12.3,3.8');

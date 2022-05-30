@@ -33,8 +33,8 @@ RSCanvas >> inspectorCanvas [
 
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvasContext: aContext [
-  
-  aContext withoutEvaluator
+
+	aContext withoutEvaluator
 ]
 
 { #category : #'*Roassal3-Inspector' }

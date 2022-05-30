@@ -1,3 +1,6 @@
+"
+This class is deprecated class. use RSLineDrivenLayout
+"
 Class {
 	#name : #RSEdgeDrivenLayout,
 	#superclass : #RSLineDrivenLayout,

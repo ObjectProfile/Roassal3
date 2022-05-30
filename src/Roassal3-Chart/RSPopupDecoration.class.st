@@ -3,7 +3,7 @@ I am a popup decoration for instances of line Plots in RSChart by default but yo
 "
 Class {
 	#name : #RSPopupDecoration,
-	#superclass : #RSChartDecoration,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
 		'popup'
 	],
@@ -23,6 +23,11 @@ RSPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
 { #category : #accessing }
 RSPopupDecoration >> createdShapes [
 	^ #()
+]
+
+{ #category : #initialization }
+RSPopupDecoration >> defaultShape [
+	^ nil
 ]
 
 { #category : #initialization }
@@ -47,7 +52,7 @@ RSPopupDecoration >> popup: aRSPopup [
 { #category : #rendering }
 RSPopupDecoration >> renderIn: canvas [
 	| box |
-	box := chart decorations first shape.
+	box := chart spine.
 	popup chart: chart.
 	box addInteraction: popup.
 ]

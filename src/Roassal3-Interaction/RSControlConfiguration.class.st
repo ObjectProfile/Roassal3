@@ -34,10 +34,21 @@ Class {
 		'zoomToFitOnStart',
 		'zoomToFitOnExtent',
 		'hasHorizontalScrolling',
-		'hasVerticalScrolling'
+		'hasVerticalScrolling',
+		'hasDraggableAnimation'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
+
+{ #category : #configuration }
+RSControlConfiguration >> hasDraggableAnimation [
+	^ hasDraggableAnimation
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> hasDraggableAnimation: aBoolean [
+	hasDraggableAnimation := aBoolean
+]
 
 { #category : #'scrollbar managing' }
 RSControlConfiguration >> hasHorizontalScrolling [
@@ -70,7 +81,8 @@ RSControlConfiguration >> initialize [
 		useZoomToFitOnStart;
 		noBasicZoom;
 		hasHorizontalScrolling: true;
-		hasVerticalScrolling: true.
+		hasVerticalScrolling: true;
+		hasDraggableAnimation: true.
 ]
 
 { #category : #accessing }

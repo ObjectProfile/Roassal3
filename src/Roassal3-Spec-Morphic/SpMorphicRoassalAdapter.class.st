@@ -26,6 +26,7 @@ SpMorphicRoassalAdapter >> adapt: aComposableModel [
 		aCanvas 
 			morph: widget;
 			extent: widget extent.
+		widget sessionChanged.
 		canvas := aCanvas.
 		 ].
 	widget

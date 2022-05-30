@@ -22,21 +22,21 @@ RSAttachPoint class >> isAbstract [
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> basicEndingPointOf: anEdge [
+RSAttachPoint >> basicEndingPointOf: aLine [
 	^ self subclassResponsibility 
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> basicStartingPointOf: anEdge [
+RSAttachPoint >> basicStartingPointOf: aLine [
 	^ self subclassResponsibility 
 ]
 
 { #category : #private }
-RSAttachPoint >> commonParents: shape in: anEdge [
+RSAttachPoint >> commonParents: shape in: aLine [
 	| current parents |
 	current := shape parent.
 	parents := OrderedCollection new.
-	[ current = anEdge parent ] whileFalse: [ 
+	[ current = aLine parent ] whileFalse: [ 
 		current ifNil: [ ^ nil ].
 		current parent = current ifTrue: [ ^ nil ].
 		parents add: current.
@@ -76,8 +76,8 @@ RSAttachPoint >> endingPointOf: aLine [
 ]
 
 { #category : #private }
-RSAttachPoint >> hasParents: shape in: anEdge [
-	^ shape parent notNil and: [ anEdge parent notNil ]
+RSAttachPoint >> hasParents: shape in: aLine [
+	^ shape parent notNil and: [ aLine parent notNil ]
 ]
 
 { #category : #'public - hooks' }
@@ -95,19 +95,19 @@ RSAttachPoint >> matrixFor: commonParents [
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: shape in: anEdge [
+RSAttachPoint >> positionFor: shape in: aLine [
 	shape isPoint ifTrue: [ ^ shape ].
-	^ self positionFor: shape in: anEdge point: shape position
+	^ self positionFor: shape in: aLine point: shape position
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: shape in: anEdge point: pos [
+RSAttachPoint >> positionFor: shape in: aLine point: pos [
 	| commonParents |
 	shape isPoint ifTrue: [ ^ shape ].
-	(self hasParents: shape in: anEdge) ifFalse: [ ^ pos ].
-	shape parent = anEdge parent ifTrue: [ ^ pos ].
+	(self hasParents: shape in: aLine) ifFalse: [ ^ pos ].
+	shape parent = aLine parent ifTrue: [ ^ pos ].
 	"TODO we can cache this info"
-	commonParents := self commonParents: shape in: anEdge.
+	commonParents := self commonParents: shape in: aLine.
 	commonParents ifNil: [ ^ pos ].
 	^ (self matrixFor: commonParents) transform: pos. 
 ]

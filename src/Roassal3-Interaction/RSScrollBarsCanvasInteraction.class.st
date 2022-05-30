@@ -98,9 +98,14 @@ RSScrollBarsCanvasInteraction >> initializeShape [
 		yourself
 ]
 
+{ #category : #accessing }
+RSScrollBarsCanvasInteraction >> minBarSize [
+	^ 5.
+]
+
 { #category : #hooks }
 RSScrollBarsCanvasInteraction >> moveScroll: evt [
-	| shape delta position camera canvasExtent shapesRect correct |
+	| shape delta position camera canvasExtent shapesRect correct oldPosition |
 	shape := evt shape.
 	delta := evt step.
 	delta := shape = vertical shape
@@ -113,10 +118,16 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	position := position * shapesRect extent / canvasExtent.
 	
 	camera := evt camera.
+	oldPosition := camera position.
 	camera position: position + shapesRect origin.
 	correct := self correctCameraPosition: evt canvas.
-	correct = camera position ifFalse: [ 
-		camera position: correct.
+	correct = camera position ifTrue: [ 
+		"to notify the change"
+		camera position: oldPosition.
+		camera translateTo: position + shapesRect origin.
+	] ifFalse: [ 
+		camera translateTo: correct.
+		"camera position: correct."
 		self updateBasicScrollbars. ].
 	evt signalUpdate. 
 ]
@@ -181,8 +192,8 @@ RSScrollBarsCanvasInteraction >> updateBasicScrollbars [
 	
 	pd := canvas extent * (canvasRect floatCenter - shapesRect origin) / shapesRect extent.
 	ext := canvasRect extent * canvas extent / shapesRect extent.
-	vertical position: p x @ pd y ; height: ext y.
-	horizontal position: pd x @ p y; width: ext x.
+	vertical position: p x @ pd y ; height: (ext y max: self minBarSize).
+	horizontal position: pd x @ p y; width: (ext x max: self minBarSize).
 ]
 
 { #category : #hooks }

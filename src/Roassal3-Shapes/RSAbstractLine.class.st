@@ -45,9 +45,9 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
-{ #category : #visiting }
+{ #category : #adding }
 RSAbstractLine >> accept: visitor [
-	visitor visitLine: self.
+	visitor visitLine: self
 ]
 
 { #category : #'attach point' }
@@ -87,7 +87,7 @@ RSAbstractLine >> color [
 
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
-	self strokePaint: aColor
+	self strokePaint: (Color colorFrom: aColor)
 ]
 
 { #category : #accessing }
@@ -305,7 +305,7 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	ref ifNotNil: [ ref removeConnectedLine: self ].
 	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]

@@ -9,12 +9,13 @@ Class {
 
 { #category : #hooks }
 RSSimpleMarkerPopupBuilder >> shapeFor: aRSChart [
-	| line box |
+	| line box x |
 	line := RSLine new dashArray: #(3).
-	box := aRSChart decorations first shape encompassingRectangle.
+	box := aRSChart spine globalEncompassingRectangle.
+	x := position x.
 	line 
-		startPoint: position x@ box top;
-		endPoint: position x@ box bottom .
+		startPoint: x @ box top;
+		endPoint: x @ box bottom.
 	^ line
 	
 ]

@@ -28,7 +28,7 @@ Class {
 		'bars',
 		'binningStrategy'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }

@@ -13,12 +13,20 @@ RSSimpleForceBasedLayout >> doExecute: shapes [
 	es := shapes flatCollect: #outgoingLines.
 	layout edges: es.
 	layout start.
-	shapes do: [ :node | (layout mockElementAt: node)
-		charge: node width * -10;
-		weight: node width ].
-	es do: [ :edge | (layout mockLineAt: edge)
-		strength: 1;
-		length: (edge from width + edge to width) ].
+	shapes do: [ :node | 
+		layout 
+			mockElementAt: node
+			ifPresent: [ :mock | 
+				mock
+					charge: node width * -10;
+					weight: node width] ].
+	es do: [ :edge | 
+		layout
+			mockLineAt: edge
+			ifPresent: [ :mock |
+				mock 
+					strength: 1;
+					length: (edge from width + edge to width) ] ].
 	layout runLayoutSimply.
 	shapes do: [ :n | n updateLinesON. n connectedLines do: #update ].
 ]

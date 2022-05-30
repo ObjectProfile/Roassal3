@@ -119,9 +119,9 @@ Class {
 	#classTraits : 'RSTContainer classTrait',
 	#instVars : [
 		'nodes',
-		'edges',
 		'children',
-		'clipChildren'
+		'clipChildren',
+		'lines'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -281,6 +281,19 @@ RSComposite >> clipChildren: aBoolean [
 	clipChildren := aBoolean
 ]
 
+{ #category : #copying }
+RSComposite >> copyWithoutAnnouncer [
+	| copy |
+	copy := self copy.
+	copy privateShapes: (self children collect: [ :child | 
+		child copyWithoutAnnouncer
+			parent: copy;
+			yourself ]).
+	copy privateNodes: #().
+	copy privateEdges: #().
+	^ copy 
+]
+
 { #category : #'looking up shapes' }
 RSComposite >> deepShapesFromModels: someObjects result: result [
 	"Private method"
@@ -300,6 +313,11 @@ RSComposite >> initialize [
 	self clipChildren: false.
 	self resetPath.
 	
+]
+
+{ #category : #testing }
+RSComposite >> isComposite [
+	^ true
 ]
 
 { #category : #accessing }
@@ -350,12 +368,12 @@ c
 
 { #category : #private }
 RSComposite >> privateEdges [
-	^ edges
+	^ lines
 ]
 
 { #category : #private }
 RSComposite >> privateEdges: aRSGroup [
-	edges := aRSGroup
+	lines := aRSGroup
 ]
 
 { #category : #private }

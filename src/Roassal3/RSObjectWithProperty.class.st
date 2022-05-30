@@ -89,6 +89,12 @@ RSObjectWithProperty >> hasProperty: aKey [
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
+{ #category : #testing }
+RSObjectWithProperty >> isShape [
+	"Useful to lookup the canvas in a hierarchy of nested shapes"
+	^ false
+]
+
 { #category : #announcer }
 RSObjectWithProperty >> privateAnnouncer [
 	^ announcer

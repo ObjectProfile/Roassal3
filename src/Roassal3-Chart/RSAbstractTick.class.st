@@ -3,13 +3,13 @@ I define basic configuration for ticks, my subclasses creates lines and labels f
 "
 Class {
 	#name : #RSAbstractTick,
-	#superclass : #RSAbstractPlot,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
-		'configuration',
 		'niceLabel',
 		'ticks',
 		'labels',
-		'labelLocation'
+		'labelLocation',
+		'configuration'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -30,12 +30,15 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 	self min = self max 
 		ifTrue: [ 
 			niceLabel := self defaultNiceLabel.
-			^ super beforeRenderingIn: aChart. ].
+			self createXScale.
+			self createYScale.
+			^ self ].
 		
 	niceLabel := self configuration shouldUseNiceLabel 
 		ifTrue: [ self createNiceLabelIn: aChart ]
 		ifFalse: [ self defaultNiceLabel ].
-	super beforeRenderingIn: aChart.
+	self createXScale.
+	self createYScale.
 ]
 
 { #category : #accessing }

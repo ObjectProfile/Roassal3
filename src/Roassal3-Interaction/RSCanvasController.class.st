@@ -20,6 +20,7 @@ RSCanvasController class >> simple [
 	inst noLegend.
 	inst configuration
 		noZoomToFitOnStart;
+		hasDraggableAnimation: false;
 		noZoomToFitOnExtendChanged.
 	inst interactions removeKey: RSZoomToFitCanvasInteraction.
 	"this interaction works better when the visualization has already been created"

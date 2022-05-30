@@ -70,6 +70,13 @@ RSUserInputEvent >> initialize [
 	shiftKeyPressed := false
 ]
 
+{ #category : #'modifier state' }
+RSUserInputEvent >> metaKeyPressed [
+	^ Smalltalk platform isMacOS
+		ifTrue: [ self commandKeyPressed ]
+		ifFalse: [ self controlKeyPressed ]
+]
+
 { #category : #'private - accessing' }
 RSUserInputEvent >> modifiers: modifiers [
 	commandKeyPressed := modifiers anyMask: 2r01000000.

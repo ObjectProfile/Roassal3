@@ -1,39 +1,36 @@
 "
-New Control points controller for bezier lines in this visualization
+I am similar to RSHorizontalAttachPoint, with the different that I want to find the shortests distance
 "
 Class {
 	#name : #RSShortestHorizontalAttachPoint,
-	#superclass : #RSAbstractCPController,
+	#superclass : #RSOffsetAttachPoint,
 	#category : #'Roassal3-Shapes-AttachPoint'
 }
 
-{ #category : #hooks }
-RSShortestHorizontalAttachPoint >> controlPointsFor: aLine [
-	| r1 r2 ap c1 c2 c3 c4 mid |
-	ap := aLine attachPoint.
-	r1 := self rectangleFor: aLine from line: aLine.
-	r2 := self rectangleFor: aLine to line: aLine.
-	c1 := r1 floatCenter.
-	c4 := r2 floatCenter.
-	c1 x < c4 x  ifTrue: [ 
-		c1 := r1 rightCenter.
-		c4 := r2 leftCenter.
-	] ifFalse: [ 
-		c1 := r1 leftCenter.
-		c4 := r2 rightCenter.
-	].
-	mid := (c1 x + c4 x)/2.
-	c2 :=	mid @ c1 y.
-	c3 := mid @ c4 y.
-	^ { c1. c2. c3. c4 }
-	
+{ #category : #'public - hooks' }
+RSShortestHorizontalAttachPoint >> basicEndingPointOf: aLine [
+	| r1 r2 off p1 p2 center |
+	r1 := aLine from globalEncompassingRectangle.
+	r2 := aLine to globalEncompassingRectangle.
+	off := endOffset@0.
+	p1 := r2 rightCenter + off.
+	p2 := r2 leftCenter - off.
+	center := r1 floatCenter.
+	^ (p1 distanceTo: center) < (p2 distanceTo: center)
+		ifTrue: [ p1 ]
+		ifFalse: [ p2 ].
 ]
 
-{ #category : #hooks }
-RSShortestHorizontalAttachPoint >> rectangleFor: shape line: line [
-	| r ap |
-	ap := line attachPoint.
-	r := shape encompassingRectangle.
-	^ (ap positionFor: shape in: line point: r origin) 
-		corner: (ap positionFor: shape in: line point: r corner).
+{ #category : #'public - hooks' }
+RSShortestHorizontalAttachPoint >> basicStartingPointOf: aLine [
+	| r1 r2 off p1 p2 center |
+	r1 := aLine from globalEncompassingRectangle.
+	r2 := aLine to globalEncompassingRectangle.
+	off := startOffset@0.
+	p1 := r1 rightCenter + off.
+	p2 := r1 leftCenter - off.
+	center := r2 floatCenter.
+	^ (p1 distanceTo: center) < (p2 distanceTo: center)
+		ifTrue: [ p1 ]
+		ifFalse: [ p2 ].
 ]

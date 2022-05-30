@@ -71,3 +71,8 @@ RSBlockSegmentsVisitor >> visitLineSegment: aSegment [
 RSBlockSegmentsVisitor >> visitMoveSegment: aSegment [
 	moveToBlock value: aSegment
 ]
+
+{ #category : #visiting }
+RSBlockSegmentsVisitor >> visitQuadSegment: aSegment [
+	lineToBlock value: aSegment
+]

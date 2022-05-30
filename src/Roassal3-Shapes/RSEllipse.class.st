@@ -38,7 +38,7 @@ RSEllipse >> geometry [
 ]
 
 { #category : #testing }
-RSEllipse >> includesPoint: aPoint [
+RSEllipse >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
 	invertedPoint := matrix rsInverseTransform: aPoint.

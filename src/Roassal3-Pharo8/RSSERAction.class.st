@@ -12,7 +12,7 @@ Class {
 RSSERAction >> execute [
 	| canvas |
 	canvas := self roassalCanvas.
-	canvas showRectangles
+	canvas shouldShowRectangles
 		ifTrue:[ canvas hideEncompassingRectangles]
 		ifFalse:[canvas showEncompassingRectangles ].
 	canvas signalUpdate
