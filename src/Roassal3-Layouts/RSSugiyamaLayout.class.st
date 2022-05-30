@@ -26,43 +26,32 @@ RSSugiyamaLayout class >> sortBlock [
 
 { #category : #private }
 RSSugiyamaLayout >> addDummyNodes [
+
 	| layer layerNr |
 	connections := RSIdentityMatrix new.
-	self edgesDo:
-			[:edge | 
-			| layerFrom layerTo span fromNode toNode |
-			"edge hints removeAll."
-			layerFrom := layerNrs at: edge from.
-			layerTo := layerNrs at: edge to.
-			span := (layerFrom - layerTo) abs.
-	
-			"Normal case where nodes are in adjacent layers"
-			span = 1
-				ifTrue:
-					[connections
-						at: edge from
-						at: edge to
-						put: true].
-			
-			fromNode := edge from.
-			[span > 1] whileTrue: [
-				span := span - 1.
-				layerNr := layerTo - span.
-				layer := layers at: layerNr.
-				toNode := RSDummyNode
-					on: edge
-					slot: layerFrom - span.
-				layer add: toNode.
-				layerNrs at: toNode put: layerNr.
-				connections at: fromNode at: toNode put: true.
-				fromNode := toNode ].
-				
-			(layerFrom - layerTo) abs > 1
-				ifTrue:
-					[connections
-						at: fromNode
-						at: edge to
-						put: true] ]
+	self edgesDo: [ :edge | 
+		| layerFrom layerTo span fromNode toNode |
+		"edge hints removeAll."
+		layerFrom := layerNrs at: edge from.
+		layerTo := layerNrs at: edge to.
+		span := (layerFrom - layerTo) abs.
+
+		"Normal case where nodes are in adjacent layers"
+		span = 1 ifTrue: [ connections at: edge from at: edge to put: true ].
+
+		fromNode := edge from.
+		[ span > 1 ] whileTrue: [ 
+			span := span - 1.
+			layerNr := layerTo - span.
+			layer := layers at: layerNr.
+			toNode := RSDummyNode on: edge slot: layerFrom - span.
+			layer add: toNode.
+			layerNrs at: toNode put: layerNr.
+			connections at: fromNode at: toNode put: true.
+			fromNode := toNode ].
+
+		(layerFrom - layerTo) abs > 1 ifTrue: [ 
+			connections at: fromNode at: edge to put: true ] ]
 ]
 
 { #category : #private }
@@ -156,29 +145,32 @@ RSSugiyamaLayout >> doExecute: aNodeCollection [
 
 { #category : #private }
 RSSugiyamaLayout >> layoutAt: aPoint [
+
 	| treeWidth layerKeys layer layerWidth horizontalPosition verticalPosition layerHeight |
 	treeWidth := layers values
-		inject: self maxFloat negated
-		into:
-			[:max :e | max max: (e sumNumbers: #width) + ((e size - 1) * self horizontalGap)].
-	verticalPosition := self horizontalGap.	"For visual reasons NOT: self class verticalGap"
+		             inject: self maxFloat negated
+		             into: [ :max :e | 
+			             max max:
+				             (e sumNumbers: #width)
+				             + (e size - 1 * self horizontalGap) ].
+	verticalPosition := self horizontalGap. "For visual reasons NOT: self class verticalGap"
 	layerKeys := layers keys asSortedCollection.
-	layerKeys
-		do:
-			[:aKey | 
-			layer := layers at: aKey.
-			layerWidth := (layer sum: #width)
-				+ ((layer size - 1) * self horizontalGap).
-			layerHeight := (layer detectMax: #height) height.
-			horizontalPosition := treeWidth / 2.0 + aPoint x - (layerWidth / 2.0).
-			layer
-				do:
-					[:node | 
-					translator translateTopLeftOf: node to:  horizontalPosition @ verticalPosition.
-					
-					horizontalPosition := horizontalPosition + node width
-						+ self horizontalGap ].
-			verticalPosition := verticalPosition + layerHeight + self verticalGap ]
+	layerKeys do: [ :aKey | 
+		layer := layers at: aKey.
+		layerWidth := (layer sum: #width)
+		              + (layer size - 1 * self horizontalGap).
+		layerHeight := (layer detectMax: #height) height.
+		horizontalPosition := treeWidth / 2.0 + aPoint x
+		                      - (layerWidth / 2.0).
+		layer do: [ :node | 
+			translator
+				translateTopLeftOf: node
+				to: horizontalPosition @ verticalPosition.
+
+			horizontalPosition := horizontalPosition + node width
+			                      + self horizontalGap ].
+		verticalPosition := verticalPosition + layerHeight
+		                    + self verticalGap ]
 ]
 
 { #category : #private }
@@ -213,26 +205,24 @@ RSSugiyamaLayout >> recursiveRemoveCyclesFrom: aRSComposite [
 
 { #category : #private }
 RSSugiyamaLayout >> reduceCrossing [
+
 	"Crossing reduction"
+
 	| layer2 u v c1 c2 layer1 done |
 	2 to: layers keys size do: [ :index | 
 		layer1 := layers at: index - 1.
 		layer2 := layers at: index.
 		done := false.
-		[ done ] whileFalse: [
+		[ done ] whileFalse: [ 
 			done := true.
 			2 to: layer2 size do: [ :i | 
 				u := layer2 at: i - 1.
 				v := layer2 at: i.
 				c1 := self cl: layer1 u: u v: v.
 				c2 := self cl: layer1 u: v v: u.
-				c1 > c2 ifTrue: [
+				c1 > c2 ifTrue: [ 
 					layer2 rsSwapElement: u withElement: v.
-					done := false
-				]
-			]
-		]
-	]
+					done := false ] ] ] ]
 ]
 
 { #category : #'real sugiyama' }
