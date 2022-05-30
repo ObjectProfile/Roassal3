@@ -339,6 +339,7 @@ RSDSMExample >> example03Classes [
 	dsm objects: RSShape withAllSubclasses.
 	dsm setShouldFeedY.
 	dsm dependency: #dependentClasses.
+	dsm shape popup.
 	^ dsm 
 
 ]
