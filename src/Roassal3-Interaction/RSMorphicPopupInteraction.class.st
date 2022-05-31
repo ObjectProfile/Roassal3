@@ -78,6 +78,7 @@ RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [
 	| position xdelta ydelta cMorph world |
 	cMorph := evt canvas morph.
 	world := cMorph world.
+	world ifNil: [ ^ self ].
 	position := (evt camera fromSpaceToPixel: evt position) + cMorph positionInWorld.
 	xdelta := gapFromPointer x.
 	ydelta := gapFromPointer y.

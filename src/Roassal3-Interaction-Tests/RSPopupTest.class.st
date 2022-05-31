@@ -21,6 +21,13 @@ bar';
 ]
 
 { #category : #tests }
+RSPopupTest >> testMorphicPopup [
+	canvas createMorph.
+	shapes @ RSMorphicPopupInteraction.
+	shapes first announce: RSMouseMove new.
+]
+
+{ #category : #tests }
 RSPopupTest >> testMultiline [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .

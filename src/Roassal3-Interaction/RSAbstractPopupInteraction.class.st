@@ -24,6 +24,17 @@ RSAbstractPopupInteraction class >> removeEvents [
 ]
 
 { #category : #hooks }
+RSAbstractPopupInteraction >> activePopupWith: evt [
+	| popup |
+	popup := self createOrGetPopupOn: evt shape event: evt.
+	self translatePopup: popup event: evt.
+	
+	"popup translateBy: (offset rsValue: popup)."
+	popup position: popup position + (offset rsValue: popup).
+	evt signalUpdate.
+]
+
+{ #category : #hooks }
 RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	"Create a popup and register it"
 	| prop popupShape key |
@@ -131,12 +142,7 @@ RSAbstractPopupInteraction >> onShape: aShape [
 	
 	self registerRemoveEventsOn: aShape.
 	aShape
-		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: evt shape event: evt.
-			self translatePopup: popup event: evt.
-			popup translateBy: (offset rsValue: popup).
-			evt signalUpdate. ]
-
+		when: self class activationEvent send: #activePopupWith: to: self
 ]
 
 { #category : #accessing }
