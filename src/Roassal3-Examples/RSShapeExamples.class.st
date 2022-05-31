@@ -874,7 +874,7 @@ RSShapeExamples >> example34MorphicPopup [
 	RSGridLayout on: c nodes.
 	c @ RSCanvasController.
 	c nodes @ (RSMorphicPopupInteraction new
-		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
+		"morphBuilder: [:model | ('Class: ', model asString) asStringMorph ]") .
 	^ c
 ]
 

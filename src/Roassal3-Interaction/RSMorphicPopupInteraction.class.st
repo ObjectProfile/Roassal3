@@ -49,7 +49,14 @@ RSMorphicPopupInteraction >> gapFromPointer: aPoint [
 { #category : #initialization }
 RSMorphicPopupInteraction >> initialize [
 	super initialize.
-	self morphBuilder: [ :model | model asString asTextMorph ].
+	self morphBuilder: [ :model | 
+		model asString asTextMorph
+        backgroundColor: (Smalltalk ui theme backgroundColor alpha: 0.9);
+        borderColor: Color black;
+        borderWidth: 1;
+        margins: 15;
+        yourself
+		 ].
 	gapFromPointer := 0@0.
 ]
 
