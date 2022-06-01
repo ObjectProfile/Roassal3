@@ -26,6 +26,16 @@ Class {
 	#category : #'Roassal3-Inspector-Interactions'
 }
 
+{ #category : #hooks }
+RSSelectionPresentationInteraction >> addInteractionToCanvas: aShape [
+	| canvas |
+	canvas := aShape canvas.
+	canvas ifNil: [ ^ self ].
+	canvas propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
+		canvas removeInteractionIfPresent: self class.
+		canvas when: RSMouseClick send: #removeShadowFromCanvas: to: self ]
+]
+
 { #category : #initialization }
 RSSelectionPresentationInteraction >> initialize [
 	super initialize.
@@ -40,15 +50,9 @@ RSSelectionPresentationInteraction >> key [
 { #category : #hooks }
 RSSelectionPresentationInteraction >> onShape: aShape [
 	aShape model ifNil: [ ^ self ].
-	aShape canvas ifNotNil: [ :c | 
-		c propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
-			c removeInteractionIfPresent: self class.
-			c when: RSMouseClick do: [ :evt |
-				self removeShadowOn: evt.
-				evt signalUpdate. ].
-			1 ].
-		 ].
-	aShape when: RSMouseClick do: [ :evt | self selection: evt shape ].
+	self addInteractionToCanvas: aShape.
+	aShape removeInteractionIfPresent: self class.
+	aShape when: RSMouseClick send: #selection: to: self
 ]
 
 { #category : #accessing }
@@ -96,6 +100,12 @@ RSSelectionPresentationInteraction >> release [
 ]
 
 { #category : #hooks }
+RSSelectionPresentationInteraction >> removeShadowFromCanvas: evt [
+	self removeShadowOn: evt.
+	evt signalUpdate
+]
+
+{ #category : #hooks }
 RSSelectionPresentationInteraction >> removeShadowOn: aShape [
 	"Nothing to do if there is no canvas"
 	aShape canvas ifNil: [ ^ self ].
@@ -115,15 +125,17 @@ RSSelectionPresentationInteraction >> scaleFrom: aShape [
 ]
 
 { #category : #hooks }
-RSSelectionPresentationInteraction >> selection: aShape [
-	self presentation ifNotNil: [ 
-		self presentation value: (SpWrappedItem new selectedItem: aShape model) ]. 
+RSSelectionPresentationInteraction >> selection: evt [
+	"evt can be a RSShape or RSEvent"
+	| aShape |
+	aShape := evt shape.
+	self presentation 
+		ifNotNil: [ self presentation value: (SpWrappedItem new selectedItem: aShape model) ]. 
 	self
 		removeShadowOn: aShape;
 		putShadowOn: aShape.
-		
-	aShape canvas ifNotNil: [ 
-		aShape canvas signalUpdate ]
+	aShape canvas 
+		ifNotNil: [ aShape canvas signalUpdate ]
 ]
 
 { #category : #accessing }
