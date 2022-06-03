@@ -4,8 +4,8 @@ Class {
 	#category : #'Roassal3-Shapes-Util'
 }
 
-{ #category : #'accessing - structure variables' }
-RSUnaryLinspaceParameterization >> samples: n [
+{ #category : #'instance creation' }
+RSUnaryLinspaceParameterization >> from: from to: to samples: samples [
 
-	self from: 0 to: 1 samples: n
+	super from: 0 to: 1 samples: samples
 ]

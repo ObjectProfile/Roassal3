@@ -67,7 +67,7 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 		  collect: [ :each | 
 			  RSParametricXYLine new
 				  parameterization: (RSUnaryLinspaceParameterization new
-						   samples: scale ceiling;
+						   from: 0 to: 1 samples: scale ceiling;
 						   yourself);
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
 				  scale: scale ]
@@ -325,9 +325,9 @@ RSdeCasteljauLine >> newLine [
 { #category : #accessing }
 RSdeCasteljauLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: aNumber [
 
-	"parameterization
+	parameterization
 		controlPointsChanged: points
-		overlappingDistancesSum: aNumber"
+		overlappingDistancesSum: aNumber
 ]
 
 { #category : #'as yet unclassified' }
@@ -354,6 +354,14 @@ RSdeCasteljauLine >> polar: ratio [
 
 { #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samples: n [
+
+	self parameterization: (RSUnaryLinspaceParameterization new
+			 from: 0 to: 1 samples: n;
+			 yourself)
+]
+
+{ #category : #'accessing - structure variables' }
+RSdeCasteljauLine >> samplesChebyshev: n [
 
 	self parameterization: (RSChebyshevParameterization new
 			 from: 0 to: 1 samples: n;

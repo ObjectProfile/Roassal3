@@ -12,7 +12,9 @@ RSArcLengthParameterization >> controlPointsChanged: points overlappingDistances
 
 	parameterization
 		controlPointsChanged: points
-		overlappingDistancesSum: controlPolygonLength
+		overlappingDistancesSum: controlPolygonLength.
+
+	self updateDomain
 ]
 
 { #category : #sorting }
