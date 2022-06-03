@@ -206,7 +206,7 @@ RSRenderTreeTest >> testZeroElementContains [
 
 { #category : #tests }
 RSRenderTreeTest >> testZeroElementRectangle [
-	| tree box |
+	| tree |
 	tree := RSRenderTree new.
 	self assert: tree rectangle equals: (0@0 corner: 0@0)
 ]

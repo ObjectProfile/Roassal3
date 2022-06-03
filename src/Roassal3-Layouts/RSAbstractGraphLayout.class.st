@@ -10,8 +10,7 @@ Class {
 		'cachedChildren',
 		'cachedParents',
 		'cachedParentsWithHighestNestings',
-		'shouldValidateCycles',
-		'nestingLevelCalculator'
+		'shouldValidateCycles'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }

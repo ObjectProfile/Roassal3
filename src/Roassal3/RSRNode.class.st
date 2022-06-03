@@ -73,7 +73,7 @@ RSRNode >> height [
 		ifFalse: [ (left height max: right height) + 1 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
 RSRNode >> inspectionTree: aBuilder [
     <inspectorPresentationOrder: 1 title: 'Tree Structure'>
 
