@@ -299,22 +299,22 @@ RSAthensRenderer >> buildNotePath: aNoteShape [
 	mSamples := m << 2.
 
 	left := RSdeCasteljauLine new
-		        samples: nSamples;
+		        samplesChebyshev: nSamples;
 		        controlPoints: lPoints;
 		        yourself.
 
 	bottom := RSdeCasteljauLine new
-		          samples: mSamples;
+		          samplesChebyshev: mSamples;
 		          controlPoints: bPoints;
 		          yourself.
 
 	right := RSdeCasteljauLine new
-		         samples: nSamples;
+		         samplesChebyshev: nSamples;
 		         controlPoints: rPoints;
 		         yourself.
 
 	top := RSdeCasteljauLine new
-		       samples: mSamples;
+		       samplesChebyshev: mSamples;
 		       controlPoints: tPoints;
 		       yourself.
 

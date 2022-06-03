@@ -157,7 +157,7 @@ RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 	^ self horizontalDovetailSegmentedLine: (RSSegmentedPolyline new
 			   lineBlock: [ :anArrayOfPoints | 
 				   RSdeCasteljauLine new
-					   samples: anArrayOfPoints size * 10;
+					   samplesChebyshev: anArrayOfPoints size * 10;
 					   controlPoints: anArrayOfPoints;
 					   yourself ];
 			   junctionBlock: [ :aLine :each | 
