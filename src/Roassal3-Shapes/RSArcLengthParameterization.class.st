@@ -7,6 +7,14 @@ Class {
 	#category : #'Roassal3-Shapes-Util'
 }
 
+{ #category : #dispatching }
+RSArcLengthParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
+
+	parameterization
+		controlPointsChanged: points
+		overlappingDistancesSum: controlPolygonLength
+]
+
 { #category : #sorting }
 RSArcLengthParameterization >> indexForInserting: newObject into: aSequenceable [
 

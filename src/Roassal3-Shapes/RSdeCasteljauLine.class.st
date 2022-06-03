@@ -318,8 +318,16 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 RSdeCasteljauLine >> newLine [
 
 	^ super newLine
-		  samples: parameterization size;
+		  parameterization: parameterization copy;
 		  yourself
+]
+
+{ #category : #accessing }
+RSdeCasteljauLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: aNumber [
+
+	"parameterization
+		controlPointsChanged: points
+		overlappingDistancesSum: aNumber"
 ]
 
 { #category : #'as yet unclassified' }

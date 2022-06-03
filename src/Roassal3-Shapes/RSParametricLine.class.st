@@ -125,9 +125,10 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints [
 		points at: index put: aPoint.
 		sandboxPoints at: index put: aPoint ].
 
-	"parameterization
-		controlPointsChanged: points
-		approxArcLength: controlPolygonLength."
+	self notifyDesignPointsChangedWithOverlappingDistancesSum:
+		controlPolygonLength.
+
+	controlPoints := Array new: parameterization size.
 
 	self
 		refreshControlPoints;
@@ -164,6 +165,12 @@ RSParametricLine >> designPoints [
 RSParametricLine >> newLine [
 
 	^ self class new
+]
+
+{ #category : #accessing }
+RSParametricLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: controlPolygonLength [
+
+	self subclassResponsibility
 ]
 
 { #category : #'event handling' }
@@ -203,8 +210,7 @@ RSParametricLine >> parameterized_RSArcLengthParameterization: aParameterization
 { #category : #accessing }
 RSParametricLine >> parameterized_RSIntervalParameterization: aParameterization [
 
-	parameterization := aParameterization.
-	controlPoints := Array new: parameterization size
+	parameterization := aParameterization
 ]
 
 { #category : #accessing }

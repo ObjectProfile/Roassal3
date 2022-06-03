@@ -27,6 +27,12 @@ RSParametricXYLine >> newLine [
 ]
 
 { #category : #accessing }
+RSParametricXYLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: controlPolygonLength [
+
+	
+]
+
+{ #category : #accessing }
 RSParametricXYLine >> scale: factor [
 
 	^ self newLine

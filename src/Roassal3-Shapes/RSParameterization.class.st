@@ -22,6 +22,12 @@ RSParameterization >> collect: aBlock [
 	^ domain collect: aBlock
 ]
 
+{ #category : #dispatching }
+RSParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
+
+	self subclassResponsibility
+]
+
 { #category : #'instance creation' }
 RSParameterization >> from [
 
