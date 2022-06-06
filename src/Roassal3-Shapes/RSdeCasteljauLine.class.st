@@ -67,23 +67,7 @@ RSdeCasteljauLine >> asBeziersGroup [
 { #category : #converting }
 RSdeCasteljauLine >> asBeziersGroupSplitBlock: aBlock [
 
-	| pool beziers |
-	beziers := OrderedCollection new.
-
-	pool := OrderedCollection with: self.
-
-	[ pool isNotEmpty ] whileTrue: [ 
-		| bezier |
-		bezier := pool removeFirst.
-		(aBlock value: bezier)
-			ifNil: [ beziers add: bezier asRSBezier ]
-			ifNotNil: [ :at | 
-				bezier splitAt: at in: [ :left :right :whole | 
-					pool
-						add: left;
-						add: right ] ] ].
-
-	^ beziers
+	^ (self splitWhile: aBlock) collect: [ :each | each asRSBezier ]
 ]
 
 { #category : #converting }
@@ -452,6 +436,28 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 		         yourself.
 
 	^ aBlock value: left value: right value: self
+]
+
+{ #category : #converting }
+RSdeCasteljauLine >> splitWhile: aBlock [
+
+	| pool beziers |
+	beziers := RSGroup new.
+
+	pool := OrderedCollection with: self.
+
+	[ pool isNotEmpty ] whileTrue: [ 
+		| bezier |
+		bezier := pool removeFirst.
+		(aBlock value: bezier)
+			ifNil: [ beziers add: bezier ]
+			ifNotNil: [ :at | 
+				bezier splitAt: at in: [ :left :right :whole | 
+					pool
+						addFirst: right;
+						addFirst: left ] ] ].
+
+	^ beziers
 ]
 
 { #category : #accessing }

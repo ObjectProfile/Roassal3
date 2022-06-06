@@ -168,6 +168,23 @@ RSLineBuilder class >> horizontalDeCasteljauSegmentedLine [
 ]
 
 { #category : #'instance creation' }
+RSLineBuilder class >> horizontalDeCasteljauSegmentedLine_ [
+
+	^ self horizontalDovetailSegmentedLine:
+		  (RSSegmentedBeziersPolyline new
+			   lineBlock: [ :anArrayOfPoints | 
+				   RSdeCasteljauLine new
+					   samples: anArrayOfPoints size;
+					   controlPoints: anArrayOfPoints;
+					   yourself ];
+			   junctionBlock: [ :aLine :each | 
+				   aLine
+					   junction: each
+					   right: [ :c0Line :c1Line :c2Line | c1Line ] ];
+			   yourself)
+]
+
+{ #category : #'instance creation' }
 RSLineBuilder class >> horizontalDovetailSegmentedLine: aLine [
 
 	^ self
@@ -228,6 +245,25 @@ RSLineBuilder class >> horizontalSegmentedLine: aLine controlPointsController: c
 
 	controller linearizationPredicate: [ :from :to | 
 		(predicate value: from value: to) or: [ (from y - to y) abs <= 10 ] ].
+
+	^ (self new: aLine)
+		  controlPointsController: controller;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+RSLineBuilder class >> horizontalSegmentedLine: aLine controlPointsController_: cpapController [
+
+	| controller predicate |
+	controller := RSSegmentedCPAPController new
+		              controlPointsController: cpapController;
+		              yourself.
+
+	"Keep a reference to the original predicate."
+	predicate := controller linearizationPredicate.
+
+	"controller linearizationPredicate: [ :from :to | 
+		(predicate value: from value: to) or: [ (from y - to y) abs <= 10 ] ]."
 
 	^ (self new: aLine)
 		  controlPointsController: controller;

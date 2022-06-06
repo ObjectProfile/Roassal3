@@ -16,12 +16,12 @@ RSSegmentedPolyline >> controlPoints: aCollectionOfArrays [
 
 	aLine := lines first.
 
-	points := aLine controlPoints.
+	points := OrderedCollection withAll: aLine controlPoints.
 
 	lines allButFirstDo: [ :each | 
 		aLine := junctionBlock value: aLine value: each.
 
-		points := points , aLine controlPoints ].
+		points addAll: aLine controlPoints ].
 
 	^ super controlPoints: points
 ]

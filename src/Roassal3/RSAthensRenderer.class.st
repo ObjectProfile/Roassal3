@@ -538,6 +538,13 @@ RSAthensRenderer >> buildRingPath: ring [
 ]
 
 { #category : #'creating path' }
+RSAthensRenderer >> buildSegmentedBeziersPolylinePath: line [
+
+	line splits do: [ :each | 
+		each do: [ :bezier | bezier asRSBezier buildPathOn: self ] ]
+]
+
+{ #category : #'creating path' }
 RSAthensRenderer >> buildSimpleBoxPath: box [
 	| rectangle |
 	rectangle := box baseRectangle.
