@@ -52,6 +52,12 @@ RSParameterization >> to [
 	^ domain last
 ]
 
+{ #category : #accessing }
+RSParameterization >> unitAt: aNumber [
+
+	^ domain unitAt: aNumber
+]
+
 { #category : #enumerating }
 RSParameterization >> withIndexDo: aBlock [
 

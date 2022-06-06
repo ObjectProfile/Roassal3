@@ -56,6 +56,37 @@ RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeT
 ]
 
 { #category : #converting }
+RSdeCasteljauLine >> asBeziersGroup [
+
+	^ self asBeziersGroupSplitBlock: [ :aBezier | 
+		  aBezier overlappingControlPointsDistance > 100
+			  ifTrue: [ 1 / 2 ]
+			  ifFalse: [ nil ] ]
+]
+
+{ #category : #converting }
+RSdeCasteljauLine >> asBeziersGroupSplitBlock: aBlock [
+
+	| pool beziers |
+	beziers := OrderedCollection new.
+
+	pool := OrderedCollection with: self.
+
+	[ pool isNotEmpty ] whileTrue: [ 
+		| bezier |
+		bezier := pool removeFirst.
+		(aBlock value: bezier)
+			ifNil: [ beziers add: bezier asRSBezier ]
+			ifNotNil: [ :at | 
+				bezier splitAt: at in: [ :left :right :whole | 
+					pool
+						add: left;
+						add: right ] ] ].
+
+	^ beziers
+]
+
+{ #category : #converting }
 RSdeCasteljauLine >> asGroupBernsteinBase [
 
 	| n scale |
@@ -72,6 +103,14 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 				  x: [ :t | t ] y: [ :t | t bernstein: n choose: each ];
 				  scale: scale ]
 		  as: RSGroup
+]
+
+{ #category : #converting }
+RSdeCasteljauLine >> asRSBezier [
+
+	^ RSBezier new
+		  controlPoints: self designPoints;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }

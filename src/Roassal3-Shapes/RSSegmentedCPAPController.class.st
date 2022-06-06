@@ -31,6 +31,7 @@ RSSegmentedCPAPController >> controlPointsFor: aLine [
 	anArray := anArray overlappingPairsCollect: [ :aPoint :anotherPoint | 
 		           | samples distance |
 		           distance := aPoint distanceTo: anotherPoint.
+
 		           samples := ((distance closeTo: 0)
 			                       ifTrue: [ 0 ]
 			                       ifFalse: [ distance ln ceiling ]) max: 4.

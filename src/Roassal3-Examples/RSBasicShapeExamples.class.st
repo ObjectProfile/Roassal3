@@ -1041,6 +1041,30 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 ]
 
 { #category : #lines }
+RSBasicShapeExamples >> example44deCasteljauLineAsBeziers [
+
+	<script: 'self new example44deCasteljauLineAsBeziers open'>
+	| points bezier |
+	points := { 
+		          (1 @ 0).
+		          (1.66575 @ -0.49197).
+		          (3.07038 @ -0.1196).
+		          (3 @ 1) } collect: [ :each | each * 100 ].
+
+	bezier := RSdeCasteljauLine new
+		          samples: 50;
+		          controlPoints: points;
+		          yourself.
+
+	^ RSCanvas new
+		  addAll: (bezier asGroupWithControlNetColoured: Color red);
+		  addAll: bezier asBeziersGroup;
+		  zoomToFit;
+		  addInteraction: RSCanvasController new;
+		  yourself
+]
+
+{ #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 
 	<script: 'self new example44deCasteljauLineBernsteinBase open'>

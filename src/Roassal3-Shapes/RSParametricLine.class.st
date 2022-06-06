@@ -6,7 +6,8 @@ Class {
 		'pointsSize',
 		'cumulativeArcLengths',
 		'sandboxPoints',
-		'parameterization'
+		'parameterization',
+		'overlappingControlPointsDistance'
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
@@ -103,13 +104,13 @@ RSParametricLine >> asGroupWithControlNetColoured: aColor [
 { #category : #accessing }
 RSParametricLine >> controlPoints: aSequenceableOfPoints [
 
-	| controlPolygonLength lastPoint |
+	| lastPoint |
 	pointsSize := aSequenceableOfPoints size.
 
 	points := Array new: pointsSize.
 	sandboxPoints := Array new: pointsSize.
 
-	controlPolygonLength := 0.0.
+	overlappingControlPointsDistance := 0.0.
 	lastPoint := aSequenceableOfPoints
 		             ifEmpty: [ nil ]
 		             ifNotEmpty: [ aSequenceableOfPoints first ].
@@ -118,15 +119,15 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints [
 		| aPoint |
 		aPoint := each asFloatPoint.
 
-		controlPolygonLength := controlPolygonLength
-		                        + (lastPoint distanceTo: each).
+		overlappingControlPointsDistance := overlappingControlPointsDistance
+		                                    + (lastPoint distanceTo: each).
 		lastPoint := each.
 
 		points at: index put: aPoint.
 		sandboxPoints at: index put: aPoint ].
 
 	self notifyDesignPointsChangedWithOverlappingDistancesSum:
-		controlPolygonLength.
+		overlappingControlPointsDistance.
 
 	controlPoints := Array new: parameterization size.
 
@@ -181,6 +182,12 @@ RSParametricLine >> notifyExtentChanged [
 			shape: self;
 			oldExtent: nil;
 			newExtent: (Rectangle encompassing: self controlPoints) extent ]
+]
+
+{ #category : #accessing }
+RSParametricLine >> overlappingControlPointsDistance [
+
+	^ overlappingControlPointsDistance
 ]
 
 { #category : #'as yet unclassified' }
