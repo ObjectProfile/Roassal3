@@ -34,7 +34,7 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfArrays [
 		junctionBezier := anotherSplit first.
 
 		right := RSdeCasteljauLine new
-			         samples: junctionBezier parameterization size;
+			         samplesLinspace: junctionBezier parameterization size;
 			         controlPoints: { 
 					         junctionBezier designPoints first.
 					         junctionBezier designPoints first };

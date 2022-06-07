@@ -161,6 +161,14 @@ RSParametricLine >> designPoints [
 	^ points
 ]
 
+{ #category : #initialization }
+RSParametricLine >> initialize [
+
+	super initialize.
+
+	self capRound
+]
+
 { #category : #'instance creation' }
 RSParametricLine >> newLine [
 

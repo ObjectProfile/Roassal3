@@ -174,7 +174,7 @@ RSLineBuilder class >> horizontalDeCasteljauSegmentedLine_ [
 		  (RSSegmentedBeziersPolyline new
 			   lineBlock: [ :anArrayOfPoints | 
 				   RSdeCasteljauLine new
-					   samples: anArrayOfPoints size;
+					   samplesLinspace: anArrayOfPoints size;
 					   controlPoints: anArrayOfPoints;
 					   yourself ];
 			   junctionBlock: [ :aLine :each | 

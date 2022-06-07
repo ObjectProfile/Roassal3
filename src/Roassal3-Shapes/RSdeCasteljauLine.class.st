@@ -192,6 +192,14 @@ RSdeCasteljauLine >> increment [
 		  yourself
 ]
 
+{ #category : #initialization }
+RSdeCasteljauLine >> initialize [
+
+	super initialize.
+
+	self samplesLinspace: 2
+]
+
 { #category : #accessing }
 RSdeCasteljauLine >> junction: aLine left: aBlock [
 
@@ -376,17 +384,17 @@ RSdeCasteljauLine >> polar: ratio [
 ]
 
 { #category : #'accessing - structure variables' }
-RSdeCasteljauLine >> samples: n [
+RSdeCasteljauLine >> samplesChebyshev: n [
 
-	self parameterization: (RSUnaryLinspaceParameterization new
+	self parameterization: (RSChebyshevParameterization new
 			 from: 0 to: 1 samples: n;
 			 yourself)
 ]
 
 { #category : #'accessing - structure variables' }
-RSdeCasteljauLine >> samplesChebyshev: n [
+RSdeCasteljauLine >> samplesLinspace: n [
 
-	self parameterization: (RSChebyshevParameterization new
+	self parameterization: (RSUnaryLinspaceParameterization new
 			 from: 0 to: 1 samples: n;
 			 yourself)
 ]

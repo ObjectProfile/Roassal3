@@ -1028,7 +1028,7 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
+				   samplesLinspace: 50;
 				   controlPoints: points;
 				   asGroupWithControlNet);
 		  addShape: (RSBezier new
@@ -1052,7 +1052,7 @@ RSBasicShapeExamples >> example44deCasteljauLineAsBeziers [
 		          (3 @ 1) } collect: [ :each | each * 100 ].
 
 	bezier := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: points;
 		          yourself.
 
@@ -1079,7 +1079,7 @@ RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
+				   samplesLinspace: 50;
 				   controlPoints: points;
 				   asGroupBernsteinBase);
 		  zoomToFit;
@@ -1146,7 +1146,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 		          (1 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: points;
 		          scale: 100.
 
@@ -1174,7 +1174,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 		          (1 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: points;
 		          scale: 100.
 
@@ -1193,7 +1193,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 	<script: 'self new example44deCasteljauLineJunctionLeft open'>
 	| line anotherLine |
 	line := RSdeCasteljauLine new
-		        samples: 50;
+		        samplesLinspace: 50;
 		        controlPoints: { 
 				        (10 @ 12).
 				        (13 @ 8.5).
@@ -1202,7 +1202,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 		        scale: 100.
 
 	anotherLine := RSdeCasteljauLine new
-		               samples: 50;
+		               samplesLinspace: 50;
 		               controlPoints: { 
 				               (0 @ 3).
 				               (1 @ -4).
@@ -1227,7 +1227,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 	<script: 'self new example44deCasteljauLineJunctionRight open'>
 	| aLine anotherLine |
 	aLine := RSdeCasteljauLine new
-		         samples: 50;
+		         samplesLinspace: 50;
 		         controlPoints: { 
 				         (0 @ 0).
 				         (1 @ 2).
@@ -1236,7 +1236,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 		         scale: 100.
 
 	anotherLine := RSdeCasteljauLine new
-		               samples: 50;
+		               samplesLinspace: 50;
 		               controlPoints: { 
 				               (15 @ 3).
 				               (15 @ 3).
@@ -1267,7 +1267,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRightLongVerticalLine [
 	random := RandomBoxMullerBivariateGaussian seed: 541.
 
 	aLine := RSdeCasteljauLine new
-		         samples: 50;
+		         samplesLinspace: 50;
 		         controlPoints: { 
 				         (0 @ 0 + random next).
 				         (0 @ 50 + random next).
@@ -1276,7 +1276,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRightLongVerticalLine [
 		         yourself.
 
 	anotherLine := RSdeCasteljauLine new
-		               samples: 50;
+		               samplesLinspace: 50;
 		               controlPoints: { 
 				               (10 @ 200 + random next).
 				               (50 @ 200 + random next).
@@ -1332,7 +1332,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	<script: 'self new example44deCasteljauLineNoteBoxJunctionOfFourBeziers open'>
 	| left bottom right top leftBottom rightTop bottomRight topLeft |
 	left := RSdeCasteljauLine new
-		        samples: 50;
+		        samplesLinspace: 50;
 		        controlPoints: { 
 				       " (0 @ 0)."
 				        (-1.143 @ 17).
@@ -1344,7 +1344,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 		        yourself.
 
 	bottom := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: { 
 				          "(0 @ 100)".
 				          (33.024 @ 105.286).
@@ -1358,7 +1358,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	leftBottom := left junction: bottom right: [ :c0 :c1 :c2 | c1 ].
 
 	right := RSdeCasteljauLine new
-		         samples: 50;
+		         samplesLinspace: 50;
 		         controlPoints: ({ 
 				          (0 @ 0).
 				          (-1.143 @ 17).
@@ -1373,7 +1373,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	bottomRight := leftBottom junction: right right: [ :c0 :c1 :c2 | c1 ].
 
 	top := RSdeCasteljauLine new
-		       samples: 50;
+		       samplesLinspace: 50;
 		       controlPoints: ({ 
 				        (0 @ 100).
 				        (33.024 @ 105.286).
@@ -1449,7 +1449,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 	offsetPoint := 5 @ -5 * 5.
 
 	aLine := RSdeCasteljauLine new
-		         samples: 50;
+		         samplesLinspace: 50;
 		         controlPoints: { 
 				         (0 @ 0 - offsetPoint).
 				         (0 @ 300) };
@@ -1457,7 +1457,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 
 
 	anotherLine := RSdeCasteljauLine new
-		               samples: 50;
+		               samplesLinspace: 50;
 		               controlPoints: { 
 				               (300 @ 0).
 				               (0 @ 0 + offsetPoint) };
@@ -1480,7 +1480,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenC [
 	<script: 'self new example44deCasteljauLinePenC open'>
 	| b1 |
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 25 @ 50;
@@ -1502,7 +1502,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenOrthogonalHorizontalLine [
 	random := RandomBoxMullerBivariateGaussian seed: 541.
 
 	b1 := RSdeCasteljauLine new
-		      samples: 100;
+		      samplesLinspace: 100;
 		      pen: [ :aBezier | 
 			      | a  c |
 			      a := 100.
@@ -1531,7 +1531,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenQ [
 	<script: 'self new example44deCasteljauLinePenQ open'>
 	| b1 |
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 25 @ 75;
@@ -1550,7 +1550,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenQuote [
 	<script: 'self new example44deCasteljauLinePenQuote open'>
 	| b1 |
 	b1 := RSdeCasteljauLine new
-		      samples: 100;
+		      samplesLinspace: 100;
 		      pen: [ :aBezier | 
 			      | base |
 			      base := 300 @ 419.7.
@@ -1578,7 +1578,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenS [
 	<script: 'self new example44deCasteljauLinePenS open'>
 	| b1 |
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 25 @ 50;
@@ -1598,7 +1598,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenT [
 	<script: 'self new example44deCasteljauLinePenT open'>
 	| b1 |
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 25 @ 75;
@@ -1618,14 +1618,14 @@ RSBasicShapeExamples >> example44deCasteljauLinePenTwoLines [
 	<script: 'self new example44deCasteljauLinePenTwoLines open'>
 	| b1 b2 b3 |
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 25 @ 50;
 				      addPoint: 150 @ 50 via: 25 @ 100 via: 150 @ 100 ].
 
 	b2 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: b1 designPoints last;
@@ -1636,7 +1636,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenTwoLines [
 				      via: 200 @ 0 ].
 
 	b3 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      pen: [ :aBezier | 
 			      aBezier
 				      addPoint: 200 @ 0;
@@ -1664,7 +1664,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePolar [
 		          (1 @ 2) }.
 
 	bezier := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: points;
 		          scale: 100.
 
@@ -1691,7 +1691,7 @@ RSBasicShapeExamples >> example44deCasteljauLineReflection [
 	p6 := p5 reflectedAbout: p4.
 
 	b1 := RSdeCasteljauLine new
-		      samples: 50;
+		      samplesLinspace: 50;
 		      controlPoints: { 
 				      p1.
 				      p2.
@@ -1735,11 +1735,11 @@ RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
 	^ RSCanvas new
 		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
+				   samplesLinspace: 50;
 				   controlPoints: simpleControlPoints;
 				   asGroupWithControlNetColoured: Color red);
 		  addAll: (RSdeCasteljauLine new
-				   samples: 50;
+				   samplesLinspace: 50;
 				   controlPoints: repetitionControlPoints;
 				   asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
@@ -1759,7 +1759,7 @@ RSBasicShapeExamples >> example44deCasteljauLineReversed [
 		          (3 @ 1) } collect: [ :each | each * 100 ].
 
 	line := RSdeCasteljauLine new
-		        samples: 50;
+		        samplesLinspace: 50;
 		        controlPoints: points;
 		        yourself.
 
@@ -1786,7 +1786,7 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 		          (6 @ 1) }.
 
 	^ (RSdeCasteljauLine new
-		   samples: 50;
+		   samplesLinspace: 50;
 		   controlPoints: points;
 		   scale: 100)
 		  splitAt: 1 / 4
@@ -1813,7 +1813,7 @@ RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
 		          (3 / 2 @ 1) }.
 
 	bezier := RSdeCasteljauLine new
-		          samples: 50;
+		          samplesLinspace: 50;
 		          controlPoints: points;
 		          scale: 100.
 
@@ -1953,7 +1953,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 		          (1 @ 1) }.
 
 	^ RSdeCasteljauLine new
-		  samples: 100;
+		  samplesLinspace: 100;
 		  controlPoints: points;
 		  scale: 100
 ]
@@ -1962,7 +1962,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 
 	^ RSdeCasteljauLine new
-		  samples: 10;
+		  samplesLinspace: 10;
 		  controlPoints: { 
 				  (0 @ 0).
 				  (8.461 @ 36.411).
@@ -2094,7 +2094,7 @@ RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
 		          (10 @ 2) }.
 
 	bspline1 := RSdeCasteljauLine new
-		            samples: 50;
+		            samplesLinspace: 50;
 		            controlPoints: points;
 		            scale: 100.
 
