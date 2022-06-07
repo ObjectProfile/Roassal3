@@ -27,7 +27,7 @@ RSParametricXYLine >> newLine [
 ]
 
 { #category : #accessing }
-RSParametricXYLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: controlPolygonLength [
+RSParametricXYLine >> notifyDesignPointsChanged [
 
 	
 ]

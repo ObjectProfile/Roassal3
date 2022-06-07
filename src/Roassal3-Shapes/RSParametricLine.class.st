@@ -126,8 +126,7 @@ RSParametricLine >> controlPoints: aSequenceableOfPoints [
 		points at: index put: aPoint.
 		sandboxPoints at: index put: aPoint ].
 
-	self notifyDesignPointsChangedWithOverlappingDistancesSum:
-		overlappingControlPointsDistance.
+	self notifyDesignPointsChanged.
 
 	controlPoints := Array new: parameterization size.
 
@@ -169,7 +168,7 @@ RSParametricLine >> newLine [
 ]
 
 { #category : #accessing }
-RSParametricLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: controlPolygonLength [
+RSParametricLine >> notifyDesignPointsChanged [
 
 	self subclassResponsibility
 ]

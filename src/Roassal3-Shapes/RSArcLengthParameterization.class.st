@@ -48,6 +48,14 @@ RSArcLengthParameterization >> parameterize_RSParametricLine: aLine [
 	aLine parameterized_RSArcLengthParameterization: self
 ]
 
+{ #category : #copying }
+RSArcLengthParameterization >> postCopy [
+
+	super postCopy.
+
+	parameterization := parameterization copy
+]
+
 { #category : #accessing }
 RSArcLengthParameterization >> updateDomain [
 

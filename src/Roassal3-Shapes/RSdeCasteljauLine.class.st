@@ -346,11 +346,11 @@ RSdeCasteljauLine >> newLine [
 ]
 
 { #category : #accessing }
-RSdeCasteljauLine >> notifyDesignPointsChangedWithOverlappingDistancesSum: aNumber [
+RSdeCasteljauLine >> notifyDesignPointsChanged [
 
 	parameterization
-		controlPointsChanged: points
-		overlappingDistancesSum: aNumber
+		controlPointsChanged: self designPoints
+		overlappingDistancesSum: self overlappingControlPointsDistance
 ]
 
 { #category : #'as yet unclassified' }
