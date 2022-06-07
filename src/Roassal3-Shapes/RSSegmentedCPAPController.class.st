@@ -73,7 +73,7 @@ RSSegmentedCPAPController >> controlPointsFor_: aLine [
 			            tPoint := aPoint unitAffine: anotherPoint at: 1 - t.
 			            random next + tPoint ]) allButLast ].
 
-	"anArray atLast: 1 put: anArray last , { (random next + to) }."
+	anArray atLast: 1 put: anArray last allButLast , { (random next + to) }.
 
 	^ anArray
 ]

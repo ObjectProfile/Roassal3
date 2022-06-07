@@ -16,14 +16,18 @@ RSSegmentedBeziersPolyline >> buildPathOn: visitor [
 { #category : #accessing }
 RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfArrays [
 
-	| lines |
+	| lines newSplits |
 	lines := aCollectionOfArrays collect: lineBlock.
 
-	splits := lines collect: [ :aLine | 
-		          aLine splitWhile: [ :aBezier | 
-			          aBezier overlappingControlPointsDistance > 100
-				          ifTrue: [ 1 / 2 ]
-				          ifFalse: [ nil ] ] ].
+	splits := lines
+		          collect: [ :aLine | 
+			          aLine splitWhile: [ :aBezier | 
+				          aBezier overlappingControlPointsDistance > 100
+					          ifTrue: [ 1 / 2 ]
+					          ifFalse: [ nil ] ] ]
+		          as: OrderedCollection.
+
+	newSplits := OrderedCollection new.
 
 	splits overlappingPairsDo: [ :aSplit :anotherSplit | 
 		| aBezier right innerSplits junctionBezier |
@@ -43,7 +47,11 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfArrays [
 				               ifTrue: [ 1 / 2 ]
 				               ifFalse: [ nil ] ].
 
-		innerSplits reverseDo: [ :each | anotherSplit addFirst: each ] ]
+		newSplits add: innerSplits
+
+		"innerSplits reverseDo: [ :each | anotherSplit addFirst: each ] " ].
+
+	splits addAll: newSplits
 ]
 
 { #category : #accessing }

@@ -8,8 +8,8 @@ Class {
 RSIntervalParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
 
 	| samples |
-	samples := (controlPolygonLength / (points size - 1)) floor double 
-		           max: domain size.
+	samples := (controlPolygonLength / (points size - 1)
+	            * Float goldenRatio) floor max: domain size.
 
 	self from: domain first to: domain last samples: samples
 ]

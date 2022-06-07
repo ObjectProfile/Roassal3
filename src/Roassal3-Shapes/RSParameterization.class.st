@@ -40,6 +40,14 @@ RSParameterization >> parameterize_RSParametricLine: aLine [
 	self subclassResponsibility
 ]
 
+{ #category : #copying }
+RSParameterization >> postCopy [
+
+	domain := domain copy.
+
+	cumulativeArcLengths := cumulativeArcLengths copy
+]
+
 { #category : #accessing }
 RSParameterization >> size [
 
