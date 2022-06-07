@@ -1,3 +1,6 @@
+"
+Basic examples about parametric XY lines.
+"
 Class {
 	#name : #RSParametricLineExamples,
 	#superclass : #RSAbstractExamples,
