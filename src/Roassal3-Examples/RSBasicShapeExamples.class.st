@@ -1842,83 +1842,6 @@ RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> example45ParametricButterfly [
-
-	<script: 'self new example45ParametricButterfly open'>
-	^ RSCanvas new
-		  add: self lineParametricButterfly;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricHypotrochoid [
-
-	<script: 'self new example45ParametricHypotrochoid open'>
-	^ RSCanvas new
-		  add: self lineParametricHypotrochoid;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricLissajous [
-
-	<script: 'self new example45ParametricLissajous open'>
-	^ RSCanvas new
-		  add: self lineParametricLissajous;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricNeil [
-
-	<script: 'self new example45ParametricNeil open'>
-	^ RSCanvas new
-		  add: self lineParametricNeil;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricNeil2 [
-
-	<script: 'self new example45ParametricNeil2 open'>
-	^ RSCanvas new
-		  add: self lineParametricNeil2;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricTrochoid [
-
-	<script: 'self new example45ParametricTrochoid open'>
-	^ RSCanvas new
-		  add: self lineParametricTrochoid;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> example45ParametricUnitCircle [
-
-	<script: 'self new example45ParametricUnitCircle open'>
-	^ RSCanvas new
-		  add: self lineParametricUnitCircle;
-		  zoomToFit;
-		  addInteraction: RSCanvasController new;
-		  yourself
-]
-
-{ #category : #lines }
 RSBasicShapeExamples >> example46NoteInteger [
 
 	<script: 'self new example46NoteInteger open'>
@@ -1992,97 +1915,6 @@ RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 ]
 
 { #category : #lines }
-RSBasicShapeExamples >> lineParametricButterfly [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: 0 to: Float pi * 12 samples: 10000;
-				   yourself);
-		  x: [ :t | 
-			  t sin
-			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
-		  y: [ :t | 
-			  t cos
-			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
-		  scale: 30
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricHypotrochoid [
-
-	| s r d a b |
-	s := 5.
-	r := 3.
-	d := 5.
-
-	a := s - r.
-	b := a / r.
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: -10 to: 10 samples: 10000;
-				   yourself);
-		  x: [ :t | a * t cos + (d * (b * t) cos) ]
-		  y: [ :t | a * t sin - (d * (b * t) sin) ];
-		  scale: 10
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricLissajous [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: 0 to: Float pi * 2 samples: 1000;
-				   yourself);
-		  x: [ :t | (3 * t) cos ] y: [ :t | (2 * t) sin ];
-		  scale: 100
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricNeil [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: -2 to: 2 samples: 100;
-				   yourself);
-		  x: [ :t | t raisedTo: 2 ] y: [ :t | t raisedTo: 3 ];
-		  scale: 10
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricNeil2 [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: -2 to: 2 samples: 100;
-				   yourself);
-		  x: [ :t | t raisedTo: 2 ] y: [ :t | (t raisedTo: 3) - t ];
-		  scale: 10
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricTrochoid [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: 0 to: Float pi samples: 100;
-				   yourself);
-		  x: [ :t | t cos * (3 * t) cos ] y: [ :t | t sin * (3 * t) cos ];
-		  scale: 100
-]
-
-{ #category : #lines }
-RSBasicShapeExamples >> lineParametricUnitCircle [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: 0 to: Float pi * 2 samples: 100;
-				   yourself);
-		  x: [ :t | t cos ] y: [ :t | t sin ];
-		  scale: 100
-]
-
-{ #category : #lines }
 RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
 
 	| points bspline1 bspline2 bspline3 bspline4 |
@@ -2094,7 +1926,6 @@ RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
 		          (10 @ 2) }.
 
 	bspline1 := RSdeCasteljauLine new
-		            samplesLinspace: 50;
 		            controlPoints: points;
 		            scale: 100.
 
