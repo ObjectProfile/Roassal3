@@ -1303,11 +1303,11 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 	line := self lineDeCasteljauLineNoteBox.
 
 	self assert: (Rectangle encompassing: line controlPoints)
-		= (-4.381590877489069 @ -7.793939601397815 corner:
-				 218.57105173675455 @ 189.47681084770576).
+		= (-4.520638537331172 @ -7.975723858025306 corner:
+				 218.56668027942536 @ 189.46698343689167).
 
 	^ RSCanvas new
-		  addAll: line arcLengthParameterization  asGroupWithControlNet;
+		  addAll: line asGroupWithControlNet;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
