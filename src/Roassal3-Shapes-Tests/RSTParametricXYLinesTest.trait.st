@@ -6,11 +6,11 @@ Trait {
 }
 
 { #category : #lines }
-RSTParametricXYLinesTest >> testLineParametricButterfly [
+RSTParametricXYLinesTest >> testParametricXYlineButterfly [
 
 	self
 		assert:
-		(self lineParametricButterfly controlPoints copyFrom: 1 to: 1000)
+		(self parametricXYlineButterfly controlPoints copyFrom: 1 to: 1000)
 		equals: { 
 				(0.0 @ 21.548454853771354).
 				(0.08126723260360777 @ 21.55454515308179).

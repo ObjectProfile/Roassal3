@@ -4,22 +4,6 @@ Trait {
 }
 
 { #category : #lines }
-RSTParametricXYLines >> lineParametricButterfly [
-
-	^ RSParametricXYLine new
-		  parameterization: (RSLinspaceParameterization new
-				   from: 0 to: Float pi * 12 samples: 10000;
-				   yourself);
-		  x: [ :t | 
-			  t sin
-			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
-		  y: [ :t | 
-			  t cos
-			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
-		  scale: 30
-]
-
-{ #category : #lines }
 RSTParametricXYLines >> lineParametricHypotrochoid [
 
 	| s r d a b |
@@ -92,4 +76,20 @@ RSTParametricXYLines >> lineParametricUnitCircle [
 				   yourself);
 		  x: [ :t | t cos ] y: [ :t | t sin ];
 		  scale: 100
+]
+
+{ #category : #lines }
+RSTParametricXYLines >> parametricXYlineButterfly [
+
+	^ RSParametricXYLine new
+		  parameterization: (RSLinspaceParameterization new
+				   from: 0 to: Float pi * 12 samples: 10000;
+				   yourself);
+		  x: [ :t | 
+			  t sin
+			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ]
+		  y: [ :t | 
+			  t cos
+			  * (t cos exp - (2 * (4 * t) cos) - ((t / 12) sin raisedTo: 5)) ];
+		  scale: 30
 ]

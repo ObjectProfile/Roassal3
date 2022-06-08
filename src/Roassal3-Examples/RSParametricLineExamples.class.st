@@ -14,7 +14,7 @@ RSParametricLineExamples >> example45ParametricButterfly [
 
 	<script: 'self new example45ParametricButterfly open'>
 	^ RSCanvas new
-		  add: self lineParametricButterfly;
+		  add: self parametricXYlineButterfly;
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;
 		  yourself
