@@ -27,6 +27,30 @@ RSCompositeTest >> testAdjustChildren [
 ]
 
 { #category : #tests }
+RSCompositeTest >> testAdjustChildrenTwice [
+	| box circle composite  |
+	box := RSBox new size: 20.
+	box position: 100@100.
+	circle := RSEllipse new size: 20.
+	circle position: 50@50.
+	composite := RSComposite new.
+	composite addAll: { box. circle }.
+	self assert: composite extent equals: composite defaultExtent.
+	self assert: composite position equals: 0@0.
+	composite adjustToChildren.
+	self assert: composite extent equals: 70@70.
+	self assert: composite position equals: 75@75.
+	
+	self assert: box extent equals: 20@20.
+	self assert: box position equals: 25@25.
+	self assert: circle extent equals: 20@20.
+	self assert: circle position equals: -25@ -25.
+	composite adjustToChildren.
+	self assert: composite extent equals: 70@70.
+	self assert: composite position equals: 75@75.
+]
+
+{ #category : #tests }
 RSCompositeTest >> testEdgesCanvasAndComposite01 [
 	"basic case in a canvas"
 	| c b1 b2 e1 |
@@ -107,12 +131,13 @@ RSCompositeTest >> testEdgesCanvasAndComposite05 [
 	com := RSComposite new.
 	b1 := RSBox new size: 10; position: 50@50.
 	com add: b1.
-	com position: 200@0.
 	b2 := RSBox new size: 10; position: 100@100.
 	e1 := RSLine new from: b1; to: b2.
 	
 	com add: e1.
 	com adjustToChildren.
+	com position: 200@0.
+	
 	c addAll: { com. b2. }.
 	
 	self assert: e1 startPoint equals: b1 position.
