@@ -165,3 +165,58 @@ RSBezier >> lines [
 		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start. 
 		]
 ]
+
+{ #category : #composing }
+RSBezier >> split: aBlock [
+
+	| a b linspace firstLine secondLine thirdLine |
+	a := self controlPoints second.
+	b := self controlPoints third.
+
+	linspace := aBlock value: a value: b.
+
+	firstLine := self class new
+		             controlPoints: { 
+				             self controlPoints first.
+				             a.
+				             linspace second.
+				             linspace third };
+		             yourself.
+
+	thirdLine := self class new
+		             controlPoints: { 
+				             (linspace atLast: 3).
+				             (linspace atLast: 2).
+				             b.
+				             self controlPoints last };
+		             yourself.
+
+	secondLine := firstLine joinC1Last: thirdLine.
+
+	^ { 
+		  firstLine.
+		  secondLine.
+		  thirdLine }
+]
+
+{ #category : #composing }
+RSBezier >> splitXrandom: random convex: direction [
+
+	^ self split: [ :a :b | 
+		  | y |
+		  y := (a y + b y) halved.
+
+		  ((a x to: b x) linspace: 8) collect: [ :x | 
+			  x @ y + (0 @ random next y abs * direction * Float silverRatio) ] ]
+]
+
+{ #category : #composing }
+RSBezier >> splitYrandom: random convex: direction [
+
+	^ self split: [ :a :b | 
+		  | x |
+		  x := (a x + b x) halved.
+
+		  ((a y to: b y) linspace: 8) collect: [ :y | 
+			  x @ y + (random next x abs @ 0 * direction * Float silverRatio) ] ]
+]

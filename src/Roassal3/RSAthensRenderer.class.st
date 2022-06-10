@@ -575,7 +575,7 @@ RSAthensRenderer >> buildSimpleBoxPath: box [
 { #category : #'creating path' }
 RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 
-	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLine topLine1 topLine2 rightLine bottomLine leftLine a b linspace |
+	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLines rightLines bottomLines leftLines |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
@@ -631,90 +631,37 @@ RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 					                   :each | each + (random next abs * (-1 @ 1)) ]);
 		                  yourself.
 
-	a := topLeftLine controlPoints lastButOne reflectedAbout:
-		     topLeftLine controlPoints last.
+	topLines := (topLeftLine joinC1Last: topRightLine)
+		            splitXrandom: random
+		            convex: -1.
 
-	b := topRightLine controlPoints second reflectedAbout:
-		     topRightLine controlPoints first.
+	rightLines := (topRightLine joinC1Last: bottomRightLine)
+		              splitYrandom: random
+		              convex: 1.
 
-	linspace := ((a x to: b x) linspace: 8) collect: [ :x | 
-		            x @ (a y + b y) halved
-		            + (0 @ random next y abs negated * Float silverRatio) ].
+	bottomLines := (bottomRightLine joinC1Last: bottomLeftLine)
+		               splitXrandom: random
+		               convex: 1.
 
-	topLine := RSBezier new
-		           controlPoints: { 
-				           topLeftLine controlPoints last.
-				           a.
-				           linspace second.
-				           linspace third };
-		           yourself.
-
-	topLine2 := RSBezier new
-		            controlPoints: { 
-				            linspace sixth.
-				            linspace seventh.
-				            b.
-				            topRightLine controlPoints first };
-		            yourself.
-
-	"topLine1 := RSBezier new
-		            controlPoints: { 
-				            topLine controlPoints last.
-				            (topLine controlPoints lastButOne reflectedAbout:
-						             topLine controlPoints last).
-				            (topLine2 controlPoints second reflectedAbout:
-						             topLine2 controlPoints first).
-				            topLine2 controlPoints first };
-		            yourself."
-
-	topLine1 := topLine joinC1Last: topLine2.
-
-	rightLine := RSBezier new
-		             controlPoints: { 
-				             topRightLine controlPoints last.
-				             (topRightLine controlPoints lastButOne 
-					              reflectedAbout: topRightLine controlPoints last).
-				             (bottomRightLine controlPoints second 
-					              reflectedAbout: bottomRightLine controlPoints first).
-				             bottomRightLine controlPoints first };
-		             yourself.
-
-	bottomLine := RSBezier new
-		              controlPoints: { 
-				              bottomRightLine controlPoints last.
-				              (bottomRightLine controlPoints lastButOne 
-					               reflectedAbout: bottomRightLine controlPoints last).
-				              (bottomLeftLine controlPoints second 
-					               reflectedAbout: bottomLeftLine controlPoints first).
-				              bottomLeftLine controlPoints first };
-		              yourself.
-
-	leftLine := RSBezier new
-		            controlPoints: { 
-				            bottomLeftLine controlPoints last.
-				            (bottomLeftLine controlPoints lastButOne 
-					             reflectedAbout: bottomLeftLine controlPoints last).
-				            (topLeftLine controlPoints second reflectedAbout:
-						             topLeftLine controlPoints first).
-				            topLeftLine controlPoints first };
-		            yourself.
+	leftLines := (bottomLeftLine joinC1Last: topLeftLine)
+		             splitYrandom: random
+		             convex: -1.
 
 	builder
 		absolute;
 		moveTo: topLeftLine controlPoints first.
 
 	"Clockwise order matters."
-	{ 
-		topLeftLine.
-		topLine.
-		topLine1.
-		topLine2.
-		topRightLine.
-		rightLine.
-		bottomRightLine.
-		bottomLine.
-		bottomLeftLine.
-		leftLine } do: [ :each | 
+	(Array streamContents: [ :aStream | 
+		 aStream
+			 nextPut: topLeftLine;
+			 nextPutAll: topLines;
+			 nextPut: topRightLine;
+			 nextPutAll: rightLines;
+			 nextPut: bottomRightLine;
+			 nextPutAll: bottomLines;
+			 nextPut: bottomLeftLine;
+			 nextPutAll: leftLines ]) do: [ :each | 
 		each joinRound.
 
 		self buildBezierPathWithoutMoving: each ].
