@@ -16,7 +16,7 @@ RSSegmentedBeziersPolyline >> buildPathOn: visitor [
 { #category : #accessing }
 RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 
-	| first second third fourth aCorner anotherCorner cornerRadii direction random firstSegment secondSegment thirdSegment |
+	| first second third fourth aCorner anotherCorner cornerRadii direction random firstSegment secondSegments thirdSegment |
 	random := RandomBoxMullerBivariateGaussian new.
 	splits := OrderedCollection new.
 
@@ -99,16 +99,9 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 						                aCorner controlPoints first };
 				                yourself.
 
-			secondSegment := RSBezier new
-				                 controlPoints: { 
-						                 aCorner controlPoints last.
-						                 (aCorner controlPoints lastButOne 
-							                  reflectedAbout: aCorner controlPoints last).
-						                 (anotherCorner controlPoints second 
-							                  reflectedAbout:
-								                  anotherCorner controlPoints first).
-						                 anotherCorner controlPoints first };
-				                 yourself.
+			secondSegments := (aCorner joinC1Last: anotherCorner)
+				                  splitYrandom: random
+				                  convex: -1.
 
 			thirdSegment := RSBezier new
 				                controlPoints: { 
@@ -126,7 +119,7 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 			splits
 				add: firstSegment;
 				add: aCorner;
-				add: secondSegment;
+				addAll: secondSegments;
 				add: anotherCorner;
 				add: thirdSegment ].
 
