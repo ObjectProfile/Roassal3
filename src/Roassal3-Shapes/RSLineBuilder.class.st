@@ -225,6 +225,18 @@ RSLineBuilder class >> horizontalLine: aShape [
 ]
 
 { #category : #'instance creation' }
+RSLineBuilder class >> horizontalSegmentedBezierLine [
+
+	^ self horizontalLine: (RSSegmentedBeziersPolyline new
+			  " lineBlock: [ :anArrayOfPoints | 
+				   RSBezier new
+					   controlPoints: anArrayOfPoints;
+					   yourself ];
+			   junctionBlock: [ :aLine :each | Error signal ];"
+			   yourself)
+]
+
+{ #category : #'instance creation' }
 RSLineBuilder class >> horizontalSegmentedLine: aLine [
 
 	^ self

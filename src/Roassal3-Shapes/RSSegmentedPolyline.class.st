@@ -23,7 +23,7 @@ RSSegmentedPolyline >> controlPoints: aCollectionOfArrays [
 
 		points addAll: aLine controlPoints ].
 
-	^ super controlPoints: points
+	super controlPoints: points
 ]
 
 { #category : #accessing }

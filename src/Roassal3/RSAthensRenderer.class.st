@@ -172,6 +172,21 @@ RSAthensRenderer >> buildBezierPath: bezier [
 ]
 
 { #category : #'creating path' }
+RSAthensRenderer >> buildBezierPathWithoutMoving: bezier [
+
+	| points |
+	points := bezier controlPoints.
+	points size = 2 ifTrue: [ 
+		builder lineTo: points second.
+		^ self ].
+	points size = 3 ifTrue: [ 
+		builder curveVia: points second to: points third.
+		^ self ].
+	points size = 4 ifTrue: [ 
+		builder curveVia: points second and: points third to: points fourth ]
+]
+
+{ #category : #'creating path' }
 RSAthensRenderer >> buildBoxPath: box [
 	box hasCornerRadius 
 		ifTrue: [ self buildCornerBoxPath: box ]
@@ -540,8 +555,7 @@ RSAthensRenderer >> buildRingPath: ring [
 { #category : #'creating path' }
 RSAthensRenderer >> buildSegmentedBeziersPolylinePath: line [
 
-	line splits do: [ :each | 
-		each do: [ :bezier | bezier asRSBezier buildPathOn: self ] ]
+	line splits do: [ :bezier | self buildBezierPath: bezier ]
 ]
 
 { #category : #'creating path' }
@@ -556,6 +570,126 @@ RSAthensRenderer >> buildSimpleBoxPath: box [
 		lineTo: rectangle bottomLeft;
 		lineTo: rectangle topLeft;
 		closePath
+]
+
+{ #category : #'creating path' }
+RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
+
+	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLine rightLine bottomLine leftLine |
+	rectangle := aNoteShape baseRectangle.
+
+	random := RandomBoxMullerBivariateGaussian new.
+
+	radius := aNoteShape hasCornerRadius
+		          ifTrue: [ aNoteShape cornerRadius ]
+		          ifFalse: [ 
+			          RSCornerRadius new
+				          radius: random next x abs;
+				          yourself ].
+
+	point := rectangle topLeft.
+
+	topLeftLine := RSBezier new
+		               controlPoints: ({ 
+				                (point + (0 @ radius topLeft)).
+				                (point + (0 @ radius topLeft halved)).
+				                (point + (radius topLeft halved @ 0)).
+				                (point + (radius topLeft @ 0)) } collect: [ :each | 
+					                each + (random next abs * -1) ]);
+		               yourself.
+
+	point := rectangle topRight.
+
+	topRightLine := RSBezier new
+		                controlPoints: ({ 
+				                 (point - (radius topRight @ 0)).
+				                 (point - (radius topRight halved @ 0)).
+				                 (point + (0 @ radius topRight halved)).
+				                 (point + (0 @ radius topRight)) } collect: [ 
+					                 :each | each + (random next abs * (1 @ -1)) ]);
+		                yourself.
+
+	point := rectangle bottomRight.
+
+	bottomRightLine := RSBezier new
+		                   controlPoints: ({ 
+				                    (point - (0 @ radius bottomRight)).
+				                    (point - (0 @ radius bottomRight halved)).
+				                    (point - (radius bottomRight halved @ 0)).
+				                    (point - (radius bottomRight @ 0)) } collect: [ 
+					                    :each | each + random next abs ]);
+		                   yourself.
+
+	point := rectangle bottomLeft.
+
+	bottomLeftLine := RSBezier new
+		                  controlPoints: ({ 
+				                   (point + (radius bottomLeft @ 0)).
+				                   (point + (radius bottomLeft halved @ 0)).
+				                   (point - (0 @ radius bottomLeft halved)).
+				                   (point - (0 @ radius bottomLeft)) } collect: [ 
+					                   :each | each + (random next abs * (-1 @ 1)) ]);
+		                  yourself.
+
+	topLine := RSBezier new
+		           controlPoints: { 
+				           topLeftLine controlPoints last.
+				           (topLeftLine controlPoints lastButOne reflectedAbout:
+						            topLeftLine controlPoints last).
+				           (topRightLine controlPoints second reflectedAbout:
+						            topRightLine controlPoints first).
+				           topRightLine controlPoints first };
+		           yourself.
+
+	rightLine := RSBezier new
+		             controlPoints: { 
+				             topRightLine controlPoints last.
+				             (topRightLine controlPoints lastButOne 
+					              reflectedAbout: topRightLine controlPoints last).
+				             (bottomRightLine controlPoints second 
+					              reflectedAbout: bottomRightLine controlPoints first).
+				             bottomRightLine controlPoints first };
+		             yourself.
+
+	bottomLine := RSBezier new
+		              controlPoints: { 
+				              bottomRightLine controlPoints last.
+				              (bottomRightLine controlPoints lastButOne 
+					               reflectedAbout: bottomRightLine controlPoints last).
+				              (bottomLeftLine controlPoints second 
+					               reflectedAbout: bottomLeftLine controlPoints first).
+				              bottomLeftLine controlPoints first };
+		              yourself.
+
+	leftLine := RSBezier new
+		            controlPoints: { 
+				            bottomLeftLine controlPoints last.
+				            (bottomLeftLine controlPoints lastButOne 
+					             reflectedAbout: bottomLeftLine controlPoints last).
+				            (topLeftLine controlPoints second reflectedAbout:
+						             topLeftLine controlPoints first).
+				            topLeftLine controlPoints first };
+		            yourself.
+
+	builder
+		absolute;
+		moveTo: topLeftLine controlPoints first.
+
+	"Clockwise order matters."
+	{ 
+		topLeftLine.
+		topLine.
+		topRightLine.
+		rightLine.
+		bottomRightLine.
+		bottomLine.
+		bottomLeftLine.
+		leftLine } do: [ :each | 
+		each joinRound.
+
+		self buildBezierPathWithoutMoving: each ].
+
+	builder closePath
 ]
 
 { #category : #accessing }
