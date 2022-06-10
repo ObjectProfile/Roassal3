@@ -575,7 +575,7 @@ RSAthensRenderer >> buildSimpleBoxPath: box [
 { #category : #'creating path' }
 RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 
-	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLine rightLine bottomLine leftLine |
+	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLine topLine1 topLine2 rightLine bottomLine leftLine a b linspace |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
@@ -631,15 +631,43 @@ RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 					                   :each | each + (random next abs * (-1 @ 1)) ]);
 		                  yourself.
 
+	a := topLeftLine controlPoints lastButOne reflectedAbout:
+		     topLeftLine controlPoints last.
+
+	b := topRightLine controlPoints second reflectedAbout:
+		     topRightLine controlPoints first.
+
+	linspace := ((a x to: b x) linspace: 8) collect: [ :x | 
+		            x @ (a y + b y) halved
+		            + (0 @ random next y abs negated * Float silverRatio) ].
+
 	topLine := RSBezier new
 		           controlPoints: { 
 				           topLeftLine controlPoints last.
-				           (topLeftLine controlPoints lastButOne reflectedAbout:
-						            topLeftLine controlPoints last).
-				           (topRightLine controlPoints second reflectedAbout:
-						            topRightLine controlPoints first).
-				           topRightLine controlPoints first };
+				           a.
+				           linspace second.
+				           linspace third };
 		           yourself.
+
+	topLine2 := RSBezier new
+		            controlPoints: { 
+				            linspace sixth.
+				            linspace seventh.
+				            b.
+				            topRightLine controlPoints first };
+		            yourself.
+
+	"topLine1 := RSBezier new
+		            controlPoints: { 
+				            topLine controlPoints last.
+				            (topLine controlPoints lastButOne reflectedAbout:
+						             topLine controlPoints last).
+				            (topLine2 controlPoints second reflectedAbout:
+						             topLine2 controlPoints first).
+				            topLine2 controlPoints first };
+		            yourself."
+
+	topLine1 := topLine joinC1Last: topLine2.
 
 	rightLine := RSBezier new
 		             controlPoints: { 
@@ -679,6 +707,8 @@ RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 	{ 
 		topLeftLine.
 		topLine.
+		topLine1.
+		topLine2.
 		topRightLine.
 		rightLine.
 		bottomRightLine.

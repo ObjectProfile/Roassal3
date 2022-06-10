@@ -130,6 +130,22 @@ RSBezier >> initialize [
 	controlPoints := { 0@0. 100@100 }.
 ]
 
+{ #category : #composing }
+RSBezier >> joinC1Last: aBezier [
+
+	| last first |
+	last := self controlPoints last.
+	first := aBezier controlPoints first.
+
+	^ self class new
+		  controlPoints: { 
+				  last.
+				  (self controlPoints lastButOne reflectedAbout: last).
+				  (aBezier controlPoints second reflectedAbout: first).
+				  first };
+		  yourself
+]
+
 { #category : #private }
 RSBezier >> lines [
 	| c b a via1 via2 start end cp |
