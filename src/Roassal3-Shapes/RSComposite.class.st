@@ -241,8 +241,9 @@ composite extent '=> (20.0@50.0)'
 	
 	children do: [ :s | s basicTranslateBy: delta ].
 	self 
-		extent: rect extent;
-		translateTo: delta negated.
+		extent: rect extent.
+	self position = (0@0) ifTrue: [ self translateTo: delta negated ].
+		
 ]
 
 { #category : #accessing }

@@ -137,6 +137,11 @@ RSBoundingShape >> connectedLines: aCollection [
 	connectedLines := aCollection
 ]
 
+{ #category : #defaults }
+RSBoundingShape >> defaultExtent [
+	^ 10@10
+]
+
 { #category : #accessing }
 RSBoundingShape >> extent: aPoint [
 	| oldExtent extent |
@@ -240,7 +245,7 @@ RSBoundingShape >> initialize [
 	self initializeMatrix; updateEdgesON.
 	
 	baseRectangle := 0@0 corner: 0@0.
-	self extent: 10 @ 10.
+	self extent: self defaultExtent
 ]
 
 { #category : #initialization }
