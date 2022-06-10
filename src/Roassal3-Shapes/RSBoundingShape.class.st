@@ -467,7 +467,8 @@ c add: polygon.
 c
 ```
 	"
-	matrix scaleBy: scale
+	matrix scaleBy: scale.
+	self resetBBox.
 ]
 
 { #category : #'edges - deprecated' }
