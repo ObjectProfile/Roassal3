@@ -124,6 +124,12 @@ RSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
+{ #category : #composing }
+RSBezier >> firstC1Point [
+
+	^ self controlPoints second reflectedAbout: self controlPoints first
+]
+
 { #category : #initialization }
 RSBezier >> initialize [
 	super initialize.
@@ -144,6 +150,13 @@ RSBezier >> joinC1Last: aBezier [
 				  (aBezier controlPoints second reflectedAbout: first).
 				  first };
 		  yourself
+]
+
+{ #category : #composing }
+RSBezier >> lastC1Point [
+
+	^ (self controlPoints atLast: 1) reflectedAbout:
+		  self controlPoints last
 ]
 
 { #category : #private }

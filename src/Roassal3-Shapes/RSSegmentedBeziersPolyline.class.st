@@ -16,34 +16,34 @@ RSSegmentedBeziersPolyline >> buildPathOn: visitor [
 { #category : #accessing }
 RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 
-	| first second third fourth aCorner anotherCorner cornerRadii direction random firstSegment secondSegments thirdSegment |
+	| first second third fourth aCorner anotherCorner cornerRadii direction random firstSegment secondSegments thirdSegment yDistance aPoint |
 	random := RandomBoxMullerBivariateGaussian new.
 	splits := OrderedCollection new.
 
-	(aCollectionOfPoints first y - aCollectionOfPoints last y) abs
-	< (5 * Float goldenRatio)
+	yDistance := (aCollectionOfPoints first y
+	              - aCollectionOfPoints last y) abs.
+
+	yDistance < (self cornerRadii * 2)
 		ifTrue: [ 
-			splits add: (RSBezier new
-					 controlPoints: { 
-							 aCollectionOfPoints first.
-							 (aCollectionOfPoints first + aCollectionOfPoints last / 2
-							  + random next).
-							 aCollectionOfPoints last };
-					 yourself) ]
+			| aBezier midPoint |
+			midPoint := aCollectionOfPoints first
+				            unitAffine: aCollectionOfPoints last
+				            at: 1 / 2.
+
+			aBezier := RSBezier new
+				           controlPoints: { 
+						           aCollectionOfPoints first.
+						           (midPoint + random next).
+						           aCollectionOfPoints last };
+				           yourself.
+
+			splits add: aBezier ]
 		ifFalse: [ 
 			direction := aCollectionOfPoints first y
 			             < aCollectionOfPoints last y
 				             ifTrue: [ 1 ]
 				             ifFalse: [ -1 ].
 
-			"	cornerRadii := ((self
-		                 cornerRadiusAmongPoint: aCollectionOfPoints first
-		                 andPoint: aCollectionOfPoints second) max: (self
-			                 cornerRadiusAmongPoint: aCollectionOfPoints second
-			                 andPoint: aCollectionOfPoints third)) max: (self
-			                cornerRadiusAmongPoint: aCollectionOfPoints third
-			                andPoint: aCollectionOfPoints fourth).
-"
 			cornerRadii := self
 				               cornerRadiusAmongPoint: aCollectionOfPoints first
 				               andPoint: aCollectionOfPoints second.
@@ -86,33 +86,49 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 						                 (fourth + (random next * Float silverRatio)) };
 				                 yourself.
 
+			aPoint := aCorner firstC1Point.
+
 			firstSegment := RSBezier new
 				                controlPoints: { 
 						                aCollectionOfPoints first.
-						                (aCollectionOfPoints first
-						                 +
-							                 (aCorner controlPoints second reflectedAbout:
-									                  aCorner controlPoints first) / 2
-						                 + random next).
-						                (aCorner controlPoints second reflectedAbout:
-								                 aCorner controlPoints first).
+						                ((aCollectionOfPoints first
+							                  unitAffine: aPoint
+							                  at: 1 / 2) + random next).
+						                aPoint.
 						                aCorner controlPoints first };
 				                yourself.
 
-			secondSegments := (aCorner joinC1Last: anotherCorner)
-				                  splitYrandom: random
-				                  convex: -1.
+			yDistance := (aCorner controlPoints last y
+			              - anotherCorner controlPoints first y) abs.
+
+			yDistance < (self cornerRadii * 3)
+				ifTrue: [ 
+					| cps |
+					cps := Array new: 4.
+
+					cps
+						at: 1 put: aCorner controlPoints last;
+						at: 2 put: aCorner lastC1Point;
+						at: 3 put: anotherCorner controlPoints third;
+						at: 4 put: anotherCorner controlPoints fourth.
+
+					anotherCorner controlPoints: cps.
+
+					secondSegments := {  } ]
+				ifFalse: [ 
+					secondSegments := (aCorner joinC1Last: anotherCorner)
+						                  splitYrandom: random
+						                  convex: -1 ].
+
+			aPoint := anotherCorner lastC1Point.
 
 			thirdSegment := RSBezier new
 				                controlPoints: { 
 						                anotherCorner controlPoints last.
-						                (anotherCorner controlPoints lastButOne 
-							                 reflectedAbout:
-								                 anotherCorner controlPoints last).
-						                ((anotherCorner controlPoints lastButOne 
-							                  reflectedAbout:
-								                  anotherCorner controlPoints last)
-						                 + aCollectionOfPoints last / 2 + random next).
+						                aPoint.
+						                ((aPoint
+							                  unitAffine: aCollectionOfPoints last
+							                  at: 1 / 2) + random next).
 						                aCollectionOfPoints last };
 				                yourself.
 
@@ -129,7 +145,8 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 { #category : #accessing }
 RSSegmentedBeziersPolyline >> cornerRadiusAmongPoint: aPoint andPoint: anotherPoint [
 
-	^ ((aPoint distanceTo: anotherPoint) max: 1) log: 2
+	^ (((aPoint distanceTo: anotherPoint) max: 2) log: 2) max:
+		  self cornerRadii
 ]
 
 { #category : #initialization }
