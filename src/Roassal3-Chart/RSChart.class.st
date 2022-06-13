@@ -326,27 +326,16 @@ RSChart >> padding: aPoint [
 
 { #category : #accessing }
 RSChart >> plots [
-	^ plots
-]
-
-{ #category : #building }
-RSChart >> renderDecorationsIn: aCanvas [
-	decorations do: [ :d | d renderIn: aCanvas ]
+	^ elements select: #isPlot
 ]
 
 { #category : #hooks }
 RSChart >> renderIn: aCanvas [
-	decorations, plots do: [ :e | e beforeRenderingIn: self ].
-	self renderDecorationsIn: aCanvas.
-	self renderPlotsIn: aCanvas.
-	shapes := decorations, plots flatCollect: [ :element | 
-		element createdShapes ] as: RSGroup.
-]
-
-{ #category : #building }
-RSChart >> renderPlotsIn: aCanvas [
-	plots do: [ :p | p renderIn: aCanvas ].
-	
+	self decorations, self plots do: [ :e | e beforeRenderingIn: self ].
+	elements do: [ :element | element renderIn: aCanvas ].
+	shapes := elements
+		flatCollect: [ :element | element createdShapes ]
+		as: RSGroup
 ]
 
 { #category : #building }

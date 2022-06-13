@@ -6,3 +6,8 @@ Class {
 	#superclass : #RSAbstractChartPlot,
 	#category : #'Roassal3-Chart-Decoration'
 }
+
+{ #category : #testing }
+RSAbstractChartDecoration >> isDecoration [
+	^ true
+]

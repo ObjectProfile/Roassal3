@@ -141,12 +141,7 @@ RSAbstractPopupInteraction >> onShape: aShape [
 	
 	self registerRemoveEventsOn: aShape.
 	aShape
-		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: evt shape event: evt.
-			self translatePopup: popup event: evt.
-			popup translateBy: (offset rsValue: popup).
-			evt signalUpdate. ]
-
+		when: self class activationEvent send: #activePopupWith: to: self
 ]
 
 { #category : #accessing }

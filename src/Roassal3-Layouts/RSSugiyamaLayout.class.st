@@ -227,6 +227,16 @@ RSSugiyamaLayout >> reduceCrossing [
 	]
 ]
 
+{ #category : #'real sugiyama' }
+RSSugiyamaLayout >> removeCycles: aCollection [ 
+
+	| roots |
+	roots := self rootNodesFor: aCollection.
+	visited := Set new.
+	stack := Stack new.
+	roots do: [ :root | self recursiveRemoveCyclesFrom: root ].
+]
+
 { #category : #private }
 RSSugiyamaLayout >> sortBlock [
 	^ sortBlock ifNil: [ sortBlock := self class sortBlock ]
