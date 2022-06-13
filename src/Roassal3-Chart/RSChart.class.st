@@ -351,7 +351,7 @@ RSChart >> spine [
 	^ (self decorations
 		detect: [ :d | d class == RSChartSpineDecoration ]
 		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
-		shape
+		box
 ]
 
 { #category : #accessing }

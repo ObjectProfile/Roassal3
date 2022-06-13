@@ -28,7 +28,6 @@ RSAbstractPopupInteraction >> activePopupWith: evt [
 	| popup |
 	popup := self createOrGetPopupOn: evt shape event: evt.
 	self translatePopup: popup event: evt.
-	
 	"popup translateBy: (offset rsValue: popup)."
 	popup position: popup position + (offset rsValue: popup).
 	evt signalUpdate.
