@@ -13,7 +13,7 @@ RSSpecMenu classSide >> menu07PalettesOn: aBuilder [
 ]
 
 { #category : #'*Roassal3-Spec-Examples' }
-RSSpecMenu classSide >> menu12PalettesOn: aBuilder [
+RSSpecMenu class >> menu12PalettesOn: aBuilder [
 
 	<worldMenu>
 	(aBuilder item: #Roassal3Palettes)

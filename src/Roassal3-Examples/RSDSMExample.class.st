@@ -381,51 +381,9 @@ RSDSMExample >> example05TopLabelRotation [
 		at: #C put: #(A);
 		yourself.
 	keys := #(9 A B C D).
-	dsm := RSDSM new.
-	dsm objects: keys.
-	dsm setShouldFeedY.
-	dsm rotation: 0.
-	dsm dependency: [ :k  | v at: k ifAbsent: #() ].
-	^ dsm
-]
-
-{ #category : #sources }
-RSDSMExample >> example06StronglyConnected [
-	<script: 'self new example06StronglyConnected open'>
-	| dsm v keys |
-	v := Dictionary new 
-		at: #A put: #(B C);
-		at: #B put: #(A C);
-		at: #C put: #(A);
-		yourself.
-	keys := #(9 A B C D).
 	dsm := RSDSMStronglyConnected new.
 	dsm objects: keys.
 	dsm setShouldFeedY.
 	dsm dependency: [ :k  | v at: k ifAbsent: #() ].
 	^ dsm
-]
-
-{ #category : #sources }
-RSDSMExample >> example07StronglyConnectedWithClasses [
-	<script: 'self new example07StronglyConnectedWithClasses open'>
-	| classes v keys dsm |
-	classes := Collection withAllSubclasses.
-	v := Dictionary new.
-	classes 
-		do: [ :c | v at: c name put: (c dependentClasses collect: #name) ]
-		displayingProgress: [:c | 'Processing: ', c name ]
-		every: 500.
-	keys := v keys.
-	dsm := RSDSMStronglyConnected new.
-	dsm objects: keys.
-	dsm setShouldFeedY.
-	dsm shape @ (RSPopup text: [ :association | 
-		association key, 
-		((dsm isAssocDependent: association)
-			ifTrue: [ ' depends on ' ] 
-			ifFalse: [ ' does not depend on' ]) , association value ]).
-	dsm dependency: [ :k | v at: k ifAbsent: #() ].
-	^ dsm
-
 ]

@@ -49,6 +49,7 @@ RSDSMGraph >> computeSCCs [
 { #category : #utilties }
 RSDSMGraph >> dfsUtil: index visited: visited [
 	visited at: index put: true.
+	index trace.
 	(graph at: index ifAbsent: [ #() ]) do: [ :each |
 		(visited at: each)
 			ifFalse: [ self dfsUtil: each visited: visited ]

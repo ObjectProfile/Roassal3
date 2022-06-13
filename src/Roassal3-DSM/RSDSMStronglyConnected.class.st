@@ -18,20 +18,18 @@ RSDSMStronglyConnected >> borderFor: group [
 
 { #category : #rendering }
 RSDSMStronglyConnected >> boxFor: group [
-	| aGroupOfShapes rectangle |
+	| aGroupOfShapes |
 	aGroupOfShapes := self shapesFrom: group.
-	rectangle := aGroupOfShapes encompassingRectangle.
 	^ RSBox new
-		model: group;
-		color: (self colorFor: rectangle);
+		color: (self colorFor: group);
 		border: (self borderFor: group);
-		fromRectangle: rectangle;
+		fromRectangle: aGroupOfShapes encompassingRectangle;
 		yourself
 ]
 
 { #category : #rendering }
-RSDSMStronglyConnected >> colorFor: rectangle [
-	^ (self palette scale: rectangle) alpha: 0.2
+RSDSMStronglyConnected >> colorFor: group [
+	^ (self palette scale: group) translucent
 ]
 
 { #category : #rendering }
@@ -40,22 +38,17 @@ RSDSMStronglyConnected >> createGraph [
 	objectsX = objectsY ifFalse: [ ^ self error: 'we should have the same data in X and Y' ].
 	graph := RSDSMGraph new: objectsX size.
 	selectedColor := self selectedColor.
-	objectsX doWithIndex: [ :a :k | 
-		objectsX doWithIndex: [ :b :j |
-			shouldFeedX ifTrue: [ 
-				(self isAssocDependent: a -> b)
-					ifTrue: [ graph addEdge: k to: j ]
-			] ifFalse: [ 
-				(self isAssocDependent: b -> a)
-					ifTrue: [ graph addEdge: k to: j ]
-			]
-		] ].
+	shapes 
+		select: [ :each | each color = selectedColor ]
+		thenDo: [ :each | | index |
+			index := each propertyAt: #matrixIndex.
+			graph addEdge: index y to: index x].
 	^ graph
 ]
 
 { #category : #accessing }
 RSDSMStronglyConnected >> palette [
-	^ palette ifNil: [ palette := NSScale category20 ].
+	^ palette ifNil: [ palette := NSScale category20c ].
 ]
 
 { #category : #rendering }
@@ -65,16 +58,18 @@ RSDSMStronglyConnected >> renderBoxes: aRSCanvas groups: aCollection [
 		thenCollect: [ :group | self boxFor: group ])
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDSMStronglyConnected >> renderIn: aCanvas [
+	super renderIn: aCanvas.
+	self renderStrongConnectedBoxes: aCanvas.
+]
+
+{ #category : #rendering }
+RSDSMStronglyConnected >> renderStrongConnectedBoxes: aCanvas [
 	| graph groups |
 	graph := self createGraph.
 	groups := graph computeSCCs.
-	"this method changes the model"
 	self sortGroups: groups.
-	graph := self createGraph.
-	groups := graph computeSCCs.
-	super renderIn: aCanvas.
 	self renderBoxes: aCanvas groups: groups.
 ]
 
@@ -85,11 +80,5 @@ RSDSMStronglyConnected >> shapesFrom: group [
 
 { #category : #sorting }
 RSDSMStronglyConnected >> sortGroups: aCollection [ 
-	| newModel |
-	aCollection sort: [ :a :b | a size > b size ].
-	newModel := aCollection 
-		flatCollect: [ :each | each collect: [ :index | objectsX at: index ] ] 
-		as: objectsX class.
-	objectsX := newModel.
-	objectsY := newModel.
+	
 ]

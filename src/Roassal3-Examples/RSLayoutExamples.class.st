@@ -804,7 +804,7 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 		@ RSCanvasController
 ]
 
-{ #category : #layouts }
+{ #category : #'as yet unclassified' }
 RSLayoutExamples >> example24SmartHorizontalTree [
 	<script: 'self new example24SmartHorizontalTree open setLabel: ''Horizontal Tree'''>
 	| c shapes |

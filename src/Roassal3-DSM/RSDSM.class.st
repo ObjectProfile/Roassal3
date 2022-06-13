@@ -185,7 +185,6 @@ RSDSM >> highlight: evt [
 	position := shape propertyAt: #matrixIndex.
 	self highlightRectangle: (self columnAt: position x) key: #columnRect.
 	self highlightRectangle: (self rowAt: position y) key: #rowRect.
-	evt signalUpdate.
 ]
 
 { #category : #highlighting }
@@ -370,7 +369,6 @@ RSDSM >> unSelectedColor [
 RSDSM >> unhighlight: evt [
 	self unhighlight: evt key: #columnRect.
 	self unhighlight: evt key: #rowRect.
-	evt signalUpdate.
 ]
 
 { #category : #highlighting }

@@ -5,20 +5,6 @@ Class {
 }
 
 { #category : #tests }
-RSChartTest >> testAddingPlotsAndDecoration [
-	| chart |
-	chart := RSChart new.
-	chart addPlot: RSLinePlot new.
-	chart addDecoration: RSHorizontalTick new.
-	chart add: RSLinePlot new.
-	chart add: RSVerticalTick new.
-	self 
-		assert: (chart elements collect: #class as: Array) 
-		equals: { RSChartSpineDecoration. RSLinePlot. RSHorizontalTick. RSLinePlot. RSVerticalTick }.
-	
-]
-
-{ #category : #tests }
 RSChartTest >> testBasic [
 	| x |
 	x := -10.0 to: 20.0 count: 100.
