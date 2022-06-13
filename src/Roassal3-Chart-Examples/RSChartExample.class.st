@@ -260,72 +260,6 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 ]
 
 { #category : #examples }
-RSChartExample >> example18Animation [
-	<script: 'self new example18Animation inspect'>
-	| c canvas line points current lineAnimation area paint afterline yticks xticks |
-	c := self example17CLPvsUSD.
-	c build.
-	canvas := c canvas.
-	
-	"line"
-	line := canvas shapes detect: [ :s | s class = RSPolyline ].
-	points := line controlPoints.
-	current := OrderedCollection new.
-	current add: points first; add: points second.
-	line controlPoints: current.
-	lineAnimation := (2 to: points size) collect: [ :i |
-		canvas transitionAnimation
-			duration: 100 milliSeconds;
-			from: (points at: i - 1);
-			to: (points at: i);
-			onStepDo: [ :t |
-				current removeLast; add: t.
-				line controlPoints: current.
-				 ];
-			when: RSAnimationEndEvent do: [current add: (points at: i) ].
-	] as: OrderedCollection.
-	"area"
-	area := canvas shapes detect: [ :s | s class = RSSVGPath ].
-	paint := area paint.
-	area noPaint.
-	afterline := canvas parallelAnimation.
-	afterline add: (canvas transitionAnimation
-		onStepDo: [ :t |
-			area paint: (Color transparent interpolateTo: paint at: t).
-		]).
-	lineAnimation add: afterline.
-	canvas animationFrom: lineAnimation.
-	
-	"ticks"
-	yticks := canvas shapes select: [ :s | s class = RSLabel ].
-	yticks do: [ :s |  s bold. ].
-	yticks := yticks groupedBy: [ :s | s matrix sy ].
-	xticks := yticks values first.
-	yticks := yticks values second.
-	xticks doWithIndex: [ :s :index | 
-		canvas newAnimation
-			delay: ((index-1) * 100) milliSeconds;
-			duration: 200 milliSeconds;
-			from: Color transparent;
-			to: s color;
-			on: s set: #color:.
-		s color: Color transparent ].
-	yticks doWithIndex: [ :s :index |
-		s noPaint.
-		afterline add: (canvas transitionAnimation
-			delay: (index * 300) milliSeconds;
-			duration: 2 second;
-			easing: RSEasingInterpolator elasticOut;
-			from: -100@ s position y;
-			to: s position;
-			onStepDo: [:p | 
-				s color: Color black.
-				s position: p]).
-		].
-	^ canvas
-]
-
-{ #category : #examples }
 RSChartExample >> example19PositiveNetagiveBarPlots [
 	<script: 'self new example19PositiveNetagiveBarPlots open'>
 	| c d d2 |
@@ -474,7 +408,7 @@ RSChartExample >> example22CustomPopup [
 		rowShapeBlock: [:plot :point |
 			value := RSLabel new text: point y; bold.
 			date := RSLabel new text: (names at: point x).
-			group := { value. date } asGroup.
+			group := { value. date }.
 			RSHorizontalLineLayout on: group.
 			group asShape
 			 ]).

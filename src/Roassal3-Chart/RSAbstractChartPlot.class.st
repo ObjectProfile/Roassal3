@@ -90,6 +90,16 @@ RSAbstractChartPlot >> initialize [
 	shape := self defaultShape
 ]
 
+{ #category : #testing }
+RSAbstractChartPlot >> isDecoration [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractChartPlot >> isPlot [
+	^ false
+]
+
 { #category : #rendering }
 RSAbstractChartPlot >> renderIn: canvas [
 	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"

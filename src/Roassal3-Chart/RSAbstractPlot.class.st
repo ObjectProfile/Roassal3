@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal3-Chart-Plots'
 }
 
+{ #category : #adding }
+RSAbstractPlot >> addedIn: aRSChart [ 
+	aRSChart addPlot: self
+]
+
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
 	super beforeRenderingIn: aChart.
@@ -76,6 +81,11 @@ RSAbstractPlot >> isHorizontalBarPlot [
 { #category : #testing }
 RSAbstractPlot >> isLinePlot [
 	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isPlot [
+	^ true
 ]
 
 { #category : #testing }

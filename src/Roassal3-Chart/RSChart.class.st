@@ -32,14 +32,18 @@ Class {
 	#name : #RSChart,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
-		'plots',
-		'decorations',
+		'elements',
 		'extents',
 		'generator',
 		'colorPalette'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #adding }
+RSChart >> add: aRSPlot [
+	aRSPlot addedIn: self
+]
 
 { #category : #adding }
 RSChart >> addDecoration: aDecoration [
@@ -55,7 +59,7 @@ c addDecoration: (RSHorizontalTick new).
 c addDecoration: (RSVerticalTick new).
 c
 ```"
-	decorations add: aDecoration.
+	elements add: aDecoration.
 	aDecoration chart: self.
 	^ aDecoration
 ]
@@ -73,7 +77,7 @@ c addPlot: (RSLinePlot new x: x y: y).
 c
 ```
 	"
-	plots add: aPlot.
+	elements add: aPlot.
 	aPlot chart: self
 ]
 
@@ -135,7 +139,7 @@ RSChart >> colors: someColors [
 { #category : #accessing }
 RSChart >> decorations [
 	"Return the list of decorations used to annotate plots"
-	^ decorations
+	^ elements select: #isDecoration
 ]
 
 { #category : #defaults }
@@ -146,6 +150,11 @@ RSChart >> defaultContainer [
 { #category : #color }
 RSChart >> defaultPlotColors [
 	^ NSScale category20
+]
+
+{ #category : #accessing }
+RSChart >> elements [
+	^ elements
 ]
 
 { #category : #'accessing - extension' }
@@ -170,7 +179,7 @@ RSChart >> gtInspectorViewIn: composite [
 { #category : #initialization }
 RSChart >> initialize [
 	super initialize.
-	plots := OrderedCollection new.
+	elements := OrderedCollection new.
 	self extent: 200 @ 200.
 	self initializeDecorations.
 	colorPalette := self defaultPlotColors.
@@ -178,7 +187,6 @@ RSChart >> initialize [
 
 { #category : #initialization }
 RSChart >> initializeDecorations [
-	decorations := OrderedCollection new.
 	self addDecoration: RSChartSpineDecoration new.
 ]
 
@@ -208,7 +216,7 @@ RSChart >> lineX: aCollectionX y: aCollectionY [
 RSChart >> maxValueX [
 	^ self chartExtents maxValueX
 		ifNil: [ | res |
-			self chartExtents maxValueX: (res := (plots collect: #maxValueX) max).
+			self chartExtents maxValueX: (res := (self plots collect: #maxValueX) max).
 			res ]
 		ifNotNil: [:res | res ].
 ]
@@ -222,7 +230,7 @@ RSChart >> maxValueX: aNumber [
 RSChart >> maxValueY [
 	^ self chartExtents maxValueY
 		ifNil: [ | res |
-			self chartExtents maxValueY: (res := (plots collect: #maxValueY) max).
+			self chartExtents maxValueY: (res := (self plots collect: #maxValueY) max).
 			res ]
 		ifNotNil: [:res | res ].
 		
@@ -237,7 +245,7 @@ RSChart >> maxValueY: aNumber [
 RSChart >> minValueX [ 
 	^ self chartExtents minValueX
 		ifNil: [ | res |
-			self chartExtents minValueX: (res := (plots collect: #minValueX) min).
+			self chartExtents minValueX: (res := (self plots collect: #minValueX) min).
 			res ]
 		ifNotNil: [:res | res ].
 ]
@@ -251,7 +259,7 @@ RSChart >> minValueX: aNumber [
 RSChart >> minValueY [
 	^ self chartExtents minValueY
 		ifNil: [ | res |
-			self chartExtents minValueY: (res := (plots collect: #minValueY) min).
+			self chartExtents minValueY: (res := (self plots collect: #minValueY) min).
 			res ]
 		ifNotNil: [:res | res ].
 ]
@@ -293,7 +301,7 @@ RSChart >> niceGenerator [
 { #category : #accessing }
 RSChart >> numberOfPlots [
 	"Return the number of plots contained in the chart"
-	^ plots size
+	^ self plots size
 ]
 
 { #category : #public }
@@ -318,27 +326,16 @@ RSChart >> padding: aPoint [
 
 { #category : #accessing }
 RSChart >> plots [
-	^ plots
-]
-
-{ #category : #building }
-RSChart >> renderDecorationsIn: aCanvas [
-	decorations do: [ :d | d renderIn: aCanvas ]
+	^ elements select: #isPlot
 ]
 
 { #category : #hooks }
 RSChart >> renderIn: aCanvas [
-	decorations, plots do: [ :e | e beforeRenderingIn: self ].
-	self renderDecorationsIn: aCanvas.
-	self renderPlotsIn: aCanvas.
-	shapes := decorations, plots flatCollect: [ :element | 
-		element createdShapes ] as: RSGroup.
-]
-
-{ #category : #building }
-RSChart >> renderPlotsIn: aCanvas [
-	plots do: [ :p | p renderIn: aCanvas ].
-	
+	self decorations, self plots do: [ :e | e beforeRenderingIn: self ].
+	elements do: [ :element | element renderIn: aCanvas ].
+	shapes := elements
+		flatCollect: [ :element | element createdShapes ]
+		as: RSGroup.
 ]
 
 { #category : #building }
@@ -390,7 +387,7 @@ RSChart >> xRawLog [
 
 { #category : #'public - scales' }
 RSChart >> xScale: aScale [
-	plots, decorations do: [ :e | e xScale: aScale ].
+	elements do: [ :e | e xScale: aScale ].
 	^ aScale
 ]
 
@@ -440,7 +437,7 @@ RSChart >> yRawLog [
 
 { #category : #'public - scales' }
 RSChart >> yScale: aScale [
-	plots, decorations do: [ :e | e yScale: aScale ].
+	elements do: [ :e | e yScale: aScale ].
 	^ aScale
 ]
 
