@@ -633,19 +633,71 @@ RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 
 	topLines := (topLeftLine joinC1Last: topRightLine)
 		            splitXrandom: random
-		            convex: -1.
+		            convex: -1
+		            lessThanBound: radius topLeft + radius topRight.
+
+	topLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: topLeftLine controlPoints last;
+			at: 2 put: topLeftLine lastC1Point;
+			at: 3 put: topRightLine controlPoints third;
+			at: 4 put: topRightLine controlPoints fourth.
+
+		topRightLine controlPoints: cps ].
 
 	rightLines := (topRightLine joinC1Last: bottomRightLine)
 		              splitYrandom: random
-		              convex: 1.
+		              convex: 1
+		              lessThanBound: radius topRight + radius bottomRight.
+
+	rightLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: topRightLine controlPoints last;
+			at: 2 put: topRightLine lastC1Point;
+			at: 3 put: bottomRightLine controlPoints third;
+			at: 4 put: bottomRightLine controlPoints fourth.
+
+		bottomRightLine controlPoints: cps ].
 
 	bottomLines := (bottomRightLine joinC1Last: bottomLeftLine)
 		               splitXrandom: random
-		               convex: 1.
+		               convex: 1
+		               lessThanBound: radius bottomRight + radius bottomLeft.
+
+	bottomLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: bottomRightLine controlPoints last;
+			at: 2 put: bottomRightLine lastC1Point;
+			at: 3 put: bottomLeftLine controlPoints third;
+			at: 4 put: bottomLeftLine controlPoints fourth.
+
+		bottomLeftLine controlPoints: cps ].
 
 	leftLines := (bottomLeftLine joinC1Last: topLeftLine)
 		             splitYrandom: random
-		             convex: -1.
+		             convex: -1
+		             lessThanBound: radius bottomLeft + radius topLeft.
+
+	leftLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: bottomLeftLine controlPoints last;
+			at: 2 put: bottomLeftLine lastC1Point;
+			at: 3 put: topLeftLine controlPoints third;
+			at: 4 put: topLeftLine controlPoints fourth.
+
+		topLeftLine controlPoints: cps ].
 
 	builder
 		absolute;

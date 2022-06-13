@@ -98,27 +98,22 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 						                aCorner controlPoints first };
 				                yourself.
 
-			yDistance := (aCorner controlPoints last y
-			              - anotherCorner controlPoints first y) abs.
+			secondSegments := (aCorner joinC1Last: anotherCorner)
+				                  splitYrandom: random
+				                  convex: -1
+				                  lessThanBound: self cornerRadii * 3.
 
-			yDistance < (self cornerRadii * 3)
-				ifTrue: [ 
-					| cps |
-					cps := Array new: 4.
+			secondSegments ifEmpty: [ 
+				| cps |
+				cps := Array new: 4.
 
-					cps
-						at: 1 put: aCorner controlPoints last;
-						at: 2 put: aCorner lastC1Point;
-						at: 3 put: anotherCorner controlPoints third;
-						at: 4 put: anotherCorner controlPoints fourth.
+				cps
+					at: 1 put: aCorner controlPoints last;
+					at: 2 put: aCorner lastC1Point;
+					at: 3 put: anotherCorner controlPoints third;
+					at: 4 put: anotherCorner controlPoints fourth.
 
-					anotherCorner controlPoints: cps.
-
-					secondSegments := {  } ]
-				ifFalse: [ 
-					secondSegments := (aCorner joinC1Last: anotherCorner)
-						                  splitYrandom: random
-						                  convex: -1 ].
+				anotherCorner controlPoints: cps ].
 
 			aPoint := anotherCorner lastC1Point.
 
