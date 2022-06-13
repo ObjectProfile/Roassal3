@@ -226,11 +226,17 @@ RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
 		  (a x - b x) abs < aBound
 			  ifTrue: [ {  } ]
 			  ifFalse: [ 
-				  | y |
+				  | y ys n |
+				  n := 7.
+
 				  y := (a y + b y) halved.
 
-				  ((a x to: b x) linspace: 8) collect: [ :x | 
-					  x @ y + (0 @ random next y abs * direction * Float silverRatio) ] ] ]
+				  ys := ((1 to: n) collect: [ :i | 
+					         random next y abs * direction + y ]) 
+					        exponentiallyWeighted: 0.5.
+
+				  ((a x to: b x) linspace: n) withIndexCollect: [ :x :i | 
+					  x @ (ys at: i) ] ] ]
 ]
 
 { #category : #composing }
@@ -246,9 +252,15 @@ RSBezier >> splitYrandom: random convex: direction lessThanBound: aBound [
 		  (a y - b y) abs < aBound
 			  ifTrue: [ {  } ]
 			  ifFalse: [ 
-				  | x |
+				  | x xs n |
+				  n := 7.
+
 				  x := (a x + b x) halved.
 
-				  ((a y to: b y) linspace: 8) collect: [ :y | 
-					  x @ y + (random next x abs @ 0 * direction * Float silverRatio) ] ] ]
+				  xs := ((1 to: n) collect: [ :i | 
+					         random next x abs * direction + x ]) 
+					        exponentiallyWeighted: 0.5.
+
+				  ((a y to: b y) linspace: n) withIndexCollect: [ :y :i | 
+					  (xs at: i) @ y ] ] ]
 ]

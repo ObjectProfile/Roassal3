@@ -149,7 +149,7 @@ RSSegmentedBeziersPolyline >> initialize [
 
 	super initialize.
 
-	self cornerRadii: 20
+	self cornerRadii: 5
 ]
 
 { #category : #accessing }
