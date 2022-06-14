@@ -1,5 +1,6 @@
 | profiler classSizeScale classColorCoverage m lbl fileCoverageResult str |
    
+'Loading spy2 roassal3 and exporters' traceCr.
 [ Metacello new 
 	baseline: 'Spy2'; 
 	repository: 'github://ObjectProfile/Spy2'; 
@@ -14,10 +15,8 @@
     baseline: 'Roassal3Exporters';
     repository: 'github://ObjectProfile/Roassal3Exporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
-'Packages loaded' traceCr.
-(Delay forSeconds: 5) wait.
-'WorlMorph doOnCycle' traceCr.
-WorldMorph doOneCycle.
+
+
 'Starting with Hapao' traceCr.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
 'Profiler created' traceCr.
@@ -53,4 +52,3 @@ m canvas extent: (1500 @ 1500).
   exportToFile: 'coverage.png' asFileReference.
 
 'coverage.png created' traceCr.
-SmalltalkImage current quitPrimitive
