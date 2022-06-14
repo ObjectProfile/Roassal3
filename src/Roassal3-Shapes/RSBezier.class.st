@@ -184,6 +184,14 @@ RSBezier >> lines [
 ]
 
 { #category : #composing }
+RSBezier >> reversed [
+
+	^ self class new
+		  controlPoints: self controlPoints reversed;
+		  yourself
+]
+
+{ #category : #composing }
 RSBezier >> split: aBlock [
 
 	| a b linspace firstLine secondLine thirdLine |
