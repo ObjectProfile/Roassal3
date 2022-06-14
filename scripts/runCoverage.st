@@ -15,8 +15,7 @@
     baseline: 'Roassal3Exporters';
     repository: 'github://ObjectProfile/Roassal3Exporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
-
-
+[ 
 'Starting with Hapao' traceCr.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
 'Profiler created' traceCr.
@@ -52,3 +51,4 @@ m canvas extent: (1500 @ 1500).
   exportToFile: 'coverage.png' asFileReference.
 
 'coverage.png created' traceCr.
+SmalltalkImage current quitPrimitive
