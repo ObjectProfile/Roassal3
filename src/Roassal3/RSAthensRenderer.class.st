@@ -588,11 +588,9 @@ RSAthensRenderer >> strokeCache [
 { #category : #visiting }
 RSAthensRenderer >> visitBorder: border [
 	| stroke |
-	"removed"
-	"stroke := border useCache 
+	stroke := border useCache 
 		ifTrue: [ self strokeCache at: border ifAbsentPut: [ self createStrokePaintFor: border ] ]
-		ifFalse: [ self createStrokePaintFor: border ]."
-	stroke := self createStrokePaintFor: border.
+		ifFalse: [ self createStrokePaintFor: border ].
 	athensCanvas privatePaint: stroke.
 	^ stroke
 ]
@@ -637,7 +635,6 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	showRectangles := aRSCanvas shouldShowRectangles.
 	athensCanvas fillRuleEvenOdd.
 	athensCanvas setAA: aRSCanvas antialiasing.
-	"athensCanvas setTolerance: 7."
 	
 	aRSCanvas camera accept: self.
 	aRSCanvas shapes accept: self.

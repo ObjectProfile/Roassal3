@@ -3,12 +3,13 @@ BTree node
 "
 Class {
 	#name : #RSRNode,
-	#superclass : #RSObject,
+	#superclass : #RSAbstractRNode,
 	#instVars : [
 		'contents',
 		'left',
 		'right',
-		'rectangle'
+		'rectangle',
+		'height'
 	],
 	#category : #'Roassal3-Rendering'
 }
@@ -34,6 +35,40 @@ RSRNode >> add: anObject [
 	rectangle := Rectangle merging: {left rectangle. right rectangle}.
 ]
 
+{ #category : #adding }
+RSRNode >> add: anObject path: list [
+	
+	self isLeaf ifTrue: [ 
+		left := self class new: self contents.
+		right := self class new: anObject.
+		height := 2.
+		contents := nil.
+	]ifFalse: [ | leastEnlargementChild |
+		leastEnlargementChild := self leastEnlargementChild: anObject.
+		list add: (right = leastEnlargementChild) -> leastEnlargementChild.
+		leastEnlargementChild add: anObject path: list.
+		height := (left height max: right height) + 1.
+	].
+	rectangle := Rectangle merging: {left rectangle. right rectangle}.
+]
+
+{ #category : #adding }
+RSRNode >> bulkLoad: aCollection from: a to: b [
+	b < a ifTrue: [ ^ self error: 'should not' ].
+	a = b ifTrue: [
+		contents := aCollection at: a.
+		rectangle := contents encompassingRectangle.
+	] ifFalse: [ | mid |
+		rectangle := Rectangle merging: ((a to: b) collect: [:i |
+			(aCollection at: i) encompassingRectangle ]).
+		mid := (a+b/2) asInteger.
+		left := self class new.
+		left bulkLoad: aCollection from: a to: mid.
+		right := self class new.
+		right bulkLoad: aCollection from: mid + 1 to: b.
+	]
+]
+
 { #category : #accessing }
 RSRNode >> children [
 	^ {left. right} copyWithout: nil
@@ -45,6 +80,20 @@ RSRNode >> childrenDo: aBlock [
 	right ifNotNil: aBlock
 ]
 
+{ #category : #public }
+RSRNode >> computeHeight [
+	height := self isLeaf
+		ifTrue: [ 1 ]
+		ifFalse: [ (left computeHeight max: right computeHeight) + 1 ].
+	^ height
+]
+
+{ #category : #public }
+RSRNode >> computeRectangle [
+	rectangle := Rectangle merging: { left rectangle. right rectangle }.
+	height := (left height max: right height) + 1
+]
+
 { #category : #accessing }
 RSRNode >> contents [
 	^ contents
@@ -53,6 +102,7 @@ RSRNode >> contents [
 { #category : #accessing }
 RSRNode >> contents: aRSShape [
 	contents := aRSShape.
+	height := 1.
 	rectangle := aRSShape encompassingRectangle.
 ]
 
@@ -68,12 +118,15 @@ RSRNode >> do: aBlock [
 
 { #category : #accessing }
 RSRNode >> height [
-	^ self isLeaf
-		ifTrue: [ 1 ]
-		ifFalse: [ (left height max: right height) + 1 ]
+	^ height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RSRNode >> height: anInteger [ 
+	height := anInteger
+]
+
+{ #category : #adding }
 RSRNode >> inspectionTree: aBuilder [
     <inspectorPresentationOrder: 1 title: 'Tree Structure'>
 
@@ -92,6 +145,11 @@ RSRNode >> isBalanced [
 ]
 
 { #category : #testing }
+RSRNode >> isEmpty [
+	^ false
+]
+
+{ #category : #testing }
 RSRNode >> isInvalid [
 	^ self isLeaf and: [ self contents isNil ]
 ]
@@ -101,23 +159,44 @@ RSRNode >> isLeaf [
 	^ right isNil and: [ left isNil ]
 ]
 
+{ #category : #testing }
+RSRNode >> isTotalBalanced [
+	^ self isBalanced 
+		and: [ (left isNil or: [ left isTotalBalanced ]) 
+			and: [ right isNil or: [ right isTotalBalanced ] ] ]
+		
+		
+]
+
 { #category : #adding }
 RSRNode >> leastEnlargementChild: anObject [
-	| minRectangleEnlargement rect leftRect rightRect leftDiff rightDiff |
+	| minRectangleEnlargement rect leftRect rightRect leftDiff rightDiff area1 area2 |
 	minRectangleEnlargement := nil.
 	rect := anObject encompassingRectangle.
 	leftRect := Rectangle merging: {left rectangle. rect }.
 	rightRect := Rectangle merging: {right rectangle. rect }.
-	leftDiff := leftRect area - left rectangle area.
-	rightDiff := rightRect area - right rectangle area.
-	^ rightDiff <  leftDiff 
-		ifTrue: [ right ]
-		ifFalse: [ left ].	
+	area1 := left rectangle area.
+	area2 := right rectangle area.
+	leftDiff := leftRect area - area1.
+	rightDiff := rightRect area - area2.
+	^ rightDiff = leftDiff 
+		ifTrue: [ area1 < area2
+				ifTrue: [ left ]
+				ifFalse: [ right ] ]
+		ifFalse: [ 
+			leftDiff < rightDiff
+				ifTrue: [ left ]
+				ifFalse: [ right ] ].	
 ]
 
 { #category : #accessing }
 RSRNode >> left [
 	^ left
+]
+
+{ #category : #accessing }
+RSRNode >> left: aRSRNode [ 
+	left := aRSRNode
 ]
 
 { #category : #'finding/searching' }
@@ -179,4 +258,9 @@ RSRNode >> remove: anObject [
 { #category : #accessing }
 RSRNode >> right [
 	^ right
+]
+
+{ #category : #accessing }
+RSRNode >> right: aRSRNode [ 
+	right := aRSRNode
 ]
