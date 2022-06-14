@@ -21,7 +21,6 @@ Class {
 		'matrix',
 		'canvasRect',
 		'showRectangles',
-		'strokeCache',
 		'originMatrix'
 	],
 	#category : #'Roassal3-Rendering'
@@ -580,17 +579,10 @@ RSAthensRenderer >> paintFor: shape form: form [
 			paint ]
 ]
 
-{ #category : #accessing }
-RSAthensRenderer >> strokeCache [
-	^ strokeCache ifNil: [ strokeCache := RSLRUCache new maximumWeight: 100 ]
-]
-
 { #category : #visiting }
 RSAthensRenderer >> visitBorder: border [
 	| stroke |
-	stroke := border useCache 
-		ifTrue: [ self strokeCache at: border ifAbsentPut: [ self createStrokePaintFor: border ] ]
-		ifFalse: [ self createStrokePaintFor: border ].
+	stroke := self createStrokePaintFor: border.
 	athensCanvas privatePaint: stroke.
 	^ stroke
 ]
