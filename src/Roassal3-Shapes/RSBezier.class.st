@@ -83,6 +83,14 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #converting }
+RSBezier >> asDeCasteljauLine [
+
+	^ RSdeCasteljauLine new
+		  controlPoints: self controlPoints;
+		  yourself
+]
+
 { #category : #testing }
 RSBezier >> basicIncludesPoint: aPoint [
 	"Not perfect but close enough"
@@ -139,16 +147,12 @@ RSBezier >> initialize [
 { #category : #composing }
 RSBezier >> joinC1Last: aBezier [
 
-	| last first |
-	last := self controlPoints last.
-	first := aBezier controlPoints first.
-
 	^ self class new
 		  controlPoints: { 
-				  last.
-				  (self controlPoints lastButOne reflectedAbout: last).
-				  (aBezier controlPoints second reflectedAbout: first).
-				  first };
+				  self controlPoints last.
+				  self lastC1Point.
+				  aBezier firstC1Point.
+				  aBezier controlPoints first };
 		  yourself
 ]
 

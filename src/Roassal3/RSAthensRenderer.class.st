@@ -575,7 +575,7 @@ RSAthensRenderer >> buildSimpleBoxPath: box [
 { #category : #'creating path' }
 RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 
-	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine point topLines rightLines bottomLines leftLines |
+	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine topLines rightLines bottomLines leftLines |
 	rectangle := aNoteShape baseRectangle.
 
 	random := RandomBoxMullerBivariateGaussian new.
@@ -587,49 +587,21 @@ RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
 				          radius: random next x abs;
 				          yourself ].
 
-	point := rectangle topLeft.
+	topLeftLine := radius
+		               asBezierTopLeftPoint: rectangle topLeft
+		               random: random.
 
-	topLeftLine := RSBezier new
-		               controlPoints: ({ 
-				                (point + (0 @ radius topLeft)).
-				                (point + (0 @ radius topLeft halved)).
-				                (point + (radius topLeft halved @ 0)).
-				                (point + (radius topLeft @ 0)) } collect: [ :each | 
-					                each + (random next abs * -1) ]);
-		               yourself.
+	topRightLine := radius
+		                asBezierTopRightPoint: rectangle topRight
+		                random: random.
 
-	point := rectangle topRight.
+	bottomRightLine := radius
+		                   asBezierBottomRightPoint: rectangle bottomRight
+		                   random: random.
 
-	topRightLine := RSBezier new
-		                controlPoints: ({ 
-				                 (point - (radius topRight @ 0)).
-				                 (point - (radius topRight halved @ 0)).
-				                 (point + (0 @ radius topRight halved)).
-				                 (point + (0 @ radius topRight)) } collect: [ 
-					                 :each | each + (random next abs * (1 @ -1)) ]);
-		                yourself.
-
-	point := rectangle bottomRight.
-
-	bottomRightLine := RSBezier new
-		                   controlPoints: ({ 
-				                    (point - (0 @ radius bottomRight)).
-				                    (point - (0 @ radius bottomRight halved)).
-				                    (point - (radius bottomRight halved @ 0)).
-				                    (point - (radius bottomRight @ 0)) } collect: [ 
-					                    :each | each + random next abs ]);
-		                   yourself.
-
-	point := rectangle bottomLeft.
-
-	bottomLeftLine := RSBezier new
-		                  controlPoints: ({ 
-				                   (point + (radius bottomLeft @ 0)).
-				                   (point + (radius bottomLeft halved @ 0)).
-				                   (point - (0 @ radius bottomLeft halved)).
-				                   (point - (0 @ radius bottomLeft)) } collect: [ 
-					                   :each | each + (random next abs * (-1 @ 1)) ]);
-		                  yourself.
+	bottomLeftLine := radius
+		                  asBezierBottomLeftPoint: rectangle bottomLeft
+		                  random: random.
 
 	topLines := (topLeftLine joinC1Last: topRightLine)
 		            splitXrandom: random
