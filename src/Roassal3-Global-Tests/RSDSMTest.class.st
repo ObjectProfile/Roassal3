@@ -125,6 +125,8 @@ RSDSMTest >> testLabelsTopPosition [
 	b := RSDSM new.
 	b objectsY: #(#a #b #c).
 	b objectsX: (1 to: 3).
+	b rotation: 90.
+	b shape size: 50.
 	b dependency: [ :aValue | aValue + 1 ].
 	b build.
 	labels := b labelsX.
