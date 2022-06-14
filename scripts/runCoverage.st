@@ -51,4 +51,4 @@ m canvas extent: (1500 @ 1500).
   exportToFile: 'coverage.png' asFileReference.
 
 'coverage.png created' traceCr.
-SmalltalkImage current quitPrimitive
+SmalltalkImage current quitPrimitive ] fork
