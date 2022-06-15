@@ -226,12 +226,6 @@ RSBezier >> split: aBlock [
 ]
 
 { #category : #composing }
-RSBezier >> splitXrandom: random convex: direction [
-
-	^ self splitXrandom: random convex: direction lessThanBound: -1
-]
-
-{ #category : #composing }
 RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
 
 	^ self split: [ :a :b | 
@@ -249,12 +243,6 @@ RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
 
 				  ((a x to: b x) linspace: n) withIndexCollect: [ :x :i | 
 					  x @ (ys at: i) ] ] ]
-]
-
-{ #category : #composing }
-RSBezier >> splitYrandom: random convex: direction [
-
-	^ self splitYrandom: random convex: direction lessThanBound: -1
 ]
 
 { #category : #composing }
