@@ -1,6 +1,6 @@
 Trait {
 	#name : #RSTParametricXYLines,
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal3-Examples'
 }
 
 { #category : #lines }
