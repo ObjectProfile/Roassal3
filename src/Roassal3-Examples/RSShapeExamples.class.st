@@ -1210,7 +1210,10 @@ RSShapeExamples >> example43KeepLabelSize [
 	labels := RSLabel models: String withAllSubclasses.
 	RSNormalizer fontSize
 		shapes: labels;
-		normalize: [ :cls | cls linesOfCode ln +5 ].
+		normalize: [ :cls |
+			(cls linesOfCode > 0 
+				ifTrue: [ cls linesOfCode ln ]
+				ifFalse: [ 0 ]) + 5 ].
 	
 	RSLineBuilder line
 		color: Color red;

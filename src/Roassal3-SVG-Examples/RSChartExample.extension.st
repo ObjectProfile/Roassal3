@@ -11,17 +11,14 @@ RSChartExample >> example13AreaPlot [
 	canvas := RSCanvas new.
 	charts := {'Between y1 and 0'-> (y1 -> 0).
 	'Between y2 and 1'-> (y1 -> 1).
-	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc | | g |
-		g := RSGroup new.
+	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc |
 		c := RSChart new.
-		c container: g.
 		c extent: 500@100.
 		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
 		c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
 		c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
 		c ylabel: assoc key.
-		c build.
-		g asShape	].
+		c asShape	].
 	RSVerticalLineLayout on: charts.
 	canvas addAll: charts.
 	canvas @ RSCanvasController.

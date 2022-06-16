@@ -81,15 +81,6 @@ c
 	aPlot chart: self
 ]
 
-{ #category : #converting }
-RSChart >> asShape [
-	| shape |
-	shape := self container asShape.
-	self container: shape.
-	^ shape
-	
-]
-
 { #category : #'public - plots' }
 RSChart >> barHeights: aCollectionY [
 	| res |

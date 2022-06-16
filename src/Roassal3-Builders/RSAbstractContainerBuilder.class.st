@@ -53,6 +53,20 @@ Class {
 	#category : #'Roassal3-Builders-Core'
 }
 
+{ #category : #accessing }
+RSAbstractContainerBuilder >> asShape [
+	^ self asShapeFor: nil
+]
+
+{ #category : #accessing }
+RSAbstractContainerBuilder >> asShapeFor: model [
+	self build.
+	^ self container asShape
+		model: model;
+		yourself
+	
+]
+
 { #category : #building }
 RSAbstractContainerBuilder >> build [
 	self renderIn: self container.

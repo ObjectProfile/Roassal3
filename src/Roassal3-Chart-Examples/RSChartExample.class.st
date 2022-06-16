@@ -128,28 +128,21 @@ RSChartExample >> example07AdjustingFontSize [
 { #category : #examples }
 RSChartExample >> example08TwoCharts [
 	<script: 'self new example08TwoCharts open'>
-	| c g1 c1 g2 c2 |
+	| c c1 c2 |
 	c := RSCanvas new.
 
-	g1 := RSGroup new.
 	c1 := RSChart new.
-	c1 container: g1.
 	c1 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) sqrt).
 	c1 title: 'squared root'.
 	c1 xlabel: 'X'.
 	c1 ylabel: 'Y'.
-	c1 build.
 
-	g2 := RSGroup new.
 	c2 := RSChart new.
-	c2 container: g2.
 	c2 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) squared).
 	c2 title: '^ 2'.
 	c2 xlabel: 'X'.
 	c2 ylabel: 'Y'.
-	c2 build.
-
-	c add: g1 asShape; add: g2 asShape.
+	c add: c1 asShape; add: c2 asShape.
 	RSHorizontalLineLayout on: c shapes.
 
 	c @ RSCanvasController.
@@ -163,17 +156,14 @@ RSChartExample >> example09LinearSqrtSymlog [
 	c := RSCanvas new @ RSCanvasController.
 	x := (-5 to: 500 by: 0.1).
 	y := x.
-	#(yLinear ySqrt yLog) do: [ :sel | 
-		| chart g |
-		g := RSGroup new.
+	c addAll: (#(yLinear ySqrt yLog) collect: [ :sel |
+		| chart |
 		chart := RSChart new.
-		chart container: g.
 		chart addPlot: (RSLinePlot new x: x y: y).
 		chart addDecoration: (RSVerticalTick new asFloat).
 		chart perform: sel.
 		chart title: sel.
-		chart build.
-		c add: g asShape ].
+		chart asShape ]).
 	RSHorizontalLineLayout on: c shapes.
 	^ c
 ]
