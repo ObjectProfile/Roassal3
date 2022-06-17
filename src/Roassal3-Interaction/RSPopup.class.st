@@ -138,6 +138,27 @@ canvas open.
 	^ inst
 ]
 
+{ #category : #accessing }
+RSPopup class >> theme [
+	^ self themeText: #yourself
+]
+
+{ #category : #accessing }
+RSPopup class >> themeText: aBlock [
+	"you can create your own custom popups by adding extention methods for this class"
+	| popup theme |
+	popup := self text: aBlock.
+	theme := Smalltalk ui theme.
+	popup shapeBuilder labelBuilder labelShape color: theme textColor.
+	popup shapeBuilder boxBuilder
+		border: (RSBorder new color: theme textColor);
+		cornerRadius: 0;
+		color: (theme backgroundColor alpha: 0.8);
+		padding: 20.
+	^ popup
+		
+]
+
 { #category : #hooks }
 RSPopup >> createPopupFor: aShape event: event [
 	| popupShape |

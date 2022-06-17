@@ -408,12 +408,16 @@ RSChartExample >> example22CustomPopup [
 { #category : #examples }
 RSChartExample >> example23PopupInScatterPlot [
 	<script: 'self new example23PopupInScatterPlot open'>
-	| chart plot data |
+	| chart plot data classes  |
 	chart := RSChart new.
-	data := #(1 2 3).
+	classes := Collection withAllSubclasses.
+	data := classes collect: [:cls | cls linesOfCode sqrt ].
 	plot := RSScatterPlot new y: data.
 	chart addPlot: plot.
+	chart padding: 10.
 	chart build.
-	plot ellipses @ (RSPopup text: [:point | 'My data: ', point y asString ]).
+	plot ellipses with: classes do: [ :e :cls | e model: cls ].
+	plot ellipses @ (RSPopup themeText: [:model | 
+		model name, String cr, 'LOC: ', model linesOfCode asString]).
 	^ chart
 ]

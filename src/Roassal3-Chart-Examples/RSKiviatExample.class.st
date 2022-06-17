@@ -104,7 +104,7 @@ RSKiviatExample >> example04Restaurant [
 { #category : #examples }
 RSKiviatExample >> example05RestaurantAnimation [
 	<script: 'self new example05RestaurantAnimation open'>
-	| kiviat shapes canvas animatedPolygon |
+	| kiviat shapes canvas animatedPolygon animations title |
 	kiviat := self example04Restaurant.
 	kiviat usePolygonFillColor.
 	kiviat noDots.
@@ -113,8 +113,12 @@ RSKiviatExample >> example05RestaurantAnimation [
 	shapes do: #remove.
 	canvas := kiviat canvas.
 	canvas add: (animatedPolygon := RSPolygon new withBorder).
-	
-	(canvas animationFrom: (shapes collectWithIndex: [:fromShape :index |
+	canvas add: (title := RSLabel new 
+		text: 'Restaurant: 1';
+		fontSize: 15;
+		color: 'black';
+		position: 0@ -250).
+	animations := shapes collectWithIndex: [:fromShape :index |
 		| k toShape |
 		k := index + 1.
 		k > shapes size ifTrue: [ k := 1 ].
@@ -123,6 +127,7 @@ RSKiviatExample >> example05RestaurantAnimation [
 		canvas transitionAnimation
 			duration: 3 seconds;
 			easing: RSEasingInterpolator expIn;
+			when: RSAnimationEndEvent do: [ :evt | title text: 'Restaurant: ', k asString ];
 			onStepDo: [ :t |
 				animatedPolygon 
 					privatePoints: (fromShape points with: toShape points 
@@ -132,9 +137,8 @@ RSKiviatExample >> example05RestaurantAnimation [
 					position: (fromShape position interpolateTo: toShape position at: t).
 				animatedPolygon border 
 					color: (fromShape border color interpolateTo: toShape border color at: t).
-				canvas signalUpdate.
-				 ]
-		])) repeat.
+				canvas signalUpdate ] ].
+	(canvas animationFrom: animations) repeat.
 	^ kiviat canvas
 ]
 
