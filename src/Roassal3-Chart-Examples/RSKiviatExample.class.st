@@ -58,8 +58,8 @@ RSKiviatExample >> example01Basic [
 ]
 
 { #category : #examples }
-RSKiviatExample >> example02Basic [
-	<script: 'self new example02Basic open'>
+RSKiviatExample >> example02PolygonBackground [
+	<script: 'self new example02PolygonBackground open'>
 	| kiviat |
 	kiviat := RSKiviat new.
 	kiviat addRow: #(1 5 2 2 3).
@@ -102,8 +102,45 @@ RSKiviatExample >> example04Restaurant [
 ]
 
 { #category : #examples }
-RSKiviatExample >> example05Chemistry [
-	<script: 'self new example05Chemistry open'>
+RSKiviatExample >> example05RestaurantAnimation [
+	<script: 'self new example05RestaurantAnimation open'>
+	| kiviat shapes canvas animatedPolygon |
+	kiviat := self example04Restaurant.
+	kiviat usePolygonFillColor.
+	kiviat noDots.
+	kiviat build.
+	shapes := kiviat polygonShapes.
+	shapes do: #remove.
+	canvas := kiviat canvas.
+	canvas add: (animatedPolygon := RSPolygon new withBorder).
+	
+	(canvas animationFrom: (shapes collectWithIndex: [:fromShape :index |
+		| k toShape |
+		k := index + 1.
+		k > shapes size ifTrue: [ k := 1 ].
+		toShape := shapes at: k.
+		
+		canvas transitionAnimation
+			duration: 3 seconds;
+			easing: RSEasingInterpolator expIn;
+			onStepDo: [ :t |
+				animatedPolygon 
+					privatePoints: (fromShape points with: toShape points 
+						collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
+					resetPath;
+					color: (fromShape color interpolateTo: toShape color at: t);
+					position: (fromShape position interpolateTo: toShape position at: t).
+				animatedPolygon border 
+					color: (fromShape border color interpolateTo: toShape border color at: t).
+				canvas signalUpdate.
+				 ]
+		])) repeat.
+	^ kiviat canvas
+]
+
+{ #category : #examples }
+RSKiviatExample >> example06Chemistry [
+	<script: 'self new example06Chemistry open'>
 	| data axisNames canvas kiviat lb |
 	data := self data.
 	axisNames := data first.

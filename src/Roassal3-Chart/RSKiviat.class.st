@@ -15,7 +15,11 @@ Class {
 		'palette',
 		'shouldUsePolygonBorder',
 		'shouldUseDots',
-		'shouldUsePolygonFillColor'
+		'shouldUsePolygonFillColor',
+		'labels',
+		'axis',
+		'backgroundShapes',
+		'polygonShapes'
 	],
 	#category : #'Roassal3-Chart-Radar'
 }
@@ -31,6 +35,11 @@ RSKiviat >> addRows: aCollection [
 ]
 
 { #category : #accessing }
+RSKiviat >> axis [
+	^ axis
+]
+
+{ #category : #accessing }
 RSKiviat >> axisNames [
 	^ axisNames
 ]
@@ -43,6 +52,11 @@ RSKiviat >> axisNames: aCollection [
 { #category : #accessing }
 RSKiviat >> backgroundColor [
  ^ '#e5ebf6'
+]
+
+{ #category : #accessing }
+RSKiviat >> backgroundShapes [
+	^ backgroundShapes
 ]
 
 { #category : #accessing }
@@ -216,6 +230,11 @@ RSKiviat >> labelGapSize: aNumber [
 	labelGapSize := aNumber
 ]
 
+{ #category : #accessing }
+RSKiviat >> labels [
+	^ labels
+]
+
 { #category : #public }
 RSKiviat >> noDots [
 	shouldUseDots := false
@@ -247,6 +266,11 @@ RSKiviat >> polygonShape [
 ]
 
 { #category : #accessing }
+RSKiviat >> polygonShapes [
+	^ polygonShapes
+]
+
+{ #category : #accessing }
 RSKiviat >> radius [
 	^ radius
 ]
@@ -258,7 +282,7 @@ RSKiviat >> radius: aNumber [
 
 { #category : #hooks }
 RSKiviat >> renderAxisIn: aCanvas [
-	| delta current labels backgrounds deltaRadius axis |
+	| delta current deltaRadius |
 	delta := Float twoPi / axisNames size.
 	current := Float halfPi negated.
 	axis := RSGroup new.
@@ -270,13 +294,13 @@ RSKiviat >> renderAxisIn: aCanvas [
 		label ].
 	
 	deltaRadius := radius / 5.
-	backgrounds := (deltaRadius to: radius by: deltaRadius) 
+	backgroundShapes := (deltaRadius to: radius by: deltaRadius) 
 		collect: [ :each | shouldUseEllipse
 			ifTrue: [ self createEllipseFor: each ]
 			ifFalse: [ self createPolygonFor: each ] ].
 	
-	aCanvas addAll: backgrounds.
-	backgrounds last 
+	aCanvas addAll: backgroundShapes.
+	backgroundShapes last 
 		color: self backgroundColor;
 		pushBack.
 	aCanvas addAll: axis.
@@ -294,10 +318,9 @@ RSKiviat >> renderIn: aCanvas [
 
 { #category : #hooks }
 RSKiviat >> renderValuesIn: aCanvas [
-	| valueShapes |
 	self computeScales.
-	valueShapes := values collect: [ :array | self createValuePolygon: array ].
-	aCanvas addAll: valueShapes.
+	polygonShapes := values collect: [ :array | self createValuePolygon: array ].
+	aCanvas addAll: polygonShapes.
 ]
 
 { #category : #testing }

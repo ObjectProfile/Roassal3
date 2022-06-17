@@ -1,11 +1,11 @@
 "
 RSAbstractRenderTree defines 2 methods to search shapes.
 
-`shapeWithAction: eventClass forPositionInPixels: position`
+- `shapeAtPoint:`
+- `shapesAtRectangle:`
+- `bulkload:` when user is going to change the `shapesCollection:` in canvas
 
-`shapeWithActionForPositionInPixels: position`
-
-subclasses of this tree should override Collection abstract methods
+subclasses of this tree should override also Collection abstract methods
 "
 Class {
 	#name : #RSShapeCollection,
