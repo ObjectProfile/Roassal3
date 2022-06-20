@@ -68,8 +68,9 @@ RSKiviat >> border [
 
 { #category : #'accessing - computed' }
 RSKiviat >> computePointsFor: aCollection [ 
-	| delta current  |
-	delta := Float twoPi / axisNames size.
+	| delta current divisor |
+	divisor := axisNames ifEmpty: [ 1 ] ifNotEmpty: [ axisNames size ]. 
+	delta := Float twoPi / divisor.
 	current := Float halfPi negated.
 	^ aCollection collectWithIndex: [ :value :index | | indexScale point |
 		indexScale := scales scale: index.
@@ -81,9 +82,9 @@ RSKiviat >> computePointsFor: aCollection [
 { #category : #private }
 RSKiviat >> computeScaleFor: array [
 	| min max |
-	min := values first min.
+	min := values first ifEmpty: 0 ifNotEmpty: [ values first min ].
 	min := min min: 0.
-	max := values first max.
+	max := values first ifEmpty: 1 ifNotEmpty: [ values first max ].
 	^ NSScale linear domain: { min. max }; range: { 0. radius }.
 ]
 
@@ -282,8 +283,9 @@ RSKiviat >> radius: aNumber [
 
 { #category : #hooks }
 RSKiviat >> renderAxisIn: aCanvas [
-	| delta current deltaRadius |
-	delta := Float twoPi / axisNames size.
+	| delta current deltaRadius divisor |
+	divisor := axisNames ifEmpty: [ 1 ] ifNotEmpty: [ axisNames size ].
+	delta := Float twoPi / divisor.
 	current := Float halfPi negated.
 	axis := RSGroup new.
 	labels := axisNames collect: [ :name | | label |
