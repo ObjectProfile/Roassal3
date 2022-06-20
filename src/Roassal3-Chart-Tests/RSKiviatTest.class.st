@@ -36,6 +36,18 @@ RSKiviatTest >> testBasic [
 ]
 
 { #category : #tests }
+RSKiviatTest >> testMaxMinValues [
+	| kiviat |
+	"one value"
+	kiviat := RSKiviat new.
+	kiviat addRow: #(1 2 3).
+	kiviat axisNames: #(a b c).
+	kiviat minValue: 1.
+	kiviat maxValue: 5.
+	kiviat build.
+]
+
+{ #category : #tests }
 RSKiviatTest >> testOddCollectionSize [
 	| kiviat |
 	kiviat := RSKiviat new.
@@ -47,7 +59,7 @@ RSKiviatTest >> testOddCollectionSize [
 { #category : #tests }
 RSKiviatTest >> testZeroValues [
 	| kiviat |
-	"one vaule"
+	"one value"
 	kiviat := RSKiviat new.
 	kiviat addRow: #(1).
 	kiviat axisNames: #(a).

@@ -19,7 +19,9 @@ Class {
 		'labels',
 		'axis',
 		'backgroundShapes',
-		'polygonShapes'
+		'polygonShapes',
+		'maxValue',
+		'minValue'
 	],
 	#category : #'Roassal3-Chart-Radar'
 }
@@ -72,9 +74,10 @@ RSKiviat >> computePointsFor: aCollection [
 	divisor := axisNames ifEmpty: [ 1 ] ifNotEmpty: [ axisNames size ]. 
 	delta := Float twoPi / divisor.
 	current := Float halfPi negated.
-	^ aCollection collectWithIndex: [ :value :index | | indexScale point |
+	^ aCollection collectWithIndex: [ :value :index | | indexScale point newRadius |
 		indexScale := scales scale: index.
-		point := current cos @ current sin * (indexScale scale: value).
+		newRadius := (indexScale scale: value).
+		point := current cos @ current sin * newRadius.
 		current := current + delta.
 		point ]
 ]
@@ -82,10 +85,16 @@ RSKiviat >> computePointsFor: aCollection [
 { #category : #private }
 RSKiviat >> computeScaleFor: array [
 	| min max |
-	min := values first ifEmpty: 0 ifNotEmpty: [ values first min ].
-	min := min min: 0.
-	max := values first ifEmpty: 1 ifNotEmpty: [ values first max ].
+	min := minValue 
+		ifNotNil: [ minValue 	]
+		ifNil: [ (array ifEmpty: 0 ifNotEmpty: [ values first min ]) min: 0 ].
+	max := maxValue 
+		ifNotNil: [ maxValue ]
+		ifNil: [ array ifEmpty: 1 ifNotEmpty: [ values first max ] ].
+	
 	^ NSScale linear domain: { min. max }; range: { 0. radius }.
+	
+
 ]
 
 { #category : #private }
@@ -167,6 +176,7 @@ RSKiviat >> createValuePolygon: array [
 	
 	self shouldUseDots ifTrue: [ 
 		shapePoints := points collect: [:point | self createShapePointFor: point in: polygon ].
+		shapePoints with: array do: [ :s :value | s model: value ].
 		self shouldUsePolygonFillColor ifFalse: [ polygon noPaint ].
 		^ ({ polygon }, shapePoints) asShape ].
 	self shouldUsePolygonFillColor ifFalse: [ polygon noPaint ].
@@ -236,6 +246,26 @@ RSKiviat >> labels [
 	^ labels
 ]
 
+{ #category : #accessing }
+RSKiviat >> maxValue [
+	^ maxValue
+]
+
+{ #category : #accessing }
+RSKiviat >> maxValue: aNumber [
+	maxValue := aNumber
+]
+
+{ #category : #accessing }
+RSKiviat >> minValue [
+	^ minValue
+]
+
+{ #category : #accessing }
+RSKiviat >> minValue: aNumber [
+	minValue := aNumber
+]
+
 { #category : #public }
 RSKiviat >> noDots [
 	shouldUseDots := false
@@ -294,8 +324,7 @@ RSKiviat >> renderAxisIn: aCanvas [
 		axis add: (self createAxisLine: name angle: current).
 		current := current + delta.
 		label ].
-	
-	deltaRadius := radius / 5.
+	deltaRadius := self tickStep. "should we use nice label generator for ticks?"
 	backgroundShapes := (deltaRadius to: radius by: deltaRadius) 
 		collect: [ :each | shouldUseEllipse
 			ifTrue: [ self createEllipseFor: each ]
@@ -303,7 +332,7 @@ RSKiviat >> renderAxisIn: aCanvas [
 	
 	aCanvas addAll: backgroundShapes.
 	backgroundShapes last 
-		color: self backgroundColor;
+		color: self backgroundColor; "should I draw rings insteadof one one ellipse"
 		pushBack.
 	aCanvas addAll: axis.
 	aCanvas addAll: labels.
@@ -343,6 +372,11 @@ RSKiviat >> shouldUsePolygonBorder [
 { #category : #testing }
 RSKiviat >> shouldUsePolygonFillColor [
 	^ shouldUsePolygonFillColor
+]
+
+{ #category : #'accessing - computed' }
+RSKiviat >> tickStep [
+	^ radius / 5
 ]
 
 { #category : #public }
