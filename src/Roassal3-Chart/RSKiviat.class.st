@@ -101,7 +101,7 @@ RSKiviat >> computeScaleFor: array [
 RSKiviat >> computeScales [
 	scales := NSScale ordinal.
 	values size = 1 ifTrue: [
-		scales range: { self computeScaleFor: values }
+		scales range: { self computeScaleFor: values first }
 	] ifFalse: [
 		scales range: (axisNames collectWithIndex: [ :each :index | 
 			| column |
