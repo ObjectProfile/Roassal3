@@ -45,14 +45,20 @@ RSKiviatTest >> testOddCollectionSize [
 ]
 
 { #category : #tests }
-RSKiviatTest >> testZeroValuesError [
+RSKiviatTest >> testZeroValues [
 	| kiviat |
+	"one vaule"
 	kiviat := RSKiviat new.
 	kiviat addRow: #(1).
 	kiviat axisNames: #(a).
-	
+	kiviat build.
+	"zero values"
 	kiviat := RSKiviat new.
 	kiviat addRow: #().
 	kiviat axisNames: #().
+	kiviat build.
+	
+	kiviat := RSKiviat new.
+	"use addRow: first"
 	self should: [ kiviat build ] raise: Error.
 ]
