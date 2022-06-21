@@ -998,7 +998,7 @@ RSShapeExamples >> example38Transformable [
 		text: 'Kaguya Sama';
 		yourself).
 	c add: (RSBitmap new
-		form: (self iconNamed: 'pharoBig');
+		form: (self iconNamed: #pharoBig);
 		
 		yourself).
 	c add: (RSShapeFactory star

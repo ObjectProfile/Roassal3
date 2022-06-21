@@ -65,7 +65,7 @@ RSWorldMenu class >> menu01ReportABugOn: aBuilder [
 		parent: #Roassal3;
 		order: 1;
 		label: 'Report a Bug';
-		icon: (self iconNamed: 'smallDebug');
+		icon: (self iconNamed: #smallDebug);
 		help: 'Will open the github page to report an issue';
 		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/issues/new' ]
 ]
@@ -78,7 +78,7 @@ RSWorldMenu class >> menu02GithubOn: aBuilder [
 		order: 2;
 		label: 'Github';
 		help: 'Open Roassal3 git hubpage';
-		icon: (self iconNamed: 'github');
+		icon: (self iconNamed: #github);
 		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/' ]
 ]
 
@@ -139,7 +139,7 @@ RSWorldMenu class >> menu11SelfOn: aBuilder [
 		order: 11;
 		label: 'This menu';
 		help: 'Open RSWorldMenu';
-		icon: (self iconNamed: 'smallExport');
+		icon: (self iconNamed: #smallExport);
 		action: [ self browse ]
 ]
 

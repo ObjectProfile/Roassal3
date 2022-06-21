@@ -2701,7 +2701,7 @@ RSAnimationExamples >> example45Beziers [
 						anime := comp newAnimation	
 							duration: 5 seconds;
 							onStepDo: [ :t |
-								| currentLines last |
+								| currentLines |
 								newShapes do: #remove.
 								labelT text: 'T=', (t printShowingDecimalPlaces: 3).
 								newShapes removeAll.
