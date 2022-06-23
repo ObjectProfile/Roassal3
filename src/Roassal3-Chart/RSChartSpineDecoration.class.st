@@ -38,10 +38,20 @@ RSChartSpineDecoration >> defaultShape [
 		yourself
 ]
 
+{ #category : #testing }
+RSChartSpineDecoration >> isSpineDecoration [
+	^ true
+]
+
 { #category : #rendering }
 RSChartSpineDecoration >> renderIn: canvas [
 	box := self shape copy
 		extent: chart extent.
 	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
 	canvas add: box
+]
+
+{ #category : #accessing }
+RSChartSpineDecoration >> zeroPoint [
+	^ 0 @ chart extent y
 ]

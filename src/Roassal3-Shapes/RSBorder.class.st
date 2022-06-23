@@ -51,8 +51,7 @@ Class {
 	#instVars : [
 		'width',
 		'style',
-		'paint',
-		'useCache'
+		'paint'
 	],
 	#category : #'Roassal3-Shapes-Border'
 }
@@ -121,8 +120,7 @@ c
 -=-=-=-=-=-=-=-=-=-=-=-=
 
 	"
-	self pStyle dashArray: arrayOfNumbers.
-	self doNotUseCache.
+	self pStyle dashArray: arrayOfNumbers
 	
 ]
 
@@ -177,7 +175,6 @@ RSBorder >> initialize [
 	super initialize.
 	paint := Color gray.
 	width := 1.
-	useCache := true.
 ]
 
 { #category : #'style - join' }
@@ -228,16 +225,6 @@ RSBorder >> style [
 { #category : #accessing }
 RSBorder >> style: aStyle [
 	style := aStyle
-]
-
-{ #category : #accessing }
-RSBorder >> useCache [
-	^ useCache
-]
-
-{ #category : #accessing }
-RSBorder >> useCache: aBoolean [
-	useCache := aBoolean
 ]
 
 { #category : #accessing }

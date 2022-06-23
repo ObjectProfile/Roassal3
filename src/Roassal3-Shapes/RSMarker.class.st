@@ -103,7 +103,6 @@ RSMarker >> postCopy [
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	| angle pos |
 	angle := vector angle.
-	"0.00001 in order to avoid inverseTransform bad result with sx = 0"
 	angle := angle + Float halfPi.
 	pos := from.
 	
@@ -113,7 +112,7 @@ RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [ 
 		| unit |
 		unit := vector / (vector r max: 1).
-		pos := pos -(vector * self offsetRatio) - (unit * self offset)
+		pos := pos - (vector * self offsetRatio) - (unit * self offset).
 		 ].
 	shape position: pos.
 	aBlock value: shape

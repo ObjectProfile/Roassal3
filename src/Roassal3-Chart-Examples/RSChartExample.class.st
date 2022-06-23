@@ -421,3 +421,20 @@ RSChartExample >> example23PopupInScatterPlot [
 		model name, String cr, 'LOC: ', model linesOfCode asString]).
 	^ chart
 ]
+
+{ #category : #examples }
+RSChartExample >> example24SpineLine [
+	<script: 'self new example24SpineLine open'>
+	| x c y spine |
+	
+	x := -3.14 to: 3.14 by: 0.01.
+	y := x sin * 0.22 + 0.2.
+	c := RSChart new.
+	c extent: 400@300.
+	c lineX: x y: y.
+	c spineDecoration: (spine := RSLineSpineDecoration new).
+	spine shape fmt: '^'.
+	c add: RSHorizontalTick new.
+	c add: RSVerticalTick new.
+	^ c
+]

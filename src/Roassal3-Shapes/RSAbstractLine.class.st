@@ -159,7 +159,9 @@ canvas open
 ````
 	 "
 	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].
+		ifNotNil: [ :shape | 
+			self shape marker: ((shape size: self border width * 4) color: self shape color; yourself).
+			 ].
 	(RSStrokeStyle fromString: aString)
 		ifNotNil: [ :style | self shape border style: style ]
 	

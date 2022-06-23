@@ -35,7 +35,8 @@ Class {
 		'elements',
 		'extents',
 		'generator',
-		'colorPalette'
+		'colorPalette',
+		'spineDecoration'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -178,7 +179,7 @@ RSChart >> initialize [
 
 { #category : #initialization }
 RSChart >> initializeDecorations [
-	self addDecoration: RSChartSpineDecoration new.
+	self spineDecoration: RSChartSpineDecoration new.
 ]
 
 { #category : #inspector }
@@ -304,10 +305,6 @@ RSChart >> openOnce [
 { #category : #'accessing - extension' }
 RSChart >> padding [
 	^ self chartExtents padding
-		ifNil: [ | res |
-			self chartExtents padding: (res := 0@0).
-			res ]
-		ifNotNil: [:res | res ].
 ]
 
 { #category : #'accessing - extension' }
@@ -336,10 +333,24 @@ RSChart >> show [
 
 { #category : #accessing }
 RSChart >> spine [
-	^ (self decorations
-		detect: [ :d | d class == RSChartSpineDecoration ]
-		ifNone: [ self error: 'No spine is added in the plt, you need to add one' ])
-		box
+	"returns the shape"
+	^ self spineDecoration box
+]
+
+{ #category : #accessing }
+RSChart >> spineDecoration [
+	^ spineDecoration
+]
+
+{ #category : #accessing }
+RSChart >> spineDecoration: aRSChartSpineDecoration [
+	spineDecoration ifNotNil: [ 
+		elements remove: spineDecoration.
+		spineDecoration chart: nil ].
+	spineDecoration := aRSChartSpineDecoration.
+	elements addFirst: spineDecoration.
+	spineDecoration chart: self.
+	
 ]
 
 { #category : #accessing }
