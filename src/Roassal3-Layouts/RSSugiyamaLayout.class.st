@@ -12,7 +12,6 @@ Class {
 		'connections',
 		'visited',
 		'stack',
-		'childrenWithoutCycles',
 		'parentWithoutCycles'
 	],
 	#category : #'Roassal3-Layouts-Core'
