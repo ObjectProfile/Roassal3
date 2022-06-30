@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #hooks }
-RSSturgesBinning >> computeSizeFor: values [
-	^ (values size log / 2 log) ceiling + 1
+RSSturgesBinning >> computeNumberOfBinsFor: aCollection [
+	^ (aCollection size log / 2 log) ceiling + 1
 ]

@@ -54,36 +54,37 @@ RSHistogramPlot >> bins [
 ]
 
 { #category : #accessing }
-RSHistogramPlot >> bins: aCollectionOrNumber [
-	bins := aCollectionOrNumber.
+RSHistogramPlot >> bins: aCollection [
+	self assert: aCollection isCollection description: 'you must provide a collection'.
+	bins := aCollection.
 	self computeXYValues.
 ]
 
 { #category : #private }
 RSHistogramPlot >> computeBins [
-	| binsSize |
-	(bins notNil and:[bins isCollection ]) ifTrue: [ ^ bins ].
-	binsSize := bins.
-	binsSize
+	| newBins |
+	bins ifNotNil: [ ^ bins ].
+	newBins := binningStrategy createBinsFor: x.
+	"binsSize
 		ifNil: [ binsSize := binningStrategy computeSizeFor: x. ].
 	binsSize := binsSize + 1.
-	bins := x first to: x last count: binsSize.
-	^ bins
+	bins := x first to: x last count: binsSize."
+	^ newBins
 ]
 
 { #category : #private }
 RSHistogramPlot >> computeXYValues [
-	| prev |
-	bins := self computeBins.
-	xValues := bins.
-	prev := bins first.
-	yValues := bins allButLast collectWithIndex: [ :val1 :index | 
+	| prev currentBins |
+	currentBins := self computeBins.
+	xValues := currentBins.
+	prev := currentBins first.
+	yValues := currentBins allButLast collectWithIndex: [ :val1 :index | 
 		| val2 condition |
-		val2 := bins at: index + 1.
-		condition := index + 1 = bins size 
+		val2 := currentBins at: index + 1.
+		condition := index + 1 = currentBins size 
 			ifTrue: [ [ :value | value between: val1 and: val2 ] ]
 			ifFalse: [ [ :value | val1 <= value and: [ value < val2 ] ] ].
-		"TODO"
+		
 		(x select: condition ) size.
 	].
 	
@@ -111,6 +112,17 @@ RSHistogramPlot >> definedValuesY [
 RSHistogramPlot >> initialize [
 	super initialize.
 	self binningStrategy: RSDefaultBinning new.
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> numberOfBins [
+	^ self binningStrategy numberOfBins
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> numberOfBins: aNumber [
+	self binningStrategy numberOfBins: aNumber.
+	self computeXYValues.
 ]
 
 { #category : #rendering }

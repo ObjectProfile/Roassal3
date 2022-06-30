@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #hooks }
-RSRiceBinning >> computeSizeFor: values [
-	^ 2 * (values size raisedTo: 1/3)
+RSRiceBinning >> computeNumberOfBinsFor: aCollection [
+	^ 2 * (aCollection size raisedTo: 1/3)
 ]

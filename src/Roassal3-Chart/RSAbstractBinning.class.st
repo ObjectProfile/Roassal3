@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : #hooks }
-RSAbstractBinning >> computeSizeFor: values [
+RSAbstractBinning >> computeNumberOfBinsFor: aCollection [
+	" should return a number"
 	^ self subclassResponsibility
+]
+
+{ #category : #hooks }
+RSAbstractBinning >> createBinsFor: aCollection [
+	| size |
+	size := self computeNumberOfBinsFor: aCollection.
+	"an adjust"
+	size := size + 1.
+	^ aCollection first to: aCollection last count: size.
 ]

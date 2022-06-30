@@ -22,7 +22,7 @@ RSHistogramPlotTest >> testBins [
 	| c values plot |
 	c := RSChart new.
 	values := #(1 2 3 4 5 6 7 8 9 10).
-	c addPlot: (plot := RSHistogramPlot new x: values; bins: 2).
+	c addPlot: (plot := RSHistogramPlot new x: values; numberOfBins: 2).
 	c build.
 	self assert: plot bars size equals: 2.
 	self assert: plot xValues equals: (1 to: 10 count: 3).
