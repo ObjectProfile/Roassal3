@@ -18,6 +18,18 @@ RSHistogramPlotTest >> testBasic [
 ]
 
 { #category : #tests }
+RSHistogramPlotTest >> testBinSize [
+	| c values plot size |
+	c := RSChart new.
+	values := (1 to: 100) shuffled.
+	c addPlot: (plot := RSHistogramPlot new x: values; binSize: 30).
+	c build.
+	size := (plot binningStrategy computeNumberOfBinsFor: values sorted).
+	self assert: plot bars size equals: size.
+	
+]
+
+{ #category : #tests }
 RSHistogramPlotTest >> testBins [
 	| c values plot |
 	c := RSChart new.

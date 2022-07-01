@@ -37,6 +37,13 @@ RSHistogramPlot >> bars [
 ]
 
 { #category : #accessing }
+RSHistogramPlot >> binSize: aNumber [
+	self binningStrategy: (RSBinSizeBinning new
+		size: aNumber;
+		yourself)
+]
+
+{ #category : #accessing }
 RSHistogramPlot >> binningStrategy [
 
 	^ binningStrategy
