@@ -56,6 +56,7 @@ RSSunburstExamples >> example04Edges [
 	sb build.
 	sb shapes @ RSPopup.
 	RSLineBuilder arrowedLine
+		color: Color black;
 		attachPoint: RSSunburstAttachPoint new;
 		canvas: sb canvas;
 		connectFrom: #superclass.
