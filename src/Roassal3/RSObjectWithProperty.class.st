@@ -106,6 +106,11 @@ RSObjectWithProperty >> properties [
 ]
 
 { #category : #properties }
+RSObjectWithProperty >> properties: aDictionary [
+	properties := aDictionary
+]
+
+{ #category : #properties }
 RSObjectWithProperty >> propertiesDo: block [
 	self hasProperties ifFalse: [ ^ self ].
 	block value: self properties.

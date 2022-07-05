@@ -29,8 +29,8 @@ c
 Class {
 	#name : #RSAbstractLine,
 	#superclass : #RSShape,
-	#traits : 'RSTMarkeable',
-	#classTraits : 'RSTMarkeable classTrait',
+	#traits : 'RSTMarkeable + RSTPositionable',
+	#classTraits : 'RSTMarkeable classTrait + RSTPositionable classTrait',
 	#instVars : [
 		'attachPoint',
 		'from',
@@ -63,6 +63,11 @@ RSAbstractLine >> attachPoint: anAttachPoint [
 { #category : #testing }
 RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
+]
+
+{ #category : #accessing }
+RSAbstractLine >> basicTranslateBy: delta [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'style - cap' }
@@ -254,6 +259,11 @@ RSAbstractLine >> notifyExtentChanged [
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]
+]
+
+{ #category : #accessing }
+RSAbstractLine >> position [
+	^ self encompassingRectangle floatCenter
 ]
 
 { #category : #'accessing - markers' }

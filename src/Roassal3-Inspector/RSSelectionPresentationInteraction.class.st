@@ -32,8 +32,17 @@ RSSelectionPresentationInteraction >> addInteractionToCanvas: aShape [
 	canvas := aShape canvas.
 	canvas ifNil: [ ^ self ].
 	canvas propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
-		canvas removeInteractionIfPresent: self class.
+		canvas when: RSScaleChangedEvent send: #updateShadow: to: self.
 		canvas when: RSMouseClick send: #removeShadowFromCanvas: to: self ]
+]
+
+{ #category : #visitor }
+RSSelectionPresentationInteraction >> createShadowFor: aShape [
+	^ (aShape
+		inspectorShadowFor: self padding / (self scaleFrom: aShape) 
+		color: self shadowColor)
+		propertyAt: self key put: aShape;
+		yourself
 ]
 
 { #category : #initialization }
@@ -50,9 +59,12 @@ RSSelectionPresentationInteraction >> key [
 { #category : #hooks }
 RSSelectionPresentationInteraction >> onShape: aShape [
 	aShape model ifNil: [ ^ self ].
-	self addInteractionToCanvas: aShape.
 	aShape removeInteractionIfPresent: self class.
-	aShape when: RSMouseClick send: #selection: to: self
+	self addInteractionToCanvas: aShape.
+	aShape
+		when: RSPositionChangedEvent send: #updateShadow: to: self;
+		when: RSExtentChangedEvent send: #updateShadow: to: self;
+		when: RSMouseClick send: #selection: to: self
 ]
 
 { #category : #accessing }
@@ -75,23 +87,27 @@ RSSelectionPresentationInteraction >> presentation: aRSRoassalPresentation [
 	presentation := aRSRoassalPresentation
 ]
 
+{ #category : #visitor }
+RSSelectionPresentationInteraction >> privateShadowFor: aShape [
+	^ aShape class = RSBitmap ifTrue: [ 
+		RSBox new
+	] ifFalse: [
+		aShape copy
+			border: nil;
+			properties: nil;
+			yourself ]
+	
+]
+
 { #category : #hooks }
 RSSelectionPresentationInteraction >> putShadowOn: aShape [
-
-	| shadow pad |
-	"Make sure that  the size is indenpendent of the camera scale"
-	pad := self padding / (self scaleFrom: aShape).
-	shadow := RSBox new
-		fromRectangle: (aShape encompassingRectangle expandBy: pad);
-		paint: self shadowColor;
-		cornerRadius: pad * 0.75;
-		yourself.
-	aShape removeInteractionIfPresent: RSLocation.
-	RSLocation new stick: shadow on: aShape.
-	
+	| shadow |
+	shadow := self createShadowFor: aShape.
 	(aShape parent notNil or: [ aShape canvas ]) ifNil: [ ^ self ].
+	aShape pushFront.
 	aShape parent addShape: shadow before: aShape.
-	aShape canvas propertyAt: self key put: shadow
+	aShape canvas propertyAt: self key put: shadow.
+	self updateShadowPosition: aShape canvas.
 ]
 
 { #category : #dependencies }
@@ -112,8 +128,10 @@ RSSelectionPresentationInteraction >> removeShadowOn: aShape [
 	
 	aShape canvas
 		propertyAt: self key
-		ifPresent: [ :shadow | shadow remove ].
-	aShape canvas removeKey: self key.
+		ifPresent: [ :shadow | 
+			shadow remove.
+			aShape canvas removeKey: self key. ].
+	
 ]
 
 { #category : #hooks }
@@ -146,4 +164,24 @@ RSSelectionPresentationInteraction >> shadowColor [
 { #category : #accessing }
 RSSelectionPresentationInteraction >> shadowColor: aColor [
 	shadowColor := aColor
+]
+
+{ #category : #hooks }
+RSSelectionPresentationInteraction >> updateShadow: evt [
+	| shadow shape |
+	(evt canvas hasProperty: self key) ifFalse: [ ^ self ].
+	shadow := evt canvas propertyAt: self key.
+	shape := shadow propertyAt: self key.
+	self 
+		removeShadowOn: shape;
+		putShadowOn: shape.
+	evt canvas canvas signalUpdate
+]
+
+{ #category : #hooks }
+RSSelectionPresentationInteraction >> updateShadowPosition: aCanvas [
+	| shadow |
+	(aCanvas hasProperty: self key) ifFalse: [ ^ self ].
+	shadow := aCanvas propertyAt: self key.
+	RSLocation new move: shadow on: (shadow propertyAt: self key)
 ]

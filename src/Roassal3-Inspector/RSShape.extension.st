@@ -19,6 +19,11 @@ RSShape >> inspectorCanvasIn: composite [
 ]
 
 { #category : #'*Roassal3-Inspector' }
+RSShape >> inspectorShadowFor: padding color: aColor [
+	^ self subclassResponsibility
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSShape >> inspectorShape [
 	<inspectorPresentationOrder: 90 title: 'Shape'>
 
