@@ -436,5 +436,6 @@ RSChartExample >> example24SpineLine [
 	spine shape fmt: '^'.
 	c add: RSHorizontalTick new.
 	c add: RSVerticalTick new.
+	c padding: 10.
 	^ c
 ]

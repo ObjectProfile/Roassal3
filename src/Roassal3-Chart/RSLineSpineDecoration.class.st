@@ -30,7 +30,6 @@ RSLineSpineDecoration >> renderIn: canvas [
 	axisY startPoint: x @ chart extent y; endPoint: x @ 0.
 	
 	box := { axisX. axisY } asShape.
-	box color: Color red translucent.
 	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
 	canvas add: box
 ]

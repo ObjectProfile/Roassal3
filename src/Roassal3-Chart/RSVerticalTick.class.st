@@ -36,11 +36,13 @@ RSVerticalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSVerticalTick >> createTickLineFor: aNumber [
-	| scaledNumber |
+	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.
+	zeroX := chart spineDecoration zeroPoint x.
+	
 	^ self shape copy
-		startPoint: 0 @ scaledNumber;
-		endPoint: self configuration tickSize negated @ scaledNumber;
+		startPoint: zeroX @ scaledNumber;
+		endPoint: zeroX - self configuration tickSize @ scaledNumber;
 		yourself
 ]
 
