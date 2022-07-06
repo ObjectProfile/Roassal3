@@ -39,5 +39,5 @@ RSSelectionPresentationTest >> testWithNoCanvas [
 	| shapes |
 	shapes := (1 to: 100) collect: [ :v | RSBox new model: v ] as: RSGroup.
 	shapes @ RSSelectionPresentationInteraction.
-	shapes first announce: RSMouseClick
+	shapes first announce: RSMouseClick.
 ]

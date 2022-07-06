@@ -28,12 +28,14 @@ Class {
 
 { #category : #hooks }
 RSSelectionPresentationInteraction >> addInteractionToCanvas: aShape [
-	| canvas |
+	| canvas key |
 	canvas := aShape canvas.
 	canvas ifNil: [ ^ self ].
-	canvas propertyAt: #canvasInspectorSelection ifAbsentPut: [ 
-		canvas when: RSScaleChangedEvent send: #updateShadow: to: self.
-		canvas when: RSMouseClick send: #removeShadowFromCanvas: to: self ]
+	key := #canvasInspectorSelection.
+	(canvas hasProperty: key) ifTrue: [ ^ self ].
+	canvas when: RSScaleChangedEvent send: #updateShadow: to: self.
+	canvas when: RSMouseClick send: #removeShadowFromCanvas: to: self.
+	canvas propertyAt: key put: true.
 ]
 
 { #category : #visitor }
@@ -41,6 +43,7 @@ RSSelectionPresentationInteraction >> createShadowFor: aShape [
 	^ (aShape
 		inspectorShadowFor: self padding / (self scaleFrom: aShape) 
 		color: self shadowColor)
+		model: nil;
 		propertyAt: self key put: aShape;
 		yourself
 ]
