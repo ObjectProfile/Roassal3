@@ -345,6 +345,7 @@ RSKiviat >> renderIn: aCanvas [
 	self assert: values first size = axisNames size description: 'can not be different'.
 	self renderAxisIn: aCanvas.
 	self renderValuesIn: aCanvas.
+	shapes := backgroundShapes, axis, labels, polygonShapes
 ]
 
 { #category : #hooks }

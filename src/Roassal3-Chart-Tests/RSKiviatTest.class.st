@@ -18,7 +18,13 @@ RSKiviatTest >> testAccessingCreatedShapes [
 	self assert: (kiviat axis allSatisfy: [:shape | shape class = RSLine ]).
 	self assert: (kiviat backgroundShapes  allSatisfy: [ :shape | shape class = RSEllipse ]).
 	self assert: kiviat polygonShapes size equals: 1.
-	self assert: (kiviat polygonShapes allSatisfy: [ :shape | shape class = RSPolygon ])
+	self assert: (kiviat polygonShapes allSatisfy: [ :shape | shape class = RSPolygon ]).
+	
+	self assert: kiviat shapes isNotNil.
+	self 
+		assert: kiviat shapes size
+		equals: (#(backgroundShapes axis labels polygonShapes) 
+			collect: [ :selector | (kiviat perform: selector) size ]) sum
 	
 ]
 
