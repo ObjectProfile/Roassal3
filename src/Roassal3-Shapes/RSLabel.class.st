@@ -413,7 +413,9 @@ RSLabel >> textHeight [
 { #category : #accessing }
 RSLabel >> textWidth [
 	"without any transformation"
-	^ self textExtents width
+	| ext |
+	ext := self textExtents.
+	^ ext width + ext x_bearing
 ]
 
 { #category : #'managing font' }

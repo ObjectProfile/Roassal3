@@ -85,5 +85,7 @@ RSWrapStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 		self wrapLineShapesFor: line with: aRSMultilineLabelBuilder ] 
 		as: RSGroup.
 	aRSMultilineLabelBuilder layout on: shapes.
-	^ shapes asShape position: 0@0; yourself.
+	^ shapes asShape 
+		position: 0@0;
+		yourself
 ]

@@ -607,9 +607,10 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
-		self visitChildrenIfNecessary: shape.
 		self visitShadowRectangleIfNecessary: shape.
-	]
+		self visitChildrenIfNecessary: shape.
+	].
+	
 	
 	
 ]
