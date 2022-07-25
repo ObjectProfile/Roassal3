@@ -30,7 +30,6 @@ RSRNode >> add: anObject [
 	]ifFalse: [ | leastEnlargementChild |
 		leastEnlargementChild := self leastEnlargementChild: anObject.
 		leastEnlargementChild add: anObject.
-		self flag: 'balance'.
 	].
 	rectangle := Rectangle merging: {left rectangle. right rectangle}.
 ]
@@ -216,9 +215,8 @@ RSRNode >> nodesWithPoint: aPoint list: aCollection [
 	(self rectangle containsPoint: aPoint)
 		ifFalse: [ ^ self ].
 	self isLeaf ifTrue:[
-		(self contents includesPoint: aPoint) ifTrue: [
-			aCollection add: self contents.
-			].
+		(self contents includesPoint: aPoint)
+			ifTrue: [ aCollection add: self contents ]
 	] ifFalse: [ 
 		self childrenDo: [ :child | child nodesWithPoint: aPoint list: aCollection ]
 	]

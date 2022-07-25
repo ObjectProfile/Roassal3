@@ -1,6 +1,17 @@
 Extension { #name : #RSRTreeShapeCollection }
 
 { #category : #'*Roassal3-Inspector' }
+RSRTreeShapeCollection >> inspectorQueries [
+	<inspectorPresentationOrder: 4 title: 'Queries'>
+	^ root inspectorQueries
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRTreeShapeCollection >> inspectorQueriesContext: aContext [
+	aContext withoutEvaluator
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSRTreeShapeCollection >> inspectorRectangles [
 	<inspectorPresentationOrder: 1 title: 'Rectangles'>
 	^ self root inspectorRectangles

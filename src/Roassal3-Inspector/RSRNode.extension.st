@@ -83,6 +83,38 @@ RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent 
 ]
 
 { #category : #'*Roassal3-Inspector' }
+RSRNode >> asRSCanvasForQueries [
+	| canvas box point log |
+	canvas := self newCanvas.
+	
+	self do: [ :value | canvas add: (RSBox new 
+		fromRectangle: value encompassingRectangle;
+		color: Color black;
+		yourself) ].
+	box := RSBox new 
+		extent: canvas encompassingRectangle extent * 0.1;
+		color: ((Color colorFrom: '#3399FF') alpha: 0.2);
+		border: (RSBorder new color: Color black);
+		yourself.
+	point := RSShapeFactory plus.
+	point size: box extent * 0.1.
+	point color: Color red.
+	log := RSComposite new.
+	log isFixed: true.
+	log when: RSExtentChangedEvent do: [ :evt | 
+		RSLocation new inner bottom; top; left; offset: 10@10; 
+		move: log on: (0@0 corner: canvas extent) ].
+	canvas addAll: {box. point. log}.
+	canvas when: RSMouseMove do: [ :evt |
+		box position: evt position.
+		point position: evt position.
+		self updateLog: log rectangle: box encompassingRectangle.
+		evt signalUpdate.
+		 ].
+	^ canvas
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSRNode >> asRSCanvasForRectangles [
 	| canvas palette list |
 	palette := NSScale category20.
@@ -154,6 +186,14 @@ RSRNode >> createBoxesIn: canvas palette: palette level: level [
 ]
 
 { #category : #'*Roassal3-Inspector' }
+RSRNode >> inspectorQueries [
+	<inspectorPresentationOrder: 4 title: 'Queries'>
+	^ SpRoassal3InspectorPresenter new
+		canvas: self asRSCanvasForQueries;
+		yourself
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSRNode >> inspectorRectangles [
 	<inspectorPresentationOrder: 1 title: 'Rectangles'>
 	^ SpRoassal3InspectorPresenter new
@@ -213,4 +253,49 @@ RSRNode >> parentsFor: shape list: list [
 	shape ifNil: [ ^ self ].
 	shape model isLeaf ifFalse: [ list add: shape ].
 	self parentsFor: (shape propertyAt: #parent) list: list.
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRNode >> queryResult: aRect [
+	| link node nodesVisited nodesInPointVisited nodesInPoint nodesInRectangle |
+	nodesInPoint := OrderedCollection new.
+	nodesInRectangle := OrderedCollection new.
+	nodesVisited := 0.
+	
+	link := MetaLink new
+		arguments: #(context);
+		selector: #value:;
+		metaObject: [ :context | nodesVisited := nodesVisited + 1 ];
+		yourself.
+		
+	node := (self class >> #nodesWithPoint:list:) ast.
+	node link: link.
+	[ self nodesWithPoint: aRect floatCenter list: nodesInPoint] ensure: [ link uninstall ].
+	nodesInPointVisited := nodesVisited.
+	nodesVisited := 0.
+	node := (self class >> #nodesIntersetcsRectangle:list:) ast.
+	node link: link.
+	[ self nodesIntersetcsRectangle: aRect list: nodesInRectangle  ] ensure: [ link uninstall ].
+	
+	^ String streamContents: [ :stream |
+		stream
+			<<  'Nodes in point: ';
+			<< nodesInPoint size asString; cr;
+			<< 'Queries: ';
+			<< nodesInPointVisited asString; cr;
+			<< 'Nodes in rectangle: ';
+			<< nodesInRectangle size asString; cr;
+			<< 'Queries: ';
+			<< nodesVisited asString ]	
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRNode >> updateLog: log rectangle: aRect [
+	| builder |
+	builder := RSMultilineLabelBuilder new.
+	builder labelShape color: Color black.
+	log children do: #remove.
+	log add: (builder shapeFor: (self queryResult: aRect) ). 
+	log adjustToChildren.
+	
 ]
