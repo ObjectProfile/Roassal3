@@ -57,3 +57,26 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	c nodes @ RSHighlightable red.
 	^ c
 ]
+
+{ #category : #lines }
+RSRenderTreeExamples >> example03RTree [
+	<script: 'self new example03RTree inspect'>
+	<noTest>
+	| tree random canvas |
+	tree := RSRTreeShapeCollection new.
+	random := Random new.
+	random seed: 777.
+	canvas := RSCanvas new.
+	1 to: 100 do: [ :each | | box |
+		box := RSBox new.
+		box size: 10.
+		box model: each.
+		box popup.
+		box position: (random next @ random next) * 1000.
+		canvas add: box.
+		
+		tree add: box.	
+	].
+	canvas @ RSCanvasController.
+	^ tree
+]
