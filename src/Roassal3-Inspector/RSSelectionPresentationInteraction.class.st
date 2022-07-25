@@ -21,7 +21,8 @@ Class {
 	#instVars : [
 		'presentation',
 		'shadowColor',
-		'padding'
+		'padding',
+		'shouldPushFront'
 	],
 	#category : #'Roassal3-Inspector-Interactions'
 }
@@ -52,11 +53,17 @@ RSSelectionPresentationInteraction >> createShadowFor: aShape [
 RSSelectionPresentationInteraction >> initialize [
 	super initialize.
 	self padding: 10.
+	self usePushFront.
 ]
 
 { #category : #accessing }
 RSSelectionPresentationInteraction >> key [
 	^ self class name
+]
+
+{ #category : #public }
+RSSelectionPresentationInteraction >> noPushFront [
+	shouldPushFront := false
 ]
 
 { #category : #hooks }
@@ -107,7 +114,7 @@ RSSelectionPresentationInteraction >> putShadowOn: aShape [
 	| shadow |
 	shadow := self createShadowFor: aShape.
 	(aShape parent notNil or: [ aShape canvas ]) ifNil: [ ^ self ].
-	aShape pushFront.
+	self shouldPushFront ifTrue: [ aShape pushFront ]. 
 	aShape parent addShape: shadow before: aShape.
 	aShape canvas propertyAt: self key put: shadow.
 	self updateShadowPosition: aShape canvas.
@@ -169,6 +176,11 @@ RSSelectionPresentationInteraction >> shadowColor: aColor [
 	shadowColor := aColor
 ]
 
+{ #category : #testing }
+RSSelectionPresentationInteraction >> shouldPushFront [
+	^ shouldPushFront
+]
+
 { #category : #hooks }
 RSSelectionPresentationInteraction >> updateShadow: evt [
 	| shadow shape |
@@ -187,4 +199,9 @@ RSSelectionPresentationInteraction >> updateShadowPosition: aCanvas [
 	(aCanvas hasProperty: self key) ifFalse: [ ^ self ].
 	shadow := aCanvas propertyAt: self key.
 	RSLocation new move: shadow on: (shadow propertyAt: self key)
+]
+
+{ #category : #public }
+RSSelectionPresentationInteraction >> usePushFront [
+	shouldPushFront := true
 ]

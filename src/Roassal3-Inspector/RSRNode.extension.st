@@ -84,13 +84,18 @@ RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent 
 
 { #category : #'*Roassal3-Inspector' }
 RSRNode >> asRSCanvasForRectangles [
-	| canvas palette |
+	| canvas palette list |
 	palette := NSScale category20.
-	canvas := RSCanvas new.
-	self addWithChildren: canvas level: 1 palette: palette.
+	canvas := self newCanvas.
+	self createBoxesIn: canvas palette: palette level: 1.
+	list := LinkedList new.
+	list add: canvas nodes first.
+	[ list isEmpty ] whileFalse: [ | node |
+		node := list removeFirst.
+		node pushFront.
+		list addAll: node schildren ].
 	canvas nodes @ RSHighlightable red.
 	self addMenu: canvas.
-	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -98,7 +103,7 @@ RSRNode >> asRSCanvasForRectangles [
 RSRNode >> asRSCanvasTree [
 	| canvas palette |
 	palette := NSScale category20. 
-	canvas := RSCanvas new.
+	canvas := self newCanvas.
 	self addWithChildren: canvas.
 	RSLineBuilder line
 		withVerticalAttachPoint;
@@ -106,7 +111,6 @@ RSRNode >> asRSCanvasTree [
 		connectToAll: [ :node | node children ].
 	
 	RSTreeLayout on: canvas nodes.
-	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -114,33 +118,39 @@ RSRNode >> asRSCanvasTree [
 RSRNode >> asRSCanvasWithParentPath [
 	| canvas palette leafs |
 	palette := NSScale category20. 
-	canvas := RSCanvas new.
+	canvas := self newCanvas.
 	self addWithChildren: canvas level: 1 palette: palette parent: nil.
 	leafs := canvas shapes select: [ :node | node model isLeaf ].
 	leafs
 		pushFront;
+		addInteraction: self parentHighlightable;
 		addInteraction: (RSPopup text: [:node | | shape parents |
 			shape := (canvas shapeFromModel: node).
 			parents := OrderedCollection new.
 			self parentsFor: shape list: parents.
 			'Parents size: ' ,parents size asString.
-			]);
-		when: RSMouseEnter do: [ :evt | | parents |
-			parents := OrderedCollection new.
-			self parentsFor: evt shape list: parents.
-			parents do: [ :each |
-				each color: (each propertyAt: #originalColor).
-				 ].
-			evt canvas propertyAt: #parents put: parents.
-			evt signalUpdate.
-			 ];
-		when: RSMouseLeave do: [ :evt |
-			evt canvas propertyAt: #parents ifPresent: [ :parents | parents do: #noPaint ].
-			evt signalUpdate.
-		].
-	
-	canvas @ RSCanvasController.
+			]).
 	^ canvas
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRNode >> createBoxesIn: canvas palette: palette level: level [
+	| color box children |
+	color := (palette scale: level) alpha: 0.6.
+	box := RSBox new
+		model: self;
+		fromRectangle: rectangle;
+		color: (Color black alpha: 0.1);
+		propertyAt: #level put: level;
+		propertyAt: #originalColor put: color;
+		yourself.
+	canvas add: box.
+	children := RSGroup new.
+	self childrenDo: [ :child | | childBox |
+		childBox := child createBoxesIn: canvas palette: palette level: level +1.
+		children add: childBox ].
+	box schildren: children.
+	^ box
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -164,6 +174,37 @@ RSRNode >> inspectorWithParent [
 	<inspectorPresentationOrder: 2 title: 'With Parent'>
 	^ SpRoassal3InspectorPresenter new
 		canvas: self asRSCanvasWithParentPath;
+		yourself
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRNode >> newCanvas [
+	^ RSCanvas new
+		addInteraction: RSCanvasController;
+		in: [ :canvas | canvas inspectorContext interactionsToBeRegistered first noPushFront ];
+		yourself.
+	
+]
+
+{ #category : #'*Roassal3-Inspector' }
+RSRNode >> parentHighlightable [
+	^ RSHighlightable new
+		when: RSHighlightEvent do: [ :evt | 
+			| parents |
+			parents := OrderedCollection new.
+			self parentsFor: evt shape list: parents.
+			parents do: [ :each |
+				each color: (each propertyAt: #originalColor).
+				 ].
+			evt signalUpdate.
+			 ];
+		when: RSUnHighlightEvent do: [ :evt |
+			| parents |
+			parents := OrderedCollection new.
+			self parentsFor: evt shape list: parents.
+			parents do: #noPaint.
+			evt signalUpdate.
+		];
 		yourself
 ]
 
