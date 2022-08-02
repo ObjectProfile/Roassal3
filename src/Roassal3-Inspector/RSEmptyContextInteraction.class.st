@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Inspector-Contexts'
 }
 
+{ #category : #accessing }
+RSEmptyContextInteraction >> inspectorInteractions [
+	^ #()
+]
+
 { #category : #hooks }
 RSEmptyContextInteraction >> interactionsToBeRegistered [
 	^ #()

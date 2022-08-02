@@ -11,11 +11,14 @@ Class {
 }
 
 { #category : #initialization }
+RSContextInteraction >> defaultInteractions [
+	^ { RSSelectionPresentationInteraction new } asOrderedCollection
+]
+
+{ #category : #initialization }
 RSContextInteraction >> initialize [
 	super initialize.
-	interactions := OrderedCollection new
-		add: RSSelectionPresentationInteraction new;
-		yourself.
+	interactions := self defaultInteractions.
 ]
 
 { #category : #hooks }

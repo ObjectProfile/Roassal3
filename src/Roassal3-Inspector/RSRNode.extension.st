@@ -97,7 +97,7 @@ RSRNode >> asRSCanvasForQueries [
 		border: (RSBorder new color: Color black);
 		yourself.
 	point := RSShapeFactory plus.
-	point size: box extent * 0.1.
+	point size: 10.
 	point color: Color red.
 	log := RSComposite new.
 	log isFixed: true.
