@@ -151,8 +151,8 @@ RSColorPaletteChooser >> initializeInteractions [
 
 { #category : #initialization }
 RSColorPaletteChooser >> initializePresenters [
-	buttons := self instantiate: SpRoassalPresenter.
-	colors := self instantiate: SpRoassalPresenter.
+	buttons := self newRoassal.
+	colors := self newRoassal.
 	buttons script: [ :canvas | 
 		self renderButtonsOn: canvas.
 		self renderColorPalettesFor: buttonElements first.].
@@ -273,5 +273,5 @@ RSColorPaletteChooser >> renderColorPalettesFor: aShape [
 
 { #category : #initialization }
 RSColorPaletteChooser >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]

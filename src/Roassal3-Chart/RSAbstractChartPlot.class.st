@@ -1,5 +1,5 @@
 "
-TODO
+Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'chart',
 		'xScale',
-		'yScale'
+		'yScale',
+		'shape'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -20,7 +21,6 @@ RSAbstractChartPlot >> addShape: aShape [
 
 { #category : #rendering }
 RSAbstractChartPlot >> beforeRenderingIn: aChart [
-	"do nothing here"
 ]
 
 { #category : #accessing }
@@ -31,6 +31,16 @@ RSAbstractChartPlot >> chart [
 { #category : #accessing }
 RSAbstractChartPlot >> chart: aChart [
 	chart := aChart
+]
+
+{ #category : #'public - shape' }
+RSAbstractChartPlot >> color [
+	^ self shape color
+]
+
+{ #category : #'public - shape' }
+RSAbstractChartPlot >> color: aColor [
+	self shape color: aColor
 ]
 
 { #category : #rendering }
@@ -69,10 +79,41 @@ RSAbstractChartPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
+{ #category : #initialization }
+RSAbstractChartPlot >> defaultShape [
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+RSAbstractChartPlot >> initialize [
+	super initialize.
+	shape := self defaultShape
+]
+
+{ #category : #testing }
+RSAbstractChartPlot >> isDecoration [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractChartPlot >> isPlot [
+	^ false
+]
+
 { #category : #rendering }
 RSAbstractChartPlot >> renderIn: canvas [
 	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> shape [
+	^ shape
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> shape: aRSShape [
+	shape := aRSShape
 ]
 
 { #category : #rendering }

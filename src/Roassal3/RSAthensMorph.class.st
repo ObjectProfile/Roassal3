@@ -35,8 +35,7 @@ RSAthensMorph >> checkSession [
 	session == Smalltalk session ifTrue: [ ^ self ].
 	surface := nil.
 	self createSurface.
-	roassalCanvas shapes do: [ :s | s sessionChanged ].
-	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
+	self sessionChanged
 	
 ]
 
@@ -97,16 +96,10 @@ v canvas buildMorph drawOnMockCanvas
 RSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [ :athensCanvas | 
-		| camera |
-		roassalCanvas clearBackground
+		roassalCanvas shouldClearBackground
 			ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
-		camera := roassalCanvas camera.
 		
-		athensCanvas pathTransform
-			translateBy: (self extent / 2) asFloatPoint;
-			scaleBy: camera scale asFloat;
-			translateBy: camera position negated asFloatPoint.
 		renderer canvas: athensCanvas.
 		roassalCanvas accept: renderer.
 	]
@@ -195,7 +188,6 @@ RSAthensMorph >> eventMouseDragging: aMorphicEvent [
 	| trEvent step |
 	eventBeginingDragging ifNil: [ ^ self ].
 	step := aMorphicEvent position - eventBeginingDragging position.
-
 	trEvent := self eventOfClass: RSMouseDragging from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
 	trEvent step: step.
@@ -463,10 +455,7 @@ RSAthensMorph >> mouseLeave: evt [
 
 { #category : #'event handling' }
 RSAthensMorph >> mouseMove: evt [
-	evt anyButtonPressed
-		ifTrue: [ self eventMouseDragging: evt ]
-		ifFalse: [ self eventMouseMove: evt ].
-	evt wasHandled: true
+	evt anyButtonPressed ifTrue: [ self eventMouseDragging: evt ]
 ]
 
 { #category : #'event handling' }
@@ -516,6 +505,14 @@ RSAthensMorph >> renderer: aRenderer [
 RSAthensMorph >> roassalCanvas [
 	"Return the Roassal canvas that I have to render"
 	^ roassalCanvas
+]
+
+{ #category : #'session management' }
+RSAthensMorph >> sessionChanged [
+
+	roassalCanvas shapes do: [ :s | s sessionChanged ].
+	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
+	roassalCanvas extent: self extent
 ]
 
 { #category : #public }

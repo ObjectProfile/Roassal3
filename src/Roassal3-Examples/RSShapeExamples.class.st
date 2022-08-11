@@ -874,7 +874,7 @@ RSShapeExamples >> example34MorphicPopup [
 	RSGridLayout on: c nodes.
 	c @ RSCanvasController.
 	c nodes @ (RSMorphicPopupInteraction new
-		morphBuilder: [:model | ('Class: ', model asString) asTextMorph ]) .
+		"morphBuilder: [:model | ('Class: ', model asString) asStringMorph ]") .
 	^ c
 ]
 
@@ -998,7 +998,7 @@ RSShapeExamples >> example38Transformable [
 		text: 'Kaguya Sama';
 		yourself).
 	c add: (RSBitmap new
-		form: (self iconNamed: 'pharoBig');
+		form: (self iconNamed: #pharoBig);
 		
 		yourself).
 	c add: (RSShapeFactory star
@@ -1210,7 +1210,10 @@ RSShapeExamples >> example43KeepLabelSize [
 	labels := RSLabel models: String withAllSubclasses.
 	RSNormalizer fontSize
 		shapes: labels;
-		normalize: [ :cls | cls linesOfCode ln +5 ].
+		normalize: [ :cls |
+			(cls linesOfCode > 0 
+				ifTrue: [ cls linesOfCode ln ]
+				ifFalse: [ 0 ]) + 5 ].
 	
 	RSLineBuilder line
 		color: Color red;

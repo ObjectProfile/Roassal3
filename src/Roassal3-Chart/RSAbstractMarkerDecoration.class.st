@@ -21,11 +21,11 @@ c
 "
 Class {
 	#name : #RSAbstractMarkerDecoration,
-	#superclass : #RSChartDecoration,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
 		'markerColor',
 		'getRelevantValueBlock',
-		'line'
+		'lines'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
@@ -43,7 +43,7 @@ RSAbstractMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 { #category : #accessing }
 RSAbstractMarkerDecoration >> createdShapes [
-	^ { line }
+	^ lines
 ]
 
 { #category : #rendering }
@@ -54,6 +54,11 @@ RSAbstractMarkerDecoration >> defaultDashStyle [
 { #category : #initialization }
 RSAbstractMarkerDecoration >> defaultMarkerColor [
 	^ Color red
+]
+
+{ #category : #initialization }
+RSAbstractMarkerDecoration >> defaultShape [
+	^ RSLine new
 ]
 
 { #category : #rendering }
@@ -71,8 +76,8 @@ RSAbstractMarkerDecoration >> initialize [
 ]
 
 { #category : #accessing }
-RSAbstractMarkerDecoration >> line [
-	^ line
+RSAbstractMarkerDecoration >> lines [
+	^ lines
 ]
 
 { #category : #'public - configuration' }
@@ -87,15 +92,14 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-	chart plots
-		do: [ :p | 
-			line := self createMarkerLineFromPlot: p.
-			line
-				dashArray: self defaultDashStyle;
-				color: markerColor;
-				yourself.
-			self addShape: line ]
-
+	lines := chart plots collect: [ :p | | line |
+		line := self createMarkerLineFromPlot: p.
+		line
+			dashArray: self defaultDashStyle;
+			color: markerColor.
+		self addShape: line.
+		line
+	] as: RSGroup.
 ]
 
 { #category : #'public - configuration' }

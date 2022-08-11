@@ -12,36 +12,26 @@ Class {
 { #category : #examples }
 RSGraphVizExamples >> example01Basic [
 	<script: 'self new example01Basic'>
-	"OSSUnixSubprocess new
-	command: '/usr/bin/which';
-	arguments: (Array with: 'dot');
-	addAllEnvVariablesFromParentWithoutOverride;
-	redirectStdout;
-	terminateOnShutdown;
-	runAndWaitOnExitDo: [ :process :outString :errString | 
-		^ process isSuccess 
-			ifTrue: [ outString trim ]
-			ifFalse: [ self error: 'ffmpeg not found' ]
-		]"
+	
 	| process |
-process := OSSUnixSubprocess new
-	command: '/usr/local/bin/dot';
-	arguments: {'-Tjson'};
-	workingDirectory: FileLocator home fullName;
-	addAllEnvVariablesFromParentWithoutOverride;
-	redirectStdout;
-	redirectStderr;
-	redirectStdin;
-	run.
+	process := OSSUnixSubprocess new
+		command: RSGraphvizLayout commandLocation;
+		arguments: {'-Tjson'};
+		workingDirectory: FileLocator home fullName;
+		addAllEnvVariablesFromParentWithoutOverride;
+		redirectStdout;
+		redirectStderr;
+		redirectStdin;
+		run.
 
-process stdinStream
-	nextPutAll: '
-digraph G {Hello->World}
-';
-	close.		
-process waitForExit.
-process stdoutStream upToEndOfFile inspect.
-process closeAndCleanStreams.
+	process stdinStream
+		nextPutAll: '
+	digraph G {Hello->World}
+	';
+		close.		
+	process waitForExit.
+	process stdoutStream upToEndOfFile inspect.
+	process closeAndCleanStreams.
 ]
 
 { #category : #examples }
@@ -122,7 +112,7 @@ RSGraphVizExamples >> example03Basic [
 	canvas accept: converter.
 	
 	process := OSSUnixSubprocess new
-		command: '/usr/local/bin/dot';
+		command: RSGraphvizLayout commandLocation;
 		arguments: {'-Tsvg'};
 		workingDirectory: FileLocator home fullName;
 		addAllEnvVariablesFromParentWithoutOverride;

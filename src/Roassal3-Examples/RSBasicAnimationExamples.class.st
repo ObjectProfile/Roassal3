@@ -35,7 +35,7 @@ RSBasicAnimationExamples >> example01Basic [
 		do: [ c animations do: #pause ];
 		when: RSMouseDoubleClick 
 		do: [ c animations do: #continue ].
-	c clearBackground: false.
+	c shouldClearBackground: false.
 	^ c
 ]
 
@@ -140,7 +140,7 @@ RSBasicAnimationExamples >> example05LoopEvent [
 	<script: 'self new example05LoopEvent open'>
 	| canvas box |
 	canvas := RSCanvas new.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	box := RSComposite new
 		add: (RSLabel new text: '0');
 		adjustToChildren;
@@ -162,7 +162,7 @@ RSBasicAnimationExamples >> example06Parallel [
 	<script: 'self new example06Parallel open'>
 	| canvas box1 box2 animation updateWithAngle |
 	canvas := RSCanvas new.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	box1 := RSBox new size: 50; color: (Color red alpha: 0.02).
 	box2 := RSBox new size: 50; color: (Color blue alpha: 0.02).
 	updateWithAngle := [ :ang :box | | p |

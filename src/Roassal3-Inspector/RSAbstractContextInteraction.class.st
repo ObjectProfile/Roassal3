@@ -19,6 +19,11 @@ RSAbstractContextInteraction >> initialize [
 	self propagateToChildren: true.
 ]
 
+{ #category : #accessing }
+RSAbstractContextInteraction >> inspectorInteractions [
+	^ RSInspectorToolbar interactions
+]
+
 { #category : #hooks }
 RSAbstractContextInteraction >> interactionsToBeRegistered [
 	^ self subclassResponsibility

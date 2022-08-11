@@ -11,17 +11,14 @@ RSChartExample >> example13AreaPlot [
 	canvas := RSCanvas new.
 	charts := {'Between y1 and 0'-> (y1 -> 0).
 	'Between y2 and 1'-> (y1 -> 1).
-	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc | | g |
-		g := RSGroup new.
+	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc |
 		c := RSChart new.
-		c container: g.
 		c extent: 500@100.
 		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
 		c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
 		c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
 		c ylabel: assoc key.
-		c build.
-		g asShape	].
+		c asShape	].
 	RSVerticalLineLayout on: charts.
 	canvas addAll: charts.
 	canvas @ RSCanvasController.
@@ -169,4 +166,70 @@ RSChartExample >> example17CLPvsUSD [
 	c addDecoration: (RSVerticalTick new numberOfTicks: 10; asFloat).
 	c title: 'CLP vs USD'.
 	^ c
+]
+
+{ #category : #'*Roassal3-SVG-Examples' }
+RSChartExample >> example18Animation [
+	<script: 'self new example18Animation inspect'>
+	| c canvas line points current lineAnimation area paint afterline yticks xticks |
+	c := self example17CLPvsUSD.
+	c build.
+	canvas := c canvas.
+	
+	"line"
+	line := canvas shapes detect: [ :s | s class = RSPolyline ].
+	points := line controlPoints.
+	current := OrderedCollection new.
+	current add: points first; add: points second.
+	line controlPoints: current.
+	lineAnimation := (2 to: points size) collect: [ :i |
+		canvas transitionAnimation
+			duration: 100 milliSeconds;
+			from: (points at: i - 1);
+			to: (points at: i);
+			onStepDo: [ :t |
+				current removeLast; add: t.
+				line controlPoints: current.
+				 ];
+			when: RSAnimationEndEvent do: [current add: (points at: i) ].
+	] as: OrderedCollection.
+	"area"
+	area := canvas shapes detect: [ :s | s class = RSSVGPath ].
+	paint := area paint.
+	area noPaint.
+	afterline := canvas parallelAnimation.
+	afterline add: (canvas transitionAnimation
+		onStepDo: [ :t |
+			area paint: (Color transparent interpolateTo: paint at: t).
+		]).
+	lineAnimation add: afterline.
+	canvas animationFrom: lineAnimation.
+	
+	"ticks"
+	yticks := canvas shapes select: [ :s | s class = RSLabel ].
+	yticks do: [ :s |  s bold. ].
+	yticks := yticks groupedBy: [ :s | s matrix sy ].
+	xticks := yticks values first.
+	yticks := yticks values second.
+	xticks doWithIndex: [ :s :index | 
+		canvas newAnimation
+			delay: ((index-1) * 100) milliSeconds;
+			duration: 200 milliSeconds;
+			from: Color transparent;
+			to: s color;
+			on: s set: #color:.
+		s color: Color transparent ].
+	yticks doWithIndex: [ :s :index |
+		s noPaint.
+		afterline add: (canvas transitionAnimation
+			delay: (index * 300) milliSeconds;
+			duration: 2 second;
+			easing: RSEasingInterpolator elasticOut;
+			from: -100@ s position y;
+			to: s position;
+			onStepDo: [:p | 
+				s color: Color black.
+				s position: p]).
+		].
+	^ canvas
 ]

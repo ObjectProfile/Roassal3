@@ -119,9 +119,9 @@ Class {
 	#classTraits : 'RSTContainer classTrait',
 	#instVars : [
 		'nodes',
-		'edges',
 		'children',
-		'clipChildren'
+		'clipChildren',
+		'lines'
 	],
 	#category : #'Roassal3-Shapes-Bounding'
 }
@@ -241,8 +241,9 @@ composite extent '=> (20.0@50.0)'
 	
 	children do: [ :s | s basicTranslateBy: delta ].
 	self 
-		extent: rect extent;
-		translateTo: delta negated.
+		extent: rect extent.
+	self position = (0@0) ifTrue: [ self translateTo: delta negated ].
+		
 ]
 
 { #category : #accessing }
@@ -279,6 +280,19 @@ RSComposite >> clipChildren [
 { #category : #accessing }
 RSComposite >> clipChildren: aBoolean [
 	clipChildren := aBoolean
+]
+
+{ #category : #copying }
+RSComposite >> copyWithoutAnnouncer [
+	| copy |
+	copy := self copy.
+	copy privateShapes: (self children collect: [ :child | 
+		child copyWithoutAnnouncer
+			parent: copy;
+			yourself ]).
+	copy privateNodes: #().
+	copy privateEdges: #().
+	^ copy 
 ]
 
 { #category : #'looking up shapes' }
@@ -355,12 +369,12 @@ c
 
 { #category : #private }
 RSComposite >> privateEdges [
-	^ edges
+	^ lines
 ]
 
 { #category : #private }
 RSComposite >> privateEdges: aRSGroup [
-	edges := aRSGroup
+	lines := aRSGroup
 ]
 
 { #category : #private }

@@ -1,5 +1,6 @@
 | profiler classSizeScale classColorCoverage m lbl fileCoverageResult str |
    
+'Loading spy2 roassal3 and exporters' traceCr.
 [ Metacello new 
 	baseline: 'Spy2'; 
 	repository: 'github://ObjectProfile/Spy2'; 
@@ -14,12 +15,10 @@
     baseline: 'Roassal3Exporters';
     repository: 'github://ObjectProfile/Roassal3Exporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
-
-WorldMorph doOneCycle.
-(Delay forSeconds: 5) wait.
-WorldMorph doOneCycle.
+[ 
+'Starting with Hapao' traceCr.
 profiler := 'Hapao2' asClass runTestsForPackagesMatching: 'Roassal3*'.
-
+'Profiler created' traceCr.
 classSizeScale := 'NSScale' asClass linear range: #(5 30); domain: { 0 . (profiler allClasses max: #numberOfMethods) }.
 classColorCoverage := 'NSScale' asClass linear range: {Color red . Color black}; domain: { 0 . 100 }.
 m := 'RSMondrian' asClass new.
@@ -44,9 +43,12 @@ fileCoverageResult exists ifTrue: [ fileCoverageResult delete ].
 str := fileCoverageResult writeStream.
 str nextPutAll: profiler coverage asString.
 str close.
-
+'Ratio created' traceCr.
 m canvas extent: (1500 @ 1500).
-"m canvas zoomToFit."
+
 'RSPNGExporter' asClass new
-	canvas: m canvas;
-	exportToFile: 'coverage.png' asFileReference.
+  canvas: m canvas;
+  exportToFile: 'coverage.png' asFileReference.
+
+'coverage.png created' traceCr.
+SmalltalkImage current quitPrimitive ] fork

@@ -36,11 +36,13 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
-	| value |
+	| value zeroY |
 	value := xScale scale: aNumber.
+	zeroY := chart spineDecoration zeroPoint y.
+	zeroY := zeroY - chart extent y.
 	^ self shape copy
-		startPoint: value @ 0;
-		endPoint: value @ self configuration tickSize;
+		startPoint: value @ zeroY;
+		endPoint: value @ (zeroY + self configuration tickSize);
 		yourself
 ]
 

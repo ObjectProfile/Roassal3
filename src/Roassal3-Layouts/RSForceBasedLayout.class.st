@@ -458,7 +458,7 @@ RSForceBasedLayout >> stepGravityForce [
 { #category : #events }
 RSForceBasedLayout >> stepNodeRepulsion [
 	"Handle fixed nodes. Do this after all forces in a step were already applied."
-	quadtree := RSQuadTreeF withAll: nodes.
+	quadtree := RSQuadTreeForce withAll: nodes.
 	self accumulate: quadtree.
 	nodes
 		do: [ :each | 

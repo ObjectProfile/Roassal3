@@ -7,7 +7,8 @@ Class {
 	#name : #RSAbstractPopupInteraction,
 	#superclass : #RSInteraction,
 	#instVars : [
-		'modelBlock'
+		'modelBlock',
+		'offset'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
@@ -20,6 +21,16 @@ RSAbstractPopupInteraction class >> activationEvent [
 { #category : #accessing }
 RSAbstractPopupInteraction class >> removeEvents [
 	^ { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging }
+]
+
+{ #category : #hooks }
+RSAbstractPopupInteraction >> activePopupWith: evt [
+	| popup |
+	popup := self createOrGetPopupOn: evt shape event: evt.
+	self translatePopup: popup event: evt.
+	"popup translateBy: (offset rsValue: popup)."
+	popup position: popup position + (offset rsValue: popup).
+	evt signalUpdate.
 ]
 
 { #category : #hooks }
@@ -55,6 +66,30 @@ RSAbstractPopupInteraction >> createPopupFor: aShape event: event [
 RSAbstractPopupInteraction >> initialize [
 	super initialize.
 	self model: #model.
+	
+	"Offset to locate the popup"
+	offset := 0 @ 0
+]
+
+{ #category : #hooks }
+RSAbstractPopupInteraction >> makeLocateAboveMouseCursor [
+	"Make the popup located above the mouse cursor.
+```
+c := RSCanvas new.
+shapes := RSCircle models: (1 to: 5).
+RSNormalizer size
+	shapes: shapes;
+	normalize.
+RSNormalizer color
+	shapes: shapes;
+	normalize.
+c addAll: shapes.
+shapes @ (RSPopup new makeLocateAboveMouseCursor).
+RSHorizontalLineLayout on: shapes.
+c @ RSCanvasController	
+```
+	"
+	self offset: [ :s | 0 @ (s height negated - 5) ]
 ]
 
 { #category : #accessing }
@@ -76,17 +111,37 @@ RSAbstractPopupInteraction >> modelFor: aRSShape [
 	^ modelBlock rsValue: aRSShape
 ]
 
+{ #category : #accessing }
+RSAbstractPopupInteraction >> offset: anOffsetAsPointOrBlock [
+	"Set the offset of the popup. The default behavior, is to have the popup at the location of the 
+	mouse. Which could be cumbersome if the default mouse cursor from the OS is large
+	For example:
+```
+c := RSCanvas new.
+shapes := RSCircle models: (1 to: 5).
+RSNormalizer size
+	shapes: shapes;
+	normalize.
+RSNormalizer color
+	shapes: shapes;
+	normalize.
+c addAll: shapes.
+shapes @ (RSPopup new offset: [ :s | 0 @ (s height negated - 5) ]).
+RSHorizontalLineLayout on: shapes.
+c @ RSCanvasController
+```
+	
+	"
+	offset := anOffsetAsPointOrBlock
+]
+
 { #category : #hooks }
 RSAbstractPopupInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
 	
 	self registerRemoveEventsOn: aShape.
 	aShape
-		when: self class activationEvent do: [ :evt | | popup |
-			popup := self createOrGetPopupOn: evt shape event: evt.
-			self translatePopup: popup event: evt.
-			evt signalUpdate. ]
-
+		when: self class activationEvent send: #activePopupWith: to: self
 ]
 
 { #category : #accessing }

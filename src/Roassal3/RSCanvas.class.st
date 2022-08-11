@@ -29,18 +29,49 @@ Class {
 	#instVars : [
 		'shapes',
 		'fixedShapes',
+		'nodes',
+		'edges',
 		'camera',
 		'animations',
 		'extent',
 		'color',
-		'morph',
-		'clearBackground',
-		'showRectangles',
-		'nodes',
-		'edges'
+		'morph'
+	],
+	#pools : [
+		'AthensCairoDefinitions'
 	],
 	#category : #'Roassal3-Core'
 }
+
+{ #category : #antialiasing }
+RSCanvas >> aaBest [
+	self setAA: CAIRO_ANTIALIAS_BEST
+]
+
+{ #category : #antialiasing }
+RSCanvas >> aaDefault [
+	self setAA: CAIRO_ANTIALIAS_DEFAULT
+]
+
+{ #category : #antialiasing }
+RSCanvas >> aaFast [
+	self setAA: CAIRO_ANTIALIAS_FAST
+]
+
+{ #category : #antialiasing }
+RSCanvas >> aaGood [
+	self setAA: CAIRO_ANTIALIAS_GOOD
+]
+
+{ #category : #antialiasing }
+RSCanvas >> aaGray [
+	self setAA: CAIRO_ANTIALIAS_GRAY
+]
+
+{ #category : #antialiasing }
+RSCanvas >> aaNone [
+	self setAA: CAIRO_ANTIALIAS_NONE
+]
 
 { #category : #visiting }
 RSCanvas >> accept: visitor [
@@ -127,6 +158,22 @@ RSCanvas >> announcementClasses [
 				subcls hasSubclasses ] ]
 ]
 
+{ #category : #antialiasing }
+RSCanvas >> antialiasing [
+	^ self propertyAt: #aa ifAbsent: [ CAIRO_ANTIALIAS_BEST ]
+	
+]
+
+{ #category : #converting }
+RSCanvas >> asForm [
+	| canvas |
+	canvas := FormCanvas extent: self extent.
+	(self morph ifNil: [ self createMorph ])
+		extent: self extent;
+		drawOn: canvas.
+	^ canvas form
+]
+
 { #category : #accessing }
 RSCanvas >> basicRectangle [
 	"Return a rectangle encompassing all the elements"
@@ -158,31 +205,6 @@ RSCanvas >> camera: aCamera [
 RSCanvas >> canvas [
 	"Useful method to have it polymorphic with shapes"
 	^ self
-]
-
-{ #category : #testing }
-RSCanvas >> clearBackground [
-	"Return whether the screen must be cleaned at each screen refresh"
-	^ clearBackground
-]
-
-{ #category : #accessing }
-RSCanvas >> clearBackground: aBool [
-	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
-	
-For example, evaluate the following script:
-```
-c := RSCanvas new.
-c clearBackground: false.
-(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
-RSGridLayout on: c shapes.
-c.
-```
-
-And execute the expression `c camera translateBy: 1 @ 1.`
-
-"
-	clearBackground := aBool
 ]
 
 { #category : #accessing }
@@ -236,6 +258,17 @@ RSCanvas >> deepShapesFromModel: someObjects result: result [
 RSCanvas >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
+]
+
+{ #category : #antialiasing }
+RSCanvas >> disableAntialiasing [
+	self hasAntialiasing: false
+	
+]
+
+{ #category : #antialiasing }
+RSCanvas >> enableAntialiasing [
+	self hasAntialiasing: true
 ]
 
 { #category : #'accessing - computed' }
@@ -298,32 +331,36 @@ RSCanvas >> hasAnimation: anAnimation [
 	^ animations includes: anAnimation
 ]
 
+{ #category : #testing }
+RSCanvas >> hasAntialiasing [
+	^ self antialiasing ~= CAIRO_ANTIALIAS_NONE
+]
+
+{ #category : #antialiasing }
+RSCanvas >> hasAntialiasing: aBoolean [
+	aBoolean 
+		ifTrue: [ self aaGood ]
+		ifFalse: [ self aaNone ]
+]
+
 { #category : #'debug support' }
 RSCanvas >> hideEncompassingRectangles [
-	showRectangles := false.
+	self shouldShowRectangles: false
 ]
 
 { #category : #initialization }
 RSCanvas >> initialize [
 	super initialize.
-	showRectangles := false.
 	shapes := RSGroup new.
 	fixedShapes := RSGroup new.
 	nodes := RSGroup new.
 	edges := RSGroup new.
 	animations := OrderedCollection new.
-	clearBackground := true.
 	color := Color white.
 	extent := 500@500.
 	camera := RSCamera new
 		canvas: self;
 		yourself.
-]
-
-{ #category : #testing }
-RSCanvas >> isShape [
-	"Useful to lookup the canvas in a hierarchy of nested shapes"
-	^ false
 ]
 
 { #category : #accessing }
@@ -336,6 +373,11 @@ RSCanvas >> morph [
 RSCanvas >> morph: aMorph [
 	"Set the RSAthensMorph. The canvas will directly render in the morph"
 	morph := aMorph
+]
+
+{ #category : #actions }
+RSCanvas >> notifyExtentChanged [
+	self extent: self extent
 ]
 
 { #category : #animations }
@@ -418,12 +460,6 @@ RSCanvas >> playAnimations [
 ]
 
 { #category : #private }
-RSCanvas >> privExtent: aRect [
-
-	extent := aRect
-]
-
-{ #category : #private }
 RSCanvas >> privateEdges [
 	^ edges
 ]
@@ -431,6 +467,12 @@ RSCanvas >> privateEdges [
 { #category : #private }
 RSCanvas >> privateEdges: aTSGroup [
 	edges := aTSGroup
+]
+
+{ #category : #private }
+RSCanvas >> privateExtent: aRect [
+
+	extent := aRect
 ]
 
 { #category : #private }
@@ -523,6 +565,12 @@ RSCanvas >> removeShape: shape [
 	
 ]
 
+{ #category : #antialiasing }
+RSCanvas >> setAA: aNumber [
+	self propertyAt: #aa put: aNumber
+	
+]
+
 { #category : #'adding - removing shapes' }
 RSCanvas >> setAsFixed: aShape [
 	self removeShape: aShape.
@@ -588,14 +636,44 @@ RSCanvas >> shapesFromModels: objects [
 
 ]
 
-{ #category : #'debug support' }
-RSCanvas >> showEncompassingRectangles [
-	showRectangles := true.
+{ #category : #testing }
+RSCanvas >> shouldClearBackground [
+	"Return whether the screen must be cleaned at each screen refresh"
+	^ self propertyAt: #shouldClearBackground ifAbsent: [ true ].
+]
+
+{ #category : #accessing }
+RSCanvas >> shouldClearBackground: aBool [
+	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
+	
+For example, evaluate the following script:
+```
+c := RSCanvas new.
+c shouldClearBackground: false.
+(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
+RSGridLayout on: c shapes.
+c.
+```
+
+And execute the expression `c camera translateBy: 1 @ 1.`
+
+"
+	self propertyAt: #shouldClearBackground put: aBool
 ]
 
 { #category : #testing }
-RSCanvas >> showRectangles [
-	^ showRectangles
+RSCanvas >> shouldShowRectangles [
+	^ self propertyAt: #shouldShowRectangles ifAbsent: [ false ]
+]
+
+{ #category : #'debug support' }
+RSCanvas >> shouldShowRectangles: aBoolean [
+	self propertyAt: #shouldShowRectangles put: aBoolean
+]
+
+{ #category : #'debug support' }
+RSCanvas >> showEncompassingRectangles [
+	self shouldShowRectangles: true
 ]
 
 { #category : #updating }

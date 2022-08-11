@@ -62,12 +62,10 @@ RSPieSlice >> buildPathOn: visitor [
 { #category : #accessing }
 RSPieSlice >> centroid: off [
 	| r a |
-	r := innerRadius isZero
-		ifTrue: [ 0 ]
-		ifFalse: [ (innerRadius + externalRadius)/2 ].
+	r := (innerRadius + externalRadius)/2.
 	r := r + off.
 	a := self middleAngle degreesToRadians.
-	^ (a cos @ (a sin negated) * r)  + self position.
+	^ (a cos @ (a sin negated) * r) + self position.
 ]
 
 { #category : #accessing }
@@ -89,7 +87,9 @@ RSPieSlice >> cornerRadii: aNumber [
 
 { #category : #utilities }
 RSPieSlice >> emphasizeWith: anInteger [ 
-	self translateBy: (self centroid: anInteger)
+	| angle |
+	angle := self middleAngle degreesToRadians.
+	self translateBy: (angle cos @ angle sin negated) * anInteger
 ]
 
 { #category : #accessing }
@@ -132,6 +132,11 @@ RSPieSlice >> innerRadius: iR [
 { #category : #accessing }
 RSPieSlice >> middleAngle [
 	^ (alphaAngle + betaAngle) / 2
+]
+
+{ #category : #accessing }
+RSPieSlice >> middleRadius [
+	^ (self innerRadius + self externalRadius) / 2
 ]
 
 { #category : #testing }

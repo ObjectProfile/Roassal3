@@ -29,8 +29,8 @@ c
 Class {
 	#name : #RSAbstractLine,
 	#superclass : #RSShape,
-	#traits : 'RSTMarkeable',
-	#classTraits : 'RSTMarkeable classTrait',
+	#traits : 'RSTMarkeable + RSTPositionable',
+	#classTraits : 'RSTMarkeable classTrait + RSTPositionable classTrait',
 	#instVars : [
 		'attachPoint',
 		'from',
@@ -45,9 +45,9 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
-{ #category : #visiting }
+{ #category : #adding }
 RSAbstractLine >> accept: visitor [
-	visitor visitLine: self.
+	visitor visitLine: self
 ]
 
 { #category : #'attach point' }
@@ -63,6 +63,11 @@ RSAbstractLine >> attachPoint: anAttachPoint [
 { #category : #testing }
 RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
+]
+
+{ #category : #accessing }
+RSAbstractLine >> basicTranslateBy: delta [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'style - cap' }
@@ -87,7 +92,7 @@ RSAbstractLine >> color [
 
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
-	self strokePaint: aColor
+	self strokePaint: (Color colorFrom: aColor)
 ]
 
 { #category : #accessing }
@@ -159,7 +164,9 @@ canvas open
 ````
 	 "
 	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].
+		ifNotNil: [ :shape | 
+			self shape marker: ((shape size: self border width * 4) color: self shape color; yourself).
+			 ].
 	(RSStrokeStyle fromString: aString)
 		ifNotNil: [ :style | self shape border style: style ]
 	
@@ -254,6 +261,11 @@ RSAbstractLine >> notifyExtentChanged [
 		newExtent: self controlPoints first - self controlPoints last ]
 ]
 
+{ #category : #accessing }
+RSAbstractLine >> position [
+	^ self encompassingRectangle floatCenter
+]
+
 { #category : #'accessing - markers' }
 RSAbstractLine >> privateMarkers [
 	^ markers
@@ -305,7 +317,7 @@ RSAbstractLine >> sessionChanged [
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedLine: self ].
+	ref ifNotNil: [ ref removeConnectedLine: self ].
 	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]

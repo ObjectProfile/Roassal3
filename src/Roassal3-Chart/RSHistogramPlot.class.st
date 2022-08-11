@@ -28,12 +28,19 @@ Class {
 		'bars',
 		'binningStrategy'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
 RSHistogramPlot >> bars [
 	^ bars
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> binSize: aNumber [
+	self binningStrategy: (RSBinSizeBinning new
+		size: aNumber;
+		yourself)
 ]
 
 { #category : #accessing }
@@ -44,8 +51,8 @@ RSHistogramPlot >> binningStrategy [
 
 { #category : #accessing }
 RSHistogramPlot >> binningStrategy: aBinningStrategy [
-
-	binningStrategy := aBinningStrategy
+	binningStrategy := aBinningStrategy.
+	self computeXYValues.
 ]
 
 { #category : #accessing }
@@ -54,26 +61,23 @@ RSHistogramPlot >> bins [
 ]
 
 { #category : #accessing }
-RSHistogramPlot >> bins: aCollectionOrNumber [
-	bins := aCollectionOrNumber.
-	self computeXYValues.
+RSHistogramPlot >> bins: aCollection [
+	self assert: aCollection isCollection description: 'you must provide a collection'.
+	self binningStrategy: (RSFixedBinning new 
+		bins: aCollection; 
+		yourself).
 ]
 
 { #category : #private }
 RSHistogramPlot >> computeBins [
-	| binsSize |
-	(bins notNil and:[bins isCollection ]) ifTrue: [ ^ bins ].
-	binsSize := bins.
-	binsSize
-		ifNil: [ binsSize := binningStrategy computeSizeFor: x. ].
-	binsSize := binsSize + 1.
-	bins := x first to: x last count: binsSize.
-	^ bins
+	^ binningStrategy createBinsFor: x.
+	
 ]
 
 { #category : #private }
 RSHistogramPlot >> computeXYValues [
 	| prev |
+	x ifNil: [ ^ self ].
 	bins := self computeBins.
 	xValues := bins.
 	prev := bins first.
@@ -83,7 +87,7 @@ RSHistogramPlot >> computeXYValues [
 		condition := index + 1 = bins size 
 			ifTrue: [ [ :value | value between: val1 and: val2 ] ]
 			ifFalse: [ [ :value | val1 <= value and: [ value < val2 ] ] ].
-		"TODO"
+		
 		(x select: condition ) size.
 	].
 	
@@ -111,6 +115,17 @@ RSHistogramPlot >> definedValuesY [
 RSHistogramPlot >> initialize [
 	super initialize.
 	self binningStrategy: RSDefaultBinning new.
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> numberOfBins [
+	^ self binningStrategy numberOfBins
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> numberOfBins: aNumber [
+	self binningStrategy numberOfBins: aNumber.
+	self computeXYValues.
 ]
 
 { #category : #rendering }

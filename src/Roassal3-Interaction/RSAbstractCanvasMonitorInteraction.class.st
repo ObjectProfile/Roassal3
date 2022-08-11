@@ -34,8 +34,7 @@ RSAbstractCanvasMonitorInteraction >> initializeShape [
 RSAbstractCanvasMonitorInteraction >> lastFrameCPUConsumption [
 	| res current |
 	current := self currentTime.
-	lastFrameEndTime ifNil: [ 
-		lastFrameEndTime := current ].
+	lastFrameEndTime ifNil: [ lastFrameEndTime := current - 10000 ].
 	res := (current - lastFrameEndTime) * 1e-3.
 	lastFrameEndTime := current.
 	^ res

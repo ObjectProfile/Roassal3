@@ -36,13 +36,6 @@ RSGraphCanvasMonitorInteraction >> defaultLabel [
 { #category : #defaults }
 RSGraphCanvasMonitorInteraction >> defaultPolygon [
 	^ RSPolygon new
-		paint: ((LinearGradientPaint fromArray:
-				{0  -> Color red translucent.
-				0.5 -> Color orange translucent.
-				1   -> Color green translucent. } )
-			start: 0@25;
-			stop: 0@ -20;
-			yourself);
 		cornerRadii: 5;
 		yourself
 ]
@@ -51,14 +44,8 @@ RSGraphCanvasMonitorInteraction >> defaultPolygon [
 RSGraphCanvasMonitorInteraction >> defaultPolyline [
 	^ RSPolyline new
 		controlPoints: #();
-		border: (RSBorder new
-			paint: ((LinearGradientPaint fromArray:
-					{0  -> 'red'.
-					0.5 -> 'orange'.
-					1   -> 'gree'})
-				start: 0@25;
-				stop: 0@ -20;
-				yourself))
+		border: (RSBorder new paint: Color black; yourself);
+		yourself
 ]
 
 { #category : #initialization }
@@ -97,20 +84,33 @@ RSGraphCanvasMonitorInteraction >> polyline [
 ]
 
 { #category : #update }
+RSGraphCanvasMonitorInteraction >> updatePolygonPaint [
+	| rect start |
+	rect := polygon encompassingRectangle.
+	start := rect bottomCenter - (polygon position).
+	polygon
+		paint: ((LinearGradientPaint fromArray:
+				{0  -> Color red translucent.
+				0.5 -> Color orange translucent.
+				1   -> Color green translucent. } )
+			start: start;
+			stop: start - (0@ 50) )
+]
+
+{ #category : #update }
 RSGraphCanvasMonitorInteraction >> updateShape [
 	| cp |
 	frames add: self lastFramePerSecond.
-	
 	frames size > shape shapes first extent x
 		ifTrue: [ frames removeFirst ].
 	self label text: frames last asString, 'fps'.
-	frames first = 1000 ifTrue: [ frames removeFirst ].
 	cp := frames collectWithIndex: [ :frame :i |
 		polyScale scale: i @ frame ].
 	self polyline controlPoints: cp.
 	cp := cp copy.
 	cp 
 		add: (polyScale scale: cp size @ 0);
-		add: (polyScale scale: 1@0).
-	self polygon points: cp
+		add: (polyScale scale: 0.7@0).
+	self polygon points: cp.
+	self updatePolygonPaint.
 ]

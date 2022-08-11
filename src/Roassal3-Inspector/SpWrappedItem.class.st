@@ -19,3 +19,8 @@ SpWrappedItem >> selectedItem [
 SpWrappedItem >> selectedItem: anObject [
 	selectedItem := anObject
 ]
+
+{ #category : #accessing }
+SpWrappedItem >> transmission [
+	^ selectedItem
+]

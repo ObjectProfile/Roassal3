@@ -38,6 +38,7 @@ RSDependencyTest >> packageNamed: aSymbol [
 RSDependencyTest >> testDependencies [
 
 	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Layouts'.
+	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Inspector'.
 	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Animation'.
 	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Builders'.
 	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Chart'.

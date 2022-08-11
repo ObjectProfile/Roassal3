@@ -6,11 +6,15 @@ Class {
 	#superclass : #RSAbstractChartPlot,
 	#instVars : [
 		'xValues',
-		'yValues',
-		'shape'
+		'yValues'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #adding }
+RSAbstractPlot >> addedIn: aRSChart [ 
+	aRSChart addPlot: self
+]
 
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
@@ -27,16 +31,6 @@ RSAbstractPlot >> checkAssertion [
 	self
 		assert: [ xValues size = yValues size ]
 		description: 'X and Y values have not the same size, and they should'
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> color [
-	^ self shape color
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> color: aColor [
-	self shape color: aColor
 ]
 
 { #category : #public }
@@ -90,6 +84,11 @@ RSAbstractPlot >> isLinePlot [
 ]
 
 { #category : #testing }
+RSAbstractPlot >> isPlot [
+	^ true
+]
+
+{ #category : #testing }
 RSAbstractPlot >> isPointWellDefined: aPoint [
 	"Indicate whether the point deserves to be displayed"
 	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ])
@@ -135,16 +134,6 @@ RSAbstractPlot >> minValueY [
 { #category : #'accessing - computed' }
 RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> shape [
-	^ shape
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> shape: aShape [
-	shape := aShape
 ]
 
 { #category : #public }

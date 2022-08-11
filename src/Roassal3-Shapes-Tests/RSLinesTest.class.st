@@ -84,6 +84,22 @@ RSLinesTest >> testDrawMarkers [
 ]
 
 { #category : #running }
+RSLinesTest >> testFmt [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	self assert: line border style isNil.
+	self assert: line markerEnd isNil.
+	line fmt: '.^'.
+	self deny: line border style dashArray isNil.
+	self deny: line markerEnd isNil.
+	self deny: line markerStart isNil.
+	self assert: line markerEnd shape color equals: line color.
+]
+
+{ #category : #running }
 RSLinesTest >> testLineIncludesPoint [
 	| line |
 	line := RSLine new

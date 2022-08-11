@@ -123,3 +123,13 @@ RSLabelTest >> testUnderlineStruckout [
 	self assert: label isBold.
 	self assert: label isUnderlined.
 ]
+
+{ #category : #tests }
+RSLabelTest >> testWhiteSpace [
+	| normalLabel labelWithSpace labelWithLargeSpace |
+	normalLabel := RSLabel new text: 'test'.
+	labelWithSpace := RSLabel new text: ' test'.
+	labelWithLargeSpace := RSLabel new text: '    test'.
+	self assert: normalLabel width < labelWithSpace width.
+	self assert: labelWithSpace width < labelWithLargeSpace width.
+]

@@ -116,6 +116,17 @@ RSSpace3D >> initialize [
 	tmat := RSMatrix3D new
 ]
 
+{ #category : #ui }
+RSSpace3D >> inspector [
+	<inspectorPresentationOrder: 90 title: 'View'>
+	canvas color: Smalltalk ui theme backgroundColor.
+	canvas zoomToFit.
+			
+	^ SpRoassal3InspectorPresenter new
+		canvas: canvas;
+		yourself
+]
+
 { #category : #accessing }
 RSSpace3D >> meshes [
 	^ meshes

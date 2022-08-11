@@ -67,6 +67,7 @@ RSEasel >> connectPresenters [
 RSEasel >> initialCode [
 	^
 '"[:canvas | ]"
+| box |
 box := RSBox new
 	size: 100;
 	draggable;
@@ -80,7 +81,7 @@ RSEasel >> initializePresenters [
 	label := self newLabel.
 	text := self newCode.
 	button := self newButton.
-	diagram := self instantiate: SpRoassalPresenter
+	diagram := self newRoassal.
 ]
 
 { #category : #initialization }
@@ -97,7 +98,7 @@ RSEasel >> release [
 
 { #category : #running }
 RSEasel >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]
 
 { #category : #accessing }

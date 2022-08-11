@@ -35,6 +35,30 @@ RSCanvasTest >> testAddShapeBefore [
 	self assert: canvas shapes asArray equals: { shape1 . shape2 }
 ]
 
+{ #category : #tests }
+RSCanvasTest >> testAntialiasing [
+	| morph |
+	canvas aaBest.
+	morph := canvas createMorph.
+	morph drawOnMockCanvas.
+	canvas aaNone.
+	morph drawOnMockCanvas.
+	self deny: canvas hasAntialiasing.
+	canvas enableAntialiasing.
+	canvas aaGray.
+	canvas aaFast.
+	canvas aaDefault.
+]
+
+{ #category : #'tests - composite' }
+RSCanvasTest >> testAsForm [
+	| form |
+	canvas add: RSBox new.
+	form := canvas asForm.
+	self assert: form isForm.
+	
+]
+
 { #category : #'tests - converting' }
 RSCanvasTest >> testAsShapeModel [
 

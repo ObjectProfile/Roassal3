@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'left'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }

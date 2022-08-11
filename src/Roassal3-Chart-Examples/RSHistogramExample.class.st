@@ -43,7 +43,7 @@ RSHistogramExample >> example03Bins [
 		g := RSGroup new.
 		c := RSChart new.
 		c container: g.
-		plot := RSHistogramPlot new x: values; bins: numberOfBins.
+		plot := RSHistogramPlot new x: values; numberOfBins: numberOfBins.
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new.
 		c addDecoration: RSHorizontalTick new.
@@ -150,7 +150,7 @@ RSHistogramExample >> example08Strategies [
 		g := RSGroup new.
 		c := RSChart new.
 		c container: g.
-		y := x collect: [ :v | strat computeSizeFor: (Array new: v) ].
+		y := x collect: [ :v | strat computeNumberOfBinsFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
@@ -177,6 +177,47 @@ RSHistogramExample >> example09BinsCollection [
 	c addDecoration: RSVerticalTick new.
 	c addDecoration: RSHorizontalTick new.
 	^ c
+]
+
+{ #category : #examples }
+RSHistogramExample >> example10Objects [
+	<script: 'self new example10Objects open'>
+	| values c plot classes tick map |
+	classes := Collection withAllSubclasses.
+	
+	values := classes collect: #linesOfCode.
+	map := Dictionary newFromKeys: classes andValues: values.
+	c := RSChart new.
+	c padding: 10@10.
+	c extent: 300@200.
+	plot := RSHistogramPlot new x: values.
+	plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
+	
+	c add: (tick := RSVerticalTick new).
+	tick configuration tickSize: -300.
+	tick color: Color lightGray.
+	tick shape width: 0.5.
+	c add: RSHorizontalTick new.
+	c add: plot.
+	c build.
+	
+	plot bars do: [ :bar | | range classesToShow |
+		range := bar model key.
+		classesToShow := classes 
+			select: [ :cls | (map at: cls)
+				between: range key and: range value ].
+		bar model: classesToShow.
+		 ].
+	plot bars @ (RSPopup text: [:classesToShow | 
+		String streamContents: [ :stream |
+			classesToShow do: [ :cls | 
+				cls printOn: stream.
+				stream << ' LOC: '.
+				(map at: cls) printOn: stream ]
+			separatedBy: [ stream cr ].
+			] 
+		]).
+	^ c canvas.
 ]
 
 { #category : #computing }
