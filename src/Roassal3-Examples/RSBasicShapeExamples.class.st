@@ -1958,6 +1958,7 @@ RSBasicShapeExamples >> noteLoremIpsum [
 		  useDefaultCodeFont;
 		  padded: Float goldenPlatinumRatio
 		  withNoteDo: [ :aBox | aBox color: Color yellow translucent ]
+]
 
 RSBasicShapeExamples >> example44AA [
 	<script: 'self new example44AA open'>
