@@ -459,6 +459,11 @@ RSCanvas >> playAnimations [
 			animation hasCompleted ifTrue: [ animation remove ] ] ].
 ]
 
+{ #category : #accessing }
+RSCanvas >> position [
+	^ self camera position
+]
+
 { #category : #private }
 RSCanvas >> privateEdges [
 	^ edges

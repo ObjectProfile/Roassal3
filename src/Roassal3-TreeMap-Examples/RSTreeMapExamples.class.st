@@ -149,10 +149,10 @@ RSTreeMapExamples >> example07Roassal [
 	<script: 'self new example07Roassal open'>
 	| b palette lb bag title |
 	b := RSTreeMap new.
-	b inset: 2 asPoint.
+	b inset: 1 asPoint.
 	b canvas color: (Color colorFrom: '#2d2f3c') lighter.
 	b boxShape
-		color: Color transparent.
+		color: Color white.
 	b
 		leafWeight: [ :f | f size sqrt ];
 		explore: (IceRepository registry 
@@ -161,26 +161,16 @@ RSTreeMapExamples >> example07Roassal [
 				reject: [ :dir | dir basename beginsWith: '.' ] ]
 			leaves: #files.
 	b build.
-	palette := NSScale category20c.
-	bag := b shapes collect: [ :shape | | extension |
-		extension := shape model extension.
-		shape border: (RSBorder new width: 1/(shape propertyAt: #depth); color: Color black).
-		shape isSLeaf ifTrue: [ | paint color |
-			paint := RadialGradientPaint new.
-			paint center: 0@0; focalPoint: 0@0; radius: shape extent max.
-			color := palette scale: extension.
-			paint colorRamp: 
-				{ 0 -> (color alphaMixed: 0.4 with: Color white).
-				1 -> color }.
-			shape paint: paint.
-		] ifFalse: [ 
-			shape color: Color veryVeryLightGray ].
-		extension
-	] as: Bag.
+	palette := RSColorPalette qualitative flatui120.
+	bag := b gradientFill: palette block: [ :model | model extension ].
+	b shapes do: [ :shape | shape border: (RSBorder new width: 1/(shape propertyAt: #depth); color: Color black) ].
+	
+	"LEGEND"
 	lb := RSLegend new.
 	lb defaultLabel
 		color: Color white;
 		fontSize: 18;
+		fontName: 'Gill Sans';
 		bold;
 		border: (RSBorder new color: Color black).
 	lb defaultCircle
@@ -188,25 +178,35 @@ RSTreeMapExamples >> example07Roassal [
 	lb layout vertical gapSize: 0.
 	lb container: b canvas.
 	bag sortedCounts do: [ :assoc | 
-		assoc value
+		(assoc value
 			ifEmpty: [ lb 
-				text: assoc key asString, ' directories' 
+				text: (String streamContents: [ :stream | stream << assoc key asString<< ' directories' ])
 				withCircleColor: Color veryVeryLightGray ]
 			ifNotEmpty: [ lb 
-				text: assoc key asString, ' ', assoc value , ' files' 
-				withCircleColor: (palette scale: assoc value) ] .
+				text: (String streamContents: [ :stream | stream << assoc key asString << ' ' << assoc value << ' files' ])
+				withCircleColor: (palette scale: assoc value) ]) model: assoc.
 		 ].
-	"lb shapes @ highlitableLinesInteraction."
 	lb location left; middle; offset: -10@0.
 	lb build.
+
+	lb shapes @ (RSHighlightable
+		showEdges: [:assoc | b shapes 
+			select: [:shape | shape model extension = assoc value ]
+			thenCollect: [ :shape | shape model ] ]
+		using: (RSBezier new
+			color: Color red;
+			width: 2;
+			controlPointsController: RSShortestHorizontalCPController new;
+			yourself)).
 	title := RSLabel new
-		text: 'Roassal3 Github Repository directory';
+		text: 'Roassal3 Github Repository Directory';
 		color: Color yellow;
+		fontName: 'Gill Sans';
 		bold;
 		fontSize: 34;
 		border: (RSBorder new color: Color black; width: 1.5).
 	RSLocation new
 		above; move: title on: b canvas shapes first.
-	b canvas add: title.
+	title addedIn: b canvas.
 	^ b canvas
 ]
