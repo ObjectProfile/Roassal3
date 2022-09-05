@@ -1,5 +1,5 @@
 "
-I am a builder
+Use RSTreeMap to visualize trees similar to file system where each leaf has a metric value and each branch is a container of more branches or leafs
 "
 Class {
 	#name : #RSTreeMap,
@@ -9,7 +9,7 @@ Class {
 		'extent',
 		'inset'
 	],
-	#category : #'Roassal3-TreeMap'
+	#category : #'Roassal3-TreeMap-Core'
 }
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ RSTreeMap >> extent: aPoint [
 { #category : #private }
 RSTreeMap >> focalPointFor: shape [
 	| parent b1 b2 l1 rect |
-	parent := shape propertyAt: #parent.
+	parent := shape sparent.
 	rect := shape encompassingRectangle.
 	(rect containsPoint: parent position)
 		ifTrue: [ ^ parent position - shape position ].

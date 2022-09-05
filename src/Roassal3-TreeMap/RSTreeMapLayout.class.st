@@ -11,7 +11,7 @@ Class {
 		'rectangle',
 		'weight'
 	],
-	#category : #'Roassal3-TreeMap'
+	#category : #'Roassal3-TreeMap-Rectangle'
 }
 
 { #category : #hook }

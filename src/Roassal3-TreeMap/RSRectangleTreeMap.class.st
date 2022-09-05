@@ -9,7 +9,7 @@ Class {
 		'subrectangles',
 		'inset'
 	],
-	#category : #'Roassal3-TreeMap'
+	#category : #'Roassal3-TreeMap-Rectangle'
 }
 
 { #category : #'instance creation' }

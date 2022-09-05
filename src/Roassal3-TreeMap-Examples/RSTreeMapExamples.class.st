@@ -151,8 +151,8 @@ RSTreeMapExamples >> example07Roassal [
 	b := RSTreeMap new.
 	b inset: 1 asPoint.
 	b canvas color: (Color colorFrom: '#2d2f3c') lighter.
-	b boxShape
-		color: Color white.
+	b boxShape color: Color white.
+	
 	b
 		leafWeight: [ :f | f size sqrt ];
 		explore: (IceRepository registry 

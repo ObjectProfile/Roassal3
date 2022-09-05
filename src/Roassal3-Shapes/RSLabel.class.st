@@ -182,6 +182,11 @@ RSLabel >> font: aLogicalFont [
 ]
 
 { #category : #accessing }
+RSLabel >> fontFamily: aString [
+	self fontName: aString
+]
+
+{ #category : #accessing }
 RSLabel >> fontName [
 	^ fontName
 ]
