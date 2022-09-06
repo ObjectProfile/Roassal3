@@ -33,7 +33,7 @@ RSRectangleTreeMap >> addSubrectangle: aTreeRectangle [
 	self currentSubrectangle: aTreeRectangle.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSRectangleTreeMap >> computeHorizontalRemainingSubrectangleFrom: row [
 
 	| areaToLayout remainingSubrectangle currentRect currentOrigin |
@@ -52,14 +52,14 @@ RSRectangleTreeMap >> computeHorizontalRemainingSubrectangleFrom: row [
 	 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSRectangleTreeMap >> computeRemainingSubrectangleFrom: row [
 	(self currentSubrectangle isHorizontal)
 		ifTrue: [^ self computeHorizontalRemainingSubrectangleFrom: row ]
 		ifFalse: [ ^ self computeVerticalRemainingSubrectangleFrom: row ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSRectangleTreeMap >> computeVerticalRemainingSubrectangleFrom: row [
 
 	| areaToLayout remainingSubrectangle currentRect currentOrigin |
@@ -113,7 +113,7 @@ RSRectangleTreeMap >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSRectangleTreeMap >> shortestSide [
 	^ self width min: self height
 ]
