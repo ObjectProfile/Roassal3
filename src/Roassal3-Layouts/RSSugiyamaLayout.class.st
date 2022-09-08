@@ -34,14 +34,16 @@ RSSugiyamaLayout >> addDummyNodes [
 		"edge hints removeAll."
 		layerFrom := layerNrs at: edge from.
 		layerTo := layerNrs at: edge to.
-		span := (layerFrom - layerTo) abs.
+		span := layerTo - layerFrom.
 
 		"Normal case where nodes are in adjacent layers"
-		span = 1 ifTrue: [ connections at: edge from at: edge to put: true ].
+		span abs = 1 ifTrue: [ connections at: edge from at: edge to put: true ].
 
 		fromNode := edge from.
-		[ span > 1 ] whileTrue: [ 
-			span := span - 1.
+		[ span > 1 or: [ span < -1 ] ] whileTrue: [ 
+			span := span > 0 
+				ifTrue: [ span - 1]
+				ifFalse: [ span + 1].
 			layerNr := layerTo - span.
 			layer := layers at: layerNr.
 			toNode := RSDummyNode on: edge slot: layerFrom - span.
