@@ -68,6 +68,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Menu'
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
+	'Roassal3-BaselineMap'
 	)
 ]
 
@@ -169,5 +170,7 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Chart-Tests'
 	'Roassal3-UML-Tests'
 	'Roassal3-Spec-Tests'
-	'Roassal3-Inspector-Tests')
+	'Roassal3-Inspector-Tests'
+	'Roassal3-BaselineMap-Tests'
+	)
 ]
