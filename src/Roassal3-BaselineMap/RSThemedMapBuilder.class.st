@@ -27,7 +27,7 @@ RSThemedMapBuilder >> marker [
 	marker color: theme textColor.
 	marker size: 10.
 	marker := marker asMarker.
-	marker offset: 5.
+	marker offset: 0.
 	^ marker
 ]
 
@@ -61,7 +61,7 @@ RSThemedMapBuilder >> newLineBuilder [
 	marker := self marker.
 	^ RSLineBuilder bezier
 		markerEnd: marker;
-		controlPointsController: (RSSmartHorizontalCPController new
+		controlPointsController: (RSShortestHorizontalCPController new
 			endOffset: marker shape height / 2;
 			yourself);
 		color: self theme textColor;

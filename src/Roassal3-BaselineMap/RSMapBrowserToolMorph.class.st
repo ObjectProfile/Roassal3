@@ -12,7 +12,7 @@ Class {
 
 { #category : #baselines }
 RSMapBrowserToolMorph class >> baselineClassActivation [
-	"<classAnnotation>"
+	<classAnnotation>
 	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 

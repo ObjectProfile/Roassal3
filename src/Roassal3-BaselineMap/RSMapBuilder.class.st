@@ -96,6 +96,7 @@ RSMapBuilder >> layoutOn: aCanvas [
 		horizontalGap: 50;
 		verticalGap: 5;
 		on: aCanvas nodes.
+	
 ]
 
 { #category : #accessing }
