@@ -99,6 +99,12 @@ RSBorder >> color: aColor [
 ]
 
 { #category : #'style - dashes' }
+RSBorder >> dashArray [
+	style ifNil: [ ^ nil ].
+	^ style dashArray
+]
+
+{ #category : #'style - dashes' }
 RSBorder >> dashArray: arrayOfNumbers [
 	"Set the pattern for the dash. For example:
 -=-=-=-=-=-=-=-=-=-=-=-=

@@ -13,9 +13,70 @@ RSThemedMapBuilder >> defaultContainer [
 	theme := self theme.
 	^ RSCanvas new 
 		color: theme backgroundColor;
-		addInteraction: (RSCanvasController new
-			noLegend;
-			yourself);
+		when: RSThemeChangedEvent send: #themeChanged: to: self;
+		addInteraction: RSCanvasController new;
+		yourself
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> highlight: evt [
+	| box lines boxes |
+	box := evt shape.
+	lines := box outgoingLines.
+	self highlightLines: lines.
+	boxes := lines collect: #to.
+	boxes add: box.
+	self highlightBoxes: boxes.
+	evt canvas propertyAt: #highlightedLines put: lines.
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> highlightAnt: antBorder [
+	| animation canvas |
+	canvas := self container.
+	antBorder dashArray: #(7 3).
+	animation := canvas newAnimation
+		repeat;
+		from: 0;
+		to: antBorder dashArray sum negated;
+		duration: 1 second;
+		onStepDo: [ :t | 
+			antBorder dashOffset: t.
+			canvas signalUpdate ].
+	
+	canvas propertyAt: #ant put: animation.
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> highlightBoxes: boxes [
+	| canvas |
+	canvas := self canvas.
+	
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> highlightLines: lines [
+	| canvas antBorder color |
+	lines ifEmpty: [ ^ self ].
+	canvas := self container.
+	antBorder := RSBorder new 
+		width: 2;
+		yourself.
+	color := self theme dangerTextColor.
+	lines do: [ :line | | border |
+		border := line border.
+		line propertyAt: #oldBorder put: border.
+		line border: antBorder.
+		line color: color.
+		 ].
+	self highlightAnt: antBorder.
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> highlightable [
+	^ RSHighlightable new
+		when: RSHighlightEvent send: #highlight: to: self;
+		when: RSUnHighlightEvent send: #unhighlight: to: self;
 		yourself
 ]
 
@@ -49,10 +110,13 @@ RSThemedMapBuilder >> newBox [
 ]
 
 { #category : #'instance creation' }
-RSThemedMapBuilder >> newLabelFor: anObject [
-	^ (super newLabelFor: anObject)
-		color: self theme textColor;
-		yourself
+RSThemedMapBuilder >> newLabelFor: model [
+	| label |
+	label := super newLabelFor: model.
+	model name = baseline name
+		ifTrue: [ label fontSize: label fontSize * 1.5; bold ].
+		
+	^ label
 ]
 
 { #category : #'instance creation' }
@@ -68,7 +132,37 @@ RSThemedMapBuilder >> newLineBuilder [
 		yourself
 ]
 
+{ #category : #hooks }
+RSThemedMapBuilder >> renderIn: aCanvas [
+	super renderIn: aCanvas.
+	aCanvas nodes @ self highlightable
+]
+
 { #category : #'accessing - defaults' }
 RSThemedMapBuilder >> theme [
 	^ Smalltalk ui theme
+]
+
+{ #category : #'accessing - defaults' }
+RSThemedMapBuilder >> themeChanged: evt [
+	evt canvas shapes copy do: #remove.
+	evt canvas color: self theme backgroundColor.
+	self renderIn: evt canvas.
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> unhighlight: evt [
+	evt canvas 
+		propertyAt: #ant ifPresent: [ :anime | anime stop ];
+		propertyAt: #highlightedLines ifPresent: [ :lines | self unhighlightLines: lines ].
+	
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> unhighlightLines: lines [
+	lines do: [ :line | 
+		line border: (line propertyAt: #oldBorder).
+		line color: line border color.
+		line removeKey: #oldBorder ]
+	
 ]

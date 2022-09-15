@@ -37,13 +37,11 @@ RSShortestHorizontalCPController >> controlPointsFor: aLine [
 
 { #category : #accessing }
 RSShortestHorizontalCPController >> endOffset [
-
 	^ endOffset
 ]
 
 { #category : #accessing }
 RSShortestHorizontalCPController >> endOffset: aNumber [
-
 	endOffset := aNumber
 ]
 
@@ -64,12 +62,10 @@ RSShortestHorizontalCPController >> rectangleFor: shape line: line [
 
 { #category : #accessing }
 RSShortestHorizontalCPController >> startOffset [
-
 	^ startOffset
 ]
 
 { #category : #accessing }
 RSShortestHorizontalCPController >> startOffset: aNumber [
-
 	startOffset := aNumber
 ]
