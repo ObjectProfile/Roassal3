@@ -49,9 +49,16 @@ RSThemedMapBuilder >> highlightAnt: antBorder [
 
 { #category : #highlighting }
 RSThemedMapBuilder >> highlightBoxes: boxes [
-	| canvas |
+	| canvas color |
 	canvas := self canvas.
-	
+	color := self theme testColorPassing.
+	boxes do: [ :box | | shadow |
+		shadow := self shadowFor: box.
+		shadow color: color.
+		box propertyAt: #shadow put: shadow.
+		canvas addShape: shadow.
+		shadow pushBack ].
+	canvas propertyAt: #highlightedBoxes put: boxes.
 ]
 
 { #category : #highlighting }
@@ -138,6 +145,15 @@ RSThemedMapBuilder >> renderIn: aCanvas [
 	aCanvas nodes @ self highlightable
 ]
 
+{ #category : #highlighting }
+RSThemedMapBuilder >> shadowFor: box [
+	^ RSBox new
+		position: box position;
+		extent: box extent + 3;
+		cornerRadius: 10;
+		yourself
+]
+
 { #category : #'accessing - defaults' }
 RSThemedMapBuilder >> theme [
 	^ Smalltalk ui theme
@@ -154,7 +170,15 @@ RSThemedMapBuilder >> themeChanged: evt [
 RSThemedMapBuilder >> unhighlight: evt [
 	evt canvas 
 		propertyAt: #ant ifPresent: [ :anime | anime stop ];
-		propertyAt: #highlightedLines ifPresent: [ :lines | self unhighlightLines: lines ].
+		propertyAt: #highlightedLines ifPresent: [ :lines | self unhighlightLines: lines ];
+		propertyAt: #highlightedBoxes ifPresent: [ :boxes | self unhighlightBoxes: boxes ].
+	
+]
+
+{ #category : #highlighting }
+RSThemedMapBuilder >> unhighlightBoxes: boxes [
+	boxes do: [ :box | 
+		box propertyAt: #shadow ifPresent: [ :shadow | shadow remove ] ]
 	
 ]
 
