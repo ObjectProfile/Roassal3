@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSAbstractCPController,
 	#instVars : [
 		'startOffset',
-		'endOffset'
+		'endOffset',
+		'swapDirection'
 	],
 	#category : #'Roassal3-Shapes-ControlPoints'
 }
@@ -21,16 +22,30 @@ RSShortestHorizontalCPController >> controlPointsFor: aLine [
 	c4 := r2 floatCenter.
 	off1 := startOffset @ 0.
 	off2 := endOffset @ 0.
-	c1 x < c4 x  ifTrue: [ 
+	swapDirection ifTrue: [ 
+		c1 x < c4 x  ifTrue: [ 
+			c1 := r1 rightCenter + off1.
+			c4 := r2 leftCenter - off2.
+		] ifFalse: [ 
+			c1 := r1 leftCenter - off1.
+			c4 := r2 rightCenter + off2.
+		].
+		mid := (c1 x + c4 x)/2.
+		c2 :=	mid @ c1 y.
+		c3 := mid @ c4 y.
+	] ifFalse: [
 		c1 := r1 rightCenter + off1.
 		c4 := r2 leftCenter - off2.
-	] ifFalse: [ 
-		c1 := r1 leftCenter - off1.
-		c4 := r2 rightCenter + off2.
+		mid := (c1 x + c4 x)/2.
+		c2 :=	mid @ c1 y.
+		c3 := mid @ c4 y.
+		c1 x > c4 x ifTrue: [ 
+			mid := (c1 y + c4 y) / 2.
+			c2 := (c1 x + (r1 width/2) ) @ mid.
+			c3 := c4 - (r2 width @ 0).
+			].
 	].
-	mid := (c1 x + c4 x)/2.
-	c2 :=	mid @ c1 y.
-	c3 := mid @ c4 y.
+	
 	^ { c1. c2. c3. c4 }
 	
 ]
@@ -48,7 +63,8 @@ RSShortestHorizontalCPController >> endOffset: aNumber [
 { #category : #initialization }
 RSShortestHorizontalCPController >> initialize [
 	super initialize.
-	startOffset := endOffset := 0
+	startOffset := endOffset := 0.
+	swapDirection := true.
 ]
 
 { #category : #hooks }
@@ -68,4 +84,14 @@ RSShortestHorizontalCPController >> startOffset [
 { #category : #accessing }
 RSShortestHorizontalCPController >> startOffset: aNumber [
 	startOffset := aNumber
+]
+
+{ #category : #accessing }
+RSShortestHorizontalCPController >> swapDirection [
+	^ swapDirection
+]
+
+{ #category : #accessing }
+RSShortestHorizontalCPController >> swapDirection: aBoolean [
+	swapDirection := aBoolean
 ]

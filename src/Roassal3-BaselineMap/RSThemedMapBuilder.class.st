@@ -55,6 +55,7 @@ RSThemedMapBuilder >> highlightBoxes: boxes [
 	boxes do: [ :box | | shadow |
 		shadow := self shadowFor: box.
 		shadow color: color.
+		box when: RSPositionChangedEvent do: [ :evt | shadow position: evt newPosition ].
 		box propertyAt: #shadow put: shadow.
 		canvas addShape: shadow.
 		shadow pushBack ].
@@ -134,6 +135,7 @@ RSThemedMapBuilder >> newLineBuilder [
 		markerEnd: marker;
 		controlPointsController: (RSShortestHorizontalCPController new
 			endOffset: marker shape height / 2;
+			swapDirection: false;
 			yourself);
 		color: self theme textColor;
 		yourself
