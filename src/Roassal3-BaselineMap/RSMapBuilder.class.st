@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'models',
-		'baseline'
+		'baseline',
+		'context'
 	],
 	#category : #'Roassal3-BaselineMap-UI'
 }
@@ -38,6 +39,16 @@ RSMapBuilder >> computeModels [
 	todo := LinkedList with: rootModel.
 	self findModels: todo.
 	
+]
+
+{ #category : #accessing }
+RSMapBuilder >> context [
+	^ context
+]
+
+{ #category : #accessing }
+RSMapBuilder >> context: aClyFullBrowserClassContext [
+	context := aClyFullBrowserClassContext
 ]
 
 { #category : #'accessing - defaults' }
@@ -95,8 +106,7 @@ RSMapBuilder >> layoutOn: aCanvas [
 	RSHorizontalTreeLayout new
 		horizontalGap: 50;
 		verticalGap: 5;
-		on: aCanvas nodes.
-	
+		on: aCanvas nodes
 ]
 
 { #category : #accessing }

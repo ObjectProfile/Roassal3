@@ -29,6 +29,13 @@ RSBaselineModel >> baselineClass: aClass [
 	class := aClass
 ]
 
+{ #category : #private }
+RSBaselineModel >> browse [
+	class ifNil: [ ^ nil ].
+	^ class browse
+	
+]
+
 { #category : #accessing }
 RSBaselineModel >> dependencies [
 

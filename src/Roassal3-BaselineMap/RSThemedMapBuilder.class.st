@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-BaselineMap-Customs'
 }
 
+{ #category : #events }
+RSThemedMapBuilder >> browse: evt [
+	evt shape model browse
+]
+
 { #category : #'accessing - defaults' }
 RSThemedMapBuilder >> defaultContainer [
 	| theme |
@@ -133,11 +138,19 @@ RSThemedMapBuilder >> newLineBuilder [
 	marker := self marker.
 	^ RSLineBuilder bezier
 		markerEnd: marker;
-		controlPointsController: (RSShortestHorizontalCPController new
-			endOffset: marker shape height / 2;
-			swapDirection: false;
+		attachPoint: (RSHorizontalAttachPoint new
+			endOffset: marker shape height / -2;
 			yourself);
+		controlPointsController: RSHorizontalLeftRightController new;
 		color: self theme textColor;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSThemedMapBuilder >> newShapeFor: model [
+	^ (super newShapeFor: model)
+		when: RSMouseDoubleClick send: #browse: to: self;
+		when: RSMouseRightClick send: #showMenu: to: self;
 		yourself
 ]
 
@@ -154,6 +167,24 @@ RSThemedMapBuilder >> shadowFor: box [
 		extent: box extent + 3;
 		cornerRadius: 10;
 		yourself
+]
+
+{ #category : #events }
+RSThemedMapBuilder >> showMenu: evt [
+	| menu newContext tool class |
+	
+	context ifNil: [ ^ self ].
+	class := evt shape model baselineClass.
+	class ifNil: [ ^ self] .
+	newContext := context copy.
+	tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
+	tool prepareInitialStateBy: [ :b | b selectClass: class ].
+	
+	newContext tool: tool.
+		menu := CmdContextMenuActivation 
+			buildContextMenuFor: evt canvas morph 
+			inContext: newContext.
+	menu popUpInWorld: self currentWorld.
 ]
 
 { #category : #'accessing - defaults' }
