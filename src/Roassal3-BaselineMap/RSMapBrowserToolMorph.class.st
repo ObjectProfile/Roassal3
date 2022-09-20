@@ -54,7 +54,7 @@ RSMapBrowserToolMorph >> defaultIconName [
 
 { #category : #initialization }
 RSMapBrowserToolMorph >> defaultTitle [
-	^ 'Baseline browser'
+	^ 'Graph'
 ]
 
 { #category : #testing }
