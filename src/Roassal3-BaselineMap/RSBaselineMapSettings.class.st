@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 RSBaselineMapSettings class >> classMapBuilder [
-	^ classMapBuilder ifNil: [ self defaultClassMapBuilder ]
+	^ classMapBuilder
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ RSBaselineMapSettings class >> settingsClassOn: aBuilder [
 		description: 'Choose a class to be default in the inspector and baseline';
 		target: self;
 		domainValues: RSMapBuilder withAllSubclasses;
-		default: RSMapBuilder
+		default: self defaultClassMapBuilder
 ]
 
 { #category : #settings }
