@@ -23,3 +23,14 @@ RSMapBuilderTest >> testBasic [
 		baseline: BaselineOfMorphic;
 		build
 ]
+
+{ #category : #tests }
+RSMapBuilderTest >> testHighlightOnNode [
+	| builder |
+	builder := RSThemedMapBuilder new.
+	builder baseline: BaselineOfGeometry.
+	builder build.
+	builder highlight: (RSHighlightEvent new 
+		shape: builder canvas nodes first;
+		yourself).
+]

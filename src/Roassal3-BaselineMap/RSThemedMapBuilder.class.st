@@ -19,7 +19,9 @@ RSThemedMapBuilder >> defaultContainer [
 	^ RSCanvas new 
 		color: theme backgroundColor;
 		when: RSThemeChangedEvent send: #themeChanged: to: self;
-		addInteraction: RSCanvasController new;
+		addInteraction: (RSCanvasController new
+			in: [:i | i configuration useBasicZoom ];
+			yourself);
 		yourself
 ]
 
@@ -29,7 +31,7 @@ RSThemedMapBuilder >> highlight: evt [
 	box := evt shape.
 	lines := box outgoingLines.
 	self highlightLines: lines.
-	boxes := lines collect: #to.
+	boxes := (lines collect: #to) asOrderedCollection.
 	boxes add: box.
 	self highlightBoxes: boxes.
 	evt canvas propertyAt: #highlightedLines put: lines.
