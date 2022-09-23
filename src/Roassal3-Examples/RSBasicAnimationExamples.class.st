@@ -271,3 +271,8 @@ RSBasicAnimationExamples >> example08Markers [
 
 	^ canvas
 ]
+
+{ #category : #accessing }
+RSBasicAnimationExamples >> order [
+	^ 10
+]

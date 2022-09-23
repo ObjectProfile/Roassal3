@@ -1,5 +1,12 @@
 "
-My subclasses has an extent and a transformation matrix
+Bounding shapes have encompassing rectangle or bounding box.
+My subclasses are: `RSBitmap`, `RSBox`, `RSCircularShape`, `RSComposite`, `RSLabel`, `RSPieSlice` and `RSSVGPath`
+
+## Instance variables
+- `baseRectangle`, the center of this rectangle is `0@0`, base rectangle contains the basic shape without any transformation.
+- `matrix` is an instance of `AthensAffineTransform`, this matrix handles scalation, rotation, translation and skew operations.
+- `connectedLines`, a collection of lines where this bounding shape is conected. If the shape changes its position, the connected lines will be updated.
+- shouldUpdateLines, 
 "
 Class {
 	#name : #RSBoundingShape,

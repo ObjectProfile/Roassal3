@@ -1,5 +1,5 @@
 "
-I represent lines drawn in sankey charts
+I represent lines drawn in sankey charts, these lines have instance variables used by Sankey layout algorithmn
 "
 Class {
 	#name : #RSSankeyLine,

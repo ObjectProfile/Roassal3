@@ -10,6 +10,8 @@ c add: polyline.
 
 c open
 ```
+
+Please review comment of `RSAbstractControlPointsLine` and `RSAbstractLine`.
 "
 Class {
 	#name : #RSPolyline,

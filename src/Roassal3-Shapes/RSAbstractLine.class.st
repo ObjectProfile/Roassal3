@@ -1,30 +1,54 @@
 "
-I represent the abstract lines that have start and end points
+Lines in roassal can be: straight lines and bezier lines. Here there are som subclasses: `RSLine`, `RSArrowedLine`, `RSBezier`, `RSPolyline`, but you can define more types of lines.
 
-For example:
--=-=-=-=-=-=-=-=-=-=-=-=
-c := RSCanvas new.
+## Examples
+```
+line := RSLine new.
+line startPoint: 0@0.
+line endPoint: 100@100.
 
-circle := RSEllipse new color: Color green; size: 10.
-box := RSBox new color: Color red; size: 10.
-c add: circle; add: box.
+bezier := RSBezier new.
+bezier controlPoints: { 0 @ 0. 100@100. 200@0 }.
+```
+More examples:
+```
+RSShapeExamples new example35Lines.
+RSBasicShapeExamples new example12BasicLine.
+RSBasicShapeExamples new example31BorderAttachPointWithOffset.
+```
 
-dragMeLabel := RSLabel new text: 'Drag me'.
-c add: dragMeLabel.
-RSLocation new
-	above; center;
-	stick: dragMeLabel on: box.
+## Canvas
+Lines interact directly with the canvas(`RSCanvas`), when you add it to the canvas you can access all lines with method `lines`.
 
-c add: (RSLine new color: Color veryVeryLightGray; from: 0 @ -1000; to: 0 @ 1000).
-c add: (RSLine new color: Color veryVeryLightGray; from: -1000 @ 0; to: 1000 @ 0).
+There are two groups of lines in roassal, lines with 2 control points and lines with several control points.
 
-box translateBy: 50 @ 50.
-box @ RSDraggable.
+## Conection with nodes
+Lines can be conected to a node, an instance of `RSBoundingShape`.
 
-c add: (RSLine new color: Color blue; from: box; to: circle).
+```
+x := RSBox new.
+y := RSBox new.
+line from: x.
+line to: y.
+```
 
-c
--=-=-=-=-=-=-=-=-=-=-=-=
+Then if you move one box, the line will update its position.
+
+## Attach Points
+In order to calculate the line position related to one connected box, lines use instances of `RSAttachPoint`. An attach point only works with `from:` or `to:` methods.
+```
+line attachPoint: RSVerticalAttach new.
+```
+In the previous script vertical attach point will compute vertical control points for the `from:` and `to:` shapes
+## Markers
+Lines in roassal also have markers, it is a kind of decoration for lines. Check this class `RSTMarkeable`. In a line you can put a decoration for each control point. This decoration is `markerStart:` for the first control point, `markerEnd:` for the last control point. and `markerMiddle:` for middle control points.
+Lines uses `RSMarker`
+```
+shape := RSShapeFactory triangle.
+shape extent: 10@10.
+line markerEnd: shape asMarker.
+```
+
 "
 Class {
 	#name : #RSAbstractLine,

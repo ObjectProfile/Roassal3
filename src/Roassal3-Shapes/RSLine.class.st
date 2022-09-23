@@ -1,9 +1,17 @@
 "
-RSLine describes a line. A line typically links two shapes.
+RSLine describes a line. This example shows how to create a line with basic properties
 
-Here is an example:
+```
+line := RSLine new.
+line startPoint: 40@30.
+line endPoint: 220@140.
+line color: Color blue.
+line width: 10.
+line dashArray: #(8 4).
+```
+A line typically links two shapes. Here is an example:
 
--=-=-=-=
+```
 | c from to l |
 c := RSCanvas new.
 
@@ -26,9 +34,10 @@ to translateBy: 50 @ 40.
 
 c @ RSCanvasController.
 c
--=-=-=-=
+```
 
-Adding single line can be complex in some situation. You may want to look at RSEdgeBuilder to ease the edge creation. 
+Adding single line can be complex in some situation. You may want to look at `RSLineBuilder` to ease the line creation.
+To get more information read comment of `RSAbstractLine`
 "
 Class {
 	#name : #RSLine,

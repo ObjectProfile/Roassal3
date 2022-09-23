@@ -48,9 +48,15 @@ RSExamplesBrowser >> classChanged: cls [
 
 { #category : #private }
 RSExamplesBrowser >> classes [
-	^ RSAbstractExamples withAllSubclasses select: [ :cls | 
-		cls methods anySatisfy: [ :met | 
-			met selector beginsWith: 'example' ] ].
+	^ (RSAbstractExamples withAllSubclasses select: [ :cls | 
+		cls methods anySatisfy: [ :met | met selector beginsWith: 'example' ] ])
+	sorted: [ :a :b | 
+		| x y |
+		x := a new order.
+		y := b new order.
+		x = y
+			ifTrue: [ a name < b name ]
+			ifFalse: [ x < y  ] ]
 ]
 
 { #category : #private }
@@ -58,11 +64,7 @@ RSExamplesBrowser >> computeExamples [
 	selectedClass := self defaultClass.
 	^ (selectedClass methods
 		select: [ :met | met selector beginsWith: 'example' ]
-		) asSortedCollection: [ :a :b |
-		a protocol = b protocol 
-			ifTrue: [ a selector < b selector ]
-			ifFalse: [ a protocol < b protocol ]
-		 ].
+		) asSortedCollection: [ :a :b | a selector < b selector ].
 ]
 
 { #category : #private }
@@ -79,8 +81,8 @@ RSExamplesBrowser >> initializePresenter [
 		help: 'Select the example to view';
 		items: self classes;
 		display: [ :cls | cls name ];
-		displayIcon: [ :cls | cls systemIcon ];
-		whenSelectedItemChangedDo: [ :cls | self classChanged: cls  ].
+		displayIcon: [ :cls | cls iconNamed: cls systemIconName ];
+		whenSelectedItemChangedDo: [ :cls | self classChanged: cls ].
 
 	examples := self computeExamples.
 	index := 1.
@@ -89,9 +91,9 @@ RSExamplesBrowser >> initializePresenter [
 	leftButton action: [ self shiftLeft ].
 	roassalCanvas := self newRoassal.
 	codeEditor := self newCode
-		              withSyntaxHighlight;
-		              withScrollBars;
-		              yourself.
+		withSyntaxHighlight;
+		withScrollBars;
+		yourself.
 	rightButton := self newButton.
 	rightButton label: '>'.
 	rightButton action: [ self shiftRight ].
@@ -110,14 +112,15 @@ RSExamplesBrowser >> run [
 
 { #category : #updated }
 RSExamplesBrowser >> shiftLeft [
-	index = 1 ifTrue: [ ^ self ].
+	index = 1 ifTrue: [ ^ self inform: 'Nothing left' ].
 	index := index - 1.
 	self updateCanvas.
 ]
 
 { #category : #updated }
 RSExamplesBrowser >> shiftRight [
-	index = examples size ifTrue: [ ^ self ].
+	index = examples size
+		ifTrue: [ ^ self inform: 'Nothing Right'].
 	index := index + 1.
 	self updateCanvas.
 ]
@@ -128,7 +131,7 @@ RSExamplesBrowser >> updateCanvas [
 	current := examples at: index.
 	self withWindowDo: [ :window | self initializeWindow: window ].
 	codeEditor text: current sourceCode.
-	codeEditor behavior: selectedClass.
+	codeEditor beForBehavior: selectedClass.
 	[
 		canvas :=  current selector value: selectedClass new.
 		canvas class = RSCanvas ifFalse: [ 

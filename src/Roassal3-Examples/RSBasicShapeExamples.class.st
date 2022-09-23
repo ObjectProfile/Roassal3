@@ -1043,3 +1043,8 @@ RSBasicShapeExamples >> example44AA [
 			 ].
 	^ canvas
 ]
+
+{ #category : #accessing }
+RSBasicShapeExamples >> order [
+	^ 0
+]

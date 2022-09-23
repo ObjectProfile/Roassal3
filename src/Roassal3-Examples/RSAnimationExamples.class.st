@@ -2844,3 +2844,8 @@ RSAnimationExamples >> example46Lines [
 
 
 ]
+
+{ #category : #accessing }
+RSAnimationExamples >> order [
+	^ 1000
+]
