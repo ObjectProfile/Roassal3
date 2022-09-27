@@ -68,6 +68,26 @@ RSAttachPointTest >> testHorizontalAttachPoint [
 ]
 
 { #category : #tests }
+RSAttachPointTest >> testInverted [
+	| ap e1 e2 line |
+	ap := RSCenteredAttachPoint new.
+	ap straight.
+	self deny: ap isInverted.
+	e1 := RSEllipse new.
+	e2  := RSEllipse new.
+	e1 translateTo: 20 asPoint.
+	line := RSLine new.
+	line attachPoint: ap.
+	line from: e1.
+	line to: e2.
+	line update.
+	self assert: e1 position equals: line startPoint.
+	ap inverted.
+	line update.
+	self assert: e1 position equals: line endPoint.
+]
+
+{ #category : #tests }
 RSAttachPointTest >> testVerticalAttachPoint [
 	| b1 b2 l c |
 	b1 := RSBox new size: 20.
