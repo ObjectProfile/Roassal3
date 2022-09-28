@@ -29,6 +29,39 @@ Class {
 	#category : #'Roassal3-SVG-Shapes'
 }
 
+{ #category : #examples }
+RSSVGPathLine class >> exampleBasic [
+	| line a b |
+	line := self new.
+	a := RSCircle new
+		radius: 5;
+		color: 'blue';
+		draggable;
+		yourself.
+	b := RSEllipse new 
+		radius: 5 ;
+		color: 'red';
+		draggable;
+		position: 100@100;
+		yourself.
+	
+	line from: a; to: b.
+	line svgPath: [ :aLine | | from to |
+		from := aLine from position.
+		to := aLine to position.
+		'M ', from x asString, ' ', from y asString,
+		'L ', to x asString, ' ', to y asString,
+		'L' , from x asString, ' ', to y asString, ' Z'
+		 ].
+	
+	line color: Color green; borderColor: Color black.
+	
+	RSCanvas new
+		addAll: { a. b. line };
+		open.
+		
+]
+
 { #category : #visiting }
 RSSVGPathLine >> buildPathOn: visitor [
 	visitor buildSVGLinePath: self.

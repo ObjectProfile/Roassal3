@@ -43,8 +43,9 @@ RSCircle >> geometry [
 		coVertex:p + (e x@ 0) 
 ]
 
-{ #category : #matrix }
+{ #category : #accessing }
 RSCircle >> height: anInteger [
+	"use `radius:` instead"
 	self error: 'Should not be performed'
 ]
 
@@ -74,17 +75,8 @@ RSCircle >> radius: integer [
 	self extent: integer * 2 asPoint
 ]
 
-{ #category : #matrix }
+{ #category : #accessing }
 RSCircle >> width: anInteger [
-	self error: 'Should not be performed'
-]
-
-{ #category : #matrix }
-RSCircle >> x: anInteger [
-	self error: 'Should not be performed'
-]
-
-{ #category : #matrix }
-RSCircle >> y: anInteger [
+	"use `radius:` instead"
 	self error: 'Should not be performed'
 ]
