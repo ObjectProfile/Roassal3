@@ -43,6 +43,25 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #examples }
+RSCanvas class >> exampleSimple [
+	| canvas |
+	canvas := self new.
+	canvas color: Color black.
+	"add some shapes here"
+	canvas open
+]
+
+{ #category : #examples }
+RSCanvas class >> exampleSpec [
+	| canvas spec |
+	canvas := self new.
+	canvas color: Color black.
+	spec := SpMorphPresenter new.
+	spec morph: canvas createMorph.
+	spec open.
+]
+
 { #category : #antialiasing }
 RSCanvas >> aaBest [
 	self setAA: CAIRO_ANTIALIAS_BEST

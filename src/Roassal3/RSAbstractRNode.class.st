@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Rendering'
 }
 
+{ #category : #adding }
+RSAbstractRNode >> addChild: newObject [
+	^ self subclassResponsibility
+]
+
 { #category : #public }
 RSAbstractRNode >> computeHeight [
 	^ 0
