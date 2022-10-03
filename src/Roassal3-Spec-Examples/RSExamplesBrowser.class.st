@@ -11,8 +11,8 @@ Class {
 		'index',
 		'examples',
 		'codeEditor',
-		'selectedClass',
-		'classesList'
+		'classesList',
+		'selectedClass'
 	],
 	#category : #'Roassal3-Spec-Examples'
 }
@@ -89,7 +89,7 @@ RSExamplesBrowser >> initializePresenter [
 	leftButton := self newButton.
 	leftButton label: '<'.
 	leftButton action: [ self shiftLeft ].
-	roassalCanvas := self newRoassal.
+	roassalCanvas := self instantiate: SpRoassal3InspectorPresenter.
 	codeEditor := self newCode
 		withSyntaxHighlight;
 		withScrollBars;
@@ -102,7 +102,9 @@ RSExamplesBrowser >> initializePresenter [
 
 { #category : #initialization }
 RSExamplesBrowser >> initializeWindow: window [
-	window title: (examples at: index) selector.
+	window
+		initialExtent: 800@500;
+		title: (examples at: index) fullDisplayString .
 ]
 
 { #category : #running }
@@ -134,19 +136,9 @@ RSExamplesBrowser >> updateCanvas [
 	codeEditor beForBehavior: selectedClass.
 	[
 		canvas :=  current selector value: selectedClass new.
-		canvas class = RSCanvas ifFalse: [ 
-			canvas := canvas build; canvas
-			 ].
-		roassalCanvas currentCanvas 
-			ifNil: [ roassalCanvas canvas: canvas ]
-			ifNotNil: [ :aCanvas | 
-				| widget |
-				widget := aCanvas morph.
-				widget canvas: canvas.
-				canvas morph: widget.
-				canvas extent: widget extent.
-				canvas signalUpdate.
-				].
+		canvas class = RSCanvas 
+			ifFalse: [ canvas := canvas build; canvas ].
+		roassalCanvas canvas: canvas.
 	] onErrorDo: [ :ex | ex traceCr ]	
 		
 ]

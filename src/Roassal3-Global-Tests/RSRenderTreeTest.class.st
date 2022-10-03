@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #tests }
+RSRenderTreeTest >> testAllChildren [
+	| tree list |
+	self skip.
+	tree := RSRTreeShapeCollection new.
+	list := tree root withAllChildren.
+	self assert: list isEmpty.
+	
+	tree add: RSBox new.
+	list := tree root withAllChildren.
+]
+
+{ #category : #tests }
 RSRenderTreeTest >> testBalanced [
 	| tree |
 	tree := RSRTreeShapeCollection new.
@@ -92,6 +104,20 @@ RSRenderTreeTest >> testOneElementRemove [
 	tree remove: box.
 	self assert: tree isEmpty.
 	
+]
+
+{ #category : #tests }
+RSRenderTreeTest >> testRemove [
+	| tree leafs |
+	self skip.
+	tree := self tree.
+	leafs := tree root withAllChildren select: [ :child | child isLeaf ].
+	
+	self assert: leafs notEmpty.
+	self assert: tree isBalanced.
+	
+	tree remove: leafs anyOne.
+	self assert: tree isBalanced.
 ]
 
 { #category : #tests }
@@ -247,4 +273,23 @@ RSRenderTreeTest >> testZeroElementRectangle [
 	| tree |
 	tree := RSRTreeShapeCollection new.
 	self assert: tree rectangle equals: (0@0 corner: 0@0)
+]
+
+{ #category : #accessing }
+RSRenderTreeTest >> tree [
+	| tree random |
+	tree := RSRTreeShapeCollection new.
+	random := Random new.
+	random seed: 777.
+	
+	1 to: 10 do: [ :each | | box |
+		box := RSBox new.
+		box size: 10.
+		box model: each.
+		box popup.
+		box position: (random next @ random next) * 1000.
+		tree add: box.
+	].
+
+	^ tree
 ]
