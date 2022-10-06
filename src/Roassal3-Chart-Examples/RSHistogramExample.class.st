@@ -30,6 +30,7 @@ RSHistogramExample >> example02Histogram [
 	c addPlot: plot.
 	c addDecoration: RSVerticalTick new.
 	c addDecoration: RSHorizontalTick new.
+	c title: 'My Chart'.
 	^ c
 ]
 

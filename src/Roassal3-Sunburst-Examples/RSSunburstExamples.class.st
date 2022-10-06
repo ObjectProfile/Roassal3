@@ -12,7 +12,7 @@ RSSunburstExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| sb |
 	sb := RSSunburstBuilder new.
-	sb explore: String using: #subclasses.
+	sb explore: Collection using: #subclasses.
 	sb canvas @ RSCanvasController.
 	^ sb
 ]

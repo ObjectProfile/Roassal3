@@ -17,7 +17,7 @@ RSBasicShapeExamples >> example01BasicBoxes [
 		yourself).
 	c addShape: (RSBox new
 		position: 100@100;
-		color: Color red;
+		color: Color blue;
 		extent: 100@100;
 		yourself).
 	^ c
