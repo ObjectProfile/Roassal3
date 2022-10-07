@@ -840,3 +840,43 @@ RSLayoutExamples >> example24SmartHorizontalTree [
 	RSHorizontalTreeLayout new on: c nodes.
 	^ c
 ]
+
+{ #category : #layouts }
+RSLayoutExamples >> example25SortBlock [
+	<script: 'self new example25SortBlock open'>
+	| c shapes |
+	c := RSCanvas new.
+	
+	shapes := Dictionary withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := RSLabel new
+			text: cls;
+			color: Color black;
+			yourself.
+		box := RSBox new
+			withBorder;
+			color: Color veryVeryLightGray;
+			cornerRadius: (RSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		RSComposite new
+			draggable;
+			model: cls;
+			shapes: (RSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ RSCanvasController.
+	RSLineBuilder orthoHorizontal
+		withHorizontalAttachPoint;
+		shapes: c nodes;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new
+		childrenSortBlock: [ :a :b | | sizeA sizeB |
+			"use a cache"
+			sizeA := a model withAllSubclasses size.
+			sizeB := b model withAllSubclasses size.
+			
+			sizeA = sizeB
+				ifTrue: [ a model name > b model name ]
+				ifFalse: [ sizeA > sizeB ] ];
+		on: c nodes.
+	^ c
+]

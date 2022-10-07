@@ -74,7 +74,7 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 				]
 			].
 			self childrenSortBlock 
-				ifNotNil: [ :block | nodes sort block ].
+				ifNotNil: [ :block | nodes sort: block ].
 			nodes]
 ]
 
