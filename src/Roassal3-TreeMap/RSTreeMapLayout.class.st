@@ -1,5 +1,6 @@
 "
 A layout for tree map layout
+Created by Roberto Minelli for Roassal1
 "
 Class {
 	#name : #RSTreeMapLayout,
@@ -11,7 +12,7 @@ Class {
 		'rectangle',
 		'weight'
 	],
-	#category : #'Roassal3-TreeMap'
+	#category : #'Roassal3-TreeMap-Rectangle'
 }
 
 { #category : #hook }
@@ -105,14 +106,7 @@ RSTreeMapLayout >> layoutVerticalRow: row [
 ]
 
 { #category : #hook }
-RSTreeMapLayout >> prepareNextRectangleAfterRow: row [
-	| nextRect |
-	nextRect := self rectangle currentSubrectangle computeRemainingSubrectangleFrom: row.
-	self rectangle addSubrectangle: nextRect
-]
-
-{ #category : #hook }
-RSTreeMapLayout >> prepareShapesForLayout: shapes inRectangle: rec [
+RSTreeMapLayout >> normalizeAreaOf: shapes byAreaOf: rec [
 	| shapesArea viewArea area |
 	shapes isEmpty ifTrue: [ ^ shapes ].
 	shapesArea := shapes inject: 0 into: [ :s :shape | 
@@ -124,6 +118,13 @@ RSTreeMapLayout >> prepareShapesForLayout: shapes inRectangle: rec [
 		shape propertyAt: #area put: area. ].
 	
 	^ shapes
+]
+
+{ #category : #hook }
+RSTreeMapLayout >> prepareNextRectangleAfterRow: row [
+	| nextRect |
+	nextRect := self rectangle currentSubrectangle computeRemainingSubrectangleFrom: row.
+	self rectangle addSubrectangle: nextRect
 ]
 
 { #category : #accessing }
@@ -179,7 +180,7 @@ RSTreeMapLayout >> squarify: children inRectangle: aTreeRectangle [
 	| elementsToLayout |
 	children isEmpty ifTrue: [ ^ self  ].
 	self rectangle: aTreeRectangle.
-	elementsToLayout := self prepareShapesForLayout: children inRectangle: aTreeRectangle.
+	elementsToLayout := self normalizeAreaOf: children byAreaOf: aTreeRectangle.
 	self 
 		squarify: elementsToLayout
 		currentRow: OrderedCollection new

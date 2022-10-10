@@ -177,7 +177,7 @@ RSHighlightable class >> color: aColor [
 RSHighlightable class >> createEdgesWith: aBlock shape: aShape using: aRSLine from: aRSGroup [
 	| models lines shapes parent |
 	models := aBlock value: aShape model.
-	parent := aShape parent.
+	parent := aShape canvas.
 	shapes := parent shapesFromModels: models.
 	lines := shapes collect: [:s | 
 		aRSLine copy
@@ -239,7 +239,9 @@ RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 					from: aRSGroup).
 		];
 		when: RSUnHighlightEvent do: [:evt |
-			evt shape parent propertyAt: #lines ifPresent: [:lines | lines do: #remove ].
+			evt canvas 
+				propertyAt: #lines ifPresent: [:lines | lines do: #remove ];
+				removeKey: #lines.
 		].
 	^ i 
 ]

@@ -1,5 +1,8 @@
 "
-I am an abtract shape that has an start and one end
+I am an abtract shape that has an start and one end, 2 control points.
+My subclasses are `RSLine` and `RSSVGPathLine`
+
+
 "
 Class {
 	#name : #RSAbstractDualLine,

@@ -17,5 +17,5 @@ RSWorldMenu class >> menu05ExamplesOn: aBuilder [
 		label: 'Examples';
 		help: 'Browse examples packages for Roassal3';
 		icon: self roassalIcon;
-		action: [ self browseExample ]
+		action: [ RSExamplesBrowser new open ]
 ]

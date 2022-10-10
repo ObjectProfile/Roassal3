@@ -14,7 +14,7 @@ RSBasicAnimationExamples >> example01Basic [
 	c := RSCanvas new.
 	b := RSBox new
 		extent: 100@100;
-		withBorder.
+		border: (RSBorder new color: 'black').
 	c addShape: b.
 	
 	c newAnimation 
@@ -270,4 +270,9 @@ RSBasicAnimationExamples >> example08Markers [
 			 ].
 
 	^ canvas
+]
+
+{ #category : #accessing }
+RSBasicAnimationExamples >> order [
+	^ 10
 ]

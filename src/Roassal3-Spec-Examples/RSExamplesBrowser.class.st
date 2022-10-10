@@ -11,8 +11,9 @@ Class {
 		'index',
 		'examples',
 		'codeEditor',
+		'classesList',
 		'selectedClass',
-		'classesList'
+		'searchButton'
 	],
 	#category : #'Roassal3-Spec-Examples'
 }
@@ -26,8 +27,11 @@ RSExamplesBrowser class >> defaultLayout [
 	^ SpBoxLayout newHorizontal
 		add: #leftButton withConstraints: const;
 		add: (SpPanedLayout newHorizontal
-			add: (SpBoxLayout newTopToBottom
-				add: #classesList withConstraints: [:c | c expand: false; height: 25];
+			add: (SpBoxLayout newVertical
+				add: (SpBoxLayout newHorizontal
+					add: #classesList;
+					add: #searchButton withConstraints: [:c | c expand: false; width: 25];
+					yourself) withConstraints: [:c | c expand: false; height: 25];
 				add: #codeEditor;
 				yourself);
 			add: #roassalCanvas;
@@ -37,20 +41,39 @@ RSExamplesBrowser class >> defaultLayout [
 		
 ]
 
-{ #category : #updated }
+{ #category : #events }
 RSExamplesBrowser >> classChanged: cls [
 	selectedClass := cls.
-	index := 1.
 	examples := self computeExamples.
+	index := index < 0 ifTrue: [ examples size ] ifFalse: [ 1 ].
 	self updateCanvas.
 	
 ]
 
 { #category : #private }
 RSExamplesBrowser >> classes [
-	^ RSAbstractExamples withAllSubclasses select: [ :cls | 
-		cls methods anySatisfy: [ :met | 
-			met selector beginsWith: 'example' ] ].
+	^ (RSAbstractExamples withAllSubclasses select: [ :cls | 
+		cls methods anySatisfy: [ :met | met selector beginsWith: 'example' ] ])
+	sorted: [ :a :b | 
+		| x y |
+		x := a new order.
+		y := b new order.
+		x = y
+			ifTrue: [ a name < b name ]
+			ifFalse: [ x < y  ] ]
+]
+
+{ #category : #initialization }
+RSExamplesBrowser >> compile: text [
+	[
+		(examples at: index) methodClass compile: text.
+		
+		self updateCanvas.
+		
+		codeEditor text: text.
+		"for some reason after the compile process the code editor does not have the current text
+		the previous code fixes that"
+	] onErrorDo: [ :ex | ex traceCr ].
 ]
 
 { #category : #private }
@@ -58,11 +81,17 @@ RSExamplesBrowser >> computeExamples [
 	selectedClass := self defaultClass.
 	^ (selectedClass methods
 		select: [ :met | met selector beginsWith: 'example' ]
-		) asSortedCollection: [ :a :b |
-		a protocol = b protocol 
-			ifTrue: [ a selector < b selector ]
-			ifFalse: [ a protocol < b protocol ]
-		 ].
+		) asSortedCollection: [ :a :b | a selector < b selector ].
+]
+
+{ #category : #initialization }
+RSExamplesBrowser >> connectPresenters [
+
+	classesList	whenSelectedItemChangedDo: [ :cls | self classChanged: cls ].
+	codeEditor whenSubmitDo: [ :text | self compile: text.  ].
+	leftButton action: [ self shiftLeft ].
+	rightButton action: [ self shiftRight ].
+	searchButton action: [ self openSpotter ].
 ]
 
 { #category : #private }
@@ -71,36 +100,67 @@ RSExamplesBrowser >> defaultClass [
 	
 ]
 
-{ #category : #'initialization - deprecated' }
-RSExamplesBrowser >> initializePresenter [
+{ #category : #initialization }
+RSExamplesBrowser >> initializePresenters [
 
-	classesList := self newDropList.
-	classesList
+	classesList := self newDropList
 		help: 'Select the example to view';
 		items: self classes;
 		display: [ :cls | cls name ];
-		displayIcon: [ :cls | cls systemIcon ];
-		whenSelectedItemChangedDo: [ :cls | self classChanged: cls  ].
+		displayIcon: [ :cls | cls iconNamed: cls systemIconName ];
+		yourself.
+	searchButton := self newButton
+		icon: (self iconNamed: #glamorousSearch);
+		help: 'Open spotter';
+		yourself.
+		
+	leftButton := self newButton
+		label: '<';
+		yourself.
 
-	examples := self computeExamples.
-	index := 1.
-	leftButton := self newButton.
-	leftButton label: '<'.
-	leftButton action: [ self shiftLeft ].
-	roassalCanvas := self newRoassal.
+	roassalCanvas := self instantiate: SpRoassal3InspectorPresenter.
+	
 	codeEditor := self newCode
-		              withSyntaxHighlight;
-		              withScrollBars;
-		              yourself.
-	rightButton := self newButton.
-	rightButton label: '>'.
-	rightButton action: [ self shiftRight ].
-	self updateCanvas
+		withSyntaxHighlight;
+		withScrollBars;
+		yourself.
+		
+	rightButton := self newButton
+		label: '>';
+		yourself.
 ]
 
 { #category : #initialization }
 RSExamplesBrowser >> initializeWindow: window [
-	window title: (examples at: index) selector.
+	window
+		initialExtent: 800@500;
+		title: (examples at: index) fullDisplayString .
+]
+
+{ #category : #'accessing - computed' }
+RSExamplesBrowser >> nextClass [
+	| classes i |
+	classes := classesList items.
+	i := classesList selectedIndex.
+	i := i + 1.
+	i > classes size ifTrue: [ i := 1 ].
+	^ classes at: i.
+]
+
+{ #category : #events }
+RSExamplesBrowser >> openSpotter [
+	"TODO custom search in spotter to look for examples"
+	StSpotter openWithText: 'Examples'
+]
+
+{ #category : #'accessing - computed' }
+RSExamplesBrowser >> previousClass [
+	| classes i |
+	classes := classesList items.
+	i := classesList selectedIndex.
+	i := i - 1.
+	i < 1 ifTrue: [ i := classes size ].
+	^ classes at: i.
 ]
 
 { #category : #running }
@@ -108,17 +168,20 @@ RSExamplesBrowser >> run [
 	<script: 'self new open'>
 ]
 
-{ #category : #updated }
+{ #category : #events }
 RSExamplesBrowser >> shiftLeft [
-	index = 1 ifTrue: [ ^ self ].
-	index := index - 1.
+	index = 1 ifTrue: [
+		index := -1.
+		^ classesList selectItem: self previousClass.
+	] ifFalse: [ index := index - 1 ].
 	self updateCanvas.
 ]
 
-{ #category : #updated }
+{ #category : #events }
 RSExamplesBrowser >> shiftRight [
-	index = examples size ifTrue: [ ^ self ].
-	index := index + 1.
+	index = examples size ifTrue: [
+		^ classesList selectItem: self nextClass.
+	] ifFalse: [ index := index + 1].
 	self updateCanvas.
 ]
 
@@ -128,22 +191,19 @@ RSExamplesBrowser >> updateCanvas [
 	current := examples at: index.
 	self withWindowDo: [ :window | self initializeWindow: window ].
 	codeEditor text: current sourceCode.
-	codeEditor behavior: selectedClass.
+	codeEditor beForBehavior: selectedClass.
 	[
 		canvas :=  current selector value: selectedClass new.
-		canvas class = RSCanvas ifFalse: [ 
-			canvas := canvas build; canvas
-			 ].
-		roassalCanvas currentCanvas 
-			ifNil: [ roassalCanvas canvas: canvas ]
-			ifNotNil: [ :aCanvas | 
-				| widget |
-				widget := aCanvas morph.
-				widget canvas: canvas.
-				canvas morph: widget.
-				canvas extent: widget extent.
-				canvas signalUpdate.
-				].
+		canvas class = RSCanvas 
+			ifFalse: [ canvas := canvas build; canvas ].
+		roassalCanvas canvas: canvas.
+		canvas when: RSMouseEnter send: #takeKeyboardFocus to: canvas morph.
 	] onErrorDo: [ :ex | ex traceCr ]	
 		
+]
+
+{ #category : #initialization }
+RSExamplesBrowser >> updatePresenter [
+	index := 1.
+	self classChanged: self defaultClass.
 ]

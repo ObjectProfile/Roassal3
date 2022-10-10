@@ -42,6 +42,16 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
+{ #category : #examples }
+RSBox class >> example [
+	| box |
+	box := self new.
+	box extent: 100 asPoint.
+	box cornerRadius: 10.
+	box color: Color blue muchDarker.
+	box inspect.
+]
+
 { #category : #visiting }
 RSBox >> buildPathOn: visitor [
 	visitor buildBoxPath: self

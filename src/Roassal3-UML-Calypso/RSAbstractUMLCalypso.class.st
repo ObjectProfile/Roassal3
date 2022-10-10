@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classesToShow'
 	],
-	#category : #'Roassal3-UML-Calypso'
+	#category : #'Roassal3-UML-Calypso-Core'
 }
 
 { #category : #building }
@@ -32,7 +32,7 @@ RSAbstractUMLCalypso >> addClassInteractions: builder [
 { #category : #building }
 RSAbstractUMLCalypso >> applyTheme: builder [
 	| theme renderer |
-	theme := Smalltalk ui theme.
+	theme := self theme.
 	builder canvas color: theme backgroundColor.
 	renderer := builder renderer.
 	renderer border color: theme textColor.

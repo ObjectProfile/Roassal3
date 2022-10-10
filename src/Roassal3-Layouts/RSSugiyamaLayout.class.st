@@ -12,6 +12,7 @@ Class {
 		'connections',
 		'visited',
 		'stack',
+		'childrenWithoutCycles',
 		'parentWithoutCycles'
 	],
 	#category : #'Roassal3-Layouts-Core'
@@ -28,35 +29,31 @@ RSSugiyamaLayout >> addDummyNodes [
 
 	| layer layerNr |
 	connections := RSIdentityMatrix new.
-	self edgesDo: [:edge | 
-		| a b span fromNode toNode |
+	self edgesDo: [ :edge | 
+		| layerFrom layerTo span fromNode toNode |
 		"edge hints removeAll."
-		a := layerNrs at: edge from.
-		b := layerNrs at: edge to.
-		span := (a - b) abs.
-		span = 1 ifTrue:[
-			connections
-				at: edge from
-				at: edge to
-				put: true].	"Normal case where nodes are in adjacent layers"
+		layerFrom := layerNrs at: edge from.
+		layerTo := layerNrs at: edge to.
+		span := layerTo - layerFrom.
+
+		"Normal case where nodes are in adjacent layers"
+		span abs = 1 ifTrue: [ connections at: edge from at: edge to put: true ].
+
 		fromNode := edge from.
-		[span > 1] whileTrue:	[
-			span := span - 1.
-			layerNr := b + span.
+		[ span > 1 or: [ span < -1 ] ] whileTrue: [ 
+			span := span > 0 
+				ifTrue: [ span - 1]
+				ifFalse: [ span + 1].
+			layerNr := layerTo - span.
 			layer := layers at: layerNr.
-			toNode := RSDummyNode
-				on: edge
-				slot: a - span.
+			toNode := RSDummyNode on: edge slot: layerFrom - span.
 			layer add: toNode.
 			layerNrs at: toNode put: layerNr.
 			connections at: fromNode at: toNode put: true.
-			fromNode := toNode].
-		(a - b) abs > 1 ifTrue: [
-			connections
-				at: fromNode
-				at: edge to
-				put: true ]
-	]
+			fromNode := toNode ].
+
+		(layerFrom - layerTo) abs > 1 ifTrue: [ 
+			connections at: fromNode at: edge to put: true ] ]
 ]
 
 { #category : #private }
@@ -90,28 +87,32 @@ RSSugiyamaLayout >> buildLayers: g [
 	w := self maxFloat.
 	u := OrderedCollection new.
 	layers := IdentityDictionary new.
-	layerNrs := IdentityDictionary new.	"Assign all nodes to layers"
-	[g isEmpty] whileFalse: [
-		vertices := g select:	[:e | 
-			(self childrenFor: e) allSatisfy: [:node | u includes: node]].
-		vertex := vertices detectMax: [:e | labels at: e].
+	layerNrs := IdentityDictionary new. "Assign all nodes to layers"
+	[ g isEmpty ] whileFalse: [ 
+		vertices := g select: [ :e | 
+			            (self parentsWithoutCylesFor: e) allSatisfy: [ :node | 
+				            u includes: node ] ].
+		vertex := vertices detectMax: [ :e | labels at: e ].
 		done := false.
 		layerNr := 1.
-		[done] whileFalse: [ 
-			layer := layers
-				at: layerNr
-				ifAbsentPut: [OrderedCollection new].
-			(layer size >= w
-				or: [(self childrenFor: vertex) anySatisfy: [:n | 
-						(layerNrs at: n) >= layerNr]])
-					ifTrue: [layerNr := layerNr + 1]
-					ifFalse: [done := true]
-		].
+		[ done ] whileFalse: [ 
+			layer := layers at: layerNr ifAbsentPut: [ OrderedCollection new ].
+			(layer size >= w or: [ 
+				 (self parentsWithoutCylesFor: vertex) anySatisfy: [ :n | 
+					 (layerNrs at: n) >= layerNr ] ])
+				ifTrue: [ layerNr := layerNr + 1 ]
+				ifFalse: [ done := true ] ].
 		layer add: vertex.
 		layerNrs at: vertex put: layerNr.
 		u add: vertex.
-		g remove: vertex
-	]
+		g remove: vertex ]
+]
+
+{ #category : #accessing }
+RSSugiyamaLayout >> childrenWithoutCyclesFor: aRSComposite [ 
+	
+	childrenWithoutCycles ifNil: [ childrenWithoutCycles := IdentityDictionary new ].
+	^ childrenWithoutCycles at: aRSComposite ifAbsentPut: [ (self childrenFor: aRSComposite) copy ]
 ]
 
 { #category : #private }
@@ -149,25 +150,29 @@ RSSugiyamaLayout >> layoutAt: aPoint [
 
 	| treeWidth layerKeys layer layerWidth horizontalPosition verticalPosition layerHeight |
 	treeWidth := layers values
-		inject: self maxFloat negated
-		into:
-			[:max :e | max max: (e sumNumbers: #width) + ((e size - 1) * self horizontalGap)].
-	verticalPosition := self horizontalGap.	"For visual reasons NOT: self class verticalGap"
-	layerKeys := layers keys asSortedCollection reverse.
-	layerKeys do: [:aKey | 
+		             inject: self maxFloat negated
+		             into: [ :max :e | 
+			             max max:
+				             (e sumNumbers: #width)
+				             + (e size - 1 * self horizontalGap) ].
+	verticalPosition := self horizontalGap. "For visual reasons NOT: self class verticalGap"
+	layerKeys := layers keys asSortedCollection.
+	layerKeys do: [ :aKey | 
 		layer := layers at: aKey.
 		layerWidth := (layer sum: #width)
-			+ ((layer size - 1) * self horizontalGap).
+		              + (layer size - 1 * self horizontalGap).
 		layerHeight := (layer detectMax: #height) height.
-		horizontalPosition := treeWidth / 2.0 + aPoint x - (layerWidth / 2.0).
-		layer
-			do:
-				[:node | 
-				translator translateTopLeftOf: node to:  horizontalPosition @ verticalPosition.
-				
-				horizontalPosition := horizontalPosition + node width
-					+ self horizontalGap ].
-		verticalPosition := verticalPosition + layerHeight + self verticalGap ]
+		horizontalPosition := treeWidth / 2.0 + aPoint x
+		                      - (layerWidth / 2.0).
+		layer do: [ :node | 
+			translator
+				translateTopLeftOf: node
+				to: horizontalPosition @ verticalPosition.
+
+			horizontalPosition := horizontalPosition + node width
+			                      + self horizontalGap ].
+		verticalPosition := verticalPosition + layerHeight
+		                    + self verticalGap ]
 ]
 
 { #category : #private }
@@ -210,20 +215,23 @@ RSSugiyamaLayout >> reduceCrossing [
 		layer1 := layers at: index - 1.
 		layer2 := layers at: index.
 		done := false.
-		[ done ] whileFalse: [
+		[ done ] whileFalse: [ 
 			done := true.
 			2 to: layer2 size do: [ :i | 
 				u := layer2 at: i - 1.
 				v := layer2 at: i.
 				c1 := self cl: layer1 u: u v: v.
 				c2 := self cl: layer1 u: v v: u.
-				c1 > c2 ifTrue: [
+				c1 > c2 ifTrue: [ 
 					layer2 rsSwapElement: u withElement: v.
-					done := false
-				]
-			]
-		]
-	]
+					done := false ] ] ] ]
+]
+
+{ #category : #'real sugiyama' }
+RSSugiyamaLayout >> removeCycleFrom: aRSComposite to: aRSComposite2 [ 
+	
+	(self childrenWithoutCyclesFor: aRSComposite) remove: aRSComposite2.
+	(self parentsWithoutCylesFor: aRSComposite2) remove: aRSComposite
 ]
 
 { #category : #'real sugiyama' }

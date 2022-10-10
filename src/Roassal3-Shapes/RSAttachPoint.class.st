@@ -86,6 +86,16 @@ RSAttachPoint >> initialize [
 	inverted := false.
 ]
 
+{ #category : #public }
+RSAttachPoint >> inverted [
+	inverted := true
+]
+
+{ #category : #testing }
+RSAttachPoint >> isInverted [
+	^ inverted 
+]
+
 { #category : #private }
 RSAttachPoint >> matrixFor: commonParents [
 	| matrix |
@@ -142,4 +152,9 @@ RSAttachPoint >> startingPointOf: aLine [
         ifTrue: [ self basicEndingPointOf: aLine ]
         ifFalse: [ self basicStartingPointOf: aLine ]
 
+]
+
+{ #category : #public }
+RSAttachPoint >> straight [
+	inverted := false
 ]

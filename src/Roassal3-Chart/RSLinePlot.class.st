@@ -4,8 +4,8 @@ TODO
 Class {
 	#name : #RSLinePlot,
 	#superclass : #RSAbstractPlot,
-	#traits : 'RSTEdge',
-	#classTraits : 'RSTEdge classTrait',
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'line'
 	],

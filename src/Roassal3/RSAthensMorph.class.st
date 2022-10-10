@@ -578,6 +578,11 @@ RSAthensMorph >> takesKeyboardFocus [
 	^ true
 ]
 
+{ #category : #theme }
+RSAthensMorph >> themeChanged [
+	roassalCanvas announce: RSThemeChangedEvent new
+]
+
 { #category : #testing }
 RSAthensMorph >> wantsSteps [
 	^ roassalCanvas hasAnimation 

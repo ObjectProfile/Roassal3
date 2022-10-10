@@ -12,7 +12,7 @@ Class {
 		'highMenu',
 		'nodeSizeOption'
 	],
-	#category : #'Roassal3-UML-Calypso'
+	#category : #'Roassal3-UML-Calypso-Core'
 }
 
 { #category : #testing }
@@ -248,7 +248,7 @@ RSBaselineCalypso >> dependenciesOf: name [
 RSBaselineCalypso >> highlightable [
 	^ high ifNil: [ 
 		high := RSHighlightable new withOutgoingEdges.
-		high highlightBorder: (RSBorder new color: Smalltalk ui theme selectionColor; width: 2).
+		high highlightBorder: (RSBorder new color: self theme selectionColor; width: 2).
 		high ]
 ]
 
@@ -385,7 +385,7 @@ RSBaselineCalypso >> shapeFor: assoc [
 RSBaselineCalypso >> showHideNames: evt [
 	| label textColor |
 	label := evt canvas nodes first propertyAt: #RSLabeled.
-	textColor :=  Smalltalk ui theme textColor.
+	textColor := self theme textColor.
 	label ifNil: [ 
 		| labeled |
 		labeled := RSLabeled new highlightable.

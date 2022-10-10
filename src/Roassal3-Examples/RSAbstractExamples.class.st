@@ -14,3 +14,8 @@ Class {
 RSAbstractExamples >> label [
 	^ self className
 ]
+
+{ #category : #accessing }
+RSAbstractExamples >> order [
+	^ 100
+]

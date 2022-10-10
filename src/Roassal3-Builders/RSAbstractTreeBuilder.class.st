@@ -13,28 +13,28 @@ Class {
 
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
-	| children e leaves nodes|
+	| children aShape leaves nodes|
 	
-	e := self shapeFor: atree.
-	shapes add: e.
+	aShape := self shapeFor: atree.
+	shapes add: aShape.
 	
 	children := block1 rsValue: atree.
-	e properties at: #depth put: depth.
-	children := children collect: [ :child | | e2 |
-		e2 := self createElements: child nesting: block1 
+	aShape depth: depth.
+	children := children collect: [ :child | | aShape2 |
+		aShape2 := self createElements: child nesting: block1 
 			leaves: block2 depth: depth + 1.
-		e2 properties at: #parent put: e.
-		e2 ] as: Array.
-	leaves := (block2 rsValue: atree) collect: [:child | | e2 |
-		e2 := self createElements: child nesting: #() 
+		aShape2 sparent: aShape.
+		aShape2 ] as: Array.
+	leaves := (block2 rsValue: atree) collect: [:child | | aShape2 |
+		aShape2 := self createElements: child nesting: #() 
 			leaves: #() depth: depth +1.
-		e2 properties at: #parent put: e.
-		e2 ] as: Array.
+		aShape2 sparent: aShape.
+		aShape2 ] as: Array.
 	nodes := OrderedCollection new: (leaves size + children size).
 	nodes addAll: children; addAll: leaves.
 		
-	e schildren: nodes.
-	^ e.
+	aShape schildren: nodes.
+	^ aShape.
 ]
 
 { #category : #private }

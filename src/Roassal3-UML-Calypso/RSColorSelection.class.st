@@ -4,7 +4,7 @@ Highlight the target class from the canvas to a darker color in one second
 Class {
 	#name : #RSColorSelection,
 	#superclass : #RSInitialSelection,
-	#category : #'Roassal3-UML-Calypso'
+	#category : #'Roassal3-UML-Calypso-Utilities'
 }
 
 { #category : #'instance creation' }
