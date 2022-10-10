@@ -10,7 +10,8 @@ Class {
 		'cachedChildren',
 		'cachedParents',
 		'cachedParentsWithHighestNestings',
-		'shouldValidateCycles'
+		'shouldValidateCycles',
+		'childrenSortBlock'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -64,14 +65,16 @@ RSAbstractGraphLayout >> cachedParentsWithHighestNestings [
 RSAbstractGraphLayout >> childrenFor: aNode [
 	^ self cachedChildren
 		at: aNode
-		ifAbsentPut:
-			[| nodes |
+		ifAbsentPut: [ | nodes |
 			nodes := OrderedCollection new.
-			self edgesDo:
-					[:edge | 
-					(edge from == aNode and: [edge to ~= aNode])
-						ifTrue:
-							[(nodes includes: edge from) ifFalse: [nodes add: edge to]]].
+			self edgesDo: [:edge | 
+				(edge from == aNode and: [edge to ~= aNode]) ifTrue: [
+					(nodes includes: edge from)
+						ifFalse: [nodes add: edge to ]
+				]
+			].
+			self childrenSortBlock 
+				ifNotNil: [ :block | nodes sort: block ].
 			nodes]
 ]
 
@@ -81,6 +84,16 @@ RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 		reject: [:each | aNodeCollection includes: each]
 	
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
+]
+
+{ #category : #accessing }
+RSAbstractGraphLayout >> childrenSortBlock [
+	^ childrenSortBlock
+]
+
+{ #category : #accessing }
+RSAbstractGraphLayout >> childrenSortBlock: aBlock [
+	childrenSortBlock := aBlock
 ]
 
 { #category : #private }
@@ -94,6 +107,11 @@ RSAbstractGraphLayout >> clear [
 	cachedParents := nil.
 	cachedChildren := nil.
 	cachedParentsWithHighestNestings := nil
+]
+
+{ #category : #defaults }
+RSAbstractGraphLayout >> defaultChildrenSortBlock [
+	^ nil
 ]
 
 { #category : #hook }
@@ -137,6 +155,7 @@ RSAbstractGraphLayout >> horizontalGap: anInteger [
 RSAbstractGraphLayout >> initialize [
 	super initialize.
 	self doNotValidateCycles.
+	self childrenSortBlock: self defaultChildrenSortBlock
 ]
 
 { #category : #private }

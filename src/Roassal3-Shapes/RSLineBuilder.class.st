@@ -83,8 +83,8 @@ c open
 Class {
 	#name : #RSLineBuilder,
 	#superclass : #RSObject,
-	#traits : 'RSTEdge',
-	#classTraits : 'RSTEdge classTrait',
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'shape',
 		'allowRepetition',

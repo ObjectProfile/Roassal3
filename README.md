@@ -26,7 +26,7 @@ If you wish to install Roassal in Pharo 8, then execute the following code snipp
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9.9g';
+    repository: 'github://ObjectProfile/Roassal3:v0.9.9i2';
     load.
 ```
 

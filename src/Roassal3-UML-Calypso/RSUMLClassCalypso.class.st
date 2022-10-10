@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-UML-Calypso'
+	#category : #'Roassal3-UML-Calypso-Core'
 }
 
 { #category : #activation }

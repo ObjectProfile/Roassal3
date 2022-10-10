@@ -116,3 +116,9 @@ RSAbstractContainerBuilder >> renderIn: aCanvas [
 RSAbstractContainerBuilder >> shapes [
 	^ shapes
 ]
+
+{ #category : #updating }
+RSAbstractContainerBuilder >> update [
+	self container shapes do: #remove.
+	self build.
+]

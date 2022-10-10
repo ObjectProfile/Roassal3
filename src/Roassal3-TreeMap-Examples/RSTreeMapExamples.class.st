@@ -143,3 +143,70 @@ RSTreeMapExamples >> example06FitText [
 	
 	^ canvas
 ]
+
+{ #category : #examples }
+RSTreeMapExamples >> example07Roassal [
+	<script: 'self new example07Roassal open'>
+	| b palette lb bag title |
+	b := RSTreeMap new.
+	b inset: 1 asPoint.
+	b canvas color: (Color colorFrom: '#2d2f3c') lighter.
+	b boxShape color: Color white.
+	
+	b
+		leafWeight: [ :f | f size sqrt ];
+		explore: (IceRepository registry 
+				detect: [ :each | each name = 'Roassal3' ]) location
+			nesting: [:file | file directories 
+				reject: [ :dir | dir basename beginsWith: '.' ] ]
+			leaves: #files.
+	b build.
+	palette := RSColorPalette qualitative flatui120.
+	bag := b gradientFill: palette block: [ :model | model extension ].
+	b shapes do: [ :shape | shape border: (RSBorder new width: 1/(shape propertyAt: #depth); color: Color black) ].
+	
+	"LEGEND"
+	lb := RSLegend new.
+	lb defaultLabel
+		color: Color white;
+		fontSize: 18;
+		fontName: 'Gill Sans';
+		bold;
+		border: (RSBorder new color: Color black).
+	lb defaultCircle
+		border: (RSBorder new color: Color black).
+	lb layout vertical gapSize: 0.
+	lb container: b canvas.
+	bag sortedCounts do: [ :assoc | 
+		(assoc value
+			ifEmpty: [ lb 
+				text: (String streamContents: [ :stream | stream << assoc key asString<< ' directories' ])
+				withCircleColor: Color veryVeryLightGray ]
+			ifNotEmpty: [ lb 
+				text: (String streamContents: [ :stream | stream << assoc key asString << ' ' << assoc value << ' files' ])
+				withCircleColor: (palette scale: assoc value) ]) model: assoc.
+		 ].
+	lb location left; middle; offset: -10@0.
+	lb build.
+
+	lb shapes @ (RSHighlightable
+		showEdges: [:assoc | b shapes 
+			select: [:shape | shape model extension = assoc value ]
+			thenCollect: [ :shape | shape model ] ]
+		using: (RSBezier new
+			color: Color red;
+			width: 2;
+			controlPointsController: RSShortestHorizontalCPController new;
+			yourself)).
+	title := RSLabel new
+		text: 'Roassal3 Github Repository Directory';
+		color: Color yellow;
+		fontName: 'Gill Sans';
+		bold;
+		fontSize: 34;
+		border: (RSBorder new color: Color black; width: 1.5).
+	RSLocation new
+		above; move: title on: b canvas shapes first.
+	title addedIn: b canvas.
+	^ b canvas
+]

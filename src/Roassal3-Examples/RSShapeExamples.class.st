@@ -216,7 +216,7 @@ RSShapeExamples >> example10Donut [
 	color := NSScale linear
 		domain: #(1 7 10);
 		range: #('brown' '4682b4' 'brown').
-	border := RSBorder new.
+	border := RSBorder new color: 'black'.
 	1 to: 10 do: [ :i |
 		canvas addAll: (data collect: [ :a | 
 			| d |
@@ -1428,4 +1428,9 @@ RSShapeExamples >> example48GhostDraggable [
 	RSSimpleForceBasedLayout on: (c nodes copyFrom: 1 to: 4).
 
 	^ c @ RSCanvasController simple
+]
+
+{ #category : #accessing }
+RSShapeExamples >> order [
+	^ 20
 ]

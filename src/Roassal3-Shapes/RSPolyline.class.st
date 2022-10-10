@@ -10,6 +10,8 @@ c add: polyline.
 
 c open
 ```
+
+Please review comment of `RSAbstractControlPointsLine` and `RSAbstractLine`.
 "
 Class {
 	#name : #RSPolyline,
@@ -19,6 +21,26 @@ Class {
 	],
 	#category : #'Roassal3-Shapes-Lines'
 }
+
+{ #category : #examples }
+RSPolyline class >> exampleArrowedPolyline [
+	| line |
+	line := self new.
+	line controlPoints: {0@0. 100@0. 0@ -100 }.
+	line markerEnd: (RSShapeFactory arrow size: 10).
+	line color: Color purple.
+	RSCanvas new
+		add: line;
+		open
+]
+
+{ #category : #examples }
+RSPolyline class >> examplePolyline [
+	| line |
+	line := self new.
+	line controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
+	line inspect
+]
 
 { #category : #testing }
 RSPolyline >> basicIncludesPoint: aPoint [

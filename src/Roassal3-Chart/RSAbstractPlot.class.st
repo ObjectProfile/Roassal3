@@ -159,8 +159,8 @@ c addDecoration: RSYMarkerDecoration new.
 c 
 ```
 	"
-	self assert: [ aCollection notNil ] description: 'Cannot be nil'.
-	self assert: [ aCollection2 notNil ] description: 'Cannot be nil'.
+	self assert: [ aCollection isCollection ] description: 'Should be a collection'.
+	self assert: [ aCollection2 isCollection ] description: 'Should be a collection'.
 	self assert: [ aCollection size = aCollection2 size ] description: 'The two collections must have the same size'.
  	
 	xValues := aCollection.

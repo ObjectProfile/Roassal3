@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #'Roassal3-UML-Calypso'
+	#category : #'Roassal3-UML-Calypso-Core'
 }
 
 { #category : #activation }

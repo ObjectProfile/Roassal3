@@ -68,6 +68,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Menu'
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
+	'Roassal3-BaselineMap'
 	)
 ]
 
@@ -76,7 +77,7 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
-		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+		spec repository: 'github://pharo-contributions/Athens-SVG/src'].
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
@@ -169,5 +170,7 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Chart-Tests'
 	'Roassal3-UML-Tests'
 	'Roassal3-Spec-Tests'
-	'Roassal3-Inspector-Tests')
+	'Roassal3-Inspector-Tests'
+	'Roassal3-BaselineMap-Tests'
+	)
 ]

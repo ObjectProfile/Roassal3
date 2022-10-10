@@ -2,72 +2,82 @@
 My users have a line shape to interact with it. This trait has common methods to handle lines
 "
 Trait {
-	#name : #RSTEdge,
+	#name : #RSTLine,
 	#category : #'Roassal3-Shapes-Graph'
 }
 
 { #category : #'public - shape' }
-RSTEdge >> addInteraction: anInteraction [
+RSTLine >> addInteraction: anInteraction [
 	self shape addInteraction: anInteraction
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> border [
+RSTLine >> border [
 	^ self shape border
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> border: aBorder [
+RSTLine >> border: aBorder [
 	self shape border: aBorder
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> borderColor: aColor [
+RSTLine >> borderColor: aColor [
 	self shape borderColor: aColor
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> capRound [
+RSTLine >> capButt [
+	self shape capButt
+]
+
+{ #category : #'public - shape' }
+RSTLine >> capRound [
 	self shape capRound
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> color: aColor [
+RSTLine >> capSquare [
+	self shape capSquare
+]
+
+{ #category : #'public - shape' }
+RSTLine >> color: aColor [
 	self shape color: aColor
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> controlPointsController [
+RSTLine >> controlPointsController [
 	^ self shape controlPointsController
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> controlPointsController: aCPController [
+RSTLine >> controlPointsController: aCPController [
 	self shape controlPointsController: aCPController
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> cornerRadii: aNumber [
+RSTLine >> cornerRadii: aNumber [
 	^ self shape cornerRadii: aNumber
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> dashArray: anArray [
+RSTLine >> dashArray: anArray [
 	^ self shape dashArray: anArray
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> dashed [
+RSTLine >> dashed [
 	self shape dashed
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> fmt: aString [
+RSTLine >> fmt: aString [
 	self shape fmt: aString.
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> format: aString [
+RSTLine >> format: aString [
 	
 	"want more markers? submit a new issue in roassal3"
 	| marker bs |
@@ -78,57 +88,67 @@ RSTEdge >> format: aString [
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> joinRound [
+RSTLine >> joinBevel [
+	self shape joinBevel
+]
+
+{ #category : #'public - shape' }
+RSTLine >> joinMiter [
+	self shape joinMiter
+]
+
+{ #category : #'public - shape' }
+RSTLine >> joinRound [
 	self shape joinRound
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> marker: aMarker [
+RSTLine >> marker: aMarker [
 	self shape marker: aMarker
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> markerEnd: aMarker [
+RSTLine >> markerEnd: aMarker [
 	self shape markerEnd: aMarker
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> markerStart: aMarker [
+RSTLine >> markerStart: aMarker [
 	self shape markerStart: aMarker
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> markerStartEnd: aMarker [
+RSTLine >> markerStartEnd: aMarker [
 	self shape markerStartEnd: aMarker
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> noBorder [
+RSTLine >> noBorder [
 	self shape noBorder
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> paint: aPaint [
+RSTLine >> paint: aPaint [
 	self shape paint: aPaint
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> shape [
+RSTLine >> shape [
 	^ self explicitRequirement
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> shape: aRSAbstractLine [
+RSTLine >> shape: aRSAbstractLine [
 	self explicitRequirement
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> width [
+RSTLine >> width [
 	^ self shape border width
 ]
 
 { #category : #'public - shape' }
-RSTEdge >> width: aNumber [
+RSTLine >> width: aNumber [
 	"Set the width of the line. For example:
 	
 -=-=-=-=-=-=-=-=-=-=

@@ -17,7 +17,7 @@ RSBasicShapeExamples >> example01BasicBoxes [
 		yourself).
 	c addShape: (RSBox new
 		position: 100@100;
-		color: Color red;
+		color: Color blue;
 		extent: 100@100;
 		yourself).
 	^ c
@@ -1016,6 +1016,34 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 	^ canvas @ RSCanvasController simple
 ]
 
+{ #category : #'as yet unclassified' }
+RSBasicShapeExamples >> example44AA [
+	<script: 'self new example44AA open'>
+	| canvas |
+	canvas := RSCanvas new.
+	canvas
+		add: (RSBox new size: 30; color: 'blue'; yourself);
+		add: (RSLine new width: 0.5; startPoint: 0@0; endPoint: 50 asPoint; color: 'black'; yourself);
+		add: (RSEllipse new extent: 40@50; color: 'gray'; yourself);
+		add: (RSLabel new text: 'AA enabled'; color: 'black'; yourself).
+	RSGridLayout on: canvas shapes.
+	canvas zoomToFit.
+	canvas newAnimation
+		repeat;
+		onStepDo: [ :t | 
+			canvas shapes last text: (canvas hasAntialiasing
+				ifTrue: ['AA enabled']
+				ifFalse: [ 'AA disabled' ] ).
+			canvas signalUpdate ];
+		when: RSAnimationLoopEvent do: [ :evt | 
+			canvas hasAntialiasing
+				ifTrue: [ canvas disableAntialiasing ]
+				ifFalse: [ canvas enableAntialiasing ].
+			canvas signalUpdate.
+			 ].
+	^ canvas
+]
+
 { #category : #lines }
 RSBasicShapeExamples >> example44deCasteljauLine [
 
@@ -1960,29 +1988,7 @@ RSBasicShapeExamples >> noteLoremIpsum [
 		  withNoteDo: [ :aBox | aBox color: Color yellow translucent ]
 ]
 
-RSBasicShapeExamples >> example44AA [
-	<script: 'self new example44AA open'>
-	| canvas |
-	canvas := RSCanvas new.
-	canvas
-		add: (RSBox new size: 30; color: 'blue'; yourself);
-		add: (RSLine new width: 0.5; startPoint: 0@0; endPoint: 50 asPoint; color: 'black'; yourself);
-		add: (RSEllipse new extent: 40@50; color: 'gray'; yourself);
-		add: (RSLabel new text: 'AA enabled'; color: 'black'; yourself).
-	RSGridLayout on: canvas shapes.
-	canvas zoomToFit.
-	canvas newAnimation
-		repeat;
-		onStepDo: [ :t | 
-			canvas shapes last text: (canvas hasAntialiasing
-				ifTrue: ['AA enabled']
-				ifFalse: [ 'AA disabled' ] ).
-			canvas signalUpdate ];
-		when: RSAnimationLoopEvent do: [ :evt | 
-			canvas hasAntialiasing
-				ifTrue: [ canvas disableAntialiasing ]
-				ifFalse: [ canvas enableAntialiasing ].
-			canvas signalUpdate.
-			 ].
-	^ canvas
+{ #category : #accessing }
+RSBasicShapeExamples >> order [
+	^ 0
 ]
