@@ -7,6 +7,31 @@ Class {
 	#category : #'Roassal3-Global-Tests-Rendering'
 }
 
+{ #category : #accessing }
+RSRenderTreeTest >> bigTree [
+	^ self createTreeWith: 100
+]
+
+{ #category : #accessing }
+RSRenderTreeTest >> createTreeWith: aNumber [
+	| random |
+	"do not modify this method"
+	tree := self emptyTree.
+	random := Random new.
+	random seed: 777.
+	
+	1 to: aNumber do: [ :each | | box |
+		box := RSBox new.
+		box size: 10.
+		box model: each.
+		box popup.
+		box position: (random next @ random next) * 1000.
+		tree add: box.
+	].
+
+	^ tree
+]
+
 { #category : #tests }
 RSRenderTreeTest >> emptyTree [
 	^ RSRTreeShapeCollection new
@@ -144,7 +169,7 @@ RSRenderTreeTest >> testRemoveLeaf2 [
 	size := tree size.
 	leafs := self leafs.
 	shapes := leafs collect: [ :each | each contents ] as: RSGroup.
-	
+	"use the inspector to visualize the node position in the tree"
 	shape := shapes shapeFromModel: 1.
 	tree remove: shape.
 	
@@ -152,6 +177,30 @@ RSRenderTreeTest >> testRemoveLeaf2 [
 	self assert: tree size + 1  equals: size.
 	
 	
+]
+
+{ #category : #tests }
+RSRenderTreeTest >> testRemoveLeaf3 [
+	| leafs shapes random toRemove size |
+	tree := self bigTree.
+	size := tree size.
+	leafs := self leafs.
+	shapes := leafs collect: [ :each | each contents ] as: RSGroup.
+	
+	random := Random new.
+	random seed: 444.
+	shapes shuffleBy: random.
+	toRemove := 1 to: (size / 2) asInteger do: [:index | | shape nodes heights newHeights |
+		shape := shapes at: index.
+		tree remove: shape.
+		self assert: tree size + index equals: size.
+		nodes := tree root withAllChildren.
+		heights := nodes collect: [ :node | node height ].
+		tree root computeHeight.
+		newHeights := nodes collect: [ :node | node height ].
+		heights with: newHeights do: [ :old :new |
+			self assert: old equals: new. ].
+		self assert: tree isBalanced.].
 ]
 
 { #category : #tests }
@@ -346,20 +395,5 @@ RSRenderTreeTest >> testZeroElementRectangle [
 
 { #category : #accessing }
 RSRenderTreeTest >> tree [
-	| random |
-	"do not modify this method"
-	tree := self emptyTree.
-	random := Random new.
-	random seed: 777.
-	
-	1 to: 10 do: [ :each | | box |
-		box := RSBox new.
-		box size: 10.
-		box model: each.
-		box popup.
-		box position: (random next @ random next) * 1000.
-		tree add: box.
-	].
-
-	^ tree
+	^ self createTreeWith: 10
 ]

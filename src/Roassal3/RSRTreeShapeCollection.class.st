@@ -23,9 +23,14 @@ RSRTreeShapeCollection >> add: newObject [
 
 { #category : #'private - removing' }
 RSRTreeShapeCollection >> balanceRemovedPath: path [
+	"| times |
+	times := 0.
+	self haltIf: path last value contents model = 53."
 	(1 to: path size -2) reverseDo: [ :index | | tree |
 		tree := (path at: index) value.
+		tree height: (tree left height max: tree right height)+1.
 		tree isBalanced ifFalse: [ | toMove brother |
+			"times := times + 1."
 			tree left height < tree right height ifTrue: [ 
 				toMove := tree left.
 				brother := tree right.
@@ -33,9 +38,14 @@ RSRTreeShapeCollection >> balanceRemovedPath: path [
 				toMove := tree right.
 				brother := tree left ].
 			tree fromNode: brother.
-			toMove do: [ :shape | tree addChild: shape ]
+			toMove do: [ :shape | tree addChild: shape ].
+			"this means that when you remove a node,
+			 in order to keed it balanced
+			maybe you can move a lot of nodes"
 		].
-	]
+	].
+	"(path last value contents model asString, ' - ', times asString, ' times') traceCr."
+	
 	
 ]
 
