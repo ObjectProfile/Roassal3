@@ -13,14 +13,14 @@ Class {
 		'y_bearing'
 	],
 	#classVars : [
-		'empty'
+		'EmptyExtents'
 	],
-	#category : #'Roassal3-Shapes-Text'
+	#category : #'Roassal3-Shapes-TextMetrics'
 }
 
 { #category : #requirements }
 RSTextExtents class >> empty [
-	^ empty ifNil: [ empty := self new empty ]
+	^ EmptyExtents ifNil: [ EmptyExtents := self new empty ]
 ]
 
 { #category : #public }
