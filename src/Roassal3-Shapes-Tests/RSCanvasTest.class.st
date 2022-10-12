@@ -483,3 +483,18 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }. 
 
 ]
+
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testVisibleArea [
+	| box smallSize bigSize |
+	smallSize := 100.
+	bigSize := 500.
+	box := RSBox new.
+	box size: smallSize asPoint.
+	box position: box extent / 2.
+	canvas add: box.
+	canvas extent: bigSize asPoint.
+	canvas visibleArea: (0 asPoint corner: smallSize asPoint).
+	self assert: canvas position equals: box position.
+	self assert: canvas camera scale equals: bigSize / smallSize
+]

@@ -35,7 +35,8 @@ Class {
 		'zoomToFitOnExtent',
 		'hasHorizontalScrolling',
 		'hasVerticalScrolling',
-		'hasDraggableAnimation'
+		'hasDraggableAnimation',
+		'shouldShowLegend'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
@@ -77,7 +78,8 @@ RSControlConfiguration >> initialize [
 		minScale: 0.04;
 		maxScale: 7;
 		padding: 25;
-		useZoomToFitOnExtendChanged;
+		noZoomToFitOnExtendChanged;
+		withLegend;
 		useZoomToFitOnStart;
 		noBasicZoom;
 		hasHorizontalScrolling: true;
@@ -113,6 +115,11 @@ RSControlConfiguration >> noBasicZoom [
 ]
 
 { #category : #configuration }
+RSControlConfiguration >> noLegend [
+	shouldShowLegend := false
+]
+
+{ #category : #configuration }
 RSControlConfiguration >> noZoomToFitOnExtendChanged [
 	zoomToFitOnExtent := false
 ]
@@ -130,6 +137,11 @@ RSControlConfiguration >> padding [
 { #category : #accessing }
 RSControlConfiguration >> padding: aMargin [
 	padding := aMargin asMargin
+]
+
+{ #category : #testing }
+RSControlConfiguration >> shouldShowLegend [
+	^ shouldShowLegend
 ]
 
 { #category : #testing }
@@ -160,4 +172,9 @@ RSControlConfiguration >> useZoomToFitOnExtendChanged [
 { #category : #configuration }
 RSControlConfiguration >> useZoomToFitOnStart [
 	zoomToFitOnStart := true.
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> withLegend [
+	shouldShowLegend := true
 ]

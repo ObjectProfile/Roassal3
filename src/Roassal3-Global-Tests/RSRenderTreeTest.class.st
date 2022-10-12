@@ -280,7 +280,6 @@ RSRenderTreeTest >> testSeriousBalance [
 		self assert: tree height equals: tree root computeHeight.
 		self assert: tree isTotalBalanced.		
 	].
-	canvas @ RSCanvasController.
 	
 ]
 
