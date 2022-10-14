@@ -656,7 +656,6 @@ RSShapeExamples >> example28MultilineLabel [
 			shapes: methods;
 			padding: 10;
 			color: (Color purple alpha: 0.3 );
-			draggable; 
 			popup;
 			yourself ].
 	RSLineBuilder orthoVertical
@@ -697,7 +696,6 @@ RSShapeExamples >> example29AntAnimation [
 			shapes: methods;
 			padding: 10;
 			popup;
-			draggable;
 			addInteraction: labelInt;
 			addInteraction: highInt;
 			yourself ].
@@ -1020,7 +1018,9 @@ RSShapeExamples >> example38Transformable [
 		gapSize: 50;
 		on: c nodes.
 	c nodes do: [ :s | s model: s ].
-	c nodes @ RSDraggable; @ (RSPopup text: [ :m | m class name ] ).
+	c nodes 
+		@ (RSDraggable new noValidateChildrenEvents);
+		@ (RSPopup text: [ :m | m class name ] ).
 	
 	c nodes allButLast @ RSTransformable.
 	

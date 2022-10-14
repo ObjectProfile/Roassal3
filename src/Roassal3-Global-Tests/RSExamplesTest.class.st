@@ -17,9 +17,11 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 { #category : #tests }
 RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
-	| clazz |
+	| clazz withErrors sameResult |
 	self timeLimit: 10 minutes.
 	clazz := Smalltalk at: #RSAbstractExamples ifAbsent: [ ^ self ].
+	withErrors := OrderedCollection new.
+	sameResult := OrderedCollection new.
 	clazz subclasses do: [ :cls | 
 		| inst methods |
 		inst := cls new.
@@ -29,9 +31,18 @@ RSExamplesTest >> testExamples [
 				and: [ (met hasPragmaNamed: 'noTest') not ] ].
 		methods sort: CompiledMethod sortBlock.
 		methods
-			do: [ :met | self executeTest: met in: inst ]
+			do: [ :met | | res |
+				[res := inst perform: met selector.
+				res = inst ifTrue: [ sameResult add: met ]]
+				on: Error do: [ :ex | withErrors add: met ]
+				 ]
 			displayingProgress: [ :met | met selector ]
 			every: 100 ]
 		displayingProgress: [ :cls | cls asString ]
-		every: 500
+		every: 500.
+		
+	self assert: withErrors isEmpty description: 'All examples in roassal should run'.
+	self assert: sameResult isEmpty description: 'All examples should return a canvas or builder'
+
+
 ]

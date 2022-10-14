@@ -250,7 +250,7 @@ b open
 	].
 	canvas addAll: nodes.
 	nodes @ RSPopup.
-	depth = 0 ifTrue: [ nodes @ RSDraggable ].
+	depth = 0 ifTrue: [ nodes addInteraction: (RSDraggable new noValidateChildrenEvents) ].
 	nodesForLayout addAll: nodes.
 	^ nodes
 ]

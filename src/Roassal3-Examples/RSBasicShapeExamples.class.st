@@ -849,14 +849,10 @@ RSBasicShapeExamples >> example38Interaction [
 		withBorder;
 		color: Color blue translucent;
 		yourself.
-	com := RSComposite new
-		addAll:
-			{c1.
-			c2};
-		adjustToChildren;
+	com := {c1. c2} asShape
 		model: 'Draggable';
 		popup;
-		draggable;
+		@ (RSDraggable new noValidateChildrenEvents);
 		padding: 10;
 		color: Color gray translucent;
 		yourself.
