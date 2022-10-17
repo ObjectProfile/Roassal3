@@ -272,6 +272,48 @@ RSBasicAnimationExamples >> example08Markers [
 	^ canvas
 ]
 
+{ #category : #lines }
+RSBasicAnimationExamples >> example09Easing [
+	<script: 'self new example09Easing open'>
+	| canvas radius numberOfCircles circles innerRadius |
+	numberOfCircles := 8.
+	radius := 100.
+	innerRadius := 30.
+	
+	circles := (1 to: numberOfCircles) collect: [ :each | 
+		RSCircle new radius: 0; withBorder; noPaint ].
+	
+	canvas := RSCanvas new.
+	canvas aaBest.
+	canvas addAnimation: (RSSequentialAnimation new
+		add: (RSTransitionAnimation new
+			duration: 2 seconds;
+			easing: RSEasingInterpolator elasticOut;
+			onStepDo: [:t |
+				circles doWithIndex: [ :circle :index |
+					circle radius: t * radius.
+					circle position: innerRadius * (index even asInteger * 2 -1) @ 0 ].
+			];
+			yourself);
+		add: (RSTransitionAnimation new
+			duration: 2 seconds;
+			easing: RSEasingInterpolator backOut;
+			onStepDo: [ :t |
+				circles doWithIndex: [ :circle :index | | angle toAngle fromAngle |
+					toAngle := (index - 1) /numberOfCircles * Float twoPi.
+					fromAngle := Float pi * index even asInteger.
+					angle := fromAngle interpolateTo: toAngle at: t.
+					circle position: (angle cos @ (angle sin) ) * innerRadius.
+				]
+			];
+			yourself);
+		yourself
+		).
+	canvas addAll: circles.
+	^ canvas
+	
+]
+
 { #category : #accessing }
 RSBasicAnimationExamples >> order [
 	^ 10
