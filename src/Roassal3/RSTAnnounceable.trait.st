@@ -35,6 +35,28 @@ RSTAnnounceable >> announcer: anAnnouncer [
 ]
 
 { #category : #public }
+RSTAnnounceable >> click [
+	"Simulate a click. 
+	
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+box := RSBox new size: 40.
+box when: RSMouseClick do: [ :evt | self inform: 'hello' ].
+c add: box.
+
+box click.
+
+c
+-=-=-=-=-=-=-=-=-=
+"
+	self announce: (RSMouseClick new 
+		canvas: self canvas;
+		shape: self; 
+		yourself).
+]
+
+{ #category : #public }
 RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
 	| ann |
 	ann := self privateAnnouncer.

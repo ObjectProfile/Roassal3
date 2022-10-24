@@ -197,7 +197,6 @@ RSExamplesBrowser >> updateCanvas [
 		canvas class = RSCanvas 
 			ifFalse: [ canvas := canvas build; canvas ].
 		roassalCanvas canvas: canvas.
-		canvas when: RSMouseEnter send: #takeKeyboardFocus to: canvas morph.
 	] onErrorDo: [ :ex | ex traceCr ]	
 		
 ]

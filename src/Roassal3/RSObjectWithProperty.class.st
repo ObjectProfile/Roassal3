@@ -73,7 +73,7 @@ box click.
 c
 -=-=-=-=-=-=-=-=-=
 "
-	self announcer announce: (RSMouseClick new 
+	self announce: (RSMouseClick new 
 		canvas: self canvas;
 		shape: self; 
 		yourself).

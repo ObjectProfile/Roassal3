@@ -89,7 +89,6 @@ SpRoassal3InspectorPresenter >> whenActivatedDo: aBlock [
 	self createToolbarIfNecessary.
 	context := canvas inspectorContext.
 	context presentation: aBlock.
-	canvas morph setTakeKeyboardFocus.
 	canvas shapes @ context.
 	canvas
 		when: RSShapeAddedEvent

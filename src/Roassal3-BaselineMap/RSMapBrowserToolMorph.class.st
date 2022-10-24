@@ -34,7 +34,6 @@ RSMapBrowserToolMorph >> build [
 	morph := canvas createMorph.
 	morph onAnnouncement: MorphDeleted 
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
-	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 

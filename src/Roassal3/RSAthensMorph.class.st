@@ -414,6 +414,7 @@ RSAthensMorph >> layoutChanged [
 
 { #category : #'event handling' }
 RSAthensMorph >> mouseDown: evt [
+	self takeKeyboardFocus.
 	eventBeginingDragging
 		ifNil:
 			[ evt hand
@@ -513,12 +514,6 @@ RSAthensMorph >> sessionChanged [
 	roassalCanvas shapes do: [ :s | s sessionChanged ].
 	roassalCanvas fixedShapes do: [ :s | s sessionChanged ].
 	roassalCanvas extent: self extent
-]
-
-{ #category : #public }
-RSAthensMorph >> setTakeKeyboardFocus [
-	self takeKeyboardFocus.
-	roassalCanvas when: RSUserInputEvent do: [ self takeKeyboardFocus ].
 ]
 
 { #category : #'events - processed' }
