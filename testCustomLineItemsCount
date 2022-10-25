@@ -1,0 +1,6 @@
+RSGridLayoutTest>>testCustomLineItemsCount
+		|expected res rsgrid|
+	rsgrid :=RSGridLayout new lineItemsCount: 5; on: canvas nodes.
+	res := rsgrid lineItemsCountBlock .
+	expected:=5.
+	self assert: res equals:expected
