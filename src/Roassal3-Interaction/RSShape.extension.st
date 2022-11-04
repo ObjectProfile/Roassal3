@@ -1,6 +1,11 @@
 Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Interaction' }
+RSShape >> browseable [
+	self when: RSMouseClick do: [ self model browse  ].
+]
+
+{ #category : #'*Roassal3-Interaction' }
 RSShape >> draggable [
 	self @ RSDraggable.
 ]
