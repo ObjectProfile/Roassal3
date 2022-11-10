@@ -24,3 +24,18 @@ RSGridLayoutTest >>testBasicDefaultGapSizeGridLayout[
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (12.5@2.5). (22.5@2.5). (32.5@2.5). (2.5@12.5). (12.5@12.5). (22.5@12.5). (32.5@12.5). (2.5@22.5). (12.5@22.5)}
 	
 	]
+
+
+RSGridLayoutTest >>testLineItemsCount[
+
+	| shapesInLine firstPosition |
+	RSGridLayout new
+		lineItemsCount: 3;
+		on: canvas nodes.
+	shapesInLine := canvas nodes groupedBy: [ :each | each position y ].
+	shapesInLine keysAndValuesDo: [ :key :line | 
+		firstPosition := line first position.
+		self assert:
+			(line allSatisfy: [ :each | each position y = firstPosition y ]) ]
+		
+         ]
