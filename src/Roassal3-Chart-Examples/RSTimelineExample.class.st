@@ -76,3 +76,30 @@ RSTimelineExample >> example02Labeled [
 				locationDo: [ :loc | loc middle ]) ].
 	^ chart canvas
 ]
+
+{ #category : #examples }
+RSTimelineExample >> example03ZoomInAxis [
+	<script: 'self new example03ZoomInAxis open'>
+	| data chart |
+	chart := RSChart new.
+	data := #(
+		#(0 5 6 8)
+		#(0 5 8 10)
+		#(0 10)
+		#(5 10)
+		#(5 8)).
+	chart addAll: (data collectWithIndex: [ :line :index |
+		 RSTimeLinePlot new
+			entries: line at: index;
+			yourself ]).
+	chart addDecoration: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: 5;
+		useDiagonalLabel;
+		labelConversion: [ :v | Date year: 2021 day: v ];
+		yourself).
+	chart build.
+	chart plots doWithIndex: [ :plot :index |
+		 ].
+	^ chart canvas
+]

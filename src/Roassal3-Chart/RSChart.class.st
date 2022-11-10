@@ -47,6 +47,11 @@ RSChart >> add: aRSPlot [
 ]
 
 { #category : #adding }
+RSChart >> addAll: aCollection [
+	aCollection do: [ :each | self add: each ]
+]
+
+{ #category : #adding }
 RSChart >> addDecoration: aDecoration [
 	"Add a decoration to the chart
 
