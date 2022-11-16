@@ -51,6 +51,11 @@ RSVerticalTick >> defaultLabelLocation [
 	^ RSLocation new outer; left; offset: -2@0
 ]
 
+{ #category : #testing }
+RSVerticalTick >> isVerticalTick [
+	^ true
+]
+
 { #category : #accessing }
 RSVerticalTick >> max [
 	^ chart maxValueY

@@ -75,7 +75,10 @@ RSControlConfiguration >> hasVerticalScrolling: aBool [
 RSControlConfiguration >> initialize [
 	super initialize.
 	self 
+		"used in zoom out"
 		minScale: 0.04;
+		
+		"used in zoom in"
 		maxScale: 7;
 		padding: 25;
 		noZoomToFitOnExtendChanged;
@@ -94,7 +97,8 @@ RSControlConfiguration >> maxScale [
 
 { #category : #accessing }
 RSControlConfiguration >> maxScale: aNum [
-	"Set the maximum scale for the configuration"
+	"Set the maximum scale for the configuration.
+	Used in the zoom in level"
 	maxScale := aNum
 ]
 
@@ -105,7 +109,8 @@ RSControlConfiguration >> minScale [
 
 { #category : #accessing }
 RSControlConfiguration >> minScale: aNum [
-	"Set the minimum scale allowed by the configuration."
+	"Set the minimum scale allowed by the configuration.
+	Used in zoom out level"
 	minScale := aNum
 ]
 

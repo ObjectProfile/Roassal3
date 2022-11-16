@@ -58,6 +58,12 @@ RSTimeLinePlot >> defaultShape [
 
 { #category : #accessing }
 RSTimeLinePlot >> entries: aCollection at: aNumber [
+	"example:
+	self entries: { 0 2 4 8}.
+	"
+	self
+		assert: aCollection size even
+		description: 'You only can use collection of even sizes'.
 	self 
 		x: aCollection
 		y: (Array new: aCollection size withAll: aNumber).
