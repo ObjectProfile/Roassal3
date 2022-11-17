@@ -39,7 +39,7 @@ RSMapBrowserToolMorph >> build [
 
 { #category : #building }
 RSMapBrowserToolMorph >> buildBaselineMap [
-	^ RSBaselineMapSettings classMapBuilder new
+	^ RSBaselineMapSettings classMapBuilderOrDefault new
 		baseline: self targetClass;
 		context: context;
 		build;
