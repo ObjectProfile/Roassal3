@@ -11,31 +11,30 @@ RSGridLayoutTest >> testBasic [
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (12.5@2.5). (22.5@2.5). (32.5@2.5). (2.5@12.5). (12.5@12.5). (22.5@12.5). (32.5@12.5). (2.5@22.5). (12.5@22.5)}
 ]
 
-RSGridLayoutTest >> testBasicCustomizedGapSizeGridLayout[
+{ #category : #tests }
+RSGridLayoutTest >> testBasicCustomizedGapSizeGridLayout [
 	
 	RSGridLayout  new gapSize:15; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (22.5@2.5). (42.5@2.5). (62.5@2.5). (2.5@22.5). (22.5@22.5). (42.5@22.5). (62.5@22.5). (2.5@42.5). (22.5@42.5)}
 ]
 
-
-RSGridLayoutTest >>testBasicDefaultGapSizeGridLayout[
+{ #category : #tests }
+RSGridLayoutTest >> testBasicDefaultGapSizeGridLayout [
 	
 	RSGridLayout  new gapSize:5; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (12.5@2.5). (22.5@2.5). (32.5@2.5). (2.5@12.5). (12.5@12.5). (22.5@12.5). (32.5@12.5). (2.5@22.5). (12.5@22.5)}
 	
-	]
+]
 
+{ #category : #tests }
+RSGridLayoutTest >> testLineItemsCount [
 
-RSGridLayoutTest >>testLineItemsCount[
-
-	| shapesInLine firstPosition |
+	| shapesInLine |
 	RSGridLayout new
 		lineItemsCount: 3;
 		on: canvas nodes.
 	shapesInLine := canvas nodes groupedBy: [ :each | each position y ].
-	shapesInLine keysAndValuesDo: [ :key :line | 
-		firstPosition := line first position.
-		self assert:
-			(line allSatisfy: [ :each | each position y = firstPosition y ]) ]
+	self assert: (shapesInLine allSatisfy: [:group | group size between: 1 and: 3 ]).
+
 		
-         ]
+]
