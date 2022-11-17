@@ -55,7 +55,7 @@ RSDraggable >> processDrag: evt [
 
 { #category : #testing }
 RSDraggable >> shouldValidateChildrenEvents [
-	^ shouldValidateChildrenEvents
+	^ shouldValidateChildrenEvents ifNil: [ ^ false ]
 ]
 
 { #category : #public }
