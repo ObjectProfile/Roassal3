@@ -5,6 +5,7 @@
 curl -L https://get.pharo.org/64/alpha+vm | bash
 echo ${REPO_NAME}
 echo ${GITHUB_HEAD_REF}
+echo ${GITHUB_REF}
 yovi="/tmp/io.txt"
 echo ${GITHUB_BASE_REF} > $yovi
 echo ${GITHUB_REPOSITORY} >> $yovi
