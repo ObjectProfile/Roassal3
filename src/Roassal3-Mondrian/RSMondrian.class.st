@@ -81,15 +81,6 @@ RSMondrian >> defaultLineColor [
 	^ Color gray translucent
 ]
 
-{ #category : #visualization }
-RSMondrian >> gtInspectorViewIn: composite [
-
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: [ 'Canvas' ];
-		initializeCanvas: [ self build; canvas ]
-]
-
 { #category : #'building - graph' }
 RSMondrian >> initialize [
 	super initialize.
@@ -250,7 +241,7 @@ b open
 	].
 	canvas addAll: nodes.
 	nodes @ RSPopup.
-	depth = 0 ifTrue: [ nodes @ RSDraggable ].
+	depth = 0 ifTrue: [ nodes addInteraction: (RSDraggable new noValidateChildrenEvents) ].
 	nodesForLayout addAll: nodes.
 	^ nodes
 ]

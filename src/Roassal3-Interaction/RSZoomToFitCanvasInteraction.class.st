@@ -60,10 +60,11 @@ RSZoomToFitCanvasInteraction >> cameraFor: aCanvas [
 { #category : #hooks }
 RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSKeyUp send: #processKeyUp: to: self.
-	aCanvas when: RSExtentChangedEvent do: [ self zoomToFitIfNecessary: aCanvas ].
+	aCanvas when: RSExtentChangedEvent send: #zoomToFitIfNecessary: to: self.
 	aCanvas camera: (self cameraFor: aCanvas).
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
-	aCanvas zoomToFit
+	"this will call the zoomToFit"
+	self zoomToFitOnStart: aCanvas.
 ]
 
 { #category : #'private - events' }
@@ -78,7 +79,14 @@ RSZoomToFitCanvasInteraction >> renderLegendOn: lb [
 ]
 
 { #category : #'zoom animation' }
-RSZoomToFitCanvasInteraction >> zoomToFitIfNecessary: aCanvas [
+RSZoomToFitCanvasInteraction >> zoomToFitIfNecessary: evt [
 	self configuration shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
-	aCanvas zoomToFit
+	evt canvas zoomToFit
+]
+
+{ #category : #'zoom animation' }
+RSZoomToFitCanvasInteraction >> zoomToFitOnStart: aCanvas [
+	aCanvas newAnimation
+		duration: 60 milliSeconds;
+		onStepDo: [ aCanvas zoomToFit ]
 ]

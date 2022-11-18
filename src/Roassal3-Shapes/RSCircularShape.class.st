@@ -17,3 +17,13 @@ RSCircularShape class >> size: anInteger [
 	"Create a new circular shape with a given size"
 	^ self new size: anInteger
 ]
+
+{ #category : #accessing }
+RSCircularShape >> center [
+	^ self position
+]
+
+{ #category : #accessing }
+RSCircularShape >> center: aPoint [
+	self position: aPoint
+]

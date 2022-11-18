@@ -163,7 +163,6 @@ RSChannelTest >> testLocationsOfUnderlines [
 	box := RSBox new size: 10.
 	c add: box.
 	RSGridLayout on: c nodes.
-	c @ RSCanvasController.
 
 	channel1 := RSChannel new.
 	channel1 color: Color blue.

@@ -18,15 +18,13 @@ RSColoredTreePaletteTest >> testBasic [
 	lb connectFrom: [ :nb | nb // 2 ].
 
 	RSTreeLayout on: nodes.
-
-	c @ RSCanvasController.
 	
 	node1 := c shapeFromModel: 1. "The root"
 	node2 := c shapeFromModel: 2. "Right below 1"
 	node3 := c shapeFromModel: 3. "Right below 1"
 	
-	self assert: node1 color == node2 color.
-	self assert: node3 color == node2 color.
+	self assert: node1 color identityHash equals: node2 color identityHash.
+	self assert: node3 color identityHash equals: node2 color identityHash.
 	
 	"Assign the color"
 	ctp := RSColoredTreePalette new.
@@ -54,8 +52,6 @@ RSColoredTreePaletteTest >> testLeaves [
 	lb connectFrom: [ :nb | nb // 2 ].
 
 	RSTreeLayout on: nodes.
-
-	c @ RSCanvasController.
 	
 	node1 := c shapeFromModel: 1. "The root"
 	node2 := c shapeFromModel: 2. "Right below 1"

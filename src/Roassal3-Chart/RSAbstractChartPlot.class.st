@@ -96,7 +96,17 @@ RSAbstractChartPlot >> isDecoration [
 ]
 
 { #category : #testing }
+RSAbstractChartPlot >> isHorizontalTick [
+	^ false
+]
+
+{ #category : #testing }
 RSAbstractChartPlot >> isPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractChartPlot >> isVerticalTick [
 	^ false
 ]
 

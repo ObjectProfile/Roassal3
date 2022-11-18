@@ -6,25 +6,23 @@ Class {
 
 { #category : #tests }
 RSShapeTest >> testAllConnectedShapes [
-	| c shapes lb node1 node2 node3 node5 node6 |
-	c := RSCanvas new.
-
+	| canvas shapes lb node1 node2 node3 node5 node6 |
+	canvas := RSCanvas new.
 
 	shapes := RSLabel models: (1 to: 6).
-	c addAll: shapes.
+	canvas addAll: shapes.
 	shapes @ RSDraggable.
 	lb := RSLineBuilder arrowedLine.
 	lb withBorderAttachPoint.
 	lb shapes: shapes.
 	lb useAssociations: { 1 -> 3 . 3 -> 2 . 3 -> 4 . 5 -> 6. }.
 	RSForceBasedLayout on: shapes.
-	c @ RSCanvasController.
 	
-	node1 := c shapeFromModel: 1.
-	node2 := c shapeFromModel: 2.
-	node3 := c shapeFromModel: 3.
-	node5 := c shapeFromModel: 5.
-	node6 := c shapeFromModel: 6.
+	node1 := canvas shapeFromModel: 1.
+	node2 := canvas shapeFromModel: 2.
+	node3 := canvas shapeFromModel: 3.
+	node5 := canvas shapeFromModel: 5.
+	node6 := canvas shapeFromModel: 6.
 	
 	self assert: (node1 allRecursiveConnectedShapes collect: #model) asSortedCollection asArray equals: (1 to: 4).
 	

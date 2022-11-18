@@ -47,6 +47,11 @@ RSChart >> add: aRSPlot [
 ]
 
 { #category : #adding }
+RSChart >> addAll: aCollection [
+	aCollection do: [ :each | self add: each ]
+]
+
+{ #category : #adding }
 RSChart >> addDecoration: aDecoration [
 	"Add a decoration to the chart
 
@@ -134,9 +139,18 @@ RSChart >> decorations [
 	^ elements select: #isDecoration
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSChart >> defaultContainer [
-	^ RSCanvas new @ RSCanvasController
+	^ RSCanvas new 
+		addInteraction: (RSCanvasController new
+			in: [ :controller | 
+				controller configuration 
+					useZoomToFitOnExtendChanged;
+					maxScale: 20.
+				 ];
+			yourself);
+		yourself
+		
 ]
 
 { #category : #color }
@@ -159,13 +173,9 @@ RSChart >> extent: aPoint [
 	self chartExtents extent: aPoint
 ]
 
-{ #category : #visualization }
-RSChart >> gtInspectorViewIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Canvas'];
-		initializeCanvas: [ self build; canvas ]
-		
+{ #category : #accessing }
+RSChart >> horizontalTick [
+	^ elements detect: [ :element | element isHorizontalTick ] ifNone: [ nil ].
 ]
 
 { #category : #initialization }
@@ -365,6 +375,11 @@ c
 ```
 	"
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
+]
+
+{ #category : #accessing }
+RSChart >> verticalTick [
+	^ elements detect: [ :element | element isVerticalTick ] ifNone: [ nil ].
 ]
 
 { #category : #'public - scales' }

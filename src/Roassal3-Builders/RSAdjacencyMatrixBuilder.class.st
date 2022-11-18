@@ -1,3 +1,6 @@
+"
+Used as example
+"
 Class {
 	#name : #RSAdjacencyMatrixBuilder,
 	#superclass : #RSAbstractContainerBuilder,

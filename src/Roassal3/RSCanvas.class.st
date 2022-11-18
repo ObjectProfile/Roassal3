@@ -315,6 +315,7 @@ RSCanvas >> extent [
 RSCanvas >> extent: aPoint [
 	"Set the extent of the canvas. This method is called when a window is resized. An event is raised when the extension happens. "
 	| evt |
+	extent = aPoint ifTrue: [ ^ self ].
 	evt := RSExtentChangedEvent new
 		shape: self;
 		oldExtent: extent;
@@ -709,6 +710,12 @@ RSCanvas >> signalUpdate [
 { #category : #'accessing - computed' }
 RSCanvas >> transform: aPoint [
 	^ aPoint
+]
+
+{ #category : #camera }
+RSCanvas >> visibleArea: aRectangle [
+	self camera zoomToFit: self extent rectangle: aRectangle.
+	self signalUpdate.
 ]
 
 { #category : #'accessing - computed' }

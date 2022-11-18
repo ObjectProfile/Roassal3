@@ -4,8 +4,28 @@ Examples related to timeline
 Class {
 	#name : #RSTimelineExample,
 	#superclass : #RSAbstractExamples,
+	#instVars : [
+		'lastDay'
+	],
 	#category : #'Roassal3-Chart-Examples'
 }
+
+{ #category : #examples }
+RSTimelineExample >> createRandomData [
+	| perlin r |
+	perlin := NSPerlinNoise3 new octaves: 3.
+	r := Random new.
+	r seed: 777.
+	^ (1 to: 25) collect: [:each | | time n |
+		time := 0.
+		n := ((perlin noise: each log and: 0) * 100) asInteger.
+		n odd ifTrue: [ n := n + 1 ]. "n must be even"
+		(1 to: n) collect: [ :x | | factor |
+			factor := r next * 30.
+			time := time + ((perlin noise: x*0.001 and: each log) * factor) asInteger.
+			].
+		].
+]
 
 { #category : #examples }
 RSTimelineExample >> example01Gantt [
@@ -75,4 +95,50 @@ RSTimelineExample >> example02Labeled [
 				highlightable;
 				locationDo: [ :loc | loc middle ]) ].
 	^ chart canvas
+]
+
+{ #category : #examples }
+RSTimelineExample >> example03ZoomInAxis [
+	<script: 'self new example03ZoomInAxis open'>
+	| data chart names |
+	chart := RSChart new.
+	chart extent: 500@200.
+	chart padding: 10@0.
+	data := self createRandomData.
+	
+	names := (1 to: data  size) collect: [ :each | 'Series ', each asString ].
+	chart addAll: (data collectWithIndex: [ :line :index |
+		 RSTimeLinePlot new
+			entries: line at: index;
+			yourself ]).
+	chart add: (RSVerticalTick new fromNames: names).
+	chart add: (RSHorizontalTick new 
+		doNotUseNiceLabel;
+		numberOfTicks: 10;
+		useDiagonalLabel;
+		labelConversion: [ :day | self printDate: day ];
+		yourself).
+	chart add: RSZoomTickDecoration new.
+	^ chart
+]
+
+{ #category : #examples }
+RSTimelineExample >> printDate: day [
+	| label |
+	"use a method, remeber this is an example"
+	label := lastDay ifNil: [
+		Date year: Year current year day: day
+	] ifNotNil: [ | difference |
+		difference := day - lastDay.
+		difference < 0 ifTrue: [
+			Date year: Year current year day: day
+		] ifFalse: [ 
+			difference < 1 "one day" ifTrue: [ 
+				label := DateAndTime year: Year current year day: day.
+				label asDate asString, ', ', label asTime print24 ]
+			ifFalse: [ Date year: Year current year day: day ]
+		]
+	].
+	lastDay := day.
+	^ label
 ]

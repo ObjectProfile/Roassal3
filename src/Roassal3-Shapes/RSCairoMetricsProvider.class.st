@@ -4,7 +4,7 @@ This provider uses CairoFontMetricsProvider to calculate the width of text, but 
 Class {
 	#name : #RSCairoMetricsProvider,
 	#superclass : #RSCairoFitMetricsProvider,
-	#category : #'Roassal3-Shapes-Text'
+	#category : #'Roassal3-Shapes-TextMetrics'
 }
 
 { #category : #hooks }

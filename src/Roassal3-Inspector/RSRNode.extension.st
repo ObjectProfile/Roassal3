@@ -38,6 +38,7 @@ RSRNode >> addWithChildren: canvas [
 		yourself.
 	canvas add: ({ circle. label } asShape
 		model: self;
+		popupText: [ :node | node height asString ];
 		yourself).
 	self childrenDo: [ :child | child addWithChildren: canvas ].
 ]
@@ -84,15 +85,17 @@ RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent 
 
 { #category : #'*Roassal3-Inspector' }
 RSRNode >> asRSCanvasForQueries [
-	| canvas box point log |
+	| canvas box point log zet |
 	canvas := self newCanvas.
-	
-	self do: [ :value | canvas add: (RSBox new 
-		fromRectangle: value encompassingRectangle;
-		color: Color black;
-		yourself) ].
+	zet := self. "arc warden"
+	canvas addAll: (zet select: [:value | 
+		RSBox new
+			fromRectangle: (self bbox: value);
+			color: Color black;
+			yourself
+		]).
 	box := RSBox new 
-		extent: canvas encompassingRectangle extent * 0.1;
+		extent: canvas shapes extent * 0.1;
 		color: ((Color colorFrom: '#3399FF') alpha: 0.2);
 		border: (RSBorder new color: Color black);
 		yourself.

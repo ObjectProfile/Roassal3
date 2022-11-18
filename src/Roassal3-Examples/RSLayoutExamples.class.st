@@ -377,7 +377,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		
 		composite color: Color lightGray.
 		composite model: cls.
-		composite @ RSAnimatedPopup; @ RSDraggable.
+		composite @ RSAnimatedPopup; @ (RSDraggable new noValidateChildrenEvents).
 		composite padding: 10.
 		c add: composite ].
 

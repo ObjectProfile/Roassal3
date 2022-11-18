@@ -14,7 +14,6 @@ RSSelectionPresentationTest >> testBasic [
 	RSNormalizer size shapes: shapes; normalize: #yourself.
 	RSFlowLayout on: shapes.
 	shapes @ RSSelectionPresentationInteraction.
-	c @ RSCanvasController.
 
 	"make sure there is no error when clicking on an element, while being outside the GTInspector"
 	c nodes first announce: RSMouseClick

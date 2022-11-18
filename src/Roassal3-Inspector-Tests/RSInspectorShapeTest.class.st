@@ -12,7 +12,7 @@ RSInspectorShapeTest >> testNoEvents [
 	box popup.
 	label popup.
 	composite := { box. label } asShape.
-	composite draggable.
+	composite when: RSMouseEnter do: [:evt | ].
 	canvas := composite canvasForInspector.
 	
 	self assert: canvas shapes size equals: 1.

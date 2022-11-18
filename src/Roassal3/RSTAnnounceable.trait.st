@@ -35,6 +35,28 @@ RSTAnnounceable >> announcer: anAnnouncer [
 ]
 
 { #category : #public }
+RSTAnnounceable >> click [
+	"Simulate a click. 
+	
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+box := RSBox new size: 40.
+box when: RSMouseClick do: [ :evt | self inform: 'hello' ].
+c add: box.
+
+box click.
+
+c
+-=-=-=-=-=-=-=-=-=
+"
+	self announce: (RSMouseClick new 
+		canvas: self canvas;
+		shape: self; 
+		yourself).
+]
+
+{ #category : #public }
 RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
 	| ann |
 	ann := self privateAnnouncer.
@@ -50,10 +72,21 @@ RSTAnnounceable >> getInteractionsForClass: anInteractionClass [
 ]
 
 { #category : #testing }
+RSTAnnounceable >> handleAnnouncementClass: aClass [
+	| subscriptions evt |
+	evt := aClass new.
+	subscriptions := self subscriptions.
+	subscriptions ifNil: [ ^ false ].
+	^ subscriptions subscriptions anySatisfy: [ :each | each handlesAnnouncement: evt ]
+]
+
+{ #category : #testing }
 RSTAnnounceable >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
-	self announcer subscriptions ifNil: [ ^ false ].
-	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
+	| subscriptions |
+	subscriptions := self subscriptions.
+	subscriptions ifNil: [ ^ false ].
+	^ subscriptions handleSubscriberClass: anInteractionClass
 ]
 
 { #category : #announcer }
@@ -66,6 +99,14 @@ RSTAnnounceable >> removeInteractionIfPresent: anInteractionClass [
 	"Remove all the callbacks associated to the interaction."
 	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
+]
+
+{ #category : #announcer }
+RSTAnnounceable >> subscriptions [
+	| anAnnouncer |
+	anAnnouncer := self privateAnnouncer.
+	anAnnouncer ifNil: [ ^ nil ].
+	^ anAnnouncer subscriptions
 ]
 
 { #category : #announcer }

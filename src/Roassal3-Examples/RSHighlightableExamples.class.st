@@ -276,6 +276,7 @@ RSHighlightableExamples >> example08DependendMethods [
 	canvas := RSCanvas new.
 	popup := RSPopup new.
 	label := RSLabeled new highlightable.
+	label shapeBuilder labelShape color: Color black.
 	padding := 10 asMargin.
 	high := RSHighlightable new.
 	arrow := RSShapeFactory arrowedLine
@@ -285,7 +286,7 @@ RSHighlightableExamples >> example08DependendMethods [
 		| classes pkg |
 		classes := p definedClasses collect: [ :cls | | methods |
 			methods := cls methods collect: [ :met |
-				RSEllipse new
+				RSBox new
 					extent: 5 @ met linesOfCode;
 					@ popup;
 					@ high;
@@ -301,12 +302,9 @@ RSHighlightableExamples >> example08DependendMethods [
 				children: methods;
 				padding: padding;
 				yourself ] as: RSGroup.
-		pkg := RSComposite new
-			children: classes;
-			paint: Color blue translucent;
-			model: p;
+		pkg := (classes asShapeFor: p)
+			paint: Color veryVeryLightGray translucent;
 			@ popup;
-			draggable;
 			yourself.
 		RSLineBuilder orthoVertical 
 			withVerticalAttachPoint;
@@ -314,7 +312,9 @@ RSHighlightableExamples >> example08DependendMethods [
 			shapes: pkg nodes;
 			connectFrom: #superclass.
 		RSTreeLayout on: pkg nodes edges: pkg edges.
-		pkg adjustToChildren;
+		pkg
+			position: 0@0;
+			adjustToChildren;
 			padding: padding.
 		pkg ].
 	canvas addAll: packages.

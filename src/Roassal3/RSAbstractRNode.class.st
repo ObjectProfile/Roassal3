@@ -7,6 +7,10 @@ Class {
 	#category : #'Roassal3-Rendering'
 }
 
+{ #category : #visiting }
+RSAbstractRNode >> accept: visitor [
+]
+
 { #category : #adding }
 RSAbstractRNode >> addChild: newObject [
 	^ self subclassResponsibility
@@ -58,4 +62,14 @@ RSAbstractRNode >> nodesWithPoint: aPoint list: list [
 { #category : #accessing }
 RSAbstractRNode >> rectangle [
 	^ 0@0 corner: 0@0
+]
+
+{ #category : #'finding/searching' }
+RSAbstractRNode >> searchPath: anObject [
+	^ #()
+]
+
+{ #category : #'accessing - children' }
+RSAbstractRNode >> withAllChildren [
+	^ #()
 ]

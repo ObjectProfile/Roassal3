@@ -51,6 +51,11 @@ RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
 ]
 
+{ #category : #testing }
+RSHorizontalTick >> isHorizontalTick [
+	^ true
+]
+
 { #category : #accessing }
 RSHorizontalTick >> max [
 	^ chart maxValueX

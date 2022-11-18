@@ -21,6 +21,11 @@ RSBaselineMapSettings class >> classMapBuilder: aClass [
 ]
 
 { #category : #accessing }
+RSBaselineMapSettings class >> classMapBuilderOrDefault [
+	^ self classMapBuilder ifNil: [ self defaultClassMapBuilder ]
+]
+
+{ #category : #accessing }
 RSBaselineMapSettings class >> defaultClassMapBuilder [
 	^ RSThemedMapBuilder
 ]

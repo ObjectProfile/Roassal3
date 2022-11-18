@@ -11,14 +11,6 @@ RSShape >> canvasForInspector [
 ]
 
 { #category : #'*Roassal3-Inspector' }
-RSShape >> inspectorCanvasIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Shape'];
-		initializeCanvas: [ self canvasForInspector ]
-]
-
-{ #category : #'*Roassal3-Inspector' }
 RSShape >> inspectorShadowFor: padding color: aColor [
 	^ self subclassResponsibility
 ]

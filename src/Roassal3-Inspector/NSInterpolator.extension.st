@@ -70,14 +70,6 @@ NSInterpolator >> gtCanvasForInspector [
 ]
 
 { #category : #'*Roassal3-Inspector' }
-NSInterpolator >> gtInspectorCanvasIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Interpolator'];
-		initializeCanvas: [ self gtCanvasForInspector ]
-]
-
-{ #category : #'*Roassal3-Inspector' }
 NSInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new

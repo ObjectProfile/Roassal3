@@ -34,13 +34,12 @@ RSMapBrowserToolMorph >> build [
 	morph := canvas createMorph.
 	morph onAnnouncement: MorphDeleted 
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
-	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 
 { #category : #building }
 RSMapBrowserToolMorph >> buildBaselineMap [
-	^ RSBaselineMapSettings classMapBuilder new
+	^ RSBaselineMapSettings classMapBuilderOrDefault new
 		baseline: self targetClass;
 		context: context;
 		build;
