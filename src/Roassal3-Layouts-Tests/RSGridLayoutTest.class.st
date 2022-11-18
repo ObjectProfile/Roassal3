@@ -27,14 +27,16 @@ RSGridLayoutTest >> testBasicDefaultGapSizeGridLayout [
 ]
 
 { #category : #tests }
-RSGridLayoutTest >> testLineItemsCount [
+RSGridLayoutTest >>testLineItemsCount[
 
-	| shapesInLine |
-	RSGridLayout new
-		lineItemsCount: 3;
-		on: canvas nodes.
-	shapesInLine := canvas nodes groupedBy: [ :each | each position y ].
-	self assert: (shapesInLine allSatisfy: [:group | group size between: 1 and: 3 ]).
+    | shapesInLine firstPosition |
+    RSGridLayout new
+        lineItemsCount: 3;
+        on: canvas nodes.
+    shapesInLine := canvas nodes groupedBy: [ :each | each position y ].
+    shapesInLine keysAndValuesDo: [ :key :line | 
+        firstPosition := line first position.
+        self assert:
+            (line allSatisfy: [ :each | each position y = firstPosition y ]) ]
 
-		
-]
+         ]
