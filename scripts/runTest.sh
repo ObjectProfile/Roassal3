@@ -8,6 +8,7 @@ yovi="/tmp/io.txt"
 echo ${GITHUB_REF##*/} > $yovi
 echo ${GITHUB_REPOSITORY} >> $yovi
 
+cat $yovi
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
 FILE=/tmp/result.txt
