@@ -7,7 +7,7 @@ yovi := '/tmp/io.txt' asFileReference contents lines.
 branchName := yovi first.
 repoName := yovi second.
 repository := 'github://', repoName, ':', branchName.
-
+stream << 'Loading: '; << repository; crlf.
 "We load the application software analyzer"
 [ Metacello new
     baseline: 'Roassal3';
