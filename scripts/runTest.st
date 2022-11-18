@@ -1,16 +1,21 @@
-"We load the application software analyzer"
-[ Metacello new
-    baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3';
-    load: 'Full' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
-
-"We identify the unit tests contained in the loaded application"
-unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'Roassal3' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
-
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
+
+yovi := '/tmp/io.txt' asFileReference contents lines.
+branchName := yovi first.
+repoName := yovi second.
+repository := 'github://', repoName, ':', branchName.
+
+"We load the application software analyzer"
+[ Metacello new
+    baseline: 'Roassal3';
+    repository: repository;
+    load: 'Full' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
+
+"We identify the unit tests contained in the loaded application"
+unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'Roassal3' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
 
 numberOfPassed := 0.
 "We run the unit tests"
