@@ -42,7 +42,11 @@ RSExamplesTest >> testExamples [
 		every: 500.
 	withErrors ifNotEmpty: [ 
 		'>>> Examples with errors: ' traceCr.
-		withErrors traceCr. ].
+		withErrors do: [ :report |
+			report value traceCr.
+			(String streamContents: [ :stream | report key signalerContext shortDebugStackOn: stream ]) traceCr.
+			'' traceCr.
+			 ] ].
 	withErrors := withErrors collect: [ :each | each value ].
 	
 	self assert: withErrors isEmpty description: 'All examples in roassal should run'.
