@@ -22,7 +22,7 @@ unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageNam
 
 numberOfPassed := 0.
 "We run the unit tests"
-unitTests do: [ :unitTestClass |
+unitTests do: [ :unitTestClass | | res |
 	res := unitTestClass buildSuite run.
 	(res hasFailures or: [ res hasErrors ]) ifTrue: [ 
 
