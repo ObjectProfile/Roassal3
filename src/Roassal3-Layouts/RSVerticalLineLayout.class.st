@@ -32,7 +32,7 @@ RSVerticalLineLayout >> deltaFor: aNodeFigure [
 	^delta @ 0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSVerticalLineLayout >> initialize [
 	super initialize.
 	self alignLeft

@@ -64,7 +64,7 @@ RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 			].
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
 	self all.

@@ -81,7 +81,7 @@ RSMondrian >> defaultLineColor [
 	^ Color gray translucent
 ]
 
-{ #category : #'building - graph' }
+{ #category : #initialization }
 RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.

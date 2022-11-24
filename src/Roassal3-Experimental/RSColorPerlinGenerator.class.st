@@ -25,7 +25,7 @@ RSColorPerlinGenerator >> colorFor: aParticle [
 	^ color alpha: 0.03
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSColorPerlinGenerator >> initialize [
 	super initialize.
 	perlin := NSPerlinNoise3 new octaves: 5

@@ -6,14 +6,10 @@ Class {
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
+
 { #category : #accessing }
 RSAngleLineLayout >> angle [
 	^ angle
-]
-
-{ #category : #accessing }
-RSAngleLineLayout >> angle :anAngle [
-	angle := anAngle
 ]
 
 { #category : #hook }
@@ -21,18 +17,7 @@ RSAngleLineLayout >> defaultAngle [
 	^ 90.
 ]
 
-{ #category : #hook }
-RSAngleLineLayout >> positionOriginalPointer [
-	^ 0@0.
-]
-
-{ #category : #'initialize-release' }
-RSAngleLineLayout >> initialize [
-	super initialize.
-	angle := self defaultAngle
-]
-
-{ #category : #'overrides' }
+{ #category : #overrides }
 RSAngleLineLayout >> doExecute: elements [
 	| pointer |
 	pointer := self positionOriginalPointer.
@@ -41,4 +26,15 @@ RSAngleLineLayout >> doExecute: elements [
 		pointer := pointer setR: index degrees: self angle 
 ]
 
+]
+
+{ #category : #initialization }
+RSAngleLineLayout >> initialize [
+	super initialize.
+	angle := self defaultAngle
+]
+
+{ #category : #hook }
+RSAngleLineLayout >> positionOriginalPointer [
+	^ 0@0.
 ]

@@ -61,7 +61,7 @@ RSAbstractSunburstLayout >> hasCenter: aBool [
 	hasCenter := aBool
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractSunburstLayout >> initialize [
 	super initialize.
 	self

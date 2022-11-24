@@ -206,7 +206,7 @@ RSForceBasedLayout >> initialLayout: aLayout [
 	initialLayout := aLayout
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSForceBasedLayout >> initialize [
 	super initialize.
 	random := Random seed: 42.

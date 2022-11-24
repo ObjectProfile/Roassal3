@@ -49,7 +49,7 @@ RSRectangleForceLayout >> enclosingThreshold: aNumber [
 	enclosingThreshold := aNumber
 ]
 
-{ #category : #events }
+{ #category : #initialization }
 RSRectangleForceLayout >> initialize [
 	super initialize.
 

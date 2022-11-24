@@ -116,7 +116,7 @@ RSAbstractCompactTreeLayout >> initialLayout: aLayout [
 	initialLayout := aLayout 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractCompactTreeLayout >> initialize [ 
 	super initialize.
 	verticalGap := 20.

@@ -16,7 +16,7 @@ RSMouseDragging class >> step: aStepAsPoint [
 	^ self new step: aStepAsPoint
 ]
 
-{ #category : #'initialize - release' }
+{ #category : #initialization }
 RSMouseDragging >> initialize [
 	super initialize.
 	step := 0 @ 0.

@@ -69,7 +69,7 @@ RSHierarchyPackerInteraction >> fill: group with: aShape [
 		self fill: group with: ed to ].
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 RSHierarchyPackerInteraction >> initialize [
 	super initialize.
 	

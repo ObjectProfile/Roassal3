@@ -5,6 +5,22 @@ Class {
 }
 
 { #category : #tests }
+RSRoassal3Test >> testInitializeInRoassal [
+
+	| pkgs methods violating |
+	pkgs := RPackage organizer packages
+		select: [ :pkg | 'Roassal3*' match: pkg name ].
+	methods := pkgs flatCollect: [ :pkg | 
+		pkg definedClasses flatCollect: [ :class | class methods ] ].
+	violating := methods select: [ :method | 
+		method selector = #initialize and: [ 
+			method protocol ~= #initialization ] ].
+	self
+		assert: violating isEmpty
+		description: 'Roassal initialize methods should be categorized in initialization'
+]
+
+{ #category : #tests }
 RSRoassal3Test >> testOpen [
 
 	| v |

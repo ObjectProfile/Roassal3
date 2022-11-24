@@ -119,7 +119,7 @@ RSClusteringLayout >> getClusterFor: shapes [
 	^ clusters"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSClusteringLayout >> initialize [
 	super initialize.
 	forEachLayout := RSHorizontalLineLayout new.

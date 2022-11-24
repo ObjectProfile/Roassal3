@@ -29,7 +29,7 @@ RSChartTitleDecoration >> defaultFontSize [
 	^ 15
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 RSChartTitleDecoration >> initialize [
 	super initialize.
 	self fontSize: 15.

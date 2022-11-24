@@ -42,7 +42,7 @@ RSFlowLayout >> alignTop [
 	alignment := #top
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSFlowLayout >> initialize [
 	super initialize.
 	self alignTop.

@@ -40,7 +40,7 @@ RSBasicUMLClassRenderer >> classInnerLine: aShape [
 	classInnerLine := aShape
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 RSBasicUMLClassRenderer >> initialize [
 	super initialize.
 	popup := RSPopup new model: #yourself.

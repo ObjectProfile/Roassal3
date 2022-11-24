@@ -108,7 +108,7 @@ RSAbstractGridLayout >> gapSize: anInteger [
 	gapSize := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractGridLayout >> initialize [
 	super initialize.
 	gapSize := self defaultGapSize.

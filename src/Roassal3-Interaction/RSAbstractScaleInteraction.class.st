@@ -11,7 +11,7 @@ Class {
 	#category : #'Roassal3-Interaction-Extra'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSAbstractScaleInteraction >> initialize [
 	super initialize.
 	self 
