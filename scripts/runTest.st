@@ -10,11 +10,11 @@ cout := Stdio stdout.
 cout << '>>> Clonning from: '.
 
 repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
-stream << 'Loading: '; << repository; crlf.
+stream << 'Loading: '; << repoPath; crlf.
 "We load the application software analyzer"
 [ Metacello new
     baseline: 'Roassal3';
-    repository: repository;
+    repository: repoPath;
     load: 'Full' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 
 "We identify the unit tests contained in the loaded application"
