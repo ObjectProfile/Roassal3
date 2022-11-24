@@ -18,6 +18,9 @@ packages := packagesRegExp flatCollect: [ :regExp |
 packages := packages reject: [ :pck | pck name = 'Roassal3-Pharo7' ].
 packages do: [ :package | package removeFromSystem ].
 
+cout << '>>> Updating fonts'; crlf.
+FreeTypeFontProvider current updateFromSystem.
+
 cout << '>>> Clonning from: '.
 
 repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
