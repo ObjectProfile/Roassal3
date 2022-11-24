@@ -1,12 +1,15 @@
+| path stream repoPath unitTests numberOfPassed env cout |
+
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
-yovi := '/tmp/io.txt' asFileReference contents lines.
-branchName := yovi first.
-repoName := yovi second.
-repository := 'github://', repoName, ':', branchName.
+env := Smalltalk os environment.
+cout := Stdio stdout.
+cout << '>>> Clonning from: '.
+
+repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
 stream << 'Loading: '; << repository; crlf.
 "We load the application software analyzer"
 [ Metacello new
