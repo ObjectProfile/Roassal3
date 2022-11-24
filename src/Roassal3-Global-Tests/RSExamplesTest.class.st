@@ -34,7 +34,12 @@ RSExamplesTest >> testExamples [
 			do: [ :met | | res |
 				[res := inst perform: met selector.
 				res = inst ifTrue: [ sameResult add: met ]]
-				on: Error do: [ :ex | withErrors add: ex -> met ]
+				on: Error do: [ :ex | | message |
+					
+					message := String streamContents: [ :stream | 
+						stream << ex printString; crlf.
+						ex signalerContext shortDebugStackOn: stream ].
+					withErrors add: message -> met ]
 				 ]
 			displayingProgress: [ :met | met selector ]
 			every: 100 ]
@@ -43,8 +48,8 @@ RSExamplesTest >> testExamples [
 	withErrors ifNotEmpty: [ 
 		'>>> Examples with errors: ' traceCr.
 		withErrors do: [ :report |
-			report value traceCr.
-			(String streamContents: [ :stream | report key signalerContext shortDebugStackOn: stream ]) traceCr.
+			report value printString traceCr.
+			report key traceCr.
 			'' traceCr.
 			 ] ].
 	withErrors := withErrors collect: [ :each | each value ].
