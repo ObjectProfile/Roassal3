@@ -35,9 +35,7 @@ RSExamplesTest >> testExamples [
 				[res := inst perform: met selector.
 				res = inst ifTrue: [ sameResult add: met ]]
 				on: Error do: [ :ex | | message |
-					
 					message := String streamContents: [ :stream | 
-						stream << ex printString; crlf.
 						ex signalerContext shortDebugStackOn: stream ].
 					withErrors add: message -> met ]
 				 ]
