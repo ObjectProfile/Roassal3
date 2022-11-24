@@ -20,10 +20,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Get Repo name
-        run: echo "REPO_NAME=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
-      - name: Get Branch name
-        run: echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
         
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.0
@@ -31,7 +27,10 @@ jobs:
           access_token: ${{ github.token }}
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      # depth 0 will download all the repository history
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       # Runs a single command using the runners shell
       - name: Run unit tests
