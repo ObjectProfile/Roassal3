@@ -10,7 +10,7 @@ cout := Stdio stdout.
 cout << '>>> Clonning from: '.
 
 repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
-stream << 'Loading: '; << repoPath; crlf.
+cout << 'Loading: '; << repoPath; crlf.
 "We load the application software analyzer"
 [ Metacello new
     baseline: 'Roassal3';
