@@ -30,7 +30,7 @@ cout << 'Loading: '; << repoPath; crlf.
     baseline: 'Roassal3';
     repository: repoPath;
     load: 'Full' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
-
+cout << '>>> Running tests:'; crlf.
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'Roassal3' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
 
