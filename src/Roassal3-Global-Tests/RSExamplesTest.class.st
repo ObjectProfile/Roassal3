@@ -40,7 +40,10 @@ RSExamplesTest >> testExamples [
 			every: 100 ]
 		displayingProgress: [ :cls | cls asString ]
 		every: 500.
-		
+	withErrors ifNotEmpty: [ 
+		'Examples with errors: ' traceCr.
+		withErrors traceCr. ].
+	
 	self assert: withErrors isEmpty description: 'All examples in roassal should run'.
 	self assert: sameResult isEmpty description: 'All examples should return a canvas or builder'
 
