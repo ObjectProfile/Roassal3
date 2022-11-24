@@ -1,12 +1,23 @@
-| path stream repoPath unitTests numberOfPassed env cout |
-
+| path stream repoPath unitTests numberOfPassed env cout packagesRegExp packages |
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
+
 env := Smalltalk os environment.
 cout := Stdio stdout.
+cout << '>>> Removing old roassal code'; crlf.
+
+packagesRegExp := { '*Roassal3*' }.
+
+packages := packagesRegExp flatCollect: [ :regExp |
+	RPackageOrganizer default packages
+		select: [ :p | regExp match: p packageName ] ].
+
+packages := packages reject: [ :pck | pck name = 'Roassal3-Pharo7' ].
+packages do: [ :package | package removeFromSystem ].
+
 cout << '>>> Clonning from: '.
 
 repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
