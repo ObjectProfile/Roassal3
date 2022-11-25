@@ -67,7 +67,7 @@ RSMockShape >> height [
 	^ realShape height
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 RSMockShape >> initialize [
 	super initialize.
 	isFixed := false.

@@ -31,7 +31,7 @@ RSInspectableInteraction >> highlightable: anObject [
 	highlightable := anObject
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 RSInspectableInteraction >> initialize [
 	super initialize.
 	highlightable := RSHighlightable new.

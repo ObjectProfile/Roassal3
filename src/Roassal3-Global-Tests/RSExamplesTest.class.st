@@ -34,13 +34,24 @@ RSExamplesTest >> testExamples [
 			do: [ :met | | res |
 				[res := inst perform: met selector.
 				res = inst ifTrue: [ sameResult add: met ]]
-				on: Error do: [ :ex | withErrors add: met ]
+				on: Error do: [ :ex | | message |
+					message := String streamContents: [ :stream | 
+						ex signalerContext shortDebugStackOn: stream ].
+					withErrors add: message -> met ]
 				 ]
 			displayingProgress: [ :met | met selector ]
 			every: 100 ]
 		displayingProgress: [ :cls | cls asString ]
 		every: 500.
-		
+	withErrors ifNotEmpty: [ 
+		'>>> Examples with errors: ' traceCr.
+		withErrors do: [ :report |
+			report value printString traceCr.
+			report key traceCr.
+			'' traceCr.
+			 ] ].
+	withErrors := withErrors collect: [ :each | each value ].
+	
 	self assert: withErrors isEmpty description: 'All examples in roassal should run'.
 	self assert: sameResult isEmpty description: 'All examples should return a canvas or builder'
 

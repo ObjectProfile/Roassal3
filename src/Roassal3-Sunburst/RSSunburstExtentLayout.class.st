@@ -18,7 +18,7 @@ RSSunburstExtentLayout >> extent: aPoint [
 	wside := aPoint x min: aPoint y
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSSunburstExtentLayout >> initialize [
 	super initialize.
 	self extent: 500@500

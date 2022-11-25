@@ -44,7 +44,7 @@ RSIdentityMatrix >> at: u at: v put: aBoolean [
 	row at: u put: aBoolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSIdentityMatrix >> initialize [
 	rows := IdentityDictionary new
 ]

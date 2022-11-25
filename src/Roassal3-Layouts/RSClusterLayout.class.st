@@ -64,7 +64,7 @@ RSClusterLayout >> draw: aNode [
 		to: (Point r: (maxLayer - (self layerOf: aNode)) * verticalGap theta: (maxAbcissa - (self xOf: aNode) / maxAbcissa) * 2 * Float pi )
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSClusterLayout >> initialize [ 
 	super initialize.
 	verticalGap := 30.

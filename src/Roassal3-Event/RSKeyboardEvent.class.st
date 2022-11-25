@@ -11,7 +11,7 @@ Class {
 	#category : #'Roassal3-Event'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 RSKeyboardEvent >> initialize [
 	super initialize.
 	keyValue := 0

@@ -132,7 +132,7 @@ RSRectanglePackLayout >> gap: aFloat [
 	gap := aFloat
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSRectanglePackLayout >> initialize [
 	super initialize.
 	self doNotUseProgressBar.

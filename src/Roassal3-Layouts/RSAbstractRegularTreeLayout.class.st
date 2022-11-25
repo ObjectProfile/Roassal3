@@ -69,7 +69,7 @@ RSAbstractRegularTreeLayout >> horizontallyReverse: elements [
 		do: [ :el | el translateTo: (largeur - el position x) @ el position y ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractRegularTreeLayout >> initialize [
 	super initialize.
 	topGap := 5.

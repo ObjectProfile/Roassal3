@@ -17,7 +17,7 @@ RSAbstractHorizontalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractHorizontalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 3.

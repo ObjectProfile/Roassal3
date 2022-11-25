@@ -40,7 +40,7 @@ RSHorizontalLineLayout >> deltaFor: aNodeFigure [
 	^ 0 @ delta
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSHorizontalLineLayout >> initialize [
 	super initialize.
 	self alignTop

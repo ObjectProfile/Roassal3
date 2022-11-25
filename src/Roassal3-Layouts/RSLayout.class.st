@@ -95,7 +95,7 @@ RSLayout >> fatherOf: aNode put: aValue [
 	aNode propertyAt: #father put: aValue
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSLayout >> initialize [
 	super initialize.
 	translator := RSLayoutTranslator default

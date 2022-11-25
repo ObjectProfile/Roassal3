@@ -28,7 +28,7 @@ RSAngleLineLayout >> doExecute: elements [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAngleLineLayout >> initialize [
 	super initialize.
 	angle := self defaultAngle

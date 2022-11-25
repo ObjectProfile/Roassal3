@@ -656,7 +656,7 @@ RSDelaunayExample >> hasAreaLessThan: lim p1: p1 p2: p2 p3: p3 [
 		
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 RSDelaunayExample >> initialize [
 	super initialize.
 	useFill := false.

@@ -27,7 +27,7 @@ RSOffsetAttachPoint >> endOffset: aNumber [
 	endOffset := aNumber
 ]
 
-{ #category : #'public - hooks' }
+{ #category : #initialization }
 RSOffsetAttachPoint >> initialize [ 
 	super initialize.
 	startOffset := endOffset := 0.

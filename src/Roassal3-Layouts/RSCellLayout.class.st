@@ -79,7 +79,7 @@ RSCellLayout >> inCellPosition: anObjectOrOneArgBlock [
 	inCellPosition := anObjectOrOneArgBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSCellLayout >> initialize [
 	super initialize.
 	self leftCentered

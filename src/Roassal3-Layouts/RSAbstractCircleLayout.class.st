@@ -87,7 +87,7 @@ RSAbstractCircleLayout >> initialRadius: aNumber [
 	initialRadius := aNumber
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractCircleLayout >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 	

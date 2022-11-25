@@ -74,7 +74,7 @@ RSAbstractFlowLayout >> gapSize: aSizeInPixels [
 	gapSize := aSizeInPixels
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractFlowLayout >> initialize [
 	super initialize.
 	maxWidth := self defaultMaxWidth.

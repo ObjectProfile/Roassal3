@@ -33,7 +33,7 @@ RSSunburstConstantWidthLayout >> centerWidth: anObject [
 	centerWidth := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSSunburstConstantWidthLayout >> initialize [
 	super initialize.
 	self arcWidth: 50.

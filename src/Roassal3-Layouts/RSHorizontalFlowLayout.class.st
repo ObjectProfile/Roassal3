@@ -23,7 +23,7 @@ RSHorizontalFlowLayout >> alignRight [
 	alignment := #right
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSHorizontalFlowLayout >> initialize [
 	super initialize.
 	self alignLeft.

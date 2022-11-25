@@ -80,7 +80,7 @@ RSAttachPoint >> hasParents: shape in: aLine [
 	^ shape parent notNil and: [ aLine parent notNil ]
 ]
 
-{ #category : #'public - hooks' }
+{ #category : #initialization }
 RSAttachPoint >> initialize [
 	super initialize.
 	inverted := false.

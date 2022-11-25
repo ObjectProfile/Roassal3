@@ -113,7 +113,7 @@ RSAbstractLineLayout >> horizontalGap: anInteger [
 	horizontalGap := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractLineLayout >> initialize [
 	super initialize.
 	verticalGap := 10.
