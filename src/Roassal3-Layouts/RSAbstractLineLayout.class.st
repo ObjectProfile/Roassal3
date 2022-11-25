@@ -71,6 +71,11 @@ RSAbstractLineLayout >> alignment: anObject [
 	alignment := anObject
 ]
 
+{ #category : #initialization }
+RSAbstractLineLayout >> defaultGapSize [
+	^ 5
+]
+
 { #category : #hook }
 RSAbstractLineLayout >> deltaFor: aNodeFigure [
 	^ self subclassResponsibility
@@ -116,8 +121,7 @@ RSAbstractLineLayout >> horizontalGap: anInteger [
 { #category : #initialization }
 RSAbstractLineLayout >> initialize [
 	super initialize.
-	verticalGap := 10.
-	horizontalGap := 10.
+	self gapSize: self defaultGapSize.
 ]
 
 { #category : #hook }

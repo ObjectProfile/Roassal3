@@ -1,12 +1,12 @@
 Class {
-	#name : #RSAngleTest,
+	#name : #RSAngleLineLayoutTest,
 	#superclass : #RSLayoutTest,
 	#category : #'Roassal3-Layouts-Tests'
 }
 
 { #category : #tests }
-RSAngleTest >> testBasic
-[
+RSAngleLineLayoutTest >> testBasic [
+
 	| layout |
 	layout := RSAngleLineLayout new.
 	self assert: layout angle equals: layout defaultAngle.
@@ -15,8 +15,8 @@ RSAngleTest >> testBasic
 ]
 
 { #category : #tests }
-RSAngleTest >> testGapSize
-[
+RSAngleLineLayoutTest >> testGapSize [
+
 	| layout var1st var2nd |
 	layout := RSAngleLineLayout new gapSize: 100.
 	layout on: shapes.
@@ -27,20 +27,8 @@ RSAngleTest >> testGapSize
 ]
 
 { #category : #tests }
-RSAngleTest >> testLayoutwith90Angle
-[
-	| layout |
-	layout := RSAngleLineLayout new.
-	layout on: #(  ).
-	shapes := shapes first: 2.
-	layout on: shapes.
-	self assert: shapes first position closeTo: 2.5 @ 2.5.
-	self assert: shapes second position closeTo: 2.5 @ 7.5
-]
+RSAngleLineLayoutTest >> testLayoutWith0Angle [
 
-{ #category : #tests }
-RSAngleTest >>testLayoutWith0Angle
-[
 	| layout x |
 	layout := RSAngleLineLayout new angle: 0.
 	layout on: shapes.
@@ -51,8 +39,8 @@ RSAngleTest >>testLayoutWith0Angle
 ]
 
 { #category : #tests }
-RSAngleTest >> testLayoutWith90Angle
-[
+RSAngleLineLayoutTest >> testLayoutWith90Angle [
+
 	| layout y |
 	layout := RSAngleLineLayout new.
 	layout on: shapes.
@@ -63,8 +51,8 @@ RSAngleTest >> testLayoutWith90Angle
 ]
 
 { #category : #tests }
-RSAngleTest >>testLayoutWithThreeElements
-[
+RSAngleLineLayoutTest >> testLayoutWithThreeElements [
+
 	| layout y |
 	layout := RSAngleLineLayout new.
 	layout on: #(  ).
@@ -73,4 +61,16 @@ RSAngleTest >>testLayoutWithThreeElements
 	shapes do: [ :each | 
 		self assert: each position closeTo: 2.5 @ y.
 		y := y + layout gapSize ]
-		]
+]
+
+{ #category : #tests }
+RSAngleLineLayoutTest >> testLayoutwith90Angle [
+
+	| layout |
+	layout := RSAngleLineLayout new.
+	layout on: #(  ).
+	shapes := shapes first: 2.
+	layout on: shapes.
+	self assert: shapes first position closeTo: 2.5 @ 2.5.
+	self assert: shapes second position closeTo: 2.5 @ 7.5
+]
