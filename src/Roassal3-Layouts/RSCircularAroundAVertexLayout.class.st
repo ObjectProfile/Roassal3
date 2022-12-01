@@ -23,3 +23,16 @@ RSCircularAroundAVertexLayout >> doExecute: shapes [
 	centerShape position: rad@rad.
 	
 ]
+
+{ #category : #utilities }
+RSCircularAroundAVertexLayout >> findCenterIn: aCollection [ 
+	| max currentSize center |
+	max := 0.
+	center := nil.
+	aCollection do: [ :each | 
+		currentSize := each connectedLines size.
+		currentSize > max ifTrue: [ 
+			max := currentSize.
+			center := each ] ].
+	^ center
+]
