@@ -339,7 +339,7 @@ RSLabel >> normal [
 
 { #category : #private }
 RSLabel >> privateFontName [
-	^ font realFont isTTCFont
+	^ font isTTCFont
 		ifTrue: [ font familyName ] 
 		ifFalse: [ self class familyFontName ]
 	
