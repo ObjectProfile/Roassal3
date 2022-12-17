@@ -24,7 +24,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	RSNormalizer color
 		shapes: classes;
 		normalize: #numberOfMethods.
-	RSClusterLayout on: classes.
+	RSClusterTreeLayout on: classes.
 	RSMultiBezierEdgeBuilder multiBezier
 		borderColor: (Color blue alpha: 0.3);
 		canvas: c;

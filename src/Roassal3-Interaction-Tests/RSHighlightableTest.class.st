@@ -58,7 +58,7 @@ RSHighlightableTest >> testWithEdges [
 		connectFrom: [ :n | n // 2 ].
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	
 	interaction := RSHighlightable red.
 	interaction withLines.
@@ -96,7 +96,7 @@ RSHighlightableTest >> testWithEdges2 [
 		connectFrom: [ :n | n // 2 ].
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	
 	interaction := RSHighlightable withLines.
 	shapes @ interaction.
