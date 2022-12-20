@@ -102,6 +102,6 @@ RSClusteringLayoutTest >> testCycles [
 			$b -> $c.
 			$c -> $d.
 			$d -> $a}. "cycle"
-	self should: [RSClusterLayout on: shapes] raise: Error.
+	self should: [RSClusterTreeLayout on: shapes] raise: Error.
 	
 ]

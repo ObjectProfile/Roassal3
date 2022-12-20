@@ -87,7 +87,7 @@ RSInspectableExample >> example02Inspect [
 				canvas: canvas;
 				connectFrom: #superclass.
 			canvas nodes do: #updateLinesOFF.
-			RSClusterLayout on: canvas nodes.
+			RSClusterTreeLayout on: canvas nodes.
 			canvas nodes do: #updateLinesON.
 			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
 		 ]}.

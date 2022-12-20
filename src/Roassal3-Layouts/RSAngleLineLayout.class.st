@@ -1,3 +1,6 @@
+"
+This layout uses an angle to put the elements in a line
+"
 Class {
 	#name : #RSAngleLineLayout,
 	#superclass : #RSAbstractLineLayout,
@@ -12,20 +15,28 @@ RSAngleLineLayout >> angle [
 	^ angle
 ]
 
+{ #category : #accessing }
+RSAngleLineLayout >> angle: anAngleInDegrees [ 
+	angle := anAngleInDegrees
+]
+
 { #category : #hook }
 RSAngleLineLayout >> defaultAngle [
 	^ 90.
 ]
 
-{ #category : #overrides }
+{ #category : #hook }
 RSAngleLineLayout >> doExecute: elements [
-	| pointer |
-	pointer := self positionOriginalPointer.
-	elements doWithIndex: [ :element :index | 
-		translator translateTopLeftOf: element to: pointer.
-		pointer := pointer setR: index degrees: self angle 
-]
-
+	| originalCenter radius gap ang |
+	originalCenter := self positionOriginalPointer.
+	radius := 0.
+	gap := self gapSize.
+	ang := self angle degreesToRadians.
+	elements do: [ :element | 
+		| point |
+		point := ang cos @ ang sin * radius.
+		translator translateTopLeftOf: element to: originalCenter + point.
+		radius := radius + gap ]
 ]
 
 { #category : #initialization }

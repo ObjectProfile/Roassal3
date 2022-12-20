@@ -455,8 +455,8 @@ RSLayoutExamples >> example17ForceBasedLayout [
 ]
 
 { #category : #layouts }
-RSLayoutExamples >> example18Cluster [
-	<script: 'self new example18Cluster open'>
+RSLayoutExamples >> example18ClusterTree [
+	<script: 'self new example18ClusterTree open'>
 	| canvas shapes |
 	canvas := RSCanvas new.
 	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
@@ -488,7 +488,7 @@ RSLayoutExamples >> example18Cluster [
 			to: Color red;
 			shapes: shapes;
 			normalize: #numberOfMethods.
-		RSClusterLayout on: shapes.
+		RSClusterTreeLayout on: shapes.
 		RSComposite new
 			color: Color veryLightGray translucent;
 			model: scale;

@@ -57,28 +57,6 @@ RSObjectWithProperty >> canvas [
 	^ self subclassResponsibility
 ]
 
-{ #category : #events }
-RSObjectWithProperty >> click [
-	"Simulate a click. 
-	
-For example:
--=-=-=-=-=-=-=-=-=
-c := RSCanvas new.
-box := RSBox new size: 40.
-box when: RSMouseClick do: [ :evt | self inform: 'hello' ].
-c add: box.
-
-box click.
-
-c
--=-=-=-=-=-=-=-=-=
-"
-	self announce: (RSMouseClick new 
-		canvas: self canvas;
-		shape: self; 
-		yourself).
-]
-
 { #category : #properties }
 RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]

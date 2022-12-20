@@ -22,7 +22,7 @@ RSLayoutBuilder >> circle [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> cluster [
-	^ layout := RSClusterLayout new.
+	^ layout := RSClusterTreeLayout new.
 ]
 
 { #category : #'public - layout' }

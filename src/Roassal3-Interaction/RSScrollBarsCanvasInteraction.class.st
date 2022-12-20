@@ -143,7 +143,7 @@ RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 
 { #category : #rendering }
 RSScrollBarsCanvasInteraction >> renderLegendOn: lb [ 
-	lb text: '' description: 'Use scrool bars to navigate'
+	lb text: '' description: 'Use scroll bars to navigate'
 ]
 
 { #category : #accessing }

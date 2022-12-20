@@ -30,7 +30,7 @@ RSHighlightableExamples >> example01Basic [
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
 	canvas shapes @ RSHighlightable red.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
 ]
@@ -60,7 +60,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	canvas edges do: #withBorder.
 	canvas edges @ RSHighlightable red.
 	canvas nodes @ interaction.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
 ]
@@ -86,7 +86,7 @@ RSHighlightableExamples >> example03Interactive [
 		connectFrom: [ :n | n // 2 ].
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	
 	interaction := RSHighlightable red.
 	interaction withLines.
@@ -119,7 +119,7 @@ RSHighlightableExamples >> example04Interactive [
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	
 	interaction := RSHighlightable red.
 	bool := true.
@@ -156,7 +156,7 @@ RSHighlightableExamples >> example05Border [
 	interaction highlightBorder: (RSBorder new width: 2).
 	canvas addAll: shapes.
 	canvas nodes @ interaction.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
 ]
@@ -373,7 +373,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 	canvas addAll: shapes.
 
 	canvas nodes @ interaction.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas
 ]
@@ -398,7 +398,7 @@ RSHighlightableExamples >> example10ElasticBox [
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	high := RSHighlightable red.
 	elastic := RSElasticBoxInteraction new.
 	elastic
@@ -431,7 +431,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 		canvas: canvas;
 		connectFrom: [ :n | n // 2 ].
 	canvas addAll: shapes.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	high := RSHighlightable red.
 	selectedShapes := #().
 	elastic := RSElasticBoxInteraction new.
@@ -492,7 +492,7 @@ RSHighlightableExamples >> example12ShowingEdges [
 			controlPointsController: cpController
 			yourself	).
 	canvas nodes @ interaction.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas 
 ]
@@ -539,7 +539,7 @@ RSHighlightableExamples >> example13Click [
 			evt signalUpdate ].
 	interaction2 := RSHighlightable red withLines.
 	canvas nodes @ interaction2.
-	RSClusterLayout on: shapes.
+	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas 
 ]
