@@ -38,7 +38,7 @@ RSSelfLoopCPController class >> example [
 			line color: Color black.
 			canvas add: line ]
 	].
-	RSTreeLayout on: canvas nodes.
+	(Smalltalk globals at: #RSTreeLayout) on: canvas nodes.
 	canvas zoomToFit.
 	canvas open.
 ]
