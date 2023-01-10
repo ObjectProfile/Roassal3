@@ -6,6 +6,16 @@ Trait {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #accessing }
+RSTPositionable >> position [
+	^ self explicitRequirement
+]
+
+{ #category : #accessing }
+RSTPositionable >> position: aPoint [
+	self explicitRequirement
+]
+
 { #category : #actions }
 RSTPositionable >> translateBy: deltaAsPoint [
 	"Move a shape by a delta value, expressed as a point"
