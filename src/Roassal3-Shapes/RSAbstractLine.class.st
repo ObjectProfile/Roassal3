@@ -290,6 +290,11 @@ RSAbstractLine >> position [
 	^ self encompassingRectangle floatCenter
 ]
 
+{ #category : #accessing }
+RSAbstractLine >> position: aPoint [
+	self subclassResponsibility
+]
+
 { #category : #'accessing - markers' }
 RSAbstractLine >> privateMarkers [
 	^ markers

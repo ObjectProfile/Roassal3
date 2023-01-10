@@ -104,6 +104,14 @@ RSAbstractControlPointsLine >> isControlPointsLine [
 ]
 
 { #category : #accessing }
+RSAbstractControlPointsLine >> position: aPoint [
+	| position delta |
+	position := self position.
+	delta := aPoint - position.
+	self controlPoints: controlPoints + delta
+]
+
+{ #category : #accessing }
 RSAbstractControlPointsLine >> startPoint [
 	^ self controlPoints first
 ]

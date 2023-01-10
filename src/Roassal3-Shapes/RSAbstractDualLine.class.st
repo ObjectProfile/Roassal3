@@ -54,6 +54,17 @@ RSAbstractDualLine >> position [
 ]
 
 { #category : #accessing }
+RSAbstractDualLine >> position: aPoint [
+	| position delta |
+	position := self position.
+	delta := aPoint - position.
+	self
+		startPoint: startPoint + delta;
+		endPoint: endPoint  + delta;
+		resetPath
+]
+
+{ #category : #accessing }
 RSAbstractDualLine >> startPoint [ 
 	^ startPoint
 ]
@@ -62,21 +73,6 @@ RSAbstractDualLine >> startPoint [
 RSAbstractDualLine >> startPoint: point [
 	startPoint := point.
 	self resetPath
-]
-
-{ #category : #transforming }
-RSAbstractDualLine >> translateBy: delta [
-	self
-		startPoint: startPoint + delta;
-		endPoint: endPoint + delta.
-	self resetPath
-]
-
-{ #category : #transforming }
-RSAbstractDualLine >> translateTo: delta [
-	| center |
-	center := (startPoint + endPoint ) /2.
-	self translateBy: delta - center
 ]
 
 { #category : #update }
