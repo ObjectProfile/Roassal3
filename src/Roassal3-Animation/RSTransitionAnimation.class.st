@@ -123,15 +123,12 @@ RSTransitionAnimation >> onStepDo: aBlockClosure with: anObject [
 ]
 
 { #category : #'accessing - computed' }
-RSTransitionAnimation >> progress [ 
+RSTransitionAnimation >> progress [
 	| progress |
 	self startStep.
 	progress := (self currentTime - pauseTime - startLoopTime)/ duration asFloat.
-	progress > 1 ifTrue: [ 
-		self loopDone.
-		progress := 1.
-		 ].
-	
+	progress := progress min: 1.
+
 	^ progress
 ]
 
@@ -175,13 +172,12 @@ RSTransitionAnimation >> scale: aScale [
 ]
 
 { #category : #refreshing }
-RSTransitionAnimation >> step [ 
+RSTransitionAnimation >> step [
 	| value |
 	value := self progressValue: self progress.
 	stepAction cull: value.
+	value == 1 ifTrue: [self loopDone].
 	self updateHasCompleted
-	
-	
 ]
 
 { #category : #accessing }
