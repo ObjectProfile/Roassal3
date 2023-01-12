@@ -715,13 +715,15 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 	<noTest>
 	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps open'>
 	| icerepo commits edges dict aCanvas |
-	icerepo := IceRepository repositoryNamed: 'Roassal3'.
+	icerepo := IceRepository repositories
+		detect: [ :each | each name = 'Roassal3' ]
+		ifNone: [ nil ].
 
 	dict := Dictionary new.
 	"if you remove <noTest> you will break ci in githubactions"
 	"for some reasong icerepo allBranches fails in ci"
-	icerepo allBranches do: [ :aBranch | 
-		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit | 
+	icerepo allBranches do: [ :aBranch |
+		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit |
 			| circle |
 			circle := RSCircle new
 				          model: aCommit id asSymbol;
@@ -730,8 +732,8 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 							           sqrt;"
 				          color: Color white;
 				          draggable;
-				          addInteraction: (RSPopup new text: [ 
-							           String streamContents: [ :aStream | 
+				          addInteraction: (RSPopup new text: [
+							           String streamContents: [ :aStream |
 									           aStream
 										           nextPutAll: aCommit comment;
 										           cr;
@@ -756,25 +758,25 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 	edges := RSLineBuilder verticalBezier
 		         shapes: commits;
 		         withVerticalAttachPoint;
-		         connectToAll: [ :aCommitId | 
+		         connectToAll: [ :aCommitId |
 			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
 
-	edges sort: [ :a :b | 
+	edges sort: [ :a :b |
 		| aTime bTime |
 		aTime := (a to propertyAt: #gitCommit) datetime.
 		bTime := (b to propertyAt: #gitCommit) datetime.
 		aTime > bTime
 			ifTrue: [ true ]
-			ifFalse: [ 
+			ifFalse: [
 				aTime = bTime
-					ifTrue: [ 
+					ifTrue: [
 						(a from propertyAt: #gitCommit) datetime
 						> (b from propertyAt: #gitCommit) datetime ]
 					ifFalse: [ false ] ] ].
 
 	RSVanDerPloegTreeLayout new
 		doNotValidateCycles;
-		verticalGap: [ :parent :child :default | 
+		verticalGap: [ :parent :child :default |
 			| duration goldenRatio |
 			goldenRatio := 1.61803398875.
 			duration := (parent propertyAt: #gitCommit) datetime
@@ -788,12 +790,12 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 		           addAll: commits , edges;
 		           yourself.
 
-	edges do: [ :each | 
+	edges do: [ :each |
 		self assert: each to encompassingRectangle top
 			>= each from encompassingRectangle bottom.
 
 		(each to propertyAt: #vdpLevel) - (each from propertyAt: #vdpLevel)
-		> 1 ifTrue: [ 
+		> 1 ifTrue: [
 			each
 				dashArray: #( 4 );
 				color: each color translucent;
