@@ -173,10 +173,11 @@ RSTransitionAnimation >> scale: aScale [
 
 { #category : #refreshing }
 RSTransitionAnimation >> step [
-	| value |
-	value := self progressValue: self progress.
+	| value progress |
+	progress := self progress.
+	value := self progressValue: progress.
 	stepAction cull: value.
-	value == 1 ifTrue: [self loopDone].
+	progress == 1 ifTrue: [self loopDone].
 	self updateHasCompleted
 ]
 
