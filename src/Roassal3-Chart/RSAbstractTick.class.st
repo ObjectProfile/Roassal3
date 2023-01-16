@@ -148,15 +148,19 @@ c
 
 { #category : #public }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
+	| size |
+	size := aCollectionOfStrings size - 1.
+	self assert: size >= 0 description: 'aCollectionOfStrings can not be empty'.
+	size isZero ifTrue: [ size := 1 ].
+
 	self
 		doNotUseNiceLabel;
-		numberOfTicks: aCollectionOfStrings size-1.
-	
-	self labelConversion: [ :x | 
-		x isZero 
+		numberOfTicks: size.
+
+	self labelConversion: [ :x |
+		x isZero
 			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x asInteger ] ].
-		
+			ifFalse: [aCollectionOfStrings at: x asInteger ] ]
 ]
 
 { #category : #public }

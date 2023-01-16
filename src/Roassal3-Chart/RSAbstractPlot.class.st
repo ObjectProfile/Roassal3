@@ -137,9 +137,9 @@ RSAbstractPlot >> scalePoint: aPoint [
 ]
 
 { #category : #public }
-RSAbstractPlot >> x: aCollection y: aCollection2 [ 
+RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
-	
+
 	For example:
 ```
 x := (-3.14 to: 3.14 by: 0.01).
@@ -156,13 +156,13 @@ c addPlot: p.
 c addDecoration: RSHorizontalTick new.
 c addDecoration: RSVerticalTick new asFloat.
 c addDecoration: RSYMarkerDecoration new.
-c 
+c
 ```
 	"
 	self assert: [ aCollection isCollection ] description: 'Should be a collection'.
 	self assert: [ aCollection2 isCollection ] description: 'Should be a collection'.
 	self assert: [ aCollection size = aCollection2 size ] description: 'The two collections must have the same size'.
- 	
+
 	xValues := aCollection.
 	yValues := aCollection2
 ]

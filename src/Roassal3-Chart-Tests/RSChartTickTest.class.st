@@ -47,3 +47,35 @@ RSChartTickTest >> testFromNames [
 	c build.
 	self assert: horizontal labels size equals: dates size.
 ]
+
+{ #category : #tests }
+RSChartTickTest >> testFromNamesWithEmptyData [
+	| dates x y chart |
+	dates := {}.
+	x := {}.
+	y := {}.
+	chart := RSChart new.
+	chart add: (RSHorizontalBarPlot new
+		x: y y: x;
+		yourself).
+	self should: [ chart add: (RSHorizontalTick new
+		fromNames: dates;
+		yourself) ] raise: Error
+]
+
+{ #category : #tests }
+RSChartTickTest >> testFromNamesWithOneData [
+	| names indices values chart |
+	names := { 'Simple'.}.
+	indices := { 1 }.
+	values := {100}.
+
+	chart := RSChart new.
+	chart add: (RSHorizontalBarPlot new
+		x: indices y: values;
+		yourself).
+	chart add: (RSHorizontalTick new
+		fromNames: names;
+		yourself).
+	chart build
+]
