@@ -88,14 +88,14 @@ RSRNode >> asRSCanvasForQueries [
 	| canvas box point log zet |
 	canvas := self newCanvas.
 	zet := self. "arc warden"
-	canvas addAll: (zet select: [:value | 
+	canvas addAll: (zet collect: [:value |
 		RSBox new
 			fromRectangle: (self bbox: value);
 			color: Color black;
 			yourself
 		]).
-	box := RSBox new 
-		extent: canvas shapes extent * 0.1;
+	box := RSBox new
+		extent: 100@100;
 		color: ((Color colorFrom: '#3399FF') alpha: 0.2);
 		border: (RSBorder new color: Color black);
 		yourself.
@@ -104,8 +104,8 @@ RSRNode >> asRSCanvasForQueries [
 	point color: Color red.
 	log := RSComposite new.
 	log isFixed: true.
-	log when: RSExtentChangedEvent do: [ :evt | 
-		RSLocation new inner bottom; top; left; offset: 10@10; 
+	log when: RSExtentChangedEvent do: [ :evt |
+		RSLocation new inner bottom; top; left; offset: 10@10;
 		move: log on: (0@0 corner: canvas extent) ].
 	canvas addAll: {box. point. log}.
 	canvas when: RSMouseMove do: [ :evt |
