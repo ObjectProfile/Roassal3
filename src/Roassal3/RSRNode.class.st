@@ -128,6 +128,14 @@ RSRNode >> childrenDo: aBlock [
 	right ifNotNil: aBlock
 ]
 
+{ #category : #enumerating }
+RSRNode >> collect: aFullBlockClosure [
+	| list |
+	list := OrderedCollection new.
+	self do: [ :each | list add: each ].
+	^ list
+]
+
 { #category : #public }
 RSRNode >> computeHeight [
 	height := self isLeaf

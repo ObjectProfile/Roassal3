@@ -32,7 +32,7 @@ RSShapeExamples >> example03LinePath [
 			s space. ].
 		vector := a - b.
 		u := vector normal.
-		unit := vector / vector r.
+		unit := vector / (vector r max: 1).
 	
 		1 to: 3 do: [ :i |
 			middle := a - (unit * (i+1)* 5).

@@ -114,3 +114,27 @@ RSHighlightableTest >> testWithEdges2 [
 
 	
 ]
+
+{ #category : #tests }
+RSHighlightableTest >> testWithOutgoingLines [
+	| h c shapes |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+	RSLineBuilder line
+		canvas: c;
+		connectFrom: [ :n | n // 2 ].
+	h := RSHighlightable new.
+	h withOutgoingLines.
+	c nodes @ h.
+	shapes := h highlightShapesFor: c nodes first.
+	self assert: shapes size equals: 2+2."the lines and the outgoing nodes"
+	h withOutgoingLinesOnly.
+	shapes := h highlightShapesFor: c nodes first.
+	self assert: shapes size equals: 2.
+	self assert: (shapes allSatisfy: [ :s | s isLine ]).
+	
+	h withOutgoingShapes.
+	shapes := h highlightShapesFor: c nodes first.
+	self assert: shapes size equals: 2.
+	self assert: (shapes allSatisfy: [ :s | s isNode ]).
+]

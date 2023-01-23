@@ -6,11 +6,20 @@ Trait {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #accessing }
+RSTPositionable >> position [
+	^ self explicitRequirement
+]
+
+{ #category : #accessing }
+RSTPositionable >> position: aPoint [
+	self explicitRequirement
+]
+
 { #category : #actions }
 RSTPositionable >> translateBy: deltaAsPoint [
 	"Move a shape by a delta value, expressed as a point"
 	self translateTo: self position + deltaAsPoint
-	
 ]
 
 { #category : #actions }
@@ -20,9 +29,8 @@ RSTPositionable >> translateTo: aPoint [
 	oldPosition := self position.
 	oldPosition = aPoint ifTrue: [ ^ self ].
 	self position: aPoint.
-	self announce: [RSPositionChangedEvent new 
-		shape: self; 
+	self announce: [RSPositionChangedEvent new
+		shape: self;
 		oldPosition: oldPosition;
-		newPosition: aPoint ].
-
+		newPosition: aPoint ]
 ]

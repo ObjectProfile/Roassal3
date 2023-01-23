@@ -259,11 +259,10 @@ RSChart >> minValueX: aNumber [
 
 { #category : #'accessing - extension' }
 RSChart >> minValueY [
-	^ self chartExtents minValueY
-		ifNil: [ | res |
-			self chartExtents minValueY: (res := (self plots collect: #minValueY) min).
-			res ]
-		ifNotNil: [:res | res ].
+	^ self chartExtents minValueY ifNil: [ | res |
+		self chartExtents minValueY: (res := (self plots collect: #minValueY) min).
+		res ]
+		ifNotNil: [:res | res ]
 ]
 
 { #category : #'accessing - extension' }

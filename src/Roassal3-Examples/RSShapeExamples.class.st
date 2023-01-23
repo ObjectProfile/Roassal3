@@ -720,21 +720,21 @@ RSShapeExamples >> example29AntAnimation [
 { #category : #shapes }
 RSShapeExamples >> example30EdgesToChildren [
 	<script: 'self new example30EdgesToChildren open'>
-	
-	| canvas color shape parent1 parent2 edge |
+
+	| canvas color shape parent1 parent2 line |
 	canvas := RSCanvas new.
 	color := NSScale category20b.
 
-	shape := [ :model | 
+	shape := [ :model |
 		RSComposite new
 			color: (color scale: model);
-			shapes: { 
+			shapes: {
 				RSEllipse new
 					color: (color scale: model + 2);
 					size: 20;
 					yourself };
 			draggable;
-			padding: (Margin 
+			padding: (Margin
 				left: 100
 				right: 10
 				top: 100
@@ -742,8 +742,8 @@ RSShapeExamples >> example30EdgesToChildren [
 			yourself. ].
 	parent1 := shape value: 1.
 	parent2 := shape value: 2.
-	parent1 translateTo: 100@100.
-	edge := RSLine new
+	parent2 translateTo: 100@100.
+	line := RSLine new
 		width: 2;
 		color: Color red;
 		from: parent1 shapes first;
@@ -758,8 +758,8 @@ RSShapeExamples >> example30EdgesToChildren [
 			parent1 matrix
 				loadIdentity;
 				rotateByDegrees: t.
-			parent1 translateTo: p].
-	canvas add: parent1; add: parent2; add: edge.
+			parent1 position: p ].
+	canvas add: parent1; add: parent2; add: line.
 	^ canvas
 ]
 
