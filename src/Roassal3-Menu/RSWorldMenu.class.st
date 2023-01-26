@@ -50,6 +50,9 @@ RSWorldMenu class >> loadFullStableVersion [
 
 { #category : #loading }
 RSWorldMenu class >> loadFullVersion [
+	"TODO do not discard changes"
+	(UIManager default confirm: 'Do you want to load the last version of Roassal3? Note: this will discard changes')
+		ifFalse: [ ^ self ].
 	[Metacello new
 		baseline: 'Roassal3';
 		repository: 'github://ObjectProfile/Roassal3';
