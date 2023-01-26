@@ -23,9 +23,7 @@ SpMorphicRoassalAdapter >> adapt: aComposableModel [
 	canvas := widget roassalCanvas.
 	self model currentCanvas ifNotNil: [ :aCanvas |
 		widget canvas: aCanvas.
-		aCanvas 
-			morph: widget;
-			extent: widget extent.
+		aCanvas morph: widget.
 		widget sessionChanged.
 		canvas := aCanvas.
 		 ].
@@ -34,6 +32,7 @@ SpMorphicRoassalAdapter >> adapt: aComposableModel [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	self basicApplyScript.
+	canvas notifyExtentChanged: widget extent
 ]
 
 { #category : #'scripting actions' }
@@ -42,16 +41,16 @@ SpMorphicRoassalAdapter >> applyScript [
 	extent := canvas extent.
 	self freeCanvas.
 	self basicApplyScript.
-	canvas extent: extent.
-	
+	canvas notifyExtentChanged: extent
 ]
 
 { #category : #'scripting actions' }
 SpMorphicRoassalAdapter >> basicApplyScript [
-	self model script value: canvas.
-	self model canvas: canvas.
-	self widgetDo: #startStepping.
-
+	| aModel |
+	aModel := self model.
+	aModel script value: canvas.
+	aModel canvas: canvas.
+	self widgetDo: #startStepping
 ]
 
 { #category : #factory }

@@ -80,6 +80,12 @@ RSGroup >> asGroup [
 	^ self
 ]
 
+{ #category : #accessing }
+RSGroup >> canvas [
+	self ifEmpty: [ ^ nil ].
+	^ self anyOne canvas
+]
+
 { #category : #'public - forwarding' }
 RSGroup >> color: aColor [
 	"Give the same color to all the shapes"
