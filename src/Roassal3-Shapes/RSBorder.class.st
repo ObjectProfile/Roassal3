@@ -166,11 +166,6 @@ c
 	self pStyle dashOffset: offset
 ]
 
-{ #category : #configuration }
-RSBorder >> doNotUseCache [
-	self useCache: false
-]
-
 { #category : #comparing }
 RSBorder >> hash [
 	^ (width hash hashMultiply + paint hash) hashMultiply + style hash

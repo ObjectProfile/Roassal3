@@ -553,14 +553,14 @@ RSLayoutExamples >> example20FlowLayout [
 			to: p + d;
 			on: s set: #position:].
 	high := RSHighlightable new.
-	high 
-		when: RSHighlightEvent do: [ :evt | 
+	high
+		when: RSHighlightEvent do: [ :evt |
 			evt shape color: Color blue; underline.
 			menuAnimation value: evt shape value: -5@0 ];
 		when: RSUnHighlightEvent do: [ :evt |
 			evt shape color: Color gray; normal.
 			menuAnimation value: evt shape value: 0 ].
-		
+
 	newLabel := [ :s |
 		canvas add: (RSLabel new
 			text: s;
@@ -581,7 +581,7 @@ RSLayoutExamples >> example20FlowLayout [
 	'VerticalLeft'. RSVerticalLineLayout new.
 	'VerticalCenter'. RSVerticalLineLayout new alignCenter.
 	'VerticalRight'. RSVerticalLineLayout new alignRight.
-	} pairsDo: [:s :layout | 
+	} pairsDo: [:s :layout |
 		(newLabel value: s)
 			when: RSMouseClick do: [ :evt |
 				| last current |
@@ -590,14 +590,14 @@ RSLayoutExamples >> example20FlowLayout [
 				current := labels collect: #position.
 				canvas newAnimation
 					duration: 1 second;
-					onStepDo:[:t | 
+					onStepDo:[:t |
 						labels doWithIndex: [ :l :i |
 							l translateTo: ((last at: i) interpolateTo: (current at: i) at: t) ].
 						canvas zoomToFit.
 						].
 				 ]
 		].
-	{'Show/Hide Boxes'. [ canvas showRectangles
+	{'Show/Hide Boxes'. [ canvas shouldShowRectangles
 		ifTrue: [ canvas hideEncompassingRectangles ]
 		ifFalse: [ canvas showEncompassingRectangles ]  ].
 	'Show/Hide Underlines'. [ labels first isUnderlined

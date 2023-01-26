@@ -8,9 +8,10 @@ Trait {
 
 { #category : #positioning }
 RSTWalkBasedRegularTreeLayoutRandomizedPositioning >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
-
+	| goldenRatio |
+	goldenRatio := 1.618033988749894848.
 	^ (self rawPositionOfShape: aShape atDepth: depth atBreadth: breadth)
-	  + (self random next asPoint * Float goldenRatio)
+	  + (self random next asPoint * goldenRatio)
 ]
 
 { #category : #accessing }

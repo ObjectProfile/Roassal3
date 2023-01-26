@@ -18,7 +18,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	c := RSCanvas new.
 	c aaNone.
 	b2 := nil.
-	1 to: (2 raisedTo: 17) do: [ :i | 
+	1 to: (2 raisedTo: 17) do: [ :i |
 		b1 := b2.
 		b2 := RSBox new.
 		b2 model: i.
@@ -26,7 +26,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	c renderCollection: RSSequenceableCollection new.
+	"c renderCollection: RSSequenceableCollection new."
 	c @ RSDraggableCanvasInteraction new.
 	c nodes @ RSPopup.
 	c nodes @ RSHighlightable red.
@@ -42,7 +42,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	c := RSCanvas new.
 	c aaNone.
 	b2 := nil.
-	1 to: (2 raisedTo: 19) do: [ :i | 
+	1 to: (2 raisedTo: 19) do: [ :i |
 		b1 := b2.
 		b2 := RSBox new.
 		b2 model: i.
@@ -50,7 +50,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	c renderCollection: RSBulkLoadRTreeCollection new.
+	"c renderCollection: RSBulkLoadRTreeCollection new."
 	"c @ RSDraggableCanvasInteraction new."
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.

@@ -32,7 +32,7 @@ RSEasel class >> defaultLayout [
 { #category : #specs }
 RSEasel class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #initialization }
