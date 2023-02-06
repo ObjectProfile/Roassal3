@@ -1,5 +1,41 @@
 "
-TODO
+`RSLayout` is an abstract class which represents a layout made to set the position of a group of shapes.
+
+Layouts perform once on a group of shapes, if you want to apply a relayout, you have to call again the layout.
+You can use the layout creating a new instance of it.
+```st
+layout := RSGridLayout new.
+layout on: shapes.
+```
+Or using the class method `RSLayout class >> #on:`
+
+```st
+RSGridLayout on: shapes
+```
+My instance variable is
+- translator, an `RSLayoutTranslator` to set the position based on the bounding box of each shape.
+
+I collaborate with
+- `RSBoundingShape` to get the shape position.
+- `RSAbstractLine` to get the relation between two bounding shapes.
+
+I provide the following methods.
+
+- `RSLayout >> #on:`, a shortcut to call `applyOn:`
+- `RSLayout >> #on:edges:`, similar to on, but using custom links/edges/lines.
+- `RSLayout >> #userDefinedEdges:`, to set the nodes links/edges/lines for the layout.
+- `RSLayout >> #applyOn:`, a shortcut to call `executeOnElements:`
+- `RSLayout >> #executeOnElements:`, to initialize and call the execution of the layout
+- `RSLayout >> #doInitialize:`, override this method to initialize the layout with a group of shapes.
+- `RSLayout >> #doExecute:`, override this method and set the position of each element here.
+- `RSLayout >> #doPost:`, orerride this method to finalize the the layout process.
+
+### Examples
+
+Layouts have some examples on class side. Here there are some examples
+- `RSLayout class >> #example1`
+- `RSLayout class >> #example2`
+- `RSLayout class >> #example3`
 "
 Class {
 	#name : #RSLayout,
@@ -10,20 +46,55 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #public }
+{ #category : #examples }
+RSLayout class >> canvasExample [
+	| canvas shapes |
+	canvas := RSCanvas new.
+	shapes := RSBox models: Collection withAllSubclasses.
+	canvas addAll: shapes.
+	shapes @ RSPopup.
+	RSLineBuilder line
+		shapes: shapes;
+		connectFrom: #superclass.
+	RSNormalizer size
+		shapes: shapes;
+		normalize: #linesOfCode.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #examples }
+RSLayout class >> example1 [
+	RSGridLayout exampleBasic
+]
+
+{ #category : #examples }
+RSLayout class >> example2 [
+	RSTreeLayout exampleBasic
+]
+
+{ #category : #examples }
+RSLayout class >> example3 [
+	RSVerticalLineLayout exampleBasic
+]
+
+{ #category : #examples }
+RSLayout class >> exampleBasic [
+	| canvas |
+	canvas := self canvasExample.
+	self on: canvas nodes.
+	canvas open
+]
+
+{ #category : #testing }
 RSLayout class >> isAbstract [
 	^ self name = #RSLayout
 ]
 
 { #category : #public }
-RSLayout class >> isNotAbstract [
-	^ self isAbstract not
-]
-
-{ #category : #public }
 RSLayout class >> on: aCollection [
 	"main entry point of the class"
-	
+
 	"If aCollection is empty, then there is not much to do"
 	aCollection isEmpty ifTrue: [ ^ aCollection ].
 	self new applyOn: aCollection.
@@ -33,20 +104,8 @@ RSLayout class >> on: aCollection [
 { #category : #public }
 RSLayout class >> on: elements edges: edges [
 	"To make all the layout polymorphic"
-	
-	^ self on: elements 
-]
 
-{ #category : #public }
-RSLayout class >> onElement: aRoassalViewOrRoassalElement [
-
-	^ self on: aRoassalViewOrRoassalElement elements
-]
-
-{ #category : #public }
-RSLayout class >> onView: aRoassalView [
-
-	^ self on: aRoassalView elements
+	^ self on: elements
 ]
 
 { #category : #hook }
@@ -72,27 +131,15 @@ RSLayout >> doInitialize: elements [
 { #category : #hook }
 RSLayout >> doPost: elements [
 	"Method executed after performing the layout"
-
 ]
 
 { #category : #hook }
-RSLayout >> executeOnElements: elements [ 
+RSLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
-		
+
 	self doInitialize: elements.
 	self doExecute: elements asOrderedCollection.
-	self doPost: elements.
-
-]
-
-{ #category : #utilities }
-RSLayout >> fatherOf: aNode [
-	^ aNode propertyAt: #father
-]
-
-{ #category : #utilities }
-RSLayout >> fatherOf: aNode put: aValue [
-	aNode propertyAt: #father put: aValue
+	self doPost: elements
 ]
 
 { #category : #initialization }
@@ -106,38 +153,6 @@ RSLayout >> isEdgeDrivenLayout [
 	^ false
 ]
 
-{ #category : #utilities }
-RSLayout >> layerOf: aNode [
-	^ aNode propertyAt: #layout
-]
-
-{ #category : #utilities }
-RSLayout >> layerOf: aNode put: aValue [
-	aNode propertyAt: #layout put: aValue
-]
-
-{ #category : #utilities }
-RSLayout >> leftContourOf: aNode [
-	^ aNode propertyAt: #leftContour
-]
-
-{ #category : #utilities }
-RSLayout >> leftContourOf: aNode put: aValue [
-	aNode propertyAt: #leftContour put: aValue
-]
-
-{ #category : #utilities }
-RSLayout >> modOf: aNode [
-	^ aNode propertyAt: #mod ifAbsent: [ 0 ]
-
-]
-
-{ #category : #utilities }
-RSLayout >> modOf: aNode put: aFloat [
-	aNode propertyAt: #mod put: aFloat
-
-]
-
 { #category : #hook }
 RSLayout >> on: elements [
 	self applyOn: elements
@@ -148,49 +163,9 @@ RSLayout >> on: elements edges: edges [
 	self applyOn: elements
 ]
 
-{ #category : #utilities }
-RSLayout >> pointerOf: aNode [
-	^ aNode propertyAt: #pointer
-]
-
-{ #category : #utilities }
-RSLayout >> pointerOf: aNode put: aValue [
-	^ aNode propertyAt: #pointer put: aValue
-]
-
-{ #category : #utilities }
-RSLayout >> rOf: aNode [ 
-	^ aNode propertyAt: #r ifAbsent: [ 0 ]
-	
-]
-
-{ #category : #utilities }
-RSLayout >> rOf: aNode put: aValue [
-	^ aNode propertyAt: #r put: aValue
-]
-
-{ #category : #utilities }
-RSLayout >> rightContourOf: aNode [
-	^ aNode propertyAt: #rightContour
-]
-
-{ #category : #utilities }
-RSLayout >> rightContourOf: aNode put: aValue [
-	aNode propertyAt: #rightContour put: aValue
-]
-
-{ #category : #events }
+{ #category : #hook }
 RSLayout >> step [
-]
-
-{ #category : #utilities }
-RSLayout >> thetaOf: aNode [
-	^ aNode propertyAt: #theta ifAbsent: [ ^ 0 ]
-]
-
-{ #category : #utilities }
-RSLayout >> thetaOf: aNode put: aValue [
-	^ aNode propertyAt: #theta put: aValue
+	"use this method for animations"
 ]
 
 { #category : #accessing }
@@ -206,14 +181,4 @@ RSLayout >> translator: aTranslator [
 { #category : #hook }
 RSLayout >> userDefinedEdges: edges [
 	"Do nothing"
-]
-
-{ #category : #utilities }
-RSLayout >> xOf: aNode [ 
-	^ aNode propertyAt: #x ifAbsent: [ 0 ]
-]
-
-{ #category : #utilities }
-RSLayout >> xOf: aNode put: aValue [
-	aNode propertyAt: #x put: aValue
 ]
