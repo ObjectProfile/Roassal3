@@ -4,10 +4,10 @@ I all some menus in 'Tools-Roassal3' for these examples
 Class {
 	#name : #RSSpecMenu,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples-Basic'
 }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #menu }
 RSSpecMenu class >> menu07PalettesOn: aBuilder [
 
 	<worldMenu>
@@ -20,7 +20,7 @@ RSSpecMenu class >> menu07PalettesOn: aBuilder [
 		action: [ RSColorPaletteChooser new open ]
 ]
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #menu }
 RSSpecMenu class >> menu12PalettesOn: aBuilder [
 
 	<worldMenu>

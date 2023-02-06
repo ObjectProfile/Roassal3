@@ -164,3 +164,7 @@ RSWorldMenu class >> roassalIcon [
 RSWorldMenu class >> roassalIconStream [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABMUlEQVQ4T2NkoBAwgvS/sAr5D6LNi6MZ/v39z/D3LwPD3z8MEPrvf4b3ycFgddgAwoD/DF8ljq/hkV217v/jsCC4BsG5a/+DDPuUjt0QDJPRDQDZyjdz7f9/fxkYvmRhGkKUASBDeKat/U/QAPm1ayX//WV8huwFmL8JGqC0cT3Yr8iB+DIWEhZEeQFkwD3/QEZYGIgvXvf/4vRlDJrJkeAYIRiIIAP+/f2//u8fhsC//xi+/f3NwAUyAAQkjq3BH40wf8qvBRsCjv9nkUGML6zDKjWTwtsIpgPkBIItHVBuAO9fdoawsF8wi17ahAb+//d/HchrRKUDUCwgByIs6WMY8NIq5Pd/BgYW9ECDRSMkf0DzSkkI2HIUFyCbjC3jcE5e++R7brAMshzO6CE2lwMAVKG/Eb0e33UAAAAASUVORK5CYII='
 ]
+
+{ #category : #'see class side' }
+RSWorldMenu >> seeClassSide [
+]

@@ -15,7 +15,7 @@ Class {
 		'selectedClass',
 		'searchButton'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples-Basic'
 }
 
 { #category : #layout }

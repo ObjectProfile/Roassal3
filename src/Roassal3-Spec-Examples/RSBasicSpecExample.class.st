@@ -1,5 +1,5 @@
 "
-Basic example of how to use SpRoassalPresenter
+Basic example of how to use SpRoassalPresenter, use it as a reference of how interact with some spec components
 "
 Class {
 	#name : #RSBasicSpecExample,
@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'roassalSpec'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples-Basic'
 }
 
 { #category : #layout }
