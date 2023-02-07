@@ -1,5 +1,34 @@
 "
-RTLayoutBuilder is a higher abstract to manage layout. Most builder use it as it significantly shorten the use of layouts.
+RSLayoutBuilder is a higher abstract to manage layout. Most builder use it as it significantly shorten the use of layouts.
+
+my common methods
+- `RSLayoutBuilder >> #layout`, to access to the current layout modified by my common layouts.
+- `RSLayoutBuilder >> #on:`, to execute the current layout with a group of shapes.
+My common layouts are:
+- cell => `RSCellLayout`
+- circle => `RSCircleLayout`
+- cluster => `RSClusterTreeLayout`
+- compactTree => `RSVanDerPloegTreeLayout`
+- flow => `RSFlowLayout`
+- force => `RSForceBasedLayout`
+- grid => `RSGridLayout`
+- horizontal => `RSHorizontalLineLayout`
+- horizontalCompactTree => `RSHorizontalVanDerPloegTreeLayout`
+- horizontalTree => `RSHorizontalTreeLayout`
+- none => `RSNoLayout`
+- radial => `RSRadialTreeLayout`
+- simpleForce => `RSSimpleForceBasedLayout`
+- sugiyama => `RSSugiyamaLayout`
+- tree => `RSTreeLayout`
+- vertical => `RSVerticalLineLayout`
+
+### Conditional layouts
+You can use a conditional layout (`RSConditionalLayout`) using:
+- `RSLayoutBuilder >> #ifConnected:`
+- `RSLayoutBuilder >> #ifConnected:ifNotConnected:`
+
+
+
 "
 Class {
 	#name : #RSLayoutBuilder,

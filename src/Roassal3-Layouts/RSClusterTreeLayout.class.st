@@ -4,6 +4,8 @@ TODO
 Class {
 	#name : #RSClusterTreeLayout,
 	#superclass : #RSAbstractGraphLayout,
+	#traits : 'RSTLayoutProperties',
+	#classTraits : 'RSTLayoutProperties classTrait',
 	#instVars : [
 		'externalLayer',
 		'maxLayer',

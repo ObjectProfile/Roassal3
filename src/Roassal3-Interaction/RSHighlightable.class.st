@@ -332,7 +332,7 @@ RSHighlightable >> announcer: anAnnouncer [
 
 { #category : #'accessing - keys' }
 RSHighlightable >> copyKey [
-	^ copyKey ifNil: [ copyKey := #original ].
+	^ copyKey ifNil: [ copyKey := #original, self hash asString ]
 ]
 
 { #category : #'accessing - keys' }
@@ -463,12 +463,12 @@ canvas open
 { #category : #'public - hooks' }
 RSHighlightable >> highlightShapes: aBlock butKeep: aRSHighlightable [
 	"aBlock receives a shape and returns a collection of shapes"
-	self highlightShapes: [ :e | 
+	self highlightShapes: [ :e |
 		| shapes |
 		shapes := aBlock value: e.
 		e canvas properties
 			at: aRSHighlightable propertyKey
-			ifPresent: [ :hshapes | 
+			ifPresent: [ :hshapes |
 				shapes reject: [ :hs | hshapes includes: hs ] ]
 			ifAbsent: [ shapes ] ]
 ]
@@ -526,7 +526,7 @@ RSHighlightable >> privateAnnouncer [
 
 { #category : #'accessing - keys' }
 RSHighlightable >> propertyKey [
-	^ propertyKey ifNil: [ propertyKey := self hash asString ]
+	^ propertyKey ifNil: [ propertyKey := self class name, self hash asString ]
 ]
 
 { #category : #'accessing - keys' }
@@ -604,17 +604,12 @@ RSHighlightable >> restore: aShape selector: selector [
 
 { #category : #actions }
 RSHighlightable >> unhighlightRecordedShapes: shapeOrGroupOrCanvas [
-	| top |
-	(shapeOrGroupOrCanvas class == RSGroup)
-		ifTrue: [ 
-			shapeOrGroupOrCanvas ifEmpty: [ ^ self ].
-			top := shapeOrGroupOrCanvas anyOne canvas ]
-		ifFalse: [
-			top := shapeOrGroupOrCanvas canvas ]. 
-		
-	top ifNil: [ ^ self ].
-	top
-		propertyAt: self propertyKey 
+	| canvas |
+	canvas := shapeOrGroupOrCanvas canvas.
+
+	canvas ifNil: [ ^ self ].
+	canvas
+		propertyAt: self propertyKey
 		ifPresent: [ :shapes |
 			shapes do: [ :s | self announceUnHightlight: s source: shapeOrGroupOrCanvas ].
 		 ].

@@ -11,7 +11,7 @@ Class {
 		'packages',
 		'totalSum'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples-Basic'
 }
 
 { #category : #layout }
@@ -26,19 +26,9 @@ RSPieChartExample class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #accessing }
-RSPieChartExample >> chart [
-	^ chart
-]
-
-{ #category : #accessing }
-RSPieChartExample >> droplist [
-	^ droplist
-]
-
 { #category : #initialization }
 RSPieChartExample >> initializePresenters [
-	| org |
+	| org selectedItem |
 	droplist := self instantiate: SpDropListPresenter.
 	org := RPackage organizer.
 	packages := (org packageNames
@@ -47,33 +37,32 @@ RSPieChartExample >> initializePresenters [
 		sorted: [ :a :b | a linesOfCode > b linesOfCode ].
 	totalSum := packages max: #linesOfCode.
 	droplist
-		"label: 'Roassal Packages';"
 		items: packages;
 		display: [ :i | i name ].
 	chart := self newRoassal.
 	pie := self newRoassal.
-	droplist whenSelectedItemChangedDo: [ :pkg | 
-		chart script: [ :aCanvas | 
-			aCanvas
-				when: RSExtentChangedEvent
-				do: [ aCanvas edges copy do: #remove.
-					aCanvas nodes copy do: #remove.
-					self visualizeChart: aCanvas package: pkg ] ].
-		pie script: [ :view | self visualizePie: view package: pkg ] ].
-	droplist selectIndex: 1
+	selectedItem := packages first.
+	chart script: [ :aCanvas |
+		aCanvas
+			when: RSExtentChangedEvent
+			do: [ aCanvas edges copy do: #remove.
+				aCanvas nodes copy do: #remove.
+				self visualizeChart: aCanvas package: selectedItem ] ].
+	pie script: [ :view | self visualizePie: view package: selectedItem ].
+
+	droplist whenSelectedItemChangedDo: [ :pkg |
+		selectedItem := pkg.
+		chart refresh.
+		pie refresh.
+		 ]
 ]
 
 { #category : #initialization }
-RSPieChartExample >> initializeWindow: w [
-	w 
+RSPieChartExample >> initializeWindow: aWindow [
+	aWindow
 		title: 'Roassal packages';
 		initialExtent: 800@500;
 		centered
-]
-
-{ #category : #accessing }
-RSPieChartExample >> pie [
-	^ pie
 ]
 
 { #category : #running }

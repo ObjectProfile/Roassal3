@@ -29,20 +29,19 @@ RSForceLayoutInSpacesBuilder >> abandonLayout: shape [
 RSForceLayoutInSpacesBuilder >> addEdgesOf: shape to: space [
 	| layout edgesToAdd |
 	layout := space propertyAt: #layout.
-	edgesToAdd := shape connectedLines groupedBy: [ :ed | 
-		(ed from propertyAt: #layout) = layout and: [ 
+	edgesToAdd := shape connectedLines groupedBy: [ :ed |
+		(ed from propertyAt: #layout) = layout and: [
 		(ed to propertyAt: #layout) = layout ] ].
 
 	"Edges in the same space"
 	(edgesToAdd at: true ifAbsent: [#()]) do: [ :each |
 		each color: colorForLinesInSameSpace ].
-	
+
 	"Edges in different spaces"
 	(edgesToAdd at: false ifAbsent: [#()]) do: [ :each |
 		each color: colorForLinesInDifferentSpace ].
 
-	layout addEdges: (edgesToAdd at: true ifAbsent: [#()]).
-
+	layout addLines: (edgesToAdd at: true ifAbsent: [#()])
 ]
 
 { #category : #hooks }

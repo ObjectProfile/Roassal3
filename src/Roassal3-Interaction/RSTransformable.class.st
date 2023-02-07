@@ -271,31 +271,35 @@ RSTransformable >> topRight: position rectangle: rectangle [
 
 { #category : #update }
 RSTransformable >> updateCurrentShape: evt [
-	| handle  newRec scale pos rect  e |
+
+	| handle newRec scale pos rect e |
 	currentShape ifNil: [ ^ self ].
 	handle := evt shape.
 	pos := currentMatrix rsInverseTransform: handle position.
-	newRec := self 
-		perform: (handle model key, ':rectangle:') asSymbol
-		withArguments: { pos. baseRectangle}.
-	scale := (newRec value - newRec key) / currentShape baseRectangle extent.
-	
-	e := Float epsilon.
-	scale x abs < e ifTrue: [ scale := (e * scale x sign) @ scale y ].
-	scale y abs < e ifTrue: [ scale := scale x @ (e * scale y sign) ].
-	
-	rect := newRec value corner: newRec key.
-	rect := currentShape 
-		computeEncompassingRectangleFor: (newRec key corner: newRec value)
-		matrix: currentMatrix.
+	newRec := self
+		          perform: (handle model key , ':rectangle:') asSymbol
+		          withArguments: {
+				          pos.
+				          baseRectangle }.
+	scale := newRec value - newRec key
+	         / currentShape baseRectangle extent.
 
-	currentShape matrix
-		loadIdentity.
+	e := Float machineEpsilon.
+	scale x abs < e ifTrue: [ scale := e * scale x sign @ scale y ].
+	scale y abs < e ifTrue: [ scale := scale x @ (e * scale y sign) ].
+
+	rect := newRec value corner: newRec key.
+	rect := currentShape
+		        computeEncompassingRectangleFor:
+		        (newRec key corner: newRec value)
+		        matrix: currentMatrix.
+
+	currentShape matrix loadIdentity.
 	currentShape scaleBy: scale.
 	currentShape translateTo: rect floatCenter.
-	
+
 	self updateHandles: evt.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #update }

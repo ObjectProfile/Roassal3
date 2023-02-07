@@ -4,11 +4,12 @@ TODO
 Class {
 	#name : #RSAbstractCompactTreeLayout,
 	#superclass : #RSAbstractGraphLayout,
+	#traits : 'RSTLayoutProperties',
+	#classTraits : 'RSTLayoutProperties classTrait',
 	#instVars : [
 		'sonsDictionary',
 		'root',
-		'initialLayout',
-		'margin'
+		'initialLayout'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -121,7 +122,6 @@ RSAbstractCompactTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 30.
-	margin := 40. 
 	sonsDictionary := Dictionary new
 ]
 

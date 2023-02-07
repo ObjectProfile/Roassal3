@@ -314,13 +314,8 @@ RSCanvas >> extent [
 { #category : #accessing }
 RSCanvas >> extent: aPoint [
 	"Set the extent of the canvas. This method is called when a window is resized. An event is raised when the extension happens. "
-	| evt |
 	extent = aPoint ifTrue: [ ^ self ].
-	evt := RSExtentChangedEvent new
-		shape: self;
-		oldExtent: extent;
-		newExtent: (extent := aPoint).
-	self announce: evt
+	self notifyExtentChanged: aPoint
 ]
 
 { #category : #accessing }
@@ -396,8 +391,13 @@ RSCanvas >> morph: aMorph [
 ]
 
 { #category : #actions }
-RSCanvas >> notifyExtentChanged [
-	self extent: self extent
+RSCanvas >> notifyExtentChanged: aNewExtent [
+	| evt |
+	evt := RSExtentChangedEvent new
+		shape: self;
+		oldExtent: extent;
+		newExtent: (extent := aNewExtent).
+	self announce: evt
 ]
 
 { #category : #animations }
