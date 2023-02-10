@@ -23,7 +23,29 @@ Class {
 
 { #category : #testing }
 RSAbstractCircleLayout class >> isAbstract [
-	^ self name = #RSAbstractCircleLayout
+	^ self = RSAbstractCircleLayout
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout class >> layoutDefinition [
+	^ RSLayoutDefinition new
+		add: (RSLayoutNumberField new
+			label: 'Initial Angle';
+			selector: #initialAngle;
+			yourself);
+		add: (RSLayoutNumberField new
+			label: 'Increment Angle';
+			selector: #initialIncrementalAngle;
+			yourself);
+		add: (RSLayoutNumberField new
+			label: 'Initial Radius';
+			selector: #initialRadius;
+			yourself);
+		add: (RSLayoutNumberField new
+			label: 'Scale Factor';
+			selector: #scaleFactor;
+			yourself);
+		yourself
 ]
 
 { #category : #hook }
@@ -133,10 +155,15 @@ canvas
 
 { #category : #accessing }
 RSAbstractCircleLayout >> scaleBy: aNumber [
-	scaleFactor := aNumber
+	self scaleFactor: aNumber
 ]
 
 { #category : #accessing }
 RSAbstractCircleLayout >> scaleFactor [
 	^ scaleFactor
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout >> scaleFactor: aNumber [
+	scaleFactor := aNumber
 ]

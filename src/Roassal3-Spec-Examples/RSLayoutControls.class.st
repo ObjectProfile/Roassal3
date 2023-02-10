@@ -16,6 +16,28 @@ RSLayoutControls class >> defaultLayout [
 ]
 
 { #category : #accessing }
+RSLayoutControls >> boxLayoutSpace [
+	^ 10
+]
+
+{ #category : #accessing }
+RSLayoutControls >> layoutStudio [
+	^ layoutStudio
+]
+
+{ #category : #accessing }
 RSLayoutControls >> layoutStudio: aSpLayoutStudio [
-	layoutStudio := aSpLayoutStudio
+	layoutStudio := aSpLayoutStudio.
+	self updateFields
+]
+
+{ #category : #update }
+RSLayoutControls >> updateFields [
+	| boxLayout |
+	boxLayout := SpBoxLayout newVertical.
+	boxLayout spacing: self boxLayoutSpace.
+	layoutStudio layoutDefinition fields do: [ :each |
+		each layoutStudio: layoutStudio.
+		each renderIn: boxLayout ].
+	self layout: (SpScrollableLayout with: boxLayout)
 ]
