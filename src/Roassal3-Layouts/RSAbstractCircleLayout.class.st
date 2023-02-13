@@ -29,11 +29,11 @@ RSAbstractCircleLayout class >> isAbstract [
 { #category : #accessing }
 RSAbstractCircleLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
-		add: (RSLayoutNumberField new
+		add: (RSLayoutAngleField new
 			label: 'Initial Angle';
 			selector: #initialAngle;
 			yourself);
-		add: (RSLayoutNumberField new
+		add: (RSLayoutAngleField new
 			label: 'Increment Angle';
 			selector: #initialIncrementalAngle;
 			yourself);

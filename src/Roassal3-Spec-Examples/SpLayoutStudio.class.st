@@ -45,8 +45,7 @@ SpLayoutStudio >> addAnimation: anRSCanvas [
 			nodes doWithIndex: [ :each :index | | old new |
 				old := oldPositions at: index.
 				new := newPositions at: index.
-				each translateTo: (old interpolateTo: new at: t)
-				 ].
+				each translateTo: (old interpolateTo: new at: t) ].
 			anRSCanvas zoomToFit.
 			anRSCanvas signalUpdate.
 			 ]
@@ -148,19 +147,12 @@ SpLayoutStudio >> openLayout [
 
 { #category : #initialization }
 SpLayoutStudio >> renderIn: anRSCanvas [
-	nodes := RSBox models: Collection withAllSubclasses.
-	anRSCanvas addAll: nodes.
-	nodes
-		@ RSPopup new;
-		@ RSDraggable new.
-	RSNormalizer size
-		from: 10;
-		to: 200;
-		shapes: nodes;
-		normalize: #linesOfCode.
-	RSLineBuilder line
-		shapes: nodes;
-		connectTo: #superclass.
+	| canvas |
+	canvas := currentLayout class canvasExample.
+	canvas shapes inspect.
+	anRSCanvas addAll: canvas shapes.
+
+	nodes := anRSCanvas nodes.
 	currentLayout on: nodes.
 	anRSCanvas @ RSCanvasController.
 	oldPositions ifNil: [ ^ self ].

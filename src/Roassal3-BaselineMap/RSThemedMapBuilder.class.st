@@ -1,5 +1,5 @@
 "
-Used to have custom colors and  with theme
+Custom basemap builder that supports theme with pharo
 "
 Class {
 	#name : #RSThemedMapBuilder,
