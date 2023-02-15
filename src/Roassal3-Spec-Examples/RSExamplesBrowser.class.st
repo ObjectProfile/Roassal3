@@ -194,11 +194,10 @@ RSExamplesBrowser >> updateCanvas [
 	codeEditor beForBehavior: selectedClass.
 	[
 		canvas :=  current selector value: selectedClass new.
-		canvas class = RSCanvas 
+		canvas class = RSCanvas
 			ifFalse: [ canvas := canvas build; canvas ].
 		roassalCanvas canvas: canvas.
-	] onErrorDo: [ :ex | ex traceCr ]	
-		
+	] onErrorDo: [ :ex | ex traceCr ]
 ]
 
 { #category : #initialization }

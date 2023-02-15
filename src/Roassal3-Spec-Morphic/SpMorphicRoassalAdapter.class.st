@@ -21,17 +21,18 @@ SpMorphicRoassalAdapter class >> initialize [
 SpMorphicRoassalAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
 	canvas := widget roassalCanvas.
-	self model currentCanvas ifNotNil: [ :aCanvas |
+
+	self model currentCanvas ifNil: [
+		self basicApplyScript
+	] ifNotNil: [ :aCanvas |
 		widget canvas: aCanvas.
 		aCanvas morph: widget.
 		widget sessionChanged.
-		canvas := aCanvas.
-		 ].
+		canvas := aCanvas ].
 	widget
 		setProperty: #model toValue: self;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
-	self basicApplyScript.
 	canvas notifyExtentChanged: widget extent
 ]
 

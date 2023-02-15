@@ -52,7 +52,9 @@ RSLayout class >> canvasExample [
 	canvas := RSCanvas new.
 	shapes := RSBox models: Collection withAllSubclasses.
 	canvas addAll: shapes.
-	shapes @ RSPopup.
+	shapes
+		@ RSPopup new;
+		@ RSDraggable new.
 	RSLineBuilder line
 		shapes: shapes;
 		connectFrom: #superclass.

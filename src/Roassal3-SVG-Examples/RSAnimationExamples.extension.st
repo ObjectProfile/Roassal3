@@ -15,7 +15,7 @@ RSAnimationExamples >> example04Phyco [
 	"for zoom to fit"
 	canvas add: (RSBox new extent: 800@800; noPaint; yourself).
 	theta := 0.
-	update := [ 
+	update := [
 		canvas edges copy do: #remove.
 		1 to: slices do: [ :i | | line sz  |
 			line := RSSVGPathLine new
@@ -24,7 +24,7 @@ RSAnimationExamples >> example04Phyco [
 			sz := i even
 				ifTrue: [ sc1 scale: (i *unit + theta) sin ]
 				ifFalse: [ sc2 scale: (line model*unit - theta) sin ].
-			line 
+			line
 				width:  sz /2;
 				borderColor: (color scale: i even);
 				from: (i even
@@ -34,17 +34,17 @@ RSAnimationExamples >> example04Phyco [
 			line svgPath: [ :theLine |
 				"this block returns a block to use complex operations of Athens Canvas"
 				"in this part you can also return a string, the svg path"
-				[ :athensCanvas | 
+				[ :pathBuilder |
 					| angle a |
 					a := theLine startPoint.
 					angle := i * unit.
-					athensCanvas  
+					pathBuilder
 						moveTo: a + (sz * (angle cos@ angle sin));
 						arcCenterX: a x
-							centerY: a y 
+							centerY: a y
 							radius: sz
 							startAngle: line model* unit
-							endAngle: (line model+1)*unit 
+							endAngle: (line model+1)*unit
 					 ] ].
 			canvas add: line.
 		].
@@ -53,7 +53,7 @@ RSAnimationExamples >> example04Phyco [
 	canvas newAnimation repeat onStepDo: [ :t |
 		update value.
 		theta := theta + 0.0523 ].
-	canvas when: RSExtentChangedEvent do: [ :evt | 
+	canvas when: RSExtentChangedEvent do: [ :evt |
 		canvas zoomToFit ].
 	^ canvas
 ]
