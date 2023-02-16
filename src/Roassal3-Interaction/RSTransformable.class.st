@@ -284,7 +284,7 @@ RSTransformable >> updateCurrentShape: evt [
 	scale := newRec value - newRec key
 	         / currentShape baseRectangle extent.
 
-	e := Float machineEpsilon.
+	e := 2.220446049250313e-16.
 	scale x abs < e ifTrue: [ scale := e * scale x sign @ scale y ].
 	scale y abs < e ifTrue: [ scale := scale x @ (e * scale y sign) ].
 
