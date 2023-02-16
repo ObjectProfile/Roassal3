@@ -58,7 +58,7 @@ RSThemedMapBuilder >> highlightAnt: antBorder [
 RSThemedMapBuilder >> highlightBoxes: boxes [
 	| canvas color |
 	canvas := self canvas.
-	color := self theme testColorPassing.
+	color := TestResult defaultColorBackGroundForPassingTest.
 	boxes do: [ :box | | shadow |
 		shadow := self shadowFor: box.
 		shadow color: color.
@@ -66,7 +66,7 @@ RSThemedMapBuilder >> highlightBoxes: boxes [
 		box propertyAt: #shadow put: shadow.
 		canvas addShape: shadow.
 		shadow pushBack ].
-	canvas propertyAt: #highlightedBoxes put: boxes.
+	canvas propertyAt: #highlightedBoxes put: boxes
 ]
 
 { #category : #highlighting }
