@@ -59,13 +59,14 @@ RSSelfLoopCPController >> controlPointsFor: aLine [
 
 { #category : #hooks }
 RSSelfLoopCPController >> selfLoopControlPointsFor: aLine [
-	| temp from to delta |
+	| temp from to delta matrix |
 	temp := aLine from.
 	delta := 50.
-	from := temp encompassingRectangle topCenter.
-	to := temp encompassingRectangle leftCenter.
+	matrix := temp parent globalMatrix.
+	from := matrix transform: temp encompassingRectangle topCenter.
+	to := matrix transform: temp encompassingRectangle leftCenter.
 	^ Array
-		with: from 
+		with: from
 		with: from - (0 @ delta)
 		with: to - (delta @ 0)
 		with: to - (5 @ 0)
