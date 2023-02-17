@@ -38,7 +38,7 @@ RSPieLabeledInteraction >> labelColor: aColor [
 	"can be a color, a block or color scale"
 	"self labelColor: Color white"
 	"self labelColor: [:model | model modelColor ]"
-	"self labelColor: TSScale category20"
+	"self labelColor: NSScale category20"
 	labelColor := aColor
 ]
 

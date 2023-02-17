@@ -26,28 +26,6 @@ RSAbstractCircleLayout class >> isAbstract [
 	^ self = RSAbstractCircleLayout
 ]
 
-{ #category : #accessing }
-RSAbstractCircleLayout class >> layoutDefinition [
-	^ RSLayoutDefinition new
-		add: (RSLayoutAngleField new
-			label: 'Initial Angle';
-			selector: #initialAngle;
-			yourself);
-		add: (RSLayoutAngleField new
-			label: 'Increment Angle';
-			selector: #initialIncrementalAngle;
-			yourself);
-		add: (RSLayoutNumberField new
-			label: 'Initial Radius';
-			selector: #initialRadius;
-			yourself);
-		add: (RSLayoutNumberField new
-			label: 'Scale Factor';
-			selector: #scaleFactor;
-			yourself);
-		yourself
-]
-
 { #category : #hook }
 RSAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
