@@ -39,7 +39,7 @@ RSPolygon class >> fitPolygonToSquare: points [
 	| maxx minx maxy miny sx sy x y |
 	minx := maxx :=  points first x.
 	miny := maxy :=  points first y.
-	points do: [ :p | 
+	points do: [ :p |
 		minx := minx min: p x.
 		miny := miny min: p y.
 		maxx := maxx max: p x.
@@ -55,10 +55,10 @@ RSPolygon class >> fitPolygonToSquare: points [
 		miny := miny min: y.
 		maxx := maxx max: x.
 		maxy := maxy max: y ].
-	miny < -1 ifTrue: [ 
+	miny < -1 ifTrue: [
 		points doWithIndex: [ :p :i |
 			points at: i put: p x @ ( p y - 1 - miny ) ] ].
-	^ points.
+	^ points
 ]
 
 { #category : #utilities }
@@ -71,9 +71,9 @@ RSPolygon class >> generatePointsFitSquare: sides [
 
 { #category : #utilities }
 RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle [
-	
+
 	^ self generateUnitNgonPoints: sides  rotation: rotationAngle
-		angle: [ :a :i | a negated ] 
+		angle: [ :a :i | a negated ]
 		radius: [ :a :i | 1 ]
 ]
 
@@ -90,7 +90,7 @@ RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle angle: 
 		ifFalse: [ Float pi / 2 ].
 	startAngle := startAngle + rotationAngle.
 	points := Array new: sides.
-	0 to: sides - 1 do: [ :i | 
+	0 to: sides - 1 do: [ :i |
 		currentAngle := i * increment + startAngle.
 		currentAngle := angleBloc value: currentAngle value: i.
 		currentRadius := radiusBloc value: currentAngle value: i.
@@ -108,7 +108,7 @@ RSPolygon >> centerPoints [
 	"Private method, should not be used externally"
 
 	| r center |
-	r := points 
+	r := points
 		ifEmpty: [ 0@0 corner: 0@0 ]
 		ifNotEmpty: [ Rectangle encompassing: points ].
 	center := r floatCenter.
@@ -117,14 +117,14 @@ RSPolygon >> centerPoints [
 ]
 
 { #category : #accessing }
-RSPolygon >> cornerRadii [ 
+RSPolygon >> cornerRadii [
 	"Return the corner radii, indicating how smooth the polygon corners shoulid be"
 	^ radius ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 RSPolygon >> cornerRadii: aNumber [
-	"Set the corner radii. Has the effect to make corners smooth 
+	"Set the corner radii. Has the effect to make corners smooth
 	For example:
 
 c := RSCanvas new.
@@ -133,12 +133,12 @@ polygon := RSPolygon new
 		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
 		color: 'FFAE0B'.
 polygon cornerRadii: 5.
-		
+
 
 polygon2 := RSPolygon new
 		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
 		color: Color red trans.
-		
+
 polygon2 rotateByDegrees: 90.
 polygon2 translateBy: 0 @ -50.
 
@@ -149,20 +149,20 @@ c
 
 	"
 	radius := aNumber abs.
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #private }
 RSPolygon >> extent: newExtent [
 	| min max s extent |
-	self hasPoints 
+	self hasPoints
 		ifFalse: [ ^ self ].
 	extent := baseRectangle extent.
 	extent = newExtent
 		ifTrue: [ ^ self ].
 	min := Float fmax asPoint.
 	max := Float fmin asPoint.
-	points do: [ :p | 
+	points do: [ :p |
 		min := min min: p.
 		max := max max: p ].
 	s := newExtent / (max - min).
@@ -188,7 +188,7 @@ RSPolygon >> hasPoints [
 { #category : #initialization }
 RSPolygon >> initialize [
 	super initialize.
-	points := #().
+	points := #()
 ]
 
 { #category : #accessing }
@@ -214,7 +214,7 @@ RSPolygon >> preciseIncludesPoint: aPoint [
 	invertedPoint := matrix rsInverseTransform: aPoint.
 	^ (self baseRectangle containsPoint: invertedPoint)
 		ifFalse: [ false ]
-		ifTrue: [(AthensPolygonTester new 
+		ifTrue: [(AthensPolygonTester new
 			polygon: points) includesPoint: invertedPoint]
 ]
 

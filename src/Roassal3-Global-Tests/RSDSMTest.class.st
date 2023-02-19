@@ -12,8 +12,7 @@ RSDSMTest >> testColor [
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b color: [ :tuple | Color random ].
-	b build.
-	
+	b build
 ]
 
 { #category : #tests }
@@ -35,10 +34,9 @@ RSDSMTest >> testDep [
 	dsm build.
 	v := dsm canvas.
 	self assert: v shapes size equals: 100.
-	
-	ts := v shapes collect: #color as: Set.
-	self assert: ts size equals: 2 
 
+	ts := v shapes collect: #color as: Set.
+	self assert: ts size equals: 2
 ]
 
 { #category : #tests }
@@ -58,22 +56,22 @@ RSDSMTest >> testExample02 [
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	dsm build.
-	
+
 	shapes := dsm shapes.
 	self assert: shapes size equals: 100.
 	self assert: (dsm shapeAt: 1 @ 1) model equals: 1 -> 1.
 	self assert: (dsm shapeAt: 3 @ 1) model equals: 1 -> 3.
 	self assert: (dsm shapeAt: 10 @ 10) model equals: 10 -> 10.
 	self assert: (dsm shapeAt: 5 @ 2) model equals: 2 -> 5.
-	
+
 	column5 := dsm columnAt: 5.
 	self assert: column5 size equals: 10.
 	self assert: column5 first model equals: 5 -> 1.
-	
+
 	row5 := dsm rowAt: 5.
 	self assert: row5 size equals: 10.
 	self assert: row5 first model equals: 1 -> 5.
-	
+
 	column5 first announce: (RSMouseEnter new shape: column5 first)
 ]
 
@@ -84,7 +82,7 @@ RSDSMTest >> testLabelShapeColor [
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.
-	b labelsX do: [ :label | 
+	b labelsX do: [ :label |
 		label color: (label model even
 			ifTrue: [ Color red ]
 			ifFalse: [ Color gray ]) ].
@@ -101,7 +99,7 @@ RSDSMTest >> testLabelShapeHeight [
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.
 	b labels do: [ :l | l fontSize: 30; color: Color blue ].
-	self assert: b labelsX first color equals: Color blue.
+	self assert: b labelsX first color equals: Color blue
 ]
 
 { #category : #tests }
@@ -115,8 +113,8 @@ RSDSMTest >> testLabelsLeftPosition [
 	shapes := b labelsY.
 	self assert: shapes isNotEmpty.
 	firstColumn := b columnAt: 1.
-	firstColumn with: shapes do: [ :box :label | 
-		self assert: box position y equals: label position y  ].
+	firstColumn with: shapes do: [ :box :label |
+		self assert: box position y equals: label position y  ]
 ]
 
 { #category : #tests }
@@ -132,13 +130,13 @@ RSDSMTest >> testLabelsTopPosition [
 	labels := b labelsX.
 	self assert: labels isNotEmpty.
 	firstRow := b rowAt: 1.
-	firstRow with: labels do: [ :box : label | 
+	firstRow with: labels do: [ :box : label |
 		| x x1 x2 |
 		x := label encompassingRectangle bottomRight x.
 		x1 := box encompassingRectangle topLeft x.
 		x2 := box encompassingRectangle topRight x.
 		self assert: (x between: x1 and: x2)
-		 ].
+		 ]
 ]
 
 { #category : #tests }
@@ -149,7 +147,7 @@ RSDSMTest >> testUsingXAndY [
 	b objectsX: #(1 2 3 4).
 	b objectsY: #( 'A' 'B' 'C' ).
 	b build.
-	
+
 	self assert: b objectsX size equals: 4.
-	self assert: b objectsY size equals: 3.
+	self assert: b objectsY size equals: 3
 ]

@@ -8,7 +8,7 @@ BaselineOf >> inspectionBaselineMap [
 		baseline: self class;
 		build;
 		canvas.
-	
+
 	^ SpRoassal3InspectorPresenter new
 		canvas: canvas;
 		yourself

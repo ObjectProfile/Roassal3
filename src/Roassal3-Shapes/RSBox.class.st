@@ -49,7 +49,7 @@ RSBox class >> example [
 	box extent: 100 asPoint.
 	box cornerRadius: 10.
 	box color: Color blue muchDarker.
-	box inspect.
+	box inspect
 ]
 
 { #category : #visiting }
@@ -81,10 +81,10 @@ c open
 ```
 "
 
-	cornerRadius := aRSCornerRadius isNumber 
+	cornerRadius := aRSCornerRadius isNumber
 		ifTrue: [ RSCornerRadius new radius: aRSCornerRadius ]
 		ifFalse: [ aRSCornerRadius ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #testing }

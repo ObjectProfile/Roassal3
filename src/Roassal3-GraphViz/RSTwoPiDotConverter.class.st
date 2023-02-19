@@ -17,11 +17,11 @@ Class {
 
 { #category : #visiting }
 RSTwoPiDotConverter >> writeHeader: aRSGroup [
-	stream 
-		<< 'digraph Roassal3{ '; crlf; 
-		<< 'ranksep=3;'; crlf; 
+	stream
+		<< 'digraph Roassal3{ '; crlf;
+		<< 'ranksep=3;'; crlf;
 		<< 'ratio=auto;'; crlf;
-		<< 'layout=twopi;'; crlf.
+		<< 'layout=twopi;'; crlf
 ]
 
 { #category : #visiting }

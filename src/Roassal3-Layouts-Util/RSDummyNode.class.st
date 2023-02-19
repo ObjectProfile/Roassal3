@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 RSDummyNode class >> on: anEdge slot: anIndex [
-	
+
 	^(self new)
 		edge: anEdge;
 		slot: anIndex;
@@ -51,7 +51,6 @@ RSDummyNode >> signalUpdate [
 
 { #category : #accessing }
 RSDummyNode >> slot: anIndex [
-	
 ]
 
 { #category : #accessing }

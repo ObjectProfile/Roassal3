@@ -24,8 +24,8 @@ RSDraggableForceInteraction >> layout: aForceLayout [
 RSDraggableForceInteraction >> onShape: aShape [
 
 	aShape removeInteractionIfPresent: RSDraggable.
-	aShape 
-		when: RSMouseDragStart do: [ :evt | 
+	aShape
+		when: RSMouseDragStart do: [ :evt |
 			layout
 				mockElementAt: evt shape
 				ifPresent: [ :mock | mock isFixed: true ] ];
@@ -37,8 +37,8 @@ RSDraggableForceInteraction >> onShape: aShape [
 				mockElementAt: evt shape
 				ifPresent: [ :mock | mock fixPosition: evt shape position ].
 			evt shape signalUpdate ];
-		when: RSMouseDragEnd do:[:evt | 
+		when: RSMouseDragEnd do:[:evt |
 			layout
 				mockElementAt: evt shape
-				ifPresent: [ :mock | mock isFixed: false ] ].
+				ifPresent: [ :mock | mock isFixed: false ] ]
 ]

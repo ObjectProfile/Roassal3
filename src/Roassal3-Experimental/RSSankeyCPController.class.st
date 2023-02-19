@@ -11,8 +11,8 @@ Class {
 RSSankeyCPController >> controlPointsFor: aLine [
 
 	| x1 x2 x3 x4 y1 y2 y3 y4 sy ty |
-	aLine dy ifNil: [ 
-		^ { 
+	aLine dy ifNil: [
+		^ {
 			  (0 @ 0).
 			  (0 @ 0) } ].
 	sy := aLine sy ifNil: [ 0 ].
@@ -30,7 +30,7 @@ RSSankeyCPController >> controlPointsFor: aLine [
 	      - (aLine from dy / 2).
 	y3 := aLine to position y + aLine ty + (aLine dy / 2)
 	      - (aLine to dy / 2).
-	^ { 
+	^ {
 		  (x1 @ y1).
 		  (x2 @ y2).
 		  (x3 @ y3).

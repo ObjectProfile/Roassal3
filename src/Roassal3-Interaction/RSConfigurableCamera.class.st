@@ -44,7 +44,7 @@ RSConfigurableCamera >> zoomToFit [
 		floatCenter: shapesRect floatCenter
 		extent: canvas extent / 1.
 	self translateTo: shapesRect floatCenter.
-	int configuration shouldUseBasicZoom ifTrue: [ 
+	int configuration shouldUseBasicZoom ifTrue: [
 		(canvasRect containsRect: shapesRect )
 			ifTrue: [ self scale: 1]
 			ifFalse: [
@@ -52,6 +52,5 @@ RSConfigurableCamera >> zoomToFit [
 				self scale: original ]
 	] ifFalse: [ self scale: sc].
 	int removeRectanglesFor: canvas.
-	canvas signalUpdate.
-	
+	canvas signalUpdate
 ]

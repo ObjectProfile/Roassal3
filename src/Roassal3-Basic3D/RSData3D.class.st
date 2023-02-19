@@ -23,5 +23,5 @@ RSData3D >> cube [
 { #category : #initialization }
 RSData3D >> initialize [
 	super initialize.
-	cubeShape := RSMShape3D cube.
+	cubeShape := RSMShape3D cube
 ]

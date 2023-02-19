@@ -12,15 +12,15 @@ RSChannelTest >> testAnnouncement [
 	start := RSLabel text: 'Start'.
 	end := RSLabel text: 'End'.
 	c add: start; add: end.
-	
+
 	self assert: start announcer numberOfSubscriptions equals: 0.
 
 	channel := RSChannel new.
 	channel input: { start }.
 	channel output: { end }.
 	channel build.
-	
-	self assert: start announcer numberOfSubscriptions equals: 5.
+
+	self assert: start announcer numberOfSubscriptions equals: 5
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ RSChannelTest >> testBasic [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes }.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel input: { oddLabel }.
 	channel output: (mondrianNodes select: [ :e | e model odd ]).
@@ -73,13 +73,13 @@ RSChannelTest >> testBasic [
 	self assert: mondrianNodes first color equals: Color gray.
 	mondrianNodes first announce: RSMouseEnter.
 	self assert: mondrianNodes first color equals: Color gray.
-	
+
 	oddLabel announce: RSMouseEnter.
 	self assert: mondrianNodes first color equals: Color blue.
 	oddLabel announce: RSMouseLeave.
 	self assert: mondrianNodes first color equals: Color gray.
 
-	oddLabel announce: RSMouseClick.
+	oddLabel announce: RSMouseClick
 ]
 
 { #category : #tests }
@@ -108,7 +108,7 @@ RSChannelTest >> testBasicWithCallbacks [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes }.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel input: { oddLabel }.
 	channel output: (mondrianNodes select: [ :e | e model odd ]).
@@ -136,7 +136,7 @@ RSChannelTest >> testBasicWithCallbacks [
 	mondrianNodes first announce: RSMouseEnter.
 	self assert: mondrianNodes first color equals: Color gray.
 
-	
+
 	oddLabel announce: RSMouseEnter.
 	self assert: mondrianNodes first color equals: Color blue.
 	oddLabel announce: RSMouseLeave.
@@ -146,7 +146,7 @@ RSChannelTest >> testBasicWithCallbacks [
 	oddLabel announce: RSMouseClick.
 	self assert: value asArray equals: #('ONOdd').
 	oddLabel announce: RSMouseClick.
-	self assert: value asArray equals: #('ONOdd' 'OFFOdd').
+	self assert: value asArray equals: #('ONOdd' 'OFFOdd')
 ]
 
 { #category : #tests }
@@ -197,7 +197,7 @@ RSChannelTest >> testLocationsOfUnderlines [
 	markRed := (box properties values copyWithout: markBlue) anyOne.
 	self assert: markRed color equals: Color red.
 
-	self assert: ((channel1 getAllMarksFrom: box) includesAll: { 
+	self assert: ((channel1 getAllMarksFrom: box) includesAll: {
 				 markBlue.
 				 markRed }).
 

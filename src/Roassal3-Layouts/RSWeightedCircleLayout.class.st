@@ -25,7 +25,7 @@ RSWeightedCircleLayout >> doExecute: elements [
 	angleIncrement := self computeIncrementalAngleFor: elements.
 	angle := self initialAngle.
 	elements
-		do: [ :each | 
+		do: [ :each |
 			| point fctr |
 			"The factor weighs the angleIncrement"
 			"The angle is increased by half of the total increment,

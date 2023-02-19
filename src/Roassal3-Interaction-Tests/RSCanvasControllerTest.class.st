@@ -18,7 +18,7 @@ RSCanvasControllerTest >> testBasic [
 	self assert: controller class equals: self classToTest.
 	canvas @ self classToTest.
 	self assert: controller equals: canvas controllerInteraction.
-	self assert: canvas fixedShapes size equals: 3.
+	self assert: canvas fixedShapes size equals: 3
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ RSCanvasControllerTest >> testNoLegend [
 	controller := self classToTest new.
 	controller noLegend.
 	canvas addInteraction: controller.
-	self assert: canvas fixedShapes size equals: 2.
+	self assert: canvas fixedShapes size equals: 2
 ]
 
 { #category : #tests }
@@ -50,5 +50,5 @@ RSCanvasControllerTest >> testZoomToFitOnStart [
 	scale := canvas camera scale.
 	canvas extent: 100@100.
 	self assert: canvas position equals: box position.
-	self assert: scale equals: canvas camera scale.
+	self assert: scale equals: canvas camera scale
 ]

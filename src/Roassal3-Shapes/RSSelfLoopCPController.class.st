@@ -12,10 +12,10 @@ RSSelfLoopCPController class >> example [
 	| canvas links models arrow |
 	canvas := RSCanvas new.
 	models := 1 to: 10.
-	canvas addAll: (RSComposite models: models forEach: [:c :m | 
+	canvas addAll: (RSComposite models: models forEach: [:c :m |
 		c addAll: {
-			RSBox new 
-				extent: 20 asPoint; 
+			RSBox new
+				extent: 20 asPoint;
 				color: Color veryVeryLightGray;
 				border: (RSBorder new color: Color black).
 			(RSLabel model: m) color: Color black}.
@@ -28,7 +28,7 @@ RSSelfLoopCPController class >> example [
 	links do: [ :assoc | | from to line |
 		from := canvas shapeFromModel: assoc key.
 		to := canvas shapeFromModel: assoc value.
-		(from notNil and: [ to notNil ]) ifTrue: [ 
+		(from notNil and: [ to notNil ]) ifTrue: [
 			line := RSBezier new
 				markerEnd: arrow;
 				attachPoint: (RSBorderAttachPoint new endOffset: 5);
@@ -40,20 +40,20 @@ RSSelfLoopCPController class >> example [
 	].
 	(Smalltalk globals at: #RSTreeLayout) on: canvas nodes.
 	canvas zoomToFit.
-	canvas open.
+	canvas open
 ]
 
 { #category : #hooks }
 RSSelfLoopCPController >> controlPointsFor: aLine [
 	| ap from to |
 	ap := aLine attachPoint.
-	
-	aLine from = aLine to 
+
+	aLine from = aLine to
 		ifTrue: [ ^ self selfLoopControlPointsFor: aLine ].
-		
+
 	from := ap startingPointOf: aLine.
 	to := ap endingPointOf: aLine.
-	
+
 	^ Array with: from with: to
 ]
 

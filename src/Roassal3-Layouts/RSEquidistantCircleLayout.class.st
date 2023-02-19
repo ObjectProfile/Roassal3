@@ -33,7 +33,7 @@ RSEquidistantCircleLayout >> doExecute: elements [
 	center := Point x: rad y: rad.
 	angle := self initialAngle.
 	elements
-		do: [ :each | 
+		do: [ :each |
 			| point |
 			"First, the angle is increased only by the angle given by the element radius (height/2),
 			then the point is set, and then it's increased by the rest of the total increment"

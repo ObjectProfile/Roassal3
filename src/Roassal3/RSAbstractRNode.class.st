@@ -56,7 +56,6 @@ RSAbstractRNode >> nodesIntersetcsRectangle: aRectangle list: list [
 
 { #category : #'finding/searching' }
 RSAbstractRNode >> nodesWithPoint: aPoint list: list [
-	
 ]
 
 { #category : #accessing }

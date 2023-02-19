@@ -69,7 +69,7 @@ RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
 { #category : #initialization }
 RSAbstractMarkerDecoration >> initialize [
 	super initialize.
-	
+
 	"Per default, mark the max value"
 	self max.
 	markerColor := self defaultMarkerColor
@@ -99,7 +99,7 @@ RSAbstractMarkerDecoration >> renderIn: canvas [
 			color: markerColor.
 		self addShape: line.
 		line
-	] as: RSGroup.
+	] as: RSGroup
 ]
 
 { #category : #'public - configuration' }

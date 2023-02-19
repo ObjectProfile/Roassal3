@@ -58,8 +58,8 @@ Class {
 
 { #category : #public }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot color: aColor [
-	self for: aRSLinePlot icon: (RSEllipse new 
-		size: 10; 
+	self for: aRSLinePlot icon: (RSEllipse new
+		size: 10;
 		color: aColor;
 		yourself)
 ]
@@ -76,23 +76,23 @@ RSSimpleChartPopupBuilder >> for: aRSLinePlot text: aString [
 
 { #category : #public }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot text: aString color: aColor [
-	self 
+	self
 		for: aRSLinePlot text: aString;
-		for: aRSLinePlot color: aColor.
+		for: aRSLinePlot color: aColor
 ]
 
 { #category : #initialization }
 RSSimpleChartPopupBuilder >> initialize [
 	super initialize.
 	labels := Dictionary new.
-	icons := Dictionary new.
+	icons := Dictionary new
 ]
 
 { #category : #hooks }
 RSSimpleChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
 	| group |
 	group := RSGroup new.
-	
+
 	icons at: aRSLinePlot ifPresent: [ :icon |
 		group add: icon copy ].
 	labels at: aRSLinePlot ifPresent: [ :label |

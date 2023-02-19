@@ -37,13 +37,13 @@ RSDraggableCanvasInteraction class >> right [
 { #category : #mouse }
 RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
-	mouseEvent := RSMouseDragStart.
+	mouseEvent := RSMouseDragStart
 ]
 
 { #category : #computing }
 RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	| camera p correct anime |
-	self configuration hasDraggableAnimation 
+	self configuration hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	camera := aCanvas camera.
 	p := camera position.
@@ -61,14 +61,14 @@ RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ];
 		when: RSAnimationEndEvent do: [:evt |
 			aCanvas removeKey: self key.
-			].
+			]
 ]
 
 { #category : #initialization }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
 	self all.
-	isMoving := false.
+	isMoving := false
 ]
 
 { #category : #accessing }
@@ -90,7 +90,7 @@ RSDraggableCanvasInteraction >> middle [
 RSDraggableCanvasInteraction >> mouseEnd: evt [
 	| threshold aCanvas camera delta p correct anime |
 	isMoving := false.
-	self configuration hasDraggableAnimation 
+	self configuration hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	lastStep ifNil: [ ^ self ].
 	aCanvas := evt canvas.
@@ -98,16 +98,16 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	threshold := 4.
 	(lastStep distanceTo: 0@0) < threshold
 		ifTrue: [ ^ self checkCamera: aCanvas ].
-		
+
 	delta := lastStep * 1.5.
 	lastStep := nil.
 	camera translateBy: delta.
 	correct := self correctCameraPosition: aCanvas.
 	camera translateBy: delta negated.
-			
+
 	p := (correct - camera position) abs max: 1@1.
 	p := p x sqrt @ p y sqrt.
-	
+
 	aCanvas propertyAt: self key ifPresent: [ :a | a stop ].
 	anime := aCanvas newAnimation.
 	aCanvas propertyAt: self key put: anime.
@@ -116,11 +116,9 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 		duration: 200 milliSeconds;
 		from: camera position; to: camera position + (delta / p);
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ];
-		when: RSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [
 			aCanvas removeKey: self key.
-			self checkCamera: aCanvas ].
-		
-
+			self checkCamera: aCanvas ]
 ]
 
 { #category : #mouse }
@@ -139,8 +137,8 @@ RSDraggableCanvasInteraction >> mouseMove: evt [
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
 	lastStep := evt step negated / camera scale.
-	self configuration hasDraggableAnimation 
-		ifTrue: [ 
+	self configuration hasDraggableAnimation
+		ifTrue: [
 			correct  := self correctCameraPosition: evt canvas.
 			p := (correct - camera position) abs max: 1@1.
 			p := p x sqrt @ p y sqrt.
@@ -156,15 +154,15 @@ RSDraggableCanvasInteraction >> mouseMove: evt [
 RSDraggableCanvasInteraction >> mouseStart: evt [
 	self removeRectanglesFor: evt canvas.
 	isMoving := true.
-	lastStep := nil.
+	lastStep := nil
 ]
 
 { #category : #hooks }
 RSDraggableCanvasInteraction >> onShape: aCanvas [
-	aCanvas 
+	aCanvas
 		when: self mouseEvent send: #mouseStart: to: self;
 		when: RSMouseDragging send: #mouseMove: to: self;
-		when: RSMouseDragEnd send: #mouseEnd: to: self.
+		when: RSMouseDragEnd send: #mouseEnd: to: self
 ]
 
 { #category : #rendering }
@@ -174,5 +172,5 @@ RSDraggableCanvasInteraction >> renderLegendOn: lb [
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> right [
-	mouseEvent := RSMouseRightDragStart.
+	mouseEvent := RSMouseRightDragStart
 ]

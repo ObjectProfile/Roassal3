@@ -46,11 +46,11 @@ RSDraggable >> onShape: aShape [
 ]
 
 { #category : #events }
-RSDraggable >> processDrag: evt [ 
+RSDraggable >> processDrag: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
 	evt shape translateBy: d.
-	evt signalUpdate 
+	evt signalUpdate
 ]
 
 { #category : #testing }

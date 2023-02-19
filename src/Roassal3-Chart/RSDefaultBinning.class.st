@@ -23,7 +23,7 @@ RSDefaultBinning >> defaultNumberOfBins [
 { #category : #initialization }
 RSDefaultBinning >> initialize [
 	super initialize.
-	self numberOfBins: self defaultNumberOfBins.
+	self numberOfBins: self defaultNumberOfBins
 ]
 
 { #category : #accessing }

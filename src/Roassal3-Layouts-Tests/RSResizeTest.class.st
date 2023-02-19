@@ -11,13 +11,13 @@ Class {
 { #category : #running }
 RSResizeTest >> setUp [
 	super setUp.
-	shapes := (1 to: 3) collect: [ :o | 
+	shapes := (1 to: 3) collect: [ :o |
 		RSBox new
 			height: o;
 			width: o + 1;
 			yourself ].
 	resize := RSResize new.
-	resize shapes: shapes.
+	resize shapes: shapes
 ]
 
 { #category : #tests }
@@ -29,13 +29,12 @@ RSResizeTest >> testBiggestExtent [
 RSResizeTest >> testBiggestShape [
 	self assert: resize biggestShape equals: shapes last.
 	resize useBiggestShape.
-	self assert: resize fixedShape equals: shapes last.
+	self assert: resize fixedShape equals: shapes last
 ]
 
 { #category : #tests }
 RSResizeTest >> testHighestShape [
-	self assert: resize highestShape equals: shapes last.
-
+	self assert: resize highestShape equals: shapes last
 ]
 
 { #category : #tests }
@@ -67,6 +66,5 @@ RSResizeTest >> testSameWidth [
 
 { #category : #tests }
 RSResizeTest >> testWidestShape [
-	self assert: resize widestShape equals: shapes last.
-
+	self assert: resize widestShape equals: shapes last
 ]

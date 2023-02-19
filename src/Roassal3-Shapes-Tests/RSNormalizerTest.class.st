@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #tests }
-RSNormalizerTest >> testBasic [ 
+RSNormalizerTest >> testBasic [
 	| shapes |
 	shapes := (1 to: 2) collect: [ :n | RSBox new model: n; yourself ].
-	
+
 	self assert: shapes size equals: 2.
 	self assert: shapes first color equals: Color lightGray.
 	RSNormalizer color
@@ -24,5 +24,5 @@ RSNormalizerTest >> testBasic [
 		to: 200;
 		normalize: #yourself.
 	self assert: shapes first extent equals: 100@100.
-	self assert: shapes first extent equals: 100@100.
+	self assert: shapes first extent equals: 100@100
 ]

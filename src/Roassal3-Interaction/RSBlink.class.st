@@ -30,7 +30,7 @@ RSBlink >> onShape: aShape [
 	canvas signalUpdate.
 	canvas newAnimation
 				duration: 0.5 second;
-				when: RSAnimationEndEvent do: [ :evt | 
+				when: RSAnimationEndEvent do: [ :evt |
 					aShape color: previousColor.
 					canvas signalUpdate. ]
 ]

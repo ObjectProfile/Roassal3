@@ -16,8 +16,8 @@ RSDancingSelection >> on: aCanvas [
 	d := 20.
 	aCanvas newAnimation
 		duration: 1 second;
-		scale: (NSScale linear 
+		scale: (NSScale linear
 			domain: #(0 0.25 0.5 0.75 1);
 			range: {p. p+d. p. p+d. p});
-		on: shape set: #translateTo: . 
+		on: shape set: #translateTo: .
 ]

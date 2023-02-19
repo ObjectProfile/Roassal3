@@ -28,7 +28,7 @@ Class {
 RSHorizontalTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := super createNiceLabelIn: aChart.
-	aChart 
+	aChart
 		minValueX: nice min;
 		maxValueX: nice max.
 	^ nice
@@ -69,10 +69,10 @@ RSHorizontalTick >> min [
 { #category : #public }
 RSHorizontalTick >> useDiagonalLabel [
 	self labelRotation: -45.
-	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0)
 ]
 
 { #category : #public }
 RSHorizontalTick >> useVerticalLabel [
-	self labelRotation: -90.
+	self labelRotation: -90
 ]

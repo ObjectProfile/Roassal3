@@ -27,7 +27,7 @@ RSXmasFrontier >> finished: aBool [
 RSXmasFrontier >> initialize [
 	super initialize.
 	finished := false.
-	thickness := SharedRandom globalGenerator rsNext: 10 and: 20.
+	thickness := SharedRandom globalGenerator rsNext: 10 and: 20
 ]
 
 { #category : #accessing }
@@ -55,7 +55,7 @@ RSXmasFrontier >> update: factor [
 	| rect r |
 	rect := -10 asPoint corner: 510 asPoint.
 	r := SharedRandom globalGenerator.
-	((rect containsPoint: position) and: [thickness > factor] ) ifTrue: [ 
+	((rect containsPoint: position) and: [thickness > factor] ) ifTrue: [
 		| uncertain |
 		velocity := velocity normalized * 0.8.
 		uncertain := (r rsNext: -1 and: 1)@(r rsNext: -1 and: 1).

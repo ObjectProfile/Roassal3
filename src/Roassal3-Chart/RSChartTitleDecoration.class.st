@@ -35,5 +35,5 @@ RSChartTitleDecoration >> initialize [
 	self fontSize: 15.
 	location
 		offset: 0@ -2;
-		above; center.
+		above; center
 ]

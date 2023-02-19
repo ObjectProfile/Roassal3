@@ -23,24 +23,23 @@ RSVerticalGridLayout >> doExecute: shapes [
 	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop |
 	originalGapLeft := 0.
 	originalGapTop := 0.
-	
+
 	pointer := originalGapLeft @ originalGapTop.
 	lineItemSize := self lineItemsCountBlock rsValue: shapes.
 	lineItemCount := 0.
 	maxLastLineWidth := 0.
 
 	shapes
-		do: [ :aShape | 
+		do: [ :aShape |
 			translator translateTopLeftOf: aShape to: pointer.
 			pointer := pointer x @ (pointer y + aShape height + self gapSize).
 			lineItemCount := lineItemCount + 1.
 			maxLastLineWidth := maxLastLineWidth max: aShape width.
 			lineItemCount >= lineItemSize
-				ifTrue: [ 
+				ifTrue: [
 					pointer := (pointer x + (self gapSize) + maxLastLineWidth) @ originalGapLeft.
-					
+
 					maxLastLineWidth := 0.
 					lineItemCount := 0 ].
-			self step ].
-
+			self step ]
 ]

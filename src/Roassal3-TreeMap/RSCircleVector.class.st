@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 RSCircleVector class >> circle: c1 minus: c0 [
-	^ self 
+	^ self
 		x: c1 x - c0 x
 		y: c1 y - c0 y
 ]
@@ -28,7 +28,7 @@ RSCircleVector class >> x: x y: y [
 ]
 
 { #category : #'instance creation' }
-RSCircleVector class >> x: x y: y z: z [ 
+RSCircleVector class >> x: x y: y z: z [
 	^ self new
 		x: x;
 		y: y;
@@ -38,8 +38,8 @@ RSCircleVector class >> x: x y: y z: z [
 
 { #category : #arithmetic }
 RSCircleVector >> - w [
-	^ self class 
-		x: x - w x 
+	^ self class
+		x: x - w x
 		y: y - w y
 		z: z - w z
 ]
@@ -48,7 +48,7 @@ RSCircleVector >> - w [
 RSCircleVector >> add: rhs [
 	x := x + rhs x.
 	y := y + rhs y.
-	z := z + rhs z.
+	z := z + rhs z
 ]
 
 { #category : #computing }
@@ -97,7 +97,7 @@ RSCircleVector >> normalize [
 	x := x / mag.
 	y := y / mag.
 	z := z / mag.
-	^ mag.
+	^ mag
 ]
 
 { #category : #computing }
@@ -114,7 +114,7 @@ RSCircleVector >> rotate: axis angle: angle [
 	n scaleBy: (n dot: self).
 	n add: ((self - n) scaleBy: angle cos ).
 	n add: ((n cross: self) scaleBy: angle sin).
-	^ n.
+	^ n
 ]
 
 { #category : #computing }
@@ -135,7 +135,7 @@ RSCircleVector >> x [
 ]
 
 { #category : #accessing }
-RSCircleVector >> x: anInteger [ 
+RSCircleVector >> x: anInteger [
 	x := anInteger
 ]
 
@@ -145,7 +145,7 @@ RSCircleVector >> y [
 ]
 
 { #category : #accessing }
-RSCircleVector >> y: anInteger [ 
+RSCircleVector >> y: anInteger [
 	y := anInteger
 ]
 

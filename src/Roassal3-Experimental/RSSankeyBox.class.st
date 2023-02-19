@@ -28,10 +28,10 @@ RSSankeyBox >> computeLinesDepths [
 	| sy ty |
 	self sortLinks.
 	sy := ty := 0.
-	sourceLinks do: [ :line | 
+	sourceLinks do: [ :line |
 		line sy: sy.
 		sy := sy + line dy ].
-	targetLinks do: [ :line | 
+	targetLinks do: [ :line |
 		line ty: ty.
 		ty := ty + line dy ]
 ]
@@ -70,7 +70,7 @@ RSSankeyBox >> last: aBoolean [
 { #category : #computing }
 RSSankeyBox >> relaxLeftToRight: alpha [
 
-	targetLinks ifNotEmpty: [ 
+	targetLinks ifNotEmpty: [
 		| averageY |
 		averageY := (targetLinks sum: [ :line | line weightedSource ])
 		            / (targetLinks sum: [ :line | line value ]).
@@ -80,7 +80,7 @@ RSSankeyBox >> relaxLeftToRight: alpha [
 { #category : #computing }
 RSSankeyBox >> relaxRightToLeft: alpha [
 
-	sourceLinks ifNotEmpty: [ 
+	sourceLinks ifNotEmpty: [
 		| averageY |
 		averageY := (sourceLinks sum: [ :line | line weightedTarget ])
 		            / (sourceLinks sum: [ :line | line value ]).

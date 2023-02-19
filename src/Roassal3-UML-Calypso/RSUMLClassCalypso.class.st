@@ -23,10 +23,9 @@ RSUMLClassCalypso class >> classUmlTapActivation [
 
 { #category : #testing }
 RSUMLClassCalypso class >> shouldBeActivatedInContext: aBrowserContext [
-	^ RSUMLCalypsoSettings useCalypsoUML 
-		and: [ aBrowserContext isClassSelected 
-			and: [ aBrowserContext lastSelectedClass shouldUseUMLClassTab ] ].
-	
+	^ RSUMLCalypsoSettings useCalypsoUML
+		and: [ aBrowserContext isClassSelected
+			and: [ aBrowserContext lastSelectedClass shouldUseUMLClassTab ] ]
 ]
 
 { #category : #accessing }
@@ -44,7 +43,7 @@ RSUMLClassCalypso >> buildUmlCanvas [
 	| canvas |
 	canvas := self targetClass buildUMLCanvasWithBrowserTool: self.
 	canvas ifNil: [ canvas := super buildUmlCanvas ].
-	RSUMLCalypsoSettings initialSelectionClass new 
+	RSUMLCalypsoSettings initialSelectionClass new
 		targetClass: self targetClass;
 		on: canvas.
 	^ canvas
@@ -54,8 +53,7 @@ RSUMLClassCalypso >> buildUmlCanvas [
 RSUMLClassCalypso >> computeClasses [
 	| clazzes |
 	clazzes := self targetClass withAllSuperAndSubclasses.
-	^ clazzes copyWithoutAll: { Object. ProtoObject }.
-	
+	^ clazzes copyWithoutAll: { Object. ProtoObject }
 ]
 
 { #category : #initialization }

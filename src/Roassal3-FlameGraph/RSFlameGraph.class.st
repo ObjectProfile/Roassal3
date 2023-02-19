@@ -41,7 +41,7 @@ RSFlameGraph >> doLayout [
 		ifTrue: [
 			roots first width: graphWidth.
 			self layoutFlameGraph: roots first ]
-		ifFalse: [ 
+		ifFalse: [
 			virtual := self shapeFor: nil.
 			virtual width: graphWidth.
 			virtual schildren: roots.
@@ -50,7 +50,6 @@ RSFlameGraph >> doLayout [
 			virtual depth: 0.
 			self layoutFlameGraph: virtual.
 			roots do: [ :shape | shape sparent: nil ]	 ]
-
 ]
 
 { #category : #accessing }
@@ -61,7 +60,7 @@ RSFlameGraph >> gap [
 
 { #category : #accessing }
 RSFlameGraph >> gap: aPoint [
-	"Set the gap between the rectangles. 
+	"Set the gap between the rectangles.
 	The x value represents the horizontal gap between siblings.
 	The y value represents the vertical gap between parents and children."
 
@@ -81,12 +80,11 @@ RSFlameGraph >> initialize [
 	super initialize.
 
 	boxShape := RSBox new.
-	
+
 	self
 		graphWidth: 500;
 		boxHeight: 20;
-		gap: 1 asPoint.
-
+		gap: 1 asPoint
 ]
 
 { #category : #rendering }
@@ -101,9 +99,8 @@ RSFlameGraph >> layoutFlameGraph: aShape [
 RSFlameGraph >> renderIn: aCanvas [
 
 	super renderIn: aCanvas.
-	
-	self doLayout
 
+	self doLayout
 ]
 
 { #category : #rendering }
@@ -122,14 +119,13 @@ RSFlameGraph >> setupHorizontallyOn: shape [
 		a := parentX.
 		b := ratio * (self weightOf: child).
 		parentX := a + b.
-		
+
 		b > gap2 ifTrue: [ b := b - gap2.].
-		
+
 		child
 			position: (a+(b / 2)) @ child position y ;
 			width: b.
-		self layoutFlameGraph: child ].
-
+		self layoutFlameGraph: child ]
 ]
 
 { #category : #rendering }
@@ -138,11 +134,10 @@ RSFlameGraph >> setupVerticallyOn: aShape [
 	| depth y |
 	depth := aShape propertyAt: #depth.
 	y := depth * (boxHeight + gap y).
-	
+
 	aShape
 		position: (aShape position x @ y negated);
-		height: boxHeight.
-
+		height: boxHeight
 ]
 
 { #category : #rendering }

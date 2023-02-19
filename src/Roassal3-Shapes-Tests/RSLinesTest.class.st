@@ -23,23 +23,22 @@ RSLinesTest >> testArrowedLine [
 	line startPoint: 0@0; endPoint: 100@100.
 	head := line markerEnd.
 	self assert: head isNotNil.
-	
+
 	head := head shape.
 	self assert: head class equals: RSPolygon.
 	line color: Color blue.
 	self assert: line color equals: Color blue.
 	self assert: head border color equals: Color blue.
-	
+
 	line border: (RSBorder new width: 2; color: Color red).
 	self assert: line border width equals: 2.
 	self assert: line color equals: Color red.
 	self assert: head border width equals: 2.
 	self assert: line color equals: Color red.
-	
+
 	other := line copy.
 	self deny: other equals: line.
-	self deny: other markerEnd hash equals: line markerEnd hash.
-	
+	self deny: other markerEnd hash equals: line markerEnd hash
 ]
 
 { #category : #'tests - colors' }
@@ -47,31 +46,31 @@ RSLinesTest >> testColorLineAndMarker [
 	| line |
 	line := RSShapeFactory arrowedLine.
 	line color: Color blue.
-	self 
+	self
 		assert: line color equals: Color blue;
-		assert: line markerEnd shape borderColor equals: Color blue.
+		assert: line markerEnd shape borderColor equals: Color blue
 ]
 
 { #category : #running }
 RSLinesTest >> testDrawBezierLine [
 	canvas addShape: (RSBezier new
 		strokeColor: Color red;
-		width: 2). 
-	canvas createMorph drawOnMockCanvas.
+		width: 2).
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
 RSLinesTest >> testDrawLine [
 	canvas addShape: (RSLine new
 		strokeColor: Color red;
-		width: 2). 
-	canvas createMorph drawOnMockCanvas.
+		width: 2).
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
 RSLinesTest >> testDrawMarkers [
 	| line m |
-	m := RSPolygon new 
+	m := RSPolygon new
 		points: { -10@0. 0@ -10. 10@0 };
 		color: Color black;
 		size: 10.
@@ -80,7 +79,7 @@ RSLinesTest >> testDrawMarkers [
 		endPoint: 250@50.
 	line markerStart: m.
 	canvas addShape: line.
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
@@ -96,7 +95,7 @@ RSLinesTest >> testFmt [
 	self deny: line border style dashArray isNil.
 	self deny: line markerEnd isNil.
 	self deny: line markerStart isNil.
-	self assert: line markerEnd shape color equals: line color.
+	self assert: line markerEnd shape color equals: line color
 ]
 
 { #category : #running }
@@ -112,8 +111,7 @@ RSLinesTest >> testLineIncludesPoint [
 	self assert: (line includesPoint: 0@50).
 	self assert: (line includesPoint: 4@50).
 	self deny: (line includesPoint: 5@50).
-	self deny: (line includesPoint: 500@500).
-
+	self deny: (line includesPoint: 500@500)
 ]
 
 { #category : #running }
@@ -126,12 +124,11 @@ RSLinesTest >> testMarkerOffset [
 	marker := RSBox new size: 20; withBorder; noPaint; asMarker.
 	marker offsetRatio: 0.5.
 	line markerEnd: marker.
-	
+
 	self assert: (line includesPoint: 50@ 9).
 	marker offset: 20.
 	self deny: (line includesPoint: 50@ 9).
-	self assert: (line includesPoint: 30@ 9).	
-
+	self assert: (line includesPoint: 30@ 9).
 ]
 
 { #category : #running }
@@ -154,7 +151,7 @@ RSLinesTest >> testMarkersIncludesPoint [
 	self assert: (line includesPoint: 210@0).
 	self assert: (line includesPoint: 200@9).
 	self assert: (line includesPoint: 210@ -10).
-	self deny: (line includesPoint: 210@ -11).
+	self deny: (line includesPoint: 210@ -11)
 ]
 
 { #category : #running }
@@ -167,7 +164,7 @@ RSLinesTest >> testPolylineIncludesPoint [
 	self assert: (line includesPoint: 0@100).
 	self assert: (line includesPoint: 0@50).
 	self assert: (line includesPoint: 5@50).
-	
+
 	self deny: (line includesPoint: 500@500).
-	self deny: (line includesPoint: 6@50).
+	self deny: (line includesPoint: 6@50)
 ]

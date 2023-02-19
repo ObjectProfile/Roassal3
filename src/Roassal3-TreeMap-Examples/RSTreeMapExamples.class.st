@@ -16,7 +16,6 @@ RSTreeMapExamples >> example01Numbers [
 	b from: (1 to: 5) using: [ #() ].
 	b modelWeight: #yourself.
 	^ b
-	
 ]
 
 { #category : #examples }
@@ -30,13 +29,12 @@ RSTreeMapExamples >> example02Numbers [
 		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
 		modelWeight: [ :n | n ].
 	b build.
-	b shapes do: [ :each | 
+	b shapes do: [ :each |
 		each color: (each model even
 			ifTrue: [ 'lightGray' ]
 			ifFalse: [ 'purple' ] ).
 		each color: each color translucent. ].
-	^ b canvas.
-	
+	^ b canvas
 ]
 
 { #category : #examples }
@@ -70,7 +68,7 @@ RSTreeMapExamples >> example04CollectionSubclasses [
 		name := ByteSymbol streamContents: [ :s | s << cls name; << 'Test'].
 		(Smalltalk globals includesKey: name)
 			ifTrue: [ shape color: Color green translucent ].
-		cls hasAbstractMethods 
+		cls hasAbstractMethods
 			ifTrue: [ shape color: Color blue translucent ].
 		 ].
 	^ b canvas
@@ -86,7 +84,7 @@ RSTreeMapExamples >> example05FileSystem [
 		borderColor: Color black.
 	b
 		leafWeight: [ :f | f size sqrt ];
-		explore: FileSystem workingDirectory 
+		explore: FileSystem workingDirectory
 			nesting: #directories
 			leaves: #files.
 	b build.
@@ -97,7 +95,7 @@ RSTreeMapExamples >> example05FileSystem [
 	color := NSScale linear
 		domain: {0. max};
 		range: #(gray red).
-	b shapes 
+	b shapes
 		select: [ :box | box isSLeaf ]
 		thenDo: [ :box |
 			box color: (color scale: (b weightOf: box) )].
@@ -136,11 +134,11 @@ RSTreeMapExamples >> example06FitText [
 					].
 
 			RSLocation new
-				inner; 
+				inner;
 				move: label on: box.
 			canvas add: label.
 			 ].
-	
+
 	^ canvas
 ]
 
@@ -152,19 +150,19 @@ RSTreeMapExamples >> example07Roassal [
 	b inset: 1 asPoint.
 	b canvas color: (Color colorFrom: '#2d2f3c') lighter.
 	b boxShape color: Color white.
-	
+
 	b
 		leafWeight: [ :f | f size sqrt ];
-		explore: (IceRepository registry 
+		explore: (IceRepository registry
 				detect: [ :each | each name = 'Roassal3' ]) location
-			nesting: [:file | file directories 
+			nesting: [:file | file directories
 				reject: [ :dir | dir basename beginsWith: '.' ] ]
 			leaves: #files.
 	b build.
 	palette := RSColorPalette qualitative flatui120.
 	bag := b gradientFill: palette block: [ :model | model extension ].
 	b shapes do: [ :shape | shape border: (RSBorder new width: 1/(shape propertyAt: #depth); color: Color black) ].
-	
+
 	"LEGEND"
 	lb := RSLegend new.
 	lb defaultLabel
@@ -177,12 +175,12 @@ RSTreeMapExamples >> example07Roassal [
 		border: (RSBorder new color: Color black).
 	lb layout vertical gapSize: 0.
 	lb container: b canvas.
-	bag sortedCounts do: [ :assoc | 
+	bag sortedCounts do: [ :assoc |
 		(assoc value
-			ifEmpty: [ lb 
+			ifEmpty: [ lb
 				text: (String streamContents: [ :stream | stream << assoc key asString<< ' directories' ])
 				withCircleColor: Color veryVeryLightGray ]
-			ifNotEmpty: [ lb 
+			ifNotEmpty: [ lb
 				text: (String streamContents: [ :stream | stream << assoc key asString << ' ' << assoc value << ' files' ])
 				withCircleColor: (palette scale: assoc value) ]) model: assoc.
 		 ].
@@ -190,7 +188,7 @@ RSTreeMapExamples >> example07Roassal [
 	lb build.
 
 	lb shapes @ (RSHighlightable
-		showEdges: [:assoc | b shapes 
+		showEdges: [:assoc | b shapes
 			select: [:shape | shape model extension = assoc value ]
 			thenCollect: [ :shape | shape model ] ]
 		using: (RSBezier new

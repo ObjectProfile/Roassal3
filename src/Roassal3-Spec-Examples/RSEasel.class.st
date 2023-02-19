@@ -45,7 +45,7 @@ RSEasel class >> open [
 { #category : #initialization }
 RSEasel >> configure: canvas [
 	canvas @ RSCanvasController.
-	canvas color: self theme backgroundColor.
+	canvas color: self theme backgroundColor
 ]
 
 { #category : #initialization }
@@ -98,14 +98,14 @@ RSEasel >> initializePresenters [
 	label := self newLabel.
 	text := self newCode.
 	button := self newButton.
-	diagram := self newRoassal.
+	diagram := self newRoassal
 ]
 
 { #category : #initialization }
 RSEasel >> initializeWindow: w [
-	w 
+	w
 		title: 'Roassal3 Spec';
-		initialExtent: 800@500.
+		initialExtent: 800@500
 ]
 
 { #category : #dependencies }

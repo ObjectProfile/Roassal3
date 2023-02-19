@@ -14,7 +14,7 @@ Class {
 
 { #category : #visiting }
 RSSVGPath >> buildPathOn: visitor [
-	visitor buildSVGPath: self.
+	visitor buildSVGPath: self
 ]
 
 { #category : #private }
@@ -25,19 +25,19 @@ RSSVGPath >> centerSegment: segment absolute: absolute position: position [
 	args := segment second.
 	key = #absolute ifTrue: [ ^ true ].
 	key = #relative ifTrue: [ ^ false ].
-	(key = #ellipticalArc:xrot:large:sweep:to:relative:) ifTrue: [ 
-		absolute ifTrue: [ 
+	(key = #ellipticalArc:xrot:large:sweep:to:relative:) ifTrue: [
+		absolute ifTrue: [
 			args at: 5 put: args fifth - position.
 			args at: 6 put: false ].
 		^ absolute ].
-	key = #vLineTo: ifTrue: [ 
-		absolute ifTrue: [ args at: 1 put: args first - position y ]. 
+	key = #vLineTo: ifTrue: [
+		absolute ifTrue: [ args at: 1 put: args first - position y ].
 		^ absolute].
-	key = #hLineTo: ifTrue: [ 
-		absolute ifTrue: [ args at: 1 put: args first - position x ]. 
+	key = #hLineTo: ifTrue: [
+		absolute ifTrue: [ args at: 1 put: args first - position x ].
 		^ absolute].
-	absolute ifTrue: [ 
-		args doWithIndex: [ :point :index | 
+	absolute ifTrue: [
+		args doWithIndex: [ :point :index |
 			args at: index put: point - position ] ].
 	^ absolute
 ]
@@ -48,18 +48,18 @@ RSSVGPath >> centerSegments [
 	rect := self segmentsRectangle.
 	position := rect floatCenter.
 	absolute := true.
-	segments do: [ :segment | 
-		absolute := self 
-			centerSegment: segment 
-			absolute: absolute 
+	segments do: [ :segment |
+		absolute := self
+			centerSegment: segment
+			absolute: absolute
 			position: position  ].
-				
+
 	polygons do: [ :polygon |
 		polygon doWithIndex: [ :point :index |
 			polygon at: index put: point - position ] ].
 	rect := self segmentsRectangle.
 	self position: position.
-	baseRectangle := Rectangle floatCenter: 0@0 extent: rect extent.
+	baseRectangle := Rectangle floatCenter: 0@0 extent: rect extent
 ]
 
 { #category : #private }
@@ -69,8 +69,8 @@ RSSVGPath >> computePolygons [
 	subPath := OrderedCollection new.
 	absolute := true.
 	position := 0@0.
-	point := [:da | position := absolute 
-		ifTrue:[ da ] 
+	point := [:da | position := absolute
+		ifTrue:[ da ]
 		ifFalse: [ position + da ].
 		subPath add: position ].
 	segments do: [ :segment | | key args |
@@ -78,45 +78,42 @@ RSSVGPath >> computePolygons [
 		args := segment second.
 		key = #absolute ifTrue: [ absolute := true ].
 		key = #relative ifTrue: [ absolute := false ].
-		key = #moveTo: ifTrue: [ 
-			subPath ifNotEmpty: [ 
-				polygons add: subPath ]. 
+		key = #moveTo: ifTrue: [
+			subPath ifNotEmpty: [
+				polygons add: subPath ].
 			subPath:= OrderedCollection new.
 			point value: args first ].
-		key = #close ifTrue: [ 
+		key = #close ifTrue: [
 			position := subPath first ].
-		key = #curveVia:and:to: ifTrue: [ 
+		key = #curveVia:and:to: ifTrue: [
 			point value: args third ].
-		key = #curveVia:to: ifTrue: [ 
+		key = #curveVia:to: ifTrue: [
 			point value: args second ].
-		key = #lineTo: ifTrue: [ 
+		key = #lineTo: ifTrue: [
 			point value: args first ].
-		key = #reflectedCurveVia:to: ifTrue: [ 
+		key = #reflectedCurveVia:to: ifTrue: [
 			point value: args second ].
-		key = #ellipticalArc:xrot:large:sweep:to:relative: ifTrue: [ 
+		key = #ellipticalArc:xrot:large:sweep:to:relative: ifTrue: [
 			point value: args fifth ].
 		key = #hLineTo: ifTrue: [
 			position := absolute
 				ifTrue: [ args first @ position y ]
 				ifFalse: [ position + (args first @ 0) ].
 			subPath add: position ].
-		key = #vLineTo: ifTrue: [ 
+		key = #vLineTo: ifTrue: [
 			position := absolute
 				ifTrue: [ position x @ args first ]
 				ifFalse: [ position + (0 @ args first) ].
 			subPath add: position ].
 		].
 	polygons add: subPath
-	
-
-
 ]
 
 { #category : #private }
 RSSVGPath >> computeSegments [
-	| pathData | 
+	| pathData |
 	pathData := ASPathConverter new stream: svgPath readStream.
-	segments := pathData convertPathData.
+	segments := pathData convertPathData
 ]
 
 { #category : #accessing }
@@ -124,7 +121,7 @@ RSSVGPath >> extent: newExtent [
 	| min max s extent |
 	segments ifNil: [ ^ self ].
 	extent := baseRectangle extent.
-	extent = newExtent 
+	extent = newExtent
 		ifTrue: [ ^ self ].
 	min := self position - (extent / 2).
 	max := self position + (extent / 2).
@@ -138,19 +135,19 @@ RSSVGPath >> extent: newExtent [
 	polygons do: [ :polygon|
 		polygon doWithIndex: [ :point :index |
 			polygon at: index put: point * s ]  ].
-	super extent: newExtent.
+	super extent: newExtent
 ]
 
 { #category : #testing }
 RSSVGPath >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix rsInverseTransform: aPoint.
-	
+
 	^ (self baseRectangle containsPoint: invertedPoint)
 		ifFalse: [ false ]
 		ifTrue: [ | apt |
 			apt := AthensPolygonTester new.
-			polygons anySatisfy: [ :eachPolygon | 
+			polygons anySatisfy: [ :eachPolygon |
 				(apt polygon: eachPolygon) includesPoint: invertedPoint]]
 ]
 
@@ -172,15 +169,15 @@ RSSVGPath >> segmentsRectangle [
 ]
 
 { #category : #accessing }
-RSSVGPath >> svgPath [ 
+RSSVGPath >> svgPath [
 	^ svgPath
 ]
 
 { #category : #accessing }
-RSSVGPath >> svgPath: aString [ 
+RSSVGPath >> svgPath: aString [
 	svgPath := aString.
 	self computeSegments.
 	self computePolygons.
 	self centerSegments.
-	self resetPath.
+	self resetPath
 ]

@@ -29,7 +29,7 @@ RSLabeledTest >> testFontSize [
 
 	shapes @ (RSLabeled new fontSize: 8).
 	self assert: c numberOfShapes equals: 200.
-	
+
 	"We check the size of the labels"
 	labels := c shapes select: [ :s | s class == RSLabel ].
 	self assert: labels size equals: 100.

@@ -19,7 +19,7 @@ RSFCFlowline >> from [
 ]
 
 { #category : #'as yet unclassified' }
-RSFCFlowline >> from: anElement to: anotherElement [ 
+RSFCFlowline >> from: anElement to: anotherElement [
 	from := anElement.
 	to := anotherElement
 ]

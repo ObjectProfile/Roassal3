@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 RSConnectionExample >> example01Basic [
 	<script: 'self new example01Basic'>
-	
+
 	| c connection |
 	c := RSMondrian new.
 	c nodes: (1 to: 100 by: 10).
@@ -76,7 +76,7 @@ RSConnectionExample >> example03Code [
 
 	c := RSPopupConnection new.
 	c inputCanvas: m canvas.
-	c output: [ :aClass | 
+	c output: [ :aClass |
 		| q |
 		q := RSMondrian new.
 		q nodes: aClass methods.
@@ -99,7 +99,7 @@ RSConnectionExample >> example04UML [
 
 	c := RSPopupConnection new.
 	c inputCanvas: builder container.
-	c output: [ :aClass | 
+	c output: [ :aClass |
 		| q |
 		q := RSMondrian new.
 		q nodes: aClass methods.

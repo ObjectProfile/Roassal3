@@ -72,7 +72,6 @@ RSAbstractContainerBuilder >> asShapeFor: model [
 	^ self container asShape
 		model: model;
 		yourself
-	
 ]
 
 { #category : #building }
@@ -88,7 +87,7 @@ RSAbstractContainerBuilder >> canvas [
 
 { #category : #accessing }
 RSAbstractContainerBuilder >> container [
-	^ container ifNil: [ container := self defaultContainer ].
+	^ container ifNil: [ container := self defaultContainer ]
 ]
 
 { #category : #accessing }
@@ -120,5 +119,5 @@ RSAbstractContainerBuilder >> shapes [
 { #category : #updating }
 RSAbstractContainerBuilder >> update [
 	self container shapes do: #remove.
-	self build.
+	self build
 ]

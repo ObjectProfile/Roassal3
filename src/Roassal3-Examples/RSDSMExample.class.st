@@ -315,7 +315,6 @@ RSDSMExample >> example01Numbers [
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
 	^ dsm
-
 ]
 
 { #category : #sources }
@@ -338,28 +337,27 @@ RSDSMExample >> example03Classes [
 	dsm setShouldFeedY.
 	dsm dependency: #dependentClasses.
 	dsm shape popup.
-	^ dsm 
-
+	^ dsm
 ]
 
 { #category : #sources }
 RSDSMExample >> example04Token [
 	<script: 'self new example04Token open'>
-	
+
 	| packageRegExp packages getKeywordsFromClass rawKeywords top10Keywords dsm |
 	packageRegExp := { 'Roassal3-*'  }.
-	packages := RPackageOrganizer default packages select: [ :p | 
+	packages := RPackageOrganizer default packages select: [ :p |
 		packageRegExp anySatisfy: [ :r | r match: p packageName ] ].
-	
-	getKeywordsFromClass := [ :cls | 
-		(cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k | 
+
+	getKeywordsFromClass := [ :cls |
+		(cls name cutCamelCase, ((((cls methods collect: #selector) flatCollect: [:k |
 			k substrings: ':' ] ) flatCollect: #cutCamelCase))) collect: #asLowercase ].
-	
+
 	rawKeywords := (packages flatCollect: #definedClasses) flatCollect: getKeywordsFromClass.
-	
+
 	top10Keywords := (((rawKeywords groupedBy: #yourself) associations sorted: [ :a :b |
 		a value size > b value size ]) first: 70) collect: #key.
-	
+
 	dsm := RSDSM new.
 	dsm objectsX: top10Keywords.
 	dsm objectsY: packages.
@@ -373,7 +371,7 @@ RSDSMExample >> example04Token [
 RSDSMExample >> example05TopLabelRotation [
 	<script: 'self new example05TopLabelRotation open'>
 	| dsm v keys |
-	v := Dictionary new 
+	v := Dictionary new
 		at: #A put: #(B C);
 		at: #B put: #(A C);
 		at: #C put: #(A);
@@ -391,7 +389,7 @@ RSDSMExample >> example05TopLabelRotation [
 RSDSMExample >> example06StronglyConnected [
 	<script: 'self new example06StronglyConnected open'>
 	| dsm v keys |
-	v := Dictionary new 
+	v := Dictionary new
 		at: #A put: #(B C);
 		at: #B put: #(A C);
 		at: #C put: #(A);
@@ -410,7 +408,7 @@ RSDSMExample >> example07StronglyConnectedWithClasses [
 	| classes v keys dsm |
 	classes := Collection withAllSubclasses.
 	v := Dictionary new.
-	classes 
+	classes
 		do: [ :c | v at: c name put: (c dependentClasses collect: #name) ]
 		displayingProgress: [:c | 'Processing: ', c name ]
 		every: 500.
@@ -418,12 +416,11 @@ RSDSMExample >> example07StronglyConnectedWithClasses [
 	dsm := RSDSMStronglyConnected new.
 	dsm objects: keys.
 	dsm setShouldFeedY.
-	dsm shape @ (RSPopup text: [ :association | 
-		association key, 
+	dsm shape @ (RSPopup text: [ :association |
+		association key,
 		((dsm isAssocDependent: association)
-			ifTrue: [ ' depends on ' ] 
+			ifTrue: [ ' depends on ' ]
 			ifFalse: [ ' does not depend on' ]) , association value ]).
 	dsm dependency: [ :k | v at: k ifAbsent: #() ].
 	^ dsm
-
 ]

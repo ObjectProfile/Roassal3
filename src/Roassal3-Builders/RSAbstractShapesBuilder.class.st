@@ -16,7 +16,7 @@ RSAbstractShapesBuilder >> objects [
 
 { #category : #hooks }
 RSAbstractShapesBuilder >> renderIn: aCanvas [
-	aCanvas addAll: (shapes := self shapesFor: self objects).
+	aCanvas addAll: (shapes := self shapesFor: self objects)
 ]
 
 { #category : #hooks }
@@ -29,7 +29,7 @@ RSAbstractShapesBuilder >> shapesFor: aCollection [
 	| k |
 	k := 0.
 	^ aCollection collect: [ :m |
-		k := k + 1. 
+		k := k + 1.
 		self shapeFor: m yourself index: k.
-		 ] as: RSGroup.
+		 ] as: RSGroup
 ]

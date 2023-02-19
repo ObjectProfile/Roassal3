@@ -31,30 +31,30 @@ Class {
 RSMultilineLabelBuilder >> basicShapeFor: aString [
 	| lines |
 	lines := aString lines.
-	
-	^ lines size = 1 
+
+	^ lines size = 1
 		ifTrue: [ self singleLabelFor: lines first ]
 		ifFalse: [ self compositeLabelFor: lines ]
 ]
 
 { #category : #hooks }
-RSMultilineLabelBuilder >> compositeLabelFor: lines [ 
+RSMultilineLabelBuilder >> compositeLabelFor: lines [
 	| shapes |
-	shapes := lines collect: [:line | 
-		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ] 
+	shapes := lines collect: [:line |
+		self singleLabelFor: (line copyReplaceAll: String tab with: '   ') ]
 		as: RSGroup.
 	self layout on: shapes.
-	
-	^ shapes asShape 
+
+	^ shapes asShape
 		position: 0@0;
-		yourself.
+		yourself
 ]
 
 { #category : #initialization }
 RSMultilineLabelBuilder >> initialize [
 	super initialize.
 	self labelShape: RSLabel new; textBlock: #asString.
-	self wrapStrategy: RSNoWrapStrategy new.
+	self wrapStrategy: RSNoWrapStrategy new
 ]
 
 { #category : #accessing }
@@ -69,10 +69,10 @@ RSMultilineLabelBuilder >> labelShape: aLabelShape [
 
 { #category : #accessing }
 RSMultilineLabelBuilder >> layout [
-	^ layout ifNil: [ layout := RSVerticalLineLayout new 
-		alignLeft; 
+	^ layout ifNil: [ layout := RSVerticalLineLayout new
+		alignLeft;
 		gapSize: 0;
-		yourself ].
+		yourself ]
 ]
 
 { #category : #accessing }
@@ -92,7 +92,6 @@ RSMultilineLabelBuilder >> singleLabelFor: text [
 	^ self labelShape copy
 		text: text;
 		yourself
-		
 ]
 
 { #category : #accessing }

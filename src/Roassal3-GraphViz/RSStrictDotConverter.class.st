@@ -29,7 +29,7 @@ Class {
 
 { #category : #visiting }
 RSStrictDotConverter >> writeHeader: aRSGroup [
-	stream << 'strict graph Roassal3'; crlf; << '{'.
+	stream << 'strict graph Roassal3'; crlf; << '{'
 ]
 
 { #category : #visiting }

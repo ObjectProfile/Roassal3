@@ -14,36 +14,36 @@ Class {
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
 	| children aShape leaves nodes|
-	
+
 	aShape := self shapeFor: atree.
 	shapes add: aShape.
-	
+
 	children := block1 rsValue: atree.
 	aShape depth: depth.
 	children := children collect: [ :child | | aShape2 |
-		aShape2 := self createElements: child nesting: block1 
+		aShape2 := self createElements: child nesting: block1
 			leaves: block2 depth: depth + 1.
 		aShape2 sparent: aShape.
 		aShape2 ] as: Array.
 	leaves := (block2 rsValue: atree) collect: [:child | | aShape2 |
-		aShape2 := self createElements: child nesting: #() 
+		aShape2 := self createElements: child nesting: #()
 			leaves: #() depth: depth +1.
 		aShape2 sparent: aShape.
 		aShape2 ] as: Array.
 	nodes := OrderedCollection new: (leaves size + children size).
 	nodes addAll: children; addAll: leaves.
-		
+
 	aShape schildren: nodes.
-	^ aShape.
+	^ aShape
 ]
 
 { #category : #private }
 RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 	| children shape |
-	
+
 	shape := self shapeFor: atree.
 	shapes add: shape.
-	
+
 	children := ablock rsValue: atree.
 	shape depth: depth.
 	children := children collect: [ :child | | e2 |
@@ -51,7 +51,7 @@ RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 		e2 sparent: shape.
 		e2 ] as: Array.
 	shape schildren: children.
-	^ shape.
+	^ shape
 ]
 
 { #category : #'public - building' }
@@ -63,8 +63,7 @@ RSAbstractTreeBuilder >> explore: atree nesting: block1 leaves: block2 [
 { #category : #'public - building' }
 RSAbstractTreeBuilder >> explore: atree using: ablock [
 	shapes := RSGroup new.
-	^ (self from: (Array with: atree) using: ablock) first.
-	
+	^ (self from: (Array with: atree) using: ablock) first
 ]
 
 { #category : #'public - building' }
@@ -85,12 +84,12 @@ RSAbstractTreeBuilder >> from: objects using: ablock [
 { #category : #initialization }
 RSAbstractTreeBuilder >> initialize [
 	super initialize.
-	rootNodes := RSGroup new.
+	rootNodes := RSGroup new
 ]
 
 { #category : #weight }
 RSAbstractTreeBuilder >> leafWeight: block [
-	self weight: [ :shape | self weightLeafShape: shape block: block ].
+	self weight: [ :shape | self weightLeafShape: shape block: block ]
 ]
 
 { #category : #'accessing - defaults' }
@@ -100,7 +99,7 @@ RSAbstractTreeBuilder >> minWeightValue [
 
 { #category : #weight }
 RSAbstractTreeBuilder >> modelWeight: anObject [
-	self weight: [ :shape | anObject rsValue: shape model ].
+	self weight: [ :shape | anObject rsValue: shape model ]
 ]
 
 { #category : #hooks }
@@ -140,12 +139,11 @@ RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 	children := shape schildren.
 	weightValue := children
 		ifEmpty: [ aBlock rsValue: shape model ]
-		ifNotEmpty: [ 
-			children 
-				inject: 0 
+		ifNotEmpty: [
+			children
+				inject: 0
 				into: [ :s :child | s + (self weightLeafShape: child block: aBlock) ] ].
-	^ weightValue max: self minWeightValue.
-	
+	^ weightValue max: self minWeightValue
 ]
 
 { #category : #'accessing - keys' }
@@ -157,7 +155,7 @@ RSAbstractTreeBuilder >> weightKey [
 RSAbstractTreeBuilder >> weightLeafShape: shape block: aBlock [
 	^ shape
 		propertyAt: self weightKey
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			self weightFromChildren: shape block: aBlock ]
 ]
 

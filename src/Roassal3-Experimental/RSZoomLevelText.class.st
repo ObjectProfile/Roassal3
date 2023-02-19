@@ -20,7 +20,7 @@ RSZoomLevelText class >> exampleSimpleUML [
 	builder renderer: RSDarkUMLClassRenderer new.
 	builder build.
 	builder canvas @ self.
-	builder canvas open.
+	builder canvas open
 ]
 
 { #category : #hooks }
@@ -52,16 +52,13 @@ RSZoomLevelText >> newEmptyBox: shape [
 RSZoomLevelText >> newLine: shape [
 	| rect |
 	rect := shape encompassingRectangle.
-	
+
 	^ RSLine new
 		paint: shape paint;
 		startPoint: rect leftCenter;
 		endPoint: rect rightCenter;
 		width: rect height;
 		yourself
-		
-		
-	
 ]
 
 { #category : #hooks }
@@ -75,7 +72,7 @@ RSZoomLevelText >> prepareLabels: aCanvas [
 	| key |
 	labels := aCanvas allChildren select: [ :shape | shape isLabel ].
 	key := self key.
-	labels do: [ :each | each propertyAt: key put: each ].
+	labels do: [ :each | each propertyAt: key put: each ]
 ]
 
 { #category : #hooks }
@@ -100,21 +97,21 @@ RSZoomLevelText >> updateZoomLevel: evt [
 		matrix := parent globalMatrix.
 		matrix scaleBy: evt camera scale.
 		rect := each computeEncompassingRectangleFor: each encompassingRectangle matrix: matrix.
-		rect height >= self limitText ifTrue: [ 
+		rect height >= self limitText ifTrue: [
 			currentShape == each ifFalse: [ self update: each withNewShape: each ]
 		].
-	
+
 		(rect height between: self emptyLimit and: self limitText) ifTrue: [
 			currentShape isLine ifFalse: [
-				
+
 				self update: each withNewShape: (self newLine: each).
 			]
 		].
-		(rect height < self emptyLimit) ifTrue: [ 
-			currentShape class = RSBox ifFalse: [ 
+		(rect height < self emptyLimit) ifTrue: [
+			currentShape class = RSBox ifFalse: [
 				self update: each withNewShape: (self newEmptyBox: each).
 			]
 		]
 	].
-	evt signalUpdate.
+	evt signalUpdate
 ]

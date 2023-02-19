@@ -44,7 +44,7 @@ RSAdjacencyMatrixBuilder >> getAllCycles [
 
 	| answer |
 	answer := Set new.
-	objects do: [ :obj | 
+	objects do: [ :obj |
 		| s |
 		s := self getVisitedNodesStartingFrom: obj.
 		(s includes: obj) ifTrue: [ answer add: s ] ].
@@ -55,7 +55,7 @@ RSAdjacencyMatrixBuilder >> getAllCycles [
 RSAdjacencyMatrixBuilder >> getVisitedNodesStartingFrom: obj [
 	| visiting |
 	visiting := Set new.
-	(self outgoingConnectionsOf: obj) do: [ :o | 
+	(self outgoingConnectionsOf: obj) do: [ :o |
 		  self hasCycleStartingFrom: o visiting: visiting ].
 	^ visiting
 ]
@@ -69,7 +69,6 @@ RSAdjacencyMatrixBuilder >> hasCycle [
 { #category : #'public - cycle' }
 RSAdjacencyMatrixBuilder >> hasCycleStartingFrom: obj [
 	^ (self getVisitedNodesStartingFrom: obj) includes: obj
-	
 ]
 
 { #category : #'public - cycle' }
@@ -78,7 +77,7 @@ RSAdjacencyMatrixBuilder >> hasCycleStartingFrom: obj visiting: visiting [
 	(visiting includes: obj) ifTrue: [ ^ self ].
 	visiting add: obj.
 	(self numberOfOutgoingConnectionsOf: obj) = 0 ifTrue: [ ^ self ].
-	(self outgoingConnectionsOf: obj) do: [ :o | 
+	(self outgoingConnectionsOf: obj) do: [ :o |
 		self hasCycleStartingFrom: o visiting: visiting ]
 ]
 
@@ -166,8 +165,8 @@ RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 	"Display the adjacency matrix"
 
 	| shape |
-	objects do: [ :obj1 | 
-		objects do: [ :obj2 | 
+	objects do: [ :obj1 |
+		objects do: [ :obj2 |
 			shape := RSBox new.
 			shape size: self defaultSize.
 			(self does: obj1 dependsOn: obj2)
@@ -186,7 +185,7 @@ RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 { #category : #'public - sorting' }
 RSAdjacencyMatrixBuilder >> sortByNumberOfIncomingConnections [
 
-	objects := objects asSortedCollection: [ :a :b | 
+	objects := objects asSortedCollection: [ :a :b |
 		           (self numberOfIncomingConnectionsOf: a)
 		           < (self numberOfIncomingConnectionsOf: b) ].
 	objects := objects asArray
@@ -195,7 +194,7 @@ RSAdjacencyMatrixBuilder >> sortByNumberOfIncomingConnections [
 { #category : #'public - sorting' }
 RSAdjacencyMatrixBuilder >> sortByNumberOfOutgoingConnections [
 
-	objects := objects asSortedCollection: [ :a :b | 
+	objects := objects asSortedCollection: [ :a :b |
 		           (self numberOfOutgoingConnectionsOf: a)
 		           < (self numberOfOutgoingConnectionsOf: b) ].
 	objects := objects asArray

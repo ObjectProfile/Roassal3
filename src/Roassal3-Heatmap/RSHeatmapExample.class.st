@@ -25,7 +25,6 @@ RSHeatmapExample >> example01SimpleHeatmap [
 	h yLabels: vegetables.
 	h show: values.
 	h open
-	
 ]
 
 { #category : #'as yet unclassified' }

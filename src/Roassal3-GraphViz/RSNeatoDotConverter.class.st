@@ -34,7 +34,7 @@ Class {
 
 { #category : #visiting }
 RSNeatoDotConverter >> writeHeader: aRSGroup [
-	stream << 'graph Roassal3'; crlf; << '{'; crlf; << 'layout=neato;'; crlf.
+	stream << 'graph Roassal3'; crlf; << '{'; crlf; << 'layout=neato;'; crlf
 ]
 
 { #category : #visiting }

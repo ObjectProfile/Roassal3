@@ -12,16 +12,15 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	c := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: (RSHorizontalTick new 
+		addDecoration: (RSHorizontalTick new
 			numberOfTicks: 20;
 			integer);
-		addDecoration: (vertical := RSVerticalTick new integer 
+		addDecoration: (vertical := RSVerticalTick new integer
 			numberOfTicks: numberOfTicks;
 			doNotUseNiceLabel);
 		yourself.
 	c build.
-	self assert: vertical labels size equals: numberOfTicks+1.
-	
+	self assert: vertical labels size equals: numberOfTicks+1
 ]
 
 { #category : #tests }
@@ -29,7 +28,7 @@ RSChartTickTest >> testFromNames [
 	| dates y data x c horizontal |
 	dates := OrderedCollection new.
 	y := OrderedCollection new.
-	data := 
+	data :=
 	{'04-jun-2020'.800.
 	'03-jun-2020'.	900.
 	'02-jun-2020'.	850} reverse.
@@ -39,13 +38,13 @@ RSChartTickTest >> testFromNames [
 	x := 1 to: dates size.
 	c := RSChart new.
 	c extent: 300@200.
-	
+
 	c addPlot: (RSLinePlot new x: x y: y).
 
 	c addDecoration: ( horizontal := RSHorizontalTick new fromNames: dates).
 	c addDecoration: (RSVerticalTick new numberOfTicks: 10; asFloat).
 	c build.
-	self assert: horizontal labels size equals: dates size.
+	self assert: horizontal labels size equals: dates size
 ]
 
 { #category : #tests }
