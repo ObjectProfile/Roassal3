@@ -12,5 +12,4 @@ RSEasingInterpolatorTest >> testAllEasing [
 	RSEasingInterpolator allSubclassesDo: [ :cls |
 		someX collect: [ :v | cls new interpolate: v; interpolateOut: v ].
 	]
-
 ]

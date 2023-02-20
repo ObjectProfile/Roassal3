@@ -23,7 +23,7 @@ RSChannelExample >> example3 [
 	eb shapes: classeShapes.
 	eb connectFrom: #superclass.
 
-	RSNormalizer size 
+	RSNormalizer size
 		shapes: classeShapes;
 		normalize: #numberOfMethods.
 
@@ -112,7 +112,7 @@ RSChannelExample >> exampleBasic2 [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel color: Color green.
 	channel input: { oddLabel }.
@@ -168,7 +168,7 @@ RSChannelExample >> exampleBasic3 [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel color: Color green.
 	channel input: { oddLabel }.

@@ -21,7 +21,7 @@ RSSVGAnimationExamples >> example01SVGIcons [
 	color := RSGradientPalette gradient21.
 	color range at: 1 put: RSGradientPalette trueSunset.
 	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
-	
+
 	shapes := #(america puzzlePiece supermarketCart) collectWithIndex: [ :m :index |
 		| grad |
 		grad := (color scale: m)
@@ -35,12 +35,12 @@ RSSVGAnimationExamples >> example01SVGIcons [
 			color: grad;
 			yourself ].
 	canvas addAll: shapes.
-	canvas newAnimation repeat onStepDo: [:t | 
-		shapes do: [:shape | | p ang ext block | 
+	canvas newAnimation repeat onStepDo: [:t |
+		shapes do: [:shape | | p ang ext block |
 			p := shape position.
 			ext := shape extent / 2.
 			ang := theta at: shape index.
-			block := [ 
+			block := [
 				ang := Float pi / 4 + ang.
 				p := (ang cos@ ang sin) * 1.5 + shape position. ].
 			p := (ang cos@ ang sin) * 1.5 + p.
@@ -55,11 +55,10 @@ RSSVGAnimationExamples >> example01SVGIcons [
 		extent: 100@100;
 		noPaint;
 		withBorder).
-	canvas 
-		when: RSExtentChangedEvent 
+	canvas
+		when: RSExtentChangedEvent
 		do: [ canvas camera zoomToFit: canvas extent extent: 100 asPoint ].
 	^ canvas
-	
 ]
 
 { #category : #examples }
@@ -138,7 +137,7 @@ RSSVGAnimationExamples >> example03Boat [
 		color: 'AF7643').
 	g add: (RSEllipse new
 		position: 249.6@ 18.4; radius: 18.4;
-		color: '788787').	
+		color: '788787').
 	g add: (RSSVGPath new
 		svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
 		color: '0C91C4').
@@ -160,7 +159,7 @@ RSSVGAnimationExamples >> example03Boat [
 
 	boat := RSComposite new shapes: g; yourself.
 	x := 1.
-	updateLines := [ 
+	updateLines := [
 		lines doWithIndex: [:line :m |
 			| points |
 			points := (1 to: 200) collect: [ :i | | y |
@@ -169,14 +168,14 @@ RSSVGAnimationExamples >> example03Boat [
 			line controlPoints: points ] ].
 	updateLines value.
 	canvas newAnimation
-		repeat; 
-		onStepDo: [ :t | 
+		repeat;
+		onStepDo: [ :t |
 			| cp p1 p2 vector |
 			frame := frame + 0.5.
 			updateLines value.
 			cp := (lines at: (lines size / 2) asInteger) controlPoints.
 			x := x + 0.3.
-		
+
 			(x between: 1 and: cp size - 1)
 				ifFalse: [ x := cp size - 1 ].
 			p1 := cp at: x asInteger.
@@ -196,7 +195,7 @@ RSSVGAnimationExamples >> example03Boat [
 	canvas camera scale: 2.5.
 	canvas add: pharo.
 	canvas add: boat.
-	RSLocation new 
+	RSLocation new
 		inner; bottom; right;
 		move: pharo on: lines.
 	^ canvas
@@ -211,12 +210,12 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 		color: 'E83A54';
 		radius: 0;
 		yourself].
-	paint := (LinearGradientPaint 
+	paint := (LinearGradientPaint
 		fromArray: { 0-> '25B4AF'. 1-> '0088AC'})
 		start: 28.879@143.392;
 		stop: 272.3663@143.392.
-	c 
-		addShape: (RSSVGPath new 
+	c
+		addShape: (RSSVGPath new
 			noPaint;
 			border: (RSBorder new paint: paint; width: 21; capRound);
 			svgPath: 'M77,24.4v243.9
@@ -232,10 +231,10 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 		onStepDo: [ :t |
 			c shapes first border dashArray: {t. 10000}.
 			c signalUpdate ].
-	eAnimation := [ :duration :shape | 
-		c newAnimation 
+	eAnimation := [ :duration :shape |
+		c newAnimation
 			duration: duration milliSeconds;
-			when: RSAnimationEndEvent do: [ 
+			when: RSAnimationEndEvent do: [
 				c newAnimation
 					from: 0;
 					to: 20.4;
@@ -309,14 +308,14 @@ RSSVGAnimationExamples >> example05Corona [
 		repeat;
 		duration: 10 seconds;
 		scale: curveScale;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			| low upp mean stdDev series y first |
 			low := 0.
 			upp := t.
 			mean := (low + upp) / 2.
 			stdDev := (upp - low) / 4.
 			first := nil.
-			series := (low to: upp) collect: [ :x | 
+			series := (low to: upp) collect: [ :x |
 				y := normalY value: x value: mean value: stdDev.
 				y := y * (yscale scale: t).
 				first ifNil: [ first := y ].
@@ -328,7 +327,7 @@ RSSVGAnimationExamples >> example05Corona [
 				s << 'L'.
 				spoint value: s value: series last x@ 250.
 				s << 'Z' ]).
-			
+
 			curve paint: (color scale: t).
 			canvas signalUpdate.
 			].
@@ -336,12 +335,11 @@ RSSVGAnimationExamples >> example05Corona [
 	canvas add: title.
 	canvas add: ytitle.
 	canvas add: xtitle.
-	canvas add: curve. 
+	canvas add: curve.
 	canvas add: line.
 	canvas add: lineTitle.
 	canvas @RSCanvasController.
 	^ canvas
-
 ]
 
 { #category : #examples }

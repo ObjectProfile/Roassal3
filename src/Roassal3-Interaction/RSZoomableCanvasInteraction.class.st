@@ -19,7 +19,7 @@ RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: del
 	sc = (self scaleFor: sc) ifFalse: [ ^ self ].
 	dist := evtPosition - camera position.
 	correct := self
-		correctCameraPosition: aCanvas 
+		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
 		position: camera position + (dist * delta y)
 		scale: sc.
@@ -28,7 +28,7 @@ RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: del
 	animation := aCanvas newAnimation
 		duration: 200 milliSeconds;
 		onStepDo: [ :t |
-			camera 
+			camera
 				scale: (scale scale: t);
 				translateTo: (position scale: t).
 			aCanvas signalUpdate ];
@@ -37,7 +37,7 @@ RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: del
 
 { #category : #hooks }
 RSZoomableCanvasInteraction >> onShape: aCanvas [
-	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self.
+	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self
 ]
 
 { #category : #'events - processing' }
@@ -47,15 +47,15 @@ RSZoomableCanvasInteraction >> processEvent: evt [
 	delta := evt isUp
 		ifTrue: [ 1.25@0.2 ]
 		ifFalse: [ 0.8@ -0.25 ].
-	self move: evt canvas evtPosition: evt position delta: delta.
+	self move: evt canvas evtPosition: evt position delta: delta
 ]
 
 { #category : #rendering }
 RSZoomableCanvasInteraction >> renderLegendOn: lb [
-	lb text: 'Wheel' description: 'To zoom in-out the view'.
+	lb text: 'Wheel' description: 'To zoom in-out the view'
 ]
 
 { #category : #rendering }
 RSZoomableCanvasInteraction >> renderOn: lb [
-	lb text: 'Wheel' description: 'To zoom in-out the view'.
+	lb text: 'Wheel' description: 'To zoom in-out the view'
 ]

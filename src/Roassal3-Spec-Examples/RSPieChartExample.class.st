@@ -15,11 +15,11 @@ Class {
 }
 
 { #category : #layout }
-RSPieChartExample class >> defaultLayout [ 
+RSPieChartExample class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #droplist withConstraints: [ :c | c height: self toolbarHeight ];
-		add: (SpBoxLayout newHorizontal 
+		add: (SpBoxLayout newHorizontal
 			add: #chart withConstraints: [:c | c width: 70];
 			add: #pie;
 			yourself);
@@ -86,21 +86,21 @@ RSPieChartExample >> visualizeChart: canvas package: pkg [
 	bscale := NSScale linear
 		domain: { 0. totalSum };
 		range: { 0. canvasRect height }.
-	
+
 	box := RSBox new
 		color: Color lightGray;
 		extent: 20@ (bscale scale: pkg linesOfCode);
 		yourself.
 	box position: -10 @ ((scale scale: 0) - (box height /2 )).
 	canvas add: box.
-	canvas addAll: (ticks collect:[:t | 
+	canvas addAll: (ticks collect:[:t |
 		RSLabel new
 			position: 20@ (scale scale: t);
 			text: (t >= 1000
 				ifTrue: [ ((t / 1000) printShowingDecimalPlaces: 1) ,'K' ]
 				ifFalse: [ t asInteger asString ]);
 			yourself ]).
-	
+
 	canvas add: (RSPolyline new
 		controlPoints: (ticks collect: [:p | -10 @ (scale scale: p)]);
 		marker: (RSBox new extent: 10@2; color: Color black);
@@ -112,27 +112,26 @@ RSPieChartExample >> visualizePie: canvas package: pkg [
 	| b rect max |
 	b := RSPie new.
 	b container: canvas.
-	
+
 	b sliceShape
 		innerRadius: 70;
 		externalRadius: 150;
 		segmentSpacing: 0.1.
 	b sliceColor: NSScale google20.
-	b 
+	b
 		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;
 		build.
 	RSRotatedPieLabelDecorator on: b.
-	b shapes @ (RSPopup text: [ :cls | 
+	b shapes @ (RSPopup text: [ :cls |
 		cls name, String cr, cls linesOfCode asString, 'LOC' ] ).
 	canvas addShape: (RSLabel new
 		text: pkg linesOfCode asString,'LOC').
 	rect := canvas encompassingRectangle.
 	max := rect origin x abs max: rect corner x.
-	canvas when: RSExtentChangedEvent do: [ 
-		canvas camera 
-			zoomToFit: canvas extent 
+	canvas when: RSExtentChangedEvent do: [
+		canvas camera
+			zoomToFit: canvas extent
 			rectangle: (Rectangle floatCenter: 0@0 extent: max * 2@0).
-		canvas signalUpdate ].
-
+		canvas signalUpdate ]
 ]

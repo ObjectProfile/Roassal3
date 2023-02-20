@@ -78,7 +78,7 @@ RSCamera >> distanceFromPixelToSpace: aPoint [
 ]
 
 { #category : #accessing }
-RSCamera >> extent [ 
+RSCamera >> extent [
 
 	^ extent
 ]
@@ -101,7 +101,6 @@ RSCamera >> fromSpaceToPixel: aPoint [
 		scaleBy: self scale;
 		translateBy: self position negated;
 		transform: aPoint
-	
 ]
 
 { #category : #initialization }
@@ -109,11 +108,11 @@ RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
 	scale := 1.000000.
-	originMode := #center.
+	originMode := #center
 ]
 
 { #category : #accessing }
-RSCamera >> originMode [ 
+RSCamera >> originMode [
 
 	"#center or #topLeft"
 
@@ -176,14 +175,14 @@ RSCamera >> setMatrix: anAthensAffineTransform [
 	anAthensAffineTransform
 		translateBy: (self canvas extent / 2) asFloatPoint;
 		scaleBy: self scale asFloat;
-		translateBy: self position negated asFloatPoint.
+		translateBy: self position negated asFloatPoint
 ]
 
 { #category : #accessing }
 RSCamera >> visibleRectangle [
-	^ Rectangle 
+	^ Rectangle
 		floatCenter: self position
-		extent: self canvas extent / self scale.
+		extent: self canvas extent / self scale
 ]
 
 { #category : #zoom }
@@ -193,18 +192,16 @@ RSCamera >> zoomToFit [
 
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent [
-	self 
-		zoomToFit: anExtent 
+	self
+		zoomToFit: anExtent
 		rectangle: canvas encompassingRectangle
-	
 ]
 
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent extent: otherExtent [
-	self 
-		zoomToFit: anExtent 
+	self
+		zoomToFit: anExtent
 		rectangle: (Rectangle floatCenter: 0@0 extent: otherExtent)
-	
 ]
 
 { #category : #zoom }
@@ -212,7 +209,7 @@ RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
 	sc := anExtent / (self class maxExtentFor: rect).
 	sc := sc x min: sc y.
-	self 
+	self
 		translateTo: rect floatCenter;
-		scale: sc.
+		scale: sc
 ]

@@ -16,12 +16,12 @@ Class {
 { #category : #hooks }
 RSRotated >> dragEnd: evt [
 	drag := false.
-	prevAngle := nil.
+	prevAngle := nil
 ]
 
 { #category : #hooks }
 RSRotated >> dragStart: evt [
-	drag := true.
+	drag := true
 ]
 
 { #category : #hooks }
@@ -42,7 +42,7 @@ RSRotated >> dragging: evt [
 { #category : #initialization }
 RSRotated >> initialize [
 	super initialize.
-	drag := false.
+	drag := false
 ]
 
 { #category : #hooks }
@@ -51,5 +51,5 @@ RSRotated >> onShape: aShape [
 	aShape parent
 		when: RSMouseLeftDragStart do: [ :evt|  self dragStart: evt ];
 		when: RSMouseDragging do: [ :evt | self dragging: evt ];
-		when: RSMouseDragEnd do: [ :evt | self dragEnd: evt ].
+		when: RSMouseDragEnd do: [ :evt | self dragEnd: evt ]
 ]

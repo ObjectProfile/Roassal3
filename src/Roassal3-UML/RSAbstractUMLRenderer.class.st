@@ -16,14 +16,14 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractUMLRenderer class >> isAbstract [ 
+RSAbstractUMLRenderer class >> isAbstract [
 
 	^self name = #RSAbstractUMLRenderer
 ]
 
 { #category : #accessing }
 RSAbstractUMLRenderer >> border [
-	^ border ifNil: [ border := self defaultBorder ].
+	^ border ifNil: [ border := self defaultBorder ]
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ RSAbstractUMLRenderer >> boxBorder: aBorder [
 ]
 
 { #category : #accessing }
-RSAbstractUMLRenderer >> boxColor [ 
+RSAbstractUMLRenderer >> boxColor [
 	^ boxColor ifNil: [ boxColor := self defaultBoxColor ]
 ]
 
@@ -61,10 +61,10 @@ RSAbstractUMLRenderer >> defaultBorder [
 { #category : #defaults }
 RSAbstractUMLRenderer >> defaultBoxBorder [
 	^ RSBorder new
-		width: 5; 
-		joinMiter; 
+		width: 5;
+		joinMiter;
 		color: '666EA0';
-		yourself 
+		yourself
 ]
 
 { #category : #accessing }

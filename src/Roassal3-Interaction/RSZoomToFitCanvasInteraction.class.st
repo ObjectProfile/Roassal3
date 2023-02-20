@@ -13,8 +13,8 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	camera := aCanvas camera.
 	sc := camera scale.
 	pos := camera position.
-	aCanvas zoomToFit. 
-	
+	aCanvas zoomToFit.
+
 	position := NSScale linear
 		from: pos;
 		to: camera position.
@@ -22,17 +22,17 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 		from: sc;
 		to: camera scale.
 	camera translateTo: pos; scale: sc.
-	sc < 1 ifTrue: [ 
+	sc < 1 ifTrue: [
 		aCanvas newAnimation
 			duration: 500 milliSeconds;
 			easing: RSEasingInterpolator backOut;
-			onStepDo: [ :t | 
+			onStepDo: [ :t |
 				camera
 					position: (position scale: t);
 					scale: (scale scale: t).
 				aCanvas signalUpdate ].
 		^ self ].
-	aCanvas newAnimation 
+	aCanvas newAnimation
 		delay: 150 milliSeconds;
 		duration: 700 milliSeconds;
 		easing: RSEasingInterpolator backOut;
@@ -42,11 +42,9 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	aCanvas newAnimation
 		duration: 300 milliSeconds;
 		easing: RSEasingInterpolator exp;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 				camera scale: (scale scale: t).
 				aCanvas signalUpdate ]
-	
-	
 ]
 
 { #category : #hooks }
@@ -64,7 +62,7 @@ RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	aCanvas camera: (self cameraFor: aCanvas).
 	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
 	"this will call the zoomToFit"
-	self zoomToFitOnStart: aCanvas.
+	self zoomToFitOnStart: aCanvas
 ]
 
 { #category : #'private - events' }
@@ -75,7 +73,7 @@ RSZoomToFitCanvasInteraction >> processKeyUp: evt [
 
 { #category : #rendering }
 RSZoomToFitCanvasInteraction >> renderLegendOn: lb [
-	lb text: 'Space' description: 'To zoom to fit the view'.
+	lb text: 'Space' description: 'To zoom to fit the view'
 ]
 
 { #category : #'zoom animation' }

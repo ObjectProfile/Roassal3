@@ -129,7 +129,7 @@ Class {
 { #category : #'public - creation' }
 RSComposite class >> model: anObject forIt: twoArgsBlock [
 	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the twoArgsBlock. The variable twoArgsBlock points to a two argument block. The first argument is the object model, and the second argument is the composite.
-	
+
 For example:
 ```
 c := RSCanvas new.
@@ -141,8 +141,8 @@ compoShape := RSComposite model: 'Hello' forIt: [ :composite :title |
 	composite @ RSDraggable ].
 c add: compoShape.
 
-c open 
-```	
+c open
+```
 "
 
 	^ (self models: (Array with: anObject) forEach: twoArgsBlock) first
@@ -150,8 +150,8 @@ c open
 
 { #category : #'public - creation' }
 RSComposite class >> models: someObjects forEach: twoArgsBlock [
-	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock. 
-	
+	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock.
+
 For example:
 ```
 classes := ByteArray withAllSubclasses.
@@ -166,7 +166,7 @@ boxes := RSComposite models: classes forEach: [ :cls :c |
 	c @ RSDraggable.
 ].
 
-c addAll: boxes. 
+c addAll: boxes.
 RSFlowLayout on: c shapes.
 
 lb := RSLineBuilder line.
@@ -177,11 +177,11 @@ lb connectFrom: #superclass.
 RSTreeLayout on: c nodes.
 c @ RSCanvasController.
 c open
-```	
+```
 "
 
 	^ someObjects
-		  collect: [ :obj | 
+		  collect: [ :obj |
 				| t |
 		  		t := twoArgsBlock valueWithArguments: (Array with: (self model: obj) with: obj).
 				t adjustToChildren ]
@@ -205,7 +205,7 @@ RSComposite >> addRecursivelyIn: aCollection [
 ]
 
 { #category : #adding }
-RSComposite >> addShape: aShape before: otherShape [ 
+RSComposite >> addShape: aShape before: otherShape [
 	"Add a shape in a composite shape"
 	aShape addedIn: self.
 	self children
@@ -215,7 +215,7 @@ RSComposite >> addShape: aShape before: otherShape [
 
 { #category : #public }
 RSComposite >> adjustToChildren [
-"Recompute the encompassing rectangle of the composite shape from the position of the children. 
+"Recompute the encompassing rectangle of the composite shape from the position of the children.
 
 In case one wishes to have a padding in the composite, the method #padding: must be called _after_ calling #adjustToChildren
 
@@ -238,12 +238,11 @@ composite extent '=> (20.0@50.0)'
 	children ifNil: [ ^ self ].
 	rect := children encompassingRectangle.
 	delta := rect floatCenter negated.
-	
+
 	children do: [ :s | s basicTranslateBy: delta ].
-	self 
+	self
 		extent: rect extent.
-	self position = (0@0) ifTrue: [ self translateTo: delta negated ].
-		
+	self position = (0@0) ifTrue: [ self translateTo: delta negated ]
 ]
 
 { #category : #accessing }
@@ -263,13 +262,11 @@ RSComposite >> children: aRSGroup [
 	this method changes the position of the shapes and set the position of this composite shape
 	to the center of the encompassingRectangle.
 	"
-	aRSGroup copy do: [ :s | 
-		s isInACanvas 
+	aRSGroup copy do: [ :s |
+		s isInACanvas
 			ifTrue: [ s remove ] ].
 	self addAll: aRSGroup.
-	self adjustToChildren.
-
-	
+	self adjustToChildren
 ]
 
 { #category : #accessing }
@@ -286,13 +283,13 @@ RSComposite >> clipChildren: aBoolean [
 RSComposite >> copyWithoutAnnouncer [
 	| copy |
 	copy := self copy.
-	copy privateShapes: (self children collect: [ :child | 
+	copy privateShapes: (self children collect: [ :child |
 		child copyWithoutAnnouncer
 			parent: copy;
 			yourself ]).
 	copy privateNodes: #().
 	copy privateEdges: #().
-	^ copy 
+	^ copy
 ]
 
 { #category : #'looking up shapes' }
@@ -312,8 +309,7 @@ RSComposite >> initialize [
 	super initialize.
 	self paint: nil.
 	self clipChildren: false.
-	self resetPath.
-	
+	self resetPath
 ]
 
 { #category : #testing }
@@ -324,12 +320,12 @@ RSComposite >> isComposite [
 { #category : #accessing }
 RSComposite >> padding: anObject [
 	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
-The argument, anObject can be a number, a point or Margin. 
+The argument, anObject can be a number, a point or Margin.
 
 IMPORTANT:
 - The shapes must be added in the composite before calling #padding:
 - The padding must be set after having performed #adjustToChildren
-	
+
 Here is an example of usage:
 ```Smalltalk
 box := RSBox new
@@ -352,19 +348,19 @@ c add: composite.
 c
 ```
 	"
-	
+
 	| margin rect center temp |
-	temp := children 
+	temp := children
 		ifNil: [ RSGroup new: 0 ]
 		ifNotNil: [children].
-	margin := anObject asMargin. 
+	margin := anObject asMargin.
 	rect := temp encompassingRectangle.
 	rect := margin expandRectangle: rect.
 	self extent: rect extent.
-	
+
 	(center := rect floatCenter) = (0@0) ifTrue: [ ^ self ].
 	center := center negated.
-	temp do: [ :s | s basicTranslateBy: center ].
+	temp do: [ :s | s basicTranslateBy: center ]
 ]
 
 { #category : #private }
@@ -407,10 +403,9 @@ RSComposite >> pushBack: aShape [
 
 { #category : #actions }
 RSComposite >> pushFront: shape [
-	children 
+	children
 		remove: shape ifAbsent: [];
-		addLast: shape. 
-	
+		addLast: shape.
 ]
 
 { #category : #removing }
@@ -420,13 +415,12 @@ RSComposite >> removeShape: shape [
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.
-	shape announce: evt.
-	
+	shape announce: evt
 ]
 
 { #category : #public }
 RSComposite >> resetChildren [
-	children := nil.
+	children := nil
 ]
 
 { #category : #path }
@@ -437,7 +431,6 @@ RSComposite >> resetPath [
 { #category : #public }
 RSComposite >> resizeWithChildrenTo: aPointExtent [
 	self scaleBy: aPointExtent / self baseRectangle extent
-	
 ]
 
 { #category : #path }
@@ -455,8 +448,8 @@ RSComposite >> shapeWithAction: eventClass forPosition: position [
 	self shapes reverseDo: [ :s |
 		res := s shapeWithAction: eventClass forPosition: pos.
 		res ifNotNil: [ ^ res] ].
-	
-	^ super shapeWithAction: eventClass forPosition: position.
+
+	^ super shapeWithAction: eventClass forPosition: position
 ]
 
 { #category : #'accessing - computed' }
@@ -466,7 +459,7 @@ RSComposite >> shapeWithActionForPosition: position [
 	self shapes reverseDo: [ :s |
 		res := s shapeWithActionForPosition: pos.
 		res ifNotNil: [ ^ res] ].
-	^ super shapeWithActionForPosition: position.
+	^ super shapeWithActionForPosition: position
 ]
 
 { #category : #accessing }
@@ -482,7 +475,7 @@ RSComposite >> shapes: aRSGroup [
 { #category : #'edges - deprecated' }
 RSComposite >> updateConnectedEdges [
 	"Update the edge connected to elements contained in the composite. This happens when a shape is drag and dropped. For example:
-	
+
 -=-=-=-=-=-=-=-=-=
 c := RSCanvas new.
 
@@ -504,9 +497,9 @@ c add: (RSLine new color: Color red; from: c shapes first; to: g second).
 c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=
 "
-	self shouldUpdateEdges 
+	self shouldUpdateEdges
 		ifTrue: [ connectedLines do: [ :edge | edge update ] ].
-	self children do: [ :child | 
+	self children do: [ :child |
 		child isNode
 			ifTrue: [ child updateConnectedEdges ] ]
 ]
@@ -514,7 +507,7 @@ c @ RSCanvasController
 { #category : #lines }
 RSComposite >> updateConnectedLines [
 	"Update the lines connected to elements contained in the composite. This happens when a shape is drag and dropped. For example:
-	
+
 ```
 c := RSCanvas new.
 
@@ -536,9 +529,9 @@ c add: (RSLine new color: Color red; from: c shapes first; to: g second).
 c @ RSCanvasController
 ```
 "
-	self shouldUpdateLines 
+	self shouldUpdateLines
 		ifTrue: [ connectedLines do: [ :line | line update ] ].
-	self children do: [ :child | 
+	self children do: [ :child |
 		child isNode
 			ifTrue: [ child updateConnectedLines ] ]
 ]

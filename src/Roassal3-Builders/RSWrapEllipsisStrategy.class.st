@@ -19,15 +19,13 @@ RSWrapEllipsisStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	lines size > 1 ifTrue: [ self error: 'Not supported for multiline' ].
 	width := self wrapMaxWidth.
 	ellipsis := self ellipsis.
-	currentText := currentTextWithEllipsis := aString. 
-	
+	currentText := currentTextWithEllipsis := aString.
+
 	[label := aRSMultilineLabelBuilder singleLabelFor: currentTextWithEllipsis.
-	label width > width and: [ currentText isNotEmpty ] ] whileTrue: [ 
+	label width > width and: [ currentText isNotEmpty ] ] whileTrue: [
 		currentText := currentText copyFrom: 1 to: currentText size - 1.
 		currentTextWithEllipsis := currentText , ellipsis.
 	].
 
 	^ label
-	
-	
 ]

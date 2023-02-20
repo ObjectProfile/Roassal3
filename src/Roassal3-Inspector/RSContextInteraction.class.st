@@ -18,7 +18,7 @@ RSContextInteraction >> defaultInteractions [
 { #category : #initialization }
 RSContextInteraction >> initialize [
 	super initialize.
-	interactions := self defaultInteractions.
+	interactions := self defaultInteractions
 ]
 
 { #category : #hooks }

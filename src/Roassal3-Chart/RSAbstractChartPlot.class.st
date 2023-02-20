@@ -71,7 +71,6 @@ RSAbstractChartPlot >> createYScale [
 		range:
 			{0 - padding.
 			chart extent y negated + padding }
-
 ]
 
 { #category : #accessing }

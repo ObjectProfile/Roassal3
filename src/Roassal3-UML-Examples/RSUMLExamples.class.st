@@ -122,7 +122,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	builder renderer: RSTorchUMLClassRenderer new.
 	builder build.
 	builder canvas @ RSHierarchyPackerInteraction.
-	^ builder canvas.
+	^ builder canvas
 ]
 
 { #category : #examples }
@@ -140,7 +140,7 @@ RSUMLExamples >> example10AggregationComposition [
 	<script: 'self new example10AggregationComposition open'>
 	| builder |
 	builder := RSUMLClassBuilder new.
-	
+
 	builder classes: #(Band Musician Catalog Product Building Room).
 	builder modelDescriptor
 		classname: #yourself;
@@ -150,7 +150,7 @@ RSUMLExamples >> example10AggregationComposition [
 		isAbstract: false;
 		aggregations: { #Musician -> #Band. #Product -> #Catalog };
 		compositions: { #Room -> #Building }.
-		
+
 	builder renderer layout flow gapSize: 30.
 	builder build.
 	^ builder canvas

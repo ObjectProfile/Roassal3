@@ -21,7 +21,7 @@ RSMarker >> asMarker [
 RSMarker >> initialize [
 	super initialize.
 	offset := 0.
-	offsetRatio := 0.
+	offsetRatio := 0
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ RSMarker >> offsetRatio [
 { #category : #accessing }
 RSMarker >> offsetRatio: aFloat [
 	"Set the offset ratio of the marker. The argument is a float and has to range from 0 to 1.
-	
+
 ```
 c := RSCanvas new.
 
@@ -105,18 +105,17 @@ RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	angle := vector angle.
 	angle := angle + Float halfPi.
 	pos := from.
-	
+
 	shape matrix
 		loadIdentity;
 		rotateByRadians: angle.
-	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [ 
+	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [
 		| unit |
 		unit := vector / (vector r max: 1).
 		pos := pos - (vector * self offsetRatio) - (unit * self offset).
 		 ].
 	shape position: pos.
 	aBlock value: shape
-	
 ]
 
 { #category : #accessing }
@@ -135,7 +134,7 @@ RSMarker >> withEnd: controlPoints do: aBlock [
 	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints at: controlPoints size - 1.
 	to := controlPoints last.
-	self setPositionTo: to vector: to-from do: aBlock.
+	self setPositionTo: to vector: to-from do: aBlock
 ]
 
 { #category : #public }
@@ -153,5 +152,5 @@ RSMarker >> withStart: controlPoints do: aBlock [
 	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints first.
 	to := controlPoints second.
-	self setPositionTo: from vector: from - to do: aBlock.
+	self setPositionTo: from vector: from - to do: aBlock
 ]

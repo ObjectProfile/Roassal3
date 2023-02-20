@@ -39,7 +39,7 @@ RSWorldMenu class >> loadExporters [
 { #category : #utilities }
 RSWorldMenu class >> loadFullStableVersion [
 
-	[ 
+	[
 	Metacello new
 		baseline: 'Roassal3';
 		repository: 'github://ObjectProfile/Roassal3:v0.9.4';

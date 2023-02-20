@@ -14,24 +14,23 @@ RSCircularAroundAVertexLayout >> doExecute: shapes [
 	| centerShape rad circleLayout |
 	centerShape := self findCenterIn: shapes.
 	shapes remove: centerShape.
-	
+
 	(circleLayout := RSEquidistantCircleLayout new)
 		initialAngle: self initialAngle;
 		radius: (self computeRadiusFor: shapes);
 		on: shapes.
 	rad := circleLayout computeRadiusFor: shapes.
-	centerShape position: rad@rad.
-	
+	centerShape position: rad@rad
 ]
 
 { #category : #utilities }
-RSCircularAroundAVertexLayout >> findCenterIn: aCollection [ 
+RSCircularAroundAVertexLayout >> findCenterIn: aCollection [
 	| max currentSize center |
 	max := 0.
 	center := nil.
-	aCollection do: [ :each | 
+	aCollection do: [ :each |
 		currentSize := each connectedLines size.
-		currentSize > max ifTrue: [ 
+		currentSize > max ifTrue: [
 			max := currentSize.
 			center := each ] ].
 	^ center

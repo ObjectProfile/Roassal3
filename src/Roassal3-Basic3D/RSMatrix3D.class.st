@@ -31,9 +31,6 @@ RSMatrix3D >> gtInspertorMatrix: composite [
 		column: 'y' evaluated: [ :each | each second ];
 		column: 'z' evaluated: [ :each | each third ];
 		column: '0' evaluated: [ :each | each fourth ]
-		
-		
-		
 ]
 
 { #category : #'instance creation' }
@@ -41,12 +38,12 @@ RSMatrix3D >> identity [
 	xx := yy := zz := 1.
 	xy := xz := x0 := 0.
 	yx := yz := y0 := 0.
-	zx := zy := z0 := 0.
+	zx := zy := z0 := 0
 ]
 
 { #category : #initialization }
 RSMatrix3D >> initialize [
-	self identity.
+	self identity
 ]
 
 { #category : #tranforming }
@@ -57,31 +54,31 @@ RSMatrix3D >> mult: r [
 	lxy := (xy * r xx) + (yy * r xy) + (zy * r xz).
 	lxz := (xz * r xx) + (yz * r xy) + (zz * r xz).
 	lx0 := (x0 * r xx) + (y0 * r xy) + (z0 * r xz) + r x0.
-	
+
 	lyx := (xx * r yx) + (yx * r yy) + (zx * r yz).
 	lyy := (xy * r yx) + (yy * r yy) + (zy * r yz).
 	lyz := (xz * r yx) + (yz * r yy) + (zz * r yz).
 	ly0 := (x0 * r yx) + (y0 * r yy) + (z0 * r yz) + r y0.
-	
+
 	lzx := (xx * r zx) + (yx * r zy) + (zx * r zz).
 	lzy := (xy * r zx) + (yy * r zy) + (zy * r zz).
 	lzz := (xz * r zx) + (yz * r zy) + (zz * r zz).
 	lz0 := (x0 * r zx) + (y0 * r zy) + (z0 * r zz) + r z0.
-	
+
 	xx := lxx.
 	xy := lxy.
 	xz := lxz.
 	x0 := lx0.
-	
+
 	yx := lyx.
 	yy := lyy.
 	yz := lyz.
 	y0 := ly0.
-	
+
 	zx := lzx.
 	zy := lzy.
 	zz := lzz.
-	z0 := lz0.
+	z0 := lz0
 ]
 
 { #category : #'scaling, rotation, translation' }
@@ -91,16 +88,16 @@ RSMatrix3D >> scale: f [
 	xy := xy * f.
 	xz := xz * f.
 	x0 := x0 * f.
-	
+
 	yx := yx * f.
 	yy := yy * f.
 	yz := yz * f.
 	y0 := y0 * f.
-	
+
 	zx := zx * f.
 	zy := zy * f.
 	zz := zz * f.
-	z0 := z0 * f.
+	z0 := z0 * f
 ]
 
 { #category : #'scaling, rotation, translation' }
@@ -110,16 +107,16 @@ RSMatrix3D >> scaleX: xf y: yf z: zf [
 	xy := xy * xf.
 	xz := xz * xf.
 	x0 := x0 * xf.
-	
+
 	yx := yx * yf.
 	yy := yy * yf.
 	yz := yz * yf.
 	y0 := y0 * yf.
-	
+
 	zx := zx * zf.
 	zy := zy * zf.
 	zz := zz * zf.
-	z0 := z0 * zf.
+	z0 := z0 * zf
 ]
 
 { #category : #tranforming }
@@ -129,37 +126,36 @@ RSMatrix3D >> tranform: alist in: result [
 	lxx := xx. lxy := xy. lxz := xz. lx0 := x0.
 	lyx := yx. lyy := yy. lyz := yz. ly0 := y0.
 	lzx := zx. lzy := zy. lzz := zz. lz0 := z0.
-	
+
 	alist doWithIndex: [ :p :index |
 		| tx ty tz x y z l |
 		x := p first. y := p second. z := p third.
-		
+
 		tx := (x * lxx) + (y * lxy) + (z * lxz) + lx0.
 		ty := (x * lyx) + (y * lyy) + (z * lyz) + ly0.
 		tz := (x * lzx) + (y * lzy) + (z * lzz) + lz0.
-		
+
 		l := result at: index.
-		l 
+		l
 			ifNil: [ result at: index put: { tx. ty. tz } ]
-			ifNotNil: [ 
-				l 
+			ifNotNil: [
+				l
 					at: 1 put: tx;
 					at: 2 put: ty;
 					at: 3 put: tz. ]
-		 ].
-	
+		 ]
 ]
 
 { #category : #'scaling, rotation, translation' }
 RSMatrix3D >> translateByX: x y: y z: z [
 	x0 := x0 + x.
 	y0 := y0 + y.
-	z0 := z0 + z. 
+	z0 := z0 + z.
 ]
 
 { #category : #accessing }
 RSMatrix3D >> values [
-	^ Array 
+	^ Array
 		with: (Array with: xx with: xy with: xz with: x0)
 		with: (Array with: yx with: yy with: yz with: y0)
 		with: (Array with: zx with: zy with: zz with: x0)
@@ -174,15 +170,15 @@ RSMatrix3D >> x0 [
 RSMatrix3D >> xrot: theta [
 	" theta is in radians, rotation in x axis"
 	| ct st nyx nyy nyz ny0 nzx nzy nzz nz0 |
-	
+
 	ct := theta cos.
 	st := theta sin.
-	
+
 	nyx := (yx * ct) + (zx * st).
 	nyy := (yy * ct) + (zy * st).
 	nyz := (yz * ct) + (zz * st).
 	ny0 := (y0 * ct) + (z0 * st).
-	
+
 	nzx := (zx * ct) - (yx * st).
 	nzy := (zy * ct) - (yy * st).
 	nzz := (zz * ct) - (yz * st).
@@ -192,11 +188,11 @@ RSMatrix3D >> xrot: theta [
 	yy := nyy.
 	yz := nyz.
 	y0 := ny0.
-	
+
 	zx := nzx.
 	zy := nzy.
 	zz := nzz.
-	z0 := nz0.
+	z0 := nz0
 ]
 
 { #category : #accessing }
@@ -223,15 +219,15 @@ RSMatrix3D >> y0 [
 RSMatrix3D >> yrot: theta [
 	" theta is in radians, rotation in y axis"
 	| ct st nxx nxy nxz nx0 nzx nzy nzz nz0 |
-	
+
 	ct := theta cos.
 	st := theta sin.
-	
+
 	nxx := (xx * ct) + (zx * st).
 	nxy := (xy * ct) + (zy * st).
 	nxz := (xz * ct) + (zz * st).
 	nx0 := (x0 * ct) + (z0 * st).
-	
+
 	nzx := (zx * ct) - (xx * st).
 	nzy := (zy * ct) - (xy * st).
 	nzz := (zz * ct) - (xz * st).
@@ -241,11 +237,11 @@ RSMatrix3D >> yrot: theta [
 	xy := nxy.
 	xz := nxz.
 	x0 := nx0.
-	
+
 	zx := nzx.
 	zy := nzy.
 	zz := nzz.
-	z0 := nz0.
+	z0 := nz0
 ]
 
 { #category : #accessing }
@@ -272,15 +268,15 @@ RSMatrix3D >> z0 [
 RSMatrix3D >> zrot: theta [
 	" theta is in radians, rotation in z axis"
 	| ct st nyx nyy nyz ny0 nxx nxy nxz nx0 |
-	
+
 	ct := theta cos.
 	st := theta sin.
-	
+
 	nyx := (yx * ct) + (xx * st).
 	nyy := (yy * ct) + (xy * st).
 	nyz := (yz * ct) + (xz * st).
 	ny0 := (y0 * ct) + (x0 * st).
-	
+
 	nxx := (xx * ct) - (yx * st).
 	nxy := (xy * ct) - (yy * st).
 	nxz := (xz * ct) - (yz * st).
@@ -290,11 +286,11 @@ RSMatrix3D >> zrot: theta [
 	yy := nyy.
 	yz := nyz.
 	y0 := ny0.
-	
+
 	xx := nxx.
 	xy := nxy.
 	xz := nxz.
-	x0 := nx0.
+	x0 := nx0
 ]
 
 { #category : #accessing }

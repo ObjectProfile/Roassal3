@@ -10,5 +10,5 @@ RSRDGeneratorTest >> testIsKeyClass [
 	| g |
 	g := RSRDGenerator new.
 	self deny: (g isKeyClass: Object).
-	self assert: (g isKeyClass: RSCamera).
+	self assert: (g isKeyClass: RSCamera)
 ]

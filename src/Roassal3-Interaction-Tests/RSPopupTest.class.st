@@ -24,14 +24,14 @@ bar';
 RSPopupTest >> testMorphicPopup [
 	canvas createMorph.
 	shapes @ RSMorphicPopupInteraction.
-	shapes first announce: RSMouseMove new.
+	shapes first announce: RSMouseMove new
 ]
 
 { #category : #tests }
 RSPopupTest >> testMultiline [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
-	
+
 	shapes last announce: RSMouseMove.
 	self assert: canvas numberOfShapes equals: shapes size.
 	self assert: canvas fixedShapes size equals: 1.
@@ -41,7 +41,7 @@ RSPopupTest >> testMultiline [
 { #category : #tests }
 RSPopupTest >> testNoPopup [
 	shapes first announce: RSMouseEnter.
-	self assert: canvas numberOfShapes equals: shapes size.
+	self assert: canvas numberOfShapes equals: shapes size
 ]
 
 { #category : #tests }
@@ -66,12 +66,12 @@ RSPopupTest >> testPopup [
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 1.
 	self assert: c fixedShapes last children last text equals: '1'.
-	
+
 	shapes first announce: RSMouseLeave.
-	
+
 	shapes second announce: RSMouseMove.
 	self assert: c fixedShapes size equals: 1.
-	self assert: c fixedShapes last children last text equals: '2'.
+	self assert: c fixedShapes last children last text equals: '2'
 ]
 
 { #category : #tests }
@@ -123,19 +123,19 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 	self assert: c numberOfShapes equals: 59.
 	self assert: c fixedShapes size equals: 1.
 	self assert: c fixedShapes last children last text equals: '1'.
-	
+
 	"Note that we do not announce RSMouseLeave"
 	shapes second announce: RSMouseMove.
 	self assert: c fixedShapes size equals: 1.
-	self assert: c fixedShapes last children last text equals: '2'.
+	self assert: c fixedShapes last children last text equals: '2'
 ]
 
 { #category : #tests }
 RSPopupTest >> testWithPopup [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
-	
+
 	shapes first announce: RSMouseMove.
 	self assert: canvas numberOfShapes equals: shapes size.
-	self assert: canvas fixedShapes size equals: 1.
+	self assert: canvas fixedShapes size equals: 1
 ]

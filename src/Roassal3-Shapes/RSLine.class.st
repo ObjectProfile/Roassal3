@@ -59,7 +59,6 @@ RSLine class >> exampleFMT [
 		add: line;
 		zoomToFit;
 		open
-	
 ]
 
 { #category : #examples }
@@ -74,14 +73,13 @@ RSLine class >> exampleLine [
 	RSCanvas new
 		add: line;
 		open
-	
 ]
 
 { #category : #testing }
 RSLine >> basicIncludesPoint: aPoint [
 	^ aPoint
-		onLineFrom: self startPoint 
-		to: self endPoint 
+		onLineFrom: self startPoint
+		to: self endPoint
 		within: self includedRadius
 ]
 

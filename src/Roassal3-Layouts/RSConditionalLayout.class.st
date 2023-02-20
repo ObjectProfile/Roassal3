@@ -79,8 +79,7 @@ RSConditionalLayout >> doExecute: shapes [
 		left;
 		outer;
 		offset: -20 @ 0;
-		move: thenShapes on: elseShapes.
-
+		move: thenShapes on: elseShapes
 ]
 
 { #category : #accessing }

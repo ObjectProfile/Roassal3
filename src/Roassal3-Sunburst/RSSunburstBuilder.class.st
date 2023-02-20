@@ -46,12 +46,12 @@ RSSunburstBuilder >> from: objects using: ablock [
 
 { #category : #initialization }
 RSSunburstBuilder >> initialize [
-	super initialize. 
+	super initialize.
 	self extentStrategy extent: 500@500.
 	self leafWeight: 1.
 	self sliceColor: NSScale category20c.
 	sliceShape := RSPieSlice new.
-	maxLevel := 0.
+	maxLevel := 0
 ]
 
 { #category : #accessing }
@@ -72,7 +72,7 @@ RSSunburstBuilder >> shapeFor: anObject [
 		model: anObject;
 		yourself.
 	slice color: (color rsValue: slice).
-	^ slice 
+	^ slice
 ]
 
 { #category : #'public - shape' }

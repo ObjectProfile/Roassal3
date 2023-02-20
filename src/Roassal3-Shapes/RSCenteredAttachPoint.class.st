@@ -33,12 +33,10 @@ Class {
 
 { #category : #'public - hooks' }
 RSCenteredAttachPoint >> basicEndingPointOf: aLine [
-	^ self positionFor: aLine to in: aLine.
-	
+	^ self positionFor: aLine to in: aLine
 ]
 
 { #category : #'public - hooks' }
 RSCenteredAttachPoint >> basicStartingPointOf: aLine [
-	^ self positionFor: aLine from in: aLine.
-	
+	^ self positionFor: aLine from in: aLine
 ]

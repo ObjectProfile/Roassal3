@@ -94,10 +94,10 @@ RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: aLine offset: a
 
 { #category : #'public - hooks' }
 RSBorderAttachPoint >> basicStartingPointOf: aLine [
-	^ self 
-		basicPointFrom: aLine from 
-		to: aLine to 
-		of: aLine 
+	^ self
+		basicPointFrom: aLine from
+		to: aLine to
+		of: aLine
 		offset: startOffset
 ]
 

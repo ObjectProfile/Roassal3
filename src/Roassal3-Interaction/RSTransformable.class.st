@@ -21,17 +21,17 @@ Class {
 }
 
 { #category : #rectangle }
-RSTransformable >> bottomCenter: position rectangle: rectangle [ 
+RSTransformable >> bottomCenter: position rectangle: rectangle [
 	^ rectangle origin -> (rectangle corner x @ position y)
 ]
 
 { #category : #rectangle }
-RSTransformable >> bottomLeft: position rectangle: rectangle [ 
+RSTransformable >> bottomLeft: position rectangle: rectangle [
 	^ (position x @ rectangle origin y) -> (rectangle corner x @ position y)
 ]
 
 { #category : #rectangle }
-RSTransformable >> bottomRight: position rectangle: rectangle [ 
+RSTransformable >> bottomRight: position rectangle: rectangle [
 	^ rectangle origin -> position
 ]
 
@@ -42,15 +42,12 @@ RSTransformable >> boxShape [
 		border: (RSBorder new
 			color: Color gray);
 		yourself
-		
-	
-	
 ]
 
 { #category : #accessing }
 RSTransformable >> cornersAndSides [
 	^ {
-	
+
 	#topLeft -> #topLeft.
 	#topCenter -> #top.
 	#topRight -> #topRight.
@@ -58,7 +55,7 @@ RSTransformable >> cornersAndSides [
 	#bottomRight -> #bottomRight.
 	#bottomCenter -> #bottom.
 	#bottomLeft -> #bottomLeft.
-	#leftCenter -> #left.}.
+	#leftCenter -> #left.}
 ]
 
 { #category : #'accessing - shapes' }
@@ -92,10 +89,7 @@ RSTransformable >> createHandlesFor: shape [
 	handles add: self rotationShape."
 	self saveHandles: handles evt: shape.
 	self updateHandles: shape.
-	^ handles.
-		
-	
-	
+	^ handles
 ]
 
 { #category : #cursor }
@@ -111,7 +105,7 @@ RSTransformable >> disableHandles: evt [
 	bool := shape hasProperty: key.
 	self removeHandles: evt.
 	bool ifFalse: [ ^ self ].
-	shape propertyAt: key put: #disable.
+	shape propertyAt: key put: #disable
 ]
 
 { #category : #public }
@@ -121,8 +115,7 @@ RSTransformable >> enableHandles: evt [
 	key := self key.
 	(shape hasProperty: key) ifFalse: [ ^ self ].
 	shape removeKey: key.
-	self showHandles: evt.
-	
+	self showHandles: evt
 ]
 
 { #category : #accessing }
@@ -131,7 +124,7 @@ RSTransformable >> key [
 ]
 
 { #category : #rectangle }
-RSTransformable >> leftCenter: position rectangle: rectangle [ 
+RSTransformable >> leftCenter: position rectangle: rectangle [
 	^ (position x @ rectangle origin y) -> rectangle corner
 ]
 
@@ -141,7 +134,7 @@ RSTransformable >> onShape: aShape [
 	aShape announcer
 		when: RSMouseLeftClick send: #showHandles: to: self;
 		when: RSMouseDragStart send: #disableHandles: to: self;
-		when: RSMouseDragEnd send: #enableHandles: to: self.
+		when: RSMouseDragEnd send: #enableHandles: to: self
 ]
 
 { #category : #private }
@@ -150,7 +143,7 @@ RSTransformable >> registerCanvasEventsIfNecessary: evt [
 	canvas := evt canvas.
 	(canvas hasInteraction: self class) ifTrue: [ ^ self ].
 	canvas announcer
-		when: RSMouseClick 
+		when: RSMouseClick
 		send: #removeHandles:
 		to: self
 ]
@@ -158,7 +151,6 @@ RSTransformable >> registerCanvasEventsIfNecessary: evt [
 { #category : #cursor }
 RSTransformable >> removeCursor [
 	self setCursor: nil
-	
 ]
 
 { #category : #public }
@@ -169,14 +161,14 @@ RSTransformable >> removeHandles: evt [
 	handles := canvas propertyAt: key.
 	handles ifNil: [ ^ self ].
 	evt shape ifNotNil: [ :s | s removeKey: key ].
-	
+
 	handles do: #remove.
 	canvas removeKey: key.
-	canvas signalUpdate.
+	canvas signalUpdate
 ]
 
 { #category : #rectangle }
-RSTransformable >> rightCenter: position rectangle: rectangle [ 
+RSTransformable >> rightCenter: position rectangle: rectangle [
 	^ rectangle origin -> (position x @ rectangle corner y)
 ]
 
@@ -199,20 +191,20 @@ RSTransformable >> saveCurrentShapeState [
 	r := matrix.
 	r := r sx sign @ r sy sign.
 	r := currentShape extent * r / 2.
-	
+
 	baseRectangle := Rectangle basicNew
 		privateSetOrigin: r negated;
 		privateSetCorner: r;
 		yourself.
-		
+
 	currentMatrix := matrix copy
 		loadIdentity;
-		translation: currentShape position.
+		translation: currentShape position
 ]
 
 { #category : #private }
 RSTransformable >> saveHandles: handles evt: evt [
-	evt canvas propertyAt: self key put: handles.
+	evt canvas propertyAt: self key put: handles
 ]
 
 { #category : #cursor }
@@ -222,31 +214,22 @@ RSTransformable >> setCursor: cursor [
 
 { #category : #cursor }
 RSTransformable >> showCursor: evt [
-	self setCursor: (self cursorForCorner: evt shape model value).
+	self setCursor: (self cursorForCorner: evt shape model value)
 ]
 
 { #category : #public }
-RSTransformable >> showHandles: evt [ 
-	
+RSTransformable >> showHandles: evt [
+
 	| parent shape handles |
 	self removeHandles: evt.
 	self registerCanvasEventsIfNecessary: evt.
 	shape := evt shape.
 	shape propertyAt: self key put: #enable.
 	handles := self createHandlesFor: shape.
-	
+
 	parent := shape parent.
 	parent addAll: handles.
-	evt signalUpdate.
-	
-	
-	
-	
-		
-		
-		
-	
-	
+	evt signalUpdate
 ]
 
 { #category : #cursor }
@@ -255,17 +238,17 @@ RSTransformable >> showRotationCursor [
 ]
 
 { #category : #rectangle }
-RSTransformable >> topCenter: position rectangle: rectangle [ 
+RSTransformable >> topCenter: position rectangle: rectangle [
 	^ (rectangle origin x @ position y) -> rectangle corner
 ]
 
 { #category : #rectangle }
-RSTransformable >> topLeft: position rectangle: rectangle [ 
+RSTransformable >> topLeft: position rectangle: rectangle [
 	^ position -> rectangle corner
 ]
 
 { #category : #rectangle }
-RSTransformable >> topRight: position rectangle: rectangle [ 
+RSTransformable >> topRight: position rectangle: rectangle [
 	^ (rectangle origin x @ position y) -> (position x @ rectangle corner y)
 ]
 
@@ -318,7 +301,7 @@ RSTransformable >> updateHandles: evt [
 		h position: position.
 		points at: index put: position ].
 	base points: points.
-	
+
 	"TODO
 	rotate := handles last.
 	rotate position: (matrix transform: rect topCenter - (0@30) )."

@@ -21,5 +21,5 @@ RSPharoMetricsProvider >> extentsOf: aRSLabel [
 		y_advance: h;
 		x_bearing: 0;
 		y_bearing: (h / 4) - h;
-		yourself.
+		yourself
 ]

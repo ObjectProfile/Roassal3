@@ -59,7 +59,7 @@ RSCanvas class >> exampleSpec [
 	canvas color: Color black.
 	spec := SpMorphPresenter new.
 	spec morph: canvas createMorph.
-	spec open.
+	spec open
 ]
 
 { #category : #antialiasing }
@@ -103,11 +103,11 @@ RSCanvas >> add: aShape [
 	self
 		assert: aShape notNil
 		description: 'Nil cannot be added to a canvas'.
-		
-	self 
+
+	self
 		assert: (aShape class inheritsFrom: RSShape)
 		description: 'A shape must be provided'.
-	aShape 
+	aShape
 		addedIn: self;
 		renderOn: self.
 	^ aShape
@@ -129,7 +129,7 @@ RSCanvas >> addBasicShape: aShape [
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> addFixedShape: aShape [
-	"This is a private method. Should not be called directly (use RSShape>>setAsFixed instead). 
+	"This is a private method. Should not be called directly (use RSShape>>setAsFixed instead).
 Add a shape and make the shape fixed. It is therefore not subject to the camera.
 ```
 c := RSCanvas new.
@@ -151,7 +151,7 @@ c @ RSCanvasController.
 RSCanvas >> addShape: aShape before: otherShape [
 	aShape addedIn: self.
 	shapes remove: aShape.
-	shapes add: aShape before: otherShape.
+	shapes add: aShape before: otherShape
 ]
 
 { #category : #animations }
@@ -166,13 +166,13 @@ RSCanvas >> announce: anEventOrAnEventClass [
 	announcer ifNil: [ ^ self ].
 	theEventToSend := anEventOrAnEventClass value asAnnouncement.
 	theEventToSend canvas: self.
-	announcer announce: theEventToSend.
+	announcer announce: theEventToSend
 ]
 
 { #category : #announcer }
 RSCanvas >> announcementClasses [
-	^ {RSCanvasEvent. RSShapeEvent} 
-		flatCollect: [ :cls | 
+	^ {RSCanvasEvent. RSShapeEvent}
+		flatCollect: [ :cls |
 			cls withAllSubclasses reject: [ :subcls|
 				subcls hasSubclasses ] ]
 ]
@@ -180,7 +180,6 @@ RSCanvas >> announcementClasses [
 { #category : #antialiasing }
 RSCanvas >> antialiasing [
 	^ self propertyAt: #aa ifAbsent: [ CAIRO_ANTIALIAS_BEST ]
-	
 ]
 
 { #category : #converting }
@@ -206,10 +205,10 @@ RSCanvas >> camera [
 For example:
 ```Smalltalk
 c := RSCanvas new.
-(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
+(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ].
 RSGridLayout on: c shapes.
 c camera translateBy: -30 @ 50.
-c 
+c
 ```"
 	^ camera
 ]
@@ -227,7 +226,7 @@ RSCanvas >> canvas [
 ]
 
 { #category : #accessing }
-RSCanvas >> color [ 
+RSCanvas >> color [
 	"Return the color of the canvas background"
 	^ color
 ]
@@ -245,13 +244,13 @@ c
 "
 	color := aColor.
 	color isColor ifTrue: [ ^ self ].
-	color := Color colorFrom: aColor.
+	color := Color colorFrom: aColor
 ]
 
 { #category : #private }
 RSCanvas >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
-	morph := RSAthensMorph new. 
+	morph := RSAthensMorph new.
 	morph renderer: RSAthensRenderer new.
 	morph canvas: self.
 	^ morph
@@ -261,7 +260,7 @@ RSCanvas >> createMorph [
 RSCanvas >> deepNodes [
 	"Return the list of all the nodes contained in the visualization"
 	| result |
-	result := OrderedCollection new. 
+	result := OrderedCollection new.
 	self nodes do: [ :n |
 		n addRecursivelyIn: result ].
 	^ result
@@ -282,7 +281,6 @@ RSCanvas >> deepShapesFromModels: someObjects result: result [
 { #category : #antialiasing }
 RSCanvas >> disableAntialiasing [
 	self hasAntialiasing: false
-	
 ]
 
 { #category : #antialiasing }
@@ -300,8 +298,8 @@ RSCanvas >> encompassingRectangleOf: aCollectionOfShapes [
 	| r |
 	r := aCollectionOfShapes
 		ifEmpty: [ 0@0 corner: 0@0 ]
-		ifNotEmpty: [ Rectangle 
-			merging: (aCollectionOfShapes 
+		ifNotEmpty: [ Rectangle
+			merging: (aCollectionOfShapes
 				collect: [:each | each encompassingRectangle] ) ].
 	^ r topLeft extent: (self camera class maxExtentFor: r)
 ]
@@ -321,11 +319,11 @@ RSCanvas >> extent: aPoint [
 { #category : #accessing }
 RSCanvas >> fixedShapes [
 	"Return the list of shapes that are fixed, i.e., not subjet to the camera"
-	^ fixedShapes 
+	^ fixedShapes
 ]
 
 { #category : #accessing }
-RSCanvas >> fixedShapes: aCollection [ 
+RSCanvas >> fixedShapes: aCollection [
 	fixedShapes := aCollection
 ]
 
@@ -353,7 +351,7 @@ RSCanvas >> hasAntialiasing [
 
 { #category : #antialiasing }
 RSCanvas >> hasAntialiasing: aBoolean [
-	aBoolean 
+	aBoolean
 		ifTrue: [ self aaGood ]
 		ifFalse: [ self aaNone ]
 ]
@@ -375,7 +373,7 @@ RSCanvas >> initialize [
 	extent := 500@500.
 	camera := RSCamera new
 		canvas: self;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -436,10 +434,10 @@ RSCanvas >> openOnce [
 { #category : #opening }
 RSCanvas >> openOnceWithTitle: aTitle [
 	"Open a visualization and record the position. When #openOnce is called a second time,
-	the new window replace the previous one, at the recorded position. This method is useful when 
+	the new window replace the previous one, at the recorded position. This method is useful when
 	demoing and scripting. Return the open window"
 	| bounds win |
-	bounds := nil. 
+	bounds := nil.
 	Smalltalk at: #previousWindow ifPresent: [ :w | bounds := w bounds. w close ].
 	win := self openWithTitle: aTitle.
 	Smalltalk at: #previousWindow put: win.
@@ -457,7 +455,6 @@ RSCanvas >> openWithTitle: aTitleAsString [
 	window extent: 500 @ 500.
 	morph privateOwner: window.
 	^ window
-	
 ]
 
 { #category : #accessing }
@@ -470,13 +467,13 @@ RSCanvas >> parent [
 RSCanvas >> playAnimations [
 	| shouldClean |
 	shouldClean := false.
-	animations do: [ :animation | 
-		animation refresh. 
+	animations do: [ :animation |
+		animation refresh.
 		animation hasCompleted
 			ifTrue: [ shouldClean := true. ] ].
-	shouldClean ifTrue: [ 
+	shouldClean ifTrue: [
 		animations copy do: [ :animation |
-			animation hasCompleted ifTrue: [ animation remove ] ] ].
+			animation hasCompleted ifTrue: [ animation remove ] ] ]
 ]
 
 { #category : #accessing }
@@ -533,15 +530,15 @@ shape2 translateBy: -25@0.
 c add: shape1; add: shape2.
 c pushBack: shape2.
 c.
-```	
+```
 "
 	| col |
-	col := aShape isFixed 
+	col := aShape isFixed
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
-	col 
+	col
 		remove: aShape;
-		addFirst: aShape.
+		addFirst: aShape
 ]
 
 { #category : #'shapes ordering' }
@@ -561,12 +558,12 @@ c.
 The red circle is in front of the blue one, despite the red one is inserted first.
 "
 	| col |
-	col := aShape isFixed 
+	col := aShape isFixed
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
-	col 
+	col
 		remove: aShape ifAbsent: [];
-		addLast: aShape.
+		addLast: aShape
 ]
 
 { #category : #'adding - removing shapes' }
@@ -578,30 +575,27 @@ RSCanvas >> removeFixedShape: aShape [
 RSCanvas >> removeShape: shape [
 	| evt index |
 	index := shapes indexOf: shape.
-	index = 0 
+	index = 0
 		ifTrue: [ index := fixedShapes indexOf: shape.
 			index = 0 ifFalse: [ fixedShapes remove: shape ] ]
 		ifFalse: [ shapes removeAt: index ].
-	
+
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self announce: evt.
-	shape announce: evt.
-	
+	shape announce: evt
 ]
 
 { #category : #antialiasing }
 RSCanvas >> setAA: aNumber [
 	self propertyAt: #aa put: aNumber
-	
 ]
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> setAsFixed: aShape [
 	self removeShape: aShape.
 	aShape isFixed: true.
-	self addShape: aShape.
-	
+	self addShape: aShape
 ]
 
 { #category : #'accessing - shapes' }
@@ -609,7 +603,7 @@ RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
 	| block |
-	block := [ :list :pos| 
+	block := [ :list :pos|
 		list reverseDo: [ :s | | shape |
 			shape := s shapeWithAction: eventClass forPosition: pos.
 			shape ifNotNil: [ ^ shape ] ] ].
@@ -635,13 +629,12 @@ RSCanvas >> shapeWithActionForPositionInPixels: position [
 	"shape ifNil: [ shape := self ].
 	^ shape"
 	^ self
-	
 ]
 
 { #category : #accessing }
 RSCanvas >> shapes [
 	"Return all the shapes added to the canvas. An empty canvas would return an empty collection.
-	
+
 For example
 ```Smalltalk
 s1 := RSBox new.
@@ -658,24 +651,23 @@ The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
 RSCanvas >> shapesFromModels: objects [
 	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	^ self nodes shapesFromModels: objects
-
 ]
 
 { #category : #testing }
 RSCanvas >> shouldClearBackground [
 	"Return whether the screen must be cleaned at each screen refresh"
-	^ self propertyAt: #shouldClearBackground ifAbsent: [ true ].
+	^ self propertyAt: #shouldClearBackground ifAbsent: [ true ]
 ]
 
 { #category : #accessing }
 RSCanvas >> shouldClearBackground: aBool [
 	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
-	
+
 For example, evaluate the following script:
 ```
 c := RSCanvas new.
 c shouldClearBackground: false.
-(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ]. 
+(1 to: 10) do: [ :i | c add: (RSEllipse new size: 20) ].
 RSGridLayout on: c shapes.
 c.
 ```
@@ -715,7 +707,7 @@ RSCanvas >> transform: aPoint [
 { #category : #camera }
 RSCanvas >> visibleArea: aRectangle [
 	self camera zoomToFit: self extent rectangle: aRectangle.
-	self signalUpdate.
+	self signalUpdate
 ]
 
 { #category : #'accessing - computed' }

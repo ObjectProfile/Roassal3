@@ -37,7 +37,7 @@ RSLayoutTranslator >> translate: element by: deltaPosition [
 { #category : #hook }
 RSLayoutTranslator >> translate: element to: newPosition [
 	"Translate of the center of the element"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'public - translating' }
@@ -51,7 +51,7 @@ RSLayoutTranslator >> translate: element to: newPosition direction: aDirection [
 RSLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
 	"Translate the bottom left corner of the element"
 
-	self translate: element to: newPosition direction: 1 @ -1.
+	self translate: element to: newPosition direction: 1 @ -1
 ]
 
 { #category : #'public - translating' }

@@ -18,16 +18,15 @@ RSAbstractConnection >> clickOnShape: aShape [
 	outputs with: canvasOpenings do: [ :ob :aCanvasOpening |
 		c := ob value: aShape model.
 		aCanvasOpening canvas: c.
-		
+
 		win := c open.
-		aCanvasOpening window ifNotNil: [ 
+		aCanvasOpening window ifNotNil: [
 			aCanvasOpening window delete.
 			win bounds: aCanvasOpening window bounds ].
 		aCanvasOpening window: win.
-		
-		numberOfCreatedCanvases := numberOfCreatedCanvases + 1	
-	]
 
+		numberOfCreatedCanvases := numberOfCreatedCanvases + 1
+	]
 ]
 
 { #category : #'windows callback' }
@@ -46,7 +45,7 @@ RSAbstractConnection >> initialize [
 	numberOfCreatedCanvases := 0.
 	outputs := OrderedCollection new.
 	canvasOpenings := OrderedCollection new.
-	self openWindow.
+	self openWindow
 ]
 
 { #category : #accessing }
@@ -95,7 +94,7 @@ RSAbstractConnection >> output: oneArgBlock [
 RSAbstractConnection >> prepareInputCanvas [
 	inputCanvas nodes when: RSMouseClick do: [ :event |
 		self clickOnShape: event shape ].
-	
+
 	inputCanvas nodes @ RSSelectionPresentationInteraction
 ]
 

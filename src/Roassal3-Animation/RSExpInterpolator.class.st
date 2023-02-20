@@ -17,14 +17,14 @@ Class {
 
 { #category : #interpolation }
 RSExpInterpolator >> interpolateIn: t [
-	^ 2 raisedTo: (10 * t - 10).
+	^ 2 raisedTo: (10 * t - 10)
 ]
 
 { #category : #interpolation }
 RSExpInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
- 
+
 	^ (t <= 1
 		ifTrue: [ 2 raisedTo: 10 * t - 10 ]
 		ifFalse: [ 2 - (2 raisedTo: 10 - (10 * t)) ])/2
@@ -32,5 +32,5 @@ RSExpInterpolator >> interpolateInOut: i [
 
 { #category : #interpolation }
 RSExpInterpolator >> interpolateOut: t [
-	^ 1 - (2 raisedTo: -10 * t).
+	^ 1 - (2 raisedTo: -10 * t)
 ]

@@ -1,12 +1,12 @@
 Extension { #name : #AthensPathSegment }
 
 { #category : #'*Roassal3-SVG' }
-AthensPathSegment >> durationFor: aPoint [ 
+AthensPathSegment >> durationFor: aPoint [
 	^ self subclassResponsibility
 ]
 
 { #category : #'*Roassal3-SVG' }
-AthensPathSegment >> pointsWithStart: aPoint [ 
+AthensPathSegment >> pointsWithStart: aPoint [
 	^ self pointsWithStart: aPoint duration: (self durationFor: aPoint)
 ]
 

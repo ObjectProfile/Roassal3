@@ -3,10 +3,10 @@ Extension { #name : #RSCanvas }
 { #category : #'*Roassal3-Shapes' }
 RSCanvas >> asShape [
 	"Convert a canvas as a composite shape. Note that all the shapes are removed from the canvas after the convertion. Here is an example:
-	
+
 ```
 canvas := RSCanvas new.
-5 timesRepeat: [ 
+5 timesRepeat: [
 	tmpCanvas := RSCanvas new.
 	someShapes := RSCircle models: (1 to: 50) forEach: [ :s :e | s size: 10 ].
 	tmpCanvas addAll: someShapes.
@@ -54,14 +54,13 @@ c
 	g do: #remove.
 	^ RSComposite new
 		shapes: g;
-		yourself.
-	
+		yourself
 ]
 
 { #category : #'*Roassal3-Shapes' }
 RSCanvas >> asShapeModel: aModelObject [
 	"Convert a canvas as a composite shape. Note that all the shapes are removed from the canvas after the convertion. Attach a model to the composite shape. Here is an example:
-	
+
 Another example:
 ```
 g1 := RSChart new.

@@ -14,7 +14,6 @@ RSMapBuilderTest >> testAttributes [
 	map baseline: BaselineOfMorphic.
 	self assert: map models isCollection.
 	self assert: map models size > 1
-	
 ]
 
 { #category : #tests }
@@ -30,7 +29,7 @@ RSMapBuilderTest >> testHighlightOnNode [
 	builder := RSThemedMapBuilder new.
 	builder baseline: BaselineOfGeometry.
 	builder build.
-	builder highlight: (RSHighlightEvent new 
+	builder highlight: (RSHighlightEvent new
 		shape: builder canvas nodes first;
-		yourself).
+		yourself)
 ]

@@ -12,27 +12,27 @@ RSSankeyExamples >> example01 [
 	<script: 'self new example01 open'>
 	| data b nodes links |
 	data := self sankeyData.
-	 
+
 	nodes := data at: 'nodes'.
-	links := (data at: 'links') collect: [ :dict | 
+	links := (data at: 'links') collect: [ :dict |
 		RSSankeyLink new
 			from: (nodes at: (dict at: 'source')+1);
 			to: (nodes at: (dict at: 'target')+1);
 			value: (dict at: 'value');
 			yourself
 		].
-	
+
 	b := RSSankey withAllLinks: links.
 	b boxShape
 		withBorder;
 		borderColor: Color black;
 		width: 15.
-	
+
 	b
 		extent: 960@500;
 		iterations: 32;
 		nodePadding: 10.
-		
+
 	^ b
 ]
 
@@ -55,11 +55,11 @@ RSSankeyExamples >> example03Colors [
 	b lineShape color: (Color blue alpha: 0.2).
 	b labelShape color: Color black.
 	colors := NSScale category20c.
-	b boxColor: [ :aString | 
+	b boxColor: [ :aString |
 		| index key |
 		index := aString indexOf: Character space.
 		key := aString.
-		index = 0 
+		index = 0
 			ifFalse: [ key := key copyFrom: 1 to: index -1 ].
 		colors scale: key ].
 	^ b
@@ -72,7 +72,7 @@ RSSankeyExamples >> example04Popup [
 	b := self example03Colors.
 	b boxShape @ (RSPopup new
 		model: #yourself;
-		text: [:box | box model, String cr, 
+		text: [:box | box model, String cr,
 			(box propertyAt: #value) asString, ' TWh' ];
 		yourself).
 	b lineShape @ (RSPopup new
@@ -93,23 +93,23 @@ RSSankeyExamples >> example05Animation [
 		repeat;
 		duration: 3 seconds;
 		easing: RSEasingInterpolator circleOut;
-		onStepDo: [ :t | 
-			b lines do: [ :line | 
+		onStepDo: [ :t |
+			b lines do: [ :line |
 				| paint |
-				paint := LinearGradientPaint fromArray: { 
+				paint := LinearGradientPaint fromArray: {
 					0 -> blue.
 					(t-0.04) -> blue.
 					t -> blue2.
 					(t+0.04) -> blue.
 					1 -> blue.
 				}.
-				paint 
+				paint
 					start: line startPoint;
 					stop: line endPoint.
 				line color: paint. ].
 			b canvas signalUpdate.
 			 ].
-	
+
 	^ b canvas
 ]
 
@@ -121,7 +121,7 @@ RSSankeyExamples >> example06Gradient [
 	b build.
 	b lines do: [ :line |
 		| paint |
-		paint:= LinearGradientPaint fromArray: { 
+		paint:= LinearGradientPaint fromArray: {
 			0 -> line from color translucent.
 			1 -> line to color translucent.
 		}.
@@ -136,8 +136,8 @@ RSSankeyExamples >> example06Gradient [
 { #category : #examples }
 RSSankeyExamples >> sankeyData [
 	<script: 'self new sankeyData inspect'>
-	^ Dictionary new 
-		at: 'nodes' put: (OrderedCollection new 
+	^ Dictionary new
+		at: 'nodes' put: (OrderedCollection new
 			add: 'Agricultural ''waste''';
 			add: 'Bio-conversion';
 			add: 'Liquid';
@@ -187,7 +187,7 @@ RSSankeyExamples >> sankeyData [
 			add: 'Wave';
 			add: 'Wind';
 			yourself);
-		at: 'links' put: (OrderedCollection new 
+		at: 'links' put: (OrderedCollection new
 			add: (Dictionary new at: 'source' put: 0; at: 'target' put: 1; at: 'value' put: 124.729; yourself);
 			add: (Dictionary new at: 'source' put: 1; at: 'target' put: 2; at: 'value' put: 0.597; yourself);
 			add: (Dictionary new at: 'source' put: 1; at: 'target' put: 3; at: 'value' put: 26.862; yourself);
@@ -265,7 +265,7 @@ RSSankeyExamples >> smallExample [
 
 	<script: 'self new smallExample open'>
 	| b |
-	b := RSSankey withAllAssociations: { 
+	b := RSSankey withAllAssociations: {
 			     (#Wages -> 2500 -> #Budget).
 			     (#Interest -> 25 -> #Budget).
 			     (#Budget -> 1000 -> #Taxes).

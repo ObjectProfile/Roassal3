@@ -16,7 +16,7 @@ RSCustomCPController >> controlPointFor: model at: aLine [
 	| point |
 	model isPoint ifTrue: [ ^ model ].
 	point  := model value.
-	(model isKindOf: RSShape) ifTrue: [ 
+	(model isKindOf: RSShape) ifTrue: [
 		model addConnectedLine: aLine.
 		point := model position ].
 	^ point
@@ -24,7 +24,7 @@ RSCustomCPController >> controlPointFor: model at: aLine [
 
 { #category : #hooks }
 RSCustomCPController >> controlPointsFor: aLine [
-	^ self models collect: [ :m | self controlPointFor: m at: aLine ].
+	^ self models collect: [ :m | self controlPointFor: m at: aLine ]
 ]
 
 { #category : #accessing }

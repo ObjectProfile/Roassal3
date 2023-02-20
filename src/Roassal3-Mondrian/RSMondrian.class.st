@@ -55,14 +55,13 @@ RSMondrian >> build [
 	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
 	self applyLayout.
-	
+
 	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new color: Color black; width: 2).
 	interaction withOutgoingEdges.
 	self canvas nodes @ interaction.
-	
-	self canvas pushBackEdges.
-		 
+
+	self canvas pushBackEdges
 ]
 
 { #category : #accessing }
@@ -98,12 +97,11 @@ RSMondrian >> inspectorVisualization [
 	^ SpRoassal3InspectorPresenter new
 		canvas: self canvas;
 		yourself
-
 ]
 
 { #category : #visualization }
 RSMondrian >> inspectorVisualizationContext: aContext [
-  
+
   aContext withoutEvaluator
 ]
 
@@ -129,33 +127,33 @@ RSMondrian >> lines [
 { #category : #'building - graph' }
 RSMondrian >> nodes: objects [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
-	
+
 	For example:
 	b := RTMondrian new.
 	b nodes: (1 to: 10).
 	b layout force.
 	b open
-	
-	
+
+
 	Another example:
 	b := RTMondrian new.
 	b shape box size: #numberOfMethods.
 	b nodes: Collection withAllSubclasses.
 	b layout flow.
 	b open
-	
+
 	Another example:
 	b := RTMondrian new.
 	b shape box size: #numberOfMethods.
 	b nodes: Collection withAllSubclasses.
 	b edges connectFrom: #superclass.
-	b normalizer 
+	b normalizer
 		normalizeSize: #numberOfMethods;
 		normalizeColor: #numberOfMethods.
 	b layout cluster.
 	b open
 	"
-	
+
 	| nodes |
 	self assert: [ objects isCollection ] description: 'You need to provide a collection to #nodes:'.
 	nodes := self shapesOn: objects.
@@ -172,15 +170,15 @@ RSMondrian >> nodes: objects [
 { #category : #'building - graph' }
 RSMondrian >> nodes: objects forEach: oneArgBlock [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
-	
+
 	For example:
 ```
 b := RSMondrian new.
 b nodes: (1 to: 10).
 b layout force.
 b open
-```	
-	
+```
+
 	Another example:
 ```
 b := RSMondrian new.
@@ -189,7 +187,7 @@ b nodes: Collection withAllSubclasses.
 b layout flow.
 b open
 ```
-	
+
 	Another example:
 ```
 b := RSMondrian new.
@@ -202,35 +200,35 @@ b layout cluster.
 b open
 ```
 	"
-	
+
 	| nodes compo old previousShapeBuilder oldNodesToLayout lbl |
 	nodes := RSGroup new.
 	objects do: [ :obj |
 		previousShapeBuilder := shapeBuilder.
-		
+
 		compo := RSComposite new.
 		compo model: obj.
 		shapeBuilder configureNotCompositeShape: compo model: obj.
 		"compo := shapeBuilder configureShape: compo."
-		
+
 		old := self canvas.
 		oldNodesToLayout := nodesForLayout.
 		nodesForLayout := RSGroup new.
 		self canvas: compo.
-		
+
 		depth := depth + 1.
-		
+
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
-		
+
 		nodes add: compo.
 		self build.
-		
-		previousShapeBuilder doesUseLabel ifTrue: [ 
+
+		previousShapeBuilder doesUseLabel ifTrue: [
 			lbl := RSLabel new color: Color black; text: (previousShapeBuilder labelBlock rsValue: obj).
 			RSLocation move: lbl above: compo children.
-			compo add: lbl ]. 
-		
+			compo add: lbl ].
+
 		nodesForLayout := oldNodesToLayout.
 		compo adjustToChildren.
 		compo padding: 5.

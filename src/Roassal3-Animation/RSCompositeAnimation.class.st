@@ -17,12 +17,12 @@ RSCompositeAnimation class >> defaultDuration [
 
 { #category : #adding }
 RSCompositeAnimation >> add: anAnimation [
-	animations add: anAnimation 
+	animations add: anAnimation
 ]
 
 { #category : #adding }
 RSCompositeAnimation >> addAll: array [
-	animations addAll: array.
+	animations addAll: array
 ]
 
 { #category : #accessing }
@@ -33,7 +33,7 @@ RSCompositeAnimation >> animations [
 { #category : #initialization }
 RSCompositeAnimation >> reset [
 	super reset.
-	animations := OrderedCollection new.
+	animations := OrderedCollection new
 ]
 
 { #category : #private }

@@ -30,7 +30,7 @@ RSSimpleBoxBuilder >> color [
 
 { #category : #accessing }
 RSSimpleBoxBuilder >> color: aColor [
-	color := aColor 
+	color := aColor
 ]
 
 { #category : #accessing }
@@ -50,7 +50,7 @@ RSSimpleBoxBuilder >> initialize [
 		border: (RSBorder new color: Color gray);
 		color: (Color colorFrom: 'efefef');
 		cornerRadius: 5;
-		padding: 10@7.
+		padding: 10@7
 ]
 
 { #category : #accessing }
@@ -70,5 +70,5 @@ RSSimpleBoxBuilder >> shapeFor: aRSLabel [
 		cornerRadius: self cornerRadius;
 		border: self border;
 		extent: aRSLabel extent + self padding;
-		yourself 
+		yourself
 ]

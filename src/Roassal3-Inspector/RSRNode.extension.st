@@ -10,15 +10,15 @@ RSRNode >> addMenu: canvas [
 			yourself.
 		 ]).
 	RSHorizontalLineLayout on: canvas fixedShapes.
-	canvas fixedShapes when: RSMouseClick do: [ :evt | 
+	canvas fixedShapes when: RSMouseClick do: [ :evt |
 		canvas shapes do: [ :node |
-			(node propertyAt: #level) = evt shape model 
-				ifTrue: [ node 
+			(node propertyAt: #level) = evt shape model
+				ifTrue: [ node
 					color: (node propertyAt: #originalColor);
 					border: (RSBorder new color: 'black'). ]
 				ifFalse: [ node noPaint; noBorder ] ].
 		canvas signalUpdate
-		].
+		]
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -26,7 +26,7 @@ RSRNode >> addWithChildren: canvas [
 	| circle label |
 	circle := RSEllipse new
 		size: 20;
-		color: (self isBalanced 
+		color: (self isBalanced
 			ifTrue: [ Color blue translucent]
 			ifFalse: [ Color red ]);
 		yourself.
@@ -40,7 +40,7 @@ RSRNode >> addWithChildren: canvas [
 		model: self;
 		popupText: [ :node | node height asString ];
 		yourself).
-	self childrenDo: [ :child | child addWithChildren: canvas ].
+	self childrenDo: [ :child | child addWithChildren: canvas ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -54,9 +54,7 @@ RSRNode >> addWithChildren: canvas level: level palette: palette [
 		propertyAt: #level put: level;
 		propertyAt: #originalColor put: color;
 		yourself).
-	self childrenDo: [ :child | child addWithChildren: canvas level: level + 1 palette: palette ].
-		
-		
+	self childrenDo: [ :child | child addWithChildren: canvas level: level + 1 palette: palette ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -73,14 +71,12 @@ RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent 
 		yourself.
 	self isLeaf ifTrue: [ box color: 'black' ].
 	canvas add: box.
-	self childrenDo: [ :child | 
-		child 
-			addWithChildren: canvas 
-			level: level + 1 
+	self childrenDo: [ :child |
+		child
+			addWithChildren: canvas
+			level: level + 1
 			palette: palette
-			parent: box ].
-		
-		
+			parent: box ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -137,14 +133,14 @@ RSRNode >> asRSCanvasForRectangles [
 { #category : #'*Roassal3-Inspector' }
 RSRNode >> asRSCanvasTree [
 	| canvas palette |
-	palette := NSScale category20. 
+	palette := NSScale category20.
 	canvas := self newCanvas.
 	self addWithChildren: canvas.
 	RSLineBuilder line
 		withVerticalAttachPoint;
 		shapes: canvas nodes;
 		connectToAll: [ :node | node children ].
-	
+
 	RSTreeLayout on: canvas nodes.
 	^ canvas
 ]
@@ -152,7 +148,7 @@ RSRNode >> asRSCanvasTree [
 { #category : #'*Roassal3-Inspector' }
 RSRNode >> asRSCanvasWithParentPath [
 	| canvas palette leafs |
-	palette := NSScale category20. 
+	palette := NSScale category20.
 	canvas := self newCanvas.
 	self addWithChildren: canvas level: 1 palette: palette parent: nil.
 	leafs := canvas shapes select: [ :node | node model isLeaf ].
@@ -225,14 +221,13 @@ RSRNode >> newCanvas [
 	^ RSCanvas new
 		addInteraction: RSCanvasController;
 		in: [ :canvas | canvas inspectorContext interactionsToBeRegistered first noPushFront ];
-		yourself.
-	
+		yourself
 ]
 
 { #category : #'*Roassal3-Inspector' }
 RSRNode >> parentHighlightable [
 	^ RSHighlightable new
-		when: RSHighlightEvent do: [ :evt | 
+		when: RSHighlightEvent do: [ :evt |
 			| parents |
 			parents := OrderedCollection new.
 			self parentsFor: evt shape list: parents.
@@ -255,7 +250,7 @@ RSRNode >> parentHighlightable [
 RSRNode >> parentsFor: shape list: list [
 	shape ifNil: [ ^ self ].
 	shape model isLeaf ifFalse: [ list add: shape ].
-	self parentsFor: (shape propertyAt: #parent) list: list.
+	self parentsFor: (shape propertyAt: #parent) list: list
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -264,13 +259,13 @@ RSRNode >> queryResult: aRect [
 	nodesInPoint := OrderedCollection new.
 	nodesInRectangle := OrderedCollection new.
 	nodesVisited := 0.
-	
+
 	link := MetaLink new
 		arguments: #(context);
 		selector: #value:;
 		metaObject: [ :context | nodesVisited := nodesVisited + 1 ];
 		yourself.
-		
+
 	node := (self class >> #nodesWithPoint:list:) ast.
 	node link: link.
 	[ self nodesWithPoint: aRect floatCenter list: nodesInPoint] ensure: [ link uninstall ].
@@ -279,7 +274,7 @@ RSRNode >> queryResult: aRect [
 	node := (self class >> #nodesIntersetcsRectangle:list:) ast.
 	node link: link.
 	[ self nodesIntersetcsRectangle: aRect list: nodesInRectangle  ] ensure: [ link uninstall ].
-	
+
 	^ String streamContents: [ :stream |
 		stream
 			<<  'Nodes in point: ';
@@ -289,7 +284,7 @@ RSRNode >> queryResult: aRect [
 			<< 'Nodes in rectangle: ';
 			<< nodesInRectangle size asString; cr;
 			<< 'Queries: ';
-			<< nodesVisited asString ]	
+			<< nodesVisited asString ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -298,7 +293,6 @@ RSRNode >> updateLog: log rectangle: aRect [
 	builder := RSMultilineLabelBuilder new.
 	builder labelShape color: Color black.
 	log children do: #remove.
-	log add: (builder shapeFor: (self queryResult: aRect) ). 
-	log adjustToChildren.
-	
+	log add: (builder shapeFor: (self queryResult: aRect) ).
+	log adjustToChildren
 ]

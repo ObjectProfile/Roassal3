@@ -25,27 +25,25 @@ RSTextExtents class >> empty [
 
 { #category : #public }
 RSTextExtents >> empty [
-	self 
+	self
 		width: 0;
 		height: 0;
 		x_advance: 0;
 		y_advance: 0;
 		x_bearing: 0;
-		y_bearing: 0.
-
+		y_bearing: 0
 ]
 
 { #category : #public }
-RSTextExtents >> from: ref [ 
+RSTextExtents >> from: ref [
 	"ref is a CairoTextExtents"
-	self 
+	self
 		width: ref width;
 		height: ref height;
 		x_advance: ref x_advance;
 		y_advance: ref y_advance;
 		x_bearing: ref x_bearing;
-		y_bearing: ref y_bearing.
-
+		y_bearing: ref y_bearing
 ]
 
 { #category : #accessing }
@@ -65,7 +63,7 @@ RSTextExtents >> printOn: s [
 		s << sel; << ':'; << String tab.
 		(sel value: self) printOn: s.
 		 ] separatedBy: [ s << String crlf ].
-	s << ')'.
+	s << ')'
 ]
 
 { #category : #public }

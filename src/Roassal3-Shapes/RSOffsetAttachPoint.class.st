@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-RSOffsetAttachPoint class >> isAbstract [ 
+RSOffsetAttachPoint class >> isAbstract [
 
 	^ self == RSOffsetAttachPoint
 ]
@@ -28,9 +28,9 @@ RSOffsetAttachPoint >> endOffset: aNumber [
 ]
 
 { #category : #initialization }
-RSOffsetAttachPoint >> initialize [ 
+RSOffsetAttachPoint >> initialize [
 	super initialize.
-	startOffset := endOffset := 0.
+	startOffset := endOffset := 0
 ]
 
 { #category : #accessing }
@@ -40,5 +40,5 @@ RSOffsetAttachPoint >> startOffset [
 
 { #category : #accessing }
 RSOffsetAttachPoint >> startOffset: aNumber [
-	startOffset := aNumber.
+	startOffset := aNumber
 ]

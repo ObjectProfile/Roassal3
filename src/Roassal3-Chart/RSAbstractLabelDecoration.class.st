@@ -18,7 +18,6 @@ RSAbstractLabelDecoration >> createLabel [
 	^ self shape copy
 		text: title;
 		yourself
-		
 ]
 
 { #category : #accessing }
@@ -52,7 +51,7 @@ RSAbstractLabelDecoration >> horizontal [
 { #category : #initialization }
 RSAbstractLabelDecoration >> initialize [
 	super initialize.
-	location := RSLocation new.
+	location := RSLocation new
 ]
 
 { #category : #accessing }

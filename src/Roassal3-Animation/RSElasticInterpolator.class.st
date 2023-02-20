@@ -30,7 +30,7 @@ RSElasticInterpolator >> amplitude [
 RSElasticInterpolator >> amplitude: a [
 	amplitude := a.
 	period := period * tau.
-	self calculateS.
+	self calculateS
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ RSElasticInterpolator >> calculateS [
 	"var s = Math.asin(1 / (a = Math.max(1, a))) * (p /= tau);"
 	amplitude := 1 max: amplitude.
 	period := period / tau.
-	s := (1 / amplitude) arcSin * period 
+	s := (1 / amplitude) arcSin * period
 ]
 
 { #category : #initialization }
@@ -47,7 +47,7 @@ RSElasticInterpolator >> initialize [
 	tau := 2* Float pi.
 	amplitude := 1.
 	period := 0.3.
-	
+
 	self calculateS
 ]
 
@@ -64,7 +64,7 @@ RSElasticInterpolator >> interpolateInOut: i [
 	t := i * 2 - 1.
 	^ (t < 0
 		ifTrue: [ amplitude * (2 raisedTo: 10 * t) * ((s - t)/period) sin ]
-		ifFalse: [ 2 - (amplitude * (2 raisedTo: -10 * t) * ((s + t)/period) sin )   ]) / 2.
+		ifFalse: [ 2 - (amplitude * (2 raisedTo: -10 * t) * ((s + t)/period) sin )   ]) / 2
 ]
 
 { #category : #interpolation }
@@ -80,5 +80,5 @@ RSElasticInterpolator >> period [
 { #category : #accessing }
 RSElasticInterpolator >> period: p [
 	period := p.
-	self calculateS.
+	self calculateS
 ]

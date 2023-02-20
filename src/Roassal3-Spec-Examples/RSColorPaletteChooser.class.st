@@ -21,13 +21,12 @@ Class {
 }
 
 { #category : #layout }
-RSColorPaletteChooser class >> defaultLayout [ 
+RSColorPaletteChooser class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #buttons withConstraints: [ :c | c height: self toolbarHeight ];
 		add: #colors;
 		yourself
-		
 ]
 
 { #category : #examples }
@@ -169,7 +168,7 @@ RSColorPaletteChooser >> controllerInteraction [
 { #category : #'clipboard handling' }
 RSColorPaletteChooser >> copyToClipboard: object [
 	| name |
-	Clipboard clipboardText: (self clipTextFor: object). 
+	Clipboard clipboardText: (self clipTextFor: object).
 	name := 'Palette'.
 	object isColor ifTrue: [ name := 'Color' ].
 	self inform: name,' copied to clipboard !!!'

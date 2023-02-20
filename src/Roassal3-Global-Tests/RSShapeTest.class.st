@@ -17,23 +17,22 @@ RSShapeTest >> testAllConnectedShapes [
 	lb shapes: shapes.
 	lb useAssociations: { 1 -> 3 . 3 -> 2 . 3 -> 4 . 5 -> 6. }.
 	RSForceBasedLayout on: shapes.
-	
+
 	node1 := canvas shapeFromModel: 1.
 	node2 := canvas shapeFromModel: 2.
 	node3 := canvas shapeFromModel: 3.
 	node5 := canvas shapeFromModel: 5.
 	node6 := canvas shapeFromModel: 6.
-	
+
 	self assert: (node1 allRecursiveConnectedShapes collect: #model) asSortedCollection asArray equals: (1 to: 4).
-	
+
 	self assert: node1 allRecursiveConnectedShapes equals: node2 allRecursiveConnectedShapes.
 	self assert: node1 allRecursiveConnectedShapes equals: node3 allRecursiveConnectedShapes.
 	self assert: node2 allRecursiveConnectedShapes equals: node3 allRecursiveConnectedShapes.
 
 	self assert: node1 allRecursiveConnectedShapes ~= node5 allRecursiveConnectedShapes.
-	
-	self assert: node5 allRecursiveConnectedShapes equals: node6 allRecursiveConnectedShapes.
 
+	self assert: node5 allRecursiveConnectedShapes equals: node6 allRecursiveConnectedShapes
 ]
 
 { #category : #tests }
@@ -42,7 +41,7 @@ RSShapeTest >> testHasModel [
 	self deny: RSCircle new hasModel.
 	self assert: (RSShape new model: 52) hasModel.
 	self assert: (RSLine new model: 52) hasModel.
-	self deny: RSLine new hasModel.
+	self deny: RSLine new hasModel
 ]
 
 { #category : #tests }
@@ -55,22 +54,20 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 	lb := RSLineBuilder line.
 	lb canvas: c.
 	lb connectFrom: [ :nb | nb // 2 ].
-	
+
 	node1 := c shapeFromModel: 1.
 	self assert: node1 model equals: 1.
-	
+
 	self assert: node1 outgoingLines size equals: 2.
 	self assert: node1 outgoingShapes size equals: 2.
 	self assert: node1 outgoingShapes equals: (c shapesFromModels: #(2 3)).
-	
+
 	self assert: node1 incomingLines isEmpty.
 	self assert: node1 incomingShapes isEmpty.
-	
+
 	node5 := c shapeFromModel: 5.
 	self assert: node5 incomingShapes equals: (c shapesFromModels: #(2)).
-	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11)).
-	
-	
+	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11))
 ]
 
 { #category : #tests }
@@ -119,8 +116,7 @@ RSShapeTest >> testTranslateMiddleRightTo [
 	lbl := RSLabel text: 'Middle right corner'.
 	c add: lbl.
 	lbl translateMiddleRightTo: 0 @ 0.
-	
+
 	self assert: (lbl position x < 0).
-	self assert: (lbl position y = 0).
-	
+	self assert: (lbl position y = 0)
 ]

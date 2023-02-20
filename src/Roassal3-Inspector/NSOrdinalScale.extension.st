@@ -5,7 +5,7 @@ NSOrdinalScale >> inspectorColors [
 	<inspectorPresentationOrder: 0 title: 'Colors'>
 	| canvas |
 	canvas := RSCanvas new.
-	canvas addAll: (self range collect: [ :color | 
+	canvas addAll: (self range collect: [ :color |
 		RSEllipse new
 			model: color;
 			color: color;
@@ -20,7 +20,7 @@ NSOrdinalScale >> inspectorColors [
 
 { #category : #'*Roassal3-Inspector' }
 NSOrdinalScale >> inspectorColorsContext: context [
-	context 
+	context
 		evaluator: false;
-		active: (self range allSatisfy: #isColor).
+		active: (self range allSatisfy: #isColor)
 ]

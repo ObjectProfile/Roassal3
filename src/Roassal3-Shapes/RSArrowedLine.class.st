@@ -46,7 +46,7 @@ RSArrowedLine class >> exampleArrow [
 { #category : #border }
 RSArrowedLine >> border: aRSBorder [
 	super border: aRSBorder.
-	self markersDo: [ :m | m shape border: aRSBorder ].
+	self markersDo: [ :m | m shape border: aRSBorder ]
 ]
 
 { #category : #copying }
@@ -70,7 +70,7 @@ RSArrowedLine >> defaultHead [
 { #category : #initialization }
 RSArrowedLine >> initialize [
 	super initialize.
-	self markerEnd: self defaultHead.
+	self markerEnd: self defaultHead
 ]
 
 { #category : #copying }
@@ -78,5 +78,5 @@ RSArrowedLine >> postCopy [
 	super postCopy.
 	markers := nil.
 	self markerEnd: self defaultHead.
-	self border: self border copy.
+	self border: self border copy
 ]

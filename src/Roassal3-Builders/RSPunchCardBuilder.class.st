@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 RSPunchCardBuilder >> addMetric: aRoassalValue name: name [
-	metrics at: name put: aRoassalValue.
+	metrics at: name put: aRoassalValue
 ]
 
 { #category : #'accessing - defaults' }
@@ -26,7 +26,7 @@ RSPunchCardBuilder >> defaultContainer [
 RSPunchCardBuilder >> initialize [
 	super initialize.
 	metrics := OrderedDictionary new.
-	size := 10.
+	size := 10
 ]
 
 { #category : #hooks }
@@ -57,9 +57,9 @@ RSPunchCardBuilder >> renderDots: aCanvas [
 	| base |
 	base := RSEllipse new popup.
 	objects
-		doWithIndex: [ :cls :x | 
+		doWithIndex: [ :cls :x |
 			metrics keys
-				doWithIndex: [ :k :y | 
+				doWithIndex: [ :k :y |
 					| metric res |
 					metric := metrics at: k.
 					res := metric rsValue: cls.
@@ -85,7 +85,7 @@ RSPunchCardBuilder >> renderIn: aCanvas [
 RSPunchCardBuilder >> renderXAxis: aCanvas [
 
 	| labels |
-	labels := objects collectWithIndex: [ :cls :x | 
+	labels := objects collectWithIndex: [ :cls :x |
 		          | label |
 		          label := (self labelFor: cls) rotateByDegrees: -90.
 		          label position: x @ 0 * size.
@@ -100,7 +100,7 @@ RSPunchCardBuilder >> renderXAxis: aCanvas [
 RSPunchCardBuilder >> renderYAxis: aCanvas [
 
 	| labels |
-	labels := metrics keys collectWithIndex: [ :k :i | 
+	labels := metrics keys collectWithIndex: [ :k :i |
 		          (self labelFor: k)
 			          position: 0 @ i * size;
 			          yourself ].

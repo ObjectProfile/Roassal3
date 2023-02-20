@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 RSGhostDraggable >> color [
-	^ color ifNil: [ color := Color gray ].
+	^ color ifNil: [ color := Color gray ]
 ]
 
 { #category : #accessing }
@@ -33,9 +33,7 @@ RSGhostDraggable >> createGhost: evt [
 		noPaint;
 		yourself.
 	shape propertyAt: #ghost put: ghost.
-	shape parent add: ghost.
-
-	
+	shape parent add: ghost
 ]
 
 { #category : #hooks }
@@ -43,7 +41,7 @@ RSGhostDraggable >> onShape: aShape [
 	aShape
 		when: RSMouseDragStart send: #createGhost: to: self;
 		when: RSMouseDragging send: #updateGhost: to: self;
-		when: RSMouseDragEnd send: #removeGhost: to: self.
+		when: RSMouseDragEnd send: #removeGhost: to: self
 ]
 
 { #category : #hooks }
@@ -53,7 +51,7 @@ RSGhostDraggable >> removeGhost: evt [
 	ghost remove.
 	evt shape translateTo: ghost position.
 	evt shape removeKey: #ghost.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #hooks }
@@ -61,5 +59,5 @@ RSGhostDraggable >> updateGhost: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
 	(evt shape propertyAt: #ghost) translateBy: d.
-	evt signalUpdate 
+	evt signalUpdate
 ]

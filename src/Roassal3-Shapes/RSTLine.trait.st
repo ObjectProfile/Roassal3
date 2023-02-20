@@ -73,18 +73,17 @@ RSTLine >> dashed [
 
 { #category : #'public - shape' }
 RSTLine >> fmt: aString [
-	self shape fmt: aString.
+	self shape fmt: aString
 ]
 
 { #category : #'public - shape' }
 RSTLine >> format: aString [
-	
+
 	"want more markers? submit a new issue in roassal3"
 	| marker bs |
 	marker := RSShapeFactory shapeFromString: aString.
 	bs := RSStrokeStyle fromString: aString.
-	marker ifNotNil: [ self shape marker: marker ].
-	
+	marker ifNotNil: [ self shape marker: marker ]
 ]
 
 { #category : #'public - shape' }
@@ -150,7 +149,7 @@ RSTLine >> width [
 { #category : #'public - shape' }
 RSTLine >> width: aNumber [
 	"Set the width of the line. For example:
-	
+
 -=-=-=-=-=-=-=-=-=-=
 c := RSCanvas new.
 

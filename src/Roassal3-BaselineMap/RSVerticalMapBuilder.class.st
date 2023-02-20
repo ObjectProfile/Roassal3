@@ -27,7 +27,7 @@ RSVerticalMapBuilder >> layoutOn: aCanvas [
 		horizontalGap: 5;
 		verticalGap: 5;
 		on: aCanvas nodes;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -49,15 +49,15 @@ RSVerticalMapBuilder >> newLineBuilder [
 { #category : #hooks }
 RSVerticalMapBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
-	self updateWithPreOrder: aCanvas.
+	self updateWithPreOrder: aCanvas
 ]
 
 { #category : #hooks }
 RSVerticalMapBuilder >> updateWidth: groupOfShapes layout: layout [
-	groupOfShapes do: [ :shape | 
+	groupOfShapes do: [ :shape |
 		| children |
 		children := layout childrenFor: shape.
-		children ifNotEmpty: [ 
+		children ifNotEmpty: [
 			| width |
 			self updateWidth: children layout: layout.
 			width := children asGroup width.
@@ -70,5 +70,5 @@ RSVerticalMapBuilder >> updateWidth: groupOfShapes layout: layout [
 RSVerticalMapBuilder >> updateWithPreOrder: aCanvas [
 	| layout |
 	layout := self layoutOn: aCanvas nodes.
-	self updateWidth: (layout rootNodesFor: aCanvas nodes) layout: layout.
+	self updateWidth: (layout rootNodesFor: aCanvas nodes) layout: layout
 ]

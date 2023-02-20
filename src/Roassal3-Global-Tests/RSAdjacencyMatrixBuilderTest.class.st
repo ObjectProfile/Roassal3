@@ -13,10 +13,10 @@ RSAdjacencyMatrixBuilderTest >> setUp [
 
 	super setUp.
 	empty := RSAdjacencyMatrixBuilder new.
-	
+
 	b := RSAdjacencyMatrixBuilder new.
 	b objects: (1 to: 4).
-	b connections: { 1 -> 2 . 1 -> 3 . 2 -> 4 }.
+	b connections: { 1 -> 2 . 1 -> 3 . 2 -> 4 }
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ RSAdjacencyMatrixBuilderTest >> testBasic03 [
 { #category : #tests }
 RSAdjacencyMatrixBuilderTest >> testConnections01 [
 
-	empty connections: { 
+	empty connections: {
 			(1 -> 2).
 			(2 -> 3) }.
 	self assert: empty numberOfConnections equals: 2.
@@ -59,7 +59,7 @@ RSAdjacencyMatrixBuilderTest >> testConnections01 [
 { #category : #tests }
 RSAdjacencyMatrixBuilderTest >> testCycle01 [
 
-	self deny: b hasCycle.
+	self deny: b hasCycle
 ]
 
 { #category : #tests }
@@ -68,12 +68,12 @@ RSAdjacencyMatrixBuilderTest >> testCycle02 [
 	b := RSAdjacencyMatrixBuilder new.
 	b objects: (1 to: 3).
 
-	b connections: { 
+	b connections: {
 			(1 -> 2).
 			(2 -> 3) }.
 	self deny: b hasCycle.
 
-	b connections: { 
+	b connections: {
 			(1 -> 2).
 			(2 -> 3).
 			(3 -> 1) }.
@@ -92,18 +92,18 @@ RSAdjacencyMatrixBuilderTest >> testCycle04 [
 	b := RSAdjacencyMatrixBuilder new.
 	b objects: (1 to: 4).
 
-	b connections: { 
+	b connections: {
 			(1 -> 2).
 			(2 -> 3) }.
 	self assert: b getAllCycles isEmpty.
 
-	b connections: { 
+	b connections: {
 			(1 -> 2).
 			(2 -> 3).
 			(3 -> 1) }.
 	self assert: b getAllCycles size equals: 1.
-	
-	b connections: { 
+
+	b connections: {
 			(1 -> 2).
 			(2 -> 1).
 			(3 -> 4).
@@ -111,15 +111,15 @@ RSAdjacencyMatrixBuilderTest >> testCycle04 [
 	self assert: b getAllCycles size equals: 2.
 	self assert: (b getAllCycles includes: (Set withAll: #(1 2))).
 	self assert: (b getAllCycles includes: (Set withAll: #(3 4))).
-	
-	b connections: { 
+
+	b connections: {
 			(1 -> 2).
 			(2 -> 1).
 			(3 -> 4).
 			(4 -> 3) }.
 	self assert: b getAllCycles size equals: 2.
 	self assert: (b getAllCycles includes: (Set withAll: #(1 2))).
-	self assert: (b getAllCycles includes: (Set withAll: #(3 4))).
+	self assert: (b getAllCycles includes: (Set withAll: #(3 4)))
 ]
 
 { #category : #tests }
@@ -142,17 +142,17 @@ RSAdjacencyMatrixBuilderTest >> testOutgoingConnectionsOf [
 RSAdjacencyMatrixBuilderTest >> testRendering01 [
 	| canvas allCells |
 	canvas := b build.
-	
+
 	self assert: canvas class == RSCanvas.
-	
+
 	allCells := canvas shapes select: [ :c | c class == RSBox ].
 	self assert: allCells size equals: 4 * 4.
-	
+
 	self assert: allCells first model equals: 1 -> 1.
 	self assert: allCells first color equals: b nonConnectingColor.
-	
+
 	self assert: allCells second model equals: 1 -> 2.
-	self assert: allCells second color equals: b connectingColor.
+	self assert: allCells second color equals: b connectingColor
 ]
 
 { #category : #tests }
@@ -166,7 +166,7 @@ RSAdjacencyMatrixBuilderTest >> testSorting02 [
 	b := RSAdjacencyMatrixBuilder new.
 	b objects: (1 to: 4).
 	b connections: { 2 -> 1 . 2 -> 4 . 4 -> 1 }.
-	
+
 	b sortByNumberOfOutgoingConnections.
 	b build.
 	self assert: b objects equals: #(3 1 4 2)

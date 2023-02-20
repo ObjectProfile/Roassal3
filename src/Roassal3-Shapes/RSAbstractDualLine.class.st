@@ -25,7 +25,7 @@ RSAbstractDualLine >> basicTranslateBy: delta [
 ]
 
 { #category : #accessing }
-RSAbstractDualLine >> controlPoints [ 
+RSAbstractDualLine >> controlPoints [
 	^ Array with: self startPoint with: self endPoint
 ]
 
@@ -38,14 +38,14 @@ RSAbstractDualLine >> endPoint [
 RSAbstractDualLine >> endPoint: point [
 	endPoint := point.
 	self resetPath.
-	self notifyExtentChanged.
+	self notifyExtentChanged
 ]
 
 { #category : #initialization }
 RSAbstractDualLine >> initialize [
 	super initialize.
 	startPoint := 0@0.
-	endPoint := 100@100.
+	endPoint := 100@100
 ]
 
 { #category : #transforming }
@@ -65,7 +65,7 @@ RSAbstractDualLine >> position: aPoint [
 ]
 
 { #category : #accessing }
-RSAbstractDualLine >> startPoint [ 
+RSAbstractDualLine >> startPoint [
 	^ startPoint
 ]
 
@@ -95,5 +95,5 @@ Removing the call to #attachPoint: raised an error
 	self
 		startPoint: (attachPoint startingPointOf: self);
 		endPoint: (attachPoint endingPointOf: self);
-		notifyExtentChanged.
+		notifyExtentChanged
 ]

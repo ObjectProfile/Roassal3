@@ -24,7 +24,7 @@ RSMockShape >> addWeight [
 { #category : #actions }
 RSMockShape >> applyToRealElement [
 	isFixed ifTrue: [ ^ self ].
-	realShape translateTo: position 
+	realShape translateTo: position
 ]
 
 { #category : #accessing }
@@ -43,7 +43,7 @@ RSMockShape >> charge: aNum [
 ]
 
 { #category : #accessing }
-RSMockShape >> encompassingRectangle [ 
+RSMockShape >> encompassingRectangle [
 	^ realShape encompassingRectangle
 ]
 
@@ -70,12 +70,12 @@ RSMockShape >> height [
 { #category : #initialization }
 RSMockShape >> initialize [
 	super initialize.
-	isFixed := false.
+	isFixed := false
 ]
 
 { #category : #accessing }
 RSMockShape >> isFixed [
-	^ isFixed 
+	^ isFixed
 ]
 
 { #category : #accessing }
@@ -107,7 +107,7 @@ RSMockShape >> realShape [
 RSMockShape >> realShape: rtElement [
 	realShape := rtElement.
 	position := rtElement position.
-	self oldPosition: position.
+	self oldPosition: position
 ]
 
 { #category : #actions }

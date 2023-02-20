@@ -28,7 +28,7 @@ Class {
 { #category : #'instance creation' }
 RSSankey class >> withAllAssociations: aCollection [
 
-	^ self withAllLinks: (aCollection collect: [ :eachAssociation | 
+	^ self withAllLinks: (aCollection collect: [ :eachAssociation |
 			   RSSankeyLink on: eachAssociation ])
 ]
 
@@ -38,8 +38,8 @@ RSSankey class >> withAllLinks: aCollection [
 	^ self new
 		  links: aCollection;
 		  nodes: (aCollection
-				   flatCollect: [ :eachLink | 
-					   { 
+				   flatCollect: [ :eachLink |
+					   {
 						   eachLink from.
 						   eachLink to } ]
 				   as: OrderedCollection) removeDuplicates
@@ -74,7 +74,7 @@ RSSankey >> boxesByBreadth [
 
 	| boxesByBreadth |
 	boxesByBreadth := boxes groupedBy: [ :eachBox | eachBox x ].
-	boxesByBreadth := boxesByBreadth keysSortedSafely collect: [ 
+	boxesByBreadth := boxesByBreadth keysSortedSafely collect: [
 		                  :eachBreadth | boxesByBreadth at: eachBreadth ].
 	^ boxesByBreadth
 ]
@@ -85,9 +85,9 @@ RSSankey >> computeBoxesBreadths [
 	| remainingBoxes nextBoxes x kx |
 	x := 0.
 	remainingBoxes := boxes.
-	[ remainingBoxes notEmpty and: [ x < boxes size ] ] whileTrue: [ 
+	[ remainingBoxes notEmpty and: [ x < boxes size ] ] whileTrue: [
 		nextBoxes := OrderedCollection new.
-		remainingBoxes do: [ :box | 
+		remainingBoxes do: [ :box |
 			box x: x.
 			nextBoxes addAll: (box sourceLinks
 					 collect: [ :eachLink | eachLink to ]
@@ -96,7 +96,7 @@ RSSankey >> computeBoxesBreadths [
 		x := x + 1 ].
 
 	kx := extent x / (x - 1).
-	boxes do: [ :box | 
+	boxes do: [ :box |
 		box sourceLinks ifEmpty: [ box x: x - 1 ].
 		box x: box x * kx ]
 ]
@@ -112,7 +112,7 @@ RSSankey >> computeBoxesDepths [
 	self resolveCollisions: boxesByBreadth.
 	self computeLinesDepths.
 	alpha := 1.
-	self iterations timesRepeat: [ 
+	self iterations timesRepeat: [
 		alpha := alpha * 0.99.
 		self relaxRightToLeft: alpha boxes: boxesByBreadth.
 		self resolveCollisions: boxesByBreadth.
@@ -148,7 +148,7 @@ RSSankey >> computeSankey [
 RSSankey >> createBoxes [
 
 	^ nodes
-		  collect: [ :node | 
+		  collect: [ :node |
 			  boxShape copyWithAnnouncer
 				  model: node;
 				  color: (boxColor rsValue: node);
@@ -161,7 +161,7 @@ RSSankey >> createBoxes [
 { #category : #hooks }
 RSSankey >> createLabels [
 
-	^ nodes collect: [ :node | 
+	^ nodes collect: [ :node |
 		  labelShape copyWithAnnouncer
 			  model: node;
 			  text: node asString;
@@ -171,7 +171,7 @@ RSSankey >> createLabels [
 { #category : #hooks }
 RSSankey >> createLines [
 
-	^ links collect: [ :link | 
+	^ links collect: [ :link |
 		  | sourceBox targetBox line |
 		  sourceBox := boxes shapeFromModel: link from.
 		  targetBox := boxes shapeFromModel: link to.
@@ -299,14 +299,14 @@ RSSankey >> nodes: aCollection [
 { #category : #private }
 RSSankey >> relaxLeftToRight: alpha boxes: boxesByBreadth [
 
-	boxesByBreadth flattened do: [ :eachBox | 
+	boxesByBreadth flattened do: [ :eachBox |
 		eachBox relaxLeftToRight: alpha ]
 ]
 
 { #category : #private }
 RSSankey >> relaxRightToLeft: alpha boxes: boxesByBreadth [
 
-	boxesByBreadth reversed flattened do: [ :eachBox | 
+	boxesByBreadth reversed flattened do: [ :eachBox |
 		eachBox relaxRightToLeft: alpha ]
 ]
 
@@ -330,20 +330,20 @@ RSSankey >> renderIn: aCanvas [
 RSSankey >> resolveCollisions: boxesByBreadth [
 
 	| list node dy y0 |
-	boxesByBreadth do: [ :array | 
+	boxesByBreadth do: [ :array |
 		y0 := 0.
 		list := array sorted: [ :a :b | a y < b y ].
-		list do: [ :n | 
+		list do: [ :n |
 			node := n.
 			dy := y0 - node y.
 			dy > 0 ifTrue: [ node y: node y + dy ].
 			y0 := node y + nodePadding + node dy ].
 		"If bottommost node goes outside the bounds push it back up"
 		dy := y0 - nodePadding - extent y.
-		dy > 0 ifTrue: [ 
+		dy > 0 ifTrue: [
 			y0 := node y: node y - dy.
 			y0 := node y.
-			(list size - 1 to: 1 by: -1) do: [ :i | 
+			(list size - 1 to: 1 by: -1) do: [ :i |
 				node := list at: i.
 				dy := node y + node dy + nodePadding - y0.
 				dy > 0 ifTrue: [ node y: node y - dy ].
@@ -354,11 +354,11 @@ RSSankey >> resolveCollisions: boxesByBreadth [
 RSSankey >> setupBoxesDepth: boxesByBreadth [
 
 	| ky |
-	ky := boxesByBreadth inject: Float fmax into: [ :min :arr | 
+	ky := boxesByBreadth inject: Float fmax into: [ :min :arr |
 		      min min: extent y - (arr size - 1 * nodePadding)
 			      / (arr inject: 0 into: [ :sum :box | box value + sum ]) ].
-	boxesByBreadth do: [ :arr | 
-		arr doWithIndex: [ :box :i | 
+	boxesByBreadth do: [ :arr |
+		arr doWithIndex: [ :box :i |
 			box
 				y: i - 1;
 				dy: box value * ky ] ].
@@ -369,7 +369,7 @@ RSSankey >> setupBoxesDepth: boxesByBreadth [
 RSSankey >> updateBoxes [
 
 	| side |
-	boxes doWithIndex: [ :box :i | 
+	boxes doWithIndex: [ :box :i |
 		| label sign |
 		label := labels at: i.
 

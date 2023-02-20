@@ -19,9 +19,7 @@ Class {
 RSTreeMapLayout >> doExecute: shapes [
 	"Performs the layout"
 	self squarify: rootNodes
-		inRectangle: (RSRectangleTreeMap origin: 0@0 extent: self extent).
-
-	
+		inRectangle: (RSRectangleTreeMap origin: 0@0 extent: self extent)
 ]
 
 { #category : #accessing }
@@ -62,25 +60,25 @@ RSTreeMapLayout >> layoutChildrenOfRow: row [
 	oldCanvas := self rectangle veryDeepCopy.
 	row do: [ :each | | children |
 		children := each propertyAt: #schildren ifAbsent: [ #() ].
-		self 
-			squarify: children 
-			inRectangle: (RSRectangleTreeMap 
+		self
+			squarify: children
+			inRectangle: (RSRectangleTreeMap
 				fromContainerBounds: (each position extent: each extent)
 				withInset: self inset) ].
-	
-	self rectangle: oldCanvas.
+
+	self rectangle: oldCanvas
 ]
 
 { #category : #hook }
-RSTreeMapLayout >> layoutHorizontalRow: row [ 
+RSTreeMapLayout >> layoutHorizontalRow: row [
 
 	| container totalWidth areaToLayout height |
 	container := self rectangle currentSubrectangle.
-	totalWidth := container width.	
+	totalWidth := container width.
 	areaToLayout := row inject: 0 into: [ :s :e | s + (e propertyAt: #area) ].
 	height := areaToLayout / totalWidth.
-	row do: [ :each | each extent: (((each propertyAt: #area) / height) @ height) ].	
-	self translateShapesHorizontally: row in: container.
+	row do: [ :each | each extent: (((each propertyAt: #area) / height) @ height) ].
+	self translateShapesHorizontally: row in: container
 ]
 
 { #category : #hook }
@@ -91,7 +89,7 @@ RSTreeMapLayout >> layoutRow: row [
 		ifTrue: [ self layoutVerticalRow: row ]
 		ifFalse: [ self layoutHorizontalRow: row ].
 	self layoutChildrenOfRow: row.
-	self prepareNextRectangleAfterRow: row.
+	self prepareNextRectangleAfterRow: row
 ]
 
 { #category : #hook }
@@ -102,21 +100,21 @@ RSTreeMapLayout >> layoutVerticalRow: row [
 	areaToLayout := row inject: 0 into: [ :s :shape | s + (shape propertyAt: #area) ].
 	width := areaToLayout /totalHeight.
 	row do: [ :each | each extent: (width @ ( (each propertyAt: #area) / width)) ].
-	self translateShapesVertically: row in: container.
+	self translateShapesVertically: row in: container
 ]
 
 { #category : #hook }
 RSTreeMapLayout >> normalizeAreaOf: shapes byAreaOf: rec [
 	| shapesArea viewArea area |
 	shapes isEmpty ifTrue: [ ^ shapes ].
-	shapesArea := shapes inject: 0 into: [ :s :shape | 
+	shapesArea := shapes inject: 0 into: [ :s :shape |
 		s + (weight rsValue: shape) ].
-	
+
 	viewArea := rec width * rec height.
 	shapes do: [ :shape|
 		area := ((viewArea * (weight rsValue: shape))/shapesArea) asFloat.
 		shape propertyAt: #area put: area. ].
-	
+
 	^ shapes
 ]
 
@@ -149,24 +147,24 @@ RSTreeMapLayout >> squarify: children currentRow: row remainingSpace: remainingS
 	(row isEmpty or: [
 		| oldRatio newShapeRatio |
 		oldRatio := self
-			highestAspectRatioFor: row 
+			highestAspectRatioFor: row
 			remainingSpace: remainingSpace.
 		newShapeRatio := self
 			highestAspectRatioFor: (row, (Array with: firstShape))
 			remainingSpace: remainingSpace.
-		oldRatio >= newShapeRatio ] ) 
-	ifTrue: [ 
+		oldRatio >= newShapeRatio ] )
+	ifTrue: [
 		remainingChildren := children allButFirst.
-		(remainingChildren isEmpty) ifTrue: [ 
+		(remainingChildren isEmpty) ifTrue: [
 			self layoutRow: (row, (Array with: firstShape))
-		] ifFalse: [ 
-			self 
+		] ifFalse: [
+			self
 				squarify: remainingChildren
 				currentRow: (row, (Array with: firstShape) )
 				remainingSpace: remainingSpace ]
-	 ] ifFalse: [ 
+	 ] ifFalse: [
 		self layoutRow: row.
-		self 
+		self
 			squarify: children
 			currentRow: (OrderedCollection new)
 			remainingSpace: self rectangle shortestSide.
@@ -181,10 +179,10 @@ RSTreeMapLayout >> squarify: children inRectangle: aTreeRectangle [
 	children isEmpty ifTrue: [ ^ self  ].
 	self rectangle: aTreeRectangle.
 	elementsToLayout := self normalizeAreaOf: children byAreaOf: aTreeRectangle.
-	self 
+	self
 		squarify: elementsToLayout
 		currentRow: OrderedCollection new
-		remainingSpace: (aTreeRectangle width min: aTreeRectangle height).
+		remainingSpace: (aTreeRectangle width min: aTreeRectangle height)
 ]
 
 { #category : #hook }
@@ -193,14 +191,14 @@ RSTreeMapLayout >> translateShapesHorizontally: row in: container [
 	currentPoint := container origin.
 	row do: [ :each |
 		each translateTo: currentPoint + (each extent / 2).
-		currentPoint := currentPoint translateBy: ((each width) @ 0 ) ].
+		currentPoint := currentPoint translateBy: ((each width) @ 0 ) ]
 ]
 
 { #category : #hook }
 RSTreeMapLayout >> translateShapesVertically: row in: container [
 	| currentPoint |
 	currentPoint := container origin.
-	row do: [ :each | 
+	row do: [ :each |
 		each translateBy: currentPoint + (each extent/2).
 		currentPoint := currentPoint + (0@(each height)) ]
 ]

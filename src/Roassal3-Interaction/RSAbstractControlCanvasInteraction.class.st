@@ -21,8 +21,8 @@ RSAbstractControlCanvasInteraction >> configuration: aRSControlConfiguration [
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas [ 
-	^ self 
+RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas [
+	^ self
 		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
 		position: aCanvas camera position
@@ -63,7 +63,7 @@ RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle
 
 { #category : #utilities }
 RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas scale: scale [
-	^ self 
+	^ self
 		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
 		position: aCanvas camera position
@@ -72,24 +72,23 @@ RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas scale: scal
 
 { #category : #utilities }
 RSAbstractControlCanvasInteraction >> encompassingRectangleFor: aCanvas [
-	^ aCanvas propertyAt: #encompassingRectangle 
-		ifAbsentPut: [ aCanvas encompassingRectangle  ].
+	^ aCanvas propertyAt: #encompassingRectangle
+		ifAbsentPut: [ aCanvas encompassingRectangle  ]
 ]
 
 { #category : #utilities }
 RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
-	| key | 
+	| key |
 	key := #expanedEncompassingRectangle.
-	^ aCanvas propertyAt: key ifAbsentPut: [ 
+	^ aCanvas propertyAt: key ifAbsentPut: [
 		| rectangle |
 		rectangle := self encompassingRectangleFor: aCanvas.
-		self configuration padding expandRectangle: rectangle ].
-	
+		self configuration padding expandRectangle: rectangle ]
 ]
 
 { #category : #utilities }
 RSAbstractControlCanvasInteraction >> removeRectanglesFor: aCanvas [
-	aCanvas 
+	aCanvas
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]

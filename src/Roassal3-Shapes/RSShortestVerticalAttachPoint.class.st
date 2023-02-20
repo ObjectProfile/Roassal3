@@ -18,7 +18,7 @@ RSShortestVerticalAttachPoint >> basicEndingPointOf: aLine [
 	center := r1 floatCenter.
 	^ (p1 distanceTo: center) < (p2 distanceTo: center)
 		ifTrue: [ p1 ]
-		ifFalse: [ p2 ].
+		ifFalse: [ p2 ]
 ]
 
 { #category : #'public - hooks' }
@@ -32,5 +32,5 @@ RSShortestVerticalAttachPoint >> basicStartingPointOf: aLine [
 	center := r2 floatCenter.
 	^ (p1 distanceTo: center) < (p2 distanceTo: center)
 		ifTrue: [ p1 ]
-		ifFalse: [ p2 ].
+		ifFalse: [ p2 ]
 ]
