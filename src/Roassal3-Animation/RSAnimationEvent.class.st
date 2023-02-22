@@ -19,3 +19,8 @@ RSAnimationEvent >> animation [
 RSAnimationEvent >> animation: anAnimation [
 	animation := anAnimation
 ]
+
+{ #category : #accessing }
+RSAnimationEvent >> canvas [
+	^ self animation canvas
+]

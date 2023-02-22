@@ -313,6 +313,11 @@ RSShape >> extent [
 ]
 
 { #category : #accessing }
+RSShape >> fill: aColor [
+	self color: (aColor isNumber ifTrue: [ Color r: aColor g: aColor b: aColor range: 255 ])
+]
+
+{ #category : #accessing }
 RSShape >> globalEncompassingRectangle [
 	^ self encompassingRectangle
 ]

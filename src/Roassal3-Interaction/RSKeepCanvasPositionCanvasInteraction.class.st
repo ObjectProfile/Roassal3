@@ -1,11 +1,30 @@
 "
-The intent of this interaction is to be like a scroll from pharo
+This class is used by `RSCanvasController class >> #simple `
+This is not a default interaction in `RSCanvasController >> #defaultInteractions`
+
+When the canvas is resized this interaction puts the camera view in the top left corner, (this because roassal origin is in the window's center).
+Because we have coordinates now, may be we can remove this class.
 "
 Class {
 	#name : #RSKeepCanvasPositionCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#category : #'Roassal3-Interaction-Controls'
 }
+
+{ #category : #examples }
+RSKeepCanvasPositionCanvasInteraction class >> example [
+	| canvas window |
+	canvas := self canvasExample.
+	"this interaction is visible when the component changes it extent"
+	canvas @ self.
+	canvas @ RSDraggableCanvasInteraction.
+	window := canvas open.
+	window setLabel: 'Drag me'. 
+	
+	[ 
+	(Delay forSeconds: 5) wait.
+	window extent: 300@300 ] fork.
+]
 
 { #category : #hooks }
 RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
@@ -19,10 +38,13 @@ RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
 	self removeRectanglesFor: evt canvas.
 	camera := evt camera.
 	canvas := evt canvas.
+	
 	r := self expandedRectangle: canvas.
-	camera position: ((camera fromSpaceToPixel: evt camera position)+r origin) / camera scale.
-	self removeRectanglesFor: evt canvas.
-	evt signalUpdate
+	
+	camera translateTo: 0@0 - (camera originMode gapDistance: camera).
+	
+	self removeRectanglesFor: canvas.
+	evt signalUpdate.
 ]
 
 { #category : #rendering }

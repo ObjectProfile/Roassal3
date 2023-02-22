@@ -153,8 +153,8 @@ RSColorPaletteChooser >> controllerInteraction [
 	| controls |
 	controls := RSCanvasController new.
 	controls noLegend.
-	controls interactions removeKey: RSDraggableCanvasInteraction.
-	controls interactions at: RSScrollWheelCanvasInteraction put: RSScrollWheelCanvasInteraction new.
+	controls removeInteractionIfPresent: RSDraggableCanvasInteraction.
+	controls addInteraction: RSScrollWheelCanvasInteraction new.
 	controls configuration
 		noZoomToFitOnStart;
 		padding: 0@ 10;
@@ -299,10 +299,11 @@ RSColorPaletteChooser >> polygonFor: points [
 RSColorPaletteChooser >> relayout: evt [
 	| canvas |
 	canvas := evt canvas.
+	
 	RSFlowLayout new
 		maxWidth: canvas extent;
 		on: canvas shapes.
-	canvas camera translateTo: canvas extent / 2 + (-20@0)
+	canvas camera translateTo: canvas extent / -2 + (20@0)
 ]
 
 { #category : #dependencies }

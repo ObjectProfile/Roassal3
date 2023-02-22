@@ -395,6 +395,11 @@ RSAthensMorph >> isDrawing [
 	^ isDrawing
 ]
 
+{ #category : #accessing }
+RSAthensMorph >> lastMousePosition [
+	^ lastMousePosition
+]
+
 { #category : #initialization }
 RSAthensMorph >> layoutChanged [
 	"react on morph resize"

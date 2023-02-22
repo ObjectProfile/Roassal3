@@ -10,20 +10,55 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
+{ #category : #examples }
+RSZoomableCanvasInteraction class >> example [
+	| canvas |
+	canvas := self canvasExample.
+	canvas @ self.
+	canvas @ RSDraggableCanvasInteraction.
+	canvas @ RSKeyNavigationCanvasInteraction.
+	canvas @ RSScrollBarsCanvasInteraction.
+	canvas @ RSZoomToFitCanvasInteraction.
+	canvas open.
+]
+
+{ #category : #events }
+RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
+	| scale camera position morphPosition |
+	camera := aCanvas camera.
+	scale := camera scale.
+	
+	morphPosition := aCanvas morph lastMousePosition - aCanvas morph bounds origin.
+	position := camera fromPixelToSpace: morphPosition.
+	
+	aCanvas newAnimation 
+		easing: RSEasingInterpolator backOut;
+		duration: 200 milliSeconds;
+		onStepDo: [ :t | | newPosition zero |
+			"this method call a loadIdentity in the camera matrix"
+			camera scale: (scale interpolateTo: newScale at: t).
+			newPosition := camera fromSpaceToPixel: position.
+			zero := camera fromSpaceToPixel: 0@0.
+			camera matrix translation: morphPosition - (newPosition - zero)-(camera originMode gapDistance: camera).
+			aCanvas signalUpdate ]
+]
+
 { #category : #'events - processing' }
 RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: delta [
 
-	| camera sc dist correct scale position |
+	| camera newScale dist correct scale position |
 	camera := aCanvas camera.
-	sc := camera scale * delta x.
-	sc = (self scaleFor: sc) ifFalse: [ ^ self ].
+	
+	newScale := camera scale * delta x.
+	"if the allowed scale is not the same as the new scale we do not update"
+	newScale = (self scaleFor: newScale) ifFalse: [ ^ self ].
 	dist := evtPosition - camera position.
 	correct := self
 		correctCameraPosition: aCanvas
 		inRectangle: (self expandedRectangle: aCanvas)
 		position: camera position + (dist * delta y)
-		scale: sc.
-	scale := NSScale sqrt range: { camera scale. sc }.
+		scale: newScale.
+	scale := NSScale sqrt range: { camera scale. newScale }.
 	position := NSScale sqrt range: { camera position. correct }.
 	animation := aCanvas newAnimation
 		duration: 200 milliSeconds;
@@ -45,17 +80,12 @@ RSZoomableCanvasInteraction >> processEvent: evt [
 	| delta |
 	animation ifNotNil: [ ^ self ].
 	delta := evt isUp
-		ifTrue: [ 1.25@0.2 ]
-		ifFalse: [ 0.8@ -0.25 ].
-	self move: evt canvas evtPosition: evt position delta: delta
+		ifTrue: [ 1.25 ]
+		ifFalse: [ 0.8 ].
+	self class zoomMove: evt canvas newScale: (self scaleFor: evt camera scale * delta).
 ]
 
 { #category : #rendering }
 RSZoomableCanvasInteraction >> renderLegendOn: lb [
-	lb text: 'Wheel' description: 'To zoom in-out the view'
-]
-
-{ #category : #rendering }
-RSZoomableCanvasInteraction >> renderOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'
 ]

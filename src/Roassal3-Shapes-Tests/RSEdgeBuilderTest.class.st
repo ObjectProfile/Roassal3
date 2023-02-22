@@ -41,12 +41,12 @@ RSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 
 { #category : #tests }
 RSEdgeBuilderTest >> testBorder [
-	| numberOfEdges |
+	| numberOfLines |
 	b canvas: canvas.
 	b connectFrom: [ :vv | vv // 2 ].
 
-	numberOfEdges := canvas edges size.
-	self assert: numberOfEdges > 0.
+	numberOfLines := canvas lines size.
+	self assert: numberOfLines > 0.
 
 	self assert: (canvas edges collect: #border) asSet size equals: 1
 ]
@@ -60,7 +60,7 @@ RSEdgeBuilderTest >> testConnectFrom [
 
 	self assert: canvas numberOfEdges equals: 1.
 
-	e := canvas edges anyOne.
+	e := canvas lines anyOne.
 	self assert: e from model equals: 1.
 	self assert: e to model equals: 2
 ]
@@ -72,7 +72,7 @@ RSEdgeBuilderTest >> testConnectFromAll [
 	es := (1 to: 2) collect: [ :m | RSEllipse new size: 20; model: m; yourself ].
 	c addAll: es.
 
-	self assert: c edges size equals: 0.
+	self assert: c lines size equals: 0.
 	RSLineBuilder line
 		canvas: c;
 		objects: (1 to: 2);
@@ -80,9 +80,9 @@ RSEdgeBuilderTest >> testConnectFromAll [
 
 	(Smalltalk globals at: #RSTreeLayout) on: es.
 
-	self assert: c edges size equals: 1.
-	self assert: c edges first from position equals: (15.0@15.0).
-	self assert: c edges first to position equals: (15.0@55.0)
+	self assert: c lines size equals: 1.
+	self assert: c lines first from position equals: (15.0@15.0).
+	self assert: c lines first to position equals: (15.0@55.0)
 ]
 
 { #category : #tests }

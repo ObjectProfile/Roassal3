@@ -1,5 +1,17 @@
 "
-I add key events to the view to move it, zoom it with the key board
+I add key events to the view to move it, zoom it with the key board.
+
+I interact with:
+- `RSCanvasController`
+- `RSControlConfiguration`
+
+### Keys
+- Arrows: small move in the desired direction
+- Arrows + Shift: large move in the desired direction
+- M: to expand or collapse the current window
+- O: to zoom out
+- I: to zoom in
+
 "
 Class {
 	#name : #RSKeyNavigationCanvasInteraction,
@@ -12,6 +24,15 @@ Class {
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
+
+{ #category : #examples }
+RSKeyNavigationCanvasInteraction class >> example [
+	| canvas |
+	canvas := self canvasExample.
+	canvas @ self.
+	canvas zoomToFit.
+	canvas open
+]
 
 { #category : #'events-processing' }
 RSKeyNavigationCanvasInteraction >> expandCollapse: evt [
@@ -38,17 +59,18 @@ RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	keyName := evt keyName.
 	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
 	keyName = #O ifTrue: [ ^ self zoomOut: evt canvas ].
-	self configuration hasHorizontalScrolling ifTrue: [
-		keyName = #LEFT ifTrue: [ steps add: -1@0 ].
-		keyName = #RIGHT ifTrue: [ steps add: 1@0 ].
+	"direcctions has changed to handle new coordinate system"
+	self configuration hasHorizontalScrolling ifTrue: [ 
+		keyName = #LEFT ifTrue: [ steps add: 1@0 ].
+		keyName = #RIGHT ifTrue: [ steps add: -1@0 ].
 	].
-	self configuration hasVerticalScrolling ifTrue: [
-		keyName = #UP ifTrue: [ steps add: 0@ -1 ].
-		keyName = #DOWN ifTrue: [ steps add: 0@ 1 ].
+	self configuration hasVerticalScrolling ifTrue: [ 
+		keyName = #UP ifTrue: [ steps add: 0@ 1 ].
+		keyName = #DOWN ifTrue: [ steps add: 0@ -1 ].
 	].
-
+	
 	speedMult := evt shiftKeyPressed
-		ifTrue: [ 4 ]
+		ifTrue: [ 4 ] 
 		ifFalse: [ 1 ].
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].
@@ -79,17 +101,17 @@ RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 		| step camera correct position deltaMS current |
 		current := animation currentTime.
 		lastMS ifNil: [ lastMS := current-1 ].
-		deltaMS := current - lastMS.
+		deltaMS := (current - lastMS) max: 1.
 		lastMS := current.
 		step := steps inject: 0@0 into: [:p :s |p+s ].
 		camera := aCanvas camera.
 		camera translateBy: step / (aCanvas camera scale / (speed * speedMult * deltaMS)).
 		position := camera position.
-		correct := self correctCameraPosition: aCanvas.
-		correct = position
+		correct := self correctCamera: camera.
+		correct = position 
 			ifFalse: [ camera position: correct ].
 		aCanvas signalUpdate.
-		]
+		].
 ]
 
 { #category : #rendering }
@@ -107,28 +129,11 @@ RSKeyNavigationCanvasInteraction >> zoomIn: aCanvas [
 	self zoomMove: aCanvas delta: 1.5
 ]
 
-{ #category : #'events-processing' }
+{ #category : #events }
 RSKeyNavigationCanvasInteraction >> zoomMove: aCanvas delta: delta [
-	| scale camera newScale correct |
-	camera := aCanvas camera.
-	scale := camera scale.
-	newScale := self scaleFor: delta * scale.
-	aCanvas newAnimation
-		easing: RSEasingInterpolator backOut;
-		duration: 200 milliSeconds;
-		from: scale;
-		to: newScale;
-		on: camera set: #scale:.
-	correct := self
-		correctCameraPosition: aCanvas
-		scale: newScale.
-	correct = camera position ifTrue: [ ^ self ].
-	aCanvas newAnimation
-		easing: RSEasingInterpolator backOut;
-		duration: 200 milliSeconds;
-		from: camera position;
-		to: correct;
-		on: camera set: #translateTo:
+	RSZoomableCanvasInteraction 
+		zoomMove: aCanvas 
+		newScale: (self scaleFor: aCanvas camera scale * delta)
 ]
 
 { #category : #'events-processing' }

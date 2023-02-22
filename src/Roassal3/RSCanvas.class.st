@@ -193,6 +193,16 @@ RSCanvas >> asForm [
 ]
 
 { #category : #accessing }
+RSCanvas >> background [
+	^ self color
+]
+
+{ #category : #accessing }
+RSCanvas >> background: aColor [
+	self color: aColor
+]
+
+{ #category : #accessing }
 RSCanvas >> basicRectangle [
 	"Return a rectangle encompassing all the elements"
 	^ Rectangle origin: 0@0 extent: self extent
@@ -214,9 +224,9 @@ c
 ]
 
 { #category : #camera }
-RSCanvas >> camera: aCamera [
+RSCanvas >> camera: anRSCamera [
 	"Set a new camera for the canvas."
-	camera := aCamera
+	camera := anRSCamera
 ]
 
 { #category : #accessing }
@@ -455,6 +465,21 @@ RSCanvas >> openWithTitle: aTitleAsString [
 	window extent: 500 @ 500.
 	morph privateOwner: window.
 	^ window
+]
+
+{ #category : #camera }
+RSCanvas >> originCenterMiddle [
+	camera originMode: RSCamera originCenterMiddle
+]
+
+{ #category : #camera }
+RSCanvas >> originMode [
+	^ camera originMode
+]
+
+{ #category : #camera }
+RSCanvas >> originTopLeft [
+	camera originMode: RSCamera originTopLeft
 ]
 
 { #category : #accessing }
@@ -710,8 +735,9 @@ RSCanvas >> visibleArea: aRectangle [
 	self signalUpdate
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : #camera }
 RSCanvas >> visibleRectangle [
+	"returns the visible rectangle in the space"
 	^ self camera visibleRectangle
 ]
 
