@@ -111,6 +111,7 @@ RSChartExample >> example06CustomNumberOfTicks [
 
 { #category : #examples }
 RSChartExample >> example07AdjustingFontSize [
+
 	<script: 'self new example07AdjustingFontSize open'>
 	| x y c |
 	x := -3.14 to: 3.14 by: 0.1.
@@ -118,9 +119,16 @@ RSChartExample >> example07AdjustingFontSize [
 
 	c := RSChart new.
 	c addPlot: (RSLinePlot new x: x y: y).
-	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
-	c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-	c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; horizontal).
+	c addDecoration: (RSChartTitleDecoration new
+			 title: 'hello';
+			 fontSize: 40).
+	c addDecoration: (RSXLabelDecoration new
+			 title: 'My X Axis';
+			 fontSize: 12).
+	c addDecoration: (RSYLabelDecoration new
+			 title: 'My Y Axis';
+			 fontSize: 15;
+			 horizontal).
 	^ c
 ]
 
