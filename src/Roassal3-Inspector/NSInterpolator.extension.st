@@ -1,7 +1,7 @@
 Extension { #name : #NSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
-NSInterpolator >> gtCanvasForInspector [
+NSInterpolator >> canvasForInspector [
 	| canvas theme boxes pos rect line cp label loc s |
  	canvas := RSCanvas new.
 	theme := Smalltalk ui theme.
@@ -73,6 +73,6 @@ NSInterpolator >> gtCanvasForInspector [
 NSInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new
-		canvas: self gtCanvasForInspector;
+		canvas: self canvasForInspector;
 		yourself
 ]
