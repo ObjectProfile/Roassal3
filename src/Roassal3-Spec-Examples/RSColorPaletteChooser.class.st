@@ -89,7 +89,6 @@ RSColorPaletteChooser >> buttonClick: evt [
 	overHighlight doUnhighlight: evt shape.
 	"then with mark the selection hightlight"
 	selectedHighlight doHighlight: evt shape.
-
 	self currentPalette: evt shape model.
 	evt signalUpdate
 ]
@@ -313,16 +312,18 @@ RSColorPaletteChooser >> release [
 
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: canvas [
-	| data buttonElements |
+	| data buttonShapes |
 	canvas color: '2d5c7f'.
 
 	data := self buttonModels.
-	buttonElements := data collect: [ :m | self buttonFor: m ].
+	buttonShapes := data collect: [ :m | self buttonFor: m ].
 
 	RSHorizontalLineLayout new
 		gapSize: -9;
-		on: buttonElements.
-	canvas addAll: buttonElements.
+		on: buttonShapes.
+	canvas addAll: buttonShapes.
+	selectedHighlight doHighlight: buttonShapes first.
+
 	canvas nodes @ overHighlight.
 
 	canvas when: RSExtentChangedEvent send: #zoomToFit to: canvas

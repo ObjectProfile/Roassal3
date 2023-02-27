@@ -2,7 +2,7 @@
 Basic layout studio to interact with layout and all subclasses
 "
 Class {
-	#name : #SpLayoutStudio,
+	#name : #RSLayoutStudio,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'menu',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #layout }
-SpLayoutStudio class >> defaultLayout [
+RSLayoutStudio class >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #menu expand: false;
 		add: (SpPanedLayout newLeftToRight
@@ -29,13 +29,13 @@ SpLayoutStudio class >> defaultLayout [
 ]
 
 { #category : #'instance creation' }
-SpLayoutStudio class >> open [
+RSLayoutStudio class >> open [
 	<script>
 	self new open
 ]
 
 { #category : #initialization }
-SpLayoutStudio >> addAnimation: anRSCanvas [
+RSLayoutStudio >> addAnimation: anRSCanvas [
 	| newPositions |
 	newPositions := nodes collect: [ :each | each position ].
 	anRSCanvas newAnimation
@@ -52,24 +52,24 @@ SpLayoutStudio >> addAnimation: anRSCanvas [
 ]
 
 { #category : #public }
-SpLayoutStudio >> apply: aRSLayoutField with: anObject [
+RSLayoutStudio >> apply: aRSLayoutField with: anObject [
 	oldPositions := nodes collect: [ :each | each position ].
 	currentLayout perform: aRSLayoutField selector asMutator with: anObject.
 	roassalCanvas refresh
 ]
 
 { #category : #public }
-SpLayoutStudio >> currentLayout [
+RSLayoutStudio >> currentLayout [
 	^ currentLayout
 ]
 
 { #category : #public }
-SpLayoutStudio >> currentLayout: aRSLayout [
+RSLayoutStudio >> currentLayout: aRSLayout [
 	currentLayout := aRSLayout
 ]
 
 { #category : #public }
-SpLayoutStudio >> edit: anAssociation [
+RSLayoutStudio >> edit: anAssociation [
 	| class definition |
 	class := anAssociation key.
 	definition := anAssociation value.
@@ -85,12 +85,12 @@ SpLayoutStudio >> edit: anAssociation [
 ]
 
 { #category : #public }
-SpLayoutStudio >> editLayout: aRSLayoutClass [
+RSLayoutStudio >> editLayout: aRSLayoutClass [
 	self edit: aRSLayoutClass -> aRSLayoutClass layoutDefinition
 ]
 
 { #category : #initialization }
-SpLayoutStudio >> initializePresenters [
+RSLayoutStudio >> initializePresenters [
 	menu := self mainMenu.
 	menu addKeybindingsTo: self.
 	controls := self newButton.
@@ -100,7 +100,7 @@ SpLayoutStudio >> initializePresenters [
 ]
 
 { #category : #initialization }
-SpLayoutStudio >> initializeWindow: aWindow [
+RSLayoutStudio >> initializeWindow: aWindow [
 	| title |
 	title := 'Layout Studio'.
 	currentLayout ifNotNil: [ title := title, ' on:  ', currentLayout class name ].
@@ -111,17 +111,17 @@ SpLayoutStudio >> initializeWindow: aWindow [
 ]
 
 { #category : #accessing }
-SpLayoutStudio >> layoutDefinition [
+RSLayoutStudio >> layoutDefinition [
 	^ layoutDefinition
 ]
 
 { #category : #accessing }
-SpLayoutStudio >> layoutDefinition: aRSLayoutDefinition [
+RSLayoutStudio >> layoutDefinition: aRSLayoutDefinition [
 	layoutDefinition := aRSLayoutDefinition
 ]
 
 { #category : #initialization }
-SpLayoutStudio >> mainMenu [
+RSLayoutStudio >> mainMenu [
 	^ self newMenuBar
 		addGroup: [ :group |
 			group addItem: [ :item |
@@ -133,7 +133,7 @@ SpLayoutStudio >> mainMenu [
 ]
 
 { #category : #events }
-SpLayoutStudio >> openLayout [
+RSLayoutStudio >> openLayout [
 	| selection |
 	selection := SpSelectDialog new
 		title: 'Select a layout';
@@ -146,7 +146,7 @@ SpLayoutStudio >> openLayout [
 ]
 
 { #category : #initialization }
-SpLayoutStudio >> renderIn: anRSCanvas [
+RSLayoutStudio >> renderIn: anRSCanvas [
 	| canvas |
 	canvas := currentLayout class canvasExample.
 	canvas shapes inspect.
