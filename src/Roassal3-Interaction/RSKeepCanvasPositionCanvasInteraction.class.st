@@ -34,17 +34,20 @@ RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 
 { #category : #'events - processing' }
 RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
-	| canvas camera r |
+	| canvas camera r padding topLeftPadding zero origin |
 	self removeRectanglesFor: evt canvas.
 	camera := evt camera.
 	canvas := evt canvas.
-	
+
 	r := self expandedRectangle: canvas.
-	
-	camera translateTo: 0@0 - (camera originMode gapDistance: camera).
-	
+	padding := self configuration padding.
+	topLeftPadding := padding left @ padding top.
+	zero := camera fromSpaceToPixel: 0@0.
+	origin := camera fromSpaceToPixel: r origin.
+	camera translateTo: 0@0 - (origin - zero) - (camera originMode gapDistance: camera).
+
 	self removeRectanglesFor: canvas.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #rendering }
