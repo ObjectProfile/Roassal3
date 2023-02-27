@@ -1004,7 +1004,8 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 		toShapes: numbers;
 		connectTo: [ :n | n + 1 ].
 	RSSimpleForceBasedLayout on: numbers.
-	^ canvas @ RSCanvasController simple
+	canvas @ RSCanvasController simple.
+	^ canvas
 ]
 
 { #category : #lines }
