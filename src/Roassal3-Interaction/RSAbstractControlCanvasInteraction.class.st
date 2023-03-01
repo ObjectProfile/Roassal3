@@ -147,15 +147,6 @@ RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle
 ]
 
 { #category : #utilities }
-RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas scale: scale [
-	^ self
-		correctCameraPosition: aCanvas
-		inRectangle: (self expandedRectangle: aCanvas)
-		position: aCanvas camera position
-		scale: scale
-]
-
-{ #category : #utilities }
 RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera [
 	| visibleRectangle correctX correctY |
 	visibleRectangle := camera visibleRectangle.

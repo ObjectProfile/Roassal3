@@ -28,17 +28,18 @@ RSIconBrowser >> connectPresenters [
 
 	| c icons shapes |
 	c := canvas canvas.
-	icons := (self iconNamed: #icons) associations sorted: [ :a :b |
-		         a key < b key ].
+	icons := Smalltalk ui.
+	icons := icons icons icons associations
+		sorted: [ :a :b | a key < b key ].
 
 	shapes := icons collect: [ :icon |
-		          RSBitmap new
-			          form: icon value;
-			          model: icon;
-			          popupText: #key;
-			          when: RSMouseClick do: [ :evt |
-				          Clipboard clipboardText: evt shape model key.
-				          self inform: 'Copied icon name' ] ].
+		RSBitmap new
+			form: icon value;
+			model: icon;
+			popupText: #key;
+			when: RSMouseClick do: [ :evt |
+				Clipboard clipboardText: evt shape model key.
+				self inform: 'Copied icon name' ] ].
 	c addAll: shapes.
 	RSRectanglePackLayout on: shapes.
 	c @ RSCanvasController

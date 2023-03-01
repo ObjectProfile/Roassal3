@@ -164,6 +164,14 @@ RSCamera >> position: aPoint [
 	matrix translation: aPoint
 ]
 
+{ #category : #accessing }
+RSCamera >> positionFromSpace: aPoint [
+	| morphPosition zeroPosition |
+	morphPosition := self fromSpaceToPixel: aPoint.
+	zeroPosition := self fromSpaceToPixel: 0@0.
+	^ (morphPosition - zeroPosition) negated + (originMode gapToCenter: self)
+]
+
 { #category : #private }
 RSCamera >> privExtent: aRect [
 

@@ -43,33 +43,6 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 			aCanvas signalUpdate ]
 ]
 
-{ #category : #'events - processing' }
-RSZoomableCanvasInteraction >> move: aCanvas evtPosition: evtPosition delta: delta [
-
-	| camera newScale dist correct scale position |
-	camera := aCanvas camera.
-	
-	newScale := camera scale * delta x.
-	"if the allowed scale is not the same as the new scale we do not update"
-	newScale = (self scaleFor: newScale) ifFalse: [ ^ self ].
-	dist := evtPosition - camera position.
-	correct := self
-		correctCameraPosition: aCanvas
-		inRectangle: (self expandedRectangle: aCanvas)
-		position: camera position + (dist * delta y)
-		scale: newScale.
-	scale := NSScale sqrt range: { camera scale. newScale }.
-	position := NSScale sqrt range: { camera position. correct }.
-	animation := aCanvas newAnimation
-		duration: 200 milliSeconds;
-		onStepDo: [ :t |
-			camera
-				scale: (scale scale: t);
-				translateTo: (position scale: t).
-			aCanvas signalUpdate ];
-		when: RSAnimationEndEvent do: [ animation := nil ]
-]
-
 { #category : #hooks }
 RSZoomableCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self
