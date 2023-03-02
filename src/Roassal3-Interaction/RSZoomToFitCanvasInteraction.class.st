@@ -10,19 +10,29 @@ Note: this interaction changes the RSCamera of the canvas for a custom camera.
 Class {
 	#name : #RSZoomToFitCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
+	#instVars : [
+		'zoomToFitOnStart',
+		'zoomToFitOnExtent'
+	],
 	#category : #'Roassal3-Interaction-Controls'
 }
 
 { #category : #examples }
 RSZoomToFitCanvasInteraction class >> example [
-	| canvas |
+	| canvas interaction |
 	canvas := self canvasExample.
 	canvas originTopLeft.
-	canvas @ self.
+	interaction := self new.
+
+	interaction useZoomToFitOnStart; useZoomToFitOnExtendChanged.
+
+	canvas @ interaction.
 	canvas @ RSKeyNavigationCanvasInteraction.
 	canvas @ RSDraggableCanvasInteraction.
 	canvas @ RSScrollBarsCanvasInteraction.
-	canvas open.
+	^ canvas open
+		setLabel: 'Resize the window';
+		yourself
 ]
 
 { #category : #'zoom animation' }
@@ -69,12 +79,28 @@ RSZoomToFitCanvasInteraction >> cameraFor: aCanvas [
 		yourself
 ]
 
+{ #category : #initialization }
+RSZoomToFitCanvasInteraction >> initialize [
+	super initialize.
+	self useZoomToFitOnStart; noZoomToFitOnExtendChanged
+]
+
+{ #category : #configuration }
+RSZoomToFitCanvasInteraction >> noZoomToFitOnExtendChanged [
+	zoomToFitOnExtent := false
+]
+
+{ #category : #configuration }
+RSZoomToFitCanvasInteraction >> noZoomToFitOnStart [
+	zoomToFitOnStart := false
+]
+
 { #category : #hooks }
 RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSKeyUp send: #processKeyUp: to: self.
 	aCanvas when: RSExtentChangedEvent send: #zoomToFitIfNecessary: to: self.
 	aCanvas camera: (self cameraFor: aCanvas).
-	self configuration shouldZoomToFitOnStart ifFalse: [ ^ self ].
+	self shouldZoomToFitOnStart ifFalse: [ ^ self ].
 	self zoomToFitOnStart: aCanvas
 ]
 
@@ -89,9 +115,29 @@ RSZoomToFitCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Space' description: 'To zoom to fit the view'
 ]
 
+{ #category : #testing }
+RSZoomToFitCanvasInteraction >> shouldZoomToFitOnExtendChanged [
+	^ zoomToFitOnExtent
+]
+
+{ #category : #testing }
+RSZoomToFitCanvasInteraction >> shouldZoomToFitOnStart [
+	^ zoomToFitOnStart
+]
+
+{ #category : #configuration }
+RSZoomToFitCanvasInteraction >> useZoomToFitOnExtendChanged [
+	zoomToFitOnExtent := true
+]
+
+{ #category : #configuration }
+RSZoomToFitCanvasInteraction >> useZoomToFitOnStart [
+	zoomToFitOnStart := true
+]
+
 { #category : #'zoom animation' }
 RSZoomToFitCanvasInteraction >> zoomToFitIfNecessary: evt [
-	self configuration shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
+	self shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
 	evt canvas zoomToFit
 ]
 

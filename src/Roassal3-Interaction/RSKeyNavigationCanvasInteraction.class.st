@@ -20,7 +20,9 @@ Class {
 		'steps',
 		'speed',
 		'animation',
-		'speedMult'
+		'speedMult',
+		'hasHorizontalScrolling',
+		'hasVerticalScrolling'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -31,7 +33,45 @@ RSKeyNavigationCanvasInteraction class >> example [
 	canvas := self canvasExample.
 	canvas @ self.
 	canvas zoomToFit.
-	canvas open
+	^ canvas open
+		setLabel: 'Use key arrows';
+		yourself
+]
+
+{ #category : #examples }
+RSKeyNavigationCanvasInteraction class >> exampleNoHorizontalScroll [
+	| canvas interaction |
+	canvas := self canvasExample.
+	interaction := self new.
+	interaction hasHorizontalScrolling: false.
+	canvas @ interaction.
+	canvas zoomToFit.
+	^ canvas open
+		setLabel: 'No horizontal scroll';
+		yourself
+]
+
+{ #category : #examples }
+RSKeyNavigationCanvasInteraction class >> exampleNoVerticalScroll [
+	| canvas interaction |
+	canvas := self canvasExample.
+	interaction := self new.
+	interaction hasVerticalScrolling: false.
+	canvas @ interaction.
+	canvas zoomToFit.
+	^ canvas open
+		setLabel: 'No vertical scroll';
+		yourself
+]
+
+{ #category : #events }
+RSKeyNavigationCanvasInteraction >> computeSteps: keyName [
+	self hasHorizontalScrolling ifTrue: [
+		keyName = #LEFT ifTrue: [ steps add: 1 @ 0 ].
+		keyName = #RIGHT ifTrue: [ steps add:  -1 @ 0 ] ].
+	self hasVerticalScrolling ifFalse: [ ^ self ].
+	keyName = #UP ifTrue: [ steps add: 0 @ 1 ].
+	keyName = #DOWN ifTrue: [ steps add: 0 @ -1 ]
 ]
 
 { #category : #'events-processing' }
@@ -39,9 +79,32 @@ RSKeyNavigationCanvasInteraction >> expandCollapse: evt [
 	evt canvas morph window expandBoxHit
 ]
 
+{ #category : #'scrollbar managing' }
+RSKeyNavigationCanvasInteraction >> hasHorizontalScrolling [
+	^ hasHorizontalScrolling
+]
+
+{ #category : #'scrollbar managing' }
+RSKeyNavigationCanvasInteraction >> hasHorizontalScrolling: aBool [
+	hasHorizontalScrolling := aBool
+]
+
+{ #category : #'scrollbar managing' }
+RSKeyNavigationCanvasInteraction >> hasVerticalScrolling [
+	^ hasVerticalScrolling
+]
+
+{ #category : #'scrollbar managing' }
+RSKeyNavigationCanvasInteraction >> hasVerticalScrolling: aBool [
+	hasVerticalScrolling := aBool
+]
+
 { #category : #initialization }
 RSKeyNavigationCanvasInteraction >> initialize [
 	super initialize.
+	self
+		hasHorizontalScrolling: true;
+		hasVerticalScrolling: true.
 	steps := Set new.
 	speed := 1
 ]
@@ -59,18 +122,10 @@ RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	keyName := evt keyName.
 	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
 	keyName = #O ifTrue: [ ^ self zoomOut: evt canvas ].
-	"direcctions has changed to handle new coordinate system"
-	self configuration hasHorizontalScrolling ifTrue: [ 
-		keyName = #LEFT ifTrue: [ steps add: 1@0 ].
-		keyName = #RIGHT ifTrue: [ steps add: -1@0 ].
-	].
-	self configuration hasVerticalScrolling ifTrue: [ 
-		keyName = #UP ifTrue: [ steps add: 0@ 1 ].
-		keyName = #DOWN ifTrue: [ steps add: 0@ -1 ].
-	].
-	
+	self computeSteps: keyName.
+
 	speedMult := evt shiftKeyPressed
-		ifTrue: [ 4 ] 
+		ifTrue: [ 4 ]
 		ifFalse: [ 1 ].
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].

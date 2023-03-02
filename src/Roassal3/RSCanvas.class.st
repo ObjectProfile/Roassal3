@@ -49,7 +49,7 @@ RSCanvas class >> exampleSimple [
 	canvas := self new.
 	canvas color: Color black.
 	"add some shapes here"
-	canvas open
+	^ canvas open
 ]
 
 { #category : #examples }
@@ -59,7 +59,7 @@ RSCanvas class >> exampleSpec [
 	canvas color: Color black.
 	spec := SpMorphPresenter new.
 	spec morph: canvas createMorph.
-	spec open
+	^ spec open
 ]
 
 { #category : #antialiasing }

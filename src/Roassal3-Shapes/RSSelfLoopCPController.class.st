@@ -40,7 +40,7 @@ RSSelfLoopCPController class >> example [
 	].
 	(Smalltalk globals at: #RSTreeLayout) on: canvas nodes.
 	canvas zoomToFit.
-	canvas open
+	^ canvas open
 ]
 
 { #category : #hooks }

@@ -239,13 +239,10 @@ RSCamera >> zoomToFit: anExtent extent: otherExtent [
 
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent rectangle: rect [
-	| sc morphPosition zeroPosition |
+	| sc |
 	sc := (self computeScaleFor: anExtent rectangle: rect).
 	"we can improve this method"
-	
-	self scale: sc.
-	morphPosition := self fromSpaceToPixel: rect floatCenter.
-	zeroPosition := self fromSpaceToPixel: 0@0.
-	self translateTo: (morphPosition - zeroPosition) negated + (originMode gapToCenter: self)
 
+	self scale: sc.
+	self translateTo: (self positionFromSpace: rect floatCenter)
 ]

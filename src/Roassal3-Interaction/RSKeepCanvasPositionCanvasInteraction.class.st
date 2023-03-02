@@ -19,11 +19,12 @@ RSKeepCanvasPositionCanvasInteraction class >> example [
 	canvas @ self.
 	canvas @ RSDraggableCanvasInteraction.
 	window := canvas open.
-	window setLabel: 'Drag me'. 
-	
-	[ 
+	window setLabel: 'Drag me'.
+
+	[
 	(Delay forSeconds: 5) wait.
 	window extent: 300@300 ] fork.
+	^ window
 ]
 
 { #category : #hooks }

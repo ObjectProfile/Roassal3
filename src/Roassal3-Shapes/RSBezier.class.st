@@ -88,7 +88,7 @@ RSBezier class >> exampleBezier [
 	| bezier |
 	bezier := self new.
 	bezier controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
-	bezier inspect
+	^ Smalltalk tools inspector inspect: bezier
 ]
 
 { #category : #examples }
@@ -107,7 +107,7 @@ RSBezier class >> exampleControlPointsController [
 		yourself.
 	bezier controlPointsController: controller.
 
-	RSCanvas new
+	^ RSCanvas new
 		add: bezier;
 		addAll: points;
 		open

@@ -20,7 +20,9 @@ RSScrollWheelCanvasInteraction class >> example [
 	canvas @ RSKeyNavigationCanvasInteraction.
 	canvas @ RSScrollBarsCanvasInteraction.
 	canvas when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit; signalUpdate ].
-	canvas open
+	^ canvas open
+		setLabel: 'Use mouse wheel';
+		yourself
 ]
 
 { #category : #'events - processing' }

@@ -15,7 +15,7 @@ RSBitmap class >> example [
 	| image |
 	image := self new.
 	image form: (self iconNamed: #pharo).
-	image inspect
+	^ Smalltalk tools inspector inspect: image
 ]
 
 { #category : #private }

@@ -22,7 +22,8 @@ Class {
 	#instVars : [
 		'mouseEvent',
 		'isMoving',
-		'lastStep'
+		'lastStep',
+		'hasDraggableAnimation'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -33,11 +34,11 @@ RSDraggableCanvasInteraction class >> example [
 	canvas := self canvasExample.
 	"canvas @ RSDraggableCanvasInteraction."
 	interaction := self new.
-	interaction configuration hasDraggableAnimation: false.
+	interaction hasDraggableAnimation: false.
 	canvas @ interaction.
 	"or"
 	"canvas addInteraction RSDraggableCanvasInteraction new"
-	canvas open
+	^ canvas open
 ]
 
 { #category : #examples }
@@ -46,7 +47,7 @@ RSDraggableCanvasInteraction class >> exampleOriginTopLeft [
 	canvas := self canvasExample.
 	canvas originTopLeft.
 	canvas @ self.
-	canvas open
+	^ canvas open
 ]
 
 { #category : #accessing }
@@ -73,7 +74,7 @@ RSDraggableCanvasInteraction >> all [
 { #category : #computing }
 RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	| camera p correct anime |
-	self configuration hasDraggableAnimation 
+	self hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	camera := aCanvas camera.
 	p := camera position.
@@ -90,10 +91,22 @@ RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ]
 ]
 
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> hasDraggableAnimation [
+	^ hasDraggableAnimation
+]
+
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> hasDraggableAnimation: aBoolean [
+	hasDraggableAnimation := aBoolean
+]
+
 { #category : #initialization }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
-	self all.
+	self
+		all;
+		hasDraggableAnimation: true.
 	isMoving := false
 ]
 
@@ -118,26 +131,26 @@ RSDraggableCanvasInteraction >> mouseDragging: evt [
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
 	lastStep := evt step.
-	self configuration hasDraggableAnimation ifTrue: [
+	self hasDraggableAnimation ifTrue: [
 		correct := self correctCamera: camera.
-		
+
 		p := (correct - camera position) abs max: 1@1.
 		p := p x sqrt @ p y sqrt.
 		camera translateBy: lastStep/ p
 	] ifFalse: [
-		correct := self 
-			correctCamera: camera 
+		correct := self
+			correctCamera: camera
 			matrixDo: [:mat | 	mat translation: (camera position + lastStep) ].
 		camera translateTo: correct.
 	].
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #events }
 RSDraggableCanvasInteraction >> mouseEnd: evt [
 	| threshold aCanvas camera delta p correct anime |
 	isMoving := false.
-	self configuration hasDraggableAnimation 
+	self hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	lastStep ifNil: [ ^ self ].
 	aCanvas := evt canvas.
@@ -145,16 +158,16 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	threshold := 4.
 	(lastStep distanceTo: 0@0) < threshold
 		ifTrue: [ ^ self checkCamera: aCanvas ].
-		
+
 	delta := lastStep * 1.5.
 	lastStep := nil.
 	camera translateBy: delta.
 	correct := self correctCamera: camera.
 	camera translateBy: delta negated.
-			
+
 	p := (correct - camera position) abs max: 1@1.
 	p := p x sqrt @ p y sqrt.
-	
+
 	aCanvas propertyAt: self key ifPresent: [ :a | a stop ].
 	anime := aCanvas newAnimation.
 	aCanvas propertyAt: self key put: anime.
@@ -164,11 +177,9 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 		from: camera position;
 		to: camera position + (delta / p);
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ];
-		when: RSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [
 			aCanvas removeKey: self key.
-			self checkCamera: aCanvas ].
-		
-
+			self checkCamera: aCanvas ]
 ]
 
 { #category : #mouse }

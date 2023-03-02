@@ -47,6 +47,14 @@ Class {
 }
 
 { #category : #examples }
+RSLayout class >> basicExample [
+	| canvas |
+	canvas := self canvasExample.
+	self on: canvas nodes.
+	^ canvas open
+]
+
+{ #category : #examples }
 RSLayout class >> canvasExample [
 	| canvas shapes |
 	canvas := RSCanvas new.
@@ -67,25 +75,17 @@ RSLayout class >> canvasExample [
 
 { #category : #examples }
 RSLayout class >> example1 [
-	RSGridLayout exampleBasic
+	^ RSGridLayout basicExample
 ]
 
 { #category : #examples }
 RSLayout class >> example2 [
-	RSTreeLayout exampleBasic
+	^ RSTreeLayout basicExample
 ]
 
 { #category : #examples }
 RSLayout class >> example3 [
-	RSVerticalLineLayout exampleBasic
-]
-
-{ #category : #examples }
-RSLayout class >> exampleBasic [
-	| canvas |
-	canvas := self canvasExample.
-	self on: canvas nodes.
-	canvas open
+	^ RSVerticalLineLayout basicExample
 ]
 
 { #category : #testing }

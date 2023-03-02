@@ -35,7 +35,7 @@ RSScrollBarsCanvasInteraction class >> example [
 	canvas @ RSDraggableCanvasInteraction.
 	canvas @ RSKeyNavigationCanvasInteraction.
 	canvas @ self.
-	canvas open
+	^ canvas open
 ]
 
 { #category : #examples }
@@ -46,7 +46,7 @@ RSScrollBarsCanvasInteraction class >> exampleOriginTopLeft [
 	canvas @ RSDraggableCanvasInteraction.
 	canvas @ RSKeyNavigationCanvasInteraction.
 	canvas @ self.
-	canvas open
+	^ canvas open
 ]
 
 { #category : #hooks }

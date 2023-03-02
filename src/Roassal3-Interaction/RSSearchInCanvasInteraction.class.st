@@ -12,7 +12,6 @@ Examples
 - highlightesShapes, a collection of the group of shapes
 - colorsToUse, a color palette to highlight each search group
 - highlightableLabels, the current labels on the top left of the search.
-
 Search In Canvas will highlight with a shadow a current shape. You have to click on the search result to jump between results of the list.
 
 The selection of the elements is based on each shape model `asString`
@@ -35,7 +34,7 @@ Class {
 RSSearchInCanvasInteraction class >> exampleCollection [
 	| c shapes lb |
 	c := RSCanvas new.
-	shapes := Collection withAllSubclasses 
+	shapes := Collection withAllSubclasses
 		collect: [ :n | RSEllipse new size: 20; model: n ]
 		as: RSGroup.
 	c addAll: shapes.
@@ -45,12 +44,14 @@ RSSearchInCanvasInteraction class >> exampleCollection [
 	lb connectFrom: #superclass.
 	RSTreeLayout on: shapes.
 	c @ RSCanvasController.
-	c open
+	^ c open
+		setLabel: 'Press `s` to start the search';
+		yourself
 ]
 
 { #category : #examples }
 RSSearchInCanvasInteraction class >> exampleCollection2 [
-	
+
 	| c classes g elements high con search |
 	c := RSCanvas new.
 
@@ -71,12 +72,14 @@ RSSearchInCanvasInteraction class >> exampleCollection2 [
 		on: elements.
 
 	con := RSCanvasController new.
-	con addInteraction: (search := self new 
+	con addInteraction: (search := self new
 		colorToHighlight: Color blue translucent;
 		yourself).
 
 	c @ con.
-	c open
+	^ c open
+		setLabel: 'Press `s` to start the search';
+		yourself
 ]
 
 { #category : #public }
@@ -87,20 +90,20 @@ RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 
 { #category : #'private - events' }
 RSSearchInCanvasInteraction >> animateShadowPosition: shadow [
-	| rect correct |
+	| rect correct camera newPosition |
 	rect := shadow globalEncompassingRectangle.
 	(canvas visibleRectangle containsRect: rect)
 		ifTrue: [ ^ self ].
-	correct := self
-		correctCameraPosition: canvas
-		inRectangle: (self expandedRectangle: canvas)
-		position: rect floatCenter
-		scale: canvas camera scale.
+	camera := canvas camera.
+
+	newPosition := camera positionFromSpace: rect floatCenter.
+	correct := self correctCamera: camera matrixDo: [ :mat | mat translation: newPosition ].
+
 	canvas newAnimation
 		duration: 500 milliSeconds;
 		from: canvas camera position;
 		to: correct;
-		on: canvas camera set: #position:
+		on: camera set: #position:
 ]
 
 { #category : #util }

@@ -40,7 +40,7 @@ Class {
 RSArrowedLine class >> exampleArrow [
 	| arrow |
 	arrow := self new.
-	arrow inspect
+	^ Smalltalk tools inspector inspect: arrow
 ]
 
 { #category : #border }

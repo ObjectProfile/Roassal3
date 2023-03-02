@@ -55,7 +55,7 @@ RSLine class >> exampleFMT [
 	line width: 1.
 	line fmt: '--^'.
 	line markerEnd shape size: 20.
-	RSCanvas new
+	^ RSCanvas new
 		add: line;
 		zoomToFit;
 		open
@@ -70,7 +70,7 @@ RSLine class >> exampleLine [
 	line color: Color black.
 	line width: 10.
 	line capRound.
-	RSCanvas new
+	^ RSCanvas new
 		add: line;
 		open
 ]

@@ -20,7 +20,7 @@ RSZoomLevelText class >> exampleSimpleUML [
 	builder renderer: RSDarkUMLClassRenderer new.
 	builder build.
 	builder canvas @ self.
-	builder canvas open
+	^ builder canvas open
 ]
 
 { #category : #hooks }

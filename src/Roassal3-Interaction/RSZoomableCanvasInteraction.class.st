@@ -19,7 +19,7 @@ RSZoomableCanvasInteraction class >> example [
 	canvas @ RSKeyNavigationCanvasInteraction.
 	canvas @ RSScrollBarsCanvasInteraction.
 	canvas @ RSZoomToFitCanvasInteraction.
-	canvas open.
+	^ canvas open
 ]
 
 { #category : #events }

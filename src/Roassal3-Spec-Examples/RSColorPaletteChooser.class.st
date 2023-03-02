@@ -154,13 +154,14 @@ RSColorPaletteChooser >> controllerInteraction [
 	controls noLegend.
 	controls removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	controls addInteraction: RSScrollWheelCanvasInteraction new.
-	controls configuration
+	controls zoomToFitInteraction
 		noZoomToFitOnStart;
+		noZoomToFitOnExtendChanged.
+	controls keyNavigationInteraction hasHorizontalScrolling: false.
+	controls configuration
 		padding: 0@ 10;
-		noZoomToFitOnExtendChanged;
 		maxScale: 1;
-		minScale: 1;
-		hasHorizontalScrolling: false.
+		minScale: 1.
 	^ controls
 ]
 
