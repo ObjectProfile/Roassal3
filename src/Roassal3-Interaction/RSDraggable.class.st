@@ -10,11 +10,6 @@ Class {
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'instance creation' }
-RSDraggable class >> wantsUniqueInstance [
-	^ true
-]
-
 { #category : #public }
 RSDraggable >> checkChildrenActions: aShape [
 	| children |
