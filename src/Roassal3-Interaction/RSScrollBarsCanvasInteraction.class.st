@@ -28,27 +28,6 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #examples }
-RSScrollBarsCanvasInteraction class >> example [
-	| canvas |
-	canvas := self canvasExample.
-	canvas @ RSDraggableCanvasInteraction.
-	canvas @ RSKeyNavigationCanvasInteraction.
-	canvas @ self.
-	^ canvas open
-]
-
-{ #category : #examples }
-RSScrollBarsCanvasInteraction class >> exampleOriginTopLeft [
-	| canvas |
-	canvas := self canvasExample.
-	canvas originTopLeft.
-	canvas @ RSDraggableCanvasInteraction.
-	canvas @ RSKeyNavigationCanvasInteraction.
-	canvas @ self.
-	^ canvas open
-]
-
 { #category : #hooks }
 RSScrollBarsCanvasInteraction >> addScrollBars: aCanvas [
 	vertical := self barShapeCopy.

@@ -1,5 +1,7 @@
 "
-I can move an element from its position
+This interaction allows to the user move shapes. Just click over a shape, then drag it, and finalyy relase the click button
+### Example
+- `RSDraggable class >> #example`
 "
 Class {
 	#name : #RSDraggable,

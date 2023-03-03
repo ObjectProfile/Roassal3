@@ -11,22 +11,6 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #examples }
-RSKeepCanvasPositionCanvasInteraction class >> example [
-	| canvas window |
-	canvas := self canvasExample.
-	"this interaction is visible when the component changes it extent"
-	canvas @ self.
-	canvas @ RSDraggableCanvasInteraction.
-	window := canvas open.
-	window setLabel: 'Drag me'.
-
-	[
-	(Delay forSeconds: 5) wait.
-	window extent: 300@300 ] fork.
-	^ window
-]
-
 { #category : #hooks }
 RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSExtentChangedEvent send: #processEvent: to: self.

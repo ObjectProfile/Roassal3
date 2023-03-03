@@ -12,17 +12,6 @@ Class {
 	#category : #'Roassal3-Experimental-NewInteractions'
 }
 
-{ #category : #examples }
-RSZoomLevelText class >> exampleSimpleUML [
-	| builder |
-	builder := RSUMLClassBuilder new.
-	builder classes: RSAttachPoint withAllSubclasses.
-	builder renderer: RSDarkUMLClassRenderer new.
-	builder build.
-	builder canvas @ self.
-	^ builder canvas open
-]
-
 { #category : #hooks }
 RSZoomLevelText >> emptyLimit [
 	^ 1

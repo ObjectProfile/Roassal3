@@ -28,28 +28,6 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #examples }
-RSDraggableCanvasInteraction class >> example [
-	| canvas interaction |
-	canvas := self canvasExample.
-	"canvas @ RSDraggableCanvasInteraction."
-	interaction := self new.
-	interaction hasDraggableAnimation: false.
-	canvas @ interaction.
-	"or"
-	"canvas addInteraction RSDraggableCanvasInteraction new"
-	^ canvas open
-]
-
-{ #category : #examples }
-RSDraggableCanvasInteraction class >> exampleOriginTopLeft [
-	| canvas |
-	canvas := self canvasExample.
-	canvas originTopLeft.
-	canvas @ self.
-	^ canvas open
-]
-
 { #category : #accessing }
 RSDraggableCanvasInteraction class >> left [
 	^ self new left

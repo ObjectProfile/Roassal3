@@ -36,13 +36,6 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
-{ #category : #examples }
-RSArrowedLine class >> exampleArrow [
-	| arrow |
-	arrow := self new.
-	^ Smalltalk tools inspector inspect: arrow
-]
-
 { #category : #border }
 RSArrowedLine >> border: aRSBorder [
 	super border: aRSBorder.

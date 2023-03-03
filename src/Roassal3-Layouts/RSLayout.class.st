@@ -73,21 +73,6 @@ RSLayout class >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #examples }
-RSLayout class >> example1 [
-	^ RSGridLayout basicExample
-]
-
-{ #category : #examples }
-RSLayout class >> example2 [
-	^ RSTreeLayout basicExample
-]
-
-{ #category : #examples }
-RSLayout class >> example3 [
-	^ RSVerticalLineLayout basicExample
-]
-
 { #category : #testing }
 RSLayout class >> isAbstract [
 	^ self name = #RSLayout

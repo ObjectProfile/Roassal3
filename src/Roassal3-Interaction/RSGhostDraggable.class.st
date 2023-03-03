@@ -1,5 +1,9 @@
 "
 This interaction creates a new box(a ghost box) and it moves the box instead of the entire shape
+
+### Example
+- `RSGhostDraggable class >> #example`
+- `RSGhostDraggable class >> #exampleChangeColor`
 "
 Class {
 	#name : #RSGhostDraggable,
@@ -23,7 +27,7 @@ RSGhostDraggable >> color: anObject [
 
 { #category : #hooks }
 RSGhostDraggable >> createGhost: evt [
-	| shape ghost |
+	| shape ghost parent |
 	shape := evt shape.
 	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
@@ -33,7 +37,8 @@ RSGhostDraggable >> createGhost: evt [
 		noPaint;
 		yourself.
 	shape propertyAt: #ghost put: ghost.
-	shape parent add: ghost
+	parent := shape parent.
+	parent add: ghost
 ]
 
 { #category : #hooks }

@@ -10,18 +10,6 @@ Class {
 	#category : #'Roassal3-Interaction-Controls'
 }
 
-{ #category : #examples }
-RSZoomableCanvasInteraction class >> example [
-	| canvas |
-	canvas := self canvasExample.
-	canvas @ self.
-	canvas @ RSDraggableCanvasInteraction.
-	canvas @ RSKeyNavigationCanvasInteraction.
-	canvas @ RSScrollBarsCanvasInteraction.
-	canvas @ RSZoomToFitCanvasInteraction.
-	^ canvas open
-]
-
 { #category : #events }
 RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 	| scale camera position morphPosition |
