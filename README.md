@@ -12,7 +12,8 @@
 <!-- [![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal3?branch=master) -->
 
 Roassal3 is an agile visualization engine for [Pharo](http://pharo.org). Roassal was created to enable interactive data visualization, it contains a different groups of shapes an lines that you can use to build your projects, also animations, attach points, events, layouts and a basic chart library.
-Roassal3 allows to user to extent the presentation of any object thanks to the inspector. And also it has integration with [spec](https://github.com/pharo-spec/Spec)
+Roassal use cairo graphics as backend, in a future will support new backends.
+Roassal allows to user to extent the presentation of any object thanks to the inspector. Also it has integration with [spec](https://github.com/pharo-spec/Spec) and also with morphic world
 
 Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters).
 
@@ -89,12 +90,7 @@ You should see a layout editor browser to choose a layout with the current param
 
 Visit the [documentation github page](https://github.com/ObjectProfile/Roassal3Documentation)
 
-```Smalltalk
-RSAnimationExamples new example03Atom open
-```
-
 A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal3: https://github.com/ObjectProfile/Roassal3/wiki
-
 
 ## Roassal3 as a dependent application
 If you wish to set a dependency to Roassal3 in your application, you simply need to add the following in your baseline:
