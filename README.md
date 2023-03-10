@@ -12,9 +12,9 @@
 <!-- [![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal3/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal3?branch=master) -->
 
 Roassal3 is an agile visualization engine for [Pharo](http://pharo.org). Roassal was created to enable interactive data visualization, it contains a different groups of shapes an lines that you can use to build your projects, also animations, attach points, events, layouts and a basic chart library.
-Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters).
+Roassal3 allows to user to extent the presentation of any object thanks to the inspector. And also it has integration with [spec](https://github.com/pharo-spec/Spec)
 
-Roassal3 is free and open source, but backed by Object Profile. Commercial support offerings are available, including training and custom consultancy services. Check [RoassalPro](https://github.com/ObjectProfile/Roassal3Documentation/blob/6bbc6a4cb36914e1f79b3a038c32984673a1384f/documentation/RoassalPro.md) for more information.
+Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters).
 
 ## Pharo Installations
 Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.6b.
@@ -72,11 +72,18 @@ You should see:
 <img width="250" height="250" alt="atom" src="https://github.com/ObjectProfile/Roassal3/raw/master/images/example03atom.gif?raw=true">
 
 ```Smalltalk
-RSAnimationExamples new example03Atom open
+RSExamplesBrowser new open
 ```
-You should see:
+You should see an interactive browser with left right buttons to browse:
 
-<img height="250" alt="exampleBrowser" src="https://github.com/ObjectProfile/Roassal3/raw/master/images/exampleBrowser.png?raw=true">
+<img height="350" alt="exampleBrowser" src="https://github.com/ObjectProfile/Roassal3/raw/master/images/exampleBrowser.png?raw=true">
+
+```Smalltalk
+RSLayoutStudio new open
+```
+You should see a layout editor browser to choose a layout with the current parameters:
+
+<img height="350" alt="layoutStudio" src="https://github.com/ObjectProfile/Roassal3/raw/master/images/layoutStudio.png?raw=true">
 
 ## Documentation
 
@@ -105,6 +112,7 @@ _____
 ## Get in touch
 Share your enthusiasm by joining the #Roassal channel, in the Pharo discord server: https://pharo.org/community
 
+Roassal3 is free and open source, but backed by Object Profile. Commercial support offerings are available, including training and custom consultancy services. Check [RoassalPro](https://github.com/ObjectProfile/Roassal3Documentation/blob/6bbc6a4cb36914e1f79b3a038c32984673a1384f/documentation/RoassalPro.md) for more information.
 _____
 ## Acknowledgement
 
