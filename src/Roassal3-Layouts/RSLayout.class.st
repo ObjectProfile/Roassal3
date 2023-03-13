@@ -56,8 +56,16 @@ RSLayout class >> basicExample [
 
 { #category : #examples }
 RSLayout class >> canvasExample [
-	| canvas shapes |
+	| canvas |
 	canvas := RSCanvas new.
+	self canvasExampleIn: canvas.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #examples }
+RSLayout class >> canvasExampleIn: canvas [
+	| shapes |
 	shapes := RSBox models: Collection withAllSubclasses.
 	canvas addAll: shapes.
 	shapes
@@ -68,9 +76,7 @@ RSLayout class >> canvasExample [
 		connectFrom: #superclass.
 	RSNormalizer size
 		shapes: shapes;
-		normalize: #linesOfCode.
-	canvas @ RSCanvasController.
-	^ canvas
+		normalize: #linesOfCode
 ]
 
 { #category : #testing }

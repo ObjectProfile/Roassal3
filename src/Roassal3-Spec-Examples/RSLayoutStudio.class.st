@@ -11,7 +11,8 @@ Class {
 		'currentLayout',
 		'layoutDefinition',
 		'nodes',
-		'oldPositions'
+		'oldPositions',
+		'graphTextEditor'
 	],
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
@@ -21,7 +22,7 @@ RSLayoutStudio class >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #menu expand: false;
 		add: (SpPanedLayout newLeftToRight
-			positionOfSlider: 200;
+			positionOfSlider: 250;
 			add: #controls;
 			add: #roassalCanvas;
 			yourself);
@@ -32,6 +33,11 @@ RSLayoutStudio class >> defaultLayout [
 RSLayoutStudio class >> open [
 	<script>
 	self new open
+]
+
+{ #category : #rendering }
+RSLayoutStudio class >> renderGraphIn: anRSCanvas [
+	RSLayout canvasExampleIn: anRSCanvas
 ]
 
 { #category : #initialization }
@@ -58,6 +64,18 @@ RSLayoutStudio >> apply: aRSLayoutField with: anObject [
 	roassalCanvas refresh
 ]
 
+{ #category : #initialization }
+RSLayoutStudio >> canvasController [
+	^ RSCanvasController new
+]
+
+{ #category : #initialization }
+RSLayoutStudio >> connectPresenters [
+	graphTextEditor text: self defaultGraphText.
+	self editLayout: RSCircleLayout.
+	roassalCanvas script: [ :canvas | self renderIn: canvas ]
+]
+
 { #category : #public }
 RSLayoutStudio >> currentLayout [
 	^ currentLayout
@@ -66,6 +84,12 @@ RSLayoutStudio >> currentLayout [
 { #category : #public }
 RSLayoutStudio >> currentLayout: aRSLayout [
 	currentLayout := aRSLayout
+]
+
+{ #category : #initialization }
+RSLayoutStudio >> defaultGraphText [
+	^ '"canvas is an instance of RSCanvas"
+RSLayoutStudio renderGraphIn: canvas'
 ]
 
 { #category : #public }
@@ -77,8 +101,7 @@ RSLayoutStudio >> edit: anAssociation [
 	self
 		currentLayout: class new;
 		layoutDefinition: anAssociation value.
-	controls := self instantiate: RSLayoutControls.
-	controls layoutStudio: self.
+	self updateToolPanel.
 
 	self withWindowDo: [ :window | self initializeWindow: window ].
 	self update
@@ -94,9 +117,8 @@ RSLayoutStudio >> initializePresenters [
 	menu := self mainMenu.
 	menu addKeybindingsTo: self.
 	controls := self newButton.
-	roassalCanvas := self newRoassal.
-	self editLayout: RSCircleLayout.
-	roassalCanvas script: [ :canvas | self renderIn: canvas ]
+	graphTextEditor := self newCode.
+	roassalCanvas := self newRoassal
 ]
 
 { #category : #initialization }
@@ -106,7 +128,7 @@ RSLayoutStudio >> initializeWindow: aWindow [
 	currentLayout ifNotNil: [ title := title, ' on:  ', currentLayout class name ].
 	aWindow
 		title: title;
-		initialExtent: 800@500;
+		initialExtent: 900@600;
 		centered
 ]
 
@@ -126,7 +148,7 @@ RSLayoutStudio >> mainMenu [
 		addGroup: [ :group |
 			group addItem: [ :item |
 				item
-					name: 'New Layout';
+					name: 'Change Layout';
 					icon: (self iconNamed: #open);
 					action: [ self openLayout ] ] ];
 		yourself
@@ -146,15 +168,41 @@ RSLayoutStudio >> openLayout [
 ]
 
 { #category : #initialization }
-RSLayoutStudio >> renderIn: anRSCanvas [
-	| canvas |
-	canvas := currentLayout class canvasExample.
-	canvas shapes inspect.
-	anRSCanvas addAll: canvas shapes.
+RSLayoutStudio >> renderGraphIn: anRSCanvas [
+	"this method will render a graph in a canvas using the source text code editor"
+	self textAsBlockClosure value: anRSCanvas
+]
 
+{ #category : #initialization }
+RSLayoutStudio >> renderIn: anRSCanvas [
+	self renderGraphIn: anRSCanvas.
 	nodes := anRSCanvas nodes.
 	currentLayout on: nodes.
-	anRSCanvas @ RSCanvasController.
+	anRSCanvas @ self canvasController.
 	oldPositions ifNil: [ ^ self ].
 	self addAnimation: anRSCanvas
+]
+
+{ #category : #initialization }
+RSLayoutStudio >> textAsBlockClosure [
+	^ self class compiler
+		source: '[:canvas | ' , graphTextEditor text asString , ']';
+		logged: false;
+		evaluate
+]
+
+{ #category : #public }
+RSLayoutStudio >> updateToolPanel [
+	| attributes |
+	attributes := self instantiate: RSLayoutControls.
+	attributes layoutStudio: self.
+	controls := self newPresenter.
+	controls layout: (SpBoxLayout newVertical
+		add: 'Graph editor' expand: false;
+		add: graphTextEditor withConstraints: [ :c |
+			c expand: false; height: 200];
+		spacing: 10;
+		add: attributes;
+		yourself
+		)
 ]
