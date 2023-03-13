@@ -77,18 +77,17 @@ RSSVGShapeExamples >> example02SpockLizard [
 			| com ang circle hand |
 			ang := index * Float twoPi / 5 - Float halfPi.
 			hand := RSSVGPath new
-				svgPath: (self perform: m asSymbol).
+				svgPath: (m asSymbol value: self).
 			circle := RSEllipse new
 				color: Color white;
 				position: hand position;
 				size: (hand extent x max: hand extent y);
 				yourself.
 
-			com := RSComposite new
+			com := { circle. hand } asShape
 				popup;
 				draggable;
 				model: m;
-				shapes: { circle. hand };
 				position: ang cos @ ang sin * radius
 				yourself.
 			index = 5 ifTrue: [ com scaleBy: 2 ].
