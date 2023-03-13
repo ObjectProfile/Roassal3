@@ -35,7 +35,8 @@ Class {
 		'animations',
 		'extent',
 		'color',
-		'morph'
+		'morph',
+		'shapeCollection'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
@@ -105,7 +106,8 @@ RSCanvas >> addAnimation: anAnimation [
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> addBasicShape: aShape [
-	shapes add: aShape
+	shapes add: aShape.
+	"shapeCollection add: aShape"
 ]
 
 { #category : #'adding - removing shapes' }
@@ -269,6 +271,11 @@ RSCanvas >> deepShapesFromModels: someObjects result: result [
 	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
 ]
 
+{ #category : #initialization }
+RSCanvas >> defaultShapeCollection [
+	^ RSSequenceableCollection new
+]
+
 { #category : #antialiasing }
 RSCanvas >> disableAntialiasing [
 	self hasAntialiasing: false
@@ -355,6 +362,7 @@ RSCanvas >> hideEncompassingRectangles [
 { #category : #initialization }
 RSCanvas >> initialize [
 	super initialize.
+	self shapeCollection: self defaultShapeCollection.
 	shapes := RSGroup new.
 	fixedShapes := RSGroup new.
 	nodes := RSGroup new.
@@ -602,6 +610,16 @@ RSCanvas >> setAsFixed: aShape [
 	self removeShape: aShape.
 	aShape isFixed: true.
 	self addShape: aShape
+]
+
+{ #category : #accessing }
+RSCanvas >> shapeCollection [
+	^ shapeCollection
+]
+
+{ #category : #accessing }
+RSCanvas >> shapeCollection: anRSShapeCollection [
+	shapeCollection := anRSShapeCollection
 ]
 
 { #category : #'accessing - shapes' }

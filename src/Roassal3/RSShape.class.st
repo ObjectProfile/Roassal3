@@ -182,6 +182,12 @@ c open
 	self border color: aColor
 ]
 
+{ #category : #border }
+RSShape >> borderWidth: aNumber [
+	border ifNil: [ self withBorder ].
+	self border width: aNumber
+]
+
 { #category : #'accessing - computed' }
 RSShape >> canvas [
 	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas"
