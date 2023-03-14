@@ -69,6 +69,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
 	'Roassal3-BaselineMap'
+	'Roassal3-SVG'
 	)
 ]
 
@@ -144,25 +145,20 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Core' with: #('Roassal3'), arr1;
 		group: 'Examples' with: core, arr2;
 		group: 'Tests' with: core, arr3;
-		group: 'SVG' with: #('Core' 'Roassal3-SVG');
-		group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
-		group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
-		group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
+		group: 'SVGExamples' with: #('Examples' 'Roassal3-SVG-Examples');
+		group: 'SVGImporter' with: #('SVGExamples' 'Roassal3-SVG-Importer');
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
-		
-		group: 'Mini' with: #('SVGTests' 'SVGExamples');
+
+		group: 'Mini' with: #('SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
-		group: 'default' with: #('Core' 'Mini')
-
-
-
+		group: 'default' with: #('Core')
 ]
 
 { #category : #'API-packages' }
 BaselineOfRoassal3 >> testPackagesNames [
 	^ #(
-	'Roassal3-Global-Tests' 
+	'Roassal3-Global-Tests'
 	'Roassal3-Animation-Tests'
 	'Roassal3-Shapes-Tests'
 	'Roassal3-Interaction-Tests'
@@ -172,5 +168,6 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Spec-Tests'
 	'Roassal3-Inspector-Tests'
 	'Roassal3-BaselineMap-Tests'
+	'Roassal3-SVG-Tests'
 	)
 ]

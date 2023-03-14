@@ -36,22 +36,10 @@ RSWorldMenu class >> loadExporters [
 		load
 ]
 
-{ #category : #utilities }
-RSWorldMenu class >> loadFullStableVersion [
-
-	[
-	Metacello new
-		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3:v0.9.4';
-		load ]
-		on: MCMergeOrLoadWarning
-		do: [ :warning | warning load ]
-]
-
 { #category : #loading }
 RSWorldMenu class >> loadFullVersion [
 	"TODO do not discard changes"
-	(UIManager default confirm: 'Do you want to load the last version of Roassal3? Note: this will discard changes')
+	(UIManager default confirm: 'Do you want to load the last version of Roassal3?')
 		ifFalse: [ ^ self ].
 	[Metacello new
 		baseline: 'Roassal3';
