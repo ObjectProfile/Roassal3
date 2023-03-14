@@ -84,7 +84,7 @@ RSDSM >> createLabelShapeX: aRSBox [
 		outer;
 		top;
 		right;
-		offset: label width negated @ 0;
+		offset: label width @ 0;
 		move: label on: aRSBox.
 	^ label
 ]
