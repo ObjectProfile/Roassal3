@@ -178,7 +178,7 @@ RSLocation >> center [
 
 { #category : #private }
 RSLocation >> computePosition: movableShape on: fixedShape [
-	^ movableShape extent / 2 * orientation * direction + (self parentPosition: fixedShape) + (offset*direction)
+	^ movableShape extent / 2 * orientation * direction + (self parentPosition: fixedShape) + offset
 ]
 
 { #category : #initialization }
