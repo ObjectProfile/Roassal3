@@ -138,7 +138,7 @@ RSLocation >> below [
 
 { #category : #'public - modifiers' }
 RSLocation >> border [
-	orientation := 0
+	self orientation: 0@0
 ]
 
 { #category : #'public - positioning' }
@@ -194,7 +194,17 @@ RSLocation >> initialize [
 
 { #category : #'public - modifiers' }
 RSLocation >> inner [
-	orientation := 1
+	self orientation: 1@1
+]
+
+{ #category : #'public - positioning shorcuts' }
+RSLocation >> insideCornerLeft [
+	self orientation: 1 @ -1; top; left
+]
+
+{ #category : #'public - positioning shorcuts' }
+RSLocation >> insideCornerRight [
+	self orientation: 1 @ -1; top; right
 ]
 
 { #category : #'public - positioning' }
@@ -293,8 +303,14 @@ c
 ]
 
 { #category : #'public - modifiers' }
+RSLocation >> orientation: aPoint [
+	"check users of method orientation"
+	orientation := aPoint
+]
+
+{ #category : #'public - modifiers' }
 RSLocation >> outer [
-	orientation := -1
+	self orientation: -1 @ -1
 ]
 
 { #category : #private }
