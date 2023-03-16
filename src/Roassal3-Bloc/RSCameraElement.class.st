@@ -23,7 +23,7 @@ RSCameraElement >> initializeWithCanvas: aRSCanvas [
 	roassalCanvas := aRSCanvas.
 
 	self
-		border: (BlBorder builder paint: Color blue translucent; width: 1; dashArray: #(3 3); build);
+"		border: (BlBorder builder paint: Color blue translucent; width: 1; dashArray: #(3 3); build);"
 		clipChildren: false;
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
