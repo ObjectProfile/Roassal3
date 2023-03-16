@@ -1,6 +1,6 @@
 Class {
 	#name : #RSTranscriptCanvasMonitor,
-	#superclass : #RSAbstractCanvasMonitor,
+	#superclass : #RSAbstractCanvasMonitorInteraction,
 	#instVars : [
 		'canvasIdString'
 	],
