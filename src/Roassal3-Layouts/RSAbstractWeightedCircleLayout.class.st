@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #testing }
+RSAbstractWeightedCircleLayout class >> isAbstract [
+	^ self = RSAbstractWeightedCircleLayout
+]
+
 { #category : #hook }
 RSAbstractWeightedCircleLayout >> doExecute: elements [
 	"This method is used polymorphically"

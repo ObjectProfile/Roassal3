@@ -16,9 +16,9 @@ RSColorHSBGenerator >> backgroundColor [
 ]
 
 { #category : #accessing }
-RSColorHSBGenerator >> colorFor: aParticle [ 
+RSColorHSBGenerator >> colorFor: aParticle [
 	colors ifNil: [ colors := Dictionary new ].
-	^ colors at: aParticle ifAbsentPut: [ 
+	^ colors at: aParticle ifAbsentPut: [
 		Color h: aParticle position angle radiansToDegrees s: 1 v: 1
 		 ]
 ]

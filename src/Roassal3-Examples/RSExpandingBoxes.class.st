@@ -13,10 +13,10 @@ Class {
 	#category : #'Roassal3-Examples-Experimental'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> close: shape [
 	shape children copy do: #remove.
-	self update.
+	self update
 ]
 
 { #category : #initialization }
@@ -27,7 +27,7 @@ RSExpandingBoxes >> initialize [
 	base := RSComposite new.
 	base popup.
 	base when: RSMouseClick do: [ :evt | self processEvent: evt ].
-	border := RSBorder new.
+	border := RSBorder new
 ]
 
 { #category : #helpers }
@@ -41,32 +41,32 @@ RSExpandingBoxes >> nodeFor: cls [
 	^ com
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> open: shape [
 	| children |
-	children := shape model subclasses 
+	children := shape model subclasses
 		collect: [ :cls | self nodeFor: cls ].
 	shape addAll: children.
-	self update.
+	self update
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RSExpandingBoxes >> processEvent: evt [
 	| shape |
 	shape := evt shape.
 	shape children
 		ifEmpty: [ self open: shape]
-		ifNotEmpty: [ self close: shape ].
+		ifNotEmpty: [ self close: shape ]
 ]
 
 { #category : #updating }
 RSExpandingBoxes >> relayout: shape [
 	shape propertyAt: #original put: shape encompassingRectangle.
-	
+
 	shape shapes do: [ :s | self relayout: s ].
 	RSGridLayout on: shape shapes.
 	shape adjustToChildren.
-	shape padding: 10.
+	shape padding: 10
 ]
 
 { #category : #running }
@@ -80,7 +80,7 @@ RSExpandingBoxes >> run [
 { #category : #updating }
 RSExpandingBoxes >> saveCurrent: shape [
 	shape children do: [ :s | self saveCurrent: s ].
-	shape propertyAt: #current put: shape encompassingRectangle.
+	shape propertyAt: #current put: shape encompassingRectangle
 ]
 
 { #category : #updating }
@@ -88,12 +88,12 @@ RSExpandingBoxes >> scale: shape at: t [
 	| rect1 rect2 |
 	shape children do: [ :s | self scale: s at: t ].
 	rect1 := shape propertyAt: #original ifAbsent: [ ^ self].
-	
+
 	rect2 := shape propertyAt: #current.
-	
-		
+
+
 	shape translateTo: (rect1 floatCenter interpolateTo: rect2 floatCenter at: t).
-	
+
 	shape extent: (rect1 extent interpolateTo: rect2 extent at: t)
 ]
 
@@ -107,12 +107,12 @@ RSExpandingBoxes >> update [
 		onStepDo: [ :t |
 			self scale: first at: t.
 			self zoomCanvans.
-			canvas signalUpdate. 
-			 ].
+			canvas signalUpdate.
+			 ]
 ]
 
 { #category : #updating }
 RSExpandingBoxes >> zoomCanvans [
 	canvas zoomToFit
-	canvas camera scale: 1.
+	canvas camera scale: 1
 ]

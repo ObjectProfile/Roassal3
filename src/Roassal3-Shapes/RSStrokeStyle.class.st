@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSStrokeStyle class >> fromString: aString [ 
+RSStrokeStyle class >> fromString: aString [
 	| inst |
 	inst := self new.
 	(aString includesSubstring: '--')
@@ -23,8 +23,18 @@ RSStrokeStyle class >> fromString: aString [
 		ifTrue: [ ^ inst dashArray: #(4 1 1 1) ].
 	(aString includesSubstring: '.')
 		ifTrue: [ ^ inst dashArray: #(1) ].
-	
+
 	^ nil
+]
+
+{ #category : #comparing }
+RSStrokeStyle >> = anObject [
+	^ self == anObject or: [
+		anObject notNil and: [
+			capStyle = anObject capStyle and: [
+				joinStyle = anObject joinStyle and: [
+					dashOffset = anObject dashOffset and: [
+						dashArray = anObject dashArray ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -56,6 +66,12 @@ RSStrokeStyle >> dashOffset [
 { #category : #accessing }
 RSStrokeStyle >> dashOffset: aNumber [
 	dashOffset := aNumber
+]
+
+{ #category : #comparing }
+RSStrokeStyle >> hash [
+	^ ((capStyle hash hashMultiply + joinStyle hash) hashMultiply +
+	  (dashOffset hash hashMultiply + dashArray hash)) hashMultiply
 ]
 
 { #category : #initialization }

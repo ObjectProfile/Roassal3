@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
-{ #category : #public }
+{ #category : #'accessing - defaults' }
 RSTransitionAnimation class >> defaultDuration [
 	^ 2 seconds
 ]
@@ -35,7 +35,7 @@ RSTransitionAnimation >> easing [
 
 { #category : #accessing }
 RSTransitionAnimation >> easing: anInterpolator [
-	easing := anInterpolator 
+	easing := anInterpolator
 ]
 
 { #category : #accessing }
@@ -51,8 +51,7 @@ RSTransitionAnimation >> from: anObject [
 { #category : #initialization }
 RSTransitionAnimation >> initialize [
 	super initialize.
-	self onStepDo: [ :t | ].
-	
+	self onStepDo: [ :t | ]
 ]
 
 { #category : #'action handling' }
@@ -75,21 +74,21 @@ b dashArray: #(5 1 5).
 RSFlowLayout on: c shapes.
 c @ RSControlsCanvas.
 
-c newAnimation 
+c newAnimation
 	from: 0;
 	to: 40;
 	on: b set: #dashOffset:.
 c
 ```
 
-Another example, simpler: 
+Another example, simpler:
 ```
 c := RSCanvas new.
 
 b := RSBox new size: 30.
 c add: b.
 
-c newAnimation 
+c newAnimation
 	from: 0 @ 0;
 	to: 100 @ 100;
 	on: b set: #position:.
@@ -100,16 +99,14 @@ c
 	| sel |
 	sel := setSelector asSymbol.
 	self assert: [ sel numArgs = 1 ] description: [ 'The selector ', sel, ' should accept one argument' ].
-	self 
-		assert: (object class canUnderstand: sel) 
+	self
+		assert: (object class canUnderstand: sel)
 		description: 'Invalid input'.
-	
+
 	self onStepDo: [ :t |
 		object perform: sel withArguments: { t }.
 		canvas signalUpdate.
 	]
-	
-	
 ]
 
 { #category : #'action handling' }
@@ -123,15 +120,12 @@ RSTransitionAnimation >> onStepDo: aBlockClosure with: anObject [
 ]
 
 { #category : #'accessing - computed' }
-RSTransitionAnimation >> progress [ 
+RSTransitionAnimation >> progress [
 	| progress |
 	self startStep.
 	progress := (self currentTime - pauseTime - startLoopTime)/ duration asFloat.
-	progress > 1 ifTrue: [ 
-		self loopDone.
-		progress := 1.
-		 ].
-	
+	progress := progress min: 1.
+
 	^ progress
 ]
 
@@ -141,7 +135,7 @@ RSTransitionAnimation >> progressValue: progress [
 	"interpolate the progress"
 	value := easing interpolate: progress.
 	"apply progress to the value"
-	^ self scale scale: value.
+	^ self scale scale: value
 ]
 
 { #category : #accessing }
@@ -161,7 +155,7 @@ RSTransitionAnimation >> reset [
 	super reset.
 	self duration: self class defaultDuration.
 	easing := RSLinearInterpolator new.
-	scale := NSScale linear.
+	scale := NSScale linear
 ]
 
 { #category : #accessing }
@@ -174,14 +168,14 @@ RSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
-{ #category : #refresing }
-RSTransitionAnimation >> step [ 
-	| value |
-	value := self progressValue: self progress.
+{ #category : #refreshing }
+RSTransitionAnimation >> step [
+	| value progress |
+	progress := self progress.
+	value := self progressValue: progress.
 	stepAction cull: value.
+	progress == 1 ifTrue: [self loopDone].
 	self updateHasCompleted
-	
-	
 ]
 
 { #category : #accessing }
@@ -196,5 +190,5 @@ RSTransitionAnimation >> to [
 
 { #category : #accessing }
 RSTransitionAnimation >> to: aValue [
-	scale to: aValue.
+	scale to: aValue
 ]

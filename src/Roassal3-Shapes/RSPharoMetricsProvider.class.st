@@ -4,7 +4,7 @@ Old version of metrics provider used in Roassal2 with fonts. It is a little slow
 Class {
 	#name : #RSPharoMetricsProvider,
 	#superclass : #RSMetricsProvider,
-	#category : #'Roassal3-Shapes-Text'
+	#category : #'Roassal3-Shapes-TextMetrics'
 }
 
 { #category : #hooks }
@@ -21,5 +21,5 @@ RSPharoMetricsProvider >> extentsOf: aRSLabel [
 		y_advance: h;
 		x_bearing: 0;
 		y_bearing: (h / 4) - h;
-		yourself.
+		yourself
 ]

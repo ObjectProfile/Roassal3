@@ -16,21 +16,15 @@ Class {
 	#category : #'Roassal3-Sunburst'
 }
 
-{ #category : #'public - shape' }
-RSSunburstBuilder >> color: aBlock [
-	"an object"
-	color := aBlock
-]
-
-{ #category : #strategry }
+{ #category : #strategy }
 RSSunburstBuilder >> constantWidthStrategy [
-	self strategy: RSSunburstConstantWidthStrategy new.
+	self strategy: RSSunburstConstantWidthLayout new.
 	^ strategy
 ]
 
-{ #category : #strategry }
+{ #category : #strategy }
 RSSunburstBuilder >> extentStrategy [
-	self strategy: RSSunburstExtentStrategy new.
+	self strategy: RSSunburstExtentLayout new.
 	^ strategy
 ]
 
@@ -52,22 +46,17 @@ RSSunburstBuilder >> from: objects using: ablock [
 
 { #category : #initialization }
 RSSunburstBuilder >> initialize [
-	super initialize. 
+	super initialize.
 	self extentStrategy extent: 500@500.
 	self leafWeight: 1.
 	self sliceColor: NSScale category20c.
 	sliceShape := RSPieSlice new.
-	maxLevel := 0.
+	maxLevel := 0
 ]
 
 { #category : #accessing }
 RSSunburstBuilder >> maxLevel [
 	^ maxLevel
-]
-
-{ #category : #public }
-RSSunburstBuilder >> open [
-	^ self canvas open
 ]
 
 { #category : #hooks }
@@ -81,11 +70,9 @@ RSSunburstBuilder >> shapeFor: anObject [
 	| slice |
 	slice := self sliceShape copy
 		model: anObject;
-		popup;
-		draggable;
 		yourself.
 	slice color: (color rsValue: slice).
-	^ slice 
+	^ slice
 ]
 
 { #category : #'public - shape' }

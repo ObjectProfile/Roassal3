@@ -13,7 +13,7 @@ RSLayoutExamples >> example01LayoutBasic [
 
 	| canvas shapes |
 	canvas := RSCanvas new.
-	shapes := (1 to: 20) collect: [ :m | 
+	shapes := (1 to: 20) collect: [ :m |
 		RSBox new
 			size: m;
 			position: (1 to: m) sum asPoint -150;
@@ -53,7 +53,7 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 	color := NSScale linear
 		domain: #(1 20);
 		range: {Color red. Color green}.
-		
+
 	shapes := (1 to: 20) collect: [ :m |
 		RSBox new
 			size: m;
@@ -76,7 +76,7 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 		domain: #(1 10 20);
 		range: { Color red. Color green. Color blue }";
 		interpolate: TSColorHSVAInterpolator".
-		
+
 	shapes := (1 to: 20) collect: [ :m |
 		RSBox new
 			size: m;
@@ -108,7 +108,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
-	canvas @ RSDraggableCanvas .
+	canvas @ RSDraggableCanvasInteraction.
 	^ canvas
 ]
 
@@ -124,7 +124,7 @@ RSLayoutExamples >> example06TreeLayout [
 			size: 5;
 			yourself
 		 ].
-	
+
 	c addAll: shapes.
 	RSNormalizer color
 		from: (Color gray alpha: 0.5);
@@ -149,7 +149,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := RSShape withAllSubclasses collect: [ :cls |
-		RSEllipse new 
+		RSEllipse new
 			popup;
 			draggable;
 			model: cls;
@@ -170,7 +170,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 		moveBehind;
 		connectFrom: #superclass.
 	RSForceBasedLayout new
-		doNotUseProgressBar; 
+		doNotUseProgressBar;
 		charge: -350;
 		on: c nodes.
 	c @ RSCanvasController.
@@ -183,7 +183,7 @@ RSLayoutExamples >> example08HorizontalTree [
 	<script: 'self new example08HorizontalTree open setLabel: ''Horizontal Tree'''>
 	| c shapes |
 	c := RSCanvas new.
-	
+
 	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
 		lbl := RSLabel new
 			text: cls;
@@ -200,13 +200,13 @@ RSLayoutExamples >> example08HorizontalTree [
 	c addAll: shapes.
 	c @ RSCanvasController.
 	RSLineBuilder orthoHorizontal
-		markerEnd: (RSMarker new 
+		markerEnd: (RSMarker new
 			offset: 2;
-			shape: (RSShapeFactory triangle 
+			shape: (RSShapeFactory triangle
 				color: Color black;
 				size: 5;
 				yourself));
-		attachPoint: RSHorizontalAttachPoint new; 
+		attachPoint: RSHorizontalAttachPoint new;
 		canvas: c;
 		shapes: c nodes;
 		connectFrom: #superclass.
@@ -219,15 +219,15 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	<script: 'self new example09BorderAttachPoint open setLabel: ''TSShape withAllSubclasses'''>
 	| c shapes |
 	c := RSCanvas new.
-	shapes := RSShape withAllSubclasses collect: [ :cls | 
+	shapes := RSShape withAllSubclasses collect: [ :cls |
 		RSShapeFactory square size: 30; draggable; model: cls; yourself ].
 	c addAll: shapes.
-	RSLineBuilder arrowedLine 
+	RSLineBuilder arrowedLine
 		withBorderAttachPoint;
 		canvas: c;
 		connectFrom: #superclass.
-	RSForceBasedLayout new 
-		charge: -500; 
+	RSForceBasedLayout new
+		charge: -500;
 		on: c nodes.
 	c @ RSCanvasController.
 	^ c
@@ -264,7 +264,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 	<script: 'self new example11PaddingInComposite open'>
 	| canvas shapes |
 	canvas := RSCanvas new.
-	
+
 	shapes := Collection withAllSubclasses collect: [ :cls | | methods |
 		methods := cls methods collect: [:met | RSBox new color: Color black; size: 5; yourself ].
 		RSGridLayout on: methods.
@@ -286,7 +286,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 ]
 
 { #category : #animations }
-RSLayoutExamples >> example12AnimatedForceBasedLayout [ 
+RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	<script: 'self new example12AnimatedForceBasedLayout open'>
 	| c |
 	c := RSCanvas new.
@@ -295,7 +295,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	RSLineBuilder line
 		canvas: c;
 		connectFrom: [ :v | v // 2 ].
-	c @ RSForceLayoutStepping.
+	c @ RSForceLayoutSteppingInteraction.
 	^ c
 ]
 
@@ -304,7 +304,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	<script: 'self new example13VisualizeQuatree open'>
 	| canvas shapes stepping edges newBox boxes createBoxes colors newLabel |
 	canvas := RSCanvas new.
-	shapes := (1 to: 50) collect: [:n | 
+	shapes := (1 to: 50) collect: [:n |
 		RSBox new
 			size: 30;
 			labeled;
@@ -316,7 +316,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
+	stepping := RSForceLayoutSteppingInteraction new.
 	stepping layout
 		length: 80;
 		charge: -300.
@@ -330,7 +330,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			position: quad rectangle floatCenter;
 			color: ((colors scale: index) alpha: 0.5 );
 			yourself
-			 ]. 
+			 ].
 	newLabel := [ :quad :index |
 		RSLabel new
 			text: (quad charge printShowingDecimalPlaces: 1);
@@ -349,7 +349,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;
-		when: RSAnimationLoopEvent do: [ :v | 
+		when: RSAnimationLoopEvent do: [ :v |
 			boxes do: #remove.
 			boxes := RSGroup new.
 			createBoxes value: stepping layout currentQuadtree value: 0.
@@ -368,16 +368,16 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 		| composite label |
 		methods := cls methods collect: [ :m | RSBox new color: Color red; size: 5; model: m; yourself ] as: RSGroup.
 		methods @ (RSPopup text: #selector).
-		
+
 		RSGridLayout on: methods.
 		composite := RSComposite new.
-		label := RSLabel new text: cls name.
+		label := RSLabel new text: cls name; color: 'black'; yourself.
 		RSLocation new above; move: label on: methods.
 		composite shapes:  methods, { label }.
-		
-		composite color: Color gray.
+
+		composite color: Color lightGray.
 		composite model: cls.
-		composite @ RSAnimatedPopup @ RSDraggable.
+		composite @ RSAnimatedPopup; @ (RSDraggable new noValidateChildrenEvents).
 		composite padding: 10.
 		c add: composite ].
 
@@ -391,7 +391,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 
 	"Making sure we have zooming"
 	c @ RSCanvasController.
-	^ c 
+	^ c
 ]
 
 { #category : #lines }
@@ -419,7 +419,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 	RSTreeLayout on: c nodes.
 
 	c @ RSCanvasController.
-	^ c 
+	^ c
 ]
 
 { #category : #animations }
@@ -427,8 +427,8 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	<script: 'self new example17ForceBasedLayout open'>
 	| canvas shapes stepping edges  layout |
 	canvas := RSCanvas new.
-	shapes := (1 to: 10) collect: [ :m | 
-		RSBox new 
+	shapes := (1 to: 10) collect: [ :m |
+		RSBox new
 			size: 30;
 			draggable;
 			labeled;
@@ -440,30 +440,30 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	canvas
 		addAll: edges;
 		addAll: shapes.
-	stepping := RSForceLayoutStepping new.
-	
+	stepping := RSForceLayoutSteppingInteraction new.
+
 	(layout := stepping layout)
 		length: 80;
 		charge: -300.
 	canvas @ stepping.
-	canvas edges do: [ :edge | 
-		(layout mockEdgeAt: edge) 
+	canvas edges do: [ :edge |
+		(layout mockLineAt: edge)
 			length: (edge model key + edge model value) * 10 ].
 	canvas @ RSCanvasController.
-	
+
 	^ canvas
 ]
 
 { #category : #layouts }
-RSLayoutExamples >> example18Cluster [
-	<script: 'self new example18Cluster open'>
+RSLayoutExamples >> example18ClusterTree [
+	<script: 'self new example18ClusterTree open'>
 	| canvas shapes |
 	canvas := RSCanvas new.
-	canvas addAll: (#(linear sqrt log) collect: [ :scale | 
+	canvas addAll: (#(linear sqrt log) collect: [ :scale |
 		| group |
 		group := RSGroup new.
-		shapes :=  GLMBrickedMorph withAllSubclasses collect: [ :cls |
-			RSEllipse new 
+		shapes := Morph withAllSubclasses collect: [ :cls |
+			RSEllipse new
 				size: 5;
 				draggable;
 				color: Color red;
@@ -475,7 +475,7 @@ RSLayoutExamples >> example18Cluster [
 			canvas: group;
 			shapes: shapes;
 			connectFrom: #superclass.
-		
+
 		RSNormalizer size
 			scale: (NSScale perform: scale);
 			from: 1;
@@ -488,7 +488,7 @@ RSLayoutExamples >> example18Cluster [
 			to: Color red;
 			shapes: shapes;
 			normalize: #numberOfMethods.
-		RSClusterLayout on: shapes.
+		RSClusterTreeLayout on: shapes.
 		RSComposite new
 			color: Color veryLightGray translucent;
 			model: scale;
@@ -523,7 +523,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 		shapes: shapes;
 		normalize: [ :cls | cls numberOfMethods + 5 ].
 	RSTreeLayout on: shapes.
-	^ c @ RSCanvasController @ RSHierarchyPacker
+	^ c @ RSCanvasController @ RSHierarchyPackerInteraction
 ]
 
 { #category : #layouts }
@@ -553,14 +553,14 @@ RSLayoutExamples >> example20FlowLayout [
 			to: p + d;
 			on: s set: #position:].
 	high := RSHighlightable new.
-	high 
-		when: RSHighlightEvent do: [ :evt | 
+	high
+		when: RSHighlightEvent do: [ :evt |
 			evt shape color: Color blue; underline.
 			menuAnimation value: evt shape value: -5@0 ];
 		when: RSUnHighlightEvent do: [ :evt |
 			evt shape color: Color gray; normal.
 			menuAnimation value: evt shape value: 0 ].
-		
+
 	newLabel := [ :s |
 		canvas add: (RSLabel new
 			text: s;
@@ -581,7 +581,7 @@ RSLayoutExamples >> example20FlowLayout [
 	'VerticalLeft'. RSVerticalLineLayout new.
 	'VerticalCenter'. RSVerticalLineLayout new alignCenter.
 	'VerticalRight'. RSVerticalLineLayout new alignRight.
-	} pairsDo: [:s :layout | 
+	} pairsDo: [:s :layout |
 		(newLabel value: s)
 			when: RSMouseClick do: [ :evt |
 				| last current |
@@ -590,14 +590,14 @@ RSLayoutExamples >> example20FlowLayout [
 				current := labels collect: #position.
 				canvas newAnimation
 					duration: 1 second;
-					onStepDo:[:t | 
+					onStepDo:[:t |
 						labels doWithIndex: [ :l :i |
 							l translateTo: ((last at: i) interpolateTo: (current at: i) at: t) ].
 						canvas zoomToFit.
 						].
 				 ]
 		].
-	{'Show/Hide Boxes'. [ canvas showRectangles
+	{'Show/Hide Boxes'. [ canvas shouldShowRectangles
 		ifTrue: [ canvas hideEncompassingRectangles ]
 		ifFalse: [ canvas showEncompassingRectangles ]  ].
 	'Show/Hide Underlines'. [ labels first isUnderlined
@@ -616,39 +616,8 @@ RSLayoutExamples >> example20FlowLayout [
 ]
 
 { #category : #layouts }
-RSLayoutExamples >> example21Spaces [
-	<script: 'self new example21Spaces open'>
-	| b prop r |
-	b := RSForceLayoutInSpaces new.
-	b numberOfSpaces: 4.
-	b classes: Collection withAllSubclasses.
-	b build.
-	prop := 0.1.
-	r := Random new.
-	b canvas newAnimation
-		repeat;
-		onStepDo: [ :t | | s space |
-			r next < 0.01 ifTrue: [ 
-				s := b shapes atRandom.
-				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
-				
-				b canvas newAnimation
-					duration: 500 milliSeconds;
-					from: s position;
-					to: space position;
-					on: s set: #position:;
-					when: RSAnimationEndEvent do: [ b dragEnd: s ].
-				].
-			 ].
-	^ b canvas 
-	
-
-
-]
-
-{ #category : #layouts }
-RSLayoutExamples >> example22TreeLayoutEllipses [
-	<script: 'self new example22TreeLayoutEllipses open'>
+RSLayoutExamples >> example21TreeLayoutEllipses [
+	<script: 'self new example21TreeLayoutEllipses open'>
 	| c shapes eb |
 	c := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
@@ -658,7 +627,7 @@ RSLayoutExamples >> example22TreeLayoutEllipses [
 			size: 5;
 			yourself
 		 ].
-	
+
 	c addAll: shapes.
 	RSNormalizer color
 		from: (Color gray alpha: 0.5);
@@ -678,5 +647,238 @@ RSLayoutExamples >> example22TreeLayoutEllipses [
 	RSTreeLayout on: shapes.
 	shapes do: [ :e | e translateBy: 0 @ 0 ].
 	c @ RSCanvasController.
+	^ c
+]
+
+{ #category : #tests }
+RSLayoutExamples >> example22ClassHierarchies [
+
+	<script:
+	'RSLayoutExamples new example22ClassHierarchies open'>
+	| commits edges aCanvas gr aCollection |
+
+	aCollection := { Collection  . Magnitude . RSObject . RBNode }.
+
+	gr := 1.61803398875.
+	commits := Array streamContents: [ :aStream |
+		           aCollection do: [ :aClass |
+			           aClass withAllSubclassesDo: [ :aSubClass |
+				           | label box |
+				           label := RSLabel new text: aSubClass name.
+				           aSubClass isAbstract ifTrue: [
+					           label
+						           bold;
+						           italic ].
+				           box := RSBox new
+					                  color: Color white;
+					                  withBorder;
+					                  cornerRadius: gr * 2;
+					                  extent: label extent + (gr * 4) asPoint;
+					                  yourself.
+				           RSLocation new center stick: label on: box.
+				           aStream nextPut: (RSComposite new
+						            model: aSubClass;
+						            shapes: (Array with: box with: label);
+						            draggable;
+						            when: RSMouseLeftClick
+						            do: [ :ev | aSubClass browse ];
+						            yourself) ] ] ].
+
+	edges := RSLineBuilder horizontalBezier
+		         shapes: commits;
+		         withHorizontalAttachPoint;
+		         connectToAll: [ :aSubClass | aSubClass subclasses ].
+
+	edges sort: [ :a :b |
+		| aName bName |
+		aName := a from model name.
+		bName := b from model name.
+		aName = bName
+			ifTrue: [ a to model name < b to model name ]
+			ifFalse: [ aName < bName ] ].
+
+	RSHorizontalVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	^ aCanvas
+		zoomToFit;
+		@ RSCanvasController
+]
+
+{ #category : #tests }
+RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
+	<noTest>
+	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps open'>
+	| icerepo commits edges dict aCanvas |
+	icerepo := IceRepository repositories
+		detect: [ :each | each name = 'Roassal3' ]
+		ifNone: [ nil ].
+
+	dict := Dictionary new.
+	"if you remove <noTest> you will break ci in githubactions"
+	"for some reasong icerepo allBranches fails in ci"
+	icerepo allBranches do: [ :aBranch |
+		(icerepo newCommitWalk fromBranch: aBranch) commits do: [ :aCommit |
+			| circle |
+			circle := RSCircle new
+				          model: aCommit id asSymbol;
+				          "radius:
+						           ((aCommit changesTo: aCommit parent) size / Float pi)
+							           sqrt;"
+				          color: Color white;
+				          draggable;
+				          addInteraction: (RSPopup new text: [
+							           String streamContents: [ :aStream |
+									           aStream
+										           nextPutAll: aCommit comment;
+										           cr;
+										           cr;
+										           nextPutAll: aCommit shortId;
+										           nextPutAll: ' -- by ';
+										           nextPutAll: aCommit author;
+										           nextPutAll: ' at ';
+										           nextPutAll: aCommit datetime asLocalStringYMDHM;
+										           nextPutAll: '.' ] ]);
+				          withBorder;
+				          yourself.
+
+			circle propertyAt: #gitCommit put: aCommit.
+
+			aCommit isMergeCommit ifTrue: [ circle color: circle border color ].
+
+			dict at: aCommit id put: circle ] ].
+
+	commits := dict values.
+
+	edges := RSLineBuilder verticalBezier
+		         shapes: commits;
+		         withVerticalAttachPoint;
+		         connectToAll: [ :aCommitId |
+			         ((dict at: aCommitId) propertyAt: #gitCommit) ancestorIds ].
+
+	edges sort: [ :a :b |
+		| aTime bTime |
+		aTime := (a to propertyAt: #gitCommit) datetime.
+		bTime := (b to propertyAt: #gitCommit) datetime.
+		aTime > bTime
+			ifTrue: [ true ]
+			ifFalse: [
+				aTime = bTime
+					ifTrue: [
+						(a from propertyAt: #gitCommit) datetime
+						> (b from propertyAt: #gitCommit) datetime ]
+					ifFalse: [ false ] ] ].
+
+	RSVanDerPloegTreeLayout new
+		doNotValidateCycles;
+		verticalGap: [ :parent :child :default |
+			| duration goldenRatio |
+			goldenRatio := 1.61803398875.
+			duration := (parent propertyAt: #gitCommit) datetime
+			            - (child propertyAt: #gitCommit) datetime.
+			self assert: duration asSeconds >= 0.
+			((duration asMinutes max: goldenRatio) log: goldenRatio)
+			* goldenRatio ];
+		on: commits edges: edges.
+
+	aCanvas := RSCanvas new
+		           addAll: commits , edges;
+		           yourself.
+
+	edges do: [ :each |
+		self assert: each to encompassingRectangle top
+			>= each from encompassingRectangle bottom.
+
+		(each to propertyAt: #vdpLevel) - (each from propertyAt: #vdpLevel)
+		> 1 ifTrue: [
+			each
+				dashArray: #( 4 );
+				color: each color translucent;
+				pushBack ] ].
+
+	^ aCanvas
+		zoomToFit;
+		@ RSCanvasController
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example24SmartHorizontalTree [
+	<script: 'self new example24SmartHorizontalTree open setLabel: ''Horizontal Tree'''>
+	| c shapes |
+	c := RSCanvas new.
+
+	shapes := String withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := RSLabel new
+			text: cls;
+			yourself.
+		box := RSBox new
+			withBorder;
+			cornerRadius: (RSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		RSComposite new
+			draggable;
+			model: cls;
+			shapes: (RSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ RSCanvasController.
+	RSLineBuilder orthoHorizontal
+		controlPointsController: RSSmartHorizontalCPController new;
+		markerEnd: (RSMarker new
+			offset: 2;
+			shape: (RSShapeFactory triangle
+				color: Color black;
+				size: 5;
+				yourself));
+		attachPoint: RSHorizontalAttachPoint new;
+		canvas: c;
+		shapes: c nodes;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new on: c nodes.
+	^ c
+]
+
+{ #category : #layouts }
+RSLayoutExamples >> example25SortBlock [
+	<script: 'self new example25SortBlock open'>
+	| c shapes |
+	c := RSCanvas new.
+
+	shapes := Dictionary withAllSubclasses collect: [ :cls | | box lbl |
+		lbl := RSLabel new
+			text: cls;
+			color: Color black;
+			yourself.
+		box := RSBox new
+			withBorder;
+			color: Color veryVeryLightGray;
+			cornerRadius: (RSCornerRadius new right: 10);
+			extent: lbl extent + 10.
+		RSComposite new
+			draggable;
+			model: cls;
+			shapes: (RSGroup with: box with: lbl );
+			yourself ].
+	c addAll: shapes.
+	c @ RSCanvasController.
+	RSLineBuilder orthoHorizontal
+		withHorizontalAttachPoint;
+		shapes: c nodes;
+		connectFrom: #superclass.
+	RSHorizontalTreeLayout new
+		childrenSortBlock: [ :a :b | | sizeA sizeB |
+			"use a cache"
+			sizeA := a model withAllSubclasses size.
+			sizeB := b model withAllSubclasses size.
+
+			sizeA = sizeB
+				ifTrue: [ a model name > b model name ]
+				ifFalse: [ sizeA > sizeB ] ];
+		on: c nodes.
 	^ c
 ]

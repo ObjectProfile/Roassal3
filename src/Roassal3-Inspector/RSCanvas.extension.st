@@ -1,29 +1,6 @@
 Extension { #name : #RSCanvas }
 
 { #category : #'*Roassal3-Inspector' }
-RSCanvas >> gtInspectorShapesIn: composite [
-	<gtInspectorPresentationOrder: 20>
-	composite table 
-		title: 'Shapes';
-		showOnly: 50;
-		display: [ :each | each shapes ];
-		children: #children;
-		column: 'Shape' evaluated: [ :each | each asString ];
-		column: 'Model' evaluated: [ :each | each model asString ];
-		column: 'Paint' evaluated: [ :each | each paint asString ];
-		column: 'Border' evaluated: [ :each | each border asString ].
-]
-
-{ #category : #'*Roassal3-Inspector' }
-RSCanvas >> gtInspectorViewIn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: ['Canvas'];
-		initializeCanvas: [ self ]
-		
-]
-
-{ #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new
@@ -33,8 +10,8 @@ RSCanvas >> inspectorCanvas [
 
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvasContext: aContext [
-  
-  aContext withoutEvaluator
+
+	aContext withoutEvaluator
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -56,14 +33,14 @@ c
 In the example given above, clicking on a circle does not open a new pane in the GT inspector.
 	"
 	^ self
-		propertyAt: RSAbstractContext name asSymbol
-		ifAbsentPut: [ RSInteractiveContext new ]
+		propertyAt: RSAbstractContextInteraction name asSymbol
+		ifAbsentPut: [ RSContextInteraction new ]
 ]
 
 { #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorContext: aRSContext [
 	^ self
-		propertyAt: RSAbstractContext name asSymbol
+		propertyAt: RSAbstractContextInteraction name asSymbol
 		put: aRSContext
 ]
 
@@ -72,16 +49,16 @@ RSCanvas >> inspectorShapes [
 	<inspectorPresentationOrder: 100 title: 'Shapes'>
 	^ SpTablePresenter new
 		items: self shapes, self fixedShapes;
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Shape'
 			evaluated: [ :each | each asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Model'
 			evaluated: [ :each | each model asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Paint'
 			evaluated: [ :each | each paint asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Border'
 			evaluated: [ :each | each border asString ] )
 ]

@@ -17,5 +17,5 @@ RSAnimationEvent >> animation [
 
 { #category : #accessing }
 RSAnimationEvent >> animation: anAnimation [
-	animation := anAnimation.
+	animation := anAnimation
 ]

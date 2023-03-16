@@ -6,7 +6,6 @@ Class {
 
 { #category : #visiting }
 RSFCVisitor >> visitDecision: decision [
-
 ]
 
 { #category : #visiting }
@@ -16,20 +15,16 @@ RSFCVisitor >> visitFlowchart: flowchart [
 
 { #category : #visiting }
 RSFCVisitor >> visitFlowline: flowline [
-
 ]
 
 { #category : #visiting }
 RSFCVisitor >> visitInputOutput: flowline [
-
 ]
 
 { #category : #visiting }
 RSFCVisitor >> visitProcess: process [
-
 ]
 
 { #category : #visiting }
 RSFCVisitor >> visitTerminal: terminal [
-
 ]

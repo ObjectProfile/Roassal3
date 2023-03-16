@@ -53,6 +53,27 @@ Class {
 	#category : #'Roassal3-Builders-Core'
 }
 
+{ #category : #converting }
+RSAbstractContainerBuilder >> asPresenter [
+	self build.
+	^ SpRoassal3InspectorPresenter new
+		canvas: self container;
+		yourself
+]
+
+{ #category : #accessing }
+RSAbstractContainerBuilder >> asShape [
+	^ self asShapeFor: nil
+]
+
+{ #category : #accessing }
+RSAbstractContainerBuilder >> asShapeFor: model [
+	self build.
+	^ self container asShape
+		model: model;
+		yourself
+]
+
 { #category : #building }
 RSAbstractContainerBuilder >> build [
 	self renderIn: self container.
@@ -66,7 +87,7 @@ RSAbstractContainerBuilder >> canvas [
 
 { #category : #accessing }
 RSAbstractContainerBuilder >> container [
-	^ container ifNil: [ container := self defaultContainer ].
+	^ container ifNil: [ container := self defaultContainer ]
 ]
 
 { #category : #accessing }
@@ -74,9 +95,15 @@ RSAbstractContainerBuilder >> container: aTContainer [
 	container := aTContainer
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSAbstractContainerBuilder >> defaultContainer [
 	^ RSCanvas new
+]
+
+{ #category : #public }
+RSAbstractContainerBuilder >> open [
+	self build.
+	^ self canvas open
 ]
 
 { #category : #hooks }
@@ -87,4 +114,10 @@ RSAbstractContainerBuilder >> renderIn: aCanvas [
 { #category : #accessing }
 RSAbstractContainerBuilder >> shapes [
 	^ shapes
+]
+
+{ #category : #updating }
+RSAbstractContainerBuilder >> update [
+	self container shapes do: #remove.
+	self build
 ]

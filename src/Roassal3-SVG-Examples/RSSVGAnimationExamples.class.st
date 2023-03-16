@@ -21,7 +21,7 @@ RSSVGAnimationExamples >> example01SVGIcons [
 	color := RSGradientPalette gradient21.
 	color range at: 1 put: RSGradientPalette trueSunset.
 	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
-	
+
 	shapes := #(america puzzlePiece supermarketCart) collectWithIndex: [ :m :index |
 		| grad |
 		grad := (color scale: m)
@@ -35,12 +35,12 @@ RSSVGAnimationExamples >> example01SVGIcons [
 			color: grad;
 			yourself ].
 	canvas addAll: shapes.
-	canvas newAnimation repeat onStepDo: [:t | 
-		shapes do: [:shape | | p ang ext block | 
+	canvas newAnimation repeat onStepDo: [:t |
+		shapes do: [:shape | | p ang ext block |
 			p := shape position.
 			ext := shape extent / 2.
 			ang := theta at: shape index.
-			block := [ 
+			block := [
 				ang := Float pi / 4 + ang.
 				p := (ang cos@ ang sin) * 1.5 + shape position. ].
 			p := (ang cos@ ang sin) * 1.5 + p.
@@ -55,11 +55,10 @@ RSSVGAnimationExamples >> example01SVGIcons [
 		extent: 100@100;
 		noPaint;
 		withBorder).
-	canvas 
-		when: RSExtentChangedEvent 
+	canvas
+		when: RSExtentChangedEvent
 		do: [ canvas camera zoomToFit: canvas extent extent: 100 asPoint ].
 	^ canvas
-	
 ]
 
 { #category : #examples }
@@ -79,7 +78,7 @@ RSSVGAnimationExamples >> example02Miku [
 			color: line value;
 			yourself ] ).
 	canvas @ RSCanvasController.
-	easing := RSEasing elasticOut.
+	easing := RSEasingInterpolator elasticOut.
 	canvas nodes do: [ :e | | position |
 		position := (random next * 1000) @ (random next * 1000) - 100.
 		canvas newAnimation
@@ -138,7 +137,7 @@ RSSVGAnimationExamples >> example03Boat [
 		color: 'AF7643').
 	g add: (RSEllipse new
 		position: 249.6@ 18.4; radius: 18.4;
-		color: '788787').	
+		color: '788787').
 	g add: (RSSVGPath new
 		svgPath: 'M454.4,371.2c0-7.2,0.8-14.4,0.8-22.4c0-166.4-84.8-302.4-189.6-305.6v328H454.4z';
 		color: '0C91C4').
@@ -160,7 +159,7 @@ RSSVGAnimationExamples >> example03Boat [
 
 	boat := RSComposite new shapes: g; yourself.
 	x := 1.
-	updateLines := [ 
+	updateLines := [
 		lines doWithIndex: [:line :m |
 			| points |
 			points := (1 to: 200) collect: [ :i | | y |
@@ -169,18 +168,18 @@ RSSVGAnimationExamples >> example03Boat [
 			line controlPoints: points ] ].
 	updateLines value.
 	canvas newAnimation
-		repeat; 
-		onStepDo: [ :t | 
+		repeat;
+		onStepDo: [ :t |
 			| cp p1 p2 vector |
 			frame := frame + 0.5.
 			updateLines value.
-			cp := (lines at: lines size / 2) controlPoints.
+			cp := (lines at: (lines size / 2) asInteger) controlPoints.
 			x := x + 0.3.
-		
+
 			(x between: 1 and: cp size - 1)
 				ifFalse: [ x := cp size - 1 ].
-			p1 := cp at: x.
-			p2 := cp at: x + 1.
+			p1 := cp at: x asInteger.
+			p2 := cp at: (x + 1) asInteger.
 			vector := p2 - p1.
 			boat matrix
 				loadIdentity;
@@ -196,7 +195,7 @@ RSSVGAnimationExamples >> example03Boat [
 	canvas camera scale: 2.5.
 	canvas add: pharo.
 	canvas add: boat.
-	RSLocation new 
+	RSLocation new
 		inner; bottom; right;
 		move: pharo on: lines.
 	^ canvas
@@ -211,14 +210,14 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 		color: 'E83A54';
 		radius: 0;
 		yourself].
-	paint := (LinearGradientPaint 
+	paint := (LinearGradientPaint
 		fromArray: { 0-> '25B4AF'. 1-> '0088AC'})
 		start: 28.879@143.392;
 		stop: 272.3663@143.392.
-	c 
-		addShape: (RSSVGPath new 
+	c
+		addShape: (RSSVGPath new
 			noPaint;
-			border: (RSBorder new paint: paint; width: 21);
+			border: (RSBorder new paint: paint; width: 21; capRound);
 			svgPath: 'M77,24.4v243.9
 			M264.2,232.3c0,0-24.1,30-51.7,30C144.3,262.3,174,113,77,113c-18.5,0-37.6,12.6-37.6,30
 		c0,16,11.8,28,38.3,28s115.7-10.7,115.7-77.1c0-53.9-45.7-69.5-116.5-69.5c-11.8,0-21.8,1.4-30.1,3.4c-4.6,1.1-8.7,2.4-12.3,3.8');
@@ -232,14 +231,14 @@ RSSVGAnimationExamples >> example04RoassalIcon [
 		onStepDo: [ :t |
 			c shapes first border dashArray: {t. 10000}.
 			c signalUpdate ].
-	eAnimation := [ :duration :shape | 
-		c newAnimation 
+	eAnimation := [ :duration :shape |
+		c newAnimation
 			duration: duration milliSeconds;
-			when: RSAnimationEndEvent do: [ 
+			when: RSAnimationEndEvent do: [
 				c newAnimation
 					from: 0;
 					to: 20.4;
-					easing: RSEasing elasticOut;
+					easing: RSEasingInterpolator elasticOut;
 					on: shape set: #radius:.  ] ].
 	eAnimation value: 1 value: c shapes second.
 	eAnimation value: 2000 value: c shapes third.
@@ -309,14 +308,14 @@ RSSVGAnimationExamples >> example05Corona [
 		repeat;
 		duration: 10 seconds;
 		scale: curveScale;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			| low upp mean stdDev series y first |
 			low := 0.
 			upp := t.
 			mean := (low + upp) / 2.
 			stdDev := (upp - low) / 4.
 			first := nil.
-			series := (low to: upp) collect: [ :x | 
+			series := (low to: upp) collect: [ :x |
 				y := normalY value: x value: mean value: stdDev.
 				y := y * (yscale scale: t).
 				first ifNil: [ first := y ].
@@ -328,7 +327,7 @@ RSSVGAnimationExamples >> example05Corona [
 				s << 'L'.
 				spoint value: s value: series last x@ 250.
 				s << 'Z' ]).
-			
+
 			curve paint: (color scale: t).
 			canvas signalUpdate.
 			].
@@ -336,12 +335,11 @@ RSSVGAnimationExamples >> example05Corona [
 	canvas add: title.
 	canvas add: ytitle.
 	canvas add: xtitle.
-	canvas add: curve. 
+	canvas add: curve.
 	canvas add: line.
 	canvas add: lineTitle.
 	canvas @RSCanvasController.
 	^ canvas
-
 ]
 
 { #category : #examples }
@@ -603,6 +601,11 @@ m 405.45346,284.59283 c 0,0 4.80798,-6.45123 5.90347,-6.08606 1.0955,0.36516 0.4
 m 466.15466,362.01006 c 3.19923,26.33245 3.71863,64.39733 2.7468,78.73861 -2.79763,41.28461 11.46608,104.38145 16.61197,122.86304 0.80181,2.87972 1.09227,4.28624 2.06831,4.28624 0.97605,0 1.85005,-1.48736 2.96453,-2.65183 43.54284,-45.49597 63.22587,-85.68975 72.23254,-123.51101 0.68923,-2.89424 1.33028,-3.07654 2.06861,-3.04318 0.73833,0.0334 1.54144,0.24766 2.38019,3.13729 10.01082,34.48884 17.72566,65.50146 20.0174,83.44393 0.3633,2.84428 0.43409,5.53642 1.15547,5.74433 0.72139,0.20792 1.09714,-2.8716 1.84102,-5.55099 2.30784,-8.31262 4.15734,-18.77878 4.15734,-29.87592 0,-69.16011 -53.45009,-119.81074 -78.4225,-195.66086 l 2.67787,-2.3127 c 27.11887,78.73308 78.5102,129.91128 78.5102,198.04046 0,14.85947 -3.42589,31.0045 -8.22618,43.99853 -1.35617,3.67106 -2.66532,7.96757 -3.68189,7.60247 -1.01658,-0.36509 -0.39333,-4.61478 -0.4714,-8.32858 -0.55347,-26.32961 -8.15539,-56.84425 -18.67951,-89.09393 -0.48941,-1.49973 -0.79073,-2.6151 -1.21291,-2.59311 -0.42217,0.022 -0.8003,1.06267 -1.10511,2.55776 -7.83243,38.4178 -33.91467,79.11684 -73.56067,121.51135 -1.38154,1.47731 -2.31983,2.36791 -3.46349,2.36882 -1.14367,9.1e-4 -1.86415,-1.05219 -2.47775,-2.853 -7.42803,-21.79997 -18.97634,-66.92927 -18.62374,-130.81056 0.11887,-21.53784 1.38221,-45.10044 -2.0892,-79.21214 z
 #000000
 '
+]
+
+{ #category : #accessing }
+RSSVGAnimationExamples >> order [
+	^ 1001
 ]
 
 { #category : #'data - svg' }

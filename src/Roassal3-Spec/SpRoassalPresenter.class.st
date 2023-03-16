@@ -4,43 +4,60 @@ I am a basic presenter for widgets in roassal with the Spec system
 Class {
 	#name : #SpRoassalPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
+	#traits : 'SpTContextMenu',
+	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
-		'script',
-		'currentCanvas'
+		'#script',
+		'#currentCanvas'
 	],
 	#category : #'Roassal3-Spec-Core'
 }
 
 { #category : #specs }
 SpRoassalPresenter class >> adapterName [
-	^ #SpRoassalMorphicAdapter
+	^ #RoassalAdapter
+]
+
+{ #category : #'instance creation' }
+SpRoassalPresenter class >> on: anOwningPresenter withCanvas: aTrachelCanvas [
+
+	^ self basicNew
+		owner: anOwningPresenter;
+		canvas: aTrachelCanvas;
+		initialize;
+		yourself
 ]
 
 { #category : #'instance creation' }
 SpRoassalPresenter class >> open [
 	<script>
-	^ self new openWithSpec
+	^ self new open
 ]
 
 { #category : #accessing }
 SpRoassalPresenter >> canvas [
-	^ currentCanvas
+	^ currentCanvas ifNil: [ currentCanvas := RSCanvas new ]
 ]
 
 { #category : #accessing }
-SpRoassalPresenter >> canvas: aRSCanvas [ 
+SpRoassalPresenter >> canvas: aRSCanvas [
 	currentCanvas := aRSCanvas
+]
+
+{ #category : #accessing }
+SpRoassalPresenter >> currentCanvas [
+	^ currentCanvas
 ]
 
 { #category : #initialization }
 SpRoassalPresenter >> initialize [
 	super initialize.
-	script := [ :v | ] asValueHolder.
-	script whenChangedDo: [ :s | self refresh ].
+	script := [ :aCanvas | ] asValueHolder.
+	script whenChangedDo: [ :s | self refresh ]
 ]
 
 { #category : #public }
-SpRoassalPresenter >> refresh [ 
+SpRoassalPresenter >> refresh [
 	self changed: #applyScript with: #()
 ]
 
@@ -57,4 +74,12 @@ SpRoassalPresenter >> script [
 { #category : #accessing }
 SpRoassalPresenter >> script: anObject [
 	script value: anObject
+]
+
+{ #category : #accessing }
+SpRoassalPresenter >> whenPresenterResized: aBlock [
+
+	self announcer
+		when: PresenterResized
+		do: [ :ann | aBlock cull: ann extent ]
 ]

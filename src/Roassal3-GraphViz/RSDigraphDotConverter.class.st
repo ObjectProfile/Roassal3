@@ -7,15 +7,15 @@ digraph G {Hello->World}
 Class {
 	#name : #RSDigraphDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #visiting }
 RSDigraphDotConverter >> writeHeader: aRSGroup [
-	stream 
+	stream
 		<< 'digraph G {'; crlf;
 		<< 'ratio = auto ; '; crlf;
-		<< 'mincross = 2.0 ; '; crlf.
+		<< 'mincross = 2.0 ; '; crlf
 ]
 
 { #category : #visiting }

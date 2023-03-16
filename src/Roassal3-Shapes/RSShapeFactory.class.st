@@ -52,7 +52,7 @@ RSShapeFactory class >> circle [
 ]
 
 { #category : #shapes }
-RSShapeFactory class >> composite [ 
+RSShapeFactory class >> composite [
 	^ RSComposite new
 ]
 
@@ -120,7 +120,7 @@ RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSShapeFactory class >> polygonWithPoints: points [
 	^ self polygon
 		privatePoints: points;
@@ -141,7 +141,7 @@ RSShapeFactory class >> rhomboid [
 		with: -0.333 @ 1)
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 RSShapeFactory class >> shapeFromString: aString [
 	"self shapeFromString: 'd'"
 	#(o circle
@@ -155,7 +155,6 @@ RSShapeFactory class >> shapeFromString: aString [
 		(aString includesSubstring: k)
 			ifTrue: [ ^ sel value: self ] ].
 	^ nil
-	
 ]
 
 { #category : #shapes }
@@ -174,7 +173,7 @@ RSShapeFactory class >> star [
 	innerPoints
 		doWithIndex: [ :p :i | innerPoints at: i put: (p x * innerRadius) @ (p y * innerRadius) ].
 	star5Points
-		doWithIndex: [ :p :i | 
+		doWithIndex: [ :p :i |
 			ar := i even
 				ifTrue: [ outerPoints ]
 				ifFalse: [ innerPoints ].

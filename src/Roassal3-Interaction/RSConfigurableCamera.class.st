@@ -5,7 +5,8 @@ Class {
 	#name : #RSConfigurableCamera,
 	#superclass : #RSCamera,
 	#instVars : [
-		'zoomInteraction'
+		'zoomInteraction',
+		'zoomRatio'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
@@ -20,20 +21,30 @@ RSConfigurableCamera >> zoomInteraction: anInteraction [
 	zoomInteraction := anInteraction
 ]
 
+{ #category : #accessing }
+RSConfigurableCamera >> zoomRatio [
+	^ zoomRatio ifNil: [ 0.9 ]
+]
+
+{ #category : #accessing }
+RSConfigurableCamera >> zoomRatio: aNumber [
+	zoomRatio := aNumber
+]
+
 { #category : #zoom }
 RSConfigurableCamera >> zoomToFit [
-	| shapesRect extent sc canvasRect original int |
+	| shapesRect canvasExtent sc canvasRect original int |
 	int := self zoomInteraction.
 	shapesRect := int encompassingRectangleFor: canvas.
-	extent := canvas extent * 0.9.
-	sc := extent / (self class maxExtentFor: shapesRect).
+	canvasExtent := canvas extent * self zoomRatio.
+	sc := canvasExtent / (self class maxExtentFor: shapesRect).
 	original := sc x min: sc y.
 	sc := int scaleFor: original.
-	canvasRect := Rectangle 
+	canvasRect := Rectangle
 		floatCenter: shapesRect floatCenter
 		extent: canvas extent / 1.
 	self translateTo: shapesRect floatCenter.
-	int configuration shouldUseBasicZoom ifTrue: [ 
+	int configuration shouldUseBasicZoom ifTrue: [
 		(canvasRect containsRect: shapesRect )
 			ifTrue: [ self scale: 1]
 			ifFalse: [
@@ -41,6 +52,5 @@ RSConfigurableCamera >> zoomToFit [
 				self scale: original ]
 	] ifFalse: [ self scale: sc].
 	int removeRectanglesFor: canvas.
-	canvas signalUpdate.
-	
+	canvas signalUpdate
 ]

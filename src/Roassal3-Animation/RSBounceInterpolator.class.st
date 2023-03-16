@@ -11,7 +11,7 @@ Symmetric bounce easing; scales bounceIn for t in [0, 0.5] and bounceOut for t i
 "
 Class {
 	#name : #RSBounceInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolator,
 	#instVars : [
 		'b1',
 		'b2',
@@ -61,17 +61,17 @@ RSBounceInterpolator >> interpolateInOut: i [
 RSBounceInterpolator >> interpolateOut: i [
 	| t |
 	t := i.
-	^ t < b1 
+	^ t < b1
 		ifTrue: [ b0 * t * t ]
-		ifFalse: [ 
-			t < b3 ifTrue: [ 
+		ifFalse: [
+			t < b3 ifTrue: [
 				t := t - b2.
 				b0 * t * t + b4 ]
-			ifFalse: [ 
-				t < b6 ifTrue: [ 
+			ifFalse: [
+				t < b6 ifTrue: [
 					t := t - b5.
 					b0 * t * t + b7 ]
-				ifFalse: [ 
+				ifFalse: [
 					t := t - b8.
-					b0 * t * t + b9 ] ] ] 
+					b0 * t * t + b9 ] ] ]
 ]

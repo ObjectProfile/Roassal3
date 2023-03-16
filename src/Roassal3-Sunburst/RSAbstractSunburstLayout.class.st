@@ -19,6 +19,12 @@ Class {
 	#category : #'Roassal3-Sunburst'
 }
 
+{ #category : #testing }
+RSAbstractSunburstLayout class >> isAbstract [
+
+	^ self == RSAbstractSunburstLayout
+]
+
 { #category : #accessing }
 RSAbstractSunburstLayout >> builder [
 	^ builder
@@ -34,7 +40,7 @@ RSAbstractSunburstLayout >> doExecute: shapes [
 	| virtual |
 	shapes isEmpty ifTrue: [ ^  self ].
 	firstNode := true.
-	shapes size = 1 ifTrue: [ 
+	shapes size = 1 ifTrue: [
 		^ self layoutSunburst: shapes first ].
 	virtual := RSPieSlice new.
 	virtual schildren: shapes.
@@ -42,7 +48,7 @@ RSAbstractSunburstLayout >> doExecute: shapes [
 	virtual sparent: nil.
 	virtual depth: 0.
 	self layoutSunburst: virtual.
-	shapes do: [ :shape | shape sparent: nil ].
+	shapes do: [ :shape | shape sparent: nil ]
 ]
 
 { #category : #accessing }
@@ -55,24 +61,24 @@ RSAbstractSunburstLayout >> hasCenter: aBool [
 	hasCenter := aBool
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractSunburstLayout >> initialize [
 	super initialize.
 	self
 		hasCenter: true;
-		radialSpacing: 5.
+		radialSpacing: 5
 ]
 
 { #category : #hook }
 RSAbstractSunburstLayout >> layoutSunburst: shape [
-	self 
+	self
 		setRadius: shape;
-		setChildrenAngles: shape.
+		setChildrenAngles: shape
 ]
 
 { #category : #accessing }
 RSAbstractSunburstLayout >> radialSpacing [
-	^ radialSpacing 
+	^ radialSpacing
 ]
 
 { #category : #accessing }
@@ -100,7 +106,7 @@ RSAbstractSunburstLayout >> setChildrenAngles: shape [
 			alphaAngle: a;
 			betaAngle: b.
 		self layoutSunburst: child.
-		parentAngle := b. ].
+		parentAngle := b. ]
 ]
 
 { #category : #hook }
@@ -111,10 +117,10 @@ RSAbstractSunburstLayout >> setNormalRadius: shape [
 { #category : #hook }
 RSAbstractSunburstLayout >> setRadius: shape [
 	firstNode
-		ifTrue: [ 
-			self hasCenter 
+		ifTrue: [
+			self hasCenter
 				ifTrue: [ self setCenterRadius: shape ].
 			shape betaAngle: 360. ]
 		ifFalse: [ self setNormalRadius: shape ].
-	firstNode := false.
+	firstNode := false
 ]

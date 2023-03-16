@@ -15,28 +15,28 @@ Class {
 }
 
 { #category : #accessing }
-RSBlockSegmentsVisitor >> closeBlock: aBlockClosure [ 
+RSBlockSegmentsVisitor >> closeBlock: aBlockClosure [
 	closeBlock := aBlockClosure
 ]
 
 { #category : #accessing }
-RSBlockSegmentsVisitor >> curveViaAndToBlock: aBlockClosure [ 
+RSBlockSegmentsVisitor >> curveViaAndToBlock: aBlockClosure [
 	curveViaAndToBlock := aBlockClosure
 ]
 
 { #category : #accessing }
-RSBlockSegmentsVisitor >> lineToBlock: aBlockClosure [ 
+RSBlockSegmentsVisitor >> lineToBlock: aBlockClosure [
 	lineToBlock := aBlockClosure
 ]
 
 { #category : #accessing }
-RSBlockSegmentsVisitor >> moveToBlock: aBlockClosure [ 
+RSBlockSegmentsVisitor >> moveToBlock: aBlockClosure [
 	moveToBlock := aBlockClosure
 ]
 
 { #category : #public }
 RSBlockSegmentsVisitor >> simplePoints: aBlock [
-	
+
 	| current first simplePoints |
 	current := first := nil.
 	simplePoints := [ :segment |
@@ -47,9 +47,9 @@ RSBlockSegmentsVisitor >> simplePoints: aBlock [
 		moveToBlock: [ :segment | current := first := segment point ];
 		lineToBlock: simplePoints;
 		curveViaAndToBlock: simplePoints;
-		closeBlock: [:s | 
-			current = first ifFalse: [ 
-				simplePoints value: (AthensLineSegment new point: first) ] ].
+		closeBlock: [:s |
+			current = first ifFalse: [
+				simplePoints value: (AthensLineSegment new point: first) ] ]
 ]
 
 { #category : #visiting }
@@ -70,4 +70,9 @@ RSBlockSegmentsVisitor >> visitLineSegment: aSegment [
 { #category : #visiting }
 RSBlockSegmentsVisitor >> visitMoveSegment: aSegment [
 	moveToBlock value: aSegment
+]
+
+{ #category : #visiting }
+RSBlockSegmentsVisitor >> visitQuadSegment: aSegment [
+	lineToBlock value: aSegment
 ]

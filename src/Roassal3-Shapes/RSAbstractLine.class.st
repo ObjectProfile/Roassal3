@@ -1,36 +1,60 @@
 "
-I represent the abstract lines that have start and end points
+Lines in roassal can be: straight lines and bezier lines. Here there are som subclasses: `RSLine`, `RSArrowedLine`, `RSBezier`, `RSPolyline`, but you can define more types of lines.
 
-For example:
--=-=-=-=-=-=-=-=-=-=-=-=
-c := RSCanvas new.
+## Examples
+```
+line := RSLine new.
+line startPoint: 0@0.
+line endPoint: 100@100.
 
-circle := RSEllipse new color: Color green; size: 10.
-box := RSBox new color: Color red; size: 10.
-c add: circle; add: box.
+bezier := RSBezier new.
+bezier controlPoints: { 0 @ 0. 100@100. 200@0 }.
+```
+More examples:
+```
+RSShapeExamples new example35Lines.
+RSBasicShapeExamples new example12BasicLine.
+RSBasicShapeExamples new example31BorderAttachPointWithOffset.
+```
 
-dragMeLabel := RSLabel new text: 'Drag me'.
-c add: dragMeLabel.
-RSLocation new
-	above; center;
-	stick: dragMeLabel on: box.
+## Canvas
+Lines interact directly with the canvas(`RSCanvas`), when you add it to the canvas you can access all lines with method `lines`.
 
-c add: (RSLine new color: Color veryVeryLightGray; from: 0 @ -1000; to: 0 @ 1000).
-c add: (RSLine new color: Color veryVeryLightGray; from: -1000 @ 0; to: 1000 @ 0).
+There are two groups of lines in roassal, lines with 2 control points and lines with several control points.
 
-box translateBy: 50 @ 50.
-box @ RSDraggable.
+## Conection with nodes
+Lines can be conected to a node, an instance of `RSBoundingShape`.
 
-c add: (RSLine new color: Color blue; from: box; to: circle).
+```
+x := RSBox new.
+y := RSBox new.
+line from: x.
+line to: y.
+```
 
-c
--=-=-=-=-=-=-=-=-=-=-=-=
+Then if you move one box, the line will update its position.
+
+## Attach Points
+In order to calculate the line position related to one connected box, lines use instances of `RSAttachPoint`. An attach point only works with `from:` or `to:` methods.
+```
+line attachPoint: RSVerticalAttach new.
+```
+In the previous script vertical attach point will compute vertical control points for the `from:` and `to:` shapes
+## Markers
+Lines in roassal also have markers, it is a kind of decoration for lines. Check this class `RSTMarkeable`. In a line you can put a decoration for each control point. This decoration is `markerStart:` for the first control point, `markerEnd:` for the last control point. and `markerMiddle:` for middle control points.
+Lines uses `RSMarker`
+```
+shape := RSShapeFactory triangle.
+shape extent: 10@10.
+line markerEnd: shape asMarker.
+```
+
 "
 Class {
 	#name : #RSAbstractLine,
 	#superclass : #RSShape,
-	#traits : 'RSTMarkeable',
-	#classTraits : 'RSTMarkeable classTrait',
+	#traits : 'RSTMarkeable + RSTPositionable',
+	#classTraits : 'RSTMarkeable classTrait + RSTPositionable classTrait',
 	#instVars : [
 		'attachPoint',
 		'from',
@@ -45,9 +69,9 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
-{ #category : #visiting }
+{ #category : #adding }
 RSAbstractLine >> accept: visitor [
-	visitor visitLine: self.
+	visitor visitLine: self
 ]
 
 { #category : #'attach point' }
@@ -56,8 +80,8 @@ RSAbstractLine >> attachPoint [
 ]
 
 { #category : #'attach point' }
-RSAbstractLine >> attachPoint: ap [
-	attachPoint := ap
+RSAbstractLine >> attachPoint: anAttachPoint [
+	attachPoint := anAttachPoint
 ]
 
 { #category : #testing }
@@ -65,17 +89,22 @@ RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #'style-cap' }
+{ #category : #accessing }
+RSAbstractLine >> basicTranslateBy: delta [
+	^ self subclassResponsibility
+]
+
+{ #category : #'style - cap' }
 RSAbstractLine >> capButt [
 	self border capButt
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capRound [
 	self border capRound
 ]
 
-{ #category : #'style-cap' }
+{ #category : #'style - cap' }
 RSAbstractLine >> capSquare [
 	self border capSquare
 ]
@@ -87,14 +116,14 @@ RSAbstractLine >> color [
 
 { #category : #accessing }
 RSAbstractLine >> color: aColor [
-	self strokePaint: aColor
+	self strokePaint: (Color colorFrom: aColor)
 ]
 
 { #category : #accessing }
 RSAbstractLine >> computeEncompassingRectangle [
 	| cp |
 	cp := self controlPoints.
-	^ cp 
+	^ cp
 			ifEmpty: [ 0@0 corner: 0@0 ]
 			ifNotEmpty: [ Rectangle encompassing: cp ]
 ]
@@ -104,15 +133,14 @@ RSAbstractLine >> controlPoints [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
-	
 ]
 
-{ #category : #'style-dashes' }
+{ #category : #'style - dashes' }
 RSAbstractLine >> dashed [
-	self dashArray: #(4).
+	self dashArray: #(4)
 ]
 
 { #category : #accessing }
@@ -128,7 +156,7 @@ RSAbstractLine >> endPoint: aPoint [
 { #category : #public }
 RSAbstractLine >> fmt: aString [
 	"Format for lines a shortcut to define a line styles, or markers
-	
+
 	For markers use
 	'o' - circle
 	'^' - arrow
@@ -138,17 +166,17 @@ RSAbstractLine >> fmt: aString [
 	'+' - plus
 	'd' - diamond
 	'*' - star
-	
+
 	For stroke styles use:
 	'--' dashed line.
 	'-.' dashed line with small line then point
 	'.' dashed line with points
-	
+
 	Example:
 ```
 | canvas |
 canvas := RSCanvas new.
-canvas add: (RSLine new 
+canvas add: (RSLine new
 	startPoint: 0@0;
 	endPoint: 100@0;
 	fmt:'-.*';
@@ -158,11 +186,12 @@ canvas @ RSCanvasController.
 canvas open
 ````
 	 "
-	(RSShapeFactory shapeFromString: aString) 
-		ifNotNil: [ :shape |self shape marker: (shape size: self border width * 4) ].
+	(RSShapeFactory shapeFromString: aString)
+		ifNotNil: [ :shape |
+			self shape marker: ((shape size: self border width * 4) color: self shape color; yourself).
+			 ].
 	(RSStrokeStyle fromString: aString)
 		ifNotNil: [ :style | self shape border style: style ]
-	
 ]
 
 { #category : #accessing }
@@ -187,13 +216,32 @@ RSAbstractLine >> includesPoint: aPoint [
 ]
 
 { #category : #initialization }
-RSAbstractLine >> initialize [ 
+RSAbstractLine >> initialize [
 	super initialize.
 	self
 		withBorder;
 		noPaint;
-		withCenteredAttachPoint.
-	
+		withCenteredAttachPoint
+]
+
+{ #category : #testing }
+RSAbstractLine >> intersects: aRectangle [
+	| rect res globalMatrix |
+	self isInACanvas ifFalse: [ ^ false ].
+	globalMatrix := self parent globalMatrix.
+	rect := self
+		computeEncompassingRectangleFor: self encompassingRectangle
+		matrix: globalMatrix.
+	res := rect intersects: aRectangle.
+	res ifTrue: [ ^ true ].
+	self hasMarkers ifFalse: [ ^ false ].
+	self markerShapesInPositionDo: [ :m |
+		rect := self
+			computeEncompassingRectangleFor: m shape encompassingRectangle
+			matrix: globalMatrix.
+		(rect intersects: aRectangle) ifTrue: [ ^ true ].
+		 ].
+	^ false
 ]
 
 { #category : #testing }
@@ -206,34 +254,54 @@ RSAbstractLine >> isEdge [
 	^ true
 ]
 
-{ #category : #'style-join' }
+{ #category : #testing }
+RSAbstractLine >> isLine [
+	^ true
+]
+
+{ #category : #'style - join' }
 RSAbstractLine >> joinBevel [
 	self border joinBevel
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinMiter [
 	self border joinMiter
 ]
 
-{ #category : #'style-join' }
+{ #category : #'style - join' }
 RSAbstractLine >> joinRound [
 	self border joinRound
 ]
 
 { #category : #'event handling' }
 RSAbstractLine >> notifyExtentChanged [
-	self announce: [ RSExtentChangedEvent new 
+	self announce: [ RSExtentChangedEvent new
 		shape: self;
 		oldExtent: nil;
 		newExtent: self controlPoints first - self controlPoints last ]
+]
+
+{ #category : #accessing }
+RSAbstractLine >> position [
+	^ self encompassingRectangle floatCenter
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers [
+	^ markers
+]
+
+{ #category : #'accessing - markers' }
+RSAbstractLine >> privateMarkers: array [
+	markers := array
 ]
 
 { #category : #adding }
 RSAbstractLine >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeEdge: self.
-	self 
+	self
 		removeFromParent: to;
 		removeFromParent: from.
 	super remove
@@ -243,14 +311,13 @@ RSAbstractLine >> remove [
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
 	aShape isPoint ifTrue: [ ^ self ].
-	aShape connectedEdges remove: self ifAbsent: [  ].
-
+	aShape connectedLines remove: self ifAbsent: [  ]
 ]
 
 { #category : #adding }
 RSAbstractLine >> renderOn: aCanvas [
 	aCanvas addEdge: self.
-	self update.
+	self update
 ]
 
 { #category : #path }
@@ -264,14 +331,13 @@ RSAbstractLine >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath.
 	self hasMarkers ifFalse: [ ^ self ].
-	self markersDo: [ :mark | mark shape sessionChanged ].
-	
+	self markersDo: [ :mark | mark shape sessionChanged ]
 ]
 
 { #category : #private }
 RSAbstractLine >> setAnchor: ref shape: anObject [
-	ref isNotNil ifTrue: [ ref removeConnectedEdge: self ].
-	anObject isPoint ifFalse: [ anObject addConnectedEdge: self ].
+	ref ifNotNil: [ ref removeConnectedLine: self ].
+	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
 
@@ -298,11 +364,11 @@ RSAbstractLine >> strokePaint [
 { #category : #accessing }
 RSAbstractLine >> strokePaint: aPaint [
 	self border paint: aPaint.
-	self markersDo: [:m | m shape paint: aPaint ].
+	self markersDo: [:m | m shape paint: aPaint ]
 ]
 
 { #category : #accessing }
-RSAbstractLine >> to [ 	
+RSAbstractLine >> to [
 	^ to
 ]
 
@@ -319,25 +385,25 @@ RSAbstractLine >> update [
 
 { #category : #accessing }
 RSAbstractLine >> width: aNumber [
-	self border width: aNumber.
+	self border width: aNumber
 ]
 
 { #category : #'attach point' }
 RSAbstractLine >> withBorderAttachPoint [
-	self attachPoint: RSBorderAttachPoint new.
+	self attachPoint: RSBorderAttachPoint new
 ]
 
 { #category : #'attach point' }
 RSAbstractLine >> withCenteredAttachPoint [
-	self attachPoint: RSCenteredAttachPoint new.
+	self attachPoint: RSCenteredAttachPoint new
 ]
 
 { #category : #'attach point' }
 RSAbstractLine >> withHorizontalAttachPoint [
-	self attachPoint: RSHorizontalAttachPoint new.
+	self attachPoint: RSHorizontalAttachPoint new
 ]
 
 { #category : #'attach point' }
 RSAbstractLine >> withVerticalAttachPoint [
-	self attachPoint: RSVerticalAttachPoint new.
+	self attachPoint: RSVerticalAttachPoint new
 ]

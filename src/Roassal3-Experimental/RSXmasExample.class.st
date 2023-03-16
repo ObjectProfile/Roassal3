@@ -16,12 +16,12 @@ RSXmasExample >> background [
 	extent := self currentWorld extent * 0.79.
 	period := 0.001.
 	length := 700.
-	v clearBackground: false.
+	v shouldClearBackground: false.
 	v color: Color black.
 	px := 0.
 	perlin := NSPerlinNoise3 new octaves: 3.
 
-	v addAll: ((1 to: extent y /6) collect: [:n | 
+	v addAll: ((1 to: extent y /6) collect: [:n |
 		RSPolyline new
 			width: 0.5
 		] ).
@@ -34,11 +34,11 @@ RSXmasExample >> background [
 				y := extent y * r next.
 				n := perlin noise: x * period and: y * period.
 				e color: ((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
-				
+
 				points := OrderedCollection new.
 				points add: x@y.
 				m := 0.
-				[ m < length and:  [y >= 0 and: [ y <= extent y ] ]] whileTrue: [ 
+				[ m < length and:  [y >= 0 and: [ y <= extent y ] ]] whileTrue: [
 					n := perlin noise: x * period and: y * period.
 					x := x + (n * 15) cos.
 					y := y + (n * 15) sin.
@@ -50,8 +50,8 @@ RSXmasExample >> background [
 			px := px + 10
 			].
 
-	v when: RSExtentChangedEvent do: [ v camera 
-		zoomToFit: v extent 
+	v when: RSExtentChangedEvent do: [ v camera
+		zoomToFit: v extent
 		rectangle: (Rectangle floatCenter:  extent / 2 extent: extent) ].
 
 	^ v
@@ -204,8 +204,8 @@ RSXmasExample >> myIcon [
 			domain: #(0 0.5 1);
 			range: { 0@0. 0@ -1500. 0@0});
 		on: c set: #position:.
-	
-	
+
+
 	^ canvas
 ]
 
@@ -227,13 +227,12 @@ RSXmasExample >> run [
 	background extent: world extent * 0.8.
 	tree extent: 500@500.
 	tree position: 0@(background extent y - 500).
-	
+
 	icon extent: 500@400.
 	icon position: (background extent x - 500)@0.
 	title extent: 600@ 400.
 	title position: (background extent / 2) - (title extent / 2).
-	(full openInWindowLabeled: '2020') position: 100 asPoint.
-	
+	(full openInWindowLabeled: '2020') position: 100 asPoint
 ]
 
 { #category : #accessing }
@@ -242,7 +241,7 @@ RSXmasExample >> title [
 	| canvas title t2020 |
 	canvas := RSCanvas new.
 	canvas color: Color transparent.
-	
+
 	title := RSLabel new
 		text: 'Happy New Year';
 		"fontName: 'Brushcrazy DEMO';"
@@ -271,8 +270,8 @@ RSXmasExample >> title [
 				translation: 0@80;
 				scaleBy: t.
 			canvas signalUpdate ].
-	
-	
+
+
 	^ canvas
 ]
 

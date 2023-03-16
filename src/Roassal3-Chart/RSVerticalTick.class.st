@@ -28,7 +28,7 @@ Class {
 RSVerticalTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := super createNiceLabelIn: aChart.
-	aChart 
+	aChart
 		minValueY: nice min;
 		maxValueY: nice max.
 	^ nice
@@ -36,17 +36,24 @@ RSVerticalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSVerticalTick >> createTickLineFor: aNumber [
-	| scaledNumber |
+	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.
+	zeroX := chart spineDecoration zeroPoint x.
+
 	^ self shape copy
-		startPoint: 0 @ scaledNumber;
-		endPoint: self configuration tickSize negated @ scaledNumber;
+		startPoint: zeroX @ scaledNumber;
+		endPoint: zeroX - self configuration tickSize @ scaledNumber;
 		yourself
 ]
 
 { #category : #'accessing - defaults' }
 RSVerticalTick >> defaultLabelLocation [
 	^ RSLocation new outer; left; offset: -2@0
+]
+
+{ #category : #testing }
+RSVerticalTick >> isVerticalTick [
+	^ true
 ]
 
 { #category : #accessing }

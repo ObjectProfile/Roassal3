@@ -10,20 +10,17 @@ Class {
 { #category : #running }
 RSAlignmentTest >> setUp [
 	super setUp.
-	align := RSAlignment new.
+	align := RSAlignment new
 ]
 
 { #category : #tests }
-RSAlignmentTest >> testCenter [ 
+RSAlignmentTest >> testCenter [
 	| es |
 	es := (1 to: 5) collect: [ :v | RSBox new size: 10 ] as: RSGroup.
 	RSHorizontalLineLayout on: es.
 	align shapes: es.
 	self assert: align middle equals: align.
-	self assert: es encompassingRectangle equals: ((0.0@0.0) corner: (90.0@10.0)).
-	"	
-	RSCanvas new addAll: es; yourself.
-	"
+	self assert: es encompassingRectangle equals: ((0.0@0.0) corner: (90.0@10.0))
 ]
 
 { #category : #tests }
@@ -37,9 +34,6 @@ RSAlignmentTest >> testFromBottom [
 	self assert: align bottomMostShape equals: es second.
 	align bottom.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
-	"	
-	RSView new addAll: es; yourself.
-	"
 ]
 
 { #category : #tests }
@@ -53,9 +47,6 @@ RSAlignmentTest >> testFromLeft [
 	self assert: align leftMostShape equals: es second.
 	align left.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
-"	
-	RSView new addAll: es; inspect.
-	"
 ]
 
 { #category : #tests }
@@ -68,9 +59,6 @@ RSAlignmentTest >> testFromLeftWithAFixShape [
 	align fixedShape: es first.
 	align left.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0)
-"	
-	RSView new addAll: es; inspect.
-	"
 ]
 
 { #category : #tests }
@@ -89,9 +77,6 @@ RSAlignmentTest >> testFromLeftWithFixedShape [
 	self assert: align leftMostShape equals: es second.
 	align left.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
-"	
-	RSView new addAll: es; inspect.
-	"
 ]
 
 { #category : #tests }
@@ -117,7 +102,7 @@ RSAlignmentTest >> testFromTop [
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align topMostShape equals: es second.
 	align top.
-	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(-50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0).
+	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(-50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0)
 ]
 
 { #category : #tests }
@@ -128,16 +113,11 @@ RSAlignmentTest >> testFromTopWithAFixShape [
 	RSHorizontalLineLayout on: es.
 	es second translateBy: 0 @ -50.
 	align fixedShape: es third.
-	
+
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align topMostShape equals: es third.
 	align top.
-	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
-"
-For debugging only:
-
-RSCanvas new addAll: es; yourself.
-"
+	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0)
 ]
 
 { #category : #tests }
@@ -146,7 +126,7 @@ RSAlignmentTest >> testHasElement [
 	align shapes: (Array with: RSBox new).
 	self assert: align hasShape.
 	align shapes: #().
-	self deny: align hasShape.
+	self deny: align hasShape
 ]
 
 { #category : #tests }

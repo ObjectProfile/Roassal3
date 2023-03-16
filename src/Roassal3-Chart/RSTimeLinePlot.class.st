@@ -9,7 +9,7 @@ Class {
 		'bars',
 		'barSize'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
@@ -30,7 +30,7 @@ RSTimeLinePlot >> barSize: aBarWidth [
 ]
 
 { #category : #accessing }
-RSTimeLinePlot >> bars [ 
+RSTimeLinePlot >> bars [
 	^ bars
 ]
 
@@ -39,11 +39,16 @@ RSTimeLinePlot >> beforeRenderingIn: aChart [
 	| barScale |
 	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	
-	barScale := NSOrdinalScale new 
+
+	barScale := NSOrdinalScale new
 		domain: (aChart minValueY to: aChart maxValueY);
 		rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
+]
+
+{ #category : #accessing }
+RSTimeLinePlot >> createdShapes [
+	^ bars
 ]
 
 { #category : #initialization }
@@ -53,9 +58,15 @@ RSTimeLinePlot >> defaultShape [
 
 { #category : #accessing }
 RSTimeLinePlot >> entries: aCollection at: aNumber [
-	self 
+	"example:
+	self entries: { 0 2 4 8}.
+	"
+	self
+		assert: aCollection size even
+		description: 'You only can use collection of even sizes'.
+	self
 		x: aCollection
-		y: (Array new: aCollection size withAll: aNumber).
+		y: (Array new: aCollection size withAll: aNumber)
 ]
 
 { #category : #accessing }
@@ -71,13 +82,13 @@ RSTimeLinePlot >> gapRatio: anObject [
 { #category : #initialization }
 RSTimeLinePlot >> initialize [
 	super initialize.
-	self gapRatio: 0.1.
+	self gapRatio: 0.1
 ]
 
 { #category : #rendering }
 RSTimeLinePlot >> renderIn: canvas [
 	bars := RSGroup new.
-	1 to: xValues size by: 2 do: [ :index |	
+	1 to: xValues size by: 2 do: [ :index |
 		| x1 y1 x2 y2 origin corner rectangle sizeOffset |
 		x1 := xValues at: index.
 		y1 := yValues at: index.
@@ -95,5 +106,5 @@ RSTimeLinePlot >> renderIn: canvas [
 			fromRectangle: rectangle;
 			yourself)
 		].
-	canvas addAll: bars. 
+	canvas addAll: bars.
 ]

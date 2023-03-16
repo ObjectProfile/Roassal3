@@ -13,12 +13,12 @@ Class {
 { #category : #actions }
 RSSequentialAnimation >> continue [
 	super continue.
-	self currentDo: #continue.
+	self currentDo: #continue
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSSequentialAnimation >> current [
-	^ animations at: currentIndex ifAbsent: [ nil ].
+	^ animations at: currentIndex ifAbsent: [ nil ]
 ]
 
 { #category : #actions }
@@ -26,10 +26,10 @@ RSSequentialAnimation >> currentDo: block [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].
-	block value: current.
+	block value: current
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSSequentialAnimation >> currentHasCompleted [
 	| current |
 	current := self current.
@@ -46,33 +46,33 @@ RSSequentialAnimation >> duration [
 { #category : #actions }
 RSSequentialAnimation >> pause [
 	super pause.
-	self currentDo: #pause.
+	self currentDo: #pause
 ]
 
 { #category : #actions }
 RSSequentialAnimation >> start [
 	super start.
-	currentIndex := 1.
+	currentIndex := 1
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSSequentialAnimation >> step [
 	self startStep.
 	self stepCurrent.
-	self currentHasCompleted ifTrue: [ 
+	self currentHasCompleted ifTrue: [
 		self current remove.
 		currentIndex := currentIndex + 1. ].
-	currentIndex > animations size ifTrue: [ 
+	currentIndex > animations size ifTrue: [
 		currentIndex := 1.
 		self loopDone ].
-	self updateHasCompleted.
+	self updateHasCompleted
 ]
 
-{ #category : #refresing }
+{ #category : #refreshing }
 RSSequentialAnimation >> stepCurrent [
 	| current |
 	current := self current.
 	current ifNil: [ ^ self ].
 	self startIfNessesary: current.
-	current refresh.
+	current refresh
 ]

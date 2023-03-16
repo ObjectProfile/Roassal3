@@ -29,7 +29,7 @@ RSColorPalette class >> diverging [
 	^ RSDivergingColorPalette new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSColorPalette class >> paletteName [
 	^ self subclassResponsibility
 ]
@@ -47,7 +47,7 @@ RSColorPalette class >> sequential [
 { #category : #'instance creation' }
 RSColorPalette >> fromTriplet: array [
 	^ NSScale ordinal
-		range: (array collect: [ :arr | 
+		range: (array collect: [ :arr |
 			Color
 				r: arr first
 				g: arr second

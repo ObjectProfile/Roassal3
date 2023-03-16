@@ -21,10 +21,11 @@ c
 "
 Class {
 	#name : #RSAbstractMarkerDecoration,
-	#superclass : #RSChartDecoration,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
 		'markerColor',
-		'getRelevantValueBlock'
+		'getRelevantValueBlock',
+		'lines'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
@@ -40,6 +41,11 @@ RSAbstractMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+RSAbstractMarkerDecoration >> createdShapes [
+	^ lines
+]
+
 { #category : #rendering }
 RSAbstractMarkerDecoration >> defaultDashStyle [
 	^ #(2 2 2)
@@ -50,6 +56,11 @@ RSAbstractMarkerDecoration >> defaultMarkerColor [
 	^ Color red
 ]
 
+{ #category : #initialization }
+RSAbstractMarkerDecoration >> defaultShape [
+	^ RSLine new
+]
+
 { #category : #rendering }
 RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
 	^ getRelevantValueBlock rsValue: p
@@ -58,10 +69,15 @@ RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
 { #category : #initialization }
 RSAbstractMarkerDecoration >> initialize [
 	super initialize.
-	
+
 	"Per default, mark the max value"
 	self max.
 	markerColor := self defaultMarkerColor
+]
+
+{ #category : #accessing }
+RSAbstractMarkerDecoration >> lines [
+	^ lines
 ]
 
 { #category : #'public - configuration' }
@@ -76,17 +92,14 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-	| line |
-	
-	chart plots
-		do: [ :p | 
-			line := self createMarkerLineFromPlot: p.
-			line
-				dashArray: self defaultDashStyle;
-				color: markerColor;
-				yourself.
-			self addShape: line ]
-
+	lines := chart plots collect: [ :p | | line |
+		line := self createMarkerLineFromPlot: p.
+		line
+			dashArray: self defaultDashStyle;
+			color: markerColor.
+		self addShape: line.
+		line
+	] as: RSGroup
 ]
 
 { #category : #'public - configuration' }

@@ -8,6 +8,18 @@ m normalizeFontSize: #numberOfMethods.
 m layout force.
 m  
 ```
+
+Another example with inner boxes:
+```
+m := RSMondrian new.
+m shape box labeled.
+m nodes: #(1 2 3 4) forEach: [ :nb | 
+	m shape box labeled; size: 20; color: Color blue.
+	m nodes: #(10 20) forEach: [ :nb2 | 
+		m nodes: #(100 200) ] ].
+m line connectTo: [ :nb | nb + 1 ].
+m
+```
 "
 Class {
 	#name : #RSMondrian,
@@ -43,14 +55,13 @@ RSMondrian >> build [
 	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
 	self applyLayout.
-	
+
 	interaction := RSHighlightable new.
 	interaction highlightBorder: (RSBorder new color: Color black; width: 2).
 	interaction withOutgoingEdges.
 	self canvas nodes @ interaction.
-	
-	self canvas pushBackEdges.
-		 
+
+	self canvas pushBackEdges
 ]
 
 { #category : #accessing }
@@ -69,16 +80,7 @@ RSMondrian >> defaultLineColor [
 	^ Color gray translucent
 ]
 
-{ #category : #visualization }
-RSMondrian >> gtInspectorViewIn: composite [
-
-	<gtInspectorPresentationOrder: -10>
-	composite roassal3
-		title: [ 'Canvas' ];
-		initializeCanvas: [ self build; canvas ]
-]
-
-{ #category : #'building - graph' }
+{ #category : #initialization }
 RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.
@@ -95,12 +97,11 @@ RSMondrian >> inspectorVisualization [
 	^ SpRoassal3InspectorPresenter new
 		canvas: self canvas;
 		yourself
-
 ]
 
 { #category : #visualization }
 RSMondrian >> inspectorVisualizationContext: aContext [
-  
+
   aContext withoutEvaluator
 ]
 
@@ -111,6 +112,11 @@ RSMondrian >> layout [
 
 { #category : #'building - graph' }
 RSMondrian >> line [
+	^ self lines
+]
+
+{ #category : #'building - graph' }
+RSMondrian >> lines [
 	lineBuilder := RSLineBuilder line.
 	lineBuilder canvas: canvas.
 	lineBuilder shapes: (canvas nodes select: #hasModel).
@@ -121,33 +127,33 @@ RSMondrian >> line [
 { #category : #'building - graph' }
 RSMondrian >> nodes: objects [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
-	
+
 	For example:
 	b := RTMondrian new.
 	b nodes: (1 to: 10).
 	b layout force.
 	b open
-	
-	
+
+
 	Another example:
 	b := RTMondrian new.
 	b shape box size: #numberOfMethods.
 	b nodes: Collection withAllSubclasses.
 	b layout flow.
 	b open
-	
+
 	Another example:
 	b := RTMondrian new.
 	b shape box size: #numberOfMethods.
 	b nodes: Collection withAllSubclasses.
 	b edges connectFrom: #superclass.
-	b normalizer 
+	b normalizer
 		normalizeSize: #numberOfMethods;
 		normalizeColor: #numberOfMethods.
 	b layout cluster.
 	b open
 	"
-	
+
 	| nodes |
 	self assert: [ objects isCollection ] description: 'You need to provide a collection to #nodes:'.
 	nodes := self shapesOn: objects.
@@ -164,15 +170,15 @@ RSMondrian >> nodes: objects [
 { #category : #'building - graph' }
 RSMondrian >> nodes: objects forEach: oneArgBlock [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
-	
+
 	For example:
 ```
 b := RSMondrian new.
 b nodes: (1 to: 10).
 b layout force.
 b open
-```	
-	
+```
+
 	Another example:
 ```
 b := RSMondrian new.
@@ -181,7 +187,7 @@ b nodes: Collection withAllSubclasses.
 b layout flow.
 b open
 ```
-	
+
 	Another example:
 ```
 b := RSMondrian new.
@@ -194,26 +200,35 @@ b layout cluster.
 b open
 ```
 	"
-	
-	| nodes compo old previousShapeBuilder oldNodesToLayout |
+
+	| nodes compo old previousShapeBuilder oldNodesToLayout lbl |
 	nodes := RSGroup new.
-	objects do: [ : obj |
+	objects do: [ :obj |
 		previousShapeBuilder := shapeBuilder.
-		
+
 		compo := RSComposite new.
-		compo color: shapeBuilder color.
 		compo model: obj.
+		shapeBuilder configureNotCompositeShape: compo model: obj.
+		"compo := shapeBuilder configureShape: compo."
+
 		old := self canvas.
 		oldNodesToLayout := nodesForLayout.
 		nodesForLayout := RSGroup new.
 		self canvas: compo.
-		
+
 		depth := depth + 1.
-		
+
 		shapeBuilder := RSShapeBuilder new.
 		oneArgBlock rsValue: obj.
+
 		nodes add: compo.
 		self build.
+
+		previousShapeBuilder doesUseLabel ifTrue: [
+			lbl := RSLabel new color: Color black; text: (previousShapeBuilder labelBlock rsValue: obj).
+			RSLocation move: lbl above: compo children.
+			compo add: lbl ].
+
 		nodesForLayout := oldNodesToLayout.
 		compo adjustToChildren.
 		compo padding: 5.
@@ -224,7 +239,7 @@ b open
 	].
 	canvas addAll: nodes.
 	nodes @ RSPopup.
-	depth = 0 ifTrue: [ nodes @ RSDraggable ].
+	depth = 0 ifTrue: [ nodes addInteraction: (RSDraggable new noValidateChildrenEvents) ].
 	nodesForLayout addAll: nodes.
 	^ nodes
 ]
@@ -253,9 +268,27 @@ RSMondrian >> normalizeFontSize: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeFontSize: oneArgBlock from: fromNumber to: toNumber [
+	RSNormalizer fontSize
+		shapes: self canvas nodes;
+		from: fromNumber;
+		to: toNumber;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeHeight: oneArgBlock [
 	RSNormalizer height
 		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeHeight: oneArgBlock from: fromValue to: toValue [
+	RSNormalizer height
+		shapes: self canvas nodes;
+		from: fromValue;
+		to: toValue;
 		normalize: oneArgBlock
 ]
 
@@ -267,9 +300,27 @@ RSMondrian >> normalizeSize: oneArgBlock [
 ]
 
 { #category : #'public - normalizer' }
+RSMondrian >> normalizeSize: oneArgBlock from: aSmallSize to: aLargeSize [
+	RSNormalizer size
+		shapes: self canvas nodes;
+		from: aSmallSize;
+		to: aLargeSize;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
 RSMondrian >> normalizeWidth: oneArgBlock [
 	RSNormalizer width
 		shapes: self canvas nodes;
+		normalize: oneArgBlock
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> normalizeWidth: oneArgBlock from: fromValue to: toValue [
+	RSNormalizer width
+		shapes: self canvas nodes;
+		from: fromValue;
+		to: toValue;
 		normalize: oneArgBlock
 ]
 
@@ -297,6 +348,14 @@ RSMondrian >> openWithTitle: aTitle [
 	"Open the visualization"
 	self build.
 	^ canvas openWithTitle: aTitle
+]
+
+{ #category : #'public - normalizer' }
+RSMondrian >> ordinalColor: oneArgBlock [
+	| numberOfDifferentColors scale |
+	numberOfDifferentColors := (self canvas nodes collect: [ :aShape | oneArgBlock rsValue: aShape model ] as: Set) size.
+	scale := NSScale ordinalColored: numberOfDifferentColors.
+	self canvas nodes do: [ :aShape | aShape color: (scale scale: (oneArgBlock rsValue: aShape model)) ]
 ]
 
 { #category : #'building - graph' }

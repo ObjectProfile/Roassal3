@@ -11,7 +11,7 @@ Symmetric sinusoidal easing; scales sinIn for t in [0, 0.5] and sinOut for t in 
 "
 Class {
 	#name : #RSSinInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolator,
 	#category : #'Roassal3-Animation-Easing'
 }
 
@@ -22,7 +22,7 @@ RSSinInterpolator >> interpolateIn: t [
 
 { #category : #interpolation }
 RSSinInterpolator >> interpolateInOut: t [
-	^ (1 - (Float pi * t) cos ) / 2.
+	^ (1 - (Float pi * t) cos ) / 2
 ]
 
 { #category : #interpolation }

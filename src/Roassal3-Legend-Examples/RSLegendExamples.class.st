@@ -8,7 +8,35 @@ Class {
 }
 
 { #category : #examples }
-RSLegendExamples >> example01Basic [ 
+RSLegendExamples >> canvasExample [
+	| canvas classes |
+	canvas := RSCanvas new.
+	classes := RSShape withAllSubclasses collect: [ :cls |
+		RSBox new
+			draggable;
+			popup;
+			model: cls;
+			height: cls numberOfMethods;
+			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
+	canvas addAll: classes.
+	RSLineBuilder line
+		withVerticalAttachPoint;
+		width: 0.5;
+		canvas: canvas;
+		capRound;
+		shapes: classes;
+		connectFrom: #superclass.
+	RSNormalizer color
+		from: Color black;
+		to: Color red;
+		shapes: classes;
+		normalize: #numberOfMethods.
+	RSTreeLayout on: classes.
+	^ canvas
+]
+
+{ #category : #examples }
+RSLegendExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| b |
 	b := RSLegend new.
@@ -28,13 +56,13 @@ RSLegendExamples >> example02Border [
 	b := RSLegend new.
 	b text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
 	b text: 'Blue links = dependencies; layout = force based layout on the inheritance links'.
-	b legendDo: [ :l | 
-		l 
+	b legendDo: [ :l |
+		l
 			withBorder;
 			padding: 50 ].
 	b build.
 	b canvas @ RSCanvasController.
-	^ b canvas.
+	^ b canvas
 ]
 
 { #category : #examples }
@@ -42,15 +70,15 @@ RSLegendExamples >> example03Vertical [
 	<script: 'self new example03Vertical open'>
 	| b |
 	b := RSLegend new.
-	b 
+	b
 		title: 'Mid Heros';
 		text: 'Invoker';
 		text: 'Shadow Fiend';
 		text: 'Tinker';
 		text: 'Meepo'.
 	b layout vertical gapSize: 20.
-	b legendDo: [ :l | 
-		l 
+	b legendDo: [ :l |
+		l
 			withBorder;
 			padding: (Margin left: 50 right: 10 top: 10  bottom: 50) ].
 	b build.
@@ -63,12 +91,12 @@ RSLegendExamples >> example04Horizontal [
 	<script: 'self new example04Horizontal open'>
 	| b |
 	b := RSLegend new.
-	b 
+	b
 		text: 'Invoker';
 		text: 'Shadow Fiend';
 		text: 'Tinker';
 		text: 'Meepo'.
-	b legendDo: [ :l | 
+	b legendDo: [ :l |
 		l
 			withBorder;
 			padding: 10 ].
@@ -84,9 +112,9 @@ RSLegendExamples >> example05Colors [
 	<script: 'self new example05Colors open'>
 	| b color |
 	b := RSLegend new.
-	
+
 	color := NSScale category20.
-	b 
+	b
 		title: 'Mid Heros';
 		text: 'Invoker' withCircleColor: color;
 		text: 'Shadow Fiend' withCircleColor: color;
@@ -108,12 +136,12 @@ RSLegendExamples >> example06BoxColors [
 	b := RSLegend new.
 
 	color := NSScale category20.
-	b 
+	b
 		text: 'Invoker' withBoxColor: color;
 		text: 'Shadow Fiend' withBoxColor: color;
 		text: 'Tinker' withBoxColor: color;
 		text: 'Meepo' withBoxColor: color.
-	b legendDo: [ :l | 
+	b legendDo: [ :l |
 		l
 			withBorder;
 			padding: 20 ].
@@ -142,7 +170,7 @@ RSLegendExamples >> example08Polygons [
 	| b |
 	b := RSLegend new.
 	b title: 'Polygons'.
-	#(diamond triangle star pentagon octagon) do: [ :selector | 
+	#(diamond triangle star pentagon octagon) do: [ :selector |
 		b text: selector withShape: ((RSShapeFactory perform: selector) size: 15) ].
 	b build.
 	b canvas @ RSCanvasController.
@@ -158,8 +186,8 @@ RSLegendExamples >> example09Lines [
 	#(diamond triangle star pentagon octagon arrow) do: [ :selector |
 		| line marker |
 		marker := (RSShapeFactory perform: selector) size: 10.
-		line := RSLine new markerEnd: marker; 
-			startPoint: 0@0; 
+		line := RSLine new markerEnd: marker;
+			startPoint: 0@0;
 			endPoint: 20@0;
 			yourself.
 		b text: selector withShape: line.
@@ -174,7 +202,7 @@ RSLegendExamples >> example10Location [
 	<script: 'self new example10Location open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
 	canvas := RSCanvas new.
-	classes := RSShape withAllSubclasses collect: [ :cls | 
+	classes := RSShape withAllSubclasses collect: [ :cls |
 		RSBox new
 			draggable;
 			popup;
@@ -198,11 +226,11 @@ RSLegendExamples >> example10Location [
 	b container: canvas.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.
-	b 
-		polymetricWidth: 'number of methods' 
+	b
+		polymetricWidth: 'number of methods'
 			height: 'lines of code'
 			box: 'a Pharo class'.
-	b legendDo: [ :s | 
+	b legendDo: [ :s |
 		s
 			draggable;
 			border:(RSBorder new
@@ -213,60 +241,103 @@ RSLegendExamples >> example10Location [
 	b location right middle.
 	b build.
 	canvas @ RSCanvasController.
-	^ canvas.
-	
-
-
-
+	^ canvas
 ]
 
 { #category : #examples }
 RSLegendExamples >> example11OnDemand [
-	<script: 'self new example11OnDemand open setLabel: ''TSShape withAllSubclasses'''>
-	| canvas classes b |
-	canvas := RSCanvas new.
-	classes := RSShape withAllSubclasses collect: [ :cls | 
-		RSBox new
-			draggable;
-			popup;
-			model: cls;
-			height: cls numberOfMethods;
-			width: (cls instVarNames size + 1) * 5 ] as: RSGroup.
-	canvas addAll: classes.
-	RSLineBuilder line
-		withVerticalAttachPoint;
-		width: 0.1;
-		canvas: canvas;
-		shapes: classes;
-		connectFrom: #superclass.
-	RSNormalizer color
-		from: Color black;
-		to: Color red;
-		shapes: classes;
-		normalize: #numberOfMethods.
-	RSTreeLayout on: classes.
+	<script: 'self new example11OnDemand open setLabel: ''RSShape withAllSubclasses'''>
+	| b canvas |
+	canvas := self canvasExample.
 	b := RSLegend new.
 	b container: canvas.
 	b title: 'System complexity view'.
 	b text: 'Number of lines of code' withFadingRamp: { 0->'black'. 1->'red'}.
-	b 
-		polymetricWidth: 'number of methods' 
-			height: 'lines of code'
-			box: 'a Pharo class'.
-	b legendDo: [ :s | 
+	b
+		polymetricWidth: 'Number of attributes'
+			height: 'Number of methods'
+			box: 'a Roassal class'.
+	b legendDo: [ :s |
 		s
 			draggable;
 			border:(RSBorder new
 				color: Color red;
 				dashArray: #(4));
-			scaleBy: 0.5;
+			scaleBy: 0.75;
 			padding: 15 ].
 	b location right middle.
-	b onDemand; build.
+	b onDemand: 'Legend'; build.
 	canvas @ RSCanvasController.
-	^ canvas.
-	
+	^ canvas
+]
 
+{ #category : #examples }
+RSLegendExamples >> example12OnPopup [
+	<script: 'self new example12OnPopup open'>
+	| canvas shapes interaction popup |
+	canvas := RSCanvas new.
+	shapes := GoferOperation withAllSubclasses collect: [ :cls |
+		| boxes |
+		boxes := RSBox models: cls methods forEach: [:box :met |
+			box size: met linesOfCode*0.5+2; color: Color lightGray
+			].
+		RSGridLayout on: boxes.
+		(boxes asShapeFor: cls)
+			color: Color white;
+			withBorder;
+			padding: 5.
+		] as: RSGroup.
+	RSLineBuilder orthoVertical
+		withVerticalAttachPoint;
+		canvas: canvas;
+		shapes: shapes;
+		connectFrom: #superclass.
+	interaction := RSLabeled new.
+	interaction shapeBuilder labelShape fontSize: 5.
+	popup := RSPopup new.
+	popup shapeBuilder: [ :cls |"move this content to a class method"
+		| composite lb colors |
+		composite := RSComposite new.
+		colors := NSScale category20c.
+		lb := RSLegend new.
+		lb container: composite.
+		lb title: cls name.
+		cls methods
+			do: [ :met | lb text: met selector withCircleColor: (colors scale: met selector) ].
+		lb build.
+		composite adjustToChildren.
+		composite
+			color: Color white;
+			withBorder;
+			padding: 5;
+			yourself.
+		 ].
+	shapes @ interaction; @ popup; @ RSDraggable.
+	RSTreeLayout on: shapes.
+	canvas addAll: shapes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
 
-
+{ #category : #examples }
+RSLegendExamples >> example13LinesOfCode [
+	<script: 'self new example13LinesOfCode open'>
+	| canvas |
+	canvas := self canvasExample.
+	RSLegend new
+		container: canvas;
+		boxWidthText: 'Instance variables';
+		boxHeightText: 'Number of methods';
+		legendDo: [ :s |
+			s
+				color: (Color white alpha: 0.85);
+				border:(RSBorder new
+					color: Color gray;
+					dashArray: #(1));
+				scaleBy: 1.5;
+				padding: 10 ];
+		beFixedWithTitle: 'Legend';
+		build.
+	canvas @ RSCanvasController simple.
+	^ canvas
 ]

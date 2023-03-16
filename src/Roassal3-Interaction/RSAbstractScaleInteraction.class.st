@@ -11,12 +11,12 @@ Class {
 	#category : #'Roassal3-Interaction-Extra'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSAbstractScaleInteraction >> initialize [
 	super initialize.
-	self 
+	self
 		minScale: 0.1;
-		maxScale: 3.
+		maxScale: 3
 ]
 
 { #category : #accessing }
@@ -43,5 +43,5 @@ RSAbstractScaleInteraction >> minScale: aNumber [
 RSAbstractScaleInteraction >> scaleFor: anEvent [
 	| delta |
 	delta := 1 / anEvent newScale.
-	^ (maxScale min: delta ) max: minScale.
+	^ (maxScale min: delta ) max: minScale
 ]

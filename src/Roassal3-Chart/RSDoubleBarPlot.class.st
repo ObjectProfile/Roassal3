@@ -10,7 +10,7 @@ Class {
 		'x2Scale',
 		'bars2'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
@@ -32,7 +32,7 @@ RSDoubleBarPlot >> computeSecondRectagleFor: aPoint index: index [
 	corner := (x2Scale scale: zero) @ origin y.
 	sizeOffset := 0@(self barSize * 0.3).
 	offset := 0@ self barOffset.
-	^ Rectangle 
+	^ Rectangle
 		origin: origin + offset - sizeOffset
 		corner: corner + offset + sizeOffset
 ]
@@ -62,19 +62,23 @@ RSDoubleBarPlot >> createXScale [
 			chart extent x - padding}
 ]
 
+{ #category : #accessing }
+RSDoubleBarPlot >> createdShapes [
+	^ bars, bars2
+]
+
 { #category : #rendering }
 RSDoubleBarPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.
 	index := 1.
-	bars2 := x2Values collect: [ :xt | 
+	bars2 := x2Values collect: [ :xt |
 		| yt bar |
 		yt := yValues at: index.
 		bar := self createBar2For: xt@yt index: index.
 		index := index + 1.
 		bar ] as: RSGroup.
-	canvas addAll: bars2.
-
+	canvas addAll: bars2
 ]
 
 { #category : #accessing }
@@ -86,7 +90,7 @@ RSDoubleBarPlot >> secondColor [
 RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
 	self assert: x1 size = y size description: 'The two collections must have the same size'.
 	self x: x1 y: y.
-	x2Values := x2.
+	x2Values := x2
 ]
 
 { #category : #accessing }

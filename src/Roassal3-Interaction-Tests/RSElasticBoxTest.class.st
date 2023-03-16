@@ -17,20 +17,20 @@ RSElasticBoxTest >> setUp [
 	canvas := RSCanvas new.
 	shapes := (1 to: 10) collect: [ :i | RSBox new size: 5; yourself ].
 	RSGridLayout on: shapes.
-	canvas addAll: shapes.
+	canvas addAll: shapes
 ]
 
 { #category : #tests }
 RSElasticBoxTest >> testBasic [
-	canvas @ RSElasticBox
+	canvas @ RSElasticBoxInteraction
 ]
 
 { #category : #tests }
 RSElasticBoxTest >> testEvents [
 	| number elastic |
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	number := nil.
-	elastic 
+	elastic
 		when: RSSelectionStartEvent do: [ :evt | number := 0 ];
 		when: RSSelectionChangedEvent do: [ :evt | number := number + 1 ];
 		when: RSSelectionEndEvent do: [ :evt | number := number +10 ].
@@ -40,17 +40,17 @@ RSElasticBoxTest >> testEvents [
 	canvas announce: (RSMouseDragging new position: 10@10).
 	self assert: number equals: 1.
 	canvas announce: (RSMouseDragEnd new position: 0@0).
-	self assert: number equals: 11.
+	self assert: number equals: 11
 ]
 
 { #category : #tests }
 RSElasticBoxTest >> testEventsDraggableCanvas [
 	| elastic number |
-	elastic := RSElasticBox new.
+	elastic := RSElasticBoxInteraction new.
 	elastic rightLeft.
 	canvas @ elastic.
 	number := nil.
 	elastic when: RSSelectionStartEvent do: [ :evt | number := 0 ].
 	canvas announce: (RSMouseLeftDragStart new position: 0@0).
-	self assert: number equals: 0.
+	self assert: number equals: 0
 ]

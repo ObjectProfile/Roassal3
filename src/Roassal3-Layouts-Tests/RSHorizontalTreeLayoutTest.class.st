@@ -41,19 +41,19 @@ RSHorizontalTreeLayoutTest >> testBasicWithVerticalGap [
 ]
 
 { #category : #tests }
-RSHorizontalTreeLayoutTest >> testCycles [ 
+RSHorizontalTreeLayoutTest >> testCycles [
 	| chars |
 	canvas := RSCanvas new.
 	chars := $a to: $e.
-	shapes := RSComposite models: chars forEach: [ :char :composite |
+	shapes := RSComposite models: chars forEach: [ :composite :char |
 		| box label |
 		label := RSLabel text: char.
-		box := RSBox new 
+		box := RSBox new
 			position: label position;
 			extent: label extent + 10;
 			yourself.
-		
-		composite 
+
+		composite
 			draggable;
 			add: box;
 			add: label;
@@ -64,12 +64,12 @@ RSHorizontalTreeLayoutTest >> testCycles [
 	RSLineBuilder arrowedLine
 		canvas: canvas;
 		withVerticalAttachPoint;
-		useAssociations: 
+		useAssociations:
 			{$a -> $b.
 			$a -> $e.
 			$b -> $c.
 			$c -> $d.
 			$d -> $a}. "cycle"
-	self should: [RSHorizontalTreeLayout on: shapes] raise: Error.
-	
+	self shouldnt: [RSHorizontalTreeLayout on: shapes] raise: Error.
+	self should: [RSHorizontalTreeLayout new validateCycles; on: shapes] raise: Error
 ]

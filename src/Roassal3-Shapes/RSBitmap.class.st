@@ -10,9 +10,17 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
+{ #category : #examples }
+RSBitmap class >> example [
+	| image |
+	image := self new.
+	image form: (self iconNamed: #pharo).
+	image inspect
+]
+
 { #category : #private }
 RSBitmap >> computeRectangle [
-	baseRectangle := Rectangle floatCenter: 0@0 extent: (form 
+	baseRectangle := Rectangle floatCenter: 0@0 extent: (form
 		ifNil: [ 0@0 ]
 		ifNotNil: [ form extent ]).
 	encompassingRectangle := nil
@@ -23,8 +31,7 @@ RSBitmap >> extent: newExtent [
 	| oldExtent |
 	oldExtent := self extent.
 	(oldExtent = (0 @ 0)) ifTrue: [ ^ self ].
-	matrix scaleBy: newExtent / oldExtent.
-
+	matrix scaleBy: newExtent / oldExtent
 ]
 
 { #category : #accessing }
@@ -36,7 +43,7 @@ RSBitmap >> form [
 RSBitmap >> form: aForm [
 	aForm ifNil: [ ^ self ].
 	form := aForm.
-	self computeRectangle.
+	self computeRectangle
 ]
 
 { #category : #accessing }

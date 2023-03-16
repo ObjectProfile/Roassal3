@@ -2,7 +2,7 @@ Extension { #name : #AthensAffineTransform }
 
 { #category : #'*Roassal3' }
 AthensAffineTransform >> asFloatTransform [
-	^ self copy floatValues; yourself	
+	^ self copy floatValues; yourself
 ]
 
 { #category : #'*Roassal3' }
@@ -13,9 +13,7 @@ AthensAffineTransform >> floatValues [
 	sx := sx asFloat.
 	sy := sy asFloat.
 	shx := shx asFloat.
-	shy := shy asFloat.
-	
-	
+	shy := shy asFloat
 ]
 
 { #category : #'*Roassal3' }
@@ -25,5 +23,5 @@ AthensAffineTransform >> printOn: stream [
 	stream << ' sx: '. sx printOn: stream.
 	stream << ' sy: '. sy printOn: stream.
 	stream << ' shx: '. shx printOn: stream.
-	stream << ' shy: '. shy printOn: stream.
+	stream << ' shy: '. shy printOn: stream
 ]

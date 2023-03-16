@@ -3,45 +3,43 @@ TODO
 "
 Class {
 	#name : #RSAbstractLabelDecoration,
-	#superclass : #RSChartDecoration,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
 		'title',
-		'baseShape',
 		'location',
 		'label'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
 
-{ #category : #accessing }
-RSAbstractLabelDecoration >> baseShape [
-	^ baseShape
-]
-
-{ #category : #accessing }
-RSAbstractLabelDecoration >> baseShape: aRSLabel [
-	baseShape := aRSLabel
-]
-
 { #category : #rendering }
 RSAbstractLabelDecoration >> createLabel [
 	"Utility method to create a label"
-	^ baseShape copy
+	^ self shape copy
 		text: title;
 		yourself
-		
+]
+
+{ #category : #accessing }
+RSAbstractLabelDecoration >> createdShapes [
+	^ { label }
+]
+
+{ #category : #initialization }
+RSAbstractLabelDecoration >> defaultShape [
+	^ RSLabel new
 ]
 
 { #category : #accessing }
 RSAbstractLabelDecoration >> fontSize [
 	"Return the font size to use when generating labels"
-	^ baseShape fontSize
+	^ self shape fontSize
 ]
 
 { #category : #accessing }
 RSAbstractLabelDecoration >> fontSize: fontSizeToUse [
 	"Set the font size to use when generating labels"
-	baseShape fontSize: fontSizeToUse
+	self shape fontSize: fontSizeToUse
 ]
 
 { #category : #accessing }
@@ -53,8 +51,7 @@ RSAbstractLabelDecoration >> horizontal [
 { #category : #initialization }
 RSAbstractLabelDecoration >> initialize [
 	super initialize.
-	baseShape := RSLabel new.
-	location := RSLocation new.
+	location := RSLocation new
 ]
 
 { #category : #accessing }
@@ -93,7 +90,7 @@ RSAbstractLabelDecoration >> renderIn: canvas [
 { #category : #accessing }
 RSAbstractLabelDecoration >> rotationAngle: anAngleAsFloat [
 	"Set the rotation the label should have"
-	^ baseShape rotateByDegrees: anAngleAsFloat
+	^ self shape rotateByDegrees: anAngleAsFloat
 ]
 
 { #category : #accessing }

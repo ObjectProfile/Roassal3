@@ -36,7 +36,7 @@ RSChartExample >> example02ScatterPlot [
 	c := RSChart new.
 	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
 	c addPlot: p.
-	
+
 	c xlabel: 'X Axis'.
 	c ylabel: 'Y Axis'.
 	c title: 'Hello World'.
@@ -100,14 +100,13 @@ RSChartExample >> example06CustomNumberOfTicks [
 	^ RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: (RSHorizontalTick new 
+		addDecoration: (RSHorizontalTick new
 			numberOfTicks: 20;
 			integer);
-		addDecoration: (RSVerticalTick new integer 
+		addDecoration: (RSVerticalTick new integer
 			numberOfTicks: 2;
 			doNotUseNiceLabel);
 		yourself
-	
 ]
 
 { #category : #examples }
@@ -128,32 +127,25 @@ RSChartExample >> example07AdjustingFontSize [
 { #category : #examples }
 RSChartExample >> example08TwoCharts [
 	<script: 'self new example08TwoCharts open'>
-	| c g1 c1 g2 c2 |
+	| c c1 c2 |
 	c := RSCanvas new.
 
-	g1 := RSGroup new.
 	c1 := RSChart new.
-	c1 container: g1.
 	c1 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) sqrt).
 	c1 title: 'squared root'.
 	c1 xlabel: 'X'.
 	c1 ylabel: 'Y'.
-	c1 build.
 
-	g2 := RSGroup new.
 	c2 := RSChart new.
-	c2 container: g2.
 	c2 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) squared).
 	c2 title: '^ 2'.
 	c2 xlabel: 'X'.
 	c2 ylabel: 'Y'.
-	c2 build.
-
-	c add: g1 asShape; add: g2 asShape.
+	c add: c1 asShape; add: c2 asShape.
 	RSHorizontalLineLayout on: c shapes.
 
 	c @ RSCanvasController.
-	^ c 
+	^ c
 ]
 
 { #category : #examples }
@@ -163,17 +155,14 @@ RSChartExample >> example09LinearSqrtSymlog [
 	c := RSCanvas new @ RSCanvasController.
 	x := (-5 to: 500 by: 0.1).
 	y := x.
-	#(yLinear ySqrt yLog) do: [ :sel | 
-		| chart g |
-		g := RSGroup new.
+	c addAll: (#(yLinear ySqrt yLog) collect: [ :sel |
+		| chart |
 		chart := RSChart new.
-		chart container: g.
 		chart addPlot: (RSLinePlot new x: x y: y).
 		chart addDecoration: (RSVerticalTick new asFloat).
 		chart perform: sel.
 		chart title: sel.
-		chart build.
-		c add: g asShape ].
+		chart asShape ]).
 	RSHorizontalLineLayout on: c shapes.
 	^ c
 ]
@@ -189,13 +178,13 @@ RSChartExample >> example10BarPlot [
 	p := RSBarPlot new x: x y: y.
 
 	c addPlot: p.
-	
-	c addDecoration: (RSHorizontalTick new 
+
+	c addDecoration: (RSHorizontalTick new
 		doNotUseNiceLabel;
 		numberOfTicks: x size - 1;
 		asFloat).
 	c xlabel: 'X Axis'.
-	c addDecoration: (RSVerticalTick new 
+	c addDecoration: (RSVerticalTick new
 		numberOfTicks: 10;
 		asFloat).
 	c ylabel: 'Y Axis'.
@@ -214,7 +203,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	c addPlot: (RSBarPlot new x: x y: y).
 	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
 	c addDecoration: (RSHorizontalTick new asFloat).
-	c addDecoration: (RSVerticalTick new 
+	c addDecoration: (RSVerticalTick new
 		numberOfTicks: 10;
 		asFloat).
 	c xlabel: 'X Axis'.
@@ -232,7 +221,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	y := OrderedCollection new.
 	z := OrderedCollection new.
 	r := Random seed: 42.
-	1 to: 100 do: [ :i | 
+	1 to: 100 do: [ :i |
 		x add: i + (r next * 10 + 1) asInteger.
 		y add: i + (r next * 10 + 1) asInteger.
 		z add: i + (r next * 10 + 1) asInteger. ].
@@ -240,96 +229,30 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	c := RSChart new.
 	p := RSScatterPlot new x: x y: y.
 	p color: Color blue translucent.
-	p processBlock: [ :shapes | 
-		shapes models: z.
-		RSNormalizer size
-			shapes: shapes;
-			from: 2;
-			to: 10;
-			normalize: #yourself.
-		RSNormalizer color
-			shapes: shapes;
-			normalize: #yourself.
-		shapes translucent ].
+
 	c addPlot: p.
 
 	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
 	c addDecoration: RSVerticalTick new.
-
-	^ c
-]
-
-{ #category : #examples }
-RSChartExample >> example18Animation [
-	<script: 'self new example18Animation inspect'>
-	| c canvas line points current lineAnimation area paint afterline yticks xticks |
-	c := self example17CLPvsUSD.
 	c build.
-	canvas := c canvas.
-	
-	"line"
-	line := canvas shapes detect: [ :s | s class = RSPolyline ].
-	points := line controlPoints.
-	current := OrderedCollection new.
-	current add: points first; add: points second.
-	line controlPoints: current.
-	lineAnimation := (2 to: points size) collect: [ :i |
-		canvas transitionAnimation
-			duration: 100 milliSeconds;
-			from: (points at: i - 1);
-			to: (points at: i);
-			onStepDo: [ :t |
-				current removeLast; add: t.
-				line controlPoints: current.
-				 ];
-			when: RSAnimationEndEvent do: [current add: (points at: i) ].
-	] as: OrderedCollection.
-	"area"
-	area := canvas shapes detect: [ :s | s class = RSSVGPath ].
-	paint := area paint.
-	area noPaint.
-	afterline := canvas parallelAnimation.
-	afterline add: (canvas transitionAnimation
-		onStepDo: [ :t |
-			area paint: (Color transparent interpolateTo: paint at: t).
-		]).
-	lineAnimation add: afterline.
-	canvas animationFrom: lineAnimation.
-	
-	"ticks"
-	yticks := canvas shapes select: [ :s | s class = RSLabel ].
-	yticks do: [ :s |  s bold. ].
-	yticks := yticks groupedBy: [ :s | s matrix sy ].
-	xticks := yticks values first.
-	yticks := yticks values second.
-	xticks doWithIndex: [ :s :index | 
-		canvas newAnimation
-			delay: ((index-1) * 100) milliSeconds;
-			duration: 200 milliSeconds;
-			from: Color transparent;
-			to: s color;
-			on: s set: #color:.
-		s color: Color transparent ].
-	yticks doWithIndex: [ :s :index |
-		s noPaint.
-		afterline add: (canvas transitionAnimation
-			delay: (index * 300) milliSeconds;
-			duration: 2 second;
-			easing: RSEasing elasticOut;
-			from: -100@ s position y;
-			to: s position;
-			onStepDo: [:p | 
-				s color: Color black.
-				s position: p]).
-		].
-	^ canvas
+	p ellipses models: z.
+		RSNormalizer size
+			shapes: p ellipses;
+			from: 2;
+			to: 10;
+			normalize: #yourself.
+		RSNormalizer color
+			shapes: p ellipses;
+			normalize: #yourself.
+	p ellipses translucent.
+	^ c canvas
 ]
 
 { #category : #examples }
 RSChartExample >> example19PositiveNetagiveBarPlots [
 	<script: 'self new example19PositiveNetagiveBarPlots open'>
 	| c d d2 |
-	
+
 	c := RSChart new.
 
 	d := RSBarPlot new.
@@ -348,14 +271,14 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	c addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
 	c addDecoration: (RSXLabelDecoration new title: 'Evolution').
 
-	^ c 
+	^ c
 ]
 
 { #category : #examples }
 RSChartExample >> example20Grid [
 	<script: 'self new example20Grid open'>
 	| c x y vertical horizontal |
-	
+
 	c := RSChart new.
 	x := 0 to: 10.
 	y := x raisedTo: 2.
@@ -367,7 +290,6 @@ RSChartExample >> example20Grid [
 	horizontal configuration tickSize: c extent y negated.
 	c build.
 	^ c canvas
-	
 ]
 
 { #category : #examples }
@@ -393,8 +315,8 @@ RSChartExample >> example21Popup [
 		y := cumsum value: y.
 		error := x.
 		col := color value: Color.
-		
-		c addPlot: (RSAreaPlot new 
+
+		c addPlot: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: col translucent).
 		c addPlot: (plot := RSLinePlot new x: x y: y; fmt: 'o';
@@ -406,7 +328,7 @@ RSChartExample >> example21Popup [
 
 	c build.
 
-	^ c canvas.
+	^ c canvas
 ]
 
 { #category : #examples }
@@ -474,9 +396,44 @@ RSChartExample >> example22CustomPopup [
 		rowShapeBlock: [:plot :point |
 			value := RSLabel new text: point y; bold.
 			date := RSLabel new text: (names at: point x).
-			group := { value. date } asGroup.
+			group := { value. date }.
 			RSHorizontalLineLayout on: group.
 			group asShape
 			 ]).
+	^ c
+]
+
+{ #category : #examples }
+RSChartExample >> example23PopupInScatterPlot [
+	<script: 'self new example23PopupInScatterPlot open'>
+	| chart plot data classes  |
+	chart := RSChart new.
+	classes := Collection withAllSubclasses.
+	data := classes collect: [:cls | cls linesOfCode sqrt ].
+	plot := RSScatterPlot new y: data.
+	chart addPlot: plot.
+	chart padding: 10.
+	chart build.
+	plot ellipses with: classes do: [ :e :cls | e model: cls ].
+	plot ellipses @ (RSPopup themeText: [:model |
+		model name, String cr, 'LOC: ', model linesOfCode asString]).
+	^ chart
+]
+
+{ #category : #examples }
+RSChartExample >> example24SpineLine [
+	<script: 'self new example24SpineLine open'>
+	| x c y spine |
+
+	x := -3.14 to: 3.14 by: 0.01.
+	y := x sin * 0.22 + 0.2.
+	c := RSChart new.
+	c extent: 400@300.
+	c lineX: x y: y.
+	c spineDecoration: (spine := RSLineSpineDecoration new).
+	spine shape fmt: '^'.
+	c add: RSHorizontalTick new.
+	c add: RSVerticalTick new.
+	c padding: 10.
 	^ c
 ]

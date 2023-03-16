@@ -30,7 +30,7 @@ RSDelaunayExample >> anime1 [
 		to: 500;
 		onStepDo: [ :t | girl translateTo: t @ 300  ];
 		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+			girl position: 10000 asPoint.]
 ]
 
 { #category : #girls }
@@ -46,7 +46,7 @@ RSDelaunayExample >> anime2 [
 		to: 0;
 		onStepDo: [ :t | girl translateTo: t @ (300+ (((t*2) degreesToRadians sin) * 10))  ];
 		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+			girl position: 10000 asPoint.]
 ]
 
 { #category : #girls }
@@ -63,11 +63,11 @@ RSDelaunayExample >> anime3 [
 		delay: 1 seconds;
 		from: 0;
 		to: 500;
-		onStepDo: [ :t | 
-			
+		onStepDo: [ :t |
+
 			girl translateTo: t @ (y scale:t)  ];
 		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+			girl position: 10000 asPoint.]
 ]
 
 { #category : #running }
@@ -629,8 +629,8 @@ RSDelaunayExample >> girlFrom: string [
 	com := RSComposite new.
 	com isFixed: true.
 	last := nil.
-	string lines 
-		doWithIndex: [ :l :in | 
+	string lines
+		doWithIndex: [ :l :in |
 			(l beginsWith: '<path d="')
 				ifTrue: [
 					last ifNotNil: [
@@ -641,7 +641,7 @@ RSDelaunayExample >> girlFrom: string [
 								color: Color white;
 								yourself).
 							].
-					last := l copyFrom: 10 to: l size 
+					last := l copyFrom: 10 to: l size
 				] ifFalse: [ last := last , ' ' , l ] ].
 	com adjustToChildren.
 	com scaleBy: 0.15@ -0.15.
@@ -650,17 +650,16 @@ RSDelaunayExample >> girlFrom: string [
 
 { #category : #running }
 RSDelaunayExample >> hasAreaLessThan: lim p1: p1 p2: p2 p3: p3 [
-	^ (p1 position distanceTo: p2 position) < lim and: [ 
-		(p2 position distanceTo: p3 position) < lim and: [ 
+	^ (p1 position distanceTo: p2 position) < lim and: [
+		(p2 position distanceTo: p3 position) < lim and: [
 			(p3 position distanceTo: p1 position) < lim ] ]
-		
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 RSDelaunayExample >> initialize [
 	super initialize.
 	useFill := false.
-	allParticles := OrderedCollection new.
+	allParticles := OrderedCollection new
 ]
 
 { #category : #running }
@@ -675,12 +674,12 @@ RSDelaunayExample >> run [
 	canvas := RSCanvas new.
 	canvas addShape: (RSBox new color: (Color black alpha: 0.1); size: 777; yourself).
 	canvas color: Color black.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	"animation for girls"
 	(canvas animationFrom: { self anime1. self anime2. self anime3 }) repeat.
-	
-	canvas when: RSMouseDragging do: [ :evt | 
+
+	canvas when: RSMouseDragging do: [ :evt |
 		allParticles add: (RSParticleD new
 			position: evt position;
 			level: 5;
@@ -697,13 +696,13 @@ RSDelaunayExample >> run2 [
 	| maxLevel |
 	canvas := RSCanvas new.
 	canvas color: Color black.
-	canvas clearBackground: false.
+	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	maxLevel := 3.
-	canvas when: RSMouseDragging do: [ :evt | 
+	canvas when: RSMouseDragging do: [ :evt |
 		allParticles add: (RSParticleD new
 			position: evt position;
-			maxLevel: 3; 
+			maxLevel: 3;
 			level: 3;
 			decay: 1;
 			yourself) ].
@@ -715,27 +714,26 @@ RSDelaunayExample >> run2 [
 RSDelaunayExample >> step [
 	| indices |
 	canvas nodes copy do: #remove.
-	allParticles copy  reverseDo: [ :p | 
+	allParticles copy  reverseDo: [ :p |
 		p moveIn: allParticles.
 		p velocity < 0.01 ifTrue: [ allParticles remove: p ].
 	].
 	allParticles ifEmpty: [ ^ self ].
-	
+
 	indices := RSDelaunay triangulate: allParticles.
-	
+
 	(1 to: indices size by: 3) do: [ :i | | p1 p2 p3 |
 		p1 := allParticles at: (indices at: i).
 		p2 := allParticles at: (indices at: i+1).
 		p3 := allParticles at: (indices at: i+2).
-		(self hasAreaLessThan: 75 p1: p1 p2: p2 p3: p3) ifTrue: [ 
+		(self hasAreaLessThan: 75 p1: p1 p2: p2 p3: p3) ifTrue: [
 			canvas add: (RSPolygon new
 				border: (self borderFor: p1);
 				paint: (self paintFor: p1);
 				points: { p1 position. p2 position. p3 position };
 				yourself )
 		 ].
-	].
-
+	]
 ]
 
 { #category : #accessing }

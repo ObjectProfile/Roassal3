@@ -10,14 +10,15 @@ Class {
 		'cachedChildren',
 		'cachedParents',
 		'cachedParentsWithHighestNestings',
-		'shouldValidateCycles'
+		'shouldValidateCycles',
+		'childrenSortBlock'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
 
 { #category : #constants }
 RSAbstractGraphLayout class >> horizontalGap [
-	
+
 	^3.0
 ]
 
@@ -30,14 +31,14 @@ RSAbstractGraphLayout class >> isAbstract [
 RSAbstractGraphLayout class >> on: elements edges: edges [
 	"Do the layout of the elements tacking into account the provided edges"
 
-	^ self new 
+	^ self new
 		userDefinedEdges: edges;
-		applyOn: elements.
+		applyOn: elements
 ]
 
 { #category : #constants }
 RSAbstractGraphLayout class >> verticalGap [
-	
+
 	^20.0
 ]
 
@@ -64,23 +65,35 @@ RSAbstractGraphLayout >> cachedParentsWithHighestNestings [
 RSAbstractGraphLayout >> childrenFor: aNode [
 	^ self cachedChildren
 		at: aNode
-		ifAbsentPut:
-			[| nodes |
+		ifAbsentPut: [ | nodes |
 			nodes := OrderedCollection new.
-			self edgesDo:
-					[:edge | 
-					(edge from == aNode and: [edge to ~= aNode])
-						ifTrue:
-							[(nodes includes: edge from) ifFalse: [nodes add: edge to]]].
+			self edgesDo: [:edge |
+				(edge from == aNode and: [edge to ~= aNode]) ifTrue: [
+					(nodes includes: edge from)
+						ifFalse: [nodes add: edge to ]
+				]
+			].
+			self childrenSortBlock
+				ifNotNil: [ :block | nodes sort: block ].
 			nodes]
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
-	^ (self childrenFor: aNode) 
+	^ (self childrenFor: aNode)
 		reject: [:each | aNodeCollection includes: each]
-	
+
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
+]
+
+{ #category : #accessing }
+RSAbstractGraphLayout >> childrenSortBlock [
+	^ childrenSortBlock
+]
+
+{ #category : #accessing }
+RSAbstractGraphLayout >> childrenSortBlock: aBlock [
+	childrenSortBlock := aBlock
 ]
 
 { #category : #private }
@@ -96,8 +109,13 @@ RSAbstractGraphLayout >> clear [
 	cachedParentsWithHighestNestings := nil
 ]
 
+{ #category : #defaults }
+RSAbstractGraphLayout >> defaultChildrenSortBlock [
+	^ nil
+]
+
 { #category : #hook }
-RSAbstractGraphLayout >> doInitialize: elements [ 
+RSAbstractGraphLayout >> doInitialize: elements [
 	super doInitialize: elements.
 	self clear.
 	"self greedyCycleRemoval: elements"
@@ -133,10 +151,11 @@ RSAbstractGraphLayout >> horizontalGap: anInteger [
 	horizontalGap := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractGraphLayout >> initialize [
 	super initialize.
-	self validateCycles.
+	self doNotValidateCycles.
+	self childrenSortBlock: self defaultChildrenSortBlock
 ]
 
 { #category : #private }
@@ -144,7 +163,6 @@ RSAbstractGraphLayout >> maximumDiameter: aCollection [
 	^ aCollection
 		inject: 0
 		into: [:max :node | max max: (node radius * 2) ]
- 
 ]
 
 { #category : #private }
@@ -163,7 +181,6 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 	^parentsNesting isEmpty
 		ifTrue: [0]
 		ifFalse: [parentsNesting max + 1]
-
 ]
 
 { #category : #actions }
@@ -171,7 +188,7 @@ RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
 	self userDefinedEdges ifNil: [ self userDefinedEdges: edgs ].
 
-	^ self applyOn: el.
+	^ self applyOn: el
 ]
 
 { #category : #private }
@@ -188,8 +205,8 @@ RSAbstractGraphLayout >> parentsFor: aNode [
 
 { #category : #private }
 RSAbstractGraphLayout >> rootNodesFor: aCollection [
-	^ aCollection select: [:node | 
-		(self parentsFor: node) isEmpty ].
+	^ aCollection select: [:node |
+		(self parentsFor: node) isEmpty ]
 ]
 
 { #category : #private }
@@ -206,8 +223,8 @@ RSAbstractGraphLayout >> shouldValidateCycles [
 { #category : #private }
 RSAbstractGraphLayout >> validateCachedParents [
 	self shouldValidateCycles ifFalse: [ ^ self ].
-	self cachedParents keysDo: [ :node | 
-		self validateCycleFor: node path: Set new ].
+	self cachedParents keysDo: [ :node |
+		self validateCycleFor: node path: Set new ]
 ]
 
 { #category : #private }
@@ -215,8 +232,7 @@ RSAbstractGraphLayout >> validateCycleFor: node path: aSet [
 	(aSet includes: node)
 		ifTrue: [ self error: 'cycle with: ', aSet asString ].
 	aSet add: node.
-	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ].
-	
+	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ]
 ]
 
 { #category : #public }

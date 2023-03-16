@@ -33,7 +33,7 @@ Class {
 	#instVars : [
 		'bottom'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	| barScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSOrdinalScale new 
+	barScale := NSOrdinalScale new
 		domain: xValues;
 		rangeBands: xScale range padding: gapRatio.
 	aChart xScale: barScale
@@ -59,7 +59,7 @@ RSBarPlot >> bottom [
 
 { #category : #accessing }
 RSBarPlot >> bottom: aCollection [
-	self 
+	self
 		assert: xValues size = aCollection size
 		description: 'Invalid size'.
 	bottom := aCollection
@@ -70,11 +70,11 @@ RSBarPlot >> computeRectagleFor: aPoint index: index [
 	| origin corner sizeOffset offset zero |
 	zero := 0.
 	bottom ifNotNil: [ zero := bottom at: index ].
-	origin := self scalePoint: aPoint.
+	origin := self scalePoint: aPoint + (0@ zero).
 	corner := origin x @ (yScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
-	^ Rectangle 
+	^ Rectangle
 		origin: origin + offset - sizeOffset
 		corner: corner + offset + sizeOffset
 ]

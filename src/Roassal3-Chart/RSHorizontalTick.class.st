@@ -28,7 +28,7 @@ Class {
 RSHorizontalTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := super createNiceLabelIn: aChart.
-	aChart 
+	aChart
 		minValueX: nice min;
 		maxValueX: nice max.
 	^ nice
@@ -36,17 +36,24 @@ RSHorizontalTick >> createNiceLabelIn: aChart [
 
 { #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
-	| value |
+	| value zeroY |
 	value := xScale scale: aNumber.
+	zeroY := chart spineDecoration zeroPoint y.
+	zeroY := zeroY - chart extent y.
 	^ self shape copy
-		startPoint: value @ 0;
-		endPoint: value @ self configuration tickSize;
+		startPoint: value @ zeroY;
+		endPoint: value @ (zeroY + self configuration tickSize);
 		yourself
 ]
 
 { #category : #'accessing - defaults' }
 RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
+]
+
+{ #category : #testing }
+RSHorizontalTick >> isHorizontalTick [
+	^ true
 ]
 
 { #category : #accessing }
@@ -62,10 +69,10 @@ RSHorizontalTick >> min [
 { #category : #public }
 RSHorizontalTick >> useDiagonalLabel [
 	self labelRotation: -45.
-	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0)
 ]
 
 { #category : #public }
 RSHorizontalTick >> useVerticalLabel [
-	self labelRotation: -90.
+	self labelRotation: -90
 ]

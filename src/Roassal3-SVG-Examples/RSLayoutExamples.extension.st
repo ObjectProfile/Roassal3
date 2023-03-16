@@ -8,8 +8,8 @@ RSLayoutExamples >> example14ClassHierarchy [
 
 	classes := (Object withAllSubclasses first: 300)
 		flatCollect: #withAllSuperclasses.
-	classes := classes asSet 
-		collect: [:cls | RSEllipse new draggable; popup; model: cls; yourself] 
+	classes := classes asSet
+		collect: [:cls | RSEllipse new draggable; popup; model: cls; yourself]
 		as: RSGroup.
 	c addAll: classes.
 	RSLineBuilder line
@@ -24,7 +24,7 @@ RSLayoutExamples >> example14ClassHierarchy [
 	RSNormalizer color
 		shapes: classes;
 		normalize: #numberOfMethods.
-	RSClusterLayout on: classes.
+	RSClusterTreeLayout on: classes.
 	RSMultiBezierEdgeBuilder multiBezier
 		borderColor: (Color blue alpha: 0.3);
 		canvas: c;

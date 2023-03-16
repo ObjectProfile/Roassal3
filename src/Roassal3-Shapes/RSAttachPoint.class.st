@@ -15,22 +15,28 @@ RSAttachPoint class >> centered [
 	^ RSCenteredAttachPoint new
 ]
 
-{ #category : #'public - hooks' }
-RSAttachPoint >> basicEndingPointOf: anEdge [
-	^ self subclassResponsibility 
+{ #category : #testing }
+RSAttachPoint class >> isAbstract [
+
+	^ self == RSAttachPoint
 ]
 
 { #category : #'public - hooks' }
-RSAttachPoint >> basicStartingPointOf: anEdge [
-	^ self subclassResponsibility 
+RSAttachPoint >> basicEndingPointOf: aLine [
+	^ self subclassResponsibility
+]
+
+{ #category : #'public - hooks' }
+RSAttachPoint >> basicStartingPointOf: aLine [
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
-RSAttachPoint >> commonParents: shape in: anEdge [
+RSAttachPoint >> commonParents: shape in: aLine [
 	| current parents |
 	current := shape parent.
 	parents := OrderedCollection new.
-	[ current = anEdge parent ] whileFalse: [ 
+	[ current = aLine parent ] whileFalse: [
 		current ifNil: [ ^ nil ].
 		current parent = current ifTrue: [ ^ nil ].
 		parents add: current.
@@ -41,7 +47,7 @@ RSAttachPoint >> commonParents: shape in: anEdge [
 { #category : #'public - hooks' }
 RSAttachPoint >> endingPointOf: aLine [
 	"Return the end point of a line.
-	
+
 	b1 := RSBox new size: 20.
 	b2 := RSBox new size: 20.
 	b1 translateTo: 20 @ 30.
@@ -58,11 +64,11 @@ RSAttachPoint >> endingPointOf: aLine [
 		add: b1;
 		add: b2;
 		add: l.
-	
+
 	l attachPoint startingPointOf: l
 => 	50 @ 45
 	"
-	(aLine from = aLine to) 
+	(aLine from = aLine to)
 		ifTrue: [ ^ self positionFor: aLine from in: aLine ].
     ^ inverted
         ifTrue: [ self basicStartingPointOf: aLine ]
@@ -70,14 +76,24 @@ RSAttachPoint >> endingPointOf: aLine [
 ]
 
 { #category : #private }
-RSAttachPoint >> hasParents: shape in: anEdge [
-	^ shape parent notNil and: [ anEdge parent notNil ]
+RSAttachPoint >> hasParents: shape in: aLine [
+	^ shape parent notNil and: [ aLine parent notNil ]
 ]
 
-{ #category : #'public - hooks' }
+{ #category : #initialization }
 RSAttachPoint >> initialize [
 	super initialize.
-	inverted := false.
+	inverted := false
+]
+
+{ #category : #public }
+RSAttachPoint >> inverted [
+	inverted := true
+]
+
+{ #category : #testing }
+RSAttachPoint >> isInverted [
+	^ inverted
 ]
 
 { #category : #private }
@@ -89,28 +105,27 @@ RSAttachPoint >> matrixFor: commonParents [
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: shape in: anEdge [
+RSAttachPoint >> positionFor: shape in: aLine [
 	shape isPoint ifTrue: [ ^ shape ].
-	^ self positionFor: shape in: anEdge point: shape position
+	^ self positionFor: shape in: aLine point: shape position
 ]
 
 { #category : #private }
-RSAttachPoint >> positionFor: shape in: anEdge point: pos [
+RSAttachPoint >> positionFor: shape in: aLine point: pos [
 	| commonParents |
 	shape isPoint ifTrue: [ ^ shape ].
-	(self hasParents: shape in: anEdge) ifFalse: [ ^ pos ].
-	shape parent = anEdge parent ifTrue: [ ^ pos ].
-	
+	(self hasParents: shape in: aLine) ifFalse: [ ^ pos ].
+	shape parent = aLine parent ifTrue: [ ^ pos ].
 	"TODO we can cache this info"
-	commonParents := self commonParents: shape in: anEdge.
+	commonParents := self commonParents: shape in: aLine.
 	commonParents ifNil: [ ^ pos ].
-	^ (self matrixFor: commonParents) transform: pos. 
+	^ (self matrixFor: commonParents) transform: pos.
 ]
 
 { #category : #'public - hooks' }
 RSAttachPoint >> startingPointOf: aLine [
 "Return the starting point of a line.
-	
+
 	b1 := RSBox new size: 20.
 	b2 := RSBox new size: 20.
 	b1 translateTo: 20 @ 30.
@@ -127,14 +142,18 @@ RSAttachPoint >> startingPointOf: aLine [
 		add: b1;
 		add: b2;
 		add: l.
-	
+
 	l attachPoint startingPointOf: l
 => 	30 @ 35
 	"
-	(aLine from = aLine to) 
+	(aLine from = aLine to)
 		ifTrue: [ ^ self positionFor: aLine from in: aLine ].
     ^ inverted
         ifTrue: [ self basicEndingPointOf: aLine ]
         ifFalse: [ self basicStartingPointOf: aLine ]
+]
 
+{ #category : #public }
+RSAttachPoint >> straight [
+	inverted := false
 ]

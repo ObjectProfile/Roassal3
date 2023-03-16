@@ -28,7 +28,6 @@ RSSVGTest >> testBimetricLine [
 		to: s2;
 		yourself.
 	canvas addAll: { s1. s2. l}.
-	canvas @ RSCanvasController. 
 	^ canvas
 ]
 
@@ -38,7 +37,7 @@ RSSVGTest >> testDrawSVG [
 	canvas addShape: (RSSVGPath new
 		svgPath: 'M 100 350 q 150 -300 300 0';
 		yourself).
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #tests }
@@ -46,14 +45,14 @@ RSSVGTest >> testDrawSVGLine [
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [ :aLine | 'M 100 100 L 200 200' ];
-		width: 2). 
+		width: 2).
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
 		svgPath: [:aLine | String streamContents: [:stream |
 			| a b |
 			a := aLine startPoint.
 			b := aLine endPoint.
-			stream 
+			stream
 				nextPutAll: 'M ';
 				nextPutAll: a x asString;
 				space;
@@ -66,14 +65,14 @@ RSSVGTest >> testDrawSVGLine [
 		] ];
 		startPoint: 100@100;
 		endPoint: 200@200;
-		width: 2). 
+		width: 2).
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;
-		svgPath: [ :aLine | [ :canvas| 
-			canvas
+		svgPath: [ :aLine | [ :aCanvas|
+			aCanvas
 				absolute;
 				moveTo: aLine startPoint;
 				lineTo: aLine endPoint. ] ];
-		width: 2). 
-	canvas createMorph drawOnMockCanvas.
+		width: 2).
+	canvas createMorph drawOnMockCanvas
 ]

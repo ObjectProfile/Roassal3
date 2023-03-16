@@ -15,7 +15,7 @@ Symmetric polynomial easing; scales polyIn for t in [0, 0.5] and polyOut for t i
 "
 Class {
 	#name : #RSPolyInterpolator,
-	#superclass : #RSEasing,
+	#superclass : #RSEasingInterpolator,
 	#instVars : [
 		'exponent'
 	],
@@ -35,12 +35,12 @@ RSPolyInterpolator >> exponent: aNumber [
 { #category : #initialization }
 RSPolyInterpolator >> initialize [
 	super initialize.
-	self exponent: 3.
+	self exponent: 3
 ]
 
 { #category : #interpolation }
 RSPolyInterpolator >> interpolateIn: i [
-	^ i raisedTo: exponent.
+	^ i raisedTo: exponent
 ]
 
 { #category : #interpolation }
@@ -50,10 +50,9 @@ RSPolyInterpolator >> interpolateInOut: i [
 	^ (t <= 1
 		ifTrue: [ t raisedTo: exponent ]
 		ifFalse: [ 2 - ( ( 2 - t) raisedTo: exponent ) ]) / 2
-	
 ]
 
 { #category : #interpolation }
 RSPolyInterpolator >> interpolateOut:  t [
-	^ 1 - ((1 -t) raisedTo: exponent).
+	^ 1 - ((1 -t) raisedTo: exponent)
 ]

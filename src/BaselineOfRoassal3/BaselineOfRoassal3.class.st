@@ -14,6 +14,7 @@ BaselineOfRoassal3 >> baseline: spec [
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
 { #category : #baselines }
@@ -29,7 +30,15 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
-	self baselineForCommon: spec
+	"https://github.com/ObjectProfile/Roassal3"
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo8'.
+	spec package: #'Roassal3-Spec-Obsolete'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
 ]
 
 { #category : #baselines }
@@ -40,20 +49,28 @@ BaselineOfRoassal3 >> baselineForPharo9: spec [
 { #category : #'API-packages' }
 BaselineOfRoassal3 >> corePackagesNames [
 	^ #(
+	'Roassal3-Event'
 	'Roassal3-Builders'
 	'Roassal3-Shapes'
 	'Roassal3-Animation'
 	'Roassal3-Interaction'
+	'Roassal3-Layouts-Util'
 	'Roassal3-Layouts'
 	'Roassal3-Colors'
 	'Roassal3-Legend'
 	'Roassal3-UML'
 	'Roassal3-Sunburst'
+	'Roassal3-FlameGraph'
 	'Roassal3-Pie'
 	'Roassal3-Inspector'
 	'Roassal3-Chart'
+	'Roassal3-DSM'
 	'Roassal3-Menu'
-	'Roassal3-Spec')
+	'Roassal3-Spec'
+	'Roassal3-Spec-Morphic'
+	'Roassal3-BaselineMap'
+	'Roassal3-SVG'
+	)
 ]
 
 { #category : #baselines }
@@ -67,7 +84,7 @@ BaselineOfRoassal3 >> dependencies: spec [.
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
-		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+		spec repository: 'github://pharo-contributions/Athens-SVG/src'].
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
@@ -85,6 +102,7 @@ BaselineOfRoassal3 >> examplePackagesNames [
 	'Roassal3-Chart-Examples'
 	'Roassal3-Pie-Examples'
 	'Roassal3-Sunburst-Examples'
+	'Roassal3-FlameGraph-Examples'
 	'Roassal3-UML-Examples'
 	'Roassal3-Spec-Examples')
 ]
@@ -115,7 +133,8 @@ BaselineOfRoassal3 >> registerPackages: spec [
 		
 	spec package: #'Roassal3-GraphViz' with: [ spec requires: #('OSSubprocess') ].
 	
-
+	spec package: #'Roassal3-Gtk'.
+	spec package: #'Roassal3-Spec-Gtk'.
 
 
 
@@ -130,17 +149,15 @@ BaselineOfRoassal3 >> registerPackages: spec [
 BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 [
 	| core |
 	core := #('Core').
-	spec 
+	spec
 		group: 'Core' with: #('Roassal3'), arr1;
 		group: 'Examples' with: core, arr2;
 		group: 'Tests' with: core, arr3;
-		group: 'SVG' with: #('Core' 'Roassal3-SVG');
-		group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
-		group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
-		group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
-		group: 'GraphViz' with: #('SVG' 'Roassal3-GraphViz');
-		
-		group: 'Mini' with: #('SVGTests' 'SVGExamples');
+		group: 'SVGExamples' with: #('Examples' 'Roassal3-SVG-Examples');
+		group: 'SVGImporter' with: #('SVGExamples' 'Roassal3-SVG-Importer');
+		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
+
+		group: 'Mini' with: #('SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'default' with: #('Core' 'Mini');
 		
@@ -161,7 +178,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 { #category : #'API-packages' }
 BaselineOfRoassal3 >> testPackagesNames [
 	^ #(
-	'Roassal3-Global-Tests' 
+	'Roassal3-Global-Tests'
 	'Roassal3-Animation-Tests'
 	'Roassal3-Shapes-Tests'
 	'Roassal3-Interaction-Tests'
@@ -169,5 +186,8 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Chart-Tests'
 	'Roassal3-UML-Tests'
 	'Roassal3-Spec-Tests'
-	'Roassal3-Inspector-Tests')
+	'Roassal3-Inspector-Tests'
+	'Roassal3-BaselineMap-Tests'
+	'Roassal3-SVG-Tests'
+	)
 ]

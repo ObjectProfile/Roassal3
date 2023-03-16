@@ -71,7 +71,7 @@ RSClusteringLayout >> doExecute: shapes [
 	| clusters |
 	clusters := self getClusterFor: shapes.
 	clusters do: [ :group | forEachLayout on: group ].
-	clustersLayout on: clusters  
+	clustersLayout on: clusters
 ]
 
 { #category : #accessing }
@@ -89,37 +89,37 @@ RSClusteringLayout >> forEachLayout: anObject [
 { #category : #hook }
 RSClusteringLayout >> getClusterFor: shapes [
 	| result resultWithGroups st |
-	result := OrderedCollection new. 
+	result := OrderedCollection new.
 	shapes do: [ :s |
 		| t |
 		t := s allRecursiveConnectedShapes.
 		(result includes: t) ifFalse: [ result add: t ]
 		 ].
-	
+
 	resultWithGroups := RSGroup new.
-	result do: [ :coll | 
-		st := coll asArray sortedAs: #asString. 
+	result do: [ :coll |
+		st := coll asArray sortedAs: #asString.
 		resultWithGroups add: st asGroup ].
 	^ resultWithGroups
 
 "	| clusters groupToBeIncluded g |
 	clusters := RSGroup new.
-	
+
 	shapes do: [ :s |
-		groupToBeIncluded := s incomingShapes 
+		groupToBeIncluded := s incomingShapes
 									ifEmpty: [ nil ]
 									ifNotEmpty: [
 			 									clusters detect: [ :group | group includes: s incomingShapes anyOne ] ifNone: [ nil ] ].
-		groupToBeIncluded 
+		groupToBeIncluded
 			ifNil: [ g := RSGroup new. g add: s. clusters add: g ]
-			ifNotNil: [ groupToBeIncluded add: s ]. 
+			ifNotNil: [ groupToBeIncluded add: s ].
 		].
-	
+
 	self assert: ((clusters collect: #size) sum = (clusters collect: #yourself as: Set) size).
 	^ clusters"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSClusteringLayout >> initialize [
 	super initialize.
 	forEachLayout := RSHorizontalLineLayout new.

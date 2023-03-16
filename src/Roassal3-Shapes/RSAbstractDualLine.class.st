@@ -1,5 +1,8 @@
 "
-I am an abtract shape that has an start and one end
+I am an abtract shape that has an start and one end, 2 control points.
+My subclasses are `RSLine` and `RSSVGPathLine`
+
+
 "
 Class {
 	#name : #RSAbstractDualLine,
@@ -22,7 +25,7 @@ RSAbstractDualLine >> basicTranslateBy: delta [
 ]
 
 { #category : #accessing }
-RSAbstractDualLine >> controlPoints [ 
+RSAbstractDualLine >> controlPoints [
 	^ Array with: self startPoint with: self endPoint
 ]
 
@@ -35,14 +38,14 @@ RSAbstractDualLine >> endPoint [
 RSAbstractDualLine >> endPoint: point [
 	endPoint := point.
 	self resetPath.
-	self notifyExtentChanged.
+	self notifyExtentChanged
 ]
 
 { #category : #initialization }
 RSAbstractDualLine >> initialize [
 	super initialize.
 	startPoint := 0@0.
-	endPoint := 100@100.
+	endPoint := 100@100
 ]
 
 { #category : #transforming }
@@ -50,13 +53,19 @@ RSAbstractDualLine >> position [
 	^ self encompassingRectangle floatCenter
 ]
 
-{ #category : #private }
-RSAbstractDualLine >> privateMarkers [
-	^ markers ifNil: [ markers := Array new: 3 ].
+{ #category : #accessing }
+RSAbstractDualLine >> position: aPoint [
+	| position delta |
+	position := self position.
+	delta := aPoint - position.
+	self
+		startPoint: startPoint + delta;
+		endPoint: endPoint  + delta;
+		resetPath
 ]
 
 { #category : #accessing }
-RSAbstractDualLine >> startPoint [ 
+RSAbstractDualLine >> startPoint [
 	^ startPoint
 ]
 
@@ -64,21 +73,6 @@ RSAbstractDualLine >> startPoint [
 RSAbstractDualLine >> startPoint: point [
 	startPoint := point.
 	self resetPath
-]
-
-{ #category : #transforming }
-RSAbstractDualLine >> translateBy: delta [
-	self
-		startPoint: startPoint + delta;
-		endPoint: endPoint + delta.
-	self resetPath
-]
-
-{ #category : #transforming }
-RSAbstractDualLine >> translateTo: delta [
-	| center |
-	center := (startPoint + endPoint ) /2.
-	self translateBy: delta - center
 ]
 
 { #category : #update }
@@ -101,5 +95,5 @@ Removing the call to #attachPoint: raised an error
 	self
 		startPoint: (attachPoint startingPointOf: self);
 		endPoint: (attachPoint endingPointOf: self);
-		notifyExtentChanged.
+		notifyExtentChanged
 ]

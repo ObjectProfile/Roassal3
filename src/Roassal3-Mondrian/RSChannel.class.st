@@ -8,7 +8,9 @@ Class {
 		'highlightable',
 		'color',
 		'isClickable',
-		'marksGoUpward'
+		'marksGoUpward',
+		'toggleOnCallback',
+		'toggleOffCallback'
 	],
 	#category : #'Roassal3-Mondrian-Connections'
 }
@@ -16,20 +18,26 @@ Class {
 { #category : #public }
 RSChannel >> build [
 
-	inputGroup when: RSMouseEnter do: [ :evt | 
+	inputGroup when: RSMouseEnter do: [ :evt |
 		self doHighlight.
 		evt signalUpdate ].
 	inputGroup @ (RSHighlightable new highlightColor: self color).
 
-	inputGroup when: RSMouseLeave do: [ :evt | 
+	inputGroup when: RSMouseLeave do: [ :evt |
 		self doUnhighlight.
 		evt signalUpdate ].
 
 	isClickable ifFalse: [ ^ self ].
-	inputGroup when: RSMouseClick do: [ :evt | 
+	inputGroup when: RSMouseClick do: [ :evt |
 		isClicked
-			ifTrue: [ self unmark: evt shape. self doUnmark ]
-			ifFalse: [ self mark: evt shape. self doMark ].
+			ifTrue: [ self unmark: evt shape.
+						self doUnmark.
+						"We give the possibility to execute a callback"
+						toggleOffCallback rsValue: evt shape. ]
+			ifFalse: [ self mark: evt shape.
+						self doMark.
+						"We give the possibility to execute a callback"
+						toggleOnCallback rsValue: evt shape. ].
 		isClicked := isClicked not.
 		evt signalUpdate ]
 ]
@@ -44,7 +52,6 @@ RSChannel >> color: aColor [
 	color := aColor.
 	highlightable := RSHighlightable new.
 	highlightable highlightColor: aColor
-
 ]
 
 { #category : #accessing }
@@ -87,9 +94,11 @@ RSChannel >> initialize [
 	isClicked := false.
 	isClickable := true.
 	self color: self defaultColor.
-	
+
 	"Marks must go downward"
 	marksGoUpward := false.
+
+	toggleOnCallback := toggleOffCallback := [ :aShape | "Do nothing for now" ]
 ]
 
 { #category : #public }
@@ -129,9 +138,9 @@ RSChannel >> mark: shape [
 	position := shape position + (0 @ (shape height / 2))
 	            + parentPosition.
 
-	"We compute the vertical delta of the mark to be added, based on the existing marks" 
+	"We compute the vertical delta of the mark to be added, based on the existing marks"
 	deltaY := self markHeight * (self getAllMarksFrom: shape) size.
-	
+
 	"We must not forget the first mark, half must be added, to have exactly the mark below the shape (not overlapping)"
 	deltaY := deltaY + (self markHeight / 2).
 	marksGoUpward ifTrue: [ deltaY := deltaY negated ].
@@ -162,6 +171,30 @@ RSChannel >> output: aCollection [
 { #category : #'private - highlight' }
 RSChannel >> symbolMarker [
 	^ #mark, self hash asString asSymbol
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOffCallback [
+
+	^ toggleOffCallback
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOffCallback: anObject [
+
+	toggleOffCallback := anObject
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOnCallback [
+
+	^ toggleOnCallback
+]
+
+{ #category : #accessing }
+RSChannel >> toggleOnCallback: anObject [
+
+	toggleOnCallback := anObject
 ]
 
 { #category : #'private - highlight' }

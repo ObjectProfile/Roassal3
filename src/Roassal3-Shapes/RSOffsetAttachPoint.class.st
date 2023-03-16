@@ -11,6 +11,12 @@ Class {
 	#category : #'Roassal3-Shapes-AttachPoint'
 }
 
+{ #category : #testing }
+RSOffsetAttachPoint class >> isAbstract [
+
+	^ self == RSOffsetAttachPoint
+]
+
 { #category : #accessing }
 RSOffsetAttachPoint >> endOffset [
 	^ endOffset
@@ -21,10 +27,10 @@ RSOffsetAttachPoint >> endOffset: aNumber [
 	endOffset := aNumber
 ]
 
-{ #category : #'public - hooks' }
-RSOffsetAttachPoint >> initialize [ 
+{ #category : #initialization }
+RSOffsetAttachPoint >> initialize [
 	super initialize.
-	startOffset := endOffset := 0.
+	startOffset := endOffset := 0
 ]
 
 { #category : #accessing }
@@ -34,5 +40,5 @@ RSOffsetAttachPoint >> startOffset [
 
 { #category : #accessing }
 RSOffsetAttachPoint >> startOffset: aNumber [
-	startOffset := aNumber.
+	startOffset := aNumber
 ]

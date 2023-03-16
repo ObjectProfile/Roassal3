@@ -1,21 +1,26 @@
 Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Interaction' }
+RSShape >> browseable [
+	self when: RSMouseClick do: [ self model browse  ]
+]
+
+{ #category : #'*Roassal3-Interaction' }
 RSShape >> draggable [
-	self @ RSDraggable.
+	self @ RSDraggable
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> labeled [
-	self @ RSLabeled.
+	self @ RSLabeled
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> popup [
-	self @ RSPopup.
+	self @ RSPopup
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> popupText: aBlock [
-	self @ (RSPopup text: aBlock).
+	self @ (RSPopup text: aBlock)
 ]

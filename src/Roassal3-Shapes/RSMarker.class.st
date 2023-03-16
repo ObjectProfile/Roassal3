@@ -21,7 +21,7 @@ RSMarker >> asMarker [
 RSMarker >> initialize [
 	super initialize.
 	offset := 0.
-	offsetRatio :=0.
+	offsetRatio := 0
 ]
 
 { #category : #accessing }
@@ -31,6 +31,30 @@ RSMarker >> offset [
 
 { #category : #accessing }
 RSMarker >> offset: aNumber [
+	"Set the offset in pixel. Consider:
+```
+c := RSCanvas new.
+
+box := RSBox new.
+circle := RSCircle new.
+
+c add: box; add: circle.
+box @ RSDraggable.
+circle @ RSDraggable.
+
+circle translateTo: 50 @ 40.
+
+line := RSLine new.
+line withBorderAttachPoint.
+marker := (RSCircle new size: 5; color: #red) asMarker.
+marker offset: 10.
+line marker: marker.
+line from: box.
+line to: circle.
+c add: line.
+c zoomToFit.
+c open
+```"
 	offset := aNumber
 ]
 
@@ -41,29 +65,57 @@ RSMarker >> offsetRatio [
 
 { #category : #accessing }
 RSMarker >> offsetRatio: aFloat [
-	"[0 1] value"
+	"Set the offset ratio of the marker. The argument is a float and has to range from 0 to 1.
+
+```
+c := RSCanvas new.
+
+box := RSBox new.
+circle := RSCircle new.
+
+c add: box; add: circle.
+box @ RSDraggable.
+circle @ RSDraggable.
+
+circle translateTo: 50 @ 40.
+
+line := RSLine new.
+line withBorderAttachPoint.
+marker := (RSCircle new size: 5; color: #red) asMarker.
+marker offsetRatio: 0.7.
+line marker: marker.
+line from: box.
+line to: circle.
+c add: line.
+c zoomToFit.
+c open
+```
+"
 	offsetRatio := aFloat
+]
+
+{ #category : #copying }
+RSMarker >> postCopy [
+	shape := shape copy
 ]
 
 { #category : #public }
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	| angle pos |
 	angle := vector angle.
-	"0.00001 in order to avoid inverseTransform bad result with sx = 0"
 	angle := angle + Float halfPi.
 	pos := from.
-	
+
 	shape matrix
 		loadIdentity;
 		rotateByRadians: angle.
-	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [ 
+	(self offset isZero and: [ self offsetRatio isZero ]) ifFalse: [
 		| unit |
 		unit := vector / (vector r max: 1).
-		pos := pos -(vector * self offsetRatio) - (unit * self offset)
+		pos := pos - (vector * self offsetRatio) - (unit * self offset).
 		 ].
 	shape position: pos.
 	aBlock value: shape
-	
 ]
 
 { #category : #accessing }
@@ -82,7 +134,7 @@ RSMarker >> withEnd: controlPoints do: aBlock [
 	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints at: controlPoints size - 1.
 	to := controlPoints last.
-	self setPositionTo: to vector: to-from do: aBlock.
+	self setPositionTo: to vector: to-from do: aBlock
 ]
 
 { #category : #public }
@@ -100,5 +152,5 @@ RSMarker >> withStart: controlPoints do: aBlock [
 	controlPoints size < 2 ifTrue: [ ^ self ].
 	from := controlPoints first.
 	to := controlPoints second.
-	self setPositionTo: from vector: from - to do: aBlock.
+	self setPositionTo: from vector: from - to do: aBlock
 ]

@@ -24,12 +24,12 @@ strict graph ip_map {
 Class {
 	#name : #RSStrictDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz'
+	#category : #'Roassal3-GraphViz-Core'
 }
 
 { #category : #visiting }
 RSStrictDotConverter >> writeHeader: aRSGroup [
-	stream << 'strict graph Roassal3'; crlf; << '{'.
+	stream << 'strict graph Roassal3'; crlf; << '{'
 ]
 
 { #category : #visiting }

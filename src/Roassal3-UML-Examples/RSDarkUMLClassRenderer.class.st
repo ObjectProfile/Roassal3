@@ -14,13 +14,13 @@ Class {
 RSDarkUMLClassRenderer >> initialize [
 	super initialize.
 	darkColor := Color r: 0.130 g: 0.130 b: 0.130.
-	self 
+	self
 		boxColor: darkColor;
 		textColor: Color white.
 	self marker shape color: darkColor.
-	self border 
+	self border
 		width: 2;
-		color: Color white.
+		color: Color white
 ]
 
 { #category : #initialization }
@@ -40,13 +40,13 @@ RSDarkUMLClassRenderer >> setUpCanvas: aCanvas [
 RSDarkUMLClassRenderer >> titleFor: aClass [
 	| shapes |
 	shapes := RSGroup with: (super titleFor: aClass).
-	aClass hasAbstractMethods ifTrue: [ 
+	aClass hasAbstractMethods ifTrue: [
 		shapes addFirst: (RSLabel new
 			color: Color magenta;
 			italic;
 			text: '<<Abstract>>') ].
 	self applyLayoutOn: shapes.
-	^ RSComposite new 
+	^ RSComposite new
 		shapes: shapes;
-		yourself.
+		yourself
 ]

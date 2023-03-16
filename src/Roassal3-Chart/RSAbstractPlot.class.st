@@ -3,14 +3,18 @@ TODO
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartElement,
+	#superclass : #RSAbstractChartPlot,
 	#instVars : [
 		'xValues',
-		'yValues',
-		'shape'
+		'yValues'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #adding }
+RSAbstractPlot >> addedIn: aRSChart [
+	aRSChart addPlot: self
+]
 
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
@@ -29,20 +33,10 @@ RSAbstractPlot >> checkAssertion [
 		description: 'X and Y values have not the same size, and they should'
 ]
 
-{ #category : #'public - shape' }
-RSAbstractPlot >> color [
-	^ self shape color
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> color: aColor [
-	self shape color: aColor
-]
-
 { #category : #public }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
-	^ self color ifNil: [ chart colorFor: self ].
+	^ self color ifNil: [ chart colorFor: self ]
 ]
 
 { #category : #initialization }
@@ -87,6 +81,11 @@ RSAbstractPlot >> isHorizontalBarPlot [
 { #category : #testing }
 RSAbstractPlot >> isLinePlot [
 	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isPlot [
+	^ true
 ]
 
 { #category : #testing }
@@ -137,20 +136,10 @@ RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
-{ #category : #'public - shape' }
-RSAbstractPlot >> shape [
-	^ shape
-]
-
-{ #category : #'public - shape' }
-RSAbstractPlot >> shape: aShape [
-	shape := aShape
-]
-
 { #category : #public }
-RSAbstractPlot >> x: aCollection y: aCollection2 [ 
+RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
-	
+
 	For example:
 ```
 x := (-3.14 to: 3.14 by: 0.01).
@@ -167,13 +156,13 @@ c addPlot: p.
 c addDecoration: RSHorizontalTick new.
 c addDecoration: RSVerticalTick new asFloat.
 c addDecoration: RSYMarkerDecoration new.
-c 
+c
 ```
 	"
-	self assert: [ aCollection notNil ] description: 'Cannot be nil'.
-	self assert: [ aCollection2 notNil ] description: 'Cannot be nil'.
+	self assert: [ aCollection isCollection ] description: 'Should be a collection'.
+	self assert: [ aCollection2 isCollection ] description: 'Should be a collection'.
 	self assert: [ aCollection size = aCollection2 size ] description: 'The two collections must have the same size'.
- 	
+
 	xValues := aCollection.
 	yValues := aCollection2
 ]
@@ -186,7 +175,7 @@ RSAbstractPlot >> xValues [
 { #category : #public }
 RSAbstractPlot >> y: aCollection [
 	"Define a plot with only a Y coordinate. The X coordinate is the index of the data point.
-	
+
 	For example:
 -=-=-=-=-=-=-=-=-=
 x := (-3.14 to: 3.14 by: 0.01).
@@ -202,7 +191,7 @@ c addPlot: p.
 
 c addDecoration: RSHorizontalTick new.
 c addDecoration: (RSVerticalTick new asFloat).
-c 
+c
 -=-=-=-=-=-=-=-=-=
 	"
 	self x: (1 to: aCollection size) y: aCollection

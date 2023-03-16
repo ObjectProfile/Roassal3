@@ -16,7 +16,7 @@ RSFlowLayout >> alignBottom [
 { #category : #alignment }
 RSFlowLayout >> alignLabel [
 	"Allow to align labels along their baseline.
-	
+
 ```Smalltalk
 words := (String loremIpsum: 100) substrings.
 r := Random new.
@@ -42,10 +42,10 @@ RSFlowLayout >> alignTop [
 	alignment := #top
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSFlowLayout >> initialize [
 	super initialize.
-	self alignTop.
+	self alignTop
 ]
 
 { #category : #testing }
@@ -84,14 +84,14 @@ RSFlowLayout >> linesFor: shapes [
 		maxLastLineHeight := maxLastLineHeight max: element height.
 		nextElement := shapes at: (index + 1 min: shapes size).
 		(x + nextElement width) > maxWidthFloat ifTrue: [
-			
+
 			lines add: currentLine.
 			x := gap.
 			y := y + maxLastLineHeight + gap.
 			currentLine := OrderedCollection new.
 			maxLastLineHeight := 0.
 		].
-		
+
 	].
 	currentLine ifNotEmpty: [ lines add: currentLine ].
 	^ lines

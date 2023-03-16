@@ -10,19 +10,19 @@ Class {
 	#category : #'Roassal3-Animation-Core'
 }
 
-{ #category : #public }
+{ #category : #'accessing - defaults' }
 RSCompositeAnimation class >> defaultDuration [
 	^ 0 seconds
 ]
 
 { #category : #adding }
 RSCompositeAnimation >> add: anAnimation [
-	animations add: anAnimation 
+	animations add: anAnimation
 ]
 
 { #category : #adding }
 RSCompositeAnimation >> addAll: array [
-	animations addAll: array.
+	animations addAll: array
 ]
 
 { #category : #accessing }
@@ -33,7 +33,7 @@ RSCompositeAnimation >> animations [
 { #category : #initialization }
 RSCompositeAnimation >> reset [
 	super reset.
-	animations := OrderedCollection new.
+	animations := OrderedCollection new
 ]
 
 { #category : #private }

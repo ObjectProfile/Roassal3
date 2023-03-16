@@ -3,11 +3,11 @@ TODO
 "
 Class {
 	#name : #RSRiceBinning,
-	#superclass : #RSBinningStrategy,
+	#superclass : #RSAbstractBinning,
 	#category : #'Roassal3-Chart-Strategy'
 }
 
-{ #category : #'as yet unclassified' }
-RSRiceBinning >> computeSizeFor: values [
-	^ 2 * (values size raisedTo: 1/3)
+{ #category : #hooks }
+RSRiceBinning >> computeNumberOfBinsFor: aCollection [
+	^ 2 * (aCollection size raisedTo: 1/3)
 ]

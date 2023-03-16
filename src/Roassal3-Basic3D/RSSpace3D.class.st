@@ -21,11 +21,10 @@ RSSpace3D >> add: mesh [
 
 { #category : #building }
 RSSpace3D >> build [
-	
-	self 
+
+	self
 		buildElements;
-		buildEvents.
-	
+		buildEvents
 ]
 
 { #category : #building }
@@ -37,28 +36,28 @@ RSSpace3D >> buildElements [
 		canvas addAll: meshElements.
 		elements at: mesh put: meshElements.
 		mesh update.
-		 ].
+		 ]
 ]
 
 { #category : #building }
 RSSpace3D >> buildEvents [
 	| prev |
 	prev := nil.
-	canvas 
-		when: RSMouseDragStart do: [ :evt | 
+	canvas
+		when: RSMouseDragStart do: [ :evt |
 			prev := evt positionFromCamera ];
 		when: RSMouseDragging do: [ :evt | | p theta |
 			tmat identity.
 			p := evt positionFromCamera.
 			theta := (prev - p )* 360 / extent.
-			tmat 
+			tmat
 				xrot: theta y degreesToRadians;
 				yrot: theta x degreesToRadians.
 			meshes do: [ :m | m matrix mult: tmat].
 			self draw.
 			canvas signalUpdate.
 			prev := p.
-			 ].
+			 ]
 ]
 
 { #category : #accessing }
@@ -76,7 +75,7 @@ RSSpace3D >> draw [
 	meshes do: [ :mesh |
 		self updateMatrix: mesh.
 		mesh update ].
-	canvas signalUpdate.
+	canvas signalUpdate
 ]
 
 { #category : #accessing }
@@ -90,7 +89,7 @@ RSSpace3D >> extent [
 ]
 
 { #category : #accessing }
-RSSpace3D >> extent: aPoint [ 
+RSSpace3D >> extent: aPoint [
 	extent := aPoint
 ]
 
@@ -99,11 +98,11 @@ RSSpace3D >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
 		title: ['View'];
-		initializeCanvas: [ 
+		initializeCanvas: [
 			canvas color: Smalltalk ui theme backgroundColor.
-			canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ]. 
-			
-			canvas ].
+			canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
+
+			canvas ]
 ]
 
 { #category : #initialization }
@@ -114,6 +113,17 @@ RSSpace3D >> initialize [
 		canvas: RSCanvas new.
 	meshes := OrderedCollection new.
 	tmat := RSMatrix3D new
+]
+
+{ #category : #ui }
+RSSpace3D >> inspector [
+	<inspectorPresentationOrder: 90 title: 'View'>
+	canvas color: Smalltalk ui theme backgroundColor.
+	canvas zoomToFit.
+
+	^ SpRoassal3InspectorPresenter new
+		canvas: canvas;
+		yourself
 ]
 
 { #category : #accessing }

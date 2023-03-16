@@ -55,9 +55,9 @@ Class {
 	#category : #'Roassal3-SVG-Edges'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSMultiBezierEdgeBuilder class >> multiBezier [
-	^ self new: RSSVGPathLine new.
+	^ self new: RSSVGPathLine new
 ]
 
 { #category : #private }
@@ -69,8 +69,8 @@ RSMultiBezierEdgeBuilder >> applyTensionOn: points [
 	ten := self tension.
 	2 to: n do: [ :i| | p t |
 		p := points at: i.
-		t := (i -1)/n. 
-		points at: i put: (1 - ten) * (p1 + (t * dp)) + (ten * p)].
+		t := (i -1)/n.
+		points at: i put: (1 - ten) * (p1 + (t * dp)) + (ten * p)]
 ]
 
 { #category : #private }
@@ -84,15 +84,15 @@ RSMultiBezierEdgeBuilder >> commonAncestor: edge with: selector [
 	a := aNodes removeLast.
 	b := bNodes removeLast.
 	sharedNode := nil.
-	remove := [ :list | list 
+	remove := [ :list | list
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ list removeLast ] ].
-	[ a == b ] whileTrue: [ 
+	[ a == b ] whileTrue: [
 		sharedNode := a.
 		sharedNode ifNil: [ ^ nil ].
 		a := remove value: aNodes.
 		b := remove value: bNodes. ].
-	^ sharedNode.
+	^ sharedNode
 ]
 
 { #category : #private }
@@ -102,32 +102,31 @@ RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	from := edge from.
 	to := edge to.
 	ancestor := self commonAncestor: edge with: selector.
-	ancestor ifNil: [ 
+	ancestor ifNil: [
 		shapes := (self followersOf: from with: selector),
 			(self followersOf: to with: selector) reverse.
 		^ shapes ].
 	search := [ :model | canvas shapeFromModel: (selector rsValue: model) ].
 	shapes := OrderedCollection new.
 	shapes add: from.
-	[ from == ancestor ] whileFalse: [ 
+	[ from == ancestor ] whileFalse: [
 		from := search value: from model.
 		shapes add: from ].
 	index := shapes size.
-	[ to == ancestor ] whileFalse: [ 
+	[ to == ancestor ] whileFalse: [
 		shapes add: to afterIndex: index.
 		to := search value: to model ].
-	shapes do: [ :e | (e connectedEdges includes: edge)
-		ifFalse: [ e addConnectedEdge: edge ] ].
-	^ shapes.
-	
+	shapes do: [ :e | (e connectedLines includes: edge)
+		ifFalse: [ e addConnectedLine: edge ] ].
+	^ shapes
 ]
 
 { #category : #private }
 RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 	| t followers |
 	followers := OrderedCollection new.
-	t := element. 
-	[ t notNil ] whileTrue: [ 
+	t := element.
+	[ t notNil ] whileTrue: [
 		followers add: t.
 		t := canvas shapeFromModel: (selector rsValue: t model) ].
 	^ followers
@@ -135,7 +134,7 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 
 { #category : #'public - line path' }
 RSMultiBezierEdgeBuilder >> following: selector [
-	self shape svgPath: [ :line | [:builder | 
+	self shape svgPath: [ :line | [:builder |
 		| points commonShapes att a b |
 		att := line properties.
 		a := line startPoint.
@@ -145,17 +144,17 @@ RSMultiBezierEdgeBuilder >> following: selector [
 			ifAbsentPut: [ self commonShapes: line with: selector ].
 		points := commonShapes collect: [ :e | e position asFloatPoint ].
 		points removeFirst; removeLast; addFirst: a; addLast: b.
-		self applyTensionOn: points. 
+		self applyTensionOn: points.
 		builder absolute; moveTo: points first.
 		2 to: points size - 2 do: [ :i | | p1 p2 |
 			p1 := points at: i.
 			p2 := points at: i +1.
-			builder 
+			builder
 				curveVia: p1
 				to: (p1 + p2)/2 ].
 		builder
 			curveVia:( points at: points size -1)
-			to: points last ] ].
+			to: points last ] ]
 ]
 
 { #category : #'public - line path' }
@@ -165,7 +164,7 @@ RSMultiBezierEdgeBuilder >> tension [
 
 { #category : #'public - line path' }
 RSMultiBezierEdgeBuilder >> tension: aNumberOrBlock [
-	"tension should evaluate it and return a value between 0 and 1. 
+	"tension should evaluate it and return a value between 0 and 1.
 	0 means straight lines
 	1 means a curve line"
 	tension := aNumberOrBlock

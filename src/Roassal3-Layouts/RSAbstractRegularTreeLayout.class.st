@@ -44,14 +44,14 @@ RSAbstractRegularTreeLayout >> doExecute: elements [
 ]
 
 { #category : #hook }
-RSAbstractRegularTreeLayout >> doInitialize: elements [ 
+RSAbstractRegularTreeLayout >> doInitialize: elements [
 	self clear
 ]
 
 { #category : #hook }
 RSAbstractRegularTreeLayout >> doPost: elements [
 	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
-	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ].
+	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ]
 ]
 
 { #category : #accessing }
@@ -69,14 +69,14 @@ RSAbstractRegularTreeLayout >> horizontallyReverse: elements [
 		do: [ :el | el translateTo: (largeur - el position x) @ el position y ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractRegularTreeLayout >> initialize [
 	super initialize.
 	topGap := 5.
 	leftGap := 5.
 	isLayered := false.
 	shouldBeHorizontallyReversed := false.
-	shouldBeVerticallyReversed := false.
+	shouldBeVerticallyReversed := false
 ]
 
 { #category : #accessing }
@@ -96,7 +96,7 @@ RSAbstractRegularTreeLayout >> layered [
 	self isLayered: true
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSAbstractRegularTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: anObject [
 	self subclassResponsibility
 ]
@@ -120,7 +120,7 @@ RSAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 { #category : #accessing }
 RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
 	"Return if the layout is horizontally reversed"
-	^ shouldBeHorizontallyReversed 
+	^ shouldBeHorizontallyReversed
 ]
 
 { #category : #accessing }
@@ -145,7 +145,7 @@ RSAbstractRegularTreeLayout >> verticallyReverse [
 	"Reverse the edge extremities"
 	"Here is an example:
 
-| b |	
+| b |
 b := RTMondrian new.
 b nodes: (1 to: 100).
 b edges connectFrom: [ :v | v // 2 ].
@@ -153,8 +153,6 @@ b layout tree verticallyReverse.
 b
 "
 	shouldBeVerticallyReversed := true
-	
-
 ]
 
 { #category : #reversing }

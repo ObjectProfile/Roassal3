@@ -24,14 +24,14 @@ RSAlpharo >> addGravityAnimation [
 	layout length: 100.
 	layout alpha: 0.005.
 	layout addNodes: { box }.
-	layout addEdges: edges.
+	layout addLines: edges.
 	mock := layout mockElementAt: box.
 	mock isFixed: true.
 	mock fixPosition: 0@0.
 	self canvas newAnimation repeat onStepDo: [ | p |
 		p := self canvas camera fromPixelToSpace: self mousePosition.
 		mock fixPosition: p.
-		box translateTo: p].
+		box translateTo: p]
 ]
 
 { #category : #hooks }
@@ -40,14 +40,14 @@ RSAlpharo >> blinkRandomAmeba [
 	random next> 0.05 ifTrue: [ ^ self ].
 	ameba := amebas atRandom.
 	ameba isBlinking ifTrue: [ ^ self ].
-	ameba blink.
+	ameba blink
 ]
 
 { #category : #initialization }
 RSAlpharo >> initialize [
 	super initialize.
 	perlin := NSPerlinNoise3 new octaves: 3.
-	random := Random new.
+	random := Random new
 ]
 
 { #category : #hooks }
@@ -110,7 +110,7 @@ RSAlpharo >> mousePosition [
 ]
 
 { #category : #accessing }
-RSAlpharo >> objects: aCollection [ 
+RSAlpharo >> objects: aCollection [
 	objects := aCollection
 ]
 
@@ -135,41 +135,40 @@ RSAlpharo >> removeJar [
 			self addGravityAnimation.
 			  ];
 		yourself.
-	jarShape propertyAt: #anime put: animation.
+	jarShape propertyAt: #anime put: animation
 ]
 
 { #category : #hooks }
 RSAlpharo >> renderIn: aCanvas [
-	aCanvas inspectorContext: RSEmptyContext new.
-	amebas := objects collect: [ :obj | 
-		RSAmeba new 
-			model: obj; 
+	aCanvas inspectorContext: RSEmptyContextInteraction new.
+	amebas := objects collect: [ :obj |
+		RSAmeba new
+			model: obj;
 			offset: random next;
 			yourself ] as: RSGroup.
 	shapes := amebas collect: #shape.
-	
+
 	self setupLayoutIn: aCanvas.
 	self setAnimationsIn: aCanvas.
 	aCanvas addAll: shapes.
 	aCanvas add: self jar.
-	aCanvas when: RSMouseClick send: #removeJar to: self.
+	aCanvas when: RSMouseClick send: #removeJar to: self
 ]
 
 { #category : #hooks }
 RSAlpharo >> setAnimationsIn: aCanvas [
 	"we create 3 different animations, then we can pause one animation with out affectin others"
-	aCanvas newAnimation repeat 
+	aCanvas newAnimation repeat
 		onStepDo: [ layout step ].
-		
-	aCanvas newAnimation repeat 
+
+	aCanvas newAnimation repeat
 		onStepDo: [ amebas do: [:ameba | ameba update: perlin ] ].
-		
+
 	aCanvas newAnimation repeat
 		onStepDo: [ self blinkRandomAmeba ].
-		
+
 	aCanvas newAnimation repeat
-		onStepDo: [ self updateRedLine ].
-	
+		onStepDo: [ self updateRedLine ]
 ]
 
 { #category : #hooks }
@@ -186,7 +185,7 @@ RSAlpharo >> setupLayoutIn: aCanvas [
 		strength: 0.2;
 		addNodes: shapes;
 		alpha: 0.8;
-		yourself.
+		yourself
 ]
 
 { #category : #hooks }
@@ -208,8 +207,5 @@ RSAlpharo >> updateRedLine [
 		redLine add: (RSLine new
 			startPoint: p1;
 			endPoint: p2;
-			color: (Color red alpha: i/trace size)  ) ].
-	
-	
-
+			color: (Color red alpha: i/trace size)  ) ]
 ]

@@ -9,7 +9,7 @@ RSBasicShapeExamples >> example16BasicLinePath [
 	b2 := RSBox new size: 100@100; color: Color blue; position: 100@100.
 	c addShape: b1.
 	c addShape: b2.
-	
+
 	l := RSSVGPathLine new
 		svgPath: [ :aLine |
 			[ :canvas | | vector u unit left right left1 right1 a b |
@@ -25,7 +25,7 @@ RSBasicShapeExamples >> example16BasicLinePath [
 			right := middle + (u * arrowWidth / 4).
 			left1 := middle - (u * arrowWidth / 2).
 			right1 := middle + (u * arrowWidth / 2).
-			
+
 			canvas
 				absolute;
 				moveTo: a;
@@ -44,9 +44,9 @@ RSBasicShapeExamples >> example16BasicLinePath [
 		startPoint: 0@0;
 		endPoint: 100@100.
 	c addShape: l.
-	
+
 	translate := [ :evt |
-		l 
+		l
 			startPoint: b1 position;
 			endPoint: b2 position.
 		evt shape translateBy: evt step.

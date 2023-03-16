@@ -11,7 +11,7 @@ RSTContainer >> add: aShape [
 	self
 		assert: aShape notNil
 		description: 'Nil cannot be added to a canvas'.
-	aShape 
+	aShape
 		addedIn: self;
 		renderOn: self.
 	^ aShape
@@ -22,7 +22,7 @@ RSTContainer >> addAll: aCollection [
 	"Add a collection of shapes to the canvas. The argument is a collection of shapes."
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
 	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
-	
+
 	"Add each shape"
 	aCollection do: [ :aShape | self add: aShape ]
 ]
@@ -31,7 +31,7 @@ RSTContainer >> addAll: aCollection [
 RSTContainer >> addAllShapes: aCollection [
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
 	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
-	aCollection do: [ :shape | self addShape: shape ].
+	aCollection do: [ :shape | self addShape: shape ]
 ]
 
 { #category : #'adding nodes edges' }
@@ -55,6 +55,22 @@ RSTContainer >> addNode: aShape [
 { #category : #adding }
 RSTContainer >> addShape: aShape [
 	aShape addedIn: self
+]
+
+{ #category : #accessing }
+RSTContainer >> allChildren [
+	| allChildren index |
+	index := 1.
+	allChildren := OrderedCollection withAll: self shapes.
+	[ index <= allChildren size ] whileTrue: [
+		allChildren addAll: ((allChildren at: index) children ifNil: [#()]).
+		index := index + 1 ].
+	^ allChildren
+]
+
+{ #category : #accessing }
+RSTContainer >> children [
+	^ self nodes
 ]
 
 { #category : #'looking up shapes' }
@@ -127,7 +143,7 @@ RSTContainer >> lines [
 ]
 
 { #category : #accessing }
-RSTContainer >> nodes [ 
+RSTContainer >> nodes [
 	"Return all the shapes except lines contained in the canvas."
 	^ self privateNodes
 		ifNil: [ | res |
@@ -137,6 +153,13 @@ RSTContainer >> nodes [
 
 { #category : #accessing }
 RSTContainer >> numberOfEdges [
+	"OBSOLETE. USE #numberOfLines INSTEAD"
+	"Return the number of edges contained in the container"
+	^ self numberOfLines
+]
+
+{ #category : #accessing }
+RSTContainer >> numberOfLines [
 	"Return the number of edges contained in the container"
 	^ self privateEdges
 		ifNil: [ 0 ]
@@ -189,12 +212,12 @@ RSTContainer >> pushBackEdges [
 
 { #category : #removing }
 RSTContainer >> removeEdge: anEdge [
-	self edges remove: anEdge ifAbsent: [  ].
+	self edges remove: anEdge ifAbsent: [  ]
 ]
 
 { #category : #removing }
 RSTContainer >> removeNode: aNode [
-	self nodes remove: aNode ifAbsent: [  ].
+	self nodes remove: aNode ifAbsent: [  ]
 ]
 
 { #category : #'looking up shapes' }
@@ -205,7 +228,7 @@ RSTContainer >> shapeFromModel: anObject [
 ]
 
 { #category : #accessing }
-RSTContainer >> shapes [ 
+RSTContainer >> shapes [
 	^ self privateShapes
 		ifNil: [ | res |
 			self privateShapes: (res := RSGroup new).
@@ -217,4 +240,11 @@ RSTContainer >> shapesFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapesFromModel: anObject
+]
+
+{ #category : #accessing }
+RSTContainer >> withAllChildren [
+	^ self allChildren
+		add: self;
+		yourself
 ]

@@ -26,10 +26,10 @@ Class {
 
 { #category : #layout }
 RSTorchUMLClassRenderer >> applyMLayoutOn: shapes [
-	RSFlowLayout new 
+	RSFlowLayout new
 		gapSize: 2;
 		maxWidth: self currentMaxWidth;
-		on: shapes.
+		on: shapes
 ]
 
 { #category : #layout }
@@ -46,7 +46,7 @@ RSTorchUMLClassRenderer >> classBoxShapeFor: aClass [
 ]
 
 { #category : #hooks }
-RSTorchUMLClassRenderer >> classNameBoxFor: aClass [ 
+RSTorchUMLClassRenderer >> classNameBoxFor: aClass [
 	^ RSBox new
 		color: self titleBoxColor;
 		yourself
@@ -87,7 +87,7 @@ RSTorchUMLClassRenderer >> methodFor: aMethod [
 { #category : #hooks }
 RSTorchUMLClassRenderer >> methodsFor: aClass [
 	^ (super methodsFor: aClass)
-		padding: ( Margin 
+		padding: ( Margin
 		 	left: 0
 			right: 0
 			top: 5
@@ -114,8 +114,8 @@ RSTorchUMLClassRenderer >> shapeFor: aClass [
 	self adjustTitle: title on: shapes.
 	shapes addFirst: boxTitle.
 	shapes addLast: box.
-	self adjustBox: box on: shapes. 
-	boxTitle 
+	self adjustBox: box on: shapes.
+	boxTitle
 		position: box position x @ title position y ;
 		extent: (box width @ title height).
 	^ RSComposite new
@@ -123,7 +123,7 @@ RSTorchUMLClassRenderer >> shapeFor: aClass [
 		draggable;
 		model: aClass;
 		shapes: shapes;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -151,5 +151,4 @@ RSTorchUMLClassRenderer >> varFor: model [
 		popup;
 		size: 20;
 		yourself
-		
 ]

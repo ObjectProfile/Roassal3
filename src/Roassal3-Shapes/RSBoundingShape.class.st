@@ -1,5 +1,12 @@
 "
-My subclasses has an extent and a transformation matrix
+Bounding shapes have encompassing rectangle or bounding box.
+My subclasses are: `RSBitmap`, `RSBox`, `RSCircularShape`, `RSComposite`, `RSLabel`, `RSPieSlice` and `RSSVGPath`
+
+## Instance variables
+- `baseRectangle`, the center of this rectangle is `0@0`, base rectangle contains the basic shape without any transformation.
+- `matrix` is an instance of `AthensAffineTransform`, this matrix handles scalation, rotation, translation and skew operations.
+- `connectedLines`, a collection of lines where this bounding shape is conected. If the shape changes its position, the connected lines will be updated.
+- shouldUpdateLines, 
 "
 Class {
 	#name : #RSBoundingShape,
@@ -28,7 +35,7 @@ For example:
 ```
 c := RSCanvas new.
 
-shapes := RSCircle models: (30 to: 50) size: [ :nb | nb ]. 
+shapes := RSCircle models: (30 to: 50) size: [ :nb | nb ].
 
 c addAll: shapes.
 
@@ -38,7 +45,7 @@ lines := RSEdgeBuilder line
 
 lines do: [ :l | l attachPoint: (RSHorizontalAttachPoint new) ].
 
-RSGridLayout on: shapes. 
+RSGridLayout on: shapes.
 RSLocation new
 	above;
 	move: shapes first on: shapes allButFirst.
@@ -46,11 +53,11 @@ shapes @ RSDraggable.
 
 c @ RSCanvasController.
 c open
-```	
+```
 "
 
 	^ someObjects
-		  collect: [ :obj | 
+		  collect: [ :obj |
 		  (self model: obj) size: (aOneArgBlockOrSymbol rsValue: obj) ]
 		  as: RSGroup
 ]
@@ -63,14 +70,14 @@ RSBoundingShape >> accept: visitor [
 { #category : #'edges - deprecated' }
 RSBoundingShape >> addConnectedEdge: anEdge [
 	self assert: anEdge isEdge.
-	(self connectedEdges includes: anEdge) 
+	(self connectedEdges includes: anEdge)
 		ifFalse: [ self connectedEdges add: anEdge ]
 ]
 
 { #category : #lines }
 RSBoundingShape >> addConnectedLine: aLine [
-	self assert: aLine isEdge.
-	(self connectedLines includes: aLine) 
+	self assert: [ aLine isLine ] description: 'Only a line can be added'.
+	(self connectedLines includes: aLine)
 		ifFalse: [ self connectedLines add: aLine ]
 ]
 
@@ -86,14 +93,14 @@ RSBoundingShape >> allRecursiveConnectedShapes [
 { #category : #private }
 RSBoundingShape >> allRecursiveConnectedShapesIn: aCollection [
 	"Private method"
-	
+
 	"If we already went through me, there is nothing to do"
 	(aCollection includes: self) ifTrue: [ ^ self ].
-	
+
 	"Else, we add it and we do the recursion"
 	aCollection add: self.
 	self incomingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ].
-	self outgoingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ].
+	self outgoingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ]
 ]
 
 { #category : #accessing }
@@ -103,29 +110,19 @@ RSBoundingShape >> baseRectangle [
 
 { #category : #matrix }
 RSBoundingShape >> basicTranslateBy: delta [
-	self updateEdgesOFF.
+	self updateLinesOFF.
 	self position: self position + delta.
-	self updateEdgesON.
+	self updateLinesON
 ]
 
 { #category : #accessing }
 RSBoundingShape >> computeEncompassingRectangle [
-	^ self computeEncompassingRectangleFor: self baseRectangle.
-	
+	^ self computeEncompassingRectangleFor: self baseRectangle
 ]
 
 { #category : #accessing }
-RSBoundingShape >> computeEncompassingRectangleFor: rect [ 
+RSBoundingShape >> computeEncompassingRectangleFor: rect [
 	^ self computeEncompassingRectangleFor: rect matrix: self matrix
-]
-
-{ #category : #accessing }
-RSBoundingShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
-	| points |
-	points := #(topLeft topRight bottomRight bottomLeft)
-		collect: [ :s | aMatrix transform: (s value: rect) ].
-	^ Rectangle encompassing: points.
-	
 ]
 
 { #category : #'edges - deprecated' }
@@ -141,6 +138,16 @@ RSBoundingShape >> connectedLines [
 	^ connectedLines
 ]
 
+{ #category : #lines }
+RSBoundingShape >> connectedLines: aCollection [
+	connectedLines := aCollection
+]
+
+{ #category : #defaults }
+RSBoundingShape >> defaultExtent [
+	^ 10@10
+]
+
 { #category : #accessing }
 RSBoundingShape >> extent: aPoint [
 	| oldExtent extent |
@@ -150,7 +157,7 @@ RSBoundingShape >> extent: aPoint [
 	oldExtent := extent.
 	baseRectangle := Rectangle floatCenter: 0@0 extent: aPoint.
 	self resetBBox; resetPath.
-	self announce: [ RSExtentChangedEvent new 
+	self announce: [ RSExtentChangedEvent new
 		shape: self;
 		oldExtent: oldExtent;
 		newExtent: extent ]
@@ -159,7 +166,7 @@ RSBoundingShape >> extent: aPoint [
 { #category : #initialization }
 RSBoundingShape >> fromRectangle: aRectangle [
 	"Set the position and extent of the shape, using a rectangle as argument.
-For example:	
+For example:
 ```
 c := RSCanvas new.
 box := RSBox new.
@@ -168,7 +175,7 @@ c add: box.
 c
 ```
 "
-	self 
+	self
 		translateTo: aRectangle floatCenter;
 		extent: aRectangle extent
 ]
@@ -180,13 +187,20 @@ RSBoundingShape >> geometry [
 	e := rect extent.
 	e = (0@0) ifTrue: [ ^ rect floatCenter asGPoint ].
 	^ GRectangle
-		origin: rect origin 
+		origin: rect origin
 		corner: rect corner
+]
+
+{ #category : #accessing }
+RSBoundingShape >> globalEncompassingRectangle [
+	^ self
+		computeEncompassingRectangleFor: self baseRectangle
+		matrix: self globalMatrix
 ]
 
 { #category : #matrix }
 RSBoundingShape >> globalMatrix [
-	^ parent globalMatrix multiplyBy: matrix.
+	^ parent globalMatrix multiplyBy: matrix
 ]
 
 { #category : #testing }
@@ -202,10 +216,13 @@ RSBoundingShape >> height: aNumber [
 
 { #category : #testing }
 RSBoundingShape >> includesPoint: aPoint [
-	"Return true if the provided point is included in the encompassing rectangle of the shape."
-	| invertedPoint |
-	invertedPoint := matrix rsInverseTransform: aPoint.
-	^ self baseRectangle containsPoint: invertedPoint.
+	"Return true if the provided point is included in the shape"
+
+	"First we check if the encompassingRectangle has the point. If the point is outside, there is not need to transform the point"
+	(self encompassingRectangle containsPoint: aPoint)
+		ifFalse: [ ^ false ].
+
+	^ self preciseIncludesPoint: aPoint
 ]
 
 { #category : #'edges - deprecated' }
@@ -232,14 +249,22 @@ RSBoundingShape >> incomingShapes [
 RSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix; updateEdgesON.
-	
+
 	baseRectangle := 0@0 corner: 0@0.
-	self extent: 10 @ 10.
+	self extent: self defaultExtent
 ]
 
 { #category : #initialization }
 RSBoundingShape >> initializeMatrix [
 	matrix := AthensAffineTransform new
+]
+
+{ #category : #testing }
+RSBoundingShape >> intersects: aRectangle [
+	| rect |
+	self isInACanvas ifFalse: [ ^ false ].
+	rect := self globalEncompassingRectangle.
+	^ rect intersects: aRectangle
 ]
 
 { #category : #lines }
@@ -271,19 +296,19 @@ RSBoundingShape >> matrix: aMatrix [
 { #category : #matrix }
 RSBoundingShape >> matrixDo: aBlock [
 	aBlock value: matrix.
-	self resetBBox.
+	self resetBBox
 ]
 
 { #category : #metrics }
 RSBoundingShape >> numberOfIncomingLines [
 	"Return the number of lines incoming to the shape"
-	^ self incomingEdges size
+	^ self incomingLines size
 ]
 
 { #category : #metrics }
 RSBoundingShape >> numberOfOutgoingLines [
 	"Return the number of lines incoming to the shape"
-	^ self outgoingEdges size
+	^ self outgoingLines size
 ]
 
 { #category : #'edges - deprecated' }
@@ -307,24 +332,24 @@ RSBoundingShape >> outgoingShapes [
 ]
 
 { #category : #matrix }
-RSBoundingShape >> position [ 
+RSBoundingShape >> position [
 	^ matrix translation
 ]
 
 { #category : #matrix }
 RSBoundingShape >> position: aPoint [
 	"This method is private. Use #translateTo: instead."
-	self 
+	self
 		assert: [ (aPoint x isNaN | aPoint y isNaN) not ]
 		description: 'you must provide a real point'.
 	matrix translation: aPoint.
 	self resetBBox.
-	self updateConnectedEdges.
+	self updateConnectedLines
 ]
 
 { #category : #accessing }
 RSBoundingShape >> positionInCanvas [
-	^ self globalMatrix transform: 0@0.
+	^ self globalMatrix transform: 0@0
 ]
 
 { #category : #copying }
@@ -333,11 +358,22 @@ RSBoundingShape >> postCopy [
 	self matrix: self matrix copy
 ]
 
+{ #category : #testing }
+RSBoundingShape >> preciseIncludesPoint: aPoint [
+
+	"Return true if the provided point is precisily included in the shape. Taking care of the transformation (aka scaling, position, rotation)"
+
+	| invertedPoint |
+
+	invertedPoint := matrix rsInverseTransform: aPoint.
+	^ self baseRectangle containsPoint: invertedPoint
+]
+
 { #category : #actions }
 RSBoundingShape >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeNode: self.
-	self removeConnectedEdges.
+	self removeConnectedLines.
 	super remove
 ]
 
@@ -355,7 +391,7 @@ RSBoundingShape >> removeConnectedEdges [
 
 { #category : #lines }
 RSBoundingShape >> removeConnectedLine: aLine [
-	[  aLine isEdge ] assert.
+	self assert: [  aLine isLine ].
 	self connectedLines remove: aLine ifAbsent: [ ]
 ]
 
@@ -380,10 +416,26 @@ polygon := RSPolygon new
 		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
 		color: 'FFAE0B'.
 polygon cornerRadii: 5.
-polygon rotateByDegrees: -45.		
+polygon rotateByDegrees: -45.
 
 c add: polygon.
-c	
+c
+```
+
+Another example:
+```
+c := RSCanvas new.
+
+(0 to: 90 count: 10) do: [ :rotation |
+	lbl := RSLabel text: 'Hello world'.
+	lbl color: Color gray translucent.
+	lbl rotateByDegrees: rotation.
+	lbl @ RSHighlightable red.
+	lbl translateTopLeftTo: 0 @ 0.
+	c add: lbl
+	 ].
+c @ RSCanvasController.
+c open
 ```
 	"
 	matrix rotateByDegrees: angle
@@ -410,7 +462,7 @@ RSBoundingShape >> scale [
 ]
 
 { #category : #matrix }
-RSBoundingShape >> scaleBy: scale [ 
+RSBoundingShape >> scaleBy: scale [
 	"Scale the shape. For example:
 
 ```
@@ -420,13 +472,14 @@ polygon := RSPolygon new
 		points: { 0 @ -50 . 50 @ 0 . -50 @ 0 };
 		color: 'FFAE0B'.
 polygon cornerRadii: 5.
-polygon rotateByDegrees: -45.		
+polygon rotateByDegrees: -45.
 polygon scaleBy: 4.
 c add: polygon.
 c
 ```
 	"
-	matrix scaleBy: scale
+	matrix scaleBy: scale.
+	self resetBBox
 ]
 
 { #category : #'edges - deprecated' }
@@ -468,7 +521,7 @@ c add: dot.
 c zoomToFit.
 c open
 ```
-	
+
 "
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (1 @ -1))
 ]
@@ -488,7 +541,7 @@ c add: dot.
 c zoomToFit.
 c open
 ```
-	
+
 "
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ -1))
 ]
@@ -510,7 +563,7 @@ lbl translateMiddleRightTo: 0 @ 0.
 c @ RSCanvasController.
 c open
 ```
-	
+
 "
 	self translateTo: aPositionAsPoint - ((self extent x / 2) @ 0)
 ]
@@ -527,7 +580,7 @@ lbl setAsFixed.
 lbl translateTopLeftTo: 0 @ 0.
 c open
 ```
-	
+
 "
 	self translateTo: aPositionAsPoint + (self extent / 2)
 ]
@@ -547,7 +600,7 @@ c add: dot.
 c zoomToFit.
 c open
 ```
-	
+
 "
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ 1))
 ]
@@ -556,14 +609,14 @@ c open
 RSBoundingShape >> updateConnectedEdges [
 	self shouldUpdateEdges
 		ifFalse: [ ^ self ].
-	self connectedEdges do: [ :edge | edge update ].
+	self connectedEdges do: [ :edge | edge update ]
 ]
 
-{ #category : #'edges - deprecated' }
+{ #category : #lines }
 RSBoundingShape >> updateConnectedLines [
 	self shouldUpdateLines
 		ifFalse: [ ^ self ].
-	self connectedLines do: [ :line | line update ].
+	self connectedLines do: [ :line | line update ]
 ]
 
 { #category : #'edges - deprecated' }

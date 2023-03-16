@@ -25,12 +25,12 @@ Class {
 	#instVars : [
 		'athensCanvas'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Rendering'
 }
 
 { #category : #accessing }
 RSRenderer >> canvas [
-	^ athensCanvas 
+	^ athensCanvas
 ]
 
 { #category : #accessing }
@@ -39,6 +39,30 @@ RSRenderer >> canvas: aCanvas [
 	athensCanvas := aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
+RSRenderer >> visitBorder: border [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitBoundingShape: shape [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitCamera: camera [
+]
+
+{ #category : #visiting }
 RSRenderer >> visitCanvas: canvas [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitGroup: aGroup [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitLabel: label [
+]
+
+{ #category : #visiting }
+RSRenderer >> visitLine: line [
 ]

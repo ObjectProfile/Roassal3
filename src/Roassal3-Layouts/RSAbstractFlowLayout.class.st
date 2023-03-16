@@ -19,7 +19,7 @@ RSAbstractFlowLayout class >> isAbstract [
 
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger [
-	
+
 	^(self new)
 		maxWidth: anInteger;
 		yourself
@@ -27,7 +27,7 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
-	
+
 	^(self new)
 		maxWidth: anInteger;
 		gapSize: anotherInteger;
@@ -41,7 +41,7 @@ RSAbstractFlowLayout >> defaultGapSize [
 
 { #category : #configuration }
 RSAbstractFlowLayout >> defaultMaxWidth [
-	^ [ :elements | 
+	^ [ :elements |
 		(elements size < 4) ifTrue: [ (((elements collect: [ :each | each width * each height]) * 2) sum ) + (elements size * (gapSize squared)) ]
 			ifFalse: [
 			((((elements collect: [ :each | each width * each height]) * 2) sum) + (elements size * (gapSize squared))) sqrt ceiling truncated.
@@ -56,12 +56,10 @@ RSAbstractFlowLayout >> doExecute: elements [
 	elements ifEmpty: [ ^ self ].
 	lines := self linesFor: elements.
 	align := RSAlignment new.
-	lines do: [ :line | 
+	lines do: [ :line |
 		align shapes: line.
 		alignment value: align.
-		 ].
-	
-	
+		 ]
 ]
 
 { #category : #accessing }
@@ -74,15 +72,15 @@ RSAbstractFlowLayout >> gapSize: aSizeInPixels [
 	gapSize := aSizeInPixels
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractFlowLayout >> initialize [
 	super initialize.
 	maxWidth := self defaultMaxWidth.
-	gapSize := self defaultGapSize.
+	gapSize := self defaultGapSize
 ]
 
 { #category : #hook }
-RSAbstractFlowLayout >> linesFor: elements [ 
+RSAbstractFlowLayout >> linesFor: elements [
 	^ self subclassResponsibility
 ]
 

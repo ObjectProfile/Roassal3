@@ -32,7 +32,7 @@ RSVerticalLineLayout >> deltaFor: aNodeFigure [
 	^delta @ 0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSVerticalLineLayout >> initialize [
 	super initialize.
 	self alignLeft
@@ -44,15 +44,14 @@ RSVerticalLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
 ]
 
 { #category : #hook }
-RSVerticalLineLayout >> positionOriginalPointer: elements [ 
+RSVerticalLineLayout >> positionOriginalPointer: elements [
 	| maxWidth delta |
 	delta := 0.
-	self alignment == #right ifTrue: 
+	self alignment == #right ifTrue:
 		[ maxWidth := elements maxValue: #width.
 		delta := maxWidth ].
-	self alignment == #center ifTrue: 
+	self alignment == #center ifTrue:
 		[ maxWidth := elements maxValue: #width.
 		delta := maxWidth / 2.0 ].
 	^ ((0) + delta) @ (0)
-
 ]

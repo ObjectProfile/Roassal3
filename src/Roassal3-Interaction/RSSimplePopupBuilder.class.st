@@ -5,33 +5,40 @@ Class {
 	#name : #RSSimplePopupBuilder,
 	#superclass : #RSObject,
 	#instVars : [
-		'labelBuilder'
+		'labelBuilder',
+		'boxBuilder'
 	],
 	#category : #'Roassal3-Interaction-Popup'
 }
 
+{ #category : #accessing }
+RSSimplePopupBuilder >> boxBuilder [
+	^ boxBuilder
+]
+
+{ #category : #accessing }
+RSSimplePopupBuilder >> boxBuilder: aRSSimpleBoxBuilder [
+	boxBuilder := aRSSimpleBoxBuilder
+]
+
 { #category : #hooks }
 RSSimplePopupBuilder >> boxFor: lbl [
-	^ RSBox new
-		color: (Color colorFrom: 'efefef');
-		cornerRadius: 5;
-		border: (RSBorder new color: Color gray);
-		extent: lbl extent + (10@7);
-		yourself
+	^ self boxBuilder shapeFor: lbl
 ]
 
 { #category : #initialization }
 RSSimplePopupBuilder >> initialize [
 	super initialize.
 	self labelBuilder: RSMultilineLabelBuilder new.
+	self boxBuilder: RSSimpleBoxBuilder new
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RSSimplePopupBuilder >> labelBuilder [
 	^ labelBuilder
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RSSimplePopupBuilder >> labelBuilder: aLabelBuilder [
 	labelBuilder := aLabelBuilder
 ]

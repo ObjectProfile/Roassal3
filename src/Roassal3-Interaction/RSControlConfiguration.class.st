@@ -34,10 +34,22 @@ Class {
 		'zoomToFitOnStart',
 		'zoomToFitOnExtent',
 		'hasHorizontalScrolling',
-		'hasVerticalScrolling'
+		'hasVerticalScrolling',
+		'hasDraggableAnimation',
+		'shouldShowLegend'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
+
+{ #category : #configuration }
+RSControlConfiguration >> hasDraggableAnimation [
+	^ hasDraggableAnimation
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> hasDraggableAnimation: aBoolean [
+	hasDraggableAnimation := aBoolean
+]
 
 { #category : #'scrollbar managing' }
 RSControlConfiguration >> hasHorizontalScrolling [
@@ -62,15 +74,20 @@ RSControlConfiguration >> hasVerticalScrolling: aBool [
 { #category : #initialization }
 RSControlConfiguration >> initialize [
 	super initialize.
-	self 
+	self
+		"used in zoom out"
 		minScale: 0.04;
+
+		"used in zoom in"
 		maxScale: 7;
 		padding: 25;
-		useZoomToFitOnExtendChanged;
+		noZoomToFitOnExtendChanged;
+		withLegend;
 		useZoomToFitOnStart;
 		noBasicZoom;
 		hasHorizontalScrolling: true;
-		hasVerticalScrolling: true.
+		hasVerticalScrolling: true;
+		hasDraggableAnimation: true
 ]
 
 { #category : #accessing }
@@ -80,7 +97,8 @@ RSControlConfiguration >> maxScale [
 
 { #category : #accessing }
 RSControlConfiguration >> maxScale: aNum [
-	"Set the maximum scale for the configuration"
+	"Set the maximum scale for the configuration.
+	Used in the zoom in level"
 	maxScale := aNum
 ]
 
@@ -91,13 +109,19 @@ RSControlConfiguration >> minScale [
 
 { #category : #accessing }
 RSControlConfiguration >> minScale: aNum [
-	"Set the minimum scale allowed by the configuration."
+	"Set the minimum scale allowed by the configuration.
+	Used in zoom out level"
 	minScale := aNum
 ]
 
 { #category : #configuration }
 RSControlConfiguration >> noBasicZoom [
-	shouldUseBasicZoom := false.
+	shouldUseBasicZoom := false
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> noLegend [
+	shouldShowLegend := false
 ]
 
 { #category : #configuration }
@@ -107,7 +131,7 @@ RSControlConfiguration >> noZoomToFitOnExtendChanged [
 
 { #category : #configuration }
 RSControlConfiguration >> noZoomToFitOnStart [
-	zoomToFitOnStart := false.
+	zoomToFitOnStart := false
 ]
 
 { #category : #accessing }
@@ -118,6 +142,11 @@ RSControlConfiguration >> padding [
 { #category : #accessing }
 RSControlConfiguration >> padding: aMargin [
 	padding := aMargin asMargin
+]
+
+{ #category : #testing }
+RSControlConfiguration >> shouldShowLegend [
+	^ shouldShowLegend
 ]
 
 { #category : #testing }
@@ -137,7 +166,7 @@ RSControlConfiguration >> shouldZoomToFitOnStart [
 
 { #category : #configuration }
 RSControlConfiguration >> useBasicZoom [
-	shouldUseBasicZoom := true.
+	shouldUseBasicZoom := true
 ]
 
 { #category : #configuration }
@@ -147,5 +176,10 @@ RSControlConfiguration >> useZoomToFitOnExtendChanged [
 
 { #category : #configuration }
 RSControlConfiguration >> useZoomToFitOnStart [
-	zoomToFitOnStart := true.
+	zoomToFitOnStart := true
+]
+
+{ #category : #configuration }
+RSControlConfiguration >> withLegend [
+	shouldShowLegend := true
 ]

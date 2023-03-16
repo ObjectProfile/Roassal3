@@ -10,7 +10,7 @@ Class {
 		'gapRatio',
 		'barOffset'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
@@ -59,6 +59,11 @@ RSAbstractBarPlot >> createBarFor: aPoint index: index [
 		yourself
 ]
 
+{ #category : #accessing }
+RSAbstractBarPlot >> createdShapes [
+	^ bars
+]
+
 { #category : #initialization }
 RSAbstractBarPlot >> defaultShape [
 	^ RSBox new noPaint
@@ -80,7 +85,7 @@ RSAbstractBarPlot >> initialize [
 	super initialize.
 	self
 		gapRatio: 0.1;
-		barOffset: 0.
+		barOffset: 0
 ]
 
 { #category : #testing }
@@ -98,12 +103,11 @@ RSAbstractBarPlot >> renderIn: canvas [
 	| index |
 	self checkAssertion.
 	index := 1.
-	bars := xValues collect: [ :xt | 
+	bars := xValues collect: [ :xt |
 		| yt bar |
 		yt := yValues at: index.
 		bar := self createBarFor: xt@yt index: index.
 		index := index + 1.
 		bar ] as: RSGroup.
-	canvas addAll: bars.
-
+	canvas addAll: bars
 ]

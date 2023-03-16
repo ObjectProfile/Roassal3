@@ -35,9 +35,11 @@ Class {
 	#instVars : [
 		'scale',
 		'position',
-		'canvas'
+		'canvas',
+		'extent',
+		'originMode'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal3-Camera'
 }
 
 { #category : #utilities }
@@ -48,6 +50,11 @@ RSCamera class >> maxExtentFor: rectangle [
 { #category : #utilities }
 RSCamera class >> minimumExtent [
 	^ 0.0001 asPoint
+]
+
+{ #category : #visiting }
+RSCamera >> accept: visitor [
+	visitor visitCamera: self
 ]
 
 { #category : #announce }
@@ -70,6 +77,12 @@ RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
 ]
 
+{ #category : #accessing }
+RSCamera >> extent [
+
+	^ extent
+]
+
 { #category : #convertion }
 RSCamera >> fromPixelToSpace: aPoint [
 
@@ -88,14 +101,28 @@ RSCamera >> fromSpaceToPixel: aPoint [
 		scaleBy: self scale;
 		translateBy: self position negated;
 		transform: aPoint
-	
 ]
 
 { #category : #initialization }
 RSCamera >> initialize [
 	super initialize.
 	position := 0@0.
-	scale := 1.0000001.
+	scale := 1.000000.
+	originMode := #center
+]
+
+{ #category : #accessing }
+RSCamera >> originMode [
+
+	"#center or #topLeft"
+
+	^ originMode
+]
+
+{ #category : #accessing }
+RSCamera >> originMode: anObject [
+
+	originMode := anObject
 ]
 
 { #category : #accessing }
@@ -119,6 +146,12 @@ RSCamera >> position: aPoint [
  	position := aPoint
 ]
 
+{ #category : #private }
+RSCamera >> privExtent: aRect [
+
+	extent := aRect
+]
+
 { #category : #accessing }
 RSCamera >> scale [
 	^ scale
@@ -137,6 +170,21 @@ RSCamera >> scale: aFloatNumber [
 		newScale: aFloatNumber ]
 ]
 
+{ #category : #public }
+RSCamera >> setMatrix: anAthensAffineTransform [
+	anAthensAffineTransform
+		translateBy: (self canvas extent / 2) asFloatPoint;
+		scaleBy: self scale asFloat;
+		translateBy: self position negated asFloatPoint
+]
+
+{ #category : #accessing }
+RSCamera >> visibleRectangle [
+	^ Rectangle
+		floatCenter: self position
+		extent: self canvas extent / self scale
+]
+
 { #category : #zoom }
 RSCamera >> zoomToFit [
 	self zoomToFit: canvas extent * 0.9
@@ -144,18 +192,16 @@ RSCamera >> zoomToFit [
 
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent [
-	self 
-		zoomToFit: anExtent 
+	self
+		zoomToFit: anExtent
 		rectangle: canvas encompassingRectangle
-	
 ]
 
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent extent: otherExtent [
-	self 
-		zoomToFit: anExtent 
+	self
+		zoomToFit: anExtent
 		rectangle: (Rectangle floatCenter: 0@0 extent: otherExtent)
-	
 ]
 
 { #category : #zoom }
@@ -163,7 +209,7 @@ RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
 	sc := anExtent / (self class maxExtentFor: rect).
 	sc := sc x min: sc y.
-	self 
+	self
 		translateTo: rect floatCenter;
-		scale: sc.
+		scale: sc
 ]

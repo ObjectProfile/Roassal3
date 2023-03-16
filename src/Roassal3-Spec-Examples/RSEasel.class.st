@@ -1,5 +1,12 @@
 "
-I am a basic spec example. You can edit a script with roassal then this will be updated on the view
+I am a basic spec example of how to build a roassal visualization with spec.
+Use the text editor with some roassal code, then click on draw! This will be updated on the canvas view.
+
+Please check my methods:
+- `RSEasel class >> #defaultLayout`, where the skeleton of the ui is defined.
+- `RSEasel >> #initializePresenters`, where where the text editor, and the roassal diagram is defined
+- `RSEasel >> #connectPresenters`, the main logic of the program, and how to draw and redraw things in roassal
+
 "
 Class {
 	#name : #RSEasel,
@@ -10,33 +17,35 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Examples'
+	#category : #'Roassal3-Spec-Examples-Basic'
 }
 
-{ #category : #specs }
-RSEasel class >> defaultSpec [ 
+{ #category : #layout }
+RSEasel class >> defaultLayout [
+
 	<spec: #default>
-	^ SpPanedLayout newHorizontal 
-		position: 35 percent;
-		add: (SpBoxLayout newVertical
-			add: #label withConstraints: [ :c | c height: self toolbarHeight ];
-			add: #text;
-			add: #button withConstraints: [ :c | c height: self toolbarHeight ]
-			);
-		add: #diagram ;
-		yourself
+	^ SpPanedLayout newHorizontal
+		  positionOfSlider: 45 percent;
+		  add: (SpBoxLayout newVertical
+				   add: #label
+				   withConstraints: [ :c | c height: self toolbarHeight ];
+				   add: #text;
+				   add: #button
+				   withConstraints: [ :c | c height: self toolbarHeight ]);
+		  add: #diagram;
+		  yourself
 ]
 
 { #category : #specs }
 RSEasel class >> open [
 	<script>
-	self new openWithSpec
+	self new open
 ]
 
 { #category : #initialization }
 RSEasel >> configure: canvas [
 	canvas @ RSCanvasController.
-	canvas color: self theme backgroundColor.
+	canvas color: self theme backgroundColor
 ]
 
 { #category : #initialization }
@@ -51,6 +60,7 @@ RSEasel >> connectPresenters [
 
 	button
 		label: 'Draw this!';
+		"this will update the canvas view with the current value of the text editor"
 		action: [ diagram refresh ].
 
 	"This is the code for the Roassal view.
@@ -58,18 +68,28 @@ RSEasel >> connectPresenters [
 	diagram script: [ :canvas |
 		self configure: canvas.
 		self textAsBlockClosure value: canvas ]
-
 ]
 
 { #category : #initialization }
 RSEasel >> initialCode [
 	^
-'"[:canvas | ]"
+'"[:canvas | ...your code... ]"
+| box icon label |
 box := RSBox new
 	size: 100;
 	draggable;
 	yourself.
-canvas add: box.
+icon := RSBitmap new
+	form: (self iconNamed: #pharo);
+	yourself.
+label := RSLabel new
+	color: ''black'';
+	text: ''Kaguya'';
+	yourself.
+canvas addAll: {icon. box. label}.
+RSVerticalLineLayout new
+	alignCenter;
+	on: canvas shapes.
 '
 ]
 
@@ -78,14 +98,14 @@ RSEasel >> initializePresenters [
 	label := self newLabel.
 	text := self newCode.
 	button := self newButton.
-	diagram := self instantiate: SpRoassalPresenter
+	diagram := self newRoassal
 ]
 
 { #category : #initialization }
 RSEasel >> initializeWindow: w [
-	w 
+	w
 		title: 'Roassal3 Spec';
-		initialExtent: 800@500.
+		initialExtent: 800@500
 ]
 
 { #category : #dependencies }
@@ -95,7 +115,7 @@ RSEasel >> release [
 
 { #category : #running }
 RSEasel >> run [
-	<script: 'self new openWithSpec'>
+	<script: 'self new asWindow open'>
 ]
 
 { #category : #accessing }

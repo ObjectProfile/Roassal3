@@ -31,25 +31,26 @@ RSCircle >> extent: aPoint [
 ]
 
 { #category : #geometry }
-RSCircle >> geometry [ 
+RSCircle >> geometry [
 	| rect e p |
 	rect := self encompassingRectangle.
 	e := rect extent / 2.
 	p := self position.
 	e = (0@0) ifTrue: [ ^ p asGPoint ].
-	^ GEllipse 
+	^ GEllipse
 		center: p
 		vertex: p + (0@ e y)
-		coVertex:p + (e x@ 0) 
+		coVertex:p + (e x@ 0)
 ]
 
-{ #category : #matrix }
+{ #category : #accessing }
 RSCircle >> height: anInteger [
+	"use `radius:` instead"
 	self error: 'Should not be performed'
 ]
 
 { #category : #testing }
-RSCircle >> includesPoint: aPoint [
+RSCircle >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
 	invertedPoint := matrix rsInverseTransform: aPoint.
@@ -61,7 +62,7 @@ RSCircle >> includesPoint: aPoint [
 	xOverY := rect width asFloat / rect height asFloat.
 	t1 := (delta x asFloat / xOverY) squared + delta y squared.
 	t2 := radius squared.
-	^ (t1 < t2)  or: [ t1 closeTo: t2 ].
+	^ (t1 < t2)  or: [ t1 closeTo: t2 ]
 ]
 
 { #category : #accessing }
@@ -74,17 +75,8 @@ RSCircle >> radius: integer [
 	self extent: integer * 2 asPoint
 ]
 
-{ #category : #matrix }
+{ #category : #accessing }
 RSCircle >> width: anInteger [
-	self error: 'Should not be performed'
-]
-
-{ #category : #matrix }
-RSCircle >> x: anInteger [
-	self error: 'Should not be performed'
-]
-
-{ #category : #matrix }
-RSCircle >> y: anInteger [
+	"use `radius:` instead"
 	self error: 'Should not be performed'
 ]

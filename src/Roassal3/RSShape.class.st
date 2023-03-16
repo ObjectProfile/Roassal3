@@ -51,26 +51,25 @@ RSShape class >> model: anObject [
 ]
 
 { #category : #accessing }
-RSShape class >> model: anObject forIt: aOneArgBlock [
+RSShape class >> model: anObject forIt: aTwoArgBlock [
 	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
 	| r |
 	r := self new.
 	r model: anObject.
-	aOneArgBlock rsValue: r.
+	aTwoArgBlock value: r value: anObject.
 	^ r
 ]
 
 { #category : #accessing }
 RSShape class >> models: someObjects [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
-	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup.
-
+	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup
 ]
 
 { #category : #accessing }
 RSShape class >> models: someObjects forEach: twoArgBlock [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model. The second argument is used to initialize the shape.
-	
+
 	For example:
 ```
 c := RSCanvas new.
@@ -87,12 +86,26 @@ c @ RSCanvasController
 	r := someObjects collect: [ :obj | self model: obj ] as: RSGroup.
 	r with: someObjects do: [ :aShape :anObject | twoArgBlock value: aShape value: anObject ].
 	^ r
-
 ]
 
 { #category : #adding }
 RSShape >> accept: aVisitor [
-	self subclassResponsibility 
+	self subclassResponsibility
+]
+
+{ #category : #'private - adding' }
+RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
+	| key myAnimations parentAnimations |
+	key := #todoAnimations.
+	(self hasProperty: key) ifFalse: [ ^ self ].
+	myAnimations := self propertyAt: key.
+	aShapeOrCanvas isShape ifTrue: [
+		parentAnimations := parent propertyAt: key ifAbsentPut: [ OrderedCollection new ].
+		parentAnimations addAll: myAnimations.
+	] ifFalse: [
+		myAnimations do: [:anime|
+			aShapeOrCanvas addAnimation: anime ] ].
+	self removeKey: key
 ]
 
 { #category : #adding }
@@ -109,10 +122,11 @@ RSShape >> addedIn: aCanvas [
 		ifFalse: [ aCanvas addBasicShape: self ].
 	parent ifNotNil: [ self remove ].
 	parent := aCanvas.
-	
+	self addPendingAnimationsIn: parent.
+
 	evt := RSShapeAddedEvent new shape: self.
 	aCanvas announce: evt.
-	self announce: evt.
+	self announce: evt
 ]
 
 { #category : #announcer }
@@ -123,12 +137,12 @@ RSShape >> announce: anEventOrAnEventClassOrABlock [
 	theEventToSend := anEventOrAnEventClassOrABlock value asAnnouncement.
 	theEventToSend canvas: self canvas.
 	theEventToSend shape: self.
-	announcer announce: theEventToSend.
+	announcer announce: theEventToSend
 ]
 
 { #category : #announcer }
 RSShape >> announcementClasses [
-	^ RSShapeEvent withAllSubclasses 
+	^ RSShapeEvent withAllSubclasses
 		reject: [ :subcls| subcls hasSubclasses ]
 ]
 
@@ -170,9 +184,9 @@ c open
 
 { #category : #'accessing - computed' }
 RSShape >> canvas [
-	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas" 
+	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas"
 	parent ifNil: [ ^ nil ].
-	^ parent isShape 
+	^ parent isShape
 		ifTrue: [ parent canvas ]
 		ifFalse: [ parent ]
 ]
@@ -185,19 +199,19 @@ RSShape >> children [
 
 { #category : #accessing }
 RSShape >> color [
-	^ paint 
+	^ paint
 ]
 
 { #category : #accessing }
 RSShape >> color: aColor [
-	"Set the color of the shape. 
+	"Set the color of the shape.
 
 ```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 50; color: #blue).
 c
 ```
-	
+
 ```Smalltalk
 c := RSCanvas new.
 c add: (RSBox new size: 50; color: Color blue).
@@ -206,7 +220,7 @@ c
 	"
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
-	paint := Color colorFrom: aColor.
+	paint := Color colorFrom: aColor
 ]
 
 { #category : #accessing }
@@ -214,20 +228,28 @@ RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
+	| groupOfPoints |
+	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
+		collect: [ :s | aMatrix transform: (s value: rect) ].
+	^ Rectangle encompassing: groupOfPoints
+]
+
 { #category : #copying }
 RSShape >> copyWithAnnouncer [
-	"Answer a copy of this shape that shares the same instance of announcer (The default #postCopy cleans it). 
-	This means that interactions and subscription handlers to any RSEvent will be shared between both instances. 
-	This is useful for optimizations. Senders should be careful! 
-	
+	"Answer a copy of this shape that shares the same instance of announcer (The default #postCopy cleans it).
+	This means that interactions and subscription handlers to any RSEvent will be shared between both instances.
+	This is useful for optimizations. Senders should be careful!
+
 	Example:
 		base := RSBox new
 		    size: 100;
 		    color: Color blue;
 		    popup;
 		    draggable.
-		    
-		shapes := (1 to: 20) collect:[:i | 
+
+		shapes := (1 to: 20) collect:[:i |
 		    base copyWithEvents
 		        model: i;
 		        yourself.
@@ -241,6 +263,11 @@ RSShape >> copyWithAnnouncer [
 	^ self copy
 		announcer: announcer;
 		yourself
+]
+
+{ #category : #copying }
+RSShape >> copyWithoutAnnouncer [
+	^ self copy
 ]
 
 { #category : #'looking up shapes' }
@@ -271,8 +298,8 @@ RSShape >> depth: anObject [
 
 { #category : #accessing }
 RSShape >> encompassingRectangle [
-	^ encompassingRectangle ifNil: [ 
-		encompassingRectangle := self computeEncompassingRectangle ].
+	^ encompassingRectangle ifNil: [
+		encompassingRectangle := self computeEncompassingRectangle ]
 ]
 
 { #category : #accessing }
@@ -285,9 +312,14 @@ RSShape >> extent [
 	^ self encompassingRectangle extent
 ]
 
+{ #category : #accessing }
+RSShape >> globalEncompassingRectangle [
+	^ self encompassingRectangle
+]
+
 { #category : #testing }
 RSShape >> hasBorder [
-	^ border notNil and: [ border width > 0 ].
+	^ border notNil and: [ border width > 0 ]
 ]
 
 { #category : #testing }
@@ -328,12 +360,20 @@ RSShape >> index: anObject [
 RSShape >> initialize [
 	super initialize.
 	paint := Color lightGray.
-	isFixed := false.
+	isFixed := false
 ]
 
 { #category : #testing }
 RSShape >> intersects: aRectangle [
-	^ self encompassingRectangle intersects: aRectangle
+	"used in drawing operation
+	aRectangle is the visible rectangle of the canvas, then this method is used
+	to draw or not this shape"
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+RSShape >> isComposite [
+	^ false
 ]
 
 { #category : #testing }
@@ -342,7 +382,7 @@ RSShape >> isEdge [
 ]
 
 { #category : #testing }
-RSShape >> isFixed [ 
+RSShape >> isFixed [
 	^ isFixed
 ]
 
@@ -354,6 +394,16 @@ RSShape >> isFixed: aBool [
 { #category : #testing }
 RSShape >> isInACanvas [
 	^ parent notNil
+]
+
+{ #category : #testing }
+RSShape >> isLabel [
+	^ false
+]
+
+{ #category : #testing }
+RSShape >> isLine [
+	^ false
 ]
 
 { #category : #testing }
@@ -428,7 +478,7 @@ RSShape >> path: aPath [
 
 { #category : #copying }
 RSShape >> postCopy [
-	self 
+	self
 		parent: nil;
 		announcer: nil;
 		resetPath;
@@ -439,19 +489,19 @@ RSShape >> postCopy [
 RSShape >> printOn: stream [
 	super printOn: stream.
 	model ifNil: [ ^ self ].
-	stream << '('; << model asString; << ')'.
+	stream << '('; << model asString; << ')'
 ]
 
 { #category : #actions }
 RSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"
 	self assert: [ parent notNil ] description: 'Should add the shape in a canvas first'.
-	parent pushBack: self.
+	parent pushBack: self
 ]
 
 { #category : #actions }
 RSShape >> pushFront [
-	parent pushFront: self.
+	parent pushFront: self
 ]
 
 { #category : #actions }
@@ -459,7 +509,6 @@ RSShape >> remove [
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ].
 	parent removeShape: self
-	
 ]
 
 { #category : #adding }
@@ -469,7 +518,11 @@ RSShape >> renderOn: aCanvas [
 
 { #category : #initialization }
 RSShape >> resetBBox [
-	encompassingRectangle := nil.
+	encompassingRectangle := nil
+]
+
+{ #category : #accessing }
+RSShape >> resetChildren [
 ]
 
 { #category : #path }
@@ -486,11 +539,11 @@ RSShape >> sessionChanged [
 { #category : #actions }
 RSShape >> setAsFixed [
 	"Per default, a shape is subject to the camera mouvement. If the camera is relocated, shapes appears to be relocated. This behavior can be avoided by sending the message #setAsFixed to a shape, which makes the shape fixed in the canvas. This is useful to define menus.
-	
+
 	The message setAsFixed must be send after being added to a canvas"
 	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
 	parent setAsFixed: self.
-	isFixed := true.
+	isFixed := true
 ]
 
 { #category : #accessing }
@@ -500,16 +553,16 @@ RSShape >> shape [
 
 { #category : #'accessing - computed' }
 RSShape >> shapeWithAction: eventClass forPosition: position [
-	^ (self hasEventCallback and: [ 
+	^ (self hasEventCallback and: [
 		(self announcer handleEventClass: eventClass)
-			and: [ self includesPoint: position ] ]) 
+			and: [ self includesPoint: position ] ])
 			ifTrue: [ self ]
 			ifFalse: [ nil ]
 ]
 
 { #category : #'accessing - computed' }
 RSShape >> shapeWithActionForPosition: position [
-	^ (self hasEventCallback and: [ self includesPoint: position ] ) 
+	^ (self hasEventCallback and: [ self includesPoint: position ] )
 			ifTrue: [ self ]
 			ifFalse: [ nil ]
 ]
@@ -519,11 +572,6 @@ RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
-]
-
-{ #category : #accessing }
-RSShape >> topParent [
-	^ parent ifNotNil: [ parent topParent ]
 ]
 
 { #category : #accessing }

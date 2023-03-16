@@ -16,33 +16,34 @@ Here is an example:
 
 Another example:
 ```Smalltalk
-	v := RSCanvas new.
-	
-	e1 := RSBox new size: 100; color: Color blue.
-	e2 := RSBox new size: 100; color: Color red.
-	e1 translateTo: 100 @ -200.
+canvas := RSCanvas new.
+ 
+box1 := RSBox new color: Color blue.
+box2 := RSBox new color: Color red.
+box2 translateTo: 100 @ -200.
 
-	e1 @ RSDraggable.
-	e2 @ RSDraggable.
-	v
-		add: e1;
-		add: e2.
-	
-	l := RSBezier new
-		withVerticalAttachPoint;
-		from: e1;
-		to: e2;
-		controlPointsBlock: [ :a :b | 
-			| mid |
-			mid := (a + b) / 2.
-			Array
-				with: a
-				with: a x @ mid y
-				with: b x @ mid y
-				with: b ];
-		yourself.
-	v add: l.
-	v open
+box1 @ RSDraggable.
+box2 @ RSDraggable.
+canvas add: box1; add: box2.
+ 
+bezierLine := RSBezier new
+	withVerticalAttachPoint;
+	from: box1;
+	to: box2;
+	controlPointsController: (
+			RSBlockCPController new
+				block: [ :aLine |
+					| mid |
+   					mid := (box1 position + box2 position) / 2.
+					{(box1 position) . 
+					(box1 position x @ mid y) .
+					(box2 position x @ mid y) .
+					(box2 position)} ];
+				yourself);
+  yourself.
+canvas add: bezierLine.
+canvas zoomToFit.
+canvas open
 ```
 
 Here is an example of a bezier line with a marker
@@ -82,28 +83,70 @@ Class {
 	#category : #'Roassal3-Shapes-Lines'
 }
 
+{ #category : #examples }
+RSBezier class >> exampleBezier [
+	| bezier |
+	bezier := self new.
+	bezier controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
+	bezier inspect
+]
+
+{ #category : #examples }
+RSBezier class >> exampleControlPointsController [
+	| bezier controller points |
+	bezier := self new.
+	points := {0@0. 100@ -50.  0@ -100. 50@ 0} collect: [:point |
+		RSCircle new
+			radius: 5;
+			position: point;
+			draggable;
+			yourself ].
+
+	controller := RSCustomCPController new
+		models: points;
+		yourself.
+	bezier controlPointsController: controller.
+
+	RSCanvas new
+		add: bezier;
+		addAll: points;
+		open
+]
+
 { #category : #testing }
 RSBezier >> basicIncludesPoint: aPoint [
-	| cp |
+	"Not perfect but close enough"
+	| cp lines ir |
 	cp := self controlPoints.
-	cp size = 2 ifTrue: [ 
+	ir := self includedRadius.
+	cp size = 2 ifTrue: [
 		^ aPoint
 			onLineFrom: cp first
 			to: cp second
-			within: self includedRadius
+			within: ir
 		 ].
-	^ false
+	lines := self lines.
+	lines ifNil: [ ^ false ].
+	^ (1 to: lines size - 1) anySatisfy: [ :i |
+		| p1 p2 |
+		p1 := lines at: i.
+		p2 := lines at: i + 1.
+		(aPoint
+			onLineFrom: p1
+			to: p2
+			within: ir )
+		 ]
 ]
 
 { #category : #visiting }
 RSBezier >> buildPathOn: visitor [
-	visitor buildBezierPath: self.
+	visitor buildBezierPath: self
 ]
 
 { #category : #accessing }
 RSBezier >> controlPoints: anArrayOfPoints [
 	self
-		assert: anArrayOfPoints notNil 
+		assert: anArrayOfPoints notNil
 		description: 'The argument can not be nil';
 		assert: (anArrayOfPoints size between: 2 and: 4)
 		description: 'The array size must be between 2 and 4 points'.
@@ -113,5 +156,25 @@ RSBezier >> controlPoints: anArrayOfPoints [
 { #category : #initialization }
 RSBezier >> initialize [
 	super initialize.
-	controlPoints := { 0@0. 100@100 }.
+	controlPoints := { 0@0. 100@100 }
+]
+
+{ #category : #private }
+RSBezier >> lines [
+	| c b a via1 via2 start end cp |
+	cp := controlPoints.
+	cp size <3 ifTrue: [ ^ nil ].
+	start := cp first.
+	via1 := cp second.
+	via2 := cp third.
+	end := cp size = 3
+		ifTrue: [ via2 ]
+		ifFalse: [ cp fourth ].
+	c := 3 * (via1 - start).
+	b := 3 * (via2 - via1) - c.
+	a := end - start - c - b.
+
+	^ (0 to: 1 by: 0.2) collect: [ :t |
+		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start.
+		]
 ]

@@ -29,11 +29,11 @@ RSChartTitleDecoration >> defaultFontSize [
 	^ 15
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 RSChartTitleDecoration >> initialize [
 	super initialize.
 	self fontSize: 15.
 	location
 		offset: 0@ -2;
-		above; center.
+		above; center
 ]

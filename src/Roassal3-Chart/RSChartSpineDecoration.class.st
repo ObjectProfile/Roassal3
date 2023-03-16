@@ -13,21 +13,45 @@ The method is not meant to be used by a normal user as it represents a functiona
 "
 Class {
 	#name : #RSChartSpineDecoration,
-	#superclass : #RSChartDecoration,
+	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
-		'shape'
+		'box'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
 
-{ #category : #rendering }
-RSChartSpineDecoration >> renderIn: canvas [
-	shape := RSBox new color: nil; extent: chart extent; withBorder.
-	shape translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
-	canvas add: shape
+{ #category : #accessing }
+RSChartSpineDecoration >> box [
+	^ box
+]
+
+{ #category : #accessing }
+RSChartSpineDecoration >> createdShapes [
+	^ { box }
+]
+
+{ #category : #initialization }
+RSChartSpineDecoration >> defaultShape [
+	^ RSBox new
+		noPaint;
+		withBorder;
+		yourself
+]
+
+{ #category : #testing }
+RSChartSpineDecoration >> isSpineDecoration [
+	^ true
 ]
 
 { #category : #rendering }
-RSChartSpineDecoration >> shape [
-	^ shape
+RSChartSpineDecoration >> renderIn: canvas [
+	box := self shape copy
+		extent: chart extent.
+	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
+	canvas add: box
+]
+
+{ #category : #accessing }
+RSChartSpineDecoration >> zeroPoint [
+	^ 0 @ chart extent y
 ]

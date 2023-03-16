@@ -1,7 +1,7 @@
 Extension { #name : #AthensCubicSegment }
 
 { #category : #'*Roassal3-SVG' }
-AthensCubicSegment >> durationFor: aPoint [ 
+AthensCubicSegment >> durationFor: aPoint [
 	| d |
 	d := to distanceTo: aPoint.
 	^ 1 / (d*0.5)
@@ -14,8 +14,8 @@ AthensCubicSegment >> pointsWithStart: aPoint duration: duration [
 	b := 3 * (via2 - via1) - c.
 	a := to - aPoint - c - b.
 
-	^ (0 to: 1 by: duration) collect: [ :t | 
-		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + aPoint. 
+	^ (0 to: 1 by: duration) collect: [ :t |
+		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + aPoint.
 		]
 ]
 

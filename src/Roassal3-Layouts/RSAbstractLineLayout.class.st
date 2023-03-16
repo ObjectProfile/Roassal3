@@ -55,7 +55,7 @@ RSAbstractLineLayout class >> isAbstract [
 
 { #category : #'instance creation' }
 RSAbstractLineLayout class >> withGap: anInteger [
-	
+
 	^(self new)
 		gapSize: anInteger;
 		yourself
@@ -71,22 +71,27 @@ RSAbstractLineLayout >> alignment: anObject [
 	alignment := anObject
 ]
 
+{ #category : #initialization }
+RSAbstractLineLayout >> defaultGapSize [
+	^ 5
+]
+
 { #category : #hook }
 RSAbstractLineLayout >> deltaFor: aNodeFigure [
 	^ self subclassResponsibility
 ]
 
 { #category : #hook }
-RSAbstractLineLayout >> doExecute: elements [ 
+RSAbstractLineLayout >> doExecute: elements [
 	| pointer delta |
 	pointer := self positionOriginalPointer: elements.
 	elements do: [ :element |
 		delta := self deltaFor: element.
 		translator translateTopLeftOf: element to: pointer - delta.
-		pointer := self 
+		pointer := self
 			movePointer: pointer
 			accordingToFigure: element.
-		].
+		]
 ]
 
 { #category : #accessing }
@@ -97,7 +102,7 @@ RSAbstractLineLayout >> gapSize [
 { #category : #accessing }
 RSAbstractLineLayout >> gapSize: aNumber [
 	gapSize := aNumber. " This value is never used actually "
-	
+
 	verticalGap := 2 * aNumber.
 	horizontalGap := 2 * aNumber
 ]
@@ -113,11 +118,10 @@ RSAbstractLineLayout >> horizontalGap: anInteger [
 	horizontalGap := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RSAbstractLineLayout >> initialize [
 	super initialize.
-	verticalGap := 10.
-	horizontalGap := 10.
+	self gapSize: self defaultGapSize
 ]
 
 { #category : #hook }

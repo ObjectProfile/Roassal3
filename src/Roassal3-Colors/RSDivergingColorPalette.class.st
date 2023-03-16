@@ -18,7 +18,7 @@ Class {
 	#category : #'Roassal3-Colors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSDivergingColorPalette class >> paletteName [
 	^ #diverging
 ]
