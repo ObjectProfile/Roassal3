@@ -37,8 +37,6 @@ Class {
 		'color',
 		'clearBackground',
 		'showRectangles',
-		'nodes',
-		'edges',
 		'host'
 	],
 	#pools : [
