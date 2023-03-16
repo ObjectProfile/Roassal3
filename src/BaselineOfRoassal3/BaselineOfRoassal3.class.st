@@ -76,10 +76,10 @@ BaselineOfRoassal3 >> corePackagesNames [
 { #category : #baselines }
 BaselineOfRoassal3 >> dependencies: spec [.
 "	-- This dependency should be enough for Roassal3-Bloc, but the RSExamplesBrowserPresenter requires a super-set: the Brick backend for Spec --
-	spec baseline: 'NewBloc' with: [
-		spec repository: 'github://pharo-graphics/Bloc/src' ]."
-	spec baseline: 'SpecBrick' with: [
-		spec repository: 'github://pharo-graphics/Spec-Brick:main/src' ].
+	spec baseline: 'Bloc' with: [
+		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ]."
+"	spec baseline: 'SpecBrick' with: [
+		spec repository: 'github://pharo-graphics/Spec-Brick:main/src' ]."
 
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
