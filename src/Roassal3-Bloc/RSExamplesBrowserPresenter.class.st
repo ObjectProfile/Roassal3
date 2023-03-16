@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #specs }
-RSExamplesBrowserPresenter class >> defaultSpec [
+RSExamplesBrowserPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
 		  borderWidth: 10;
@@ -26,12 +26,10 @@ RSExamplesBrowserPresenter class >> defaultSpec [
 RSExamplesBrowserPresenter class >> exampleOpenRSBlocExamples [
 
 	| app presenter |
-	app := SpApplication new 
-	  useBackend: #Brick;
-	  yourself.
+	app := SpApplication new.
 
 	presenter := self newApplication: app model: RSBlocExamples.
-	presenter openWithSpec.
+	presenter open
 
 ]
 
@@ -53,7 +51,7 @@ RSExamplesBrowserPresenter >> initializePresenters [
 	super initializePresenters.
 	
 	examplesList := self newList.
-	visualization := self instantiate: SpBlElementPresenter.
+	visualization := self instantiate: SpBlSpaceInMorphPresenter.
 
 	self refresh.
 ]
@@ -94,7 +92,9 @@ RSExamplesBrowserPresenter >> setModelBeforeInitialization: aClass [
 { #category : #initialization }
 RSExamplesBrowserPresenter >> showNullVisualization [
 
-	visualization element: (BlElement new
+	visualization space root 
+		removeChildren;
+		addChild: (BlElement new
 			 background: Color transparent;
 			 yourself)
 ]
@@ -105,6 +105,7 @@ RSExamplesBrowserPresenter >> showVisualizationFor: aSelector [
 	| aRSCanvas |
 	aRSCanvas := examplesClass new perform: aSelector.
 	aRSCanvas useBlocHost.
-	visualization element: aRSCanvas host canvasElement.
-
+	visualization space root 
+		removeChildren;
+		addChild: aRSCanvas host canvasElement
 ]
