@@ -75,11 +75,9 @@ BaselineOfRoassal3 >> corePackagesNames [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> dependencies: spec [.
-"	-- This dependency should be enough for Roassal3-Bloc, but the RSExamplesBrowserPresenter requires a super-set: the Brick backend for Spec --
+"	-- This dependency should be enough for Roassal3-Bloc, but the RSExamplesBrowserPresenter requires a super-set: the Brick backend for Spec --"
 	spec baseline: 'Bloc' with: [
-		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ]."
-"	spec baseline: 'SpecBrick' with: [
-		spec repository: 'github://pharo-graphics/Spec-Brick:main/src' ]."
+		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
 
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
@@ -124,7 +122,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	self extraPackagesNames do: [ :name | spec package: name ].
 	
 	spec		
-		package: #'Roassal3-Bloc' with: [ spec requires: #('SpecBrick') ];
+		package: #'Roassal3-Bloc' with: [ spec requires: #('Bloc') ];
 
 		package: #'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
 		package: #'Roassal3-SVG-Tests';
