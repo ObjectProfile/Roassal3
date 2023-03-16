@@ -159,7 +159,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'default' with: #('Core' 'Mini');
 		
-		group: 'Bloc' with: #('Full' 'Roassal3-Bloc').
+		group: 'BlocFull' with: #('Full' 'Roassal3-Bloc').
 
 
 
