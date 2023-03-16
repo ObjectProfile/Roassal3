@@ -7,11 +7,10 @@ Class {
 { #category : #hooks }
 RSBlocMetricProvider >> extentsOf: aRSLabel [
 	| paragraph line | 
-	paragraph := BlSingleLineTextParagraph new
+	paragraph := BlTextParagraph new
 		text: aRSLabel blRopedText;
 		yourself.
-	(BlSpartaCanvasTextMeasurer new canvas: Bloc preferableSpartaCanvas offscreen)
-		measureTextParagraph: paragraph.
+	BlHostRenderer preferableClass offscreenMeasureTextParagraph: paragraph.
 	line := paragraph line.
 	"ascent descent height baseline y"
 	^ RSTextExtents new
