@@ -545,7 +545,7 @@ RSBlocExamples >> example16Histogram [
 		g := RSGroup new.
 		c := RSChart new.
 		c container: g.
-		y := x collect: [ :v | strat computeSizeFor: (Array new: v) ].
+		y := x collect: [ :v | strat computeNumberOfBinsFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
@@ -704,7 +704,7 @@ RSBlocExamples >> example20BoxWindmill [
 			frameCount := frameCount + 1.
 			canvas signalUpdate ].
 
-	canvas @ RSSimpleCanvasMonitor.
+	canvas @ RSSimpleCanvasMonitorInteraction.
 
 	^ canvas
 ]
@@ -843,7 +843,7 @@ RSBlocExamples >> example22AnimationOnRightClick [
 				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
 		].
 		canvas newAnimation
-			easing: RSEasing elasticOut;
+			easing: RSEasingInterpolator elasticOut;
 			onStepDo: [ :t |
 				canvas nodes do: [ :shape | | scale |
 					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
@@ -1274,7 +1274,7 @@ RSBlocExamples >> example33AnimatedLayout [
 		layout on: shapes.
 		 ].
 	update value: #tree.
-	RSZoomToFitCanvas new animatedZoomToFit: c.
+	RSZoomToFitCanvasInteraction new animatedZoomToFit: c.
 
 	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	labels := labels collect: [ :sel |
@@ -1393,17 +1393,21 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 { #category : #examples }
 RSBlocExamples >> example35MouseEnterMouseLeave [
 	<script: 'self new example35MouseEnterMouseLeave open'>
-	"Open Transcript to see the traced events. Blue ellipse is over the box. Red circle doesn''t listen, so mouse events should reach the other shapes or the canvas."
+	"Open Transcript to see the traced events. 
+	- Blue ellipse is over the box. 
+	- Red circle does not listen, so mouse events should reach either the other shapes or the canvas."
 
 	| canvas |
 	canvas := RSCanvas new.
 	canvas useBlocHost.
 
 	canvas addShape: (RSBox new
+			model: #orange;
 			color: Color orange translucent;
 			extent: 100 asPoint;
 			yourself).
 	canvas addShape: (RSEllipse new
+			model: #blue;
 			position: 25 asPoint;
 			color: Color blue translucent;
 			extent: 100 asPoint;
@@ -1422,6 +1426,7 @@ RSBlocExamples >> example35MouseEnterMouseLeave [
 			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ].
 
 	canvas addShape: (RSCircle new
+			model: #red;
 			position: 50 @ -25;
 			color: Color red translucent;
 			extent: 100 asPoint;
