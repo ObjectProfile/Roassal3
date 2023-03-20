@@ -52,7 +52,7 @@ RSShapeFactory class >> circle [
 ]
 
 { #category : #shapes }
-RSShapeFactory class >> composite [ 
+RSShapeFactory class >> composite [
 	^ RSComposite new
 ]
 
@@ -155,7 +155,6 @@ RSShapeFactory class >> shapeFromString: aString [
 		(aString includesSubstring: k)
 			ifTrue: [ ^ sel value: self ] ].
 	^ nil
-	
 ]
 
 { #category : #shapes }
@@ -174,7 +173,7 @@ RSShapeFactory class >> star [
 	innerPoints
 		doWithIndex: [ :p :i | innerPoints at: i put: (p x * innerRadius) @ (p y * innerRadius) ].
 	star5Points
-		doWithIndex: [ :p :i | 
+		doWithIndex: [ :p :i |
 			ar := i even
 				ifTrue: [ outerPoints ]
 				ifFalse: [ innerPoints ].

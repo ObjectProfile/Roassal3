@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSCircleTree class >> radius: aNumber [ 
+RSCircleTree class >> radius: aNumber [
 	^ self new
 		radius: aNumber;
 		yourself
@@ -42,14 +42,14 @@ RSCircleTree >> combine: circle [
 	vector lengthenBy: radius1 + radius2.
 	vector scaleBy: 0.5.
 	deltaRadius := vector magnitude.
-	deltaRadius >= radius1 ifTrue: [ 
+	deltaRadius >= radius1 ifTrue: [
 		vector shortenBy: radius1.
 		vector add: self center.
 		^ self class vector: vector radius: deltaRadius ].
-	
+
 	^ radius1 >= radius2
 		ifTrue: [ self ]
-		ifFalse: [ circle ].
+		ifFalse: [ circle ]
 ]
 
 { #category : #computing }
@@ -63,7 +63,6 @@ RSCircleTree >> distanceTo: circle [
 { #category : #testing }
 RSCircleTree >> intersects: circle [
 	^ (circle center - self center) magnitude < (self radius + circle radius - Number epsilon)
-	
 ]
 
 { #category : #accessing }
@@ -72,7 +71,7 @@ RSCircleTree >> radius [
 ]
 
 { #category : #accessing }
-RSCircleTree >> radius: aNumber [ 
+RSCircleTree >> radius: aNumber [
 	radius := aNumber.
 	x := y := 0
 ]
@@ -81,7 +80,7 @@ RSCircleTree >> radius: aNumber [
 RSCircleTree >> scaleFull: factor [
 	x := x * factor.
 	y := y * factor.
-	radius := radius * factor.
+	radius := radius * factor
 ]
 
 { #category : #public }
@@ -96,7 +95,7 @@ RSCircleTree >> x [
 ]
 
 { #category : #accessing }
-RSCircleTree >> x: aNumber [ 
+RSCircleTree >> x: aNumber [
 	x := aNumber
 ]
 
@@ -106,6 +105,6 @@ RSCircleTree >> y [
 ]
 
 { #category : #accessing }
-RSCircleTree >> y: aNumber [ 
+RSCircleTree >> y: aNumber [
 	y := aNumber
 ]

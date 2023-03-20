@@ -4,7 +4,7 @@ Extension { #name : #GEllipse }
 GEllipse >> rsScaleWith: anAthensAffineTransform [
 	| m |
 	m := anAthensAffineTransform.
-	^ self class 
+	^ self class
 		center: (m transform: center)
 		vertex: (m transform: coVertex)
 		coVertex: (m transform: vertex)

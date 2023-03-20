@@ -79,9 +79,9 @@ Class {
 
 { #category : #public }
 RSTickConfiguration >> createLabelFor: aValue [
-	^ RSLabel new 
-		fontSize: self fontSize; 
-		text: (self labelConversion rsValue: aValue); 
+	^ RSLabel new
+		fontSize: self fontSize;
+		text: (self labelConversion rsValue: aValue);
 		rotateByDegrees: self labelRotation;
 		yourself
 ]

@@ -31,7 +31,7 @@ RSRTreeShapeCollection >> balanceRemovedPath: path [
 		tree height: (tree left height max: tree right height)+1.
 		tree isBalanced ifFalse: [ | toMove brother |
 			"times := times + 1."
-			tree left height < tree right height ifTrue: [ 
+			tree left height < tree right height ifTrue: [
 				toMove := tree left.
 				brother := tree right.
 			] ifFalse: [
@@ -45,12 +45,10 @@ RSRTreeShapeCollection >> balanceRemovedPath: path [
 		].
 	].
 	"(path last value contents model asString, ' - ', times asString, ' times') traceCr."
-	
-	
 ]
 
 { #category : #enumerating }
-RSRTreeShapeCollection >> do: aBlock [ 
+RSRTreeShapeCollection >> do: aBlock [
 	root do: aBlock
 ]
 
@@ -62,7 +60,7 @@ RSRTreeShapeCollection >> height [
 { #category : #initialization }
 RSRTreeShapeCollection >> initialize [
 	super initialize.
-	root := RSRNilNode new.
+	root := RSRNilNode new
 ]
 
 { #category : #testing }
@@ -86,16 +84,16 @@ RSRTreeShapeCollection >> rectangle [
 ]
 
 { #category : #removing }
-RSRTreeShapeCollection >> remove: oldObject ifAbsent: anExceptionBlock [ 
+RSRTreeShapeCollection >> remove: oldObject ifAbsent: anExceptionBlock [
 	| path |
 	path := root searchPath: oldObject.
 	path ifEmpty: [ ^ anExceptionBlock value ].
-	path size = 1 ifTrue: [ 
+	path size = 1 ifTrue: [
 		root := RSRNilNode new.
 	] ifFalse: [
 		self removeLastNodeInPath: path.
 	].
-	
+
 	^ path last value contents
 ]
 
@@ -107,10 +105,10 @@ RSRTreeShapeCollection >> removeLastNodeInPath: path [
 	isRight := last key.
 	last := last value.
 	brother := isRight ifTrue: [ parent left ] ifFalse: [ parent right ].
-	
+
 	parent fromNode: brother.
 	path size < 3 ifTrue: [ ^ self ].
-	self balanceRemovedPath: path.
+	self balanceRemovedPath: path
 ]
 
 { #category : #accessing }
@@ -119,7 +117,7 @@ RSRTreeShapeCollection >> root [
 ]
 
 { #category : #'finding/searching' }
-RSRTreeShapeCollection >> shapesAtPoint: aPoint [ 
+RSRTreeShapeCollection >> shapesAtPoint: aPoint [
 	| res |
 	res := OrderedCollection new.
 	root nodesWithPoint: aPoint list: res.

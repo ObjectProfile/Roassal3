@@ -65,17 +65,17 @@ Class {
 { #category : #private }
 RSHierarchyPackerInteraction >> fill: group with: aShape [
 	group add: aShape.
-	aShape outgoingLines do: [ :ed | 
-		self fill: group with: ed to ].
+	aShape outgoingLines do: [ :ed |
+		self fill: group with: ed to ]
 ]
 
 { #category : #initialization }
 RSHierarchyPackerInteraction >> initialize [
 	super initialize.
-	
+
 	rectanglePackLayout := RSRectanglePackLayout new
 		doNotUseProgressBar;
-		yourself.
+		yourself
 ]
 
 { #category : #private }
@@ -87,20 +87,19 @@ RSHierarchyPackerInteraction >> onShape: aCanvas [
 	connected := connectedAsGroups select: #hasEdges.
 	isolated := connectedAsGroups reject: #hasEdges.
 
-	connectedAsGroups := (layout rootNodesFor: connected) collect: [ :e | 
+	connectedAsGroups := (layout rootNodesFor: connected) collect: [ :e |
 		| group |
 		group :=  RSGroup new.
 		self fill: group with: e.
-		group ]. 
-	
+		group ].
+
 	all := connectedAsGroups, isolated.
 
 	aCanvas when: RSExtentChangedEvent do: [
 		rectanglePackLayout
 			preferredAngle: aCanvas extent angle;
 			on: all.
-		aCanvas zoomToFit; signalUpdate ].
-
+		aCanvas zoomToFit; signalUpdate ]
 ]
 
 { #category : #accessing }

@@ -127,18 +127,18 @@ RSLocation class >> move: aShapeOrAGroup1 onTheRightOf: aShapeOrAGroup2 [
 ]
 
 { #category : #'public - positioning shorcuts' }
-RSLocation >> above [ 
-	self top; outer.
+RSLocation >> above [
+	self top; outer
 ]
 
 { #category : #'public - positioning shorcuts' }
-RSLocation >> below [ 
+RSLocation >> below [
 	self bottom; outer
 ]
 
 { #category : #'public - modifiers' }
 RSLocation >> border [
-	orientation := 0
+	self orientation: 0@0
 ]
 
 { #category : #'public - positioning' }
@@ -167,7 +167,7 @@ c
 ```
 	"
 	fixedY := #bottom.
-	direction := direction x @ -1.
+	direction := direction x @ -1
 ]
 
 { #category : #'public - positioning' }
@@ -178,7 +178,7 @@ RSLocation >> center [
 
 { #category : #private }
 RSLocation >> computePosition: movableShape on: fixedShape [
-	^ movableShape extent / 2 * orientation * direction + (self parentPosition: fixedShape) + offset.
+	^ movableShape extent / 2 * orientation * direction + (self parentPosition: fixedShape) + offset
 ]
 
 { #category : #initialization }
@@ -194,7 +194,17 @@ RSLocation >> initialize [
 
 { #category : #'public - modifiers' }
 RSLocation >> inner [
-	orientation := 1
+	self orientation: 1@1
+]
+
+{ #category : #'public - positioning shorcuts' }
+RSLocation >> insideCornerLeft [
+	self orientation: 1 @ -1; top; left
+]
+
+{ #category : #'public - positioning shorcuts' }
+RSLocation >> insideCornerRight [
+	self orientation: 1 @ -1; top; right
 ]
 
 { #category : #'public - positioning' }
@@ -255,7 +265,7 @@ c
 { #category : #'public - executing' }
 RSLocation >> move: movableShape on: baseShape [
 	"Utility method"
-	movableShape translateTo: (self computePosition: movableShape on: baseShape).
+	movableShape translateTo: (self computePosition: movableShape on: baseShape)
 ]
 
 { #category : #'public - modifiers' }
@@ -266,7 +276,7 @@ RSLocation >> offset [
 { #category : #'public - modifiers' }
 RSLocation >> offset: aNumber [
 	"Let an offset between the positioned shape and the base shape.
-	
+
 For example
 ```Smalltalk
 c := RSCanvas new.
@@ -293,8 +303,14 @@ c
 ]
 
 { #category : #'public - modifiers' }
+RSLocation >> orientation: aPoint [
+	"check users of method orientation"
+	orientation := aPoint
+]
+
+{ #category : #'public - modifiers' }
 RSLocation >> outer [
-	orientation := -1
+	self orientation: -1 @ -1
 ]
 
 { #category : #private }
@@ -302,7 +318,7 @@ RSLocation >> parentPosition: fixedShape [
 	| rec |
 	rec := fixedShape.
 	rec isRectangle ifFalse:  [ rec := rec encompassingRectangle ] .
-	^ (fixedX value: rec)@ (fixedY value: rec).
+	^ (fixedX value: rec)@ (fixedY value: rec)
 ]
 
 { #category : #'public - positioning' }
@@ -329,7 +345,7 @@ RSLocation new
 c
 ```"
 	fixedX := #right.
-	direction := -1 @ direction y.
+	direction := -1 @ direction y
 ]
 
 { #category : #'public - executing' }
@@ -337,9 +353,9 @@ RSLocation >> stick: movableShape on: baseShape [
 	| block |
 	block := [ self move: movableShape on: baseShape ].
 	block value.
-	baseShape 
+	baseShape
 		when: RSExtentChangedEvent do: block;
-		when: RSPositionChangedEvent do: block.
+		when: RSPositionChangedEvent do: block
 ]
 
 { #category : #'public - positioning' }

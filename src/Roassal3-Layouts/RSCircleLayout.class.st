@@ -9,7 +9,7 @@ Class {
 
 { #category : #'instance creation' }
 RSCircleLayout class >> scaleBy: aNumber [
-	
+
 	^self new scaleBy: aNumber
 ]
 

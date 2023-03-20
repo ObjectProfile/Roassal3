@@ -26,7 +26,7 @@ RSHorizontalFlowLayout >> alignRight [
 { #category : #initialization }
 RSHorizontalFlowLayout >> initialize [
 	super initialize.
-	self alignLeft.
+	self alignLeft
 ]
 
 { #category : #testing }
@@ -67,7 +67,7 @@ RSHorizontalFlowLayout >> linesFor: shapes [
 			currentLine := OrderedCollection new.
 			maxLastLineWidth := 0.
 		].
-		
+
 	].
 	currentLine ifNotEmpty: [ lines add: currentLine ].
 	^ lines

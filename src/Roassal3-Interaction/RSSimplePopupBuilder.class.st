@@ -23,14 +23,14 @@ RSSimplePopupBuilder >> boxBuilder: aRSSimpleBoxBuilder [
 
 { #category : #hooks }
 RSSimplePopupBuilder >> boxFor: lbl [
-	^ self boxBuilder shapeFor: lbl.
+	^ self boxBuilder shapeFor: lbl
 ]
 
 { #category : #initialization }
 RSSimplePopupBuilder >> initialize [
 	super initialize.
 	self labelBuilder: RSMultilineLabelBuilder new.
-	self boxBuilder: RSSimpleBoxBuilder new.
+	self boxBuilder: RSSimpleBoxBuilder new
 ]
 
 { #category : #accessing }

@@ -20,7 +20,7 @@ RSPieLabeledInteraction >> initialize [
 	self labelShape: RSLabel new.
 	self labelColor: Color black.
 	offset := 0.
-	rotated := false.
+	rotated := false
 ]
 
 { #category : #testing }
@@ -38,7 +38,7 @@ RSPieLabeledInteraction >> labelColor: aColor [
 	"can be a color, a block or color scale"
 	"self labelColor: Color white"
 	"self labelColor: [:model | model modelColor ]"
-	"self labelColor: TSScale category20"
+	"self labelColor: NSScale category20"
 	labelColor := aColor
 ]
 
@@ -86,12 +86,12 @@ RSPieLabeledInteraction >> onShape: aShape [
 	label := self shapeFor: aShape.
 	aShape propertyAt: self labelKey put: label.
 	parent := aShape parent.
-	parent add: label.
+	parent add: label
 ]
 
 { #category : #accessing }
 RSPieLabeledInteraction >> rotated [
-	rotated := true.
+	rotated := true
 ]
 
 { #category : #hooks }

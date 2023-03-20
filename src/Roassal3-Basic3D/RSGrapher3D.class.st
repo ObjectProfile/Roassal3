@@ -20,8 +20,7 @@ RSGrapher3D class >> sampleData [
 	r := SharedRandom globalGenerator.
 	data := OrderedCollection new.
 	1 to: 20 do: [ :x |
-		1 to: 20 do: [ :z | 
+		1 to: 20 do: [ :z |
 			data add: { x. r next * 10. z  }. ] ].
 	^ data
-	
 ]

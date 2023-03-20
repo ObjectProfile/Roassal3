@@ -17,7 +17,7 @@ RSUMLClassBuilder >> classes [
 
 { #category : #accessing }
 RSUMLClassBuilder >> classes: aColletionOfClasses [
-	classes := aColletionOfClasses 
+	classes := aColletionOfClasses
 ]
 
 { #category : #initialization }
@@ -42,6 +42,5 @@ RSUMLClassBuilder >> renderIn: aCanvas [
 		connectFrom: modelDescriptor superclass.
 	self layout on: shapes.
 	self renderer renderAssociations.
-	renderer setUpCanvas: aCanvas.
-
+	renderer setUpCanvas: aCanvas
 ]

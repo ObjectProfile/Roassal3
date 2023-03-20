@@ -67,7 +67,7 @@ RSHeatmap >> setXLabelsOn: topMostShapes [
 	xLabels ifNil: [ ^ self ].
 	self assert: [ xLabels isCollection ] description: 'Should provide a collection instead'.
 	self assert: [ xLabels size = topMostShapes size ] description: 'Mismatched collection'.
-	
+
 	topMostShapes with: xLabels do: [ :s :l |
 		lShape := RSLabel new text: l.
 		lShape rotateByDegrees: -90.
@@ -85,14 +85,14 @@ RSHeatmap >> setYLabelsOn: leftMostShapes [
 	yLabels ifNil: [ ^ self ].
 	self assert: [ yLabels isCollection ] description: 'Should provide a collection instead'.
 	self assert: [ yLabels size = leftMostShapes size ] description: 'Mismatched collection'.
-	
+
 	leftMostShapes with: yLabels do: [ :s :l |
 		lShape := RSLabel new text: l.
 		canvas addShape: lShape.
 		RSLocation new
 			offset: -10 @ 0;
 			outer;
-			left; 
+			left;
 			move: lShape on: s ]
 ]
 
@@ -104,9 +104,9 @@ RSHeatmap >> show: matrix [
 	topMostShapes := OrderedCollection new.
 	boxes := OrderedCollection new.
 	matrix
-		doWithIndex: [ :row :ic | 
+		doWithIndex: [ :row :ic |
 			row
-				doWithIndex: [ :v :ir | 
+				doWithIndex: [ :v :ir |
 					box := RSBox new.
 					box size: 40.
 					box color: (scale scale: v).
@@ -115,12 +115,12 @@ RSHeatmap >> show: matrix [
 					ir = 1 ifTrue: [ leftMostShapes add: box ].
 					ic = 1 ifTrue: [ topMostShapes add: box ].
 					 ] ].
-		
+
 	RSGridLayout new
 		gapSize: 0;
 		lineItemsCount: matrix first size;
 		on: boxes.
-	
+
 	self setYLabelsOn: leftMostShapes.
 	self setXLabelsOn: topMostShapes
 ]

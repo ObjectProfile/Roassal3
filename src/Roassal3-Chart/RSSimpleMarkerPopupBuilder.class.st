@@ -13,9 +13,8 @@ RSSimpleMarkerPopupBuilder >> shapeFor: aRSChart [
 	line := RSLine new dashArray: #(3).
 	box := aRSChart spine globalEncompassingRectangle.
 	x := position x.
-	line 
+	line
 		startPoint: x @ box top;
 		endPoint: x @ box bottom.
 	^ line
-	
 ]

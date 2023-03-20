@@ -22,7 +22,7 @@ RSSunburstBuilderTest >> testBasic [
 		alphaAngle: -45;
 		betaAngle: 45;
 		yourself.
-		
+
 	line := RSLine new
 		from: segment1;
 		to: segment2;

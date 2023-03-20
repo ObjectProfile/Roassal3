@@ -18,5 +18,5 @@ RSCircleTest >> testCenter [
 		radius: 10;
 		center: center;
 		yourself.
-	self assert: circle center equals: center.
+	self assert: circle center equals: center
 ]

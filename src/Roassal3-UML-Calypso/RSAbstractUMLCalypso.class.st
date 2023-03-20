@@ -12,21 +12,21 @@ Class {
 
 { #category : #building }
 RSAbstractUMLCalypso >> addClassInteractions: builder [
-	builder canvas nodes 
+	builder canvas nodes
 		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
-		when: RSMouseRightClick do: [ :evt | 
+		when: RSMouseRightClick do: [ :evt |
 			| menu newContext tool |
 			tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
-			tool 
+			tool
 				prepareInitialStateBy: [ :b | b selectClass: evt shape model ].
 			"newContext := ClyFullBrowserClassContext for: tool."
 			newContext := context copy.
 			newContext tool: tool.
-			menu := CmdContextMenuActivation 
-				buildContextMenuFor: evt canvas morph 
+			menu := CmdContextMenuActivation
+				buildContextMenuFor: evt canvas morph
 				inContext: newContext.
 			menu popUpInWorld: self currentWorld.
-			].
+			]
 ]
 
 { #category : #building }
@@ -39,7 +39,7 @@ RSAbstractUMLCalypso >> applyTheme: builder [
 	renderer marker shape color: theme backgroundColor.
 	renderer textColor: theme textColor.
 	renderer boxColor: theme classBoxBackgroundColor.
-	builder modelDescriptor methodsLimit: theme methodsLimitUML.
+	builder modelDescriptor methodsLimit: theme methodsLimitUML
 ]
 
 { #category : #building }
@@ -47,7 +47,7 @@ RSAbstractUMLCalypso >> build [
 	| canvas morph |
 	canvas := self buildUmlCanvas.
 	morph := canvas createMorph.
-	morph onAnnouncement: MorphDeleted 
+	morph onAnnouncement: MorphDeleted
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
 	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus].
 	self addMorph: morph fullFrame: LayoutFrame identity
@@ -61,7 +61,7 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 	builder canvas @ self canvasController.
 	builder build.
 	self addClassInteractions: builder.
-	
+
 	^ builder canvas
 ]
 
@@ -69,7 +69,7 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 RSAbstractUMLCalypso >> canvasController [
 	| controls |
 	controls := RSCanvasController new.
-	controls configuration 
+	controls configuration
 		useBasicZoom;
 		maxScale: 2.
 	^ controls
@@ -99,9 +99,9 @@ RSAbstractUMLCalypso >> defaultIconName [
 RSAbstractUMLCalypso >> limitedClasses: aCollection [
 	| limit |
 	limit := 100.
-	^ aCollection size < limit 
+	^ aCollection size < limit
 		ifTrue: [ aCollection ]
-		ifFalse: [ aCollection copyFrom: 1 to: limit ].
+		ifFalse: [ aCollection copyFrom: 1 to: limit ]
 ]
 
 { #category : #building }

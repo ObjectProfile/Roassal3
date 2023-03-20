@@ -34,26 +34,26 @@ Class {
 { #category : #'accessing - computed' }
 RSPie >> alphaAngleFor: aShape [
 	values ifNil: [ self slice: #yourself ].
-	^ (sumValues at: aShape index) * 360 / totalSum.
+	^ (sumValues at: aShape index) * 360 / totalSum
 ]
 
 { #category : #'accessing - computed' }
 RSPie >> betaAngleFor: aShape [
-	^ ((sumValues at: aShape index) + (values at: aShape index )) * 360 / totalSum.
+	^ ((sumValues at: aShape index) + (values at: aShape index )) * 360 / totalSum
 ]
 
 { #category : #initialization }
 RSPie >> initialize [
 	super initialize.
-	self sliceColor: [ :slice | 
-		slice index even 
+	self sliceColor: [ :slice |
+		slice index even
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ Color gray ] ].
 	sliceShape := RSPieSlice new
 		segmentSpacing: 0;
 		cornerRadii: 0;
 		innerRadius: 0;
-		externalRadius: 120.
+		externalRadius: 120
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ RSPie >> slice: aBlockOrASymbol [
 		sumValues at: i put: tempSum.
 		tempSum := tempSum + v
 		 ].
-	totalSum := tempSum.
+	totalSum := tempSum
 ]
 
 { #category : #accessing }
@@ -115,8 +115,7 @@ RSPie >> sliceColor [
 { #category : #accessing }
 RSPie >> sliceColor: anObject [
 	"a block or object that can anwser rsValue:"
-	sliceColor := anObject 
-	
+	sliceColor := anObject
 ]
 
 { #category : #accessing }

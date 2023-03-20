@@ -33,7 +33,6 @@ RSBaselineModel >> baselineClass: aClass [
 RSBaselineModel >> browse [
 	class ifNil: [ ^ nil ].
 	^ class browse
-	
 ]
 
 { #category : #accessing }
@@ -59,7 +58,7 @@ RSBaselineModel >> inspectionBaselineMap: builder [
 	| canvas |
 	canvas := RSBaselineMapSettings classMapBuilder new
 		in: [ :map |
-			self baselineClass 
+			self baselineClass
 				ifNotNil: [ map baseline: self baselineClass ] ];
 		build;
 		canvas.

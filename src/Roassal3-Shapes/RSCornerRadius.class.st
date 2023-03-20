@@ -107,7 +107,7 @@ RSCornerRadius >> bottom: aNumber [
 ]
 
 { #category : #accessing }
-RSCornerRadius >> bottomLeft [ 
+RSCornerRadius >> bottomLeft [
 	"Define the bottom left of the radius"
 	^ bottomLeft
 ]
@@ -119,7 +119,7 @@ RSCornerRadius >> bottomLeft: aNumber [
 
 { #category : #accessing }
 RSCornerRadius >> bottomRight [
-	^ bottomRight 
+	^ bottomRight
 ]
 
 { #category : #accessing }
@@ -131,7 +131,7 @@ RSCornerRadius >> bottomRight: aNumber [
 { #category : #initialization }
 RSCornerRadius >> initialize [
 	super initialize.
-	self radius: 0.
+	self radius: 0
 ]
 
 { #category : #transforming }
@@ -193,7 +193,7 @@ RSCornerRadius >> top: aNumber [
 
 { #category : #accessing }
 RSCornerRadius >> topLeft [
-	^ topLeft 
+	^ topLeft
 ]
 
 { #category : #accessing }

@@ -17,8 +17,8 @@ RSEdgeBuilderTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
 	shapes := (1 to: 10) collect: [ :n | RSBox new model: n; size: 5; yourself ] as: RSGroup.
-	canvas addAll: shapes. 
-	b := RSLineBuilder line.
+	canvas addAll: shapes.
+	b := RSLineBuilder line
 ]
 
 { #category : #tests }
@@ -33,9 +33,9 @@ RSEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
 	eb color: (Color red alpha: 0.5).
 	eb noRepetition.
 	eb useAssociations: (Array with: 1 -> 2 with: 2 -> 3 with: 1 -> 2).
-	
+
 	(Smalltalk globals at: #RSGridLayout)  on: canvas nodes.
-	
+
 	self assert: canvas numberOfEdges equals: 2
 ]
 
@@ -44,10 +44,10 @@ RSEdgeBuilderTest >> testBorder [
 	| numberOfEdges |
 	b canvas: canvas.
 	b connectFrom: [ :vv | vv // 2 ].
-	
+
 	numberOfEdges := canvas edges size.
 	self assert: numberOfEdges > 0.
-	
+
 	self assert: (canvas edges collect: #border) asSet size equals: 1
 ]
 
@@ -57,12 +57,12 @@ RSEdgeBuilderTest >> testConnectFrom [
 	b canvas: canvas.
 	b objects: #(1 2).
 	b connectFrom: [ :v | v - 1 ].
-	
+
 	self assert: canvas numberOfEdges equals: 1.
-	
+
 	e := canvas edges anyOne.
 	self assert: e from model equals: 1.
-	self assert: e to model equals: 2.
+	self assert: e to model equals: 2
 ]
 
 { #category : #tests }
@@ -71,18 +71,18 @@ RSEdgeBuilderTest >> testConnectFromAll [
 	c := RSCanvas new.
 	es := (1 to: 2) collect: [ :m | RSEllipse new size: 20; model: m; yourself ].
 	c addAll: es.
-	
+
 	self assert: c edges size equals: 0.
 	RSLineBuilder line
 		canvas: c;
 		objects: (1 to: 2);
 		connectFromAll: (Array with: 1) to: 2.
-		
+
 	(Smalltalk globals at: #RSTreeLayout) on: es.
 
 	self assert: c edges size equals: 1.
 	self assert: c edges first from position equals: (15.0@15.0).
-	self assert: c edges first to position equals: (15.0@55.0).
+	self assert: c edges first to position equals: (15.0@55.0)
 ]
 
 { #category : #tests }
@@ -91,12 +91,12 @@ RSEdgeBuilderTest >> testConnectTo [
 	b canvas: canvas.
 	b objects: #(1 2).
 	b connectTo: [ :v | v - 1 ].
-	
+
 	self assert: canvas numberOfEdges equals: 1.
-	
+
 	e := canvas edges anyOne.
 	self assert: e from model equals: 2.
-	self assert: e to model equals: 1.
+	self assert: e to model equals: 1
 ]
 
 { #category : #tests }
@@ -105,13 +105,13 @@ RSEdgeBuilderTest >> testConnectToAll [
 	b canvas: canvas.
 	b objects: #(1 2 3).
 	b connectToAll: [ :v | Array with: v - 1 with: v - 2 ].
-	
+
 	self assert: canvas numberOfEdges equals: 3.
-	 
+
 	eFrom := (canvas edges collect: [ :edge | edge from model ]) sorted asArray.
 	eTo := (canvas edges collect: [ :edge | edge to model ]) sorted asArray.
 	self assert: eFrom equals: #(2 3 3).
-	self assert: eTo equals: #(1 1 2).
+	self assert: eTo equals: #(1 1 2)
 ]
 
 { #category : #tests }
@@ -126,10 +126,10 @@ RSEdgeBuilderTest >> testElements [
 	b := RSLineBuilder line.
 	b canvas: canvas.
 	self assert: b fromShapes equals: canvas nodes.
-	
+
 	es := (1 to: 4) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
 	b shapes: es.
-	self assert: b fromShapes equals: es.
+	self assert: b fromShapes equals: es
 ]
 
 { #category : #tests }
@@ -147,19 +147,19 @@ RSEdgeBuilderTest >> testElementsToLookup [
 					toShapes: es2;
 					connectTo: #yourself.
 	self assert: edges size equals: 3.
-	
+
 	self assert: edges first from equals: es1 first.
-	self assert: edges first to equals: es2 first.
+	self assert: edges first to equals: es2 first
 ]
 
 { #category : #'tests - error' }
 RSEdgeBuilderTest >> testErrors [
 	| eb |
 	eb := RSLineBuilder line.
-	
+
 	self should: [ eb shapes: #(1 2 3) ] raise: AssertionFailure.
 	self should: [ eb shapes: 'hello world' ] raise: AssertionFailure.
-	self should: [ eb shapes: 42 ] raise: AssertionFailure.
+	self should: [ eb shapes: 42 ] raise: AssertionFailure
 ]
 
 { #category : #tests }
@@ -174,7 +174,7 @@ RSEdgeBuilderTest >> testFromObjects [
 	self assert: edges first to model equals: 10.
 
 	self assert: b toObjects asArray equals: (1 to: 10) asArray.
-	self assert: b fromObjects asArray equals: #(1 2).
+	self assert: b fromObjects asArray equals: #(1 2)
 ]
 
 { #category : #tests }
@@ -185,7 +185,7 @@ RSEdgeBuilderTest >> testFromObjects02 [
 	self assert: canvas numberOfEdges equals: 1.
 
 	self assert: b toObjects asArray equals: (1 to: 10) asArray.
-	self assert: b fromObjects asArray equals: #(1).
+	self assert: b fromObjects asArray equals: #(1)
 ]
 
 { #category : #tests }
@@ -194,7 +194,7 @@ RSEdgeBuilderTest >> testFromObjectsError [
 "
 view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
-	view addAll: elements. 
+	view addAll: elements.
 	b := RTEdgeBuilder new."
 	self should: [ RSLineBuilder new  fromObjects: #(1 2) ] raise: Error
 ]
@@ -203,11 +203,11 @@ view := RTView new.
 RSEdgeBuilderTest >> testFromObjectsToElements [
 	| edges |
 	b canvas: canvas.
-	edges := 
+	edges :=
 		b fromObjects: #(1 2);
 			toShapes: (shapes copyFrom: 10 to: 10);
 			connectTo: 10.
-	self assert: edges size equals: 2.
+	self assert: edges size equals: 2
 ]
 
 { #category : #tests }
@@ -217,15 +217,14 @@ RSEdgeBuilderTest >> testHasEdges [
 	s2 := canvas nodes second.
 	self deny: s1 hasEdges.
 	self deny: s2 hasEdges.
-	
+
 	b canvas: canvas.
 	b objects: #(1 2).
 	b connectTo: [ :v | v - 1 ].
-	
+
 	self assert: s1 hasEdges.
 	self assert: s2 hasEdges.
 	self assert: s1 connectedLines size equals: 1
-	
 ]
 
 { #category : #tests }
@@ -234,9 +233,9 @@ RSEdgeBuilderTest >> testInferCanvas [
 	self assert: b canvas isNil.
 	b toShapes: canvas nodes.
 	self assert: b canvas isNil.
-	
+
 	b fromShapes: canvas nodes.
-	self assert: b canvas equals: canvas.
+	self assert: b canvas equals: canvas
 ]
 
 { #category : #tests }
@@ -244,7 +243,7 @@ RSEdgeBuilderTest >> testInferCanvas2 [
 
 	self assert: b canvas isNil.
 	b shapes: canvas nodes.
-	self assert: b canvas equals: canvas.
+	self assert: b canvas equals: canvas
 ]
 
 { #category : #tests }
@@ -252,7 +251,7 @@ RSEdgeBuilderTest >> testInferCanvas3 [
 
 	| c |
 	c := RSCanvas new.
-	1 to: 100 do: [ :i | 
+	1 to: 100 do: [ :i |
 		c add: (RSLabel new
 				 text: i;
 				 model: i) ].
@@ -272,14 +271,14 @@ RSEdgeBuilderTest >> testInit [
 	eb := RSLineBuilder line.
 	self deny: eb shouldAllowRepetition.
 	eb allowRepetition.
-	self assert: eb shouldAllowRepetition.
+	self assert: eb shouldAllowRepetition
 ]
 
 { #category : #tests }
 RSEdgeBuilderTest >> testNoMoveBehind [
 	RSLineBuilder line
 		canvas: canvas;
-		useAssociations: (Array 
+		useAssociations: (Array
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).
@@ -291,12 +290,12 @@ RSEdgeBuilderTest >> testObjectFrom [
 	| e |
 	b canvas: canvas.
 	b objects: #(1 2); connectFrom: [ :v | v - 1 ].
-	
+
 	self assert: canvas numberOfEdges equals: 1.
-	
+
 	e := canvas edges anyOne.
 	self assert: e from model equals: 1.
-	self assert: e to model equals: 2.
+	self assert: e to model equals: 2
 ]
 
 { #category : #tests }
@@ -304,12 +303,12 @@ RSEdgeBuilderTest >> testObjectTo [
 	| e |
 	b canvas: canvas.
 	b objects: #(1 2); connectTo: [ :v | v - 1 ].
-	
+
 	self assert: canvas numberOfEdges equals: 1.
-	
+
 	e := canvas edges anyOne.
 	self assert: e from model equals: 2.
-	self assert: e to model equals: 1.
+	self assert: e to model equals: 1
 ]
 
 { #category : #tests }
@@ -320,7 +319,7 @@ RSEdgeBuilderTest >> testObjects [
 
 "	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
-	view addAll: elements. 
+	view addAll: elements.
 	b := RTEdgeBuilder new."
 ]
 
@@ -329,7 +328,6 @@ RSEdgeBuilderTest >> testObjects02 [
 	b canvas: canvas.
 	b objects: #even.
 	self assert: (b fromShapes collect: #model) asArray equals: #(2 4 6 8 10)
-
 ]
 
 { #category : #tests }
@@ -348,15 +346,15 @@ RSEdgeBuilderTest >> testShouldAllowBidirection [
 	b noBidirectional.
 	b objects: #(1 2).
 	b useAssociations: (Array with: 1 -> 2 with: 2 -> 1 ).
-	self deny: b isBidirectional. 
-	
+	self deny: b isBidirectional.
+
 	shapes := canvas shapesFromModels: #(1 2).
 	self assert: shapes size equals: 2.
 	self assert: (b shouldCreateEdgeFrom: shapes first to: shapes second).
-	
+
 	self assert: canvas numberOfEdges equals: 1.
 	self assert: canvas edges anyOne from model equals: 1.
-	self assert: canvas edges anyOne to model equals: 2.
+	self assert: canvas edges anyOne to model equals: 2
 ]
 
 { #category : #tests }
@@ -366,7 +364,7 @@ RSEdgeBuilderTest >> testShouldNotAllowBidirection [
 	b canvas: canvas.
 	b objects: #(1 2).
 	b useAssociations: (Array with: 1 -> 2 with: 2 -> 1).
-	self assert: canvas numberOfEdges equals: 2.
+	self assert: canvas numberOfEdges equals: 2
 ]
 
 { #category : #tests }
@@ -380,7 +378,7 @@ RSEdgeBuilderTest >> testSimple [
 
 	RSLineBuilder line
 		canvas: canvas;
-		useElementAssociations: (Array 
+		useElementAssociations: (Array
 									with: shapes first -> shapes second
 									with: shapes second -> shapes third).
 	self assert: canvas numberOfEdges equals: 2
@@ -391,7 +389,7 @@ RSEdgeBuilderTest >> testSimple2 [
 
 	RSLineBuilder line
 		canvas: canvas;
-		useAssociations: (Array 
+		useAssociations: (Array
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).
@@ -429,9 +427,8 @@ RSEdgeBuilderTest >> testSimple5 [
 		canvas: canvas;
 		fromObjects: #(1 2 3 6);
 		connectFrom: #yourself toAll: [ :v | Array with: v + 1 with: v + 2 ].
-		
-	self assert: canvas numberOfEdges equals: 8.
 
+	self assert: canvas numberOfEdges equals: 8
 ]
 
 { #category : #tests }
@@ -441,8 +438,7 @@ RSEdgeBuilderTest >> testSimple6 [
 		canvas: canvas;
 		fromObjects: (Array with: 2);
 		connectFromAll: (Array with: 2) to: 3.
-	self assert: canvas numberOfEdges equals: 1.
-
+	self assert: canvas numberOfEdges equals: 1
 ]
 
 { #category : #tests }
@@ -461,17 +457,17 @@ RSEdgeBuilderTest >> testSimple7 [
 RSEdgeBuilderTest >> testSource [
 	| c es eb col |
 	c := RSCanvas new.
-	es := #(1 2 3) collect: [:n | RSBox new model: n; yourself]. 
+	es := #(1 2 3) collect: [:n | RSBox new model: n; yourself].
 	c addAll: es.
-	
+
 	eb := RSLineBuilder line.
 	eb canvas: c.
-	
+
 	col := OrderedCollection new.
 	col add: 1 -> 2.
 	col add: 3 -> 1.
 	eb source: col connectFrom: #key to: #value.
-	
+
 	self assert: c numberOfEdges equals: 2
 ]
 
@@ -483,7 +479,7 @@ RSEdgeBuilderTest >> testToObjects [
 	self assert: canvas numberOfEdges equals: 0.
 
 	self assert: b toObjects asArray equals: #(1 2).
-	self assert: b fromObjects asArray equals: (1 to: 10) asArray.
+	self assert: b fromObjects asArray equals: (1 to: 10) asArray
 ]
 
 { #category : #tests }
@@ -492,7 +488,7 @@ RSEdgeBuilderTest >> testWithMoveBehind [
 	RSLineBuilder line
 		canvas: canvas;
 		moveBehind;
-		useAssociations: (Array 
+		useAssociations: (Array
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).
@@ -523,7 +519,7 @@ RSEdgeBuilderTest >> testconnectFromToAll [
 					toShapes: es2;
 					connectFrom: #yourself toAll: [ :obj | Array with: obj ].
 	self assert: edges size equals: 3.
-	
+
 	self assert: edges first from equals: es1 first.
-	self assert: edges first to equals: es2 first.
+	self assert: edges first to equals: es2 first
 ]

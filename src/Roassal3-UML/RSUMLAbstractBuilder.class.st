@@ -12,15 +12,15 @@ Class {
 }
 
 { #category : #testing }
-RSUMLAbstractBuilder class >> isAbstract [ 
+RSUMLAbstractBuilder class >> isAbstract [
 	^self name = #RSUMLAbstractBuilder
 ]
 
 { #category : #private }
 RSUMLAbstractBuilder >> defaultContainer [
-	^ RSCanvas new 
+	^ RSCanvas new
 		addInteraction: RSCanvasController new;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -36,7 +36,7 @@ RSUMLAbstractBuilder >> modelDescriptor [
 { #category : #accessing }
 RSUMLAbstractBuilder >> modelDescriptor: aRSClassDescriptor [
 	modelDescriptor := aRSClassDescriptor.
-	renderer ifNotNil: [ renderer modelDescriptor: modelDescriptor ].
+	renderer ifNotNil: [ renderer modelDescriptor: modelDescriptor ]
 ]
 
 { #category : #accessing }

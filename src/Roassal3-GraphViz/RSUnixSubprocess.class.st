@@ -55,7 +55,7 @@ RSUnixSubprocess class >> command: cmd arguments: args [
 
 	^self new
 		command: cmd;
-		arguments: args.
+		arguments: args
 ]
 
 { #category : #adding }
@@ -67,7 +67,6 @@ RSUnixSubprocess >> addAllEnvVariablesFromParentWithoutOverride [
 { #category : #accessing }
 RSUnixSubprocess >> arguments [
 	^ arguments
-
 ]
 
 { #category : #accessing }
@@ -79,7 +78,7 @@ RSUnixSubprocess >> arguments: anObject [
 RSUnixSubprocess >> closeAndCleanStreams [
 
 	process ifNil: [ ^ self ].
-	process closeAndCleanStreams.
+	process closeAndCleanStreams
 ]
 
 { #category : #accessing }
@@ -96,13 +95,11 @@ RSUnixSubprocess >> command: anObject [
 RSUnixSubprocess >> envVariables [
 
 	^ process envVariables
-
 ]
 
 { #category : #accessing }
 RSUnixSubprocess >> environmentAt: key put: value [
 	^ self process environmentAt: key put: value
-
 ]
 
 { #category : #accessing }
@@ -121,7 +118,6 @@ RSUnixSubprocess >> exitCode [
 
 	(process isNil or: [ process isRunning ]) ifTrue: [ ^ nil ].
 	^ process exitStatusInterpreter exitStatus
-
 ]
 
 { #category : #accessing }
@@ -133,7 +129,6 @@ RSUnixSubprocess >> exitStatus [
 RSUnixSubprocess >> exitStatusInterpreter [
 
 	^ process exitStatusInterpreter
-
 ]
 
 { #category : #testing }
@@ -141,7 +136,6 @@ RSUnixSubprocess >> hasProcess [
 	"Answer a boolean indicating whether the receiver has a process object"
 
 	^ process isNotNil
-
 ]
 
 { #category : #initialization }
@@ -149,13 +143,12 @@ RSUnixSubprocess >> initialize [
 
 	super initialize.
 	arguments := #().
-	stdinStream := String new writeStream.
+	stdinStream := String new writeStream
 ]
 
 { #category : #testing }
 RSUnixSubprocess >> isRunning [
 	^ self process isRunning
-
 ]
 
 { #category : #testing }
@@ -173,11 +166,10 @@ RSUnixSubprocess >> printOn: aStream [
 	process isRunning ifTrue:
 		[ aStream nextPutAll: 'a Running RSUnixSubprocess' ]
 	ifFalse:
-		[ self isSuccess ifTrue: 
+		[ self isSuccess ifTrue:
 				[ aStream nextPutAll: 'a Successfull RSUnixSubprocess' ]
 			ifFalse:
-				[ aStream nextPutAll: 'an Unsuccessfull RSUnixSubprocess' ] ].
-
+				[ aStream nextPutAll: 'an Unsuccessfull RSUnixSubprocess' ] ]
 ]
 
 { #category : #accessing }
@@ -189,7 +181,6 @@ RSUnixSubprocess >> process [
 RSUnixSubprocess >> queryExitStatus [
 
 	^ process queryExitStatus
-
 ]
 
 { #category : #removing }
@@ -198,8 +189,7 @@ RSUnixSubprocess >> removeLD_LIBRARY_PATH [
 	Unset LD_LIBRARY_PATH."
 
 	self process addAllEnvVariablesFromParentWithoutOverride.
-	self process envVariables removeKey: 'LD_LIBRARY_PATH'.
-
+	self process envVariables removeKey: 'LD_LIBRARY_PATH'
 ]
 
 { #category : #running }
@@ -208,7 +198,6 @@ RSUnixSubprocess >> run [
 
 	semaphore := nil.
 	^self runProcess
-
 ]
 
 { #category : #running }
@@ -220,7 +209,6 @@ RSUnixSubprocess >> runAndWait [
 	semaphore wait.
 	(errorBlock isNotNil and: [ self isSuccess not ])
 		ifTrue: [ errorBlock value: self ]
-
 ]
 
 { #category : #running }
@@ -234,18 +222,18 @@ RSUnixSubprocess >> runProcess [
 		redirectStdout;
 		redirectStdin;
 		redirectStderr.
-	workingDirectory ifNotNil: 
+	workingDirectory ifNotNil:
 		[ self process workingDirectory: workingDirectory fullName ].
 	self process run.
 
-	[ 
+	[
 	self process stdinStream
 		nextPutAll: stdinStream;
 		close.
-	
+
 	self process
 		waitForExitPollingEvery: (Delay forMilliseconds: 500)
-		doing: [ :proc :outStream :errStream | 
+		doing: [ :proc :outStream :errStream |
 			stdoutStream nextPutAll: outStream upToEnd.
 			stderrStream nextPutAll: errStream upToEnd ].
 	self process closeAndCleanStreams.
@@ -254,8 +242,7 @@ RSUnixSubprocess >> runProcess [
 	semaphore
 		ifNil: [ (errorBlock isNotNil and: [ self isSuccess not ])
 				ifTrue: [ errorBlock value: self ] ]
-		ifNotNil: [ semaphore signal ] ] fork.
-
+		ifNotNil: [ semaphore signal ] ] fork
 ]
 
 { #category : #private }
@@ -263,24 +250,22 @@ RSUnixSubprocess >> setCommand [
 	"Set the command or shell command in the process.
 	Either may be specified, but not both :-)"
 
-	(command isNil and: [ shellCommand isNil ]) ifTrue: 
+	(command isNil and: [ shellCommand isNil ]) ifTrue:
 		[ self error: 'No command supplied' ].
-	(command isNotNil and: [ shellCommand isNotNil ]) ifTrue: 
+	(command isNotNil and: [ shellCommand isNotNil ]) ifTrue:
 		[ self error: 'Only one of a command or shell command may be supplied' ].
 
-	command ifNil: 
+	command ifNil:
 		[ self process shellCommand: shellCommand ]
 	ifNotNil:
 		[ self process
 			command: command;
-			arguments: arguments ].
-
+			arguments: arguments ]
 ]
 
 { #category : #accessing }
 RSUnixSubprocess >> shellCommand [
 	^ shellCommand
-
 ]
 
 { #category : #accessing }
@@ -293,7 +278,6 @@ RSUnixSubprocess >> sigterm [
 	"Ask the external process to terminate"
 
 	^process sigterm
-
 ]
 
 { #category : #accessing }
@@ -307,7 +291,7 @@ RSUnixSubprocess >> stdin [
 ]
 
 { #category : #accessing }
-RSUnixSubprocess >> stdin: aByteArray [ 
+RSUnixSubprocess >> stdin: aByteArray [
 	stdinStream := aByteArray
 ]
 
@@ -319,20 +303,17 @@ RSUnixSubprocess >> stdout [
 { #category : #actions }
 RSUnixSubprocess >> terminate [
 	process terminate
-
 ]
 
 { #category : #'system startup & shutdown' }
 RSUnixSubprocess >> terminateOnShutdown [
 
 	self process terminateOnShutdown
-
 ]
 
 { #category : #accessing }
 RSUnixSubprocess >> workingDirectory [
 	^ workingDirectory
-
 ]
 
 { #category : #accessing }

@@ -14,7 +14,7 @@ Trait {
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> addChildSpacing: children [
 
-	^ children inject: 0 @ 0 into: [ :aPoint :child | 
+	^ children inject: 0 @ 0 into: [ :aPoint :child |
 		  | x newPoint y |
 		  x := aPoint x + (self shiftOf: child).
 		  y := x + aPoint y + (self changeOf: child).
@@ -474,7 +474,7 @@ RSTWalkBasedRegularTreeLayout >> moveSubtree: children at: i other: si distance:
 	"Are there intermediate children? (originally extracted in the `distributedExtra` function)"
 	self assert: i > si.
 
-	(intermediateChildren := i - si) > 1 ifTrue: [ 
+	(intermediateChildren := i - si) > 1 ifTrue: [
 		| siChild ratio |
 		ratio := dist / intermediateChildren.
 		siChild := children at: si + 1.
@@ -783,7 +783,7 @@ RSTWalkBasedRegularTreeLayout >> updateIYL: minY at: i rest: aValueLink [
 	| ih |
 	"Remove siblings that are hidden by the new subtree."
 	ih := aValueLink.
-	[ ih isNotNil and: [ minY >= (self lowYofIYL: ih) ] ] whileTrue: [ 
+	[ ih isNotNil and: [ minY >= (self lowYofIYL: ih) ] ] whileTrue: [
 		ih := ih nextLink ].
 
 	"Prepend the new subtree"

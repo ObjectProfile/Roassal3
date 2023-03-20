@@ -30,7 +30,7 @@ RSUMLClassBuilderTest >> testJustClassName [
 	self assert: shape shapes size equals: 2.
 	self assert: shape shapes first class equals: RSBox.
 	self assert: shape shapes second class equals: RSComposite.
-	
+
 	builder := self classToTest new.
 	builder classes: {RSMouseMove}.
 	builder renderer: RSTorchUMLClassRenderer new.
@@ -39,5 +39,5 @@ RSUMLClassBuilderTest >> testJustClassName [
 	self assert: shape shapes size equals: 3.
 	self assert: shape shapes first class equals: RSBox.
 	self assert: shape shapes second class equals: RSComposite.
-	self assert: shape shapes third class equals: RSBox.
+	self assert: shape shapes third class equals: RSBox
 ]

@@ -24,7 +24,7 @@ RSGraphvizAttachPoint >> basicEndingPointOf: anEdge [
 RSGraphvizAttachPoint >> basicStartingPointOf: anEdge [
 	| p |
 	p := anEdge from position.
-	
+
 	points at: 1 put: p + startDistance.
 	^ points first
 ]
@@ -36,12 +36,12 @@ RSGraphvizAttachPoint >> points [
 
 { #category : #accessing }
 RSGraphvizAttachPoint >> points: aCollection edge: anEdge [
-	|p1 p2 | 
+	|p1 p2 |
 	self assert: aCollection isNotEmpty description: 'Can not be empty'.
-	
+
 	points := aCollection.
 	p1 := anEdge from position.
 	p2 := anEdge to position.
 	startDistance := points first - p1.
-	endDistance := points last - p2.
+	endDistance := points last - p2
 ]

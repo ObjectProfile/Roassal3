@@ -8,7 +8,7 @@ Class {
 RSDraggableTest >> testBasic [
 	| box |
 	box := RSBox new.
-	box @ RSDraggable.
+	box @ RSDraggable
 ]
 
 { #category : #tests }
@@ -16,7 +16,7 @@ RSDraggableTest >> testCheckChildrenActions [
 	| box composite |
 	box := RSBox new model: 'foo'; popup; yourself.
 	composite := { box } asShape.
-	self should: [ composite draggable ] raise: Error.
+	self should: [ composite draggable ] raise: Error
 ]
 
 { #category : #tests }
@@ -26,5 +26,5 @@ RSDraggableTest >> testDisableCheckChildrenActions [
 	composite := { box } asShape.
 	draggable := RSDraggable new.
 	draggable noValidateChildrenEvents.
-	composite @ draggable.
+	composite @ draggable
 ]

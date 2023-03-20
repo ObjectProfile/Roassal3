@@ -10,7 +10,7 @@ Class {
 { #category : #hooks }
 RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSExtentChangedEvent send: #processEvent: to: self.
-	self processEvent: aCanvas.
+	self processEvent: aCanvas
 ]
 
 { #category : #'events - processing' }
@@ -22,10 +22,9 @@ RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
 	r := self expandedRectangle: canvas.
 	camera position: ((camera fromSpaceToPixel: evt camera position)+r origin) / camera scale.
 	self removeRectanglesFor: evt canvas.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #rendering }
 RSKeepCanvasPositionCanvasInteraction >> renderLegendOn: aLegendBuilder [
-	
 ]

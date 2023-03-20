@@ -32,37 +32,35 @@ RSQuadTree class >> withAll: aRSGroup [
 RSQuadTree class >> withAll: aRSGroup rectangle: rectangle [
 	| root extent |
 	extent := rectangle extent.
-	
-	(extent x closeTo: extent y) ifTrue: [ 
+
+	(extent x closeTo: extent y) ifTrue: [
 		root := self new.
 		root rectangle: rectangle.
 		aRSGroup do: [ :shape | root add: shape ].
 		^ root ].
-	
+
 	^ extent x > extent y
-		ifTrue: [ 
-			self 
+		ifTrue: [
+			self
 				withAll: aRSGroup
-				rectangle: (rectangle origin 
+				rectangle: (rectangle origin
 					corner: rectangle corner x @ (extent x + rectangle origin y)) ]
 		ifFalse: [
-			self 
+			self
 				withAll: aRSGroup
-				rectangle: (rectangle origin 
+				rectangle: (rectangle origin
 					corner: (extent y + rectangle origin x) @ rectangle corner y) ]
-
-
 ]
 
 { #category : #adding }
 RSQuadTree >> add: aShape [
-	isLeaf ifTrue: [ 
+	isLeaf ifTrue: [
 		soleChild
 			ifNil: [ soleChild := aShape ]
-			ifNotNil: [ 
+			ifNotNil: [
 				((self position: soleChild) closeTo: (self position: aShape))
 					ifTrue: [ self addChild: aShape ]
-					ifFalse: [ 
+					ifFalse: [
 						| firstChild |
 						firstChild := soleChild.
 						soleChild := nil.
@@ -85,13 +83,13 @@ RSQuadTree >> addChild: aShape [
 		ifTrue: [
 			position y < center y
 				ifTrue: [
-					northWestQuad ifNil: [ 
+					northWestQuad ifNil: [
 						northWestQuad := self class new
 							rectangle: (origin corner: center);
 							yourself ].
 					northWestQuad add: aShape ]
 				ifFalse: [
-					southWestQuad ifNil: [ 
+					southWestQuad ifNil: [
 						southWestQuad := self class new
 							rectangle: ((origin x @ center y ) corner: (center x @ corner y));
 							yourself ].
@@ -105,19 +103,17 @@ RSQuadTree >> addChild: aShape [
 							yourself ].
 					northEastQuad add: aShape ]
 				ifFalse: [
-					southEastQuad ifNil: [ 
+					southEastQuad ifNil: [
 						southEastQuad := self class new
 							rectangle: (center corner: corner);
 							yourself ].
 					southEastQuad add: aShape ] ]
-
 ]
 
 { #category : #initialization }
-RSQuadTree >> initialize [ 
+RSQuadTree >> initialize [
 	super initialize.
 	isLeaf := true
-
 ]
 
 { #category : #testing }
@@ -127,7 +123,7 @@ RSQuadTree >> isLeaf [
 
 { #category : #accessing }
 RSQuadTree >> position: aShape [
-	^ self class position: aShape.
+	^ self class position: aShape
 ]
 
 { #category : #accessing }
@@ -136,7 +132,7 @@ RSQuadTree >> rectangle [
 ]
 
 { #category : #accessing }
-RSQuadTree >> rectangle: aRectangle [ 
+RSQuadTree >> rectangle: aRectangle [
 	rectangle := aRectangle
 ]
 
@@ -150,8 +146,7 @@ RSQuadTree >> subQuadsDo: aBlockClosure [
   northWestQuad ifNotNil: aBlockClosure.
   northEastQuad ifNotNil: aBlockClosure.
   southWestQuad ifNotNil: aBlockClosure.
-  southEastQuad ifNotNil: aBlockClosure.
-
+  southEastQuad ifNotNil: aBlockClosure
 ]
 
 { #category : #private }
@@ -160,7 +155,7 @@ RSQuadTree >> visibleShapeContains: aPoint list: listResult [
 	self isLeaf ifTrue: [
 		(self soleChild encompassingRectangle containsPoint: aPoint)
 			ifTrue: [ listResult add: self soleChild ]
-	] ifFalse: [ 
+	] ifFalse: [
 		self subQuadsDo: [ :aQuad |
 			aQuad visibleShapeContains: aPoint list: listResult ]
 	]
@@ -191,10 +186,10 @@ RSQuadTree >> visibleShapesFrom: aRectangle list: listResult [
 
 	(self rectangle intersects: aRectangle) ifFalse: [ ^ self ].
 	self isLeaf
-		ifTrue: [ 
-			(self soleChild encompassingRectangle intersects: aRectangle) 
+		ifTrue: [
+			(self soleChild encompassingRectangle intersects: aRectangle)
 				ifTrue: [ listResult add: self soleChild ] ]
-		ifFalse: [ 
-			self subQuadsDo: [ :aQuad | 
+		ifFalse: [
+			self subQuadsDo: [ :aQuad |
 				aQuad visibleShapesFrom: aRectangle list: listResult ] ]
 ]

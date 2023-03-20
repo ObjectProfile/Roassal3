@@ -55,8 +55,8 @@ RSBasicShapeExamples >> example03BasicComposite [
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
-		
-	c addShape: com.	
+
+	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
@@ -85,10 +85,10 @@ RSBasicShapeExamples >> example04BasicComposite [
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
-		
+
 	com position: 100@100.
-	
-	c addShape: com.	
+
+	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
@@ -132,7 +132,7 @@ RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
-	1 to: 12 do: [ :m | 
+	1 to: 12 do: [ :m |
 		| angle theta p|
 		angle := (m * 360 / 12) degreesToRadians.
 		theta := angle cos @ angle sin.
@@ -144,10 +144,10 @@ RSBasicShapeExamples >> example06BasicLabels [
 			text: (Month nameOfMonth: m);
 			yourself.
 		angle := angle radiansToDegrees.
-		angle := angle + ((angle between: 90 and: 270) 
+		angle := angle + ((angle between: 90 and: 270)
 			ifTrue: [ 180 ]
 			ifFalse: [ 0 ] ).
-		
+
 		label rotateByDegrees: angle.
 		label position: p + ((label textWidth/2) * theta).
 		m even
@@ -173,18 +173,17 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 		yourself.
 	c addShape: ellipse.
 	update := [ :evt :color |
-		ellipse 
+		ellipse
 			color: color;
 			position: evt position;
 			signalUpdate].
 	c
-		when: RSMouseDragging do: [ :evt | 
+		when: RSMouseDragging do: [ :evt |
 			update value: evt value: (Color colorFrom: '12A288')];
-		when: RSMouseMove do: [ :evt | 
+		when: RSMouseMove do: [ :evt |
 			update value: evt value: (Color colorFrom: 'AB2567') ].
 	c shouldClearBackground: false.
 	^ c
-	
 ]
 
 { #category : #'boxes and ellipses' }
@@ -200,8 +199,8 @@ RSBasicShapeExamples >> example08EllipseBorder [
 			color: Color transparent;
 			border: (RSBorder new
 				width: x/ 50;
-				color: (Color 
-					r: r next * 255 
+				color: (Color
+					r: r next * 255
 					g: r next * 200
 					b: 255
 					range: y) );
@@ -226,10 +225,10 @@ RSBasicShapeExamples >> example09MouseStep [
 		radius: 0.
 	c addShape: e.
 	prev := 0.
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt |
 		dif := (evt position x - prev) abs.
 		prev := evt position x.
-		e 
+		e
 			color: (Color r: 0 g: dif b: 0 range: 255);
 			position: evt position;
 			size: dif.
@@ -248,7 +247,7 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 	border := RSBorder new color: (Color colorFrom: '002800').
 	b := 1.
 	radius := 200.
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt |
 		circleResolution := b.
 		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
 		angle := Float twoPi / circleResolution.
@@ -257,13 +256,13 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 		b := 200 * p y / c extent y.
 		c shapes copy do: #remove.
 		0 to: circleResolution do: [ :i |
-			c addShape: (RSEllipse new 
+			c addShape: (RSEllipse new
 				color: Color transparent;
 				rotateByDegrees: 45;
 				border: border;
 				extent: ((angle * i) cos @ (angle * i) sin) * radius + a
 			)].
-		
+
 		c signalUpdate.
 		 ].
 	^ c
@@ -279,27 +278,27 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	boxSize := 50.
 	canvasExtent := 500 asPoint.
 	maxDist := 0@0 distanceTo: canvasExtent.
-	scale := NSScale linear 
-		domain: { 0. maxDist}; 
+	scale := NSScale linear
+		domain: { 0. maxDist};
 		rangeRound: #(80 0).
 	border := RSBorder new.
-	c when: RSExtentChangedEvent do: [ 
+	c when: RSExtentChangedEvent do: [
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
 		maxDist := 0@0 distanceTo: canvasExtent.
-		scale := NSScale linear 
-			domain: { 0. maxDist}; 
+		scale := NSScale linear
+			domain: { 0. maxDist};
 			rangeRound: #(80 0).
 		0 to: canvasExtent y/boxSize do: [ :y|
-			0 to: canvasExtent x/boxSize do: [ :x| 
-				c addShape: (RSBox new 
+			0 to: canvasExtent x/boxSize do: [ :x|
+				c addShape: (RSBox new
 					color: Color white;
 					position: ((x@y)*boxSize) - (canvasExtent/2);
 					extent: 10@10;
 					border: border )
 				] ]
 		].
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt |
 		easing := easing + ((evt position - easing)* 1).
 		c shapes copy do: [ :s |
 			zindex := scale scale: (easing distanceTo: s position).
@@ -325,7 +324,7 @@ RSBasicShapeExamples >> example12BasicLine [
 		"rotated"
 		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
 	].
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt |
 		size := evt position distanceTo: 0@0.
 		angle := evt position angle + 135 degreesToRadians.
 		c shapes copy do: #remove.
@@ -341,7 +340,7 @@ RSBasicShapeExamples >> example12BasicLine [
 		 ].
 		c signalUpdate.
 	].
-	
+
 	^ c
 ]
 
@@ -354,7 +353,7 @@ RSBasicShapeExamples >> example14BasicBitmap [
 	c addShape: (RSBitmap new
 		form: (self iconNamed: #eyedropper);
 		extent: 200@350).
-		
+
 	^ c
 ]
 
@@ -367,13 +366,13 @@ RSBasicShapeExamples >> example15BasicRoundBoxes [
 	c addShape: (RSBox new
 		cornerRadius: 5;
 		extent: 100@50).
-		
+
 	c addShape: (RSBox new
 		cornerRadius: (RSCornerRadius new top: 20);
 		position: 100@100;
 		extent: 100@50;
 		withBorder).
-		
+
 	^ c
 ]
 
@@ -489,7 +488,7 @@ RSBasicShapeExamples >> example23FixedShape [
 		yourself.
 	box isFixed: true.
 	c addShape: box.
-	
+
 	box := RSBox new
 		extent: 100@100;
 		yourself.
@@ -522,7 +521,7 @@ RSBasicShapeExamples >> example25LabelWithBorder [
 		fontSize: 60;
 		fontName: 'Source Sans Pro';
 		"fontName: 'Brushcrazy DEMO';"
-		border: (RSBorder new 
+		border: (RSBorder new
 			color: Color red;
 			dashArray: #(4) );
 		text: 'Roassal Pharo').
@@ -549,7 +548,7 @@ RSBasicShapeExamples >> example27Markers [
 	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
 	c := RSCanvas new.
-	arrow := RSPolygon new 
+	arrow := RSPolygon new
 		points: { -10@0. 0@ -10. 10@0 };
 		color: Color black;
 		size: 10.
@@ -558,7 +557,7 @@ RSBasicShapeExamples >> example27Markers [
 		color: Color red.
 	axes := RSPolyline new
 		controlPoints: { 10@10. 10@90. 90@90 }.
-	dataLine := RSPolyline new 
+	dataLine := RSPolyline new
 		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
 	axes markerEnd: (axes markerStart: arrow).
 	dataLine marker: circle.
@@ -653,7 +652,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com1 adjustToChildren.
 	b1 position: 20@20.
 	com1 position: 200@0.
-	
+
 	com2 := RSComposite new.
 	com2 paint: Color blue translucent.
 	b2 := RSBox new size: 10.
@@ -661,10 +660,10 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com2 adjustToChildren.
 	b2 position: 50@0.
 	com2 position: -100@0.
-	
+
 	com1 draggable.
 	com2 draggable.
-	
+
 	e1 := RSLine new from: b1; to: b2.
 	c addAll: { com1. com2. e1 }.
 	^ c
@@ -674,27 +673,27 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 RSBasicShapeExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
-	"Try 
+	"Try
 		RSColorPalette qualitative
 		RSColorPalette sequential
 	"
 	paletteObject := RSColorPalette diverging.
-	
+
 	c := RSCanvas new.
 	composites := OrderedCollection new.
 	paletteObject class selectors do: [ :selector |
 		colors := paletteObject perform: selector.
-		
+
 		shapes := RSGroup new.
 		shapes addAll: (colors range collect: [ :aColor | RSBox new size: 20; color: aColor ]).
-		
+
 		RSHorizontalLineLayout on: shapes.
-		
+
 		compo := RSComposite new.
 		compo shapes: shapes.
 		c add: compo.
 		composites add: compo.
-		
+
 		label := RSLabel new text: selector.
 		c add: label.
 		RSLocation new
@@ -713,10 +712,10 @@ RSBasicShapeExamples >> example35KeyEvents [
 	down := RSLabel new model: 'DOWN'; text: ''.
 	up := RSLabel new model: 'UP'; text: ''; position: 0@ 30.
 	c addAll: { down. up }.
-	print := [ :evt :s | 
+	print := [ :evt :s |
 		s text: (s model, ': ' , evt keyName,', value: ', evt keyValue asString).
 		evt signalUpdate  ].
-	c 
+	c
 		when: RSKeyDown do: [ :evt | print value: evt value: down ];
 		when: RSKeyUp do: [ :evt | print value: evt value: up ].
 
@@ -781,7 +780,7 @@ RSBasicShapeExamples >> example37AngleDirection [
 	| canvas slice magic |
 	canvas := RSCanvas new.
 	slice := RSPieSlice new.
-	slice 
+	slice
 		innerRadius: 100;
 		externalRadius: 150;
 		alphaAngle: 15;
@@ -813,10 +812,10 @@ RSBasicShapeExamples >> example37AngleDirection [
 		markerEnd: (RSShapeFactory arrow
 			size: 20;
 			color: Color black);
-		controlPoints: 
-			{160@0. 
-			160@ magic negated. 
-			magic@ -160. 
+		controlPoints:
+			{160@0.
+			160@ magic negated.
+			magic@ -160.
 			0@ -160  };
 		yourself
 		).
@@ -827,10 +826,6 @@ RSBasicShapeExamples >> example37AngleDirection [
 		yourself).
 
 	^ canvas
-
-
-
-
 ]
 
 { #category : #shapes }
@@ -858,7 +853,7 @@ RSBasicShapeExamples >> example38Interaction [
 		yourself.
 	c1
 		when: RSMouseClick
-		do: [ :evt | 
+		do: [ :evt |
 			c1 remove.
 			com removeInteractionIfPresent: RSDraggable.
 			com model: 'Not draggable anymore'.
@@ -883,13 +878,13 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	| c size circles posOffset negOffset |
 	c := RSCanvas new.
 	size := 200.
-	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
+	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel |
 	    c add: (RSEllipse new
 	        size: size;
 	        color: ((Color perform: sel) alpha: 0.4 );
 	        yourself).
 	    ]).
-	c when: RSMouseMove do: [ :evt | 
+	c when: RSMouseMove do: [ :evt |
 	    posOffset := (evt position distanceTo: 0@0).
 	    negOffset := posOffset negated.
 	    circles first position: posOffset @ 0.
@@ -908,10 +903,10 @@ RSBasicShapeExamples >> example40ColorScale [
 	color := NSScale linear
 	    domain: { 1. 200. 400 };
 	    range: #(white gray red).
-	    
+
 	canvas := RSCanvas new.
-	popup := RSPopup text: [ :cls | 
-	    cls name, String crlf, 
+	popup := RSPopup text: [ :cls |
+	    cls name, String crlf,
 	    'Nro Methods: ', cls numberOfMethods asString, String crlf,
 	    'Lines of Code: ', cls linesOfCode asString ].
 	shapes := Collection withAllSubclasses collect: [ :cls |
@@ -983,7 +978,7 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 			yourself ] as: RSGroup.
 	numbers @ RSDraggable new.
 	canvas addAll: numbers.
-	marker := (RSShapeFactory arrow 
+	marker := (RSShapeFactory arrow
 		size: 10;
 		asMarker)
 		offset: 5;

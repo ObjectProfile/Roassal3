@@ -36,8 +36,7 @@ RSChartPopupDecoration >> chartPopupBuilder: aShapeBuilder [
 RSChartPopupDecoration >> initialize [
 	super initialize.
 	"this composite is created once when the mouse enter into the box shape"
-	self shapeBuilder: [ :obj | RSComposite new ].
-	
+	self shapeBuilder: [ :obj | RSComposite new ]
 ]
 
 { #category : #accessing }
@@ -53,12 +52,12 @@ RSChartPopupDecoration >> markersPopupBuilder: aRSAbstractChartPopupBuilder [
 { #category : #hooks }
 RSChartPopupDecoration >> releasePopup: popup [
 	popup remove.
-	chart container propertyAt: #popupMarkers ifPresent: [ :old | old remove ].
+	chart container propertyAt: #popupMarkers ifPresent: [ :old | old remove ]
 ]
 
 { #category : #hooks }
 RSChartPopupDecoration >> translatePopup: popup event: evt [
-	self 
+	self
 		updatePopup: popup event: evt;
 		updateMarkers: evt.
 	super translatePopup: popup event: evt
@@ -86,8 +85,7 @@ RSChartPopupDecoration >> updatePopup: popup event: evt [
 	builder := self chartPopupBuilder.
 	rect := evt shape globalEncompassingRectangle.
 	builder position: evt position - rect origin.
-	
+
 	popup addShape: (builder shapeFor: self chart).
-	popup adjustToChildren.
-	
+	popup adjustToChildren
 ]

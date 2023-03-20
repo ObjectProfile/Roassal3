@@ -15,17 +15,17 @@ Class {
 { #category : #hooks }
 RSForceLayoutSteppingInteraction >> addEventsTo: shape [
 	| mock |
-	shape 
-		when: RSMouseDragStart do: [ :evt | 
+	shape
+		when: RSMouseDragStart do: [ :evt |
 			mock := layout mockElementAt: evt shape.
 			mock isFixed: true.
 			self startForceAnimation: evt canvas ];
 		when: RSMouseDragging do: [ :evt |
 			mock fixPosition: evt shape position ];
-		when: RSMouseDragEnd do:[:evt | 
+		when: RSMouseDragEnd do:[:evt |
 			mock isFixed: false.
 			mock := nil.
-			self startSimpleAnimation: evt canvas ].
+			self startSimpleAnimation: evt canvas ]
 ]
 
 { #category : #accessing }
@@ -40,7 +40,7 @@ RSForceLayoutSteppingInteraction >> configureLayoutOn: aCanvas [
 	self layout
 		nodes: aCanvas nodes;
 		edges: aCanvas edges;
-		start.
+		start
 ]
 
 { #category : #configuration }
@@ -56,7 +56,7 @@ RSForceLayoutSteppingInteraction >> hasDraggable [
 { #category : #initialization }
 RSForceLayoutSteppingInteraction >> initialize [
 	super initialize.
-	self draggable.
+	self draggable
 ]
 
 { #category : #accessing }
@@ -71,7 +71,7 @@ RSForceLayoutSteppingInteraction >> layout: aRSForceBasedLayout [
 
 { #category : #configuration }
 RSForceLayoutSteppingInteraction >> noDraggable [
-	hasDraggable := false.
+	hasDraggable := false
 ]
 
 { #category : #hooks }
@@ -79,7 +79,7 @@ RSForceLayoutSteppingInteraction >> onShape: aCanvas [
 	self configureLayoutOn: aCanvas.
 	aCanvas nodes do: [ :s | self addEventsTo: s ].
 	self startFirstAnimation: aCanvas.
-	aCanvas newAnimation onStepDo: [:t| aCanvas zoomToFit ].
+	aCanvas newAnimation onStepDo: [:t| aCanvas zoomToFit ]
 ]
 
 { #category : #animation }
@@ -109,14 +109,13 @@ RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 		"Continue on max alpha undefinitely"
 		aCanvas transitionAnimation
 			repeat;
-			onStepDo: [ :t | layout step ] }.
-
+			onStepDo: [ :t | layout step ] }
 ]
 
 { #category : #animation }
 RSForceLayoutSteppingInteraction >> startSimpleAnimation: aCanvas [
 	animation ifNotNil: #stop.
-	animation := aCanvas newAnimation 
+	animation := aCanvas newAnimation
 		easing: RSEasingInterpolator cubicInOut;
 		range: self alphaRange reversed;
 		duration: 2 seconds;

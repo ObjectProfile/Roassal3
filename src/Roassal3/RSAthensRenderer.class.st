@@ -29,54 +29,54 @@ Class {
 { #category : #utilities }
 RSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 	"based on https://riptutorial.com/html5-canvas/example/18766/render-a-rounded-polygon-"
-	| cp p1 p2 p3 arc v1 len1 a1 v2 len2 a2 sinA sin90 
+	| cp p1 p2 p3 arc v1 len1 a1 v2 len2 a2 sinA sin90
 	angle radDir drawDir halfAngle cRadius lenOut p a b len |
 	cp := controlPoints.
 	len := cp size.
 	p1 := p2 := p3 := nil.
-	arc := [ 
+	arc := [
 		v1 := p1 - p2.
 		len1 := ((v1 x * v1 x) + (v1 y * v1 y)) sqrt.
 		v1 := v1 / len1.
 		a1 := v1 angle.
-		
+
 		v2 := p3 - p2.
 		len2 := ((v2 x * v2 x) + (v2 y * v2 y)) sqrt.
 		v2 := v2 / len2.
 		a2 := v2 angle.
-			
+
 		sinA := (v1 x * v2 y) - (v1 y * v2 x).
 		sin90 := (v1 x * v2 x) - (v1 y * v2 y negated).
 		angle := sinA arcSin.
 		radDir := 1.
 		drawDir := false.
-		
-		sin90 < 0 ifTrue: [ 
-			angle < 0 ifTrue: [ 
+
+		sin90 < 0 ifTrue: [
+			angle < 0 ifTrue: [
 				angle := angle + Float pi ]
-			ifFalse: [ 
+			ifFalse: [
 				angle := angle - Float pi.
 				radDir := -1.
 				drawDir := true ] ]
-		ifFalse: [ 
-			angle >= 0 ifTrue: [ 
+		ifFalse: [
+			angle >= 0 ifTrue: [
 				radDir := -1.
 				drawDir := true. ] ].
 		halfAngle := angle / 2.
 		sinA :=  halfAngle sin.
-		lenOut := sinA = 0 
+		lenOut := sinA = 0
 			ifTrue: [ Float infinity ]
 			ifFalse: [ (halfAngle cos * radius/ sinA) abs].
 		cRadius := radius.
-		lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [ 
+		lenOut > ((len1 / 2) min: (len2 / 2)) ifTrue: [
 			lenOut := (len1 / 2) min: (len2 / 2).
 			cRadius := (lenOut * halfAngle tan) abs.
 			].
 		p := p2 + (v2 * lenOut) + (v2 y negated@ v2 x * cRadius * radDir).
 		a := a1 + (Float halfPi * radDir).
-		b := a2 - (Float halfPi * radDir). 
+		b := a2 - (Float halfPi * radDir).
 		(a closeTo: b) ifTrue: [ a := b ].
-		builder 
+		builder
 			arcAround: p
 			radius: cRadius
 			startAngle: a
@@ -86,8 +86,7 @@ RSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		p1 := cp at: (i)%len + 1.
 		p2 := cp at: (i + 1)%len + 1.
 		p3 := cp at: (i + 2)%len + 1.
-		(p1 = p2 or: [p2 = p3]) ifFalse: [ arc value ] ].
-	
+		(p1 = p2 or: [p2 = p3]) ifFalse: [ arc value ] ]
 ]
 
 { #category : #utilities }
@@ -118,19 +117,16 @@ RSAthensRenderer >> arcCornerTangets: p0 p1: p1 r: r1 rc: rc cw: cw [
 	dy0 := cy0 - y3.
 	dx1 := cx1 - x3.
 	dy1 := cy1 - y3.
-	((dx0 * dx0) + (dy0 * dy0)) > ((dx1 * dx1) + (dy1 * dy1)) ifTrue: [ 
+	((dx0 * dx0) + (dy0 * dy0)) > ((dx1 * dx1) + (dy1 * dy1)) ifTrue: [
 		cx0 := cx1.
 		cy0 := cy1 ].
-	^  (cx0 - ox)@ (cy0 - oy) negated -> ((cx0 * r1 / r)@(cy0 * r1/r) negated).
-
-
-
+	^  (cx0 - ox)@ (cy0 - oy) negated -> ((cx0 * r1 / r)@(cy0 * r1/r) negated)
 ]
 
 { #category : #utilities }
 RSAthensRenderer >> arcSweep: p1 and: p2 [
 	^ ((p1 x - p2 x)* p1 y) - ((p1 y - p2 y) * p1 x) > 0
-		ifTrue: [ 1 ] 
+		ifTrue: [ 1 ]
 		ifFalse: [ 0 ]
 ]
 
@@ -140,36 +136,33 @@ RSAthensRenderer >> asin: x [
 	ifTrue: [ 1.5707963267948966 ]
 	ifFalse: [ x <= -1
 		ifTrue: [ -1.5707963267948966 ]
-		ifFalse: [ x arcSin ] ].
-	
+		ifFalse: [ x arcSin ] ]
 ]
 
 { #category : #'creating path' }
 RSAthensRenderer >> buildBezierPath: bezier [
 	| points |
 	points := bezier controlPoints.
-	points size = 2 ifTrue: [ 
-		builder 
-			absolute; 
-			moveTo: points first; 
+	points size = 2 ifTrue: [
+		builder
+			absolute;
+			moveTo: points first;
 			lineTo: points second.
 		^ self ].
-	points size = 3 ifTrue: [ 
-		builder 
-			absolute; 
-			moveTo: points first; 
-			curveVia: points second 
+	points size = 3 ifTrue: [
+		builder
+			absolute;
+			moveTo: points first;
+			curveVia: points second
 				to: points third.
 		^ self ].
-	points size = 4 ifTrue: [ 
+	points size = 4 ifTrue: [
 		builder
-			absolute; 
-			moveTo: points first; 
-			curveVia: points second 
-				and: points third 
-				to: points fourth  ].
-
-	
+			absolute;
+			moveTo: points first;
+			curveVia: points second
+				and: points third
+				to: points fourth  ]
 ]
 
 { #category : #'creating path' }
@@ -205,7 +198,7 @@ RSAthensRenderer >> buildCornerBoxPath: box [
 	tr := (c topRight min: min) max: 0.
 	bl := (c bottomLeft min: min) max: 0.
 	br := (c bottomRight min: min) max: 0.
-	
+
 	builder
 		absolute;
 		moveTo: rectangle topLeft + (tl@0);
@@ -217,7 +210,7 @@ RSAthensRenderer >> buildCornerBoxPath: box [
 		cwArcTo: rectangle bottomLeft - (0@ bl) angle: Float halfPi;
 		lineTo: rectangle topLeft + (0@ tl);
 		cwArcTo: rectangle topLeft + (tl @0) angle: Float halfPi;
-		closePath.
+		closePath
 ]
 
 { #category : #'creating path' }
@@ -226,7 +219,7 @@ RSAthensRenderer >> buildEllipsePath: ellipse [
 	extent := ellipse baseRectangle extent.
 	halfWidth := extent x / 2 asFloat.
 	halfHeight := extent y / 2 asFloat.
-	
+
 	builder
 		absolute;
 		moveTo: 0@0;
@@ -243,10 +236,7 @@ RSAthensRenderer >> buildEllipsePath: ellipse [
 			to: halfWidth negated @ halfHeight;
 		curveVia: (halfWidth negated * 0.55) @ 0
 			and: halfWidth negated @ (halfHeight negated * 0.45)
-			to: halfWidth negated @ halfHeight negated.
-	
-
-
+			to: halfWidth negated @ halfHeight negated
 ]
 
 { #category : #'creating path' }
@@ -254,7 +244,7 @@ RSAthensRenderer >> buildLinePath: line [
 	builder
 		absolute;
 		moveTo: line startPoint;
-		lineTo: line endPoint.
+		lineTo: line endPoint
 ]
 
 { #category : #'creating path' }
@@ -352,21 +342,18 @@ RSAthensRenderer >> buildPolygonPath: polygon [
 	radius := polygon cornerRadii.
 	cp := polygon points.
 	[
-	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [ 
+	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [
 		builder moveTo: (cp first + cp second) /2.
 		self applyRadius: radius on: cp from: 0 to: cp size-1.
 		^ self ].
 	first := true.
 	cp do: [ :point |
-		first ifTrue: [ 
+		first ifTrue: [
 			first := false.
 			builder moveTo: point ]
-		ifFalse: [ 
+		ifFalse: [
 			builder lineTo: point ] ].
-	] ensure: [ builder closePath. ].
-	
-	
-	
+	] ensure: [ builder closePath. ]
 ]
 
 { #category : #'creating path' }
@@ -375,23 +362,23 @@ RSAthensRenderer >> buildPolylinePath: line [
 	builder absolute.
 	cp := line controlPoints.
 	radius := line cornerRadii.
-	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [ 
+	(radius ~= 0 and: [ cp size > 2 ]) ifTrue: [
 		builder moveTo: cp first.
 		self applyRadius: radius on: cp from: 0 to: cp size - 3.
 		builder lineTo: cp last.
 		^ self ].
 	first := true.
-	cp do: [ :point | 
-		first ifTrue: [ 
+	cp do: [ :point |
+		first ifTrue: [
 			first := false.
 			builder moveTo: point ]
-		ifFalse: [ 
+		ifFalse: [
 			builder lineTo: point ] ]
 ]
 
 { #category : #'creating path' }
 RSAthensRenderer >> buildRingPath: ring [
-	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2 
+	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2
 	rp da da0 da1 rc x1 x2 x3 x4 y1 y2 y3 y4 rc0 rc1 t41 t23  t14 t32 |
 	epsilon := 1e-12.
 	ap := (ring segmentSpacing / 2) degreesToRadians.
@@ -403,36 +390,36 @@ RSAthensRenderer >> buildRingPath: ring [
 	center := 0@0.
 	i := ring innerRadius asFloat.
 	e := ring externalRadius asFloat.
-	e < i ifTrue: [ | r0 | 
+	e < i ifTrue: [ | r0 |
 		r0 := i. i := e. e := r0. ].
-	
+
 	builder absolute.
 	"is it a point? "
 	e < epsilon ifTrue: [ ^ builder  moveTo: center ].
-	
+
 	"or is a circle? "
-	da0 > (Float pi * 2 - epsilon) ifTrue: [ 
-		builder 
+	da0 > (Float pi * 2 - epsilon) ifTrue: [
+		builder
 			moveTo: ((e * aAngle cos)@( e * aAngle sin negated)) + center ;
 			arcAround: center radius: e startAngle: aAngle endAngle: bAngle.
-		i > epsilon ifTrue: [ 
+		i > epsilon ifTrue: [
 			builder
 				moveTo: (i * (aAngle cos @ aAngle sin negated) )+ center ;
 				arcAround: center radius: i startAngle: aAngle endAngle: bAngle ].
 		builder close.
-		^ self ]. 
+		^ self ].
 	"circle part"
 	xAngle := (aAngle + bAngle)/2.
 	rp := ((i*i) + (e*e)) sqrt.
 	"apply padding"
 	rp > epsilon ifTrue: [ | p0 p1 |
-		p0 := i isZero 
+		p0 := i isZero
 			ifTrue: [ self asin: Float infinity ]
 			ifFalse: [ self asin: (rp / i * ap sin) ].
 		p1 := self asin: (rp / e * ap sin).
 		da0 := da0 - (p0*2).
 		da0 > epsilon
-			ifTrue: [ aAngle2 := aAngle2 + p0. bAngle2 := bAngle - p0 ] 	
+			ifTrue: [ aAngle2 := aAngle2 + p0. bAngle2 := bAngle - p0 ]
 			ifFalse: [ aAngle2 := bAngle2 := (aAngle + bAngle)/2. ].
 		da1 := da1 - (p1*2).
 		da1 > epsilon
@@ -446,18 +433,18 @@ RSAthensRenderer >> buildRingPath: ring [
 	y4 := i*aAngle2 sin.
 	x3 := i*bAngle2 cos.
 	y3 := i*bAngle2 sin.
-	
+
 	"is it small circle part?"
-	(aAngle - bAngle) abs < 0.001 ifTrue: [ 
-		builder 
+	(aAngle - bAngle) abs < 0.001 ifTrue: [
+		builder
 			moveTo: (x3@y3) + center;
 			close.
 		^ self ].
 	"apply corner radius"
 	rc := ((i -e) abs /2) min: ring cornerRadii.
 	rc0 := rc1 := rc.
-	(da > epsilon and: [ rc > 0.001 ]) ifTrue: [ 	
-		da < Float pi ifTrue: [ 
+	(da > epsilon and: [ rc > 0.001 ]) ifTrue: [
+		da < Float pi ifTrue: [
 			| oc ax ay bx by kc lc |
 			oc := self geomPolygonIntersectC: x1@y1 d: x4@y4 a: x2@y2  b: x3@y3.
 			ax := x1 - oc x.
@@ -472,9 +459,9 @@ RSAthensRenderer >> buildRingPath: ring [
 		t41 := self arcCornerTangets: x4@y4 p1: x1@y1 r: e rc: rc0 cw: true.
 		t23 := self arcCornerTangets: x2@y2 p1: x3@y3 r: e rc: rc0 cw: true.
 		builder moveTo: t41 key + center.
-		rc0 == rc ifTrue: [ 
-			builder 
-				ellipticalArc2: rc0@rc0 
+		rc0 == rc ifTrue: [
+			builder
+				ellipticalArc2: rc0@rc0
 					xrot: 0
 					large: 0
 					sweep: 0
@@ -490,22 +477,22 @@ RSAthensRenderer >> buildRingPath: ring [
 					sweep: 0
 					to: t23 key + center.
 				 ]
-		ifFalse: [ 
-			builder 
-				ellipticalArc2: rc0@rc0 
-					xrot: 0 
-					large: 1 
+		ifFalse: [
+			builder
+				ellipticalArc2: rc0@rc0
+					xrot: 0
+					large: 1
 					sweep: 0
 					to: t23 key + center ].
 
-		(x4 isZero & y4 isZero) ifTrue: [ 
+		(x4 isZero & y4 isZero) ifTrue: [
 			builder lineTo: center. ]
-		ifFalse: [ 
+		ifFalse: [
 			t14 := self arcCornerTangets: x1@y1 p1: x4@y4 r: i rc: rc1 negated cw: true.
 			t32 := self arcCornerTangets: x3@y3 p1: x2@y2 r: i rc: rc1 negated cw: true.
 			builder lineTo: t32 key + center.
-			(rc == rc1 and: [da0 > 0 ]) ifTrue: [ 
-				builder 
+			(rc == rc1 and: [da0 > 0 ]) ifTrue: [
+				builder
 					ellipticalArc2: rc1@ rc1
 						xrot: 0
 						large: 0
@@ -513,7 +500,7 @@ RSAthensRenderer >> buildRingPath: ring [
 						to: t32 value + center;
 					ellipticalArc2: i@i
 						xrot: 0
-						large: (self arcSweep: t14 value and: t32 value) 
+						large: (self arcSweep: t14 value and: t32 value)
 						sweep: 1
 						to: t14 value + center;
 					ellipticalArc2: rc1@rc1
@@ -521,8 +508,8 @@ RSAthensRenderer >> buildRingPath: ring [
 						large: 0
 						sweep: 0
 						to: t14 key + center
-			] ifFalse: [ 
-				builder 
+			] ifFalse: [
+				builder
 					ellipticalArc2: rc1@ rc1
 						xrot: 0
 						large: 0
@@ -532,7 +519,7 @@ RSAthensRenderer >> buildRingPath: ring [
 	] ifFalse: [ | l0 l1 |
 		l1 := (bAngle - aAngle) abs <= Float pi ifTrue: [ 0 ] ifFalse: [ 1 ].
 		l0 := (bAngle2 - aAngle2) abs <= Float pi ifTrue: [ 0 ] ifFalse: [ 1 ].
-		
+
 		builder
 			moveTo: x1 @ y1 negated;
 			ellipticalArc2: e@ e negated
@@ -547,7 +534,7 @@ RSAthensRenderer >> buildRingPath: ring [
 				sweep: 1
 				to: x4@y4 negated.
 	].
-	builder close.
+	builder close
 ]
 
 { #category : #'creating path' }
@@ -703,9 +690,9 @@ RSAthensRenderer >> createStrokePaintFor: border [
 	stroke width: border width asFloat.
 	style := border style.
 	style ifNil: [ ^ stroke ].
-	style dashArray 
+	style dashArray
 		ifNotNil: [ :a | stroke dashes: a offset: style dashOffset ].
-		
+
 	style capStyle
 		ifNotNil: [:s | s value: stroke ].
 	style joinStyle
@@ -717,32 +704,30 @@ RSAthensRenderer >> createStrokePaintFor: border [
 RSAthensRenderer >> drawPathLabel: label [
 	| utf8String act f stroke |
 	utf8String := label path.
-	utf8String ifNil: [ 
+	utf8String ifNil: [
 		act := AthensCairoText new.
 		utf8String := act convertTextUtf8: label text.
 		label path: utf8String.
 	 ].
 	f := label cairoFont.
-	
+
 	athensCanvas newPath.
 	f lock.
-	athensCanvas 
+	athensCanvas
 		setPathMatrix;
 		setScaledFont: f.
-	label paint ifNotNil: [ 
+	label paint ifNotNil: [
 		(label paint asAthensPaintOn: athensCanvas)"
 			setMatrix: athensCanvas paintTransform inverted;"
 			loadOnCairoCanvas: athensCanvas. ].
 	athensCanvas textPath: utf8String.
 	label paint ifNotNil: [ athensCanvas fillPreserve ].
-	label hasBorder ifTrue: [ 
+	label hasBorder ifTrue: [
 		stroke := label border accept: self.
 		stroke prepareForDrawingOn: athensCanvas.
 		athensCanvas stroke.
 	 ].
-	f unlock.
-
-
+	f unlock
 ]
 
 { #category : #'visiting - helpers' }
@@ -751,14 +736,13 @@ RSAthensRenderer >> drawShadowRectangle: rect [
 	athensCanvas setPaint: (Color blue alpha: 0.1).
 	r := rect origin asFloatPoint corner: rect corner asFloatPoint.
 	athensCanvas drawShape: r
-	
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
 	| font |
 	(label paint isNil or: [ label cairoGlyphs isNil ]) ifTrue: [ ^ self ].
-	
+
 	"returns a CairoScaledFont"
 	font := label cairoFont.
 	font lock.
@@ -811,13 +795,13 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 { #category : #paint }
 RSAthensRenderer >> paintFor: shape form: form [
 	form isForm ifFalse: [ ^ form ].
-	
-	^ CairoBackendCache soleInstance 
+
+	^ CairoBackendCache soleInstance
 		at: form
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			| paint |
-			paint := (AthensCairoPatternSurfacePaint 
-				createForSurface: (AthensCairoSurface 
+			paint := (AthensCairoPatternSurfacePaint
+				createForSurface: (AthensCairoSurface
 				fromForm: form)).
 			paint origin: (form extent /2) negated asFloatPoint.
 			paint ]
@@ -841,22 +825,19 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 
 { #category : #visiting }
 RSAthensRenderer >> visitBoundingShape: shape [
-	self visitShapeIfNecessary: shape block: [ 
+	self visitShapeIfNecessary: shape block: [
 		| path paint |
 		athensCanvas pathTransform loadAffineTransform: matrix.
 		path := self getOrCreatePathOf: shape.
 		paint := shape paintOn: self.
-		paint ifNotNil: [ 
-			athensCanvas 
+		paint ifNotNil: [
+			athensCanvas
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
 		self visitShadowRectangleIfNecessary: shape.
 		self visitChildrenIfNecessary: shape.
-	].
-	
-	
-	
+	]
 ]
 
 { #category : #visiting }
@@ -872,36 +853,36 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	showRectangles := aRSCanvas shouldShowRectangles.
 	athensCanvas fillRuleEvenOdd.
 	athensCanvas setAA: aRSCanvas antialiasing.
-	
+
 	aRSCanvas camera accept: self.
 	aRSCanvas shapes accept: self.
-	
+
 	"We display the elements that are _NOT_ subject to the camera"
 	matrix loadIdentity.
 	originMatrix loadIdentity.
 	canvasRect := 0@0 extent: aRSCanvas extent.
-	aRSCanvas fixedShapes accept: self.
+	aRSCanvas fixedShapes accept: self
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
-	| draw | 
+	| draw |
 	shape hasChildren ifFalse: [ ^ self ].
 	draw := [ shape children accept: self ].
-	shape clipChildren 
+	shape clipChildren
 		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
-		ifFalse: [ draw value ].
+		ifFalse: [ draw value ]
 ]
 
 { #category : #visiting }
 RSAthensRenderer >> visitGroup: aRSGroup [
-	aRSGroup do: [ :roassalShape | roassalShape accept: self ].
+	aRSGroup do: [ :roassalShape | roassalShape accept: self ]
 ]
 
 { #category : #visiting }
 RSAthensRenderer >> visitLabel: label [
 	label hasText ifFalse: [ ^ self ].
-	self visitShapeIfNecessary: label block: [ 
+	self visitShapeIfNecessary: label block: [
 		| lbtranslation |
 		lbtranslation := label textExtents translationPoint asFloatPoint.
 		matrix translateBy: lbtranslation.
@@ -909,29 +890,26 @@ RSAthensRenderer >> visitLabel: label [
 		label hasBorder
 			ifTrue: [ self drawPathLabel: label ]
 			ifFalse: [ self drawSimpleLabel: label ].
-		
+
 		self visitLabelDecoratorsIfNecessary: label.
 		athensCanvas pathTransform translateBy: lbtranslation negated.
 		self visitShadowRectangleIfNecessary: label
 	]
-	
-	
-
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 	| advance |
 	(label isUnderlined or: [label isStruckOut]) ifFalse: [ ^ self ].
-	
+
 	athensCanvas setPaint: label paint.
 	advance := (CairoFontMetricsProvider new
 			font: label font;
 			extentsOf: label text) x_advance.
 	label isUnderlined
 		ifTrue: [ athensCanvas drawShape: ((0 @ 1 extent: advance @ 1)) ].
-	label isStruckOut ifFalse:  [ ^ self ]. 
-	
+	label isStruckOut ifFalse:  [ ^ self ].
+
 	athensCanvas pathTransform
 		translateBy: (0@ (label textHeight / 4)) negated asFloatPoint.
 	athensCanvas drawShape: ((0 @ 1 extent: advance @ 1))
@@ -944,40 +922,38 @@ RSAthensRenderer >> visitLine: line [
 	athensCanvas pathTransform loadAffineTransform: matrix .
 	path := self getOrCreatePathOf: line.
 	paint := line paintOn: self.
-	
-	paint ifNotNil: [ 
+
+	paint ifNotNil: [
 		athensCanvas
 			setPaint: paint;
 			drawShape: path ].
 	self visitBorderIfNecessary: line.
 	line markerShapesInPositionDo: [ :shape | shape accept: self ].
-	self visitShadowRectLineIfNecessary: line.
-	
+	self visitShadowRectLineIfNecessary: line
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitShadowRectLineIfNecessary: line [
 	showRectangles ifFalse: [ ^ self ].
 	self drawShadowRectangle: line encompassingRectangle
-	
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
 	showRectangles ifFalse: [ ^ self ].
-	self drawShadowRectangle: shape baseRectangle.
+	self drawShadowRectangle: shape baseRectangle
 ]
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
-	matrix restoreAfter: [ 
+	matrix restoreAfter: [
 		| shapeMatrix |
 		shapeMatrix := shape matrix asFloatTransform.
 		matrix multiplyBy: shapeMatrix.
-		originMatrix restoreAfter: [ 
-			| rect | 
+		originMatrix restoreAfter: [
+			| rect |
 			originMatrix multiplyBy: shapeMatrix.
-			rect := shape 
+			rect := shape
 				computeEncompassingRectangleFor: shape baseRectangle
 				matrix: originMatrix.
 			(rect intersects: canvasRect) ifFalse: [ ^ self ].

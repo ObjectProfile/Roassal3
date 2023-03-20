@@ -14,7 +14,6 @@ Class {
 
 { #category : #accessing }
 RSInterference >> color: aColor [
-
 ]
 
 { #category : #initialization }
@@ -22,8 +21,8 @@ RSInterference >> initialize [
 	| r |
 	super initialize.
 	r := SharedRandom globalGenerator.
-	self mode: (r next < 0.5 
-		ifTrue: [ #attract ] 
+	self mode: (r next < 0.5
+		ifTrue: [ #attract ]
 		ifFalse: [ #reject ]).
 	self radius: r next * 300
 ]

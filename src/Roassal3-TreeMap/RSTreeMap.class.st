@@ -25,11 +25,11 @@ RSTreeMap >> defaultContainer [
 { #category : #public }
 RSTreeMap >> depthShadedBorder [
 	| color depths |
-	depths := self shapes collect: [ :shape | shape depth ] as: SortedCollection. 
+	depths := self shapes collect: [ :shape | shape depth ] as: SortedCollection.
 	color := NSScale linear
 		domain: { depths first. depths last};
 		range: { Color gray. Color white darker }.
-	self shapes do: [ :shape | 
+	self shapes do: [ :shape |
 		shape border: (RSBorder new color: (color rsValue: shape depth))  ]
 ]
 
@@ -61,7 +61,7 @@ RSTreeMap >> focalPointFor: shape [
 
 { #category : #public }
 RSTreeMap >> gradientFill: palette block: aBlock [
-	^ self shapes 
+	^ self shapes
 		collect: [ :shape | self gradientFill: palette block: aBlock shape: shape ]
 		as: Bag
 ]
@@ -92,10 +92,9 @@ RSTreeMap >> initialize [
 		withBorder;
 		popup;
 		yourself.
-	self 
+	self
 		extent: 500@500;
-		inset: 4.
-	
+		inset: 4
 ]
 
 { #category : #accessing }
@@ -123,5 +122,5 @@ RSTreeMap >> renderIn: aCanvas [
 RSTreeMap >> shapeFor: anObject [
 	^ self boxShape copyWithAnnouncer
 		model: anObject;
-		yourself.
+		yourself
 ]

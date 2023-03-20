@@ -13,10 +13,10 @@ RSWrapStrategy >> wordsAndSpacesFor: aString [
 	tokens := OrderedCollection new.
 	isWord := nil.
 	i := 1.
-	aString doWithIndex: [ :char :index | 
+	aString doWithIndex: [ :char :index |
 		flag := char tokenish.
 		isWord ifNil: [ isWord := flag ].
-		isWord = flag ifFalse: [ 
+		isWord = flag ifFalse: [
 			tokens add: (aString copyFrom: i to: index-1).
 			i := index.
 			isWord := flag.
@@ -29,7 +29,7 @@ RSWrapStrategy >> wordsAndSpacesFor: aString [
 { #category : #hooks }
 RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 	| label tokens newLines i currentLine width lastLabel |
-	label := aRSMultilineLabelBuilder 
+	label := aRSMultilineLabelBuilder
 		singleLabelFor: line.
 	width := self wrapMaxWidth.
 	label width < width
@@ -42,17 +42,17 @@ RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 	[ i <= tokens size ] whileTrue: [
 		| token |
 		token := tokens at: i.
-		label := aRSMultilineLabelBuilder 
+		label := aRSMultilineLabelBuilder
 			singleLabelFor: currentLine, token.
 		label width > width
-			ifTrue: [ 
-				lastLabel ifNil: [ 
+			ifTrue: [
+				lastLabel ifNil: [
 					| k ok |
 					token := label text.
 					k := token size - 1.
 					ok := false.
-					[ k > 1 and: [ ok not ] ] whileTrue: [ 
-						lastLabel := aRSMultilineLabelBuilder 
+					[ k > 1 and: [ ok not ] ] whileTrue: [
+						lastLabel := aRSMultilineLabelBuilder
 							singleLabelFor: (token copyFrom: 1 to: k).
 						lastLabel width < width ifTrue: [
 							ok := true.
@@ -60,32 +60,32 @@ RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 					].
 					newLines add: lastLabel.
 					tokens at: i put: (token copyFrom: k+1 to: token size).
-				 ] ifNotNil: [ 
+				 ] ifNotNil: [
 					newLines add: lastLabel.
 					currentLine := ''.
 					lastLabel := nil
 				 ].
-			] ifFalse: [ 
+			] ifFalse: [
 				currentLine := label text.
 				lastLabel := label.
 				i := i + 1 ]
 	].
-	currentLine ifNotEmpty: [ 
-		newLines add: (aRSMultilineLabelBuilder 
+	currentLine ifNotEmpty: [
+		newLines add: (aRSMultilineLabelBuilder
 			singleLabelFor: currentLine). ].
-	
-	^ newLines.
+
+	^ newLines
 ]
 
 { #category : #hooks }
 RSWrapStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	| lines shapes |
 	lines := aString lines.
-	shapes := lines flatCollect: [ :line | 
-		self wrapLineShapesFor: line with: aRSMultilineLabelBuilder ] 
+	shapes := lines flatCollect: [ :line |
+		self wrapLineShapesFor: line with: aRSMultilineLabelBuilder ]
 		as: RSGroup.
 	aRSMultilineLabelBuilder layout on: shapes.
-	^ shapes asShape 
+	^ shapes asShape
 		position: 0@0;
 		yourself
 ]

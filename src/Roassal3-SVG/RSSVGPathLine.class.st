@@ -30,6 +30,31 @@ Class {
 }
 
 { #category : #examples }
+RSSVGPathLine class >> exampleArc [
+	| canvas line |
+	canvas := RSCanvas new.
+	line := self new.
+	line borderColor: Color black.
+	line paint: Color lightGray.
+	line svgPath: [ :theLine | [ :pathBuilder |
+		| radius center startAngle deltaAngle |
+		radius := 60.
+		startAngle := 45 degreesToRadians.
+		deltaAngle := 90 degreesToRadians.
+		center := 0@0.
+		pathBuilder
+			moveTo: (startAngle cos @ startAngle sin) * radius + center;
+			arcCenterX: center x
+			centerY: center y
+			radius: radius
+			startAngle: startAngle
+			endAngle: startAngle + deltaAngle
+		 ] ].
+	canvas add: line.
+	canvas open
+]
+
+{ #category : #examples }
 RSSVGPathLine class >> exampleBasic [
 	| line a b |
 	line := self new.
@@ -38,13 +63,13 @@ RSSVGPathLine class >> exampleBasic [
 		color: 'blue';
 		draggable;
 		yourself.
-	b := RSEllipse new 
+	b := RSEllipse new
 		radius: 5 ;
 		color: 'red';
 		draggable;
 		position: 100@100;
 		yourself.
-	
+
 	line from: a; to: b.
 	line svgPath: [ :aLine | | from to |
 		from := aLine from position.
@@ -53,18 +78,17 @@ RSSVGPathLine class >> exampleBasic [
 		'L ', to x asString, ' ', to y asString,
 		'L' , from x asString, ' ', to y asString, ' Z'
 		 ].
-	
+
 	line color: Color green; borderColor: Color black.
-	
+
 	RSCanvas new
 		addAll: { a. b. line };
-		open.
-		
+		open
 ]
 
 { #category : #visiting }
 RSSVGPathLine >> buildPathOn: visitor [
-	visitor buildSVGLinePath: self.
+	visitor buildSVGLinePath: self
 ]
 
 { #category : #accessing }
@@ -80,7 +104,7 @@ RSSVGPathLine >> color: aColor [
 { #category : #initialization }
 RSSVGPathLine >> initialize [
 	super initialize.
-	self svgPath: [:line |''].
+	self svgPath: [:line |'']
 ]
 
 { #category : #accessing }
@@ -91,6 +115,5 @@ RSSVGPathLine >> svgPath [
 { #category : #accessing }
 RSSVGPathLine >> svgPath: aBlock [
 	"aBlock return a string and recives 1 argument, the svg line"
-	svgPath := aBlock 
-	
+	svgPath := aBlock
 ]

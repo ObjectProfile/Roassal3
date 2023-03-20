@@ -21,15 +21,12 @@ RSCircularAroundAVertexLayoutTest >> createCanvasToTest [
 			c
 			 ];
 	 yourself
-	
 ]
 
 { #category : #running }
 RSCircularAroundAVertexLayoutTest >> setUp [
 	super setUp.
 	canvas := self createCanvasToTest
-	
-	
 ]
 
 { #category : #tests }
@@ -38,8 +35,7 @@ RSCircularAroundAVertexLayoutTest >> testBasic [
 	layout := RSCircularAroundAVertexLayout new.
 	oldPositions := canvas nodes collect: #position.
 	layout on: canvas nodes.
-	self deny: (canvas nodes collect: #position) equals: oldPositions.
-	
+	self deny: (canvas nodes collect: #position) equals: oldPositions
 ]
 
 { #category : #tests }
@@ -50,7 +46,6 @@ RSCircularAroundAVertexLayoutTest >> testDefaultRadius [
 	first := canvas nodes first.
 	second := canvas nodes second.
 	self deny: (first encompassingRectangle intersects: second encompassingRectangle)
-	
 ]
 
 { #category : #tests }
@@ -59,7 +54,7 @@ RSCircularAroundAVertexLayoutTest >> testRadius [
 	layout := RSCircularAroundAVertexLayout new.
 	layout radius: 1000.
 	layout on: canvas nodes.
-	
+
 	boundingBox := canvas encompassingRectangle.
-	self assert: boundingBox width > 1000.
+	self assert: boundingBox width > 1000
 ]

@@ -9,5 +9,5 @@ Class {
 
 { #category : #documentation }
 RSEdgeBuilder >> README [
-	"This class is voluntarily empty" 
+	"This class is voluntarily empty"
 ]

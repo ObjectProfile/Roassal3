@@ -24,7 +24,7 @@ RSCircleD >> indices [
 
 { #category : #accessing }
 RSCircleD >> indices: array [
-	indices := array.
+	indices := array
 ]
 
 { #category : #accessing }

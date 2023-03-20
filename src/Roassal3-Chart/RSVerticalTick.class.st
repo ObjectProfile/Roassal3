@@ -28,7 +28,7 @@ Class {
 RSVerticalTick >> createNiceLabelIn: aChart [
 	| nice |
 	nice := super createNiceLabelIn: aChart.
-	aChart 
+	aChart
 		minValueY: nice min;
 		maxValueY: nice max.
 	^ nice
@@ -39,7 +39,7 @@ RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.
 	zeroX := chart spineDecoration zeroPoint x.
-	
+
 	^ self shape copy
 		startPoint: zeroX @ scaledNumber;
 		endPoint: zeroX - self configuration tickSize @ scaledNumber;

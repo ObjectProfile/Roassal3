@@ -15,7 +15,6 @@ Class {
 
 { #category : #'instance creation' }
 RSShapeBuilder >> arrowedLine [
-	
 ]
 
 { #category : #accessing }
@@ -47,13 +46,13 @@ RSShapeBuilder >> borderWidth: anIntegerOrASymbolOrOneArgBlock [
 { #category : #'public - configuration' }
 RSShapeBuilder >> box [
 	shapeClass := RSBox.
-	self extent: 5 @ 5.
+	self extent: 5 @ 5
 ]
 
 { #category : #'public - configuration' }
 RSShapeBuilder >> circle [
 	shapeClass := RSEllipse.
-	self extent: 5 @ 5.
+	self extent: 5 @ 5
 ]
 
 { #category : #accessing }
@@ -71,7 +70,7 @@ RSShapeBuilder >> configureNotCompositeShape: aShape model: model [
 
 	width ifNotNil: [ aShape width: (width rsValue: model) ].
 	height ifNotNil: [ aShape height: (height rsValue: model) ].
-	(borderColor notNil and: [ borderWidth notNil ]) ifTrue: [ 
+	(borderColor notNil and: [ borderWidth notNil ]) ifTrue: [
 		aShape border: (RSBorder new
 				 color: (borderColor rsValue: model);
 				 width: (borderWidth rsValue: model)) ].
@@ -91,10 +90,10 @@ RSShapeBuilder >> configureShape: aShape [
 	result := aShape.
 	model := aShape model.
 	self configureNotCompositeShape: aShape model: model.
-	labelBlock notNil ifTrue: [ 
+	labelBlock notNil ifTrue: [
 		newResult := RSComposite model: aShape model.
 		aShape model: nil.
-		newResult children: { 
+		newResult children: {
 				aShape.
 				(RSLabel new
 					 text: (labelBlock rsValue: model);
@@ -112,7 +111,7 @@ RSShapeBuilder >> doesUseLabel [
 { #category : #'public - configuration' }
 RSShapeBuilder >> ellipse [
 	shapeClass := RSEllipse.
-	self extent: 5 @ 5.
+	self extent: 5 @ 5
 ]
 
 { #category : #'public - configuration' }
@@ -135,7 +134,7 @@ RSShapeBuilder >> height: aValueOrAOneArgBlock [
 RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 	| aColor |
 	aColor := color.
-	self color: [ :obj | (oneArgBlock rsValue: obj) 
+	self color: [ :obj | (oneArgBlock rsValue: obj)
 											ifTrue: [ aOneArgBlockOrAValue rsValue: obj ]
 											ifFalse: [ aColor rsValue: obj ] ]
 ]
@@ -144,7 +143,7 @@ RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 RSShapeBuilder >> initialize [
 	super initialize.
 	self box.
-	color := Color gray.
+	color := Color gray
 ]
 
 { #category : #'public - configuration' }
@@ -188,7 +187,7 @@ RSShapeBuilder >> shapeOn: anObject [
 	aShape := shapeClass new
 		          model: anObject;
 		          yourself.
-	^ self configureShape: aShape.
+	^ self configureShape: aShape
 ]
 
 { #category : #building }

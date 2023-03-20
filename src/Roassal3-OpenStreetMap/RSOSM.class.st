@@ -22,7 +22,7 @@ RSOSM class >> emptyTile [
 	^ EmptyTile
 		ifNil:
 			[ EmptyTile := ((StringMorph contents: 'Loading...') center: 127 @ 127)
-				imageFormForRectangle: (0 @ 0 extent: 256 @ 256) ] 
+				imageFormForRectangle: (0 @ 0 extent: 256 @ 256) ]
 ]
 
 { #category : #public }
@@ -42,7 +42,7 @@ RSOSM >> computeEncompassingRectangle [
 	| canvas |
 	canvas := self canvas.
 	canvas ifNil: [ ^ 0@0 corner: 0@0 ].
-	^ canvas extent negated / 2.0 extent: canvas extent.
+	^ canvas extent negated / 2.0 extent: canvas extent
 ]
 
 { #category : #private }
@@ -54,7 +54,7 @@ RSOSM >> computeOsmZoomLevel [
 
 { #category : #'accessing - computed' }
 RSOSM >> end [
-	^ self fromOurSpaceToTile: self encompassingRectangle bottomRight.
+	^ self fromOurSpaceToTile: self encompassingRectangle bottomRight
 ]
 
 { #category : #accessing }
@@ -103,7 +103,7 @@ RSOSM >> initialize [
 	super initialize.
 	tiles := Dictionary new.
 	emptyTile := Form extent: 256 @ 256.
-	semaphore := Semaphore forMutualExclusion.
+	semaphore := Semaphore forMutualExclusion
 ]
 
 { #category : #actions }
@@ -137,7 +137,6 @@ RSOSM >> remainderZoom: z [
 
 { #category : #adding }
 RSOSM >> renderOn: aCanvas [
-	
 ]
 
 { #category : #accessing }
@@ -147,7 +146,7 @@ RSOSM >> semaphore [
 
 { #category : #'accessing - computed' }
 RSOSM >> start [
-	^ self fromOurSpaceToTile: self encompassingRectangle topLeft.
+	^ self fromOurSpaceToTile: self encompassingRectangle topLeft
 ]
 
 { #category : #accessing }

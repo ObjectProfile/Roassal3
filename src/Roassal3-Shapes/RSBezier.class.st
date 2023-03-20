@@ -88,7 +88,7 @@ RSBezier class >> exampleBezier [
 	| bezier |
 	bezier := self new.
 	bezier controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
-	bezier inspect.
+	bezier inspect
 ]
 
 { #category : #examples }
@@ -101,12 +101,12 @@ RSBezier class >> exampleControlPointsController [
 			position: point;
 			draggable;
 			yourself ].
-	
-	controller := RSCustomCPController new 
+
+	controller := RSCustomCPController new
 		models: points;
 		yourself.
 	bezier controlPointsController: controller.
-	
+
 	RSCanvas new
 		add: bezier;
 		addAll: points;
@@ -127,7 +127,7 @@ RSBezier >> basicIncludesPoint: aPoint [
 	| cp lines ir |
 	cp := self controlPoints.
 	ir := self includedRadius.
-	cp size = 2 ifTrue: [ 
+	cp size = 2 ifTrue: [
 		^ aPoint
 			onLineFrom: cp first
 			to: cp second
@@ -139,23 +139,22 @@ RSBezier >> basicIncludesPoint: aPoint [
 		| p1 p2 |
 		p1 := lines at: i.
 		p2 := lines at: i + 1.
-		(aPoint 
+		(aPoint
 			onLineFrom: p1
 			to: p2
 			within: ir )
-		 ].
-	
+		 ]
 ]
 
 { #category : #visiting }
 RSBezier >> buildPathOn: visitor [
-	visitor buildBezierPath: self.
+	visitor buildBezierPath: self
 ]
 
 { #category : #accessing }
 RSBezier >> controlPoints: anArrayOfPoints [
 	self
-		assert: anArrayOfPoints notNil 
+		assert: anArrayOfPoints notNil
 		description: 'The argument can not be nil';
 		assert: (anArrayOfPoints size between: 2 and: 4)
 		description: 'The array size must be between 2 and 4 points'.
@@ -171,7 +170,7 @@ RSBezier >> firstC1Point [
 { #category : #initialization }
 RSBezier >> initialize [
 	super initialize.
-	controlPoints := { 0@0. 100@100 }.
+	controlPoints := { 0@0. 100@100 }
 ]
 
 { #category : #composing }
@@ -201,15 +200,15 @@ RSBezier >> lines [
 	start := cp first.
 	via1 := cp second.
 	via2 := cp third.
-	end := cp size = 3 
+	end := cp size = 3
 		ifTrue: [ via2 ]
 		ifFalse: [ cp fourth ].
 	c := 3 * (via1 - start).
 	b := 3 * (via2 - via1) - c.
 	a := end - start - c - b.
 
-	^ (0 to: 1 by: 0.2) collect: [ :t | 
-		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start. 
+	^ (0 to: 1 by: 0.2) collect: [ :t |
+		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start.
 		]
 ]
 

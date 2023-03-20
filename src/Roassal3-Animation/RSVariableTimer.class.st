@@ -12,7 +12,7 @@ Class {
 
 { #category : #public }
 RSVariableTimer >> addTime: aDuration [
-	currentTime := currentTime + aDuration asMilliSeconds.
+	currentTime := currentTime + aDuration asMilliSeconds
 ]
 
 { #category : #public }
@@ -23,5 +23,5 @@ RSVariableTimer >> currentTime [
 { #category : #initialization }
 RSVariableTimer >> initialize [
 	super initialize.
-	currentTime := RSDefaultTimer new currentTime.
+	currentTime := RSDefaultTimer new currentTime
 ]

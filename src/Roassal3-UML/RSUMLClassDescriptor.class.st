@@ -60,8 +60,7 @@ RSUMLClassDescriptor >> forPharo [
 		superclass: #superclass;
 		methodSelector: #selector;
 		instVarSelector: #yourself;
-		methodsLimit: SmallInteger maxVal.
-		
+		methodsLimit: SmallInteger maxVal
 ]
 
 { #category : #accessing }

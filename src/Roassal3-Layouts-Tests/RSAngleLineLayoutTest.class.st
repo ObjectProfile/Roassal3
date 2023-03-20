@@ -33,7 +33,7 @@ RSAngleLineLayoutTest >> testLayoutWith0Angle [
 	layout := RSAngleLineLayout new angle: 0.
 	layout on: shapes.
 	x := 2.5.
-	shapes do: [ :each | 
+	shapes do: [ :each |
 		self assert: each position closeTo: x @ 2.5.
 		x := x + layout gapSize ]
 ]
@@ -45,7 +45,7 @@ RSAngleLineLayoutTest >> testLayoutWith90Angle [
 	layout := RSAngleLineLayout new.
 	layout on: shapes.
 	y := 2.5.
-	shapes do: [ :each | 
+	shapes do: [ :each |
 		self assert: each position closeTo: 2.5 @ y.
 		y := y + layout gapSize ]
 ]
@@ -58,7 +58,7 @@ RSAngleLineLayoutTest >> testLayoutWithThreeElements [
 	layout on: #(  ).
 	layout on: shapes.
 	y := 2.5.
-	shapes do: [ :each | 
+	shapes do: [ :each |
 		self assert: each position closeTo: 2.5 @ y.
 		y := y + layout gapSize ]
 ]

@@ -74,10 +74,10 @@ RSControlConfiguration >> hasVerticalScrolling: aBool [
 { #category : #initialization }
 RSControlConfiguration >> initialize [
 	super initialize.
-	self 
+	self
 		"used in zoom out"
 		minScale: 0.04;
-		
+
 		"used in zoom in"
 		maxScale: 7;
 		padding: 25;
@@ -87,7 +87,7 @@ RSControlConfiguration >> initialize [
 		noBasicZoom;
 		hasHorizontalScrolling: true;
 		hasVerticalScrolling: true;
-		hasDraggableAnimation: true.
+		hasDraggableAnimation: true
 ]
 
 { #category : #accessing }
@@ -116,7 +116,7 @@ RSControlConfiguration >> minScale: aNum [
 
 { #category : #configuration }
 RSControlConfiguration >> noBasicZoom [
-	shouldUseBasicZoom := false.
+	shouldUseBasicZoom := false
 ]
 
 { #category : #configuration }
@@ -131,7 +131,7 @@ RSControlConfiguration >> noZoomToFitOnExtendChanged [
 
 { #category : #configuration }
 RSControlConfiguration >> noZoomToFitOnStart [
-	zoomToFitOnStart := false.
+	zoomToFitOnStart := false
 ]
 
 { #category : #accessing }
@@ -166,7 +166,7 @@ RSControlConfiguration >> shouldZoomToFitOnStart [
 
 { #category : #configuration }
 RSControlConfiguration >> useBasicZoom [
-	shouldUseBasicZoom := true.
+	shouldUseBasicZoom := true
 ]
 
 { #category : #configuration }
@@ -176,7 +176,7 @@ RSControlConfiguration >> useZoomToFitOnExtendChanged [
 
 { #category : #configuration }
 RSControlConfiguration >> useZoomToFitOnStart [
-	zoomToFitOnStart := true.
+	zoomToFitOnStart := true
 ]
 
 { #category : #configuration }

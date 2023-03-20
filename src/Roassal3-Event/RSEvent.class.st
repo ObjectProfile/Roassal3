@@ -31,7 +31,7 @@ RSEvent >> camera [
 
 { #category : #accessing }
 RSEvent >> canvas [
-	^ canvas ifNil: [ canvas := shape canvas ].
+	^ canvas ifNil: [ canvas := shape canvas ]
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ RSEvent >> shape [
 
 { #category : #accessing }
 RSEvent >> shape: aRSShape [
-	"An event should now the shape to which it is related to. 
+	"An event should now the shape to which it is related to.
 	The shape has to be set before emitting the event."
 	shape := aRSShape
 ]
@@ -71,7 +71,6 @@ RSEvent >> shape: aRSShape [
 RSEvent >> signalUpdate [
 	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
 	morph notNil ifTrue: [ morph changed ]
-	
 ]
 
 { #category : #accessing }

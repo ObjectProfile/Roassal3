@@ -25,8 +25,8 @@ RSUMLPackageCalypso class >> classUmlTapActivation2 [
 { #category : #accessing }
 RSUMLPackageCalypso class >> shouldBeActivatedInContext: aBrowserContext [
 	^ RSUMLCalypsoSettings useCalypsoUML
-		and: [ aBrowserContext isPackageSelected 
-			and: [aBrowserContext isClassSelected not 
+		and: [ aBrowserContext isPackageSelected
+			and: [aBrowserContext isClassSelected not
 				and: [ (aBrowserContext lastSelectedPackage name beginsWith: 'BaselineOf') not ] ]]
 ]
 
@@ -37,8 +37,7 @@ RSUMLPackageCalypso class >> tabOrder [
 
 { #category : #accessing }
 RSUMLPackageCalypso >> computeClasses [
-	^ self packages flatCollect: #classes.
-	
+	^ self packages flatCollect: #classes
 ]
 
 { #category : #initialization }
@@ -64,7 +63,7 @@ RSUMLPackageCalypso >> packages: aCollection [
 
 { #category : #initialization }
 RSUMLPackageCalypso >> setUpModelFromContext [
-	self packages: (context isClassTagSelected 
+	self packages: (context isClassTagSelected
 		ifTrue: [ context selectedClassGroups ]
-		ifFalse: [ context selectedPackages ]).
+		ifFalse: [ context selectedPackages ])
 ]

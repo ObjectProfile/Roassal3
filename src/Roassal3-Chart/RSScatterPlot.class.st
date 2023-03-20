@@ -82,20 +82,18 @@ RSScatterPlot >> renderIn: canvas [
 	color := self computeColor.
 	self checkAssertion.
 	ellipses := (1 to: xValues size)
-		collect: [ :notUsed | 
+		collect: [ :notUsed |
 			self shape copy
 				radius: 2;
 				color: color ] as: RSGroup.
-	xValues doWithIndex: [ :xt :i | 
+	xValues doWithIndex: [ :xt :i |
 		| yt et |
 		et := ellipses at: i.
 		yt := yValues at: i.
 		newPoint := self scalePoint: xt @ yt.
 		(self isPointWellDefined: newPoint)
-			ifTrue: [ 
+			ifTrue: [
 				et model: xt @ yt.
 				et translateTo: newPoint.
-				canvas add: et ] ].
-		
-	
+				canvas add: et ] ]
 ]

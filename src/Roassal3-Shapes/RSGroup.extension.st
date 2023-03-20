@@ -50,7 +50,7 @@ RSGridLayout on: elements.
 c @ RSCanvasController
 ```
 "
-	^ RSComposite new 
+	^ RSComposite new
 		model: model;
 		shapes: self;
 		yourself

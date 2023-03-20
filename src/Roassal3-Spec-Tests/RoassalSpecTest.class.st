@@ -7,7 +7,6 @@ Class {
 { #category : #tests }
 RoassalSpecTest >> isValid [
 	^ Smalltalk globals includesKey: #SpRoassalPresenter
-		
 ]
 
 { #category : #tests }
@@ -17,12 +16,12 @@ RoassalSpecTest >> testBasic [
 	spec := SpRoassalPresenter new.
 	window := spec asWindow open.
 	value := 0.
-	
+
 	spec script: [ :view | view addShape: RSBox new. value := value + 1 ].
 	self assert: value equals: 1.
 	spec script: [ :view | view addShape: RSBox new. value := 0 ].
 	self assert: value equals: 0.
-	window close.
+	window close
 ]
 
 { #category : #tests }
@@ -38,14 +37,14 @@ RoassalSpecTest >> testTakeKeyboardFocus [
 	window := spec open.
 	window2 := StPlayground new open.
 	self deny: canvas morph hasKeyboardFocus.
-	canvas morph mouseDown: (MouseButtonEvent new 
-		setType: nil 
+	canvas morph mouseDown: (MouseButtonEvent new
+		setType: nil
 		position: canvas morph center
-		which: MouseButtonEvent yellowButton 
-		buttons: MouseButtonEvent yellowButton 
+		which: MouseButtonEvent yellowButton
+		buttons: MouseButtonEvent yellowButton
 		hand: canvas morph activeHand
 		stamp: nil).
 	self assert: canvas morph hasKeyboardFocus.
 	window delete.
-	window2 delete.
+	window2 delete
 ]

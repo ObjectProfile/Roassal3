@@ -21,16 +21,16 @@ RSFlameGraphExamples >> example01FileSystem [
 		gap: 0.5 asPoint;
 		boxHeight: 4;
 		leafWeight: [ :f | f size sqrt ];
-		explore: FileSystem workingDirectory 
+		explore: FileSystem workingDirectory
 			nesting: #directories
 			leaves: #files.
 	builder build.
 	builder shapes @ RSDraggable.
 	builder shapes @ (RSPopup text: [:f | f basenameWithIndicator, String crlf, f humanReadableSize ]).
 	colorPalette := NSScale google20.
-	builder shapes do: [ :box | 
+	builder shapes do: [ :box |
 		box color: (colorPalette scale: box model extension) ].
-	
+
 	"Add legend for file extensions"
 	RSLegend new
 		title: 'Legend';
@@ -44,7 +44,6 @@ RSFlameGraphExamples >> example01FileSystem [
 	^ builder canvas
 		addInteraction: RSCanvasController new;
 		yourself
-
 ]
 
 { #category : #examples }
@@ -63,12 +62,12 @@ RSFlameGraphExamples >> example02FileSystem [
 			nesting: #directories
 			leaves: #files.
 	builder build.
-	builder shapes 
+	builder shapes
 		@ RSDraggable;
 		@ (RSPopup text: [:f | f basenameWithIndicator, String crlf, f humanReadableSize ]);
 		@ (RSHighlightable new highlightBorder: (RSBorder new color: Color black)).
 
-	"Add labels to rectangles, when they fit inside."	
+	"Add labels to rectangles, when they fit inside."
 	builder shapes do: [ :shape |
 		| location labelBuilder label |
 		location := RSLocation new middle; inner; left; offset: 5@0; yourself.
@@ -78,11 +77,10 @@ RSFlameGraphExamples >> example02FileSystem [
 		labelBuilder labelShape color: Color black.
 		label := labelBuilder shapeFor: shape model basenameWithIndicator.
 		location stick: label on: shape.
-		(label width > 25 and: [ (label width+5) < shape width ]) ifTrue: [ 
+		(label width > 25 and: [ (label width+5) < shape width ]) ifTrue: [
 			builder canvas addShape: label ] ].
 
 	^ builder canvas
 		addInteraction: RSCanvasController new;
 		yourself
-
 ]

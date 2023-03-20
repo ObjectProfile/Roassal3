@@ -20,9 +20,8 @@ RSShapeCollection >> bulkLoad: aCollectionOfShapes [
 
 { #category : #'finding/searching' }
 RSShapeCollection >> shapesAtPoint: position [
-	
+
 	^ self subclassResponsibility
-	
 ]
 
 { #category : #'finding/searching' }

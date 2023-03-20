@@ -32,7 +32,7 @@ RSChartSpineDecoration >> createdShapes [
 
 { #category : #initialization }
 RSChartSpineDecoration >> defaultShape [
-	^ RSBox new 
+	^ RSBox new
 		noPaint;
 		withBorder;
 		yourself

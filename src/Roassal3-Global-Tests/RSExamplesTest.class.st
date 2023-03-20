@@ -11,7 +11,6 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 	self
 		deny: res = exampleClass
 		description: '''' , method selector, ''', should return a canvas or view.'
-		
 ]
 
 { #category : #tests }
@@ -22,12 +21,12 @@ RSExamplesTest >> testExamples [
 	clazz := Smalltalk at: #RSAbstractExamples ifAbsent: [ ^ self ].
 	withErrors := OrderedCollection new.
 	sameResult := OrderedCollection new.
-	clazz subclasses do: [ :cls | 
+	clazz subclasses do: [ :cls |
 		| inst methods |
 		inst := cls new.
-		methods := cls methods 
-			select: [ :met | 
-				(met selector beginsWith: 'example') 
+		methods := cls methods
+			select: [ :met |
+				(met selector beginsWith: 'example')
 				and: [ (met hasPragmaNamed: 'noTest') not ] ].
 		methods sort: CompiledMethod sortBlock.
 		methods
@@ -35,7 +34,7 @@ RSExamplesTest >> testExamples [
 				[res := inst perform: met selector.
 				res = inst ifTrue: [ sameResult add: met ]]
 				on: Error do: [ :ex | | message |
-					message := String streamContents: [ :stream | 
+					message := String streamContents: [ :stream |
 						ex signalerContext shortDebugStackOn: stream ].
 					withErrors add: message -> met ]
 				 ]
@@ -43,7 +42,7 @@ RSExamplesTest >> testExamples [
 			every: 100 ]
 		displayingProgress: [ :cls | cls asString ]
 		every: 500.
-	withErrors ifNotEmpty: [ 
+	withErrors ifNotEmpty: [
 		'>>> Examples with errors: ' traceCr.
 		withErrors do: [ :report |
 			report value printString traceCr.
@@ -51,9 +50,7 @@ RSExamplesTest >> testExamples [
 			'' traceCr.
 			 ] ].
 	withErrors := withErrors collect: [ :each | each value ].
-	
+
 	self assert: withErrors isEmpty description: 'All examples in roassal should run'.
 	self assert: sameResult isEmpty description: 'All examples should return a canvas or builder'
-
-
 ]

@@ -34,7 +34,7 @@ Class {
 { #category : #initialization }
 RSNiceLabel >> initialize [
 	super initialize.
-	score := 0.
+	score := 0
 ]
 
 { #category : #accessing }
@@ -59,23 +59,21 @@ RSNiceLabel >> min: aNumber [
 
 { #category : #accessing }
 RSNiceLabel >> numberOfTicks [
-	^ self ticks / step.
+	^ self ticks / step
 ]
 
 { #category : #printing }
 RSNiceLabel >> printOn: aStream [
 	| x |
-	aStream 
+	aStream
 		nextPutAll: '(Score: ';
 		nextPutAll: (score printShowingDecimalPlaces: 2);
 		nextPutAll: ') '.
 	x := min.
-	[x <= max ] whileTrue: [ 
+	[x <= max ] whileTrue: [
 		aStream nextPutAll: (x printShowingDecimalPlaces: 2).
 		aStream nextPutAll: String tab.
-		x := x + step ].
-	
-	
+		x := x + step ]
 ]
 
 { #category : #accessing }
@@ -100,9 +98,9 @@ RSNiceLabel >> step: aNumber [
 
 { #category : #accessing }
 RSNiceLabel >> ticks [
-	^  min < 0 ifTrue: [ 
-		 max < 0 
-			ifTrue: [ (max - min) abs ] 
+	^  min < 0 ifTrue: [
+		 max < 0
+			ifTrue: [ (max - min) abs ]
 			ifFalse: [ max + min abs  ]
 	] ifFalse: [ max - min ]
 ]

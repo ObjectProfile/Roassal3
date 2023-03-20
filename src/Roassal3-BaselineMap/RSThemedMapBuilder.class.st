@@ -16,7 +16,7 @@ RSThemedMapBuilder >> browse: evt [
 RSThemedMapBuilder >> defaultContainer [
 	| theme |
 	theme := self theme.
-	^ RSCanvas new 
+	^ RSCanvas new
 		color: theme backgroundColor;
 		when: RSThemeChangedEvent send: #themeChanged: to: self;
 		addInteraction: (RSCanvasController new
@@ -34,7 +34,7 @@ RSThemedMapBuilder >> highlight: evt [
 	boxes := (lines collect: #to) asOrderedCollection.
 	boxes add: box.
 	self highlightBoxes: boxes.
-	evt canvas propertyAt: #highlightedLines put: lines.
+	evt canvas propertyAt: #highlightedLines put: lines
 ]
 
 { #category : #highlighting }
@@ -47,18 +47,18 @@ RSThemedMapBuilder >> highlightAnt: antBorder [
 		from: 0;
 		to: antBorder dashArray sum negated;
 		duration: 1 second;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			antBorder dashOffset: t.
 			canvas signalUpdate ].
-	
-	canvas propertyAt: #ant put: animation.
+
+	canvas propertyAt: #ant put: animation
 ]
 
 { #category : #highlighting }
 RSThemedMapBuilder >> highlightBoxes: boxes [
 	| canvas color |
 	canvas := self canvas.
-	color := self theme testColorPassing.
+	color := TestResult defaultColorBackGroundForPassingTest.
 	boxes do: [ :box | | shadow |
 		shadow := self shadowFor: box.
 		shadow color: color.
@@ -66,7 +66,7 @@ RSThemedMapBuilder >> highlightBoxes: boxes [
 		box propertyAt: #shadow put: shadow.
 		canvas addShape: shadow.
 		shadow pushBack ].
-	canvas propertyAt: #highlightedBoxes put: boxes.
+	canvas propertyAt: #highlightedBoxes put: boxes
 ]
 
 { #category : #highlighting }
@@ -74,7 +74,7 @@ RSThemedMapBuilder >> highlightLines: lines [
 	| canvas antBorder color |
 	lines ifEmpty: [ ^ self ].
 	canvas := self container.
-	antBorder := RSBorder new 
+	antBorder := RSBorder new
 		width: 2;
 		yourself.
 	color := self theme dangerTextColor.
@@ -84,7 +84,7 @@ RSThemedMapBuilder >> highlightLines: lines [
 		line border: antBorder.
 		line color: color.
 		 ].
-	self highlightAnt: antBorder.
+	self highlightAnt: antBorder
 ]
 
 { #category : #highlighting }
@@ -110,11 +110,11 @@ RSThemedMapBuilder >> marker [
 { #category : #'instance creation' }
 RSThemedMapBuilder >> newBorderFor: aModel [
 	aModel baselineClass ifNotNil: [ ^ nil ].
-	^ RSBorder new 
+	^ RSBorder new
 		color: self theme textColor;
 		width: 2;
 		dashArray: #(4);
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -130,7 +130,7 @@ RSThemedMapBuilder >> newLabelFor: model [
 	label := super newLabelFor: model.
 	model name = baseline name
 		ifTrue: [ label fontSize: label fontSize * 1.5; bold ].
-		
+
 	^ label
 ]
 
@@ -174,19 +174,19 @@ RSThemedMapBuilder >> shadowFor: box [
 { #category : #events }
 RSThemedMapBuilder >> showMenu: evt [
 	| menu newContext tool class |
-	
+
 	context ifNil: [ ^ self ].
 	class := evt shape model baselineClass.
 	class ifNil: [ ^ self] .
 	newContext := context copy.
 	tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
 	tool prepareInitialStateBy: [ :b | b selectClass: class ].
-	
+
 	newContext tool: tool.
-		menu := CmdContextMenuActivation 
-			buildContextMenuFor: evt canvas morph 
+		menu := CmdContextMenuActivation
+			buildContextMenuFor: evt canvas morph
 			inContext: newContext.
-	menu popUpInWorld: self currentWorld.
+	menu popUpInWorld: self currentWorld
 ]
 
 { #category : #'accessing - defaults' }
@@ -198,30 +198,27 @@ RSThemedMapBuilder >> theme [
 RSThemedMapBuilder >> themeChanged: evt [
 	evt canvas shapes copy do: #remove.
 	evt canvas color: self theme backgroundColor.
-	self renderIn: evt canvas.
+	self renderIn: evt canvas
 ]
 
 { #category : #highlighting }
 RSThemedMapBuilder >> unhighlight: evt [
-	evt canvas 
+	evt canvas
 		propertyAt: #ant ifPresent: [ :anime | anime stop ];
 		propertyAt: #highlightedLines ifPresent: [ :lines | self unhighlightLines: lines ];
-		propertyAt: #highlightedBoxes ifPresent: [ :boxes | self unhighlightBoxes: boxes ].
-	
+		propertyAt: #highlightedBoxes ifPresent: [ :boxes | self unhighlightBoxes: boxes ]
 ]
 
 { #category : #highlighting }
 RSThemedMapBuilder >> unhighlightBoxes: boxes [
-	boxes do: [ :box | 
+	boxes do: [ :box |
 		box propertyAt: #shadow ifPresent: [ :shadow | shadow remove ] ]
-	
 ]
 
 { #category : #highlighting }
 RSThemedMapBuilder >> unhighlightLines: lines [
-	lines do: [ :line | 
+	lines do: [ :line |
 		line border: (line propertyAt: #oldBorder).
 		line color: line border color.
 		line removeKey: #oldBorder ]
-	
 ]

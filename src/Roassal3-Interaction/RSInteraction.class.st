@@ -21,13 +21,13 @@ Class {
 
 { #category : #'instance creation' }
 RSInteraction class >> instance [
-	^ instance ifNil: [ instance := self new ].
+	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #'instance creation' }
 RSInteraction class >> onShape: aShape [
 	| inst |
-	inst := self wantsUniqueInstance 
+	inst := self wantsUniqueInstance
 		ifTrue: [ self instance ]
 		ifFalse: [ self new ].
 	inst onShape: aShape.
@@ -41,12 +41,11 @@ RSInteraction class >> reset [
 ]
 
 { #category : #'instance creation' }
-RSInteraction class >> wantsUniqueInstance [ 
+RSInteraction class >> wantsUniqueInstance [
 	^ false
 ]
 
 { #category : #hooks }
 RSInteraction >> onShape: aShape [
-	self subclassResponsibility 
-	
+	self subclassResponsibility
 ]

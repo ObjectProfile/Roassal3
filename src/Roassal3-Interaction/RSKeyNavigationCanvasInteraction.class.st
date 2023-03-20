@@ -22,16 +22,14 @@ RSKeyNavigationCanvasInteraction >> expandCollapse: evt [
 RSKeyNavigationCanvasInteraction >> initialize [
 	super initialize.
 	steps := Set new.
-	speed := 1.
-		
-	
+	speed := 1
 ]
 
 { #category : #hooks }
 RSKeyNavigationCanvasInteraction >> onShape: aCanvas [
-	aCanvas 
+	aCanvas
 		when: RSKeyDown send: #processKeyDown: to: self;
-		when: RSKeyUp send: #processKeyUp: to: self.
+		when: RSKeyUp send: #processKeyUp: to: self
 ]
 
 { #category : #events }
@@ -40,17 +38,17 @@ RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	keyName := evt keyName.
 	keyName = #I ifTrue: [ ^ self zoomIn: evt canvas ].
 	keyName = #O ifTrue: [ ^ self zoomOut: evt canvas ].
-	self configuration hasHorizontalScrolling ifTrue: [ 
+	self configuration hasHorizontalScrolling ifTrue: [
 		keyName = #LEFT ifTrue: [ steps add: -1@0 ].
 		keyName = #RIGHT ifTrue: [ steps add: 1@0 ].
 	].
-	self configuration hasVerticalScrolling ifTrue: [ 
+	self configuration hasVerticalScrolling ifTrue: [
 		keyName = #UP ifTrue: [ steps add: 0@ -1 ].
 		keyName = #DOWN ifTrue: [ steps add: 0@ 1 ].
 	].
-	
+
 	speedMult := evt shiftKeyPressed
-		ifTrue: [ 4 ] 
+		ifTrue: [ 4 ]
 		ifFalse: [ 1 ].
 	animation ifNotNil: [ ^ self ].
 	steps ifEmpty: [ ^ self ].
@@ -66,7 +64,7 @@ RSKeyNavigationCanvasInteraction >> processKeyUp: evt [
 	animation ifNil: [ ^ self ].
 	self removeRectanglesFor: evt canvas.
 	animation stop.
-	animation := nil.
+	animation := nil
 ]
 
 { #category : #events }
@@ -88,10 +86,10 @@ RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 		camera translateBy: step / (aCanvas camera scale / (speed * speedMult * deltaMS)).
 		position := camera position.
 		correct := self correctCameraPosition: aCanvas.
-		correct = position 
+		correct = position
 			ifFalse: [ camera position: correct ].
 		aCanvas signalUpdate.
-		].
+		]
 ]
 
 { #category : #rendering }
@@ -101,7 +99,7 @@ RSKeyNavigationCanvasInteraction >> renderLegendOn: lb [
 		text: 'Shift + arrows' description: 'Accelerate the move';
 		text: 'M' description: 'Maximize or restore the window';
 		text: 'I' description: 'Zoom in';
-		text: 'O' description: 'Zoom out'.
+		text: 'O' description: 'Zoom out'
 ]
 
 { #category : #'events-processing' }
@@ -114,27 +112,26 @@ RSKeyNavigationCanvasInteraction >> zoomMove: aCanvas delta: delta [
 	| scale camera newScale correct |
 	camera := aCanvas camera.
 	scale := camera scale.
-	newScale := self scaleFor: delta * scale. 
-	aCanvas newAnimation 
+	newScale := self scaleFor: delta * scale.
+	aCanvas newAnimation
 		easing: RSEasingInterpolator backOut;
 		duration: 200 milliSeconds;
 		from: scale;
 		to: newScale;
 		on: camera set: #scale:.
-	correct := self 
+	correct := self
 		correctCameraPosition: aCanvas
 		scale: newScale.
 	correct = camera position ifTrue: [ ^ self ].
-	aCanvas newAnimation 
+	aCanvas newAnimation
 		easing: RSEasingInterpolator backOut;
 		duration: 200 milliSeconds;
 		from: camera position;
 		to: correct;
-		on: camera set: #translateTo:.
+		on: camera set: #translateTo:
 ]
 
 { #category : #'events-processing' }
 RSKeyNavigationCanvasInteraction >> zoomOut: aCanvas [
-	self zoomMove: aCanvas delta: 0.5.
-	
+	self zoomMove: aCanvas delta: 0.5
 ]

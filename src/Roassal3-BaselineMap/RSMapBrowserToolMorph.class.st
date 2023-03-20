@@ -18,7 +18,7 @@ RSMapBrowserToolMorph class >> baselineClassActivation [
 
 { #category : #testing }
 RSMapBrowserToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
-	^ aBrowserContext isClassSelected 
+	^ aBrowserContext isClassSelected
 		and: [ aBrowserContext lastSelectedClass inheritsFrom: BaselineOf ]
 ]
 
@@ -32,7 +32,7 @@ RSMapBrowserToolMorph >> build [
 	| canvas morph |
 	canvas := self buildBaselineMap.
 	morph := canvas createMorph.
-	morph onAnnouncement: MorphDeleted 
+	morph onAnnouncement: MorphDeleted
 		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
@@ -43,7 +43,7 @@ RSMapBrowserToolMorph >> buildBaselineMap [
 		baseline: self targetClass;
 		context: context;
 		build;
-		canvas.
+		canvas
 ]
 
 { #category : #initialization }

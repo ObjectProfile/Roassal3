@@ -20,9 +20,9 @@ RSBarPlotTest >> test2BarPlots [
 	vtick := RSVerticalTick new withNoLabels.
 	chart addDecoration: vtick.
 	chart build.
-	self 
-		assert: chart canvas encompassingRectangle extent 
-		equals: extent+(vtick configuration tickSize @0).
+	self
+		assert: chart canvas encompassingRectangle extent
+		equals: extent+(vtick configuration tickSize @0)
 ]
 
 { #category : #tests }
@@ -32,15 +32,13 @@ RSBarPlotTest >> testHorizontalBar [
 	y := (x raisedTo: 2) - 2.
 	c := RSChart new.
 	p := RSHorizontalBarPlot new x: x y: y.
-	
+
 	self deny: p isVerticalBarPlot.
 	self assert: p isHorizontalBarPlot.
 	c addPlot: p.
 	c build.
 	self assert: (p bars allSatisfy: [ :shape |
-		 shape height closeTo: p bars anyOne height ]).
-	
-
+		 shape height closeTo: p bars anyOne height ])
 ]
 
 { #category : #tests }
@@ -50,16 +48,14 @@ RSBarPlotTest >> testVerticalBar [
 	y := (x raisedTo: 2) - 2.
 	c := RSChart new.
 	p := RSBarPlot new x: x y: y.
-	
+
 	self assert: p isVerticalBarPlot.
 	self deny: p isHorizontalBarPlot.
 	c addPlot: p.
-	c addDecoration: (RSVerticalTick new 
+	c addDecoration: (RSVerticalTick new
 		numberOfTicks: 10;
 		asFloat).
 	c build.
 	self assert: (p bars allSatisfy: [ :shape |
-		 shape width closeTo: p bars anyOne width ]).
-	
-
+		 shape width closeTo: p bars anyOne width ])
 ]
