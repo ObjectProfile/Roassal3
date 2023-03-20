@@ -18,6 +18,6 @@ RSLayoutAngleField >> layoutValue [
 ]
 
 { #category : #accessing }
-RSLayoutAngleField >> layoutValue: anObject [
-	^ super layoutValue: anObject degreesToRadians
+RSLayoutAngleField >> layoutValue: aNumber [
+	^ super layoutValue: aNumber degreesToRadians
 ]

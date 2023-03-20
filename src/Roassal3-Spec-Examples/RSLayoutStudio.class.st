@@ -88,7 +88,7 @@ RSLayoutStudio >> currentLayout: aRSLayout [
 
 { #category : #initialization }
 RSLayoutStudio >> defaultGraphText [
-	^ '"canvas is an instance of RSCanvas"
+	^ '"canvas is an instance of RSCanvas use it to render a graph"
 RSLayoutStudio renderGraphIn: canvas'
 ]
 
@@ -198,9 +198,12 @@ RSLayoutStudio >> updateToolPanel [
 	attributes layoutStudio: self.
 	controls := self newPresenter.
 	controls layout: (SpBoxLayout newVertical
-		add: 'Graph editor' expand: false;
-		add: graphTextEditor withConstraints: [ :c |
-			c expand: false; height: 200];
+		add: (SpBoxLayout newVertical
+			add: 'Graph editor' expand: false;
+			add: graphTextEditor withConstraints: [ :c |
+				c expand: false; height: 200];
+			yourself
+			) expand: false;
 		spacing: 10;
 		add: attributes;
 		yourself
