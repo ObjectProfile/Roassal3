@@ -40,7 +40,7 @@ RSHorizontalTick >> createTickLineFor: aNumber [
 	value := xScale scale: aNumber.
 	zeroY := chart spineDecoration zeroPoint y.
 	zeroY := zeroY - chart extent y.
-	^ self shape copy
+	^ self newLineTick
 		startPoint: value @ zeroY;
 		endPoint: value @ (zeroY + self configuration tickSize);
 		yourself

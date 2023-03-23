@@ -17,6 +17,7 @@ RSAbstractLabelDecoration >> createLabel [
 	"Utility method to create a label"
 	^ self shape copy
 		text: title;
+		color: self styler textColor;
 		yourself
 ]
 
