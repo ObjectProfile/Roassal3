@@ -11,6 +11,7 @@ Class {
 RSLayoutPointField >> layoutValue [
 	| value |
 	value := super layoutValue.
+	value ifNil: [ ^ 'nil' ].
 	^ value x asString , ' @ ', value y asString
 ]
 
@@ -18,6 +19,7 @@ RSLayoutPointField >> layoutValue [
 RSLayoutPointField >> transform: aString [
 	| point |
 	point := self class compiler evaluate: aString.
+	point ifNil: [ ^ nil ].
 	self assert: point isPoint description: 'You should provide a string'.
 	^ point
 ]

@@ -101,9 +101,10 @@ RSLayoutStudio >> edit: anAssociation [
 	self
 		currentLayout: class new;
 		layoutDefinition: anAssociation value.
+	roassalCanvas refresh.
 	self updateToolPanel.
 
-	self withWindowDo: [ :window | self initializeWindow: window ].
+	self withWindowDo: [ :window | window title: 'Layout Studio on: ', currentLayout class name ].
 	self update
 ]
 
