@@ -1,16 +1,5 @@
 "
 RSGridLayout places shapes as a grid. Shapes keeps their order, from left to right.
-
-Here is an example
-
-```
-c := RSCanvas new.
-
-shapes := RSLabel models: (1 to: 9).
-c addAll: shapes.
-RSGridLayout on: shapes.
-c @ RSCanvasController
-```
 "
 Class {
 	#name : #RSGridLayout,

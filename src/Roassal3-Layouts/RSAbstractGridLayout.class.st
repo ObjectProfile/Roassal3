@@ -1,16 +1,11 @@
 "
-A ROAbstractGridLayout is xxxxxxxxx.
+Abstract class for grid layouts.
 
-Instance Variables
-	gapSize:		<Object>
-	lineItemsCountBlock:		<Object>
+My subclasses are `RSCellLayout`, `RSGridLayout` and `RSVerticalGridLayout`.
 
-gapSize
-	- xxxxx
-
-lineItemsCountBlock
-	- xxxxx
-
+My instance variables are:
+- gapSize the space between each element
+- lineItemsCount: a number or block to compute the number of desired elements per row.
 "
 Class {
 	#name : #RSAbstractGridLayout,

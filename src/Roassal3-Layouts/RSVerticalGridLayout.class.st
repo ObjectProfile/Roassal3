@@ -1,16 +1,5 @@
 "
 RSVerticalGridLayout places shapes as a grid. Shapes keeps their order, from top to down, and then left to right.
-
-Here is an example
-
-```
-c := RSCanvas new.
-
-shapes := RSLabel models: (1 to: 9).
-c addAll: shapes.
-RSVerticalGridLayout on: shapes.
-c @ RSCanvasController
-```
 "
 Class {
 	#name : #RSVerticalGridLayout,

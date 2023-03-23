@@ -30,12 +30,6 @@ I provide the following methods.
 - `RSLayout >> #doExecute:`, override this method and set the position of each element here.
 - `RSLayout >> #doPost:`, orerride this method to finalize the the layout process.
 
-### Examples
-
-Layouts have some examples on class side. Here there are some examples
-- `RSLayout class >> #example1`
-- `RSLayout class >> #example2`
-- `RSLayout class >> #example3`
 "
 Class {
 	#name : #RSLayout,
@@ -46,12 +40,45 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #documentation }
+RSLayout class >> addDocumentSection: aBuilder label: label methods: methods [
+
+	methods ifEmpty: [ ^ self ].
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
+	aBuilder unorderedListDuring: [
+		(methods sorted: #selector ascending) do: [ :each |
+			aBuilder item: [
+				aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+]
+
+{ #category : #documentation }
+RSLayout class >> addDocumentSectionHierarchy: aBuilder [
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Hierarchy' ] withLevel: 2.
+	SpDocumentHierarchyBuilder new
+		fromClass: RSLayout;
+		builder: aBuilder;
+		filter: [ :eachClass | eachClass package packageName beginsWith: 'Roassal3-' ];
+		buildFor: self
+]
+
 { #category : #examples }
 RSLayout class >> basicExample [
 	| canvas |
 	canvas := self canvasExample.
 	self on: canvas nodes.
 	^ canvas open
+]
+
+{ #category : #documentation }
+RSLayout class >> buildMicroDownUsing: aBuilder withComment: aString [
+	super buildMicroDownUsing: aBuilder withComment: aString.
+	self documentSections keysAndValuesDo: [ :label :methods |
+		self addDocumentSection: aBuilder label: label methods: methods ].
+	self addDocumentSectionHierarchy: aBuilder
 ]
 
 { #category : #examples }
@@ -65,18 +92,55 @@ RSLayout class >> canvasExample [
 
 { #category : #examples }
 RSLayout class >> canvasExampleIn: canvas [
-	| shapes |
+	| shapes colorPalette |
+	self cartensianLinesIn: canvas.
 	shapes := RSBox models: Collection withAllSubclasses.
 	canvas addAll: shapes.
+	colorPalette := NSScale category20c.
+	shapes do: [ :shape |
+		shape color: (colorPalette scale: shape model)
+		].
 	shapes
 		@ RSPopup new;
 		@ RSDraggable new.
-	RSLineBuilder line
+	RSLineBuilder arrowedLine
 		shapes: shapes;
+		withBorderAttachPoint;
 		connectFrom: #superclass.
 	RSNormalizer size
 		shapes: shapes;
 		normalize: #linesOfCode
+]
+
+{ #category : #examples }
+RSLayout class >> cartensianLinesIn: canvas [
+	| lineX lineY zeroLabel |
+	lineX := RSArrowedLine new
+		color: Color black;
+		startPoint: 0@0;
+		endPoint: 300@0;
+		yourself.
+	lineY := lineX copy
+		startPoint: 0@0;
+		endPoint: 0 @ 300;
+		yourself.
+	zeroLabel := RSLabel new
+		text: '0@0';
+		addInteraction: (RSPopup themeText: 'Origin in a box of 300@300');
+		position: 0@0;
+		color: Color black;
+		yourself.
+	canvas
+		addShape: lineX;
+		addShape: lineY;
+		addShape: zeroLabel
+]
+
+{ #category : #documentation }
+RSLayout class >> documentSections [
+	^ OrderedDictionary newFromPairs: {
+		'Examples'. self class methods select: [ :each | each selector beginsWith: 'example' ].
+		}
 ]
 
 { #category : #testing }

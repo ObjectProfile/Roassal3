@@ -1,5 +1,5 @@
 "
-A ROCellLayout is like ROGridLayout. Elements of each column are centered along the same vertical line. And elements of each row are centered along the same horizontal line.
+A `RSCellLayout` is like `RSGridLayout`. Elements of each column are centered along the same vertical line. And elements of each row are centered along the same horizontal line.
 
 Instance Variables
 	inCellPosition:		<Object | Block>

@@ -50,6 +50,12 @@ RSAbstractCircleLayout >> centerPoint: aPoint [
 ]
 
 { #category : #hook }
+RSAbstractCircleLayout >> computeCenter: aNumber [
+	"returns the defined center point"
+	^ centerPoint ifNil: [ aNumber @ aNumber ]
+]
+
+{ #category : #hook }
 RSAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 
@@ -130,8 +136,7 @@ RSAbstractCircleLayout >> initialize [
 		"Distance of the circle. If it is 0 when entering doExecute, then it is computed"
 		initialRadius: 0;
 		"0 means that it is computed, and not set by the user"
-		angleIncrement: 0;
-		centerPoint: 0@0
+		angleIncrement: 0
 ]
 
 { #category : #accessing }
