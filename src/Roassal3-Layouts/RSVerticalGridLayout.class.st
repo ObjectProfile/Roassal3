@@ -4,12 +4,32 @@ RSVerticalGridLayout places shapes as a grid. Shapes keeps their order, from top
 Class {
 	#name : #RSVerticalGridLayout,
 	#superclass : #RSAbstractGridLayout,
+	#instVars : [
+		'alignment'
+	],
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RSVerticalGridLayout class >> alignmentOptions [
+	^ #()
+]
+
+{ #category : #accessing }
+RSVerticalGridLayout >> alignment [
+
+	^ alignment
+]
+
+{ #category : #accessing }
+RSVerticalGridLayout >> alignment: anObject [
+
+	alignment := anObject
+]
+
 { #category : #hook }
 RSVerticalGridLayout >> doExecute: shapes [
-	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop |
+	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop gap align line |
 	originalGapLeft := 0.
 	originalGapTop := 0.
 
@@ -17,18 +37,23 @@ RSVerticalGridLayout >> doExecute: shapes [
 	lineItemSize := self lineItemsCountBlock rsValue: shapes.
 	lineItemCount := 0.
 	maxLastLineWidth := 0.
-
-	shapes
-		do: [ :aShape |
-			translator translateTopLeftOf: aShape to: pointer.
-			pointer := pointer x @ (pointer y + aShape height + self gapSize).
-			lineItemCount := lineItemCount + 1.
-			maxLastLineWidth := maxLastLineWidth max: aShape width.
-			lineItemCount >= lineItemSize
-				ifTrue: [
-					pointer := (pointer x + (self gapSize) + maxLastLineWidth) @ originalGapLeft.
-
-					maxLastLineWidth := 0.
-					lineItemCount := 0 ].
-			self step ]
+	gap := self gapSize.
+	align := RSAlignment new.
+	line := OrderedCollection new.
+	shapes do: [ :shape |
+		translator translateTopLeftOf: shape to: pointer.
+		line add: shape.
+		pointer := pointer x @ (pointer y + shape height + gap).
+		lineItemCount := lineItemCount + 1.
+		maxLastLineWidth := maxLastLineWidth max: shape width.
+		lineItemCount >= lineItemSize ifTrue: [
+			align shapes: line.
+			alignment value: align.
+			pointer := (pointer x + gap + maxLastLineWidth) @ originalGapLeft.
+			maxLastLineWidth := 0.
+			lineItemCount := 0 ]
+	].
+	line size < lineItemSize ifFalse: [ ^ self ].
+	align shapes: line.
+	alignment value: align
 ]

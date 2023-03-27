@@ -10,17 +10,17 @@ Class {
 
 { #category : #alignment }
 RSHorizontalFlowLayout >> alignCenter [
-	alignment := #center
+	self alignment: #center
 ]
 
 { #category : #alignment }
 RSHorizontalFlowLayout >> alignLeft [
-	alignment := #left
+	self alignment: #left
 ]
 
 { #category : #alignment }
 RSHorizontalFlowLayout >> alignRight [
-	alignment := #right
+	self alignment: #right
 ]
 
 { #category : #initialization }

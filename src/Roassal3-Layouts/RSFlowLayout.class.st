@@ -9,38 +9,43 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RSFlowLayout class >> exampleLabel [
+	
+	| words r wordShapes c |
+	words := (String loremIpsum: 100) substrings.
+	r := Random new.
+	wordShapes := words collect: [ :w | 
+		RSLabel new
+			fontSize: (r nextInteger: 30);
+			text: w ] as: RSGroup.
+
+	c := RSCanvas new.
+	c addAll: wordShapes.
+	self new alignLabel; on: wordShapes.
+	c @ RSCanvasController.
+	^ c open
+]
+
 { #category : #alignment }
 RSFlowLayout >> alignBottom [
-	alignment := #bottom
+	self alignment: #bottom
 ]
 
 { #category : #alignment }
 RSFlowLayout >> alignLabel [
-	"Allow to align labels along their baseline.
-
-```Smalltalk
-words := (String loremIpsum: 100) substrings.
-r := Random new.
-wordShapes := words collect: [ :w | RSLabel new fontSize: (r nextInt: 30); text: w ] as: RSGroup.
-
-c := RSCanvas new.
-c addAll: wordShapes.
-RSFlowLayout new alignLabel; on: wordShapes.
-c @ RSCanvasController.
-c open
-```
-"
-	alignment := #label
+	"Allow to align labels along their baseline"
+	self alignment: #label
 ]
 
 { #category : #alignment }
 RSFlowLayout >> alignMiddle [
-	alignment := #middle
+	self alignment: #middle
 ]
 
 { #category : #alignment }
 RSFlowLayout >> alignTop [
-	alignment := #top
+	self alignment: #top
 ]
 
 { #category : #initialization }

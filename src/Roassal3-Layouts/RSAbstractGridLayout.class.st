@@ -107,7 +107,12 @@ RSAbstractGridLayout >> gapSize: anInteger [
 RSAbstractGridLayout >> initialize [
 	super initialize.
 	gapSize := self defaultGapSize.
-	lineItemsCountBlock := self defaultLineItemsCount
+	lineItemsCountBlock := self defaultLineItemsCount.
+]
+
+{ #category : #accessing }
+RSAbstractGridLayout >> lineItemsCount [
+	^ lineItemsCountBlock
 ]
 
 { #category : #accessing }

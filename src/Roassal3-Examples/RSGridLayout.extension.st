@@ -1,6 +1,11 @@
 Extension { #name : #RSGridLayout }
 
 { #category : #'*Roassal3-Examples' }
+RSGridLayout class >> alignmentOptions [
+	^ #(top middle bottom none)
+]
+
+{ #category : #'*Roassal3-Examples' }
 RSGridLayout class >> example1 [
 	| c shapes |
 	c := RSCanvas new.
