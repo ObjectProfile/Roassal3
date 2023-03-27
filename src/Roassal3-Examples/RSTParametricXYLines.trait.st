@@ -1,3 +1,6 @@
+"
+I provide some parametric lines.
+"
 Trait {
 	#name : #RSTParametricXYLines,
 	#category : #'Roassal3-Examples'
