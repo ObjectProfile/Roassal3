@@ -11,12 +11,12 @@ RSObjectWithPropertyTest >> testBasic [
 	b1 := RSBox new.
 	b2 := RSBox new.
 	b3 := RSBox new.
-	b1 schildren: { 
+	b1 schildren: {
 			b2.
 			b3 }.
 
 	self assert: b2 sparent equals: b1.
-	self assert: b3 sparent equals: b1.
+	self assert: b3 sparent equals: b1
 ]
 
 { #category : #tests }
@@ -27,7 +27,7 @@ RSObjectWithPropertyTest >> testWithAllChildren [
 	b2 := RSBox new.
 	b3 := RSBox new.
 	b4 := RSBox new.
-	children := { 
+	children := {
 		            b2.
 		            b3 }.
 	b1 schildren: children.

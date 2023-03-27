@@ -161,7 +161,7 @@ RSAbstractUMLClassRenderer >> ellipsisShape [
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> groupFor: shapes [
 	^ RSGroup streamContents: [ :stream |
-		shapes do: [ :s | s hasChildren ifTrue: [ stream << s ] ] ].
+		shapes do: [ :s | s hasChildren ifTrue: [ stream << s ] ] ]
 ]
 
 { #category : #accessing }

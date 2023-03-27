@@ -283,7 +283,7 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 	niceLabel step isZero ifTrue: [ niceLabel step: 1 ].
-	^ niceLabel min to: niceLabel max by: niceLabel step.
+	^ niceLabel min to: niceLabel max by: niceLabel step
 ]
 
 { #category : #public }

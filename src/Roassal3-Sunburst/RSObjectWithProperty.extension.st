@@ -5,7 +5,7 @@ RSObjectWithProperty >> allSChildren [
 	| allChildren index |
 	index := 1.
 	allChildren := OrderedCollection withAll: self schildren.
-	[ index <= allChildren size ] whileTrue: [ 
+	[ index <= allChildren size ] whileTrue: [
 		allChildren addAll: ((allChildren at: index) schildren ifNil: [#()]).
 		index := index + 1 ].
 	^ allChildren
@@ -45,5 +45,5 @@ RSObjectWithProperty >> sparent: anObject [
 RSObjectWithProperty >> withAllSChildren [
 	^ self allSChildren
 		add: self;
-		yourself.
+		yourself
 ]

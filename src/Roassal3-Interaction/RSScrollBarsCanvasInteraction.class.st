@@ -128,7 +128,7 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 		camera translateTo: correct.
 		"camera position: correct."
 		self updateBasicScrollbars. ].
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #hooks }

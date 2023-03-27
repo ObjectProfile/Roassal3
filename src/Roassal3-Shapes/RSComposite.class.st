@@ -405,7 +405,7 @@ RSComposite >> pushBack: aShape [
 RSComposite >> pushFront: shape [
 	children
 		remove: shape ifAbsent: [];
-		addLast: shape.
+		addLast: shape
 ]
 
 { #category : #removing }

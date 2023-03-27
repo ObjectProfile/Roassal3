@@ -154,9 +154,7 @@ RSChartTest >> testStylerDefault [
 		yourself.
 	self assert: chart styler textColor equals: Color black.
 	self assert: tick styler textColor equals: Color black.
-	self assert: chart styler equals: tick styler.
-	
-	
+	self assert: chart styler equals: tick styler
 ]
 
 { #category : #tests }
@@ -172,9 +170,7 @@ RSChartTest >> testStylerRedLabel [
 		textColor: Color red.
 	tick styler: styler.
 	chart build.
-	self assert: (tick labels allSatisfy: [ :line | line color = Color red ]).
-	
-	
+	self assert: (tick labels allSatisfy: [ :line | line color = Color red ])
 ]
 
 { #category : #tests }
@@ -190,9 +186,7 @@ RSChartTest >> testStylerRedTick [
 		tickColor: Color red.
 	tick styler: styler.
 	chart build.
-	self assert: (tick ticks allSatisfy: [ :line | line color = Color red ]).
-	
-	
+	self assert: (tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
 { #category : #tests }
@@ -208,46 +202,42 @@ RSChartTest >> testStylerRedTickInChart [
 		tickColor: Color red.
 	chart styler: styler.
 	chart build.
-	self assert: (tick ticks allSatisfy: [ :line | line color = Color red ]).
-	
-	
+	self assert: (tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
 { #category : #tests }
 RSChartTest >> testStylerSpineRed [
 	| x chart styler spine |
 	x := -10.0 to: 20.0 count: 100.
-	
+
 	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	styler := RSChartStyler new
 		spineColor: Color red.
-		
+
 	spine := chart spineDecoration.
-	
+
 	chart styler: styler.
 	chart build.
-	self assert: spine box border color equals: Color red.
-	
+	self assert: spine box border color equals: Color red
 ]
 
 { #category : #tests }
 RSChartTest >> testStylerTitleLabel [
 	| x title chart styler |
 	x := -10.0 to: 20.0 count: 100.
-	
+
 	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	styler := RSChartStyler new
 		textColor: Color red.
-	
+
 	title := chart title: 'Chart'.
 	chart styler: styler.
 	chart build.
-	self assert: title label color equals: Color red.
-	
+	self assert: title label color equals: Color red
 ]
 
 { #category : #tests }

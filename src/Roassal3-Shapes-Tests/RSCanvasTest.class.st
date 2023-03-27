@@ -473,7 +473,7 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 	self assert: (canvas shapesFromModels: #(41 1)) asArray equals: { compo . compo2 . compo3 }.
 	self assert: (canvas shapesFromModels: #(42)) isEmpty.
 
-	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }.
+	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }
 ]
 
 { #category : #'tests - shapes ordering' }
