@@ -36,7 +36,8 @@ Class {
 		'extents',
 		'generator',
 		'colorPalette',
-		'spineDecoration'
+		'spineDecoration',
+		'styler'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -67,6 +68,7 @@ c
 ```"
 	elements add: aDecoration.
 	aDecoration chart: self.
+	aDecoration styler: self styler.
 	^ aDecoration
 ]
 
@@ -84,7 +86,9 @@ c
 ```
 	"
 	elements add: aPlot.
-	aPlot chart: self
+	aPlot chart: self.
+	aPlot styler: self styler.
+	^ aPlot
 ]
 
 { #category : #'public - plots' }
@@ -157,6 +161,11 @@ RSChart >> defaultPlotColors [
 	^ NSScale category20
 ]
 
+{ #category : #initialization }
+RSChart >> defaultStyler [
+	^ RSChartStyler new
+]
+
 { #category : #accessing }
 RSChart >> elements [
 	^ elements
@@ -180,6 +189,7 @@ RSChart >> horizontalTick [
 { #category : #initialization }
 RSChart >> initialize [
 	super initialize.
+	styler := self defaultStyler.
 	elements := OrderedCollection new.
 	self extent: 200 @ 200.
 	self initializeDecorations.
@@ -357,6 +367,17 @@ RSChart >> spineDecoration: aRSChartSpineDecoration [
 	spineDecoration := aRSChartSpineDecoration.
 	elements addFirst: spineDecoration.
 	spineDecoration chart: self
+]
+
+{ #category : #accessing }
+RSChart >> styler [
+	^ styler
+]
+
+{ #category : #accessing }
+RSChart >> styler: anRSChartStyler [
+	styler := anRSChartStyler.
+	elements do: [ :each | each styler: styler ]
 ]
 
 { #category : #accessing }

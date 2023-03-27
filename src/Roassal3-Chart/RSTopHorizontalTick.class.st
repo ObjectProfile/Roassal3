@@ -15,7 +15,7 @@ RSTopHorizontalTick >> createTickLineFor: aNumber [
 	| value y |
 	value := xScale scale: aNumber.
 	y := chart extent y negated.
-	^ self shape copy
+	^ self newLineTick
 		startPoint: value @ y;
 		endPoint: value @ (y - self configuration tickSize);
 		yourself

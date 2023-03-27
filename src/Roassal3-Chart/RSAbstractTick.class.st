@@ -57,7 +57,7 @@ RSAbstractTick >> createLabelFor: aValue index: index [
 	| tick lbl |
 	tick := self ticks at: index.
 	lbl := self configuration createLabelFor: aValue.
-	self color ifNotNil: [ lbl color: self color ].
+	lbl color: self styler textColor.
 	self labelLocation move: lbl on: tick.
 	^ lbl
 ]
@@ -226,6 +226,13 @@ RSAbstractTick >> max [
 { #category : #accessing }
 RSAbstractTick >> min [
 	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+RSAbstractTick >> newLineTick [
+	^ self shape copy
+		color: self styler tickColor;
+		yourself
 ]
 
 { #category : #public }
