@@ -43,7 +43,7 @@ RSWorldMenu class >> loadFullVersion [
 		ifFalse: [ ^ self ].
 	[Metacello new
 		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3';
+		repository: 'github://ObjectProfile/Roassal3:v1.0';
 		load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
 ]
 
