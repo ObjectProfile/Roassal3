@@ -17,7 +17,7 @@ Class {
 { #category : #initialization }
 RSChartStyler >> initialize [
 	super initialize.
-	self 
+	self
 		textColor: Color black;
 		tickColor: Color black;
 		spineColor: Color black

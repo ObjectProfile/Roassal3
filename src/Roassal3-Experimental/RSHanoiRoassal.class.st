@@ -77,7 +77,7 @@ RSHanoiRoassal >> createCanvasFor: anInteger [
 		zoomToFit: canvas extent
 		rectangle: (w negated@ 0 corner: (w * 3)@(anInteger * size) ) .
 	canvas open
-		setLabel: 'Hanoi!'.
+		setLabel: 'Hanoi!'
 ]
 
 { #category : #public }

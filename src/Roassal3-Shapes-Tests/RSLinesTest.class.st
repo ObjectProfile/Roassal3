@@ -128,7 +128,7 @@ RSLinesTest >> testMarkerOffset [
 	self assert: (line includesPoint: 50@ 9).
 	marker offset: 20.
 	self deny: (line includesPoint: 50@ 9).
-	self assert: (line includesPoint: 30@ 9).
+	self assert: (line includesPoint: 30@ 9)
 ]
 
 { #category : #running }

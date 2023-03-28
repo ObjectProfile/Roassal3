@@ -56,7 +56,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 		centerCharge := centerCharge + (k * soleChild position) ].
 
 	aQuad charge = 0 ifTrue: [ ^ self ].
-	aQuad centerOfCharge: centerCharge / aQuad charge.
+	aQuad centerOfCharge: centerCharge / aQuad charge
 ]
 
 { #category : #'adding-removing' }
