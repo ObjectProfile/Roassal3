@@ -40,7 +40,7 @@ RSVerticalTick >> createTickLineFor: aNumber [
 	scaledNumber := yScale scale: aNumber.
 	zeroX := chart spineDecoration zeroPoint x.
 
-	^ self shape copy
+	^ self newLineTick
 		startPoint: zeroX @ scaledNumber;
 		endPoint: zeroX - self configuration tickSize @ scaledNumber;
 		yourself

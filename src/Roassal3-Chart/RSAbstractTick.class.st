@@ -57,7 +57,7 @@ RSAbstractTick >> createLabelFor: aValue index: index [
 	| tick lbl |
 	tick := self ticks at: index.
 	lbl := self configuration createLabelFor: aValue.
-	self color ifNotNil: [ lbl color: self color ].
+	lbl color: self styler textColor.
 	self labelLocation move: lbl on: tick.
 	^ lbl
 ]
@@ -228,6 +228,13 @@ RSAbstractTick >> min [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'instance creation' }
+RSAbstractTick >> newLineTick [
+	^ self shape copy
+		color: self styler tickColor;
+		yourself
+]
+
 { #category : #public }
 RSAbstractTick >> noConvertion [
 	"Do not convert the value when determining labels"
@@ -276,7 +283,7 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 	niceLabel step isZero ifTrue: [ niceLabel step: 1 ].
-	^ niceLabel min to: niceLabel max by: niceLabel step.
+	^ niceLabel min to: niceLabel max by: niceLabel step
 ]
 
 { #category : #public }

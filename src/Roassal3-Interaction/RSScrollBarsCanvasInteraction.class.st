@@ -152,7 +152,6 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	
 	camera translateTo: correct.
 	correct = target ifFalse: [ self updateBasicScrollbars ].
-	
 	evt signalUpdate
 ]
 
