@@ -167,7 +167,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	<script: 'self new example08SunburstExplorer open'>
 	| sb canvas newData color newAnimation first interpolate label |
 	canvas := RSCanvas new.
-	canvas @ RSCanvasController.
+
 	color := NSScale category20c.
 	newData := nil.
 	newAnimation := [ :from :to |
@@ -194,7 +194,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 		(newAnimation
 			value: oldShape externalRadius
 			value: newShape externalRadius)
-			onStepDo: [ :t | target externalRadius: t ];
+			onStepDo: [ :t | target externalRadius: t. canvas zoomToFit ];
 			yourself ].
 
 	sb := RSSunburstBuilder new.
@@ -202,7 +202,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 		container: canvas;
 		sliceColor: [:shape | color scale: shape model category ].
 	sb sliceShape
-		withBorder.
+		border: (RSBorder new color: Color black).
 	canvas addShape: (label := RSLabel new
 		text: '';
 		isFixed: true;
@@ -258,5 +258,6 @@ RSSunburstExamples >> example08SunburstExplorer [
 		do: [ label position: (canvas extent x / 2) @ (canvas extent y - label height) ].
 
 	newData value: Collection.
+
 	^ canvas
 ]

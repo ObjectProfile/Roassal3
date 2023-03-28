@@ -1,5 +1,6 @@
 "
-TODO
+Abstract class for flow layouts.
+I define the maximum width, gap size and alignment (`RSAlignment`)
 "
 Class {
 	#name : #RSAbstractFlowLayout,
@@ -20,7 +21,7 @@ RSAbstractFlowLayout class >> isAbstract [
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 
-	^(self new)
+	^ self new
 		maxWidth: anInteger;
 		yourself
 ]
@@ -28,10 +29,22 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 
-	^(self new)
+	^ self new
 		maxWidth: anInteger;
 		gapSize: anotherInteger;
 		yourself
+]
+
+{ #category : #accessing }
+RSAbstractFlowLayout >> alignment [
+
+	^ alignment
+]
+
+{ #category : #accessing }
+RSAbstractFlowLayout >> alignment: anObject [
+
+	alignment := anObject
 ]
 
 { #category : #configuration }

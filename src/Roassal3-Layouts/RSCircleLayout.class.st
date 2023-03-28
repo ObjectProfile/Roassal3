@@ -15,15 +15,15 @@ RSCircleLayout class >> scaleBy: aNumber [
 
 { #category : #hook }
 RSCircleLayout >> doExecute: elements [
-	| angleIncrement angle rad center |
+	| angle rad angleInc center |
 	rad := self computeRadiusFor: elements.
-	center := Point x: rad y: rad.
-	angleIncrement := self computeIncrementalAngleFor: elements.
+	angleInc := self computeIncrementalAngleFor: elements.
 	angle := self initialAngle.
+	center := self computeCenter: rad.
 	elements do: [ :each |
 		| point |
 		point := center + (Point r: rad theta: angle).
-		angle := angle + angleIncrement.
+		angle := angle + angleInc.
 		translator translateTopLeftOf: each to: point.
 	]
 ]

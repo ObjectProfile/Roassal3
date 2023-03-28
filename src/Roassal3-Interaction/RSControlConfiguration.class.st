@@ -1,27 +1,9 @@
 "
-A control configuration is made to set a configuration for the canvas. For example, by modifying a control configuraiton, you can decide if you wish to have an horizontal scrollbar or no, the minimum zoom, or maximum zoom, the padding, ...
+A control configuration is shared by the interactions of `RSCanvasController`. For example, by modifying a control configuration, the minimum zoom, or maximum zoom, the padding.
 
-For example:
--=-=--=-=--=-=--=-=-
-c := RSCanvas new. 
-controller := RSCanvasController new.
-controller configuration: (RSControlConfiguration new maxScale: 10).
-c @ controller.
--=-=--=-=--=-=--=-=-
-
-
--=-=--=-=--=-=--=-=-
-canvas := RSCanvas new.
-shapes := #('hello' 'world' 'from' 'Roassal3') collect: [ :s | RSLabel new text: s ] as: RSGroup.
-canvas addAll: shapes.
-RSVerticalLineLayout on: shapes.
-int := RSCanvasController new.
-int configuration
-	minScale: 1;
-	maxScale: 3.
-canvas @ int.
-canvas
--=-=--=-=--=-=--=-=-
+For examples:
+- `RSControlConfiguration class >> #example1`
+- `RSControlConfiguration class >> #example2`
 "
 Class {
 	#name : #RSControlConfiguration,
@@ -31,45 +13,10 @@ Class {
 		'maxScale',
 		'minScale',
 		'shouldUseBasicZoom',
-		'zoomToFitOnStart',
-		'zoomToFitOnExtent',
-		'hasHorizontalScrolling',
-		'hasVerticalScrolling',
-		'hasDraggableAnimation',
 		'shouldShowLegend'
 	],
 	#category : #'Roassal3-Interaction-Utils'
 }
-
-{ #category : #configuration }
-RSControlConfiguration >> hasDraggableAnimation [
-	^ hasDraggableAnimation
-]
-
-{ #category : #configuration }
-RSControlConfiguration >> hasDraggableAnimation: aBoolean [
-	hasDraggableAnimation := aBoolean
-]
-
-{ #category : #'scrollbar managing' }
-RSControlConfiguration >> hasHorizontalScrolling [
-	^ hasHorizontalScrolling
-]
-
-{ #category : #'scrollbar managing' }
-RSControlConfiguration >> hasHorizontalScrolling: aBool [
-	hasHorizontalScrolling := aBool
-]
-
-{ #category : #'scrollbar managing' }
-RSControlConfiguration >> hasVerticalScrolling [
-	^ hasVerticalScrolling
-]
-
-{ #category : #'scrollbar managing' }
-RSControlConfiguration >> hasVerticalScrolling: aBool [
-	hasVerticalScrolling := aBool
-]
 
 { #category : #initialization }
 RSControlConfiguration >> initialize [
@@ -77,17 +24,11 @@ RSControlConfiguration >> initialize [
 	self
 		"used in zoom out"
 		minScale: 0.04;
-
 		"used in zoom in"
 		maxScale: 7;
 		padding: 25;
-		noZoomToFitOnExtendChanged;
 		withLegend;
-		useZoomToFitOnStart;
-		noBasicZoom;
-		hasHorizontalScrolling: true;
-		hasVerticalScrolling: true;
-		hasDraggableAnimation: true
+		noBasicZoom
 ]
 
 { #category : #accessing }
@@ -124,16 +65,6 @@ RSControlConfiguration >> noLegend [
 	shouldShowLegend := false
 ]
 
-{ #category : #configuration }
-RSControlConfiguration >> noZoomToFitOnExtendChanged [
-	zoomToFitOnExtent := false
-]
-
-{ #category : #configuration }
-RSControlConfiguration >> noZoomToFitOnStart [
-	zoomToFitOnStart := false
-]
-
 { #category : #accessing }
 RSControlConfiguration >> padding [
 	^ padding
@@ -154,29 +85,9 @@ RSControlConfiguration >> shouldUseBasicZoom [
 	^ shouldUseBasicZoom
 ]
 
-{ #category : #testing }
-RSControlConfiguration >> shouldZoomToFitOnExtendChanged [
-	^ zoomToFitOnExtent
-]
-
-{ #category : #testing }
-RSControlConfiguration >> shouldZoomToFitOnStart [
-	^ zoomToFitOnStart
-]
-
 { #category : #configuration }
 RSControlConfiguration >> useBasicZoom [
 	shouldUseBasicZoom := true
-]
-
-{ #category : #configuration }
-RSControlConfiguration >> useZoomToFitOnExtendChanged [
-	zoomToFitOnExtent := true
-]
-
-{ #category : #configuration }
-RSControlConfiguration >> useZoomToFitOnStart [
-	zoomToFitOnStart := true
 ]
 
 { #category : #configuration }

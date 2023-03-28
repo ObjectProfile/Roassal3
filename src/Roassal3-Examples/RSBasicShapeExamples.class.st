@@ -281,7 +281,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	scale := NSScale linear
 		domain: { 0. maxDist};
 		rangeRound: #(80 0).
-	border := RSBorder new.
+	border := RSBorder new color: Color black.
 	c when: RSExtentChangedEvent do: [
 		c shapes copy do: #remove.
 		canvasExtent := c extent.
@@ -937,7 +937,7 @@ RSBasicShapeExamples >> example41PopupAndMarkers [
 	marker := RSShapeFactory star size: 40.
 	line markerEnd: marker.
 	line @ RSPopup new.
-	line model: 'foo'.
+	line model: 'Magic stick'.
 	canvas := RSCanvas new add: line; yourself.
 	canvas zoomToFit.
 	^ canvas
@@ -1004,7 +1004,8 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 		toShapes: numbers;
 		connectTo: [ :n | n + 1 ].
 	RSSimpleForceBasedLayout on: numbers.
-	^ canvas @ RSCanvasController simple
+	canvas @ RSCanvasController simple.
+	^ canvas
 ]
 
 { #category : #lines }

@@ -16,7 +16,7 @@ RSAnimationExamples >> example04Phyco [
 	canvas add: (RSBox new extent: 800@800; noPaint; yourself).
 	theta := 0.
 	update := [
-		canvas edges copy do: #remove.
+		canvas lines copy do: #remove.
 		1 to: slices do: [ :i | | line sz  |
 			line := RSSVGPathLine new
 				model: i;

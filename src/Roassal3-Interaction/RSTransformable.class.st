@@ -1,5 +1,5 @@
 "
-I provide element resizing in all eight directions. 
+I provide shape resizing in all eight directions. 
 
 Resizing handles are displayed after clicking on an associated shape, and are automatically removed when clicked on a canvas or another shape.
 
