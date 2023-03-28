@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'labels'
 	],
-	#category : #'Roassal3-Experimental-NewInteractions'
+	#category : #'Roassal3-Interaction-Extra'
 }
 
 { #category : #hooks }
