@@ -596,16 +596,17 @@ RSPieExamples >> example18ManyPies [
 
 { #category : #examples }
 RSPieExamples >> example19Buttons [
+
 	<script: 'self new example19Buttons open setLabel: ''Arc buttons'''>
 	| canvas shapes pie move |
 	canvas := RSCanvas new.
 	shapes := Collection withAllSubclasses collect: [ :cls |
-		RSBox new
-			size: cls numberOfMethods;
-			draggable;
-			popup;
-			model: cls;
-			yourself ].
+		          RSBox new
+			          size: cls numberOfMethods;
+			          draggable;
+			          popup;
+			          model: cls;
+			          yourself ].
 	RSNormalizer color
 		shapes: shapes;
 		normalize: #numberOfMethods.
@@ -614,51 +615,64 @@ RSPieExamples >> example19Buttons [
 	RSGridLayout on: shapes.
 
 	canvas camera position: canvas shapes encompassingRectangle center.
-	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit; signalUpdate ].
+	canvas when: RSExtentChangedEvent do: [
+		canvas
+			zoomToFit;
+			signalUpdate ].
 	canvas @ RSCanvasController.
 
 	pie := RSPie new.
 	pie
 		container: canvas;
-		objects: { 1@0. 1@ -1. 0@ -1. -1@ -1. -1@0. -1@1. 0@1. 1@1 };
-		slice: [:ob | 1 ].
+		objects: {
+				(-1 @ 0).
+				(-1 @ 1).
+				(0 @ 1).
+				(1 @ 1).
+				(1 @ 0).
+				(1 @ -1).
+				(0 @ -1).
+				(-1 @ -1) };
+		slice: [ :ob | 1 ].
 	pie sliceShape
-		innerRadius:10;
+		innerRadius: 10;
 		externalRadius: 40;
 		border: (RSBorder new color: Color lightGray).
 	pie
-		sliceColor: ((RadialGradientPaint fromArray:
-				{0 -> 'E5EFF0'.
-				0.6->'D9D9D9'.
-				1 ->'A0ABAD'})
-			center: 0 asPoint;
-			focalPoint: 0 asPoint;
-			radius: 40);
+		sliceColor: ((RadialGradientPaint fromArray: {
+						  (0 -> 'E5EFF0').
+						  (0.6 -> 'D9D9D9').
+						  (1 -> 'A0ABAD') })
+				 center: 0 asPoint;
+				 focalPoint: 0 asPoint;
+				 radius: 40);
 		build.
-	move := 0@0.
-	pie canvas newAnimation repeat;
-		onStepDo: [ :t |
-			canvas camera translateBy: move. ].
+	move := 0 @ 0.
+	pie canvas newAnimation
+		repeat;
+		onStepDo: [ :t | canvas camera translateBy: move ].
 
-	pie shapes do: [:shape |
+	pie shapes do: [ :shape |
 		shape
 			position: 50 asPoint;
-			shiftAngles: 45/ -2;
+			shiftAngles: 45 / -2;
 			setAsFixed;
 			when: RSMouseEnter do: [
 				move := shape model.
 				canvas newAnimation
 					duration: 1 second;
 					easing: RSEasingInterpolator backOut;
-					from: 40; to: 50;
-					on: shape shape set: #externalRadius:. ];
+					from: 40;
+					to: 50;
+					on: shape shape set: #externalRadius: ];
 			when: RSMouseLeave do: [
-				move := 0@0.
-				canvas newAnimation
-					duration: 1 second;
-					easing: RSEasingInterpolator backOut;
-					from: 50; to: 40;
-					on: shape shape set: #externalRadius:. ] ] .
+			move := 0 @ 0.
+			canvas newAnimation
+				duration: 1 second;
+				easing: RSEasingInterpolator backOut;
+				from: 50;
+				to: 40;
+				on: shape shape set: #externalRadius: ] ].
 	^ canvas
 ]
 

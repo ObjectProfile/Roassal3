@@ -72,6 +72,19 @@ RSCanvasTest >> testAsShapeModel [
 	self assert: compositeShape children size equals: 20
 ]
 
+{ #category : #'tests - coordinates' }
+RSCanvasTest >> testBasicCoordinates [
+	canvas := RSCanvas new.
+	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
+	
+	canvas originTopLeft.
+	self assert: canvas originMode class equals: RSCamera originTopLeft class.
+	self deny: canvas originMode class equals: RSCamera originCenterMiddle class.
+	
+	canvas originCenterMiddle.
+	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
+]
+
 { #category : #tests }
 RSCanvasTest >> testDeepNodes [
 
@@ -487,6 +500,6 @@ RSCanvasTest >> testVisibleArea [
 	canvas add: box.
 	canvas extent: bigSize asPoint.
 	canvas visibleArea: (0 asPoint corner: smallSize asPoint).
-	self assert: canvas position equals: box position.
+	self assert: canvas position equals: bigSize asPoint / -2.
 	self assert: canvas camera scale equals: bigSize / smallSize
 ]

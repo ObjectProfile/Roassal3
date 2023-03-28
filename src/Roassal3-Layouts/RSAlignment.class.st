@@ -190,6 +190,11 @@ c
 ]
 
 { #category : #public }
+RSAlignment >> none [
+	"just empty alignment, because sometimes, shapes are in the position"
+]
+
+{ #category : #public }
 RSAlignment >> right [
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromRightUsing: self rightMostShape

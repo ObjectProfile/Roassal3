@@ -10,14 +10,6 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
-{ #category : #examples }
-RSBitmap class >> example [
-	| image |
-	image := self new.
-	image form: (self iconNamed: #pharo).
-	image inspect
-]
-
 { #category : #private }
 RSBitmap >> computeRectangle [
 	baseRectangle := Rectangle floatCenter: 0@0 extent: (form

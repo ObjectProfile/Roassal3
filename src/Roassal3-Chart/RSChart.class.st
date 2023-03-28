@@ -148,9 +148,8 @@ RSChart >> defaultContainer [
 	^ RSCanvas new
 		addInteraction: (RSCanvasController new
 			in: [ :controller |
-				controller configuration
-					useZoomToFitOnExtendChanged;
-					maxScale: 20.
+				controller zoomToFitInteraction useZoomToFitOnExtendChanged.
+				controller configuration	maxScale: 20.
 				 ];
 			yourself);
 		yourself

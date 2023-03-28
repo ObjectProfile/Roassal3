@@ -1,5 +1,5 @@
 "
-A RTHorizontalLineLayout locates all the elements horizontally
+A RSHorizontalLineLayout locates all the elements horizontally
 "
 Class {
 	#name : #RSHorizontalLineLayout,

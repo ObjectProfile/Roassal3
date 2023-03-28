@@ -1,5 +1,4 @@
 "
-<keyClass>
 `RSConditionalLayout` applies two layouts on a set of shapes using a condition
 
 *Responsibility*: Shapes matching a given condition use a particular layout, else another layout is applied 
@@ -11,48 +10,6 @@
 - `thenLayout`: a layout used for the shapes that matches the condition
 - `thenLayout `: a layout used for the shapes that do not match the condition
 
-*Example*:
-```Smalltalk
-classes := Collection allSubclasses.
-shapes := classes collect: [ :c | RSBox new size: 10; model: c ] as: RSGroup.
-
-c := RSCanvas new.
-c addAll: shapes.
-eb := RSEdgeBuilder orthoVertical.
-eb canvas: c.
-eb withVerticalAttachPoint.
-eb shapes: shapes.
-eb connectFrom: #superclass.
-
-""RSTreeLayout on: shapes.""
-RSConditionalLayout new
-	ifNotConnectedThen: RSGridLayout new;
-	else: RSTreeLayout new;
-	on: shapes.
-c @ RSCanvasController
-```
-
-Another example:
-
-```Smalltalk
-classes := Collection allSubclasses.
-shapes := classes collect: [ :c | RSBox new size: 10; model: c ] as: RSGroup.
-
-c := RSCanvas new.
-c addAll: shapes.
-eb := RSEdgeBuilder orthoVertical.
-eb canvas: c.
-eb withVerticalAttachPoint.
-eb shapes: shapes.
-eb connectFrom: #superclass.
-
-""RSTreeLayout on: shapes.""
-RSConditionalLayout new
-	ifConnectedThen: RSTreeLayout new;
-	else: RSGridLayout new;
-	on: shapes.
-c @ RSCanvasController
-```
 "
 Class {
 	#name : #RSConditionalLayout,
