@@ -31,20 +31,21 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
-	spec package: #'Roassal3-Pharo9'.
+	spec package: #'Roassal3-Pharo8'.
+	spec package: #'Roassal3-Spec-Obsolete'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo9')
+		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo9: spec [
-	
 	self dependencies: spec.
 	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo9'.
 	self roassalGroups: spec 
-		core: self corePackagesNames
+		core: self corePackagesNames, #('Roassal3-Pharo9')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
