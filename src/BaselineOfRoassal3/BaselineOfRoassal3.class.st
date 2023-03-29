@@ -19,7 +19,6 @@ BaselineOfRoassal3 >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForCommon: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
 	self roassalGroups: spec 
@@ -30,20 +29,24 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
-	spec package: #'Roassal3-Pharo8'.
-	spec package: #'Roassal3-Spec-Obsolete'.
+	spec package: #'Roassal3-Pharo9'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
+		core: self corePackagesNames, #('Roassal3-Pharo9')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo9: spec [
-	self baselineForCommon: spec
+	
+	self dependencies: spec.
+	self registerPackages: spec.
+	self roassalGroups: spec 
+		core: self corePackagesNames
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
 ]
 
 { #category : #'API-packages' }
