@@ -57,3 +57,9 @@ RSVerticalGridLayout >> doExecute: shapes [
 	align shapes: line.
 	alignment value: align
 ]
+
+{ #category : #initialization }
+RSVerticalGridLayout >> initialize [
+	super initialize.
+	self alignment: #none
+]
