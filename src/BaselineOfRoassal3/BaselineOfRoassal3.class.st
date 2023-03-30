@@ -153,7 +153,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'SVGImporter' with: #('SVGExamples' 'Roassal3-SVG-Importer');
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
 
-		group: 'Mini' with: #('SVGExamples');
+		group: 'Mini' with: #('Tests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
 		group: 'default' with: #('Mini')
