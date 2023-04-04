@@ -110,12 +110,12 @@ RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 					shape: evt shape
 					using: aRSLine
 					from: aRSGroup).
-		];
+		] for: self;
 		when: RSUnHighlightEvent do: [:evt |
 			evt canvas
 				propertyAt: #lines ifPresent: [:lines | lines do: #remove ];
 				removeKey: #lines.
-		].
+		] for: self.
 	^ i
 ]
 
@@ -147,7 +147,7 @@ RSHighlightable class >> withAntAnimation [
 					shape signalUpdate ].
 			shape canvas propertyAt: #antAnimation put: anime.
 		].
-	].
+	] for: self.
 	i when: RSUnHighlightEvent do: [ :evt |
 		| att shape |
 		shape := evt shape.
@@ -158,7 +158,7 @@ RSHighlightable class >> withAntAnimation [
 			(att at: #antAnimation) stop.
 			att removeKey: #antAnimation.
 		 ]
-	].
+	] for: self.
 	^ i
 ]
 

@@ -183,7 +183,7 @@ RSDraggableCanvasInteraction >> newAnimation [
 	^ RSTransitionAnimation new
 		easing: RSEasingInterpolator cubicIn;
 		duration: 200 milliSeconds;
-		when: RSAnimationEndEvent do: [:evt | evt canvas removeKey: self key ];
+		when: RSAnimationEndEvent do: [:evt | evt canvas removeKey: self key ] for: self;
 		yourself
 ]
 

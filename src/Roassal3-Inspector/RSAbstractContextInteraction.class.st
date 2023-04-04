@@ -42,6 +42,7 @@ RSAbstractContextInteraction >> onShape: aShape [
 	aShape
 		when: RSShapeAddedEvent
 		do: [ :evt | evt shape @ self ]
+		for: self
 ]
 
 { #category : #accessing }

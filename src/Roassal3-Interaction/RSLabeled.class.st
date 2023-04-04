@@ -79,9 +79,9 @@ RSLabeled >> createLabel: aShape [
 		targetLabel color: c.
 		label signalUpdate ].
 	aShape
-		when: RSMouseEnter do: [ set value: color ];
-		when: RSMouseLeave do: [ set value: lowColor ];
-		when: RSShapeRemovedEvent do: [ label remove ].
+		when: RSMouseEnter do: [ set value: color ] for: self;
+		when: RSMouseLeave do: [ set value: lowColor ] for: self;
+		when: RSShapeRemovedEvent do: [ label remove ] for: self.
 	^ label
 ]
 
@@ -201,7 +201,7 @@ RSLabeled >> onShape: aShape [
 	aShape isInACanvas
 		ifTrue: [ self getOrCreateLabel: aShape ]
 		ifFalse: [ aShape when: RSShapeAddedEvent do: [ :evt |
-			self getOrCreateLabel: evt shape ] ]
+			self getOrCreateLabel: evt shape ] for: self ]
 ]
 
 { #category : #accessing }

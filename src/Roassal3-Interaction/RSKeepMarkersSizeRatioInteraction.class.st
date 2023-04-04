@@ -56,4 +56,5 @@ RSKeepMarkersSizeRatioInteraction >> onShape: anEdge [
 		markers doWithIndex: [ :marker :index |
 			marker shape extent: delta * (sizes at: index).
 			marker offset: delta * (offsets at: index)  ] ]
+	for: self
 ]
