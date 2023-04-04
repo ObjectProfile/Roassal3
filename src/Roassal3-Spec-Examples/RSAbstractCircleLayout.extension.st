@@ -19,5 +19,9 @@ RSAbstractCircleLayout class >> layoutDefinition [
 			label: 'Scale Factor';
 			selector: #scaleFactor;
 			yourself);
+		add: (RSLayoutPointField new
+			label: 'Central Point';
+			selector: #centerPoint;
+			yourself);
 		yourself
 ]

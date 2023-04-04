@@ -1,12 +1,20 @@
 "
-I set the drag event for view, I use a basic bars to do that.
+I set the drag event for canvas view.
 
 Use example:
-```Smalltalk
+```st
 c := RSCanvas new.
 c add: (RSBox new size: 30).
-c @ RSDraggableCanvas
+c @ RSDraggableCanvasInteraction
 ```
+I work with `RSControlConfiguration` to obtain the padding/margin size.
+I am part of the default set of interactions in `RSCanvasController >> #defaultInteractions`.
+
+Users can drag and drop when they click over the canvas. Even the can drag out of the visible area(`visibleRectangle`), then an animation will start to put the canvas camera in the correct position.
+
+If you want to disable the animation interaction use `RSControlConfiguration >> #hasDraggableAnimation:`.
+
+Also you can configure the action event to activate the drag and drop: `left`, `right`, `middle` or `all`
 "
 Class {
 	#name : #RSDraggableCanvasInteraction,
@@ -14,7 +22,8 @@ Class {
 	#instVars : [
 		'mouseEvent',
 		'isMoving',
-		'lastStep'
+		'lastStep',
+		'hasDraggableAnimation'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -37,37 +46,45 @@ RSDraggableCanvasInteraction class >> right [
 { #category : #mouse }
 RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
-	mouseEvent := RSMouseDragStart
+	self mouseEvent: RSMouseDragStart.
 ]
 
 { #category : #computing }
 RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	| camera p correct anime |
-	self configuration hasDraggableAnimation
+	self hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	camera := aCanvas camera.
 	p := camera position.
-	correct := self correctCameraPosition: aCanvas.
+	correct := self correctCamera: camera.
 	correct = p ifTrue: [ ^ self ].
 	self removeRectanglesFor: aCanvas.
 	aCanvas propertyAt: self key ifPresent: [ :a | a stop ].
-	anime := aCanvas newAnimation.
+	anime := self newAnimation.
+	aCanvas addAnimation: anime.
 	aCanvas propertyAt: self key put: anime.
 	anime
-		easing: RSEasingInterpolator cubicIn;
-		duration: 200 milliSeconds;
 		from: p;
 		to: correct;
-		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ];
-		when: RSAnimationEndEvent do: [:evt |
-			aCanvas removeKey: self key.
-			]
+		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ]
+]
+
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> hasDraggableAnimation [
+	^ hasDraggableAnimation
+]
+
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> hasDraggableAnimation: aBoolean [
+	hasDraggableAnimation := aBoolean
 ]
 
 { #category : #initialization }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
-	self all.
+	self
+		all;
+		hasDraggableAnimation: true.
 	isMoving := false
 ]
 
@@ -78,19 +95,40 @@ RSDraggableCanvasInteraction >> key [
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> left [
-	mouseEvent := RSMouseLeftDragStart
+	self mouseEvent: RSMouseLeftDragStart
 ]
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> middle [
-	mouseEvent := RSMouseMiddleDragStart
+	self mouseEvent: RSMouseMiddleDragStart
+]
+
+{ #category : #events }
+RSDraggableCanvasInteraction >> mouseDragging: evt [
+	| camera p correct |
+	isMoving ifFalse: [ ^ self ].
+	camera := evt camera.
+	lastStep := evt step.
+	self hasDraggableAnimation ifTrue: [
+		correct := self correctCamera: camera.
+
+		p := (correct - camera position) abs max: 1@1.
+		p := p x sqrt @ p y sqrt.
+		camera translateBy: lastStep/ p
+	] ifFalse: [
+		correct := self
+			correctCamera: camera
+			matrixDo: [:mat | 	mat translation: (camera position + lastStep) ].
+		camera translateTo: correct.
+	].
+	evt signalUpdate
 ]
 
 { #category : #events }
 RSDraggableCanvasInteraction >> mouseEnd: evt [
 	| threshold aCanvas camera delta p correct anime |
 	isMoving := false.
-	self configuration hasDraggableAnimation
+	self hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	lastStep ifNil: [ ^ self ].
 	aCanvas := evt canvas.
@@ -102,7 +140,7 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	delta := lastStep * 1.5.
 	lastStep := nil.
 	camera translateBy: delta.
-	correct := self correctCameraPosition: aCanvas.
+	correct := self correctCamera: camera.
 	camera translateBy: delta negated.
 
 	p := (correct - camera position) abs max: 1@1.
@@ -114,7 +152,8 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	anime
 		easing: RSEasingInterpolator cubicOut;
 		duration: 200 milliSeconds;
-		from: camera position; to: camera position + (delta / p);
+		from: camera position;
+		to: camera position + (delta / p);
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ];
 		when: RSAnimationEndEvent do: [
 			aCanvas removeKey: self key.
@@ -132,37 +171,27 @@ RSDraggableCanvasInteraction >> mouseEvent: aRSMouseDragEvent [
 ]
 
 { #category : #events }
-RSDraggableCanvasInteraction >> mouseMove: evt [
-	| camera p correct |
-	isMoving ifFalse: [ ^ self ].
-	camera := evt camera.
-	lastStep := evt step negated / camera scale.
-	self configuration hasDraggableAnimation
-		ifTrue: [
-			correct  := self correctCameraPosition: evt canvas.
-			p := (correct - camera position) abs max: 1@1.
-			p := p x sqrt @ p y sqrt.
-			camera translateBy: lastStep/ p
-		] ifFalse: [
-		camera translateBy: lastStep.
-		correct  := self correctCameraPosition: evt canvas.
-		camera translateTo: correct ].
-	evt signalUpdate
-]
-
-{ #category : #events }
 RSDraggableCanvasInteraction >> mouseStart: evt [
 	self removeRectanglesFor: evt canvas.
 	isMoving := true.
 	lastStep := nil
 ]
 
+{ #category : #computing }
+RSDraggableCanvasInteraction >> newAnimation [
+	^ RSTransitionAnimation new
+		easing: RSEasingInterpolator cubicIn;
+		duration: 200 milliSeconds;
+		when: RSAnimationEndEvent do: [:evt | evt canvas removeKey: self key ];
+		yourself
+]
+
 { #category : #hooks }
 RSDraggableCanvasInteraction >> onShape: aCanvas [
-	aCanvas
+	aCanvas 
 		when: self mouseEvent send: #mouseStart: to: self;
-		when: RSMouseDragging send: #mouseMove: to: self;
-		when: RSMouseDragEnd send: #mouseEnd: to: self
+		when: RSMouseDragging send: #mouseDragging: to: self;
+		when: RSMouseDragEnd send: #mouseEnd: to: self.
 ]
 
 { #category : #rendering }
@@ -172,5 +201,5 @@ RSDraggableCanvasInteraction >> renderLegendOn: lb [
 
 { #category : #mouse }
 RSDraggableCanvasInteraction >> right [
-	mouseEvent := RSMouseRightDragStart
+	self mouseEvent: RSMouseRightDragStart
 ]

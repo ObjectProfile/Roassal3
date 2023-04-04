@@ -35,32 +35,14 @@ Class {
 		'animations',
 		'extent',
 		'color',
-		'morph'
+		'morph',
+		'shapeCollection'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],
 	#category : #'Roassal3-Core'
 }
-
-{ #category : #examples }
-RSCanvas class >> exampleSimple [
-	| canvas |
-	canvas := self new.
-	canvas color: Color black.
-	"add some shapes here"
-	canvas open
-]
-
-{ #category : #examples }
-RSCanvas class >> exampleSpec [
-	| canvas spec |
-	canvas := self new.
-	canvas color: Color black.
-	spec := SpMorphPresenter new.
-	spec morph: canvas createMorph.
-	spec open
-]
 
 { #category : #antialiasing }
 RSCanvas >> aaBest [
@@ -124,7 +106,8 @@ RSCanvas >> addAnimation: anAnimation [
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> addBasicShape: aShape [
-	shapes add: aShape
+	shapes add: aShape.
+	"shapeCollection add: aShape"
 ]
 
 { #category : #'adding - removing shapes' }
@@ -193,6 +176,16 @@ RSCanvas >> asForm [
 ]
 
 { #category : #accessing }
+RSCanvas >> background [
+	^ self color
+]
+
+{ #category : #accessing }
+RSCanvas >> background: aColor [
+	self color: aColor
+]
+
+{ #category : #accessing }
 RSCanvas >> basicRectangle [
 	"Return a rectangle encompassing all the elements"
 	^ Rectangle origin: 0@0 extent: self extent
@@ -214,9 +207,9 @@ c
 ]
 
 { #category : #camera }
-RSCanvas >> camera: aCamera [
+RSCanvas >> camera: anRSCamera [
 	"Set a new camera for the canvas."
-	camera := aCamera
+	camera := anRSCamera
 ]
 
 { #category : #accessing }
@@ -276,6 +269,11 @@ RSCanvas >> deepShapesFromModel: someObjects result: result [
 RSCanvas >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
+]
+
+{ #category : #initialization }
+RSCanvas >> defaultShapeCollection [
+	^ RSSequenceableCollection new
 ]
 
 { #category : #antialiasing }
@@ -364,6 +362,7 @@ RSCanvas >> hideEncompassingRectangles [
 { #category : #initialization }
 RSCanvas >> initialize [
 	super initialize.
+	self shapeCollection: self defaultShapeCollection.
 	shapes := RSGroup new.
 	fixedShapes := RSGroup new.
 	nodes := RSGroup new.
@@ -455,6 +454,21 @@ RSCanvas >> openWithTitle: aTitleAsString [
 	window extent: 500 @ 500.
 	morph privateOwner: window.
 	^ window
+]
+
+{ #category : #camera }
+RSCanvas >> originCenterMiddle [
+	camera originMode: RSCamera originCenterMiddle
+]
+
+{ #category : #camera }
+RSCanvas >> originMode [
+	^ camera originMode
+]
+
+{ #category : #camera }
+RSCanvas >> originTopLeft [
+	camera originMode: RSCamera originTopLeft
 ]
 
 { #category : #accessing }
@@ -598,6 +612,16 @@ RSCanvas >> setAsFixed: aShape [
 	self addShape: aShape
 ]
 
+{ #category : #accessing }
+RSCanvas >> shapeCollection [
+	^ shapeCollection
+]
+
+{ #category : #accessing }
+RSCanvas >> shapeCollection: anRSShapeCollection [
+	shapeCollection := anRSShapeCollection
+]
+
 { #category : #'accessing - shapes' }
 RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
@@ -710,8 +734,9 @@ RSCanvas >> visibleArea: aRectangle [
 	self signalUpdate
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : #camera }
 RSCanvas >> visibleRectangle [
+	"returns the visible rectangle in the space"
 	^ self camera visibleRectangle
 ]
 

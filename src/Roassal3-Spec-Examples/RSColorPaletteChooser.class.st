@@ -89,7 +89,6 @@ RSColorPaletteChooser >> buttonClick: evt [
 	overHighlight doUnhighlight: evt shape.
 	"then with mark the selection hightlight"
 	selectedHighlight doHighlight: evt shape.
-
 	self currentPalette: evt shape model.
 	evt signalUpdate
 ]
@@ -153,15 +152,16 @@ RSColorPaletteChooser >> controllerInteraction [
 	| controls |
 	controls := RSCanvasController new.
 	controls noLegend.
-	controls interactions removeKey: RSDraggableCanvasInteraction.
-	controls interactions at: RSScrollWheelCanvasInteraction put: RSScrollWheelCanvasInteraction new.
-	controls configuration
+	controls removeInteractionIfPresent: RSDraggableCanvasInteraction.
+	controls addInteraction: RSScrollWheelCanvasInteraction new.
+	controls zoomToFitInteraction
 		noZoomToFitOnStart;
+		noZoomToFitOnExtendChanged.
+	controls keyNavigationInteraction hasHorizontalScrolling: false.
+	controls configuration
 		padding: 0@ 10;
-		noZoomToFitOnExtendChanged;
 		maxScale: 1;
-		minScale: 1;
-		hasHorizontalScrolling: false.
+		minScale: 1.
 	^ controls
 ]
 
@@ -299,10 +299,11 @@ RSColorPaletteChooser >> polygonFor: points [
 RSColorPaletteChooser >> relayout: evt [
 	| canvas |
 	canvas := evt canvas.
+	
 	RSFlowLayout new
 		maxWidth: canvas extent;
 		on: canvas shapes.
-	canvas camera translateTo: canvas extent / 2 + (-20@0)
+	canvas camera translateTo: canvas extent / -2 + (20@0)
 ]
 
 { #category : #dependencies }
@@ -312,16 +313,18 @@ RSColorPaletteChooser >> release [
 
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: canvas [
-	| data buttonElements |
+	| data buttonShapes |
 	canvas color: '2d5c7f'.
 
 	data := self buttonModels.
-	buttonElements := data collect: [ :m | self buttonFor: m ].
+	buttonShapes := data collect: [ :m | self buttonFor: m ].
 
 	RSHorizontalLineLayout new
 		gapSize: -9;
-		on: buttonElements.
-	canvas addAll: buttonElements.
+		on: buttonShapes.
+	canvas addAll: buttonShapes.
+	selectedHighlight doHighlight: buttonShapes first.
+
 	canvas nodes @ overHighlight.
 
 	canvas when: RSExtentChangedEvent send: #zoomToFit to: canvas

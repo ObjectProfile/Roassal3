@@ -1,5 +1,5 @@
 "
-This layout uses an angle to put the elements in a line
+This layout uses an angle to describe a line where the elements would be placed
 "
 Class {
 	#name : #RSAngleLineLayout,

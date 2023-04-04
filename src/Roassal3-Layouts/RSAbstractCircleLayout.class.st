@@ -14,9 +14,10 @@ Class {
 	#superclass : #RSLayout,
 	#instVars : [
 		'initialAngle',
-		'initialIncrementalAngle',
-		'initialRadius',
-		'scaleFactor'
+		'scaleFactor',
+		'angleIncrement',
+		'layoutRadius',
+		'centerPoint'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
@@ -26,21 +27,49 @@ RSAbstractCircleLayout class >> isAbstract [
 	^ self = RSAbstractCircleLayout
 ]
 
+{ #category : #accessing }
+RSAbstractCircleLayout >> angleIncrement [
+	^ angleIncrement
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout >> angleIncrement: aNumberInRadian [
+	angleIncrement := aNumberInRadian
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout >> centerPoint [
+
+	^ centerPoint
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout >> centerPoint: aPoint [
+
+	centerPoint := aPoint
+]
+
+{ #category : #hook }
+RSAbstractCircleLayout >> computeCenter: aNumber [
+	"returns the defined center point"
+	^ centerPoint ifNil: [ aNumber @ aNumber ]
+]
+
 { #category : #hook }
 RSAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 
-	^ initialIncrementalAngle = 0
+	^ angleIncrement = 0
 		ifTrue: [ 2 * Float pi / elements size ]
-		ifFalse: [ initialIncrementalAngle ]
+		ifFalse: [ angleIncrement ]
 ]
 
 { #category : #hook }
 RSAbstractCircleLayout >> computeRadiusFor: elements [
 	"Return the radius of the circle. If none has been set (i.e., initialRadius = 0), then it is computed as the scale factor times the number of elements"
-	^ initialRadius = 0
+	^ layoutRadius = 0
 		ifTrue: [ elements size * self scaleFactor ]
-		ifFalse: [ initialRadius ]
+		ifFalse: [ layoutRadius ]
 ]
 
 { #category : #accessing }
@@ -70,12 +99,12 @@ RSAbstractCircleLayout >> initialAngleInDegree: aNumber [
 { #category : #accessing }
 RSAbstractCircleLayout >> initialIncrementalAngle [
 	"Return the initial incremental angle"
-	^ initialIncrementalAngle
+	^ self angleIncrement
 ]
 
 { #category : #accessing }
 RSAbstractCircleLayout >> initialIncrementalAngle: aNumberInRadian [
-	initialIncrementalAngle := aNumberInRadian
+	self angleIncrement: aNumberInRadian
 ]
 
 { #category : #accessing }
@@ -86,13 +115,13 @@ RSAbstractCircleLayout >> initialIncrementalAngleInDegree: aNumberInDegree [
 { #category : #accessing }
 RSAbstractCircleLayout >> initialRadius [
 	"Return the radius in pixels of the circle"
-	^ initialRadius
+	^ layoutRadius
 ]
 
 { #category : #accessing }
 RSAbstractCircleLayout >> initialRadius: aNumber [
 	"Set the radius of the circle"
-	initialRadius := aNumber
+	layoutRadius := aNumber
 ]
 
 { #category : #initialization }
@@ -100,16 +129,14 @@ RSAbstractCircleLayout >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	super initialize.
-	self scaleBy: 11.
-
-	"Represent the initial angle to place the elements"
-	initialAngle := 0.
-
-	"Distance of the circle. If it is 0 when entering doExecute, then it is computed"
-	initialRadius := 0.
-
-	"0 means that it is computed, and not set by the user"
-	initialIncrementalAngle := 0
+	self
+		scaleBy: 11;
+		"Represent the initial angle to place the elements"
+		initialAngle: 0;
+		"Distance of the circle. If it is 0 when entering doExecute, then it is computed"
+		initialRadius: 0;
+		"0 means that it is computed, and not set by the user"
+		angleIncrement: 0
 ]
 
 { #category : #accessing }

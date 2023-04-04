@@ -1459,7 +1459,7 @@ RSAnimationExamples >> example25AnimationCircle [
 		lines := lines + 1.
 		lines > 10 ifTrue: [ lines := 2 ].
 		canvas nodes copy do: #remove.
-		canvas edges copy do: #remove.
+		canvas lines copy do: #remove.
 		shapes do: [ :e | e model: (e index - 1) / (lines*2) ].
 		1 to: lines do: [ :i| | ab |
 			ab := points value: radius value: i.
@@ -1659,7 +1659,7 @@ RSAnimationExamples >> example28AlteredWorld [
 		loops: extent x;
 		duration: 50 milliSeconds;
 		when: RSAnimationLoopEvent do: [
-			canvas edges do: [ :e |
+			canvas lines do: [ :e |
 					| x y n points m |
 					x := px.
 					y := extent y * r next.
@@ -1976,7 +1976,7 @@ RSAnimationExamples >> example34ForceLayout [
 	c addAll: classes.
 	layout := RSForceBasedLayout new
 		nodes: classes;
-		edges: c edges;
+		edges: c lines;
 		start;
 		yourself.
 	c newAnimation repeat onStepDo: [ :t |
@@ -2483,7 +2483,7 @@ RSAnimationExamples >> example43Waves [
 	height := NSScale linear range: { extent y* 0.3. extent y* 0.6}.
 	canvas newAnimation repeat
 		onStepDo: [ :t |
-			canvas edges copy do: #remove.
+			canvas lines copy do: #remove.
 			0 to: size do: [ :i | | color |
 				color := paint scale: i.
 				color := Color gray: color.

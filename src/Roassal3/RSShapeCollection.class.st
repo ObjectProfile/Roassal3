@@ -19,6 +19,14 @@ RSShapeCollection >> bulkLoad: aCollectionOfShapes [
 ]
 
 { #category : #'finding/searching' }
+RSShapeCollection >> shapeAtPoint: aPoint [
+	| result |
+	result := self shapesAtPoint: aPoint.
+	result ifEmpty: [ ^ nil ].
+	^ result anyOne
+]
+
+{ #category : #'finding/searching' }
 RSShapeCollection >> shapesAtPoint: position [
 
 	^ self subclassResponsibility

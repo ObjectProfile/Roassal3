@@ -19,7 +19,6 @@ BaselineOfRoassal3 >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForCommon: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
 	self roassalGroups: spec 
@@ -30,7 +29,6 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
@@ -43,7 +41,13 @@ BaselineOfRoassal3 >> baselineForPharo8: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo9: spec [
-	self baselineForCommon: spec
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo9'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo9')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
 ]
 
 { #category : #'API-packages' }
@@ -149,10 +153,10 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'SVGImporter' with: #('SVGExamples' 'Roassal3-SVG-Importer');
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
 
-		group: 'Mini' with: #('SVGExamples');
+		group: 'Mini' with: #('Tests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
-		group: 'default' with: #('Core')
+		group: 'default' with: #('Mini')
 ]
 
 { #category : #'API-packages' }

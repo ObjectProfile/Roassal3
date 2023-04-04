@@ -1,45 +1,7 @@
 "
-```
-m := RSMondrian new.
-m nodes: Collection allSubclasses.
-m line connectFrom: #superclass.
-m normalizeSize: #numberOfLinesOfCode.
-m build.
-
-nodes := m canvas nodes.
-
-RSConditionalLayout new
-	ifNotConnectedThen: RSGridLayout new;
-	else: (RSClusteringLayout new 
-				clustersLayout: RSFlowLayout new;
-				forEachLayout: RSTreeLayout new);
-	on: nodes.
-
-
-m canvas.
-```
-
-Another example:
-
-```
-m := RSMondrian new.
-m nodes: (10 to: 50).
-m line connectFrom: [ :nb | nb // 2 ].
-m build.
-
-nodes := m canvas nodes.
-
-RSConditionalLayout new
-	ifNotConnectedThen: RSGridLayout new;
-	else: (RSClusteringLayout new 
-				clustersLayout: RSFlowLayout new;
-				forEachLayout: RSTreeLayout new);
-	on: nodes.
-
-
-
-m canvas.
-```
+Creates a layout of all connected shapes, all connected shapes are going to have `forEachLayout`.
+Then the clusters will have perform `clustersLayout`.
+In general I have 2 layouts, one for clusters another of elements inside each cluster.
 "
 Class {
 	#name : #RSClusteringLayout,

@@ -1,5 +1,5 @@
 "
-A RTVerticalLineLayout locates all the elements vertically
+A RSVerticalLineLayout locates all the elements vertically.
 "
 Class {
 	#name : #RSVerticalLineLayout,

@@ -130,7 +130,7 @@ RSShapeExamples >> example07NormalizeColor [
 		shapes: shapes;
 		normalize: #numberOfMethods.
 	RSNormalizer size
-		scale: NSScale sqrt;
+		"scale: NSScale sqrt;"
 		shapes: shapes;
 		normalize: #numberOfMethods.
 
@@ -497,10 +497,10 @@ RSShapeExamples >> example21MenuActivableOnElement [
 	boxes @ RSHighlightable red.
 	RSGridLayout on: boxes.
 	boxes @ (RSMenuActivable new
-		menuDo: [ :menu :box |
-			menu
+		menuDo: [ :aMenuMorph :anRSBox |
+			aMenuMorph
 				add: 'Inspect'
-				target: box
+				target: anRSBox
 				selector: #inspect
 				argument: #() ]).
 	canvas @ RSCanvasController.
