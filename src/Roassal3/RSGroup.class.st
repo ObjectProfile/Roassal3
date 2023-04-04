@@ -266,7 +266,7 @@ RSGroup >> translucent [
 ]
 
 { #category : #'public - forwarding' }
-RSGroup >> when: event do: aOneArgBlock [
+RSGroup >> when: event do: aOneArgBlock for: aSubscriber [
 	"Define a callback for each of the shape contained in the group. For example:
 ```
 c := RSCanvas new.
@@ -277,7 +277,7 @@ RSGridLayout on: shapes.
 shapes when: RSMouseClick do: [ :evt | evt shape @ RSBlink ].
 c @ RSCanvasController
 ```"
-	self do: [ :shape | shape when: event do: aOneArgBlock ]
+	self do: [ :shape | shape when: event do: aOneArgBlock for: aSubscriber ]
 ]
 
 { #category : #'public - forwarding' }

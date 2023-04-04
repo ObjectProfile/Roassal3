@@ -158,6 +158,7 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 		when: RSAnimationEndEvent do: [
 			aCanvas removeKey: self key.
 			self checkCamera: aCanvas ]
+		for: self
 ]
 
 { #category : #mouse }

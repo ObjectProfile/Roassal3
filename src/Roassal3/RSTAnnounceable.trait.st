@@ -110,8 +110,9 @@ RSTAnnounceable >> subscriptions [
 ]
 
 { #category : #announcer }
-RSTAnnounceable >> when: event do: aBlock [
-	self announcer when: event do: aBlock
+RSTAnnounceable >> when: event do: aBlock for: aSubscriber [
+
+	self announcer when: event do: aBlock for: aSubscriber
 ]
 
 { #category : #announcer }

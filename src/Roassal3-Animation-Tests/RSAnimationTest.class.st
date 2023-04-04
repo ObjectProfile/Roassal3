@@ -36,7 +36,7 @@ RSAnimationTest >> runAnimation: animation threshold: threshold [
 	| time ended |
 
 	ended := false.
-	animation when: RSAnimationEndEvent do: [ :evt | ended := true ].
+	animation when: RSAnimationEndEvent do: [ :evt | ended := true ] for: self.
 	time := Time now asDuration.
 	[ ended ] whileFalse: [
 		(Time now asDuration - time) > threshold milliSeconds ifTrue: [
