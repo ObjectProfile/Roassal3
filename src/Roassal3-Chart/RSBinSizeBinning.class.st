@@ -22,7 +22,6 @@ RSBinSizeBinning >> createBinsFor: aCollection [
 	^ interval last < aCollection last
 		ifTrue: [ interval , { aCollection last } ]
 		ifFalse: [ interval ]
-	
 ]
 
 { #category : #accessing }

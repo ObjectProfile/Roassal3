@@ -28,7 +28,7 @@ RSPieSlice >> alphaAngle: stAngle [
 	old := alphaAngle.
 	alphaAngle := stAngle.
 	old = alphaAngle ifTrue: [ ^ self ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #public }
@@ -51,7 +51,7 @@ RSPieSlice >> betaAngle: ndAngle [
 	old := betaAngle.
 	betaAngle := ndAngle.
 	old = betaAngle ifTrue: [ ^ self ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #visiting }
@@ -65,7 +65,7 @@ RSPieSlice >> centroid: off [
 	r := (innerRadius + externalRadius)/2.
 	r := r + off.
 	a := self middleAngle degreesToRadians.
-	^ (a cos @ (a sin negated) * r) + self position.
+	^ (a cos @ (a sin negated) * r) + self position
 ]
 
 { #category : #accessing }
@@ -76,17 +76,17 @@ RSPieSlice >> cornerRadii [
 { #category : #accessing }
 RSPieSlice >> cornerRadii: aNumber [
 	| old |
-	self 
+	self
 		assert: [ aNumber >= 0 ]
 		description: 'Corner radius must be a non-negative!'.
 	old := cornerRadii.
 	cornerRadii := aNumber.
 	old = cornerRadii ifTrue: [ ^ self ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #utilities }
-RSPieSlice >> emphasizeWith: anInteger [ 
+RSPieSlice >> emphasizeWith: anInteger [
 	| angle |
 	angle := self middleAngle degreesToRadians.
 	self translateBy: (angle cos @ angle sin negated) * anInteger
@@ -95,7 +95,7 @@ RSPieSlice >> emphasizeWith: anInteger [
 { #category : #accessing }
 RSPieSlice >> extent: aPoint [
 	super extent: aPoint.
-	externalRadius := (aPoint x min: aPoint y)/2.
+	externalRadius := (aPoint x min: aPoint y)/2
 ]
 
 { #category : #accessing }
@@ -105,14 +105,13 @@ RSPieSlice >> externalRadius [
 
 { #category : #accessing }
 RSPieSlice >> externalRadius: eR [
-	self extent: (eR * 2) asPoint.
+	self extent: (eR * 2) asPoint
 ]
 
 { #category : #initialization }
 RSPieSlice >> initialize [
 	super initialize.
-	cornerRadii := innerRadius := externalRadius := betaAngle := alphaAngle := segmentSpacing := 0.
-	
+	cornerRadii := innerRadius := externalRadius := betaAngle := alphaAngle := segmentSpacing := 0
 ]
 
 { #category : #accessing }
@@ -126,7 +125,7 @@ RSPieSlice >> innerRadius: iR [
 	old := innerRadius.
 	innerRadius := iR asFloat.
 	old = innerRadius ifTrue: [ ^ self ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #accessing }
@@ -172,13 +171,12 @@ RSPieSlice >> segmentSpacing: anAngleInDegrees [
 	old := segmentSpacing.
 	segmentSpacing := anAngleInDegrees.
 	old = segmentSpacing ifTrue: [ ^self ].
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #accessing }
-RSPieSlice >> shiftAngles: aNumber [ 
-	self 
+RSPieSlice >> shiftAngles: aNumber [
+	self
 		alphaAngle: alphaAngle + aNumber;
 		betaAngle: betaAngle + aNumber
-	
 ]

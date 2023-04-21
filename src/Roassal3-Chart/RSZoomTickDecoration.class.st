@@ -19,7 +19,7 @@ RSZoomTickDecoration >> boxScale [
 	spine := chart spine encompassingRectangle.
 	^ NSScale linear
 		domain: { spine origin. spine corner };
-		range: { visibleRectangle origin. visibleRectangle corner}.
+		range: { visibleRectangle origin. visibleRectangle corner}
 ]
 
 { #category : #accessing }
@@ -37,7 +37,7 @@ RSZoomTickDecoration >> computeVisibleRectangle: eventRectangle [
 	| rect spine scale |
 	"spine the the chart box"
 	spine := chart spine encompassingRectangle.
-	rect := (eventRectangle origin max: spine origin) 
+	rect := (eventRectangle origin max: spine origin)
 		corner: (eventRectangle corner min: spine corner).
 	scale := self boxScale.
 	^ (scale scale: rect origin) corner: (scale scale: rect corner)
@@ -89,15 +89,15 @@ RSZoomTickDecoration >> renderIn: canvas [
 	canvas addInteraction: self elasticBox.
 	resetLabel := self createResetLabel.
 	canvas add: resetLabel.
-	
+
 	currentShapes := #().
-	self resetZoom: canvas.
+	self resetZoom: canvas
 ]
 
 { #category : #rendering }
 RSZoomTickDecoration >> renderPlots [
 	| visibleShapes scale |
-	visibleShapes := chart plots flatCollect: [ :plot | plot createdShapes 
+	visibleShapes := chart plots flatCollect: [ :plot | plot createdShapes
 		select: [ :s | s encompassingRectangle intersects: visibleRectangle ] ].
 	scale := chart spine extent/visibleRectangle extent.
 	"I use a composite shape because the composite can scale the selected shapes,
@@ -122,13 +122,13 @@ RSZoomTickDecoration >> renderPlotsAndTicksIn: canvas [
 	currentShapes := OrderedCollection new.
 	self renderPlots.
 	self renderTicks.
-	canvas addAll: currentShapes.
+	canvas addAll: currentShapes
 ]
 
 { #category : #rendering }
 RSZoomTickDecoration >> renderTicks [
 	self renderYAxis.
-	self renderXAxis.
+	self renderXAxis
 ]
 
 { #category : #rendering }
@@ -140,21 +140,21 @@ RSZoomTickDecoration >> renderXAxis [
 	scale := horizontalTick xScale.
 	"scale inspect."
 	newChart := RSChart new chartExtents: chart chartExtents.
-	newChart 
+	newChart
 		minValueX: (scale invert: visibleRectangle origin x);
 		maxValueX: (scale invert: visibleRectangle corner x).
-	
+
 	horizontalTick := horizontalTick copy.
 	horizontalTick xScale: nil.
 	horizontalTick chart: newChart.
-	
+
 	tickShapes := RSGroup new.
-	
-	horizontalTick 
+
+	horizontalTick
 		beforeRenderingIn: newChart;
 		renderIn: tickShapes.
-	
-	currentShapes addAll: tickShapes.
+
+	currentShapes addAll: tickShapes
 ]
 
 { #category : #rendering }
@@ -162,10 +162,10 @@ RSZoomTickDecoration >> renderYAxis [
 	| verticalTick tickShapes ymin ymax scale |
 	verticalTick := chart verticalTick.
 	verticalTick ifNil: [ ^ self ].
-	
+
 	ymin := visibleRectangle origin y.
 	ymax := visibleRectangle corner y.
-	tickShapes := verticalTick createdShapes 
+	tickShapes := verticalTick createdShapes
 		select: [ :s |s position y between: ymin and: ymax ]
 		thenCollect: [:s | | copy |
 			copy := s copy.
@@ -173,7 +173,7 @@ RSZoomTickDecoration >> renderYAxis [
 			copy ].
 	scale := self boxScale.
 	tickShapes do: [ :each | each translateTo: each position x @ (scale invert: each position) y ].
-	currentShapes addAll: tickShapes.
+	currentShapes addAll: tickShapes
 ]
 
 { #category : #events }
@@ -186,11 +186,6 @@ RSZoomTickDecoration >> resetZoom: evt [
 	canvas addAll: currentShapes.
 	resetLabel pushFront.
 	evt signalUpdate
-	
-
-	
-	
-	
 ]
 
 { #category : #events }
@@ -198,5 +193,5 @@ RSZoomTickDecoration >> updateSelection: evt [
 	visibleRectangle := self computeVisibleRectangle: evt shape encompassingRectangle.
 	currentShapes do: #remove.
 	self renderPlotsAndTicksIn: evt canvas.
-	resetLabel pushFront.
+	resetLabel pushFront
 ]

@@ -36,7 +36,7 @@ RSPopupDecoration >> initialize [
 	popup := RSChartPopupDecoration new
 		chartPopupBuilder: RSSimpleChartPopupBuilder new;
 		markersPopupBuilder: RSSimpleMarkerPopupBuilder new;
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }
@@ -54,5 +54,5 @@ RSPopupDecoration >> renderIn: canvas [
 	| box |
 	box := chart spine.
 	popup chart: chart.
-	box addInteraction: popup.
+	box addInteraction: popup
 ]

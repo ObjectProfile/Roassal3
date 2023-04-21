@@ -13,14 +13,14 @@ RSSunburstAttachPoint class >> centroid: aRSPieSlice [
 ]
 
 { #category : #public }
-RSSunburstAttachPoint class >> centroid: aRSPieSlice offset: anInteger [ 
+RSSunburstAttachPoint class >> centroid: aRSPieSlice offset: anInteger [
 	| radius angle |
 	radius := aRSPieSlice innerRadius isZero
 		ifTrue: [ 0 ]
 		ifFalse: [ aRSPieSlice middleRadius ].
 	radius := radius + anInteger.
 	angle := aRSPieSlice middleAngle degreesToRadians.
-	^ (angle cos @ (angle sin negated) * radius) + aRSPieSlice position.
+	^ (angle cos @ (angle sin negated) * radius) + aRSPieSlice position
 ]
 
 { #category : #'public - hooks' }

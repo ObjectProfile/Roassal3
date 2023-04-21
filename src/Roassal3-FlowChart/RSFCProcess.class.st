@@ -6,5 +6,5 @@ Class {
 
 { #category : #visiting }
 RSFCProcess >> accept: visitor [
-	visitor visitProcess: self.
+	visitor visitProcess: self
 ]

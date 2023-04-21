@@ -19,7 +19,7 @@ RSRadialTreeLayout >> compareContourOf: aNode with: another [
 	nodeB := self followLeftContour: nodeB toLayer: (self layerOf: nodeB) + 1.
 	nodeA := self followRightContour: nodeA toLayer: (self layerOf: nodeA) + 1.
 	[ nodeB isNil not & nodeA isNil not ]
-		whileTrue: [ 
+		whileTrue: [
 			difference := horizontalGap / (self layerOf: nodeA)
 				-
 					((self getAbcissaOf: nodeB inSubtreeFromLayer: (self layerOf: aNode) - 1)
@@ -33,22 +33,22 @@ RSRadialTreeLayout >> compareContourOf: aNode with: another [
 { #category : #hook }
 RSRadialTreeLayout >> computeGap: aNode [
 	" compute the vertical gap needed for drawing the radial tree "
-	| gap maxAbcissa i abc nodeL nodeR layer |	
+	| gap maxAbcissa i abc nodeL nodeR layer |
 	gap := 0.
 	maxAbcissa := 0.
 	layer := 1.
-	
+
 	i := 1.
 	[ nodeL :=(self followLeftContour: aNode toLayer: i).
 	nodeR := (self followRightContour: aNode toLayer: i).
 	nodeL isNil not & nodeR isNil not ] whileTrue: [ abc := (((self getAbcissaOf: nodeR inSubtreeFromLayer: 0) - (self getAbcissaOf: nodeL inSubtreeFromLayer: 0 ) + (horizontalGap / layer/2)) / layer).
-																	(abc > maxAbcissa) ifTrue: [ maxAbcissa := abc. 
+																	(abc > maxAbcissa) ifTrue: [ maxAbcissa := abc.
 																								layer := layer ].
 																	i := i + 1 ].
 
-	
+
 	gap:= (maxAbcissa / 2 /Float pi ) floor +1.
-	
+
 	((verticalGap isNil) or: [gap > verticalGap])  ifTrue: [ self verticalGap: gap ]
 ]
 
@@ -69,7 +69,7 @@ RSRadialTreeLayout >> computePosition: aNode [
 				self
 					pointerOf: aNode
 					put: (self followRightContour: neighbor toLayer: (self layerOf: aNode) + 1) ] ]
-	ifFalse: [ 
+	ifFalse: [
 		self leftContourOf: aNode put: children first.
 		self rightContourOf: aNode put: children last.
 		children do: [ :e | self computePosition: e ].
@@ -112,7 +112,7 @@ RSRadialTreeLayout >> computePosition: aNode [
 
 { #category : #hook }
 RSRadialTreeLayout >> doExecute: nodeElements [
-	| rootNodes xOffset maximumRadius | 
+	| rootNodes xOffset maximumRadius |
 	initialLayout isNil
 		ifFalse: [ initialLayout new executeOnElements: nodeElements ].
 	rootNodes := self rootNodesFor: nodeElements.
@@ -123,13 +123,11 @@ RSRadialTreeLayout >> doExecute: nodeElements [
 		do: [ :e | self toRadialTree: e withMod: 0 ].
 	xOffset := 0.
 	rootNodes
-		do: [ :e | 
+		do: [ :e |
 			maximumRadius := self radialDraw: e.
 			"Shifting all the subgroups"
 			self shiftTree: e by:  (maximumRadius+xOffset)@maximumRadius.
-			xOffset := xOffset + (2 * maximumRadius) + 10.  ].
-
-
+			xOffset := xOffset + (2 * maximumRadius) + 10.  ]
 ]
 
 { #category : #private }
@@ -157,7 +155,7 @@ RSRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngl
 					toAngle := aFromAngle + delta].
 			aCollection
 				do:
-					[:child | 
+					[:child |
 					translator translateTopLeftOf: child to: (Point
 								r: myRadius
 								theta: toAngle - (delta / 2.0)).
@@ -183,7 +181,7 @@ RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
 	| pos min |
 	pos := elements collect: #position.
 	min := pos inject: 0 @ 0 into: [ :minimum :p | minimum min: p ].
-	elements do: [ :e | e translateBy: min negated ] 
+	elements do: [ :e | e translateBy: min negated ]
 ]
 
 { #category : #algorithm }
@@ -196,13 +194,13 @@ RSRadialTreeLayout >> radialDraw: aNode [
 	children := self childrenFor: aNode.
 	max := 0.
 	children do: [ :e | max := max max: (self radialDraw: e) ].
-	^ r + max.
+	^ r + max
 ]
 
 { #category : #hook }
 RSRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
 	aNode theta: aNode theta + aFloat.
-	(self childrenFor: aNode) do: [ :e | 
+	(self childrenFor: aNode) do: [ :e |
 		self rotateSubtreeFrom: e by: aFloat ]
 ]
 
@@ -211,10 +209,10 @@ RSRadialTreeLayout >> toRadialTree: aNode withMod: aFloat [
 	"compute polar coordinates of the subtree induced by anode from its cartesian coordinates "
 	| children |
 	self rOf: aNode put: ((self layerOf: aNode) * verticalGap ).
-	((self rOf: aNode) = 0) ifTrue: [ self thetaOf: aNode put: 0 ] 
+	((self rOf: aNode) = 0) ifTrue: [ self thetaOf: aNode put: 0 ]
 					ifFalse: [ self thetaOf: aNode put: ((self xOf: aNode)  + aFloat + (self modOf: aNode)) / verticalGap ].
-	
+
 	children := self childrenFor: aNode.
-	
+
 	children do: [ :e | self toRadialTree: e withMod: ( (self modOf: aNode) + aFloat) ]
 ]

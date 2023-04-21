@@ -7,8 +7,8 @@ RSShapeExamples >> example03LinePath [
 	| canvas shapes form paint line path |
 	canvas := RSCanvas new.
 	form := self iconNamed: #remote.
-	paint := (AthensCairoPatternSurfacePaint 
-		createForSurface: (AthensCairoSurface 
+	paint := (AthensCairoPatternSurfacePaint
+		createForSurface: (AthensCairoSurface
 			fromForm: form)).
 	paint origin: (form extent / 2) negated.
 	shapes := #(-1 1 ) collect: [ :m |
@@ -23,9 +23,9 @@ RSShapeExamples >> example03LinePath [
 		| point number vector u unit middle middle2 l r a b |
 		a := aLine startPoint.
 		b := aLine endPoint.
-		number := [ :n | 
+		number := [ :n |
 			s nextPutAll: n asFloat asString ].
-		point := [ :p | 
+		point := [ :p |
 			number value: p x.
 			s space.
 			number value: p y.
@@ -33,15 +33,15 @@ RSShapeExamples >> example03LinePath [
 		vector := a - b.
 		u := vector normal.
 		unit := vector / (vector r max: 1).
-	
+
 		1 to: 3 do: [ :i |
 			middle := a - (unit * (i+1)* 5).
 			middle2 := a - (unit * (i*2)*5).
 			l := middle - (u * ((i-1) * 7)).
 			r := middle + (u * ((i-0.9) * 7)).
-			
+
 			s nextPutAll: 'M'.
-			point value: l. 
+			point value: l.
 			s nextPutAll: 'Q '.
 			point value: middle2.
 			point value: r.
@@ -69,18 +69,18 @@ RSShapeExamples >> example06JoinStyles [
 	<script: 'self new example06JoinStyles open'>
 	| canvas line path styles |
 	canvas := RSCanvas new.
-	path := [ :aLine | String streamContents: [ :s| 
+	path := [ :aLine | String streamContents: [ :s|
 		| mid number point a b |
 		a := aLine startPoint.
 		b := aLine endPoint.
-		number := [ :n | 
+		number := [ :n |
 			s nextPutAll: n asFloat asString ].
-		point := [ :p | 
+		point := [ :p |
 			number value: p x.
 			s space.
 			number value: p y.
 			s space. ].
-		
+
 		mid := (a + b)/2 + (0@ -50).
 		s nextPutAll: 'M'.
 		point value: a.
@@ -89,10 +89,10 @@ RSShapeExamples >> example06JoinStyles [
 		s nextPutAll: 'L'.
 		point value: b.
 		 ] ].
-	
+
 	styles := #('joinMiter' 'joinRound' 'joinBevel').
 	styles doWithIndex: [ :style :i|
-		line := RSSVGPathLine new 
+		line := RSSVGPathLine new
 			svgPath: path;
 			borderColor: Color gray;
 			draggable;
@@ -132,7 +132,7 @@ RSShapeExamples >> example15BimetricLine [
 		to: s2;
 		yourself.
 	canvas addAll: { s1. s2. l}.
-	canvas @ RSCanvasController. 
+	canvas @ RSCanvasController.
 	^ canvas
 ]
 
@@ -142,7 +142,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 	| canvas legend |
 	canvas := RSCanvas new.
 
-	canvas addAll: (Collection withAllSubclasses collect: [:cls | 
+	canvas addAll: (Collection withAllSubclasses collect: [:cls |
 		RSEllipse new
 			draggable;
 			model: cls;
@@ -167,7 +167,7 @@ RSShapeExamples >> example18ExampleFromMondrian [
 		tension: 0.7;
 		following: #superclass;
 		connectToAll: #dependentClasses.
-	
+
 	legend := (RSMultilineLabelBuilder new
 		shapeFor: 'Circle = classes, size = number of methods; gray links = inheritance;
 blue links = dependencies; layout = force based layout on the inheritance links')
@@ -188,11 +188,11 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 	<script: 'self new example25BimetricLineOnLargeExample open'>
 	| packagesRegExp packages l packageElements high canvas |
 	packagesRegExp := { 'Calypso*' }.
-	
-	packages := packagesRegExp flatCollect: [ :regExp | 
-		RPackageOrganizer default packages 
+
+	packages := packagesRegExp flatCollect: [ :regExp |
+		RPackageOrganizer default packages
 			select: [ :p | regExp match: p packageName ] ].
-		
+
 	l := RSLabeled new text: [ :model | model packageName ].
 	packageElements  := packages collect: [ :pkg | | shapes |
 		shapes := pkg definedClasses collect: [ :cls |
@@ -212,8 +212,8 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 			yourself ] as: RSGroup.
 	high := RSHighlightable new.
 	high withLines.
-	high highlightColor: Color red translucent.							
-	packageElements @ high.						
+	high highlightColor: Color red translucent.
+	packageElements @ high.
 	canvas := RSCanvas new.
 	canvas addAll: packageElements.
 
@@ -237,11 +237,11 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 	"Same than example25BimetricLineOnLargeExample, but with no label"
 	| packagesRegExp packages packageElements high canvas |
 	packagesRegExp := { 'Calypso*' }.
-	
-	packages := packagesRegExp flatCollect: [ :regExp | 
-		RPackageOrganizer default packages 
+
+	packages := packagesRegExp flatCollect: [ :regExp |
+		RPackageOrganizer default packages
 			select: [ :p | regExp match: p packageName ] ].
-		
+
 	packageElements  := packages collect: [ :pkg | | shapes |
 		shapes := pkg definedClasses collect: [ :cls |
 			RSBox new
@@ -259,8 +259,8 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 			yourself ] as: RSGroup.
 	high := RSHighlightable new.
 	high withLines.
-	high highlightColor: Color red translucent.							
-	packageElements @ high.						
+	high highlightColor: Color red translucent.
+	packageElements @ high.
 	canvas := RSCanvas new.
 	canvas addAll: packageElements.
 

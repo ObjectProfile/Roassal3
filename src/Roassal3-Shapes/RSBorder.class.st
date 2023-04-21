@@ -58,10 +58,10 @@ Class {
 
 { #category : #comparing }
 RSBorder >> = anObject [
-	^ self == anObject or: [ 
-		anObject notNil and: [ 
-			width = anObject width and: [ 
-				paint = anObject paint and: [ 
+	^ self == anObject or: [
+		anObject notNil and: [
+			width = anObject width and: [
+				paint = anObject paint and: [
 					style = anObject style ] ] ] ]
 ]
 
@@ -72,17 +72,17 @@ RSBorder >> accept: visitor [
 
 { #category : #'style - cap' }
 RSBorder >> capButt [
-	self pStyle capStyle: #capButt.
+	self pStyle capStyle: #capButt
 ]
 
 { #category : #'style - cap' }
 RSBorder >> capRound [
-	self pStyle capStyle: #capRound.
+	self pStyle capStyle: #capRound
 ]
 
 { #category : #'style - cap' }
 RSBorder >> capSquare [
-	self pStyle capStyle: #capSquare.
+	self pStyle capStyle: #capSquare
 ]
 
 { #category : #accessing }
@@ -95,7 +95,7 @@ RSBorder >> color: aColor [
 	"Set a color to the border. The color is provided as argument, and can be either a color object (e.g., `Color red`) or a symbol (e.g., `#yellow`)."
 	paint := aColor.
 	paint isColor ifTrue: [ ^ self ].
-	paint := Color colorFrom: aColor.
+	paint := Color colorFrom: aColor
 ]
 
 { #category : #'style - dashes' }
@@ -127,7 +127,6 @@ c
 
 	"
 	self pStyle dashArray: arrayOfNumbers
-	
 ]
 
 { #category : #accessing }
@@ -137,7 +136,7 @@ RSBorder >> dashOffset [
 
 { #category : #accessing }
 RSBorder >> dashOffset: offset [
-	"Set the offset for the dash. The offset is useful when animating. 
+	"Set the offset for the dash. The offset is useful when animating.
 
 ```Smalltalk
 c := RSCanvas new.
@@ -155,7 +154,7 @@ b dashArray: #(5 1 5).
 RSFlowLayout on: c shapes.
 c @ RSControlsCanvas.
 
-c newAnimation 
+c newAnimation
 	from: 0;
 	to: 40;
 	on: b set: #dashOffset:.
@@ -175,7 +174,7 @@ RSBorder >> hash [
 RSBorder >> initialize [
 	super initialize.
 	paint := Color gray.
-	width := 1.
+	width := 1
 ]
 
 { #category : #'style - join' }
@@ -194,12 +193,12 @@ RSBorder >> joinRound [
 ]
 
 { #category : #private }
-RSBorder >> pStyle [ 
-	^ style ifNil: [ style := RSStrokeStyle new ].
+RSBorder >> pStyle [
+	^ style ifNil: [ style := RSStrokeStyle new ]
 ]
 
 { #category : #accessing }
-RSBorder >> paint [ 
+RSBorder >> paint [
 	^ paint
 ]
 
@@ -215,7 +214,7 @@ RSBorder >> printOn: stream [
 	paint printOn: stream.
 	style ifNil: [ ^ self ].
 	stream nextPutAll: ', '.
-	style printOn: stream.
+	style printOn: stream
 ]
 
 { #category : #accessing }
@@ -229,14 +228,14 @@ RSBorder >> style: aStyle [
 ]
 
 { #category : #accessing }
-RSBorder >> width [ 
+RSBorder >> width [
 	^ width
 ]
 
 { #category : #accessing }
-RSBorder >> width: anInteger [ 
-	"Set the width of the border. 
-	
+RSBorder >> width: anInteger [
+	"Set the width of the border.
+
 For example:
 ```Smalltalk
 c := RSCanvas new.

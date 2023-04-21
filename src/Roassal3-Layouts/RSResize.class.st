@@ -24,22 +24,22 @@ Class {
 { #category : #'accessing - computed' }
 RSResize >> biggestExtent [
 	fixedShape ifNotNil: [ ^ fixedShape extent ].
-	^ shapes inject: 0 @ 0 into: [ :maxExtent :e | 
-			maxExtent max: e extent ] 
+	^ shapes inject: 0 @ 0 into: [ :maxExtent :e |
+			maxExtent max: e extent ]
 ]
 
 { #category : #'accessing - computed' }
 RSResize >> biggestShape [
-	^ shapes inject: shapes anyOne into: [ :biggestShape :e | 
+	^ shapes inject: shapes anyOne into: [ :biggestShape :e |
 			biggestShape extent < e extent
-				ifTrue: [ e ] ifFalse: [ biggestShape ] ] 
+				ifTrue: [ e ] ifFalse: [ biggestShape ] ]
 ]
 
 { #category : #'accessing - computed' }
 RSResize >> highestShape [
-	^ shapes inject: shapes anyOne into: [ :highestShape :e | 
+	^ shapes inject: shapes anyOne into: [ :highestShape :e |
 			highestShape extent y < e extent y
-				ifTrue: [ e ] ifFalse: [ highestShape ] ] 
+				ifTrue: [ e ] ifFalse: [ highestShape ] ]
 ]
 
 { #category : #public }
@@ -67,7 +67,7 @@ RSResize >> useBiggestShape [
 
 { #category : #'public - configuration' }
 RSResize >> useHighestShape [
-	self fixedShape: self highestShape 
+	self fixedShape: self highestShape
 ]
 
 { #category : #'public - configuration' }
@@ -77,7 +77,7 @@ RSResize >> useWidestShape [
 
 { #category : #'accessing - computed' }
 RSResize >> widestShape [
-	^ shapes inject: shapes anyOne into: [ :widestElement :e | 
+	^ shapes inject: shapes anyOne into: [ :widestElement :e |
 			widestElement extent x < e extent x
-				ifTrue: [ e ] ifFalse: [ widestElement ] ] 
+				ifTrue: [ e ] ifFalse: [ widestElement ] ]
 ]

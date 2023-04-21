@@ -9,21 +9,18 @@ Class {
 
 { #category : #hooks }
 RSChessBackgroundInteraction >> onShape: aCanvas [
-	aCanvas when: RSExtentChangedEvent send: #updateExtent: to: self.
-	
-	
-
+	aCanvas when: RSExtentChangedEvent send: #updateExtent: to: self
 ]
 
 { #category : #hooks }
 RSChessBackgroundInteraction >> removeBoxes: evt [
-	evt canvas 
-		propertyAt: self class name 
-		ifPresent: [ :boxes | boxes do: #remove ].
+	evt canvas
+		propertyAt: self class name
+		ifPresent: [ :boxes | boxes do: #remove ]
 ]
 
 { #category : #hooks }
-RSChessBackgroundInteraction >> updateExtent: evt [ 
+RSChessBackgroundInteraction >> updateExtent: evt [
 	| extent side counter even camera canvas boxes color theme |
 	theme := Smalltalk ui theme.
 	canvas := evt canvas.
@@ -41,7 +38,7 @@ RSChessBackgroundInteraction >> updateExtent: evt [
 		even := counter even.
 		(side / 2) to: extent y by: 20 do: [ :k |
 			| box |
-			even ifTrue: [ 
+			even ifTrue: [
 				box := RSBox new
 					color: color;
 					size: side / camera scale;
@@ -54,10 +51,7 @@ RSChessBackgroundInteraction >> updateExtent: evt [
 		counter := counter + 1 ].
 	boxes pushBack.
 	canvas
-		propertyAt: self class name 
+		propertyAt: self class name
 		put: boxes.
 	canvas signalUpdate
-
-
-
 ]

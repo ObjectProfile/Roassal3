@@ -117,7 +117,7 @@ canvas := RSCanvas new.
 
 someColors := { Color red . Color blue . Color green }.
 shapes := RSGroup new.
-someColors do: [ :aColor | 
+someColors do: [ :aColor |
 	shapes add: (RSEllipse new size: 30; model: aColor; color: aColor) ].
 
 canvas addAll: shapes.
@@ -156,7 +156,6 @@ RSPopup class >> themeText: aBlock [
 		color: (theme backgroundColor alpha: 0.8);
 		padding: 20.
 	^ popup
-		
 ]
 
 { #category : #hooks }
@@ -165,13 +164,13 @@ RSPopup >> createPopupFor: aShape event: event [
 	popupShape := shapeBuilder shapeFor: (self modelFor: aShape).
 	popupShape isFixed: true.
 	event canvas addShape: popupShape.
-	^ popupShape.
+	^ popupShape
 ]
 
 { #category : #initialization }
 RSPopup >> initialize [
 	super initialize.
-	shapeBuilder := RSSimplePopupBuilder new.
+	shapeBuilder := RSSimplePopupBuilder new
 ]
 
 { #category : #hooks }
@@ -187,7 +186,7 @@ RSPopup >> shapeBuilder [
 { #category : #accessing }
 RSPopup >> shapeBuilder: aShapeBuilder [
 	"Let one customize the way the popup is generated. The method accept a shape builder or a one-argument-block. For example:
-	
+
 ```
 canvas := RSCanvas new.
 
@@ -201,7 +200,7 @@ popup shapeBuilder: [ :aNumber |
 	g := RSGroup new.
 	g addAll: (RSCircle models: (1 to: aNumber)).
 	RSGridLayout on: g.
-	g asShape 
+	g asShape
 		color: Color white darker darker;
 		padding: 5.
 ].
@@ -220,20 +219,20 @@ RSPopup >> text: oneArgBlock [
 ]
 
 { #category : #hooks }
-RSPopup >> translatePopup: popup event: evt [ 
+RSPopup >> translatePopup: popup event: evt [
 	| p e extent |
 	p := evt camera fromSpaceToPixel: evt position.
 	extent := popup canvas extent.
 	e := (popup extent /2) + 5.
-	p x + popup width > extent x ifTrue: [ 
+	p x + popup width > extent x ifTrue: [
 		e := e x negated @ e y.
 		p x - popup width < 0
 		ifTrue: [ e := p x negated + (popup width/2 + 4) @ e y ].
 		].
-	p y + popup height > extent y ifTrue: [ 
+	p y + popup height > extent y ifTrue: [
 		e := e x @ e y negated.
 		p y - popup height < 0
 		ifTrue: [ e := e x @ ( p y negated + (popup height/2 + 4) ) ]
-		]. 
-	popup translateTo: p + e.
+		].
+	popup translateTo: p + e
 ]

@@ -1,5 +1,7 @@
 "
-I can move an element from its position
+This interaction allows to the user move shapes. Just click over a shape, then drag it, and finalyy relase the click button
+### Example
+- `RSDraggable class >> #example`
 "
 Class {
 	#name : #RSDraggable,
@@ -9,11 +11,6 @@ Class {
 	],
 	#category : #'Roassal3-Interaction-Core'
 }
-
-{ #category : #'instance creation' }
-RSDraggable class >> wantsUniqueInstance [
-	^ true
-]
 
 { #category : #public }
 RSDraggable >> checkChildrenActions: aShape [
@@ -46,11 +43,11 @@ RSDraggable >> onShape: aShape [
 ]
 
 { #category : #events }
-RSDraggable >> processDrag: evt [ 
+RSDraggable >> processDrag: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
 	evt shape translateBy: d.
-	evt signalUpdate 
+	evt signalUpdate
 ]
 
 { #category : #testing }

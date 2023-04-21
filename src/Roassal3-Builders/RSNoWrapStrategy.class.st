@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 RSNoWrapStrategy >> initialize [
-	"Subclasses should redefine this method to perform initializations on instance creation" 
+	"Subclasses should redefine this method to perform initializations on instance creation"
 ]
 
 { #category : #hooks }

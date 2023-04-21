@@ -36,7 +36,7 @@ RSBackInterpolator >> interpolateInOut: i [
 	t := i * 2.
 	^ (t < 1
 		ifTrue: [ t * t * ((overshoot + 1) * t - overshoot) ]
-		ifFalse: [ 
+		ifFalse: [
 			t := t -2.
 			t * t * ((overshoot + 1) * t + overshoot) + 2 ])/2
 ]

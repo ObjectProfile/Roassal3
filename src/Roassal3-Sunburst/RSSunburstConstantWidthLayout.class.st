@@ -37,13 +37,12 @@ RSSunburstConstantWidthLayout >> centerWidth: anObject [
 RSSunburstConstantWidthLayout >> initialize [
 	super initialize.
 	self arcWidth: 50.
-	self centerWidth: 50.
+	self centerWidth: 50
 ]
 
 { #category : #hook }
 RSSunburstConstantWidthLayout >> setCenterRadius: shape [
-	shape externalRadius: self centerWidth.
-	
+	shape externalRadius: self centerWidth
 ]
 
 { #category : #hook }
@@ -55,5 +54,5 @@ RSSunburstConstantWidthLayout >> setNormalRadius: shape [
 	r2 := ((depth -1 )* arcWidth ) + off.
 	shape
 		innerRadius: r1 + self centerWidth;
-		externalRadius: r2 + self centerWidth.
+		externalRadius: r2 + self centerWidth
 ]

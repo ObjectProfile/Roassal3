@@ -36,13 +36,13 @@ RSSelectionPresentationInteraction >> addInteractionToCanvas: aShape [
 	(canvas hasProperty: key) ifTrue: [ ^ self ].
 	canvas when: RSScaleChangedEvent send: #updateShadow: to: self.
 	canvas when: RSMouseClick send: #removeShadowFromCanvas: to: self.
-	canvas propertyAt: key put: true.
+	canvas propertyAt: key put: true
 ]
 
 { #category : #visitor }
 RSSelectionPresentationInteraction >> createShadowFor: aShape [
 	^ (aShape
-		inspectorShadowFor: self padding / (self scaleFrom: aShape) 
+		inspectorShadowFor: self padding / (self scaleFrom: aShape)
 		color: self shadowColor)
 		model: nil;
 		propertyAt: self key put: aShape;
@@ -53,7 +53,7 @@ RSSelectionPresentationInteraction >> createShadowFor: aShape [
 RSSelectionPresentationInteraction >> initialize [
 	super initialize.
 	self padding: 10.
-	self usePushFront.
+	self usePushFront
 ]
 
 { #category : #accessing }
@@ -99,14 +99,13 @@ RSSelectionPresentationInteraction >> presentation: aRSRoassalPresentation [
 
 { #category : #visitor }
 RSSelectionPresentationInteraction >> privateShadowFor: aShape [
-	^ aShape class = RSBitmap ifTrue: [ 
+	^ aShape class = RSBitmap ifTrue: [
 		RSBox new
 	] ifFalse: [
 		aShape copy
 			border: nil;
 			properties: nil;
 			yourself ]
-	
 ]
 
 { #category : #hooks }
@@ -114,10 +113,10 @@ RSSelectionPresentationInteraction >> putShadowOn: aShape [
 	| shadow |
 	shadow := self createShadowFor: aShape.
 	(aShape parent notNil or: [ aShape canvas ]) ifNil: [ ^ self ].
-	self shouldPushFront ifTrue: [ aShape pushFront ]. 
+	self shouldPushFront ifTrue: [ aShape pushFront ].
 	aShape parent addShape: shadow before: aShape.
 	aShape canvas propertyAt: self key put: shadow.
-	self updateShadowPosition: aShape canvas.
+	self updateShadowPosition: aShape canvas
 ]
 
 { #category : #dependencies }
@@ -135,13 +134,12 @@ RSSelectionPresentationInteraction >> removeShadowFromCanvas: evt [
 RSSelectionPresentationInteraction >> removeShadowOn: aShape [
 	"Nothing to do if there is no canvas"
 	aShape canvas ifNil: [ ^ self ].
-	
+
 	aShape canvas
 		propertyAt: self key
-		ifPresent: [ :shadow | 
+		ifPresent: [ :shadow |
 			shadow remove.
-			aShape canvas removeKey: self key. ].
-	
+			aShape canvas removeKey: self key. ]
 ]
 
 { #category : #hooks }
@@ -157,12 +155,12 @@ RSSelectionPresentationInteraction >> selection: evt [
 	"evt can be a RSShape or RSEvent"
 	| aShape |
 	aShape := evt shape.
-	self presentation 
-		ifNotNil: [ self presentation value: (SpWrappedItem new selectedItem: aShape model) ]. 
+	self presentation
+		ifNotNil: [ self presentation value: (SpWrappedItem new selectedItem: aShape model) ].
 	self
 		removeShadowOn: aShape;
 		putShadowOn: aShape.
-	aShape canvas 
+	aShape canvas
 		ifNotNil: [ aShape canvas signalUpdate ]
 ]
 
@@ -187,7 +185,7 @@ RSSelectionPresentationInteraction >> updateShadow: evt [
 	(evt canvas hasProperty: self key) ifFalse: [ ^ self ].
 	shadow := evt canvas propertyAt: self key.
 	shape := shadow propertyAt: self key.
-	self 
+	self
 		removeShadowOn: shape;
 		putShadowOn: shape.
 	evt canvas canvas signalUpdate

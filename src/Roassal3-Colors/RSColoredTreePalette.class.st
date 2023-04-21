@@ -53,7 +53,7 @@ Class {
 }
 
 { #category : #private }
-RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [ 
+RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [
 
 	| c |
 	c := OrderedCollection new.
@@ -64,13 +64,12 @@ RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [
 { #category : #private }
 RSColoredTreePalette >> allLeavesAccessibleFrom: aShape in: result [
 
-	aShape numberOfOutgoingLines = 0 
+	aShape numberOfOutgoingLines = 0
 		ifTrue: [
 			result add: self ]
-		ifFalse: [ 
+		ifFalse: [
 			 (aShape outgoingLines collect: #to) do: [ :s | self allLeavesAccessibleFrom: s in: result ]
 			 ]
-
 ]
 
 { #category : #accessing }
@@ -96,7 +95,6 @@ RSColoredTreePalette >> assignColorToChildren: children low: low high: high [
 	children with: hs do: [ :s :h |
 		self assignColorToRoot: s h: (h min: 360 max: 0)
 	]
-	
 ]
 
 { #category : #private }
@@ -107,13 +105,13 @@ RSColoredTreePalette >> assignColorToRoot: aRootShape [
 { #category : #private }
 RSColoredTreePalette >> assignColorToRoot: aRootShape h: h [
 	| children span |
-	
+
 	aRootShape color: ((Color h: h s: 1 v: 1) alpha: alpha).
 
 	children := aRootShape outgoingShapes.
 	children ifEmpty: [ ^ self ].
 	span := (self allLeavesAccessibleFrom: aRootShape) * 360 / (totalNumberOfLeaves * 2).
-	self assignColorToChildren: children low: h - (span / 2) high: h + (span / 2).
+	self assignColorToChildren: children low: h - (span / 2) high: h + (span / 2)
 ]
 
 { #category : #initialization }
@@ -133,7 +131,7 @@ RSColoredTreePalette >> shapes: someShapes [
 	"Set the shapes (the nodes) that must be colored"
 	shapes := someShapes.
 	totalNumberOfLeaves := 0.
-	(someShapes select: [ :s | s numberOfIncomingLines = 0 ]) do: [ :s | 
+	(someShapes select: [ :s | s numberOfIncomingLines = 0 ]) do: [ :s |
 		totalNumberOfLeaves := totalNumberOfLeaves + (self allLeavesAccessibleFrom: s)
 	]
 ]

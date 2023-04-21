@@ -19,7 +19,7 @@ RSLinePlot >> createdShapes [
 
 { #category : #initialization }
 RSLinePlot >> defaultShape [
-	^ RSPolyline new color: nil.
+	^ RSPolyline new color: nil
 ]
 
 { #category : #testing }
@@ -35,7 +35,7 @@ RSLinePlot >> line [
 { #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
-	self checkAssertion. 
+	self checkAssertion.
 	controlPoints := OrderedCollection new.
 	(1 to: xValues size) do: [ :i |
 			| xt yt |
@@ -46,5 +46,5 @@ RSLinePlot >> renderIn: canvas [
 	canvas add: (line := self shape copy
 		color: self computeColor;
 		controlPoints: controlPoints;
-		yourself).
+		yourself)
 ]

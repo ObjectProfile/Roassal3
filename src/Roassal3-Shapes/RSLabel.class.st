@@ -60,16 +60,16 @@ RSLabel class >> familyFontName [
 	"
 	| fontList |
 	fontList := LogicalFontManager current allFamilies collect: #familyName.
-	
+
 	(fontList includes: 'Source Sans Pro') ifTrue: [ ^ 'Source Sans Pro' ].
 	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
 	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
-	
-	(fontList includes: StandardFonts listFont familyName ) 
+
+	(fontList includes: StandardFonts listFont familyName )
 		ifTrue: [ ^ StandardFonts listFont familyName ].
-		
-	
-	^  StandardFonts defaultFont familyName 
+
+
+	^  StandardFonts defaultFont familyName
 ]
 
 { #category : #accessing }
@@ -103,7 +103,7 @@ c @ RSCanvasController.
 c open
 ```
 "
-	self emphasisAdd: TextEmphasis bold.
+	self emphasisAdd: TextEmphasis bold
 ]
 
 { #category : #accessing }
@@ -118,12 +118,12 @@ RSLabel >> cairoGlyphs [
 	^ cairoGlyphs ifNil: [
 		cairoGlyphs := CairoFontMetricsProvider new
 			font: font;
-			glyphsOf: text ].
+			glyphsOf: text ]
 ]
 
 { #category : #metrics }
 RSLabel >> computeTextExtents [
-	^ self hasText 
+	^ self hasText
 		ifTrue: [ self metricsProvider extentsOf: self ]
 		ifFalse: [ RSTextExtents empty ]
 ]
@@ -131,7 +131,7 @@ RSLabel >> computeTextExtents [
 { #category : #private }
 RSLabel >> createFont [
 	| aFont |
-	aFont := LogicalFont 
+	aFont := LogicalFont
 		familyName: fontName
 		pointSize: fontSize.
 	aFont := aFont emphasized: emphasis emphasisCode.
@@ -155,13 +155,13 @@ c open
 "
 	emphasis = aTextEmphasis ifTrue: [ ^ self ].
 	emphasis := aTextEmphasis.
-	self resetFont.
+	self resetFont
 ]
 
 { #category : #'managing font' }
 RSLabel >> emphasisAdd: anEmphasis [
 	emphasis add: anEmphasis.
-	self resetFont.
+	self resetFont
 ]
 
 { #category : #accessing }
@@ -177,8 +177,7 @@ RSLabel >> font: aLogicalFont [
 	fontName := font familyName.
 	emphasis := TextEmphasis fromCode: font emphasis.
 	self fontName: self privateFontName.
-	self resetCache.
-	
+	self resetCache
 ]
 
 { #category : #accessing }
@@ -198,13 +197,12 @@ RSLabel >> fontName: aString [
 	"
 	fontName = aString ifTrue: [ ^ self ].
 	fontName := aString.
-	self resetFont.
-	
+	self resetFont
 ]
 
 { #category : #accessing }
 RSLabel >> fontSize [
-	^ fontSize 
+	^ fontSize
 ]
 
 { #category : #accessing }
@@ -225,7 +223,7 @@ c @ RSCanvasController
 "
 	fontSize = aNumber ifTrue: [ ^ self ].
 	fontSize := aNumber.
-	self resetFont.
+	self resetFont
 ]
 
 { #category : #testing }
@@ -237,8 +235,7 @@ RSLabel >> hasText [
 RSLabel >> initialize [
 	super initialize.
 	paint := Color gray.
-	self font: self class defaultFont.
-	
+	self font: self class defaultFont
 ]
 
 { #category : #private }
@@ -292,7 +289,7 @@ c @ RSCanvasController.
 c open
 ```
 "
-	self emphasisAdd: TextEmphasis italic.
+	self emphasisAdd: TextEmphasis italic
 ]
 
 { #category : #metrics }
@@ -303,11 +300,11 @@ RSLabel >> metricsProvider [
 { #category : #metrics }
 RSLabel >> metricsProvider: aRSMetricsProvider [
 	"Set the way metrics related to the label (e.g., height, width), can be computed. The metric provier per default is RSCairoMetricsProvider.
-	
+
 	 The argument must be a subclass of RSMetricsProvider.
-	
+
 	For example:
-	
+
 ```Smalltalk
 metricsProvider := RSCairoMetricsProvider new.
 
@@ -322,7 +319,7 @@ c open
 ```
 	"
 	metricsProvider := aRSMetricsProvider.
-	self resetCache.
+	self resetCache
 ]
 
 { #category : #'accessing - attributes' }
@@ -334,24 +331,23 @@ RSLabel >> model: anObject [
 
 { #category : #'managing font' }
 RSLabel >> normal [
-	self emphasis: TextEmphasis normal.
+	self emphasis: TextEmphasis normal
 ]
 
 { #category : #private }
 RSLabel >> privateFontName [
 	^ font isTTCFont
-		ifTrue: [ font familyName ] 
+		ifTrue: [ font familyName ]
 		ifFalse: [ self class familyFontName ]
-	
 ]
 
 { #category : #initialization }
-RSLabel >> resetCache [ 
+RSLabel >> resetCache [
 	font ifNil: [ font := self createFont ].
-	
+
 	textExtents := nil.
 	self resetCairoGlyphs.
-	self extent: self textWidth @ self textHeight.
+	self extent: self textWidth @ self textHeight
 ]
 
 { #category : #initialization }
@@ -362,7 +358,7 @@ RSLabel >> resetCairoGlyphs [
 { #category : #initialization }
 RSLabel >> resetFont [
 	font := nil.
-	self resetCache.
+	self resetCache
 ]
 
 { #category : #path }
@@ -374,7 +370,7 @@ RSLabel >> sessionChanged [
 { #category : #'managing font' }
 RSLabel >> struckOut [
 	"Make the label strickethrough
-	
+
 ```
 | c lbl1 lbl2 |
 c := RSCanvas new.
@@ -387,7 +383,7 @@ c @ RSCanvasController.
 c open
 ```
 "
-	self emphasisAdd: TextEmphasis struckOut.
+	self emphasisAdd: TextEmphasis struckOut
 ]
 
 { #category : #accessing }
@@ -400,12 +396,12 @@ RSLabel >> text: string [
 	"Set the text of a label. do not try to write in the `text` variable directly."
 	text = string ifTrue: [ ^ self ].
 	text := string asString.
-	self resetCache; resetPath.
+	self resetCache; resetPath
 ]
 
 { #category : #accessing }
 RSLabel >> textExtents [
-	^ textExtents ifNil: [ textExtents := self computeTextExtents ].
+	^ textExtents ifNil: [ textExtents := self computeTextExtents ]
 ]
 
 { #category : #accessing }
@@ -438,5 +434,5 @@ c @ RSCanvasController.
 c open
 ```
 "
-	self emphasisAdd: TextEmphasis underlined.
+	self emphasisAdd: TextEmphasis underlined
 ]

@@ -19,7 +19,7 @@ RSMouseDragging class >> step: aStepAsPoint [
 { #category : #initialization }
 RSMouseDragging >> initialize [
 	super initialize.
-	step := 0 @ 0.
+	step := 0 @ 0
 ]
 
 { #category : #accessing }

@@ -17,8 +17,8 @@ RSColorSelection >> on: aCanvas [
 	c2 := c1 muchDarker.
 	aCanvas newAnimation
 		duration: 1 second;
-		scale: (NSScale linear 
+		scale: (NSScale linear
 			domain: #(0 0.25 0.5 0.75 1);
 			range: {c1. c2. c1. c2. c1});
-		on: shape set: #color:. 
+		on: shape set: #color:.
 ]

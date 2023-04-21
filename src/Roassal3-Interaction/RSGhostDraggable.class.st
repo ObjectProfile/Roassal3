@@ -1,5 +1,9 @@
 "
 This interaction creates a new box(a ghost box) and it moves the box instead of the entire shape
+
+### Example
+- `RSGhostDraggable class >> #example`
+- `RSGhostDraggable class >> #exampleChangeColor`
 "
 Class {
 	#name : #RSGhostDraggable,
@@ -12,7 +16,7 @@ Class {
 
 { #category : #accessing }
 RSGhostDraggable >> color [
-	^ color ifNil: [ color := Color gray ].
+	^ color ifNil: [ color := Color gray ]
 ]
 
 { #category : #accessing }
@@ -23,7 +27,7 @@ RSGhostDraggable >> color: anObject [
 
 { #category : #hooks }
 RSGhostDraggable >> createGhost: evt [
-	| shape ghost |
+	| shape ghost parent |
 	shape := evt shape.
 	ghost := shape copy
 		fromRectangle: shape encompassingRectangle;
@@ -33,9 +37,8 @@ RSGhostDraggable >> createGhost: evt [
 		noPaint;
 		yourself.
 	shape propertyAt: #ghost put: ghost.
-	shape parent add: ghost.
-
-	
+	parent := shape parent.
+	parent add: ghost
 ]
 
 { #category : #hooks }
@@ -43,7 +46,7 @@ RSGhostDraggable >> onShape: aShape [
 	aShape
 		when: RSMouseDragStart send: #createGhost: to: self;
 		when: RSMouseDragging send: #updateGhost: to: self;
-		when: RSMouseDragEnd send: #removeGhost: to: self.
+		when: RSMouseDragEnd send: #removeGhost: to: self
 ]
 
 { #category : #hooks }
@@ -53,7 +56,7 @@ RSGhostDraggable >> removeGhost: evt [
 	ghost remove.
 	evt shape translateTo: ghost position.
 	evt shape removeKey: #ghost.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #hooks }
@@ -61,5 +64,5 @@ RSGhostDraggable >> updateGhost: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
 	(evt shape propertyAt: #ghost) translateBy: d.
-	evt signalUpdate 
+	evt signalUpdate
 ]

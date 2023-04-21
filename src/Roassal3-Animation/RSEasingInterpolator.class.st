@@ -150,7 +150,7 @@ RSEasingInterpolator class >> polyIn [
 
 { #category : #poly }
 RSEasingInterpolator class >> polyInOut [
-	^ RSPolyInterpolator new.
+	^ RSPolyInterpolator new
 ]
 
 { #category : #poly }
@@ -200,7 +200,7 @@ RSEasingInterpolator class >> sinOut [
 
 { #category : #actions }
 RSEasingInterpolator >> in [
-	useIn := true.
+	useIn := true
 ]
 
 { #category : #actions }
@@ -211,14 +211,14 @@ RSEasingInterpolator >> inOut [
 { #category : #initialization }
 RSEasingInterpolator >> initialize [
 	super initialize.
-	self inOut.
+	self inOut
 ]
 
 { #category : #interpolation }
 RSEasingInterpolator >> interpolate: t [
 	useIn ifTrue: [ ^ self interpolateIn: t ].
 	useOut ifTrue: [ ^ self interpolateOut: t ].
-	^ self interpolateInOut: t.
+	^ self interpolateInOut: t
 ]
 
 { #category : #interpolation }
@@ -228,7 +228,7 @@ RSEasingInterpolator >> interpolateIn: t [
 
 { #category : #interpolation }
 RSEasingInterpolator >> interpolateInOut: t [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #interpolation }
@@ -237,6 +237,6 @@ RSEasingInterpolator >> interpolateOut: t [
 ]
 
 { #category : #actions }
-RSEasingInterpolator >> out [ 
-	useOut := true.
+RSEasingInterpolator >> out [
+	useOut := true
 ]

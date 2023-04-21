@@ -1,19 +1,6 @@
 "
-Make the shape blink.
-
-For example:
-
-```
-c := RSCanvas new.
-shapes := RSCircle models: (1 to: 9).
-shapes size: 30.
-c addAll: shapes.
-RSGridLayout on: shapes.
-shapes when: RSMouseClick do: [ :evt | evt shape @ RSBlink ].
-
-shapes fifth @ RSBlink.
-c @ RSCanvasController
-```
+Small example of how to create an interaction added a new animation in the canvas.
+Please check how to use this class here: `RSBlink class>> #example`
 "
 Class {
 	#name : #RSBlink,
@@ -29,8 +16,9 @@ RSBlink >> onShape: aShape [
 	aShape color: Color red.
 	canvas signalUpdate.
 	canvas newAnimation
-				duration: 0.5 second;
-				when: RSAnimationEndEvent do: [ :evt | 
-					aShape color: previousColor.
-					canvas signalUpdate. ]
+		duration: 0.5 second;
+		onStepDo: [ :t | aShape signalUpdate ];
+		when: RSAnimationEndEvent do: [ :evt |
+			aShape color: previousColor.
+			canvas signalUpdate ]
 ]

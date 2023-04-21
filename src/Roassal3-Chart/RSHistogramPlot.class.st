@@ -52,7 +52,7 @@ RSHistogramPlot >> binningStrategy [
 { #category : #accessing }
 RSHistogramPlot >> binningStrategy: aBinningStrategy [
 	binningStrategy := aBinningStrategy.
-	self computeXYValues.
+	self computeXYValues
 ]
 
 { #category : #accessing }
@@ -63,15 +63,14 @@ RSHistogramPlot >> bins [
 { #category : #accessing }
 RSHistogramPlot >> bins: aCollection [
 	self assert: aCollection isCollection description: 'you must provide a collection'.
-	self binningStrategy: (RSFixedBinning new 
-		bins: aCollection; 
-		yourself).
+	self binningStrategy: (RSFixedBinning new
+		bins: aCollection;
+		yourself)
 ]
 
 { #category : #private }
 RSHistogramPlot >> computeBins [
-	^ binningStrategy createBinsFor: x.
-	
+	^ binningStrategy createBinsFor: x
 ]
 
 { #category : #private }
@@ -81,18 +80,15 @@ RSHistogramPlot >> computeXYValues [
 	bins := self computeBins.
 	xValues := bins.
 	prev := bins first.
-	yValues := bins allButLast collectWithIndex: [ :val1 :index | 
+	yValues := bins allButLast collectWithIndex: [ :val1 :index |
 		| val2 condition |
 		val2 := bins at: index + 1.
-		condition := index + 1 = bins size 
+		condition := index + 1 = bins size
 			ifTrue: [ [ :value | value between: val1 and: val2 ] ]
 			ifFalse: [ [ :value | val1 <= value and: [ value < val2 ] ] ].
-		
+
 		(x select: condition ) size.
-	].
-	
-	
-	
+	]
 ]
 
 { #category : #accessing }
@@ -114,7 +110,7 @@ RSHistogramPlot >> definedValuesY [
 { #category : #initialization }
 RSHistogramPlot >> initialize [
 	super initialize.
-	self binningStrategy: RSDefaultBinning new.
+	self binningStrategy: RSDefaultBinning new
 ]
 
 { #category : #accessing }
@@ -125,7 +121,7 @@ RSHistogramPlot >> numberOfBins [
 { #category : #accessing }
 RSHistogramPlot >> numberOfBins: aNumber [
 	self binningStrategy numberOfBins: aNumber.
-	self computeXYValues.
+	self computeXYValues
 ]
 
 { #category : #rendering }
@@ -134,7 +130,7 @@ RSHistogramPlot >> renderIn: canvas [
 		| rect xVal xVal2 |
 		xVal := xValues at: index.
 		xVal2 := xValues at: index +1.
-		rect := Rectangle 
+		rect := Rectangle
 			origin: (self scalePoint: xVal @ yVal)
 			corner: (self scalePoint: xVal2 @ 0).
 		self shape copy
@@ -143,11 +139,11 @@ RSHistogramPlot >> renderIn: canvas [
 			fromRectangle: rect;
 			yourself ].
 	bars := bars asGroup.
-	canvas addAll: bars.
+	canvas addAll: bars
 ]
 
 { #category : #accessing }
 RSHistogramPlot >> x: aCollection [
 	x := aCollection sorted.
-	self computeXYValues.
+	self computeXYValues
 ]

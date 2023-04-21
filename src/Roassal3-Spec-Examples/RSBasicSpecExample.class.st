@@ -16,20 +16,19 @@ RSBasicSpecExample class >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #roassalSpec;
 		yourself
-		
 ]
 
 { #category : #initialization }
 RSBasicSpecExample >> initializePresenters [
 	roassalSpec := self newRoassal.
-	self initializeRoassal3: roassalSpec canvas.
+	self initializeRoassal3: roassalSpec canvas
 ]
 
 { #category : #initialization }
 RSBasicSpecExample >> initializeRoassal3: canvas [
 	| slice magic |
 	slice := RSPieSlice new.
-	slice 
+	slice
 		innerRadius: 100;
 		externalRadius: 150;
 		alphaAngle: 15;
@@ -62,10 +61,10 @@ RSBasicSpecExample >> initializeRoassal3: canvas [
 		markerEnd: (RSShapeFactory arrow
 			size: 20;
 			color: Color black);
-		controlPoints: 
-			{160@0. 
-			160@ magic negated. 
-			magic@ -160. 
+		controlPoints:
+			{160@0.
+			160@ magic negated.
+			magic@ -160.
 			0@ -160  };
 		yourself
 		).
@@ -73,12 +72,12 @@ RSBasicSpecExample >> initializeRoassal3: canvas [
 		text: 'Angle direction';
 		color: 'blue';
 		position: 180@ -130;
-		yourself).
+		yourself)
 ]
 
 { #category : #initialization }
 RSBasicSpecExample >> initializeWindow: w [
-	w 
+	w
 		title: 'Basic plot';
 		initialExtent: 800@500;
 		centered

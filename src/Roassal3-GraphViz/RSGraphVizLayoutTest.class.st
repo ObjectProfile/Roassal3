@@ -12,7 +12,7 @@ RSGraphVizLayoutTest >> testBasic [
 	"m shape box size: 30."
 	m shape box size: 30; "width: 30; height: 20;" labeled .
 	m nodes: 'abcde'.
-	m graphvizLine 
+	m graphvizLine
 		arrowMarkerEnd;
 		useAssociations: { $a -> $b . $b -> $c . $a -> $c . $d -> $c . $e -> $c . $e -> $a }.
 	layout := m layout graphviz digraph.
@@ -40,14 +40,14 @@ RSGraphVizLayoutTest >> testBasic2 [
 	m := RSMondrian new.
 	m shape box size: 20; labeled.
 	m nodes: 'abcd'.
-	m graphvizLine 
+	m graphvizLine
 		arrowMarkerEnd;
 		useAssociations: { $a -> $b . $b -> $c . $c -> $d . $d -> $a }.
 	layout := m layout graphviz sfdp.
 	m build.
-	
+
 	self assert: (layout dotDescription copyWithoutAll: String crlf) equals: ('graph G {
-ratio = auto ; 
+ratio = auto ;
 layout = "sfdp" ;
 1 [label="a", height=0.2];
 2 [label="b", height=0.2];
@@ -57,6 +57,6 @@ layout = "sfdp" ;
 "1" --"2";
 "2" --"3";
 "3" --"4"}' copyWithoutAll: String crlf).
-	
+
 	self assert: (layout graphvizResult asString includesSubstring: 'node')
 ]

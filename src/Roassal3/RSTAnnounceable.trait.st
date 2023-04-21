@@ -22,7 +22,7 @@ RSTAnnounceable >> announcementClasses [
 
 { #category : #announcer }
 RSTAnnounceable >> announcer [
-	^ self privateAnnouncer ifNil: [ 
+	^ self privateAnnouncer ifNil: [
 		| a |
 		a := Announcer new.
 		self announcer: a.
@@ -36,8 +36,8 @@ RSTAnnounceable >> announcer: anAnnouncer [
 
 { #category : #public }
 RSTAnnounceable >> click [
-	"Simulate a click. 
-	
+	"Simulate a click.
+
 For example:
 -=-=-=-=-=-=-=-=-=
 c := RSCanvas new.
@@ -50,10 +50,10 @@ box click.
 c
 -=-=-=-=-=-=-=-=-=
 "
-	self announce: (RSMouseClick new 
+	self announce: (RSMouseClick new
 		canvas: self canvas;
-		shape: self; 
-		yourself).
+		shape: self;
+		yourself)
 ]
 
 { #category : #public }
@@ -62,7 +62,7 @@ RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
 	ann := self privateAnnouncer.
 	self announcer: nil.
 	aBlock value.
-	self announcer: ann.
+	self announcer: ann
 ]
 
 { #category : #announcer }

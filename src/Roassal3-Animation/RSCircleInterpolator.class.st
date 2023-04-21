@@ -28,7 +28,7 @@ RSCircleInterpolator >> interpolateInOut: i [
 	t := i * 2.
 	^ (t<=1
 		ifTrue: [ 1 - (1 - (t*t)) sqrt ]
-		ifFalse: [ 
+		ifFalse: [
 			t := t - 2.
 			(1 - (t*t)) sqrt + 1 ])/2
 ]
@@ -37,6 +37,5 @@ RSCircleInterpolator >> interpolateInOut: i [
 RSCircleInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.
-	^ (1 - (t* t)) sqrt.
-
+	^ (1 - (t* t)) sqrt
 ]

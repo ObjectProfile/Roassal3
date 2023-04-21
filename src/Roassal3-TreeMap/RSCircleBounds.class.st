@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RSCircleBounds class >> maxCircles: anInteger [ 
+RSCircleBounds class >> maxCircles: anInteger [
 	^ self new
 		maxCircles: anInteger;
 		yourself
@@ -23,19 +23,19 @@ RSCircleBounds >> findStart: circle [
 	| high low probe |
 	high := circles size + 1.
 	low := 1.
-	[ (high - low) > 1 ] whileTrue: [ 
+	[ (high - low) > 1 ] whileTrue: [
 		probe := ((high + low)/2) asFloat floor.
-		(circle intersects: (circles at: probe)) 
+		(circle intersects: (circles at: probe))
 			ifTrue: [ high := probe ]
 			ifFalse: [ low := probe ]
 	 ].
-	^ indices at: low.
+	^ indices at: low
 ]
 
 { #category : #accessing }
 RSCircleBounds >> maxCircles: anInteger [
 	circles := OrderedCollection new: anInteger.
-	indices := OrderedCollection new: anInteger.
+	indices := OrderedCollection new: anInteger
 ]
 
 { #category : #public }

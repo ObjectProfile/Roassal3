@@ -18,7 +18,7 @@ RSRoassal3DExamples >> example01Ball [
 	list := RSMesh3D inflate: list.
 	list := RSMesh3D inflate: list.
 	mesh addAll: list.
-	
+
 	space add: mesh.
 	space build.
 	^ space
@@ -36,7 +36,7 @@ RSRoassal3DExamples >> example02Rect [
 		duration: 20 seconds;
 		from: 0;
 		to: 360;
-		onStepDo: [ :t |  
+		onStepDo: [ :t |
 			space meshes first matrix
 				identity
 				xrot: t degreesToRadians.

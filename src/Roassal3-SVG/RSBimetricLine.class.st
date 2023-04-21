@@ -40,13 +40,13 @@ Class {
 RSBimetricLine >> initialize [
 	super initialize.
 	widthFrom := widthTo := 0.
-	self initializeSVG.
+	self initializeSVG
 ]
 
 { #category : #initialization }
 RSBimetricLine >> initializeSVG [
 	self
-		svgPath: [ :aLine | 
+		svgPath: [ :aLine |
 			| e w1 w2 dist z sourcePoint targetPoint |
 			sourcePoint := aLine startPoint.
 			targetPoint := aLine endPoint.
@@ -59,10 +59,10 @@ RSBimetricLine >> initializeSVG [
 			z > dist
 				ifTrue: [ w1 := w1 * dist / z.
 					w2 := w2 * dist / z ].
-			[ :builder | 
+			[ :builder |
 			| first side |
 			first := true.
-			side := [ :vector :end :size | 
+			side := [ :vector :end :size |
 			| left right u unit middle l r |
 			u := vector normal.
 			unit := vector / (vector r max: e).

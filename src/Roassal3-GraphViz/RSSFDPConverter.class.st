@@ -9,10 +9,10 @@ Class {
 
 { #category : #writing }
 RSSFDPConverter >> writeHeader: aRSGroup [
-	stream 
+	stream
 		<< 'graph G {'; crlf;
 		<< 'ratio = auto ; '; crlf;
-		<< 'layout = "sfdp" ;'; crlf.
+		<< 'layout = "sfdp" ;'; crlf
 ]
 
 { #category : #visiting }

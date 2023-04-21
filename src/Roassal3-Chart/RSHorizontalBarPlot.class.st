@@ -20,7 +20,7 @@ RSHorizontalBarPlot >> beforeRenderingIn: aChart [
 	| barScale |
 	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSOrdinalScale new 
+	barScale := NSOrdinalScale new
 		domain: yValues;
 		rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
@@ -35,7 +35,7 @@ RSHorizontalBarPlot >> computeRectagleFor: aPoint index: index [
 	corner := (xScale scale: zero) @ origin y.
 	sizeOffset := 0@(self barSize/ 2.0).
 	offset := 0@self barOffset.
-	^ Rectangle 
+	^ Rectangle
 		origin: origin + offset - sizeOffset
 		corner: corner + offset + sizeOffset
 ]
@@ -61,7 +61,7 @@ RSHorizontalBarPlot >> left [
 
 { #category : #accessing }
 RSHorizontalBarPlot >> left: aCollection [
-	self 
+	self
 		assert: yValues size = aCollection size
 		description: 'Invalid size'.
 	left := aCollection

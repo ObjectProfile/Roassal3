@@ -48,7 +48,7 @@ RSHistogramExample >> example03Bins [
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new.
 		c addDecoration: RSHorizontalTick new.
-		c title: numberOfBins. 
+		c title: numberOfBins.
 		c build.
 		g asShapeFor: numberOfBins.
 		 ].
@@ -65,7 +65,7 @@ RSHistogramExample >> example04BinningStrat [
 	"Do we need a binning strat?"
 	values := self randomValues: 0 scale: 20 size: 1000.
 	canvas := RSCanvas new.
-	shapes := { 
+	shapes := {
 		RSDefaultBinning new.
 		RSRiceBinning new.
 		RSSturgesBinning new.
@@ -77,7 +77,7 @@ RSHistogramExample >> example04BinningStrat [
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new.
 		c addDecoration: RSHorizontalTick new.
-		c title: strat class name. 
+		c title: strat class name.
 		c build.
 		g asShapeFor: strat.
 		 ].
@@ -114,17 +114,17 @@ RSHistogramExample >> example06Animations [
 			from: zeroPoint;
 			to: originalPoint;
 			easing: RSEasingInterpolator elasticOut;
-			onStepDo: [ :newPoint | 
+			onStepDo: [ :newPoint |
 				shape
 					fromRectangle: (newPoint corner: rect corner);
 					signalUpdate.
 			].
 		 ].
-	p bars 
+	p bars
 		@ (RSHighlightable new highlightBorder: (RSBorder new color: Color black));
-		@ (RSPopup text: [:assoc | 
+		@ (RSPopup text: [:assoc |
 			"TODO create an object to define the model for each bin"
-			'From: ', (assoc key key round: 3) asString, String cr, 
+			'From: ', (assoc key key round: 3) asString, String cr,
 			'To: ', (assoc key value round: 3) asString, String cr,
 			'Size: ', assoc value asString ]).
 	^ c canvas
@@ -143,7 +143,7 @@ RSHistogramExample >> example08Strategies [
 	"Do we need a binning strat?"
 	x := 1 to: 100.
 	canvas := RSCanvas new.
-	shapes := { 
+	shapes := {
 		RSDefaultBinning new.
 		RSRiceBinning new.
 		RSSturgesBinning new.
@@ -156,7 +156,7 @@ RSHistogramExample >> example08Strategies [
 		c addPlot: plot.
 		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
 		c addDecoration: RSHorizontalTick new.
-		c title: strat class name. 
+		c title: strat class name.
 		c build.
 		g asShapeFor: strat.
 		 ].
@@ -185,7 +185,7 @@ RSHistogramExample >> example10Objects [
 	<script: 'self new example10Objects open'>
 	| values c plot classes tick map |
 	classes := Collection withAllSubclasses.
-	
+
 	values := classes collect: #linesOfCode.
 	map := Dictionary newFromKeys: classes andValues: values.
 	c := RSChart new.
@@ -193,7 +193,7 @@ RSHistogramExample >> example10Objects [
 	c extent: 300@200.
 	plot := RSHistogramPlot new x: values.
 	plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
-	
+
 	c add: (tick := RSVerticalTick new).
 	tick configuration tickSize: -300.
 	tick color: Color lightGray.
@@ -201,24 +201,24 @@ RSHistogramExample >> example10Objects [
 	c add: RSHorizontalTick new.
 	c add: plot.
 	c build.
-	
+
 	plot bars do: [ :bar | | range classesToShow |
 		range := bar model key.
-		classesToShow := classes 
+		classesToShow := classes
 			select: [ :cls | (map at: cls)
 				between: range key and: range value ].
 		bar model: classesToShow.
 		 ].
-	plot bars @ (RSPopup text: [:classesToShow | 
+	plot bars @ (RSPopup text: [:classesToShow |
 		String streamContents: [ :stream |
-			classesToShow do: [ :cls | 
+			classesToShow do: [ :cls |
 				cls printOn: stream.
 				stream << ' LOC: '.
 				(map at: cls) printOn: stream ]
 			separatedBy: [ stream cr ].
-			] 
+			]
 		]).
-	^ c canvas.
+	^ c canvas
 ]
 
 { #category : #computing }
@@ -230,7 +230,7 @@ RSHistogramExample >> normal: x mean: mean stdDev: std [
 { #category : #computing }
 RSHistogramExample >> randomValues [
 	<script: 'self new randomValues inspect'>
-	^ self randomValues: 170 scale: 10 size: 250.
+	^ self randomValues: 170 scale: 10 size: 250
 ]
 
 { #category : #computing }
@@ -242,14 +242,13 @@ RSHistogramExample >> randomValues: loc scale: scale size: size [
 	mean := (low + upp) / 2.
 	stdDev := (upp - low)/4.
 	r := Random new.
-	
-	^ ((1 to: size ) collectWithIndex: [ :i :index | 
+
+	^ ((1 to: size ) collectWithIndex: [ :i :index |
 		| val sign rval |
 		rval := r rsNext:0-mean and: upp + mean.
 		val := self normal: rval mean: mean stdDev: stdDev.
 		sign := index < (size / 2) ifTrue: [ -1 ] ifFalse: [ 1 ].
-		
+
 		loc +(size * val * sign)
-		 ]) shuffled.
-	
+		 ]) shuffled
 ]

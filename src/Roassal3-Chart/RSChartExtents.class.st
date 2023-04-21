@@ -71,7 +71,7 @@ RSChartExtents >> minValueY: aNumber [
 
 { #category : #accessing }
 RSChartExtents >> padding [
-	^ padding ifNil: [ padding := 0@0 ].
+	^ padding ifNil: [ padding := 0@0 ]
 ]
 
 { #category : #accessing }

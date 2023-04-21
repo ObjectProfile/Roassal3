@@ -40,12 +40,12 @@ RSDSMStronglyConnected >> createGraph [
 	objectsX = objectsY ifFalse: [ ^ self error: 'we should have the same data in X and Y' ].
 	graph := RSDSMGraph new: objectsX size.
 	selectedColor := self selectedColor.
-	objectsX doWithIndex: [ :a :k | 
+	objectsX doWithIndex: [ :a :k |
 		objectsX doWithIndex: [ :b :j |
-			shouldFeedX ifTrue: [ 
+			shouldFeedX ifTrue: [
 				(self isAssocDependent: a -> b)
 					ifTrue: [ graph addEdge: k to: j ]
-			] ifFalse: [ 
+			] ifFalse: [
 				(self isAssocDependent: b -> a)
 					ifTrue: [ graph addEdge: k to: j ]
 			]
@@ -55,12 +55,12 @@ RSDSMStronglyConnected >> createGraph [
 
 { #category : #accessing }
 RSDSMStronglyConnected >> palette [
-	^ palette ifNil: [ palette := NSScale category20 ].
+	^ palette ifNil: [ palette := NSScale category20 ]
 ]
 
 { #category : #rendering }
-RSDSMStronglyConnected >> renderBoxes: aRSCanvas groups: aCollection [ 
-	aRSCanvas addAll: (aCollection 
+RSDSMStronglyConnected >> renderBoxes: aRSCanvas groups: aCollection [
+	aRSCanvas addAll: (aCollection
 		select: [ :group | group size > 1 ]
 		thenCollect: [ :group | self boxFor: group ])
 ]
@@ -75,21 +75,21 @@ RSDSMStronglyConnected >> renderIn: aCanvas [
 	graph := self createGraph.
 	groups := graph computeSCCs.
 	super renderIn: aCanvas.
-	self renderBoxes: aCanvas groups: groups.
+	self renderBoxes: aCanvas groups: groups
 ]
 
 { #category : #rendering }
 RSDSMStronglyConnected >> shapesFrom: group [
-	^ group collect: [ :each | self shapeAt: each @ each ] as: RSGroup.
+	^ group collect: [ :each | self shapeAt: each @ each ] as: RSGroup
 ]
 
 { #category : #sorting }
-RSDSMStronglyConnected >> sortGroups: aCollection [ 
+RSDSMStronglyConnected >> sortGroups: aCollection [
 	| newModel |
 	aCollection sort: [ :a :b | a size > b size ].
-	newModel := aCollection 
-		flatCollect: [ :each | each collect: [ :index | objectsX at: index ] ] 
+	newModel := aCollection
+		flatCollect: [ :each | each collect: [ :index | objectsX at: index ] ]
 		as: objectsX class.
 	objectsX := newModel.
-	objectsY := newModel.
+	objectsY := newModel
 ]

@@ -15,7 +15,7 @@ Class {
 RSPieTitleInteraction >> initialize [
 	super initialize.
 	labelBuilder := RSMultilineLabelBuilder new.
-	labelBuilder layout alignCenter.
+	labelBuilder layout alignCenter
 ]
 
 { #category : #accessing }
@@ -37,7 +37,5 @@ RSPieTitleInteraction >> labelText: aString [
 RSPieTitleInteraction >> onShape: aCanvas [
 	| label |
 	label := labelBuilder shapeFor: self labelText.
-	aCanvas add: label.
-	
-	
+	aCanvas add: label
 ]

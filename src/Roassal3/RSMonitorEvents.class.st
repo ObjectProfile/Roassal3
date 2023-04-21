@@ -31,7 +31,7 @@ RSMonitorEvents >> onNewEventDo: aBlockClosure [
 	events := self announcementClasses.
 	events ifNil:  [ events := target announcementClasses ].
 	events do: [ :evt |
-		target when: evt do: aBlockClosure ].
+		target when: evt do: aBlockClosure ]
 ]
 
 { #category : #accessing }
@@ -46,5 +46,5 @@ RSMonitorEvents >> target: aRSTAnnounceable [
 
 { #category : #public }
 RSMonitorEvents >> unRegister [
-	target removeInteractionIfPresent: self class.
+	target removeInteractionIfPresent: self class
 ]

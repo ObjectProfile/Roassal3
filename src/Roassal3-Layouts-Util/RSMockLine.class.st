@@ -45,7 +45,7 @@ RSMockLine >> realLine: anRSLine [
 ]
 
 { #category : #accessing }
-RSMockLine >> strength [ 
+RSMockLine >> strength [
 	^ strength
 ]
 

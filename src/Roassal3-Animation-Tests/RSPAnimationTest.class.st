@@ -13,11 +13,10 @@ RSPAnimationTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
 	classesToConsider := RSAbstractAnimation allSubclasses select: [ :c | c subclasses isEmpty ].
-	classesToConsider do: [ :cls | 
+	classesToConsider do: [ :cls |
 		m addCase: { (#animationClass -> cls) }
 	].
-	^ m 
-	
+	^ m
 ]
 
 { #category : #accessing }
@@ -42,7 +41,7 @@ RSPAnimationTest >> testBasic [
 	animation := self animationClass new.
 	self assert: animation loops equals: 1.
 	self deny: animation hasCompleted.
-	
+
 	self deny: animation isRunning.
 	self assert: animation startTime isNil.
 	self deny: animation isPaused.
@@ -50,16 +49,16 @@ RSPAnimationTest >> testBasic [
 	self assert: animation isRunning.
 	self deny: animation startTime isNil.
 	self deny: animation isPaused.
-	
+
 	animation pause.
 	self assert: animation isPaused.
 	animation continue.
 	self deny: animation isPaused.
-	
+
 	self assert: animation loops equals: 1.
 	self should: [animation loops: 0 ] raise: Error.
 	animation loops: 3.
-	self assert: animation loops equals: 3.
+	self assert: animation loops equals: 3
 ]
 
 { #category : #tests }
@@ -68,7 +67,7 @@ RSPAnimationTest >> testBasicInCanvas [
 	animation := self animationClass new.
 	canvas addAnimation: animation.
 	self assert: canvas animations size equals: 1.
-	
+
 	self assert: animation isRunning.
 	self assert: animation duration equals: self animationClass defaultDuration
 ]
@@ -81,7 +80,7 @@ RSPAnimationTest >> testDelay [
 	animation start.
 	self deny: animation isDelayDone.
 	(Delay forMilliseconds: 201) wait.
-	self assert: animation isDelayDone.
+	self assert: animation isDelayDone
 ]
 
 { #category : #tests }
@@ -96,6 +95,5 @@ RSPAnimationTest >> testError [
 	ani := c newAnimation
 				from: -50 @ -50;
 				to: 100 @ 0.
-	self should: [ ani on: shape set: #position ] raise: AssertionFailure.
-	
+	self should: [ ani on: shape set: #position ] raise: AssertionFailure
 ]

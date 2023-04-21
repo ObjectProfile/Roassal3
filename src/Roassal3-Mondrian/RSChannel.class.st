@@ -18,23 +18,23 @@ Class {
 { #category : #public }
 RSChannel >> build [
 
-	inputGroup when: RSMouseEnter do: [ :evt | 
+	inputGroup when: RSMouseEnter do: [ :evt |
 		self doHighlight.
 		evt signalUpdate ].
 	inputGroup @ (RSHighlightable new highlightColor: self color).
 
-	inputGroup when: RSMouseLeave do: [ :evt | 
+	inputGroup when: RSMouseLeave do: [ :evt |
 		self doUnhighlight.
 		evt signalUpdate ].
 
 	isClickable ifFalse: [ ^ self ].
-	inputGroup when: RSMouseClick do: [ :evt | 
+	inputGroup when: RSMouseClick do: [ :evt |
 		isClicked
-			ifTrue: [ self unmark: evt shape. 
-						self doUnmark. 	
+			ifTrue: [ self unmark: evt shape.
+						self doUnmark.
 						"We give the possibility to execute a callback"
 						toggleOffCallback rsValue: evt shape. ]
-			ifFalse: [ self mark: evt shape. 
+			ifFalse: [ self mark: evt shape.
 						self doMark.
 						"We give the possibility to execute a callback"
 						toggleOnCallback rsValue: evt shape. ].
@@ -52,7 +52,6 @@ RSChannel >> color: aColor [
 	color := aColor.
 	highlightable := RSHighlightable new.
 	highlightable highlightColor: aColor
-
 ]
 
 { #category : #accessing }
@@ -95,12 +94,11 @@ RSChannel >> initialize [
 	isClicked := false.
 	isClickable := true.
 	self color: self defaultColor.
-	
+
 	"Marks must go downward"
 	marksGoUpward := false.
-	
-	toggleOnCallback := toggleOffCallback := [ :aShape | "Do nothing for now" ].
 
+	toggleOnCallback := toggleOffCallback := [ :aShape | "Do nothing for now" ]
 ]
 
 { #category : #public }
@@ -140,17 +138,16 @@ RSChannel >> mark: shape [
 	position := shape position + (0 @ (shape height / 2))
 	            + parentPosition.
 
-	"We compute the vertical delta of the mark to be added, based on the existing marks" 
+	"We compute the vertical delta of the mark to be added, based on the existing marks"
 	deltaY := self markHeight * (self getAllMarksFrom: shape) size.
-	
+
 	"We must not forget the first mark, half must be added, to have exactly the mark below the shape (not overlapping)"
 	deltaY := deltaY + (self markHeight / 2).
 	marksGoUpward ifTrue: [ deltaY := deltaY negated ].
 	aMark translateTo: position + (0 @ deltaY).
 
 	"Register the mark in the shape"
-	shape propertyAt: self symbolMarker put: aMark.
-
+	shape propertyAt: self symbolMarker put: aMark
 ]
 
 { #category : #accessing }
@@ -206,6 +203,5 @@ RSChannel >> unmark: shape [
 	mark := shape propertyAt: self symbolMarker.
 	mark ifNil: [ ^ self ].
 	mark remove.
-	shape removeKey: self symbolMarker.
-
+	shape removeKey: self symbolMarker
 ]

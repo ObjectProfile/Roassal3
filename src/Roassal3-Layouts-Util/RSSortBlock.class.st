@@ -16,7 +16,7 @@ RSSortBlock >> value: assocA value: assocB [
 	"Return false if assocA is bigger than assocB.
 	Return true if assocA is smaller than assocB.
 	-> Inverted list with biggest elements first"
-	
+
 	| a b offset |
 	offset := 0.
 	a := assocA value.

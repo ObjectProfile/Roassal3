@@ -30,7 +30,7 @@ Class {
 }
 
 { #category : #examples }
-RSSVGPathLine class >> exampleBasic [
+RSSVGPathLine class >> basicExample [
 	| line a b |
 	line := self new.
 	a := RSCircle new
@@ -38,13 +38,13 @@ RSSVGPathLine class >> exampleBasic [
 		color: 'blue';
 		draggable;
 		yourself.
-	b := RSEllipse new 
+	b := RSEllipse new
 		radius: 5 ;
 		color: 'red';
 		draggable;
 		position: 100@100;
 		yourself.
-	
+
 	line from: a; to: b.
 	line svgPath: [ :aLine | | from to |
 		from := aLine from position.
@@ -53,18 +53,17 @@ RSSVGPathLine class >> exampleBasic [
 		'L ', to x asString, ' ', to y asString,
 		'L' , from x asString, ' ', to y asString, ' Z'
 		 ].
-	
+
 	line color: Color green; borderColor: Color black.
-	
+
 	RSCanvas new
 		addAll: { a. b. line };
-		open.
-		
+		open
 ]
 
 { #category : #visiting }
 RSSVGPathLine >> buildPathOn: visitor [
-	visitor buildSVGLinePath: self.
+	visitor buildSVGLinePath: self
 ]
 
 { #category : #accessing }
@@ -80,7 +79,7 @@ RSSVGPathLine >> color: aColor [
 { #category : #initialization }
 RSSVGPathLine >> initialize [
 	super initialize.
-	self svgPath: [:line |''].
+	self svgPath: [:line |'']
 ]
 
 { #category : #accessing }
@@ -91,6 +90,5 @@ RSSVGPathLine >> svgPath [
 { #category : #accessing }
 RSSVGPathLine >> svgPath: aBlock [
 	"aBlock return a string and recives 1 argument, the svg line"
-	svgPath := aBlock 
-	
+	svgPath := aBlock
 ]

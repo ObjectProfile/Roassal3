@@ -23,10 +23,10 @@ RSHanoiRoassal >> animationFor: asso [
 			shapeTo := to last.
 			p1 := shapeFrom position.
 			p2 := shapeTo position.
-			pscale ifNil: [ 
+			pscale ifNil: [
 				pscale := NSScale linear
 					domain: #(0 0.3 0.6 1);
-					range: 
+					range:
 						{p1.
 						p1 x@0.
 						p2 x@0.
@@ -35,18 +35,17 @@ RSHanoiRoassal >> animationFor: asso [
 				 ].
 			shapeFrom position: (pscale scale: t).
 			canvas signalUpdate ];
-		when: RSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [
 			to addLast: from removeLast. ];
-		yourself.
-		
+		yourself
 ]
 
 { #category : #'meta level' }
 RSHanoiRoassal >> createAnimations [
 	| allAnimations |
-	allAnimations := canvas 
+	allAnimations := canvas
 		animationFrom: (moves collect: [:asso | self animationFor: asso]).
-	allAnimations when: RSAnimationEndEvent do: [ self inform: 'Done!!' ].
+	allAnimations when: RSAnimationEndEvent do: [ self inform: 'Done!!' ]
 ]
 
 { #category : #public }
@@ -67,18 +66,18 @@ RSHanoiRoassal >> createCanvasFor: anInteger [
 	color := NSScale category20.
 	size := 20.
 	w := anInteger * size.
-	canvas addAll: ((1 to: anInteger) 
-		collect: [ :i | (self createBoxFor: i size: size) 
+	canvas addAll: ((1 to: anInteger)
+		collect: [ :i | (self createBoxFor: i size: size)
 			color: (color scale: i) ]).
-	
+
 	##(A B C) doWithIndex: [ :sym :i | self createGroup: sym length: anInteger size: size index: i-1. ].
 	groupA := canvas propertyAt: #A.
 	groupA addAll: canvas nodes reverse.
 	canvas camera
-		zoomToFit: canvas extent 
+		zoomToFit: canvas extent
 		rectangle: (w negated@ 0 corner: (w * 3)@(anInteger * size) ) .
 	canvas open
-		setLabel: 'Hanoi!'. 
+		setLabel: 'Hanoi!'
 ]
 
 { #category : #public }
@@ -91,13 +90,13 @@ RSHanoiRoassal >> createGroup: aString length: anInteger size: size index: index
 		position: (index * (w + (w * 0.1))) @ ((anInteger + 1) * size);
 		yourself.
 	canvas addShape: l.
-	g add: l.
+	g add: l
 ]
 
 { #category : #'meta level' }
 RSHanoiRoassal >> createLink [
 	| node link |
-	node := (RSHanoi >> #moveFrom:to:) ast. 
+	node := (RSHanoi >> #moveFrom:to:) ast.
 	moves := OrderedCollection new.
 	link :=  MetaLink new
 		arguments: #(context);
@@ -108,13 +107,13 @@ RSHanoiRoassal >> createLink [
 			moves add: a-> b ];
 		yourself.
 	node link: link.
-	^ link.
+	^ link
 ]
 
 { #category : #public }
-RSHanoiRoassal >> createLinkAnCanvas: anInteger [ 
+RSHanoiRoassal >> createLinkAnCanvas: anInteger [
 	self createCanvasFor: anInteger.
-	^ self createLink.
+	^ self createLink
 ]
 
 { #category : #'meta level' }

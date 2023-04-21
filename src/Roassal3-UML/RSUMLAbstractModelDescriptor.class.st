@@ -8,18 +8,18 @@ Class {
 }
 
 { #category : #testing }
-RSUMLAbstractModelDescriptor class >> isAbstract [ 
-	^self name = #RSUMLAbstractModelDescriptor 
+RSUMLAbstractModelDescriptor class >> isAbstract [
+	^self name = #RSUMLAbstractModelDescriptor
 ]
 
 { #category : #public }
 RSUMLAbstractModelDescriptor >> forPharo [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
 RSUMLAbstractModelDescriptor >> initialize [
 	super initialize.
-	self forPharo.
+	self forPharo
 ]

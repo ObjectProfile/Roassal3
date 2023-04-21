@@ -22,16 +22,14 @@ RSLissajous >> build [
 	canvas color: Color black.
 	rows := self createCirclesWith: [ :n | 0@n ].
 	columns := self createCirclesWith: [ :n | n @ 0 ].
-	
+
 	rows do: [ :row |
 		columns do: [ :column |
-			self createAnimationFor: row and: column ] ].
-	
-		
+			self createAnimationFor: row and: column ] ]
 ]
 
 { #category : #animations }
-RSLissajous >> createAnimationFor: row and: column [ 
+RSLissajous >> createAnimationFor: row and: column [
 	| col points combined e1 e2  p1 p2 delta dot |
 	e1 := column shapes first.
 	e2 := row shapes first.
@@ -55,12 +53,11 @@ RSLissajous >> createAnimationFor: row and: column [
 			points add: newPoint.
 			dot position: newPoint.
 			combined controlPoints: points.
-		].
-	
+		]
 ]
 
 { #category : #shapes }
-RSLissajous >> createBigCircleFor: aPoint [ 
+RSLissajous >> createBigCircleFor: aPoint [
 	| group shape |
 	group := RSGroup new.
 	group add: (RSEllipse new
@@ -73,16 +70,16 @@ RSLissajous >> createBigCircleFor: aPoint [
 		yourself).
 	shape := group asShape.
 	self createLineAnimationFor: shape.
-	^ shape.
+	^ shape
 ]
 
 { #category : #shapes }
-RSLissajous >> createCirclesWith: aBlockClosure [ 
+RSLissajous >> createCirclesWith: aBlockClosure [
 	| values shapes |
 	values := (1 to: nCircles) collect: aBlockClosure.
 	shapes := values collect: [ :p | self createBigCircleFor: p ].
 	canvas addAll: shapes.
-	^ shapes.
+	^ shapes
 ]
 
 { #category : #animations }
@@ -116,10 +113,7 @@ RSLissajous >> createLineAnimationFor: shape [
 				ifFalse: [ position x @ (cell * (nCircles + 0.5) ) ].
 			position := (point * cell) + delta.
 			line startPoint: position.
-			].
-		
-	
-
+			]
 ]
 
 { #category : #shapes }
@@ -139,11 +133,11 @@ RSLissajous >> initialize [
 	canvas := RSCanvas new.
 	color := NSScale category20.
 	nCircles := 7.
-	
+
 	gap := 10.
 	circleSize := 50.
 	dotSize := 10.
-	cell := gap + circleSize.
+	cell := gap + circleSize
 ]
 
 { #category : #running }
@@ -153,5 +147,5 @@ RSLissajous >> run [
 	canvas open
 		extent: 500@550;
 		setLabel: 'Lissajous curves :V'.
-	canvas zoomToFit.
+	canvas zoomToFit
 ]

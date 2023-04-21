@@ -13,6 +13,6 @@ RSAbstractColorGenerator >> backgroundColor [
 ]
 
 { #category : #accessing }
-RSAbstractColorGenerator >> colorFor: aParticle [ 
+RSAbstractColorGenerator >> colorFor: aParticle [
 	self subclassResponsibility
 ]

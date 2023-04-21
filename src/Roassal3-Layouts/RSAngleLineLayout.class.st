@@ -1,5 +1,5 @@
 "
-This layout uses an angle to put the elements in a line
+This layout uses an angle to describe a line where the elements would be placed
 "
 Class {
 	#name : #RSAngleLineLayout,
@@ -16,13 +16,13 @@ RSAngleLineLayout >> angle [
 ]
 
 { #category : #accessing }
-RSAngleLineLayout >> angle: anAngleInDegrees [ 
+RSAngleLineLayout >> angle: anAngleInDegrees [
 	angle := anAngleInDegrees
 ]
 
 { #category : #hook }
 RSAngleLineLayout >> defaultAngle [
-	^ 90.
+	^ 90
 ]
 
 { #category : #hook }
@@ -32,7 +32,7 @@ RSAngleLineLayout >> doExecute: elements [
 	radius := 0.
 	gap := self gapSize.
 	ang := self angle degreesToRadians.
-	elements do: [ :element | 
+	elements do: [ :element |
 		| point |
 		point := ang cos @ ang sin * radius.
 		translator translateTopLeftOf: element to: originalCenter + point.
@@ -47,5 +47,5 @@ RSAngleLineLayout >> initialize [
 
 { #category : #hook }
 RSAngleLineLayout >> positionOriginalPointer [
-	^ 0@0.
+	^ 0@0
 ]

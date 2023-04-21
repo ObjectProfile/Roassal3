@@ -27,7 +27,7 @@ Class {
 
 { #category : #'public - positioning shorcuts' }
 RSXLabelDecoration >> above [
-	self location 
+	self location
 		offset: 0@ -5;
 		above;
 		center
@@ -35,7 +35,7 @@ RSXLabelDecoration >> above [
 
 { #category : #'public - positioning shorcuts' }
 RSXLabelDecoration >> below [
-	self location 
+	self location
 		offset: 0@5;
 		below;
 		center
@@ -44,5 +44,5 @@ RSXLabelDecoration >> below [
 { #category : #initialization }
 RSXLabelDecoration >> initialize [
 	super initialize.
-	self below.
+	self below
 ]

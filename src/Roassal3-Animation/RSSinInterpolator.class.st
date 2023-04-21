@@ -22,7 +22,7 @@ RSSinInterpolator >> interpolateIn: t [
 
 { #category : #interpolation }
 RSSinInterpolator >> interpolateInOut: t [
-	^ (1 - (Float pi * t) cos ) / 2.
+	^ (1 - (Float pi * t) cos ) / 2
 ]
 
 { #category : #interpolation }

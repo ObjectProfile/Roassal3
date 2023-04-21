@@ -47,7 +47,7 @@ RSColorPalette class >> sequential [
 { #category : #'instance creation' }
 RSColorPalette >> fromTriplet: array [
 	^ NSScale ordinal
-		range: (array collect: [ :arr | 
+		range: (array collect: [ :arr |
 			Color
 				r: arr first
 				g: arr second

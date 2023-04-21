@@ -37,7 +37,7 @@ Class {
 }
 
 { #category : #algorithm }
-RSForceBasedLayout >> accumulate: aQuad [ 
+RSForceBasedLayout >> accumulate: aQuad [
 	| centerCharge |
 	centerCharge := 0@0.
 	aQuad charge: 0; centerOfCharge: 0@0.
@@ -54,10 +54,9 @@ RSForceBasedLayout >> accumulate: aQuad [
 		k := alpha * soleChild charge.
 		aQuad charge: aQuad charge + k.
 		centerCharge := centerCharge + (k * soleChild position) ].
-		
-	aQuad charge = 0 ifTrue: [ ^ self ].		
-	aQuad centerOfCharge: centerCharge / aQuad charge.		
 
+	aQuad charge = 0 ifTrue: [ ^ self ].
+	aQuad centerOfCharge: centerCharge / aQuad charge
 ]
 
 { #category : #'adding-removing' }
@@ -67,8 +66,7 @@ RSForceBasedLayout >> addLines: realLines [
 		collect: [ :e | self newMockLineFor: e ]
 		thenReject: [:e | e isNil ].
 	lines class = Array ifTrue: [ lines := OrderedCollection new ].
-	lines addAll: newMockLines.
-
+	lines addAll: newMockLines
 ]
 
 { #category : #'adding-removing' }
@@ -76,8 +74,7 @@ RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
 	nodes class = Array ifTrue: [ nodes := nodes asOrderedCollection ].
-	nodes addAll: newMockElements.
-	
+	nodes addAll: newMockElements
 ]
 
 { #category : #accessing }
@@ -100,7 +97,7 @@ RSForceBasedLayout >> autoRepulse [
 
 { #category : #accessing }
 RSForceBasedLayout >> autoRepulse: aBoolean [
-	autoRepulse := aBoolean 
+	autoRepulse := aBoolean
 ]
 
 { #category : #hook }
@@ -109,8 +106,7 @@ RSForceBasedLayout >> calculateAutoRepulse [
 	nodes do: [ :node | | e |
 		e := node extent.
 		e := e x max: e y.
-		node charge: e * -2 ].
-	
+		node charge: e * -2 ]
 ]
 
 { #category : #hook }
@@ -121,9 +117,7 @@ RSForceBasedLayout >> calculateAutoRepulseFor: line [
 	e1 := e1 x max: e1 y.
 	e2 := e2 x max: e2 y.
 	n := (e1 + e2) * 0.7.
-	line length: n.
-		
-	
+	line length: n
 ]
 
 { #category : #accessing }
@@ -134,7 +128,7 @@ RSForceBasedLayout >> center [
 { #category : #accessing }
 RSForceBasedLayout >> center: aPoint [
 	"gravity moves elements to that point"
-	center := aPoint.
+	center := aPoint
 ]
 
 { #category : #accessing }
@@ -164,7 +158,7 @@ RSForceBasedLayout >> doExecute: nodeShapes [
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
 	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
-	nodeShapes do: [ :n | n updateLinesON. n connectedLines do: #update ].
+	nodeShapes do: [ :n | n updateLinesON. n connectedLines do: #update ]
 ]
 
 { #category : #'public - configuration' }
@@ -223,7 +217,7 @@ RSForceBasedLayout >> initialize [
 		length: 20;
 		charge: -30;
 		center: 0@0;
-		useProgressBar.
+		useProgressBar
 ]
 
 { #category : #accessing }
@@ -312,13 +306,12 @@ RSForceBasedLayout >> removeEdge: aRealEdge [
 RSForceBasedLayout >> removeNode: aRealNode [
 	| node |
 	node := self mockElementAt: aRealNode.
-	nodes remove: node.
-	
+	nodes remove: node
 ]
 
 { #category : #algorithm }
 RSForceBasedLayout >> repulse: aNode from: aQuad [
-	
+
 	aQuad soleChild = aNode ifFalse: [
 		| d |
 		d := aQuad centerOfCharge - aNode position.
@@ -335,22 +328,21 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 				ifTrue: [
 					k := aQuad soleChild charge * dn * dn * alpha.
 					aNode oldPosition: p - (d * k).] ] ].
- 
-	(aQuad charge closeTo: 0) ifFalse: [ 
-		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
 
+	(aQuad charge closeTo: 0) ifFalse: [
+		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
 ]
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutIn: job [
 	"Central method"
-	iterations isZero ifTrue: [ 
+	iterations isZero ifTrue: [
 		[alpha := alpha * 0.99.
-		alpha > 0.005 ] whileTrue: [ 
+		alpha > 0.005 ] whileTrue: [
 			self step.
 			job currentValue: 1 - alpha ] ]
-	ifFalse: [ 
-		iterations timesRepeat: [ 
+	ifFalse: [
+		iterations timesRepeat: [
 			alpha := alpha * 0.99.
 			self step.
 		job currentValue: 1 - alpha ] ]
@@ -358,7 +350,7 @@ RSForceBasedLayout >> runLayoutIn: job [
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutInJob [
-	[ :job | 
+	[ :job |
 		job
 			title: 'Laying out elements';
 			min: 1 - alpha;
@@ -369,11 +361,11 @@ RSForceBasedLayout >> runLayoutInJob [
 { #category : #hook }
 RSForceBasedLayout >> runLayoutSimply [
 	self runLayoutIn: Job new.
-	"iterations = 0 ifTrue: [ 
+	"iterations = 0 ifTrue: [
 		[ alpha := alpha * 0.99.
 		alpha > 0.005 ] whileTrue: [ self step ] ]
-	ifFalse: [ 
-		iterations timesRepeat: [ 
+	ifFalse: [
+		iterations timesRepeat: [
 			alpha := alpha * 0.99.
 			self step ] ]"
 ]
@@ -388,10 +380,10 @@ RSForceBasedLayout >> start [
 	"mandatory for animations"
 	initialLayout on: nodes.
 	nodes := nodes collect: [ :node | self newMockElementFor: node ].
-	lines := lines 
+	lines := lines
 		collect: [ :e | self newMockLineFor: e ]
 		thenReject: [:e | e isNil ].
-	self autoRepulse ifTrue: [ 
+	self autoRepulse ifTrue: [
 		self calculateAutoRepulse.
 		 ].
 	alpha ifNil: [ alpha :=  0.1 ]
@@ -410,7 +402,7 @@ RSForceBasedLayout >> step [
 { #category : #events }
 RSForceBasedLayout >> stepEdgeForces [
 	"Apply forces of edges."
-	lines do: [ :each | 
+	lines do: [ :each |
 		| from to fp tp len k pd |
 		from := each from.
 		to := each to.
@@ -425,14 +417,13 @@ RSForceBasedLayout >> stepEdgeForces [
 			to translateTo: tp - (pd * k).
 			k := 1 - k.
 			from translateTo: fp + (pd * k).]
-	].
-
+	]
 ]
 
 { #category : #events }
 RSForceBasedLayout >> stepFriction [
 	"Apply friction. This is the last to do in a step, after new positions have been defined."
-	nodes do: [ :each | 
+	nodes do: [ :each |
 		| current new old |
 		current := each position.
 		old := each oldPosition.
@@ -448,11 +439,10 @@ RSForceBasedLayout >> stepGravityForce [
 	| k |
 	k := alpha * gravity.
 	(k closeTo: 0) ifTrue: [ ^ self ].
-	nodes do: [ :each | 
+	nodes do: [ :each |
 		| pos |
 		pos := each position.
 		each translateTo: pos + (k * (center - pos)) ]
-
 ]
 
 { #category : #events }
@@ -461,7 +451,7 @@ RSForceBasedLayout >> stepNodeRepulsion [
 	quadtree := RSQuadTreeForce withAll: nodes.
 	self accumulate: quadtree.
 	nodes
-		do: [ :each | 
+		do: [ :each |
 			each isFixed
 				ifTrue: [ each translateTo: each fixPosition ]
 				ifFalse: [ self repulse: each from: quadtree ] ]

@@ -39,7 +39,7 @@ RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 { #category : #accessing }
 RSUMLCalypsoSettings class >> initialSelectionClass [
-	^ initialSelectionClass ifNil: [ RSDancingSelection ].
+	^ initialSelectionClass ifNil: [ RSDancingSelection ]
 ]
 
 { #category : #accessing }
@@ -83,14 +83,14 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLColors)
 		parent: #useCalypsoUML;
-		label: 'UML Colors' ;  
+		label: 'UML Colors' ;
 		description: 'All settings concerned with the look''n feel of your system';
 		with: [
 			(aBuilder setting: #lightThemeUMLClassColor)
 				target: self;
 				label: 'Light Theme UML Class color';
 				default: self defaultLightThemeColorUMLClass.
-			
+
 			(aBuilder setting: #darkThemeUMLClassColor)
 				target: self;
 				label: 'Dark Theme UML Class color';
@@ -114,7 +114,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLValues)
 		parent: #useCalypsoUML;
-		label: 'Capypso UML Methods' ;  
+		label: 'Capypso UML Methods' ;
 		description: 'All settings concerned with the size of variables to show';
 		with: [
 			(aBuilder range: #methodsLimitUML)
@@ -132,7 +132,7 @@ RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 		parent: #Calypso;
 		default: true;
 		target: self;
-		description: 'Settings related to the UML within Calypso browser'.
+		description: 'Settings related to the UML within Calypso browser'
 ]
 
 { #category : #accessing }

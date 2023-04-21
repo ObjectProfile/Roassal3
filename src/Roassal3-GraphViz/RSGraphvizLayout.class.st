@@ -18,7 +18,7 @@ Class {
 
 { #category : #public }
 RSGraphvizLayout class >> commandLocation [
-	^ commandLocation ifNil: [ commandLocation := self findCommand ].
+	^ commandLocation ifNil: [ commandLocation := self findCommand ]
 ]
 
 { #category : #'instance creation' }
@@ -38,7 +38,7 @@ RSGraphvizLayout class >> findCommand [
 		yourself.
 	process stdin: 'dot' utf8Encoded.
 	process runAndWait.
-	^ process stdout trimBoth 
+	^ process stdout trimBoth
 ]
 
 { #category : #'instance creation' }
@@ -58,17 +58,17 @@ RSGraphvizLayout class >> twoPi [
 
 { #category : #'public - configuration' }
 RSGraphvizLayout >> digraph [
-	^ self 
+	^ self
 		dotConverter: RSDigraphDotConverter new;
 		yourself
 ]
 
 { #category : #hook }
 RSGraphvizLayout >> doExecute: shapes [
-	| group process | 
+	| group process |
 	group := shapes asGroup.
 	dotDescription := self dotDescriptionOf: shapes.
-	
+
 	process := RSUnixSubprocess new
 		command: self class commandLocation;
 		arguments: { '-Tplain-ext' };
@@ -82,7 +82,7 @@ RSGraphvizLayout >> doExecute: shapes [
 	graphvizResult := process stdout.
 	graphvizResult ifEmpty: [ self error: process stderr. ].
 	self positionShapes: group with: graphvizResult.
-	process closeAndCleanStreams.
+	process closeAndCleanStreams
 ]
 
 { #category : #accessing }
@@ -125,7 +125,7 @@ RSGraphvizLayout >> initialize [
 
 { #category : #'public - configuration' }
 RSGraphvizLayout >> neato [
-	^ self 
+	^ self
 		dotConverter: RSNeatoDotConverter new;
 		yourself
 ]
@@ -134,7 +134,7 @@ RSGraphvizLayout >> neato [
 RSGraphvizLayout >> pointsFor: line [
 	| points n |
 	n := line next asNumber.
-	points := (1 to: n) collect: [ :i | 
+	points := (1 to: n) collect: [ :i |
 		| x y |
 		x := line next asNumber.
 		y := line next asNumber.
@@ -148,17 +148,17 @@ RSGraphvizLayout >> positionShapes: elements with: string [
 	| nodeIndex |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
 	nodeIndex := 1.
-	
-	string linesDo: [ :l | 
+
+	string linesDo: [ :l |
 		| line type |
 		line := (' ' split: l) readStream.
 		type := line next.
-		type = #node ifTrue: [ 
+		type = #node ifTrue: [
 			| x y |
 			line next.
 			x := line next asNumber.
 			y := line next asNumber.
-			
+
 			(elements at: nodeIndex) translateTo: (self transform: x@y).
 			nodeIndex := nodeIndex + 1.
 			 ].
@@ -173,7 +173,7 @@ RSGraphvizLayout >> positionShapes: elements with: string [
 			edge attachPoint: (RSGraphvizAttachPoint new points: points edge: edge).
 			edge propertyAt: #points put: points.
 			 ].
-		 ].
+		 ]
 ]
 
 { #category : #hook }
@@ -181,7 +181,7 @@ RSGraphvizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: 
 	"
 	self new runningGraphvizInputFilename: 'hello.dot' outputFilename: 'myresult.txt'
 	"
-	
+
 	^ self ffiCall: #( int runGraphviz ( char * filenameInput , char* filenameOutput) ) library: GraphvizFFILibrary
 ]
 
@@ -197,14 +197,14 @@ RSGraphvizLayout >> scale: aNumber [
 
 { #category : #'public - configuration' }
 RSGraphvizLayout >> sfdp [
-	^ self 
+	^ self
 		dotConverter: RSSFDPConverter new;
 		yourself
 ]
 
 { #category : #'public - configuration' }
 RSGraphvizLayout >> strict [
-	^ self 
+	^ self
 		dotConverter: RSStrictDotConverter new;
 		yourself
 ]
@@ -216,7 +216,7 @@ RSGraphvizLayout >> transform: aPoint [
 
 { #category : #'public - configuration' }
 RSGraphvizLayout >> twoPi [
-	^ self 
+	^ self
 		dotConverter: RSTwoPiDotConverter new;
 		yourself
 ]
