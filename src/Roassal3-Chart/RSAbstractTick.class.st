@@ -276,9 +276,16 @@ RSAbstractTick >> ticks [
 
 { #category : #public }
 RSAbstractTick >> ticksData [
-	niceLabel step isZero ifTrue: [ niceLabel step: 1 ].
-	^ niceLabel min to: niceLabel max by: niceLabel step. 
-	
+
+	| rangeForDividing inverseStep scaleToUse |
+	scaleToUse := self isHorizontalTick
+		ifTrue: [ xScale ]
+		ifFalse: [ yScale ].
+	inverseStep := scaleToUse range second - scaleToUse range first
+	               / self configuration numberOfTicks.
+	rangeForDividing := scaleToUse range first to: scaleToUse range second by: inverseStep.
+
+	^ (rangeForDividing collect: [ :e | scaleToUse invert: e ]) allButLast
 ]
 
 { #category : #public }
