@@ -277,15 +277,15 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 
-	| rangeForDividing inverseStep scaleToUse |
+	| rangeForDividing scaleToUse |
 	scaleToUse := self isHorizontalTick
 		ifTrue: [ xScale ]
-		ifFalse: [ yScale ].
-	inverseStep := scaleToUse range second - scaleToUse range first
-	               / self configuration numberOfTicks.
-	rangeForDividing := scaleToUse range first to: scaleToUse range second by: inverseStep.
+		 ifFalse: [ yScale ].
+	rangeForDividing := scaleToUse range first
+		to: scaleToUse range second
+		count: self configuration numberOfTicks - 1.
 
-	^ (rangeForDividing collect: [ :e | scaleToUse invert: e ]) allButLast
+	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
 ]
 
 { #category : #public }
