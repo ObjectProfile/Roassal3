@@ -25,10 +25,10 @@ RSLineSpineDecoration >> renderIn: canvas [
 	x := zeroPoint x.
 	y := zeroPoint y.
 	axisX startPoint: 0@ y; endPoint: chart extent x @ y.
-	
+
 	axisY := self shape copy.
 	axisY startPoint: x @ chart extent y; endPoint: x @ 0.
-	
+
 	box := { axisX. axisY } asShape.
 	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
 	canvas add: box
@@ -44,5 +44,5 @@ RSLineSpineDecoration >> zeroPoint [
 	x := (0 between: chart minValueX and: chart maxValueX)
 		ifTrue: [ (plot xScale scale: 0) ]
 		ifFalse: [ 0 ].
-	^ x @ y 
+	^ x @ y
 ]

@@ -29,7 +29,7 @@ RSParticleForce >> position: aPoint [
 
 { #category : #rendering }
 RSParticleForce >> renderIn: aCanvas [
-	shape ifNil: [ 
+	shape ifNil: [
 		shape := RSEllipse new size: 1; color: (Color black alpha: 0.1).
 		aCanvas addShape: shape.
 		 ].
@@ -39,7 +39,7 @@ RSParticleForce >> renderIn: aCanvas [
 { #category : #rendering }
 RSParticleForce >> renderIn: aCanvas perlin: perlin [
 	| period n |
-	shape ifNil: [ 
+	shape ifNil: [
 		shape := RSEllipse new size: 1.
 		aCanvas addShape: shape.
 		 ].
@@ -52,14 +52,13 @@ RSParticleForce >> renderIn: aCanvas perlin: perlin [
 
 { #category : #rendering }
 RSParticleForce >> renderIn: aCanvas with: colorGenerator [
-	
-	shape ifNil: [ 
+
+	shape ifNil: [
 		shape := RSEllipse new size: 1.
 		aCanvas addShape: shape.
 		 ].
 	shape color: (colorGenerator colorFor: self).
 	shape position: position
-	
 ]
 
 { #category : #updating }
@@ -69,9 +68,9 @@ RSParticleForce >> update: itf with: force [
 	p2 := itf position.
 	dist := p1 distanceTo: p2.
 	"dist < itf radius ifFalse: [ ^ self ]."
-	dir := itf mode = #attract 
+	dir := itf mode = #attract
 		ifTrue: [ p1 - p2 ]
 		ifFalse: [ p2 - p1 ].
 	dir := dir normalized * force / dist.
-	position := position + dir.
+	position := position + dir
 ]

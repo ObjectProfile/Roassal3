@@ -2,57 +2,19 @@
 `RSSearchInCanvas` am an option for the canvas controller. 
 You can use `RSSearchInCanvas` as follows (press the S key and the R key):
 
-```Smalltalk
-c := RSCanvas new.
-shapes := Collection withAllSubclasses collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
-c addAll: shapes.
-shapes @ RSPopup.
-eb := RSEdgeBuilder line.
-eb canvas: c.
-eb connectFrom: #superclass.
-RSTreeLayout on: shapes.
-c @ RSCanvasController.
-```
+Examples
+- `RSSearchInCanvasInteraction class >>#exampleCollection`
+- `RSSearchInCanvasInteraction class >>#exampleCollection2`
 
-```Smalltalk
-c := RSCanvas new.
-shapes := (1 to: 10) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
-c addAll: shapes.
-RSGridLayout on: shapes.
-shapes @ RSPopup.
-con := RSCanvasController new.
-con addInteraction: RSSearchInCanvas new.
-c @ con.
-```
+### Variables
+- canvas, the current canvas.
+- useExactMach, a configuration flag, if true it will use a exact regular expression
+- highlightesShapes, a collection of the group of shapes
+- colorsToUse, a color palette to highlight each search group
+- highlightableLabels, the current labels on the top left of the search.
+Search In Canvas will highlight with a shadow a current shape. You have to click on the search result to jump between results of the list.
 
-Another example:
-```Smalltalk
-c := RSCanvas new.
-
-classes := Collection withAllSubclasses.
-elements := classes collect: [ :cls |
-	g := RSGroup new
-		add: (RSLabel new text: cls name);
-		add: (RSEllipse new size: (cls numberOfMethods + 5) sqrt; color: Color blue );
-		yourself.
-	RSVerticalLineLayout new center; on: g.
-	g asShapeFor: cls ] as: RSGroup.
-
-c addAll: elements.
-high := RSHighlightable defaultRed.
-elements @ high.
-RSGridLayout new
-	lineItemsCount: 5;
-	on: elements.
-
-con := RSCanvasController new.
-con addInteraction: (search := RSSearchInCanvas new 
-	colorToHighlight: Color blue translucent;
-	yourself).
-
-c @ con.
-```
-
+The selection of the elements is based on each shape model `asString`
 "
 Class {
 	#name : #RSSearchInCanvasInteraction,
@@ -76,25 +38,25 @@ RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 
 { #category : #'private - events' }
 RSSearchInCanvasInteraction >> animateShadowPosition: shadow [
-	| rect correct |
+	| rect correct camera newPosition |
 	rect := shadow globalEncompassingRectangle.
 	(canvas visibleRectangle containsRect: rect)
 		ifTrue: [ ^ self ].
-	correct := self
-		correctCameraPosition: canvas
-		inRectangle: (self expandedRectangle: canvas)
-		position: rect floatCenter
-		scale: canvas camera scale.
+	camera := canvas camera.
+
+	newPosition := camera positionFromSpace: rect floatCenter.
+	correct := self correctCamera: camera matrixDo: [ :mat | mat translation: newPosition ].
+
 	canvas newAnimation
 		duration: 500 milliSeconds;
 		from: canvas camera position;
 		to: correct;
-		on: canvas camera set: #position:.
+		on: camera set: #position:
 ]
 
 { #category : #util }
 RSSearchInCanvasInteraction >> candidateShapes [
-	"Return shapes for which the model has to be matched. 
+	"Return shapes for which the model has to be matched.
 	 Only shapes that are not a line and having a model may be eligeable to be highligted"
 	self assert: [ canvas notNil ] description: 'Canvas should be set first'.
 	^ canvas allChildren select: [ :child | child model notNil and: [ child isNode ] ]
@@ -121,20 +83,20 @@ RSSearchInCanvasInteraction >> clickOnLabel: evt [
 	index := label propertyAt: #index ifAbsent: [ 1 ].
 	shadow := (shapes at: index) propertyAt: #shadow.
 	shadow color: label color.
-	
-	index := evt class == RSMouseLeftClick 
+
+	index := evt class == RSMouseLeftClick
 		ifTrue: [ index % shapes size + 1]
 		ifFalse: [ index - 1 ].
 	index = 0 ifTrue: [ index := shapes size ].
 	label propertyAt: #index put: index.
 	nextShadow := (shapes at: index) propertyAt: #shadow.
-	self animateShadowPosition: nextShadow.
+	self animateShadowPosition: nextShadow
 ]
 
 { #category : #'public - configuration' }
 RSSearchInCanvasInteraction >> colorToHighlight: aColor [
 	"Set the color to highlight shapes when searching"
-	colorsToUse range at: 1 put: aColor.
+	colorsToUse range at: 1 put: aColor
 ]
 
 { #category : #public }
@@ -165,8 +127,7 @@ RSSearchInCanvasInteraction >> doNotUseExactMatch [
 RSSearchInCanvasInteraction >> doUnhighlightShapes [
 
 	highlightesShapes do: [ :s | self removeShadow: s ].
-	highlightesShapes := RSGroup new.
-
+	highlightesShapes := RSGroup new
 ]
 
 { #category : #accessing }
@@ -181,16 +142,14 @@ RSSearchInCanvasInteraction >> hideCurrentShadow: evt [
 	label := evt shape.
 	shapes := label propertyAt: #shapesToHighlight.
 	anime := label propertyAt: #animation.
-	anime ifNotNil: [ 
+	anime ifNotNil: [
 		anime stop.
 		label removeKey: #animation ].
 	(shapes isNil or: [shapes isEmpty]) ifTrue: [ ^ self ].
 	index := label propertyAt: #index ifAbsent: [ 1 ].
-	
+
 	shadow := (shapes at: index) propertyAt: #shadow.
-	shadow color: label color.
-	
-	
+	shadow color: label color
 ]
 
 { #category : #initialization }
@@ -250,7 +209,7 @@ RSSearchInCanvasInteraction >> obtainRegExpToHighlight [
 RSSearchInCanvasInteraction >> onShape: aCanvas [
 	aCanvas
 		when: RSKeyUp send: #processKeyUp: to: self;
-		when: RSScaleChangedEvent send: #updateShadows: to: self.
+		when: RSScaleChangedEvent send: #updateShadows: to: self
 ]
 
 { #category : #'private - events' }
@@ -271,27 +230,27 @@ RSSearchInCanvasInteraction >> putShadowOn: shape [
 		paint: self colorToUseToHighlight;
 		yourself.
 	shape removeInteractionIfPresent: self class.
-	shape 
+	shape
 		when: RSPositionChangedEvent send: #updateShadow: to: self;
 		when: RSExtentChangedEvent send: #updateShadow: to: self;
 		when: RSShapeRemovedEvent send: #removeShadow: to: self.
-	
+
 	shape parent ifNotNil: [ shape parent addShape: shadow before: shape ].
 	shape propertyAt: key
 		ifPresent: [ :oldShadow | oldShadow remove ].
-		
+
 	shape propertyAt: key put: shadow.
-	self updateShadow: shape.
+	self updateShadow: shape
 ]
 
 { #category : #public }
 RSSearchInCanvasInteraction >> removeShadow: evt [
 	| shape |
-	shape := evt shape.	
+	shape := evt shape.
 	shape propertyAt: #shadow ifPresent: [ :shadow |
 		shadow remove.
 		shape removeKey: #shadow.
-	].
+	]
 ]
 
 { #category : #rendering }
@@ -350,10 +309,10 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 
 	lbl := RSLabel new text: regExp.
 	lbl propertyAt: #shapesToHighlight put: shapesToHighlight.
-	
+
 	lbl fontSize: 14.
-	lbl 
-		@ (RSPopup text:  shapesToHighlight size asString, ' elements'); 
+	lbl
+		@ (RSPopup text:  shapesToHighlight size asString, ' elements');
 		@ highlightableLabels.
 	lbl when: RSMouseClick send: #clickOnLabel: to: self.
 	lbl color: self colorToUseToHighlight.
@@ -369,7 +328,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 
 { #category : #util }
 RSSearchInCanvasInteraction >> shapesToHighlightUsingRegExp: regExp [
-	"Return the shapes to be highlighted"	
+	"Return the shapes to be highlighted"
 
 	| candidateShapes shapesToHighlight |
 	candidateShapes := self candidateShapes.
@@ -396,7 +355,7 @@ RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 		scale: (NSScale linear
 			domain: #(0 0.5 1);
 			range: {label color. label color negated. label color});
-		onStepDo: [:newColor | 
+		onStepDo: [:newColor |
 			shadow ifNotNil: [
 				index := label propertyAt: #index ifAbsent: [ 1 ].
 				shadow := (shapes at: index) propertyAt: #shadow.
@@ -404,8 +363,7 @@ RSSearchInCanvasInteraction >> showCurrentShadow: evt [
 				shadow signalUpdate.
 			 ]
 		].
-	label propertyAt: #animation put: anime.
-	
+	label propertyAt: #animation put: anime
 ]
 
 { #category : #util }
@@ -427,12 +385,12 @@ RSSearchInCanvasInteraction >> updateShadow: evt [
 	pad := 5/ (self scaleFrom: shape).
 	shadow
 		fromRectangle: (shape encompassingRectangle expandBy: pad);
-		cornerRadius: pad * 0.75.
+		cornerRadius: pad * 0.75
 ]
 
 { #category : #public }
 RSSearchInCanvasInteraction >> updateShadows: evt [
-	highlightesShapes do: [ :each | self updateShadow: each ].
+	highlightesShapes do: [ :each | self updateShadow: each ]
 ]
 
 { #category : #'public - configuration' }

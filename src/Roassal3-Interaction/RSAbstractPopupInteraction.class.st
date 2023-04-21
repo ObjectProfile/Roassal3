@@ -30,7 +30,7 @@ RSAbstractPopupInteraction >> activePopupWith: evt [
 	self translatePopup: popup event: evt.
 	"popup translateBy: (offset rsValue: popup)."
 	popup position: popup position + (offset rsValue: popup).
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #hooks }
@@ -41,7 +41,7 @@ RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	key := self popupKey.
 
 	"We checked if the very same shape has emitted the popup.
-	If this is the case, then we use the popup previously created, 
+	If this is the case, then we use the popup previously created,
 	else, we remove it"
 	((prop includesKey: key) and: [ (prop includesKey: #shapeWithPopup) ])
 		ifTrue: [ | popup |
@@ -54,7 +54,6 @@ RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	prop at: key put: popupShape.
 	prop at: #shapeWithPopup put: aShape.
 	^ popupShape
-	
 ]
 
 { #category : #hooks }
@@ -66,7 +65,7 @@ RSAbstractPopupInteraction >> createPopupFor: aShape event: event [
 RSAbstractPopupInteraction >> initialize [
 	super initialize.
 	self model: #model.
-	
+
 	"Offset to locate the popup"
 	offset := 0 @ 0
 ]
@@ -86,7 +85,7 @@ RSNormalizer color
 c addAll: shapes.
 shapes @ (RSPopup new makeLocateAboveMouseCursor).
 RSHorizontalLineLayout on: shapes.
-c @ RSCanvasController	
+c @ RSCanvasController
 ```
 	"
 	self offset: [ :s | 0 @ (s height negated - 5) ]
@@ -100,10 +99,10 @@ RSAbstractPopupInteraction >> model [
 { #category : #accessing }
 RSAbstractPopupInteraction >> model: anObject [
 	"
-	- can be a one arg BlockClosure 
+	- can be a one arg BlockClosure
 	- can be a ByteString
 	"
-	modelBlock := anObject.
+	modelBlock := anObject
 ]
 
 { #category : #accessing }
@@ -113,7 +112,7 @@ RSAbstractPopupInteraction >> modelFor: aRSShape [
 
 { #category : #accessing }
 RSAbstractPopupInteraction >> offset: anOffsetAsPointOrBlock [
-	"Set the offset of the popup. The default behavior, is to have the popup at the location of the 
+	"Set the offset of the popup. The default behavior, is to have the popup at the location of the
 	mouse. Which could be cumbersome if the default mouse cursor from the OS is large
 	For example:
 ```
@@ -130,7 +129,7 @@ shapes @ (RSPopup new offset: [ :s | 0 @ (s height negated - 5) ]).
 RSHorizontalLineLayout on: shapes.
 c @ RSCanvasController
 ```
-	
+
 	"
 	offset := anOffsetAsPointOrBlock
 ]
@@ -138,7 +137,7 @@ c @ RSCanvasController
 { #category : #hooks }
 RSAbstractPopupInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
-	
+
 	self registerRemoveEventsOn: aShape.
 	aShape
 		when: self class activationEvent send: #activePopupWith: to: self
@@ -151,8 +150,8 @@ RSAbstractPopupInteraction >> popupKey [
 
 { #category : #hooks }
 RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
-	self class removeEvents do: [ :clsEvent | 
-		aShape 
+	self class removeEvents do: [ :clsEvent |
+		aShape
 			when: clsEvent
 			do: [ :evt |
 				self removePopupOn: evt ] ]
@@ -175,7 +174,7 @@ RSAbstractPopupInteraction >> removePopupOn: evt [
 	popup := att at: key.
 	self releasePopup: popup.
 	att removeKey: key.
-	evt signalUpdate.
+	evt signalUpdate
 ]
 
 { #category : #hooks }

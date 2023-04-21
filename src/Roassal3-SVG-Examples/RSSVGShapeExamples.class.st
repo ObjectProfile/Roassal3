@@ -47,8 +47,8 @@ RSSVGShapeExamples >> example02SpockLizard [
 	paint start: -900 @ 900; stop: 900 @ -900.
 	canvas addShape: (RSEllipse new
 		noPaint;
-		border: (RSBorder new 
-			width: 300; 
+		border: (RSBorder new
+			width: 300;
 			paint: paint;
 			yourself);
 		radius: 1500;
@@ -57,7 +57,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 		extent: 380 @ 200;
 		color: '36C5B8';
 		yourself.
-	1 to: 5 do: [ :i | 
+	1 to: 5 do: [ :i |
 		| angle a |
 		angle := i * 360 / 5 + 45.
 		canvas addShape: (RSPieSlice new
@@ -71,24 +71,23 @@ RSSVGShapeExamples >> example02SpockLizard [
 		angle := (angle + 3) degreesToRadians.
 		a position: angle cos @ angle sin negated * radius.
 		canvas addShape: a ].
-	
-	canvas addAll: (#('paper' 'scissors' 'spock' 'lizard' 'rock') 
+
+	canvas addAll: (#('paper' 'scissors' 'spock' 'lizard' 'rock')
 		collectWithIndex: [:m :index|
 			| com ang circle hand |
 			ang := index * Float twoPi / 5 - Float halfPi.
 			hand := RSSVGPath new
-				svgPath: (self perform: m asSymbol).
-			circle := RSEllipse new 
+				svgPath: (m asSymbol value: self).
+			circle := RSEllipse new
 				color: Color white;
 				position: hand position;
 				size: (hand extent x max: hand extent y);
 				yourself.
-		
-			com := RSComposite new
+
+			com := { circle. hand } asShape
 				popup;
 				draggable;
 				model: m;
-				shapes: { circle. hand };
 				position: ang cos @ ang sin * radius
 				yourself.
 			index = 5 ifTrue: [ com scaleBy: 2 ].
@@ -102,7 +101,7 @@ RSSVGShapeExamples >> example02SpockLizard [
 	color := NSScale category20c.
 	RSLineBuilder bezier
 		controlPointsController: (RSBlockCPController new
-			block: [ :aLine | 
+			block: [ :aLine |
 				| vec f t a b |
 				a := aLine from position.
 				b := aLine to position.
@@ -120,11 +119,11 @@ RSSVGShapeExamples >> example02SpockLizard [
 				width: 300;
 				color: col;
 				yourself);
-			markerEnd: ((arrow copy 
+			markerEnd: ((arrow copy
 				color: col
 				yourself) asMarker
 				offset: -90;
-				yourself)  ].  
+				yourself)  ].
 	lb := RSLegend new.
 	lb defaultLabel fontSize: 50.
 	lb container: canvas.

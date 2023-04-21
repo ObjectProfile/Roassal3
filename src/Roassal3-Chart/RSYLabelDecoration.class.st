@@ -34,7 +34,7 @@ RSYLabelDecoration >> initialize [
 
 { #category : #accessing }
 RSYLabelDecoration >> left [
-	self location 
+	self location
 		offset: -5 @ 0;
 		left;
 		outer;
@@ -43,7 +43,7 @@ RSYLabelDecoration >> left [
 
 { #category : #accessing }
 RSYLabelDecoration >> right [
-	self location 
+	self location
 		offset: 5 @ 0;
 		right;
 		outer;

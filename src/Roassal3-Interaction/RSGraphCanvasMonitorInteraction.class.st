@@ -20,7 +20,7 @@ RSGraphCanvasMonitorInteraction >> box [
 		extent: 100@ 50;
 		color: Color lightGray translucent;
 		cornerRadius: 5;
-		yourself.
+		yourself
 ]
 
 { #category : #defaults }
@@ -54,9 +54,7 @@ RSGraphCanvasMonitorInteraction >> initialize [
 		domain: { 1@0. 100@65 };
 		range: { -50 @ 25. 50@ -25 }.
 	frames := OrderedCollection new.
-	super initialize.
-	
-	
+	super initialize
 ]
 
 { #category : #initialization }
@@ -108,9 +106,9 @@ RSGraphCanvasMonitorInteraction >> updateShape [
 		polyScale scale: i @ frame ].
 	self polyline controlPoints: cp.
 	cp := cp copy.
-	cp 
+	cp
 		add: (polyScale scale: cp size @ 0);
 		add: (polyScale scale: 0.7@0).
 	self polygon points: cp.
-	self updatePolygonPaint.
+	self updatePolygonPaint
 ]

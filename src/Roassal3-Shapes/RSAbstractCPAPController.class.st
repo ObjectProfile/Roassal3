@@ -21,7 +21,7 @@ RSAbstractCPAPController >> controlPointsFor: aLine [
 	ap := aLine attachPoint.
 	^ self
 		controlPointsFrom: (ap startingPointOf: aLine)
-		to: (ap endingPointOf: aLine).
+		to: (ap endingPointOf: aLine)
 ]
 
 { #category : #hooks }

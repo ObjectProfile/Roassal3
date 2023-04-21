@@ -13,8 +13,7 @@ RSHistogramPlotTest >> testBasic [
 	c build.
 	self assert: plot bars size equals: 10.
 	self assert: plot xValues equals: (1 to: 10 count: 11).
-	self assert: (plot yValues allSatisfy: [ :v | v = 1 ]).
-	
+	self assert: (plot yValues allSatisfy: [ :v | v = 1 ])
 ]
 
 { #category : #tests }
@@ -25,8 +24,7 @@ RSHistogramPlotTest >> testBinSize [
 	c addPlot: (plot := RSHistogramPlot new x: values; binSize: 30).
 	c build.
 	size := (plot binningStrategy computeNumberOfBinsFor: values sorted).
-	self assert: plot bars size equals: size.
-	
+	self assert: plot bars size equals: size
 ]
 
 { #category : #tests }
@@ -41,8 +39,7 @@ RSHistogramPlotTest >> testBins [
 	self assert: plot bars size equals: 2.
 	self assert: plot bins equals: (1 to: 10 count: 3).
 	self assert: plot xValues equals: (1 to: 10 count: 3).
-	self assert: (plot yValues allSatisfy: [ :v | v = 5 ]).
-	
+	self assert: (plot yValues allSatisfy: [ :v | v = 5 ])
 ]
 
 { #category : #tests }
@@ -57,8 +54,7 @@ RSHistogramPlotTest >> testBinsCollection [
 	self assert: plot bars size equals: 3.
 	self assert: plot bins equals: bins.
 	self assert: plot xValues equals: bins.
-	self assert: plot yValues equals: #(4 3 3).
-	
+	self assert: plot yValues equals: #(4 3 3)
 ]
 
 { #category : #tests }
@@ -71,6 +67,5 @@ RSHistogramPlotTest >> testBinsStrat [
 	c build.
 	size := (strategy computeNumberOfBinsFor: values).
 	self assert: plot bars size equals: size.
-	self assert: plot xValues equals: (1 to: 100 by: 99/size).
-	
+	self assert: plot xValues equals: (1 to: 100 by: 99/size)
 ]

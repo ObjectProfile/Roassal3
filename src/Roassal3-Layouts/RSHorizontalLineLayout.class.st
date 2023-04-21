@@ -1,5 +1,5 @@
 "
-A RTHorizontalLineLayout locates all the elements horizontally
+A RSHorizontalLineLayout locates all the elements horizontally
 "
 Class {
 	#name : #RSHorizontalLineLayout,
@@ -35,7 +35,7 @@ RSHorizontalLineLayout >> deltaFor: aNodeFigure [
 	delta := 0.
 	alignment = #bottom ifTrue: [delta := aNodeFigure height].
 	alignment = #middle ifTrue: [delta := aNodeFigure height / 2.0].
-	alignment = #label 
+	alignment = #label
 		ifTrue: [ delta := aNodeFigure textExtents y_bearing negated ].
 	^ 0 @ delta
 ]
@@ -52,13 +52,13 @@ RSHorizontalLineLayout >> movePointer: pointer accordingToFigure: element [
 ]
 
 { #category : #hook }
-RSHorizontalLineLayout >> positionOriginalPointer: elements [ 
+RSHorizontalLineLayout >> positionOriginalPointer: elements [
 	| maxHeight delta |
 	delta := 0.
-	self alignment == #bottom ifTrue: 
+	self alignment == #bottom ifTrue:
 		[ maxHeight := elements maxValue: #height.
 		delta := maxHeight ].
-	self alignment == #center ifTrue: 
+	self alignment == #center ifTrue:
 		[ maxHeight := elements maxValue: #height.
 		delta := maxHeight / 2.0 ].
 	^ (0) @ ((0) + delta)

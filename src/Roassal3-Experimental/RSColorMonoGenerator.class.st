@@ -13,7 +13,7 @@ RSColorMonoGenerator >> backgroundColor [
 ]
 
 { #category : #accessing }
-RSColorMonoGenerator >> colorFor: aParticle [ 
-	
-	^ Color black alpha: 0.1.
+RSColorMonoGenerator >> colorFor: aParticle [
+
+	^ Color black alpha: 0.1
 ]

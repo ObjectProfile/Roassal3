@@ -25,12 +25,11 @@ RSQuadInterpolator >> interpolateIn: t [
 RSQuadInterpolator >> interpolateInOut: i [
 	| t |
 	t := i *2.
-	^ (t <= 1 
+	^ (t <= 1
 		ifTrue: [ t*t ]
-		ifFalse: [ 
+		ifFalse: [
 			t := t-1.
 			t * (2- t)+1 ]) /2
-	
 ]
 
 { #category : #interpolation }

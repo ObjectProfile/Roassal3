@@ -16,5 +16,5 @@ Class {
 RSBulkLoadRTreeCollection >> bulkLoad: aCollection [
 	aCollection ifEmpty: [ ^ self ].
 	root := RSRNode new.
-	root bulkLoad: aCollection from: 1 to: aCollection size.
+	root bulkLoad: aCollection from: 1 to: aCollection size
 ]

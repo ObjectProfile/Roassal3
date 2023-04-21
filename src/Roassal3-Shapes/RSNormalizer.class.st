@@ -120,7 +120,7 @@ Class {
 { #category : #'instance creation' }
 RSNormalizer class >> color [
 	"Define a linear color normalizer. For example:
-	
+
 ```Smalltalk
 values := 1 to: 5.
 
@@ -143,11 +143,10 @@ c
 	n to: Color red.
 	n executeBlock: [ :shape :scaledValue | shape color: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'instance creation' }
-RSNormalizer class >> fontSize [ 
+RSNormalizer class >> fontSize [
 "Here is example
 ```
 v := RSCanvas new.
@@ -174,24 +173,22 @@ v open
 	n to: 100.
 	n executeBlock: [ :shape :scaledValue | shape fontSize: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'instance creation' }
-RSNormalizer class >> height [ 
+RSNormalizer class >> height [
 	| n |
 	n := self new.
 	n from: 5.
 	n to: 100.
 	n executeBlock: [ :shape :scaledValue | shape height: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'instance creation' }
-RSNormalizer class >> position [ 
+RSNormalizer class >> position [
 	"Create a normalizer for position.
-	
+
 Here is an example:
 -=-=-=
 classes := Collection withAllSubclasses.
@@ -207,20 +204,20 @@ RSNormalizer size
 	from: 5;
 	to: 20;
 	normalize: [ :cls | cls instVarNames size ].
-	
+
 RSNormalizer position
 	to: 500 @ -500;
 	elements: es;
 	normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
-v open		
--=-=-=		
+v open
+-=-=-=
 
 and a more elaborated example:
 -=-=-=
 classes := Collection withAllSubclasses.
 
 v := RSView new.
-line := RSSingleEdgeBuilder polyline 
+line := RSSingleEdgeBuilder polyline
 	width: 2;
 	controlPoints: { 0@ -600. 0@0. 600@0 };
 	markerStartEnd: (RSShapeBuilder triangle
@@ -240,14 +237,14 @@ RSNormalizer size
 	to: 20;
 	elements: es;
 	normalize: [ :cls | cls instVarNames size ].
-	
+
 RSNormalizer position
 	from: 0@0;
 	to: 600@ -600;
 	elements: es;
 	normalize: [ :cls | cls numberOfMethods @ cls linesOfCode ].
 v @ RSControlsView.
-v 
+v
 -=-=-=
 	"
 	| n |
@@ -256,29 +253,26 @@ v
 	n to: 100 @ 100.
 	n executeBlock: [ :shape :scaledValue | shape translateTo: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'instance creation' }
-RSNormalizer class >> size [ 
+RSNormalizer class >> size [
 	| n |
 	n := self new.
 	n from: 5.
 	n to: 100.
 	n executeBlock: [ :shape :scaledValue | shape size: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'instance creation' }
-RSNormalizer class >> width [ 
+RSNormalizer class >> width [
 	| n |
 	n := self new.
 	n from: 5.
 	n to: 100.
 	n executeBlock: [ :shape :scaledValue | shape width: scaledValue ].
 	^ n
-
 ]
 
 { #category : #'private - accessing' }
@@ -306,14 +300,14 @@ RSNormalizer size
 	from: 5;
 	to: 20;
 	normalize: #numberOfMethods.
-	
+
 RSNormalizer color
 	shapes: es;
 	to: Color pink;
 	normalize: #numberOfMethods.
 RSGridLayout on: es.
 v @ RSCanvasController.
-v  
+v
 ```
 "
 	scale from: aValue
@@ -366,12 +360,12 @@ RSNormalizer size
 	shapes: shapes;
 	from: 20;
 	to: 30;
-	normalize. 
+	normalize.
 
 RSNormalizer color
 	shapes: shapes;
-	normalize. 
-	
+	normalize.
+
 RSGridLayout new gapSize: 40; on: shapes.
 shapes @ RSLabeled.
 
@@ -400,18 +394,18 @@ RSNormalizer size
 	shapes: shapes;
 	from: 20;
 	to: 30;
-	normalize: #yourself. 
+	normalize: #yourself.
 
 RSNormalizer color
 	shapes: shapes;
-	normalize: #yourself. 
-	
+	normalize: #yourself.
+
 RSGridLayout new gapSize: 40; on: shapes.
 shapes @ RSLabeled.
 
 c @ RSCanvasController.
 c openOnce
-```	
+```
 
 	"
 	| minAndMax |
@@ -422,19 +416,17 @@ c openOnce
 		objectValue := shape propertyAt: self key.
 		scaledValue := scale scale: objectValue.
 		executeBlock value: shape value: scaledValue ]
-
 ]
 
 { #category : #accessing }
 RSNormalizer >> scale [
 	^ scale
-
 ]
 
 { #category : #accessing }
 RSNormalizer >> scale: aNSScale [
 	"Set the scale of the normalizer. For example
-	
+
 ```Smalltalk
 c := RSCanvas new.
 shapes := (1 to: 150) collect: [ :n | RSEllipse new size: 20; model: n ] as: RSGroup.
@@ -451,15 +443,13 @@ c @ RSCanvasController.
 c
 ```
 "
-	scale := aNSScale.
-	
+	scale := aNSScale
 ]
 
 { #category : #accessing }
 RSNormalizer >> shapes [
 	"Return the shapes that should be normalized"
 	^ shapes
-
 ]
 
 { #category : #accessing }
@@ -487,16 +477,15 @@ RSNormalizer size
 	shapes: es;
 	to: 20;
 	normalize: #numberOfMethods.
-	
+
 RSNormalizer color
 	shapes: es;
 	to: Color pink;
 	normalize: #numberOfMethods.
 RSGridLayout on: es.
 v @ RSCanvasController.
-v  
+v
 ```
 "
 	scale to: aValue
-
 ]

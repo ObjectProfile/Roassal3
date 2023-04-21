@@ -35,13 +35,13 @@ RSXmasBranch >> baseIndex [
 ]
 
 { #category : #public }
-RSXmasBranch >> branchRotate: index theta: theta position: reference [ 
+RSXmasBranch >> branchRotate: index theta: theta position: reference [
 	| v |
 	v := positions at: index.
 	v := v - reference.
-	v := ((v x * theta cos) - (v y * theta sin)) @ 
+	v := ((v x * theta cos) - (v y * theta sin)) @
 		((v x * theta sin) + (v y * theta cos)).
-	
+
 	v := v + reference.
 	positions at: index put: v
 ]
@@ -52,7 +52,7 @@ RSXmasBranch >> dTheta [
 ]
 
 { #category : #accessing }
-RSXmasBranch >> dTheta: aCollection [ 
+RSXmasBranch >> dTheta: aCollection [
 	dTheta := aCollection
 ]
 
@@ -62,7 +62,7 @@ RSXmasBranch >> initialize [
 	positions := OrderedCollection new.
 	thickness := OrderedCollection new.
 	baseIndex := OrderedCollection new.
-	isCandidate := false.
+	isCandidate := false
 ]
 
 { #category : #accessing }
@@ -71,7 +71,7 @@ RSXmasBranch >> isCandidate [
 ]
 
 { #category : #accessing }
-RSXmasBranch >> isCandidate: aBool [ 
+RSXmasBranch >> isCandidate: aBool [
 	isCandidate := aBool
 ]
 
@@ -81,7 +81,7 @@ RSXmasBranch >> positions [
 ]
 
 { #category : #accessing }
-RSXmasBranch >> setLastThickness: aNumber [ 
+RSXmasBranch >> setLastThickness: aNumber [
 	thickness at: thickness size put: aNumber
 ]
 

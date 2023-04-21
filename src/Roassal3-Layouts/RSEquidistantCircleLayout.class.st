@@ -1,15 +1,5 @@
 "
-RTEquidistantCircleLayout is a circle layout in which elements are equidistant from each other: the layout maintains the same distance between elements.
-
-Here is an example:
--=-=-=-=-=-=-=-=-=-=-=-=
-v := RSView new.
-elements := (RSShapeBuilder circle size: 5; color: Color red; size: [:vv | vv * 4 ]) elementsOn: (1 to: 15).
-v addAll: elements.
-RSEquidistantCircleLayout on: elements.
-v @ RSControlsView.
-v open
--=-=-=-=-=-=-=-=-=-=-=-=
+`RSEquidistantCircleLayout` is a circle layout in which elements are equidistant from each other: the layout maintains the same distance between elements.
 "
 Class {
 	#name : #RSEquidistantCircleLayout,
@@ -19,29 +9,29 @@ Class {
 
 { #category : #hook }
 RSEquidistantCircleLayout >> computeSeparationFor: elements [
-"Compute the separation between each element, this separation will always be the same"
+	"Compute the separation between each element, this separation will always be the same"
 	| sep |
-	sep := ((2 * Float pi * (self computeRadiusFor: elements)) - (self weightSum: elements))/
+	sep := ((Float twoPi * (self computeRadiusFor: elements)) - (self weightSum: elements))/
 	(elements size).
-	^sep
+	^ sep
 ]
 
 { #category : #hook }
 RSEquidistantCircleLayout >> doExecute: elements [
-	| angle rad center angleIncrement |
+	| angle rad center angleInc separation |
 	rad := self computeRadiusFor: elements.
-	center := Point x: rad y: rad.
+	center := self computeCenter: rad.
 	angle := self initialAngle.
-	elements
-		do: [ :each | 
-			| point |
-			"First, the angle is increased only by the angle given by the element radius (height/2),
-			then the point is set, and then it's increased by the rest of the total increment"
-			"This is to consider both last and next elements weights"
-			angle := angle + ((each height)/(2*rad)).
-			point := center + (Point r: rad theta: angle).
-			angleIncrement := (((each height)/2) + (self computeSeparationFor: elements))/rad.
-			angle := angle + angleIncrement.
-			translator translate: each to: point.
-		]
+	separation := self computeSeparationFor: elements.
+	elements do: [ :each |
+		| point |
+		"First, the angle is increased only by the angle given by the element radius (height/2),
+		then the point is set, and then it's increased by the rest of the total increment"
+		"This is to consider both last and next elements weights"
+		angle := angle + ((each height)/(2*rad)).
+		point := center + (Point r: rad theta: angle).
+		angleInc := (each height / 2 + separation)/rad.
+		angle := angle + angleInc.
+		translator translate: each to: point.
+	]
 ]

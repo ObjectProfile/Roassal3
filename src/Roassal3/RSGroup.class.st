@@ -105,7 +105,7 @@ RSGroup >> extent [
 ]
 
 { #category : #accessing }
-RSGroup >> height [ 
+RSGroup >> height [
 	^ self extent y
 ]
 
@@ -135,7 +135,7 @@ RSGroup >> position [
 ]
 
 { #category : #'public - forwarding' }
-RSGroup >> pushBack [ 
+RSGroup >> pushBack [
 	"Push back all the shapes contained in the group"
 	self do: [ :each | each pushBack ]
 ]
@@ -154,7 +154,7 @@ RSGroup >> resetShapeFromModelCache [
 { #category : #accessing }
 RSGroup >> shapeFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
-	
+
 ```Smalltalk
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
@@ -165,16 +165,16 @@ g shapeFromModel: 'hello'
 
 	"
 	| t |
-	self shapeFromModelCache 
-		at: anObject 
+	self shapeFromModelCache
+		at: anObject
 		ifPresent: [ :v |
 			v isCollection ifFalse: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
+	t := (anObject class == CompiledMethod)
 		ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
 		ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-	
+
 	self shapeFromModelCache at: anObject put: t.
 	^ t
 ]
@@ -195,16 +195,16 @@ For example:
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
 g add: (RSEllipse new model: 'world').
-g shapesFromModel: 'hello' 
+g shapesFromModel: 'hello'
 -=-=-=-=-=-=-=-=-=
 => a RSGroup(a RSBox(hello))
-	"	
+	"
 
 	| t key |
 	self shapeFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
+	t := (anObject class == CompiledMethod)
 				ifTrue: [ self select: [ :el | el model == anObject ] ]
 				ifFalse: [ self select: [ :el | el model = anObject ] ].
 
@@ -218,7 +218,7 @@ g shapesFromModel: 'hello'
 RSGroup >> shapesFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	| answer t |
-	self assert: [ objects isCollection ] description: 'Provide a set of shapes instead of one single shape'. 
+	self assert: [ objects isCollection ] description: 'Provide a set of shapes instead of one single shape'.
 	answer := RSGroup new.
 	objects do: [ :o |
 		t := self shapesFromModel: o.
@@ -238,7 +238,6 @@ RSGridLayout on: shapes.
 c @ RSCanvasController
 ```"
 	self do: [ :s | s size: aNumber ]
-	
 ]
 
 { #category : #transforming }
@@ -287,7 +286,7 @@ RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 ]
 
 { #category : #accessing }
-RSGroup >> width [ 
+RSGroup >> width [
 	"Return the width of the encompassing rectangle of the group"
 	^ self extent x
 ]
@@ -302,7 +301,7 @@ circles size: 20.
 circles withBorder.
 c addAll: circles.
 RSGridLayout on: circles.
-c 
+c
 ```
 	"
 	self do: #withBorder

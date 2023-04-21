@@ -4,6 +4,5 @@ Extension { #name : #RSLineBuilder }
 RSLineBuilder class >> sunburstBezier [
 	^ self bezier
 		controlPointsController: RSSunburstCPController new;
-		yourself.
-	
+		yourself
 ]

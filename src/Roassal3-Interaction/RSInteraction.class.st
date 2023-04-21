@@ -13,40 +13,52 @@ view @ RSDraggableView.
 Class {
 	#name : #RSInteraction,
 	#superclass : #RSObject,
-	#classVars : [
-		'instance'
-	],
 	#category : #'Roassal3-Interaction-Core'
 }
 
-{ #category : #'instance creation' }
-RSInteraction class >> instance [
-	^ instance ifNil: [ instance := self new ].
+{ #category : #examples }
+RSInteraction class >> canvasExample [
+	| canvas |
+	canvas := RSCanvas new.
+	canvas background: 'veryVeryLightGray'.
+	canvas originCenterMiddle.
+		
+	canvas add: (RSEllipse new
+		position: 0@0;
+		extent: 10@10;
+		borderColor: 'black';
+		model: 'origin';
+		color: 'red';
+		yourself).
+		
+	canvas add: (RSBox new
+		position: 200@200;
+		extent: 200@200;
+		borderColor: 'black';
+		model: 'white';
+		fill: 255;
+		yourself).
+
+	canvas add: (RSBox new
+		position: 200@200;
+		extent: 100@100;
+		borderColor: 'black';
+		model: 'gray';
+		fill: 100;
+		yourself).
+	canvas shapes @ RSPopup.
+	^ canvas
 ]
 
 { #category : #'instance creation' }
 RSInteraction class >> onShape: aShape [
 	| inst |
-	inst := self wantsUniqueInstance 
-		ifTrue: [ self instance ]
-		ifFalse: [ self new ].
+	inst := self new.
 	inst onShape: aShape.
 	^ inst
 ]
 
-{ #category : #'class initialization' }
-RSInteraction class >> reset [
-	<script: 'self reset'>
-	instance := nil
-]
-
-{ #category : #'instance creation' }
-RSInteraction class >> wantsUniqueInstance [ 
-	^ false
-]
-
 { #category : #hooks }
 RSInteraction >> onShape: aShape [
-	self subclassResponsibility 
-	
+	self subclassResponsibility
 ]

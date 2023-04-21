@@ -11,37 +11,9 @@
 - `isHighlightable`: a boolean indicating whether the label should be highlighted
 - `lowColor`: a boolean indicating whether the label should be highlighted
 
-*Example*:
-```Smalltalk
-c := RSCanvas new.
-
-shapes := RSGroup new.
-1 to: 3 do: [ :v |
-	shapes add: (RSBox new model: v) ].
-
-shapes @ (RSLabeled new text: [ :m | 'Value = ', m asString ]).
-
-RSNormalizer size
-	shapes: shapes;
-	from: 20; to: 40;
-	normalize: [ :aModel | aModel ].
-
-c addAll: shapes.
-RSVerticalLineLayout new gapSize: 30; on: shapes.
-c @ RSCanvasController
-```
-
-Another example:
-```Smalltalk
-c := RSCanvas new.
-shapes := (1 to: 10) collect: [ :v | RSBox new model: v; size: 30 ] as: RSGroup.
-c addAll: shapes.
-shapes @ RSLabeled new highlightable.
-RSNormalizer size shapes: shapes; normalize: #yourself.
-RSGridLayout on: shapes.
-c @ RSCanvasController.
-c 
-```
+### Examples
+- `RSLabeled class >> #exampleBoxes`
+- `RSLabeled class >> #exampleLabeledHighlightable`
 
 "
 Class {
@@ -65,7 +37,7 @@ RSLabeled class >> highlightable [
 canvas := RSCanvas new.
 
 someColors := { Color red . Color blue . Color green }.
-shapes := (someColors collect: [ :aColor | 
+shapes := (someColors collect: [ :aColor |
 	RSEllipse new size: 30; model: aColor; color: aColor ]) asGroup.
 
 canvas addAll: shapes.
@@ -76,7 +48,7 @@ shapes @ RSLabeled highlightable.
 RSHorizontalLineLayout on: shapes.
 
 canvas @ RSCanvasController
-```	
+```
 "
 	^ self new highlightable
 ]
@@ -97,16 +69,16 @@ RSLabeled >> createLabel: aShape [
 	| label color set targetLabel |
 	label := self shapeBuilder shapeFor: (self modelFor: aShape).
 	location stick: label on: aShape.
-	isHighlightable 
+	isHighlightable
 		ifFalse: [ ^ label ].
 	targetLabel := target value: label.
 	color := targetLabel color.
 	targetLabel color: self lowColor.
-	set := [ :c | 
+	set := [ :c |
 		label pushFront.
 		targetLabel color: c.
 		label signalUpdate ].
-	aShape 
+	aShape
 		when: RSMouseEnter do: [ set value: color ];
 		when: RSMouseLeave do: [ set value: lowColor ];
 		when: RSShapeRemovedEvent do: [ label remove ].
@@ -125,7 +97,7 @@ shapes := (1 to: 100) collect: [ :v |
 ] as: RSGroup .
 
 c addAll: shapes.
-RSNormalizer size 
+RSNormalizer size
 	shapes: shapes;
 	from: 10;
 	to: 30;
@@ -135,7 +107,7 @@ RSGridLayout on: shapes.
 shapes @ (RSLabeled new fontSize: 10).
 
 c @ RSCanvasController.
-```	
+```
 "
 	self shapeBuilder labelShape fontSize: fontSizeAsNumber
 ]
@@ -143,12 +115,12 @@ c @ RSCanvasController.
 { #category : #hooks }
 RSLabeled >> getOrCreateLabel: aShape [
 	| label parent |
-	label := aShape properties 
+	label := aShape properties
 		at: #RSLabeled
 		ifAbsentPut: [ self createLabel: aShape ].
 	parent :=aShape parent.
 	aShape when: RSShapeRemovedEvent send: #remove to: label.
-	(label isInACanvas not and: [parent notNil ]) 
+	(label isInACanvas not and: [parent notNil ])
 		ifTrue: [ parent addShape: label shape ].
 	^ label
 ]
@@ -165,22 +137,22 @@ shapes @ RSLabeled new highlightable.
 RSNormalizer size shapes: shapes; normalize: #yourself.
 RSGridLayout on: shapes.
 c @ RSCanvasController.
-c 
+c
 ```
 "
 	isHighlightable := true.
-	self 
+	self
 		lowColor: Color veryVeryLightGray;
-		target: #yourself.
+		target: #yourself
 ]
 
 { #category : #initialization }
-RSLabeled >> initialize [ 
+RSLabeled >> initialize [
 	super initialize.
 	self shapeBuilder: RSMultilineLabelBuilder new.
 	self model: #model.
 	location := RSLocation new above.
-	isHighlightable := false.
+	isHighlightable := false
 ]
 
 { #category : #accessing }
@@ -225,11 +197,11 @@ RSLabeled >> modelFor: aRSShape [
 
 { #category : #hooks }
 RSLabeled >> onShape: aShape [
-	
-	aShape isInACanvas 
+
+	aShape isInACanvas
 		ifTrue: [ self getOrCreateLabel: aShape ]
-		ifFalse: [ aShape when: RSShapeAddedEvent do: [ :evt | 
-			self getOrCreateLabel: evt shape ] ].
+		ifFalse: [ aShape when: RSShapeAddedEvent do: [ :evt |
+			self getOrCreateLabel: evt shape ] ]
 ]
 
 { #category : #accessing }

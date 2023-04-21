@@ -12,19 +12,19 @@ Class {
 }
 
 { #category : #adding }
-RSSequenceableCollection >> add: newObject [ 
+RSSequenceableCollection >> add: newObject [
 	group add: newObject
 ]
 
 { #category : #enumerating }
-RSSequenceableCollection >> do: aBlock [ 
+RSSequenceableCollection >> do: aBlock [
 	group do: aBlock
 ]
 
 { #category : #initialization }
 RSSequenceableCollection >> initialize [
 	super initialize.
-	group := RSGroup new.
+	group := RSGroup new
 ]
 
 { #category : #removing }
@@ -40,10 +40,9 @@ RSSequenceableCollection >> shapesAtPoint: position [
 		result ifNotNil: [ ^ { result }  ].
 		 ].
 	^ {  }
-	
 ]
 
 { #category : #'finding/searching' }
 RSSequenceableCollection >> shapesAtRectangle: aRectangle [
-	^ group select: [ :each | each encompassingRectangle intersects: aRectangle ].
+	^ group select: [ :each | each encompassingRectangle intersects: aRectangle ]
 ]

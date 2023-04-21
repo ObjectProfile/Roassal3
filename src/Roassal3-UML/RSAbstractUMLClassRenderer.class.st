@@ -14,37 +14,37 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractUMLClassRenderer class >> isAbstract [ 
+RSAbstractUMLClassRenderer class >> isAbstract [
 
-	^self name = #RSAbstractUMLClassRenderer 
+	^self name = #RSAbstractUMLClassRenderer
 ]
 
 { #category : #hooks }
-RSAbstractUMLClassRenderer >> adjustBox: box on: shapes [ 
+RSAbstractUMLClassRenderer >> adjustBox: box on: shapes [
 	| rect |
 	rect := shapes encompassingRectangle.
 	box
 		extent: rect extent + self classBoxPadding;
-		position: rect floatCenter.
+		position: rect floatCenter
 ]
 
 { #category : #hooks }
-RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [ 
-	title position: shapes encompassingRectangle floatCenter x @ title position y.
+RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [
+	title position: shapes encompassingRectangle floatCenter x @ title position y
 ]
 
 { #category : #accessing }
 RSAbstractUMLClassRenderer >> aggregationShape [
 	| shape |
 	shape := self compositionShape.
-	
+
 	shape markerEnd shape color: Color white.
 	^ shape
 ]
 
 { #category : #layout }
 RSAbstractUMLClassRenderer >> applyLayoutOn: shapes [
-	RSVerticalLineLayout new gapSize: 1.5; on: shapes.
+	RSVerticalLineLayout new gapSize: 1.5; on: shapes
 ]
 
 { #category : #layout }
@@ -68,7 +68,7 @@ RSAbstractUMLClassRenderer >> classBoxPadding: aPoint [
 ]
 
 { #category : #hooks }
-RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [ 
+RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 	^ RSBox new
 		paint: self boxColor;
 		border: self boxBorder;
@@ -85,19 +85,18 @@ RSAbstractUMLClassRenderer >> compositionShape [
 	^ RSLine new
 		markerEnd: m;
 		border: self border;
-		yourself.
+		yourself
 ]
 
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
 	| rect ellipsis |
 	self needsEllipsis ifFalse: [ ^ self ].
-	
+
 	ellipsis := self ellipsisShape.
 	rect := aGroup encompassingRectangle.
 	ellipsis position: rect bottomCenter + (0@10).
-	aGroup add: ellipsis.
-	
+	aGroup add: ellipsis
 ]
 
 { #category : #defaults }
@@ -110,7 +109,7 @@ RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 	| offset |
 	offset := -2.5.
 	^ RSLineBuilder orthoVertical
-		attachPoint: (RSVerticalAttachPoint new 
+		attachPoint: (RSVerticalAttachPoint new
 			startOffset: 11 - offset;
 			endOffset: offset;
 			yourself);
@@ -123,15 +122,15 @@ RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 RSAbstractUMLClassRenderer >> defaultLayout [
 	| defaultLayout |
 	defaultLayout := RSLayoutBuilder new.
-	defaultLayout tree 
-		verticalGap: 50; 
+	defaultLayout tree
+		verticalGap: 50;
 		horizontalGap: 50.
 	^ defaultLayout
 ]
 
 { #category : #defaults }
 RSAbstractUMLClassRenderer >> defaultMarker [
-	^ RSMarker new 
+	^ RSMarker new
 		shape: (RSShapeFactory triangle
 			color: Color white;
 			border: self border;
@@ -162,17 +161,17 @@ RSAbstractUMLClassRenderer >> ellipsisShape [
 { #category : #hooks }
 RSAbstractUMLClassRenderer >> groupFor: shapes [
 	^ RSGroup streamContents: [ :stream |
-		shapes do: [ :s | s hasChildren ifTrue: [ stream << s ] ] ]. 
+		shapes do: [ :s | s hasChildren ifTrue: [ stream << s ] ] ]
 ]
 
 { #category : #accessing }
-RSAbstractUMLClassRenderer >> marker [ 
+RSAbstractUMLClassRenderer >> marker [
 	^ marker ifNil: [ marker := self defaultMarker ]
 ]
 
 { #category : #accessing }
 RSAbstractUMLClassRenderer >> marker: aMarker [
-	marker := aMarker.
+	marker := aMarker
 ]
 
 { #category : #hooks }
@@ -190,8 +189,8 @@ RSAbstractUMLClassRenderer >> methodsFor: model [
 	| shapes methods |
 	methods := currentClassMethods := modelDescriptor methods rsValue: model.
 	currentClassMethods size > modelDescriptor methodsLimit
-		ifTrue: [ methods := currentClassMethods 
-			copyFrom: 1 
+		ifTrue: [ methods := currentClassMethods
+			copyFrom: 1
 			to: modelDescriptor methodsLimit ].
 	shapes := methods collect: [ :met | self methodFor: met ].
 	self applyMLayoutOn: shapes.
@@ -201,26 +200,24 @@ RSAbstractUMLClassRenderer >> methodsFor: model [
 ]
 
 { #category : #testing }
-RSAbstractUMLClassRenderer >> needsEllipsis [ 
-	^ currentClassMethods isNotNil 
+RSAbstractUMLClassRenderer >> needsEllipsis [
+	^ currentClassMethods isNotNil
 		and:  [ currentClassMethods size > modelDescriptor methodsLimit ]
-		
 ]
 
 { #category : #public }
-RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [ 
+RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [
 	aCollection ifNil: [ ^ self ].
 	(RSLineBuilder new: aRSLine)
 		withBorderAttachPoint;
 		shapes: edgeBuilder fromShapes;
-		useAssociations: aCollection.
+		useAssociations: aCollection
 ]
 
 { #category : #public }
 RSAbstractUMLClassRenderer >> renderAssociations [
 	self renderAssociation: self modelDescriptor compositions shape: self compositionShape.
-	self renderAssociation: self modelDescriptor aggregations shape: self aggregationShape.
-	
+	self renderAssociation: self modelDescriptor aggregations shape: self aggregationShape
 ]
 
 { #category : #hooks }
@@ -230,11 +227,10 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 		color: self textColor;
 		text: (modelDescriptor classname rsValue: model);
 		yourself.
-	(modelDescriptor isAbstract rsValue: model) ifTrue: [ 
+	(modelDescriptor isAbstract rsValue: model) ifTrue: [
 		label italic ].
 	label fontSize: label fontSize.
 	^ { label } asGroup asShape padding: 0@ 5; yourself
-	
 ]
 
 { #category : #hooks }
@@ -257,5 +253,4 @@ RSAbstractUMLClassRenderer >> varsFor: model [
 		shapes: shapes;
 		padding: (Margin left: 0 right: 0 top: 3  bottom: 8 );
 		yourself
-		
 ]

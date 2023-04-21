@@ -10,7 +10,7 @@ Class {
 { #category : #actions }
 RSParallelAnimation >> continue [
 	super continue.
-	animations do: #continue.
+	animations do: #continue
 ]
 
 { #category : #accessing }
@@ -22,7 +22,7 @@ RSParallelAnimation >> duration [
 { #category : #actions }
 RSParallelAnimation >> pause [
 	super pause.
-	animations do: #pause.
+	animations do: #pause
 ]
 
 { #category : #actions }
@@ -37,14 +37,12 @@ RSParallelAnimation >> step [
 	self startStep.
 	activeAnimations := animations reject: [ :animation | animation hasCompleted ].
 	activeSize := 0.
-	activeAnimations do: [ :animation | 
+	activeAnimations do: [ :animation |
 		self startIfNessesary: animation.
 		animation refresh.
-		animation hasCompleted 
+		animation hasCompleted
 			ifTrue: [ animation remove ]
 			ifFalse: [ activeSize := activeSize + 1 ] ].
 	activeSize isZero ifTrue: [ self loopDone ].
-	self updateHasCompleted.
-	
-	
+	self updateHasCompleted
 ]

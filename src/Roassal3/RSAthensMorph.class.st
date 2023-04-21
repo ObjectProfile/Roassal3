@@ -36,13 +36,12 @@ RSAthensMorph >> checkSession [
 	surface := nil.
 	self createSurface.
 	self sessionChanged
-	
 ]
 
 { #category : #'surface management' }
 RSAthensMorph >> createSurface [
 	surface := AthensCairoSurface extent: self extent asIntegerPoint.
-	session := Smalltalk session.
+	session := Smalltalk session
 ]
 
 { #category : #drawing }
@@ -50,12 +49,12 @@ RSAthensMorph >> drawOn: aCanvas [
 	"Draw the whole visualization"
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true.
-	[ 
+	[
 		self checkSession.
 		self recreateSurfaceIfNecessary.
-		aCanvas 
-			fillRectangle: self bounds 
-			fillStyle: roassalCanvas color 
+		aCanvas
+			fillRectangle: self bounds
+			fillStyle: roassalCanvas color
 			borderStyle: self borderStyle.
 		roassalCanvas playAnimations.
 		self drawShapes.
@@ -95,16 +94,14 @@ v canvas buildMorph drawOnMockCanvas
 { #category : #drawing }
 RSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	surface drawDuring: [ :athensCanvas | 
+	surface drawDuring: [ :athensCanvas |
 		roassalCanvas shouldClearBackground
 			ifTrue: [ surface clear ].
 		"We display the elements that are subject to the camera"
-		
+
 		renderer canvas: athensCanvas.
 		roassalCanvas accept: renderer.
 	]
-		
-
 ]
 
 { #category : #'events - processed' }
@@ -115,8 +112,7 @@ RSAthensMorph >> eventKeyDown: aMorphicEvent [
 		position: (roassalCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
 		keyName: aMorphicEvent key name. "(self class keyNameFor: aMorphicEvent keyValue)".
-	trEvent shape announce: trEvent.
-
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -139,7 +135,7 @@ RSAthensMorph >> eventMouseClick: aMorphicEvent [
 		ifRightButton: RSMouseRightClick
 		from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -151,7 +147,7 @@ RSAthensMorph >> eventMouseDoubleClick: aMorphicEvent [
 		ifRightButton: RSMouseDoubleRightClick
 		from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -160,15 +156,15 @@ RSAthensMorph >> eventMouseDragEnd: aMorphicEvent [
 	trEvent := self eventOfClass: RSMouseDragEnd from: aMorphicEvent.
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
-	
-	eventBeginingDragging := nil.
+
+	eventBeginingDragging := nil
 ]
 
 { #category : #'events - processed' }
 RSAthensMorph >> eventMouseDragStart: aMorphicEvent [
 	| trEvent trEventClass |
 	eventBeginingDragging := aMorphicEvent copy.
-	
+
 	trEventClass := RSMouseDragStart.
 	aMorphicEvent redButtonChanged
 		ifTrue: [ trEventClass := RSMouseLeftDragStart ].
@@ -179,8 +175,7 @@ RSAthensMorph >> eventMouseDragStart: aMorphicEvent [
 	trEvent := self eventOfClass: trEventClass actionClass: RSMouseDragging from: aMorphicEvent.
 
 	shapeBeingPointed := trEvent shape.
-	shapeBeingPointed announce: trEvent.
-	
+	shapeBeingPointed announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -201,24 +196,23 @@ RSAthensMorph >> eventMouseDragging: aMorphicEvent [
 
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
-	eventBeginingDragging := aMorphicEvent copy.
-	
+	eventBeginingDragging := aMorphicEvent copy
 ]
 
 { #category : #'events - processed' }
 RSAthensMorph >> eventMouseEnter: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseEnter from: aMorphicEvent.
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
 RSAthensMorph >> eventMouseLeave: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
-	shapeBeingPointed ifNotNil: [ 
+	shapeBeingPointed ifNotNil: [
 		trEvent shape: shapeBeingPointed].
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -226,7 +220,7 @@ RSAthensMorph >> eventMouseMove: aMorphicEvent [
 	| trEvent |
 	trEvent := self eventOfClass: RSMouseMove from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -234,11 +228,11 @@ RSAthensMorph >> eventMouseUp: aMorphicEvent [
 	| trEvent |
 	trEvent := self
 		mouseEventOfClass: RSMouseUp
-		ifLeftButton: RSMouseUpLeft  
+		ifLeftButton: RSMouseUpLeft
 		ifRightButton: RSMouseUpRight
 		from: aMorphicEvent.
 	trEvent position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
@@ -248,15 +242,15 @@ RSAthensMorph >> eventMouseWheel: aMorphicEvent [
 	trEvent
 		direction: aMorphicEvent direction;
 		position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent.
+	trEvent shape announce: trEvent
 ]
 
 { #category : #'events - processed' }
 RSAthensMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
 	| relativePosition trEvent shape |
 	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition. 
-	
+	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
+
 	trEvent := anEventClass fromEvent: aMorphicEvent.
 	trEvent
 		morph: self;
@@ -290,31 +284,31 @@ RSAthensMorph >> fullDrawOnAthensCanvas: aCanvas [
 
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true.
-	[  
+	[
 		self checkSession.
 		self recreateSurfaceIfNecessary.
-		
+
 		aCanvas setPaint: roassalCanvas color.
-		aCanvas drawShape: bounds.
+		aCanvas drawShape: (bounds translateBy: bounds origin negated).
 		roassalCanvas playAnimations.
 		self drawShapes.
-		surface hasBeenFreed ifTrue: [ self createSurface ].	
+		surface hasBeenFreed ifTrue: [ self createSurface ].
 
 		aCanvas pathTransform restoreAfter: [
 			aCanvas pathTransform loadIdentity.
 			aCanvas paintMode restoreAfter: [
-				aCanvas 
+				aCanvas
 					setPaint: surface;
 					drawShape: (0@0 extent: self extent) ] ] ]
-	ensure: [ 
+	ensure: [
 		isDrawing := false ]
 ]
 
 { #category : #'event handling' }
 RSAthensMorph >> handleKeyDown: anEvent [
-	
+
 	super handleKeyDown: anEvent.
-	self eventKeyDown: anEvent.
+	self eventKeyDown: anEvent
 ]
 
 { #category : #'events - processing' }
@@ -326,9 +320,7 @@ RSAthensMorph >> handleKeyUp: anEvent [
 { #category : #'events - processing' }
 RSAthensMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
-	anEvent anyButtonPressed ifFalse: [ self eventMouseMove: anEvent ].
-	
-	
+	anEvent anyButtonPressed ifFalse: [ self eventMouseMove: anEvent ]
 ]
 
 { #category : #'events - processing' }
@@ -340,24 +332,24 @@ RSAthensMorph >> handleMouseOver: aMorphicEvent [
 		ifTrue: [ ^ self ].	"Do nothing if it was already handled"
 	self isDragging
 		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
-	lastMousePosition = aMorphicEvent position 
+	lastMousePosition = aMorphicEvent position
 		ifTrue: [ ^ self].		"Do nothing if it is in the same position"
 	shapeBeingPointed ifNil: [
 		shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
-	
+
 	"time := [currentElement := self shapeForEvent: aMorphicEvent] timeToRun.
 	times := roassalCanvas propertyAt: #times ifAbsentPut: [ OrderedCollection new ].
 	times add: time.
 	times average traceCr."
 	currentElement := self shapeForEvent: aMorphicEvent.
 	lastMousePosition := aMorphicEvent position.
-	currentElement == shapeBeingPointed 
+	currentElement == shapeBeingPointed
 		ifTrue: [ ^ self ].
 	rsEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
 	rsEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: rsEvent.
 	shapeBeingPointed := currentElement.
-	self eventMouseEnter: aMorphicEvent.
+	self eventMouseEnter: aMorphicEvent
 ]
 
 { #category : #testing }
@@ -403,13 +395,17 @@ RSAthensMorph >> isDrawing [
 	^ isDrawing
 ]
 
+{ #category : #accessing }
+RSAthensMorph >> lastMousePosition [
+	^ lastMousePosition
+]
+
 { #category : #initialization }
 RSAthensMorph >> layoutChanged [
 	"react on morph resize"
 
 	super layoutChanged.
-	self checkSession.
-	
+	self checkSession
 ]
 
 { #category : #'event handling' }
@@ -564,7 +560,7 @@ RSAthensMorph >> surface [
 ]
 
 { #category : #accessing }
-RSAthensMorph >> surface: anAthensCairoSurface [ 
+RSAthensMorph >> surface: anAthensCairoSurface [
 	surface := anAthensCairoSurface
 ]
 
@@ -580,12 +576,12 @@ RSAthensMorph >> themeChanged [
 
 { #category : #testing }
 RSAthensMorph >> wantsSteps [
-	^ roassalCanvas hasAnimation 
+	^ roassalCanvas hasAnimation
 ]
 
 { #category : #'event handling' }
 RSAthensMorph >> wouldAcceptKeyboardFocusUponTab [
-	"Answer whether the receiver might accept keyboard focus if 
+	"Answer whether the receiver might accept keyboard focus if
 	tab were hit in some container playfield"
 	^ true
 ]

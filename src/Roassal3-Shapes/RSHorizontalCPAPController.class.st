@@ -34,9 +34,9 @@ Class {
 RSHorizontalCPAPController >> controlPointsFrom: from to: to [
 	| mid |
 	mid := (from + to)/2.
-	^ Array 
+	^ Array
 		with: from
 		with: mid x @ from y
 		with: mid x @ to y
-		with: to 
+		with: to
 ]

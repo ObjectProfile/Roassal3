@@ -14,13 +14,13 @@ RSNodeOnTopWhenPositionChanged >> moveToTop: evt [
 	shape ifNil: [ ^ self ].
 	shape isInACanvas ifFalse: [ ^ self ].
 	shape pushFront.
-	(shape withAllChildren flatCollect: #connectedLines) do: #pushFront.
+	(shape withAllChildren flatCollect: #connectedLines) do: #pushFront
 ]
 
 { #category : #hooks }
 RSNodeOnTopWhenPositionChanged >> onShape: aShape [
 	aShape
-		when: RSPositionChangedEvent 
+		when: RSPositionChangedEvent
 		send: #moveToTop:
 		to: self
 ]

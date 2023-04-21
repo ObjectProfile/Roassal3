@@ -34,8 +34,7 @@ RSSunburstExtentLayout >> radiusForDepth: depth [
 
 { #category : #hook }
 RSSunburstExtentLayout >> setCenterRadius: shape [
-	shape externalRadius: (self radiusForDepth: 1).
-	
+	shape externalRadius: (self radiusForDepth: 1)
 ]
 
 { #category : #hook }
@@ -47,5 +46,5 @@ RSSunburstExtentLayout >> setNormalRadius: shape [
 	r2 := (self radiusForDepth: depth) + off.
 	shape
 		innerRadius: r1;
-		externalRadius: r2.
+		externalRadius: r2
 ]

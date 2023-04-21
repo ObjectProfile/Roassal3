@@ -1,5 +1,9 @@
 "
-The intent of this interaction is to be like a scroll from pharo
+This class is used by `RSCanvasController class >> #simple `
+This is not a default interaction in `RSCanvasController >> #defaultInteractions`
+
+When the canvas is resized this interaction puts the camera view in the top left corner, (this because roassal origin is in the window's center).
+Because we have coordinates now, may be we can remove this class.
 "
 Class {
 	#name : #RSKeepCanvasPositionCanvasInteraction,
@@ -10,22 +14,27 @@ Class {
 { #category : #hooks }
 RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSExtentChangedEvent send: #processEvent: to: self.
-	self processEvent: aCanvas.
+	self processEvent: aCanvas
 ]
 
 { #category : #'events - processing' }
 RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
-	| canvas camera r |
+	| canvas camera r padding topLeftPadding zero origin |
 	self removeRectanglesFor: evt canvas.
 	camera := evt camera.
 	canvas := evt canvas.
+
 	r := self expandedRectangle: canvas.
-	camera position: ((camera fromSpaceToPixel: evt camera position)+r origin) / camera scale.
-	self removeRectanglesFor: evt canvas.
-	evt signalUpdate.
+	padding := self configuration padding.
+	topLeftPadding := padding left @ padding top.
+	zero := camera fromSpaceToPixel: 0@0.
+	origin := camera fromSpaceToPixel: r origin.
+	camera translateTo: 0@0 - (origin - zero) - (camera originMode gapDistance: camera).
+
+	self removeRectanglesFor: canvas.
+	evt signalUpdate
 ]
 
 { #category : #rendering }
 RSKeepCanvasPositionCanvasInteraction >> renderLegendOn: aLegendBuilder [
-	
 ]

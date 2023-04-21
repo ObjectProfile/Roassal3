@@ -7,7 +7,7 @@ Array >> asShape [
 
 { #category : #'*Roassal3-Shapes' }
 Array >> asShapeFor: model [
-	^ RSComposite new 
+	^ RSComposite new
 		model: model;
 		shapes: self;
 		yourself

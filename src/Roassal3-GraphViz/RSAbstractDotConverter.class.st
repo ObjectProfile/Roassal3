@@ -19,8 +19,8 @@ RSAbstractDotConverter >> dotMode: aRSDotMode [
 
 { #category : #visiting }
 RSAbstractDotConverter >> idFor: aShape [
-	^ nodes at: aShape ifAbsentPut: [ 
-		(nodes size+1) asString ].
+	^ nodes at: aShape ifAbsentPut: [
+		(nodes size+1) asString ]
 ]
 
 { #category : #accessing }
@@ -33,14 +33,13 @@ RSAbstractDotConverter >> visitBoundingShape: aShape [
 	"http://www.graphviz.org/doc/info/attrs.html#d:height"
 	| s |
 	s := 0.01.
-	stream 
-		<< (self idFor: aShape); 
-		<< ' [label="' ; 
-		<< aShape model asString; 
+	stream
+		<< (self idFor: aShape);
+		<< ' [label="' ;
+		<< aShape model asString;
 		<< '", height=';
 		<< (aShape height * s) asFloat asString;
-		<< ']'.
-	
+		<< ']'
 ]
 
 { #category : #visiting }
@@ -50,36 +49,34 @@ RSAbstractDotConverter >> visitCanvas: aCanvas [
 
 { #category : #visiting }
 RSAbstractDotConverter >> visitGroup: aRSGroup [
-	
+
 	stream := WriteStream on: String new.
 	nodes := Dictionary new.
-	
+
 	self writeHeader: aRSGroup.
-	
+
 	aRSGroup do: [ :node | node accept: self ]
-		separatedBy: [ stream << ';'; crlf ]. 
+		separatedBy: [ stream << ';'; crlf ].
 	stream << '}'.
-	stream close.
-	
+	stream close
 ]
 
 { #category : #visiting }
 RSAbstractDotConverter >> visitLabel: aShape [
 	^ self visitBoundingShape: aShape
-
 ]
 
 { #category : #visiting }
 RSAbstractDotConverter >> visitLine: aLine [
-	stream 
+	stream
 		<< '"';
 		<< (self idFor: aLine from);
 		<< '" '.
 	self writeLineConnector: aLine.
-	stream 
+	stream
 		<< '"';
 		<< (self idFor: aLine to);
-		<< '"'.
+		<< '"'
 ]
 
 { #category : #visiting }

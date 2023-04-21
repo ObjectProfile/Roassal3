@@ -1,16 +1,11 @@
 "
-A ROAbstractGridLayout is xxxxxxxxx.
+Abstract class for grid layouts.
 
-Instance Variables
-	gapSize:		<Object>
-	lineItemsCountBlock:		<Object>
+My subclasses are `RSCellLayout`, `RSGridLayout` and `RSVerticalGridLayout`.
 
-gapSize
-	- xxxxx
-
-lineItemsCountBlock
-	- xxxxx
-
+My instance variables are:
+- gapSize the space between each element
+- lineItemsCount: a number or block to compute the number of desired elements per row.
 "
 Class {
 	#name : #RSAbstractGridLayout,
@@ -30,7 +25,7 @@ RSAbstractGridLayout class >> isAbstract [
 { #category : #public }
 RSAbstractGridLayout class >> on: aCollectionOfElements withGap: anInteger withLineItemsCount: aBlock [
 	"place the elements in a grid with (aBlock roValue: aCollectionOfElements) as the amount of elements horizontally"
-	
+
 	| myLayout |
 	myLayout := self new gapSize: anInteger;  lineItemsCount: aBlock; yourself.
 	myLayout applyOn: aCollectionOfElements.
@@ -44,12 +39,12 @@ RSAbstractGridLayout class >> on: aCollectionOfElements withLineItemsCount: aBlo
 	For example:
 	self on: (ROElement forCollection: (1 to: 20)) withLineItemsCount: 5
 	=> place the 20 elements on a grid 5 x 4
-	
+
 	self on: (ROElement forCollection: (1 to: 20)) withLineItemsCount: [ :elements | elements size // 3 ]
 	=> place the 20 elements on a grid 3 x 7
 	"
-	
-	
+
+
 	| myLayout |
 	myLayout := self new lineItemsCount: aBlock; yourself.
 	myLayout applyOn: aCollectionOfElements.
@@ -57,16 +52,16 @@ RSAbstractGridLayout class >> on: aCollectionOfElements withLineItemsCount: aBlo
 ]
 
 { #category : #'instance creation' }
-RSAbstractGridLayout class >> withGap: anInteger [ 
+RSAbstractGridLayout class >> withGap: anInteger [
 
-	^ self new 
-			gapSize: anInteger; 
+	^ self new
+			gapSize: anInteger;
 			yourself
 ]
 
 { #category : #'instance creation' }
 RSAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock [
-	
+
 	^self new
 		gapSize: anInteger;
 		lineItemsCount: aBlock;
@@ -75,7 +70,7 @@ RSAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock [
 
 { #category : #'instance creation' }
 RSAbstractGridLayout class >> withLineItemsCount: aBlock [
-	
+
 	^self new
 		lineItemsCount: aBlock;
 		yourself
@@ -88,11 +83,11 @@ RSAbstractGridLayout >> defaultGapSize [
 
 { #category : #accessing }
 RSAbstractGridLayout >> defaultLineItemsCount [
-	^ [ :elements | 
+	^ [ :elements |
 			| height width |
-			(elements size < 3 
+			(elements size < 3
 				ifTrue: [ (elements size max: 1) @ 1 ]
-				ifFalse: 
+				ifFalse:
 					[ height := (elements size * 0.618034) sqrt ceiling truncated.
 					width := (elements size / height) ceiling truncated.
 					width @ height ]) x ]
@@ -113,6 +108,11 @@ RSAbstractGridLayout >> initialize [
 	super initialize.
 	gapSize := self defaultGapSize.
 	lineItemsCountBlock := self defaultLineItemsCount.
+]
+
+{ #category : #accessing }
+RSAbstractGridLayout >> lineItemsCount [
+	^ lineItemsCountBlock
 ]
 
 { #category : #accessing }

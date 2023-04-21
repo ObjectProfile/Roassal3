@@ -9,8 +9,8 @@ I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and ful
 Class {
 	#name : #RSVanDerPloegTreeLayout,
 	#superclass : #RSTreeLayout,
-	#traits : 'RSTLayoutProperties + RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularVerticalTreeLayout',
-	#classTraits : 'RSTLayoutProperties classTrait + RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularVerticalTreeLayout classTrait',
+	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularVerticalTreeLayout',
+	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularVerticalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],

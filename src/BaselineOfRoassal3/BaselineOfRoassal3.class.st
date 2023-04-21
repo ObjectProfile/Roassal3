@@ -19,7 +19,6 @@ BaselineOfRoassal3 >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForCommon: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
 	self roassalGroups: spec 
@@ -30,7 +29,6 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
-	"https://github.com/ObjectProfile/Roassal3"
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
@@ -43,7 +41,13 @@ BaselineOfRoassal3 >> baselineForPharo8: spec [
 
 { #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo9: spec [
-	self baselineForCommon: spec
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo9'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo9')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
 ]
 
 { #category : #'API-packages' }
@@ -69,6 +73,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	'Roassal3-Spec'
 	'Roassal3-Spec-Morphic'
 	'Roassal3-BaselineMap'
+	'Roassal3-SVG'
 	)
 ]
 
@@ -81,7 +86,7 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://ObjectProfile/NumericScales:v1.0/src' ].
+		spec repository: 'github://ObjectProfile/NumericScales/src' ].
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
@@ -144,25 +149,20 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Core' with: #('Roassal3'), arr1;
 		group: 'Examples' with: core, arr2;
 		group: 'Tests' with: core, arr3;
-		group: 'SVG' with: #('Core' 'Roassal3-SVG');
-		group: 'SVGTests' with: #('SVG' 'Tests' 'Roassal3-SVG-Tests');
-		group: 'SVGExamples' with: #('SVG' 'Examples' 'Roassal3-SVG-Examples');
-		group: 'SVGImporter' with: #('SVG' 'SVGExamples' 'SVGTests' 'Roassal3-SVG-Importer');
+		group: 'SVGExamples' with: #('Examples' 'Roassal3-SVG-Examples');
+		group: 'SVGImporter' with: #('SVGExamples' 'Roassal3-SVG-Importer');
 		group: 'Gtk' with: #('Roassal3-Gtk' 'Roassal3-Spec-Gtk');
-		
-		group: 'Mini' with: #('SVGTests' 'SVGExamples');
+
+		group: 'Mini' with: #('Tests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
-		group: 'default' with: #('Core' 'Mini')
-
-
-
+		group: 'default' with: #('Mini')
 ]
 
 { #category : #'API-packages' }
 BaselineOfRoassal3 >> testPackagesNames [
 	^ #(
-	'Roassal3-Global-Tests' 
+	'Roassal3-Global-Tests'
 	'Roassal3-Animation-Tests'
 	'Roassal3-Shapes-Tests'
 	'Roassal3-Interaction-Tests'
@@ -172,5 +172,6 @@ BaselineOfRoassal3 >> testPackagesNames [
 	'Roassal3-Spec-Tests'
 	'Roassal3-Inspector-Tests'
 	'Roassal3-BaselineMap-Tests'
+	'Roassal3-SVG-Tests'
 	)
 ]

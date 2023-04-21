@@ -29,7 +29,7 @@ RSBoundingTest >> testCreating [
 RSBoundingTest >> testDrawBitmap [
 	canvas addShape: (RSBitmap new
 		form: (ColorForm extent: 100@100 depth: 32)).
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
@@ -38,7 +38,7 @@ RSBoundingTest >> testDrawBorder [
 		radius: 100;
 		withBorder;
 		yourself).
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
@@ -47,7 +47,7 @@ RSBoundingTest >> testDrawBoxCornerRadius [
 		extent: 100@100;
 		cornerRadius: 5;
 		yourself).
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
@@ -61,7 +61,7 @@ RSBoundingTest >> testDrawPolygon [
 		points: { 200@10. 250@190. 160@210 };
 		yourself).
 	self assert: canvas shapes second points equals: {(-5@ -100). (45@80). (-45@100)}.
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #running }
@@ -102,7 +102,7 @@ RSBoundingTest >> testDrawRing [
 		alphaAngle: 0;
 		betaAngle: 45;
 		cornerRadii: 20).
-	canvas createMorph drawOnMockCanvas.
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #tests }
@@ -114,9 +114,7 @@ RSBoundingTest >> testFromRectangle [
 	self assert: box extent > (0 @ 0).
 	box fromRectangle: (10 @ 10 corner: 50 @ 40).
 	self assert: box position equals: 30 @ 25.
-	self assert: box extent equals: 40 @ 30.
-	
-	
+	self assert: box extent equals: 40 @ 30
 ]
 
 { #category : #tests }
@@ -133,7 +131,7 @@ RSBoundingTest >> testPosition [
 	| b |
 	b := RSBox new.
 	self assert: b position equals: 0@0.
-	b position: 0@0.
+	b position: 0@0
 ]
 
 { #category : #tests }
@@ -143,7 +141,7 @@ RSBoundingTest >> testTranslateTopLeftTo [
 	b := RSBox new size: 10.
 	b translateTopLeftTo: 0 @ 0.
 	self assert: b position equals: 5 @ 5.
-	
+
 	b translateTopLeftTo: 10 @ 50.
-	self assert: b position equals: 15 @ 55.
+	self assert: b position equals: 15 @ 55
 ]

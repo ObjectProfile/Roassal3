@@ -32,7 +32,7 @@ shape @ RSPopup.
 c @ RSCanvasController
 -=-=-=-=-=-=-=-=-=
 	"
-	
+
 	self addInteraction: anInteractionClassOrInstance
 ]
 
@@ -63,7 +63,7 @@ RSObjectWithProperty >> hasProperties [
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> hasProperty: aKey [ 
+RSObjectWithProperty >> hasProperty: aKey [
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
@@ -91,7 +91,7 @@ RSObjectWithProperty >> properties: aDictionary [
 { #category : #properties }
 RSObjectWithProperty >> propertiesDo: block [
 	self hasProperties ifFalse: [ ^ self ].
-	block value: self properties.
+	block value: self properties
 ]
 
 { #category : #properties }
@@ -100,18 +100,18 @@ RSObjectWithProperty >> propertyAt: aKey [
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifAbsent: anAbsentBlock [ 
-	^ self properties at: aKey ifAbsent: anAbsentBlock 
+RSObjectWithProperty >> propertyAt: aKey ifAbsent: anAbsentBlock [
+	^ self properties at: aKey ifAbsent: anAbsentBlock
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: anAbsentBlock [ 
-	^ self properties at: aKey ifAbsentPut: anAbsentBlock 
+RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: anAbsentBlock [
+	^ self properties at: aKey ifAbsentPut: anAbsentBlock
 ]
 
 { #category : #properties }
-RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock [ 
-	^ self properties at: aKey ifPresent: aPresentBlock 
+RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock [
+	^ self properties at: aKey ifPresent: aPresentBlock
 ]
 
 { #category : #properties }
@@ -129,7 +129,7 @@ RSObjectWithProperty >> propertyAt: aKey put: value [
 	"Keep a value under a key. The key is usually a symbol.
 For example:
 ```
-RSBox new propertyAt: #hello put: 'World'; propertyAt: #hello 
+RSBox new propertyAt: #hello put: 'World'; propertyAt: #hello
 ```
 return World
 	"
@@ -149,7 +149,6 @@ RSObjectWithProperty >> removeKey: aKey [
 	(prop includesKey: aKey) ifFalse: [ ^ self ].
 	prop removeKey: aKey.
 	prop ifEmpty: [ prop := nil ]
-	
 ]
 
 { #category : #properties }

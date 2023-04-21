@@ -30,7 +30,7 @@ Class {
 
 { #category : #accessing }
 RSRenderer >> canvas [
-	^ athensCanvas 
+	^ athensCanvas
 ]
 
 { #category : #accessing }
@@ -61,7 +61,6 @@ RSRenderer >> visitGroup: aGroup [
 
 { #category : #visiting }
 RSRenderer >> visitLabel: label [
-
 ]
 
 { #category : #visiting }

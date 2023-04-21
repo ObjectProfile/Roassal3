@@ -28,16 +28,16 @@ RSParticleD >> decay: aNumber [
 { #category : #initialization }
 RSParticleD >> initialize [
 	super initialize.
-	life := 0.
+	life := 0
 ]
 
 { #category : #accessing }
-RSParticleD >> level: anInteger [ 
+RSParticleD >> level: anInteger [
 	| r |
 	level := anInteger.
 	r := SharedRandom globalGenerator.
 	vel := (r next @ r next)* 2 - 1.
-	vel := vel * (NSScale linear domain: {0. self maxLevel}; range: #(5 2); scale: level).
+	vel := vel * (NSScale linear domain: {0. self maxLevel}; range: #(5 2); scale: level)
 ]
 
 { #category : #accessing }
@@ -62,15 +62,15 @@ RSParticleD >> moveIn: particles [
 	vel := vel * decay.
 	pos := pos + vel.
 	"spawn new particles if conditions are met "
-	life % 10 = 0 ifTrue: [ 
-		level > 0 ifTrue: [ 
+	life % 10 = 0 ifTrue: [
+		level > 0 ifTrue: [
 			level := level - 1.
 			particles add: (self class new
 				position: pos;
 				decay: decay;
 				maxLevel: self maxLevel;
 				level: level - 1) ].
-		 ].
+		 ]
 ]
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ RSParticleD >> position [
 ]
 
 { #category : #accessing }
-RSParticleD >> position: aPoint [ 
+RSParticleD >> position: aPoint [
 	pos := aPoint
 ]
 

@@ -1,7 +1,7 @@
 Extension { #name : #NSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
-NSInterpolator >> gtCanvasForInspector [
+NSInterpolator >> canvasForInspector [
 	| canvas theme boxes pos rect line cp label loc s |
  	canvas := RSCanvas new.
 	theme := Smalltalk ui theme.
@@ -19,11 +19,11 @@ NSInterpolator >> gtCanvasForInspector [
 	pos := NSScale linear
 		domain: { 0@0. 1@1 };
 		range: { 0 @ rect height. rect width@ 0 }.
-	line := RSPolyline new 
-		border: (RSBorder new 
+	line := RSPolyline new
+		border: (RSBorder new
 			width: 4;
 			paint: ((LinearGradientPaint fromArray: {"sweetPeriod"
-					0->'3f51b1'. 
+					0->'3f51b1'.
 					0.13->'5a55ae'.
 					0.25->'7b5fac'.
 					0.38->'8f6aae'.
@@ -42,11 +42,11 @@ NSInterpolator >> gtCanvasForInspector [
 		duration: 5 seconds;
 		onStepDo: [ :t |
 			cp add: t.
-			line controlPoints: (cp collect: [:value | 
+			line controlPoints: (cp collect: [:value |
 				pos scale: value @ (self interpolate: value) ]).
 			canvas signalUpdate].
 	canvas addAll: boxes.
-	label := [ :text | 
+	label := [ :text |
 		RSLabel new
 			color: theme textColor;
 			size: 20;
@@ -73,6 +73,6 @@ NSInterpolator >> gtCanvasForInspector [
 NSInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new
-		canvas: self gtCanvasForInspector;
+		canvas: self canvasForInspector;
 		yourself
 ]

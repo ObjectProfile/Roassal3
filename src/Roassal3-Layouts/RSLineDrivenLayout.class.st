@@ -25,7 +25,7 @@ RSLineDrivenLayout class >> on: elements edges: edges [
 
 { #category : #'instance creation' }
 RSLineDrivenLayout class >> withEdges: aCollection [
-	
+
 	^self new initialize userDefinedEdges: aCollection
 ]
 
@@ -48,7 +48,7 @@ RSLineDrivenLayout >> edges [
 { #category : #accessing }
 RSLineDrivenLayout >> edges: aCollection [
 	"Set the list of edges that should be considered for the layout.
-	If none is specified (i.e., if this method is not called), then the 
+	If none is specified (i.e., if this method is not called), then the
 	edges are infered."
 	lines := aCollection
 ]
@@ -58,7 +58,6 @@ RSLineDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
 	lines ifNil: [ ^ self ].
 	lines do: aBlock
-
 ]
 
 { #category : #hook }
@@ -69,7 +68,7 @@ RSLineDrivenLayout >> executeOnElements: elements [
 		ifNotNil: [ | flat |
 			flat := OrderedCollection new.
 			self userDefinedEdges
-				do: [ :each | 
+				do: [ :each |
 					each isCollection
 						ifTrue: [ flat addAll: each ]
 						ifFalse: [ flat add: each ] ].
@@ -90,11 +89,10 @@ RSLineDrivenLayout >> isEdgeDrivenLayout [
 { #category : #accessing }
 RSLineDrivenLayout >> setEdgesFromElements: elements [
 	elements isEmpty ifTrue: [ ^ self ].
-	
+
 	^ self edges:
 		((elements flatCollect: #incomingLines)
 			select: [ :anEdge |elements includes: anEdge from])
-
 ]
 
 { #category : #accessing }
@@ -110,6 +108,5 @@ RSLineDrivenLayout >> userDefinedEdges [
 { #category : #accessing }
 RSLineDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
 	"useful to tell to the layout which edges have to be used for the layout"
-	userDefinedEdges := aCollectionOfEdges.
-	
+	userDefinedEdges := aCollectionOfEdges
 ]

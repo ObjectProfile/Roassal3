@@ -25,8 +25,8 @@ RSSankeyLink class >> on: anAssociation [
 { #category : #comparing }
 RSSankeyLink >> = anObject [
 
-	^ anObject class == self class and: [ 
-		  anObject from = self from and: [ 
+	^ anObject class == self class and: [
+		  anObject from = self from and: [
 			  anObject to = self to and: [ anObject value = self value ] ] ]
 ]
 
@@ -53,7 +53,7 @@ RSSankeyLink >> printOn: stream [
 	stream
 		<< from
 		<< ' → '
-		<< to.
+		<< to
 ]
 
 { #category : #accessing }

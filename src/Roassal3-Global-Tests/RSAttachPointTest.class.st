@@ -84,7 +84,7 @@ RSAttachPointTest >> testInverted [
 	self assert: e1 position equals: line startPoint.
 	ap inverted.
 	line update.
-	self assert: e1 position equals: line endPoint.
+	self assert: e1 position equals: line endPoint
 ]
 
 { #category : #tests }

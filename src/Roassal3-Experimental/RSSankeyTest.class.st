@@ -11,7 +11,7 @@ Class {
 RSSankeyTest >> setUp [
 
 	super setUp.
-	sankey := RSSankey withAllAssociations: { 
+	sankey := RSSankey withAllAssociations: {
 			          (#Source1 -> 5 -> #Target1).
 			          (#Source2 -> 1 -> #Target1).
 			          (#Target1 -> 2 -> #Target2).
@@ -84,13 +84,13 @@ RSSankeyTest >> testBoxY [
 	self assert: ((sankey boxes at: 2) y closeTo: 2.02 precision: 10e-2).
 	self assert: ((sankey boxes at: 3) y closeTo: 418.33 precision: 10e-2).
 	self assert: ((sankey boxes at: 4) y closeTo: 336.66 precision: 10e-2).
-	self assert: ((sankey boxes at: 5) y closeTo: 0 precision: 10e-2).
+	self assert: ((sankey boxes at: 5) y closeTo: 0 precision: 10e-2)
 ]
 
 { #category : #tests }
 RSSankeyTest >> testGenerateSankeyUsingSet [
 
-	RSSankey withAllAssociations: { 
+	RSSankey withAllAssociations: {
 			(#Source1 -> 5 -> #Target1).
 			(#Source2 -> 1 -> #Target1).
 			(#Target1 -> 2 -> #Target2).
@@ -138,7 +138,7 @@ RSSankeyTest >> testLineTy [
 	self assert: (sankey lines at: 1) ty equals: 0.
 	self assert: (sankey lines at: 2) ty equals: 1225 / 3.
 	self assert: (sankey lines at: 3) ty equals: 0.
-	self assert: (sankey lines at: 4) ty equals: 0.
+	self assert: (sankey lines at: 4) ty equals: 0
 ]
 
 { #category : #tests }
@@ -158,10 +158,10 @@ RSSankeyTest >> testNodeAndLinksOrders [
 		equals:
 		#( #Source1 #Target1 #Source2 #Target2 #Target3 )
 			asOrderedCollection.
-	self assert: sankey links equals: ({ 
+	self assert: sankey links equals: ({
 			 (#Source1 -> 5 -> #Target1).
 			 (#Source2 -> 1 -> #Target1).
 			 (#Target1 -> 2 -> #Target2).
-			 (#Target1 -> 4 -> #Target3) } collect: [ :each | 
+			 (#Target1 -> 4 -> #Target3) } collect: [ :each |
 			 RSSankeyLink on: each ])
 ]

@@ -44,7 +44,7 @@ RSAlignment >> alignFromLabelUsing: aRSLabel [
 	| topY yb |
 	topY := aRSLabel encompassingRectangle top.
 	yb := aRSLabel textExtents y_bearing.
-	shapes do: [ :s |	
+	shapes do: [ :s |
 		s translateTo: s position x @ (topY + (s extent y / 2.0) + s textExtents y_bearing-yb).
 	]
 ]
@@ -62,8 +62,8 @@ RSAlignment >> alignFromLeftUsing: aShape [
 { #category : #alignment }
 RSAlignment >> alignFromMiddleUsing: aShape [
 	| midY |
-	midY := aShape position y.	
-	shapes do: [ :s |	
+	midY := aShape position y.
+	shapes do: [ :s |
 		s translateTo: s position x @ midY
 	]
 ]
@@ -105,15 +105,15 @@ c
 -=-=-=-=
 "
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromBottomUsing: self bottomMostShape 
+	self alignFromBottomUsing: self bottomMostShape
 ]
 
 { #category : #'accessing - computed' }
 RSAlignment >> bottomMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
-	^ shapes inject: shapes first into: [ :maxS :s | 
+	^ shapes inject: shapes first into: [ :maxS :s |
 			maxS encompassingRectangle bottom <= s encompassingRectangle bottom
-					ifTrue: [ s ] ifFalse: [ maxS ] ] 
+					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
 
 { #category : #public }
@@ -138,7 +138,7 @@ c
 { #category : #'accessing - computed' }
 RSAlignment >> centerMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
-	^ shapes inject: shapes first into: [ :maxS :s | 
+	^ shapes inject: shapes first into: [ :maxS :s |
 			maxS encompassingRectangle floatCenter <= s encompassingRectangle floatCenter
 					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
@@ -158,16 +158,16 @@ RSAlignment >> label [
 { #category : #public }
 RSAlignment >> left [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromLeftUsing: self leftMostShape 
+	self alignFromLeftUsing: self leftMostShape
 ]
 
 { #category : #'accessing - computed' }
 RSAlignment >> leftMostShape [
 	"Return the shape that is the located the most on the left hand side"
 	fixedShape ifNotNil: [ ^ fixedShape ].
-	^ shapes inject: shapes first into: [ :maxS :s | 
+	^ shapes inject: shapes first into: [ :maxS :s |
 			maxS encompassingRectangle left >= s encompassingRectangle left
-					ifTrue: [ s ] ifFalse: [ maxS ] ] 
+					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
 
 { #category : #public }
@@ -190,30 +190,35 @@ c
 ]
 
 { #category : #public }
+RSAlignment >> none [
+	"just empty alignment, because sometimes, shapes are in the position"
+]
+
+{ #category : #public }
 RSAlignment >> right [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromRightUsing: self rightMostShape 
+	self alignFromRightUsing: self rightMostShape
 ]
 
 { #category : #'accessing - computed' }
 RSAlignment >> rightMostShape [
 	"Return the shape that is the located the most on the right hand side"
 	fixedShape ifNotNil: [ ^ fixedShape ].
-	^ shapes inject: shapes first into: [ :maxS :s | 
+	^ shapes inject: shapes first into: [ :maxS :s |
 			maxS encompassingRectangle right <= s encompassingRectangle right
-					ifTrue: [ s ] ifFalse: [ maxS ] ] 
+					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]
 
 { #category : #public }
 RSAlignment >> top [
 	self hasShape ifFalse: [ ^ self ].
-	self alignFromTopUsing: self topMostShape 
+	self alignFromTopUsing: self topMostShape
 ]
 
 { #category : #'accessing - computed' }
 RSAlignment >> topMostShape [
 	fixedShape ifNotNil: [ ^ fixedShape ].
-	^ shapes inject: shapes first into: [ :maxS :s | 
+	^ shapes inject: shapes first into: [ :maxS :s |
 			maxS encompassingRectangle top >= s encompassingRectangle top
-					ifTrue: [ s ] ifFalse: [ maxS ] ] 
+					ifTrue: [ s ] ifFalse: [ maxS ] ]
 ]

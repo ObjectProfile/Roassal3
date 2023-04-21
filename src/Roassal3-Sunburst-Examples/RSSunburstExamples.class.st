@@ -23,7 +23,7 @@ RSSunburstExamples >> example02MultipleRoots [
 	| sb |
 	sb := RSSunburstBuilder new.
 	sb strategy hasCenter: false.
-	sb sliceShape 
+	sb sliceShape
 		withBorder;
 		segmentSpacing: 1.
 	sb from: { String. RSEvent. RSShape } using:  #subclasses.
@@ -70,7 +70,7 @@ RSSunburstExamples >> example05BezierEdges [
 	sb := RSSunburstBuilder new.
 	sb sliceShape
 		withBorder.
-	sb sliceColor: [:shape | shape model subclasses isEmpty 
+	sb sliceColor: [:shape | shape model subclasses isEmpty
 		ifTrue: [ Color purple ]
 		ifFalse: [ Color lightGray ] ].
 	sb explore: Collection using:  #subclasses.
@@ -80,7 +80,7 @@ RSSunburstExamples >> example05BezierEdges [
 	RSLineBuilder sunburstBezier
 		width: 2;
 		color: Color black;
-		markerEnd: (RSEllipse new 
+		markerEnd: (RSEllipse new
 			size: 10;
 			color: Color white;
 			withBorder;
@@ -147,11 +147,11 @@ RSSunburstExamples >> example07FadeInteraction [
 	label text: 'fooo'.
 	label isFixed: true.
 
-	 sb shapes 
-		when: RSMouseEnter do: [ :evt | 
+	 sb shapes
+		when: RSMouseEnter do: [ :evt |
 			| path |
 			path := (interaction pathFor: evt shape) reverse.
-			path := String streamContents: [:s | 
+			path := String streamContents: [:s |
 				path do: [ :node | s << node model asString ] separatedBy: [ s << '>>' ] ].
 			label text: path; signalUpdate.
 			label position: label extent / 2 ];
@@ -167,7 +167,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 	<script: 'self new example08SunburstExplorer open'>
 	| sb canvas newData color newAnimation first interpolate label |
 	canvas := RSCanvas new.
-	canvas @ RSCanvasController.
+
 	color := NSScale category20c.
 	newData := nil.
 	newAnimation := [ :from :to |
@@ -177,43 +177,43 @@ RSSunburstExamples >> example08SunburstExplorer [
 			from: from;
 			to: to;
 			yourself ].
-	
+
 	interpolate := [ :oldShape :newShape :target |
-		(newAnimation 
+		(newAnimation
 			value: oldShape alphaAngle
 			value: newShape alphaAngle)
 			onStepDo: [ :t | target alphaAngle: t. canvas signalUpdate ].
-		(newAnimation 
+		(newAnimation
 			value: oldShape betaAngle
 			value: newShape betaAngle)
 			onStepDo: [ :t | target betaAngle: t ].
-		(newAnimation 
+		(newAnimation
 			value: oldShape innerRadius
 			value: newShape innerRadius)
 			onStepDo: [ :t | target innerRadius: t ].
-		(newAnimation 
+		(newAnimation
 			value: oldShape externalRadius
 			value: newShape externalRadius)
-			onStepDo: [ :t | target externalRadius: t ];
+			onStepDo: [ :t | target externalRadius: t. canvas zoomToFit ];
 			yourself ].
-		
+
 	sb := RSSunburstBuilder new.
-	sb 
+	sb
 		container: canvas;
 		sliceColor: [:shape | color scale: shape model category ].
 	sb sliceShape
-		withBorder.
-	canvas addShape: (label := RSLabel new 
+		border: (RSBorder new color: Color black).
+	canvas addShape: (label := RSLabel new
 		text: '';
 		isFixed: true;
-		yourself).	
+		yourself).
 	newData := [ :class | | lastShapes newShapes oshape |
 		lastShapes := canvas shapes copy.
 		sb explore: class using:  #subclasses.
 		sb build.
 		sb shapes @ RSPopup.
 		label text: class name.
-		
+
 		newShapes := sb shapes.
 		first := newShapes first.
 		first when: RSMouseClick do: [ :evt | | cls |
@@ -221,8 +221,8 @@ RSSunburstExamples >> example08SunburstExplorer [
 			cls = Object ifFalse: [ newData value: cls ] ].
 		(newShapes allButFirst reject: #isSLeaf)
 			when: RSMouseClick do: [ :evt | newData value: evt shape model ].
-		
-		newShapes size < lastShapes size ifTrue: [ 
+
+		newShapes size < lastShapes size ifTrue: [
 			newShapes do: [:new | | old |
 				old := lastShapes shapeFromModel: new model.
 				old remove.
@@ -230,19 +230,19 @@ RSSunburstExamples >> example08SunburstExplorer [
 			oshape := lastShapes shapeFromModel: class.
 			lastShapes do: [ :old | | new |
 				new := RSPieSlice new.
-				oshape betaAngle < old betaAngle 
+				oshape betaAngle < old betaAngle
 					ifTrue: [ new alphaAngle: 360; betaAngle: 360 ].
 				old depth = 1 ifTrue: [ new alphaAngle: 0; betaAngle: 360 ].
-				(interpolate value: old value: new value: old) 
+				(interpolate value: old value: new value: old)
 					when: RSAnimationLoopEvent do: [ old remove ].
 				 ].
-		] ifFalse: [ 
-			oshape := lastShapes 
-				ifEmpty: [ RSPieSlice new ] 
+		] ifFalse: [
+			oshape := lastShapes
+				ifEmpty: [ RSPieSlice new ]
 				ifNotEmpty: [ newShapes shapeFromModel: lastShapes first model. ].
 			newShapes do: [ :new | | old |
 				old := lastShapes shapeFromModel: new model.
-				old ifNil: [ 
+				old ifNil: [
 					old := RSPieSlice new.
 					oshape betaAngle < new betaAngle
 						ifTrue: [ old alphaAngle: 360; betaAngle: 360. ]
@@ -253,10 +253,11 @@ RSSunburstExamples >> example08SunburstExplorer [
 				interpolate value: old value: new value: new. ].
 		]
 	].
-	canvas 
-		when: RSExtentChangedEvent 
+	canvas
+		when: RSExtentChangedEvent
 		do: [ label position: (canvas extent x / 2) @ (canvas extent y - label height) ].
-			
+
 	newData value: Collection.
-	^ canvas.
+
+	^ canvas
 ]

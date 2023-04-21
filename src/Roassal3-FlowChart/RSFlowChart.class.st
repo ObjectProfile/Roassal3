@@ -44,8 +44,7 @@ RSFlowChart >> decisionLabeled: aLabel as: variableName yes: variableNameYes no:
 	e yesElement: (self lookUp: variableNameYes).
 	e noElement: (self lookUp: variableNameNo).
 	self addElement: e.
-	variables at: variableName put: e.
-	
+	variables at: variableName put: e
 ]
 
 { #category : #accessing }
@@ -63,7 +62,7 @@ RSFlowChart >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
 	variables := Dictionary new.
-	canvas := RSCanvas new.
+	canvas := RSCanvas new
 ]
 
 { #category : #'as yet unclassified' }
@@ -71,8 +70,7 @@ RSFlowChart >> inputOutputLabeled: aLabel as: variableName [
 	| e |
 	e := RSFCInputOutput new label: aLabel.
 	self addElement: e.
-	variables at: variableName put: e.
-	
+	variables at: variableName put: e
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,6 +88,5 @@ RSFlowChart >> processLabeled: aLabel as: variableName [
 	| e |
 	e := RSFCProcess new label: aLabel.
 	self addElement: e.
-	variables at: variableName put: e.
-	
+	variables at: variableName put: e
 ]
