@@ -5,7 +5,6 @@ Class {
 	#name : #RSAbstractTick,
 	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
-		'niceLabel',
 		'ticks',
 		'labels',
 		'labelLocation',
@@ -287,7 +286,7 @@ RSAbstractTick >> ticksData [
 		ifTrue: [ xScale ]
 		ifFalse: [ yScale ].
 	rangeForDividing := scaleToUse range first
-		to: scaleToUse range second
+		to: scaleToUse range last
 		count: self configuration numberOfTicks.
 
 	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
