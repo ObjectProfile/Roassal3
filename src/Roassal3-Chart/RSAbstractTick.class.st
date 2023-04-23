@@ -8,7 +8,8 @@ Class {
 		'ticks',
 		'labels',
 		'labelLocation',
-		'configuration'
+		'configuration',
+		'niceLabel'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
