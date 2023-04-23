@@ -288,7 +288,7 @@ RSAbstractTick >> ticksData [
 		ifFalse: [ yScale ].
 	rangeForDividing := scaleToUse range first
 		to: scaleToUse range second
-		count: self configuration numberOfTicks - 1.
+		count: self configuration numberOfTicks.
 
 	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
 ]
