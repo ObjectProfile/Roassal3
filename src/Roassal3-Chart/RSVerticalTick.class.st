@@ -25,16 +25,6 @@ Class {
 }
 
 { #category : #rendering }
-RSVerticalTick >> createNiceLabelIn: aChart [
-	| nice |
-	nice := super createNiceLabelIn: aChart.
-	aChart
-		minValueY: nice min;
-		maxValueY: nice max.
-	^ nice
-]
-
-{ #category : #rendering }
 RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.

@@ -8,8 +8,7 @@ Class {
 		'ticks',
 		'labels',
 		'labelLocation',
-		'configuration',
-		'niceLabel'
+		'configuration'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -27,16 +26,12 @@ RSAbstractTick >> asFloat: numberOfDecimals [
 
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
-	self min = self max
-		ifTrue: [
-			niceLabel := self defaultNiceLabel.
-			self createXScale.
-			self createYScale.
-			^ self ].
 
-	niceLabel := self configuration shouldUseNiceLabel
-		ifTrue: [ self createNiceLabelIn: aChart ]
-		ifFalse: [ self defaultNiceLabel ].
+	self min = self max ifTrue: [
+		self createXScale.
+		self createYScale.
+		^ self ].
+
 	self createXScale.
 	self createYScale
 ]
@@ -60,16 +55,6 @@ RSAbstractTick >> createLabelFor: aValue index: index [
 	lbl color: self styler textColor.
 	self labelLocation move: lbl on: tick.
 	^ lbl
-]
-
-{ #category : #accessing }
-RSAbstractTick >> createNiceLabelIn: aChart [
-	| nice |
-	nice := aChart niceGenerator
-		searchMin: self min
-		max: self max
-		desired: self configuration numberOfTicks.
-	^ nice
 ]
 
 { #category : #rendering }
@@ -100,26 +85,9 @@ RSAbstractTick >> defaultLabelLocation [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - defaults' }
-RSAbstractTick >> defaultNiceLabel [
-	| nice |
-	nice := RSNiceLabel new.
-	nice
-		min: self min;
-		max: self max;
-		step: nice ticks / self configuration numberOfTicks.
-	^ nice
-]
-
 { #category : #initialization }
 RSAbstractTick >> defaultShape [
 	^ RSLine new
-]
-
-{ #category : #public }
-RSAbstractTick >> doNotUseNiceLabel [
-	"Ticks use RSNiceLabelGenerator"
-	self configuration shouldUseNiceLabel: false
 ]
 
 { #category : #accessing }
@@ -147,19 +115,17 @@ c
 
 { #category : #public }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
+
 	| size |
-	size := aCollectionOfStrings size - 1.
-	self assert: size >= 0 description: 'aCollectionOfStrings can not be empty'.
+	size := aCollectionOfStrings size.
+	self assert: size > 0 description: 'aCollectionOfStrings can not be empty'.
 	size isZero ifTrue: [ size := 1 ].
 
-	self
-		doNotUseNiceLabel;
-		numberOfTicks: size.
+	self numberOfTicks: size.
 
 	self labelConversion: [ :x |
-		x isZero
-			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x asInteger ] ]
+		x isZero ifTrue: [ '' ]
+			ifFalse: [ aCollectionOfStrings at: x asInteger ] ]
 ]
 
 { #category : #public }
@@ -291,12 +257,6 @@ RSAbstractTick >> ticksData [
 		count: self configuration numberOfTicks.
 
 	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
-]
-
-{ #category : #public }
-RSAbstractTick >> useNiceLabel [
-	"Ticks use RSNiceLabelGenerator"
-	self configuration shouldUseNiceLabel: true
 ]
 
 { #category : #public }

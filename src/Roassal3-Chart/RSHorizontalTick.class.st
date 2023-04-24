@@ -25,16 +25,6 @@ Class {
 }
 
 { #category : #rendering }
-RSHorizontalTick >> createNiceLabelIn: aChart [
-	| nice |
-	nice := super createNiceLabelIn: aChart.
-	aChart
-		minValueX: nice min;
-		maxValueX: nice max.
-	^ nice
-]
-
-{ #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
 	| value zeroY |
 	value := xScale scale: aNumber.
