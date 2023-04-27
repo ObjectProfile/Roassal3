@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
 
+{ #category : #'instance creation' }
+RSLayoutNumberField >> newTextInput [
+	^ layoutStudio newNumberInput
+]
+
 { #category : #accessing }
 RSLayoutNumberField >> transform: aString [
 	^ aString asNumber

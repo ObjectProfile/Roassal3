@@ -10,6 +10,15 @@ Class {
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
 
+{ #category : #rendering }
+RSLayoutChooseField >> createWidget [
+	^ layoutStudio newDropList
+		items: items;
+		selectItem: self layoutValue;
+		display: [ :item | item asString ];
+		whenSelectedItemChangedDo: [ :item | self layoutValue: (self transform: item) ].
+]
+
 { #category : #accessing }
 RSLayoutChooseField >> items [
 
@@ -20,15 +29,6 @@ RSLayoutChooseField >> items [
 RSLayoutChooseField >> items: anObject [
 
 	items := anObject
-]
-
-{ #category : #'instance creation' }
-RSLayoutChooseField >> newTextField [
-	^ layoutStudio newDropList
-		items: items;
-		selectItem: self layoutValue;
-		display: [ :item | item asString ];
-		whenSelectedItemChangedDo: [ :item | self layoutValue: (self transform: item) ].
 ]
 
 { #category : #accessing }

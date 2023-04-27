@@ -3,10 +3,10 @@ Extension { #name : #RSLayout }
 { #category : #'*Roassal3-Spec-Examples' }
 RSLayout class >> classesWithDefinitionsToEdit [
 
-	^ (self withAllSubclasses
+	^ ((self withAllSubclasses
 		select: [ :cls | cls isAbstract not ]
 		thenCollect: [ :cls | cls -> cls layoutDefinition ])
-		select: [:tuple | tuple value notNil ].
+		select: [:tuple | tuple value notNil ]) asSortedCollection: [:a :b | a key name < b key name ].
 		
 ]
 
