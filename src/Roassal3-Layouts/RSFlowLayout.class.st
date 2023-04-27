@@ -1,7 +1,7 @@
 "
-A `RSFlowLayout` arrange shapes in a rectangle including space (gapSize) between them, ideally it give you a square if all elements have an equal height and width.
+A RSFlowLayout arrange shapes in a rectangle including space (gapSize) between them, ideally it give you a square if all elements have an equal height and width.
 
-I work with `RSAlignment `
+I work with RSAlignment 
 "
 Class {
 	#name : #RSFlowLayout,
@@ -76,24 +76,25 @@ RSFlowLayout >> isAlignTop [
 
 { #category : #hook }
 RSFlowLayout >> linesFor: shapes [
-	| x y maxLastLineHeight nextElement maxWidthFloat lines currentLine gap |
-	gap := self gapSize.
-	x := y := gap.
+	| x y maxLastLineHeight nextElement maxWidthFloat lines currentLine hgap vgap |
+	hgap := self horizontalGap.
+	vgap := self verticalGap.
+	x := hgap.
+	y := vgap.
 	maxLastLineHeight := 0.
 	maxWidthFloat := self maxWidth rsValue: shapes.
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
-	shapes doWithIndex: [ :element :index |
-		element translateTo: (x @ y) + (element extent / 2.0).
-		currentLine add: element.
-		x := x + element width + gap.
-		maxLastLineHeight := maxLastLineHeight max: element height.
+	shapes doWithIndex: [ :shape :index |
+		shape translateTo: (x @ y) + (shape extent / 2.0).
+		currentLine add: shape.
+		x := x + shape width + hgap.
+		maxLastLineHeight := maxLastLineHeight max: shape height.
 		nextElement := shapes at: (index + 1 min: shapes size).
 		(x + nextElement width) > maxWidthFloat ifTrue: [
-
 			lines add: currentLine.
-			x := gap.
-			y := y + maxLastLineHeight + gap.
+			x := hgap.
+			y := y + maxLastLineHeight + vgap.
 			currentLine := OrderedCollection new.
 			maxLastLineHeight := 0.
 		].

@@ -1,6 +1,6 @@
 "
-This layout finds the shape with most connexions then it uses a circular layout with the rest.
-Then it puts the shape with most connexion in the center.
+This layout finds the shape with most connexions then it uses a circular(`RSEquidistantCircleLayout`) layout with the rest.
+Then the layout moves the shape with most connexions into the center.
 
 Users can select the center element using `centerIndex:`, if the center element is index in the collection of objects is not defined, then would be computed using the element with more connections
 "

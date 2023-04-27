@@ -8,10 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-RSSortBlock >> fixTemps [
-]
-
-{ #category : #accessing }
 RSSortBlock >> value: assocA value: assocB [
 	"Return false if assocA is bigger than assocB.
 	Return true if assocA is smaller than assocB.
