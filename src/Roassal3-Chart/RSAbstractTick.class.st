@@ -90,6 +90,12 @@ RSAbstractTick >> defaultShape [
 	^ RSLine new
 ]
 
+{ #category : #public }
+RSAbstractTick >> doNotUseNiceLabel [
+
+	
+]
+
 { #category : #accessing }
 RSAbstractTick >> fontSize: fontSizeToSet [
 	"Set the font size used by the labels associated to ticks"
@@ -257,6 +263,12 @@ RSAbstractTick >> ticksData [
 		count: self configuration numberOfTicks.
 
 	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
+]
+
+{ #category : #public }
+RSAbstractTick >> useNiceLabel [
+
+	
 ]
 
 { #category : #public }
