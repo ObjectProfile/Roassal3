@@ -56,6 +56,14 @@ RSHorizontalTick >> min [
 	^ chart minValueX
 ]
 
+{ #category : #rendering }
+RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueX: self ticksData first;
+		maxValueX: self ticksData last
+]
+
 { #category : #public }
 RSHorizontalTick >> useDiagonalLabel [
 	self labelRotation: -45.

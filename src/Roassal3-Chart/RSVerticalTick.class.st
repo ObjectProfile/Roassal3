@@ -55,3 +55,11 @@ RSVerticalTick >> max [
 RSVerticalTick >> min [
 	^ chart minValueY
 ]
+
+{ #category : #rendering }
+RSVerticalTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueY: self ticksData first;
+		maxValueY: self ticksData last
+]

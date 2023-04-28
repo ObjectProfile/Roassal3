@@ -36,6 +36,14 @@ RSVerticalRightTick >> min [
 	^ values min
 ]
 
+{ #category : #rendering }
+RSVerticalRightTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueY: self ticksData first;
+		maxValueY: self ticksData last
+]
+
 { #category : #accessing }
 RSVerticalRightTick >> values [
 

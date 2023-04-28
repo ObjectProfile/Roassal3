@@ -28,6 +28,14 @@ RSAbstractTick >> asFloat: numberOfDecimals [
 RSAbstractTick >> beforeRenderingIn: aChart [
 
 	self createXScale.
+	self createYScale.
+
+	self updateChartMaxAndMinValues: aChart.
+
+	"We need to recalculate the scales because in the above method,
+	updateChartMaxAndMinValues:, we change the dimensions of the chart. And now we need to
+	recalculate the scales to be consistent with the dimensions."
+	self createXScale.
 	self createYScale
 ]
 
@@ -245,13 +253,9 @@ RSAbstractTick >> renderIn: canvas [
 { #category : #public }
 RSAbstractTick >> scaleToUse [
 
-	| scaleToUse | 
-	scaleToUse := self isHorizontalTick
+	^ self isHorizontalTick
 		ifTrue: [ xScale ]
-		ifFalse: [ yScale ].
-	^ self configuration shouldUseNiceLabel
-		ifTrue: [ scaleToUse niceScale: self configuration numberOfTicks ]
-		ifFalse: [ scaleToUse ]
+		ifFalse: [ yScale ]
 ]
 
 { #category : #accessing }
@@ -263,13 +267,17 @@ RSAbstractTick >> ticks [
 RSAbstractTick >> ticksData [
 
 	| scaleToUse |
-	scaleToUse := self isHorizontalTick
-		ifTrue: [ xScale ]
-		ifFalse: [ yScale ].
-	
+	scaleToUse := self scaleToUse.
+
 	^ self configuration shouldUseNiceLabel
 		ifTrue: [ scaleToUse niceTicks: self configuration numberOfTicks ]
 		ifFalse: [ scaleToUse ticks: self configuration numberOfTicks ]
+]
+
+{ #category : #rendering }
+RSAbstractTick >> updateChartMaxAndMinValues: aChart [
+
+	self subclassResponsibility
 ]
 
 { #category : #public }
