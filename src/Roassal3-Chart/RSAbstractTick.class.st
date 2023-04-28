@@ -247,6 +247,18 @@ RSAbstractTick >> renderIn: canvas [
 	canvas addAll: labels
 ]
 
+{ #category : #public }
+RSAbstractTick >> scaleToUse [
+
+	| scaleToUse | 
+	scaleToUse := self isHorizontalTick
+		ifTrue: [ xScale ]
+		ifFalse: [ yScale ].
+	^ self configuration shouldUseNiceLabel
+		ifTrue: [ scaleToUse niceScale ]
+		ifFalse: [ scaleToUse ]
+]
+
 { #category : #accessing }
 RSAbstractTick >> ticks [
 	^ ticks
@@ -256,9 +268,8 @@ RSAbstractTick >> ticks [
 RSAbstractTick >> ticksData [
 
 	| rangeForDividing scaleToUse |
-	scaleToUse := self isHorizontalTick
-		ifTrue: [ xScale ]
-		ifFalse: [ yScale ].
+	scaleToUse := self scaleToUse.
+
 	rangeForDividing := scaleToUse range first
 		to: scaleToUse range last
 		count: self configuration numberOfTicks.
