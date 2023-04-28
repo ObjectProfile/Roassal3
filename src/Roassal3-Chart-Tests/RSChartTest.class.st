@@ -312,7 +312,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks2 [
 
 	linePlot := RSLinePlot new x: x y: y.
 	chart addPlot: linePlot.
-	chart addDecoration: RSVerticalTick new.
+	chart addDecoration: (RSVerticalTick new doNotUseNiceLabel; yourself).
 	chart build.
 
 	self assert: chart minValueX equals: x min.
@@ -339,7 +339,7 @@ RSChartTest >> testYMarker [
 	plot2 x: x y: y.
 	chart addPlot: plot2.
 
-	chart addDecoration: RSHorizontalTick new.
+	chart addDecoration: (RSHorizontalTick new doNotUseNiceLabel; yourself).
 	chart addDecoration: RSVerticalTick new asFloat.
 
 	marker := RSYMarkerDecoration new.
