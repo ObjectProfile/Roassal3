@@ -255,7 +255,7 @@ RSAbstractTick >> scaleToUse [
 		ifTrue: [ xScale ]
 		ifFalse: [ yScale ].
 	^ self configuration shouldUseNiceLabel
-		ifTrue: [ scaleToUse niceScale ]
+		ifTrue: [ scaleToUse niceScale: self configuration numberOfTicks ]
 		ifFalse: [ scaleToUse ]
 ]
 
@@ -267,14 +267,7 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 
-	| rangeForDividing scaleToUse |
-	scaleToUse := self scaleToUse.
-
-	rangeForDividing := scaleToUse range first
-		to: scaleToUse range last
-		count: self configuration numberOfTicks.
-
-	^ rangeForDividing collect: [ :e | scaleToUse invert: e ]
+	^ self scaleToUse ticks: self configuration numberOfTicks
 ]
 
 { #category : #public }
