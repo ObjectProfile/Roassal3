@@ -93,7 +93,7 @@ RSAbstractTick >> defaultShape [
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 
-	
+	self configuration shouldUseNiceLabel: false
 ]
 
 { #category : #accessing }
@@ -254,6 +254,7 @@ RSAbstractTick >> ticks [
 
 { #category : #public }
 RSAbstractTick >> ticksData [
+
 	| rangeForDividing scaleToUse |
 	scaleToUse := self isHorizontalTick
 		ifTrue: [ xScale ]
@@ -268,7 +269,7 @@ RSAbstractTick >> ticksData [
 { #category : #public }
 RSAbstractTick >> useNiceLabel [
 
-	
+	self configuration shouldUseNiceLabel: true
 ]
 
 { #category : #public }
