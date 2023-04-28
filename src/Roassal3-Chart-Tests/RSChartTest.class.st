@@ -127,20 +127,20 @@ RSChartTest >> testMustInclude05 [
 { #category : #tests }
 RSChartTest >> testSameMinMax [
 
-	| c plot |
-	c := RSChart new.
+	| chart plot |
+	chart := RSChart new.
 	plot := RSLinePlot new.
 	plot y: #( 2 2 ).
-	c addPlot: plot.
+	chart addPlot: plot.
 
-	c addDecoration: (RSChartTitleDecoration new
-			 title: 'Reward evolution';
-			 fontSize: 20).
-	c xlabel: 'Episode' offset: 0 @ 10.
-	c ylabel: 'Reward' offset: -20 @ 0.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new.
-	c build
+	chart addDecoration: (RSChartTitleDecoration new
+		title: 'Reward evolution';
+		fontSize: 20).
+	chart xlabel: 'Episode' offset: 0 @ 10.
+	chart ylabel: 'Reward' offset: -20 @ 0.
+	chart addDecoration: RSHorizontalTick new.
+	chart addDecoration: RSVerticalTick new.
+	chart build
 ]
 
 { #category : #tests }
@@ -295,7 +295,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks [
 
 	canvas := chart canvas.
 
-	self assert: canvas numberOfShapes equals: 22.
+	self assert: canvas numberOfShapes equals: 20.
 	self assert: canvas shapes first class equals: RSBox.
 
 	line := canvas shapes second.

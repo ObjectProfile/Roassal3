@@ -267,7 +267,14 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 
-	^ self scaleToUse ticks: self configuration numberOfTicks
+	| scaleToUse |
+	scaleToUse := self isHorizontalTick
+		ifTrue: [ xScale ]
+		ifFalse: [ yScale ].
+	
+	^ self configuration shouldUseNiceLabel
+		ifTrue: [ scaleToUse niceTicks: self configuration numberOfTicks ]
+		ifFalse: [ scaleToUse ticks: self configuration numberOfTicks ]
 ]
 
 { #category : #public }
