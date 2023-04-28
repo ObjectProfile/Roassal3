@@ -27,11 +27,6 @@ RSAbstractTick >> asFloat: numberOfDecimals [
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
 
-	self min = self max ifTrue: [
-		self createXScale.
-		self createYScale.
-		^ self ].
-
 	self createXScale.
 	self createYScale
 ]
