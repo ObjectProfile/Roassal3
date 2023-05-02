@@ -73,7 +73,7 @@ RSPieChartExample >> run [
 { #category : #initialization }
 RSPieChartExample >> visualizeChart: canvas package: pkg [
 	| generator result ticks scale bscale canvasRect box |
-	generator := RSLabelGenerator new.
+	generator := NSNiceLinearTicksGenerator new.
 	generator setLooseFlag: true.
 	result := generator searchMin: 0 max: totalSum desired: 10.
 	ticks := result min to: result max by: result step.

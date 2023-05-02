@@ -33,10 +33,16 @@ RSAbstractChartTest >> testBasic [
 RSAbstractChartTest >> testEmptyPlot [
 
 	| p |
-	p := self classToTest new x: #(0) y: #(0).
+	p := self classToTest new x: #( 0 ) y: #( 0 ).
 	chart addPlot: p.
-	chart addDecoration: (RSVerticalTick new integer fontSize: 10; doNotUseNiceLabel).
-	chart addDecoration: (RSHorizontalTick new  integer fontSize: 10; doNotUseNiceLabel).
+	chart addDecoration: (RSVerticalTick new integer
+			 numberOfTicks: 1;
+			 fontSize: 10;
+			 yourself).
+	chart addDecoration: (RSHorizontalTick new integer
+			 numberOfTicks: 1;
+			 fontSize: 10;
+			 yourself).
 	chart build
 ]
 
