@@ -53,12 +53,12 @@ RSHorizontalFlowLayout >> linesFor: shapes [
 	maxHeight := self maxWidth rsValue: shapes.
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
-	shapes doWithIndex: [ :element :index |
+	shapes doWithIndex: [ :shape :index |
 		"maybe we need to use a mock element in all layouts"
-		element translateTo: (x @ y) + (element extent / 2.0).
-		currentLine add: element.
-		y := y + element height + gap.
-		maxLastLineWidth := maxLastLineWidth max: element width.
+		shape translateTo: (x @ y) + (shape extent / 2.0).
+		currentLine add: shape.
+		y := y + shape height + gap.
+		maxLastLineWidth := maxLastLineWidth max: shape width.
 		nextElement := shapes at: (index + 1 min: shapes size).
 		(y + nextElement height) > maxHeight ifTrue: [
 			lines add: currentLine.

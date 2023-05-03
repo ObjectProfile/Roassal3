@@ -127,20 +127,20 @@ RSChartTest >> testMustInclude05 [
 { #category : #tests }
 RSChartTest >> testSameMinMax [
 
-	| c plot |
-	c := RSChart new.
+	| chart plot |
+	chart := RSChart new.
 	plot := RSLinePlot new.
 	plot y: #( 2 2 ).
-	c addPlot: plot.
+	chart addPlot: plot.
 
-	c addDecoration: (RSChartTitleDecoration new
-			 title: 'Reward evolution';
-			 fontSize: 20).
-	c xlabel: 'Episode' offset: 0 @ 10.
-	c ylabel: 'Reward' offset: -20 @ 0.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new.
-	c build
+	chart addDecoration: (RSChartTitleDecoration new
+		title: 'Reward evolution';
+		fontSize: 20).
+	chart xlabel: 'Episode' offset: 0 @ 10.
+	chart ylabel: 'Reward' offset: -20 @ 0.
+	chart addDecoration: RSHorizontalTick new.
+	chart addDecoration: RSVerticalTick new.
+	chart build
 ]
 
 { #category : #tests }
@@ -279,65 +279,75 @@ RSChartTest >> testWithWeirdValuesLine [
 { #category : #tests }
 RSChartTest >> testWithWeirdValuesLineWithTicks [
 
-	| values g d line c |
-	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
-	d := RSLinePlot new y: values.
-	g addPlot: d.
-	g addDecoration: RSHorizontalTick new.
-	g addDecoration: RSVerticalTick new.
-	g build.
-	c := g canvas.
+	| values chart linePlot line canvas |
+	values := {
+		          Float infinity negated.
+		          Float infinity negated.
+		          0.30102999566398114.
+		          0.47712125471966244 }.
+	chart := RSChart new.
 
-	self assert: c numberOfShapes equals: 20.
-	self assert: c shapes first class equals: RSBox.
+	linePlot := RSLinePlot new y: values.
+	chart addPlot: linePlot.
+	chart addDecoration: RSHorizontalTick new.
+	chart addDecoration: RSVerticalTick new.
+	chart build.
 
-	line := c shapes second.
+	canvas := chart canvas.
+
+	self assert: canvas numberOfShapes equals: 20.
+	self assert: canvas shapes first class equals: RSBox.
+
+	line := canvas shapes second.
 	self assert: line controlPoints size equals: 2
 ]
 
 { #category : #tests }
 RSChartTest >> testWithWeirdValuesLineWithTicks2 [
-	| x g d c labels |
-	x := { -5 . 0 . 1 . 2 }.
-	g := RSChart new.
-	d := RSLinePlot new x: x y: x log.
-	g addPlot: d.
-	g addDecoration: RSVerticalTick new.
-	g build.
 
-	self assert: g minValueX equals: -5.
-	self assert: g minValueY equals: 0.
+	| x chart linePlot canvas labels y |
+	x := { -5. 0. 1. 2 }.
+	y := x log.
+	chart := RSChart new.
 
-	self assert: g maxValueX equals: 2.
-	self assert: g maxValueY equals: 8 / 25.
+	linePlot := RSLinePlot new x: x y: y.
+	chart addPlot: linePlot.
+	chart addDecoration: (RSVerticalTick new doNotUseNiceLabel; yourself).
+	chart build.
 
-	c := g canvas.
+	self assert: chart minValueX equals: x min.
+	self assert: chart minValueY equals: 0. "Here is y min negative infinity but Roassal puts a 0"
 
-	labels := c shapes select: [ :s | s class == RSLabel ].
+	self assert: chart maxValueX equals: x max.
+	self assert: chart maxValueY equals: y max.
+
+	canvas := chart canvas.
+
+	labels := canvas shapes select: [ :s | s class == RSLabel ].
 	self assert: labels first position y <= 0
 ]
 
 { #category : #tests }
 RSChartTest >> testYMarker [
 
-	| x c p1 p2 marker line |
+	| x chart plot2 marker line y |
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSChart new.
-	p1 := RSLinePlot new.
-	p1 x: x y: x sin * 0.22.
-	c addPlot: p1.
-	p2 := RSLinePlot new.
-	p2 x: x y: x cos * 0.18.
-	c addPlot: p2.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new asFloat.
+	y := x cos * 0.18.
+	chart := RSChart new.
+
+	plot2 := RSLinePlot new.
+	plot2 x: x y: y.
+	chart addPlot: plot2.
+
+	chart addDecoration: (RSHorizontalTick new doNotUseNiceLabel; yourself).
+	chart addDecoration: RSVerticalTick new asFloat.
 
 	marker := RSYMarkerDecoration new.
-	c addDecoration: marker.
-	c build.
+	chart addDecoration: marker.
+	chart build.
 
-	line := marker createMarkerLineFromPlot: p2.
-	self assert: line from equals: (0@ -175.0).
-	self assert: line to equals: (200@ -175.0)
+	line := marker createMarkerLineFromPlot: plot2.
+	self assert: line from equals: 0 @ (plot2 yScale scale: plot2 maxValueY).
+	self assert: line to
+		equals: (plot2 xScale scale: plot2 maxValueX) @ (plot2 yScale scale: plot2 maxValueY)
 ]

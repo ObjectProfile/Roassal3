@@ -38,6 +38,16 @@ RSAbstractCircleLayout >> angleIncrement: aNumberInRadian [
 ]
 
 { #category : #accessing }
+RSAbstractCircleLayout >> center [
+	^ self centerPoint
+]
+
+{ #category : #accessing }
+RSAbstractCircleLayout >> center: aPoint [
+	self centerPoint: aPoint
+]
+
+{ #category : #accessing }
 RSAbstractCircleLayout >> centerPoint [
 
 	^ centerPoint

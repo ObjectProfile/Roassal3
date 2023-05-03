@@ -9,10 +9,18 @@ Class {
 		'label',
 		'selector',
 		'layoutStudio',
-		'textField'
+		'widget'
 	],
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
+
+{ #category : #rendering }
+RSLayoutField >> createWidget [
+	^ self newTextInput
+		text: self layoutValue asString;
+		whenTextChangedDo: [ :text | self updateField: text ];
+		yourself
+]
 
 { #category : #accessing }
 RSLayoutField >> label [
@@ -48,12 +56,9 @@ RSLayoutField >> layoutValue: anObject [
 	layoutStudio apply: self with: anObject
 ]
 
-{ #category : #rendering }
-RSLayoutField >> newTextField [
+{ #category : #'instance creation' }
+RSLayoutField >> newTextInput [
 	^ layoutStudio newTextInput
-		text: self layoutValue asString;
-		whenSubmitDo: [ :text | self updateField: text ];
-		yourself
 ]
 
 { #category : #rendering }
@@ -61,7 +66,7 @@ RSLayoutField >> renderIn: boxLayout [
 
 	boxLayout add: (SpBoxLayout newVertical
 		add: label asString expand: false;
-		add: self textField expand: false;
+		add: self widget expand: false;
 		yourself) expand: false
 ]
 
@@ -79,7 +84,7 @@ RSLayoutField >> selector: anObject [
 
 { #category : #accessing }
 RSLayoutField >> textField [
-	^ textField ifNil: [ textField := self newTextField ]
+	^ widget ifNil: [ widget := self createWidget ]
 ]
 
 { #category : #accessing }
@@ -90,5 +95,10 @@ RSLayoutField >> transform: aString [
 { #category : #update }
 RSLayoutField >> updateField: aString [
 	[ self layoutValue: (self transform: aString) ] onErrorDo: [ :ex | ex traceCr ].
-	textField text: self layoutValue asString
+	widget text: self layoutValue asString
+]
+
+{ #category : #accessing }
+RSLayoutField >> widget [
+	^ self textField
 ]
