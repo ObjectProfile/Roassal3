@@ -53,14 +53,6 @@ Class {
 	#category : #'Roassal3-Builders-Core'
 }
 
-{ #category : #converting }
-RSAbstractContainerBuilder >> asPresenter [
-	self build.
-	^ SpRoassal3InspectorPresenter new
-		canvas: self container;
-		yourself
-]
-
 { #category : #accessing }
 RSAbstractContainerBuilder >> asShape [
 	^ self asShapeFor: nil
