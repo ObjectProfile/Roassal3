@@ -11,7 +11,8 @@ RSShapeCollectionTest >> testBasic [
 	collection := canvas shapeCollection.
 	self assert: collection class equals: canvas defaultShapeCollection class.
 	self assert: collection isCollection.
-	self assert: collection isEmpty
+	self assert: collection isEmpty.
+	
 ]
 
 { #category : #tests }

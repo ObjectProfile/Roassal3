@@ -2,7 +2,7 @@
 RSVerticalGridLayout places shapes as a grid. Shapes keeps their order, from top to down, and then left to right.
 "
 Class {
-	#name : #RSVerticalGridLayout,
+	#name : #RSVerticalCellLayout,
 	#superclass : #RSAbstractGridLayout,
 	#instVars : [
 		'alignment'
@@ -10,56 +10,56 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
-{ #category : #'as yet unclassified' }
-RSVerticalGridLayout class >> alignmentOptions [
-	^ #()
-]
-
 { #category : #accessing }
-RSVerticalGridLayout >> alignment [
+RSVerticalCellLayout >> alignment [
 
 	^ alignment
 ]
 
 { #category : #accessing }
-RSVerticalGridLayout >> alignment: anObject [
+RSVerticalCellLayout >> alignment: anObject [
 
 	alignment := anObject
 ]
 
 { #category : #hook }
-RSVerticalGridLayout >> doExecute: shapes [
-	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop gap align line |
+RSVerticalCellLayout >> doExecute: shapes [
+	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop vgap hgap align line mocks|
+	
+	mocks := RSMockShape shapes: shapes.
 	originalGapLeft := 0.
 	originalGapTop := 0.
-
 	pointer := originalGapLeft @ originalGapTop.
-	lineItemSize := self lineItemsCountBlock rsValue: shapes.
+	lineItemSize := self lineItemsCountBlock rsValue: mocks.
 	lineItemCount := 0.
 	maxLastLineWidth := 0.
-	gap := self gapSize.
+	vgap := self verticalGap.
+	hgap := self horizontalGap.
 	align := RSAlignment new.
 	line := OrderedCollection new.
-	shapes do: [ :shape |
+	mocks do: [ :shape |
 		translator translateTopLeftOf: shape to: pointer.
 		line add: shape.
-		pointer := pointer x @ (pointer y + shape height + gap).
+		pointer := pointer x @ (pointer y + shape height + vgap).
 		lineItemCount := lineItemCount + 1.
 		maxLastLineWidth := maxLastLineWidth max: shape width.
 		lineItemCount >= lineItemSize ifTrue: [
 			align shapes: line.
 			alignment value: align.
-			pointer := (pointer x + gap + maxLastLineWidth) @ originalGapLeft.
+			line do: [:mock | mock applyToRealElement ].
+			line removeAll.
+			pointer := (pointer x + hgap + maxLastLineWidth) @ originalGapLeft.
 			maxLastLineWidth := 0.
 			lineItemCount := 0 ]
 	].
-	line size < lineItemSize ifFalse: [ ^ self ].
+	line ifEmpty: [ ^ self ].
 	align shapes: line.
-	alignment value: align
+	alignment value: align.
+	line do: [:mock | mock applyToRealElement ].
 ]
 
 { #category : #initialization }
-RSVerticalGridLayout >> initialize [
+RSVerticalCellLayout >> initialize [
 	super initialize.
 	self alignment: #none
 ]

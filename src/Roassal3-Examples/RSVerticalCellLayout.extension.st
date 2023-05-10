@@ -1,7 +1,7 @@
-Extension { #name : #RSVerticalGridLayout }
+Extension { #name : #RSVerticalCellLayout }
 
 { #category : #'*Roassal3-Examples' }
-RSVerticalGridLayout class >> example1 [
+RSVerticalCellLayout class >> example1 [
 	| c shapes |
 	c := RSCanvas new.
 

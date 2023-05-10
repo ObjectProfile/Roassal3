@@ -8,20 +8,29 @@ Class {
 RSGridLayoutTest >> testBasic [
 
 	RSGridLayout on: canvas nodes.
-	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (12.5@2.5). (22.5@2.5). (32.5@2.5). (2.5@12.5). (12.5@12.5). (22.5@12.5). (32.5@12.5). (2.5@22.5). (12.5@22.5)}
+	self assert: (shapes collect: [:each | each position asIntegerPoint ] as: Array) equals: {2 @ 2.
+12 @ 2.
+22 @ 2.
+32 @ 2.
+2 @ 12.
+12 @ 12.
+22 @ 12.
+32 @ 12.
+2 @ 22.
+12 @ 22}
 ]
 
 { #category : #tests }
 RSGridLayoutTest >> testBasicCustomizedGapSizeGridLayout [
 
-	RSGridLayout  new gapSize:15; on: canvas nodes.
+	RSGridLayout new gapSize:15; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (22.5@2.5). (42.5@2.5). (62.5@2.5). (2.5@22.5). (22.5@22.5). (42.5@22.5). (62.5@22.5). (2.5@42.5). (22.5@42.5)}
 ]
 
 { #category : #tests }
 RSGridLayoutTest >> testBasicDefaultGapSizeGridLayout [
 
-	RSGridLayout  new gapSize:5; on: canvas nodes.
+	RSGridLayout new gapSize:5; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(2.5@2.5). (12.5@2.5). (22.5@2.5). (32.5@2.5). (2.5@12.5). (12.5@12.5). (22.5@12.5). (32.5@12.5). (2.5@22.5). (12.5@22.5)}
 ]
 

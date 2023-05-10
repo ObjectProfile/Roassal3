@@ -40,6 +40,7 @@ RSCircleLayout >> doExecute: shapes [
 	angleInc := self computeIncrementalAngleFor: shapes.
 	angle := self initialAngle.
 	center := self computeCenter: rad.
+	
 	shapes do: [ :shape |
 		| point |
 		point := center + (Point r: rad theta: angle).

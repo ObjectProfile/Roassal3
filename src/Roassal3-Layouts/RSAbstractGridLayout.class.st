@@ -9,9 +9,8 @@ My instance variables are:
 "
 Class {
 	#name : #RSAbstractGridLayout,
-	#superclass : #RSLayout,
+	#superclass : #RSAbstractGappedLayout,
 	#instVars : [
-		'gapSize',
 		'lineItemsCountBlock'
 	],
 	#category : #'Roassal3-Layouts-Core'
@@ -76,11 +75,6 @@ RSAbstractGridLayout class >> withLineItemsCount: aBlock [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
-RSAbstractGridLayout >> defaultGapSize [
-	^ 5
-]
-
 { #category : #accessing }
 RSAbstractGridLayout >> defaultLineItemsCount [
 	^ [ :elements |
@@ -93,21 +87,10 @@ RSAbstractGridLayout >> defaultLineItemsCount [
 					width @ height ]) x ]
 ]
 
-{ #category : #accessing }
-RSAbstractGridLayout >> gapSize [
-	^ gapSize
-]
-
-{ #category : #accessing }
-RSAbstractGridLayout >> gapSize: anInteger [
-	gapSize := anInteger
-]
-
 { #category : #initialization }
 RSAbstractGridLayout >> initialize [
 	super initialize.
-	gapSize := self defaultGapSize.
-	lineItemsCountBlock := self defaultLineItemsCount.
+	self lineItemsCount: self defaultLineItemsCount
 ]
 
 { #category : #accessing }
