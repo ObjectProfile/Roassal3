@@ -61,7 +61,7 @@ RSLayoutStudio >> addAnimation: anRSCanvas [
 RSLayoutStudio >> apply: aRSLayoutField with: anObject [
 	oldPositions := nodes collect: [ :each | each position ].
 	currentLayout perform: aRSLayoutField selector asMutator with: anObject.
-	roassalCanvas refresh
+	self refresh
 ]
 
 { #category : #initialization }
@@ -151,21 +151,32 @@ RSLayoutStudio >> mainMenu [
 				item
 					name: 'Change Layout';
 					icon: (self iconNamed: #open);
-					action: [ self openLayout ] ] ];
+					action: [ self openLayout ] ].
+			group addItem: [ :item |
+				item
+					icon: (self iconNamed: #smallSystemBrowser);
+					action: [ currentLayout class browse ];
+					name: 'Browse' ] ];
 		yourself
 ]
 
 { #category : #events }
 RSLayoutStudio >> openLayout [
-	| selection |
-	selection := SpSelectDialog new
+	| selection items |
+	items := RSLayout classesWithDefinitionsToEdit.
+	selection := RSSelectDialog new
 		title: 'Select a layout';
 		label: 'Select a class';
-		items: RSLayout classesWithDefinitionsToEdit;
-		display: [ :each | each key name ];
-		displayIcon: [ :each | self iconNamed: each key systemIconName ];
+		items: (items collect: #key);
 		openModal.
-	selection ifNotNil: [ self edit: selection ]
+	selection ifNotNil: [
+		self edit: (items detect: [ :each | each key = selection ]) ].
+]
+
+{ #category : #update }
+RSLayoutStudio >> refresh [
+	layoutDefinition update.
+	roassalCanvas refresh
 ]
 
 { #category : #initialization }

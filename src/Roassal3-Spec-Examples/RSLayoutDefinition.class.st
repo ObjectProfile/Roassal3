@@ -25,3 +25,9 @@ RSLayoutDefinition >> initialize [
 	super initialize.
 	fields := OrderedCollection new
 ]
+
+{ #category : #updating }
+RSLayoutDefinition >> update [
+	self fields do: [ :field | 
+		field disableEvent; update; enableEvent ].
+]

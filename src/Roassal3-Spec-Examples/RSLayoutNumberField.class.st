@@ -10,6 +10,8 @@ Class {
 { #category : #'instance creation' }
 RSLayoutNumberField >> newTextInput [
 	^ layoutStudio newNumberInput
+		whenTextChangedDo: [ :text | self updateField: text ];
+		yourself
 ]
 
 { #category : #accessing }

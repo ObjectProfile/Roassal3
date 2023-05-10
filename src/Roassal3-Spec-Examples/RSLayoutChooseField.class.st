@@ -16,7 +16,7 @@ RSLayoutChooseField >> createWidget [
 		items: items;
 		selectItem: self layoutValue;
 		display: [ :item | item asString ];
-		whenSelectedItemChangedDo: [ :item | self layoutValue: (self transform: item) ].
+		whenSelectedItemChangedDo: [ :item | self updateField: item ].
 ]
 
 { #category : #accessing }
@@ -31,7 +31,12 @@ RSLayoutChooseField >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #accessing }
-RSLayoutChooseField >> transform: aString [
-	^ aString
+{ #category : #updating }
+RSLayoutChooseField >> update [
+	widget selectItem: self layoutValue
+]
+
+{ #category : #update }
+RSLayoutChooseField >> updateWidget: aString [
+	self layoutValue: (self transform: aString)
 ]

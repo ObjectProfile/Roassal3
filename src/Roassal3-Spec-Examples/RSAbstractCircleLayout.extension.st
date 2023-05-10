@@ -18,6 +18,7 @@ RSAbstractCircleLayout class >> layoutDefinition [
 		add: (RSLayoutNumberField new
 			label: 'Scale Factor';
 			selector: #scaleFactor;
+			help: 'If one field is zero, then it will use the scale factor to compute its value';
 			yourself);
 		add: (RSLayoutPointField new
 			label: 'Central Point';

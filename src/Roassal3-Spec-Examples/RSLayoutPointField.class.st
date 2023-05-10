@@ -3,7 +3,7 @@ Similar to number field but I can handle points
 "
 Class {
 	#name : #RSLayoutPointField,
-	#superclass : #RSLayoutField,
+	#superclass : #RSLayoutEvalField,
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
 
@@ -18,8 +18,7 @@ RSLayoutPointField >> layoutValue [
 { #category : #accessing }
 RSLayoutPointField >> transform: aString [
 	| point |
-	point := self class compiler evaluate: aString.
-	point ifNil: [ ^ nil ].
+	point := super transform: aString.
 	self assert: point isPoint description: 'You should provide a string'.
 	^ point
 ]

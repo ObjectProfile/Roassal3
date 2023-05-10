@@ -8,8 +8,10 @@ Class {
 	#instVars : [
 		'label',
 		'selector',
+		'help',
 		'layoutStudio',
-		'widget'
+		'widget',
+		'isEventEnabled'
 	],
 	#category : #'Roassal3-Spec-Examples-Layout'
 }
@@ -18,8 +20,36 @@ Class {
 RSLayoutField >> createWidget [
 	^ self newTextInput
 		text: self layoutValue asString;
-		whenTextChangedDo: [ :text | self updateField: text ];
+		help: self help;
 		yourself
+]
+
+{ #category : #public }
+RSLayoutField >> disableEvent [
+	isEventEnabled := false
+]
+
+{ #category : #public }
+RSLayoutField >> enableEvent [
+	isEventEnabled := true
+]
+
+{ #category : #accessing }
+RSLayoutField >> help [
+
+	^ help
+]
+
+{ #category : #accessing }
+RSLayoutField >> help: anObject [
+
+	help := anObject
+]
+
+{ #category : #initialization }
+RSLayoutField >> initialize [
+	super initialize.
+	self enableEvent
 ]
 
 { #category : #accessing }
@@ -59,6 +89,8 @@ RSLayoutField >> layoutValue: anObject [
 { #category : #'instance creation' }
 RSLayoutField >> newTextInput [
 	^ layoutStudio newTextInput
+		whenSubmitDo: [ :text | self updateField: text ];
+		yourself
 ]
 
 { #category : #rendering }
@@ -89,13 +121,28 @@ RSLayoutField >> textField [
 
 { #category : #accessing }
 RSLayoutField >> transform: aString [
-	^ self subclassResponsibility
+	^ aString
+]
+
+{ #category : #updating }
+RSLayoutField >> update [
+	widget text: self layoutValue asString
 ]
 
 { #category : #update }
 RSLayoutField >> updateField: aString [
-	[ self layoutValue: (self transform: aString) ] onErrorDo: [ :ex | ex traceCr ].
+	isEventEnabled ifFalse: [ ^ self ].
+	widget ifNil: [ ^ self ].
+	self updateWidget: aString.
+	
+]
+
+{ #category : #update }
+RSLayoutField >> updateWidget: aString [
+	[ self layoutValue: (self transform: aString) ] 
+		onErrorDo: [ :ex | self inform: ex printString ].
 	widget text: self layoutValue asString
+	
 ]
 
 { #category : #accessing }
