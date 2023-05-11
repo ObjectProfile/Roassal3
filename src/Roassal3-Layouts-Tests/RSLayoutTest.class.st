@@ -1,6 +1,6 @@
 Class {
 	#name : #RSLayoutTest,
-	#superclass : #TestCase,
+	#superclass : #RSTest,
 	#instVars : [
 		'shapes',
 		'canvas'

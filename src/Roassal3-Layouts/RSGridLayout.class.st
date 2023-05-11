@@ -92,8 +92,9 @@ RSGridLayout >> doExecute: shapes [
 			rowCount := rowCount + 1.
 			rowCount <= rowHeights size
 				ifTrue: [ pointer := pointer + (0 @ ((rowHeights at: rowCount) / 2)) ]
-		]
-		ifFalse: [ pointer := pointer + (((columnsWidths at: columnCount ) / 2) @ 0) ].
+		] ifFalse: [
+			columnCount := columnCount min: columnsWidths size.
+			pointer := pointer + (((columnsWidths at: columnCount ) / 2) @ 0) ].
 	]
 ]
 

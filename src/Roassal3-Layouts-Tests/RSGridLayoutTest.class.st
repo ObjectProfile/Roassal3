@@ -44,3 +44,17 @@ RSGridLayoutTest >> testLineItemsCount [
 	shapesInLine := canvas nodes groupedBy: [ :each | each position y ].
 	self assert: (shapesInLine allSatisfy: [:group | group size between: 1 and: 3 ])
 ]
+
+{ #category : #tests }
+RSGridLayoutTest >> testLineItemsCount2 [
+	canvas := RSCanvas new.
+	shapes := (1 to: 3) collect: [ :each | RSBox new size: 20 ].
+	canvas addAll: shapes.
+	RSGridLayout new
+		gapSize: 10;
+		lineItemsCount: 8;
+		on: shapes.
+	self assertIntegerPosition: shapes equals: {10@10. 40@10. 70@10}.
+	
+	
+]
