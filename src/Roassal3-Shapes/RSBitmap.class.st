@@ -10,6 +10,18 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
+{ #category : #'instance creation' }
+RSBitmap class >> newFrom: anObject [
+	| shape |
+	shape := self new.
+	shape form: (anObject isString 
+		ifTrue: [ (self iconNamed: anObject) ]
+		ifFalse: [anObject ]).
+	^ shape
+	
+		
+]
+
 { #category : #private }
 RSBitmap >> computeRectangle [
 	baseRectangle := Rectangle floatCenter: 0@0 extent: (form
