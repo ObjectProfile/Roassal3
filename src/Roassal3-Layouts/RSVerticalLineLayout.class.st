@@ -7,51 +7,65 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #examples }
+RSVerticalLineLayout class >> example1 [
+	| c |
+	c := self canvasExample.
+	self on: c nodes.
+	c zoomToFit.
+	^ c open
+]
+
+{ #category : #examples }
+RSVerticalLineLayout class >> example2 [
+	| c |
+	c := self canvasExample.
+	self new
+		alignRight;
+		on: c nodes.
+	c zoomToFit.
+	^ c open
+]
+
 { #category : #alignment }
 RSVerticalLineLayout >> alignCenter [
 	"Make the element centered"
-	alignment := #center
+	self alignment: #center
 ]
 
 { #category : #alignment }
 RSVerticalLineLayout >> alignLeft [
-	alignment := #left
+	self alignment: #left
 ]
 
 { #category : #alignment }
 RSVerticalLineLayout >> alignRight [
-	alignment := #right
+	self alignment: #right
 ]
 
 { #category : #hook }
-RSVerticalLineLayout >> deltaFor: aNodeFigure [
+RSVerticalLineLayout >> deltaFor: anRSShape [
 	| delta |
 	delta := 0.
-	self alignment == #right ifTrue: [delta := aNodeFigure width].
-	self alignment == #center ifTrue: [delta := aNodeFigure width / 2.0].
+	alignment == #right ifTrue: [ delta := anRSShape width ].
+	alignment == #center ifTrue: [ delta := anRSShape width / 2.0 ].
 	^delta @ 0
 ]
 
-{ #category : #initialization }
-RSVerticalLineLayout >> initialize [
-	super initialize.
-	self alignLeft
+{ #category : #hook }
+RSVerticalLineLayout >> movePointer: pointer accordingToFigure: anRSShape [
+	^ pointer x @ (pointer y + anRSShape height + self verticalGap)
 ]
 
 { #category : #hook }
-RSVerticalLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
-	^ pointer x @ (pointer y + aNodeFigure height + self verticalGap)
-]
-
-{ #category : #hook }
-RSVerticalLineLayout >> positionOriginalPointer: elements [
+RSVerticalLineLayout >> positionOriginalPointer: aCollectionOfShapes [
 	| maxWidth delta |
 	delta := 0.
-	self alignment == #right ifTrue:
-		[ maxWidth := elements maxValue: #width.
+	alignment == #right ifTrue: [
+		maxWidth := aCollectionOfShapes maxValue: #width.
 		delta := maxWidth ].
-	self alignment == #center ifTrue:
-		[ maxWidth := elements maxValue: #width.
+	alignment == #center ifTrue: [
+		maxWidth := aCollectionOfShapes maxValue: #width.
 		delta := maxWidth / 2.0 ].
 	^ ((0) + delta) @ (0)
 ]
