@@ -7,10 +7,20 @@ Class {
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
-		'line'
+		'line',
+		'format',
+		'ylabel'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #'instance creation' }
+RSLinePlot class >> y: aCollection [
+	| linePlot |
+	linePlot := self new.
+	linePlot y: aCollection.
+	^ linePlot
+]
 
 { #category : #accessing }
 RSLinePlot >> createdShapes [
@@ -22,6 +32,16 @@ RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
 
+{ #category : #formatting }
+RSLinePlot >> format2 [
+	^ format
+]
+
+{ #category : #formatting }
+RSLinePlot >> format2: aString [
+	format := aString
+]
+
 { #category : #testing }
 RSLinePlot >> isLinePlot [
 	^ true
@@ -30,6 +50,19 @@ RSLinePlot >> isLinePlot [
 { #category : #accessing }
 RSLinePlot >> line [
 	^ line
+]
+
+{ #category : #'instance creation' }
+RSLinePlot >> open [
+	| chartPlot |
+	chartPlot := RSChart new.
+	chartPlot add: self.
+
+	chartPlot ylabel: self ylabel.
+
+	chartPlot add: RSHorizontalTick new.
+	chartPlot add: RSVerticalTick new.
+	^ chartPlot open
 ]
 
 { #category : #rendering }
@@ -47,4 +80,14 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself)
+]
+
+{ #category : #accessing }
+RSLinePlot >> ylabel [
+	^ ylabel
+]
+
+{ #category : #decoration }
+RSLinePlot >> ylabel: aString [
+	ylabel := aString
 ]
