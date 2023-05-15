@@ -70,6 +70,7 @@ RSAbstractMarkerDecoration >> defaultShape [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
+
 	^ getRelevantValueBlock rsValue: p
 ]
 
