@@ -136,6 +136,11 @@ RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
+{ #category : #accessing }
+RSAbstractPlot >> x [
+	^ xValues
+]
+
 { #category : #public }
 RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
@@ -170,6 +175,11 @@ c
 { #category : #accessing }
 RSAbstractPlot >> xValues [
 	^ xValues
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> y [
+	^ yValues
 ]
 
 { #category : #public }
