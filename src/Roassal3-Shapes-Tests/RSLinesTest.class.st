@@ -91,7 +91,7 @@ RSLinesTest >> testFmt [
 		yourself.
 	self assert: line border style isNil.
 	self assert: line markerEnd isNil.
-	line fmt: '.^'.
+	line format: '.^'.
 	self deny: line border style dashArray isNil.
 	self deny: line markerEnd isNil.
 	self deny: line markerStart isNil.

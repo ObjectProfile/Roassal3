@@ -3,6 +3,9 @@ My users have a line shape to interact with it. This trait has common methods to
 "
 Trait {
 	#name : #RSTLine,
+	#instVars : [
+		'formatString'
+	],
 	#category : #'Roassal3-Shapes-Graph'
 }
 
@@ -72,18 +75,14 @@ RSTLine >> dashed [
 ]
 
 { #category : #'public - shape' }
-RSTLine >> fmt: aString [
-	self shape fmt: aString
+RSTLine >> format [
+	^ formatString
 ]
 
 { #category : #'public - shape' }
 RSTLine >> format: aString [
-
-	"want more markers? submit a new issue in roassal3"
-	| marker bs |
-	marker := RSShapeFactory shapeFromString: aString.
-	bs := RSStrokeStyle fromString: aString.
-	marker ifNotNil: [ self shape marker: marker ]
+	formatString := aString.
+	self shape format: formatString.
 ]
 
 { #category : #'public - shape' }

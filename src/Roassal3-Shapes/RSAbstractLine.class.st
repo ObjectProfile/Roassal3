@@ -153,8 +153,8 @@ RSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
-RSAbstractLine >> fmt: aString [
+{ #category : #accessing }
+RSAbstractLine >> format: aString [
 	"Format for lines a shortcut to define a line styles, or markers
 
 	For markers use
@@ -186,12 +186,14 @@ canvas @ RSCanvasController.
 canvas open
 ````
 	 "
-	(RSShapeFactory shapeFromString: aString)
-		ifNotNil: [ :shape |
-			self shape marker: ((shape size: self border width * 4) color: self shape color; yourself).
-			 ].
-	(RSStrokeStyle fromString: aString)
-		ifNotNil: [ :style | self shape border style: style ]
+
+	(RSShapeFactory shapeFromString: aString) ifNotNil: [ :markerShape |
+		markerShape
+			size: self border width * 4;
+			color: self color.
+		self marker: markerShape ].
+	(RSStrokeStyle fromString: aString) ifNotNil: [ :style |
+		self border style: style ]
 ]
 
 { #category : #accessing }

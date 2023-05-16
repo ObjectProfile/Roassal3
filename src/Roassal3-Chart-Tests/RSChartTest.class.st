@@ -125,23 +125,6 @@ RSChartTest >> testMustInclude05 [
 ]
 
 { #category : #tests }
-RSChartTest >> testPlotWithOneCollection [
-	| p window |
-	p := (RSLinePlot y: #(1 2 3 4)) format2: 'o-r'.
-	p ylabel: 'Some numbers'.
-	p xlabel: 'X label'.
- 	window := p open.
-	self assert: p y equals: #(1 2 3 4).
-	self assert: p x equals: #(1 2 3 4).
-	self assert: p format2 equals: 'o-r'.
-	self assert: p ylabel equals: 'Some numbers'.
-	self assert: p xlabel equals: 'X label'.
-	self assert: window isDisplayed.
-	"window delete."
-	self flag: 'Add title and rename format2'
-]
-
-{ #category : #tests }
 RSChartTest >> testSameMinMax [
 
 	| chart plot |

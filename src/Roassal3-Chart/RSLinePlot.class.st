@@ -23,6 +23,31 @@ RSLinePlot class >> y: aCollection [
 	^ linePlot
 ]
 
+{ #category : #building }
+RSLinePlot >> buildChart [
+
+	| chartPlot marker colorDictionary colorChar color markerChar |
+	colorDictionary := Dictionary newFrom: { ($r -> Color red) }.
+	chartPlot := RSChart new.
+	chartPlot add: self.
+
+	colorChar := self format at: 3.
+	markerChar := self format copyFrom: 1 to: 1.
+	color := colorDictionary at: colorChar.
+	self color: color.
+
+	marker := RSShapeFactory shapeFromString: markerChar.
+	self shape marker: marker.
+	chartPlot
+		add: RSHorizontalTick new;
+		add: RSVerticalTick new;
+		ylabel: self ylabel;
+		xlabel: self xlabel;
+		extent: 250 @ 200;
+		padding: 15 @ 10.
+	^ chartPlot
+]
+
 { #category : #accessing }
 RSLinePlot >> createdShapes [
 	^ { line }
@@ -31,16 +56,6 @@ RSLinePlot >> createdShapes [
 { #category : #initialization }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
-]
-
-{ #category : #formatting }
-RSLinePlot >> format2 [
-	^ format
-]
-
-{ #category : #formatting }
-RSLinePlot >> format2: aString [
-	format := aString
 ]
 
 { #category : #testing }
@@ -55,23 +70,7 @@ RSLinePlot >> line [
 
 { #category : #'instance creation' }
 RSLinePlot >> open [
-	| chartPlot marker colorDictionary colorChar color markerChar|
-	colorDictionary := Dictionary newFrom: { $r -> Color red.}.
-	chartPlot := RSChart new.
-	chartPlot add: self.
-	chartPlot ylabel: self ylabel.
-	chartPlot xlabel: self xlabel.
-	
-	colorChar := self format2 at: 3.
-	markerChar := self format2 copyFrom: 1 to: 1.
-	color := colorDictionary at: colorChar.
-	self color: color.
-	
-	marker := RSShapeFactory shapeFromString: markerChar.
-	self shape marker: marker.
-	chartPlot add: RSHorizontalTick new.
-	chartPlot add: RSVerticalTick new.
-	^ chartPlot open
+	^ self buildChart open
 ]
 
 { #category : #rendering }
