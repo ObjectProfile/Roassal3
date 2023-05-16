@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'line',
 		'format',
-		'ylabel'
+		'ylabel',
+		'xlabel'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -59,6 +60,7 @@ RSLinePlot >> open [
 	chartPlot := RSChart new.
 	chartPlot add: self.
 	chartPlot ylabel: self ylabel.
+	chartPlot xlabel: self xlabel.
 	
 	colorChar := self format2 at: 3.
 	markerChar := self format2 copyFrom: 1 to: 1.
@@ -87,6 +89,16 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself)
+]
+
+{ #category : #accessing }
+RSLinePlot >> xlabel [
+	^ xlabel
+]
+
+{ #category : #decoration }
+RSLinePlot >> xlabel: aString [
+	xlabel := aString
 ]
 
 { #category : #accessing }
