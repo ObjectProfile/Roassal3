@@ -138,7 +138,7 @@ RSChartTest >> testPlotWithOneCollection [
 	self assert: p xlabel equals: 'X label'.
 	self assert: window isDisplayed.
 	"window delete."
-	self flag: 'Add xlabel and title, implement and rename format2'
+	self flag: 'Add title and rename format2'
 ]
 
 { #category : #tests }
