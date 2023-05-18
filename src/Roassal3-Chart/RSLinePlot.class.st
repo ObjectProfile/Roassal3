@@ -37,6 +37,7 @@ RSLinePlot >> buildChart [
 	self color: color.
 
 	marker := RSShapeFactory shapeFromString: markerChar.
+	marker extent: 5@5. 
 	self shape marker: marker.
 	chartPlot
 		add: RSHorizontalTick new;
@@ -66,6 +67,11 @@ RSLinePlot >> isLinePlot [
 { #category : #accessing }
 RSLinePlot >> line [
 	^ line
+]
+
+{ #category : #constants }
+RSLinePlot >> marker [
+	^ self shape markers at: 1
 ]
 
 { #category : #'instance creation' }

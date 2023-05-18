@@ -22,10 +22,23 @@ RSLinePlotTest >> testDefaultValues [
 ]
 
 { #category : #tests }
+RSLinePlotTest >> testMarkerShape [
+	| circleMarkersPlot squareMarkersPlot |
+	circleMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
+	squareMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 's-r'.
+	self assert: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 'o') class name.
+	self deny: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
+	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
+]
+
+{ #category : #tests }
 RSLinePlotTest >> testMarkerSize [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
-	
+	chart := p buildChart.
+	"Is it correct that buildChart modify and return attributes of plot?"
+	chart open.
+	self assert: (p shape markers at: 2) shape extent equals: 5@5
 ]
 
 { #category : #tests }
