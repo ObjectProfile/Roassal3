@@ -8,7 +8,7 @@ RSLine class >> exampleFMT [
 	line endPoint: 200@100.
 	line color: Color black.
 	line width: 1.
-	line fmt: '--^'.
+	line format: '--^'.
 	line markerEnd shape size: 20.
 	^ RSCanvas new
 		add: line;

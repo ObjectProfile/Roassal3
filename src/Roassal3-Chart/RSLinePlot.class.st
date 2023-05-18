@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'line',
 		'format',
-		'ylabel'
+		'ylabel',
+		'xlabel'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -22,6 +23,29 @@ RSLinePlot class >> y: aCollection [
 	^ linePlot
 ]
 
+{ #category : #building }
+RSLinePlot >> buildChart [
+
+	| chartPlot marker colorDictionary colorChar color markerChar |
+	colorDictionary := Dictionary newFrom: { ($r -> Color red) }.
+	chartPlot := RSChart new.
+	chartPlot add: self.
+
+	colorChar := self format at: 3.
+	markerChar := self format copyFrom: 1 to: 1.
+	color := colorDictionary at: colorChar.
+	self color: color.
+
+	chartPlot
+		add: RSHorizontalTick new;
+		add: RSVerticalTick new;
+		ylabel: self ylabel;
+		xlabel: self xlabel;
+		extent: 250 @ 200;
+		padding: 15 @ 10.
+	^ chartPlot
+]
+
 { #category : #accessing }
 RSLinePlot >> createdShapes [
 	^ { line }
@@ -30,16 +54,6 @@ RSLinePlot >> createdShapes [
 { #category : #initialization }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
-]
-
-{ #category : #formatting }
-RSLinePlot >> format2 [
-	^ format
-]
-
-{ #category : #formatting }
-RSLinePlot >> format2: aString [
-	format := aString
 ]
 
 { #category : #testing }
@@ -52,17 +66,14 @@ RSLinePlot >> line [
 	^ line
 ]
 
+{ #category : #constants }
+RSLinePlot >> marker [
+	^ self shape markers at: 1
+]
+
 { #category : #'instance creation' }
 RSLinePlot >> open [
-	| chartPlot |
-	chartPlot := RSChart new.
-	chartPlot add: self.
-
-	chartPlot ylabel: self ylabel.
-
-	chartPlot add: RSHorizontalTick new.
-	chartPlot add: RSVerticalTick new.
-	^ chartPlot open
+	^ self buildChart open
 ]
 
 { #category : #rendering }
@@ -80,6 +91,16 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself)
+]
+
+{ #category : #accessing }
+RSLinePlot >> xlabel [
+	^ xlabel
+]
+
+{ #category : #decoration }
+RSLinePlot >> xlabel: aString [
+	xlabel := aString
 ]
 
 { #category : #accessing }

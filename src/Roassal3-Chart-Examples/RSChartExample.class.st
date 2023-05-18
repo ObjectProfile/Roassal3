@@ -327,7 +327,7 @@ RSChartExample >> example21Popup [
 		c addPlot: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: col translucent).
-		c addPlot: (plot := RSLinePlot new x: x y: y; fmt: 'o';
+		c addPlot: (plot := RSLinePlot new x: x y: y; format: 'o';
 			color: col;
 			yourself).
 		popup chartPopupBuilder
@@ -439,7 +439,7 @@ RSChartExample >> example24SpineLine [
 	c extent: 400@300.
 	c lineX: x y: y.
 	c spineDecoration: (spine := RSLineSpineDecoration new).
-	spine shape fmt: '^'.
+	spine shape format: '^'.
 	c add: RSHorizontalTick new.
 	c add: RSVerticalTick new.
 	c padding: 10.

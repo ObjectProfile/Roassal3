@@ -65,8 +65,8 @@ RSChartExample >> example15AreaBox [
 	c := RSChart new.
 	c extent: 150@50.
 	c addPlot: (RSAreaPlot new x: x y1: y1 y2: y2).
-	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; fmt: 's--').
-	c addPlot: (RSLinePlot new x: x y: y2; color: Color orange; fmt: 'o--').
+	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; format: 's--').
+	c addPlot: (RSLinePlot new x: x y: y2; color: Color orange; format: 'o--').
 	c addDecoration: (RSHorizontalTick new numberOfTicks: 7; asFloat).
 	c addDecoration: (RSVerticalTick new asFloat).
 
@@ -98,7 +98,7 @@ RSChartExample >> example16Series [
 		c addPlot: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: (color value: Color) translucent).
-		c addPlot: (RSLinePlot new x: x y: y; fmt: 'o';
+		c addPlot: (RSLinePlot new x: x y: y; format: 'o';
 			color: (color value: Color)).
 		b text: label withBoxColor: (color value: Color)
 		 ].
