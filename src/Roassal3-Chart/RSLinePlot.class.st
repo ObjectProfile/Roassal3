@@ -36,9 +36,6 @@ RSLinePlot >> buildChart [
 	color := colorDictionary at: colorChar.
 	self color: color.
 
-	marker := RSShapeFactory shapeFromString: markerChar.
-	marker extent: 5@5. 
-	self shape marker: marker.
 	chartPlot
 		add: RSHorizontalTick new;
 		add: RSVerticalTick new;

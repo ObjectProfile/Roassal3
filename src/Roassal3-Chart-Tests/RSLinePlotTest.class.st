@@ -16,7 +16,6 @@ RSLinePlotTest >> testDefaultValues [
 	p ylabel: 'Some numbers'.
 	p xlabel: 'X label'.
  	chart := p buildChart.
-	chart open.
 	self assert: chart extent equals: 250 @ 200.
 	self assert: chart padding equals: 15 @ 10.
 ]
@@ -37,8 +36,7 @@ RSLinePlotTest >> testMarkerSize [
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	chart := p buildChart.
 	"Is it correct that buildChart modify and return attributes of plot?"
-	chart open.
-	self assert: (p shape markers at: 2) shape extent equals: 5@5
+	self assert: p shape markerStart shape extent equals: 4@4
 ]
 
 { #category : #tests }
