@@ -50,6 +50,52 @@ RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
 
+{ #category : #'public - shape' }
+RSLinePlot >> format: aString [
+	"Format lines of the LinePlot.
+	Receive a string shortcut to define line and marker styles.
+
+	For markers use
+	'o' - circle
+	'^' - arrow
+	's' - square
+	'p' - pentagon
+	'h' - hexagon
+	'+' - plus
+	'd' - diamond
+	'*' - star
+
+	For stroke styles use:
+	'--' dashed line.
+	'-.' dashed line with small line then point
+	'.' dashed line with points
+	
+	For colors use:
+	'r' red
+	'g' green
+	'b' blue
+	'c' cyan
+	'm' magenta
+	'y' yellow
+	'k' black
+	'w white'
+	
+	There is no order of marker, stroke or color specification.
+	'r.o'
+	'.or'
+	'o.r'
+		
+	Example:
+```
+| p |
+p := (RSLinePlot y: #(1 2 3 4)) format: 'or--'.
+p open.
+````
+	 "
+	formatString := aString.
+	self shape format: formatString.
+]
+
 { #category : #testing }
 RSLinePlot >> isLinePlot [
 	^ true
