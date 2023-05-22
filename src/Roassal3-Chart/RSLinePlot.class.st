@@ -26,15 +26,9 @@ RSLinePlot class >> y: aCollection [
 { #category : #building }
 RSLinePlot >> buildChart [
 
-	| chartPlot marker colorDictionary colorChar color markerChar |
-	colorDictionary := Dictionary newFrom: { ($r -> Color red) }.
+	| chartPlot marker markerChar |
 	chartPlot := RSChart new.
 	chartPlot add: self.
-
-	colorChar := self format at: 3.
-	markerChar := self format copyFrom: 1 to: 1.
-	color := colorDictionary at: colorChar.
-	self color: color.
 
 	chartPlot
 		add: RSHorizontalTick new;

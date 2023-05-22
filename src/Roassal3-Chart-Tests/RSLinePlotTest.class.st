@@ -21,6 +21,22 @@ RSLinePlotTest >> testDefaultValues [
 ]
 
 { #category : #tests }
+RSLinePlotTest >> testLineStroke [
+	| p |
+	p := (RSLinePlot y: #(1 2 3 4)) format: '--'.
+	chart := p buildChart.
+	self assert: p border style equals: (RSStrokeStyle fromString: '--').
+	
+	p := (RSLinePlot y: #(1 2 3 4)) format: '-.'.
+	chart := p buildChart.
+	self assert: p border style equals: (RSStrokeStyle fromString: '-.').
+	
+	p := (RSLinePlot y: #(1 2 3 4)) format: '.'.
+	chart := p buildChart.
+	self assert: p border style equals: (RSStrokeStyle fromString: '.').
+]
+
+{ #category : #tests }
 RSLinePlotTest >> testMarkerShape [
 	| circleMarkersPlot squareMarkersPlot |
 	circleMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
