@@ -23,14 +23,6 @@ Class {
 	#category : #'Roassal3-Interaction-ElasticBox'
 }
 
-{ #category : #'event processing' }
-RSElasticBoxInteraction >> adjustCamera: event [
-
-	"We have to create an animation, we have to compute the speed of the animation based on the difference of the event position. We have to stop the animation when event position is in selection bounds."
-
-	
-]
-
 { #category : #announcer }
 RSElasticBoxInteraction >> announcementClasses [
 	^ RSSelectionEvent subclasses
@@ -206,22 +198,6 @@ RSElasticBoxInteraction >> initialize [
 	self useNegativeBox.
 	self targetShapes: #nodes.
 	draggingCanvas := false
-]
-
-{ #category : #testing }
-RSElasticBoxInteraction >> isInCanvasSelectionBounds: event [
-
-	| padding visibleRect position |
-	padding := -10 asMargin.
-	visibleRect := event camera originMode
-		               visibleRectangleFor: event camera
-		               rectangle:
-		               (padding expandRectangle:
-			                (0 @ 0 corner: event canvas extent)).
-
-
-	position := event position.
-	^ visibleRect containsPoint: position
 ]
 
 { #category : #public }
