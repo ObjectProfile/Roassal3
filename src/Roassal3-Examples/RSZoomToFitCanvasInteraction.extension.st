@@ -7,7 +7,7 @@ RSZoomToFitCanvasInteraction class >> example [
 	canvas originTopLeft.
 	interaction := self new.
 
-	interaction useZoomToFitOnStart; useZoomToFitOnExtendChanged.
+	interaction useZoomToFitOnStart; useZoomToFitOnExtentChanged.
 
 	canvas @ interaction.
 	canvas @ RSKeyNavigationCanvasInteraction.

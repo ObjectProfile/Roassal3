@@ -146,13 +146,15 @@ RSChart >> decorations [
 { #category : #'accessing - defaults' }
 RSChart >> defaultContainer [
 	^ RSCanvas new
-		addInteraction: (RSCanvasController new
+		when: RSExtentChangedEvent send:#updateChart: to: self;
+		yourself.
+		"addInteraction: (RSCanvasController new
 			in: [ :controller |
-				controller zoomToFitInteraction useZoomToFitOnExtendChanged.
+				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
 				controller configuration	maxScale: 20.
 				 ];
 			yourself);
-		yourself
+		yourself"
 ]
 
 { #category : #color }
@@ -382,6 +384,15 @@ c
 ```
 	"
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
+]
+
+{ #category : #'accessing - defaults' }
+RSChart >> updateChart: anEvent [
+	| canvas |
+	canvas := anEvent canvas.
+	self extent: canvas extent.
+	self update.
+	canvas zoomToFit.
 ]
 
 { #category : #accessing }
