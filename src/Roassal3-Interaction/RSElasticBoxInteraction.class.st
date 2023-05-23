@@ -212,7 +212,6 @@ RSElasticBoxInteraction >> noNegativeBox [
 
 { #category : #hooks }
 RSElasticBoxInteraction >> onShape: aCanvas [
-	aCanvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
 	
 	aCanvas
 		when: self dragStartEvent send: #enableDrag: to: self;

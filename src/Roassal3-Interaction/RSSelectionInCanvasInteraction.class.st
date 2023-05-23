@@ -78,9 +78,7 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 				onCanvas: evt canvas ];
 		when: RSSelectionEndEvent
 		do: [ :evt | evt canvas selectedShapes: evt selectedShapes ].
-	aCanvas @ elastic.
-	aCanvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
-	aCanvas @ RSDraggableCanvasInteraction left.
+	aCanvas @ elastic
 ]
 
 { #category : #rendering }
