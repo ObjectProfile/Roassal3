@@ -26,6 +26,55 @@ RSHighlightableTest >> testBasic [
 ]
 
 { #category : #tests }
+RSHighlightableTest >> testHighlightAllShapes [
+
+	| h c |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+
+	h := RSHighlightable red.
+
+	c nodes @ h.
+	h doHighlightShapes: c nodes.
+
+	self assert:
+		(c nodes allSatisfy: [ :shape | shape color = Color red ])
+]
+
+{ #category : #tests }
+RSHighlightableTest >> testHighlightAllShapesThenHighlightNothing [
+
+	| h c defaultColor |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+	defaultColor := c nodes first color.
+	h := RSHighlightable red.
+
+	c nodes @ h.
+	h doHighlightShapes: c nodes.
+	h doHighlightShapes: {  } onCanvas: c.
+
+	self assert:
+		(c nodes allSatisfy: [ :shape | shape color = defaultColor ])
+]
+
+{ #category : #tests }
+RSHighlightableTest >> testHighlightShapes [
+
+	| h c defaultColor |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+	defaultColor := c nodes first color.
+	h := RSHighlightable red.
+
+	c nodes @ h.
+	h doHighlightShapes: c nodes first asOrderedCollection.
+	self assert: c nodes first color equals: Color red.
+	self assert: (c nodes allButFirst allSatisfy: [ :shape | 
+			 shape color = defaultColor ])
+]
+
+{ #category : #tests }
 RSHighlightableTest >> testSameModel [
 
 	| values c boxes |

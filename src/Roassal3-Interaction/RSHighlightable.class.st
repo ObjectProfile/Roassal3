@@ -225,14 +225,25 @@ RSHighlightable >> doHighlight: shape [
 
 { #category : #actions }
 RSHighlightable >> doHighlightShapes: shapes [
-	"Assuming all the shapes belongs to the same canvas"
-	| allHShapes |
+
 	shapes ifEmpty: [ ^ self ].
-	self unhighlightRecordedShapes: shapes first.
-	allHShapes := shapes flatCollect: [ :s | | hshapes |
-		hshapes := self highlightShapesFor: s.
-		hshapes do: [ :hs | self announceHighlight: hs source: s ].
-		hshapes ].
+	self doHighlightShapes: shapes onCanvas: shapes first canvas
+]
+
+{ #category : #actions }
+RSHighlightable >> doHighlightShapes: shapes onCanvas: aCanvas [
+
+	"Assuming all the shapes belongs to the same canvas"
+
+	| allHShapes |
+	self unhighlightRecordedShapes: aCanvas.
+	shapes ifEmpty: [ ^ self ].
+	allHShapes := shapes flatCollect: [ :s | 
+		              | hshapes |
+		              hshapes := self highlightShapesFor: s.
+		              hshapes do: [ :hs | 
+			              self announceHighlight: hs source: s ].
+		              hshapes ].
 	shapes first canvas propertyAt: self propertyKey put: allHShapes
 ]
 
