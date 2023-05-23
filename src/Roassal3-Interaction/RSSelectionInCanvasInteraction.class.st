@@ -61,8 +61,9 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 
 	| elastic selectionHigh |
 	elastic := RSElasticBoxInteraction new.
-	elastic rightLeft.
+	elastic leftRight.
 	elastic targetShapes: aCanvas nodes.
+	
 	selectionHigh := RSHighlightable new
 		                 when: RSHighlightEvent
 		                 do: [ :evt | self createBoxSelectionFor: evt shape ];
@@ -77,7 +78,9 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 				onCanvas: evt canvas ];
 		when: RSSelectionEndEvent
 		do: [ :evt | evt canvas selectedShapes: evt selectedShapes ].
-	aCanvas @ elastic
+	aCanvas @ elastic.
+	aCanvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
+	aCanvas @ RSDraggableCanvasInteraction left.
 ]
 
 { #category : #rendering }
