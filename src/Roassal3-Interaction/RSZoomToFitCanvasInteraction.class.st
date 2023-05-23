@@ -108,7 +108,7 @@ RSZoomToFitCanvasInteraction >> shouldZoomToFitOnStart [
 ]
 
 { #category : #configuration }
-RSZoomToFitCanvasInteraction >> useZoomToFitOnExtendChanged [
+RSZoomToFitCanvasInteraction >> useZoomToFitOnExtentChanged [
 	zoomToFitOnExtent := true
 ]
 

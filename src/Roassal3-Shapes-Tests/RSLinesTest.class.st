@@ -212,3 +212,18 @@ RSLinesTest >> testPolylineIncludesPoint [
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50)
 ]
+
+{ #category : #running }
+RSLinesTest >> testStroke [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	line format: '--'.
+	self assert: line border dashArray equals: #(4 2).
+	line format: '-.'.
+	self assert: line border dashArray equals: #(4 1 1 1).
+	line format: '.'.
+	self assert: line border dashArray equals: #(1).
+]

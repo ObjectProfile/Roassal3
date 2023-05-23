@@ -1,5 +1,5 @@
 "
-TODO
+RSLinePlot is a class to create an y vs x plot.
 "
 Class {
 	#name : #RSLinePlot,
@@ -16,6 +16,13 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSLinePlot class >> example1 [
+	| p |
+	p := (self y: #(1 2 3 4)) format: 'or--'.
+	^ p open.
+]
+
+{ #category : #'instance creation' }
 RSLinePlot class >> y: aCollection [
 	| linePlot |
 	linePlot := self new.
@@ -26,15 +33,9 @@ RSLinePlot class >> y: aCollection [
 { #category : #building }
 RSLinePlot >> buildChart [
 
-	| chartPlot marker colorDictionary colorChar color markerChar |
-	colorDictionary := Dictionary newFrom: { ($r -> Color red) }.
+	| chartPlot marker markerChar |
 	chartPlot := RSChart new.
 	chartPlot add: self.
-
-	colorChar := self format at: 3.
-	markerChar := self format copyFrom: 1 to: 1.
-	color := colorDictionary at: colorChar.
-	self color: color.
 
 	chartPlot
 		add: RSHorizontalTick new;

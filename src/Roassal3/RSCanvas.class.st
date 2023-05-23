@@ -272,6 +272,11 @@ RSCanvas >> deepShapesFromModels: someObjects result: result [
 ]
 
 { #category : #initialization }
+RSCanvas >> defaultExtent [
+	^ 500@500
+]
+
+{ #category : #initialization }
 RSCanvas >> defaultShapeCollection [
 	^ RSSequenceableCollection new
 ]
@@ -369,7 +374,7 @@ RSCanvas >> initialize [
 	edges := RSGroup new.
 	animations := OrderedCollection new.
 	color := Color white.
-	extent := 500@500.
+	extent := self defaultExtent.
 	camera := RSCamera new
 		canvas: self;
 		yourself

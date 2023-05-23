@@ -17,6 +17,21 @@ RSChartTest >> testBasic [
 ]
 
 { #category : #tests }
+RSChartTest >> testExtentOnChange [
+	| chart plot canvas|
+	chart := RSChart new.
+	plot := RSLinePlot y: #(1 2 3).
+	chart add: plot.
+	chart build.
+	canvas := chart container.
+	self assert: canvas extent equals: canvas defaultExtent.
+	self assert: chart extent < canvas extent.
+	canvas extent: 1000@1000.
+	self assert: chart extent equals: canvas extent.
+	self assert: chart extent > canvas defaultExtent.	
+]
+
+{ #category : #tests }
 RSChartTest >> testMinMaxValue [
 
 	| y c |
