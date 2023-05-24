@@ -20,5 +20,6 @@ RSBlink >> onShape: aShape [
 		onStepDo: [ :t | aShape signalUpdate ];
 		when: RSAnimationEndEvent do: [ :evt |
 			aShape color: previousColor.
-			canvas signalUpdate ]
+			canvas signalUpdate ] 
+		for: self
 ]

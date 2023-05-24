@@ -62,19 +62,24 @@ RSColorPaletteChooser class >> example1 [
 
 { #category : #utilities }
 RSColorPaletteChooser >> boxColorFor: color [
+
 	| label box |
 	box := RSBox new
-		extent: 150 @ 30;
-		color: color;
-		yourself.
+		       extent: 150 @ 30;
+		       color: color;
+		       yourself.
 	label := RSLabel new
-		noPaint;
-		text: color asHexString;
-		yourself.
-	^ { box. label} asShape
+		         noPaint;
+		         text: color asHexString;
+		         yourself.
+	^ {
+		  box.
+		  label } asShape
 		  @ boxColorHighlight;
 		  model: color;
-		  when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model ];
+		  when: RSMouseClick
+		  do: [ :evt | self copyToClipboard: evt shape model ]
+		  for: self;
 		  yourself
 ]
 
@@ -251,23 +256,25 @@ RSColorPaletteChooser >> paletteFor: method [
 
 { #category : #utilities }
 RSColorPaletteChooser >> paletteFor: palette method: method [
-	| shapes |
 
+	| shapes |
 	shapes := self boxesFor: palette range.
 	shapes add: (RSLabel new
-		bold;
-		text: method selector;
-		yourself).
+			 bold;
+			 text: method selector;
+			 yourself).
 	RSVerticalLineLayout new
 		alignCenter;
 		gapSize: 0;
 		on: shapes.
 	^ shapes asShape
-		model: method;
-		padding: 10;
-		withBorder;
-		when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model];
-		yourself
+		  model: method;
+		  padding: 10;
+		  withBorder;
+		  when: RSMouseClick
+		  do: [ :evt | self copyToClipboard: evt shape model ]
+		  for: self;
+		  yourself
 ]
 
 { #category : #accessing }

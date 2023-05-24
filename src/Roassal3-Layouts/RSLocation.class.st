@@ -354,8 +354,8 @@ RSLocation >> stick: movableShape on: baseShape [
 	block := [ self move: movableShape on: baseShape ].
 	block value.
 	baseShape
-		when: RSExtentChangedEvent do: block;
-		when: RSPositionChangedEvent do: block
+		when: RSExtentChangedEvent do: block for: self;
+		when: RSPositionChangedEvent do: block for: self
 ]
 
 { #category : #'public - positioning' }

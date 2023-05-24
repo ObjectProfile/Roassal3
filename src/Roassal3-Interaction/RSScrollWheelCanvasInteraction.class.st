@@ -38,7 +38,7 @@ RSScrollWheelCanvasInteraction >> move: aCanvas delta: delta [
 					onStepDo: [ :t | 
 						aCanvas camera translateTo: t.
 						aCanvas signalUpdate ] ]
-			].
+			] for: self.
 ]
 
 { #category : #hooks }

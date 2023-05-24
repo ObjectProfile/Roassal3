@@ -115,30 +115,36 @@ RSShapeExamples >> example05CapStyles [
 
 { #category : #normalizer }
 RSShapeExamples >> example07NormalizeColor [
+
 	<script: 'self new example07NormalizeColor open'>
 	| canvas shapes |
 	canvas := RSCanvas new.
 
 	shapes := Collection withAllSubclasses collect: [ :cls |
-		RSBox new
-			model: cls;
-			draggable;
-			"size: cls numberOfMethods;"
-			popup;
-			yourself ].
+		          RSBox new
+			          model: cls;
+			          draggable;
+			          "size: cls numberOfMethods;"popup;
+			          yourself ].
 	RSNormalizer color
 		shapes: shapes;
 		normalize: #numberOfMethods.
 	RSNormalizer size
-		"scale: NSScale sqrt;"
 		shapes: shapes;
 		normalize: #numberOfMethods.
+	"scale: NSScale sqrt;"
 
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
 
 	canvas camera position: canvas shapes encompassingRectangle center.
-	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit; signalUpdate ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [
+			canvas
+				zoomToFit;
+				signalUpdate ]
+		for: self.
 	^ canvas
 ]
 
@@ -443,18 +449,21 @@ RSShapeExamples >> example17Labeled [
 
 { #category : #shapes }
 RSShapeExamples >> example19Bitmap [
+
 	<script: 'self new example19Bitmap open'>
 	| canvas shapes icons |
-	icons := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key].
+	icons := Smalltalk ui icons icons associations sorted: [ :a :b |
+		         a key < b key ].
 	canvas := RSCanvas new.
-	shapes := icons collect: [ :icon|
-		RSBitmap new
-			form: icon value;
-			model: icon;
-			popupText: #key;
-			when: RSMouseClick do: [ :evt |
-				Clipboard clipboardText: evt shape model key.
-				self inform: 'Copied icon name' ].  ].
+	shapes := icons collect: [ :icon |
+		          RSBitmap new
+			          form: icon value;
+			          model: icon;
+			          popupText: #key;
+			          when: RSMouseClick do: [ :evt |
+				          Clipboard clipboardText: evt shape model key.
+				          self inform: 'Copied icon name' ]
+			          for: self ].
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
 	canvas @ RSCanvasController.
@@ -608,6 +617,7 @@ RSShapeExamples >> example26AnimatedPopup [
 
 { #category : #shapes }
 RSShapeExamples >> example27MultilineLabelBasic [
+
 	<script: 'self new example27MultilineLabelBasic open'>
 	| canvas shapeBuilder text |
 	canvas := RSCanvas new.
@@ -618,13 +628,17 @@ qui s''alimentent de ta lumière"'.
 	shapeBuilder labelShape
 		fontSize: 20;
 		italic.
-	canvas add:(shapeBuilder shapeFor: text).
+	canvas add: (shapeBuilder shapeFor: text).
 	shapeBuilder wrapStrategy: (RSWrapStrategy new wrapMaxWidth: 200).
-	canvas add:(shapeBuilder shapeFor: text).
-	shapeBuilder wrapStrategy: (RSWrapEllipsisStrategy new wrapMaxWidth: 200).
-	canvas add:(shapeBuilder shapeFor: String loremIpsum).
-	RSFlowLayout  on: canvas nodes.
-	canvas nodes when: RSMouseClick do: [ :evt | evt shape inspect ].
+	canvas add: (shapeBuilder shapeFor: text).
+	shapeBuilder wrapStrategy:
+		(RSWrapEllipsisStrategy new wrapMaxWidth: 200).
+	canvas add: (shapeBuilder shapeFor: String loremIpsum).
+	RSFlowLayout on: canvas nodes.
+	canvas nodes
+		when: RSMouseClick
+		do: [ :evt | evt shape inspect ]
+		for: self.
 	canvas showEncompassingRectangles.
 
 	^ canvas zoomToFit
@@ -632,27 +646,29 @@ qui s''alimentent de ta lumière"'.
 
 { #category : #shapes }
 RSShapeExamples >> example28MultilineLabel [
+
 	<script: 'self new example28MultilineLabel open'>
 	| canvas shapes |
 	canvas := RSCanvas new.
 	shapes := RSShape withAllSubclasses collect: [ :cls |
-		| methods |
-		methods := cls methods collect: [ :met |
-			RSBox new
-				model: met;
-				size: 20;
-				popup;
-				when: RSMouseClick do: [ :evt | evt shape inspect ];
-				yourself
-			 ].
-		RSGridLayout on: methods.
-		RSComposite new
-			model: cls;
-			shapes: methods;
-			padding: 10;
-			color: (Color purple alpha: 0.3 );
-			popup;
-			yourself ].
+		          | methods |
+		          methods := cls methods collect: [ :met |
+			                     RSBox new
+				                     model: met;
+				                     size: 20;
+				                     popup;
+				                     when: RSMouseClick
+				                     do: [ :evt | evt shape inspect ]
+				                     for: self;
+				                     yourself ].
+		          RSGridLayout on: methods.
+		          RSComposite new
+			          model: cls;
+			          shapes: methods;
+			          padding: 10;
+			          color: (Color purple alpha: 0.3);
+			          popup;
+			          yourself ].
 	RSLineBuilder orthoVertical
 		withVerticalAttachPoint;
 		canvas: canvas;
@@ -666,34 +682,37 @@ RSShapeExamples >> example28MultilineLabel [
 
 { #category : #lines }
 RSShapeExamples >> example29AntAnimation [
-	<script: 'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
+
+	<script:
+	'self new example29AntAnimation open setLabel: ''Move mouse on one box'''>
 	| canvas shapes labelInt highInt popupMethod |
 	canvas := RSCanvas new.
 	labelInt := RSLabeled new.
 	labelInt shapeBuilder: [ :model |
-		 RSLabel new
+		RSLabel new
 			color: Color white;
 			text: model;
 			yourself ].
 	highInt := RSHighlightable withAntAnimation.
 	popupMethod := RSPopup text: #selector.
-	shapes := String withAllSubclasses collect: [ :cls | | methods |
-		methods := cls methods collect: [ :met |
-			RSBox new
-				color: Color green;
-				model: met;
-				addInteraction: popupMethod;
-				size: met linesOfCode ].
-		RSGridLayout on: methods.
-		RSComposite new
-			color: Color white translucent;
-			model: cls;
-			shapes: methods;
-			padding: 10;
-			popup;
-			addInteraction: labelInt;
-			addInteraction: highInt;
-			yourself ].
+	shapes := String withAllSubclasses collect: [ :cls |
+		          | methods |
+		          methods := cls methods collect: [ :met |
+			                     RSBox new
+				                     color: Color green;
+				                     model: met;
+				                     addInteraction: popupMethod;
+				                     size: met linesOfCode ].
+		          RSGridLayout on: methods.
+		          RSComposite new
+			          color: Color white translucent;
+			          model: cls;
+			          shapes: methods;
+			          padding: 10;
+			          popup;
+			          addInteraction: labelInt;
+			          addInteraction: highInt;
+			          yourself ].
 	canvas color: PharoDarkTheme new backgroundColor.
 
 	canvas addAll: shapes.
@@ -708,7 +727,7 @@ RSShapeExamples >> example29AntAnimation [
 		verticalGap: 100;
 		on: shapes.
 	canvas @ RSCanvasController.
-	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ].
+	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ] for: self.
 	^ canvas
 ]
 
@@ -916,28 +935,25 @@ RSShapeExamples >> example35Lines [
 
 { #category : #shapes }
 RSShapeExamples >> example36ShapePosition [
+
 	<script: 'self new example36ShapePosition open'>
 	| c circle box labelBox dragMeLabel |
 	c := RSCanvas new.
 	circle := RSEllipse new size: 10.
 	box := RSBox new
-		color: Color red;
-		size: 10.
+		       color: Color red;
+		       size: 10.
 	c
 		add: circle;
 		add: box.
-	c
-		add:
-			(RSLine new
-				color: Color veryVeryLightGray;
-				from: 0 @ -1000;
-				to: 0 @ 1000).
-	c
-		add:
-			(RSLine new
-				color: Color veryVeryLightGray;
-				from: -1000 @ 0;
-				to: 1000 @ 0).
+	c add: (RSLine new
+			 color: Color veryVeryLightGray;
+			 from: 0 @ -1000;
+			 to: 0 @ 1000).
+	c add: (RSLine new
+			 color: Color veryVeryLightGray;
+			 from: -1000 @ 0;
+			 to: 1000 @ 0).
 	labelBox := RSLabel new text: 'Box'.
 	c add: labelBox.
 	labelBox setAsFixed.
@@ -946,13 +962,15 @@ RSShapeExamples >> example36ShapePosition [
 	box
 		when: RSMouseDragging
 		do: [ :evt |
-			labelBox
-				text: 'Box position = ' , evt position asIntegerPoint asString ].
+			labelBox text:
+				'Box position = ' , evt position asIntegerPoint asString ]
+		for: self.
 
 	dragMeLabel := RSLabel new text: 'Drag me'.
 	c add: dragMeLabel.
 	RSLocation new
-		above; center;
+		above;
+		center;
 		stick: dragMeLabel on: box.
 	box translateTo: 50 @ 50.
 	^ c
@@ -1361,36 +1379,42 @@ RSShapeExamples >> example46Popups [
 
 { #category : #shapes }
 RSShapeExamples >> example47CompositeClipChildren [
+
 	<script: 'self new example47CompositeClipChildren open'>
 	| boxes containers c |
-	containers := { RSShape. String. RSEvent } collect: [ :rootCls |
-		| container |
-		container := RSComposite new.
-		boxes := RSBox models: rootCls withAllSubclasses
-			forEach: [ :box :cls | box size: cls linesOfCode sqrt + 5 ].
-		container addAll: boxes.
-		RSLineBuilder line
-			canvas: container;
-			withVerticalAttachPoint;
-			shapes: boxes;
-			connectFrom: #superclass.
-		RSTreeLayout on: boxes.
+	containers := {
+		              RSShape.
+		              String.
+		              RSEvent } collect: [ :rootCls |
+		              | container |
+		              container := RSComposite new.
+		              boxes := RSBox
+			                       models: rootCls withAllSubclasses
+			                       forEach: [ :box :cls |
+			                       box size: cls linesOfCode sqrt + 5 ].
+		              container addAll: boxes.
+		              RSLineBuilder line
+			              canvas: container;
+			              withVerticalAttachPoint;
+			              shapes: boxes;
+			              connectFrom: #superclass.
+		              RSTreeLayout on: boxes.
 
-		container
-			model: rootCls;
-			adjustToChildren;
-			padding: 10;
-			labeled;
-			border: (RSBorder new color: Color black; joinMiter);
-			clipChildren: true;
-			when: RSMouseDragging do: [ :evt | | d |
-				d := evt camera distanceFromPixelToSpace: evt step.
-				evt shape nodes do: [ :child |
-					child translateBy: d ].
-				evt signalUpdate.
-				 ]
-			yourself
-		 ].
+		              container
+			              model: rootCls;
+			              adjustToChildren;
+			              padding: 10;
+			              labeled;
+			              border: (RSBorder new
+					               color: Color black;
+					               joinMiter);
+			              clipChildren: true;
+			              when: RSMouseDragging do: [ :evt |
+				              | d |
+				              d := evt camera distanceFromPixelToSpace: evt step.
+				              evt shape nodes do: [ :child | child translateBy: d ].
+				              evt signalUpdate ] yourself
+			              for: self ].
 
 	c := RSCanvas new.
 	c addAll: containers.

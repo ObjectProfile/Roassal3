@@ -301,18 +301,19 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 
 { #category : #animations }
 RSLayoutExamples >> example13VisualizeQuatree [
+
 	<script: 'self new example13VisualizeQuatree open'>
 	| canvas shapes stepping edges newBox boxes createBoxes colors newLabel |
 	canvas := RSCanvas new.
-	shapes := (1 to: 50) collect: [:n |
-		RSBox new
-			size: 30;
-			labeled;
-			model: n;
-			yourself].
+	shapes := (1 to: 50) collect: [ :n |
+		          RSBox new
+			          size: 30;
+			          labeled;
+			          model: n;
+			          yourself ].
 	edges := RSLineBuilder line
-		shapes: shapes;
-		connectFrom: [ :i | i // 2 ].
+		         shapes: shapes;
+		         connectFrom: [ :i | i // 2 ].
 	canvas
 		addAll: edges;
 		addAll: shapes.
@@ -324,28 +325,29 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas @ stepping.
 	colors := RSColorPalette sequential pubu9.
 	newBox := [ :quad :index |
-		RSBox new
-			border: (RSBorder new color: Color lightGray translucent; width: 0.5);
-			extent: quad rectangle extent;
-			position: quad rectangle floatCenter;
-			color: ((colors scale: index) alpha: 0.5 );
-			yourself
-			 ].
+	          RSBox new
+		          border: (RSBorder new
+				           color: Color lightGray translucent;
+				           width: 0.5);
+		          extent: quad rectangle extent;
+		          position: quad rectangle floatCenter;
+		          color: ((colors scale: index) alpha: 0.5);
+		          yourself ].
 	newLabel := [ :quad :index |
-		RSLabel new
-			text: (quad charge printShowingDecimalPlaces: 1);
-			position: quad rectangle floatCenter;
-			yourself.
-		 ].
-	boxes := #().
+	            RSLabel new
+		            text: (quad charge printShowingDecimalPlaces: 1);
+		            position: quad rectangle floatCenter;
+		            yourself ].
+	boxes := #(  ).
 	createBoxes := nil.
-	createBoxes := [ :quad :lvl | | box label |
-		box := newBox value: quad value: lvl.
-		label := newLabel value: quad value: lvl.
-		quad subQuadsDo: [ :subQuad | createBoxes value: subQuad value: lvl + 1 ].
-		boxes add: box.
-		boxes add: label.
-		].
+	createBoxes := [ :quad :lvl |
+	               | box label |
+	               box := newBox value: quad value: lvl.
+	               label := newLabel value: quad value: lvl.
+	               quad subQuadsDo: [ :subQuad |
+		               createBoxes value: subQuad value: lvl + 1 ].
+	               boxes add: box.
+	               boxes add: label ].
 	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;
@@ -354,7 +356,8 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			boxes := RSGroup new.
 			createBoxes value: stepping layout currentQuadtree value: 0.
 			canvas addAll: boxes.
-			boxes pushBack ].
+			boxes pushBack ]
+		for: self.
 	^ canvas
 ]
 
@@ -528,88 +531,114 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 
 { #category : #layouts }
 RSLayoutExamples >> example20FlowLayout [
+
 	<script: 'self new example20FlowLayout open extent: 700@500'>
 	| words labels canvas menuAnimation high newLabel |
 	words := (String loremIpsum: 100) substrings.
 	labels := words collectWithIndex: [ :word :index |
-		RSLabel new
-			text: word;
-			fontSize: 10 + ((index % 10)*2);
-			underline;
-			yourself.
-		 ].
+		          RSLabel new
+			          text: word;
+			          fontSize: 10 + (index % 10 * 2);
+			          underline;
+			          yourself ].
 
 	RSFlowLayout on: labels.
 	canvas := RSCanvas new.
 	canvas addAll: labels.
 	menuAnimation := [ :s :d |
-		| p |
-		p := s
-			propertyAt: #opos
-			ifAbsentPut: [ s position ].
-		canvas newAnimation
-			duration: 200 milliSeconds;
-			from: s position;
-			to: p + d;
-			on: s set: #position:].
+	                 | p |
+	                 p := s propertyAt: #opos ifAbsentPut: [ s position ].
+	                 canvas newAnimation
+		                 duration: 200 milliSeconds;
+		                 from: s position;
+		                 to: p + d;
+		                 on: s set: #position: ].
 	high := RSHighlightable new.
 	high
 		when: RSHighlightEvent do: [ :evt |
-			evt shape color: Color blue; underline.
-			menuAnimation value: evt shape value: -5@0 ];
+			evt shape
+				color: Color blue;
+				underline.
+			menuAnimation value: evt shape value: -5 @ 0 ]
+		for: self;
 		when: RSUnHighlightEvent do: [ :evt |
-			evt shape color: Color gray; normal.
-			menuAnimation value: evt shape value: 0 ].
+			evt shape
+				color: Color gray;
+				normal.
+			menuAnimation value: evt shape value: 0 ]
+		for: self.
 
 	newLabel := [ :s |
-		canvas add: (RSLabel new
-			text: s;
-			isFixed: true;
-			@ high;
-			yourself) ].
-	{'FlowTop'. RSFlowLayout new alignTop.
-	'FlowMiddle'. RSFlowLayout new alignMiddle.
-	'FlowBot'. RSFlowLayout new alignBottom.
-	'FlowLabel'. RSFlowLayout new alignLabel.
-	'FlowLeft'. RSHorizontalFlowLayout new alignLeft.
-	'FlowCenter'. RSHorizontalFlowLayout new alignCenter.
-	'FlowRight'. RSHorizontalFlowLayout new alignRight.
-	'HorizontalTop'. RSHorizontalLineLayout new alignTop.
-	'HorizontalMid'. RSHorizontalLineLayout new alignMiddle.
-	'HorizontalBot'. RSHorizontalLineLayout new alignBottom.
-	'HorizontalLabel'.RSHorizontalLineLayout new alignLabel.
-	'VerticalLeft'. RSVerticalLineLayout new.
-	'VerticalCenter'. RSVerticalLineLayout new alignCenter.
-	'VerticalRight'. RSVerticalLineLayout new alignRight.
-	} pairsDo: [:s :layout |
+	            canvas add: (RSLabel new
+			             text: s;
+			             isFixed: true;
+			             @ high;
+			             yourself) ].
+	{
+		'FlowTop'.
+		RSFlowLayout new alignTop.
+		'FlowMiddle'.
+		RSFlowLayout new alignMiddle.
+		'FlowBot'.
+		RSFlowLayout new alignBottom.
+		'FlowLabel'.
+		RSFlowLayout new alignLabel.
+		'FlowLeft'.
+		RSHorizontalFlowLayout new alignLeft.
+		'FlowCenter'.
+		RSHorizontalFlowLayout new alignCenter.
+		'FlowRight'.
+		RSHorizontalFlowLayout new alignRight.
+		'HorizontalTop'.
+		RSHorizontalLineLayout new alignTop.
+		'HorizontalMid'.
+		RSHorizontalLineLayout new alignMiddle.
+		'HorizontalBot'.
+		RSHorizontalLineLayout new alignBottom.
+		'HorizontalLabel'.
+		RSHorizontalLineLayout new alignLabel.
+		'VerticalLeft'.
+		RSVerticalLineLayout new.
+		'VerticalCenter'.
+		RSVerticalLineLayout new alignCenter.
+		'VerticalRight'.
+		RSVerticalLineLayout new alignRight } pairsDo: [ :s :layout |
 		(newLabel value: s)
-			when: RSMouseClick do: [ :evt |
+			when: RSMouseClick
+			do: [ :evt |
 				| last current |
 				last := labels collect: #position.
 				layout on: labels.
 				current := labels collect: #position.
 				canvas newAnimation
 					duration: 1 second;
-					onStepDo:[:t |
+					onStepDo: [ :t |
 						labels doWithIndex: [ :l :i |
-							l translateTo: ((last at: i) interpolateTo: (current at: i) at: t) ].
-						canvas zoomToFit.
-						].
-				 ]
-		].
-	{'Show/Hide Boxes'. [ canvas shouldShowRectangles
-		ifTrue: [ canvas hideEncompassingRectangles ]
-		ifFalse: [ canvas showEncompassingRectangles ]  ].
-	'Show/Hide Underlines'. [ labels first isUnderlined
-		ifTrue: [ labels do: #normal ]
-		ifFalse: [ labels do: #underline ] ].
-	} pairsDo: [:s :a |
+								l translateTo:
+										((last at: i) interpolateTo: (current at: i) at: t) ].
+						canvas zoomToFit ] ]
+			for: self ].
+	{
+		'Show/Hide Boxes'.
+		[
+		canvas shouldShowRectangles
+			ifTrue: [ canvas hideEncompassingRectangles ]
+			ifFalse: [ canvas showEncompassingRectangles ] ].
+		'Show/Hide Underlines'.
+		[
+		labels first isUnderlined
+			ifTrue: [ labels do: #normal ]
+			ifFalse: [ labels do: #underline ] ] } pairsDo: [ :s :a |
 		(newLabel value: s)
 			fontSize: 12;
-			when: RSMouseClick do: [ a value. canvas signalUpdate ].
-		].
+			when: RSMouseClick do: [
+				a value.
+				canvas signalUpdate ]
+			for: self ].
 	canvas showEncompassingRectangles.
-	RSVerticalLineLayout new gapSize: 3; on: canvas fixedShapes.
+	RSVerticalLineLayout new
+		gapSize: 3;
+		on: canvas fixedShapes.
 	canvas fixedShapes translateBy: 7.
 	canvas @ RSCanvasController.
 	^ canvas
@@ -653,11 +682,13 @@ RSLayoutExamples >> example21TreeLayoutEllipses [
 { #category : #tests }
 RSLayoutExamples >> example22ClassHierarchies [
 
-	<script:
-	'RSLayoutExamples new example22ClassHierarchies open'>
+	<script: 'RSLayoutExamples new example22ClassHierarchies open'>
 	| commits edges aCanvas gr aCollection |
-
-	aCollection := { Collection  . Magnitude . RSObject . RBNode }.
+	aCollection := {
+		               Collection.
+		               Magnitude.
+		               RSObject.
+		               RBNode }.
 
 	gr := 1.61803398875.
 	commits := Array streamContents: [ :aStream |
@@ -681,7 +712,8 @@ RSLayoutExamples >> example22ClassHierarchies [
 						            shapes: (Array with: box with: label);
 						            draggable;
 						            when: RSMouseLeftClick
-						            do: [ :ev | aSubClass browse ];
+						            do: [ :ev | aSubClass browse ]
+						            for: self;
 						            yourself) ] ] ].
 
 	edges := RSLineBuilder horizontalBezier
@@ -706,8 +738,8 @@ RSLayoutExamples >> example22ClassHierarchies [
 		           yourself.
 
 	^ aCanvas
-		zoomToFit;
-		@ RSCanvasController
+		  zoomToFit;
+		  @ RSCanvasController
 ]
 
 { #category : #tests }

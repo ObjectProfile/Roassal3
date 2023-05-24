@@ -19,6 +19,7 @@ RSRNode >> addMenu: canvas [
 				ifFalse: [ node noPaint; noBorder ] ].
 		canvas signalUpdate
 		]
+	for: self
 ]
 
 { #category : #'*Roassal3-Inspector' }
@@ -102,14 +103,15 @@ RSRNode >> asRSCanvasForQueries [
 	log isFixed: true.
 	log when: RSExtentChangedEvent do: [ :evt |
 		RSLocation new inner bottom; top; left; offset: 10@10;
-		move: log on: (0@0 corner: canvas extent) ].
+		move: log on: (0@0 corner: canvas extent) ]
+	for: self.
 	canvas addAll: {box. point. log}.
 	canvas when: RSMouseMove do: [ :evt |
 		box position: evt position.
 		point position: evt position.
 		self updateLog: log rectangle: box encompassingRectangle.
 		evt signalUpdate.
-		 ].
+		 ] for: self.
 	^ canvas
 ]
 
@@ -235,14 +237,14 @@ RSRNode >> parentHighlightable [
 				each color: (each propertyAt: #originalColor).
 				 ].
 			evt signalUpdate.
-			 ];
+		] for: self;
 		when: RSUnHighlightEvent do: [ :evt |
 			| parents |
 			parents := OrderedCollection new.
 			self parentsFor: evt shape list: parents.
 			parents do: #noPaint.
 			evt signalUpdate.
-		];
+		] for: self;
 		yourself
 ]
 
