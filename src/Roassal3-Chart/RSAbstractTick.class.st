@@ -73,6 +73,7 @@ RSAbstractTick >> createdShapes [
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultConfiguration [
 	^ RSTickConfiguration new
+		"when: RSExtentChangedEvent send:#updateTickConfiguration: to: self;"
 		numberOfTicks: 5;
 		fontSize: 5;
 		labelRotation: 0;

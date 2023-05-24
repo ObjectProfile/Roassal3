@@ -167,3 +167,10 @@ RSTickConfiguration >> tickSize [
 RSTickConfiguration >> tickSize: aNumber [
 	tickSize := aNumber
 ]
+
+{ #category : #accessing }
+RSTickConfiguration >> updateTickConfiguration: anEvent [
+	| canvas |
+	canvas := anEvent canvas.
+	self fontSize: (canvas extent) / (canvas defaultExtent).
+]

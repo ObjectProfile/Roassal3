@@ -78,3 +78,19 @@ RSChartTickTest >> testFromNamesWithOneData [
 		yourself).
 	chart build
 ]
+
+{ #category : #tests }
+RSChartTickTest >> testUpdateFontSizeOnResize [
+	| chart plot canvas ticks|
+	self skip.
+	chart := RSChart new.
+	plot := RSLinePlot y: #(1 2 3).
+	chart add: RSVerticalTick new.
+	chart add: plot.
+	chart build.
+	canvas := chart container.
+	ticks := chart verticalTick.
+	self assert: ticks configuration fontSize equals: 5.
+	canvas extent: canvas defaultExtent * 5.
+	self assert: ticks configuration fontSize equals: 5 * 5.
+]
