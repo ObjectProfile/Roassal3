@@ -67,19 +67,20 @@ RSHighlightableExamples >> example02ElementEdges [
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example03Interactive [
+
 	<script: 'self new example03Interactive open'>
 	| canvas shapes interaction update color |
 	canvas := RSCanvas new.
 
 	color := RSColorPalette diverging rdylbu3.
 	shapes := (1 to: 20) collect: [ :i |
-		RSBox new
-			size: 10;
-			model: i;
-			draggable;
-			withBorder;
-			color: (color scale: i) ;
-			yourself ].
+		          RSBox new
+			          size: 10;
+			          model: i;
+			          draggable;
+			          withBorder;
+			          color: (color scale: i);
+			          yourself ].
 	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
@@ -92,7 +93,10 @@ RSHighlightableExamples >> example03Interactive [
 	interaction withLines.
 	update := [ interaction doHighlight: shapes atRandom ].
 	update value.
-	canvas newAnimation repeat when: RSAnimationLoopEvent do: update.
+	canvas newAnimation repeat
+		when: RSAnimationLoopEvent
+		do: update
+		for: self.
 
 	canvas zoomToFit.
 	^ canvas
@@ -100,20 +104,21 @@ RSHighlightableExamples >> example03Interactive [
 
 { #category : #'examples - animated' }
 RSHighlightableExamples >> example04Interactive [
+
 	<script: 'self new example04Interactive open'>
 	| canvas shapes interaction bool update color |
 	canvas := RSCanvas new.
 
 	color := RSColorPalette qualitative accent8.
 	shapes := (1 to: 20) collect: [ :i |
-		RSBox new
-			size: 10;
-			model: i;
-			popup;
-			draggable;
-			withBorder;
-			color: (color scale: i) ;
-			yourself ].
+		          RSBox new
+			          size: 10;
+			          model: i;
+			          popup;
+			          draggable;
+			          withBorder;
+			          color: (color scale: i);
+			          yourself ].
 	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
@@ -124,10 +129,14 @@ RSHighlightableExamples >> example04Interactive [
 	interaction := RSHighlightable red.
 	bool := true.
 	update := [
-		interaction doHighlightShapes: (shapes select: [ :e | bool = e model even ]).
-		bool := bool not ].
+	          interaction doHighlightShapes:
+		          (shapes select: [ :e | bool = e model even ]).
+	          bool := bool not ].
 	update value.
-	canvas newAnimation repeat when: RSAnimationLoopEvent do: update.
+	canvas newAnimation repeat
+		when: RSAnimationLoopEvent
+		do: update
+		for: self.
 	canvas zoomToFit.
 	^ canvas
 ]
@@ -163,78 +172,100 @@ RSHighlightableExamples >> example05Border [
 
 { #category : #examples }
 RSHighlightableExamples >> example06IterateNext [
+
 	<script: 'self new example06IterateNext open'>
 	| canvas numbers edges layout legendBuilder highlightableForBoxes highlightableForLabels selectedNumber highlightBlock unhighlightAllBlock |
 	canvas := RSCanvas new.
 	legendBuilder := RSLegend new container: canvas.
 
 	"Create the view with numbers as elements."
-	numbers := (1 to: 10) collect: [ :i |
-		RSBox new
-			model: i;
-			size: 30;
-			labeled;
-			yourself ] as: RSGroup.
+	numbers := (1 to: 10)
+		           collect: [ :i |
+			           RSBox new
+				           model: i;
+				           size: 30;
+				           labeled;
+				           yourself ]
+		           as: RSGroup.
 	edges := RSLineBuilder line
-		shapes: numbers;
-		connectFrom: [ :i | i // 2 ].
+		         shapes: numbers;
+		         connectFrom: [ :i | i // 2 ].
 	canvas
 		addAll: edges;
 		addAll: numbers.
 	layout := RSForceBasedLayout new
-		length: 80;
-		charge: -300;
-		nodes: numbers;
-		edges: edges;
-		start;
-		yourself.
+		          length: 80;
+		          charge: -300;
+		          nodes: numbers;
+		          edges: edges;
+		          start;
+		          yourself.
 	canvas newAnimation repeat onStepDo: [ :t | layout step ].
 	numbers @ (RSDraggableForceInteraction new layout: layout).
 
 	"Set up highlighting interactions"
 	highlightableForBoxes := RSHighlightable red.
 	highlightableForLabels := RSHighlightable new
-		propertyKey: #exampleKey;
-		when: RSHighlightEvent do: [ :evt | evt shape bold ];
-		when: RSUnHighlightEvent do: [ :evt | evt shape normal ].
+		                          propertyKey: #exampleKey;
+		                          when: RSHighlightEvent
+		                          do: [ :evt | evt shape bold ]
+		                          for: self;
+		                          when: RSUnHighlightEvent
+		                          do: [ :evt | evt shape normal ]
+		                          for: self.
 	highlightBlock := [ :model |
-		highlightableForBoxes doHighlight: (canvas shapeFromModel: model).
-		highlightableForLabels doHighlight: (legendBuilder shapes shapeFromModel: model).
-		selectedNumber := model ].
+	                  highlightableForBoxes doHighlight:
+		                  (canvas shapeFromModel: model).
+	                  highlightableForLabels doHighlight:
+		                  (legendBuilder shapes shapeFromModel: model).
+	                  selectedNumber := model ].
 	unhighlightAllBlock := [
-		highlightableForBoxes unhighlightRecordedShapes: canvas.
-		highlightableForLabels unhighlightRecordedShapes: canvas ].
+	                       highlightableForBoxes
+		                       unhighlightRecordedShapes: canvas.
+	                       highlightableForLabels
+		                       unhighlightRecordedShapes: canvas ].
 
 	"Build a legend with all the numbers"
-	legendBuilder legendDo: [ :l |l withBorder; padding: 5 ].
+	legendBuilder legendDo: [ :l |
+		l
+			withBorder;
+			padding: 5 ].
 	legendBuilder location
-		outer; right; offset: 70@ -200.
-	numbers do: [ :e |
-		(legendBuilder text: e model) model: e model  ].
-	numbers, legendBuilder shapes when: RSMouseClick do: [ :evt | highlightBlock value: evt shape model ].
+		outer;
+		right;
+		offset: 70 @ -200.
+	numbers do: [ :e | (legendBuilder text: e model) model: e model ].
+	numbers , legendBuilder shapes
+		when: RSMouseClick
+		do: [ :evt | highlightBlock value: evt shape model ]
+		for: self.
 	legendBuilder build.
 
 	"Unhighlight all when clicking on background."
-	canvas when: RSMouseClick do: unhighlightAllBlock.
+	canvas when: RSMouseClick do: unhighlightAllBlock for: self.
 
 	"Highlight next number when N key is pressed. Initial is nothing"
 	selectedNumber := 0.
-	canvas when: RSKeyUp do: [ :evt |
-		evt keyName = #N ifTrue: [
-			selectedNumber := (selectedNumber \\ numbers size) + 1.
-			highlightBlock value: selectedNumber ] ].
+	canvas
+		when: RSKeyUp
+		do: [ :evt |
+			evt keyName = #N ifTrue: [
+				selectedNumber := selectedNumber \\ numbers size + 1.
+				highlightBlock value: selectedNumber ] ]
+		for: self.
 
 	^ canvas
 ]
 
 { #category : #examples }
 RSHighlightableExamples >> example07HighlightButtons [
+
 	<script: 'self new example07HighlightButtons open'>
 	| canvas mouseOver selectedButton |
 	canvas := RSCanvas new.
 	selectedButton := RSHighlightable red.
 
-	mouseOver:= RSHighlightable new.
+	mouseOver := RSHighlightable new.
 	mouseOver highlightColor: [ :shape |
 		shape model > 5
 			ifTrue: [ Color purple ]
@@ -244,16 +275,17 @@ RSHighlightableExamples >> example07HighlightButtons [
 	mouseOver highlightShapesButKeep: selectedButton.
 
 	canvas addAll: ((1 to: 10) collect: [ :i |
-		RSBox new
-			model: i;
-			@ mouseOver;
-			extent: 120@30;
-			cornerRadius: 3;
-			when: RSMouseClick do: [ :evt |
-				mouseOver doUnhighlight: evt shape.
-				selectedButton doHighlight: evt shape.
-				evt signalUpdate ];
-			yourself ] ).
+			 RSBox new
+				 model: i;
+				 @ mouseOver;
+				 extent: 120 @ 30;
+				 cornerRadius: 3;
+				 when: RSMouseClick do: [ :evt |
+					 mouseOver doUnhighlight: evt shape.
+					 selectedButton doHighlight: evt shape.
+					 evt signalUpdate ]
+				 for: self;
+				 yourself ]).
 
 	selectedButton doHighlight: canvas nodes first.
 	RSVerticalLineLayout on: canvas nodes.
@@ -263,13 +295,14 @@ RSHighlightableExamples >> example07HighlightButtons [
 
 { #category : #examples }
 RSHighlightableExamples >> example08DependendMethods [
+
 	<script: 'self new example08DependendMethods open'>
 	| packagesRegExp packages canvas popup label padding high arrow allClasses allMethods |
-	packagesRegExp := { 'Roassal3-Shapes'}.
+	packagesRegExp := { 'Roassal3-Shapes' }.
 
 	packages := packagesRegExp flatCollect: [ :regExp |
-		RPackageOrganizer default packages
-			select: [ :p | regExp match: p packageName ] ].
+		            RPackageOrganizer default packages select: [ :p |
+			            regExp match: p packageName ] ].
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
@@ -278,68 +311,70 @@ RSHighlightableExamples >> example08DependendMethods [
 	padding := 10 asMargin.
 	high := RSHighlightable new.
 	arrow := RSShapeFactory arrowedLine
-		withBorderAttachPoint;
-		color: Color blue.
+		         withBorderAttachPoint;
+		         color: Color blue.
 	packages := packages collect: [ :p |
-		| classes pkg |
-		classes := p definedClasses collect: [ :cls | | methods |
-			methods := cls methods collect: [ :met |
-				RSBox new
-					extent: 5 @ met linesOfCode;
-					@ popup;
-					@ high;
-					model: met;
-					yourself
-					 ].
-			RSGridLayout on: methods.
-			RSComposite new
-				model: cls;
-				@ label;
-				@ popup;
-				paint: Color white;
-				children: methods;
-				padding: padding;
-				yourself ] as: RSGroup.
-		pkg := (classes asShapeFor: p)
-			paint: Color veryVeryLightGray translucent;
-			@ popup;
-			yourself.
-		RSLineBuilder orthoVertical
-			withVerticalAttachPoint;
-			canvas: pkg;
-			shapes: pkg nodes;
-			connectFrom: #superclass.
-		RSTreeLayout on: pkg nodes edges: pkg edges.
-		pkg
-			position: 0@0;
-			adjustToChildren;
-			padding: padding.
-		pkg ].
+		            | classes pkg |
+		            classes := p definedClasses
+			                       collect: [ :cls |
+				                       | methods |
+				                       methods := cls methods collect: [ :met |
+					                                  RSBox new
+						                                  extent: 5 @ met linesOfCode;
+						                                  @ popup;
+						                                  @ high;
+						                                  model: met;
+						                                  yourself ].
+				                       RSGridLayout on: methods.
+				                       RSComposite new
+					                       model: cls;
+					                       @ label;
+					                       @ popup;
+					                       paint: Color white;
+					                       children: methods;
+					                       padding: padding;
+					                       yourself ]
+			                       as: RSGroup.
+		            pkg := (classes asShapeFor: p)
+			                   paint: Color veryVeryLightGray translucent;
+			                   @ popup;
+			                   yourself.
+		            RSLineBuilder orthoVertical
+			            withVerticalAttachPoint;
+			            canvas: pkg;
+			            shapes: pkg nodes;
+			            connectFrom: #superclass.
+		            RSTreeLayout on: pkg nodes edges: pkg edges.
+		            pkg
+			            position: 0 @ 0;
+			            adjustToChildren;
+			            padding: padding.
+		            pkg ].
 	canvas addAll: packages.
 	RSGridLayout on: canvas shapes.
 	allClasses := canvas shapes flatCollect: #nodes.
 	allMethods := allClasses flatCollect: #nodes.
 
 	high
-		when: RSHighlightEvent do: [ :evt | | methods |
+		when: RSHighlightEvent do: [ :evt |
+			| methods |
 			methods := allClasses flatCollect: [ :class |
-				(class model
-					thoroughWhichMethodsReferTo:
-						evt shape model selector)
-							collect: [ :method | method ] ].
+					           (class model thoroughWhichMethodsReferTo:
+							            evt shape model selector) collect: [ :method |
+							           method ] ].
 			methods := methods collect: [ :met |
-				arrow copy
-					from: evt shape;
-					to:(allMethods shapeFromModel: met)
-					 ].
+					           arrow copy
+						           from: evt shape;
+						           to: (allMethods shapeFromModel: met) ].
 			canvas addAll: methods.
-			canvas propertyAt: #methods put: methods.
-			 ];
+			canvas propertyAt: #methods put: methods ]
+		for: self;
 		when: RSUnHighlightEvent do: [ :evt |
-			(canvas propertyAt: #methods ifAbsent: [ #() ]) do:#remove ].
+			(canvas propertyAt: #methods ifAbsent: [ #(  ) ]) do: #remove ]
+		for: self.
 
 	canvas @ RSCanvasController.
-	^  canvas
+	^ canvas
 ]
 
 { #category : #examples }
@@ -378,19 +413,20 @@ RSHighlightableExamples >> example09ArrowedLines [
 
 { #category : #elastic }
 RSHighlightableExamples >> example10ElasticBox [
+
 	<script: 'self new example10ElasticBox open'>
 	| canvas color shapes high elastic |
 	canvas := RSCanvas new.
 
 	color := RSColorPalette diverging rdylbu3.
 	shapes := (1 to: 20) collect: [ :i |
-		RSBox new
-			size: 10;
-			model: i;
-			draggable;
-			withBorder;
-			color: (color scale: i) ;
-			yourself ].
+		          RSBox new
+			          size: 10;
+			          model: i;
+			          draggable;
+			          withBorder;
+			          color: (color scale: i);
+			          yourself ].
 	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
@@ -400,10 +436,12 @@ RSHighlightableExamples >> example10ElasticBox [
 	high := RSHighlightable red.
 	elastic := RSElasticBoxInteraction new.
 	elastic
-		when: RSSelectionStartEvent do: [ :evt |
-			high unhighlightRecordedShapes: evt canvas ];
-		when: RSSelectionChangedEvent do: [ :evt |
-			high doHighlightShapes: evt selectedShapes ].
+		when: RSSelectionStartEvent
+		do: [ :evt | high unhighlightRecordedShapes: evt canvas ]
+		for: self;
+		when: RSSelectionChangedEvent
+		do: [ :evt | high doHighlightShapes: evt selectedShapes ]
+		for: self.
 	canvas @ RSCanvasController.
 	elastic targetShapes: canvas shapes.
 	canvas @ elastic.
@@ -412,18 +450,19 @@ RSHighlightableExamples >> example10ElasticBox [
 
 { #category : #elastic }
 RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
+
 	<script: 'self new example11ElasticBoxWithCustomDraggable open'>
 	| canvas color shapes high elastic selectedShapes |
 	canvas := RSCanvas new.
 
 	color := RSColorPalette diverging rdylbu3.
 	shapes := (1 to: 20) collect: [ :i |
-		RSBox new
-			size: 10;
-			model: i;
-			withBorder;
-			color: (color scale: i) ;
-			yourself ].
+		          RSBox new
+			          size: 10;
+			          model: i;
+			          withBorder;
+			          color: (color scale: i);
+			          yourself ].
 	RSLineBuilder line
 		shapes: shapes;
 		canvas: canvas;
@@ -431,22 +470,29 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 	canvas addAll: shapes.
 	RSClusterTreeLayout on: shapes.
 	high := RSHighlightable red.
-	selectedShapes := #().
+	selectedShapes := #(  ).
 	elastic := RSElasticBoxInteraction new.
 	elastic
-		when: RSSelectionStartEvent do: [ :evt |
-			high unhighlightRecordedShapes: evt canvas ];
-		when: RSSelectionChangedEvent do: [ :evt |
-			high doHighlightShapes: evt selectedShapes ];
-		when: RSSelectionEndEvent do: [:evt | selectedShapes := evt selectedShapes ].
-	canvas nodes when: RSMouseDragging do: [ :evt |
-		| d |
-		d := evt camera distanceFromPixelToSpace: evt step.
-		(selectedShapes includes: evt shape)
-			ifTrue: [ selectedShapes translateBy: d ]
-			ifFalse: [ evt shape translateBy: d ].
+		when: RSSelectionStartEvent
+		do: [ :evt | high unhighlightRecordedShapes: evt canvas ]
+		for: self;
+		when: RSSelectionChangedEvent
+		do: [ :evt | high doHighlightShapes: evt selectedShapes ]
+		for: self;
+		when: RSSelectionEndEvent
+		do: [ :evt | selectedShapes := evt selectedShapes ]
+		for: self.
+	canvas nodes
+		when: RSMouseDragging
+		do: [ :evt |
+			| d |
+			d := evt camera distanceFromPixelToSpace: evt step.
+			(selectedShapes includes: evt shape)
+				ifTrue: [ selectedShapes translateBy: d ]
+				ifFalse: [ evt shape translateBy: d ].
 
-		evt signalUpdate ].
+			evt signalUpdate ]
+		for: self.
 	canvas @ RSCanvasController.
 	elastic targetShapes: canvas nodes.
 	canvas @ elastic.
@@ -497,20 +543,20 @@ RSHighlightableExamples >> example12ShowingEdges [
 
 { #category : #elastic }
 RSHighlightableExamples >> example13Click [
+
 	<script: 'self new example13Click open'>
 	| canvas shapes color interaction selectedItems interaction2 |
 	canvas := RSCanvas new.
 
 	color := RSColorPalette sequential bupu3.
 	shapes := (1 to: 20) collect: [ :m |
-		RSBox new
-			size: 10;
-			model: m;
-			draggable;
-			withBorder;
-			color: (color scale: m);
-			yourself.
-		 ].
+		          RSBox new
+			          size: 10;
+			          model: m;
+			          draggable;
+			          withBorder;
+			          color: (color scale: m);
+			          yourself ].
 
 	RSLineBuilder line
 		canvas: canvas;
@@ -522,19 +568,23 @@ RSHighlightableExamples >> example13Click [
 
 	interaction := RSHighlightable red withLines.
 	canvas nodes
-		when: RSMouseLeftClick do: [ :evt | | shape|
+		when: RSMouseLeftClick
+		do: [ :evt |
+			| shape |
 			shape := evt shape.
 			(selectedItems includes: shape)
 				ifTrue: [ selectedItems remove: shape ]
 				ifFalse: [ selectedItems add: shape ].
 			interaction doHighlightShapes: selectedItems.
-			evt signalUpdate.
-	].
+			evt signalUpdate ]
+		for: self.
 	canvas
-		when: RSMouseClick do: [ :evt |
+		when: RSMouseClick
+		do: [ :evt |
 			selectedItems removeAll.
 			interaction unhighlightRecordedShapes: evt.
-			evt signalUpdate ].
+			evt signalUpdate ]
+		for: self.
 	interaction2 := RSHighlightable red withLines.
 	canvas nodes @ interaction2.
 	RSClusterTreeLayout on: shapes.
