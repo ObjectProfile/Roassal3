@@ -74,7 +74,7 @@ RSParallelAnimationTest >> testStepEvent [
 		add: (RSTransitionAnimation new
 			duration: 100 milliSeconds;
 			onStepDo: [ :t| value := t ]);
-		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
+		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.] for: self.
 	canvas addAnimation: animation.
 	self assert: value isNil.
 	self assert: loop equals: 0.

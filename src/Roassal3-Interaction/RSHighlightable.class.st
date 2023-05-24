@@ -110,12 +110,12 @@ RSHighlightable class >> showEdges: aBlock using: aRSLine from: aRSGroup [
 					shape: evt shape
 					using: aRSLine
 					from: aRSGroup).
-		];
+		] for: self;
 		when: RSUnHighlightEvent do: [:evt |
 			evt canvas
 				propertyAt: #lines ifPresent: [:lines | lines do: #remove ];
 				removeKey: #lines.
-		].
+		] for: self.
 	^ i
 ]
 
@@ -147,7 +147,7 @@ RSHighlightable class >> withAntAnimation [
 					shape signalUpdate ].
 			shape canvas propertyAt: #antAnimation put: anime.
 		].
-	].
+	] for: self.
 	i when: RSUnHighlightEvent do: [ :evt |
 		| att shape |
 		shape := evt shape.
@@ -158,7 +158,7 @@ RSHighlightable class >> withAntAnimation [
 			(att at: #antAnimation) stop.
 			att removeKey: #antAnimation.
 		 ]
-	].
+	] for: self.
 	^ i
 ]
 
@@ -272,8 +272,8 @@ c @ RSCanvasController
 	"
 	self
 		when: RSHighlightEvent do: [ :evt |
-			self record: evt shape selector: #border value: aBorder ];
-		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #border ]
+			self record: evt shape selector: #border value: aBorder ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #border ] for: self
 ]
 
 { #category : #public }
@@ -315,8 +315,8 @@ c @ RSCanvasController
 ```
 	"
 	self
-		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ];
-		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ]
+		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ] for: self
 ]
 
 { #category : #accessing }
@@ -384,15 +384,15 @@ RSHighlightable >> initialize [
 { #category : #public }
 RSHighlightable >> lowColor: lowColor highColor: highColor [
 	self
-		when: RSHighlightEvent do: [ :evt | evt shape color: highColor  ];
-		when: RSUnHighlightEvent do: [ :evt | evt shape color: lowColor ]
+		when: RSHighlightEvent do: [ :evt | evt shape color: highColor  ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | evt shape color: lowColor ] for: self
 ]
 
 { #category : #hooks }
 RSHighlightable >> onShape: aShape [
 	aShape
-		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ];
-		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ]
+		when: RSMouseEnter do: [ :evt | self doHighlight: evt shape. evt signalUpdate ] for: self;
+		when: RSMouseLeave do: [ :evt | self doUnhighlight: evt shape. evt signalUpdate ] for: self
 ]
 
 { #category : #'public - hooks' }

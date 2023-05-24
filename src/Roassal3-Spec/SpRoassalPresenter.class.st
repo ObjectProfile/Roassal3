@@ -79,7 +79,8 @@ SpRoassalPresenter >> script: anObject [
 { #category : #accessing }
 SpRoassalPresenter >> whenPresenterResized: aBlock [
 
-	self announcer
-		when: PresenterResized
+	self announcer 
+		when: PresenterResized 
 		do: [ :ann | aBlock cull: ann extent ]
+		 for: self
 ]

@@ -49,4 +49,5 @@ RSKeepBorderWidthRatioInteraction >> onShape: aShape [
 	aShape canvas when: RSScaleChangedEvent do: [:evt |
 		aShape border width: (self scaleFor: evt) * width.
 		evt signalUpdate ]
+		for: self
 ]
