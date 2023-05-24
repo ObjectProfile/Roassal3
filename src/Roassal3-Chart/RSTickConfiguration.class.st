@@ -100,11 +100,11 @@ RSTickConfiguration >> fontSize: aNumber [
 RSTickConfiguration >> initialize [
 	super initialize.
 	self numberOfTicks: 5;
-		fontSize: 5;
+		fontSize: RSLabel defaultFontSize;
 		labelRotation: 0;
 		shouldHaveLabels: true;
 		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value ];
+		labelConversion: [ :value | value asFloat round: 3 ];
 		tickSize: 3
 ]
 

@@ -68,9 +68,9 @@ RSHighlightableTest >> testHighlightShapes [
 	h := RSHighlightable red.
 
 	c nodes @ h.
-	h doHighlightShapes: c nodes first asOrderedCollection.
+	h doHighlightShapes: (OrderedCollection with: c nodes first).
 	self assert: c nodes first color equals: Color red.
-	self assert: (c nodes allButFirst allSatisfy: [ :shape | 
+	self assert: (c nodes allButFirst allSatisfy: [ :shape |
 			 shape color = defaultColor ])
 ]
 

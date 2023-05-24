@@ -148,13 +148,6 @@ RSChart >> defaultContainer [
 	^ RSCanvas new
 		when: RSExtentChangedEvent send:#updateChart: to: self;
 		yourself.
-		"addInteraction: (RSCanvasController new
-			in: [ :controller |
-				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
-				controller configuration	maxScale: 20.
-				 ];
-			yourself);
-		yourself"
 ]
 
 { #category : #color }
@@ -388,7 +381,8 @@ c
 
 { #category : #'accessing - defaults' }
 RSChart >> updateChart: anEvent [
-	| canvas |
+	| canvas camera |
+	camera := anEvent camera.
 	canvas := anEvent canvas.
 	self extent: canvas extent.
 	self update.
