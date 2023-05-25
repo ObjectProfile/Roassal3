@@ -3,7 +3,7 @@ TODO
 "
 Trait {
 	#name : #RSTGapsHolder,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Traits'
 }
 
 { #category : #accessing }

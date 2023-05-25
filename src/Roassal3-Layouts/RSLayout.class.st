@@ -206,7 +206,7 @@ RSLayout >> initialize [
 ]
 
 { #category : #testing }
-RSLayout >> isEdgeDrivenLayout [
+RSLayout >> isLineDrivenLayout [
 	^ false
 ]
 

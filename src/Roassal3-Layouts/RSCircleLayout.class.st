@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #examples }
-RSCircleLayout class >> example [
+RSCircleLayout class >> example1 [
 	| aLayout objects |
 	aLayout := self new.
 	aLayout center: 200@200.
@@ -25,6 +25,21 @@ RSCircleLayout class >> example [
 		addAll: objects;
 		@ RSCanvasController;
 		open
+]
+
+{ #category : #examples }
+RSCircleLayout class >> example2 [
+	| nodes canvas shapes |
+	nodes := (1 to: 5).
+
+	canvas := RSCanvas new.
+	shapes := RSCircle models: nodes.
+	shapes size: 30.
+	canvas addAll: shapes.
+
+	self new radius: 20; on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas open
 ]
 
 { #category : #'instance creation' }

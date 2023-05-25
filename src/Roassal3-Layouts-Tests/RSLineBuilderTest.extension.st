@@ -1,7 +1,7 @@
-Extension { #name : #RSEdgeBuilderTest }
+Extension { #name : #RSLineBuilderTest }
 
 { #category : #'*Roassal3-Layouts-Tests' }
-RSEdgeBuilderTest >> testUseInLayout [
+RSLineBuilderTest >> testUseInLayout [
 	b
 		canvas: canvas;
 		connectTo: [ :v | v + 1 ].
@@ -10,7 +10,7 @@ RSEdgeBuilderTest >> testUseInLayout [
 ]
 
 { #category : #'*Roassal3-Layouts-Tests' }
-RSEdgeBuilderTest >> testUseInLayoutDefault [
+RSLineBuilderTest >> testUseInLayoutDefault [
 
 	b
 		canvas: canvas;

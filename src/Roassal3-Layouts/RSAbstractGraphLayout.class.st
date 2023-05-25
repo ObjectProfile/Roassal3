@@ -1,5 +1,5 @@
 "
-TODO
+It offers methods for initializing the layout, performing layout computations, and updating the positions of nodes and edges based on the chosen algorithm.
 "
 Class {
 	#name : #RSAbstractGraphLayout,

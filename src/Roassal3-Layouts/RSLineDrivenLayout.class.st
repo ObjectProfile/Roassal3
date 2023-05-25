@@ -1,5 +1,8 @@
 "
-TODO
+This class implements a layout algorithm that arranges objects based on their connections, using lines to guide their positioning.
+My subclasses are `RSAbstractGraphLayout` and `RSForceBasedLayout`
+
+I define utility methods to find the lines/edges connections used in my subclasses
 "
 Class {
 	#name : #RSLineDrivenLayout,
@@ -27,17 +30,6 @@ RSLineDrivenLayout class >> on: elements edges: edges [
 RSLineDrivenLayout class >> withEdges: aCollection [
 
 	^self new initialize userDefinedEdges: aCollection
-]
-
-{ #category : #hook }
-RSLineDrivenLayout >> doExecute: elements [
-	self subclassResponsibility
-]
-
-{ #category : #hook }
-RSLineDrivenLayout >> doIncrementallyExecute: anElementNode [
-	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
-	self doExecute: anElementNode
 ]
 
 { #category : #private }
@@ -82,17 +74,17 @@ RSLineDrivenLayout >> fromPositions: anArray [
 ]
 
 { #category : #testing }
-RSLineDrivenLayout >> isEdgeDrivenLayout [
+RSLineDrivenLayout >> isLineDrivenLayout [
 	^ true
 ]
 
 { #category : #accessing }
-RSLineDrivenLayout >> setEdgesFromElements: elements [
-	elements isEmpty ifTrue: [ ^ self ].
+RSLineDrivenLayout >> setEdgesFromElements: shapes [
+	shapes isEmpty ifTrue: [ ^ self ].
 
 	^ self edges:
-		((elements flatCollect: #incomingLines)
-			select: [ :anEdge |elements includes: anEdge from])
+		((shapes flatCollect: #incomingLines)
+			select: [ :anEdge |shapes includes: anEdge from])
 ]
 
 { #category : #accessing }
