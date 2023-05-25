@@ -11,7 +11,7 @@ Class {
 		'root',
 		'initialLayout'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #testing }

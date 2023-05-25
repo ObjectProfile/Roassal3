@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'centerIndex'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Circle'
 }
 
 { #category : #accessing }

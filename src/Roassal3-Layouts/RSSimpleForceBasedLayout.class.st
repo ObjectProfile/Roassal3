@@ -1,7 +1,7 @@
 Class {
 	#name : #RSSimpleForceBasedLayout,
 	#superclass : #RSLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Force'
 }
 
 { #category : #hook }

@@ -9,7 +9,7 @@ I define a layouts with horizontal and vertical gap spaces between elements.
 
 "
 Class {
-	#name : #RSAbstractGappedLayout,
+	#name : #RSAbstractBoxedLayout,
 	#superclass : #RSLayout,
 	#instVars : [
 		'gapSize',
@@ -20,12 +20,12 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractGappedLayout class >> isAbstract [
-	^ self name = #RSAbstractGappedLayout
+RSAbstractBoxedLayout class >> isAbstract [
+	^ self name = #RSAbstractBoxedLayout
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout class >> layoutDefinition [
+RSAbstractBoxedLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutNumberField new
 			label: 'Gap size';
@@ -43,48 +43,48 @@ RSAbstractGappedLayout class >> layoutDefinition [
 ]
 
 { #category : #configuration }
-RSAbstractGappedLayout >> defaultGapSize [
+RSAbstractBoxedLayout >> defaultGapSize [
 	^ 5
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> gapSize [
+RSAbstractBoxedLayout >> gapSize [
 	^ gapSize
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> gapSize: aSizeInPixels [
+RSAbstractBoxedLayout >> gapSize: aSizeInPixels [
 	gapSize := aSizeInPixels.
 	self horizontalGap: gapSize.
 	self verticalGap: gapSize.
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> horizontalGap [
+RSAbstractBoxedLayout >> horizontalGap [
 
 	^ horizontalGap
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> horizontalGap: aNumber [
+RSAbstractBoxedLayout >> horizontalGap: aNumber [
 
 	horizontalGap := aNumber
 ]
 
 { #category : #initialization }
-RSAbstractGappedLayout >> initialize [
+RSAbstractBoxedLayout >> initialize [
 	super initialize.
 	self gapSize: self defaultGapSize
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> verticalGap [
+RSAbstractBoxedLayout >> verticalGap [
 
 	^ verticalGap
 ]
 
 { #category : #accessing }
-RSAbstractGappedLayout >> verticalGap: aNumber [
+RSAbstractBoxedLayout >> verticalGap: aNumber [
 
 	verticalGap := aNumber
 ]

@@ -1,3 +1,6 @@
+"
+Used in WalkbasedRegularVerticalTreeLayout
+"
 Trait {
 	#name : #RSTWalkBasedRegularVerticalTreeLayout,
 	#traits : 'RSTGapsHolder',

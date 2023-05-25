@@ -19,7 +19,7 @@ Class {
 		'layoutRadius',
 		'centerPoint'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Circle'
 }
 
 { #category : #testing }

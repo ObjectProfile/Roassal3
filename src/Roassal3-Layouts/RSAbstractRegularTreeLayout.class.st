@@ -13,7 +13,7 @@ Class {
 		'shouldBeHorizontallyReversed',
 		'shouldBeVerticallyReversed'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #testing }

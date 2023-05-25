@@ -10,7 +10,7 @@ Class {
 		'verticalAlignment',
 		'horizontalAlignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Grid'
 }
 
 { #category : #alignment }

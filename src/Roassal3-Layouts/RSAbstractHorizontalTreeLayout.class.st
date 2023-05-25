@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSAbstractHorizontalTreeLayout,
 	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #testing }
