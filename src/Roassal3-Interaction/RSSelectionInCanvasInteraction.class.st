@@ -24,7 +24,7 @@ RSSelectionInCanvasInteraction class >> example2 [
 
 { #category : #'accessing - defaults' }
 RSSelectionInCanvasInteraction >> createBoxSelectionFor: shape [
-	| border canvas |
+	"| border canvas |
 	canvas := shape parent.
 	shape removeSelectionBox.
 			
@@ -39,7 +39,7 @@ RSSelectionInCanvasInteraction >> createBoxSelectionFor: shape [
 	shape selectionBox: border.
 	HUpdateSelectionBox new updateSelectionBox: shape.
 	canvas addShape: border.
-	border pushBack.
+	border pushBack."
 	
 ]
 
@@ -63,21 +63,26 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 	elastic := RSElasticBoxInteraction new.
 	elastic leftRight.
 	elastic targetShapes: aCanvas nodes.
-	
+
 	selectionHigh := RSHighlightable new
-		                 when: RSHighlightEvent
-		                 do: [ :evt | self createBoxSelectionFor: evt shape ];
+		                 "when: RSHighlightEvent
+		                 do: [ :evt | self createBoxSelectionFor: evt shape ]
+		                 for: self;
 		                 when: RSUnHighlightEvent
-		                 do: [ :evt | evt shape removeSelectionBox ].
+		                 do: [ :evt | evt shape removeSelectionBox ]
+		                 for: self".
 	elastic
 		when: RSSelectionStartEvent
-		do: [ :evt | selectionHigh unhighlightRecordedShapes: evt canvas ];
-		when: RSSelectionChangedEvent do: [ :evt | 
+		do: [ :evt | selectionHigh unhighlightRecordedShapes: evt canvas ]
+		for: self;
+		when: RSSelectionChangedEvent do: [ :evt |
 			selectionHigh
 				doHighlightShapes: evt selectedShapes
-				onCanvas: evt canvas ];
+				onCanvas: evt canvas ]
+		for: self;
 		when: RSSelectionEndEvent
-		do: [ :evt | evt canvas selectedShapes: evt selectedShapes ].
+		do: [ :evt | evt canvas selectedShapes: evt selectedShapes ]
+		for: self.
 	aCanvas @ elastic
 ]
 

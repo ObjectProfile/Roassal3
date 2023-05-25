@@ -328,106 +328,133 @@ RSBasicAnimationExamples >> example09Easing [
 
 { #category : #lines }
 RSBasicAnimationExamples >> example10Scales [
+
 	<script: 'self new example10Scales open'>
 	| c data width scale numbers totalLine lineWidth currentLevelLine labelShape background triangle level icons accept |
 	c := RSCanvas new.
 	width := 250.
 	lineWidth := 20.
 	data := {
-		5 -> #userFemale.
-		15 -> #checkboxSelected.
-		30 -> #komitter.
-		60 -> #user.
-		100 -> #smallScreenshot.
-		150 -> #smallFullscreen.
-		200 -> #github.
-		500 -> #glamorousBug.
-		750 -> #tools.
-		1000 -> #komitterNewSlice
-	}.
+		        (5 -> #userFemale).
+		        (15 -> #checkboxSelected).
+		        (30 -> #komitter).
+		        (60 -> #user).
+		        (100 -> #smallScreenshot).
+		        (150 -> #smallFullscreen).
+		        (200 -> #github).
+		        (500 -> #glamorousBug).
+		        (750 -> #tools).
+		        (1000 -> #komitterNewSlice) }.
 	numbers := OrderedCollection with: 0.
 	numbers addAll: (data collect: #key).
 	scale := NSScale linear
-		domain: numbers;
-		range: (0 to: width count: data size+1).
-		
+		         domain: numbers;
+		         range: (0 to: width count: data size + 1).
+
 	totalLine := RSLine new
-		width: lineWidth;
-		color: Color veryVeryLightGray;
-		startPoint: (scale scale: numbers min)@ lineWidth negated;
-		endPoint: (scale scale: numbers max)@ lineWidth negated;
-		yourself.
+		             width: lineWidth;
+		             color: Color veryVeryLightGray;
+		             startPoint:
+			             (scale scale: numbers min) @ lineWidth negated;
+		             endPoint:
+			             (scale scale: numbers max) @ lineWidth negated;
+		             yourself.
 	labelShape := RSLabel new
-		fontSize: 7;
-		bold;
-		color: Color white;
-		borderColor: Color black;
-		borderWidth: 0.3;
-		yourself.
+		              fontSize: 7;
+		              bold;
+		              color: Color white;
+		              borderColor: Color black;
+		              borderWidth: 0.3;
+		              yourself.
 	c add: totalLine.
 	background := RSPolygon new
-		points: { -10@ -10. 10 @ -10. 10@ 10. -10@ 10};
-		color: Color veryLightGray;
-		borderColor: Color black;
-		yourself.
+		              points: {
+				              (-10 @ -10).
+				              (10 @ -10).
+				              (10 @ 10).
+				              (-10 @ 10) };
+		              color: Color veryLightGray;
+		              borderColor: Color black;
+		              yourself.
 	triangle := RSPolygon new
-		points: { 0@0. 0@3. -3@3 };
-		color: Color veryLightGray;
-		borderColor: Color black;
-		yourself.
+		            points: {
+				            (0 @ 0).
+				            (0 @ 3).
+				            (-3 @ 3) };
+		            color: Color veryLightGray;
+		            borderColor: Color black;
+		            yourself.
 	accept := RSBitmap newFrom: #glamorousAccept.
 	RSLocation new
-		orientation: 1@ -1;
-		top; right;
+		orientation: 1 @ -1;
+		top;
+		right;
 		move: triangle on: background;
 		inner;
-		top; right;
+		top;
+		right;
 		move: accept on: background.
-	icons := data collect: [:assoc | | icon xpos label |
-		icon := RSBitmap newFrom: assoc value.
-		xpos := scale scale: assoc key.
-		icon := { background copy. icon} asShapeFor: assoc key.
-		icon addShape: triangle copy.
-		label := labelShape copy
-			text: assoc key asString;
-			yourself.
-		label position: xpos - (label width / 2)-0.5 @ lineWidth negated.
-		icon position: xpos - (icon width / 2) @ 5.
-		c addAll: {label. icon}.
-		icon
-	] as: OrderedCollection.
+	icons := data
+		         collect: [ :assoc |
+			         | icon xpos label |
+			         icon := RSBitmap newFrom: assoc value.
+			         xpos := scale scale: assoc key.
+			         icon := {
+				                 background copy.
+				                 icon } asShapeFor: assoc key.
+			         icon addShape: triangle copy.
+			         label := labelShape copy
+				                  text: assoc key asString;
+				                  yourself.
+			         label position:
+				         xpos - (label width / 2) - 0.5 @ lineWidth negated.
+			         icon position: xpos - (icon width / 2) @ 5.
+			         c addAll: {
+					         label.
+					         icon }.
+			         icon ]
+		         as: OrderedCollection.
 	currentLevelLine := RSLine new
-		color: Color green;
-		width: lineWidth;
-		startPoint: totalLine startPoint;
-		endPoint: totalLine startPoint;
-		yourself.
+		                    color: Color green;
+		                    width: lineWidth;
+		                    startPoint: totalLine startPoint;
+		                    endPoint: totalLine startPoint;
+		                    yourself.
 	c add: currentLevelLine.
 	level := { labelShape copy } asShape
-		color: Color blue translucent;
-		borderColor: Color black;
-		yourself.
+		         color: Color blue translucent;
+		         borderColor: Color black;
+		         yourself.
 	c add: level.
 	c newAnimation
 		from: 0;
 		to: 1000;
 		easing: RSEasingInterpolator cubicIn;
 		duration: 30 seconds;
-		onStepDo: [ :t | | posx icon |
+		onStepDo: [ :t |
+			| posx icon |
 			posx := scale scale: t.
 			currentLevelLine endPoint: posx @ lineWidth negated.
 			level children first text: t asInteger asString.
-			
-			level adjustToChildren; padding: 3.
+
+			level
+				adjustToChildren;
+				padding: 3.
 			level position: currentLevelLine endPoint.
 			icon := icons first.
-			icon model <= t asInteger ifTrue: [ 
+			icon model <= t asInteger ifTrue: [
 				icon addShape: accept copy.
 				icon shapes first color: Color black translucent.
-				icons removeFirst. ].
-			c signalUpdate].
-	c when: RSExtentChangedEvent do: [ c zoomToFit; signalUpdate ].
-	^ c 
+				icons removeFirst ].
+			c signalUpdate ].
+	c
+		when: RSExtentChangedEvent
+		do: [
+			c
+				zoomToFit;
+				signalUpdate ]
+		for: self.
+	^ c
 ]
 
 { #category : #accessing }

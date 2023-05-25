@@ -28,7 +28,7 @@ RSChartExample >> example13AreaPlot [
 { #category : #'*Roassal3-SVG-Examples' }
 RSChartExample >> example14AreaPlotWithError [
 	<script: 'self new example14AreaPlotWithError open'>
-	| x y polyfit res y_est y_err c |
+	| x y polyfit res y_est y_err c scatter |
 	x := 0 to: 10.
 	y := #(3.9 4.4 10.8 10.3 11.2 13.1 14.1 9.9 13.9 15.1 12.5).
 	polyfit := [ :x1 :y1 :n |
@@ -49,7 +49,8 @@ RSChartExample >> example14AreaPlotWithError [
 	c padding: 10@10.
 	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
 	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
-	c addPlot: (RSScatterPlot new x: x y: y).
+	c addPlot: (scatter := RSScatterPlot new x: x y: y).
+	scatter color: Color red.
 	c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
 	c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
 	^ c

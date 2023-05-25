@@ -61,16 +61,16 @@ RSHighlightableTest >> testHighlightAllShapesThenHighlightNothing [
 { #category : #tests }
 RSHighlightableTest >> testHighlightShapes [
 
-	| h c defaultColor |
-	c := RSCanvas new.
-	c addAll: (RSBox models: (1 to: 10)).
-	defaultColor := c nodes first color.
-	h := RSHighlightable red.
+	| interaction canvas defaultColor |
+	canvas := RSCanvas new.
+	canvas addAll: (RSBox models: (1 to: 10)).
+	defaultColor := canvas nodes first color.
+	interaction := RSHighlightable red.
 
-	c nodes @ h.
-	h doHighlightShapes: c nodes first asOrderedCollection.
-	self assert: c nodes first color equals: Color red.
-	self assert: (c nodes allButFirst allSatisfy: [ :shape | 
+	canvas nodes @ interaction.
+	interaction doHighlightShapes: (OrderedCollection with: canvas nodes first).
+	self assert: canvas nodes first color equals: Color red.
+	self assert: (canvas nodes allButFirst allSatisfy: [ :shape |
 			 shape color = defaultColor ])
 ]
 
