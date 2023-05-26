@@ -1,5 +1,7 @@
 "
-TODO
+The `RSRadialTreeLayout` class implements a layout algorithm for arranging nodes in a radial tree structure. It places nodes in a hierarchical structure with a single root node at the center and branches radiating outwards from it.
+
+Radial tree layouts are useful for visualizing hierarchical relationships, such as organizational charts or family trees, where the focus is on the relationships between the nodes rather than the precise positions of the nodes.
 "
 Class {
 	#name : #RSRadialTreeLayout,
@@ -33,23 +35,28 @@ RSRadialTreeLayout >> compareContourOf: aNode with: another [
 { #category : #hook }
 RSRadialTreeLayout >> computeGap: aNode [
 	" compute the vertical gap needed for drawing the radial tree "
+
 	| gap maxAbcissa i abc nodeL nodeR layer |
 	gap := 0.
 	maxAbcissa := 0.
 	layer := 1.
 
 	i := 1.
-	[ nodeL :=(self followLeftContour: aNode toLayer: i).
-	nodeR := (self followRightContour: aNode toLayer: i).
-	nodeL isNil not & nodeR isNil not ] whileTrue: [ abc := (((self getAbcissaOf: nodeR inSubtreeFromLayer: 0) - (self getAbcissaOf: nodeL inSubtreeFromLayer: 0 ) + (horizontalGap / layer/2)) / layer).
-																	(abc > maxAbcissa) ifTrue: [ maxAbcissa := abc.
-																								layer := layer ].
-																	i := i + 1 ].
+	[
+	nodeL := self followLeftContour: aNode toLayer: i.
+	nodeR := self followRightContour: aNode toLayer: i.
+	nodeL isNil not & nodeR isNil not ] whileTrue: [
+		abc := (self getAbcissaOf: nodeR inSubtreeFromLayer: 0)
+		       - (self getAbcissaOf: nodeL inSubtreeFromLayer: 0)
+		       + (horizontalGap / layer / 2) / layer.
+		maxAbcissa := maxAbcissa max: abc.
+		i := i + 1 ].
 
 
-	gap:= (maxAbcissa / 2 /Float pi ) floor +1.
+	gap := (maxAbcissa / 2 / Float pi) floor + 1.
 
-	((verticalGap isNil) or: [gap > verticalGap])  ifTrue: [ self verticalGap: gap ]
+	(verticalGap isNil or: [ gap > verticalGap ]) ifTrue: [
+		self verticalGap: gap ]
 ]
 
 { #category : #algorithm }

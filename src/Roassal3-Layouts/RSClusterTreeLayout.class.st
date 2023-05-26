@@ -1,5 +1,7 @@
 "
-TODO
+The `RSClusterTreeLayout` class implements a layout algorithm for arranging nodes in a cluster tree structure. It organizes nodes into hierarchical clusters where each cluster represents a subset of nodes. Clusters can be nested within each other, forming a tree-like structure.
+
+Cluster tree layouts are useful for visualizing hierarchical relationships and grouping related nodes together.
 "
 Class {
 	#name : #RSClusterTreeLayout,

@@ -1,5 +1,5 @@
 "
-TODO
+Regular Hoorizontal tree layout, similar to `RSTreeLayout` but horizontal direction
 "
 Class {
 	#name : #RSHorizontalTreeLayout,

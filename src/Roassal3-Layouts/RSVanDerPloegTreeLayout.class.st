@@ -25,7 +25,7 @@ RSVanDerPloegTreeLayout >> doInitialize: elements [
 	root := self initialize: elements lineEdges: self edges
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint y breadth: aPoint x

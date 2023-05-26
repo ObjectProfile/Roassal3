@@ -1,5 +1,11 @@
 "
-TODO
+Abstract class of regular tree layouts defines utility methods for naviagate in the graph
+in a tree style.
+
+Description:
+The `RSAbstractRegularTreeLayout` class is an abstract base class that provides common functionality for regular tree layout algorithms in Roassal. Regular tree layouts arrange nodes in a tree-like structure where each level of the tree is aligned horizontally or vertically
+
+You can use it verticalReversed or horizontalReversed
 "
 Class {
 	#name : #RSAbstractRegularTreeLayout,
@@ -38,6 +44,11 @@ RSAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	collection addAll: aNodeCollection
 ]
 
+{ #category : #'private - hook' }
+RSAbstractRegularTreeLayout >> computeChildrenFor: aNode [
+	^ self subclassResponsibility
+]
+
 { #category : #hook }
 RSAbstractRegularTreeLayout >> doExecute: shapes [
 	| rootNodes |
@@ -64,7 +75,7 @@ RSAbstractRegularTreeLayout >> doPost: elements [
 	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ]
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RSAbstractRegularTreeLayout >> horizontallyReverse [
 	shouldBeHorizontallyReversed := true
 ]
@@ -150,7 +161,7 @@ RSAbstractRegularTreeLayout >> topGap: anInteger [
 	topGap := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RSAbstractRegularTreeLayout >> verticallyReverse [
 	"Reverse the edge extremities"
 	shouldBeVerticallyReversed := true

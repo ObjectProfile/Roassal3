@@ -1,5 +1,7 @@
 "
-TODO
+The `RSTreeLayout` class implements a layout algorithm for arranging nodes in a tree structure. It places nodes in a hierarchical structure with a single root node at the top and child nodes arranged below their parents.
+
+Also known as RSVerticalTreeLayout
 "
 Class {
 	#name : #RSTreeLayout,

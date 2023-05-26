@@ -1,3 +1,6 @@
+"
+I describe a compact layout of information, I visit the graph and put each level in a dictionary to access the children of each node
+"
 Class {
 	#name : #RSAbstractCompactTreeLayout,
 	#superclass : #RSAbstractGraphLayout,

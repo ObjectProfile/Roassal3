@@ -1,5 +1,5 @@
 "
-TODO
+Dominance analysis from graph theory allows one to locate subordinated elements in a rooted dependency graph. It identifies the nesting structure for a dependency graph as a dominance vertical tree
 "
 Class {
 	#name : #RSDominanceTreeLayout,

@@ -1,5 +1,7 @@
 "
-TODO
+The `RSAbstractHorizontalTreeLayout` class is an abstract base class that provides common functionality for horizontal tree layout algorithms in Roassal. Horizontal tree layouts arrange nodes in a tree-like structure where each level of the tree is aligned vertically.
+
+Instances of `RSAbstractHorizontalTreeLayout` can be used with `RSHorizontalTreeLayout`
 "
 Class {
 	#name : #RSAbstractHorizontalTreeLayout,
@@ -10,11 +12,6 @@ Class {
 { #category : #testing }
 RSAbstractHorizontalTreeLayout class >> isAbstract [
 	^ self = RSAbstractHorizontalTreeLayout
-]
-
-{ #category : #'private - hook' }
-RSAbstractHorizontalTreeLayout >> computeChildrenFor: aNode [
-	self subclassResponsibility
 ]
 
 { #category : #initialization }
