@@ -1,17 +1,18 @@
 "
 I am a layout that uses forces in each elements, I have create a light representation of one element.
-For example:
--=-=-=-=-=-=-=-=-=
-c := RSCanvas new.
-c addAll: ((1 to: 100) collect: [:i | RSEllipse new size: 10; model: i]).
+On a given graph or network. It uses the force-directed layout approach to position the nodes
+The class provides methods to configure the layout parameters, such as the force constants,
 
-eb := RSEdgeBuilder line.
-eb canvas: c.
-eb connectFrom: [ :v | v // 2 ].
+The force-based layout algorithm works by simulating a physical system, where nodes are
+treated as particles that repel each other due to electrical charges and are attracted
+to each other by springs. By iteratively applying these forces, the algorithm moves the
+nodes towards an equilibrium state, resulting in an aesthetically pleasing layout.
+The RSForceBasedLayout class provides a flexible and efficient implementation of the
+force-directed layout algorithm, allowing users to apply it to a variety of graph structures.
 
-RSForceBasedLayout on: c nodes.
-c
--=-=-=-=-=-=-=-=-=
+# Collaborators
+I work with `RSMockShape` and `RSMockLine`. I work for optimization I work with `RSQuadTreeForce`
+
 "
 Class {
 	#name : #RSForceBasedLayout,
@@ -360,14 +361,7 @@ RSForceBasedLayout >> runLayoutInJob [
 
 { #category : #hook }
 RSForceBasedLayout >> runLayoutSimply [
-	self runLayoutIn: Job new.
-	"iterations = 0 ifTrue: [
-		[ alpha := alpha * 0.99.
-		alpha > 0.005 ] whileTrue: [ self step ] ]
-	ifFalse: [
-		iterations timesRepeat: [
-			alpha := alpha * 0.99.
-			self step ] ]"
+	self runLayoutIn: Job new
 ]
 
 { #category : #testing }
@@ -389,14 +383,14 @@ RSForceBasedLayout >> start [
 	alpha ifNil: [ alpha :=  0.1 ]
 ]
 
-{ #category : #events }
+{ #category : #hook }
 RSForceBasedLayout >> step [
 	nodes ifEmpty: [ ^ self ].
 	self stepEdgeForces.
 	self stepGravityForce.
 	self stepNodeRepulsion.
 	self stepFriction.
-	nodes do: #applyToRealElement
+	nodes do: [ :node | node applyToRealElement ]
 ]
 
 { #category : #events }

@@ -1,3 +1,6 @@
+"
+Because class `RSForceBasedLayout` is hard to configure, this object provides a nice default behavior to work with force layout with out many configurations
+"
 Class {
 	#name : #RSSimpleForceBasedLayout,
 	#superclass : #RSLayout,
