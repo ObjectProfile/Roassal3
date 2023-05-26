@@ -91,18 +91,6 @@ RSTWalkBasedRegularTreeLayoutOnShapeProperties >> levelOf: aNode put: aFloat [
 ]
 
 { #category : #properties }
-RSTWalkBasedRegularTreeLayoutOnShapeProperties >> modOf: aNode [
-
-	^ aNode propertyAt: #mod
-]
-
-{ #category : #properties }
-RSTWalkBasedRegularTreeLayoutOnShapeProperties >> modOf: aNode put: aFloat [
-
-	^ aNode propertyAt: #mod put: aFloat
-]
-
-{ #category : #properties }
 RSTWalkBasedRegularTreeLayoutOnShapeProperties >> mselOf: aNode [
 
 	^ aNode propertyAt: #msel

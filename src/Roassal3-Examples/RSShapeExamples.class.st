@@ -1043,6 +1043,7 @@ RSShapeExamples >> example38Transformable [
 
 { #category : #shapes }
 RSShapeExamples >> example39RoassalPackages [
+	<noTest>
 	<script: 'self new example39RoassalPackages open'>
 	| packagesRegExp packages canvas color labeled boxes stepping |
 	packagesRegExp := { 'Roassal3*' }.

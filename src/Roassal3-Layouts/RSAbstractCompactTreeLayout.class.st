@@ -1,6 +1,3 @@
-"
-TODO
-"
 Class {
 	#name : #RSAbstractCompactTreeLayout,
 	#superclass : #RSAbstractGraphLayout,
