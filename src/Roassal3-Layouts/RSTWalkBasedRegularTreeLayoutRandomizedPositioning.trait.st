@@ -1,3 +1,6 @@
+"
+I generate a random position for a given shape
+"
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayoutRandomizedPositioning,
 	#instVars : [

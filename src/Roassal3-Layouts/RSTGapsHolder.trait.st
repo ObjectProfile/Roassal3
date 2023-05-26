@@ -1,5 +1,5 @@
 "
-TODO
+This trait provides methods to propagate the vertical gap and horizontal gap
 "
 Trait {
 	#name : #RSTGapsHolder,

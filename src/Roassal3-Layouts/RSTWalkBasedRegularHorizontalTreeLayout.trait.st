@@ -1,3 +1,8 @@
+"
+This trait defines methods to get information of a roassal shape like the gap, the width and height.
+It applies this properties for a horizontal tree layout.
+Check similarities with `RSTWalkBasedRegularVerticalTreeLayout`
+"
 Trait {
 	#name : #RSTWalkBasedRegularHorizontalTreeLayout,
 	#traits : 'RSTGapsHolder',

@@ -77,34 +77,34 @@ RSRectanglePackLayout >> boundingBox [
 ]
 
 { #category : #hook }
-RSRectanglePackLayout >> doExecute: elements [
-	| sortedElements maxSpace |
+RSRectanglePackLayout >> doExecute: shapes [
+	| sortedShapes maxSpace |
 	bounds := 0@0.
 
-	maxSpace := elements
+	maxSpace := shapes
 		inject: 0@0
 		into: [ :sum :el | sum + el extent ].
 
-	padding := maxSpace / elements size * gap / 2.
+	padding := maxSpace / shapes size * gap / 2.
 	maxSpace :=(1 + gap) * maxSpace.
 
 	freeSpace := Set with: (0@0 corner: maxSpace).
 
-	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
+	sortedShapes := SortedCollection sortBlock:  [ :larger :smaller |
 		larger  encompassingRectangle halfPerimeter >
 		smaller encompassingRectangle halfPerimeter ].
-	sortedElements addAll: elements.
+	sortedShapes addAll: shapes.
 
-	sortedElements size <= 2 ifTrue: [
-		^ RSHorizontalLineLayout on: sortedElements ].
+	sortedShapes size <= 2 ifTrue: [
+		^ RSHorizontalLineLayout on: sortedShapes ].
 
 	self shouldUseProgressBar
 		ifTrue: [
-			sortedElements
+			sortedShapes
 				do: [ :element | self packIn: element ]
 				displayingProgress: 'Laying out elements' ]
 		ifFalse: [
-			sortedElements
+			sortedShapes
 				do: [ :element | self packIn: element ] ]
 ]
 

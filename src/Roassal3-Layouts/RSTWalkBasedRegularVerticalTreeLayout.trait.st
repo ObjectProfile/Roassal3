@@ -1,5 +1,7 @@
 "
-Used in WalkbasedRegularVerticalTreeLayout
+This trait defines methods to get information of a roassal shape like the gap, the width and height.
+It applies this properties for a vertical tree layout.
+Check similarities with `RSTWalkBasedRegularHorizontalTreeLayout`
 "
 Trait {
 	#name : #RSTWalkBasedRegularVerticalTreeLayout,

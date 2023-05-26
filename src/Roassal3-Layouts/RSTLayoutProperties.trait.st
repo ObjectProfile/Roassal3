@@ -37,13 +37,13 @@ RSTLayoutProperties >> leftContourOf: aNode put: aValue [
 ]
 
 { #category : #utilities }
-RSTLayoutProperties >> modOf: arg1 [
-	self traitConflict
+RSTLayoutProperties >> modOf: aNode [
+	^ aNode propertyAt: #mod ifAbsent: [ 0 ]
 ]
 
 { #category : #utilities }
-RSTLayoutProperties >> modOf: arg1 put: arg2 [
-	self traitConflict
+RSTLayoutProperties >> modOf: aNode put: aFloat [
+	aNode propertyAt: #mod put: aFloat
 ]
 
 { #category : #utilities }

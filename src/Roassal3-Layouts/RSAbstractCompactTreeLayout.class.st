@@ -65,26 +65,38 @@ RSAbstractCompactTreeLayout >> computePosition: aNode [
 RSAbstractCompactTreeLayout >> followLeftContour: aNode toLayer: anInteger [
 	"return the last node in the left contour begining at anode"
 
-	((self layerOf: aNode) = anInteger ) ifTrue: [^ aNode  ].
-	((self layerOf: aNode) > anInteger ) ifTrue: [^ nil  ].
+	(self layerOf: aNode) = anInteger ifTrue: [ ^ aNode ].
+	(self layerOf: aNode) > anInteger ifTrue: [ ^ nil ].
 
-	(self leftContourOf: aNode) isNil ifTrue: [ (self pointerOf: aNode)  isNil ifTrue: [ ^ nil ]
-														 ifFalse: [ ^ ( self followLeftContour: (self pointerOf: aNode) toLayer: anInteger ) ] ]
-
-			  				ifFalse: [ ^ (self followLeftContour: (self leftContourOf: aNode) toLayer: anInteger ) ]
+	(self leftContourOf: aNode)
+		ifNil: [
+			(self pointerOf: aNode) ifNil: [ ^ nil ] ifNotNil: [
+				^ self
+					  followLeftContour: (self pointerOf: aNode)
+					  toLayer: anInteger ] ]
+		ifNotNil: [
+			^ self
+				  followLeftContour: (self leftContourOf: aNode)
+				  toLayer: anInteger ]
 ]
 
 { #category : #algorithm }
 RSAbstractCompactTreeLayout >> followRightContour: aNode toLayer: anInteger [
 	"return the node in the right contour begining at anode in layer anInteger"
 
-	((self layerOf: aNode) = anInteger ) ifTrue: [^ aNode  ].
-	((self layerOf: aNode) > anInteger ) ifTrue: [^ nil  ].
+	(self layerOf: aNode) = anInteger ifTrue: [ ^ aNode ].
+	(self layerOf: aNode) > anInteger ifTrue: [ ^ nil ].
 
-	(self rightContourOf: aNode) isNil ifTrue: [ (self pointerOf: aNode) isNil ifTrue: [ ^ nil ]
-														 ifFalse: [ ^ ( self followRightContour: (self pointerOf: aNode) toLayer: anInteger ) ] ]
-
-			  				ifFalse: [ ^ (self followRightContour: (self rightContourOf: aNode) toLayer: anInteger ) ]
+	(self rightContourOf: aNode)
+		ifNil: [
+			(self pointerOf: aNode) ifNil: [ ^ nil ] ifNotNil: [
+				^ self
+					  followRightContour: (self pointerOf: aNode)
+					  toLayer: anInteger ] ]
+		ifNotNil: [
+			^ self
+				  followRightContour: (self rightContourOf: aNode)
+				  toLayer: anInteger ]
 ]
 
 { #category : #algorithm }
@@ -107,10 +119,6 @@ RSAbstractCompactTreeLayout >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger
 ]
 
 { #category : #'initialize-release' }
-RSAbstractCompactTreeLayout >> greedyCycleRemoval: aGraph [
-]
-
-{ #category : #'initialize-release' }
 RSAbstractCompactTreeLayout >> initialLayout: aLayout [
 	initialLayout := aLayout
 ]
@@ -125,22 +133,27 @@ RSAbstractCompactTreeLayout >> initialize [
 
 { #category : #'initialize-release' }
 RSAbstractCompactTreeLayout >> initialize: aNode whoseFatherIs: another [
+
 	self fatherOf: aNode put: another.
 
-	another isNil ifTrue: [ self layerOf: aNode put: 0 ] ifFalse: [ self layerOf: aNode put: (self layerOf: another) + 1 ] .
+	another
+		ifNil: [ self layerOf: aNode put: 0 ]
+		ifNotNil: [ self layerOf: aNode put: (self layerOf: another) + 1 ].
 
-	( self childrenFor: aNode ) do: [ :e | self initialize: e whoseFatherIs: aNode ]
+	(self childrenFor: aNode) do: [ :e |
+		self initialize: e whoseFatherIs: aNode ]
 ]
 
 { #category : #algorithm }
 RSAbstractCompactTreeLayout >> leftSiblingOf: aNode [
 	"return the left sibling of the given node "
-	| children |
 
-	(self fatherOf: aNode) isNil ifTrue: ["has no sibling" ^ nil]
-					    ifFalse: [ children := self childrenFor: (self fatherOf: aNode).
-								(children first) = aNode ifTrue: ["as no left sibling" ^ nil ]
-																    ifFalse: [^ children at: ((children indexOf: aNode) - 1) ] ]
+	| children |
+	(self fatherOf: aNode) ifNil: [ "has no sibling" ^ nil ] ifNotNil: [
+		children := self childrenFor: (self fatherOf: aNode).
+		children first = aNode
+			ifTrue: [ "as no left sibling" ^ nil ]
+			ifFalse: [ ^ children at: (children indexOf: aNode) - 1 ] ]
 ]
 
 { #category : #'initialize-release' }

@@ -1,5 +1,6 @@
 "
-TODO
+The SugiyamaLayout class implements the Sugiyama algorithm, a popular graph layout algorithm used to create hierarchical layouts of directed acyclic graphs (DAGs). 
+This algorithm organizes nodes into multiple layers and minimizes the number of edge crossings, resulting in a visually appealing and easy-to-understand representation of the input graph.
 "
 Class {
 	#name : #RSSugiyamaLayout,

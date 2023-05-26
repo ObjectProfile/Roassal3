@@ -348,27 +348,21 @@ RSTWalkBasedRegularTreeLayout >> modOf: aNode update: aBlock [
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> moveSubtree: children at: i other: si distance: dist [
 
-	"Move subtree by changing mod."
-
-	| child intermediateChildren |
+	| child intermediateChildren siChild ratio |
 	child := children at: i.
-
 	self
 		modOf: child update: [ :mod | mod + dist ];
 		mselOf: child update: [ :msel | msel + dist ];
 		mserOf: child update: [ :mser | mser + dist ].
-
-	"Are there intermediate children? (originally extracted in the `distributedExtra` function)"
 	self assert: i > si.
 
-	(intermediateChildren := i - si) > 1 ifTrue: [
-		| siChild ratio |
-		ratio := dist / intermediateChildren.
-		siChild := children at: si + 1.
-		self
-			shiftOf: siChild update: [ :shift | shift + ratio ];
-			shiftOf: child update: [ :shift | shift - ratio ];
-			changeOf: child update: [ :change | change - dist + ratio ] ]
+	(intermediateChildren := i - si) > 1 ifFalse: [ ^ self ].
+	ratio := dist / intermediateChildren.
+	siChild := children at: si + 1.
+	self
+		shiftOf: siChild update: [ :shift | shift + ratio ];
+		shiftOf: child update: [ :shift | shift - ratio ];
+		changeOf: child update: [ :change | change - dist + ratio ]
 ]
 
 { #category : #properties }

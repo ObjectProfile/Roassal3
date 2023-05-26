@@ -1,3 +1,6 @@
+"
+I adds utility methods to access meta information of the layout algorithm and I store that information the the shape properties dictionary
+"
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayoutOnShapeProperties,
 	#category : #'Roassal3-Layouts-Traits'
