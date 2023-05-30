@@ -14,6 +14,7 @@ Class {
 
 { #category : #updating }
 RSAmeba >> blink [
+
 	| leftEye rightEye p1 p2 |
 	shape propertyAt: #blink put: 1.
 
@@ -24,20 +25,19 @@ RSAmeba >> blink [
 
 	shape newAnimation
 		scale: (NSScale linear
-			domain: {0. 0.5. 1};
-			range: {1. 0.05. 1});
+				 domain: { 0. 0.5. 1 };
+				 range: { 1. 0.05. 1 });
 		duration: 500 milliSeconds;
 		onStepDo: [ :t |
 			leftEye matrix
 				loadIdentity;
-				scaleBy: 1@ t;
+				scaleBy: 1 @ t;
 				translation: p1.
 			rightEye matrix
 				loadIdentity;
-				scaleBy: 1@ t;
-				translation: p2.
-			 ];
-		when: RSAnimationEndEvent do: [ shape removeKey: #blink ]
+				scaleBy: 1 @ t;
+				translation: p2 ];
+		when: RSAnimationEndEvent do: [ shape removeKey: #blink ] for: self
 ]
 
 { #category : #accessing }

@@ -13,39 +13,44 @@ Class {
 
 { #category : #'meta level' }
 RSHanoiRoassal >> animationFor: asso [
+
 	| from to pscale |
 	from := self group: asso key.
 	to := self group: asso value.
 	pscale := nil.
 	^ canvas transitionAnimation
-		onStepDo: [ :t  | | shapeFrom shapeTo p1 p2 |
-			shapeFrom := from last.
-			shapeTo := to last.
-			p1 := shapeFrom position.
-			p2 := shapeTo position.
-			pscale ifNil: [
-				pscale := NSScale linear
-					domain: #(0 0.3 0.6 1);
-					range:
-						{p1.
-						p1 x@0.
-						p2 x@0.
-						p2 x @ (p2 y - 20)
-						}.
-				 ].
-			shapeFrom position: (pscale scale: t).
-			canvas signalUpdate ];
-		when: RSAnimationEndEvent do: [
-			to addLast: from removeLast. ];
-		yourself
+		  onStepDo: [ :t |
+			  | shapeFrom shapeTo p1 p2 |
+			  shapeFrom := from last.
+			  shapeTo := to last.
+			  p1 := shapeFrom position.
+			  p2 := shapeTo position.
+			  pscale ifNil: [
+					  pscale := NSScale linear
+						            domain: #( 0 0.3 0.6 1 );
+						            range: {
+								            p1.
+								            (p1 x @ 0).
+								            (p2 x @ 0).
+								            (p2 x @ (p2 y - 20)) } ].
+			  shapeFrom position: (pscale scale: t).
+			  canvas signalUpdate ];
+		  when: RSAnimationEndEvent
+		  do: [ to addLast: from removeLast ]
+		  for: self;
+		  yourself
 ]
 
 { #category : #'meta level' }
 RSHanoiRoassal >> createAnimations [
+
 	| allAnimations |
-	allAnimations := canvas
-		animationFrom: (moves collect: [:asso | self animationFor: asso]).
-	allAnimations when: RSAnimationEndEvent do: [ self inform: 'Done!!' ]
+	allAnimations := canvas animationFrom:
+		                 (moves collect: [ :asso | self animationFor: asso ]).
+	allAnimations
+		when: RSAnimationEndEvent
+		do: [ self inform: 'Done!!' ]
+		for: self
 ]
 
 { #category : #public }
