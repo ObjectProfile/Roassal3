@@ -1,6 +1,6 @@
 Extension { #name : #RSAbstractGridLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSAbstractGridLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutEvalField new

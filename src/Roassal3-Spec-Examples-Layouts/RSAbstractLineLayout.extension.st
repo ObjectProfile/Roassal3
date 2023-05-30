@@ -1,11 +1,11 @@
 Extension { #name : #RSAbstractLineLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSAbstractLineLayout class >> alignmentOptions [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSAbstractLineLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new

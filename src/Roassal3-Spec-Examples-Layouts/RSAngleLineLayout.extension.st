@@ -1,11 +1,11 @@
 Extension { #name : #RSAngleLineLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSAngleLineLayout class >> alignmentOptions [
 	^ #(none)
 ]
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSAngleLineLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutAngleField new

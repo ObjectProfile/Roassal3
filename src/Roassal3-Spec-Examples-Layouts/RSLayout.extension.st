@@ -1,6 +1,6 @@
 Extension { #name : #RSLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSLayout class >> classesWithDefinitionsToEdit [
 
 	^ ((self withAllSubclasses
@@ -10,7 +10,7 @@ RSLayout class >> classesWithDefinitionsToEdit [
 		sorted: [ :a :b | a key name < b key name ]
 ]
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSLayout class >> layoutDefinition [
 	^ nil
 ]

@@ -1,6 +1,6 @@
 Extension { #name : #RSGridLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSGridLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new
@@ -16,7 +16,7 @@ RSGridLayout class >> layoutDefinition [
 		yourself
 ]
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSGridLayout class >> verticalAlignmentOptions [
 	^ #(top middle bottom)
 ]

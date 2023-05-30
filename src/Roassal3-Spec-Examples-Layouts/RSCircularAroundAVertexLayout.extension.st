@@ -1,6 +1,6 @@
 Extension { #name : #RSCircularAroundAVertexLayout }
 
-{ #category : #'*Roassal3-Spec-Examples' }
+{ #category : #'*Roassal3-Spec-Examples-Layouts' }
 RSCircularAroundAVertexLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutNumberField new
