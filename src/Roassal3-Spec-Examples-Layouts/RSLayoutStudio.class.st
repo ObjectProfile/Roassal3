@@ -20,10 +20,12 @@ Class {
 { #category : #layout }
 RSLayoutStudio class >> defaultLayout [
 	^ SpBoxLayout newVertical
-		add: #menu expand: false;
 		add: (SpPanedLayout newLeftToRight
 			positionOfSlider: 250;
-			add: #controls;
+			add: (SpBoxLayout newVertical
+				add: #menu expand: false;
+				add: #controls;
+				yourself);
 			add: #roassalCanvas;
 			yourself);
 		yourself
@@ -74,6 +76,11 @@ RSLayoutStudio >> connectPresenters [
 	graphTextEditor text: self defaultGraphText.
 	self editLayout: RSCircleLayout.
 	roassalCanvas script: [ :canvas | self renderIn: canvas ]
+]
+
+{ #category : #accessing }
+RSLayoutStudio >> controls [
+	^ controls
 ]
 
 { #category : #public }
@@ -218,6 +225,5 @@ RSLayoutStudio >> updateToolPanel [
 			) expand: false;
 		spacing: 10;
 		add: attributes;
-		yourself
-		)
+		yourself)
 ]

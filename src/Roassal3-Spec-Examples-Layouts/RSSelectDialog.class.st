@@ -26,7 +26,6 @@ RSSelectDialog >> initializePresenters [
 		enableFilter;
 		explicitFunction;
 		selectionColor: self theme selectionColor;
-		secondarySelectionColor: Color red;
 		onAnnouncement: FTStrongSelectionChanged do: [ :evt | self accept ];
 		yourself.
 	list morph: fastTable
