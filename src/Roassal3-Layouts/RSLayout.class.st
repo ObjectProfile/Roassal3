@@ -77,9 +77,14 @@ RSLayout class >> canvasExample [
 
 { #category : #examples }
 RSLayout class >> canvasExampleIn: canvas [
+	self canvasExampleIn: canvas models: Collection withAllSubclasses
+]
+
+{ #category : #examples }
+RSLayout class >> canvasExampleIn: canvas models: aCollection [
 	| shapes colorPalette |
 	self cartensianLinesIn: canvas.
-	shapes := RSBox models: Collection withAllSubclasses.
+	shapes := RSBox models: aCollection.
 	canvas addAll: shapes.
 	colorPalette := NSScale category20c.
 	shapes do: [ :shape |
