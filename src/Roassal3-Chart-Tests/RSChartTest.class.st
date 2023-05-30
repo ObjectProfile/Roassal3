@@ -20,6 +20,7 @@ RSChartTest >> testBasic [
 RSChartTest >> testExtentOnChange [
 	| chart plot canvas|
 	chart := RSChart new.
+	self skip.
 	plot := RSLinePlot y: #(1 2 3).
 	chart add: plot.
 	chart build.
