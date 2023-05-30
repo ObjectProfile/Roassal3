@@ -146,15 +146,14 @@ RSChart >> decorations [
 { #category : #'accessing - defaults' }
 RSChart >> defaultContainer [
 	^ RSCanvas new
-		when: RSExtentChangedEvent send:#updateChart: to: self;
-		yourself.
-		"addInteraction: (RSCanvasController new
+		"when: RSExtentChangedEvent send:#updateChart: to: self;"
+		addInteraction: (RSCanvasController new
 			in: [ :controller |
 				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
 				controller configuration	maxScale: 20.
 				 ];
 			yourself);
-		yourself"
+		yourself
 ]
 
 { #category : #color }
