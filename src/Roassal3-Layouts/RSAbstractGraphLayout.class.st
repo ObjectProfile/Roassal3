@@ -43,6 +43,17 @@ RSAbstractGraphLayout class >> verticalGap [
 ]
 
 { #category : #private }
+RSAbstractGraphLayout >> allChildrenFor: aNode [
+	| scan scanTop |
+	scan := OrderedCollection withAll: (self childrenFor: aNode).
+	scanTop := 1.
+	[scanTop > scan size]
+		whileFalse: [scan addAll: (self childrenFor:  (scan at: scanTop)).
+			scanTop := scanTop + 1].
+	^ scan
+]
+
+{ #category : #private }
 RSAbstractGraphLayout >> cachedChildren [
 	cachedChildren ifNil: [cachedChildren := IdentityDictionary new: 1000].
 	^ cachedChildren
