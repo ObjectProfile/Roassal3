@@ -37,6 +37,29 @@ RSViolinPlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
 
+{ #category : #accessing }
+RSViolinPlot >> densityCurveSample: aCollection [
+	^ aCollection collect: [ :value | (self kde: value) ]
+]
+
+{ #category : #accessing }
+RSViolinPlot >> kde: aNumber [
+	| sum h |
+	sum := 0.
+	h := 4. "TO DO: make it a parameter"
+	data 
+		do: [ :xi |
+			sum := sum + (self kernelFunction: ((aNumber - xi)/h))
+		 ].
+	^ sum / ((data size) * h)
+]
+
+{ #category : #accessing }
+RSViolinPlot >> kernelFunction: aNumber [
+	"by now it is harcoded the normal (gaussian) kernel"
+	^ ((0-((aNumber squared)/2))) exp / ((2 * (Float pi)) sqrt).
+]
+
 { #category : #initialization }
 RSViolinPlot >> open [
 	chart := RSChart new.
