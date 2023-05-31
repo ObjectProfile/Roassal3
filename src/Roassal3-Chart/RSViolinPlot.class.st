@@ -28,7 +28,7 @@ RSViolinPlot >> data [
 { #category : #accessing }
 RSViolinPlot >> data: aCollection [
 	data := aCollection.
-	xValues :=  #(1).
+	xValues :=  #(0 1 2).
 	yValues := aCollection.
 ]
 
@@ -48,10 +48,10 @@ RSViolinPlot >> open [
 	^ chart open
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
 	| polygon |
 	polygon := RSPolygon new.
-	polygon points: { 200@10. 250@190. 160@210 }.
+	polygon points: ({ 0@0. 2@2.6. 2@2.5 } collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: polygon.
 ]
