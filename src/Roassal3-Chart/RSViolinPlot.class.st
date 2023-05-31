@@ -28,6 +28,8 @@ RSViolinPlot >> data [
 { #category : #accessing }
 RSViolinPlot >> data: aCollection [
 	data := aCollection.
+	xValues :=  #(1).
+	yValues := aCollection.
 ]
 
 { #category : #initialization }
@@ -36,18 +38,20 @@ RSViolinPlot >> defaultShape [
 ]
 
 { #category : #initialization }
+RSViolinPlot >> open [
+	chart := RSChart new.
+	chart add: self.
+
+	chart
+		extent: 250 @ 200;
+		padding: 15 @ 10.
+	^ chart open
+]
+
+{ #category : #initialization }
 RSViolinPlot >> renderIn: canvas [
-	| controlPoints |
-	self checkAssertion.
-	controlPoints := OrderedCollection new.
-	(1 to: xValues size) do: [ :i |
-			| xt yt |
-			xt := xValues at: i.
-			yt := yValues at: i.
-			(self isPointWellDefined: xt @ yt)
-				ifTrue: [ controlPoints add: (self scalePoint: xt @ yt) ] ].
-	"canvas add: (line := self shape copy
-		color: self computeColor;
-		controlPoints: controlPoints;
-		yourself)"
+	| polygon |
+	polygon := RSPolygon new.
+	polygon points: { 200@10. 250@190. 160@210 }.
+	canvas add: polygon.
 ]
