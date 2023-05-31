@@ -28,13 +28,23 @@ RSViolinPlot >> data [
 { #category : #accessing }
 RSViolinPlot >> data: aCollection [
 	data := aCollection.
-	xValues :=  #(0 1 2).
-	yValues := aCollection.
+	xValues := #(0 50).
+	yValues := #(0 0.05).
 ]
 
 { #category : #initialization }
 RSViolinPlot >> defaultShape [
 	^ RSPolyline new color: nil
+]
+
+{ #category : #rendering }
+RSViolinPlot >> densityCurve [
+	| xs yi |
+	xs := #(0 15 20 30 50).
+	^ xs collect: [ :d |
+		yi := self kde: d.
+		d@yi.
+		 ].
 ]
 
 { #category : #accessing }
@@ -73,8 +83,15 @@ RSViolinPlot >> open [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| polygon |
+	| polygon line line2|
 	polygon := RSPolygon new.
-	polygon points: ({ 0@0. 2@2.6. 2@2.5 } collect: [ :aPoint | self scalePoint: aPoint ]).
+	line := RSPolyline new.
+	line2 := RSPolyline new.
+	line startPoint: (self scalePoint: 0@0); endPoint: (self scalePoint: 2@2.6); width: 3.
+	line2 startPoint: (self scalePoint: 2@2.6); endPoint: (self scalePoint: 8@2.6); width: 3.
+	"polygon points: ({ 0@0. 2@2.6. 2@2.5 } collect: [ :aPoint | self scalePoint: aPoint ])."
+	polygon points: (self densityCurve collect: [ :aPoint | self scalePoint: aPoint ]).
+	"canvas add: line.
+	canvas add: line2."
 	canvas add: polygon.
 ]
