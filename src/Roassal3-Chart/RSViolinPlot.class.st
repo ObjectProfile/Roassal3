@@ -40,7 +40,8 @@ RSViolinPlot >> defaultShape [
 { #category : #rendering }
 RSViolinPlot >> densityCurve [
 	| xs yi |
-	xs := #(0 15 20 30 50).
+	"xs := #(0 15 20 30 50)."
+	xs := 0 to: 50 by: 0.5.
 	^ xs collect: [ :d |
 		yi := self kde: d.
 		d@yi.
@@ -76,8 +77,7 @@ RSViolinPlot >> open [
 	chart add: self.
 
 	chart
-		extent: 250 @ 200;
-		padding: 15 @ 10.
+		extent: 250 @ 200.
 	^ chart open
 ]
 
