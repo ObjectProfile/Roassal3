@@ -52,9 +52,12 @@ RSAbstractRegularTreeLayout >> computeChildrenFor: aNode [
 { #category : #hook }
 RSAbstractRegularTreeLayout >> doExecute: shapes [
 	| rootNodes |
-	alreadyLayoutedNodes := OrderedCollection new.
+	alreadyLayoutedNodes := Set new.
 	rootNodes := self rootNodesFor: shapes.
 	self validateCachedParents.
+	(rootNodes isEmpty and: [ shapes isNotEmpty ])
+		ifTrue: [ rootNodes := self rootNodesFromCycles: shapes ].
+	self sortCollection: rootNodes.
 	nodesByLayer := OrderedCollection new.
 	self
 		layout: rootNodes

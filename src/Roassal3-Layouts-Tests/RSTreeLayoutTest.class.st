@@ -5,6 +5,38 @@ Class {
 }
 
 { #category : #tests }
+RSTreeLayoutTest >> computeTreeWithCycles [
+	| chars |
+	canvas := RSCanvas new.
+	chars := $a to: $e.
+	shapes := RSComposite models: chars forEach: [ :composite :char |
+		| box label |
+		label := RSLabel text: char.
+		box := RSBox new
+			position: label position;
+			extent: label extent + 10;
+			yourself.
+
+		composite
+			draggable;
+			add: box;
+			add: label;
+			yourself.
+		].
+
+	canvas addAll: shapes.
+	RSLineBuilder arrowedLine
+		canvas: canvas;
+		withBorderAttachPoint;
+		useAssociations:
+			{$a -> $b.
+			$a -> $e.
+			$b -> $c.
+			$c -> $d.
+			$d -> $a}. "cycle"
+]
+
+{ #category : #tests }
 RSTreeLayoutTest >> testBasic [
 	RSTreeLayout on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(23.5@7.5). (15.5@32.5). (35.5@32.5). (11.5@57.5). (23.5@57.5). (31.5@57.5). (39.5@57.5). (7.5@82.5). (15.5@82.5). (23.5@82.5)}
@@ -41,35 +73,26 @@ RSTreeLayoutTest >> testBasicWithVerticalGap [
 ]
 
 { #category : #tests }
-RSTreeLayoutTest >> testCycles [
-	| chars |
-	canvas := RSCanvas new.
-	chars := $a to: $e.
-	shapes := RSComposite models: chars forEach: [ :composite :char |
-		| box label |
-		label := RSLabel text: char.
-		box := RSBox new
-			position: label position;
-			extent: label extent + 10;
-			yourself.
+RSTreeLayoutTest >> testDoNotValidateCyclesLayoutsEachShapeProperly [
+	| groups |
+	self computeTreeWithCycles.
+	RSTreeLayout new
+		horizontalGap: 10;
+		childrenSortBlock: [ :a :b | a model < b model ];
+		doNotValidateCycles; on: shapes.
+	groups := shapes groupedBy: [ :each | each position ].
+	"at least each shape should be in a different position"
+	self assert: groups size equals: shapes size
+]
 
-		composite
-			draggable;
-			add: box;
-			add: label;
-			yourself.
-		].
-
-	canvas addAll: shapes.
-	RSLineBuilder arrowedLine
-		canvas: canvas;
-		withVerticalAttachPoint;
-		useAssociations:
-			{$a -> $b.
-			$a -> $e.
-			$b -> $c.
-			$c -> $d.
-			$d -> $a}. "cycle"
-	self should: [ RSTreeLayout new validateCycles on: shapes ] raise: Error.
+{ #category : #tests }
+RSTreeLayoutTest >> testDoNotValidateCyclesRunsNormally [
+	self computeTreeWithCycles.
 	RSTreeLayout new doNotValidateCycles; on: shapes
+]
+
+{ #category : #tests }
+RSTreeLayoutTest >> testValidateCyclesRaisesError [
+	self computeTreeWithCycles.
+	self should: [ RSTreeLayout new validateCycles on: shapes ] raise: Error
 ]

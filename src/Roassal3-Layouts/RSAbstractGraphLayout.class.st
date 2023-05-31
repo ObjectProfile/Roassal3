@@ -73,8 +73,7 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 						ifFalse: [nodes add: edge to ]
 				]
 			].
-			self childrenSortBlock
-				ifNotNil: [ :block | nodes sort: block ].
+			self sortCollection: nodes.
 			nodes]
 ]
 
@@ -209,6 +208,27 @@ RSAbstractGraphLayout >> rootNodesFor: aCollection [
 		(self parentsFor: node) isEmpty ]
 ]
 
+{ #category : #hook }
+RSAbstractGraphLayout >> rootNodesFromCycles: shapes [
+	| graph groups  |
+	graph := RSDSMGraph new: shapes size.
+	shapes doWithIndex: [ :shape :index1 |
+		shape outgoingShapes do: [ :otherShape | | index2 |
+			index2 := shapes indexOf: otherShape.
+			"added only when index2 is valid"
+			index2 == 0 ifFalse: [ graph addEdge: index1 to: index2 ].
+			 ].
+		 ].
+	groups := graph computeSCCs.
+	"this takes all cycles and put them as roots"
+	"a cycle is detected when group size is more than 1"
+	^ (groups flatCollect: [ :group | 
+		group size > 1
+			ifTrue: [ group collect: [ :i | shapes at: i ] ]
+			ifFalse: [#()]
+		] as: Set) asOrderedCollection.
+]
+
 { #category : #private }
 RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	aNode translateBy: aPoint.
@@ -218,6 +238,12 @@ RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 { #category : #testing }
 RSAbstractGraphLayout >> shouldValidateCycles [
 	^ shouldValidateCycles
+]
+
+{ #category : #hook }
+RSAbstractGraphLayout >> sortCollection: nodes [
+	self childrenSortBlock
+		ifNotNil: [ :block | nodes sort: block ]
 ]
 
 { #category : #private }
