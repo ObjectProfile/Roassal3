@@ -2,7 +2,9 @@ Class {
 	#name : #RSViolinPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'data'
+		'data',
+		'bandwidth',
+		'kernelDensity'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -21,6 +23,11 @@ RSViolinPlot class >> exampleBasicViolinPlot [
 	data := #(14 15 28 27 32 35).
 	violinPlot := self data: data.
 	^ violinPlot open.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> bandwidth: aNumber [
+	bandwidth := aNumber
 ]
 
 { #category : #initialization }
@@ -63,7 +70,7 @@ RSViolinPlot >> densityCurveSample: aCollection [
 
 { #category : #accessing }
 RSViolinPlot >> kde: aNumber [
-	^ (RSKernelDensity kernel: 'gaussian' data: (self data)) kde: aNumber.
+	^ (RSKernelDensity kernel: 'gaussian' data: self data) kde: aNumber.
 ]
 
 { #category : #initialization }

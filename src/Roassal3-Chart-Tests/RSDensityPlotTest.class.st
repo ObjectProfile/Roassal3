@@ -9,22 +9,24 @@ Class {
 
 { #category : #tests }
 RSDensityPlotTest >> testDensityCurveSample [
-	| violinPlot data proveValues validationValues |
+	| densityPlot data proveValues validationValues |
 	data := #(14 15 28 27 32 35).
 	proveValues := #(0 15 20 30 50).
 	validationValues := #(5.105e-05 0.033 0.019 0.0495 1.536e-05).
-	violinPlot := RSViolinPlot data: data.
+	densityPlot := RSDensityPlot data: data.
+	densityPlot bandwidth: 4.
  	"kernel density stimation"
-	self assert: (violinPlot densityCurveSample: proveValues) closeTo: validationValues.
+	self assert: (densityPlot densityCurveSample: proveValues) closeTo: validationValues.
 ]
 
 { #category : #tests }
 RSDensityPlotTest >> testKernelDensityEstimation [
-	| violinPlot data |
+	| densityPlot data |
 	data := #(14 15 28 27 32 35).
-	violinPlot := RSViolinPlot data: data.
+	densityPlot := RSDensityPlot data: data.
+	densityPlot bandwidth: 4.
  	"kernel density stimation"
-	self assert: (violinPlot kde: 30) closeTo: 0.0495.
+	self assert: (densityPlot kde: 30) closeTo: 0.0495.
 ]
 
 { #category : #tests }
