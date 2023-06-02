@@ -20,6 +20,16 @@ RSDensityPlotTest >> testDensityCurveSample [
 ]
 
 { #category : #tests }
+RSDensityPlotTest >> testDensityPlotDefaultValues [
+	| densityPlot data |
+	data := #(1 2 2 2 3 4).
+	densityPlot := RSDensityPlot data: data.
+ 	self assert: densityPlot data equals: data.
+	self assert: (densityPlot kernel isKindOf: RSKernelFunction).
+	self assert: densityPlot bandwidth equals: 1.
+]
+
+{ #category : #tests }
 RSDensityPlotTest >> testKernelDensityEstimation [
 	| densityPlot data |
 	data := #(14 15 28 27 32 35).
@@ -27,12 +37,4 @@ RSDensityPlotTest >> testKernelDensityEstimation [
 	densityPlot bandwidth: 4.
  	"kernel density stimation"
 	self assert: (densityPlot kde: 30) closeTo: 0.0495.
-]
-
-{ #category : #tests }
-RSDensityPlotTest >> testOneViolinPlot [
-	| violinPlot data |
-	data := #(1 2 2 2 3 4).
-	violinPlot := RSViolinPlot data: data.
- 	self assert: violinPlot data equals: data.
 ]

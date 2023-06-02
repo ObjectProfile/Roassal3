@@ -4,17 +4,18 @@ Class {
 	#instVars : [
 		'data',
 		'bandwith',
-		'kernel'
+		'kernel',
+		'bandwidth'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
 RSDensityPlot class >> data: aCollection [
-	| violinPlot |
-	violinPlot := self new.
-	violinPlot data: aCollection.
-	^ violinPlot
+	| densityPlot |
+	densityPlot := self new.
+	densityPlot data: aCollection.
+	^ densityPlot
 ]
 
 { #category : #accessing }
@@ -26,8 +27,14 @@ RSDensityPlot class >> exampleBasicViolinPlot [
 ]
 
 { #category : #rendering }
+RSDensityPlot >> bandwidth [
+	^ bandwidth
+	
+]
+
+{ #category : #rendering }
 RSDensityPlot >> bandwidth: aNumber [
-	bandwith := aNumber.
+	bandwidth := aNumber.
 	
 ]
 
@@ -82,12 +89,18 @@ RSDensityPlot >> densityCurveSample: aCollection [
 { #category : #rendering }
 RSDensityPlot >> initialize [
 	super initialize.
-	kernel := self defaultKernel
+	kernel := self defaultKernel.
+	bandwidth := self defaultBandwidth.
 ]
 
 { #category : #accessing }
 RSDensityPlot >> kde: aNumber [
-	^ ((RSKernelDensity kernel: kernel data: data) bandwidth: bandwith) kde: aNumber.
+	^ ((RSKernelDensity kernel: kernel data: data) bandwidth: bandwidth) kde: aNumber.
+]
+
+{ #category : #rendering }
+RSDensityPlot >> kernel [
+	^ kernel.
 ]
 
 { #category : #initialization }
