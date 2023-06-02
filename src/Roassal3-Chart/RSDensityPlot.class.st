@@ -19,11 +19,12 @@ RSDensityPlot class >> data: aCollection [
 ]
 
 { #category : #accessing }
-RSDensityPlot class >> exampleBasicViolinPlot [
-	| violinPlot data |
+RSDensityPlot class >> exampleBasicDensityPlot [
+	| densityPlot data |
 	data := #(14 15 28 27 32 35).
-	violinPlot := self data: data.
-	^ violinPlot open.
+	densityPlot := self data: data.
+	densityPlot bandwidth: 4.
+	^ densityPlot open.
 ]
 
 { #category : #rendering }
