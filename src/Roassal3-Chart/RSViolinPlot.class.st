@@ -15,6 +15,14 @@ RSViolinPlot class >> data: aCollection [
 	^ violinPlot
 ]
 
+{ #category : #accessing }
+RSViolinPlot class >> exampleBasicViolinPlot [
+	| violinPlot data |
+	data := #(14 15 28 27 32 35).
+	violinPlot := self data: data.
+	^ violinPlot open.
+]
+
 { #category : #initialization }
 RSViolinPlot >> createdShapes [
 	^ { data }
@@ -55,20 +63,7 @@ RSViolinPlot >> densityCurveSample: aCollection [
 
 { #category : #accessing }
 RSViolinPlot >> kde: aNumber [
-	| sum h |
-	sum := 0.
-	h := 4. "TO DO: make it a parameter"
-	data 
-		do: [ :xi |
-			sum := sum + (self kernelFunction: ((aNumber - xi)/h))
-		 ].
-	^ sum / ((data size) * h)
-]
-
-{ #category : #accessing }
-RSViolinPlot >> kernelFunction: aNumber [
-	"by now it is harcoded the normal (gaussian) kernel"
-	^ ((0-((aNumber squared)/2))) exp / ((2 * (Float pi)) sqrt).
+	^ (RSKernelDensity kernel: 'gaussian' data: (self data)) kde: aNumber.
 ]
 
 { #category : #initialization }

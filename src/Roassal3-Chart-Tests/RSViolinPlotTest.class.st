@@ -28,14 +28,6 @@ RSViolinPlotTest >> testKernelDensityEstimation [
 ]
 
 { #category : #tests }
-RSViolinPlotTest >> testKernelFunction [
-	| violinPlot |
-	violinPlot := RSViolinPlot new.
- 	"kernel function is the normal function harcoded"
-	self assert: (violinPlot kernelFunction: 30) closeTo: 1.4736e-196.
-]
-
-{ #category : #tests }
 RSViolinPlotTest >> testOneViolinPlot [
 	| violinPlot data |
 	data := #(1 2 2 2 3 4).
