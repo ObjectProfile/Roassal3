@@ -15,7 +15,6 @@ RSDensityPlotTest >> testDensityCurveSample [
 	validationValues := #(5.105e-05 0.033 0.019 0.0495 1.536e-05).
 	densityPlot := RSDensityPlot data: data.
 	densityPlot bandwidth: 4.
- 	"kernel density stimation"
 	self assert: (densityPlot densityCurveSample: proveValues) closeTo: validationValues.
 ]
 
@@ -35,6 +34,15 @@ RSDensityPlotTest >> testKernelDensityEstimation [
 	data := #(14 15 28 27 32 35).
 	densityPlot := RSDensityPlot data: data.
 	densityPlot bandwidth: 4.
- 	"kernel density stimation"
 	self assert: (densityPlot kde: 30) closeTo: 0.0495.
+]
+
+{ #category : #tests }
+RSDensityPlotTest >> testSetBandwidth [
+	| densityPlot data |
+	data := #(1 2 2 2 3 4).
+	densityPlot := RSDensityPlot data: data.
+ 	self assert: densityPlot bandwidth equals: 1.
+	densityPlot bandwidth: 4.
+	self assert: densityPlot bandwidth equals: 4.
 ]

@@ -27,6 +27,24 @@ RSDensityPlot class >> exampleBasicDensityPlot [
 	^ densityPlot open.
 ]
 
+{ #category : #accessing }
+RSDensityPlot class >> exampleBasicDensityPlot2 [
+	| densityPlot data |
+	data := #(5 5 5 45 45 45).
+	densityPlot := self data: data.
+	densityPlot bandwidth: 4.
+	^ densityPlot open.
+]
+
+{ #category : #accessing }
+RSDensityPlot class >> exampleBasicDensityPlot3 [
+	| densityPlot data |
+	data := #(10 10 10 10).
+	densityPlot := self data: data.
+	densityPlot bandwidth: 4.
+	^ densityPlot open.
+]
+
 { #category : #rendering }
 RSDensityPlot >> bandwidth [
 	^ bandwidth
@@ -74,12 +92,10 @@ RSDensityPlot >> defaultShape [
 { #category : #rendering }
 RSDensityPlot >> densityCurve [
 	| xs yi |
-	"xs := #(0 15 20 30 50)."
 	xs := 0 to: 50 by: 0.5.
-	^ xs collect: [ :d |
-		yi := self kde: d.
-		d@yi.
-		 ].
+	^ xs collect: [ :d | 
+		yi := self kde: d. 
+		d@yi.].
 ]
 
 { #category : #accessing }
