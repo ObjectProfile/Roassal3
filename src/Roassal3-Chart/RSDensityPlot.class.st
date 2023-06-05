@@ -45,6 +45,15 @@ RSDensityPlot class >> exampleBasicDensityPlot3 [
 	^ densityPlot open.
 ]
 
+{ #category : #accessing }
+RSDensityPlot class >> exampleBasicDensityPlot4 [
+	| densityPlot data |
+	data := #(25 25 25 25).
+	densityPlot := self data: data.
+	densityPlot bandwidth: 4.
+	^ densityPlot open.
+]
+
 { #category : #rendering }
 RSDensityPlot >> bandwidth [
 	^ bandwidth
@@ -132,8 +141,17 @@ RSDensityPlot >> open [
 
 { #category : #rendering }
 RSDensityPlot >> renderIn: canvas [
-	| polygon |
+	| polygon curve firstPoint lastPoint closingPointStart closingPointEnd |
 	polygon := RSPolygon new.
-	polygon points: (self densityCurve collect: [ :aPoint | self scalePoint: aPoint ]).
+	curve := self densityCurve.
+	firstPoint := curve first.
+	lastPoint := curve last.
+	closingPointStart := firstPoint x @ 0.
+	closingPointEnd := lastPoint x @ 0.
+	curve := curve asOrderedCollection.
+	curve addFirst: closingPointStart.
+	curve add: closingPointEnd.
+	lastPoint := curve last.
+	polygon points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: polygon.
 ]
