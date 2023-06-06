@@ -60,6 +60,30 @@ RSDensityPlot class >> exampleBasicDensityPlot4 [
 	^ densityPlot open.
 ]
 
+{ #category : #examples }
+RSDensityPlot class >> exampleDensityPlotCreateWithKernelDesity [
+	| densityPlot data kernelDensity |
+	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
+	kernelDensity := RSKernelDensity data: data.
+	kernelDensity bandwidth: 10.
+	densityPlot := self kernelDensity: kernelDensity.
+	densityPlot shape
+		color: Color blue translucent;
+		border: (RSBorder new 
+			color: Color blue; 
+			width: 2;
+			dashArray: #(2 4)).
+	^ densityPlot open.
+]
+
+{ #category : #accessing }
+RSDensityPlot class >> kernelDensity: anRSKernelDensity [
+	| densityPlot |
+	densityPlot := self new.
+	densityPlot kernelDensity: anRSKernelDensity.
+	^ densityPlot
+]
+
 { #category : #accessing }
 RSDensityPlot >> area [
 	^ area
@@ -112,11 +136,6 @@ RSDensityPlot >> defaultKernelDensity [
 { #category : #initialization }
 RSDensityPlot >> defaultShape [
 	^ RSPolygon new
-]
-
-{ #category : #accessing }
-RSDensityPlot >> densityCurveSample: aCollection [
-	^ aCollection collect: [ :value | (self kde: value) ]
 ]
 
 { #category : #initialization }

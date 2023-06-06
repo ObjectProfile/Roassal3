@@ -8,23 +8,22 @@ Class {
 }
 
 { #category : #tests }
+RSDensityPlotTest >> testCreatePlotWihtKernelDensity [
+	| data densityPlot kernelDensity |
+	data := #(1 2 5 36 5 12 3).
+	kernelDensity := RSKernelDensity data: data.
+	densityPlot := RSDensityPlot kernelDensity: kernelDensity.
+	self assert: densityPlot kernel class equals: RSKernelGaussianFunction.
+	self assert: densityPlot data equals: data.
+]
+
+{ #category : #tests }
 RSDensityPlotTest >> testDataIsACollectionOfNumbers [
 	| data fakeData densityPlot |
 	data := #(1 2 5 36 5 12 3).
 	densityPlot := RSDensityPlot data: data.
 	fakeData := #('a' 'b' '15' '25').
 	self should: [ densityPlot := RSDensityPlot data: fakeData. ] raise: Error
-]
-
-{ #category : #tests }
-RSDensityPlotTest >> testDensityCurveSample [
-	| densityPlot data proveValues validationValues |
-	data := #(14 15 28 27 32 35).
-	proveValues := #(0 15 20 30 50).
-	validationValues := #(5.105e-05 0.033 0.019 0.0495 1.536e-05).
-	densityPlot := RSDensityPlot data: data.
-	densityPlot bandwidth: 4.
-	self assert: (densityPlot densityCurveSample: proveValues) closeTo: validationValues.
 ]
 
 { #category : #tests }

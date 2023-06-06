@@ -24,6 +24,17 @@ RSKernelDensityTest >> testBasicNewKernelDensity [
 ]
 
 { #category : #tests }
+RSKernelDensityTest >> testDensityCurveSample [
+	| data proveValues validationValues kernelDensity |
+	data := #(14 15 28 27 32 35).
+	proveValues := #(0 15 20 30 50).
+	validationValues := #(5.105e-05 0.033 0.019 0.0495 1.536e-05).
+	kernelDensity := RSKernelDensity data: data.
+	kernelDensity bandwidth: 4.
+	self assert: (kernelDensity densityCurveSample: proveValues) closeTo: validationValues.
+]
+
+{ #category : #tests }
 RSKernelDensityTest >> testKDEDefaultBandwidth [
 	| kernelDensity anXValue |
 	kernelDensity := RSKernelDensity gaussian.

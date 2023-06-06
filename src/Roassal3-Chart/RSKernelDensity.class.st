@@ -128,6 +128,11 @@ RSKernelDensity >> densityCurve [
 ]
 
 { #category : #accessing }
+RSKernelDensity >> densityCurveSample: aCollection [
+	^ aCollection collect: [ :value | (self kde: value) ]
+]
+
+{ #category : #accessing }
 RSKernelDensity >> evaluateKernel: aNumber [
 	^ kernel evaluate: aNumber.
 ]
