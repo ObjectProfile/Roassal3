@@ -51,12 +51,6 @@ RSDensityPlot class >> exampleBasicDensityPlot4 [
 	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 10.
-	densityPlot shape
-		color: Color blue translucent;
-		border: (RSBorder new 
-			color: Color blue; 
-			width: 2;
-			dashArray: #(2 4)).
 	^ densityPlot open.
 ]
 
@@ -130,7 +124,7 @@ RSDensityPlot >> data: aCollection [
 
 { #category : #defaults }
 RSDensityPlot >> defaultAreaColor [
-	^ Color r:227 g:218 b:246 range: 255.
+	^ Color r:188 g:189 b:220 range: 255.
 	
 ]
 
@@ -141,7 +135,7 @@ RSDensityPlot >> defaultKernelDensity [
 
 { #category : #defaults }
 RSDensityPlot >> defaultLineColor [
-	^ Color r:152 g:122 b:223 range: 255.
+	^ Color r:117 g:107 b:177 range: 255.
 ]
 
 { #category : #initialization }

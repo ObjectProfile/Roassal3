@@ -33,7 +33,7 @@ RSDensityPlotTest >> testDefaultColor [
 	kernelDensity := RSKernelDensity data: data.
 	kernelDensity bandwidth: 10.
 	densityPlot := RSDensityPlot kernelDensity: kernelDensity.
-	window := densityPlot open. "area assigned on plot open"
+	window := densityPlot open. "area assigned to plot on renderIn"
 	self assert: densityPlot area color equals: densityPlot defaultAreaColor.
 	window delete.
 ]
