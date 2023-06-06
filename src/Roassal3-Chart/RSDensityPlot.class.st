@@ -48,9 +48,9 @@ RSDensityPlot class >> exampleBasicDensityPlot3 [
 { #category : #accessing }
 RSDensityPlot class >> exampleBasicDensityPlot4 [
 	| densityPlot data |
-	data := #(25 25 25 25).
+	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
-	densityPlot bandwidth: 4.
+	densityPlot bandwidth: 20.
 	^ densityPlot open.
 ]
 
@@ -68,7 +68,6 @@ RSDensityPlot >> bandwidth: aNumber [
 
 { #category : #rendering }
 RSDensityPlot >> beforeRenderingIn: aChart [
-	self densityCurve.
 	super beforeRenderingIn: aChart.
 ]
 
@@ -104,33 +103,36 @@ RSDensityPlot >> defaultShape [
 
 { #category : #rendering }
 RSDensityPlot >> densityCurve [
-	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain |
-
+	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain maxY |
 	maxData := data max.
 	minData := data min.
 	curvePoints := OrderedCollection new.
-	epsilon := 0.000001.
-	step := 0.5.
-
+	epsilon := 0.0001.
+	step := 0.05.
+	maxY := 0.
 	"Calculate left side"
 	xi := minData.
 	yi := self kde: xi.
 	curvePoints add: xi@yi.
+	maxY := yi max: maxY.
 	[ yi > epsilon ] whileTrue: [
 		xi := xi - step.
 		yi := self kde: xi. 
 		curvePoints addFirst: xi@yi.
+		maxY := yi max: maxY.
 	].
 	minXDomain := xi.
 
 	"Calculate middle"
 	xi := minData + step.
 	yi := self kde: xi.
+	maxY := yi max: maxY.
 	curvePoints add: xi@yi.
 	[ xi < maxData ] whileTrue: [
 		xi := xi + step.
 		yi := self kde: xi. 
 		curvePoints add: xi@yi.
+		maxY := yi max: maxY.
 	].
 		
 	"Calculate right side"
@@ -138,10 +140,12 @@ RSDensityPlot >> densityCurve [
 		xi := xi + step.
 		yi := self kde: xi. 
 		curvePoints add: xi@yi.
+		maxY := yi max: maxY.
 	].
 	maxXDomain := xi.
-	xValues := { minXDomain. maxXDomain }.
-	yValues := #(0 0.05).
+	maxY := yi max: maxY.
+	xValues := { minXDomain. maxXDomain. }.
+	yValues := {0. maxY. }.
 	
 	^ curvePoints.
 ]
@@ -171,10 +175,12 @@ RSDensityPlot >> kernel [
 { #category : #initialization }
 RSDensityPlot >> open [
 	chart := RSChart new.
+	self densityCurve.
 	chart add: self.
-
 	chart
-		extent: 250 @ 200.
+		extent: 250 @ 200;
+		add: RSHorizontalTick new;
+		add: RSVerticalTick new.
 	^ chart open
 ]
 
