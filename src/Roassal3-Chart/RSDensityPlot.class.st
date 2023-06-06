@@ -117,29 +117,26 @@ RSDensityPlot >> densityCurve [
 	yi := self kde: xi.
 	curvePoints add: xi@yi.
 	[ yi > epsilon ] whileTrue: [
-		yi := self kde: xi. 
 		xi := xi - step.
+		yi := self kde: xi. 
 		curvePoints addFirst: xi@yi.
 	].
 	minXDomain := xi.
 
 	"Calculate middle"
-	xi := minData.
+	xi := minData + step.
 	yi := self kde: xi.
 	curvePoints add: xi@yi.
 	[ xi < maxData ] whileTrue: [
-		yi := self kde: xi. 
 		xi := xi + step.
+		yi := self kde: xi. 
 		curvePoints add: xi@yi.
 	].
 		
 	"Calculate right side"
-	xi := maxData.
-	yi := self kde: xi.
-	curvePoints add: xi@yi.
 	[ yi > epsilon ] whileTrue: [
-		yi := self kde: xi. 
 		xi := xi + step.
+		yi := self kde: xi. 
 		curvePoints add: xi@yi.
 	].
 	maxXDomain := xi.
