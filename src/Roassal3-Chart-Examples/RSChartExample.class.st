@@ -16,8 +16,7 @@ RSChartExample >> example01Markers [
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
 	c addPlot: p.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new asFloat.
+	c verticalTick asFloat.
 	c addDecoration: RSYMarkerDecoration new average.
 	c addDecoration: RSYMarkerDecoration new min.
 	c addDecoration: RSYMarkerDecoration new max.
@@ -68,14 +67,15 @@ RSChartExample >> example03Plot [
 { #category : #examples }
 RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick show'>
-	| x |
+	| x chart |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: RSHorizontalTick new integer;
-		addDecoration: RSVerticalTick new integer;
-		yourself
+		yourself.
+	chart horizontalTick integer.
+	chart verticalTick integer.
+	^ chart
 ]
 
 { #category : #examples }
@@ -87,26 +87,26 @@ RSChartExample >> example05WithTick [
 	1 to: 7 do: [ :i |
 		c addPlot: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
 	].
-	c addDecoration: RSVerticalTick new integer.
-	c addDecoration: RSHorizontalTick new integer.
+	c verticalTick integer.
+	c horizontalTick integer.
 	^ c
 ]
 
 { #category : #examples }
 RSChartExample >> example06CustomNumberOfTicks [
 	<script: 'self new example06CustomNumberOfTicks show'>
-	| x |
+	| x chart |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: (RSHorizontalTick new
-			numberOfTicks: 20;
-			integer);
-		addDecoration: (RSVerticalTick new integer
+		yourself.
+	chart horizontalTick numberOfTicks: 20;
+			integer.
+	chart verticalTick integer
 			numberOfTicks: 2;
-			doNotUseNiceLabel);
-		yourself
+			doNotUseNiceLabel.
+	^ chart
 ]
 
 { #category : #examples }
@@ -167,7 +167,8 @@ RSChartExample >> example09LinearSqrtSymlog [
 		| chart |
 		chart := RSChart new.
 		chart addPlot: (RSLinePlot new x: x y: y).
-		chart addDecoration: (RSVerticalTick new asFloat).
+		chart verticalTick asFloat.
+		chart removeHorizontalTicks.
 		chart perform: sel.
 		chart title: sel.
 		chart asShape ]).
@@ -187,14 +188,12 @@ RSChartExample >> example10BarPlot [
 
 	c addPlot: p.
 
-	c addDecoration: (RSHorizontalTick new
-		doNotUseNiceLabel;
+	c horizontalTick doNotUseNiceLabel;
 		numberOfTicks: x size - 1;
-		asFloat).
+		asFloat.
 	c xlabel: 'X Axis'.
-	c addDecoration: (RSVerticalTick new
-		numberOfTicks: 10;
-		asFloat).
+	c verticalTick numberOfTicks: 10;
+		asFloat.
 	c ylabel: 'Y Axis'.
 	c title: 'Histogram'.
 	^ c
@@ -210,10 +209,9 @@ RSChartExample >> example11BarplotCombinedWithLine [
 
 	c addPlot: (RSBarPlot new x: x y: y).
 	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
-	c addDecoration: (RSHorizontalTick new asFloat).
-	c addDecoration: (RSVerticalTick new
-		numberOfTicks: 10;
-		asFloat).
+	c horizontalTick asFloat.
+	c verticalTick numberOfTicks: 10;
+		asFloat.
 	c xlabel: 'X Axis'.
 	c ylabel: 'Y Axis'.
 	c title: 'Bar char'.
@@ -240,8 +238,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 
 	c addPlot: p.
 
-	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
-	c addDecoration: RSVerticalTick new.
+	c horizontalTick doNotUseNiceLabel asFloat: 3.
 	c build.
 	p ellipses models: z.
 		RSNormalizer size
@@ -273,8 +270,7 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	d2 y: #(-5 -6 -3 -3).
 	c addPlot: d2.
 
-	c addDecoration: (RSVerticalTick new integer).
-	c addDecoration: (RSHorizontalTick new).
+	c verticalTick integer.
 
 	c addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
 	c addDecoration: (RSXLabelDecoration new title: 'Evolution').
@@ -291,10 +287,10 @@ RSChartExample >> example20Grid [
 	x := 0 to: 10.
 	y := x raisedTo: 2.
 	c lineX: x y: y.
-	c addDecoration: (vertical := RSVerticalTick new).
+	vertical := c verticalTick.
 	vertical shape dashed.
 	vertical configuration tickSize: c extent x negated.
-	c addDecoration: (horizontal := RSHorizontalTick new).
+	horizontal := c horizontalTick.
 	horizontal configuration tickSize: c extent y negated.
 	c build.
 	^ c canvas
@@ -397,8 +393,7 @@ RSChartExample >> example22CustomPopup [
 			yourself)).
 	(c lineX: x y: y) color: Color gray.
 
-	c addDecoration: (RSVerticalTick new).
-	c addDecoration: (RSHorizontalTick new fromNames: names; useDiagonalLabel).
+	c horizontalTick fromNames: names; useDiagonalLabel.
 	c addDecoration: popup.
 	popup chartPopupBuilder: (RSBlockChartPopupBuilder new
 		rowShapeBlock: [:plot :point |
@@ -440,8 +435,6 @@ RSChartExample >> example24SpineLine [
 	c lineX: x y: y.
 	c spineDecoration: (spine := RSLineSpineDecoration new).
 	spine shape format: '^'.
-	c add: RSHorizontalTick new.
-	c add: RSVerticalTick new.
 	c padding: 10.
 	^ c
 ]
