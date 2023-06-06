@@ -102,8 +102,20 @@ RSDensityPlotTest >> testSetBandwidth [
 ]
 
 { #category : #tests }
+RSDensityPlotTest >> testSetColor [
+	| densityPlot data color |
+	data := #(1 2 2 2 3 4).
+	densityPlot := RSDensityPlot data: data.
+	color := Color blue.
+	
+	densityPlot color: color.
+
+ 	self assert: densityPlot areaColor equals: color.
+]
+
+{ #category : #tests }
 RSDensityPlotTest >> testSetLabels [
-	| densityPlot data window |
+	| densityPlot data |
 	data := #(1 2 2 2 3 4).
 	densityPlot := RSDensityPlot data: data.
  	densityPlot xlabel: 'x label'; ylabel: 'y label'; title:'Density plot'.

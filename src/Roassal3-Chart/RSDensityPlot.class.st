@@ -75,11 +75,11 @@ RSDensityPlot class >> exampleDensityPlotCreateWithKernelDesity [
 
 { #category : #examples }
 RSDensityPlot class >> exampleDensityPlotWithLabels [
-	| densityPlot data kernelDensity |
+	| densityPlot data |
 	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 10.
-	densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwith:10)'.
+	densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwidth:10)'.
 	^ densityPlot open.
 ]
 
@@ -97,6 +97,11 @@ RSDensityPlot >> area [
 ]
 
 { #category : #accessing }
+RSDensityPlot >> areaColor [
+	^ area color.
+]
+
+{ #category : #accessing }
 RSDensityPlot >> bandwidth [
 	^ kernelDensity bandwidth.
 	
@@ -107,6 +112,12 @@ RSDensityPlot >> bandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
 	self computeCurvePoints.
 	
+]
+
+{ #category : #'public - shape' }
+RSDensityPlot >> color: aColor [
+	area color: aColor.
+	"Improvement TO DO: Use color palletes to calculate line and areaColor"
 ]
 
 { #category : #private }
@@ -164,6 +175,7 @@ RSDensityPlot >> defaultShape [
 RSDensityPlot >> initialize [
 	super initialize.
 	kernelDensity := self defaultKernelDensity.
+	area := self shape copy.
 ]
 
 { #category : #accessing }
