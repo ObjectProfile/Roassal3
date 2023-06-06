@@ -58,7 +58,14 @@ RSKernelDensity >> bandwidth: aNumber [
 ]
 
 { #category : #accessing }
+RSKernelDensity >> data [
+	^ data.
+]
+
+{ #category : #accessing }
 RSKernelDensity >> data: aCollection [
+	self assert: (aCollection allSatisfy: [ :each | each isNumber ]) 
+		description: 'data: should receive only a collection of numbers'.
 	data := aCollection
 ]
 
@@ -68,14 +75,68 @@ RSKernelDensity >> defaultBandwidth [
 ]
 
 { #category : #accessing }
+RSKernelDensity >> defaultKernel [
+	^ RSKernelGaussianFunction new.
+]
+
+{ #category : #rendering }
+RSKernelDensity >> densityCurve [
+	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain maxY |
+	maxData := data max.
+	minData := data min.
+	curvePoints := OrderedCollection new.
+	epsilon := 0.0001.
+	step := 0.05.
+	maxY := 0.
+	
+	"Calculate left side"
+	xi := minData.
+	yi := self kde: xi.
+	curvePoints add: xi@yi.
+	maxY := yi max: maxY.
+	[ yi > epsilon ] whileTrue: [
+		xi := xi - step.
+		yi := self kde: xi. 
+		curvePoints addFirst: xi@yi.
+		maxY := yi max: maxY.
+	].
+	minXDomain := xi.
+
+	"Calculate middle"
+	xi := minData + step.
+	yi := self kde: xi.
+	maxY := yi max: maxY.
+	curvePoints add: xi@yi.
+	[ xi < maxData ] whileTrue: [
+		xi := xi + step.
+		yi := self kde: xi. 
+		curvePoints add: xi@yi.
+		maxY := yi max: maxY.
+	].
+		
+	"Calculate right side"
+	[ yi > epsilon ] whileTrue: [
+		xi := xi + step.
+		yi := self kde: xi. 
+		curvePoints add: xi@yi.
+		maxY := yi max: maxY.
+	].
+	maxXDomain := xi.
+	maxY := yi max: maxY.
+
+	^ curvePoints.
+]
+
+{ #category : #accessing }
 RSKernelDensity >> evaluateKernel: aNumber [
 	^ kernel evaluate: aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSKernelDensity >> initialize [
 	super initialize.
 	self bandwidth: self defaultBandwidth.
+	self kernel: self defaultKernel.
 ]
 
 { #category : #accessing }

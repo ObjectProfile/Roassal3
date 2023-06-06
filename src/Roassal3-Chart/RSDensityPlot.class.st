@@ -3,9 +3,9 @@ Class {
 	#superclass : #RSAbstractPlot,
 	#instVars : [
 		'data',
-		'bandwith',
-		'kernel',
-		'bandwidth'
+		'kernelDensity',
+		'curvePoints',
+		'area'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -18,7 +18,7 @@ RSDensityPlot class >> data: aCollection [
 	^ densityPlot
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSDensityPlot class >> exampleBasicDensityPlot [
 	| densityPlot data |
 	data := #(14 15 28 27 32 35).
@@ -27,7 +27,7 @@ RSDensityPlot class >> exampleBasicDensityPlot [
 	^ densityPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSDensityPlot class >> exampleBasicDensityPlot2 [
 	| densityPlot data |
 	data := #(5 5 5 45 45 45).
@@ -36,7 +36,7 @@ RSDensityPlot class >> exampleBasicDensityPlot2 [
 	^ densityPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSDensityPlot class >> exampleBasicDensityPlot3 [
 	| densityPlot data |
 	data := #(10 10 10 10).
@@ -45,109 +45,73 @@ RSDensityPlot class >> exampleBasicDensityPlot3 [
 	^ densityPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSDensityPlot class >> exampleBasicDensityPlot4 [
 	| densityPlot data |
 	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
-	densityPlot bandwidth: 20.
+	densityPlot bandwidth: 10.
+	densityPlot shape
+		color: Color blue translucent;
+		border: (RSBorder new 
+			color: Color blue; 
+			width: 2;
+			dashArray: #(2 4)).
 	^ densityPlot open.
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
+RSDensityPlot >> area [
+	^ area
+]
+
+{ #category : #accessing }
 RSDensityPlot >> bandwidth [
-	^ bandwidth
+	^ kernelDensity bandwidth.
 	
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSDensityPlot >> bandwidth: aNumber [
-	bandwidth := aNumber.
+	kernelDensity bandwidth: aNumber.
+	self computeCurvePoints.
 	
 ]
 
-{ #category : #rendering }
-RSDensityPlot >> beforeRenderingIn: aChart [
-	super beforeRenderingIn: aChart.
+{ #category : #private }
+RSDensityPlot >> computeCurvePoints [
+	| ys yMax |
+	curvePoints := kernelDensity densityCurve.
+	xValues := { curvePoints first x. curvePoints last x. }.
+	ys := curvePoints collect: [ :point | point y ].
+	yMax := ys max.
+	yValues := {0. yMax. }.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RSDensityPlot >> createdShapes [
-	^ { data }
+	^ { area }
 ]
 
 { #category : #accessing }
 RSDensityPlot >> data [
-	^ data
+	^ kernelDensity data.
 ]
 
 { #category : #accessing }
 RSDensityPlot >> data: aCollection [
-	data := aCollection.
+	kernelDensity data: aCollection.
+	self computeCurvePoints.
 ]
 
-{ #category : #accessing }
-RSDensityPlot >> defaultBandwidth [
-	^ 1.00.
-]
-
-{ #category : #accessing }
-RSDensityPlot >> defaultKernel [
-	^ RSKernelGaussianFunction new.
+{ #category : #defaults }
+RSDensityPlot >> defaultKernelDensity [
+	^ RSKernelDensity new.
 ]
 
 { #category : #initialization }
 RSDensityPlot >> defaultShape [
-	^ RSPolyline new color: nil
-]
-
-{ #category : #rendering }
-RSDensityPlot >> densityCurve [
-	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain maxY |
-	maxData := data max.
-	minData := data min.
-	curvePoints := OrderedCollection new.
-	epsilon := 0.0001.
-	step := 0.05.
-	maxY := 0.
-	"Calculate left side"
-	xi := minData.
-	yi := self kde: xi.
-	curvePoints add: xi@yi.
-	maxY := yi max: maxY.
-	[ yi > epsilon ] whileTrue: [
-		xi := xi - step.
-		yi := self kde: xi. 
-		curvePoints addFirst: xi@yi.
-		maxY := yi max: maxY.
-	].
-	minXDomain := xi.
-
-	"Calculate middle"
-	xi := minData + step.
-	yi := self kde: xi.
-	maxY := yi max: maxY.
-	curvePoints add: xi@yi.
-	[ xi < maxData ] whileTrue: [
-		xi := xi + step.
-		yi := self kde: xi. 
-		curvePoints add: xi@yi.
-		maxY := yi max: maxY.
-	].
-		
-	"Calculate right side"
-	[ yi > epsilon ] whileTrue: [
-		xi := xi + step.
-		yi := self kde: xi. 
-		curvePoints add: xi@yi.
-		maxY := yi max: maxY.
-	].
-	maxXDomain := xi.
-	maxY := yi max: maxY.
-	xValues := { minXDomain. maxXDomain. }.
-	yValues := {0. maxY. }.
-	
-	^ curvePoints.
+	^ RSPolygon new
 ]
 
 { #category : #accessing }
@@ -155,27 +119,42 @@ RSDensityPlot >> densityCurveSample: aCollection [
 	^ aCollection collect: [ :value | (self kde: value) ]
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 RSDensityPlot >> initialize [
 	super initialize.
-	kernel := self defaultKernel.
-	bandwidth := self defaultBandwidth.
+	kernelDensity := self defaultKernelDensity.
 ]
 
 { #category : #accessing }
 RSDensityPlot >> kde: aNumber [
-	^ ((RSKernelDensity kernel: kernel data: data) bandwidth: bandwidth) kde: aNumber.
+	^ kernelDensity kde: aNumber.
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSDensityPlot >> kernel [
-	^ kernel.
+	^ kernelDensity kernel.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+RSDensityPlot >> kernel: anRSKernelFunction [
+	kernelDensity kernel: anRSKernelFunction.
+	self computeCurvePoints.
+]
+
+{ #category : #accessing }
+RSDensityPlot >> kernelDensity [
+	^ kernelDensity.
+]
+
+{ #category : #accessing }
+RSDensityPlot >> kernelDensity: anRSKernelDensity [
+	kernelDensity := anRSKernelDensity.
+	self computeCurvePoints.
+]
+
+{ #category : #opening }
 RSDensityPlot >> open [
 	chart := RSChart new.
-	self densityCurve.
 	chart add: self.
 	chart
 		extent: 250 @ 200;
@@ -186,17 +165,16 @@ RSDensityPlot >> open [
 
 { #category : #rendering }
 RSDensityPlot >> renderIn: canvas [
-	| polygon curve firstPoint lastPoint closingPointStart closingPointEnd |
-	polygon := RSPolygon new.
-	curve := self densityCurve.
-	firstPoint := curve first.
-	lastPoint := curve last.
+	| curve firstPoint lastPoint closingPointStart closingPointEnd |
+	area := self shape copy.
+	firstPoint := curvePoints first.
+	lastPoint := curvePoints last.
 	closingPointStart := firstPoint x @ 0.
 	closingPointEnd := lastPoint x @ 0.
-	curve := curve asOrderedCollection.
+	curve := curvePoints copy.
 	curve addFirst: closingPointStart.
 	curve add: closingPointEnd.
 	lastPoint := curve last.
-	polygon points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
-	canvas add: polygon.
+	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
+	canvas add: area.
 ]
