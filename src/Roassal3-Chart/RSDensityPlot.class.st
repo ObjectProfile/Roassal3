@@ -66,6 +66,12 @@ RSDensityPlot >> bandwidth: aNumber [
 	
 ]
 
+{ #category : #rendering }
+RSDensityPlot >> beforeRenderingIn: aChart [
+	self densityCurve.
+	super beforeRenderingIn: aChart.
+]
+
 { #category : #initialization }
 RSDensityPlot >> createdShapes [
 	^ { data }
@@ -79,8 +85,6 @@ RSDensityPlot >> data [
 { #category : #accessing }
 RSDensityPlot >> data: aCollection [
 	data := aCollection.
-	xValues := #(0 50).
-	yValues := #(0 0.05).
 ]
 
 { #category : #accessing }
@@ -100,11 +104,49 @@ RSDensityPlot >> defaultShape [
 
 { #category : #rendering }
 RSDensityPlot >> densityCurve [
-	| xs yi |
-	xs := 0 to: 50 by: 0.5.
-	^ xs collect: [ :d | 
-		yi := self kde: d. 
-		d@yi.].
+	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain |
+
+	maxData := data max.
+	minData := data min.
+	curvePoints := OrderedCollection new.
+	epsilon := 0.000001.
+	step := 0.5.
+
+	"Calculate left side"
+	xi := minData.
+	yi := self kde: xi.
+	curvePoints add: xi@yi.
+	[ yi > epsilon ] whileTrue: [
+		yi := self kde: xi. 
+		xi := xi - step.
+		curvePoints addFirst: xi@yi.
+	].
+	minXDomain := xi.
+
+	"Calculate middle"
+	xi := minData.
+	yi := self kde: xi.
+	curvePoints add: xi@yi.
+	[ xi < maxData ] whileTrue: [
+		yi := self kde: xi. 
+		xi := xi + step.
+		curvePoints add: xi@yi.
+	].
+		
+	"Calculate right side"
+	xi := maxData.
+	yi := self kde: xi.
+	curvePoints add: xi@yi.
+	[ yi > epsilon ] whileTrue: [
+		yi := self kde: xi. 
+		xi := xi + step.
+		curvePoints add: xi@yi.
+	].
+	maxXDomain := xi.
+	xValues := { minXDomain. maxXDomain }.
+	yValues := #(0 0.05).
+	
+	^ curvePoints.
 ]
 
 { #category : #accessing }
