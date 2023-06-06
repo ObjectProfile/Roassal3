@@ -100,3 +100,14 @@ RSDensityPlotTest >> testSetBandwidth [
 	densityPlot bandwidth: 4.
 	self assert: densityPlot bandwidth equals: 4.
 ]
+
+{ #category : #tests }
+RSDensityPlotTest >> testSetLabels [
+	| densityPlot data window |
+	data := #(1 2 2 2 3 4).
+	densityPlot := RSDensityPlot data: data.
+ 	densityPlot xlabel: 'x label'; ylabel: 'y label'; title:'Density plot'.
+	self assert: densityPlot xlabel equals: 'x label'.
+	self assert: densityPlot ylabel equals: 'y label'.
+	self assert: densityPlot title equals: 'Density plot'.
+]

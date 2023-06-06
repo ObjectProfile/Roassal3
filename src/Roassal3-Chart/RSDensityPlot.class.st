@@ -5,7 +5,10 @@ Class {
 		'data',
 		'kernelDensity',
 		'curvePoints',
-		'area'
+		'area',
+		'xlabel',
+		'ylabel',
+		'title'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -67,6 +70,16 @@ RSDensityPlot class >> exampleDensityPlotCreateWithKernelDesity [
 			color: Color blue; 
 			width: 2;
 			dashArray: #(2 4)).
+	^ densityPlot open.
+]
+
+{ #category : #examples }
+RSDensityPlot class >> exampleDensityPlotWithLabels [
+	| densityPlot data kernelDensity |
+	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
+	densityPlot := self data: data.
+	densityPlot bandwidth: 10.
+	densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwith:10)'.
 	^ densityPlot open.
 ]
 
@@ -187,7 +200,10 @@ RSDensityPlot >> open [
 	chart
 		extent: 250 @ 200;
 		add: RSHorizontalTick new;
-		add: RSVerticalTick new.
+		add: RSVerticalTick new;
+		ylabel: self ylabel;
+		xlabel: self xlabel;
+		title: self title.
 	^ chart open
 ]
 
@@ -205,4 +221,34 @@ RSDensityPlot >> renderIn: canvas [
 	lastPoint := curve last.
 	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: area.
+]
+
+{ #category : #accessing }
+RSDensityPlot >> title [
+	^ title.
+]
+
+{ #category : #accessing }
+RSDensityPlot >> title: aString [
+	title := aString.
+]
+
+{ #category : #accessing }
+RSDensityPlot >> xlabel [
+	^ xlabel
+]
+
+{ #category : #accessing }
+RSDensityPlot >> xlabel: aString [
+	xlabel := aString
+]
+
+{ #category : #accessing }
+RSDensityPlot >> ylabel [
+	^ ylabel
+]
+
+{ #category : #accessing }
+RSDensityPlot >> ylabel: aString [
+	ylabel := aString
 ]
