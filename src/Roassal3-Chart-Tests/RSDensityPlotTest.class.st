@@ -27,6 +27,18 @@ RSDensityPlotTest >> testDataIsACollectionOfNumbers [
 ]
 
 { #category : #tests }
+RSDensityPlotTest >> testDefaultColor [
+	| densityPlot data kernelDensity window |
+	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
+	kernelDensity := RSKernelDensity data: data.
+	kernelDensity bandwidth: 10.
+	densityPlot := RSDensityPlot kernelDensity: kernelDensity.
+	window := densityPlot open. "area assigned on plot open"
+	self assert: densityPlot area color equals: densityPlot defaultAreaColor.
+	window delete.
+]
+
+{ #category : #tests }
 RSDensityPlotTest >> testDensityPlotDefaultValues [
 	| densityPlot data |
 	data := #(1 2 2 2 3 4).

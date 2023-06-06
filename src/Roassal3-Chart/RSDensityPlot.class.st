@@ -129,13 +129,28 @@ RSDensityPlot >> data: aCollection [
 ]
 
 { #category : #defaults }
+RSDensityPlot >> defaultAreaColor [
+	^ Color r:227 g:218 b:246 range: 255.
+	
+]
+
+{ #category : #defaults }
 RSDensityPlot >> defaultKernelDensity [
 	^ RSKernelDensity new.
+]
+
+{ #category : #defaults }
+RSDensityPlot >> defaultLineColor [
+	^ Color r:152 g:122 b:223 range: 255.
 ]
 
 { #category : #initialization }
 RSDensityPlot >> defaultShape [
 	^ RSPolygon new
+		color: self defaultAreaColor;
+		border: (RSBorder new 
+			color: self defaultLineColor; 
+			width: 2).
 ]
 
 { #category : #initialization }
