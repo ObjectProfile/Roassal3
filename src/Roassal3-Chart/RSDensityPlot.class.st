@@ -67,7 +67,7 @@ RSDensityPlot class >> exampleDensityPlotCreateWithKernelDesity [
 	densityPlot shape
 		color: Color blue translucent;
 		border: (RSBorder new 
-			color: Color blue; 
+			color: Color red; 
 			width: 2;
 			dashArray: #(2 4)).
 	^ densityPlot open.
@@ -98,7 +98,7 @@ RSDensityPlot >> area [
 
 { #category : #accessing }
 RSDensityPlot >> areaColor [
-	^ area color.
+	^ self computeColor.
 ]
 
 { #category : #accessing }
@@ -112,12 +112,6 @@ RSDensityPlot >> bandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
 	self computeCurvePoints.
 	
-]
-
-{ #category : #'public - shape' }
-RSDensityPlot >> color: aColor [
-	area color: aColor.
-	"Improvement TO DO: Use color palletes to calculate line and areaColor"
 ]
 
 { #category : #private }
@@ -163,19 +157,15 @@ RSDensityPlot >> defaultLineColor [
 ]
 
 { #category : #initialization }
-RSDensityPlot >> defaultShape [
+RSDensityPlot >> defaultShape [ 
 	^ RSPolygon new
-		color: self defaultAreaColor;
-		border: (RSBorder new 
-			color: self defaultLineColor; 
-			width: 2).
+		noPaint.
 ]
 
 { #category : #initialization }
 RSDensityPlot >> initialize [
 	super initialize.
 	kernelDensity := self defaultKernelDensity.
-	area := self shape copy.
 ]
 
 { #category : #accessing }
@@ -223,6 +213,7 @@ RSDensityPlot >> open [
 RSDensityPlot >> renderIn: canvas [
 	| curve firstPoint lastPoint closingPointStart closingPointEnd |
 	area := self shape copy.
+	area color: self computeColor.
 	firstPoint := curvePoints first.
 	lastPoint := curvePoints last.
 	closingPointStart := firstPoint x @ 0.
