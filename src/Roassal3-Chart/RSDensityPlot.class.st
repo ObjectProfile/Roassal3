@@ -142,7 +142,7 @@ RSDensityPlot >> data: aCollection [
 
 { #category : #defaults }
 RSDensityPlot >> defaultAreaColor [
-	^ Color r:188 g:189 b:220 range: 255.
+	^ area color.
 	
 ]
 
