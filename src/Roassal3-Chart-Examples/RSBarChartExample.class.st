@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 RSBarChartExample >> example01TwoBars [
+
 	<script: 'self new example01TwoBars open'>
 	| c p p2 x y size |
 	x := 0.0 to: 2 count: 10.
@@ -18,28 +19,27 @@ RSBarChartExample >> example01TwoBars [
 	size := 6.
 	p barSize: size.
 	p barOffset: size / 2.
-	p2 := RSBarPlot new x: x y: y +0.5.
+	p2 := RSBarPlot new x: x y: y + 0.5.
 	p2 barSize: size.
 	p2 barOffset: size / -2.
 	c addPlot: p.
 	c addPlot: p2.
-	c addDecoration: (RSHorizontalTick new
-		doNotUseNiceLabel;
-		numberOfTicks: x size - 1;
-		asFloat: 5;
-		useVerticalLabel;
-		yourself).
+	c horizontalTick doNotUseNiceLabel;
+			 numberOfTicks: x size - 1;
+			 asFloat: 5;
+			 useVerticalLabel.
 
 	c build.
 	p bars @ RSPopup.
 
 	p2 bars
-		when: RSMouseEnter do: [ :evt |
+		when: RSMouseEnter
+		do: [ :evt |
 			| color |
 			color := Color random.
 			p2 bars do: [ :shape | shape color: color ].
-			evt signalUpdate.
-		 ].
+			evt signalUpdate ]
+		for: self.
 	^ c canvas
 ]
 
@@ -131,8 +131,8 @@ RSBarChartExample >> example03TilePaint [
 		lb text: (labels at: index) withBoxColor: color.
 		].
 
-	c addDecoration: (RSHorizontalTick new fromNames: #(Math Science); labelRotation: 0 ).
-	c addDecoration: (RSVerticalTick new numberOfTicks: 5).
+	c horizontalTick fromNames: #(Math Science); labelRotation: 0.
+	c verticalTick numberOfTicks: 5.
 	c ylabel: 'Number of students'.
 	c xlabel: 'Class'.
 	c build.
@@ -154,8 +154,8 @@ RSBarChartExample >> example04VerticalStack [
 	c barHeights: menMeans.
 	(c barHeights: womenMeans)
 		bottom: menMeans.
-	c addDecoration: (RSHorizontalTick new fromNames: #(Day1 Day2 Day3 Day4 Day5)).
-	c addDecoration: (RSVerticalTick new integer).
+	c horizontalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
+	c verticalTick integer.
 	c ylabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
@@ -179,8 +179,8 @@ RSBarChartExample >> example05HorizontalStack [
 	c barWidths: menMeans.
 	(c barWidths: womenMeans)
 		left: menMeans.
-	c addDecoration: (RSHorizontalTick new integer).
-	c addDecoration: (RSVerticalTick new fromNames: #(Day1 Day2 Day3 Day4 Day5)).
+	c horizontalTick integer.
+	c verticalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
 	c xlabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
@@ -229,30 +229,33 @@ RSBarChartExample >> example06BarAnimation [
 
 { #category : #examples }
 RSBarChartExample >> example07DoubleBar [
+
 	<script: 'self new example07DoubleBar open'>
 	| c classes x1 x2 y plot title |
-
 	c := RSChart new.
-	classes := RSShape withAllSubclasses asOrderedCollection
-		sorted: [:a :b | a name<b name ].
+	classes := RSShape withAllSubclasses asOrderedCollection sorted: [
+		           :a
+		           :b | a name < b name ].
 	x1 := classes collect: #numberOfMethods.
 	x2 := classes collect: #numberOfVariables.
 	y := 1 to: classes size.
 	c addPlot: (plot := RSDoubleBarPlot new
-		x1: x1 x2: x2 y: y;
-		yourself).
+			         x1: x1 x2: x2 y: y;
+			         yourself).
 
-	c addDecoration: (RSHorizontalTick new numberOfTicks: 10).
-	c addDecoration: (RSHorizontalTopTick new values: x2; numberOfTicks: 10).
+	c horizontalTick numberOfTicks: 10.
+	c addDecoration: (RSHorizontalTopTick new
+			 values: x2;
+			 numberOfTicks: 10).
 
 	c xlabel: 'Number Of Methods'.
 	c xlabelTop: 'Number Of Variables'.
 
-	c addDecoration: (RSVerticalTick new fromNames: (classes collect: #name)).
+	c verticalTick fromNames: (classes collect: #name).
 	c addDecoration: (RSVerticalRightTick new
-		values: (1 to: classes size);
-		numberOfTicks: 10;
-		fromNames: (classes collect: #linesOfCode)).
+			 values: (1 to: classes size);
+			 numberOfTicks: 10;
+			 fromNames: (classes collect: #linesOfCode)).
 
 	c ylabel: 'Classes'.
 	c ylabelRight: 'Number of lines Of code'.
@@ -263,9 +266,9 @@ RSBarChartExample >> example07DoubleBar [
 		withBorder.
 
 	c build.
-	(plot bars, plot bars2) @ RSPopup.
+	plot bars , plot bars2 @ RSPopup.
 	title label
 		addInteraction: (RSPopup text: 'Click to inspect');
-		when: RSMouseClick do: [ :evt | classes inspect ].
+		when: RSMouseClick do: [ :evt | classes inspect ] for: self.
 	^ c canvas
 ]

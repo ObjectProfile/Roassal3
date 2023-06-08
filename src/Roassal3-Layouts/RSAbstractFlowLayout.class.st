@@ -1,18 +1,19 @@
 "
-Abstract class for flow layouts.
-I define the maximum width, gap size and alignment (`RSAlignment`)
+I contain gap distance size between each element, in vertical and horizontal axis.
+### Variables
+
+- horizontalGap, the horizontal distance size between elements in the layout
+- verticalGap, the vertical distance size between elements in the layout
+- gapSize, a number used to change both values, vertical and horizontal
 "
 Class {
 	#name : #RSAbstractFlowLayout,
-	#superclass : #RSLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
 		'maxWidth',
-		'gapSize',
-		'alignment',
-		'horizontalGap',
-		'verticalGap'
+		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
 
 { #category : #public }
@@ -50,11 +51,6 @@ RSAbstractFlowLayout >> alignment: anObject [
 ]
 
 { #category : #configuration }
-RSAbstractFlowLayout >> defaultGapSize [
-	^ 5
-]
-
-{ #category : #configuration }
 RSAbstractFlowLayout >> defaultMaxWidth [
 	^ [ :shapes |
 		(shapes size < 4) 
@@ -71,7 +67,7 @@ RSAbstractFlowLayout >> doExecute: shapes [
 
 	| lines align mocks |
 	shapes ifEmpty: [ ^ self ].
-	mocks := shapes collect: [ :shape | RSMockShape new realShape: shape ].
+	mocks := RSMockShape shapes: shapes.
 	lines := self linesFor: mocks.
 	align := RSAlignment new.
 	lines do: [ :line |
@@ -81,36 +77,10 @@ RSAbstractFlowLayout >> doExecute: shapes [
 	mocks do: [:mock | mock applyToRealElement ]
 ]
 
-{ #category : #accessing }
-RSAbstractFlowLayout >> gapSize [
-	^ gapSize
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> gapSize: aSizeInPixels [
-	gapSize := aSizeInPixels.
-	self horizontalGap: gapSize.
-	self verticalGap: gapSize.
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> horizontalGap [
-
-	^ horizontalGap
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> horizontalGap: aNumber [
-
-	horizontalGap := aNumber
-]
-
 { #category : #initialization }
 RSAbstractFlowLayout >> initialize [
 	super initialize.
-	self 
-		maxWidth: self defaultMaxWidth;
-		gapSize: self defaultGapSize
+	self maxWidth: self defaultMaxWidth
 ]
 
 { #category : #hook }
@@ -126,16 +96,4 @@ RSAbstractFlowLayout >> maxWidth [
 { #category : #accessing }
 RSAbstractFlowLayout >> maxWidth: aSizeInPixels [
 	maxWidth := aSizeInPixels
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> verticalGap [
-
-	^ verticalGap
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> verticalGap: aNumber [
-
-	verticalGap := aNumber
 ]

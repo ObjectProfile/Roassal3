@@ -199,6 +199,7 @@ RSScrollBarsCanvasInteraction >> updateAnimation [
 		onStepDo: [ :t | canvas signalUpdate ];
 		when: RSAnimationLoopEvent do: [ 
 			canvas addAnimation: hideAnimation ]
+		for: self
 ]
 
 { #category : #hooks }

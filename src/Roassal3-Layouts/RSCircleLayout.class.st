@@ -10,11 +10,11 @@ For more information, see the class methods and instance variables of RSCircleLa
 Class {
 	#name : #RSCircleLayout,
 	#superclass : #RSAbstractCircleLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Circle'
 }
 
 { #category : #examples }
-RSCircleLayout class >> example [
+RSCircleLayout class >> example1 [
 	| aLayout objects |
 	aLayout := self new.
 	aLayout center: 200@200.
@@ -25,6 +25,21 @@ RSCircleLayout class >> example [
 		addAll: objects;
 		@ RSCanvasController;
 		open
+]
+
+{ #category : #examples }
+RSCircleLayout class >> example2 [
+	| nodes canvas shapes |
+	nodes := (1 to: 5).
+
+	canvas := RSCanvas new.
+	shapes := RSCircle models: nodes.
+	shapes size: 30.
+	canvas addAll: shapes.
+
+	self new radius: 20; on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas open
 ]
 
 { #category : #'instance creation' }
@@ -40,6 +55,7 @@ RSCircleLayout >> doExecute: shapes [
 	angleInc := self computeIncrementalAngleFor: shapes.
 	angle := self initialAngle.
 	center := self computeCenter: rad.
+	
 	shapes do: [ :shape |
 		| point |
 		point := center + (Point r: rad theta: angle).

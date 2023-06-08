@@ -28,13 +28,15 @@ RSPieChartExample class >> defaultLayout [
 
 { #category : #initialization }
 RSPieChartExample >> initializePresenters [
+
 	| org selectedItem |
 	droplist := self instantiate: SpDropListPresenter.
 	org := RPackage organizer.
 	packages := (org packageNames
-		select: [ :s | '*Roassal3*' match: s ]
-		thenCollect: [ :s | org packageNamed: s ])
-		sorted: [ :a :b | a linesOfCode > b linesOfCode ].
+		             select: [ :s | '*Roassal3*' match: s ]
+		             thenCollect: [ :s | org packageNamed: s ]) sorted: [
+		            :a
+		            :b | a linesOfCode > b linesOfCode ].
 	totalSum := packages max: #linesOfCode.
 	droplist
 		items: packages;
@@ -45,16 +47,17 @@ RSPieChartExample >> initializePresenters [
 	chart script: [ :aCanvas |
 		aCanvas
 			when: RSExtentChangedEvent
-			do: [ aCanvas edges copy do: #remove.
+			do: [
+				aCanvas edges copy do: #remove.
 				aCanvas nodes copy do: #remove.
-				self visualizeChart: aCanvas package: selectedItem ] ].
+				self visualizeChart: aCanvas package: selectedItem ]
+			for: self ].
 	pie script: [ :view | self visualizePie: view package: selectedItem ].
 
 	droplist whenSelectedItemChangedDo: [ :pkg |
 		selectedItem := pkg.
 		chart refresh.
-		pie refresh.
-		 ]
+		pie refresh ]
 ]
 
 { #category : #initialization }
@@ -109,6 +112,7 @@ RSPieChartExample >> visualizeChart: canvas package: pkg [
 
 { #category : #initialization }
 RSPieChartExample >> visualizePie: canvas package: pkg [
+
 	| b rect max |
 	b := RSPie new.
 	b container: canvas.
@@ -119,19 +123,23 @@ RSPieChartExample >> visualizePie: canvas package: pkg [
 		segmentSpacing: 0.1.
 	b sliceColor: NSScale google20.
 	b
-		objects: (pkg definedClasses sorted: [:x :y | x linesOfCode < y linesOfCode ]);
+		objects:
+			(pkg definedClasses sorted: [ :x :y |
+					 x linesOfCode < y linesOfCode ]);
 		slice: #linesOfCode;
 		build.
 	RSRotatedPieLabelDecorator on: b.
 	b shapes @ (RSPopup text: [ :cls |
-		cls name, String cr, cls linesOfCode asString, 'LOC' ] ).
-	canvas addShape: (RSLabel new
-		text: pkg linesOfCode asString,'LOC').
+		 cls name , String cr , cls linesOfCode asString , 'LOC' ]).
+	canvas addShape: (RSLabel new text: pkg linesOfCode asString , 'LOC').
 	rect := canvas encompassingRectangle.
 	max := rect origin x abs max: rect corner x.
-	canvas when: RSExtentChangedEvent do: [
-		canvas camera
-			zoomToFit: canvas extent
-			rectangle: (Rectangle floatCenter: 0@0 extent: max * 2@0).
-		canvas signalUpdate ]
+	canvas
+		when: RSExtentChangedEvent
+		do: [
+			canvas camera
+				zoomToFit: canvas extent
+				rectangle: (Rectangle floatCenter: 0 @ 0 extent: max * 2 @ 0).
+			canvas signalUpdate ]
+		for: self
 ]

@@ -41,3 +41,4 @@ jobs:
           baseline: 'Roassal3'
           group: 'Full'
           tests: 'Roassal3'
+          pharo: 'pharo11'

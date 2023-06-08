@@ -18,6 +18,14 @@ Class {
 	#category : #'Roassal3-Layouts-Util'
 }
 
+{ #category : #accessing }
+RSMockShape class >> shapes: aCollection [
+	^ aCollection collect: [ :shape | 
+		self new 
+			realShape: shape;
+			yourself ]
+]
+
 { #category : #actions }
 RSMockShape >> addWeight [
 	weight := weight + 1

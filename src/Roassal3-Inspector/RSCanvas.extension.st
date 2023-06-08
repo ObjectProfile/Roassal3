@@ -1,6 +1,13 @@
 Extension { #name : #RSCanvas }
 
 { #category : #'*Roassal3-Inspector' }
+RSCanvas >> asPresenter [
+	^ SpRoassal3InspectorPresenter new
+		canvas: self;
+		yourself
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new

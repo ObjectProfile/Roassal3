@@ -82,6 +82,7 @@ RSForceLayoutInSpacesBuilder >> dragEnd: evt [
 
 { #category : #accessing }
 RSForceLayoutInSpacesBuilder >> example01 [
+
 	<script: 'self new example01 open'>
 	| b prop r |
 	b := self class new.
@@ -92,19 +93,19 @@ RSForceLayoutInSpacesBuilder >> example01 [
 	r := Random new.
 	b canvas newAnimation
 		repeat;
-		onStepDo: [ :t | | s space |
+		onStepDo: [ :t |
+			| s space |
 			r next < 0.01 ifTrue: [
-				s := b shapes atRandom.
-				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
+					s := b shapes atRandom.
+					space := b canvas shapeFromModel:
+							         (2 to: b numberOfSpaces) atRandom.
 
-				b canvas newAnimation
-					duration: 500 milliSeconds;
-					from: s position;
-					to: space position;
-					on: s set: #position:;
-					when: RSAnimationEndEvent do: [ b dragEnd: s ].
-				].
-			 ].
+					b canvas newAnimation
+						duration: 500 milliSeconds;
+						from: s position;
+						to: space position;
+						on: s set: #position:;
+						when: RSAnimationEndEvent do: [ b dragEnd: s ] for: self ] ].
 	^ b canvas
 ]
 

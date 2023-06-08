@@ -91,4 +91,5 @@ SpRoassal3InspectorPresenter >> whenActivatedDo: aBlock [
 	canvas
 		when: RSShapeAddedEvent
 		do: [ :evt | evt shape @ context ]
+		for: self
 ]

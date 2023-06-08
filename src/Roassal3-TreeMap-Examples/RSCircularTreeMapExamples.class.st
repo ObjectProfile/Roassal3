@@ -60,6 +60,7 @@ RSCircularTreeMapExamples >> example02Morph [
 { #category : #examples }
 RSCircularTreeMapExamples >> example03Evolving [
 	"original example created by Alexandre Bergel for Roassal1 ;)"
+
 	<script: 'self new example03Evolving open'>
 	| canvas t |
 	canvas := RSCanvas new.
@@ -69,23 +70,26 @@ RSCircularTreeMapExamples >> example03Evolving [
 	t := 0.
 
 	canvas add: (RSLabel new
-		text: '+1';
-		isFixed: true;
-		position: 20@20;
-		when: RSMouseClick do: [ :evt |
-			t := t + 1.
-			canvas shapes copy do: #remove.
-			"RSCircularTreeMap new"
-			RSTreeMap new
-				in: [ :b |b boxShape noPaint ];
-				container: canvas;
-				leafWeight: #yourself;
-				explore: 1 using: [:n | {n * 2. n * 2 + 1} select: [ :each | each <= t ] ];
-				build.
-			canvas shapes @ RSPopup.
-			canvas zoomToFit.
-			canvas signalUpdate.
-			];
-		yourself).
+			 text: '+1';
+			 isFixed: true;
+			 position: 20 @ 20;
+			 when: RSMouseClick do: [ :evt |
+				 t := t + 1.
+				 canvas shapes copy do: #remove.
+				 "RSCircularTreeMap new"
+				 RSTreeMap new
+					 in: [ :b | b boxShape noPaint ];
+					 container: canvas;
+					 leafWeight: #yourself;
+					 explore: 1 using: [ :n |
+						 {
+							 (n * 2).
+							 (n * 2 + 1) } select: [ :each | each <= t ] ];
+					 build.
+				 canvas shapes @ RSPopup.
+				 canvas zoomToFit.
+				 canvas signalUpdate ]
+			 for: self;
+			 yourself).
 	^ canvas
 ]

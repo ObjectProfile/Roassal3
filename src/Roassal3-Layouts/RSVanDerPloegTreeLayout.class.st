@@ -31,7 +31,7 @@ RSVanDerPloegTreeLayout >> horizontalGapAmong: aShape and: anotherShape [
 	^ self horizontalGap
 ]
 
-{ #category : #'hook-private' }
+{ #category : #'private - hook' }
 RSVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint y breadth: aPoint x

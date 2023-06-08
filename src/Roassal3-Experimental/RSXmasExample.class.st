@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 RSXmasExample >> background [
+
 	<script: 'self new background open'>
 	| v extent px perlin r period length |
 	v := RSCanvas new.
@@ -21,38 +22,41 @@ RSXmasExample >> background [
 	px := 0.
 	perlin := NSPerlinNoise3 new octaves: 3.
 
-	v addAll: ((1 to: extent y /6) collect: [:n |
-		RSPolyline new
-			width: 0.5
-		] ).
+	v addAll:
+		((1 to: extent y / 6) collect: [ :n | RSPolyline new width: 0.5 ]).
 	v newAnimation
 		loops: extent x;
 		duration: 10 milliSeconds;
 		when: RSAnimationLoopEvent do: [
-			v edges do: [ :e | | x y n points m |
-				x := px.
-				y := extent y * r next.
-				n := perlin noise: x * period and: y * period.
-				e color: ((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
-
-				points := OrderedCollection new.
-				points add: x@y.
-				m := 0.
-				[ m < length and:  [y >= 0 and: [ y <= extent y ] ]] whileTrue: [
+			v edges do: [ :e |
+					| x y n points m |
+					x := px.
+					y := extent y * r next.
 					n := perlin noise: x * period and: y * period.
-					x := x + (n * 15) cos.
-					y := y + (n * 15) sin.
-					points add: x@y.
-					m := m + 1 ].
-				e controlPoints: points.
-				].
-			v signalUpdate.
-			px := px + 10
-			].
+					e color:
+							((Color h: -210 + (n * 600) s: 1 l: 8 * n * n * n) alpha: 0.05).
 
-	v when: RSExtentChangedEvent do: [ v camera
-		zoomToFit: v extent
-		rectangle: (Rectangle floatCenter:  extent / 2 extent: extent) ].
+					points := OrderedCollection new.
+					points add: x @ y.
+					m := 0.
+					[ m < length and: [ y between: 0 and: extent y ] ] whileTrue: [
+							n := perlin noise: x * period and: y * period.
+							x := x + (n * 15) cos.
+							y := y + (n * 15) sin.
+							points add: x @ y.
+							m := m + 1 ].
+					e controlPoints: points ].
+			v signalUpdate.
+			px := px + 10 ]
+		for: self.
+
+	v
+		when: RSExtentChangedEvent
+		do: [
+			v camera
+				zoomToFit: v extent
+				rectangle: (Rectangle floatCenter: extent / 2 extent: extent) ]
+		for: self.
 
 	^ v
 ]

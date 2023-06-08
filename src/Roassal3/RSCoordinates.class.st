@@ -47,11 +47,21 @@ RSCoordinates >> matrixFor: anRSCamera [
 
 { #category : #public }
 RSCoordinates >> visibleRectangleFor: anRSCamera [
-	| matrix rectangle |
+
+	| rectangle |
+	"returns the visible rectangle in the canvas space"
+	rectangle := 0 @ 0 corner: anRSCamera canvas extent.
+
+	^ self visibleRectangleFor: anRSCamera rectangle: rectangle
+]
+
+{ #category : #public }
+RSCoordinates >> visibleRectangleFor: anRSCamera rectangle: aRectangle [
+
+	| matrix |
 	"returns the visible rectangle in the canvas space"
 	matrix := self matrixFor: anRSCamera.
-	rectangle := 0@0 corner: anRSCamera canvas extent.
-	
-	^ Rectangle encompassing: ( rectangle corners collect: [:point | 
-		matrix inverseTransform: point]).
+
+	^ Rectangle encompassing: (aRectangle corners collect: [ :point | 
+			   matrix inverseTransform: point ])
 ]

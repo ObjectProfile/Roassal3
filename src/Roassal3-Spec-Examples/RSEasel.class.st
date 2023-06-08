@@ -17,7 +17,7 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : #'Roassal3-Spec-Examples-Menu'
 }
 
 { #category : #layout }

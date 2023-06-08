@@ -127,6 +127,17 @@ Class {
 }
 
 { #category : #'public - creation' }
+RSComposite class >> boxesForModels: aCollection [
+	| box label |
+	box := RSBox new.
+	box color: Color white.
+	box border: (RSBorder new joinMiter; color: Color black).
+	label := RSLabel new.
+	label color: Color black.
+	^ self models: aCollection box: box label: label
+]
+
+{ #category : #'public - creation' }
 RSComposite class >> model: anObject forIt: twoArgsBlock [
 	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the twoArgsBlock. The variable twoArgsBlock points to a two argument block. The first argument is the object model, and the second argument is the composite.
 
@@ -146,6 +157,21 @@ c open
 "
 
 	^ (self models: (Array with: anObject) forEach: twoArgsBlock) first
+]
+
+{ #category : #'public - creation' }
+RSComposite class >> models: aCollection box: boxShape label: labelShape [
+	^ aCollection collect: [ :each |
+		| box label |
+		box := boxShape copy.
+		label := labelShape copy.
+		label text: each asString.
+		box extent: label extent + 5.
+		box position: 0@0.
+		label position: 0@0.
+		{ box. label } asShape
+			model: each;
+			yourself ] as: RSGroup
 ]
 
 { #category : #'public - creation' }

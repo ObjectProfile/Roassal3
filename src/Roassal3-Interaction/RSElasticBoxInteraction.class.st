@@ -6,7 +6,7 @@ this interaction works with an announcer. with this events `RSSelectionChangedEv
 "
 Class {
 	#name : #RSElasticBoxInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
+	#superclass : #RSAbstractControlCanvasInteraction,
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
@@ -17,7 +17,8 @@ Class {
 		'selectedShapes',
 		'startPosition',
 		'shouldUseNegativeBox',
-		'targetShapes'
+		'targetShapes',
+		'cameraDelta'
 	],
 	#category : #'Roassal3-Interaction-ElasticBox'
 }
@@ -80,6 +81,57 @@ RSElasticBoxInteraction >> boxUpdated: event [
 	event signalUpdate
 ]
 
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> cameraMin: min max: max value: value [
+
+	(value between: min and: max) ifTrue: [ ^ 0 ].
+	value < min ifTrue: [ ^ value - min ].
+	^ value - max
+]
+
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> computeCameraDelta: event [
+
+	| padding visibleRect position x y |
+	padding := -10 asMargin.
+	visibleRect := event camera originMode
+		               visibleRectangleFor: event camera
+		               rectangle:
+		               (padding expandRectangle:
+			                (0 @ 0 corner: event canvas extent)).
+
+
+	position := event position.
+	x := self
+		     cameraMin: visibleRect origin x
+		     max: visibleRect corner x
+		     value: position x.
+	y := self
+		     cameraMin: visibleRect origin y
+		     max: visibleRect corner y
+		     value: position y.
+	cameraDelta := x @ y * -1
+]
+
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> createCameraAnimation: event [
+
+	| canvas animation position correct |
+	canvas := event canvas.
+	cameraDelta := 0 asPoint.
+	(canvas hasProperty: self class) ifTrue: [ 
+		(canvas propertyAt: self class) stop ].
+	animation := canvas newAnimation.
+	animation
+		repeat;
+		onStepDo: [ 
+			canvas camera translateBy: cameraDelta.
+			position := canvas camera position.
+			correct := self correctCamera: canvas camera.
+			correct = position ifFalse: [ canvas camera position: correct ].
+			canvas signalUpdate ]
+]
+
 { #category : #helper }
 RSElasticBoxInteraction >> createElasticBox: event [
 	| canvas elasticBox |
@@ -110,7 +162,8 @@ RSElasticBoxInteraction >> defaultBox [
 { #category : #'event processing' }
 RSElasticBoxInteraction >> disableDrag: event [
 	draggingCanvas := false.
-	self boxStarted: event
+	self boxStarted: event.
+	self createCameraAnimation: event
 ]
 
 { #category : #accessing }
@@ -159,9 +212,7 @@ RSElasticBoxInteraction >> noNegativeBox [
 
 { #category : #hooks }
 RSElasticBoxInteraction >> onShape: aCanvas [
-	aCanvas removeInteractionIfPresent: RSDraggableCanvasInteraction.
-	aCanvas addInteraction: (RSDraggableCanvasInteraction new
-		mouseEvent: self dragStartEvent).
+	
 	aCanvas
 		when: self dragStartEvent send: #enableDrag: to: self;
 		when: self boxStartEvent send: #disableDrag: to: self;
@@ -176,7 +227,9 @@ RSElasticBoxInteraction >> privateAnnouncer [
 
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDrag: event [
+
 	draggingCanvas ifTrue: [ ^ self ].
+	self computeCameraDelta: event.
 	self boxUpdated: event
 ]
 
@@ -184,7 +237,8 @@ RSElasticBoxInteraction >> processDrag: event [
 RSElasticBoxInteraction >> processDragEnd: event [
 	draggingCanvas
 		ifTrue: [ draggingCanvas := false ]
-		ifFalse: [ self boxEnded: event ]
+		ifFalse: [ self boxEnded: event.
+			self stopCameraAnimation: event ]
 ]
 
 { #category : #public }
@@ -210,6 +264,14 @@ RSElasticBoxInteraction >> selectedShapesWith: shape [
 { #category : #testing }
 RSElasticBoxInteraction >> shouldUseNegativeBox [
 	^ shouldUseNegativeBox
+]
+
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> stopCameraAnimation: event [
+
+	event canvas propertyAt: self class ifPresent: [ :animation | 
+		animation stop.
+		event canvas removeKey: self class ]
 ]
 
 { #category : #accessing }

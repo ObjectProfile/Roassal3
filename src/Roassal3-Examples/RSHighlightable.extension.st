@@ -68,6 +68,7 @@ RSHighlightable class >> exampleGrid2 [
 
 { #category : #'*Roassal3-Examples' }
 RSHighlightable class >> exampleInteractive [
+
 	| classes c shapes buttonReset selectedShapes highlightable lbl buttonInspect g |
 	classes := Collection withAllSubclasses.
 
@@ -75,10 +76,14 @@ RSHighlightable class >> exampleInteractive [
 	selectedShapes := RSGroup new.
 	highlightable := self new.
 	lbl := RSLabel new.
-	shapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
+	shapes := classes
+		          collect: [ :cls | RSBox new model: cls ]
+		          as: RSGroup.
 
 	c addAll: shapes.
-	RSNormalizer size shapes: shapes; normalize: #numberOfMethods.
+	RSNormalizer size
+		shapes: shapes;
+		normalize: #numberOfMethods.
 	RSFlowLayout on: shapes.
 
 	shapes @ RSPopup.
@@ -87,35 +92,43 @@ RSHighlightable class >> exampleInteractive [
 	c add: buttonReset.
 	buttonReset setAsFixed.
 	buttonReset @ self red.
-	buttonReset when: RSMouseClick do: [ :evt |
-		selectedShapes do: [ :s | highlightable restore: s selector: #color ].
-		selectedShapes := RSGroup new.
-		lbl text: ''.
-		c signalUpdate. ].
+	buttonReset
+		when: RSMouseClick
+		do: [ :evt |
+			selectedShapes do: [ :s |
+				highlightable restore: s selector: #color ].
+			selectedShapes := RSGroup new.
+			lbl text: ''.
+			c signalUpdate ]
+		for: self.
 
 	buttonInspect := RSLabel text: 'Inspect'.
 	c add: buttonInspect.
 	buttonInspect setAsFixed.
 	buttonInspect @ self red.
-	buttonInspect when: RSMouseClick do: [ :evt | selectedShapes inspect ].
+	buttonInspect
+		when: RSMouseClick
+		do: [ :evt | selectedShapes inspect ]
+		for: self.
 	c add: lbl.
 	lbl setAsFixed.
 	lbl translateTo: 90 @ 30.
 
-	g := {buttonReset . buttonInspect } asGroup.
+	g := {
+		     buttonReset.
+		     buttonInspect } asGroup.
 	RSHorizontalLineLayout on: g.
 	g translateTo: g extent / 2 + (10 @ 10).
 
-	shapes when: RSMouseClick do: [ :evt |
-		(selectedShapes includes: evt shape)
-			ifFalse: [ selectedShapes add: evt shape ].
-		highlightable
-				record: evt shape
-				selector: #color
-				value: Color red.
-		lbl text: selectedShapes size asString, ' selected shapes'.
-		c signalUpdate.
-			 ].
+	shapes
+		when: RSMouseClick
+		do: [ :evt |
+			(selectedShapes includes: evt shape) ifFalse: [
+				selectedShapes add: evt shape ].
+			highlightable record: evt shape selector: #color value: Color red.
+			lbl text: selectedShapes size asString , ' selected shapes'.
+			c signalUpdate ]
+		for: self.
 
 	c @ RSCanvasController.
 	^ c openOnce

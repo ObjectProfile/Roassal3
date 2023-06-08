@@ -6,7 +6,7 @@ I work with RSAlignment
 Class {
 	#name : #RSFlowLayout,
 	#superclass : #RSAbstractFlowLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
 
 { #category : #'as yet unclassified' }
@@ -79,9 +79,7 @@ RSFlowLayout >> linesFor: shapes [
 	| x y maxLastLineHeight nextElement maxWidthFloat lines currentLine hgap vgap |
 	hgap := self horizontalGap.
 	vgap := self verticalGap.
-	x := hgap.
-	y := vgap.
-	maxLastLineHeight := 0.
+	x := y := maxLastLineHeight := 0.
 	maxWidthFloat := self maxWidth rsValue: shapes.
 	lines := OrderedCollection new.
 	currentLine := OrderedCollection new.
@@ -93,12 +91,11 @@ RSFlowLayout >> linesFor: shapes [
 		nextElement := shapes at: (index + 1 min: shapes size).
 		(x + nextElement width) > maxWidthFloat ifTrue: [
 			lines add: currentLine.
-			x := hgap.
+			x := 0.
 			y := y + maxLastLineHeight + vgap.
 			currentLine := OrderedCollection new.
 			maxLastLineHeight := 0.
 		].
-
 	].
 	currentLine ifNotEmpty: [ lines add: currentLine ].
 	^ lines

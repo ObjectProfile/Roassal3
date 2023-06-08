@@ -1,9 +1,12 @@
+"
+I generate a random position for a given shape
+"
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayoutRandomizedPositioning,
 	#instVars : [
 		'random'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Traits'
 }
 
 { #category : #positioning }

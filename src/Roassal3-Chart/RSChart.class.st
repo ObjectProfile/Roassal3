@@ -146,9 +146,10 @@ RSChart >> decorations [
 { #category : #'accessing - defaults' }
 RSChart >> defaultContainer [
 	^ RSCanvas new
+		"when: RSExtentChangedEvent send:#updateChart: to: self;"
 		addInteraction: (RSCanvasController new
 			in: [ :controller |
-				controller zoomToFitInteraction useZoomToFitOnExtendChanged.
+				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
 				controller configuration	maxScale: 20.
 				 ];
 			yourself);
@@ -197,7 +198,10 @@ RSChart >> initialize [
 
 { #category : #initialization }
 RSChart >> initializeDecorations [
-	self spineDecoration: RSChartSpineDecoration new
+
+	self spineDecoration: RSChartSpineDecoration new.
+	self addDecoration: RSHorizontalTick new.
+	self addDecoration: RSVerticalTick new
 ]
 
 { #category : #inspector }
@@ -324,6 +328,28 @@ RSChart >> plots [
 	^ elements select: #isPlot
 ]
 
+{ #category : #removing }
+RSChart >> removeAllTicks [
+	"Remove both horizontal and vertical ticks"
+
+	self removeHorizontalTicks.
+	self removeVerticalTicks
+]
+
+{ #category : #removing }
+RSChart >> removeHorizontalTicks [
+	"Remove horizontal ticks from the chart"
+
+	elements remove: self horizontalTick
+]
+
+{ #category : #removing }
+RSChart >> removeVerticalTicks [
+	"Remove vertical ticks from the chart"
+
+	elements remove: self verticalTick
+]
+
 { #category : #hooks }
 RSChart >> renderIn: aCanvas [
 	self decorations, self plots do: [ :e | e beforeRenderingIn: self ].
@@ -382,6 +408,15 @@ c
 ```
 	"
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
+]
+
+{ #category : #'accessing - defaults' }
+RSChart >> updateChart: anEvent [
+	| canvas |
+	canvas := anEvent canvas.
+	self extent: canvas extent.
+	self update.
+	canvas zoomToFit.
 ]
 
 { #category : #accessing }

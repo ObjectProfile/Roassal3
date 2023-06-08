@@ -36,4 +36,5 @@ RSMenuActivable >> onShape: aShape [
 		menu := MenuMorph new.
 		menuBlock value: menu value: evt shape.
 		menu popUpInWorld ]
+	for: self
 ]

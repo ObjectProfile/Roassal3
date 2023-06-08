@@ -73,4 +73,5 @@ RSInspectableInteraction >> onShape: aShape [
 	aShape
 		when: RSMouseLeftClick
 		do: [ :evt | self inspectShape: aShape ]
+		for: self
 ]

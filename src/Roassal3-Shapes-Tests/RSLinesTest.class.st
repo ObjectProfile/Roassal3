@@ -83,6 +83,18 @@ RSLinesTest >> testDrawMarkers [
 ]
 
 { #category : #running }
+RSLinesTest >> testEmptyFormat [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	line format: ''.
+	self assert: line color equals: Color gray.
+	self assert: line markerStart isNil.
+]
+
+{ #category : #running }
 RSLinesTest >> testFmt [
 	| line |
 	line := RSLine new
@@ -91,11 +103,43 @@ RSLinesTest >> testFmt [
 		yourself.
 	self assert: line border style isNil.
 	self assert: line markerEnd isNil.
-	line fmt: '.^'.
+	line format: '.^'.
 	self deny: line border style dashArray isNil.
 	self deny: line markerEnd isNil.
 	self deny: line markerStart isNil.
 	self assert: line markerEnd shape color equals: line color
+]
+
+{ #category : #running }
+RSLinesTest >> testFormat [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	line format: 'r-o'.
+	self assert: line color equals: Color red.
+	self assert: line markerEnd shape class equals: RSEllipse.
+	line format: 'gs'.
+	self assert: line color equals: Color green.
+	line format: 'bs'.
+	self assert: line color equals: Color blue.
+	self assert: line markerEnd shape class equals: RSPolygon
+]
+
+{ #category : #running }
+RSLinesTest >> testFormatMarker [
+	| line markerShape|
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	line format: 'o'.
+	markerShape := line markerEnd shape.
+	self assert: markerShape class equals: RSEllipse.
+	self assert: markerShape extent equals: line markerSizeScale asPoint.
+	line format: 's'.
+	self deny: line markerEnd shape class equals: markerShape
 ]
 
 { #category : #running }
@@ -167,4 +211,19 @@ RSLinesTest >> testPolylineIncludesPoint [
 
 	self deny: (line includesPoint: 500@500).
 	self deny: (line includesPoint: 6@50)
+]
+
+{ #category : #running }
+RSLinesTest >> testStroke [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@0;
+		yourself.
+	line format: '--'.
+	self assert: line border dashArray equals: #(4 2).
+	line format: '-.'.
+	self assert: line border dashArray equals: #(4 1 1 1).
+	line format: '.'.
+	self assert: line border dashArray equals: #(1).
 ]

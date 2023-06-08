@@ -54,3 +54,11 @@ RSExtentChangedEvent >> oldExtent [
 RSExtentChangedEvent >> oldExtent: aPoint [
 	oldExtent := aPoint
 ]
+
+{ #category : #printing }
+RSExtentChangedEvent >> printOn: aStream [
+	aStream <<'newExtent: '.
+	newExtent printOn: aStream.
+	aStream << ' oldExtent:'.
+	oldExtent printOn: aStream.
+]

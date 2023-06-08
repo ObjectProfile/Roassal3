@@ -45,13 +45,11 @@ RSTimelineExample >> example01Gantt [
 		plot entries: line at: index.
 		chart addPlot: plot.
 	].
-	chart addDecoration: (RSVerticalTick new fromNames: names).
-	chart addDecoration: (RSHorizontalTick new
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 5;
 		useDiagonalLabel;
-		labelConversion: [ :v | Date year: 2021 day: v ];
-		yourself).
+		labelConversion: [ :v | Date year: 2021 day: v ].
 	chart build.
 	chart plots doWithIndex: [ :p :index |
 		p bars @ (RSPopup text: [ :assoc |
@@ -77,13 +75,11 @@ RSTimelineExample >> example02Labeled [
 		plot entries: line at: index.
 		chart addPlot: plot.
 	].
-	chart addDecoration: (RSVerticalTick new fromNames: names).
-	chart addDecoration: (RSHorizontalTick new
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 5;
 		useDiagonalLabel;
-		labelConversion: [ :v | Date year: 2021 day: v ];
-		yourself).
+		labelConversion: [ :v | Date year: 2021 day: v ].
 	chart build.
 	chart plots doWithIndex: [ :p :index |
 		p bars
@@ -111,13 +107,11 @@ RSTimelineExample >> example03ZoomInAxis [
 		 RSTimeLinePlot new
 			entries: line at: index;
 			yourself ]).
-	chart add: (RSVerticalTick new fromNames: names).
-	chart add: (RSHorizontalTick new
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 10;
 		useDiagonalLabel;
-		labelConversion: [ :day | self printDate: day ];
-		yourself).
+		labelConversion: [ :day | self printDate: day ].
 	chart add: RSZoomTickDecoration new.
 	^ chart
 ]

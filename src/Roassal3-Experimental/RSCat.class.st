@@ -15,35 +15,52 @@ Class {
 
 { #category : #building }
 RSCat >> addAnimationSlider [
+
 	| red black slider label loc layout ps durations |
-	red := RSBox new extent: 3 * pixel asPoint; color: Color red.
-	black := RSBox new extent: 18@3 * pixel; color: Color black.
-	slider := { red. black }.
+	red := RSBox new
+		       extent: 3 * pixel asPoint;
+		       color: Color red.
+	black := RSBox new
+		         extent: 18 @ 3 * pixel;
+		         color: Color black.
+	slider := {
+		          red.
+		          black }.
 	layout := RSHorizontalLineLayout new gapSize: 0.
 	layout on: slider.
 	slider := slider asGroup asShape.
 	slider isFixed: true.
-	label := RSLabel new text: '100%'; color: Color white; isFixed: true.
+	label := RSLabel new
+		         text: '100%';
+		         color: Color white;
+		         isFixed: true.
 	loc := RSLocation new
-		outer; right;
-		move: label on: slider.
-	ps := NSScale linear domain: #(0 1); range: {0. 6 }.
+		       outer;
+		       right;
+		       move: label on: slider.
+	ps := NSScale linear
+		      domain: #( 0 1 );
+		      range: { 0. 6 }.
 	durations := canvas animations collect: [ :a | a duration ].
-	slider when: RSMouseClick do: [ :evt | | p |
-		p := evt camera fromSpaceToPixel: evt position.
-		p := p x / slider width.
-		red width: p * slider width.
-		black width: (1-p)* slider width.
-		layout on: slider children.
-		slider adjustToChildren.
-		p := ps scale: p.
-		label text: (p*100) asInteger asString, '%'.
-		loc move: label on: slider.
+	slider
+		when: RSMouseClick
+		do: [ :evt |
+			| p |
+			p := evt camera fromSpaceToPixel: evt position.
+			p := p x / slider width.
+			red width: p * slider width.
+			black width: (1 - p) * slider width.
+			layout on: slider children.
+			slider adjustToChildren.
+			p := ps scale: p.
+			label text: (p * 100) asInteger asString , '%'.
+			loc move: label on: slider.
 
-		canvas animations with: durations do: [ :a :d |
-			a duration: d / p ] .
-		].
-	canvas addAll: {slider. label}
+			canvas animations with: durations do: [ :a :d | a duration: d / p ] ]
+		for: self.
+	canvas addAll: {
+			slider.
+			label }
 ]
 
 { #category : #building }

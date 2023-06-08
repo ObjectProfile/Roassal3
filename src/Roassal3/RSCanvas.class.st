@@ -44,6 +44,20 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #'instance creation' }
+RSCanvas class >> newCenterMiddleOrigin [
+	^ self new
+		originCenterMiddle;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSCanvas class >> newTopLeftOrigin [
+	^ self new
+		originTopLeft;
+		yourself
+]
+
 { #category : #antialiasing }
 RSCanvas >> aaBest [
 	self setAA: CAIRO_ANTIALIAS_BEST
@@ -272,6 +286,11 @@ RSCanvas >> deepShapesFromModels: someObjects result: result [
 ]
 
 { #category : #initialization }
+RSCanvas >> defaultExtent [
+	^ 500@500
+]
+
+{ #category : #initialization }
 RSCanvas >> defaultShapeCollection [
 	^ RSSequenceableCollection new
 ]
@@ -369,7 +388,7 @@ RSCanvas >> initialize [
 	edges := RSGroup new.
 	animations := OrderedCollection new.
 	color := Color white.
-	extent := 500@500.
+	extent := self defaultExtent.
 	camera := RSCamera new
 		canvas: self;
 		yourself

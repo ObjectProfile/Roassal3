@@ -1,20 +1,17 @@
 "
-TODO
+The `RSAbstractVerticalTreeLayout` class is an abstract base class that provides common functionality for vertical tree layout algorithms in Roassal. Vertical tree layouts arrange nodes in a tree-like structure where each level of the tree is aligned horizontally.
+
+Instances of `RSAbstractVerticalTreeLayout` can be used with `RSVerticalTree`
 "
 Class {
 	#name : #RSAbstractVerticalTreeLayout,
 	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #testing }
 RSAbstractVerticalTreeLayout class >> isAbstract [
 	^ self = RSAbstractVerticalTreeLayout
-]
-
-{ #category : #'private - hook' }
-RSAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
-	self subclassResponsibility
 ]
 
 { #category : #initialization }

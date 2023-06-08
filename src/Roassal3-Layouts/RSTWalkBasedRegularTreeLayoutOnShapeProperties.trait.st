@@ -1,6 +1,9 @@
+"
+I adds utility methods to access meta information of the layout algorithm and I store that information the the shape properties dictionary
+"
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayoutOnShapeProperties,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Traits'
 }
 
 { #category : #properties }
@@ -109,18 +112,6 @@ RSTWalkBasedRegularTreeLayoutOnShapeProperties >> levelOf: aNode [
 RSTWalkBasedRegularTreeLayoutOnShapeProperties >> levelOf: aNode put: aFloat [
 
 	^ aNode propertyAt: #vdpLevel put: aFloat
-]
-
-{ #category : #properties }
-RSTWalkBasedRegularTreeLayoutOnShapeProperties >> modOf: aNode [
-
-	^ aNode propertyAt: #mod
-]
-
-{ #category : #properties }
-RSTWalkBasedRegularTreeLayoutOnShapeProperties >> modOf: aNode put: aFloat [
-
-	^ aNode propertyAt: #mod put: aFloat
 ]
 
 { #category : #properties }
