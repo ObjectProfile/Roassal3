@@ -33,7 +33,6 @@ Class {
 	#name : #RSDensityPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'data',
 		'kernelDensity',
 		'curvePoints',
 		'area',
