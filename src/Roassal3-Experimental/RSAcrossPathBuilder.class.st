@@ -17,7 +17,7 @@ RSAcrossPathBuilder >> example01Labels [
 	<script: 'self new example01Labels open'>
 	| path |
 	self fromString: 'Roassal3 across the path'.
-	path := 'M 100 200 
+	path := 'M 100 200
              C 200 100 300   0 400 100
              C 500 200 600 300 700 200
              C 800 100 900 100 900 100'.
@@ -96,7 +96,7 @@ RSAcrossPathBuilder >> example04Labels [
 ]
 
 { #category : #public }
-RSAcrossPathBuilder >> fromString: aString [ 
+RSAcrossPathBuilder >> fromString: aString [
 	| groupOfShapes |
 	groupOfShapes := aString collect: [ :char | self labelShapeFor: char ] as: RSGroup.
 	self shapesToLayout: groupOfShapes
@@ -104,15 +104,15 @@ RSAcrossPathBuilder >> fromString: aString [
 
 { #category : #public }
 RSAcrossPathBuilder >> labelShapeFor: char [
-	^ char isSpaceSeparator 
-		ifTrue: [ 
+	^ char isSpaceSeparator
+		ifTrue: [
 			RSBox new
 				size: 7;
 				noPaint;
 				yourself ]
 		ifFalse: [
 			RSLabel new
-				text: char; 
+				text: char;
 				metricsProvider: RSPharoMetricsProvider new;
 				yourself.
 			]
@@ -124,8 +124,8 @@ RSAcrossPathBuilder >> renderIn: aCanvas [
 	aCanvas addAll: shapesToLayout.
 	aCanvas add: svgShape.
 	shapes := RSGroup withAll: shapesToLayout.
-	visitor := RSBlockSegmentsVisitor new 
-		simplePoints: [ :segment :current | 
+	visitor := RSBlockSegmentsVisitor new
+		simplePoints: [ :segment :current |
 			segment consumeShapes: shapes current: current delta: svgShape position ].
 	svgShape accept: visitor.
 	[ shapes isEmpty ] whileFalse: [ shapes removeFirst remove ]

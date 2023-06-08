@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #testing }
-RSAbstractUMLPackageRenderer class >> isAbstract [ 
+RSAbstractUMLPackageRenderer class >> isAbstract [
 
 	^self name = #RSAbstractUMLPackageRenderer
 ]
@@ -48,7 +48,7 @@ RSAbstractUMLPackageRenderer >> classFor: aClass [
 		shapes: { box. className };
 		popup;
 		browseable;
-		yourself.
+		yourself
 ]
 
 { #category : #hooks }
@@ -66,7 +66,7 @@ RSAbstractUMLPackageRenderer >> classesFor: aPackage [
 	RSFlowLayout on: shapes.
 	^ RSComposite new
 		shapes: shapes;
-		yourself.
+		yourself
 ]
 
 { #category : #defaults }
@@ -79,8 +79,8 @@ RSAbstractUMLPackageRenderer >> defaultLayout [
 
 	| defaultLayout |
 	defaultLayout := RSLayoutBuilder new.
-	defaultLayout vertical 
-		verticalGap: 100; 
+	defaultLayout vertical
+		verticalGap: 100;
 		horizontalGap: 50.
 	^defaultLayout
 ]
@@ -100,13 +100,13 @@ RSAbstractUMLPackageRenderer >> packageBoxFor: title and: classes [
 		radius: 5;
 		yourself.
 	boxTitle := RSBox new
-		position: title position; 
+		position: title position;
 		extent: title extent + 10;
 		cornerRadius: cradius;
 		border: self border;
 		color: self packageColor;
 		yourself.
-	boxClasses := RSBox new 
+	boxClasses := RSBox new
 		position: rect floatCenter;
 		extent: rect extent+10;
 		cornerRadius: cradius;
@@ -115,7 +115,7 @@ RSAbstractUMLPackageRenderer >> packageBoxFor: title and: classes [
 		yourself.
 	^ RSComposite new
 		addAll: { boxTitle. boxClasses };
-		yourself.
+		yourself
 ]
 
 { #category : #accessing }

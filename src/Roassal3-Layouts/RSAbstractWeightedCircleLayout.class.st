@@ -4,7 +4,7 @@ I am the abstract root class of weighted circle layout. Look at the class commen
 Class {
 	#name : #RSAbstractWeightedCircleLayout,
 	#superclass : #RSCircleLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Circle'
 }
 
 { #category : #testing }

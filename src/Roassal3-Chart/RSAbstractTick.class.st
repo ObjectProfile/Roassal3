@@ -5,7 +5,6 @@ Class {
 	#name : #RSAbstractTick,
 	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
-		'niceLabel',
 		'ticks',
 		'labels',
 		'labelLocation',
@@ -27,18 +26,17 @@ RSAbstractTick >> asFloat: numberOfDecimals [
 
 { #category : #rendering }
 RSAbstractTick >> beforeRenderingIn: aChart [
-	self min = self max 
-		ifTrue: [ 
-			niceLabel := self defaultNiceLabel.
-			self createXScale.
-			self createYScale.
-			^ self ].
-		
-	niceLabel := self configuration shouldUseNiceLabel 
-		ifTrue: [ self createNiceLabelIn: aChart ]
-		ifFalse: [ self defaultNiceLabel ].
+
 	self createXScale.
 	self createYScale.
+
+	self updateChartMaxAndMinValues: aChart.
+
+	"We need to recalculate the scales because in the above method,
+	updateChartMaxAndMinValues:, we change the dimensions of the chart. And now we need to
+	recalculate the scales to be consistent with the dimensions."
+	self createXScale.
+	self createYScale
 ]
 
 { #category : #accessing }
@@ -57,20 +55,9 @@ RSAbstractTick >> createLabelFor: aValue index: index [
 	| tick lbl |
 	tick := self ticks at: index.
 	lbl := self configuration createLabelFor: aValue.
-	self color ifNotNil: [ lbl color: self color ].
+	lbl color: self styler textColor.
 	self labelLocation move: lbl on: tick.
 	^ lbl
-	
-]
-
-{ #category : #accessing }
-RSAbstractTick >> createNiceLabelIn: aChart [
-	| nice |
-	nice := aChart niceGenerator 
-		searchMin: self min
-		max: self max
-		desired: self configuration numberOfTicks.
-	^ nice
 ]
 
 { #category : #rendering }
@@ -101,17 +88,6 @@ RSAbstractTick >> defaultLabelLocation [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - defaults' }
-RSAbstractTick >> defaultNiceLabel [
-	| nice |
-	nice := RSNiceLabel new.
-	nice
-		min: self min;
-		max: self max;
-		step: nice ticks / self configuration numberOfTicks.
-	^ nice
-]
-
 { #category : #initialization }
 RSAbstractTick >> defaultShape [
 	^ RSLine new
@@ -119,14 +95,14 @@ RSAbstractTick >> defaultShape [
 
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
-	"Ticks use RSNiceLabelGenerator"
+
 	self configuration shouldUseNiceLabel: false
 ]
 
 { #category : #accessing }
 RSAbstractTick >> fontSize: fontSizeToSet [
 	"Set the font size used by the labels associated to ticks"
-	
+
 "
 For example:
 -=-=-=-=-=-=-=-=-=
@@ -148,19 +124,17 @@ c
 
 { #category : #public }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
+
 	| size |
-	size := aCollectionOfStrings size - 1.
-	self assert: size >= 0 description: 'aCollectionOfStrings can not be empty'.
+	size := aCollectionOfStrings size.
+	self assert: size > 0 description: 'aCollectionOfStrings can not be empty'.
 	size isZero ifTrue: [ size := 1 ].
 
-	self
-		doNotUseNiceLabel;
-		numberOfTicks: size.
+	self numberOfTicks: size.
 
 	self labelConversion: [ :x |
-		x isZero
-			ifTrue: [ '' ]
-			ifFalse: [aCollectionOfStrings at: x asInteger ] ]
+		x isZero ifTrue: [ '' ]
+			ifFalse: [ aCollectionOfStrings at: x asInteger ] ]
 ]
 
 { #category : #public }
@@ -177,8 +151,8 @@ RSAbstractTick >> integerWithCommas [
 
 { #category : #public }
 RSAbstractTick >> labelConversion: oneArgBlock [
-	"This method is used to convert numerical values into a label. This is useful to particularlize labels on the X or Y axes. The parameter block accepts one argument, which is a numerical value. The block should return a string or any other object. When displayed, the message asString will be sent to it. 
-	
+	"This method is used to convert numerical values into a label. This is useful to particularlize labels on the X or Y axes. The parameter block accepts one argument, which is a numerical value. The block should return a string or any other object. When displayed, the message asString will be sent to it.
+
 	For example:
 -=-=-=-=-=-=-=-=-=
 x := #(-2 -1 0 1 2).
@@ -189,19 +163,19 @@ d := RSLinePlot new x: x y: y.
 c addPlot: d.
 
 c addDecoration: (RSVerticalTick new).
-c addDecoration: (RSHorizontalTick new 
-							numberOfTicks: x size; 
+c addDecoration: (RSHorizontalTick new
+							numberOfTicks: x size;
 							labelConversion: [ :val | Date today addDays: val ] ).
 c mustInclude0inY.
 c
 -=-=-=-=-=-=-=-=-=
 	"
-	self configuration labelConversion: oneArgBlock 
+	self configuration labelConversion: oneArgBlock
 ]
 
 { #category : #accessing }
 RSAbstractTick >> labelLocation [
-	^ labelLocation ifNil: [ labelLocation := self defaultLabelLocation ].
+	^ labelLocation ifNil: [ labelLocation := self defaultLabelLocation ]
 ]
 
 { #category : #accessing }
@@ -229,6 +203,13 @@ RSAbstractTick >> min [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'instance creation' }
+RSAbstractTick >> newLineTick [
+	^ self shape copy
+		color: self styler tickColor;
+		yourself
+]
+
 { #category : #public }
 RSAbstractTick >> noConvertion [
 	"Do not convert the value when determining labels"
@@ -238,7 +219,7 @@ RSAbstractTick >> noConvertion [
 { #category : #accessing }
 RSAbstractTick >> numberOfTicks: aNumber [
 	"Set the number of ticks to be used. Can be used with doNotUseNiceLabels or not.
-	
+
 For example:
 ```Smalltalk
 x := (-3.14 to: 3.14 count: 20).
@@ -264,9 +245,17 @@ RSAbstractTick >> renderIn: canvas [
 	self configuration shouldHaveLabels ifFalse: [
 		labels := #().
 		 ^ self ].
-	labels := ticksData collectWithIndex: [ :value :index | 
+	labels := ticksData collectWithIndex: [ :value :index |
 		self createLabelFor: value index: index ].
-	canvas addAll: labels.
+	canvas addAll: labels
+]
+
+{ #category : #public }
+RSAbstractTick >> scaleToUse [
+
+	^ self isHorizontalTick
+		ifTrue: [ xScale ]
+		ifFalse: [ yScale ]
 ]
 
 { #category : #accessing }
@@ -276,14 +265,24 @@ RSAbstractTick >> ticks [
 
 { #category : #public }
 RSAbstractTick >> ticksData [
-	niceLabel step isZero ifTrue: [ niceLabel step: 1 ].
-	^ niceLabel min to: niceLabel max by: niceLabel step. 
-	
+
+	| scaleToUse |
+	scaleToUse := self scaleToUse.
+
+	^ self configuration shouldUseNiceLabel
+		ifTrue: [ scaleToUse niceTicks: self configuration numberOfTicks ]
+		ifFalse: [ scaleToUse ticks: self configuration numberOfTicks ]
+]
+
+{ #category : #rendering }
+RSAbstractTick >> updateChartMaxAndMinValues: aChart [
+
+	self subclassResponsibility
 ]
 
 { #category : #public }
 RSAbstractTick >> useNiceLabel [
-	"Ticks use RSNiceLabelGenerator"
+
 	self configuration shouldUseNiceLabel: true
 ]
 

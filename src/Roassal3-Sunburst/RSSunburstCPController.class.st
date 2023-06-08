@@ -16,7 +16,7 @@ RSSunburstCPController >> controlPointsFor: aLine [
 	from innerRadius isZero ifTrue: [ width1 := 0 ].
 	cp1 := RSSunburstAttachPoint centroid: from offset: width1 negated.
 	cp2 := RSSunburstAttachPoint centroid: from offset: width1.
-	
+
 	width2 := (to externalRadius - to innerRadius)/2.
 	cp3 := to centroid: (width1 * 2 + width2) negated.
 	cp4 := to centroid: width2 negated.

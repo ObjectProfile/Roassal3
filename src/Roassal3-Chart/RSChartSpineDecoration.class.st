@@ -32,9 +32,9 @@ RSChartSpineDecoration >> createdShapes [
 
 { #category : #initialization }
 RSChartSpineDecoration >> defaultShape [
-	^ RSBox new 
+	^ RSBox new
 		noPaint;
-		withBorder;
+		border: (RSBorder new joinMiter);
 		yourself
 ]
 
@@ -46,6 +46,7 @@ RSChartSpineDecoration >> isSpineDecoration [
 { #category : #rendering }
 RSChartSpineDecoration >> renderIn: canvas [
 	box := self shape copy
+		borderColor: self styler spineColor;
 		extent: chart extent.
 	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
 	canvas add: box

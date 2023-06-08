@@ -19,55 +19,60 @@ RSDelaunayExample >> addParticle: aRSParticleD [
 
 { #category : #girls }
 RSDelaunayExample >> anime1 [
+
 	| girl |
 	girl := self girl1.
 	canvas addShape: girl.
 	girl position: 10000 asPoint.
 	^ canvas transitionAnimation
-		duration: 2 seconds;
-		delay: 2 seconds;
-		from: 0;
-		to: 500;
-		onStepDo: [ :t | girl translateTo: t @ 300  ];
-		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+		  duration: 2 seconds;
+		  delay: 2 seconds;
+		  from: 0;
+		  to: 500;
+		  onStepDo: [ :t | girl translateTo: t @ 300 ];
+		  when: RSAnimationEndEvent
+		  do: [ girl position: 10000 asPoint ]
+		  for: self
 ]
 
 { #category : #girls }
 RSDelaunayExample >> anime2 [
+
 	| girl |
 	girl := self girl2.
 	canvas addShape: girl.
 	girl position: 10000 asPoint.
 	^ canvas transitionAnimation
-		duration: 2 seconds;
-		delay: 1 seconds;
-		from: 500;
-		to: 0;
-		onStepDo: [ :t | girl translateTo: t @ (300+ (((t*2) degreesToRadians sin) * 10))  ];
-		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+		  duration: 2 seconds;
+		  delay: 1 seconds;
+		  from: 500;
+		  to: 0;
+		  onStepDo: [ :t |
+			  girl translateTo: t @ (300 + ((t * 2) degreesToRadians sin * 10)) ];
+		  when: RSAnimationEndEvent
+		  do: [ girl position: 10000 asPoint ]
+		  for: self
 ]
 
 { #category : #girls }
 RSDelaunayExample >> anime3 [
+
 	| girl y |
 	girl := self girl3.
 	canvas addShape: girl.
 	girl position: 10000 asPoint.
 	y := NSScale linear
-		domain: #(0 100 200 300 400 500);
-		range: #(250 350 250 350 250 350).
+		     domain: #( 0 100 200 300 400 500 );
+		     range: #( 250 350 250 350 250 350 ).
 	^ canvas transitionAnimation
-		duration: 2 seconds;
-		delay: 1 seconds;
-		from: 0;
-		to: 500;
-		onStepDo: [ :t | 
-			
-			girl translateTo: t @ (y scale:t)  ];
-		when: RSAnimationEndEvent do: [
-			girl position: 10000 asPoint.].
+		  duration: 2 seconds;
+		  delay: 1 seconds;
+		  from: 0;
+		  to: 500;
+		  onStepDo: [ :t | girl translateTo: t @ (y scale: t) ];
+		  when: RSAnimationEndEvent
+		  do: [ girl position: 10000 asPoint ]
+		  for: self
 ]
 
 { #category : #running }
@@ -629,8 +634,8 @@ RSDelaunayExample >> girlFrom: string [
 	com := RSComposite new.
 	com isFixed: true.
 	last := nil.
-	string lines 
-		doWithIndex: [ :l :in | 
+	string lines
+		doWithIndex: [ :l :in |
 			(l beginsWith: '<path d="')
 				ifTrue: [
 					last ifNotNil: [
@@ -641,7 +646,7 @@ RSDelaunayExample >> girlFrom: string [
 								color: Color white;
 								yourself).
 							].
-					last := l copyFrom: 10 to: l size 
+					last := l copyFrom: 10 to: l size
 				] ifFalse: [ last := last , ' ' , l ] ].
 	com adjustToChildren.
 	com scaleBy: 0.15@ -0.15.
@@ -650,17 +655,16 @@ RSDelaunayExample >> girlFrom: string [
 
 { #category : #running }
 RSDelaunayExample >> hasAreaLessThan: lim p1: p1 p2: p2 p3: p3 [
-	^ (p1 position distanceTo: p2 position) < lim and: [ 
-		(p2 position distanceTo: p3 position) < lim and: [ 
+	^ (p1 position distanceTo: p2 position) < lim and: [
+		(p2 position distanceTo: p3 position) < lim and: [
 			(p3 position distanceTo: p1 position) < lim ] ]
-		
 ]
 
 { #category : #initialization }
 RSDelaunayExample >> initialize [
 	super initialize.
 	useFill := false.
-	allParticles := OrderedCollection new.
+	allParticles := OrderedCollection new
 ]
 
 { #category : #running }
@@ -671,28 +675,41 @@ RSDelaunayExample >> paintFor: particle [
 
 { #category : #running }
 RSDelaunayExample >> run [
+
 	<script: 'self new run'>
 	canvas := RSCanvas new.
-	canvas addShape: (RSBox new color: (Color black alpha: 0.1); size: 777; yourself).
+	canvas addShape: (RSBox new
+			 color: (Color black alpha: 0.1);
+			 size: 777;
+			 yourself).
 	canvas color: Color black.
 	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	"animation for girls"
-	(canvas animationFrom: { self anime1. self anime2. self anime3 }) repeat.
-	
-	canvas when: RSMouseDragging do: [ :evt | 
-		allParticles add: (RSParticleD new
-			position: evt position;
-			level: 5;
-			decay: 0.85;
-			yourself) ].
-	canvas when: RSKeyDown do: [ :evt| useFill := useFill not ].
-	canvas open
-		setLabel: 'Delaunay and Chelmico'
+	(canvas animationFrom: {
+			 self anime1.
+			 self anime2.
+			 self anime3 }) repeat.
+
+	canvas
+		when: RSMouseDragging
+		do: [ :evt |
+			allParticles add: (RSParticleD new
+					 position: evt position;
+					 level: 5;
+					 decay: 0.85;
+					 yourself) ]
+		for: self.
+	canvas
+		when: RSKeyDown
+		do: [ :evt | useFill := useFill not ]
+		for: self.
+	canvas open setLabel: 'Delaunay and Chelmico'
 ]
 
 { #category : #running }
 RSDelaunayExample >> run2 [
+
 	<script: 'self new run2'>
 	| maxLevel |
 	canvas := RSCanvas new.
@@ -700,42 +717,43 @@ RSDelaunayExample >> run2 [
 	canvas shouldClearBackground: false.
 	canvas newAnimation repeat onStepDo: [ :t | self step ].
 	maxLevel := 3.
-	canvas when: RSMouseDragging do: [ :evt | 
-		allParticles add: (RSParticleD new
-			position: evt position;
-			maxLevel: 3; 
-			level: 3;
-			decay: 1;
-			yourself) ].
-	canvas open
-		setLabel: 'Delaunay'
+	canvas
+		when: RSMouseDragging
+		do: [ :evt |
+			allParticles add: (RSParticleD new
+					 position: evt position;
+					 maxLevel: 3;
+					 level: 3;
+					 decay: 1;
+					 yourself) ]
+		for: self.
+	canvas open setLabel: 'Delaunay'
 ]
 
 { #category : #running }
 RSDelaunayExample >> step [
 	| indices |
 	canvas nodes copy do: #remove.
-	allParticles copy  reverseDo: [ :p | 
+	allParticles copy  reverseDo: [ :p |
 		p moveIn: allParticles.
 		p velocity < 0.01 ifTrue: [ allParticles remove: p ].
 	].
 	allParticles ifEmpty: [ ^ self ].
-	
+
 	indices := RSDelaunay triangulate: allParticles.
-	
+
 	(1 to: indices size by: 3) do: [ :i | | p1 p2 p3 |
 		p1 := allParticles at: (indices at: i).
 		p2 := allParticles at: (indices at: i+1).
 		p3 := allParticles at: (indices at: i+2).
-		(self hasAreaLessThan: 75 p1: p1 p2: p2 p3: p3) ifTrue: [ 
+		(self hasAreaLessThan: 75 p1: p1 p2: p2 p3: p3) ifTrue: [
 			canvas add: (RSPolygon new
 				border: (self borderFor: p1);
 				paint: (self paintFor: p1);
 				points: { p1 position. p2 position. p3 position };
 				yourself )
 		 ].
-	].
-
+	]
 ]
 
 { #category : #accessing }

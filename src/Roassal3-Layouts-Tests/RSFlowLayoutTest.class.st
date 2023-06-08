@@ -14,10 +14,10 @@ RSFlowLayoutTest >> testLinesEven [
 	self assert: lines size equals: n.
 	line := lines last.
 	"all shapes has the same size"
-	
-	self 
-		assert: line first position y 
-		equals: (layout gapSize* n)+(shapes first height * (n - 0.5))
+
+	self
+		assert: line first position y
+		equals: (layout gapSize* n)+(shapes first height * (n-1.5))
 ]
 
 { #category : #tests }
@@ -31,8 +31,8 @@ RSFlowLayoutTest >> testLinesOdd [
 	self assert: lines size equals: n.
 	line := lines last.
 	"all shapes has the same size"
-	
-	self 
-		assert: line first position y 
-		equals: (layout gapSize* n)+(shapes first height * (n - 0.5))
+
+	self
+		assert: line first position y
+		equals: (layout gapSize* n)+(shapes first height * (n-1.5))
 ]

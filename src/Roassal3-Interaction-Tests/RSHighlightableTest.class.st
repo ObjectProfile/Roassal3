@@ -26,6 +26,55 @@ RSHighlightableTest >> testBasic [
 ]
 
 { #category : #tests }
+RSHighlightableTest >> testHighlightAllShapes [
+
+	| h c |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+
+	h := RSHighlightable red.
+
+	c nodes @ h.
+	h doHighlightShapes: c nodes.
+
+	self assert:
+		(c nodes allSatisfy: [ :shape | shape color = Color red ])
+]
+
+{ #category : #tests }
+RSHighlightableTest >> testHighlightAllShapesThenHighlightNothing [
+
+	| h c defaultColor |
+	c := RSCanvas new.
+	c addAll: (RSBox models: (1 to: 10)).
+	defaultColor := c nodes first color.
+	h := RSHighlightable red.
+
+	c nodes @ h.
+	h doHighlightShapes: c nodes.
+	h doHighlightShapes: {  } onCanvas: c.
+
+	self assert:
+		(c nodes allSatisfy: [ :shape | shape color = defaultColor ])
+]
+
+{ #category : #tests }
+RSHighlightableTest >> testHighlightShapes [
+
+	| interaction canvas defaultColor |
+	canvas := RSCanvas new.
+	canvas addAll: (RSBox models: (1 to: 10)).
+	defaultColor := canvas nodes first color.
+	interaction := RSHighlightable red.
+
+	canvas nodes @ interaction.
+	interaction doHighlightShapes: (OrderedCollection with: canvas nodes first).
+	self assert: canvas nodes first color equals: Color red.
+	self assert: (canvas nodes allButFirst allSatisfy: [ :shape |
+			 shape color = defaultColor ])
+]
+
+{ #category : #tests }
 RSHighlightableTest >> testSameModel [
 
 	| values c boxes |
@@ -37,7 +86,7 @@ RSHighlightableTest >> testSameModel [
 	boxes @ RSPopup.
 	boxes @ (RSHighlightable sameModel: c).
 	RSGridLayout on: boxes.
-	
+
 	c nodes first announce: RSMouseEnter
 ]
 
@@ -60,23 +109,21 @@ RSHighlightableTest >> testWithEdges [
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
 	RSClusterTreeLayout on: shapes.
-	
+
 	interaction := RSHighlightable red.
 	interaction withLines.
 	shapes @ interaction.
-	
+
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
-	
+
 	shapes second announce: RSMouseEnter.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color red.
-	
+
 	shapes second announce: RSMouseLeave.
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
-
-
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray
 ]
 
 { #category : #tests }
@@ -98,22 +145,20 @@ RSHighlightableTest >> testWithEdges2 [
 	canvas edges do: #withBorder.
 	canvas addAll: shapes.
 	RSClusterTreeLayout on: shapes.
-	
+
 	interaction := RSHighlightable withLines.
 	shapes @ interaction.
-	
-	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
-	
-	shapes second announce: RSMouseEnter.
-	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
-	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color black.
-	
-	shapes second announce: RSMouseLeave.
+
 	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray.
 
-	
+	shapes second announce: RSMouseEnter.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color black.
+
+	shapes second announce: RSMouseLeave.
+	self assert: (shapes second outgoingLines collect: #color) asSet size equals: 1.
+	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray
 ]
 
 { #category : #tests }
@@ -133,9 +178,9 @@ RSHighlightableTest >> testWithOutgoingLines [
 	shapes := h highlightShapesFor: c nodes first.
 	self assert: shapes size equals: 2.
 	self assert: (shapes allSatisfy: [ :s | s isLine ]).
-	
+
 	h withOutgoingShapes.
 	shapes := h highlightShapesFor: c nodes first.
 	self assert: shapes size equals: 2.
-	self assert: (shapes allSatisfy: [ :s | s isNode ]).
+	self assert: (shapes allSatisfy: [ :s | s isNode ])
 ]

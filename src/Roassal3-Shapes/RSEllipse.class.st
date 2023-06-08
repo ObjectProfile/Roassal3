@@ -25,13 +25,13 @@ RSEllipse >> buildPathOn: visitor [
 ]
 
 { #category : #geometry }
-RSEllipse >> geometry [ 
+RSEllipse >> geometry [
 	| rect e p |
 	rect := self encompassingRectangle.
 	e := rect extent / 2.
 	p := self position.
 	e = (0@0) ifTrue: [ ^ p asGPoint ].
-	^ GEllipse 
+	^ GEllipse
 		center: p
 		vertex: p + (e x@ 0)
 		coVertex: p + (0@ e y)
@@ -50,7 +50,7 @@ RSEllipse >> preciseIncludesPoint: aPoint [
 	xOverY := rect width asFloat / rect height asFloat.
 	t1 := (delta x asFloat / xOverY) squared + delta y squared.
 	t2 := radius squared.
-	^ (t1 < t2)  or: [ t1 closeTo: t2 ].
+	^ (t1 < t2)  or: [ t1 closeTo: t2 ]
 ]
 
 { #category : #accessing }

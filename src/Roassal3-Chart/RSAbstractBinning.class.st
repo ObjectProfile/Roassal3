@@ -21,5 +21,5 @@ RSAbstractBinning >> createBinsFor: aCollection [
 	size := self computeNumberOfBinsFor: aCollection.
 	"an adjust"
 	size := size + 1.
-	^ aCollection first to: aCollection last count: size.
+	^ aCollection first to: aCollection last count: size
 ]

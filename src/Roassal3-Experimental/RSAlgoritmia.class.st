@@ -36,25 +36,24 @@ RSAlgoritmia >> cosInterpolateA: val1 withB: val2 at: amt [
 { #category : #update }
 RSAlgoritmia >> doInterpolateA: cOne withB: cTwo inT: beTwixt [
 	^ (1 to: degs) collect: [ :j |
-		(self 
+		(self
 			cosInterpolateA: (cOne at: j)
 			withB: (cTwo at: j)
-			at: beTwixt) ].
-	
+			at: beTwixt) ]
 ]
 
 { #category : #update }
 RSAlgoritmia >> doSimpleOutline: myCircle [
 	| points polygon n |
 	masterX := masterX + 3.
-	border color: (Color 
+	border color: (Color
 		h: (color scale: masterX)
 		s: 1
 		v: 0.7).
-	points := (1 to: degs) collect: [:j | 
+	points := (1 to: degs) collect: [:j |
 		n := j degreesToRadians.
 		n := n sin @ n cos.
-		n * (myCircle at: j) 
+		n * (myCircle at: j)
 		].
 	polygon := RSPolygon new
 		noPaint;
@@ -95,10 +94,10 @@ RSAlgoritmia >> initialize [
 		domain: { extent x / -2. extent x / 2 };
 		range: #(80 300).
 	border := RSBorder new.
-	
+
 	"call again these methods if necessary "
 	self initializeCircles.
-	self initializeCanvas.
+	self initializeCanvas
 ]
 
 { #category : #initialization }
@@ -108,34 +107,33 @@ RSAlgoritmia >> initializeCanvas [
 	canvas shouldClearBackground: false.
 	animation := canvas newAnimation
 		repeat;
-		onStepDo: [:t | self step ].
+		onStepDo: [:t | self step ]
 ]
 
 { #category : #initialization }
 RSAlgoritmia >> initializeCircles [
 	1 to: models do: [ :i | | zz |
 		zz := rand atRandom.
-		radii at: i put: (self newCircleX: zz y: zz -1 ) ].
+		radii at: i put: (self newCircleX: zz y: zz -1 ) ]
 ]
 
 { #category : #initialization }
 RSAlgoritmia >> newCircleX: nXstart y: nYstart [
 	| n |
-	^ (1 to: degs) collect: [ :i | 
+	^ (1 to: degs) collect: [ :i |
 		n := i degreesToRadians.
 		n := n sin @ n cos.
 		n := n * nRadius + (nXstart @ nYstart).
 		n := (perlin noise: n x and: n y).
 		n := n * outRadius.
-		n ].
-	
+		n ]
 ]
 
 { #category : #'instance creation' }
 RSAlgoritmia >> open [
 	canvas open
 		setLabel: 'Algoritmia';
-		extent: extent.
+		extent: extent
 ]
 
 { #category : #running }
@@ -169,22 +167,22 @@ RSAlgoritmia >> run03 [
 RSAlgoritmia >> step [
 	frameCount := frameCount + 1.
 	canvas shapes copy do: #remove.
-	masterX > 1500 ifTrue: [ 
+	masterX > 1500 ifTrue: [
 		masterX := -225.
 		circleNumber := 5.
 		inBetween := 0.
 		animation stop ].
-	
-	(inBetween < totalTweens and: [ circleNumber + 1 < models ]) ifTrue: [ 
+
+	(inBetween < totalTweens and: [ circleNumber + 1 < models ]) ifTrue: [
 		| hybridCircle |
-		hybridCircle := self 
+		hybridCircle := self
 			doInterpolateA: (radii at: circleNumber)
 			withB: (radii at: circleNumber + 1)
 			inT: inBetween / totalTweens.
 		self doSimpleOutline: hybridCircle.
 		inBetween := inBetween + 1.
-	] ifFalse: [ 
-		circleNumber + 1 < models ifTrue: [ 
+	] ifFalse: [
+		circleNumber + 1 < models ifTrue: [
 			circleNumber := circleNumber + 1.
 			inBetween := 0.
 		].

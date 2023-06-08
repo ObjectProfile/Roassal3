@@ -74,8 +74,8 @@ RSRenderTreeExamples >> example03RTree [
 		box popup.
 		box position: (random next @ random next) * 1000.
 		canvas add: box.
-		
-		tree add: box.	
+
+		tree add: box.
 	].
 	canvas @ RSCanvasController.
 	^ tree

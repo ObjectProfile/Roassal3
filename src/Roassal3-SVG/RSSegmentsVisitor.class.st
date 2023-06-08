@@ -11,12 +11,12 @@ Class {
 RSSegmentsVisitor >> visitBoundingShape: aRSSVGPath [
 	| b segment |
 	b := AthensSimplePathBuilder new.
-	aRSSVGPath segments do: [ :each | 
+	aRSSVGPath segments do: [ :each |
 		b perform: each first withArguments: each second ].
 	segment := b pathStart.
-	[ segment notNil ] whileTrue: [ 
+	[ segment notNil ] whileTrue: [
 		segment visitWith: self.
-		segment := segment next ].
+		segment := segment next ]
 ]
 
 { #category : #visiting }
@@ -29,12 +29,10 @@ RSSegmentsVisitor >> visitCubicSegment: aSegment [
 
 { #category : #visiting }
 RSSegmentsVisitor >> visitLineSegment: aSegment [
-	
 ]
 
 { #category : #visiting }
 RSSegmentsVisitor >> visitMoveSegment: aSegment [
-	
 ]
 
 { #category : #visiting }

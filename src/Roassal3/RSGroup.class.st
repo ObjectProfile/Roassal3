@@ -89,7 +89,7 @@ RSGroup >> canvas [
 { #category : #'public - forwarding' }
 RSGroup >> color: aColor [
 	"Give the same color to all the shapes"
-	self do: [ :s | s color: aColor ]
+	self do: [ :s | s color: (aColor rsValue: s model) ]
 ]
 
 { #category : #accessing }
@@ -105,7 +105,7 @@ RSGroup >> extent [
 ]
 
 { #category : #accessing }
-RSGroup >> height [ 
+RSGroup >> height [
 	^ self extent y
 ]
 
@@ -135,7 +135,7 @@ RSGroup >> position [
 ]
 
 { #category : #'public - forwarding' }
-RSGroup >> pushBack [ 
+RSGroup >> pushBack [
 	"Push back all the shapes contained in the group"
 	self do: [ :each | each pushBack ]
 ]
@@ -154,7 +154,7 @@ RSGroup >> resetShapeFromModelCache [
 { #category : #accessing }
 RSGroup >> shapeFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
-	
+
 ```Smalltalk
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
@@ -165,16 +165,16 @@ g shapeFromModel: 'hello'
 
 	"
 	| t |
-	self shapeFromModelCache 
-		at: anObject 
+	self shapeFromModelCache
+		at: anObject
 		ifPresent: [ :v |
 			v isCollection ifFalse: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
+	t := (anObject class == CompiledMethod)
 		ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
 		ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-	
+
 	self shapeFromModelCache at: anObject put: t.
 	^ t
 ]
@@ -195,16 +195,16 @@ For example:
 g := RSGroup new.
 g add: (RSBox new model: 'hello').
 g add: (RSEllipse new model: 'world').
-g shapesFromModel: 'hello' 
+g shapesFromModel: 'hello'
 -=-=-=-=-=-=-=-=-=
 => a RSGroup(a RSBox(hello))
-	"	
+	"
 
 	| t key |
 	self shapeFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
+	t := (anObject class == CompiledMethod)
 				ifTrue: [ self select: [ :el | el model == anObject ] ]
 				ifFalse: [ self select: [ :el | el model = anObject ] ].
 
@@ -218,7 +218,7 @@ g shapesFromModel: 'hello'
 RSGroup >> shapesFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	| answer t |
-	self assert: [ objects isCollection ] description: 'Provide a set of shapes instead of one single shape'. 
+	self assert: [ objects isCollection ] description: 'Provide a set of shapes instead of one single shape'.
 	answer := RSGroup new.
 	objects do: [ :o |
 		t := self shapesFromModel: o.
@@ -237,8 +237,7 @@ c addAll: shapes.
 RSGridLayout on: shapes.
 c @ RSCanvasController
 ```"
-	self do: [ :s | s size: aNumber ]
-	
+	self do: [ :s | s size: (aNumber rsValue: s model) ]
 ]
 
 { #category : #transforming }
@@ -266,8 +265,31 @@ RSGroup >> translucent [
 	self do: [ :s | s color: s color translucent ]
 ]
 
+{ #category : #protocol }
+RSGroup >> when: anAnnouncementClass do: aValuable [
+
+	| subscriberForDeprecation |
+	aValuable receiver ifNil: [
+		self error:
+			'You must specify a subscriber object for this subscription. Please use #when:do:for: method.' ].
+
+	subscriberForDeprecation := thisContext sender receiver = aValuable receiver
+		                            ifTrue: [ 'self' ]
+		                            ifFalse: [ '`@arg2 receiver' ].
+	self
+		deprecated:
+			'Since there are some block closures (Clean and Constant) without a receiver, the API of announcements was changed to send the subscriber explicitly. 
+			We are deprecating this method because it was asking for the receiver of the block to use it as the subscriber.'
+		transformWith: '`@receiver when: `@arg1 do: `@arg2'
+			->
+			('`@receiver when: `@arg1 do: `@arg2 for: '
+			 , subscriberForDeprecation).
+
+	self when: anAnnouncementClass do: aValuable for: aValuable receiver
+]
+
 { #category : #'public - forwarding' }
-RSGroup >> when: event do: aOneArgBlock [
+RSGroup >> when: event do: aOneArgBlock for: aSubscriber [
 	"Define a callback for each of the shape contained in the group. For example:
 ```
 c := RSCanvas new.
@@ -278,7 +300,7 @@ RSGridLayout on: shapes.
 shapes when: RSMouseClick do: [ :evt | evt shape @ RSBlink ].
 c @ RSCanvasController
 ```"
-	self do: [ :shape | shape when: event do: aOneArgBlock ]
+	self do: [ :shape | shape when: event do: aOneArgBlock for: aSubscriber ]
 ]
 
 { #category : #'public - forwarding' }
@@ -287,7 +309,7 @@ RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 ]
 
 { #category : #accessing }
-RSGroup >> width [ 
+RSGroup >> width [
 	"Return the width of the encompassing rectangle of the group"
 	^ self extent x
 ]
@@ -302,7 +324,7 @@ circles size: 20.
 circles withBorder.
 c addAll: circles.
 RSGridLayout on: circles.
-c 
+c
 ```
 	"
 	self do: #withBorder

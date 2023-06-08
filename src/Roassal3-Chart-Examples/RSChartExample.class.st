@@ -16,8 +16,7 @@ RSChartExample >> example01Markers [
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
 	c addPlot: p.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new asFloat.
+	c verticalTick asFloat.
 	c addDecoration: RSYMarkerDecoration new average.
 	c addDecoration: RSYMarkerDecoration new min.
 	c addDecoration: RSYMarkerDecoration new max.
@@ -36,7 +35,7 @@ RSChartExample >> example02ScatterPlot [
 	c := RSChart new.
 	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
 	c addPlot: p.
-	
+
 	c xlabel: 'X Axis'.
 	c ylabel: 'Y Axis'.
 	c title: 'Hello World'.
@@ -68,14 +67,15 @@ RSChartExample >> example03Plot [
 { #category : #examples }
 RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick show'>
-	| x |
+	| x chart |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: RSHorizontalTick new integer;
-		addDecoration: RSVerticalTick new integer;
-		yourself
+		yourself.
+	chart horizontalTick integer.
+	chart verticalTick integer.
+	^ chart
 ]
 
 { #category : #examples }
@@ -87,31 +87,31 @@ RSChartExample >> example05WithTick [
 	1 to: 7 do: [ :i |
 		c addPlot: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
 	].
-	c addDecoration: RSVerticalTick new integer.
-	c addDecoration: RSHorizontalTick new integer.
+	c verticalTick integer.
+	c horizontalTick integer.
 	^ c
 ]
 
 { #category : #examples }
 RSChartExample >> example06CustomNumberOfTicks [
 	<script: 'self new example06CustomNumberOfTicks show'>
-	| x |
+	| x chart |
 	x := -10.0 to: 20.0 count: 100.
-	^ RSChart new
+	chart := RSChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		addDecoration: (RSHorizontalTick new 
-			numberOfTicks: 20;
-			integer);
-		addDecoration: (RSVerticalTick new integer 
+		yourself.
+	chart horizontalTick numberOfTicks: 20;
+			integer.
+	chart verticalTick integer
 			numberOfTicks: 2;
-			doNotUseNiceLabel);
-		yourself
-	
+			doNotUseNiceLabel.
+	^ chart
 ]
 
 { #category : #examples }
 RSChartExample >> example07AdjustingFontSize [
+
 	<script: 'self new example07AdjustingFontSize open'>
 	| x y c |
 	x := -3.14 to: 3.14 by: 0.1.
@@ -119,9 +119,16 @@ RSChartExample >> example07AdjustingFontSize [
 
 	c := RSChart new.
 	c addPlot: (RSLinePlot new x: x y: y).
-	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
-	c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-	c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; horizontal).
+	c addDecoration: (RSChartTitleDecoration new
+			 title: 'hello';
+			 fontSize: 40).
+	c addDecoration: (RSXLabelDecoration new
+			 title: 'My X Axis';
+			 fontSize: 12).
+	c addDecoration: (RSYLabelDecoration new
+			 title: 'My Y Axis';
+			 fontSize: 15;
+			 horizontal).
 	^ c
 ]
 
@@ -146,7 +153,7 @@ RSChartExample >> example08TwoCharts [
 	RSHorizontalLineLayout on: c shapes.
 
 	c @ RSCanvasController.
-	^ c 
+	^ c
 ]
 
 { #category : #examples }
@@ -160,7 +167,8 @@ RSChartExample >> example09LinearSqrtSymlog [
 		| chart |
 		chart := RSChart new.
 		chart addPlot: (RSLinePlot new x: x y: y).
-		chart addDecoration: (RSVerticalTick new asFloat).
+		chart verticalTick asFloat.
+		chart removeHorizontalTicks.
 		chart perform: sel.
 		chart title: sel.
 		chart asShape ]).
@@ -179,15 +187,13 @@ RSChartExample >> example10BarPlot [
 	p := RSBarPlot new x: x y: y.
 
 	c addPlot: p.
-	
-	c addDecoration: (RSHorizontalTick new 
-		doNotUseNiceLabel;
+
+	c horizontalTick doNotUseNiceLabel;
 		numberOfTicks: x size - 1;
-		asFloat).
+		asFloat.
 	c xlabel: 'X Axis'.
-	c addDecoration: (RSVerticalTick new 
-		numberOfTicks: 10;
-		asFloat).
+	c verticalTick numberOfTicks: 10;
+		asFloat.
 	c ylabel: 'Y Axis'.
 	c title: 'Histogram'.
 	^ c
@@ -203,10 +209,9 @@ RSChartExample >> example11BarplotCombinedWithLine [
 
 	c addPlot: (RSBarPlot new x: x y: y).
 	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
-	c addDecoration: (RSHorizontalTick new asFloat).
-	c addDecoration: (RSVerticalTick new 
-		numberOfTicks: 10;
-		asFloat).
+	c horizontalTick asFloat.
+	c verticalTick numberOfTicks: 10;
+		asFloat.
 	c xlabel: 'X Axis'.
 	c ylabel: 'Y Axis'.
 	c title: 'Bar char'.
@@ -222,7 +227,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	y := OrderedCollection new.
 	z := OrderedCollection new.
 	r := Random seed: 42.
-	1 to: 100 do: [ :i | 
+	1 to: 100 do: [ :i |
 		x add: i + (r next * 10 + 1) asInteger.
 		y add: i + (r next * 10 + 1) asInteger.
 		z add: i + (r next * 10 + 1) asInteger. ].
@@ -233,8 +238,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 
 	c addPlot: p.
 
-	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
-	c addDecoration: RSVerticalTick new.
+	c horizontalTick doNotUseNiceLabel asFloat: 3.
 	c build.
 	p ellipses models: z.
 		RSNormalizer size
@@ -253,7 +257,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 RSChartExample >> example19PositiveNetagiveBarPlots [
 	<script: 'self new example19PositiveNetagiveBarPlots open'>
 	| c d d2 |
-	
+
 	c := RSChart new.
 
 	d := RSBarPlot new.
@@ -266,32 +270,30 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	d2 y: #(-5 -6 -3 -3).
 	c addPlot: d2.
 
-	c addDecoration: (RSVerticalTick new integer).
-	c addDecoration: (RSHorizontalTick new).
+	c verticalTick integer.
 
 	c addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
 	c addDecoration: (RSXLabelDecoration new title: 'Evolution').
 
-	^ c 
+	^ c
 ]
 
 { #category : #examples }
 RSChartExample >> example20Grid [
 	<script: 'self new example20Grid open'>
 	| c x y vertical horizontal |
-	
+
 	c := RSChart new.
 	x := 0 to: 10.
 	y := x raisedTo: 2.
 	c lineX: x y: y.
-	c addDecoration: (vertical := RSVerticalTick new).
+	vertical := c verticalTick.
 	vertical shape dashed.
 	vertical configuration tickSize: c extent x negated.
-	c addDecoration: (horizontal := RSHorizontalTick new).
+	horizontal := c horizontalTick.
 	horizontal configuration tickSize: c extent y negated.
 	c build.
 	^ c canvas
-	
 ]
 
 { #category : #examples }
@@ -317,11 +319,11 @@ RSChartExample >> example21Popup [
 		y := cumsum value: y.
 		error := x.
 		col := color value: Color.
-		
-		c addPlot: (RSAreaPlot new 
+
+		c addPlot: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: col translucent).
-		c addPlot: (plot := RSLinePlot new x: x y: y; fmt: 'o';
+		c addPlot: (plot := RSLinePlot new x: x y: y; format: 'o';
 			color: col;
 			yourself).
 		popup chartPopupBuilder
@@ -330,7 +332,7 @@ RSChartExample >> example21Popup [
 
 	c build.
 
-	^ c canvas.
+	^ c canvas
 ]
 
 { #category : #examples }
@@ -391,8 +393,7 @@ RSChartExample >> example22CustomPopup [
 			yourself)).
 	(c lineX: x y: y) color: Color gray.
 
-	c addDecoration: (RSVerticalTick new).
-	c addDecoration: (RSHorizontalTick new fromNames: names; useDiagonalLabel).
+	c horizontalTick fromNames: names; useDiagonalLabel.
 	c addDecoration: popup.
 	popup chartPopupBuilder: (RSBlockChartPopupBuilder new
 		rowShapeBlock: [:plot :point |
@@ -417,7 +418,7 @@ RSChartExample >> example23PopupInScatterPlot [
 	chart padding: 10.
 	chart build.
 	plot ellipses with: classes do: [ :e :cls | e model: cls ].
-	plot ellipses @ (RSPopup themeText: [:model | 
+	plot ellipses @ (RSPopup themeText: [:model |
 		model name, String cr, 'LOC: ', model linesOfCode asString]).
 	^ chart
 ]
@@ -426,16 +427,14 @@ RSChartExample >> example23PopupInScatterPlot [
 RSChartExample >> example24SpineLine [
 	<script: 'self new example24SpineLine open'>
 	| x c y spine |
-	
+
 	x := -3.14 to: 3.14 by: 0.01.
 	y := x sin * 0.22 + 0.2.
 	c := RSChart new.
 	c extent: 400@300.
 	c lineX: x y: y.
 	c spineDecoration: (spine := RSLineSpineDecoration new).
-	spine shape fmt: '^'.
-	c add: RSHorizontalTick new.
-	c add: RSVerticalTick new.
+	spine shape format: '^'.
 	c padding: 10.
 	^ c
 ]

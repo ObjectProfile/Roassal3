@@ -28,7 +28,7 @@ RSForceBuilder >> createObjects: amt radius: radius class: cls [
 	^ (1 to: amt) collect: [ :i | | r |
 		r := random next * 360.
 		r := r radiansToDegrees.
-		cls new 
+		cls new
 			position: r cos @ r sin * radius;
 			yourself ]
 ]
@@ -48,13 +48,13 @@ RSForceBuilder >> initialize [
 	super initialize.
 	interferences := particles := #().
 	random := Random new.
-	self 
+	self
 		force: 10;
 		colorGenerator: RSColorMonoGenerator new;
 		particlesSize: 1000;
 		particlesRadius: 100;
 		interferencesSize: 100;
-		interferencesRadius: 100.
+		interferencesRadius: 100
 ]
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ RSForceBuilder >> interferencesRadius [
 ]
 
 { #category : #accessing }
-RSForceBuilder >> interferencesRadius: anInteger [ 
+RSForceBuilder >> interferencesRadius: anInteger [
 	interferencesRadius := anInteger
 ]
 
@@ -78,7 +78,7 @@ RSForceBuilder >> interferencesSize [
 ]
 
 { #category : #accessing }
-RSForceBuilder >> interferencesSize: anInteger [ 
+RSForceBuilder >> interferencesSize: anInteger [
 	interferencesSize := anInteger
 ]
 
@@ -93,7 +93,7 @@ RSForceBuilder >> particlesRadius [
 ]
 
 { #category : #accessing }
-RSForceBuilder >> particlesRadius: anInteger [ 
+RSForceBuilder >> particlesRadius: anInteger [
 	particlesRadius := anInteger
 ]
 
@@ -103,7 +103,7 @@ RSForceBuilder >> particlesSize [
 ]
 
 { #category : #accessing }
-RSForceBuilder >> particlesSize: anInteger [ 
+RSForceBuilder >> particlesSize: anInteger [
 	particlesSize := anInteger
 ]
 
@@ -112,28 +112,28 @@ RSForceBuilder >> renderIn: aCanvas [
 	aCanvas color: colorGenerator backgroundColor.
 	self reset.
 	aCanvas when: RSMouseClick send: #reset to: self.
-	aCanvas newAnimation repeat; onStepDo: [ self update: self force ].
+	aCanvas newAnimation repeat; onStepDo: [ self update: self force ]
 ]
 
 { #category : #initialization }
 RSForceBuilder >> reset [
+
 	| c |
 	c := self canvas.
 	c shapes copy do: #remove.
 	c shouldClearBackground: true.
 	c newAnimation
 		duration: 500 milliSeconds;
-		when: RSAnimationEndEvent do: [ 
+		when: RSAnimationEndEvent do: [
 			self setParticles.
 			self setInterferences.
-			c shouldClearBackground: false.
-			 ].
-	
+			c shouldClearBackground: false ]
+		for: self
 ]
 
 { #category : #hooks }
 RSForceBuilder >> setInterferences [
-	interferences := self 
+	interferences := self
 		createObjects: self interferencesSize
 		radius: self interferencesRadius
 		class: RSInterference
@@ -141,7 +141,7 @@ RSForceBuilder >> setInterferences [
 
 { #category : #hooks }
 RSForceBuilder >> setParticles [
-	particles := self 
+	particles := self
 		createObjects: self particlesSize
 		radius: self particlesRadius
 		class: RSParticleForce

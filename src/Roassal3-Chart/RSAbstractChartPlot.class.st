@@ -8,7 +8,8 @@ Class {
 		'chart',
 		'xScale',
 		'yScale',
-		'shape'
+		'shape',
+		'styler'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -17,6 +18,11 @@ Class {
 RSAbstractChartPlot >> addShape: aShape [
 	"Add a shape to the canvas"
 	chart canvas add: aShape
+]
+
+{ #category : #'private - adding' }
+RSAbstractChartPlot >> addedIn: anRSChart [
+	self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -71,7 +77,6 @@ RSAbstractChartPlot >> createYScale [
 		range:
 			{0 - padding.
 			chart extent y negated + padding }
-
 ]
 
 { #category : #accessing }
@@ -85,9 +90,15 @@ RSAbstractChartPlot >> defaultShape [
 ]
 
 { #category : #initialization }
+RSAbstractChartPlot >> defaultStyler [
+	^ RSChartStyler new
+]
+
+{ #category : #initialization }
 RSAbstractChartPlot >> initialize [
 	super initialize.
-	shape := self defaultShape
+	shape := self defaultShape.
+	styler := self defaultStyler
 ]
 
 { #category : #testing }
@@ -130,6 +141,17 @@ RSAbstractChartPlot >> shape: aRSShape [
 RSAbstractChartPlot >> spine [
 	"Return the roassal shape that describes the spine"
 	^ chart spine
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> styler [
+	^ styler
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> styler: anObject [
+
+	styler := anObject
 ]
 
 { #category : #accessing }

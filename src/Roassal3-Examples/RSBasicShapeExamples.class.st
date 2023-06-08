@@ -55,8 +55,8 @@ RSBasicShapeExamples >> example03BasicComposite [
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
-		
-	c addShape: com.	
+
+	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.4);
 		extent: 100@100;
@@ -85,10 +85,10 @@ RSBasicShapeExamples >> example04BasicComposite [
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
-		
+
 	com position: 100@100.
-	
-	c addShape: com.	
+
+	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
 		extent: 100@100;
@@ -132,7 +132,7 @@ RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
-	1 to: 12 do: [ :m | 
+	1 to: 12 do: [ :m |
 		| angle theta p|
 		angle := (m * 360 / 12) degreesToRadians.
 		theta := angle cos @ angle sin.
@@ -144,10 +144,10 @@ RSBasicShapeExamples >> example06BasicLabels [
 			text: (Month nameOfMonth: m);
 			yourself.
 		angle := angle radiansToDegrees.
-		angle := angle + ((angle between: 90 and: 270) 
+		angle := angle + ((angle between: 90 and: 270)
 			ifTrue: [ 180 ]
 			ifFalse: [ 0 ] ).
-		
+
 		label rotateByDegrees: angle.
 		label position: p + ((label textWidth/2) * theta).
 		m even
@@ -164,27 +164,29 @@ RSBasicShapeExamples >> example06BasicLabels [
 
 { #category : #events }
 RSBasicShapeExamples >> example07EventsMouseMoveDrag [
+
 	<script: 'self new example07EventsMouseMoveDrag open'>
 	| c ellipse update |
 	c := RSCanvas new.
 	ellipse := RSEllipse new
-		radius: 40;
-		border: (RSBorder new color: 'black');
-		yourself.
+		           radius: 40;
+		           border: (RSBorder new color: 'black');
+		           yourself.
 	c addShape: ellipse.
 	update := [ :evt :color |
-		ellipse 
-			color: color;
-			position: evt position;
-			signalUpdate].
+	          ellipse
+		          color: color;
+		          position: evt position;
+		          signalUpdate ].
 	c
-		when: RSMouseDragging do: [ :evt | 
-			update value: evt value: (Color colorFrom: '12A288')];
-		when: RSMouseMove do: [ :evt | 
-			update value: evt value: (Color colorFrom: 'AB2567') ].
+		when: RSMouseDragging
+		do: [ :evt | update value: evt value: (Color colorFrom: '12A288') ]
+		for: self;
+		when: RSMouseMove
+		do: [ :evt | update value: evt value: (Color colorFrom: 'AB2567') ]
+		for: self.
 	c shouldClearBackground: false.
 	^ c
-	
 ]
 
 { #category : #'boxes and ellipses' }
@@ -200,8 +202,8 @@ RSBasicShapeExamples >> example08EllipseBorder [
 			color: Color transparent;
 			border: (RSBorder new
 				width: x/ 50;
-				color: (Color 
-					r: r next * 255 
+				color: (Color
+					r: r next * 255
 					g: r next * 200
 					b: 255
 					range: y) );
@@ -217,30 +219,38 @@ RSBasicShapeExamples >> example08EllipseBorder [
 
 { #category : #events }
 RSBasicShapeExamples >> example09MouseStep [
+
 	<script: 'self new example09MouseStep open'>
-	|  c e prev dif |
+	| c e prev dif |
 	c := RSCanvas new.
 	c color: Color black.
 	e := RSEllipse new
-		border: (RSBorder new color: Color white);
-		radius: 0.
+		     border: (RSBorder new color: Color white);
+		     radius: 0.
 	c addShape: e.
 	prev := 0.
-	c when: RSMouseMove do: [ :evt | 
-		dif := (evt position x - prev) abs.
-		prev := evt position x.
-		e 
-			color: (Color r: 0 g: dif b: 0 range: 255);
-			position: evt position;
-			size: dif.
-		c signalUpdate.
-		 ].
+	c
+		when: RSMouseMove
+		do: [ :evt |
+			dif := (evt position x - prev) abs.
+			prev := evt position x.
+			e
+				color: (Color
+						 r: 0
+						 g: dif
+						 b: 0
+						 range: 255);
+				position: evt position;
+				size: dif.
+			c signalUpdate ]
+		for: self.
 	c shouldClearBackground: false.
 	^ c
 ]
 
 { #category : #events }
 RSBasicShapeExamples >> example10EllipseMouseMove [
+
 	<script: 'self new example10EllipseMouseMove open'>
 	| c border circleResolution angle a b radius p |
 	c := RSCanvas new.
@@ -248,100 +258,111 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 	border := RSBorder new color: (Color colorFrom: '002800').
 	b := 1.
 	radius := 200.
-	c when: RSMouseMove do: [ :evt | 
-		circleResolution := b.
-		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
-		angle := Float twoPi / circleResolution.
-		p := evt position abs.
-		a := 175 * p x / c extent x.
-		b := 200 * p y / c extent y.
-		c shapes copy do: #remove.
-		0 to: circleResolution do: [ :i |
-			c addShape: (RSEllipse new 
-				color: Color transparent;
-				rotateByDegrees: 45;
-				border: border;
-				extent: ((angle * i) cos @ (angle * i) sin) * radius + a
-			)].
-		
-		c signalUpdate.
-		 ].
+	c
+		when: RSMouseMove
+		do: [ :evt |
+			circleResolution := b.
+			circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
+			angle := Float twoPi / circleResolution.
+			p := evt position abs.
+			a := 175 * p x / c extent x.
+			b := 200 * p y / c extent y.
+			c shapes copy do: #remove.
+			0 to: circleResolution do: [ :i |
+				c addShape: (RSEllipse new
+						 color: Color transparent;
+						 rotateByDegrees: 45;
+						 border: border;
+						 extent: (angle * i) cos @ (angle * i) sin * radius + a) ].
+
+			c signalUpdate ]
+		for: self.
 	^ c
 ]
 
 { #category : #events }
 RSBasicShapeExamples >> example11ScaleMouseDistance [
+
 	<script: 'self new example11ScaleMouseDistance open'>
 	| c easing canvasExtent boxSize zindex maxDist scale border |
 	c := RSCanvas new.
 	c color: Color white.
-	easing := 0@0.
+	easing := 0 @ 0.
 	boxSize := 50.
 	canvasExtent := 500 asPoint.
-	maxDist := 0@0 distanceTo: canvasExtent.
-	scale := NSScale linear 
-		domain: { 0. maxDist}; 
-		rangeRound: #(80 0).
-	border := RSBorder new.
-	c when: RSExtentChangedEvent do: [ 
-		c shapes copy do: #remove.
-		canvasExtent := c extent.
-		maxDist := 0@0 distanceTo: canvasExtent.
-		scale := NSScale linear 
-			domain: { 0. maxDist}; 
-			rangeRound: #(80 0).
-		0 to: canvasExtent y/boxSize do: [ :y|
-			0 to: canvasExtent x/boxSize do: [ :x| 
-				c addShape: (RSBox new 
-					color: Color white;
-					position: ((x@y)*boxSize) - (canvasExtent/2);
-					extent: 10@10;
-					border: border )
-				] ]
-		].
-	c when: RSMouseMove do: [ :evt | 
-		easing := easing + ((evt position - easing)* 1).
-		c shapes copy do: [ :s |
-			zindex := scale scale: (easing distanceTo: s position).
-			s extent: boxSize * (zindex /100) asPoint ].
-		c signalUpdate.
-	].
+	maxDist := 0 @ 0 distanceTo: canvasExtent.
+	scale := NSScale linear
+		         domain: {
+				         0.
+				         maxDist };
+		         rangeRound: #( 80 0 ).
+	border := RSBorder new color: Color black.
+	c
+		when: RSExtentChangedEvent
+		do: [
+			c shapes copy do: #remove.
+			canvasExtent := c extent.
+			maxDist := 0 @ 0 distanceTo: canvasExtent.
+			scale := NSScale linear
+				         domain: {
+						         0.
+						         maxDist };
+				         rangeRound: #( 80 0 ).
+			0 to: canvasExtent y / boxSize do: [ :y |
+				0 to: canvasExtent x / boxSize do: [ :x |
+					c addShape: (RSBox new
+							 color: Color white;
+							 position: x @ y * boxSize - (canvasExtent / 2);
+							 extent: 10 @ 10;
+							 border: border) ] ] ]
+		for: self.
+	c
+		when: RSMouseMove
+		do: [ :evt |
+			easing := easing + (evt position - easing * 1).
+			c shapes copy do: [ :s |
+				zindex := scale scale: (easing distanceTo: s position).
+				s extent: boxSize * (zindex / 100) asPoint ].
+			c signalUpdate ]
+		for: self.
 	c shouldClearBackground: false.
 	^ c
 ]
 
 { #category : #lines }
 RSBasicShapeExamples >> example12BasicLine [
+
 	<script: 'self new example12BasicLine open'>
 	| c rotate size angle |
 	c := RSCanvas new.
 	angle := 0.
 	size := 0.
-	rotate := [ :point | | cos sin p |
-		cos := angle cos.
-		sin := angle sin.
-		"origin"
-		p := point - ((size @ size)/2).
-		"rotated"
-		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
-	].
-	c when: RSMouseMove do: [ :evt | 
-		size := evt position distanceTo: 0@0.
-		angle := evt position angle + 135 degreesToRadians.
-		c shapes copy do: #remove.
-		size := size asInteger.
-		(0 to: size by: 3) do: [ :k |
-			| a b |
-			a := rotate value: k @ 0.
-			b := rotate value: 0 @ (size - k).
-			c addShape: (RSLine new
-				startPoint: a;
-				endPoint: b;
-				yourself).
-		 ].
-		c signalUpdate.
-	].
-	
+	rotate := [ :point |
+	          | cos sin p |
+	          cos := angle cos.
+	          sin := angle sin.
+	          "origin"
+	          p := point - (size @ size / 2).
+	          "rotated"
+	          p x * cos - (p y * sin) @ (p y * cos + (p x * sin)) ].
+	c
+		when: RSMouseMove
+		do: [ :evt |
+			size := evt position distanceTo: 0 @ 0.
+			angle := evt position angle + 135 degreesToRadians.
+			c shapes copy do: #remove.
+			size := size asInteger.
+			(0 to: size by: 3) do: [ :k |
+				| a b |
+				a := rotate value: k @ 0.
+				b := rotate value: 0 @ (size - k).
+				c addShape: (RSLine new
+						 startPoint: a;
+						 endPoint: b;
+						 yourself) ].
+			c signalUpdate ]
+		for: self.
+
 	^ c
 ]
 
@@ -354,7 +375,7 @@ RSBasicShapeExamples >> example14BasicBitmap [
 	c addShape: (RSBitmap new
 		form: (self iconNamed: #eyedropper);
 		extent: 200@350).
-		
+
 	^ c
 ]
 
@@ -367,13 +388,13 @@ RSBasicShapeExamples >> example15BasicRoundBoxes [
 	c addShape: (RSBox new
 		cornerRadius: 5;
 		extent: 100@50).
-		
+
 	c addShape: (RSBox new
 		cornerRadius: (RSCornerRadius new top: 20);
 		position: 100@100;
 		extent: 100@50;
 		withBorder).
-		
+
 	^ c
 ]
 
@@ -489,7 +510,7 @@ RSBasicShapeExamples >> example23FixedShape [
 		yourself.
 	box isFixed: true.
 	c addShape: box.
-	
+
 	box := RSBox new
 		extent: 100@100;
 		yourself.
@@ -522,7 +543,7 @@ RSBasicShapeExamples >> example25LabelWithBorder [
 		fontSize: 60;
 		fontName: 'Source Sans Pro';
 		"fontName: 'Brushcrazy DEMO';"
-		border: (RSBorder new 
+		border: (RSBorder new
 			color: Color red;
 			dashArray: #(4) );
 		text: 'Roassal Pharo').
@@ -531,16 +552,27 @@ RSBasicShapeExamples >> example25LabelWithBorder [
 
 { #category : #polygons }
 RSBasicShapeExamples >> example26Polygon [
+
 	<script: 'self new example26Polygon open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolygon new
-		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
-		yourself).
-	c shapes first translateTo: 0@0.
+			 points: {
+					 (100 @ 10).
+					 (40 @ 198).
+					 (190 @ 78).
+					 (10 @ 78).
+					 (160 @ 198) };
+			 yourself).
+	c shapes first translateTo: 0 @ 0.
 	c showEncompassingRectangles.
-	c shapes first when: RSMouseDragging do: [:evt |
-		evt shape translateBy: evt step; signalUpdate].
+	c shapes first
+		when: RSMouseDragging
+		do: [ :evt |
+			evt shape
+				translateBy: evt step;
+				signalUpdate ]
+		for: self.
 	^ c
 ]
 
@@ -549,7 +581,7 @@ RSBasicShapeExamples >> example27Markers [
 	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
 	c := RSCanvas new.
-	arrow := RSPolygon new 
+	arrow := RSPolygon new
 		points: { -10@0. 0@ -10. 10@0 };
 		color: Color black;
 		size: 10.
@@ -558,7 +590,7 @@ RSBasicShapeExamples >> example27Markers [
 		color: Color red.
 	axes := RSPolyline new
 		controlPoints: { 10@10. 10@90. 90@90 }.
-	dataLine := RSPolyline new 
+	dataLine := RSPolyline new
 		controlPoints: { 15@80. 29@50. 43@60. 57@30. 71@40. 85@15 }.
 	axes markerEnd: (axes markerStart: arrow).
 	dataLine marker: circle.
@@ -587,17 +619,28 @@ RSBasicShapeExamples >> example29PolylineRadius [
 
 { #category : #polygons }
 RSBasicShapeExamples >> example30PolygonWithRadius [
+
 	<script: 'self new example30PolygonWithRadius open'>
 	| c |
 	c := RSCanvas new.
 	c addShape: (RSPolygon new
-		cornerRadii: 10;
-		points: { 100@10. 40@198. 190@78. 10@78. 160@198 };
-		yourself).
-	c shapes first translateTo: 0@0.
+			 cornerRadii: 10;
+			 points: {
+					 (100 @ 10).
+					 (40 @ 198).
+					 (190 @ 78).
+					 (10 @ 78).
+					 (160 @ 198) };
+			 yourself).
+	c shapes first translateTo: 0 @ 0.
 	c showEncompassingRectangles.
-	c shapes first when: RSMouseDragging do: [:evt |
-		evt shape translateBy: evt step; signalUpdate].
+	c shapes first
+		when: RSMouseDragging
+		do: [ :evt |
+			evt shape
+				translateBy: evt step;
+				signalUpdate ]
+		for: self.
 	^ c
 ]
 
@@ -653,7 +696,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com1 adjustToChildren.
 	b1 position: 20@20.
 	com1 position: 200@0.
-	
+
 	com2 := RSComposite new.
 	com2 paint: Color blue translucent.
 	b2 := RSBox new size: 10.
@@ -661,10 +704,10 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com2 adjustToChildren.
 	b2 position: 50@0.
 	com2 position: -100@0.
-	
+
 	com1 draggable.
 	com2 draggable.
-	
+
 	e1 := RSLine new from: b1; to: b2.
 	c addAll: { com1. com2. e1 }.
 	^ c
@@ -674,27 +717,27 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 RSBasicShapeExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
-	"Try 
+	"Try
 		RSColorPalette qualitative
 		RSColorPalette sequential
 	"
 	paletteObject := RSColorPalette diverging.
-	
+
 	c := RSCanvas new.
 	composites := OrderedCollection new.
 	paletteObject class selectors do: [ :selector |
 		colors := paletteObject perform: selector.
-		
+
 		shapes := RSGroup new.
 		shapes addAll: (colors range collect: [ :aColor | RSBox new size: 20; color: aColor ]).
-		
+
 		RSHorizontalLineLayout on: shapes.
-		
+
 		compo := RSComposite new.
 		compo shapes: shapes.
 		c add: compo.
 		composites add: compo.
-		
+
 		label := RSLabel new text: selector.
 		c add: label.
 		RSLocation new
@@ -707,18 +750,31 @@ RSBasicShapeExamples >> example34PaletteVisualization [
 
 { #category : #events }
 RSBasicShapeExamples >> example35KeyEvents [
-	<script: 'self new example35KeyEvents open setLabel: ''Use the keyboard'''>
+
+	<script:
+	'self new example35KeyEvents open setLabel: ''Use the keyboard'''>
 	| c print down up |
 	c := RSCanvas new.
-	down := RSLabel new model: 'DOWN'; text: ''.
-	up := RSLabel new model: 'UP'; text: ''; position: 0@ 30.
-	c addAll: { down. up }.
-	print := [ :evt :s | 
-		s text: (s model, ': ' , evt keyName,', value: ', evt keyValue asString).
-		evt signalUpdate  ].
-	c 
-		when: RSKeyDown do: [ :evt | print value: evt value: down ];
-		when: RSKeyUp do: [ :evt | print value: evt value: up ].
+	down := RSLabel new
+		        model: 'DOWN';
+		        text: ''.
+	up := RSLabel new
+		      model: 'UP';
+		      text: '';
+		      position: 0 @ 30.
+	c addAll: {
+			down.
+			up }.
+	print := [ :evt :s |
+	         s text:
+		         s model , ': ' , evt keyName , ', value: '
+		         , evt keyValue asString.
+	         evt signalUpdate ].
+	c
+		when: RSKeyDown
+		do: [ :evt | print value: evt value: down ]
+		for: self;
+		when: RSKeyUp do: [ :evt | print value: evt value: up ] for: self.
 
 	^ c
 ]
@@ -781,7 +837,7 @@ RSBasicShapeExamples >> example37AngleDirection [
 	| canvas slice magic |
 	canvas := RSCanvas new.
 	slice := RSPieSlice new.
-	slice 
+	slice
 		innerRadius: 100;
 		externalRadius: 150;
 		alphaAngle: 15;
@@ -813,10 +869,10 @@ RSBasicShapeExamples >> example37AngleDirection [
 		markerEnd: (RSShapeFactory arrow
 			size: 20;
 			color: Color black);
-		controlPoints: 
-			{160@0. 
-			160@ magic negated. 
-			magic@ -160. 
+		controlPoints:
+			{160@0.
+			160@ magic negated.
+			magic@ -160.
 			0@ -160  };
 		yourself
 		).
@@ -827,51 +883,49 @@ RSBasicShapeExamples >> example37AngleDirection [
 		yourself).
 
 	^ canvas
-
-
-
-
 ]
 
 { #category : #shapes }
 RSBasicShapeExamples >> example38Interaction [
+
 	<script: 'self new example38Interaction open'>
 	| c1 c2 com canvas |
 	c1 := RSEllipse new
-		extent: 100 @ 50;
-		withBorder;
-		model: 'Click to remove';
-		popup;
-		color: Color red translucent;
-		yourself.
+		      extent: 100 @ 50;
+		      withBorder;
+		      model: 'Click to remove';
+		      popup;
+		      color: Color red translucent;
+		      yourself.
 	c2 := RSEllipse new
-		extent: 50 @ 100;
-		withBorder;
-		color: Color blue translucent;
-		yourself.
-	com := {c1. c2} asShape
-		model: 'Draggable';
-		popup;
-		@ (RSDraggable new noValidateChildrenEvents);
-		padding: 10;
-		color: Color gray translucent;
-		yourself.
+		      extent: 50 @ 100;
+		      withBorder;
+		      color: Color blue translucent;
+		      yourself.
+	com := {
+		       c1.
+		       c2 } asShape
+		       model: 'Draggable';
+		       popup;
+		       @ RSDraggable new noValidateChildrenEvents;
+		       padding: 10;
+		       color: Color gray translucent;
+		       yourself.
 	c1
 		when: RSMouseClick
-		do: [ :evt | 
+		do: [ :evt |
 			c1 remove.
 			com removeInteractionIfPresent: RSDraggable.
 			com model: 'Not draggable anymore'.
-			evt signalUpdate ].
+			evt signalUpdate ]
+		for: self.
 	canvas := RSCanvas new.
-	canvas
-		add:
-			(RSEllipse new
-				color: Color red;
-				model: 'Reference';
-				popup;
-				size: 10;
-				yourself).
+	canvas add: (RSEllipse new
+			 color: Color red;
+			 model: 'Reference';
+			 popup;
+			 size: 10;
+			 yourself).
 	canvas add: com.
 	canvas @ RSCanvasController.
 	^ canvas
@@ -879,25 +933,27 @@ RSBasicShapeExamples >> example38Interaction [
 
 { #category : #shapes }
 RSBasicShapeExamples >> example39YikigeiAnimated [
+
 	<script: 'self new example39YikigeiAnimated open'>
 	| c size circles posOffset negOffset |
 	c := RSCanvas new.
 	size := 200.
-	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
-	    c add: (RSEllipse new
-	        size: size;
-	        color: ((Color perform: sel) alpha: 0.4 );
-	        yourself).
-	    ]).
-	c when: RSMouseMove do: [ :evt | 
-	    posOffset := (evt position distanceTo: 0@0).
-	    negOffset := posOffset negated.
-	    circles first position: posOffset @ 0.
-	    circles second position: 0 @ posOffset.
-	    circles third position: negOffset @ 0.
-	    circles fourth position: 0@negOffset.
-	    c signalUpdate.
-	     ].
+	c addAll: (circles := #( magenta yellow red cyan ) collect: [ :sel |
+			            c add: (RSEllipse new
+					             size: size;
+					             color: ((Color perform: sel) alpha: 0.4);
+					             yourself) ]).
+	c
+		when: RSMouseMove
+		do: [ :evt |
+			posOffset := evt position distanceTo: 0 @ 0.
+			negOffset := posOffset negated.
+			circles first position: posOffset @ 0.
+			circles second position: 0 @ posOffset.
+			circles third position: negOffset @ 0.
+			circles fourth position: 0 @ negOffset.
+			c signalUpdate ]
+		for: self.
 	^ c
 ]
 
@@ -908,10 +964,10 @@ RSBasicShapeExamples >> example40ColorScale [
 	color := NSScale linear
 	    domain: { 1. 200. 400 };
 	    range: #(white gray red).
-	    
+
 	canvas := RSCanvas new.
-	popup := RSPopup text: [ :cls | 
-	    cls name, String crlf, 
+	popup := RSPopup text: [ :cls |
+	    cls name, String crlf,
 	    'Nro Methods: ', cls numberOfMethods asString, String crlf,
 	    'Lines of Code: ', cls linesOfCode asString ].
 	shapes := Collection withAllSubclasses collect: [ :cls |
@@ -942,7 +998,7 @@ RSBasicShapeExamples >> example41PopupAndMarkers [
 	marker := RSShapeFactory star size: 40.
 	line markerEnd: marker.
 	line @ RSPopup new.
-	line model: 'foo'.
+	line model: 'Magic stick'.
 	canvas := RSCanvas new add: line; yourself.
 	canvas zoomToFit.
 	^ canvas
@@ -983,7 +1039,7 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 			yourself ] as: RSGroup.
 	numbers @ RSDraggable new.
 	canvas addAll: numbers.
-	marker := (RSShapeFactory arrow 
+	marker := (RSShapeFactory arrow
 		size: 10;
 		asMarker)
 		offset: 5;
@@ -1009,34 +1065,50 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 		toShapes: numbers;
 		connectTo: [ :n | n + 1 ].
 	RSSimpleForceBasedLayout on: numbers.
-	^ canvas @ RSCanvasController simple
+	canvas @ RSCanvasController simple.
+	^ canvas
 ]
 
 { #category : #lines }
 RSBasicShapeExamples >> example44AA [
+
 	<script: 'self new example44AA open'>
 	| canvas |
 	canvas := RSCanvas new.
 	canvas
-		add: (RSBox new size: 30; color: 'blue'; yourself);
-		add: (RSLine new width: 0.5; startPoint: 0@0; endPoint: 50 asPoint; color: 'black'; yourself);
-		add: (RSEllipse new extent: 40@50; color: 'gray'; yourself);
-		add: (RSLabel new text: 'AA enabled'; color: 'black'; yourself).
+		add: (RSBox new
+				 size: 30;
+				 color: 'blue';
+				 yourself);
+		add: (RSLine new
+				 width: 0.5;
+				 startPoint: 0 @ 0;
+				 endPoint: 50 asPoint;
+				 color: 'black';
+				 yourself);
+		add: (RSEllipse new
+				 extent: 40 @ 50;
+				 color: 'gray';
+				 yourself);
+		add: (RSLabel new
+				 text: 'AA enabled';
+				 color: 'black';
+				 yourself).
 	RSGridLayout on: canvas shapes.
 	canvas zoomToFit.
 	canvas newAnimation
 		repeat;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			canvas shapes last text: (canvas hasAntialiasing
-				ifTrue: ['AA enabled']
-				ifFalse: [ 'AA disabled' ] ).
+						 ifTrue: [ 'AA enabled' ]
+						 ifFalse: [ 'AA disabled' ]).
 			canvas signalUpdate ];
-		when: RSAnimationLoopEvent do: [ :evt | 
+		when: RSAnimationLoopEvent do: [ :evt |
 			canvas hasAntialiasing
 				ifTrue: [ canvas disableAntialiasing ]
 				ifFalse: [ canvas enableAntialiasing ].
-			canvas signalUpdate.
-			 ].
+			canvas signalUpdate ]
+		for: self.
 	^ canvas
 ]
 

@@ -1,6 +1,13 @@
 Extension { #name : #RSCanvas }
 
 { #category : #'*Roassal3-Inspector' }
+RSCanvas >> asPresenter [
+	^ SpRoassal3InspectorPresenter new
+		canvas: self;
+		yourself
+]
+
+{ #category : #'*Roassal3-Inspector' }
 RSCanvas >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new
@@ -49,16 +56,16 @@ RSCanvas >> inspectorShapes [
 	<inspectorPresentationOrder: 100 title: 'Shapes'>
 	^ SpTablePresenter new
 		items: self shapes, self fixedShapes;
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Shape'
 			evaluated: [ :each | each asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Model'
 			evaluated: [ :each | each model asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Paint'
 			evaluated: [ :each | each paint asString ] );
-		addColumn: (SpStringTableColumn 
+		addColumn: (SpStringTableColumn
 			title: 'Border'
 			evaluated: [ :each | each border asString ] )
 ]

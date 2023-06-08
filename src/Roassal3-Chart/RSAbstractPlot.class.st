@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #adding }
-RSAbstractPlot >> addedIn: aRSChart [ 
+RSAbstractPlot >> addedIn: aRSChart [
 	aRSChart addPlot: self
 ]
 
@@ -36,7 +36,7 @@ RSAbstractPlot >> checkAssertion [
 { #category : #public }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
-	^ self color ifNil: [ chart colorFor: self ].
+	^ self color ifNil: [ chart colorFor: self ]
 ]
 
 { #category : #initialization }
@@ -136,6 +136,11 @@ RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
+{ #category : #accessing }
+RSAbstractPlot >> x [
+	^ xValues
+]
+
 { #category : #public }
 RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
@@ -172,10 +177,15 @@ RSAbstractPlot >> xValues [
 	^ xValues
 ]
 
+{ #category : #accessing }
+RSAbstractPlot >> y [
+	^ yValues
+]
+
 { #category : #public }
 RSAbstractPlot >> y: aCollection [
 	"Define a plot with only a Y coordinate. The X coordinate is the index of the data point.
-	
+
 	For example:
 -=-=-=-=-=-=-=-=-=
 x := (-3.14 to: 3.14 by: 0.01).
@@ -191,7 +201,7 @@ c addPlot: p.
 
 c addDecoration: RSHorizontalTick new.
 c addDecoration: (RSVerticalTick new asFloat).
-c 
+c
 -=-=-=-=-=-=-=-=-=
 	"
 	self x: (1 to: aCollection size) y: aCollection

@@ -10,7 +10,7 @@ RSDependencyTest >> assertPackage: p1Name dependOn: p2Name [
 	| p1 p2 |
 	p1 := self packageNamed: p1Name.
 	p2 := self packageNamed: p2Name.
-	self assert: (p1 dependentPackages includes: p2).
+	self assert: (p1 dependentPackages includes: p2)
 ]
 
 { #category : #'private - asserting' }
@@ -19,18 +19,18 @@ RSDependencyTest >> assertPackage: p1Name doesNotDependOn: p2Name [
 	| p1 p2 |
 	p1 := self packageNamed: p1Name.
 	p2 := self packageNamed: p2Name.
-	self deny: (p1 dependentPackages includes: p2).
+	self deny: (p1 dependentPackages includes: p2)
 ]
 
 { #category : #testing }
-RSDependencyTest >> hasPackage: aString [ 
-	
-	^ (self packageNamed: aString) notNil.
+RSDependencyTest >> hasPackage: aString [
+
+	^ (self packageNamed: aString) notNil
 ]
 
 { #category : #'private - accessing' }
 RSDependencyTest >> packageNamed: aSymbol [
-	^ RPackageOrganizer default packageNamed: aSymbol 
+	^ RPackageOrganizer default packageNamed: aSymbol
 		ifAbsent: [ nil ]
 ]
 
@@ -48,6 +48,6 @@ RSDependencyTest >> testDependencies [
 
 	"Chart uses RSLocation from Layouts"
 	self assertPackage: 'Roassal3-Chart' dependOn: 'Roassal3-Layouts'.
-	
-	self assertPackage: 'Roassal3' dependOn: 'Announcements-Core'.
+
+	self assertPackage: 'Roassal3' dependOn: 'Announcements-Core'
 ]

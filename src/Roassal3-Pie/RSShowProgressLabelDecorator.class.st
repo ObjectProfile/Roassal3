@@ -17,11 +17,10 @@ RSShowProgressLabelDecorator >> initialize [
 	super initialize.
 	labelShape := RSLabel new.
 	highlight := RSHighlightable new.
-	highlight 
-		highlightColor: [ :shape | shape color adjustBrightness: 0.08 ]; 
-		when: RSHighlightEvent do: [ :evt | self updateLabel: evt shape ];
-		when: RSUnHighlightEvent do: [ :evt | self updateLabel: nil ].
-	
+	highlight
+		highlightColor: [ :shape | shape color adjustBrightness: 0.08 ];
+		when: RSHighlightEvent do: [ :evt | self updateLabel: evt shape ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | self updateLabel: nil ] for: self
 ]
 
 { #category : #accessing }
@@ -46,8 +45,7 @@ RSShowProgressLabelDecorator >> render [
 	progressLabel text: ''.
 	canvas := builder container.
 	canvas add: progressLabel.
-	builder shapes @ highlight.
-	
+	builder shapes @ highlight
 ]
 
 { #category : #updating }

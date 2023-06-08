@@ -32,10 +32,10 @@ RSCanvasController class >> simple [
 	| inst |
 	inst := self new.
 	inst noLegend.
-	inst configuration
+	inst zoomToFitInteraction
 		noZoomToFitOnStart;
-		hasDraggableAnimation: false;
 		noZoomToFitOnExtendChanged.
+	inst draggableCanvasInteraction hasDraggableAnimation: false.
 	inst removeInteractionIfPresent: RSZoomToFitCanvasInteraction.
 	"this interaction works better when the visualization has already been created"
 	inst addInteractionClass: RSKeepCanvasPositionCanvasInteraction.
@@ -62,13 +62,27 @@ RSCanvasController >> configuration [
 { #category : #accessing }
 RSCanvasController >> configuration: aRSControlLimits [
 	configuration := aRSControlLimits.
-	self interactions do: [ :i | i configuration: configuration ].
+	self interactions do: [ :i | i configuration: configuration ]
 ]
 
 { #category : #initialization }
 RSCanvasController >> defaultInteractions [
-	"create a subclass of RSControslView and define your own custom interactions for your canvas"
-	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvasInteraction. RSZoomToFitCanvasInteraction. RSZoomableCanvasInteraction. RSScrollBarsCanvasInteraction . RSSearchInCanvasInteraction }
+
+	"create a subclass of RSCanvasController and define your own custom interactions for your canvas"
+
+	^ { 
+		  RSDraggableCanvasInteraction.
+		  RSKeyNavigationCanvasInteraction.
+		  RSZoomToFitCanvasInteraction.
+		  RSZoomableCanvasInteraction.
+		  RSScrollBarsCanvasInteraction.
+		  RSSearchInCanvasInteraction.
+		  RSSelectionInCanvasInteraction }
+]
+
+{ #category : #accessing }
+RSCanvasController >> draggableCanvasInteraction [
+	^ interactions at: RSDraggableCanvasInteraction
 ]
 
 { #category : #initialization }
@@ -96,7 +110,11 @@ RSCanvasController >> interactionsFromArray: anArray [
 	anArray do: [ :int |
 		collection at: int class put: int ].
 	self interactions: collection
-	
+]
+
+{ #category : #accessing }
+RSCanvasController >> keyNavigationInteraction [
+	^ interactions at: RSKeyNavigationCanvasInteraction
 ]
 
 { #category : #configuration }
@@ -109,8 +127,7 @@ RSCanvasController >> onShape: aCanvas [
 	aCanvas controllerInteraction ifNotNil: [ ^ self ].
 	aCanvas controllerInteraction: self.
 	self interactions do: [ :int | int onShape: aCanvas ].
-	self renderLegendOn: aCanvas.
-	
+	self renderLegendOn: aCanvas
 ]
 
 { #category : #accessing }
@@ -122,14 +139,14 @@ RSCanvasController >> removeInteractionIfPresent: anInteractionClass [
 RSCanvasController >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
-	lb := RSLegend new 
+	lb := RSLegend new
 		container: aCanvas;
 		yourself.
 	lb defaultTitle fontSize: 12.
 	lb defaultLabel fontSize: 10.
 	lb defaultBoldText fontSize: 10.
 	lb legendDo: [ :l |
-		l 
+		l
 			border: RSBorder new;
 			color: (Color white alpha: 0.8);
 			padding: 10.
@@ -137,7 +154,7 @@ RSCanvasController >> renderLegendOn: aCanvas [
 	lb title: 'Shortcuts'.
 	self interactions do: [ :int | int renderLegendOn: lb ].
 	lb onDemand.
-	lb build.
+	lb build
 ]
 
 { #category : #testing }
@@ -148,4 +165,9 @@ RSCanvasController >> shouldShowLegend [
 { #category : #configuration }
 RSCanvasController >> withLegend [
 	self configuration withLegend
+]
+
+{ #category : #accessing }
+RSCanvasController >> zoomToFitInteraction [
+	^ interactions at: RSZoomToFitCanvasInteraction
 ]

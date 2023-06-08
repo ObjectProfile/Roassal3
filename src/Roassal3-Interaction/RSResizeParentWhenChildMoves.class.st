@@ -12,7 +12,7 @@ Class {
 
 { #category : #hooks }
 RSResizeParentWhenChildMoves >> brotherFor: shape from: children [
-	^ children 
+	^ children
 		detect: [ :child | child ~= shape ]
 		ifNone: [ nil ]
 ]
@@ -30,7 +30,7 @@ RSResizeParentWhenChildMoves >> defaultPadding [
 { #category : #initialization }
 RSResizeParentWhenChildMoves >> initialize [
 	super initialize.
-	self padding: self defaultPadding.
+	self padding: self defaultPadding
 ]
 
 { #category : #testing }
@@ -40,9 +40,9 @@ RSResizeParentWhenChildMoves >> isValidParent: parent [
 
 { #category : #hooks }
 RSResizeParentWhenChildMoves >> onShape: aCanvas [
-	aCanvas isShape 
+	aCanvas isShape
 		ifTrue: [ ^ self registerShape: aCanvas ].
-		
+
 	aCanvas allChildren do: [ :child | self registerShape: child ]
 ]
 
@@ -68,10 +68,10 @@ RSResizeParentWhenChildMoves >> prepare: shape with: parent [
 
 { #category : #hooks }
 RSResizeParentWhenChildMoves >> registerShape: child [
-	child 
+	child
 		when: RSPositionChangedEvent
 		send: #resizeParent:
-		to: self 
+		to: self
 ]
 
 { #category : #hooks }
@@ -80,30 +80,26 @@ RSResizeParentWhenChildMoves >> resizeParent: evt [
 	shape := evt shape.
 	parent := self parentFor: shape.
 	(self isValidParent: parent) ifFalse: [^ self ].
-	
+
 	lastPosition := parent position.
 	delta := evt newPosition - evt oldPosition.
 	children := self childrenFor: parent.
-	
+
 	brother := self brotherFor: shape from: children.
 	reference := nil.
-	brother ifNotNil: [ 
-		reference := brother parent globalMatrix 
+	brother ifNotNil: [
+		reference := brother parent globalMatrix
 			transform: brother position ].
-	parent executeWithoutAnnouncer: [ 
+	parent executeWithoutAnnouncer: [
 		self prepare: shape with: parent.
 		parent adjustToChildren.
 		parent padding: self padding.
 		 ].
-	children size = 1 ifTrue: [ 
+	children size = 1 ifTrue: [
 		shape position: evt oldPosition.
 		parent translateTo: lastPosition + delta.
 		^ self ].
 	parent position: lastPosition.
 	delta := (brother parent globalMatrix transform: brother position) - reference.
-	parent translateBy: delta negated.
-	
-	
-	
-	
+	parent translateBy: delta negated
 ]

@@ -23,7 +23,7 @@ RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	vertices := SimpleBalloonMorph getVertices: targetMorph bounds.
 	popup := SimpleBalloonMorph new
 		"color: self backgroundColor;"
-		
+
 		addMorph: targetMorph;
 		setTarget: nil;
 		setVertices: vertices;
@@ -33,7 +33,7 @@ RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	world ifNil: [ ^ popup ].
 	world addMorphFront: popup.
 	world activeHand balloonHelp: popup.
-	^ popup 
+	^ popup
 ]
 
 { #category : #accessing }
@@ -50,7 +50,7 @@ RSMorphicPopupInteraction >> gapFromPointer: aPoint [
 RSMorphicPopupInteraction >> initialize [
 	super initialize.
 	self morphBuilder: [ :model | self popupFor: model ].
-	gapFromPointer := 0@0.
+	gapFromPointer := 0@0
 ]
 
 { #category : #accessing }
@@ -84,7 +84,7 @@ RSMorphicPopupInteraction >> releasePopup: popup [
 ]
 
 { #category : #hooks }
-RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [ 
+RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [
 	| position xdelta ydelta cMorph world |
 	cMorph := evt canvas morph.
 	world := cMorph world.
@@ -92,17 +92,16 @@ RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [
 	position := (evt camera fromSpaceToPixel: evt position) + cMorph positionInWorld.
 	xdelta := gapFromPointer x.
 	ydelta := gapFromPointer y.
-	
-	(position x + aMorph width) > world width 
+
+	(position x + aMorph width) > world width
 		ifTrue: [ xdelta := xdelta negated - aMorph width ].
 	(position y + aMorph height) > world height
 		ifTrue: [ ydelta := ydelta negated - aMorph height ].
-	
+
 	aMorph
 		lock;
 		fullBounds;
 		setProperty: #morphicLayerNumber toValue: aMorph morphicLayerNumber.
-	
-	aMorph position: ((position x + xdelta) max: 0) @ ((position y + ydelta) max: 0)
 
+	aMorph position: ((position x + xdelta) max: 0) @ ((position y + ydelta) max: 0)
 ]

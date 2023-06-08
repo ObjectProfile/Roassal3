@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'class initialization' }
-SpMorphicRoassalAdapter class >> initialize [ 
+SpMorphicRoassalAdapter class >> initialize [
 
 	"we need to reset the cached adapter bindigns"
 	SpNullApplication reset
@@ -66,7 +66,7 @@ SpMorphicRoassalAdapter >> freeCanvas [
 	canvas := temp roassalCanvas.
 	widget canvas: canvas.
 	canvas morph: widget.
-	canvas extent: widget extent.
+	canvas extent: widget extent
 ]
 
 { #category : #initialization }

@@ -61,18 +61,18 @@ RSAbstractControlPointsLine class >> isAbstract [
 
 { #category : #actions }
 RSAbstractControlPointsLine >> basicTranslateBy: delta [
-	controlPoints := controlPoints collect: [:p | p + delta ].
+	controlPoints := controlPoints collect: [:p | p + delta ]
 ]
 
 { #category : #accessing }
 RSAbstractControlPointsLine >> controlPoints [
-	^ controlPoints ifNil: [ controlPoints := { 0@0. 0@0 } ].
+	^ controlPoints ifNil: [ controlPoints := { 0@0. 0@0 } ]
 ]
 
 { #category : #accessing }
 RSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
 	controlPoints := anArrayOfPoints collect: #asFloatPoint.
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #accessing }
@@ -92,10 +92,10 @@ RSAbstractControlPointsLine >> endPoint [
 
 { #category : #accessing }
 RSAbstractControlPointsLine >> endPoint: aPoint [
-	self controlPoints 
+	self controlPoints
 		at: self controlPoints size
 		put: aPoint.
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #testing }
@@ -119,7 +119,7 @@ RSAbstractControlPointsLine >> startPoint [
 { #category : #accessing }
 RSAbstractControlPointsLine >> startPoint: aPoint [
 	self controlPoints at: 1 put: aPoint.
-	self resetPath.
+	self resetPath
 ]
 
 { #category : #update }
@@ -127,5 +127,5 @@ RSAbstractControlPointsLine >> update [
 	controlPointsController ifNil: [ ^ self ].
 	self
 		controlPoints: (controlPointsController controlPointsFor: self);
-		notifyExtentChanged.
+		notifyExtentChanged
 ]

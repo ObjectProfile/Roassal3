@@ -32,7 +32,7 @@ RSCircularTreeMapExamples >> example02Morph [
 	b build.
 	palette := NSScale ordinal rangeFrom: #('012642' '3d88b6' 'cbe5ef').
 	b shapes do: [ :shape | | paint color |
-		shape border: (RSBorder new 
+		shape border: (RSBorder new
 			color: Color black;
 			width: 2 - (shape depth*0.4) ).
 		color := palette scale: shape depth.
@@ -48,7 +48,7 @@ RSCircularTreeMapExamples >> example02Morph [
 				text: shape model asString;
 				position: shape position;
 				yourself.
-			label width > shape width ifTrue: [ 
+			label width > shape width ifTrue: [
 				label scaleBy: (shape width / label width) * 0.9
 				 ].
 			canvas add: label.
@@ -60,32 +60,36 @@ RSCircularTreeMapExamples >> example02Morph [
 { #category : #examples }
 RSCircularTreeMapExamples >> example03Evolving [
 	"original example created by Alexandre Bergel for Roassal1 ;)"
+
 	<script: 'self new example03Evolving open'>
 	| canvas t |
 	canvas := RSCanvas new.
 	canvas @ RSCanvasController.
-	
+
 	"we prepare the data"
 	t := 0.
-	
+
 	canvas add: (RSLabel new
-		text: '+1';
-		isFixed: true;
-		position: 20@20;
-		when: RSMouseClick do: [ :evt | 
-			t := t + 1.
-			canvas shapes copy do: #remove.
-			"RSCircularTreeMap new"
-			RSTreeMap new
-				in: [ :b |b boxShape noPaint ];
-				container: canvas;
-				leafWeight: #yourself;
-				explore: 1 using: [:n | {n * 2. n * 2 + 1} select: [ :each | each <= t ] ];
-				build.
-			canvas shapes @ RSPopup.
-			canvas zoomToFit.
-			canvas signalUpdate.
-			];
-		yourself).
+			 text: '+1';
+			 isFixed: true;
+			 position: 20 @ 20;
+			 when: RSMouseClick do: [ :evt |
+				 t := t + 1.
+				 canvas shapes copy do: #remove.
+				 "RSCircularTreeMap new"
+				 RSTreeMap new
+					 in: [ :b | b boxShape noPaint ];
+					 container: canvas;
+					 leafWeight: #yourself;
+					 explore: 1 using: [ :n |
+						 {
+							 (n * 2).
+							 (n * 2 + 1) } select: [ :each | each <= t ] ];
+					 build.
+				 canvas shapes @ RSPopup.
+				 canvas zoomToFit.
+				 canvas signalUpdate ]
+			 for: self;
+			 yourself).
 	^ canvas
 ]

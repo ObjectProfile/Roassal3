@@ -14,37 +14,53 @@ Class {
 }
 
 { #category : #building }
-RSCat >> addAnimationSlider [ 
+RSCat >> addAnimationSlider [
+
 	| red black slider label loc layout ps durations |
-	red := RSBox new extent: 3 * pixel asPoint; color: Color red.
-	black := RSBox new extent: 18@3 * pixel; color: Color black.
-	slider := { red. black }.
+	red := RSBox new
+		       extent: 3 * pixel asPoint;
+		       color: Color red.
+	black := RSBox new
+		         extent: 18 @ 3 * pixel;
+		         color: Color black.
+	slider := {
+		          red.
+		          black }.
 	layout := RSHorizontalLineLayout new gapSize: 0.
 	layout on: slider.
 	slider := slider asGroup asShape.
 	slider isFixed: true.
-	label := RSLabel new text: '100%'; color: Color white; isFixed: true.
+	label := RSLabel new
+		         text: '100%';
+		         color: Color white;
+		         isFixed: true.
 	loc := RSLocation new
-		outer; right;
-		move: label on: slider.
-	ps := NSScale linear domain: #(0 1); range: {0. 6 }.
+		       outer;
+		       right;
+		       move: label on: slider.
+	ps := NSScale linear
+		      domain: #( 0 1 );
+		      range: { 0. 6 }.
 	durations := canvas animations collect: [ :a | a duration ].
-	slider when: RSMouseClick do: [ :evt | | p |
-		p := evt camera fromSpaceToPixel: evt position.
-		p := p x / slider width.
-		red width: p * slider width.
-		black width: (1-p)* slider width.
-		layout on: slider children.
-		slider adjustToChildren.
-		p := ps scale: p.
-		label text: (p*100) asInteger asString, '%'.
-		loc move: label on: slider.
-		
-		canvas animations with: durations do: [ :a :d |
-			a duration: d / p ] .
-		].
-	canvas addAll: {slider. label}.
-	
+	slider
+		when: RSMouseClick
+		do: [ :evt |
+			| p |
+			p := evt camera fromSpaceToPixel: evt position.
+			p := p x / slider width.
+			red width: p * slider width.
+			black width: (1 - p) * slider width.
+			layout on: slider children.
+			slider adjustToChildren.
+			p := ps scale: p.
+			label text: (p * 100) asInteger asString , '%'.
+			loc move: label on: slider.
+
+			canvas animations with: durations do: [ :a :d | a duration: d / p ] ]
+		for: self.
+	canvas addAll: {
+			slider.
+			label }
 ]
 
 { #category : #building }
@@ -57,10 +73,10 @@ RSCat >> addCat [
 	tail := self catTail.
 	tail position: -12 @3 * pixel.
 	feet := self catFeet.
-	
+
 	{-6@8. -9@7.5. 9@7.5. 5@8.} with: feet do: [ :pos :foot |
 		foot position: pos * pixel ].
-	
+
 	delta := { -20. -100. -90. -10.   0. -45}.
 	feet, {body. head } with: delta do: [ :part :d| | currentPosition |
 		currentPosition := part position.
@@ -70,12 +86,12 @@ RSCat >> addCat [
 			to: 0;
 			onStepDo: [ :t | | angle |
 				angle := (t +d) degreesToRadians.
-				
+
 				part position: (angle cos @ angle sin negated) * pixel + currentPosition
 				].
-		
+
 		 ].
-	canvas addAll: feet, { tail. body. head}.
+	canvas addAll: feet, { tail. body. head}
 ]
 
 { #category : #building }
@@ -87,7 +103,7 @@ RSCat >> addRainbow [
 	canvas newAnimation
 		repeat;
 		duration: 1 second;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			rainbow doWithIndex: [ :s :i | | p y |
 				p := s position.
 				y := (psy scale: (t + (i / (rainbow size)))%1) * pixel * 2.
@@ -97,7 +113,7 @@ RSCat >> addRainbow [
 	canvas newAnimation
 		repeat;
 		duration: 4 seconds;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			rainbow doWithIndex: [ :s :i | | p x |
 				p := s position.
 				x := (psx scale: (t+ (i /rainbow size))%1 ) * pixel*6.
@@ -105,7 +121,7 @@ RSCat >> addRainbow [
 			].
 		].
 	canvas addAll: rainbow.
-	rainbow pushBack.
+	rainbow pushBack
 ]
 
 { #category : #building }
@@ -120,14 +136,13 @@ RSCat >> addStars [
 	canvas newAnimation
 		repeat;
 		duration: 4 seconds;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			stars with: delta do: [ :s :d |
 				s position: (sx scale: (t + d)%1) @ s position y.
 				 ]
 			 ].
 	canvas addAll: stars.
-	stars pushBack.
-	
+	stars pushBack
 ]
 
 { #category : #building }
@@ -194,7 +209,7 @@ RSCat >> catFeet [
 001111
 '.
  }.
-	^ feet collect: [ :s | self partFrom: s ].
+	^ feet collect: [ :s | self partFrom: s ]
 ]
 
 { #category : #building }
@@ -222,36 +237,34 @@ RSCat >> catTail [
 	tail:= RSGroup with: self firstTail.
 	tail addAll: ((1 to: 3) collect: [ :i| self middleTail]).
 	RSHorizontalLineLayout new gapSize: 0 * pixel; on: tail.
-	
+
 	ys := NSScale linear domain: #(0 0.5 1); range: { -1. 1. -1 }.
 	canvas newAnimation repeat
 		duration: 430 milliSeconds;
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			tail doWithIndex: [ :s :i | | p y |
 				p := s position.
 				y := (ys scale: t) *pixel * (tail size -i).
 				s position: p x @ y.
 				 ].
 			].
-	^ tail asShape.
+	^ tail asShape
 ]
 
 { #category : #building }
 RSCat >> createRainbowSegFor: i [
 	| boxes segment |
-	boxes := (1 to: 6) collect: [ :j | 
+	boxes := (1 to: 6) collect: [ :j |
 		RSBox new
 			extent: 9@3 * pixel;
 			color: (rainbowColors scale: j);
 			yourself.
 		 ] as: RSGroup.
 	RSVerticalLineLayout new gapSize: 0; on: boxes.
-	
-	segment := boxes asShape.
-	
-	^ segment
-	
 
+	segment := boxes asShape.
+
+	^ segment
 ]
 
 { #category : #building }
@@ -260,7 +273,7 @@ RSCat >> firstTail [
 0111
 1555
 1555
-0111'.
+0111'
 ]
 
 { #category : #initialization }
@@ -272,7 +285,7 @@ RSCat >> initialize [
 		rangeFrom: {'#f1944e'. '#f9d448'. '#feef50'. '#66d841'. '#56c5f9'. '#9294f8'}.
 	tileColor := NSScale ordinal
 		domain: {$1. $2. $3. $4. $5. $6. $7};
-		rangeFrom: { 'black'. '#f6d4ac'. '#f1a9f8'. '#dd63b6'. '#a8c5e9'. '#f9deeb'. 'white'}.
+		rangeFrom: { 'black'. '#f6d4ac'. '#f1a9f8'. '#dd63b6'. '#a8c5e9'. '#f9deeb'. 'white'}
 ]
 
 { #category : #building }
@@ -282,7 +295,7 @@ RSCat >> middleTail [
 55
 55
 11
-'.
+'
 ]
 
 { #category : #building }
@@ -295,29 +308,29 @@ RSCat >> newStar [
 		scale: (NSScale linear
 			domain: #(0 0.33 0.66 1);
 			range: { 0. 0.5. 1. 1} );
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			rays do: [ :s |  | r |
 				r := s encompassingRectangle.
-				r privateSetCorner: pixel / 2 @ (t* pixel * 6). 
+				r privateSetCorner: pixel / 2 @ (t* pixel * 6).
 				s fromRectangle: r.
 				 ].
 		].
-	
+
 	canvas newAnimation
 		repeat;
 		duration: 1 second;
 		scale: (NSScale linear
 			domain: #(0 0.33 0.66 1);
 			range: { 0. 0. 0.5. 1} );
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			rays do: [ :s |  | r |
 				r := s encompassingRectangle.
-				r privateSetOrigin: pixel / -2 @ (t* pixel * 6). 
+				r privateSetOrigin: pixel / -2 @ (t* pixel * 6).
 				s fromRectangle: r.
 				 ].
 		].
-	
-	^ (rays collectWithIndex: [ :r :i | 
+
+	^ (rays collectWithIndex: [ :r :i |
 		RSComposite new
 			add: r;
 		 	rotateByDegrees: i* 90;
@@ -332,7 +345,7 @@ RSCat >> partFrom: aString [
 	model lines doWithIndex: [ :line :k |
 		line doWithIndex: [ :c :j |
 			self tileFor: c pos: j @ k in: g ] ].
-	^ g asShape.
+	^ g asShape
 ]
 
 { #category : #running }
@@ -340,7 +353,7 @@ RSCat >> run [
 	<script: 'self new run'>
 	self addCat.
 	canvas color: Color transparent.
-	
+
 	canvas open
 		setLabel: 'Nyan cat in roassal';
 		extent: 1000@800;
@@ -349,7 +362,7 @@ RSCat >> run [
 	canvas camera zoomToFit: canvas extent* 0.8.
 	self addRainbow; addStars.
 	canvas newAnimation repeat onStepDo: [ canvas signalUpdate ].
-	self addAnimationSlider.
+	self addAnimationSlider
 ]
 
 { #category : #building }
@@ -360,5 +373,5 @@ RSCat >> tileFor: char pos: pos in: group [
 		size: pixel;
 		color: (tileColor scale: char);
 		position: pos * (pixel-1).
-	group add: tile.
+	group add: tile
 ]

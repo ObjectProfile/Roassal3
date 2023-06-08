@@ -20,7 +20,7 @@ RSRoassal3Test >> testOpen [
 	| v |
 	v := RSCanvas new open.
 	self assert: v class == SystemWindow.
-	v delete.
+	v delete
 ]
 
 { #category : #tests }
@@ -29,7 +29,7 @@ RSRoassal3Test >> testOpenOnce [
 	| v |
 	v := RSCanvas new openOnce.
 	self assert: v class == SystemWindow.
-	v delete.
+	v delete
 ]
 
 { #category : #tests }
@@ -39,16 +39,16 @@ RSRoassal3Test >> testRemoveInteractionIfPresent [
 	self deny: (box announcer handleSubscriberClass: RSPopup).
 	box popup.
 	self assert: (box announcer handleSubscriberClass: RSPopup).
-	
+
 	box removeInteractionIfPresent: RSPopup.
 	self deny: (box announcer handleSubscriberClass: RSPopup).
 	self deny: box hasEventCallback.
-	
+
 	box := RSBox new.
-	box popup. 
+	box popup.
 	self assert: (box announcer handleEventClass: RSMouseMove).
 	box removeInteractionIfPresent: RSMouseMove.
-	self assert: (box announcer handleEventClass: RSMouseMove).
+	self assert: (box announcer handleEventClass: RSMouseMove)
 ]
 
 { #category : #tests }
@@ -61,14 +61,13 @@ RSRoassal3Test >> testSubscriberClass [
 	"but popup adds a lot of events, RSPopup is not an event"
 	self deny: (box announcer handleEventClass: RSPopup).
 	{RSPopup activationEvent}, RSPopup removeEvents do: [ :evt | self assert:  (box announcer handleEventClass: evt). ]
-
 ]
 
 { #category : #tests }
 RSRoassal3Test >> testsRsValue [
 	| myCutomObjectValueProvider posiblesValuesForRoassal model colors |
 	myCutomObjectValueProvider := NSScale category10.
-		
+
 	posiblesValuesForRoassal:= {
 		Color red.
 		nil.
@@ -77,7 +76,7 @@ RSRoassal3Test >> testsRsValue [
 		#color.
 		[ :obj | obj color ].
 		myCutomObjectValueProvider  }.
-		
+
 	model := Morph new.
 
 	colors := posiblesValuesForRoassal collect: [ :value |

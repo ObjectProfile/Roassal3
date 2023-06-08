@@ -10,7 +10,7 @@ Class {
 		'enclosingThreshold',
 		'enclosingForce'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Force'
 }
 
 { #category : #accessing }
@@ -54,15 +54,13 @@ RSRectangleForceLayout >> initialize [
 	super initialize.
 
 	enclosingThreshold := 50.
-	enclosingForce := 0.3.
-
+	enclosingForce := 0.3
 ]
 
 { #category : #events }
 RSRectangleForceLayout >> step [
 	self stepRectangleForces.
-	super step.
-
+	super step
 ]
 
 { #category : #events }
@@ -72,24 +70,23 @@ RSRectangleForceLayout >> stepRectangleForces [
 	| k |
 	k := enclosingForce * alpha.
 	(k closeTo: 0) ifTrue: [ ^ self ].
-	
+
 	nodes do: [ :each |
 		| eachRect diff |
 		eachRect := each encompassingRectangle.
 
 		"horizontal"
-		(diff := eachRect left - enclosingRectangle left) < enclosingThreshold ifTrue: [ 
+		(diff := eachRect left - enclosingRectangle left) < enclosingThreshold ifTrue: [
 			each translateTo: each position + (k * (enclosingThreshold - diff)@0) ].
 
-		(diff := enclosingRectangle right - eachRect right) < enclosingThreshold ifTrue: [ 
+		(diff := enclosingRectangle right - eachRect right) < enclosingThreshold ifTrue: [
 			each translateTo: each position - (k * (enclosingThreshold - diff)@0) ].
 
 		"vertical"
-		(diff := eachRect top - enclosingRectangle top) < enclosingThreshold ifTrue: [ 
+		(diff := eachRect top - enclosingRectangle top) < enclosingThreshold ifTrue: [
 			each translateTo: each position + (0@(k * (enclosingThreshold - diff))) ].
 
-		(diff := enclosingRectangle bottom - eachRect bottom) < enclosingThreshold ifTrue: [ 
+		(diff := enclosingRectangle bottom - eachRect bottom) < enclosingThreshold ifTrue: [
 			each translateTo: each position - (0@(k * (enclosingThreshold - diff))) ].
-		].
-
+		]
 ]

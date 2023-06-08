@@ -17,17 +17,16 @@ Class {
 		'overHighlight',
 		'boxColorHighlight'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : #'Roassal3-Spec-Examples-Menu'
 }
 
 { #category : #layout }
-RSColorPaletteChooser class >> defaultLayout [ 
+RSColorPaletteChooser class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
 		add: #buttons withConstraints: [ :c | c height: self toolbarHeight ];
 		add: #colors;
 		yourself
-		
 ]
 
 { #category : #examples }
@@ -63,19 +62,24 @@ RSColorPaletteChooser class >> example1 [
 
 { #category : #utilities }
 RSColorPaletteChooser >> boxColorFor: color [
+
 	| label box |
 	box := RSBox new
-		extent: 150 @ 30;
-		color: color;
-		yourself.
+		       extent: 150 @ 30;
+		       color: color;
+		       yourself.
 	label := RSLabel new
-		noPaint;
-		text: color asHexString;
-		yourself.
-	^ { box. label} asShape
+		         noPaint;
+		         text: color asHexString;
+		         yourself.
+	^ {
+		  box.
+		  label } asShape
 		  @ boxColorHighlight;
 		  model: color;
-		  when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model ];
+		  when: RSMouseClick
+		  do: [ :evt | self copyToClipboard: evt shape model ]
+		  for: self;
 		  yourself
 ]
 
@@ -90,7 +94,6 @@ RSColorPaletteChooser >> buttonClick: evt [
 	overHighlight doUnhighlight: evt shape.
 	"then with mark the selection hightlight"
 	selectedHighlight doHighlight: evt shape.
-
 	self currentPalette: evt shape model.
 	evt signalUpdate
 ]
@@ -154,22 +157,23 @@ RSColorPaletteChooser >> controllerInteraction [
 	| controls |
 	controls := RSCanvasController new.
 	controls noLegend.
-	controls interactions removeKey: RSDraggableCanvasInteraction.
-	controls interactions at: RSScrollWheelCanvasInteraction put: RSScrollWheelCanvasInteraction new.
-	controls configuration
+	controls removeInteractionIfPresent: RSDraggableCanvasInteraction.
+	controls addInteraction: RSScrollWheelCanvasInteraction new.
+	controls zoomToFitInteraction
 		noZoomToFitOnStart;
+		noZoomToFitOnExtendChanged.
+	controls keyNavigationInteraction hasHorizontalScrolling: false.
+	controls configuration
 		padding: 0@ 10;
-		noZoomToFitOnExtendChanged;
 		maxScale: 1;
-		minScale: 1;
-		hasHorizontalScrolling: false.
+		minScale: 1.
 	^ controls
 ]
 
 { #category : #'clipboard handling' }
 RSColorPaletteChooser >> copyToClipboard: object [
 	| name |
-	Clipboard clipboardText: (self clipTextFor: object). 
+	Clipboard clipboardText: (self clipTextFor: object).
 	name := 'Palette'.
 	object isColor ifTrue: [ name := 'Color' ].
 	self inform: name,' copied to clipboard !!!'
@@ -252,23 +256,25 @@ RSColorPaletteChooser >> paletteFor: method [
 
 { #category : #utilities }
 RSColorPaletteChooser >> paletteFor: palette method: method [
-	| shapes |
 
+	| shapes |
 	shapes := self boxesFor: palette range.
 	shapes add: (RSLabel new
-		bold;
-		text: method selector;
-		yourself).
+			 bold;
+			 text: method selector;
+			 yourself).
 	RSVerticalLineLayout new
 		alignCenter;
 		gapSize: 0;
 		on: shapes.
 	^ shapes asShape
-		model: method;
-		padding: 10;
-		withBorder;
-		when: RSMouseClick do: [ :evt | self copyToClipboard: evt shape model];
-		yourself
+		  model: method;
+		  padding: 10;
+		  withBorder;
+		  when: RSMouseClick
+		  do: [ :evt | self copyToClipboard: evt shape model ]
+		  for: self;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -300,10 +306,11 @@ RSColorPaletteChooser >> polygonFor: points [
 RSColorPaletteChooser >> relayout: evt [
 	| canvas |
 	canvas := evt canvas.
+	
 	RSFlowLayout new
 		maxWidth: canvas extent;
 		on: canvas shapes.
-	canvas camera translateTo: canvas extent / 2 + (-20@0)
+	canvas camera translateTo: canvas extent / -2 + (20@0)
 ]
 
 { #category : #dependencies }
@@ -313,16 +320,18 @@ RSColorPaletteChooser >> release [
 
 { #category : #rendering }
 RSColorPaletteChooser >> renderButtonsOn: canvas [
-	| data buttonElements |
+	| data buttonShapes |
 	canvas color: '2d5c7f'.
 
 	data := self buttonModels.
-	buttonElements := data collect: [ :m | self buttonFor: m ].
+	buttonShapes := data collect: [ :m | self buttonFor: m ].
 
 	RSHorizontalLineLayout new
 		gapSize: -9;
-		on: buttonElements.
-	canvas addAll: buttonElements.
+		on: buttonShapes.
+	canvas addAll: buttonShapes.
+	selectedHighlight doHighlight: buttonShapes first.
+
 	canvas nodes @ overHighlight.
 
 	canvas when: RSExtentChangedEvent send: #zoomToFit to: canvas

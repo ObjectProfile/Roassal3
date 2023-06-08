@@ -39,7 +39,7 @@ RSAdaptativePopup >> shapeFor: aRSShape [
 ]
 
 { #category : #accessing }
-RSAdaptativePopup >> smallBuilder: aRSSimplePopupBuilder [ 
+RSAdaptativePopup >> smallBuilder: aRSSimplePopupBuilder [
 	smallBuilder := aRSSimplePopupBuilder
 ]
 

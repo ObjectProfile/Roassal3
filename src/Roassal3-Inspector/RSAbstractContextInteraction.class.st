@@ -16,7 +16,7 @@ Class {
 { #category : #initialization }
 RSAbstractContextInteraction >> initialize [
 	super initialize.
-	self propagateToChildren: true.
+	self propagateToChildren: true
 ]
 
 { #category : #accessing }
@@ -32,16 +32,17 @@ RSAbstractContextInteraction >> interactionsToBeRegistered [
 { #category : #hooks }
 RSAbstractContextInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
-	self interactionsToBeRegistered do: [ :i | 
+	self interactionsToBeRegistered do: [ :i |
 		i presentation: self presentation.
 		aShape addInteraction: i ].
 	self propagateToChildren ifFalse: [ ^ self ].
 	aShape children ifNil: [ ^ self ].
-	
+
 	aShape children do: [ :child | child addInteraction: self ].
 	aShape
 		when: RSShapeAddedEvent
-		do: [ :evt | evt shape @ self ].
+		do: [ :evt | evt shape @ self ]
+		for: self
 ]
 
 { #category : #accessing }

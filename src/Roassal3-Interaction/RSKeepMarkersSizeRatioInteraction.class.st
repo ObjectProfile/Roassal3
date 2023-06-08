@@ -53,7 +53,8 @@ RSKeepMarkersSizeRatioInteraction >> onShape: anEdge [
 	offsets := markers collect: #offset.
 	anEdge canvas when: RSScaleChangedEvent do: [ :evt | | delta |
 		delta := self scaleFor: evt.
-		markers doWithIndex: [ :marker :index | 
+		markers doWithIndex: [ :marker :index |
 			marker shape extent: delta * (sizes at: index).
-			marker offset: delta * (offsets at: index)  ] ].
+			marker offset: delta * (offsets at: index)  ] ]
+	for: self
 ]

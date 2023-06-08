@@ -1,10 +1,10 @@
 "
-TODO
+Dominance analysis from graph theory allows one to locate subordinated elements in a rooted dependency graph. It identifies the nesting structure for a dependency graph as a dominance vertical tree
 "
 Class {
 	#name : #RSDominanceTreeLayout,
 	#superclass : #RSAbstractVerticalTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #'private - hook' }

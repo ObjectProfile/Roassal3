@@ -35,6 +35,13 @@ RSAbstractMarkerDecoration >> average [
 	self subclassResponsibility
 ]
 
+{ #category : #'public - shape' }
+RSAbstractMarkerDecoration >> color: aColor [
+
+	super color: aColor.
+	markerColor := aColor
+]
+
 { #category : #rendering }
 RSAbstractMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	"This method should be overriden to produce a line"
@@ -63,16 +70,18 @@ RSAbstractMarkerDecoration >> defaultShape [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
+
 	^ getRelevantValueBlock rsValue: p
 ]
 
 { #category : #initialization }
 RSAbstractMarkerDecoration >> initialize [
+
 	super initialize.
-	
+
 	"Per default, mark the max value"
 	self max.
-	markerColor := self defaultMarkerColor
+	markerColor := self color ifNil: [ self defaultMarkerColor ] ifNotNil: [ self color ]
 ]
 
 { #category : #accessing }
@@ -99,7 +108,7 @@ RSAbstractMarkerDecoration >> renderIn: canvas [
 			color: markerColor.
 		self addShape: line.
 		line
-	] as: RSGroup.
+	] as: RSGroup
 ]
 
 { #category : #'public - configuration' }

@@ -30,5 +30,5 @@ RSRNodeVisitor >> block: aBlock [
 { #category : #visiting }
 RSRNodeVisitor >> visitNode: aNode [
 	block value: aNode.
-	aNode childrenDo: [ :child | child accept: self ].
+	aNode childrenDo: [ :child | child accept: self ]
 ]

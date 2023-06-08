@@ -24,13 +24,13 @@ Class {
 }
 
 { #category : #'hooks - labels' }
-RSDSM >> addLabels: aRSCanvas [ 
+RSDSM >> addLabels: aRSCanvas [
 	self addLabelsLeft: aRSCanvas.
-	self addLabelsTop: aRSCanvas.
+	self addLabelsTop: aRSCanvas
 ]
 
 { #category : #'hooks - labels' }
-RSDSM >> addLabelsIfNecessary: aRSCanvas [ 
+RSDSM >> addLabelsIfNecessary: aRSCanvas [
 	self wantsLabels ifFalse: [ ^ self ].
 	self addLabels: aRSCanvas
 ]
@@ -39,14 +39,14 @@ RSDSM >> addLabelsIfNecessary: aRSCanvas [
 RSDSM >> addLabelsLeft: aRSCanvas [
 	| column |
 	column := self columnAt: 1.
-	aRSCanvas addAll: (labelsY := column collect: [ :s | self createLabelShapeY: s ]).
+	aRSCanvas addAll: (labelsY := column collect: [ :s | self createLabelShapeY: s ])
 ]
 
 { #category : #'hooks - labels' }
-RSDSM >> addLabelsTop: aRSCanvas [ 
+RSDSM >> addLabelsTop: aRSCanvas [
 	| row |
 	row := self rowAt: 1.
-	aRSCanvas addAll: (labelsX := row collect: [ :s | self createLabelShapeX: s ]).
+	aRSCanvas addAll: (labelsX := row collect: [ :s | self createLabelShapeX: s ])
 ]
 
 { #category : #accessing }
@@ -74,7 +74,7 @@ RSDSM >> computeColor: tuple [
 { #category : #'hooks - labels' }
 RSDSM >> createLabelShapeX: aRSBox [
 	| label model |
-	model := shouldFeedX 
+	model := shouldFeedX
 		ifTrue: [ aRSBox model key ]
 		ifFalse: [ aRSBox model value ].
 	label := self labelShapeX shapeFor: model.
@@ -90,9 +90,9 @@ RSDSM >> createLabelShapeX: aRSBox [
 ]
 
 { #category : #'hooks - labels' }
-RSDSM >> createLabelShapeY: aRSBox [ 
+RSDSM >> createLabelShapeY: aRSBox [
 	| label model |
-	model := shouldFeedX 
+	model := shouldFeedX
 		ifTrue: [ aRSBox model value ]
 		ifFalse: [ aRSBox model key ].
 	label := self labelShapeY shapeFor: model.
@@ -102,7 +102,7 @@ RSDSM >> createLabelShapeY: aRSBox [
 		left;
 		offset: -10 @0;
 		move: label on: aRSBox.
-		
+
 	^ label
 ]
 
@@ -124,7 +124,6 @@ RSDSM >> createShapeX: anObjectX y: anObjectY position: position list: list [
 	self setUpShape: box.
 	list add: box.
 	^ box
-	
 ]
 
 { #category : #hooks }
@@ -134,10 +133,10 @@ RSDSM >> createShapes [
 	matrix := Array2D rows: objectsX size columns: objectsY size.
 	objectsY doWithIndex: [ :anObjectY :k |
 		objectsX doWithIndex: [ :anObjectX :j |
-			matrix 
+			matrix
 				at: j
 				at: k
-				put: (self 
+				put: (self
 					createShapeX: anObjectX
 					y: anObjectY
 					position: j@k
@@ -149,7 +148,7 @@ RSDSM >> createShapes [
 
 { #category : #'accessing - defaults' }
 RSDSM >> defaultContainer [
-	^ super defaultContainer @ RSCanvasController.
+	^ super defaultContainer @ RSCanvasController
 ]
 
 { #category : #initialization }
@@ -159,7 +158,6 @@ RSDSM >> defaultShape [
 		border: (RSBorder new color: 'white');
 		@ self highlightable;
 		yourself
-		
 ]
 
 { #category : #accessing }
@@ -184,7 +182,7 @@ RSDSM >> highlight: evt [
 	shape := evt shape.
 	position := shape propertyAt: #matrixIndex.
 	self highlightRectangle: (self columnAt: position x) key: #columnRect.
-	self highlightRectangle: (self rowAt: position y) key: #rowRect.
+	self highlightRectangle: (self rowAt: position y) key: #rowRect
 ]
 
 { #category : #highlighting }
@@ -192,14 +190,14 @@ RSDSM >> highlightRectangle: aGroupOfShapes key: key [
 	| canvas rectangle box |
 	canvas := aGroupOfShapes anyOne canvas.
 	rectangle := 1 asMargin expandRectangle: aGroupOfShapes asGroup encompassingRectangle.
-	
+
 	box := RSBox new
 		noPaint;
 		border: (RSBorder new color: 'black');
 		fromRectangle: rectangle;
 		yourself.
 	canvas addShape: box.
-	canvas propertyAt: key put: box.
+	canvas propertyAt: key put: box
 ]
 
 { #category : #highlighting }
@@ -213,7 +211,7 @@ RSDSM >> highlightable [
 RSDSM >> initialize [
 	super initialize.
 	shape := self defaultShape.
-	self 
+	self
 		rotation: 45;
 		showLabels;
 		setShouldFeedX;
@@ -277,9 +275,9 @@ RSDSM >> objects [
 
 { #category : #accessing }
 RSDSM >> objects: someObjects [
-	self 
+	self
 		objectsX: someObjects;
-		objectsY: someObjects.
+		objectsY: someObjects
 ]
 
 { #category : #accessing }
@@ -307,7 +305,7 @@ RSDSM >> renderIn: aCanvas [
 	shapes := self createShapes.
 	aCanvas addAll: shapes.
 	self layoutShapes: shapes.
-	self addLabelsIfNecessary: aCanvas.
+	self addLabelsIfNecessary: aCanvas
 ]
 
 { #category : #accessing }
@@ -342,7 +340,7 @@ RSDSM >> setShouldFeedY [
 
 { #category : #hooks }
 RSDSM >> setUpShape: box [
-	box announcer: shape announcer.
+	box announcer: shape announcer
 ]
 
 { #category : #accessing }
@@ -351,7 +349,7 @@ RSDSM >> shape [
 ]
 
 { #category : #'accessing - computed' }
-RSDSM >> shapeAt: aPoint [ 
+RSDSM >> shapeAt: aPoint [
 	^ matrix at: aPoint y at: aPoint x
 ]
 
@@ -368,16 +366,16 @@ RSDSM >> unSelectedColor [
 { #category : #highlighting }
 RSDSM >> unhighlight: evt [
 	self unhighlight: evt key: #columnRect.
-	self unhighlight: evt key: #rowRect.
+	self unhighlight: evt key: #rowRect
 ]
 
 { #category : #highlighting }
 RSDSM >> unhighlight: evt key: key [
 	| canvas |
 	canvas := evt canvas.
-	canvas propertyAt: key ifPresent: [ :s | 
+	canvas propertyAt: key ifPresent: [ :s |
 		s remove.
-		canvas removeKey: key ].
+		canvas removeKey: key ]
 ]
 
 { #category : #testing }

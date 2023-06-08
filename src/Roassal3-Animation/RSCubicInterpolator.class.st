@@ -26,9 +26,9 @@ RSCubicInterpolator >> interpolateIn: t [
 RSCubicInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
-	^ (t <= 1 
+	^ (t <= 1
 		ifTrue: [ t * t * t  ]
-		ifFalse: [ 
+		ifFalse: [
 			t := t - 2.
 			t * t * t + 2 ])/2
 ]

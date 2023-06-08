@@ -25,13 +25,13 @@ RSMonitorEvents >> announcementClasses: aCollection [
 ]
 
 { #category : #public }
-RSMonitorEvents >> onNewEventDo: aBlockClosure [
+RSMonitorEvents >> onNewEventDo: aBlockClosure for: aSubscriber [
 	| events |
 	self assert: self target isNotNil description: 'Must provide a target'.
 	events := self announcementClasses.
 	events ifNil:  [ events := target announcementClasses ].
 	events do: [ :evt |
-		target when: evt do: aBlockClosure ].
+		target when: evt do: aBlockClosure for: aSubscriber ]
 ]
 
 { #category : #accessing }
@@ -46,5 +46,5 @@ RSMonitorEvents >> target: aRSTAnnounceable [
 
 { #category : #public }
 RSMonitorEvents >> unRegister [
-	target removeInteractionIfPresent: self class.
+	target removeInteractionIfPresent: self class
 ]

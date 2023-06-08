@@ -15,13 +15,13 @@ Class {
 		'selectedClass',
 		'searchButton'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : #'Roassal3-Spec-Examples-Menu'
 }
 
 { #category : #layout }
 RSExamplesBrowser class >> defaultLayout [
 	| const |
-	const := [ :constraints | 
+	const := [ :constraints |
 		constraints expand: false;
 		width: 20 ].
 	^ SpBoxLayout newHorizontal
@@ -38,7 +38,6 @@ RSExamplesBrowser class >> defaultLayout [
 			yourself);
 		add: #rightButton withConstraints: const;
 		yourself
-		
 ]
 
 { #category : #events }
@@ -46,15 +45,14 @@ RSExamplesBrowser >> classChanged: cls [
 	selectedClass := cls.
 	examples := self computeExamples.
 	index := index < 0 ifTrue: [ examples size ] ifFalse: [ 1 ].
-	self updateCanvas.
-	
+	self updateCanvas
 ]
 
 { #category : #private }
 RSExamplesBrowser >> classes [
-	^ (RSAbstractExamples withAllSubclasses select: [ :cls | 
+	^ (RSAbstractExamples withAllSubclasses select: [ :cls |
 		cls methods anySatisfy: [ :met | met selector beginsWith: 'example' ] ])
-	sorted: [ :a :b | 
+	sorted: [ :a :b |
 		| x y |
 		x := a new order.
 		y := b new order.
@@ -67,13 +65,13 @@ RSExamplesBrowser >> classes [
 RSExamplesBrowser >> compile: text [
 	[
 		(examples at: index) methodClass compile: text.
-		
+
 		self updateCanvas.
-		
+
 		codeEditor text: text.
 		"for some reason after the compile process the code editor does not have the current text
 		the previous code fixes that"
-	] onErrorDo: [ :ex | ex traceCr ].
+	] onErrorDo: [ :ex | ex traceCr ]
 ]
 
 { #category : #private }
@@ -81,7 +79,7 @@ RSExamplesBrowser >> computeExamples [
 	selectedClass := self defaultClass.
 	^ (selectedClass methods
 		select: [ :met | met selector beginsWith: 'example' ]
-		) asSortedCollection: [ :a :b | a selector < b selector ].
+		) asSortedCollection: [ :a :b | a selector < b selector ]
 ]
 
 { #category : #initialization }
@@ -91,13 +89,12 @@ RSExamplesBrowser >> connectPresenters [
 	codeEditor whenSubmitDo: [ :text | self compile: text.  ].
 	leftButton action: [ self shiftLeft ].
 	rightButton action: [ self shiftRight ].
-	searchButton action: [ self openSpotter ].
+	searchButton action: [ self openSpotter ]
 ]
 
 { #category : #private }
 RSExamplesBrowser >> defaultClass [
-	^ selectedClass ifNil: [ self classes first ].
-	
+	^ selectedClass ifNil: [ self classes first ]
 ]
 
 { #category : #initialization }
@@ -113,28 +110,28 @@ RSExamplesBrowser >> initializePresenters [
 		icon: (self iconNamed: #glamorousSearch);
 		help: 'Open spotter';
 		yourself.
-		
+
 	leftButton := self newButton
 		label: '<';
 		yourself.
 
 	roassalCanvas := self instantiate: SpRoassal3InspectorPresenter.
-	
+
 	codeEditor := self newCode
 		withSyntaxHighlight;
 		withScrollBars;
 		yourself.
-		
+
 	rightButton := self newButton
 		label: '>';
-		yourself.
+		yourself
 ]
 
 { #category : #initialization }
 RSExamplesBrowser >> initializeWindow: window [
 	window
 		initialExtent: 800@500;
-		title: (examples at: index) fullDisplayString .
+		title: (examples at: index) fullDisplayString
 ]
 
 { #category : #'accessing - computed' }
@@ -144,7 +141,7 @@ RSExamplesBrowser >> nextClass [
 	i := classesList selectedIndex.
 	i := i + 1.
 	i > classes size ifTrue: [ i := 1 ].
-	^ classes at: i.
+	^ classes at: i
 ]
 
 { #category : #events }
@@ -160,7 +157,7 @@ RSExamplesBrowser >> previousClass [
 	i := classesList selectedIndex.
 	i := i - 1.
 	i < 1 ifTrue: [ i := classes size ].
-	^ classes at: i.
+	^ classes at: i
 ]
 
 { #category : #running }
@@ -174,7 +171,7 @@ RSExamplesBrowser >> shiftLeft [
 		index := -1.
 		^ classesList selectItem: self previousClass.
 	] ifFalse: [ index := index - 1 ].
-	self updateCanvas.
+	self updateCanvas
 ]
 
 { #category : #events }
@@ -182,7 +179,7 @@ RSExamplesBrowser >> shiftRight [
 	index = examples size ifTrue: [
 		^ classesList selectItem: self nextClass.
 	] ifFalse: [ index := index + 1].
-	self updateCanvas.
+	self updateCanvas
 ]
 
 { #category : #updated }
@@ -203,5 +200,5 @@ RSExamplesBrowser >> updateCanvas [
 { #category : #initialization }
 RSExamplesBrowser >> updatePresenter [
 	index := 1.
-	self classChanged: self defaultClass.
+	self classChanged: self defaultClass
 ]

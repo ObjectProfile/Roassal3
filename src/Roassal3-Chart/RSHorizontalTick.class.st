@@ -25,22 +25,12 @@ Class {
 }
 
 { #category : #rendering }
-RSHorizontalTick >> createNiceLabelIn: aChart [
-	| nice |
-	nice := super createNiceLabelIn: aChart.
-	aChart 
-		minValueX: nice min;
-		maxValueX: nice max.
-	^ nice
-]
-
-{ #category : #rendering }
 RSHorizontalTick >> createTickLineFor: aNumber [
 	| value zeroY |
 	value := xScale scale: aNumber.
 	zeroY := chart spineDecoration zeroPoint y.
 	zeroY := zeroY - chart extent y.
-	^ self shape copy
+	^ self newLineTick
 		startPoint: value @ zeroY;
 		endPoint: value @ (zeroY + self configuration tickSize);
 		yourself
@@ -66,13 +56,21 @@ RSHorizontalTick >> min [
 	^ chart minValueX
 ]
 
+{ #category : #rendering }
+RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueX: self ticksData first;
+		maxValueX: self ticksData last
+]
+
 { #category : #public }
 RSHorizontalTick >> useDiagonalLabel [
 	self labelRotation: -45.
-	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0).
+	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0)
 ]
 
 { #category : #public }
 RSHorizontalTick >> useVerticalLabel [
-	self labelRotation: -90.
+	self labelRotation: -90
 ]

@@ -24,14 +24,14 @@ RSTimelineExample >> createRandomData [
 			factor := r next * 30.
 			time := time + ((perlin noise: x*0.001 and: each log) * factor) asInteger.
 			].
-		].
+		]
 ]
 
 { #category : #examples }
 RSTimelineExample >> example01Gantt [
 	<script: 'self new example01Gantt open'>
-	| chart data names plot |	
-	
+	| chart data names plot |
+
 	data := #(
 		#(0 5 6 8)
 		#(0 5 8 10)
@@ -45,16 +45,14 @@ RSTimelineExample >> example01Gantt [
 		plot entries: line at: index.
 		chart addPlot: plot.
 	].
-	chart addDecoration: (RSVerticalTick new fromNames: names).
-	chart addDecoration: (RSHorizontalTick new 
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 5;
 		useDiagonalLabel;
-		labelConversion: [ :v | Date year: 2021 day: v ];
-		yourself).
+		labelConversion: [ :v | Date year: 2021 day: v ].
 	chart build.
 	chart plots doWithIndex: [ :p :index |
-		p bars @ (RSPopup text: [ :assoc | 
+		p bars @ (RSPopup text: [ :assoc |
 			(names at: index), String cr, assoc asString ]) ].
 	^ chart canvas
 ]
@@ -62,8 +60,8 @@ RSTimelineExample >> example01Gantt [
 { #category : #examples }
 RSTimelineExample >> example02Labeled [
 	<script: 'self new example02Labeled open'>
-	| chart data names plot |	
-	
+	| chart data names plot |
+
 	data := #(
 		#(0 5 6 8)
 		#(0 5 8 10)
@@ -77,19 +75,17 @@ RSTimelineExample >> example02Labeled [
 		plot entries: line at: index.
 		chart addPlot: plot.
 	].
-	chart addDecoration: (RSVerticalTick new fromNames: names).
-	chart addDecoration: (RSHorizontalTick new 
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 5;
 		useDiagonalLabel;
-		labelConversion: [ :v | Date year: 2021 day: v ];
-		yourself).
+		labelConversion: [ :v | Date year: 2021 day: v ].
 	chart build.
 	chart plots doWithIndex: [ :p :index |
 		p bars
-			@ (RSPopup text: [ :assoc | 
+			@ (RSPopup text: [ :assoc |
 				(names at: index), String cr, assoc asString ]);
-			@ (RSLabeled new 
+			@ (RSLabeled new
 				text: [ names at: index ];
 				lowColor: Color black;
 				highlightable;
@@ -105,19 +101,17 @@ RSTimelineExample >> example03ZoomInAxis [
 	chart extent: 500@200.
 	chart padding: 10@0.
 	data := self createRandomData.
-	
+
 	names := (1 to: data  size) collect: [ :each | 'Series ', each asString ].
 	chart addAll: (data collectWithIndex: [ :line :index |
 		 RSTimeLinePlot new
 			entries: line at: index;
 			yourself ]).
-	chart add: (RSVerticalTick new fromNames: names).
-	chart add: (RSHorizontalTick new 
-		doNotUseNiceLabel;
+	chart verticalTick fromNames: names.
+	chart horizontalTick doNotUseNiceLabel;
 		numberOfTicks: 10;
 		useDiagonalLabel;
-		labelConversion: [ :day | self printDate: day ];
-		yourself).
+		labelConversion: [ :day | self printDate: day ].
 	chart add: RSZoomTickDecoration new.
 	^ chart
 ]
@@ -132,8 +126,8 @@ RSTimelineExample >> printDate: day [
 		difference := day - lastDay.
 		difference < 0 ifTrue: [
 			Date year: Year current year day: day
-		] ifFalse: [ 
-			difference < 1 "one day" ifTrue: [ 
+		] ifFalse: [
+			difference < 1 "one day" ifTrue: [
 				label := DateAndTime year: Year current year day: day.
 				label asDate asString, ', ', label asTime print24 ]
 			ifFalse: [ Date year: Year current year day: day ]

@@ -14,30 +14,30 @@ Class {
 
 { #category : #updating }
 RSAmeba >> blink [
+
 	| leftEye rightEye p1 p2 |
 	shape propertyAt: #blink put: 1.
-	
+
 	leftEye := shape children second.
 	rightEye := shape children third.
 	p1 := leftEye position.
 	p2 := rightEye position.
-	
+
 	shape newAnimation
 		scale: (NSScale linear
-			domain: {0. 0.5. 1};
-			range: {1. 0.05. 1});
+				 domain: { 0. 0.5. 1 };
+				 range: { 1. 0.05. 1 });
 		duration: 500 milliSeconds;
 		onStepDo: [ :t |
-			leftEye matrix 
+			leftEye matrix
 				loadIdentity;
-				scaleBy: 1@ t;
+				scaleBy: 1 @ t;
 				translation: p1.
-			rightEye matrix 
+			rightEye matrix
 				loadIdentity;
-				scaleBy: 1@ t;
-				translation: p2.
-			 ];
-		when: RSAnimationEndEvent do: [ shape removeKey: #blink ]
+				scaleBy: 1 @ t;
+				translation: p2 ];
+		when: RSAnimationEndEvent do: [ shape removeKey: #blink ] for: self
 ]
 
 { #category : #accessing }
@@ -52,7 +52,7 @@ RSAmeba >> createBody [
 	rightEye position: 15@0.
 	body := RSComposite new.
 	body children: { polygon. leftEye. rightEye}.
-	
+
 	^ body
 ]
 
@@ -75,8 +75,7 @@ RSAmeba >> isBlinking [
 
 { #category : #accessing }
 RSAmeba >> model: anObject [
-	self shape children first model: anObject.
-	
+	self shape children first model: anObject
 ]
 
 { #category : #accessing }
@@ -94,7 +93,7 @@ RSAmeba >> offset: aNumber [
 
 { #category : #accessing }
 RSAmeba >> shape [
-	^ shape ifNil: [ shape := self createBody ].
+	^ shape ifNil: [ shape := self createBody ]
 ]
 
 { #category : #updating }
@@ -111,7 +110,7 @@ RSAmeba >> update: perlin [
 			p := p *  r * n.].
 		polygon points: points.
 		offset := offset + offsetInc.
-	self updateEyes.
+	self updateEyes
 ]
 
 { #category : #updating }
@@ -124,11 +123,11 @@ RSAmeba >> updateEye: eye [
 	iris := eye children second.
 	dist := position distanceTo: eyepos.
 	dist := dist min: 7.
-	iris translateTo: (angle cos @ angle sin) * dist.
+	iris translateTo: (angle cos @ angle sin) * dist
 ]
 
 { #category : #updating }
 RSAmeba >> updateEyes [
 	self updateEye: self shape children second.
-	self updateEye: self shape children third.
+	self updateEye: self shape children third
 ]

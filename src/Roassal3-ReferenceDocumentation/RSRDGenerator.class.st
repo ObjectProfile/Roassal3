@@ -32,26 +32,26 @@ RSRDGenerator >> path [
 
 { #category : #'as yet unclassified' }
 RSRDGenerator >> roassal3Methods [
-	^ self roassal3Packages flatCollect: #methods 
+	^ self roassal3Packages flatCollect: #methods
 ]
 
 { #category : #'as yet unclassified' }
 RSRDGenerator >> roassal3Packages [
 	^ RPackageOrganizer default packages
-		select: [ :p | 
+		select: [ :p |
 			#('Numeric' 'Roassal3') anySatisfy: [ :r | p packageName beginsWith: r ] ]
 ]
 
 { #category : #'as yet unclassified' }
 RSRDGenerator >> writeClass: cls [
-	
+
 	| fr ref wr |
 	fr := self path asFileReference.
 	fr exists ifFalse: [ self error: 'Path does not exist' ].
-	
+
 	ref := fr / (cls name, '.md').
 	ref exists ifTrue: [ ref delete ].
-	
+
 	wr := ref writeStream.
 	wr nextPutAll: '[list of classes](reference.md)'; lf.
 	wr nextPutAll: '# ', cls name; lf.
@@ -64,12 +64,12 @@ RSRDGenerator >> writeRootFor: someClasses [
 	| fr ref w |
 	fr := self path asFileReference.
 	fr exists ifFalse: [ self error: 'Path does not exist' ].
-	
+
 	ref := fr / 'reference.md'.
 	ref exists ifTrue: [ ref delete ].
 	w := ref writeStream.
 	w nextPutAll: '# References'; lf.
-	
+
 	w nextPutAll: 'This page is the entry point of the _reference documentation_ of Roassal. We designate the reference documentation as a precise description of the machinary of Roassal. Comments of the key classes and key methods are accessible from this page.'.
 
 	w lf; lf.
@@ -82,11 +82,10 @@ RSRDGenerator >> writeRootFor: someClasses [
 	w nextPutAll: ' methods.'.
 
 	w lf; lf.
-		
+
 	w nextPutAll: 'The key classes of Roassal are:'; lf.
 	allKeyClasses do: [ :cls |
 		w nextPutAll: '- [', cls name, '](', cls name, '.md)'; lf
 	].
 	w close
-	
 ]

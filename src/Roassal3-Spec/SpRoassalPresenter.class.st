@@ -53,11 +53,11 @@ SpRoassalPresenter >> currentCanvas [
 SpRoassalPresenter >> initialize [
 	super initialize.
 	script := [ :aCanvas | ] asValueHolder.
-	script whenChangedDo: [ :s | self refresh ].
+	script whenChangedDo: [ :s | self refresh ]
 ]
 
 { #category : #public }
-SpRoassalPresenter >> refresh [ 
+SpRoassalPresenter >> refresh [
 	self changed: #applyScript with: #()
 ]
 
@@ -82,4 +82,5 @@ SpRoassalPresenter >> whenPresenterResized: aBlock [
 	self announcer 
 		when: PresenterResized 
 		do: [ :ann | aBlock cull: ann extent ]
+		 for: self
 ]

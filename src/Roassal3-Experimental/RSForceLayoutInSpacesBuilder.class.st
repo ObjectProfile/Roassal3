@@ -22,7 +22,6 @@ RSForceLayoutInSpacesBuilder >> abandonLayout: shape [
 	layout := shape propertyAt: #layout.
 	shape connectedLines do: [ :ed | layout removeEdge: ed ].
 	layout removeNode: shape
-	
 ]
 
 { #category : #hooks }
@@ -51,12 +50,11 @@ RSForceLayoutInSpacesBuilder >> addShape: shape to: space [
 	layout addNodes: { shape }.
 	shape removeInteractionIfPresent: RSDraggableForceInteraction.
 	shape addInteraction: (RSDraggableForceInteraction new layout: layout).
-	shape propertyAt: #layout put: layout.
-	
+	shape propertyAt: #layout put: layout
 ]
 
 { #category : #accessing }
-RSForceLayoutInSpacesBuilder >> classes: aCollection [ 
+RSForceLayoutInSpacesBuilder >> classes: aCollection [
 	classes := aCollection
 ]
 
@@ -75,16 +73,16 @@ RSForceLayoutInSpacesBuilder >> dragEnd: evt [
 	"Check if it's a different space"
 	(targetLayout propertyAt: #layout) = layout ifTrue: [ ^ self ].
 
-	"Move shape and company"	
+	"Move shape and company"
 	shapesToMove := self withShapesThatAccompany: droppedShape.
 	shapesToMove do: [ :s | self abandonLayout: s ].
 	shapesToMove do: [ :s | self addShape: s to: targetLayout ].
-	shapesToMove do: [ :s | self addEdgesOf: s to: targetLayout ].
-
+	shapesToMove do: [ :s | self addEdgesOf: s to: targetLayout ]
 ]
 
 { #category : #accessing }
 RSForceLayoutInSpacesBuilder >> example01 [
+
 	<script: 'self new example01 open'>
 	| b prop r |
 	b := self class new.
@@ -95,23 +93,20 @@ RSForceLayoutInSpacesBuilder >> example01 [
 	r := Random new.
 	b canvas newAnimation
 		repeat;
-		onStepDo: [ :t | | s space |
-			r next < 0.01 ifTrue: [ 
-				s := b shapes atRandom.
-				space := b canvas shapeFromModel: (2 to: b numberOfSpaces) atRandom.
-				
-				b canvas newAnimation
-					duration: 500 milliSeconds;
-					from: s position;
-					to: space position;
-					on: s set: #position:;
-					when: RSAnimationEndEvent do: [ b dragEnd: s ].
-				].
-			 ].
-	^ b canvas 
-	
+		onStepDo: [ :t |
+			| s space |
+			r next < 0.01 ifTrue: [
+					s := b shapes atRandom.
+					space := b canvas shapeFromModel:
+							         (2 to: b numberOfSpaces) atRandom.
 
-
+					b canvas newAnimation
+						duration: 500 milliSeconds;
+						from: s position;
+						to: space position;
+						on: s set: #position:;
+						when: RSAnimationEndEvent do: [ b dragEnd: s ] for: self ] ].
+	^ b canvas
 ]
 
 { #category : #hooks }
@@ -122,7 +117,7 @@ RSForceLayoutInSpacesBuilder >> fill: space with: aCollection [
 			| result a b |
 			a := edge from position.
 			b := edge to position.
-			
+
 			result := OrderedCollection with: a with: b.
 			(edge from propertyAt: #layout) = (edge to propertyAt: #layout) ifFalse: [
 				| vector u d unit middle left right |
@@ -136,7 +131,7 @@ RSForceLayoutInSpacesBuilder >> fill: space with: aCollection [
 				result add: ({ left. right } detectMax: #y) afterIndex: 1 ].
 			result ];
 		yourself.
-		
+
 	RSLineBuilder bezier
 		controlPointsController: cpController;
 		canvas: self canvas;
@@ -151,7 +146,6 @@ RSForceLayoutInSpacesBuilder >> fill: space with: aCollection [
 	aCollection do: [ :s | s propertyAt: #layout put: layout ].
 	aCollection @ (RSDraggableForceInteraction new layout: layout).
 	aCollection do:[ :s | s when: RSMouseDragEnd send: #dragEnd: to: self ]
-
 ]
 
 { #category : #initialization }
@@ -160,7 +154,7 @@ RSForceLayoutInSpacesBuilder >> initialize [
 	colorForLinesInSameSpace := Color blue muchDarker alpha: 0.8.
 	colorForLinesInDifferentSpace := Color blue muchDarker alpha: 0.1.
 	colorScale := NSScale category20.
-	linearScale := NSScale linear domain: #(5 20); range: #(5 10).
+	linearScale := NSScale linear domain: #(5 20); range: #(5 10)
 ]
 
 { #category : #shapes }
@@ -196,7 +190,7 @@ RSForceLayoutInSpacesBuilder >> numberOfSpaces [
 ]
 
 { #category : #accessing }
-RSForceLayoutInSpacesBuilder >> numberOfSpaces: anInteger [ 
+RSForceLayoutInSpacesBuilder >> numberOfSpaces: anInteger [
 	numberOfSpaces := anInteger
 ]
 
@@ -209,7 +203,7 @@ RSForceLayoutInSpacesBuilder >> renderIn: aCanvas [
 	(RSGridLayout withGap: 20) on: spaces.
 	spaces do: [ :space | self updateSpace: space. ].
 	aCanvas @ RSSimpleCanvasMonitorInteraction.
-	aCanvas @ RSCanvasController.
+	aCanvas @ RSCanvasController
 ]
 
 { #category : #hooks }
@@ -222,5 +216,5 @@ RSForceLayoutInSpacesBuilder >> updateSpace: space [
 
 { #category : #hooks }
 RSForceLayoutInSpacesBuilder >> withShapesThatAccompany: shape [
-	^ shape model withAllSubclasses collect: [ :cls | self canvas shapeFromModel: cls ].
+	^ shape model withAllSubclasses collect: [ :cls | self canvas shapeFromModel: cls ]
 ]

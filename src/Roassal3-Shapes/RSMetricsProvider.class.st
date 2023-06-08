@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 RSMetricsProvider class >> default [
-	^ Default ifNil: [ Default := RSCairoMetricsProvider new ].
+	^ Default ifNil: [ Default := RSCairoMetricsProvider new ]
 ]
 
 { #category : #accessing }

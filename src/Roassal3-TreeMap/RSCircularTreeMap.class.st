@@ -48,22 +48,22 @@ RSCircularTreeMap >> expandCircles: aShape parent: parent [
 	aShape
 		position: parent x @ parent y;
 		radius: parent radius.
-	
+
 	children := aShape schildren.
 	children ifNil: [ ^ self ].
-	children do: [ :child | 
-		child 
-			propertyAt: #circle 
+	children do: [ :child |
+		child
+			propertyAt: #circle
 			ifPresent: [ :circle |
 				self
 					expandCircles: child
 					parent: (self relativeToCirble: circle parent: parent)
 			 ]
-		].
+		]
 ]
 
 { #category : #private }
-RSCircularTreeMap >> findBestGapIn: gaps 
+RSCircularTreeMap >> findBestGapIn: gaps
 	children: children
 	index: i
 	cbounding: cbounding
@@ -77,17 +77,17 @@ RSCircularTreeMap >> findBestGapIn: gaps
 	gaps do: [ :cgap |
 		gapCircle := cgap makeGapCircle: (self weight2Rad: (children at: i)).
 		cdistance := cbounding distanceTo: gapCircle.
-		cdistance < distance ifTrue: [ 
-			cgap circles third ifNotNil: [ 
+		cdistance < distance ifTrue: [
+			cgap circles third ifNotNil: [
 				(cgap circles third intersects: gapCircle )
 					ifTrue: [ cdistance := Float fmax. ]
-			] ifNil: [ 
-				[ :br | 
+			] ifNil: [
+				[ :br |
 					((bounds findStart: gapCircle) to: ncircles) do: [ :ccircle |
 						((circles at: ccircle) intersects: gapCircle)
 							ifTrue: [ cdistance := Float fmax. br value ] ]
 				] valueWithExit.  ] ].
-		cdistance < distance ifTrue: [ 
+		cdistance < distance ifTrue: [
 			^ { cdistance. gapCircle. cgap}  ].
 	].
 	^ { distance. closest. gap}
@@ -98,8 +98,7 @@ RSCircularTreeMap >> initialize [
 	super initialize.
 	shape := self defaultShape.
 	self baseRadius: self defaultBaseRadius.
-	self weight: 1.
-	
+	self weight: 1
 ]
 
 { #category : #layout }
@@ -107,10 +106,10 @@ RSCircularTreeMap >> layout: aShape [
 	| children |
 	children := aShape schildren.
 	children do: [ :child | self layout: child ].
-	
+
 	children sort: [ :a :b | (self weightOf: a) > (self weightOf: b) ].
-	
-	self layoutNodes: children.
+
+	self layoutNodes: children
 ]
 
 { #category : #layout }
@@ -119,20 +118,20 @@ RSCircularTreeMap >> layoutNodes: children [
 	children ifEmpty: [ ^ self ].
 	size := children size min: 100.
 	circles := OrderedCollection new: size.
-	
+
 	bounds := RSCircleBounds maxCircles: 100.
-	
+
 	firstCircle := RSCircleTree radius: (self weight2Rad: children first).
 	circles add: firstCircle.
 	cbounding := bounds push: firstCircle index: 1.
-	size > 1 ifTrue: [ 
+	size > 1 ifTrue: [
 		circle := RSCircleTree radius: (self weight2Rad: children second).
 		circle
 			translateBy: firstCircle center;
 			translateBy: (RSCircleVector x: firstCircle radius + circle radius y: 0).
 		circles add: circle.
 		cbounding := bounds push: circle index: 2.
-		size > 2 ifTrue: [ 
+		size > 2 ifTrue: [
 			| gaps closest gap ncircles |
 			gaps := OrderedCollection new.
 			gaps
@@ -145,28 +144,28 @@ RSCircularTreeMap >> layoutNodes: children [
 				distance := Float fmax.
 				closest := nil.
 				gap := nil.
-				arr := self 
-					findBestGapIn: gaps 
+				arr := self
+					findBestGapIn: gaps
 					children: children
-					index: i 
+					index: i
 					cbounding: cbounding
-					bounds: bounds circles: circles 
+					bounds: bounds circles: circles
 					distance: distance
 					closest: closest
 					gap: gap
 					ncircles: ncircles.
-				
+
 				distance := arr first.
 				closest := arr second.
 				gap := arr third.
-				
+
 				gaps remove: gap.
 				gap addGapsTo: gaps closest: closest.
 				circles add: closest.
 				ncircles := ncircles + 1.
-				(cbounding radius < (distance + closest radius)) 
+				(cbounding radius < (distance + closest radius))
 					ifTrue: [ cbounding := bounds push: closest index: ncircles  ].
-				
+
 			] ] ].
 
 	scale := 1/ cbounding radius.
@@ -175,11 +174,8 @@ RSCircularTreeMap >> layoutNodes: children [
 		circ scaleFull: scale.
 		(children at: index) propertyAt: #circle put: circ
 		].
-	
-	^ circles.
 
-
-
+	^ circles
 ]
 
 { #category : #layout }
@@ -189,7 +185,7 @@ RSCircularTreeMap >> layoutShapes [
 	virtualRoot schildren: rootNodes.
 	self
 		layout: virtualRoot;
-		expandCircles: virtualRoot 
+		expandCircles: virtualRoot
 			parent: (RSCircleTree radius: self baseRadius)
 ]
 
@@ -205,7 +201,7 @@ RSCircularTreeMap >> relativeToCirble: circle parent: parent [
 { #category : #hooks }
 RSCircularTreeMap >> renderIn: aCanvas [
 	super renderIn: aCanvas.
-	self layoutShapes.
+	self layoutShapes
 ]
 
 { #category : #accessing }

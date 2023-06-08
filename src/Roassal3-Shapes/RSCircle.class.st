@@ -31,16 +31,16 @@ RSCircle >> extent: aPoint [
 ]
 
 { #category : #geometry }
-RSCircle >> geometry [ 
+RSCircle >> geometry [
 	| rect e p |
 	rect := self encompassingRectangle.
 	e := rect extent / 2.
 	p := self position.
 	e = (0@0) ifTrue: [ ^ p asGPoint ].
-	^ GEllipse 
+	^ GEllipse
 		center: p
 		vertex: p + (0@ e y)
-		coVertex:p + (e x@ 0) 
+		coVertex:p + (e x@ 0)
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ RSCircle >> preciseIncludesPoint: aPoint [
 	xOverY := rect width asFloat / rect height asFloat.
 	t1 := (delta x asFloat / xOverY) squared + delta y squared.
 	t2 := radius squared.
-	^ (t1 < t2)  or: [ t1 closeTo: t2 ].
+	^ (t1 < t2)  or: [ t1 closeTo: t2 ]
 ]
 
 { #category : #accessing }

@@ -39,19 +39,33 @@ Class {
 	#category : #'Roassal3-Layouts-Builder'
 }
 
+{ #category : #examples }
+RSLayoutBuilder class >> exampleTidyTree [
+	| canvas notConnected |
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
+	notConnected := {self. RSEvent. RSShape }.
+	RSLayout 
+		canvasExampleIn: canvas
+		models: SequenceableCollection withAllSubclasses,
+			Set withAllSubclasses, notConnected.
+	self new tidyTree; on: canvas nodes.
+	^ canvas open.
+]
+
 { #category : #'public - layout' }
 RSLayoutBuilder >> cell [
-	^ layout := RSCellLayout new.
+	^ layout := RSCellLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> circle [
-	^ layout := RSCircleLayout new.
+	^ layout := RSCircleLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> cluster [
-	^ layout := RSClusterTreeLayout new.
+	^ layout := RSClusterTreeLayout new
 ]
 
 { #category : #'public - layout' }
@@ -62,7 +76,7 @@ RSLayoutBuilder >> compactTree [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> flow [
-	^ layout := RSFlowLayout new.
+	^ layout := RSFlowLayout new
 ]
 
 { #category : #'public - layout' }
@@ -72,12 +86,12 @@ RSLayoutBuilder >> force [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> grid [
-	^ layout := RSGridLayout new.
+	^ layout := RSGridLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> horizontal [
-	^ layout := RSHorizontalLineLayout new.
+	^ layout := RSHorizontalLineLayout new
 ]
 
 { #category : #'public - layout' }
@@ -88,7 +102,7 @@ RSLayoutBuilder >> horizontalCompactTree [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> horizontalTree [
-	^ layout := RSHorizontalTreeLayout new.
+	^ layout := RSHorizontalTreeLayout new
 ]
 
 { #category : #'public - layout' }
@@ -107,13 +121,12 @@ RSLayoutBuilder >> ifConnected: aLayout ifNotConnected: anotherLayout [
 { #category : #initialization }
 RSLayoutBuilder >> initialize [
 	super initialize.
-	self flow.
-	
+	self flow
 ]
 
 { #category : #accessing }
 RSLayoutBuilder >> layout [
-	^ layout 
+	^ layout
 ]
 
 { #category : #'public - layout' }
@@ -129,12 +142,12 @@ RSLayoutBuilder >> on: shapes [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> radial [
-	^ layout := RSRadialTreeLayout new.
+	^ layout := RSRadialTreeLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> rawForce [
-	^ layout := RSForceBasedLayout new useProgressBar.
+	^ layout := RSForceBasedLayout new useProgressBar
 ]
 
 { #category : #'public - layout' }
@@ -144,38 +157,24 @@ RSLayoutBuilder >> simpleForce [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> sugiyama [
-	^ layout := RSSugiyamaLayout new.
+	^ layout := RSSugiyamaLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> tidyTree [
-	"For example:
-	
-```
-packages := RPackage organizer packages select: [ :pak | pak packageName beginsWith: 'Roassal3' ].
-classes := packages flatCollect: #definedClasses.
-
-m := RSMondrian new.
-m nodes: classes.
-m line connectFrom: #superclass.
-m layout tidyTree.
-m 
-```"
-
-
 	^ layout := RSConditionalLayout new
 					 ifNotConnectedThen: RSGridLayout new;
-					 else: (RSClusteringLayout new 
+					 else: (RSClusteringLayout new
 					    clustersLayout: RSFlowLayout new;
 					    forEachLayout: RSTreeLayout new)
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> tree [
-	^ layout := RSTreeLayout new.
+	^ layout := RSTreeLayout new
 ]
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> vertical [
-	^ layout := RSVerticalLineLayout new.
+	^ layout := RSVerticalLineLayout new
 ]

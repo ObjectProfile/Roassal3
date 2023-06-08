@@ -8,13 +8,13 @@ I encode the main algorithm leaving objects that use my behavior to fullfil some
 "
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Traits'
 }
 
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> addChildSpacing: children [
 
-	^ children inject: 0 @ 0 into: [ :aPoint :child | 
+	^ children inject: 0 @ 0 into: [ :aPoint :child |
 		  | x newPoint y |
 		  x := aPoint x + (self shiftOf: child).
 		  y := x + aPoint y + (self changeOf: child).
@@ -131,7 +131,7 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: v [
 	self
 		is: v
 		ifLeaf: [ self setExtremesOfLeaf: v ]
-		ifNotLeaf: [ :children | 
+		ifNotLeaf: [ :children |
 			| leftMostChild rightMostChild chain bound |
 			leftMostChild := children first.
 			rightMostChild := children last.
@@ -144,7 +144,7 @@ RSTWalkBasedRegularTreeLayout >> firstWalk: v [
 
 			chain := (2 to: children size)
 				         inject: (self updateIYL: bound at: 1 rest: nil)
-				         into: [ :ih :i | 
+				         into: [ :ih :i |
 					         | child |
 					         child := children at: i.
 
@@ -196,7 +196,7 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associat
 	leaves := IdentitySet withAll: elements.
 	fathers := IdentityDictionary new.
 
-	associations do: [ :anAssociation | 
+	associations do: [ :anAssociation |
 		| children child father multipleParents fathersOfChild |
 		father := anAssociation key.
 		child := anAssociation value.
@@ -217,24 +217,24 @@ RSTWalkBasedRegularTreeLayout >> initialize: elements associationEdges: associat
 
 		children := hierarchy
 			            at: father
-			            ifAbsentPut: [ 
+			            ifAbsentPut: [
 			            self childrenOf: father put: OrderedCollection new ].
 
 		multipleParents ifFalse: [ children add: child ] ].
 
 	rootNode := roots size > 1
-		        ifTrue: [ 
-			        roots collect: [ :each | 
+		        ifTrue: [
+			        roots collect: [ :each |
 				        self assert: (fathers includesKey: each) not
 				        "fathers at: each put: { rootBox }" ].
 
 			        RSComposite new
-				        in: [ :aRootShape | 
+				        in: [ :aRootShape |
 					        self childrenOf: aRootShape put: roots asArray ];
 				        yourself ]
 		        ifFalse: [ roots anyOne ].
 
-	leaves do: [ :each | 
+	leaves do: [ :each |
 		self
 			assert: (self childrenOf: each) isNil;
 			childrenOf: each put: Array empty;
@@ -269,11 +269,11 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 
 	depth := fathers
 		         at: aShape
-		         ifPresent: [ :parents | 
+		         ifPresent: [ :parents |
 			         | level |
 			         parents
 				         reject: [ :each | self hasBeenInitializedOf: each ]
-				         thenDo: [ :each | 
+				         thenDo: [ :each |
 				         self initializeForShape: each fathers: fathers ].
 
 			         level := (parents collect: [ :each | self levelOf: each ])
@@ -281,7 +281,7 @@ RSTWalkBasedRegularTreeLayout >> initializeForShape: aShape fathers: fathers [
 
 			         self levelOf: aShape put: level + 1.
 
-			         (parents collect: [ :aShapeParent | 
+			         (parents collect: [ :aShapeParent |
 				          (self depthBoundOf: aShapeParent)
 				          + (self depthGapAmong: aShapeParent and: aShape) ]) max ]
 		         ifAbsent: [ self levelOf: aShape put: 0 ].
@@ -348,27 +348,21 @@ RSTWalkBasedRegularTreeLayout >> modOf: aNode update: aBlock [
 { #category : #algorithm }
 RSTWalkBasedRegularTreeLayout >> moveSubtree: children at: i other: si distance: dist [
 
-	"Move subtree by changing mod."
-
-	| child intermediateChildren |
+	| child intermediateChildren siChild ratio |
 	child := children at: i.
-
 	self
 		modOf: child update: [ :mod | mod + dist ];
 		mselOf: child update: [ :msel | msel + dist ];
 		mserOf: child update: [ :mser | mser + dist ].
-
-	"Are there intermediate children? (originally extracted in the `distributedExtra` function)"
 	self assert: i > si.
 
-	(intermediateChildren := i - si) > 1 ifTrue: [ 
-		| siChild ratio |
-		ratio := dist / intermediateChildren.
-		siChild := children at: si + 1.
-		self
-			shiftOf: siChild update: [ :shift | shift + ratio ];
-			shiftOf: child update: [ :shift | shift - ratio ];
-			changeOf: child update: [ :change | change - dist + ratio ] ]
+	(intermediateChildren := i - si) > 1 ifFalse: [ ^ self ].
+	ratio := dist / intermediateChildren.
+	siChild := children at: si + 1.
+	self
+		shiftOf: siChild update: [ :shift | shift + ratio ];
+		shiftOf: child update: [ :shift | shift - ratio ];
+		changeOf: child update: [ :change | change - dist + ratio ]
 ]
 
 { #category : #properties }
@@ -502,7 +496,7 @@ RSTWalkBasedRegularTreeLayout >> secondWalk: aShape depth: n breadth: m [
 	self addChildSpacing: children.
 
 	"Recur over my onw children."
-	children do: [ :aChild | 
+	children do: [ :aChild |
 		self secondWalk: aChild depth: n breadth: mNext ]
 ]
 
@@ -520,9 +514,9 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 
 	"Looping"
 	ih := aValueLink.
-	[ sr isNotNil and: [ cl isNotNil ] ] whileTrue: [ 
+	[ sr isNotNil and: [ cl isNotNil ] ] whileTrue: [
 		| dist sy cy |
-		(self depthBoundOf: sr) > (self lowYofIYL: ih) ifTrue: [ 
+		(self depthBoundOf: sr) > (self lowYofIYL: ih) ifTrue: [
 			ih := ih nextLink ].
 
 		"How far to the left of the right side of sr is the left side of cl?"
@@ -530,7 +524,7 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 		        + (self breadthGapAmong: sr and: cl) - mscl
 		        - (self prelimOf: cl).
 
-		dist > 0 ifTrue: [ 
+		dist > 0 ifTrue: [
 			mscl := mscl + dist.
 			self
 				moveSubtree: children
@@ -542,11 +536,11 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 		sy := self depthBoundOf: sr.
 		cy := self depthBoundOf: cl.
 
-		sy <= cy ifTrue: [ 
+		sy <= cy ifTrue: [
 			sr := self nextRightContour: sr.
 			sr ifNotNil: [ mssr := mssr + (self modOf: sr) ] ].
 
-		sy >= cy ifTrue: [ 
+		sy >= cy ifTrue: [
 			cl := self nextLeftContour: cl.
 			cl ifNotNil: [ mscl := mscl + (self modOf: cl) ] ] ].
 
@@ -560,7 +554,7 @@ RSTWalkBasedRegularTreeLayout >> separate: v children: children at: i rest: aVal
 				child: cl
 				acc: mscl ]
 		ifFalse: [ "the left siblings must be taller than the current subtree."
-			(sr isNotNil and: [ cl isNil ]) ifTrue: [ 
+			(sr isNotNil and: [ cl isNil ]) ifTrue: [
 				self
 					setRightThread: v
 					previousChild: (children at: i - 1)
@@ -665,7 +659,7 @@ RSTWalkBasedRegularTreeLayout >> updateIYL: minY at: i rest: aValueLink [
 	| ih |
 	"Remove siblings that are hidden by the new subtree."
 	ih := aValueLink.
-	[ ih isNotNil and: [ minY >= (self lowYofIYL: ih) ] ] whileTrue: [ 
+	[ ih isNotNil and: [ minY >= (self lowYofIYL: ih) ] ] whileTrue: [
 		ih := ih nextLink ].
 
 	"Prepend the new subtree"

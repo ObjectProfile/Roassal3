@@ -18,7 +18,7 @@ RSCanvasControllerTest >> testBasic [
 	self assert: controller class equals: self classToTest.
 	canvas @ self classToTest.
 	self assert: controller equals: canvas controllerInteraction.
-	self assert: canvas fixedShapes size equals: 3.
+	self assert: canvas fixedShapes size equals: 3
 ]
 
 { #category : #tests }
@@ -28,12 +28,21 @@ RSCanvasControllerTest >> testNoLegend [
 	controller := self classToTest new.
 	controller noLegend.
 	canvas addInteraction: controller.
-	self assert: canvas fixedShapes size equals: 2.
+	self assert: canvas fixedShapes size equals: 2
+]
+
+{ #category : #tests }
+RSCanvasControllerTest >> testNoZoomToFitOnExtendChanged [
+	| controller |
+	controller := RSCanvasController new.
+	controller zoomToFitInteraction noZoomToFitOnExtendChanged
+		
+	
 ]
 
 { #category : #tests }
 RSCanvasControllerTest >> testZoomToFitOnStart [
-	| canvas box controller window scale |
+	| canvas box controller window scale pixelPosition newPixelPosition |
 	canvas := RSCanvas new.
 	box := RSBox new
 		position: 1000 asPoint;
@@ -46,9 +55,12 @@ RSCanvasControllerTest >> testZoomToFitOnStart [
 	window := canvas open.
 	window delete.
 	canvas morph drawOnMockCanvas.
-	self assert: canvas position equals: box position.
+	pixelPosition := canvas camera fromSpaceToPixel: box position.
+	self assert: pixelPosition equals: canvas extent / 2.
 	scale := canvas camera scale.
 	canvas extent: 100@100.
-	self assert: canvas position equals: box position.
-	self assert: scale equals: canvas camera scale.
+	newPixelPosition := canvas camera fromSpaceToPixel: box position.
+	self assert: newPixelPosition equals: canvas extent / 2.
+	self deny: newPixelPosition equals: pixelPosition.
+	self assert: scale equals: canvas camera scale
 ]

@@ -49,7 +49,7 @@ RSAbstractAnimation >> announcer: anAnnouncer [
 
 { #category : #accessing }
 RSAbstractAnimation >> canvas [
-	^ canvas 
+	^ canvas
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ RSAbstractAnimation >> continue [
 	isPaused ifFalse: [ ^ self ].
 	isPaused := false.
 	endPauseTime := self currentTime.
-	pauseTime := pauseTime + endPauseTime - startPauseTime.
+	pauseTime := pauseTime + endPauseTime - startPauseTime
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ RSAbstractAnimation >> currentTime [
 ]
 
 { #category : #accessing }
-RSAbstractAnimation >> delay [ 
+RSAbstractAnimation >> delay [
 	^ delay
 ]
 
@@ -109,13 +109,13 @@ RSAbstractAnimation >> hasCompleted [
 RSAbstractAnimation >> initialize [
 	super initialize.
 	self reset.
-	canvas := RSDefaultTimer new.
+	canvas := RSDefaultTimer new
 ]
 
 { #category : #testing }
 RSAbstractAnimation >> isDelayDone [
 	delay ifNil: [ ^ true ].
-	^ startTime + delay < self currentTime.
+	^ startTime + delay < self currentTime
 ]
 
 { #category : #testing }
@@ -125,11 +125,11 @@ RSAbstractAnimation >> isPaused [
 
 { #category : #testing }
 RSAbstractAnimation >> isRepeating [
-	^ loops isInfinite.
+	^ loops isInfinite
 ]
 
 { #category : #testing }
-RSAbstractAnimation >> isRunning [ 
+RSAbstractAnimation >> isRunning [
 	^ isRunning
 ]
 
@@ -138,7 +138,7 @@ RSAbstractAnimation >> loopDone [
 	currentLoop := currentLoop + 1.
 	startPauseTime := endPauseTime := pauseTime := 0.
 	startLoopTime := self currentTime.
-	self announce: (RSAnimationLoopEvent new animation: self).
+	self announce: (RSAnimationLoopEvent new animation: self)
 ]
 
 { #category : #accessing }
@@ -161,8 +161,7 @@ RSAbstractAnimation >> noRepeat [
 RSAbstractAnimation >> pause [
 	isPaused ifTrue: [ ^ self ].
 	isPaused := true.
-	startPauseTime := self currentTime.
-	
+	startPauseTime := self currentTime
 ]
 
 { #category : #accessing }
@@ -181,10 +180,9 @@ RSAbstractAnimation >> refresh [
 		ifTrue: [ ^ self ].
 	self isDelayDone
 		ifFalse: [ ^ self ].
-	self isPaused 
+	self isPaused
 		ifTrue: [ ^ self ].
-	self step.
-	
+	self step
 ]
 
 { #category : #dependencies }
@@ -200,7 +198,6 @@ RSAbstractAnimation >> remove [
 	currentLoop := nil.
 	startLoopTime := nil.
 	self announce: (RSAnimationEndEvent new animation: self)
-	
 ]
 
 { #category : #'api - running' }
@@ -219,7 +216,7 @@ RSAbstractAnimation >> reset [
 	startLoopTime := nil.
 	startPauseTime := 0.
 	endPauseTime := 0.
-	pauseTime := 0.
+	pauseTime := 0
 ]
 
 { #category : #actions }
@@ -232,7 +229,7 @@ RSAbstractAnimation >> start [
 
 { #category : #accessing }
 RSAbstractAnimation >> startLoopTime [
-	^ startLoopTime 
+	^ startLoopTime
 ]
 
 { #category : #accessing }
@@ -242,15 +239,15 @@ RSAbstractAnimation >> startPauseTime [
 
 { #category : #private }
 RSAbstractAnimation >> startStep [
-	currentLoop 
+	currentLoop
 		ifNil: [ currentLoop := 0 ].
-	startLoopTime 
-		ifNil: [ startLoopTime := self currentTime ].
+	startLoopTime
+		ifNil: [ startLoopTime := self currentTime ]
 ]
 
 { #category : #accessing }
 RSAbstractAnimation >> startTime [
-	^ startTime 
+	^ startTime
 ]
 
 { #category : #refreshing }
@@ -261,17 +258,17 @@ RSAbstractAnimation >> step [
 { #category : #actions }
 RSAbstractAnimation >> stop [
 	isRunning := false.
-	hasCompleted := true.
+	hasCompleted := true
 ]
 
 { #category : #actions }
 RSAbstractAnimation >> toggle [
-	self isPaused 
+	self isPaused
 		ifTrue: [ self continue ]
 		ifFalse: [ self pause ]
 ]
 
 { #category : #private }
 RSAbstractAnimation >> updateHasCompleted [
-	hasCompleted ifFalse: [ hasCompleted := currentLoop >= loops ].
+	hasCompleted ifFalse: [ hasCompleted := currentLoop >= loops ]
 ]

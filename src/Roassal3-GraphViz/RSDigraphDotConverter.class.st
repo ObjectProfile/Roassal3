@@ -12,10 +12,10 @@ Class {
 
 { #category : #visiting }
 RSDigraphDotConverter >> writeHeader: aRSGroup [
-	stream 
+	stream
 		<< 'digraph G {'; crlf;
 		<< 'ratio = auto ; '; crlf;
-		<< 'mincross = 2.0 ; '; crlf.
+		<< 'mincross = 2.0 ; '; crlf
 ]
 
 { #category : #visiting }

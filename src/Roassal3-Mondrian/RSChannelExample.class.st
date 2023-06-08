@@ -5,48 +5,7 @@ Class {
 }
 
 { #category : #examples }
-RSChannelExample >> example3 [
-	<script: 'self new example3'>
-	| c names labels classes classeShapes eb channel scale |
-	c := RSCanvas new.
-	names := #('Set' 'Array' 'Hash' 'Dictionary').
-	labels := names collect: [ :aName | RSLabel new fontSize: 20; text: aName ] as: RSGroup.
-	c addAll: labels.
-	RSHorizontalLineLayout on: labels.
-
-	classes := Collection withAllSubclasses.
-	classeShapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
-	classeShapes @ RSPopup.
-	c addAll: classeShapes.
-	eb := RSLineBuilder orthoVertical.
-	eb withVerticalAttachPoint.
-	eb shapes: classeShapes.
-	eb connectFrom: #superclass.
-
-	RSNormalizer size 
-		shapes: classeShapes;
-		normalize: #numberOfMethods.
-
-	RSTreeLayout on: classeShapes.
-
-	RSVerticalLineLayout new alignCenter; on: (RSGroup with: labels with: classeShapes).
-
-	"-------"
-	scale := NSScale ordinalColored: labels size.
-	labels doWithIndex: [ :l :i |
-		channel := RSChannel new.
-		channel color: Color random"(scale scale: i)".
-		channel input: { l }.
-		channel output: (classeShapes select: [ :s | ('*', l text, '*') match: s model name ]).
-		channel build.
-	].
-	"-------"
-	c @ RSCanvasController.
-	c open
-]
-
-{ #category : #examples }
-RSChannelExample >> exampleBasic [
+RSChannelExample >> basicExample [
 
 	<script: 'self new exampleBasic'>
 	| c box1 box2 label connection |
@@ -87,6 +46,47 @@ RSChannelExample >> exampleBasic [
 ]
 
 { #category : #examples }
+RSChannelExample >> example3 [
+	<script: 'self new example3'>
+	| c names labels classes classeShapes eb channel scale |
+	c := RSCanvas new.
+	names := #('Set' 'Array' 'Hash' 'Dictionary').
+	labels := names collect: [ :aName | RSLabel new fontSize: 20; text: aName ] as: RSGroup.
+	c addAll: labels.
+	RSHorizontalLineLayout on: labels.
+
+	classes := Collection withAllSubclasses.
+	classeShapes := classes collect: [ :cls | RSBox new model: cls ] as: RSGroup.
+	classeShapes @ RSPopup.
+	c addAll: classeShapes.
+	eb := RSLineBuilder orthoVertical.
+	eb withVerticalAttachPoint.
+	eb shapes: classeShapes.
+	eb connectFrom: #superclass.
+
+	RSNormalizer size
+		shapes: classeShapes;
+		normalize: #numberOfMethods.
+
+	RSTreeLayout on: classeShapes.
+
+	RSVerticalLineLayout new alignCenter; on: (RSGroup with: labels with: classeShapes).
+
+	"-------"
+	scale := NSScale ordinalColored: labels size.
+	labels doWithIndex: [ :l :i |
+		channel := RSChannel new.
+		channel color: Color random"(scale scale: i)".
+		channel input: { l }.
+		channel output: (classeShapes select: [ :s | ('*', l text, '*') match: s model name ]).
+		channel build.
+	].
+	"-------"
+	c @ RSCanvasController.
+	c open
+]
+
+{ #category : #examples }
 RSChannelExample >> exampleBasic2 [
 	<script: 'self new exampleBasic2'>
 	| c m mondrianNodes oddLabel evenLabel g channel smallLabel bigLabel |
@@ -112,7 +112,7 @@ RSChannelExample >> exampleBasic2 [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel color: Color green.
 	channel input: { oddLabel }.
@@ -168,7 +168,7 @@ RSChannelExample >> exampleBasic3 [
 	RSHorizontalLineLayout on: g.
 	RSVerticalLineLayout new alignCenter; on: { g .  mondrianNodes}.
 
-	"-------" 
+	"-------"
 	channel := RSChannel new.
 	channel color: Color green.
 	channel input: { oddLabel }.

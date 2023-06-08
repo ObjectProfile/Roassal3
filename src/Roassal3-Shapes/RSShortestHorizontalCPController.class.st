@@ -21,10 +21,10 @@ RSShortestHorizontalCPController >> controlPointsFor: aLine [
 	c4 := r2 floatCenter.
 	off1 := startOffset @ 0.
 	off2 := endOffset @ 0.
-	c1 x < c4 x  ifTrue: [ 
+	c1 x < c4 x  ifTrue: [
 		c1 := r1 rightCenter + off1.
 		c4 := r2 leftCenter - off2.
-	] ifFalse: [ 
+	] ifFalse: [
 		c1 := r1 leftCenter - off1.
 		c4 := r2 rightCenter + off2.
 	].
@@ -32,7 +32,6 @@ RSShortestHorizontalCPController >> controlPointsFor: aLine [
 	c2 :=	mid @ c1 y.
 	c3 := mid @ c4 y.
 	^ { c1. c2. c3. c4 }
-	
 ]
 
 { #category : #accessing }
@@ -56,8 +55,8 @@ RSShortestHorizontalCPController >> rectangleFor: shape line: line [
 	| r ap |
 	ap := line attachPoint.
 	r := shape encompassingRectangle.
-	^ (ap positionFor: shape in: line point: r origin) 
-		corner: (ap positionFor: shape in: line point: r corner).
+	^ (ap positionFor: shape in: line point: r origin)
+		corner: (ap positionFor: shape in: line point: r corner)
 ]
 
 { #category : #accessing }

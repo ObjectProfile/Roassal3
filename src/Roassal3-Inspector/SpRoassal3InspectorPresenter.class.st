@@ -35,7 +35,7 @@ SpRoassal3InspectorPresenter >> canvas [
 { #category : #accessing }
 SpRoassal3InspectorPresenter >> canvas: aRSCanvas [
 	canvas := aRSCanvas.
-	roassalMorph morph: canvas createMorph.
+	roassalMorph morph: canvas createMorph
 ]
 
 { #category : #enumerating }
@@ -48,16 +48,14 @@ SpRoassal3InspectorPresenter >> createToolbarIfNecessary [
 	interactions do: [ :cls | | i |
 		i := cls new.
 		i canvas: canvas.
-		toolBar add: i newButton withConstraints: [ :constraints | 
-			constraints 
+		toolBar add: i newButton withConstraints: [ :constraints |
+			constraints
 				width: 20;
 				height: 20 ]  ].
 	self layout: (SpBoxLayout newTopToBottom
 		add: toolBar height: 25;
 		add: #roassalMorph;
 		yourself)
-	
-	
 ]
 
 { #category : #ports }
@@ -70,7 +68,7 @@ SpRoassal3InspectorPresenter >> defaultOutputPort [
 SpRoassal3InspectorPresenter >> initializePresenters [
 	roassalMorph := self newMorph.
 	toolBar := self newButton.
-	toolBar label: 'fooo'.
+	toolBar label: 'fooo'
 ]
 
 { #category : #ports }
@@ -92,5 +90,6 @@ SpRoassal3InspectorPresenter >> whenActivatedDo: aBlock [
 	canvas shapes @ context.
 	canvas
 		when: RSShapeAddedEvent
-		do: [ :evt | evt shape @ context ].
+		do: [ :evt | evt shape @ context ]
+		for: self
 ]

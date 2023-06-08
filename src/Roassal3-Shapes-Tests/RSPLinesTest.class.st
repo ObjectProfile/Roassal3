@@ -13,11 +13,10 @@ RSPLinesTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
 	classesToConsider := RSAbstractLine allSubclasses select: [ :c | c isAbstract not ].
-	classesToConsider do: [ :cls | 
+	classesToConsider do: [ :cls |
 		m addCase: { (#shapeClass -> cls) }
 	].
-	^ m 
-	
+	^ m
 ]
 
 { #category : #running }
@@ -42,8 +41,8 @@ RSPLinesTest >> testDraw [
 
 	canvas addShape: (self shapeClass new
 		strokeColor: Color red;
-		width: 2). 
-	canvas createMorph drawOnMockCanvas.
+		width: 2).
+	canvas createMorph drawOnMockCanvas
 ]
 
 { #category : #tests }

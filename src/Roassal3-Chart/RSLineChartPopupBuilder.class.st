@@ -12,7 +12,7 @@ RSLineChartPopupBuilder >> rowShapeFor: aRSLinePlot [
 	| valuePoint |
 	valuePoint := self valuePointFor: aRSLinePlot.
 	valuePoint ifNil: [ ^ nil ].
-	^ self rowShapeFor: aRSLinePlot point: valuePoint.
+	^ self rowShapeFor: aRSLinePlot point: valuePoint
 ]
 
 { #category : #hooks }
@@ -24,7 +24,7 @@ RSLineChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
 RSLineChartPopupBuilder >> shapeFor: aRSChart [
 	| plots |
 	plots := aRSChart plots select: #isLinePlot.
-	plots := plots 
+	plots := plots
 		collect: [ :plot | self rowShapeFor: plot ]
 		as: RSGroup.
 	plots := plots reject: #isNil.
@@ -34,7 +34,7 @@ RSLineChartPopupBuilder >> shapeFor: aRSChart [
 		padding: 10;
 		color: (Color white alpha: 0.8);
 		withBorder;
-		yourself.
+		yourself
 ]
 
 { #category : #hooks }

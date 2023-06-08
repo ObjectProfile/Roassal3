@@ -1,51 +1,20 @@
 "
-A ROAbstractLineLayout is the abstract superclass of the line layout.
+I represent an abstract line layout for arranging elements in a line-based format.
 
-Instance Variables
-	alignment:		<Object>
-	gapSize:		<Object>
-	horizontalGap:		<Object>
-	horizontalOutGap:		<Object>
-	horizontallyStretchable:		<Object>
-	verticalGap:		<Object>
-	verticalOutGap:		<Object>
-	verticallyStretchable:		<Object>
+My subclasses define specific line layout algorithms, such as horizontal or vertical arrangements.
 
-alignment
-	- xxxxx
-
-gapSize
-	- xxxxx
-
-horizontalGap
-	- xxxxx
-
-horizontalOutGap
-	- xxxxx
-
-horizontallyStretchable
-	- xxxxx
-
-verticalGap
-	- xxxxx
-
-verticalOutGap
-	- xxxxx
-
-verticallyStretchable
-	- xxxxx
-
+Usage:
+- Create an instance of a subclass, such as RSVerticalLineLayout or RSHorizontalLineLayout.
+- Set layout-specific properties, such as spacing or alignment, if supported by the subclass.
+- Call #on: to perform the layout calculations and update the positions of the elements.
 "
 Class {
 	#name : #RSAbstractLineLayout,
-	#superclass : #RSLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
-		'gapSize',
-		'horizontalGap',
-		'verticalGap',
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Line'
 }
 
 { #category : #testing }
@@ -55,10 +24,15 @@ RSAbstractLineLayout class >> isAbstract [
 
 { #category : #'instance creation' }
 RSAbstractLineLayout class >> withGap: anInteger [
-	
-	^(self new)
+
+	^ self new
 		gapSize: anInteger;
 		yourself
+]
+
+{ #category : #alignment }
+RSAbstractLineLayout >> alignNone [
+	self alignment: #none
 ]
 
 { #category : #accessing }
@@ -71,76 +45,35 @@ RSAbstractLineLayout >> alignment: anObject [
 	alignment := anObject
 ]
 
-{ #category : #initialization }
-RSAbstractLineLayout >> defaultGapSize [
-	^ 5
-]
-
 { #category : #hook }
-RSAbstractLineLayout >> deltaFor: aNodeFigure [
+RSAbstractLineLayout >> deltaFor: anRSShape [
 	^ self subclassResponsibility
 ]
 
 { #category : #hook }
-RSAbstractLineLayout >> doExecute: elements [ 
+RSAbstractLineLayout >> doExecute: shapes [
 	| pointer delta |
-	pointer := self positionOriginalPointer: elements.
-	elements do: [ :element |
-		delta := self deltaFor: element.
-		translator translateTopLeftOf: element to: pointer - delta.
-		pointer := self 
+	pointer := self positionOriginalPointer: shapes.
+	shapes do: [ :shape |
+		delta := self deltaFor: shape.
+		translator translateTopLeftOf: shape to: pointer - delta.
+		pointer := self
 			movePointer: pointer
-			accordingToFigure: element.
-		].
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> gapSize [
-	^ gapSize
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> gapSize: aNumber [
-	gapSize := aNumber. " This value is never used actually "
-	
-	verticalGap := 2 * aNumber.
-	horizontalGap := 2 * aNumber
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> horizontalGap [
-	^ horizontalGap
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> horizontalGap: anInteger [
-	"Set the horizontal space, in pixel, between two neighbors"
-	horizontalGap := anInteger
+			accordingToFigure: shape ]
 ]
 
 { #category : #initialization }
 RSAbstractLineLayout >> initialize [
 	super initialize.
-	self gapSize: self defaultGapSize.
+	self alignNone
 ]
 
 { #category : #hook }
-RSAbstractLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
-	self subclassResponsibility
-]
-
-{ #category : #hook }
-RSAbstractLineLayout >> positionOriginalPointer: aGraph [
+RSAbstractLineLayout >> movePointer: pointer accordingToFigure: anRSShape [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-RSAbstractLineLayout >> verticalGap [
-	^ verticalGap
-]
-
-{ #category : #accessing }
-RSAbstractLineLayout >> verticalGap: anInteger [
-	"Set the vertical space, in pixel, between a layer and a children layer"
-	verticalGap := anInteger
+{ #category : #hook }
+RSAbstractLineLayout >> positionOriginalPointer: aCollectionOfShapes [
+	^ self subclassResponsibility
 ]

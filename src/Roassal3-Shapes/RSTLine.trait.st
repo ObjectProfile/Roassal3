@@ -3,6 +3,9 @@ My users have a line shape to interact with it. This trait has common methods to
 "
 Trait {
 	#name : #RSTLine,
+	#instVars : [
+		'formatString'
+	],
 	#category : #'Roassal3-Shapes-Graph'
 }
 
@@ -72,19 +75,47 @@ RSTLine >> dashed [
 ]
 
 { #category : #'public - shape' }
-RSTLine >> fmt: aString [
-	self shape fmt: aString.
+RSTLine >> format [
+	^ formatString
 ]
 
 { #category : #'public - shape' }
 RSTLine >> format: aString [
+	"Format lines of the LinePlot.
+	Receive a string shortcut to define line and marker styles.
+
+	For markers use
+	'o' - circle
+	'^' - arrow
+	's' - square
+	'p' - pentagon
+	'h' - hexagon
+	'+' - plus
+	'd' - diamond
+	'*' - star
+
+	For stroke styles use:
+	'--' dashed line.
+	'-.' dashed line with small line then point
+	'.' dashed line with points
 	
-	"want more markers? submit a new issue in roassal3"
-	| marker bs |
-	marker := RSShapeFactory shapeFromString: aString.
-	bs := RSStrokeStyle fromString: aString.
-	marker ifNotNil: [ self shape marker: marker ].
+	For colors use:
+	'r' red
+	'g' green
+	'b' blue
+	'c' cyan
+	'm' magenta
+	'y' yellow
+	'k' black
+	'w' white
 	
+	There is no order of marker, stroke or color specification.
+	'r.o'
+	'.or'
+	'o.r'
+	 "
+	formatString := aString.
+	self shape format: formatString.
 ]
 
 { #category : #'public - shape' }
@@ -150,7 +181,7 @@ RSTLine >> width [
 { #category : #'public - shape' }
 RSTLine >> width: aNumber [
 	"Set the width of the line. For example:
-	
+
 -=-=-=-=-=-=-=-=-=-=
 c := RSCanvas new.
 

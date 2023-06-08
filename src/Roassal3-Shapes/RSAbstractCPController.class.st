@@ -18,5 +18,5 @@ RSAbstractCPController class >> isAbstract [
 { #category : #hooks }
 RSAbstractCPController >> controlPointsFor: aLine [
 	"return an array of points generated from the line"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

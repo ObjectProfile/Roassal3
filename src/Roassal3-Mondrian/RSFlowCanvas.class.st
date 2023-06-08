@@ -23,14 +23,14 @@ RSFlowCanvas >> canvas [
 
 { #category : #initialization }
 RSFlowCanvas >> clickOnModel: aModel [
-	(mapping includesKey: aModel class) 
+	(mapping includesKey: aModel class)
 		ifTrue: [
 			canvas shapes do: #remove.
 			(mapping at: aModel class) value: canvas value: aModel.
 			self setOnCanvas: canvas.
-			
+
 			 ]
-		ifFalse: [ 		
+		ifFalse: [
 			mapping associationsDo: [ :assoc |
 				(aModel class inheritsFrom: assoc key)
 					ifTrue: [
@@ -40,7 +40,7 @@ RSFlowCanvas >> clickOnModel: aModel [
 			]
 		].
 	canvas signalUpdate.
-	
+
 	breadcrumbs add: aModel.
 	self updateBreadcrumbs
 ]
@@ -63,8 +63,7 @@ RSFlowCanvas >> initializeCanvas [
 	canvas add: breadcrumbsLabel.
 	breadcrumbsLabel setAsFixed.
 "	self setBreadcrumbsLabel: '/'
-"	
-
+"
 ]
 
 { #category : #'instance creation' }
@@ -75,45 +74,50 @@ RSFlowCanvas >> open [
 { #category : #initialization }
 RSFlowCanvas >> setBreadcrumbsLabel: aString [
 	breadcrumbsLabel text: aString.
-	breadcrumbsLabel translateTopLeftTo: 0 @ 0.
+	breadcrumbsLabel translateTopLeftTo: 0 @ 0
 ]
 
 { #category : #initialization }
 RSFlowCanvas >> setOnCanvas: aCanvas [
 
 	| relevantShapes |
-	self assert: [ aCanvas class == RSCanvas ] description: 'Must provide a canvas'.
+	self
+		assert: [ aCanvas class == RSCanvas ]
+		description: 'Must provide a canvas'.
 	canvas := aCanvas.
-	relevantShapes := (aCanvas deepNodes select: [ :s | s model notNil ]) asGroup.
-	relevantShapes when: RSMouseClick do: [ :evt |
-		self clickOnModel: evt shape model ].
-	
-
+	relevantShapes := (aCanvas deepNodes select: [ :s | s model notNil ])
+		                  asGroup.
+	relevantShapes
+		when: RSMouseClick
+		do: [ :evt | self clickOnModel: evt shape model ]
+		for: self
 ]
 
 { #category : #initialization }
 RSFlowCanvas >> updateBreadcrumbs [
 
-   breadcrumbsLabels do: #remove.
-   breadcrumbsLabels := RSGroup new.
-   breadcrumbs do: [ :obj |
-	   | lbl |
-	   lbl := RSLabel text: obj asString, '/ ' model: obj.
+	breadcrumbsLabels do: #remove.
+	breadcrumbsLabels := RSGroup new.
+	breadcrumbs do: [ :obj |
+		| lbl |
+		lbl := RSLabel text: obj asString , '/ ' model: obj.
 		breadcrumbsLabels add: lbl.
-		lbl @ RSHighlightable red. 
-		lbl when: RSMouseClick do: [ :evt | 
-			| i |
-			i := breadcrumbsLabels indexOf: lbl.
-			breadcrumbs := breadcrumbs first: i - 1.
-			
-			self clickOnModel: lbl model ].
-	].
-self assert: [ canvas class == RSCanvas ].
-   canvas addAll: breadcrumbsLabels.
-   breadcrumbsLabels do: #setAsFixed.
-   RSHorizontalLineLayout on: breadcrumbsLabels.
+		lbl @ RSHighlightable red.
+		lbl
+			when: RSMouseClick
+			do: [ :evt |
+				| i |
+				i := breadcrumbsLabels indexOf: lbl.
+				breadcrumbs := breadcrumbs first: i - 1.
 
-	breadcrumbsLabel translateTopLeftTo: 0 @ 0.
+				self clickOnModel: lbl model ]
+			for: self ].
+	self assert: [ canvas class == RSCanvas ].
+	canvas addAll: breadcrumbsLabels.
+	breadcrumbsLabels do: #setAsFixed.
+	RSHorizontalLineLayout on: breadcrumbsLabels.
+
+	breadcrumbsLabel translateTopLeftTo: 0 @ 0
 ]
 
 { #category : #initialization }

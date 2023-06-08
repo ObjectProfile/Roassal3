@@ -9,20 +9,18 @@ AthensLineSegment >> consumeShapes: shapes current: opoint delta: delta [
 	angle := vector angle.
 	unit := vector / (vector r max: 1).
 	dist := opoint distanceTo: point.
-	
+
 	sum := 0.
 	shapes copy do: [ :s |
 		w2 := s width / 2.
 		sum := sum + w2.
 		sum > dist ifTrue: [ ^ self ].
 		curPoint := opoint + delta + (unit * sum).
-		shapes remove: s.		
+		shapes remove: s.
 		s translateTo: curPoint - (u * (s height/2) ).
 		sum := sum + w2.
 		s rotateByRadians: angle.
-	].
-
-
+	]
 ]
 
 { #category : #'*Roassal3-SVG' }
@@ -33,8 +31,8 @@ AthensLineSegment >> durationFor: aPoint [
 ]
 
 { #category : #'*Roassal3-SVG' }
-AthensLineSegment >> pointsWithStart: aPoint duration: duration [ 
-	
+AthensLineSegment >> pointsWithStart: aPoint duration: duration [
+
 	^ (0 to: 1 by: duration) collect: [ :t |
-		aPoint interpolateTo: point at: t ].
+		aPoint interpolateTo: point at: t ]
 ]

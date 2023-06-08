@@ -1,5 +1,5 @@
 "
-TODO
+It offers methods for initializing the layout, performing layout computations, and updating the positions of nodes and edges based on the chosen algorithm.
 "
 Class {
 	#name : #RSAbstractGraphLayout,
@@ -13,12 +13,12 @@ Class {
 		'shouldValidateCycles',
 		'childrenSortBlock'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-ByConnection'
 }
 
 { #category : #constants }
 RSAbstractGraphLayout class >> horizontalGap [
-	
+
 	^3.0
 ]
 
@@ -31,14 +31,14 @@ RSAbstractGraphLayout class >> isAbstract [
 RSAbstractGraphLayout class >> on: elements edges: edges [
 	"Do the layout of the elements tacking into account the provided edges"
 
-	^ self new 
+	^ self new
 		userDefinedEdges: edges;
-		applyOn: elements.
+		applyOn: elements
 ]
 
 { #category : #constants }
 RSAbstractGraphLayout class >> verticalGap [
-	
+
 	^20.0
 ]
 
@@ -67,22 +67,22 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 		at: aNode
 		ifAbsentPut: [ | nodes |
 			nodes := OrderedCollection new.
-			self edgesDo: [:edge | 
+			self edgesDo: [:edge |
 				(edge from == aNode and: [edge to ~= aNode]) ifTrue: [
 					(nodes includes: edge from)
 						ifFalse: [nodes add: edge to ]
 				]
 			].
-			self childrenSortBlock 
+			self childrenSortBlock
 				ifNotNil: [ :block | nodes sort: block ].
 			nodes]
 ]
 
 { #category : #private }
 RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
-	^ (self childrenFor: aNode) 
+	^ (self childrenFor: aNode)
 		reject: [:each | aNodeCollection includes: each]
-	
+
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
 ]
 
@@ -115,7 +115,7 @@ RSAbstractGraphLayout >> defaultChildrenSortBlock [
 ]
 
 { #category : #hook }
-RSAbstractGraphLayout >> doInitialize: elements [ 
+RSAbstractGraphLayout >> doInitialize: elements [
 	super doInitialize: elements.
 	self clear.
 	"self greedyCycleRemoval: elements"
@@ -163,7 +163,6 @@ RSAbstractGraphLayout >> maximumDiameter: aCollection [
 	^ aCollection
 		inject: 0
 		into: [:max :node | max max: (node radius * 2) ]
- 
 ]
 
 { #category : #private }
@@ -182,7 +181,6 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 	^parentsNesting isEmpty
 		ifTrue: [0]
 		ifFalse: [parentsNesting max + 1]
-
 ]
 
 { #category : #actions }
@@ -190,7 +188,7 @@ RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
 	self userDefinedEdges ifNil: [ self userDefinedEdges: edgs ].
 
-	^ self applyOn: el.
+	^ self applyOn: el
 ]
 
 { #category : #private }
@@ -207,8 +205,8 @@ RSAbstractGraphLayout >> parentsFor: aNode [
 
 { #category : #private }
 RSAbstractGraphLayout >> rootNodesFor: aCollection [
-	^ aCollection select: [:node | 
-		(self parentsFor: node) isEmpty ].
+	^ aCollection select: [:node |
+		(self parentsFor: node) isEmpty ]
 ]
 
 { #category : #private }
@@ -225,8 +223,8 @@ RSAbstractGraphLayout >> shouldValidateCycles [
 { #category : #private }
 RSAbstractGraphLayout >> validateCachedParents [
 	self shouldValidateCycles ifFalse: [ ^ self ].
-	self cachedParents keysDo: [ :node | 
-		self validateCycleFor: node path: Set new ].
+	self cachedParents keysDo: [ :node |
+		self validateCycleFor: node path: Set new ]
 ]
 
 { #category : #private }
@@ -234,8 +232,7 @@ RSAbstractGraphLayout >> validateCycleFor: node path: aSet [
 	(aSet includes: node)
 		ifTrue: [ self error: 'cycle with: ', aSet asString ].
 	aSet add: node.
-	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ].
-	
+	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ]
 ]
 
 { #category : #public }

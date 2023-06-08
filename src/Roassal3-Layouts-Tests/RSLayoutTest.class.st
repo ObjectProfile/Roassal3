@@ -1,6 +1,6 @@
 Class {
 	#name : #RSLayoutTest,
-	#superclass : #TestCase,
+	#superclass : #RSTest,
 	#instVars : [
 		'shapes',
 		'canvas'
@@ -17,15 +17,16 @@ RSLayoutTest class >> isAbstract [
 RSLayoutTest >> setUp [
 	| eb |
 	super setUp.
-	
+
 	canvas := RSCanvas new.
-	shapes := (1 to: 10) collect: [ :i | RSBox new size: 5; model: i ] as: RSGroup.
+	shapes := (1 to: 10) collect: [ :i | 
+		(RSBox model: i) 
+			size: 5;
+			yourself ] as: RSGroup.
 	canvas addAll: shapes.
-	
+
 	eb := RSLineBuilder line.
 	eb canvas: canvas.
 	eb shapes: shapes.
 	eb connectFrom: [ :nb | nb // 2 ]
-	
-
 ]

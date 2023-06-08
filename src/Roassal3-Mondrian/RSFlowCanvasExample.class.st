@@ -30,22 +30,22 @@ RSFlowCanvasExample >> example02CallGraph [
 	f := RSFlowCanvas new.
 	f when: CompiledMethod visualize: [ :canvas :compiledMethod |
 		cms := compiledMethod messages.
-	   lbls := cms collect: [ :cm | 
+	   lbls := cms collect: [ :cm |
 			RSLabel new model: cm ] as: RSGroup.
-		canvas addAll: lbls. 
+		canvas addAll: lbls.
 		RSVerticalLineLayout on: lbls.
 
 	].
-	
+
 	f when: ByteSymbol visualize: [ :canvas :symbol |
 		cms := SystemNavigation default allImplementorsOf: symbol.
-		
-		
-		lbls := cms collect: [ :cm | 
+
+
+		lbls := cms collect: [ :cm |
 			RSLabel new text: (cm methodClass asString, cm selector); model: cm ] as: RSGroup.
-		canvas addAll: lbls. 
+		canvas addAll: lbls.
 		RSVerticalLineLayout on: lbls.
-		
+
 	].
 	f clickOnModel: #allMethods.
 	f open

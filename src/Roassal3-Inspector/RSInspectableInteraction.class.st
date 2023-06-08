@@ -18,7 +18,6 @@ RSInspectableInteraction >> deselectIfNecessary [
 	"Nothing to unselect"
 	selectedShape ifNil: [ ^ self ].
 	highlightable doUnhighlight: selectedShape
-	
 ]
 
 { #category : #accessing }
@@ -34,7 +33,7 @@ RSInspectableInteraction >> highlightable: anObject [
 { #category : #initialization }
 RSInspectableInteraction >> initialize [
 	super initialize.
-	highlightable := RSHighlightable new.
+	highlightable := RSHighlightable new
 ]
 
 { #category : #accessing }
@@ -48,7 +47,7 @@ RSInspectableInteraction >> inspectShape: aShape [
 	self deselectIfNecessary.
 	selectedShape := aShape.
 	highlightable doHighlight: selectedShape.
-	
+
 	oldInspectorWindow := inspectorWindow.
 	inspectorWindow := inspectShapeBlock rsValue: aShape model.
 	inspectorWindow setLabel: aShape model asString.
@@ -56,13 +55,11 @@ RSInspectableInteraction >> inspectShape: aShape [
 	canvasMorph root activate.
 	"If there is a previous inspector window, then we use the same position and extent"
 	oldInspectorWindow ifNil: [ ^ self ].
-	inspectorWindow 
+	inspectorWindow
 		position: oldInspectorWindow position;
 		extent: oldInspectorWindow extent.
 	oldInspectorWindow delete.
 	oldInspectorWindow := nil
-	
-	
 ]
 
 { #category : #accessing }
@@ -73,7 +70,8 @@ RSInspectableInteraction >> inspectShapeBlock: oneArgBlock [
 
 { #category : #hooks }
 RSInspectableInteraction >> onShape: aShape [
-	aShape 
+	aShape
 		when: RSMouseLeftClick
 		do: [ :evt | self inspectShape: aShape ]
+		for: self
 ]

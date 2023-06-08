@@ -24,9 +24,9 @@ RSUMLPackageBuilder >> objects [
 ]
 
 { #category : #accessing }
-RSUMLPackageBuilder >> packages [ 
+RSUMLPackageBuilder >> packages [
 
-	^packages 
+	^packages
 ]
 
 { #category : #accessing }
@@ -38,5 +38,5 @@ RSUMLPackageBuilder >> packages: aCollection [
 { #category : #hooks }
 RSUMLPackageBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
-	self layout on: shapes.
+	self layout on: shapes
 ]

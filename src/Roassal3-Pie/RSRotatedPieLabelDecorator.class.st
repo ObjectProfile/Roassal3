@@ -32,7 +32,7 @@ RSRotatedPieLabelDecorator >> createLabels [
 
 { #category : #rendering }
 RSRotatedPieLabelDecorator >> createLines [
-	lines := builder objects collect: [ :obj | 
+	lines := builder objects collect: [ :obj |
 		RSPolyline new
 			dashArray: #( 4 );
 			yourself ]
@@ -47,14 +47,14 @@ RSRotatedPieLabelDecorator >> render [
 	container
 		addAll: lines;
 		addAll: labels.
-	builder shapes when: RSMouseClick do: [ animation toggle ].
+	builder shapes when: RSMouseClick do: [ animation toggle ] for: self.
 	self createAnimation.
 	self stepShapes: 0
 ]
 
 { #category : #rendering }
 RSRotatedPieLabelDecorator >> stepShapes: t [
-	builder shapes doWithIndex: [ :shape :index | 
+	builder shapes doWithIndex: [ :shape :index |
 		  | a b label ang ext x p1 p2 p3 line |
 		  a := shape propertyAt: #a ifAbsentPut: [ shape alphaAngle ].
 		  b := shape propertyAt: #b ifAbsentPut: [ shape betaAngle ].
@@ -65,14 +65,14 @@ RSRotatedPieLabelDecorator >> stepShapes: t [
 		  ang := shape alphaAngle + shape betaAngle / 2 % 360.
 		  ext := label extent x / 2 @ 0.
 		  x := -250.
-		  (ang between: 90 and: 270) ifFalse: [ 
+		  (ang between: 90 and: 270) ifFalse: [
 			  ext := ext negated.
 			  x := x negated ].
 		  p1 := shape centroid: 0.
 		  p2 := shape centroid: 50.
 		  p3 := x @ p2 y.
 		  line := lines at: index.
-		  line shape controlPoints: { 
+		  line shape controlPoints: {
 				  p1.
 				  p2.
 				  p3 }.
