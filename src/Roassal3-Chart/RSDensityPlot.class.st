@@ -1,3 +1,34 @@
+"
+`RSDensityPlot` is a visual representation of the density distribution of a dataset using a kernel density estimation.
+
+**Responsibility:** plots the density distribution, provides options to customize the plot.
+
+**Collaborators:** the instance variable kernel density is a `RSKernelDensity` object that calculates the points of the density curve.
+
+**Public API and Key Messages**
+- `data: aCollection` to create instances passing aCollection as argument.
+- `kernelDensity aRSKernelDensity`: to create instances passing a `RSKernelDensity` object with set attributes like, bandwidth, kernel, etc.
+- `bandwidth: aFloat` to set the bandwith (h) of the kernel in the kernel density estimation function. By `default 1.0`.
+
+**Instance Variables:**
+- `area`: an `RSPolygon` that represents the area under the density curve.
+- `curvePoints`: an `OrderedCollection` of  `Point`s that store the result of evaluate the Kernel Density Estimation.
+- `kernelDensity`: a `RSKernelDensity` object that made the calculation of the Kernel Density Estimation, several parametres are passed to this object to personalize the curve (bandwidth, kernel, etc.).
+- `title`: aString that stores the title of the chart.
+- `xlabel`:	aString that stores the label of x axis.
+- `ylabel`: aString that stores the label of y axis.
+
+**Example:**
+```Smalltalk
+| densityPlot data |
+data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
+densityPlot := RSDensityPlot data: data.
+densityPlot bandwidth: 10.
+densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwidth:10)'.
+densityPlot color: Color green.
+densityPlot open.
+```
+"
 Class {
 	#name : #RSDensityPlot,
 	#superclass : #RSAbstractPlot,
