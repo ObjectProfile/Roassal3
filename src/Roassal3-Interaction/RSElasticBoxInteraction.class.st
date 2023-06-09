@@ -10,15 +10,14 @@ Class {
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
-		'events',
-		'draggingCanvas',
 		'announcer',
 		'baseBox',
 		'selectedShapes',
 		'startPosition',
 		'shouldUseNegativeBox',
 		'targetShapes',
-		'cameraDelta'
+		'cameraDelta',
+		'isLeftClick'
 	],
 	#category : #'Roassal3-Interaction-ElasticBox'
 }
@@ -159,30 +158,6 @@ RSElasticBoxInteraction >> defaultBox [
 		yourself
 ]
 
-{ #category : #'event processing' }
-RSElasticBoxInteraction >> disableDrag: event [
-	draggingCanvas := false.
-	self boxStarted: event.
-	self createCameraAnimation: event
-]
-
-{ #category : #accessing }
-RSElasticBoxInteraction >> dragStartEvent [
-	"return the drag activation event for RSDraggableCanvas"
-	^ self events first
-]
-
-{ #category : #'event processing' }
-RSElasticBoxInteraction >> enableDrag: event [
-	draggingCanvas := true
-]
-
-{ #category : #accessing }
-RSElasticBoxInteraction >> events [
-	"return an array with 2 elements the `boxStartEvent` and `dragStartEvent` "
-	^ events
-]
-
 { #category : #helper }
 RSElasticBoxInteraction >> getOrCreateElasticBox: event [
 	^ event canvas
@@ -193,16 +168,10 @@ RSElasticBoxInteraction >> getOrCreateElasticBox: event [
 { #category : #initialization }
 RSElasticBoxInteraction >> initialize [
 	super initialize.
-	self leftRight.
 	baseBox := self defaultBox.
 	self useNegativeBox.
 	self targetShapes: #nodes.
-	draggingCanvas := false
-]
-
-{ #category : #public }
-RSElasticBoxInteraction >> leftRight [
-	events := { RSMouseLeftDragStart. RSMouseRightDragStart }
+	isLeftClick := false.
 ]
 
 { #category : #public }
@@ -214,9 +183,8 @@ RSElasticBoxInteraction >> noNegativeBox [
 RSElasticBoxInteraction >> onShape: aCanvas [
 	
 	aCanvas
-		when: self dragStartEvent send: #enableDrag: to: self;
-		when: self boxStartEvent send: #disableDrag: to: self;
-		when: RSMouseDragging send: #processDrag: to: self;
+		when: RSMouseLeftDragStart send: #processDragStart: to: self;
+		when: RSMouseDragging send: #processDragging: to: self;
 		when: RSMouseDragEnd send: #processDragEnd: to: self
 ]
 
@@ -226,24 +194,30 @@ RSElasticBoxInteraction >> privateAnnouncer [
 ]
 
 { #category : #'event processing' }
-RSElasticBoxInteraction >> processDrag: event [
+RSElasticBoxInteraction >> processDragEnd: event [
+	isLeftClick := false.
+	self boxEnded: event.
+	self stopCameraAnimation: event
+]
 
-	draggingCanvas ifTrue: [ ^ self ].
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> processDragStart: event [
+
+	isLeftClick := true.
+	self boxStarted: event.
+	self createCameraAnimation: event
+]
+
+{ #category : #'event processing' }
+RSElasticBoxInteraction >> processDragging: event [
+	isLeftClick ifFalse: [ ^ self ].
 	self computeCameraDelta: event.
 	self boxUpdated: event
 ]
 
-{ #category : #'event processing' }
-RSElasticBoxInteraction >> processDragEnd: event [
-	draggingCanvas
-		ifTrue: [ draggingCanvas := false ]
-		ifFalse: [ self boxEnded: event.
-			self stopCameraAnimation: event ]
-]
-
-{ #category : #public }
-RSElasticBoxInteraction >> rightLeft [
-	events := { RSMouseRightDragStart. RSMouseLeftDragStart }
+{ #category : #rendering }
+RSElasticBoxInteraction >> renderLegendOn: anRSLegend [
+	
 ]
 
 { #category : #accessing }

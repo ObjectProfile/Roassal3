@@ -24,3 +24,22 @@ RSShape >> popup [
 RSShape >> popupText: aBlock [
 	self @ (RSPopup text: aBlock)
 ]
+
+{ #category : #'*Roassal3-Interaction' }
+RSShape >> removeShadow [
+	| key |
+	key := #shadow.
+	(self hasProperty: key) ifFalse: [ ^ self ].
+	self shadow remove.
+	self removeKey: key.
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSShape >> shadow [
+	^ self propertyAt: #shadow
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSShape >> shadow: aRSBox [
+	^ self propertyAt: #shadow put: aRSBox
+]

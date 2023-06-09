@@ -35,7 +35,6 @@ RSCanvasController class >> simple [
 	inst zoomToFitInteraction
 		noZoomToFitOnStart;
 		noZoomToFitOnExtendChanged.
-	inst draggableCanvasInteraction hasDraggableAnimation: false.
 	inst removeInteractionIfPresent: RSZoomToFitCanvasInteraction.
 	"this interaction works better when the visualization has already been created"
 	inst addInteractionClass: RSKeepCanvasPositionCanvasInteraction.
@@ -71,7 +70,7 @@ RSCanvasController >> defaultInteractions [
 	"create a subclass of RSCanvasController and define your own custom interactions for your canvas"
 
 	^ { 
-		  RSDraggableCanvasInteraction.
+		  "RSDraggableCanvasInteraction."
 		  RSKeyNavigationCanvasInteraction.
 		  RSZoomToFitCanvasInteraction.
 		  RSZoomableCanvasInteraction.
@@ -165,6 +164,12 @@ RSCanvasController >> shouldShowLegend [
 { #category : #configuration }
 RSCanvasController >> withLegend [
 	self configuration withLegend
+]
+
+{ #category : #accessing }
+RSCanvasController >> withoutSelectionBox [
+
+	self removeInteractionIfPresent: RSSelectionInCanvasInteraction
 ]
 
 { #category : #accessing }

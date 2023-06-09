@@ -19,3 +19,27 @@ RSCanvas >> selectedShapes [
 RSCanvas >> selectedShapes: aGroupOfShapes [
 	self propertyAt: #selectedShapes put: aGroupOfShapes.
 ]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> selectionInteraction [
+	
+	^ self propertyAt: #selectionInteraction
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> selectionInteraction: aRSSelectionInCanvasInteraction [
+
+	self
+		propertyAt: #selectionInteraction
+		put: aRSSelectionInCanvasInteraction
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> setSelectedShapes: aGroupOfShapes [
+
+	self
+		assert: self selectionInteraction notNil
+		description:
+		'This canvas has no selection interaction. RSSelectionInCanvasInteraction has to be added to canvas.'.
+	self selectionInteraction setSelectedShapes: aGroupOfShapes on: self
+]

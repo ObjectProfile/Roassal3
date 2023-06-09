@@ -31,7 +31,9 @@ RSEvent >> camera [
 
 { #category : #accessing }
 RSEvent >> canvas [
-	^ canvas ifNil: [ canvas := shape canvas ]
+
+	^ canvas ifNil: [ 
+		  canvas := shape ifNil: [ nil ] ifNotNil: [ shape canvas ] ]
 ]
 
 { #category : #accessing }

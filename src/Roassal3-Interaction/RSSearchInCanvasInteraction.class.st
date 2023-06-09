@@ -25,7 +25,8 @@ Class {
 		'fixedLabels',
 		'highlightesShapes',
 		'colorsToUse',
-		'highlightableLabels'
+		'highlightableLabels',
+		'searchField'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -169,6 +170,16 @@ RSSearchInCanvasInteraction >> initialize [
 	self useExactMatch
 ]
 
+{ #category : #testing }
+RSSearchInCanvasInteraction >> isKeyForReset: evt [
+	^ evt keyName = self keyForReset
+]
+
+{ #category : #testing }
+RSSearchInCanvasInteraction >> isKeyForSearch: evt [
+	^ evt keyName = self keyForSearch and: [ evt commandKeyPressed ]
+]
+
 { #category : #util }
 RSSearchInCanvasInteraction >> isRegExpValid: regExp [
 	"Is the regular expression relevant to be processed"
@@ -177,12 +188,12 @@ RSSearchInCanvasInteraction >> isRegExpValid: regExp [
 
 { #category : #configuration }
 RSSearchInCanvasInteraction >> keyForReset [
-	^ 'R'
+	^ 'ESCAPE'
 ]
 
 { #category : #configuration }
 RSSearchInCanvasInteraction >> keyForSearch [
-	^ 'S'
+	^ 'F'
 ]
 
 { #category : #util }
@@ -199,10 +210,12 @@ RSSearchInCanvasInteraction >> numberOfPerformedSearches [
 
 { #category : #private }
 RSSearchInCanvasInteraction >> obtainRegExpToHighlight [
+
 	"Open a UI"
-	^ UIManager default
-		request: 'Enter a reg exp to search for an item'
-		initialAnswer: '*value*'
+
+	^ searchField := UIManager default
+		                 request: 'Enter a reg exp to search for an item'
+		                 initialAnswer: '*value*'
 ]
 
 { #category : #hooks }
@@ -213,13 +226,33 @@ RSSearchInCanvasInteraction >> onShape: aCanvas [
 ]
 
 { #category : #'private - events' }
+RSSearchInCanvasInteraction >> openSearchField [
+
+	| canvasMorph ed |
+	canvasMorph := canvas morph.
+	canvasMorph ifNil: [ canvasMorph := canvas createMorph ].
+
+	ed := RubFloatingEditorBuilder new
+		      autoAccept: true;
+		      customizeEditorWith: [ :editor | 
+			      editor scrollbarsShowNever.
+			      editor extent: 200 @ 30.
+			      editor position:
+					      canvasMorph positionInWorld
+					      + (canvasMorph width - editor width @ 0) ];
+		      withEditedContentsDo: [ :editedContents | 
+			      editedContents traceCr ];
+		      whenEditorEscapedDo: [  ].
+
+	ed openEditor.
+	searchField := ed
+]
+
+{ #category : #'private - events' }
 RSSearchInCanvasInteraction >> processKeyUp: evt [
-	| keyName |
 	self canvas: evt canvas.
-	keyName := evt keyName.
-	evt anyModifierKeyPressed ifTrue: [ ^ self ].
-	keyName = self keyForSearch ifTrue: [ self searchForShapes ].
-	keyName = self keyForReset ifTrue: [ self resetAllHighlightedShapes ]
+	(self isKeyForSearch: evt) ifTrue: [ self openSearchField ].
+	(self isKeyForReset: evt) ifTrue: [ self resetAllHighlightedShapes ]
 ]
 
 { #category : #public }
@@ -285,14 +318,9 @@ RSSearchInCanvasInteraction >> scaleFrom: s [
 	^ s canvas camera scale
 ]
 
-{ #category : #public }
-RSSearchInCanvasInteraction >> searchForShapes [
-	"callback called when some shapes have to be search"
-	| regExp |
-	regExp := self obtainRegExpToHighlight.
-	(self isRegExpValid: regExp)
-		ifFalse: [ ^ self ].
-	self searchForShapes: regExp
+{ #category : #accessing }
+RSSearchInCanvasInteraction >> searchField [
+	^ searchField
 ]
 
 { #category : #public }

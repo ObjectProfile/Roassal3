@@ -41,23 +41,26 @@ RSSpace3D >> buildElements [
 
 { #category : #building }
 RSSpace3D >> buildEvents [
+
 	| prev |
 	prev := nil.
 	canvas
-		when: RSMouseDragStart do: [ :evt |
-			prev := evt positionFromCamera ];
-		when: RSMouseDragging do: [ :evt | | p theta |
+		when: RSMouseDragStart
+		do: [ :evt | prev := evt positionFromCamera ]
+		for: self;
+		when: RSMouseDragging do: [ :evt | 
+			| p theta |
 			tmat identity.
 			p := evt positionFromCamera.
-			theta := (prev - p )* 360 / extent.
+			theta := prev - p * 360 / extent.
 			tmat
 				xrot: theta y degreesToRadians;
 				yrot: theta x degreesToRadians.
-			meshes do: [ :m | m matrix mult: tmat].
+			meshes do: [ :m | m matrix mult: tmat ].
 			self draw.
 			canvas signalUpdate.
-			prev := p.
-			 ]
+			prev := p ]
+		for: self
 ]
 
 { #category : #accessing }

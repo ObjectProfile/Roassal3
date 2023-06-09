@@ -2,7 +2,9 @@ Class {
 	#name : #RSSelectionInCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
-		'shadowColor'
+		'shadowColor',
+		'elastic',
+		'shadowInteraction'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -22,31 +24,24 @@ RSSelectionInCanvasInteraction class >> example2 [
 	^ (self canvasExample @ interaction) open
 ]
 
-{ #category : #'accessing - defaults' }
-RSSelectionInCanvasInteraction >> createBoxSelectionFor: shape [
-	"| border canvas |
-	canvas := shape parent.
-	shape removeSelectionBox.
-			
-	border := RSBox new
-		cornerRadius: 10;
-		noPaint;
-		border: (RSBorder new 
-			color: self shadowColor;
-			width: 5;
-			yourself);
-		yourself.
-	shape selectionBox: border.
-	HUpdateSelectionBox new updateSelectionBox: shape.
-	canvas addShape: border.
-	border pushBack."
-	
-]
-
 { #category : #initialization }
 RSSelectionInCanvasInteraction >> defaultShadowColor [
 
 	^ Color black
+]
+
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> doHighlight: event [
+
+	| shape |
+	shape := event shape.
+	shape @ shadowInteraction
+]
+
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> doUnHighlight: event [
+
+	shadowInteraction removeShadow: event
 ]
 
 { #category : #initialization }
@@ -54,41 +49,57 @@ RSSelectionInCanvasInteraction >> initialize [
 
 	super initialize.
 	shadowColor := self defaultShadowColor.
+	elastic := RSElasticBoxInteraction new.
+	shadowInteraction := RSShadowInteraction new.
+
+	elastic
+		when: RSSelectionStartEvent send: #selectionStart: to: self;
+		when: RSSelectionChangedEvent send: #selectionChange: to: self;
+		when: RSSelectionEndEvent send: #selectionEnd: to: self
 ]
 
 { #category : #hooks }
 RSSelectionInCanvasInteraction >> onShape: aCanvas [
 
-	| elastic selectionHigh |
-	elastic := RSElasticBoxInteraction new.
-	elastic leftRight.
+	aCanvas selectionInteraction: self.
 	elastic targetShapes: aCanvas nodes.
-
-	selectionHigh := RSHighlightable new
-		                 "when: RSHighlightEvent
-		                 do: [ :evt | self createBoxSelectionFor: evt shape ]
-		                 for: self;
-		                 when: RSUnHighlightEvent
-		                 do: [ :evt | evt shape removeSelectionBox ]
-		                 for: self".
-	elastic
-		when: RSSelectionStartEvent
-		do: [ :evt | selectionHigh unhighlightRecordedShapes: evt canvas ]
-		for: self;
-		when: RSSelectionChangedEvent do: [ :evt |
-			selectionHigh
-				doHighlightShapes: evt selectedShapes
-				onCanvas: evt canvas ]
-		for: self;
-		when: RSSelectionEndEvent
-		do: [ :evt | evt canvas selectedShapes: evt selectedShapes ]
-		for: self.
 	aCanvas @ elastic
 ]
 
 { #category : #rendering }
 RSSelectionInCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Left click' description: 'Use drag and drop to select shapes'
+]
+
+{ #category : #'event processing' }
+RSSelectionInCanvasInteraction >> selectionChange: evt [
+
+	self setSelectedShapes: evt selectedShapes on: evt canvas
+]
+
+{ #category : #'event processing' }
+RSSelectionInCanvasInteraction >> selectionEnd: evt [
+
+	evt canvas selectedShapes: evt selectedShapes.
+	evt canvas announce: evt
+]
+
+{ #category : #'event processing' }
+RSSelectionInCanvasInteraction >> selectionStart: evt [
+
+	shadowInteraction removeShadowsOn: evt canvas.
+	evt canvas announce: evt
+]
+
+{ #category : #public }
+RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanvas [
+
+	shadowInteraction removeShadowsOn: aRSCanvas.
+	aGroupOfShapes @ shadowInteraction.
+	aRSCanvas selectedShapes: aGroupOfShapes.
+	aRSCanvas announce: (RSSelectionChangedEvent new
+			 selectedShapes: aGroupOfShapes;
+			 yourself)
 ]
 
 { #category : #accessing }

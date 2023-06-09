@@ -1,5 +1,5 @@
 Class {
-	#name : #RSSearchInCanvasTest,
+	#name : #RSSearchInCanvasInteractionTest,
 	#superclass : #RSTest,
 	#instVars : [
 		'c',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #running }
-RSSearchInCanvasTest >> setUp [
+RSSearchInCanvasInteractionTest >> setUp [
 	super setUp.
 	c := RSCanvas new.
 	shapes := (1 to: 10) * 100
@@ -32,7 +32,7 @@ RSSearchInCanvasTest >> setUp [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testBasic [
+RSSearchInCanvasInteractionTest >> testBasic [
 	search searchForShapes: '*4*'.
 	self assert: (shapes fourth hasProperty: #shadow).
 	self deny: (shapes fifth hasProperty: #shadow).
@@ -49,7 +49,7 @@ RSSearchInCanvasTest >> testBasic [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testExactMatch [
+RSSearchInCanvasInteractionTest >> testExactMatch [
 	search useExactMatch.
 	search searchForShapes: '4'.
 	self deny: (shapes fourth hasProperty: #shadow).
@@ -60,7 +60,7 @@ RSSearchInCanvasTest >> testExactMatch [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testFixedShapes [
+RSSearchInCanvasInteractionTest >> testFixedShapes [
 
 	self assert: c numberOfFixedShapes equals: 3.
 	search searchForShapes: '*4*'.
@@ -73,7 +73,7 @@ RSSearchInCanvasTest >> testFixedShapes [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testFixedShapesAndPopup [
+RSSearchInCanvasInteractionTest >> testFixedShapesAndPopup [
 
 	| lbl |
 	search searchForShapes: '*4*'.
@@ -82,19 +82,36 @@ RSSearchInCanvasTest >> testFixedShapesAndPopup [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testIsRegExpValid [
+RSSearchInCanvasInteractionTest >> testIsRegExpValid [
 	self deny: (search isRegExpValid: '').
 	self deny: (search isRegExpValid: nil)
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testNoSearch [
+RSSearchInCanvasInteractionTest >> testKeyCombinationOpensSearchWindow [
+
+	| keyEvent |
+	keyEvent := RSKeyUp new
+		            keyName: 'F';
+		            yourself.
+	search processKeyUp: keyEvent.
+	self assert: search searchField isNil.
+	keyEvent := RSKeyUp new
+		            keyName: 'F';
+		            canvas: c;
+		            commandKeyPressed: true; 		            yourself.
+	search processKeyUp: keyEvent.
+	self assert: search searchField isNotNil
+]
+
+{ #category : #tests }
+RSSearchInCanvasInteractionTest >> testNoSearch [
 
 	self assert: (c shapes allSatisfy: [ :s | s color = Color gray ])
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
+RSSearchInCanvasInteractionTest >> testNumberOfHighlightedShapes [
 	self assert: search numberOfHighlightedShapes equals: 0.
 	search searchForShapes: '*4*'.
 	self assert: search numberOfHighlightedShapes equals: 1.
@@ -108,7 +125,16 @@ RSSearchInCanvasTest >> testNumberOfHighlightedShapes [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testShadow [
+RSSearchInCanvasInteractionTest >> testSearchTextChangeSelectedShapes [
+	self assert: c selectedShapes size equals: 0.
+	search searchForShapes: '1'.
+	self assert: (c selectedShapes collect: #model) asArray equals: #(100 1000).
+	
+	
+]
+
+{ #category : #tests }
+RSSearchInCanvasInteractionTest >> testShadow [
 	self assert: search numberOfPerformedSearches equals: 0.
 
 	search searchForShapes: '*4*'.
@@ -133,7 +159,7 @@ RSSearchInCanvasTest >> testShadow [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testUpdateShadowSize [
+RSSearchInCanvasInteractionTest >> testUpdateShadowSize [
 	| shadow extent |
 	self assert: search numberOfPerformedSearches equals: 0.
 	c camera scale: 2.
@@ -146,7 +172,7 @@ RSSearchInCanvasTest >> testUpdateShadowSize [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testWithEdge [
+RSSearchInCanvasInteractionTest >> testWithEdge [
 
 	| l |
 	l := RSLine new.
@@ -167,7 +193,7 @@ RSSearchInCanvasTest >> testWithEdge [
 ]
 
 { #category : #tests }
-RSSearchInCanvasTest >> testWithEdgeAndhighlightable [
+RSSearchInCanvasInteractionTest >> testWithEdgeAndhighlightable [
 
 	| l interaction |
 

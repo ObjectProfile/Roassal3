@@ -606,15 +606,20 @@ RSCanvas >> removeFixedShape: aShape [
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> removeShape: shape [
+
 	| evt index |
 	index := shapes indexOf: shape.
 	index = 0
-		ifTrue: [ index := fixedShapes indexOf: shape.
+		ifTrue: [ 
+			index := fixedShapes indexOf: shape.
 			index = 0 ifFalse: [ fixedShapes remove: shape ] ]
 		ifFalse: [ shapes removeAt: index ].
 
 	shape parent: nil.
-	evt := RSShapeRemovedEvent new shape: shape.
+	evt := RSShapeRemovedEvent new
+		       shape: shape;
+		       canvas: self;
+		       yourself.
 	self announce: evt.
 	shape announce: evt
 ]
