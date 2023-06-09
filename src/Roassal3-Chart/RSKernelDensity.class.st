@@ -1,3 +1,35 @@
+"
+`RSKernelDensity` is a class that performs calculations related to density distribution plots (`RSDensityPlot`,`RSViolinPlot`) using the **kernel density estimation (KDE) function**.
+Resources to understand the calculations and concepts related:
+- https://youtu.be/qc9elACH8LA
+- https://mathisonian.github.io/kde/
+
+**Responsibility:** calculate density distribution of a dataset.
+
+**Collaborators:** `RSKernelFunction` represents the Kernel function (by default a Gaussian function) evaluated in the KDE function.
+
+**Public API and Key Messages**
+- `data: aCollection` to create instances passing aCollection (dataset) as argument.
+- `evaluateKernel: aNumber` to get the kernel function evaluation of aNumber K(x). 
+- `kde: aNumber` to get the corresponding density (probability)  of an x value. (it sum all the kernels applied over the dataset values).  
+- `densityCurve`: to apply the `kde` function over a ""continuos"" set of x values and get the y values, for the domain of the dataset passed.
+
+**Instance Variables:**
+  
+- `data`: aCollection, the dataset for wich the probability density is estimated.
+- `bandwidth`: a Float that stores the bandwidth used for the kernel function.
+- `kernel`: a `RSKernelFunction` that calculates the corresponding kernel (a `RSKernelGaussianFunction` by default) and has an `evaluate: aNumber` message.
+
+**Example:**
+```Smalltalk
+| kernelDensity anXValue data |
+data := #(14 15 28 27 32 35).
+kernelDensity := RSKernelDensity data: data.
+kernelDensity bandwidth: 4.
+anXValue := 30.
+self assert: (kernelDensity kde: anXValue) closeTo: 0.0495.
+```
+"
 Class {
 	#name : #RSKernelDensity,
 	#superclass : #RSObject,
