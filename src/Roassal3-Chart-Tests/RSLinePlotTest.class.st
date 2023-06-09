@@ -15,7 +15,7 @@ RSLinePlotTest >> testDefaultValues [
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	p ylabel: 'Some numbers'.
 	p xlabel: 'X label'.
-	p buildChart.
+	chart := p buildChart.
 	self assert: chart extent equals: 250 @ 200.
 	self assert: chart padding equals: 15 @ 10.
 ]

@@ -33,7 +33,7 @@ RSLinePlot class >> y: aCollection [
 { #category : #building }
 RSLinePlot >> buildChart [
 
-	| chartPlot marker markerChar |
+	| chartPlot |
 	chartPlot := RSChart new.
 	chartPlot add: self.
 
