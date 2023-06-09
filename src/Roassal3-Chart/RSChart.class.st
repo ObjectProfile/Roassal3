@@ -412,7 +412,8 @@ c
 
 { #category : #'accessing - defaults' }
 RSChart >> updateChart: anEvent [
-	| canvas |
+	| canvas camera |
+	camera := anEvent camera.
 	canvas := anEvent canvas.
 	self extent: canvas extent.
 	self update.

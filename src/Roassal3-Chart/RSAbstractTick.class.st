@@ -73,14 +73,6 @@ RSAbstractTick >> createdShapes [
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultConfiguration [
 	^ RSTickConfiguration new
-		numberOfTicks: 5;
-		fontSize: 5;
-		labelRotation: 0;
-		shouldHaveLabels: true;
-		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value asFloat round: 3 ] ;
-		tickSize: 3;
-		yourself
 ]
 
 { #category : #'accessing - defaults' }
