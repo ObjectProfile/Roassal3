@@ -1,23 +1,103 @@
 "
-Define alignment of elements. 
+Define alignment of aligment for shapes. Note that some layouts like `RSVerticalLineLayout` or `RSHorizontalLineLayout` uses internally this class for aligment operations
 
-For example, inspect the following:
--=-=-=
-c := RSCanvas new.
-es := (1 to: 5) collect: [ :v | RSBox new size: v * 5 ] as: RSGroup.
-RSVerticalLineLayout on: es.
+Users should use `shapes` before any alignment operation.
+```
 align := RSAlignment new.
-align shapes: es.
-align right.
-c addAll: es.
-c
--=-=-=
+align shapes: someShapes.
+align bottom.
+```
+# Operations
+- vertical operations are `bottom`, `top`, `middle`, `label`.
+	- `label` operation align labels based on its baseline.
+	- for vertical operation `label` shapes should be a collection of `RSLabel`
+- horizontal operations are `left`, `center`, `right`.
+- none, you can apply none operation, to skip any alignment.
 "
 Class {
 	#name : #RSAlignment,
 	#superclass : #RSAbstractShapeHandling,
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
+
+{ #category : #examples }
+RSAlignment class >> exampleAlignBottom [
+	| canvas boxes |
+	canvas := RSCanvas new.
+	boxes := (1 to: 5) collect: [ :v | 
+		RSBox new 
+			color: Color gray translucent;
+			size: v * 5 ] as: RSGroup.
+	RSHorizontalLineLayout new alignBottom; on: boxes.
+	"align := self new.
+	align shapes: boxes.
+	align bottom."
+	canvas addAll: boxes.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSAlignment class >> exampleAlignCenter [
+	| canvas boxes |
+	canvas := RSCanvas new.
+	boxes := (1 to: 5) collect: [ :v | RSBox new size: v * 5 ] as: RSGroup.
+	RSVerticalLineLayout new alignCenter; on: boxes.
+	
+	"align := self new.
+	align shapes: boxes.
+	align center."
+	canvas addAll: boxes.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSAlignment class >> exampleAlignLabel [
+	| canvas labels |
+	canvas := RSCanvas new.
+	labels := (1 to: 5) collect: [ :v | 
+		RSLabel new
+			text: v;
+			fontSize: v * 5 ] as: RSGroup.
+	RSHorizontalLineLayout new alignLabel; on: labels.
+	
+	"align := self new.
+	align shapes: labels.
+	align label."
+	canvas addAll: labels.
+	"note that each label, have different encompassing rectangle"
+	canvas showEncompassingRectangles.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSAlignment class >> exampleAlignMiddle [
+	| canvas boxes |
+	canvas := RSCanvas new.
+	boxes := (1 to: 5) collect: [ :v | 
+		RSBox new 
+			color: Color gray translucent;
+			size: v * 5 ] as: RSGroup.
+	RSHorizontalLineLayout new alignMiddle; on: boxes.
+	"align := self new.
+	align shapes: boxes.
+	align middle."
+	canvas addAll: boxes.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSAlignment class >> exampleAlignRight [
+	| canvas boxes |
+	canvas := RSCanvas new.
+	boxes := (1 to: 5) collect: [ :v | RSBox new size: v * 5 ] as: RSGroup.
+	RSVerticalLineLayout new alignRight; on: boxes.
+	
+	"align := self new.
+	align shapes: boxes.
+	align right."
+	canvas addAll: boxes.
+	^ canvas open
+]
 
 { #category : #alignment }
 RSAlignment >> alignFromBottomUsing: aShape [
@@ -90,20 +170,7 @@ RSAlignment >> alignFromTopUsing: aShape [
 
 { #category : #public }
 RSAlignment >> bottom [
-"
-Align all the shapes on the bottoms of the shapes.
-
--=-=-=-=-=-=-=-=
-c := RSCanvas new.
-es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
-RSHorizontalLineLayout on: es.
-align := RSAlignment new.
-align shapes: es.
-align bottom.
-c addAll: es.
-c
--=-=-=-=
-"
+	"Align all the shapes on the bottoms of the shapes"
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromBottomUsing: self bottomMostShape
 ]
@@ -118,19 +185,7 @@ RSAlignment >> bottomMostShape [
 
 { #category : #public }
 RSAlignment >> center [
-"
-Center all the shapes along their X coordinate
--=-=-=-
-c := RSCanvas new.
-es := (1 to: 5) collect: [ :v | RSBox new color: Color gray trans; size: v * 5 ] as: RSGroup.
-RSVerticalLineLayout on: es.
-align := RSAlignment new.
-align shapes: es.
-align center.
-c addAll: es.
-c
--=-=-=-
-"
+	"Center all the shapes along their X coordinate"
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromCenterUsing: self centerMostShape
 ]
@@ -172,19 +227,7 @@ RSAlignment >> leftMostShape [
 
 { #category : #public }
 RSAlignment >> middle [
-"Center all the shapes along their Y coordinate
-
-```Smalltalk
-c := RSCanvas new.
-es := (1 to: 5) collect: [ :v | RSBox new color: Color gray translucent; size: v * 5 ] as: RSGroup.
-RSHorizontalLineLayout on: es.
-align := RSAlignment new.
-align shapes: es.
-align middle.
-c addAll: es.
-c
-```
-"
+	"Center all the shapes along their Y coordinate"
 	self hasShape ifFalse: [ ^ self ].
 	self alignFromMiddleUsing: self centerMostShape
 ]

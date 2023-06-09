@@ -41,19 +41,6 @@ Class {
 }
 
 { #category : #documentation }
-RSLayout class >> addDocumentSection: aBuilder label: label methods: methods [
-
-	methods ifEmpty: [ ^ self ].
-
-	aBuilder newLine.
-	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
-	aBuilder unorderedListDuring: [
-		(methods sorted: #selector ascending) do: [ :each |
-			aBuilder item: [
-				aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
-]
-
-{ #category : #documentation }
 RSLayout class >> addDocumentSectionHierarchy: aBuilder [
 
 	aBuilder newLine.
@@ -76,8 +63,6 @@ RSLayout class >> basicExample [
 { #category : #documentation }
 RSLayout class >> buildMicroDownUsing: aBuilder withComment: aString [
 	super buildMicroDownUsing: aBuilder withComment: aString.
-	self documentSections keysAndValuesDo: [ :label :methods |
-		self addDocumentSection: aBuilder label: label methods: methods ].
 	self addDocumentSectionHierarchy: aBuilder
 ]
 
@@ -92,9 +77,14 @@ RSLayout class >> canvasExample [
 
 { #category : #examples }
 RSLayout class >> canvasExampleIn: canvas [
+	self canvasExampleIn: canvas models: Collection withAllSubclasses
+]
+
+{ #category : #examples }
+RSLayout class >> canvasExampleIn: canvas models: aCollection [
 	| shapes colorPalette |
 	self cartensianLinesIn: canvas.
-	shapes := RSBox models: Collection withAllSubclasses.
+	shapes := RSBox models: aCollection.
 	canvas addAll: shapes.
 	colorPalette := NSScale category20c.
 	shapes do: [ :shape |
@@ -134,13 +124,6 @@ RSLayout class >> cartensianLinesIn: canvas [
 		addShape: lineX;
 		addShape: lineY;
 		addShape: zeroLabel
-]
-
-{ #category : #documentation }
-RSLayout class >> documentSections [
-	^ OrderedDictionary newFromPairs: {
-		'Examples'. self class methods select: [ :each | each selector beginsWith: 'example' ].
-		}
 ]
 
 { #category : #testing }
@@ -206,7 +189,7 @@ RSLayout >> initialize [
 ]
 
 { #category : #testing }
-RSLayout >> isEdgeDrivenLayout [
+RSLayout >> isLineDrivenLayout [
 	^ false
 ]
 

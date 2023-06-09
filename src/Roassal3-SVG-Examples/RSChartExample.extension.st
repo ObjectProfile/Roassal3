@@ -15,8 +15,8 @@ RSChartExample >> example13AreaPlot [
 		c := RSChart new.
 		c extent: 500@100.
 		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
-		c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
-		c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
+		c horizontalTick numberOfTicks: 10; asFloat.
+		c verticalTick numberOfTicks: 3; asFloat.
 		c ylabel: assoc key.
 		c asShape	].
 	RSVerticalLineLayout on: charts.
@@ -28,7 +28,7 @@ RSChartExample >> example13AreaPlot [
 { #category : #'*Roassal3-SVG-Examples' }
 RSChartExample >> example14AreaPlotWithError [
 	<script: 'self new example14AreaPlotWithError open'>
-	| x y polyfit res y_est y_err c |
+	| x y polyfit res y_est y_err c scatter |
 	x := 0 to: 10.
 	y := #(3.9 4.4 10.8 10.3 11.2 13.1 14.1 9.9 13.9 15.1 12.5).
 	polyfit := [ :x1 :y1 :n |
@@ -49,9 +49,10 @@ RSChartExample >> example14AreaPlotWithError [
 	c padding: 10@10.
 	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
 	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
-	c addPlot: (RSScatterPlot new x: x y: y).
-	c addDecoration: (RSHorizontalTick new numberOfTicks: 10; asFloat).
-	c addDecoration: (RSVerticalTick new numberOfTicks: 3; asFloat).
+	c addPlot: (scatter := RSScatterPlot new x: x y: y).
+	scatter color: Color red.
+	c horizontalTick numberOfTicks: 10; asFloat.
+	c verticalTick numberOfTicks: 3; asFloat.
 	^ c
 ]
 
@@ -67,8 +68,8 @@ RSChartExample >> example15AreaBox [
 	c addPlot: (RSAreaPlot new x: x y1: y1 y2: y2).
 	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; format: 's--').
 	c addPlot: (RSLinePlot new x: x y: y2; color: Color orange; format: 'o--').
-	c addDecoration: (RSHorizontalTick new numberOfTicks: 7; asFloat).
-	c addDecoration: (RSVerticalTick new asFloat).
+	c horizontalTick numberOfTicks: 7; asFloat.
+	c verticalTick asFloat.
 
 	^ c
 ]
@@ -158,10 +159,10 @@ RSChartExample >> example17CLPvsUSD [
 	plot markerEnd: (RSEllipse new size: 10).
 	c addPlot: plot.
 
-	c addDecoration: (horizontal := RSHorizontalTick new fromNames: dates; yourself).
+	horizontal := c horizontalTick fromNames: dates.
 	horizontal configuration fontSize: 4.
 	horizontal useDiagonalLabel.
-	c addDecoration: (RSVerticalTick new numberOfTicks: 10; asFloat).
+	c verticalTick numberOfTicks: 10; asFloat.
 	c title: 'CLP vs USD'.
 	^ c
 ]

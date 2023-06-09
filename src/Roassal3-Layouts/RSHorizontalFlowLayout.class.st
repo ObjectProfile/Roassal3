@@ -5,8 +5,25 @@ A RSHorizontalFlowLayout is a FlowLayout horizontaly arranged, right queued at d
 Class {
 	#name : #RSHorizontalFlowLayout,
 	#superclass : #RSAbstractFlowLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
+
+{ #category : #examples }
+RSHorizontalFlowLayout class >> exampleLabel [
+	
+	| string characterShapes c |
+	string := 'KISSItemSameStar'.
+	characterShapes := RSLabel models: string.
+
+	c := RSCanvas new.
+	c addAll: characterShapes.
+	
+	self new maxWidth: characterShapes first height * 4; alignCenter; gapSize: 0; on: characterShapes.
+	
+	c @ RSCanvasController.
+	c showEncompassingRectangles.
+	^ c open
+]
 
 { #category : #alignment }
 RSHorizontalFlowLayout >> alignCenter [

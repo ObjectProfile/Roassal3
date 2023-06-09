@@ -19,7 +19,7 @@ Class {
 		'layoutRadius',
 		'centerPoint'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Circle'
 }
 
 { #category : #testing }
@@ -151,19 +151,8 @@ RSAbstractCircleLayout >> initialize [
 
 { #category : #accessing }
 RSAbstractCircleLayout >> radius: aNumber [
-	"Set the radius in pixels of the layout
-```
-nodes := (1 to: 5).
-
-canvas := RSCanvas new.
-shapes := RSCircle models: nodes.
-shapes size: 30.
-canvas addAll: shapes.
-
-RSCircleLayout new radius: 20; on: shapes.
-canvas @ RSCanvasController.
-canvas
-```
+	"
+	Set the radius in pixels of the layout
 	"
 	^ self initialRadius: aNumber
 ]

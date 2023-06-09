@@ -27,12 +27,10 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	c := RSChart new
 		     addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		     addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
-		     addDecoration: (RSHorizontalTick new
-				      numberOfTicks: 20;
-				      integer);
-		     addDecoration:
-		     (vertical := RSVerticalTick new integer numberOfTicks: numberOfTicks);
 		     yourself.
+	c horizontalTick numberOfTicks: 20;
+				      integer.
+	vertical := c verticalTick integer numberOfTicks: numberOfTicks.
 	c build.
 	self assert: vertical labels size equals: numberOfTicks
 ]
@@ -53,10 +51,9 @@ RSChartTickTest >> testFromNames [
 
 	chart addPlot: (RSLinePlot new x: x y: y).
 
-	chart addDecoration: (horizontal := RSHorizontalTick new fromNames: dates).
-	chart addDecoration: (RSVerticalTick new
-			 numberOfTicks: 10;
-			 asFloat).
+	horizontal := chart horizontalTick fromNames: dates.
+	chart verticalTick numberOfTicks: 10;
+			 asFloat.
 	chart build.
 	self assert: horizontal labels size equals: dates size
 ]
@@ -71,9 +68,7 @@ RSChartTickTest >> testFromNamesWithEmptyData [
 	chart add: (RSHorizontalBarPlot new
 		x: y y: x;
 		yourself).
-	self should: [ chart add: (RSHorizontalTick new
-		fromNames: dates;
-		yourself) ] raise: Error
+	self should: [ chart horizontalTick fromNames: dates ] raise: Error
 ]
 
 { #category : #tests }
@@ -87,9 +82,8 @@ RSChartTickTest >> testFromNamesWithOneData [
 	chart add: (RSHorizontalBarPlot new
 		x: indices y: values;
 		yourself).
-	chart add: (RSHorizontalTick new
-		fromNames: names;
-		yourself).
+	chart horizontalTick fromNames: names.
+	chart removeVerticalTicks.
 	chart build
 ]
 

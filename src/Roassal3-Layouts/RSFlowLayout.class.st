@@ -6,7 +6,7 @@ I work with RSAlignment
 Class {
 	#name : #RSFlowLayout,
 	#superclass : #RSAbstractFlowLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
 
 { #category : #'as yet unclassified' }

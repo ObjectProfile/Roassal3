@@ -9,11 +9,11 @@ My instance variables are:
 "
 Class {
 	#name : #RSAbstractGridLayout,
-	#superclass : #RSAbstractGappedLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
 		'lineItemsCountBlock'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Grid'
 }
 
 { #category : #public }

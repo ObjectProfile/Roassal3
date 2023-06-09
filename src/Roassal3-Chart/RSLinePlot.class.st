@@ -38,8 +38,6 @@ RSLinePlot >> buildChart [
 	chartPlot add: self.
 
 	chartPlot
-		add: RSHorizontalTick new;
-		add: RSVerticalTick new;
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		extent: 250 @ 200;

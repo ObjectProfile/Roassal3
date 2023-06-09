@@ -109,7 +109,9 @@ BaselineOfRoassal3 >> examplePackagesNames [
 BaselineOfRoassal3 >> extraPackagesNames [
 	^ #(
 	'Roassal3-Mondrian'
-	'Roassal3-Experimental')
+	'Roassal3-Experimental'
+	'Roassal3-LayoutStudio'
+	'Roassal3-LayoutStudio-Tests')
 ]
 
 { #category : #baselines }

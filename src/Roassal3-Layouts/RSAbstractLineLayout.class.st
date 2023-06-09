@@ -10,11 +10,11 @@ Usage:
 "
 Class {
 	#name : #RSAbstractLineLayout,
-	#superclass : #RSAbstractGappedLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Line'
 }
 
 { #category : #testing }

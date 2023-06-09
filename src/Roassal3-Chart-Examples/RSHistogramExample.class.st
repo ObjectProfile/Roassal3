@@ -15,8 +15,7 @@ RSHistogramExample >> example01RandomValues [
 	c := RSChart new.
 	p := RSLinePlot new x:(1 to: values size) y: values.
 	c addPlot: p.
-	c addDecoration: (RSHorizontalTick new doNotUseNiceLabel).
-	c addDecoration: (RSVerticalTick new).
+	c horizontalTick doNotUseNiceLabel.
 	^ c
 ]
 
@@ -28,8 +27,6 @@ RSHistogramExample >> example02Histogram [
 	c := RSChart new.
 	plot := RSHistogramPlot new x: values.
 	c addPlot: plot.
-	c addDecoration: RSVerticalTick new.
-	c addDecoration: RSHorizontalTick new.
 	c title: 'My Chart'.
 	^ c
 ]
@@ -46,8 +43,6 @@ RSHistogramExample >> example03Bins [
 		c container: g.
 		plot := RSHistogramPlot new x: values; numberOfBins: numberOfBins.
 		c addPlot: plot.
-		c addDecoration: RSVerticalTick new.
-		c addDecoration: RSHorizontalTick new.
 		c title: numberOfBins.
 		c build.
 		g asShapeFor: numberOfBins.
@@ -75,8 +70,6 @@ RSHistogramExample >> example04BinningStrat [
 		c container: g.
 		plot := RSHistogramPlot new x: values; binningStrategy: strat.
 		c addPlot: plot.
-		c addDecoration: RSVerticalTick new.
-		c addDecoration: RSHorizontalTick new.
 		c title: strat class name.
 		c build.
 		g asShapeFor: strat.
@@ -154,8 +147,7 @@ RSHistogramExample >> example08Strategies [
 		y := x collect: [ :v | strat computeNumberOfBinsFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
 		c addPlot: plot.
-		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
-		c addDecoration: RSHorizontalTick new.
+		c verticalTick doNotUseNiceLabel.
 		c title: strat class name.
 		c build.
 		g asShapeFor: strat.
@@ -175,8 +167,6 @@ RSHistogramExample >> example09BinsCollection [
 	plot := RSHistogramPlot new x: values.
 	plot bins: #(100 150 155 180 200).
 	c addPlot: plot.
-	c addDecoration: RSVerticalTick new.
-	c addDecoration: RSHorizontalTick new.
 	^ c
 ]
 
@@ -194,11 +184,10 @@ RSHistogramExample >> example10Objects [
 	plot := RSHistogramPlot new x: values.
 	plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
 
-	c add: (tick := RSVerticalTick new).
+	tick := c verticalTick.
 	tick configuration tickSize: -300.
 	tick color: Color lightGray.
 	tick shape width: 0.5.
-	c add: RSHorizontalTick new.
 	c add: plot.
 	c build.
 

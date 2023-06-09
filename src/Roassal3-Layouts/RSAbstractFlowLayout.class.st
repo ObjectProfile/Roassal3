@@ -8,12 +8,12 @@ I contain gap distance size between each element, in vertical and horizontal axi
 "
 Class {
 	#name : #RSAbstractFlowLayout,
-	#superclass : #RSAbstractGappedLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
 		'maxWidth',
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
 
 { #category : #public }

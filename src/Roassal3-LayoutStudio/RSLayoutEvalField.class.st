@@ -1,0 +1,16 @@
+"
+this field can use a number or a block evaluator, user can select one from a list of options
+"
+Class {
+	#name : #RSLayoutEvalField,
+	#superclass : #RSLayoutField,
+	#category : #'Roassal3-LayoutStudio-Fields'
+}
+
+{ #category : #accessing }
+RSLayoutEvalField >> transform: aString [
+	| point |
+	point := self class compiler evaluate: aString.
+	point ifNil: [ ^ nil ].
+	^ point
+]

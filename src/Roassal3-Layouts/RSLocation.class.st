@@ -10,88 +10,6 @@
 - `offset`: offset between the positioned shape and the base shape
 - `orientation`: a value that could be -1, 0, 1 indicating the orientation of the location
 - `direction`: a point indicating the direction of the lcoation
-
-*Example*:
-Here is a simple example:
-```Smalltalk
-c := RSCanvas new.
-
-box1 := RSBox new size: 50; color: Color gray translucent.
-box2 := RSBox new size: 30; color: Color gray translucent.
-box1 @ RSDraggable.
-box2 @ RSDraggable.
-c add: box1; add: box2.
-
-box1 translateBy: 150 @ -40.
-
-label := RSLabel new text: 'Move the mouse above me'.
-c add: label.
-RSLocation new 
-	above;
-	stick: label on: box1.
-c
-```
-
-
-```Smalltalk
-c := RSCanvas new.
-
-g := RSGroup new.
-g add: (RSLabel new text: 'Base shape, drag me').
-baseShape := g asShape adjustToChildren.
-baseShape color: #lightBlue.
-baseShape @ RSDraggable.
-c add: baseShape.
-
-redShape := RSBox new extent: 60 @ 30; color: #red.
-c add: redShape.
-
-RSLocation new
-	bottom;
-	outer;
-	right;
-	offset: 20;
-	stick: redShape on: baseShape.
-""Try changing stick:on: by move:on. Replacing bottom by top""
-c
-```
-
-A more complex example:
-
-```Smalltalk
-v := RSCanvas new.
-
-classes := Collection withAllSubclasses.
-boxes := classes collect: [ :cls |
-	RSBox new
-		width: (cls instVarNames size * 5 max: 5);
-		height: (cls numberOfMethods max: 5);
-		model: cls
-] as: RSGroup.
-
-boxes @ RSDraggable.
-v addAll: boxes.
-
-RSEdgeBuilder orthoVertical
-	canvas: v;
-	attachPoint: RSVerticalAttachPoint new;
-	shapes: boxes;
-	connectFrom: #superclass.
-
-boxes do: [ :b |
-	| t |
-	t := RSLabel new height: 2; text: b model name.
-	v add: t.
-	RSLocation new
-		offset: 1;
-		above; center;
-		stick: t on: b.
-].
-
-RSTreeLayout on: boxes.
-v @ RSCanvasController.
-v open
-```
 "
 Class {
 	#name : #RSLocation,
@@ -105,6 +23,52 @@ Class {
 	],
 	#category : #'Roassal3-Layouts-PositionAndResize'
 }
+
+{ #category : #examples }
+RSLocation class >> example1 [
+	| canvas box1 box2 label |
+	canvas := RSCanvas new.
+
+	box1 := RSBox new size: 50; color: Color gray translucent.
+	box2 := RSBox new size: 30; color: Color gray translucent.
+	box1 @ RSDraggable.
+	box2 @ RSDraggable.
+	canvas add: box1; add: box2.
+
+	box1 translateBy: 150 @ -40.
+
+	label := RSLabel new text: 'Move the mouse above me'.
+	canvas add: label.
+	self new 
+		above;
+		stick: label on: box1.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSLocation class >> example2 [
+	| canvas group baseShape redShape |
+	canvas := RSCanvas new.
+
+	group := RSGroup new.
+	group add: (RSLabel new text: 'Base shape, drag me').
+	baseShape := group asShape adjustToChildren.
+	baseShape color: #lightBlue.
+	baseShape @ RSDraggable.
+	canvas add: baseShape.
+
+	redShape := RSBox new extent: 60 @ 30; color: #red.
+	canvas add: redShape.
+
+	self new
+		bottom;
+		outer;
+		right;
+		offset: 20@0;
+		stick: redShape on: baseShape.
+	"Try changing stick:on: by move:on. Replacing bottom by top"
+	^ canvas open
+]
 
 { #category : #public }
 RSLocation class >> move: aShapeOrAGroup1 above: aShapeOrAGroup2 [

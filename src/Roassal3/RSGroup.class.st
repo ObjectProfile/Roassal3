@@ -89,7 +89,7 @@ RSGroup >> canvas [
 { #category : #'public - forwarding' }
 RSGroup >> color: aColor [
 	"Give the same color to all the shapes"
-	self do: [ :s | s color: aColor ]
+	self do: [ :s | s color: (aColor rsValue: s model) ]
 ]
 
 { #category : #accessing }
@@ -237,7 +237,7 @@ c addAll: shapes.
 RSGridLayout on: shapes.
 c @ RSCanvasController
 ```"
-	self do: [ :s | s size: aNumber ]
+	self do: [ :s | s size: (aNumber rsValue: s model) ]
 ]
 
 { #category : #transforming }

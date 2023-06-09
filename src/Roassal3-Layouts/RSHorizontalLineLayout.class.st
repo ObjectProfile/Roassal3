@@ -7,7 +7,7 @@ You can use label alignment to align labels based on baseline of each font.
 Class {
 	#name : #RSHorizontalLineLayout,
 	#superclass : #RSAbstractLineLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Line'
 }
 
 { #category : #examples }

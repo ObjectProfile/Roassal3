@@ -44,6 +44,20 @@ Class {
 	#category : #'Roassal3-Core'
 }
 
+{ #category : #'instance creation' }
+RSCanvas class >> newCenterMiddleOrigin [
+	^ self new
+		originCenterMiddle;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RSCanvas class >> newTopLeftOrigin [
+	^ self new
+		originTopLeft;
+		yourself
+]
+
 { #category : #antialiasing }
 RSCanvas >> aaBest [
 	self setAA: CAIRO_ANTIALIAS_BEST
