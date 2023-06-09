@@ -36,7 +36,7 @@ RSKernelDensityTest >> testDensityCurveSample [
 
 { #category : #tests }
 RSKernelDensityTest >> testKDEDefaultBandwidth [
-	| kernelDensity anXValue |
+	| kernelDensity |
 	kernelDensity := RSKernelDensity gaussian.
 	self assert: kernelDensity bandwidth closeTo: 1.00.
 ]

@@ -8,7 +8,6 @@ Class {
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'line',
-		'format',
 		'ylabel',
 		'xlabel'
 	],

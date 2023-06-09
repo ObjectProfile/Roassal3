@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal3-Chart-Statistics'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelFunction class >> gaussian [
 	^ RSKernelGaussianFunction new.
 ]

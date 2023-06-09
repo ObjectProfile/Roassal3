@@ -34,7 +34,6 @@ Class {
 	#instVars : [
 		'elements',
 		'extents',
-		'generator',
 		'colorPalette',
 		'spineDecoration',
 		'styler'
