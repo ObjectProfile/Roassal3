@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-RSStatisticalMeasuresTest >> testBasicNewKernelDensity [
+RSStatisticalMeasuresTest >> testBasicStatisticalMeasures [
 	| statisticalMeasures data sortedData |
 	data := #(90 23 22 20 50 80 82 87 15).
 	sortedData := #(15 20 22 23 50 80 82 87 90).
