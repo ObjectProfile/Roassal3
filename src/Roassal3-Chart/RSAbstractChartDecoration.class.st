@@ -4,7 +4,6 @@ TODO
 Class {
 	#name : #RSAbstractChartDecoration,
 	#superclass : #RSAbstractChartPlot,
-	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#category : #'Roassal3-Chart-Decoration'
 }
