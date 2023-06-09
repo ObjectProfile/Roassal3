@@ -33,13 +33,11 @@ RSLinePlot class >> y: aCollection [
 { #category : #building }
 RSLinePlot >> buildChart [
 
-	| chartPlot marker markerChar |
+	| chartPlot |
 	chartPlot := RSChart new.
 	chartPlot add: self.
 
 	chartPlot
-		add: RSHorizontalTick new;
-		add: RSVerticalTick new;
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		extent: 250 @ 200;
