@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal3-Interaction-Extra'
 }
 
-{ #category : #update }
+{ #category : #initialization }
 RSTranscriptCanvasMonitor >> initialize [
 
 	canvasIdString := 'RSCanvas#{1}' format: { canvas identityHash }.
