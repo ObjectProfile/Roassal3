@@ -99,7 +99,10 @@ BaselineOfRoassal3 >> corePackagesNames [
 ]
 
 { #category : #dependencies }
-BaselineOfRoassal3 >> dependencies: spec [
+BaselineOfRoassal3 >> dependencies: spec [.
+	spec baseline: 'Bloc' with: [
+		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
+
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
@@ -145,6 +148,8 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	self extraPackagesNames do: [ :name | spec package: name ].
 	
 	spec		
+		package: #'Roassal3-Bloc' with: [ spec requires: #('Bloc') ];
+
 		package: #'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
 		package: #'Roassal3-SVG-Tests';
 		package: #'Roassal3-SVG-Examples';
@@ -179,6 +184,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Mini' with: #('Tests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
+		group: 'BlocFull' with: #('Full' 'Roassal3-Bloc');
 		group: 'default' with: #('Mini')
 ]
 
