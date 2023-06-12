@@ -14,9 +14,9 @@ RSHost >> canvas [
 ]
 
 { #category : #accessing }
-RSHost >> canvas: anObject [
+RSHost >> canvas: aRSCanvas [
 
-	canvas := anObject
+	canvas := aRSCanvas
 ]
 
 { #category : #accessing }
