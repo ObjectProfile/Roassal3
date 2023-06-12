@@ -32,7 +32,7 @@ RSAbstractGraphLayout class >> on: elements edges: edges [
 	"Do the layout of the elements tacking into account the provided edges"
 
 	^ self new
-		userDefinedEdges: edges;
+		userDefinedLines: edges;
 		applyOn: elements
 ]
 
@@ -193,10 +193,10 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 		ifFalse: [parentsNesting max + 1]
 ]
 
-{ #category : #actions }
+{ #category : #hook }
 RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
-	self userDefinedEdges ifNil: [ self userDefinedEdges: edgs ].
+	self userDefinedLines ifNil: [ self userDefinedLines: edgs ].
 
 	^ self applyOn: el
 ]

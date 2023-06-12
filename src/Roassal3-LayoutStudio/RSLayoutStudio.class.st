@@ -121,6 +121,16 @@ RSLayoutStudio >> editLayout: aRSLayoutClass [
 ]
 
 { #category : #initialization }
+RSLayoutStudio >> generateCodeAndOpenIt [
+	^ StPlayground openContents: self generateStringCode
+]
+
+{ #category : #printing }
+RSLayoutStudio >> generateStringCode [
+	^ layoutDefinition generateStringCode
+]
+
+{ #category : #initialization }
 RSLayoutStudio >> initializePresenters [
 	menu := self mainMenu.
 	menu addKeybindingsTo: self.
@@ -163,7 +173,12 @@ RSLayoutStudio >> mainMenu [
 				item
 					icon: (self iconNamed: #smallSystemBrowser);
 					action: [ currentLayout class browse ];
-					name: 'Browse' ] ];
+					name: 'Browse' ].
+			group addItem: [ :item |
+				item
+					icon: (self iconNamed: #glamorousSave);
+					action: [ self generateCodeAndOpenIt ];
+					name: 'Generate' ] ];
 		yourself
 ]
 

@@ -22,16 +22,6 @@ Class {
 	#category : #'Roassal3-Layouts-Tree'
 }
 
-{ #category : #examples }
-RSAbstractRegularTreeLayout class >> example1 [
-	| b |
-	b := RSMondrian new.
-	b nodes: (1 to: 100).
-	b lines connectFrom: [ :v | v // 2 ].
-	b layout tree verticallyReverse.
-	^ b open
-]
-
 { #category : #testing }
 RSAbstractRegularTreeLayout class >> isAbstract [
 	^ self = RSAbstractRegularTreeLayout

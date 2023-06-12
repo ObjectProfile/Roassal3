@@ -1,12 +1,14 @@
 "
 The SugiyamaLayout class implements the Sugiyama algorithm, a popular graph layout algorithm used to create hierarchical layouts of directed acyclic graphs (DAGs). 
+
 This algorithm organizes nodes into multiple layers and minimizes the number of edge crossings, resulting in a visually appealing and easy-to-understand representation of the input graph.
+
+Based on Coffman-Graham-Layering. Di Battista Book, page 275, chapter, 9.2.1
 "
 Class {
 	#name : #RSSugiyamaLayout,
 	#superclass : #RSAbstractGraphLayout,
 	#instVars : [
-		'sortBlock',
 		'labels',
 		'layers',
 		'layerNrs',
@@ -20,9 +22,24 @@ Class {
 }
 
 { #category : #utilities }
+RSSugiyamaLayout class >> sort: assocA to: assocB [
+	| a b offset |
+	offset := 0.
+	a := assocA value.
+	b := assocB value.
+	[(a size > offset)
+		and: [(b size > offset) and: [(a at: a size - offset) = (b at: b size - offset)]]]
+		whileTrue: [offset := offset + 1].	"Corner cases"
+	(a size = b size and: [b size = offset]) ifTrue: [ ^ true ].	"[3, 3], [3, 3]"
+	(a size > offset and: [b size = offset]) ifTrue: [ ^ true ].	"[3, 3, 6], [3, 3]"
+	(b size > offset and: [a size = offset]) ifTrue: [ ^ false ].	"[3, 3], [3, 3, 6]"	"Normal case"
+	^ (a at: a size - offset) >= (b at: b size - offset)
+]
+
+{ #category : #utilities }
 RSSugiyamaLayout class >> sortBlock [
 
-	^ RSSortBlock new
+	^ [ :assocA :assocB | self sort: assocA to: assocB ]
 ]
 
 { #category : #private }
@@ -155,13 +172,13 @@ RSSugiyamaLayout >> layoutAt: aPoint [
 		             into: [ :max :e |
 			             max max:
 				             (e sumNumbers: #width)
-				             + (e size - 1 * self horizontalGap) ].
+				             + ((e size - 1) * self horizontalGap) ].
 	verticalPosition := self horizontalGap. "For visual reasons NOT: self class verticalGap"
 	layerKeys := layers keys asSortedCollection.
 	layerKeys do: [ :aKey |
 		layer := layers at: aKey.
 		layerWidth := (layer sum: #width)
-		              + (layer size - 1 * self horizontalGap).
+		              + ((layer size - 1) * self horizontalGap).
 		layerHeight := (layer detectMax: #height) height.
 		horizontalPosition := treeWidth / 2.0 + aPoint x
 		                      - (layerWidth / 2.0).
@@ -189,15 +206,15 @@ RSSugiyamaLayout >> parentsWithoutCylesFor: aRSComposite [
 ]
 
 { #category : #'real sugiyama' }
-RSSugiyamaLayout >> recursiveRemoveCyclesFrom: aRSComposite [
+RSSugiyamaLayout >> recursiveRemoveCyclesFrom: aNode [
 
-	(visited includes: aRSComposite) ifTrue: [ ^ self ].
-	visited add: aRSComposite.
-	stack push: aRSComposite.
+	(visited includes: aNode) ifTrue: [ ^ self ].
+	visited add: aNode.
+	stack push: aNode.
 
-	(self childrenFor: aRSComposite) do: [ :e |
+	(self childrenFor: aNode) do: [ :e |
 		(stack includes: e) ifTrue: [
-			self removeCycleFrom: aRSComposite to: e
+			self removeCycleFrom: aNode to: e
 		] ifFalse: [
 			self recursiveRemoveCyclesFrom: e.
 		]
@@ -247,5 +264,5 @@ RSSugiyamaLayout >> removeCycles: aCollection [
 
 { #category : #private }
 RSSugiyamaLayout >> sortBlock [
-	^ sortBlock ifNil: [ sortBlock := self class sortBlock ]
+	^ self class sortBlock
 ]
