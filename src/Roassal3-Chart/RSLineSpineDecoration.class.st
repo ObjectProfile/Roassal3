@@ -4,6 +4,8 @@ Used to draw line axis
 Class {
 	#name : #RSLineSpineDecoration,
 	#superclass : #RSChartSpineDecoration,
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'axisX',
 		'axisY'

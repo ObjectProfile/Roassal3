@@ -94,6 +94,7 @@ Class {
 		'fromShapes',
 		'toShapes',
 		'canvas',
+		'formatString',
 		'canvasHasBeenManuallySet'
 	],
 	#category : #'Roassal3-Shapes-Graph'

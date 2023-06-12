@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal3-Interaction-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RSSelectionInCanvasInteractionTest >> setUp [
 
 	super setUp.

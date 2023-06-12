@@ -5,6 +5,20 @@ Class {
 }
 
 { #category : #tests }
+RSChartTickTest >> testDefaultFont [
+	| chart plot canvas ticks labels |
+	chart := RSChart new.
+	plot := RSLinePlot y: #(1 2 3).
+	chart add: RSVerticalTick new.
+	chart add: plot.
+	chart build.
+	canvas := chart container.
+	ticks := chart verticalTick.
+	labels := ticks labels.
+	self assert: (labels allSatisfy: [ :label | label font = label class defaultFont ]).
+]
+
+{ #category : #tests }
 RSChartTickTest >> testDoNotUseNiceLabel [
 
 	| x c numberOfTicks vertical |
@@ -71,4 +85,19 @@ RSChartTickTest >> testFromNamesWithOneData [
 	chart horizontalTick fromNames: names.
 	chart removeVerticalTicks.
 	chart build
+]
+
+{ #category : #tests }
+RSChartTickTest >> testSetFontSize [
+	| chart plot canvas ticks labels |
+	chart := RSChart new.
+	plot := RSLinePlot y: #(1 2 3).
+	chart add: RSVerticalTick new.
+	chart add: plot.
+	canvas := chart container.
+	ticks := chart verticalTick.
+	ticks configuration fontSize: 12.
+	chart build.
+	labels := ticks labels.
+	self assert: (labels allSatisfy: [ :label | label fontSize = 12 ]).
 ]

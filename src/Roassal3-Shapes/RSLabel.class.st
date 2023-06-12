@@ -54,6 +54,11 @@ RSLabel class >> defaultFont [
 ]
 
 { #category : #public }
+RSLabel class >> defaultFontSize [
+	^  self defaultFont pointSize
+]
+
+{ #category : #public }
 RSLabel class >> familyFontName [
 	"
 	self familyFontName
