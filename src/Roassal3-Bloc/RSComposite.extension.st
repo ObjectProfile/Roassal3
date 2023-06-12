@@ -11,11 +11,10 @@ RSComposite >> asBlElement [
 	self children do: [:each |
 		| newChild |
 		newChild := each asBlElement.
-		newChild relocate: newChild position + (self baseRectangle extent / 2).
+		newChild position: newChild position + (self baseRectangle extent / 2).
 		container addChild: newChild ].
 
 	^ container
-		
 ]
 
 { #category : #'*Roassal3-Bloc' }
