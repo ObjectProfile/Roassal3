@@ -35,7 +35,9 @@ Class {
 		'animations',
 		'extent',
 		'color',
-		'morph'
+		'clearBackground',
+		'showRectangles',
+		'host'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
@@ -250,10 +252,9 @@ c
 { #category : #private }
 RSCanvas >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
-	morph := RSAthensMorph new.
-	morph renderer: RSAthensRenderer new.
-	morph canvas: self.
-	^ morph
+	<deprecated: 'This only works when the host is a RSMorphicHost'>
+	
+	^ host	 createMorph
 ]
 
 { #category : #accessing }
@@ -373,19 +374,24 @@ RSCanvas >> initialize [
 	extent := 500@500.
 	camera := RSCamera new
 		canvas: self;
-		yourself
+		yourself.
+	host := RSMorphicHost new canvas: self; yourself.
 ]
 
 { #category : #accessing }
 RSCanvas >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
-	^ morph
+	<deprecated: 'This only works when the host is a RSMorphicHost'>
+	
+	^ host morph
 ]
 
 { #category : #accessing }
 RSCanvas >> morph: aMorph [
 	"Set the RSAthensMorph. The canvas will directly render in the morph"
-	morph := aMorph
+	<deprecated: 'This only works when the host is a RSMorphicHost'>
+
+	host morph: aMorph
 ]
 
 { #category : #actions }
@@ -423,7 +429,7 @@ RSCanvas >> numberOfShapes [
 
 { #category : #opening }
 RSCanvas >> open [
-	^ self openWithTitle: 'Roassal'
+	^ self openWithTitle: host defaultWindowTitle
 ]
 
 { #category : #opening }
@@ -449,12 +455,8 @@ RSCanvas >> openOnceWithTitle: aTitle [
 { #category : #opening }
 RSCanvas >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
-	| window |
-	self createMorph.
-	window := morph openInWindowLabeled: aTitleAsString.
-	window extent: 500 @ 500.
-	morph privateOwner: window.
-	^ window
+
+	^ host openWithTitle: aTitleAsString
 ]
 
 { #category : #accessing }
@@ -696,12 +698,21 @@ RSCanvas >> showEncompassingRectangles [
 { #category : #updating }
 RSCanvas >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
-	morph changed
+
+	host signalUpdate
 ]
 
 { #category : #'accessing - computed' }
 RSCanvas >> transform: aPoint [
 	^ aPoint
+]
+
+{ #category : #accessing }
+RSCanvas >> useMorphicHost [
+
+	host := RSMorphicHost new
+		        canvas: self;
+		        yourself
 ]
 
 { #category : #camera }
