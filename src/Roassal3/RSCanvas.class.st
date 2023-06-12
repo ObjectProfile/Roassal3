@@ -391,7 +391,7 @@ RSCanvas >> initialize [
 	camera := RSCamera new
 		canvas: self;
 		yourself.
-	host := RSMorphicHost new canvas: self; yourself.
+	self useMorphicHost
 ]
 
 { #category : #accessing }
