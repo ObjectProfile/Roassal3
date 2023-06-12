@@ -14,11 +14,43 @@ RSStatisticalMeasuresTest >> testBasicStatisticalMeasures [
 ]
 
 { #category : #tests }
+RSStatisticalMeasuresTest >> testGetInterQuartileRange [
+	| statisticalMeasures data |
+	data := #(6 7 15 36 39 40 41 42 43 47 49).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures iqr closeTo: (43 - 15).
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetLowerLimit [
+	| statisticalMeasures data |
+	data := #(6 7 15 36 39 40 41 42 43 47 49).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures lowerLimit closeTo: -27.
+]
+
+{ #category : #tests }
 RSStatisticalMeasuresTest >> testGetMeanOfDataset [
 	| statisticalMeasures data |
 	data := #(90 23 22 20 50 80 82 87 15).
 	statisticalMeasures := RSStatisticalMeasures data: data.
 	self assert: (statisticalMeasures mean) closeTo: 52.1111.
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetMeanOfDatasetSizeOne [
+	| statisticalMeasures data |
+	data := #(90).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures mean equals: 90.
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetMedianOfDatasetSizeOne [
+	| statisticalMeasures data |
+	data := #(90).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures median equals: 90.
 ]
 
 { #category : #tests }
@@ -35,4 +67,28 @@ RSStatisticalMeasuresTest >> testGetMedianOfOddDatasetSize [
 	data := #(90 23 22 20 50 80 82 87 15).
 	statisticalMeasures := RSStatisticalMeasures data: data.
 	self assert: statisticalMeasures median equals: 50.
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetQuartilesOfEvenDatasetSize [
+	| statisticalMeasures data |
+	data := #(7 15 36 39 40 41).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures quartiles closeTo: #(15 37.5 40).
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetQuartilesOfOddDatasetSize [
+	| statisticalMeasures data |
+	data := #(1 2 3 4 5 6 7 8 9 10 11 12 13).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures quartiles closeTo: #(3.5 7 10.5).
+]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testGetQuartilesOfOddDatasetSize2 [
+	| statisticalMeasures data |
+	data := #(6 7 15 36 39 40 41 42 43 47 49).
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures quartiles closeTo: #(15 40 43).
 ]
