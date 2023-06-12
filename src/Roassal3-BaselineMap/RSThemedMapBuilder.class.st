@@ -62,7 +62,7 @@ RSThemedMapBuilder >> highlightBoxes: boxes [
 	boxes do: [ :box | | shadow |
 		shadow := self shadowFor: box.
 		shadow color: color.
-		box when: RSPositionChangedEvent do: [ :evt | shadow position: evt newPosition ].
+		box when: RSPositionChangedEvent do: [ :evt | shadow position: evt newPosition ] for: self.
 		box propertyAt: #shadow put: shadow.
 		canvas addShape: shadow.
 		shadow pushBack ].

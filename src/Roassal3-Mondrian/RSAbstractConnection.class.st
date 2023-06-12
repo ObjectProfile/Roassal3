@@ -92,8 +92,11 @@ RSAbstractConnection >> output: oneArgBlock [
 
 { #category : #initialization }
 RSAbstractConnection >> prepareInputCanvas [
-	inputCanvas nodes when: RSMouseClick do: [ :event |
-		self clickOnShape: event shape ].
+
+	inputCanvas nodes
+		when: RSMouseClick
+		do: [ :event | self clickOnShape: event shape ]
+		for: self.
 
 	inputCanvas nodes @ RSSelectionPresentationInteraction
 ]

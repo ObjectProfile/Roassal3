@@ -1,15 +1,18 @@
 "
-<keyClass>
-All shapes in Roassal are contained in a `RSCanvas`. The canvas has an infinite 2D dimension. The portion of the canvas that is visible within the window is given by a camera. `RSCamera` describes a camera in Roassal. A camera has a scale and a position.
+All shapes in Roassal are contained in a `RSCanvas`. The canvas has an infinite 2D dimension. The portion of the canvas that is visible within the window is given by a camera. `RSCamera` describes a camera in Roassal. A camera has a scale and a position. The camera contains a matrix tranformation `AthensAffineTransform`
 
-*Responsibility*: identify the portion and the zoom level of a canvas that must be visible. Whenever the canvas is scrolled with the mouse or the key, then the camera is responsible for this.
+### Responsibility: 
+Identify the portion and the zoom level of a canvas that must be visible. Whenever the canvas is scrolled with the mouse or the key, then the camera is responsible for this.
 
-*Collaborators*: A `RSCanvas` has a `RSCamera`. 
+### Collaborators:
+A `RSCanvas` has a `RSCamera`. 
 
-*Variables*:
-`position` is a point representing coordinates of the canvas on which the viewing window frame will be centered. Position can be changes with the method `#translateBy:` and `#translateTo:`. Both methods accept canvas based coordinates
+### Variables:
+- `position` is a point representing coordinates of the canvas on which the viewing window frame will be centered. Position can be changes with the method `#translateBy:` and `#translateTo:`. Both methods accept morph based coordinates.
 
-`scale` defines a magnitude of zooming applied to the canvas and its elements.
+- `scale` defines a magnitude of zooming applied to the canvas and its elements.
+
+- `origin` defines system coordinate `RSCoordinates`. By default is `RSCenterMiddleCoordinates` but you can use `RSCamera >> #originMode:` to change it.
 
 *Example*:
 ```Smalltalk
@@ -34,10 +37,10 @@ Class {
 	#classTraits : 'RSTPositionable classTrait',
 	#instVars : [
 		'scale',
-		'position',
 		'canvas',
 		'extent',
-		'originMode'
+		'originMode',
+		'matrix'
 	],
 	#category : #'Roassal3-Camera'
 }
@@ -50,6 +53,16 @@ RSCamera class >> maxExtentFor: rectangle [
 { #category : #utilities }
 RSCamera class >> minimumExtent [
 	^ 0.0001 asPoint
+]
+
+{ #category : #'accessing coordinates' }
+RSCamera class >> originCenterMiddle [
+	^ RSCoordinates originCenterMiddle
+]
+
+{ #category : #'accessing coordinates' }
+RSCamera class >> originTopLeft [
+	^ RSCoordinates originTopLeft
 ]
 
 { #category : #visiting }
@@ -72,6 +85,14 @@ RSCamera >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
+{ #category : #zoom }
+RSCamera >> computeScaleFor: anExtent rectangle: rect [
+	| sc |
+	sc := anExtent / (self class maxExtentFor: rect).
+	sc := sc x min: sc y.
+	^ sc
+]
+
 { #category : #convertion }
 RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
@@ -85,30 +106,30 @@ RSCamera >> extent [
 
 { #category : #convertion }
 RSCamera >> fromPixelToSpace: aPoint [
-
-	^ AthensAffineTransform new
-		translateBy: self position;
-		scaleBy: 1 / self scale;
-		translateBy: (self canvas extent / 2) negated;
-		transform: aPoint
+	^ originMode fromPixelToSpace: aPoint camera: self
 ]
 
 { #category : #convertion }
 RSCamera >> fromSpaceToPixel: aPoint [
-
-	^ AthensAffineTransform new
-		translateBy: self canvas extent / 2;
-		scaleBy: self scale;
-		translateBy: self position negated;
-		transform: aPoint
+	^ originMode fromSpaceToPixel: aPoint camera: self
 ]
 
 { #category : #initialization }
 RSCamera >> initialize [
 	super initialize.
-	position := 0@0.
+	matrix := AthensAffineTransform new.
 	scale := 1.000000.
-	originMode := #center
+	originMode := RSCoordinates originCenterMiddle.
+]
+
+{ #category : #accessing }
+RSCamera >> matrix [
+	^ matrix
+]
+
+{ #category : #accessing }
+RSCamera >> matrix: anAthensAffineTransform [
+	matrix := anAthensAffineTransform
 ]
 
 { #category : #accessing }
@@ -137,19 +158,38 @@ c camera position
 
 returns the value `25 @ 15`
 "
-	^ position
+	^ matrix translation
 ]
 
 { #category : #accessing }
 RSCamera >> position: aPoint [
 	"Set the camera position"
- 	position := aPoint
+	matrix translation: aPoint
+]
+
+{ #category : #accessing }
+RSCamera >> positionFromSpace: aPoint [
+	| morphPosition zeroPosition |
+	morphPosition := self fromSpaceToPixel: aPoint.
+	zeroPosition := self fromSpaceToPixel: 0@0.
+	^ (morphPosition - zeroPosition) negated + (originMode gapToCenter: self)
 ]
 
 { #category : #private }
 RSCamera >> privExtent: aRect [
 
 	extent := aRect
+]
+
+{ #category : #private }
+RSCamera >> privateScale: aFloatNumber [
+	| position |
+	scale := aFloatNumber.
+	position := matrix translation.
+	matrix
+		loadIdentity;
+		scaleBy: scale;
+		translation: position
 ]
 
 { #category : #accessing }
@@ -163,7 +203,8 @@ RSCamera >> scale: aFloatNumber [
 	| oldScale |
 	scale = aFloatNumber ifTrue: [ ^ self ].
 	oldScale := scale.
-	scale := aFloatNumber.
+	"this method will call loadIdentity in camera matrix"
+	self privateScale: aFloatNumber.
 	self canvas announce: [ RSScaleChangedEvent new
 		canvas: self canvas;
 		oldScale: oldScale;
@@ -172,17 +213,12 @@ RSCamera >> scale: aFloatNumber [
 
 { #category : #public }
 RSCamera >> setMatrix: anAthensAffineTransform [
-	anAthensAffineTransform
-		translateBy: (self canvas extent / 2) asFloatPoint;
-		scaleBy: self scale asFloat;
-		translateBy: self position negated asFloatPoint
+	anAthensAffineTransform multiplyBy: (originMode matrixFor: self)
 ]
 
 { #category : #accessing }
 RSCamera >> visibleRectangle [
-	^ Rectangle
-		floatCenter: self position
-		extent: self canvas extent / self scale
+	^ originMode visibleRectangleFor: self
 ]
 
 { #category : #zoom }
@@ -207,9 +243,9 @@ RSCamera >> zoomToFit: anExtent extent: otherExtent [
 { #category : #zoom }
 RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
-	sc := anExtent / (self class maxExtentFor: rect).
-	sc := sc x min: sc y.
-	self
-		translateTo: rect floatCenter;
-		scale: sc
+	sc := (self computeScaleFor: anExtent rectangle: rect).
+	"we can improve this method"
+
+	self scale: sc.
+	self translateTo: (self positionFromSpace: rect floatCenter)
 ]

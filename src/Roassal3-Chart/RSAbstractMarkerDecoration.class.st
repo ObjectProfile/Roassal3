@@ -22,6 +22,8 @@ c
 Class {
 	#name : #RSAbstractMarkerDecoration,
 	#superclass : #RSAbstractChartDecoration,
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'markerColor',
 		'getRelevantValueBlock',
@@ -33,6 +35,13 @@ Class {
 { #category : #'public - configuration' }
 RSAbstractMarkerDecoration >> average [
 	self subclassResponsibility
+]
+
+{ #category : #'public - shape' }
+RSAbstractMarkerDecoration >> color: aColor [
+
+	super color: aColor.
+	markerColor := aColor
 ]
 
 { #category : #rendering }
@@ -63,16 +72,18 @@ RSAbstractMarkerDecoration >> defaultShape [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
+
 	^ getRelevantValueBlock rsValue: p
 ]
 
 { #category : #initialization }
 RSAbstractMarkerDecoration >> initialize [
+
 	super initialize.
 
 	"Per default, mark the max value"
 	self max.
-	markerColor := self defaultMarkerColor
+	markerColor := self color ifNil: [ self defaultMarkerColor ] ifNotNil: [ self color ]
 ]
 
 { #category : #accessing }

@@ -41,7 +41,8 @@ RSSunburstFadeInteraction >> onShape: aShape [
 		when: RSMouseEnter do: [ :evt |
 			still := true.
 			self doHighlight: evt shape.
-			evt signalUpdate ];
+			evt signalUpdate ]
+		for: self;
 		when: RSMouseLeave do: [ :evt |
 			still := false.
 			evt canvas newAnimation
@@ -49,8 +50,10 @@ RSSunburstFadeInteraction >> onShape: aShape [
 				onStepDo: [ :t | evt signalUpdate ];
 				when: RSAnimationLoopEvent do: [ :e |
 					still ifFalse: [ self doUnhighlight: evt shape. ].
-					].
+					]
+				for: self.
 			evt signalUpdate ]
+		for: self
 ]
 
 { #category : #initialization }

@@ -100,11 +100,11 @@ RSTickConfiguration >> fontSize: aNumber [
 RSTickConfiguration >> initialize [
 	super initialize.
 	self numberOfTicks: 5;
-		fontSize: 5;
+		fontSize: RSLabel defaultFontSize;
 		labelRotation: 0;
 		shouldHaveLabels: true;
 		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value ];
+		labelConversion: [ :value | value asFloat round: 3 ];
 		tickSize: 3
 ]
 
@@ -166,4 +166,11 @@ RSTickConfiguration >> tickSize [
 { #category : #accessing }
 RSTickConfiguration >> tickSize: aNumber [
 	tickSize := aNumber
+]
+
+{ #category : #accessing }
+RSTickConfiguration >> updateTickConfiguration: anEvent [
+	| canvas |
+	canvas := anEvent canvas.
+	self fontSize: (canvas extent) / (canvas defaultExtent).
 ]

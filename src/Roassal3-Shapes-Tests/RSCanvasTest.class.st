@@ -72,6 +72,19 @@ RSCanvasTest >> testAsShapeModel [
 	self assert: compositeShape children size equals: 20
 ]
 
+{ #category : #'tests - coordinates' }
+RSCanvasTest >> testBasicCoordinates [
+	canvas := RSCanvas new.
+	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
+	
+	canvas originTopLeft.
+	self assert: canvas originMode class equals: RSCamera originTopLeft class.
+	self deny: canvas originMode class equals: RSCamera originCenterMiddle class.
+	
+	canvas originCenterMiddle.
+	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
+]
+
 { #category : #tests }
 RSCanvasTest >> testDeepNodes [
 
@@ -158,7 +171,7 @@ RSCanvasTest >> testEncompassingRectangle [
 RSCanvasTest >> testEvent [
 	| box |
 	box := RSBox new.
-	box when: RSMouseClick do: [ :evt |  ]
+	box when: RSMouseClick do: [ :evt |  ] for: self
 ]
 
 { #category : #tests }
@@ -167,7 +180,7 @@ RSCanvasTest >> testEventKnowsItsCanvas [
 	| evt t |
 	evt := RSEvent new.
 	t := false.
-	canvas when: RSEvent do: [ :ex | t := true ].
+	canvas when: RSEvent do: [ :ex | t := true ] for: self.
 	canvas announce: evt.
 	self assert: evt canvas equals: canvas.
 	self assert: t
@@ -189,7 +202,7 @@ RSCanvasTest >> testEventKnowsItsCanvas02 [
 RSCanvasTest >> testLowLevelEvent [
 	| box |
 	box := RSBox new size: 30.
-	box when: RSMouseDragging do: [ :evt | box ].
+	box when: RSMouseDragging do: [ :evt | box ] for: self.
 	canvas addShape: box.
 	self assert: canvas extent equals: 500 asPoint.
 	self
@@ -473,7 +486,7 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 	self assert: (canvas shapesFromModels: #(41 1)) asArray equals: { compo . compo2 . compo3 }.
 	self assert: (canvas shapesFromModels: #(42)) isEmpty.
 
-	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }.
+	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }
 ]
 
 { #category : #'tests - shapes ordering' }
@@ -487,6 +500,6 @@ RSCanvasTest >> testVisibleArea [
 	canvas add: box.
 	canvas extent: bigSize asPoint.
 	canvas visibleArea: (0 asPoint corner: smallSize asPoint).
-	self assert: canvas position equals: box position.
+	self assert: canvas position equals: bigSize asPoint / -2.
 	self assert: canvas camera scale equals: bigSize / smallSize
 ]

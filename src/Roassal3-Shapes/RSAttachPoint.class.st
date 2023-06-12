@@ -119,7 +119,7 @@ RSAttachPoint >> positionFor: shape in: aLine point: pos [
 	"TODO we can cache this info"
 	commonParents := self commonParents: shape in: aLine.
 	commonParents ifNil: [ ^ pos ].
-	^ (self matrixFor: commonParents) transform: pos.
+	^ (self matrixFor: commonParents) transform: pos
 ]
 
 { #category : #'public - hooks' }

@@ -119,6 +119,25 @@ RSAbstractLine >> color: aColor [
 	self strokePaint: (Color colorFrom: aColor)
 ]
 
+{ #category : #'accessing-computed' }
+RSAbstractLine >> colorFromString: aString [
+	| colorList |
+	colorList := {
+		#r. Color red. 
+		#g. Color green.
+		#b. Color blue.
+		#c. Color cyan.
+		#m. Color magenta.
+		#y. Color yellow.
+		#k. Color black.
+		#w. Color white.
+	}.
+	colorList pairsDo: [ 
+		:colorSymbol :colorValue |
+		(aString includesSubstring: colorSymbol) ifTrue: [ ^colorValue  ]].
+	^ self color. "Default case, when it isn't found the color in the list"
+]
+
 { #category : #accessing }
 RSAbstractLine >> computeEncompassingRectangle [
 	| cp |
@@ -153,8 +172,8 @@ RSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
-RSAbstractLine >> fmt: aString [
+{ #category : #accessing }
+RSAbstractLine >> format: aString [
 	"Format for lines a shortcut to define a line styles, or markers
 
 	For markers use
@@ -186,12 +205,14 @@ canvas @ RSCanvasController.
 canvas open
 ````
 	 "
-	(RSShapeFactory shapeFromString: aString)
-		ifNotNil: [ :shape |
-			self shape marker: ((shape size: self border width * 4) color: self shape color; yourself).
-			 ].
-	(RSStrokeStyle fromString: aString)
-		ifNotNil: [ :style | self shape border style: style ]
+	self color: (self colorFromString: aString).
+	(RSShapeFactory shapeFromString: aString) ifNotNil: [ :markerShape |
+		markerShape
+			size: self border width * self markerSizeScale;
+			color: self color.
+		self marker: markerShape ].
+	(RSStrokeStyle fromString: aString) ifNotNil: [ :style |
+		self border style: style ]
 ]
 
 { #category : #accessing }
@@ -272,6 +293,11 @@ RSAbstractLine >> joinMiter [
 { #category : #'style - join' }
 RSAbstractLine >> joinRound [
 	self border joinRound
+]
+
+{ #category : #accessing }
+RSAbstractLine >> markerSizeScale [
+	^ 4
 ]
 
 { #category : #'event handling' }

@@ -16,7 +16,7 @@ RSHorizontalTopTick >> createTickLineFor: aNumber [
 	| value y |
 	value := xScale scale: aNumber.
 	y := chart extent y negated.
-	^ self shape copy
+	^ self newLineTick
 		startPoint: value @ y;
 		endPoint: value @ (y - self configuration tickSize);
 		yourself
@@ -50,6 +50,14 @@ RSHorizontalTopTick >> max [
 { #category : #accessing }
 RSHorizontalTopTick >> min [
 	^ values min
+]
+
+{ #category : #rendering }
+RSHorizontalTopTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueX: self ticksData first;
+		maxValueX: self ticksData last
 ]
 
 { #category : #accessing }

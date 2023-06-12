@@ -1,5 +1,5 @@
 "
-TODO
+It offers methods for initializing the layout, performing layout computations, and updating the positions of nodes and edges based on the chosen algorithm.
 "
 Class {
 	#name : #RSAbstractGraphLayout,
@@ -13,7 +13,7 @@ Class {
 		'shouldValidateCycles',
 		'childrenSortBlock'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-ByConnection'
 }
 
 { #category : #constants }
@@ -32,7 +32,7 @@ RSAbstractGraphLayout class >> on: elements edges: edges [
 	"Do the layout of the elements tacking into account the provided edges"
 
 	^ self new
-		userDefinedEdges: edges;
+		userDefinedLines: edges;
 		applyOn: elements
 ]
 
@@ -40,6 +40,17 @@ RSAbstractGraphLayout class >> on: elements edges: edges [
 RSAbstractGraphLayout class >> verticalGap [
 
 	^20.0
+]
+
+{ #category : #private }
+RSAbstractGraphLayout >> allChildrenFor: aNode [
+	| scan scanTop |
+	scan := OrderedCollection withAll: (self childrenFor: aNode).
+	scanTop := 1.
+	[scanTop > scan size]
+		whileFalse: [scan addAll: (self childrenFor:  (scan at: scanTop)).
+			scanTop := scanTop + 1].
+	^ scan
 ]
 
 { #category : #private }
@@ -73,8 +84,7 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 						ifFalse: [nodes add: edge to ]
 				]
 			].
-			self childrenSortBlock
-				ifNotNil: [ :block | nodes sort: block ].
+			self sortCollection: nodes.
 			nodes]
 ]
 
@@ -183,10 +193,10 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 		ifFalse: [parentsNesting max + 1]
 ]
 
-{ #category : #actions }
+{ #category : #hook }
 RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
-	self userDefinedEdges ifNil: [ self userDefinedEdges: edgs ].
+	self userDefinedLines ifNil: [ self userDefinedLines: edgs ].
 
 	^ self applyOn: el
 ]
@@ -209,6 +219,27 @@ RSAbstractGraphLayout >> rootNodesFor: aCollection [
 		(self parentsFor: node) isEmpty ]
 ]
 
+{ #category : #hook }
+RSAbstractGraphLayout >> rootNodesFromCycles: shapes [
+	| graph groups  |
+	graph := RSDSMGraph new: shapes size.
+	shapes doWithIndex: [ :shape :index1 |
+		shape outgoingShapes do: [ :otherShape | | index2 |
+			index2 := shapes indexOf: otherShape.
+			"added only when index2 is valid"
+			index2 == 0 ifFalse: [ graph addEdge: index1 to: index2 ].
+			 ].
+		 ].
+	groups := graph computeSCCs.
+	"this takes all cycles and put them as roots"
+	"a cycle is detected when group size is more than 1"
+	^ (groups flatCollect: [ :group | 
+		group size > 1
+			ifTrue: [ group collect: [ :i | shapes at: i ] ]
+			ifFalse: [#()]
+		] as: Set) asOrderedCollection.
+]
+
 { #category : #private }
 RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	aNode translateBy: aPoint.
@@ -218,6 +249,12 @@ RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 { #category : #testing }
 RSAbstractGraphLayout >> shouldValidateCycles [
 	^ shouldValidateCycles
+]
+
+{ #category : #hook }
+RSAbstractGraphLayout >> sortCollection: nodes [
+	self childrenSortBlock
+		ifNotNil: [ :block | nodes sort: block ]
 ]
 
 { #category : #private }

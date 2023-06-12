@@ -49,12 +49,12 @@ RSRenderTreeTest >> setUp [
 	tree := self emptyTree
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testAddNil [
 	self should: [tree add: nil] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testAllChildren [
 	| list |
 	list := tree root withAllChildren.
@@ -111,7 +111,7 @@ RSRenderTreeTest >> testIsBalanced [
 		tree isBalanced ])
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testOneElement [
 	self assert: tree isEmpty.
 	tree add: (RSBox new size: 10).
@@ -139,7 +139,7 @@ RSRenderTreeTest >> testOneElementRectangle [
 	self assert: tree rectangle equals: box encompassingRectangle
 ]
 
-{ #category : #tests }
+{ #category : #'tests - removing' }
 RSRenderTreeTest >> testRemoveLeaf1 [
 	| leafs size shapes shape |
 	tree := self tree.
@@ -160,7 +160,7 @@ RSRenderTreeTest >> testRemoveLeaf1 [
 	self assert: size - 2 equals: tree size
 ]
 
-{ #category : #tests }
+{ #category : #'tests - removing' }
 RSRenderTreeTest >> testRemoveLeaf2 [
 	| leafs shapes shape size |
 	tree := self tree.
@@ -175,7 +175,7 @@ RSRenderTreeTest >> testRemoveLeaf2 [
 	self assert: tree size + 1  equals: size
 ]
 
-{ #category : #tests }
+{ #category : #'tests - removing' }
 RSRenderTreeTest >> testRemoveLeaf3 [
 	| leafs shapes random toRemove size |
 	tree := self bigTree.
@@ -199,7 +199,7 @@ RSRenderTreeTest >> testRemoveLeaf3 [
 		self assert: tree isBalanced.]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - removing' }
 RSRenderTreeTest >> testRemoveRootChildren [
 	| box |
 	tree addAll: { box := RSBox new size: 10. }.
@@ -207,7 +207,7 @@ RSRenderTreeTest >> testRemoveRootChildren [
 	self assert: tree isEmpty
 ]
 
-{ #category : #tests }
+{ #category : #'tests - removing' }
 RSRenderTreeTest >> testRemoveZero [
 	| value |
 	value := false.
@@ -275,7 +275,7 @@ RSRenderTreeTest >> testSeriousBalance [
 	]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testThreeElements [
 	| b1 b2 b3 |
 	b1 := RSBox new size: 10.
@@ -316,7 +316,7 @@ RSRenderTreeTest >> testThreeElementsContains [
 	self assert: result size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testTwoElements [
 	| b1 b2 |
 	b1 := RSBox new size: 10.
@@ -348,7 +348,7 @@ RSRenderTreeTest >> testTwoElementsContains [
 	self assert: result size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 RSRenderTreeTest >> testTwoElementsRectangle [
 	| b1 b2 group |
 	b1 := RSBox new size: 10.

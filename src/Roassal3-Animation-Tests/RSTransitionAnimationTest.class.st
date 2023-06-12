@@ -44,7 +44,7 @@ RSTransitionAnimationTest >> testStepEvent [
 		duration: 100 milliSeconds;
 		loops: 3;
 		onStepDo: [ :t| value := t ];
-		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.].
+		when: RSAnimationLoopEvent do: [ :evt | loop := loop + 1.] for: self.
 	self assert: value isNil.
 	self assert: loop equals: 0.
 	self assert: animation endTime isNil.

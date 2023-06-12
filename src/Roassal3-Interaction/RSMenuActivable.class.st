@@ -1,16 +1,13 @@
 "
-With the mouse right click event I show a basic popup
+With the mouse right click event I show a basic popup.
 
-Example:
-```Smalltalk
-m := RSMondrian new.
-m nodes: (1 to: 10).
-m build.
+`menuDo:` recives a block of two arguments to build the menu.
+- First argument is an instance of `MenuMorph`.
+- Second argument is the shape with the event
 
-m canvas nodes @ (RSMenuActivable new menuDo: [ :menu :element | menu add: 'Inspect' target: element model selector: #inspect ]).
+### Example
+- `RSMenuActivable class >> #example`
 
-m open
-```
 "
 Class {
 	#name : #RSMenuActivable,
@@ -39,4 +36,5 @@ RSMenuActivable >> onShape: aShape [
 		menu := MenuMorph new.
 		menuBlock value: menu value: evt shape.
 		menu popUpInWorld ]
+	for: self
 ]

@@ -20,7 +20,7 @@ RSAlignmentTest >> testCenter [
 	RSHorizontalLineLayout on: es.
 	align shapes: es.
 	self assert: align middle equals: align.
-	self assert: es encompassingRectangle equals: ((0.0@0.0) corner: (90.0@10.0))
+	self assert: es encompassingRectangle equals: ((0.0@0.0) corner: (70.0@10.0))
 ]
 
 { #category : #tests }

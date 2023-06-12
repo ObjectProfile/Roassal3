@@ -8,13 +8,13 @@ Class {
 RSChartTitleDecorationTest >> testBasic [
 	| c title label |
 	c := RSChart new.
+	c removeAllTicks.
 	title := c title: 'hello'.
-	title shape
-		color: Color blue.
+	title styler textColor: Color blue.
 	c build.
 
 	self assert: c canvas numberOfShapes equals: 2.
-	label := c canvas shapes second.
+	label := title label.
 	self assert: label class equals: RSLabel.
 	self assert: label color equals: Color blue
 ]
@@ -23,6 +23,7 @@ RSChartTitleDecorationTest >> testBasic [
 RSChartTitleDecorationTest >> testBasic2 [
 	| c |
 	c := RSChart new.
+	c removeAllTicks.
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c build.
 

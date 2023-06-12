@@ -34,9 +34,9 @@ Class {
 	#instVars : [
 		'elements',
 		'extents',
-		'generator',
 		'colorPalette',
-		'spineDecoration'
+		'spineDecoration',
+		'styler'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -67,6 +67,7 @@ c
 ```"
 	elements add: aDecoration.
 	aDecoration chart: self.
+	aDecoration styler: self styler.
 	^ aDecoration
 ]
 
@@ -84,7 +85,9 @@ c
 ```
 	"
 	elements add: aPlot.
-	aPlot chart: self
+	aPlot chart: self.
+	aPlot styler: self styler.
+	^ aPlot
 ]
 
 { #category : #'public - plots' }
@@ -142,11 +145,11 @@ RSChart >> decorations [
 { #category : #'accessing - defaults' }
 RSChart >> defaultContainer [
 	^ RSCanvas new
+		"when: RSExtentChangedEvent send:#updateChart: to: self;"
 		addInteraction: (RSCanvasController new
 			in: [ :controller |
-				controller configuration
-					useZoomToFitOnExtendChanged;
-					maxScale: 20.
+				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
+				controller configuration	maxScale: 20.
 				 ];
 			yourself);
 		yourself
@@ -155,6 +158,11 @@ RSChart >> defaultContainer [
 { #category : #color }
 RSChart >> defaultPlotColors [
 	^ NSScale category20
+]
+
+{ #category : #initialization }
+RSChart >> defaultStyler [
+	^ RSChartStyler new
 ]
 
 { #category : #accessing }
@@ -180,6 +188,7 @@ RSChart >> horizontalTick [
 { #category : #initialization }
 RSChart >> initialize [
 	super initialize.
+	styler := self defaultStyler.
 	elements := OrderedCollection new.
 	self extent: 200 @ 200.
 	self initializeDecorations.
@@ -188,7 +197,10 @@ RSChart >> initialize [
 
 { #category : #initialization }
 RSChart >> initializeDecorations [
-	self spineDecoration: RSChartSpineDecoration new
+
+	self spineDecoration: RSChartSpineDecoration new.
+	self addDecoration: RSHorizontalTick new.
+	self addDecoration: RSVerticalTick new
 ]
 
 { #category : #inspector }
@@ -289,15 +301,6 @@ RSChart >> mustInclude0inY [
 ]
 
 { #category : #accessing }
-RSChart >> niceGenerator [
-	"Produce a generator for nice labels. Whether nice labels are used or not is a choice made by the horizontal or vertical ticks."
-	^ generator ifNil: [
-		generator := RSLabelGenerator new.
-		generator setLooseFlag: true.
-		generator ]
-]
-
-{ #category : #accessing }
 RSChart >> numberOfPlots [
 	"Return the number of plots contained in the chart"
 	^ self plots size
@@ -322,6 +325,28 @@ RSChart >> padding: aPoint [
 { #category : #accessing }
 RSChart >> plots [
 	^ elements select: #isPlot
+]
+
+{ #category : #removing }
+RSChart >> removeAllTicks [
+	"Remove both horizontal and vertical ticks"
+
+	self removeHorizontalTicks.
+	self removeVerticalTicks
+]
+
+{ #category : #removing }
+RSChart >> removeHorizontalTicks [
+	"Remove horizontal ticks from the chart"
+
+	elements remove: self horizontalTick
+]
+
+{ #category : #removing }
+RSChart >> removeVerticalTicks [
+	"Remove vertical ticks from the chart"
+
+	elements remove: self verticalTick
 ]
 
 { #category : #hooks }
@@ -360,6 +385,17 @@ RSChart >> spineDecoration: aRSChartSpineDecoration [
 ]
 
 { #category : #accessing }
+RSChart >> styler [
+	^ styler
+]
+
+{ #category : #accessing }
+RSChart >> styler: anRSChartStyler [
+	styler := anRSChartStyler.
+	elements do: [ :each | each styler: styler ]
+]
+
+{ #category : #accessing }
 RSChart >> title: aTitle [
 	"Set the title of a chart. For example:
 
@@ -371,6 +407,16 @@ c
 ```
 	"
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
+]
+
+{ #category : #'accessing - defaults' }
+RSChart >> updateChart: anEvent [
+	| canvas camera |
+	camera := anEvent camera.
+	canvas := anEvent canvas.
+	self extent: canvas extent.
+	self update.
+	canvas zoomToFit.
 ]
 
 { #category : #accessing }

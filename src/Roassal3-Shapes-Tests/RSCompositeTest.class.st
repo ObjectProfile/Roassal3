@@ -21,7 +21,7 @@ RSCompositeTest >> testAdjustChildren [
 	RSVerticalLineLayout on: g.
 	self assert: composite extent equals: (20 @ 20).
 	composite adjustToChildren.
-	self assert: composite extent equals: (20 @ 50)
+	self assert: composite extent equals: (20 @ 45)
 ]
 
 { #category : #tests }

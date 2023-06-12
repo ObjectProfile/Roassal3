@@ -1,6 +1,6 @@
 Class {
 	#name : #RSClusteringLayoutTest,
-	#superclass : #TestCase,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Layouts-Tests'
 }
 
@@ -26,10 +26,47 @@ RSClusteringLayoutTest >> testBasic [
 				 clustersLayout: RSFlowLayout new;
 				 forEachLayout: RSTreeLayout new);
 		on: nodes.
-
-	self
-		assert: (nodes collect: #position) asArray
-		equals: ((Array new: 41) at: 1 put: ((29.0@10.0)); at: 2 put: ((83.0@10.0)); at: 3 put: ((131.0@10.0)); at: 4 put: ((165.0@10.0)); at: 5 put: ((16.0@85.0)); at: 6 put: ((44.0@85.0)); at: 7 put: ((72.0@85.0)); at: 8 put: ((100.0@85.0)); at: 9 put: ((128.0@85.0)); at: 10 put: ((156.0@85.0)); at: 11 put: ((16.0@40.0)); at: 12 put: ((42.0@40.0)); at: 13 put: ((70.0@40.0)); at: 14 put: ((96.0@40.0)); at: 15 put: ((124.5@40.0)); at: 16 put: ((144.0@40.0)); at: 17 put: ((158.5@40.0)); at: 18 put: ((171.5@40.0)); at: 19 put: ((9.5@115.0)); at: 20 put: ((22.5@115.0)); at: 21 put: ((37.5@115.0)); at: 22 put: ((50.5@115.0)); at: 23 put: ((65.5@115.0)); at: 24 put: ((78.5@115.0)); at: 25 put: ((93.5@115.0)); at: 26 put: ((106.5@115.0)); at: 27 put: ((121.5@115.0)); at: 28 put: ((134.5@115.0)); at: 29 put: ((149.5@115.0)); at: 30 put: ((162.5@115.0)); at: 31 put: ((9.5@70.0)); at: 32 put: ((22.5@70.0)); at: 33 put: ((35.5@70.0)); at: 34 put: ((48.5@70.0)); at: 35 put: ((63.5@70.0)); at: 36 put: ((76.5@70.0)); at: 37 put: ((89.5@70.0)); at: 38 put: ((102.5@70.0)); at: 39 put: ((118.0@70.0)); at: 40 put: ((131.0@70.0)); at: 41 put: ((144.0@70.0)); yourself)
+	self assertIntegerPosition: nodes equals: {24 @ 5.
+78 @ 5.
+126 @ 5.
+160 @ 5.
+11 @ 80.
+39 @ 80.
+67 @ 80.
+95 @ 80.
+123 @ 80.
+151 @ 80.
+11 @ 35.
+37 @ 35.
+65 @ 35.
+91 @ 35.
+119 @ 35.
+139 @ 35.
+154 @ 35.
+167 @ 35.
+5 @ 110.
+18 @ 110.
+33 @ 110.
+46 @ 110.
+61 @ 110.
+74 @ 110.
+89 @ 110.
+102 @ 110.
+117 @ 110.
+130 @ 110.
+145 @ 110.
+158 @ 110.
+5 @ 65.
+18 @ 65.
+31 @ 65.
+44 @ 65.
+59 @ 65.
+72 @ 65.
+85 @ 65.
+98 @ 65.
+113 @ 65.
+126 @ 65.
+139 @ 65}
 ]
 
 { #category : #tests }

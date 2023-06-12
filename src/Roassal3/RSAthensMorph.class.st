@@ -289,7 +289,7 @@ RSAthensMorph >> fullDrawOnAthensCanvas: aCanvas [
 		self recreateSurfaceIfNecessary.
 
 		aCanvas setPaint: roassalCanvas color.
-		aCanvas drawShape: bounds.
+		aCanvas drawShape: (bounds translateBy: bounds origin negated).
 		roassalCanvas playAnimations.
 		self drawShapes.
 		surface hasBeenFreed ifTrue: [ self createSurface ].
@@ -393,6 +393,11 @@ RSAthensMorph >> isDragging [
 { #category : #accessing }
 RSAthensMorph >> isDrawing [
 	^ isDrawing
+]
+
+{ #category : #accessing }
+RSAthensMorph >> lastMousePosition [
+	^ lastMousePosition
 ]
 
 { #category : #initialization }

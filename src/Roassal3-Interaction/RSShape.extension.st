@@ -2,7 +2,7 @@ Extension { #name : #RSShape }
 
 { #category : #'*Roassal3-Interaction' }
 RSShape >> browseable [
-	self when: RSMouseClick do: [ self model browse  ]
+	self when: RSMouseClick do: [ self model browse  ] for: self
 ]
 
 { #category : #'*Roassal3-Interaction' }

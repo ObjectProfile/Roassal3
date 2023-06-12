@@ -11,12 +11,6 @@ Class {
 	#category : #'Roassal3-Menu'
 }
 
-{ #category : #utilities }
-RSWorldMenu class >> areExamplesAlreadyLoaded [
-
-	^ Smalltalk globals hasClassNamed: #RSAbstractExamples
-]
-
 { #category : #icons }
 RSWorldMenu class >> discord [
 	^ discord ifNil: [ discord := PNGReadWriter formFromStream: self discordPNGByteArray readStream ]
@@ -44,7 +38,8 @@ RSWorldMenu class >> loadFullVersion [
 	[Metacello new
 		baseline: 'Roassal3';
 		repository: 'github://ObjectProfile/Roassal3';
-		load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
+		load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
+	self loadExporters.
 ]
 
 { #category : #menu }
@@ -55,14 +50,26 @@ RSWorldMenu class >> menu00RoassalOn: aBuilder [
 		label: 'Roassal3';
 		icon: self roassalIcon;
 		help: 'A visualization engine';
-		order: 777
+		order: 777.
+	(aBuilder item: #Roassal3Help)
+		parent: #Roassal3;
+		label: 'Help';
+		icon: (self iconNamed: #glamorousHelp);
+		help: 'Need help?';
+		order: 1.
+	(aBuilder item: #Roassal3Load)
+		parent: #Roassal3;
+		label: 'Load...';
+		icon: (self iconNamed: #smallLoadProject);
+		help: 'Load roassal projects';
+		order: 2
 ]
 
 { #category : #menu }
 RSWorldMenu class >> menu01ReportABugOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Bug)
-		parent: #Roassal3;
+		parent: #Roassal3Help;
 		order: 1;
 		label: 'Report a Bug';
 		icon: (self iconNamed: #smallDebug);
@@ -74,7 +81,7 @@ RSWorldMenu class >> menu01ReportABugOn: aBuilder [
 RSWorldMenu class >> menu02GithubOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Git)
-		parent: #Roassal3;
+		parent: #Roassal3Help;
 		order: 2;
 		label: 'Github';
 		help: 'Open Roassal3 git hubpage';
@@ -86,7 +93,7 @@ RSWorldMenu class >> menu02GithubOn: aBuilder [
 RSWorldMenu class >> menu03DiscordOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Chat)
-		parent: #Roassal3;
+		parent: #Roassal3Help;
 		order: 3;
 		label: 'Chat with us';
 		help: 'Will open discord web to chat with us in Pharo server';
@@ -98,7 +105,7 @@ RSWorldMenu class >> menu03DiscordOn: aBuilder [
 RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Documentation)
-		parent: #Roassal3;
+		parent: #Roassal3Help;
 		order: 4;
 		label: 'Online documentation';
 		help: 'Will open the webpage https://github.com/ObjectProfile/Roassal3Documentation';
@@ -107,26 +114,26 @@ RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 ]
 
 { #category : #menu }
-RSWorldMenu class >> menu06PluginsOn: aBuilder [
+RSWorldMenu class >> menu05PluginsOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3Plugins)
-		parent: #Roassal3;
+	(aBuilder item: #Roassal3Exporters)
+		parent: #Roassal3Load;
 		order: 6;
 		label: 'Load exporters';
-		help: 'You need this package to export roassal canvas to PNG, PDF, SVG, etc';
+		help: 'To export roassal canvas in PNG, PDF, SVG';
 		icon: self roassalIcon;
 		action: [ self loadExporters ]
 ]
 
 { #category : #menu }
-RSWorldMenu class >> menu07LoadFullVersionOn: aBuilder [
+RSWorldMenu class >> menu06LoadFullVersionOn: aBuilder [
 
 	<worldMenu>
 	(aBuilder item: #Roassal3LoadFullVersion)
-		parent: #Roassal3;
+		parent: #Roassal3Load;
 		order: 5;
 		label: 'Load full version';
-		help: 'Load full version of Roassal';
+		help: 'Load full version of Roassal including examples';
 		icon: self roassalIcon;
 		action: [ self loadFullVersion ]
 ]
@@ -140,7 +147,7 @@ RSWorldMenu class >> menu11SelfOn: aBuilder [
 		label: 'This menu';
 		help: 'Open RSWorldMenu';
 		icon: (self iconNamed: #smallExport);
-		action: [ self browse ]
+		action: [ self class browse ]
 ]
 
 { #category : #icons }

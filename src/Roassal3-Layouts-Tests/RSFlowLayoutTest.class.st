@@ -17,7 +17,7 @@ RSFlowLayoutTest >> testLinesEven [
 
 	self
 		assert: line first position y
-		equals: (layout gapSize* n)+(shapes first height * (n - 0.5))
+		equals: (layout gapSize* n)+(shapes first height * (n-1.5))
 ]
 
 { #category : #tests }
@@ -34,5 +34,5 @@ RSFlowLayoutTest >> testLinesOdd [
 
 	self
 		assert: line first position y
-		equals: (layout gapSize* n)+(shapes first height * (n - 0.5))
+		equals: (layout gapSize* n)+(shapes first height * (n-1.5))
 ]

@@ -100,6 +100,7 @@ RSHierarchyPackerInteraction >> onShape: aCanvas [
 			preferredAngle: aCanvas extent angle;
 			on: all.
 		aCanvas zoomToFit; signalUpdate ]
+	for: self
 ]
 
 { #category : #accessing }
