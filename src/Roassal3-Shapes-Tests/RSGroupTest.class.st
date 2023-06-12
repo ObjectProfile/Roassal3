@@ -127,12 +127,12 @@ RSGroupTest >> testTranslateTopLeftTo [
 	| g |
 	g := RSBox models: #(1 2).
 	RSHorizontalLineLayout on: g.
-	self assert: (g collect: #position as: Array) equals: {(5.0@5.0). (25.0@5.0)}.
-	self assert: g position equals: 15 @ 5.
+	self assert: (g collect: #position as: Array) equals: {(5.0@5.0). (20.0@5.0)}.
+	self assert: g position equals: 12 @ 5.
 
 	g translateTopLeftTo: 40 @ 42.
-	self assert: (g collect: #position as: Array) equals: {(45.0@47.0). (65.0@47.0)}.
-	self assert: g position equals: 55 @ 47
+	self assert: (g collect: #position as: Array) equals: {(45.0@47.0). (60.0@47.0)}.
+	self assert: g position equals: 52 @ 47
 ]
 
 { #category : #tests }

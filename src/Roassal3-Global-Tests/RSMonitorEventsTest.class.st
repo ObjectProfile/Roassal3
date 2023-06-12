@@ -16,7 +16,7 @@ RSMonitorEventsTest >> testBasic [
 	monitor onNewEventDo: [ :evt |
 		eventClass := evt class.
 		timeStamp := evt timeStamp.
-	].
+	] for: self.
 
 	canvas announce: RSMouseLeftClick new.
 	self assert: eventClass equals: RSMouseLeftClick.
@@ -31,7 +31,7 @@ RSMonitorEventsTest >> testBasic [
 RSMonitorEventsTest >> testNoTarget [
 	| monitor |
 	monitor := RSMonitorEvents new.
-	self should: [ monitor onNewEventDo: [  ] ] raise: Error
+	self should: [ monitor onNewEventDo: [  ] for: self ] raise: Error
 ]
 
 { #category : #tests }
@@ -42,7 +42,7 @@ RSMonitorEventsTest >> testWriteToFile [
 	monitor := RSMonitorEvents new.
 	monitor target: box.
 	events := OrderedCollection new.
-	monitor onNewEventDo: [:evt | events add: evt className -> evt timeStamp ].
+	monitor onNewEventDo: [:evt | events add: evt className -> evt timeStamp ] for: self.
 	box announce: (RSPositionChangedEvent new newPosition: 100@100; yourself).
 	self assert: events isNotEmpty.
 

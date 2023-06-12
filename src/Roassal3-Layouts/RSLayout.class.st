@@ -30,12 +30,6 @@ I provide the following methods.
 - `RSLayout >> #doExecute:`, override this method and set the position of each element here.
 - `RSLayout >> #doPost:`, orerride this method to finalize the the layout process.
 
-### Examples
-
-Layouts have some examples on class side. Here there are some examples
-- `RSLayout class >> #example1`
-- `RSLayout class >> #example2`
-- `RSLayout class >> #example3`
 "
 Class {
 	#name : #RSLayout,
@@ -46,46 +40,90 @@ Class {
 	#category : #'Roassal3-Layouts-Core'
 }
 
+{ #category : #documentation }
+RSLayout class >> addDocumentSectionHierarchy: aBuilder [
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Hierarchy' ] withLevel: 2.
+	SpDocumentHierarchyBuilder new
+		fromClass: RSLayout;
+		builder: aBuilder;
+		filter: [ :eachClass | eachClass package packageName beginsWith: 'Roassal3-' ];
+		buildFor: self
+]
+
+{ #category : #examples }
+RSLayout class >> basicExample [
+	| canvas |
+	canvas := self canvasExample.
+	self on: canvas nodes.
+	^ canvas open
+]
+
+{ #category : #documentation }
+RSLayout class >> buildMicroDownUsing: aBuilder withComment: aString [
+	super buildMicroDownUsing: aBuilder withComment: aString.
+	self addDocumentSectionHierarchy: aBuilder
+]
+
 { #category : #examples }
 RSLayout class >> canvasExample [
-	| canvas shapes |
+	| canvas |
 	canvas := RSCanvas new.
-	shapes := RSBox models: Collection withAllSubclasses.
-	canvas addAll: shapes.
-	shapes
-		@ RSPopup new;
-		@ RSDraggable new.
-	RSLineBuilder line
-		shapes: shapes;
-		connectFrom: #superclass.
-	RSNormalizer size
-		shapes: shapes;
-		normalize: #linesOfCode.
+	self canvasExampleIn: canvas.
 	canvas @ RSCanvasController.
 	^ canvas
 ]
 
 { #category : #examples }
-RSLayout class >> example1 [
-	RSGridLayout exampleBasic
+RSLayout class >> canvasExampleIn: canvas [
+	self canvasExampleIn: canvas models: Collection withAllSubclasses
 ]
 
 { #category : #examples }
-RSLayout class >> example2 [
-	RSTreeLayout exampleBasic
+RSLayout class >> canvasExampleIn: canvas models: aCollection [
+	| shapes colorPalette |
+	self cartensianLinesIn: canvas.
+	shapes := RSBox models: aCollection.
+	canvas addAll: shapes.
+	colorPalette := NSScale category20c.
+	shapes do: [ :shape |
+		shape color: (colorPalette scale: shape model)
+		].
+	shapes
+		@ RSPopup new;
+		@ RSDraggable new.
+	RSLineBuilder arrowedLine
+		shapes: shapes;
+		withBorderAttachPoint;
+		connectFrom: #superclass.
+	RSNormalizer size
+		shapes: shapes;
+		normalize: #linesOfCode
 ]
 
 { #category : #examples }
-RSLayout class >> example3 [
-	RSVerticalLineLayout exampleBasic
-]
-
-{ #category : #examples }
-RSLayout class >> exampleBasic [
-	| canvas |
-	canvas := self canvasExample.
-	self on: canvas nodes.
-	canvas open
+RSLayout class >> cartensianLinesIn: canvas [
+	| lineX lineY zeroLabel |
+	lineX := RSArrowedLine new
+		color: Color black;
+		startPoint: 0@0;
+		endPoint: 300@0;
+		yourself.
+	lineY := lineX copy
+		startPoint: 0@0;
+		endPoint: 0 @ 300;
+		yourself.
+	zeroLabel := RSLabel new
+		text: '0@0';
+		addInteraction: (RSPopup themeText: 'Origin in a box of 300@300');
+		position: 0@0;
+		color: Color black;
+		yourself.
+	canvas
+		addShape: lineX;
+		addShape: lineY;
+		addShape: zeroLabel
 ]
 
 { #category : #testing }
@@ -150,11 +188,6 @@ RSLayout >> initialize [
 	translator := RSLayoutTranslator default
 ]
 
-{ #category : #testing }
-RSLayout >> isEdgeDrivenLayout [
-	^ false
-]
-
 { #category : #hook }
 RSLayout >> on: elements [
 	self applyOn: elements
@@ -181,6 +214,6 @@ RSLayout >> translator: aTranslator [
 ]
 
 { #category : #hook }
-RSLayout >> userDefinedEdges: edges [
+RSLayout >> userDefinedLines: aCollectionOfLines [
 	"Do nothing"
 ]

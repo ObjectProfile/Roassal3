@@ -21,12 +21,10 @@ RSBoxPlotExample >> example01 [
 
 	c addPlot: p.
 
-	c addDecoration: (RSHorizontalTick new
-		numberOfTicks: y size).
+	c horizontalTick numberOfTicks: y size.
 	c xlabel: 'X Axis'.
-	c addDecoration: (RSVerticalTick new
-		numberOfTicks: 10;
-		asFloat).
+	c verticalTick numberOfTicks: 10;
+		asFloat.
 	c ylabel: 'Y Axis'.
 	c title: 'Box Plot'.
 	^ c
@@ -70,8 +68,8 @@ RSBoxPlotExample >> example02 [
 	c addPlot: p.
 	c addPlot: p2.
 	c addPlot: p3.
-	c addDecoration: (RSHorizontalTick new fromNames: x).
-	c addDecoration: (RSVerticalTick new integer).
+	c horizontalTick fromNames: x.
+	c verticalTick integer.
 
 	^ c
 ]

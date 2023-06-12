@@ -10,12 +10,16 @@ Class {
 	#category : #'Roassal3-Shapes-Bounding'
 }
 
-{ #category : #examples }
-RSBitmap class >> example [
-	| image |
-	image := self new.
-	image form: (self iconNamed: #pharo).
-	image inspect
+{ #category : #'instance creation' }
+RSBitmap class >> newFrom: anObject [
+	| shape |
+	shape := self new.
+	shape form: (anObject isString 
+		ifTrue: [ (self iconNamed: anObject) ]
+		ifFalse: [anObject ]).
+	^ shape
+	
+		
 ]
 
 { #category : #private }
@@ -31,7 +35,9 @@ RSBitmap >> extent: newExtent [
 	| oldExtent |
 	oldExtent := self extent.
 	(oldExtent = (0 @ 0)) ifTrue: [ ^ self ].
-	matrix scaleBy: newExtent / oldExtent
+	matrix scaleBy: newExtent / oldExtent.
+	self resetBBox.
+	
 ]
 
 { #category : #accessing }

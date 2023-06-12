@@ -25,7 +25,6 @@ RSInspectableExample >> example01SimpleExample [
 		withVerticalAttachPoint;
 		connectFrom: #superclass.
 	RSTreeLayout on: boxes.
-	RSInspectableInteraction reset.
 	inspectable := RSInspectableInteraction new.
 	highligtable := inspectable highlightable.
 	highligtable highlightColor: Color green.
@@ -43,54 +42,58 @@ RSInspectableExample >> example01SimpleExample [
 
 { #category : #examples }
 RSInspectableExample >> example02Inspect [
-	<script: 'self new example02Inspect inspect'>
 
+	<script: 'self new example02Inspect inspect'>
 	| canvas animation lastSize box color |
 	canvas := RSCanvas new.
 	color := NSScale category20c.
 	box := [ :model |
-		RSBox new
-			model: model;
-			color: (color scale: model);
-			size: 20;
-		yourself ].
+	       RSBox new
+		       model: model;
+		       color: (color scale: model);
+		       size: 20;
+		       yourself ].
 
 	canvas add: (box value: Collection).
 	lastSize := 0.
 	animation := nil.
-	animation := canvas animationFrom: {
-		canvas transitionAnimation repeat
-		easing: RSEasingInterpolator backOut;
-		onStepDo: [ :t |
-			canvas nodes do: [ :shape |
-				| att a b |
-				att := shape properties.
-				a := att at: #old ifAbsentPut: [ shape position ].
-				b := att at: #new ifAbsentPut: [ shape position ].
-				shape translateTo: (a interpolateTo: b at: t ) ].
-			canvas zoomToFit.
-		];
-		when: RSAnimationLoopEvent do: [
-			canvas nodes size = lastSize ifTrue: [
-				animation stop.
-				self inform: 'Done :V!!!' ].
-			lastSize := canvas nodes size.
-			canvas nodes do: [ :shape |
-				shape outgoingLines ifEmpty: [ | children |
-					children := shape model subclasses collect: [:cls | box value: cls ].
-					children do: [ :child | child position: shape position ].
-					canvas addAll: children ]. ].
+	animation := canvas animationFrom:
+		             { (canvas transitionAnimation repeat
+			              easing: RSEasingInterpolator backOut;
+			              onStepDo: [ :t |
+				              canvas nodes do: [ :shape |
+						              | att a b |
+						              att := shape properties.
+						              a := att at: #old ifAbsentPut: [ shape position ].
+						              b := att at: #new ifAbsentPut: [ shape position ].
+						              shape translateTo: (a interpolateTo: b at: t) ].
+				              canvas zoomToFit ];
+			              when: RSAnimationLoopEvent do: [
+				              canvas nodes size = lastSize ifTrue: [
+						              animation stop.
+						              self inform: 'Done :V!!!' ].
+				              lastSize := canvas nodes size.
+				              canvas nodes do: [ :shape |
+						              shape outgoingLines ifEmpty: [
+								              | children |
+								              children := shape model subclasses collect: [
+										                          :cls | box value: cls ].
+								              children do: [ :child |
+										              child position: shape position ].
+								              canvas addAll: children ] ].
 
-			canvas edges copy do: #remove.
-			canvas nodes do: [:shape | shape propertyAt: #old put: shape position ].
-			RSLineBuilder arrowedLine
-				canvas: canvas;
-				connectFrom: #superclass.
-			canvas nodes do: #updateLinesOFF.
-			RSClusterTreeLayout on: canvas nodes.
-			canvas nodes do: #updateLinesON.
-			canvas nodes do: [:shape | shape propertyAt: #new put: shape position. ].
-		 ]}.
+				              canvas edges copy do: #remove.
+				              canvas nodes do: [ :shape |
+						              shape propertyAt: #old put: shape position ].
+				              RSLineBuilder arrowedLine
+					              canvas: canvas;
+					              connectFrom: #superclass.
+				              canvas nodes do: #updateLinesOFF.
+				              RSClusterTreeLayout on: canvas nodes.
+				              canvas nodes do: #updateLinesON.
+				              canvas nodes do: [ :shape |
+					              shape propertyAt: #new put: shape position ] ]
+			              for: self) }.
 	canvas @ RSCanvasController.
 	^ canvas
 ]

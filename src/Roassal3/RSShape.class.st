@@ -182,6 +182,12 @@ c open
 	self border color: aColor
 ]
 
+{ #category : #border }
+RSShape >> borderWidth: aNumber [
+	border ifNil: [ self withBorder ].
+	self border width: aNumber
+]
+
 { #category : #'accessing - computed' }
 RSShape >> canvas [
 	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas"
@@ -310,6 +316,11 @@ RSShape >> encompassingRectangle: aRectangle [
 { #category : #accessing }
 RSShape >> extent [
 	^ self encompassingRectangle extent
+]
+
+{ #category : #accessing }
+RSShape >> fill: aColor [
+	self color: (aColor isNumber ifTrue: [ Color r: aColor g: aColor b: aColor range: 255 ])
 ]
 
 { #category : #accessing }

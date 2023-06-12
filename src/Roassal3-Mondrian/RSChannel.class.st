@@ -18,28 +18,39 @@ Class {
 { #category : #public }
 RSChannel >> build [
 
-	inputGroup when: RSMouseEnter do: [ :evt |
-		self doHighlight.
-		evt signalUpdate ].
+	inputGroup
+		when: RSMouseEnter
+		do: [ :evt |
+			self doHighlight.
+			evt signalUpdate ]
+		for: self.
 	inputGroup @ (RSHighlightable new highlightColor: self color).
 
-	inputGroup when: RSMouseLeave do: [ :evt |
-		self doUnhighlight.
-		evt signalUpdate ].
+	inputGroup
+		when: RSMouseLeave
+		do: [ :evt |
+			self doUnhighlight.
+			evt signalUpdate ]
+		for: self.
 
 	isClickable ifFalse: [ ^ self ].
-	inputGroup when: RSMouseClick do: [ :evt |
-		isClicked
-			ifTrue: [ self unmark: evt shape.
-						self doUnmark.
-						"We give the possibility to execute a callback"
-						toggleOffCallback rsValue: evt shape. ]
-			ifFalse: [ self mark: evt shape.
-						self doMark.
-						"We give the possibility to execute a callback"
-						toggleOnCallback rsValue: evt shape. ].
-		isClicked := isClicked not.
-		evt signalUpdate ]
+	inputGroup
+		when: RSMouseClick
+		do: [ :evt |
+			isClicked
+				ifTrue: [
+					self unmark: evt shape.
+					self doUnmark.
+					"We give the possibility to execute a callback"
+					toggleOffCallback rsValue: evt shape ]
+				ifFalse: [
+					self mark: evt shape.
+					self doMark.
+					"We give the possibility to execute a callback"
+					toggleOnCallback rsValue: evt shape ].
+			isClicked := isClicked not.
+			evt signalUpdate ]
+		for: self
 ]
 
 { #category : #accessing }

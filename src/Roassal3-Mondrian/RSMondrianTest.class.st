@@ -15,19 +15,17 @@ RSMondrianTest >> setUp [
 
 { #category : #tests }
 RSMondrianTest >> testBasic [
-	| pos someNodes |
+	| someNodes |
 	someNodes := m nodes: (1 to: 5).
 	m build.
 
-	pos := m canvas shapes collect: #position.
-	self assert: pos asArray equals: {(7.5@7.5). (17.5@7.5). (7.5@17.5). (17.5@17.5). (7.5@27.5)}.
-
+	self assertIntegerPosition: m canvas shapes equals: {2 @ 2. 12 @ 2. 2 @ 12. 12 @ 12. 2 @ 22}.
 	self assert: someNodes asArray equals: m canvas shapes asArray
 ]
 
 { #category : #tests }
 RSMondrianTest >> testBasic2 [
-	| pos someNodes |
+	| someNodes |
 	m shape size: #yourself.
 
 	self assert: m shape height equals: #yourself.
@@ -39,8 +37,7 @@ RSMondrianTest >> testBasic2 [
 	self assert: (m canvas shapes collect: #width) asArray equals: #(10.0 20.0 30.0 40.0 50.0).
 	self assert: (m canvas shapes collect: #height) asArray equals: #(10.0 20.0 30.0 40.0 50.0).
 
-	pos := m canvas shapes collect: #position.
-	self assert: pos asArray equals: {(10.0@10.0). (30.0@15.0). (60.0@20.0). (25.0@60.0). (75.0@65.0)}.
+	self assertIntegerPosition: m canvas shapes equals: {5 @ 5. 25 @ 10. 55 @ 15. 20 @ 55. 70 @ 60}.
 
 	self assert: someNodes asArray equals: m canvas shapes asArray
 ]
@@ -88,8 +85,7 @@ RSMondrianTest >> testComposingMondrian [
 
 	self assert: c numberOfEdges equals: 3.
 	self assert: c numberOfNodes equals: 5.
-
-	self assert: (nodes collect: #position) asArray equals:  {(7.5@7.5). (7.5@17.5). (7.5@27.5). (7.5@37.5)}
+	self assertIntegerPosition: nodes equals: {2 @ 2. 12 @ 2. 2 @ 12. 12 @ 12}.
 ]
 
 { #category : #tests }
@@ -272,7 +268,7 @@ RSMondrianTest >> testNesting [
 
 	subNodes := firstNode nodes.
 	self assert: subNodes size equals: 9.
-	self assert: (subNodes collect: #position) asArray equals:  {(-5.0@ -20.0). (5.0@ -20.0). (-5.0@ -10.0). (5.0@ -10.0). (-5.0@0.0). (5.0@0.0). (-5.0@10.0). (5.0@10.0). (-5.0@20.0)}
+	self assertIntegerPosition: subNodes equals: {-10 @ -10. 0 @ -10. 10 @ -10. -10 @ 0. 0 @ 0. 10 @ 0. -10 @ 10. 0 @ 10. 10 @ 10}.
 ]
 
 { #category : #tests }

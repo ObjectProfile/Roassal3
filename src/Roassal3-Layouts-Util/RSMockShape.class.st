@@ -1,5 +1,5 @@
 "
-TODO
+The RSMockShape class in Roassal3 is used for testing and mocking purposes. It provides a way to create mock shapes that can be used to test the behavior of other Roassal3 classes that depend on shapes.
 "
 Class {
 	#name : #RSMockShape,
@@ -11,10 +11,20 @@ Class {
 		'isFixed',
 		'fixPosition',
 		'charge',
-		'realShape'
+		'realShape',
+		'width',
+		'height'
 	],
 	#category : #'Roassal3-Layouts-Util'
 }
+
+{ #category : #accessing }
+RSMockShape class >> shapes: aCollection [
+	^ aCollection collect: [ :shape | 
+		self new 
+			realShape: shape;
+			yourself ]
+]
 
 { #category : #actions }
 RSMockShape >> addWeight [
@@ -44,12 +54,12 @@ RSMockShape >> charge: aNum [
 
 { #category : #accessing }
 RSMockShape >> encompassingRectangle [
-	^ realShape encompassingRectangle
+	^ Rectangle floatCenter: position extent: self extent
 ]
 
 { #category : #accessing }
 RSMockShape >> extent [
-	^ realShape extent
+	^ width @ height
 ]
 
 { #category : #accessing }
@@ -64,7 +74,7 @@ RSMockShape >> fixPosition: aPoint [
 
 { #category : #accessing }
 RSMockShape >> height [
-	^ realShape height
+	^ height
 ]
 
 { #category : #initialization }
@@ -104,10 +114,19 @@ RSMockShape >> realShape [
 ]
 
 { #category : #accessing }
-RSMockShape >> realShape: rtElement [
-	realShape := rtElement.
-	position := rtElement position.
+RSMockShape >> realShape: aRSShape [
+	| extent |
+	extent := aRSShape extent.
+	realShape := aRSShape.
+	position := aRSShape position.
+	width := extent x.
+	height := extent y.
 	self oldPosition: position
+]
+
+{ #category : #accessing }
+RSMockShape >> textExtents [
+	^ realShape textExtents
 ]
 
 { #category : #actions }
@@ -127,5 +146,5 @@ RSMockShape >> weight: aNumber [
 
 { #category : #accessing }
 RSMockShape >> width [
-	^ realShape width
+	^ width
 ]

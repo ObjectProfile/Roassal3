@@ -39,6 +39,20 @@ Class {
 	#category : #'Roassal3-Layouts-Builder'
 }
 
+{ #category : #examples }
+RSLayoutBuilder class >> exampleTidyTree [
+	| canvas notConnected |
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
+	notConnected := {self. RSEvent. RSShape }.
+	RSLayout 
+		canvasExampleIn: canvas
+		models: SequenceableCollection withAllSubclasses,
+			Set withAllSubclasses, notConnected.
+	self new tidyTree; on: canvas nodes.
+	^ canvas open.
+]
+
 { #category : #'public - layout' }
 RSLayoutBuilder >> cell [
 	^ layout := RSCellLayout new
@@ -148,20 +162,6 @@ RSLayoutBuilder >> sugiyama [
 
 { #category : #'public - layout' }
 RSLayoutBuilder >> tidyTree [
-	"For example:
-
-```
-packages := RPackage organizer packages select: [ :pak | pak packageName beginsWith: 'Roassal3' ].
-classes := packages flatCollect: #definedClasses.
-
-m := RSMondrian new.
-m nodes: classes.
-m line connectFrom: #superclass.
-m layout tidyTree.
-m
-```"
-
-
 	^ layout := RSConditionalLayout new
 					 ifNotConnectedThen: RSGridLayout new;
 					 else: (RSClusteringLayout new

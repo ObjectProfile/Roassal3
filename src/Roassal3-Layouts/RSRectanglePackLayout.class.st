@@ -1,36 +1,5 @@
 "
-A layout that packs elements according to their bounding box. Check #gap and #preferredAngle.
-
-Here is an example:
-```
-numberOfBoxes := 900.
-r := Random seed: 42.
-shapes := RSGroup new.
-numberOfBoxes timesRepeat: [ 
-	shapes add: (RSBox new width: (r nextInt: 40); height: (r nextInt: 40)) ].
-
-c := RSCanvas new.
-c addAll: shapes.
-RSRectanglePackLayout new useProgressBar; on: shapes.
-c @ RSCanvasController
-```
-
-Another example:
-```
-nodes := (1 to: 20) asArray shuffleBy: (Random seed: 42).
-
-canvas := RSCanvas new.
-shapes := RSCircle models: nodes.
-shapes size: 30.
-canvas addAll: shapes.
-RSNormalizer size
-    shapes: shapes;
-    normalize.
-
-RSRectanglePackLayout on: shapes.
-canvas zoomToFit.
-canvas open
-```
+A layout that packs elements according to their bounding box. Check #gap and #preferredAngle
 "
 Class {
 	#name : #RSRectanglePackLayout,
@@ -45,6 +14,41 @@ Class {
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
+
+{ #category : #examples }
+RSRectanglePackLayout class >> example1 [
+	<noTest>
+	| numberOfBoxes random shapes canvas |
+		numberOfBoxes := 900.
+	random := Random seed: 42.
+	shapes := RSGroup new.
+	numberOfBoxes timesRepeat: [ 
+		shapes add: (RSBox new width: (random nextInteger: 40); height: (random nextInteger: 40)) ].
+
+	canvas := RSCanvas new.
+	canvas addAll: shapes.
+	self new useProgressBar; on: shapes.
+	canvas @ RSCanvasController.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSRectanglePackLayout class >> example2 [
+	| nodes canvas shapes |
+	nodes := (1 to: 20) asArray shuffleBy: (Random seed: 42).
+
+	canvas := RSCanvas new.
+	shapes := RSCircle models: nodes.
+	shapes size: 30.
+	canvas addAll: shapes.
+	RSNormalizer size
+	    shapes: shapes;
+	    normalize.
+
+	self on: shapes.
+	canvas zoomToFit.
+	^ canvas open
+]
 
 { #category : #'space-calculation' }
 RSRectanglePackLayout >> bestSpaceFor: anElement [
@@ -73,34 +77,34 @@ RSRectanglePackLayout >> boundingBox [
 ]
 
 { #category : #hook }
-RSRectanglePackLayout >> doExecute: elements [
-	| sortedElements maxSpace |
+RSRectanglePackLayout >> doExecute: shapes [
+	| sortedShapes maxSpace |
 	bounds := 0@0.
 
-	maxSpace := elements
+	maxSpace := shapes
 		inject: 0@0
 		into: [ :sum :el | sum + el extent ].
 
-	padding := maxSpace / elements size * gap / 2.
+	padding := maxSpace / shapes size * gap / 2.
 	maxSpace :=(1 + gap) * maxSpace.
 
 	freeSpace := Set with: (0@0 corner: maxSpace).
 
-	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
+	sortedShapes := SortedCollection sortBlock:  [ :larger :smaller |
 		larger  encompassingRectangle halfPerimeter >
 		smaller encompassingRectangle halfPerimeter ].
-	sortedElements addAll: elements.
+	sortedShapes addAll: shapes.
 
-	sortedElements size <= 2 ifTrue: [
-		^ RSHorizontalLineLayout on: sortedElements ].
+	sortedShapes size <= 2 ifTrue: [
+		^ RSHorizontalLineLayout on: sortedShapes ].
 
 	self shouldUseProgressBar
 		ifTrue: [
-			sortedElements
+			sortedShapes
 				do: [ :element | self packIn: element ]
 				displayingProgress: 'Laying out elements' ]
 		ifFalse: [
-			sortedElements
+			sortedShapes
 				do: [ :element | self packIn: element ] ]
 ]
 

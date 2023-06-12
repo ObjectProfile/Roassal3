@@ -19,16 +19,19 @@ RSAlpharoExample >> example01Basic [
 
 { #category : #running }
 RSAlpharoExample >> example02Classes [
+
 	<script: 'self new example02Classes'>
 	| b classes |
-	classes := (RPackage organizer packageNamed: 'Roassal3-Experimental') definedClasses.
+	classes := (RPackage organizer packageNamed: 'Roassal3-Experimental')
+		           definedClasses.
 	classes := classes select: [ :cls | cls comment size < 10 ].
 	b := RSAlpharo new.
 	b objects: classes.
 	b build.
 	(b shapes collect: [ :s | s children first ])
-		when:RSMouseClick
-		do: [ :evt | evt shape model browse ].
+		when: RSMouseClick
+		do: [ :evt | evt shape model browse ]
+		for: self.
 	b canvas inspect
 ]
 

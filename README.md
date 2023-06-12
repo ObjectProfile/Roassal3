@@ -27,21 +27,13 @@ If you wish to install Roassal in Pharo 8, then execute the following code snipp
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v0.9.9m';
+    repository: 'github://ObjectProfile/Roassal3:v1.01';
     load.
 ```
 
 ### Latest version
-If you wish to have the lastest release of Roassal, then execute the following code snippet in a Playground:
+If you wish to have the lastest release of Roassal, then execute the following code snippet in a Playground, including Mondrian and experimental packages, use:
 
-```Smalltalk
-[Metacello new
-    baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3';
-    load ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
-```   
-
-You can load the full version (including Mondrian and experimental packages) using:
 ```Smalltalk
 [Metacello new
     baseline: 'Roassal3';

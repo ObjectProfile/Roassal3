@@ -15,4 +15,5 @@ RSKeepFontSizeRatioInteraction >> onShape: aLabel [
 	aLabel canvas when: RSScaleChangedEvent do: [ :evt |
 		aLabel fontSize: (self scaleFor: evt) * fontSize.
 		evt signalUpdate ]
+	for: self
 ]

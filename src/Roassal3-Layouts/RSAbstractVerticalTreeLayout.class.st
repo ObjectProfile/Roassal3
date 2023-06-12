@@ -1,20 +1,17 @@
 "
-TODO
+The `RSAbstractVerticalTreeLayout` class is an abstract base class that provides common functionality for vertical tree layout algorithms in Roassal. Vertical tree layouts arrange nodes in a tree-like structure where each level of the tree is aligned horizontally.
+
+Instances of `RSAbstractVerticalTreeLayout` can be used with `RSVerticalTree`
 "
 Class {
 	#name : #RSAbstractVerticalTreeLayout,
 	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #testing }
 RSAbstractVerticalTreeLayout class >> isAbstract [
 	^ self = RSAbstractVerticalTreeLayout
-]
-
-{ #category : #'private - hook' }
-RSAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
-	self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -34,8 +31,10 @@ RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer:
 	self atLayer: aNumber add: aNodeCollection.
 	aNodeCollection do: [ :each |
 		| children |
+		
 		childrenPosition := y + each height + self verticalGap.
 		children := self computeChildrenFor: each.
+			
 		treeSize := self
 			layout: children
 			atPoint: x @ childrenPosition
@@ -43,7 +42,6 @@ RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer:
 		treeSize < each width ifTrue: [
 			self translate: children by: (each width - treeSize) / 2.0 @ 0.
 			treeSize := each width. ].
-
 		middleOfTree := x + (treeSize / 2.0) - (each width / 2.0).
 		translator translateTopLeftOf: each to: middleOfTree @ y.
 		x := x + treeSize + self horizontalGap.

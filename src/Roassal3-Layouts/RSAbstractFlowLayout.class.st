@@ -1,15 +1,19 @@
 "
-TODO
+I contain gap distance size between each element, in vertical and horizontal axis.
+### Variables
+
+- horizontalGap, the horizontal distance size between elements in the layout
+- verticalGap, the vertical distance size between elements in the layout
+- gapSize, a number used to change both values, vertical and horizontal
 "
 Class {
 	#name : #RSAbstractFlowLayout,
-	#superclass : #RSLayout,
+	#superclass : #RSAbstractBoxedLayout,
 	#instVars : [
 		'maxWidth',
-		'gapSize',
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Flow'
 }
 
 { #category : #public }
@@ -20,7 +24,7 @@ RSAbstractFlowLayout class >> isAbstract [
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 
-	^(self new)
+	^ self new
 		maxWidth: anInteger;
 		yourself
 ]
@@ -28,55 +32,55 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 { #category : #'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 
-	^(self new)
+	^ self new
 		maxWidth: anInteger;
 		gapSize: anotherInteger;
 		yourself
 ]
 
-{ #category : #configuration }
-RSAbstractFlowLayout >> defaultGapSize [
-	^ 5
+{ #category : #accessing }
+RSAbstractFlowLayout >> alignment [
+
+	^ alignment
+]
+
+{ #category : #accessing }
+RSAbstractFlowLayout >> alignment: anObject [
+
+	alignment := anObject
 ]
 
 { #category : #configuration }
 RSAbstractFlowLayout >> defaultMaxWidth [
-	^ [ :elements |
-		(elements size < 4) ifTrue: [ (((elements collect: [ :each | each width * each height]) * 2) sum ) + (elements size * (gapSize squared)) ]
+	^ [ :shapes |
+		(shapes size < 4) 
+			ifTrue: [ 
+				(((shapes collect: [ :each | each width * each height]) * 2) sum ) + (shapes size * (gapSize squared)) ]
 			ifFalse: [
-			((((elements collect: [ :each | each width * each height]) * 2) sum) + (elements size * (gapSize squared))) sqrt ceiling truncated.
+			((((shapes collect: [ :each | each width * each height]) * 2) sum) + (shapes size * (gapSize squared))) sqrt ceiling truncated.
 			]
 		]
 ]
 
 { #category : #hook }
-RSAbstractFlowLayout >> doExecute: elements [
+RSAbstractFlowLayout >> doExecute: shapes [
 
-	| lines align |
-	elements ifEmpty: [ ^ self ].
-	lines := self linesFor: elements.
+	| lines align mocks |
+	shapes ifEmpty: [ ^ self ].
+	mocks := RSMockShape shapes: shapes.
+	lines := self linesFor: mocks.
 	align := RSAlignment new.
 	lines do: [ :line |
 		align shapes: line.
 		alignment value: align.
-		 ]
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> gapSize [
-	^ gapSize
-]
-
-{ #category : #accessing }
-RSAbstractFlowLayout >> gapSize: aSizeInPixels [
-	gapSize := aSizeInPixels
+		 ].
+	mocks do: [:mock | mock applyToRealElement ]
 ]
 
 { #category : #initialization }
 RSAbstractFlowLayout >> initialize [
 	super initialize.
-	maxWidth := self defaultMaxWidth.
-	gapSize := self defaultGapSize
+	self maxWidth: self defaultMaxWidth
 ]
 
 { #category : #hook }

@@ -249,7 +249,7 @@ RSRNode >> leastEnlargementChild: anRSShape [
 		ifFalse: [
 			leftDiff < rightDiff
 				ifTrue: [ left ]
-				ifFalse: [ right ] ].
+				ifFalse: [ right ] ]
 ]
 
 { #category : #accessing }

@@ -307,6 +307,7 @@ RSLegend >> renderFixedOn: aCanvas [
 		legendLabels add: legend.
 		self updateLegendLabels: aCanvas.
 		evt signalUpdate ]
+	for: self
 ]
 
 { #category : #hooks }

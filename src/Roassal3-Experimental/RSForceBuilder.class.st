@@ -117,6 +117,7 @@ RSForceBuilder >> renderIn: aCanvas [
 
 { #category : #initialization }
 RSForceBuilder >> reset [
+
 	| c |
 	c := self canvas.
 	c shapes copy do: #remove.
@@ -126,8 +127,8 @@ RSForceBuilder >> reset [
 		when: RSAnimationEndEvent do: [
 			self setParticles.
 			self setInterferences.
-			c shouldClearBackground: false.
-			 ]
+			c shouldClearBackground: false ]
+		for: self
 ]
 
 { #category : #hooks }

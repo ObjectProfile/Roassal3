@@ -32,10 +32,10 @@ RSCanvasController class >> simple [
 	| inst |
 	inst := self new.
 	inst noLegend.
-	inst configuration
+	inst zoomToFitInteraction
 		noZoomToFitOnStart;
-		hasDraggableAnimation: false;
 		noZoomToFitOnExtendChanged.
+	inst draggableCanvasInteraction hasDraggableAnimation: false.
 	inst removeInteractionIfPresent: RSZoomToFitCanvasInteraction.
 	"this interaction works better when the visualization has already been created"
 	inst addInteractionClass: RSKeepCanvasPositionCanvasInteraction.
@@ -67,8 +67,22 @@ RSCanvasController >> configuration: aRSControlLimits [
 
 { #category : #initialization }
 RSCanvasController >> defaultInteractions [
-	"create a subclass of RSControslView and define your own custom interactions for your canvas"
-	^ { RSDraggableCanvasInteraction. RSKeyNavigationCanvasInteraction. RSZoomToFitCanvasInteraction. RSZoomableCanvasInteraction. RSScrollBarsCanvasInteraction . RSSearchInCanvasInteraction }
+
+	"create a subclass of RSCanvasController and define your own custom interactions for your canvas"
+
+	^ { 
+		  RSDraggableCanvasInteraction.
+		  RSKeyNavigationCanvasInteraction.
+		  RSZoomToFitCanvasInteraction.
+		  RSZoomableCanvasInteraction.
+		  RSScrollBarsCanvasInteraction.
+		  RSSearchInCanvasInteraction.
+		  RSSelectionInCanvasInteraction }
+]
+
+{ #category : #accessing }
+RSCanvasController >> draggableCanvasInteraction [
+	^ interactions at: RSDraggableCanvasInteraction
 ]
 
 { #category : #initialization }
@@ -96,6 +110,11 @@ RSCanvasController >> interactionsFromArray: anArray [
 	anArray do: [ :int |
 		collection at: int class put: int ].
 	self interactions: collection
+]
+
+{ #category : #accessing }
+RSCanvasController >> keyNavigationInteraction [
+	^ interactions at: RSKeyNavigationCanvasInteraction
 ]
 
 { #category : #configuration }
@@ -146,4 +165,9 @@ RSCanvasController >> shouldShowLegend [
 { #category : #configuration }
 RSCanvasController >> withLegend [
 	self configuration withLegend
+]
+
+{ #category : #accessing }
+RSCanvasController >> zoomToFitInteraction [
+	^ interactions at: RSZoomToFitCanvasInteraction
 ]

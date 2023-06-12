@@ -106,5 +106,5 @@ RSTimeLinePlot >> renderIn: canvas [
 			fromRectangle: rectangle;
 			yourself)
 		].
-	canvas addAll: bars.
+	canvas addAll: bars
 ]

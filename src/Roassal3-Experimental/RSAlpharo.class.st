@@ -116,25 +116,28 @@ RSAlpharo >> objects: aCollection [
 
 { #category : #hooks }
 RSAlpharo >> removeJar [
+
 	| animation |
 	jarShape ifNil: [ ^ self ].
 	(jarShape hasProperty: #anime) ifTrue: [ ^ self ].
 	animation := jarShape newAnimation
-		duration: 1 second;
-		from: jarShape color;
-		to: Color transparent;
-		on: jarShape set: #color:;
-		when: RSAnimationEndEvent do: [ :evt |
-			layout enclosingRectangle: jarShape canvas visibleRectangle.
-			shapes do: [ :s | | p |
-				p := s position.
-				s matrix loadIdentity.
-				s translateTo: p ].
-			jarShape remove.
-			jarShape := nil.
-			self addGravityAnimation.
-			  ];
-		yourself.
+		             duration: 1 second;
+		             from: jarShape color;
+		             to: Color transparent;
+		             on: jarShape set: #color:;
+		             when: RSAnimationEndEvent do: [ :evt |
+			             layout enclosingRectangle:
+					             jarShape canvas visibleRectangle.
+			             shapes do: [ :s |
+					             | p |
+					             p := s position.
+					             s matrix loadIdentity.
+					             s translateTo: p ].
+			             jarShape remove.
+			             jarShape := nil.
+			             self addGravityAnimation ]
+		             for: self;
+		             yourself.
 	jarShape propertyAt: #anime put: animation
 ]
 

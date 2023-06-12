@@ -1,7 +1,10 @@
+"
+Because class `RSForceBasedLayout` is hard to configure, this object provides a nice default behavior to work with force layout without many configurations
+"
 Class {
 	#name : #RSSimpleForceBasedLayout,
 	#superclass : #RSLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Force'
 }
 
 { #category : #hook }

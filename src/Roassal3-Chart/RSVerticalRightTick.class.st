@@ -15,7 +15,7 @@ RSVerticalRightTick >> createTickLineFor: aNumber [
 	| scaledNumber x |
 	scaledNumber := yScale scale: aNumber.
 	x := chart extent x.
-	^ self shape copy
+	^ self newLineTick
 		startPoint: x @ scaledNumber;
 		endPoint: (x + self configuration tickSize) @ scaledNumber;
 		yourself
@@ -34,6 +34,14 @@ RSVerticalRightTick >> max [
 { #category : #accessing }
 RSVerticalRightTick >> min [
 	^ values min
+]
+
+{ #category : #rendering }
+RSVerticalRightTick >> updateChartMaxAndMinValues: aChart [
+
+	aChart
+		minValueY: self ticksData first;
+		maxValueY: self ticksData last
 ]
 
 { #category : #accessing }

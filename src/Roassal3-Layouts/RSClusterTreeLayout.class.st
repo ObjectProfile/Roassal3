@@ -1,5 +1,7 @@
 "
-TODO
+The `RSClusterTreeLayout` class implements a layout algorithm for arranging nodes in a cluster tree structure. It organizes nodes into hierarchical clusters where each cluster represents a subset of nodes. Clusters can be nested within each other, forming a tree-like structure.
+
+Cluster tree layouts are useful for visualizing hierarchical relationships and grouping related nodes together.
 "
 Class {
 	#name : #RSClusterTreeLayout,
@@ -11,7 +13,7 @@ Class {
 		'maxLayer',
 		'maxAbcissa'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal3-Layouts-Tree'
 }
 
 { #category : #algorithm }
@@ -36,7 +38,7 @@ RSClusterTreeLayout >> computePosition: aNode [
 RSClusterTreeLayout >> doExecute: nodeElements [
 	| rootNodes gap |
 	"Not much to do if there is only one element"
-	nodeElements size = 1 ifTrue: [ ^ self ].
+	nodeElements size <= 1 ifTrue: [ ^ self ].
 
 	rootNodes := self rootNodesFor: nodeElements.
 	self validateCachedParents.
@@ -49,11 +51,11 @@ RSClusterTreeLayout >> doExecute: nodeElements [
 
 	maxAbcissa := (self xOf: externalLayer last) + horizontalGap .
 
-	gap := maxAbcissa "+ horizontalGap "/ 2 / Float pi / maxLayer.
+	gap := maxAbcissa / 2 / Float pi / maxLayer.
 
 	verticalGap := verticalGap max: gap.
 
-	rootNodes do: [ :e | self draw: e. self step ]
+	rootNodes do: [ :e | self draw: e ]
 ]
 
 { #category : #'drawing - general' }

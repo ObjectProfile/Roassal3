@@ -12,21 +12,24 @@ Class {
 
 { #category : #building }
 RSAbstractUMLCalypso >> addClassInteractions: builder [
+
 	builder canvas nodes
-		when: RSMouseDoubleClick do: [ :evt | evt shape model browse ];
+		when: RSMouseDoubleClick
+		do: [ :evt | evt shape model browse ]
+		for: self;
 		when: RSMouseRightClick do: [ :evt |
 			| menu newContext tool |
-			tool := ClyFullBrowserMorph on: ClyNavigationEnvironment currentImage.
-			tool
-				prepareInitialStateBy: [ :b | b selectClass: evt shape model ].
+			tool := ClyFullBrowserMorph on:
+					        ClyNavigationEnvironment currentImage.
+			tool prepareInitialStateBy: [ :b | b selectClass: evt shape model ].
 			"newContext := ClyFullBrowserClassContext for: tool."
 			newContext := context copy.
 			newContext tool: tool.
 			menu := CmdContextMenuActivation
-				buildContextMenuFor: evt canvas morph
-				inContext: newContext.
-			menu popUpInWorld: self currentWorld.
-			]
+				        buildContextMenuFor: evt canvas morph
+				        inContext: newContext.
+			menu popUpInWorld: self currentWorld ]
+		for: self
 ]
 
 { #category : #building }
@@ -44,12 +47,15 @@ RSAbstractUMLCalypso >> applyTheme: builder [
 
 { #category : #building }
 RSAbstractUMLCalypso >> build [
+
 	| canvas morph |
 	canvas := self buildUmlCanvas.
 	morph := canvas createMorph.
-	morph onAnnouncement: MorphDeleted
-		do: [ self containerTab owner ifNotNil: [ self containerTab delete]].
-	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus].
+	morph
+		onAnnouncement: MorphDeleted
+		do: [
+		self containerTab owner ifNotNil: [ self containerTab delete ] ].
+	canvas when: RSMouseEnter do: [ morph takeKeyboardFocus ] for: self.
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 

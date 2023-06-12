@@ -18,12 +18,6 @@ RSMorphicHost >> createMorph [
 ]
 
 { #category : #accessing }
-RSMorphicHost >> defaultWindowTitle [
-
-	^ super defaultWindowTitle , ' - Morphic'
-]
-
-{ #category : #accessing }
 RSMorphicHost >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 
