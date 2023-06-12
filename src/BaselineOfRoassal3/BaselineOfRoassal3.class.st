@@ -14,6 +14,8 @@ BaselineOfRoassal3 >> baseline: spec [
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
+	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
 	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
@@ -28,13 +30,31 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 ]
 
 { #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo10: spec [
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo9'.
+	spec package: #'Roassal3-Pharo'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo9' 'Roassal3-Pharo')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
+]
+
+{ #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo11: spec [
+	self baselineForPharo10: spec
+]
+
+{ #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
 	spec package: #'Roassal3-Spec-Obsolete'.
+	spec package: #'Roassal3-Pharo'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
+		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete' 'Roassal3-Pharo')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
@@ -44,8 +64,9 @@ BaselineOfRoassal3 >> baselineForPharo9: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo9'.
+	spec package: #'Roassal3-Pharo'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo9')
+		core: self corePackagesNames, #('Roassal3-Pharo9' 'Roassal3-Pharo')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
