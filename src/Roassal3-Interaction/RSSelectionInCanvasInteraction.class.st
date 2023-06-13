@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
 		'elastic',
-		'shadowInteraction'
+		'shadowInteraction',
+		'withoutNilModels'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -23,20 +24,28 @@ RSSelectionInCanvasInteraction class >> example2 [
 	^ (self canvasExample @ interaction) open
 ]
 
-{ #category : #hooks }
+{ #category : #'instance creation' }
+RSSelectionInCanvasInteraction class >> withoutNilModels [
+
+	^ self new
+		  withoutNilModels: true;
+		  yourself
+]
+
+{ #category : #interactions }
 RSSelectionInCanvasInteraction >> addInteractionToShape: aShape [
 
-	(aShape hasInteraction: self class) ifTrue: [ ^ self ].
+	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [ ^ self ].
 	aShape when: RSMouseLeftClick send: #processClick: to: self
 ]
 
-{ #category : #hooks }
+{ #category : #interactions }
 RSSelectionInCanvasInteraction >> addInteractionToShapes: aCanvas [
 
-	aCanvas shapes do: [ :shape | self addInteractionToShape: shape ]
+	aCanvas nodes do: [ :shape | self addInteractionToShape: shape ]
 ]
 
-{ #category : #hooks }
+{ #category : #interactions }
 RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
 
 	aCanvas
@@ -45,21 +54,8 @@ RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
 		for: self;
 		when: RSMouseLeftClick
 		do: [ :evt | evt canvas setSelectedShapes: RSGroup new ]
-		for: self
-]
-
-{ #category : #hooks }
-RSSelectionInCanvasInteraction >> doHighlight: event [
-
-	| shape |
-	shape := event shape.
-	shape @ shadowInteraction
-]
-
-{ #category : #hooks }
-RSSelectionInCanvasInteraction >> doUnHighlight: event [
-
-	shadowInteraction removeShadow: event
+		for: self;
+		when: RSKeyDown send: #processKeyDown: to: self
 ]
 
 { #category : #initialization }
@@ -68,11 +64,18 @@ RSSelectionInCanvasInteraction >> initialize [
 	super initialize.
 	elastic := RSElasticBoxInteraction new.
 	shadowInteraction := RSShadowInteraction new.
+	self withoutNilModels: false.
 
 	elastic
 		when: RSSelectionStartEvent send: #selectionStart: to: self;
 		when: RSSelectionChangedEvent send: #selectionChange: to: self;
 		when: RSSelectionEndEvent send: #selectionEnd: to: self
+]
+
+{ #category : #accessing }
+RSSelectionInCanvasInteraction >> keyToSelect [
+
+	^ 'A'
 ]
 
 { #category : #hooks }
@@ -89,7 +92,7 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 		for: self
 ]
 
-{ #category : #hooks }
+{ #category : #'event processing' }
 RSSelectionInCanvasInteraction >> processClick: evt [
 
 	| shape canvas selectedShapes |
@@ -100,7 +103,19 @@ RSSelectionInCanvasInteraction >> processClick: evt [
 	shape hasShadow
 		ifTrue: [ selectedShapes remove: shape ]
 		ifFalse: [ selectedShapes add: shape ].
-	canvas setSelectedShapes: selectedShapes
+	canvas setSelectedShapes: selectedShapes.
+	canvas signalUpdate
+]
+
+{ #category : #'event processing' }
+RSSelectionInCanvasInteraction >> processKeyDown: evt [
+
+	| canvas |
+	((evt commandKeyPressed or: [ evt controlKeyPressed ]) and: [ 
+		 evt keyName = self keyToSelect ]) ifFalse: [ ^ self ].
+	canvas := evt canvas.
+	canvas setSelectedShapes: canvas nodes.
+	canvas signalUpdate
 ]
 
 { #category : #rendering }
@@ -131,11 +146,18 @@ RSSelectionInCanvasInteraction >> selectionStart: evt [
 { #category : #public }
 RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanvas [
 
-	shadowInteraction removeShadowsOn: aRSCanvas. 
-	aGroupOfShapes @ shadowInteraction.
-	aRSCanvas selectedShapes: aGroupOfShapes.
+	| filteredShapes |
+	filteredShapes := self withoutNilModels
+		                  ifTrue: [ 
+		                  aGroupOfShapes select: [ :shape | 
+			                  shape model isNotNil ] ]
+		                  ifFalse: [ aGroupOfShapes ].
+
+	shadowInteraction removeShadowsOn: aRSCanvas.
+	filteredShapes @ shadowInteraction.
+	aRSCanvas selectedShapes: filteredShapes.
 	aRSCanvas announce: (RSSelectionChangedEvent new
-			 selectedShapes: aGroupOfShapes;
+			 selectedShapes: filteredShapes;
 			 yourself)
 ]
 
@@ -148,4 +170,16 @@ RSSelectionInCanvasInteraction >> shadowColor [
 { #category : #accessing }
 RSSelectionInCanvasInteraction >> shadowColor: aColor [ 
 	shadowInteraction shadowColor: aColor
+]
+
+{ #category : #accessing }
+RSSelectionInCanvasInteraction >> withoutNilModels [
+
+	^ withoutNilModels
+]
+
+{ #category : #accessing }
+RSSelectionInCanvasInteraction >> withoutNilModels: aBoolean [
+
+	withoutNilModels := aBoolean 
 ]

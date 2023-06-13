@@ -59,6 +59,18 @@ RSSelectionInCanvasInteractionTest >> testClickOnCanvasUnselectsAllShapes [
 ]
 
 { #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectAllShapesWithCommandA [
+
+	canvas @ RSSelectionInCanvasInteraction.
+	canvas announce: (RSKeyDown new
+			 keyName: 'A';
+			 commandKeyPressed: true;
+			 controlKeyPressed: true;
+			 yourself).
+	self assert: canvas selectedShapes size equals: shapes size
+]
+
+{ #category : #tests }
 RSSelectionInCanvasInteractionTest >> testSelectNewAddedShapeWithShiftClick [
 
 	| newShape |
@@ -106,6 +118,19 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 	canvas @ RSSelectionInCanvasInteraction.
 	canvas setSelectedShapes: shapes.
 	self assert: (shapes allSatisfy: [ :each | each shadow notNil ])
+]
+
+{ #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectShapesWithModelOnlyUsingCommandA [
+
+	canvas @ RSSelectionInCanvasInteraction withoutNilModels.
+	shapes first model: nil.
+	canvas announce: (RSKeyDown new
+			 keyName: 'A';
+			 commandKeyPressed: true;
+			 controlKeyPressed: true;
+			 yourself).
+	self assert: canvas selectedShapes size equals: shapes size - 1
 ]
 
 { #category : #tests }
