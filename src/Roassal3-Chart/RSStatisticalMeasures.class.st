@@ -27,7 +27,7 @@ RSStatisticalMeasures >> data: aDataset [
 	data := aDataset copy sort.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : #accessing }
 RSStatisticalMeasures >> defaultQuantile [
 	^ (RSInvertedCDF data: data).
 ]
@@ -65,9 +65,7 @@ RSStatisticalMeasures >> median [
 ]
 
 { #category : #'accessing - computed' }
-RSStatisticalMeasures >> median: aDataset [
-	| medianIndex medianValue isSizeEven |
-	
+RSStatisticalMeasures >> median: aDataset [	
 	^ quantile compute: 0.5.
 ]
 
