@@ -67,12 +67,8 @@ RSStatisticalMeasures >> median [
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> median: aDataset [
 	| medianIndex medianValue isSizeEven |
-	isSizeEven := aDataset size even.
-	medianIndex := (aDataset size / 2) ceiling.
-	medianValue := isSizeEven
-		               ifTrue: [((aDataset at: medianIndex) + (aDataset at: (medianIndex + 1))) / 2 ]
-		               ifFalse: [ aDataset at: medianIndex ].
-	^ medianValue
+	
+	^ quantile compute: 0.5.
 ]
 
 { #category : #'accessing - computed' }

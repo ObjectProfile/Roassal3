@@ -58,7 +58,7 @@ RSStatisticalMeasuresTest >> testGetMedianOfEvenDatasetSize [
 	| statisticalMeasures data |
 	data := #(90 23 22 20 50 80 82 87 15 95).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures median closeTo: (50+80)/2.
+	self assert: statisticalMeasures median closeTo: 50.
 ]
 
 { #category : #tests }
