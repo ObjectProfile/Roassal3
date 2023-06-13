@@ -70,21 +70,12 @@ RSStatisticalMeasures >> median: aDataset [
 
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> quartiles [
-
-	| q1 q2 q3 medianIndex isSizeEven leftHalf rightHalf |
-	isSizeEven := self data size even.
-	q2 := self median.
-	medianIndex := data size + 1 // 2.
-	leftHalf := isSizeEven
-		            ifTrue: [ data copyFrom: 1 to: medianIndex ]
-		            ifFalse: [ data copyFrom: 1 to: medianIndex - 1 ].
-	rightHalf := data copyFrom: medianIndex + 1 to: data size.
-	q1 := self median: leftHalf.
-	q3 := self median: rightHalf.
-	^ {
-		  q1.
-		  q2.
-		  q3 }
+	| q1 q2 q3 aRSQuantile |
+	aRSQuantile := RSInvertedCDF data: data.
+	q1 := aRSQuantile compute: 0.25.
+	q2 := aRSQuantile compute: 0.50.
+	q3 := aRSQuantile compute: 0.75.
+	^  { q1. q2. q3 }.
 ]
 
 { #category : #'accessing - computed' }

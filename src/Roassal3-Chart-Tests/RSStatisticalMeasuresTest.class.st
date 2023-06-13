@@ -74,7 +74,7 @@ RSStatisticalMeasuresTest >> testGetQuartilesOfEvenDatasetSize [
 	| statisticalMeasures data |
 	data := #(7 15 36 39 40 41).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures quartiles closeTo: #(15 37.5 40).
+	self assert: statisticalMeasures quartiles closeTo: #(15 36 40).
 ]
 
 { #category : #tests }
@@ -82,7 +82,7 @@ RSStatisticalMeasuresTest >> testGetQuartilesOfOddDatasetSize [
 	| statisticalMeasures data |
 	data := #(1 2 3 4 5 6 7 8 9 10 11 12 13).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures quartiles closeTo: #(3.5 7 10.5).
+	self assert: statisticalMeasures quartiles closeTo: #(4 7 10).
 ]
 
 { #category : #tests }
