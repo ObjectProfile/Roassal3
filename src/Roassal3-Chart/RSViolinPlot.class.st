@@ -7,7 +7,8 @@ Class {
 		'area',
 		'xlabel',
 		'ylabel',
-		'title'
+		'title',
+		'statisticalMeasures'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -17,6 +18,8 @@ RSViolinPlot class >> data: aCollection [
 	| densityPlot |
 	densityPlot := self new.
 	densityPlot data: aCollection.
+	"It should be here?"
+	densityPlot statisticalMeasures: densityPlot defaultStatisticalMeasures.
 	^ densityPlot
 ]
 
@@ -161,6 +164,11 @@ RSViolinPlot >> defaultShape [
 		noPaint.
 ]
 
+{ #category : #defaults }
+RSViolinPlot >> defaultStatisticalMeasures [
+	^ RSStatisticalMeasures data: self data.
+]
+
 { #category : #initialization }
 RSViolinPlot >> initialize [
 	super initialize.
@@ -194,6 +202,11 @@ RSViolinPlot >> kernelDensity: anRSKernelDensity [
 	self computeCurvePoints.
 ]
 
+{ #category : #accessing }
+RSViolinPlot >> median [
+	^ statisticalMeasures median.
+]
+
 { #category : #opening }
 RSViolinPlot >> open [
 	chart := RSChart new.
@@ -223,6 +236,11 @@ RSViolinPlot >> renderIn: canvas [
 	lastPoint := curve last.
 	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: area.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> statisticalMeasures: aRSStatisticalMeasures [
+	statisticalMeasures := aRSStatisticalMeasures.
 ]
 
 { #category : #accessing }
