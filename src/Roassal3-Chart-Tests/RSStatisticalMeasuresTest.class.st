@@ -92,3 +92,12 @@ RSStatisticalMeasuresTest >> testGetQuartilesOfOddDatasetSize2 [
 	statisticalMeasures := RSStatisticalMeasures data: data.
 	self assert: statisticalMeasures quartiles closeTo: #(15 40 43).
 ]
+
+{ #category : #tests }
+RSStatisticalMeasuresTest >> testOutliers [
+	| statisticalMeasures data |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	statisticalMeasures := RSStatisticalMeasures data: data.
+	self assert: statisticalMeasures upperLimit closeTo: 19.5.
+	self assert: statisticalMeasures outliers closeTo: #(24).
+]

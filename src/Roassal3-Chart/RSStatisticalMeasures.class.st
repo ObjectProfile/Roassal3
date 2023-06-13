@@ -70,6 +70,23 @@ RSStatisticalMeasures >> median: aDataset [
 ]
 
 { #category : #'accessing - computed' }
+RSStatisticalMeasures >> outliers [
+	| outlierValues lowerLimit upperLimit iterator |
+	outlierValues := OrderedCollection new.
+	lowerLimit := self lowerLimit. 
+	upperLimit := self upperLimit.
+	iterator := 1.
+	[(data at:iterator)<lowerLimit] whileTrue: [ 
+		outlierValues add: (data at:iterator).
+		iterator := iterator + 1 ].
+	iterator := data size.
+	[(data at:iterator)>upperLimit] whileTrue: [ 
+		outlierValues add: (data at:iterator). 
+		iterator := iterator - 1].
+	^ outlierValues.
+]
+
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> quantile: aRSQuantileSubclass [
 	quantile := aRSQuantileSubclass.
 ]
