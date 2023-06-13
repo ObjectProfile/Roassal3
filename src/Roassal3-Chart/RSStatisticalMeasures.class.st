@@ -2,7 +2,8 @@ Class {
 	#name : #RSStatisticalMeasures,
 	#superclass : #RSObject,
 	#instVars : [
-		'data'
+		'data',
+		'quantile'
 	],
 	#category : #'Roassal3-Chart-Statistics'
 }
@@ -12,6 +13,7 @@ RSStatisticalMeasures class >> data: aDataset [
 	| statisticalMeasures |
 	statisticalMeasures := self new.
 	statisticalMeasures data: aDataset.
+	statisticalMeasures quantile: statisticalMeasures defaultQuantile.
 	^ statisticalMeasures
 ]
 
@@ -23,6 +25,11 @@ RSStatisticalMeasures >> data [
 { #category : #accessing }
 RSStatisticalMeasures >> data: aDataset [
 	data := aDataset copy sort.
+]
+
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> defaultQuantile [
+	^ (RSInvertedCDF data: data).
 ]
 
 { #category : #'accessing - computed' }
@@ -69,12 +76,16 @@ RSStatisticalMeasures >> median: aDataset [
 ]
 
 { #category : #'accessing - computed' }
+RSStatisticalMeasures >> quantile: aRSQuantileSubclass [
+	quantile := aRSQuantileSubclass.
+]
+
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> quartiles [
-	| q1 q2 q3 aRSQuantile |
-	aRSQuantile := RSInvertedCDF data: data.
-	q1 := aRSQuantile compute: 0.25.
-	q2 := aRSQuantile compute: 0.50.
-	q3 := aRSQuantile compute: 0.75.
+	| q1 q2 q3 |
+	q1 := quantile compute: 0.25.
+	q2 := quantile compute: 0.50.
+	q3 := quantile compute: 0.75.
 	^  { q1. q2. q3 }.
 ]
 
