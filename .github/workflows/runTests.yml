@@ -19,8 +19,15 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        smalltalk: [ pharo9,  pharo10, pharo11, pharo12 ]
+        group: [ Tests, Full]
+        tests: [ Roassal3, "Roassal3,ReleaseTests" ]
+        os: [ ubuntu-latest, macos-latest ]
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -43,6 +50,6 @@ jobs:
         with:
           removes-repo: 'Roassal, Numeric'
           baseline: 'Roassal3'
-          group: 'Full'
-          tests: 'Roassal3'
-          pharo: 'pharo11'
+          group: ${{matrix.group}}
+          tests: ${{matrix.tests}}
+          pharo: ${{matrix.pharo}}
