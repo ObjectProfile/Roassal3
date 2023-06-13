@@ -25,8 +25,8 @@ RSStatisticalMeasures >> data: aDataset [
 	data := aDataset copy sort.
 ]
 
-{ #category : #accessing }
-RSStatisticalMeasures >> iqr [
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> interQuartileRange [
 	| quartiles q1 q3 |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
@@ -34,17 +34,17 @@ RSStatisticalMeasures >> iqr [
 	^ q3 - q1.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> lowerLimit [
 	| quartiles q1 q3 iqr |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
-	iqr := self iqr.
+	iqr := self interQuartileRange.
 	^ q1 - (1.5 * iqr).
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> mean [
 	| sum |
 	sum := 0.
@@ -52,18 +52,12 @@ RSStatisticalMeasures >> mean [
 	^ (sum / (data size)).
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> median [
-	| medianIndex medianValue isSizeEven |
-	isSizeEven := data size even.
-	medianIndex := (data size / 2) ceiling.
-	medianValue := isSizeEven
-		               ifTrue: [((data at: medianIndex) + (data at: (medianIndex + 1))) / 2 ]
-		               ifFalse: [ data at: medianIndex ].
-	^ medianValue
+	^ self median: data.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> median: aDataset [
 	| medianIndex medianValue isSizeEven |
 	isSizeEven := aDataset size even.
@@ -74,31 +68,31 @@ RSStatisticalMeasures >> median: aDataset [
 	^ medianValue
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> quartiles [
-	| q1 q2 q3 medianIndex isSizeEven leftHalf rightHalf|
+
+	| q1 q2 q3 medianIndex isSizeEven leftHalf rightHalf |
 	isSizeEven := self data size even.
 	q2 := self median.
-	medianIndex := (data size + 1) // 2.
-	isSizeEven ifTrue: [ 
-		leftHalf := (data copyFrom: 1 to: medianIndex).
-		rightHalf := (data copyFrom: (medianIndex + 1) to: data size).
-	]
-	ifFalse: [ 
-		leftHalf := (data copyFrom: 1 to: (medianIndex -1)).
-		rightHalf := (data copyFrom: (medianIndex + 1)  to: (data size)).
-	]. 
+	medianIndex := data size + 1 // 2.
+	leftHalf := isSizeEven
+		            ifTrue: [ data copyFrom: 1 to: medianIndex ]
+		            ifFalse: [ data copyFrom: 1 to: medianIndex - 1 ].
+	rightHalf := data copyFrom: medianIndex + 1 to: data size.
 	q1 := self median: leftHalf.
 	q3 := self median: rightHalf.
-	^ {q1. q2. q3.}
+	^ {
+		  q1.
+		  q2.
+		  q3 }
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> upperLimit [
 	| quartiles q1 q3 iqr |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
-	iqr := self iqr.
+	iqr := self interQuartileRange.
 	^ q3 + (1.5 * iqr).
 ]

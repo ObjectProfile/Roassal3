@@ -18,7 +18,7 @@ RSStatisticalMeasuresTest >> testGetInterQuartileRange [
 	| statisticalMeasures data |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures iqr closeTo: (43 - 15).
+	self assert: statisticalMeasures interQuartileRange closeTo: (43 - 15).
 ]
 
 { #category : #tests }
