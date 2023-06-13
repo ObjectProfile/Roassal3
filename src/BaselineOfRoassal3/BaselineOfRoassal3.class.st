@@ -99,7 +99,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 ]
 
 { #category : #dependencies }
-BaselineOfRoassal3 >> dependencies: spec [.
+BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Bloc' with: [
 		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
 

@@ -80,12 +80,6 @@ c
 ]
 
 { #category : #interactions }
-RSObjectWithProperty >> getInteractionsForClass: anInteractionClass [
-	"Return the Announcement subscriptions for the interaction"
-	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
-]
-
-{ #category : #interactions }
 RSObjectWithProperty >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
 	self announcer subscriptions ifNil: [ ^ false ].
