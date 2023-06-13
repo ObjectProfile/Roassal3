@@ -24,8 +24,8 @@ jobs:
       matrix:
         smalltalk: [ pharo9,  pharo10, pharo11, pharo12 ]
         group: [ Tests, Full]
-        tests: [ Roassal3, "Roassal3,ReleaseTests" ]
-        os: [ ubuntu-latest, macos-latest ]
+        tests: [ "Roassal3,ReleaseTests" ]
+        os: [ ubuntu-latest ]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
@@ -36,7 +36,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.0
         with:
           access_token: ${{ github.token }}
-      
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # depth 0 will download all the repository history
       - uses: actions/checkout@v3
@@ -52,4 +52,4 @@ jobs:
           baseline: 'Roassal3'
           group: ${{matrix.group}}
           tests: ${{matrix.tests}}
-          pharo: ${{matrix.pharo}}
+          pharo: ${{matrix.smalltalk}}
