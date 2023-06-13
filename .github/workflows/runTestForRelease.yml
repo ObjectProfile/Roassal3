@@ -1,4 +1,4 @@
-name: CI
+name: CIRelease
 
 # Controls when the action will run. 
 on:
@@ -22,9 +22,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ pharo9, pharo10, pharo11, pharo12 ]
-        group: [ Full ]
-        tests: [ Roassal3 ]
+        smalltalk: [ pharo12 ]
+        group: [ Tests ]
+        tests: [ "Roassal3,Release" ]
         os: [ ubuntu-latest ]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
