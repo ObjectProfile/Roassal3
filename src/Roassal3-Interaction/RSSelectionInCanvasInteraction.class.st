@@ -2,7 +2,6 @@ Class {
 	#name : #RSSelectionInCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
 	#instVars : [
-		'shadowColor',
 		'elastic',
 		'shadowInteraction'
 	],
@@ -24,10 +23,29 @@ RSSelectionInCanvasInteraction class >> example2 [
 	^ (self canvasExample @ interaction) open
 ]
 
-{ #category : #initialization }
-RSSelectionInCanvasInteraction >> defaultShadowColor [
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> addInteractionToShape: aShape [
 
-	^ Color black
+	(aShape hasInteraction: self class) ifTrue: [ ^ self ].
+	aShape when: RSMouseLeftClick send: #processClick: to: self
+]
+
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> addInteractionToShapes: aCanvas [
+
+	aCanvas shapes do: [ :shape | self addInteractionToShape: shape ]
+]
+
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
+
+	aCanvas
+		when: RSShapeAddedEvent
+		do: [ :evt | self addInteractionToShape: evt shape ]
+		for: self;
+		when: RSMouseLeftClick
+		do: [ :evt | evt canvas setSelectedShapes: RSGroup new ]
+		for: self
 ]
 
 { #category : #hooks }
@@ -48,7 +66,6 @@ RSSelectionInCanvasInteraction >> doUnHighlight: event [
 RSSelectionInCanvasInteraction >> initialize [
 
 	super initialize.
-	shadowColor := self defaultShadowColor.
 	elastic := RSElasticBoxInteraction new.
 	shadowInteraction := RSShadowInteraction new.
 
@@ -63,7 +80,27 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 
 	aCanvas selectionInteraction: self.
 	elastic targetShapes: aCanvas nodes.
-	aCanvas @ elastic
+	aCanvas @ elastic.
+	self addInteractionsToCanvas: aCanvas.
+	self addInteractionToShapes: aCanvas.
+	aCanvas
+		when: RSShapeAddedEvent
+		do: [ :evt | self addInteractionToShape: evt shape ]
+		for: self
+]
+
+{ #category : #hooks }
+RSSelectionInCanvasInteraction >> processClick: evt [
+
+	| shape canvas selectedShapes |
+	evt shiftPressed ifFalse: [ ^ self ].
+	shape := evt shape.
+	canvas := evt canvas.
+	selectedShapes := canvas selectedShapes asGroup.
+	shape hasShadow
+		ifTrue: [ selectedShapes remove: shape ]
+		ifFalse: [ selectedShapes add: shape ].
+	canvas setSelectedShapes: selectedShapes
 ]
 
 { #category : #rendering }
@@ -94,7 +131,7 @@ RSSelectionInCanvasInteraction >> selectionStart: evt [
 { #category : #public }
 RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanvas [
 
-	shadowInteraction removeShadowsOn: aRSCanvas.
+	shadowInteraction removeShadowsOn: aRSCanvas. 
 	aGroupOfShapes @ shadowInteraction.
 	aRSCanvas selectedShapes: aGroupOfShapes.
 	aRSCanvas announce: (RSSelectionChangedEvent new
@@ -105,10 +142,10 @@ RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanva
 { #category : #accessing }
 RSSelectionInCanvasInteraction >> shadowColor [
 
-	^ shadowColor
+	^ shadowInteraction shadowColor
 ]
 
 { #category : #accessing }
 RSSelectionInCanvasInteraction >> shadowColor: aColor [ 
-	shadowColor := aColor
+	shadowInteraction shadowColor: aColor
 ]

@@ -11,6 +11,11 @@ RSShape >> draggable [
 ]
 
 { #category : #'*Roassal3-Interaction' }
+RSShape >> hasShadow [
+	^ self shadow notNil
+]
+
+{ #category : #'*Roassal3-Interaction' }
 RSShape >> labeled [
 	self @ RSLabeled
 ]

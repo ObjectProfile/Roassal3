@@ -21,7 +21,7 @@ RSSelectionPresentationInteractionTest >> testBasic [
 
 	"make sure there is no error when clicking on an element, while being outside the GTInspector"
 	c nodes first announce: RSMouseClick.
-	self assert: c nodes first shadow notNil
+	self assert: c nodes first hasShadow
 ]
 
 { #category : #tests }

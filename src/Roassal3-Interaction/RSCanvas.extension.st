@@ -11,6 +11,18 @@ RSCanvas >> controllerInteraction: aCanvasController [
 ]
 
 { #category : #'*Roassal3-Interaction' }
+RSCanvas >> searchInteraction [
+	
+	^ self propertyAt: RSSearchInCanvasInteraction
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> searchInteraction: anRSSearchInCanvasInteraction [
+	
+	self propertyAt: RSSearchInCanvasInteraction put: anRSSearchInCanvasInteraction
+]
+
+{ #category : #'*Roassal3-Interaction' }
 RSCanvas >> selectedShapes [
 	^ self propertyAt: #selectedShapes ifAbsent: [ #() ]
 ]
@@ -23,14 +35,14 @@ RSCanvas >> selectedShapes: aGroupOfShapes [
 { #category : #'*Roassal3-Interaction' }
 RSCanvas >> selectionInteraction [
 	
-	^ self propertyAt: #selectionInteraction
+	^ self propertyAt: RSSelectionInCanvasInteraction
 ]
 
 { #category : #'*Roassal3-Interaction' }
 RSCanvas >> selectionInteraction: aRSSelectionInCanvasInteraction [
 
 	self
-		propertyAt: #selectionInteraction
+		propertyAt: RSSelectionInCanvasInteraction
 		put: aRSSelectionInCanvasInteraction
 ]
 

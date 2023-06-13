@@ -70,13 +70,12 @@ RSCanvasController >> defaultInteractions [
 	"create a subclass of RSCanvasController and define your own custom interactions for your canvas"
 
 	^ { 
-		  "RSDraggableCanvasInteraction."
 		  RSKeyNavigationCanvasInteraction.
 		  RSZoomToFitCanvasInteraction.
 		  RSZoomableCanvasInteraction.
 		  RSScrollBarsCanvasInteraction.
-		  RSSearchInCanvasInteraction.
-		  RSSelectionInCanvasInteraction }
+		  RSSelectionInCanvasInteraction.
+		  RSSearchInCanvasInteraction }
 ]
 
 { #category : #accessing }

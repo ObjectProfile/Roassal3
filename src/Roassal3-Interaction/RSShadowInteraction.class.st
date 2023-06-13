@@ -33,8 +33,8 @@ RSShadowInteraction >> createShadowFor: aShape [
 RSShadowInteraction >> initialize [
 
 	super initialize.
-	self padding: 10.
-	self shadowColor: (Color blue alpha: 0.3).
+	self padding: 4.
+	self shadowColor: (Color fromHexString: 'E67E2255').
 	self shouldPushFront: false
 ]
 

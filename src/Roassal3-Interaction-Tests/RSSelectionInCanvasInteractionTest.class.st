@@ -50,6 +50,46 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenShapesAreSelected [
 ]
 
 { #category : #tests }
+RSSelectionInCanvasInteractionTest >> testClickOnCanvasUnselectsAllShapes [
+
+	canvas @ RSSelectionInCanvasInteraction.
+	canvas setSelectedShapes: shapes.
+	canvas leftClick.
+	self assert: canvas selectedShapes isEmpty
+]
+
+{ #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectNewAddedShapeWithShiftClick [
+
+	| newShape |
+	canvas @ RSSelectionInCanvasInteraction.
+	newShape := RSBox model: 11.
+	canvas add: newShape.
+	newShape shiftLeftClick.
+	self assert: newShape hasShadow
+]
+
+{ #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectSeveralShapesWithShiftClick [
+
+	| shapesToSelect |
+	canvas @ RSSelectionInCanvasInteraction.
+	shapesToSelect := canvas shapes copyFrom: 1 to: 5.
+	shapesToSelect do: [ :shape | 
+		shape shiftLeftClick ].
+	self assert: (shapesToSelect allSatisfy: [ :s | s hasShadow ])
+]
+
+{ #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectShapeWithShiftClick [
+
+	canvas @ RSSelectionInCanvasInteraction.
+
+	shapes first shiftLeftClick.
+	self assert: shapes first hasShadow
+]
+
+{ #category : #tests }
 RSSelectionInCanvasInteractionTest >> testSelectShapes [
 
 	self assert: canvas selectedShapes isEmpty.
@@ -66,4 +106,14 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 	canvas @ RSSelectionInCanvasInteraction.
 	canvas setSelectedShapes: shapes.
 	self assert: (shapes allSatisfy: [ :each | each shadow notNil ])
+]
+
+{ #category : #tests }
+RSSelectionInCanvasInteractionTest >> testUnselectShapeWithShiftClick [
+
+	
+	canvas @ RSSelectionInCanvasInteraction.
+	canvas setSelectedShapes: shapes.
+	canvas shapes first shiftLeftClick.
+	self deny: canvas shapes first hasShadow
 ]
