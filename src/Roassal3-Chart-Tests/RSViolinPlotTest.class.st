@@ -13,8 +13,9 @@ RSViolinPlotTest >> testBasicViolinPlot [
 	data := #(10 20 30 40 40 50).
 	violinPlot := RSViolinPlot data: data.
 	window := violinPlot open.
+	self halt.
 	self assert: window isDisplayed.
-	window delete. 
+	window delete.
 ]
 
 { #category : #tests }

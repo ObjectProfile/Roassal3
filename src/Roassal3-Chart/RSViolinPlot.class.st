@@ -117,13 +117,29 @@ RSViolinPlot >> bandwidth: aNumber [
 ]
 
 { #category : #private }
+RSViolinPlot >> computeBox [
+	| boxPoints yMax q1 q3 |
+	q1 := statisticalMeasures quartiles at: 1.
+	q3 := statisticalMeasures quartiles at: 3.	
+	boxPoints := {-0.01@q1. 0.01@q1. 0.01@q3. -0.01@q3}.
+	"xValues := { 0. 20. }.
+	yMax := q3 + 1.
+	yValues := {q1 - 1. yMax. }."
+	^ boxPoints.
+]
+
+{ #category : #private }
 RSViolinPlot >> computeCurvePoints [
-	| ys yMax |
-	curvePoints := kernelDensity densityCurve.
-	xValues := { curvePoints first x. curvePoints last x. }.
-	ys := curvePoints collect: [ :point | point y ].
-	yMax := ys max.
-	yValues := {0. yMax. }.
+	| xs xMax xMin densityCurve |
+	kernelDensity bandwidth: 10.
+	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
+	yValues := { densityCurve first y. densityCurve last y. }.
+	curvePoints := densityCurve copy.
+	(densityCurve reversed) do: [ :point | curvePoints add: ((point x * -1) @ point y) ].
+	xs := curvePoints collect: [ :point | point x ].
+	xMax := xs max.
+	xMin := xs min.
+	xValues := {xMin. xMax. }.
 ]
 
 { #category : #accessing }
@@ -223,19 +239,15 @@ RSViolinPlot >> open [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| curve firstPoint lastPoint closingPointStart closingPointEnd |
+	| curve firstPoint lastPoint closingPointStart closingPointEnd box |
 	area := self shape copy.
 	area color: self computeColor.
-	firstPoint := curvePoints first.
-	lastPoint := curvePoints last.
-	closingPointStart := firstPoint x @ 0.
-	closingPointEnd := lastPoint x @ 0.
-	curve := curvePoints copy.
-	curve addFirst: closingPointStart.
-	curve add: closingPointEnd.
-	lastPoint := curve last.
-	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
+	area points: (curvePoints collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: area.
+	box :=  RSPolygon new.
+	box points: ((self computeBox) collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: Color black translucent.
+	canvas add: box.
 ]
 
 { #category : #accessing }
