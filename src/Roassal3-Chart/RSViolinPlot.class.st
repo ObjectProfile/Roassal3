@@ -3,12 +3,14 @@ Class {
 	#superclass : #RSAbstractPlot,
 	#instVars : [
 		'kernelDensity',
-		'curvePoints',
-		'area',
+		'densityAreaPoints',
+		'densityArea',
+		'statisticalMeasures',
+		'boxPoints',
+		'box',
 		'xlabel',
 		'ylabel',
-		'title',
-		'statisticalMeasures'
+		'title'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -18,8 +20,6 @@ RSViolinPlot class >> data: aCollection [
 	| densityPlot |
 	densityPlot := self new.
 	densityPlot data: aCollection.
-	"It should be here?"
-	densityPlot statisticalMeasures: densityPlot defaultStatisticalMeasures.
 	^ densityPlot
 ]
 
@@ -95,7 +95,7 @@ RSViolinPlot class >> kernelDensity: anRSKernelDensity [
 
 { #category : #accessing }
 RSViolinPlot >> area [
-	^ area
+	^ densityArea
 ]
 
 { #category : #accessing }
@@ -117,26 +117,22 @@ RSViolinPlot >> bandwidth: aNumber [
 ]
 
 { #category : #private }
-RSViolinPlot >> computeBox [
-	| boxPoints yMax q1 q3 |
+RSViolinPlot >> computeBoxPoints [
+	| q1 q3 boxWidth |
 	q1 := statisticalMeasures quartiles at: 1.
-	q3 := statisticalMeasures quartiles at: 3.	
-	boxPoints := {-0.01@q1. 0.01@q1. 0.01@q3. -0.01@q3}.
-	"xValues := { 0. 20. }.
-	yMax := q3 + 1.
-	yValues := {q1 - 1. yMax. }."
-	^ boxPoints.
+	q3 := statisticalMeasures quartiles at: 3.
+	boxWidth := 0.005.
+	boxPoints := {(0-(boxWidth/2))@q1. (boxWidth/2)@q1. (boxWidth/2)@q3. (0-(boxWidth/2))@q3}.
 ]
 
 { #category : #private }
 RSViolinPlot >> computeCurvePoints [
 	| xs xMax xMin densityCurve |
-	kernelDensity bandwidth: 10.
 	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
 	yValues := { densityCurve first y. densityCurve last y. }.
-	curvePoints := densityCurve copy.
-	(densityCurve reversed) do: [ :point | curvePoints add: ((point x * -1) @ point y) ].
-	xs := curvePoints collect: [ :point | point x ].
+	densityAreaPoints := densityCurve copy.
+	(densityCurve reversed) do: [ :point | densityAreaPoints add: ((point x * -1) @ point y) ].
+	xs := densityAreaPoints collect: [ :point | point x ].
 	xMax := xs max.
 	xMin := xs min.
 	xValues := {xMin. xMax. }.
@@ -144,7 +140,7 @@ RSViolinPlot >> computeCurvePoints [
 
 { #category : #accessing }
 RSViolinPlot >> createdShapes [
-	^ { area }
+	^ { densityArea. box. }
 ]
 
 { #category : #accessing }
@@ -156,17 +152,22 @@ RSViolinPlot >> data [
 RSViolinPlot >> data: aCollection [
 	kernelDensity data: aCollection.
 	self computeCurvePoints.
+	"It should be here?"
+	"Statistical measures should be replaced as extension methods. 
+	Or a class that don't store the data"
+	self statisticalMeasures: self defaultStatisticalMeasures.
+	self computeBoxPoints.
 ]
 
 { #category : #defaults }
 RSViolinPlot >> defaultAreaColor [
-	^ area color.
+	^ densityArea color.
 	
 ]
 
 { #category : #defaults }
 RSViolinPlot >> defaultKernelDensity [
-	^ RSKernelDensity new.
+	^ RSKernelDensity new bandwidth: 10.
 ]
 
 { #category : #defaults }
@@ -239,14 +240,16 @@ RSViolinPlot >> open [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| curve firstPoint lastPoint closingPointStart closingPointEnd box |
-	area := self shape copy.
-	area color: self computeColor.
-	area points: (curvePoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	canvas add: area.
+	densityArea := self shape copy.
+	densityArea color: self computeColor.
+	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	densityArea borderColor: Color black.
+	canvas add: densityArea.
+	
 	box :=  RSPolygon new.
-	box points: ((self computeBox) collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: Color black translucent.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: Color white.
+	box borderColor: Color black.
 	canvas add: box.
 ]
 
