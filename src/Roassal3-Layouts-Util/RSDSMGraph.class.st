@@ -9,7 +9,7 @@ Class {
 		'graph',
 		'numberOfVertices'
 	],
-	#category : #'Roassal3-DSM-Variations'
+	#category : #'Roassal3-Layouts-Util'
 }
 
 { #category : #'instance creation' }
@@ -71,7 +71,7 @@ RSDSMGraph >> dfsUtil: index visited: visited groups: groups [
 
 { #category : #examples }
 RSDSMGraph >> example01 [
-	<script: 'self new example01'>
+	<script: 'self new example01 inspect'>
 
 	| g |
 	g := self class new: 5.

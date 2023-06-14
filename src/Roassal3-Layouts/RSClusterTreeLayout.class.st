@@ -38,7 +38,7 @@ RSClusterTreeLayout >> computePosition: aNode [
 RSClusterTreeLayout >> doExecute: nodeElements [
 	| rootNodes gap |
 	"Not much to do if there is only one element"
-	nodeElements size = 1 ifTrue: [ ^ self ].
+	nodeElements size <= 1 ifTrue: [ ^ self ].
 
 	rootNodes := self rootNodesFor: nodeElements.
 	self validateCachedParents.
@@ -51,11 +51,11 @@ RSClusterTreeLayout >> doExecute: nodeElements [
 
 	maxAbcissa := (self xOf: externalLayer last) + horizontalGap .
 
-	gap := maxAbcissa "+ horizontalGap "/ 2 / Float pi / maxLayer.
+	gap := maxAbcissa / 2 / Float pi / maxLayer.
 
 	verticalGap := verticalGap max: gap.
 
-	rootNodes do: [ :e | self draw: e. self step ]
+	rootNodes do: [ :e | self draw: e ]
 ]
 
 { #category : #'drawing - general' }

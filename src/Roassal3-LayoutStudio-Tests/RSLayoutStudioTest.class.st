@@ -38,6 +38,30 @@ RSLayoutStudioTest >> testEditGridLayoutUpdatesToolPanel [
 ]
 
 { #category : #tests }
+RSLayoutStudioTest >> testGenerateFromDefaultCreatesAnString [
+	| layoutClass association |
+	layoutClass := RSGridLayout.
+	association := layoutClass -> layoutClass layoutDefinition.
+	studio edit: association.
+	self assert: studio generateStringCode equals: 'layout := RSGridLayout new.'.
+]
+
+{ #category : #tests }
+RSLayoutStudioTest >> testGenerateWithChangedFieldShowsTheFieldAsString [
+	| layoutClass association field |
+	layoutClass := RSGridLayout.
+	association := layoutClass -> layoutClass layoutDefinition.
+	studio edit: association.
+	field := studio layoutDefinition fieldNamed: 'horizontalGap'.
+	field layoutValue: 20.
+	self
+		assert: studio generateStringCode
+		equals: 'layout := RSGridLayout new
+	horizontalGap: 20;
+	yourself.'
+]
+
+{ #category : #tests }
 RSLayoutStudioTest >> testOpenShouldCreateAWindow [
 	self assert: window isDisplayed
 ]

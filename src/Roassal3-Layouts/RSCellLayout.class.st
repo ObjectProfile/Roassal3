@@ -1,5 +1,5 @@
 "
-RSCellLayout places shapes keeping their order from left to right.
+`RSCellLayout` places shapes keeping their order from left to right.
 Use `lineItemsCount:` to set the number of items per line.
 
 Note with elements of different size each line will have different size also.

@@ -1,12 +1,12 @@
 Extension { #name : #RSVerticalCellLayout }
 
 { #category : #'*Roassal3-LayoutStudio' }
-RSVerticalCellLayout classSide >> alignmentOptions [
+RSVerticalCellLayout class >> alignmentOptions [
 	^ #(left center right none)
 ]
 
 { #category : #'*Roassal3-LayoutStudio' }
-RSVerticalCellLayout classSide >> layoutDefinition [
+RSVerticalCellLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new
 			label: 'Aligment';
