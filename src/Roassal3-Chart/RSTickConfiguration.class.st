@@ -69,7 +69,6 @@ Class {
 		'numberOfTicks',
 		'shouldHaveLabels',
 		'labelConversion',
-		'shouldUseNiceLabel',
 		'labelRotation',
 		'fontSize',
 		'tickSize'
@@ -103,7 +102,6 @@ RSTickConfiguration >> initialize [
 		fontSize: RSLabel defaultFontSize;
 		labelRotation: 0;
 		shouldHaveLabels: true;
-		shouldUseNiceLabel: true;
 		labelConversion: [ :value | value asFloat round: 3 ];
 		tickSize: 3
 ]
@@ -146,16 +144,6 @@ RSTickConfiguration >> shouldHaveLabels [
 { #category : #accessing }
 RSTickConfiguration >> shouldHaveLabels: aBoolean [
 	shouldHaveLabels := aBoolean
-]
-
-{ #category : #accessing }
-RSTickConfiguration >> shouldUseNiceLabel [
-	^ shouldUseNiceLabel
-]
-
-{ #category : #accessing }
-RSTickConfiguration >> shouldUseNiceLabel: aBoolean [
-	shouldUseNiceLabel := aBoolean
 ]
 
 { #category : #accessing }

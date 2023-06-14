@@ -8,7 +8,8 @@ Class {
 		'ticks',
 		'labels',
 		'labelLocation',
-		'configuration'
+		'configuration',
+		'tickLocator'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -81,6 +82,12 @@ RSAbstractTick >> defaultLabelLocation [
 ]
 
 { #category : #initialization }
+RSAbstractTick >> defaultLocator [
+
+	^ RSAutoLocator new
+]
+
+{ #category : #initialization }
 RSAbstractTick >> defaultShape [
 	^ RSLine new
 ]
@@ -88,7 +95,7 @@ RSAbstractTick >> defaultShape [
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 
-	self configuration shouldUseNiceLabel: false
+	self locator: RSLinearLocator new
 ]
 
 { #category : #accessing }
@@ -127,6 +134,13 @@ RSAbstractTick >> fromNames: aCollectionOfStrings [
 	self labelConversion: [ :x |
 		x isZero ifTrue: [ '' ]
 			ifFalse: [ aCollectionOfStrings at: x asInteger ] ]
+]
+
+{ #category : #initialization }
+RSAbstractTick >> initialize [
+
+	super initialize.
+	tickLocator := self defaultLocator
 ]
 
 { #category : #public }
@@ -183,6 +197,18 @@ RSAbstractTick >> labelRotation: aNumber [
 { #category : #accessing }
 RSAbstractTick >> labels [
 	^ labels
+]
+
+{ #category : #accessing }
+RSAbstractTick >> locator [
+
+	^ tickLocator 
+]
+
+{ #category : #accessing }
+RSAbstractTick >> locator: aLocator [
+
+	tickLocator := aLocator 
 ]
 
 { #category : #accessing }
@@ -258,12 +284,14 @@ RSAbstractTick >> ticks [
 { #category : #public }
 RSAbstractTick >> ticksData [
 
-	| scaleToUse |
+	| scaleToUse data |
 	scaleToUse := self scaleToUse.
+	data := tickLocator
+		        generateTicks: scaleToUse
+		        with: self configuration numberOfTicks.
+	configuration numberOfTicks: data size.
 
-	^ self configuration shouldUseNiceLabel
-		ifTrue: [ scaleToUse niceTicks: self configuration numberOfTicks ]
-		ifFalse: [ scaleToUse ticks: self configuration numberOfTicks ]
+	^ data
 ]
 
 { #category : #rendering }
@@ -275,7 +303,7 @@ RSAbstractTick >> updateChartMaxAndMinValues: aChart [
 { #category : #public }
 RSAbstractTick >> useNiceLabel [
 
-	self configuration shouldUseNiceLabel: true
+	self locator: RSAutoLocator new
 ]
 
 { #category : #public }
