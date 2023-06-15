@@ -8,9 +8,11 @@ Class {
 		'statisticalMeasures',
 		'boxPoints',
 		'box',
+		'medianLinePoints',
 		'xlabel',
 		'ylabel',
-		'title'
+		'title',
+		'centerLinePoints'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -24,39 +26,20 @@ RSViolinPlot class >> data: aCollection [
 ]
 
 { #category : #examples }
-RSViolinPlot class >> exampleBasicDensityPlot [
-	| densityPlot data |
-	data := #(14 15 28 27 32 35).
-	densityPlot := self data: data.
-	densityPlot bandwidth: 4.
-	^ densityPlot open.
+RSViolinPlot class >> exampleBasicViolinPlot [
+	| violinPlot data |
+	data := #(10 20 30 40 40 50).
+	violinPlot := RSViolinPlot data: data.
+	violinPlot open.
 ]
 
 { #category : #examples }
-RSViolinPlot class >> exampleBasicDensityPlot2 [
-	| densityPlot data |
-	data := #(5 5 5 45 45 45).
-	densityPlot := self data: data.
-	densityPlot bandwidth: 4.
-	^ densityPlot open.
-]
-
-{ #category : #examples }
-RSViolinPlot class >> exampleBasicDensityPlot3 [
-	| densityPlot data |
-	data := #(10 10 10 10).
-	densityPlot := self data: data.
-	densityPlot bandwidth: 4.
-	^ densityPlot open.
-]
-
-{ #category : #examples }
-RSViolinPlot class >> exampleBasicDensityPlot4 [
-	| densityPlot data |
-	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
-	densityPlot := self data: data.
-	densityPlot bandwidth: 10.
-	^ densityPlot open.
+RSViolinPlot class >> exampleBasicViolinPlot2 [
+	| violinPlot data |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	violinPlot bandwidth: 150.
+	violinPlot open.
 ]
 
 { #category : #examples }
@@ -118,11 +101,18 @@ RSViolinPlot >> bandwidth: aNumber [
 
 { #category : #private }
 RSViolinPlot >> computeBoxPoints [
-	| q1 q3 boxWidth |
-	q1 := statisticalMeasures quartiles at: 1.
-	q3 := statisticalMeasures quartiles at: 3.
-	boxWidth := 0.005.
-	boxPoints := {(0-(boxWidth/2))@q1. (boxWidth/2)@q1. (boxWidth/2)@q3. (0-(boxWidth/2))@q3}.
+	| q025 q050 q075 boxWidth quartiles upperLimit lowerLimit |
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q050 := quartiles at: 2.
+	q075 := quartiles at: 3.
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	boxWidth := 0.01.
+	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
+	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
+	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }
+	
 ]
 
 { #category : #private }
@@ -135,7 +125,7 @@ RSViolinPlot >> computeCurvePoints [
 	xs := densityAreaPoints collect: [ :point | point x ].
 	xMax := xs max.
 	xMin := xs min.
-	xValues := {xMin. xMax. }.
+	xValues := {xMin-0.05. xMax+0.05. }.
 ]
 
 { #category : #accessing }
@@ -167,7 +157,7 @@ RSViolinPlot >> defaultAreaColor [
 
 { #category : #defaults }
 RSViolinPlot >> defaultKernelDensity [
-	^ RSKernelDensity new bandwidth: 10.
+	^ RSKernelDensity new bandwidth: 12.
 ]
 
 { #category : #defaults }
@@ -240,17 +230,30 @@ RSViolinPlot >> open [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
+	| medianLine centerLine |
 	densityArea := self shape copy.
 	densityArea color: self computeColor.
 	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
 	densityArea borderColor: Color black.
 	canvas add: densityArea.
 	
+	centerLine := RSPolyline new.
+	centerLine := centerLine controlPoints: (centerLinePoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	centerLine width: 1.25.
+	centerLine color: Color black.
+	canvas add: centerLine.
+	
 	box :=  RSPolygon new.
 	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
 	box color: Color white.
 	box borderColor: Color black.
 	canvas add: box.
+	
+	medianLine := RSPolyline new.
+	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	medianLine width: 2.
+	medianLine color: Color black.
+	canvas add: medianLine.
 ]
 
 { #category : #accessing }
