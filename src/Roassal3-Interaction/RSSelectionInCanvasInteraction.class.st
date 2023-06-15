@@ -35,7 +35,8 @@ RSSelectionInCanvasInteraction class >> withoutNilModels [
 { #category : #interactions }
 RSSelectionInCanvasInteraction >> addInteractionToShape: aShape [
 
-	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [ ^ self ].
+	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [ 
+		^ self ].
 	aShape when: RSMouseLeftClick send: #processClick: to: self
 ]
 
@@ -99,7 +100,7 @@ RSSelectionInCanvasInteraction >> processClick: evt [
 	evt shiftPressed ifFalse: [ ^ self ].
 	shape := evt shape.
 	canvas := evt canvas.
-	selectedShapes := canvas selectedShapes asGroup.
+	selectedShapes := RSGroup withAll: canvas selectedShapes.
 	shape hasShadow
 		ifTrue: [ selectedShapes remove: shape ]
 		ifFalse: [ selectedShapes add: shape ].
@@ -125,7 +126,6 @@ RSSelectionInCanvasInteraction >> renderLegendOn: lb [
 
 { #category : #'event processing' }
 RSSelectionInCanvasInteraction >> selectionChange: evt [
-
 	self setSelectedShapes: evt selectedShapes on: evt canvas
 ]
 
@@ -146,19 +146,26 @@ RSSelectionInCanvasInteraction >> selectionStart: evt [
 { #category : #public }
 RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanvas [
 
-	| filteredShapes |
+	| filteredShapes selectedShapes shapesToRemoveShadow shapesToPutShadow |
 	filteredShapes := self withoutNilModels
 		                  ifTrue: [ 
 		                  aGroupOfShapes select: [ :shape | 
 			                  shape model isNotNil ] ]
 		                  ifFalse: [ aGroupOfShapes ].
+		
+	selectedShapes := aRSCanvas selectedShapes.
+	shapesToRemoveShadow := selectedShapes difference: filteredShapes.
+	self unselectShapes: shapesToRemoveShadow in: aRSCanvas.
 
-	shadowInteraction removeShadowsOn: aRSCanvas.
-	filteredShapes @ shadowInteraction.
+	shapesToPutShadow := filteredShapes difference: selectedShapes.
+
+
+	shapesToPutShadow @ shadowInteraction.
 	aRSCanvas selectedShapes: filteredShapes.
 	aRSCanvas announce: (RSSelectionChangedEvent new
 			 selectedShapes: filteredShapes;
-			 yourself)
+			 yourself).
+	aRSCanvas signalUpdate
 ]
 
 { #category : #accessing }
@@ -170,6 +177,17 @@ RSSelectionInCanvasInteraction >> shadowColor [
 { #category : #accessing }
 RSSelectionInCanvasInteraction >> shadowColor: aColor [ 
 	shadowInteraction shadowColor: aColor
+]
+
+{ #category : #public }
+RSSelectionInCanvasInteraction >> unselectShapes: aGroupOfShapes in: aCanvas [
+
+	| key |
+	aGroupOfShapes do: [ :s | s removeShadow ].
+	key := shadowInteraction key.
+	aCanvas
+		propertyAt: key
+		ifPresent: [ :list | list removeAll: aGroupOfShapes ]
 ]
 
 { #category : #accessing }

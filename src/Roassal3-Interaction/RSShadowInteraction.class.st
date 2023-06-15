@@ -15,7 +15,8 @@ RSShadowInteraction >> addInteractionToCanvas: aShape [
 	| canvas |
 	canvas := aShape canvas.
 	canvas ifNil: [ ^ self ].
-	(canvas hasInteraction: self) ifTrue: [ ^ self ].
+	canvas shadowInteraction ifNotNil: [ ^ self ].
+	canvas shadowInteraction: self.
 	canvas when: RSScaleChangedEvent send: #updateAllShadows: to: self
 ]
 
@@ -36,6 +37,11 @@ RSShadowInteraction >> initialize [
 	self padding: 4.
 	self shadowColor: (Color fromHexString: 'E67E2255').
 	self shouldPushFront: false
+]
+
+{ #category : #accessing }
+RSShadowInteraction >> key [
+	^ #shadowShapeList
 ]
 
 { #category : #hooks }
@@ -75,7 +81,7 @@ RSShadowInteraction >> putShadowOn: aShape [
 	aShape shadow: shadow.
 	shadow position: aShape position.
 
-	list := canvas propertyAt: self class ifAbsentPut: [ Set new ].
+	list := canvas propertyAt: self key ifAbsentPut: [ Set new ].
 	list add: aShape
 ]
 
@@ -87,17 +93,18 @@ RSShadowInteraction >> removeShadow: evt [
 	shape := evt shape.
 	shape removeShadow.
 	canvas
-		propertyAt: self class
+		propertyAt: self key
 		ifPresent: [ :list | list remove: shape ]
 ]
 
 { #category : #removing }
 RSShadowInteraction >> removeShadowsOn: aRSCanvas [
-
+	| key |
+	key := self key.
 	aRSCanvas
-		propertyAt: self class
+		propertyAt: key
 		ifPresent: [ :list | list do: #removeShadow ].
-	aRSCanvas removeKey: self class
+	aRSCanvas removeKey: key
 ]
 
 { #category : #hooks }
@@ -140,7 +147,7 @@ RSShadowInteraction >> updateAllShadows: evt [
 	| canvas |
 	canvas := evt canvas.
 	canvas
-		propertyAt: self class
+		propertyAt: self key
 		ifPresent: [ :list | list do: [ :shape | self updateShadow: shape ] ]
 ]
 

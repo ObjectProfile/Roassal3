@@ -35,6 +35,7 @@ RSShape >> removeShadow [
 	| key |
 	key := #shadow.
 	(self hasProperty: key) ifFalse: [ ^ self ].
+	self removeInteractionIfPresent: RSShadowInteraction.
 	self shadow remove.
 	self removeKey: key.
 ]

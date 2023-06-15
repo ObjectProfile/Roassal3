@@ -55,3 +55,13 @@ RSCanvas >> setSelectedShapes: aGroupOfShapes [
 		'This canvas has no selection interaction. RSSelectionInCanvasInteraction has to be added to canvas.'.
 	self selectionInteraction setSelectedShapes: aGroupOfShapes on: self
 ]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> shadowInteraction [
+	^ self propertyAt: RSShadowInteraction
+]
+
+{ #category : #'*Roassal3-Interaction' }
+RSCanvas >> shadowInteraction: aRSShadowInteraction [ 
+	self propertyAt: RSShadowInteraction put: aRSShadowInteraction
+]
