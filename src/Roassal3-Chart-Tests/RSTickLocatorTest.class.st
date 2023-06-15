@@ -63,6 +63,49 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk3 [
 ]
 
 { #category : #tests }
+RSTickLocatorTest >> testFixedLocatorBasic [
+
+	| ticksCol data |
+	ticksCol := { 0. 1. 4. 6 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #( 0 1 4 6 )
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorCollectionTooLarge [
+
+	| ticksCol data |
+	ticksCol := { -1. 0. 1. 4. 6. 9 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #( 0 1 4 6 )
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorEmptyCollection [
+
+	| ticksCol |
+	ticksCol := {  }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+
+	self should: [ ticks ticksData ] raise: Error
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorUnsortedCollection [
+
+	| ticksCol data |
+	ticksCol := { 6. 1. 0. 4 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #(0 1 4 6)
+]
+
+{ #category : #tests }
 RSTickLocatorTest >> testLinearLocatorDataIsOk [
 
 	| data |
