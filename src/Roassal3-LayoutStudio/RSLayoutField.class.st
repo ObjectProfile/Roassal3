@@ -40,6 +40,11 @@ RSLayoutField >> hasChanged [
 	^ hasChanged
 ]
 
+{ #category : #testing }
+RSLayoutField >> hasChanged: aBool [
+	hasChanged := aBool
+]
+
 { #category : #accessing }
 RSLayoutField >> help [
 
@@ -102,7 +107,7 @@ RSLayoutField >> newTextInput [
 ]
 
 { #category : #printing }
-RSLayoutField >> printOn: stream [
+RSLayoutField >> printOn: stream tab: tabSize [
 	stream << selector << ': '.
 	self layoutValue printOn: stream.
 ]
