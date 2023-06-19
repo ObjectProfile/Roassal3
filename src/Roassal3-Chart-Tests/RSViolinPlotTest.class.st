@@ -41,6 +41,16 @@ RSViolinPlotTest >> testDomainXValues [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testOutliersPoints [
+	| violinPlot data outlierPoints |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	violinPlot := RSViolinPlot data: data.
+	outlierPoints := violinPlot outlierPoints.
+	self assert: outlierPoints size equals: 1.
+	self assert: (outlierPoints at: 1) equals: 0@24.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testViolinPlotHasStatisticalMeasures [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).

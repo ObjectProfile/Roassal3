@@ -13,7 +13,8 @@ Class {
 		'ylabel',
 		'title',
 		'centerLinePoints',
-		'boxWidth'
+		'boxWidth',
+		'outlierPoints'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -41,6 +42,15 @@ RSViolinPlot class >> exampleBasicViolinPlot2 [
 	data := { 100. 200. 300. 400. 500. 600. }.
 	violinPlot := RSViolinPlot data: data.
 	violinPlot bandwidth: 150.
+	violinPlot open.
+]
+
+{ #category : #examples }
+RSViolinPlot class >> exampleViolinPlotWithOutliers [
+	| violinPlot data |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	violinPlot := RSViolinPlot data: data.
+	violinPlot bandwidth: 3.
 	violinPlot open.
 ]
 
@@ -92,8 +102,8 @@ RSViolinPlot >> computeBoxPoints [
 	boxWidth := (xValues max - xValues min) * 0.10.
 	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
 	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
-	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }
-	
+	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
+	outlierPoints := statisticalMeasures outliers collect: [ :y | 0@y ].
 ]
 
 { #category : #private }
@@ -218,9 +228,14 @@ RSViolinPlot >> open [
 	^ chart open
 ]
 
+{ #category : #private }
+RSViolinPlot >> outlierPoints [
+	^ outlierPoints.
+]
+
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| medianLine centerLine |
+	| medianLine centerLine outliers |
 	densityArea := self shape copy.
 	densityArea color: self computeColor.
 	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
@@ -244,6 +259,17 @@ RSViolinPlot >> renderIn: canvas [
 	medianLine width: 2.
 	medianLine color: Color black.
 	canvas add: medianLine.
+	
+	outliers := outlierPoints collect: [ :point | self scalePoint: point ].
+	outliers do: [ :out |
+			| e |
+			e := RSEllipse new
+			radius: 2;
+			color: Color black;
+			yourself.
+			e translateTo: out.
+			canvas add: e.
+	].
 ]
 
 { #category : #accessing }
