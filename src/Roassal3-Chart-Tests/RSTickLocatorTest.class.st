@@ -63,7 +63,7 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk3 [
 ]
 
 { #category : #tests }
-RSTickLocatorTest >> testFixedLocatorBasic [
+RSTickLocatorTest >> testFixedLocatorDataIsOk [
 
 	| ticksCol data |
 	ticksCol := { 0. 1. 4. 6 }.
@@ -74,7 +74,7 @@ RSTickLocatorTest >> testFixedLocatorBasic [
 ]
 
 { #category : #tests }
-RSTickLocatorTest >> testFixedLocatorCollectionTooLarge [
+RSTickLocatorTest >> testFixedLocatorDataIsOkWithCollectionTooLarge [
 
 	| ticksCol data |
 	ticksCol := { -1. 0. 1. 4. 6. 9 }.
@@ -85,17 +85,7 @@ RSTickLocatorTest >> testFixedLocatorCollectionTooLarge [
 ]
 
 { #category : #tests }
-RSTickLocatorTest >> testFixedLocatorEmptyCollection [
-
-	| ticksCol |
-	ticksCol := {  }.
-	ticks locator: (RSFixedLocator new ticks: ticksCol).
-
-	self should: [ ticks ticksData ] raise: Error
-]
-
-{ #category : #tests }
-RSTickLocatorTest >> testFixedLocatorUnsortedCollection [
+RSTickLocatorTest >> testFixedLocatorDataIsOkWithUnsortedCollection [
 
 	| ticksCol data |
 	ticksCol := { 6. 1. 0. 4 }.
@@ -103,6 +93,49 @@ RSTickLocatorTest >> testFixedLocatorUnsortedCollection [
 	data := ticks ticksData.
 
 	self assert: data equals: #(0 1 4 6)
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOk [
+
+	| ticksCol data |
+	ticksCol := { 0. 1. 4. 6 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithCollectionTooLarge [
+
+	| ticksCol data |
+	ticksCol := { -1. 0. 1. 4. 6. 9 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithUnsortedCollection [
+
+	| ticksCol data |
+	ticksCol := { 6. 1. 0. 4 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorRaisesErrorWithEmptyCollection [
+
+	| ticksCol |
+	ticksCol := {  }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+
+	self should: [ ticks ticksData ] raise: Error
 ]
 
 { #category : #tests }
