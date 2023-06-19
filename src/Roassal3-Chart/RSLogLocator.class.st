@@ -30,11 +30,6 @@ RSLogLocator >> base: aNumber [
 
 { #category : #generate }
 RSLogLocator >> generateTicks: aScale with: numberOfTicks [
-	"^ (aScale domain first ceiling to: aScale domain last by: 1) select: [
-		  :tick |
-		  | decimalPart |
-		  decimalPart := (tick log: base) fractionPart.
-		  decimalPart < self precision or: 1 - decimalPart < self precision ]"
 
 	| first last power collection tick |
 	first := aScale domain first.
