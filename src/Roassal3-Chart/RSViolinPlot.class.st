@@ -30,6 +30,7 @@ RSViolinPlot class >> exampleBasicViolinPlot [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).
 	violinPlot := RSViolinPlot data: data.
+	violinPlot bandwidth.
 	violinPlot open.
 ]
 
@@ -157,7 +158,7 @@ RSViolinPlot >> defaultAreaColor [
 
 { #category : #defaults }
 RSViolinPlot >> defaultKernelDensity [
-	^ RSKernelDensity new bandwidth: 12.
+	^ RSKernelDensity new.
 ]
 
 { #category : #defaults }
@@ -220,8 +221,6 @@ RSViolinPlot >> open [
 	chart add: self.
 	chart
 		extent: 250 @ 200;
-		add: RSHorizontalTick new;
-		add: RSVerticalTick new;
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		title: self title.

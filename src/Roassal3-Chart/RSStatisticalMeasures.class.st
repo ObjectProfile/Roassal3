@@ -101,6 +101,16 @@ RSStatisticalMeasures >> quartiles [
 ]
 
 { #category : #'accessing - computed' }
+RSStatisticalMeasures >> standardDeviation [
+	| standardDeviation sum mean |
+	sum := 0.
+	mean := self mean.
+	data do: [ :observationX | sum := sum + ((observationX - mean) squared) ].
+	standardDeviation := (mean/(data size)) sqrt.
+	^ standardDeviation.
+]
+
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> upperLimit [
 	| quartiles q1 q3 iqr |
 	quartiles := self quartiles.

@@ -24,6 +24,30 @@ RSKernelDensityTest >> testBasicNewKernelDensity [
 ]
 
 { #category : #tests }
+RSKernelDensityTest >> testComputeBandwidth [
+	| data kernelDensity |
+	data := #(6 7 15 36 39 40 41 42 43 47 49).
+	kernelDensity := RSKernelDensity data: data.
+	self assert: kernelDensity bandwidth closeTo: 8.432115827458984.
+]
+
+{ #category : #tests }
+RSKernelDensityTest >> testComputeDensityCurveDataOnlyOneValue [
+	| kernelDensity data |
+	data := #(87 87 87 87 87 87).
+	kernelDensity := RSKernelDensity data: data.
+	self assert: kernelDensity curveStep closeTo: 0.01.
+]
+
+{ #category : #tests }
+RSKernelDensityTest >> testComputeDensityCurveStep [
+	| kernelDensity data |
+	data := #(14 15 28 27 32 35).
+	kernelDensity := RSKernelDensity data: data.
+	self assert: kernelDensity curveStep closeTo: 0.21.
+]
+
+{ #category : #tests }
 RSKernelDensityTest >> testDensityCurveSample [
 	| data proveValues validationValues kernelDensity |
 	data := #(14 15 28 27 32 35).
@@ -32,6 +56,14 @@ RSKernelDensityTest >> testDensityCurveSample [
 	kernelDensity := RSKernelDensity data: data.
 	kernelDensity bandwidth: 4.
 	self assert: (kernelDensity densityCurveSample: proveValues) closeTo: validationValues.
+]
+
+{ #category : #tests }
+RSKernelDensityTest >> testGetStandardDeviation [
+	| data standardDeviation |
+	data := #(6 7 15 36 39 40 41 42 43 47 49).
+	standardDeviation := data standardDeviation.
+	self assert: standardDeviation closeTo: 15.134657288477642.
 ]
 
 { #category : #tests }
@@ -67,4 +99,16 @@ RSKernelDensityTest >> testKernelFunction [
 	kernelDensity := RSKernelDensity gaussian.
 	anXValue := 30.
  	self assert: (kernelDensity evaluateKernel: anXValue) closeTo: 1.4736e-196.
+]
+
+{ #category : #tests }
+RSKernelDensityTest >> testSetDensityCurveStep [
+	| kernelDensity data densityCurveBeforeStepChange densityCurveAfterStepChange|
+	data := #(14 15 28 27 32 35).
+	kernelDensity := RSKernelDensity data: data.
+	densityCurveBeforeStepChange := kernelDensity densityCurve.
+	kernelDensity curveStep: 5.
+	densityCurveAfterStepChange := kernelDensity densityCurve.
+	self assert: kernelDensity curveStep closeTo: 5.
+	self assert: densityCurveBeforeStepChange size > densityCurveAfterStepChange size.	
 ]

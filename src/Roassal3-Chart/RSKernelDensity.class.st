@@ -36,7 +36,8 @@ Class {
 	#instVars : [
 		'data',
 		'bandwidth',
-		'kernel'
+		'kernel',
+		'curveStep'
 	],
 	#category : #'Roassal3-Chart-Statistics'
 }
@@ -86,7 +87,37 @@ RSKernelDensity >> bandwidth [
 
 { #category : #accessing }
 RSKernelDensity >> bandwidth: aNumber [
-	bandwidth := aNumber
+	bandwidth := aNumber abs.
+]
+
+{ #category : #private }
+RSKernelDensity >> computeBandwidth [
+	"Based on https://en.wikipedia.org/wiki/Kernel_density_estimation"
+	| n standardDeviation iqr |
+	n := data size.
+	standardDeviation := data standardDeviation.
+	iqr := data interQuartileRange.
+	self bandwidth: (0.9 * (standardDeviation min: (iqr/1.34)) * (n raisedTo: (-1/5))).
+]
+
+{ #category : #private }
+RSKernelDensity >> computeCurveStep [
+	| min max diff |
+	min := data min.
+	max := data max.
+	diff := max - min.
+	diff isZero ifTrue: [ diff := 1 ].
+	self curveStep: diff * 0.01.
+]
+
+{ #category : #accessing }
+RSKernelDensity >> curveStep [
+	^ curveStep
+]
+
+{ #category : #accessing }
+RSKernelDensity >> curveStep: aNumber [
+	curveStep := aNumber abs.
 ]
 
 { #category : #accessing }
@@ -98,12 +129,9 @@ RSKernelDensity >> data [
 RSKernelDensity >> data: aCollection [
 	self assert: (aCollection allSatisfy: [ :each | each isNumber ]) 
 		description: 'data: should receive only a collection of numbers'.
-	data := aCollection
-]
-
-{ #category : #accessing }
-RSKernelDensity >> defaultBandwidth [
-	^ 1.0.
+	data := aCollection.
+	self computeBandwidth.
+	self computeCurveStep.
 ]
 
 { #category : #accessing }
@@ -118,7 +146,7 @@ RSKernelDensity >> densityCurve [
 	minData := data min.
 	curvePoints := OrderedCollection new.
 	epsilon := 0.0001.
-	step := 0.05.
+	step := self curveStep.
 	maxY := 0.
 	
 	"Calculate left side"
@@ -172,7 +200,6 @@ RSKernelDensity >> evaluateKernel: aNumber [
 { #category : #initialization }
 RSKernelDensity >> initialize [
 	super initialize.
-	self bandwidth: self defaultBandwidth.
 	self kernel: self defaultKernel.
 ]
 
@@ -181,6 +208,7 @@ RSKernelDensity >> kde: aNumber [
 	| sum h |
 	sum := 0.
 	h := bandwidth.
+	h isZero ifTrue: [ h := 1 ].
 	data 
 		do: [ :xi |
 			sum := sum + (self evaluateKernel: ((aNumber - xi)/h))

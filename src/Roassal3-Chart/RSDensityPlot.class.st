@@ -74,7 +74,7 @@ RSDensityPlot class >> exampleBasicDensityPlot3 [
 	| densityPlot data |
 	data := #(10 10 10 10).
 	densityPlot := self data: data.
-	densityPlot bandwidth: 4.
+"	densityPlot bandwidth: 4."
 	^ densityPlot open.
 ]
 
@@ -84,6 +84,16 @@ RSDensityPlot class >> exampleBasicDensityPlot4 [
 	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 10.
+	^ densityPlot open.
+]
+
+{ #category : #examples }
+RSDensityPlot class >> exampleBasicDensityPlot5 [
+	| densityPlot data |
+	data := #(0.1 0.05 0.05 0.08).
+	densityPlot := self data: data.
+	densityPlot bandwidth." -0.02545046473618206"
+"	densityPlot bandwidth: 4."
 	^ densityPlot open.
 ]
 
@@ -231,8 +241,6 @@ RSDensityPlot >> open [
 	chart add: self.
 	chart
 		extent: 250 @ 200;
-		add: RSHorizontalTick new;
-		add: RSVerticalTick new;
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		title: self title.
