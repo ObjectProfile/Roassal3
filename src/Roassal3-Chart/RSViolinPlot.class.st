@@ -75,16 +75,21 @@ RSViolinPlot >> bandwidth: aNumber [
 	
 ]
 
+{ #category : #accessing }
+RSViolinPlot >> boxWidth [
+	^ boxWidth.
+]
+
 { #category : #private }
 RSViolinPlot >> computeBoxPoints [
-	| q025 q050 q075 boxWidth quartiles upperLimit lowerLimit |
+	| q025 q050 q075 quartiles upperLimit lowerLimit |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
 	q050 := quartiles at: 2.
 	q075 := quartiles at: 3.
 	upperLimit := statisticalMeasures upperLimit.
 	lowerLimit := statisticalMeasures lowerLimit.
-	boxWidth := 0.01.
+	boxWidth := (xValues max - xValues min) * 0.10.
 	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
 	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
 	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }
