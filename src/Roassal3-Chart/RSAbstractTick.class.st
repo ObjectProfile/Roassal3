@@ -289,6 +289,7 @@ RSAbstractTick >> ticksData [
 	data := tickLocator
 		        generateTicks: scaleToUse
 		        with: self configuration numberOfTicks.
+	data ifEmpty: [ Error signal: 'Empty ticks data' ].
 	configuration numberOfTicks: data size.
 
 	^ data

@@ -1,10 +1,10 @@
 "
 <keyClass>
-`RSLinearTickLocator` places ticks at regular intervals between the minimum and the maximum data value, even if the value of the ticks are not ""round"".
+`RSLinearLocator` places ticks at regular intervals between the minimum and the maximum data value, even if the value of the ticks are not ""round"".
 
 *Responsibility*: Places ticks linearly.
 
-*Collaborators*: `RSLinearTickLocator` is used when rendering ticks.
+*Collaborators*: `RSLinearLocator` is used when rendering ticks.
 "
 Class {
 	#name : #RSLinearLocator,

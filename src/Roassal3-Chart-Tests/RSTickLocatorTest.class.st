@@ -63,6 +63,82 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk3 [
 ]
 
 { #category : #tests }
+RSTickLocatorTest >> testFixedLocatorDataIsOk [
+
+	| ticksCol data |
+	ticksCol := { 0. 1. 4. 6 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #( 0 1 4 6 )
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorDataIsOkWithCollectionTooLarge [
+
+	| ticksCol data |
+	ticksCol := { -1. 0. 1. 4. 6. 9 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #( 0 1 4 6 )
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorDataIsOkWithUnsortedCollection [
+
+	| ticksCol data |
+	ticksCol := { 6. 1. 0. 4 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: data equals: #(0 1 4 6)
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOk [
+
+	| ticksCol data |
+	ticksCol := { 0. 1. 4. 6 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithCollectionTooLarge [
+
+	| ticksCol data |
+	ticksCol := { -1. 0. 1. 4. 6. 9 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithUnsortedCollection [
+
+	| ticksCol data |
+	ticksCol := { 6. 1. 0. 4 }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+	data := ticks ticksData.
+
+	self assert: ticks configuration numberOfTicks equals: 4
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testFixedLocatorRaisesErrorWithEmptyCollection [
+
+	| ticksCol |
+	ticksCol := {  }.
+	ticks locator: (RSFixedLocator new ticks: ticksCol).
+
+	self should: [ ticks ticksData ] raise: Error
+]
+
+{ #category : #tests }
 RSTickLocatorTest >> testLinearLocatorDataIsOk [
 
 	| data |
