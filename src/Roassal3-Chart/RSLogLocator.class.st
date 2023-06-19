@@ -11,7 +11,9 @@ Class {
 	#name : #RSLogLocator,
 	#superclass : #RSTickLocator,
 	#instVars : [
-		'base'
+		'base',
+		'smallestIndex',
+		'smallestPower'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -23,9 +25,10 @@ RSLogLocator >> base [
 ]
 
 { #category : #generate }
-RSLogLocator >> base: aNumber [
+RSLogLocator >> base: aBase [
 
-	base := aNumber
+	base := aBase.
+	smallestIndex := aBase**(smallestPower) 
 ]
 
 { #category : #generate }
@@ -44,7 +47,7 @@ RSLogLocator >> generateTicks: aScale with: numberOfTicks [
 	last <= 0 ifTrue: [
 		^ DomainError signal: 'Data has no positive value' ].
 
-	first <= 0 ifTrue: [ first := self smallestIndex ].
+	first <= 0 ifTrue: [ first := smallestIndex ].
 	power := (first log: base) rounded.
 	collection := OrderedCollection new.
 	tick := base ** power.
@@ -61,11 +64,26 @@ RSLogLocator >> generateTicks: aScale with: numberOfTicks [
 RSLogLocator >> initialize [
 
 	super initialize.
-	base := 10
+	base := 10.
+	smallestPower := -3.
+	smallestIndex := base**smallestPower
 ]
 
 { #category : #stepping }
 RSLogLocator >> smallestIndex [
 
-	^ 10**(-3)
+	^ smallestIndex
+]
+
+{ #category : #stepping }
+RSLogLocator >> smallestPower [
+
+	^ smallestPower
+]
+
+{ #category : #stepping }
+RSLogLocator >> smallestPower: aPower [
+
+	smallestPower := aPower.
+	smallestIndex := base**aPower
 ]

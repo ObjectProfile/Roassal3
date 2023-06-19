@@ -99,7 +99,7 @@ RSTickLocatorTest >> testLogLocatorBaseIsCorrectlyChanged [
 RSTickLocatorTest >> testLogLocatorDataIsOk [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 0.001 10 )).
+	ticks xScale: (NSLogScale new domain: #( 0.001 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
@@ -107,14 +107,16 @@ RSTickLocatorTest >> testLogLocatorDataIsOk [
 	self assert: (data at: 2) equals: 1/100.
 	self assert: (data at: 3) equals: 1/10.
 	self assert: (data at: 4) equals: 1.
-	self assert: (data at: 5) equals: 10
+	self assert: (data at: 5) equals: 10.
+	self assert: (data at: 6) equals: 100.
+	self assert: (data at: 7) equals: 1000
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtNegative [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( -1 10 )).
+	ticks xScale: (NSLogScale new domain: #( -1 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
@@ -122,14 +124,16 @@ RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtNegative [
 	self assert: (data at: 2) equals: 1/100.
 	self assert: (data at: 3) equals: 1/10.
 	self assert: (data at: 4) equals: 1.
-	self assert: (data at: 5) equals: 10
+	self assert: (data at: 5) equals: 10.
+	self assert: (data at: 6) equals: 100.
+	self assert: (data at: 7) equals: 1000
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtZero [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 0 10 )).
+	ticks xScale: (NSLogScale new domain: #( 0 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
@@ -137,14 +141,16 @@ RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtZero [
 	self assert: (data at: 2) equals: 1/100.
 	self assert: (data at: 3) equals: 1/10.
 	self assert: (data at: 4) equals: 1.
-	self assert: (data at: 5) equals: 10
+	self assert: (data at: 5) equals: 10.
+	self assert: (data at: 6) equals: 100.
+	self assert: (data at: 7) equals: 1000
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorDataIsOkWithReversedDomain [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 10 0.001 )).
+	ticks xScale: (NSLogScale new domain: #( 1000 0.001 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
@@ -152,7 +158,9 @@ RSTickLocatorTest >> testLogLocatorDataIsOkWithReversedDomain [
 	self assert: (data at: 2) equals: 1/100.
 	self assert: (data at: 3) equals: 1/10.
 	self assert: (data at: 4) equals: 1.
-	self assert: (data at: 5) equals: 10
+	self assert: (data at: 5) equals: 10.
+	self assert: (data at: 6) equals: 100.
+	self assert: (data at: 7) equals: 1000.
 ]
 
 { #category : #tests }
@@ -165,47 +173,56 @@ RSTickLocatorTest >> testLogLocatorDefaultBaseIs10 [
 ]
 
 { #category : #tests }
+RSTickLocatorTest >> testLogLocatorDefaultSmallestPowerIsMinus3 [
+
+	| locator |
+	locator := RSLogLocator new.
+
+	self assert: locator smallestPower equals: -3
+]
+
+{ #category : #tests }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOk [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 0.001 10 )).
+	ticks xScale: (NSLogScale new domain: #( 0.001 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
-	self assert: data size equals: 5
+	self assert: data size equals: 7
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtNegative [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( -1 10 )).
+	ticks xScale: (NSLogScale new domain: #( -1 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
-	self assert: data size equals: 5
+	self assert: data size equals: 7
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtZero [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 0 10 )).
+	ticks xScale: (NSLogScale new domain: #( 0 1000 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
-	self assert: data size equals: 5
+	self assert: data size equals: 7
 ]
 
 { #category : #tests }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkWithReversedDomain [
 
 	| data |
-	ticks xScale: (NSLogScale new domain: #( 10 0.001 )).
+	ticks xScale: (NSLogScale new domain: #( 1000 0.001 )).
 	ticks locator: RSLogLocator new.
 	data := ticks ticksData.
 
-	self assert: data size equals: 5
+	self assert: data size equals: 7
 ]
 
 { #category : #tests }
@@ -214,6 +231,33 @@ RSTickLocatorTest >> testLogLocatorRaisesErrorWithNegativeData [
 	ticks xScale: (NSLogScale new domain: #( -10 -1 )).
 	ticks locator: RSLogLocator new.
 	self should: [ ticks ticksData ] raise: DomainError
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrect [
+
+	| locator |
+	locator := RSLogLocator new.
+	
+	self assert: locator smallestIndex equals: 10**(-3)
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingBase [
+
+	| locator |
+	locator := RSLogLocator new base: 2.
+	
+	self assert: locator smallestIndex equals: 2**(-3)
+]
+
+{ #category : #tests }
+RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingSmallestPower [
+
+	| locator |
+	locator := RSLogLocator new smallestPower: -2.
+	
+	self assert: locator smallestIndex equals: 10**(-2)
 ]
 
 { #category : #tests }
