@@ -12,7 +12,8 @@ Class {
 		'xlabel',
 		'ylabel',
 		'title',
-		'centerLinePoints'
+		'centerLinePoints',
+		'boxWidth'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -41,32 +42,6 @@ RSViolinPlot class >> exampleBasicViolinPlot2 [
 	violinPlot := RSViolinPlot data: data.
 	violinPlot bandwidth: 150.
 	violinPlot open.
-]
-
-{ #category : #examples }
-RSViolinPlot class >> exampleDensityPlotCreateWithKernelDesity [
-	| densityPlot data kernelDensity |
-	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
-	kernelDensity := RSKernelDensity data: data.
-	kernelDensity bandwidth: 10.
-	densityPlot := self kernelDensity: kernelDensity.
-	densityPlot shape
-		color: Color blue translucent;
-		border: (RSBorder new 
-			color: Color red; 
-			width: 2;
-			dashArray: #(2 4)).
-	^ densityPlot open.
-]
-
-{ #category : #examples }
-RSViolinPlot class >> exampleDensityPlotWithLabels [
-	| densityPlot data |
-	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
-	densityPlot := self data: data.
-	densityPlot bandwidth: 10.
-	densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwidth:10)'.
-	^ densityPlot open.
 ]
 
 { #category : #accessing }
@@ -126,7 +101,7 @@ RSViolinPlot >> computeCurvePoints [
 	xs := densityAreaPoints collect: [ :point | point x ].
 	xMax := xs max.
 	xMin := xs min.
-	xValues := {xMin-0.05. xMax+0.05. }.
+	xValues := {xMin*self defaultAreaMarginRatio. xMax*self defaultAreaMarginRatio. }.
 ]
 
 { #category : #accessing }
@@ -157,6 +132,11 @@ RSViolinPlot >> defaultAreaColor [
 ]
 
 { #category : #defaults }
+RSViolinPlot >> defaultAreaMarginRatio [
+	^ 1.5.
+]
+
+{ #category : #defaults }
 RSViolinPlot >> defaultKernelDensity [
 	^ RSKernelDensity new.
 ]
@@ -175,6 +155,12 @@ RSViolinPlot >> defaultShape [
 { #category : #defaults }
 RSViolinPlot >> defaultStatisticalMeasures [
 	^ RSStatisticalMeasures data: self data.
+]
+
+{ #category : #defaults }
+RSViolinPlot >> densityAreaPoints [
+	^ densityAreaPoints.
+	
 ]
 
 { #category : #initialization }
