@@ -40,8 +40,7 @@ RSViolinPlot class >> exampleBasicViolinPlot [
 RSViolinPlot class >> exampleBasicViolinPlot2 [
 	| violinPlot data |
 	data := { 100. 200. 300. 400. 500. 600. }.
-	violinPlot := RSViolinPlot data: data.
-	violinPlot bandwidth: 150.
+	violinPlot := self data: data.
 	violinPlot open.
 ]
 
@@ -49,8 +48,9 @@ RSViolinPlot class >> exampleBasicViolinPlot2 [
 RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	| violinPlot data |
 	data := { 12. 12. 13. 14. 15. 24. }.
-	violinPlot := RSViolinPlot data: data.
+	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
+	violinPlot computeBoxPoints.
 	violinPlot open.
 ]
 
@@ -136,7 +136,7 @@ RSViolinPlot >> data: aCollection [
 	"It should be here?"
 	"Statistical measures should be replaced as extension methods. 
 	Or a class that don't store the data"
-	self statisticalMeasures: self defaultStatisticalMeasures.
+	self statisticalMeasures: (RSStatisticalMeasures data: self data).
 	self computeBoxPoints.
 ]
 
@@ -165,11 +165,6 @@ RSViolinPlot >> defaultLineColor [
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
-]
-
-{ #category : #defaults }
-RSViolinPlot >> defaultStatisticalMeasures [
-	^ RSStatisticalMeasures data: self data.
 ]
 
 { #category : #defaults }
