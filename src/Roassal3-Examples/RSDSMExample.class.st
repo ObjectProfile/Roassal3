@@ -424,3 +424,66 @@ RSDSMExample >> example07StronglyConnectedWithClasses [
 	dsm dependency: [ :k | v at: k ifAbsent: #() ].
 	^ dsm
 ]
+
+{ #category : #sources }
+RSDSMExample >> example08Heatmap [
+	<script: 'self new example08Heatmap open'>
+	| builder |
+	builder := RSHeatmap new.
+	builder objectsX: #('A' 'B' 'C').
+	builder objectsY: #('tomato' 'pumpkin').
+   builder dataMatrix: #(#(1 2 5) #(3 4 6)).
+   ^ builder
+]
+
+{ #category : #sources }
+RSDSMExample >> example09HeatmapMonths [
+	<script: 'self new example09HeatmapMonths open'>
+	| builder |
+	builder := RSHeatmap new.
+	builder shape extent: 40 @ 15.
+	builder colorPalette: (NSScale linear
+		range: {Color gray. Color purple muchDarker}).
+	builder labelShapeCell labelShape 
+		border: (RSBorder new color: Color black; width: 0.3);
+		color: Color white.
+	builder objectsX: #('<0.1' '0.1-4.0' '4.1-10' '10.1-20' '>20').
+	builder objectsY: #(January February March April May June July August September October November December).
+   builder dataMatrix: #(
+		#(255 167 123 65 41)
+		#(244 196 89 52 12)
+		#(268 198 119 46 20)
+		#(321 179 88 31 11)
+		#(413 152 51 31 4)
+		#(432 137 42 15 4)
+		#(567 63 14 7 4)
+		#(550 63 24 8 6)
+		#(454 114 39 16 7)
+		#(337 165 81 44 24)
+		#(238 162 110 65 55)
+		#(263 176 113 64 35)).
+   ^ builder
+]
+
+{ #category : #sources }
+RSDSMExample >> example10Vegetables [
+	<script: 'self new example10Vegetables open'>
+	| vegetables farmers values h |
+	h := RSHeatmap new.
+	h shape extent: 40@20.
+	vegetables := { 'cucumber' . 'tomato'.  'lettuce'. 'asparagus' .
+              'potato'. 'wheat'. 'barley' }.
+	farmers := { 'Farmer Joe'. 'Upland Bros.'. 'Smith Gardening'.
+           'Agrifun'. 'Organiculture' . 'BioGoods Ltd.'. 'Cornylee Corp.' }.
+	values := {{0.8. 2.4. 2.5. 3.9. 0.0. 4.0. 0.0}.
+                    {2.4. 0.0. 4.0. 1.0. 2.7. 0.0. 0.0}.
+                    {1.1. 2.4. 0.8. 4.3. 1.9. 4.4. 0.0}.
+                    {0.6. 0.0. 0.3. 0.0. 3.1. 0.0. 0.0}.
+                    {0.7. 1.7. 0.6. 2.6. 2.2. 6.2. 0.0}.
+                    {1.3. 1.2. 0.0. 0.0. 0.0. 3.2. 5.1}.
+                    {0.1. 2.0. 0.0. 1.4. 0.0. 1.9. 6.3}}.
+	h objectsX: farmers.
+	h objectsY: vegetables.
+   h dataMatrix: values.
+   ^ h
+]
