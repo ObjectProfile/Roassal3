@@ -47,10 +47,9 @@ RSViolinPlot class >> exampleBasicViolinPlot2 [
 { #category : #examples }
 RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	| violinPlot data |
-	data := { 12. 12. 13. 14. 15. 24. }.
+	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
 	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
-	violinPlot computeBoxPoints.
 	violinPlot open.
 ]
 
@@ -82,12 +81,25 @@ RSViolinPlot >> bandwidth [
 RSViolinPlot >> bandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
 	self computeCurvePoints.
-	
+	self computeBoxPoints.
+	self computeYValues.
 ]
 
 { #category : #accessing }
 RSViolinPlot >> boxWidth [
 	^ boxWidth.
+]
+
+{ #category : #opening }
+RSViolinPlot >> buildChart [
+	chart := RSChart new.
+	chart add: self.
+	chart
+		extent: 250 @ 200;
+		ylabel: self ylabel;
+		xlabel: self xlabel;
+		title: self title.
+	^ chart
 ]
 
 { #category : #private }
@@ -110,13 +122,32 @@ RSViolinPlot >> computeBoxPoints [
 RSViolinPlot >> computeCurvePoints [
 	| xs xMax xMin densityCurve |
 	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
-	yValues := { densityCurve first y. densityCurve last y. }.
 	densityAreaPoints := densityCurve copy.
 	(densityCurve reversed) do: [ :point | densityAreaPoints add: ((point x * -1) @ point y) ].
 	xs := densityAreaPoints collect: [ :point | point x ].
 	xMax := xs max.
 	xMin := xs min.
 	xValues := {xMin*self defaultAreaMarginRatio. xMax*self defaultAreaMarginRatio. }.
+]
+
+{ #category : #private }
+RSViolinPlot >> computeYValues [
+	| densityCurve yMax yMin maxOutlier minOutlier outliers densityCurveYs upperLimit diff margin |
+	outliers := statisticalMeasures outliers.
+	maxOutlier := 0.
+	minOutlier := 0.
+	(outliers isNotEmpty) ifTrue: [ 
+		maxOutlier := outliers max.
+		minOutlier := outliers min.
+	].
+	upperLimit := statisticalMeasures upperLimit.
+	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
+	densityCurveYs := densityCurve collect: [ :point | point y ].
+	yMax := ((statisticalMeasures upperLimit) max: (densityCurveYs max)) max: maxOutlier.
+	yMin := ((statisticalMeasures lowerLimit) min: (densityCurveYs min)) min: minOutlier.
+	diff := yMax - yMin.
+	margin := 0.1*diff.
+	yValues := {yMin-margin. yMax+margin.}.
 ]
 
 { #category : #accessing }
@@ -138,6 +169,7 @@ RSViolinPlot >> data: aCollection [
 	Or a class that don't store the data"
 	self statisticalMeasures: (RSStatisticalMeasures data: self data).
 	self computeBoxPoints.
+	self computeYValues.
 ]
 
 { #category : #defaults }
@@ -213,19 +245,17 @@ RSViolinPlot >> median [
 
 { #category : #opening }
 RSViolinPlot >> open [
-	chart := RSChart new.
-	chart add: self.
-	chart
-		extent: 250 @ 200;
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		title: self title.
-	^ chart open
+	^ self buildChart open
 ]
 
 { #category : #private }
 RSViolinPlot >> outlierPoints [
 	^ outlierPoints.
+]
+
+{ #category : #private }
+RSViolinPlot >> outliers [
+	^ statisticalMeasures outliers.
 ]
 
 { #category : #rendering }
@@ -280,6 +310,11 @@ RSViolinPlot >> title [
 { #category : #accessing }
 RSViolinPlot >> title: aString [
 	title := aString.
+]
+
+{ #category : #private }
+RSViolinPlot >> upperWhiskerLimit [
+	^ statisticalMeasures upperLimit.
 ]
 
 { #category : #accessing }
