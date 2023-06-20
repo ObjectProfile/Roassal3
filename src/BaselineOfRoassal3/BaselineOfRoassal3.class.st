@@ -33,7 +33,6 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 BaselineOfRoassal3 >> baselineForPharo10: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
-	spec package: #'Roassal3-Pharo9'.
 	spec package: #'Roassal3-Pharo'.
 	self roassalGroups: spec 
 		core: self corePackagesNames, #('Roassal3-Pharo9' 'Roassal3-Pharo')
