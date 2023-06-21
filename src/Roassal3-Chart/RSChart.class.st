@@ -206,7 +206,7 @@ RSChart >> initializeDecorations [
 { #category : #inspector }
 RSChart >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
-	self build.
+	self update.
 	^ SpRoassal3InspectorPresenter new
 		canvas: self canvas;
 		yourself
