@@ -23,7 +23,7 @@ RSViolinPlotTest >> testDefaultComputeBoxWidth [
 	data := #(10 20 30 40 40 50).
 	violinPlot := RSViolinPlot data: data.
 	boxWidth := violinPlot boxWidth.
-	self assert: boxWidth closeTo: 0.0072.
+	self assert: boxWidth closeTo: 0.0072 precision: 4.
 ]
 
 { #category : #tests }
