@@ -70,7 +70,7 @@ RSKernelDensityTest >> testGetStandardDeviation [
 RSKernelDensityTest >> testKDEDefaultBandwidth [
 	| kernelDensity anXValue |
 	kernelDensity := RSKernelDensity gaussian.
-	self assert: kernelDensity bandwidth closeTo: 1.00.
+	self assert: kernelDensity bandwidth isNil.
 ]
 
 { #category : #tests }

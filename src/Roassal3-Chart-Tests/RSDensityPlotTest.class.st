@@ -45,7 +45,7 @@ RSDensityPlotTest >> testDensityPlotDefaultValues [
 	densityPlot := RSDensityPlot data: data.
  	self assert: densityPlot data equals: data.
 	self assert: (densityPlot kernel isKindOf: RSKernelFunction).
-	self assert: densityPlot bandwidth equals: 1.
+	self assert: densityPlot bandwidth closeTo: 0.46936.
 ]
 
 { #category : #tests }
@@ -96,7 +96,7 @@ RSDensityPlotTest >> testSetBandwidth [
 	| densityPlot data |
 	data := #(1 2 2 2 3 4).
 	densityPlot := RSDensityPlot data: data.
- 	self assert: densityPlot bandwidth equals: 1.
+ 	self assert: densityPlot bandwidth closeTo: 0.46936.
 	densityPlot bandwidth: 4.
 	self assert: densityPlot bandwidth equals: 4.
 ]
