@@ -140,12 +140,16 @@ RSHeatmap >> renderIn: aCanvas [
 RSHeatmap >> setUpShape: aComposite [
 	| label matrixIndex value box |
 	super setUpShape: aComposite.
-	label := self newLabelFor: aComposite.
-	aComposite add: label.
 	matrixIndex := aComposite propertyAt: self matrixKey.
 	value := (dataMatrix at: matrixIndex y) at: matrixIndex x.
-	box := aComposite children first.
-	box color: (self color rsValue: value)
+	self shouldShowCellLabels ifTrue: [
+		label := self newLabelFor: aComposite.
+		aComposite add: label.
+	].
+	box := self shouldShowCellLabels 
+		ifTrue: [ aComposite children first]
+		ifFalse: [ aComposite ].
+	box color: (self color cull: value)
 ]
 
 { #category : #accessing }

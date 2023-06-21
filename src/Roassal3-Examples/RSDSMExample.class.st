@@ -432,8 +432,8 @@ RSDSMExample >> example08Heatmap [
 	builder := RSHeatmap new.
 	builder objectsX: #('A' 'B' 'C').
 	builder objectsY: #('tomato' 'pumpkin').
-   builder dataMatrix: #(#(1 2 5) #(3 4 6)).
-   ^ builder
+	builder dataMatrix: #(#(1 2 5) #(3 4 6)).
+	^ builder
 ]
 
 { #category : #sources }
@@ -486,4 +486,30 @@ RSDSMExample >> example10Vegetables [
 	h objectsY: vegetables.
    h dataMatrix: values.
    ^ h
+]
+
+{ #category : #sources }
+RSDSMExample >> example11Heatmap [
+	<script: 'self new example11Heatmap open'>
+	| builder |
+	builder := RSHeatmap new.
+	builder objectsX: #('A' 'B' 'C').
+	builder objectsY: #('tomato' 'pumpkin').
+	builder dataMatrix: #(#(1 2 5) #(3 4 6)).
+	builder color: [ :aNumber | Color random ].
+	builder build.
+	builder gradientLegend remove.
+	^ builder canvas
+]
+
+{ #category : #sources }
+RSDSMExample >> example12Heatmap [
+	<script: 'self new example12Heatmap open'>
+	| builder |
+	builder := RSHeatmap new.
+	builder objectsX: #('A' 'B' 'C').
+	builder objectsY: #('tomato' 'pumpkin').
+	builder dataMatrix: #(#(1 2 5) #(3 4 6)).
+	builder shouldShowCellLabels: false.
+	^ builder
 ]
