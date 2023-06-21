@@ -58,15 +58,6 @@ RSDensityPlotTest >> testDensityPlotHasKernelDensity [
 ]
 
 { #category : #tests }
-RSDensityPlotTest >> testKernelDensityEstimation [
-	| densityPlot data |
-	data := #(14 15 28 27 32 35).
-	densityPlot := RSDensityPlot data: data.
-	densityPlot bandwidth: 4.
-	self assert: (densityPlot kde: 30) closeTo: 0.0495.
-]
-
-{ #category : #tests }
 RSDensityPlotTest >> testOpen [
 	| densityPlot data window |
 	data := #(14 15 28 27 32 35).

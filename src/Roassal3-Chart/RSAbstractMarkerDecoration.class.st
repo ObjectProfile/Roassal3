@@ -22,6 +22,8 @@ c
 Class {
 	#name : #RSAbstractMarkerDecoration,
 	#superclass : #RSAbstractChartDecoration,
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'markerColor',
 		'getRelevantValueBlock',

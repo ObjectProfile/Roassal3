@@ -22,16 +22,6 @@ Class {
 	#category : #'Roassal3-Layouts-Tree'
 }
 
-{ #category : #examples }
-RSAbstractRegularTreeLayout class >> example1 [
-	| b |
-	b := RSMondrian new.
-	b nodes: (1 to: 100).
-	b lines connectFrom: [ :v | v // 2 ].
-	b layout tree verticallyReverse.
-	^ b open
-]
-
 { #category : #testing }
 RSAbstractRegularTreeLayout class >> isAbstract [
 	^ self = RSAbstractRegularTreeLayout
@@ -52,9 +42,12 @@ RSAbstractRegularTreeLayout >> computeChildrenFor: aNode [
 { #category : #hook }
 RSAbstractRegularTreeLayout >> doExecute: shapes [
 	| rootNodes |
-	alreadyLayoutedNodes := OrderedCollection new.
+	alreadyLayoutedNodes := Set new.
 	rootNodes := self rootNodesFor: shapes.
 	self validateCachedParents.
+	(rootNodes isEmpty and: [ shapes isNotEmpty ])
+		ifTrue: [ rootNodes := self rootNodesFromCycles: shapes ].
+	self sortCollection: rootNodes.
 	nodesByLayer := OrderedCollection new.
 	self
 		layout: rootNodes

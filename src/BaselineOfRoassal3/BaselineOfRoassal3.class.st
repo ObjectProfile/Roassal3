@@ -14,6 +14,8 @@ BaselineOfRoassal3 >> baseline: spec [
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
+	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
+	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
 	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
@@ -28,13 +30,37 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 ]
 
 { #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo10: spec [
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo'.
+	spec package: #'Roassal3-Pharo10'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo' 'Roassal3-Pharo10')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
+]
+
+{ #category : #baselines }
+BaselineOfRoassal3 >> baselineForPharo11: spec [
+	self dependencies: spec.
+	self registerPackages: spec.
+	spec package: #'Roassal3-Pharo'.
+	self roassalGroups: spec 
+		core: self corePackagesNames, #('Roassal3-Pharo')
+		examples: self examplePackagesNames
+		tests: self testPackagesNames.
+]
+
+{ #category : #baselines }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo8'.
 	spec package: #'Roassal3-Spec-Obsolete'.
+	spec package: #'Roassal3-Pharo'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete')
+		core: self corePackagesNames, #('Roassal3-Pharo8' 'Roassal3-Spec-Obsolete' 'Roassal3-Pharo')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
@@ -44,8 +70,9 @@ BaselineOfRoassal3 >> baselineForPharo9: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
 	spec package: #'Roassal3-Pharo9'.
+	spec package: #'Roassal3-Pharo'.
 	self roassalGroups: spec 
-		core: self corePackagesNames, #('Roassal3-Pharo9')
+		core: self corePackagesNames, #('Roassal3-Pharo9' 'Roassal3-Pharo')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
@@ -77,8 +104,11 @@ BaselineOfRoassal3 >> corePackagesNames [
 	)
 ]
 
-{ #category : #baselines }
+{ #category : #dependencies }
 BaselineOfRoassal3 >> dependencies: spec [
+	spec baseline: 'Bloc' with: [
+		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
+
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
@@ -86,7 +116,7 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://ObjectProfile/NumericScales/src' ].
+		spec repository: 'github://ObjectProfile/NumericScales:v1.01/src' ].
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
@@ -124,6 +154,8 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	self extraPackagesNames do: [ :name | spec package: name ].
 	
 	spec		
+		package: #'Roassal3-Bloc' with: [ spec requires: #('Bloc') ];
+
 		package: #'Roassal3-SVG' with: [ spec requires: #('Athens-SVG-PathConverter') ];
 		package: #'Roassal3-SVG-Tests';
 		package: #'Roassal3-SVG-Examples';
@@ -158,6 +190,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Mini' with: #('Tests' 'SVGExamples');
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
+		group: 'BlocFull' with: #('Full' 'Roassal3-Bloc');
 		group: 'default' with: #('Mini')
 ]
 

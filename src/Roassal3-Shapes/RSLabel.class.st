@@ -143,6 +143,11 @@ RSLabel >> createFont [
 	^ aFont
 ]
 
+{ #category : #defaults }
+RSLabel >> defaultColor [
+	^ Color black
+]
+
 { #category : #accessing }
 RSLabel >> emphasis [
 	^ emphasis
@@ -239,7 +244,6 @@ RSLabel >> hasText [
 { #category : #initialization }
 RSLabel >> initialize [
 	super initialize.
-	paint := Color gray.
 	self font: self class defaultFont
 ]
 

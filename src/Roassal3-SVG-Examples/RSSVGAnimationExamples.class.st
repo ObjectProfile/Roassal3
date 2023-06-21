@@ -14,50 +14,54 @@ RSSVGAnimationExamples >> america [
 
 { #category : #examples }
 RSSVGAnimationExamples >> example01SVGIcons [
+
 	<script: 'self new example01SVGIcons open setLabel: ''Icons'''>
 	| canvas shapes color r theta |
 	canvas := RSCanvas new.
 	r := Random new.
 	color := RSGradientPalette gradient21.
 	color range at: 1 put: RSGradientPalette trueSunset.
-	theta := (1 to: 3) collect: [:i | r next * Float twoPi ].
+	theta := (1 to: 3) collect: [ :i | r next * Float twoPi ].
 
-	shapes := #(america puzzlePiece supermarketCart) collectWithIndex: [ :m :index |
-		| grad |
-		grad := (color scale: m)
-			start: -20 asPoint;
-			stop: 20 asPoint.
-		RSSVGPath new
-			draggable;
-			index: index;
-			svgPath: (self perform: m);
-			position: (r next * 50)@ (r next * 50) - 25;
-			color: grad;
-			yourself ].
+	shapes := #( america puzzlePiece supermarketCart ) collectWithIndex: [
+		          :m
+		          :index |
+		          | grad |
+		          grad := (color scale: m)
+			                  start: -20 asPoint;
+			                  stop: 20 asPoint.
+		          RSSVGPath new
+			          draggable;
+			          index: index;
+			          svgPath: (self perform: m);
+			          position: r next * 50 @ (r next * 50) - 25;
+			          color: grad;
+			          yourself ].
 	canvas addAll: shapes.
-	canvas newAnimation repeat onStepDo: [:t |
-		shapes do: [:shape | | p ang ext block |
+	canvas newAnimation repeat onStepDo: [ :t |
+		shapes do: [ :shape |
+			| p ang ext block |
 			p := shape position.
 			ext := shape extent / 2.
 			ang := theta at: shape index.
 			block := [
-				ang := Float pi / 4 + ang.
-				p := (ang cos@ ang sin) * 1.5 + shape position. ].
-			p := (ang cos@ ang sin) * 1.5 + p.
-			(p x + ext x) > 50 ifTrue: block.
-			(p y + ext y)  > 50 ifTrue: block.
-			(p x - ext x) < -50 ifTrue: block.
-			(p y - ext y) < -50 ifTrue: block.
+			         ang := Float pi / 4 + ang.
+			         p := ang cos @ ang sin * 1.5 + shape position ].
+			p := ang cos @ ang sin * 1.5 + p.
+			p x + ext x > 50 ifTrue: block.
+			p y + ext y > 50 ifTrue: block.
+			p x - ext x < -50 ifTrue: block.
+			p y - ext y < -50 ifTrue: block.
 			theta at: shape index put: ang.
-			shape position: p.
-			 ] ].
+			shape position: p ] ].
 	canvas addShape: (RSBox new
-		extent: 100@100;
-		noPaint;
-		withBorder).
+			 extent: 100 @ 100;
+			 noPaint;
+			 withBorder).
 	canvas
 		when: RSExtentChangedEvent
-		do: [ canvas camera zoomToFit: canvas extent extent: 100 asPoint ].
+		do: [ canvas camera zoomToFit: canvas extent extent: 100 asPoint ]
+		for: self.
 	^ canvas
 ]
 
@@ -203,43 +207,53 @@ RSSVGAnimationExamples >> example03Boat [
 
 { #category : #examples }
 RSSVGAnimationExamples >> example04RoassalIcon [
+
 	<script: 'self new example04RoassalIcon open'>
 	| c newEllipse paint eAnimation |
 	c := RSCanvas new.
-	newEllipse := [ RSEllipse new
-		color: 'E83A54';
-		radius: 0;
-		yourself].
-	paint := (LinearGradientPaint
-		fromArray: { 0-> '25B4AF'. 1-> '0088AC'})
-		start: 28.879@143.392;
-		stop: 272.3663@143.392.
+	newEllipse := [
+	              RSEllipse new
+		              color: 'E83A54';
+		              radius: 0;
+		              yourself ].
+	paint := (LinearGradientPaint fromArray: {
+				          (0 -> '25B4AF').
+				          (1 -> '0088AC') })
+		         start: 28.879 @ 143.392;
+		         stop: 272.3663 @ 143.392.
 	c
 		addShape: (RSSVGPath new
-			noPaint;
-			border: (RSBorder new paint: paint; width: 21; capRound);
-			svgPath: 'M77,24.4v243.9
+				 noPaint;
+				 border: (RSBorder new
+						  paint: paint;
+						  width: 21;
+						  capRound);
+				 svgPath: 'M77,24.4v243.9
 			M264.2,232.3c0,0-24.1,30-51.7,30C144.3,262.3,174,113,77,113c-18.5,0-37.6,12.6-37.6,30
 		c0,16,11.8,28,38.3,28s115.7-10.7,115.7-77.1c0-53.9-45.7-69.5-116.5-69.5c-11.8,0-21.8,1.4-30.1,3.4c-4.6,1.1-8.7,2.4-12.3,3.8');
-		addShape: (newEllipse value position: 264.2@232.3);
-		addShape: (newEllipse value position: 143.6@158.1);
-		addShape: (newEllipse value position: 77@268.4);
-		addShape: (newEllipse value position: 34.6@31.6).
+		addShape: (newEllipse value position: 264.2 @ 232.3);
+		addShape: (newEllipse value position: 143.6 @ 158.1);
+		addShape: (newEllipse value position: 77 @ 268.4);
+		addShape: (newEllipse value position: 34.6 @ 31.6).
 	c newAnimation
-		from: 0; to: 1000;
+		from: 0;
+		to: 1000;
 		duration: 10 seconds;
 		onStepDo: [ :t |
-			c shapes first border dashArray: {t. 10000}.
+			c shapes first border dashArray: {
+						t.
+						10000 }.
 			c signalUpdate ].
 	eAnimation := [ :duration :shape |
-		c newAnimation
-			duration: duration milliSeconds;
-			when: RSAnimationEndEvent do: [
-				c newAnimation
-					from: 0;
-					to: 20.4;
-					easing: RSEasingInterpolator elasticOut;
-					on: shape set: #radius:.  ] ].
+	              c newAnimation
+		              duration: duration milliSeconds;
+		              when: RSAnimationEndEvent do: [
+			              c newAnimation
+				              from: 0;
+				              to: 20.4;
+				              easing: RSEasingInterpolator elasticOut;
+				              on: shape set: #radius: ]
+		              for: self ].
 	eAnimation value: 1 value: c shapes second.
 	eAnimation value: 2000 value: c shapes third.
 	eAnimation value: 2500 value: c shapes fourth.

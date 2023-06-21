@@ -188,11 +188,6 @@ RSLayout >> initialize [
 	translator := RSLayoutTranslator default
 ]
 
-{ #category : #testing }
-RSLayout >> isLineDrivenLayout [
-	^ false
-]
-
 { #category : #hook }
 RSLayout >> on: elements [
 	self applyOn: elements
@@ -219,6 +214,6 @@ RSLayout >> translator: aTranslator [
 ]
 
 { #category : #hook }
-RSLayout >> userDefinedEdges: edges [
+RSLayout >> userDefinedLines: aCollectionOfLines [
 	"Do nothing"
 ]
