@@ -48,6 +48,14 @@ RSKernelDensityTest >> testComputeDensityCurveStep [
 ]
 
 { #category : #tests }
+RSKernelDensityTest >> testDefaultErrorMargin [
+	| kernelDensity data |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	kernelDensity := RSKernelDensity data: data.
+	self assert: kernelDensity errorMargin closeTo: kernelDensity defaultErrorMargin.
+]
+
+{ #category : #tests }
 RSKernelDensityTest >> testDensityCurveSample [
 	| data proveValues validationValues kernelDensity |
 	data := #(14 15 28 27 32 35).
@@ -111,4 +119,16 @@ RSKernelDensityTest >> testSetDensityCurveStep [
 	densityCurveAfterStepChange := kernelDensity densityCurve.
 	self assert: kernelDensity curveStep closeTo: 5.
 	self assert: densityCurveBeforeStepChange size > densityCurveAfterStepChange size.	
+]
+
+{ #category : #tests }
+RSKernelDensityTest >> testSetErrorMargin [
+	| kernelDensity data densityCurveSizeBefore densityCurveSizeAfter |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	kernelDensity := RSKernelDensity data: data.
+	densityCurveSizeBefore := kernelDensity densityCurve size.
+	kernelDensity errorMargin: 0.000001.
+	self assert: kernelDensity errorMargin < kernelDensity defaultErrorMargin.
+	densityCurveSizeAfter := kernelDensity densityCurve size.
+	self assert: densityCurveSizeBefore < densityCurveSizeAfter.
 ]

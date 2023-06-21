@@ -37,7 +37,8 @@ Class {
 		'data',
 		'bandwidth',
 		'kernel',
-		'curveStep'
+		'curveStep',
+		'errorMargin'
 	],
 	#category : #'Roassal3-Chart-Statistics'
 }
@@ -134,6 +135,11 @@ RSKernelDensity >> data: aCollection [
 	self computeCurveStep.
 ]
 
+{ #category : #defaults }
+RSKernelDensity >> defaultErrorMargin [
+	^ 0.0001.
+]
+
 { #category : #accessing }
 RSKernelDensity >> defaultKernel [
 	^ RSKernelGaussianFunction new.
@@ -145,7 +151,7 @@ RSKernelDensity >> densityCurve [
 	maxData := data max.
 	minData := data min.
 	curvePoints := OrderedCollection new.
-	epsilon := 0.0001.
+	epsilon := self errorMargin.
 	step := self curveStep.
 	maxY := 0.
 	
@@ -192,6 +198,18 @@ RSKernelDensity >> densityCurveSample: aCollection [
 	^ aCollection collect: [ :value | (self kde: value) ]
 ]
 
+{ #category : #private }
+RSKernelDensity >> errorMargin [
+	^ errorMargin.
+]
+
+{ #category : #private }
+RSKernelDensity >> errorMargin: floatCloseToZero [
+	"The error margin will be use to calculate when the curve will be truncated, 
+	how close to zero is needed to stop the iteration"
+	errorMargin := floatCloseToZero.
+]
+
 { #category : #accessing }
 RSKernelDensity >> evaluateKernel: aNumber [
 	^ kernel evaluate: aNumber.
@@ -200,6 +218,7 @@ RSKernelDensity >> evaluateKernel: aNumber [
 { #category : #initialization }
 RSKernelDensity >> initialize [
 	super initialize.
+	self errorMargin: self defaultErrorMargin.
 	self kernel: self defaultKernel.
 ]
 

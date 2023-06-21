@@ -80,9 +80,7 @@ RSViolinPlot >> bandwidth [
 { #category : #accessing }
 RSViolinPlot >> bandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
-	self computeCurvePoints.
-	self computeBoxPoints.
-	self computeYValues.
+	self computeState.
 ]
 
 { #category : #accessing }
@@ -120,10 +118,23 @@ RSViolinPlot >> computeBoxPoints [
 
 { #category : #private }
 RSViolinPlot >> computeCurvePoints [
-	| xs xMax xMin densityCurve |
+	| densityCurve |
 	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
 	densityAreaPoints := densityCurve copy.
-	(densityCurve reversed) do: [ :point | densityAreaPoints add: ((point x * -1) @ point y) ].
+	densityCurve reversed do: [ :point | densityAreaPoints add: ((point x * -1) @ point y) ].
+]
+
+{ #category : #initialization }
+RSViolinPlot >> computeState [
+	self computeCurvePoints.
+	self computeXValues.
+	self computeBoxPoints.
+	self computeYValues.
+]
+
+{ #category : #initialization }
+RSViolinPlot >> computeXValues [
+	| xs xMax xMin |
 	xs := densityAreaPoints collect: [ :point | point x ].
 	xMax := xs max.
 	xMin := xs min.
@@ -163,13 +174,8 @@ RSViolinPlot >> data [
 { #category : #accessing }
 RSViolinPlot >> data: aCollection [
 	kernelDensity data: aCollection.
-	self computeCurvePoints.
-	"It should be here?"
-	"Statistical measures should be replaced as extension methods. 
-	Or a class that don't store the data"
 	self statisticalMeasures: (RSStatisticalMeasures data: self data).
-	self computeBoxPoints.
-	self computeYValues.
+	self computeState.
 ]
 
 { #category : #defaults }
@@ -205,6 +211,12 @@ RSViolinPlot >> densityAreaPoints [
 	
 ]
 
+{ #category : #private }
+RSViolinPlot >> errorMargin: aFloat [
+	kernelDensity errorMargin: aFloat.
+	self computeState.
+]
+
 { #category : #initialization }
 RSViolinPlot >> initialize [
 	super initialize.
@@ -224,7 +236,7 @@ RSViolinPlot >> kernel [
 { #category : #accessing }
 RSViolinPlot >> kernel: anRSKernelFunction [
 	kernelDensity kernel: anRSKernelFunction.
-	self computeCurvePoints.
+	self computeState.
 ]
 
 { #category : #accessing }
@@ -235,7 +247,7 @@ RSViolinPlot >> kernelDensity [
 { #category : #accessing }
 RSViolinPlot >> kernelDensity: anRSKernelDensity [
 	kernelDensity := anRSKernelDensity.
-	self computeCurvePoints.
+	self computeState.
 ]
 
 { #category : #accessing }

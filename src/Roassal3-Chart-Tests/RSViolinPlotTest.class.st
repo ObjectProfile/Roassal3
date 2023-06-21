@@ -61,6 +61,18 @@ RSViolinPlotTest >> testOutliersPoints [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testSetErrorMargin [
+	| violinPlot data densityAreaPointsBefore densityAreaPointsAfter |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	violinPlot buildChart.
+	densityAreaPointsBefore := violinPlot densityAreaPoints size.
+	violinPlot errorMargin: 0.00001.
+	densityAreaPointsAfter := violinPlot densityAreaPoints size.
+	self assert: densityAreaPointsBefore < densityAreaPointsAfter.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testViolinPlotHasStatisticalMeasures [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).
