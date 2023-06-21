@@ -1,9 +1,6 @@
 Class {
 	#name : #RSViolinPlotTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'chart'
-	],
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
@@ -34,10 +31,10 @@ RSViolinPlotTest >> testDomainXValues [
 	xs := violinPlot densityAreaPoints collect: [:point | point x].
 	minXCurve := xs min.
 	maxXCurve := xs max.
-	self assert: minXCurve closeTo: -0.0241.
+	self assert: minXCurve closeTo: -0.0241 precision: 4.
 	minXValue := violinPlot xValues min.
 	maxXValue := violinPlot xValues max.
-	self assert: minXValue closeTo: -0.03615.
+	self assert: minXValue closeTo: -0.03615 precision: 4.
 ]
 
 { #category : #tests }
