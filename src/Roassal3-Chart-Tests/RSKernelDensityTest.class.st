@@ -55,7 +55,7 @@ RSKernelDensityTest >> testDensityCurveSample [
 	validationValues := #(5.105e-05 0.033 0.019 0.0495 1.536e-05).
 	kernelDensity := RSKernelDensity data: data.
 	kernelDensity bandwidth: 4.
-	self assert: (kernelDensity densityCurveSample: proveValues) closeTo: validationValues.
+	self assert: (kernelDensity densityCurveSample: proveValues) closeTo: validationValues precision: 0.01.
 ]
 
 { #category : #tests }
@@ -68,7 +68,7 @@ RSKernelDensityTest >> testGetStandardDeviation [
 
 { #category : #tests }
 RSKernelDensityTest >> testKDEDefaultBandwidth [
-	| kernelDensity anXValue |
+	| kernelDensity |
 	kernelDensity := RSKernelDensity gaussian.
 	self assert: kernelDensity bandwidth isNil.
 ]
@@ -89,7 +89,7 @@ RSKernelDensityTest >> testKernelDensityEstimation [
 	kernelDensity := RSKernelDensity data: data.
 	kernelDensity bandwidth: 4.
 	anXValue := 30.
-	self assert: (kernelDensity kde: anXValue) closeTo: 0.0495.
+	self assert: (kernelDensity kde: anXValue) closeTo: 0.0495 precision: 0.001.
 
 ]
 

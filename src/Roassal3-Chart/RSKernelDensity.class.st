@@ -42,12 +42,12 @@ Class {
 	#category : #'Roassal3-Chart-Statistics'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelDensity class >> bandwidth: aNumber [
 	^ self gaussian bandwidth: aNumber.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelDensity class >> data: aCollection [
 	| kernelDensity |
 	kernelDensity := self gaussian.
@@ -55,7 +55,7 @@ RSKernelDensity class >> data: aCollection [
 	^ kernelDensity
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelDensity class >> gaussian [
 	| kernelDensity |
 	kernelDensity := self new.
@@ -63,7 +63,7 @@ RSKernelDensity class >> gaussian [
 	^ kernelDensity
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelDensity class >> kernel: anRSKernelFunction [
 	| kernelDensity |
 	kernelDensity := self new.
@@ -71,7 +71,7 @@ RSKernelDensity class >> kernel: anRSKernelFunction [
 	^ kernelDensity
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RSKernelDensity class >> kernel: anRSKernelFunction data: aCollection [
 	| kernelDensity |
 	kernelDensity := self new.

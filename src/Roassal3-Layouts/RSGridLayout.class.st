@@ -1,5 +1,5 @@
 "
-A `RSCellLayout` is like `RSGridLayout`. Elements of each column are centered along the same vertical line. And elements of each row are centered along the same horizontal line.
+Elements of each column are centered along the same vertical line. And elements of each row are centered along the same horizontal line.
 
 I have vertical and horizontal alignments. The alignment uses class `RSLocation` in the selected rectangle
 "

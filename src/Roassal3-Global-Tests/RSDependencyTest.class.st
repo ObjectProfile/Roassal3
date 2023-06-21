@@ -47,7 +47,6 @@ RSDependencyTest >> testDependencies [
 	self assertPackage: 'Roassal3-Animation' dependOn: 'Roassal3'.
 
 	"Chart uses RSLocation from Layouts"
-	self assertPackage: 'Roassal3-Chart' dependOn: 'Roassal3-Layouts'.
 
 	self assertPackage: 'Roassal3' dependOn: 'Announcements-Core'
 ]

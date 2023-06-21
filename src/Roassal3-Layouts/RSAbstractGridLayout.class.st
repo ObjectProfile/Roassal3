@@ -1,7 +1,7 @@
 "
 Abstract class for grid layouts.
 
-My subclasses are `RSCellLayout`, `RSGridLayout` and `RSVerticalGridLayout`.
+My subclasses are `RSCellLayout`, `RSGridLayout` and `RSVerticalCellLayout`.
 
 My instance variables are:
 - gapSize the space between each element

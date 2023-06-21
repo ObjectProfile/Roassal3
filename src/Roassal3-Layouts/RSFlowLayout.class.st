@@ -9,7 +9,7 @@ Class {
 	#category : #'Roassal3-Layouts-Flow'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSFlowLayout class >> exampleLabel [
 	
 	| words r wordShapes c |
