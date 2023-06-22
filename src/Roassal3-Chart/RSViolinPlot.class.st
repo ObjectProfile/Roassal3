@@ -231,7 +231,7 @@ RSViolinPlot >> computeXValues [
 
 { #category : #private }
 RSViolinPlot >> computeYValues [
-	| densityCurve yMax yMin maxOutlier minOutlier outliers densityCurveYs upperLimit diff margin |
+	| densityCurve yMax yMin maxOutlier minOutlier densityCurveYs upperLimit diff margin |
 	outliers := statisticalMeasures outliers.
 	maxOutlier := 0.
 	minOutlier := 0.
