@@ -23,6 +23,7 @@ Class {
 	#name : #RSHistogramPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
+		'map',
 		'x',
 		'bins',
 		'bars',
@@ -30,6 +31,12 @@ Class {
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #'instance creation' }
+RSHistogramPlot class >> of: aCollection on: aBloc [
+
+	^ self new collectDataOf: aCollection on: aBloc
+]
 
 { #category : #accessing }
 RSHistogramPlot >> bars [
@@ -66,6 +73,15 @@ RSHistogramPlot >> bins: aCollection [
 	self binningStrategy: (RSFixedBinning new
 		bins: aCollection;
 		yourself)
+]
+
+{ #category : #enumerating }
+RSHistogramPlot >> collectDataOf: aCollection on: aBloc [
+
+	x := aCollection collect: aBloc.
+	map := Dictionary newFromKeys: aCollection andValues: x.
+	x := x sorted.
+	self computeXYValues
 ]
 
 { #category : #private }
@@ -114,6 +130,31 @@ RSHistogramPlot >> initialize [
 ]
 
 { #category : #accessing }
+RSHistogramPlot >> map [
+
+	^ map
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> map: aMap [
+
+	map := aMap
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> model: anArray [
+
+	| toShow xVal xVal2 yVal |
+	xVal := anArray first.
+	xVal2 := anArray second.
+	yVal := anArray last.
+
+	map ifNil: [ ^ xVal -> xVal2 -> yVal ].
+	^ toShow := map keys select: [ :e |
+		          (map at: e) between: xVal and: xVal2 ]
+]
+
+{ #category : #accessing }
 RSHistogramPlot >> numberOfBins [
 	^ self binningStrategy numberOfBins
 ]
@@ -126,20 +167,26 @@ RSHistogramPlot >> numberOfBins: aNumber [
 
 { #category : #rendering }
 RSHistogramPlot >> renderIn: canvas [
+
 	bars := yValues collectWithIndex: [ :yVal :index |
-		| rect xVal xVal2 |
-		xVal := xValues at: index.
-		xVal2 := xValues at: index +1.
-		rect := Rectangle
-			origin: (self scalePoint: xVal @ yVal)
-			corner: (self scalePoint: xVal2 @ 0).
-		self shape copy
-			model: (xVal->xVal2) -> yVal;
-			color: self computeColor;
-			fromRectangle: rect;
-			yourself ].
+		        | rect xVal xVal2 |
+		        xVal := xValues at: index.
+		        xVal2 := xValues at: index + 1.
+		        rect := Rectangle
+			                origin: (self scalePoint: xVal @ yVal)
+			                corner: (self scalePoint: xVal2 @ 0).
+		        self shape copy
+			        model: (self model: { xVal. xVal2. yVal });
+			        color: self computeColor;
+			        fromRectangle: rect;
+			        yourself ].
 	bars := bars asGroup.
 	canvas addAll: bars
+]
+
+{ #category : #accessing }
+RSHistogramPlot >> x [
+	^ x
 ]
 
 { #category : #accessing }
