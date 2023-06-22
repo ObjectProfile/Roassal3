@@ -15,6 +15,18 @@ RSViolinPlotTest >> testBasicViolinPlot [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testCreateCenterLine [
+	| violinPlot data window |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	self assert: violinPlot densityArea isNil.
+	window := violinPlot open.
+	self assert: violinPlot centerLine class equals: RSPolyline.
+	self assert: violinPlot centerLine controlPoints isNotEmpty.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testCreateDensityArea [
 	| violinPlot data window |
 	data := { 100. 200. 300. 400. 500. 600. }.
@@ -22,7 +34,7 @@ RSViolinPlotTest >> testCreateDensityArea [
 	self assert: violinPlot densityArea isNil.
 	window := violinPlot open.
 	self assert: violinPlot densityArea class equals: RSPolygon.
-	self assert: violinPlot densityArea points size > 0.
+	self assert: violinPlot densityArea points isNotEmpty.
 	window delete.
 ]
 

@@ -67,6 +67,7 @@ Class {
 		'ylabel',
 		'title',
 		'centerLinePoints',
+		'centerLine',
 		'boxWidth',
 		'outlierPoints'
 	],
@@ -154,6 +155,11 @@ RSViolinPlot >> buildChart [
 	^ chart
 ]
 
+{ #category : #accessing }
+RSViolinPlot >> centerLine [
+	^ centerLine
+]
+
 { #category : #private }
 RSViolinPlot >> computeBoxPoints [
 	| q025 q050 q075 quartiles upperLimit lowerLimit |
@@ -213,6 +219,16 @@ RSViolinPlot >> computeYValues [
 	diff := yMax - yMin.
 	margin := 0.1*diff.
 	yValues := {yMin-margin. yMax+margin.}.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> createCenterLine [
+	centerLine := RSPolyline new.
+	centerLine := centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	centerLine width: 1.25.
+	centerLine color: Color black.
 ]
 
 { #category : #accessing }
@@ -339,14 +355,11 @@ RSViolinPlot >> outliers [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| medianLine centerLine outliers |
+	| medianLine outliers |
 	self createDensityArea.
 	canvas add: densityArea.
 	
-	centerLine := RSPolyline new.
-	centerLine := centerLine controlPoints: (centerLinePoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	centerLine width: 1.25.
-	centerLine color: Color black.
+	self createCenterLine.
 	canvas add: centerLine.
 	
 	box :=  RSPolygon new.
