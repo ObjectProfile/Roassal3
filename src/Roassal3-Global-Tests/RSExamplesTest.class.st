@@ -30,12 +30,12 @@ RSExamplesTest >> testClassSideExamples [
 	self timeLimit: 10 minutes.
 	methods := self class validMethods: (RSObject withAllSubclasses
 		flatCollect: [:cls | cls class methods ]).
-	methods := self class validMethods: methods.
 	errors := OrderedCollection new.
 	noSystemWindow := OrderedCollection new.
+	
 	methods do:[ :met | | window |
 		[ window := met selector value: met methodClass soleInstance.
-		window isDisplayed
+		window isSystemWindow
 			ifTrue: [ window delete ]
 			ifFalse: [ noSystemWindow add: met ]
 		 ] onErrorDo: [ :error | errors add: met ].

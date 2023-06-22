@@ -16,5 +16,5 @@ RSCanvas class >> exampleSpec [
 	canvas color: Color black.
 	spec := SpMorphPresenter new.
 	spec morph: canvas createMorph.
-	^ spec open
+	^ spec open window
 ]

@@ -3,7 +3,7 @@ Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
-	#superclass : #Object,
+	#superclass : #RSObject,
 	#instVars : [
 		'chart',
 		'xScale',

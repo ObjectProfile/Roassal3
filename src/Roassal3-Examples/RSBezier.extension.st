@@ -5,7 +5,7 @@ RSBezier class >> exampleBezier [
 	| bezier |
 	bezier := self new.
 	bezier controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
-	^ Smalltalk tools inspector inspect: bezier
+	^ (Smalltalk tools inspector inspect: bezier) window.
 ]
 
 { #category : #'*Roassal3-Examples' }
