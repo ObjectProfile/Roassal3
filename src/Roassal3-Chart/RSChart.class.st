@@ -206,7 +206,7 @@ RSChart >> initializeDecorations [
 { #category : #inspector }
 RSChart >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
-	self build.
+	self update.
 	^ SpRoassal3InspectorPresenter new
 		canvas: self canvas;
 		yourself
@@ -441,7 +441,16 @@ RSChart >> xLog [
 
 { #category : #'public - scales' }
 RSChart >> xRawLog [
-	self xScale: NSScale log
+	
+	self horizontalTick locator: RSLogLocator new.
+	^ self xScale: NSScale log
+]
+
+{ #category : #'public - scales' }
+RSChart >> xRawLog: aNumber [
+	
+	self horizontalTick locator: (RSLogLocator new base: aNumber).
+	^ self xScale: (NSLogScale new base: aNumber) 
 ]
 
 { #category : #'public - scales' }
@@ -491,7 +500,15 @@ RSChart >> yLog [
 { #category : #'public - scales' }
 RSChart >> yRawLog [
 	"ensure all your data and axis do not contains zero"
+	self verticalTick locator: RSLogLocator new.
 	^ self yScale: NSScale log
+]
+
+{ #category : #'public - scales' }
+RSChart >> yRawLog: aNumber [
+	
+	self verticalTick locator: (RSLogLocator new base: aNumber).
+	^ self yScale: (NSLogScale new base: aNumber) 
 ]
 
 { #category : #'public - scales' }

@@ -291,6 +291,11 @@ RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
 
+{ #category : #defaults }
+RSShape >> defaultColor [
+	^ Color lightGray
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
@@ -377,7 +382,7 @@ RSShape >> index: anObject [
 { #category : #initialization }
 RSShape >> initialize [
 	super initialize.
-	paint := Color lightGray.
+	paint := self defaultColor.
 	isFixed := false
 ]
 
