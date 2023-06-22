@@ -15,6 +15,18 @@ RSViolinPlotTest >> testBasicViolinPlot [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testCreateDensityArea [
+	| violinPlot data window |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	self assert: violinPlot densityArea isNil.
+	window := violinPlot open.
+	self assert: violinPlot densityArea class equals: RSPolygon.
+	self assert: violinPlot densityArea points size > 0.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testDefaultComputeBoxWidth [
 	| violinPlot data boxWidth |
 	data := #(10 20 30 40 40 50).

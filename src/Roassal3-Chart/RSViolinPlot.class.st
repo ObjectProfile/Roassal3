@@ -171,7 +171,7 @@ RSViolinPlot >> computeBoxPoints [
 ]
 
 { #category : #private }
-RSViolinPlot >> computeCurvePoints [
+RSViolinPlot >> computeDensityAreaPoints [
 	| densityCurve |
 	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
 	densityAreaPoints := densityCurve copy.
@@ -180,7 +180,7 @@ RSViolinPlot >> computeCurvePoints [
 
 { #category : #initialization }
 RSViolinPlot >> computeState [
-	self computeCurvePoints.
+	self computeDensityAreaPoints.
 	self computeXValues.
 	self computeBoxPoints.
 	self computeYValues.
@@ -213,6 +213,14 @@ RSViolinPlot >> computeYValues [
 	diff := yMax - yMin.
 	margin := 0.1*diff.
 	yValues := {yMin-margin. yMax+margin.}.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> createDensityArea [
+	densityArea := self shape copy.
+	densityArea color: self computeColor.
+	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	densityArea borderColor: Color black.
 ]
 
 { #category : #accessing }
@@ -257,6 +265,11 @@ RSViolinPlot >> defaultLineColor [
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> densityArea [
+	^ densityArea.
 ]
 
 { #category : #defaults }
@@ -327,10 +340,7 @@ RSViolinPlot >> outliers [
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
 	| medianLine centerLine outliers |
-	densityArea := self shape copy.
-	densityArea color: self computeColor.
-	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	densityArea borderColor: Color black.
+	self createDensityArea.
 	canvas add: densityArea.
 	
 	centerLine := RSPolyline new.
