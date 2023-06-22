@@ -138,6 +138,11 @@ RSViolinPlot >> bandwidth: aNumber [
 	self computeState.
 ]
 
+{ #category : #private }
+RSViolinPlot >> box [
+	^ box.
+]
+
 { #category : #accessing }
 RSViolinPlot >> boxWidth [
 	^ boxWidth.
@@ -219,6 +224,14 @@ RSViolinPlot >> computeYValues [
 	diff := yMax - yMin.
 	margin := 0.1*diff.
 	yValues := {yMin-margin. yMax+margin.}.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> createBox [
+	box :=  RSPolygon new.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: Color white.
+	box borderColor: Color black.
 ]
 
 { #category : #accessing }
@@ -362,10 +375,7 @@ RSViolinPlot >> renderIn: canvas [
 	self createCenterLine.
 	canvas add: centerLine.
 	
-	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: Color white.
-	box borderColor: Color black.
+	self createBox.
 	canvas add: box.
 	
 	medianLine := RSPolyline new.

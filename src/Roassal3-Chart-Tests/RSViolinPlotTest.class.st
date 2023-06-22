@@ -15,6 +15,18 @@ RSViolinPlotTest >> testBasicViolinPlot [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testCreateBox [
+	| violinPlot data window |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	self assert: violinPlot densityArea isNil.
+	window := violinPlot open.
+	self assert: violinPlot box class equals: RSPolygon.
+	self assert: violinPlot box points isNotEmpty.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testCreateCenterLine [
 	| violinPlot data window |
 	data := { 100. 200. 300. 400. 500. 600. }.
