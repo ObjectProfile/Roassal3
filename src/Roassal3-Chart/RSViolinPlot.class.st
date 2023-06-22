@@ -110,6 +110,19 @@ RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	violinPlot open.
 ]
 
+{ #category : #examples }
+RSViolinPlot class >> exampleViolinWithLabels [
+	| violinPlot data |
+	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
+	violinPlot := self data: data.
+	violinPlot
+		bandwidth: 3;
+		title: 'This is a RSViolinPlot';
+		xlabel: 'Data frequency (distribution)';
+		ylabel: 'Data domain'.
+	violinPlot open.
+]
+
 { #category : #accessing }
 RSViolinPlot class >> kernelDensity: anRSKernelDensity [
 	| densityPlot |
