@@ -51,6 +51,30 @@ RSViolinPlotTest >> testCreateDensityArea [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testCreateMedianLine [
+	| violinPlot data window |
+	data := { 100. 200. 300. 400. 500. 600. }.
+	violinPlot := RSViolinPlot data: data.
+	self assert: violinPlot densityArea isNil.
+	window := violinPlot open.
+	self assert: violinPlot medianLine class equals: RSPolyline .
+	self assert: violinPlot medianLine controlPoints isNotEmpty.
+	window delete.
+]
+
+{ #category : #tests }
+RSViolinPlotTest >> testCreateOutliers [
+	| violinPlot data window |
+	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
+	violinPlot := RSViolinPlot data: data.
+	self assert: violinPlot densityArea isNil.
+	window := violinPlot open.
+	self assert: violinPlot outliers class equals: RSGroup.
+	self assert: violinPlot outliers first class equals: RSEllipse.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testDefaultComputeBoxWidth [
 	| violinPlot data boxWidth |
 	data := #(10 20 30 40 40 50).
@@ -80,8 +104,8 @@ RSViolinPlotTest >> testOutliersInsideChartDomain [
 	violinPlot := RSViolinPlot data: data.
 	violinPlot buildChart.
 	yValues := violinPlot yValues.
-	outlierMax := violinPlot outliers max.
-	outlierMin := violinPlot outliers min.
+	outlierMax := (violinPlot outlierPoints collect: [ :point | point y ]) max.
+	outlierMin := (violinPlot outlierPoints collect: [ :point | point y ]) min.
 	self assert: ((yValues max) >= (outlierMax)).
 	self assert: ((yValues min) <= (outlierMin)).
 ]

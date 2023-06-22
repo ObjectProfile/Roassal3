@@ -69,7 +69,9 @@ Class {
 		'centerLinePoints',
 		'centerLine',
 		'boxWidth',
-		'outlierPoints'
+		'outlierPoints',
+		'medianLine',
+		'outliers'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -253,8 +255,31 @@ RSViolinPlot >> createDensityArea [
 ]
 
 { #category : #accessing }
+RSViolinPlot >> createMedianLine [
+	medianLine := RSPolyline new.
+	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	medianLine width: 2.
+	medianLine color: Color black.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> createOutliers [
+	outliers := outlierPoints collect: [ :point | self scalePoint: point ].
+	outliers := outliers collect: [ :out |
+			| e |
+			e := RSEllipse new
+			radius: 2;
+			color: Color black;
+			yourself.
+			e translateTo: out.
+	] as: RSGroup.
+]
+
+{ #category : #accessing }
 RSViolinPlot >> createdShapes [
-	^ { densityArea. box. }
+	^ { densityArea. box. medianLine. centerLine. outliers. }
 ]
 
 { #category : #accessing }
@@ -351,6 +376,11 @@ RSViolinPlot >> median [
 	^ statisticalMeasures median.
 ]
 
+{ #category : #private }
+RSViolinPlot >> medianLine [
+	^ medianLine.
+]
+
 { #category : #opening }
 RSViolinPlot >> open [
 	^ self buildChart open
@@ -363,37 +393,21 @@ RSViolinPlot >> outlierPoints [
 
 { #category : #private }
 RSViolinPlot >> outliers [
-	^ statisticalMeasures outliers.
+	^ outliers.
 ]
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
-	| medianLine outliers |
 	self createDensityArea.
 	canvas add: densityArea.
-	
 	self createCenterLine.
-	canvas add: centerLine.
-	
+	canvas add: centerLine.	
 	self createBox.
 	canvas add: box.
-	
-	medianLine := RSPolyline new.
-	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	medianLine width: 2.
-	medianLine color: Color black.
+	self createMedianLine.
 	canvas add: medianLine.
-	
-	outliers := outlierPoints collect: [ :point | self scalePoint: point ].
-	outliers do: [ :out |
-			| e |
-			e := RSEllipse new
-			radius: 2;
-			color: Color black;
-			yourself.
-			e translateTo: out.
-			canvas add: e.
-	].
+	self createOutliers.
+	canvas addAll: outliers.
 ]
 
 { #category : #accessing }
