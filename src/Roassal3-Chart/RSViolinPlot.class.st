@@ -1,3 +1,57 @@
+"
+`RSDensityPlot` is a visual representation that combines a box plot with a density distribution (an approximation of the frequency) to depict the distribution of a dataset.
+
+**Responsibility:** 
+- Plots the density distribution area, the box and the whiskers.
+- Provides options to customize the plot.
+
+**Collaborators:** 
+- The instance variable `kernelDensity` is an `RSKernelDensity` object responsible for calculating the points of the density curve, which delineates the boundary of the density area.
+- The instance variable `statisticalMeasures` is an `RSStatisticalMeasures` object that computes various statistical measures, including mean, median, quartiles, and interquartile range (IQR), to facilitate the construction of the box and whiskers plot.
+
+**Public API and Key Messages**
+- `data: aCollection` to create instances passing dataset (aCollection) as argument.
+- `bandwidth: aFloat` to set the bandwith (h) of the kernel in the kernel density estimation function. By default is computed by `RSKernelDensity`. The float passed indicates how soft will be the curve.
+
+**Instance Variables:**
+- `area`: an `RSPolygon` that represents the area under the density curve.
+- `curvePoints`: an `OrderedCollection` of  `Point`s that store the result of evaluate the Kernel Density Estimation.
+- `kernelDensity`: a `RSKernelDensity` object that made the calculation of the Kernel Density Estimation, several parametres are passed to this object to personalize the curve (bandwidth, kernel, etc.).
+- `title`: aString that stores the title of the chart.
+- `xlabel`:	aString that stores the label of x axis.
+- `ylabel`: aString that stores the label of y axis.
+
+**Example:**
+```Smalltalk
+| densityPlot data |
+data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
+densityPlot := RSDensityPlot data: data.
+densityPlot bandwidth: 10.
+densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwidth:10)'.
+densityPlot color: Color green.
+densityPlot open.
+```
+
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	box:		<Object>
+	boxPoints:		<Object>
+	boxWidth:		<Object>
+	centerLinePoints:		<Object>
+	densityArea:		<Object>
+	densityAreaPoints:		<Object>
+	kernelDensity:		<Object>
+	medianLinePoints:		<Object>
+	outlierPoints:		<Object>
+	statisticalMeasures:		<Object>
+	title:		<Object>
+	xlabel:		<Object>
+	ylabel:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #RSViolinPlot,
 	#superclass : #RSAbstractPlot,
