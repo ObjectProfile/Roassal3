@@ -77,8 +77,8 @@ RSViolinPlot class >> data: aCollection [
 RSViolinPlot class >> exampleBasicViolinPlot [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).
-	violinPlot := RSViolinPlot data: data.
-	violinPlot open.
+	violinPlot := self data: data.
+	^ violinPlot open.
 ]
 
 { #category : #examples }
@@ -86,7 +86,7 @@ RSViolinPlot class >> exampleViolinPlotDataDomainDiffOf100 [
 	| violinPlot data |
 	data := { 100. 200. 300. 400. 500. 600. }.
 	violinPlot := self data: data.
-	violinPlot open.
+	^ violinPlot open.
 ]
 
 { #category : #examples }
@@ -95,7 +95,7 @@ RSViolinPlot class >> exampleViolinPlotSettingBandwidth [
 	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
 	violinPlot := self data: data.
 	violinPlot bandwidth: 5.
-	violinPlot open.
+	^ violinPlot open.
 ]
 
 { #category : #examples }
@@ -104,7 +104,7 @@ RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
 	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
-	violinPlot open.
+	^ violinPlot open.
 ]
 
 { #category : #examples }
@@ -117,7 +117,7 @@ RSViolinPlot class >> exampleViolinWithLabels [
 		title: 'This is a RSViolinPlot';
 		xlabel: 'Data frequency (distribution)';
 		ylabel: 'Data domain'.
-	violinPlot open.
+	^ violinPlot open.
 ]
 
 { #category : #accessing }
