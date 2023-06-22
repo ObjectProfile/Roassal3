@@ -89,15 +89,23 @@ RSViolinPlot class >> exampleBasicViolinPlot [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).
 	violinPlot := RSViolinPlot data: data.
-	violinPlot bandwidth.
 	violinPlot open.
 ]
 
 { #category : #examples }
-RSViolinPlot class >> exampleBasicViolinPlot2 [
+RSViolinPlot class >> exampleViolinPlotDataDomainDiffOf100 [
 	| violinPlot data |
 	data := { 100. 200. 300. 400. 500. 600. }.
 	violinPlot := self data: data.
+	violinPlot open.
+]
+
+{ #category : #examples }
+RSViolinPlot class >> exampleViolinPlotSettingBandwidth [
+	| violinPlot data |
+	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
+	violinPlot := self data: data.
+	violinPlot bandwidth: 5.
 	violinPlot open.
 ]
 
