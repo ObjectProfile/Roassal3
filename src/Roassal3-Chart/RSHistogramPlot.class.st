@@ -29,7 +29,7 @@ c := RSChart new.
 plot := RSHistogramPlot of: classes on: #linesOfCode.
 plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
 
-c add: plot.
+c addPlot: plot.
 c show
 ```
 "
