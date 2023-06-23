@@ -6,8 +6,7 @@ values := #(0.5 0.5 0.3 -0.2 1.6 0 0.1 0.1 0.6 0.4).
 c := RSChart new.
 plot := RSHistogramPlot new x: values; bins: #(-0.5 0 0.5 1 0.5 1 1.5 2).
 c addPlot: plot.
-c addDecoration: RSVerticalTick new.
-c addDecoration: RSHorizontalTick new doNotUseNiceLabel.
+c horizontalTick doNotUseNiceLabel.
 ^ c
 ```
 
@@ -18,6 +17,21 @@ c addDecoration: RSHorizontalTick new doNotUseNiceLabel.
 - All bins but last use this expression to calculate the number of values in each bin: `start <= n and: [n < end]`
 - Last bin uses this expression `n between: start and: end`
 - `binningStrategy:` allows to the user define different strategies to calculate the size for bins. Check `RSBinningStrategy`
+
+
+A histogram can also be generated from a collection and a bloc using `RSHistogramPlot of: aCollection on: aBloc`. It can be useful when the data is associated with something, like the number of lines of code of a class.
+The histogram will `collect:` on the collection with the bloc on its own to get the data, then the plot will show the distribution of the elements of the collection according to their corresponding value from the data.
+Here is an example for the number of lines of code of `Collection` and its subclasses:
+
+```
+classes := Collection withAllSubclasses.
+c := RSChart new.
+plot := RSHistogramPlot of: classes on: #linesOfCode.
+plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
+
+c addPlot: plot.
+c show
+```
 "
 Class {
 	#name : #RSHistogramPlot,
