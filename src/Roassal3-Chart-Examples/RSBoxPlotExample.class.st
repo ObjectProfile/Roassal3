@@ -53,9 +53,9 @@ RSBoxPlotExample >> example02 [
 	p := RSBoxPlot new y: y.
 
 	"size controls the width of the bars"
-	size := 12.
+	size := 10.
 	p barSize: size.
-	p barOffset: size * -1.
+	p barOffset: size * -1.1.
 
 	p2 := RSBoxPlot new y: y2.
 	p2 barSize: size.
@@ -63,7 +63,7 @@ RSBoxPlotExample >> example02 [
 
 	p3 := RSBoxPlot new y: y3.
 	p3 barSize: size.
-	p3 barOffset: size.
+	p3 barOffset: size * 1.1.
 
 	c addPlot: p.
 	c addPlot: p2.
