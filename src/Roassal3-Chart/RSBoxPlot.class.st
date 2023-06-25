@@ -400,3 +400,8 @@ RSBoxPlot >> x: aCollection y: aCollection2 [
 	yValues := aCollection2.
 	self computeBoxAndWhiskerExtent: aCollection2
 ]
+
+{ #category : #accessing }
+RSBoxPlot >> y: aCollection [
+	self data: aCollection.
+]
