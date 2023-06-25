@@ -35,10 +35,25 @@ Class {
 		'bars',
 		'gapRatio',
 		'barOffset',
-		'boxAndWhisker'
+		'boxAndWhisker',
+		'statisticalMeasures',
+		'boxWidth',
+		'boxPoints',
+		'medianLinePoints',
+		'centerLinePoints',
+		'outlierPoints',
+		'box'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #accessing }
+RSBoxPlot class >> data: aCollection [
+	| boxPlot |
+	boxPlot := self new.
+	boxPlot data: aCollection.
+	^ boxPlot
+]
 
 { #category : #accessing }
 RSBoxPlot >> barOffset [
@@ -83,6 +98,20 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 	aChart xScale: barScale
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> box [
+	^ box
+]
+
+{ #category : #public }
+RSBoxPlot >> buildChart [
+	chart := RSChart new.
+	chart add: self.
+	chart
+		extent: 250 @ 200.
+	^ chart
+]
+
 { #category : #private }
 RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	"Converts a 2D collection of data points into the poisition of the 1 and 3 quartile, the whiskers, and outlieing points.
@@ -119,6 +148,38 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 
 		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers  }
 	]
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeBoxPoints [
+	| q025 q050 q075 quartiles upperLimit lowerLimit |
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q050 := quartiles at: 2.
+	q075 := quartiles at: 3.
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	boxWidth := (xValues max - xValues min) * 0.10.
+	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
+	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
+	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
+	outlierPoints := statisticalMeasures outliers collect: [ :y | 0@y ].
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures [
+	| q025 q050 q075 quartiles upperLimit lowerLimit |
+	quartiles := aRSStatisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q050 := quartiles at: 2.
+	q075 := quartiles at: 3.
+	upperLimit := aRSStatisticalMeasures upperLimit.
+	lowerLimit := aRSStatisticalMeasures lowerLimit.
+	boxWidth := (xValues max - xValues min) * 0.10.
+	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
+	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
+	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
+	outlierPoints := aRSStatisticalMeasures outliers collect: [ :y | 0@y ].
 ]
 
 { #category : #rendering }
@@ -185,8 +246,45 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 ]
 
 { #category : #accessing }
+RSBoxPlot >> computeState [
+	self computeBoxPoints.
+]
+
+{ #category : #public }
+RSBoxPlot >> createBox [
+	box :=  RSPolygon new.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: Color white.
+	box borderColor: Color black.
+]
+
+{ #category : #accessing }
 RSBoxPlot >> createdShapes [
 	^ bars
+]
+
+{ #category : #rendering }
+RSBoxPlot >> data [
+	| collectionOfDatasets |
+	(statisticalMeasures size = 1) ifTrue: [ ^statisticalMeasures first data ].
+	collectionOfDatasets := statisticalMeasures collect: [
+		                        :aRSStatiscalMeasures |
+		                        aRSStatiscalMeasures data ].
+	^ collectionOfDatasets
+]
+
+{ #category : #rendering }
+RSBoxPlot >> data: aCollection [
+
+	| statisticalMeasuresArray collectionOfDatasets |
+	"if is not a collection of collections. transform in a collection of collections"
+	collectionOfDatasets := aCollection first isCollection
+		                        ifFalse: [ { aCollection } ]
+		                        ifTrue: [ aCollection ].
+	statisticalMeasuresArray := collectionOfDatasets collect: [ :dataSet |
+		                            RSStatisticalMeasures data: dataSet ].
+	self statisticalMeasures: statisticalMeasuresArray
+	"self computeState."
 ]
 
 { #category : #initialization }
@@ -237,6 +335,11 @@ RSBoxPlot >> modelFor: aPoint [
 	^ aPoint y
 ]
 
+{ #category : #public }
+RSBoxPlot >> open [
+	^ self buildChart open.
+]
+
 { #category : #'math functions' }
 RSBoxPlot >> quantile: aProbability for: aSortedCollection [
 	"returns the expected quantile only, if I use my standard initialization method"
@@ -272,6 +375,17 @@ RSBoxPlot >> renderIn: canvas [
 		index := index + 1.
 		bar ] as: RSGroup.
 	canvas addAll: bars
+]
+
+{ #category : #accessing }
+RSBoxPlot >> statisticalMeasures [
+	(statisticalMeasures size = 1) ifTrue: [ ^ statisticalMeasures first ].
+	^ statisticalMeasures.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> statisticalMeasures: aRSStatisticalMeasures [
+	statisticalMeasures := aRSStatisticalMeasures
 ]
 
 { #category : #public }
