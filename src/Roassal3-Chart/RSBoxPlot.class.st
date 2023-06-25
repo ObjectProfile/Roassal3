@@ -38,7 +38,7 @@ Class {
 		'boxAndWhisker',
 		'statisticalMeasures',
 		'boxWidth',
-		'boxPoints',
+		'boxesPoints',
 		'medianLinePoints',
 		'centerLinePoints',
 		'outlierPoints',
@@ -151,35 +151,19 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 ]
 
 { #category : #accessing }
-RSBoxPlot >> computeBoxPoints [
-	| q025 q050 q075 quartiles upperLimit lowerLimit |
-	quartiles := statisticalMeasures quartiles.
+RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures [
+	| q025 q075 quartiles boxPoints |
+	quartiles := aRSStatisticalMeasures quartiles.
 	q025 := quartiles at: 1.
-	q050 := quartiles at: 2.
 	q075 := quartiles at: 3.
-	upperLimit := statisticalMeasures upperLimit.
-	lowerLimit := statisticalMeasures lowerLimit.
-	boxWidth := (xValues max - xValues min) * 0.10.
+	boxWidth := 1 * 0.10.
 	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
-	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
-	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
-	outlierPoints := statisticalMeasures outliers collect: [ :y | 0@y ].
+	^ boxPoints.
 ]
 
 { #category : #accessing }
-RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures [
-	| q025 q050 q075 quartiles upperLimit lowerLimit |
-	quartiles := aRSStatisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q050 := quartiles at: 2.
-	q075 := quartiles at: 3.
-	upperLimit := aRSStatisticalMeasures upperLimit.
-	lowerLimit := aRSStatisticalMeasures lowerLimit.
-	boxWidth := (xValues max - xValues min) * 0.10.
-	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
-	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
-	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
-	outlierPoints := aRSStatisticalMeasures outliers collect: [ :y | 0@y ].
+RSBoxPlot >> computeBoxesPoints [
+	^ statisticalMeasures collect: [ :sm | self computeBoxPoints: sm ].
 ]
 
 { #category : #rendering }
@@ -247,7 +231,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 
 { #category : #accessing }
 RSBoxPlot >> computeState [
-	self computeBoxPoints.
+	self computeBoxesPoints.
 ]
 
 { #category : #public }
