@@ -352,6 +352,7 @@ RSChart >> removeVerticalTicks [
 { #category : #hooks }
 RSChart >> renderIn: aCanvas [
 	self decorations, self plots do: [ :e | e beforeRenderingIn: self ].
+	self halt.
 	elements do: [ :element | element renderIn: aCanvas ].
 	shapes := elements
 		flatCollect: [ :element | element createdShapes ]

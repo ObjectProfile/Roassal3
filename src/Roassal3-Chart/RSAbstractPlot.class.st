@@ -18,6 +18,7 @@ RSAbstractPlot >> addedIn: aRSChart [
 
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
+	self halt.
 	super beforeRenderingIn: aChart.
 	self createXScale.
 	self createYScale

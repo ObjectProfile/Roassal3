@@ -78,3 +78,19 @@ RSBoxPlotTest >> testComputeBoxesPoints [
 	self assert: boxesPoints first first y equals: firstDatasetQ1.
 	self assert: boxesPoints first last y equals: firstDatasetQ3.
 ]
+
+{ #category : #tests }
+RSBoxPlotTest >> testCreateBox [
+	| boxPlot data boxPoints q1 q3 boxes |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	"q1 := boxPlot statisticalMeasures quartiles at: 1.
+	q3 := boxPlot statisticalMeasures quartiles at: 3.
+	boxPlot computeXValues.
+	boxPoints := boxPlot computeBoxPoints: data."
+	boxPlot open.
+	boxes := boxPlot boxes.
+	self assert: boxes first class equals: RSPolygon.
+]

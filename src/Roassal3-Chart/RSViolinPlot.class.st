@@ -78,6 +78,7 @@ RSViolinPlot class >> exampleBasicViolinPlot [
 	| violinPlot data |
 	data := #(10 20 30 40 40 50).
 	violinPlot := self data: data.
+	self halt.
 	^ violinPlot open.
 ]
 
@@ -169,6 +170,7 @@ RSViolinPlot >> buildChart [
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		title: self title.
+	self halt.
 	^ chart
 ]
 

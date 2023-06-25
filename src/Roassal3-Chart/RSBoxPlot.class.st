@@ -42,7 +42,8 @@ Class {
 		'medianLinePoints',
 		'centerLinePoints',
 		'outlierPoints',
-		'box'
+		'boxes',
+		'outliers'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -87,20 +88,9 @@ RSBoxPlot >> bars [
 	^ bars
 ]
 
-{ #category : #rendering }
-RSBoxPlot >> beforeRenderingIn: aChart [
-	| barScale |
-	super beforeRenderingIn: aChart.
-	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
-	aChart xScale: barScale
-]
-
 { #category : #accessing }
-RSBoxPlot >> box [
-	^ box
+RSBoxPlot >> boxes [
+	^ boxes
 ]
 
 { #category : #public }
@@ -109,6 +99,7 @@ RSBoxPlot >> buildChart [
 	chart add: self.
 	chart
 		extent: 250 @ 200.
+	self halt.
 	^ chart
 ]
 
@@ -163,7 +154,8 @@ RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures [
 
 { #category : #accessing }
 RSBoxPlot >> computeBoxesPoints [
-	^ statisticalMeasures collect: [ :sm | self computeBoxPoints: sm ].
+	boxesPoints := statisticalMeasures collect: [ :sm | self computeBoxPoints: sm ].
+	^ boxesPoints.
 ]
 
 { #category : #rendering }
@@ -232,19 +224,55 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 { #category : #accessing }
 RSBoxPlot >> computeState [
 	self computeBoxesPoints.
+	self computeXValues.
+	self computeYValues.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeXValues [
+	| numberOfBoxes |
+	numberOfBoxes := statisticalMeasures size.
+	xValues := {0. numberOfBoxes + 1. }.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeYValues [
+	| yMax yMin maxOutlier minOutlier maxUpperLimit minLowerLimit diff margin |
+	"outliers := statisticalMeasures outliers.
+	maxOutlier := 0.
+	minOutlier := 0.
+	(outliers isNotEmpty) ifTrue: [ 
+		maxOutlier := outliers max.
+		minOutlier := outliers min.
+	]."
+	maxUpperLimit := (statisticalMeasures collect: [ :sm | sm upperLimit ]) max.
+	minLowerLimit := (statisticalMeasures collect: [ :sm | sm lowerLimit ]) min.
+	yMax := maxUpperLimit." max: maxOutlier."
+	yMin := minLowerLimit." min: minOutlier."
+	diff := yMax - yMin.
+	margin := 0.1*diff.
+	yValues := {yMin. yMax.}.
 ]
 
 { #category : #public }
-RSBoxPlot >> createBox [
+RSBoxPlot >> createBox: boxPoints [
+	| box |
 	box :=  RSPolygon new.
 	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
 	box color: Color white.
 	box borderColor: Color black.
+	^ box
+]
+
+{ #category : #public }
+RSBoxPlot >> createBoxes [
+	boxes := boxesPoints collect: [ :boxPoints | self createBox: boxPoints ].
+	^ boxes.
 ]
 
 { #category : #accessing }
 RSBoxPlot >> createdShapes [
-	^ bars
+	^ { boxes. }
 ]
 
 { #category : #rendering }
@@ -267,21 +295,13 @@ RSBoxPlot >> data: aCollection [
 		                        ifTrue: [ aCollection ].
 	statisticalMeasuresArray := collectionOfDatasets collect: [ :dataSet |
 		                            RSStatisticalMeasures data: dataSet ].
-	self statisticalMeasures: statisticalMeasuresArray
-	"self computeState."
+	self statisticalMeasures: statisticalMeasuresArray.
+	self computeState.
 ]
 
 { #category : #initialization }
 RSBoxPlot >> defaultShape [
 	^ RSBox new noPaint
-]
-
-{ #category : #rendering }
-RSBoxPlot >> definedValuesY [
-	"Return the list Y values that are defined"
-	| res |
-	res := yValues flatCollect: [ :i | i].
-	^ res, {0}
 ]
 
 { #category : #accessing }
@@ -350,7 +370,9 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	| index |
+	self createBoxes.
+	canvas addAll: boxes.
+	"| index |
 	self checkAssertion.
 	index := 1.
 	bars := xValues flatCollect: [ :xt |
@@ -358,7 +380,7 @@ RSBoxPlot >> renderIn: canvas [
 		bar := self computeRectagleAndLinesFor: index.
 		index := index + 1.
 		bar ] as: RSGroup.
-	canvas addAll: bars
+	canvas addAll: bars"
 ]
 
 { #category : #accessing }
