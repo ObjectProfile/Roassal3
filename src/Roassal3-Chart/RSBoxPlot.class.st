@@ -40,11 +40,12 @@ Class {
 		'boxWidth',
 		'boxesPoints',
 		'medianLinesPoints',
-		'centerLinePoints',
+		'centerLinesPoints',
 		'outlierPoints',
 		'boxes',
 		'outliers',
-		'medianLines'
+		'medianLines',
+		'centerLines'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -106,6 +107,16 @@ RSBoxPlot >> buildChart [
 	chart
 		extent: 250 @ 200.
 	^ chart
+]
+
+{ #category : #accessing }
+RSBoxPlot >> centerLines [
+	^ centerLines.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> centerLinesPoints [
+	^ centerLinesPoints
 ]
 
 { #category : #private }
@@ -172,6 +183,21 @@ RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures boxIndex: aNumber [
 RSBoxPlot >> computeBoxesPoints [
 	boxesPoints := statisticalMeasures collectWithIndex: [ :sm :idx | self computeBoxPoints: sm boxIndex: idx ].
 	^ boxesPoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeCenterLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
+	| upperLimit lowerLimit centerLinePoints |
+	upperLimit := self upperLimits at: aNumber.
+	lowerLimit := self lowerLimits at: aNumber.
+	centerLinePoints := { aNumber@upperLimit. aNumber@lowerLimit. }.
+	^ centerLinePoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeCenterLinesPoints [
+	centerLinesPoints := statisticalMeasures collectWithIndex: [ :sm :idx | self computeCenterLinePoints: sm boxIndex: idx ].
+	^ centerLinesPoints.
 ]
 
 { #category : #accessing }
@@ -256,6 +282,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 RSBoxPlot >> computeState [
 	self computeBoxesPoints.
 	self computeMedianLinesPoints.
+	self computeCenterLinesPoints.
 	self computeXValues.
 	self computeYValues.
 ]
@@ -269,7 +296,7 @@ RSBoxPlot >> computeXValues [
 
 { #category : #rendering }
 RSBoxPlot >> computeYValues [
-	| yMax yMin maxOutlier minOutlier maxUpperLimit minLowerLimit diff margin |
+	| yMax yMin maxUpperLimit minLowerLimit diff margin |
 	"outliers := statisticalMeasures outliers.
 	maxOutlier := 0.
 	minOutlier := 0.
@@ -300,6 +327,24 @@ RSBoxPlot >> createBox: boxPoints [
 RSBoxPlot >> createBoxes [
 	boxes := boxesPoints collect: [ :boxPoints | self createBox: boxPoints ].
 	^ boxes.
+]
+
+{ #category : #public }
+RSBoxPlot >> createCenterLine: centerLinePoints [
+	| centerLine |
+	centerLine :=  RSPolyline new.
+	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	centerLine width: 2.
+	centerLine color: Color black.
+	^ centerLine.
+]
+
+{ #category : #public }
+RSBoxPlot >> createCenterLines [
+	centerLines := centerLinesPoints collect: [ :centerLinePoints | self createCenterLine: centerLinePoints ].
+	^ centerLines.
 ]
 
 { #category : #public }
@@ -378,6 +423,11 @@ RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> lowerLimits [
+	^ statisticalMeasures collect: [ :sm | sm lowerLimit ].
+]
+
 { #category : #private }
 RSBoxPlot >> medianLines [
 	^ medianLines.
@@ -435,6 +485,8 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
+	self createCenterLines.
+	canvas addAll: centerLines.
 	self createBoxes.
 	canvas addAll: boxes.
 	self createMedianLines.
@@ -459,6 +511,11 @@ RSBoxPlot >> statisticalMeasures [
 { #category : #accessing }
 RSBoxPlot >> statisticalMeasures: aRSStatisticalMeasures [
 	statisticalMeasures := aRSStatisticalMeasures
+]
+
+{ #category : #accessing }
+RSBoxPlot >> upperLimits [
+	^ statisticalMeasures collect: [ :sm | sm upperLimit ].
 ]
 
 { #category : #public }

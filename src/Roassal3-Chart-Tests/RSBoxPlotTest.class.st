@@ -108,6 +108,22 @@ RSBoxPlotTest >> testCreateBoxesOneBox [
 ]
 
 { #category : #tests }
+RSBoxPlotTest >> testCreateCenterLines [
+	| boxPlot data window firstDatasetUpperLimit centerLines |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	firstDatasetUpperLimit := boxPlot statisticalMeasures first upperLimit.
+	self assert: boxPlot upperLimits first closeTo: firstDatasetUpperLimit.
+	window := boxPlot open.
+	centerLines := boxPlot centerLines.
+	self assert: centerLines first class equals: RSPolyline.
+	self assert: boxPlot centerLinesPoints first first y closeTo: firstDatasetUpperLimit.
+	window delete.
+]
+
+{ #category : #tests }
 RSBoxPlotTest >> testCreateMedianLines [
 	| boxPlot data medianLines window firstDatasetMedian |
 	data := { { 1. 2. 3. 4. 5. } .
