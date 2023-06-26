@@ -81,13 +81,44 @@ RSBoxPlotTest >> testComputeBoxesPoints [
 
 { #category : #tests }
 RSBoxPlotTest >> testCreateBoxes [
-	| boxPlot data boxes window |
+	| boxPlot data boxes window firstDatasetQ1 |
 	data := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
+	firstDatasetQ1 := boxPlot statisticalMeasures first quartiles first.
 	window := boxPlot open.
 	boxes := boxPlot boxes.
 	self assert: boxes first class equals: RSPolygon.
+	self assert: boxPlot boxesPoints first first y closeTo: firstDatasetQ1. 
+	window close.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testCreateBoxesOneBox [
+	| boxPlot data boxes window firstDatasetQ1 |
+	data := { 1. 2. 3. 4. 5. } .
+	boxPlot := RSBoxPlot data: data.
+	firstDatasetQ1 := boxPlot statisticalMeasures quartiles first.
+	window := boxPlot open.
+	boxes := boxPlot boxes.
+	self assert: boxes first class equals: RSPolygon.
+	self assert: boxPlot boxesPoints first first y closeTo: firstDatasetQ1.
+	window close.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testCreateMedianLines [
+	| boxPlot data medianLines window firstDatasetMedian |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	firstDatasetMedian := boxPlot statisticalMeasures first median.
+	self assert: boxPlot medians first closeTo: firstDatasetMedian.
+	window := boxPlot open.
+	medianLines := boxPlot medianLines.
+	self assert: medianLines first class equals: RSPolyline.
+	self assert: boxPlot medianLinesPoints first first y closeTo: firstDatasetMedian.
 	window delete.
 ]

@@ -39,11 +39,12 @@ Class {
 		'statisticalMeasures',
 		'boxWidth',
 		'boxesPoints',
-		'medianLinePoints',
+		'medianLinesPoints',
 		'centerLinePoints',
 		'outlierPoints',
 		'boxes',
-		'outliers'
+		'outliers',
+		'medianLines'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -91,6 +92,11 @@ RSBoxPlot >> bars [
 { #category : #accessing }
 RSBoxPlot >> boxes [
 	^ boxes
+]
+
+{ #category : #accessing }
+RSBoxPlot >> boxesPoints [
+	^ boxesPoints
 ]
 
 { #category : #public }
@@ -152,9 +158,35 @@ RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures [
 ]
 
 { #category : #accessing }
+RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures boxIndex: aNumber [
+	| q025 q075 quartiles boxPoints |
+	quartiles := aRSStatisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q075 := quartiles at: 3.
+	boxWidth := 7 * 0.10.
+	boxPoints := {(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075}.
+	^ boxPoints.
+]
+
+{ #category : #accessing }
 RSBoxPlot >> computeBoxesPoints [
-	boxesPoints := statisticalMeasures collect: [ :sm | self computeBoxPoints: sm ].
+	boxesPoints := statisticalMeasures collectWithIndex: [ :sm :idx | self computeBoxPoints: sm boxIndex: idx ].
 	^ boxesPoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeMedianLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
+	| q050 medianLinePoints |
+	q050 := aRSStatisticalMeasures quartiles second.
+	medianLinePoints := { (aNumber-(boxWidth/2))@q050. (aNumber+(boxWidth/2))@q050. }.
+	^ medianLinePoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeMedianLinesPoints [
+	medianLinesPoints := statisticalMeasures collectWithIndex: [ :sm :idx | 
+		self computeMedianLinePoints: sm boxIndex:  idx ].
+	^ medianLinesPoints .
 ]
 
 { #category : #rendering }
@@ -223,6 +255,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 { #category : #accessing }
 RSBoxPlot >> computeState [
 	self computeBoxesPoints.
+	self computeMedianLinesPoints.
 	self computeXValues.
 	self computeYValues.
 ]
@@ -267,6 +300,24 @@ RSBoxPlot >> createBox: boxPoints [
 RSBoxPlot >> createBoxes [
 	boxes := boxesPoints collect: [ :boxPoints | self createBox: boxPoints ].
 	^ boxes.
+]
+
+{ #category : #public }
+RSBoxPlot >> createMedianLine: medianLinePoints [
+	| medianLine |
+	medianLine := RSPolyline new.
+	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	medianLine width: 2.
+	medianLine color: Color black.
+	^ medianLine.
+]
+
+{ #category : #public }
+RSBoxPlot >> createMedianLines [
+	medianLines := medianLinesPoints collect: [ :medianLinePoints | self createMedianLine: medianLinePoints ].
+	^ medianLines.
 ]
 
 { #category : #accessing }
@@ -327,6 +378,21 @@ RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
+{ #category : #private }
+RSBoxPlot >> medianLines [
+	^ medianLines.
+]
+
+{ #category : #public }
+RSBoxPlot >> medianLinesPoints [
+	^ medianLinesPoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> medians [
+	^ statisticalMeasures collect: [ :sm | sm median ].
+]
+
 { #category : #'math functions' }
 RSBoxPlot >> modeBased [
 	"Initialize the quantile calculation with this input"
@@ -371,6 +437,8 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 RSBoxPlot >> renderIn: canvas [
 	self createBoxes.
 	canvas addAll: boxes.
+	self createMedianLines.
+	canvas addAll: medianLines.
 	"| index |
 	self checkAssertion.
 	index := 1.
