@@ -170,7 +170,6 @@ RSViolinPlot >> buildChart [
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		title: self title.
-	self halt.
 	^ chart
 ]
 

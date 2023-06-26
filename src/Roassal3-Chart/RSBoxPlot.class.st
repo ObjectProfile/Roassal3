@@ -99,7 +99,6 @@ RSBoxPlot >> buildChart [
 	chart add: self.
 	chart
 		extent: 250 @ 200.
-	self halt.
 	^ chart
 ]
 
