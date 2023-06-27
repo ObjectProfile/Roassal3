@@ -319,18 +319,19 @@ RSBoxPlot >> computeXValues [
 
 { #category : #rendering }
 RSBoxPlot >> computeYValues [
-	| yMax yMin maxUpperLimit minLowerLimit diff margin |
-	"outliers := statisticalMeasures outliers.
+	| yMax yMin maxUpperLimit minLowerLimit diff margin allOutliersCollection maxOutlier minOutlier |
+	allOutliersCollection := OrderedCollection new.
+	self outliersValues do: [ :outValues | allOutliersCollection addAll: outValues ].
 	maxOutlier := 0.
 	minOutlier := 0.
-	(outliers isNotEmpty) ifTrue: [ 
-		maxOutlier := outliers max.
-		minOutlier := outliers min.
-	]."
+	(allOutliersCollection isNotEmpty) ifTrue: [ 
+		maxOutlier := allOutliersCollection max.
+		minOutlier := allOutliersCollection min.
+	].
 	maxUpperLimit := (statisticalMeasures collect: [ :sm | sm upperLimit ]) max.
 	minLowerLimit := (statisticalMeasures collect: [ :sm | sm lowerLimit ]) min.
-	yMax := maxUpperLimit." max: maxOutlier."
-	yMin := minLowerLimit." min: minOutlier."
+	yMax := maxUpperLimit max: maxOutlier.
+	yMin := minLowerLimit min: minOutlier.
 	diff := yMax - yMin.
 	margin := 0.1*diff.
 	yValues := {yMin. yMax.}.
