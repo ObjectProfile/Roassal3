@@ -82,7 +82,8 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
-			 { 12. 12. 13. 14. 15. 24. }  }.
+			 { 12. 12. 13. 14. 15. 24. }.
+			 { 1. 10. 10. 10. 10. 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := self data: data.
 	^ boxPlot open.
 ]
@@ -229,6 +230,11 @@ RSBoxPlot >> computeCenterLinesPoints [
 	^ centerLinesPoints.
 ]
 
+{ #category : #rendering }
+RSBoxPlot >> computeColor: plotIdx [
+	^ self color ifNil: [ chart colorFor: plotIdx ]
+]
+
 { #category : #accessing }
 RSBoxPlot >> computeMedianLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
 	| q050 medianLinePoints |
@@ -360,10 +366,11 @@ RSBoxPlot >> computeYValues [
 
 { #category : #public }
 RSBoxPlot >> createBox: boxPoints [
-	| box |
+	| box boxIndex |
+	boxIndex := boxPoints first x.
 	box :=  RSPolygon new.
 	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: self computeColor.
+	box color: (self computeColor: boxIndex).
 	box borderColor: Color black.
 	^ box
 ]

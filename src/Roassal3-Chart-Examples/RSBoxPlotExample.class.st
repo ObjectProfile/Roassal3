@@ -31,6 +31,18 @@ RSBoxPlotExample >> example01 [
 ]
 
 { #category : #examples }
+RSBoxPlotExample >> example01new [
+	"A simple boxplot"
+	<script: 'self new example01new open'>
+	| p y |
+	y := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	p := RSBoxPlot new y: y.
+	^ p
+]
+
+{ #category : #examples }
 RSBoxPlotExample >> example02 [
 	"This is a grouped boxplot, comparing different datasets with the same x axis"
 	<script: 'self new example02 open'>
