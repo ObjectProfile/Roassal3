@@ -67,6 +67,17 @@ RSBoxPlot class >> exampleBoxPlot [
 ]
 
 { #category : #accessing }
+RSBoxPlot class >> exampleBoxPlotCustomColor [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot shape color: (Color r: 158 g: 202 b: 226  range: 255 ).
+	^ boxPlot open.
+]
+
+{ #category : #accessing }
 RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -370,7 +381,7 @@ RSBoxPlot >> createCenterLine: centerLinePoints [
 	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
 		self scalePoint: aPoint 
 	]).
-	centerLine width: 2.
+	centerLine width: 1.5.
 	centerLine color: Color black.
 	^ centerLine.
 ]
@@ -451,8 +462,13 @@ RSBoxPlot >> data: aCollection [
 ]
 
 { #category : #initialization }
+RSBoxPlot >> defaultBox [
+	^ RSPolygon new noPaint.
+]
+
+{ #category : #initialization }
 RSBoxPlot >> defaultShape [
-	^ RSBox new noPaint
+	^ RSPolygon new noPaint.
 ]
 
 { #category : #accessing }
