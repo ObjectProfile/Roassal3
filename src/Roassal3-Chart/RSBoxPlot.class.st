@@ -67,6 +67,16 @@ RSBoxPlot class >> exampleBoxPlot [
 ]
 
 { #category : #accessing }
+RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	^ boxPlot open.
+]
+
+{ #category : #accessing }
 RSBoxPlot >> barOffset [
 	^ barOffset
 ]
@@ -342,7 +352,7 @@ RSBoxPlot >> createBox: boxPoints [
 	| box |
 	box :=  RSPolygon new.
 	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: Color white.
+	box color: self computeColor.
 	box borderColor: Color black.
 	^ box
 ]
