@@ -104,7 +104,6 @@ RSBoxPlotTest >> testCreateBoxesOneBox [
 	boxes := boxPlot boxes.
 	self assert: boxes first class equals: RSPolygon.
 	self assert: boxPlot boxesPoints first first y closeTo: firstDatasetQ1.
-	window close.
 ]
 
 { #category : #tests }
@@ -136,5 +135,21 @@ RSBoxPlotTest >> testCreateMedianLines [
 	medianLines := boxPlot medianLines.
 	self assert: medianLines first class equals: RSPolyline.
 	self assert: boxPlot medianLinesPoints first first y closeTo: firstDatasetMedian.
+	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testCreateOutliers [
+	| boxPlot data outliers window lastDatasetOutliers |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	lastDatasetOutliers := boxPlot statisticalMeasures last outliers.
+	self assert: boxPlot outliersValues last closeTo: lastDatasetOutliers.
+	window := boxPlot open.
+	outliers := boxPlot outliers.
+	self assert: outliers last first class equals: RSEllipse.
+	self assert: boxPlot outliersPoints last first y closeTo: lastDatasetOutliers first.
 	window delete.
 ]

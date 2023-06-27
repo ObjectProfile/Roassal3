@@ -41,11 +41,11 @@ Class {
 		'boxesPoints',
 		'medianLinesPoints',
 		'centerLinesPoints',
-		'outlierPoints',
 		'boxes',
 		'outliers',
 		'medianLines',
-		'centerLines'
+		'centerLines',
+		'outliersPoints'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -56,6 +56,14 @@ RSBoxPlot class >> data: aCollection [
 	boxPlot := self new.
 	boxPlot data: aCollection.
 	^ boxPlot
+]
+
+{ #category : #accessing }
+RSBoxPlot class >> exampleBoxPlot [
+	| boxPlot data |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxPlot := self data: data.
+	^ boxPlot open.
 ]
 
 { #category : #accessing }
@@ -231,6 +239,20 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 	]
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> computeOutliersPoints [
+	outliersPoints := statisticalMeasures collectWithIndex: [ :sm :idx | 
+		self computeOutliersPoints: sm boxIndex: idx ].
+	^ outliersPoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeOutliersPoints: aRSStatisticalMeasures boxIndex: aNumber [
+	|  outliersPointsOfOneBox  |
+	outliersPointsOfOneBox := aRSStatisticalMeasures outliers collect: [ :y | aNumber@y ].
+	^ outliersPointsOfOneBox.
+]
+
 { #category : #rendering }
 RSBoxPlot >> computeRectagleAndLinesFor: index [
    "Convert the box and whisker extents to their positions in the plot using the scale"
@@ -283,6 +305,7 @@ RSBoxPlot >> computeState [
 	self computeBoxesPoints.
 	self computeMedianLinesPoints.
 	self computeCenterLinesPoints.
+	self computeOutliersPoints.
 	self computeXValues.
 	self computeYValues.
 ]
@@ -363,6 +386,28 @@ RSBoxPlot >> createMedianLine: medianLinePoints [
 RSBoxPlot >> createMedianLines [
 	medianLines := medianLinesPoints collect: [ :medianLinePoints | self createMedianLine: medianLinePoints ].
 	^ medianLines.
+]
+
+{ #category : #public }
+RSBoxPlot >> createOutliers [
+	outliersPoints collect: [ :pointsOfBox | self createOutliersFor: pointsOfBox ].
+	^ outliers.
+]
+
+{ #category : #public }
+RSBoxPlot >> createOutliersFor: outlierPointsOfBox [
+	| outliersOfBox |
+	outliersOfBox := outlierPointsOfBox collect: [ :point | self scalePoint: point ].
+	outliersOfBox := outliersOfBox collect: [ :out |
+			| e |
+			e := RSEllipse new
+			radius: 2;
+			color: Color black;
+			yourself.
+			e translateTo: out.
+	] as: RSGroup.
+	outliers isNil ifTrue: [ outliers := OrderedCollection new ].
+	outliers add: outliersOfBox.
 ]
 
 { #category : #accessing }
@@ -459,6 +504,21 @@ RSBoxPlot >> open [
 	^ self buildChart open.
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> outliers [
+	^ outliers.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> outliersPoints [
+	^ outliersPoints.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> outliersValues [
+	^ statisticalMeasures collect: [ :sm | sm outliers ].
+]
+
 { #category : #'math functions' }
 RSBoxPlot >> quantile: aProbability for: aSortedCollection [
 	"returns the expected quantile only, if I use my standard initialization method"
@@ -491,6 +551,8 @@ RSBoxPlot >> renderIn: canvas [
 	canvas addAll: boxes.
 	self createMedianLines.
 	canvas addAll: medianLines.
+	self createOutliers.
+	outliers do: [ :out | canvas addAll: out ].
 	"| index |
 	self checkAssertion.
 	index := 1.
