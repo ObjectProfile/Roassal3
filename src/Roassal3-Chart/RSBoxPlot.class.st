@@ -231,8 +231,8 @@ RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures boxIndex: aNumber [
 { #category : #accessing }
 RSBoxPlot >> computeCenterLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
 	| upperLimit lowerLimit centerLinePoints |
-	upperLimit := self upperLimits at: aNumber.
-	lowerLimit := self lowerLimits at: aNumber.
+	upperLimit := aRSStatisticalMeasures upperLimit.
+	lowerLimit := aRSStatisticalMeasures lowerLimit.
 	centerLinePoints := { aNumber@upperLimit. aNumber@lowerLimit. }.
 	^ centerLinePoints.
 ]
@@ -332,10 +332,12 @@ RSBoxPlot >> computeState [
 
 { #category : #accessing }
 RSBoxPlot >> computeStateWithCategories: numberOfCategories [
-	| categoryColor |
+	| categoryColor space |
 	boxGraphics := OrderedCollection new.
-	statisticalMeasures collectWithIndex: [ :sm :idx |  
-		boxGraphics add: (self computeBoxGraphPoints: sm at: idx) ].
+	space := 0.
+	statisticalMeasures collectWithIndex: [ :sm :idx |
+		(idx % (numberOfCategories+1)) = 0 ifTrue: [ space := space + 1 ].  
+		boxGraphics add: (self computeBoxGraphPoints: sm at: idx + space) ].
 	categoryColor := numberOfCategories.
 	boxGraphics collectWithIndex: [ :boxGraph :idx | 
 		boxGraph color: categoryColor.
