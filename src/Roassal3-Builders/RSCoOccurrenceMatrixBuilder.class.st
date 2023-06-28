@@ -1,3 +1,14 @@
+"
+Takes as input a ""data source"" plot an Occurrence Matrix, a matrix which represents occurrence statistics between data. Each cell (i,j) of a matrix is the number of times the element appear for a row i in column j.
+
+The input data source should implement these methods:
+
+  - `columnNames`
+  - `rowNames` 
+  - `rows`
+
+
+"
 Class {
 	#name : #RSCoOccurrenceMatrixBuilder,
 	#superclass : #RSAbstractContainerBuilder,
@@ -10,6 +21,35 @@ Class {
 	],
 	#category : #'Roassal3-Builders-Core'
 }
+
+{ #category : #examples }
+RSCoOccurrenceMatrixBuilder class >> exampleBinaryMatrixFromDataFrame [
+
+	(self environment hasClassNamed: #DataFrame)
+		ifFalse: [ ^ self inform: 'Install DataFrame package to evaluate the example' ].
+	
+	RSCoOccurrenceMatrixBuilder new
+		dataSource: ((Smalltalk	at: #DataFrame) readFromCsvWithRowNames: self exampleMatrix);
+		open.
+]
+
+{ #category : #examples }
+RSCoOccurrenceMatrixBuilder class >> exampleMatrix [
+
+	^ '"","col_1","col_2","col_3","col_4","col_5","col_6","col_7","col_8","col_9"
+"row_1","1","0","1","1","1","1","1","1","1"
+"row_2","1","1","0","1","0","1","1","1","0"
+"row_3","0","0","0","0","1","0","0","0","0"
+"row_4","0","1","0","0","1","0","1","0","0"
+"row_5","0","0","0","0","1","0","0","0","0"
+"row_6","0","1","0","0","1","0","0","0","1"
+"row_7","0","0","0","0","0","0","0","0","0"
+"row_8","0","0","0","0","0","0","1","0","0"
+"row_9","0","0","0","0","0","0","0","0","0"
+"row_10","0","1","0","0","0","0","0","0","0"
+"row_11","0","1","0","0","0","0","0","1","0"
+"row_12","0","0","0","0","0","0","1","0","0"'
+]
 
 { #category : #rendering }
 RSCoOccurrenceMatrixBuilder >> colorScale [
@@ -190,7 +230,7 @@ RSCoOccurrenceMatrixBuilder >> defaultContainer [
 RSCoOccurrenceMatrixBuilder >> domainRange [
 
 	^ domainRange
-		ifNil: [ domainRange := (1 to: 10) ]
+		ifNil: [ domainRange := 1 to: 10 ]
 ]
 
 { #category : #accessing }
@@ -242,11 +282,4 @@ RSCoOccurrenceMatrixBuilder >> rows [
 	"Answer a <Collection> of <Object> representing the receiver's data source rows"
 
 	^ self dataSource rows
-]
-
-{ #category : #accessing }
-RSCoOccurrenceMatrixBuilder >> title: aTitle [
-	" Set the title of the receiver "
-
-	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
