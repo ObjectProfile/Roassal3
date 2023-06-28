@@ -82,6 +82,23 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 ]
 
 { #category : #accessing }
+RSBoxPlot >> addData: aCollection [
+	| statisticalMeasuresArray collectionOfDatasets numberOfCategories |
+	"if is not a collection of collections. transform in a collection of collections"
+	numberOfCategories := aCollection size.
+	collectionOfDatasets := aCollection first isCollection
+		                        ifFalse: [ { aCollection } ]
+		                        ifTrue: [ aCollection ].
+	statisticalMeasuresArray := collectionOfDatasets collect: [ :dataSet |
+		                            RSStatisticalMeasures data: dataSet ].
+	self statisticalMeasures: 
+		((self statisticalMeasures) 
+			asOrderedCollection addAll: statisticalMeasuresArray; 
+			yourself).
+	self computeStateWithCategories: numberOfCategories.
+]
+
+{ #category : #accessing }
 RSBoxPlot >> barOffset [
 	^ barOffset
 ]
@@ -306,7 +323,25 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 { #category : #accessing }
 RSBoxPlot >> computeState [
 	boxGraphics := OrderedCollection new.
-	statisticalMeasures collectWithIndex: [ :sm :idx | boxGraphics add: (self computeBoxGraphPoints: sm at: idx) ].
+	statisticalMeasures collectWithIndex: [ :sm :idx | 
+		boxGraphics add: (self computeBoxGraphPoints: sm at: idx) ].
+	boxGraphics collectWithIndex: [ :boxGraph :idx | boxGraph color: idx ].
+	self computeXValues.
+	self computeYValues.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeStateWithCategories: numberOfCategories [
+	| categoryColor |
+	boxGraphics := OrderedCollection new.
+	statisticalMeasures collectWithIndex: [ :sm :idx |  
+		boxGraphics add: (self computeBoxGraphPoints: sm at: idx) ].
+	categoryColor := numberOfCategories.
+	boxGraphics collectWithIndex: [ :boxGraph :idx | 
+		boxGraph color: categoryColor.
+		categoryColor := categoryColor - 1.
+		categoryColor > 0 ifFalse: [ categoryColor := numberOfCategories ]
+	 ].
 	self computeXValues.
 	self computeYValues.
 ]
@@ -350,11 +385,23 @@ RSBoxPlot >> createBox: boxPoints [
 ]
 
 { #category : #public }
+RSBoxPlot >> createBox: boxPoints withColor: colorIndex [
+	| box boxIndex |
+	boxIndex := boxPoints first x.
+	box :=  RSPolygon new.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: (self computeColor: colorIndex).
+	box borderColor: Color black.
+	box borderWidth: 1.
+	^ box
+]
+
+{ #category : #public }
 RSBoxPlot >> createBoxGraphShapes: aRSBoxGraph [
 	| box centerLine medianLine outliersEllipses |
 	centerLine := self createCenterLine: aRSBoxGraph centerLinePoints.
 	aRSBoxGraph centerLine: centerLine.
-	box := self createBox: aRSBoxGraph boxPoints.
+	box := self createBox: aRSBoxGraph boxPoints withColor: aRSBoxGraph color.
 	aRSBoxGraph box: box.
 	medianLine := self createMedianLine: aRSBoxGraph medianLinePoints.
 	aRSBoxGraph medianLine: medianLine.
@@ -370,7 +417,7 @@ RSBoxPlot >> createCenterLine: centerLinePoints [
 	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
 		self scalePoint: aPoint 
 	]).
-	centerLine width: 1.5.
+	centerLine width: 1.
 	centerLine color: Color black.
 	^ centerLine.
 ]

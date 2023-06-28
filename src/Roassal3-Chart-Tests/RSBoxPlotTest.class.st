@@ -51,6 +51,23 @@ RSBoxPlotTest >> testBoxPlotCreatedWithData [
 ]
 
 { #category : #tests }
+RSBoxPlotTest >> testBoxPlotsClusters [
+	| boxPlot data window data2 |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 2. 2. 5. 10. 5. 25. 5. 5. 3. } .
+			 { 5. 6. 7. 5. 10. 20. 15. 2. 2. 2. 2. 2. }  .
+			 { 12. 12. 13. 14. 15. 24. 15. 15. 15. 15.}  }.
+	boxPlot := RSBoxPlot data: data.
+	self assert: boxPlot statisticalMeasures size equals: 3.
+	boxPlot addData: data2.
+	self assert: boxPlot statisticalMeasures size equals: 6.
+	window := boxPlot open.
+	self assert: boxPlot boxGraphics size equals: 6.
+]
+
+{ #category : #tests }
 RSBoxPlotTest >> testComputeBoxPoints [
 	| boxPlot data boxPoints q1 q3 |
 	data := { 1. 2. 3. 4. 5. }.

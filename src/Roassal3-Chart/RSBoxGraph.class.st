@@ -9,7 +9,8 @@ Class {
 		'centerLine',
 		'box',
 		'medianLine',
-		'outliers'
+		'outliers',
+		'color'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -52,6 +53,16 @@ RSBoxGraph >> centerLinePoints [
 { #category : #accessing }
 RSBoxGraph >> centerLinePoints: aCollectionOfPoints [
 	centerLinePoints := aCollectionOfPoints
+]
+
+{ #category : #accessing }
+RSBoxGraph >> color [
+	^ color
+]
+
+{ #category : #accessing }
+RSBoxGraph >> color: aNumber [
+	color := aNumber
 ]
 
 { #category : #accessing }
