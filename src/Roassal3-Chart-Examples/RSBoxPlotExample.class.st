@@ -80,8 +80,8 @@ RSBoxPlotExample >> example02 [
 	c addPlot: p.
 	c addPlot: p2.
 	c addPlot: p3.
-	c horizontalTick fromNames: x.
-	c verticalTick integer.
+	"c horizontalTick fromNames: x.
+	c verticalTick integer."
 
 	^ c
 ]
