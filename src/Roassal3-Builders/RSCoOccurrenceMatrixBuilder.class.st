@@ -7,6 +7,13 @@ The input data source should implement these methods:
   - `rowNames` 
   - `rows`
 
+## Usage Example
+
+```language=Pharo
+	RSCoOccurrenceMatrixBuilder new
+		dataSource: ((Smalltalk	at: #DataFrame) readFromCsvWithRowNames: RSCoOccurrenceMatrixBuilder sampleMatrix);
+		open.
+```
 
 "
 Class {
@@ -23,18 +30,7 @@ Class {
 }
 
 { #category : #examples }
-RSCoOccurrenceMatrixBuilder class >> exampleBinaryMatrixFromDataFrame [
-
-	(self environment hasClassNamed: #DataFrame)
-		ifFalse: [ ^ self inform: 'Install DataFrame package to evaluate the example' ].
-	
-	RSCoOccurrenceMatrixBuilder new
-		dataSource: ((Smalltalk	at: #DataFrame) readFromCsvWithRowNames: self exampleMatrix);
-		open.
-]
-
-{ #category : #examples }
-RSCoOccurrenceMatrixBuilder class >> exampleMatrix [
+RSCoOccurrenceMatrixBuilder class >> sampleMatrix [
 
 	^ '"","col_1","col_2","col_3","col_4","col_5","col_6","col_7","col_8","col_9"
 "row_1","1","0","1","1","1","1","1","1","1"
