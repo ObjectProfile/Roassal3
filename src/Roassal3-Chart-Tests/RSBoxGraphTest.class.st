@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : #tests }
+RSBoxGraphTest >> testBox [
+	| boxGraph data  box aScale |
+	data := { 1. 2. 3. 4. 5. }.
+	aScale := NSLinearScale new.
+	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
+	box := boxGraph box.
+	self assert: box class equals: RSPolygon.
+	self assert: box points size equals: 4.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testBoxGraphHasScales [
 	| boxGraph data aPoint aScale |
 	data := { 1. 2. 3. 4. 5. }.
@@ -26,50 +37,39 @@ RSBoxGraphTest >> testBoxGraphHasStatisticalMeasures [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testBoxPointsWithCenterAt [
+RSBoxGraphTest >> testBoxPoints [
 	| boxGraph data boxPoints q1 q3 |
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxGraph data: data.
 	q1 := boxGraph statisticalMeasures quartiles at: 1.
 	q3 := boxGraph statisticalMeasures quartiles at: 3.
-	boxPoints := boxGraph boxPointsWithCenterAt: 1.
+	boxPoints := boxGraph boxPoints.
 	self assert: boxPoints size equals: 4.
 	self assert: boxPoints first y equals: q1.
 	self assert: boxPoints last y equals: q3.
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testBoxWithCenterAt [
-	| boxGraph data  box aScale |
+RSBoxGraphTest >> testCenterLine [
+	| boxGraph data  centerLine aScale |
 	data := { 1. 2. 3. 4. 5. }.
 	aScale := NSLinearScale new.
 	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
-	box := boxGraph boxWithCenterAt: 1.
-	self assert: box class equals: RSPolygon.
-	self assert: box points size equals: 4.
+	centerLine := boxGraph centerLine.
+	self assert: centerLine class equals: RSPolyline.
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testCenterLinePointsWithCenterAt [
+RSBoxGraphTest >> testCenterLinePoints [
 	| boxGraph data centerLinePoints upperLimit lowerLimit |
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxGraph data: data.
 	upperLimit := boxGraph statisticalMeasures upperLimit.
 	lowerLimit := boxGraph statisticalMeasures lowerLimit.
-	centerLinePoints := boxGraph centerLinePointsWithCenterAt: 1.
+	centerLinePoints := boxGraph centerLinePoints.
 	self assert: centerLinePoints size equals: 2.
 	self assert: centerLinePoints first y equals: upperLimit.
 	self assert: centerLinePoints second y equals: lowerLimit.
-]
-
-{ #category : #tests }
-RSBoxGraphTest >> testCenterLineWithCenterAt [
-	| boxGraph data  centerLine aScale |
-	data := { 1. 2. 3. 4. 5. }.
-	aScale := NSLinearScale new.
-	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
-	centerLine := boxGraph centerLineWithCenterAt: 1.
-	self assert: centerLine class equals: RSPolyline.
 ]
 
 { #category : #tests }
@@ -89,24 +89,24 @@ RSBoxGraphTest >> testDefaultGraphCenter [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testMedianLinePointsWithCenterAt [
-	| boxGraph data  median medianPoints|
-	data := { 1. 2. 3. 4. 5. }.
-	boxGraph := RSBoxGraph data: data.
-	median := boxGraph statisticalMeasures quartiles at: 2.
-	medianPoints := boxGraph medianLinePointsWithCenterAt: 1.
-	self assert: medianPoints size equals: 2.
-	self assert: medianPoints first y equals: median.
-]
-
-{ #category : #tests }
-RSBoxGraphTest >> testMedianLineWithCenterAt [
+RSBoxGraphTest >> testMedianLine [
 	| boxGraph data  medianLine aScale |
 	data := { 1. 2. 3. 4. 5. }.
 	aScale := NSLinearScale new.
 	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
-	medianLine := boxGraph medianLineWithCenterAt: 1.
+	medianLine := boxGraph medianLine.
 	self assert: medianLine class equals: RSPolyline.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testMedianLinePoints [
+	| boxGraph data  median medianPoints|
+	data := { 1. 2. 3. 4. 5. }.
+	boxGraph := RSBoxGraph data: data.
+	median := boxGraph statisticalMeasures quartiles at: 2.
+	medianPoints := boxGraph medianLinePoints.
+	self assert: medianPoints size equals: 2.
+	self assert: medianPoints first y equals: median.
 ]
 
 { #category : #tests }

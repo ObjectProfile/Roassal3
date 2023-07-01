@@ -34,23 +34,23 @@ RSBoxGraph class >> data: collectionOfData1D scales: collectionOfNSScales [
 
 { #category : #accessing }
 RSBoxGraph >> box [
+	| boxPoints |
+	boxPoints := self boxPoints.
+	box :=  RSPolygon new.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box borderColor: Color black.
 	^ box
 ]
 
 { #category : #accessing }
-RSBoxGraph >> box: aRSPolygon [
-	box := aRSPolygon
-]
-
-{ #category : #accessing }
-RSBoxGraph >> boxPointsWithCenterAt: aNumber [
+RSBoxGraph >> boxPoints [
 	| q025 q075 quartiles boxPoints |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
 	q075 := quartiles at: 3.
 	boxPoints := { 
-		(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025.
-		(aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075
+		(graphCenter)@q025. (graphCenter+(boxWidth/2))@q025.
+		(graphCenter+(boxWidth/2))@q075. (graphCenter-(boxWidth/2))@q075
 	}.
 	^ boxPoints.
 ]
@@ -61,38 +61,9 @@ RSBoxGraph >> boxWidth [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> boxWithCenterAt: aNumber [
-	| boxPoints |
-	boxPoints := self boxPointsWithCenterAt: aNumber.
-	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box borderColor: Color black.
-	^ box
-]
-
-{ #category : #accessing }
 RSBoxGraph >> centerLine [
-	^ centerLine
-]
-
-{ #category : #accessing }
-RSBoxGraph >> centerLine: aRSPolyline [
-	centerLine := aRSPolyline
-]
-
-{ #category : #accessing }
-RSBoxGraph >> centerLinePointsWithCenterAt: aNumber [
-	| upperLimit lowerLimit centerLinePoints |
-	upperLimit := statisticalMeasures upperLimit.
-	lowerLimit := statisticalMeasures lowerLimit.
-	centerLinePoints := { aNumber@upperLimit. aNumber@lowerLimit. }.
-	^ centerLinePoints.
-]
-
-{ #category : #accessing }
-RSBoxGraph >> centerLineWithCenterAt: aNumber [
 	| centerLinePoints |
-	centerLinePoints := self centerLinePointsWithCenterAt: aNumber.
+	centerLinePoints := self centerLinePoints.
 	centerLine :=  RSPolyline new.
 	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
 		self scalePoint: aPoint 
@@ -100,6 +71,15 @@ RSBoxGraph >> centerLineWithCenterAt: aNumber [
 	centerLine width: 1.
 	centerLine color: Color black.
 	^ centerLine.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> centerLinePoints [
+	| upperLimit lowerLimit centerLinePoints |
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	centerLinePoints := { graphCenter@upperLimit. graphCenter@lowerLimit. }.
+	^ centerLinePoints.
 ]
 
 { #category : #accessing }
@@ -132,6 +112,11 @@ RSBoxGraph >> graphCenter [
 	^ graphCenter.
 ]
 
+{ #category : #accessing }
+RSBoxGraph >> graphCenter: aNumber [
+	graphCenter := aNumber.
+]
+
 { #category : #initialization }
 RSBoxGraph >> initialize [
 	super initialize.
@@ -146,26 +131,8 @@ RSBoxGraph >> median [
 
 { #category : #accessing }
 RSBoxGraph >> medianLine [
-	^ medianLine
-]
-
-{ #category : #accessing }
-RSBoxGraph >> medianLine: aRSPolyline [
-	medianLine := aRSPolyline
-]
-
-{ #category : #accessing }
-RSBoxGraph >> medianLinePointsWithCenterAt: aNumber [
-	| q050 medianLinePoints |
-	q050 := statisticalMeasures quartiles second.
-	medianLinePoints := { (aNumber-(boxWidth/2))@q050. (aNumber+(boxWidth/2))@q050. }.
-	^ medianLinePoints.
-]
-
-{ #category : #accessing }
-RSBoxGraph >> medianLineWithCenterAt: aNumber [
 	| medianLinePoints |
-	medianLinePoints := self medianLinePointsWithCenterAt: aNumber.
+	medianLinePoints := self medianLinePoints.
 	medianLine := RSPolyline new.
 	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
 		self scalePoint: aPoint 
@@ -173,6 +140,14 @@ RSBoxGraph >> medianLineWithCenterAt: aNumber [
 	medianLine width: 2.
 	medianLine color: Color black.
 	^ medianLine.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> medianLinePoints [
+	| q050 medianLinePoints |
+	q050 := statisticalMeasures quartiles second.
+	medianLinePoints := { (graphCenter-(boxWidth/2))@q050. (graphCenter+(boxWidth/2))@q050. }.
+	^ medianLinePoints.
 ]
 
 { #category : #accessing }
@@ -218,9 +193,10 @@ RSBoxGraph >> scales: collectionOfNSScales [
 
 { #category : #accessing }
 RSBoxGraph >> shapesWithCenterAt: aNumber [
-	centerLine := self centerLineWithCenterAt: aNumber.
-	medianLine := self medianLineWithCenterAt: aNumber.
-	box := self boxWithCenterAt: aNumber.
+	self graphCenter: aNumber.
+	centerLine := self centerLine.
+	medianLine := self medianLine.
+	box := self box.
 	outliers := self outliers.
 	^ { centerLine. box. medianLine. outliers.}.
 ]
