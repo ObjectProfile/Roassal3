@@ -5,19 +5,6 @@ Class {
 }
 
 { #category : #tests }
-RSBoxGraphTest >> testBoxGraphComputeBoxPoints [
-	| boxGraph data boxPoints q1 q3 |
-	data := { 1. 2. 3. 4. 5. }.
-	boxGraph := RSBoxGraph data: data.
-	q1 := boxGraph statisticalMeasures quartiles at: 1.
-	q3 := boxGraph statisticalMeasures quartiles at: 3.
-	boxPoints := boxGraph computeBoxPoints: data boxCenterAt: 1.
-	self assert: boxPoints size equals: 4.
-	self assert: boxPoints first y equals: q1.
-	self assert: boxPoints last y equals: q3.
-]
-
-{ #category : #tests }
 RSBoxGraphTest >> testBoxGraphHasScales [
 	| boxGraph data aPoint aScale |
 	data := { 1. 2. 3. 4. 5. }.
@@ -39,9 +26,33 @@ RSBoxGraphTest >> testBoxGraphHasStatisticalMeasures [
 ]
 
 { #category : #tests }
+RSBoxGraphTest >> testBoxPointsWithCenterAt [
+	| boxGraph data boxPoints q1 q3 |
+	data := { 1. 2. 3. 4. 5. }.
+	boxGraph := RSBoxGraph data: data.
+	q1 := boxGraph statisticalMeasures quartiles at: 1.
+	q3 := boxGraph statisticalMeasures quartiles at: 3.
+	boxPoints := boxGraph boxPointsWithCenterAt: 1.
+	self assert: boxPoints size equals: 4.
+	self assert: boxPoints first y equals: q1.
+	self assert: boxPoints last y equals: q3.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testDefaultBoxWidth [
 	| boxGraph data|
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxGraph data: data.
 	self assert: boxGraph boxWidth closeTo: 0.7 precision: 1.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testMedianLinePointsWithCenterAt [
+	| boxGraph data  median medianPoints|
+	data := { 1. 2. 3. 4. 5. }.
+	boxGraph := RSBoxGraph data: data.
+	median := boxGraph statisticalMeasures quartiles at: 2.
+	medianPoints := boxGraph medianLinePointsWithCenterAt: 1.
+	self assert: medianPoints size equals: 2.
+	self assert: medianPoints first y equals: median.
 ]

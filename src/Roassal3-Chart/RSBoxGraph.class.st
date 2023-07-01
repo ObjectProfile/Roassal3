@@ -2,8 +2,8 @@ Class {
 	#name : #RSBoxGraph,
 	#superclass : #RSObject,
 	#instVars : [
+		'boxWidth',
 		'statisticalMeasures',
-		'medianLinePoints',
 		'centerLinePoints',
 		'outliersPoints',
 		'centerLine',
@@ -12,8 +12,7 @@ Class {
 		'outliers',
 		'color',
 		'xScale',
-		'yScale',
-		'boxWidth'
+		'yScale'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -42,6 +41,19 @@ RSBoxGraph >> box [
 { #category : #accessing }
 RSBoxGraph >> box: aRSPolygon [
 	box := aRSPolygon
+]
+
+{ #category : #accessing }
+RSBoxGraph >> boxPointsWithCenterAt: aNumber [
+	| q025 q075 quartiles boxPoints |
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q075 := quartiles at: 3.
+	boxPoints := { 
+		(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025.
+		(aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075
+	}.
+	^ boxPoints.
 ]
 
 { #category : #accessing }
@@ -80,19 +92,6 @@ RSBoxGraph >> color: aNumber [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> computeBoxPoints: datasetOf1D boxCenterAt: aNumber [
-	| q025 q075 quartiles boxPoints |
-	quartiles := statisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q075 := quartiles at: 3.
-	boxPoints := { 
-		(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025.
-		(aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075
-	}.
-	^ boxPoints.
-]
-
-{ #category : #accessing }
 RSBoxGraph >> data: collectionOfData1D [
 	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
 ]
@@ -124,13 +123,11 @@ RSBoxGraph >> medianLine: aRSPolyline [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> medianLinePoints [
-	^ medianLinePoints
-]
-
-{ #category : #accessing }
-RSBoxGraph >> medianLinePoints: aCollectionOfPoints [
-	medianLinePoints := aCollectionOfPoints
+RSBoxGraph >> medianLinePointsWithCenterAt: aNumber [
+	| q050 medianLinePoints |
+	q050 := statisticalMeasures quartiles second.
+	medianLinePoints := { (aNumber-(boxWidth/2))@q050. (aNumber+(boxWidth/2))@q050. }.
+	^ medianLinePoints.
 ]
 
 { #category : #accessing }
