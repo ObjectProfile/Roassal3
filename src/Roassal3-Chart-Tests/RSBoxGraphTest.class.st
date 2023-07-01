@@ -78,7 +78,7 @@ RSBoxGraphTest >> testDefaultBoxWidth [
 	| boxGraph data|
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph boxWidth closeTo: 0.7 precision: 1.
+	self assert: boxGraph boxWidth closeTo: 1.4.
 ]
 
 { #category : #tests }
@@ -95,6 +95,22 @@ RSBoxGraphTest >> testLowerLimit [
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxGraph data: data.
 	self assert: boxGraph lowerLimit closeTo: 7.5 precision: 1.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testMaxYValueIsOutlier [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph maxYValue equals: 24.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testMaxYValueIsUpperLimit [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph maxYValue equals: 17.
 ]
 
 { #category : #tests }
@@ -116,6 +132,14 @@ RSBoxGraphTest >> testMedianLinePoints [
 	medianPoints := boxGraph medianLinePoints.
 	self assert: medianPoints size equals: 2.
 	self assert: medianPoints first y equals: median.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testMinYValueIsLowerLimit [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph minYValue equals: 9.
 ]
 
 { #category : #tests }

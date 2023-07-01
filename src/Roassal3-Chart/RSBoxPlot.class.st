@@ -36,8 +36,6 @@ Class {
 		'gapRatio',
 		'barOffset',
 		'boxAndWhisker',
-		'boxWidth',
-		'boxGraphics',
 		'spaceBetweenGroups',
 		'groups'
 	],
@@ -133,17 +131,10 @@ RSBoxPlot >> bars [
 
 { #category : #rendering }
 RSBoxPlot >> boxGraphics [
+	| boxGraphics |
+	boxGraphics := OrderedCollection new.
+	groups do: [:boxGraphGroup | boxGraphics addAll: (boxGraphGroup boxGraphics) ].
 	^ boxGraphics.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> boxes [
-	^ boxGraphics collect: [ :boxGraph | boxGraph box ].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> boxesPoints [
-	^ boxGraphics collect: [ :boxGraph | boxGraph boxPoints ].
 ]
 
 { #category : #public }
@@ -153,16 +144,6 @@ RSBoxPlot >> buildChart [
 	chart
 		extent: 250 @ 200.
 	^ chart
-]
-
-{ #category : #accessing }
-RSBoxPlot >> centerLines [
-	^ boxGraphics collect: [ :boxGraph | boxGraph centerLine ].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> centerLinesPoints [
-	^ boxGraphics collect: [ :boxGraph | boxGraph centerLinePoints ].
 ]
 
 { #category : #private }
@@ -263,28 +244,17 @@ RSBoxPlot >> computeState [
 
 { #category : #rendering }
 RSBoxPlot >> computeXValues [
-	| numberOfBoxes |
-	numberOfBoxes := boxGraphics size.
-	xValues := {0. numberOfBoxes + 1. }.
+	| maxXValue boxesMaxXValues |
+	boxesMaxXValues := groups collect: [ :boxGraphGroup | boxGraphGroup maxXValue ].
+	maxXValue := boxesMaxXValues max.
+	xValues := {0. maxXValue. }.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> computeYValues [
-	| yMax yMin maxUpperLimit minLowerLimit diff margin allOutliersCollection maxOutlier minOutlier |
-	allOutliersCollection := OrderedCollection new.
-	self outliersValues do: [ :outValues | allOutliersCollection addAll: outValues ].
-	maxOutlier := 0.
-	minOutlier := 0.
-	(allOutliersCollection isNotEmpty) ifTrue: [ 
-		maxOutlier := allOutliersCollection max.
-		minOutlier := allOutliersCollection min.
-	].
-	maxUpperLimit := (boxGraphics collect: [ :sm | sm upperLimit ]) max.
-	minLowerLimit := (boxGraphics collect: [ :sm | sm lowerLimit ]) min.
-	yMax := maxUpperLimit max: maxOutlier.
-	yMin := minLowerLimit min: minOutlier.
-	diff := yMax - yMin.
-	margin := 0.1*diff.
+	| yMax yMin |
+	yMax := (groups collect: [ :boxGraphGroup | boxGraphGroup maxYValue ]) max.
+	yMin := (groups collect: [ :boxGraphGroup | boxGraphGroup minYValue ]) min.
 	yValues := {yMin. yMax.}.
 ]
 
@@ -302,27 +272,13 @@ RSBoxPlot >> createBox: boxPoints withColor: colorIndex [
 
 { #category : #accessing }
 RSBoxPlot >> createdShapes [
-	^ { boxGraphics. }
-]
-
-{ #category : #rendering }
-RSBoxPlot >> data [
-	| collectionOfDatasets |
-	(boxGraphics size = 1) ifTrue: [ ^boxGraphics first data ].
-	collectionOfDatasets := boxGraphics collect: [ :boxGraph | boxGraph data ].
-	^ collectionOfDatasets
+	^ { self boxGraphics. }
 ]
 
 { #category : #rendering }
 RSBoxPlot >> data: aCollection [
-	| collectionOfDatasets |
-	"if is not a collection of collections. transform in a collection of collections"
-	collectionOfDatasets := aCollection first isCollection
-		                        ifFalse: [ { aCollection } ]
-		                        ifTrue: [ aCollection ].
-	boxGraphics := collectionOfDatasets collect: [ :dataSet | RSBoxGraph data: dataSet ].
+	self groups: { RSBoxGraphGroup data: aCollection. }.
 	self computeState.
-	self groups: { RSBoxGraphGroup boxGraphics: boxGraphics. }.
 ]
 
 { #category : #initialization }
@@ -369,26 +325,6 @@ RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
-{ #category : #accessing }
-RSBoxPlot >> lowerLimits [
-	^ boxGraphics collect: [ :boxGraph | boxGraph lowerLimit ].
-]
-
-{ #category : #private }
-RSBoxPlot >> medianLines [
-	^ boxGraphics collect: [ :boxGraph | boxGraph medianLine ].
-]
-
-{ #category : #public }
-RSBoxPlot >> medianLinesPoints [
-	^ boxGraphics collect: [ :boxGraph | boxGraph medianLinePoints ].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> medians [
-	^ boxGraphics collect: [ :boxGraph | boxGraph median ].
-]
-
 { #category : #'math functions' }
 RSBoxPlot >> modeBased [
 	"Initialize the quantile calculation with this input"
@@ -403,21 +339,6 @@ RSBoxPlot >> modelFor: aPoint [
 { #category : #public }
 RSBoxPlot >> open [
 	^ self buildChart open.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> outliers [
-	^ boxGraphics collect: [ :boxGraph | boxGraph outliers ].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> outliersPoints [
-	^ boxGraphics collect: [ :boxGraph | boxGraph outliersPoints ].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> outliersValues [
-	^ boxGraphics collect: [ :sm | sm outlierValues ].
 ]
 
 { #category : #'math functions' }
@@ -446,13 +367,10 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	boxGraphics := boxGraphics collect: [ :boxGraph | boxGraph scales: { xScale. yScale. } ].
-	boxGraphics do: [ :boxGraph |  boxGraph renderIn: canvas].
-]
-
-{ #category : #accessing }
-RSBoxPlot >> upperLimits [
-	^ boxGraphics collect: [ :boxGraph | boxGraph upperLimit ].
+	groups do: [ :aRSBoxGraphGroup |
+		aRSBoxGraphGroup scales: {xScale. yScale.}. 
+		aRSBoxGraphGroup renderIn: canvas 
+	]
 ]
 
 { #category : #public }

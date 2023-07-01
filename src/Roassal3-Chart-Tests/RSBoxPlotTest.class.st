@@ -75,7 +75,6 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
 	self assert: p boxGraphics first class equals: RSBoxGraph.
 	window := p open.
 	self assert: p createdShapes notEmpty.
-	window delete.
 ]
 
 { #category : #tests }
@@ -194,4 +193,18 @@ RSBoxPlotTest >> testGroupsOfOneBoxGraph [
 	self assert: firstBoxGraphGroup class equals: RSBoxGraphGroup.
 	self assert: firstBoxGraphGroup boxGraphics size equals: 1.
 	self assert: firstBoxGraphGroup boxGraphics first class equals: RSBoxGraph.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testNumberOfBoxes [
+	| boxPlot data boxes window |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	window := boxPlot open.
+	boxes := boxPlot boxes.
+	self assert: boxPlot numberOfBoxes equals: 3.
+	self assert: boxPlot boxes size equals: boxPlot numberOfBoxes. 
+	window close.
 ]

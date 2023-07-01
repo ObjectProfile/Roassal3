@@ -99,7 +99,7 @@ RSBoxGraph >> data: collectionOfData1D [
 
 { #category : #defaults }
 RSBoxGraph >> defaultBoxWidth [
-	^ 0.7
+	^ 1.4
 ]
 
 { #category : #defaults }
@@ -117,6 +117,11 @@ RSBoxGraph >> graphCenter: aNumber [
 	graphCenter := aNumber.
 ]
 
+{ #category : #defaults }
+RSBoxGraph >> hasOutliers [
+	^ self outlierValues isNotEmpty
+]
+
 { #category : #initialization }
 RSBoxGraph >> initialize [
 	super initialize.
@@ -127,6 +132,13 @@ RSBoxGraph >> initialize [
 { #category : #accessing }
 RSBoxGraph >> lowerLimit [
 	^ statisticalMeasures lowerLimit.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> maxYValue [
+	self hasOutliers 
+		ifTrue: [ ^ (self outlierValues max) max: self upperLimit ]
+		ifFalse: [ ^ self upperLimit ].
 ]
 
 { #category : #accessing }
@@ -153,6 +165,13 @@ RSBoxGraph >> medianLinePoints [
 	q050 := statisticalMeasures quartiles second.
 	medianLinePoints := { (graphCenter-(boxWidth/2))@q050. (graphCenter+(boxWidth/2))@q050. }.
 	^ medianLinePoints.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> minYValue [
+	self hasOutliers 
+		ifTrue: [ ^ (self outlierValues min) min: self lowerLimit ]
+		ifFalse: [ ^ self lowerLimit ].
 ]
 
 { #category : #accessing }
@@ -193,7 +212,7 @@ RSBoxGraph >> outliersPoints [
 { #category : #accessing }
 RSBoxGraph >> renderIn: canvas [
 	| shapes |
-	shapes := self shapesWithCenterAt: self defaultGraphCenter.
+	shapes := self shapesWithCenterAt: graphCenter.
 	shapes do: [ :aShape |
 		aShape isCollection ifTrue: [ canvas addAll: aShape ]
 		ifFalse: [ canvas add: aShape ].
