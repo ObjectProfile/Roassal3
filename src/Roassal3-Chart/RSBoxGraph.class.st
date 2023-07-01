@@ -49,7 +49,7 @@ RSBoxGraph >> boxPoints [
 	q025 := quartiles at: 1.
 	q075 := quartiles at: 3.
 	boxPoints := { 
-		(graphCenter)@q025. (graphCenter+(boxWidth/2))@q025.
+		(graphCenter-(boxWidth/2))@q025. (graphCenter+(boxWidth/2))@q025.
 		(graphCenter+(boxWidth/2))@q075. (graphCenter-(boxWidth/2))@q075
 	}.
 	^ boxPoints.
@@ -125,6 +125,11 @@ RSBoxGraph >> initialize [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> lowerLimit [
+	^ statisticalMeasures lowerLimit.
+]
+
+{ #category : #accessing }
 RSBoxGraph >> median [
 	^ statisticalMeasures median.
 ]
@@ -151,11 +156,16 @@ RSBoxGraph >> medianLinePoints [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> outlierValues [
+	^ statisticalMeasures outliers.
+]
+
+{ #category : #accessing }
 RSBoxGraph >> outliers [
 	| outliersPoints |
 	outliersPoints := self outliersPoints.
 	outliers := outliersPoints collect: [ :point | self scalePoint: point ].
-	outliers := outliersPoints collect: [ :out |
+	outliers := outliers collect: [ :out |
 			| e |
 			e := RSEllipse new
 			radius: 2;
@@ -178,6 +188,17 @@ RSBoxGraph >> outliersPoints [
 	| outliersPoints |
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@y ].
 	^ outliersPoints.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> renderIn: canvas [
+	| shapes |
+	shapes := self shapesWithCenterAt: self defaultGraphCenter.
+	shapes do: [ :aShape |
+		aShape isCollection ifTrue: [ canvas addAll: aShape ]
+		ifFalse: [ canvas add: aShape ].
+	].
+	^ canvas.
 ]
 
 { #category : #accessing }
@@ -209,6 +230,11 @@ RSBoxGraph >> statisticalMeasures [
 { #category : #accessing }
 RSBoxGraph >> statisticalMeasures: aRSStatisticalMeasures [
 	statisticalMeasures := aRSStatisticalMeasures.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> upperLimit [
+	^ statisticalMeasures upperLimit.
 ]
 
 { #category : #accessing }

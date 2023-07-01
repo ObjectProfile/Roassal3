@@ -36,9 +36,10 @@ Class {
 		'gapRatio',
 		'barOffset',
 		'boxAndWhisker',
-		'statisticalMeasures',
 		'boxWidth',
-		'boxGraphics'
+		'boxGraphics',
+		'spaceBetweenGroups',
+		'groups'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -202,75 +203,9 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	]
 ]
 
-{ #category : #accessing }
-RSBoxPlot >> computeBoxGraphPoints: aRSStatisticalMeasure at: boxIndex [
-	| oneBoxGraph |
-	oneBoxGraph := RSBoxGraph new.
-	oneBoxGraph boxPoints: 
-		(self computeBoxPoints: aRSStatisticalMeasure boxIndex: boxIndex).
-	oneBoxGraph medianLinePoints: 
-		(self computeMedianLinePoints: aRSStatisticalMeasure boxIndex: boxIndex).
-	oneBoxGraph centerLinePoints: 
-		(self computeCenterLinePoints: aRSStatisticalMeasure boxIndex: boxIndex).
-	oneBoxGraph outliersPoints: 
-		(self computeOutliersPoints: aRSStatisticalMeasure boxIndex: boxIndex).
-	^ oneBoxGraph
-]
-
-{ #category : #accessing }
-RSBoxPlot >> computeBoxPoints: aRSStatisticalMeasures boxIndex: aNumber [
-	| q025 q075 quartiles boxPoints |
-	quartiles := aRSStatisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q075 := quartiles at: 3.
-	boxWidth := 7 * 0.10.
-	boxPoints := {(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075}.
-	^ boxPoints.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> computeCenterLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
-	| upperLimit lowerLimit centerLinePoints |
-	upperLimit := aRSStatisticalMeasures upperLimit.
-	lowerLimit := aRSStatisticalMeasures lowerLimit.
-	centerLinePoints := { aNumber@upperLimit. aNumber@lowerLimit. }.
-	^ centerLinePoints.
-]
-
 { #category : #rendering }
 RSBoxPlot >> computeColor: plotIdx [
 	^ self color ifNil: [ chart colorFor: plotIdx ]
-]
-
-{ #category : #accessing }
-RSBoxPlot >> computeMedianLinePoints: aRSStatisticalMeasures boxIndex: aNumber [
-	| q050 medianLinePoints |
-	q050 := aRSStatisticalMeasures quartiles second.
-	medianLinePoints := { (aNumber-(boxWidth/2))@q050. (aNumber+(boxWidth/2))@q050. }.
-	^ medianLinePoints.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeOutliersFor: points at: xValue [
-
-	"Translates a collection of points to the plot coordinates and returns a collection of RSEllipse"
-	"xValue has already been converted into the xscale but points are still in the original data scale"
-
-	^points collect: [ :i |
-		| newPoint |
-		newPoint := xValue @ (yScale scale: i).
-		RSEllipse new
-				radius: 2;
-				color: self computeColor;
-				translateTo: newPoint .
-	]
-]
-
-{ #category : #accessing }
-RSBoxPlot >> computeOutliersPoints: aRSStatisticalMeasures boxIndex: aNumber [
-	|  outliersPointsOfOneBox  |
-	outliersPointsOfOneBox := aRSStatisticalMeasures outliers collect: [ :y | aNumber@y ].
-	^ outliersPointsOfOneBox.
 ]
 
 { #category : #rendering }
@@ -322,28 +257,6 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 
 { #category : #accessing }
 RSBoxPlot >> computeState [
-	boxGraphics := OrderedCollection new.
-	statisticalMeasures collectWithIndex: [ :sm :idx | 
-		boxGraphics add: (self computeBoxGraphPoints: sm at: idx) ].
-	boxGraphics collectWithIndex: [ :boxGraph :idx | boxGraph color: idx ].
-	self computeXValues.
-	self computeYValues.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> computeStateWithCategories: numberOfCategories [
-	| categoryColor space |
-	boxGraphics := OrderedCollection new.
-	space := 0.
-	statisticalMeasures collectWithIndex: [ :sm :idx |
-		(idx % (numberOfCategories+1)) = 0 ifTrue: [ space := space + 1 ].  
-		boxGraphics add: (self computeBoxGraphPoints: sm at: idx + space) ].
-	categoryColor := numberOfCategories.
-	boxGraphics collectWithIndex: [ :boxGraph :idx | 
-		boxGraph color: categoryColor.
-		categoryColor := categoryColor - 1.
-		categoryColor > 0 ifFalse: [ categoryColor := numberOfCategories ]
-	 ].
 	self computeXValues.
 	self computeYValues.
 ]
@@ -351,7 +264,7 @@ RSBoxPlot >> computeStateWithCategories: numberOfCategories [
 { #category : #rendering }
 RSBoxPlot >> computeXValues [
 	| numberOfBoxes |
-	numberOfBoxes := statisticalMeasures size.
+	numberOfBoxes := boxGraphics size.
 	xValues := {0. numberOfBoxes + 1. }.
 ]
 
@@ -366,24 +279,13 @@ RSBoxPlot >> computeYValues [
 		maxOutlier := allOutliersCollection max.
 		minOutlier := allOutliersCollection min.
 	].
-	maxUpperLimit := (statisticalMeasures collect: [ :sm | sm upperLimit ]) max.
-	minLowerLimit := (statisticalMeasures collect: [ :sm | sm lowerLimit ]) min.
+	maxUpperLimit := (boxGraphics collect: [ :sm | sm upperLimit ]) max.
+	minLowerLimit := (boxGraphics collect: [ :sm | sm lowerLimit ]) min.
 	yMax := maxUpperLimit max: maxOutlier.
 	yMin := minLowerLimit min: minOutlier.
 	diff := yMax - yMin.
 	margin := 0.1*diff.
 	yValues := {yMin. yMax.}.
-]
-
-{ #category : #public }
-RSBoxPlot >> createBox: boxPoints [
-	| box boxIndex |
-	boxIndex := boxPoints first x.
-	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: (self computeColor: boxIndex).
-	box borderColor: Color black.
-	^ box
 ]
 
 { #category : #public }
@@ -398,59 +300,6 @@ RSBoxPlot >> createBox: boxPoints withColor: colorIndex [
 	^ box
 ]
 
-{ #category : #public }
-RSBoxPlot >> createBoxGraphShapes: aRSBoxGraph [
-	| box centerLine medianLine outliersEllipses |
-	centerLine := self createCenterLine: aRSBoxGraph centerLinePoints.
-	aRSBoxGraph centerLine: centerLine.
-	box := self createBox: aRSBoxGraph boxPoints withColor: aRSBoxGraph color.
-	aRSBoxGraph box: box.
-	medianLine := self createMedianLine: aRSBoxGraph medianLinePoints.
-	aRSBoxGraph medianLine: medianLine.
-	outliersEllipses := self createOutliersFor: aRSBoxGraph outliersPoints.
-	aRSBoxGraph outliers: outliersEllipses.
-	^ { centerLine. box. medianLine. outliersEllipses. }.
-]
-
-{ #category : #public }
-RSBoxPlot >> createCenterLine: centerLinePoints [
-	| centerLine |
-	centerLine :=  RSPolyline new.
-	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
-	centerLine width: 1.
-	centerLine color: Color black.
-	^ centerLine.
-]
-
-{ #category : #public }
-RSBoxPlot >> createMedianLine: medianLinePoints [
-	| medianLine |
-	medianLine := RSPolyline new.
-	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
-	medianLine width: 2.
-	medianLine color: Color black.
-	^ medianLine.
-]
-
-{ #category : #public }
-RSBoxPlot >> createOutliersFor: outlierPointsOfBox [
-	| outliersOfBox |
-	outliersOfBox := outlierPointsOfBox collect: [ :point | self scalePoint: point ].
-	outliersOfBox := outliersOfBox collect: [ :out |
-			| e |
-			e := RSEllipse new
-			radius: 2;
-			color: Color black;
-			yourself.
-			e translateTo: out.
-	] as: RSGroup.
-	^ outliersOfBox.
-]
-
 { #category : #accessing }
 RSBoxPlot >> createdShapes [
 	^ { boxGraphics. }
@@ -459,25 +308,21 @@ RSBoxPlot >> createdShapes [
 { #category : #rendering }
 RSBoxPlot >> data [
 	| collectionOfDatasets |
-	(statisticalMeasures size = 1) ifTrue: [ ^statisticalMeasures first data ].
-	collectionOfDatasets := statisticalMeasures collect: [
-		                        :aRSStatiscalMeasures |
-		                        aRSStatiscalMeasures data ].
+	(boxGraphics size = 1) ifTrue: [ ^boxGraphics first data ].
+	collectionOfDatasets := boxGraphics collect: [ :boxGraph | boxGraph data ].
 	^ collectionOfDatasets
 ]
 
 { #category : #rendering }
 RSBoxPlot >> data: aCollection [
-
-	| statisticalMeasuresArray collectionOfDatasets |
+	| collectionOfDatasets |
 	"if is not a collection of collections. transform in a collection of collections"
 	collectionOfDatasets := aCollection first isCollection
 		                        ifFalse: [ { aCollection } ]
 		                        ifTrue: [ aCollection ].
-	statisticalMeasuresArray := collectionOfDatasets collect: [ :dataSet |
-		                            RSStatisticalMeasures data: dataSet ].
-	self statisticalMeasures: statisticalMeasuresArray.
+	boxGraphics := collectionOfDatasets collect: [ :dataSet | RSBoxGraph data: dataSet ].
 	self computeState.
+	self groups: { RSBoxGraphGroup boxGraphics: boxGraphics. }.
 ]
 
 { #category : #initialization }
@@ -501,6 +346,16 @@ RSBoxPlot >> gapRatio: aNumber [
 	gapRatio := aNumber
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> groups [
+	^ groups.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
+	groups := aCollectionOfRSBoxGraphs.
+]
+
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
@@ -516,7 +371,7 @@ RSBoxPlot >> isBoxPlot [
 
 { #category : #accessing }
 RSBoxPlot >> lowerLimits [
-	^ statisticalMeasures collect: [ :sm | sm lowerLimit ].
+	^ boxGraphics collect: [ :boxGraph | boxGraph lowerLimit ].
 ]
 
 { #category : #private }
@@ -531,7 +386,7 @@ RSBoxPlot >> medianLinesPoints [
 
 { #category : #accessing }
 RSBoxPlot >> medians [
-	^ statisticalMeasures collect: [ :sm | sm median ].
+	^ boxGraphics collect: [ :boxGraph | boxGraph median ].
 ]
 
 { #category : #'math functions' }
@@ -562,7 +417,7 @@ RSBoxPlot >> outliersPoints [
 
 { #category : #accessing }
 RSBoxPlot >> outliersValues [
-	^ statisticalMeasures collect: [ :sm | sm outliers ].
+	^ boxGraphics collect: [ :sm | sm outlierValues ].
 ]
 
 { #category : #'math functions' }
@@ -589,44 +444,15 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 				+ (((aSortedCollection at: p ceiling) - f) * (p fractionPart * d + c)) ]
 ]
 
-{ #category : #'math functions' }
-RSBoxPlot >> renderBoxGraph: aRSBoxGraph in: canvas [
-	| boxGraphShapes |
-	boxGraphShapes := self createBoxGraphShapes: aRSBoxGraph.
-	boxGraphShapes do: [ :aShape | 
-		aShape isCollection ifTrue: [ canvas addAll: aShape ]
-		ifFalse: [ canvas add: aShape ].
-	].
-]
-
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	boxGraphics do: [ :boxGraph | self renderBoxGraph: boxGraph in: canvas ].
-	"| index |
-	self checkAssertion.
-	index := 1.
-	bars := xValues flatCollect: [ :xt |
-		| bar |
-		bar := self computeRectagleAndLinesFor: index.
-		index := index + 1.
-		bar ] as: RSGroup.
-	canvas addAll: bars"
-]
-
-{ #category : #accessing }
-RSBoxPlot >> statisticalMeasures [
-	(statisticalMeasures size = 1) ifTrue: [ ^ statisticalMeasures first ].
-	^ statisticalMeasures.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> statisticalMeasures: aRSStatisticalMeasures [
-	statisticalMeasures := aRSStatisticalMeasures
+	boxGraphics := boxGraphics collect: [ :boxGraph | boxGraph scales: { xScale. yScale. } ].
+	boxGraphics do: [ :boxGraph |  boxGraph renderIn: canvas].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> upperLimits [
-	^ statisticalMeasures collect: [ :sm | sm upperLimit ].
+	^ boxGraphics collect: [ :boxGraph | boxGraph upperLimit ].
 ]
 
 { #category : #public }

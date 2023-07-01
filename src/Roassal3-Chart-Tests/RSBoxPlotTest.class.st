@@ -5,6 +5,22 @@ Class {
 }
 
 { #category : #tests }
+RSBoxPlotTest >> testAddBoxPlotsToGroup [
+	| groupA groupB  dataA dataB windowA windowB windowOfAdd boxPlot |
+	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	groupA := RSBoxPlot data: dataA.
+	groupB := RSBoxPlot data: dataB.
+	windowA := groupA open.
+	windowA delete.
+	windowB := groupB open.
+	windowB delete.
+	boxPlot := groupA + groupB.
+	self assert: boxPlot boxes size equals: 4.
+	windowOfAdd := boxPlot open.
+]
+
+{ #category : #tests }
 RSBoxPlotTest >> testBasicBoxPlot [
 	| c p y window |
 
@@ -48,6 +64,18 @@ RSBoxPlotTest >> testBoxPlotCreatedWithData [
 	self assert: boxPlot statisticalMeasures class equals: RSStatisticalMeasures.
 	self assert: boxPlot statisticalMeasures data equals: data.
 	self assert: boxPlot data first equals: data first.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
+	| p y window |
+	y := { 12. 12. 13. 14. 15. 24. }.
+	p := RSBoxPlot data: y.
+	self assert: p boxGraphics size equals: 1.
+	self assert: p boxGraphics first class equals: RSBoxGraph.
+	window := p open.
+	self assert: p createdShapes notEmpty.
+	window delete.
 ]
 
 { #category : #tests }
@@ -154,4 +182,16 @@ RSBoxPlotTest >> testCreateOutliers [
 	self assert: outliers last first class equals: RSEllipse.
 	self assert: boxPlot outliersPoints last first y closeTo: lastDatasetOutliers first.
 	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testGroupsOfOneBoxGraph [
+	| boxPlot data firstBoxGraphGroup |
+	data := { 1. 2. 3. 4. 5. }.
+	boxPlot := RSBoxPlot data: data.
+	self assert: boxPlot groups size equals: 1.
+	firstBoxGraphGroup := boxPlot groups first.
+	self assert: firstBoxGraphGroup class equals: RSBoxGraphGroup.
+	self assert: firstBoxGraphGroup boxGraphics size equals: 1.
+	self assert: firstBoxGraphGroup boxGraphics first class equals: RSBoxGraph.
 ]

@@ -21,7 +21,8 @@ RSBoxGraphTest >> testBoxGraphHasScales [
 	data := { 1. 2. 3. 4. 5. }.
 	aPoint := 1@1.
 	aScale := NSLinearScale new.
-	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
+	boxGraph := RSBoxGraph data: data.
+	boxGraph scales: {aScale. aScale }.
 	self assert: boxGraph xScale class equals: NSLinearScale.
 	self assert: boxGraph yScale class equals: NSLinearScale.
 	self assert: (boxGraph scalePoint: aPoint) class equals: Point.
@@ -89,6 +90,14 @@ RSBoxGraphTest >> testDefaultGraphCenter [
 ]
 
 { #category : #tests }
+RSBoxGraphTest >> testLowerLimit [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph lowerLimit closeTo: 7.5 precision: 1.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testMedianLine [
 	| boxGraph data  medianLine aScale |
 	data := { 1. 2. 3. 4. 5. }.
@@ -107,6 +116,15 @@ RSBoxGraphTest >> testMedianLinePoints [
 	medianPoints := boxGraph medianLinePoints.
 	self assert: medianPoints size equals: 2.
 	self assert: medianPoints first y equals: median.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testOutlierValues [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph outlierValues size equals: 1.
+	self assert: boxGraph outlierValues first equals: 24.
 ]
 
 { #category : #tests }
@@ -143,4 +161,12 @@ RSBoxGraphTest >> testShapesWithCenterAt [
 	shapes := boxGraph shapesWithCenterAt: 2.
 	newCenterLineX := shapes first controlPoints first x.
 	self assert: centerLineX < newCenterLineX.
+]
+
+{ #category : #tests }
+RSBoxGraphTest >> testUpperLimit [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph upperLimit closeTo: 19.5 precision: 1.
 ]
