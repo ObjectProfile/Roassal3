@@ -4,15 +4,14 @@ Class {
 	#instVars : [
 		'boxWidth',
 		'statisticalMeasures',
-		'centerLinePoints',
-		'outliersPoints',
 		'centerLine',
 		'box',
 		'medianLine',
 		'outliers',
 		'color',
 		'xScale',
-		'yScale'
+		'yScale',
+		'graphCenter'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -62,6 +61,16 @@ RSBoxGraph >> boxWidth [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> boxWithCenterAt: aNumber [
+	| boxPoints |
+	boxPoints := self boxPointsWithCenterAt: aNumber.
+	box :=  RSPolygon new.
+	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box borderColor: Color black.
+	^ box
+]
+
+{ #category : #accessing }
 RSBoxGraph >> centerLine [
 	^ centerLine
 ]
@@ -72,13 +81,25 @@ RSBoxGraph >> centerLine: aRSPolyline [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> centerLinePoints [
-	^ centerLinePoints
+RSBoxGraph >> centerLinePointsWithCenterAt: aNumber [
+	| upperLimit lowerLimit centerLinePoints |
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	centerLinePoints := { aNumber@upperLimit. aNumber@lowerLimit. }.
+	^ centerLinePoints.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> centerLinePoints: aCollectionOfPoints [
-	centerLinePoints := aCollectionOfPoints
+RSBoxGraph >> centerLineWithCenterAt: aNumber [
+	| centerLinePoints |
+	centerLinePoints := self centerLinePointsWithCenterAt: aNumber.
+	centerLine :=  RSPolyline new.
+	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	centerLine width: 1.
+	centerLine color: Color black.
+	^ centerLine.
 ]
 
 { #category : #accessing }
@@ -101,10 +122,21 @@ RSBoxGraph >> defaultBoxWidth [
 	^ 0.7
 ]
 
+{ #category : #defaults }
+RSBoxGraph >> defaultGraphCenter [
+	^ 1
+]
+
 { #category : #accessing }
+RSBoxGraph >> graphCenter [
+	^ graphCenter.
+]
+
+{ #category : #initialization }
 RSBoxGraph >> initialize [
 	super initialize.
 	boxWidth := self defaultBoxWidth.
+	graphCenter := self defaultGraphCenter.
 ]
 
 { #category : #accessing }
@@ -131,8 +163,34 @@ RSBoxGraph >> medianLinePointsWithCenterAt: aNumber [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> medianLineWithCenterAt: aNumber [
+	| medianLinePoints |
+	medianLinePoints := self medianLinePointsWithCenterAt: aNumber.
+	medianLine := RSPolyline new.
+	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
+		self scalePoint: aPoint 
+	]).
+	medianLine width: 2.
+	medianLine color: Color black.
+	^ medianLine.
+]
+
+{ #category : #accessing }
 RSBoxGraph >> outliers [
-	^ outliers
+	| outliersPoints |
+	outliersPoints := self outliersPoints.
+	outliers := outliersPoints collect: [ :point | self scalePoint: point ].
+	outliers := outliersPoints collect: [ :out |
+			| e |
+			e := RSEllipse new
+			radius: 2;
+			color: Color black;
+			yourself.
+			e translateTo: out.
+	] as: RSGroup.
+	^ outliers.
+	
+	
 ]
 
 { #category : #accessing }
@@ -142,12 +200,9 @@ RSBoxGraph >> outliers: aRSGroupOfRSElipses [
 
 { #category : #accessing }
 RSBoxGraph >> outliersPoints [
-	^ outliersPoints
-]
-
-{ #category : #accessing }
-RSBoxGraph >> outliersPoints: aCollectionOfPoints [
-	outliersPoints := aCollectionOfPoints
+	| outliersPoints |
+	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@y ].
+	^ outliersPoints.
 ]
 
 { #category : #accessing }
@@ -159,6 +214,15 @@ RSBoxGraph >> scalePoint: aPoint [
 RSBoxGraph >> scales: collectionOfNSScales [
 	self xScale: collectionOfNSScales first.
 	self yScale: collectionOfNSScales second.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> shapesWithCenterAt: aNumber [
+	centerLine := self centerLineWithCenterAt: aNumber.
+	medianLine := self medianLineWithCenterAt: aNumber.
+	box := self boxWithCenterAt: aNumber.
+	outliers := self outliers.
+	^ { centerLine. box. medianLine. outliers.}.
 ]
 
 { #category : #accessing }
