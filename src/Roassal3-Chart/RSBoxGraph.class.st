@@ -2,7 +2,7 @@ Class {
 	#name : #RSBoxGraph,
 	#superclass : #RSObject,
 	#instVars : [
-		'boxPoints',
+		'statisticalMeasures',
 		'medianLinePoints',
 		'centerLinePoints',
 		'outliersPoints',
@@ -10,10 +10,29 @@ Class {
 		'box',
 		'medianLine',
 		'outliers',
-		'color'
+		'color',
+		'xScale',
+		'yScale',
+		'boxWidth'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #accessing }
+RSBoxGraph class >> data: collectionOfData1D [
+	| boxGraph |
+	boxGraph := self new.
+	boxGraph data: collectionOfData1D.
+	^ boxGraph
+]
+
+{ #category : #accessing }
+RSBoxGraph class >> data: collectionOfData1D scales: collectionOfNSScales [
+	| boxGraph |
+	boxGraph := self data: collectionOfData1D.
+	boxGraph scales: collectionOfNSScales.
+	^ boxGraph.
+]
 
 { #category : #accessing }
 RSBoxGraph >> box [
@@ -26,13 +45,8 @@ RSBoxGraph >> box: aRSPolygon [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> boxPoints [
-	^ boxPoints
-]
-
-{ #category : #accessing }
-RSBoxGraph >> boxPoints: aCollectionOfPoints [
-	boxPoints := aCollectionOfPoints
+RSBoxGraph >> boxWidth [
+	^ boxWidth.
 ]
 
 { #category : #accessing }
@@ -63,6 +77,40 @@ RSBoxGraph >> color [
 { #category : #accessing }
 RSBoxGraph >> color: aNumber [
 	color := aNumber
+]
+
+{ #category : #accessing }
+RSBoxGraph >> computeBoxPoints: datasetOf1D boxCenterAt: aNumber [
+	| q025 q075 quartiles boxPoints |
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q075 := quartiles at: 3.
+	boxPoints := { 
+		(aNumber-(boxWidth/2))@q025. (aNumber+(boxWidth/2))@q025.
+		(aNumber+(boxWidth/2))@q075. (aNumber-(boxWidth/2))@q075
+	}.
+	^ boxPoints.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> data: collectionOfData1D [
+	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
+]
+
+{ #category : #defaults }
+RSBoxGraph >> defaultBoxWidth [
+	^ 0.7
+]
+
+{ #category : #accessing }
+RSBoxGraph >> initialize [
+	super initialize.
+	boxWidth := self defaultBoxWidth.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> median [
+	^ statisticalMeasures median.
 ]
 
 { #category : #accessing }
@@ -103,4 +151,45 @@ RSBoxGraph >> outliersPoints [
 { #category : #accessing }
 RSBoxGraph >> outliersPoints: aCollectionOfPoints [
 	outliersPoints := aCollectionOfPoints
+]
+
+{ #category : #accessing }
+RSBoxGraph >> scalePoint: aPoint [
+	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+]
+
+{ #category : #accessing }
+RSBoxGraph >> scales: collectionOfNSScales [
+	self xScale: collectionOfNSScales first.
+	self yScale: collectionOfNSScales second.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> statisticalMeasures [
+	^ statisticalMeasures.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> statisticalMeasures: aRSStatisticalMeasures [
+	statisticalMeasures := aRSStatisticalMeasures.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> xScale [
+	^ xScale.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> xScale: aNSScale [
+	xScale := aNSScale
+]
+
+{ #category : #accessing }
+RSBoxGraph >> yScale [
+	^ yScale.
+]
+
+{ #category : #accessing }
+RSBoxGraph >> yScale: aNSScale [
+	yScale := aNSScale
 ]
