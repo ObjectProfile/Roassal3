@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : #tests }
+RSBoxGraphGroupTest >> testAddOffsetToGroup [
+	| boxGraphGroup data xCenterBeforeSetOffset xCenterAfterSetOffset |
+	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
+	boxGraphGroup := RSBoxGraphGroup data: data.
+	xCenterBeforeSetOffset := boxGraphGroup boxGraphics first centerLinePoints first x.
+	boxGraphGroup addOffsetToGroup: 2.
+	xCenterAfterSetOffset := boxGraphGroup boxGraphics first centerLinePoints first x.
+	self assert: xCenterBeforeSetOffset < xCenterAfterSetOffset.
+]
+
+{ #category : #tests }
 RSBoxGraphGroupTest >> testDefaultOffset [
 	| boxGraphGroup data firstBoxXCenter secondBoxXCenter |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.

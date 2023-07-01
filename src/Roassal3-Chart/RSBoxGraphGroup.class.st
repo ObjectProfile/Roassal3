@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'boxGraphics',
 		'xScale',
-		'yScale'
+		'yScale',
+		'groupOffset'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -34,6 +35,12 @@ RSBoxGraphGroup class >> data: aCollection scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
+RSBoxGraphGroup >> addOffsetToGroup: aNumber [
+	groupOffset := groupOffset + aNumber.
+	self computeBoxGraphicsCenters.
+]
+
+{ #category : #accessing }
 RSBoxGraphGroup >> boxGraphics [
 	^ boxGraphics.
 ]
@@ -44,24 +51,46 @@ RSBoxGraphGroup >> boxGraphics: aCollectionOfRSBoxGraphs [
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> data: aCollection [
-	| collectionOfDatasets lastBoxCenter |
-	"if is not a collection of collections. transform in a collection of collections"
-	collectionOfDatasets := aCollection first isCollection
-		                        ifFalse: [ { aCollection } ]
-		                        ifTrue: [ aCollection ].
+RSBoxGraphGroup >> computeBoxGraphicsCenters [
+	| lastBoxCenter |
 	lastBoxCenter := 1.
-	self boxGraphics: (collectionOfDatasets collectWithIndex: [ :dataSet :idx | 
-		| boxGraph |
-		boxGraph := (RSBoxGraph data: dataSet) graphCenter: lastBoxCenter.
+	self boxGraphics: (boxGraphics collect: [ :boxGraph | 
+		boxGraph graphCenter: lastBoxCenter + groupOffset.
 		lastBoxCenter := lastBoxCenter + self defaultOffset.
 		boxGraph.
 	]).
 ]
 
 { #category : #accessing }
+RSBoxGraphGroup >> data: aCollection [
+	| collectionOfDatasets |
+	"if is not a collection of collections. transform in a collection of collections"
+	collectionOfDatasets := aCollection first isCollection
+		                        ifFalse: [ { aCollection } ]
+		                        ifTrue: [ aCollection ].
+	self boxGraphics: (collectionOfDatasets collect: [ :dataSet | RSBoxGraph data: dataSet]).
+	self computeBoxGraphicsCenters.
+]
+
+{ #category : #accessing }
+RSBoxGraphGroup >> defaultGroupOffset [
+	^ 0
+]
+
+{ #category : #accessing }
 RSBoxGraphGroup >> defaultOffset [
 	^ 2
+]
+
+{ #category : #accessing }
+RSBoxGraphGroup >> groupOffset [
+	^ groupOffset
+]
+
+{ #category : #initialization }
+RSBoxGraphGroup >> initialize [
+	super initialize.
+	groupOffset := self defaultGroupOffset.
 ]
 
 { #category : #accessing }

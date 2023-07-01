@@ -81,6 +81,20 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 ]
 
 { #category : #accessing }
+RSBoxPlot >> + aRSBoxPlot [
+	| groupsA groupsB offset maxOffsetOfGroupsA |
+	groupsA := self groups.
+	groupsB := aRSBoxPlot groups.
+	maxOffsetOfGroupsA := (groupsA collect: [:group|group groupOffset]) max.
+	offset := maxOffsetOfGroupsA + 6.
+	groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ].
+	groupsA addAll: groupsB.
+	groups := groupsA.
+	self computeState.
+	^ self.
+]
+
+{ #category : #accessing }
 RSBoxPlot >> addData: aCollection [
 	| statisticalMeasuresArray collectionOfDatasets numberOfCategories |
 	"if is not a collection of collections. transform in a collection of collections"
@@ -277,7 +291,10 @@ RSBoxPlot >> createdShapes [
 
 { #category : #rendering }
 RSBoxPlot >> data: aCollection [
-	self groups: { RSBoxGraphGroup data: aCollection. }.
+	| groupsCollection |
+	groupsCollection := OrderedCollection new.
+	groupsCollection add: ( RSBoxGraphGroup data: aCollection).
+	self groups: groupsCollection.
 	self computeState.
 ]
 
