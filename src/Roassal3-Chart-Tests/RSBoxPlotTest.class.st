@@ -17,8 +17,9 @@ RSBoxPlotTest >> testAddBoxPlotsToGroup [
 	windowB := groupB open.
 	windowB delete.
 	boxPlot := groupA + groupB + groupC.
-	"self assert: boxPlot boxes size equals: 4."
+	self assert: boxPlot boxGraphics size equals: 6.
 	windowOfAdd := boxPlot open.
+	windowOfAdd delete.
 ]
 
 { #category : #tests }
@@ -74,6 +75,7 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
 	self assert: p boxGraphics first class equals: RSBoxGraph.
 	window := p open.
 	self assert: p createdShapes notEmpty.
+	window delete.
 ]
 
 { #category : #tests }
@@ -99,5 +101,5 @@ RSBoxPlotTest >> testNumberOfBoxes [
 	boxes := boxPlot boxGraphics.
 	self assert: boxPlot numberOfBoxes equals: 3.
 	self assert: boxPlot boxGraphics size equals: boxPlot numberOfBoxes. 
-	window close.
+	window delete.
 ]
