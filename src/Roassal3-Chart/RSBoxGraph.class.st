@@ -93,6 +93,11 @@ RSBoxGraph >> color: aNumber [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> data [
+	^ self statisticalMeasures data.
+]
+
+{ #category : #accessing }
 RSBoxGraph >> data: collectionOfData1D [
 	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
 ]

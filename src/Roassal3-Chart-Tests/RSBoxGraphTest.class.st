@@ -74,6 +74,14 @@ RSBoxGraphTest >> testCenterLinePoints [
 ]
 
 { #category : #tests }
+RSBoxGraphTest >> testData [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	self assert: boxGraph data equals: data.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testDefaultBoxWidth [
 	| boxGraph data|
 	data := { 1. 2. 3. 4. 5. }.
