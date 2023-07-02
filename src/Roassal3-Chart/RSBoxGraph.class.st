@@ -38,6 +38,7 @@ RSBoxGraph >> box [
 	boxPoints := self boxPoints.
 	box :=  RSPolygon new.
 	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box color: color.
 	box borderColor: Color black.
 	^ box
 ]
@@ -93,8 +94,8 @@ RSBoxGraph >> color [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> color: aNumber [
-	color := aNumber
+RSBoxGraph >> color: aColor [
+	color := aColor
 ]
 
 { #category : #accessing }

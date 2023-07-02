@@ -32,7 +32,8 @@ Class {
 	#superclass : #RSAbstractPlot,
 	#instVars : [
 		'boxAndWhisker',
-		'groups'
+		'groups',
+		'collorPallete'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -65,6 +66,22 @@ RSBoxPlot class >> exampleBoxPlotCustomColor [
 ]
 
 { #category : #accessing }
+RSBoxPlot class >> exampleBoxPlotGroups [
+	| boxPlot boxPlot1  boxPlot2 data1 data2 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }.
+			 { 1. 10. 10. 10. 10. 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }.}.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot := boxPlot1 + boxPlot2.
+	^ boxPlot open.
+]
+
+{ #category : #accessing }
 RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -81,7 +98,7 @@ RSBoxPlot >> + aRSBoxPlot [
 	groupsA := self groups.
 	groupsB := aRSBoxPlot groups.
 	maxCenterOfGroups := (groupsA collect: [:group|group maxCenter]) max.
-	offset := maxCenterOfGroups + 6.
+	offset := maxCenterOfGroups + 5.
 	groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ].
 	groupsA addAll: groupsB.
 	groups := groupsA.
@@ -106,9 +123,29 @@ RSBoxPlot >> buildChart [
 	^ chart
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> color: aColor [
+	groups do: [ :group | group color: aColor ].
+]
+
+{ #category : #accessing }
+RSBoxPlot >> colorFor: aNumber [
+	^ collorPallete scale: aNumber.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> colors: collectionOfColors [
+	groups do:  [ :group | group colors: collectionOfColors ].
+]
+
 { #category : #rendering }
-RSBoxPlot >> computeColor: plotIdx [
-	^ self color ifNil: [ chart colorFor: plotIdx ]
+RSBoxPlot >> computeColor [
+	groups do: [ :group |
+		| colors |
+		colors := 1 to: group numberOfBoxes. 
+		colors := colors collect: [ :color | self colorFor: color ].
+		group colors: colors
+	].
 ]
 
 { #category : #rendering }
@@ -160,6 +197,7 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 
 { #category : #accessing }
 RSBoxPlot >> computeState [
+	self computeColor.
 	self computeXValues.
 	self computeYValues.
 ]
@@ -207,6 +245,11 @@ RSBoxPlot >> data: aCollection [
 ]
 
 { #category : #initialization }
+RSBoxPlot >> defaultPlotColors [
+	^ NSScale category20
+]
+
+{ #category : #initialization }
 RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
@@ -224,6 +267,7 @@ RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
+	collorPallete := self defaultPlotColors.
 ]
 
 { #category : #testing }

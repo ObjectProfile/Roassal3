@@ -84,6 +84,15 @@ RSBoxGraphTest >> testCenterLinePoints [
 ]
 
 { #category : #tests }
+RSBoxGraphTest >> testColor [
+	| boxGraph data   |
+	data := { 12. 12. 13. 14. 15. 24. }.
+	boxGraph := RSBoxGraph data: data.
+	boxGraph color: Color red.
+	self assert: boxGraph color equals: Color red.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testData [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.

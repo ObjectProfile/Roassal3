@@ -84,3 +84,21 @@ RSBoxGraphGroupTest >> testNumberOfBoxes [
 	boxGraphGroup := RSBoxGraphGroup data: data.
 	self assert: boxGraphGroup numberOfBoxes equals: 2.
 ]
+
+{ #category : #tests }
+RSBoxGraphGroupTest >> testSetColorOfAllBoxes [
+	| boxGraphGroup data |
+	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
+	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup color: Color purple.
+	self assert: boxGraphGroup colors equals: {Color purple. Color purple.}.
+]
+
+{ #category : #tests }
+RSBoxGraphGroupTest >> testSetColorsWithACollection [
+	| boxGraphGroup data |
+	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
+	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup colors: {Color purple. Color blue.}.
+	self assert: boxGraphGroup colors equals: {Color purple. Color blue.}.
+]

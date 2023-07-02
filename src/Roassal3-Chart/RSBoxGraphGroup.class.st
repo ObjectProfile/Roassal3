@@ -51,6 +51,21 @@ RSBoxGraphGroup >> boxGraphics: aCollectionOfRSBoxGraphs [
 ]
 
 { #category : #accessing }
+RSBoxGraphGroup >> color: aColor [
+	boxGraphics do: [ :boxGraph | boxGraph color: aColor].
+]
+
+{ #category : #accessing }
+RSBoxGraphGroup >> colors [
+	^ boxGraphics collect: [ :boxGraph | boxGraph color].
+]
+
+{ #category : #accessing }
+RSBoxGraphGroup >> colors: collectionOfColors [
+	boxGraphics doWithIndex: [ :boxGraph :idx | boxGraph color: (collectionOfColors at: idx)].
+]
+
+{ #category : #accessing }
 RSBoxGraphGroup >> computeBoxGraphicsCenters [
 	| lastBoxCenter |
 	lastBoxCenter := 1.
@@ -124,7 +139,9 @@ RSBoxGraphGroup >> numberOfBoxes [
 
 { #category : #accessing }
 RSBoxGraphGroup >> renderIn: canvas [
-	boxGraphics := boxGraphics collect: [ :boxGraph | boxGraph scales: { xScale. yScale. } ].
+	boxGraphics := boxGraphics collect: [ :boxGraph | 
+		boxGraph scales: { xScale. yScale. }.
+	].
 	boxGraphics do: [ :boxGraph |  boxGraph renderIn: canvas].
 ]
 

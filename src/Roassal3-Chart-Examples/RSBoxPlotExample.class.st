@@ -66,7 +66,7 @@ RSBoxPlotExample >> example02new [
 	p1 := RSBoxPlot data: y1.
 	p2 := RSBoxPlot data: y2.
 	p3 := RSBoxPlot data: y3.
-	p := p1 + p2." + p3."
+	p := p1 + p2 + p3.
 	^ p.
 ]
 
