@@ -38,7 +38,7 @@ Class {
 	#category : #'Roassal3-Chart-Plots'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 RSBoxPlot class >> data: aCollection [
 	| boxPlot |
 	boxPlot := self new.
@@ -46,7 +46,7 @@ RSBoxPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlot [
 	| boxPlot data |
 	data := { 12. 12. 13. 14. 15. 24. }.
@@ -54,7 +54,7 @@ RSBoxPlot class >> exampleBoxPlot [
 	^ boxPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlotCustomColor [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -65,7 +65,7 @@ RSBoxPlot class >> exampleBoxPlotCustomColor [
 	^ boxPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlotGroups [
 	| boxPlot boxPlot1  boxPlot2 data1 data2 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -81,7 +81,7 @@ RSBoxPlot class >> exampleBoxPlotGroups [
 	^ boxPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .

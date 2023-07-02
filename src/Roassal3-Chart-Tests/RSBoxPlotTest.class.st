@@ -79,14 +79,14 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
 ]
 
 { #category : #tests }
-RSBoxPlotTest >> testComputeColor [
+RSBoxPlotTest >> testDefaultPlotColors [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
 	boxPlot buildChart.
-	self assert: (boxPlot computeColor: 1) class equals: Color.
+	self assert: (boxPlot defaultPlotColors scale: 1) equals: (NSScale category20 scale: 1).
 ]
 
 { #category : #tests }
