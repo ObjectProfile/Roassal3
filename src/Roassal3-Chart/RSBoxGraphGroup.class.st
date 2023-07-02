@@ -94,6 +94,13 @@ RSBoxGraphGroup >> initialize [
 ]
 
 { #category : #accessing }
+RSBoxGraphGroup >> maxCenter [
+	| boxesCenters |
+	boxesCenters := boxGraphics collect: [ :boxGraph | boxGraph center ].
+	^ boxesCenters max.
+]
+
+{ #category : #accessing }
 RSBoxGraphGroup >> maxXValue [
 	| boxesMaxXValues |
 	boxesMaxXValues := boxGraphics collect: [ :boxGraph | boxGraph boxPoints second x ].

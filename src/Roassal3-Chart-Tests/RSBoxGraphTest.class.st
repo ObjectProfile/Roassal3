@@ -51,6 +51,16 @@ RSBoxGraphTest >> testBoxPoints [
 ]
 
 { #category : #tests }
+RSBoxGraphTest >> testCenter [
+	| boxGraph data  center aScale |
+	data := { 1. 2. 3. 4. 5. }.
+	aScale := NSLinearScale new.
+	boxGraph := RSBoxGraph data: data scales: {aScale. aScale }.
+	center := boxGraph center.
+	self assert: center equals: 1.
+]
+
+{ #category : #tests }
 RSBoxGraphTest >> testCenterLine [
 	| boxGraph data  centerLine aScale |
 	data := { 1. 2. 3. 4. 5. }.

@@ -61,6 +61,11 @@ RSBoxGraph >> boxWidth [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> center [
+	^ graphCenter
+]
+
+{ #category : #accessing }
 RSBoxGraph >> centerLine [
 	| centerLinePoints |
 	centerLinePoints := self centerLinePoints.

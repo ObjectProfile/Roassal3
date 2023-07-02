@@ -46,6 +46,14 @@ RSBoxGraphGroupTest >> testGroupOfSeveralBoxGraphics [
 ]
 
 { #category : #tests }
+RSBoxGraphGroupTest >> testMaxCenterValue [
+	| boxGraphGroup data |
+	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
+	boxGraphGroup := RSBoxGraphGroup data: data.
+	self assert: boxGraphGroup maxCenter closeTo: 3.
+]
+
+{ #category : #tests }
 RSBoxGraphGroupTest >> testMaxXValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.

@@ -77,11 +77,11 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 
 { #category : #accessing }
 RSBoxPlot >> + aRSBoxPlot [
-	| groupsA groupsB offset maxOffsetOfGroupsA |
+	| groupsA groupsB offset maxCenterOfGroups |
 	groupsA := self groups.
 	groupsB := aRSBoxPlot groups.
-	maxOffsetOfGroupsA := (groupsA collect: [:group|group groupOffset]) max.
-	offset := maxOffsetOfGroupsA + 6.
+	maxCenterOfGroups := (groupsA collect: [:group|group maxCenter]) max.
+	offset := maxCenterOfGroups + 6.
 	groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ].
 	groupsA addAll: groupsB.
 	groups := groupsA.
