@@ -31,7 +31,6 @@ Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'boxAndWhisker',
 		'groups',
 		'collorPallete'
 	],
@@ -67,17 +66,71 @@ RSBoxPlot class >> exampleBoxPlotCustomColor [
 
 { #category : #examples }
 RSBoxPlot class >> exampleBoxPlotGroups [
-	| boxPlot boxPlot1  boxPlot2 data1 data2 |
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
 	data1 := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
-			 { 12. 12. 13. 14. 15. 24. }.
-			 { 1. 10. 10. 10. 10. 12. 12. 13. 14. 15. 24. }  }.
-	data2 := { { 1. 2. 3. 4. 5. } .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot3 := self data: data3.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotGroupsEven [
+	| boxPlot boxPlot1  boxPlot2 data1 data2  |
+	data1 := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
-			 { 12. 12. 13. 14. 15. 24. }.}.
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
 	boxPlot := boxPlot1 + boxPlot2.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotGroupsEven4 [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 boxPlot4 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot3 := self data: data2.
+	boxPlot4 := self data: data2.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3 + boxPlot4.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotGroupsOdd [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot3 := self data: data3.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
 	^ boxPlot open.
 ]
 
@@ -98,10 +151,11 @@ RSBoxPlot >> + aRSBoxPlot [
 	groupsA := self groups.
 	groupsB := aRSBoxPlot groups.
 	maxCenterOfGroups := (groupsA collect: [:group|group maxCenter]) max.
-	offset := maxCenterOfGroups + 5.
-	groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ].
+	offset := maxCenterOfGroups + 3.
+	"groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ]."
 	groupsA addAll: groupsB.
 	groups := groupsA.
+	self computeGroupsOffsets.
 	self computeState.
 	^ self.
 ]
@@ -139,6 +193,15 @@ RSBoxPlot >> colors: collectionOfColors [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> computeBoxesWidths [
+	| numberOfGroups boxWidth defaultBoxWidth |
+	defaultBoxWidth := 0.4.
+	numberOfGroups := self numberOfGroups.
+	boxWidth := defaultBoxWidth / numberOfGroups.
+	groups do: [ :boxGroup | boxGroup boxesWidth: boxWidth ].
+]
+
+{ #category : #rendering }
 RSBoxPlot >> computeColor [
 	groups do: [ :group |
 		| colors |
@@ -149,55 +212,68 @@ RSBoxPlot >> computeColor [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> computeRectagleAndLinesFor: index [
-   "Convert the box and whisker extents to their positions in the plot using the scale"
-	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
-
-	boxAndWhis := boxAndWhisker at: index.
-	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
-	zero := boxAndWhis at: 3.
-	"origin is the top left of the rectangle"
-	origin := self scalePoint: aPoint.
-	corner := origin x @ (yScale scale: zero ).
-
-	sizeOffset := (self barSize / 2.0) @ 0.
-	offset := self barOffset @ 0.
-
-	topLeft := origin + offset - sizeOffset.
-
-	bottomRight := corner + offset + sizeOffset.
-
-	center := (topLeft x + bottomRight x) / 2.
-
-	"These are a collection of RSEllipse for the outlying points of the dataset"
-	lowerOutliers := self computeOutliersFor: (boxAndWhis at: 1) at: center.
-	upperOutliers := self computeOutliersFor: (boxAndWhis at: 7) at: center.
-
-	bottomWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 2)).
-	topWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 6)).
-
-
-	^{ 	self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
-		yourself.
-		RSLine new
-			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
-			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4))).
-		RSLine new
-			startPoint: center @ corner y;
-			endPoint: bottomWhiskerExtent .
-		RSLine new
-			startPoint: center @ origin y;
-			endPoint: topWhiskerExtent},
-		lowerOutliers,
-		upperOutliers
+RSBoxPlot >> computeGroupsOffsets [
+	| numberOfGroups defaultBoxGroupSpace groupBoxSpace offsets |
+	defaultBoxGroupSpace := 0.5.
+	numberOfGroups := self numberOfGroups.
+	groupBoxSpace := defaultBoxGroupSpace / numberOfGroups.
+	
+	offsets := OrderedCollection new.
+	numberOfGroups odd ifTrue: [ 
+		| indexOfTheMiddle currentIndex counter |
+		indexOfTheMiddle := (numberOfGroups / 2) ceiling. 
+		currentIndex := 1.
+		counter := 1.
+		[currentIndex < indexOfTheMiddle] whileTrue: [ 
+			offsets addFirst: (0-(groupBoxSpace * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+		currentIndex := indexOfTheMiddle.
+		counter := 0.
+		[currentIndex <= numberOfGroups] whileTrue: [ 
+			offsets add: (groupBoxSpace * counter).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+				
+		"{ 0-groupBoxSpace. 0. 0+groupBoxSpace. } "
+	].
+	numberOfGroups even ifTrue: [ 
+		| indexOfTheMiddle currentIndex counter |
+		indexOfTheMiddle := (numberOfGroups / 2). 
+		currentIndex := 1.
+		counter := 0.
+		[currentIndex <= indexOfTheMiddle] whileTrue: [ 
+			offsets addFirst: (0-(groupBoxSpace/2)-(groupBoxSpace * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+		currentIndex := indexOfTheMiddle.
+		counter := 0.
+		[currentIndex < numberOfGroups] whileTrue: [ 
+			offsets add: ((groupBoxSpace/2) + (groupBoxSpace * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+				
+		"{ 0-groupBoxSpace. 0. 0+groupBoxSpace. } "
+	].
+	"numberOfGroups even ifTrue: [ 
+		{ 0-groupBoxSpace-groupBoxSpace/2. 
+		0+groupBoxSpace/2.
+		0+groupBoxSpace/2. 
+		0+groupBoxSpace+groupBoxSpace/2. } ].
+	"
+	groups doWithIndex: [ :boxGroup :idx | 
+		boxGroup groupOffset: (offsets at: idx)
+	].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> computeState [
 	self computeColor.
+	self computeBoxesWidths.
 	self computeXValues.
 	self computeYValues.
 ]
@@ -216,18 +292,6 @@ RSBoxPlot >> computeYValues [
 	yMax := (groups collect: [ :boxGraphGroup | boxGraphGroup maxYValue ]) max.
 	yMin := (groups collect: [ :boxGraphGroup | boxGraphGroup minYValue ]) min.
 	yValues := {yMin. yMax.}.
-]
-
-{ #category : #public }
-RSBoxPlot >> createBox: boxPoints withColor: colorIndex [
-	| box boxIndex |
-	boxIndex := boxPoints first x.
-	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: (self computeColor: colorIndex).
-	box borderColor: Color black.
-	box borderWidth: 1.
-	^ box
 ]
 
 { #category : #accessing }
@@ -280,6 +344,11 @@ RSBoxPlot >> numberOfBoxes [
 	^ self boxGraphics size.
 ]
 
+{ #category : #rendering }
+RSBoxPlot >> numberOfGroups [
+	^ groups size.
+]
+
 { #category : #public }
 RSBoxPlot >> open [
 	^ self buildChart open.
@@ -290,7 +359,7 @@ RSBoxPlot >> renderIn: canvas [
 	groups do: [ :aRSBoxGraphGroup |
 		aRSBoxGraphGroup scales: {xScale. yScale.}. 
 		aRSBoxGraphGroup renderIn: canvas 
-	]
+	].
 ]
 
 { #category : #public }

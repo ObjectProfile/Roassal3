@@ -62,6 +62,11 @@ RSBoxGraph >> boxWidth [
 ]
 
 { #category : #accessing }
+RSBoxGraph >> boxWidth: aNumber [
+	boxWidth := aNumber.
+]
+
+{ #category : #accessing }
 RSBoxGraph >> center [
 	^ graphCenter
 ]
@@ -110,7 +115,7 @@ RSBoxGraph >> data: collectionOfData1D [
 
 { #category : #defaults }
 RSBoxGraph >> defaultBoxWidth [
-	^ 1.4
+	^ 0.7
 ]
 
 { #category : #defaults }

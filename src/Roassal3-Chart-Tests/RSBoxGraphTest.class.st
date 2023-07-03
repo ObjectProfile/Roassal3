@@ -105,7 +105,7 @@ RSBoxGraphTest >> testDefaultBoxWidth [
 	| boxGraph data|
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph boxWidth closeTo: 1.4.
+	self assert: boxGraph boxWidth closeTo: 0.7.
 ]
 
 { #category : #tests }

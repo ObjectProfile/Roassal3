@@ -51,6 +51,12 @@ RSBoxGraphGroup >> boxGraphics: aCollectionOfRSBoxGraphs [
 ]
 
 { #category : #accessing }
+RSBoxGraphGroup >> boxesWidth: aNumber [
+	boxGraphics do: [ :boxGraph | boxGraph boxWidth: aNumber ]
+	
+]
+
+{ #category : #accessing }
 RSBoxGraphGroup >> color: aColor [
 	boxGraphics do: [ :boxGraph | boxGraph color: aColor].
 ]
@@ -94,12 +100,18 @@ RSBoxGraphGroup >> defaultGroupOffset [
 
 { #category : #accessing }
 RSBoxGraphGroup >> defaultOffset [
-	^ 2
+	^ 1
 ]
 
 { #category : #accessing }
 RSBoxGraphGroup >> groupOffset [
 	^ groupOffset
+]
+
+{ #category : #accessing }
+RSBoxGraphGroup >> groupOffset: aNumber [
+	groupOffset := aNumber.
+	self computeBoxGraphicsCenters.
 ]
 
 { #category : #initialization }
