@@ -145,6 +145,29 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	^ boxPlot open.
 ]
 
+{ #category : #examples }
+RSBoxPlot class >> exampleDays [
+	| p p1 p2 p3 y1 y2 y3 |
+
+	y1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+
+	y2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+
+	y3 := { { 1. 2. 3. 3. 3. 5. 3. 5. 5. 7. 8. 5. 6. 10. 11. } .
+			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
+
+	p1 := self data: y1.
+	p2 := self data: y2.
+	p3 := self data: y3.
+	p := p1 + p2 + p3.
+	^ p open.
+]
+
 { #category : #accessing }
 RSBoxPlot >> + aRSBoxPlot [
 	| groupsA groupsB offset maxCenterOfGroups |
@@ -173,7 +196,7 @@ RSBoxPlot >> buildChart [
 	chart := RSChart new.
 	chart add: self.
 	chart
-		extent: 250 @ 200.
+		extent: 360 @ 300.
 	^ chart
 ]
 
@@ -195,7 +218,7 @@ RSBoxPlot >> colors: collectionOfColors [
 { #category : #rendering }
 RSBoxPlot >> computeBoxesWidths [
 	| numberOfGroups boxWidth defaultBoxWidth |
-	defaultBoxWidth := 0.4.
+	defaultBoxWidth := 0.5.
 	numberOfGroups := self numberOfGroups.
 	boxWidth := defaultBoxWidth / numberOfGroups.
 	groups do: [ :boxGroup | boxGroup boxesWidth: boxWidth ].
@@ -214,7 +237,7 @@ RSBoxPlot >> computeColor [
 { #category : #rendering }
 RSBoxPlot >> computeGroupsOffsets [
 	| numberOfGroups defaultBoxGroupSpace groupBoxSpace offsets |
-	defaultBoxGroupSpace := 0.5.
+	defaultBoxGroupSpace := 0.66.
 	numberOfGroups := self numberOfGroups.
 	groupBoxSpace := defaultBoxGroupSpace / numberOfGroups.
 	
@@ -283,7 +306,7 @@ RSBoxPlot >> computeXValues [
 	| maxXValue boxesMaxXValues |
 	boxesMaxXValues := groups collect: [ :boxGraphGroup | boxGraphGroup maxXValue ].
 	maxXValue := boxesMaxXValues max.
-	xValues := {0. maxXValue. }.
+	xValues := {0.5. maxXValue. }.
 ]
 
 { #category : #rendering }
