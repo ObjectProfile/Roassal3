@@ -226,11 +226,8 @@ RSBoxPlot >> computeBoxesWidths [
 
 { #category : #rendering }
 RSBoxPlot >> computeColor [
-	groups do: [ :group |
-		| colors |
-		colors := 1 to: group numberOfBoxes. 
-		colors := colors collect: [ :color | self colorFor: color ].
-		group colors: colors
+	groups doWithIndex: [ :group :index |
+		group color: (self colorFor: index ).
 	].
 ]
 
