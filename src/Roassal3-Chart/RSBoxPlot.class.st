@@ -165,7 +165,7 @@ RSBoxPlot class >> exampleDays [
 	p2 := self data: y2. "sky blue"
 	p3 := self data: y3. "orange"
 	p := p1 + p2 + p3.
-	p xTickLabels: { 'G1'. 'G2'. 'G3' }.
+	p xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
 	^ p open.
 ]
 
@@ -241,6 +241,11 @@ RSBoxPlot >> computeColor [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> computeDefualtXTicks [
+	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self maxNumberOfBoxesPerGroup) ].
+]
+
+{ #category : #rendering }
 RSBoxPlot >> computeGroupsOffsets [
 	| numberOfGroups defaultBoxGroupSpace groupBoxSpace offsets |
 	defaultBoxGroupSpace := 0.66.
@@ -305,6 +310,7 @@ RSBoxPlot >> computeState [
 	self computeBoxesWidths.
 	self computeXValues.
 	self computeYValues.
+	self computeDefualtXTicks.
 ]
 
 { #category : #rendering }

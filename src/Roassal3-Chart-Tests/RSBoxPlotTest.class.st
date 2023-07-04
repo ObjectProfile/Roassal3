@@ -110,6 +110,20 @@ RSBoxPlotTest >> testDefaultPlotColors [
 ]
 
 { #category : #tests }
+RSBoxPlotTest >> testDefaultXTickLabels [
+	| boxPlot data chart horizontalTick xTickLabels |
+	data := { { 1. 2. 3. 4. 5. } . "1"
+			 { 5. 6. 7. 5. 10. }  . "2"
+			 { 12. 12. 13. 14. 15. 24. } "3"  }.
+	xTickLabels := { '1'. '2'. '3'.}.
+	boxPlot := RSBoxPlot data: data.
+	chart := boxPlot buildChart.
+	horizontalTick := chart horizontalTick.
+	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: xTickLabels.
+	boxPlot open.
+]
+
+{ #category : #tests }
 RSBoxPlotTest >> testGroupsOfOneBoxGraph [
 	| boxPlot data firstBoxGraphGroup |
 	data := { 1. 2. 3. 4. 5. }.
