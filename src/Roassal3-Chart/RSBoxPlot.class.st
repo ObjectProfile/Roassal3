@@ -171,12 +171,9 @@ RSBoxPlot class >> exampleDays [
 
 { #category : #accessing }
 RSBoxPlot >> + aRSBoxPlot [
-	| groupsA groupsB offset maxCenterOfGroups |
+	| groupsA groupsB |
 	groupsA := self groups.
 	groupsB := aRSBoxPlot groups.
-	maxCenterOfGroups := (groupsA collect: [:group|group maxCenter]) max.
-	offset := maxCenterOfGroups + 3.
-	"groupsB := groupsB collect: [ :aRSBoxGraphGroup | aRSBoxGraphGroup addOffsetToGroup: offset ]."
 	groupsA addAll: groupsB.
 	groups := groupsA.
 	self computeGroupsOffsets.
@@ -194,10 +191,10 @@ RSBoxPlot >> boxGraphics [
 
 { #category : #public }
 RSBoxPlot >> buildChart [
-	chart := RSChart new.
 	chart add: self.
 	chart
-		extent: 360 @ 300.
+		extent: 360 @ 300;
+		build.
 	^ chart
 ]
 
@@ -353,6 +350,7 @@ RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
 RSBoxPlot >> initialize [
 	super initialize.
 	collorPallete := self defaultPlotColors.
+	chart := RSChart new.
 ]
 
 { #category : #testing }
@@ -381,13 +379,6 @@ RSBoxPlot >> renderIn: canvas [
 		aRSBoxGraphGroup scales: {xScale. yScale.}. 
 		aRSBoxGraphGroup renderIn: canvas 
 	].
-]
-
-{ #category : #public }
-RSBoxPlot >> x: aCollection y: aCollection2 [
-	xValues := aCollection.
-	yValues := aCollection2.
-	self computeBoxAndWhiskerExtent: aCollection2
 ]
 
 { #category : #accessing }
