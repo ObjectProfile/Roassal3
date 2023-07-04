@@ -14,12 +14,6 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #rendering }
-RSAbstractChartPlot >> addShape: aShape [
-	"Add a shape to the canvas"
-	chart canvas add: aShape
-]
-
 { #category : #'private - adding' }
 RSAbstractChartPlot >> addedIn: anRSChart [
 	self subclassResponsibility

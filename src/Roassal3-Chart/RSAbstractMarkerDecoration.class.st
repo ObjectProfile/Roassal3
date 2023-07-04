@@ -108,7 +108,7 @@ RSAbstractMarkerDecoration >> renderIn: canvas [
 		line
 			dashArray: self defaultDashStyle;
 			color: markerColor.
-		self addShape: line.
+		canvas add: line.
 		line
 	] as: RSGroup
 ]
