@@ -24,10 +24,9 @@ RSBarChartExample >> example01TwoBars [
 	p2 barOffset: size / -2.
 	c addPlot: p.
 	c addPlot: p2.
-	c horizontalTick doNotUseNiceLabel;
-			 numberOfTicks: x size - 1;
-			 asFloat: 5;
-			 useVerticalLabel.
+	c horizontalTick
+		ticksData: #(0 0.25 1 1.75);
+		useVerticalLabel.
 
 	c build.
 	p bars @ RSPopup.
