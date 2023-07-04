@@ -80,15 +80,14 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
 
 { #category : #tests }
 RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
-	| boxPlot data chart box chartBox categories |
-	self skip.
+	| boxPlot data chart box chartBox categories window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
 			 { 5. 6. 7. 5. 10. }  . "B"
 			 { 12. 12. 13. 14. 15. 24. } "C"  }.
 	categories := { 'A'. 'B'. 'C' }.
 	boxPlot := RSBoxPlot data: data.
 	boxPlot xTickLabels: categories.
-	boxPlot open.
+	window := boxPlot open.
 	chart := boxPlot chart.
 	chartBox := chart spine encompassingRectangle.
 	boxPlot boxGraphics do: [ :eachBoxGraph |
@@ -96,6 +95,7 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 		self assert: box class equals: RSPolygon.
 		self assert: (chartBox containsRect: box encompassingRectangle).
 	].
+	window delete.
 ]
 
 { #category : #tests }
