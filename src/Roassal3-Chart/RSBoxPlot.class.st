@@ -182,6 +182,17 @@ RSBoxPlot >> + aRSBoxPlot [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> beforeRenderingIn: aChart [
+	| barScale |
+	super beforeRenderingIn: aChart.
+	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
+	barScale := NSLinearScale new
+		domain: {xValues first - 0.5. xValues second +0.5 };
+		range: xScale range.
+	aChart xScale: barScale.
+]
+
+{ #category : #rendering }
 RSBoxPlot >> boxGraphics [
 	| boxGraphics |
 	boxGraphics := OrderedCollection new.
@@ -301,7 +312,7 @@ RSBoxPlot >> computeXValues [
 	| maxXValue boxesMaxXValues |
 	boxesMaxXValues := groups collect: [ :boxGraphGroup | boxGraphGroup maxXValue ].
 	maxXValue := boxesMaxXValues max.
-	xValues := {0.5. maxXValue. }.
+	xValues := {1. self maxNumberOfBoxesPerGroup. }.
 ]
 
 { #category : #rendering }
@@ -359,6 +370,11 @@ RSBoxPlot >> isBoxPlot [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> maxNumberOfBoxesPerGroup [
+	^ (groups collect: [:group | group numberOfBoxes ]) max.
+]
+
+{ #category : #rendering }
 RSBoxPlot >> numberOfBoxes [
 	^ self boxGraphics size.
 ]
@@ -379,6 +395,7 @@ RSBoxPlot >> renderIn: canvas [
 		aRSBoxGraphGroup scales: {xScale. yScale.}. 
 		aRSBoxGraphGroup renderIn: canvas 
 	].
+	"canvas add: (RSPolyline new controlPoints: {xScale range first@500. xScale range second@500 })."
 ]
 
 { #category : #accessing }

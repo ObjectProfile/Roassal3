@@ -79,6 +79,26 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
 ]
 
 { #category : #tests }
+RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
+	| boxPlot data chart box chartBox categories |
+	self skip.
+	data := { { 1. 2. 3. 4. 5. } . "A"
+			 { 5. 6. 7. 5. 10. }  . "B"
+			 { 12. 12. 13. 14. 15. 24. } "C"  }.
+	categories := { 'A'. 'B'. 'C' }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot xTickLabels: categories.
+	boxPlot open.
+	chart := boxPlot chart.
+	chartBox := chart spine encompassingRectangle.
+	boxPlot boxGraphics do: [ :eachBoxGraph |
+		box := eachBoxGraph box.
+		self assert: box class equals: RSPolygon.
+		self assert: (chartBox containsRect: box encompassingRectangle).
+	].
+]
+
+{ #category : #tests }
 RSBoxPlotTest >> testDefaultPlotColors [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -125,7 +145,6 @@ RSBoxPlotTest >> testXTickLabels [
 	yTickLabels := { '-5'. 'zero'. '10'. '30' }.
 	boxPlot := RSBoxPlot data: data.
 	boxPlot xTickLabels: categories.
-	boxPlot yTickLabels: yTickLabels.
 	chart := boxPlot buildChart.
 	horizontalTick := chart horizontalTick.
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
