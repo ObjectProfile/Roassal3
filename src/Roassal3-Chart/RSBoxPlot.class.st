@@ -161,10 +161,11 @@ RSBoxPlot class >> exampleDays [
 			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
 			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
 
-	p1 := self data: y1.
-	p2 := self data: y2.
-	p3 := self data: y3.
+	p1 := self data: y1. "blue"
+	p2 := self data: y2. "sky blue"
+	p3 := self data: y3. "orange"
 	p := p1 + p2 + p3.
+	p xTickLabels: { 'G1'. 'G2'. 'G3' }.
 	^ p open.
 ]
 

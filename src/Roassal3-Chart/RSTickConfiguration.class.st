@@ -133,7 +133,7 @@ RSTickConfiguration >> numberOfTicks [
 
 { #category : #accessing }
 RSTickConfiguration >> numberOfTicks: aNumber [
-	numberOfTicks := aNumber
+	numberOfTicks := aNumber.
 ]
 
 { #category : #accessing }

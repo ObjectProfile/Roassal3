@@ -165,6 +165,11 @@ RSAbstractChartPlot >> xScale: aScale [
 ]
 
 { #category : #accessing }
+RSAbstractChartPlot >> xTickLabels: aCollection [
+	chart horizontalTick fromNames: aCollection.
+]
+
+{ #category : #accessing }
 RSAbstractChartPlot >> yScale [
 	^ yScale
 ]
@@ -172,4 +177,14 @@ RSAbstractChartPlot >> yScale [
 { #category : #accessing }
 RSAbstractChartPlot >> yScale: aScale [
 	yScale := aScale
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> yTickLabels: aCollection [
+	chart verticalTick fromNames: aCollection.
+]
+
+{ #category : #accessing }
+RSAbstractChartPlot >> yTicks: collectionOfNumbers labels: aCollection [
+	chart verticalTick ticks: collectionOfNumbers labels: aCollection.
 ]

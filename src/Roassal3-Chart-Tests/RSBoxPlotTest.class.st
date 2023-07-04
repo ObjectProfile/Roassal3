@@ -114,3 +114,35 @@ RSBoxPlotTest >> testNumberOfBoxes [
 	self assert: boxPlot boxGraphics size equals: boxPlot numberOfBoxes. 
 	window delete.
 ]
+
+{ #category : #tests }
+RSBoxPlotTest >> testXTickLabels [
+	| boxPlot data chart categories horizontalTick yTickLabels |
+	data := { { 1. 2. 3. 4. 5. } . "A"
+			 { 5. 6. 7. 5. 10. }  . "B"
+			 { 12. 12. 13. 14. 15. 24. } "C"  }.
+	categories := { 'A'. 'B'. 'C' }.
+	yTickLabels := { '-5'. 'zero'. '10'. '30' }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot xTickLabels: categories.
+	boxPlot yTickLabels: yTickLabels.
+	chart := boxPlot buildChart.
+	horizontalTick := chart horizontalTick.
+	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testYTickLabels [
+	| boxPlot data chart categories horizontalTick yTickLabels |
+	data := { { 1. 2. 3. 4. 5. } . "A"
+			 { 5. 6. 7. 5. 10. }  . "B"
+			 { 12. 12. 13. 14. 15. 24. } "C"  }.
+	categories := { 'A'. 'B'. 'C' }.
+	yTickLabels := { '-5'. 'zero'. '10'. '30' }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot xTickLabels: categories.
+	boxPlot yTicks: #(-5 0 10 30) labels: yTickLabels.
+	chart := boxPlot buildChart.
+	horizontalTick := chart horizontalTick.
+	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
+]
