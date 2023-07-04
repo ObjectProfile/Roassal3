@@ -253,6 +253,7 @@ RSBoxPlot >> computeGroupsOffsets [
 	groupBoxSpace := defaultBoxGroupSpace / numberOfGroups.
 	
 	offsets := OrderedCollection new.
+	
 	numberOfGroups odd ifTrue: [ 
 		| indexOfTheMiddle currentIndex counter |
 		indexOfTheMiddle := (numberOfGroups / 2) ceiling. 
@@ -270,9 +271,8 @@ RSBoxPlot >> computeGroupsOffsets [
 			counter := counter + 1.
 			currentIndex := currentIndex + 1.
 		].
-				
-		"{ 0-groupBoxSpace. 0. 0+groupBoxSpace. } "
 	].
+	
 	numberOfGroups even ifTrue: [ 
 		| indexOfTheMiddle currentIndex counter |
 		indexOfTheMiddle := (numberOfGroups / 2). 
@@ -290,15 +290,8 @@ RSBoxPlot >> computeGroupsOffsets [
 			counter := counter + 1.
 			currentIndex := currentIndex + 1.
 		].
-				
-		"{ 0-groupBoxSpace. 0. 0+groupBoxSpace. } "
 	].
-	"numberOfGroups even ifTrue: [ 
-		{ 0-groupBoxSpace-groupBoxSpace/2. 
-		0+groupBoxSpace/2.
-		0+groupBoxSpace/2. 
-		0+groupBoxSpace+groupBoxSpace/2. } ].
-	"
+	
 	groups doWithIndex: [ :boxGroup :idx | 
 		boxGroup groupOffset: (offsets at: idx)
 	].
