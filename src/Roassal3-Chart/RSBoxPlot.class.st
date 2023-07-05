@@ -48,7 +48,7 @@ RSBoxPlot class >> data: aCollection [
 { #category : #examples }
 RSBoxPlot class >> exampleBoxPlot [
 	| boxPlot data |
-	data := { 12. 12. 13. 14. 15. 24. }.
+	data := { 1. 2. 3. 4. 5. } .
 	boxPlot := self data: data.
 	^ boxPlot open.
 ]
@@ -60,7 +60,6 @@ RSBoxPlot class >> exampleBoxPlotCustomColor [
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := self data: data.
-	boxPlot shape color: (Color r: 158 g: 202 b: 226  range: 255 ).
 	^ boxPlot open.
 ]
 
@@ -169,6 +168,19 @@ RSBoxPlot class >> exampleDays [
 	^ p open.
 ]
 
+{ #category : #examples }
+RSBoxPlot class >> exampleSetYTicksLabels [
+	| p1 y1 |
+
+	y1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+
+	p1 := self data: y1. "blue"
+	p1 xTickLabels: { 'Day 1'. 'Day 2'. }.
+	^ p1 open.
+]
+
 { #category : #accessing }
 RSBoxPlot >> + aRSBoxPlot [
 	| groupsA groupsB |
@@ -187,7 +199,7 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSLinearScale new
-		domain: {xValues first - 0.5. xValues second +0.5 };
+		domain: {xValues first - 0.5. xValues second + 0.5};
 		range: xScale range.
 	aChart xScale: barScale.
 ]
