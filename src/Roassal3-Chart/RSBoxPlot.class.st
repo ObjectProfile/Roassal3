@@ -205,6 +205,7 @@ RSBoxPlot >> buildChart [
 	chart add: self.
 	chart
 		extent: 360 @ 300;
+		padding: 15;
 		build.
 	^ chart
 ]

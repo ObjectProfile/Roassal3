@@ -43,12 +43,13 @@ RSStatisticalMeasures >> interQuartileRange [
 
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> lowerLimit [
-	| quartiles q1 q3 iqr |
+	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
-	^ q1 - (1.5 * iqr).
+	iqr15 := q1 - (1.5 * iqr).
+	^ (data select: [ :d | d >= iqr15 ]) min.
 ]
 
 { #category : #'accessing - computed' }
@@ -112,10 +113,11 @@ RSStatisticalMeasures >> standardDeviation [
 
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> upperLimit [
-	| quartiles q1 q3 iqr |
+	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
-	^ q3 + (1.5 * iqr).
+	iqr15 := q3 + (1.5 * iqr).
+	^ (data select: [ :d | d <= iqr15 ]) max.
 ]
