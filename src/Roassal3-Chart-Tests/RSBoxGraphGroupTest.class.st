@@ -66,7 +66,7 @@ RSBoxGraphGroupTest >> testMaxYValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
 	boxGraphGroup := RSBoxGraphGroup data: data.
-	self assert: boxGraphGroup maxYValue equals: 11.
+	self assert: boxGraphGroup maxYValue equals: 9.
 ]
 
 { #category : #tests }
@@ -74,7 +74,7 @@ RSBoxGraphGroupTest >> testMinYValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
 	boxGraphGroup := RSBoxGraphGroup data: data.
-	self assert: boxGraphGroup minYValue equals: -1.
+	self assert: boxGraphGroup minYValue equals: 1.
 ]
 
 { #category : #tests }

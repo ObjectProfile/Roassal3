@@ -26,7 +26,7 @@ RSStatisticalMeasuresTest >> testGetLowerLimit [
 	| statisticalMeasures data |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures lowerLimit closeTo: -27.
+	self assert: statisticalMeasures lowerLimit closeTo: 6.
 ]
 
 { #category : #tests }
@@ -98,6 +98,6 @@ RSStatisticalMeasuresTest >> testOutliers [
 	| statisticalMeasures data |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures upperLimit closeTo: 19.5.
+	self assert: statisticalMeasures upperLimit closeTo: 15.
 	self assert: statisticalMeasures outliers closeTo: #(24).
 ]

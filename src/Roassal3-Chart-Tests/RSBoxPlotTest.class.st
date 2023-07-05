@@ -120,7 +120,6 @@ RSBoxPlotTest >> testDefaultXTickLabels [
 	chart := boxPlot buildChart.
 	horizontalTick := chart horizontalTick.
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: xTickLabels.
-	boxPlot open.
 ]
 
 { #category : #tests }

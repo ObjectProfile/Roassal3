@@ -121,7 +121,7 @@ RSBoxGraphTest >> testLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph lowerLimit closeTo: 7.5 precision: 1.
+	self assert: boxGraph lowerLimit closeTo: 12 precision: 1.
 ]
 
 { #category : #tests }
@@ -137,7 +137,7 @@ RSBoxGraphTest >> testMaxYValueIsUpperLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph maxYValue equals: 17.
+	self assert: boxGraph maxYValue equals: 15.
 ]
 
 { #category : #tests }
@@ -166,7 +166,7 @@ RSBoxGraphTest >> testMinYValueIsLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph minYValue equals: 9.
+	self assert: boxGraph minYValue equals: 12.
 ]
 
 { #category : #tests }
@@ -219,5 +219,5 @@ RSBoxGraphTest >> testUpperLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxGraph data: data.
-	self assert: boxGraph upperLimit closeTo: 19.5 precision: 1.
+	self assert: boxGraph upperLimit closeTo: 15 precision: 1.
 ]
