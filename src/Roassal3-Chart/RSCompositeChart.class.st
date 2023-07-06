@@ -30,9 +30,9 @@ c
 "
 Class {
 	#name : #RSCompositeChart,
-	#superclass : #RSAbstractChartPlot,
+	#superclass : #RSChart,
 	#instVars : [
-		'elements'
+		'plots'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -50,7 +50,7 @@ c addPlot: (RSLinePlot new x: x y: y).
 c
 ```
 	"
-	elements add: aPlot.
+	plots add: aPlot.
 	aPlot chart: self.
 	aPlot styler: self styler.
 	^ aPlot
@@ -62,42 +62,17 @@ RSCompositeChart >> addAll: aCollection [
 	aCollection do: [ :each | self add: each ]
 ]
 
-{ #category : #hooks }
-RSCompositeChart >> addDecoration: aDecoration [
-	"Add a decoration to the chart
-
-For example:
-```Smalltalk
-x := -3.14 to: 3.14 by: 0.1.
-y := x sin.
-c := RSChart new.
-c addPlot: (RSLinePlot new x: x y: y).
-c addDecoration: (RSHorizontalTick new).
-c addDecoration: (RSVerticalTick new).
-c
-```"
-	elements add: aDecoration.
-	aDecoration chart: self.
-	aDecoration styler: self styler.
-	^ aDecoration
-]
-
 { #category : #adding }
 RSCompositeChart >> chart [
 
 	^ self
 ]
 
-{ #category : #accessing }
-RSCompositeChart >> decorations [
+{ #category : #initialization }
+RSCompositeChart >> initialize [
 
-	^ elements select: #isDecoration
-]
-
-{ #category : #accessing }
-RSCompositeChart >> elements [
-
-	^ elements
+	super initialize.
+	plots := OrderedCollection new
 ]
 
 { #category : #'accessing - extension' }

@@ -3,13 +3,10 @@ Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSChart,
 	#instVars : [
-		'extents',
-		'xScale',
-		'yScale',
-		'shape',
-		'styler'
+		'chart',
+		'shape'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -24,16 +21,6 @@ RSAbstractChartPlot >> addShape: aShape [
 RSAbstractChartPlot >> beforeRenderingIn: aChart [
 ]
 
-{ #category : #accessing }
-RSAbstractChartPlot >> chartExtents [
-	^ extents ifNil: [ extents := RSChartExtents new ]
-]
-
-{ #category : #'accessing - extension' }
-RSAbstractChartPlot >> chartExtents: aRSChartExtents [
-	extents := aRSChartExtents
-]
-
 { #category : #'public - shape' }
 RSAbstractChartPlot >> color [
 
@@ -46,21 +33,6 @@ RSAbstractChartPlot >> color: aColor [
 	self shape color: aColor
 ]
 
-{ #category : #rendering }
-RSAbstractChartPlot >> createXScale [
-	| padding |
-	xScale ifNil: [ xScale := NSScale linear ].
-	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	padding := self padding x.
-	xScale
-		domain:
-			{self minValueX.
-			self maxValueX};
-		range:
-			{0 + padding.
-			self extent x - padding}
-]
-
 { #category : #accessing }
 RSAbstractChartPlot >> createdShapes [
 
@@ -68,11 +40,16 @@ RSAbstractChartPlot >> createdShapes [
 ]
 
 { #category : #initialization }
+RSAbstractChartPlot >> defaultShape [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
 RSAbstractChartPlot >> initialize [
+
 	super initialize.
-	shape := self defaultShape.
-	styler := self defaultStyler.
-	self className = 'RSSpineDecoration' ifTrue: [ Transcript show: chart ].
+	shape := self defaultShape
 ]
 
 { #category : #testing }
@@ -81,18 +58,14 @@ RSAbstractChartPlot >> isPlot [
 	^ false
 ]
 
-{ #category : #'accessing - extension' }
-RSAbstractChartPlot >> padding [
-	^ self chartExtents padding
+{ #category : #'public - shape' }
+RSAbstractChartPlot >> shape [
+
+	^ shape
 ]
 
-{ #category : #'accessing - extension' }
-RSAbstractChartPlot >> padding: aPoint [
-	self chartExtents padding: aPoint asPoint
-]
+{ #category : #'public - shape' }
+RSAbstractChartPlot >> shape: aRSShape [
 
-{ #category : #accessing }
-RSAbstractChartPlot >> styler: anObject [
-
-	styler := anObject
+	shape := aRSShape
 ]

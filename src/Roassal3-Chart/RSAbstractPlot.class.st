@@ -6,37 +6,10 @@ Class {
 	#superclass : #RSAbstractChartPlot,
 	#instVars : [
 		'xValues',
-		'yValues',
-		'decorations',
-		'spineDecoration',
-		'xlabel',
-		'xlabelTop',
-		'ylabel',
-		'ylabelRight',
-		'title'
+		'yValues'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
-
-{ #category : #adding }
-RSAbstractPlot >> addDecoration: aDecoration [
-	"Add a decoration to the chart
-
-For example:
-```Smalltalk
-x := -3.14 to: 3.14 by: 0.1.
-y := x sin.
-c := RSChart new.
-c addPlot: (RSLinePlot new x: x y: y).
-c addDecoration: (RSHorizontalTick new).
-c addDecoration: (RSVerticalTick new).
-c
-```"
-	elements add: aDecoration.
-	aDecoration chart: self.
-	aDecoration styler: self styler.
-	^ aDecoration
-]
 
 { #category : #'public - plots' }
 RSAbstractPlot >> barHeights: aCollectionY [
@@ -66,7 +39,7 @@ RSAbstractPlot >> beforeRenderingIn: aChart [
 { #category : #accessing }
 RSAbstractPlot >> chart [
 
-	^ chart
+	^ chart ifNil: [ self ]
 ]
 
 { #category : #accessing }
@@ -87,39 +60,11 @@ RSAbstractPlot >> checkAssertion [
 		'X and Y values have not the same size, and they should'
 ]
 
-{ #category : #accessing }
-RSAbstractPlot >> decorations [
-	"Return the list of decorations used to annotate plots"
-	^ elements select: #isDecoration
-]
+{ #category : #testing }
+RSAbstractPlot >> computeColor [
+	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
-{ #category : #'accessing - defaults' }
-RSAbstractPlot >> defaultContainer [
-	^ RSCanvas new
-		"when: RSExtentChangedEvent send:#updateChart: to: self;"
-		addInteraction: (RSCanvasController new
-			in: [ :controller |
-				controller zoomToFitInteraction useZoomToFitOnExtentChanged.
-				controller configuration	maxScale: 20.
-				 ];
-			yourself);
-		yourself
-]
-
-{ #category : #color }
-RSAbstractPlot >> defaultPlotColors [
-	^ NSScale category20
-]
-
-{ #category : #initialization }
-RSAbstractPlot >> defaultShape [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #initialization }
-RSAbstractPlot >> defaultStyler [
-	^ RSChartStyler new
+	^ self color ifNil: [ self chart colorFor: self ]
 ]
 
 { #category : #rendering }
@@ -136,44 +81,11 @@ RSAbstractPlot >> definedValuesY [
 	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #accessing }
-RSAbstractPlot >> elements [
-	^ elements
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> horizontalTick [
-	^ elements detect: [ :element | element isHorizontalTick ] ifNone: [ nil ]
-]
-
 { #category : #inspector }
 RSAbstractPlot >> initialize [
 
 	super initialize.
 	shape := self defaultShape
-]
-
-{ #category : #initialization }
-RSAbstractPlot >> initializeDecorations [
-
-	self spineDecoration: RSChartSpineDecoration new.
-	"self addDecoration: RSHorizontalTick new.
-	self addDecoration: RSVerticalTick new"
-]
-
-{ #category : #inspector }
-RSAbstractPlot >> inspectorCanvas [
-	<inspectorPresentationOrder: 90 title: 'Canvas'>
-	self update.
-	^ SpRoassal3InspectorPresenter new
-		canvas: self canvas;
-		yourself
-]
-
-{ #category : #inspector }
-RSAbstractPlot >> inspectorCanvasContext: aContext [
-
-  aContext withoutEvaluator
 ]
 
 { #category : #testing }
@@ -220,11 +132,26 @@ RSAbstractPlot >> isVerticalBarPlot [
 	^ false
 ]
 
-{ #category : #'public - plots' }
-RSAbstractPlot >> lineX: aCollectionX y: aCollectionY [
-	| res |
-	self addPlot: (res := RSLinePlot new x: aCollectionX y: aCollectionY).
-	^ res
+{ #category : #rendering }
+RSAbstractPlot >> maxChartValueX [
+
+	^ self chartExtents maxValueX
+		  ifNil: [
+			  | res |
+			  self chartExtents maxValueX: (res := self maxValueX).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
+{ #category : #rendering }
+RSAbstractPlot >> maxChartValueY [
+
+	^ self chartExtents maxValueY
+		  ifNil: [
+			  | res |
+			  self chartExtents maxValueY: (res := self maxValueY).
+			  res ]
+		  ifNotNil: [ :res | res ]
 ]
 
 { #category : #rendering }
@@ -242,6 +169,28 @@ RSAbstractPlot >> maxValueY [
 ]
 
 { #category : #rendering }
+RSAbstractPlot >> minChartValueX [
+
+	^ self chartExtents minValueX
+		  ifNil: [
+			  | res |
+			  self chartExtents minValueX: (res := self minValueX).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
+{ #category : #rendering }
+RSAbstractPlot >> minChartValueY [
+
+	^ self chartExtents minValueY
+		  ifNil: [
+			  | res |
+			  self chartExtents minValueY: (res := self minValueY).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
+{ #category : #rendering }
 RSAbstractPlot >> minValueX [
 	"Return the minimum X value of the plot, excluding NaN and infinite"
 
@@ -255,12 +204,6 @@ RSAbstractPlot >> minValueY [
 	^ self definedValuesY min
 ]
 
-{ #category : #accessing }
-RSAbstractPlot >> numberOfPlots [
-
-	^ 1
-]
-
 { #category : #rendering }
 RSAbstractPlot >> renderIn: aCanvas [
 
@@ -271,80 +214,6 @@ RSAbstractPlot >> renderIn: aCanvas [
 	shapes := decorations
 		          flatCollect: [ :element | element createdShapes ]
 		          as: RSGroup
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> shape [
-
-	^ shape
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> shape: aRSShape [
-
-	shape := aRSShape
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> spine [
-	"returns the shape"
-	^ self spineDecoration box
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> spineDecoration [
-	^ spineDecoration
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> spineDecoration: aRSChartSpineDecoration [
-
-	spineDecoration ifNotNil: [ self removeSpine ].
-	spineDecoration := aRSChartSpineDecoration.
-	decorations addFirst: spineDecoration.
-	aRSChartSpineDecoration chart: self
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> styler: anRSChartStyler [
-	styler := anRSChartStyler.
-	elements do: [ :each | each styler: styler ]
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> title [
-
- ^ title
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> title: aTitle [
-	"Set the title of a chart. For example:
-
-```Smalltalk
-c := RSChart new.
-c addPlot: (RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt).
-c title: 'Square root'.
-c
-```
-	"
-	title := aTitle.
-	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
-]
-
-{ #category : #'accessing - defaults' }
-RSAbstractPlot >> updateChart: anEvent [
-	| canvas camera |
-	camera := anEvent camera.
-	canvas := anEvent canvas.
-	self extent: canvas extent.
-	self update.
-	canvas zoomToFit.
-]
-
-{ #category : #accessing }
-RSAbstractPlot >> verticalTick [
-	^ elements detect: [ :element | element isVerticalTick ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -391,53 +260,10 @@ c
 	yValues := aCollection2
 ]
 
-{ #category : #'public - scales' }
-RSAbstractPlot >> xScale: aScale [
-	elements do: [ :e | e xScale: aScale ].
-	^ aScale
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> xSqrt [
-	^ self xScale: NSScale sqrt
-]
-
 { #category : #accessing }
 RSAbstractPlot >> xValues [
 
 	^ xValues
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> xlabel [
-	
-	^ xlabel
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> xlabel: aTitle [
-	"Set a label on the horizontal axis"
-	xlabel := aTitle.
-	^ self addDecoration: (RSXLabelDecoration new title: aTitle)
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> xlabel: aTitle offset: aPointOrANumber [
-	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
-	^ self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> xlabelTop [
-	
-	^ xlabelTop
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> xlabelTop: aTitle [
-	"Set a label on the horizontal top axis"
-	xlabelTop := aTitle.
-	^ self addDecoration: (RSXLabelDecoration new title: aTitle; above)
 ]
 
 { #category : #accessing }
@@ -472,80 +298,8 @@ c
 	self x: (1 to: aCollection size) y: aCollection
 ]
 
-{ #category : #'public - scales' }
-RSAbstractPlot >> yLinear [
-	^ self yScale: NSScale linear
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> yLn [
-	^ self yScale: NSScale ln
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> yLog [
-	^ self yScale: NSScale symlog
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> yRawLog [
-	"ensure all your data and axis do not contains zero"
-	self verticalTick locator: RSLogLocator new.
-	^ self yScale: NSScale log
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> yRawLog: aNumber [
-	
-	self verticalTick locator: (RSLogLocator new base: aNumber).
-	^ self yScale: (NSLogScale new base: aNumber) 
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> yScale: aScale [
-	elements do: [ :e | e yScale: aScale ].
-	^ aScale
-]
-
-{ #category : #'public - scales' }
-RSAbstractPlot >> ySqrt [
-	^ self yScale: NSScale sqrt
-]
-
 { #category : #accessing }
 RSAbstractPlot >> yValues [
 
 	^ yValues
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> ylabel [
-	
-	^ ylabel
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> ylabel: aTitle [
-	"Set a label on the vertical axis"
-	ylabel := aTitle.
-	^ self addDecoration: (RSYLabelDecoration new title: aTitle)
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> ylabel: aTitle offset: aPointOrANumber [
-	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
-	^ self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> ylabelRight [
-
-	^ ylabelRight
-]
-
-{ #category : #decoration }
-RSAbstractPlot >> ylabelRight: aTitle [
-	"Set a label on the vertical axis"
-	ylabelRight := aTitle.
-	^ self addDecoration: (RSYLabelDecoration new title: aTitle; right; yourself)
 ]
