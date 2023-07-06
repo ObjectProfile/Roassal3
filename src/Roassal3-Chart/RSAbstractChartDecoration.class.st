@@ -159,18 +159,6 @@ RSAbstractChartDecoration >> isYLabel [
 ]
 
 { #category : #accessing }
-RSAbstractChartDecoration >> plot [
-
-	^ plot
-]
-
-{ #category : #accessing }
-RSAbstractChartDecoration >> plot: aPlot [
-
-	plot := aPlot
-]
-
-{ #category : #accessing }
 RSAbstractChartDecoration >> shape [
 
 	^ shape
@@ -185,7 +173,7 @@ RSAbstractChartDecoration >> shape: aRSShape [
 { #category : #rendering }
 RSAbstractChartDecoration >> spine [
 	"Return the roassal shape that describes the spine"
-	^ plot spine
+	^ chart spine
 ]
 
 { #category : #accessing }

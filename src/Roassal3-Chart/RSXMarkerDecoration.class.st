@@ -42,7 +42,7 @@ RSXMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 	^ self shape copy
 			from: (aPlot xScale scale: value) @ 0;
-			to: (aPlot xScale scale: value) @ plot extent y negated
+			to: (aPlot xScale scale: value) @ chart extent y negated
 ]
 
 { #category : #'public - configuration' }

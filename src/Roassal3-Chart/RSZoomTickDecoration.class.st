@@ -16,7 +16,7 @@ Class {
 { #category : #accessing }
 RSZoomTickDecoration >> boxScale [
 	| spine |
-	spine := plot spine encompassingRectangle.
+	spine := chart spine encompassingRectangle.
 	^ NSScale linear
 		domain: { spine origin. spine corner };
 		range: { visibleRectangle origin. visibleRectangle corner}
@@ -26,9 +26,9 @@ RSZoomTickDecoration >> boxScale [
 RSZoomTickDecoration >> chartElements [
 	| elements |
 	elements := OrderedCollection new.
-	elements add: plot.
-	plot verticalTick ifNotNil: [:tick | elements add: tick ].
-	plot horizontalTick ifNotNil: [:tick | elements add: tick ].
+	elements add: chart.
+	chart verticalTick ifNotNil: [:tick | elements add: tick ].
+	chart horizontalTick ifNotNil: [:tick | elements add: tick ].
 	^ elements
 ]
 
@@ -36,7 +36,7 @@ RSZoomTickDecoration >> chartElements [
 RSZoomTickDecoration >> computeVisibleRectangle: eventRectangle [
 	| rect spine scale |
 	"spine the the chart box"
-	spine := plot spine encompassingRectangle.
+	spine := chart spine encompassingRectangle.
 	rect := (eventRectangle origin max: spine origin)
 		corner: (eventRectangle corner min: spine corner).
 	scale := self boxScale.
@@ -97,8 +97,8 @@ RSZoomTickDecoration >> renderIn: canvas [
 { #category : #rendering }
 RSZoomTickDecoration >> renderPlots [
 	| visibleShapes scale |
-	visibleShapes := plot createdShapes select: [ :s | s encompassingRectangle intersects: visibleRectangle ].
-	scale := plot spine extent/visibleRectangle extent.
+	visibleShapes := chart createdShapes select: [ :s | s encompassingRectangle intersects: visibleRectangle ].
+	scale := chart spine extent/visibleRectangle extent.
 	"I use a composite shape because the composite can scale the selected shapes,
 	but more important we can clip the selected shapes"
 	visibleShapes := RSComposite new
@@ -111,7 +111,7 @@ RSZoomTickDecoration >> renderPlots [
 			copy translateBy: visibleRectangle floatCenter negated.
 			copy ]);
 		scaleBy: scale;
-		translateBy: plot spine encompassingRectangle floatCenter - visibleRectangle floatCenter;
+		translateBy: chart spine encompassingRectangle floatCenter - visibleRectangle floatCenter;
 		yourself.
 	currentShapes add: visibleShapes
 ]
@@ -133,12 +133,12 @@ RSZoomTickDecoration >> renderTicks [
 { #category : #rendering }
 RSZoomTickDecoration >> renderXAxis [
 	| horizontalTick tickShapes newPlot scale |
-	horizontalTick := plot horizontalTick.
+	horizontalTick := chart horizontalTick.
 	horizontalTick ifNil: [ ^ self ].
 	"should be a copy to not lose created shapes from original horizontal tick"
 	scale := horizontalTick xScale.
 	"scale inspect."
-	newPlot := plot copy.
+	newPlot := chart copy.
 	newPlot
 		minValueX: (scale invert: visibleRectangle origin x);
 		maxValueX: (scale invert: visibleRectangle corner x).
@@ -159,7 +159,7 @@ RSZoomTickDecoration >> renderXAxis [
 { #category : #rendering }
 RSZoomTickDecoration >> renderYAxis [
 	| verticalTick tickShapes ymin ymax scale |
-	verticalTick := plot verticalTick.
+	verticalTick := chart verticalTick.
 	verticalTick ifNil: [ ^ self ].
 
 	ymin := visibleRectangle origin y.

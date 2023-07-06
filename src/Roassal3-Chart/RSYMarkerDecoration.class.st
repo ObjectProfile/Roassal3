@@ -41,7 +41,7 @@ RSYMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	value := self getValueToBeMarkedFromPlot: aPlot.
 	^ RSLine new
 			from: 0 @ (aPlot yScale scale: value);
-			to: plot extent x @ (aPlot yScale scale: value)
+			to: chart extent x @ (aPlot yScale scale: value)
 ]
 
 { #category : #'public - configuration' }

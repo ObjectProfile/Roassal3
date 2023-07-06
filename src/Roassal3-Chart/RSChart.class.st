@@ -228,6 +228,28 @@ RSChart >> minChartValueY: aNumber [
 	self chartExtents minValueY: aNumber
 ]
 
+{ #category : #rendering }
+RSChart >> mustInclude0inX [
+	"Make sure that the 0 value is in the chart"
+
+	(0 between: self minChartValueX and: self maxChartValueX) ifTrue: [ ^ self ].
+
+	self maxChartValueX > 0
+		ifTrue: [ self minChartValueX: 0 ]
+		ifFalse: [ self maxChartValueX: 0 ]
+]
+
+{ #category : #rendering }
+RSChart >> mustInclude0inY [
+	"Make sure that the 0 value is in the chart"
+
+	(0 between: self minChartValueY and: self maxChartValueY) ifTrue: [ ^ self ].
+
+	self maxChartValueY > 0
+		ifTrue: [ self minChartValueY: 0 ]
+		ifFalse: [ self maxChartValueY: 0 ]
+]
+
 { #category : #'accessing - extension' }
 RSChart >> padding [
 	^ self chartExtents padding
@@ -236,6 +258,28 @@ RSChart >> padding [
 { #category : #'accessing - extension' }
 RSChart >> padding: aPoint [
 	self chartExtents padding: aPoint asPoint
+]
+
+{ #category : #removing }
+RSChart >> removeAllTicks [
+	"Remove both horizontal and vertical ticks"
+
+	self removeHorizontalTicks.
+	self removeVerticalTicks
+]
+
+{ #category : #removing }
+RSChart >> removeHorizontalTicks [
+	"Remove horizontal ticks from the chart"
+
+	decorations remove: self horizontalTick
+]
+
+{ #category : #removing }
+RSChart >> removeVerticalTicks [
+	"Remove vertical ticks from the chart"
+
+	decorations remove: self verticalTick
 ]
 
 { #category : #rendering }
