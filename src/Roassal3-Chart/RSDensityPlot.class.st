@@ -234,14 +234,12 @@ RSDensityPlot >> kernelDensity: anRSKernelDensity [
 
 { #category : #opening }
 RSDensityPlot >> open [
-	chart := RSCompositeChart new.
-	chart add: self.
-	chart
-		extent: 250 @ 200;
+
+	self
 		ylabel: self ylabel;
 		xlabel: self xlabel;
 		title: self title.
-	^ chart open
+	^ self open
 ]
 
 { #category : #rendering }

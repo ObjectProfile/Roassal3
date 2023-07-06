@@ -27,21 +27,6 @@ RSLinePlot class >> y: aCollection [
 	^ linePlot
 ]
 
-{ #category : #building }
-RSLinePlot >> buildChart [
-
-	| chartPlot |
-	chartPlot := RSCompositeChart new.
-	chartPlot add: self.
-
-	chartPlot
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		extent: 250 @ 200;
-		padding: 15 @ 10.
-	^ chartPlot
-]
-
 { #category : #accessing }
 RSLinePlot >> createdShapes [
 	^ { line }

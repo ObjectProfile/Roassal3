@@ -26,34 +26,30 @@ RSBarPlotTest >> test2BarPlots [
 
 { #category : #tests }
 RSBarPlotTest >> testHorizontalBar [
-	| c p x y |
+	| p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSCompositeChart new.
 	p := RSHorizontalBarPlot new x: x y: y.
 
 	self deny: p isVerticalBarPlot.
 	self assert: p isHorizontalBarPlot.
-	c addPlot: p.
-	c build.
+	p build.
 	self assert: (p bars allSatisfy: [ :shape |
 		 shape height closeTo: p bars anyOne height ])
 ]
 
 { #category : #tests }
 RSBarPlotTest >> testVerticalBar [
-	| c p x y |
+	| p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSCompositeChart new.
 	p := RSBarPlot new x: x y: y.
 
 	self assert: p isVerticalBarPlot.
 	self deny: p isHorizontalBarPlot.
-	c addPlot: p.
-	c verticalTick numberOfTicks: 10;
+	p verticalTick numberOfTicks: 10;
 		asFloat.
-	c build.
+	p build.
 	self assert: (p bars allSatisfy: [ :shape |
 		 shape width closeTo: p bars anyOne width ])
 ]

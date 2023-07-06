@@ -1,6 +1,19 @@
 Class {
 	#name : #RSChart,
 	#superclass : #RSAbstractContainerBuilder,
+	#instVars : [
+		'xScale',
+		'yScale',
+		'extents',
+		'styler',
+		'colorPalette',
+		'decorations',
+		'xlabel',
+		'xlabelTop',
+		'ylabel',
+		'ylabelRight',
+		'title'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
 

@@ -6,7 +6,14 @@ Class {
 	#superclass : #RSAbstractChartPlot,
 	#instVars : [
 		'xValues',
-		'yValues'
+		'yValues',
+		'decorations',
+		'spineDecoration',
+		'xlabel',
+		'xlabelTop',
+		'ylabel',
+		'ylabelRight',
+		'title'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -134,16 +141,6 @@ RSAbstractPlot >> elements [
 	^ elements
 ]
 
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> extent [
-	^ self chartExtents extent
-]
-
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> extent: aPoint [
-	self chartExtents extent: aPoint
-]
-
 { #category : #accessing }
 RSAbstractPlot >> horizontalTick [
 	^ elements detect: [ :element | element isHorizontalTick ] ifNone: [ nil ]
@@ -237,21 +234,11 @@ RSAbstractPlot >> maxValueX [
 	^ self definedValuesX max
 ]
 
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> maxValueX: aNumber [
-	self chartExtents maxValueX: aNumber
-]
-
 { #category : #rendering }
 RSAbstractPlot >> maxValueY [
 	"Return the maximum Y value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesY max
-]
-
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> maxValueY: aNumber [
-	self chartExtents maxValueY: aNumber
 ]
 
 { #category : #rendering }
@@ -261,21 +248,11 @@ RSAbstractPlot >> minValueX [
 	^ self definedValuesX min
 ]
 
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> minValueX: aNumber [
-	self chartExtents minValueX: aNumber
-]
-
 { #category : #rendering }
 RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesY min
-]
-
-{ #category : #'accessing - extension' }
-RSAbstractPlot >> minValueY: aNumber [
-	self chartExtents minValueY: aNumber
 ]
 
 { #category : #accessing }

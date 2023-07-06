@@ -132,25 +132,25 @@ RSZoomTickDecoration >> renderTicks [
 
 { #category : #rendering }
 RSZoomTickDecoration >> renderXAxis [
-	| horizontalTick tickShapes newChart scale |
-	horizontalTick := chart horizontalTick.
+	| horizontalTick tickShapes newPlot scale |
+	horizontalTick := plot horizontalTick.
 	horizontalTick ifNil: [ ^ self ].
 	"should be a copy to not lose created shapes from original horizontal tick"
 	scale := horizontalTick xScale.
 	"scale inspect."
-	newChart := RSCompositeChart new chartExtents: chart chartExtents.
-	newChart
+	newPlot := plot copy.
+	newPlot
 		minValueX: (scale invert: visibleRectangle origin x);
 		maxValueX: (scale invert: visibleRectangle corner x).
 
 	horizontalTick := horizontalTick copy.
 	horizontalTick xScale: nil.
-	horizontalTick chart: newChart.
+	horizontalTick chart: newPlot.
 
 	tickShapes := RSGroup new.
 
 	horizontalTick
-		beforeRenderingIn: newChart;
+		beforeRenderingIn: newPlot;
 		renderIn: tickShapes.
 
 	currentShapes addAll: tickShapes

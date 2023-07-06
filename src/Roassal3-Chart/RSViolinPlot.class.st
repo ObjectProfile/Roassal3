@@ -157,18 +157,6 @@ RSViolinPlot >> boxWidth [
 	^ boxWidth.
 ]
 
-{ #category : #opening }
-RSViolinPlot >> buildChart [
-	chart := RSCompositeChart new.
-	chart add: self.
-	chart
-		extent: 250 @ 200;
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		title: self title.
-	^ chart
-]
-
 { #category : #accessing }
 RSViolinPlot >> centerLine [
 	^ centerLine

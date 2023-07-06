@@ -3,9 +3,9 @@ Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
-	#superclass : #RSChart,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
-		'chart',
+		'extents',
 		'xScale',
 		'yScale',
 		'shape',

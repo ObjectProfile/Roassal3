@@ -7,13 +7,6 @@ Class {
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
-{ #category : #running }
-RSHistogramPlotTest >> setUp [
-
-	super setUp.
-	c := RSCompositeChart new
-]
-
 { #category : #tests }
 RSHistogramPlotTest >> testBasic [
 	| values plot |

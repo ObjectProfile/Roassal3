@@ -35,21 +35,6 @@ RSAbstractPlotTest >> testBasic [
 ]
 
 { #category : #tests }
-RSAbstractPlotTest >> testEmptyPlot [
-
-	| p |
-	p := self classToTest new x: #( 0 ) y: #( 0 ).
-	chart addPlot: p.
-	chart verticalTick integer;
-			 numberOfTicks: 1;
-			 fontSize: 10.
-	chart horizontalTick integer;
-			 numberOfTicks: 1;
-			 fontSize: 10.
-	chart build
-]
-
-{ #category : #tests }
 RSAbstractPlotTest >> testExtentIsCorrect [
 
 	plot build.
@@ -130,18 +115,6 @@ RSAbstractPlotTest >> testMustInclude05 [
 
 	self assert: plot minValueY equals: -0.9995258306054791.
 	self assert: plot maxValueY equals: 0.9999417202299663
-]
-
-{ #category : #tests }
-RSAbstractPlotTest >> testOpening [
-	| x |
-	chart := RSCompositeChart new.
-	x := 0 to: 2 by: 1 / 100.
-	chart addPlot: (self classToTest new x: x y: x).
-	chart addPlot: (self classToTest new x: x y: (x collect: #squared)).
-	chart addPlot: (self classToTest new x: x y: (x collect: [ :v | v * v * v ])).
-	chart build.
-	chart show delete
 ]
 
 { #category : #tests }
@@ -263,52 +236,6 @@ RSAbstractPlotTest >> testWithAxisLabel [
 ]
 
 { #category : #tests }
-RSAbstractPlotTest >> testWithOnePlot [
-
-	| p |
-	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
-	chart addPlot: p.
-	self assert: chart numberOfPlots equals: 1.
-	chart build.
-
-	self assert: chart plots size equals: 1.
-	self assert: chart plots first equals: p.
-	self assert: p chart equals: chart
-]
-
-{ #category : #tests }
-RSAbstractPlotTest >> testWithOnePlotWithTitle [
-
-	| p |
-	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
-	chart addPlot: p.
-	self assert: chart numberOfPlots equals: 1.
-	chart title: 'Hello World'.
-	chart build.
-
-	self assert: chart plots size equals: 1.
-	self assert: chart plots first equals: p.
-	self assert: p chart equals: chart
-]
-
-{ #category : #tests }
-RSAbstractPlotTest >> testWithOnePlotWithTitleAndTitleOnAxes [
-
-	| p |
-	p := self classToTest new x: #(1 2 3) y: #(1 2 3).
-	chart addPlot: p.
-	chart xlabel: 'X Axis'.
-	chart ylabel: 'Y Axis'.
-	self assert: chart numberOfPlots equals: 1.
-	chart title: 'Hello World'.
-	chart build.
-
-	self assert: chart plots size equals: 1.
-	self assert: chart plots first equals: p.
-	self assert: p chart equals: chart
-]
-
-{ #category : #tests }
 RSAbstractPlotTest >> testWithTitle [
 
 	plot title: 'Hello World'.
@@ -317,22 +244,6 @@ RSAbstractPlotTest >> testWithTitle [
 	self
 		assert: (plot container shapes select: #isLabel) last text
 		equals: 'Hello World'
-]
-
-{ #category : #tests }
-RSAbstractPlotTest >> testWithTwoPlots [
-
-	| p1 p2 |
-	p1 := self classToTest new x: #(1 2 3) y: #(1 2 3).
-	p2 := self classToTest new x: #(-1 0 1) y: #(-2 0 2).
-	chart addPlot: p1.
-	chart addPlot: p2.
-	self assert: chart numberOfPlots equals: 2.
-
-	self assert: chart minValueX equals: -1.
-	self assert: chart maxValueX equals: 3.
-	self assert: chart maxValueY equals: 3.
-	self assert: chart minValueY equals: -2
 ]
 
 { #category : #tests }
