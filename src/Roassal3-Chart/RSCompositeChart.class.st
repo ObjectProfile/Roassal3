@@ -160,7 +160,7 @@ RSCompositeChart >> show [
 RSCompositeChart >> xScale: aScale [
 
 	super xScale: aScale.
-	plots do: [ :e | e xScale: aScale ]
+	plots do: [ :plot | plot xScale: aScale ]
 ]
 
 { #category : #building }

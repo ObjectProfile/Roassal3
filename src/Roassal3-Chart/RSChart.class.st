@@ -39,13 +39,21 @@ c
 	^ aDecoration
 ]
 
+{ #category : #rendering }
+RSChart >> chart [
+
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 RSChart >> chartExtents [
+
 	^ extents ifNil: [ extents := RSChartExtents new ]
 ]
 
 { #category : #'accessing - extension' }
 RSChart >> chartExtents: aRSChartExtents [
+
 	extents := aRSChartExtents
 ]
 
@@ -65,8 +73,8 @@ RSChart >> createXScale [
 	padding := self padding x.
 	xScale
 		domain: {
-				self minValueX.
-				self maxValueX };
+				self chart minChartValueX.
+				self chart maxChartValueX };
 		range: {
 				(0 + padding).
 				(self extent x - padding) }
@@ -81,8 +89,8 @@ RSChart >> createYScale [
 	padding := self padding y.
 	yScale
 		domain: {
-				self minValueY.
-				self maxValueY };
+				self minChartValueY.
+				self maxChartValueY };
 		range: {
 				(0 - padding).
 				(self extent y negated + padding) }

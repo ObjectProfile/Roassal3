@@ -46,11 +46,10 @@ RSChartSpineDecoration >> isSpineDecoration [
 { #category : #rendering }
 RSChartSpineDecoration >> renderIn: canvas [
 
-	Transcript show: chart.
 	box := self shape copy
-		borderColor: self styler spineColor;
-		extent: chart extent.
-	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
+		       borderColor: self styler spineColor;
+		       extent: chart extent.
+	box translateTo: chart extent x / 2 @ (chart extent y negated / 2).
 	canvas add: box
 ]
 
