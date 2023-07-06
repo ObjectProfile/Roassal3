@@ -1,17 +1,16 @@
 Class {
-	#name : #RSBoxGraphGroup,
+	#name : #RSBoxPlotShapeGroup,
 	#superclass : #RSObject,
 	#instVars : [
 		'boxGraphics',
-		'xScale',
-		'yScale',
-		'groupOffset'
+		'groupOffset',
+		'boxPlot'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
 
 { #category : #accessing }
-RSBoxGraphGroup class >> boxGraphics: aCollectionOfRSBoxGraphics [
+RSBoxPlotShapeGroup class >> boxGraphics: aCollectionOfRSBoxGraphics [
 	| boxGraphGroup |
 	boxGraphGroup := self new.
 	boxGraphGroup boxGraphics: aCollectionOfRSBoxGraphics.
@@ -19,7 +18,7 @@ RSBoxGraphGroup class >> boxGraphics: aCollectionOfRSBoxGraphics [
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup class >> data: aCollection [
+RSBoxPlotShapeGroup class >> data: aCollection [
 	| boxGraphGroup |
 	boxGraphGroup := self new.
 	boxGraphGroup data: aCollection.
@@ -27,7 +26,15 @@ RSBoxGraphGroup class >> data: aCollection [
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup class >> data: aCollection scales: collectionOfNSScales [
+RSBoxPlotShapeGroup class >> data: aCollection boxPlot: aRSBoxPlot [
+	| boxGraphGroup |
+	boxGraphGroup := self data: aCollection.
+	boxGraphGroup boxPlot: aRSBoxPlot.
+	^ boxGraphGroup.
+]
+
+{ #category : #accessing }
+RSBoxPlotShapeGroup class >> data: aCollection scales: collectionOfNSScales [
 	| boxGraphGroup |
 	boxGraphGroup := self data: aCollection.
 	boxGraphGroup scales: collectionOfNSScales.
@@ -35,44 +42,48 @@ RSBoxGraphGroup class >> data: aCollection scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> addOffsetToGroup: aNumber [
-	groupOffset := groupOffset + aNumber.
-	self computeBoxGraphicsCenters.
-]
-
-{ #category : #accessing }
-RSBoxGraphGroup >> boxGraphics [
+RSBoxPlotShapeGroup >> boxGraphics [
 	^ boxGraphics.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> boxGraphics: aCollectionOfRSBoxGraphs [
+RSBoxPlotShapeGroup >> boxGraphics: aCollectionOfRSBoxGraphs [
 	boxGraphics := aCollectionOfRSBoxGraphs.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> boxesWidth: aNumber [
+RSBoxPlotShapeGroup >> boxPlot [
+	^ boxPlot
+]
+
+{ #category : #accessing }
+RSBoxPlotShapeGroup >> boxPlot: aRSBoxPlot [
+	boxPlot := aRSBoxPlot.
+]
+
+{ #category : #accessing }
+RSBoxPlotShapeGroup >> boxesWidth: aNumber [
 	boxGraphics do: [ :boxGraph | boxGraph boxWidth: aNumber ]
 	
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> color: aColor [
+RSBoxPlotShapeGroup >> color: aColor [
 	boxGraphics do: [ :boxGraph | boxGraph color: aColor].
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> colors [
+RSBoxPlotShapeGroup >> colors [
 	^ boxGraphics collect: [ :boxGraph | boxGraph color].
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> colors: collectionOfColors [
+RSBoxPlotShapeGroup >> colors: collectionOfColors [
 	boxGraphics doWithIndex: [ :boxGraph :idx | boxGraph color: (collectionOfColors at: idx)].
 ]
 
-{ #category : #accessing }
-RSBoxGraphGroup >> computeBoxGraphicsCenters [
+{ #category : #private }
+RSBoxPlotShapeGroup >> computeBoxGraphicsCenters [
 	| lastBoxCenter |
 	lastBoxCenter := 1.
 	self boxGraphics: (boxGraphics collect: [ :boxGraph | 
@@ -83,92 +94,76 @@ RSBoxGraphGroup >> computeBoxGraphicsCenters [
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> data: aCollection [
+RSBoxPlotShapeGroup >> data: aCollection [
 	| collectionOfDatasets |
 	"if is not a collection of collections. transform in a collection of collections"
 	collectionOfDatasets := aCollection first isCollection
 		                        ifFalse: [ { aCollection } ]
 		                        ifTrue: [ aCollection ].
-	self boxGraphics: (collectionOfDatasets collect: [ :dataSet | RSBoxGraph data: dataSet]).
+	self boxGraphics: (collectionOfDatasets collect: [ :dataSet | RSBoxPlotShape data: dataSet]).
 	self computeBoxGraphicsCenters.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> defaultGroupOffset [
+RSBoxPlotShapeGroup >> defaultGroupOffset [
 	^ 0
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> defaultOffset [
+RSBoxPlotShapeGroup >> defaultOffset [
 	^ 1
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> groupOffset [
+RSBoxPlotShapeGroup >> groupOffset [
 	^ groupOffset
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> groupOffset: aNumber [
+RSBoxPlotShapeGroup >> groupOffset: aNumber [
 	groupOffset := aNumber.
 	self computeBoxGraphicsCenters.
 ]
 
 { #category : #initialization }
-RSBoxGraphGroup >> initialize [
+RSBoxPlotShapeGroup >> initialize [
 	super initialize.
 	groupOffset := self defaultGroupOffset.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> maxCenter [
+RSBoxPlotShapeGroup >> maxCenter [
 	| boxesCenters |
 	boxesCenters := boxGraphics collect: [ :boxGraph | boxGraph center ].
 	^ boxesCenters max.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> maxXValue [
+RSBoxPlotShapeGroup >> maxXValue [
 	| boxesMaxXValues |
 	boxesMaxXValues := boxGraphics collect: [ :boxGraph | boxGraph boxPoints second x ].
 	^ boxesMaxXValues max.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> maxYValue [
+RSBoxPlotShapeGroup >> maxYValue [
 	^ (boxGraphics collect: [ :boxGraph | boxGraph maxYValue ]) max.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> minYValue [
+RSBoxPlotShapeGroup >> minYValue [
 	^ (boxGraphics collect: [ :boxGraph | boxGraph minYValue ]) min.
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> numberOfBoxes [
+RSBoxPlotShapeGroup >> numberOfBoxes [
 	^ boxGraphics size
 ]
 
 { #category : #accessing }
-RSBoxGraphGroup >> renderIn: canvas [
-	boxGraphics := boxGraphics collect: [ :boxGraph | 
-		boxGraph scales: { xScale. yScale. }.
+RSBoxPlotShapeGroup >> renderIn: canvas [
+	boxGraphics do: [ :boxGraph |  
+		boxGraph scales: { boxPlot xScale. boxPlot yScale. }.
+		boxGraph renderIn: canvas
 	].
-	boxGraphics do: [ :boxGraph |  boxGraph renderIn: canvas].
-]
-
-{ #category : #accessing }
-RSBoxGraphGroup >> scales: collectionOfNSScales [
-	self xScale: collectionOfNSScales first.
-	self yScale: collectionOfNSScales second.
-]
-
-{ #category : #accessing }
-RSBoxGraphGroup >> xScale: aNSScale [
-	xScale := aNSScale
-]
-
-{ #category : #accessing }
-RSBoxGraphGroup >> yScale: aNSScale [
-	yScale := aNSScale
 ]

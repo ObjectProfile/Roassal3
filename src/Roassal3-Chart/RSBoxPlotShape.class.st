@@ -1,5 +1,5 @@
 Class {
-	#name : #RSBoxGraph,
+	#name : #RSBoxPlotShape,
 	#superclass : #RSObject,
 	#instVars : [
 		'boxWidth',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #accessing }
-RSBoxGraph class >> data: collectionOfData1D [
+RSBoxPlotShape class >> data: collectionOfData1D [
 	| boxGraph |
 	boxGraph := self new.
 	boxGraph data: collectionOfData1D.
@@ -25,7 +25,7 @@ RSBoxGraph class >> data: collectionOfData1D [
 ]
 
 { #category : #accessing }
-RSBoxGraph class >> data: collectionOfData1D scales: collectionOfNSScales [
+RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 	| boxGraph |
 	boxGraph := self data: collectionOfData1D.
 	boxGraph scales: collectionOfNSScales.
@@ -33,7 +33,7 @@ RSBoxGraph class >> data: collectionOfData1D scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> box [
+RSBoxPlotShape >> box [
 	| boxPoints |
 	boxPoints := self boxPoints.
 	box :=  RSPolygon new.
@@ -44,7 +44,7 @@ RSBoxGraph >> box [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> boxPoints [
+RSBoxPlotShape >> boxPoints [
 	| q025 q075 quartiles boxPoints |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
@@ -57,22 +57,22 @@ RSBoxGraph >> boxPoints [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> boxWidth [
+RSBoxPlotShape >> boxWidth [
 	^ boxWidth.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> boxWidth: aNumber [
+RSBoxPlotShape >> boxWidth: aNumber [
 	boxWidth := aNumber.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> center [
+RSBoxPlotShape >> center [
 	^ graphCenter
 ]
 
 { #category : #accessing }
-RSBoxGraph >> centerLine [
+RSBoxPlotShape >> centerLine [
 	| centerLinePoints |
 	centerLinePoints := self centerLinePoints.
 	centerLine :=  RSPolyline new.
@@ -85,7 +85,7 @@ RSBoxGraph >> centerLine [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> centerLinePoints [
+RSBoxPlotShape >> centerLinePoints [
 	| upperLimit lowerLimit centerLinePoints |
 	upperLimit := statisticalMeasures upperLimit.
 	lowerLimit := statisticalMeasures lowerLimit.
@@ -94,76 +94,76 @@ RSBoxGraph >> centerLinePoints [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> color [
+RSBoxPlotShape >> color [
 	^ color
 ]
 
 { #category : #accessing }
-RSBoxGraph >> color: aColor [
+RSBoxPlotShape >> color: aColor [
 	color := aColor
 ]
 
 { #category : #accessing }
-RSBoxGraph >> data [
+RSBoxPlotShape >> data [
 	^ self statisticalMeasures data.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> data: collectionOfData1D [
+RSBoxPlotShape >> data: collectionOfData1D [
 	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
 ]
 
 { #category : #defaults }
-RSBoxGraph >> defaultBoxWidth [
+RSBoxPlotShape >> defaultBoxWidth [
 	^ 0.7
 ]
 
 { #category : #defaults }
-RSBoxGraph >> defaultGraphCenter [
+RSBoxPlotShape >> defaultGraphCenter [
 	^ 1
 ]
 
 { #category : #accessing }
-RSBoxGraph >> graphCenter [
+RSBoxPlotShape >> graphCenter [
 	^ graphCenter.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> graphCenter: aNumber [
+RSBoxPlotShape >> graphCenter: aNumber [
 	graphCenter := aNumber.
 ]
 
 { #category : #defaults }
-RSBoxGraph >> hasOutliers [
+RSBoxPlotShape >> hasOutliers [
 	^ self outlierValues isNotEmpty
 ]
 
 { #category : #initialization }
-RSBoxGraph >> initialize [
+RSBoxPlotShape >> initialize [
 	super initialize.
 	boxWidth := self defaultBoxWidth.
 	graphCenter := self defaultGraphCenter.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> lowerLimit [
+RSBoxPlotShape >> lowerLimit [
 	^ statisticalMeasures lowerLimit.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> maxYValue [
+RSBoxPlotShape >> maxYValue [
 	self hasOutliers 
 		ifTrue: [ ^ (self outlierValues max) max: self upperLimit ]
 		ifFalse: [ ^ self upperLimit ].
 ]
 
 { #category : #accessing }
-RSBoxGraph >> median [
+RSBoxPlotShape >> median [
 	^ statisticalMeasures median.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> medianLine [
+RSBoxPlotShape >> medianLine [
 	| medianLinePoints |
 	medianLinePoints := self medianLinePoints.
 	medianLine := RSPolyline new.
@@ -176,7 +176,7 @@ RSBoxGraph >> medianLine [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> medianLinePoints [
+RSBoxPlotShape >> medianLinePoints [
 	| q050 medianLinePoints |
 	q050 := statisticalMeasures quartiles second.
 	medianLinePoints := { (graphCenter-(boxWidth/2))@q050. (graphCenter+(boxWidth/2))@q050. }.
@@ -184,26 +184,26 @@ RSBoxGraph >> medianLinePoints [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> minYValue [
+RSBoxPlotShape >> minYValue [
 	self hasOutliers 
 		ifTrue: [ ^ (self outlierValues min) min: self lowerLimit ]
 		ifFalse: [ ^ self lowerLimit ].
 ]
 
 { #category : #accessing }
-RSBoxGraph >> outlierValues [
+RSBoxPlotShape >> outlierValues [
 	^ statisticalMeasures outliers.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> outliers [
+RSBoxPlotShape >> outliers [
 	| outliersPoints |
 	outliersPoints := self outliersPoints.
 	outliers := outliersPoints collect: [ :point | self scalePoint: point ].
 	outliers := outliers collect: [ :out |
 			| e |
 			e := RSEllipse new
-			radius: 2;
+			radius: 2.5;
 			color: Color black;
 			yourself.
 			e translateTo: out.
@@ -214,19 +214,19 @@ RSBoxGraph >> outliers [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> outliers: aRSGroupOfRSElipses [
+RSBoxPlotShape >> outliers: aRSGroupOfRSElipses [
 	outliers := aRSGroupOfRSElipses
 ]
 
 { #category : #accessing }
-RSBoxGraph >> outliersPoints [
+RSBoxPlotShape >> outliersPoints [
 	| outliersPoints |
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@y ].
 	^ outliersPoints.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> renderIn: canvas [
+RSBoxPlotShape >> renderIn: canvas [
 	| shapes |
 	shapes := self shapesWithCenterAt: graphCenter.
 	shapes do: [ :aShape |
@@ -237,18 +237,18 @@ RSBoxGraph >> renderIn: canvas [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> scalePoint: aPoint [
+RSBoxPlotShape >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
 { #category : #accessing }
-RSBoxGraph >> scales: collectionOfNSScales [
+RSBoxPlotShape >> scales: collectionOfNSScales [
 	self xScale: collectionOfNSScales first.
 	self yScale: collectionOfNSScales second.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> shapesWithCenterAt: aNumber [
+RSBoxPlotShape >> shapesWithCenterAt: aNumber [
 	self graphCenter: aNumber.
 	centerLine := self centerLine.
 	medianLine := self medianLine.
@@ -258,36 +258,36 @@ RSBoxGraph >> shapesWithCenterAt: aNumber [
 ]
 
 { #category : #accessing }
-RSBoxGraph >> statisticalMeasures [
+RSBoxPlotShape >> statisticalMeasures [
 	^ statisticalMeasures.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> statisticalMeasures: aRSStatisticalMeasures [
+RSBoxPlotShape >> statisticalMeasures: aRSStatisticalMeasures [
 	statisticalMeasures := aRSStatisticalMeasures.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> upperLimit [
+RSBoxPlotShape >> upperLimit [
 	^ statisticalMeasures upperLimit.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> xScale [
+RSBoxPlotShape >> xScale [
 	^ xScale.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> xScale: aNSScale [
+RSBoxPlotShape >> xScale: aNSScale [
 	xScale := aNSScale
 ]
 
 { #category : #accessing }
-RSBoxGraph >> yScale [
+RSBoxPlotShape >> yScale [
 	^ yScale.
 ]
 
 { #category : #accessing }
-RSBoxGraph >> yScale: aNSScale [
+RSBoxPlotShape >> yScale: aNSScale [
 	yScale := aNSScale
 ]

@@ -31,8 +31,7 @@ Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'groups',
-		'collorPallete'
+		'groups'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -186,6 +185,7 @@ RSBoxPlot >> + aRSBoxPlot [
 	| groupsA groupsB |
 	groupsA := self groups.
 	groupsB := aRSBoxPlot groups.
+	groupsB do: [ :each | each boxPlot: self ].
 	groupsA addAll: groupsB.
 	groups := groupsA.
 	self computeGroupsOffsets.
@@ -228,11 +228,6 @@ RSBoxPlot >> color: aColor [
 ]
 
 { #category : #accessing }
-RSBoxPlot >> colorFor: aNumber [
-	^ collorPallete scale: aNumber.
-]
-
-{ #category : #accessing }
 RSBoxPlot >> colors: collectionOfColors [
 	groups do:  [ :group | group colors: collectionOfColors ].
 ]
@@ -244,13 +239,6 @@ RSBoxPlot >> computeBoxesWidths [
 	numberOfGroups := self numberOfGroups.
 	boxWidth := defaultBoxWidth / numberOfGroups.
 	groups do: [ :boxGroup | boxGroup boxesWidth: boxWidth ].
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeColor [
-	groups doWithIndex: [ :group :index |
-		group color: (self colorFor: index ).
-	].
 ]
 
 { #category : #rendering }
@@ -310,9 +298,8 @@ RSBoxPlot >> computeGroupsOffsets [
 	].
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 RSBoxPlot >> computeState [
-	self computeColor.
 	self computeBoxesWidths.
 	self computeXValues.
 	self computeYValues.
@@ -344,14 +331,9 @@ RSBoxPlot >> createdShapes [
 RSBoxPlot >> data: aCollection [
 	| groupsCollection |
 	groupsCollection := OrderedCollection new.
-	groupsCollection add: ( RSBoxGraphGroup data: aCollection).
+	groupsCollection add: ( RSBoxPlotShapeGroup data: aCollection boxPlot: self).
 	self groups: groupsCollection.
 	self computeState.
-]
-
-{ #category : #initialization }
-RSBoxPlot >> defaultPlotColors [
-	^ NSScale category20
 ]
 
 { #category : #initialization }
@@ -372,7 +354,6 @@ RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
-	collorPallete := self defaultPlotColors.
 	chart := RSChart new.
 ]
 
@@ -404,10 +385,11 @@ RSBoxPlot >> open [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	groups do: [ :aRSBoxGraphGroup |
-		aRSBoxGraphGroup scales: {xScale. yScale.}. 
+		| boxColor |
+		boxColor := chart colors scale: aRSBoxGraphGroup.
+		aRSBoxGraphGroup color: boxColor.
 		aRSBoxGraphGroup renderIn: canvas 
 	].
-	"canvas add: (RSPolyline new controlPoints: {xScale range first@500. xScale range second@500 })."
 ]
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 RSBoxGraphGroupTest >> testAddOffsetToGroup [
 	| boxGraphGroup data xCenterBeforeSetOffset xCenterAfterSetOffset |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	xCenterBeforeSetOffset := boxGraphGroup boxGraphics first centerLinePoints first x.
 	boxGraphGroup addOffsetToGroup: 2.
 	xCenterAfterSetOffset := boxGraphGroup boxGraphics first centerLinePoints first x.
@@ -19,7 +19,7 @@ RSBoxGraphGroupTest >> testAddOffsetToGroup [
 RSBoxGraphGroupTest >> testDefaultOffset [
 	| boxGraphGroup data firstBoxXCenter secondBoxXCenter |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	firstBoxXCenter := boxGraphGroup boxGraphics first centerLinePoints first x.
 	secondBoxXCenter := boxGraphGroup boxGraphics second  centerLinePoints first x.
 	self assert: boxGraphGroup defaultOffset equals: 1.
@@ -33,7 +33,7 @@ RSBoxGraphGroupTest >> testDefaultOffset [
 RSBoxGraphGroupTest >> testGroupOfOneBoxGraph [
 	| boxGraphGroup data |
 	data := { 1. 2. 3. 4. 5. }.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup boxGraphics size equals: 1.
 ]
 
@@ -41,7 +41,7 @@ RSBoxGraphGroupTest >> testGroupOfOneBoxGraph [
 RSBoxGraphGroupTest >> testGroupOfSeveralBoxGraphics [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup boxGraphics size equals: 2.
 ]
 
@@ -49,7 +49,7 @@ RSBoxGraphGroupTest >> testGroupOfSeveralBoxGraphics [
 RSBoxGraphGroupTest >> testMaxCenterValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup maxCenter closeTo: 2.
 ]
 
@@ -57,7 +57,7 @@ RSBoxGraphGroupTest >> testMaxCenterValue [
 RSBoxGraphGroupTest >> testMaxXValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup maxXValue closeTo: 2.35.
 ]
 
@@ -65,7 +65,7 @@ RSBoxGraphGroupTest >> testMaxXValue [
 RSBoxGraphGroupTest >> testMaxYValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup maxYValue equals: 9.
 ]
 
@@ -73,7 +73,7 @@ RSBoxGraphGroupTest >> testMaxYValue [
 RSBoxGraphGroupTest >> testMinYValue [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup minYValue equals: 1.
 ]
 
@@ -81,7 +81,7 @@ RSBoxGraphGroupTest >> testMinYValue [
 RSBoxGraphGroupTest >> testNumberOfBoxes [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	self assert: boxGraphGroup numberOfBoxes equals: 2.
 ]
 
@@ -89,7 +89,7 @@ RSBoxGraphGroupTest >> testNumberOfBoxes [
 RSBoxGraphGroupTest >> testSetColorOfAllBoxes [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	boxGraphGroup color: Color purple.
 	self assert: boxGraphGroup colors equals: {Color purple. Color purple.}.
 ]
@@ -98,7 +98,7 @@ RSBoxGraphGroupTest >> testSetColorOfAllBoxes [
 RSBoxGraphGroupTest >> testSetColorsWithACollection [
 	| boxGraphGroup data |
 	data := {{ 1. 2. 3. 4. 5. }.{5. 6. 7. 8. 9.}}.
-	boxGraphGroup := RSBoxGraphGroup data: data.
+	boxGraphGroup := RSBoxPlotShapeGroup data: data.
 	boxGraphGroup colors: {Color purple. Color blue.}.
 	self assert: boxGraphGroup colors equals: {Color purple. Color blue.}.
 ]
