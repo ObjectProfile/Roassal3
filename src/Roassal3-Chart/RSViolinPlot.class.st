@@ -52,9 +52,6 @@ Class {
 		'boxPoints',
 		'box',
 		'medianLinePoints',
-		'xlabel',
-		'ylabel',
-		'title',
 		'centerLinePoints',
 		'centerLine',
 		'boxWidth',
@@ -62,7 +59,7 @@ Class {
 		'medianLine',
 		'outliers'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -162,7 +159,7 @@ RSViolinPlot >> boxWidth [
 
 { #category : #opening }
 RSViolinPlot >> buildChart [
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	chart add: self.
 	chart
 		extent: 250 @ 200;
@@ -391,11 +388,6 @@ RSViolinPlot >> medianLine [
 	^ medianLine.
 ]
 
-{ #category : #opening }
-RSViolinPlot >> open [
-	^ self buildChart open
-]
-
 { #category : #private }
 RSViolinPlot >> outlierPoints [
 	^ outlierPoints.
@@ -408,6 +400,7 @@ RSViolinPlot >> outliers [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
+	super renderIn: canvas.
 	self createDensityArea.
 	canvas add: densityArea.
 	self createCenterLine.
@@ -425,37 +418,7 @@ RSViolinPlot >> statisticalMeasures: aRSStatisticalMeasures [
 	statisticalMeasures := aRSStatisticalMeasures.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> title [
-	^ title.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> title: aString [
-	title := aString.
-]
-
 { #category : #private }
 RSViolinPlot >> upperWhiskerLimit [
 	^ statisticalMeasures upperLimit.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #accessing }
-RSViolinPlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #accessing }
-RSViolinPlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #accessing }
-RSViolinPlot >> ylabel: aString [
-	ylabel := aString
 ]

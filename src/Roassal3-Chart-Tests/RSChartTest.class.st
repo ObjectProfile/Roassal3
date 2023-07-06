@@ -8,7 +8,7 @@ Class {
 RSChartTest >> testBasic [
 	| x |
 	x := -10.0 to: 20.0 count: 100.
-	RSChart new
+	RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 		build
@@ -17,7 +17,7 @@ RSChartTest >> testBasic [
 { #category : #tests }
 RSChartTest >> testExtentOnChange [
 	| chart plot canvas|
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	self skip.
 	plot := RSLinePlot y: #(1 2 3).
 	chart add: plot.
@@ -35,7 +35,7 @@ RSChartTest >> testMinMaxValue [
 
 	| y c |
 	y := #(10 13 15).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c addPlot: (RSLinePlot new y: y).
 	c build.
 	self assert: c minValueX equals: 1.
@@ -50,7 +50,7 @@ RSChartTest >> testMinMaxValue2 [
 	| y c x |
 	y := #(-10 -13 -15).
 	x := #(4 6 9).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c addPlot: (RSLinePlot new x: x y: y).
 	c build.
 	self assert: c minValueX equals: 4.
@@ -64,7 +64,7 @@ RSChartTest >> testMustInclude0 [
 
 	| y c |
 	y := #(10 13 15).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c addPlot: (RSLinePlot new y: y).
 	c mustInclude0inY.
 	c build.
@@ -79,7 +79,7 @@ RSChartTest >> testMustInclude02 [
 
 	| y c |
 	y := #(-10 -13 -15).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c addPlot: (RSLinePlot new y: y).
 	c mustInclude0inY.
 	c build.
@@ -95,7 +95,7 @@ RSChartTest >> testMustInclude03 [
 	| y c x |
 	y := #(-10 -13 -15).
 	x := #(4 6 9).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c removeAllTicks.
 	c addPlot: (RSLinePlot new x: x y: y).
 	c mustInclude0inX.
@@ -114,7 +114,7 @@ RSChartTest >> testMustInclude04 [
 	-3.14 to: 3.14 by: 0.1 do: [ :x |
 		y add: x sin ].
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c removeAllTicks.
 	c addPlot: (RSLinePlot new y: y).
 	c build.
@@ -131,7 +131,7 @@ RSChartTest >> testMustInclude05 [
 	-3.14 to: 3.14 by: 0.1 do: [ :x |
 		y add: x sin ].
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c removeAllTicks.
 	c addPlot: (RSLinePlot new y: y).
 	c mustInclude0inY.
@@ -145,7 +145,7 @@ RSChartTest >> testMustInclude05 [
 RSChartTest >> testSameMinMax [
 
 	| chart plot |
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	plot := RSLinePlot new.
 	plot y: #( 2 2 ).
 	chart addPlot: plot.
@@ -162,7 +162,7 @@ RSChartTest >> testSameMinMax [
 RSChartTest >> testStylerDefault [
 	| x tick chart |
 	x := -10.0 to: 20.0 count: 100.
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	tick := chart horizontalTick.
@@ -175,7 +175,7 @@ RSChartTest >> testStylerDefault [
 RSChartTest >> testStylerRedLabel [
 	| x tick chart styler |
 	x := -10.0 to: 20.0 count: 100.
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	tick := chart horizontalTick.
@@ -190,7 +190,7 @@ RSChartTest >> testStylerRedLabel [
 RSChartTest >> testStylerRedTick [
 	| x tick chart styler |
 	x := -10.0 to: 20.0 count: 100.
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	tick := chart horizontalTick.
@@ -205,7 +205,7 @@ RSChartTest >> testStylerRedTick [
 RSChartTest >> testStylerRedTickInChart [
 	| x tick chart styler |
 	x := -10.0 to: 20.0 count: 100.
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	tick := chart horizontalTick.
@@ -221,7 +221,7 @@ RSChartTest >> testStylerSpineRed [
 	| x chart styler spine |
 	x := -10.0 to: 20.0 count: 100.
 
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	styler := RSChartStyler new
@@ -239,7 +239,7 @@ RSChartTest >> testStylerTitleLabel [
 	| x title chart styler |
 	x := -10.0 to: 20.0 count: 100.
 
-	chart := RSChart new
+	chart := RSCompositeChart new
 		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		yourself.
 	styler := RSChartStyler new
@@ -256,7 +256,7 @@ RSChartTest >> testWithWeirdValues [
 
 	| values g d line c |
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
+	g := RSCompositeChart new.
 	g removeAllTicks.
 	d := RSLinePlot new y: values.
 	g addPlot: d.
@@ -275,7 +275,7 @@ RSChartTest >> testWithWeirdValuesLine [
 
 	| values g d line c |
 	values := {Float infinity negated. Float infinity negated. 0.30102999566398114. 0.47712125471966244}.
-	g := RSChart new.
+	g := RSCompositeChart new.
 	g removeAllTicks.
 	d := RSLinePlot new y: values.
 	g addPlot: d.
@@ -298,7 +298,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks [
 		          Float infinity negated.
 		          0.30102999566398114.
 		          0.47712125471966244 }.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 
 	linePlot := RSLinePlot new y: values.
 	chart addPlot: linePlot.
@@ -319,7 +319,7 @@ RSChartTest >> testWithWeirdValuesLineWithTicks2 [
 	| x chart linePlot canvas labels y |
 	x := { -5. 0. 1. 2 }.
 	y := x log.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 
 	linePlot := RSLinePlot new x: x y: y.
 	chart addPlot: linePlot.
@@ -345,7 +345,7 @@ RSChartTest >> testYMarker [
 	| x chart plot2 marker line y |
 	x := -3.14 to: 3.14 by: 0.01.
 	y := x cos * 0.18.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 
 	plot2 := RSLinePlot new.
 	plot2 x: x y: y.

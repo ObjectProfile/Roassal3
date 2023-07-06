@@ -38,3 +38,9 @@ RSChartTitleDecoration >> initialize [
 		offset: 0@ -2;
 		above; center
 ]
+
+{ #category : #initialization }
+RSChartTitleDecoration >> isTitle [
+
+	^ true
+]

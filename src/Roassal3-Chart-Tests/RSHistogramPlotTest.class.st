@@ -11,15 +11,15 @@ Class {
 RSHistogramPlotTest >> setUp [
 
 	super setUp.
-	c := RSChart new
+	c := RSCompositeChart new
 ]
 
 { #category : #tests }
 RSHistogramPlotTest >> testBasic [
 	| values plot |
 	values := #(1 2 3 4 5 6 7 8 9 10).
-	c addPlot: (plot := RSHistogramPlot new x: values).
-	c build.
+	plot := RSHistogramPlot new x: values.
+	plot build.
 	self assert: plot bars size equals: 10.
 	self assert: plot xValues equals: (1 to: 10 count: 11).
 	self assert: (plot yValues allSatisfy: [ :v | v = 1 ])
@@ -29,8 +29,8 @@ RSHistogramPlotTest >> testBasic [
 RSHistogramPlotTest >> testBinSize [
 	| values plot size |
 	values := (1 to: 100) shuffled.
-	c addPlot: (plot := RSHistogramPlot new x: values; binSize: 30).
-	c build.
+	plot := RSHistogramPlot new x: values; binSize: 30.
+	plot build.
 	size := (plot binningStrategy computeNumberOfBinsFor: values sorted).
 	self assert: plot bars size equals: size
 ]
@@ -39,10 +39,10 @@ RSHistogramPlotTest >> testBinSize [
 RSHistogramPlotTest >> testBins [
 	| values plot |
 	values := #(1 2 3 4 5 6 7 8 9 10).
-	c addPlot: (plot := RSHistogramPlot new x: values; numberOfBins: 2).
+	plot := RSHistogramPlot new x: values; numberOfBins: 2.
 	self deny: plot bins isNil.
 	self assert: plot numberOfBins equals: 2.
-	c build.
+	plot build.
 	self assert: plot bars size equals: 2.
 	self assert: plot bins equals: (1 to: 10 count: 3).
 	self assert: plot xValues equals: (1 to: 10 count: 3).
@@ -54,9 +54,9 @@ RSHistogramPlotTest >> testBinsCollection [
 	| values plot bins |
 	bins := #(1 5 8 10).
 	values := #(1 2 3 4 5 6 7 8 9 10).
-	c addPlot: (plot := RSHistogramPlot new x: values; bins: bins).
+	plot := RSHistogramPlot new x: values; bins: bins.
 	self assert: plot bins equals: bins.
-	c build.
+	plot build.
 	self assert: plot bars size equals: 3.
 	self assert: plot bins equals: bins.
 	self assert: plot xValues equals: bins.
@@ -68,8 +68,8 @@ RSHistogramPlotTest >> testBinsStrat [
 	| values plot strategy size |
 	strategy := RSSturgesBinning new.
 	values := (1 to: 100) shuffled.
-	c addPlot: (plot := RSHistogramPlot new x: values; binningStrategy: strategy).
-	c build.
+	plot := RSHistogramPlot new x: values; binningStrategy: strategy.
+	plot build.
 	size := (strategy computeNumberOfBinsFor: values).
 	self assert: plot bars size equals: size.
 	self assert: plot xValues equals: (1 to: 100 by: 99/size)
@@ -96,8 +96,7 @@ RSHistogramPlotTest >> testModelWithCollectedData [
 	plot := RSHistogramPlot new.
 	
 	plot collectDataOf: col on: [ :e | e % 4 ]; numberOfBins: 4.
-	c addPlot: plot.
-	c build.
+	plot build.
 	bars := plot bars.
 	
 	self assert: (plot bars at:1) model sorted equals: #(4 8).
@@ -113,8 +112,7 @@ RSHistogramPlotTest >> testModelWithRawValues [
 	plot := RSHistogramPlot new.
 	
 	plot x: #(0 1 3 3 1 1); bins: (0 to: 4).
-	c addPlot: plot.
-	c build.
+	plot build.
 	bars := plot bars.
 	
 	self assert: (plot bars at:1) model equals: 0->1->1.

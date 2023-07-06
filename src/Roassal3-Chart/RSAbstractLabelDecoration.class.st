@@ -5,9 +5,9 @@ Class {
 	#name : #RSAbstractLabelDecoration,
 	#superclass : #RSAbstractChartDecoration,
 	#instVars : [
-		'title',
 		'location',
-		'label'
+		'label',
+		'title'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }

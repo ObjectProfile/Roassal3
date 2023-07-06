@@ -43,7 +43,7 @@ Class {
 		'bars',
 		'binningStrategy'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #'instance creation' }
@@ -182,6 +182,7 @@ RSHistogramPlot >> numberOfBins: aNumber [
 { #category : #rendering }
 RSHistogramPlot >> renderIn: canvas [
 
+	super renderIn: canvas.
 	bars := yValues collectWithIndex: [ :yVal :index |
 		        | rect xVal xVal2 |
 		        xVal := xValues at: index.

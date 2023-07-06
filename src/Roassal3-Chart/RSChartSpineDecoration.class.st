@@ -45,6 +45,8 @@ RSChartSpineDecoration >> isSpineDecoration [
 
 { #category : #rendering }
 RSChartSpineDecoration >> renderIn: canvas [
+
+	Transcript show: chart.
 	box := self shape copy
 		borderColor: self styler spineColor;
 		extent: chart extent.
@@ -54,5 +56,5 @@ RSChartSpineDecoration >> renderIn: canvas [
 
 { #category : #accessing }
 RSChartSpineDecoration >> zeroPoint [
-	^ 0 @ chart extent y
+	^ 0 @ self chart extent y
 ]

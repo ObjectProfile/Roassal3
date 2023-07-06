@@ -39,7 +39,7 @@ RSTimelineExample >> example01Gantt [
 		#(5 10)
 		#(5 8)).
 	names := #(c1 c2 c3 c4 c5).
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
@@ -69,7 +69,7 @@ RSTimelineExample >> example02Labeled [
 		#(5 10)
 		#(5 8)).
 	names := #(c1 c2 c3 c4 c5).
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
@@ -97,7 +97,7 @@ RSTimelineExample >> example02Labeled [
 RSTimelineExample >> example03ZoomInAxis [
 	<script: 'self new example03ZoomInAxis open'>
 	| data chart names |
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	chart extent: 500@200.
 	chart padding: 10@0.
 	data := self createRandomData.

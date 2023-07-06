@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSChartTickTest >> testDefaultFont [
 	| chart plot canvas ticks labels |
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	plot := RSLinePlot y: #(1 2 3).
 	chart add: RSVerticalTick new.
 	chart add: plot.
@@ -24,7 +24,7 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	| x c numberOfTicks vertical |
 	x := -10.0 to: 20.0 count: 100.
 	numberOfTicks := 2.
-	c := RSChart new
+	c := RSCompositeChart new
 		     addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
 		     addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
 		     yourself.
@@ -46,7 +46,7 @@ RSChartTickTest >> testFromNames [
 		dates add: d.
 		y add: f ].
 	x := 1 to: dates size.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	chart extent: 300 @ 200.
 
 	chart addPlot: (RSLinePlot new x: x y: y).
@@ -64,7 +64,7 @@ RSChartTickTest >> testFromNamesWithEmptyData [
 	dates := {}.
 	x := {}.
 	y := {}.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	chart add: (RSHorizontalBarPlot new
 		x: y y: x;
 		yourself).
@@ -78,7 +78,7 @@ RSChartTickTest >> testFromNamesWithOneData [
 	indices := { 1 }.
 	values := {100}.
 
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	chart add: (RSHorizontalBarPlot new
 		x: indices y: values;
 		yourself).
@@ -90,7 +90,7 @@ RSChartTickTest >> testFromNamesWithOneData [
 { #category : #tests }
 RSChartTickTest >> testSetFontSize [
 	| chart plot canvas ticks labels |
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	plot := RSLinePlot y: #(1 2 3).
 	chart add: RSVerticalTick new.
 	chart add: plot.

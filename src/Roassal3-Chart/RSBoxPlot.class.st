@@ -37,7 +37,7 @@ Class {
 		'barOffset',
 		'boxAndWhisker'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -74,12 +74,12 @@ RSBoxPlot >> bars [
 
 { #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
-	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
+		            domain: xValues;
+		            rangeBands: xScale range padding: gapRatio.
 	aChart xScale: barScale
 ]
 
@@ -264,6 +264,7 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	| index |
+	super renderIn: canvas.
 	self checkAssertion.
 	index := 1.
 	bars := xValues flatCollect: [ :xt |

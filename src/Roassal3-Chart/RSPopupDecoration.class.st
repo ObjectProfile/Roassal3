@@ -52,7 +52,7 @@ RSPopupDecoration >> popup: aRSPopup [
 { #category : #rendering }
 RSPopupDecoration >> renderIn: canvas [
 	| box |
-	box := chart spine.
-	popup chart: chart.
+	box := plot spine.
+	popup chart: plot.
 	box addInteraction: popup
 ]

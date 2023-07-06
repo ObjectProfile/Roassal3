@@ -1,6 +1,6 @@
 Class {
 	#name : #RSBarPlotTest,
-	#superclass : #RSAbstractChartTest,
+	#superclass : #RSTest,
 	#category : #'Roassal3-Chart-Tests-Base'
 }
 
@@ -11,17 +11,16 @@ RSBarPlotTest >> classToTest [
 
 { #category : #tests }
 RSBarPlotTest >> test2BarPlots [
-	| d1 d2 extent vtick |
+	| d1 d2 extent vtick plot |
 	d1 := #(4 10 5 9).
 	d2 := #(-5 -6 -3 -3 ).
-	extent := chart extent.
-	chart addPlot: (RSBarPlot new y: d1).
-	chart addPlot: (RSBarPlot new y: d2).
-	vtick := chart verticalTick withNoLabels.
-	chart removeHorizontalTicks.
-	chart build.
+	plot := RSBarPlot new y: d1.
+	extent := plot extent.
+	vtick := plot verticalTick withNoLabels.
+	plot removeHorizontalTicks.
+	plot build.
 	self
-		assert: chart canvas encompassingRectangle extent
+		assert: plot canvas encompassingRectangle extent
 		equals: extent+(vtick configuration tickSize @0)
 ]
 
@@ -30,7 +29,7 @@ RSBarPlotTest >> testHorizontalBar [
 	| c p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSHorizontalBarPlot new x: x y: y.
 
 	self deny: p isVerticalBarPlot.
@@ -46,7 +45,7 @@ RSBarPlotTest >> testVerticalBar [
 	| c p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSBarPlot new x: x y: y.
 
 	self assert: p isVerticalBarPlot.

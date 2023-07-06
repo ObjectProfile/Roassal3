@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'ellipses'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -78,6 +78,7 @@ RSScatterPlot >> isScatterPlot [
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
 	| newPoint color |
+	super renderIn: canvas.
 	color := self computeColor.
 	self checkAssertion.
 	ellipses := (1 to: xValues size)

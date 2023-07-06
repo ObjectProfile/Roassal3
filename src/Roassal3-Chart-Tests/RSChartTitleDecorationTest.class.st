@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic [
 	| c title label |
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c removeAllTicks.
 	title := c title: 'hello'.
 	title styler textColor: Color blue.
@@ -22,7 +22,7 @@ RSChartTitleDecorationTest >> testBasic [
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic2 [
 	| c |
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c removeAllTicks.
 	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 	c build.

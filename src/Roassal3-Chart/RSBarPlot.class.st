@@ -33,7 +33,7 @@ Class {
 	#instVars : [
 		'bottom'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }

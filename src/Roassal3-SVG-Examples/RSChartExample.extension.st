@@ -12,7 +12,7 @@ RSChartExample >> example13AreaPlot [
 	charts := {'Between y1 and 0'-> (y1 -> 0).
 	'Between y2 and 1'-> (y1 -> 1).
 	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc |
-		c := RSChart new.
+		c := RSCompositeChart new.
 		c extent: 500@100.
 		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
 		c horizontalTick numberOfTicks: 10; asFloat.
@@ -45,7 +45,7 @@ RSChartExample >> example14AreaPlotWithError [
 		((x - x average) raisedTo: 2) sum) ) sqrt.
 
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c padding: 10@10.
 	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
 	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
@@ -63,7 +63,7 @@ RSChartExample >> example15AreaBox [
 	x := #(0 1 2 3).
 	y1 := #(0.8 0.8 0.2 0.2).
 	y2 := #(0 0 1 1).
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c extent: 150@50.
 	c addPlot: (RSAreaPlot new x: x y1: y1 y2: y2).
 	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; format: 's--').
@@ -83,7 +83,7 @@ RSChartExample >> example16Series [
 		sum := 0.
 		arr collect: [ :v | sum := sum + v. sum ] ].
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c extent: 400@400.
 
 	b := RSLegend new.
@@ -143,7 +143,7 @@ RSChartExample >> example17CLPvsUSD [
 			dates add: d.
 			y add: f ].
 	x := 1 to: dates size.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c extent: 300@200.
 	plot := RSAreaPlot new x: x y1: y y2: 750.
 	paint := LinearGradientPaint fromArray:

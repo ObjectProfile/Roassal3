@@ -46,3 +46,9 @@ RSXLabelDecoration >> initialize [
 	super initialize.
 	self below
 ]
+
+{ #category : #testing }
+RSXLabelDecoration >> isXLabel [
+
+	^ true
+]

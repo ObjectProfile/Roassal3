@@ -3,7 +3,7 @@ Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartPlot,
-	#superclass : #RSObject,
+	#superclass : #RSChart,
 	#instVars : [
 		'chart',
 		'xScale',
@@ -17,12 +17,7 @@ Class {
 { #category : #rendering }
 RSAbstractChartPlot >> addShape: aShape [
 	"Add a shape to the canvas"
-	chart canvas add: aShape
-]
-
-{ #category : #'private - adding' }
-RSAbstractChartPlot >> addedIn: anRSChart [
-	self subclassResponsibility
+	self container add: aShape
 ]
 
 { #category : #rendering }
@@ -30,22 +25,24 @@ RSAbstractChartPlot >> beforeRenderingIn: aChart [
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> chart [
-	^ chart
+RSAbstractChartPlot >> chartExtents [
+	^ extents ifNil: [ extents := RSChartExtents new ]
 ]
 
-{ #category : #accessing }
-RSAbstractChartPlot >> chart: aChart [
-	chart := aChart
+{ #category : #'accessing - extension' }
+RSAbstractChartPlot >> chartExtents: aRSChartExtents [
+	extents := aRSChartExtents
 ]
 
 { #category : #'public - shape' }
 RSAbstractChartPlot >> color [
+
 	^ self shape color
 ]
 
 { #category : #'public - shape' }
 RSAbstractChartPlot >> color: aColor [
+
 	self shape color: aColor
 ]
 
@@ -54,122 +51,48 @@ RSAbstractChartPlot >> createXScale [
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	padding := chart padding x.
+	padding := self padding x.
 	xScale
 		domain:
-			{chart minValueX.
-			chart maxValueX};
+			{self minValueX.
+			self maxValueX};
 		range:
 			{0 + padding.
-			chart extent x - padding}
-]
-
-{ #category : #rendering }
-RSAbstractChartPlot >> createYScale [
-	| padding |
-	yScale ifNil: [ yScale := NSScale linear ].
-	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	padding := chart padding y.
-	yScale
-		domain:
-			{chart minValueY.
-			chart maxValueY};
-		range:
-			{0 - padding.
-			chart extent y negated + padding }
+			self extent x - padding}
 ]
 
 { #category : #accessing }
 RSAbstractChartPlot >> createdShapes [
-	^ self subclassResponsibility
-]
 
-{ #category : #initialization }
-RSAbstractChartPlot >> defaultShape [
 	^ self subclassResponsibility
-]
-
-{ #category : #initialization }
-RSAbstractChartPlot >> defaultStyler [
-	^ RSChartStyler new
 ]
 
 { #category : #initialization }
 RSAbstractChartPlot >> initialize [
 	super initialize.
 	shape := self defaultShape.
-	styler := self defaultStyler
-]
-
-{ #category : #testing }
-RSAbstractChartPlot >> isDecoration [
-	^ false
-]
-
-{ #category : #testing }
-RSAbstractChartPlot >> isHorizontalTick [
-	^ false
+	styler := self defaultStyler.
+	self className = 'RSSpineDecoration' ifTrue: [ Transcript show: chart ].
 ]
 
 { #category : #testing }
 RSAbstractChartPlot >> isPlot [
+
 	^ false
 ]
 
-{ #category : #testing }
-RSAbstractChartPlot >> isVerticalTick [
-	^ false
+{ #category : #'accessing - extension' }
+RSAbstractChartPlot >> padding [
+	^ self chartExtents padding
 ]
 
-{ #category : #rendering }
-RSAbstractChartPlot >> renderIn: canvas [
-	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> shape [
-	^ shape
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> shape: aRSShape [
-	shape := aRSShape
-]
-
-{ #category : #rendering }
-RSAbstractChartPlot >> spine [
-	"Return the roassal shape that describes the spine"
-	^ chart spine
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> styler [
-	^ styler
+{ #category : #'accessing - extension' }
+RSAbstractChartPlot >> padding: aPoint [
+	self chartExtents padding: aPoint asPoint
 ]
 
 { #category : #accessing }
 RSAbstractChartPlot >> styler: anObject [
 
 	styler := anObject
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> xScale [
-	^ xScale
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> xScale: aScale [
-	xScale := aScale
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> yScale [
-	^ yScale
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> yScale: aScale [
-	yScale := aScale
 ]

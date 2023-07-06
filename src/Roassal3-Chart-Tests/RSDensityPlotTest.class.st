@@ -72,7 +72,7 @@ RSDensityPlotTest >> testRedArea [
 	| densityPlot data area |
 	data := #(14 15 28 27 32 35).
 	densityPlot := RSDensityPlot data: data.
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	densityPlot shape color: Color red.
 	chart add: densityPlot.
 	chart build.

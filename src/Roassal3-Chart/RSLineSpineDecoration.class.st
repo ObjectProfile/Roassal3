@@ -20,30 +20,28 @@ RSLineSpineDecoration >> defaultShape [
 
 { #category : #rendering }
 RSLineSpineDecoration >> renderIn: canvas [
-	| x y plot zeroPoint |
+	| x y zeroPoint |
 	axisX := self shape copy.
-	plot := chart plots anyOne.
 	zeroPoint := self zeroPoint.
 	x := zeroPoint x.
 	y := zeroPoint y.
-	axisX startPoint: 0@ y; endPoint: chart extent x @ y.
+	axisX startPoint: 0@ y; endPoint: plot extent x @ y.
 
 	axisY := self shape copy.
-	axisY startPoint: x @ chart extent y; endPoint: x @ 0.
+	axisY startPoint: x @ plot extent y; endPoint: x @ 0.
 
 	box := { axisX. axisY } asShape.
-	box translateTo: (chart extent x / 2) @ (chart extent y negated / 2).
+	box translateTo: (plot extent x / 2) @ (plot extent y negated / 2).
 	canvas add: box
 ]
 
 { #category : #accessing }
 RSLineSpineDecoration >> zeroPoint [
-	| plot x y |
-	plot := chart plots first.
-	y := (0 between: chart minValueY and: chart maxValueY)
-		ifTrue: [ (plot yScale scale: 0) + chart extent y ]
-		ifFalse: [ chart extent y ].
-	x := (0 between: chart minValueX and: chart maxValueX)
+	| x y |
+	y := (0 between: plot minValueY and: plot maxValueY)
+		ifTrue: [ (plot yScale scale: 0) + plot extent y ]
+		ifFalse: [ plot extent y ].
+	x := (0 between: plot minValueX and: plot maxValueX)
 		ifTrue: [ (plot xScale scale: 0) ]
 		ifFalse: [ 0 ].
 	^ x @ y

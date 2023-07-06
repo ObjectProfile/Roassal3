@@ -1,6 +1,6 @@
 Class {
 	#name : #RSLinePlotTest,
-	#superclass : #RSAbstractChartTest,
+	#superclass : #RSAbstractPlotTest,
 	#category : #'Roassal3-Chart-Tests-Base'
 }
 
@@ -15,24 +15,26 @@ RSLinePlotTest >> testDefaultValues [
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	p ylabel: 'Some numbers'.
 	p xlabel: 'X label'.
-	chart := p buildChart.
-	self assert: chart extent equals: 250 @ 200.
-	self assert: chart padding equals: 15 @ 10.
+	chart := p build.
+	self assert: p extent equals: 250 @ 200.
+	self assert: p padding equals: 15 @ 10.
 ]
 
 { #category : #tests }
 RSLinePlotTest >> testLineStroke [
 	| p |
-	p := (RSLinePlot y: #(1 2 3 4)) format: '--'.
-	chart := p buildChart.
+	p := RSLinePlot y: #(1 2 3 4).
+	
+	p format: '--'.
+	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '--').
 	
-	p := (RSLinePlot y: #(1 2 3 4)) format: '-.'.
-	chart := p buildChart.
+	p format: '-.'.
+	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '-.').
 	
-	p := (RSLinePlot y: #(1 2 3 4)) format: '.'.
-	chart := p buildChart.
+	p format: '.'.
+	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '.').
 ]
 
@@ -50,9 +52,20 @@ RSLinePlotTest >> testMarkerShape [
 RSLinePlotTest >> testMarkerSize [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
-	chart := p buildChart.
+	p build.
 	"Is it correct that buildChart modify and return attributes of plot?"
 	self assert: p shape markerStart shape extent equals: 4@4
+]
+
+{ #category : #tests }
+RSLinePlotTest >> testMinMaxValue [
+
+	plot := RSLinePlot new y: #(10 13 15).
+	plot build.
+	self assert: plot minValueX equals: 1.
+	self assert: plot maxValueX equals: 3.
+	self assert: plot minValueY equals: 10.
+	self assert: plot maxValueY equals: 15
 ]
 
 { #category : #tests }
@@ -70,4 +83,72 @@ RSLinePlotTest >> testPlotWithOneCollection [
 	self assert: window isDisplayed.
 	window delete.
 	self flag: 'Add title and rename format2'
+]
+
+{ #category : #tests }
+RSLinePlotTest >> testWithWeirdValuesLine [
+
+	| values line canvas |
+	values := {
+		          Float infinity negated.
+		          Float infinity negated.
+		          0.30102999566398114.
+		          0.47712125471966244 }.
+	plot := RSLinePlot new y: values.
+	plot removeAllTicks.
+	plot build.
+	canvas := plot canvas.
+
+	self assert: canvas numberOfShapes equals: 2.
+	self assert: canvas shapes first class equals: RSBox.
+
+	line := canvas shapes second.
+
+	self assert: line controlPoints size equals: 2
+]
+
+{ #category : #tests }
+RSLinePlotTest >> testWithWeirdValuesLineWithTicks [
+
+	| values line canvas |
+	values := {
+		          Float infinity negated.
+		          Float infinity negated.
+		          0.30102999566398114.
+		          0.47712125471966244 }.
+	plot := RSLinePlot new y: values.
+	plot build.
+	canvas := plot canvas.
+
+	self assert: canvas numberOfShapes equals: 20.
+	self assert: canvas shapes first class equals: RSBox.
+
+	line := canvas shapes second.
+
+	self assert: line controlPoints size equals: 2
+]
+
+{ #category : #tests }
+RSLinePlotTest >> testWithWeirdValuesLineWithTicks2 [
+
+	| canvas labels |
+	x := { -5. 0. 1. 2 }.
+	y := x log.
+
+	plot := RSLinePlot new x: x y: y.
+	plot verticalTick doNotUseNiceLabel.
+	plot removeHorizontalTicks.
+	plot build.
+
+	self assert: plot minValueX equals: x min.
+	self assert: plot minValueY equals: 0. "Here is y min negative infinity but Roassal puts a 0"
+
+	self assert: plot maxValueX equals: x max.
+	self assert: plot maxValueY equals: y max.
+
+	canvas := plot canvas.
+
+	labels := canvas shapes select: [ :s | s class == RSLabel ].
+
+	self assert: labels first position y <= 0
 ]

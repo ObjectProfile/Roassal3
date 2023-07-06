@@ -28,7 +28,7 @@ Class {
 RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.
-	zeroX := chart spineDecoration zeroPoint x.
+	zeroX := self chart spineDecoration zeroPoint x.
 
 	^ self newLineTick
 		startPoint: zeroX @ scaledNumber;
@@ -48,18 +48,18 @@ RSVerticalTick >> isVerticalTick [
 
 { #category : #accessing }
 RSVerticalTick >> max [
-	^ chart maxValueY
+	^ plot maxValueY
 ]
 
 { #category : #accessing }
 RSVerticalTick >> min [
-	^ chart minValueY
+	^ plot minValueY
 ]
 
 { #category : #rendering }
 RSVerticalTick >> updateChartMaxAndMinValues: aChart [
 
 	aChart
-		minValueY: self ticksData first;
-		maxValueY: self ticksData last
+		minChartValueY: self ticksData first;
+		maxChartValueY: self ticksData last
 ]

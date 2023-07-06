@@ -10,7 +10,7 @@ Class {
 		'gapRatio',
 		'barOffset'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -52,11 +52,12 @@ RSAbstractBarPlot >> computeRectagleFor: aPoint index: index [
 
 { #category : #rendering }
 RSAbstractBarPlot >> createBarFor: aPoint index: index [
+
 	^ self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (self computeRectagleFor: aPoint index: index);
-		yourself
+		  model: (self modelFor: aPoint);
+		  color: self computeColor;
+		  fromRectangle: (self computeRectagleFor: aPoint index: index);
+		  yourself
 ]
 
 { #category : #accessing }
@@ -66,6 +67,7 @@ RSAbstractBarPlot >> createdShapes [
 
 { #category : #initialization }
 RSAbstractBarPlot >> defaultShape [
+
 	^ RSBox new noPaint
 ]
 
@@ -101,6 +103,7 @@ RSAbstractBarPlot >> modelFor: aPoint [
 { #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
 	| index |
+	super renderIn: canvas.
 	self checkAssertion.
 	index := 1.
 	bars := xValues collect: [ :xt |

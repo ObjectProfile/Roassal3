@@ -7,11 +7,9 @@ Class {
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
-		'line',
-		'ylabel',
-		'xlabel'
+		'line'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +31,7 @@ RSLinePlot class >> y: aCollection [
 RSLinePlot >> buildChart [
 
 	| chartPlot |
-	chartPlot := RSChart new.
+	chartPlot := RSCompositeChart new.
 	chartPlot add: self.
 
 	chartPlot
@@ -69,14 +67,10 @@ RSLinePlot >> marker [
 	^ self shape markers at: 1
 ]
 
-{ #category : #'instance creation' }
-RSLinePlot >> open [
-	^ self buildChart open
-]
-
 { #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
+	super renderIn: canvas.
 	self checkAssertion.
 	controlPoints := OrderedCollection new.
 	(1 to: xValues size) do: [ :i |
@@ -89,24 +83,4 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself)
-]
-
-{ #category : #accessing }
-RSLinePlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #decoration }
-RSLinePlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #accessing }
-RSLinePlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #decoration }
-RSLinePlot >> ylabel: aString [
-	ylabel := aString
 ]

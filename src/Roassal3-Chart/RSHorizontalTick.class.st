@@ -28,8 +28,8 @@ Class {
 RSHorizontalTick >> createTickLineFor: aNumber [
 	| value zeroY |
 	value := xScale scale: aNumber.
-	zeroY := chart spineDecoration zeroPoint y.
-	zeroY := zeroY - chart extent y.
+	zeroY := self chart spineDecoration zeroPoint y.
+	zeroY := zeroY - self chart extent y.
 	^ self newLineTick
 		startPoint: value @ zeroY;
 		endPoint: value @ (zeroY + self configuration tickSize);
@@ -48,20 +48,20 @@ RSHorizontalTick >> isHorizontalTick [
 
 { #category : #accessing }
 RSHorizontalTick >> max [
-	^ chart maxValueX
+	^ plot maxValueX
 ]
 
 { #category : #accessing }
 RSHorizontalTick >> min [
-	^ chart minValueX
+	^ plot minValueX
 ]
 
 { #category : #rendering }
 RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
 
 	aChart
-		minValueX: self ticksData first;
-		maxValueX: self ticksData last
+		minChartValueX: self ticksData first;
+		maxChartValueX: self ticksData last
 ]
 
 { #category : #public }
