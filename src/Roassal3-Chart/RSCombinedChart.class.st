@@ -4,15 +4,6 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #adding }
-RSCombinedChart >> add: aPlot [
-
-	elements add: aPlot.
-	aPlot decorations removeAll.
-	aPlot chart: self.
-	^ aPlot
-]
-
 { #category : #color }
 RSCombinedChart >> defaultPlotColors [
 
@@ -28,10 +19,10 @@ RSCombinedChart >> defaultStyler [
 { #category : #hooks }
 RSCombinedChart >> renderIn: aCanvas [
 
-	elements do: [ :element |
+	decorations, plots do: [ :element |
 		element beforeRenderingIn: self.
 		element renderIn: aCanvas ].
-	shapes := elements
+	shapes := decorations, plots
 		          flatCollect: [ :element | element createdShapes ]
 		          as: RSGroup
 ]

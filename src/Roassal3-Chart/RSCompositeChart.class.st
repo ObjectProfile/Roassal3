@@ -52,6 +52,7 @@ c
 	"
 	plots add: aPlot.
 	aPlot chart: self.
+	aPlot decorations removeAll.
 	aPlot styler: self styler.
 	^ aPlot
 ]
@@ -76,7 +77,7 @@ RSCompositeChart >> initialize [
 ]
 
 { #category : #'accessing - extension' }
-RSCompositeChart >> maxValueX [
+RSCompositeChart >> maxChartValueX [
 
 	^ self chartExtents maxValueX
 		  ifNil: [
@@ -88,7 +89,7 @@ RSCompositeChart >> maxValueX [
 ]
 
 { #category : #'accessing - extension' }
-RSCompositeChart >> maxValueY [
+RSCompositeChart >> maxChartValueY [
 
 	^ self chartExtents maxValueY
 		  ifNil: [
@@ -100,7 +101,7 @@ RSCompositeChart >> maxValueY [
 ]
 
 { #category : #'accessing - extension' }
-RSCompositeChart >> minValueX [
+RSCompositeChart >> minChartValueX [
 
 	^ self chartExtents minValueX
 		  ifNil: [
@@ -112,7 +113,7 @@ RSCompositeChart >> minValueX [
 ]
 
 { #category : #'accessing - extension' }
-RSCompositeChart >> minValueY [
+RSCompositeChart >> minChartValueY [
 
 	^ self chartExtents minValueY
 		  ifNil: [
@@ -140,7 +141,7 @@ RSCompositeChart >> openOnce [
 { #category : #accessing }
 RSCompositeChart >> plots [
 
-	^ elements select: #isPlot
+	^ plots
 ]
 
 { #category : #hooks }

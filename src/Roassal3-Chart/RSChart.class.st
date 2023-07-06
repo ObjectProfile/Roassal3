@@ -307,8 +307,48 @@ RSChart >> verticalTick [
 ]
 
 { #category : #'public - scales' }
+RSChart >> xLinear [
+
+	^ self xScale: NSScale linear
+]
+
+{ #category : #'public - scales' }
+RSChart >> xLn [
+
+	^ self xScale: NSScale ln
+]
+
+{ #category : #'public - scales' }
+RSChart >> xLog [
+
+	^ self xScale: NSScale symlog
+]
+
+{ #category : #'public - scales' }
+RSChart >> xRawLog [
+	"ensure all your data and axis do not contains zero"
+
+	self horizontalTick locator: RSLogLocator new.
+	^ self xScale: NSScale log
+]
+
+{ #category : #'public - scales' }
+RSChart >> xRawLog: aNumber [
+
+	self horizontalTick locator: (RSLogLocator new base: aNumber).
+	^ self xScale: (NSLogScale new base: aNumber)
+]
+
+{ #category : #'public - scales' }
+RSChart >> xScale [
+
+	^ xScale
+]
+
+{ #category : #'public - scales' }
 RSChart >> xScale: aScale [
 
+	xScale := aScale.
 	decorations do: [ :e | e xScale: aScale ].
 	^ aScale
 ]
@@ -380,8 +420,15 @@ RSChart >> yRawLog: aNumber [
 ]
 
 { #category : #'public - scales' }
+RSChart >> yScale [
+
+	^ yScale
+]
+
+{ #category : #'public - scales' }
 RSChart >> yScale: aScale [
 
+	yScale := aScale.
 	decorations do: [ :e | e yScale: aScale ].
 	^ aScale
 ]
