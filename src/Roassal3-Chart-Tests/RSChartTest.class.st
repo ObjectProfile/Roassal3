@@ -37,10 +37,10 @@ RSChartTest >> testMinMaxValue [
 	y := #(10 13 15).
 	p := RSLinePlot new y: y.
 	p build.
-	self assert: p minValueX equals: 1.
-	self assert: p maxValueX equals: 3.
-	self assert: p minValueY equals: 10.
-	self assert: p maxValueY equals: 15
+	self assert: p minChartValueX equals: 1.
+	self assert: p maxChartValueX equals: 3.
+	self assert: p minChartValueY equals: 10.
+	self assert: p maxChartValueY equals: 15
 ]
 
 { #category : #tests }
@@ -51,10 +51,10 @@ RSChartTest >> testMinMaxValue2 [
 	x := #(4 6 9).
 	p := RSLinePlot new x: x y: y.
 	p build.
-	self assert: p minValueX equals: 4.
-	self assert: p maxValueX equals: 9.
-	self assert: p minValueY equals: -15.
-	self assert: p maxValueY equals: -10
+	self assert: p minChartValueX equals: 4.
+	self assert: p maxChartValueX equals: 9.
+	self assert: p minChartValueY equals: -15.
+	self assert: p maxChartValueY equals: -10
 ]
 
 { #category : #tests }
@@ -65,10 +65,10 @@ RSChartTest >> testMustInclude0 [
 	p := RSLinePlot new y: y.
 	p mustInclude0inY.
 	p build.
-	self assert: p minValueX equals: 1.
-	self assert: p maxValueX equals: 3.
-	self assert: p minValueY equals: 0.
-	self assert: p maxValueY equals: 15
+	self assert: p minChartValueX equals: 1.
+	self assert: p maxChartValueX equals: 3.
+	self assert: p minChartValueY equals: 0.
+	self assert: p maxChartValueY equals: 15
 ]
 
 { #category : #tests }
@@ -79,10 +79,10 @@ RSChartTest >> testMustInclude02 [
 	p := RSLinePlot new y: y.
 	p mustInclude0inY.
 	p build.
-	self assert: p minValueX equals: 1.
-	self assert: p maxValueX equals: 3.
-	self assert: p minValueY equals: -15.
-	self assert: p maxValueY equals: 0
+	self assert: p minChartValueX equals: 1.
+	self assert: p maxChartValueX equals: 3.
+	self assert: p minChartValueY equals: -15.
+	self assert: p maxChartValueY equals: 0
 ]
 
 { #category : #tests }
@@ -95,10 +95,10 @@ RSChartTest >> testMustInclude03 [
 	p removeAllTicks.
 	p mustInclude0inX.
 	p build.
-	self assert: p minValueX equals: 0.
-	self assert: p maxValueX equals: 9.
-	self assert: p minValueY equals: -15.
-	self assert: p maxValueY equals: -10
+	self assert: p minChartValueX equals: 0.
+	self assert: p maxChartValueX equals: 9.
+	self assert: p minChartValueY equals: -15.
+	self assert: p maxChartValueY equals: -10
 ]
 
 { #category : #tests }
@@ -297,22 +297,25 @@ RSChartTest >> testWithWeirdValuesLineWithTicks2 [
 { #category : #tests }
 RSChartTest >> testYMarker [
 
-	| x plot2 marker line y |
+	| x plot marker line y |
 	x := -3.14 to: 3.14 by: 0.01.
 	y := x cos * 0.18.
 
-	plot2 := RSLinePlot new.
-	plot2 x: x y: y.
+	plot := RSLinePlot new.
+	plot x: x y: y.
 
-	plot2 horizontalTick doNotUseNiceLabel.
-	plot2 verticalTick asFloat.
+	plot horizontalTick doNotUseNiceLabel.
+	plot verticalTick asFloat.
 
 	marker := RSYMarkerDecoration new.
-	plot2 addDecoration: marker.
-	plot2 build.
+	plot addDecoration: marker.
+	plot padding: 0 @ 0.
+	plot build.
 
-	line := marker createMarkerLineFromPlot: plot2.
-	self assert: line from equals: 0 @ (plot2 yScale scale: plot2 maxValueY).
-	self assert: line to
-		equals: (plot2 xScale scale: plot2 maxValueX) @ (plot2 yScale scale: plot2 maxValueY)
+	line := marker createMarkerLineFromPlot: plot.
+	self
+		assert: line from
+		equals: 0 @ (plot yScale scale: plot maxValueY).
+	self assert: line to equals: (plot xScale scale: plot maxValueX)
+		@ (plot yScale scale: plot maxValueY)
 ]

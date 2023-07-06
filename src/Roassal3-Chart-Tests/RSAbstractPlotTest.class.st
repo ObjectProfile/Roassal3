@@ -48,10 +48,10 @@ RSAbstractPlotTest >> testMinMaxValue2 [
 	plot := self classToTest new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
 	plot build.
 	
-	self assert: plot minValueX equals: 4.
-	self assert: plot maxValueX equals: 9.
-	self assert: plot minValueY equals: -15.
-	self assert: plot maxValueY equals: -10
+	self assert: plot minChartValueX equals: 4.
+	self assert: plot maxChartValueX equals: 9.
+	self assert: plot minChartValueY equals: -15.
+	self assert: plot maxChartValueY equals: -10
 ]
 
 { #category : #tests }

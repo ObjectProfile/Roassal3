@@ -53,7 +53,7 @@ RSHorizontalTick >> max [
 
 { #category : #accessing }
 RSHorizontalTick >> min [
-	^ plot minValueX
+	^ chart minChartValueX
 ]
 
 { #category : #rendering }

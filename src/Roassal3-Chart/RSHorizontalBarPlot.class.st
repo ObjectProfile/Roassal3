@@ -17,11 +17,13 @@ RSHorizontalBarPlot >> barScale [
 
 { #category : #rendering }
 RSHorizontalBarPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
+	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		domain: yValues;
-		rangeBands: yScale range padding: gapRatio.
+		            domain: yValues;
+		            rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
 ]
 

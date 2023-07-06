@@ -232,16 +232,6 @@ RSDensityPlot >> kernelDensity: anRSKernelDensity [
 	self computeCurvePoints.
 ]
 
-{ #category : #opening }
-RSDensityPlot >> open [
-
-	self
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		title: self title.
-	^ self open
-]
-
 { #category : #rendering }
 RSDensityPlot >> renderIn: canvas [
 	| curve firstPoint lastPoint closingPointStart closingPointEnd |

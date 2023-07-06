@@ -38,10 +38,10 @@ RSLineSpineDecoration >> renderIn: canvas [
 { #category : #accessing }
 RSLineSpineDecoration >> zeroPoint [
 	| x y |
-	y := (0 between: chart minValueY and: chart maxValueY)
+	y := (0 between: chart minChartValueY and: chart maxChartValueY)
 		ifTrue: [ (chart yScale scale: 0) + chart extent y ]
 		ifFalse: [ chart extent y ].
-	x := (0 between: chart minValueX and: chart maxValueX)
+	x := (0 between: chart minChartValueX and: chart maxChartValueX)
 		ifTrue: [ (chart xScale scale: 0) ]
 		ifFalse: [ 0 ].
 	^ x @ y

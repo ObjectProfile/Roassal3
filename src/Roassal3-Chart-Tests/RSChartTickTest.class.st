@@ -75,7 +75,7 @@ RSChartTickTest >> testFromNamesWithOneData [
 		yourself.
 	plot horizontalTick fromNames: names.
 	plot removeVerticalTicks.
-	plot build
+	plot build.
 ]
 
 { #category : #tests }
