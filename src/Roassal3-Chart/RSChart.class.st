@@ -288,6 +288,12 @@ RSChart >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
+{ #category : #building }
+RSChart >> show [
+
+	^ self open
+]
+
 { #category : #accessing }
 RSChart >> spine [
 	"returns the shape"

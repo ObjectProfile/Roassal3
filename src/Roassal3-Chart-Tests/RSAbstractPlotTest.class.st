@@ -126,19 +126,6 @@ RSAbstractPlotTest >> testPaddingIsCorrect [
 ]
 
 { #category : #tests }
-RSAbstractPlotTest >> testSameMinMax [
-
-	plot := self classToTest new.
-	plot y: #( 2 2 ).
-	plot addDecoration: (RSChartTitleDecoration new
-			 title: 'Reward evolution';
-			 fontSize: 20).
-	plot xlabel: 'Episode' offset: 0 @ 10.
-	plot ylabel: 'Reward' offset: -20 @ 0.
-	plot build
-]
-
-{ #category : #tests }
 RSAbstractPlotTest >> testStylerDefault [
 
 	| tick |
@@ -247,6 +234,19 @@ RSAbstractPlotTest >> testWithTitle [
 ]
 
 { #category : #tests }
+RSAbstractPlotTest >> testWithTitleAndLabels [
+
+	plot := self classToTest new.
+	plot y: #( 2 2 ).
+	plot addDecoration: (RSChartTitleDecoration new
+			 title: 'Reward evolution';
+			 fontSize: 20).
+	plot xlabel: 'Episode' offset: 0 @ 10.
+	plot ylabel: 'Reward' offset: -20 @ 0.
+	plot build
+]
+
+{ #category : #tests }
 RSAbstractPlotTest >> testWithoutTicks [
 
 	plot removeAllTicks.
@@ -260,12 +260,6 @@ RSAbstractPlotTest >> testWithoutTicks [
 RSAbstractPlotTest >> testYMarker [
 
 	| marker line |
-	x := -3.14 to: 3.14 by: 0.01.
-	y := x cos * 0.18.
-
-	plot := self classToTest new.
-	plot x: x y: y.
-
 	plot horizontalTick doNotUseNiceLabel.
 	plot verticalTick asFloat.
 

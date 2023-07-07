@@ -174,12 +174,6 @@ RSCompositeChart >> renderIn: aCanvas [
 ]
 
 { #category : #building }
-RSCompositeChart >> show [
-
-	^ self open
-]
-
-{ #category : #building }
 RSCompositeChart >> xScale: aScale [
 
 	super xScale: aScale.
