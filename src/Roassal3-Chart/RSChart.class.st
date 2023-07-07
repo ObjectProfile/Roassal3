@@ -1,3 +1,26 @@
+"
+<keyClass>
+`RSChart` is the abstract class that encompass plots and charts.
+
+*Responsibility*: maintain and render plots.
+
+*Collaborators*: a chart closely interacts with plots and decorations. 
+
+*Variables*:
+- xScale:	 the scale of the x-axis
+- yScale:	 the scale of the y-axis
+- extents: the size of the chart
+- styler:	 contains information for the chart like its decorations color or text size
+- colorPalette: the colors used to render plots
+- decorations: the collection of all decorations (spine, ticks, labels, etc)
+- spineDecoration: the spine decoration of the chart
+- title: the tilte of the chart
+- xlabel: the text used as label for the x-axis
+- xlabelTop: the text used as label for the top x-axis
+- ylabel: the text used as label for the y-axis
+- ylabelRight: the text used as label for the right y-axis
+
+"
 Class {
 	#name : #RSChart,
 	#superclass : #RSAbstractContainerBuilder,
@@ -9,11 +32,11 @@ Class {
 		'colorPalette',
 		'decorations',
 		'spineDecoration',
+		'title',
 		'xlabel',
 		'xlabelTop',
 		'ylabel',
-		'ylabelRight',
-		'title'
+		'ylabelRight'
 	],
 	#category : #'Roassal3-Chart-Core'
 }

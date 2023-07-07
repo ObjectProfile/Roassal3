@@ -3,13 +3,21 @@ TODO
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartPlot,
+	#superclass : #RSChart,
 	#instVars : [
+		'chart',
+		'shape',
 		'xValues',
 		'yValues'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #rendering }
+RSAbstractPlot >> addShape: aShape [
+	"Add a shape to the canvas"
+	self container add: aShape
+]
 
 { #category : #'public - plots' }
 RSAbstractPlot >> barHeights: aCollectionY [
@@ -60,11 +68,35 @@ RSAbstractPlot >> checkAssertion [
 		'X and Y values have not the same size, and they should'
 ]
 
+{ #category : #'public - shape' }
+RSAbstractPlot >> color [
+
+	^ self shape color
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> color: aColor [
+
+	self shape color: aColor
+]
+
 { #category : #testing }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
 	^ self color ifNil: [ self chart colorFor: self ]
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> createdShapes [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+RSAbstractPlot >> defaultShape [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -214,6 +246,18 @@ RSAbstractPlot >> renderIn: aCanvas [
 	shapes := decorations
 		          flatCollect: [ :element | element createdShapes ]
 		          as: RSGroup
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> shape [
+
+	^ shape
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> shape: aRSShape [
+
+	shape := aRSShape
 ]
 
 { #category : #accessing }
