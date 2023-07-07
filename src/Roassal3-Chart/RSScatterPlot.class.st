@@ -60,7 +60,7 @@ RSScatterPlot >> createdShapes [
 	^ ellipses
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]

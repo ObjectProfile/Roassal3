@@ -32,7 +32,7 @@ RSLinePlot >> createdShapes [
 	^ { line }
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]

@@ -50,7 +50,7 @@ RSAbstractPlot >> chart [
 	^ chart ifNil: [ self ]
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractPlot >> chart: aChart [
 
 	chart := aChart
@@ -80,7 +80,7 @@ RSAbstractPlot >> color: aColor [
 	self shape color: aColor
 ]
 
-{ #category : #testing }
+{ #category : #rendering }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
@@ -93,7 +93,7 @@ RSAbstractPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAbstractPlot >> defaultShape [
 
 	^ self subclassResponsibility
@@ -113,7 +113,7 @@ RSAbstractPlot >> definedValuesY [
 	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #inspector }
+{ #category : #initialization }
 RSAbstractPlot >> initialize [
 
 	super initialize.

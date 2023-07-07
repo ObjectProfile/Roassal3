@@ -41,7 +41,7 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #adding }
+{ #category : #decorations }
 RSChart >> addDecoration: aDecoration [
 	"Add a decoration to the chart
 
@@ -62,7 +62,7 @@ c
 	^ aDecoration
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSChart >> chart [
 
 	^ self subclassResponsibility
@@ -74,7 +74,7 @@ RSChart >> chartExtents [
 	^ extents ifNil: [ extents := RSChartExtents new ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : #rendering }
 RSChart >> chartExtents: aRSChartExtents [
 
 	extents := aRSChartExtents
@@ -119,7 +119,7 @@ RSChart >> createYScale [
 				(self extent y negated + padding) }
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> decorations [
 	"Return the list of decorations used to annotate plots"
 
@@ -139,13 +139,13 @@ RSChart >> defaultContainer [
 		yourself
 ]
 
-{ #category : #color }
+{ #category : #'accessing - defaults' }
 RSChart >> defaultPlotColors [
 
 	^ NSScale google20
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSChart >> defaultStyler [
 	^ RSChartStyler new
 ]
@@ -162,7 +162,7 @@ RSChart >> extent: aPoint [
 	self chartExtents extent: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> horizontalTick [
 
 	^ decorations detect: #isHorizontalTick ifNone: [ nil ]
@@ -203,7 +203,7 @@ RSChart >> inspectorCanvasContext: aContext [
   aContext withoutEvaluator
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSChart >> maxChartValueX [
 
 	^ self subclassResponsibility
@@ -215,7 +215,7 @@ RSChart >> maxChartValueX: aNumber [
 	self chartExtents maxValueX: aNumber
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSChart >> maxChartValueY [
 
 	^ self subclassResponsibility
@@ -227,7 +227,7 @@ RSChart >> maxChartValueY: aNumber [
 	self chartExtents maxValueY: aNumber
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSChart >> minChartValueX [
 
 	^ self subclassResponsibility
@@ -239,7 +239,7 @@ RSChart >> minChartValueX: aNumber [
 	self chartExtents minValueX: aNumber
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSChart >> minChartValueY [
 
 	^ self subclassResponsibility
@@ -273,12 +273,12 @@ RSChart >> mustInclude0inY [
 		ifFalse: [ self maxChartValueY: 0 ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : #accessing }
 RSChart >> padding [
 	^ self chartExtents padding
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : #rendering }
 RSChart >> padding: aPoint [
 	self chartExtents padding: aPoint asPoint
 ]
@@ -317,21 +317,23 @@ RSChart >> show [
 	^ self open
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> spine [
 	"returns the shape"
 	^ self spineDecoration box
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> spineDecoration [
 	^ spineDecoration
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> spineDecoration: aRSChartSpineDecoration [
 
-	spineDecoration ifNotNil: [ self removeSpine ].
+	spineDecoration ifNotNil: [
+		decorations remove: spineDecoration.
+		spineDecoration chart: nil ].
 	spineDecoration := aRSChartSpineDecoration.
 	decorations addFirst: spineDecoration.
 	aRSChartSpineDecoration chart: self
@@ -343,20 +345,20 @@ RSChart >> styler [
 	^ styler
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSChart >> styler: anRSChartStyler [
 
 	styler := anRSChartStyler.
 	decorations do: [ :each | each styler: styler ]
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> title [
 
  ^ title
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> title: aTitle [
 	"Set the title of a chart. For example:
 
@@ -371,7 +373,7 @@ c
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #rendering }
 RSChart >> updateChart: anEvent [
 	| canvas camera |
 	camera := anEvent camera.
@@ -381,7 +383,7 @@ RSChart >> updateChart: anEvent [
 	canvas zoomToFit.
 ]
 
-{ #category : #accessing }
+{ #category : #decorations }
 RSChart >> verticalTick [
 
 	^ decorations detect: #isVerticalTick ifNone: [ nil ]
@@ -439,32 +441,32 @@ RSChart >> xSqrt [
 	^ self xScale: NSScale sqrt
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> xlabel [
 	
 	^ xlabel
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> xlabel: aTitle [
 	"Set a label on the horizontal axis"
 	xlabel := aTitle.
 	^ self addDecoration: (RSXLabelDecoration new title: aTitle)
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> xlabel: aTitle offset: aPointOrANumber [
 	"Set a label on the horizontal axis, using an offset (useful to avoid overlap with axis labels)"
 	^ self addDecoration: (RSXLabelDecoration new title: aTitle; offset: aPointOrANumber)
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> xlabelTop [
 	
 	^ xlabelTop
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> xlabelTop: aTitle [
 	"Set a label on the horizontal top axis"
 	xlabelTop := aTitle.
@@ -519,32 +521,32 @@ RSChart >> ySqrt [
 	^ self yScale: NSScale sqrt
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> ylabel [
 	
 	^ ylabel
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> ylabel: aTitle [
 	"Set a label on the vertical axis"
 	ylabel := aTitle.
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle)
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> ylabel: aTitle offset: aPointOrANumber [
 	"Set a label on the vertical axis, using an offset (useful to avoid overlap with axis labels)"
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle ; offset: aPointOrANumber)
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> ylabelRight [
 
 	^ ylabelRight
 ]
 
-{ #category : #decoration }
+{ #category : #decorations }
 RSChart >> ylabelRight: aTitle [
 	"Set a label on the vertical axis"
 	ylabelRight := aTitle.

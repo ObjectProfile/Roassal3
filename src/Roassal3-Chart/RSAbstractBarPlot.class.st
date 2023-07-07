@@ -65,7 +65,7 @@ RSAbstractBarPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAbstractBarPlot >> defaultShape [
 
 	^ RSBox new noPaint

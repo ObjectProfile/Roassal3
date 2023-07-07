@@ -177,18 +177,18 @@ RSDensityPlot >> data: aCollection [
 	self computeCurvePoints.
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSDensityPlot >> defaultAreaColor [
 	^ area color.
 	
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSDensityPlot >> defaultKernelDensity [
 	^ RSKernelDensity new.
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 RSDensityPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
