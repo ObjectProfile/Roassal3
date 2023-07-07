@@ -89,8 +89,8 @@ RSChart >> createYScale [
 	padding := self padding y.
 	yScale
 		domain: {
-				self minChartValueY.
-				self maxChartValueY };
+				self chart minChartValueY.
+				self chart maxChartValueY };
 		range: {
 				(0 - padding).
 				(self extent y negated + padding) }

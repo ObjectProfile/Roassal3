@@ -53,6 +53,8 @@ c
 	plots add: aPlot.
 	aPlot chart: self.
 	aPlot decorations removeAll.
+	aPlot padding: self padding.
+	aPlot extent: self extent.
 	aPlot styler: self styler.
 	^ aPlot
 ]
@@ -67,6 +69,14 @@ RSCompositeChart >> addAll: aCollection [
 RSCompositeChart >> chart [
 
 	^ self
+]
+
+{ #category : #building }
+RSCompositeChart >> extent: aPoint [
+
+	super extent: aPoint.
+	plots ifNil: [ ^ self ].
+	plots do: [ :plot | plot extent: aPoint ]
 ]
 
 { #category : #initialization }
@@ -136,6 +146,14 @@ RSCompositeChart >> openOnce [
 
 	self build.
 	^ self canvas openOnce
+]
+
+{ #category : #building }
+RSCompositeChart >> padding: aPoint [
+
+	super padding: aPoint.
+	plots ifNil: [ ^ self ].
+	plots do: [ :plot | plot padding: aPoint ]
 ]
 
 { #category : #accessing }
