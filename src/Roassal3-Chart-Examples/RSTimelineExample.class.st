@@ -43,7 +43,7 @@ RSTimelineExample >> example01Gantt [
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
-		chart addPlot: plot.
+		chart add: plot.
 	].
 	chart verticalTick fromNames: names.
 	chart horizontalTick doNotUseNiceLabel;
@@ -73,7 +73,7 @@ RSTimelineExample >> example02Labeled [
 	data doWithIndex: [ :line :index |
 		plot := RSTimeLinePlot new.
 		plot entries: line at: index.
-		chart addPlot: plot.
+		chart add: plot.
 	].
 	chart verticalTick fromNames: names.
 	chart horizontalTick doNotUseNiceLabel;

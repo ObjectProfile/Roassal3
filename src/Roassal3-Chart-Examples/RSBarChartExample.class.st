@@ -22,8 +22,8 @@ RSBarChartExample >> example01TwoBars [
 	p2 := RSBarPlot new x: x y: y + 0.5.
 	p2 barSize: size.
 	p2 barOffset: size / -2.
-	c addPlot: p.
-	c addPlot: p2.
+	c add: p.
+	c add: p2.
 	c horizontalTick doNotUseNiceLabel;
 			 numberOfTicks: x size - 1;
 			 asFloat: 5;
@@ -57,8 +57,8 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	p2 := RSHorizontalBarPlot new x: y +0.5 y: x.
 	p2 barSize: size.
 	p2 barOffset: size / -2.
-	c addPlot: p.
-	c addPlot: p2.
+	c add: p.
+	c add: p2.
 	c build.
 	p bars , p2 bars @ RSPopup.
 	lb := RSLegend new.
@@ -67,7 +67,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	lb text: 'Series2' withBoxColor: p2 computeColor.
 	lb legendDo: [ :shape | shape withBorder; padding: 10; scaleBy: 0.5 ].
 	lb location
-		inner; bottom; right; offset: -10.
+		inner; bottom; right; offset: -30.
 	lb build.
 	^ c canvas
 ]
@@ -122,7 +122,7 @@ RSBarChartExample >> example03TilePaint [
 
 	data doWithIndex: [ :serie :index |
 		| plot color |
-		c addPlot: (plot := RSBarPlot new x: x y: serie).
+		c add: (plot := RSBarPlot new x: x y: serie).
 		color := plot computeColor.
 		index even
 			ifTrue: [ plot color: (paintBlock value: color) ].
@@ -239,7 +239,7 @@ RSBarChartExample >> example07DoubleBar [
 	x1 := classes collect: #numberOfMethods.
 	x2 := classes collect: #numberOfVariables.
 	y := 1 to: classes size.
-	c addPlot: (plot := RSDoubleBarPlot new
+	c add: (plot := RSDoubleBarPlot new
 			         x1: x1 x2: x2 y: y;
 			         yourself).
 

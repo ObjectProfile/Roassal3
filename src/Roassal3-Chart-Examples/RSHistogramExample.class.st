@@ -14,7 +14,7 @@ RSHistogramExample >> example01RandomValues [
 	values := self randomValues.
 	c := RSCompositeChart new.
 	p := RSLinePlot new x:(1 to: values size) y: values.
-	c addPlot: p.
+	c add: p.
 	c horizontalTick doNotUseNiceLabel.
 	^ c
 ]
@@ -26,7 +26,7 @@ RSHistogramExample >> example02Histogram [
 	values := self randomValues.
 	c := RSCompositeChart new.
 	plot := RSHistogramPlot new x: values.
-	c addPlot: plot.
+	c add: plot.
 	c title: 'My Chart'.
 	^ c
 ]
@@ -42,7 +42,7 @@ RSHistogramExample >> example03Bins [
 		c := RSCompositeChart new.
 		c container: g.
 		plot := RSHistogramPlot new x: values; numberOfBins: numberOfBins.
-		c addPlot: plot.
+		c add: plot.
 		c title: numberOfBins.
 		c build.
 		g asShapeFor: numberOfBins.
@@ -69,7 +69,7 @@ RSHistogramExample >> example04BinningStrat [
 		c := RSCompositeChart new.
 		c container: g.
 		plot := RSHistogramPlot new x: values; binningStrategy: strat.
-		c addPlot: plot.
+		c add: plot.
 		c title: strat class name.
 		c build.
 		g asShapeFor: strat.
@@ -146,7 +146,7 @@ RSHistogramExample >> example08Strategies [
 		c container: g.
 		y := x collect: [ :v | strat computeNumberOfBinsFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
-		c addPlot: plot.
+		c add: plot.
 		c verticalTick doNotUseNiceLabel.
 		c title: strat class name.
 		c build.
@@ -166,7 +166,7 @@ RSHistogramExample >> example09BinsCollection [
 	c := RSCompositeChart new.
 	plot := RSHistogramPlot new x: values.
 	plot bins: #(100 150 155 180 200).
-	c addPlot: plot.
+	c add: plot.
 	^ c
 ]
 

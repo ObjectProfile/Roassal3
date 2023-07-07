@@ -15,7 +15,7 @@ Class {
 RSHorizontalTopTick >> createTickLineFor: aNumber [
 	| value y |
 	value := xScale scale: aNumber.
-	y := plot extent y negated.
+	y := chart extent y negated.
 	^ self newLineTick
 		startPoint: value @ y;
 		endPoint: value @ (y - self configuration tickSize);
@@ -27,14 +27,14 @@ RSHorizontalTopTick >> createXScale [
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	padding := plot padding x.
+	padding := chart padding x.
 	xScale
 		domain:
 			{self min.
 			self max};
 		range:
 			{0 + padding.
-			plot extent x - padding}
+			chart extent x - padding}
 ]
 
 { #category : #'accessing - defaults' }

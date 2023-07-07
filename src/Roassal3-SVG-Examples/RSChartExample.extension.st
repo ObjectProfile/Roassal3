@@ -3,7 +3,7 @@ Extension { #name : #RSChartExample }
 { #category : #'*Roassal3-SVG-Examples' }
 RSChartExample >> example13AreaPlot [
 	<script: 'self new example13AreaPlot open'>
-	| x y1 y2  c canvas charts |
+	| x y1 y2 p canvas charts |
 	x := 0 to: 2 by: 0.01.
 	y1 := (2 * Float pi * x) sin.
 	y2 := 1.2 * (4 * Float pi * x) sin.
@@ -12,13 +12,12 @@ RSChartExample >> example13AreaPlot [
 	charts := {'Between y1 and 0'-> (y1 -> 0).
 	'Between y2 and 1'-> (y1 -> 1).
 	'Between y1 and y2'-> (y1 -> y2)} collect: [ :assoc |
-		c := RSCompositeChart new.
-		c extent: 500@100.
-		c addPlot: (RSAreaPlot new x: x y1: assoc value key y2: assoc value value).
-		c horizontalTick numberOfTicks: 10; asFloat.
-		c verticalTick numberOfTicks: 3; asFloat.
-		c ylabel: assoc key.
-		c asShape	].
+		p := RSAreaPlot new x: x y1: assoc value key y2: assoc value value.
+		p extent: 500@100.
+		p horizontalTick numberOfTicks: 10; asFloat.
+		p verticalTick numberOfTicks: 3; asFloat.
+		p ylabel: assoc key.
+		p asShape	].
 	RSVerticalLineLayout on: charts.
 	canvas addAll: charts.
 	canvas @ RSCanvasController.
@@ -47,9 +46,9 @@ RSChartExample >> example14AreaPlotWithError [
 
 	c := RSCompositeChart new.
 	c padding: 10@10.
-	c addPlot: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
-	c addPlot: (RSLinePlot new x: x y: y_est; color: Color red).
-	c addPlot: (scatter := RSScatterPlot new x: x y: y).
+	c add: (RSAreaPlot new x: x y1: y_est + y_err y2: y_est - y_err; color: (Color blue alpha: 0.1) ).
+	c add: (RSLinePlot new x: x y: y_est; color: Color red).
+	c add: (scatter := RSScatterPlot new x: x y: y).
 	scatter color: Color red.
 	c horizontalTick numberOfTicks: 10; asFloat.
 	c verticalTick numberOfTicks: 3; asFloat.
@@ -65,9 +64,9 @@ RSChartExample >> example15AreaBox [
 	y2 := #(0 0 1 1).
 	c := RSCompositeChart new.
 	c extent: 150@50.
-	c addPlot: (RSAreaPlot new x: x y1: y1 y2: y2).
-	c addPlot: (RSLinePlot new x: x y: y1; color: Color red; format: 's--').
-	c addPlot: (RSLinePlot new x: x y: y2; color: Color orange; format: 'o--').
+	c add: (RSAreaPlot new x: x y1: y1 y2: y2).
+	c add: (RSLinePlot new x: x y: y1; color: Color red; format: 's--').
+	c add: (RSLinePlot new x: x y: y2; color: Color orange; format: 'o--').
 	c horizontalTick numberOfTicks: 7; asFloat.
 	c verticalTick asFloat.
 
@@ -96,10 +95,10 @@ RSChartExample >> example16Series [
 		y := cumsum value: y.
 		error := x.
 
-		c addPlot: (RSAreaPlot new
+		c add: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: (color value: Color) translucent).
-		c addPlot: (RSLinePlot new x: x y: y; format: 'o';
+		c add: (RSLinePlot new x: x y: y; format: 'o';
 			color: (color value: Color)).
 		b text: label withBoxColor: (color value: Color)
 		 ].
@@ -151,13 +150,13 @@ RSChartExample >> example17CLPvsUSD [
 		0.8 -> Color transparent}.
 	paint start: 0@ -100; stop: 0@ 100.
 	plot shape paint: paint.
-	c addPlot: plot.
+	c add: plot.
 	plot := RSLinePlot new x: x y: y.
 	plot color: Color green muchDarker.
 	plot width: 2.
 	plot joinRound.
 	plot markerEnd: (RSEllipse new size: 10).
-	c addPlot: plot.
+	c add: plot.
 
 	horizontal := c horizontalTick fromNames: dates.
 	horizontal configuration fontSize: 4.

@@ -20,7 +20,7 @@ RSDoubleBarPlot >> bars2 [
 
 { #category : #public }
 RSDoubleBarPlot >> computeSecondColor [
-	^ secondColor ifNil: [ self colorFor: x2Values ]
+	^ secondColor ifNil: [ self chart colorFor: x2Values ]
 ]
 
 { #category : #hooks }

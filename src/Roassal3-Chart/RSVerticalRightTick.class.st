@@ -14,7 +14,7 @@ Class {
 RSVerticalRightTick >> createTickLineFor: aNumber [
 	| scaledNumber x |
 	scaledNumber := yScale scale: aNumber.
-	x := plot extent x.
+	x := chart extent x.
 	^ self newLineTick
 		startPoint: x @ scaledNumber;
 		endPoint: (x + self configuration tickSize) @ scaledNumber;

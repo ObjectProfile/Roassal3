@@ -51,7 +51,7 @@ RSConnectionExample >> example02TwoViews [
 		d y:
 			(((1 to: inputModel) collect: [ :v | SharedRandom globalGenerator nextInteger: 42 ])
 				 sortedAs: #yourself).
-		c3 addPlot: d.
+		c3 add: d.
 		c3 build ]
 ]
 

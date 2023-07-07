@@ -19,24 +19,6 @@ RSAbstractPlot >> addShape: aShape [
 	self container add: aShape
 ]
 
-{ #category : #'public - plots' }
-RSAbstractPlot >> barHeights: aCollectionY [
-	| res |
-	self addPlot: (res := RSBarPlot new
-		x: (1 to: aCollectionY size)
-		y: aCollectionY).
-	^ res
-]
-
-{ #category : #'public - plots' }
-RSAbstractPlot >> barWidths: aCollectionX [
-	| res |
-	self addPlot: (res := RSHorizontalBarPlot new
-		x: aCollectionX
-		y: (1 to: aCollectionX size)).
-	^ res
-]
-
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
 
@@ -239,7 +221,7 @@ RSAbstractPlot >> minValueY [
 { #category : #rendering }
 RSAbstractPlot >> renderIn: aCanvas [
 
-	self beforeRenderingIn: self.
+	self beforeRenderingIn: self" chart".
 	self decorations do: [ :e |
 		e beforeRenderingIn: self.
 		e renderIn: aCanvas ].

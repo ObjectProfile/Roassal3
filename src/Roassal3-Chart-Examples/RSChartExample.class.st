@@ -10,36 +10,32 @@ Class {
 { #category : #examples }
 RSChartExample >> example01Markers [
 	<script: 'self new example01Markers open'>
-	| x c p |
+	| x p |
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSCompositeChart new.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
-	c addPlot: p.
-	c verticalTick asFloat.
-	c addDecoration: RSYMarkerDecoration new average.
-	c addDecoration: RSYMarkerDecoration new min.
-	c addDecoration: RSYMarkerDecoration new max.
-	c addDecoration: RSXMarkerDecoration new max.
-	c addDecoration: RSXMarkerDecoration new min.
-	c addDecoration: (RSXMarkerDecoration new value: 0).
-	^ c
+	p verticalTick asFloat.
+	p addDecoration: RSYMarkerDecoration new average.
+	p addDecoration: RSYMarkerDecoration new min.
+	p addDecoration: RSYMarkerDecoration new max.
+	p addDecoration: RSXMarkerDecoration new max.
+	p addDecoration: RSXMarkerDecoration new min.
+	p addDecoration: (RSXMarkerDecoration new value: 0).
+	^ p
 ]
 
 { #category : #examples }
 RSChartExample >> example02ScatterPlot [
 	<script: 'self new example02ScatterPlot show'>
 
-	| classes c p |
+	| classes p |
 	classes := Collection withAllSubclasses.
-	c := RSCompositeChart new.
 	p := RSScatterPlot new x: (classes collect: #numberOfMethods) y: (classes collect: #linesOfCode).
-	c addPlot: p.
 
-	c xlabel: 'X Axis'.
-	c ylabel: 'Y Axis'.
-	c title: 'Hello World'.
-	^ c
+	p xlabel: 'X Axis'.
+	p ylabel: 'Y Axis'.
+	p title: 'Hello World'.
+	^ p
 ]
 
 { #category : #examples }
@@ -50,13 +46,13 @@ RSChartExample >> example03Plot [
 	x := 0.0 to: 2 count: 100.
 	plt := RSCompositeChart new.
 	p := RSLinePlot new x: x y: (x raisedTo: 2).
-	plt addPlot: p.
+	plt add: p.
 
 	p := RSLinePlot new x: x y: (x raisedTo: 3).
-	plt addPlot: p.
+	plt add: p.
 
 	p := RSLinePlot new x: x y: (x raisedTo: 4).
-	plt addPlot: p.
+	plt add: p.
 
 	plt xlabel: 'X Axis'.
 	plt ylabel: 'Y Axis'.
@@ -70,8 +66,8 @@ RSChartExample >> example04WithTick [
 	| x chart |
 	x := -10.0 to: 20.0 count: 100.
 	chart := RSCompositeChart new
-		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
-		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
+		add: (RSScatterPlot new x: x y: (x raisedTo: 3));
+		add: (RSLinePlot new x: x y: (x raisedTo: 2));
 		yourself.
 	chart horizontalTick integer.
 	chart verticalTick integer.
@@ -85,7 +81,7 @@ RSChartExample >> example05WithTick [
 	x := 0.0 to: 14 count: 100.
 	c := RSCompositeChart new.
 	1 to: 7 do: [ :i |
-		c addPlot: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
+		c add: (RSLinePlot new x: x y: (i * 0.3 + x) sin * (7 - i))
 	].
 	c verticalTick integer.
 	c horizontalTick integer.
@@ -98,8 +94,8 @@ RSChartExample >> example06CustomNumberOfTicks [
 	| x chart |
 	x := -10.0 to: 20.0 count: 100.
 	chart := RSCompositeChart new
-		addPlot: (RSScatterPlot new x: x y: (x raisedTo: 3));
-		addPlot: (RSLinePlot new x: x y: (x raisedTo: 2));
+		add: (RSScatterPlot new x: x y: (x raisedTo: 3));
+		add: (RSLinePlot new x: x y: (x raisedTo: 2));
 		yourself.
 	chart horizontalTick numberOfTicks: 20;
 			integer.
@@ -117,8 +113,7 @@ RSChartExample >> example07AdjustingFontSize [
 	x := -3.14 to: 3.14 by: 0.1.
 	y := x sin.
 
-	c := RSCompositeChart new.
-	c addPlot: (RSLinePlot new x: x y: y).
+	c := RSLinePlot new x: x y: y.
 	c addDecoration: (RSChartTitleDecoration new
 			 title: 'hello';
 			 fontSize: 40).
@@ -139,13 +134,13 @@ RSChartExample >> example08TwoCharts [
 	c := RSCanvas new.
 
 	c1 := RSCompositeChart new.
-	c1 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) sqrt).
+	c1 add: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) sqrt).
 	c1 title: 'squared root'.
 	c1 xlabel: 'X'.
 	c1 ylabel: 'Y'.
 
 	c2 := RSCompositeChart new.
-	c2 addPlot: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) squared).
+	c2 add: (RSLinePlot new x: (1 to: 10) y: (1 to: 10) squared).
 	c2 title: '^ 2'.
 	c2 xlabel: 'X'.
 	c2 ylabel: 'Y'.
@@ -166,7 +161,7 @@ RSChartExample >> example09LinearSqrtSymlog [
 	c addAll: (#(yLinear ySqrt yLog) collect: [ :sel |
 		| chart |
 		chart := RSCompositeChart new.
-		chart addPlot: (RSLinePlot new x: x y: y).
+		chart add: (RSLinePlot new x: x y: y).
 		chart verticalTick asFloat.
 		chart removeHorizontalTicks.
 		chart perform: sel.
@@ -179,24 +174,21 @@ RSChartExample >> example09LinearSqrtSymlog [
 { #category : #examples }
 RSChartExample >> example10BarPlot [
 	<script: 'self new example10BarPlot open'>
-	| c p x y |
+	| p x y |
 
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSCompositeChart new.
 	p := RSBarPlot new x: x y: y.
 
-	c addPlot: p.
-
-	c horizontalTick doNotUseNiceLabel;
+	p horizontalTick doNotUseNiceLabel;
 		numberOfTicks: x size - 1;
 		asFloat.
-	c xlabel: 'X Axis'.
-	c verticalTick numberOfTicks: 10;
+	p xlabel: 'X Axis'.
+	p verticalTick numberOfTicks: 10;
 		asFloat.
-	c ylabel: 'Y Axis'.
-	c title: 'Histogram'.
-	^ c
+	p ylabel: 'Y Axis'.
+	p title: 'Histogram'.
+	^ p
 ]
 
 { #category : #examples }
@@ -207,8 +199,8 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	y := (x raisedTo: 2) - 2.
 	c := RSCompositeChart new.
 
-	c addPlot: (RSBarPlot new x: x y: y).
-	c addPlot: (RSLinePlot new x: x y: y; color: Color red).
+	c add: (RSBarPlot new x: x y: y).
+	c add: (RSLinePlot new x: x y: y; color: Color red).
 	c horizontalTick asFloat.
 	c verticalTick numberOfTicks: 10;
 		asFloat.
@@ -222,7 +214,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 RSChartExample >> example12ScatterPlotAndNormalizer [
 
 	<script: 'self new example12ScatterPlotAndNormalizer open'>
-	| x y z r c p |
+	| x y z r p |
 	x := OrderedCollection new.
 	y := OrderedCollection new.
 	z := OrderedCollection new.
@@ -232,14 +224,11 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 		y add: i + (r next * 10 + 1) asInteger.
 		z add: i + (r next * 10 + 1) asInteger. ].
 
-	c := RSCompositeChart new.
 	p := RSScatterPlot new x: x y: y.
 	p color: Color blue translucent.
 
-	c addPlot: p.
-
-	c horizontalTick doNotUseNiceLabel asFloat: 3.
-	c build.
+	p horizontalTick doNotUseNiceLabel asFloat: 3.
+	p build.
 	p ellipses models: z.
 		RSNormalizer size
 			shapes: p ellipses;
@@ -250,7 +239,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 			shapes: p ellipses;
 			normalize: #yourself.
 	p ellipses translucent.
-	^ c canvas
+	^ p canvas
 ]
 
 { #category : #examples }
@@ -263,12 +252,12 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	d := RSBarPlot new.
 	d color: Color green darker darker darker translucent.
 	d y: #(4 10 5 9).
-	c addPlot: d.
+	c add: d.
 
 	d2 := RSBarPlot new.
 	d2 color: Color red darker darker darker translucent.
 	d2 y: #(-5 -6 -3 -3).
-	c addPlot: d2.
+	c add: d2.
 
 	c verticalTick integer.
 
@@ -320,10 +309,10 @@ RSChartExample >> example21Popup [
 		error := x.
 		col := color value: Color.
 
-		c addPlot: (RSAreaPlot new
+		c add: (RSAreaPlot new
 			x: x y1: y + error y2: y - error;
 			color: col translucent).
-		c addPlot: (plot := RSLinePlot new x: x y: y; format: 'o';
+		c add: (plot := RSLinePlot new x: x y: y; format: 'o';
 			color: col;
 			yourself).
 		popup chartPopupBuilder
@@ -382,7 +371,7 @@ RSChartExample >> example22CustomPopup [
 	popup := RSPopupDecoration new.
 	c := RSCompositeChart new.
 	c extent: 400@ 150.
-	c addPlot: (RSAreaPlot new
+	c add: (RSAreaPlot new
 		x: x y1: y y2: 750;
 		color: ((LinearGradientPaint fromArray: {
 				0 -> Color green translucent.
@@ -414,7 +403,7 @@ RSChartExample >> example23PopupInScatterPlot [
 	classes := Collection withAllSubclasses.
 	data := classes collect: [:cls | cls linesOfCode sqrt ].
 	plot := RSScatterPlot new y: data.
-	chart addPlot: plot.
+	chart add: plot.
 	chart padding: 10.
 	chart build.
 	plot ellipses with: classes do: [ :e :cls | e model: cls ].

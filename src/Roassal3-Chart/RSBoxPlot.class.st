@@ -76,6 +76,7 @@ RSBoxPlot >> bars [
 RSBoxPlot >> beforeRenderingIn: aChart [
 
 	| barScale |
+	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
 		            domain: xValues;
