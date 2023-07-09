@@ -145,7 +145,7 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 
 { #category : #examples }
 RSBoxPlot class >> exampleDays [
-	| p p1 p2 p3 y1 y2 y3 |
+	| chart p1 p2 p3 y1 y2 y3 |
 
 	y1 := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
@@ -162,9 +162,9 @@ RSBoxPlot class >> exampleDays [
 	p1 := self data: y1. "blue"
 	p2 := self data: y2. "sky blue"
 	p3 := self data: y3. "orange"
-	p := p1 + p2 + p3.
-	p xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
-	^ p open.
+	chart := p1 + p2 + p3.
+	chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
+	^ chart open.
 ]
 
 { #category : #examples }
@@ -178,19 +178,6 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 	p1 := self data: y1. "blue"
 	p1 xTickLabels: { 'Day 1'. 'Day 2'. }.
 	^ p1 open.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> + aRSBoxPlot [
-	| groupsA groupsB |
-	groupsA := self groups.
-	groupsB := aRSBoxPlot groups.
-	groupsB do: [ :each | each boxPlot: self ].
-	groupsA addAll: groupsB.
-	groups := groupsA.
-	self computeGroupsOffsets.
-	self computeState.
-	^ self.
 ]
 
 { #category : #rendering }
@@ -220,6 +207,11 @@ RSBoxPlot >> buildChart [
 		padding: 15;
 		build.
 	^ chart
+]
+
+{ #category : #testing }
+RSBoxPlot >> canHandleCluster [
+	^ true
 ]
 
 { #category : #accessing }

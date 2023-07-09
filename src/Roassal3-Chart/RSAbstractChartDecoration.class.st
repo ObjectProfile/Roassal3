@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSAbstractChartDecoration,
-	#superclass : #RSAbstractChartPlot,
+	#superclass : #RSAbstractChartElement,
 	#category : #'Roassal3-Chart-Decoration'
 }
 

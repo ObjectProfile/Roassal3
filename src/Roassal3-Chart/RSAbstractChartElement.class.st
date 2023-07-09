@@ -2,7 +2,7 @@
 Abstract class for all plot classes
 "
 Class {
-	#name : #RSAbstractChartPlot,
+	#name : #RSAbstractChartElement,
 	#superclass : #RSObject,
 	#instVars : [
 		'chart',
@@ -15,36 +15,36 @@ Class {
 }
 
 { #category : #'private - adding' }
-RSAbstractChartPlot >> addedIn: anRSChart [
+RSAbstractChartElement >> addedIn: anRSChart [
 	self subclassResponsibility
 ]
 
 { #category : #rendering }
-RSAbstractChartPlot >> beforeRenderingIn: aChart [
+RSAbstractChartElement >> beforeRenderingIn: aChart [
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> chart [
+RSAbstractChartElement >> chart [
 	^ chart
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> chart: aChart [
+RSAbstractChartElement >> chart: aChart [
 	chart := aChart
 ]
 
 { #category : #'public - shape' }
-RSAbstractChartPlot >> color [
+RSAbstractChartElement >> color [
 	^ self shape color
 ]
 
 { #category : #'public - shape' }
-RSAbstractChartPlot >> color: aColor [
+RSAbstractChartElement >> color: aColor [
 	self shape color: aColor
 ]
 
 { #category : #rendering }
-RSAbstractChartPlot >> createXScale [
+RSAbstractChartElement >> createXScale [
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
@@ -59,7 +59,7 @@ RSAbstractChartPlot >> createXScale [
 ]
 
 { #category : #rendering }
-RSAbstractChartPlot >> createYScale [
+RSAbstractChartElement >> createYScale [
 	| padding |
 	yScale ifNil: [ yScale := NSScale linear ].
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
@@ -74,111 +74,96 @@ RSAbstractChartPlot >> createYScale [
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> createdShapes [
+RSAbstractChartElement >> createdShapes [
 	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
-RSAbstractChartPlot >> defaultShape [
+RSAbstractChartElement >> defaultShape [
 	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
-RSAbstractChartPlot >> defaultStyler [
+RSAbstractChartElement >> defaultStyler [
 	^ RSChartStyler new
 ]
 
 { #category : #initialization }
-RSAbstractChartPlot >> initialize [
+RSAbstractChartElement >> initialize [
 	super initialize.
 	shape := self defaultShape.
 	styler := self defaultStyler
 ]
 
 { #category : #testing }
-RSAbstractChartPlot >> isDecoration [
+RSAbstractChartElement >> isDecoration [
 	^ false
 ]
 
 { #category : #testing }
-RSAbstractChartPlot >> isHorizontalTick [
+RSAbstractChartElement >> isHorizontalTick [
 	^ false
 ]
 
 { #category : #testing }
-RSAbstractChartPlot >> isPlot [
+RSAbstractChartElement >> isPlot [
 	^ false
 ]
 
 { #category : #testing }
-RSAbstractChartPlot >> isVerticalTick [
+RSAbstractChartElement >> isVerticalTick [
 	^ false
 ]
 
 { #category : #rendering }
-RSAbstractChartPlot >> renderIn: canvas [
+RSAbstractChartElement >> renderIn: canvas [
 	"Need to be overridden in subclasses. This methods has to be use trachel to enrich a visualization"
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> shape [
+RSAbstractChartElement >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> shape: aRSShape [
+RSAbstractChartElement >> shape: aRSShape [
 	shape := aRSShape
 ]
 
 { #category : #rendering }
-RSAbstractChartPlot >> spine [
+RSAbstractChartElement >> spine [
 	"Return the roassal shape that describes the spine"
 	^ chart spine
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> styler [
+RSAbstractChartElement >> styler [
 	^ styler
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> styler: anObject [
+RSAbstractChartElement >> styler: anObject [
 
 	styler := anObject
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> xScale [
+RSAbstractChartElement >> xScale [
 	^ xScale
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> xScale: aScale [
+RSAbstractChartElement >> xScale: aScale [
 	xScale := aScale
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> xTickLabels: aCollection [
-	chart horizontalTick fromNames: aCollection.
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> yScale [
+RSAbstractChartElement >> yScale [
 	^ yScale
 ]
 
 { #category : #accessing }
-RSAbstractChartPlot >> yScale: aScale [
+RSAbstractChartElement >> yScale: aScale [
 	yScale := aScale
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> yTickLabels: aCollection [
-	chart verticalTick fromNames: aCollection.
-]
-
-{ #category : #accessing }
-RSAbstractChartPlot >> yTicks: collectionOfNumbers labels: aCollection [
-	chart verticalTick ticks: collectionOfNumbers labels: aCollection.
 ]

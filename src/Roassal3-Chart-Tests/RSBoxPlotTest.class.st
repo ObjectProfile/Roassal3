@@ -4,22 +4,75 @@ Class {
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
-{ #category : #tests }
-RSBoxPlotTest >> testAddBoxPlotsToGroup [
-	| groupA groupB groupC dataA dataB windowA windowB windowOfAdd boxPlot |
+{ #category : #'tests - adding' }
+RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
+	| boxPlotA boxPlotB boxPlotC data chart |
+	
+	data := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	boxPlotA := RSBoxPlot data: data.
+	boxPlotB := RSBoxPlot data: data.
+	boxPlotC := RSBoxPlot data: data.
+	
+	chart := boxPlotA + boxPlotB + boxPlotC.
+	self assert: chart class equals: RSClusterChart.
+	self assert: chart plots size equals: 3.
+]
+
+{ #category : #'tests - adding' }
+RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
+	| boxPlot linePlot data x y chart |
+	
+	x := { 1. 2. }.
+	y := { 5. 6. }.
+	linePlot := RSLinePlot x: x y: y.
+	
+	data := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	boxPlot := RSBoxPlot data: data.
+	
+	chart := boxPlot + linePlot.
+	self assert: chart class equals: RSChart.
+	self assert: chart plots size equals: 2.
+]
+
+{ #category : #'tests - adding' }
+RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
+	| boxPlotA boxPlotB dataA dataB chart |
 	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
-	groupA := RSBoxPlot data: dataA.
-	groupB := RSBoxPlot data: dataB.
-	groupC := RSBoxPlot data: dataB.
-	windowA := groupA open.
-	windowA delete.
-	windowB := groupB open.
-	windowB delete.
-	boxPlot := groupA + groupB + groupC.
-	self assert: boxPlot boxGraphics size equals: 6.
-	windowOfAdd := boxPlot open.
-	windowOfAdd delete.
+	boxPlotA := RSBoxPlot data: dataA.
+	boxPlotB := RSBoxPlot data: dataB.
+	chart := boxPlotA + boxPlotB.
+	self assert: chart plots first identicalTo: boxPlotA.
+	self assert: chart plots second identicalTo: boxPlotB.
+]
+
+{ #category : #'tests - adding' }
+RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
+	| boxPlotA boxPlotB dataA dataB chart |
+	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	boxPlotA := RSBoxPlot data: dataA.
+	boxPlotB := RSBoxPlot data: dataB.
+	chart := boxPlotA + boxPlotB.
+	self assert: chart class equals: RSClusterChart.
+	self assert: chart plots size equals: 2.
+]
+
+{ #category : #'tests - adding' }
+RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
+	| boxPlot linePlot data x y chart |
+	
+	x := { 1. 2. }.
+	y := { 5. 6. }.
+	linePlot := RSLinePlot x: x y: y.
+	
+	data := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
+	boxPlot := RSBoxPlot data: data.
+	
+	chart := linePlot + boxPlot.
+	self assert: chart class equals: RSChart.
+	self assert: chart plots size equals: 2.
+	chart open.
 ]
 
 { #category : #tests }

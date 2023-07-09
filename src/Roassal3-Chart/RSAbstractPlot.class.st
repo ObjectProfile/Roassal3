@@ -3,13 +3,31 @@ TODO
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartPlot,
+	#superclass : #RSAbstractChartElement,
 	#instVars : [
 		'xValues',
 		'yValues'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
+
+{ #category : #'instance creation' }
+RSAbstractPlot class >> x: collectionX y: collectionY [
+	^ self new 
+		x: collectionX y: collectionY;
+		yourself.
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> + aRSPlot [
+	| newChart |
+	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ]) 
+		ifTrue: [ RSClusterChart new ]
+		ifFalse: [ RSChart new ].
+	newChart add: self.
+	newChart add: aRSPlot.
+	^ newChart.
+]
 
 { #category : #adding }
 RSAbstractPlot >> addedIn: aRSChart [
@@ -21,6 +39,11 @@ RSAbstractPlot >> beforeRenderingIn: aChart [
 	super beforeRenderingIn: aChart.
 	self createXScale.
 	self createYScale
+]
+
+{ #category : #testing }
+RSAbstractPlot >> canHandleCluster [
+	^ false
 ]
 
 { #category : #testing }
@@ -70,6 +93,11 @@ RSAbstractPlot >> initialize [
 
 { #category : #testing }
 RSAbstractPlot >> isBarPlot [
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isBoxPlot [
 	^ false
 ]
 
@@ -172,6 +200,16 @@ c
 	yValues := aCollection2
 ]
 
+{ #category : #ticks }
+RSAbstractPlot >> xTickLabels: aCollection [
+	chart xTickLabels: aCollection.
+]
+
+{ #category : #ticks }
+RSAbstractPlot >> xTicks: collectionOfNumbers labels: aCollection [
+	chart xTicks: collectionOfNumbers labels: aCollection
+]
+
 { #category : #accessing }
 RSAbstractPlot >> xValues [
 	^ xValues
@@ -205,6 +243,16 @@ c
 -=-=-=-=-=-=-=-=-=
 	"
 	self x: (1 to: aCollection size) y: aCollection
+]
+
+{ #category : #ticks }
+RSAbstractPlot >> yTickLabels: aCollection [
+	chart yTickLabels: aCollection.
+]
+
+{ #category : #ticks }
+RSAbstractPlot >> yTicks: collectionOfNumbers labels: aCollection [
+	chart yTicks: collectionOfNumbers labels: aCollection
 ]
 
 { #category : #accessing }

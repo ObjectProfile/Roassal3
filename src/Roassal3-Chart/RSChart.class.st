@@ -42,6 +42,11 @@ Class {
 }
 
 { #category : #adding }
+RSChart >> + aRSPlot [
+	self add: aRSPlot.
+]
+
+{ #category : #adding }
 RSChart >> add: aRSPlot [
 	aRSPlot addedIn: self
 ]
@@ -464,6 +469,16 @@ RSChart >> xSqrt [
 	^ self xScale: NSScale sqrt
 ]
 
+{ #category : #ticks }
+RSChart >> xTickLabels: aCollection [
+	self horizontalTick fromNames: aCollection.
+]
+
+{ #category : #ticks }
+RSChart >> xTicks: collectionOfNumbers labels: aCollection [
+	self horizontalTick ticks: collectionOfNumbers labels: aCollection.
+]
+
 { #category : #decoration }
 RSChart >> xlabel: aTitle [
 	"Set a label on the horizontal axis"
@@ -520,6 +535,16 @@ RSChart >> yScale: aScale [
 { #category : #'public - scales' }
 RSChart >> ySqrt [
 	^ self yScale: NSScale sqrt
+]
+
+{ #category : #ticks }
+RSChart >> yTickLabels: aCollection [
+	self verticalTick fromNames: aCollection.
+]
+
+{ #category : #ticks }
+RSChart >> yTicks: collectionOfNumbers labels: aCollection [
+	self verticalTick ticks: collectionOfNumbers labels: aCollection.
 ]
 
 { #category : #decoration }
