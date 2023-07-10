@@ -112,7 +112,7 @@ RSTimelineExample >> example03ZoomInAxis [
 		numberOfTicks: 10;
 		useDiagonalLabel;
 		labelConversion: [ :day | self printDate: day ].
-	chart add: RSZoomTickDecoration new.
+	chart addDecoration: RSZoomTickDecoration new.
 	^ chart
 ]
 

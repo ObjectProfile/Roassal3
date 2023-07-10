@@ -37,10 +37,11 @@ RSTimeLinePlot >> bars [
 { #category : #rendering }
 RSTimeLinePlot >> beforeRenderingIn: aChart [
 	| barScale |
+	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
 
 	barScale := NSOrdinalScale new
-		domain: (aChart minValueY to: aChart maxValueY);
+		domain: (aChart minChartValueY to: aChart maxChartValueY);
 		rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
 ]

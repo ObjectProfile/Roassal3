@@ -120,7 +120,7 @@ RSChart >> createXScale [
 				self chart maxChartValueX };
 		range: {
 				(0 + padding).
-				(self extent x - padding) }
+				(self chart extent x - padding) }
 ]
 
 { #category : #rendering }
@@ -209,9 +209,11 @@ RSChart >> initializeDecorations [
 
 { #category : #initialization }
 RSChart >> initializeRenderOptions [
+	"extent is 250@200 to have a bit larger chart, and a small padding not to make plots
+	overlap with spine decoration, for better visibility"
 
 	self extent: 250 @ 200.
-	self padding: 5 @ 5.
+	self padding: 5 @ 5
 ]
 
 { #category : #inspector }
@@ -307,6 +309,12 @@ RSChart >> padding [
 { #category : #rendering }
 RSChart >> padding: aPoint [
 	self chartExtents padding: aPoint asPoint
+]
+
+{ #category : #accessing }
+RSChart >> plots [
+
+	^ self
 ]
 
 { #category : #removing }

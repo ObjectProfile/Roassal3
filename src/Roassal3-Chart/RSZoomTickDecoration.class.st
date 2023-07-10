@@ -26,7 +26,7 @@ RSZoomTickDecoration >> boxScale [
 RSZoomTickDecoration >> chartElements [
 	| elements |
 	elements := OrderedCollection new.
-	elements add: chart.
+	elements addAll: chart plots.
 	chart verticalTick ifNotNil: [:tick | elements add: tick ].
 	chart horizontalTick ifNotNil: [:tick | elements add: tick ].
 	^ elements
