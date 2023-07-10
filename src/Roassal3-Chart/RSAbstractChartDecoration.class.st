@@ -56,32 +56,34 @@ RSAbstractChartDecoration >> color: aColor [
 
 { #category : #rendering }
 RSAbstractChartDecoration >> createXScale [
+
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	padding := chart padding x.
 	xScale
-		domain:
-			{chart minChartValueX.
-			chart maxChartValueX};
-		range:
-			{0 + padding.
-			chart extent x - padding}
+		domain: {
+				chart minChartValueX.
+				chart maxChartValueX };
+		range: {
+				(0 + padding).
+				(chart extent x - padding) }
 ]
 
 { #category : #rendering }
 RSAbstractChartDecoration >> createYScale [
+
 	| padding |
 	yScale ifNil: [ yScale := NSScale linear ].
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	padding := chart padding y.
 	yScale
-		domain:
-			{chart minChartValueY.
-			chart maxChartValueY};
-		range:
-			{0 - padding.
-			chart extent y negated + padding }
+		domain: {
+				chart minChartValueY.
+				chart maxChartValueY };
+		range: {
+				(0 - padding).
+				(chart extent y negated + padding) }
 ]
 
 { #category : #accessing }

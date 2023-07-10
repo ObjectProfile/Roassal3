@@ -194,8 +194,7 @@ RSChart >> initialize [
 	super initialize.
 	styler := self defaultStyler.
 	decorations := OrderedCollection new.
-	self extent: 250 @ 200.
-	self padding: 15 @ 10.
+	self initializeRenderOptions.
 	self initializeDecorations.
 	colorPalette := self defaultPlotColors
 ]
@@ -206,6 +205,13 @@ RSChart >> initializeDecorations [
 	self spineDecoration: RSChartSpineDecoration new.
 	self addDecoration: RSHorizontalTick new.
 	self addDecoration: RSVerticalTick new
+]
+
+{ #category : #initialization }
+RSChart >> initializeRenderOptions [
+
+	self extent: 250 @ 200.
+	self padding: 5 @ 5.
 ]
 
 { #category : #inspector }

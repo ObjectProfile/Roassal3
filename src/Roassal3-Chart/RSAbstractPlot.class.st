@@ -221,7 +221,7 @@ RSAbstractPlot >> minValueY [
 { #category : #rendering }
 RSAbstractPlot >> renderIn: aCanvas [
 
-	self beforeRenderingIn: self" chart".
+	self beforeRenderingIn: self chart.
 	self decorations do: [ :e |
 		e beforeRenderingIn: self.
 		e renderIn: aCanvas ].

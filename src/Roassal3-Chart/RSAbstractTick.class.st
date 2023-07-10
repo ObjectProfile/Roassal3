@@ -37,7 +37,9 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 	updateChartMaxAndMinValues:, we change the dimensions of the chart. And now we need to
 	recalculate the scales to be consistent with the dimensions."
 	self createXScale.
-	self createYScale
+	chart createXScale.
+	self createYScale.
+	chart createYScale
 ]
 
 { #category : #accessing }

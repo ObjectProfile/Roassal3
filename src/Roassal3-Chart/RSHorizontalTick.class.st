@@ -48,7 +48,7 @@ RSHorizontalTick >> isHorizontalTick [
 
 { #category : #accessing }
 RSHorizontalTick >> max [
-	^ plot maxValueX
+	^ chart maxValueX
 ]
 
 { #category : #accessing }

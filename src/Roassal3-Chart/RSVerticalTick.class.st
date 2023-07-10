@@ -48,12 +48,12 @@ RSVerticalTick >> isVerticalTick [
 
 { #category : #accessing }
 RSVerticalTick >> max [
-	^ plot maxValueY
+	^ chart maxValueY
 ]
 
 { #category : #accessing }
 RSVerticalTick >> min [
-	^ plot minValueY
+	^ chart minValueY
 ]
 
 { #category : #rendering }
