@@ -182,13 +182,20 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> bandsPadding: aNumber [
+	groups do: [ :boxGroup | boxGroup bandsPadding: (aNumber) ].
+	bandsWidth := aNumber.
+]
+
+{ #category : #rendering }
 RSBoxPlot >> bandsWidth [
 	^ bandsWidth
 ]
 
 { #category : #rendering }
 RSBoxPlot >> bandsWidth: aNumber [
-	groups do: [ :boxGroup | boxGroup boxesWidth: (aNumber) ].
+	groups do: [ :boxGroup | boxGroup bandsWidth: (aNumber) ].
+	bandsWidth := aNumber.
 ]
 
 { #category : #rendering }
@@ -236,74 +243,12 @@ RSBoxPlot >> colors: collectionOfColors [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> computeBoxesWidths [
-	| numberOfGroups boxWidth defaultBoxWidth |
-	defaultBoxWidth := 0.5.
-	numberOfGroups := self numberOfGroups.
-	boxWidth := defaultBoxWidth / numberOfGroups.
-	groups do: [ :boxGroup | boxGroup boxesWidth: boxWidth ].
-]
-
-{ #category : #rendering }
 RSBoxPlot >> computeDefualtXTicks [
 	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self maxNumberOfBoxesPerGroup) ].
 ]
 
-{ #category : #rendering }
-RSBoxPlot >> computeGroupsOffsets [
-	| numberOfGroups defaultBoxGroupSpace groupBoxSpace offsets |
-	defaultBoxGroupSpace := 0.66.
-	numberOfGroups := self numberOfGroups.
-	groupBoxSpace := defaultBoxGroupSpace / numberOfGroups.
-	
-	offsets := OrderedCollection new.
-	
-	numberOfGroups odd ifTrue: [ 
-		| indexOfTheMiddle currentIndex counter |
-		indexOfTheMiddle := (numberOfGroups / 2) ceiling. 
-		currentIndex := 1.
-		counter := 1.
-		[currentIndex < indexOfTheMiddle] whileTrue: [ 
-			offsets addFirst: (0-(groupBoxSpace * counter)).
-			counter := counter + 1.
-			currentIndex := currentIndex + 1.
-		].
-		currentIndex := indexOfTheMiddle.
-		counter := 0.
-		[currentIndex <= numberOfGroups] whileTrue: [ 
-			offsets add: (groupBoxSpace * counter).
-			counter := counter + 1.
-			currentIndex := currentIndex + 1.
-		].
-	].
-	
-	numberOfGroups even ifTrue: [ 
-		| indexOfTheMiddle currentIndex counter |
-		indexOfTheMiddle := (numberOfGroups / 2). 
-		currentIndex := 1.
-		counter := 0.
-		[currentIndex <= indexOfTheMiddle] whileTrue: [ 
-			offsets addFirst: (0-(groupBoxSpace/2)-(groupBoxSpace * counter)).
-			counter := counter + 1.
-			currentIndex := currentIndex + 1.
-		].
-		currentIndex := indexOfTheMiddle.
-		counter := 0.
-		[currentIndex < numberOfGroups] whileTrue: [ 
-			offsets add: ((groupBoxSpace/2) + (groupBoxSpace * counter)).
-			counter := counter + 1.
-			currentIndex := currentIndex + 1.
-		].
-	].
-	
-	groups doWithIndex: [ :boxGroup :idx | 
-		boxGroup groupOffset: (offsets at: idx)
-	].
-]
-
 { #category : #private }
 RSBoxPlot >> computeState [
-	self computeBoxesWidths.
 	self computeXValues.
 	self computeYValues.
 	self computeDefualtXTicks.
@@ -341,7 +286,7 @@ RSBoxPlot >> data: aCollection [
 
 { #category : #accessing }
 RSBoxPlot >> defaultBandsWidth [
-	^ 0.66
+	^ 1
 ]
 
 { #category : #initialization }

@@ -42,6 +42,16 @@ RSBoxPlotShapeGroup class >> data: aCollection scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
+RSBoxPlotShapeGroup >> bandsPadding: aNumber [
+	boxGraphics do: [ :boxGraph | boxGraph bandPadding: aNumber ]
+]
+
+{ #category : #accessing }
+RSBoxPlotShapeGroup >> bandsWidth: aNumber [
+	boxGraphics do: [ :boxGraph | boxGraph bandWidth: aNumber ]
+]
+
+{ #category : #accessing }
 RSBoxPlotShapeGroup >> boxGraphics [
 	^ boxGraphics.
 ]

@@ -11,7 +11,8 @@ Class {
 		'color',
 		'xScale',
 		'yScale',
-		'graphCenter'
+		'graphCenter',
+		'bandPadding'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -30,6 +31,16 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 	boxGraph := self data: collectionOfData1D.
 	boxGraph scales: collectionOfNSScales.
 	^ boxGraph.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> bandPadding: aNumber [
+	bandPadding := aNumber
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> bandWidth: aNumber [
+	self boxWidth: aNumber - (aNumber * 0.2).
 ]
 
 { #category : #accessing }
@@ -114,6 +125,11 @@ RSBoxPlotShape >> data: collectionOfData1D [
 ]
 
 { #category : #defaults }
+RSBoxPlotShape >> defaultBandPadding [
+	^ 0.2
+]
+
+{ #category : #defaults }
 RSBoxPlotShape >> defaultBoxWidth [
 	^ 0.7
 ]
@@ -143,6 +159,7 @@ RSBoxPlotShape >> initialize [
 	super initialize.
 	boxWidth := self defaultBoxWidth.
 	graphCenter := self defaultGraphCenter.
+	bandPadding := self defaultBandPadding.
 ]
 
 { #category : #accessing }

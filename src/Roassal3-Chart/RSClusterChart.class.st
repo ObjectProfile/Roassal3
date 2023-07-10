@@ -65,11 +65,22 @@ RSClusterChart >> computeBandsOffset [
 
 { #category : #adding }
 RSClusterChart >> computeBandsWidth [
-	| plotBandsWith numberOfPlots newBandWidth |
+	| numberOfPlots newBandWidth |
 	numberOfPlots := self plots size.
-	plotBandsWith := self plots first bandsWidth.
-	newBandWidth := plotBandsWith / numberOfPlots.
-	self plots do: [ :plot | plot bandsWidth: newBandWidth. ].
+	newBandWidth := (self defaultBandsWidth - self defaultClusterPadding) / numberOfPlots.
+	self plots do: [ :plot | 
+		plot bandsWidth: newBandWidth.
+	].
+]
+
+{ #category : #adding }
+RSClusterChart >> defaultBandsWidth [
+	^ 1
+]
+
+{ #category : #adding }
+RSClusterChart >> defaultClusterPadding [
+	^ 0.3
 ]
 
 { #category : #adding }
