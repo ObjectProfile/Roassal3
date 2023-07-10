@@ -31,7 +31,8 @@ Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'groups'
+		'groups',
+		'bandsWidth'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -178,6 +179,16 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 	p1 := self data: y1. "blue"
 	p1 xTickLabels: { 'Day 1'. 'Day 2'. }.
 	^ p1 open.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> bandsWidth [
+	^ bandsWidth
+]
+
+{ #category : #rendering }
+RSBoxPlot >> bandsWidth: aNumber [
+	groups do: [ :boxGroup | boxGroup boxesWidth: (aNumber) ].
 ]
 
 { #category : #rendering }
@@ -328,6 +339,11 @@ RSBoxPlot >> data: aCollection [
 	self computeState.
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> defaultBandsWidth [
+	^ 0.66
+]
+
 { #category : #initialization }
 RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
@@ -347,6 +363,7 @@ RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
 RSBoxPlot >> initialize [
 	super initialize.
 	chart := RSChart new.
+	bandsWidth := self defaultBandsWidth.
 ]
 
 { #category : #testing }
@@ -367,6 +384,13 @@ RSBoxPlot >> numberOfBoxes [
 { #category : #rendering }
 RSBoxPlot >> numberOfGroups [
 	^ groups size.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> offset: aNumber [
+	groups do: [ :boxGroup  | 
+		boxGroup groupOffset: aNumber
+	].
 ]
 
 { #category : #public }

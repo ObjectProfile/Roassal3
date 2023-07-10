@@ -44,6 +44,7 @@ RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	chart := boxPlotA + boxPlotB.
 	self assert: chart plots first identicalTo: boxPlotA.
 	self assert: chart plots second identicalTo: boxPlotB.
+	chart open.
 ]
 
 { #category : #'tests - adding' }

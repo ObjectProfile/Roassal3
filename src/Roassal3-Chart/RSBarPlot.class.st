@@ -65,6 +65,11 @@ RSBarPlot >> bottom: aCollection [
 	bottom := aCollection
 ]
 
+{ #category : #testing }
+RSBarPlot >> canHandleCluster [
+	^ true
+]
+
 { #category : #hooks }
 RSBarPlot >> computeRectagleFor: aPoint index: index [
 	| origin corner sizeOffset offset zero |

@@ -3,3 +3,76 @@ Class {
 	#superclass : #RSChart,
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #adding }
+RSClusterChart >> addPlot: aPlot [
+	super addPlot: aPlot.
+	self computeBandsWidth.
+	self computeBandsOffset.
+	^ aPlot
+]
+
+{ #category : #adding }
+RSClusterChart >> computeBandsOffset [
+	| numberOfPlots bandsWidth offsets |
+	numberOfPlots := self plots size.
+	bandsWidth := self plots first bandsWidth.
+	
+	offsets := OrderedCollection new.
+	
+	numberOfPlots odd ifTrue: [ 
+		| indexOfTheMiddle currentIndex counter |
+		indexOfTheMiddle := (numberOfPlots / 2) ceiling. 
+		currentIndex := 1.
+		counter := 1.
+		[currentIndex < indexOfTheMiddle] whileTrue: [ 
+			offsets addFirst: (0-(bandsWidth * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+		currentIndex := indexOfTheMiddle.
+		counter := 0.
+		[currentIndex <= numberOfPlots] whileTrue: [ 
+			offsets add: (bandsWidth * counter).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+	].
+	
+	numberOfPlots even ifTrue: [ 
+		| indexOfTheMiddle currentIndex counter |
+		indexOfTheMiddle := (numberOfPlots / 2). 
+		currentIndex := 1.
+		counter := 0.
+		[currentIndex <= indexOfTheMiddle] whileTrue: [ 
+			offsets addFirst: (0-(bandsWidth/2)-(bandsWidth * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+		currentIndex := indexOfTheMiddle.
+		counter := 0.
+		[currentIndex < numberOfPlots] whileTrue: [ 
+			offsets add: ((bandsWidth/2) + (bandsWidth * counter)).
+			counter := counter + 1.
+			currentIndex := currentIndex + 1.
+		].
+	].
+	
+	self plots doWithIndex: [ :plot :idx | 
+		plot offset: (offsets at: idx)
+	].
+]
+
+{ #category : #adding }
+RSClusterChart >> computeBandsWidth [
+	| plotBandsWith numberOfPlots newBandWidth |
+	numberOfPlots := self plots size.
+	plotBandsWith := self plots first bandsWidth.
+	newBandWidth := plotBandsWith / numberOfPlots.
+	self plots do: [ :plot | plot bandsWidth: newBandWidth. ].
+]
+
+{ #category : #adding }
+RSClusterChart >> defaultPlotDomainLength [
+	^ 38
+]
