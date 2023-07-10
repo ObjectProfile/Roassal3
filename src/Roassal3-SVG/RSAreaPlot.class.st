@@ -79,6 +79,7 @@ RSAreaPlot >> pointFor: aPoint [
 
 { #category : #rendering }
 RSAreaPlot >> renderIn: canvas [
+	super renderIn: canvas.
 	canvas add: (area := self shape copy
 		color: self computeColor;
 		svgPath: self computePath;

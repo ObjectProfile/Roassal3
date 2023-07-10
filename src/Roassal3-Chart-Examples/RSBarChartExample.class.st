@@ -151,9 +151,8 @@ RSBarChartExample >> example04VerticalStack [
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
-	c barHeights: menMeans.
-	(c barHeights: womenMeans)
-		bottom: menMeans.
+	c add: (RSChart barHeights: menMeans).
+	c add: ((RSChart barHeights: womenMeans) bottom: menMeans).
 	c horizontalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
 	c verticalTick integer.
 	c ylabel: 'Scores'.
@@ -170,24 +169,24 @@ RSBarChartExample >> example04VerticalStack [
 
 { #category : #examples }
 RSBarChartExample >> example05HorizontalStack [
+
 	<script: 'self new example05HorizontalStack open'>
 	| c menMeans womenMeans lb |
 	c := RSCompositeChart new.
-	c extent: 300@200.
-	menMeans := #(20 35 30 35 27).
-	womenMeans := #(25 32 34 20 25).
-	c barWidths: menMeans.
-	(c barWidths: womenMeans)
-		left: menMeans.
+	c extent: 300 @ 200.
+	menMeans := #( 20 35 30 35 27 ).
+	womenMeans := #( 25 32 34 20 25 ).
+	c add: (RSChart barWidths: menMeans).
+	c add: ((RSChart barWidths: womenMeans) left: menMeans).
 	c horizontalTick integer.
-	c verticalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
+	c verticalTick fromNames: #( Day1 Day2 Day3 Day4 Day5 ).
 	c xlabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
 	lb := RSLegend new.
 	lb layout horizontal.
-	#(Men Women) doWithIndex: [ :lbl :index |
-		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
+	#( Men Women ) doWithIndex: [ :lbl :index |
+		lb text: lbl withBoxColor: (c plots at: index) computeColor ].
 	lb container: c canvas.
 	lb build.
 	^ c canvas

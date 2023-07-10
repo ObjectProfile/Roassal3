@@ -41,6 +41,26 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #'public - plots' }
+RSChart class >> barHeights: aCollectionY [
+
+	^ RSBarPlot new x: (1 to: aCollectionY size) y: aCollectionY
+]
+
+{ #category : #'public - plots' }
+RSChart class >> barWidths: aCollectionX [
+
+	^ RSHorizontalBarPlot new
+		  x: aCollectionX
+		  y: (1 to: aCollectionX size)
+]
+
+{ #category : #'public - plots' }
+RSChart class >> lineX: aCollectionX y: aCollectionY [
+
+	^ RSLinePlot new x: aCollectionX y: aCollectionY
+]
+
 { #category : #decorations }
 RSChart >> addDecoration: aDecoration [
 	"Add a decoration to the chart

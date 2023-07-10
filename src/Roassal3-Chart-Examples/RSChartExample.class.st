@@ -272,10 +272,9 @@ RSChartExample >> example20Grid [
 	<script: 'self new example20Grid open'>
 	| c x y vertical horizontal |
 
-	c := RSCompositeChart new.
 	x := 0 to: 10.
 	y := x raisedTo: 2.
-	c lineX: x y: y.
+	c := RSChart lineX: x y: y.
 	vertical := c verticalTick.
 	vertical shape dashed.
 	vertical configuration tickSize: c extent x negated.
@@ -370,28 +369,32 @@ RSChartExample >> example22CustomPopup [
 	y := values collect: #value.
 	popup := RSPopupDecoration new.
 	c := RSCompositeChart new.
-	c extent: 400@ 150.
+	c extent: 400 @ 150.
 	c add: (RSAreaPlot new
-		x: x y1: y y2: 750;
-		color: ((LinearGradientPaint fromArray: {
-				0 -> Color green translucent.
-				0.75 -> Color transparent
-			 })
-			start: 0@ -100;
-			stop: 0@100;
-			yourself)).
-	(c lineX: x y: y) color: Color gray.
+			 x: x y1: y y2: 750;
+			 color: ((LinearGradientPaint fromArray: {
+							   (0 -> Color green translucent).
+							   (0.75 -> Color transparent) })
+					  start: 0 @ -100;
+					  stop: 0 @ 100;
+					  yourself)).
+	c add: ((RSChart lineX: x y: y) color: Color gray).
 
-	c horizontalTick fromNames: names; useDiagonalLabel.
+	c horizontalTick
+		fromNames: names;
+		useDiagonalLabel.
 	c addDecoration: popup.
-	popup chartPopupBuilder: (RSBlockChartPopupBuilder new
-		rowShapeBlock: [:plot :point |
-			value := RSLabel new text: point y; bold.
-			date := RSLabel new text: (names at: point x).
-			group := { value. date }.
-			RSHorizontalLineLayout on: group.
-			group asShape
-			 ]).
+	popup chartPopupBuilder:
+		(RSBlockChartPopupBuilder new rowShapeBlock: [ :plot :point |
+			 value := RSLabel new
+				          text: point y;
+				          bold.
+			 date := RSLabel new text: (names at: point x).
+			 group := {
+				          value.
+				          date }.
+			 RSHorizontalLineLayout on: group.
+			 group asShape ]).
 	^ c
 ]
 
@@ -414,14 +417,13 @@ RSChartExample >> example23PopupInScatterPlot [
 
 { #category : #examples }
 RSChartExample >> example24SpineLine [
+
 	<script: 'self new example24SpineLine open'>
 	| x c y spine |
-
 	x := -3.14 to: 3.14 by: 0.01.
 	y := x sin * 0.22 + 0.2.
-	c := RSCompositeChart new.
-	c extent: 400@300.
-	c lineX: x y: y.
+	c := RSChart lineX: x y: y.
+	c extent: 400 @ 300.
 	c spineDecoration: (spine := RSLineSpineDecoration new).
 	spine shape format: '^'.
 	c padding: 10.

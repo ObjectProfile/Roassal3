@@ -65,25 +65,6 @@ RSCompositeChart >> addAll: aCollection [
 	aCollection do: [ :each | self add: each ]
 ]
 
-{ #category : #'public - plots' }
-RSCompositeChart >> barHeights: aCollectionY [
-
-	| res |
-	self add:
-		(res := RSBarPlot new x: (1 to: aCollectionY size) y: aCollectionY).
-	^ res
-]
-
-{ #category : #'public - plots' }
-RSCompositeChart >> barWidths: aCollectionX [
-
-	| res |
-	self add: (res := RSHorizontalBarPlot new
-			        x: aCollectionX
-			        y: (1 to: aCollectionX size)).
-	^ res
-]
-
 { #category : #adding }
 RSCompositeChart >> chart [
 
