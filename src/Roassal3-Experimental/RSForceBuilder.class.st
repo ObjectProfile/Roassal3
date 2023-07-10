@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSForceBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'interferences',
 		'particles',

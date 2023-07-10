@@ -3,7 +3,7 @@ I am a abstract class to create visual elements based on tree structured in roas
 "
 Class {
 	#name : #RSAbstractTreeBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'rootNodes',
 		'weight'

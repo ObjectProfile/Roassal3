@@ -18,7 +18,7 @@ The input data source should implement these methods:
 "
 Class {
 	#name : #RSCoOccurrenceMatrixBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'colorScale',
 		'dataSource',

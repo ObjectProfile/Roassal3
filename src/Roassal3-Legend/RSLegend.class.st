@@ -28,7 +28,7 @@ c
 "
 Class {
 	#name : #RSLegend,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'layout',
 		'defaults',

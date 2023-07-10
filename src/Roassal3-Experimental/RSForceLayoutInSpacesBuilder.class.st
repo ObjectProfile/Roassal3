@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSForceLayoutInSpacesBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'numberOfSpaces',
 		'spaces',

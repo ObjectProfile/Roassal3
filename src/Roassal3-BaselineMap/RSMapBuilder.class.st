@@ -3,7 +3,7 @@ I am a builder that can be used to generate dependencies between baselines
 "
 Class {
 	#name : #RSMapBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'models',
 		'baseline',

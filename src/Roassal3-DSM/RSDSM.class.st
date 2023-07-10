@@ -4,7 +4,7 @@ For a collection of objects and an arbitrary dependency function.
 "
 Class {
 	#name : #RSDSM,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'shape',
 		'objectsX',

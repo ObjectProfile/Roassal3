@@ -3,7 +3,7 @@ this class is related to radar visualization
 "
 Class {
 	#name : #RSKiviat,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'values',
 		'axisNames',

@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSAlpharo,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'objects',
 		'jarShape',

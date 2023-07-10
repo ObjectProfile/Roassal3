@@ -7,7 +7,7 @@ https://www.d3-graph-gallery.com/sankey
 "
 Class {
 	#name : #RSSankey,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'extent',
 		'nodePadding',

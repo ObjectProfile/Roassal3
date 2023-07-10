@@ -30,7 +30,7 @@ c
 "
 Class {
 	#name : #RSChart,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'elements',
 		'extents',

@@ -3,7 +3,7 @@ I am an example
 "
 Class {
 	#name : #RSPunchCardBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'objects',
 		'metrics',
@@ -17,6 +17,16 @@ RSPunchCardBuilder >> addMetric: aRoassalValue name: name [
 	metrics at: name put: aRoassalValue
 ]
 
+{ #category : #accessing }
+RSPunchCardBuilder >> boxSize [
+	^ size
+]
+
+{ #category : #accessing }
+RSPunchCardBuilder >> boxSize: aNumber [
+	size := aNumber
+]
+
 { #category : #'accessing - defaults' }
 RSPunchCardBuilder >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
@@ -26,7 +36,7 @@ RSPunchCardBuilder >> defaultContainer [
 RSPunchCardBuilder >> initialize [
 	super initialize.
 	metrics := OrderedDictionary new.
-	size := 10
+	self boxSize: 10
 ]
 
 { #category : #hooks }

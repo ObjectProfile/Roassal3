@@ -3,7 +3,7 @@ Used as example
 "
 Class {
 	#name : #RSAdjacencyMatrixBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'connections',
 		'objects'
