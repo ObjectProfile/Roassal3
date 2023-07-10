@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #accessing }
+RSAbstractBarPlot >> bandWidthRange: barWidthInScaleRangeUnits [
+	self barSize: barWidthInScaleRangeUnits.
+]
+
+{ #category : #accessing }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
 ]

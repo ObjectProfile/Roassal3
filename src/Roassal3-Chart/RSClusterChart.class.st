@@ -6,9 +6,22 @@ Class {
 
 { #category : #adding }
 RSClusterChart >> addPlot: aPlot [
+	| scale clusterPadding bandPadding clusterScale |
 	super addPlot: aPlot.
-	self computeBandsWidth.
-	self computeBandsOffset.
+	clusterPadding := 0.1.
+	scale := NSScale ordinal
+		domain: aPlot xValues;
+		rangeBands: { self padding x. self extent x - self padding x} padding: clusterPadding.
+	bandPadding := 0.05.
+	clusterScale := NSScale ordinal
+		domain: (1 to: self numberOfPlots);
+		rangeBands: {0. scale rangeBand} padding: bandPadding.
+	self plots doWithIndex: [ :plot :index |
+		| positionInInnerOrdinalScale |
+		positionInInnerOrdinalScale := clusterScale scale: index.	
+		plot bandWidthRange: clusterScale rangeBand.
+		plot barOffset: positionInInnerOrdinalScale - (scale rangeBand/2) 
+	].
 	^ aPlot
 ]
 
