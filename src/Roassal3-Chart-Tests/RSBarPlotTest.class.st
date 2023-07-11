@@ -78,7 +78,7 @@ RSBarPlotTest >> testPaddingIsCorrect [
 
 	plot build.
 	
-	self assert: plot padding equals: 15 @ 10
+	self assert: plot padding equals: 5 @ 5
 ]
 
 { #category : #tests }

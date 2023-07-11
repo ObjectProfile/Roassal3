@@ -23,7 +23,7 @@ RSAbstractPlotTest >> classToTest [
 RSAbstractPlotTest >> setUp [
 
 	super setUp.
-	x := 0 to: 6 by: 0.1.
+	x := 0 to: 6 by: 0.01.
 	y := x sin.
 	plot := self classToTest new x: x y: y
 ]
@@ -122,7 +122,7 @@ RSAbstractPlotTest >> testPaddingIsCorrect [
 
 	plot build.
 	
-	self assert: plot padding equals: 15 @ 10
+	self assert: plot padding equals: 5 @ 5
 ]
 
 { #category : #tests }
@@ -270,9 +270,10 @@ RSAbstractPlotTest >> testYMarker [
 
 	line := marker createMarkerLineFromPlot: plot.
 
+	self assert: plot maxValueY =~ 1.
 	self
 		assert: line from
-		equals: 0 @ (plot yScale scale: plot maxValueY).
+		equals: 0 @ (plot yScale scale: 1).
 	self assert: line to equals: (plot xScale scale: plot maxValueX)
-		@ (plot yScale scale: plot maxValueY)
+		@ (plot yScale scale: 1)
 ]

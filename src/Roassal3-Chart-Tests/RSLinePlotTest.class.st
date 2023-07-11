@@ -17,7 +17,7 @@ RSLinePlotTest >> testDefaultValues [
 	p xlabel: 'X label'.
 	p build.
 	self assert: p extent equals: 250 @ 200.
-	self assert: p padding equals: 15 @ 10.
+	self assert: p padding equals: 5 @ 5.
 ]
 
 { #category : #tests }

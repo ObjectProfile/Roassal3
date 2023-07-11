@@ -35,11 +35,11 @@ RSCompositeChartTest >> testExtentIsCorrect [
 	| plot x |
 	plot := RSLinePlot new x: (x := 1 to: 5 by: 0.1) y: x sin.
 	chart add: plot.
-	chart extent: 200 @ 200.
+	chart extent: 250 @ 200.
 
 	chart build.
 
-	self assert: plot extent equals: 200 @ 200
+	self assert: plot extent equals: 250 @ 200
 ]
 
 { #category : #running }
