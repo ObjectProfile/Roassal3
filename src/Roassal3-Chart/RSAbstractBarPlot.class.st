@@ -1,5 +1,16 @@
 "
-The abstract class for bar plots
+<keyClass>
+`RSChart` is the abstract class that encompass bar plots.
+
+*Responsibility*: maintain and render bar plots.
+
+*Collaborators*: a plot closely interacts with decorations and can be added in a `RSCompositeChart`. 
+
+*Variables*:
+- barSize: the size of the bars
+- bars: all the bars of the plot
+- gapRatio: 
+- barOffset: shifts the bars left or right
 "
 Class {
 	#name : #RSAbstractBarPlot,

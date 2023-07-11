@@ -25,12 +25,10 @@ Here is an example for the number of lines of code of `Collection` and its subcl
 
 ```
 classes := Collection withAllSubclasses.
-c := RSChart new.
 plot := RSHistogramPlot of: classes on: #linesOfCode.
 plot bins: (0 to: 1000 by: 20) , {1000. 2000. 3000 }.
 
-c addPlot: plot.
-c show
+p show
 ```
 "
 Class {

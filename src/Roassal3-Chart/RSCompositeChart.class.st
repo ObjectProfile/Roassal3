@@ -1,30 +1,28 @@
 "
 <keyClass>
-`RSChart` is the main class to build charts.
+`RSCompositeChart` is the main class to build charts.
 
 *Responsibility*: maintain and render plots
 
 *Collaborators*: a chart closely interacts with plots and decorations. 
 
 *Variables*:
-- `plots`: the list of plots 
-- `extent`: size of the produced chart. Note that this extent is for the area on which plots are draw. It does not comprise ticks and axis titles
-- `decorations`: collection of decorations to annotate the chart
-- `generator`: nice label generator, useful to have labels that are visually appealing
-- `colors`: default color palette
+- `plots`: the list of plots
 
 *Example*:
 Here is an example that adjust the font size used for the title, and axis labels:
 
 ```Smalltalk
 x := -3.14 to: 3.14 by: 0.1.
-y := x sin.
+y1 := x sin.
+y2 := x cos.
 
-c := RSChart new.
-c addPlot: (RSLinePlot new x: x y: y).
+c := RSCompositeChart new.
+c add: (RSLinePlot new x: x y: y1).
+c add: (RSLinePlot new x: x y: y2).
 c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
 c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; vertical).
+c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15).
 c
 ```
 "
@@ -80,6 +78,7 @@ RSCompositeChart >> initialize [
 
 { #category : #'accessing - extension' }
 RSCompositeChart >> maxChartValueX [
+	"if not set before, returns the maximum x value of all the plots"
 
 	^ self chartExtents maxValueX
 		  ifNil: [
@@ -92,6 +91,7 @@ RSCompositeChart >> maxChartValueX [
 
 { #category : #'accessing - extension' }
 RSCompositeChart >> maxChartValueY [
+	"if not set before, returns the maximum y value of all the plots"
 
 	^ self chartExtents maxValueY
 		  ifNil: [
@@ -104,6 +104,7 @@ RSCompositeChart >> maxChartValueY [
 
 { #category : #'accessing - extension' }
 RSCompositeChart >> minChartValueX [
+	"if not set before, returns the minimum x value of all the plots"
 
 	^ self chartExtents minValueX
 		  ifNil: [
@@ -116,6 +117,7 @@ RSCompositeChart >> minChartValueX [
 
 { #category : #'accessing - extension' }
 RSCompositeChart >> minChartValueY [
+	"if not set before, returns the minimum y value of all the plots"
 
 	^ self chartExtents minValueY
 		  ifNil: [
@@ -138,6 +140,14 @@ RSCompositeChart >> openOnce [
 
 	self build.
 	^ self canvas openOnce
+]
+
+{ #category : #rendering }
+RSCompositeChart >> padding: aPoint [
+
+	super padding: aPoint.
+	plots ifNil: [ ^ self ].
+	plots do: [ :plot | plot padding: aPoint ]
 ]
 
 { #category : #accessing }

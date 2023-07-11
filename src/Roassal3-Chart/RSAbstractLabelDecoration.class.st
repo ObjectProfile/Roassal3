@@ -1,5 +1,15 @@
 "
-TODO
+<keyClass>
+`RSAbstractLabelDecoration` is the abstract class for chart labels.
+
+*Responsibility*: manage label decorations for charts.
+
+*Collaborators*: interacts with charts. 
+
+*Variables*:
+- location: how the label is located.
+- label: the label as an `RSLabel` object.
+- title: the title of the label.
 "
 Class {
 	#name : #RSAbstractLabelDecoration,

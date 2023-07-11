@@ -3,24 +3,21 @@ Set some markers along the Y axis.
 
 -=-=-=-=-=-=-=-=-=
 x := (-3.14 to: 3.14 by: 0.01).
-c := RSChart new.
 
 p := RSLinePlot new.
 p x: x y: x sin * 0.22 + 0.5.
-c addPlot: p.
 
 
-c addDecoration: RSHorizontalTick new.
-c addDecoration: (RSVerticalTick new asFloat).
+p verticalTick asFloat.
 
-c addDecoration: (RSYMarkerDecoration new average).
-c addDecoration: (RSYMarkerDecoration new min).
-c addDecoration: (RSYMarkerDecoration new max).
+p addDecoration: (RSYMarkerDecoration new average).
+p addDecoration: (RSYMarkerDecoration new min).
+p addDecoration: (RSYMarkerDecoration new max).
 
-c addDecoration: (RSXMarkerDecoration new max).
-c addDecoration: (RSXMarkerDecoration new min).
-c addDecoration: (RSXMarkerDecoration new value: 0).
-c 
+p addDecoration: (RSXMarkerDecoration new max).
+p addDecoration: (RSXMarkerDecoration new min).
+p addDecoration: (RSXMarkerDecoration new value: 0).
+p 
 -=-=-=-=-=-=-=-=-=
 "
 Class {

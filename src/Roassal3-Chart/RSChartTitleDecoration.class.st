@@ -1,6 +1,6 @@
 "
 <keyClass>
-`RSChartTitleDecoration` is a `RSChartDecoration` that adds a title to a chart.
+`RSChartTitleDecoration` is a `RSAbstractChartDecoration` that adds a title to a chart.
 
 *Responsibility*: To display a title on top of a chart per default
 
@@ -8,14 +8,13 @@
 
 *Example*:
 ```Smalltalk
-c := RSChart new.
-c addPlot: (RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt).
-c addDecoration: (RSChartTitleDecoration new title: 'Square root').
+p := RSLinePlot new x: (1 to: 200) y: (1 to: 200) sqrt.
+p addDecoration: (RSChartTitleDecoration new title: 'Square root').
 
 ""The line above can also be writen as:
-c title: 'Square root'.
+p title: 'Square root'.
 ""
-c open
+p open
 ```
 "
 Class {

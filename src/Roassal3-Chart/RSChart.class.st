@@ -201,6 +201,7 @@ RSChart >> initialize [
 
 { #category : #initialization }
 RSChart >> initializeDecorations [
+	"adds the basis decorations to the chart"
 
 	self spineDecoration: RSChartSpineDecoration new.
 	self addDecoration: RSHorizontalTick new.
@@ -233,55 +234,63 @@ RSChart >> inspectorCanvasContext: aContext [
 
 { #category : #accessing }
 RSChart >> maxChartValueX [
+	"the maximum value displayed on the x-axis of the chart"
 
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
 RSChart >> maxChartValueX: aNumber [
+	"sets the maximum value displayed on the x-axis of the chart"
 
 	self chartExtents maxValueX: aNumber
 ]
 
 { #category : #accessing }
 RSChart >> maxChartValueY [
+	"the maximum value displayed on the y-axis of the chart"
 
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
 RSChart >> maxChartValueY: aNumber [
+	"sets the maximum value displayed on the y-axis of the chart"
 
 	self chartExtents maxValueY: aNumber
 ]
 
 { #category : #accessing }
 RSChart >> minChartValueX [
+	"the minimum value displayed on the x-axis of the chart"
 
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
 RSChart >> minChartValueX: aNumber [
+	"sets the minimum value displayed on the x-axis of the chart"
 
 	self chartExtents minValueX: aNumber
 ]
 
 { #category : #accessing }
 RSChart >> minChartValueY [
+	"the minimum value displayed on the y-axis of the chart"
 
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
 RSChart >> minChartValueY: aNumber [
+	"sets the minimum value displayed on the y-axis of the chart"
 
 	self chartExtents minValueY: aNumber
 ]
 
 { #category : #rendering }
 RSChart >> mustInclude0inX [
-	"Make sure that the 0 value is in the chart"
+	"Make sure that the 0 value is in the x-axis of the chart"
 
 	(0 between: self minChartValueX and: self maxChartValueX) ifTrue: [ ^ self ].
 
@@ -292,7 +301,7 @@ RSChart >> mustInclude0inX [
 
 { #category : #rendering }
 RSChart >> mustInclude0inY [
-	"Make sure that the 0 value is in the chart"
+	"Make sure that the 0 value is in the y-axis of the chart"
 
 	(0 between: self minChartValueY and: self maxChartValueY) ifTrue: [ ^ self ].
 
@@ -303,11 +312,15 @@ RSChart >> mustInclude0inY [
 
 { #category : #accessing }
 RSChart >> padding [
+	"the space between the spine and the plots"
+
 	^ self chartExtents padding
 ]
 
 { #category : #rendering }
 RSChart >> padding: aPoint [
+	"adds a space corresponding to aPoint between the spine and plots"
+
 	self chartExtents padding: aPoint asPoint
 ]
 

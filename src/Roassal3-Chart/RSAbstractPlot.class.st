@@ -1,5 +1,16 @@
 "
-TODO
+<keyClass>
+`RSAbstractPlot` is the abstract class that encompass plots.
+
+*Responsibility*: maintain and render plots.
+
+*Collaborators*: a plot closely interacts with decorations and can be added in a `RSCompositeChart`. 
+
+*Variables*:
+- chart: if the plot is added into a chart, refers to this chart, else refers to the plot itself
+- shape: the shape of the plot
+- xValues: the x values of the plot
+- yValues: the y values of the plot
 "
 Class {
 	#name : #RSAbstractPlot,
@@ -148,6 +159,7 @@ RSAbstractPlot >> isVerticalBarPlot [
 
 { #category : #rendering }
 RSAbstractPlot >> maxChartValueX [
+	"if not set before, returns the maximum x value of the plot"
 
 	^ self chartExtents maxValueX
 		  ifNil: [
@@ -159,6 +171,7 @@ RSAbstractPlot >> maxChartValueX [
 
 { #category : #rendering }
 RSAbstractPlot >> maxChartValueY [
+	"if not set before, returns the maximum y value of the plot"
 
 	^ self chartExtents maxValueY
 		  ifNil: [
@@ -184,6 +197,7 @@ RSAbstractPlot >> maxValueY [
 
 { #category : #rendering }
 RSAbstractPlot >> minChartValueX [
+	"if not set before, returns the minimum x value of the plot"
 
 	^ self chartExtents minValueX
 		  ifNil: [
@@ -195,6 +209,7 @@ RSAbstractPlot >> minChartValueX [
 
 { #category : #rendering }
 RSAbstractPlot >> minChartValueY [
+	"if not set before, returns the minimum y value of the plot"
 
 	^ self chartExtents minValueY
 		  ifNil: [

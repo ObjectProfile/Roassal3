@@ -1,5 +1,17 @@
 "
-TODO
+<keyClass>
+`RSAbstractChartDecoration` is the abstract class for chart decorations.
+
+*Responsibility*: manage decorations for charts.
+
+*Collaborators*: interacts with charts. 
+
+*Variables*:
+- xScale:	 the scale of the x-axis
+- yScale:	 the scale of the y-axis
+- chart: the chart in which the decoration is
+- shape: the shape of the decoration
+- styler: the style of the decoration
 "
 Class {
 	#name : #RSAbstractChartDecoration,
@@ -112,12 +124,6 @@ RSAbstractChartDecoration >> initialize [
 	styler := self defaultStyler
 ]
 
-{ #category : #testing }
-RSAbstractChartDecoration >> isDecoration [
-
-	^ true
-]
-
 { #category : #accessing }
 RSAbstractChartDecoration >> isHorizontalTick [
 
@@ -158,6 +164,12 @@ RSAbstractChartDecoration >> isXLabel [
 RSAbstractChartDecoration >> isYLabel [
 
 	^ false
+]
+
+{ #category : #rendering }
+RSAbstractChartDecoration >> renderIn: aCanvas [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

@@ -9,13 +9,10 @@
 *Example*:
 ```Smalltalk
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSChart new.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
-	c addPlot: p.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new asFloat.
-	c
+	p verticalTick asFloat.
+	p
 ```
 "
 Class {
