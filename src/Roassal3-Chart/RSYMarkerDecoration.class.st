@@ -46,10 +46,10 @@ RSYMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 { #category : #'public - configuration' }
 RSYMarkerDecoration >> max [
-	getRelevantValueBlock := [ :p | p maxValueY ]
+	getRelevantValueBlock := [ :p | p maxChartValueY ]
 ]
 
 { #category : #'public - configuration' }
 RSYMarkerDecoration >> min [
-	getRelevantValueBlock := [ :p | p minValueY ]
+	getRelevantValueBlock := [ :p | p minChartValueY ]
 ]

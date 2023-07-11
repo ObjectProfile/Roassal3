@@ -149,10 +149,9 @@ RSCompositeChart >> plots [
 { #category : #hooks }
 RSCompositeChart >> renderIn: aCanvas [
 
-	decorations, plots do: [ :element |
-		element beforeRenderingIn: self.
-		element renderIn: aCanvas ].
-	shapes := decorations, plots
+	decorations , plots do: [ :element | element beforeRenderingIn: self ].
+	decorations , plots do: [ :element | element renderIn: aCanvas ].
+	shapes := decorations , plots
 		          flatCollect: [ :element | element createdShapes ]
 		          as: RSGroup
 ]

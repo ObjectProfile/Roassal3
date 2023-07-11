@@ -47,12 +47,12 @@ RSXMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 { #category : #'public - configuration' }
 RSXMarkerDecoration >> max [
-	getRelevantValueBlock := [ :p | p maxValueX ]
+	getRelevantValueBlock := [ :p | p maxChartValueX ]
 ]
 
 { #category : #'public - configuration' }
 RSXMarkerDecoration >> min [
-	getRelevantValueBlock := [ :p | p minValueX ]
+	getRelevantValueBlock := [ :p | p minChartValueX ]
 ]
 
 { #category : #'public - configuration' }

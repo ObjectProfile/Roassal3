@@ -43,12 +43,13 @@ RSBarPlot >> barScale [
 
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
+		            domain: xValues;
+		            rangeBands: xScale range padding: gapRatio.
 	aChart xScale: barScale
 ]
 

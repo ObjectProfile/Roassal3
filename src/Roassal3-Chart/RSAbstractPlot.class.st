@@ -222,9 +222,8 @@ RSAbstractPlot >> minValueY [
 RSAbstractPlot >> renderIn: aCanvas [
 
 	self beforeRenderingIn: self chart.
-	self decorations do: [ :e |
-		e beforeRenderingIn: self.
-		e renderIn: aCanvas ].
+	decorations do: [ :e | e beforeRenderingIn: self ].
+	decorations do: [ :e | e renderIn: aCanvas ].
 	shapes := decorations
 		          flatCollect: [ :element | element createdShapes ]
 		          as: RSGroup
