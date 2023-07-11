@@ -2,7 +2,7 @@ Class {
 	#name : #RSBoxPlotShape,
 	#superclass : #RSObject,
 	#instVars : [
-		'boxWidth',
+		'bandWidth',
 		'statisticalMeasures',
 		'centerLine',
 		'box',
@@ -12,7 +12,7 @@ Class {
 		'xScale',
 		'yScale',
 		'graphCenter',
-		'bandPadding'
+		'bandOffset'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -34,47 +34,40 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> bandPadding: aNumber [
-	bandPadding := aNumber
+RSBoxPlotShape >> bandOffset: aNumber [
+	bandOffset := aNumber.
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> bandWidth: aNumber [
-	self boxWidth: aNumber - (aNumber * 0.2).
+	bandWidth := aNumber
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> box [
-	| boxPoints |
-	boxPoints := self boxPoints.
+	| boxPoints q025 q075 quartiles |
+	
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q075 := quartiles at: 3.
+	graphCenter := bandOffset.
+	"bandWidth is already scaled (in pixels"
+	boxPoints := { 
+		(graphCenter-(bandWidth/2)) @ (yScale scale: q025). 
+		(graphCenter+(bandWidth/2)) @ (yScale scale: q025).
+		(graphCenter+(bandWidth/2)) @ (yScale scale: q075). 
+		(graphCenter-(bandWidth/2)) @ (yScale scale: q075)
+	}.
 	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
+	box points: boxPoints.
 	box color: color.
 	box borderColor: Color black.
 	^ box
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> boxPoints [
-	| q025 q075 quartiles boxPoints |
-	quartiles := statisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q075 := quartiles at: 3.
-	boxPoints := { 
-		(graphCenter-(boxWidth/2))@q025. (graphCenter+(boxWidth/2))@q025.
-		(graphCenter+(boxWidth/2))@q075. (graphCenter-(boxWidth/2))@q075
-	}.
-	^ boxPoints.
-]
-
-{ #category : #accessing }
 RSBoxPlotShape >> boxWidth [
-	^ boxWidth.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> boxWidth: aNumber [
-	boxWidth := aNumber.
+	^ bandWidth.
 ]
 
 { #category : #accessing }
@@ -84,24 +77,16 @@ RSBoxPlotShape >> center [
 
 { #category : #accessing }
 RSBoxPlotShape >> centerLine [
-	| centerLinePoints |
-	centerLinePoints := self centerLinePoints.
-	centerLine :=  RSPolyline new.
-	centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
-	centerLine width: 1.
-	centerLine color: Color black.
-	^ centerLine.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> centerLinePoints [
 	| upperLimit lowerLimit centerLinePoints |
 	upperLimit := statisticalMeasures upperLimit.
 	lowerLimit := statisticalMeasures lowerLimit.
-	centerLinePoints := { graphCenter@upperLimit. graphCenter@lowerLimit. }.
-	^ centerLinePoints.
+	graphCenter := bandOffset.
+	centerLinePoints := { graphCenter@ (yScale scale: upperLimit). graphCenter@(yScale scale: lowerLimit). }.
+	centerLine :=  RSPolyline new.
+	centerLine controlPoints: centerLinePoints.
+	centerLine width: 1.
+	centerLine color: Color black.
+	^ centerLine.
 ]
 
 { #category : #accessing }
@@ -157,9 +142,7 @@ RSBoxPlotShape >> hasOutliers [
 { #category : #initialization }
 RSBoxPlotShape >> initialize [
 	super initialize.
-	boxWidth := self defaultBoxWidth.
 	graphCenter := self defaultGraphCenter.
-	bandPadding := self defaultBandPadding.
 ]
 
 { #category : #accessing }
@@ -181,23 +164,17 @@ RSBoxPlotShape >> median [
 
 { #category : #accessing }
 RSBoxPlotShape >> medianLine [
-	| medianLinePoints |
-	medianLinePoints := self medianLinePoints.
+	| q050 medianLinePoints |
+	q050 := statisticalMeasures quartiles second.
+	graphCenter := bandOffset.
+	medianLinePoints := { 
+		(graphCenter-(bandWidth/2))@ (yScale scale: q050). 
+		(graphCenter+(bandWidth/2))@ (yScale scale: q050). }.
 	medianLine := RSPolyline new.
-	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
+	medianLine := medianLine controlPoints: medianLinePoints.
 	medianLine width: 2.
 	medianLine color: Color black.
 	^ medianLine.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> medianLinePoints [
-	| q050 medianLinePoints |
-	q050 := statisticalMeasures quartiles second.
-	medianLinePoints := { (graphCenter-(boxWidth/2))@q050. (graphCenter+(boxWidth/2))@q050. }.
-	^ medianLinePoints.
 ]
 
 { #category : #accessing }
@@ -215,8 +192,9 @@ RSBoxPlotShape >> outlierValues [
 { #category : #accessing }
 RSBoxPlotShape >> outliers [
 	| outliersPoints |
-	outliersPoints := self outliersPoints.
-	outliers := outliersPoints collect: [ :point | self scalePoint: point ].
+	graphCenter := bandOffset.
+	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
+	outliers := outliersPoints.
 	outliers := outliers collect: [ :out |
 			| e |
 			e := RSEllipse new
@@ -226,20 +204,11 @@ RSBoxPlotShape >> outliers [
 			e translateTo: out.
 	] as: RSGroup.
 	^ outliers.
-	
-	
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> outliers: aRSGroupOfRSElipses [
 	outliers := aRSGroupOfRSElipses
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> outliersPoints [
-	| outliersPoints |
-	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@y ].
-	^ outliersPoints.
 ]
 
 { #category : #accessing }

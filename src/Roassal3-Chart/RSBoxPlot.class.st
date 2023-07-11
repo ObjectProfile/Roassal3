@@ -31,8 +31,9 @@ Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'groups',
-		'bandsWidth'
+		'boxShapes',
+		'bandWidth',
+		'offset'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -182,20 +183,13 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> bandsPadding: aNumber [
-	groups do: [ :boxGroup | boxGroup bandsPadding: (aNumber) ].
-	bandsWidth := aNumber.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> bandsWidth [
-	^ bandsWidth
+RSBoxPlot >> bandsOffset: aNumberInRange [
+	offset := aNumberInRange
 ]
 
 { #category : #rendering }
 RSBoxPlot >> bandsWidth: aNumber [
-	groups do: [ :boxGroup | boxGroup bandsWidth: (aNumber) ].
-	bandsWidth := aNumber.
+	bandWidth := aNumber.
 ]
 
 { #category : #rendering }
@@ -203,18 +197,20 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 	| barScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSLinearScale new
-		domain: {xValues first - 0.5. xValues second + 0.5};
-		range: xScale range.
+	barScale := NSScale ordinal
+		domain: xValues "{xValues first - 0.5. xValues second + 0.5}" ;
+		rangeBands: { 0. aChart extent x. }.
 	aChart xScale: barScale.
 ]
 
 { #category : #rendering }
-RSBoxPlot >> boxGraphics [
-	| boxGraphics |
-	boxGraphics := OrderedCollection new.
-	groups do: [:boxGraphGroup | boxGraphics addAll: (boxGraphGroup boxGraphics) ].
-	^ boxGraphics.
+RSBoxPlot >> boxShapes [
+	^ boxShapes.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> boxShapes: collectionOfRSBoxPlotShape [
+	boxShapes := collectionOfRSBoxPlotShape.
 ]
 
 { #category : #public }
@@ -234,17 +230,40 @@ RSBoxPlot >> canHandleCluster [
 
 { #category : #accessing }
 RSBoxPlot >> color: aColor [
-	groups do: [ :group | group color: aColor ].
+	boxShapes do: [ :boxShape | boxShape color: aColor ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> colors: collectionOfColors [
-	groups do:  [ :group | group colors: collectionOfColors ].
+	boxShapes doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeBandsOffset [
+	boxShapes doWithIndex: [ :boxShape :idx |
+		boxShape bandOffset: (xScale scale: (xValues at: idx)) + offset
+	].
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeBandsWidth [
+	boxShapes do: [ :boxShape | boxShape bandWidth: bandWidth ].
+]
+
+{ #category : #accessing }
+RSBoxPlot >> computeBoxGraphicsCenters [
+	| lastBoxCenter |
+	lastBoxCenter := 1.
+	self boxShapes: (boxShapes collect: [ :boxGraph | 
+		boxGraph graphCenter: lastBoxCenter "+groupOffset".
+		"lastBoxCenter := lastBoxCenter + self defaultOffset".
+		boxGraph.
+	]).
 ]
 
 { #category : #rendering }
 RSBoxPlot >> computeDefualtXTicks [
-	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self maxNumberOfBoxesPerGroup) ].
+	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
 ]
 
 { #category : #private }
@@ -256,37 +275,43 @@ RSBoxPlot >> computeState [
 
 { #category : #rendering }
 RSBoxPlot >> computeXValues [
-	| maxXValue boxesMaxXValues |
-	boxesMaxXValues := groups collect: [ :boxGraphGroup | boxGraphGroup maxXValue ].
-	maxXValue := boxesMaxXValues max.
-	xValues := {1. self maxNumberOfBoxesPerGroup. }.
+	xValues := (1 to: self numberOfBoxes).
 ]
 
 { #category : #rendering }
 RSBoxPlot >> computeYValues [
 	| yMax yMin |
-	yMax := (groups collect: [ :boxGraphGroup | boxGraphGroup maxYValue ]) max.
-	yMin := (groups collect: [ :boxGraphGroup | boxGraphGroup minYValue ]) min.
+	yMax := (boxShapes collect: [ :boxShape | boxShape maxYValue ]) max.
+	yMin := (boxShapes collect: [ :boxGraph | boxGraph minYValue ]) min.
 	yValues := {yMin. yMax.}.
 ]
 
 { #category : #accessing }
 RSBoxPlot >> createdShapes [
-	^ { self boxGraphics. }
+	^ { self boxShapes. }
 ]
 
 { #category : #rendering }
 RSBoxPlot >> data: aCollection [
-	| groupsCollection |
-	groupsCollection := OrderedCollection new.
-	groupsCollection add: ( RSBoxPlotShapeGroup data: aCollection boxPlot: self).
-	self groups: groupsCollection.
+	| collectionOfDatasets |
+	
+	"if is not a collection of collections. transform in a collection of collections"
+	collectionOfDatasets := aCollection first isCollection
+		                        ifFalse: [ { aCollection } ]
+		                        ifTrue: [ aCollection ].
+	self boxShapes: (collectionOfDatasets collect: [ :dataSet | RSBoxPlotShape data: dataSet]).
+	self computeBoxGraphicsCenters.
 	self computeState.
 ]
 
 { #category : #accessing }
 RSBoxPlot >> defaultBandsWidth [
-	^ 1
+	^ xScale scale: 1
+]
+
+{ #category : #accessing }
+RSBoxPlot >> defaultOffset [
+	^ xScale scale: 0
 ]
 
 { #category : #initialization }
@@ -294,21 +319,10 @@ RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
-{ #category : #accessing }
-RSBoxPlot >> groups [
-	^ groups.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> groups: aCollectionOfRSBoxGraphs [
-	groups := aCollectionOfRSBoxGraphs.
-]
-
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
 	chart := RSChart new.
-	bandsWidth := self defaultBandsWidth.
 ]
 
 { #category : #testing }
@@ -317,25 +331,8 @@ RSBoxPlot >> isBoxPlot [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> maxNumberOfBoxesPerGroup [
-	^ (groups collect: [:group | group numberOfBoxes ]) max.
-]
-
-{ #category : #rendering }
 RSBoxPlot >> numberOfBoxes [
-	^ self boxGraphics size.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> numberOfGroups [
-	^ groups size.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> offset: aNumber [
-	groups do: [ :boxGroup  | 
-		boxGroup groupOffset: aNumber
-	].
+	^ self boxShapes size.
 ]
 
 { #category : #public }
@@ -345,12 +342,21 @@ RSBoxPlot >> open [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	groups do: [ :aRSBoxGraphGroup |
-		| boxColor |
-		boxColor := chart colors scale: aRSBoxGraphGroup.
-		aRSBoxGraphGroup color: boxColor.
-		aRSBoxGraphGroup renderIn: canvas 
-	].
+	"self bandWidth: (xScale scale: 1).
+	self bandOffset: xScale rangeBand."
+
+	offset ifNil: [ offset := 0 ].
+	self computeBandsOffset.
+	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
+	self computeBandsWidth.
+	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx | "| boxColor |
+		boxColor := chart colors scale: aRSBoxPlotShape."
+		aRSBoxPlotShape color: self computeColor.
+		aRSBoxPlotShape scales: {
+				self xScale.
+				self yScale }.
+		"aRSBoxPlotShape bandOffset: bandWidth."
+		aRSBoxPlotShape renderIn: canvas ]
 ]
 
 { #category : #accessing }

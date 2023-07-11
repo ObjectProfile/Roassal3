@@ -181,18 +181,6 @@ RSBoxPlotTest >> testDefaultXTickLabels [
 ]
 
 { #category : #tests }
-RSBoxPlotTest >> testGroupsOfOneBoxGraph [
-	| boxPlot data firstBoxGraphGroup |
-	data := { 1. 2. 3. 4. 5. }.
-	boxPlot := RSBoxPlot data: data.
-	self assert: boxPlot groups size equals: 1.
-	firstBoxGraphGroup := boxPlot groups first.
-	self assert: firstBoxGraphGroup class equals: RSBoxPlotShapeGroup.
-	self assert: firstBoxGraphGroup boxGraphics size equals: 1.
-	self assert: firstBoxGraphGroup boxGraphics first class equals: RSBoxPlotShape.
-]
-
-{ #category : #tests }
 RSBoxPlotTest >> testNumberOfBoxes [
 	| boxPlot data boxes window |
 	data := { { 1. 2. 3. 4. 5. } .

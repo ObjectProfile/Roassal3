@@ -5,17 +5,6 @@ Class {
 }
 
 { #category : #tests }
-RSBoxGraphTest >> testBox [
-	| boxGraph data  box aScale |
-	data := { 1. 2. 3. 4. 5. }.
-	aScale := NSLinearScale new.
-	boxGraph := RSBoxPlotShape data: data scales: {aScale. aScale }.
-	box := boxGraph box.
-	self assert: box class equals: RSPolygon.
-	self assert: box points size equals: 4.
-]
-
-{ #category : #tests }
 RSBoxGraphTest >> testBoxGraphHasScales [
 	| boxGraph data aPoint aScale |
 	data := { 1. 2. 3. 4. 5. }.
