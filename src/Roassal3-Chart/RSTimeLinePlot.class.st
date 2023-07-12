@@ -52,7 +52,7 @@ RSTimeLinePlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSTimeLinePlot >> defaultShape [
 	^ RSBox new noPaint
 ]
@@ -86,7 +86,7 @@ RSTimeLinePlot >> initialize [
 	self gapRatio: 0.1
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSTimeLinePlot >> renderIn: canvas [
 
 	super renderIn: canvas.

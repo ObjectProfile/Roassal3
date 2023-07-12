@@ -67,7 +67,7 @@ RSDoubleBarPlot >> createdShapes [
 	^ bars, bars2
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSDoubleBarPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.

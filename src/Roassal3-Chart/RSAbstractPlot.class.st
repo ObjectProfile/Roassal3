@@ -24,6 +24,12 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #testing }
+RSAbstractPlot class >> isAbstract [
+
+	^ self == RSAbstractPlot
+]
+
 { #category : #rendering }
 RSAbstractPlot >> addShape: aShape [
 	"Add a shape to the canvas"
@@ -43,7 +49,7 @@ RSAbstractPlot >> chart [
 	^ chart ifNil: [ self ]
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSAbstractPlot >> chart: aChart [
 
 	chart := aChart
@@ -73,7 +79,7 @@ RSAbstractPlot >> color: aColor [
 	self shape color: aColor
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
@@ -86,7 +92,7 @@ RSAbstractPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSAbstractPlot >> defaultShape [
 
 	^ self subclassResponsibility
@@ -157,7 +163,7 @@ RSAbstractPlot >> isVerticalBarPlot [
 	^ false
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing - extension' }
 RSAbstractPlot >> maxChartValueX [
 	"if not set before, returns the maximum x value of the plot"
 
@@ -169,7 +175,7 @@ RSAbstractPlot >> maxChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing - extension' }
 RSAbstractPlot >> maxChartValueY [
 	"if not set before, returns the maximum y value of the plot"
 
@@ -195,7 +201,7 @@ RSAbstractPlot >> maxValueY [
 	^ self definedValuesY max
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing - extension' }
 RSAbstractPlot >> minChartValueX [
 	"if not set before, returns the minimum x value of the plot"
 
@@ -207,7 +213,7 @@ RSAbstractPlot >> minChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing - extension' }
 RSAbstractPlot >> minChartValueY [
 	"if not set before, returns the minimum y value of the plot"
 
@@ -233,7 +239,7 @@ RSAbstractPlot >> minValueY [
 	^ self definedValuesY min
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSAbstractPlot >> renderIn: aCanvas [
 
 	self beforeRenderingIn: self chart.
@@ -244,13 +250,13 @@ RSAbstractPlot >> renderIn: aCanvas [
 		          as: RSGroup
 ]
 
-{ #category : #'public - shape' }
+{ #category : #accessing }
 RSAbstractPlot >> shape [
 
 	^ shape
 ]
 
-{ #category : #'public - shape' }
+{ #category : #accessing }
 RSAbstractPlot >> shape: aRSShape [
 
 	shape := aRSShape

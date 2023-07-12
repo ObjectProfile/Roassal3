@@ -24,6 +24,12 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #testing }
+RSAbstractBarPlot class >> isAbstract [
+
+	^ self == RSAbstractBarPlot
+]
+
 { #category : #accessing }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
@@ -76,7 +82,7 @@ RSAbstractBarPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSAbstractBarPlot >> defaultShape [
 
 	^ RSBox new noPaint
@@ -111,7 +117,7 @@ RSAbstractBarPlot >> modelFor: aPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSAbstractBarPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.

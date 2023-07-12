@@ -63,7 +63,7 @@ RSCompositeChart >> addAll: aCollection [
 	aCollection do: [ :each | self add: each ]
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 RSCompositeChart >> chart [
 
 	^ self
@@ -142,7 +142,7 @@ RSCompositeChart >> openOnce [
 	^ self canvas openOnce
 ]
 
-{ #category : #rendering }
+{ #category : #'accessing - extension' }
 RSCompositeChart >> padding: aPoint [
 
 	super padding: aPoint.
@@ -166,14 +166,14 @@ RSCompositeChart >> renderIn: aCanvas [
 		          as: RSGroup
 ]
 
-{ #category : #building }
+{ #category : #'public - scales' }
 RSCompositeChart >> xScale: aScale [
 
 	super xScale: aScale.
 	plots do: [ :plot | plot xScale: aScale ]
 ]
 
-{ #category : #building }
+{ #category : #'public - scales' }
 RSCompositeChart >> yScale: aScale [
 
 	super yScale: aScale.

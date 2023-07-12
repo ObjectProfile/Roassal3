@@ -177,18 +177,18 @@ RSDensityPlot >> data: aCollection [
 	self computeCurvePoints.
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #defaults }
 RSDensityPlot >> defaultAreaColor [
 	^ area color.
 	
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #defaults }
 RSDensityPlot >> defaultKernelDensity [
 	^ RSKernelDensity new.
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #defaults }
 RSDensityPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
@@ -232,7 +232,7 @@ RSDensityPlot >> kernelDensity: anRSKernelDensity [
 	self computeCurvePoints.
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSDensityPlot >> renderIn: canvas [
 	| curve firstPoint lastPoint closingPointStart closingPointEnd |
 	super renderIn: canvas.

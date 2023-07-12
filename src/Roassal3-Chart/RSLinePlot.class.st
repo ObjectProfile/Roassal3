@@ -32,7 +32,7 @@ RSLinePlot >> createdShapes [
 	^ { line }
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
@@ -52,7 +52,7 @@ RSLinePlot >> marker [
 	^ self shape markers at: 1
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
 	super renderIn: canvas.

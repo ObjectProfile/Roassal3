@@ -124,7 +124,7 @@ RSHistogramPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSHistogramPlot >> defaultShape [
 	^ RSBox new noPaint
 ]
@@ -177,7 +177,7 @@ RSHistogramPlot >> numberOfBins: aNumber [
 	self computeXYValues
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSHistogramPlot >> renderIn: canvas [
 
 	super renderIn: canvas.

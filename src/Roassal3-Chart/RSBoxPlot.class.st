@@ -186,7 +186,7 @@ RSBoxPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSBoxPlot >> defaultShape [
 	^ RSBox new noPaint
 ]
@@ -258,7 +258,7 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 				+ (((aSortedCollection at: p ceiling) - f) * (p fractionPart * d + c)) ]
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSBoxPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.

@@ -31,12 +31,6 @@ RSYLabelDecoration >> initialize [
 	self left
 ]
 
-{ #category : #testing }
-RSYLabelDecoration >> isYLabel [
-
-	^ true
-]
-
 { #category : #accessing }
 RSYLabelDecoration >> left [
 	self location

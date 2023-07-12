@@ -26,7 +26,7 @@ Class {
 	#category : #'Roassal3-Chart-Decoration'
 }
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractChartDecoration >> addShape: aShape [
 	"Add a shape to the canvas"
 
@@ -38,7 +38,7 @@ RSAbstractChartDecoration >> addedIn: aPlot [
 	aPlot addDecoration: self
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractChartDecoration >> beforeRenderingIn: aChart [
 ]
 
@@ -54,13 +54,13 @@ RSAbstractChartDecoration >> chart: aChart [
 	chart := aChart
 ]
 
-{ #category : #accessing }
+{ #category : #'public - shape' }
 RSAbstractChartDecoration >> color [
 
 	^ self shape color
 ]
 
-{ #category : #accessing }
+{ #category : #'public - shape' }
 RSAbstractChartDecoration >> color: aColor [
 
 	self shape color: aColor
@@ -104,13 +104,13 @@ RSAbstractChartDecoration >> createdShapes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSAbstractChartDecoration >> defaultShape [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RSAbstractChartDecoration >> defaultStyler [
 
 	^ RSChartStyler new
@@ -124,13 +124,13 @@ RSAbstractChartDecoration >> initialize [
 	styler := self defaultStyler
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RSAbstractChartDecoration >> isHorizontalTick [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RSAbstractChartDecoration >> isPlot [
 
 	^ false
@@ -148,20 +148,8 @@ RSAbstractChartDecoration >> isTitle [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RSAbstractChartDecoration >> isVerticalTick [
-
-	^ false
-]
-
-{ #category : #testing }
-RSAbstractChartDecoration >> isXLabel [
-
-	^ false
-]
-
-{ #category : #testing }
-RSAbstractChartDecoration >> isYLabel [
 
 	^ false
 ]
@@ -178,7 +166,7 @@ RSAbstractChartDecoration >> shape [
 	^ shape
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RSAbstractChartDecoration >> shape: aRSShape [
 
 	shape := aRSShape

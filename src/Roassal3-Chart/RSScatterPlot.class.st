@@ -57,7 +57,7 @@ RSScatterPlot >> createdShapes [
 	^ ellipses
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]
@@ -72,7 +72,7 @@ RSScatterPlot >> isScatterPlot [
 	^ true
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSScatterPlot >> renderIn: canvas [
 	| newPoint color |
 	super renderIn: canvas.

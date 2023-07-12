@@ -310,7 +310,7 @@ RSViolinPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
@@ -386,7 +386,7 @@ RSViolinPlot >> outliers [
 	^ outliers.
 ]
 
-{ #category : #rendering }
+{ #category : #hooks }
 RSViolinPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	self createDensityArea.
