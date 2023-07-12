@@ -135,7 +135,7 @@ RSAbstractTick >> fromNames: aCollectionOfStrings [
 
 	self labelConversion: [ :x |
 		x isZero ifTrue: [ '' ]
-			ifFalse: [ aCollectionOfStrings at: x asInteger ] ]
+			ifFalse: [ aCollectionOfStrings at: x rounded ] ]
 ]
 
 { #category : #initialization }

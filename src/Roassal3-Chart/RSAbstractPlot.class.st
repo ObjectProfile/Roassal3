@@ -250,6 +250,12 @@ RSAbstractPlot >> renderIn: aCanvas [
 		          as: RSGroup
 ]
 
+{ #category : #'accessing - computed' }
+RSAbstractPlot >> scalePoint: aPoint [
+
+	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+]
+
 { #category : #accessing }
 RSAbstractPlot >> shape [
 

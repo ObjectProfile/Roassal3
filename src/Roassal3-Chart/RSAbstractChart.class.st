@@ -370,12 +370,6 @@ RSAbstractChart >> removeVerticalTicks [
 	decorations remove: self verticalTick
 ]
 
-{ #category : #'accessing - computed' }
-RSAbstractChart >> scalePoint: aPoint [
-
-	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
-]
-
 { #category : #building }
 RSAbstractChart >> show [
 
