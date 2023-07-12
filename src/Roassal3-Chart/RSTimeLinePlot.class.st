@@ -86,7 +86,7 @@ RSTimeLinePlot >> initialize [
 	self gapRatio: 0.1
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSTimeLinePlot >> renderIn: canvas [
 
 	super renderIn: canvas.

@@ -177,13 +177,13 @@ RSChart >> defaultContainer [
 		yourself
 ]
 
-{ #category : #color }
+{ #category : #'accessing - color' }
 RSChart >> defaultPlotColors [
 
 	^ NSScale google20
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSChart >> defaultStyler [
 	^ RSChartStyler new
 ]
@@ -438,7 +438,7 @@ c
 	^ self addDecoration: (RSChartTitleDecoration new title: aTitle)
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #updating }
 RSChart >> updateChart: anEvent [
 	| canvas camera |
 	camera := anEvent camera.

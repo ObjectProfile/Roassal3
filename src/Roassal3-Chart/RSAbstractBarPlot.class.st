@@ -117,7 +117,7 @@ RSAbstractBarPlot >> modelFor: aPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.

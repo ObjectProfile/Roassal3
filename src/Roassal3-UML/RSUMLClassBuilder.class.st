@@ -33,7 +33,7 @@ RSUMLClassBuilder >> objects [
 	^ classes
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSUMLClassBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self renderer edgeBuilder

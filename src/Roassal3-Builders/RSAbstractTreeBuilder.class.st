@@ -102,7 +102,7 @@ RSAbstractTreeBuilder >> modelWeight: anObject [
 	self weight: [ :shape | anObject rsValue: shape model ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractTreeBuilder >> renderIn: aCanvas [
 	aCanvas addAll: self shapes
 ]

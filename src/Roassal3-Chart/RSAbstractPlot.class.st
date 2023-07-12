@@ -30,7 +30,7 @@ RSAbstractPlot class >> isAbstract [
 	^ self == RSAbstractPlot
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSAbstractPlot >> addShape: aShape [
 	"Add a shape to the canvas"
 	self container add: aShape
@@ -79,7 +79,7 @@ RSAbstractPlot >> color: aColor [
 	self shape color: aColor
 ]
 
-{ #category : #public }
+{ #category : #'accessing - computed' }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
@@ -92,7 +92,7 @@ RSAbstractPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAbstractPlot >> defaultShape [
 
 	^ self subclassResponsibility
@@ -239,7 +239,7 @@ RSAbstractPlot >> minValueY [
 	^ self definedValuesY min
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractPlot >> renderIn: aCanvas [
 
 	self beforeRenderingIn: self chart.

@@ -247,7 +247,7 @@ RSCoOccurrenceMatrixBuilder >> exportToFile: aString [
 		export
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 
 	self createBoundingBoxIn: canvas.

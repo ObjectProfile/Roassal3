@@ -72,7 +72,7 @@ RSScatterPlot >> isScatterPlot [
 	^ true
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
 	| newPoint color |
 	super renderIn: canvas.

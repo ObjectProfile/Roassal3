@@ -386,7 +386,7 @@ RSViolinPlot >> outliers [
 	^ outliers.
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	self createDensityArea.

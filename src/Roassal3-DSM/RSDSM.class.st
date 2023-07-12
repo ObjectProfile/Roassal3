@@ -305,7 +305,7 @@ RSDSM >> objectsY: someObjects [
 	objectsY := someObjects
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDSM >> renderIn: aCanvas [
 	shapes := self createShapes.
 	aCanvas addAll: shapes.

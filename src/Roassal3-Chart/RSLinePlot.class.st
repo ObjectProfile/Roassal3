@@ -52,7 +52,7 @@ RSLinePlot >> marker [
 	^ self shape markers at: 1
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
 	super renderIn: canvas.

@@ -232,7 +232,7 @@ RSDensityPlot >> kernelDensity: anRSKernelDensity [
 	self computeCurvePoints.
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDensityPlot >> renderIn: canvas [
 	| curve firstPoint lastPoint closingPointStart closingPointEnd |
 	super renderIn: canvas.

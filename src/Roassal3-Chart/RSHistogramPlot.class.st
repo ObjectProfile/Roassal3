@@ -177,7 +177,7 @@ RSHistogramPlot >> numberOfBins: aNumber [
 	self computeXYValues
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSHistogramPlot >> renderIn: canvas [
 
 	super renderIn: canvas.

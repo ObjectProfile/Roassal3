@@ -156,7 +156,7 @@ RSCompositeChart >> plots [
 	^ plots
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSCompositeChart >> renderIn: aCanvas [
 
 	decorations , plots do: [ :element | element beforeRenderingIn: self ].

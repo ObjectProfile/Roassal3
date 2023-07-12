@@ -118,7 +118,7 @@ RSAcrossPathBuilder >> labelShapeFor: char [
 			]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAcrossPathBuilder >> renderIn: aCanvas [
 	| visitor |
 	aCanvas addAll: shapesToLayout.

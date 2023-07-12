@@ -258,7 +258,7 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 				+ (((aSortedCollection at: p ceiling) - f) * (p fractionPart * d + c)) ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.
