@@ -28,7 +28,7 @@ c
 "
 Class {
 	#name : #RSCompositeChart,
-	#superclass : #RSChart,
+	#superclass : #RSAbstractChart,
 	#instVars : [
 		'plots'
 	],

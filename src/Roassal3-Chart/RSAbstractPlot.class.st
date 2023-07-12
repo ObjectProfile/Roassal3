@@ -14,7 +14,7 @@
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSChart,
+	#superclass : #RSAbstractChart,
 	#instVars : [
 		'chart',
 		'shape',

@@ -151,8 +151,8 @@ RSBarChartExample >> example04VerticalStack [
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
-	c add: (RSChart barHeights: menMeans).
-	c add: ((RSChart barHeights: womenMeans) bottom: menMeans).
+	c add: (RSAbstractChart barHeights: menMeans).
+	c add: ((RSAbstractChart barHeights: womenMeans) bottom: menMeans).
 	c horizontalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
 	c verticalTick integer.
 	c ylabel: 'Scores'.
@@ -176,8 +176,8 @@ RSBarChartExample >> example05HorizontalStack [
 	c extent: 300 @ 200.
 	menMeans := #( 20 35 30 35 27 ).
 	womenMeans := #( 25 32 34 20 25 ).
-	c add: (RSChart barWidths: menMeans).
-	c add: ((RSChart barWidths: womenMeans) left: menMeans).
+	c add: (RSAbstractChart barWidths: menMeans).
+	c add: ((RSAbstractChart barWidths: womenMeans) left: menMeans).
 	c horizontalTick integer.
 	c verticalTick fromNames: #( Day1 Day2 Day3 Day4 Day5 ).
 	c xlabel: 'Scores'.

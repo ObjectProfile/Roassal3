@@ -274,7 +274,7 @@ RSChartExample >> example20Grid [
 
 	x := 0 to: 10.
 	y := x raisedTo: 2.
-	c := RSChart lineX: x y: y.
+	c := RSAbstractChart lineX: x y: y.
 	vertical := c verticalTick.
 	vertical shape dashed.
 	vertical configuration tickSize: c extent x negated.
@@ -378,7 +378,7 @@ RSChartExample >> example22CustomPopup [
 					  start: 0 @ -100;
 					  stop: 0 @ 100;
 					  yourself)).
-	c add: ((RSChart lineX: x y: y) color: Color gray).
+	c add: ((RSAbstractChart lineX: x y: y) color: Color gray).
 
 	c horizontalTick
 		fromNames: names;
@@ -422,7 +422,7 @@ RSChartExample >> example24SpineLine [
 	| x c y spine |
 	x := -3.14 to: 3.14 by: 0.01.
 	y := x sin * 0.22 + 0.2.
-	c := RSChart lineX: x y: y.
+	c := RSAbstractChart lineX: x y: y.
 	c extent: 400 @ 300.
 	c spineDecoration: (spine := RSLineSpineDecoration new).
 	spine shape format: '^'.
