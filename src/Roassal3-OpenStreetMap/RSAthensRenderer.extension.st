@@ -51,9 +51,9 @@ RSAthensRenderer >> getTileAt: aPoint with: osm key: key [
 		or: [ aPoint y >= level ] ] ]) ifTrue: [ ^ nil ].
 	osm tiles
 		at: key
-		put: osm class emptyTile.
+		put: osm emptyTile.
 	self downloadTile: osm key: key.
-	^ osm class emptyTile
+	^ osm emptyTile
 ]
 
 { #category : #'*Roassal3-OpenStreetMap' }
@@ -65,9 +65,9 @@ RSAthensRenderer >> visitOSM: osm [
 		athensCanvas pathTransform restoreAfter: [
 			| canvas |
 			canvas := osm canvas.
-			athensCanvas pathTransform
+			"athensCanvas pathTransform
 				translateBy: canvas camera position;
-				scaleBy: 1 / canvas camera scale.
+				scaleBy: 1 / canvas camera scale."
 			athensCanvas
 				clipBy: osm encompassingRectangle
 				during: [

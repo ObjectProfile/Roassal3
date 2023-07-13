@@ -11,18 +11,14 @@ Class {
 		'osmZoomLevel',
 		'ratio'
 	],
-	#classVars : [
-		'EmptyTile'
-	],
 	#category : #'Roassal3-OpenStreetMap'
 }
 
 { #category : #public }
-RSOSM class >> emptyTile [
-	^ EmptyTile
-		ifNil:
-			[ EmptyTile := ((StringMorph contents: 'Loading...') center: 127 @ 127)
-				imageFormForRectangle: (0 @ 0 extent: 256 @ 256) ]
+RSOSM class >> earthR [
+	"Earth R in km."
+
+	^ 6378.1370
 ]
 
 { #category : #public }
@@ -42,7 +38,7 @@ RSOSM >> computeEncompassingRectangle [
 	| canvas |
 	canvas := self canvas.
 	canvas ifNil: [ ^ 0@0 corner: 0@0 ].
-	^ canvas extent negated / 2.0 extent: canvas extent
+	^ canvas visibleRectangle
 ]
 
 { #category : #private }
@@ -50,6 +46,22 @@ RSOSM >> computeOsmZoomLevel [
 	"The osm zoom level."
 
 	^ (((self pixelLength * self canvas camera scale) ln / 2 ln) rounded max: 0) min: 18
+]
+
+{ #category : #defaults }
+RSOSM >> defaultEmptyTile [
+	^ ((StringMorph contents: 'Loading...') center: 127 @ 127)
+				imageFormForRectangle: (0 @ 0 extent: 256 @ 256)
+]
+
+{ #category : #accessing }
+RSOSM >> emptyTile [
+	^ emptyTile
+]
+
+{ #category : #accessing }
+RSOSM >> emptyTile: aMorph [
+	emptyTile := aMorph
 ]
 
 { #category : #'accessing - computed' }
@@ -67,10 +79,7 @@ RSOSM >> equatorLength [
 RSOSM >> fromCameraSpaceToOurSpace: aPoint [
 	"To convert our boundaries from the camera space into our space (0@0 at center, no zoom)."
 
-	^ AthensAffineTransform new
-		scaleBy: self canvas camera scale;
-		translateBy: self canvas camera position negated;
-		transform: aPoint
+	^ self canvas camera fromSpaceToPixel: aPoint
 ]
 
 { #category : #'accessing - computed' }
@@ -84,10 +93,7 @@ RSOSM >> fromOSMSpaceToOurSpace: aPoint [
 RSOSM >> fromOurSpaceToCameraSpace: aPoint [
 	"To convert our boundaries into the camera space."
 
-	^ AthensAffineTransform new
-		translateBy: self canvas camera position;
-		scaleBy: 1 / self canvas camera scale;
-		transform: aPoint
+	^ self canvas camera fromPixelToSpace: aPoint
 ]
 
 { #category : #'accessing - computed' }
@@ -102,13 +108,20 @@ RSOSM >> fromOurSpaceToTile: aPoint [
 RSOSM >> initialize [
 	super initialize.
 	tiles := Dictionary new.
-	emptyTile := Form extent: 256 @ 256.
+	emptyTile := self defaultEmptyTile.
 	semaphore := Semaphore forMutualExclusion
 ]
 
-{ #category : #actions }
-RSOSM >> loadShape: aShape [
-	"no interesting"
+{ #category : #private }
+RSOSM >> inspectorShadowFor: padding color: aColor [
+	"a map does not contains a shadow"
+	^ self shouldNotImplement
+]
+
+{ #category : #testing }
+RSOSM >> intersects: aRectangle [
+	"probably this will change with the RTree"
+	^ self shouldNotImplement
 ]
 
 { #category : #accessing }
