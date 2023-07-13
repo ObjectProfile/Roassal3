@@ -342,20 +342,18 @@ RSBoxPlot >> open [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
-	"self bandWidth: (xScale scale: 1).
-	self bandOffset: xScale rangeBand."
-
+	
 	offset ifNil: [ offset := 0 ].
 	self computeBandsOffset.
+	
 	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 	self computeBandsWidth.
-	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx | "| boxColor |
-		boxColor := chart colors scale: aRSBoxPlotShape."
+	
+	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color: self computeColor.
 		aRSBoxPlotShape scales: {
 				self xScale.
 				self yScale }.
-		"aRSBoxPlotShape bandOffset: bandWidth."
 		aRSBoxPlotShape renderIn: canvas ]
 ]
 
