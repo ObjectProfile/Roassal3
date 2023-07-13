@@ -193,7 +193,7 @@ RSDensityPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSDensityPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.

@@ -186,7 +186,7 @@ RSBoxPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSBoxPlot >> defaultShape [
 	^ RSBox new noPaint
 ]

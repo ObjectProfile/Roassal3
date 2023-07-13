@@ -124,7 +124,7 @@ RSHistogramPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSHistogramPlot >> defaultShape [
 	^ RSBox new noPaint
 ]

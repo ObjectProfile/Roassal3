@@ -310,7 +310,7 @@ RSViolinPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.

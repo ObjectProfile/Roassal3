@@ -52,7 +52,7 @@ RSTimeLinePlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSTimeLinePlot >> defaultShape [
 	^ RSBox new noPaint
 ]

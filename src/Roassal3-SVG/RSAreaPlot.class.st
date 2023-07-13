@@ -54,7 +54,7 @@ RSAreaPlot >> createdShapes [
 	^ {area}
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAreaPlot >> defaultShape [
 	^ RSSVGPath new noPaint
 ]
