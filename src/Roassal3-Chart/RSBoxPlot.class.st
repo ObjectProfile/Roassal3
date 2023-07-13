@@ -194,13 +194,13 @@ RSBoxPlot >> bandsWidth: aNumber [
 
 { #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
-	| barScale |
+	| bandScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSScale ordinal
-		domain: xValues "{xValues first - 0.5. xValues second + 0.5}" ;
+	bandScale := NSScale ordinal
+		domain: xValues;
 		rangeBands: { 0. aChart extent x. }.
-	aChart xScale: barScale.
+	aChart xScale: bandScale.
 ]
 
 { #category : #rendering }
