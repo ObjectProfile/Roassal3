@@ -35,12 +35,9 @@ Class {
 	#instVars : [
 		'kernelDensity',
 		'curvePoints',
-		'area',
-		'xlabel',
-		'ylabel',
-		'title'
+		'area'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -196,7 +193,7 @@ RSDensityPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSDensityPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
@@ -235,21 +232,10 @@ RSDensityPlot >> kernelDensity: anRSKernelDensity [
 	self computeCurvePoints.
 ]
 
-{ #category : #opening }
-RSDensityPlot >> open [
-	chart := RSChart new.
-	chart add: self.
-	chart
-		extent: 250 @ 200;
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		title: self title.
-	^ chart open
-]
-
 { #category : #rendering }
 RSDensityPlot >> renderIn: canvas [
 	| curve firstPoint lastPoint closingPointStart closingPointEnd |
+	super renderIn: canvas.
 	area := self shape copy.
 	area color: self computeColor.
 	firstPoint := curvePoints first.
@@ -262,34 +248,4 @@ RSDensityPlot >> renderIn: canvas [
 	lastPoint := curve last.
 	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
 	canvas add: area.
-]
-
-{ #category : #accessing }
-RSDensityPlot >> title [
-	^ title.
-]
-
-{ #category : #accessing }
-RSDensityPlot >> title: aString [
-	title := aString.
-]
-
-{ #category : #accessing }
-RSDensityPlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #accessing }
-RSDensityPlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #accessing }
-RSDensityPlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #accessing }
-RSDensityPlot >> ylabel: aString [
-	ylabel := aString
 ]

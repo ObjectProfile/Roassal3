@@ -11,12 +11,11 @@
 x := -3.14 to: 3.14 by: 0.1.
 y := x sin.
 
-c := RSChart new.
-c addPlot: (RSLinePlot new x: x y: y).
-c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
-c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; horizontal).
-c open
+p := RSLinePlot new x: x y: y.
+p addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
+p addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
+p addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15; horizontal).
+p open
 ```
 "
 Class {

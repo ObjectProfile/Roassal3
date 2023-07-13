@@ -179,7 +179,7 @@ RSMapBuilder >> newShapeFor: model [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSMapBuilder >> renderIn: aCanvas [
 	| modelsByGroup |
 	models ifNil: [ ^ self ].

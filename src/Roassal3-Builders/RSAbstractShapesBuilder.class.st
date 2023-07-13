@@ -14,7 +14,7 @@ RSAbstractShapesBuilder >> objects [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractShapesBuilder >> renderIn: aCanvas [
 	aCanvas addAll: (shapes := self shapesFor: self objects)
 ]

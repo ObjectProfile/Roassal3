@@ -52,9 +52,6 @@ Class {
 		'boxPoints',
 		'box',
 		'medianLinePoints',
-		'xlabel',
-		'ylabel',
-		'title',
 		'centerLinePoints',
 		'centerLine',
 		'boxWidth',
@@ -62,7 +59,7 @@ Class {
 		'medianLine',
 		'outliers'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -158,18 +155,6 @@ RSViolinPlot >> box [
 { #category : #accessing }
 RSViolinPlot >> boxWidth [
 	^ boxWidth.
-]
-
-{ #category : #opening }
-RSViolinPlot >> buildChart [
-	chart := RSChart new.
-	chart add: self.
-	chart
-		extent: 250 @ 200;
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		title: self title.
-	^ chart
 ]
 
 { #category : #accessing }
@@ -325,7 +310,7 @@ RSViolinPlot >> defaultLineColor [
 	^ Color r:117 g:107 b:177 range: 255.
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
@@ -391,11 +376,6 @@ RSViolinPlot >> medianLine [
 	^ medianLine.
 ]
 
-{ #category : #opening }
-RSViolinPlot >> open [
-	^ self buildChart open
-]
-
 { #category : #private }
 RSViolinPlot >> outlierPoints [
 	^ outlierPoints.
@@ -408,6 +388,7 @@ RSViolinPlot >> outliers [
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
+	super renderIn: canvas.
 	self createDensityArea.
 	canvas add: densityArea.
 	self createCenterLine.
@@ -425,37 +406,7 @@ RSViolinPlot >> statisticalMeasures: aRSStatisticalMeasures [
 	statisticalMeasures := aRSStatisticalMeasures.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> title [
-	^ title.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> title: aString [
-	title := aString.
-]
-
 { #category : #private }
 RSViolinPlot >> upperWhiskerLimit [
 	^ statisticalMeasures upperLimit.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #accessing }
-RSViolinPlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #accessing }
-RSViolinPlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #accessing }
-RSViolinPlot >> ylabel: aString [
-	ylabel := aString
 ]

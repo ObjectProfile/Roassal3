@@ -107,7 +107,7 @@ RSForceBuilder >> particlesSize: anInteger [
 	particlesSize := anInteger
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSForceBuilder >> renderIn: aCanvas [
 	aCanvas color: colorGenerator backgroundColor.
 	self reset.

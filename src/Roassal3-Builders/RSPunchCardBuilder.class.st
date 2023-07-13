@@ -82,7 +82,7 @@ RSPunchCardBuilder >> renderDots: aCanvas [
 								announcer: base announcer) ] ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSPunchCardBuilder >> renderIn: aCanvas [
 
 	self

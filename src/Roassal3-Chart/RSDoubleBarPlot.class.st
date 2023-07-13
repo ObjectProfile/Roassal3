@@ -10,7 +10,7 @@ Class {
 		'x2Scale',
 		'bars2'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -20,7 +20,7 @@ RSDoubleBarPlot >> bars2 [
 
 { #category : #public }
 RSDoubleBarPlot >> computeSecondColor [
-	^ secondColor ifNil: [ chart colorFor: x2Values ]
+	^ secondColor ifNil: [ self chart colorFor: x2Values ]
 ]
 
 { #category : #hooks }
@@ -52,14 +52,14 @@ RSDoubleBarPlot >> createXScale [
 	super createXScale.
 	x2Scale ifNil: [ x2Scale := NSScale linear ].
 	x2Scale class = NSOrdinalScale ifTrue: [ ^ self ].
-	padding := chart padding x.
+	padding := self padding x.
 	x2Scale
 		domain:
 			{x2Values min.
 			x2Values max};
 		range:
 			{0 + padding.
-			chart extent x - padding}
+			self extent x - padding}
 ]
 
 { #category : #accessing }

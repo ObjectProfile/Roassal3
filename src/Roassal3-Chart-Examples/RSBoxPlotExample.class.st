@@ -11,23 +11,20 @@ Class {
 RSBoxPlotExample >> example01 [
 	"A simple boxplot"
 	<script: 'self new example01 open'>
-	| c p y |
+	| p y |
 
 	y := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
-	c := RSChart new.
 	p := RSBoxPlot new y: y.
 
-	c addPlot: p.
-
-	c horizontalTick numberOfTicks: y size.
-	c xlabel: 'X Axis'.
-	c verticalTick numberOfTicks: 10;
+	p horizontalTick numberOfTicks: y size.
+	p xlabel: 'X Axis'.
+	p verticalTick numberOfTicks: 10;
 		asFloat.
-	c ylabel: 'Y Axis'.
-	c title: 'Box Plot'.
-	^ c
+	p ylabel: 'Y Axis'.
+	p title: 'Box Plot'.
+	^ p
 ]
 
 { #category : #examples }
@@ -49,7 +46,7 @@ RSBoxPlotExample >> example02 [
 			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
 			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSBoxPlot new y: y.
 
 	"size controls the width of the bars"
@@ -65,9 +62,9 @@ RSBoxPlotExample >> example02 [
 	p3 barSize: size.
 	p3 barOffset: size * 1.1.
 
-	c addPlot: p.
-	c addPlot: p2.
-	c addPlot: p3.
+	c add: p.
+	c add: p2.
+	c add: p3.
 	c horizontalTick fromNames: x.
 	c verticalTick integer.
 

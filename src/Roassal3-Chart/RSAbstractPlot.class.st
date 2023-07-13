@@ -1,108 +1,190 @@
 "
-TODO
+<keyClass>
+`RSAbstractPlot` is the abstract class that encompass plots.
+
+*Responsibility*: maintain and render plots.
+
+*Collaborators*: a plot closely interacts with decorations and can be added in a `RSCompositeChart`. 
+
+*Variables*:
+- chart: if the plot is added into a chart, refers to this chart, else refers to the plot itself
+- shape: the shape of the plot
+- xValues: the x values of the plot
+- yValues: the y values of the plot
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartPlot,
+	#superclass : #RSAbstractChart,
 	#instVars : [
+		'chart',
+		'shape',
 		'xValues',
 		'yValues'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #adding }
-RSAbstractPlot >> addedIn: aRSChart [
-	aRSChart addPlot: self
+{ #category : #testing }
+RSAbstractPlot class >> isAbstract [
+
+	^ self == RSAbstractPlot
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> addShape: aShape [
+	"Add a shape to the canvas"
+	self container add: aShape
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
-	super beforeRenderingIn: aChart.
+
 	self createXScale.
 	self createYScale
 ]
 
+{ #category : #accessing }
+RSAbstractPlot >> chart [
+
+	^ chart ifNil: [ self ]
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> chart: aChart [
+
+	chart := aChart
+]
+
 { #category : #testing }
 RSAbstractPlot >> checkAssertion [
+
 	self
 		assert: [ xValues notNil and: [ yValues notNil ] ]
 		description: 'X and Y values must be added'.
 	self
 		assert: [ xValues size = yValues size ]
-		description: 'X and Y values have not the same size, and they should'
+		description:
+		'X and Y values have not the same size, and they should'
 ]
 
-{ #category : #public }
+{ #category : #'public - shape' }
+RSAbstractPlot >> color [
+
+	^ self shape color
+]
+
+{ #category : #'public - shape' }
+RSAbstractPlot >> color: aColor [
+
+	self shape color: aColor
+]
+
+{ #category : #'accessing - computed' }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
-	^ self color ifNil: [ chart colorFor: self ]
+
+	^ self color ifNil: [ self chart colorFor: self ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+RSAbstractPlot >> createdShapes [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'accessing - defaults' }
 RSAbstractPlot >> defaultShape [
+
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> definedValuesX [
 	"Return the list of X values that are defined"
+
 	^ xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> definedValuesY [
 	"Return the list Y values that are defined"
-	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
-]
 
-{ #category : #accessing }
-RSAbstractPlot >> index [
-	"Return the index of the plot within the list of plots to display in the plt object"
-	^ chart plots indexOf: self
+	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
 { #category : #initialization }
 RSAbstractPlot >> initialize [
+
 	super initialize.
 	shape := self defaultShape
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isBarPlot [
+
 	^ false
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isHorizontalBarPlot [
+
 	^ false
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isLinePlot [
+
 	^ false
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isPlot [
+
 	^ true
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isPointWellDefined: aPoint [
 	"Indicate whether the point deserves to be displayed"
-	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ])
-		and: [ (aPoint x isNaN not and: [ aPoint y isNaN not ]) ]
+
+	^ (aPoint x isInfinite not and: [ aPoint y isInfinite not ]) and: [
+		  aPoint x isNaN not and: [ aPoint y isNaN not ] ]
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isScatterPlot [
+
 	^ false
 ]
 
 { #category : #testing }
 RSAbstractPlot >> isVerticalBarPlot [
+
 	^ false
+]
+
+{ #category : #'accessing - extension' }
+RSAbstractPlot >> maxChartValueX [
+	"if not set before, returns the maximum x value of the plot"
+
+	^ self chartExtents maxValueX
+		  ifNil: [
+			  | res |
+			  self chartExtents maxValueX: (res := self maxValueX).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
+{ #category : #'accessing - extension' }
+RSAbstractPlot >> maxChartValueY [
+	"if not set before, returns the maximum y value of the plot"
+
+	^ self chartExtents maxValueY
+		  ifNil: [
+			  | res |
+			  self chartExtents maxValueY: (res := self maxValueY).
+			  res ]
+		  ifNotNil: [ :res | res ]
 ]
 
 { #category : #rendering }
@@ -119,25 +201,76 @@ RSAbstractPlot >> maxValueY [
 	^ self definedValuesY max
 ]
 
+{ #category : #'accessing - extension' }
+RSAbstractPlot >> minChartValueX [
+	"if not set before, returns the minimum x value of the plot"
+
+	^ self chartExtents minValueX
+		  ifNil: [
+			  | res |
+			  self chartExtents minValueX: (res := self minValueX).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
+{ #category : #'accessing - extension' }
+RSAbstractPlot >> minChartValueY [
+	"if not set before, returns the minimum y value of the plot"
+
+	^ self chartExtents minValueY
+		  ifNil: [
+			  | res |
+			  self chartExtents minValueY: (res := self minValueY).
+			  res ]
+		  ifNotNil: [ :res | res ]
+]
+
 { #category : #rendering }
 RSAbstractPlot >> minValueX [
 	"Return the minimum X value of the plot, excluding NaN and infinite"
+
 	^ self definedValuesX min
 ]
 
 { #category : #rendering }
 RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
+
 	^ self definedValuesY min
+]
+
+{ #category : #rendering }
+RSAbstractPlot >> renderIn: aCanvas [
+
+	self beforeRenderingIn: self chart.
+	decorations do: [ :e | e beforeRenderingIn: self ].
+	decorations do: [ :e | e renderIn: aCanvas ].
+	shapes := decorations
+		          flatCollect: [ :element | element createdShapes ]
+		          as: RSGroup
 ]
 
 { #category : #'accessing - computed' }
 RSAbstractPlot >> scalePoint: aPoint [
+
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
 { #category : #accessing }
+RSAbstractPlot >> shape [
+
+	^ shape
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> shape: aRSShape [
+
+	shape := aRSShape
+]
+
+{ #category : #accessing }
 RSAbstractPlot >> x [
+
 	^ xValues
 ]
 
@@ -164,9 +297,16 @@ c addDecoration: RSYMarkerDecoration new.
 c
 ```
 	"
-	self assert: [ aCollection isCollection ] description: 'Should be a collection'.
-	self assert: [ aCollection2 isCollection ] description: 'Should be a collection'.
-	self assert: [ aCollection size = aCollection2 size ] description: 'The two collections must have the same size'.
+
+	self
+		assert: [ aCollection isCollection ]
+		description: 'Should be a collection'.
+	self
+		assert: [ aCollection2 isCollection ]
+		description: 'Should be a collection'.
+	self
+		assert: [ aCollection size = aCollection2 size ]
+		description: 'The two collections must have the same size'.
 
 	xValues := aCollection.
 	yValues := aCollection2
@@ -174,11 +314,13 @@ c
 
 { #category : #accessing }
 RSAbstractPlot >> xValues [
+
 	^ xValues
 ]
 
 { #category : #accessing }
 RSAbstractPlot >> y [
+
 	^ yValues
 ]
 
@@ -204,10 +346,12 @@ c addDecoration: (RSVerticalTick new asFloat).
 c
 -=-=-=-=-=-=-=-=-=
 	"
+
 	self x: (1 to: aCollection size) y: aCollection
 ]
 
 { #category : #accessing }
 RSAbstractPlot >> yValues [
+
 	^ yValues
 ]

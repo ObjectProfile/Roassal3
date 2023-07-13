@@ -4,7 +4,7 @@
 
 *Responsibility*: create shapes that represent a scatter plot.
 
-*Collaborators*: used by `RSChart`
+*Collaborators*: a plot closely interacts with decorations and can be added in a `RSCompositeChart`.
 
 *Variables*:
 - `processBlock`: is either `nil` or refer to a one argument block. This block is used to particularize the shapes.
@@ -21,15 +21,12 @@ r := Random seed: 42.
 	z add: i + (r nextInteger: 10).
 ].
 
-c := RSChart new.
 p := RSScatterPlot new x: x y: y.
 p color: Color blue translucent.
-c addPlot: p.
  
-c addDecoration: (RSHorizontalTick new doNotUseNiceLabel asFloat: 3).
-c addDecoration: RSVerticalTick new.
+p horizontalTick doNotUseNiceLabel asFloat: 3.
 
-c build.
+p build.
 shapes := p ellipses.
 shapes models: z.
 RSNormalizer size
@@ -40,7 +37,7 @@ RSNormalizer size
 RSNormalizer color
 	shapes: shapes;
 	normalize: #yourself.
-c canvas
+p canvas
 ```
 
 
@@ -52,7 +49,7 @@ Class {
 	#instVars : [
 		'ellipses'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -60,7 +57,7 @@ RSScatterPlot >> createdShapes [
 	^ ellipses
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]
@@ -78,6 +75,7 @@ RSScatterPlot >> isScatterPlot [
 { #category : #rendering }
 RSScatterPlot >> renderIn: canvas [
 	| newPoint color |
+	super renderIn: canvas.
 	color := self computeColor.
 	self checkAssertion.
 	ellipses := (1 to: xValues size)
