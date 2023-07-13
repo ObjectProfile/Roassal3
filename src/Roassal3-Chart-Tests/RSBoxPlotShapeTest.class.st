@@ -1,11 +1,11 @@
 Class {
-	#name : #RSBoxGraphTest,
+	#name : #RSBoxPlotShapeTest,
 	#superclass : #TestCase,
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
 { #category : #tests }
-RSBoxGraphTest >> testBoxGraphHasScales [
+RSBoxPlotShapeTest >> testBoxGraphHasScales [
 	| boxGraph data aPoint aScale |
 	data := { 1. 2. 3. 4. 5. }.
 	aPoint := 1@1.
@@ -18,7 +18,7 @@ RSBoxGraphTest >> testBoxGraphHasScales [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testBoxGraphHasStatisticalMeasures [
+RSBoxPlotShapeTest >> testBoxGraphHasStatisticalMeasures [
 	| boxGraph data |
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -27,7 +27,7 @@ RSBoxGraphTest >> testBoxGraphHasStatisticalMeasures [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testCenter [
+RSBoxPlotShapeTest >> testCenter [
 	| boxGraph data  center aScale |
 	data := { 1. 2. 3. 4. 5. }.
 	aScale := NSLinearScale new.
@@ -37,7 +37,7 @@ RSBoxGraphTest >> testCenter [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testColor [
+RSBoxPlotShapeTest >> testColor [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -46,7 +46,7 @@ RSBoxGraphTest >> testColor [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testData [
+RSBoxPlotShapeTest >> testData [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -54,7 +54,7 @@ RSBoxGraphTest >> testData [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testDefaultGraphCenter [
+RSBoxPlotShapeTest >> testDefaultGraphCenter [
 	| boxGraph data|
 	data := { 1. 2. 3. 4. 5. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -62,7 +62,7 @@ RSBoxGraphTest >> testDefaultGraphCenter [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testLowerLimit [
+RSBoxPlotShapeTest >> testLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -70,7 +70,7 @@ RSBoxGraphTest >> testLowerLimit [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testMaxYValueIsOutlier [
+RSBoxPlotShapeTest >> testMaxYValueIsOutlier [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -78,7 +78,7 @@ RSBoxGraphTest >> testMaxYValueIsOutlier [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testMaxYValueIsUpperLimit [
+RSBoxPlotShapeTest >> testMaxYValueIsUpperLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -86,7 +86,7 @@ RSBoxGraphTest >> testMaxYValueIsUpperLimit [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testMinYValueIsLowerLimit [
+RSBoxPlotShapeTest >> testMinYValueIsLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -94,7 +94,7 @@ RSBoxGraphTest >> testMinYValueIsLowerLimit [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testOutlierValues [
+RSBoxPlotShapeTest >> testOutlierValues [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
@@ -103,7 +103,7 @@ RSBoxGraphTest >> testOutlierValues [
 ]
 
 { #category : #tests }
-RSBoxGraphTest >> testUpperLimit [
+RSBoxPlotShapeTest >> testUpperLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
