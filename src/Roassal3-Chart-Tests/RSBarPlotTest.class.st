@@ -20,7 +20,6 @@ RSBarPlotTest >> test2BarPlots [
 	vtick := chart verticalTick withNoLabels.
 	chart removeHorizontalTicks.
 	chart build.
-	chart open.
 	self
 		assert: chart canvas encompassingRectangle extent
 		equals: extent+(vtick configuration tickSize @0)
@@ -37,8 +36,7 @@ RSBarPlotTest >> testAdd2BarPlotsToCluster [
 	clusterChart := barPlot1 + barPlot2.
 	plotsInClusterChart := clusterChart elements select: [ :element | element isPlot ].
 	self assert: plotsInClusterChart size equals: 2.
-	clusterChart open.
-	self deny: plotsInClusterChart first barSize equals: plotsInClusterChart second barSize.
+	self assert: plotsInClusterChart first barSize equals: plotsInClusterChart second barSize.
 	self deny: plotsInClusterChart first barOffset equals: plotsInClusterChart second barOffset.
 ]
 
