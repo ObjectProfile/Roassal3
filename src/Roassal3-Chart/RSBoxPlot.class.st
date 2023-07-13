@@ -171,14 +171,14 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	confidenceIntervalOrigin := self scalePoint: confidenceIntervalPoint.
 	confidenceIntervalCorner := origin x @ (yScale scale: confidenceIntervalZero ).
 	
-	confidenceIntervalTopLeft := confidenceIntervalOrigin + offset - (0.5*sizeOffset).
-	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + (0.5*sizeOffset).
+	confidenceIntervalTopLeft := confidenceIntervalOrigin + offset - sizeOffset.
+	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + sizeOffset.
 
 	
 	^{ 	self shape copy
 		model: (self modelFor: aPoint);
 		color: self computeColor;
-		borderColor: Color black;
+		"borderColor: Color black;"
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
 		RSLine new
@@ -189,15 +189,16 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 			startPoint: center @ origin y;
 			endPoint: topWhiskerExtent;
 			color: Color black.
-		self shape copy
-		model: (self modelFor: confidenceIntervalPoint);
-		color: self computeColor;
-		borderColor: Color black;
-		fromRectangle: (Rectangle origin: confidenceIntervalTopLeft corner: confidenceIntervalBottomRight ).
 		RSLine new
 			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
 			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4)));
-			color: Color black },
+			color: Color black.
+		RSPolygon new
+			points: { confidenceIntervalTopLeft - (5@0) . (confidenceIntervalTopLeft x - 5) @ confidenceIntervalBottomRight y . (confidenceIntervalTopLeft x + (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
+			color: Color white.
+		RSPolygon new
+			points: { confidenceIntervalBottomRight + (5@0) . (confidenceIntervalBottomRight x + 5) @ confidenceIntervalTopLeft y . (confidenceIntervalBottomRight x - (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
+			color: Color white },
 		lowerOutliers,
 		upperOutliers
 ]
