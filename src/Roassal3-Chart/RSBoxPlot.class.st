@@ -94,7 +94,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	7. An array of the upper outlying data
 	"
 	boxAndWhisker := aCollection collect: [ :i |
-		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers |
+		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers confidenceIntervalMax confidenceIntervalMin |
 
 		iSort := i asSortedCollection .
 
@@ -103,7 +103,10 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 		quartile1 := self quantile: 0.25 for: iSort.
 		quartile3 := self quantile: 0.75 for: iSort.
 		iqr := quartile3 - quartile1 .
-
+		"95% confidence interval around the median"
+		confidenceIntervalMax := iSort median + (1.57 * iqr/(iSort size sqrt)).
+		confidenceIntervalMin  := iSort median - (1.57 * iqr/(iSort size sqrt)).
+		
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
 		bottomWhiskerExtent <= minVal
 			ifTrue: [ bottomWhiskerExtent := minVal. bottomOutliers := Array new ]
@@ -114,7 +117,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 			ifTrue: [ topWhiskerExtent := maxVal. topOutliers := Array new ]
 			ifFalse: [ topOutliers := i select: [ :j | j > topWhiskerExtent  ] ].
 
-		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers  }
+		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers . confidenceIntervalMax . confidenceIntervalMin }
 	]
 ]
 
@@ -128,7 +131,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 		| newPoint |
 		newPoint := xValue @ (yScale scale: i).
 		RSEllipse new
-				radius: 2;
+				radius: 2.5;
 				color: self computeColor;
 				translateTo: newPoint .
 	]
@@ -137,7 +140,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 { #category : #rendering }
 RSBoxPlot >> computeRectagleAndLinesFor: index [
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
+	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center confidenceIntervalPoint confidenceIntervalZero confidenceIntervalOrigin confidenceIntervalCorner confidenceIntervalTopLeft confidenceIntervalBottomRight |
 
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
@@ -161,22 +164,40 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 
 	bottomWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 2)).
 	topWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 6)).
+	
+	"For the 95% confidence interval around the median"
+	confidenceIntervalPoint := (xValues at: index) @ (boxAndWhis at: 8).
+	confidenceIntervalZero := boxAndWhis at: 9.
+	confidenceIntervalOrigin := self scalePoint: confidenceIntervalPoint.
+	confidenceIntervalCorner := origin x @ (yScale scale: confidenceIntervalZero ).
+	
+	confidenceIntervalTopLeft := confidenceIntervalOrigin + offset - (0.5*sizeOffset).
+	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + (0.5*sizeOffset).
 
-
+	
 	^{ 	self shape copy
 		model: (self modelFor: aPoint);
 		color: self computeColor;
+		borderColor: Color black;
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
 		RSLine new
-			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
-			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4))).
-		RSLine new
 			startPoint: center @ corner y;
-			endPoint: bottomWhiskerExtent .
+			endPoint: bottomWhiskerExtent;
+			color: Color black.
 		RSLine new
 			startPoint: center @ origin y;
-			endPoint: topWhiskerExtent},
+			endPoint: topWhiskerExtent;
+			color: Color black.
+		self shape copy
+		model: (self modelFor: confidenceIntervalPoint);
+		color: self computeColor;
+		borderColor: Color black;
+		fromRectangle: (Rectangle origin: confidenceIntervalTopLeft corner: confidenceIntervalBottomRight ).
+		RSLine new
+			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
+			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4)));
+			color: Color black },
 		lowerOutliers,
 		upperOutliers
 ]
