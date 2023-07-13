@@ -44,7 +44,6 @@ RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	chart := boxPlotA + boxPlotB.
 	self assert: chart plots first identicalTo: boxPlotA.
 	self assert: chart plots second identicalTo: boxPlotB.
-	chart open.
 ]
 
 { #category : #'tests - adding' }
@@ -73,7 +72,6 @@ RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	chart := linePlot + boxPlot.
 	self assert: chart class equals: RSChart.
 	self assert: chart plots size equals: 2.
-	chart open.
 ]
 
 { #category : #tests }
@@ -106,9 +104,9 @@ RSBoxPlotTest >> testBoxPlotCreatedWithCollectionOfDatasets [
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
-	self assert: boxPlot boxGraphics size equals: 3.
-	self assert: boxPlot boxGraphics first class equals: RSBoxPlotShape.
-	self assert: boxPlot boxGraphics first data equals: data first.
+	self assert: boxPlot boxShapes size equals: 3.
+	self assert: boxPlot boxShapes first class equals: RSBoxPlotShape.
+	self assert: boxPlot boxShapes first data equals: data first.
 ]
 
 { #category : #tests }
@@ -116,17 +114,17 @@ RSBoxPlotTest >> testBoxPlotCreatedWithData [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. }.
 	boxPlot := RSBoxPlot data: data.
-	self assert: boxPlot boxGraphics first class equals: RSBoxPlotShape.
-	self assert: boxPlot boxGraphics first data equals: data.
+	self assert: boxPlot boxShapes first class equals: RSBoxPlotShape.
+	self assert: boxPlot boxShapes first data equals: data.
 ]
 
 { #category : #tests }
-RSBoxPlotTest >> testBoxPlotWithOneBoxGraph [
+RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
 	| p y window |
 	y := { 12. 12. 13. 14. 15. 24. }.
 	p := RSBoxPlot data: y.
-	self assert: p boxGraphics size equals: 1.
-	self assert: p boxGraphics first class equals: RSBoxPlotShape.
+	self assert: p boxShapes size equals: 1.
+	self assert: p boxShapes first class equals: RSBoxPlotShape.
 	window := p open.
 	self assert: p createdShapes notEmpty.
 	window delete.
@@ -144,8 +142,8 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 	window := boxPlot open.
 	chart := boxPlot chart.
 	chartBox := chart spine encompassingRectangle.
-	boxPlot boxGraphics do: [ :eachBoxGraph |
-		box := eachBoxGraph box.
+	boxPlot boxShapes do: [ :eachBoxShape |
+		box := eachBoxShape box.
 		self assert: box class equals: RSPolygon.
 		self assert: (chartBox containsRect: box encompassingRectangle).
 	].
@@ -155,14 +153,13 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 { #category : #tests }
 RSBoxPlotTest >> testDefaultPlotColors [
 	| boxPlot data chart boxColor |
-	self skip.
 	data := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
 	chart := boxPlot buildChart.
 	boxColor := chart colorFor: boxPlot.
-	boxPlot boxGraphics do: [ :box |
+	boxPlot boxShapes do: [ :box |
 		self assert: box color equals: boxColor.
 	].
 ]
@@ -188,9 +185,9 @@ RSBoxPlotTest >> testNumberOfBoxes [
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
 	window := boxPlot open.
-	boxes := boxPlot boxGraphics.
+	boxes := boxPlot boxShapes.
 	self assert: boxPlot numberOfBoxes equals: 3.
-	self assert: boxPlot boxGraphics size equals: boxPlot numberOfBoxes. 
+	self assert: boxPlot boxShapes size equals: boxPlot numberOfBoxes. 
 	window delete.
 ]
 
