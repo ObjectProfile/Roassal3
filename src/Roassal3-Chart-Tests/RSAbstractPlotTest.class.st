@@ -19,7 +19,7 @@ RSAbstractPlotTest >> classToTest [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : #running }
 RSAbstractPlotTest >> setUp [
 
 	super setUp.

@@ -6,13 +6,14 @@ Class {
 
 { #category : #tests }
 RSChartTickTest >> testDefaultFont [
-	| plot canvas ticks labels |
+	| plot canvas ticks labels defaultFont |
 	plot := RSLinePlot y: #(1 2 3).
 	plot build.
 	canvas := plot container.
 	ticks := plot verticalTick.
 	labels := ticks labels.
-	self assert: (labels allSatisfy: [ :label | label font = label class defaultFont ]).
+	defaultFont := labels anyOne class familyFontName .
+	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ]).
 ]
 
 { #category : #tests }

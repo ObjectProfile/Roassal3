@@ -106,7 +106,7 @@ RSBuilder >> open [
 	^ self canvas open
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSBuilder >> renderIn: aCanvas [
 	"add some shapes in the canvas"
 	self subclassResponsibility

@@ -1,9 +1,6 @@
 Class {
 	#name : #RSDensityPlotTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'chart'
-	],
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 

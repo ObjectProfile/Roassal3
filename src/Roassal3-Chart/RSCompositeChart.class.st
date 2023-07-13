@@ -1,30 +1,5 @@
 "
-<keyClass>
-`RSCompositeChart` is the main class to build charts.
-
-*Responsibility*: maintain and render plots
-
-*Collaborators*: a chart closely interacts with plots and decorations. 
-
-*Variables*:
-- `plots`: the list of plots
-
-*Example*:
-Here is an example that adjust the font size used for the title, and axis labels:
-
-```Smalltalk
-x := -3.14 to: 3.14 by: 0.1.
-y1 := x sin.
-y2 := x cos.
-
-c := RSCompositeChart new.
-c add: (RSLinePlot new x: x y: y1).
-c add: (RSLinePlot new x: x y: y2).
-c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
-c addDecoration: (RSXLabelDecoration new title: 'My X Axis'; fontSize: 12).
-c addDecoration: (RSYLabelDecoration new title: 'My Y Axis'; fontSize: 15).
-c
-```
+Please use RSCompositeChart
 "
 Class {
 	#name : #RSCompositeChart,

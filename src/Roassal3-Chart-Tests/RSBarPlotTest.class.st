@@ -20,7 +20,7 @@ RSBarPlotTest >> setUp [
 
 { #category : #tests }
 RSBarPlotTest >> test2BarPlots [
-	| d1 d2 extent vtick plot |
+	| d1 d2 extent vtick |
 	d1 := #(4 10 5 9).
 	d2 := #(-5 -6 -3 -3 ).
 	plot := RSBarPlot new y: d1.
@@ -157,7 +157,7 @@ RSBarPlotTest >> testStylerTitleLabel [
 
 { #category : #tests }
 RSBarPlotTest >> testVerticalBar [
-	| p x y |
+	| p |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
 	p := RSBarPlot new x: x y: y.

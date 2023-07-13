@@ -1,9 +1,6 @@
 Class {
 	#name : #RSHistogramPlotTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'c'
-	],
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
