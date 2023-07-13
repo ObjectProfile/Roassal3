@@ -54,7 +54,7 @@ RSAreaPlot >> createdShapes [
 	^ {area}
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAreaPlot >> defaultShape [
 	^ RSSVGPath new noPaint
 ]
@@ -79,6 +79,7 @@ RSAreaPlot >> pointFor: aPoint [
 
 { #category : #rendering }
 RSAreaPlot >> renderIn: canvas [
+	super renderIn: canvas.
 	canvas add: (area := self shape copy
 		color: self computeColor;
 		svgPath: self computePath;

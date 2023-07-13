@@ -128,7 +128,7 @@ RSHeatmap >> newLabelFor: aComposite [
 	^ self labelShapeCell shapeFor: ((dataMatrix at: position y) at: position x).
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSHeatmap >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	gradientLegend := self createGradientLegend.

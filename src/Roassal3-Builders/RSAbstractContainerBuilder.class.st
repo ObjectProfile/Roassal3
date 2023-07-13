@@ -98,7 +98,7 @@ RSAbstractContainerBuilder >> open [
 	^ self canvas open
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractContainerBuilder >> renderIn: aCanvas [
 	self subclassResponsibility
 ]

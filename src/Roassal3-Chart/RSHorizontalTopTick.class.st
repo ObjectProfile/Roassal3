@@ -56,8 +56,8 @@ RSHorizontalTopTick >> min [
 RSHorizontalTopTick >> updateChartMaxAndMinValues: aChart [
 
 	aChart
-		minValueX: self ticksData first;
-		maxValueX: self ticksData last
+		minChartValueX: self ticksData first;
+		maxChartValueX: self ticksData last
 ]
 
 { #category : #accessing }

@@ -194,7 +194,7 @@ RSForceLayoutInSpacesBuilder >> numberOfSpaces: anInteger [
 	numberOfSpaces := anInteger
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSForceLayoutInSpacesBuilder >> renderIn: aCanvas [
 	spaces := (1 to: numberOfSpaces) collect: [ :i | self newSpaceFor: i ].
 	shapes := classes collect: [ :obj | self newShapeFor: obj ] as: RSGroup.

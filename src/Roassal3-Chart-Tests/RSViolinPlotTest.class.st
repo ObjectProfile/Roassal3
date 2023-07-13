@@ -102,7 +102,7 @@ RSViolinPlotTest >> testOutliersInsideChartDomain [
 	| violinPlot data yValues outlierMax outlierMin |
 	data := {-5. 12. 12. 13. 14. 15. 24. }.
 	violinPlot := RSViolinPlot data: data.
-	violinPlot buildChart.
+	violinPlot build.
 	yValues := violinPlot yValues.
 	outlierMax := (violinPlot outlierPoints collect: [ :point | point y ]) max.
 	outlierMin := (violinPlot outlierPoints collect: [ :point | point y ]) min.
@@ -125,7 +125,7 @@ RSViolinPlotTest >> testSetErrorMargin [
 	| violinPlot data densityAreaPointsBefore densityAreaPointsAfter |
 	data := { 100. 200. 300. 400. 500. 600. }.
 	violinPlot := RSViolinPlot data: data.
-	violinPlot buildChart.
+	violinPlot build.
 	densityAreaPointsBefore := violinPlot densityAreaPoints size.
 	violinPlot errorMargin: 0.00001.
 	densityAreaPointsAfter := violinPlot densityAreaPoints size.
@@ -145,7 +145,7 @@ RSViolinPlotTest >> testWhiskersInsideChartDomain [
 	| violinPlot data yValues upperWhisker |
 	data := { 100. 200. 300. 400. 500. 600. }.
 	violinPlot := RSViolinPlot data: data.
-	violinPlot buildChart.
+	violinPlot build.
 	yValues := violinPlot yValues.
 	upperWhisker := violinPlot upperWhiskerLimit.
 	self assert: ((yValues last) >= (upperWhisker)).

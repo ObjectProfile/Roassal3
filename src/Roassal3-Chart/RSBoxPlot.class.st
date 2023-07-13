@@ -11,20 +11,16 @@ collection are the data points.
 y := { { 1. 2. 3. 4. 5. } . 
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }. 
-c := RSChart new.
 p := RSBoxPlot new y: y.
 	
-c addPlot: p.
-	
-c addDecoration: (RSHorizontalTick new 
-		numberOfTicks: y size).
-c xlabel: 'X Axis'.
-c addDecoration: (RSVerticalTick new 
+p horizontalTick numberOfTicks: y size.
+p xlabel: 'X Axis'.
+p verticalTick 
 		numberOfTicks: 10;
-		asFloat).
-c ylabel: 'Y Axis'.
-c title: 'Box Plot'.
-c openOnce.
+		asFloat.
+p ylabel: 'Y Axis'.
+p title: 'Box Plot'.
+p openOnce.
 ```
 "
 Class {
@@ -37,7 +33,7 @@ Class {
 		'barOffset',
 		'boxAndWhisker'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -74,12 +70,13 @@ RSBoxPlot >> bars [
 
 { #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
+		            domain: xValues;
+		            rangeBands: xScale range padding: gapRatio.
 	aChart xScale: barScale
 ]
 
@@ -189,7 +186,7 @@ RSBoxPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSBoxPlot >> defaultShape [
 	^ RSBox new noPaint
 ]
@@ -264,6 +261,7 @@ RSBoxPlot >> quantile: aProbability for: aSortedCollection withProbs: anArray [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	| index |
+	super renderIn: canvas.
 	self checkAssertion.
 	index := 1.
 	bars := xValues flatCollect: [ :xt |

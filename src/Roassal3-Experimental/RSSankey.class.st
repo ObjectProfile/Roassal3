@@ -310,7 +310,7 @@ RSSankey >> relaxRightToLeft: alpha boxes: boxesByBreadth [
 		eachBox relaxRightToLeft: alpha ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSSankey >> renderIn: aCanvas [
 
 	nodes ifNil: [ ^ self ].

@@ -97,8 +97,7 @@ RSZoomTickDecoration >> renderIn: canvas [
 { #category : #rendering }
 RSZoomTickDecoration >> renderPlots [
 	| visibleShapes scale |
-	visibleShapes := chart plots flatCollect: [ :plot | plot createdShapes
-		select: [ :s | s encompassingRectangle intersects: visibleRectangle ] ].
+	visibleShapes := chart createdShapes select: [ :s | s encompassingRectangle intersects: visibleRectangle ].
 	scale := chart spine extent/visibleRectangle extent.
 	"I use a composite shape because the composite can scale the selected shapes,
 	but more important we can clip the selected shapes"
@@ -133,25 +132,25 @@ RSZoomTickDecoration >> renderTicks [
 
 { #category : #rendering }
 RSZoomTickDecoration >> renderXAxis [
-	| horizontalTick tickShapes newChart scale |
+	| horizontalTick tickShapes newPlot scale |
 	horizontalTick := chart horizontalTick.
 	horizontalTick ifNil: [ ^ self ].
 	"should be a copy to not lose created shapes from original horizontal tick"
 	scale := horizontalTick xScale.
 	"scale inspect."
-	newChart := RSChart new chartExtents: chart chartExtents.
-	newChart
+	newPlot := chart copy.
+	newPlot
 		minValueX: (scale invert: visibleRectangle origin x);
 		maxValueX: (scale invert: visibleRectangle corner x).
 
 	horizontalTick := horizontalTick copy.
 	horizontalTick xScale: nil.
-	horizontalTick chart: newChart.
+	horizontalTick chart: newPlot.
 
 	tickShapes := RSGroup new.
 
 	horizontalTick
-		beforeRenderingIn: newChart;
+		beforeRenderingIn: newPlot;
 		renderIn: tickShapes.
 
 	currentShapes addAll: tickShapes

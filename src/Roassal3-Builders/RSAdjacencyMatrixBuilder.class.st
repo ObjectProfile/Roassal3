@@ -159,7 +159,7 @@ RSAdjacencyMatrixBuilder >> outgoingConnectionsOf: anObject [
 		  thenCollect: #value
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 
 	"Display the adjacency matrix"

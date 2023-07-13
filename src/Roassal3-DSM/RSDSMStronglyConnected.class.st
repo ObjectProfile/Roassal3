@@ -65,7 +65,7 @@ RSDSMStronglyConnected >> renderBoxes: aRSCanvas groups: aCollection [
 		thenCollect: [ :group | self boxFor: group ])
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDSMStronglyConnected >> renderIn: aCanvas [
 	| graph groups |
 	graph := self createGraph.
