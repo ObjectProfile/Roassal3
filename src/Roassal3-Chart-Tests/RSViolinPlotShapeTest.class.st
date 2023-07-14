@@ -25,5 +25,7 @@ RSViolinPlotShapeTest >> testDensityArea [
 		range: { 0. 360. }.
 	violinShape := RSViolinPlotShape data: data.
 	violinShape scales: {xScale. yScale}.
+	violinShape bandWidth: xScale rangeBand.
+	violinShape bandOffset: (xScale scale: 1).
 	self assert: violinShape densityArea class equals: RSPolygon.
 ]
