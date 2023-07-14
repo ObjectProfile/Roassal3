@@ -21,6 +21,16 @@ RSViolinPlot class >> data: aCollection [
 ]
 
 { #category : #rendering }
+RSViolinPlot >> bandsOffset: aNumberInRange [
+	offset := aNumberInRange
+]
+
+{ #category : #rendering }
+RSViolinPlot >> bandsWidth: aNumber [
+	bandWidth := aNumber.
+]
+
+{ #category : #rendering }
 RSViolinPlot >> beforeRenderingIn: aChart [
 	| bandScale |
 	super beforeRenderingIn: aChart.
