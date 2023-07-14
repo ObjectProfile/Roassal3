@@ -23,7 +23,7 @@ RSViolinPlotTest >> testBasicViolinPlot [
 	violinPlot := RSViolinPlot data: data.
 	window := violinPlot open.
 	self assert: window isDisplayed.
-	"window delete."
+	window delete.
 ]
 
 { #category : #tests }
@@ -33,7 +33,7 @@ RSViolinPlotTest >> testTwoViolinPlots [
 	violinPlot := RSViolinPlot data: data.
 	window := violinPlot open.
 	self assert: window isDisplayed.
-	"window delete."
+	window delete.
 ]
 
 { #category : #tests }
@@ -45,5 +45,5 @@ RSViolinPlotTest >> testTwoViolinPlotsClustered [
 	chart := violinPlotA + violinPlotB.
 	window := chart open.
 	self assert: window isDisplayed.
-	"window delete."
+	window delete.
 ]
