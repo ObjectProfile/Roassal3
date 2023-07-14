@@ -146,6 +146,65 @@ RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleBoxFillColor [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot color: Color red.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleBoxFillColorsCollection [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot colors: {Color red. Color green. Color blue.}.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleMedianLine [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot medianLines do: [:ml | 
+		ml dashArray: {4.}.
+		ml color: Color red.
+	].
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleMedianLineColor [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot medianLines color: Color red.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleOneMedianLineColor [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot medianLines last color: Color red.
+	(boxPlot medianLines at: 2) color: Color white.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleDays [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -331,6 +390,11 @@ RSBoxPlot >> isBoxPlot [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> medianLines [
+	^ RSGroup new addAll: (boxShapes collect: [ :box | box medianLine ]); yourself.
+]
+
+{ #category : #rendering }
 RSBoxPlot >> numberOfBoxes [
 	^ self boxShapes size.
 ]
@@ -350,7 +414,7 @@ RSBoxPlot >> renderIn: canvas [
 	self computeBandsWidth.
 	
 	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx |
-		aRSBoxPlotShape color: self computeColor.
+		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
 		aRSBoxPlotShape scales: {
 				self xScale.
 				self yScale }.
