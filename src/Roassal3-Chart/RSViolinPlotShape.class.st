@@ -72,6 +72,42 @@ RSViolinPlotShape >> defaultKernelDensity [
 ]
 
 { #category : #initialization }
+RSViolinPlotShape >> densityArea [
+	| densityCurve densityAreaPoints maxX minX |
+	
+	"invert x and y"
+	densityCurve := (kernelDensity densityCurve) collect: [:point | 
+		(point y @ point x)
+	].
+
+	"normalize x"
+	maxX := (densityCurve collect: [ :point | point x ]) max.
+	minX := (densityCurve collect: [ :point | point x ]) min.
+	densityCurve := densityCurve collect: [:point | 
+		| normalizedX |
+		normalizedX := ((point x)-minX)/(maxX - minX).
+		((normalizedX) @ point y)
+	].
+	
+	
+	densityAreaPoints := densityCurve copy.
+	densityAreaPoints := densityAreaPoints collect: [ :point |
+		((bandWidth/2 * point x)+bandOffset)@(yScale scale: point y)
+	 ].
+	densityCurve reversed do: [ :point | 
+		densityAreaPoints add: (bandOffset-(bandWidth/2 * point x))@(yScale scale: point y)
+		"((point x * -1) @ point y) "
+	].
+	
+	
+	densityArea points: densityAreaPoints.
+
+	densityArea borderColor: Color black.
+	densityArea color: color.
+	^ densityArea
+]
+
+{ #category : #initialization }
 RSViolinPlotShape >> initialize [
 	super initialize.
 	kernelDensity := self defaultKernelDensity.
