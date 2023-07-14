@@ -20,6 +20,25 @@ RSViolinPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotColors [
+	| violinPlot data |
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
+	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	violinPlot colors: { Color green. Color blue }.
+	^ violinPlot open.
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotWithOutliers [
+	| violinPlot data |
+	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
+	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	^ violinPlot open.
+]
+
 { #category : #rendering }
 RSViolinPlot >> bandsOffset: aNumberInRange [
 	offset := aNumberInRange
@@ -28,6 +47,11 @@ RSViolinPlot >> bandsOffset: aNumberInRange [
 { #category : #rendering }
 RSViolinPlot >> bandsWidth: aNumber [
 	bandWidth := aNumber.
+]
+
+{ #category : #rendering }
+RSViolinPlot >> bandwidth: aNumber [
+	self kernelBandwidth: aNumber.
 ]
 
 { #category : #rendering }
@@ -47,13 +71,21 @@ RSViolinPlot >> buildChart [
 	chart
 		extent: 360 @ 300;
 		padding: 15;
-		build.
+		build;
+		title: title;
+		xlabel: xlabel;
+		ylabel: ylabel.
 	^ chart
 ]
 
 { #category : #initialization }
 RSViolinPlot >> canHandleCluster [
 	^ true
+]
+
+{ #category : #rendering }
+RSViolinPlot >> colors: collectionOfColors [
+	violinShapes doWithIndex: [ :violinShape :idx | violinShape color: (collectionOfColors at: idx) ].
 ]
 
 { #category : #rendering }
@@ -129,6 +161,12 @@ RSViolinPlot >> initialize [
 ]
 
 { #category : #rendering }
+RSViolinPlot >> kernelBandwidth: aNumber [
+	violinShapes do: [ :violin | violin kernelBandwidth: aNumber ].
+	self computeState.
+]
+
+{ #category : #rendering }
 RSViolinPlot >> numberOfViolins [
 	^ violinShapes size
 ]
@@ -147,7 +185,7 @@ RSViolinPlot >> renderIn: canvas [
 	self computeBandsWidth.
 	
 	violinShapes doWithIndex: [ :aRSBoxPlotShape :idx |
-		aRSBoxPlotShape color: self computeColor.
+		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
 		aRSBoxPlotShape scales: {
 				self xScale.
 				self yScale }.
@@ -155,7 +193,37 @@ RSViolinPlot >> renderIn: canvas [
 ]
 
 { #category : #rendering }
+RSViolinPlot >> title [
+	^ title
+]
+
+{ #category : #rendering }
+RSViolinPlot >> title: aString [
+	title := aString
+]
+
+{ #category : #rendering }
 RSViolinPlot >> violinShapes: collectionOfRSViolinPlotShapes [
 	violinShapes := collectionOfRSViolinPlotShapes
 	
+]
+
+{ #category : #rendering }
+RSViolinPlot >> xlabel [
+	^ xlabel
+]
+
+{ #category : #rendering }
+RSViolinPlot >> xlabel: aString [
+	xlabel := aString
+]
+
+{ #category : #rendering }
+RSViolinPlot >> ylabel [
+	^ ylabel
+]
+
+{ #category : #rendering }
+RSViolinPlot >> ylabel: aString [
+	ylabel := aString
 ]

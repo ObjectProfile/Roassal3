@@ -17,6 +17,19 @@ RSViolinPlotTest >> test4ViolinsAnd2Clusters [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testAxisLabelsAndTitle [
+	| violinPlot data window |
+	data := #(10 20 30 40 40 50).
+	violinPlot := RSViolinPlot data: data.
+	violinPlot xlabel: 'X label'.
+	violinPlot ylabel: 'Y label'.
+	violinPlot title: 'Title'.
+	window := violinPlot open.
+	self assert: window isDisplayed.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testBasicViolinPlot [
 	| violinPlot data window |
 	data := #(10 20 30 40 40 50).

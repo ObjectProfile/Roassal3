@@ -36,6 +36,11 @@ RSViolinPlotShape >> bandWidth: aNumber [
 ]
 
 { #category : #initialization }
+RSViolinPlotShape >> color [
+	^ color
+]
+
+{ #category : #initialization }
 RSViolinPlotShape >> color: aColor [
 	color := aColor
 ]
@@ -115,6 +120,11 @@ RSViolinPlotShape >> initialize [
 	kernelDensity := self defaultKernelDensity.
 	boxPlotShape := self defaultBoxPlotShape.
 	densityArea := self defaultDensityArea.
+]
+
+{ #category : #defaults }
+RSViolinPlotShape >> kernelBandwidth: aNumber [
+	kernelDensity bandwidth: aNumber.
 ]
 
 { #category : #initialization }
