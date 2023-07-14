@@ -69,10 +69,15 @@ RSViolinPlot >> computeBandsWidth [
 ]
 
 { #category : #initialization }
+RSViolinPlot >> computeDefualtXTicks [
+	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfViolins) ].
+]
+
+{ #category : #initialization }
 RSViolinPlot >> computeState [
 	self computeXValues.
 	self computeYValues.
-	"self computeDefualtXTicks."
+	self computeDefualtXTicks.
 ]
 
 { #category : #rendering }
