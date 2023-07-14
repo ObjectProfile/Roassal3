@@ -26,11 +26,13 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 { #category : #accessing }
 RSViolinPlotShape >> bandOffset: aNumber [
 	bandOffset := aNumber.
+	boxPlotShape bandOffset: bandOffset.
 ]
 
 { #category : #accessing }
 RSViolinPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber
+	bandWidth := aNumber.
+	boxPlotShape bandWidth: bandWidth*0.1.
 ]
 
 { #category : #initialization }
@@ -137,6 +139,8 @@ RSViolinPlotShape >> renderIn: canvas [
 		aShape isCollection ifTrue: [ canvas addAll: aShape ]
 		ifFalse: [ canvas add: aShape ].
 	].
+	boxPlotShape color: Color white.
+	boxPlotShape renderIn: canvas.
 	^ canvas.
 ]
 
@@ -149,6 +153,7 @@ RSViolinPlotShape >> scalePoint: aPoint [
 RSViolinPlotShape >> scales: collectionOfNSScales [
 	self xScale: collectionOfNSScales first.
 	self yScale: collectionOfNSScales second.
+	boxPlotShape scales: collectionOfNSScales.
 ]
 
 { #category : #initialization }
@@ -159,7 +164,7 @@ RSViolinPlotShape >> shapes [
 
 { #category : #initialization }
 RSViolinPlotShape >> xScale: aNSScale [
-	xScale := aNSScale
+	xScale := aNSScale.
 ]
 
 { #category : #initialization }
