@@ -21,6 +21,34 @@ RSViolinPlot class >> data: aCollection [
 ]
 
 { #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotClusters [
+	| violinPlotA violinPlotB data aRSClusterChart |
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
+	
+	violinPlotA := self data: data.
+	violinPlotA bandwidth: 3.
+	violinPlotA color: Color green.
+	
+	violinPlotB := self data: data.
+	violinPlotB bandwidth: 3.
+	violinPlotB color: Color red.
+	
+	aRSClusterChart := violinPlotA + violinPlotB.
+	
+	^ aRSClusterChart open.
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotColor [
+	| violinPlot data |
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
+	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	violinPlot color: Color green.
+	^ violinPlot open.
+]
+
+{ #category : #accessing }
 RSViolinPlot class >> exampleViolinPlotColors [
 	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
