@@ -135,6 +135,27 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> exampleBoxPlotGroupsOdd5 [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 boxPlot4 boxPlot5 data1 data2 data3 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot3 := self data: data3.
+	boxPlot4 := self data: data3.
+	boxPlot5 := self data: data3.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3 + boxPlot4 + boxPlot5.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -207,12 +228,13 @@ RSBoxPlot class >> exampleBoxPlotStyleOneMedianLineColor [
 { #category : #examples }
 RSBoxPlot class >> exampleBoxPlotStyleOutlierShape [
 	| boxPlot1  data1  |
-	data1 := { { 1. 2. 3. 4. 5. } .
-			 { 5. 6. 7. 5. 10. }  .
+	data1 := { { 12. 12. 13. 14. 15. 24. } .
+			 { 12. 12. 13. 14. 15. 24. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot1 := self data: data1.
-	"boxPlot1 outlierMarker: '+'."
-	"boxPlot1 outlier: (RSShapeFactory shapeFromString: 'h')."
+	boxPlot1 outlierMarker: '+'.
+	"boxPlot1 boxShapes first outlier: (RSShapeFactory circle size: 10; color: Color red)."
+	"boxPlot1 outlier: (RSShapeFactory circle size: 10; color: Color red)."
 	^ boxPlot1 open.
 ]
 
@@ -424,6 +446,11 @@ RSBoxPlot >> medianLines [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> numberOfBands [
+	^ self numberOfBoxes
+]
+
+{ #category : #rendering }
 RSBoxPlot >> numberOfBoxes [
 	^ self boxShapes size.
 ]
@@ -436,6 +463,11 @@ RSBoxPlot >> open [
 { #category : #rendering }
 RSBoxPlot >> outlier: markerShape [
 	boxShapes do: [ :box | box outlier: markerShape ].
+]
+
+{ #category : #rendering }
+RSBoxPlot >> outlierMarker: markerShapeString [
+	boxShapes do: [ :box | box outlierMarker: markerShapeString ].
 ]
 
 { #category : #rendering }

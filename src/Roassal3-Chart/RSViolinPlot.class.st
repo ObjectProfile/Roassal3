@@ -200,6 +200,11 @@ RSViolinPlot >> kernelBandwidth: aNumber [
 ]
 
 { #category : #rendering }
+RSViolinPlot >> numberOfBands [
+	^ self numberOfViolins
+]
+
+{ #category : #rendering }
 RSViolinPlot >> numberOfViolins [
 	^ violinShapes size
 ]

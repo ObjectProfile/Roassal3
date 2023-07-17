@@ -122,6 +122,7 @@ RSBoxPlotShape >> computeOutliers [
 	outliers := outliers collect: [ :out |
 			| e |
 			e := outlier.
+			e size: bandWidth * 0.15.
 			e translateTo: out.
 	] as: RSGroup.
 	^ outliers.
@@ -169,7 +170,7 @@ RSBoxPlotShape >> defaultMedianLine [
 { #category : #defaults }
 RSBoxPlotShape >> defaultOutlier [
 	^ RSEllipse new
-		radius: 2.5;
+		radius: 4;
 		color: Color black.
 ]
 
@@ -229,6 +230,11 @@ RSBoxPlotShape >> minYValue [
 { #category : #accessing }
 RSBoxPlotShape >> outlier: markerShape [
 	outlier := markerShape
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> outlierMarker: markerShapeString [
+	outlier := (RSShapeFactory shapeFromString: markerShapeString) color: Color black.
 ]
 
 { #category : #accessing }
