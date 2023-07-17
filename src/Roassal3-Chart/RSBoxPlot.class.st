@@ -31,7 +31,8 @@ Class {
 		'bars',
 		'gapRatio',
 		'barOffset',
-		'boxAndWhisker'
+		'boxAndWhisker',
+		'notched'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -122,6 +123,64 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> computeMainBoxWith: values [
+
+	| boxAndWhis topLeft bottomRight confidenceIntervalTopLeft confidenceIntervalBottomRight sizeOffset aPoint |
+	boxAndWhis := values at: 1.
+	topLeft := values at: 2.
+	bottomRight := values at: 3.
+	confidenceIntervalTopLeft := values at: 4.
+	confidenceIntervalBottomRight := values at: 5.
+	sizeOffset := values at: 6.
+	aPoint := values at: 7.
+
+	^ notched
+		  ifTrue: [
+			  RSPolygon new
+				  points: {
+						  topLeft.
+						  (bottomRight x @ topLeft y).
+						  (confidenceIntervalBottomRight x @ confidenceIntervalTopLeft y).
+						  (confidenceIntervalBottomRight x - (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4))).
+						  confidenceIntervalBottomRight.
+						  bottomRight.
+						  (topLeft x @ bottomRight y).
+						  (confidenceIntervalTopLeft x @ confidenceIntervalBottomRight y).
+						  (confidenceIntervalTopLeft x + (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4))).
+						  confidenceIntervalTopLeft };
+				  color: self computeColor ]
+		  ifFalse: [
+			  self shape copy
+				  model: (self modelFor: aPoint);
+				  color: self computeColor;
+				  fromRectangle: (Rectangle origin: topLeft corner: bottomRight) ]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeMedianLineWith: values [
+
+	| boxAndWhis topLeft bottomRight confidenceIntervalTopLeft confidenceIntervalBottomRight sizeOffset |
+	boxAndWhis := values at: 1.
+	topLeft := values at: 2.
+	bottomRight := values at: 3.
+	confidenceIntervalTopLeft := values at: 4.
+	confidenceIntervalBottomRight := values at: 5.
+	sizeOffset := values at: 6.
+
+	^ notched
+		  ifTrue: [
+			  RSLine new
+				  startPoint:
+					  confidenceIntervalTopLeft x + (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4));
+				  endPoint:
+					  confidenceIntervalBottomRight x - (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4)) ]
+		  ifFalse: [
+			  RSLine new
+				  startPoint: topLeft x @ (yScale scale: (boxAndWhis at: 4));
+				  endPoint: bottomRight x @ (yScale scale: (boxAndWhis at: 4)) ]
+]
+
+{ #category : #rendering }
 RSBoxPlot >> computeOutliersFor: points at: xValue [
 
 	"Translates a collection of points to the plot coordinates and returns a collection of RSEllipse"
@@ -140,7 +199,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 { #category : #rendering }
 RSBoxPlot >> computeRectagleAndLinesFor: index [
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center confidenceIntervalPoint confidenceIntervalZero confidenceIntervalOrigin confidenceIntervalCorner confidenceIntervalTopLeft confidenceIntervalBottomRight |
+	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center confidenceIntervalPoint confidenceIntervalZero confidenceIntervalOrigin confidenceIntervalCorner confidenceIntervalTopLeft confidenceIntervalBottomRight values |
 
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
@@ -174,36 +233,20 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	confidenceIntervalTopLeft := confidenceIntervalOrigin + offset - sizeOffset.
 	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + sizeOffset.
 
+	values := { boxAndWhis . topLeft . bottomRight . confidenceIntervalTopLeft . confidenceIntervalBottomRight . sizeOffset . aPoint } asOrderedCollection.
 	
 	^{ "the main box"	
-		self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
-		yourself.
+		self computeMainBoxWith: values .
 		"the bottom whisker"
 		RSLine new
 			startPoint: center @ corner y;
-			endPoint: bottomWhiskerExtent;
-			color: Color black.
+			endPoint: bottomWhiskerExtent.
 		"the top whisker"
 		RSLine new
 			startPoint: center @ origin y;
-			endPoint: topWhiskerExtent;
-			color: Color black.
+			endPoint: topWhiskerExtent.
 		"the median line"
-		RSLine new
-			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
-			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4)));
-			color: Color black.
-		"the left notch triangle"
-		RSPolygon new
-			points: { confidenceIntervalTopLeft - (0.5@0) . (confidenceIntervalTopLeft x - 0.5) @ confidenceIntervalBottomRight y . (confidenceIntervalTopLeft x + (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
-			color: Color white.
-		"the right notch triangle"
-		RSPolygon new
-			points: { confidenceIntervalBottomRight + (0.5@0) . (confidenceIntervalBottomRight x + 0.5) @ confidenceIntervalTopLeft y . (confidenceIntervalBottomRight x - (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
-			color: Color white },
+		self computeMedianLineWith: values },
 		lowerOutliers,
 		upperOutliers
 ]
@@ -240,6 +283,7 @@ RSBoxPlot >> gapRatio: aNumber [
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
+	notched := false.
 	self
 		gapRatio: 0.1;
 		barOffset: 0
@@ -259,6 +303,18 @@ RSBoxPlot >> modeBased [
 { #category : #hooks }
 RSBoxPlot >> modelFor: aPoint [
 	^ aPoint y
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notch [
+
+	^ notched
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notch: aBool [
+
+	notched := aBool
 ]
 
 { #category : #'math functions' }
