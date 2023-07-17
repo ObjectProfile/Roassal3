@@ -50,12 +50,17 @@ RSViolinPlot class >> exampleViolinPlotColor [
 
 { #category : #accessing }
 RSViolinPlot class >> exampleViolinPlotColors [
-	| violinPlot data |
+	| violinPlot data points |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
 	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
-	violinPlot colors: { Color green. Color blue }.
-	^ violinPlot open.
+	"violinPlot colors: { Color green. Color blue }.
+	
+	violinPlot violinShapes first color: Color purple."
+	violinPlot buildChart.
+	violinPlot violinShapes first densityArea border: (RSBorder new color: Color red; dashArray: {4.}).
+	"self halt."
+	^ violinPlot chart container open.
 ]
 
 { #category : #accessing }
@@ -228,6 +233,11 @@ RSViolinPlot >> title [
 { #category : #rendering }
 RSViolinPlot >> title: aString [
 	title := aString
+]
+
+{ #category : #rendering }
+RSViolinPlot >> violinShapes [
+	^ violinShapes
 ]
 
 { #category : #rendering }

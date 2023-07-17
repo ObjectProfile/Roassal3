@@ -12,7 +12,8 @@ Class {
 		'xScale',
 		'yScale',
 		'graphCenter',
-		'bandOffset'
+		'bandOffset',
+		'outlier'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -113,6 +114,20 @@ RSBoxPlotShape >> computeMedianLine [
 ]
 
 { #category : #accessing }
+RSBoxPlotShape >> computeOutliers [
+	| outliersPoints |
+	graphCenter := bandOffset.
+	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
+	outliers := outliersPoints.
+	outliers := outliers collect: [ :out |
+			| e |
+			e := outlier.
+			e translateTo: out.
+	] as: RSGroup.
+	^ outliers.
+]
+
+{ #category : #accessing }
 RSBoxPlotShape >> data [
 	^ self statisticalMeasures data.
 ]
@@ -151,6 +166,13 @@ RSBoxPlotShape >> defaultMedianLine [
 		color: Color black.
 ]
 
+{ #category : #defaults }
+RSBoxPlotShape >> defaultOutlier [
+	^ RSEllipse new
+		radius: 2.5;
+		color: Color black.
+]
+
 { #category : #accessing }
 RSBoxPlotShape >> graphCenter [
 	^ graphCenter.
@@ -172,6 +194,7 @@ RSBoxPlotShape >> initialize [
 	graphCenter := self defaultGraphCenter.
 	medianLine := self defaultMedianLine.
 	box := self defaultBox.
+	outlier := self defaultOutlier.
 ]
 
 { #category : #accessing }
@@ -204,25 +227,18 @@ RSBoxPlotShape >> minYValue [
 ]
 
 { #category : #accessing }
+RSBoxPlotShape >> outlier: markerShape [
+	outlier := markerShape
+]
+
+{ #category : #accessing }
 RSBoxPlotShape >> outlierValues [
 	^ statisticalMeasures outliers.
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> outliers [
-	| outliersPoints |
-	graphCenter := bandOffset.
-	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
-	outliers := outliersPoints.
-	outliers := outliers collect: [ :out |
-			| e |
-			e := RSEllipse new
-			radius: 2.5;
-			color: Color black;
-			yourself.
-			e translateTo: out.
-	] as: RSGroup.
-	^ outliers.
+	^ outlier.
 ]
 
 { #category : #accessing }
@@ -259,7 +275,7 @@ RSBoxPlotShape >> shapesWithCenterAt: aNumber [
 	medianLine := self computeMedianLine.
 	box := self computeBox.
 	box color: color.
-	outliers := self outliers.
+	outliers := self computeOutliers.
 	^ { centerLine. box. medianLine. outliers.}.
 ]
 
