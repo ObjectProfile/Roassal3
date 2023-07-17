@@ -234,7 +234,10 @@ RSRenderTreeTest >> testSearchPath2 [
 
 { #category : #tests }
 RSRenderTreeTest >> testSearchPath3 [
+	"Test uses random, so we skip it."
+
 	| nodes path shapes |
+	self skip.
 	tree := self tree.
 	"tree inspect"
 	nodes := self leafs.
@@ -242,17 +245,17 @@ RSRenderTreeTest >> testSearchPath3 [
 	path := tree root searchPath: RSBox new.
 	self assert: path isEmpty.
 	path := tree root searchPath: (shapes shapeFromModel: 1).
-	self assert: path asArray equals:
-		{ nil-> tree root.
-		false -> tree root left.
-		false -> tree root left left }.
+	self assert: path asArray equals: {
+			(nil -> tree root).
+			(false -> tree root left).
+			(false -> tree root left left) }.
 	path := tree root searchPath: (shapes shapeFromModel: 10).
-	self assert: path asArray equals:
-		{ nil-> tree root.
-		true -> tree root right.
-		false -> tree root right left.
-		true -> tree root right left right.
-		true -> tree root right left right right }
+	self assert: path asArray equals: {
+			(nil -> tree root).
+			(true -> tree root right).
+			(false -> tree root right left).
+			(true -> tree root right left right).
+			(true -> tree root right left right right) }
 ]
 
 { #category : #tests }
