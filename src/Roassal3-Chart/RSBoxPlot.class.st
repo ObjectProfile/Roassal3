@@ -175,29 +175,34 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + sizeOffset.
 
 	
-	^{ 	self shape copy
+	^{ "the main box"	
+		self shape copy
 		model: (self modelFor: aPoint);
 		color: self computeColor;
-		"borderColor: Color black;"
 		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
 		yourself.
+		"the bottom whisker"
 		RSLine new
 			startPoint: center @ corner y;
 			endPoint: bottomWhiskerExtent;
 			color: Color black.
+		"the top whisker"
 		RSLine new
 			startPoint: center @ origin y;
 			endPoint: topWhiskerExtent;
 			color: Color black.
+		"the median line"
 		RSLine new
 			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
 			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4)));
 			color: Color black.
+		"the left notch triangle"
 		RSPolygon new
-			points: { confidenceIntervalTopLeft - (5@0) . (confidenceIntervalTopLeft x - 5) @ confidenceIntervalBottomRight y . (confidenceIntervalTopLeft x + (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
+			points: { confidenceIntervalTopLeft - (0.5@0) . (confidenceIntervalTopLeft x - 0.5) @ confidenceIntervalBottomRight y . (confidenceIntervalTopLeft x + (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
 			color: Color white.
+		"the right notch triangle"
 		RSPolygon new
-			points: { confidenceIntervalBottomRight + (5@0) . (confidenceIntervalBottomRight x + 5) @ confidenceIntervalTopLeft y . (confidenceIntervalBottomRight x - (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
+			points: { confidenceIntervalBottomRight + (0.5@0) . (confidenceIntervalBottomRight x + 0.5) @ confidenceIntervalTopLeft y . (confidenceIntervalBottomRight x - (0.5*(sizeOffset x))) @ (yScale scale: (boxAndWhis at: 4)) };
 			color: Color white },
 		lowerOutliers,
 		upperOutliers
