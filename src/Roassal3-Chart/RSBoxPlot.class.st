@@ -350,6 +350,11 @@ RSBoxPlot >> boxShapes: collectionOfRSBoxPlotShape [
 	boxShapes := collectionOfRSBoxPlotShape.
 ]
 
+{ #category : #rendering }
+RSBoxPlot >> boxes [
+	^ RSGroup new addAll: (boxShapes collect: [ :boxShape | boxShape box ]); yourself.
+]
+
 { #category : #public }
 RSBoxPlot >> buildChart [
 	chart add: self.

@@ -142,6 +142,11 @@ RSViolinPlot >> beforeRenderingIn: aChart [
 ]
 
 { #category : #rendering }
+RSViolinPlot >> boxes [
+	^ RSGroup new addAll: (violinShapes collect: [ :violin | violin box ]); yourself.
+]
+
+{ #category : #rendering }
 RSViolinPlot >> buildChart [
 	chart add: self.
 	chart
