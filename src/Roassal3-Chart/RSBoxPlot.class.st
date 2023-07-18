@@ -110,9 +110,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 		factor := self notchFactorFor: confidencePercentage.
 		confidenceIntervalMax := iSort median + (factor * iqr/(iSort size sqrt)).
 		confidenceIntervalMin  := iSort median - (factor * iqr/(iSort size sqrt)).
-		Transcript show: '2 '; show: confidencePercentage ; cr.
-		"Transcript show: '1 '; show: confidenceIntervalMax ; cr.
-		Transcript show: '2 '; show: confidenceIntervalMin; cr."
+
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
 		bottomWhiskerExtent <= minVal
 			ifTrue: [ bottomWhiskerExtent := minVal. bottomOutliers := Array new ]
@@ -263,12 +261,6 @@ RSBoxPlot >> confidencePercentage [
 ]
 
 { #category : #accessing }
-RSBoxPlot >> confidencePercentage: aPercentage [
-
-	confidencePercentage := aPercentage
-]
-
-{ #category : #accessing }
 RSBoxPlot >> createdShapes [
 	^ bars
 ]
@@ -306,7 +298,6 @@ RSBoxPlot >> initialize [
 			                (90 -> 1.28).
 			                (95 -> 1.57).
 			                (99 -> 1.81) }.
-	confidencePercentage := 95.
 	self
 		gapRatio: 0.1;
 		barOffset: 0
@@ -381,7 +372,6 @@ RSBoxPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.
 	self checkAssertion.
-	self computeBoxAndWhiskerExtent: yValues.
 	index := 1.
 	bars := xValues flatCollect: [ :xt |
 		| bar |
@@ -389,4 +379,27 @@ RSBoxPlot >> renderIn: canvas [
 		index := index + 1.
 		bar ] as: RSGroup.
 	canvas addAll: bars
+]
+
+{ #category : #public }
+RSBoxPlot >> x: aCollection y: aCollection2 [
+
+	self x: aCollection y: aCollection2 confidence: 95
+]
+
+{ #category : #public }
+RSBoxPlot >> x: aCollection y: aCollection2 confidence: aPercentage [
+
+	xValues := aCollection.
+	yValues := aCollection2.
+	confidencePercentage := aPercentage.
+	self computeBoxAndWhiskerExtent: aCollection2
+]
+
+{ #category : #public }
+RSBoxPlot >> y: aCollection2 confidence: aPercentage [
+
+	self y: aCollection2.
+	confidencePercentage := aPercentage.
+	self computeBoxAndWhiskerExtent: aCollection2
 ]
