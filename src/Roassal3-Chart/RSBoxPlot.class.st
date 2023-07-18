@@ -280,6 +280,33 @@ RSBoxPlot class >> exampleDays [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> exampleDaysShowBands [
+	| chart p1 p2 p3 y1 y2 y3 |
+
+	y1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+
+	y2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+
+	y3 := { { 1. 2. 3. 3. 3. 5. 3. 5. 5. 7. 8. 5. 6. 10. 11. } .
+			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
+
+	p1 := self data: y1. "blue"
+	p1 showBands.
+	p2 := self data: y2. "sky blue"
+	p2 showBands.
+	p3 := self data: y3. "orange"
+	p3 showBands.
+	chart := p1 + p2 + p3.
+	chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
+	^ chart open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleSetYTicksLabels [
 	| p1 y1 |
 
@@ -490,6 +517,11 @@ RSBoxPlot >> renderIn: canvas [
 				self xScale.
 				self yScale }.
 		aRSBoxPlotShape renderIn: canvas ]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> showBands [
+	boxShapes do: [ :box | box showBand ]
 ]
 
 { #category : #accessing }

@@ -1,3 +1,46 @@
+"
+`RSDensityPlot` is a visual representation that combines a box plot with a density distribution (an approximation of the frequency) to depict the distribution of a dataset.
+
+**Responsibility:** 
+- Plots the density distribution area, the box and the whiskers.
+- Provides options to customize the plot.
+
+**Collaborators:** 
+- The instance variable `kernelDensity` is an `RSKernelDensity` object responsible for calculating the points of the density curve, which delineates the boundary of the density area.
+- The instance variable `statisticalMeasures` is an `RSStatisticalMeasures` object that computes various statistical measures, including mean, median, quartiles, and interquartile range (IQR), to facilitate the construction of the box and whiskers plot.
+
+**Public API and Key Messages**
+- `data: aCollection` to create instances passing dataset (aCollection) as argument.
+- `bandwidth: aFloat` to set the bandwith (h) of the kernel in the kernel density estimation function. By default is computed by `RSKernelDensity`. The float passed indicates how soft will be the curve.
+
+**Instance Variables:**
+- `box`: an `RSPolygon` in which the top and bottom correspond to the 3rd and 1st quartiles of the data, respectively.
+- `boxPoints`: an `OrderedCollection` of  `Point`s that store the computed `box` points without any scaling.
+- `boxWidth`: a `Float` that represents the width of the box in the y domain units.
+- `centerLine`: an `RSPolyline` representing the whiskers (upper and lower limits) calculated as (q3 - q1)*1.5.
+- `centerLinePoints`: an `OrderedCollection` of  `Point`s that store the computed `centerLine` points without any scaling.
+- `densityArea`: an `RSPolygon` that represents the density distribution of the data, calculated by KDE method (`kernelDensity`).
+- `densityAreaPoints`: an `OrderedCollection` of  `Point`s that store the computed `densityArea` points without any scaling.
+- `kernelDensity`: a `RSKernelDensity` object that made the calculation of the Kernel Density Estimation, several parametres are passed to this object to personalize the curve (bandwidth, kernel, etc.).
+- `statisticalMeasures`:	a `RSStatisticalMeasures` object that computes various statistical measures, including mean, median, quartiles, and interquartile range (IQR), to facilitate the construction of the box and whiskers plot.
+- `title`: aString that stores the title of the chart.
+- `xlabel`:	aString that stores the label of x axis.
+- `ylabel`: aString that stores the label of y axis.
+
+
+**Example:**
+```Smalltalk
+| violinPlot data |
+data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
+violinPlot := RSViolinPlot data: data.
+violinPlot
+	bandwidth: 3;
+	title: 'This is a RSViolinPlot';
+	xlabel: 'Data frequency (distribution)';
+	ylabel: 'Data domain'.
+violinPlot open.
+```
+"
 Class {
 	#name : #RSViolinPlot,
 	#superclass : #RSAbstractPlot,

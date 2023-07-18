@@ -13,7 +13,8 @@ Class {
 		'yScale',
 		'graphCenter',
 		'bandOffset',
-		'outlier'
+		'outlier',
+		'shouldShowBand'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -81,6 +82,18 @@ RSBoxPlotShape >> color [
 { #category : #accessing }
 RSBoxPlotShape >> color: aColor [
 	color := aColor.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> computeBandRectangle [
+	^ RSPolygon new
+			points: { 
+			(graphCenter-(bandWidth/2)) @ 0. 
+			(graphCenter+(bandWidth/2)) @ 0.
+			(graphCenter+(bandWidth/2)) @ yScale range last. 
+			(graphCenter-(bandWidth/2)) @ yScale range last
+			};
+			color: Color blue translucent.
 ]
 
 { #category : #accessing }
@@ -174,6 +187,11 @@ RSBoxPlotShape >> defaultOutlier [
 		color: Color black.
 ]
 
+{ #category : #defaults }
+RSBoxPlotShape >> defaultShouldShowBand [
+	^ false
+]
+
 { #category : #accessing }
 RSBoxPlotShape >> graphCenter [
 	^ graphCenter.
@@ -196,6 +214,7 @@ RSBoxPlotShape >> initialize [
 	medianLine := self defaultMedianLine.
 	box := self defaultBox.
 	outlier := self defaultOutlier.
+	shouldShowBand := self defaultShouldShowBand.
 ]
 
 { #category : #accessing }
@@ -276,13 +295,34 @@ RSBoxPlotShape >> scales: collectionOfNSScales [
 
 { #category : #accessing }
 RSBoxPlotShape >> shapesWithCenterAt: aNumber [
+
+	| band shapes |
 	self graphCenter: aNumber.
 	centerLine := self centerLine.
 	medianLine := self computeMedianLine.
 	box := self computeBox.
 	box color: color.
 	outliers := self computeOutliers.
-	^ { centerLine. box. medianLine. outliers.}.
+	shapes := OrderedCollection new.
+	shapes addAll: {
+			          centerLine.
+			          box.
+			          medianLine.
+			          outliers }.
+	shouldShowBand ifTrue: [
+		band := self computeBandRectangle.
+		shapes add: band ].
+	^ shapes
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> shouldShowBand: aBoolean [
+	shouldShowBand := aBoolean.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> showBand [
+	self shouldShowBand: true.
 ]
 
 { #category : #accessing }
