@@ -32,7 +32,9 @@ Class {
 		'gapRatio',
 		'barOffset',
 		'boxAndWhisker',
-		'notched'
+		'notched',
+		'notchFactors',
+		'confidencePercentage'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -95,7 +97,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	7. An array of the upper outlying data
 	"
 	boxAndWhisker := aCollection collect: [ :i |
-		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers confidenceIntervalMax confidenceIntervalMin |
+		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers confidenceIntervalMax confidenceIntervalMin factor |
 
 		iSort := i asSortedCollection .
 
@@ -105,9 +107,12 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 		quartile3 := self quantile: 0.75 for: iSort.
 		iqr := quartile3 - quartile1 .
 		"95% confidence interval around the median"
-		confidenceIntervalMax := iSort median + (1.57 * iqr/(iSort size sqrt)).
-		confidenceIntervalMin  := iSort median - (1.57 * iqr/(iSort size sqrt)).
-		
+		factor := self notchFactorFor: confidencePercentage.
+		confidenceIntervalMax := iSort median + (factor * iqr/(iSort size sqrt)).
+		confidenceIntervalMin  := iSort median - (factor * iqr/(iSort size sqrt)).
+		Transcript show: '2 '; show: confidencePercentage ; cr.
+		"Transcript show: '1 '; show: confidenceIntervalMax ; cr.
+		Transcript show: '2 '; show: confidenceIntervalMin; cr."
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
 		bottomWhiskerExtent <= minVal
 			ifTrue: [ bottomWhiskerExtent := minVal. bottomOutliers := Array new ]
@@ -252,6 +257,18 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 ]
 
 { #category : #accessing }
+RSBoxPlot >> confidencePercentage [
+
+	^ confidencePercentage
+]
+
+{ #category : #accessing }
+RSBoxPlot >> confidencePercentage: aPercentage [
+
+	confidencePercentage := aPercentage
+]
+
+{ #category : #accessing }
 RSBoxPlot >> createdShapes [
 	^ bars
 ]
@@ -282,8 +299,14 @@ RSBoxPlot >> gapRatio: aNumber [
 
 { #category : #initialization }
 RSBoxPlot >> initialize [
+
 	super initialize.
 	notched := false.
+	notchFactors := Dictionary newFrom: {
+			                (90 -> 1.28).
+			                (95 -> 1.57).
+			                (99 -> 1.81) }.
+	confidencePercentage := 95.
 	self
 		gapRatio: 0.1;
 		barOffset: 0
@@ -317,6 +340,18 @@ RSBoxPlot >> notch: aBool [
 	notched := aBool
 ]
 
+{ #category : #accessing }
+RSBoxPlot >> notchFactorFor: aValue [
+
+	^ notchFactors at: aValue
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notchFactors [
+
+	^ notchFactors
+]
+
 { #category : #'math functions' }
 RSBoxPlot >> quantile: aProbability for: aSortedCollection [
 	"returns the expected quantile only, if I use my standard initialization method"
@@ -346,6 +381,7 @@ RSBoxPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.
 	self checkAssertion.
+	self computeBoxAndWhiskerExtent: yValues.
 	index := 1.
 	bars := xValues flatCollect: [ :xt |
 		| bar |
@@ -353,11 +389,4 @@ RSBoxPlot >> renderIn: canvas [
 		index := index + 1.
 		bar ] as: RSGroup.
 	canvas addAll: bars
-]
-
-{ #category : #public }
-RSBoxPlot >> x: aCollection y: aCollection2 [
-	xValues := aCollection.
-	yValues := aCollection2.
-	self computeBoxAndWhiskerExtent: aCollection2
 ]
