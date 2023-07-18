@@ -16,9 +16,7 @@ RSClusterChart >> addPlot: aPlot [
 	
 	self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y).
 	
-	self computeClustersScale: aPlot.
-	self computeInnerClusterScale: aPlot.
-	self computePlotsBands.
+	self computePlotsBands: aPlot.
 	
 	self xTickLabels: (1 to: self maxNumberOfBoxesPerPlot).
 	^ aPlot
@@ -41,7 +39,9 @@ RSClusterChart >> computeInnerClusterScale: aPlot [
 ]
 
 { #category : #private }
-RSClusterChart >> computePlotsBands [
+RSClusterChart >> computePlotsBands: aPlot [
+	self computeClustersScale: aPlot.
+	self computeInnerClusterScale: aPlot.
 	self plots doWithIndex: [ :plot :index |
 		| positionInInnerClusterScale |
 		positionInInnerClusterScale := innerClusterScale scale: index.
