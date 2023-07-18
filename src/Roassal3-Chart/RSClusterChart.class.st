@@ -1,33 +1,73 @@
 Class {
 	#name : #RSClusterChart,
 	#superclass : #RSChart,
+	#instVars : [
+		'innerClusterScale',
+		'clustersScale',
+		'clustersMargin',
+		'bandsMargin'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #adding }
 RSClusterChart >> addPlot: aPlot [
-	| scale clusterPadding bandPadding clusterScale maxNumberOfBoxes |
 	super addPlot: aPlot.
 	
 	self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y).
 	
-	clusterPadding := 0.2.
-	scale := NSScale ordinal
-		domain: aPlot xValues;
-		rangeBands: { self padding x. self extent x - self padding x} padding: clusterPadding.
-	bandPadding := 0.2.
-	clusterScale := NSScale ordinal
-		domain: (1 to: self numberOfPlots);
-		rangeBands: {0. scale rangeBand} padding: bandPadding.
-	maxNumberOfBoxes := 0.
-	self plots doWithIndex: [ :plot :index |
-		| positionInInnerOrdinalScale |
-		positionInInnerOrdinalScale := clusterScale scale: index.
-		plot bandsWidth: clusterScale rangeBand.
-		plot bandsOffset: positionInInnerOrdinalScale - (scale rangeBand/2).
-		
-		maxNumberOfBoxes := maxNumberOfBoxes max: plot numberOfBands
-	].
-	self xTickLabels: (1 to: maxNumberOfBoxes).
+	self computeClustersScale: aPlot.
+	self computeInnerClusterScale: aPlot.
+	self computePlotsBands.
+	
+	self xTickLabels: (1 to: self maxNumberOfBoxesPerPlot).
 	^ aPlot
+]
+
+{ #category : #private }
+RSClusterChart >> computeClustersScale: aPlot [
+	clustersScale := NSScale ordinal
+		domain: aPlot xValues;
+		rangeBands: { self padding x. self extent x - self padding x} padding: clustersMargin.
+	^ clustersScale
+]
+
+{ #category : #private }
+RSClusterChart >> computeInnerClusterScale: aPlot [
+	innerClusterScale := NSScale ordinal
+		domain: (1 to: self numberOfPlots);
+		rangeBands: {0. clustersScale rangeBand} padding: bandsMargin.
+	^ innerClusterScale
+]
+
+{ #category : #private }
+RSClusterChart >> computePlotsBands [
+	self plots doWithIndex: [ :plot :index |
+		| positionInInnerClusterScale |
+		positionInInnerClusterScale := innerClusterScale scale: index.
+		plot bandsWidth: innerClusterScale rangeBand.
+		plot bandsOffset:
+			positionInInnerClusterScale - (clustersScale rangeBand / 2) ]
+]
+
+{ #category : #defaults }
+RSClusterChart >> defaultBandsMargin [
+	^ 0.2
+]
+
+{ #category : #defaults }
+RSClusterChart >> defaultClustersMargin [
+	^ 0.2
+]
+
+{ #category : #initialization }
+RSClusterChart >> initialize [
+	super initialize.
+	clustersMargin := self defaultClustersMargin.
+	bandsMargin := self defaultBandsMargin.
+]
+
+{ #category : #accessing }
+RSClusterChart >> maxNumberOfBoxesPerPlot [
+	^ (self plots collect: [ :plot | plot boxes size ]) max.
 ]
