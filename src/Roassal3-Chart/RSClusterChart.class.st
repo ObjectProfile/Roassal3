@@ -16,22 +16,59 @@ RSClusterChart >> addPlot: aPlot [
 	
 	self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y).
 	
-	self computePlotsBands: aPlot.
+	self computePlotsBands.
 	
 	self xTickLabels: (1 to: self maxNumberOfBoxesPerPlot).
 	^ aPlot
 ]
 
+{ #category : #accessing }
+RSClusterChart >> bandsMargin [
+	^ bandsMargin
+]
+
+{ #category : #accessing }
+RSClusterChart >> bandsMargin: floatBetween0And1 [
+	bandsMargin := floatBetween0And1.
+	self computePlotsBands
+]
+
 { #category : #private }
-RSClusterChart >> computeClustersScale: aPlot [
+RSClusterChart >> clusterXValues [
+	| xValuesSet |
+	xValuesSet := Set new.
+	self plots do: [ :plot |
+		plot xValues do: [ :xValue | xValuesSet add: xValue ]
+	].
+	^ xValuesSet.
+]
+
+{ #category : #accessing }
+RSClusterChart >> clustersMargin [
+	^ clustersMargin 
+]
+
+{ #category : #accessing }
+RSClusterChart >> clustersMargin: floatBetween0And1 [
+	clustersMargin := floatBetween0And1.
+	self computePlotsBands.
+]
+
+{ #category : #accessing }
+RSClusterChart >> clustersScale [
+	^ clustersScale
+]
+
+{ #category : #private }
+RSClusterChart >> computeClustersScale [
 	clustersScale := NSScale ordinal
-		domain: aPlot xValues;
+		domain: (self clusterXValues);
 		rangeBands: { self padding x. self extent x - self padding x} padding: clustersMargin.
 	^ clustersScale
 ]
 
 { #category : #private }
-RSClusterChart >> computeInnerClusterScale: aPlot [
+RSClusterChart >> computeInnerClusterScale [
 	innerClusterScale := NSScale ordinal
 		domain: (1 to: self numberOfPlots);
 		rangeBands: {0. clustersScale rangeBand} padding: bandsMargin.
@@ -39,9 +76,9 @@ RSClusterChart >> computeInnerClusterScale: aPlot [
 ]
 
 { #category : #private }
-RSClusterChart >> computePlotsBands: aPlot [
-	self computeClustersScale: aPlot.
-	self computeInnerClusterScale: aPlot.
+RSClusterChart >> computePlotsBands [
+	self computeClustersScale.
+	self computeInnerClusterScale.
 	self plots doWithIndex: [ :plot :index |
 		| positionInInnerClusterScale |
 		positionInInnerClusterScale := innerClusterScale scale: index.
@@ -65,6 +102,11 @@ RSClusterChart >> initialize [
 	super initialize.
 	clustersMargin := self defaultClustersMargin.
 	bandsMargin := self defaultBandsMargin.
+]
+
+{ #category : #accessing }
+RSClusterChart >> innerClusterScale [
+	^ innerClusterScale
 ]
 
 { #category : #accessing }
