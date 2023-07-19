@@ -104,14 +104,14 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-	lines := chart plots collect: [ :p | | line |
-		line := self createMarkerLineFromPlot: p.
-		line
-			dashArray: self defaultDashStyle;
-			color: markerColor.
-		canvas add: line.
-		line
-	] as: RSGroup
+	
+	| line |
+	line := self createMarkerLineFromPlot: chart.
+	line
+		dashArray: self defaultDashStyle;
+		color: markerColor.
+	self addShape: line.
+	lines := { line } as: RSGroup
 ]
 
 { #category : #'public - configuration' }

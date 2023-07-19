@@ -1,6 +1,6 @@
 Class {
 	#name : #RSClusterChart,
-	#superclass : #RSChart,
+	#superclass : #RSAbstractChart,
 	#instVars : [
 		'innerClusterScale',
 		'clustersScale',

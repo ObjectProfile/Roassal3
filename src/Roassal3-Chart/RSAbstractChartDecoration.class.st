@@ -15,7 +15,14 @@
 "
 Class {
 	#name : #RSAbstractChartDecoration,
-	#superclass : #RSAbstractChartElement,
+	#superclass : #RSObject,
+	#instVars : [
+		'xScale',
+		'yScale',
+		'chart',
+		'shape',
+		'styler'
+	],
 	#category : #'Roassal3-Chart-Decoration'
 }
 

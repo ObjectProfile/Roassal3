@@ -3,12 +3,10 @@ Abstract class for all plot classes
 "
 Class {
 	#name : #RSAbstractChartElement,
-	#superclass : #RSObject,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
-		'chart',
 		'xScale',
 		'yScale',
-		'shape',
 		'styler'
 	],
 	#category : #'Roassal3-Chart-Core'

@@ -14,13 +14,21 @@
 "
 Class {
 	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChartElement,
+	#superclass : #RSAbstractChart,
 	#instVars : [
+		'chart',
+		'shape',
 		'xValues',
 		'yValues'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #testing }
+RSAbstractPlot class >> isAbstract [
+
+	^ self == RSAbstractPlot
+]
 
 { #category : #'instance creation' }
 RSAbstractPlot class >> x: collectionX y: collectionY [
@@ -45,17 +53,16 @@ RSAbstractPlot >> addedIn: aRSChart [
 	aRSChart addPlot: self
 ]
 
-{ #category : #testing }
-RSAbstractPlot class >> isAbstract [
-
-	^ self == RSAbstractPlot
-]
-
 { #category : #rendering }
 RSAbstractPlot >> beforeRenderingIn: aChart [
 
 	self createXScale.
 	self createYScale
+]
+
+{ #category : #testing }
+RSAbstractPlot >> canHandleCluster [
+	^ false
 ]
 
 { #category : #accessing }
@@ -68,11 +75,6 @@ RSAbstractPlot >> chart [
 RSAbstractPlot >> chart: aChart [
 
 	chart := aChart
-]
-
-{ #category : #testing }
-RSAbstractPlot >> canHandleCluster [
-	^ false
 ]
 
 { #category : #testing }
@@ -281,11 +283,6 @@ RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
-{ #category : #public }
-RSAbstractPlot >> title: aString [
-	chart title: aString.
-]
-
 { #category : #accessing }
 RSAbstractPlot >> shape [
 
@@ -358,11 +355,6 @@ RSAbstractPlot >> xValues [
 	^ xValues
 ]
 
-{ #category : #public }
-RSAbstractPlot >> xlabel: aString [
-	chart xlabel: aString
-]
-
 { #category : #accessing }
 RSAbstractPlot >> y [
 
@@ -409,9 +401,4 @@ RSAbstractPlot >> yTicks: collectionOfNumbers labels: aCollection [
 RSAbstractPlot >> yValues [
 
 	^ yValues
-]
-
-{ #category : #public }
-RSAbstractPlot >> ylabel: aString [
-	chart ylabel: aString
 ]

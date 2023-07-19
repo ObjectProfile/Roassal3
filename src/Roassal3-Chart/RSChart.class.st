@@ -3,9 +3,28 @@ Please use RSCompositeChart
 "
 Class {
 	#name : #RSChart,
-	#superclass : #RSCompositeChart,
+	#superclass : #RSAbstractContainerBuilder,
+	#instVars : [
+		'xScale',
+		'yScale',
+		'extents',
+		'styler',
+		'colorPalette',
+		'decorations',
+		'spineDecoration',
+		'title',
+		'xlabel',
+		'xlabelTop',
+		'ylabel',
+		'ylabelRight'
+	],
 	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #testing }
+RSChart class >> isDeprecated [
+	^ true
+]
 
 { #category : #adding }
 RSChart >> + aRSPlot [
@@ -529,9 +548,4 @@ RSChart >> ylabel: aTitle offset: aPointOrANumber [
 RSChart >> ylabelRight: aTitle [
 	"Set a label on the vertical axis"
 	^ self addDecoration: (RSYLabelDecoration new title: aTitle; right; yourself)
-]
-
-{ #category : #testing }
-RSChart class >> isDeprecated [
-	^ true
 ]
