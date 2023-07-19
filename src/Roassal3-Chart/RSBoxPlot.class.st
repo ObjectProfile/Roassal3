@@ -55,6 +55,15 @@ RSBoxPlot class >> exampleBoxPlot [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> exampleBoxPlotChangeBoxWidth [
+	| boxPlot1   data1  |
+	data1 := { 12. 12. 13. 14. 15. 24. }.
+	boxPlot1 := self data: data1.
+	boxPlot1 bandsWidth: 50.
+	^ boxPlot1 open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 	| clusterChart boxPlot1  boxPlot2 data1 data2  |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -67,8 +76,8 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 	boxPlot2 := self data: data2.
 	clusterChart := boxPlot1 + boxPlot2.
 	
-	"clustersMargin value between 0 and 1"
-	clusterChart bandsMargin: 0.5.
+	"bandsMargin value between 0 and 1"
+	clusterChart clustersMargin: 0.5.
 	
 	^ clusterChart open.
 ]

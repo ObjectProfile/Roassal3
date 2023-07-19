@@ -65,7 +65,7 @@ RSBoxPlotShape >> centerLine [
 	| upperLimit lowerLimit centerLinePoints |
 	upperLimit := statisticalMeasures upperLimit.
 	lowerLimit := statisticalMeasures lowerLimit.
-	graphCenter := bandOffset.
+	"graphCenter was already computed in shapesWithCenterAt"
 	centerLinePoints := { graphCenter@ (yScale scale: upperLimit). graphCenter@(yScale scale: lowerLimit). }.
 	centerLine :=  RSPolyline new.
 	centerLine controlPoints: centerLinePoints.
@@ -102,8 +102,8 @@ RSBoxPlotShape >> computeBox [
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
 	q075 := quartiles at: 3.
-	graphCenter := bandOffset.
-	"bandWidth is already scaled (in pixels"
+	"bandWidth is already scaled (in pixels)"
+	"graphCenter was already computed in shapesWithCenterAt"
 	boxPoints := { 
 		(graphCenter-(bandWidth/2)) @ (yScale scale: q025). 
 		(graphCenter+(bandWidth/2)) @ (yScale scale: q025).
@@ -118,7 +118,7 @@ RSBoxPlotShape >> computeBox [
 RSBoxPlotShape >> computeMedianLine [
 	| q050 medianLinePoints |
 	q050 := statisticalMeasures quartiles second.
-	graphCenter := bandOffset.
+	"graphCenter was already computed in shapesWithCenterAt"
 	medianLinePoints := { 
 		(graphCenter-(bandWidth/2))@ (yScale scale: q050). 
 		(graphCenter+(bandWidth/2))@ (yScale scale: q050). }.
@@ -129,7 +129,7 @@ RSBoxPlotShape >> computeMedianLine [
 { #category : #accessing }
 RSBoxPlotShape >> computeOutliers [
 	| outliersPoints |
-	graphCenter := bandOffset.
+	"graphCenter was already computed in shapesWithCenterAt"
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
 	outliers := outliersPoints.
 	outliers := outliers collect: [ :out |
@@ -274,7 +274,7 @@ RSBoxPlotShape >> outliers: aRSGroupOfRSElipses [
 { #category : #accessing }
 RSBoxPlotShape >> renderIn: canvas [
 	| shapes |
-	shapes := self shapesWithCenterAt: graphCenter.
+	shapes := self shapesWithCenterAt: bandOffset.
 	shapes do: [ :aShape |
 		aShape isCollection ifTrue: [ canvas addAll: aShape ]
 		ifFalse: [ canvas add: aShape ].
