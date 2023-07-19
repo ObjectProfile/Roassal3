@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'bandWidth',
 		'statisticalMeasures',
-		'centerLine',
 		'box',
 		'medianLine',
 		'outliers',
@@ -14,7 +13,10 @@ Class {
 		'graphCenter',
 		'bandOffset',
 		'outlier',
-		'shouldShowBand'
+		'shouldShowBand',
+		'upperWhisker',
+		'lowerWhisker',
+		'whisker'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -58,20 +60,6 @@ RSBoxPlotShape >> boxWidth [
 { #category : #accessing }
 RSBoxPlotShape >> center [
 	^ graphCenter
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> centerLine [
-	| upperLimit lowerLimit centerLinePoints |
-	upperLimit := statisticalMeasures upperLimit.
-	lowerLimit := statisticalMeasures lowerLimit.
-	"graphCenter was already computed in shapesWithCenterAt"
-	centerLinePoints := { graphCenter@ (yScale scale: upperLimit). graphCenter@(yScale scale: lowerLimit). }.
-	centerLine :=  RSPolyline new.
-	centerLine controlPoints: centerLinePoints.
-	centerLine width: 1.
-	centerLine color: Color black.
-	^ centerLine.
 ]
 
 { #category : #accessing }
@@ -142,6 +130,23 @@ RSBoxPlotShape >> computeOutliers [
 ]
 
 { #category : #accessing }
+RSBoxPlotShape >> computeWhiskers [
+	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	q1 := statisticalMeasures quartiles first.
+	q3 := statisticalMeasures quartiles third.
+	"graphCenter was already computed in shapesWithCenterAt"
+	upperWhiskerPoints := { graphCenter@(yScale scale: q3). graphCenter@ (yScale scale: upperLimit). }.
+	lowerWhiskerPoints := { graphCenter@(yScale scale: q1). graphCenter@ (yScale scale: lowerLimit). }.
+	upperWhisker := whisker copy.
+	lowerWhisker := whisker copy.
+	upperWhisker controlPoints: upperWhiskerPoints.
+	lowerWhisker controlPoints: lowerWhiskerPoints.
+	^ { upperWhisker. lowerWhisker. }.
+]
+
+{ #category : #accessing }
 RSBoxPlotShape >> data [
 	^ self statisticalMeasures data.
 ]
@@ -192,6 +197,13 @@ RSBoxPlotShape >> defaultShouldShowBand [
 	^ false
 ]
 
+{ #category : #defaults }
+RSBoxPlotShape >> defaultWhisker [
+	^ RSPolyline new
+		width: 1;
+		color: Color black.
+]
+
 { #category : #accessing }
 RSBoxPlotShape >> graphCenter [
 	^ graphCenter.
@@ -211,6 +223,9 @@ RSBoxPlotShape >> hasOutliers [
 RSBoxPlotShape >> initialize [
 	super initialize.
 	graphCenter := self defaultGraphCenter.
+	whisker := self defaultWhisker.
+	upperWhisker := self defaultWhisker.
+	lowerWhisker := self defaultWhisker.
 	medianLine := self defaultMedianLine.
 	box := self defaultBox.
 	outlier := self defaultOutlier.
@@ -220,6 +235,11 @@ RSBoxPlotShape >> initialize [
 { #category : #accessing }
 RSBoxPlotShape >> lowerLimit [
 	^ statisticalMeasures lowerLimit.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> lowerWhisker [
+	^ lowerWhisker
 ]
 
 { #category : #accessing }
@@ -298,14 +318,15 @@ RSBoxPlotShape >> shapesWithCenterAt: aNumber [
 
 	| band shapes |
 	self graphCenter: aNumber.
-	centerLine := self centerLine.
+	self computeWhiskers.
 	medianLine := self computeMedianLine.
 	box := self computeBox.
 	box color: color.
 	outliers := self computeOutliers.
 	shapes := OrderedCollection new.
 	shapes addAll: {
-			          centerLine.
+			          upperWhisker.
+						 lowerWhisker.
 			          box.
 			          medianLine.
 			          outliers }.
@@ -338,6 +359,21 @@ RSBoxPlotShape >> statisticalMeasures: aRSStatisticalMeasures [
 { #category : #accessing }
 RSBoxPlotShape >> upperLimit [
 	^ statisticalMeasures upperLimit.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> upperWhisker [
+	^ upperWhisker
+]
+
+{ #category : #public }
+RSBoxPlotShape >> whiskerFormat: aString [
+	whisker format: aString.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> whiskers [
+	^ whisker.
 ]
 
 { #category : #accessing }

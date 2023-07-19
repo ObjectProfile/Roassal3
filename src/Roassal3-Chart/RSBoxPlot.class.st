@@ -220,7 +220,7 @@ RSBoxPlot class >> exampleBoxPlotStyleBoxFillColor [
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := self data: data.
-	boxPlot color: Color red.
+	boxPlot color: Color red translucent.
 	^ boxPlot open.
 ]
 
@@ -298,6 +298,23 @@ RSBoxPlot class >> exampleBoxPlotStyleOutliersColor [
 	boxPlot1 outliers color: Color red.
 	boxPlot2 := self data: data2.
 	boxPlot2 outliers color: Color purple.
+	boxPlot := boxPlot1 + boxPlot2.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotStyleWhiskerFormat [
+	| boxPlot boxPlot1  boxPlot2 data1 data2  |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot1 whiskerFormat: '--'.
+	boxPlot2 whiskers do: [ :whiskerLine | whiskerLine format: '.'].
 	boxPlot := boxPlot1 + boxPlot2.
 	^ boxPlot open.
 ]
@@ -574,6 +591,16 @@ RSBoxPlot >> renderIn: canvas [
 { #category : #rendering }
 RSBoxPlot >> showBands [
 	boxShapes do: [ :box | box showBand ]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> whiskerFormat: aString [
+	boxShapes do: [ :box | box whiskerFormat: aString ]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> whiskers [
+	^ RSGroup new addAll: (boxShapes collect: [ :box | box whiskers ]); yourself.
 ]
 
 { #category : #accessing }
