@@ -164,6 +164,11 @@ RSAbstractPlot >> scalePoint: aPoint [
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
+{ #category : #public }
+RSAbstractPlot >> title: aString [
+	chart title: aString.
+]
+
 { #category : #accessing }
 RSAbstractPlot >> x [
 	^ xValues
@@ -215,6 +220,11 @@ RSAbstractPlot >> xValues [
 	^ xValues
 ]
 
+{ #category : #public }
+RSAbstractPlot >> xlabel: aString [
+	chart xlabel: aString
+]
+
 { #category : #accessing }
 RSAbstractPlot >> y [
 	^ yValues
@@ -258,4 +268,9 @@ RSAbstractPlot >> yTicks: collectionOfNumbers labels: aCollection [
 { #category : #accessing }
 RSAbstractPlot >> yValues [
 	^ yValues
+]
+
+{ #category : #public }
+RSAbstractPlot >> ylabel: aString [
+	chart ylabel: aString
 ]

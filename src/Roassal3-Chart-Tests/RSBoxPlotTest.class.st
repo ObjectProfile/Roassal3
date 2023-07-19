@@ -152,12 +152,14 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 
 { #category : #tests }
 RSBoxPlotTest >> testDefaultPlotColors [
-	| boxPlot data chart boxColor |
+	| boxPlot data chart boxColor window |
 	data := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := RSBoxPlot data: data.
-	chart := boxPlot buildChart.
+	window := boxPlot open.
+	chart := boxPlot chart.
+	window delete.
 	boxColor := chart colorFor: boxPlot.
 	boxPlot boxShapes do: [ :box |
 		self assert: box color equals: boxColor.
@@ -166,13 +168,15 @@ RSBoxPlotTest >> testDefaultPlotColors [
 
 { #category : #tests }
 RSBoxPlotTest >> testDefaultXTickLabels [
-	| boxPlot data chart horizontalTick xTickLabels |
+	| boxPlot data chart horizontalTick xTickLabels window |
 	data := { { 1. 2. 3. 4. 5. } . "1"
 			 { 5. 6. 7. 5. 10. }  . "2"
 			 { 12. 12. 13. 14. 15. 24. } "3"  }.
 	xTickLabels := { '1'. '2'. '3'.}.
 	boxPlot := RSBoxPlot data: data.
-	chart := boxPlot buildChart.
+	window := boxPlot open.
+	chart := boxPlot chart.
+	window delete.
 	horizontalTick := chart horizontalTick.
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: xTickLabels.
 ]
@@ -193,7 +197,7 @@ RSBoxPlotTest >> testNumberOfBoxes [
 
 { #category : #tests }
 RSBoxPlotTest >> testXTickLabels [
-	| boxPlot data chart categories horizontalTick yTickLabels |
+	| boxPlot data chart categories horizontalTick yTickLabels window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
 			 { 5. 6. 7. 5. 10. }  . "B"
 			 { 12. 12. 13. 14. 15. 24. } "C"  }.
@@ -201,14 +205,16 @@ RSBoxPlotTest >> testXTickLabels [
 	yTickLabels := { '-5'. 'zero'. '10'. '30' }.
 	boxPlot := RSBoxPlot data: data.
 	boxPlot xTickLabels: categories.
-	chart := boxPlot buildChart.
+	window := boxPlot open.
+	chart := boxPlot chart.
+	window delete.
 	horizontalTick := chart horizontalTick.
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
 ]
 
 { #category : #tests }
 RSBoxPlotTest >> testYTickLabels [
-	| boxPlot data chart categories horizontalTick yTickLabels |
+	| boxPlot data chart categories horizontalTick yTickLabels window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
 			 { 5. 6. 7. 5. 10. }  . "B"
 			 { 12. 12. 13. 14. 15. 24. } "C"  }.
@@ -217,7 +223,9 @@ RSBoxPlotTest >> testYTickLabels [
 	boxPlot := RSBoxPlot data: data.
 	boxPlot xTickLabels: categories.
 	boxPlot yTicks: #(-5 0 10 30) labels: yTickLabels.
-	chart := boxPlot buildChart.
+	window := boxPlot open.
+	chart := boxPlot chart.
+	window delete.
 	horizontalTick := chart horizontalTick.
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
 ]

@@ -45,9 +45,6 @@ Class {
 	#name : #RSViolinPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'xlabel',
-		'ylabel',
-		'title',
 		'violinShapes',
 		'offset',
 		'bandWidth'
@@ -61,6 +58,16 @@ RSViolinPlot class >> data: aCollection [
 	boxPlot := self new.
 	boxPlot data: aCollection.
 	^ boxPlot
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlot [
+	| boxPlot1   data1  |
+	data1 := { 12. 12. 13. 14. 15. 24. }.
+	boxPlot1 := self data: data1.
+	boxPlot1 xlabel: 'x axis'.
+	boxPlot1 ylabel: 'y axis'.
+	^ boxPlot1 open.
 ]
 
 { #category : #accessing }
@@ -93,17 +100,15 @@ RSViolinPlot class >> exampleViolinPlotColor [
 
 { #category : #accessing }
 RSViolinPlot class >> exampleViolinPlotColors [
-	| violinPlot data points |
+	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
 	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
-	"violinPlot colors: { Color green. Color blue }.
+	violinPlot colors: { Color green. Color blue }.
 	
-	violinPlot violinShapes first color: Color purple."
-	violinPlot buildChart.
-	violinPlot violinShapes first densityArea border: (RSBorder new color: Color red; dashArray: {4.}).
-	"self halt."
-	^ violinPlot chart container open.
+	"TO DO: Split violinShapes in compute and a defaultDensityArea"
+	"violinPlot violinShapes first densityArea border: (RSBorder new color: Color red; dashArray: {4.})."
+	^ violinPlot open.
 ]
 
 { #category : #accessing }
@@ -151,11 +156,7 @@ RSViolinPlot >> buildChart [
 	chart add: self.
 	chart
 		extent: 360 @ 300;
-		padding: 15;
-		build;
-		title: title;
-		xlabel: xlabel;
-		ylabel: ylabel.
+		padding: 15.
 	^ chart
 ]
 
@@ -279,16 +280,6 @@ RSViolinPlot >> renderIn: canvas [
 ]
 
 { #category : #rendering }
-RSViolinPlot >> title [
-	^ title
-]
-
-{ #category : #rendering }
-RSViolinPlot >> title: aString [
-	title := aString
-]
-
-{ #category : #rendering }
 RSViolinPlot >> violinShapes [
 	^ violinShapes
 ]
@@ -297,24 +288,4 @@ RSViolinPlot >> violinShapes [
 RSViolinPlot >> violinShapes: collectionOfRSViolinPlotShapes [
 	violinShapes := collectionOfRSViolinPlotShapes
 	
-]
-
-{ #category : #rendering }
-RSViolinPlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #rendering }
-RSViolinPlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #rendering }
-RSViolinPlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #rendering }
-RSViolinPlot >> ylabel: aString [
-	ylabel := aString
 ]

@@ -60,6 +60,8 @@ RSBoxPlot class >> exampleBoxPlotChangeBoxWidth [
 	data1 := { 12. 12. 13. 14. 15. 24. }.
 	boxPlot1 := self data: data1.
 	boxPlot1 bandsWidth: 50.
+	boxPlot1 xlabel: 'x axis'.
+	boxPlot1 ylabel: 'y axis'.
 	^ boxPlot1 open.
 ]
 
@@ -424,8 +426,7 @@ RSBoxPlot >> buildChart [
 	chart add: self.
 	chart
 		extent: 360 @ 300;
-		padding: 15;
-		build.
+		padding: 15.
 	^ chart
 ]
 
