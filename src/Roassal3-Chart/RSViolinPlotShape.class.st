@@ -8,7 +8,6 @@ Class {
 		'color',
 		'xScale',
 		'yScale',
-		'shapeCenter',
 		'bandOffset',
 		'bandWidth'
 	],
