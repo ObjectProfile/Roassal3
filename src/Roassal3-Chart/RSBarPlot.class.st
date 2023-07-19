@@ -128,3 +128,13 @@ RSBarPlot >> isVerticalBarPlot [
 RSBarPlot >> modelFor: aPoint [
 	^ aPoint y
 ]
+
+{ #category : #hooks }
+RSBarPlot >> numberOfBands [
+	| bandScale |
+	self beforeRenderingIn: chart.
+	bandScale := NSOrdinalScale new
+		domain: xValues;
+		rangeBands: xScale range padding: gapRatio.
+	^ bandScale range size.
+]

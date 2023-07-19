@@ -18,7 +18,7 @@ RSClusterChart >> addPlot: aPlot [
 	
 	self computePlotsBands.
 	
-	self xTickLabels: (1 to: self maxNumberOfBoxesPerPlot).
+	self xTickLabels: (1 to: self maxNumberOfBandsPerPlot).
 	^ aPlot
 ]
 
@@ -110,6 +110,6 @@ RSClusterChart >> innerClusterScale [
 ]
 
 { #category : #accessing }
-RSClusterChart >> maxNumberOfBoxesPerPlot [
-	^ (self plots collect: [ :plot | plot boxes size ]) max.
+RSClusterChart >> maxNumberOfBandsPerPlot [
+	^ (self plots collect: [ :plot | plot numberOfBands ]) max.
 ]

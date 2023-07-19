@@ -235,7 +235,7 @@ RSViolinPlot >> defaultShape [
 		noPaint.
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 RSViolinPlot >> initialize [
 	super initialize.
 	chart := RSChart new.
