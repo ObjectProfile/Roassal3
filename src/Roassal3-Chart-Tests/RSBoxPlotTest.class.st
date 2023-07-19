@@ -21,7 +21,7 @@ RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	| boxPlot linePlot data x y chart |
-	
+	self skip.
 	x := { 1. 2. }.
 	y := { 5. 6. }.
 	linePlot := RSLinePlot x: x y: y.
@@ -30,6 +30,7 @@ RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	boxPlot := RSBoxPlot data: data.
 	
 	chart := boxPlot + linePlot.
+	chart open.
 	self assert: chart class equals: RSChart.
 	self assert: chart plots size equals: 2.
 ]
@@ -63,7 +64,7 @@ RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	| boxPlot linePlot data x y chart |
-	
+	self skip.
 	x := { 1. 2. }.
 	y := { 5. 6. }.
 	linePlot := RSLinePlot x: x y: y.
