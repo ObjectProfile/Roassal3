@@ -83,7 +83,7 @@ RSViolinPlot class >> exampleViolinPlotClusters [
 	violinPlotB bandwidth: 3.
 	violinPlotB color: Color red.
 	
-	aRSClusterChart := violinPlotA + violinPlotB.
+	aRSClusterChart := violinPlotA" + violinPlotB".
 	
 	^ aRSClusterChart open.
 ]

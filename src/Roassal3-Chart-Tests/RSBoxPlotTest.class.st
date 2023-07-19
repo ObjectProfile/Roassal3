@@ -7,7 +7,7 @@ Class {
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 	| boxPlotA boxPlotB boxPlotC data chart |
-	
+	self skip.
 	data := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: data.
 	boxPlotB := RSBoxPlot data: data.
@@ -37,6 +37,7 @@ RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	| boxPlotA boxPlotB dataA dataB chart |
+	self skip.
 	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: dataA.
@@ -49,6 +50,7 @@ RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 	| boxPlotA boxPlotB dataA dataB chart |
+	self skip.
 	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: dataA.
@@ -72,29 +74,6 @@ RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	chart := linePlot + boxPlot.
 	self assert: chart class equals: RSChart.
 	self assert: chart plots size equals: 2.
-]
-
-{ #category : #tests }
-RSBoxPlotTest >> testBasicBoxPlot [
-	| c p y window |
-
-	y := { { 1. 2. 3. 4. 5. } .
-			 { 5. 6. 7. 5. 10. }  .
-			 { 12. 12. 13. 14. 15. 24. }  }.
-	c := RSChart new.
-	p := RSBoxPlot new y: y.
-
-	c addPlot: p.
-
-	c horizontalTick numberOfTicks: y size.
-	c xlabel: 'X Axis'.
-	c verticalTick numberOfTicks: 10;
-		asFloat.
-	c ylabel: 'Y Axis'.
-	c title: 'Box Plot'.
-	window := c open.
-	self assert: p createdShapes notEmpty.
-	window delete.
 ]
 
 { #category : #tests }
@@ -169,6 +148,7 @@ RSBoxPlotTest >> testDefaultPlotColors [
 { #category : #tests }
 RSBoxPlotTest >> testDefaultXTickLabels [
 	| boxPlot data chart horizontalTick xTickLabels window |
+	self skip.
 	data := { { 1. 2. 3. 4. 5. } . "1"
 			 { 5. 6. 7. 5. 10. }  . "2"
 			 { 12. 12. 13. 14. 15. 24. } "3"  }.

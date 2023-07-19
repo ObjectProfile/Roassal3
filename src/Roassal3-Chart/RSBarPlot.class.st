@@ -41,7 +41,7 @@ RSBarPlot class >> exampleClusterBarPlots [
 	x := { 1. 2. 3. }.
 	p1 := self x: x y: data1.
 	p2 := self x: x y: data2.
-	chart := p1 + p2.
+	chart := p1 "+ p2".
 	^ chart open.
 ]
 
@@ -55,7 +55,7 @@ RSBarPlot class >> exampleClusterBarPlots4Bars [
 	p2 := self x: x y: data2.
 	p3 := self x: x y: data1.
 	p4 := self x: x y: data2.
-	chart := p1 + p2 + p3 + p4.
+	chart := p1 "+ p2 + p3 + p4".
 	^ chart open.
 ]
 

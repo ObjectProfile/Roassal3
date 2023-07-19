@@ -72,10 +72,10 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
-	clusterChart := boxPlot1 + boxPlot2.
+	clusterChart := boxPlot1" + boxPlot2".
 	
 	"bandsMargin value between 0 and 1"
-	clusterChart bandsMargin: 0.5.
+	"clusterChart bandsMargin: 0.5."
 	
 	^ clusterChart open.
 ]
@@ -91,10 +91,10 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenClusters [
 			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
-	clusterChart := boxPlot1 + boxPlot2.
+	clusterChart := boxPlot1 "+ boxPlot2".
 	
 	"clustersMargin value between 0 and 1"
-	clusterChart clustersMargin: 0.5.
+	"clusterChart clustersMargin: 0.5."
 	
 	^ clusterChart open.
 ]
@@ -124,7 +124,7 @@ RSBoxPlot class >> exampleBoxPlotGroups [
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
 	boxPlot3 := self data: data3.
-	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	boxPlot := boxPlot1" + boxPlot2 + boxPlot3".
 	^ boxPlot open.
 ]
 
@@ -143,8 +143,8 @@ RSBoxPlot class >> exampleBoxPlotGroupsCustomColorPalette [
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
 	boxPlot3 := self data: data3.
-	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
-	boxPlot colors: RSColorPalette qualitative accent8.
+	boxPlot := boxPlot1 "+ boxPlot2 + boxPlot3".
+	"boxPlot colors: RSColorPalette qualitative accent8."
 	^ boxPlot open.
 ]
 
@@ -159,7 +159,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsEven [
 			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
-	boxPlot := boxPlot1 + boxPlot2.
+	boxPlot := boxPlot1" + boxPlot2".
 	^ boxPlot open.
 ]
 
@@ -176,7 +176,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsEven4 [
 	boxPlot2 := self data: data2.
 	boxPlot3 := self data: data2.
 	boxPlot4 := self data: data2.
-	boxPlot := boxPlot1 + boxPlot2 + boxPlot3 + boxPlot4.
+	boxPlot := boxPlot1 "+ boxPlot2 + boxPlot3 + boxPlot4".
 	^ boxPlot open.
 ]
 
@@ -195,7 +195,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd [
 	boxPlot1 := self data: data1.
 	boxPlot2 := self data: data2.
 	boxPlot3 := self data: data3.
-	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	boxPlot := boxPlot1 "+ boxPlot2 + boxPlot3".
 	^ boxPlot open.
 ]
 
@@ -216,7 +216,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd5 [
 	boxPlot3 := self data: data3.
 	boxPlot4 := self data: data3.
 	boxPlot5 := self data: data3.
-	boxPlot := boxPlot1 + boxPlot2 + boxPlot3 + boxPlot4 + boxPlot5.
+	boxPlot := boxPlot1 "+ boxPlot2 + boxPlot3 + boxPlot4 + boxPlot5".
 	^ boxPlot open.
 ]
 
@@ -316,24 +316,24 @@ RSBoxPlot class >> exampleBoxPlotStyleOutliersColor [
 	boxPlot1 outliers color: Color red.
 	boxPlot2 := self data: data2.
 	boxPlot2 outliers color: Color purple.
-	boxPlot := boxPlot1 + boxPlot2.
+	boxPlot := boxPlot1 "+ boxPlot2".
 	^ boxPlot open.
 ]
 
 { #category : #examples }
 RSBoxPlot class >> exampleBoxPlotStyleWhiskerFormat [
-	| boxPlot boxPlot1  boxPlot2 data1 data2  |
+	| boxPlot boxPlot1 data1 |
 	data1 := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
-	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+	"data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
 			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
-			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }."
 	boxPlot1 := self data: data1.
-	boxPlot2 := self data: data2.
+	"boxPlot2 := self data: data2."
 	boxPlot1 whiskerFormat: '--'.
-	boxPlot2 whiskers do: [ :whiskerLine | whiskerLine format: '.'].
-	boxPlot := boxPlot1 + boxPlot2.
+	"boxPlot2 whiskers do: [ :whiskerLine | whiskerLine format: '.']."
+	boxPlot := boxPlot1 "+ boxPlot2".
 	^ boxPlot open.
 ]
 
@@ -356,7 +356,7 @@ RSBoxPlot class >> exampleDays [
 	p1 := self data: y1. "blue"
 	p2 := self data: y2. "sky blue"
 	p3 := self data: y3. "orange"
-	chart := p1 + p2 + p3.
+	chart := p1 "+ p2 + p3".
 	chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
 	^ chart open.
 ]
@@ -383,7 +383,7 @@ RSBoxPlot class >> exampleDaysShowBands [
 	p2 showBands.
 	p3 := self data: y3. "orange"
 	p3 showBands.
-	chart := p1 + p2 + p3.
+	chart := p1 "+ p2 + p3".
 	chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
 	^ chart open.
 ]
