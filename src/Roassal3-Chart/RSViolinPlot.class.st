@@ -236,12 +236,6 @@ RSViolinPlot >> defaultShape [
 		noPaint.
 ]
 
-{ #category : #initialization }
-RSViolinPlot >> initialize [
-	super initialize.
-	chart := RSChart new.
-]
-
 { #category : #rendering }
 RSViolinPlot >> kernelBandwidth: aNumber [
 	violinShapes do: [ :violin | violin kernelBandwidth: aNumber ].
@@ -259,12 +253,8 @@ RSViolinPlot >> numberOfViolins [
 ]
 
 { #category : #rendering }
-RSViolinPlot >> open [
-	^ self buildChart open.
-]
-
-{ #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
+	super renderIn: canvas.
 	offset ifNil: [ offset := 1 ].
 	self computeBandsOffset.
 	

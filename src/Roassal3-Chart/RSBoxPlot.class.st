@@ -488,7 +488,7 @@ RSBoxPlot >> computeBoxGraphicsCenters [
 
 { #category : #rendering }
 RSBoxPlot >> computeDefualtXTicks [
-	chart horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
+	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
 ]
 
 { #category : #private }
@@ -543,12 +543,6 @@ RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
-{ #category : #initialization }
-RSBoxPlot >> initialize [
-	super initialize.
-	"chart := RSChart new."
-]
-
 { #category : #testing }
 RSBoxPlot >> isBoxPlot [
 	^ true
@@ -587,8 +581,7 @@ RSBoxPlot >> outliers [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
-	"self computeDefualtXTicks."
-	
+	self computeDefualtXTicks.
 	offset ifNil: [ offset := 0 ].
 	self computeBandsOffset.
 	
