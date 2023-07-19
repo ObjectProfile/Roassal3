@@ -413,8 +413,10 @@ RSBoxPlot >> bandsWidth: aNumber [
 
 { #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
-	| bandScale |
+	| bandScale horizontalTicks |
 	super beforeRenderingIn: aChart.
+	horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]) first.
+	horizontalTicks configuration numberOfTicks: xValues size.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	bandScale := NSScale ordinal
 		domain: xValues;
@@ -493,7 +495,6 @@ RSBoxPlot >> computeDefualtXTicks [
 RSBoxPlot >> computeState [
 	self computeXValues.
 	self computeYValues.
-	self computeDefualtXTicks.
 ]
 
 { #category : #rendering }
@@ -545,7 +546,7 @@ RSBoxPlot >> defaultShape [
 { #category : #initialization }
 RSBoxPlot >> initialize [
 	super initialize.
-	chart := RSChart new.
+	"chart := RSChart new."
 ]
 
 { #category : #testing }
@@ -568,11 +569,6 @@ RSBoxPlot >> numberOfBoxes [
 	^ self boxShapes size.
 ]
 
-{ #category : #public }
-RSBoxPlot >> open [
-	^ self buildChart open.
-]
-
 { #category : #rendering }
 RSBoxPlot >> outlier: markerShape [
 	boxShapes do: [ :box | box outlier: markerShape ].
@@ -590,6 +586,8 @@ RSBoxPlot >> outliers [
 
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
+	super renderIn: canvas.
+	"self computeDefualtXTicks."
 	
 	offset ifNil: [ offset := 0 ].
 	self computeBandsOffset.
