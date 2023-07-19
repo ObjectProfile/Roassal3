@@ -339,16 +339,6 @@ c
 	yValues := aCollection2
 ]
 
-{ #category : #ticks }
-RSAbstractPlot >> xTickLabels: aCollection [
-	chart xTickLabels: aCollection.
-]
-
-{ #category : #ticks }
-RSAbstractPlot >> xTicks: collectionOfNumbers labels: aCollection [
-	chart xTicks: collectionOfNumbers labels: aCollection
-]
-
 { #category : #accessing }
 RSAbstractPlot >> xValues [
 
@@ -385,16 +375,6 @@ c
 	"
 
 	self x: (1 to: aCollection size) y: aCollection
-]
-
-{ #category : #ticks }
-RSAbstractPlot >> yTickLabels: aCollection [
-	chart yTickLabels: aCollection.
-]
-
-{ #category : #ticks }
-RSAbstractPlot >> yTicks: collectionOfNumbers labels: aCollection [
-	chart yTicks: collectionOfNumbers labels: aCollection
 ]
 
 { #category : #accessing }
