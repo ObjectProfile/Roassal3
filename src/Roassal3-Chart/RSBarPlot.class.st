@@ -36,7 +36,7 @@ Class {
 	#category : #'Roassal3-Chart-Plots'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSBarPlot class >> exampleClusterBarPlots [
 	| p1 p2 chart data1 data2 x |
 	data1 := {  10. 9. 7 }. "blue"
@@ -48,7 +48,7 @@ RSBarPlot class >> exampleClusterBarPlots [
 	^ chart open.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RSBarPlot class >> exampleClusterBarPlots4Bars [
 	| p1 p2 chart data1 data2 x p3 p4|
 	data1 := {  10. 9. 7 }. "blue"
