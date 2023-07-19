@@ -1,10 +1,10 @@
 "
 <keyClass>
-`RSBarPlot` is a plot for Roassal's chart that represents a bar chart.
+`RSBarPlot` is a plot that represents a bar chart.
 
 *Responsibility*: display a bar chart, with adequate color & bar width value per default.
 
-*Collaborators*: a bar plot is added to `RSChart`.
+*Collaborators*: a bar plot is added to `RSCompositeChart`.
 
 *Variables*:
 - `barWidth`: width of a bar. A default computed value is assigned.
@@ -12,19 +12,16 @@
 *Example*:
 ```Smalltalk
 data := #(4 10 5 9).
-c := RSChart new.
 
 d := RSBarPlot new.
 d color: Color green darker darker darker.
 d y: data.
-c addPlot: d.
 
-c addDecoration: (RSVerticalTick new integer).
-c addDecoration: (RSHorizontalTick new).
+d verticalTick integer.
 
-c addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
-c addDecoration: (RSXLabelDecoration new title: 'Evolution').
-c
+d addDecoration: (RSYLabelDecoration new title: 'Difference'; rotationAngle: -90; offset: -25 @ 0).
+d addDecoration: (RSXLabelDecoration new title: 'Evolution').
+d
 ```
 "
 Class {
@@ -33,7 +30,7 @@ Class {
 	#instVars : [
 		'bottom'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #examples }
@@ -69,6 +66,7 @@ RSBarPlot >> barScale [
 
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].

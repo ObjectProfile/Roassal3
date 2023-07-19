@@ -48,18 +48,15 @@ classes := RSObject withAllSubclasses.
 x := classes collect: [ :c | c numberOfMethods ].
 y := classes collect: [ :c | c linesOfCode ].
 
-c := RSChart new.
-
 d := RSScatterPlot new.
 d color: Color blue translucent.
 d x: x y: y.
-c addPlot: d.
 
 tickConfiguration := RSTickConfiguration new.
 tickConfiguration labelConversion: [ :p | 'V', p asString ].
 
-c addDecoration: (RSHorizontalTick new configuration: tickConfiguration).
-c
+d horizontalTick configuration: tickConfiguration.
+d
 ```
 "
 Class {

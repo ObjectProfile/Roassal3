@@ -11,20 +11,16 @@ collection are the data points.
 y := { { 1. 2. 3. 4. 5. } . 
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }. 
-c := RSChart new.
 p := RSBoxPlot new y: y.
 	
-c addPlot: p.
-	
-c addDecoration: (RSHorizontalTick new 
-		numberOfTicks: y size).
-c xlabel: 'X Axis'.
-c addDecoration: (RSVerticalTick new 
+p horizontalTick numberOfTicks: y size.
+p xlabel: 'X Axis'.
+p verticalTick 
 		numberOfTicks: 10;
-		asFloat).
-c ylabel: 'Y Axis'.
-c title: 'Box Plot'.
-c openOnce.
+		asFloat.
+p ylabel: 'Y Axis'.
+p title: 'Box Plot'.
+p openOnce.
 ```
 "
 Class {
@@ -35,7 +31,7 @@ Class {
 		'bandWidth',
 		'offset'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #'instance creation' }

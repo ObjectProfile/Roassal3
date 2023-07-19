@@ -1,5 +1,16 @@
 "
-The abstract class for bar plots
+<keyClass>
+`RSChart` is the abstract class that encompass bar plots.
+
+*Responsibility*: maintain and render bar plots.
+
+*Collaborators*: a plot closely interacts with decorations and can be added in a `RSCompositeChart`. 
+
+*Variables*:
+- barSize: the size of the bars
+- bars: all the bars of the plot
+- gapRatio: 
+- barOffset: shifts the bars left or right
 "
 Class {
 	#name : #RSAbstractBarPlot,
@@ -10,8 +21,14 @@ Class {
 		'gapRatio',
 		'barOffset'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
+
+{ #category : #testing }
+RSAbstractBarPlot class >> isAbstract [
+
+	^ self == RSAbstractBarPlot
+]
 
 { #category : #accessing }
 RSAbstractBarPlot >> bandsOffset: aNumber [
@@ -62,11 +79,12 @@ RSAbstractBarPlot >> computeRectagleFor: aPoint index: index [
 
 { #category : #rendering }
 RSAbstractBarPlot >> createBarFor: aPoint index: index [
+
 	^ self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (self computeRectagleFor: aPoint index: index);
-		yourself
+		  model: (self modelFor: aPoint);
+		  color: self computeColor;
+		  fromRectangle: (self computeRectagleFor: aPoint index: index);
+		  yourself
 ]
 
 { #category : #accessing }
@@ -74,8 +92,9 @@ RSAbstractBarPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSAbstractBarPlot >> defaultShape [
+
 	^ RSBox new noPaint
 ]
 
@@ -111,6 +130,7 @@ RSAbstractBarPlot >> modelFor: aPoint [
 { #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
 	| index |
+	super renderIn: canvas.
 	self checkAssertion.
 	index := 1.
 	bars := xValues collect: [ :xt |

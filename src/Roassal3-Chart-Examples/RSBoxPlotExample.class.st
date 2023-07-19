@@ -11,23 +11,20 @@ Class {
 RSBoxPlotExample >> example01 [
 	"A simple boxplot"
 	<script: 'self new example01 open'>
-	| c p y |
+	| p y |
 
 	y := { { 1. 2. 3. 4. 5. } .
 			 { 5. 6. 7. 5. 10. }  .
 			 { 12. 12. 13. 14. 15. 24. }  }.
-	c := RSChart new.
 	p := RSBoxPlot new y: y.
 
-	c addPlot: p.
-
-	c horizontalTick numberOfTicks: y size.
-	c xlabel: 'X Axis'.
-	c verticalTick numberOfTicks: 10;
+	p horizontalTick numberOfTicks: y size.
+	p xlabel: 'X Axis'.
+	p verticalTick numberOfTicks: 10;
 		asFloat.
-	c ylabel: 'Y Axis'.
-	c title: 'Box Plot'.
-	^ c
+	p ylabel: 'Y Axis'.
+	p title: 'Box Plot'.
+	^ p
 ]
 
 { #category : #examples }

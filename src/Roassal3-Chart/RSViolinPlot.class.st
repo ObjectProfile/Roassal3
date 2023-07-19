@@ -49,7 +49,7 @@ Class {
 		'offset',
 		'bandWidth'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -230,8 +230,8 @@ RSViolinPlot >> defaultBandsWidth [
 	^ xScale scale: 1
 ]
 
-{ #category : #initialization }
-RSViolinPlot >> defaultShape [
+{ #category : #'accessing - defaults' }
+RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
 ]

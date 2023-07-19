@@ -9,7 +9,7 @@ Class {
 		'bars',
 		'barSize'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -36,13 +36,14 @@ RSTimeLinePlot >> bars [
 
 { #category : #rendering }
 RSTimeLinePlot >> beforeRenderingIn: aChart [
+
 	| barScale |
 	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
-
 	barScale := NSOrdinalScale new
-		domain: (aChart minValueY to: aChart maxValueY);
-		rangeBands: yScale range padding: gapRatio.
+		            domain:
+			            (aChart minChartValueY to: aChart maxChartValueY);
+		            rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
 ]
 
@@ -51,7 +52,7 @@ RSTimeLinePlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSTimeLinePlot >> defaultShape [
 	^ RSBox new noPaint
 ]
@@ -87,6 +88,8 @@ RSTimeLinePlot >> initialize [
 
 { #category : #rendering }
 RSTimeLinePlot >> renderIn: canvas [
+
+	super renderIn: canvas.
 	bars := RSGroup new.
 	1 to: xValues size by: 2 do: [ :index |
 		| x1 y1 x2 y2 origin corner rectangle sizeOffset |

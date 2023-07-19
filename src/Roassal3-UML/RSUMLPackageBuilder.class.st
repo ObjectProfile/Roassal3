@@ -35,7 +35,7 @@ RSUMLPackageBuilder >> packages: aCollection [
 	packages := aCollection
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSUMLPackageBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self layout on: shapes

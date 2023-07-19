@@ -18,7 +18,7 @@ The input data source should implement these methods:
 "
 Class {
 	#name : #RSCoOccurrenceMatrixBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'colorScale',
 		'dataSource',
@@ -247,7 +247,7 @@ RSCoOccurrenceMatrixBuilder >> exportToFile: aString [
 		export
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 
 	self createBoundingBoxIn: canvas.

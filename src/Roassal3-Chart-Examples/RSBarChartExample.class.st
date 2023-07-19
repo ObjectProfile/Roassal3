@@ -14,7 +14,7 @@ RSBarChartExample >> example01TwoBars [
 	| c p p2 x y size |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSBarPlot new x: x y: y.
 	size := 6.
 	p barSize: size.
@@ -22,11 +22,12 @@ RSBarChartExample >> example01TwoBars [
 	p2 := RSBarPlot new x: x y: y + 0.5.
 	p2 barSize: size.
 	p2 barOffset: size / -2.
-	c addPlot: p.
-	c addPlot: p2.
-	c horizontalTick
-		ticksData: #(0 0.25 1 1.75);
-		useVerticalLabel.
+	c add: p.
+	c add: p2.
+	c horizontalTick doNotUseNiceLabel;
+			 numberOfTicks: x size - 1;
+			 asFloat: 5;
+			 useVerticalLabel.
 
 	c build.
 	p bars @ RSPopup.
@@ -48,7 +49,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	| c p p2 x y size lb |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSHorizontalBarPlot new x: y y: x.
 	size := 5.
 	p barSize: size.
@@ -56,8 +57,8 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	p2 := RSHorizontalBarPlot new x: y +0.5 y: x.
 	p2 barSize: size.
 	p2 barOffset: size / -2.
-	c addPlot: p.
-	c addPlot: p2.
+	c add: p.
+	c add: p2.
 	c build.
 	p bars , p2 bars @ RSPopup.
 	lb := RSLegend new.
@@ -66,7 +67,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	lb text: 'Series2' withBoxColor: p2 computeColor.
 	lb legendDo: [ :shape | shape withBorder; padding: 10; scaleBy: 0.5 ].
 	lb location
-		inner; bottom; right; offset: -10.
+		inner; bottom; right; offset: -30.
 	lb build.
 	^ c canvas
 ]
@@ -106,7 +107,7 @@ RSBarChartExample >> example03TilePaint [
 		paint repeat.
 		paint ].
 
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c extent: 300@ 200.
 	lb := RSLegend new.
 	lb container: c canvas.
@@ -121,7 +122,7 @@ RSBarChartExample >> example03TilePaint [
 
 	data doWithIndex: [ :serie :index |
 		| plot color |
-		c addPlot: (plot := RSBarPlot new x: x y: serie).
+		c add: (plot := RSBarPlot new x: x y: serie).
 		color := plot computeColor.
 		index even
 			ifTrue: [ plot color: (paintBlock value: color) ].
@@ -146,13 +147,12 @@ RSBarChartExample >> example03TilePaint [
 RSBarChartExample >> example04VerticalStack [
 	<script: 'self new example04VerticalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChart new.
+	c := RSCompositeChart new.
 	c extent: 300@200.
 	menMeans := #(20 35 30 35 27).
 	womenMeans := #(25 32 34 20 25).
-	c barHeights: menMeans.
-	(c barHeights: womenMeans)
-		bottom: menMeans.
+	c add: (RSAbstractChart barHeights: menMeans).
+	c add: ((RSAbstractChart barHeights: womenMeans) bottom: menMeans).
 	c horizontalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
 	c verticalTick integer.
 	c ylabel: 'Scores'.
@@ -169,24 +169,24 @@ RSBarChartExample >> example04VerticalStack [
 
 { #category : #examples }
 RSBarChartExample >> example05HorizontalStack [
+
 	<script: 'self new example05HorizontalStack open'>
 	| c menMeans womenMeans lb |
-	c := RSChart new.
-	c extent: 300@200.
-	menMeans := #(20 35 30 35 27).
-	womenMeans := #(25 32 34 20 25).
-	c barWidths: menMeans.
-	(c barWidths: womenMeans)
-		left: menMeans.
+	c := RSCompositeChart new.
+	c extent: 300 @ 200.
+	menMeans := #( 20 35 30 35 27 ).
+	womenMeans := #( 25 32 34 20 25 ).
+	c add: (RSAbstractChart barWidths: menMeans).
+	c add: ((RSAbstractChart barWidths: womenMeans) left: menMeans).
 	c horizontalTick integer.
-	c verticalTick fromNames: #(Day1 Day2 Day3 Day4 Day5).
+	c verticalTick fromNames: #( Day1 Day2 Day3 Day4 Day5 ).
 	c xlabel: 'Scores'.
 	c title: 'Scores by group of gender'.
 	c build.
 	lb := RSLegend new.
 	lb layout horizontal.
-	#(Men Women) doWithIndex: [ :lbl :index |
-		lb text: lbl withBoxColor: (c plots at:index) computeColor ].
+	#( Men Women ) doWithIndex: [ :lbl :index |
+		lb text: lbl withBoxColor: (c plots at: index) computeColor ].
 	lb container: c canvas.
 	lb build.
 	^ c canvas
@@ -231,14 +231,14 @@ RSBarChartExample >> example07DoubleBar [
 
 	<script: 'self new example07DoubleBar open'>
 	| c classes x1 x2 y plot title |
-	c := RSChart new.
+	c := RSCompositeChart new.
 	classes := RSShape withAllSubclasses asOrderedCollection sorted: [
 		           :a
 		           :b | a name < b name ].
 	x1 := classes collect: #numberOfMethods.
 	x2 := classes collect: #numberOfVariables.
 	y := 1 to: classes size.
-	c addPlot: (plot := RSDoubleBarPlot new
+	c add: (plot := RSDoubleBarPlot new
 			         x1: x1 x2: x2 y: y;
 			         yourself).
 

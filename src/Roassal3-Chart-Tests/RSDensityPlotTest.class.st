@@ -1,9 +1,6 @@
 Class {
 	#name : #RSDensityPlotTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'chart'
-	],
 	#category : #'Roassal3-Chart-Tests-Core'
 }
 
@@ -72,10 +69,8 @@ RSDensityPlotTest >> testRedArea [
 	| densityPlot data area |
 	data := #(14 15 28 27 32 35).
 	densityPlot := RSDensityPlot data: data.
-	chart := RSChart new.
 	densityPlot shape color: Color red.
-	chart add: densityPlot.
-	chart build.
+	densityPlot build.
 	area := densityPlot area.
 	self assert: area class equals: RSPolygon.
 	self assert: area color equals: Color red.
