@@ -79,7 +79,7 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 	clusterChart := boxPlot1 + boxPlot2.
 	
 	"bandsMargin value between 0 and 1"
-	clusterChart clustersMargin: 0.5.
+	clusterChart bandsMargin: 0.5.
 	
 	^ clusterChart open.
 ]
@@ -129,6 +129,26 @@ RSBoxPlot class >> exampleBoxPlotGroups [
 	boxPlot2 := self data: data2.
 	boxPlot3 := self data: data3.
 	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> exampleBoxPlotGroupsCustomColorPalette [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot2 := self data: data2.
+	boxPlot3 := self data: data3.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	boxPlot colors: RSColorPalette qualitative accent8.
 	^ boxPlot open.
 ]
 
