@@ -22,6 +22,29 @@ p ylabel: 'Y Axis'.
 p title: 'Box Plot'.
 p openOnce.
 ```
+
+The plot can be notched to represent the confidence interval around the median. There is 3 possible percentages for the interval: 90%, 95% (default one) and 99%.
+Please note that the values used for 90% and 99% may not be exact due to a lack of data about it, but it is correct for 95%.
+
+```
+| y p1 p2 c size |
+
+y :=  { {  1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. } . { 1. 2. 3. 4. 5. 6. 7.  } }.
+
+size := 50.
+
+c := RSCompositeChart new.
+p1 := RSBoxPlot new.
+p1 y: y.
+p1 notch: true.
+p1 barSize: size.
+p1 barOffset: size * -0.55.
+p2 := RSBoxPlot new y: y.
+p2 barSize: size.
+p2 barOffset: size * 0.55.
+c add: p1; add: p2.
+c open
+```
 "
 Class {
 	#name : #RSBoxPlot,
@@ -31,7 +54,10 @@ Class {
 		'bars',
 		'gapRatio',
 		'barOffset',
-		'boxAndWhisker'
+		'boxAndWhisker',
+		'notched',
+		'notchFactors',
+		'confidencePercentage'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -81,6 +107,12 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 ]
 
 { #category : #private }
+RSBoxPlot >> boxAndWhisker [
+
+	^ boxAndWhisker
+]
+
+{ #category : #private }
 RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	"Converts a 2D collection of data points into the poisition of the 1 and 3 quartile, the whiskers, and outlieing points.
 
@@ -94,7 +126,7 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	7. An array of the upper outlying data
 	"
 	boxAndWhisker := aCollection collect: [ :i |
-		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers |
+		|iSort quartile1 quartile3 minVal maxVal bottomWhiskerExtent topWhiskerExtent iqr bottomOutliers topOutliers confidenceIntervalMax confidenceIntervalMin factor |
 
 		iSort := i asSortedCollection .
 
@@ -103,6 +135,10 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 		quartile1 := self quantile: 0.25 for: iSort.
 		quartile3 := self quantile: 0.75 for: iSort.
 		iqr := quartile3 - quartile1 .
+		"95% confidence interval around the median"
+		factor := self notchFactorFor: confidencePercentage.
+		confidenceIntervalMax := iSort median + (factor * iqr/(iSort size sqrt)).
+		confidenceIntervalMin  := iSort median - (factor * iqr/(iSort size sqrt)).
 
 		bottomWhiskerExtent := quartile1 - (iqr * 1.5).
 		bottomWhiskerExtent <= minVal
@@ -114,8 +150,66 @@ RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 			ifTrue: [ topWhiskerExtent := maxVal. topOutliers := Array new ]
 			ifFalse: [ topOutliers := i select: [ :j | j > topWhiskerExtent  ] ].
 
-		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers  }
+		{ bottomOutliers . bottomWhiskerExtent . quartile1. iSort median. quartile3. topWhiskerExtent . topOutliers . confidenceIntervalMax . confidenceIntervalMin }
 	]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeMainBoxWith: values [
+
+	| boxAndWhis topLeft bottomRight confidenceIntervalTopLeft confidenceIntervalBottomRight sizeOffset aPoint |
+	boxAndWhis := values at: 1.
+	topLeft := values at: 2.
+	bottomRight := values at: 3.
+	confidenceIntervalTopLeft := values at: 4.
+	confidenceIntervalBottomRight := values at: 5.
+	sizeOffset := values at: 6.
+	aPoint := values at: 7.
+
+	^ notched
+		  ifTrue: [
+			  RSPolygon new
+				  points: {
+						  topLeft.
+						  (bottomRight x @ topLeft y).
+						  (confidenceIntervalBottomRight x @ confidenceIntervalTopLeft y).
+						  (confidenceIntervalBottomRight x - (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4))).
+						  confidenceIntervalBottomRight.
+						  bottomRight.
+						  (topLeft x @ bottomRight y).
+						  (confidenceIntervalTopLeft x @ confidenceIntervalBottomRight y).
+						  (confidenceIntervalTopLeft x + (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4))).
+						  confidenceIntervalTopLeft };
+				  color: self computeColor ]
+		  ifFalse: [
+			  self shape copy
+				  model: (self modelFor: aPoint);
+				  color: self computeColor;
+				  fromRectangle: (Rectangle origin: topLeft corner: bottomRight) ]
+]
+
+{ #category : #rendering }
+RSBoxPlot >> computeMedianLineWith: values [
+
+	| boxAndWhis topLeft bottomRight confidenceIntervalTopLeft confidenceIntervalBottomRight sizeOffset |
+	boxAndWhis := values at: 1.
+	topLeft := values at: 2.
+	bottomRight := values at: 3.
+	confidenceIntervalTopLeft := values at: 4.
+	confidenceIntervalBottomRight := values at: 5.
+	sizeOffset := values at: 6.
+
+	^ notched
+		  ifTrue: [
+			  RSLine new
+				  startPoint:
+					  confidenceIntervalTopLeft x + (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4));
+				  endPoint:
+					  confidenceIntervalBottomRight x - (0.5 * sizeOffset x) @ (yScale scale: (boxAndWhis at: 4)) ]
+		  ifFalse: [
+			  RSLine new
+				  startPoint: topLeft x @ (yScale scale: (boxAndWhis at: 4));
+				  endPoint: bottomRight x @ (yScale scale: (boxAndWhis at: 4)) ]
 ]
 
 { #category : #rendering }
@@ -128,7 +222,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 		| newPoint |
 		newPoint := xValue @ (yScale scale: i).
 		RSEllipse new
-				radius: 2;
+				radius: 2.5;
 				color: self computeColor;
 				translateTo: newPoint .
 	]
@@ -137,7 +231,7 @@ RSBoxPlot >> computeOutliersFor: points at: xValue [
 { #category : #rendering }
 RSBoxPlot >> computeRectagleAndLinesFor: index [
    "Convert the box and whisker extents to their positions in the plot using the scale"
-	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center |
+	| lowerOutliers upperOutliers boxAndWhis origin sizeOffset offset zero aPoint topLeft bottomRight bottomWhiskerExtent topWhiskerExtent corner center confidenceIntervalPoint confidenceIntervalZero confidenceIntervalOrigin confidenceIntervalCorner confidenceIntervalTopLeft confidenceIntervalBottomRight values |
 
 	boxAndWhis := boxAndWhisker at: index.
 	aPoint := (xValues at: index) @ (boxAndWhis at: 5).
@@ -161,24 +255,44 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 
 	bottomWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 2)).
 	topWhiskerExtent := center @ (yScale scale: (boxAndWhis at: 6)).
+	
+	"For the 95% confidence interval around the median"
+	confidenceIntervalPoint := (xValues at: index) @ (boxAndWhis at: 8).
+	confidenceIntervalZero := boxAndWhis at: 9.
+	confidenceIntervalOrigin := self scalePoint: confidenceIntervalPoint.
+	confidenceIntervalCorner := origin x @ (yScale scale: confidenceIntervalZero ).
+	
+	confidenceIntervalTopLeft := confidenceIntervalOrigin + offset - sizeOffset.
+	confidenceIntervalBottomRight := confidenceIntervalCorner + offset + sizeOffset.
 
-
-	^{ 	self shape copy
-		model: (self modelFor: aPoint);
-		color: self computeColor;
-		fromRectangle: (Rectangle origin: topLeft corner: bottomRight );
-		yourself.
-		RSLine new
-			startPoint: (topLeft x  @ (yScale scale: (boxAndWhis at: 4)));
-			endPoint: (bottomRight x @(yScale scale: (boxAndWhis at: 4))).
+	values := { boxAndWhis . topLeft . bottomRight . confidenceIntervalTopLeft . confidenceIntervalBottomRight . sizeOffset . aPoint } asOrderedCollection.
+	
+	^{ "the main box"	
+		self computeMainBoxWith: values .
+		"the bottom whisker"
 		RSLine new
 			startPoint: center @ corner y;
-			endPoint: bottomWhiskerExtent .
+			endPoint: bottomWhiskerExtent.
+		"the top whisker"
 		RSLine new
 			startPoint: center @ origin y;
-			endPoint: topWhiskerExtent},
+			endPoint: topWhiskerExtent.
+		"the median line"
+		self computeMedianLineWith: values },
 		lowerOutliers,
 		upperOutliers
+]
+
+{ #category : #accessing }
+RSBoxPlot >> confidencePercentage [
+
+	^ confidencePercentage
+]
+
+{ #category : #accessing }
+RSBoxPlot >> confidencePercentage: aPercentage [
+
+	confidencePercentage := aPercentage
 ]
 
 { #category : #accessing }
@@ -212,7 +326,13 @@ RSBoxPlot >> gapRatio: aNumber [
 
 { #category : #initialization }
 RSBoxPlot >> initialize [
+
 	super initialize.
+	notched := false.
+	notchFactors := Dictionary newFrom: {
+			                (90 -> 1.28).
+			                (95 -> 1.57).
+			                (99 -> 1.81) }.
 	self
 		gapRatio: 0.1;
 		barOffset: 0
@@ -232,6 +352,30 @@ RSBoxPlot >> modeBased [
 { #category : #hooks }
 RSBoxPlot >> modelFor: aPoint [
 	^ aPoint y
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notch [
+
+	^ notched
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notch: aBool [
+
+	notched := aBool
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notchFactorFor: aValue [
+
+	^ notchFactors at: aValue
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notchFactors [
+
+	^ notchFactors
 ]
 
 { #category : #'math functions' }
@@ -274,7 +418,23 @@ RSBoxPlot >> renderIn: canvas [
 
 { #category : #public }
 RSBoxPlot >> x: aCollection y: aCollection2 [
+
+	self x: aCollection y: aCollection2 confidence: 95
+]
+
+{ #category : #public }
+RSBoxPlot >> x: aCollection y: aCollection2 confidence: aPercentage [
+
 	xValues := aCollection.
 	yValues := aCollection2.
+	confidencePercentage := aPercentage.
+	self computeBoxAndWhiskerExtent: aCollection2
+]
+
+{ #category : #public }
+RSBoxPlot >> y: aCollection2 confidence: aPercentage [
+
+	self y: aCollection2.
+	confidencePercentage := aPercentage.
 	self computeBoxAndWhiskerExtent: aCollection2
 ]
