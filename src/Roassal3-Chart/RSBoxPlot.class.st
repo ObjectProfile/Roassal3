@@ -84,6 +84,12 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 ]
 
 { #category : #private }
+RSBoxPlot >> boxAndWhisker [
+
+	^ boxAndWhisker
+]
+
+{ #category : #private }
 RSBoxPlot >> computeBoxAndWhiskerExtent: aCollection [
 	"Converts a 2D collection of data points into the poisition of the 1 and 3 quartile, the whiskers, and outlieing points.
 
@@ -258,6 +264,12 @@ RSBoxPlot >> computeRectagleAndLinesFor: index [
 RSBoxPlot >> confidencePercentage [
 
 	^ confidencePercentage
+]
+
+{ #category : #accessing }
+RSBoxPlot >> confidencePercentage: aPercentage [
+
+	confidencePercentage := aPercentage
 ]
 
 { #category : #accessing }
