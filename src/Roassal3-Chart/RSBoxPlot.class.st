@@ -369,7 +369,7 @@ RSBoxPlot class >> exampleBoxPlotStyleOutliersColor [
 	boxPlot1 outliers color: Color red.
 	boxPlot2 := self data: data2.
 	boxPlot2 outliers color: Color purple.
-	boxPlot := boxPlot1 "+ boxPlot2".
+	boxPlot := boxPlot1 + boxPlot2.
 	^ boxPlot open.
 ]
 
