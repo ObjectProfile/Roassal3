@@ -7,7 +7,7 @@ Class {
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 	| boxPlotA boxPlotB boxPlotC data chart |
-	self skip.
+	
 	data := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: data.
 	boxPlotB := RSBoxPlot data: data.
@@ -21,7 +21,7 @@ RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	| boxPlot linePlot data x y chart |
-	self skip.
+	
 	x := { 1. 2. }.
 	y := { 5. 6. }.
 	linePlot := RSLinePlot x: x y: y.
@@ -30,15 +30,15 @@ RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	boxPlot := RSBoxPlot data: data.
 	
 	chart := boxPlot + linePlot.
-	chart open.
-	self assert: chart class equals: RSChart.
+	
+	self assert: chart class equals: RSCompositeChart.
 	self assert: chart plots size equals: 2.
 ]
 
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	| boxPlotA boxPlotB dataA dataB chart |
-	self skip.
+	
 	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: dataA.
@@ -51,7 +51,7 @@ RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 	| boxPlotA boxPlotB dataA dataB chart |
-	self skip.
+	
 	dataA := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	dataB := { { 1. 2. 3. 4. 5. }. { 3. 2. 4. 5. 6. } }.
 	boxPlotA := RSBoxPlot data: dataA.
@@ -64,7 +64,6 @@ RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	| boxPlot linePlot data x y chart |
-	self skip.
 	x := { 1. 2. }.
 	y := { 5. 6. }.
 	linePlot := RSLinePlot x: x y: y.
@@ -73,7 +72,7 @@ RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	boxPlot := RSBoxPlot data: data.
 	
 	chart := linePlot + boxPlot.
-	self assert: chart class equals: RSChart.
+	self assert: chart class equals: RSCompositeChart.
 	self assert: chart plots size equals: 2.
 ]
 

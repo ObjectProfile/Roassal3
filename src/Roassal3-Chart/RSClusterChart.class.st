@@ -1,6 +1,6 @@
 Class {
 	#name : #RSClusterChart,
-	#superclass : #RSAbstractChart,
+	#superclass : #RSCompositeChart,
 	#instVars : [
 		'innerClusterScale',
 		'clustersScale',
@@ -11,8 +11,14 @@ Class {
 }
 
 { #category : #adding }
-RSClusterChart >> addPlot: aPlot [
-	super addPlot: aPlot.
+RSClusterChart >> + aRSPlot [
+	self add: aRSPlot.
+	^ self.
+]
+
+{ #category : #adding }
+RSClusterChart >> add: aPlot [
+	super add: aPlot.
 	
 	self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y).
 	

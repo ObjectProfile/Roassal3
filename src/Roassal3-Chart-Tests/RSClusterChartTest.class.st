@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RSClusterChartTest >> testBandsMargin [
 	| data boxPlot1 boxPlot2 clusterChart bandsWidth newBandsWidth |
-	self skip.
+	
 	data := #(1 2 5 36 5 12 3).
 	boxPlot1 := RSBoxPlot data: data.
 	boxPlot2 := RSBoxPlot data: data.
@@ -23,7 +23,7 @@ RSClusterChartTest >> testBandsMargin [
 { #category : #tests }
 RSClusterChartTest >> testClustersMargin [
 	| data boxPlot1 boxPlot2 clusterChart clustersScaleRangeBand newClustersScaleRangeBand |
-	self skip.
+	
 	data := #(1 2 5 36 5 12 3).
 	boxPlot1 := RSBoxPlot data: data.
 	boxPlot2 := RSBoxPlot data: data.

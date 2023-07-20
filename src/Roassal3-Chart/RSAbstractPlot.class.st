@@ -42,7 +42,7 @@ RSAbstractPlot >> + aRSPlot [
 	| newChart |
 	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ]) 
 		ifTrue: [ RSClusterChart new ]
-		ifFalse: [ RSChart new ].
+		ifFalse: [ RSCompositeChart new ].
 	newChart add: self.
 	newChart add: aRSPlot.
 	^ newChart.

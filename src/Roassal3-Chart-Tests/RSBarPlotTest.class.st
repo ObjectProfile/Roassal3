@@ -36,14 +36,14 @@ RSBarPlotTest >> test2BarPlots [
 { #category : #tests }
 RSBarPlotTest >> testAdd2BarPlotsToCluster [
 	| d1 d2 barPlot1 barPlot2 clusterChart plotsInClusterChart |
-	self skip.
+	
 	x := 0.0 to: 2 count: 10.
 	d1 := (x raisedTo: 2) - 2.
 	d2 := d1 + 05.
 	barPlot1 := RSBarPlot new y: d1.
 	barPlot2 := RSBarPlot new y: d2.
 	clusterChart := barPlot1 + barPlot2.
-	plotsInClusterChart := clusterChart elements select: [ :element | element isPlot ].
+	plotsInClusterChart := clusterChart plots.
 	self assert: plotsInClusterChart size equals: 2.
 	self assert: plotsInClusterChart first barSize equals: plotsInClusterChart second barSize.
 	self deny: plotsInClusterChart first barOffset equals: plotsInClusterChart second barOffset.

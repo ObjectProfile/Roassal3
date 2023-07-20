@@ -81,7 +81,7 @@ c addDecoration: (RSHorizontalTick new).
 c addDecoration: (RSVerticalTick new).
 c
 ```"
-
+	
 	decorations add: aDecoration.
 	aDecoration chart: self.
 	aDecoration styler: self styler.
