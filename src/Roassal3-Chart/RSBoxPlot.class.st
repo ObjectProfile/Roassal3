@@ -1,26 +1,79 @@
 "
-I am a box and whisker plot used for comparing the distributions of datasets.
+`RSBoxPlot` is a visual representation of the distribution of one or more datasets (one box for each dataset). It provides a visual summary of the data's spread, central tendency, and the presence of outliers.
+- The box represents the interquartile range (IQR) of the data, which is the middle 50% of the dataset. It spans from the first quartile (Q1) to the third quartile (Q3).
+- The central line marks the median value.
+- The whiskers extend from the edges of the box and indicate the data range. The upper whisker extends to the maximum value within a certain limit (by default, 1.5 times the IQR), and the lower whisker extends to the minimum value within the same limit.
+- The outliers are data points that fall outside the whiskers.
 
-I require a 2D collection where the first dimension are the individual box-and-whisker and the inner 
-collection are the data points. 
+**Responsibility:**
+- This class plots one or more boxes (and their corresponding whiskers and outliers) given a dataset or a collection of datasets.
+- It provides options to customize the boxes (which can be accessed as `boxShapes`).
+- Note: the data will be sorted by the class.
 
+**Collaborators:** 
+- **`RSBoxPlotShape`:** The instance variable `boxShapes` is a collection of `RSBoxPlotShape`. Each of these boxShapes is a box and whisker visualization which represents the distribution of a 1D dataset. Each shape also knows how to render itself.
+- **`NSOrdinalScale`:** This class allows rendering each boxShape in one band by assigning the `bandWidth` and the `bandOffset`. In this way, each boxShape knows which part of the canvas it needs to fill.
+
+**Public API and Key Messages**
+- `data: aCollection` to create instances passing dataset (one or several datasets, 1D or 2D collections) as argument. 
+  *Note: the `data` will be sorted by the class*
+- `open` to open the visualization.
+- `+ aRSBoxPlot` (returns a new `RSClusterChart`) to create a cluster chart that contains both box plots, each box plot will have a specific color for its boxes, and a cluster will be conformed by several colors. The number of clusters will be determined by how many boxes each plot has.
+- `color: aColor` to change the color fill to all the boxes of the plot.
+- `colors: aCollection` to change the color to each box in the plot by the color with the same index in the input collection.
+- `boxShapes` returns the collection of `RSBoxPlotShape` stored in the instance variable.
+- `medianLines` returns a `RSGroup` with the median lines (each one is a `RSPolyline`, lines at the median of each box) to customize the style of the lines as group or each one. (`color:`, `do:`, etc. check `RSGroup`)
+- `whiskers` returns a `RSGroup` with the whisker model line (each one is a `RSPolyline`, lines extending to the most extreme, non-outlier data points) to customize the style of the lines as group or each one. (`color:`, `do:`, etc. check `RSGroup`)
+- `whiskerFormat: aString` to format the whiskers line stroke and markers.
+- `outliers` returns a `RSGroup` with the outlier model shape (each one is by default a `RSEllipse`) to customize the outlier points as group or each one. (`color:`, `do:`, etc. check `RSGroup`)
+- `outlierMarker: aString` to change the shape of the marker (by default a `RSEllipse`).
+
+**Instance Variables:**
+- `boxShapes`: a collection of `RSBoxPlotShape`. Each of these boxShapes is a box and whisker visualization which represents the distribution of a 1D dataset. Each shape also knows how to render itself.
+- `bandWidth`: a `Number` expressed in pixels (scaled) that determine the box width of every box in the plot.
+- `bandOffset` a `Number` expressed in pixels (scaled) that determine an offset for all the boxes in the plot.
+
+**Example:**
+One box with one dataset (1D Collection)
+```Smalltalk
+| boxPlot data |
+data := { 1. 2. 3. 4. 5. } .
+boxPlot := RSBoxPlot data: data.
+^ boxPlot open.
 ```
-| c p y |
 
-""With PolyMath loaded SortedCollection responds to the quantile: message""
-y := { { 1. 2. 3. 4. 5. } . 
-			 { 5. 6. 7. 5. 10. }  .
-			 { 12. 12. 13. 14. 15. 24. }  }. 
-p := RSBoxPlot new y: y.
-	
-p horizontalTick numberOfTicks: y size.
-p xlabel: 'X Axis'.
-p verticalTick 
-		numberOfTicks: 10;
-		asFloat.
-p ylabel: 'Y Axis'.
-p title: 'Box Plot'.
-p openOnce.
+Three boxes With three datasets (2D Collection)
+```Smalltalk
+| boxPlot data |
+data := { { 1. 2. 3. 4. 5. } .
+		 { 5. 6. 7. 5. 10. }  .
+		 { 12. 12. 13. 14. 15. 24. }  }.
+boxPlot := self data: data.
+^ boxPlot open.
+```
+
+Clustered boxes (adding plots)
+```Smalltalk
+| chart p1 p2 p3 y1 y2 y3 |
+
+y1 := { { 1. 2. 3. 4. 5. } .
+		 { 5. 6. 7. 5. 10. }  .
+		 { 12. 12. 13. 14. 15. 24. }  }.
+
+y2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+		 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+		 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+
+y3 := { { 1. 2. 3. 3. 3. 5. 3. 5. 5. 7. 8. 5. 6. 10. 11. } .
+		 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
+		 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
+
+p1 := self data: y1. ""blue""
+p2 := self data: y2. ""sky blue""
+p3 := self data: y3. ""orange""
+chart := p1 + p2 + p3.
+chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
+^ chart open.
 ```
 "
 Class {
