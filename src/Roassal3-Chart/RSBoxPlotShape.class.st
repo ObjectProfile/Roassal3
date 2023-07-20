@@ -1,3 +1,33 @@
+"
+`RSBoxPlotShape` is a visual representation of the distribution of one dataset. It provides a visual summary of the data's spread, central tendency, and the presence of outliers.
+- The box represents the interquartile range (IQR) of the data, which is the middle 50% of the dataset. It spans from the first quartile (Q1) to the third quartile (Q3).
+- The central line marks the median value.
+- The whiskers extend from the edges of the box and indicate the data range. The upper whisker extends to the maximum value within a certain limit (by default, 1.5 times the IQR), and the lower whisker extends to the minimum value within the same limit.
+- The outliers are data points that fall outside the whiskers.
+
+**Responsibility:**
+- This class plots one box and their corresponding whiskers and outliers given a dataset.
+- It provides options to customize the box.
+- Note: the data will be sorted by the class.
+
+**Collaborators:** 
+- **`RSStatisticalMeasures`:** The instance variable `statisticalMeasures` is an object which given a dataset store the data sorted, calculates and returns the statistical measures (median, mean, quartiles, etc.).
+
+**Public API and Key Messages**
+- `TO DO`
+
+**Instance Variables:**
+- `bandWidth`: a `Number` expressed in pixels (scaled) that determine the box width.
+- `bandOffset`: a `Number` expressed in pixels (scaled) that determine the offset of the box in the plot.
+
+**Example:**
+Instance creation
+```Smalltalk
+| boxPlotShape data |
+data := { 1. 2. 3. 4. 5. } .
+boxPlotShape := RSBoxPlotShape data: data.
+```
+"
 Class {
 	#name : #RSBoxPlotShape,
 	#superclass : #RSObject,
