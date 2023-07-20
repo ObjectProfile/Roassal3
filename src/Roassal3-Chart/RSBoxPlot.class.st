@@ -22,6 +22,29 @@ p ylabel: 'Y Axis'.
 p title: 'Box Plot'.
 p openOnce.
 ```
+
+The plot can be notched to represent the confidence interval around the median. There is 3 possible percentages for the interval: 90%, 95% (default one) and 99%.
+Please note that the values used for 90% and 99% may not be exact due to a lack of data about it, but it is correct for 95%.
+
+```
+| y p1 p2 c size |
+
+y :=  { {  1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. 1. 2. 3. 4. 5. 6. 7. } . { 1. 2. 3. 4. 5. 6. 7.  } }.
+
+size := 50.
+
+c := RSCompositeChart new.
+p1 := RSBoxPlot new.
+p1 y: y.
+p1 notch: true.
+p1 barSize: size.
+p1 barOffset: size * -0.55.
+p2 := RSBoxPlot new y: y.
+p2 barSize: size.
+p2 barOffset: size * 0.55.
+c add: p1; add: p2.
+c open
+```
 "
 Class {
 	#name : #RSBoxPlot,
