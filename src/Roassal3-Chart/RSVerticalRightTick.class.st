@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : #rendering }
+RSVerticalRightTick >> beforeRenderingIn: aChart [
+
+	self createXScale.
+	self createYScale
+]
+
+{ #category : #rendering }
 RSVerticalRightTick >> createTickLineFor: aNumber [
 	| scaledNumber x |
 	scaledNumber := yScale scale: aNumber.
@@ -21,9 +28,31 @@ RSVerticalRightTick >> createTickLineFor: aNumber [
 		yourself
 ]
 
+{ #category : #rendering }
+RSVerticalRightTick >> createYScale [
+
+	| padding |
+	yScale ifNil: [ yScale := NSScale linear ].
+	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
+	padding := chart padding y.
+	yScale
+		domain: {
+				self min.
+				self max };
+		range: {
+				(0 - padding).
+				(chart extent y negated + padding) }
+]
+
 { #category : #'accessing - defaults' }
 RSVerticalRightTick >> defaultLabelLocation [
 	^ RSLocation new outer; right; offset: 2@0
+]
+
+{ #category : #testing }
+RSVerticalRightTick >> isVerticalTick [
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -39,9 +68,7 @@ RSVerticalRightTick >> min [
 { #category : #rendering }
 RSVerticalRightTick >> updateChartMaxAndMinValues: aChart [
 
-	aChart
-		minChartValueY: self ticksData first;
-		maxChartValueY: self ticksData last
+	
 ]
 
 { #category : #accessing }
