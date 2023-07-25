@@ -78,7 +78,7 @@ RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
-	| boxPlot linePlot data x y chart |
+	| boxPlot linePlot data x chart |
 	x := { 1. 2. }.
 	y := { 5. 6. }.
 	linePlot := RSLinePlot x: x y: y.
