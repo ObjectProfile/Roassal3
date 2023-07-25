@@ -465,6 +465,17 @@ RSBoxPlot class >> exampleDaysShowBands [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> exampleNotch [
+	| p1 y1 |
+
+	"y1 := { { 12. 12. 13. 14. 15. 24. }  }."
+	y1 := { 12. 12. 13. 15. 18. 20. 21. 24. }.
+	p1 := self data: y1. "blue"
+	p1 notch: true.
+	^ p1 open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleSetYTicksLabels [
 	| p1 y1 |
 
@@ -587,15 +598,23 @@ RSBoxPlot >> computeYValues [
 ]
 
 { #category : #accessing }
-RSBoxPlot >> confidencePercentage [
+RSBoxPlot >> confidenceInterval [
+	^ self confidenceIntervals first
+]
 
-	^ confidencePercentage
+{ #category : #accessing }
+RSBoxPlot >> confidenceIntervals [
+	^ boxShapes collect: [ :boxShape | boxShape confidenceInterval ]
+]
+
+{ #category : #accessing }
+RSBoxPlot >> confidencePercentage [
+	^ boxShapes collect: [ :boxShape | boxShape confidencePercentage ]
 ]
 
 { #category : #accessing }
 RSBoxPlot >> confidencePercentage: aPercentage [
-
-	confidencePercentage := aPercentage
+	boxShapes do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
 ]
 
 { #category : #accessing }
@@ -631,14 +650,49 @@ RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
+{ #category : #rendering }
+RSBoxPlot >> iqr [
+	^ self iqrs first.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> iqrs [
+	^ boxShapes collect: [ :box | box iqr ].
+]
+
 { #category : #testing }
 RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
 { #category : #rendering }
+RSBoxPlot >> median [
+	^ self medians first.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> medianConfidenceInterval [
+	^ self medianConfidenceIntervals first
+]
+
+{ #category : #accessing }
+RSBoxPlot >> medianConfidenceIntervals [
+	^ boxShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
+]
+
+{ #category : #rendering }
 RSBoxPlot >> medianLines [
 	^ RSGroup new addAll: (boxShapes collect: [ :box | box medianLine ]); yourself.
+]
+
+{ #category : #rendering }
+RSBoxPlot >> medians [
+	^ boxShapes collect: [ :box | box median ].
+]
+
+{ #category : #accessing }
+RSBoxPlot >> notch: aBool [
+	boxShapes do: [ :boxShape | boxShape notch: aBool ].	
 ]
 
 { #category : #rendering }
@@ -664,6 +718,13 @@ RSBoxPlot >> outlierMarker: markerShapeString [
 { #category : #rendering }
 RSBoxPlot >> outliers [
 	^ RSGroup new addAll: (boxShapes collect: [ :box | box outliers ]); yourself.
+]
+
+{ #category : #accessing }
+RSBoxPlot >> quartiles [
+	| quartilesArray |
+	quartilesArray := boxShapes collect: [ :boxShape | boxShape quartiles ].
+	boxShapes size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
 ]
 
 { #category : #rendering }

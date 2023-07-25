@@ -46,7 +46,10 @@ Class {
 		'shouldShowBand',
 		'upperWhisker',
 		'lowerWhisker',
-		'whisker'
+		'whisker',
+		'medianConfidencePercentage',
+		'notched',
+		'notchWidthPercentage'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -116,30 +119,54 @@ RSBoxPlotShape >> computeBandRectangle [
 
 { #category : #accessing }
 RSBoxPlotShape >> computeBox [
-	| boxPoints q025 q075 quartiles |
+	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
 	q075 := quartiles at: 3.
-	"bandWidth is already scaled (in pixels)"
-	"graphCenter was already computed in shapesWithCenterAt"
+	
 	boxPoints := { 
-		(graphCenter-(bandWidth/2)) @ (yScale scale: q025). 
-		(graphCenter+(bandWidth/2)) @ (yScale scale: q025).
-		(graphCenter+(bandWidth/2)) @ (yScale scale: q075). 
-		(graphCenter-(bandWidth/2)) @ (yScale scale: q075)
-	}.
+		(graphCenter-(bandWidth/2)) @ (yScale scale: q025)."bottom left" 
+		(graphCenter+(bandWidth/2)) @ (yScale scale: q025)."bottom right"
+	} asOrderedCollection.
+	
+	notchWidth := bandWidth * notchWidthPercentage.
+	median := quartiles at: 2.
+	medianConfidenceInterval := self medianConfidenceInterval.
+	medianCIMax := medianConfidenceInterval max.
+	medianCIMin := medianConfidenceInterval min.
+	
+	notched ifTrue: [ 
+		boxPoints addAll: { 
+		(graphCenter+(bandWidth/2))@(yScale scale: medianCIMin).
+		(graphCenter+(notchWidth/2))@(yScale scale: median).
+		(graphCenter+(bandWidth/2))@(yScale scale: medianCIMax).}	
+	].
+	
+	boxPoints addAll: { 
+		(graphCenter+(bandWidth/2)) @ (yScale scale: q075)."top right"
+		(graphCenter-(bandWidth/2)) @ (yScale scale: q075)."top left" }.
+
+	notched ifTrue: [ 
+		boxPoints addAll: { 
+		(graphCenter-(bandWidth/2))@(yScale scale: medianCIMax).
+		(graphCenter-(notchWidth/2))@(yScale scale: median).
+		(graphCenter-(bandWidth/2))@(yScale scale: medianCIMin). }	
+	].
+	
 	box points: boxPoints.
 	^ box
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> computeMedianLine [
-	| q050 medianLinePoints |
+	| q050 medianLinePoints lineWidth |
 	q050 := statisticalMeasures quartiles second.
 	"graphCenter was already computed in shapesWithCenterAt"
+	lineWidth := bandWidth * notchWidthPercentage.
+	
 	medianLinePoints := { 
-		(graphCenter-(bandWidth/2))@ (yScale scale: q050). 
-		(graphCenter+(bandWidth/2))@ (yScale scale: q050). }.
+		(graphCenter-(lineWidth/2))@ (yScale scale: q050). 
+		(graphCenter+(lineWidth/2))@ (yScale scale: q050). }.
 	medianLine := medianLine controlPoints: medianLinePoints.
 	^ medianLine.
 ]
@@ -177,6 +204,22 @@ RSBoxPlotShape >> computeWhiskers [
 ]
 
 { #category : #accessing }
+RSBoxPlotShape >> confidenceInterval [
+	^ statisticalMeasures confidenceInterval.
+	
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> confidencePercentage [
+	^ medianConfidencePercentage 
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> confidencePercentage: aNumber [
+	medianConfidencePercentage := aNumber.
+]
+
+{ #category : #accessing }
 RSBoxPlotShape >> data [
 	^ self statisticalMeasures data.
 ]
@@ -209,10 +252,20 @@ RSBoxPlotShape >> defaultGraphCenter [
 ]
 
 { #category : #defaults }
+RSBoxPlotShape >> defaultMedianConfidencePercentage [
+	^ 95
+]
+
+{ #category : #defaults }
 RSBoxPlotShape >> defaultMedianLine [
 	^ RSPolyline new
 		width: 2;
 		color: Color black.
+]
+
+{ #category : #defaults }
+RSBoxPlotShape >> defaultNotched [
+	^ false.
 ]
 
 { #category : #defaults }
@@ -260,6 +313,14 @@ RSBoxPlotShape >> initialize [
 	box := self defaultBox.
 	outlier := self defaultOutlier.
 	shouldShowBand := self defaultShouldShowBand.
+	medianConfidencePercentage := self defaultMedianConfidencePercentage.
+	notched := self defaultNotched.
+	notchWidthPercentage := 1.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> iqr [
+	^ statisticalMeasures iqr.
 ]
 
 { #category : #accessing }
@@ -274,14 +335,28 @@ RSBoxPlotShape >> lowerWhisker [
 
 { #category : #accessing }
 RSBoxPlotShape >> maxYValue [
+	| maxValue |
+	maxValue := self upperLimit.
+	notched ifTrue: [ maxValue := maxValue max: self medianConfidenceInterval max ].
 	self hasOutliers 
-		ifTrue: [ ^ (self outlierValues max) max: self upperLimit ]
-		ifFalse: [ ^ self upperLimit ].
+		ifTrue: [ maxValue := maxValue max: (self outlierValues max) ].
+	^ maxValue.
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> median [
 	^ statisticalMeasures median.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> medianConfidenceInterval [
+	^ statisticalMeasures medianConfidenceInterval.
+	
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> medianConfidencePercentage: aNumber [
+	medianConfidencePercentage := aNumber.
 ]
 
 { #category : #accessing }
@@ -291,9 +366,17 @@ RSBoxPlotShape >> medianLine [
 
 { #category : #accessing }
 RSBoxPlotShape >> minYValue [
+	| minValue |
+	minValue := self lowerLimit.
+	notched ifTrue: [ minValue := minValue min: (self medianConfidenceInterval min) ].
 	self hasOutliers 
-		ifTrue: [ ^ (self outlierValues min) min: self lowerLimit ]
-		ifFalse: [ ^ self lowerLimit ].
+		ifTrue: [ minValue := minValue min: (self outlierValues min) ].
+	^ minValue.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> notch: aBoolean [
+	notched := aBoolean
 ]
 
 { #category : #accessing }
@@ -319,6 +402,11 @@ RSBoxPlotShape >> outliers [
 { #category : #accessing }
 RSBoxPlotShape >> outliers: aRSGroupOfRSElipses [
 	outliers := aRSGroupOfRSElipses
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> quartiles [
+	^ statisticalMeasures quartiles.
 ]
 
 { #category : #accessing }
@@ -348,6 +436,7 @@ RSBoxPlotShape >> shapesWithCenterAt: aNumber [
 
 	| band shapes |
 	self graphCenter: aNumber.
+	notched ifTrue: [ notchWidthPercentage := 0.5 ].
 	self computeWhiskers.
 	medianLine := self computeMedianLine.
 	box := self computeBox.
