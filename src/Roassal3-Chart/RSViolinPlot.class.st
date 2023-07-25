@@ -61,13 +61,33 @@ RSViolinPlot class >> data: aCollection [
 ]
 
 { #category : #accessing }
-RSViolinPlot class >> exampleViolinPlot [
+RSViolinPlot class >> example01BasicViolinPlot [
 	| boxPlot1   data1  |
 	data1 := { 12. 12. 13. 14. 15. 24. }.
 	boxPlot1 := self data: data1.
 	boxPlot1 xlabel: 'x axis'.
 	boxPlot1 ylabel: 'y axis'.
 	^ boxPlot1 open.
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
+
+	| boxPlot1 |
+	boxPlot1 := self data: {
+			            {6. 8. 7. 5. 7. 11. 9. }.
+			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
+	^ boxPlot1 open
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleStyleColor [
+	| violinPlot data |
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }.}.
+	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	violinPlot color: Color purple translucent.
+	^ violinPlot open.
 ]
 
 { #category : #accessing }
@@ -86,16 +106,6 @@ RSViolinPlot class >> exampleViolinPlotClusters [
 	aRSClusterChart := violinPlotA + violinPlotB.
 	
 	^ aRSClusterChart open.
-]
-
-{ #category : #accessing }
-RSViolinPlot class >> exampleViolinPlotColor [
-	| violinPlot data |
-	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
-	violinPlot := self data: data.
-	violinPlot bandwidth: 3.
-	violinPlot color: Color green.
-	^ violinPlot open.
 ]
 
 { #category : #accessing }
