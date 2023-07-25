@@ -35,7 +35,7 @@ RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 
 { #category : #'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
-	| boxPlot linePlot data x y chart |
+	| boxPlot linePlot data x chart |
 	
 	x := { 1. 2. }.
 	y := { 5. 6. }.
@@ -114,7 +114,7 @@ RSBoxPlotTest >> testBoxPlotCreatedWithData [
 
 { #category : #tests }
 RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
-	| p y window |
+	| p window |
 	y := { 12. 12. 13. 14. 15. 24. }.
 	p := RSBoxPlot data: y.
 	self assert: p boxShapes size equals: 1.
