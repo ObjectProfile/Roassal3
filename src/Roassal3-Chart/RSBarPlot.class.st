@@ -33,6 +33,32 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #examples }
+RSBarPlot class >> exampleClusterBarPlots [
+	| p1 p2 chart data1 data2 x |
+	data1 := {  10. 9. 7 }. "blue"
+	data2	:= { 20. 15. 8 }. "orange"
+	x := { 1. 2. 3. }.
+	p1 := self x: x y: data1.
+	p2 := self x: x y: data2.
+	chart := p1 "+ p2".
+	^ chart open.
+]
+
+{ #category : #examples }
+RSBarPlot class >> exampleClusterBarPlots4Bars [
+	| p1 p2 chart data1 data2 x p3 p4|
+	data1 := {  10. 9. 7 }. "blue"
+	data2	:= { 20. 15. 8 }. "orange"
+	x := { 1. 2. 3. }.
+	p1 := self x: x y: data1.
+	p2 := self x: x y: data2.
+	p3 := self x: x y: data1.
+	p4 := self x: x y: data2.
+	chart := p1 "+ p2 + p3 + p4".
+	^ chart open.
+]
+
 { #category : #accessing }
 RSBarPlot >> barScale [
 	^ xScale
@@ -45,9 +71,9 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	super beforeRenderingIn: aChart.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		            domain: xValues;
-		            rangeBands: xScale range padding: gapRatio.
-	aChart xScale: barScale
+		domain: xValues;
+		rangeBands: xScale range padding: gapRatio.
+	aChart xScale: barScale.
 ]
 
 { #category : #accessing }
@@ -61,6 +87,11 @@ RSBarPlot >> bottom: aCollection [
 		assert: xValues size = aCollection size
 		description: 'Invalid size'.
 	bottom := aCollection
+]
+
+{ #category : #testing }
+RSBarPlot >> canHandleCluster [
+	^ true
 ]
 
 { #category : #hooks }
@@ -94,4 +125,14 @@ RSBarPlot >> isVerticalBarPlot [
 { #category : #hooks }
 RSBarPlot >> modelFor: aPoint [
 	^ aPoint y
+]
+
+{ #category : #hooks }
+RSBarPlot >> numberOfBands [
+	| bandScale |
+	self beforeRenderingIn: chart.
+	bandScale := NSOrdinalScale new
+		domain: xValues;
+		rangeBands: xScale range padding: gapRatio.
+	^ bandScale range size.
 ]

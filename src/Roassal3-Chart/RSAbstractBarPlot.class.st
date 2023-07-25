@@ -31,6 +31,16 @@ RSAbstractBarPlot class >> isAbstract [
 ]
 
 { #category : #accessing }
+RSAbstractBarPlot >> bandsOffset: aNumber [
+	self barOffset: aNumber.
+]
+
+{ #category : #accessing }
+RSAbstractBarPlot >> bandsWidth: barWidthInScaleRangeUnits [
+	self barSize: barWidthInScaleRangeUnits.
+]
+
+{ #category : #accessing }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
 ]

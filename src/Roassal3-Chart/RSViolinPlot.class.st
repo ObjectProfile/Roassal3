@@ -45,57 +45,73 @@ Class {
 	#name : #RSViolinPlot,
 	#superclass : #RSAbstractPlot,
 	#instVars : [
-		'kernelDensity',
-		'densityAreaPoints',
-		'densityArea',
-		'statisticalMeasures',
-		'boxPoints',
-		'box',
-		'medianLinePoints',
-		'centerLinePoints',
-		'centerLine',
-		'boxWidth',
-		'outlierPoints',
-		'medianLine',
-		'outliers'
+		'violinShapes',
+		'offset',
+		'bandWidth'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
 RSViolinPlot class >> data: aCollection [
-	| densityPlot |
-	densityPlot := self new.
-	densityPlot data: aCollection.
-	^ densityPlot
+	| boxPlot |
+	boxPlot := self new.
+	boxPlot data: aCollection.
+	^ boxPlot
 ]
 
-{ #category : #examples }
-RSViolinPlot class >> exampleBasicViolinPlot [
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlot [
+	| boxPlot1   data1  |
+	data1 := { 12. 12. 13. 14. 15. 24. }.
+	boxPlot1 := self data: data1.
+	boxPlot1 xlabel: 'x axis'.
+	boxPlot1 ylabel: 'y axis'.
+	^ boxPlot1 open.
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotClusters [
+	| violinPlotA violinPlotB data aRSClusterChart |
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
+	
+	violinPlotA := self data: data.
+	violinPlotA bandwidth: 3.
+	"violinPlotA color: Color green."
+	
+	violinPlotB := self data: data.
+	violinPlotB bandwidth: 3.
+	"violinPlotB color: Color red."
+	
+	aRSClusterChart := violinPlotA + violinPlotB.
+	
+	^ aRSClusterChart open.
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotColor [
 	| violinPlot data |
-	data := #(10 20 30 40 40 50).
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
 	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	violinPlot color: Color green.
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
-RSViolinPlot class >> exampleViolinPlotDataDomainDiffOf100 [
+{ #category : #accessing }
+RSViolinPlot class >> exampleViolinPlotColors [
 	| violinPlot data |
-	data := { 100. 200. 300. 400. 500. 600. }.
+	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
 	violinPlot := self data: data.
+	violinPlot bandwidth: 3.
+	violinPlot colors: { Color green. Color blue }.
+	
+	"TO DO: Split violinShapes in compute and a defaultDensityArea"
+	"violinPlot violinShapes first densityArea border: (RSBorder new color: Color red; dashArray: {4.})."
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
-RSViolinPlot class >> exampleViolinPlotSettingBandwidth [
-	| violinPlot data |
-	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
-	violinPlot := self data: data.
-	violinPlot bandwidth: 5.
-	^ violinPlot open.
-]
-
-{ #category : #examples }
+{ #category : #accessing }
 RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	| violinPlot data |
 	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
@@ -104,210 +120,114 @@ RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
-RSViolinPlot class >> exampleViolinWithLabels [
-	| violinPlot data |
-	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
-	violinPlot := self data: data.
-	violinPlot
-		bandwidth: 3;
-		title: 'This is a RSViolinPlot';
-		xlabel: 'Data frequency (distribution)';
-		ylabel: 'Data domain'.
-	^ violinPlot open.
+{ #category : #rendering }
+RSViolinPlot >> bandsOffset: aNumberInRange [
+	offset := aNumberInRange
 ]
 
-{ #category : #accessing }
-RSViolinPlot class >> kernelDensity: anRSKernelDensity [
-	| densityPlot |
-	densityPlot := self new.
-	densityPlot kernelDensity: anRSKernelDensity.
-	^ densityPlot
+{ #category : #rendering }
+RSViolinPlot >> bandsWidth: aNumber [
+	bandWidth := aNumber.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> area [
-	^ densityArea
-]
-
-{ #category : #accessing }
-RSViolinPlot >> areaColor [
-	^ self computeColor.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> bandwidth [
-	^ kernelDensity bandwidth.
-	
-]
-
-{ #category : #accessing }
+{ #category : #rendering }
 RSViolinPlot >> bandwidth: aNumber [
-	kernelDensity bandwidth: aNumber.
-	self computeState.
+	self kernelBandwidth: aNumber.
 ]
 
-{ #category : #private }
-RSViolinPlot >> box [
-	^ box.
+{ #category : #rendering }
+RSViolinPlot >> beforeRenderingIn: aChart [
+	| bandScale |
+	super beforeRenderingIn: aChart.
+	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
+	bandScale := NSScale ordinal
+		domain: xValues;
+		rangeBands: { 0. aChart extent x. }.
+	aChart xScale: bandScale.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> boxWidth [
-	^ boxWidth.
+{ #category : #rendering }
+RSViolinPlot >> boxes [
+	^ RSGroup new addAll: (violinShapes collect: [ :violin | violin box ]); yourself.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> centerLine [
-	^ centerLine
+{ #category : #rendering }
+RSViolinPlot >> buildChart [
+	chart add: self.
+	chart
+		extent: 360 @ 300;
+		padding: 15.
+	^ chart
 ]
 
-{ #category : #private }
-RSViolinPlot >> computeBoxPoints [
-	| q025 q050 q075 quartiles upperLimit lowerLimit |
-	quartiles := statisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q050 := quartiles at: 2.
-	q075 := quartiles at: 3.
-	upperLimit := statisticalMeasures upperLimit.
-	lowerLimit := statisticalMeasures lowerLimit.
-	boxWidth := (xValues max - xValues min) * 0.10.
-	boxPoints := {(0-(boxWidth/2))@q025. (boxWidth/2)@q025. (boxWidth/2)@q075. (0-(boxWidth/2))@q075}.
-	medianLinePoints := { (0-(boxWidth/2))@q050. (boxWidth/2)@q050. }.
-	centerLinePoints := { 0@upperLimit. 0@lowerLimit. }.
-	outlierPoints := statisticalMeasures outliers collect: [ :y | 0@y ].
+{ #category : #initialization }
+RSViolinPlot >> canHandleCluster [
+	^ true
 ]
 
-{ #category : #private }
-RSViolinPlot >> computeDensityAreaPoints [
-	| densityCurve |
-	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
-	densityAreaPoints := densityCurve copy.
-	densityCurve reversed do: [ :point | densityAreaPoints add: ((point x * -1) @ point y) ].
+{ #category : #rendering }
+RSViolinPlot >> colors: collectionOfColors [
+	violinShapes doWithIndex: [ :violinShape :idx | violinShape color: (collectionOfColors at: idx) ].
+]
+
+{ #category : #rendering }
+RSViolinPlot >> computeBandsOffset [
+	violinShapes doWithIndex: [ :boxShape :idx |
+		boxShape bandOffset: (xScale scale: (xValues at: idx)) + offset
+	].
+]
+
+{ #category : #rendering }
+RSViolinPlot >> computeBandsWidth [
+	violinShapes do: [ :boxShape | boxShape bandWidth: bandWidth ].
+]
+
+{ #category : #initialization }
+RSViolinPlot >> computeDefualtXTicks [
+	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfViolins) ].
 ]
 
 { #category : #initialization }
 RSViolinPlot >> computeState [
-	self computeDensityAreaPoints.
 	self computeXValues.
-	self computeBoxPoints.
 	self computeYValues.
+	self computeDefualtXTicks.
+]
+
+{ #category : #rendering }
+RSViolinPlot >> computeXValues [
+	xValues := (1 to: self numberOfViolins).
 ]
 
 { #category : #initialization }
-RSViolinPlot >> computeXValues [
-	| xs xMax xMin |
-	xs := densityAreaPoints collect: [ :point | point x ].
-	xMax := xs max.
-	xMin := xs min.
-	xValues := {xMin*self defaultAreaMarginRatio. xMax*self defaultAreaMarginRatio. }.
-]
-
-{ #category : #private }
 RSViolinPlot >> computeYValues [
-	| densityCurve yMax yMin maxOutlier minOutlier densityCurveYs upperLimit diff margin |
-	outliers := statisticalMeasures outliers.
-	maxOutlier := 0.
-	minOutlier := 0.
-	(outliers isNotEmpty) ifTrue: [ 
-		maxOutlier := outliers max.
-		minOutlier := outliers min.
-	].
-	upperLimit := statisticalMeasures upperLimit.
-	densityCurve := (kernelDensity densityCurve) collect: [:point | (point y @ point x)].
-	densityCurveYs := densityCurve collect: [ :point | point y ].
-	yMax := ((statisticalMeasures upperLimit) max: (densityCurveYs max)) max: maxOutlier.
-	yMin := ((statisticalMeasures lowerLimit) min: (densityCurveYs min)) min: minOutlier.
-	diff := yMax - yMin.
-	margin := 0.1*diff.
-	yValues := {yMin-margin. yMax+margin.}.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> createBox [
-	box :=  RSPolygon new.
-	box points: (boxPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	box color: Color white.
-	box borderColor: Color black.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> createCenterLine [
-	centerLine := RSPolyline new.
-	centerLine := centerLine controlPoints: (centerLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
-	centerLine width: 1.25.
-	centerLine color: Color black.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> createDensityArea [
-	densityArea := self shape copy.
-	densityArea color: self computeColor.
-	densityArea points: (densityAreaPoints collect: [ :aPoint | self scalePoint: aPoint ]).
-	densityArea borderColor: Color black.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> createMedianLine [
-	medianLine := RSPolyline new.
-	medianLine := medianLine controlPoints: (medianLinePoints collect: [ :aPoint | 
-		self scalePoint: aPoint 
-	]).
-	medianLine width: 2.
-	medianLine color: Color black.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> createOutliers [
-	outliers := outlierPoints collect: [ :point | self scalePoint: point ].
-	outliers := outliers collect: [ :out |
-			| e |
-			e := RSEllipse new
-			radius: 2;
-			color: Color black;
-			yourself.
-			e translateTo: out.
-	] as: RSGroup.
+	| yMax yMin |
+	yMax := (violinShapes collect: [ :violinShape | violinShape maxYValue ]) max.
+	yMin := (violinShapes collect: [ :violinShape | violinShape minYValue ]) min.
+	yValues := {yMin. yMax.}.
 ]
 
 { #category : #accessing }
 RSViolinPlot >> createdShapes [
-	^ { densityArea. box. medianLine. centerLine. outliers. }
+	^ violinShapes
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> data [
-	^ kernelDensity data.
-]
-
-{ #category : #accessing }
+{ #category : #rendering }
 RSViolinPlot >> data: aCollection [
-	kernelDensity data: aCollection.
-	self statisticalMeasures: (RSStatisticalMeasures data: self data).
+	| collectionOfDatasets |
+	
+	"if is not a collection of collections. transform in a collection of collections"
+	collectionOfDatasets := aCollection first isCollection
+		                        ifFalse: [ { aCollection } ]
+		                        ifTrue: [ aCollection ].
+	self violinShapes: (collectionOfDatasets collect: [ :dataSet | RSViolinPlotShape data: dataSet]).
+	"self computeBoxGraphicsCenters."
 	self computeState.
 ]
 
-{ #category : #defaults }
-RSViolinPlot >> defaultAreaColor [
-	^ densityArea color.
-	
-]
-
-{ #category : #defaults }
-RSViolinPlot >> defaultAreaMarginRatio [
-	^ 1.5.
-]
-
-{ #category : #defaults }
-RSViolinPlot >> defaultKernelDensity [
-	^ RSKernelDensity new.
-]
-
-{ #category : #defaults }
-RSViolinPlot >> defaultLineColor [
-	^ Color r:117 g:107 b:177 range: 255.
+{ #category : #rendering }
+RSViolinPlot >> defaultBandsWidth [
+	^ xScale scale: 1
 ]
 
 { #category : #'accessing - defaults' }
@@ -316,97 +236,46 @@ RSViolinPlot >> defaultShape [
 		noPaint.
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> densityArea [
-	^ densityArea.
-]
-
-{ #category : #defaults }
-RSViolinPlot >> densityAreaPoints [
-	^ densityAreaPoints.
-	
-]
-
-{ #category : #private }
-RSViolinPlot >> errorMargin: aFloat [
-	kernelDensity errorMargin: aFloat.
+{ #category : #rendering }
+RSViolinPlot >> kernelBandwidth: aNumber [
+	violinShapes do: [ :violin | violin kernelBandwidth: aNumber ].
 	self computeState.
 ]
 
-{ #category : #initialization }
-RSViolinPlot >> initialize [
-	super initialize.
-	kernelDensity := self defaultKernelDensity.
+{ #category : #rendering }
+RSViolinPlot >> numberOfBands [
+	^ self numberOfViolins
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> kde: aNumber [
-	^ kernelDensity kde: aNumber.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> kernel [
-	^ kernelDensity kernel.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> kernel: anRSKernelFunction [
-	kernelDensity kernel: anRSKernelFunction.
-	self computeState.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> kernelDensity [
-	^ kernelDensity.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> kernelDensity: anRSKernelDensity [
-	kernelDensity := anRSKernelDensity.
-	self computeState.
-]
-
-{ #category : #accessing }
-RSViolinPlot >> median [
-	^ statisticalMeasures median.
-]
-
-{ #category : #private }
-RSViolinPlot >> medianLine [
-	^ medianLine.
-]
-
-{ #category : #private }
-RSViolinPlot >> outlierPoints [
-	^ outlierPoints.
-]
-
-{ #category : #private }
-RSViolinPlot >> outliers [
-	^ outliers.
+{ #category : #rendering }
+RSViolinPlot >> numberOfViolins [
+	^ violinShapes size
 ]
 
 { #category : #rendering }
 RSViolinPlot >> renderIn: canvas [
 	super renderIn: canvas.
-	self createDensityArea.
-	canvas add: densityArea.
-	self createCenterLine.
-	canvas add: centerLine.	
-	self createBox.
-	canvas add: box.
-	self createMedianLine.
-	canvas add: medianLine.
-	self createOutliers.
-	canvas addAll: outliers.
+	offset ifNil: [ offset := 1 ].
+	self computeBandsOffset.
+	
+	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
+	self computeBandsWidth.
+	
+	violinShapes doWithIndex: [ :aRSBoxPlotShape :idx |
+		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
+		aRSBoxPlotShape scales: {
+				self xScale.
+				self yScale }.
+		aRSBoxPlotShape renderIn: canvas ]
 ]
 
-{ #category : #accessing }
-RSViolinPlot >> statisticalMeasures: aRSStatisticalMeasures [
-	statisticalMeasures := aRSStatisticalMeasures.
+{ #category : #rendering }
+RSViolinPlot >> violinShapes [
+	^ violinShapes
 ]
 
-{ #category : #private }
-RSViolinPlot >> upperWhiskerLimit [
-	^ statisticalMeasures upperLimit.
+{ #category : #rendering }
+RSViolinPlot >> violinShapes: collectionOfRSViolinPlotShapes [
+	violinShapes := collectionOfRSViolinPlotShapes
+	
 ]

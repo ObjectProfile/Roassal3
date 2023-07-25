@@ -14,6 +14,19 @@ RSStatisticalMeasuresTest >> testBasicStatisticalMeasures [
 ]
 
 { #category : #tests }
+RSStatisticalMeasuresTest >> testConfidenceInterval [
+
+	| median iqr data sm|
+	data := { 30. 37. 36. 43. 42. 43. 43. 46. 41. 42 }.
+	sm := RSStatisticalMeasures data: data.
+	median := sm median.
+	iqr := sm iqr.
+	self assert: median closeTo: 42.
+	self assert: sm confidenceInterval max equals: 46.
+	self assert: sm confidenceInterval min equals: 30.
+]
+
+{ #category : #tests }
 RSStatisticalMeasuresTest >> testGetInterQuartileRange [
 	| statisticalMeasures data |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
@@ -26,7 +39,7 @@ RSStatisticalMeasuresTest >> testGetLowerLimit [
 	| statisticalMeasures data |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures lowerLimit closeTo: -27.
+	self assert: statisticalMeasures lowerLimit closeTo: 6.
 ]
 
 { #category : #tests }
@@ -98,6 +111,6 @@ RSStatisticalMeasuresTest >> testOutliers [
 	| statisticalMeasures data |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	statisticalMeasures := RSStatisticalMeasures data: data.
-	self assert: statisticalMeasures upperLimit closeTo: 19.5.
+	self assert: statisticalMeasures upperLimit closeTo: 15.
 	self assert: statisticalMeasures outliers closeTo: #(24).
 ]

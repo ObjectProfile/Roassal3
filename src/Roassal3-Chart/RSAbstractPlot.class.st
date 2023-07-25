@@ -30,10 +30,27 @@ RSAbstractPlot class >> isAbstract [
 	^ self == RSAbstractPlot
 ]
 
+{ #category : #'instance creation' }
+RSAbstractPlot class >> x: collectionX y: collectionY [
+	^ self new 
+		x: collectionX y: collectionY;
+		yourself.
+]
+
 { #category : #accessing }
-RSAbstractPlot >> addShape: aShape [
-	"Add a shape to the canvas"
-	self container add: aShape
+RSAbstractPlot >> + aRSPlot [
+	| newChart |
+	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ]) 
+		ifTrue: [ RSClusterChart new ]
+		ifFalse: [ RSCompositeChart new ].
+	newChart add: self.
+	newChart add: aRSPlot.
+	^ newChart.
+]
+
+{ #category : #adding }
+RSAbstractPlot >> addedIn: aRSChart [
+	aRSChart addPlot: self
 ]
 
 { #category : #rendering }
@@ -41,6 +58,11 @@ RSAbstractPlot >> beforeRenderingIn: aChart [
 
 	self createXScale.
 	self createYScale
+]
+
+{ #category : #testing }
+RSAbstractPlot >> canHandleCluster [
+	^ false
 ]
 
 { #category : #accessing }
@@ -122,6 +144,11 @@ RSAbstractPlot >> initialize [
 { #category : #testing }
 RSAbstractPlot >> isBarPlot [
 
+	^ false
+]
+
+{ #category : #testing }
+RSAbstractPlot >> isBoxPlot [
 	^ false
 ]
 

@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'data',
-		'quantile'
+		'quantile',
+		'confidencePercentage'
 	],
 	#category : #'Roassal3-Chart-Statistics'
 }
@@ -14,7 +15,26 @@ RSStatisticalMeasures class >> data: aDataset [
 	statisticalMeasures := self new.
 	statisticalMeasures data: aDataset.
 	statisticalMeasures quantile: statisticalMeasures defaultQuantile.
+	statisticalMeasures confidencePercentage: 95.
 	^ statisticalMeasures
+]
+
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> confidenceInterval [
+	| confidenceProbability |
+	confidenceProbability := confidencePercentage / 100.
+	^ { quantile compute: (1-confidenceProbability). quantile compute: confidenceProbability. }
+]
+
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> confidencePercentage [
+	^ confidencePercentage
+]
+
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> confidencePercentage: aPercentage [
+
+	confidencePercentage := aPercentage
 ]
 
 { #category : #accessing }
@@ -42,13 +62,22 @@ RSStatisticalMeasures >> interQuartileRange [
 ]
 
 { #category : #'accessing - computed' }
+RSStatisticalMeasures >> iqr [
+	| q1 q3 |
+	q1 := quantile compute: 0.25.
+	q3 := quantile compute: 0.75.
+	^  (q3 - q1)
+]
+
+{ #category : #'accessing - computed' }
 RSStatisticalMeasures >> lowerLimit [
-	| quartiles q1 q3 iqr |
+	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
-	^ q1 - (1.5 * iqr).
+	iqr15 := q1 - (1.5 * iqr).
+	^ (data select: [ :d | d >= iqr15 ]) min.
 ]
 
 { #category : #'accessing - computed' }
@@ -67,6 +96,19 @@ RSStatisticalMeasures >> median [
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> median: aDataset [	
 	^ quantile compute: 0.5.
+]
+
+{ #category : #'accessing - computed' }
+RSStatisticalMeasures >> medianConfidenceInterval [
+	| notchFactors delta median iqr |
+	notchFactors := Dictionary newFrom: {
+			                (90 -> 1.28).
+			                (95 -> 1.57).
+			                (99 -> 1.81) }.
+	iqr := self iqr.
+	delta := (notchFactors at: confidencePercentage) * iqr / (data size sqrt).
+	median := self median.
+	^  { median - delta. median + delta}.
 ]
 
 { #category : #'accessing - computed' }
@@ -112,10 +154,11 @@ RSStatisticalMeasures >> standardDeviation [
 
 { #category : #'accessing - computed' }
 RSStatisticalMeasures >> upperLimit [
-	| quartiles q1 q3 iqr |
+	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
-	^ q3 + (1.5 * iqr).
+	iqr15 := q3 + (1.5 * iqr).
+	^ (data select: [ :d | d <= iqr15 ]) max.
 ]

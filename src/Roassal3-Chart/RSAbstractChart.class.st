@@ -81,7 +81,7 @@ c addDecoration: (RSHorizontalTick new).
 c addDecoration: (RSVerticalTick new).
 c
 ```"
-
+	
 	decorations add: aDecoration.
 	aDecoration chart: self.
 	aDecoration styler: self styler.
@@ -501,6 +501,16 @@ RSAbstractChart >> xSqrt [
 ]
 
 { #category : #decoration }
+RSAbstractChart >> xTickLabels: aCollection [
+	self horizontalTick fromNames: aCollection.
+]
+
+{ #category : #decoration }
+RSAbstractChart >> xTicks: collectionOfNumbers labels: aCollection [
+	self horizontalTick ticks: collectionOfNumbers labels: aCollection.
+]
+
+{ #category : #decoration }
 RSAbstractChart >> xlabel [
 	
 	^ xlabel
@@ -578,6 +588,16 @@ RSAbstractChart >> yScale: aScale [
 { #category : #'public - scales' }
 RSAbstractChart >> ySqrt [
 	^ self yScale: NSScale sqrt
+]
+
+{ #category : #decoration }
+RSAbstractChart >> yTickLabels: aCollection [
+	self verticalTick fromNames: aCollection.
+]
+
+{ #category : #decoration }
+RSAbstractChart >> yTicks: collectionOfNumbers labels: aCollection [
+	self verticalTick ticks: collectionOfNumbers labels: aCollection.
 ]
 
 { #category : #decoration }
