@@ -58,12 +58,12 @@ RSHorizontalTopTick >> isHorizontalTick [
 
 { #category : #accessing }
 RSHorizontalTopTick >> max [
-	^ values max
+	^ values max max: 0
 ]
 
 { #category : #accessing }
 RSHorizontalTopTick >> min [
-	^ values min
+	^ values min min: 0
 ]
 
 { #category : #rendering }
