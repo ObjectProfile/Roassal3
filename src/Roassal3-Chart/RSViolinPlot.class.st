@@ -233,6 +233,11 @@ RSViolinPlot >> borderColor: aColor [
 	self bordersColor: aColor.
 ]
 
+{ #category : #styling }
+RSViolinPlot >> borderColors: aCollectionOfColors [
+	self bordersColors: aCollectionOfColors.
+]
+
 { #category : #accessing }
 RSViolinPlot >> borders [
 	^ violinShapes collect: [ :violin | violin border ].
