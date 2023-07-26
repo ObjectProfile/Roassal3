@@ -170,34 +170,36 @@ RSBlocExamples >> example06Polyline [
 ]
 
 { #category : #examples }
-RSBlocExamples >> example07MouseMove [
-	<script: 'self new example07MouseMove open'>
-
-	| c size circles |
-	c := RSCanvas new.
-	c useBlocHost.
-
+RSBlocExamples >> example07MouseMove [ 
+	< script:	'self new example07MouseMove open' > 
+	| c size circles box |
+	c := self newCanvas.
+	box := RSBox new size: 200.
+	c add: box.
 	size := 200.
-	c addAll: (circles := #(magenta yellow red cyan) collect: [ :sel | 
-	    c add: (RSEllipse new
-	        size: size;
-	        color: ((Color perform: sel) alpha: 0.4 );
-	        yourself).
-	    ]).
+	c addAll: (circles := #( magenta yellow red cyan ) collect: [ :sel | 
+			            c add: (RSEllipse new
+					             size: size;
+					             color: ((Color perform: sel) alpha: 0.4);
+					             yourself) ]).
+	box 
+		when: RSMouseEnter 
+		do: [ :evt | box color: Color random. c signalUpdate ]
+		for: self.
+	c
+		when: RSMouseMove
+		do: [ :evt | 
+			| posOffset negOffset |
+			posOffset := evt position distanceTo: 0 @ 0.
+			negOffset := posOffset negated.
+			circles first position: posOffset @ 0.
+			circles second position: 0 @ posOffset.
+			circles third position: negOffset @ 0.
+			circles fourth position: 0 @ negOffset.
 
-	c when: RSMouseMove do: [ :evt | 
-		| posOffset negOffset |
-	    posOffset := (evt position distanceTo: 0@0).
-	    negOffset := posOffset negated.
-	    circles first position: posOffset @ 0.
-	    circles second position: 0 @ posOffset.
-	    circles third position: negOffset @ 0.
-	    circles fourth position: 0@negOffset.
-
-		c signalUpdate ].
-		
+			c signalUpdate ]
+		for: self.
 	^ c
-
 ]
 
 { #category : #examples }
