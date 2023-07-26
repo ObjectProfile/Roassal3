@@ -204,22 +204,23 @@ RSBlocExamples >> example07MouseMove [
 
 { #category : #examples }
 RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
-	<script: 'self new example08ZoomToFitWhenExtentChangedEvent open'>
-
+<script: 'self new example08ZoomToFitWhenExtentChangedEvent open' >
 	| canvas |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	canvas add: (RSBox new
 			 color: Color blue;
 			 position: 100 asPoint;
-			 size: 5000@3000;
+			 size: 5000 @ 3000;
 			 yourself).
 
-	canvas when: RSExtentChangedEvent do: [ :event |
-		canvas zoomToFit.
-		canvas signalUpdate ].
-	
+	canvas
+		when: RSExtentChangedEvent
+		do: [ :event |
+			canvas zoomToFit.
+			canvas signalUpdate ]
+		for: self.
+
 	^ canvas
 ]
 

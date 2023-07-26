@@ -39,14 +39,9 @@ RSCameraElement >> roassalShape [
 
 { #category : #accessing }
 RSCameraElement >> updateFromCanvasCamera [
-
-	self transformDo: [ :aBuilder | 
-		aBuilder
-			centerOrigin;
-			translateBy: (roassalCanvas extent / 2) asFloatPoint;
-			translateBy: roassalCanvas camera position negated asFloatPoint;
-			scaleBy: roassalCanvas camera scale asFloat;
-			yourself ]
+	| matrix |
+	matrix := roassalCanvas camera originMatrix asBlMatrix.
+	self transformation: (BlElementAbsoluteTransformation matrix: matrix)
 ]
 
 { #category : #accessing }

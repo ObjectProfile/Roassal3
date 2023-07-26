@@ -30,10 +30,13 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 		addEventHandler: elementListener;
 		when: BlElementExtentChangedEvent
 			do: [ :evt | aRSCanvas extent: evt source extent ];
+		when: BlElementAddedToSceneGraphEvent 
+			do: [ :evt |  aRSCanvas extent: evt source extent ];
 		constraintsDo:[ :c |
 			c horizontal matchParent.
 			c vertical matchParent ];
 		syncSignalUpdateFirstTime.
+		
 
 ]
 
