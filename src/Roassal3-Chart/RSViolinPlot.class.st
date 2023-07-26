@@ -60,6 +60,35 @@ RSViolinPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
+{ #category : #accessing }
+RSViolinPlot class >> dataFrame: aDataSeriesOrDataFrame [
+	| violinPlot aDataSeries |
+	violinPlot := self new.
+	aDataSeriesOrDataFrame class = DataSeries 
+		ifTrue: [ aDataSeries := aDataSeriesOrDataFrame ].
+	violinPlot dataSeries: aDataSeries.
+	^ violinPlot
+]
+
+{ #category : #accessing }
+RSViolinPlot class >> dataFrame: aDataFrame x: aColumnNameToCategory y: aColumnNameOfData [
+
+	| categoryNames data violinPlot |
+	data := OrderedCollection new.
+	categoryNames := (aDataFrame column: aColumnNameToCategory)
+		                 uniqueValues sort.
+	categoryNames do: [ :categoryName |
+		| aDataSeries |
+		aDataSeries := (aDataFrame select: [ :row |
+			                (row at: aColumnNameToCategory) = categoryName ])
+			               column: aColumnNameOfData.
+		data add: aDataSeries asArray ].
+	violinPlot := self new.
+	violinPlot data: data.
+	violinPlot xTickLabels: categoryNames.
+	^ violinPlot
+]
+
 { #category : #examples }
 RSViolinPlot class >> example01BasicViolinPlot [
 	| boxPlot1   data1  |
@@ -77,6 +106,25 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 	boxPlot1 := self data: {
 			            {6. 8. 7. 5. 7. 11. 9. }.
 			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
+	^ boxPlot1 open
+]
+
+{ #category : #examples }
+RSViolinPlot class >> example03DataSeries [
+
+	| boxPlot1 toothGrowthDose |
+	toothGrowthDose := (AIDatasets loadToothGrowth) column: 'dose'.
+	boxPlot1 := self dataFrame: toothGrowthDose.
+	^ boxPlot1 open
+]
+
+{ #category : #examples }
+RSViolinPlot class >> example04DataFrame [
+
+	| boxPlot1 toothGrowth |
+	toothGrowth := AIDatasets loadToothGrowth.
+	boxPlot1 := self dataFrame: toothGrowth x: #dose y: #len.
+	"boxPlot1 bandwidth: 2."
 	^ boxPlot1 open
 ]
 
