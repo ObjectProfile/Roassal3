@@ -35,7 +35,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 		title: aTitleAsString;
 		yourself.
 
-	space addChild: self canvasElement.
+	space root addChild: self canvasElement.
 	space show.
 
 	^ space
