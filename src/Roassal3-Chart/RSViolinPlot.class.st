@@ -60,7 +60,7 @@ RSViolinPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSViolinPlot class >> example01BasicViolinPlot [
 	| boxPlot1   data1  |
 	data1 := { 12. 12. 13. 14. 15. 24. }.
@@ -70,7 +70,7 @@ RSViolinPlot class >> example01BasicViolinPlot [
 	^ boxPlot1 open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 
 	| boxPlot1 |
@@ -80,7 +80,74 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 	^ boxPlot1 open
 ]
 
-{ #category : #accessing }
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyleBorder [
+
+	| violinPlot2 data2 |
+	
+	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}.}.
+	
+	violinPlot2 := self data: data2.
+	violinPlot2 borders do: [ :aRSBorder | aRSBorder color: Color red; dashArray: { 4. }. ].
+	
+	^ violinPlot2 open
+]
+
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyleBorderColorOfEachViolin [
+
+	| violinPlot1 data1 |
+	
+	data1 := {{6. 8. 7. 5. 7. 11. 9. }. { 12. 12. 13. 15. 18. 20. 21. 24. }}.
+	
+	violinPlot1 := self data: data1.
+	violinPlot1 borders first color: Color green.
+	violinPlot1 violinShapes last borderColor: Color red.
+	
+	^ violinPlot1 open
+]
+
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyleBorderOfEachViolin [
+
+	| violinPlot2 data2 |
+	
+	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}.}.
+	
+	violinPlot2 := self data: data2.
+	violinPlot2 borders first color: Color red; dashArray: { 4. }. "way 1"
+	violinPlot2 violinShapes last borderColor: Color orange. "way 2"
+	
+	^ violinPlot2 open
+]
+
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyleBordersColor [
+
+	| violinPlot1 data1 |
+	
+	data1 := {{6. 8. 7. 5. 7. 11. 9. }. { 12. 12. 13. 15. 18. 20. 21. 24. }}.
+	
+	violinPlot1 := self data: data1.
+	violinPlot1 bordersColor: Color red.
+	
+	^ violinPlot1 open
+]
+
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyleBordersColors [
+
+	| violinPlot1 data1 |
+	
+	data1 := {{6. 8. 7. 5. 7. 11. 9. }. { 12. 12. 13. 15. 18. 20. 21. 24. }}.
+	
+	violinPlot1 := self data: data1.
+	violinPlot1 bordersColors: {Color red. Color purple.}.
+	
+	^ violinPlot1 open
+]
+
+{ #category : #'examples - styling' }
 RSViolinPlot class >> exampleStyleColor [
 	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -90,7 +157,7 @@ RSViolinPlot class >> exampleStyleColor [
 	^ violinPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSViolinPlot class >> exampleViolinPlotClusters [
 	| violinPlotA violinPlotB data aRSClusterChart |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -108,7 +175,7 @@ RSViolinPlot class >> exampleViolinPlotClusters [
 	^ aRSClusterChart open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSViolinPlot class >> exampleViolinPlotColors [
 	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -121,7 +188,7 @@ RSViolinPlot class >> exampleViolinPlotColors [
 	^ violinPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	| violinPlot data |
 	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
@@ -154,6 +221,38 @@ RSViolinPlot >> beforeRenderingIn: aChart [
 		domain: xValues;
 		rangeBands: { 0. aChart extent x. }.
 	aChart xScale: bandScale.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> borderColor [
+	^ self bordersColor first.
+]
+
+{ #category : #styling }
+RSViolinPlot >> borderColor: aColor [
+	self bordersColor: aColor.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> borders [
+	^ violinShapes collect: [ :violin | violin border ].
+]
+
+{ #category : #accessing }
+RSViolinPlot >> bordersColor [
+	^ self borders collect: [ :border | border color ]
+]
+
+{ #category : #styling }
+RSViolinPlot >> bordersColor: aColor [
+	self borders do: [ :border | border color: aColor].
+]
+
+{ #category : #styling }
+RSViolinPlot >> bordersColors: aCollectionOfColors [
+	| borders |
+	borders := self borders.
+	aCollectionOfColors doWithIndex: [ :aColor :idx | (borders at: idx) color: aColor].
 ]
 
 { #category : #rendering }

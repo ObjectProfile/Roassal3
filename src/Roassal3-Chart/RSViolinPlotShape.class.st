@@ -34,6 +34,16 @@ RSViolinPlotShape >> bandWidth: aNumber [
 	boxPlotShape bandWidth: bandWidth*0.1.
 ]
 
+{ #category : #accessing }
+RSViolinPlotShape >> border [
+	^ densityArea border.
+]
+
+{ #category : #styling }
+RSViolinPlotShape >> borderColor: aColor [
+	^ self border color: aColor.
+]
+
 { #category : #initialization }
 RSViolinPlotShape >> color [
 	^ color
@@ -68,7 +78,8 @@ RSViolinPlotShape >> defaultBoxPlotShape [
 { #category : #defaults }
 RSViolinPlotShape >> defaultDensityArea [
 	^ RSPolygon new
-		noPaint.
+		noPaint
+		borderColor: Color black.
 ]
 
 { #category : #defaults }
@@ -107,8 +118,6 @@ RSViolinPlotShape >> densityArea [
 	
 	
 	densityArea points: densityAreaPoints.
-
-	densityArea borderColor: Color black.
 	densityArea color: color.
 	^ densityArea
 ]
