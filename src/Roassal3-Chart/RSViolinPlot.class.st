@@ -112,11 +112,12 @@ RSViolinPlot class >> exampleStyleBorderOfEachViolin [
 
 	| violinPlot2 data2 |
 	
-	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}.}.
+	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}. {14. 14. 16. 12. 13. 10. 11. 14.}.}.
 	
 	violinPlot2 := self data: data2.
 	violinPlot2 borders first color: Color red; dashArray: { 4. }. "way 1"
-	violinPlot2 violinShapes last borderColor: Color orange. "way 2"
+	violinPlot2 violinShapes second borderColor: Color orange. "way 2"
+	violinPlot2 violinShapes third border color: Color green. "way 3"
 	
 	^ violinPlot2 open
 ]
