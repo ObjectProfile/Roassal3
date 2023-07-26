@@ -32,7 +32,7 @@ RSAbstractControlCanvasInteraction >> computeExpandedRectangle: aCanvas [
 	| rectangle matrix |
 	"we obtains the rectangle in the canvas space".
 	rectangle := self encompassingRectangleFor: aCanvas.
-	matrix := aCanvas camera originMode matrixFor: aCanvas camera.
+	matrix := aCanvas camera originMatrix.
 	
 	"then we convert that to morph coordinates"
 	rectangle := Rectangle encompassing: (rectangle corners 
