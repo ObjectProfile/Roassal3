@@ -241,6 +241,7 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 	        model: cls;
 	        color:( color scale: cls numberOfMethods );
 	        size: cls linesOfCode sqrt + 10;
+				borderColor: Color black;
 	        yourself
 	     ].
 	canvas addAll: shapes.
@@ -443,7 +444,7 @@ RSBlocExamples >> example13Cluster [
 			to: Color red;
 			shapes: shapes;
 			normalize: #numberOfMethods.
-		RSClusterLayout on: shapes.
+		RSClusterTreeLayout on: shapes.
 		RSComposite new
 			color: Color veryLightGray translucent;
 			model: scale;
@@ -500,22 +501,22 @@ RSBlocExamples >> example15BarPlot [
 	| c p x y |
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
-	c := RSChart new.
+	c := RSCompositeChart new.
 	p := RSBarPlot new x: x y: y.
 
-	c addPlot: p.
+	c add: p.
 	
-	c addDecoration: (RSHorizontalTick new 
+	c horizontalTick
 		doNotUseNiceLabel;
 		numberOfTicks: x size - 1;
-		asFloat).
+		asFloat.
 	c xlabel: 'X Axis'.
-	c addDecoration: (RSVerticalTick new 
+	c verticalTick
 		numberOfTicks: 10;
-		asFloat).
+		asFloat.
 	c ylabel: 'Y Axis'.
 	c title: 'Histogram'.
-
+	c build.
 	c canvas useBlocHost.
 	^ c canvas
 ]
@@ -535,13 +536,12 @@ RSBlocExamples >> example16Histogram [
 		RSSturgesBinning new.
 	 } collect: [ :strat | | g c plot |
 		g := RSGroup new.
-		c := RSChart new.
+		c := RSCompositeChart new.
 		c container: g.
 		y := x collect: [ :v | strat computeNumberOfBinsFor: (Array new: v) ].
 		plot := RSLinePlot new x: x y: y.
-		c addPlot: plot.
-		c addDecoration: RSVerticalTick new doNotUseNiceLabel.
-		c addDecoration: RSHorizontalTick new.
+		c add: plot.
+		c verticalTick doNotUseNiceLabel.
 		c title: strat class name. 
 		c build.
 		g asShapeFor: strat.
@@ -556,111 +556,115 @@ RSBlocExamples >> example16Histogram [
 
 { #category : #examples }
 RSBlocExamples >> example17MouseMoveEllipse [
-	<script: 'self new example17MouseMoveEllipse open'>
-	| c border circleResolution angle a b radius p |
-	c := RSCanvas new.
-	c useBlocHost.
-	c color: Color white.
-	border := RSBorder new color: (Color colorFrom: '002800').
-	b := 1.
-	radius := 200.
-	c when: RSMouseMove do: [ :evt | 
-		circleResolution := b.
-		circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
-		angle := Float twoPi / circleResolution.
-		p := evt position abs.
-		a := 175 * p x / c extent x.
-		b := 200 * p y / c extent y.
-		c shapes copy do: #remove.
-		0 to: circleResolution do: [ :i |
-			c addShape: (RSEllipse new 
-				color: Color transparent;
-				rotateByDegrees: 45;
-				border: border;
-				extent: ((angle * i) cos @ (angle * i) sin) * radius + a
-			)].
-		
-		c signalUpdate.
-		 ].
-	^ c
+
+	         <script: 'self new example17MouseMoveEllipse open'>
+	         | c border circleResolution angle a b radius p |
+	         c := RSCanvas new.
+	         c useBlocHost.
+	         c color: Color white.
+	         border := RSBorder new color: (Color colorFrom: '002800').
+	         b := 1.
+	         radius := 200.
+	         c
+		         when: RSMouseMove
+		         do: [ :evt |
+			         circleResolution := b.
+			         circleResolution isZero ifTrue: [ circleResolution := 0.1 ].
+			         angle := Float twoPi / circleResolution.
+			         p := evt position abs.
+			         a := 175 * p x / c extent x.
+			         b := 200 * p y / c extent y.
+			         c shapes copy do: #remove.
+			         0 to: circleResolution do: [ :i |
+				         c addShape: (RSEllipse new
+						          color: Color transparent;
+						          rotateByDegrees: 45;
+						          border: border;
+						          extent: (angle * i) cos @ (angle * i) sin * radius + a) ].
+
+			         c signalUpdate ]
+		         for: self.
+	         ^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example18MouseMoveLine [
-	<script: 'self new example18MouseMoveLine open'>
- 	| c rotate size angle |
-	c := RSCanvas new.
-	c useBlocHost.
-	angle := 0.
-	size := 0.
-	rotate := [ :point | | cos sin p |
-		cos := angle cos.
-		sin := angle sin.
-		"origin"
-		p := point - ((size @ size)/2).
-		"rotated"
-		((p x * cos) - (p y * sin))@((p y * cos) + (p x * sin))
-	].
-	c when: RSMouseMove do: [ :evt | 
-		size := evt position distanceTo: 0@0.
-		angle := evt position angle + 135 degreesToRadians.
-		c shapes copy do: #remove.
-		size := size asInteger.
-		(0 to: size by: 3) do: [ :k |
-			| a b |
-			a := rotate value: k @ 0.
-			b := rotate value: 0 @ (size - k).
-			c addShape: (RSLine new
-				startPoint: a;
-				endPoint: b;
-				yourself).
-		 ].
-		c signalUpdate.
-	].
-	
-	^ c
+
+	         <script: 'self new example18MouseMoveLine open'>
+	         | c rotate size angle |
+	         c := RSCanvas new.
+	         c useBlocHost.
+	         angle := 0.
+	         size := 0.
+	         rotate := [ :point |
+	                   | cos sin p |
+	                   cos := angle cos.
+	                   sin := angle sin.
+	                   "origin"
+	                   p := point - (size @ size / 2).
+	                   "rotated"
+	                   p x * cos - (p y * sin)
+	                   @ (p y * cos + (p x * sin)) ].
+	         c
+		         when: RSMouseMove
+		         do: [ :evt |
+			         size := evt position distanceTo: 0 @ 0.
+			         angle := evt position angle + 135 degreesToRadians.
+			         c shapes copy do: #remove.
+			         size := size asInteger.
+			         (0 to: size by: 3) do: [ :k |
+				         | a b |
+				         a := rotate value: k @ 0.
+				         b := rotate value: 0 @ (size - k).
+				         c addShape: (RSLine new
+						          startPoint: a;
+						          endPoint: b;
+						          yourself) ].
+			         c signalUpdate ]
+		         for: self.
+
+	         ^ c
 ]
 
 { #category : #examples }
 RSBlocExamples >> example19Animation [
-	<script: 'self new example19Animation open'>
 
-	| canvas label continueMessage pauseMessage |
-	continueMessage := 'Click to pause'.
-	pauseMessage := 'Double-click to continue'.
+	         <script: 'self new example19Animation open'>
+	         | canvas label continueMessage pauseMessage |
+	         continueMessage := 'Click to pause'.
+	         pauseMessage := 'Double-click to continue'.
 
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	         canvas := RSCanvas new.
+	         canvas useBlocHost.
 
-	label := RSLabel new
-		text: continueMessage;
-		fontSize: 40;
-		withBorder.
-	canvas addShape: label.
-	
-	canvas newAnimation
-		repeat;
-		ramp: { 
-		 	0 -> (0@0).
-			0.25 -> (200@180).
-			0.75 -> (-200@ -80).
-			1 -> (0@0)};
-		on: label set: #position:.
-	
-	canvas 
-		when: RSMouseClick
-		do: [
-			canvas animations do: #pause.
-			label
-				text: pauseMessage.
-			canvas signalUpdate ];
-		when: RSMouseDoubleClick
-		do: [
-			canvas animations do: #continue.
-			label text: continueMessage.
-			canvas signalUpdate  ].
+	         label := RSLabel new
+		                  text: continueMessage;
+		                  fontSize: 40;
+		                  withBorder.
+	         canvas addShape: label.
 
-	^ canvas
+	         canvas newAnimation
+		         repeat;
+		         ramp: {
+				         (0 -> (0 @ 0)).
+				         (0.25 -> (200 @ 180)).
+				         (0.75 -> (-200 @ -80)).
+				         (1 -> (0 @ 0)) };
+		         on: label set: #position:.
+
+	         canvas
+		         when: RSMouseClick do: [
+			         canvas animations do: #pause.
+			         label text: pauseMessage.
+			         canvas signalUpdate ]
+		         for: self;
+		         when: RSMouseDoubleClick do: [
+			         canvas animations do: #continue.
+			         label text: continueMessage.
+			         canvas signalUpdate ]
+		         for: self.
+
+	         ^ canvas
 ]
 
 { #category : #examples }
@@ -703,107 +707,126 @@ RSBlocExamples >> example20BoxWindmill [
 
 { #category : #examples }
 RSBlocExamples >> example21BoxesLineCircles [
-	<script: 'self new example21BoxesLineCircles open'>
-	| canvas extent r movingShapes position alpha update updateLine lineX verticalLine |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
-	
-	r := Random new.
-	movingShapes := (1 to: 12) collect: [ :i | 
-		RSBox new
-			model: r next;
-			noPaint;
-			border: (RSBorder new width: 4; color: Color black; yourself);
-			yourself].
-	canvas addAll: movingShapes.
-	RSNormalizer size
-		from: 30;
-		to: 100;
-		shapes: movingShapes;
-		normalize: #yourself.
 
-	"Vertical line"
-	lineX := 0.
-	verticalLine := RSLine new
-		color: Color red;
-		width: 8;
-		yourself;
-		startPoint: 1@0;
-		endPoint: 0@0;
-		yourself.
-	canvas add: verticalLine. 
-	position := nil.
-	updateLine := [
-		verticalLine 
-			startPoint: lineX@position from y;
-			endPoint: lineX@position to y.
-			
-			Time now trace.
-			#updateLine traceCr.
+	         <script: 'self new example21BoxesLineCircles open'>
+	         | canvas extent r movingShapes position alpha update updateLine lineX verticalLine |
+	         canvas := RSCanvas new.
+	         canvas useBlocHost.
 
-			"TODO"
-			canvas signalUpdate.
-			 ].
-	canvas when: RSMouseMove do: [ :evt | 
-		lineX := evt position x.
-		updateLine value ].
-	update := [ 
-		extent := canvas extent.
-		position := NSScale linear
-			range: { extent / -2. extent /2 }.
-		updateLine value.
-		movingShapes do: [ :each |
-			each translateTo: (position scale: r next @ r next) ].
-	].
-	update value.
-	canvas when: RSExtentChangedEvent do: update.
-	
-	"Shadows"
-	alpha := NSScale linear domain: #(1 4); range: #(0.4 0.05); yourself.
-	movingShapes do: [ :each | | ant |
-		ant := each.
-		1 to: 4 do: [ :i | | s |
-			s := RSBox new 
-				noPaint;
-				position: each position;
-				extent: each extent;
-				border: (RSBorder new
-					width: 6;
-					color: (each border color alpha: (alpha scale: i));
-					yourself);
-				yourself.
-			ant when: RSPositionChangedEvent do: [ :evt | 
-				s translateTo: evt oldPosition ].
-			ant := s.
-			canvas add: s ] ].
+	         r := Random new.
+	         movingShapes := (1 to: 12) collect: [ :i |
+		                         RSBox new
+			                         model: r next;
+			                         noPaint;
+			                         border: (RSBorder new
+					                          width: 4;
+					                          color: Color black;
+					                          yourself);
+			                         yourself ].
+	         canvas addAll: movingShapes.
+	         RSNormalizer size
+		         from: 30;
+		         to: 100;
+		         shapes: movingShapes;
+		         normalize: #yourself.
 
-	"Move horizontally the shapes"
-	canvas newAnimation repeat; onStepDo: [ :t | 
-		| round empty |
-		round := RSCornerRadius new radius: 100; yourself.
-		empty := RSCornerRadius new.
+	         "Vertical line"
+	         lineX := 0.
+	         verticalLine := RSLine new
+		                         color: Color red;
+		                         width: 8;
+		                         yourself;
+		                         startPoint: 1 @ 0;
+		                         endPoint: 0 @ 0;
+		                         yourself.
+	         canvas add: verticalLine.
+	         position := nil.
+	         updateLine := [
+	                       verticalLine
+		                       startPoint: lineX @ position from y;
+		                       endPoint: lineX @ position to y.
 
-		movingShapes do: [ :each |
-			| delta newX |
-			delta := each propertyAt: #delta ifAbsentPut: [ 5 ].
-			newX := each position x + delta.
-			(newX between: position from x and: position to x) 
-				ifFalse: [ 
-					delta := delta negated.
-					newX := each position x + delta ].
-			each translateTo: newX@each position y.
-			each propertyAt: #delta put: delta ].
+	                       Time now trace.
+	                       #updateLine traceCr.
 
-		canvas nodes copy do: [ :each | | corner |
-			corner := each position x > lineX 
-				ifTrue: [ round ]
-				ifFalse: [ empty ].
-			each cornerRadius: corner ].
+	                       "TODO"
+	                       canvas signalUpdate ].
+	         canvas
+		         when: RSMouseMove
+		         do: [ :evt |
+			         lineX := evt position x.
+			         updateLine value ]
+		         for: self.
+	         update := [
+	                   extent := canvas extent.
+	                   position := NSScale linear range: {
+			                               (extent / -2).
+			                               (extent / 2) }.
+	                   updateLine value.
+	                   movingShapes do: [ :each |
+		                   each translateTo:
+			                   (position scale: r next @ r next) ] ].
+	         update value.
+	         canvas when: RSExtentChangedEvent do: update for: self.
 
-		canvas signalUpdate ].
+	         "Shadows"
+	         alpha := NSScale linear
+		                  domain: #( 1 4 );
+		                  range: #( 0.4 0.05 );
+		                  yourself.
+	         movingShapes do: [ :each |
+		         | ant |
+		         ant := each.
+		         1 to: 4 do: [ :i |
+			         | s |
+			         s := RSBox new
+				              noPaint;
+				              position: each position;
+				              extent: each extent;
+				              border: (RSBorder new
+						               width: 6;
+						               color:
+							               (each border color alpha: (alpha scale: i));
+						               yourself);
+				              yourself.
+			         ant
+				         when: RSPositionChangedEvent
+				         do: [ :evt | s translateTo: evt oldPosition ]
+				         for: self.
+			         ant := s.
+			         canvas add: s ] ].
 
-	^ canvas
+	         "Move horizontally the shapes"
+	         canvas newAnimation
+		         repeat;
+		         onStepDo: [ :t |
+			         | round empty |
+			         round := RSCornerRadius new
+				                  radius: 100;
+				                  yourself.
+			         empty := RSCornerRadius new.
 
+			         movingShapes do: [ :each |
+				         | delta newX |
+				         delta := each propertyAt: #delta ifAbsentPut: [ 5 ].
+				         newX := each position x + delta.
+				         (newX between: position from x and: position to x)
+					         ifFalse: [
+						         delta := delta negated.
+						         newX := each position x + delta ].
+				         each translateTo: newX @ each position y.
+				         each propertyAt: #delta put: delta ].
+
+			         canvas nodes copy do: [ :each |
+				         | corner |
+				         corner := each position x > lineX
+					                   ifTrue: [ round ]
+					                   ifFalse: [ empty ].
+				         each cornerRadius: corner ].
+
+			         canvas signalUpdate ].
+
+	         ^ canvas
 ]
 
 { #category : #examples }
