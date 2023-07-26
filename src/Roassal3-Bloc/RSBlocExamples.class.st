@@ -16,8 +16,7 @@ RSBlocExamples >> example01Boxes [
 	<script: 'self new example01Boxes open'>
 	
 	| c |
-	c := RSCanvas new.
-	c useBlocHost.
+	c := self newCanvas.
 
 	c addShape: (RSBox new
 		color: Color blue translucent;
@@ -37,8 +36,7 @@ RSBlocExamples >> example02EllipseAndCircle [
 	<script: 'self new example02EllipseAndCircle open'>
 
 	| c |
-	c := RSCanvas new.
-	c useBlocHost.
+	c := self newCanvas.
 
 	c addShape: (RSEllipse new
 			 color: Color green translucent;
@@ -59,8 +57,7 @@ RSBlocExamples >> example03RotatedBoxes [
 	<script: 'self new example03RotatedBoxes open'>
 
 	| c |
-	c := RSCanvas new.
-	c useBlocHost.
+	c := self newCanvas.
 
 	1 to: 12 do: [ :m |
 		| angle theta p box |
@@ -93,38 +90,37 @@ RSBlocExamples >> example03RotatedBoxes [
 RSBlocExamples >> example04RotatedLabels [
 	<script: 'self new example04RotatedLabels open'>
 
-	| c |
-	c := RSCanvas new.
-	c useBlocHost.
+	| c metricsProvider |
+	c := self newCanvas.
+	metricsProvider := RSBlocMetricProvider new.
+	1 to: 12 do: [ :m |
+		| angle theta p label |
+		angle := (m * 360 / 12) degreesToRadians.
+		theta := angle cos @ angle sin.
+		p := theta * 100.
+		label := RSLabel new
+			metricsProvider: metricsProvider;
+			color: (Color purple alpha: 0.5);
+			fontName: 'Arial';
+			fontSize: 40;
+			text: (Month nameOfMonth: m);
+			yourself.
+		angle := angle radiansToDegrees.
+		angle := angle + ((angle between: 90 and: 270)
+			ifTrue: [ 180 ]
+			ifFalse: [ 0 ] ).
 
-		1 to: 12 do: [ :m |
-			| angle theta p label |
-			angle := (m * 360 / 12) degreesToRadians.
-			theta := angle cos @ angle sin.
-			p := theta * 100.
-			label := RSLabel new
-				metricsProvider: RSBlocMetricProvider new;
-				color: (Color purple alpha: 0.5);
-				fontName: 'Arial';
-				fontSize: 40;
-				text: (Month nameOfMonth: m);
-				yourself.
-			angle := angle radiansToDegrees.
-			angle := angle + ((angle between: 90 and: 270)
-				ifTrue: [ 180 ]
-				ifFalse: [ 0 ] ).
-
-			label rotateByDegrees: angle.
-			label position: p + ((label textWidth/2) * theta).
-			m even
-				ifTrue: [ label bold ]
-				ifFalse: [ label italic ].
-			c addShape: label.
-			].
-		c addShape: (RSEllipse new
-			color: nil;
-			withBorder;
-			radius: 90).
+		label rotateByDegrees: angle.
+		label position: p + ((label textWidth/2) * theta).
+		m even
+			ifTrue: [ label bold ]
+			ifFalse: [ label italic ].
+		c addShape: label.
+		].
+	c addShape: (RSEllipse new
+		color: nil;
+		withBorder;
+		radius: 90).
 
 	^ c
 ]
@@ -134,8 +130,7 @@ RSBlocExamples >> example05Ellipses [
 	<script: 'self new example05Ellipses open'>
 
 	| c r y |
-	c := RSCanvas new.
-	c useBlocHost.
+	c := self newCanvas.
 
 	r := Random new.
 	c color: (Color colorFrom: '325A64').
@@ -152,9 +147,7 @@ RSBlocExamples >> example05Ellipses [
 					range: y) );
 			position: (x*2@y)-250;
 			extent: (y/10)@( x * 75/ 499 ) ).
-		 ].
-
-
+	].
 	^ c
 ]
 
@@ -163,9 +156,7 @@ RSBlocExamples >> example06Polyline [
 	<script: 'self new example06Polyline open'>
 
 	| c |
-	c := RSCanvas new.
-	c useBlocHost.
-
+	c := self newCanvas.
 	c addShape: (RSPolyline new
 		width: 30;
 		joinRound;"joinBevel; joinMiter"
@@ -174,8 +165,6 @@ RSBlocExamples >> example06Polyline [
 		controlPoints: { 50@300. 150@300. 150@200. 250@200. 250@100. 350@100};
 		basicTranslateBy: -250 @ -250;
 		yourself).
-
-
 	^ c
 
 ]
@@ -1433,4 +1422,11 @@ RSBlocExamples >> example35MouseEnterMouseLeave [
 			yourself).
 
 	^ canvas
+]
+
+{ #category : #private }
+RSBlocExamples >> newCanvas [
+	^ RSCanvas new
+		useBlocHost;
+		yourself
 ]
