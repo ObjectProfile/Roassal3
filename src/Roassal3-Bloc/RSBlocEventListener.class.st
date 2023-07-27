@@ -22,7 +22,9 @@ RSBlocEventListener >> announceEventOfClass: aRSEventClass actionClass: anAction
 	targetShape := aBlEvent target roassalShape.
 
 	((targetShape handleAnnouncementClass: anActionClass) or: [
-		(targetShape handleAnnouncementClass: aRSEventClass)]) ifFalse:[ ^ self ].
+		(targetShape handleAnnouncementClass: aRSEventClass)]) ifFalse:[ 
+		targetShape := roassalCanvas.
+		 ].
 
 	aBlEvent consumed: true.
 

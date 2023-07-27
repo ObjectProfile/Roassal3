@@ -10,9 +10,10 @@ RSShape >> asBlElement [
 
 { #category : #'*Roassal3-Bloc' }
 RSShape >> blBorder [
-
-	^ self border ifNotNil: [ :b | 
-		  BlBorder paint: b paint width: b width ]
+	border ifNil: [ ^ nil ].
+	^ border asBlBorder.
+	
+	 
 ]
 
 { #category : #'*Roassal3-Bloc' }
