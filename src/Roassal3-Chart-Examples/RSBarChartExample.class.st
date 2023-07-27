@@ -242,10 +242,9 @@ RSBarChartExample >> example07DoubleBar [
 	plot horizontalTick
 		numberOfTicks: 10;
 		labelConversion: #asInteger.
-	plot addDecoration: (RSHorizontalTopTick new
-			 values: x2;
-			 numberOfTicks: 10;
-			 labelConversion: #asInteger).
+	plot horizontalTopTick
+		numberOfTicks: 10;
+		labelConversion: #asInteger.
 
 	plot xlabel: 'Number Of Methods'.
 	plot xlabelTop: 'Number Of Variables'.
