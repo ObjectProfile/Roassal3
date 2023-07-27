@@ -9,7 +9,8 @@ Class {
 		'xScale',
 		'yScale',
 		'bandOffset',
-		'bandWidth'
+		'bandWidth',
+		'model'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -61,8 +62,10 @@ RSViolinPlotShape >> data [
 
 { #category : #accessing }
 RSViolinPlotShape >> data: dataset [
-	kernelDensity data: dataset.
-	boxPlotShape data: dataset.
+	| aCollection |
+	aCollection := dataset rsValue: model.
+	kernelDensity data: aCollection.
+	boxPlotShape data: aCollection.
 ]
 
 { #category : #accessing }
@@ -147,6 +150,16 @@ RSViolinPlotShape >> minYValue [
 	| minYValueOfCurve |
 	minYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) min.
 	^ boxPlotShape minYValue min: minYValueOfCurve.
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> model [
+	^ model
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> model: aModel [
+	model := aModel
 ]
 
 { #category : #initialization }

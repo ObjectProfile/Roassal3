@@ -71,6 +71,38 @@ RSViolinPlotTest >> testBordersColors [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testModel [
+	| violinPlot aModel window |    
+	aModel := String.
+	violinPlot := RSViolinPlot model: aModel.
+	violinPlot data: [ :cls | cls methods collect: [:met | met linesOfCode ] ].
+	window := violinPlot open.
+	self assert: violinPlot model equals: aModel.
+	window delete.
+
+]
+
+{ #category : #tests }
+RSViolinPlotTest >> testModelOfEachViolin [
+	| violinPlot window aModel1 aModel2 dataset1 dataset2 waysToGetDataFromModels |
+	aModel1 := String.
+	aModel2 := Number.
+	waysToGetDataFromModels := { 
+		[ :cls | cls methods collect: [:met | met linesOfCode ] ].
+		[ :cls | cls methods collect: [:met | met linesOfCode ] ].
+	}.
+	violinPlot := RSViolinPlot models: {aModel1. aModel2.}.
+	violinPlot data: waysToGetDataFromModels.
+	dataset1 := (waysToGetDataFromModels first) rsValue: aModel1. 
+	dataset2 := (waysToGetDataFromModels first) rsValue: aModel2.
+	
+	window := violinPlot open.
+	self assert: violinPlot models equals: {aModel1. aModel2. } asOrderedCollection.
+	self assert: violinPlot data equals: {dataset1. dataset2.} asOrderedCollection.
+	window delete.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testTwoViolinPlots [
 	| violinPlot data window |
 	data := {{10. 20. 30. 40. 40. 50.}. {1. 30. 30. 30. 30. 40. 40. 50.}.}.

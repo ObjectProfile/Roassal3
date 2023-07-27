@@ -13,17 +13,20 @@ RSViolinPlot class >> dataFrame: aDataSeriesOrDataFrame [
 { #category : #'*Roassal3-Chart-DataFrame' }
 RSViolinPlot class >> dataFrame: aDataFrame x: aColumnNameToCategory y: aColumnNameOfData [
 
-	| categoryNames data violinPlot |
+	| categoryNames data violinPlot collectionOfDataSeries |
 	data := OrderedCollection new.
 	categoryNames := (aDataFrame column: aColumnNameToCategory)
 		                 uniqueValues sort.
+	collectionOfDataSeries := OrderedCollection new. 
 	categoryNames do: [ :categoryName |
 		| aDataSeries |
 		aDataSeries := (aDataFrame select: [ :row |
 			                (row at: aColumnNameToCategory) = categoryName ])
 			               column: aColumnNameOfData.
-		data add: aDataSeries asArray ].
+		collectionOfDataSeries add: aDataSeries.
+		data add: [:ds|ds asArray].] .
 	violinPlot := self new.
+	violinPlot models: collectionOfDataSeries.
 	violinPlot data: data.
 	violinPlot xTickLabels: categoryNames.
 	violinPlot ylabel: aColumnNameOfData.
