@@ -8,7 +8,8 @@ Class {
 		'x2Values',
 		'secondColor',
 		'x2Scale',
-		'bars2'
+		'bars2',
+		'horizontalTopTick'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -67,11 +68,24 @@ RSDoubleBarPlot >> createdShapes [
 	^ bars, bars2
 ]
 
+{ #category : #accessing }
+RSDoubleBarPlot >> horizontalTopTick [
+
+	^ horizontalTopTick
+]
+
+{ #category : #initialization }
+RSDoubleBarPlot >> initializeDecorations [
+	
+	super initializeDecorations.
+	horizontalTopTick := RSHorizontalTopTick new.
+	self addDecoration: horizontalTopTick
+]
+
 { #category : #rendering }
 RSDoubleBarPlot >> renderIn: canvas [
 
 	| index |
-	self addDecoration: (RSHorizontalTopTick new values: x2Values).
 	super renderIn: canvas.
 	index := 1.
 	bars2 := x2Values
@@ -92,9 +106,10 @@ RSDoubleBarPlot >> secondColor [
 
 { #category : #accessing }
 RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
-	self assert: x1 size = y size description: 'The two collections must have the same size'.
+	self assert: x1 size = x2 size description: 'The two collections must have the same size'.
 	self x: x1 y: y.
-	x2Values := x2
+	x2Values := x2.
+	horizontalTopTick values: x2Values
 ]
 
 { #category : #accessing }
