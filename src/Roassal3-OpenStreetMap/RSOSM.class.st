@@ -104,10 +104,23 @@ RSOSM >> fromOurSpaceToTile: aPoint [
 		// (self equatorLength / (2 raisedTo: osmZoomLevel))
 ]
 
+{ #category : #accessing }
+RSOSM >> futures [
+
+	^ futures
+]
+
+{ #category : #accessing }
+RSOSM >> futures: anObject [
+
+	futures := anObject
+]
+
 { #category : #initialization }
 RSOSM >> initialize [
 	super initialize.
 	tiles := Dictionary new.
+	futures := Dictionary new.
 	emptyTile := self defaultEmptyTile.
 	semaphore := Semaphore forMutualExclusion
 ]
