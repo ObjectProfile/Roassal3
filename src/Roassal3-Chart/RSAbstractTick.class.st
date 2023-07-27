@@ -9,7 +9,8 @@ Class {
 		'labels',
 		'labelLocation',
 		'configuration',
-		'tickLocator'
+		'tickLocator',
+		'ticksData'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -40,6 +41,20 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 	chart createXScale.
 	self createYScale.
 	chart createYScale
+]
+
+{ #category : #public }
+RSAbstractTick >> computeTicksData [
+
+	| scaleToUse data |
+	scaleToUse := self scaleToUse.
+	data := tickLocator
+		        generateTicks: scaleToUse
+		        with: self configuration numberOfTicks.
+	data ifEmpty: [ Error signal: 'Empty ticks data' ].
+	configuration numberOfTicks: data size.
+
+	^ data
 ]
 
 { #category : #accessing }
@@ -125,17 +140,9 @@ c
 
 { #category : #public }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
-
 	| size |
 	size := aCollectionOfStrings size.
-	self assert: size > 0 description: 'aCollectionOfStrings can not be empty'.
-	size isZero ifTrue: [ size := 1 ].
-
-	self numberOfTicks: size.
-
-	self labelConversion: [ :x |
-		x isZero ifTrue: [ '' ]
-			ifFalse: [ aCollectionOfStrings at: x rounded ] ]
+	self ticks: (1 to: size) labels: aCollectionOfStrings.
 ]
 
 { #category : #initialization }
@@ -258,7 +265,6 @@ c
 
 { #category : #rendering }
 RSAbstractTick >> renderIn: canvas [
-	| ticksData |
 	ticksData := self ticksData.
 	ticks := ticksData collect: [ :value | self createTickLineFor: value ].
 	canvas addAll: ticks.
@@ -284,17 +290,31 @@ RSAbstractTick >> ticks [
 ]
 
 { #category : #public }
+RSAbstractTick >> ticks: collectionOfNumbers labels: collectionOfStrings [
+	self 
+		assert: collectionOfNumbers size = collectionOfStrings size 
+		description: 'Both collections should have same size'.
+	self 
+		assert: collectionOfStrings isNotEmpty 
+		description: 'collectionOfStrings should not be empty'.
+	self ticksData: collectionOfNumbers.
+	self labelConversion: [ :number | 
+		| index |
+		index := collectionOfNumbers indexOf: number.
+		(index between: 1 and: collectionOfStrings size) 
+			ifTrue: [ collectionOfStrings at: index ]
+			ifFalse: [ '' ]
+	].
+]
+
+{ #category : #public }
 RSAbstractTick >> ticksData [
+	^ ticksData ifNil: [ ticksData := self computeTicksData ]
+]
 
-	| scaleToUse data |
-	scaleToUse := self scaleToUse.
-	data := tickLocator
-		        generateTicks: scaleToUse
-		        with: self configuration numberOfTicks.
-	data ifEmpty: [ Error signal: 'Empty ticks data' ].
-	configuration numberOfTicks: data size.
-
-	^ data
+{ #category : #public }
+RSAbstractTick >> ticksData: collectionOfNumbers [
+	ticksData := collectionOfNumbers
 ]
 
 { #category : #rendering }

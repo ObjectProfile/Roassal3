@@ -104,7 +104,7 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-
+	
 	| line |
 	line := self createMarkerLineFromPlot: chart.
 	line

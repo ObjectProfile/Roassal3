@@ -30,10 +30,13 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 		addEventHandler: elementListener;
 		when: BlElementExtentChangedEvent
 			do: [ :evt | aRSCanvas extent: evt source extent ];
+		when: BlElementAddedToSceneGraphEvent 
+			do: [ :evt |  aRSCanvas extent: evt source extent ];
 		constraintsDo:[ :c |
 			c horizontal matchParent.
 			c vertical matchParent ];
 		syncSignalUpdateFirstTime.
+		
 
 ]
 
@@ -120,22 +123,23 @@ RSCanvasElement >> syncSignalUpdateFirstTime [
 		allChildrenBreadthFirstDo: [ :each |
 			self flag: #todo. "Workaround until camera element is converted into a layout "
 			each == cameraElement ifFalse: [
-				each addEventHandler: elementListener] ].
-		
+					each addEventHandler: elementListener ] ].
+
 	roassalCanvas
 		when: RSShapeAddedEvent do: [ :evt |
 			| newChild |
 			newChild := evt shape asBlElement.
 			newChild withAllChildrenBreadthFirstDo: [ :each |
-				each addEventHandler: elementListener].
-			self addChild: newChild ];
-		when: RSShapeRemovedEvent do: [ :evt | 
+					each addEventHandler: elementListener ].
+			self addChild: newChild ]
+		for: self;
+		when: RSShapeRemovedEvent do: [ :evt |
 			self
 				allChildrenBreadthFirstDetect: [ :each |
 					each roassalShape == evt shape ]
 				ifFound: [ :element | element removeFromParent ]
-				ifNone: [ #syncSignalUpdateFirstTime traceCr. ] ].
-
+				ifNone: [ #syncSignalUpdateFirstTime traceCr ] ]
+		for: self
 ]
 
 { #category : #refreshing }

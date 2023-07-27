@@ -132,6 +132,11 @@ RSCamera >> matrix: anAthensAffineTransform [
 	matrix := anAthensAffineTransform
 ]
 
+{ #category : #public }
+RSCamera >> originMatrix [
+	^ originMode matrixFor: self
+]
+
 { #category : #accessing }
 RSCamera >> originMode [
 
@@ -213,7 +218,7 @@ RSCamera >> scale: aFloatNumber [
 
 { #category : #public }
 RSCamera >> setMatrix: anAthensAffineTransform [
-	anAthensAffineTransform multiplyBy: (originMode matrixFor: self)
+	anAthensAffineTransform multiplyBy: self originMatrix
 ]
 
 { #category : #accessing }
