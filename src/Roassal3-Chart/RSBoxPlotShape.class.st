@@ -177,10 +177,10 @@ RSBoxPlotShape >> computeOutliers [
 	"graphCenter was already computed in shapesWithCenterAt"
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
 	outliers := outliersPoints.
+	outlier extent x isZero ifTrue: [ outlier size: bandWidth * 0.15 ].
 	outliers := outliers collect: [ :out |
 			| e |
 			e := outlier.
-			e size: bandWidth * 0.15.
 			e translateTo: out.
 	] as: RSGroup.
 	^ outliers.
@@ -272,7 +272,8 @@ RSBoxPlotShape >> defaultNotched [
 RSBoxPlotShape >> defaultOutlier [
 	^ RSEllipse new
 		radius: 4;
-		color: Color black.
+		color: Color black;
+		size: 0.
 ]
 
 { #category : #defaults }
@@ -387,6 +388,11 @@ RSBoxPlotShape >> outlier: markerShape [
 { #category : #accessing }
 RSBoxPlotShape >> outlierMarker: markerShapeString [
 	outlier := (RSShapeFactory shapeFromString: markerShapeString) color: Color black.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> outlierSize: aDimensionInPixels [
+	outlier size: aDimensionInPixels.
 ]
 
 { #category : #accessing }

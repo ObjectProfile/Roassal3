@@ -9,7 +9,8 @@ Class {
 		'xScale',
 		'yScale',
 		'bandOffset',
-		'bandWidth'
+		'bandWidth',
+		'model'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -32,6 +33,17 @@ RSViolinPlotShape >> bandOffset: aNumber [
 RSViolinPlotShape >> bandWidth: aNumber [
 	bandWidth := aNumber.
 	boxPlotShape bandWidth: bandWidth*0.1.
+	boxPlotShape outlierSize: bandWidth*0.05.
+]
+
+{ #category : #accessing }
+RSViolinPlotShape >> border [
+	^ densityArea border.
+]
+
+{ #category : #styling }
+RSViolinPlotShape >> borderColor: aColor [
+	^ self border color: aColor.
 ]
 
 { #category : #initialization }
@@ -51,8 +63,10 @@ RSViolinPlotShape >> data [
 
 { #category : #accessing }
 RSViolinPlotShape >> data: dataset [
-	kernelDensity data: dataset.
-	boxPlotShape data: dataset.
+	| aCollection |
+	aCollection := dataset rsValue: model.
+	kernelDensity data: aCollection.
+	boxPlotShape data: aCollection.
 ]
 
 { #category : #accessing }
@@ -68,7 +82,8 @@ RSViolinPlotShape >> defaultBoxPlotShape [
 { #category : #defaults }
 RSViolinPlotShape >> defaultDensityArea [
 	^ RSPolygon new
-		noPaint.
+		noPaint
+		borderColor: Color black.
 ]
 
 { #category : #defaults }
@@ -107,8 +122,6 @@ RSViolinPlotShape >> densityArea [
 	
 	
 	densityArea points: densityAreaPoints.
-
-	densityArea borderColor: Color black.
 	densityArea color: color.
 	^ densityArea
 ]
@@ -138,6 +151,21 @@ RSViolinPlotShape >> minYValue [
 	| minYValueOfCurve |
 	minYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) min.
 	^ boxPlotShape minYValue min: minYValueOfCurve.
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> model [
+	^ model
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> model: aModel [
+	model := aModel
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> outlierSize: aDimensionInPixels [
+	boxPlotShape outlierSize: aDimensionInPixels.
 ]
 
 { #category : #initialization }
