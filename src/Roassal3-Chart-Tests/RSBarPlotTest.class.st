@@ -55,6 +55,15 @@ RSBarPlotTest >> testBasic [
 	plot build
 ]
 
+{ #category : #tests }
+RSBarPlotTest >> testDoubleBarPlotRawData [
+
+	| data |
+	data := { #(1 2 3). #(2 3 4) . #(-3 5 -7) }.
+	plot := RSDoubleBarPlot new rawData: data x1: #first x2: #second y: #third.
+	plot build
+]
+
 { #category : #running }
 RSBarPlotTest >> testExtentIsCorrect [
 
