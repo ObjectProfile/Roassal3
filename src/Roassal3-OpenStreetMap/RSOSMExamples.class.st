@@ -14,7 +14,9 @@ RSOSMExamples >> example01Basic [
 	canvas := RSCanvas new.
 	canvas add: RSOSM new.
 	canvas add: (RSBox new size: 100; draggable).
-	canvas @ RSDraggableCanvasInteraction @ RSZoomableCanvasInteraction.
+	canvas 
+		@ RSDraggableCanvasInteraction;
+		@ RSZoomableCanvasInteraction.
 
 	canvas camera scale: 0.05.
 	^ canvas

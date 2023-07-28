@@ -1,19 +1,19 @@
 Extension { #name : #RSAthensRenderer }
 
 { #category : #'*Roassal3-OpenStreetMap' }
+RSAthensRenderer >> createFuture: osm key: key [
+	^ [ self downloadTile: osm key: key ] future
+		onSuccessDo: [ :tile | osm semaphore critical: [ osm tiles at: key put: tile]. osm signalUpdate ];
+		yourself
+	
+]
+
+{ #category : #'*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> downloadTile: osm key: key [
-	[
-	|aTile |
-	Processor yield.
-	aTile := [
-			ZnEasy getPng: ('https://a.tile.openstreetmap.org' asZnUrl
-				addPathSegment: key third printString;
-				addPathSegment: key first printString;
-				addPathSegment: key second printString , '.png')
-		] on: Error do: [ :ex | ].
-	osm semaphore critical: [ osm tiles at: key put: aTile ].
-	osm signalUpdate.
-	] fork
+	ZnEasy getPng: ('https://a.tile.openstreetmap.org' asZnUrl
+		addPathSegment: key third printString;
+		addPathSegment: key first printString;
+		addPathSegment: key second printString , '.png')
 ]
 
 { #category : #'*Roassal3-OpenStreetMap' }
