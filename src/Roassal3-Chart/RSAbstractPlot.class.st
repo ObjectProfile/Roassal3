@@ -19,7 +19,8 @@ Class {
 		'chart',
 		'shape',
 		'xValues',
-		'yValues'
+		'yValues',
+		'rawData'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -264,6 +265,13 @@ RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesY min
+]
+
+{ #category : #public }
+RSAbstractPlot >> rawData: aCollection x: bloc1 y: bloc2 [
+
+	rawData := aCollection.
+	self x: (rawData collect: bloc1) y: (rawData collect: bloc2)
 ]
 
 { #category : #rendering }

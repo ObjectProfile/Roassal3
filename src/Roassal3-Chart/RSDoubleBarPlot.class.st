@@ -82,6 +82,16 @@ RSDoubleBarPlot >> initializeDecorations [
 	self addDecoration: horizontalTopTick
 ]
 
+{ #category : #public }
+RSDoubleBarPlot >> rawData: aCollection x1: bloc1 x2: bloc2 y: bloc3 [
+
+	rawData := aCollection.
+	self
+		x1: (rawData collect: bloc1)
+		x2: (rawData collect: bloc2)
+		y: (rawData collect: bloc3)
+]
+
 { #category : #rendering }
 RSDoubleBarPlot >> renderIn: canvas [
 
