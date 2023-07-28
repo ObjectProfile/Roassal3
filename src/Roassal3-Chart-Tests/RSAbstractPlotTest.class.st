@@ -126,6 +126,15 @@ RSAbstractPlotTest >> testPaddingIsCorrect [
 ]
 
 { #category : #tests }
+RSAbstractPlotTest >> testRawdata [
+
+	| data |
+	data := { 0@1 . 1@3 . 2@3 . 3@5 . 4@6 }.
+	plot := self classToTest new rawData: data x: #x y: #y.
+	plot build
+]
+
+{ #category : #tests }
 RSAbstractPlotTest >> testStylerDefault [
 
 	| tick |
