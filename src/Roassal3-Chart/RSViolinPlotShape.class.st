@@ -33,6 +33,7 @@ RSViolinPlotShape >> bandOffset: aNumber [
 RSViolinPlotShape >> bandWidth: aNumber [
 	bandWidth := aNumber.
 	boxPlotShape bandWidth: bandWidth*0.1.
+	boxPlotShape outlierSize: bandWidth*0.05.
 ]
 
 { #category : #accessing }
@@ -160,6 +161,11 @@ RSViolinPlotShape >> model [
 { #category : #initialization }
 RSViolinPlotShape >> model: aModel [
 	model := aModel
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> outlierSize: aDimensionInPixels [
+	boxPlotShape outlierSize: aDimensionInPixels.
 ]
 
 { #category : #initialization }

@@ -55,6 +55,7 @@ RSViolinPlot class >> example04DataFrame [
 	| boxPlot1 toothGrowth |
 	toothGrowth := AIDatasets loadToothGrowth.
 	boxPlot1 := self dataFrame: toothGrowth x: #dose y: #len.
-	boxPlot1 bandwidth: 2.
+	boxPlot1 color: Color purple translucent.
+	"boxPlot1 bandwidth: 2."
 	^ boxPlot1 open
 ]
