@@ -19,7 +19,7 @@ RSDoubleBarPlot >> bars2 [
 	^ bars2
 ]
 
-{ #category : #public }
+{ #category : #'accessing - computed' }
 RSDoubleBarPlot >> computeSecondColor [
 	^ secondColor ifNil: [ self chart colorFor: x2Values ]
 ]
@@ -114,7 +114,7 @@ RSDoubleBarPlot >> secondColor [
 	^ secondColor
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
 	self assert: x1 size = x2 size description: 'The two collections must have the same size'.
 	self x: x1 y: y.
