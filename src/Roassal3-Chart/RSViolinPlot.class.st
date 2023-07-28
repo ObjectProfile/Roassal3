@@ -48,7 +48,7 @@ Class {
 		'violinShapes',
 		'offset',
 		'bandWidth',
-		'model'
+		'models'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -79,6 +79,26 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 			            {6. 8. 7. 5. 7. 11. 9. }.
 			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
 	^ boxPlot1 open
+]
+
+{ #category : #examples }
+RSViolinPlot class >> exampleModel [
+	| violinPlot |
+	violinPlot := self new.
+	violinPlot model: SequenceableCollection.
+	violinPlot data: [ :cls| cls methods collect: [ :met | met linesOfCode ] ].
+	^ violinPlot open
+]
+
+{ #category : #examples }
+RSViolinPlot class >> exampleModels [
+	| violinPlot accessor |
+	accessor := [ :cls| cls methods collect: [ :met | met linesOfCode ] ].
+	violinPlot := self new.
+	violinPlot models: (String withAllSubclasses 
+		reject: [:cls | (accessor rsValue: cls) isEmpty ]).
+	violinPlot data: accessor.
+	^ violinPlot open
 ]
 
 { #category : #'examples - styling' }
@@ -340,11 +360,31 @@ RSViolinPlot >> computeYValues [
 ]
 
 { #category : #accessing }
+RSViolinPlot >> createViolinShapeFor: anObject dataset: dataset [
+	self assert: dataset notEmpty description: 'dataset can not be empty'.
+	^ (RSViolinPlotShape data: dataset)
+		model: anObject;
+		yourself.
+]
+
+{ #category : #accessing }
+RSViolinPlot >> createViolinShapesWithDataSet: collectionOfDatasets [
+	| groupOfModels newViolinShapes |
+	groupOfModels := models.
+	groupOfModels ifNil: [ groupOfModels := Array new: collectionOfDatasets size ].
+	
+	newViolinShapes := groupOfModels with: collectionOfDatasets collect: [ :anObject :dataset | 
+		self createViolinShapeFor: anObject dataset: dataset.
+		 ].
+	self violinShapes: newViolinShapes
+]
+
+{ #category : #accessing }
 RSViolinPlot >> createdShapes [
 	^ violinShapes
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSViolinPlot >> data [
 	| collectionOfDatasets |
 	collectionOfDatasets := violinShapes collect: [ :violin | violin data ].
@@ -352,33 +392,24 @@ RSViolinPlot >> data [
 	^ collectionOfDatasets.
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSViolinPlot >> data: dataset [
 	
 	"dataset could be:
 	- aCollection of raw data (numbers)
 	- aCollection of collections
-	- aBlock to get the data from the model (previously stored in model)
-	- aCollection of Blocks to get several violins, 
-	  each block define how to get the data from the model of each violinShape
-	  (previously stored on models"
+	- aBlock to get the data from the model (previously stored in model)"
 	
-	| collectionOfDatasets aCollection |
-	aCollection := dataset rsValue: model.
-	collectionOfDatasets := ((aCollection first isCollection) or: (aCollection first isBlock))
-		                        ifTrue: [ aCollection ]
-										ifFalse: [ { aCollection } ].
-	violinShapes isEmpty 
-		ifTrue: [ 
-			self violinShapes: (collectionOfDatasets collect: [ :dataSet |
-				 RSViolinPlotShape data: dataSet ]).
-		]
-		ifFalse: [ 
-			collectionOfDatasets doWithIndex: [ :dataSet :idx |
-				(violinShapes at: idx) data: dataSet ].
-		 ].
-
+	| collectionOfDatasets |
+	collectionOfDatasets := self extractDatasetsFrom: dataset.
+	self createViolinShapesWithDataSet: collectionOfDatasets.
 	self computeState
+]
+
+{ #category : #'accessing - computed' }
+RSViolinPlot >> datasetsFromModels: data [
+	models ifNil: [ ^ data ].
+	^ models collect: [:anOjbect | data rsValue: anOjbect ].
 ]
 
 { #category : #rendering }
@@ -390,6 +421,18 @@ RSViolinPlot >> defaultBandsWidth [
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
+]
+
+{ #category : #'accessing - computed' }
+RSViolinPlot >> extractDatasetsFrom: data [
+	| result datasets |
+	datasets := self datasetsFromModels: data.
+	self assert: datasets isCollection description: 'use a collection of numbers'.
+	self assert: datasets isNotEmpty description: 'You can not have empty collection'.
+	result := datasets first isCollection 
+		ifTrue: [ datasets ]
+		ifFalse: [ { datasets } ].
+	^ result
 ]
 
 { #category : #initialization }
@@ -406,27 +449,22 @@ RSViolinPlot >> kernelBandwidth: aNumber [
 
 { #category : #rendering }
 RSViolinPlot >> model [
-	^ model
+	^ self models first
 ]
 
 { #category : #rendering }
 RSViolinPlot >> model: aModel [
-	model := aModel
+	self models: {aModel}
 ]
 
 { #category : #rendering }
 RSViolinPlot >> models [
-	^ violinShapes collect: [ :violin | violin model ]
+	^ models
 ]
 
 { #category : #rendering }
 RSViolinPlot >> models: aCollectionOfModels [
-	aCollectionOfModels do: [ :violinShapeModel |
-		| violinShape |
-		violinShape := RSViolinPlotShape new.
-		violinShape model: violinShapeModel.
-		violinShapes add: violinShape. 
-	]. 
+	models := aCollectionOfModels
 ]
 
 { #category : #rendering }

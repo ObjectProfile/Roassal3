@@ -71,6 +71,36 @@ RSViolinPlotTest >> testBordersColors [
 ]
 
 { #category : #tests }
+RSViolinPlotTest >> testExtractDatasetFromBlock [
+	| data plot result model expectedResult |
+	model := String.
+	data := [:cls | cls methods collect: [:met | met linesOfCode ] ].
+	plot := RSViolinPlot new.
+	plot model: model.
+	result := plot extractDatasetsFrom: data.
+	expectedResult := data rsValue: model.
+	self assert: result equals: {expectedResult}.
+]
+
+{ #category : #tests }
+RSViolinPlotTest >> testExtractDatasetFromSingleArray [
+	| data plot result |
+	data := #(10 20 30 40 40 50).
+	plot := RSViolinPlot new.
+	result := plot extractDatasetsFrom: data.
+	self assert: result equals: {data}.
+]
+
+{ #category : #tests }
+RSViolinPlotTest >> testExtractDatasetFromValue [
+	| data plot result |
+	data := { #(10 20 30 40 40 50) }.
+	plot := RSViolinPlot new.
+	result := plot extractDatasetsFrom: data.
+	self assert: result equals: data.
+]
+
+{ #category : #tests }
 RSViolinPlotTest >> testModel [
 	| violinPlot aModel window |    
 	aModel := String.
@@ -84,22 +114,18 @@ RSViolinPlotTest >> testModel [
 
 { #category : #tests }
 RSViolinPlotTest >> testModelOfEachViolin [
-	| violinPlot window aModel1 aModel2 dataset1 dataset2 waysToGetDataFromModels |
+	| violinPlot aModel1 aModel2 dataset1 dataset2 waysToGetDataFromModel |
 	aModel1 := String.
 	aModel2 := Number.
-	waysToGetDataFromModels := { 
-		[ :cls | cls methods collect: [:met | met linesOfCode ] ].
-		[ :cls | cls methods collect: [:met | met linesOfCode ] ].
-	}.
+	waysToGetDataFromModel := [ :cls | cls methods collect: [:met | met linesOfCode ] ].
 	violinPlot := RSViolinPlot models: {aModel1. aModel2.}.
-	violinPlot data: waysToGetDataFromModels.
-	dataset1 := (waysToGetDataFromModels first) rsValue: aModel1. 
-	dataset2 := (waysToGetDataFromModels first) rsValue: aModel2.
+	violinPlot data: waysToGetDataFromModel.
+	dataset1 := waysToGetDataFromModel rsValue: aModel1. 
+	dataset2 := waysToGetDataFromModel rsValue: aModel2.
 	
-	window := violinPlot open.
-	self assert: violinPlot models equals: {aModel1. aModel2. } asOrderedCollection.
-	self assert: violinPlot data equals: {dataset1. dataset2.} asOrderedCollection.
-	window delete.
+	violinPlot build.
+	self assert: violinPlot models equals: {aModel1. aModel2 }.
+	self assert: violinPlot data equals: {dataset1. dataset2.}.
 ]
 
 { #category : #tests }
