@@ -19,7 +19,7 @@ RSDoubleBarPlot >> bars2 [
 	^ bars2
 ]
 
-{ #category : #public }
+{ #category : #'accessing - computed' }
 RSDoubleBarPlot >> computeSecondColor [
 	^ secondColor ifNil: [ self chart colorFor: x2Values ]
 ]
@@ -82,6 +82,16 @@ RSDoubleBarPlot >> initializeDecorations [
 	self addDecoration: horizontalTopTick
 ]
 
+{ #category : #public }
+RSDoubleBarPlot >> rawData: aCollection x1: bloc1 x2: bloc2 y: bloc3 [
+
+	rawData := aCollection.
+	self
+		x1: (rawData collect: bloc1)
+		x2: (rawData collect: bloc2)
+		y: (rawData collect: bloc3)
+]
+
 { #category : #rendering }
 RSDoubleBarPlot >> renderIn: canvas [
 
@@ -104,7 +114,7 @@ RSDoubleBarPlot >> secondColor [
 	^ secondColor
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
 	self assert: x1 size = x2 size description: 'The two collections must have the same size'.
 	self x: x1 y: y.
