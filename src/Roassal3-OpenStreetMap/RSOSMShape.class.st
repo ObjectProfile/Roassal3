@@ -1,40 +1,53 @@
 "
-I am the basic shape that renders the map
+I am the basic shape that renders the map, based on code of Roassal2 using the API provided by
+
+https://a.tile.openstreetmap.org
 "
 Class {
-	#name : #RSOSM,
+	#name : #RSOSMShape,
 	#superclass : #RSShape,
 	#instVars : [
 		'tiles',
 		'emptyTile',
 		'semaphore',
 		'osmZoomLevel',
-		'ratio'
+		'ratio',
+		'futures'
 	],
 	#category : #'Roassal3-OpenStreetMap'
 }
 
 { #category : #public }
-RSOSM class >> earthR [
+RSOSMShape class >> earthR [
 	"Earth R in km."
 
 	^ 6378.1370
 ]
 
 { #category : #public }
-RSOSM class >> equatorLength [
+RSOSMShape class >> equatorLength [
 	"Equator length  in km. self earthR * 2* Float pi"
 
 	^ 40075.016685578485
 ]
 
+{ #category : #public }
+RSOSMShape class >> maxLatitude [
+	^85.05112877980659
+]
+
+{ #category : #public }
+RSOSMShape class >> minLatitude [
+	^-85.05112877980659
+]
+
 { #category : #adding }
-RSOSM >> accept: aVisitor [
+RSOSMShape >> accept: aVisitor [
 	aVisitor visitOSM: self
 ]
 
 { #category : #accessing }
-RSOSM >> computeEncompassingRectangle [
+RSOSMShape >> computeEncompassingRectangle [
 	| canvas |
 	canvas := self canvas.
 	canvas ifNil: [ ^ 0@0 corner: 0@0 ].
@@ -42,62 +55,63 @@ RSOSM >> computeEncompassingRectangle [
 ]
 
 { #category : #private }
-RSOSM >> computeOsmZoomLevel [
+RSOSMShape >> computeOsmZoomLevel [
 	"The osm zoom level."
 
 	^ (((self pixelLength * self canvas camera scale) ln / 2 ln) rounded max: 0) min: 18
 ]
 
 { #category : #defaults }
-RSOSM >> defaultEmptyTile [
+RSOSMShape >> defaultEmptyTile [
 	^ ((StringMorph contents: 'Loading...') center: 127 @ 127)
 				imageFormForRectangle: (0 @ 0 extent: 256 @ 256)
 ]
 
 { #category : #accessing }
-RSOSM >> emptyTile [
+RSOSMShape >> emptyTile [
 	^ emptyTile
 ]
 
 { #category : #accessing }
-RSOSM >> emptyTile: aMorph [
+RSOSMShape >> emptyTile: aMorph [
 	emptyTile := aMorph
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> end [
-	^ self fromOurSpaceToTile: self encompassingRectangle bottomRight
+RSOSMShape >> end [
+	^ (self fromOurSpaceToTile: self transformedRectangle bottomRight)
 ]
 
 { #category : #accessing }
-RSOSM >> equatorLength [
+RSOSMShape >> equatorLength [
 	"Equator length  in km. self earthR * 2* Float pi"
 	^ self class equatorLength * self ratio
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> fromCameraSpaceToOurSpace: aPoint [
+RSOSMShape >> fromCameraSpaceToOurSpace: aPoint [
 	"To convert our boundaries from the camera space into our space (0@0 at center, no zoom)."
 
 	^ self canvas camera fromSpaceToPixel: aPoint
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> fromOSMSpaceToOurSpace: aPoint [
+RSOSMShape >> fromOSMSpaceToOurSpace: aPoint [
 	"Convert a point in OSM space (zoom level) into our space."
 
 	^ self fromCameraSpaceToOurSpace: aPoint * self equatorLength / (2 raisedTo: osmZoomLevel) / 256 - (self equatorLength / 2)
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> fromOurSpaceToCameraSpace: aPoint [
+RSOSMShape >> fromOurSpaceToCameraSpace: aPoint [
 	"To convert our boundaries into the camera space."
-
-	^ self canvas camera fromPixelToSpace: aPoint
+	| camera |
+	camera := self canvas camera.
+	^ (camera matrix inverseTransform: aPoint+ (camera originMode gapToCenter: camera) )
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> fromOurSpaceToTile: aPoint [
+RSOSMShape >> fromOurSpaceToTile: aPoint [
 	"Convert our boundaries into the osm space (as set by the zoom level)."
 
 	^ ((self fromOurSpaceToCameraSpace: aPoint) + (self equatorLength / 2))
@@ -105,19 +119,18 @@ RSOSM >> fromOurSpaceToTile: aPoint [
 ]
 
 { #category : #accessing }
-RSOSM >> futures [
-
+RSOSMShape >> futures [
 	^ futures
 ]
 
 { #category : #accessing }
-RSOSM >> futures: anObject [
+RSOSMShape >> futures: anObject [
 
 	futures := anObject
 ]
 
 { #category : #initialization }
-RSOSM >> initialize [
+RSOSMShape >> initialize [
 	super initialize.
 	tiles := Dictionary new.
 	futures := Dictionary new.
@@ -126,67 +139,74 @@ RSOSM >> initialize [
 ]
 
 { #category : #private }
-RSOSM >> inspectorShadowFor: padding color: aColor [
+RSOSMShape >> inspectorShadowFor: padding color: aColor [
 	"a map does not contains a shadow"
 	^ self shouldNotImplement
 ]
 
 { #category : #testing }
-RSOSM >> intersects: aRectangle [
+RSOSMShape >> intersects: aRectangle [
 	"probably this will change with the RTree"
 	^ self shouldNotImplement
 ]
 
 { #category : #accessing }
-RSOSM >> osmZoomLevel [
+RSOSMShape >> osmZoomLevel [
 	^ osmZoomLevel
 ]
 
 { #category : #accessing }
-RSOSM >> pixelLength [
+RSOSMShape >> pixelLength [
 	"Pixel length at equator at highest zoom factor. "
 
 	^ self class equatorLength * self ratio / 256
 ]
 
 { #category : #accessing }
-RSOSM >> ratio [
+RSOSMShape >> ratio [
 	^ ratio ifNil: [ ratio := 1.0 ]
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> remainderZoom: z [
+RSOSMShape >> remainderZoom: z [
 	"Remainder zoom to apply on the display."
 
 	^ self pixelLength * self canvas camera scale * (256 / 255) asFloat / (2 raisedTo: z)
 ]
 
 { #category : #adding }
-RSOSM >> renderOn: aCanvas [
+RSOSMShape >> renderOn: aCanvas [
 ]
 
 { #category : #accessing }
-RSOSM >> semaphore [
+RSOSMShape >> semaphore [
 	^ semaphore
 ]
 
 { #category : #'accessing - computed' }
-RSOSM >> start [
-	^ self fromOurSpaceToTile: self encompassingRectangle topLeft
+RSOSMShape >> start [
+	^ self fromOurSpaceToTile: self transformedRectangle topLeft
 ]
 
 { #category : #accessing }
-RSOSM >> tiles [
+RSOSMShape >> tiles [
 	^ tiles
 ]
 
 { #category : #accessing }
-RSOSM >> tiles: aDictionary [
+RSOSMShape >> tiles: aDictionary [
 	tiles := aDictionary
 ]
 
+{ #category : #'accessing - computed' }
+RSOSMShape >> transformedRectangle [
+	| aPoint |
+	aPoint := parent extent.
+	^ aPoint / -2.0 extent: aPoint
+]
+
 { #category : #private }
-RSOSM >> updateOsmZoomLevel [
+RSOSMShape >> updateOsmZoomLevel [
 	"Get the osm zoom level. Do something if we need to change the zoom level, like flushing the tile cache."
 
 	osmZoomLevel := self computeOsmZoomLevel

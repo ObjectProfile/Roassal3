@@ -180,7 +180,7 @@ RSAbstractChart >> defaultContainer [
 { #category : #'accessing - color' }
 RSAbstractChart >> defaultPlotColors [
 
-	^ NSScale google20
+	^ NSScale category20
 ]
 
 { #category : #'accessing - defaults' }

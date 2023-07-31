@@ -20,3 +20,16 @@ RSOSMTest >> testRender [
 	b build.
 	b canvas createMorph drawOnMockCanvas
 ]
+
+{ #category : #tests }
+RSOSMTest >> testStartEnd [
+	| osm canvas |
+	osm := RSOSMShape new.
+	canvas := RSCanvas new.
+	canvas addShape: osm.
+	canvas extent: 500@500.
+	canvas camera scale: 1.
+	osm updateOsmZoomLevel.
+
+	self assert: osm start equals: 63@63
+]
