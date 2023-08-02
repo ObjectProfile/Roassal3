@@ -230,7 +230,79 @@ RSOSMExamples >> example07SeismOnEarthAnimated [
 	animations := shapes collect: [ :shape |
 		self newAnimationFor: {shape. dateLabel. locationLabel. canvas. magScale} ].
 	canvas animationFrom: animations.
+	canvas when: RSMouseClick do: [ canvas animations do: #toggle ] for: self.
 	^ canvas.
+]
+
+{ #category : #examples }
+RSOSMExamples >> example08SeismOnEarthAnimatedByTime [
+	<noTest>
+	<script: 'self new example08SeismOnEarthAnimatedByTime open
+		extent: 750@550
+	'>
+	| canvas shapes animations timeScale times dateLabel |
+	canvas := self example06SeismOnEarth.
+	shapes := canvas nodes select: [ :each | each class = RSEllipse ].
+	shapes do: #remove.
+	"setup"
+	shapes do: [ :each |
+		each 
+			propertyAt: #time 
+			put: (DateAndTime fromString: (each model at: 'time'));
+			propertyAt: #mag
+			put: (each model at: #mag) asNumber ].
+	times := shapes collect: [ :each | (each propertyAt:#time) asSeconds ].
+	timeScale := NSScale linear
+		domain: { times min. times max };
+		range: { 0. 30 }.
+	
+	animations := shapes collect: [ :shape |
+		self newAnimationByTimeFor: {shape. canvas. timeScale } ].
+	animations do: [ :each | canvas addAnimation: each ].
+	dateLabel := RSLabel new scaleBy: 50; position: 0@ -11000.
+	canvas add: dateLabel.
+	canvas newAnimation
+		duration: 30 seconds;
+		from: timeScale range first;
+		to: timeScale range last;
+		onStepDo: [ :t | | date |
+			date := DateAndTime fromSeconds: (timeScale invert: t).
+			dateLabel text: date asDate asString, ' ', date asTime print24.
+			 ].
+	canvas when: RSMouseClick do: [ canvas animations do: #toggle ] for: self.
+	^ canvas.
+]
+
+{ #category : #examples }
+RSOSMExamples >> newAnimationByTimeFor: data [ 
+	| shape canvas timeScale delay |
+	shape := data first.
+	canvas := data second.
+	timeScale := data third.
+	delay := (timeScale scale: (shape propertyAt: #time) asSeconds) seconds.
+	^ RSSequentialAnimation new
+		add: (RSTransitionAnimation new
+			delay: delay;
+			easing: RSEasingInterpolator elasticOut;
+			duration: 2 second;
+			from: 0;
+			to: shape width;
+			onStepDo: [ :t |
+				shape parent ifNil: [ canvas add: shape ].
+				shape size: t.
+				];
+			yourself);
+		add: (RSTransitionAnimation new
+			duration: 10 seconds;
+			from: shape width;
+			to: 0;
+			onStepDo: [ :t |
+				shape size: t.
+				];
+			when: RSAnimationEndEvent do: [ shape remove ] for: self;
+			yourself
+			);
+		yourself
 ]
 
 { #category : #examples }
@@ -254,12 +326,10 @@ RSOSMExamples >> newAnimationFor: data [
 				time := shape propertyAt: #time.
 				dateLabel text: time asDate asString, ' ', time asTime print24.
 				locationLabel text: (shape model at: #place).
-				duration traceCr.
-				canvas add: shape ] for: self;
-			onStepDo: [ :t | 
-				shape size: t.
-				];
-			when: RSAnimationEndEvent do: [ shape color: Color gray translucent ] for: self);
+				canvas add: shape.
+				locationLabel parent pushFront ] for: self;
+			onStepDo: [ :t | shape size: t ];
+			when: RSAnimationEndEvent do: [ shape color: Color blue translucent ] for: self);
 		add: (self newLineAnimationFor: data);
 		yourself
 		
@@ -275,10 +345,9 @@ RSOSMExamples >> newLineAnimationFor: data [
 	lineStart := 0@ -9000.
 	^ RSTransitionAnimation new
 		easing: RSEasingInterpolator sinOut;
-		duration: duration;
 		from: lineStart;
 		to: shape position;
-		
+		duration: duration;
 		onStepDo: [ :t |
 			canvas lines ifEmpty: [ 
 				canvas add: (RSLine new
@@ -291,6 +360,6 @@ RSOSMExamples >> newLineAnimationFor: data [
 					color: Color black;
 					yourself) ].
 			canvas lines first endPoint: t. canvas signalUpdate ];
-		when: RSAnimationStartEvent do: [ canvas lines copy do: #remove. ] for: self;
+		when: RSAnimationEndEvent do: [ canvas lines copy do: #remove. ] for: self;
 		yourself
 ]

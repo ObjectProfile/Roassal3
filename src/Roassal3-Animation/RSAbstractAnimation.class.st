@@ -20,7 +20,8 @@ Class {
 		'startPauseTime',
 		'endPauseTime',
 		'pauseTime',
-		'canvas'
+		'canvas',
+		'firstStep'
 	],
 	#category : #'Roassal3-Animation-Core'
 }
@@ -115,7 +116,7 @@ RSAbstractAnimation >> initialize [
 { #category : #testing }
 RSAbstractAnimation >> isDelayDone [
 	delay ifNil: [ ^ true ].
-	^ startTime + delay < self currentTime
+	^ startTime + delay  + pauseTime < self currentTime
 ]
 
 { #category : #testing }
@@ -137,6 +138,7 @@ RSAbstractAnimation >> isRunning [
 RSAbstractAnimation >> loopDone [
 	currentLoop := currentLoop + 1.
 	startPauseTime := endPauseTime := pauseTime := 0.
+	firstStep := true.
 	startLoopTime := self currentTime.
 	self announce: (RSAnimationLoopEvent new animation: self)
 ]
@@ -182,7 +184,11 @@ RSAbstractAnimation >> refresh [
 		ifFalse: [ ^ self ].
 	self isPaused
 		ifTrue: [ ^ self ].
-	self step
+	firstStep ifTrue: [ 
+		firstStep := false.
+		pauseTime := 0.
+		 ].
+	self step.
 ]
 
 { #category : #dependencies }
@@ -209,6 +215,7 @@ RSAbstractAnimation >> repeat [
 { #category : #initialization }
 RSAbstractAnimation >> reset [
 	isRunning := false.
+	firstStep := true.
 	self noRepeat.
 	hasCompleted := false.
 	isPaused := false.
