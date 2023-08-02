@@ -46,7 +46,7 @@ RSVerticalMapBuilder >> newLineBuilder [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSVerticalMapBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self updateWithPreOrder: aCanvas

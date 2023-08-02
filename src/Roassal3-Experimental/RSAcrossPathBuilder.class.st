@@ -3,7 +3,7 @@ This class provides a simple way do push a group of shapes across a given path
 "
 Class {
 	#name : #RSAcrossPathBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'shapesToLayout',
 		'svgShape'
@@ -118,7 +118,7 @@ RSAcrossPathBuilder >> labelShapeFor: char [
 			]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAcrossPathBuilder >> renderIn: aCanvas [
 	| visitor |
 	aCanvas addAll: shapesToLayout.

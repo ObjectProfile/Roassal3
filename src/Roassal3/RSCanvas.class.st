@@ -232,6 +232,13 @@ RSCanvas >> canvas [
 	^ self
 ]
 
+{ #category : #removing }
+RSCanvas >> clear [
+	self shapes copy do: #remove.
+	self announcer: nil.
+	self signalUpdate.
+]
+
 { #category : #accessing }
 RSCanvas >> color [
 	"Return the color of the canvas background"

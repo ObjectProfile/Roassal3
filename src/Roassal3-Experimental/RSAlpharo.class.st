@@ -3,7 +3,7 @@ TODO
 "
 Class {
 	#name : #RSAlpharo,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'objects',
 		'jarShape',
@@ -141,7 +141,7 @@ RSAlpharo >> removeJar [
 	jarShape propertyAt: #anime put: animation
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAlpharo >> renderIn: aCanvas [
 	aCanvas inspectorContext: RSEmptyContextInteraction new.
 	amebas := objects collect: [ :obj |

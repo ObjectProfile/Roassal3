@@ -3,7 +3,7 @@ I am a abstract class to create visual elements based on tree structured in roas
 "
 Class {
 	#name : #RSAbstractTreeBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'rootNodes',
 		'weight'
@@ -102,7 +102,7 @@ RSAbstractTreeBuilder >> modelWeight: anObject [
 	self weight: [ :shape | anObject rsValue: shape model ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractTreeBuilder >> renderIn: aCanvas [
 	aCanvas addAll: self shapes
 ]

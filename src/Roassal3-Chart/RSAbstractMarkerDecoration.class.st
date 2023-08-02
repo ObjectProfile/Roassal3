@@ -1,9 +1,11 @@
 "
+Class: RSAbstractMarkerDecoration
+                                                                                                    
 Set a marker in the chart. For example:
 
 =-=-=-==-=-=-==-=-=-=
 x := (-3.14 to: 3.14 by: 0.01).
-c := RSChart new.
+c := RSCompositeChart new.
 
 p := RSLinePlot new.
 p x: x y: x sin * 0.22.
@@ -13,10 +15,9 @@ p := RSLinePlot new.
 p x: x y: x cos * 0.18.
 c addPlot: p.
 
-c addDecoration: RSHorizontalTick new.
-c addDecoration: (RSVerticalTick new asFloat).
+c verticalTick asFloat.
 c addDecoration: (RSYMarkerDecoration new ).
-c 
+c
 =-=-=-==-=-=-==-=-=-=
 "
 Class {
@@ -103,14 +104,14 @@ RSAbstractMarkerDecoration >> min [
 
 { #category : #rendering }
 RSAbstractMarkerDecoration >> renderIn: canvas [
-	lines := chart plots collect: [ :p | | line |
-		line := self createMarkerLineFromPlot: p.
-		line
-			dashArray: self defaultDashStyle;
-			color: markerColor.
-		self addShape: line.
-		line
-	] as: RSGroup
+	
+	| line |
+	line := self createMarkerLineFromPlot: chart.
+	line
+		dashArray: self defaultDashStyle;
+		color: markerColor.
+	self addShape: line.
+	lines := { line } as: RSGroup
 ]
 
 { #category : #'public - configuration' }

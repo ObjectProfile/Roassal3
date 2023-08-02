@@ -46,12 +46,12 @@ RSConnectionExample >> example02TwoViews [
 
 	connection output: [ :inputModel |
 		| c3 |
-		c3 := RSChart new.
+		c3 := RSCompositeChart new.
 		d := RSLinePlot new.
 		d y:
 			(((1 to: inputModel) collect: [ :v | SharedRandom globalGenerator nextInteger: 42 ])
 				 sortedAs: #yourself).
-		c3 addPlot: d.
+		c3 add: d.
 		c3 build ]
 ]
 

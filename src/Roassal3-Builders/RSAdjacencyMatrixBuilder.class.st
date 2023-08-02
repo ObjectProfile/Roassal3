@@ -3,7 +3,7 @@ Used as example
 "
 Class {
 	#name : #RSAdjacencyMatrixBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'connections',
 		'objects'
@@ -159,7 +159,7 @@ RSAdjacencyMatrixBuilder >> outgoingConnectionsOf: anObject [
 		  thenCollect: #value
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 
 	"Display the adjacency matrix"

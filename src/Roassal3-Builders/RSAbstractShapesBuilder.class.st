@@ -5,7 +5,7 @@ My subclasses needs to implement #objects and: #shapesFor:
 "
 Class {
 	#name : #RSAbstractShapesBuilder,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#category : #'Roassal3-Builders-Core'
 }
 
@@ -14,7 +14,7 @@ RSAbstractShapesBuilder >> objects [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSAbstractShapesBuilder >> renderIn: aCanvas [
 	aCanvas addAll: (shapes := self shapesFor: self objects)
 ]

@@ -4,7 +4,7 @@ For a collection of objects and an arbitrary dependency function.
 "
 Class {
 	#name : #RSDSM,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'shape',
 		'objectsX',
@@ -305,7 +305,7 @@ RSDSM >> objectsY: someObjects [
 	objectsY := someObjects
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDSM >> renderIn: aCanvas [
 	shapes := self createShapes.
 	aCanvas addAll: shapes.

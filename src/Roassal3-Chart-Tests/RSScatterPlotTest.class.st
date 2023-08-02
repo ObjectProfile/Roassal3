@@ -1,6 +1,6 @@
 Class {
 	#name : #RSScatterPlotTest,
-	#superclass : #RSAbstractChartTest,
+	#superclass : #RSAbstractPlotTest,
 	#category : #'Roassal3-Chart-Tests-Base'
 }
 

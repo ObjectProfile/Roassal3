@@ -12,6 +12,13 @@ Class {
 }
 
 { #category : #rendering }
+RSHorizontalTopTick >> beforeRenderingIn: aChart [
+
+	self createXScale.
+	self createYScale
+]
+
+{ #category : #rendering }
 RSHorizontalTopTick >> createTickLineFor: aNumber [
 	| value y |
 	value := xScale scale: aNumber.
@@ -24,17 +31,18 @@ RSHorizontalTopTick >> createTickLineFor: aNumber [
 
 { #category : #rendering }
 RSHorizontalTopTick >> createXScale [
+
 	| padding |
 	xScale ifNil: [ xScale := NSScale linear ].
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	padding := chart padding x.
 	xScale
-		domain:
-			{self min.
-			self max};
-		range:
-			{0 + padding.
-			chart extent x - padding}
+		domain: {
+				self min.
+				self max };
+		range: {
+				(0 + padding).
+				(chart extent x - padding) }
 ]
 
 { #category : #'accessing - defaults' }
@@ -42,22 +50,26 @@ RSHorizontalTopTick >> defaultLabelLocation [
 	^ RSLocation new above offset: 0@ -3
 ]
 
+{ #category : #testing }
+RSHorizontalTopTick >> isHorizontalTick [
+
+	^ true
+]
+
 { #category : #accessing }
 RSHorizontalTopTick >> max [
-	^ values max
+	^ values max max: 0
 ]
 
 { #category : #accessing }
 RSHorizontalTopTick >> min [
-	^ values min
+	^ values min min: 0
 ]
 
 { #category : #rendering }
 RSHorizontalTopTick >> updateChartMaxAndMinValues: aChart [
 
-	aChart
-		minValueX: self ticksData first;
-		maxValueX: self ticksData last
+	
 ]
 
 { #category : #accessing }
