@@ -85,6 +85,8 @@ RSViolinPlot class >> example05DataFrameCategoryBy [
 	| boxPlot1 toothGrowth |
 	toothGrowth := AIDatasets loadToothGrowth.
 	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
+	boxPlot1 xlabel: 'dose'.
+	boxPlot1 ylabel: 'len'.
 	^ boxPlot1 open
 ]
 
