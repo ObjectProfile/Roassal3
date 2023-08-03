@@ -126,7 +126,7 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
 
 { #category : #tests }
 RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
-	| boxPlot data chart box chartBox categories window |
+	| boxPlot data chart chartBox categories window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
 			 { 5. 6. 7. 5. 10. }  . "B"
 			 { 12. 12. 13. 14. 15. 24. } "C"  }.
