@@ -30,9 +30,6 @@ RSViolinPlotShape >> addChildrenToComposite [
 		aShape isCollection ifTrue: [ self addAll: aShape ]
 		ifFalse: [ self add: aShape ].
 	].
-	boxPlotShape color: Color white.
-	boxPlotShape addChildrenToComposite.
-	self add: boxPlotShape.
 	self adjustToChildren.
 	^ self.
 ]
@@ -167,6 +164,12 @@ RSViolinPlotShape >> minYValue [
 	^ boxPlotShape minYValue min: minYValueOfCurve.
 ]
 
+{ #category : #'accessing - attributes' }
+RSViolinPlotShape >> model: aModel [
+	super model: aModel.
+	boxPlotShape model: aModel.
+]
+
 { #category : #initialization }
 RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 	boxPlotShape outlierSize: aDimensionInPixels.
@@ -176,6 +179,9 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 RSViolinPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
 	canvas add: self.
+	boxPlotShape color: Color white.
+	boxPlotShape addChildrenToComposite.
+	canvas add: boxPlotShape.
 	canvas @ RSCanvasController.
 	^ canvas.
 ]
