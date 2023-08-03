@@ -66,7 +66,7 @@ RSBoxPlotShapeTest >> testDefaultLowerWhisker [
 	| data boxShape |
 	data := { 5. 1. 2. 3. 4. }.
 	boxShape := RSBoxPlotShape data: data.
-	self assert: boxShape lowerWhisker class equals: RSPolyline.
+	self assert: boxShape lowerWhisker class equals: RSLine.
 	self assert: boxShape lowerWhisker color equals: Color black.
 	self assert: boxShape lowerWhisker border width equals: 1.
 ]
@@ -76,7 +76,7 @@ RSBoxPlotShapeTest >> testDefaultUpperWhisker [
 	| data boxShape |
 	data := { 5. 1. 2. 3. 4. }.
 	boxShape := RSBoxPlotShape data: data.
-	self assert: boxShape upperWhisker class equals: RSPolyline.
+	self assert: boxShape upperWhisker class equals: RSLine.
 	self assert: boxShape upperWhisker color equals: Color black.
 	self assert: boxShape upperWhisker border width equals: 1.
 ]

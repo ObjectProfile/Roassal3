@@ -262,7 +262,7 @@ RSBoxPlotShape >> defaultMedianConfidencePercentage [
 
 { #category : #defaults }
 RSBoxPlotShape >> defaultMedianLine [
-	^ RSPolyline new
+	^ RSLine new
 		width: 2;
 		color: Color black.
 ]
@@ -287,7 +287,7 @@ RSBoxPlotShape >> defaultShouldShowBand [
 
 { #category : #defaults }
 RSBoxPlotShape >> defaultWhisker [
-	^ RSPolyline new
+	^ RSLine new
 		width: 1;
 		color: Color black.
 ]
