@@ -69,11 +69,6 @@ RSViolinPlotShape >> data: dataset [
 	boxPlotShape data: aCollection.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> dataModel: aModel [
-	dataModel := aModel
-]
-
 { #category : #accessing }
 RSViolinPlotShape >> dataSorted [
 	^ boxPlotShape data.
@@ -166,7 +161,6 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 { #category : #initialization }
 RSViolinPlotShape >> renderIn: canvas [
 	| shapes |
-	self model: dataModel.
 	shapes := self shapesToRender.
 	shapes do: [ :aShape |
 		aShape isCollection ifTrue: [ self addAll: aShape ]
