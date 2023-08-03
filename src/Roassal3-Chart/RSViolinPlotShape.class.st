@@ -3,7 +3,6 @@ Class {
 	#superclass : #RSComposite,
 	#instVars : [
 		'boxPlotShape',
-		'dataModel',
 		'kernelDensity',
 		'densityArea',
 		'color',
