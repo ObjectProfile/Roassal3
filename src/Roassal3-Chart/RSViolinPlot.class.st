@@ -49,7 +49,8 @@ Class {
 		'offset',
 		'bandWidth',
 		'models',
-		'model'
+		'model',
+		'dataBlock'
 	],
 	#category : #'Roassal3-Chart'
 }
@@ -318,38 +319,6 @@ RSViolinPlot >> canHandleCluster [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-RSViolinPlot >> category: aColumnName [
-	self models: (models select: [ :dataSeriesModel | dataSeriesModel name = aColumnName ]).
-	self computeState.
-]
-
-{ #category : #'as yet unclassified' }
-RSViolinPlot >> categoryBy: aColumnName [
-	| categories newModels newLabels |
-	categories := (model column: aColumnName) uniqueValues sort.
-	newModels := OrderedCollection new.
-	newLabels := OrderedCollection new.
-	models do: [ :dataSeries |
-		categories do: [ :category |
-			| newDataSeries selectedIndex |
-			selectedIndex := OrderedCollection new.
-			model withIndexSelect: [:row :idx |
-				| bool |
-				bool := (row at: aColumnName) = category.
-				bool ifTrue: [ selectedIndex add: idx ].
-				bool 
-				].
-			newDataSeries := dataSeries atAll: selectedIndex.
-			newModels add: newDataSeries.
-			newLabels add: category.
-		].
-	] .
-	self models: newModels.
-	self data: [ :ds | ds asArray ].
-	self xTickLabels: newLabels.
-]
-
 { #category : #rendering }
 RSViolinPlot >> colors: collectionOfColors [
 	violinShapes doWithIndex: [ :violinShape :idx | violinShape color: (collectionOfColors at: idx) ].
@@ -434,6 +403,7 @@ RSViolinPlot >> data: dataset [
 	- aBlock to get the data from the model (previously stored in model)"
 	
 	| collectionOfDatasets |
+	dataset isBlock ifTrue: [ dataBlock := dataset ].
 	collectionOfDatasets := self extractDatasetsFrom: dataset.
 	self createViolinShapesWithDataSet: collectionOfDatasets.
 	self computeState
@@ -468,44 +438,6 @@ RSViolinPlot >> extractDatasetsFrom: data [
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
-RSViolinPlot >> hue: aColumnName [
-	| categories indexOfCategories clusteredChart |
-	
-	categories := (model column: aColumnName) uniqueValues sort.
-	indexOfCategories := OrderedCollection new.
-	
-	categories do: [ :category | 
-		| indexOfCategory |
-		indexOfCategory := OrderedCollection new.
-		model withIndexSelect: [:row :idx |
-				| bool |
-				bool := (row at: aColumnName) = category.
-				bool ifTrue: [ indexOfCategory add: idx ].
-				bool 
-		].
-		indexOfCategories add: indexOfCategory.
-	].
-	
-	clusteredChart := RSClusterChart new.
-	
-	categories doWithIndex: [ :category :idx |
-		| newModels newViolinPlot |
-		newViolinPlot := self class new.
-		newModels := OrderedCollection new.
-		models do: [ :dataSeries |
-			| newDataSeries |
-			newDataSeries := dataSeries atAll: (indexOfCategories at: idx).
-			newModels add: newDataSeries 
-		].
-		newViolinPlot model: (model atAll: (indexOfCategories at: idx)).
-		newViolinPlot models: newModels.
-		newViolinPlot data: [ :ds | ds asArray ].
-		clusteredChart := clusteredChart + newViolinPlot.
-	].
-	^ clusteredChart.
-]
-
 { #category : #initialization }
 RSViolinPlot >> initialize [
 	super initialize.
@@ -520,12 +452,11 @@ RSViolinPlot >> kernelBandwidth: aNumber [
 
 { #category : #rendering }
 RSViolinPlot >> model [
-	^ self models first
+	^ model
 ]
 
 { #category : #rendering }
 RSViolinPlot >> model: aModel [
-	self models: {aModel}.
 	model := aModel.
 ]
 
@@ -575,12 +506,4 @@ RSViolinPlot >> violinShapes [
 RSViolinPlot >> violinShapes: collectionOfRSViolinPlotShapes [
 	violinShapes := collectionOfRSViolinPlotShapes
 	
-]
-
-{ #category : #'as yet unclassified' }
-RSViolinPlot >> y: aColumnName [
-	
-	self models: (models select: [ :dataSeriesModel | dataSeriesModel name = aColumnName ]).
-	self data: [ :ds | ds asArray ].
-	self computeState.
 ]

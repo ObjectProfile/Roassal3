@@ -1,6 +1,26 @@
 Extension { #name : #RSViolinPlot }
 
 { #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot >> categoryBy: aColumnName [
+	| newModels newLabels |
+	newModels := OrderedCollection new.
+	newLabels := OrderedCollection new.
+	models do: [ :df | 
+		| categories |
+		categories := (model column: aColumnName) uniqueValues sort.
+		categories do: [ :category |
+			| newDataFrame |
+			newDataFrame := df select: [ :row | (row at: aColumnName) = category ].
+			newModels add: newDataFrame.
+			newLabels add: category.
+		].
+	].
+	self models: newModels.
+	self data: dataBlock.
+	self xTickLabels: newLabels.
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
 RSViolinPlot class >> dataFrame: aDataSeriesOrDataFrame [
 	| violinPlot aDataSeries |
 	violinPlot := self new.
@@ -54,40 +74,74 @@ RSViolinPlot class >> example04DataFrame [
 
 	| boxPlot1 toothGrowth |
 	toothGrowth := AIDatasets loadToothGrowth.
-	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len.
 	boxPlot1 color: Color purple translucent.
 	^ boxPlot1 open
 ]
 
 { #category : #'*Roassal3-Chart-DataFrame' }
-RSViolinPlot class >> example04DataFrameAndCluster [
+RSViolinPlot class >> example05DataFrameCategoryBy [
+
+	| boxPlot1 toothGrowth |
+	toothGrowth := AIDatasets loadToothGrowth.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
+	^ boxPlot1 open
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot class >> example06DataFrameHue [
+
+	| boxPlot1 toothGrowth |
+	toothGrowth := AIDatasets loadToothGrowth.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; hue:#supp.
+	^ boxPlot1 open
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot class >> example07DataFrameCategoryAndHue [
 
 	| boxPlot1 toothGrowth |
 	toothGrowth := AIDatasets loadToothGrowth.
 	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose; hue:#supp.
-	boxPlot1 color: Color purple translucent.
-	^ boxPlot1 open
-]
-
-{ #category : #'*Roassal3-Chart-DataFrame' }
-RSViolinPlot class >> example04DataFrameAndHue [
-
-	| boxPlot1 toothGrowth |
-	toothGrowth := AIDatasets loadToothGrowth.
-	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
-	boxPlot1 color: Color purple translucent.
 	^ boxPlot1 open
 ]
 
 { #category : #'*Roassal3-Chart-DataFrame' }
 RSViolinPlot class >> fromDataFrame: aDataFrame [
-	| violinPlot dataSeries |
+	| violinPlot |
 	violinPlot := self new.
-	dataSeries := aDataFrame columnNames collect: [ :columnName | aDataFrame column: columnName ].
-	dataSeries := (dataSeries select: [:ds|ds isNumerical]).
 	violinPlot model: aDataFrame.
-	violinPlot models: dataSeries.
-	violinPlot data: [:dataSerie | dataSerie asArray.].
-	violinPlot xTickLabels: (dataSeries collect: [:ds|ds name]).
+	violinPlot models: { aDataFrame }.
 	^ violinPlot
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot >> hue: aColumnName [
+	| categories clusteredChart |
+	
+	categories := (model column: aColumnName) uniqueValues sort.
+	
+	clusteredChart := RSClusterChart new.
+	
+	categories doWithIndex: [ :category :idx |
+		| newModels newViolinPlot |
+		newViolinPlot := self class new.
+		newModels := OrderedCollection new.
+		models do: [ :df |
+			| newDataFrame |
+			newDataFrame := df select: [ :row | (row at: aColumnName) = category ].
+			newModels add: newDataFrame 
+		].
+		newViolinPlot models: newModels.
+		newViolinPlot data: dataBlock.
+		clusteredChart := clusteredChart + newViolinPlot.
+	].
+	^ clusteredChart.
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot >> y: aColumnName [
+	
+	self data: [ :df | (df column: aColumnName) asArray ].
+	self computeState.
 ]
