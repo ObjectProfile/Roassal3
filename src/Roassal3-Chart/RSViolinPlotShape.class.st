@@ -23,6 +23,21 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 	^ violinShape
 ]
 
+{ #category : #initialization }
+RSViolinPlotShape >> addChildrenToComposite [
+	| shapes |
+	shapes := self shapesToRender.
+	shapes do: [ :aShape |
+		aShape isCollection ifTrue: [ self addAll: aShape ]
+		ifFalse: [ self add: aShape ].
+	].
+	boxPlotShape color: Color white.
+	boxPlotShape addChildrenToComposite.
+	self add: boxPlotShape.
+	self adjustToChildren.
+	^ self.
+]
+
 { #category : #accessing }
 RSViolinPlotShape >> bandOffset: aNumber [
 	bandOffset := aNumber.
@@ -160,16 +175,9 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 
 { #category : #initialization }
 RSViolinPlotShape >> renderIn: canvas [
-	| shapes |
-	shapes := self shapesToRender.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ self addAll: aShape ]
-		ifFalse: [ self add: aShape ].
-	].
-	self adjustToChildren.
+	self addChildrenToComposite.
 	canvas add: self.
-	boxPlotShape color: Color white.
-	boxPlotShape renderIn: canvas.
+	canvas @ RSCanvasController.
 	^ canvas.
 ]
 

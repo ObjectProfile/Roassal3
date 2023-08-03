@@ -30,7 +30,7 @@ boxPlotShape := RSBoxPlotShape data: data.
 "
 Class {
 	#name : #RSBoxPlotShape,
-	#superclass : #RSObject,
+	#superclass : #RSComposite,
 	#instVars : [
 		'bandWidth',
 		'statisticalMeasures',
@@ -68,6 +68,18 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 	boxGraph := self data: collectionOfData1D.
 	boxGraph scales: collectionOfNSScales.
 	^ boxGraph.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> addChildrenToComposite [
+	| shapes |
+	shapes := self shapesWithCenterAt: bandOffset.
+	shapes do: [ :aShape |
+		aShape isCollection ifTrue: [ self addAll: aShape ]
+		ifFalse: [ self add: aShape ].
+	].
+	self adjustToChildren.
+	^ self.
 ]
 
 { #category : #accessing }
@@ -417,12 +429,8 @@ RSBoxPlotShape >> quartiles [
 
 { #category : #accessing }
 RSBoxPlotShape >> renderIn: canvas [
-	| shapes |
-	shapes := self shapesWithCenterAt: bandOffset.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ canvas addAll: aShape ]
-		ifFalse: [ canvas add: aShape ].
-	].
+	self addChildrenToComposite.
+	canvas add: self.
 	^ canvas.
 ]
 
