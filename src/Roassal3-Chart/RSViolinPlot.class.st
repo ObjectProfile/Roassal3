@@ -88,6 +88,7 @@ RSViolinPlot class >> exampleModel [
 	| violinPlot |
 	violinPlot := self new.
 	violinPlot model: SequenceableCollection.
+	violinPlot models: { SequenceableCollection }.
 	violinPlot data: [ :cls| cls methods collect: [ :met | met linesOfCode ] ].
 	^ violinPlot open
 ]
