@@ -52,7 +52,7 @@ Class {
 		'model',
 		'dataBlock'
 	],
-	#category : #'Roassal3-Chart'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -365,7 +365,7 @@ RSViolinPlot >> computeYValues [
 RSViolinPlot >> createViolinShapeFor: anObject dataset: dataset [
 	self assert: dataset notEmpty description: 'dataset can not be empty'.
 	^ (RSViolinPlotShape data: dataset)
-		model: anObject;
+		dataModel: anObject;
 		yourself.
 ]
 
