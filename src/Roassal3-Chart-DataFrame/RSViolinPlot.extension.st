@@ -54,8 +54,40 @@ RSViolinPlot class >> example04DataFrame [
 
 	| boxPlot1 toothGrowth |
 	toothGrowth := AIDatasets loadToothGrowth.
-	boxPlot1 := self dataFrame: toothGrowth x: #dose y: #len.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
 	boxPlot1 color: Color purple translucent.
-	"boxPlot1 bandwidth: 2."
 	^ boxPlot1 open
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot class >> example04DataFrameAndCluster [
+
+	| boxPlot1 toothGrowth |
+	toothGrowth := AIDatasets loadToothGrowth.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose; hue:#supp.
+	boxPlot1 color: Color purple translucent.
+	^ boxPlot1 open
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot class >> example04DataFrameAndHue [
+
+	| boxPlot1 toothGrowth |
+	toothGrowth := AIDatasets loadToothGrowth.
+	boxPlot1 := (self fromDataFrame: toothGrowth) y: #len; categoryBy: #dose.
+	boxPlot1 color: Color purple translucent.
+	^ boxPlot1 open
+]
+
+{ #category : #'*Roassal3-Chart-DataFrame' }
+RSViolinPlot class >> fromDataFrame: aDataFrame [
+	| violinPlot dataSeries |
+	violinPlot := self new.
+	dataSeries := aDataFrame columnNames collect: [ :columnName | aDataFrame column: columnName ].
+	dataSeries := (dataSeries select: [:ds|ds isNumerical]).
+	violinPlot model: aDataFrame.
+	violinPlot models: dataSeries.
+	violinPlot data: [:dataSerie | dataSerie asArray.].
+	violinPlot xTickLabels: (dataSeries collect: [:ds|ds name]).
+	^ violinPlot
 ]
