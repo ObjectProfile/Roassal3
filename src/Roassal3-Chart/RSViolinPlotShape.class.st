@@ -182,7 +182,6 @@ RSViolinPlotShape >> renderIn: canvas [
 	boxPlotShape color: Color white.
 	boxPlotShape addChildrenToComposite.
 	canvas add: boxPlotShape.
-	canvas @ RSCanvasController.
 	^ canvas.
 ]
 

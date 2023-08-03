@@ -137,9 +137,7 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 	chart := boxPlot chart.
 	chartBox := chart spine encompassingRectangle.
 	boxPlot boxShapes do: [ :eachBoxShape |
-		box := eachBoxShape box.
-		self assert: box class equals: RSPolygon.
-		self assert: (chartBox containsRect: box encompassingRectangle).
+		self assert: (chartBox containsRect: eachBoxShape encompassingRectangle).
 	].
 	window delete.
 ]

@@ -147,7 +147,7 @@ RSBoxPlotShapeTest >> testWhiskerLinesFormat [
 
 	boxShape whiskerFormat: '--'.
 	self assert: boxShape whiskers border dashArray equals: #(4 2).
-	boxShape computeWhiskers.
+	boxShape createWhiskerLines.
 	self assert: boxShape upperWhisker border dashArray equals: #(4 2).
 	self assert: boxShape lowerWhisker border dashArray equals: #(4 2).
 
@@ -156,7 +156,7 @@ RSBoxPlotShapeTest >> testWhiskerLinesFormat [
 	boxShape scales: {xScale. yScale}.
 	boxShape bandWidth: xScale rangeBand.
 	boxShape bandOffset: (xScale scale: 1).
-	boxShape computeWhiskers.
+	boxShape createWhiskerLines.
 	self assert: boxShape upperWhisker border dashArray equals: #(4 2).
 	self assert: boxShape lowerWhisker border dashArray equals: #(4 2).
 ]

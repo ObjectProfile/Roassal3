@@ -72,12 +72,9 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 
 { #category : #accessing }
 RSBoxPlotShape >> addChildrenToComposite [
-	| shapes |
-	shapes := self shapesWithCenterAt: bandOffset.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ self addAll: aShape ]
-		ifFalse: [ self add: aShape ].
-	].
+	| shapesToRender |
+	shapesToRender := self shapesToRender.
+	self addAll: shapesToRender.
 	self adjustToChildren.
 	^ self.
 ]
@@ -130,7 +127,23 @@ RSBoxPlotShape >> computeBandRectangle [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> computeBox [
+RSBoxPlotShape >> confidenceInterval [
+	^ statisticalMeasures confidenceInterval.
+	
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> confidencePercentage [
+	^ medianConfidencePercentage 
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> confidencePercentage: aNumber [
+	medianConfidencePercentage := aNumber.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> createBoxShape [
 	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
@@ -166,11 +179,10 @@ RSBoxPlotShape >> computeBox [
 	].
 	
 	box points: boxPoints.
-	^ box
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> computeMedianLine [
+RSBoxPlotShape >> createMedianLine [
 	| q050 medianLinePoints lineWidth |
 	q050 := statisticalMeasures quartiles second.
 	"graphCenter was already computed in shapesWithCenterAt"
@@ -180,26 +192,23 @@ RSBoxPlotShape >> computeMedianLine [
 		(graphCenter-(lineWidth/2))@ (yScale scale: q050). 
 		(graphCenter+(lineWidth/2))@ (yScale scale: q050). }.
 	medianLine := medianLine controlPoints: medianLinePoints.
-	^ medianLine.
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> computeOutliers [
+RSBoxPlotShape >> createOutliersShapes [
 	| outliersPoints |
 	"graphCenter was already computed in shapesWithCenterAt"
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
-	outliers := outliersPoints.
 	outlier extent x isZero ifTrue: [ outlier size: bandWidth * 0.15 ].
-	outliers := outliers collect: [ :out |
+	outliers := outliersPoints collect: [ :out |
 			| e |
-			e := outlier.
+			e := outlier copy.
 			e translateTo: out.
 	] as: RSGroup.
-	^ outliers.
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> computeWhiskers [
+RSBoxPlotShape >> createWhiskerLines [
 	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
 	upperLimit := statisticalMeasures upperLimit.
 	lowerLimit := statisticalMeasures lowerLimit.
@@ -212,23 +221,6 @@ RSBoxPlotShape >> computeWhiskers [
 	lowerWhisker := whisker copy.
 	upperWhisker controlPoints: upperWhiskerPoints.
 	lowerWhisker controlPoints: lowerWhiskerPoints.
-	^ { upperWhisker. lowerWhisker. }.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> confidenceInterval [
-	^ statisticalMeasures confidenceInterval.
-	
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> confidencePercentage [
-	^ medianConfidencePercentage 
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> confidencePercentage: aNumber [
-	medianConfidencePercentage := aNumber.
 ]
 
 { #category : #accessing }
@@ -250,7 +242,7 @@ RSBoxPlotShape >> defaultBandPadding [
 RSBoxPlotShape >> defaultBox [
 	^ RSPolygon new
 		color: color;
-		borderColor: Color black.
+		border: (RSBorder new color: Color black; joinRound).
 ]
 
 { #category : #defaults }
@@ -431,7 +423,6 @@ RSBoxPlotShape >> quartiles [
 RSBoxPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
 	canvas add: self.
-	^ canvas.
 ]
 
 { #category : #accessing }
@@ -446,23 +437,21 @@ RSBoxPlotShape >> scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> shapesWithCenterAt: aNumber [
-
+RSBoxPlotShape >> shapesToRender [
 	| band shapes |
-	self graphCenter: aNumber.
+	self graphCenter: bandOffset.
 	notched ifTrue: [ notchWidthPercentage := 0.5 ].
-	self computeWhiskers.
-	medianLine := self computeMedianLine.
-	box := self computeBox.
+	self createWhiskerLines.
+	self createMedianLine.
+	self createBoxShape.
 	box color: color.
-	outliers := self computeOutliers.
-	shapes := OrderedCollection new.
-	shapes addAll: {
+	self createOutliersShapes.
+	shapes := OrderedCollection withAll: {
 			          upperWhisker.
 						 lowerWhisker.
 			          box.
-			          medianLine.
-			          outliers }.
+			          medianLine. }.
+	shapes addAll: outliers.
 	shouldShowBand ifTrue: [
 		band := self computeBandRectangle.
 		shapes add: band ].

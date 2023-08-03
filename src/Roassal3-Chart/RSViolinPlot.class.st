@@ -80,7 +80,7 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 	boxPlot1 := self data: {
 			            {6. 8. 7. 5. 7. 11. 9. }.
 			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
-	^ boxPlot1 open
+	^ boxPlot1 open.
 ]
 
 { #category : #examples }

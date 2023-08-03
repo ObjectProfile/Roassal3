@@ -494,6 +494,11 @@ RSBoxPlot >> bandsOffset: aNumberInRange [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> bandsWidth [
+	^ bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
+]
+
+{ #category : #rendering }
 RSBoxPlot >> bandsWidth: aNumber [
 	bandWidth := aNumber.
 ]
@@ -559,7 +564,7 @@ RSBoxPlot >> computeBandsOffset [
 
 { #category : #rendering }
 RSBoxPlot >> computeBandsWidth [
-	boxShapes do: [ :boxShape | boxShape bandWidth: bandWidth ].
+	boxShapes do: [ :boxShape | boxShape bandWidth: self bandsWidth ].
 ]
 
 { #category : #accessing }
@@ -650,6 +655,12 @@ RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
+{ #category : #initialization }
+RSBoxPlot >> initialize [
+	super initialize.
+	offset := 0.
+]
+
 { #category : #rendering }
 RSBoxPlot >> iqr [
 	^ self iqrs first.
@@ -730,13 +741,8 @@ RSBoxPlot >> quartiles [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
-	"self computeDefualtXTicks."
-	offset ifNil: [ offset := 0 ].
 	self computeBandsOffset.
-	
-	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 	self computeBandsWidth.
-	
 	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
 		aRSBoxPlotShape scales: {
