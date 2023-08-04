@@ -469,9 +469,11 @@ RSBoxPlot class >> exampleNotch [
 	| p1 y1 |
 
 	"y1 := { { 12. 12. 13. 14. 15. 24. }  }."
-	y1 := { 12. 12. 13. 15. 18. 20. 21. 24. }.
+	y1 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	p1 := self data: y1. "blue"
-	p1 notch: true.
+	"p1 notch: true."
 	^ p1 open.
 ]
 
@@ -491,6 +493,11 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 { #category : #rendering }
 RSBoxPlot >> bandsOffset: aNumberInRange [
 	offset := aNumberInRange
+]
+
+{ #category : #rendering }
+RSBoxPlot >> bandsWidth [
+	^ bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 ]
 
 { #category : #rendering }
@@ -559,7 +566,7 @@ RSBoxPlot >> computeBandsOffset [
 
 { #category : #rendering }
 RSBoxPlot >> computeBandsWidth [
-	boxShapes do: [ :boxShape | boxShape bandWidth: bandWidth ].
+	boxShapes do: [ :boxShape | boxShape bandWidth: self bandsWidth ].
 ]
 
 { #category : #accessing }
@@ -650,6 +657,12 @@ RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
+{ #category : #initialization }
+RSBoxPlot >> initialize [
+	super initialize.
+	offset := 0.
+]
+
 { #category : #rendering }
 RSBoxPlot >> iqr [
 	^ self iqrs first.
@@ -730,13 +743,8 @@ RSBoxPlot >> quartiles [
 { #category : #rendering }
 RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
-	"self computeDefualtXTicks."
-	offset ifNil: [ offset := 0 ].
 	self computeBandsOffset.
-	
-	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 	self computeBandsWidth.
-	
 	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
 		aRSBoxPlotShape scales: {

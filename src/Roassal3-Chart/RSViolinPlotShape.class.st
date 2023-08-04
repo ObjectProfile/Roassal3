@@ -1,6 +1,6 @@
 Class {
 	#name : #RSViolinPlotShape,
-	#superclass : #RSObject,
+	#superclass : #RSComposite,
 	#instVars : [
 		'boxPlotShape',
 		'kernelDensity',
@@ -9,8 +9,7 @@ Class {
 		'xScale',
 		'yScale',
 		'bandOffset',
-		'bandWidth',
-		'model'
+		'bandWidth'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -21,6 +20,18 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 	violinShape := self new.
 	violinShape data: collectionOfData1D.
 	^ violinShape
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> addChildrenToComposite [
+	| shapes |
+	shapes := self shapesToRender.
+	shapes do: [ :aShape |
+		aShape isCollection ifTrue: [ self addAll: aShape ]
+		ifFalse: [ self add: aShape ].
+	].
+	self adjustToChildren.
+	^ self.
 ]
 
 { #category : #accessing }
@@ -153,14 +164,10 @@ RSViolinPlotShape >> minYValue [
 	^ boxPlotShape minYValue min: minYValueOfCurve.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> model [
-	^ model
-]
-
-{ #category : #initialization }
+{ #category : #'accessing - attributes' }
 RSViolinPlotShape >> model: aModel [
-	model := aModel
+	super model: aModel.
+	boxPlotShape model: aModel.
 ]
 
 { #category : #initialization }
@@ -170,14 +177,11 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 
 { #category : #initialization }
 RSViolinPlotShape >> renderIn: canvas [
-	| shapes |
-	shapes := self shapes.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ canvas addAll: aShape ]
-		ifFalse: [ canvas add: aShape ].
-	].
+	self addChildrenToComposite.
+	canvas add: self.
 	boxPlotShape color: Color white.
-	boxPlotShape renderIn: canvas.
+	boxPlotShape addChildrenToComposite.
+	canvas add: boxPlotShape.
 	^ canvas.
 ]
 
@@ -194,7 +198,7 @@ RSViolinPlotShape >> scales: collectionOfNSScales [
 ]
 
 { #category : #initialization }
-RSViolinPlotShape >> shapes [
+RSViolinPlotShape >> shapesToRender [
 	densityArea := self densityArea.
 	^ { densityArea. }.
 ]

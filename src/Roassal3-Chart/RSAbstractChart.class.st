@@ -167,7 +167,7 @@ RSAbstractChart >> decorations [
 { #category : #'accessing - defaults' }
 RSAbstractChart >> defaultContainer [
 	^ RSCanvas new
-		"when: RSExtentChangedEvent send:#updateChart: to: self;"
+		in: [ :canvas | canvas inspectorContext interactionsToBeRegistered first noPushFront ];
 		addInteraction: (RSCanvasController new
 			in: [ :controller |
 				controller zoomToFitInteraction useZoomToFitOnExtentChanged.

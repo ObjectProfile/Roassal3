@@ -30,6 +30,12 @@ RSAbstractDualLine >> controlPoints [
 ]
 
 { #category : #accessing }
+RSAbstractDualLine >> controlPoints: aCollection [ 
+	self assert: aCollection size = 2 description: 'Should have two points.'.
+	self startPoint: aCollection first; endPoint: aCollection second
+]
+
+{ #category : #accessing }
 RSAbstractDualLine >> endPoint [
 	^ endPoint
 ]

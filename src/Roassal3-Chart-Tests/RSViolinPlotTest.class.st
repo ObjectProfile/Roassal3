@@ -76,7 +76,7 @@ RSViolinPlotTest >> testExtractDatasetFromBlock [
 	model := String.
 	data := [:cls | cls methods collect: [:met | met linesOfCode ] ].
 	plot := RSViolinPlot new.
-	plot model: model.
+	plot models: {model}.
 	result := plot extractDatasetsFrom: data.
 	expectedResult := data rsValue: model.
 	self assert: result equals: {expectedResult}.
@@ -104,10 +104,10 @@ RSViolinPlotTest >> testExtractDatasetFromValue [
 RSViolinPlotTest >> testModel [
 	| violinPlot aModel window |    
 	aModel := String.
-	violinPlot := RSViolinPlot model: aModel.
+	violinPlot := RSViolinPlot models: {aModel}.
 	violinPlot data: [ :cls | cls methods collect: [:met | met linesOfCode ] ].
 	window := violinPlot open.
-	self assert: violinPlot model equals: aModel.
+	self assert: violinPlot models first equals: aModel.
 	window delete.
 
 ]

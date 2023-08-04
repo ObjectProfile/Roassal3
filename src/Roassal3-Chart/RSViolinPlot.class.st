@@ -48,7 +48,9 @@ Class {
 		'violinShapes',
 		'offset',
 		'bandWidth',
-		'models'
+		'models',
+		'model',
+		'dataBlock'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -78,14 +80,38 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 	boxPlot1 := self data: {
 			            {6. 8. 7. 5. 7. 11. 9. }.
 			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
-	^ boxPlot1 open
+	^ boxPlot1 open.
+]
+
+{ #category : #examples }
+RSViolinPlot class >> exampleDays [
+	| chart p1 p2 p3 y1 y2 y3 |
+
+	y1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+
+	y2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+
+	y3 := { { 1. 2. 3. 3. 3. 5. 3. 5. 5. 7. 8. 5. 6. 10. 11. } .
+			 { 12. 7. 10. 11. 11. 13. 10. 11. 12. 11. 15. 16. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. 25. 24. 25. 26. 24. 23. 23. 25. 25. }  }.
+
+	p1 := self data: y1. "blue"
+	p2 := self data: y2. "sky blue"
+	p3 := self data: y3. "orange"
+	chart := p1 + p2 + p3.
+	chart xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
+	^ chart open.
 ]
 
 { #category : #examples }
 RSViolinPlot class >> exampleModel [
 	| violinPlot |
 	violinPlot := self new.
-	violinPlot model: SequenceableCollection.
+	violinPlot models: { SequenceableCollection }.
 	violinPlot data: [ :cls| cls methods collect: [ :met | met linesOfCode ] ].
 	^ violinPlot open
 ]
@@ -401,6 +427,7 @@ RSViolinPlot >> data: dataset [
 	- aBlock to get the data from the model (previously stored in model)"
 	
 	| collectionOfDatasets |
+	dataset isBlock ifTrue: [ dataBlock := dataset ].
 	collectionOfDatasets := self extractDatasetsFrom: dataset.
 	self createViolinShapesWithDataSet: collectionOfDatasets.
 	self computeState
@@ -449,12 +476,12 @@ RSViolinPlot >> kernelBandwidth: aNumber [
 
 { #category : #rendering }
 RSViolinPlot >> model [
-	^ self models first
+	^ model
 ]
 
 { #category : #rendering }
 RSViolinPlot >> model: aModel [
-	self models: {aModel}
+	model := aModel.
 ]
 
 { #category : #rendering }
