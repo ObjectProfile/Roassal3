@@ -43,6 +43,22 @@ RSAbstractPlotTest >> testExtentIsCorrect [
 ]
 
 { #category : #tests }
+RSAbstractPlotTest >> testInvert [
+	| xScale yScale |
+	
+	plot yLinear.
+	plot xLog.
+	xScale := plot xScale.
+	yScale := plot yScale.
+	plot invertCoordinates.
+	plot build.
+	self assert: plot xScale equals: yScale.
+	self assert: plot yScale equals: xScale.
+	self assert: plot x equals: y.
+	self assert: plot y equals: x.
+]
+
+{ #category : #tests }
 RSAbstractPlotTest >> testMinMaxValue2 [
 
 	plot := self classToTest new x: #( 4 6 9 ) y: #( -10 -13 -15 ).

@@ -96,7 +96,7 @@ RSAbstractPlot >> color [
 	^ self shape color
 ]
 
-{ #category : #'public - shape' }
+{ #category : #'accessing - computed' }
 RSAbstractPlot >> color: aColor [
 
 	self shape color: aColor
@@ -140,6 +140,15 @@ RSAbstractPlot >> initialize [
 
 	super initialize.
 	shape := self defaultShape
+]
+
+{ #category : #rendering }
+RSAbstractPlot >> invertCoordinates [
+	| auxScale |
+	auxScale := self yScale.
+	self yScale: self xScale.
+	self xScale: auxScale.
+	self x: self y y: self x.
 ]
 
 { #category : #testing }
