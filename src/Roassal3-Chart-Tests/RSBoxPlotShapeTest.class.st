@@ -12,8 +12,8 @@ RSBoxPlotShapeTest >> testBoxGraphHasScales [
 	aScale := NSLinearScale new.
 	boxGraph := RSBoxPlotShape data: data.
 	boxGraph scales: {aScale. aScale }.
-	self assert: boxGraph xScale class equals: NSLinearScale.
-	self assert: boxGraph yScale class equals: NSLinearScale.
+	self assert: boxGraph bandScale class equals: NSLinearScale.
+	self assert: boxGraph dataScale class equals: NSLinearScale.
 	self assert: (boxGraph scalePoint: aPoint) class equals: Point.
 ]
 
