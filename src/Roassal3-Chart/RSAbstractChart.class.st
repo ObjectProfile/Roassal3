@@ -23,7 +23,7 @@
 "
 Class {
 	#name : #RSAbstractChart,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'xScale',
 		'yScale',

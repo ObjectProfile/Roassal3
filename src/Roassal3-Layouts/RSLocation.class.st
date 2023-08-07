@@ -105,6 +105,16 @@ RSLocation >> border [
 	self orientation: 0@0
 ]
 
+{ #category : #'public - modifiers' }
+RSLocation >> borderX [
+	self orientation: 0 @ orientation y
+]
+
+{ #category : #'public - modifiers' }
+RSLocation >> borderY [
+	self orientation: orientation x @ 0
+]
+
 { #category : #'public - positioning' }
 RSLocation >> bottom [
 	"Locate the shape at the bottom of the base shape.
@@ -159,6 +169,16 @@ RSLocation >> initialize [
 { #category : #'public - modifiers' }
 RSLocation >> inner [
 	self orientation: 1@1
+]
+
+{ #category : #'public - modifiers' }
+RSLocation >> innerX [
+	self orientation: 1 @ orientation y
+]
+
+{ #category : #'public - modifiers' }
+RSLocation >> innerY [
+	self orientation: orientation x @ 1
 ]
 
 { #category : #'public - positioning shorcuts' }
@@ -275,6 +295,16 @@ RSLocation >> orientation: aPoint [
 { #category : #'public - modifiers' }
 RSLocation >> outer [
 	self orientation: -1 @ -1
+]
+
+{ #category : #'public - modifiers' }
+RSLocation >> outerX [
+	self orientation: -1 @ orientation y
+]
+
+{ #category : #'public - modifiers' }
+RSLocation >> outerY [
+	self orientation: orientation x @ -1
 ]
 
 { #category : #private }
