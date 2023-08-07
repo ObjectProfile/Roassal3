@@ -102,9 +102,6 @@ c open
 Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractBandPlot,
-	#instVars : [
-		'horizontal'
-	],
 	#category : #'Roassal3-Chart-Core'
 }
 
