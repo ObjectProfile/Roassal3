@@ -28,6 +28,11 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> bandValues [
+	^ self subclassResponsibility
+]
+
 { #category : #rendering }
 RSAbstractBandPlot >> bandsOffset: aNumberInRange [
 	offset := aNumberInRange

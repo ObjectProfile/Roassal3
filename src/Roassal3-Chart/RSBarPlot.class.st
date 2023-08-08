@@ -68,6 +68,11 @@ RSBarPlot class >> exampleClusterBarPlots4Bars [
 	^ chart open.
 ]
 
+{ #category : #hooks }
+RSBarPlot >> bandValues [
+	^ (1 to: self numberOfBands)
+]
+
 { #category : #accessing }
 RSBarPlot >> barScale [
 	^ xScale

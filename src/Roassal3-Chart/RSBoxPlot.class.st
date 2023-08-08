@@ -134,6 +134,29 @@ RSBoxPlot class >> example05BoxPlotsHorizontal [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> example06BoxPlotGroupsHorizontal [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
+	"TO DO"
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot1 horizontal.
+	boxPlot2 := self data: data2.
+	boxPlot2 horizontal.
+	boxPlot3 := self data: data3.
+	boxPlot3 horizontal.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlot [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. } .
@@ -488,7 +511,7 @@ RSBoxPlot class >> exampleNotch [
 			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
 			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	p1 := self data: y1. "blue"
-	"p1 notch: true."
+	p1 notch: true.
 	^ p1 open.
 ]
 
@@ -521,6 +544,11 @@ RSBoxPlot >> assignXAndYScales: aChart [
 		dataScale := self xScale. ].
 	aChart yScale: yScale.
 	aChart xScale: xScale.
+]
+
+{ #category : #private }
+RSBoxPlot >> bandValues [
+	^ (1 to: self numberOfBoxes)
 ]
 
 { #category : #rendering }
@@ -601,7 +629,7 @@ RSBoxPlot >> computeXAndYValues [
 	maxDataRelatedValue := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
 	minDataRelatedValue := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
 	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
-	bandValues := (1 to: self numberOfBoxes).
+	bandValues := self bandValues.
 	horizontal 
 		ifTrue: [ 
 			xValues := dataValues.

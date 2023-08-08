@@ -258,6 +258,11 @@ RSViolinPlot class >> models: aCollectionOfModels [
 	^ boxPlot
 ]
 
+{ #category : #accessing }
+RSViolinPlot >> bandValues [
+	^ (1 to: self numberOfBands)
+]
+
 { #category : #rendering }
 RSViolinPlot >> bandwidth: aNumber [
 	self kernelBandwidth: aNumber.

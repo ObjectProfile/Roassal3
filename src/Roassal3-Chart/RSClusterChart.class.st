@@ -40,13 +40,14 @@ RSClusterChart >> bandsMargin: floatBetween0And1 [
 ]
 
 { #category : #private }
-RSClusterChart >> clusterXValues [
-	| xValuesSet |
-	xValuesSet := Set new.
+RSClusterChart >> clusterBandValues [
+	| bandValuesSet |
+	bandValuesSet := Set new.
 	self plots do: [ :plot |
-		plot xValues do: [ :xValue | xValuesSet add: xValue ]
+		plot bandValues do: [ :value | bandValuesSet add: value ].
+		plot computeXAndYValues.
 	].
-	^ xValuesSet.
+	^ bandValuesSet.
 ]
 
 { #category : #accessing }
@@ -68,7 +69,7 @@ RSClusterChart >> clustersScale [
 { #category : #private }
 RSClusterChart >> computeClustersScale [
 	clustersScale := NSScale ordinal
-		domain: (self clusterXValues);
+		domain: (self clusterBandValues);
 		rangeBands: { self padding x. self extent x - self padding x} padding: clustersMargin.
 	^ clustersScale
 ]
