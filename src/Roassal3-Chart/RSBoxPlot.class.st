@@ -114,6 +114,26 @@ RSBoxPlot class >> data: aCollection [
 ]
 
 { #category : #examples }
+RSBoxPlot class >> example04BoxPlotHorizontal [
+	| boxPlot data |
+	data := { 1. 2. 3. 4. 5. } .
+	boxPlot := self data: data.
+	boxPlot horizontal.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> example05BoxPlotsHorizontal [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot horizontal.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
 RSBoxPlot class >> exampleBoxPlot [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. } .
@@ -486,16 +506,38 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 ]
 
 { #category : #rendering }
+RSBoxPlot >> assignXAndYScales: aChart [
+	bandScale := NSScale ordinal.
+	horizontal ifFalse: [
+		bandScale domain: xValues. 
+		bandScale rangeBands: { 0. aChart extent x. }.
+		xScale := bandScale.
+		dataScale := self yScale. ]
+	ifTrue: [ 
+		bandScale domain: yValues.
+		"important to use the corresponding range of the spine"
+		bandScale rangeBands: yScale range. 
+		yScale := bandScale.
+		dataScale := self xScale. ].
+	aChart yScale: yScale.
+	aChart xScale: xScale.
+]
+
+{ #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
-	| horizontalTicks |
+	| horizontalTicks verticalTicks |
+	self computeXAndYValues.
 	super beforeRenderingIn: aChart.
-	dataScale := self yScale.
-	horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
-	horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].
-	bandScale := NSScale ordinal
-		domain: xValues;
-		rangeBands: { 0. aChart extent x. }.
-	aChart xScale: bandScale.
+	
+	horizontal ifFalse: [
+		horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
+		horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
+	ifTrue: [ 
+		verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
+		verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
+		 ].
+	
+	self assignXAndYScales: aChart.
 ]
 
 { #category : #rendering }
@@ -554,22 +596,19 @@ RSBoxPlot >> computeDefualtXTicks [
 ]
 
 { #category : #private }
-RSBoxPlot >> computeState [
-	self computeXValues.
-	self computeYValues.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeXValues [
-	xValues := (1 to: self numberOfBoxes).
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeYValues [
-	| yMax yMin |
-	yMax := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
-	yMin := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
-	yValues := {yMin. yMax.}.
+RSBoxPlot >> computeXAndYValues [
+	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
+	maxDataRelatedValue := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
+	minDataRelatedValue := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
+	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
+	bandValues := (1 to: self numberOfBoxes).
+	horizontal 
+		ifTrue: [ 
+			xValues := dataValues.
+			yValues := bandValues ]
+		ifFalse: [ 
+			xValues := bandValues.
+			yValues := dataValues  ]
 ]
 
 { #category : #accessing }
@@ -607,12 +646,6 @@ RSBoxPlot >> data: aCollection [
 		                        ifTrue: [ aCollection ].
 	self boxShapes: (collectionOfDatasets collect: [ :dataSet | RSBoxPlotShape data: dataSet.]).
 	self computeBoxGraphicsCenters.
-	self computeState.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> defaultBandsWidth [
-	^ bandScale scale: 1
 ]
 
 { #category : #accessing }
@@ -629,6 +662,7 @@ RSBoxPlot >> defaultShape [
 RSBoxPlot >> initialize [
 	super initialize.
 	offset := 0.
+	horizontal := false.
 ]
 
 { #category : #rendering }

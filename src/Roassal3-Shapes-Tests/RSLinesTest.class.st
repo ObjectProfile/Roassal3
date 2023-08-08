@@ -143,6 +143,17 @@ RSLinesTest >> testFormatMarker [
 ]
 
 { #category : #running }
+RSLinesTest >> testInvert [
+	| line positionBefore |
+	line := RSLine new.
+	line controlPoints: {0.5@2. 1.5@2}.
+	positionBefore := line position.
+	line invert.
+	self assert: line controlPoints equals: {2@0.5. 2@1.5}.
+	self assert: line position equals: positionBefore y @ positionBefore x.
+]
+
+{ #category : #running }
 RSLinesTest >> testLineIncludesPoint [
 	| line |
 	line := RSLine new

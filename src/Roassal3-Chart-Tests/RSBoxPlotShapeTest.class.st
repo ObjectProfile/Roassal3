@@ -82,6 +82,34 @@ RSBoxPlotShapeTest >> testDefaultUpperWhisker [
 ]
 
 { #category : #tests }
+RSBoxPlotShapeTest >> testHorizontal [
+	"| data boxShape xScale yScale canvas boxBefore boxAfter |
+	data := { 5. 1. 2. 3. 4. }.
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
+	xScale := NSScale ordinal
+		domain: {1};
+		rangeBands: {0. 360. }.
+	yScale := NSScale linear
+		domain: data;
+		range: {0. canvas extent x.}.
+	boxShape := RSBoxPlotShape data: data.
+	boxShape scales: {xScale. yScale}.
+	boxShape bandOffset: (xScale scale: 1).
+	boxShape bandWidth: (xScale scale: 1).
+	boxShape color: Color blue.
+	boxShape addChildrenToComposite.
+	boxBefore := boxShape box copy.
+	boxShape notch: true.
+	boxShape horizontal.
+	boxShape renderIn: canvas.
+	boxAfter := boxShape box copy.
+	canvas open.
+	self assert: boxAfter points equals: (boxBefore points collect: [:p| p y@p x])."
+	"self assert: boxAfter position equals: boxBefore position y@boxBefore position x."
+]
+
+{ #category : #tests }
 RSBoxPlotShapeTest >> testLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.

@@ -22,7 +22,8 @@ Class {
 		'dataScale',
 		'bandWidth',
 		'offset',
-		'graphics'
+		'graphics',
+		'horizontal'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -44,8 +45,10 @@ RSAbstractBandPlot >> bandsWidth: aNumber [
 
 { #category : #rendering }
 RSAbstractBandPlot >> computeBandsOffset [
+	| bandValues |
+	bandValues := horizontal ifFalse: [ xValues ] ifTrue: [ yValues ].
 	graphics doWithIndex: [ :graphic :idx |
-		graphic bandOffset: (bandScale scale: (xValues at: idx)) + offset
+		graphic bandOffset: (bandScale scale: (bandValues at: idx)) + offset
 	].
 ]
 
@@ -59,7 +62,18 @@ RSAbstractBandPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+RSAbstractBandPlot >> defaultBandsWidth [
+	^ bandScale scale: 1
+]
+
 { #category : #'accessing - defaults' }
 RSAbstractBandPlot >> defaultShape [
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> horizontal [
+	graphics do: [ :bs | bs horizontal ].
+	horizontal := true.
 ]

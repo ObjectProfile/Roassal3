@@ -209,10 +209,14 @@ RSBoxPlotShape >> createMedianLine [
 
 { #category : #accessing }
 RSBoxPlotShape >> createOutliersShapes [
-	| outliersPoints |
+	| outliersPoints outlierDefaultSize|
 	"graphCenter was already computed in shapesWithCenterAt"
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (dataScale scale: y) ].
-	outlier extent x isZero ifTrue: [ outlier size: bandWidth * 0.15 ].
+	outlierDefaultSize := (bandWidth * 0.15) abs.
+	horizontal ifTrue: [ 
+		outliersPoints := outliersPoints collect: [ :p | p y @ p x ] 
+	].
+	outlier extent x isZero ifTrue: [ outlier size: outlierDefaultSize ].
 	outliers := outliersPoints collect: [ :out |
 			| e |
 			e := outlier copy.
