@@ -525,6 +525,11 @@ RSBoxPlotShape >> upperWhisker [
 ]
 
 { #category : #public }
+RSBoxPlotShape >> vertical [
+	horizontal := false.
+]
+
+{ #category : #public }
 RSBoxPlotShape >> whiskerFormat: aString [
 	whisker format: aString.
 ]

@@ -98,3 +98,9 @@ RSAbstractBandPlot >> horizontal [
 	graphics do: [ :bs | bs horizontal ].
 	horizontal := true.
 ]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> vertical [
+	graphics do: [ :bs | bs vertical ].
+	horizontal := false.
+]
