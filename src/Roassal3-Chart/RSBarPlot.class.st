@@ -34,6 +34,15 @@ Class {
 }
 
 { #category : #examples }
+RSBarPlot class >> example01BarPlot [
+	| p1 data1  x |
+	data1 := {  10. 9. 7 }.
+	x := { 1. 2. 3. }.
+	p1 := self x: x y: data1.
+	^ p1 open.
+]
+
+{ #category : #examples }
 RSBarPlot class >> exampleClusterBarPlots [
 	| p1 p2 chart data1 data2 x |
 	data1 := {  10. 9. 7 }. "blue"
@@ -41,7 +50,7 @@ RSBarPlot class >> exampleClusterBarPlots [
 	x := { 1. 2. 3. }.
 	p1 := self x: x y: data1.
 	p2 := self x: x y: data2.
-	chart := p1 "+ p2".
+	chart := p1 + p2.
 	^ chart open.
 ]
 
@@ -55,7 +64,7 @@ RSBarPlot class >> exampleClusterBarPlots4Bars [
 	p2 := self x: x y: data2.
 	p3 := self x: x y: data1.
 	p4 := self x: x y: data2.
-	chart := p1 "+ p2 + p3 + p4".
+	chart := p1 + p2 + p3 + p4.
 	^ chart open.
 ]
 
@@ -67,13 +76,13 @@ RSBarPlot >> barScale [
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
 
-	| barScale |
 	super beforeRenderingIn: aChart.
+	dataScale := yScale.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	barScale := NSOrdinalScale new
+	bandScale := NSOrdinalScale new
 		domain: xValues;
 		rangeBands: xScale range padding: gapRatio.
-	aChart xScale: barScale.
+	aChart xScale: bandScale.
 ]
 
 { #category : #accessing }
@@ -96,11 +105,11 @@ RSBarPlot >> canHandleCluster [
 
 { #category : #hooks }
 RSBarPlot >> computeRectagleFor: aPoint index: index [
-	| origin corner sizeOffset offset zero |
+	| origin corner sizeOffset zero |
 	zero := 0.
 	bottom ifNotNil: [ zero := bottom at: index ].
 	origin := self scalePoint: aPoint + (0@ zero).
-	corner := origin x @ (yScale scale: zero ).
+	corner := origin x @ (dataScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	^ Rectangle
@@ -129,10 +138,6 @@ RSBarPlot >> modelFor: aPoint [
 
 { #category : #hooks }
 RSBarPlot >> numberOfBands [
-	| bandScale |
 	self beforeRenderingIn: chart.
-	bandScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
 	^ bandScale range size.
 ]
