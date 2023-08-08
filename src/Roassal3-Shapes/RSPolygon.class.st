@@ -191,6 +191,14 @@ RSPolygon >> initialize [
 	points := #()
 ]
 
+{ #category : #geometry }
+RSPolygon >> invert [
+	| positionPrevInverting |
+	positionPrevInverting := self position.
+	self points: (self points collect: [ :p | p y @ p x ]).
+	self position: (positionPrevInverting y@positionPrevInverting x).
+]
+
 { #category : #accessing }
 RSPolygon >> points [
 	"Return the points defining the polygon"

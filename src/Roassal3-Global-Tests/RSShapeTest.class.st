@@ -71,6 +71,21 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 ]
 
 { #category : #tests }
+RSShapeTest >> testInvert [
+
+	| rectangle canvas positionBefore |
+	canvas := RSCanvas new.
+	rectangle := RSPolygon new points: {2@2. 2@10. 6@10. 6@2.}.
+	self assert: rectangle points equals: {-2@(-4). -2@4. 2@4. 2@(-4).}.
+	positionBefore := rectangle position.
+	canvas @ RSCanvasController.
+	canvas add: rectangle.
+	rectangle invert.
+	self assert: rectangle points equals: {-4@(-2). 4@(-2). 4@2. -4@2.}.
+	self assert: rectangle position equals: (positionBefore y @ positionBefore x).
+]
+
+{ #category : #tests }
 RSShapeTest >> testModelForIt [
 
 	| s |
