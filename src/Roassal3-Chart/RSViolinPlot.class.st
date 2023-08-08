@@ -445,6 +445,7 @@ RSViolinPlot >> extractDatasetsFrom: data [
 RSViolinPlot >> initialize [
 	super initialize.
 	graphics := OrderedCollection new.
+	horizontal := false.
 ]
 
 { #category : #rendering }

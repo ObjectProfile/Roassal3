@@ -623,22 +623,6 @@ RSBoxPlot >> computeDefualtXTicks [
 	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
 ]
 
-{ #category : #private }
-RSBoxPlot >> computeXAndYValues [
-	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
-	maxDataRelatedValue := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
-	minDataRelatedValue := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
-	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
-	bandValues := self bandValues.
-	horizontal 
-		ifTrue: [ 
-			xValues := dataValues.
-			yValues := bandValues ]
-		ifFalse: [ 
-			xValues := bandValues.
-			yValues := dataValues  ]
-]
-
 { #category : #accessing }
 RSBoxPlot >> confidenceInterval [
 	^ self confidenceIntervals first

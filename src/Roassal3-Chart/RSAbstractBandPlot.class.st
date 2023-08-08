@@ -62,6 +62,22 @@ RSAbstractBandPlot >> computeBandsWidth [
 	graphics do: [ :graphic | graphic bandWidth: self bandsWidth ].
 ]
 
+{ #category : #private }
+RSAbstractBandPlot >> computeXAndYValues [
+	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
+	maxDataRelatedValue := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
+	minDataRelatedValue := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
+	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
+	bandValues := self bandValues.
+	horizontal 
+		ifTrue: [ 
+			xValues := dataValues.
+			yValues := bandValues ]
+		ifFalse: [ 
+			xValues := bandValues.
+			yValues := dataValues  ]
+]
+
 { #category : #accessing }
 RSAbstractBandPlot >> createdShapes [
 	^ self subclassResponsibility
