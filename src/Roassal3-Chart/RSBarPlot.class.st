@@ -122,6 +122,11 @@ RSBarPlot >> computeRectagleFor: aPoint index: index [
 		corner: corner + offset + sizeOffset
 ]
 
+{ #category : #hooks }
+RSBarPlot >> computeXAndYValues [
+	^ self
+]
+
 { #category : #rendering }
 RSBarPlot >> definedValuesY [
 	"Return the list Y values that are defined"
