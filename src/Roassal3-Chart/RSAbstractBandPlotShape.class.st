@@ -7,7 +7,8 @@ Class {
 		'bandWidth',
 		'dataScale',
 		'bandScale',
-		'horizontal'
+		'horizontal',
+		'shouldShowBand'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -52,6 +53,23 @@ RSAbstractBandPlotShape >> color: aColor [
 ]
 
 { #category : #accessing }
+RSAbstractBandPlotShape >> computeBandRectangle [
+	^ RSPolygon new
+			points: { 
+			(bandOffset-(bandWidth/2)) @ dataScale range first. 
+			(bandOffset+(bandWidth/2)) @ dataScale range first.
+			(bandOffset+(bandWidth/2)) @ dataScale range last. 
+			(bandOffset-(bandWidth/2)) @ dataScale range last
+			};
+			color: Color blue translucent.
+]
+
+{ #category : #accessing }
+RSAbstractBandPlotShape >> createShapesAndLines [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 RSAbstractBandPlotShape >> dataScale [
 	^ dataScale.
 ]
@@ -76,9 +94,30 @@ RSAbstractBandPlotShape >> minYValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : #rendering }
 RSAbstractBandPlotShape >> renderIn: canvas [
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSAbstractBandPlotShape >> shapesToRender [
+	| shapesAndLines band |
+	shapesAndLines := self createShapesAndLines.
+	shouldShowBand ifTrue: [
+		band := self computeBandRectangle.
+		shapesAndLines add: band ].
+	horizontal ifTrue: [ shapesAndLines do: [ :s | s invert ] ].
+	^ shapesAndLines
+]
+
+{ #category : #accessing }
+RSAbstractBandPlotShape >> shouldShowBand: aBoolean [
+	shouldShowBand := aBoolean.
+]
+
+{ #category : #accessing }
+RSAbstractBandPlotShape >> showBand [
+	self shouldShowBand: true.
 ]
 
 { #category : #public }

@@ -28,6 +28,24 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
+{ #category : #rendering }
+RSAbstractBandPlot >> assignXAndYScales: aChart [
+	bandScale := NSScale ordinal.
+	horizontal ifFalse: [
+		bandScale domain: xValues. 
+		bandScale rangeBands: { 0. aChart extent x. }.
+		xScale := bandScale.
+		dataScale := self yScale. ]
+	ifTrue: [ 
+		bandScale domain: yValues.
+		"important to use the corresponding range of the spine"
+		bandScale rangeBands: yScale range. 
+		yScale := bandScale.
+		dataScale := self xScale. ].
+	aChart yScale: yScale.
+	aChart xScale: xScale.
+]
+
 { #category : #'accessing - defaults' }
 RSAbstractBandPlot >> bandValues [
 	^ self subclassResponsibility
@@ -46,6 +64,21 @@ RSAbstractBandPlot >> bandsWidth [
 { #category : #rendering }
 RSAbstractBandPlot >> bandsWidth: aNumber [
 	bandWidth := aNumber.
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> beforeRenderingIn: aChart [
+	| horizontalTicks verticalTicks |
+	self computeXAndYValues.
+	super beforeRenderingIn: aChart.
+	horizontal ifFalse: [
+		horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
+		horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
+	ifTrue: [ 
+		verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
+		verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
+		 ].
+	self assignXAndYScales: aChart.
 ]
 
 { #category : #rendering }
@@ -97,6 +130,11 @@ RSAbstractBandPlot >> defaultShape [
 RSAbstractBandPlot >> horizontal [
 	bandPlotShapes do: [ :bs | bs horizontal ].
 	horizontal := true.
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> showBands [
+	bandPlotShapes do: [ :box | box showBand ]
 ]
 
 { #category : #accessing }

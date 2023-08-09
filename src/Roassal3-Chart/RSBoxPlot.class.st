@@ -186,6 +186,19 @@ RSBoxPlot class >> example05BoxPlotsHorizontal [
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := self data: data.
 	boxPlot horizontal.
+	boxPlot showBands.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> example05BoxPlotsHorizontalShowBands [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot horizontal.
+	boxPlot showBands.
 	^ boxPlot open.
 ]
 
@@ -542,44 +555,9 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 	^ p1 open.
 ]
 
-{ #category : #rendering }
-RSBoxPlot >> assignXAndYScales: aChart [
-	bandScale := NSScale ordinal.
-	horizontal ifFalse: [
-		bandScale domain: xValues. 
-		bandScale rangeBands: { 0. aChart extent x. }.
-		xScale := bandScale.
-		dataScale := self yScale. ]
-	ifTrue: [ 
-		bandScale domain: yValues.
-		"important to use the corresponding range of the spine"
-		bandScale rangeBands: yScale range. 
-		yScale := bandScale.
-		dataScale := self xScale. ].
-	aChart yScale: yScale.
-	aChart xScale: xScale.
-]
-
 { #category : #private }
 RSBoxPlot >> bandValues [
 	^ (1 to: self numberOfBoxes)
-]
-
-{ #category : #rendering }
-RSBoxPlot >> beforeRenderingIn: aChart [
-	| horizontalTicks verticalTicks |
-	self computeXAndYValues.
-	super beforeRenderingIn: aChart.
-	
-	horizontal ifFalse: [
-		horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
-		horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
-	ifTrue: [ 
-		verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
-		verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
-		 ].
-	
-	self assignXAndYScales: aChart.
 ]
 
 { #category : #rendering }
@@ -778,11 +756,6 @@ RSBoxPlot >> renderIn: canvas [
 		aRSBoxPlotShape bandScale: bandScale.
 		aRSBoxPlotShape dataScale: dataScale.
 		aRSBoxPlotShape renderIn: canvas ].
-]
-
-{ #category : #rendering }
-RSBoxPlot >> showBands [
-	bandPlotShapes do: [ :box | box showBand ]
 ]
 
 { #category : #rendering }
