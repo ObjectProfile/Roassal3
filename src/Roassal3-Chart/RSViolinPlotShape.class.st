@@ -1,15 +1,10 @@
 Class {
 	#name : #RSViolinPlotShape,
-	#superclass : #RSComposite,
+	#superclass : #RSAbstractBandPlotShape,
 	#instVars : [
 		'boxPlotShape',
 		'kernelDensity',
-		'densityArea',
-		'color',
-		'bandOffset',
-		'bandWidth',
-		'dataScale',
-		'bandScale'
+		'densityArea'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -36,18 +31,13 @@ RSViolinPlotShape >> addChildrenToComposite [
 
 { #category : #accessing }
 RSViolinPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
+	super bandOffset: aNumber.
 	boxPlotShape bandOffset: bandOffset.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> bandScale: aNSScale [
-	bandScale := aNSScale.
 ]
 
 { #category : #accessing }
 RSViolinPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber.
+	super bandWidth: aNumber.
 	boxPlotShape bandWidth: bandWidth*0.1.
 	boxPlotShape outlierSize: bandWidth*0.05.
 ]
@@ -62,16 +52,6 @@ RSViolinPlotShape >> borderColor: aColor [
 	^ self border color: aColor.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> color [
-	^ color
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> color: aColor [
-	color := aColor
-]
-
 { #category : #accessing }
 RSViolinPlotShape >> data [
 	^ kernelDensity data.
@@ -83,11 +63,6 @@ RSViolinPlotShape >> data: dataset [
 	aCollection := dataset rsValue: model.
 	kernelDensity data: aCollection.
 	boxPlotShape data: aCollection.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> dataScale: aNSScale [
-	dataScale := aNSScale
 ]
 
 { #category : #accessing }

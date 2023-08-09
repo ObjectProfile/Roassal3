@@ -30,16 +30,13 @@ boxPlotShape := RSBoxPlotShape data: data.
 "
 Class {
 	#name : #RSBoxPlotShape,
-	#superclass : #RSComposite,
+	#superclass : #RSAbstractBandPlotShape,
 	#instVars : [
-		'bandWidth',
 		'statisticalMeasures',
 		'box',
 		'medianLine',
 		'outliers',
-		'color',
 		'graphCenter',
-		'bandOffset',
 		'outlier',
 		'shouldShowBand',
 		'upperWhisker',
@@ -47,10 +44,7 @@ Class {
 		'whisker',
 		'medianConfidencePercentage',
 		'notched',
-		'notchWidthPercentage',
-		'horizontal',
-		'dataScale',
-		'bandScale'
+		'notchWidthPercentage'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -72,35 +66,6 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> addChildrenToComposite [
-	| shapesToRender |
-	shapesToRender := self shapesToRender.
-	self addAll: shapesToRender.
-	self adjustToChildren.
-	^ self.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandScale [
-	^ bandScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandScale: aNSScale [
-	bandScale := aNSScale
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber
-]
-
-{ #category : #accessing }
 RSBoxPlotShape >> box [
 	^ box
 ]
@@ -113,16 +78,6 @@ RSBoxPlotShape >> boxWidth [
 { #category : #accessing }
 RSBoxPlotShape >> center [
 	^ graphCenter
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color [
-	^ color
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color: aColor [
-	color := aColor.
 ]
 
 { #category : #accessing }
@@ -253,16 +208,6 @@ RSBoxPlotShape >> data: collectionOfData1D [
 	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
 ]
 
-{ #category : #accessing }
-RSBoxPlotShape >> dataScale [
-	^ dataScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> dataScale: aNSScale [
-	dataScale := aNSScale
-]
-
 { #category : #defaults }
 RSBoxPlotShape >> defaultBandPadding [
 	^ 0.2
@@ -335,11 +280,6 @@ RSBoxPlotShape >> graphCenter: aNumber [
 { #category : #defaults }
 RSBoxPlotShape >> hasOutliers [
 	^ self outlierValues isNotEmpty
-]
-
-{ #category : #public }
-RSBoxPlotShape >> horizontal [
-	horizontal := true.
 ]
 
 { #category : #initialization }
@@ -522,11 +462,6 @@ RSBoxPlotShape >> upperLimit [
 { #category : #accessing }
 RSBoxPlotShape >> upperWhisker [
 	^ upperWhisker
-]
-
-{ #category : #public }
-RSBoxPlotShape >> vertical [
-	horizontal := false.
 ]
 
 { #category : #public }
