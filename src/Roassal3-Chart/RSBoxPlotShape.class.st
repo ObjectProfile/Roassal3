@@ -161,7 +161,7 @@ RSBoxPlotShape >> createOutliersShapes [
 	] as: RSGroup.
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSBoxPlotShape >> createShapesAndLines [
 	| shapes |
 	self graphCenter: bandOffset.
@@ -312,7 +312,7 @@ RSBoxPlotShape >> lowerWhisker [
 	^ lowerWhisker
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSBoxPlotShape >> maxYValue [
 	| maxValue |
 	maxValue := self upperLimit.
@@ -343,7 +343,7 @@ RSBoxPlotShape >> medianLine [
 	^ medianLine.
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSBoxPlotShape >> minYValue [
 	| minValue |
 	minValue := self lowerLimit.

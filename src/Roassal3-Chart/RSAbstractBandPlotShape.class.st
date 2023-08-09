@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal3-Chart-Plots'
 }
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractBandPlotShape >> addChildrenToComposite [
 	| shapesToRender |
 	shapesToRender := self shapesToRender.
@@ -22,22 +22,22 @@ RSAbstractBandPlotShape >> addChildrenToComposite [
 	^ self.
 ]
 
-{ #category : #accessing }
+{ #category : #band }
 RSAbstractBandPlotShape >> bandOffset: aNumber [
 	bandOffset := aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : #scales }
 RSAbstractBandPlotShape >> bandScale [
 	^ bandScale.
 ]
 
-{ #category : #accessing }
+{ #category : #scales }
 RSAbstractBandPlotShape >> bandScale: aNSScale [
 	bandScale := aNSScale
 ]
 
-{ #category : #accessing }
+{ #category : #band }
 RSAbstractBandPlotShape >> bandWidth: aNumber [
 	bandWidth := aNumber
 ]
@@ -52,7 +52,7 @@ RSAbstractBandPlotShape >> color: aColor [
 	color := aColor.
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSAbstractBandPlotShape >> computeBandRectangle [
 	^ RSPolygon new
 			points: { 
@@ -64,17 +64,17 @@ RSAbstractBandPlotShape >> computeBandRectangle [
 			color: Color blue translucent.
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSAbstractBandPlotShape >> createShapesAndLines [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #scales }
 RSAbstractBandPlotShape >> dataScale [
 	^ dataScale.
 ]
 
-{ #category : #accessing }
+{ #category : #scales }
 RSAbstractBandPlotShape >> dataScale: aNSScale [
 	dataScale := aNSScale
 ]
@@ -84,12 +84,12 @@ RSAbstractBandPlotShape >> horizontal [
 	horizontal := true.
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractBandPlotShape >> maxYValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractBandPlotShape >> minYValue [
 	^ self subclassResponsibility
 ]
@@ -99,7 +99,7 @@ RSAbstractBandPlotShape >> renderIn: canvas [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSAbstractBandPlotShape >> shapesToRender [
 	| shapesAndLines band |
 	shapesAndLines := self createShapesAndLines.
@@ -110,12 +110,12 @@ RSAbstractBandPlotShape >> shapesToRender [
 	^ shapesAndLines
 ]
 
-{ #category : #accessing }
+{ #category : #band }
 RSAbstractBandPlotShape >> shouldShowBand: aBoolean [
 	shouldShowBand := aBoolean.
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RSAbstractBandPlotShape >> showBand [
 	self shouldShowBand: true.
 ]

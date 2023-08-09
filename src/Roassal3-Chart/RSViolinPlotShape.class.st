@@ -17,36 +17,36 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 	^ violinShape
 ]
 
-{ #category : #accessing }
+{ #category : #band }
 RSViolinPlotShape >> bandOffset: aNumber [
 	super bandOffset: aNumber.
 	boxPlotShape bandOffset: bandOffset.
 ]
 
-{ #category : #initialization }
+{ #category : #scales }
 RSViolinPlotShape >> bandScale: aNSScale [
 	super bandScale: aNSScale.
 	boxPlotShape bandScale: aNSScale.
 ]
 
-{ #category : #accessing }
+{ #category : #band }
 RSViolinPlotShape >> bandWidth: aNumber [
 	super bandWidth: aNumber.
 	boxPlotShape bandWidth: bandWidth*0.1.
 	boxPlotShape outlierSize: (bandWidth*0.05) abs.
 ]
 
-{ #category : #accessing }
+{ #category : #border }
 RSViolinPlotShape >> border [
 	^ densityArea border.
 ]
 
-{ #category : #styling }
+{ #category : #border }
 RSViolinPlotShape >> borderColor: aColor [
 	^ self border color: aColor.
 ]
 
-{ #category : #initialization }
+{ #category : #shapes }
 RSViolinPlotShape >> createShapesAndLines [
 	| shapes |
 	densityArea := self densityArea.
@@ -69,7 +69,7 @@ RSViolinPlotShape >> data: dataset [
 	boxPlotShape data: aCollection.
 ]
 
-{ #category : #initialization }
+{ #category : #scales }
 RSViolinPlotShape >> dataScale: aNSScale [
 	super dataScale: aNSScale.
 	boxPlotShape dataScale: aNSScale.
@@ -147,14 +147,14 @@ RSViolinPlotShape >> kernelBandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RSViolinPlotShape >> maxYValue [
 	| maxYValueOfCurve |
 	maxYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) max.
 	^ boxPlotShape maxYValue max: maxYValueOfCurve.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RSViolinPlotShape >> minYValue [
 	| minYValueOfCurve |
 	minYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) min.
@@ -172,7 +172,7 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 	boxPlotShape outlierSize: aDimensionInPixels.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RSViolinPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
 	canvas add: self.
