@@ -81,6 +81,40 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 ]
 
 { #category : #examples }
+RSViolinPlot class >> example03HorizontalViolinPlot [
+	| violinPlot   data1  |
+	data1 := { 12. 12. 13. 14. 15. 24. }.
+	violinPlot := self data: data1.
+	violinPlot xlabel: 'x axis'.
+	violinPlot ylabel: 'y axis'.
+	violinPlot horizontal.
+	^ violinPlot open.
+]
+
+{ #category : #examples }
+RSViolinPlot class >> example03HorizontalVionlins [
+	
+	| violinPlot |
+	violinPlot := self data: {
+			            {6. 8. 7. 5. 7. 11. 9. }.
+			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
+	violinPlot horizontal.
+	^ violinPlot open.
+]
+
+{ #category : #examples }
+RSViolinPlot class >> example03HorizontalVionlinsShowBands [
+	
+	| violinPlot |
+	violinPlot := self data: {
+			            {6. 8. 7. 5. 7. 11. 9. }.
+			            {2. 2. 2. 3. 3. 12. 4. 2. 4. 2. 2. 2. 6. 2. 2. 8. 2. 5. 9. 2. 2. 2. 2. 2.}. }.
+	violinPlot horizontal.
+	violinPlot showBands.
+	^ violinPlot open.
+]
+
+{ #category : #examples }
 RSViolinPlot class >> exampleDays [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -268,16 +302,6 @@ RSViolinPlot >> bandwidth: aNumber [
 	self kernelBandwidth: aNumber.
 ]
 
-{ #category : #rendering }
-RSViolinPlot >> beforeRenderingIn: aChart [
-	super beforeRenderingIn: aChart.
-	dataScale := self yScale.
-	bandScale := NSScale ordinal
-		domain: xValues;
-		rangeBands: { 0. aChart extent x. }.
-	aChart xScale: bandScale.
-]
-
 { #category : #accessing }
 RSViolinPlot >> borderColor [
 	^ self bordersColor first.
@@ -348,7 +372,6 @@ RSViolinPlot >> computeDefualtXTicks [
 RSViolinPlot >> computeState [
 	self computeXValues.
 	self computeYValues.
-	self computeDefualtXTicks.
 ]
 
 { #category : #rendering }
@@ -386,7 +409,7 @@ RSViolinPlot >> createViolinShapesWithDataSet: collectionOfDatasets [
 
 { #category : #accessing }
 RSViolinPlot >> createdShapes [
-	^ bandPlotShapes
+	^ { bandPlotShapes }
 ]
 
 { #category : #accessing }
@@ -416,11 +439,6 @@ RSViolinPlot >> data: dataset [
 RSViolinPlot >> datasetsFromModels: data [
 	models ifNil: [ ^ data ].
 	^ models collect: [:anOjbect | data rsValue: anOjbect ].
-]
-
-{ #category : #rendering }
-RSViolinPlot >> defaultBandsWidth [
-	^ xScale scale: 1
 ]
 
 { #category : #'accessing - defaults' }
@@ -495,9 +513,8 @@ RSViolinPlot >> renderIn: canvas [
 	
 	bandPlotShapes doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
-		aRSBoxPlotShape scales: {
-				self xScale.
-				self yScale }.
+		aRSBoxPlotShape bandScale: bandScale.
+		aRSBoxPlotShape dataScale: dataScale.
 		aRSBoxPlotShape renderIn: canvas ]
 ]
 
