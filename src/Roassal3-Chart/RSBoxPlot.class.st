@@ -101,12 +101,7 @@ c open
 "
 Class {
 	#name : #RSBoxPlot,
-	#superclass : #RSAbstractPlot,
-	#instVars : [
-		'boxShapes',
-		'bandWidth',
-		'offset'
-	],
+	#superclass : #RSAbstractBandPlot,
 	#category : #'Roassal3-Chart-Core'
 }
 
@@ -116,6 +111,49 @@ RSBoxPlot class >> data: aCollection [
 	boxPlot := self new.
 	boxPlot data: aCollection.
 	^ boxPlot
+]
+
+{ #category : #examples }
+RSBoxPlot class >> example04BoxPlotHorizontal [
+	| boxPlot data |
+	data := { 1. 2. 3. 4. 5. } .
+	boxPlot := self data: data.
+	boxPlot horizontal.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> example05BoxPlotsHorizontal [
+	| boxPlot data |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := self data: data.
+	boxPlot horizontal.
+	^ boxPlot open.
+]
+
+{ #category : #examples }
+RSBoxPlot class >> example06BoxPlotGroupsHorizontal [
+	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
+	"TO DO"
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	data2 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	data3 := { { 1. 2. 2. 2. 3. 4. 3. 5. 12. } .
+			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
+			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
+	boxPlot1 := self data: data1.
+	boxPlot1 horizontal.
+	boxPlot2 := self data: data2.
+	boxPlot2 horizontal.
+	boxPlot3 := self data: data3.
+	boxPlot3 horizontal.
+	boxPlot := boxPlot1 + boxPlot2 + boxPlot3.
+	^ boxPlot open.
 ]
 
 { #category : #examples }
@@ -473,7 +511,7 @@ RSBoxPlot class >> exampleNotch [
 			 { 1. 12. 7. 10. 11. 11. 15. 10. }  .
 			 { 12. 12. 13. 15. 18. 20. 21. 24. }  }.
 	p1 := self data: y1. "blue"
-	"p1 notch: true."
+	p1 notch: true.
 	^ p1 open.
 ]
 
@@ -491,46 +529,58 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> bandsOffset: aNumberInRange [
-	offset := aNumberInRange
+RSBoxPlot >> assignXAndYScales: aChart [
+	bandScale := NSScale ordinal.
+	horizontal ifFalse: [
+		bandScale domain: xValues. 
+		bandScale rangeBands: { 0. aChart extent x. }.
+		xScale := bandScale.
+		dataScale := self yScale. ]
+	ifTrue: [ 
+		bandScale domain: yValues.
+		"important to use the corresponding range of the spine"
+		bandScale rangeBands: yScale range. 
+		yScale := bandScale.
+		dataScale := self xScale. ].
+	aChart yScale: yScale.
+	aChart xScale: xScale.
 ]
 
-{ #category : #rendering }
-RSBoxPlot >> bandsWidth [
-	^ bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
-]
-
-{ #category : #rendering }
-RSBoxPlot >> bandsWidth: aNumber [
-	bandWidth := aNumber.
+{ #category : #private }
+RSBoxPlot >> bandValues [
+	^ (1 to: self numberOfBoxes)
 ]
 
 { #category : #rendering }
 RSBoxPlot >> beforeRenderingIn: aChart [
-	| bandScale horizontalTicks |
+	| horizontalTicks verticalTicks |
+	self computeXAndYValues.
 	super beforeRenderingIn: aChart.
-	horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
-	horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size. ].
-	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	bandScale := NSScale ordinal
-		domain: xValues;
-		rangeBands: { 0. aChart extent x. }.
-	aChart xScale: bandScale.
+	
+	horizontal ifFalse: [
+		horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
+		horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
+	ifTrue: [ 
+		verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
+		verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
+		 ].
+	
+	self assignXAndYScales: aChart.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> boxShapes [
-	^ boxShapes.
+	^ graphics.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> boxShapes: collectionOfRSBoxPlotShape [
-	boxShapes := collectionOfRSBoxPlotShape.
+	graphics := collectionOfRSBoxPlotShape.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> boxes [
-	^ RSGroup new addAll: (boxShapes collect: [ :boxShape | boxShape box ]); yourself.
+	^ RSGroup new addAll: (graphics collect: [ :boxShape | boxShape box ]); yourself.
 ]
 
 { #category : #public }
@@ -549,31 +599,19 @@ RSBoxPlot >> canHandleCluster [
 
 { #category : #accessing }
 RSBoxPlot >> color: aColor [
-	boxShapes do: [ :boxShape | boxShape color: aColor ].
+	graphics do: [ :boxShape | boxShape color: aColor ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> colors: collectionOfColors [
-	boxShapes doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeBandsOffset [
-	boxShapes doWithIndex: [ :boxShape :idx |
-		boxShape bandOffset: (xScale scale: (xValues at: idx)) + offset
-	].
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeBandsWidth [
-	boxShapes do: [ :boxShape | boxShape bandWidth: self bandsWidth ].
+	graphics doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> computeBoxGraphicsCenters [
 	| lastBoxCenter |
 	lastBoxCenter := 1.
-	self boxShapes: (boxShapes collect: [ :boxGraph | 
+	self boxShapes: (graphics collect: [ :boxGraph | 
 		boxGraph graphCenter: lastBoxCenter "+groupOffset".
 		"lastBoxCenter := lastBoxCenter + self defaultOffset".
 		boxGraph.
@@ -585,25 +623,6 @@ RSBoxPlot >> computeDefualtXTicks [
 	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
 ]
 
-{ #category : #private }
-RSBoxPlot >> computeState [
-	self computeXValues.
-	self computeYValues.
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeXValues [
-	xValues := (1 to: self numberOfBoxes).
-]
-
-{ #category : #rendering }
-RSBoxPlot >> computeYValues [
-	| yMax yMin |
-	yMax := (boxShapes collect: [ :boxShape | boxShape maxYValue ]) max.
-	yMin := (boxShapes collect: [ :boxGraph | boxGraph minYValue ]) min.
-	yValues := {yMin. yMax.}.
-]
-
 { #category : #accessing }
 RSBoxPlot >> confidenceInterval [
 	^ self confidenceIntervals first
@@ -611,17 +630,17 @@ RSBoxPlot >> confidenceInterval [
 
 { #category : #accessing }
 RSBoxPlot >> confidenceIntervals [
-	^ boxShapes collect: [ :boxShape | boxShape confidenceInterval ]
+	^ graphics collect: [ :boxShape | boxShape confidenceInterval ]
 ]
 
 { #category : #accessing }
 RSBoxPlot >> confidencePercentage [
-	^ boxShapes collect: [ :boxShape | boxShape confidencePercentage ]
+	^ graphics collect: [ :boxShape | boxShape confidencePercentage ]
 ]
 
 { #category : #accessing }
 RSBoxPlot >> confidencePercentage: aPercentage [
-	boxShapes do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
+	graphics do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
 ]
 
 { #category : #accessing }
@@ -639,17 +658,11 @@ RSBoxPlot >> data: aCollection [
 		                        ifTrue: [ aCollection ].
 	self boxShapes: (collectionOfDatasets collect: [ :dataSet | RSBoxPlotShape data: dataSet.]).
 	self computeBoxGraphicsCenters.
-	self computeState.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> defaultBandsWidth [
-	^ xScale scale: 1
 ]
 
 { #category : #accessing }
 RSBoxPlot >> defaultOffset [
-	^ xScale scale: 0
+	^ bandScale scale: 0
 ]
 
 { #category : #initialization }
@@ -661,6 +674,7 @@ RSBoxPlot >> defaultShape [
 RSBoxPlot >> initialize [
 	super initialize.
 	offset := 0.
+	horizontal := false.
 ]
 
 { #category : #rendering }
@@ -670,7 +684,7 @@ RSBoxPlot >> iqr [
 
 { #category : #rendering }
 RSBoxPlot >> iqrs [
-	^ boxShapes collect: [ :box | box iqr ].
+	^ graphics collect: [ :box | box iqr ].
 ]
 
 { #category : #testing }
@@ -690,22 +704,22 @@ RSBoxPlot >> medianConfidenceInterval [
 
 { #category : #accessing }
 RSBoxPlot >> medianConfidenceIntervals [
-	^ boxShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
+	^ graphics collect: [ :boxShape | boxShape medianConfidenceInterval ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> medianLines [
-	^ RSGroup new addAll: (boxShapes collect: [ :box | box medianLine ]); yourself.
+	^ RSGroup new addAll: (graphics collect: [ :box | box medianLine ]); yourself.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> medians [
-	^ boxShapes collect: [ :box | box median ].
+	^ graphics collect: [ :box | box median ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> notch: aBool [
-	boxShapes do: [ :boxShape | boxShape notch: aBool ].	
+	graphics do: [ :boxShape | boxShape notch: aBool ].	
 ]
 
 { #category : #rendering }
@@ -720,24 +734,24 @@ RSBoxPlot >> numberOfBoxes [
 
 { #category : #rendering }
 RSBoxPlot >> outlier: markerShape [
-	boxShapes do: [ :box | box outlier: markerShape ].
+	graphics do: [ :box | box outlier: markerShape ].
 ]
 
 { #category : #rendering }
 RSBoxPlot >> outlierMarker: markerShapeString [
-	boxShapes do: [ :box | box outlierMarker: markerShapeString ].
+	graphics do: [ :box | box outlierMarker: markerShapeString ].
 ]
 
 { #category : #rendering }
 RSBoxPlot >> outliers [
-	^ RSGroup new addAll: (boxShapes collect: [ :box | box outliers ]); yourself.
+	^ RSGroup new addAll: (graphics collect: [ :box | box outliers ]); yourself.
 ]
 
 { #category : #accessing }
 RSBoxPlot >> quartiles [
 	| quartilesArray |
-	quartilesArray := boxShapes collect: [ :boxShape | boxShape quartiles ].
-	boxShapes size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
+	quartilesArray := graphics collect: [ :boxShape | boxShape quartiles ].
+	graphics size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
 ]
 
 { #category : #rendering }
@@ -745,27 +759,26 @@ RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	self computeBandsOffset.
 	self computeBandsWidth.
-	boxShapes doWithIndex: [ :aRSBoxPlotShape :idx |
+	graphics doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
-		aRSBoxPlotShape scales: {
-				self xScale.
-				self yScale }.
-		aRSBoxPlotShape renderIn: canvas ]
+		aRSBoxPlotShape bandScale: bandScale.
+		aRSBoxPlotShape dataScale: dataScale.
+		aRSBoxPlotShape renderIn: canvas ].
 ]
 
 { #category : #rendering }
 RSBoxPlot >> showBands [
-	boxShapes do: [ :box | box showBand ]
+	graphics do: [ :box | box showBand ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> whiskerFormat: aString [
-	boxShapes do: [ :box | box whiskerFormat: aString ]
+	graphics do: [ :box | box whiskerFormat: aString ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> whiskers [
-	^ RSGroup new addAll: (boxShapes collect: [ :box | box whiskers ]); yourself.
+	^ RSGroup new addAll: (graphics collect: [ :box | box whiskers ]); yourself.
 ]
 
 { #category : #accessing }

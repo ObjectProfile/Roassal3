@@ -6,10 +6,10 @@ Class {
 		'kernelDensity',
 		'densityArea',
 		'color',
-		'xScale',
-		'yScale',
 		'bandOffset',
-		'bandWidth'
+		'bandWidth',
+		'dataScale',
+		'bandScale'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -38,6 +38,11 @@ RSViolinPlotShape >> addChildrenToComposite [
 RSViolinPlotShape >> bandOffset: aNumber [
 	bandOffset := aNumber.
 	boxPlotShape bandOffset: bandOffset.
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> bandScale: aNSScale [
+	bandScale := aNSScale.
 ]
 
 { #category : #accessing }
@@ -78,6 +83,11 @@ RSViolinPlotShape >> data: dataset [
 	aCollection := dataset rsValue: model.
 	kernelDensity data: aCollection.
 	boxPlotShape data: aCollection.
+]
+
+{ #category : #initialization }
+RSViolinPlotShape >> dataScale: aNSScale [
+	dataScale := aNSScale
 ]
 
 { #category : #accessing }
@@ -124,10 +134,10 @@ RSViolinPlotShape >> densityArea [
 	
 	densityAreaPoints := densityCurve copy.
 	densityAreaPoints := densityAreaPoints collect: [ :point |
-		((bandWidth/2 * point x)+bandOffset)@(yScale scale: point y)
+		((bandWidth/2 * point x)+bandOffset)@(dataScale scale: point y)
 	 ].
 	densityCurve reversed do: [ :point | 
-		densityAreaPoints add: (bandOffset-(bandWidth/2 * point x))@(yScale scale: point y)
+		densityAreaPoints add: (bandOffset-(bandWidth/2 * point x))@(dataScale scale: point y)
 		"((point x * -1) @ point y) "
 	].
 	
@@ -187,28 +197,19 @@ RSViolinPlotShape >> renderIn: canvas [
 
 { #category : #initialization }
 RSViolinPlotShape >> scalePoint: aPoint [
-	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+	^ (bandScale scale: aPoint x) @ (dataScale scale: aPoint y)
 ]
 
 { #category : #initialization }
 RSViolinPlotShape >> scales: collectionOfNSScales [
-	self xScale: collectionOfNSScales first.
-	self yScale: collectionOfNSScales second.
-	boxPlotShape scales: collectionOfNSScales.
+	self bandScale: collectionOfNSScales first.
+	self dataScale: collectionOfNSScales second.
+	boxPlotShape bandScale: collectionOfNSScales first.
+	boxPlotShape dataScale: collectionOfNSScales second.
 ]
 
 { #category : #initialization }
 RSViolinPlotShape >> shapesToRender [
 	densityArea := self densityArea.
 	^ { densityArea. }.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> xScale: aNSScale [
-	xScale := aNSScale.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> yScale: aNSScale [
-	yScale := aNSScale
 ]

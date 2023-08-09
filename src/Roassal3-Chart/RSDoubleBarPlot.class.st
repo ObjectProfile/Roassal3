@@ -26,7 +26,7 @@ RSDoubleBarPlot >> computeSecondColor [
 
 { #category : #hooks }
 RSDoubleBarPlot >> computeSecondRectagleFor: aPoint index: index [
-	| origin corner sizeOffset offset zero |
+	| origin corner sizeOffset zero |
 	zero := 0.
 	left ifNotNil: [ zero := left at: index ].
 	origin := (x2Scale scale: aPoint x) @ (yScale scale: aPoint y).

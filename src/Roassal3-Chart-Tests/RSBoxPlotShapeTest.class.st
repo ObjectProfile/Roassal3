@@ -12,8 +12,8 @@ RSBoxPlotShapeTest >> testBoxGraphHasScales [
 	aScale := NSLinearScale new.
 	boxGraph := RSBoxPlotShape data: data.
 	boxGraph scales: {aScale. aScale }.
-	self assert: boxGraph xScale class equals: NSLinearScale.
-	self assert: boxGraph yScale class equals: NSLinearScale.
+	self assert: boxGraph bandScale class equals: NSLinearScale.
+	self assert: boxGraph dataScale class equals: NSLinearScale.
 	self assert: (boxGraph scalePoint: aPoint) class equals: Point.
 ]
 
@@ -79,6 +79,34 @@ RSBoxPlotShapeTest >> testDefaultUpperWhisker [
 	self assert: boxShape upperWhisker class equals: RSLine.
 	self assert: boxShape upperWhisker color equals: Color black.
 	self assert: boxShape upperWhisker border width equals: 1.
+]
+
+{ #category : #tests }
+RSBoxPlotShapeTest >> testHorizontal [
+	"| data boxShape xScale yScale canvas boxBefore boxAfter |
+	data := { 5. 1. 2. 3. 4. }.
+	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
+	xScale := NSScale ordinal
+		domain: {1};
+		rangeBands: {0. 360. }.
+	yScale := NSScale linear
+		domain: data;
+		range: {0. canvas extent x.}.
+	boxShape := RSBoxPlotShape data: data.
+	boxShape scales: {xScale. yScale}.
+	boxShape bandOffset: (xScale scale: 1).
+	boxShape bandWidth: (xScale scale: 1).
+	boxShape color: Color blue.
+	boxShape addChildrenToComposite.
+	boxBefore := boxShape box copy.
+	boxShape notch: true.
+	boxShape horizontal.
+	boxShape renderIn: canvas.
+	boxAfter := boxShape box copy.
+	canvas open.
+	self assert: boxAfter points equals: (boxBefore points collect: [:p| p y@p x])."
+	"self assert: boxAfter position equals: boxBefore position y@boxBefore position x."
 ]
 
 { #category : #tests }
