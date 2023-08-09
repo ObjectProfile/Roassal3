@@ -20,8 +20,8 @@ Class {
 		'xScale',
 		'yScale',
 		'chart',
-		'shape',
-		'styler'
+		'styler',
+		'masterShape'
 	],
 	#category : #'Roassal3-Chart-Decoration'
 }
@@ -120,7 +120,7 @@ RSAbstractChartDecoration >> defaultStyler [
 RSAbstractChartDecoration >> initialize [
 
 	super initialize.
-	shape := self defaultShape.
+	masterShape := self defaultShape.
 	styler := self defaultStyler
 ]
 
@@ -154,6 +154,12 @@ RSAbstractChartDecoration >> isVerticalTick [
 	^ false
 ]
 
+{ #category : #accessing }
+RSAbstractChartDecoration >> masterShape [
+
+	^ masterShape
+]
+
 { #category : #rendering }
 RSAbstractChartDecoration >> renderIn: aCanvas [
 
@@ -163,13 +169,13 @@ RSAbstractChartDecoration >> renderIn: aCanvas [
 { #category : #accessing }
 RSAbstractChartDecoration >> shape [
 
-	^ shape
+	^ masterShape
 ]
 
 { #category : #accessing }
 RSAbstractChartDecoration >> shape: aRSShape [
 
-	shape := aRSShape
+	masterShape := aRSShape
 ]
 
 { #category : #rendering }
