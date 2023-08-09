@@ -584,17 +584,17 @@ RSBoxPlot >> beforeRenderingIn: aChart [
 
 { #category : #rendering }
 RSBoxPlot >> boxShapes [
-	^ bandShapes.
+	^ bandPlotShapes.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> boxShapes: collectionOfRSBoxPlotShape [
-	bandShapes := collectionOfRSBoxPlotShape.
+	bandPlotShapes := collectionOfRSBoxPlotShape.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> boxes [
-	^ RSGroup new addAll: (bandShapes collect: [ :boxShape | boxShape box ]); yourself.
+	^ RSGroup new addAll: (bandPlotShapes collect: [ :boxShape | boxShape box ]); yourself.
 ]
 
 { #category : #public }
@@ -613,19 +613,19 @@ RSBoxPlot >> canHandleCluster [
 
 { #category : #accessing }
 RSBoxPlot >> color: aColor [
-	bandShapes do: [ :boxShape | boxShape color: aColor ].
+	bandPlotShapes do: [ :boxShape | boxShape color: aColor ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> colors: collectionOfColors [
-	bandShapes doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
+	bandPlotShapes doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> computeBoxGraphicsCenters [
 	| lastBoxCenter |
 	lastBoxCenter := 1.
-	self boxShapes: (bandShapes collect: [ :boxGraph | 
+	self boxShapes: (bandPlotShapes collect: [ :boxGraph | 
 		boxGraph graphCenter: lastBoxCenter "+groupOffset".
 		"lastBoxCenter := lastBoxCenter + self defaultOffset".
 		boxGraph.
@@ -644,17 +644,17 @@ RSBoxPlot >> confidenceInterval [
 
 { #category : #accessing }
 RSBoxPlot >> confidenceIntervals [
-	^ bandShapes collect: [ :boxShape | boxShape confidenceInterval ]
+	^ bandPlotShapes collect: [ :boxShape | boxShape confidenceInterval ]
 ]
 
 { #category : #accessing }
 RSBoxPlot >> confidencePercentage [
-	^ bandShapes collect: [ :boxShape | boxShape confidencePercentage ]
+	^ bandPlotShapes collect: [ :boxShape | boxShape confidencePercentage ]
 ]
 
 { #category : #accessing }
 RSBoxPlot >> confidencePercentage: aPercentage [
-	bandShapes do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
+	bandPlotShapes do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
 ]
 
 { #category : #accessing }
@@ -698,7 +698,7 @@ RSBoxPlot >> iqr [
 
 { #category : #rendering }
 RSBoxPlot >> iqrs [
-	^ bandShapes collect: [ :box | box iqr ].
+	^ bandPlotShapes collect: [ :box | box iqr ].
 ]
 
 { #category : #testing }
@@ -718,22 +718,22 @@ RSBoxPlot >> medianConfidenceInterval [
 
 { #category : #accessing }
 RSBoxPlot >> medianConfidenceIntervals [
-	^ bandShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
+	^ bandPlotShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> medianLines [
-	^ RSGroup new addAll: (bandShapes collect: [ :box | box medianLine ]); yourself.
+	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box medianLine ]); yourself.
 ]
 
 { #category : #rendering }
 RSBoxPlot >> medians [
-	^ bandShapes collect: [ :box | box median ].
+	^ bandPlotShapes collect: [ :box | box median ].
 ]
 
 { #category : #accessing }
 RSBoxPlot >> notch: aBool [
-	bandShapes do: [ :boxShape | boxShape notch: aBool ].	
+	bandPlotShapes do: [ :boxShape | boxShape notch: aBool ].	
 ]
 
 { #category : #rendering }
@@ -748,24 +748,24 @@ RSBoxPlot >> numberOfBoxes [
 
 { #category : #rendering }
 RSBoxPlot >> outlier: markerShape [
-	bandShapes do: [ :box | box outlier: markerShape ].
+	bandPlotShapes do: [ :box | box outlier: markerShape ].
 ]
 
 { #category : #rendering }
 RSBoxPlot >> outlierMarker: markerShapeString [
-	bandShapes do: [ :box | box outlierMarker: markerShapeString ].
+	bandPlotShapes do: [ :box | box outlierMarker: markerShapeString ].
 ]
 
 { #category : #rendering }
 RSBoxPlot >> outliers [
-	^ RSGroup new addAll: (bandShapes collect: [ :box | box outliers ]); yourself.
+	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box outliers ]); yourself.
 ]
 
 { #category : #accessing }
 RSBoxPlot >> quartiles [
 	| quartilesArray |
-	quartilesArray := bandShapes collect: [ :boxShape | boxShape quartiles ].
-	bandShapes size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
+	quartilesArray := bandPlotShapes collect: [ :boxShape | boxShape quartiles ].
+	bandPlotShapes size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
 ]
 
 { #category : #rendering }
@@ -773,7 +773,7 @@ RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	self computeBandsOffset.
 	self computeBandsWidth.
-	bandShapes doWithIndex: [ :aRSBoxPlotShape :idx |
+	bandPlotShapes doWithIndex: [ :aRSBoxPlotShape :idx |
 		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
 		aRSBoxPlotShape bandScale: bandScale.
 		aRSBoxPlotShape dataScale: dataScale.
@@ -782,17 +782,17 @@ RSBoxPlot >> renderIn: canvas [
 
 { #category : #rendering }
 RSBoxPlot >> showBands [
-	bandShapes do: [ :box | box showBand ]
+	bandPlotShapes do: [ :box | box showBand ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> whiskerFormat: aString [
-	bandShapes do: [ :box | box whiskerFormat: aString ]
+	bandPlotShapes do: [ :box | box whiskerFormat: aString ]
 ]
 
 { #category : #rendering }
 RSBoxPlot >> whiskers [
-	^ RSGroup new addAll: (bandShapes collect: [ :box | box whiskers ]); yourself.
+	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box whiskers ]); yourself.
 ]
 
 { #category : #accessing }

@@ -23,7 +23,7 @@ Class {
 		'bandWidth',
 		'offset',
 		'horizontal',
-		'bandShapes'
+		'bandPlotShapes'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -52,21 +52,21 @@ RSAbstractBandPlot >> bandsWidth: aNumber [
 RSAbstractBandPlot >> computeBandsOffset [
 	| bandValues |
 	bandValues := horizontal ifFalse: [ xValues ] ifTrue: [ yValues ].
-	bandShapes doWithIndex: [ :graphic :idx |
+	bandPlotShapes doWithIndex: [ :graphic :idx |
 		graphic bandOffset: (bandScale scale: (bandValues at: idx)) + offset
 	].
 ]
 
 { #category : #rendering }
 RSAbstractBandPlot >> computeBandsWidth [
-	bandShapes do: [ :graphic | graphic bandWidth: self bandsWidth ].
+	bandPlotShapes do: [ :graphic | graphic bandWidth: self bandsWidth ].
 ]
 
 { #category : #private }
 RSAbstractBandPlot >> computeXAndYValues [
 	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
-	maxDataRelatedValue := (bandShapes collect: [ :boxShape | boxShape maxYValue ]) max.
-	minDataRelatedValue := (bandShapes collect: [ :boxGraph | boxGraph minYValue ]) min.
+	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxYValue ]) max.
+	minDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape minYValue ]) min.
 	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
 	bandValues := self bandValues.
 	horizontal 
@@ -95,12 +95,12 @@ RSAbstractBandPlot >> defaultShape [
 
 { #category : #accessing }
 RSAbstractBandPlot >> horizontal [
-	bandShapes do: [ :bs | bs horizontal ].
+	bandPlotShapes do: [ :bs | bs horizontal ].
 	horizontal := true.
 ]
 
 { #category : #accessing }
 RSAbstractBandPlot >> vertical [
-	bandShapes do: [ :bs | bs vertical ].
+	bandPlotShapes do: [ :bs | bs vertical ].
 	horizontal := false.
 ]
