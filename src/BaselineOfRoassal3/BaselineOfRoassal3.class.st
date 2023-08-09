@@ -123,6 +123,9 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec 
 		baseline: 'DataFrame'
 		with: [ spec repository: 'github://PolyMathOrg/DataFrame/src' ].
+	spec 
+   		baseline: 'AIDatasets' 
+   		with: [ spec repository: 'github://pharo-ai/datasets' ].
 ]
 
 { #category : #'API-packages' }
@@ -169,7 +172,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	spec package: #'Roassal3-Gtk'.
 	spec package: #'Roassal3-Spec-Gtk'.
 
-	spec package: #'Roassal3-Chart-DataFrame' with: [ spec requires: #('DataFrame') ].
+	spec package: #'Roassal3-Chart-DataFrame' with: [ spec requires: #('DataFrame' 'AIDatasets') ].
 
 
 
