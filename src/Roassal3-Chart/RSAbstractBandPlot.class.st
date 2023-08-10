@@ -121,6 +121,11 @@ RSAbstractBandPlot >> defaultBandsWidth [
 	^ bandScale scale: 1
 ]
 
+{ #category : #accessing }
+RSAbstractBandPlot >> defaultOffset [
+	^ bandScale scale: 0
+]
+
 { #category : #'accessing - defaults' }
 RSAbstractBandPlot >> defaultShape [
 	^ self subclassResponsibility

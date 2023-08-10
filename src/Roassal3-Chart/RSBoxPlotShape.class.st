@@ -254,11 +254,6 @@ RSBoxPlotShape >> defaultOutlier [
 ]
 
 { #category : #defaults }
-RSBoxPlotShape >> defaultShouldShowBand [
-	^ false
-]
-
-{ #category : #defaults }
 RSBoxPlotShape >> defaultWhisker [
 	^ RSLine new
 		width: 1;

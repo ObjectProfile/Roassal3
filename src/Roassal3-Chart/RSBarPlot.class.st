@@ -35,10 +35,18 @@ Class {
 
 { #category : #examples }
 RSBarPlot class >> example01BarPlot [
-	| p1 data1  x |
-	data1 := {  10. 9. 7 }.
-	x := { 1. 2. 3. }.
-	p1 := self x: x y: data1.
+	| p1 data1 |
+	data1 := {  9. 9. 7. 19. 5. 10. }.
+	p1 := (self new) data: data1.
+	^ p1 open.
+]
+
+{ #category : #examples }
+RSBarPlot class >> example02BarPlotHorizontal [
+	| p1 data1 |
+	data1 := {  9. 9. 7. 19. 5. 10. }.
+	p1 := (self new) data: data1.
+	p1 horizontal.
 	^ p1 open.
 ]
 
@@ -78,18 +86,6 @@ RSBarPlot >> barScale [
 	^ xScale
 ]
 
-{ #category : #rendering }
-RSBarPlot >> beforeRenderingIn: aChart [
-
-	super beforeRenderingIn: aChart.
-	dataScale := yScale.
-	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	bandScale := NSOrdinalScale new
-		domain: xValues;
-		rangeBands: xScale range padding: gapRatio.
-	aChart xScale: bandScale.
-]
-
 { #category : #accessing }
 RSBarPlot >> bottom [
 	^ bottom
@@ -122,11 +118,6 @@ RSBarPlot >> computeRectagleFor: aPoint index: index [
 		corner: corner + offset + sizeOffset
 ]
 
-{ #category : #hooks }
-RSBarPlot >> computeXAndYValues [
-	^ self
-]
-
 { #category : #rendering }
 RSBarPlot >> definedValuesY [
 	"Return the list Y values that are defined"
@@ -148,6 +139,5 @@ RSBarPlot >> modelFor: aPoint [
 
 { #category : #hooks }
 RSBarPlot >> numberOfBands [
-	self beforeRenderingIn: chart.
-	^ bandScale range size.
+	^ bandPlotShapes size
 ]

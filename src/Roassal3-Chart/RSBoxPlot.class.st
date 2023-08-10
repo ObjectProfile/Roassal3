@@ -186,7 +186,6 @@ RSBoxPlot class >> example05BoxPlotsHorizontal [
 			 { 12. 12. 13. 14. 15. 24. }  }.
 	boxPlot := self data: data.
 	boxPlot horizontal.
-	boxPlot showBands.
 	^ boxPlot open.
 ]
 
@@ -650,11 +649,6 @@ RSBoxPlot >> data: aCollection [
 		                        ifTrue: [ aCollection ].
 	self boxShapes: (collectionOfDatasets collect: [ :dataSet | RSBoxPlotShape data: dataSet.]).
 	self computeBoxGraphicsCenters.
-]
-
-{ #category : #accessing }
-RSBoxPlot >> defaultOffset [
-	^ bandScale scale: 0
 ]
 
 { #category : #initialization }

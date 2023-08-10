@@ -79,6 +79,11 @@ RSAbstractBandPlotShape >> dataScale: aNSScale [
 	dataScale := aNSScale
 ]
 
+{ #category : #defaults }
+RSAbstractBandPlotShape >> defaultShouldShowBand [
+	^ false
+]
+
 { #category : #public }
 RSAbstractBandPlotShape >> horizontal [
 	horizontal := true.
