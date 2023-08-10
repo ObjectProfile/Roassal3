@@ -1,5 +1,5 @@
 "
-This field uses a list of object to pick one
+This field uses a list of objects to pick one
 "
 Class {
 	#name : #RSLayoutChooseField,

@@ -1,7 +1,7 @@
 Extension { #name : #RSConditionalLayout }
 
 { #category : #'*Roassal3-Examples' }
-RSConditionalLayout class >> exampleCollection [
+RSConditionalLayout class >> createCanvas [
 	| classes shapes c eb |
 	classes := Collection allSubclasses.
 	shapes := classes collect: [ :class | RSBox new size: 10; model: class ] as: RSGroup.
@@ -13,35 +13,32 @@ RSConditionalLayout class >> exampleCollection [
 	eb withVerticalAttachPoint.
 	eb shapes: shapes.
 	eb connectFrom: #superclass.
+	c @ RSCanvasController.
+	^ c
+]
 
-	"RSTreeLayout on: shapes."
+{ #category : #'*Roassal3-Examples' }
+RSConditionalLayout class >> exampleCollection [
+	| c |
+	c := self createCanvas.
 	self new
 		ifNotConnectedThen: RSGridLayout new;
 		else: RSTreeLayout new;
-		on: shapes.
-	c @ RSCanvasController.
+		on: c nodes.
 	^ c open
 ]
 
 { #category : #'*Roassal3-Examples' }
 RSConditionalLayout class >> exampleCollection2 [
-	| classes shapes c eb |
-	classes := Collection allSubclasses.
-	shapes := classes collect: [ :class | RSBox new size: 10; model: class ] as: RSGroup.
+	| c |
+	c := self createCanvas.	
 
-	c := RSCanvas new.
-	c addAll: shapes.
-	eb := RSEdgeBuilder orthoVertical.
-	eb canvas: c.
-	eb withVerticalAttachPoint.
-	eb shapes: shapes.
-	eb connectFrom: #superclass.
-
-	"RSTreeLayout on: shapes."
 	self new
 		ifConnectedThen: RSTreeLayout new;
 		else: RSGridLayout new;
-		on: shapes.
-	c @ RSCanvasController.
+		clusterLayout: (RSVerticalLineLayout new
+			alignCenter;
+			gapSize: 20);
+		on: c nodes.
 	^ c open
 ]

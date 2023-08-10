@@ -48,12 +48,10 @@ RSLayoutPickerPresenter >> connectPresenters [
 
 { #category : #public }
 RSLayoutPickerPresenter >> createBoxLayout [
-	| attributes |
-	attributes := self instantiate: RSLayoutControls.
-	attributes layoutStudio: self.
+
 	^ SpBoxLayout newVertical
 		spacing: 10;
-		add: attributes;
+		add: self attributes;
 		yourself
 ]
 
