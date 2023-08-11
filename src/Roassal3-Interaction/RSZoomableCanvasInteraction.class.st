@@ -31,7 +31,7 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 	camera := aCanvas camera.
 	scale := camera scale.
 	
-	morphPosition := aCanvas morph lastMousePosition - aCanvas morph bounds origin.
+	morphPosition := aCanvas lastMousePosition.
 	position := camera fromPixelToSpace: morphPosition.
 	self 
 		zoomMove: aCanvas 

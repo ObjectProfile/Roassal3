@@ -402,6 +402,11 @@ RSCanvas >> initialize [
 ]
 
 { #category : #accessing }
+RSCanvas >> lastMousePosition [
+	^ host lastMousePosition
+]
+
+{ #category : #accessing }
 RSCanvas >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
