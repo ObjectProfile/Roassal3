@@ -42,7 +42,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 
 ]
 
-{ #category : #refreshing }
+{ #category : #opening }
 RSBlocHost >> signalUpdate [
 	"Request a redraw on the canvas."
 
