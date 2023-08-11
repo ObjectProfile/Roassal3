@@ -239,6 +239,7 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 	    RSBox new
 	        model: cls;
 	        color:( color scale: cls numberOfMethods );
+			  draggable;
 	        size: cls linesOfCode sqrt + 10;
 				borderColor: Color black;
 	        yourself
@@ -800,47 +801,64 @@ RSBlocExamples >> example21BoxesLineCircles [
 
 { #category : #examples }
 RSBlocExamples >> example22AnimationOnRightClick [
-	<script: 'self new example22AnimationOnRightClick open'>
 
-	| canvas random mouseClick |
-	canvas := self newCanvas.
-	random := Random new.
-	
-	mouseClick := [ | c1 c2 color  |
-		canvas nodes copy do: #remove.
-		c1 := Color r: random next g: random next b: random next.
-		c2 := Color r: random next g: random next b: random next.
-		color := NSScale linear range: { c1. c2 }.
-		1 to: 10000 do: [ :i | | shape radius ang overlapped |
-			shape := RSEllipse new.
-			shape radius: random next * 30 + 2.
-			radius := random next * 250.
-			ang := random next * Float pi * 2.
-			shape position: radius * (ang cos @ ang sin).
-			overlapped := canvas nodes anySatisfy: [ :other |
-				(other position distanceTo: shape position) < 
-					((shape radius + other radius) * 1.4)  ].
-			overlapped ifFalse: [ 
-				canvas add: shape.
-				shape propertyAt: #radius put: shape radius.
-				shape color: (color scale: (shape position distanceTo: 0@0)/250 ) ].
-		].
-		canvas newAnimation
-			easing: RSEasingInterpolator elasticOut;
-			onStepDo: [ :t |
-				canvas nodes do: [ :shape | | scale |
-					scale := NSScale linear range: { 1. shape propertyAt: #radius }.
-					shape radius: (scale scale: t)
-					 ].
-				canvas signalUpdate ]
-	].
-	mouseClick value.
-	
-	canvas 
-		when: RSExtentChangedEvent do: [ :evt | canvas zoomToFit ];
-		when: RSMouseRightClick do: mouseClick.
-	^ canvas
+	         <script: 'self new example22AnimationOnRightClick open'>
+	         | canvas random mouseClick |
+	         canvas := self newCanvas.
+	         random := Random new.
 
+	         mouseClick := [
+	                       | c1 c2 color |
+	                       canvas nodes copy do: #remove.
+	                       c1 := Color
+		                             r: random next
+		                             g: random next
+		                             b: random next.
+	                       c2 := Color
+		                             r: random next
+		                             g: random next
+		                             b: random next.
+	                       color := NSScale linear range: {
+			                                c1.
+			                                c2 }.
+	                       1 to: 10000 do: [ :i |
+		                       | shape radius ang overlapped |
+		                       shape := RSEllipse new.
+		                       shape radius: random next * 30 + 2.
+		                       radius := random next * 250.
+		                       ang := random next * Float pi * 2.
+		                       shape position: radius * (ang cos @ ang sin).
+		                       overlapped := canvas nodes anySatisfy: [
+			                                     :other |
+			                                     (other position distanceTo:
+				                                      shape position)
+			                                     <
+			                                     (shape radius + other radius
+			                                      * 1.4) ].
+		                       overlapped ifFalse: [
+			                       canvas add: shape.
+			                       shape propertyAt: #radius put: shape radius.
+			                       shape color:
+				                       (color scale:
+					                        (shape position distanceTo: 0 @ 0) / 250) ] ].
+	                       canvas newAnimation
+		                       easing: RSEasingInterpolator elasticOut;
+		                       onStepDo: [ :t |
+			                       canvas nodes do: [ :shape |
+					                       | scale |
+					                       scale := NSScale linear range: {
+								                                1.
+								                                (shape propertyAt: #radius) }.
+					                       shape radius: (scale scale: t) ].
+			                       canvas signalUpdate ] ].
+	         mouseClick value.
+
+	         canvas
+		         when: RSExtentChangedEvent
+		         do: [ :evt | canvas zoomToFit ]
+		         for: self;
+		         when: RSMouseRightClick do: mouseClick for: self.
+	         ^ canvas
 ]
 
 { #category : #examples }
