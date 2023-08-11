@@ -79,6 +79,25 @@ RSBlocEventListener >> doubleClickEvent: aBlEvent [
 		from: aBlEvent
 ]
 
+{ #category : #'dnd handlers' }
+RSBlocEventListener >> dragEndEvent: aBlEvent [
+	self announceEventOfClass: RSMouseDragEnd from: aBlEvent
+]
+
+{ #category : #'dnd handlers' }
+RSBlocEventListener >> dragEvent: aBlEvent [
+	self announceEventOfClass: RSMouseDragging from: aBlEvent
+]
+
+{ #category : #'dnd handlers' }
+RSBlocEventListener >> dragStartEvent: aBlEvent [
+	self
+		announceMouseEventOfClass: RSMouseDragStart 
+		ifLeftButton: RSMouseLeftDragStart 
+		ifRightButton: RSMouseRightDragStart
+		from: aBlEvent
+]
+
 { #category : #initialization }
 RSBlocEventListener >> initializeForCanvas: aRSCanvas [ 
 	
