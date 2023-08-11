@@ -27,13 +27,8 @@ RSBlocEventListener >> announceEventOfClass: aRSEventClass actionClass: anAction
 		 ].
 
 	aBlEvent consumed: true.
-
-	aRSEvent := aRSEventClass new
-		canvas: roassalCanvas;
-		shape: targetShape;
-		position: (self roassalPositionFor: aBlEvent);
-		yourself.
-		
+	aRSEvent := aRSEventClass newFromBlEvent: aBlEvent canvas: roassalCanvas.
+	aRSEvent shape: targetShape.
 	targetShape announce: aRSEvent
 ]
 
@@ -106,17 +101,13 @@ RSBlocEventListener >> mouseLeaveEvent: aBlEvent [
 
 { #category : #'mouse handlers' }
 RSBlocEventListener >> mouseMoveEvent: aBlEvent [
-
+	roassalCanvas host lastMousePosition: aBlEvent position.
+	
 	self announceEventOfClass: RSMouseMove from: aBlEvent
 ]
 
-{ #category : #private }
-RSBlocEventListener >> roassalPositionFor: aBlEvent [
-	"Answer the position of the event translated to a RSCanvas space position as callbacks expect it (where '0@0' is the center of the canvas)."
-
-	| positionOfCanvasInSpace positionOfEventInCanvas |
-	positionOfCanvasInSpace := roassalCanvas host canvasElement positionInSpace.
-	positionOfEventInCanvas := aBlEvent position - positionOfCanvasInSpace.
-	^ roassalCanvas camera fromPixelToSpace: positionOfEventInCanvas
-
+{ #category : #'mouse handlers' }
+RSBlocEventListener >> mouseWheelEvent: aBlEvent [
+	aBlEvent vector y isZero ifTrue: [ ^ self ].
+	self announceEventOfClass: RSMouseWheelEvent from: aBlEvent
 ]

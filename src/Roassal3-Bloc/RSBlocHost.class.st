@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSHost,
 	#instVars : [
 		'space',
-		'canvasElement'
+		'canvasElement',
+		'lastMousePosition'
 	],
 	#category : #'Roassal3-Bloc-Core'
 }
@@ -24,6 +25,18 @@ RSBlocHost >> canvasElement [
 RSBlocHost >> defaultWindowTitle [
 
 	^ super defaultWindowTitle , ' - Bloc'
+]
+
+{ #category : #accessing }
+RSBlocHost >> lastMousePosition [
+
+	^ lastMousePosition
+]
+
+{ #category : #accessing }
+RSBlocHost >> lastMousePosition: anObject [
+
+	lastMousePosition := anObject
 ]
 
 { #category : #opening }
