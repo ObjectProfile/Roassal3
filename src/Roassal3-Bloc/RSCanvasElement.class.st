@@ -26,10 +26,15 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 	
 	self
 		background: aRSCanvas color;
+		"border: (BlBorder paint: Color red width: 3);"
 		addAnimation: self newInfiniteCanvasAnimation;
 		addEventHandler: elementListener;
 		when: BlElementExtentChangedEvent
-			do: [ :evt | aRSCanvas extent: evt source extent ];
+			do: [ :evt |
+				aRSCanvas extent: evt source extent.
+				"RSCanvas extent does not trigger signalUpdate"
+				self updateFromRoassalShape
+				 ];
 		when: BlElementAddedToSceneGraphEvent 
 			do: [ :evt |  aRSCanvas extent: evt source extent ];
 		constraintsDo:[ :c |
