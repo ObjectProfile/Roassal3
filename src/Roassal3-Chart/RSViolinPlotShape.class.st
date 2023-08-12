@@ -17,6 +17,11 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 	^ violinShape
 ]
 
+{ #category : #initialization }
+RSViolinPlotShape >> area [
+	^ densityArea
+]
+
 { #category : #band }
 RSViolinPlotShape >> bandOffset: aNumber [
 	super bandOffset: aNumber.
@@ -44,6 +49,11 @@ RSViolinPlotShape >> border [
 { #category : #border }
 RSViolinPlotShape >> borderColor: aColor [
 	^ self border color: aColor.
+]
+
+{ #category : #band }
+RSViolinPlotShape >> color [
+	^ color ifNil: [ densityArea color ].
 ]
 
 { #category : #shapes }
@@ -128,6 +138,7 @@ RSViolinPlotShape >> densityArea [
 	
 	
 	densityArea points: densityAreaPoints.
+	color := color ifNil: [ densityArea color ].
 	densityArea color: color.
 	^ densityArea
 ]

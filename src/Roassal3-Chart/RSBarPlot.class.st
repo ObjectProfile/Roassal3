@@ -37,7 +37,7 @@ Class {
 RSBarPlot class >> example01BarPlot [
 	| p1 data1 |
 	data1 := {  9. 9. 7. 19. 5. 10. }.
-	p1 := (self new) data: data1.
+	p1 := self new data: data1.
 	^ p1 open.
 ]
 
@@ -56,8 +56,8 @@ RSBarPlot class >> exampleClusterBarPlots [
 	data1 := {  10. 9. 7 }. "blue"
 	data2	:= { 20. 15. 8 }. "orange"
 	x := { 1. 2. 3. }.
-	p1 := self x: x y: data1.
-	p2 := self x: x y: data2.
+	p1 := (self new) data: data1.
+	p2 := (self new) data: data2.
 	chart := p1 + p2.
 	^ chart open.
 ]

@@ -159,6 +159,22 @@ RSViolinPlot class >> exampleModels [
 ]
 
 { #category : #'examples - styling' }
+RSViolinPlot class >> exampleStyle [
+
+	| violinPlot2 data2 paint |
+	
+	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}. {14. 14. 16. 12. 13. 10. 11. 14.}.}.
+	
+	violinPlot2 := self data: data2.
+	paint := LinearGradientPaint fromArray: { 0 -> Color gray. 1 -> Color red }.
+	paint start: 0@ -50.
+	paint stop: 0@ 50.
+	violinPlot2 violinShapes do: [:vs| vs area color: paint ].
+	
+	^ violinPlot2 open
+]
+
+{ #category : #'examples - styling' }
 RSViolinPlot class >> exampleStyleBorder [
 
 	| violinPlot2 data2 |
@@ -511,11 +527,11 @@ RSViolinPlot >> renderIn: canvas [
 	bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 	self computeBandsWidth.
 	
-	bandPlotShapes doWithIndex: [ :aRSBoxPlotShape :idx |
-		aRSBoxPlotShape color ifNil: [ aRSBoxPlotShape color: self computeColor. ].
-		aRSBoxPlotShape bandScale: bandScale.
-		aRSBoxPlotShape dataScale: dataScale.
-		aRSBoxPlotShape renderIn: canvas ]
+	bandPlotShapes doWithIndex: [ :violinPlotShape :idx |
+		violinPlotShape color ifNil: [ violinPlotShape color: self computeColor. ].
+		violinPlotShape bandScale: bandScale.
+		violinPlotShape dataScale: dataScale.
+		violinPlotShape renderIn: canvas ]
 ]
 
 { #category : #rendering }

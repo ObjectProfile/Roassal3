@@ -436,6 +436,21 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd5 [
 ]
 
 { #category : #'examples - style' }
+RSBoxPlot class >> exampleBoxPlotStyle [
+	| boxPlot data paint |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	paint := LinearGradientPaint fromArray: { 0 -> Color gray. 1 -> Color red }.
+	paint start: 0@ -50.
+	paint stop: 0@ 50.
+	boxPlot := self data: data.
+	boxPlot notch: true.
+	boxPlot boxShapes do: [ :bs | bs box cornerRadii: 2 ].
+	^ boxPlot open.
+]
+
+{ #category : #'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleBoxFillColor [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -559,7 +574,7 @@ RSBoxPlot >> bandValues [
 	^ (1 to: self numberOfBoxes)
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSBoxPlot >> boxShapes [
 	^ bandPlotShapes.
 ]
@@ -595,7 +610,7 @@ RSBoxPlot >> color: aColor [
 
 { #category : #accessing }
 RSBoxPlot >> colors: collectionOfColors [
-	bandPlotShapes doWithIndex: [ :boxShape :idx | boxShape color: (collectionOfColors at: idx) ].
+	bandPlotShapes with: collectionOfColors do: [ :bandShape :color | bandShape  color: color ].
 ]
 
 { #category : #accessing }
@@ -693,7 +708,7 @@ RSBoxPlot >> medianConfidenceIntervals [
 	^ bandPlotShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSBoxPlot >> medianLines [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box medianLine ]); yourself.
 ]
@@ -757,7 +772,7 @@ RSBoxPlot >> whiskerFormat: aString [
 	bandPlotShapes do: [ :box | box whiskerFormat: aString ]
 ]
 
-{ #category : #rendering }
+{ #category : #accessing }
 RSBoxPlot >> whiskers [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box whiskers ]); yourself.
 ]
