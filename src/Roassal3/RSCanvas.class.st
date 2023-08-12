@@ -422,6 +422,26 @@ RSCanvas >> morph: aMorph [
 	host morph: aMorph
 ]
 
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newBox [
+	^ self add: RSBox new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newLabel [
+	^ self add: RSLabel new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newLine [
+	^ self add: RSLine new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newPolygon [
+	^ self add: RSPolygon new
+]
+
 { #category : #actions }
 RSCanvas >> notifyExtentChanged: aNewExtent [
 	| evt |
