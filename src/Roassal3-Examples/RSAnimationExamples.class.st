@@ -3220,23 +3220,21 @@ RSAnimationExamples >> example46Lines [
 RSAnimationExamples >> example47FractalTree [
 
 	<script: 'self new example47FractalTree open'>
-	| canvas drawTree size angleGap max sizeScale colorScale |
+	| canvas drawTree size angleGap max colorScale |
 	canvas := RSCanvas new.
 	canvas background: Color black.
 	drawTree := nil.
-	size := 10.
+	size := 0.75.
 	angleGap := 20.
-	max := 9.
-	sizeScale := NSScale pow
-		domain: { max. 1 };
-		range: { 60. 3 }.
+	max := 10.
+
 	colorScale := NSScale log
 		domain: { max. 1 };
 		range: { Color white. Color green }.
 	drawTree := [ :depth :angle :p1  |  
 		depth isZero ifFalse: [ | p2 rad |
 			rad := angle degreesToRadians.
-			p2 := p1 + (rad cos @ rad sin * (sizeScale scale: depth) ).
+			p2 := p1 + (rad cos @ rad sin * depth * depth*size).
 			canvas newLine
 				color: (colorScale scale: depth);
 				width: depth*0.75;
@@ -3254,7 +3252,7 @@ RSAnimationExamples >> example47FractalTree [
 	].
 	canvas newAnimation
 		repeat;
-		easing: RSEasingInterpolator sinOut;
+		easing: RSEasingInterpolator linear;
 		duration: 10 seconds;
 		scale: (NSScale linear
 			domain: {0. 0.5. 1};
