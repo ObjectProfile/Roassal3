@@ -127,7 +127,6 @@ RSAbstractBarPlot >> modelFor: aPoint [
 
 { #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
-	self padding: 0@0.
 	super renderIn: canvas.
 	self computeBandsOffset.
 	self computeBandsWidth.
