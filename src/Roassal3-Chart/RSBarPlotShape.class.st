@@ -48,7 +48,7 @@ RSBarPlotShape >> defaultBar [
 		border: (RSBorder new color: Color black; joinRound).
 ]
 
-{ #category : #shapes }
+{ #category : #initialization }
 RSBarPlotShape >> initialize [
 	super initialize.
 	bar := self defaultBar.
