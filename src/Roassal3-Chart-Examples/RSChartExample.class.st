@@ -429,3 +429,30 @@ RSChartExample >> example24SpineLine [
 	c padding: 10.
 	^ c
 ]
+
+{ #category : #examples }
+RSChartExample >> example25CustomBackground [
+	<script: 'self new example25CustomBackground open'>
+	| plot c scale color form paint |
+	plot := self example10BarPlot.
+	c := RSCanvas new.
+	scale := NSScale linear
+		domain: { 1. 25 };
+		range: { 10. 3 }.
+	color := (Color colorFrom: '#20325a') alpha: 0.2.
+	1 to: 25 do: [ :y |
+		1 to: 50 do: [ :x | | e |
+			e := RSEllipse new.
+			e position: x @ y * 10.
+			e size: (scale scale: y).
+			e color: color.
+			c add: e 
+		]
+	].
+	c zoomToFit.
+	form := c asForm.
+	paint := AthensCairoPatternSurfacePaint createForSurface: (AthensCairoSurface fromForm: form).
+	paint origin: (form extent / 2) negated.
+	plot spineDecoration masterShape paint: paint.
+	^ plot
+]

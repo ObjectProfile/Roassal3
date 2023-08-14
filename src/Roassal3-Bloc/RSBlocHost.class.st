@@ -6,7 +6,8 @@ Class {
 	#superclass : #RSHost,
 	#instVars : [
 		'space',
-		'canvasElement'
+		'canvasElement',
+		'lastMousePosition'
 	],
 	#category : #'Roassal3-Bloc-Core'
 }
@@ -26,6 +27,18 @@ RSBlocHost >> defaultWindowTitle [
 	^ super defaultWindowTitle , ' - Bloc'
 ]
 
+{ #category : #accessing }
+RSBlocHost >> lastMousePosition [
+
+	^ lastMousePosition
+]
+
+{ #category : #accessing }
+RSBlocHost >> lastMousePosition: anObject [
+
+	lastMousePosition := anObject
+]
+
 { #category : #opening }
 RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
@@ -42,7 +55,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 
 ]
 
-{ #category : #refreshing }
+{ #category : #opening }
 RSBlocHost >> signalUpdate [
 	"Request a redraw on the canvas."
 

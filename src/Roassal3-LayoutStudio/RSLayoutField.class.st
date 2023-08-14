@@ -114,7 +114,6 @@ RSLayoutField >> printOn: stream tab: tabSize [
 
 { #category : #rendering }
 RSLayoutField >> renderIn: boxLayout [
-
 	boxLayout add: (SpBoxLayout newVertical
 		add: label asString expand: false;
 		add: self widget expand: false;

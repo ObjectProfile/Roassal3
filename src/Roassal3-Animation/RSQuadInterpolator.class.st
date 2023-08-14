@@ -1,14 +1,14 @@
 "
-TSEasing quadIn
-Quadratic easing. Equivalent to: TSEasing polyIn exponent: 2
+RSEasingInterpolator quadIn
+Quadratic easing. Equivalent to: RSEasingInterpolator polyIn exponent: 2
 
-TSEasing quadOut
-Reverse quadratic easing. Equivalent to 1 - (1 - t) quadIn. Also equivalent to: TSEasing polyOut exponent: 2.
+RSEasingInterpolator quadOut
+Reverse quadratic easing. Equivalent to 1 - (1 - t) quadIn. Also equivalent to: RSEasingInterpolator polyOut exponent: 2.
 
-TSEasing quad 
-TSEasing quadInOut 
+RSEasingInterpolator quad 
+RSEasingInterpolator quadInOut 
 Symmetric quadratic easing; scales quadIn for t in [0, 0.5] and quadOut for t in [0.5, 1].
-Also equivalent to TSEasing poly exponent: 2.
+Also equivalent to RSEasingInterpolator poly exponent: 2.
 "
 Class {
 	#name : #RSQuadInterpolator,

@@ -1,12 +1,12 @@
 "
-TSEasing expIn
+RSEasingInterpolator expIn
 Exponential easing; raises 2 to the exponent 10 * (t - 1).
 
-TSEasing expOut 
+RSEasingInterpolator expOut 
 Reverse exponential easing; equivalent to 1 - expIn(1 - t).
 
-TSEasing exp 
-TSEasing expInOut 
+RSEasingInterpolator exp 
+RSEasingInterpolator expInOut 
 Symmetric exponential easing; scales expIn for t in [0, 0.5] and expOut for t in [0.5, 1].
 "
 Class {

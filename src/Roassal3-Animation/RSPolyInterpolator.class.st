@@ -1,16 +1,16 @@
 "
-linear := TSEasing poly exponent: 1.
-quad := TSEasing poly exponent: 2.
-cubic := TSEasing poly exponent: 3
+linear := RSEasingInterpolator poly exponent: 1.
+quad := RSEasingInterpolator poly exponent: 2.
+cubic := RSEasingInterpolator poly exponent: 3
 
-TSEasing polyIn 
+RSEasingInterpolator polyIn 
 Polynomial easing; raises t to the specified exponent. If the exponent is not specified, it defaults to 3, equivalent to cubicIn.
 
-TSEasing polyOut
+RSEasingInterpolator polyOut
 Reverse polynomial easing; equivalent to 1 - polyIn(1 - t). If the exponent is not specified, it defaults to 3, equivalent to cubicOut.
 
-TSEasing poly 
-TSEasing polyInOut 
+RSEasingInterpolator poly 
+RSEasingInterpolator polyInOut 
 Symmetric polynomial easing; scales polyIn for t in [0, 0.5] and polyOut for t in [0.5, 1]. If the exponent is not specified, it defaults to 3, equivalent to cubic.
 "
 Class {

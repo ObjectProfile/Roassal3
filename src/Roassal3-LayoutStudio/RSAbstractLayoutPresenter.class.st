@@ -24,6 +24,14 @@ RSAbstractLayoutPresenter >> apply: aRSLayoutField with: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #public }
+RSAbstractLayoutPresenter >> attributes [
+	| attributes |
+	attributes := self instantiate: RSLayoutControls.
+	attributes layoutStudio: self.
+	^ attributes
+]
+
 { #category : #events }
 RSAbstractLayoutPresenter >> changeLayout [
 	| selection |
@@ -39,19 +47,7 @@ RSAbstractLayoutPresenter >> controls [
 
 { #category : #public }
 RSAbstractLayoutPresenter >> createBoxLayout [
-	| attributes |
-	attributes := self instantiate: RSLayoutControls.
-	attributes layoutStudio: self.
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newVertical
-			add: 'Graph editor' expand: false;
-			add: graphTextEditor withConstraints: [ :c |
-				c expand: false; height: 200];
-			yourself
-			) expand: false;
-		spacing: 10;
-		add: attributes;
-		yourself
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
