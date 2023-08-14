@@ -187,6 +187,7 @@ RSAbstractAnimation >> refresh [
 	firstStep ifTrue: [ 
 		firstStep := false.
 		pauseTime := 0.
+		self announce: (RSAnimationStartEvent new animation: self)
 		 ].
 	self step.
 ]
@@ -231,7 +232,6 @@ RSAbstractAnimation >> start [
 	isRunning := true.
 	hasCompleted := false.
 	startTime := self currentTime.
-	self announce: (RSAnimationStartEvent new animation: self)
 ]
 
 { #category : #accessing }
