@@ -23,7 +23,8 @@ Class {
 		'bandWidth',
 		'offset',
 		'horizontal',
-		'bandPlotShapes'
+		'bandPlotShapes',
+		'positions'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -32,23 +33,18 @@ Class {
 RSAbstractBandPlot >> assignXAndYScales: aChart [
 	bandScale := NSScale ordinal.
 	horizontal ifFalse: [
-		bandScale domain: xValues. 
+		bandScale domain: xValues copy asOrderedCollection sort. 
 		bandScale rangeBands: { 0. aChart extent x. }.
 		xScale := bandScale.
 		dataScale := self yScale. ]
 	ifTrue: [ 
-		bandScale domain: yValues.
+		bandScale domain: yValues copy asOrderedCollection sort.
 		"important to use the corresponding range of the spine"
 		bandScale rangeBands: yScale range. 
 		yScale := bandScale.
 		dataScale := self xScale. ].
 	aChart yScale: yScale.
 	aChart xScale: xScale.
-]
-
-{ #category : #'accessing - defaults' }
-RSAbstractBandPlot >> bandValues [
-	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -98,17 +94,17 @@ RSAbstractBandPlot >> computeBandsWidth [
 
 { #category : #private }
 RSAbstractBandPlot >> computeXAndYValues [
-	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
+	| dataValues bandPositions maxDataRelatedValue minDataRelatedValue |
 	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxDataValue ]) max.
 	minDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape minDataValue ]) min.
 	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
-	bandValues := self bandValues.
+	bandPositions := self positions.
 	horizontal 
 		ifTrue: [ 
 			xValues := dataValues.
-			yValues := bandValues ]
+			yValues := bandPositions ]
 		ifFalse: [ 
-			xValues := bandValues.
+			xValues := bandPositions.
 			yValues := dataValues  ]
 ]
 
@@ -141,6 +137,17 @@ RSAbstractBandPlot >> horizontal [
 { #category : #'accessing - defaults' }
 RSAbstractBandPlot >> numberOfBands [
 	^ bandPlotShapes size
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> positions [
+	positions := positions ifNil: [(1 to: self numberOfBands)].
+	^ positions.
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> positions: aCollection [
+	positions := aCollection
 ]
 
 { #category : #rendering }

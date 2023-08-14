@@ -22,6 +22,15 @@ RSBarPlotNew class >> example02BarPlotHorizontal [
 ]
 
 { #category : #examples }
+RSBarPlotNew class >> example03BarPlotPositions [
+	| p1 data1 |
+	data1 := {  9. 9. 7. 20. 5. 10. }.
+	p1 := self new data: data1.
+	p1 positions: { 1. 2. 3. 6. 7. 8. }.
+	^ p1 open.
+]
+
+{ #category : #examples }
 RSBarPlotNew class >> exampleClusterBarPlots [
 	| p1 p2 chart data1 data2 x |
 	data1 := {  10. 9. 7 }. "blue"
@@ -45,11 +54,6 @@ RSBarPlotNew class >> exampleClusterBarPlots4Bars [
 	p4 := self new data: data2.
 	chart := p1 + p2 + p3 + p4.
 	^ chart open.
-]
-
-{ #category : #'accessing - defaults' }
-RSBarPlotNew >> bandValues [
-	^ (1 to: self numberOfBands)
 ]
 
 { #category : #testing }

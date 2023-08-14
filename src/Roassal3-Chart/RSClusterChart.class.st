@@ -44,7 +44,7 @@ RSClusterChart >> clusterBandValues [
 	| bandValuesSet |
 	bandValuesSet := Set new.
 	self plots do: [ :plot |
-		plot bandValues do: [ :value | bandValuesSet add: value ].
+		plot positions do: [ :value | bandValuesSet add: value ].
 		plot computeXAndYValues.
 	].
 	^ bandValuesSet.

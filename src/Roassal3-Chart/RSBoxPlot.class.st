@@ -275,6 +275,19 @@ RSBoxPlot class >> example07BoxPlotGroupsHorizontal [
 	^ boxPlot open.
 ]
 
+{ #category : #examples }
+RSBoxPlot class >> example08Positions [
+	| boxPlot1 data1 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }.
+			 { 1. 2. 2. 2. 3. 4. 3. 5. 12. } . }.
+	boxPlot1 := self data: data1.
+	boxPlot1 positions: { 1. 6. 3. 5.}.
+	boxPlot1 showBands.
+	^ boxPlot1 open.
+]
+
 { #category : #'examples - style' }
 RSBoxPlot class >> exampleBoxPlotChangeBoxWidth [
 	| boxPlot1   data1  |
@@ -567,11 +580,6 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 	p1 := self data: y1. "blue"
 	p1 xTickLabels: { 'Day 1'. 'Day 2'. 'Day 3'}.
 	^ p1 open.
-]
-
-{ #category : #private }
-RSBoxPlot >> bandValues [
-	^ (1 to: self numberOfBoxes)
 ]
 
 { #category : #accessing }

@@ -115,6 +115,19 @@ RSViolinPlot class >> example03HorizontalVionlinsShowBands [
 ]
 
 { #category : #examples }
+RSViolinPlot class >> example08Positions [
+	| boxPlot1 data1 |
+	data1 := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }.
+			 { 1. 2. 2. 2. 3. 4. 3. 5. 12. } . }.
+	boxPlot1 := self data: data1.
+	boxPlot1 positions: { 1. 6. 3. 5.}.
+	boxPlot1 showBands.
+	^ boxPlot1 open.
+]
+
+{ #category : #examples }
 RSViolinPlot class >> exampleDays [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -306,11 +319,6 @@ RSViolinPlot class >> models: aCollectionOfModels [
 	boxPlot := self new.
 	boxPlot models: aCollectionOfModels.
 	^ boxPlot
-]
-
-{ #category : #accessing }
-RSViolinPlot >> bandValues [
-	^ (1 to: self numberOfBands)
 ]
 
 { #category : #rendering }
