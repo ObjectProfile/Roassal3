@@ -509,11 +509,6 @@ RSViolinPlot >> models: aCollectionOfModels [
 ]
 
 { #category : #rendering }
-RSViolinPlot >> numberOfBands [
-	^ self numberOfViolins
-]
-
-{ #category : #rendering }
 RSViolinPlot >> numberOfViolins [
 	^ bandPlotShapes size
 ]

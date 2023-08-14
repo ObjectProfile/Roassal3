@@ -724,11 +724,6 @@ RSBoxPlot >> notch: aBool [
 ]
 
 { #category : #rendering }
-RSBoxPlot >> numberOfBands [
-	^ self numberOfBoxes
-]
-
-{ #category : #rendering }
 RSBoxPlot >> numberOfBoxes [
 	^ self boxShapes size.
 ]

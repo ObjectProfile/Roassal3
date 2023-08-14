@@ -138,6 +138,11 @@ RSAbstractBandPlot >> horizontal [
 	horizontal := true.
 ]
 
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> numberOfBands [
+	^ bandPlotShapes size
+]
+
 { #category : #rendering }
 RSAbstractBandPlot >> showBands [
 	bandPlotShapes do: [ :box | box showBand ]

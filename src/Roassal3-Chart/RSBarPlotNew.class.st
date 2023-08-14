@@ -81,11 +81,6 @@ RSBarPlotNew >> initialize [
 	offset := 0.
 ]
 
-{ #category : #'accessing - defaults' }
-RSBarPlotNew >> numberOfBands [
-	^ bandPlotShapes size
-]
-
 { #category : #rendering }
 RSBarPlotNew >> renderIn: canvas [
 	super renderIn: canvas.
