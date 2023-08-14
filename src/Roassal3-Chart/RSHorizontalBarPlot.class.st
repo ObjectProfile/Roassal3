@@ -30,7 +30,7 @@ RSHorizontalBarPlot >> beforeRenderingIn: aChart [
 { #category : #hooks }
 RSHorizontalBarPlot >> computeRectagleFor: aPoint index: index [
 
-	| origin corner sizeOffset zero |
+	| origin corner sizeOffset offset zero |
 	zero := 0.
 	left ifNotNil: [ zero := left at: index ].
 	origin := self scalePoint: aPoint + (zero @ 0).

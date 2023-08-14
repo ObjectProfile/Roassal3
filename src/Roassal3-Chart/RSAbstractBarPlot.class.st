@@ -14,7 +14,7 @@
 "
 Class {
 	#name : #RSAbstractBarPlot,
-	#superclass : #RSAbstractBandPlot,
+	#superclass : #RSAbstractPlot,
 	#instVars : [
 		'barSize',
 		'bars',
@@ -79,12 +79,7 @@ RSAbstractBarPlot >> createBarFor: aPoint index: index [
 
 { #category : #accessing }
 RSAbstractBarPlot >> createdShapes [
-	^ { bandPlotShapes }
-]
-
-{ #category : #accessing }
-RSAbstractBarPlot >> data: aCollection [
-	bandPlotShapes := aCollection collect: [ :value | RSBarPlotShape data: value ].
+	^ bars
 ]
 
 { #category : #'accessing - defaults' }
@@ -110,9 +105,6 @@ RSAbstractBarPlot >> initialize [
 	self
 		gapRatio: 0.1;
 		barOffset: 0.
-	horizontal := false.
-	bandPlotShapes := OrderedCollection new.
-	offset := 0.
 ]
 
 { #category : #testing }
@@ -127,17 +119,15 @@ RSAbstractBarPlot >> modelFor: aPoint [
 
 { #category : #rendering }
 RSAbstractBarPlot >> renderIn: canvas [
+	| index |
 	super renderIn: canvas.
-	self computeBandsOffset.
-	self computeBandsWidth.
-	bandPlotShapes doWithIndex: [ :barPlotShape :idx |
-		barPlotShape color ifNil: [ barPlotShape color: self computeColor. ].
-		barPlotShape bandScale: bandScale.
-		barPlotShape dataScale: dataScale.
-		barPlotShape renderIn: canvas ].
-]
-
-{ #category : #accessing }
-RSAbstractBarPlot >> y: aCollection [
-	self data: aCollection.
+	self checkAssertion.
+	index := 1.
+	bars := xValues collect: [ :xt |
+		| yt bar |
+		yt := yValues at: index.
+		bar := self createBarFor: xt@yt index: index.
+		index := index + 1.
+		bar ] as: RSGroup.
+	canvas addAll: bars
 ]
