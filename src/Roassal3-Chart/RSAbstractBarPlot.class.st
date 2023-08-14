@@ -30,16 +30,6 @@ RSAbstractBarPlot class >> isAbstract [
 	^ self == RSAbstractBarPlot
 ]
 
-{ #category : #rendering }
-RSAbstractBarPlot >> bandsOffset: aNumber [
-	self barOffset: aNumber.
-]
-
-{ #category : #rendering }
-RSAbstractBarPlot >> bandsWidth: barWidthInScaleRangeUnits [
-	self barSize: barWidthInScaleRangeUnits.
-]
-
 { #category : #accessing }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
@@ -89,7 +79,7 @@ RSAbstractBarPlot >> createBarFor: aPoint index: index [
 
 { #category : #accessing }
 RSAbstractBarPlot >> createdShapes [
-	^ bars
+	^ { bandPlotShapes }
 ]
 
 { #category : #accessing }
