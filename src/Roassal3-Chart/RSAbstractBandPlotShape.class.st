@@ -90,12 +90,12 @@ RSAbstractBandPlotShape >> horizontal [
 ]
 
 { #category : #rendering }
-RSAbstractBandPlotShape >> maxYValue [
+RSAbstractBandPlotShape >> maxDataValue [
 	^ self subclassResponsibility
 ]
 
 { #category : #rendering }
-RSAbstractBandPlotShape >> minYValue [
+RSAbstractBandPlotShape >> minDataValue [
 	^ self subclassResponsibility
 ]
 

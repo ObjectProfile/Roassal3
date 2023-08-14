@@ -398,8 +398,8 @@ RSViolinPlot >> computeXValues [
 { #category : #initialization }
 RSViolinPlot >> computeYValues [
 	| yMax yMin |
-	yMax := (bandPlotShapes collect: [ :violinShape | violinShape maxYValue ]) max.
-	yMin := (bandPlotShapes collect: [ :violinShape | violinShape minYValue ]) min.
+	yMax := (bandPlotShapes collect: [ :violinShape | violinShape maxDataValue ]) max.
+	yMin := (bandPlotShapes collect: [ :violinShape | violinShape minDataValue ]) min.
 	yValues := {yMin. yMax.}.
 ]
 

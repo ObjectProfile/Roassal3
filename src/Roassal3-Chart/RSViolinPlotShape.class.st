@@ -159,17 +159,17 @@ RSViolinPlotShape >> kernelBandwidth: aNumber [
 ]
 
 { #category : #rendering }
-RSViolinPlotShape >> maxYValue [
+RSViolinPlotShape >> maxDataValue [
 	| maxYValueOfCurve |
 	maxYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) max.
-	^ boxPlotShape maxYValue max: maxYValueOfCurve.
+	^ boxPlotShape maxDataValue max: maxYValueOfCurve.
 ]
 
 { #category : #rendering }
-RSViolinPlotShape >> minYValue [
+RSViolinPlotShape >> minDataValue [
 	| minYValueOfCurve |
 	minYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) min.
-	^ boxPlotShape minYValue min: minYValueOfCurve.
+	^ boxPlotShape minDataValue min: minYValueOfCurve.
 ]
 
 { #category : #'accessing - attributes' }

@@ -92,7 +92,7 @@ RSAbstractBarPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
 RSAbstractBarPlot >> data: aCollection [
 	bandPlotShapes := aCollection collect: [ :value | RSBarPlotShape data: value ].
 ]
@@ -146,4 +146,9 @@ RSAbstractBarPlot >> renderIn: canvas [
 		barPlotShape bandScale: bandScale.
 		barPlotShape dataScale: dataScale.
 		barPlotShape renderIn: canvas ].
+]
+
+{ #category : #accessing }
+RSAbstractBarPlot >> y: aCollection [
+	self data: aCollection.
 ]

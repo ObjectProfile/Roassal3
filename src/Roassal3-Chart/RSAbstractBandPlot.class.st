@@ -71,12 +71,13 @@ RSAbstractBandPlot >> beforeRenderingIn: aChart [
 	| horizontalTicks verticalTicks |
 	self computeXAndYValues.
 	super beforeRenderingIn: aChart.
-	horizontal ifFalse: [
-		horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
-		horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
-	ifTrue: [ 
-		verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
-		verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
+	horizontal 
+		ifFalse: [
+			horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
+			horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
+		ifTrue: [ 
+			verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
+			verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
 		 ].
 	self assignXAndYScales: aChart.
 ]
@@ -98,8 +99,8 @@ RSAbstractBandPlot >> computeBandsWidth [
 { #category : #private }
 RSAbstractBandPlot >> computeXAndYValues [
 	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
-	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxYValue ]) max.
-	minDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape minYValue ]) min.
+	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxDataValue ]) max.
+	minDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape minDataValue ]) min.
 	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
 	bandValues := self bandValues.
 	horizontal 

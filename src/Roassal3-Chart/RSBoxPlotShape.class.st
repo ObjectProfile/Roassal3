@@ -308,7 +308,7 @@ RSBoxPlotShape >> lowerWhisker [
 ]
 
 { #category : #rendering }
-RSBoxPlotShape >> maxYValue [
+RSBoxPlotShape >> maxDataValue [
 	| maxValue |
 	maxValue := self upperLimit.
 	notched ifTrue: [ maxValue := maxValue max: self medianConfidenceInterval max ].
@@ -339,7 +339,7 @@ RSBoxPlotShape >> medianLine [
 ]
 
 { #category : #rendering }
-RSBoxPlotShape >> minYValue [
+RSBoxPlotShape >> minDataValue [
 	| minValue |
 	minValue := self lowerLimit.
 	notched ifTrue: [ minValue := minValue min: (self medianConfidenceInterval min) ].

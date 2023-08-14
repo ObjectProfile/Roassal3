@@ -122,7 +122,7 @@ RSBoxPlotShapeTest >> testMaxYValueIsOutlier [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. 24. }.
 	boxGraph := RSBoxPlotShape data: data.
-	self assert: boxGraph maxYValue equals: 24.
+	self assert: boxGraph maxDataValue equals: 24.
 ]
 
 { #category : #tests }
@@ -130,7 +130,7 @@ RSBoxPlotShapeTest >> testMaxYValueIsUpperLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxPlotShape data: data.
-	self assert: boxGraph maxYValue equals: 15.
+	self assert: boxGraph maxDataValue equals: 15.
 ]
 
 { #category : #tests }
@@ -138,7 +138,7 @@ RSBoxPlotShapeTest >> testMinYValueIsLowerLimit [
 	| boxGraph data   |
 	data := { 12. 12. 13. 14. 15. }.
 	boxGraph := RSBoxPlotShape data: data.
-	self assert: boxGraph minYValue equals: 12.
+	self assert: boxGraph minDataValue equals: 12.
 ]
 
 { #category : #tests }

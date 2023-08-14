@@ -57,13 +57,16 @@ RSBarPlotShape >> initialize [
 ]
 
 { #category : #rendering }
-RSBarPlotShape >> maxYValue [
+RSBarPlotShape >> maxDataValue [
 	^ data
 ]
 
 { #category : #rendering }
-RSBarPlotShape >> minYValue [
-	^ 0
+RSBarPlotShape >> minDataValue [
+	| minValue |
+	minValue := 0.
+	data < 0 ifTrue: [ minValue := data ].
+	^ minValue
 ]
 
 { #category : #rendering }
