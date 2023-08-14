@@ -1,12 +1,12 @@
 "
-TSEasing elasticIn
+RSEasingInterpolator elasticIn
 Elastic easing, like a rubber band. The amplitude and period of the oscillation are configurable; if not specified, they default to 1 and 0.3, respectively.
 
-TSEasing elasticOut
+RSEasingInterpolator elasticOut
 Reverse elastic easing; equivalent to 1 - elasticIn(1 - t).
 
-TSEasing elastic 
-TSEasing elasticInOut.
+RSEasingInterpolator elastic 
+RSEasingInterpolator elasticInOut.
 Symmetric elastic easing; scales elasticIn for t in [0, 0.5] and elasticOut for t in [0.5, 1].
 "
 Class {
