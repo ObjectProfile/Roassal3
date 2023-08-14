@@ -147,6 +147,9 @@ RSAbstractBandPlot >> positions [
 
 { #category : #'accessing - defaults' }
 RSAbstractBandPlot >> positions: aCollection [
+	self
+		assert: [ aCollection size = bandPlotShapes size ]
+		description: 'The positions collection must have the same size of bandPlotShapes'.
 	positions := aCollection
 ]
 
