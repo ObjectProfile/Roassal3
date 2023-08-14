@@ -64,3 +64,28 @@ RSEasingInterpolator class >> canvas [
 	c @ RSCanvasController.
 	c open.
 ]
+
+{ #category : #'*Roassal3-Inspector' }
+RSEasingInterpolator >> inspectorWithTools: selectors [
+	| inspectorCanvas presenter numberField tools |
+	inspectorCanvas := super inspectorCanvas.
+	presenter := SpPresenter new.
+	
+	tools := SpBoxLayout newVertical.
+	selectors do: [ :sel | 
+		numberField := SpNumberInputFieldPresenter new.
+		numberField text: (sel value: self) asString.
+		numberField whenNumberChangedDo: [ :newValue |
+			self perform: sel asMutator with: newValue.
+			inspectorCanvas canvas: self canvasForInspector ].
+		tools add: sel capitalized asString expand: false.
+		tools add: numberField expand: false.
+		tools add: ' ' expand: false."gap"
+	].
+
+	presenter layout: (SpBoxLayout newHorizontal
+		add: inspectorCanvas;
+		add: tools withConstraints: [:c| c width: 100; padding: 5 ];
+		yourself).
+	^ presenter
+]
