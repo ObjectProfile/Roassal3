@@ -115,7 +115,7 @@ RSAbstractBandPlot >> createdShapes [
 
 { #category : #accessing }
 RSAbstractBandPlot >> defaultBandsWidth [
-	^ bandScale scale: 1
+	^ bandScale rangeBand * 0.5.
 ]
 
 { #category : #accessing }

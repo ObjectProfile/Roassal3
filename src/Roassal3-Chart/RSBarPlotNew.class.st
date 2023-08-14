@@ -31,6 +31,16 @@ RSBarPlotNew class >> example03BarPlotPositions [
 ]
 
 { #category : #examples }
+RSBarPlotNew class >> example04BarPlotPositions [
+	| x y plot1 |
+	
+	x := -1 to: 10 by: 1.
+	y := x sin.
+	plot1 := self new data: y; positions: x.
+	^ plot1 open.
+]
+
+{ #category : #examples }
 RSBarPlotNew class >> exampleClusterBarPlots [
 	| p1 p2 chart data1 data2 x |
 	data1 := {  10. 9. 7 }. "blue"
