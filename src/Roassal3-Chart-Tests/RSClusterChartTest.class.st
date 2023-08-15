@@ -21,6 +21,21 @@ RSClusterChartTest >> testBandsMargin [
 ]
 
 { #category : #tests }
+RSClusterChartTest >> testClustersHorizontal [
+	| data boxPlot1 boxPlot2 clusterChart window |
+	
+	data := { #(1 2 5 36 5 12 3). #(1 2 5 36 5 12 3). }.
+	boxPlot1 := RSBoxPlot data: data.
+	boxPlot2 := RSBoxPlot data: data.
+	clusterChart :=  boxPlot1 + boxPlot2.
+	clusterChart horizontal.
+	window := clusterChart open.
+	self assert: clusterChart yScale class equals: NSOrdinalScale.
+	self assert: boxPlot1 isHorizontal.
+	window delete.
+]
+
+{ #category : #tests }
 RSClusterChartTest >> testClustersMargin [
 	| data boxPlot1 boxPlot2 clusterChart clustersScaleRangeBand newClustersScaleRangeBand |
 	

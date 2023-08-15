@@ -31,20 +31,21 @@ Class {
 
 { #category : #rendering }
 RSAbstractBandPlot >> assignXAndYScales: aChart [
-	bandScale := NSScale ordinal.
+	bandScale class = NSOrdinalScale ifFalse: [ 
+		self computeScales: aChart. ].
 	horizontal ifFalse: [
-		bandScale domain: xValues copy asOrderedCollection sort. 
-		bandScale rangeBands: { 0. aChart extent x. }.
 		xScale := bandScale.
 		dataScale := self yScale. ]
 	ifTrue: [ 
-		bandScale domain: yValues copy asOrderedCollection sort.
-		"important to use the corresponding range of the spine"
-		bandScale rangeBands: yScale range. 
 		yScale := bandScale.
 		dataScale := self xScale. ].
 	aChart yScale: yScale.
 	aChart xScale: xScale.
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> bandScale: aNSScale [
+	bandScale := aNSScale.
 ]
 
 { #category : #rendering }
@@ -92,6 +93,18 @@ RSAbstractBandPlot >> computeBandsWidth [
 	bandPlotShapes do: [ :graphic | graphic bandWidth: self bandsWidth ].
 ]
 
+{ #category : #rendering }
+RSAbstractBandPlot >> computeScales: aChart [
+	bandScale := NSScale ordinal.
+	horizontal ifFalse: [
+		bandScale domain: xValues copy asOrderedCollection sort. 
+		bandScale rangeBands: { 0. aChart extent x. }. ]
+	ifTrue: [ 
+		bandScale domain: yValues copy asOrderedCollection sort.
+		"important to use the corresponding range of the spine"
+		bandScale rangeBands: yScale range.  ].
+]
+
 { #category : #private }
 RSAbstractBandPlot >> computeXAndYValues [
 	| dataValues bandPositions maxDataRelatedValue minDataRelatedValue |
@@ -132,6 +145,11 @@ RSAbstractBandPlot >> defaultShape [
 RSAbstractBandPlot >> horizontal [
 	bandPlotShapes do: [ :bs | bs horizontal ].
 	horizontal := true.
+]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> isHorizontal [
+	^ horizontal
 ]
 
 { #category : #'accessing - defaults' }
