@@ -164,6 +164,11 @@ RSAbstractTick >> integerWithCommas [
 	self labelConversion: [ :value | value asInteger asStringWithCommas ]
 ]
 
+{ #category : #testing }
+RSAbstractTick >> isTicksDataNil [
+	^ ticksData isNil.
+]
+
 { #category : #public }
 RSAbstractTick >> labelConversion: oneArgBlock [
 	"This method is used to convert numerical values into a label. This is useful to particularlize labels on the X or Y axes. The parameter block accepts one argument, which is a numerical value. The block should return a string or any other object. When displayed, the message asString will be sent to it.

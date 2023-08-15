@@ -65,17 +65,9 @@ RSAbstractBandPlot >> bandsWidth: aNumber [
 
 { #category : #rendering }
 RSAbstractBandPlot >> beforeRenderingIn: aChart [
-	| horizontalTicks verticalTicks |
 	self computeXAndYValues.
 	super beforeRenderingIn: aChart.
-	horizontal 
-		ifFalse: [
-			horizontalTicks := (decorations select: [ :dec | dec isHorizontalTick ]).
-			horizontalTicks isNotEmpty ifTrue: [ horizontalTicks first configuration numberOfTicks: xValues size].]
-		ifTrue: [ 
-			verticalTicks := (decorations select: [ :dec | dec isVerticalTick ]).
-			verticalTicks isNotEmpty ifTrue: [ verticalTicks first configuration numberOfTicks: yValues size].
-		 ].
+	self computeTicks.
 	self assignXAndYScales: aChart.
 ]
 
@@ -103,6 +95,22 @@ RSAbstractBandPlot >> computeScales: aChart [
 		bandScale domain: yValues copy asOrderedCollection sort.
 		"important to use the corresponding range of the spine"
 		bandScale rangeBands: yScale range.  ].
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> computeTicks [
+	| horizontalTick verticalTick |
+	horizontal 
+		ifFalse: [
+			horizontalTick := self horizontalTick.
+			horizontalTick ifNotNil: [ 
+				horizontalTick isTicksDataNil ifTrue: [ self xTicks: xValues labels: xValues ] ].
+		 ]
+		ifTrue: [ 
+			verticalTick := self verticalTick.
+			verticalTick ifNotNil: [
+				verticalTick isTicksDataNil ifTrue: [ self yTicks: yValues labels: yValues ] ].
+		 ].
 ]
 
 { #category : #private }

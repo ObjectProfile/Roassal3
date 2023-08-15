@@ -6,7 +6,8 @@ Class {
 		'clustersScale',
 		'clustersMargin',
 		'bandsMargin',
-		'horizontal'
+		'horizontal',
+		'positions'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
@@ -43,13 +44,13 @@ RSClusterChart >> beforeRenderingIn: aChart [
 
 { #category : #private }
 RSClusterChart >> clusterBandValues [
-	| bandValuesSet |
-	bandValuesSet := Set new.
+	positions := Set new.
 	self plots do: [ :plot |
 		plot computeXAndYValues.
-		plot positions do: [ :value | bandValuesSet add: value ].
+		plot positions do: [ :value | positions add: value ].
 	].
-	^ bandValuesSet.
+	positions := positions asOrderedCollection.
+	^ positions.
 ]
 
 { #category : #accessing }
@@ -101,6 +102,22 @@ RSClusterChart >> computePlotsBands [
 			positionInInnerClusterScale - (clustersScale rangeBand / 2) ]
 ]
 
+{ #category : #rendering }
+RSClusterChart >> computeTicks [
+	| horizontalTick verticalTick |
+	horizontal 
+		ifFalse: [
+			horizontalTick := self horizontalTick.
+			horizontalTick ifNotNil: [ 
+				horizontalTick isTicksDataNil ifTrue: [ self xTicks: positions labels: positions ] ].
+		 ]
+		ifTrue: [ 
+			verticalTick := self verticalTick.
+			verticalTick ifNotNil: [
+				verticalTick isTicksDataNil ifTrue: [ self yTicks: positions labels: positions ] ].
+		 ].
+]
+
 { #category : #defaults }
 RSClusterChart >> defaultBandsMargin [
 	^ 0.2
@@ -141,8 +158,6 @@ RSClusterChart >> renderIn: aCanvas [
 		ifTrue: [ self extent: (self extent x)@(self extent y * (1+(self plots size * 0.1))). ]
 		ifFalse: [ self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y). ].	
 	self computePlotsBands.
-	horizontal 
-		ifTrue: [ self yTickLabels: (1 to: self maxNumberOfBandsPerPlot).  ]
-		ifFalse: [ self xTickLabels: (1 to: self maxNumberOfBandsPerPlot). ].
+	self computeTicks.
 	^ super renderIn: aCanvas.
 ]

@@ -246,6 +246,7 @@ RSBoxPlot class >> example06DaysHorizontal [
 	p3 := self data: y3. "orange"
 	chart := p1 + p2 + p3.
 	chart horizontal.
+	chart yTickLabels: { 'Day 1'. 'Day 2'. 'Day 3' }.
 	^ chart open.
 ]
 
