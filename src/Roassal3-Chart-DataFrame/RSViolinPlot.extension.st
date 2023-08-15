@@ -2,22 +2,22 @@ Extension { #name : #RSViolinPlot }
 
 { #category : #'*Roassal3-Chart-DataFrame' }
 RSViolinPlot >> categoryBy: aColumnName [
+
 	| newModels newLabels |
 	newModels := OrderedCollection new.
 	newLabels := OrderedCollection new.
-	models do: [ :df | 
+	models do: [ :df |
 		| categories |
-		categories := (model column: aColumnName) uniqueValues sort.
+		categories := (model column: aColumnName) removeDuplicates sort.
 		categories do: [ :category |
 			| newDataFrame |
-			newDataFrame := df select: [ :row | (row at: aColumnName) = category ].
+			newDataFrame := df select: [ :row |
+				                (row at: aColumnName) = category ].
 			newModels add: newDataFrame.
-			newLabels add: category.
-		].
-	].
+			newLabels add: category ] ].
 	self models: newModels.
 	self data: dataBlock.
-	self xTickLabels: newLabels.
+	self xTickLabels: newLabels
 ]
 
 { #category : #'*Roassal3-Chart-DataFrame' }
@@ -119,26 +119,25 @@ RSViolinPlot class >> fromDataFrame: aDataFrame [
 
 { #category : #'*Roassal3-Chart-DataFrame' }
 RSViolinPlot >> hue: aColumnName [
+
 	| categories clusteredChart |
-	
-	categories := (model column: aColumnName) uniqueValues sort.
-	
+	categories := (model column: aColumnName) removeDuplicates sort.
+
 	clusteredChart := RSClusterChart new.
-	
+
 	categories doWithIndex: [ :category :idx |
 		| newModels newViolinPlot |
 		newViolinPlot := self class new.
 		newModels := OrderedCollection new.
 		models do: [ :df |
 			| newDataFrame |
-			newDataFrame := df select: [ :row | (row at: aColumnName) = category ].
-			newModels add: newDataFrame 
-		].
+			newDataFrame := df select: [ :row |
+				                (row at: aColumnName) = category ].
+			newModels add: newDataFrame ].
 		newViolinPlot models: newModels.
 		newViolinPlot data: dataBlock.
-		clusteredChart := clusteredChart + newViolinPlot.
-	].
-	^ clusteredChart.
+		clusteredChart := clusteredChart + newViolinPlot ].
+	^ clusteredChart
 ]
 
 { #category : #'*Roassal3-Chart-DataFrame' }

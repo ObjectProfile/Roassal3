@@ -12,6 +12,7 @@ RSClusterChartTest >> testBandsMargin [
 	boxPlot1 := RSBoxPlot data: data.
 	boxPlot2 := RSBoxPlot data: data.
 	clusterChart :=  boxPlot1 + boxPlot2.
+	clusterChart computePlotsBands.
 	bandsWidth := clusterChart innerClusterScale rangeBand.
 	self assert: clusterChart bandsMargin equals: clusterChart defaultClustersMargin.
 	clusterChart bandsMargin: 0.3.
@@ -43,6 +44,7 @@ RSClusterChartTest >> testClustersMargin [
 	boxPlot1 := RSBoxPlot data: data.
 	boxPlot2 := RSBoxPlot data: data.
 	clusterChart :=  boxPlot1 + boxPlot2.
+	clusterChart computePlotsBands.
 	clustersScaleRangeBand := clusterChart clustersScale rangeBand.
 	self assert: clusterChart clustersMargin equals: clusterChart defaultClustersMargin.
 	clusterChart clustersMargin: 0.3.
