@@ -32,6 +32,13 @@ RSAbstractPlot class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
+RSAbstractPlot class >> points: aCollectionOfPoints [
+	^ self new 
+		x: (aCollectionOfPoints collect: #x) y: (aCollectionOfPoints collect: #y);
+		yourself.
+]
+
+{ #category : #'instance creation' }
 RSAbstractPlot class >> x: collectionX y: collectionY [
 	^ self new 
 		x: collectionX y: collectionY;
@@ -198,6 +205,16 @@ RSAbstractPlot >> isScatterPlot [
 RSAbstractPlot >> isVerticalBarPlot [
 
 	^ false
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> masterShape [
+	^ self shape
+]
+
+{ #category : #accessing }
+RSAbstractPlot >> masterShape: aShape [
+	self shape: aShape
 ]
 
 { #category : #'accessing - extension' }
