@@ -165,6 +165,16 @@ RSViolinPlotShape >> maxDataValue [
 	^ boxPlotShape maxDataValue max: maxYValueOfCurve.
 ]
 
+{ #category : #accessing }
+RSViolinPlotShape >> medianLine [
+	^ boxPlotShape medianLine
+]
+
+{ #category : #shapes }
+RSViolinPlotShape >> medianLine: aRSLineModel [
+	boxPlotShape medianLine: aRSLineModel copy
+]
+
 { #category : #rendering }
 RSViolinPlotShape >> minDataValue [
 	| minYValueOfCurve |

@@ -34,7 +34,7 @@ RSBarPlotNew class >> example03BarPlotPositions [
 RSBarPlotNew class >> example04BarPlotPositions [
 	| x y plot1 |
 	
-	x := -1 to: 10 by: 1.
+	x := 4 to: 10 by: 0.1.
 	y := x sin.
 	plot1 := self new data: y; positions: x.
 	^ plot1 open.

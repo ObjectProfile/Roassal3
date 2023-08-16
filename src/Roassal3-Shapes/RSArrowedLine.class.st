@@ -71,5 +71,4 @@ RSArrowedLine >> postCopy [
 	super postCopy.
 	markers := nil.
 	self markerEnd: self defaultHead.
-	self border: self border copy
 ]

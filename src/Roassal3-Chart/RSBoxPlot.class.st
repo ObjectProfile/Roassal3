@@ -308,7 +308,7 @@ RSBoxPlot class >> example08Positions [
 			 { 12. 12. 13. 14. 15. 24. }.
 			 { 1. 2. 2. 2. 3. 4. 3. 5. 12. } . }.
 	boxPlot1 := self data: data1.
-	boxPlot1 positions: { 1. 6. 3. 5.}.
+	boxPlot1 positions: { 1. 6. 13. 15.}.
 	boxPlot1 showBands.
 	^ boxPlot1 open.
 ]

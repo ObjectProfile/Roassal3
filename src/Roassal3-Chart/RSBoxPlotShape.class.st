@@ -172,10 +172,10 @@ RSBoxPlotShape >> createShapesAndLines [
 	box color: color.
 	self createOutliersShapes.
 	shapes := OrderedCollection withAll: {
-			          upperWhisker.
-						 lowerWhisker.
-			          box.
-			          medianLine. }.
+			          upperWhisker copy.
+						 lowerWhisker copy.
+			          box copy.
+			          medianLine copy. }.
 	shapes addAll: outliers.
 	^ shapes
 ]
@@ -336,6 +336,11 @@ RSBoxPlotShape >> medianConfidencePercentage: aNumber [
 { #category : #accessing }
 RSBoxPlotShape >> medianLine [
 	^ medianLine.
+]
+
+{ #category : #accessing }
+RSBoxPlotShape >> medianLine: aRSLineModel [
+	medianLine := aRSLineModel copy
 ]
 
 { #category : #rendering }

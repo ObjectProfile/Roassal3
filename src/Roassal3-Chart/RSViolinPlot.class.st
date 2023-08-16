@@ -175,6 +175,19 @@ RSViolinPlot class >> exampleDaysHorizontal [
 	^ chart open.
 ]
 
+{ #category : #'examples - styling' }
+RSViolinPlot class >> exampleMedianLineStyle [
+
+	| violinPlot2 data2 |
+	
+	data2 := {{ 12. 12. 13. 15. 18. 20. 21. 24. }.{15. 15. 18. 12. 13. 10. 11. 14.}. {14. 14. 16. 12. 13. 10. 11. 14.}.}.
+	
+	violinPlot2 := self data: data2.
+	violinPlot2 medianLine: (RSLine new color: Color red).
+	violinPlot2 medianLines first color: Color green.
+	^ violinPlot2 open
+]
+
 { #category : #examples }
 RSViolinPlot class >> exampleModel [
 	| violinPlot |
@@ -518,6 +531,16 @@ RSViolinPlot >> initialize [
 RSViolinPlot >> kernelBandwidth: aNumber [
 	bandPlotShapes do: [ :violin | violin kernelBandwidth: aNumber ].
 	self computeState.
+]
+
+{ #category : #styling }
+RSViolinPlot >> medianLine: aRSLineModel [
+	bandPlotShapes do: [ :bs | bs medianLine: aRSLineModel ]
+]
+
+{ #category : #accessing }
+RSViolinPlot >> medianLines [
+	^ RSGroup new addAll: (bandPlotShapes collect: [ :violin | violin medianLine ]); yourself.
 ]
 
 { #category : #rendering }
