@@ -313,6 +313,12 @@ RSAbstractLine >> position [
 	^ self encompassingRectangle floatCenter
 ]
 
+{ #category : #copying }
+RSAbstractLine >> postCopy [
+	super postCopy.
+	self border: self border copy
+]
+
 { #category : #'accessing - markers' }
 RSAbstractLine >> privateMarkers [
 	^ markers

@@ -14,7 +14,7 @@
 "
 Class {
 	#name : #RSAbstractBarPlot,
-	#superclass : #RSAbstractBandPlot,
+	#superclass : #RSAbstractPlot,
 	#instVars : [
 		'barSize',
 		'bars',
@@ -28,16 +28,6 @@ Class {
 RSAbstractBarPlot class >> isAbstract [
 
 	^ self == RSAbstractBarPlot
-]
-
-{ #category : #rendering }
-RSAbstractBarPlot >> bandsOffset: aNumber [
-	self barOffset: aNumber.
-]
-
-{ #category : #rendering }
-RSAbstractBarPlot >> bandsWidth: barWidthInScaleRangeUnits [
-	self barSize: barWidthInScaleRangeUnits.
 ]
 
 { #category : #accessing }
@@ -114,7 +104,7 @@ RSAbstractBarPlot >> initialize [
 	super initialize.
 	self
 		gapRatio: 0.1;
-		barOffset: 0
+		barOffset: 0.
 ]
 
 { #category : #testing }

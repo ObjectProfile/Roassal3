@@ -30,27 +30,20 @@ boxPlotShape := RSBoxPlotShape data: data.
 "
 Class {
 	#name : #RSBoxPlotShape,
-	#superclass : #RSComposite,
+	#superclass : #RSAbstractBandPlotShape,
 	#instVars : [
-		'bandWidth',
 		'statisticalMeasures',
 		'box',
 		'medianLine',
 		'outliers',
-		'color',
 		'graphCenter',
-		'bandOffset',
 		'outlier',
-		'shouldShowBand',
 		'upperWhisker',
 		'lowerWhisker',
 		'whisker',
 		'medianConfidencePercentage',
 		'notched',
-		'notchWidthPercentage',
-		'horizontal',
-		'dataScale',
-		'bandScale'
+		'notchWidthPercentage'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -72,35 +65,6 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> addChildrenToComposite [
-	| shapesToRender |
-	shapesToRender := self shapesToRender.
-	self addAll: shapesToRender.
-	self adjustToChildren.
-	^ self.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandScale [
-	^ bandScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandScale: aNSScale [
-	bandScale := aNSScale
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber
-]
-
-{ #category : #accessing }
 RSBoxPlotShape >> box [
 	^ box
 ]
@@ -113,28 +77,6 @@ RSBoxPlotShape >> boxWidth [
 { #category : #accessing }
 RSBoxPlotShape >> center [
 	^ graphCenter
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color [
-	^ color
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color: aColor [
-	color := aColor.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeBandRectangle [
-	^ RSPolygon new
-			points: { 
-			(graphCenter-(bandWidth/2)) @ 0. 
-			(graphCenter+(bandWidth/2)) @ 0.
-			(graphCenter+(bandWidth/2)) @ dataScale range last. 
-			(graphCenter-(bandWidth/2)) @ dataScale range last
-			};
-			color: Color blue translucent.
 ]
 
 { #category : #accessing }
@@ -153,7 +95,7 @@ RSBoxPlotShape >> confidencePercentage: aNumber [
 	medianConfidencePercentage := aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSBoxPlotShape >> createBoxShape [
 	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
 	quartiles := statisticalMeasures quartiles.
@@ -190,10 +132,9 @@ RSBoxPlotShape >> createBoxShape [
 	].
 	
 	box points: boxPoints.
-	horizontal ifTrue: [ box invert ].
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSBoxPlotShape >> createMedianLine [
 	| q050 medianLinePoints lineWidth |
 	q050 := statisticalMeasures quartiles second.
@@ -204,18 +145,14 @@ RSBoxPlotShape >> createMedianLine [
 		(graphCenter-(lineWidth/2))@ (dataScale scale: q050). 
 		(graphCenter+(lineWidth/2))@ (dataScale scale: q050). }.
 	medianLine := medianLine controlPoints: medianLinePoints.
-	horizontal ifTrue: [ medianLine invert ].
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
 RSBoxPlotShape >> createOutliersShapes [
 	| outliersPoints outlierDefaultSize|
 	"graphCenter was already computed in shapesWithCenterAt"
 	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (dataScale scale: y) ].
 	outlierDefaultSize := (bandWidth * 0.15) abs.
-	horizontal ifTrue: [ 
-		outliersPoints := outliersPoints collect: [ :p | p y @ p x ] 
-	].
 	outlier extent x isZero ifTrue: [ outlier size: outlierDefaultSize ].
 	outliers := outliersPoints collect: [ :out |
 			| e |
@@ -224,7 +161,26 @@ RSBoxPlotShape >> createOutliersShapes [
 	] as: RSGroup.
 ]
 
-{ #category : #accessing }
+{ #category : #shapes }
+RSBoxPlotShape >> createShapesAndLines [
+	| shapes |
+	self graphCenter: bandOffset.
+	notched ifTrue: [ notchWidthPercentage := 0.5 ].
+	self createWhiskerLines.
+	self createMedianLine.
+	self createBoxShape.
+	box color: color.
+	self createOutliersShapes.
+	shapes := OrderedCollection withAll: {
+			          upperWhisker copy.
+						 lowerWhisker copy.
+			          box copy.
+			          medianLine copy. }.
+	shapes addAll: outliers.
+	^ shapes
+]
+
+{ #category : #shapes }
 RSBoxPlotShape >> createWhiskerLines [
 	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
 	upperLimit := statisticalMeasures upperLimit.
@@ -238,9 +194,6 @@ RSBoxPlotShape >> createWhiskerLines [
 	lowerWhisker := whisker copy.
 	upperWhisker controlPoints: upperWhiskerPoints.
 	lowerWhisker controlPoints: lowerWhiskerPoints.
-	horizontal ifTrue: [ 
-		upperWhisker invert.
-		lowerWhisker invert.].
 ]
 
 { #category : #accessing }
@@ -251,16 +204,6 @@ RSBoxPlotShape >> data [
 { #category : #accessing }
 RSBoxPlotShape >> data: collectionOfData1D [
 	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> dataScale [
-	^ dataScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> dataScale: aNSScale [
-	dataScale := aNSScale
 ]
 
 { #category : #defaults }
@@ -311,11 +254,6 @@ RSBoxPlotShape >> defaultOutlier [
 ]
 
 { #category : #defaults }
-RSBoxPlotShape >> defaultShouldShowBand [
-	^ false
-]
-
-{ #category : #defaults }
 RSBoxPlotShape >> defaultWhisker [
 	^ RSLine new
 		width: 1;
@@ -335,11 +273,6 @@ RSBoxPlotShape >> graphCenter: aNumber [
 { #category : #defaults }
 RSBoxPlotShape >> hasOutliers [
 	^ self outlierValues isNotEmpty
-]
-
-{ #category : #public }
-RSBoxPlotShape >> horizontal [
-	horizontal := true.
 ]
 
 { #category : #initialization }
@@ -374,8 +307,8 @@ RSBoxPlotShape >> lowerWhisker [
 	^ lowerWhisker
 ]
 
-{ #category : #accessing }
-RSBoxPlotShape >> maxYValue [
+{ #category : #rendering }
+RSBoxPlotShape >> maxDataValue [
 	| maxValue |
 	maxValue := self upperLimit.
 	notched ifTrue: [ maxValue := maxValue max: self medianConfidenceInterval max ].
@@ -406,7 +339,12 @@ RSBoxPlotShape >> medianLine [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> minYValue [
+RSBoxPlotShape >> medianLine: aRSLineModel [
+	medianLine := aRSLineModel copy
+]
+
+{ #category : #rendering }
+RSBoxPlotShape >> minDataValue [
 	| minValue |
 	minValue := self lowerLimit.
 	notched ifTrue: [ minValue := minValue min: (self medianConfidenceInterval min) ].
@@ -455,7 +393,7 @@ RSBoxPlotShape >> quartiles [
 	^ statisticalMeasures quartiles.
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSBoxPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
 	canvas add: self.
@@ -470,38 +408,6 @@ RSBoxPlotShape >> scalePoint: aPoint [
 RSBoxPlotShape >> scales: collectionOfNSScales [
 	self bandScale: collectionOfNSScales first.
 	self dataScale: collectionOfNSScales second.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> shapesToRender [
-	| band shapes |
-	self graphCenter: bandOffset.
-	notched ifTrue: [ notchWidthPercentage := 0.5 ].
-	self createWhiskerLines.
-	self createMedianLine.
-	self createBoxShape.
-	box color: color.
-	self createOutliersShapes.
-	shapes := OrderedCollection withAll: {
-			          upperWhisker.
-						 lowerWhisker.
-			          box.
-			          medianLine. }.
-	shapes addAll: outliers.
-	shouldShowBand ifTrue: [
-		band := self computeBandRectangle.
-		shapes add: band ].
-	^ shapes
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> shouldShowBand: aBoolean [
-	shouldShowBand := aBoolean.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> showBand [
-	self shouldShowBand: true.
 ]
 
 { #category : #accessing }

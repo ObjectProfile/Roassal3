@@ -22,15 +22,30 @@ Class {
 		'dataScale',
 		'bandWidth',
 		'offset',
-		'graphics',
-		'horizontal'
+		'horizontal',
+		'bandPlotShapes',
+		'positions'
 	],
 	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #'accessing - defaults' }
-RSAbstractBandPlot >> bandValues [
-	^ self subclassResponsibility
+{ #category : #rendering }
+RSAbstractBandPlot >> assignXAndYScales: aChart [
+	bandScale class = NSOrdinalScale ifFalse: [ 
+		self computeScales: aChart. ].
+	horizontal ifFalse: [
+		xScale := bandScale.
+		dataScale := self yScale. ]
+	ifTrue: [ 
+		yScale := bandScale.
+		dataScale := self xScale. ].
+	aChart yScale: yScale.
+	aChart xScale: xScale.
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> bandScale: aNSScale [
+	bandScale := aNSScale.
 ]
 
 { #category : #rendering }
@@ -49,32 +64,68 @@ RSAbstractBandPlot >> bandsWidth: aNumber [
 ]
 
 { #category : #rendering }
+RSAbstractBandPlot >> beforeRenderingIn: aChart [
+	self computeXAndYValues.
+	super beforeRenderingIn: aChart.
+	self computeTicks.
+	self assignXAndYScales: aChart.
+]
+
+{ #category : #rendering }
 RSAbstractBandPlot >> computeBandsOffset [
 	| bandValues |
 	bandValues := horizontal ifFalse: [ xValues ] ifTrue: [ yValues ].
-	graphics doWithIndex: [ :graphic :idx |
+	bandPlotShapes doWithIndex: [ :graphic :idx |
 		graphic bandOffset: (bandScale scale: (bandValues at: idx)) + offset
 	].
 ]
 
 { #category : #rendering }
 RSAbstractBandPlot >> computeBandsWidth [
-	graphics do: [ :graphic | graphic bandWidth: self bandsWidth ].
+	bandPlotShapes do: [ :graphic | graphic bandWidth: self bandsWidth ].
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> computeScales: aChart [
+	bandScale := NSScale ordinal.
+	horizontal ifFalse: [
+		bandScale domain: xValues copy asOrderedCollection sort. 
+		bandScale rangeBands: { 0. aChart extent x. }. ]
+	ifTrue: [ 
+		bandScale domain: yValues copy asOrderedCollection sort.
+		"important to use the corresponding range of the spine"
+		bandScale rangeBands: yScale range.  ].
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> computeTicks [
+	| horizontalTick verticalTick |
+	horizontal 
+		ifFalse: [
+			horizontalTick := self horizontalTick.
+			horizontalTick ifNotNil: [ 
+				horizontalTick isTicksDataNil ifTrue: [ self xTicks: xValues labels: xValues ] ].
+		 ]
+		ifTrue: [ 
+			verticalTick := self verticalTick.
+			verticalTick ifNotNil: [
+				verticalTick isTicksDataNil ifTrue: [ self yTicks: yValues labels: yValues ] ].
+		 ].
 ]
 
 { #category : #private }
 RSAbstractBandPlot >> computeXAndYValues [
-	| dataValues bandValues maxDataRelatedValue minDataRelatedValue |
-	maxDataRelatedValue := (graphics collect: [ :boxShape | boxShape maxYValue ]) max.
-	minDataRelatedValue := (graphics collect: [ :boxGraph | boxGraph minYValue ]) min.
+	| dataValues bandPositions maxDataRelatedValue minDataRelatedValue |
+	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxDataValue ]) max.
+	minDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape minDataValue ]) min.
 	dataValues := {minDataRelatedValue. maxDataRelatedValue.}.
-	bandValues := self bandValues.
+	bandPositions := self positions.
 	horizontal 
 		ifTrue: [ 
 			xValues := dataValues.
-			yValues := bandValues ]
+			yValues := bandPositions ]
 		ifFalse: [ 
-			xValues := bandValues.
+			xValues := bandPositions.
 			yValues := dataValues  ]
 ]
 
@@ -85,7 +136,12 @@ RSAbstractBandPlot >> createdShapes [
 
 { #category : #accessing }
 RSAbstractBandPlot >> defaultBandsWidth [
-	^ bandScale scale: 1
+	^ bandScale rangeBand * 0.5.
+]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> defaultOffset [
+	^ bandScale scale: 0
 ]
 
 { #category : #'accessing - defaults' }
@@ -95,6 +151,41 @@ RSAbstractBandPlot >> defaultShape [
 
 { #category : #accessing }
 RSAbstractBandPlot >> horizontal [
-	graphics do: [ :bs | bs horizontal ].
+	bandPlotShapes do: [ :bs | bs horizontal ].
 	horizontal := true.
+]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> isHorizontal [
+	^ horizontal
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> numberOfBands [
+	^ bandPlotShapes size
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> positions [
+	positions := positions ifNil: [(1 to: self numberOfBands)].
+	^ positions.
+]
+
+{ #category : #'accessing - defaults' }
+RSAbstractBandPlot >> positions: aCollection [
+	self
+		assert: [ aCollection size = bandPlotShapes size ]
+		description: 'The positions collection must have the same size of bandPlotShapes'.
+	positions := aCollection
+]
+
+{ #category : #rendering }
+RSAbstractBandPlot >> showBands [
+	bandPlotShapes do: [ :box | box showBand ]
+]
+
+{ #category : #accessing }
+RSAbstractBandPlot >> vertical [
+	bandPlotShapes do: [ :bs | bs vertical ].
+	horizontal := false.
 ]

@@ -37,6 +37,11 @@ RSEllipse >> geometry [
 		coVertex: p + (0@ e y)
 ]
 
+{ #category : #geometry }
+RSEllipse >> invert [
+	self translateTo: self position y @ self position x
+]
+
 { #category : #testing }
 RSEllipse >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"

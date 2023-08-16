@@ -33,46 +33,6 @@ Class {
 	#category : #'Roassal3-Chart-Core'
 }
 
-{ #category : #examples }
-RSBarPlot class >> example01BarPlot [
-	| p1 data1  x |
-	data1 := {  10. 9. 7 }.
-	x := { 1. 2. 3. }.
-	p1 := self x: x y: data1.
-	^ p1 open.
-]
-
-{ #category : #examples }
-RSBarPlot class >> exampleClusterBarPlots [
-	| p1 p2 chart data1 data2 x |
-	data1 := {  10. 9. 7 }. "blue"
-	data2	:= { 20. 15. 8 }. "orange"
-	x := { 1. 2. 3. }.
-	p1 := self x: x y: data1.
-	p2 := self x: x y: data2.
-	chart := p1 + p2.
-	^ chart open.
-]
-
-{ #category : #examples }
-RSBarPlot class >> exampleClusterBarPlots4Bars [
-	| p1 p2 chart data1 data2 x p3 p4|
-	data1 := {  10. 9. 7 }. "blue"
-	data2	:= { 20. 15. 8 }. "orange"
-	x := { 1. 2. 3. }.
-	p1 := self x: x y: data1.
-	p2 := self x: x y: data2.
-	p3 := self x: x y: data1.
-	p4 := self x: x y: data2.
-	chart := p1 + p2 + p3 + p4.
-	^ chart open.
-]
-
-{ #category : #hooks }
-RSBarPlot >> bandValues [
-	^ (1 to: self numberOfBands)
-]
-
 { #category : #accessing }
 RSBarPlot >> barScale [
 	^ xScale
@@ -81,13 +41,13 @@ RSBarPlot >> barScale [
 { #category : #rendering }
 RSBarPlot >> beforeRenderingIn: aChart [
 
+	| barScale |
 	super beforeRenderingIn: aChart.
-	dataScale := yScale.
 	xScale class = NSOrdinalScale ifTrue: [ ^ self ].
-	bandScale := NSOrdinalScale new
+	barScale := NSOrdinalScale new
 		domain: xValues;
 		rangeBands: xScale range padding: gapRatio.
-	aChart xScale: bandScale.
+	aChart xScale: barScale.
 ]
 
 { #category : #accessing }
@@ -110,21 +70,16 @@ RSBarPlot >> canHandleCluster [
 
 { #category : #hooks }
 RSBarPlot >> computeRectagleFor: aPoint index: index [
-	| origin corner sizeOffset zero |
+	| origin corner sizeOffset offset zero |
 	zero := 0.
 	bottom ifNotNil: [ zero := bottom at: index ].
 	origin := self scalePoint: aPoint + (0@ zero).
-	corner := origin x @ (dataScale scale: zero ).
+	corner := origin x @ (yScale scale: zero ).
 	sizeOffset := (self barSize / 2.0) @ 0.
 	offset := self barOffset @ 0.
 	^ Rectangle
 		origin: origin + offset - sizeOffset
 		corner: corner + offset + sizeOffset
-]
-
-{ #category : #hooks }
-RSBarPlot >> computeXAndYValues [
-	^ self
 ]
 
 { #category : #rendering }
@@ -144,10 +99,4 @@ RSBarPlot >> isVerticalBarPlot [
 { #category : #hooks }
 RSBarPlot >> modelFor: aPoint [
 	^ aPoint y
-]
-
-{ #category : #hooks }
-RSBarPlot >> numberOfBands [
-	self beforeRenderingIn: chart.
-	^ bandScale range size.
 ]
