@@ -456,3 +456,53 @@ RSChartExample >> example25CustomBackground [
 	plot spineDecoration masterShape paint: paint.
 	^ plot
 ]
+
+{ #category : #examples }
+RSChartExample >> example26DensityPlot [
+	<script: 'self new example26DensityPlot open'>
+	| prod data paint densityPlot points linePlot plot |
+	prod := [:a | Array new: a value withAll: a key ].
+	data :=(prod value: 1.5->7), (prod value: 2.5->2), 
+		(prod value: 3.5->8), (prod value: 4.5->3), 
+		(prod value: 5.5->1), (prod value: 6.5->10).
+
+	paint := LinearGradientPaint fromArray: { 0-> '#050321'. 1-> '#435562'}.
+	paint start: 25@ 50; stop: 0@ -50.
+	densityPlot := RSDensityPlot data: data.
+	densityPlot masterShape paint: paint.
+		
+	densityPlot bandwidth: 0.5.
+	points := densityPlot curvePoints.
+	linePlot := RSLinePlot points: points.
+	linePlot color: Color red.
+	plot := densityPlot + linePlot.
+	plot container background: (Color colorFrom: '#050321').
+	(plot title: 'se multiplient' asUppercase) masterShape
+		bold;
+		fontFamily: 'Impact';
+		fontSize: 20.
+
+	(plot title: 'Les opportunities' asUppercase) masterShape
+		fontFamily: 'Avenir Next'.
+
+	plot styler: (RSChartStyler new
+		tickColor: Color white;
+		spineColor: Color white;
+		textColor: Color white).	
+
+	plot container newAnimation
+		repeat;
+		from: 0;
+		to: 1000;
+		onStepDo: [ :t |
+			linePlot line dashArray: { t. 1000 }.
+			 ];
+		when: RSAnimationStartEvent do: [:evt | 
+			linePlot line color: (linePlot line color = Color red
+				ifTrue: [Color green]
+				ifFalse: [Color red])
+			] for: plot.
+		
+	^ plot
+
+]
