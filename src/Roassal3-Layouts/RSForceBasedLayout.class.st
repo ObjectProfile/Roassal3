@@ -153,13 +153,15 @@ RSForceBasedLayout >> currentQuadtree [
 RSForceBasedLayout >> doExecute: nodeShapes [
 	nodeShapes do: [ :n | n updateLinesOFF ].
 	self nodes: nodeShapes.
+	alpha := nil.
 	self start.
 	self shouldUseProgressBar
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
 	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
-	nodeShapes do: [ :n | n updateLinesON. n connectedLines do: #update ]
+	nodeShapes do: [ :n | n updateLinesON. n connectedLines do: #update ].
+	
 ]
 
 { #category : #'public - configuration' }
@@ -205,20 +207,12 @@ RSForceBasedLayout >> initialLayout: aLayout [
 RSForceBasedLayout >> initialize [
 	super initialize.
 	random := Random seed: 42.
-	self
-		autoRepulse: false;
-		iterations: 0;
-		edges: #();
-		nodes: #();
-		initialLayout: RSGridLayout new;
-		gravity: 0.1;
-		friction: 0.9;
-		theta: 0.8;
-		strength: 1;
-		length: 20;
-		charge: -30;
-		center: 0@0;
-		useProgressBar
+	self reset.
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> iterations [
+	^ iterations
 ]
 
 { #category : #accessing }
@@ -334,6 +328,24 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
 ]
 
+{ #category : #initialization }
+RSForceBasedLayout >> reset [
+	self
+		autoRepulse: false;
+		iterations: 0;
+		edges: #();
+		nodes: #();
+		initialLayout: RSGridLayout new;
+		gravity: 0.1;
+		friction: 0.9;
+		theta: 0.8;
+		strength: 1;
+		length: 20;
+		charge: -30;
+		center: 0@0;
+		useProgressBar
+]
+
 { #category : #hook }
 RSForceBasedLayout >> runLayoutIn: job [
 	"Central method"
@@ -346,7 +358,8 @@ RSForceBasedLayout >> runLayoutIn: job [
 		iterations timesRepeat: [
 			alpha := alpha * 0.99.
 			self step.
-		job currentValue: 1 - alpha ] ]
+		job currentValue: 1 - alpha ] ].
+	self nodes: #(); edges: #().
 ]
 
 { #category : #hook }
@@ -367,6 +380,11 @@ RSForceBasedLayout >> runLayoutSimply [
 { #category : #testing }
 RSForceBasedLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
+]
+
+{ #category : #testing }
+RSForceBasedLayout >> shouldUseProgressBar: aBoolean [
+	shouldUseProgressBar := aBoolean
 ]
 
 { #category : #hook }
@@ -449,6 +467,11 @@ RSForceBasedLayout >> stepNodeRepulsion [
 			each isFixed
 				ifTrue: [ each translateTo: each fixPosition ]
 				ifFalse: [ self repulse: each from: quadtree ] ]
+]
+
+{ #category : #accessing }
+RSForceBasedLayout >> strength [
+	^ strength
 ]
 
 { #category : #accessing }
