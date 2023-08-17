@@ -54,7 +54,8 @@ RSRectangleForceLayout >> initialize [
 	super initialize.
 
 	enclosingThreshold := 50.
-	enclosingForce := 0.3
+	enclosingForce := 0.3.
+	enclosingRectangle := Rectangle floatCenter: 0@0 extent: 500@500.
 ]
 
 { #category : #events }

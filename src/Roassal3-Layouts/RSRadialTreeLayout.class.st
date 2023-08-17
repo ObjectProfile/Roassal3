@@ -119,18 +119,14 @@ RSRadialTreeLayout >> computePosition: aNode [
 
 { #category : #hook }
 RSRadialTreeLayout >> doExecute: nodeElements [
-
 	| rootNodes xOffset maximumRadius |
-	initialLayout ifNotNil: [
-		initialLayout new executeOnElements: nodeElements ].
 	rootNodes := self rootNodesFor: nodeElements.
-	rootNodes
-		do: [ :e | self initialize: e whoseFatherIs: nil ];
-		do: [ :e |
-			self computePosition: e.
-			self step ];
-		do: [ :e | self computeGap: e ];
-		do: [ :e | self toRadialTree: e withMod: 0 ].
+	rootNodes do: [ :e | 
+		self initialize: e whoseFatherIs: nil.
+		self computePosition: e.
+		self computeGap: e.
+		self toRadialTree: e withMod: 0 
+		 ].
 	xOffset := 0.
 	rootNodes do: [ :e |
 		maximumRadius := self radialDraw: e.
@@ -191,7 +187,6 @@ RSRadialTreeLayout >> radialDraw: aNode [
 	| children r max |
 	r := (self rOf: aNode).
 	translator translateTopLeftOf: aNode to: (Point r: r theta: (self thetaOf: aNode)).
-	"aNode translateTo: (Point radius: (aNode r) theta: (aNode theta))."
 	children := self childrenFor: aNode.
 	max := 0.
 	children do: [ :e | max := max max: (self radialDraw: e) ].

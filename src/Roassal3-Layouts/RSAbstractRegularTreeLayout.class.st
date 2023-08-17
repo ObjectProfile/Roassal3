@@ -27,6 +27,24 @@ RSAbstractRegularTreeLayout class >> isAbstract [
 	^ self = RSAbstractRegularTreeLayout
 ]
 
+{ #category : #accessing }
+RSAbstractRegularTreeLayout class >> layoutDefinition [
+	^ super layoutDefinition
+		add: (RSLayoutBooleanField new
+			label: 'Should be Horizontally Reversed';
+			selector: #shouldBeHorizontallyReversed);
+		add: (RSLayoutBooleanField new
+			label: 'Should be Vertically Reversed';
+			selector: #shouldBeVerticallyReversed);
+		add: (RSLayoutNumberField new
+			label: 'Top';
+			selector: #topGap);
+		add: (RSLayoutNumberField new
+			label: 'Left';
+			selector: #leftGap);
+		yourself
+]
+
 { #category : #private }
 RSAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	| collection |
@@ -138,9 +156,19 @@ RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
 ]
 
 { #category : #accessing }
+RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed: aBoolean [
+	shouldBeHorizontallyReversed := aBoolean
+]
+
+{ #category : #accessing }
 RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed [
 	"Return if the layout is vertically reversed"
 	^ shouldBeVerticallyReversed
+]
+
+{ #category : #accessing }
+RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed: aBoolean [
+	shouldBeVerticallyReversed := aBoolean
 ]
 
 { #category : #accessing }
