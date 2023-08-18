@@ -156,7 +156,7 @@ RSThemedMapBuilder >> newShapeFor: model [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSThemedMapBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	aCanvas nodes @ self highlightable

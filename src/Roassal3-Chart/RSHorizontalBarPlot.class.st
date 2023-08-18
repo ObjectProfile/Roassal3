@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'left'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #accessing }
@@ -17,27 +17,29 @@ RSHorizontalBarPlot >> barScale [
 
 { #category : #rendering }
 RSHorizontalBarPlot >> beforeRenderingIn: aChart [
+
 	| barScale |
 	super beforeRenderingIn: aChart.
 	yScale class = NSOrdinalScale ifTrue: [ ^ self ].
 	barScale := NSOrdinalScale new
-		domain: yValues;
-		rangeBands: yScale range padding: gapRatio.
+		            domain: yValues;
+		            rangeBands: yScale range padding: gapRatio.
 	aChart yScale: barScale
 ]
 
 { #category : #hooks }
 RSHorizontalBarPlot >> computeRectagleFor: aPoint index: index [
+
 	| origin corner sizeOffset offset zero |
 	zero := 0.
 	left ifNotNil: [ zero := left at: index ].
-	origin := self scalePoint: aPoint+(zero@0) .
+	origin := self scalePoint: aPoint + (zero @ 0).
 	corner := (xScale scale: zero) @ origin y.
-	sizeOffset := 0@(self barSize/ 2.0).
-	offset := 0@self barOffset.
+	sizeOffset := 0 @ (self barSize / 2.0).
+	offset := 0 @ self barOffset.
 	^ Rectangle
-		origin: origin + offset - sizeOffset
-		corner: corner + offset + sizeOffset
+		  origin: origin + offset - sizeOffset
+		  corner: corner + offset + sizeOffset
 ]
 
 { #category : #rendering }

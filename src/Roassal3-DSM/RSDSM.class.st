@@ -4,7 +4,7 @@ For a collection of objects and an arbitrary dependency function.
 "
 Class {
 	#name : #RSDSM,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'shape',
 		'objectsX',
@@ -120,7 +120,7 @@ RSDSM >> createShapeX: anObjectX y: anObjectY position: position list: list [
 	box := self createShape: (shouldFeedX
 		ifTrue: [ anObjectX -> anObjectY ]
 		ifFalse: [ anObjectY -> anObjectX ]).
-	box propertyAt: #matrixIndex put: position.
+	box propertyAt: self matrixKey put: position.
 	self setUpShape: box.
 	list add: box.
 	^ box
@@ -180,7 +180,7 @@ RSDSM >> hideLabels [
 RSDSM >> highlight: evt [
 	| position |
 	shape := evt shape.
-	position := shape propertyAt: #matrixIndex.
+	position := shape propertyAt: self matrixKey.
 	self highlightRectangle: (self columnAt: position x) key: #columnRect.
 	self highlightRectangle: (self rowAt: position y) key: #rowRect
 ]
@@ -263,6 +263,11 @@ RSDSM >> layoutShapes: aGroup [
 		on: aGroup
 ]
 
+{ #category : #hooks }
+RSDSM >> matrixKey [
+	^ #matrixIndex
+]
+
 { #category : #accessing }
 RSDSM >> numberOfObjects [
 	^ self objects size
@@ -300,7 +305,7 @@ RSDSM >> objectsY: someObjects [
 	objectsY := someObjects
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSDSM >> renderIn: aCanvas [
 	shapes := self createShapes.
 	aCanvas addAll: shapes.

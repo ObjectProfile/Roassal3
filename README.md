@@ -3,6 +3,12 @@
 ![Discord](https://img.shields.io/discord/223421264751099906)
 [![Coverage](https://raw.githubusercontent.com/ObjectProfile/Roassal3/master/ci_data/coverageBadge.svg)](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
 
+[![Pharo 8](https://img.shields.io/badge/Pharo-8.0-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo 9](https://img.shields.io/badge/Pharo-9.0-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo 10](https://img.shields.io/badge/Pharo-10-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo 11](https://img.shields.io/badge/Pharo-11-%23aac9ff.svg)](https://pharo.org/download)
+[![Pharo 12](https://img.shields.io/badge/Pharo-12-%23aac9ff.svg)](https://pharo.org/download)
+
 [*Chat with us on #Roassal*](https://discord.gg/QewZMZa)
 
 [*Visualize the test coverage of Roassal3*](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
@@ -18,16 +24,16 @@ Roassal allows to user to extent the presentation of any object thanks to the in
 Sister projects: [Roassal3Documentation](https://github.com/ObjectProfile/Roassal3Documentation), [Roassal3Exporters](https://github.com/ObjectProfile/Roassal3Exporters).
 
 ## Pharo Installations
-Roassal3 is included in Pharo 9. This means that you do not need to install anything else. Pharo 9 contains Roassal 0.9.6b.
+Roassal3 is included from Pharo 9 to 12. This means that you do not need to install anything else. Pharo contains Roassal 0.9.6b.
 Two installation flavors are available: stable and latest (a.k.a bleeding-edge).
 
 ### Stable version
-If you wish to install Roassal in Pharo 8, then execute the following code snippet in a Playground:
+If you wish to install Roassal in Pharo, then execute the following code snippet in a Playground:
 
 ```Smalltalk
 Metacello new
     baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3:v1.0';
+    repository: 'github://ObjectProfile/Roassal3:v1.01';
     load.
 ```
 

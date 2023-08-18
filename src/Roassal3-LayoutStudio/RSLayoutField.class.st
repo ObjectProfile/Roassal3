@@ -11,7 +11,8 @@ Class {
 		'help',
 		'layoutStudio',
 		'widget',
-		'isEventEnabled'
+		'isEventEnabled',
+		'hasChanged'
 	],
 	#category : #'Roassal3-LayoutStudio-Fields'
 }
@@ -34,6 +35,16 @@ RSLayoutField >> enableEvent [
 	isEventEnabled := true
 ]
 
+{ #category : #testing }
+RSLayoutField >> hasChanged [
+	^ hasChanged
+]
+
+{ #category : #testing }
+RSLayoutField >> hasChanged: aBool [
+	hasChanged := aBool
+]
+
 { #category : #accessing }
 RSLayoutField >> help [
 
@@ -49,7 +60,8 @@ RSLayoutField >> help: anObject [
 { #category : #initialization }
 RSLayoutField >> initialize [
 	super initialize.
-	self enableEvent
+	self enableEvent.
+	hasChanged := false
 ]
 
 { #category : #accessing }
@@ -83,6 +95,7 @@ RSLayoutField >> layoutValue [
 
 { #category : #accessing }
 RSLayoutField >> layoutValue: anObject [
+	hasChanged := true.
 	layoutStudio apply: self with: anObject
 ]
 
@@ -93,9 +106,14 @@ RSLayoutField >> newTextInput [
 		yourself
 ]
 
+{ #category : #printing }
+RSLayoutField >> printOn: stream tab: tabSize [
+	stream << selector << ': '.
+	self layoutValue printOn: stream.
+]
+
 { #category : #rendering }
 RSLayoutField >> renderIn: boxLayout [
-
 	boxLayout add: (SpBoxLayout newVertical
 		add: label asString expand: false;
 		add: self widget expand: false;

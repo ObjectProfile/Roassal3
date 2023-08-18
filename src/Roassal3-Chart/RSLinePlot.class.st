@@ -7,12 +7,9 @@ Class {
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
-		'line',
-		'format',
-		'ylabel',
-		'xlabel'
+		'line'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal3-Chart-Core'
 }
 
 { #category : #'instance creation' }
@@ -30,27 +27,12 @@ RSLinePlot class >> y: aCollection [
 	^ linePlot
 ]
 
-{ #category : #building }
-RSLinePlot >> buildChart [
-
-	| chartPlot |
-	chartPlot := RSChart new.
-	chartPlot add: self.
-
-	chartPlot
-		ylabel: self ylabel;
-		xlabel: self xlabel;
-		extent: 250 @ 200;
-		padding: 15 @ 10.
-	^ chartPlot
-]
-
 { #category : #accessing }
 RSLinePlot >> createdShapes [
 	^ { line }
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
@@ -70,14 +52,10 @@ RSLinePlot >> marker [
 	^ self shape markers at: 1
 ]
 
-{ #category : #'instance creation' }
-RSLinePlot >> open [
-	^ self buildChart open
-]
-
 { #category : #rendering }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
+	super renderIn: canvas.
 	self checkAssertion.
 	controlPoints := OrderedCollection new.
 	(1 to: xValues size) do: [ :i |
@@ -90,24 +68,4 @@ RSLinePlot >> renderIn: canvas [
 		color: self computeColor;
 		controlPoints: controlPoints;
 		yourself)
-]
-
-{ #category : #accessing }
-RSLinePlot >> xlabel [
-	^ xlabel
-]
-
-{ #category : #decoration }
-RSLinePlot >> xlabel: aString [
-	xlabel := aString
-]
-
-{ #category : #accessing }
-RSLinePlot >> ylabel [
-	^ ylabel
-]
-
-{ #category : #decoration }
-RSLinePlot >> ylabel: aString [
-	ylabel := aString
 ]

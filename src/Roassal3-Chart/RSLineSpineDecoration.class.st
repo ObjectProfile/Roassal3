@@ -4,6 +4,8 @@ Used to draw line axis
 Class {
 	#name : #RSLineSpineDecoration,
 	#superclass : #RSChartSpineDecoration,
+	#traits : 'RSTLine',
+	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'axisX',
 		'axisY'
@@ -18,9 +20,8 @@ RSLineSpineDecoration >> defaultShape [
 
 { #category : #rendering }
 RSLineSpineDecoration >> renderIn: canvas [
-	| x y plot zeroPoint |
+	| x y zeroPoint |
 	axisX := self shape copy.
-	plot := chart plots anyOne.
 	zeroPoint := self zeroPoint.
 	x := zeroPoint x.
 	y := zeroPoint y.
@@ -36,13 +37,12 @@ RSLineSpineDecoration >> renderIn: canvas [
 
 { #category : #accessing }
 RSLineSpineDecoration >> zeroPoint [
-	| plot x y |
-	plot := chart plots first.
-	y := (0 between: chart minValueY and: chart maxValueY)
-		ifTrue: [ (plot yScale scale: 0) + chart extent y ]
+	| x y |
+	y := (0 between: chart minChartValueY and: chart maxChartValueY)
+		ifTrue: [ (chart yScale scale: 0) + chart extent y ]
 		ifFalse: [ chart extent y ].
-	x := (0 between: chart minValueX and: chart maxValueX)
-		ifTrue: [ (plot xScale scale: 0) ]
+	x := (0 between: chart minChartValueX and: chart maxChartValueX)
+		ifTrue: [ (chart xScale scale: 0) ]
 		ifFalse: [ 0 ].
 	^ x @ y
 ]

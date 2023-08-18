@@ -59,7 +59,7 @@ RSSunburstBuilder >> maxLevel [
 	^ maxLevel
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSSunburstBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self strategy on: self rootNodes

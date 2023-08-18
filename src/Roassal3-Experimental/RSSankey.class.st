@@ -7,7 +7,7 @@ https://www.d3-graph-gallery.com/sankey
 "
 Class {
 	#name : #RSSankey,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'extent',
 		'nodePadding',
@@ -310,7 +310,7 @@ RSSankey >> relaxRightToLeft: alpha boxes: boxesByBreadth [
 		eachBox relaxRightToLeft: alpha ]
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSSankey >> renderIn: aCanvas [
 
 	nodes ifNil: [ ^ self ].

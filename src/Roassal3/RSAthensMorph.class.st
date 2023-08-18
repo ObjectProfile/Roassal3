@@ -237,12 +237,12 @@ RSAthensMorph >> eventMouseUp: aMorphicEvent [
 
 { #category : #'events - processed' }
 RSAthensMorph >> eventMouseWheel: aMorphicEvent [
-	| trEvent |
-	trEvent := self eventOfClass: RSMouseWheelEvent from: aMorphicEvent.
-	trEvent
+	| event |
+	event := self eventOfClass: RSMouseWheelEvent from: aMorphicEvent.
+	event
 		direction: aMorphicEvent direction;
-		position: (roassalCanvas camera fromPixelToSpace: trEvent position).
-	trEvent shape announce: trEvent
+		position: (roassalCanvas camera fromPixelToSpace: event position).
+	event shape announce: event
 ]
 
 { #category : #'events - processed' }

@@ -48,18 +48,15 @@ classes := RSObject withAllSubclasses.
 x := classes collect: [ :c | c numberOfMethods ].
 y := classes collect: [ :c | c linesOfCode ].
 
-c := RSChart new.
-
 d := RSScatterPlot new.
 d color: Color blue translucent.
 d x: x y: y.
-c addPlot: d.
 
 tickConfiguration := RSTickConfiguration new.
 tickConfiguration labelConversion: [ :p | 'V', p asString ].
 
-c addDecoration: (RSHorizontalTick new configuration: tickConfiguration).
-c
+d horizontalTick configuration: tickConfiguration.
+d
 ```
 "
 Class {
@@ -69,7 +66,6 @@ Class {
 		'numberOfTicks',
 		'shouldHaveLabels',
 		'labelConversion',
-		'shouldUseNiceLabel',
 		'labelRotation',
 		'fontSize',
 		'tickSize'
@@ -100,11 +96,10 @@ RSTickConfiguration >> fontSize: aNumber [
 RSTickConfiguration >> initialize [
 	super initialize.
 	self numberOfTicks: 5;
-		fontSize: 5;
+		fontSize: RSLabel defaultFontSize;
 		labelRotation: 0;
 		shouldHaveLabels: true;
-		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value ];
+		labelConversion: [ :value | value asFloat round: 3 ];
 		tickSize: 3
 ]
 
@@ -135,7 +130,7 @@ RSTickConfiguration >> numberOfTicks [
 
 { #category : #accessing }
 RSTickConfiguration >> numberOfTicks: aNumber [
-	numberOfTicks := aNumber
+	numberOfTicks := aNumber.
 ]
 
 { #category : #accessing }
@@ -149,16 +144,6 @@ RSTickConfiguration >> shouldHaveLabels: aBoolean [
 ]
 
 { #category : #accessing }
-RSTickConfiguration >> shouldUseNiceLabel [
-	^ shouldUseNiceLabel
-]
-
-{ #category : #accessing }
-RSTickConfiguration >> shouldUseNiceLabel: aBoolean [
-	shouldUseNiceLabel := aBoolean
-]
-
-{ #category : #accessing }
 RSTickConfiguration >> tickSize [
 	^ tickSize
 ]
@@ -166,4 +151,11 @@ RSTickConfiguration >> tickSize [
 { #category : #accessing }
 RSTickConfiguration >> tickSize: aNumber [
 	tickSize := aNumber
+]
+
+{ #category : #accessing }
+RSTickConfiguration >> updateTickConfiguration: anEvent [
+	| canvas |
+	canvas := anEvent canvas.
+	self fontSize: (canvas extent) / (canvas defaultExtent).
 ]

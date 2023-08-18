@@ -3216,6 +3216,58 @@ RSAnimationExamples >> example46Lines [
 	^ c
 ]
 
+{ #category : #perlin }
+RSAnimationExamples >> example47FractalTree [
+
+	<script: 'self new example47FractalTree open'>
+	| canvas drawTree size angleGap max colorScale |
+	canvas := RSCanvas new.
+	canvas background: Color black.
+	drawTree := nil.
+	size := 0.75.
+	angleGap := 20.
+	max := 10.
+
+	colorScale := NSScale log
+		domain: { max. 1 };
+		range: { Color white. Color green }.
+	drawTree := [ :depth :angle :p1  |  
+		depth isZero ifFalse: [ | p2 rad |
+			rad := angle degreesToRadians.
+			p2 := p1 + (rad cos @ rad sin * depth * depth*size).
+			canvas newLine
+				color: (colorScale scale: depth);
+				width: depth*0.75;
+				capRound;
+				controlPoints: { p1. p2 }.
+			drawTree 
+				value: depth - 1
+				value: angle - angleGap
+				value: p2.
+			drawTree
+				value: depth - 1
+				value: angle + angleGap
+				value: p2.
+		]
+	].
+	canvas newAnimation
+		repeat;
+		easing: RSEasingInterpolator linear;
+		duration: 10 seconds;
+		scale: (NSScale linear
+			domain: {0. 0.5. 1};
+			range: { 180. 0. 180 }
+			);
+		onStepDo: [ :t | 
+			canvas clear.
+			angleGap:= t.
+			drawTree value: max value: -90 value: 0@100.
+			
+			canvas signalUpdate.
+			 ].
+	^ canvas
+]
+
 { #category : #accessing }
 RSAnimationExamples >> order [
 	^ 1000

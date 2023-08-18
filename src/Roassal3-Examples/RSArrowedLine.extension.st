@@ -4,5 +4,5 @@ Extension { #name : #RSArrowedLine }
 RSArrowedLine class >> exampleArrow [
 	| arrow |
 	arrow := self new.
-	^ Smalltalk tools inspector inspect: arrow
+	^ (Smalltalk tools inspector inspect: arrow) window.
 ]

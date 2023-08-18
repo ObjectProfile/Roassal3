@@ -23,7 +23,8 @@ Class {
 		'mouseEvent',
 		'isMoving',
 		'lastStep',
-		'hasDraggableAnimation'
+		'hasDraggableAnimation',
+		'hasLimits'
 	],
 	#category : #'Roassal3-Interaction-Controls'
 }
@@ -79,12 +80,23 @@ RSDraggableCanvasInteraction >> hasDraggableAnimation: aBoolean [
 	hasDraggableAnimation := aBoolean
 ]
 
+{ #category : #testing }
+RSDraggableCanvasInteraction >> hasLimits [
+	^ hasLimits
+]
+
+{ #category : #testing }
+RSDraggableCanvasInteraction >> hasLimits: aBoolean [
+	hasLimits := aBoolean
+]
+
 { #category : #initialization }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
 	self
 		all;
-		hasDraggableAnimation: true.
+		hasDraggableAnimation: true;
+		withLimits.
 	isMoving := false
 ]
 
@@ -109,6 +121,10 @@ RSDraggableCanvasInteraction >> mouseDragging: evt [
 	isMoving ifFalse: [ ^ self ].
 	camera := evt camera.
 	lastStep := evt step.
+	self hasLimits ifFalse: [
+		camera translateBy: lastStep.
+		^ evt signalUpdate.
+		].
 	self hasDraggableAnimation ifTrue: [
 		correct := self correctCamera: camera.
 
@@ -131,6 +147,7 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 	self hasDraggableAnimation
 		ifFalse: [ ^ self ].
 	lastStep ifNil: [ ^ self ].
+	self hasLimits ifFalse: [ ^ self ].
 	aCanvas := evt canvas.
 	camera := evt camera.
 	threshold := 4.
@@ -187,6 +204,11 @@ RSDraggableCanvasInteraction >> newAnimation [
 		yourself
 ]
 
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> noLimits [
+	self hasLimits: false
+]
+
 { #category : #hooks }
 RSDraggableCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
@@ -203,4 +225,9 @@ RSDraggableCanvasInteraction >> renderLegendOn: lb [
 { #category : #mouse }
 RSDraggableCanvasInteraction >> right [
 	self mouseEvent: RSMouseRightDragStart
+]
+
+{ #category : #configuration }
+RSDraggableCanvasInteraction >> withLimits [
+	self hasLimits: true
 ]

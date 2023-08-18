@@ -54,6 +54,11 @@ RSLabel class >> defaultFont [
 ]
 
 { #category : #public }
+RSLabel class >> defaultFontSize [
+	^  self defaultFont pointSize
+]
+
+{ #category : #public }
 RSLabel class >> familyFontName [
 	"
 	self familyFontName
@@ -136,6 +141,11 @@ RSLabel >> createFont [
 		pointSize: fontSize.
 	aFont := aFont emphasized: emphasis emphasisCode.
 	^ aFont
+]
+
+{ #category : #defaults }
+RSLabel >> defaultColor [
+	^ Color black
 ]
 
 { #category : #accessing }
@@ -234,7 +244,6 @@ RSLabel >> hasText [
 { #category : #initialization }
 RSLabel >> initialize [
 	super initialize.
-	paint := Color gray.
 	self font: self class defaultFont
 ]
 

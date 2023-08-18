@@ -3,7 +3,7 @@ this class is related to radar visualization
 "
 Class {
 	#name : #RSKiviat,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'values',
 		'axisNames',
@@ -335,7 +335,7 @@ RSKiviat >> renderAxisIn: aCanvas [
 	aCanvas addAll: labels
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSKiviat >> renderIn: aCanvas [
 	self assert: values isNotEmpty description: 'Use addRow: first'.
 	axisNames ifNil: [ axisNames := values first collectWithIndex: [ :val :i | i asString ] ].

@@ -294,6 +294,11 @@ RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
 
+{ #category : #defaults }
+RSShape >> defaultColor [
+	^ Color lightGray
+]
+
 { #category : #'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
@@ -344,6 +349,7 @@ RSShape >> hasChildren [
 { #category : #testing }
 RSShape >> hasEventCallback [
 	"Return true if at least one event callback has been added to the shape"
+
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
@@ -379,7 +385,7 @@ RSShape >> index: anObject [
 { #category : #initialization }
 RSShape >> initialize [
 	super initialize.
-	paint := Color lightGray.
+	paint := self defaultColor.
 	isFixed := false
 ]
 

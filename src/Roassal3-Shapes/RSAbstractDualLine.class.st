@@ -30,6 +30,12 @@ RSAbstractDualLine >> controlPoints [
 ]
 
 { #category : #accessing }
+RSAbstractDualLine >> controlPoints: aCollection [ 
+	self assert: aCollection size = 2 description: 'Should have two points.'.
+	self startPoint: aCollection first; endPoint: aCollection second
+]
+
+{ #category : #accessing }
 RSAbstractDualLine >> endPoint [
 	^ endPoint
 ]
@@ -46,6 +52,11 @@ RSAbstractDualLine >> initialize [
 	super initialize.
 	startPoint := 0@0.
 	endPoint := 100@100
+]
+
+{ #category : #transforming }
+RSAbstractDualLine >> invert [
+	self controlPoints: ( self controlPoints collect: [ :p | p y @ p x ]).
 ]
 
 { #category : #transforming }

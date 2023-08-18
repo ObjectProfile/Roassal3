@@ -9,13 +9,10 @@
 *Example*:
 ```Smalltalk
 	x := -3.14 to: 3.14 by: 0.01.
-	c := RSChart new.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
-	c addPlot: p.
-	c addDecoration: RSHorizontalTick new.
-	c addDecoration: RSVerticalTick new asFloat.
-	c
+	p verticalTick asFloat.
+	p
 ```
 "
 Class {
@@ -28,8 +25,8 @@ Class {
 RSHorizontalTick >> createTickLineFor: aNumber [
 	| value zeroY |
 	value := xScale scale: aNumber.
-	zeroY := chart spineDecoration zeroPoint y.
-	zeroY := zeroY - chart extent y.
+	zeroY := self chart spineDecoration zeroPoint y.
+	zeroY := zeroY - self chart extent y.
 	^ self newLineTick
 		startPoint: value @ zeroY;
 		endPoint: value @ (zeroY + self configuration tickSize);
@@ -53,15 +50,15 @@ RSHorizontalTick >> max [
 
 { #category : #accessing }
 RSHorizontalTick >> min [
-	^ chart minValueX
+	^ chart minChartValueX
 ]
 
 { #category : #rendering }
 RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
-
+	
 	aChart
-		minValueX: self ticksData first;
-		maxValueX: self ticksData last
+		minChartValueX: self ticksData first;
+		maxChartValueX: self ticksData last
 ]
 
 { #category : #public }

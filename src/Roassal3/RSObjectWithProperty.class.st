@@ -57,6 +57,35 @@ RSObjectWithProperty >> canvas [
 	^ self subclassResponsibility
 ]
 
+{ #category : #events }
+RSObjectWithProperty >> click [
+	"Simulate a click. 
+	
+For example:
+-=-=-=-=-=-=-=-=-=
+c := RSCanvas new.
+box := RSBox new size: 40.
+box when: RSMouseClick do: [ :evt | self inform: 'hello' ].
+c add: box.
+
+box click.
+
+c
+-=-=-=-=-=-=-=-=-=
+"
+	self announcer announce: (RSMouseClick new 
+		canvas: self canvas;
+		shape: self; 
+		yourself).
+]
+
+{ #category : #interactions }
+RSObjectWithProperty >> hasInteraction: anInteractionClass [
+	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
+	self announcer subscriptions ifNil: [ ^ false ].
+	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
+]
+
 { #category : #properties }
 RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]

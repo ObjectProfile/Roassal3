@@ -17,5 +17,5 @@ RSPolyline class >> examplePolyline [
 	| line |
 	line := self new.
 	line controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
-	^ Smalltalk tools inspector inspect: line
+	^ (Smalltalk tools inspector inspect: line) window.
 ]

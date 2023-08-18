@@ -28,7 +28,7 @@ c
 "
 Class {
 	#name : #RSLegend,
-	#superclass : #RSAbstractContainerBuilder,
+	#superclass : #RSBuilder,
 	#instVars : [
 		'layout',
 		'defaults',
@@ -310,7 +310,7 @@ RSLegend >> renderFixedOn: aCanvas [
 	for: self
 ]
 
-{ #category : #hooks }
+{ #category : #rendering }
 RSLegend >> renderIn: aCanvas [
 	self isOnDemand
 		ifTrue: [ self renderOnDemandIn: aCanvas ]

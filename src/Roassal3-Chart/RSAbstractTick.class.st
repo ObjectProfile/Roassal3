@@ -8,7 +8,9 @@ Class {
 		'ticks',
 		'labels',
 		'labelLocation',
-		'configuration'
+		'configuration',
+		'tickLocator',
+		'ticksData'
 	],
 	#category : #'Roassal3-Chart-Ticks'
 }
@@ -36,7 +38,23 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 	updateChartMaxAndMinValues:, we change the dimensions of the chart. And now we need to
 	recalculate the scales to be consistent with the dimensions."
 	self createXScale.
-	self createYScale
+	chart createXScale.
+	self createYScale.
+	chart createYScale
+]
+
+{ #category : #public }
+RSAbstractTick >> computeTicksData [
+
+	| scaleToUse data |
+	scaleToUse := self scaleToUse.
+	data := tickLocator
+		        generateTicks: scaleToUse
+		        with: self configuration numberOfTicks.
+	data ifEmpty: [ Error signal: 'Empty ticks data' ].
+	configuration numberOfTicks: data size.
+
+	^ data
 ]
 
 { #category : #accessing }
@@ -73,19 +91,17 @@ RSAbstractTick >> createdShapes [
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultConfiguration [
 	^ RSTickConfiguration new
-		numberOfTicks: 5;
-		fontSize: 5;
-		labelRotation: 0;
-		shouldHaveLabels: true;
-		shouldUseNiceLabel: true;
-		labelConversion: [ :value | value asFloat round: 3 ] ;
-		tickSize: 3;
-		yourself
 ]
 
 { #category : #'accessing - defaults' }
 RSAbstractTick >> defaultLabelLocation [
 	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+RSAbstractTick >> defaultLocator [
+
+	^ RSAutoLocator new
 ]
 
 { #category : #initialization }
@@ -96,7 +112,7 @@ RSAbstractTick >> defaultShape [
 { #category : #public }
 RSAbstractTick >> doNotUseNiceLabel [
 
-	self configuration shouldUseNiceLabel: false
+	self locator: RSLinearLocator new
 ]
 
 { #category : #accessing }
@@ -124,17 +140,16 @@ c
 
 { #category : #public }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
-
 	| size |
 	size := aCollectionOfStrings size.
-	self assert: size > 0 description: 'aCollectionOfStrings can not be empty'.
-	size isZero ifTrue: [ size := 1 ].
+	self ticks: (1 to: size) labels: aCollectionOfStrings.
+]
 
-	self numberOfTicks: size.
+{ #category : #initialization }
+RSAbstractTick >> initialize [
 
-	self labelConversion: [ :x |
-		x isZero ifTrue: [ '' ]
-			ifFalse: [ aCollectionOfStrings at: x asInteger ] ]
+	super initialize.
+	tickLocator := self defaultLocator
 ]
 
 { #category : #public }
@@ -147,6 +162,11 @@ RSAbstractTick >> integer [
 RSAbstractTick >> integerWithCommas [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value asInteger asStringWithCommas ]
+]
+
+{ #category : #testing }
+RSAbstractTick >> isTicksDataNil [
+	^ ticksData isNil.
 ]
 
 { #category : #public }
@@ -194,6 +214,18 @@ RSAbstractTick >> labels [
 ]
 
 { #category : #accessing }
+RSAbstractTick >> locator [
+
+	^ tickLocator 
+]
+
+{ #category : #accessing }
+RSAbstractTick >> locator: aLocator [
+
+	tickLocator := aLocator 
+]
+
+{ #category : #accessing }
 RSAbstractTick >> max [
 	^ self subclassResponsibility
 ]
@@ -238,7 +270,6 @@ c
 
 { #category : #rendering }
 RSAbstractTick >> renderIn: canvas [
-	| ticksData |
 	ticksData := self ticksData.
 	ticks := ticksData collect: [ :value | self createTickLineFor: value ].
 	canvas addAll: ticks.
@@ -264,14 +295,31 @@ RSAbstractTick >> ticks [
 ]
 
 { #category : #public }
+RSAbstractTick >> ticks: collectionOfNumbers labels: collectionOfStrings [
+	self 
+		assert: collectionOfNumbers size = collectionOfStrings size 
+		description: 'Both collections should have same size'.
+	self 
+		assert: collectionOfStrings isNotEmpty 
+		description: 'collectionOfStrings should not be empty'.
+	self ticksData: collectionOfNumbers.
+	self labelConversion: [ :number | 
+		| index |
+		index := collectionOfNumbers indexOf: number.
+		(index between: 1 and: collectionOfStrings size) 
+			ifTrue: [ collectionOfStrings at: index ]
+			ifFalse: [ '' ]
+	].
+]
+
+{ #category : #public }
 RSAbstractTick >> ticksData [
+	^ ticksData ifNil: [ ticksData := self computeTicksData ]
+]
 
-	| scaleToUse |
-	scaleToUse := self scaleToUse.
-
-	^ self configuration shouldUseNiceLabel
-		ifTrue: [ scaleToUse niceTicks: self configuration numberOfTicks ]
-		ifFalse: [ scaleToUse ticks: self configuration numberOfTicks ]
+{ #category : #public }
+RSAbstractTick >> ticksData: collectionOfNumbers [
+	ticksData := collectionOfNumbers
 ]
 
 { #category : #rendering }
@@ -283,7 +331,7 @@ RSAbstractTick >> updateChartMaxAndMinValues: aChart [
 { #category : #public }
 RSAbstractTick >> useNiceLabel [
 
-	self configuration shouldUseNiceLabel: true
+	self locator: RSAutoLocator new
 ]
 
 { #category : #public }

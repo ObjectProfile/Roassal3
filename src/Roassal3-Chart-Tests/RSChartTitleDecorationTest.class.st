@@ -6,14 +6,14 @@ Class {
 
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic [
-	| c title label |
-	c := RSChart new.
-	c removeAllTicks.
-	title := c title: 'hello'.
+	| plot title label |
+	plot := RSLinePlot new y: #(1).
+	plot removeAllTicks.
+	title := plot title: 'hello'.
 	title styler textColor: Color blue.
-	c build.
+	plot build.
 
-	self assert: c canvas numberOfShapes equals: 2.
+	self assert: plot canvas numberOfShapes equals: 3.
 	label := title label.
 	self assert: label class equals: RSLabel.
 	self assert: label color equals: Color blue
@@ -21,13 +21,13 @@ RSChartTitleDecorationTest >> testBasic [
 
 { #category : #tests }
 RSChartTitleDecorationTest >> testBasic2 [
-	| c |
-	c := RSChart new.
-	c removeAllTicks.
-	c addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
-	c build.
+	| plot |
+	plot := RSLinePlot new y: #(1).
+	plot removeAllTicks.
+	plot addDecoration: (RSChartTitleDecoration new title: 'hello'; fontSize: 20).
+	plot build.
 
-	self assert: c canvas numberOfShapes equals: 2.
-	self assert: c canvas shapes second class equals: RSLabel.
-	self assert: c canvas shapes second fontSize equals: 20
+	self assert: plot canvas numberOfShapes equals: 3.
+	self assert: plot canvas shapes second class equals: RSLabel.
+	self assert: plot canvas shapes second fontSize equals: 20
 ]
