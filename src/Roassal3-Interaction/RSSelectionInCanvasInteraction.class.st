@@ -59,6 +59,11 @@ RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
 		when: RSKeyDown send: #processKeyDown: to: self
 ]
 
+{ #category : #accessing }
+RSSelectionInCanvasInteraction >> elasticBoxInteraction [
+	^ elastic
+]
+
 { #category : #initialization }
 RSSelectionInCanvasInteraction >> initialize [
 
@@ -138,9 +143,11 @@ RSSelectionInCanvasInteraction >> selectionEnd: evt [
 
 { #category : #'event processing' }
 RSSelectionInCanvasInteraction >> selectionStart: evt [
-
-	shadowInteraction removeShadowsOn: evt canvas.
-	evt canvas announce: evt
+	| canvas |
+	canvas := evt canvas.
+	shadowInteraction removeShadowsOn: canvas.
+	canvas selectedShapes: #().
+	canvas announce: evt
 ]
 
 { #category : #public }
@@ -154,14 +161,14 @@ RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanva
 		                  ifFalse: [ aGroupOfShapes ].
 		
 	selectedShapes := aRSCanvas selectedShapes.
+	
 	shapesToRemoveShadow := selectedShapes difference: filteredShapes.
 	self unselectShapes: shapesToRemoveShadow in: aRSCanvas.
 
 	shapesToPutShadow := filteredShapes difference: selectedShapes.
 
-
 	shapesToPutShadow @ shadowInteraction.
-	aRSCanvas selectedShapes: filteredShapes.
+	aRSCanvas selectedShapes: filteredShapes copy.
 	aRSCanvas announce: (RSSelectionChangedEvent new
 			 selectedShapes: filteredShapes;
 			 yourself).
@@ -187,7 +194,8 @@ RSSelectionInCanvasInteraction >> unselectShapes: aGroupOfShapes in: aCanvas [
 	key := shadowInteraction key.
 	aCanvas
 		propertyAt: key
-		ifPresent: [ :list | list removeAll: aGroupOfShapes ]
+		ifPresent: [ :list |
+		aGroupOfShapes do: [ :s | list remove: s ifAbsent: [  ] ] ]
 ]
 
 { #category : #accessing }
