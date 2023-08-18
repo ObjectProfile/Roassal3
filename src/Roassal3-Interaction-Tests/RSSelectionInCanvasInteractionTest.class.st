@@ -121,6 +121,18 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 ]
 
 { #category : #tests }
+RSSelectionInCanvasInteractionTest >> testSelectShapesWhenThereAreAlreadySelectedShapes [
+
+	| elasticBoxInteraction |
+	canvas @ RSSelectionInCanvasInteraction.
+	canvas setSelectedShapes: shapes.
+	self assert: canvas selectedShapes size equals: shapes size.
+	elasticBoxInteraction := canvas selectionInteraction elasticBoxInteraction.
+	elasticBoxInteraction announce: (RSSelectionStartEvent new canvas: canvas).
+	self assert: canvas selectedShapes isEmpty.
+]
+
+{ #category : #tests }
 RSSelectionInCanvasInteractionTest >> testSelectShapesWithModelOnlyUsingCommandA [
 
 	canvas @ RSSelectionInCanvasInteraction withoutNilModels.
