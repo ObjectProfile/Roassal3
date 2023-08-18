@@ -40,6 +40,12 @@ RSSelectionPresentationInteraction >> initialize [
 	shadowInteraction := RSShadowInteraction new
 ]
 
+{ #category : #accessing }
+RSSelectionPresentationInteraction >> noPushFront [
+
+	shadowInteraction shouldPushFront: false
+]
+
 { #category : #hooks }
 RSSelectionPresentationInteraction >> onShape: aShape [
 
