@@ -30,6 +30,7 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenSelectionStart [
 		for: self.
 	canvas announce: (RSMouseLeftDragStart new
 			 position: 0 asPoint;
+			 shiftKeyPressed: true;
 			 yourself).
 	self assert: selectionFrom notNil
 ]

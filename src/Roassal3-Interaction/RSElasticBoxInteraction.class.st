@@ -17,7 +17,7 @@ Class {
 		'shouldUseNegativeBox',
 		'targetShapes',
 		'cameraDelta',
-		'isLeftClick'
+		'shouldProcessInteraction'
 	],
 	#category : #'Roassal3-Interaction-ElasticBox'
 }
@@ -171,7 +171,7 @@ RSElasticBoxInteraction >> initialize [
 	baseBox := self defaultBox.
 	self useNegativeBox.
 	self targetShapes: #nodes.
-	isLeftClick := false.
+	shouldProcessInteraction := false.
 ]
 
 { #category : #public }
@@ -195,22 +195,22 @@ RSElasticBoxInteraction >> privateAnnouncer [
 
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDragEnd: event [
-	isLeftClick := false.
+	shouldProcessInteraction := false.
 	self boxEnded: event.
 	self stopCameraAnimation: event
 ]
 
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDragStart: event [
-
-	isLeftClick := true.
+	shouldProcessInteraction := event shiftKeyPressed.
+	event shiftKeyPressed ifFalse: [ ^ self ].
 	self boxStarted: event.
 	self createCameraAnimation: event
 ]
 
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDragging: event [
-	isLeftClick ifFalse: [ ^ self ].
+	shouldProcessInteraction ifFalse: [ ^ self ].
 	self computeCameraDelta: event.
 	self boxUpdated: event
 ]

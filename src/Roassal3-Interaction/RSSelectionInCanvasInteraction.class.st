@@ -126,7 +126,7 @@ RSSelectionInCanvasInteraction >> processKeyDown: evt [
 
 { #category : #rendering }
 RSSelectionInCanvasInteraction >> renderLegendOn: lb [
-	lb text: 'Left click' description: 'Use drag and drop to select shapes'
+	lb text: 'Shift + Left click' description: 'Drag the mouse to select shapes'
 ]
 
 { #category : #'event processing' }

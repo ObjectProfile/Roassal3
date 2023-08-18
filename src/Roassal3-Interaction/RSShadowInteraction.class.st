@@ -48,9 +48,11 @@ RSShadowInteraction >> key [
 RSShadowInteraction >> onShape: aShape [
 
 	aShape shadow ifNotNil: [ ^ self ].
-	aShape removeInteractionIfPresent: self class.
+
 	self addInteractionToCanvas: aShape.
 	self putShadowOn: aShape.
+	
+	(aShape hasInteraction: self class) ifTrue: [ ^ self ].
 	aShape
 		when: RSPositionChangedEvent send: #updateShadow: to: self;
 		when: RSExtentChangedEvent send: #updateShadow: to: self;
@@ -94,7 +96,7 @@ RSShadowInteraction >> removeShadow: evt [
 	shape removeShadow.
 	canvas
 		propertyAt: self key
-		ifPresent: [ :list | list remove: shape ]
+		ifPresent: [ :list | list remove: shape ifAbsent: [  ] ]
 ]
 
 { #category : #removing }
