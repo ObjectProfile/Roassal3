@@ -48,7 +48,7 @@ RSSpace3D >> buildEvents [
 		when: RSMouseDragStart
 		do: [ :evt | prev := evt positionFromCamera ]
 		for: self;
-		when: RSMouseDragging do: [ :evt |
+		when: RSMouseDragging do: [ :evt | 
 			| p theta |
 			tmat identity.
 			p := evt positionFromCamera.

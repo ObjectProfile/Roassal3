@@ -191,7 +191,7 @@ RSDraggableCanvasInteraction >> mouseEvent: aRSMouseDragEvent [
 { #category : #events }
 RSDraggableCanvasInteraction >> mouseStart: evt [
 	self removeRectanglesFor: evt canvas.
-	isMoving := true.
+	isMoving := evt shiftKeyPressed not.
 	lastStep := nil
 ]
 

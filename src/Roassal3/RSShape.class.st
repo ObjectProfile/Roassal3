@@ -131,11 +131,14 @@ RSShape >> addedIn: aCanvas [
 
 { #category : #announcer }
 RSShape >> announce: anEventOrAnEventClassOrABlock [
+
 	"Send an event. The event is provided as argument, and may be either an event object, an event class, or a block (taking no argument) that returns an event object. These different way of specifying events addresses some performance concern."
+
 	| theEventToSend |
 	announcer ifNil: [ ^ self ].
 	theEventToSend := anEventOrAnEventClassOrABlock value asAnnouncement.
-	theEventToSend canvas: self canvas.
+	theEventToSend canvas ifNil: [ theEventToSend canvas: self canvas ].
+
 	theEventToSend shape: self.
 	announcer announce: theEventToSend
 ]
