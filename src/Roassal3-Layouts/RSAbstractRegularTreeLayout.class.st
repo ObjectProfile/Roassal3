@@ -27,24 +27,6 @@ RSAbstractRegularTreeLayout class >> isAbstract [
 	^ self = RSAbstractRegularTreeLayout
 ]
 
-{ #category : #accessing }
-RSAbstractRegularTreeLayout class >> layoutDefinition [
-	^ super layoutDefinition
-		add: (RSLayoutBooleanField new
-			label: 'Should be Horizontally Reversed';
-			selector: #shouldBeHorizontallyReversed);
-		add: (RSLayoutBooleanField new
-			label: 'Should be Vertically Reversed';
-			selector: #shouldBeVerticallyReversed);
-		add: (RSLayoutNumberField new
-			label: 'Top';
-			selector: #topGap);
-		add: (RSLayoutNumberField new
-			label: 'Left';
-			selector: #leftGap);
-		yourself
-]
-
 { #category : #private }
 RSAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	| collection |
