@@ -12,9 +12,9 @@ Class {
 	#category : #'Roassal3-Interaction-Tests-Selection'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RSShadowInteractionTest >> setUp [
-
+	super setUp.
 	canvas := RSCanvas new.
 	shape := RSBox new.
 	canvas add: shape.
