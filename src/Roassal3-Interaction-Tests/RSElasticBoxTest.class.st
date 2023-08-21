@@ -35,7 +35,7 @@ RSElasticBoxTest >> testEvents [
 		when: RSSelectionChangedEvent do: [ :evt | number := number + 1 ] for: self;
 		when: RSSelectionEndEvent do: [ :evt | number := number +10 ] for: self.
 	canvas @ elastic.
-	canvas announce: (RSMouseRightDragStart new position: 0@0).
+	canvas announce: (RSMouseLeftDragStart new shiftKeyPressed: true; position: 0@0).
 	self assert: number equals: 0.
 	canvas announce: (RSMouseDragging new position: 10@10).
 	self assert: number equals: 1.
@@ -47,10 +47,9 @@ RSElasticBoxTest >> testEvents [
 RSElasticBoxTest >> testEventsDraggableCanvas [
 	| elastic number |
 	elastic := RSElasticBoxInteraction new.
-	elastic rightLeft.
 	canvas @ elastic.
 	number := nil.
 	elastic when: RSSelectionStartEvent do: [ :evt | number := 0 ] for: self.
-	canvas announce: (RSMouseLeftDragStart new position: 0@0).
+	canvas announce: (RSMouseLeftDragStart new shiftKeyPressed: true; position: 0@0).
 	self assert: number equals: 0
 ]

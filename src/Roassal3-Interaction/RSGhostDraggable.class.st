@@ -51,11 +51,12 @@ RSGhostDraggable >> onShape: aShape [
 
 { #category : #hooks }
 RSGhostDraggable >> removeGhost: evt [
-	| ghost |
-	ghost := evt shape propertyAt: #ghost.
+	| ghost shape |
+	shape := evt shape.
+	ghost := shape propertyAt: #ghost.
 	ghost remove.
-	evt shape translateTo: ghost position.
-	evt shape removeKey: #ghost.
+	shape translateTo: ghost position.
+	shape removeKey: #ghost.
 	evt signalUpdate
 ]
 

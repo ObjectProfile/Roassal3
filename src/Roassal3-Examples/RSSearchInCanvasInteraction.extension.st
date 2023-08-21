@@ -15,14 +15,14 @@ RSSearchInCanvasInteraction class >> exampleCollection [
 	RSTreeLayout on: shapes.
 	c @ RSCanvasController.
 	^ c open
-		setLabel: 'Press `s` to start the search';
+		setLabel: 'Press `cmd+F` to start the search';
 		yourself
 ]
 
 { #category : #'*Roassal3-Examples' }
 RSSearchInCanvasInteraction class >> exampleCollection2 [
 
-	| c classes g elements high con search |
+	| c classes g elements high con |
 	c := RSCanvas new.
 
 	classes := Collection withAllSubclasses.
@@ -42,12 +42,12 @@ RSSearchInCanvasInteraction class >> exampleCollection2 [
 		on: elements.
 
 	con := RSCanvasController new.
-	con addInteraction: (search := self new
-		colorToHighlight: Color blue translucent;
-		yourself).
-
+	
 	c @ con.
+	
+	c searchInteraction useExactMatch.
+	c selectionInteraction shadowColor: Color green translucent.
 	^ c open
-		setLabel: 'Press `s` to start the search';
+		setLabel: 'Press `cmd+F` to start the search';
 		yourself
 ]

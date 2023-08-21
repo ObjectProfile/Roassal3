@@ -762,13 +762,11 @@ RSBasicShapeExamples >> example35KeyEvents [
 		      model: 'UP';
 		      text: '';
 		      position: 0 @ 30.
-	c addAll: {
+	c addAll: { 
 			down.
 			up }.
-	print := [ :evt :s |
-	         s text:
-		         s model , ': ' , evt keyName , ', value: '
-		         , evt keyValue asString.
+	print := [ :evt :s | 
+	         s text: evt asString.
 	         evt signalUpdate ].
 	c
 		when: RSKeyDown

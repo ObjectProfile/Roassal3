@@ -482,7 +482,7 @@ RSChartExample >> example26DensityPlot [
 		fontFamily: 'Impact';
 		fontSize: 20.
 
-	(plot title: 'Les opportunities' asUppercase) masterShape
+	(plot title: 'Les opportunités' asUppercase) masterShape
 		fontFamily: 'Avenir Next'.
 
 	plot styler: (RSChartStyler new
