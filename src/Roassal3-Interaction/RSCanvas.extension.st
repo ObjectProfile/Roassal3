@@ -29,7 +29,7 @@ RSCanvas >> selectedShapes [
 
 { #category : #'*Roassal3-Interaction' }
 RSCanvas >> selectedShapes: aGroupOfShapes [
-	self propertyAt: #selectedShapes put: aGroupOfShapes.
+	self propertyAt: #selectedShapes put: aGroupOfShapes
 ]
 
 { #category : #'*Roassal3-Interaction' }

@@ -172,6 +172,7 @@ RSElasticBoxInteraction >> initialize [
 	self useNegativeBox.
 	self targetShapes: #nodes.
 	shouldProcessInteraction := false.
+	selectedShapes := #().
 ]
 
 { #category : #public }
@@ -195,6 +196,7 @@ RSElasticBoxInteraction >> privateAnnouncer [
 
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDragEnd: event [
+	shouldProcessInteraction ifFalse: [ ^ self ].
 	shouldProcessInteraction := false.
 	self boxEnded: event.
 	self stopCameraAnimation: event
@@ -203,7 +205,7 @@ RSElasticBoxInteraction >> processDragEnd: event [
 { #category : #'event processing' }
 RSElasticBoxInteraction >> processDragStart: event [
 	shouldProcessInteraction := event shiftKeyPressed.
-	event shiftKeyPressed ifFalse: [ ^ self ].
+	shouldProcessInteraction ifFalse: [ ^ self ].
 	self boxStarted: event.
 	self createCameraAnimation: event
 ]
