@@ -215,11 +215,6 @@ c open
 ]
 
 { #category : #adding }
-RSComposite >> addBasicShape: aShape [
-	self shapes add: aShape
-]
-
-{ #category : #adding }
 RSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
 ]
@@ -237,6 +232,17 @@ RSComposite >> addShape: aShape before: otherShape [
 	self children
 		remove: aShape;
 		add: aShape before: otherShape
+]
+
+{ #category : #adding }
+RSComposite >> addShapesIn: aCollection position: position [
+	| pos |
+	pos := self matrix rsInverseTransform: position.
+	self shapes reverseDo: [ :s |
+		s addShapesIn: aCollection position: pos.
+		].
+	super addShapesIn: aCollection position: position
+
 ]
 
 { #category : #public }
@@ -278,7 +284,7 @@ RSComposite >> camera [
 
 { #category : #accessing }
 RSComposite >> children [
-	^ children ifNil: [ children := RSGroup new ]
+	^ children
 ]
 
 { #category : #accessing }
@@ -333,6 +339,8 @@ RSComposite >> hasChildren [
 { #category : #initialization }
 RSComposite >> initialize [
 	super initialize.
+	self shapeCollection: self defaultShapeCollection.
+	children := RSGroup new.
 	self paint: nil.
 	self clipChildren: false.
 	self resetPath
@@ -440,6 +448,7 @@ RSComposite >> removeShape: shape [
 	children remove: shape.
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
+	self shapeCollection remove: shape.
 	self announce: evt.
 	shape announce: evt
 ]

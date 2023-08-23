@@ -36,3 +36,8 @@ RSShapeCollection >> shapesAtPoint: position [
 RSShapeCollection >> shapesAtRectangle: aRectangle [
 	^ self subclassResponsibility
 ]
+
+{ #category : #'finding/searching' }
+RSShapeCollection >> updateShape: aShape [
+	^ self subclassResponsibility
+]

@@ -611,7 +611,8 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	athensCanvas setAA: aRSCanvas antialiasing.
 
 	aRSCanvas camera accept: self.
-	aRSCanvas shapes accept: self.
+	"aRSCanvas shapes accept: self."
+	(aRSCanvas shapeCollection shapesAtRectangle: canvasRect) accept: self.
 
 	"We display the elements that are _NOT_ subject to the camera"
 	matrix loadIdentity.

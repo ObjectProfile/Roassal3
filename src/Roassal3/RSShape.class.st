@@ -113,6 +113,12 @@ RSShape >> addRecursivelyIn: aCollection [
 	aCollection add: self
 ]
 
+{ #category : #adding }
+RSShape >> addShapesIn: aCollection position: position [
+	(self includesPoint: position)
+		ifTrue: [ aCollection add: self ]
+]
+
 { #category : #'private - adding' }
 RSShape >> addedIn: aCanvas [
 	"This is a private method"
@@ -544,7 +550,11 @@ RSShape >> renderOn: aCanvas [
 
 { #category : #initialization }
 RSShape >> resetBBox [
-	encompassingRectangle := nil
+	| shouldUpdate |
+	shouldUpdate := parent notNil and: [ self isFixed not ].
+	shouldUpdate 
+		ifTrue: [ parent updateInShapeCollection: self ]
+		ifFalse: [ encompassingRectangle := nil ]
 ]
 
 { #category : #accessing }

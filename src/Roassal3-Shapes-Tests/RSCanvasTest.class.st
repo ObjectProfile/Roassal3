@@ -107,6 +107,11 @@ RSCanvasTest >> testDeepNodes [
 				 compo })
 ]
 
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testDefaultShapeCollection [
+	self assert: canvas shapeCollection class equals: RSSequenceableCollection
+]
+
 { #category : #running }
 RSCanvasTest >> testDrawCanvas [
 	canvas addShape: (RSBox new
@@ -487,6 +492,12 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 	self assert: (canvas shapesFromModels: #(42)) isEmpty.
 
 	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }
+]
+
+{ #category : #'tests - shapes ordering' }
+RSCanvasTest >> testUseRTree [
+	canvas useRTree.
+	self assert: canvas shapeCollection class equals: RSRTreeShapeCollection
 ]
 
 { #category : #'tests - shapes ordering' }

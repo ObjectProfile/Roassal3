@@ -348,10 +348,10 @@ RSRNode >> rrrotationZ: z y: y x: x [
 ]
 
 { #category : #'finding/searching' }
-RSRNode >> searchPath: anObject [
+RSRNode >> searchPath: aRSShape [
 	| path |
 	path := OrderedCollection new.
-	self searchPath: anObject rectangle: (self bbox: anObject) in: path dir: nil.
+	self searchPath: aRSShape rectangle: (self bbox: aRSShape) in: path dir: nil.
 	^ path
 ]
 
