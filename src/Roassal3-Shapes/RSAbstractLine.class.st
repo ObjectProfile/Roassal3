@@ -69,6 +69,14 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
+{ #category : #'instance creation' }
+RSAbstractLine class >> newFrom: aShape to: anotherShape [
+	^ self new
+		from: aShape;
+		to: anotherShape;
+		yourself
+]
+
 { #category : #adding }
 RSAbstractLine >> accept: visitor [
 	visitor visitLine: self
