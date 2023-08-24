@@ -831,7 +831,15 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 			withBorder;
 			model: n;
 			@ labeled;
-			popup; draggable;
+			popup;
+			when: RSMouseDragging do: [ :evt | | d new old step mat |
+				step :=  evt camera distanceFromPixelToSpace: evt step.
+				mat := evt shape parent globalMatrix.
+				old := mat inverseTransform: evt position- step.
+				new := mat inverseTransform: evt position.
+				d := new - old.
+				evt shape translateBy: d.
+				evt signalUpdate ] for: self;
 			size: 50;
 			yourself
 		] as: RSGroup.
@@ -1383,39 +1391,37 @@ RSShapeExamples >> example47CompositeClipChildren [
 
 	<script: 'self new example47CompositeClipChildren open'>
 	| boxes containers c |
-	containers := {
-		              RSShape.
-		              String.
-		              RSEvent } collect: [ :rootCls |
-		              | container |
-		              container := RSComposite new.
-		              boxes := RSBox
-			                       models: rootCls withAllSubclasses
-			                       forEach: [ :box :cls |
-			                       box size: cls linesOfCode sqrt + 5 ].
-		              container addAll: boxes.
-		              RSLineBuilder line
-			              canvas: container;
-			              withVerticalAttachPoint;
-			              shapes: boxes;
-			              connectFrom: #superclass.
-		              RSTreeLayout on: boxes.
+	containers := {RSShape. String. RSEvent } collectWithIndex: [ :rootCls :index |
+		| container |
+		container := RSComposite new.
+		boxes := RSBox
+			models: rootCls withAllSubclasses
+			forEach: [ :box :cls | box size: cls linesOfCode sqrt + 5 ].
+		boxes when: RSMouseClick do: [ :evt | evt shape color: Color random; signalUpdate ] for: self.
+		container addAll: boxes.
+		RSLineBuilder line
+			canvas: container;
+			withVerticalAttachPoint;
+			shapes: boxes;
+			connectFrom: #superclass.
+		RSTreeLayout on: boxes.
 
-		              container
-			              model: rootCls;
-			              adjustToChildren;
-			              padding: 10;
-			              labeled;
-			              border: (RSBorder new
-					               color: Color black;
-					               joinMiter);
-			              clipChildren: true;
-			              when: RSMouseDragging do: [ :evt |
-				              | d |
-				              d := evt camera distanceFromPixelToSpace: evt step.
-				              evt shape nodes do: [ :child | child translateBy: d ].
-				              evt signalUpdate ] yourself
-			              for: self ].
+		container
+			model: rootCls;
+			adjustToChildren;
+			padding: 10;
+			labeled;
+			border: (RSBorder new
+				color: Color black;
+				joinMiter);
+			clipChildren: index odd;
+			when: RSMouseDragging do: [ :evt |
+				| d |
+				d := evt camera distanceFromPixelToSpace: evt step.
+				evt shape nodes do: [ :child | child translateBy: d ].
+				evt signalUpdate ] for: self;
+			yourself
+	].
 
 	c := RSCanvas new.
 	c addAll: containers.

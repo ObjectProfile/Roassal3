@@ -246,7 +246,12 @@ RSTContainer >> shapeCollection [
 
 { #category : #accessing }
 RSTContainer >> shapeCollection: anRSShapeCollection [
-	shapeCollection := anRSShapeCollection
+	| listOfShapes |
+	shapeCollection := anRSShapeCollection.
+	
+	listOfShapes := self privateShapes.
+	listOfShapes ifNil: [ ^ self ].
+	shapeCollection bulkLoad: listOfShapes.
 ]
 
 { #category : #'looking up shapes' }

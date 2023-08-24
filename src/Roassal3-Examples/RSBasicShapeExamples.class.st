@@ -1110,6 +1110,67 @@ RSBasicShapeExamples >> example44AA [
 	^ canvas
 ]
 
+{ #category : #lines }
+RSBasicShapeExamples >> example45ExampleRTree [
+
+	<script: 'self new example45ExampleRTree open'>
+	<noTest>
+	| canvas nodes |
+	canvas := RSCanvas new.
+	canvas useRTree.
+	nodes := ((1 to: 30000) collect: [ :i | | label |
+		label := RSLabel text: i.
+		{ label } asShape
+			model: i;
+			padding: 5;
+			color: (i even 
+				ifTrue: [Color blue translucent ]
+				ifFalse: [Color red translucent ]);
+			yourself] as: RSGroup).
+	RSGridLayout on: nodes.
+	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
+	canvas addAll: nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : #lines }
+RSBasicShapeExamples >> example46ExampleRTreeInComposites [
+
+	<script: 'self new example46ExampleRTreeInComposites open'>
+	<noTest>
+	| canvas nodes |
+	canvas := RSCanvas new.
+	canvas useRTree.
+	nodes := ((1 to: 10) collect: [ :i | | innerNodes |
+		innerNodes := (1 to: 3000) collect: [ :each | | label |
+			label:= RSLabel text: each.
+			{ label } asShape
+				model: each; 
+				padding: 5;
+				color: (each even 
+					ifTrue: [Color green translucent ]
+					ifFalse: [Color gray translucent ]);
+				yourself
+			 ] as: RSGroup.
+		RSCellLayout on: innerNodes.
+		innerNodes @ RSHighlightable green.
+		innerNodes asShape
+			useRTree;
+			model: i;
+			padding: 20;
+			color: (i even 
+				ifTrue: [Color blue translucent ]
+				ifFalse: [Color red translucent ]);
+			yourself
+			] as: RSGroup).
+	RSGridLayout on: nodes.
+	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
+	canvas addAll: nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
 { #category : #accessing }
 RSBasicShapeExamples >> order [
 	^ 0

@@ -88,7 +88,7 @@ RSLabel class >> text: aText model: aModelObject [
 	^ self new text: aText; model: aModelObject
 ]
 
-{ #category : #visiting }
+{ #category : #visitor }
 RSLabel >> accept: visitor [
 	visitor visitLabel: self
 ]

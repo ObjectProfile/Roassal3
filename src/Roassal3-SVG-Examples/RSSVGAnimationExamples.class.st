@@ -358,6 +358,7 @@ RSSVGAnimationExamples >> example05Corona [
 
 { #category : #examples }
 RSSVGAnimationExamples >> example06AnimatedSVG [
+
 	<script: 'self new example06AnimatedSVG open'>
 	| monsterPath monster c |
 	monsterPath := 'M256,200.348c-30.736,0-55.652,24.917-55.652,55.652s24.917,55.652,55.652,55.652s55.652-24.917,55.652-55.652
@@ -377,7 +378,8 @@ RSSVGAnimationExamples >> example06AnimatedSVG [
 	c newAnimation repeat
 		duration: 0.1 seconds;
 		when: RSAnimationLoopEvent
-			do: [ :evt | monster rotateByDegrees: 5 ].
+		do: [ :evt | monster rotateByDegrees: 5 ]
+		for: self.
 	c @ RSCanvasController.
 	^ c
 ]

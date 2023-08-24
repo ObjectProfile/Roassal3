@@ -301,8 +301,7 @@ RSRNode >> nodesWithPoint: aPoint list: aCollection [
 	(self rectangle containsPoint: aPoint)
 		ifFalse: [ ^ self ].
 	self isLeaf ifTrue:[
-		(self contents includesPoint: aPoint)
-			ifTrue: [ aCollection add: self contents ]
+		self contents addShapesIn: aCollection position: aPoint
 	] ifFalse: [
 		self childrenDo: [ :child | child nodesWithPoint: aPoint list: aCollection ]
 	]

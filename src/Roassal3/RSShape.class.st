@@ -88,7 +88,7 @@ c @ RSCanvasController
 	^ r
 ]
 
-{ #category : #adding }
+{ #category : #visitor }
 RSShape >> accept: aVisitor [
 	self subclassResponsibility
 ]
@@ -206,7 +206,7 @@ RSShape >> canvas [
 		ifFalse: [ parent ]
 ]
 
-{ #category : #accessing }
+{ #category : #composite }
 RSShape >> children [
 	"only RSComposite can use children"
 	^ nil
@@ -238,16 +238,24 @@ c
 	paint := Color colorFrom: aColor
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
 	| groupOfPoints |
 	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
 		collect: [ :s | aMatrix transform: (s value: rect) ].
+	^ Rectangle encompassing: groupOfPoints
+]
+
+{ #category : #'accessing - computed' }
+RSShape >> computeInverseEncompassingRectangleFor: rect matrix: aMatrix [
+	| groupOfPoints |
+	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
+		collect: [ :s | aMatrix inverseTransform: (s value: rect) ].
 	^ Rectangle encompassing: groupOfPoints
 ]
 
@@ -337,7 +345,7 @@ RSShape >> fill: aColor [
 	self color: (aColor isNumber ifTrue: [ Color r: aColor g: aColor b: aColor range: 255 ])
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSShape >> globalEncompassingRectangle [
 	^ self encompassingRectangle
 ]
@@ -557,7 +565,7 @@ RSShape >> resetBBox [
 		ifFalse: [ encompassingRectangle := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : #composite }
 RSShape >> resetChildren [
 ]
 

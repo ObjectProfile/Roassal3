@@ -236,13 +236,15 @@ RSComposite >> addShape: aShape before: otherShape [
 
 { #category : #adding }
 RSComposite >> addShapesIn: aCollection position: position [
-	| pos |
+	| pos result includesPoint |
+	includesPoint := self includesPoint: position.
+	self clipChildren ifTrue: [ 
+		includesPoint ifFalse: [ ^ self ].
+		 ].
 	pos := self matrix rsInverseTransform: position.
-	self shapes reverseDo: [ :s |
-		s addShapesIn: aCollection position: pos.
-		].
-	super addShapesIn: aCollection position: position
-
+	result := self shapeCollection shapesAtPoint: pos.
+	aCollection addAll: result.
+	includesPoint ifTrue: [ aCollection add: self ]
 ]
 
 { #category : #public }
@@ -282,7 +284,7 @@ RSComposite >> camera [
 	^ parent camera
 ]
 
-{ #category : #accessing }
+{ #category : #composite }
 RSComposite >> children [
 	^ children
 ]
@@ -352,7 +354,7 @@ RSComposite >> isComposite [
 ]
 
 { #category : #accessing }
-RSComposite >> padding: anObject [
+RSComposite >> padding: aMargin [
 	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
 The argument, anObject can be a number, a point or Margin.
 
@@ -383,18 +385,15 @@ c
 ```
 	"
 
-	| margin rect center temp |
-	temp := children
-		ifNil: [ RSGroup new: 0 ]
-		ifNotNil: [children].
-	margin := anObject asMargin.
-	rect := temp encompassingRectangle.
+	| margin rect center |
+	margin := aMargin asMargin.
+	rect := children encompassingRectangle.
 	rect := margin expandRectangle: rect.
 	self extent: rect extent.
 
 	(center := rect floatCenter) = (0@0) ifTrue: [ ^ self ].
 	center := center negated.
-	temp do: [ :s | s basicTranslateBy: center ]
+	children do: [ :s | s basicTranslateBy: center ]
 ]
 
 { #category : #private }
@@ -453,9 +452,9 @@ RSComposite >> removeShape: shape [
 	shape announce: evt
 ]
 
-{ #category : #public }
+{ #category : #composite }
 RSComposite >> resetChildren [
-	children := nil
+	children := RSGroup new
 ]
 
 { #category : #path }
@@ -479,6 +478,7 @@ RSComposite >> sessionChanged [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |
+	"used for fixed shapes"
 	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithAction: eventClass forPosition: pos.
@@ -490,6 +490,7 @@ RSComposite >> shapeWithAction: eventClass forPosition: position [
 { #category : #'accessing - computed' }
 RSComposite >> shapeWithActionForPosition: position [
 	| res pos |
+	"used in fixed shapes"
 	pos := self matrix rsInverseTransform: position.
 	self shapes reverseDo: [ :s |
 		res := s shapeWithActionForPosition: pos.

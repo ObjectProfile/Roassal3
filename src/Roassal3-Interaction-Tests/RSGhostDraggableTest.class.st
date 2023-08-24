@@ -47,7 +47,7 @@ RSGhostDraggableTest >> testComposite [
 	shape announce: RSMouseDragStart new.
 	self assert: (shape propertyAt: #ghost) notNil.
 	self assert: (shape propertyAt: #ghost) class equals: RSComposite.
-	self assert: (shape propertyAt: #ghost) privateShapes isNil.
+	self assert: (shape propertyAt: #ghost) privateShapes isEmpty.
 	shape announce: RSMouseDragEnd new.
 	self assert: (shape propertyAt: #ghost) isNil
 ]

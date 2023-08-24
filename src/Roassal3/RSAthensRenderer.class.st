@@ -611,7 +611,6 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	athensCanvas setAA: aRSCanvas antialiasing.
 
 	aRSCanvas camera accept: self.
-	"aRSCanvas shapes accept: self."
 	(aRSCanvas shapeCollection shapesAtRectangle: canvasRect) accept: self.
 
 	"We display the elements that are _NOT_ subject to the camera"
@@ -623,9 +622,19 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 
 { #category : #'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
-	| draw |
+	| draw visibleChildren rectangle |
 	shape hasChildren ifFalse: [ ^ self ].
-	draw := [ shape children accept: self ].
+	rectangle := shape computeInverseEncompassingRectangleFor: canvasRect matrix: originMatrix.
+	
+	"self flag: 'TODO: consider rotration on composites'."
+	shape clipChildren 
+		ifTrue: [ rectangle := 
+			(rectangle origin max: shape baseRectangle origin) 
+				corner: (rectangle corner min: shape baseRectangle corner) ].
+	visibleChildren := shape shapeCollection shapesAtRectangle: rectangle.
+
+	draw := [ visibleChildren accept: self ].
+	
 	shape clipChildren
 		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
 		ifFalse: [ draw value ]

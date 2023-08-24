@@ -62,7 +62,7 @@ c open
 		  as: RSGroup
 ]
 
-{ #category : #visiting }
+{ #category : #visitor }
 RSBoundingShape >> accept: visitor [
 	visitor visitBoundingShape: self
 ]
@@ -115,7 +115,7 @@ RSBoundingShape >> basicTranslateBy: delta [
 	self updateLinesON
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSBoundingShape >> computeEncompassingRectangle [
 	^ self computeEncompassingRectangleFor: self baseRectangle
 ]
@@ -191,7 +191,7 @@ RSBoundingShape >> geometry [
 		corner: rect corner
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSBoundingShape >> globalEncompassingRectangle [
 	^ self
 		computeEncompassingRectangleFor: self baseRectangle

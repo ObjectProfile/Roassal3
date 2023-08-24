@@ -77,7 +77,7 @@ RSAbstractLine class >> newFrom: aShape to: anotherShape [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : #visitor }
 RSAbstractLine >> accept: visitor [
 	visitor visitLine: self
 ]
@@ -146,7 +146,7 @@ RSAbstractLine >> colorFromString: aString [
 	^ self color. "Default case, when it isn't found the color in the list"
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 RSAbstractLine >> computeEncompassingRectangle [
 	| cp |
 	cp := self controlPoints.
