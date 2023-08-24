@@ -12,6 +12,14 @@ Class {
 }
 
 { #category : #'instance creation' }
+RSMouseDragging class >> newFromBlEvent: aBlEvent canvas: roassalCanvas [
+	| instance |
+	instance := super newFromBlEvent: aBlEvent canvas: roassalCanvas.
+	instance step: aBlEvent delta.
+	^ instance
+]
+
+{ #category : #'instance creation' }
 RSMouseDragging class >> step: aStepAsPoint [
 	^ self new step: aStepAsPoint
 ]

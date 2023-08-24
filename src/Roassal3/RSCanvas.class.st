@@ -35,8 +35,7 @@ Class {
 		'animations',
 		'extent',
 		'color',
-		'host',
-		'shapeCollection'
+		'host'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
@@ -116,12 +115,6 @@ RSCanvas >> addAnimation: anAnimation [
 	anAnimation canvas: self.
 	anAnimation start.
 	self signalUpdate
-]
-
-{ #category : #'adding - removing shapes' }
-RSCanvas >> addBasicShape: aShape [
-	shapes add: aShape.
-	"shapeCollection add: aShape"
 ]
 
 { #category : #'adding - removing shapes' }
@@ -296,11 +289,6 @@ RSCanvas >> defaultExtent [
 	^ 500@500
 ]
 
-{ #category : #initialization }
-RSCanvas >> defaultShapeCollection [
-	^ RSSequenceableCollection new
-]
-
 { #category : #antialiasing }
 RSCanvas >> disableAntialiasing [
 	self hasAntialiasing: false
@@ -402,6 +390,11 @@ RSCanvas >> initialize [
 ]
 
 { #category : #accessing }
+RSCanvas >> lastMousePosition [
+	^ host lastMousePosition
+]
+
+{ #category : #accessing }
 RSCanvas >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
@@ -415,6 +408,26 @@ RSCanvas >> morph: aMorph [
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
 
 	host morph: aMorph
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newBox [
+	^ self add: RSBox new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newLabel [
+	^ self add: RSLabel new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newLine [
+	^ self add: RSLine new
+]
+
+{ #category : #'adding - nodes edges' }
+RSCanvas >> newPolygon [
+	^ self add: RSPolygon new
 ]
 
 { #category : #actions }
@@ -557,7 +570,7 @@ RSCanvas >> privateShapes: aCollection [
 	shapes := aCollection
 ]
 
-{ #category : #'shapes ordering' }
+{ #category : #'shapes - ordering' }
 RSCanvas >> pushBack: aShape [
 	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
 
@@ -581,7 +594,7 @@ c.
 		addFirst: aShape
 ]
 
-{ #category : #'shapes ordering' }
+{ #category : #'shapes - ordering' }
 RSCanvas >> pushFront: aShape [
 	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
 
@@ -613,15 +626,18 @@ RSCanvas >> removeFixedShape: aShape [
 
 { #category : #'adding - removing shapes' }
 RSCanvas >> removeShape: shape [
-	| evt index |
-	index := shapes indexOf: shape.
-	index = 0
-		ifTrue: [ index := fixedShapes indexOf: shape.
-			index = 0 ifFalse: [ fixedShapes remove: shape ] ]
-		ifFalse: [ shapes removeAt: index ].
-
+	| evt collection |
+	collection := shape isFixed
+		ifTrue: [ fixedShapes ]
+		ifFalse: [ shapes ].
+	shape isFixed
+		ifFalse: [ self shapeCollection remove: shape ].
+	collection remove: shape.
 	shape parent: nil.
-	evt := RSShapeRemovedEvent new shape: shape.
+	evt := RSShapeRemovedEvent new
+		       shape: shape;
+		       canvas: self;
+		       yourself.
 	self announce: evt.
 	shape announce: evt
 ]
@@ -652,33 +668,44 @@ RSCanvas >> shapeCollection: anRSShapeCollection [
 RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| block |
+	| block result |
 	block := [ :list :pos|
 		list reverseDo: [ :s | | shape |
 			shape := s shapeWithAction: eventClass forPosition: pos.
 			shape ifNotNil: [ ^ shape ] ] ].
 	block value: fixedShapes value: position.
-	block value: shapes value: (self camera fromPixelToSpace: position).
+	
+	result := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
+	result ifNil: [ ^ self ].
+	(result announcer handleEventClass: eventClass)
+		ifTrue: [ ^ result ].
+	"block value: shapes value: (self camera fromPixelToSpace: position)."
 	^ self
+]
+
+{ #category : #'accessing - shapes' }
+RSCanvas >> shapeWithActionForPosition: aPositionInSpace [
+	| result |
+	result := self shapesWithActionForPosition: aPositionInSpace.
+	result ifEmpty: [ ^ nil ].
+	^ result first
 ]
 
 { #category : #'accessing - shapes' }
 RSCanvas >> shapeWithActionForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| block |
+	| block aShape |
 	block := [ :list :pos |
 		list reverseDo: [ :s | | shape |
 			shape := s shapeWithActionForPosition: pos.
 			shape ifNotNil: [^ shape ] ] ].
 	block value: fixedShapes value: position.
-	"| shape |
-	shape := self quadTree shapeWithActionForPosition: (self camera fromPixelToSpace: position).
-	"
-	block value: shapes value: (self camera fromPixelToSpace: position).
-	"shape ifNil: [ shape := self ].
-	^ shape"
-	^ self
+
+	aShape := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
+	aShape ifNil: [ aShape := self ].
+	^ aShape
+	
 ]
 
 { #category : #accessing }
@@ -697,10 +724,18 @@ The expression `c shapes` returns a `RSGroup` containing both `s1` and `s2`
 	^ shapes copy
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : #'looking up shapes' }
 RSCanvas >> shapesFromModels: objects [
 	"Return shapes that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	^ self nodes shapesFromModels: objects
+]
+
+{ #category : #'accessing - shapes' }
+RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
+	| result |
+	result := self shapeCollection shapesAtPoint: aPositionInSpace.
+	result := result select: [ :s | s hasEventCallback ].
+	^ result
 ]
 
 { #category : #testing }

@@ -1,16 +1,10 @@
 Class {
 	#name : #RSViolinPlotShape,
-	#superclass : #RSObject,
+	#superclass : #RSAbstractBandPlotShape,
 	#instVars : [
 		'boxPlotShape',
 		'kernelDensity',
-		'densityArea',
-		'color',
-		'xScale',
-		'yScale',
-		'bandOffset',
-		'bandWidth',
-		'model'
+		'densityArea'
 	],
 	#category : #'Roassal3-Chart-Plots'
 }
@@ -23,37 +17,53 @@ RSViolinPlotShape class >> data: collectionOfData1D [
 	^ violinShape
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
+RSViolinPlotShape >> area [
+	^ densityArea
+]
+
+{ #category : #band }
 RSViolinPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
+	super bandOffset: aNumber.
 	boxPlotShape bandOffset: bandOffset.
 ]
 
-{ #category : #accessing }
-RSViolinPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber.
-	boxPlotShape bandWidth: bandWidth*0.1.
-	boxPlotShape outlierSize: bandWidth*0.05.
+{ #category : #scales }
+RSViolinPlotShape >> bandScale: aNSScale [
+	super bandScale: aNSScale.
+	boxPlotShape bandScale: aNSScale.
 ]
 
-{ #category : #accessing }
+{ #category : #band }
+RSViolinPlotShape >> bandWidth: aNumber [
+	super bandWidth: aNumber.
+	boxPlotShape bandWidth: bandWidth*0.1.
+	boxPlotShape outlierSize: (bandWidth*0.05) abs.
+]
+
+{ #category : #border }
 RSViolinPlotShape >> border [
 	^ densityArea border.
 ]
 
-{ #category : #styling }
+{ #category : #border }
 RSViolinPlotShape >> borderColor: aColor [
 	^ self border color: aColor.
 ]
 
-{ #category : #initialization }
+{ #category : #band }
 RSViolinPlotShape >> color [
-	^ color
+	^ color ifNil: [ densityArea color ].
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> color: aColor [
-	color := aColor
+{ #category : #shapes }
+RSViolinPlotShape >> createShapesAndLines [
+	| shapes |
+	densityArea := self densityArea.
+	boxPlotShape color: Color white.
+	shapes := OrderedCollection withAll: { densityArea. }.
+	shapes addAll: boxPlotShape shapesToRender.
+	^ shapes.
 ]
 
 { #category : #accessing }
@@ -67,6 +77,12 @@ RSViolinPlotShape >> data: dataset [
 	aCollection := dataset rsValue: model.
 	kernelDensity data: aCollection.
 	boxPlotShape data: aCollection.
+]
+
+{ #category : #scales }
+RSViolinPlotShape >> dataScale: aNSScale [
+	super dataScale: aNSScale.
+	boxPlotShape dataScale: aNSScale.
 ]
 
 { #category : #accessing }
@@ -113,15 +129,16 @@ RSViolinPlotShape >> densityArea [
 	
 	densityAreaPoints := densityCurve copy.
 	densityAreaPoints := densityAreaPoints collect: [ :point |
-		((bandWidth/2 * point x)+bandOffset)@(yScale scale: point y)
+		((bandWidth/2 * point x)+bandOffset)@(dataScale scale: point y)
 	 ].
 	densityCurve reversed do: [ :point | 
-		densityAreaPoints add: (bandOffset-(bandWidth/2 * point x))@(yScale scale: point y)
+		densityAreaPoints add: (bandOffset-(bandWidth/2 * point x))@(dataScale scale: point y)
 		"((point x * -1) @ point y) "
 	].
 	
 	
 	densityArea points: densityAreaPoints.
+	color := color ifNil: [ densityArea color ].
 	densityArea color: color.
 	^ densityArea
 ]
@@ -132,6 +149,8 @@ RSViolinPlotShape >> initialize [
 	kernelDensity := self defaultKernelDensity.
 	boxPlotShape := self defaultBoxPlotShape.
 	densityArea := self defaultDensityArea.
+	horizontal := false.
+	shouldShowBand := false.
 ]
 
 { #category : #defaults }
@@ -139,28 +158,34 @@ RSViolinPlotShape >> kernelBandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> maxYValue [
+{ #category : #rendering }
+RSViolinPlotShape >> maxDataValue [
 	| maxYValueOfCurve |
 	maxYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) max.
-	^ boxPlotShape maxYValue max: maxYValueOfCurve.
+	^ boxPlotShape maxDataValue max: maxYValueOfCurve.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> minYValue [
+{ #category : #accessing }
+RSViolinPlotShape >> medianLine [
+	^ boxPlotShape medianLine
+]
+
+{ #category : #shapes }
+RSViolinPlotShape >> medianLine: aRSLineModel [
+	boxPlotShape medianLine: aRSLineModel copy
+]
+
+{ #category : #rendering }
+RSViolinPlotShape >> minDataValue [
 	| minYValueOfCurve |
 	minYValueOfCurve := (kernelDensity densityCurve collect: [ :point | point x ]) min.
-	^ boxPlotShape minYValue min: minYValueOfCurve.
+	^ boxPlotShape minDataValue min: minYValueOfCurve.
 ]
 
-{ #category : #initialization }
-RSViolinPlotShape >> model [
-	^ model
-]
-
-{ #category : #initialization }
+{ #category : #'accessing - attributes' }
 RSViolinPlotShape >> model: aModel [
-	model := aModel
+	super model: aModel.
+	boxPlotShape model: aModel.
 ]
 
 { #category : #initialization }
@@ -168,43 +193,22 @@ RSViolinPlotShape >> outlierSize: aDimensionInPixels [
 	boxPlotShape outlierSize: aDimensionInPixels.
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RSViolinPlotShape >> renderIn: canvas [
-	| shapes |
-	shapes := self shapes.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ canvas addAll: aShape ]
-		ifFalse: [ canvas add: aShape ].
-	].
-	boxPlotShape color: Color white.
-	boxPlotShape renderIn: canvas.
+	self addChildrenToComposite.
+	canvas add: self.
 	^ canvas.
 ]
 
 { #category : #initialization }
 RSViolinPlotShape >> scalePoint: aPoint [
-	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+	^ (bandScale scale: aPoint x) @ (dataScale scale: aPoint y)
 ]
 
 { #category : #initialization }
 RSViolinPlotShape >> scales: collectionOfNSScales [
-	self xScale: collectionOfNSScales first.
-	self yScale: collectionOfNSScales second.
-	boxPlotShape scales: collectionOfNSScales.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> shapes [
-	densityArea := self densityArea.
-	^ { densityArea. }.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> xScale: aNSScale [
-	xScale := aNSScale.
-]
-
-{ #category : #initialization }
-RSViolinPlotShape >> yScale: aNSScale [
-	yScale := aNSScale
+	self bandScale: collectionOfNSScales first.
+	self dataScale: collectionOfNSScales second.
+	boxPlotShape bandScale: collectionOfNSScales first.
+	boxPlotShape dataScale: collectionOfNSScales second.
 ]

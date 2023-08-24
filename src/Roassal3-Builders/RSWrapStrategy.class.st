@@ -42,37 +42,35 @@ RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 	[ i <= tokens size ] whileTrue: [
 		| token |
 		token := tokens at: i.
-		label := aRSMultilineLabelBuilder
-			singleLabelFor: currentLine, token.
-		label width > width
-			ifTrue: [
-				lastLabel ifNil: [
-					| k ok |
-					token := label text.
-					k := token size - 1.
-					ok := false.
-					[ k > 1 and: [ ok not ] ] whileTrue: [
-						lastLabel := aRSMultilineLabelBuilder
-							singleLabelFor: (token copyFrom: 1 to: k).
-						lastLabel width < width ifTrue: [
-							ok := true.
-							] ifFalse: [ k := k - 1 ] .
-					].
-					newLines add: lastLabel.
-					tokens at: i put: (token copyFrom: k+1 to: token size).
-				 ] ifNotNil: [
-					newLines add: lastLabel.
-					currentLine := ''.
-					lastLabel := nil
-				 ].
-			] ifFalse: [
-				currentLine := label text.
-				lastLabel := label.
-				i := i + 1 ]
+		label := aRSMultilineLabelBuilder singleLabelFor: currentLine, token.
+		label width > width ifTrue: [
+			lastLabel ifNil: [
+				| k ok |
+				token := label text.
+				k := token size - 1.
+				ok := false.
+				[ k > 1 and: [ ok not ] ] whileTrue: [
+					lastLabel := aRSMultilineLabelBuilder
+						singleLabelFor: (token copyFrom: 1 to: k).
+					lastLabel  width < width ifTrue: [
+						ok := true.
+						] ifFalse: [ k := k - 1 ] .
+				].
+				newLines add: lastLabel.
+				lastLabel := nil.
+				tokens at: i put: (token copyFrom: k+1 to: token size).
+			] ifNotNil: [
+				newLines add: lastLabel.
+				currentLine := ''.
+				lastLabel := nil
+			].
+		] ifFalse: [
+			currentLine := label text.
+			lastLabel := label.
+			i := i + 1 ]
 	].
 	currentLine ifNotEmpty: [
-		newLines add: (aRSMultilineLabelBuilder
-			singleLabelFor: currentLine). ].
+		newLines add: (aRSMultilineLabelBuilder singleLabelFor: currentLine) ].
 
 	^ newLines
 ]

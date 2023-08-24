@@ -138,9 +138,19 @@ RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
 ]
 
 { #category : #accessing }
+RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed: aBoolean [
+	shouldBeHorizontallyReversed := aBoolean
+]
+
+{ #category : #accessing }
 RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed [
 	"Return if the layout is vertically reversed"
 	^ shouldBeVerticallyReversed
+]
+
+{ #category : #accessing }
+RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed: aBoolean [
+	shouldBeVerticallyReversed := aBoolean
 ]
 
 { #category : #accessing }

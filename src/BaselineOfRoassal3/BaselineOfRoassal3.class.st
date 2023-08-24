@@ -120,6 +120,12 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
+	spec 
+		baseline: 'DataFrame'
+		with: [ spec repository: 'github://PolyMathOrg/DataFrame/src' ].
+	spec 
+   		baseline: 'AIDatasets' 
+   		with: [ spec repository: 'github://pharo-ai/datasets' ].
 ]
 
 { #category : #'API-packages' }
@@ -166,7 +172,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 	spec package: #'Roassal3-Gtk'.
 	spec package: #'Roassal3-Spec-Gtk'.
 
-
+	spec package: #'Roassal3-Chart-DataFrame' with: [ spec requires: #('DataFrame' 'AIDatasets') ].
 
 
 
@@ -191,7 +197,8 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Full' with: #('Mini'), self extraPackagesNames;
 		group: 'GraphViz' with: #('Full' 'Roassal3-GraphViz');
 		group: 'BlocFull' with: #('Full' 'Roassal3-Bloc');
-		group: 'default' with: #('Mini')
+		group: 'default' with: #('Mini');
+		group: 'Full-DataFrame' with: #('Full' 'Roassal3-Chart-DataFrame')
 ]
 
 { #category : #'API-packages' }

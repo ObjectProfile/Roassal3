@@ -89,6 +89,15 @@ RSTAnnounceable >> hasInteraction: anInteractionClass [
 	^ subscriptions handleSubscriberClass: anInteractionClass
 ]
 
+{ #category : #public }
+RSTAnnounceable >> leftClick [
+
+	self announce: (RSMouseLeftClick new
+		canvas: self canvas;
+		shape: self;
+		yourself)
+]
+
 { #category : #announcer }
 RSTAnnounceable >> privateAnnouncer [
 	^ self explicitRequirement
@@ -99,6 +108,16 @@ RSTAnnounceable >> removeInteractionIfPresent: anInteractionClass [
 	"Remove all the callbacks associated to the interaction."
 	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
+]
+
+{ #category : #public }
+RSTAnnounceable >> shiftLeftClick [
+
+	self announce: (RSMouseLeftClick new
+			 canvas: self canvas;
+			 shiftKeyPressed: true;
+			 shape: self;
+			 yourself)
 ]
 
 { #category : #announcer }

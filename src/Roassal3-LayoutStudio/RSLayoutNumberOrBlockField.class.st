@@ -13,10 +13,6 @@ Class {
 { #category : #rendering }
 RSLayoutNumberOrBlockField >> createWidget [
 	widget := layoutStudio newMorph.
-	widget morph: (BorderedMorph new
-		borderColor: Color red;
-		borderWidth: 1;
-		yourself).
 	self updateTextField: self dropListItems first.
 	^ widget
 	

@@ -14,15 +14,13 @@ Class {
 
 { #category : #layout }
 RSLayoutStudio class >> defaultLayout [
-	^ SpBoxLayout newVertical
-		add: (SpPanedLayout newLeftToRight
-			positionOfSlider: 250;
-			add: (SpBoxLayout newVertical
-				add: #menu expand: false;
-				add: #controls;
-				yourself);
-			add: #roassalCanvas;
+	^ SpPanedLayout newLeftToRight
+		positionOfSlider: 280;
+		add: (SpBoxLayout newVertical
+			add: #menu expand: false;
+			add: #controls;
 			yourself);
+		add: #roassalCanvas;
 		yourself
 ]
 
@@ -74,6 +72,20 @@ RSLayoutStudio >> connectPresenters [
 	graphTextEditor text: self defaultGraphText.
 	self edit: initialLayout -> initialLayout layoutDefinition.
 	roassalCanvas script: [ :canvas | self renderIn: canvas ]
+]
+
+{ #category : #public }
+RSLayoutStudio >> createBoxLayout [
+	^ SpBoxLayout newVertical
+		add: (SpBoxLayout newVertical
+			add: 'Graph editor' expand: false;
+			add: graphTextEditor withConstraints: [ :c |
+				c expand: false; height: 200];
+			yourself
+			) expand: false;
+		spacing: 10;
+		add: self attributes;
+		yourself
 ]
 
 { #category : #defaults }
@@ -134,8 +146,9 @@ RSLayoutStudio >> mainMenu [
 					name: 'Browse' ].
 			group addItem: [ :item |
 				item
-					icon: (self iconNamed: #glamorousSave);
+					icon: (self iconNamed: #scriptManager);
 					action: [ self generateCodeAndOpenIt ];
+					help: 'Generates code with the current layout';
 					name: 'Generate' ] ];
 		yourself
 ]

@@ -1,12 +1,12 @@
 "
-TSEasing backIn
+RSEasingInterpolator backIn
 Anticipatory easing, like a dancer bending his knees before jumping off the floor. The degree of overshoot is configurable; if not specified, it defaults to 1.70158.
 
-TSEasing backOut 
+RSEasingInterpolator backOut 
 Reverse anticipatory easing; equivalent to 1 - (backIn value: 1 - t).
 
-TSEasing back 
-TSEasing backInOut
+RSEasingInterpolator back 
+RSEasingInterpolator backInOut
 Symmetric anticipatory easing; scales backIn for t in [0, 0.5] and backOut for t in [0.5, 1].
 "
 Class {

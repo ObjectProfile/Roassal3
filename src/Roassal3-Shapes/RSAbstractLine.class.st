@@ -69,6 +69,14 @@ RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
+{ #category : #'instance creation' }
+RSAbstractLine class >> newFrom: aShape to: anotherShape [
+	^ self new
+		from: aShape;
+		to: anotherShape;
+		yourself
+]
+
 { #category : #adding }
 RSAbstractLine >> accept: visitor [
 	visitor visitLine: self
@@ -311,6 +319,12 @@ RSAbstractLine >> notifyExtentChanged [
 { #category : #accessing }
 RSAbstractLine >> position [
 	^ self encompassingRectangle floatCenter
+]
+
+{ #category : #copying }
+RSAbstractLine >> postCopy [
+	super postCopy.
+	self border: self border copy
 ]
 
 { #category : #'accessing - markers' }

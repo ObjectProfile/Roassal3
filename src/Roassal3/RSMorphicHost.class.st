@@ -18,6 +18,11 @@ RSMorphicHost >> createMorph [
 ]
 
 { #category : #accessing }
+RSMorphicHost >> lastMousePosition [
+	^ morph lastMousePosition - morph bounds origin
+]
+
+{ #category : #accessing }
 RSMorphicHost >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 

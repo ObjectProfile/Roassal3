@@ -126,7 +126,7 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
 
 { #category : #tests }
 RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
-	| boxPlot data chart box chartBox categories window |
+	| boxPlot data chart chartBox categories window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
 			 { 5. 6. 7. 5. 10. }  . "B"
 			 { 12. 12. 13. 14. 15. 24. } "C"  }.
@@ -137,9 +137,7 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 	chart := boxPlot chart.
 	chartBox := chart spine encompassingRectangle.
 	boxPlot boxShapes do: [ :eachBoxShape |
-		box := eachBoxShape box.
-		self assert: box class equals: RSPolygon.
-		self assert: (chartBox containsRect: box encompassingRectangle).
+		self assert: (chartBox containsRect: eachBoxShape encompassingRectangle).
 	].
 	window delete.
 ]
@@ -288,6 +286,67 @@ RSBoxPlotTest >> testNumberOfBoxes [
 	boxes := boxPlot boxShapes.
 	self assert: boxPlot numberOfBoxes equals: 3.
 	self assert: boxPlot boxShapes size equals: boxPlot numberOfBoxes. 
+	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testPositionsCustom [
+	| boxPlot data window |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot positions: { 1. 3. 7. }.
+	window := boxPlot open.
+	self assert: boxPlot positions equals: { 1. 3. 7. }.
+	self assert: boxPlot xValues equals: { 1. 3. 7. }.
+	self deny: boxPlot yValues equals: { 1. 2. 7. }.
+	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testPositionsCustomNotSorted [
+	| boxPlot data window |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot positions: { 1. 7. 3. }.
+	window := boxPlot open.
+	self assert: boxPlot positions equals: { 1. 7. 3. }.
+	self assert: boxPlot xValues equals: { 1. 7. 3. }.
+	boxPlot boxShapes do: [ :bs | 
+		self assert: (boxPlot chart spine encompassingRectangle containsRect: bs encompassingRectangle) ].
+	self assert: boxPlot xScale domain equals: (OrderedCollection withAll: { 1. 3. 7. }).
+	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testPositionsDefault [
+	| boxPlot data window |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	window := boxPlot open.
+	self assert: boxPlot positions equals: { 1. 2. 3. }.
+	self assert: boxPlot xValues equals: { 1. 2. 3. }.
+	self deny: boxPlot yValues equals: { 1. 2. 3. }.
+	window delete.
+]
+
+{ #category : #tests }
+RSBoxPlotTest >> testPositionsDefaultHorizontal [
+	| boxPlot data window |
+	data := { { 1. 2. 3. 4. 5. } .
+			 { 5. 6. 7. 5. 10. }  .
+			 { 12. 12. 13. 14. 15. 24. }  }.
+	boxPlot := RSBoxPlot data: data.
+	boxPlot horizontal.
+	window := boxPlot open.
+	self assert: boxPlot positions equals: { 1. 2. 3. }.
+	self assert: boxPlot yValues equals: { 1. 2. 3. }.
+	self deny: boxPlot xValues equals: { 1. 2. 3. }.
 	window delete.
 ]
 

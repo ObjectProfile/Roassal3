@@ -3,6 +3,9 @@ My users can have edges and nodes useful to build graphs with roassal
 "
 Trait {
 	#name : #RSTContainer,
+	#instVars : [
+		'shapeCollection'
+	],
 	#category : #'Roassal3-Core'
 }
 
@@ -34,6 +37,12 @@ RSTContainer >> addAllShapes: aCollection [
 	aCollection do: [ :shape | self addShape: shape ]
 ]
 
+{ #category : #adding }
+RSTContainer >> addBasicShape: aShape [
+	self privateShapes add: aShape.
+	self shapeCollection add: aShape
+]
+
 { #category : #'adding nodes edges' }
 RSTContainer >> addEdge: aShape [
 	self edges add: aShape.
@@ -61,7 +70,7 @@ RSTContainer >> addShape: aShape [
 RSTContainer >> allChildren [
 	| allChildren index |
 	index := 1.
-	allChildren := OrderedCollection withAll: self shapes.
+	allChildren := RSGroup withAll: self shapes.
 	[ index <= allChildren size ] whileTrue: [
 		allChildren addAll: ((allChildren at: index) children ifNil: [#()]).
 		index := index + 1 ].
@@ -122,6 +131,11 @@ RSTContainer >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	(someObjects includes: self model) ifTrue: [ result add: self ].
 	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
+]
+
+{ #category : #defaults }
+RSTContainer >> defaultShapeCollection [
+	^ RSSequenceableCollection new
 ]
 
 { #category : #accessing }
@@ -220,6 +234,21 @@ RSTContainer >> removeNode: aNode [
 	self nodes remove: aNode ifAbsent: [  ]
 ]
 
+{ #category : #removing }
+RSTContainer >> removeShape: aShape [
+	^ self explicitRequirement
+]
+
+{ #category : #accessing }
+RSTContainer >> shapeCollection [
+	^ shapeCollection
+]
+
+{ #category : #accessing }
+RSTContainer >> shapeCollection: anRSShapeCollection [
+	shapeCollection := anRSShapeCollection
+]
+
 { #category : #'looking up shapes' }
 RSTContainer >> shapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
@@ -240,6 +269,22 @@ RSTContainer >> shapesFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapesFromModel: anObject
+]
+
+{ #category : #private }
+RSTContainer >> updateInShapeCollection: aShape [
+	"this is going to update the shape collection cache, spetially in RSRTree"
+	self shapeCollection updateShape: aShape
+]
+
+{ #category : #'shape - collection' }
+RSTContainer >> useList [
+	self shapeCollection: RSSequenceableCollection new.
+]
+
+{ #category : #'shape - collection' }
+RSTContainer >> useRTree [
+	self shapeCollection: RSRTreeShapeCollection new.
 ]
 
 { #category : #accessing }

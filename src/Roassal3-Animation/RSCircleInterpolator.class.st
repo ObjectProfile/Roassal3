@@ -1,12 +1,12 @@
 "
-TSEasing circleIn
+RSEasingInterpolator circleIn
 Circular easing.
 
-TSEasing circleOut
+RSEasingInterpolator circleOut
 Is Reverse circular easing; equivalent to 1 - interpolateIn: 1 - t.
 
-TSEasing circleInOut
-TSEasing circle
+RSEasingInterpolator circleInOut
+RSEasingInterpolator circle
 Symmetric circular easing; scales circleIn for t in {0. 0.5} and circleOut for t in {0.5, 1}.
 
 

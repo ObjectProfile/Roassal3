@@ -12,7 +12,8 @@ Class {
 		'semaphore',
 		'osmZoomLevel',
 		'ratio',
-		'futures'
+		'futures',
+		'cacheSize'
 	],
 	#category : #'Roassal3-OpenStreetMap'
 }
@@ -47,6 +48,17 @@ RSOSMShape >> accept: aVisitor [
 ]
 
 { #category : #accessing }
+RSOSMShape >> cacheSize [
+	^ cacheSize
+]
+
+{ #category : #accessing }
+RSOSMShape >> cacheSize: aNumber [
+	"a cache size for number of tiles"
+	cacheSize := aNumber
+]
+
+{ #category : #accessing }
 RSOSMShape >> computeEncompassingRectangle [
 	| canvas |
 	canvas := self canvas.
@@ -59,6 +71,11 @@ RSOSMShape >> computeOsmZoomLevel [
 	"The osm zoom level."
 
 	^ (((self pixelLength * self canvas camera scale) ln / 2 ln) rounded max: 0) min: 18
+]
+
+{ #category : #defaults }
+RSOSMShape >> defaultCacheSize [
+	^ 100
 ]
 
 { #category : #defaults }
@@ -135,7 +152,9 @@ RSOSMShape >> initialize [
 	tiles := Dictionary new.
 	futures := Dictionary new.
 	emptyTile := self defaultEmptyTile.
-	semaphore := Semaphore forMutualExclusion
+	semaphore := Semaphore forMutualExclusion.
+	self cacheSize: self defaultCacheSize.
+	
 ]
 
 { #category : #private }

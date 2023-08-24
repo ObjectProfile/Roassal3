@@ -1,12 +1,12 @@
 "
-TSEasing bounceIn
+RSEasingInterpolator bounceIn
 Bounce easing, like a rubber ball.
 
-TSEasing bounce
-TSEasing bounceOut
+RSEasingInterpolator bounce
+RSEasingInterpolator bounceOut
 Reverse bounce easing; equivalent to 1 - bounceIn(1 - t).
 
-TSEasing bounceInOut
+RSEasingInterpolator bounceInOut
 Symmetric bounce easing; scales bounceIn for t in [0, 0.5] and bounceOut for t in [0.5, 1].
 "
 Class {

@@ -429,3 +429,80 @@ RSChartExample >> example24SpineLine [
 	c padding: 10.
 	^ c
 ]
+
+{ #category : #examples }
+RSChartExample >> example25CustomBackground [
+	<script: 'self new example25CustomBackground open'>
+	| plot c scale color form paint |
+	plot := self example10BarPlot.
+	c := RSCanvas new.
+	scale := NSScale linear
+		domain: { 1. 25 };
+		range: { 10. 3 }.
+	color := (Color colorFrom: '#20325a') alpha: 0.2.
+	1 to: 25 do: [ :y |
+		1 to: 50 do: [ :x | | e |
+			e := RSEllipse new.
+			e position: x @ y * 10.
+			e size: (scale scale: y).
+			e color: color.
+			c add: e 
+		]
+	].
+	c zoomToFit.
+	form := c asForm.
+	paint := AthensCairoPatternSurfacePaint createForSurface: (AthensCairoSurface fromForm: form).
+	paint origin: (form extent / 2) negated.
+	plot spineDecoration masterShape paint: paint.
+	^ plot
+]
+
+{ #category : #examples }
+RSChartExample >> example26DensityPlot [
+	<script: 'self new example26DensityPlot open'>
+	| prod data paint densityPlot points linePlot plot |
+	prod := [:a | Array new: a value withAll: a key ].
+	data :=(prod value: 1.5->7), (prod value: 2.5->2), 
+		(prod value: 3.5->8), (prod value: 4.5->3), 
+		(prod value: 5.5->1), (prod value: 6.5->10).
+
+	paint := LinearGradientPaint fromArray: { 0-> '#050321'. 1-> '#435562'}.
+	paint start: 25@ 50; stop: 0@ -50.
+	densityPlot := RSDensityPlot data: data.
+	densityPlot masterShape paint: paint.
+		
+	densityPlot bandwidth: 0.5.
+	points := densityPlot curvePoints.
+	linePlot := RSLinePlot points: points.
+	linePlot color: Color red.
+	plot := densityPlot + linePlot.
+	plot container background: (Color colorFrom: '#050321').
+	(plot title: 'se multiplient' asUppercase) masterShape
+		bold;
+		fontFamily: 'Impact';
+		fontSize: 20.
+
+	(plot title: 'Les opportunités' asUppercase) masterShape
+		fontFamily: 'Avenir Next'.
+
+	plot styler: (RSChartStyler new
+		tickColor: Color white;
+		spineColor: Color white;
+		textColor: Color white).	
+
+	plot container newAnimation
+		repeat;
+		from: 0;
+		to: 1000;
+		onStepDo: [ :t |
+			linePlot line dashArray: { t. 1000 }.
+			 ];
+		when: RSAnimationStartEvent do: [:evt | 
+			linePlot line color: (linePlot line color = Color red
+				ifTrue: [Color green]
+				ifFalse: [Color red])
+			] for: plot.
+		
+	^ plot
+
+]

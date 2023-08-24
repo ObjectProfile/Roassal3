@@ -31,16 +31,6 @@ RSAbstractBarPlot class >> isAbstract [
 ]
 
 { #category : #accessing }
-RSAbstractBarPlot >> bandsOffset: aNumber [
-	self barOffset: aNumber.
-]
-
-{ #category : #accessing }
-RSAbstractBarPlot >> bandsWidth: barWidthInScaleRangeUnits [
-	self barSize: barWidthInScaleRangeUnits.
-]
-
-{ #category : #accessing }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
 ]
@@ -114,7 +104,7 @@ RSAbstractBarPlot >> initialize [
 	super initialize.
 	self
 		gapRatio: 0.1;
-		barOffset: 0
+		barOffset: 0.
 ]
 
 { #category : #testing }

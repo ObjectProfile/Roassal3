@@ -127,7 +127,14 @@ RSRTreeShapeCollection >> shapesAtPoint: aPoint [
 { #category : #'finding/searching' }
 RSRTreeShapeCollection >> shapesAtRectangle: aRectangle [
 	| res |
-	res := OrderedCollection new.
+	res := RSGroup new.
 	root nodesIntersetcsRectangle: aRectangle list: res.
 	^ res
+]
+
+{ #category : #'finding/searching' }
+RSRTreeShapeCollection >> updateShape: aShape [
+	self remove: aShape.
+	aShape encompassingRectangle: nil.
+	self add: aShape
 ]

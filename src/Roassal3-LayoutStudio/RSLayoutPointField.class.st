@@ -19,6 +19,6 @@ RSLayoutPointField >> layoutValue [
 RSLayoutPointField >> transform: aString [
 	| point |
 	point := super transform: aString.
-	self assert: point isPoint description: 'You should provide a string'.
+	self assert: point isPoint description: 'You should provide a point'.
 	^ point
 ]

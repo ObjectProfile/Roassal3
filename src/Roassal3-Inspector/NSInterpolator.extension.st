@@ -2,7 +2,7 @@ Extension { #name : #NSInterpolator }
 
 { #category : #'*Roassal3-Inspector' }
 NSInterpolator >> canvasForInspector [
-	| canvas theme boxes pos rect line cp label loc s |
+	| canvas theme boxes posScale rect line cp label loc s |
  	canvas := RSCanvas new.
 	theme := Smalltalk ui theme.
 	canvas color: theme backgroundColor.
@@ -15,14 +15,21 @@ NSInterpolator >> canvasForInspector [
 			color: (theme caretColor alpha: 0.2);
 			resetBBox;
 			yourself ] as: RSGroup.
+	
+	line := RSPolyline new border: (RSBorder new width: 4).
+	canvas addShape: line.
+	cp := OrderedCollection new.
 	rect := boxes encompassingRectangle.
-	pos := NSScale linear
-		domain: { 0@0. 1@1 };
-		range: { 0 @ rect height. rect width@ 0 }.
-	line := RSPolyline new
-		border: (RSBorder new
-			width: 4;
-			paint: ((LinearGradientPaint fromArray: {"sweetPeriod"
+	posScale := NSScale linear.
+	canvas newAnimation
+		duration: 5 seconds;
+		when: RSAnimationStartEvent do: [ :evt |
+			rect := boxes encompassingRectangle.
+			cp removeAll.
+			posScale
+				domain: { 0@0. 1@1 };
+				range: { rect bottomLeft. rect topRight}.
+			line border paint: ((LinearGradientPaint fromArray: {"sweetPeriod"
 					0->'3f51b1'.
 					0.13->'5a55ae'.
 					0.25->'7b5fac'.
@@ -35,15 +42,12 @@ NSInterpolator >> canvasForInspector [
 				})
 				start: rect bottomLeft;
 				stop: rect topRight;
-				yourself)).
-	canvas addShape: line.
-	cp := OrderedCollection new.
-	canvas newAnimation
-		duration: 5 seconds;
+				yourself)
+			] for: self;
 		onStepDo: [ :t |
 			cp add: t.
 			line controlPoints: (cp collect: [:value |
-				pos scale: value @ (self interpolate: value) ]).
+				posScale scale: value @ (self interpolate: value) ]).
 			canvas signalUpdate].
 	canvas addAll: boxes.
 	label := [ :text |

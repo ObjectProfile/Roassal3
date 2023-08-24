@@ -35,14 +35,19 @@ RSSequenceableCollection >> remove: oldObject ifAbsent: anExceptionBlock [
 { #category : #'finding/searching' }
 RSSequenceableCollection >> shapesAtPoint: position [
 	| result |
+	result := OrderedCollection new.
 	group reverseDo: [ :shape |
-		result := shape shapeWithActionForPosition: position.
-		result ifNotNil: [ ^ { result }  ].
-		 ].
-	^ {  }
+		shape addShapesIn: result position: position.
+	].
+	^ result
 ]
 
 { #category : #'finding/searching' }
 RSSequenceableCollection >> shapesAtRectangle: aRectangle [
 	^ group select: [ :each | each encompassingRectangle intersects: aRectangle ]
+]
+
+{ #category : #'finding/searching' }
+RSSequenceableCollection >> updateShape: aShape [
+	aShape encompassingRectangle: nil
 ]

@@ -167,6 +167,11 @@ RSDensityPlot >> createdShapes [
 ]
 
 { #category : #accessing }
+RSDensityPlot >> curvePoints [
+	^ curvePoints
+]
+
+{ #category : #accessing }
 RSDensityPlot >> data [
 	^ kernelDensity data.
 ]

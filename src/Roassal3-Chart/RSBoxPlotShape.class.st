@@ -30,20 +30,14 @@ boxPlotShape := RSBoxPlotShape data: data.
 "
 Class {
 	#name : #RSBoxPlotShape,
-	#superclass : #RSObject,
+	#superclass : #RSAbstractBandPlotShape,
 	#instVars : [
-		'bandWidth',
 		'statisticalMeasures',
 		'box',
 		'medianLine',
 		'outliers',
-		'color',
-		'xScale',
-		'yScale',
 		'graphCenter',
-		'bandOffset',
 		'outlier',
-		'shouldShowBand',
 		'upperWhisker',
 		'lowerWhisker',
 		'whisker',
@@ -71,16 +65,6 @@ RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> bandWidth: aNumber [
-	bandWidth := aNumber
-]
-
-{ #category : #accessing }
 RSBoxPlotShape >> box [
 	^ box
 ]
@@ -93,114 +77,6 @@ RSBoxPlotShape >> boxWidth [
 { #category : #accessing }
 RSBoxPlotShape >> center [
 	^ graphCenter
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color [
-	^ color
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> color: aColor [
-	color := aColor.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeBandRectangle [
-	^ RSPolygon new
-			points: { 
-			(graphCenter-(bandWidth/2)) @ 0. 
-			(graphCenter+(bandWidth/2)) @ 0.
-			(graphCenter+(bandWidth/2)) @ yScale range last. 
-			(graphCenter-(bandWidth/2)) @ yScale range last
-			};
-			color: Color blue translucent.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeBox [
-	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
-	quartiles := statisticalMeasures quartiles.
-	q025 := quartiles at: 1.
-	q075 := quartiles at: 3.
-	
-	boxPoints := { 
-		(graphCenter-(bandWidth/2)) @ (yScale scale: q025)."bottom left" 
-		(graphCenter+(bandWidth/2)) @ (yScale scale: q025)."bottom right"
-	} asOrderedCollection.
-	
-	notchWidth := bandWidth * notchWidthPercentage.
-	median := quartiles at: 2.
-	medianConfidenceInterval := self medianConfidenceInterval.
-	medianCIMax := medianConfidenceInterval max.
-	medianCIMin := medianConfidenceInterval min.
-	
-	notched ifTrue: [ 
-		boxPoints addAll: { 
-		(graphCenter+(bandWidth/2))@(yScale scale: medianCIMin).
-		(graphCenter+(notchWidth/2))@(yScale scale: median).
-		(graphCenter+(bandWidth/2))@(yScale scale: medianCIMax).}	
-	].
-	
-	boxPoints addAll: { 
-		(graphCenter+(bandWidth/2)) @ (yScale scale: q075)."top right"
-		(graphCenter-(bandWidth/2)) @ (yScale scale: q075)."top left" }.
-
-	notched ifTrue: [ 
-		boxPoints addAll: { 
-		(graphCenter-(bandWidth/2))@(yScale scale: medianCIMax).
-		(graphCenter-(notchWidth/2))@(yScale scale: median).
-		(graphCenter-(bandWidth/2))@(yScale scale: medianCIMin). }	
-	].
-	
-	box points: boxPoints.
-	^ box
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeMedianLine [
-	| q050 medianLinePoints lineWidth |
-	q050 := statisticalMeasures quartiles second.
-	"graphCenter was already computed in shapesWithCenterAt"
-	lineWidth := bandWidth * notchWidthPercentage.
-	
-	medianLinePoints := { 
-		(graphCenter-(lineWidth/2))@ (yScale scale: q050). 
-		(graphCenter+(lineWidth/2))@ (yScale scale: q050). }.
-	medianLine := medianLine controlPoints: medianLinePoints.
-	^ medianLine.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeOutliers [
-	| outliersPoints |
-	"graphCenter was already computed in shapesWithCenterAt"
-	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (yScale scale: y) ].
-	outliers := outliersPoints.
-	outlier extent x isZero ifTrue: [ outlier size: bandWidth * 0.15 ].
-	outliers := outliers collect: [ :out |
-			| e |
-			e := outlier.
-			e translateTo: out.
-	] as: RSGroup.
-	^ outliers.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> computeWhiskers [
-	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
-	upperLimit := statisticalMeasures upperLimit.
-	lowerLimit := statisticalMeasures lowerLimit.
-	q1 := statisticalMeasures quartiles first.
-	q3 := statisticalMeasures quartiles third.
-	"graphCenter was already computed in shapesWithCenterAt"
-	upperWhiskerPoints := { graphCenter@(yScale scale: q3). graphCenter@ (yScale scale: upperLimit). }.
-	lowerWhiskerPoints := { graphCenter@(yScale scale: q1). graphCenter@ (yScale scale: lowerLimit). }.
-	upperWhisker := whisker copy.
-	lowerWhisker := whisker copy.
-	upperWhisker controlPoints: upperWhiskerPoints.
-	lowerWhisker controlPoints: lowerWhiskerPoints.
-	^ { upperWhisker. lowerWhisker. }.
 ]
 
 { #category : #accessing }
@@ -217,6 +93,107 @@ RSBoxPlotShape >> confidencePercentage [
 { #category : #accessing }
 RSBoxPlotShape >> confidencePercentage: aNumber [
 	medianConfidencePercentage := aNumber.
+]
+
+{ #category : #shapes }
+RSBoxPlotShape >> createBoxShape [
+	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
+	quartiles := statisticalMeasures quartiles.
+	q025 := quartiles at: 1.
+	q075 := quartiles at: 3.
+	
+	boxPoints := { 
+		(graphCenter-(bandWidth/2)) @ (dataScale scale: q025)."bottom left" 
+		(graphCenter+(bandWidth/2)) @ (dataScale scale: q025)."bottom right"
+	} asOrderedCollection.
+	
+	notchWidth := bandWidth * notchWidthPercentage.
+	median := quartiles at: 2.
+	medianConfidenceInterval := self medianConfidenceInterval.
+	medianCIMax := medianConfidenceInterval max.
+	medianCIMin := medianConfidenceInterval min.
+	
+	notched ifTrue: [ 
+		boxPoints addAll: { 
+		(graphCenter+(bandWidth/2))@(dataScale scale: medianCIMin).
+		(graphCenter+(notchWidth/2))@(dataScale scale: median).
+		(graphCenter+(bandWidth/2))@(dataScale scale: medianCIMax).}	
+	].
+	
+	boxPoints addAll: { 
+		(graphCenter+(bandWidth/2)) @ (dataScale scale: q075)."top right"
+		(graphCenter-(bandWidth/2)) @ (dataScale scale: q075)."top left" }.
+
+	notched ifTrue: [ 
+		boxPoints addAll: { 
+		(graphCenter-(bandWidth/2))@(dataScale scale: medianCIMax).
+		(graphCenter-(notchWidth/2))@(dataScale scale: median).
+		(graphCenter-(bandWidth/2))@(dataScale scale: medianCIMin). }	
+	].
+	
+	box points: boxPoints.
+]
+
+{ #category : #shapes }
+RSBoxPlotShape >> createMedianLine [
+	| q050 medianLinePoints lineWidth |
+	q050 := statisticalMeasures quartiles second.
+	"graphCenter was already computed in shapesWithCenterAt"
+	lineWidth := bandWidth * notchWidthPercentage.
+	
+	medianLinePoints := { 
+		(graphCenter-(lineWidth/2))@ (dataScale scale: q050). 
+		(graphCenter+(lineWidth/2))@ (dataScale scale: q050). }.
+	medianLine := medianLine controlPoints: medianLinePoints.
+]
+
+{ #category : #shapes }
+RSBoxPlotShape >> createOutliersShapes [
+	| outliersPoints outlierDefaultSize|
+	"graphCenter was already computed in shapesWithCenterAt"
+	outliersPoints := statisticalMeasures outliers collect: [ :y | graphCenter@ (dataScale scale: y) ].
+	outlierDefaultSize := (bandWidth * 0.15) abs.
+	outlier extent x isZero ifTrue: [ outlier size: outlierDefaultSize ].
+	outliers := outliersPoints collect: [ :out |
+			| e |
+			e := outlier copy.
+			e translateTo: out.
+	] as: RSGroup.
+]
+
+{ #category : #shapes }
+RSBoxPlotShape >> createShapesAndLines [
+	| shapes |
+	self graphCenter: bandOffset.
+	notched ifTrue: [ notchWidthPercentage := 0.5 ].
+	self createWhiskerLines.
+	self createMedianLine.
+	self createBoxShape.
+	box color: color.
+	self createOutliersShapes.
+	shapes := OrderedCollection withAll: {
+			          upperWhisker copy.
+						 lowerWhisker copy.
+			          box copy.
+			          medianLine copy. }.
+	shapes addAll: outliers.
+	^ shapes
+]
+
+{ #category : #shapes }
+RSBoxPlotShape >> createWhiskerLines [
+	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
+	upperLimit := statisticalMeasures upperLimit.
+	lowerLimit := statisticalMeasures lowerLimit.
+	q1 := statisticalMeasures quartiles first.
+	q3 := statisticalMeasures quartiles third.
+	"graphCenter was already computed in shapesWithCenterAt"
+	upperWhiskerPoints := { graphCenter@(dataScale scale: q3). graphCenter@ (dataScale scale: upperLimit). }.
+	lowerWhiskerPoints := { graphCenter@(dataScale scale: q1). graphCenter@ (dataScale scale: lowerLimit). }.
+	upperWhisker := whisker copy.
+	lowerWhisker := whisker copy.
+	upperWhisker controlPoints: upperWhiskerPoints.
+	lowerWhisker controlPoints: lowerWhiskerPoints.
 ]
 
 { #category : #accessing }
@@ -238,7 +215,7 @@ RSBoxPlotShape >> defaultBandPadding [
 RSBoxPlotShape >> defaultBox [
 	^ RSPolygon new
 		color: color;
-		borderColor: Color black.
+		border: (RSBorder new color: Color black; joinRound).
 ]
 
 { #category : #defaults }
@@ -258,7 +235,7 @@ RSBoxPlotShape >> defaultMedianConfidencePercentage [
 
 { #category : #defaults }
 RSBoxPlotShape >> defaultMedianLine [
-	^ RSPolyline new
+	^ RSLine new
 		width: 2;
 		color: Color black.
 ]
@@ -277,13 +254,8 @@ RSBoxPlotShape >> defaultOutlier [
 ]
 
 { #category : #defaults }
-RSBoxPlotShape >> defaultShouldShowBand [
-	^ false
-]
-
-{ #category : #defaults }
 RSBoxPlotShape >> defaultWhisker [
-	^ RSPolyline new
+	^ RSLine new
 		width: 1;
 		color: Color black.
 ]
@@ -317,6 +289,7 @@ RSBoxPlotShape >> initialize [
 	medianConfidencePercentage := self defaultMedianConfidencePercentage.
 	notched := self defaultNotched.
 	notchWidthPercentage := 1.
+	horizontal := false.
 ]
 
 { #category : #accessing }
@@ -334,8 +307,8 @@ RSBoxPlotShape >> lowerWhisker [
 	^ lowerWhisker
 ]
 
-{ #category : #accessing }
-RSBoxPlotShape >> maxYValue [
+{ #category : #rendering }
+RSBoxPlotShape >> maxDataValue [
 	| maxValue |
 	maxValue := self upperLimit.
 	notched ifTrue: [ maxValue := maxValue max: self medianConfidenceInterval max ].
@@ -366,7 +339,12 @@ RSBoxPlotShape >> medianLine [
 ]
 
 { #category : #accessing }
-RSBoxPlotShape >> minYValue [
+RSBoxPlotShape >> medianLine: aRSLineModel [
+	medianLine := aRSLineModel copy
+]
+
+{ #category : #rendering }
+RSBoxPlotShape >> minDataValue [
 	| minValue |
 	minValue := self lowerLimit.
 	notched ifTrue: [ minValue := minValue min: (self medianConfidenceInterval min) ].
@@ -415,60 +393,21 @@ RSBoxPlotShape >> quartiles [
 	^ statisticalMeasures quartiles.
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 RSBoxPlotShape >> renderIn: canvas [
-	| shapes |
-	shapes := self shapesWithCenterAt: bandOffset.
-	shapes do: [ :aShape |
-		aShape isCollection ifTrue: [ canvas addAll: aShape ]
-		ifFalse: [ canvas add: aShape ].
-	].
-	^ canvas.
+	self addChildrenToComposite.
+	canvas add: self.
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> scalePoint: aPoint [
-	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
+	^ (bandScale scale: aPoint x) @ (dataScale scale: aPoint y)
 ]
 
 { #category : #accessing }
 RSBoxPlotShape >> scales: collectionOfNSScales [
-	self xScale: collectionOfNSScales first.
-	self yScale: collectionOfNSScales second.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> shapesWithCenterAt: aNumber [
-
-	| band shapes |
-	self graphCenter: aNumber.
-	notched ifTrue: [ notchWidthPercentage := 0.5 ].
-	self computeWhiskers.
-	medianLine := self computeMedianLine.
-	box := self computeBox.
-	box color: color.
-	outliers := self computeOutliers.
-	shapes := OrderedCollection new.
-	shapes addAll: {
-			          upperWhisker.
-						 lowerWhisker.
-			          box.
-			          medianLine.
-			          outliers }.
-	shouldShowBand ifTrue: [
-		band := self computeBandRectangle.
-		shapes add: band ].
-	^ shapes
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> shouldShowBand: aBoolean [
-	shouldShowBand := aBoolean.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> showBand [
-	self shouldShowBand: true.
+	self bandScale: collectionOfNSScales first.
+	self dataScale: collectionOfNSScales second.
 ]
 
 { #category : #accessing }
@@ -499,24 +438,4 @@ RSBoxPlotShape >> whiskerFormat: aString [
 { #category : #accessing }
 RSBoxPlotShape >> whiskers [
 	^ whisker.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> xScale [
-	^ xScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> xScale: aNSScale [
-	xScale := aNSScale
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> yScale [
-	^ yScale.
-]
-
-{ #category : #accessing }
-RSBoxPlotShape >> yScale: aNSScale [
-	yScale := aNSScale
 ]

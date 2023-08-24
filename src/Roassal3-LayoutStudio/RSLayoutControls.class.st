@@ -33,11 +33,13 @@ RSLayoutControls >> layoutStudio: aSpLayoutStudio [
 
 { #category : #update }
 RSLayoutControls >> updateFields [
-	| boxLayout |
+	| boxLayout fields |
 	boxLayout := SpBoxLayout newVertical.
 	boxLayout spacing: self boxLayoutSpace.
-	layoutStudio layoutDefinition fields do: [ :each |
+	fields := layoutStudio layoutDefinition fields.
+	fields do: [ :each |
 		each layoutStudio: layoutStudio.
 		each renderIn: boxLayout ].
+	fields ifEmpty: [ boxLayout add: 'No attributes to edit' ].
 	self layout: (SpScrollableLayout with: boxLayout)
 ]

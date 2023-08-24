@@ -17,10 +17,23 @@ Class {
 	#instVars : [
 		'if',
 		'thenLayout',
-		'elseLayout'
+		'elseLayout',
+		'clusterLayout'
 	],
 	#category : #'Roassal3-Layouts-Core'
 }
+
+{ #category : #accessing }
+RSConditionalLayout >> clusterLayout [
+
+	^ clusterLayout
+]
+
+{ #category : #accessing }
+RSConditionalLayout >> clusterLayout: anObject [
+
+	clusterLayout := anObject
+]
 
 { #category : #hook }
 RSConditionalLayout >> doExecute: shapes [
@@ -31,12 +44,13 @@ RSConditionalLayout >> doExecute: shapes [
 	elseShapes := (shapes reject: if) asGroup.
 	thenLayout on: thenShapes.
 	elseLayout on: elseShapes.
+	
+	clusterLayout on: { thenShapes. elseShapes }.
+]
 
-	RSLocation new
-		left;
-		outer;
-		offset: -20 @ 0;
-		move: thenShapes on: elseShapes
+{ #category : #accessing }
+RSConditionalLayout >> else [
+	^ elseLayout
 ]
 
 { #category : #accessing }
@@ -67,7 +81,28 @@ RSConditionalLayout >> ifNotConnectedThen: aLayout [
 	self then: aLayout
 ]
 
+{ #category : #initialization }
+RSConditionalLayout >> initialize [
+	super initialize.
+	self if: [ :each | true ].
+	self clusterLayout: RSHorizontalLineLayout new.
+	thenLayout := clusterLayout.
+	elseLayout := clusterLayout.
+]
+
+{ #category : #accessing }
+RSConditionalLayout >> then [
+
+	^ thenLayout
+]
+
 { #category : #accessing }
 RSConditionalLayout >> then: aLayout [
 	thenLayout := aLayout
+]
+
+{ #category : #accessing }
+RSConditionalLayout >> thenLayout [
+
+	^ thenLayout
 ]
