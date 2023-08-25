@@ -305,15 +305,16 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	<script: 'self new example13VisualizeQuatree open'>
 	| canvas shapes stepping edges newBox boxes createBoxes colors newLabel |
 	canvas := RSCanvas new.
+	canvas useList.
 	shapes := (1 to: 50) collect: [ :n |
-		          RSBox new
-			          size: 30;
-			          labeled;
-			          model: n;
-			          yourself ].
+		RSBox new
+			size: 30;
+			labeled;
+			model: n;
+			yourself ].
 	edges := RSLineBuilder line
-		         shapes: shapes;
-		         connectFrom: [ :i | i // 2 ].
+		shapes: shapes;
+		connectFrom: [ :i | i // 2 ].
 	canvas
 		addAll: edges;
 		addAll: shapes.
@@ -325,29 +326,30 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	canvas @ stepping.
 	colors := RSColorPalette sequential pubu9.
 	newBox := [ :quad :index |
-	          RSBox new
-		          border: (RSBorder new
-				           color: Color lightGray translucent;
-				           width: 0.5);
-		          extent: quad rectangle extent;
-		          position: quad rectangle floatCenter;
-		          color: ((colors scale: index) alpha: 0.5);
-		          yourself ].
+		RSBox new
+			border: (RSBorder new
+				color: Color lightGray translucent;
+				width: 0.5);
+			extent: quad rectangle extent;
+			position: quad rectangle floatCenter;
+			color: ((colors scale: index) alpha: 0.5);
+			yourself ].
 	newLabel := [ :quad :index |
-	            RSLabel new
-		            text: (quad charge printShowingDecimalPlaces: 1);
-		            position: quad rectangle floatCenter;
-		            yourself ].
+		RSLabel new
+			text: (quad charge printShowingDecimalPlaces: 1);
+			position: quad rectangle floatCenter;
+			yourself ].
 	boxes := #(  ).
 	createBoxes := nil.
 	createBoxes := [ :quad :lvl |
-	               | box label |
-	               box := newBox value: quad value: lvl.
-	               label := newLabel value: quad value: lvl.
-	               quad subQuadsDo: [ :subQuad |
-		               createBoxes value: subQuad value: lvl + 1 ].
-	               boxes add: box.
-	               boxes add: label ].
+		| box label |
+		box := newBox value: quad value: lvl.
+		label := newLabel value: quad value: lvl.
+		quad subQuadsDo: [ :subQuad |
+			createBoxes value: subQuad value: lvl + 1 ].
+		boxes add: box.
+		boxes add: label ].
+	
 	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;

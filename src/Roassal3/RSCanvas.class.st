@@ -564,58 +564,6 @@ RSCanvas >> privateShapes: aCollection [
 	shapes := aCollection
 ]
 
-{ #category : #'shapes - ordering' }
-RSCanvas >> pushBack: aShape [
-	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
-
-For example:
-```Smalltalk
-c := RSCanvas new.
-shape1 := RSEllipse new size: 50; color: #red.
-shape2 := RSEllipse new size: 50; color: #blue.
-shape2 translateBy: -25@0.
-c add: shape1; add: shape2.
-c pushBack: shape2.
-c.
-```
-"
-	| col |
-	col := aShape isFixed
-		ifTrue: [ fixedShapes ]
-		ifFalse: [ shapes ].
-	col
-		remove: aShape;
-		addFirst: aShape.
-	col doWithIndex: [ :each :index | each shapeIndex: index ].
-]
-
-{ #category : #'shapes - ordering' }
-RSCanvas >> pushFront: aShape [
-	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
-
-For example:
-```Smalltalk
-c := RSCanvas new.
-shape1 := RSEllipse new size: 50; color: #red.
-shape2 := RSEllipse new size: 50; color: #blue.
-shape2 translateBy: -25@0.
-c add: shape1; add: shape2.
-c pushFront: shape1.
-c.
-```
-The red circle is in front of the blue one, despite the red one is inserted first.
-"
-	| col |
-	col := aShape isFixed
-		ifTrue: [ fixedShapes ]
-		ifFalse: [ shapes ].
-	
-	col
-		remove: aShape;
-		addLast: aShape.
-	aShape shapeIndex to: col size do: [ :index | (col at: index) shapeIndex: index ].
-]
-
 { #category : #'adding - removing shapes' }
 RSCanvas >> removeFixedShape: aShape [
 	fixedShapes remove: aShape

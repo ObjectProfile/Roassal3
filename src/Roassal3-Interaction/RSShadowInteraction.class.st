@@ -40,7 +40,8 @@ RSShadowInteraction class >> examplePieSlice [
 		model: 'Drag me';
 		alphaAngle: 0;
 		betaAngle: 45;
-		innerRadius: 0;
+		innerRadius: 50;
+		cornerRadii: 10;
 		externalRadius: 100;
 		position: 50@ -50;
 		yourself.

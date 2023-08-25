@@ -423,21 +423,6 @@ RSComposite >> privateShapes: aCollection [
 	children := aCollection
 ]
 
-{ #category : #actions }
-RSComposite >> pushBack: aShape [
-	"Put a shape behind all other shapes"
-	children
-		remove: aShape;
-		addFirst: aShape
-]
-
-{ #category : #actions }
-RSComposite >> pushFront: shape [
-	children
-		remove: shape ifAbsent: [];
-		addLast: shape
-]
-
 { #category : #removing }
 RSComposite >> removeShape: shape [
 	| evt |
