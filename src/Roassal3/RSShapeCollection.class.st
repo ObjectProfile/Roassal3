@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #adding }
+RSShapeCollection >> add: aShape before: otherShape [
+	^ self subclassResponsibility
+]
+
+{ #category : #adding }
 RSShapeCollection >> bulkLoad: aCollectionOfShapes [
 	self addAll: aCollectionOfShapes
 ]

@@ -1,3 +1,6 @@
+"
+Shadow Interaction puts a shadow in a shape
+"
 Class {
 	#name : #RSShadowInteraction,
 	#superclass : #RSInteraction,
@@ -8,6 +11,69 @@ Class {
 	],
 	#category : #'Roassal3-Interaction-Selection'
 }
+
+{ #category : #examples }
+RSShadowInteraction class >> exampleBasic [
+	| canvas |
+	canvas := self canvasExample.
+	canvas nodes first @ self.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSShadowInteraction class >> exampleLine [
+	| canvas int line |
+	canvas := self canvasExample.
+	int := self new.
+	line  := RSLine new startPoint: 10@10; endPoint: 100@30; width: 20.
+	canvas add: line.
+	line @ int.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSShadowInteraction class >> examplePieSlice [
+	| canvas int slice |
+	canvas := self canvasExample.
+	int := self new.
+	slice  := RSPieSlice new
+		model: 'Drag me';
+		alphaAngle: 0;
+		betaAngle: 45;
+		innerRadius: 0;
+		externalRadius: 100;
+		position: 50@ -50;
+		yourself.
+	slice position: 30@30.
+	canvas add: slice.
+	slice draggable; popup.
+	slice @ int.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSShadowInteraction class >> examplePolygon [
+	| canvas int polygon |
+	canvas := self canvasExample.
+	int := self new.
+	polygon  := RSShapeFactory plus size: 30.
+	polygon model: 'Drag me'.
+	polygon position: 30@30.
+	canvas add: polygon.
+	polygon draggable; popup.
+	polygon @ int.
+	^ canvas open
+]
+
+{ #category : #examples }
+RSShadowInteraction class >> exampleShadowColor [
+	| canvas int |
+	canvas := self canvasExample.
+	int := self new.
+	int shadowColor: Color green translucent.
+	canvas nodes first @ int.
+	^ canvas open
+]
 
 { #category : #hooks }
 RSShadowInteraction >> addInteractionToCanvas: aShape [
@@ -79,6 +145,7 @@ RSShadowInteraction >> putShadowOn: aShape [
 	shadow := self createShadowFor: aShape.
 	aShape parent ifNil: [ ^ self ].
 	self shouldPushFront ifTrue: [ aShape pushFront ].
+	shadow isFixed: aShape isFixed.
 	aShape parent addShape: shadow before: aShape.
 	aShape shadow: shadow.
 	shadow position: aShape position.

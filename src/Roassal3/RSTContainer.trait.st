@@ -69,6 +69,21 @@ RSTContainer >> addShape: aShape [
 	aShape addedIn: self
 ]
 
+{ #category : #adding }
+RSTContainer >> addShape: aShape before: otherShape [
+	| col index |
+	aShape addedIn: self.
+	col := aShape isFixed
+		ifTrue: [ self fixedShapes ]
+		ifFalse: [ self privateShapes ].
+	col remove: aShape.
+	col add: aShape before: otherShape.
+	index := col indexOf: aShape.
+	index to: col size do: [ :i | (col at: i) shapeIndex: i ].
+	aShape isFixed 
+		ifFalse: [ self shapeCollection add: aShape before: otherShape ]
+]
+
 { #category : #accessing }
 RSTContainer >> allChildren [
 	| allChildren index |
@@ -148,6 +163,11 @@ RSTContainer >> edges [
 		ifNil: [ | res |
 			self privateEdges: (res := RSGroup new).
 			res ]
+]
+
+{ #category : #accessing }
+RSTContainer >> fixedShapes [
+	^ self explicitRequirement
 ]
 
 { #category : #accessing }

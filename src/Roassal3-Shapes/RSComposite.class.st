@@ -226,15 +226,6 @@ RSComposite >> addRecursivelyIn: aCollection [
 ]
 
 { #category : #adding }
-RSComposite >> addShape: aShape before: otherShape [
-	"Add a shape in a composite shape"
-	aShape addedIn: self.
-	self children
-		remove: aShape;
-		add: aShape before: otherShape
-]
-
-{ #category : #adding }
 RSComposite >> addShapesIn: aCollection position: position [
 	| pos result includesPoint |
 	includesPoint := self includesPoint: position.
@@ -331,6 +322,12 @@ RSComposite >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	(someObjects includes: self model) ifTrue: [ result add: self ].
 	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
+]
+
+{ #category : #accessing }
+RSComposite >> fixedShapes [
+	"composite does not contains fixed shapes"
+	^ self shouldNotImplement
 ]
 
 { #category : #testing }

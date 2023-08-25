@@ -138,13 +138,6 @@ c @ RSCanvasController.
 	aShape shapeIndex: fixedShapes size.
 ]
 
-{ #category : #'adding - removing shapes' }
-RSCanvas >> addShape: aShape before: otherShape [
-	aShape addedIn: self.
-	shapes remove: aShape.
-	shapes add: aShape before: otherShape
-]
-
 { #category : #animations }
 RSCanvas >> animations [
 	^ animations

@@ -26,13 +26,14 @@ RSCanvasTest >> testAddOneShape [
 
 { #category : #'tests - shapes ordering' }
 RSCanvasTest >> testAddShapeBefore [
-	| shape1 shape2 |
-	shape1 := RSBox new size: 20.
-	shape2 := RSEllipse new size: 10.
+	| box ellipse |
+	box := RSBox new size: 20.
+	ellipse := RSEllipse new size: 10.
 
-	canvas add: shape2.
-	canvas addShape: shape1 before: shape2.
-	self assert: canvas shapes asArray equals: { shape1 . shape2 }
+	canvas add: ellipse.
+	
+	canvas addShape: box before: ellipse.
+	self assert: canvas shapes asArray equals: { box . ellipse }
 ]
 
 { #category : #tests }

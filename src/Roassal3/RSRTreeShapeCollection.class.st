@@ -21,6 +21,11 @@ RSRTreeShapeCollection >> add: newObject [
 	^ newObject
 ]
 
+{ #category : #adding }
+RSRTreeShapeCollection >> add: aShape before: otherShape [
+	"do nothing"
+]
+
 { #category : #'private - removing' }
 RSRTreeShapeCollection >> balanceRemovedPath: path [
 	"| times |

@@ -16,6 +16,11 @@ RSSequenceableCollection >> add: newObject [
 	group add: newObject
 ]
 
+{ #category : #adding }
+RSSequenceableCollection >> add: aShape before: otherShape [
+	group remove: aShape; add: aShape before: otherShape
+]
+
 { #category : #enumerating }
 RSSequenceableCollection >> do: aBlock [
 	group do: aBlock
