@@ -39,8 +39,11 @@ RSTContainer >> addAllShapes: aCollection [
 
 { #category : #adding }
 RSTContainer >> addBasicShape: aShape [
-	self privateShapes add: aShape.
-	self shapeCollection add: aShape
+	| listOfShapes |
+	listOfShapes := self privateShapes.
+	listOfShapes add: aShape.
+	aShape shapeIndex: listOfShapes size.
+	shapeCollection add: aShape
 ]
 
 { #category : #'adding nodes edges' }
@@ -289,6 +292,7 @@ RSTContainer >> useList [
 
 { #category : #'shape - collection' }
 RSTContainer >> useRTree [
+	"use RTree for big data visualizations"
 	self shapeCollection: RSRTreeShapeCollection new.
 ]
 

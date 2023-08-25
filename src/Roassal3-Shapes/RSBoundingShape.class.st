@@ -108,7 +108,7 @@ RSBoundingShape >> baseRectangle [
 	^ baseRectangle
 ]
 
-{ #category : #matrix }
+{ #category : #transforming }
 RSBoundingShape >> basicTranslateBy: delta [
 	self updateLinesOFF.
 	self position: self position + delta.

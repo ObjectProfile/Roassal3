@@ -285,9 +285,9 @@ RSRenderTreeTest >> testThreeElements [
 { #category : #tests }
 RSRenderTreeTest >> testThreeElementsContains [
 	| b1 b2 b3 result |
-	b1 := RSBox new size: 10.
-	b2 := RSBox new size: 30; position: 30@30.
-	b3 := RSBox new size: 10; position: -10@ -10.
+	b1 := RSBox new size: 10; shapeIndex: 2.
+	b2 := RSBox new size: 30; position: 30@30; shapeIndex: 1.
+	b3 := RSBox new size: 10; position: -10@ -10; shapeIndex: 3.
 	tree addAll: { b1. b2. b3 }.
 
 	result := tree shapesAtPoint: 0@0.
@@ -306,7 +306,8 @@ RSRenderTreeTest >> testThreeElementsContains [
 	self assert: result size equals: 2.
 
 	result := tree shapesAtRectangle: (-20@ -20 corner: 30@30).
-	self assert: result size equals: 3
+	self assert: result size equals: 3.
+	self assert: result asArray equals: { b2. b1. b3 }.
 ]
 
 { #category : #'tests - adding' }
@@ -325,8 +326,8 @@ RSRenderTreeTest >> testTwoElements [
 { #category : #tests }
 RSRenderTreeTest >> testTwoElementsContains [
 	| b1 b2 result |
-	b1 := RSBox new size: 10.
-	b2 := RSBox new size: 30; position: 30@30.
+	b1 := RSBox new size: 10; shapeIndex: 1.
+	b2 := RSBox new size: 30; position: 30@30; shapeIndex: 2.
 	tree addAll: { b1. b2 }.
 	result := tree shapesAtPoint: 0@0.
 	self assert: result first equals: b1.

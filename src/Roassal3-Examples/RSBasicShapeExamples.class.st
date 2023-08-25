@@ -1171,6 +1171,31 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 	^ canvas
 ]
 
+{ #category : #lines }
+RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
+
+	<script: 'self new example47ExampleRTreeWithOverlapping inspect'>
+	| canvas nodes colorScale |
+	canvas := RSCanvas new.
+	colorScale := NSScale category20.
+	canvas useRTree.
+	nodes := (1 to: 10) collect: [ :i | | label |
+		label := RSLabel text: i.
+		{ label } asShape
+			size: 20;
+			borderColor: Color black;
+			color: (colorScale scale: i);
+			position: i * 15 asPoint;
+			yourself
+			 ] as: RSGroup.
+	canvas addAll: nodes.
+	nodes last pushBack.
+	nodes third pushFront.
+	nodes @ RSHighlightable green.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
 { #category : #accessing }
 RSBasicShapeExamples >> order [
 	^ 0

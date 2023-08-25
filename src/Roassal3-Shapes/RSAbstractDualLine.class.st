@@ -59,11 +59,6 @@ RSAbstractDualLine >> invert [
 	self controlPoints: ( self controlPoints collect: [ :p | p y @ p x ]).
 ]
 
-{ #category : #transforming }
-RSAbstractDualLine >> position [
-	^ self encompassingRectangle floatCenter
-]
-
 { #category : #accessing }
 RSAbstractDualLine >> position: aPoint [
 	| position delta |

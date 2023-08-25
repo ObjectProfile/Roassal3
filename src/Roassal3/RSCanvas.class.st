@@ -134,7 +134,8 @@ c addShape: lbl.
 c @ RSCanvasController.
 ```
 "
-	fixedShapes add: aShape
+	fixedShapes add: aShape.
+	aShape shapeIndex: fixedShapes size.
 ]
 
 { #category : #'adding - removing shapes' }
@@ -375,9 +376,9 @@ RSCanvas >> hideEncompassingRectangles [
 { #category : #initialization }
 RSCanvas >> initialize [
 	super initialize.
-	self shapeCollection: self defaultShapeCollection.
 	shapes := RSGroup new.
 	fixedShapes := RSGroup new.
+	self shapeCollection: self defaultShapeCollection.
 	nodes := RSGroup new.
 	edges := RSGroup new.
 	animations := OrderedCollection new.
@@ -591,7 +592,8 @@ c.
 		ifFalse: [ shapes ].
 	col
 		remove: aShape;
-		addFirst: aShape
+		addFirst: aShape.
+	col doWithIndex: [ :each :index | each shapeIndex: index ].
 ]
 
 { #category : #'shapes - ordering' }
@@ -614,9 +616,11 @@ The red circle is in front of the blue one, despite the red one is inserted firs
 	col := aShape isFixed
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
+	
 	col
-		remove: aShape ifAbsent: [];
-		addLast: aShape
+		remove: aShape;
+		addLast: aShape.
+	aShape shapeIndex to: col size do: [ :index | (col at: index) shapeIndex: index ].
 ]
 
 { #category : #'adding - removing shapes' }
@@ -633,6 +637,8 @@ RSCanvas >> removeShape: shape [
 	shape isFixed
 		ifFalse: [ self shapeCollection remove: shape ].
 	collection remove: shape.
+	shape shapeIndex to: collection size 
+		do: [ :i | (collection at: i) shapeIndex: i ].
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new
 		       shape: shape;
@@ -661,29 +667,25 @@ RSCanvas >> shapeCollection [
 
 { #category : #accessing }
 RSCanvas >> shapeCollection: anRSShapeCollection [
-	shapeCollection := anRSShapeCollection
+	shapeCollection := anRSShapeCollection.
+	shapeCollection bulkLoad: shapes.
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : #'event processing' }
 RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
-	"position is in pixel, it corresponds to the physical location in the window.
-	e.g., 0 @ 0 is top left of the window"
-	| block result |
-	block := [ :list :pos|
-		list reverseDo: [ :s | | shape |
-			shape := s shapeWithAction: eventClass forPosition: pos.
-			shape ifNotNil: [ ^ shape ] ] ].
-	block value: fixedShapes value: position.
+	|  result |
+	fixedShapes reverseDo: [ :s | | shapeWithAction |
+		shapeWithAction := s shapeWithAction: eventClass forPosition: position.
+		shapeWithAction ifNotNil: [ ^ shapeWithAction ] ].
 	
 	result := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
 	result ifNil: [ ^ self ].
 	(result announcer handleEventClass: eventClass)
 		ifTrue: [ ^ result ].
-	"block value: shapes value: (self camera fromPixelToSpace: position)."
 	^ self
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : #'event processing' }
 RSCanvas >> shapeWithActionForPosition: aPositionInSpace [
 	| result |
 	result := self shapesWithActionForPosition: aPositionInSpace.
@@ -691,17 +693,13 @@ RSCanvas >> shapeWithActionForPosition: aPositionInSpace [
 	^ result first
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : #'event processing' }
 RSCanvas >> shapeWithActionForPositionInPixels: position [
-	"position is in pixel, it corresponds to the physical location in the window.
-	e.g., 0 @ 0 is top left of the window"
-	| block aShape |
-	block := [ :list :pos |
-		list reverseDo: [ :s | | shape |
-			shape := s shapeWithActionForPosition: pos.
-			shape ifNotNil: [^ shape ] ] ].
-	block value: fixedShapes value: position.
-
+	| aShape |
+	fixedShapes reverseDo: [ :s | | shapeWithAction |
+		shapeWithAction := s shapeWithActionForPosition: position.
+		shapeWithAction ifNotNil: [^ shapeWithAction ] 
+	].
 	aShape := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
 	aShape ifNil: [ aShape := self ].
 	^ aShape
@@ -730,7 +728,7 @@ RSCanvas >> shapesFromModels: objects [
 	^ self nodes shapesFromModels: objects
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : #'event processing' }
 RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 	| result |
 	result := self shapeCollection shapesAtPoint: aPositionInSpace.

@@ -230,11 +230,12 @@ RSElasticBoxInteraction >> selectedShapes [
 
 { #category : #helper }
 RSElasticBoxInteraction >> selectedShapesWith: shape [
+
 	| rect |
 	rect := shape encompassingRectangle.
 
-	^ (targetShapes rsValue: shape canvas)
-		select: [ :node | (node = shape) not and: [ node encompassingRectangle intersects: rect] ]
+	^ (targetShapes rsValue: shape canvas) select: [ :node |
+		  node ~= shape and: [ node encompassingRectangle intersects: rect ] ]
 ]
 
 { #category : #testing }

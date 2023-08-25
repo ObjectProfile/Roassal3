@@ -97,11 +97,6 @@ RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #accessing }
-RSAbstractLine >> basicTranslateBy: delta [
-	^ self subclassResponsibility
-]
-
 { #category : #'style - cap' }
 RSAbstractLine >> capButt [
 	self border capButt

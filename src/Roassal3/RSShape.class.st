@@ -39,7 +39,8 @@ Class {
 		'parent',
 		'isFixed',
 		'encompassingRectangle',
-		'model'
+		'model',
+		'shapeIndex'
 	],
 	#category : #'Roassal3-Core'
 }
@@ -153,6 +154,11 @@ RSShape >> announce: anEventOrAnEventClassOrABlock [
 RSShape >> announcementClasses [
 	^ RSShapeEvent withAllSubclasses
 		reject: [ :subcls| subcls hasSubclasses ]
+]
+
+{ #category : #transforming }
+RSShape >> basicTranslateBy: delta [
+	^ self subclassResponsibility
 ]
 
 { #category : #border }
@@ -516,6 +522,16 @@ RSShape >> path: aPath [
 	path := aPath
 ]
 
+{ #category : #accessing }
+RSShape >> position [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+RSShape >> position: aPoint [
+	^ self subclassResponsibility
+]
+
 { #category : #copying }
 RSShape >> postCopy [
 	self
@@ -595,6 +611,17 @@ RSShape >> shape [
 	^ self
 ]
 
+{ #category : #private }
+RSShape >> shapeIndex [
+	^ shapeIndex
+]
+
+{ #category : #private }
+RSShape >> shapeIndex: aNumber [
+	"used by shapeCollection, do not use this method"
+	shapeIndex := aNumber
+]
+
 { #category : #'accessing - computed' }
 RSShape >> shapeWithAction: eventClass forPosition: position [
 	^ (self hasEventCallback and: [
@@ -621,4 +648,9 @@ RSShape >> signalUpdate [
 { #category : #accessing }
 RSShape >> width [
 	^ self extent x
+]
+
+{ #category : #accessing }
+RSShape >> width: aNumber [
+	self subclassResponsibility
 ]

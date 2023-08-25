@@ -119,17 +119,18 @@ RSRTreeShapeCollection >> root [
 { #category : #'finding/searching' }
 RSRTreeShapeCollection >> shapesAtPoint: aPoint [
 	| res |
-	res := OrderedCollection new.
+	"very important to preserv the drawing order"
+	res := SortedCollection sortUsing: [:a :b | a shapeIndex > b shapeIndex ].
 	root nodesWithPoint: aPoint list: res.
-	^ res
+	^ res asGroup
 ]
 
 { #category : #'finding/searching' }
 RSRTreeShapeCollection >> shapesAtRectangle: aRectangle [
 	| res |
-	res := RSGroup new.
+	res := SortedCollection sortUsing: [:a :b | a shapeIndex < b shapeIndex ].
 	root nodesIntersetcsRectangle: aRectangle list: res.
-	^ res
+	^ res asGroup
 ]
 
 { #category : #'finding/searching' }

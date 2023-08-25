@@ -59,7 +59,7 @@ RSAbstractControlPointsLine class >> isAbstract [
 	^ self =  RSAbstractControlPointsLine
 ]
 
-{ #category : #actions }
+{ #category : #transforming }
 RSAbstractControlPointsLine >> basicTranslateBy: delta [
 	controlPoints := controlPoints collect: [:p | p + delta ]
 ]

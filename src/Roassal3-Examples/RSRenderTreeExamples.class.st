@@ -50,8 +50,8 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	"c renderCollection: RSBulkLoadRTreeCollection new."
-	"c @ RSDraggableCanvasInteraction new."
+	c shapeCollection: RSBulkLoadRTreeCollection new.
+	
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.
 	c nodes @ RSHighlightable red.

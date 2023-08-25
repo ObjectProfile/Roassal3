@@ -445,6 +445,7 @@ RSComposite >> pushFront: shape [
 RSComposite >> removeShape: shape [
 	| evt |
 	children remove: shape.
+	shape shapeIndex to: children size do: [ :i | (children at: i) shapeIndex: i ].
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self shapeCollection remove: shape.
@@ -454,7 +455,7 @@ RSComposite >> removeShape: shape [
 
 { #category : #composite }
 RSComposite >> resetChildren [
-	children := RSGroup new
+	children := RSGroup new:0
 ]
 
 { #category : #path }
