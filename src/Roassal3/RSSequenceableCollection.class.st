@@ -32,6 +32,16 @@ RSSequenceableCollection >> initialize [
 	group := RSGroup new
 ]
 
+{ #category : #'shapes - ordering' }
+RSSequenceableCollection >> pushBack: aShape [
+	group remove: aShape; addFirst: aShape.
+]
+
+{ #category : #'shapes - ordering' }
+RSSequenceableCollection >> pushFront: aShape [
+	group remove: aShape; add: aShape
+]
+
 { #category : #removing }
 RSSequenceableCollection >> remove: oldObject ifAbsent: anExceptionBlock [
 	group remove: oldObject ifAbsent: anExceptionBlock

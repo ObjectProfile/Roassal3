@@ -23,6 +23,16 @@ RSShapeCollection >> bulkLoad: aCollectionOfShapes [
 	self addAll: aCollectionOfShapes
 ]
 
+{ #category : #'shapes - ordering' }
+RSShapeCollection >> pushBack: aShape [
+	self subclassResponsibility
+]
+
+{ #category : #'shapes - ordering' }
+RSShapeCollection >> pushFront: aShape [
+	self subclassResponsibility
+]
+
 { #category : #'finding/searching' }
 RSShapeCollection >> shapeAtPoint: aPoint [
 	| result |

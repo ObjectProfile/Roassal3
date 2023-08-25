@@ -26,7 +26,9 @@ RSShadowInteraction class >> exampleLine [
 	canvas := self canvasExample.
 	int := self new.
 	line  := RSLine new startPoint: 10@10; endPoint: 100@30; width: 20.
+	line model: 'Drag me'.
 	canvas add: line.
+	line draggable.
 	line @ int.
 	^ canvas open
 ]

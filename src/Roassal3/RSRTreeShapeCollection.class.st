@@ -83,6 +83,16 @@ RSRTreeShapeCollection >> isTotalBalanced [
 	^ root isTotalBalanced
 ]
 
+{ #category : #'shapes - ordering' }
+RSRTreeShapeCollection >> pushBack: aShape [
+	"no need it shape contains its own order"
+]
+
+{ #category : #'shapes - ordering' }
+RSRTreeShapeCollection >> pushFront: aShape [
+	"no need it aShape contains its own order with aShape shapeIndex"
+]
+
 { #category : #accessing }
 RSRTreeShapeCollection >> rectangle [
 	^ root rectangle
@@ -125,17 +135,19 @@ RSRTreeShapeCollection >> root [
 RSRTreeShapeCollection >> shapesAtPoint: aPoint [
 	| res |
 	"very important to preserv the drawing order"
-	res := SortedCollection sortUsing: [:a :b | a shapeIndex > b shapeIndex ].
+	res := RSGroup new.
 	root nodesWithPoint: aPoint list: res.
-	^ res asGroup
+	res sort: [:a :b | a shapeIndex > b shapeIndex ].
+	^ res 
 ]
 
 { #category : #'finding/searching' }
 RSRTreeShapeCollection >> shapesAtRectangle: aRectangle [
 	| res |
-	res := SortedCollection sortUsing: [:a :b | a shapeIndex < b shapeIndex ].
+	res := RSGroup new.
 	root nodesIntersetcsRectangle: aRectangle list: res.
-	^ res asGroup
+	res sort: [:a :b | a shapeIndex < b shapeIndex ].
+	^ res
 ]
 
 { #category : #'finding/searching' }

@@ -305,7 +305,6 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	<script: 'self new example13VisualizeQuatree open'>
 	| canvas shapes stepping edges newBox boxes createBoxes colors newLabel |
 	canvas := RSCanvas new.
-	canvas useList.
 	shapes := (1 to: 50) collect: [ :n |
 		RSBox new
 			size: 30;
@@ -358,7 +357,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			boxes := RSGroup new.
 			createBoxes value: stepping layout currentQuadtree value: 0.
 			canvas addAll: boxes.
-			boxes pushBack ]
+			boxes pushBack. ]
 		for: self.
 	^ canvas
 ]
@@ -821,8 +820,9 @@ RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
 		on: commits edges: edges.
 
 	aCanvas := RSCanvas new
-		           addAll: commits , edges;
-		           yourself.
+		useRTree;
+		addAll: commits , edges;
+		yourself.
 
 	edges do: [ :each |
 		self assert: each to encompassingRectangle top

@@ -263,6 +263,7 @@ c.
 	col
 		remove: aShape;
 		addFirst: aShape.
+	aShape isFixed ifFalse: [ self shapeCollection pushBack: aShape ].
 	col doWithIndex: [ :each :index | each shapeIndex: index ].
 ]
 
