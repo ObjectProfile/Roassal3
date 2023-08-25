@@ -125,6 +125,27 @@ RSShapeCollectionTest >> testRemoveOneElement [
 	self assert: collection isEmpty.
 ]
 
+{ #category : #tests }
+RSShapeCollectionTest >> testSortResultArray [
+
+	| shapes a b c d tree e |
+	shapes := { 
+		          ((a := RSBox model: 'a') -> { 1. 1 }).
+		          ((b := RSBox model: 'b') -> { 1. 2 }).
+		          ((c := RSBox model: 'c') -> { 3. 1 }).
+		          ((d := RSBox model: 'd') -> { 1. 4 }).
+		          ((e := RSBox model: 'e') -> { 1. 4. 1 }) }.
+	tree := RSRTreeShapeCollection new.
+	tree sortResultList: shapes.
+
+	self assert: (shapes collect: #key) equals: { 
+			c.
+			e.
+			d.
+			b.
+			a }
+]
+
 { #category : #'tests - removing' }
 RSShapeCollectionTest >> testUpdateExtentShouldUpdateTreeRectangle [
 	| canvas collection box oldExtent newExtent |

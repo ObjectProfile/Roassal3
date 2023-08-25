@@ -402,6 +402,24 @@ RSShape >> index: anObject [
 	self propertyAt: #index put: anObject
 ]
 
+{ #category : #'as yet unclassified' }
+RSShape >> indexesArray [
+
+	| vector |
+	vector := RSGroup new.
+	self indexesArrayIn: vector.
+	^ vector
+]
+
+{ #category : #private }
+RSShape >> indexesArrayIn: aCollection [
+
+	parent ifNil: [ ^ self ].
+
+	parent indexesArrayIn: aCollection.
+	aCollection add: shapeIndex
+]
+
 { #category : #initialization }
 RSShape >> initialize [
 	super initialize.

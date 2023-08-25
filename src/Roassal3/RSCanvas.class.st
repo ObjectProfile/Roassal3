@@ -366,6 +366,12 @@ RSCanvas >> hideEncompassingRectangles [
 	self shouldShowRectangles: false
 ]
 
+{ #category : #private }
+RSCanvas >> indexesArrayIn: aCollection [
+	"do nothing"
+	
+]
+
 { #category : #initialization }
 RSCanvas >> initialize [
 	super initialize.
@@ -628,9 +634,11 @@ RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 
 { #category : #'event processing' }
 RSCanvas >> shapeWithActionForPosition: aPositionInSpace [
+
 	| result |
 	result := self shapesWithActionForPosition: aPositionInSpace.
 	result ifEmpty: [ ^ nil ].
+	result traceCr.
 	^ result first
 ]
 

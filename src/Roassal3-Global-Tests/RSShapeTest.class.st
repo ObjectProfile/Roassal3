@@ -36,6 +36,14 @@ RSShapeTest >> testAllConnectedShapes [
 ]
 
 { #category : #tests }
+RSShapeTest >> testEmptyIndexesArray [
+
+	| box |
+	box := RSBox new.
+	self assert: box indexesArray isEmpty
+]
+
+{ #category : #tests }
 RSShapeTest >> testHasModel [
 
 	self deny: RSCircle new hasModel.
@@ -68,6 +76,40 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 	node5 := c shapeFromModel: 5.
 	self assert: node5 incomingShapes equals: (c shapesFromModels: #(2)).
 	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11))
+]
+
+{ #category : #tests }
+RSShapeTest >> testIndexesArray [
+
+	| box canvas |
+	box := RSBox new.
+	canvas := RSCanvas new.
+	canvas add: box.
+	
+	self assert: box indexesArray size equals: 1.
+	self assert: box indexesArray first equals: 1
+]
+
+{ #category : #tests }
+RSShapeTest >> testIndexesArrayWithComposites [
+
+	| box canvas comp box1 comp1 |
+	box := RSBox new.
+	box1 := RSBox new.
+	comp := { box } asShape.
+	comp1 := { box1 } asShape.
+	canvas := RSCanvas new.
+	canvas
+		add: comp;
+		add: comp1.
+
+	self assert: box indexesArray size equals: 2.
+	self assert: box indexesArray first equals: 1.
+	self assert: box indexesArray second equals: 1.
+	
+	self assert: box1 indexesArray size equals: 2.
+	self assert: box1 indexesArray first equals: 2.
+	self assert: box1 indexesArray second equals: 1
 ]
 
 { #category : #tests }

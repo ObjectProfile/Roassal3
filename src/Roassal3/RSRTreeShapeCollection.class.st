@@ -133,12 +133,16 @@ RSRTreeShapeCollection >> root [
 
 { #category : #'finding/searching' }
 RSRTreeShapeCollection >> shapesAtPoint: aPoint [
+
 	| res |
 	"very important to preserv the drawing order"
 	res := RSGroup new.
 	root nodesWithPoint: aPoint list: res.
-	res sort: [:a :b | a shapeIndex > b shapeIndex ].
-	^ res 
+	res := res collect: [ :s | s -> s indexesArray ].
+
+	self sortResultList: res.
+
+	^ res collect: [ :assoc | assoc key ]
 ]
 
 { #category : #'finding/searching' }
@@ -148,6 +152,35 @@ RSRTreeShapeCollection >> shapesAtRectangle: aRectangle [
 	root nodesIntersetcsRectangle: aRectangle list: res.
 	res sort: [:a :b | a shapeIndex < b shapeIndex ].
 	^ res
+]
+
+{ #category : #public }
+RSRTreeShapeCollection >> shouldSwap: anAssociation and: anAssociation2 [ 
+	
+	| v1 v2 size|
+	v1 := anAssociation value.
+	v2 := anAssociation2 value.
+
+	size := v1 size min: v2 size.
+	1 to: size do: [ :i| |index1 index2|
+		index1 := v1 at: i.
+		index2 := v2 at: i.
+		index1 = index2 ifFalse: [ 
+			^ index1 > index2 ]
+	].
+	^ v1 size = v2 size 
+		ifTrue: [ false ]
+		ifFalse: [ v1 size > v2 size  ]
+
+]
+
+{ #category : #public }
+RSRTreeShapeCollection >> sortResultList: aCollection [
+
+	aCollection sort: [ :a :b | 
+		
+		self shouldSwap: a and: b
+		 ]
 ]
 
 { #category : #'finding/searching' }
