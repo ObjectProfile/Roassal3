@@ -909,6 +909,7 @@ RSBlocExamples >> example23Flor [
 
 { #category : #examples }
 RSBlocExamples >> example24AnimationLinesInComposite [
+
 	<script: 'self new example24AnimationLinesInComposite open'>
 	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
 	canvas := RSCanvas new.
@@ -919,56 +920,77 @@ RSBlocExamples >> example24AnimationLinesInComposite [
 	hueOffset := 0.
 	angleSp := 0.
 	"<globals>"
-	soffset := nil. size := nil. mult := 0.
+	soffset := nil.
+	size := nil.
+	mult := 0.
 	"</globals>"
 	shape := [ :array |
-		array collect: [ :m | | com ang a line |
-			com := RSComposite new.
-			com model: m + soffset.
-			ang := m degreesToRadians.
-			a := Float halfPi + ang.
-			com propertyAt: #offset put: a * size.
-			line := RSLine new
-				width: 1.5;
-				yourself.
-				
-			com add: line.
-			com translateTo: ang cos @ ang sin * radius * mult.
-			com matrix rotateByRadians: a.
-			com ] ].
-	
-	soffset := 0. size := 12. mult := 1.
+	         array collect: [ :m |
+		         | com ang a line |
+		         com := RSComposite new.
+		         com model: m + soffset.
+		         ang := m degreesToRadians.
+		         a := Float halfPi + ang.
+		         com propertyAt: #offset put: a * size.
+		         line := RSLine new
+			                 width: 1.5;
+			                 yourself.
+
+		         com add: line.
+		         com translateTo: ang cos @ ang sin * radius * mult.
+		         com matrix rotateByRadians: a.
+		         com ] ].
+
+	soffset := 0.
+	size := 12.
+	mult := 1.
 	shapes := shape value: (0 to: 359 by: 12).
 	canvas addAll: shapes.
-	
-	soffset := 180. size := 8. mult := 0.5.
+
+	soffset := 180.
+	size := 8.
+	mult := 0.5.
 	shapes := shape value: (0 to: 359 by: 5).
 	canvas addAll: shapes.
-	
-	soffset := 120. size := 4. mult := 0.5@0.75.
+
+	soffset := 120.
+	size := 4.
+	mult := 0.5 @ 0.75.
 	shapes := shape value: (0 to: 359 by: 5).
-	canvas addAll: shapes."
+	canvas addAll: shapes. "
 	
-	"soffset := 240. size := 4. mult := 0.75@0.5.
+	"
+	soffset := 240.
+	size := 4.
+	mult := 0.75 @ 0.5.
 	shapes := shape value: (0 to: 359 by: 5).
 	canvas addAll: shapes.
 	shapes := canvas nodes.
-	canvas addShape: (RSLabel new 
-		text: 'Roassal';
-		fontSize: 30;
-		color: Color white).
+	canvas addShape: (RSLabel new
+			 position: 0 @ -15;
+			 text: 'Roassal';
+			 fontSize: 30;
+			 color: Color white).
+	canvas addShape: (RSLabel new
+			 position: 0 @ 15;
+			 text: 'on Bloc';
+			 fontSize: 30;
+			 color: Color white).
 	canvas newAnimation repeat onStepDo: [ :t |
-		frame := frame + 1. 
+		frame := frame + 1.
 		angleSp := frame / 300 * Float twoPi.
 		hueOffset := hueOffset + 1.
-		shapes do: [ :s | | pos line |
+		shapes do: [ :s |
+			| pos line |
 			pos := (angleSp negated + (s propertyAt: #offset)) cos * 30.
 			line := s shapes first.
 			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
-			line endPoint: 0@ pos ].
-			canvas signalUpdate.
-		 ].
-	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
+			line endPoint: 0 @ pos ].
+		canvas signalUpdate ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ]
+		for: self.
 	^ canvas
 ]
 
