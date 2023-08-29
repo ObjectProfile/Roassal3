@@ -44,13 +44,13 @@ RSClusterChart >> beforeRenderingIn: aChart [
 
 { #category : #private }
 RSClusterChart >> clusterBandValues [
-	positions := Set new.
+	positions := OrderedCollection new.
 	self plots do: [ :plot |
 		plot computeXAndYValues.
-		plot positions do: [ :value | positions add: value ].
+		positions addAll: plot positions.
 	].
-	positions := positions asOrderedCollection.
-	^ positions.
+	positions removeDuplicates.
+	^ positions
 ]
 
 { #category : #accessing }
