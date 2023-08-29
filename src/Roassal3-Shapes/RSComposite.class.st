@@ -175,6 +175,24 @@ RSComposite class >> models: aCollection box: boxShape label: labelShape [
 ]
 
 { #category : #'public - creation' }
+RSComposite class >> models: models boxes: boxShapes labels: labelShapes [
+
+	| shapes |
+	shapes := RSGroup new.
+	models doWithIndex: [ :each :i |
+		| box label shape |
+		label := labelShapes at: i.
+		label text: each asString.
+		box := boxShapes at: i.
+		box extent: label extent + 5.
+		shape := { box . label } asShape
+			model: each;
+			yourself.
+		shapes add: shape ].
+	^ shapes
+]
+
+{ #category : #'public - creation' }
 RSComposite class >> models: someObjects forEach: twoArgsBlock [
 	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock.
 
