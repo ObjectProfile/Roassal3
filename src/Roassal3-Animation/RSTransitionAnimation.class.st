@@ -54,6 +54,39 @@ RSTransitionAnimation >> initialize [
 	self onStepDo: [ :t | ]
 ]
 
+{ #category : #'api - running' }
+RSTransitionAnimation >> inspectorControls [
+
+	<inspectorPresentationOrder: 0 title: 'Controls'>
+	| slider visualization presenter |
+	
+	slider := SpMorphPresenter new morph: (PluggableSliderMorph new
+			   model: self;
+			   getValueSelector: #progress;
+			   setValueSelector: #stepWithNumber:;
+			   value: self progress;
+			   max: 1;
+			   min: 0;
+			   quantum: 0.01;
+			   setBalloonText: 'move it';
+			   vResizing: #spaceFill;
+			   hResizing: #spaceFill;
+			   yourself);
+			yourself.
+	canvas ifNil: [ ^ slider ].
+	self pause.
+	visualization := SpMorphPresenter new
+		morph: canvas createMorph;
+		yourself.
+	presenter := SpPresenter new.
+	presenter layout: (SpBoxLayout newVertical 
+		add: slider withConstraints: [ :c | 
+			c height: 30; expand: false ];
+		add: visualization;
+		yourself).
+	^ presenter
+]
+
 { #category : #'action handling' }
 RSTransitionAnimation >> on: object set: setSelector [
 	"Key method to set an animation. the first argument receives an object, typically a shape, a border, a line. The second argument is a selector that will be used to set the animated value. The selector must take one argument as parameter. Here is an example:
@@ -169,18 +202,24 @@ RSTransitionAnimation >> scale: aScale [
 ]
 
 { #category : #refreshing }
-RSTransitionAnimation >> step [
-	| value progress |
-	progress := self progress.
-	value := self progressValue: progress.
-	stepAction cull: value.
-	progress == 1 ifTrue: [self loopDone].
-	self updateHasCompleted
+RSTransitionAnimation >> step [	
+	self stepWithNumber: self progress
+
 ]
 
 { #category : #accessing }
 RSTransitionAnimation >> stepAction [
 	^ stepAction
+]
+
+{ #category : #refreshing }
+RSTransitionAnimation >> stepWithNumber: progress [
+	"progress shuld be a number between 0 and 1"
+	| value |	
+	value := self progressValue: progress.
+	stepAction cull: value.
+	progress == 1 ifTrue: [self loopDone].
+	self updateHasCompleted
 ]
 
 { #category : #accessing }
