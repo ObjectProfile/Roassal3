@@ -2,7 +2,7 @@
 An experimental debugger for roassal3 animations
 "
 Class {
-	#name : #RSDebuggerExtension,
+	#name : #RSAnimationDebuggerExtension,
 	#superclass : #SpPresenterWithModel,
 	#traits : 'TStDebuggerExtension',
 	#classTraits : 'TStDebuggerExtension classTrait',
@@ -13,34 +13,14 @@ Class {
 	#category : #'Roassal3-Debugger'
 }
 
-{ #category : #specs }
-RSDebuggerExtension class >> defaultSpec [ 
-	^ SpBoxLayout newTopToBottom 
-]
+{ #category : #layout }
+RSAnimationDebuggerExtension >> debuggerLayout [
 
-{ #category : #'as yet unclassified' }
-RSDebuggerExtension class >> showInContext: aContext [
-
-	^(aContext findContextSuchThat: [:ctx | ctx receiver isKindOf: RSAbstractAnimation]) notNil
-]
-
-{ #category : #'debugger extension' }
-RSDebuggerExtension >> debuggerExtensionToolName [
-	^'Roassal animation view'
-]
-
-{ #category : #'debugger extension' }
-RSDebuggerExtension >> displayOrder [
-	^ self class displayOrder
+	^ SpBoxLayout newVertical.
 ]
 
 { #category : #initialization }
-RSDebuggerExtension >> setModelBeforeInitialization: aDebugger [
-	debugger := aDebugger
-]
-
-{ #category : #initialization }
-RSDebuggerExtension >> updatePresenter [ 
+RSAnimationDebuggerExtension >> updatePresenter [ 
 	(debugger interruptedContext findContextSuchThat: [:ctx | ctx receiver isKindOf: RSAbstractAnimation]) ifNotNil: [ :ctx| 
 		canvas := ctx receiver canvas. 
 		canvas ifNotNil: [ 
@@ -50,7 +30,7 @@ RSDebuggerExtension >> updatePresenter [
 			canvasCopy addAll: (canvas shapes collect: #copy).
 			canvasCopy addAll: (canvas fixedShapes collect: #copy).
 			self layout: (SpBoxLayout newTopToBottom 
-				add: (SpMorphPresenter  new
+				add: (SpMorphPresenter new
 					morph: canvasCopy createMorph;
 					yourself);
 				yourself).
