@@ -608,11 +608,6 @@ RSCanvas >> setAsFixed: aShape [
 ]
 
 { #category : #accessing }
-RSCanvas >> shapeCollection [
-	^ shapeCollection
-]
-
-{ #category : #accessing }
 RSCanvas >> shapeCollection: anRSShapeCollection [
 	shapeCollection := anRSShapeCollection.
 	shapeCollection bulkLoad: shapes.
@@ -638,7 +633,6 @@ RSCanvas >> shapeWithActionForPosition: aPositionInSpace [
 	| result |
 	result := self shapesWithActionForPosition: aPositionInSpace.
 	result ifEmpty: [ ^ nil ].
-	result traceCr.
 	^ result first
 ]
 

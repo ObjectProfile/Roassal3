@@ -76,7 +76,7 @@ SpRSTransitionInspectorPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #controls }
 SpRSTransitionInspectorPresenter >> disableDebuggingControls [
 
 	slider disable.
@@ -84,7 +84,7 @@ SpRSTransitionInspectorPresenter >> disableDebuggingControls [
 	debug disable
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #controls }
 SpRSTransitionInspectorPresenter >> enableDebuggingControls [
 
 	sliderMorph updateValue.

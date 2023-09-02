@@ -402,7 +402,7 @@ RSShape >> index: anObject [
 	self propertyAt: #index put: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RSShape >> indexesArray [
 
 	| vector |
