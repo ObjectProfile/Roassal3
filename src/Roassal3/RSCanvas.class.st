@@ -416,6 +416,11 @@ RSCanvas >> newBox [
 ]
 
 { #category : #'adding - nodes edges' }
+RSCanvas >> newCircle [
+	^ self add: RSCircle new
+]
+
+{ #category : #'adding - nodes edges' }
 RSCanvas >> newLabel [
 	^ self add: RSLabel new
 ]
