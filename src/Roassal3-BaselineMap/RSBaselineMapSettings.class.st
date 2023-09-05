@@ -46,7 +46,7 @@ RSBaselineMapSettings class >> settingsClassOn: aBuilder [
 RSBaselineMapSettings class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #baselineMap)
-		label: #pharoSystem;
+		parent: #Calypso;
 		label: 'Baseline Map';
 		description: 'Used to generate a visual map'
 ]
