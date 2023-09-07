@@ -18,7 +18,7 @@ Class {
 { #category : #examples }
 RSCircleVennDiagram class >> example1 [
 
-	self new
+	^ self new
 		bigSet: { 1. 2. 3. 4. 5. 6. 8. 9. 0. 0. 8 };
 		smallSet: { 1. 2. 10. 20. 50. 14 };
 		open
