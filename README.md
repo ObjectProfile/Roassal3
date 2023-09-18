@@ -5,6 +5,7 @@
 WE ARE MOVING
 - Roassal3 => https://github.com/pharo-graphics/Roassal
 - Roassal3Exporters => https://github.com/pharo-graphics/RoassalExporters
+- Roassal3Documentation => https://github.com/pharo-graphics/RoassalDocumentation
   
 New repositories:
 - RoassalLayouts =>  https://github.com/pharo-graphics/RoassalLayouts
