@@ -1,4 +1,4 @@
-# Roassal3
+# Roassal
 [![CI](https://github.com/pharo-graphics/Roassal/actions/workflows/runTests.yml/badge.svg)](https://github.com/pharo-graphics/Roassal/actions/workflows/runTests.yml)
 ![Discord](https://img.shields.io/discord/223421264751099906)
 [![Coverage](https://raw.githubusercontent.com/pharo-graphics/Roassal/master/ci_data/coverageBadge.svg)](https://github.com/pharo-graphics/Roassal/blob/master/ci_data/coverage.png)
@@ -11,11 +11,11 @@
 
 [*Chat with us on #Roassal*](https://discord.gg/QewZMZa)
 
-[*Visualize the test coverage of Roassal3*](https://github.com/pharo-graphics/Roassal/blob/master/ci_data/coverage.png)
+[*Visualize the test coverage of Roassal*](https://github.com/pharo-graphics/Roassal/blob/master/ci_data/coverage.png)
 
 Old code is here: https://github.com/ObjectProfile/Roassal3
 
-Roassal3 is an agile visualization engine for [Pharo](http://pharo.org). Roassal was created to enable interactive data visualization, it contains a different groups of shapes an lines that you can use to build your projects, also animations, attach points, events, layouts and a basic chart library.
+Roassal is an agile visualization engine for [Pharo](http://pharo.org). Roassal was created to enable interactive data visualization, it contains a different groups of shapes an lines that you can use to build your projects, also animations, attach points, events, layouts and a basic chart library.
 Roassal use cairo graphics as backend, in a future will support new backends.
 Roassal allows to user to extent the presentation of any object thanks to the inspector. Also it has integration with [spec](https://github.com/pharo-spec/Spec) and also with morphic world
 
@@ -86,16 +86,16 @@ You should see a layout editor browser to choose a layout with the current param
 
 Visit the [documentation github page](https://github.com/pharo-graphics/RoassalDocumentation)
 
-A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal3: https://github.com/pharo-graphics/Roassal/wiki
+A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal: https://github.com/pharo-graphics/Roassal/wiki
 
-## Roassal3 as a dependent application
-If you wish to set a dependency to Roassal3 in your application, you simply need to add the following in your baseline:
+## Roassal as a dependent application
+If you wish to set a dependency to Roassal in your application, you simply need to add the following in your baseline:
 
 ```Smalltalk
 spec baseline: 'Roassal' with: [ spec repository: 'github://pharo-graphics/Roassal/src' ].
 ```
 
-To depend on a full version of Roassal3, you may use:
+To depend on a full version of Roassal, you may use:
 
 ```Smalltalk
 baseline: 'Roassal' with: [ spec repository: 'github://pharo-graphics/Roassal/src'; loads: #('Full') ];
