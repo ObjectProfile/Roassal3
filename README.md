@@ -19,7 +19,7 @@ Roassal3 is an agile visualization engine for [Pharo](http://pharo.org). Roassal
 Roassal use cairo graphics as backend, in a future will support new backends.
 Roassal allows to user to extent the presentation of any object thanks to the inspector. Also it has integration with [spec](https://github.com/pharo-spec/Spec) and also with morphic world
 
-Sister projects: [RoassalDocumentation](https://github.com/pharo-project/RoassalDocumentation), [RoassalExporters](https://github.com/pharo-project/RoassalExporters).
+Sister projects: [RoassalDocumentation](https://github.com/pharo-graphics/RoassalDocumentation), [RoassalExporters](https://github.com/pharo-graphics/RoassalExporters).
 
 ## Pharo Installations
 Roassal is included from Pharo 9 to 12. This means that you do not need to install anything else. Pharo contains Roassal 0.9.6b.
@@ -31,7 +31,7 @@ If you wish to install Roassal in Pharo, then execute the following code snippet
 ```Smalltalk
 Metacello new
     baseline: 'Roassal';
-    repository: 'github://pharo-project/Roassal';
+    repository: 'github://pharo-graphics/Roassal';
     load.
 ```
 
@@ -41,7 +41,7 @@ If you wish to have the lastest release of Roassal, then execute the following c
 ```Smalltalk
 [Metacello new
     baseline: 'Roassal';
-    repository: 'github://pharo-project/Roassal';
+    repository: 'github://pharo-graphics/Roassal';
     load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ]
 ```
 
@@ -66,39 +66,39 @@ RSAnimationExamples new example03Atom open
 ```
 You should see:
 
-<img width="250" height="250" alt="atom" src="https://github.com/pharo-project/Roassal/raw/master/images/example03atom.gif?raw=true">
+<img width="250" height="250" alt="atom" src="https://github.com/pharo-graphics/Roassal/raw/master/images/example03atom.gif?raw=true">
 
 ```Smalltalk
 RSExamplesBrowser new open
 ```
 You should see an interactive browser with left right buttons to browse:
 
-<img height="350" alt="exampleBrowser" src="https://github.com/pharo-project/Roassal/raw/master/images/exampleBrowser.png?raw=true">
+<img height="350" alt="exampleBrowser" src="https://github.com/pharo-graphics/Roassal/raw/master/images/exampleBrowser.png?raw=true">
 
 ```Smalltalk
 RSLayoutStudio new open
 ```
 You should see a layout editor browser to choose a layout with the current parameters:
 
-<img height="350" alt="layoutStudio" src="https://github.com/pharo-project/Roassal/raw/master/images/layoutStudio.png?raw=true">
+<img height="350" alt="layoutStudio" src="https://github.com/pharo-graphics/Roassal/raw/master/images/layoutStudio.png?raw=true">
 
 ## Documentation
 
-Visit the [documentation github page](https://github.com/pharo-project/RoassalDocumentation)
+Visit the [documentation github page](https://github.com/pharo-graphics/RoassalDocumentation)
 
-A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal3: https://github.com/pharo-project/Roassal/wiki
+A major effort on writing documentation is under way. The wiki pages are yet another source of documentation for Roassal3: https://github.com/pharo-graphics/Roassal/wiki
 
 ## Roassal3 as a dependent application
 If you wish to set a dependency to Roassal3 in your application, you simply need to add the following in your baseline:
 
 ```Smalltalk
-spec baseline: 'Roassal' with: [ spec repository: 'github://pharo-project/Roassal/src' ].
+spec baseline: 'Roassal' with: [ spec repository: 'github://pharo-graphics/Roassal/src' ].
 ```
 
 To depend on a full version of Roassal3, you may use:
 
 ```Smalltalk
-baseline: 'Roassal' with: [ spec repository: 'github://pharo-project/Roassal/src'; loads: #('Full') ];
+baseline: 'Roassal' with: [ spec repository: 'github://pharo-graphics/Roassal/src'; loads: #('Full') ];
 ```
 _____
 ## Get in touch
