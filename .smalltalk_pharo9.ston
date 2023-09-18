@@ -1,0 +1,16 @@
+SmalltalkCISpec {
+  #preLoading: 'scripts/preLoading.st',
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Roassal3',
+      #directory : 'src',
+      #load : [ 'Core', 'Tests' ],
+      #platforms : [ #pharo ]
+    }
+  ],
+  #testing : {
+    #coverage : {
+      #packages : [ 'Roassal3*' ]
+    }
+  }
+}
