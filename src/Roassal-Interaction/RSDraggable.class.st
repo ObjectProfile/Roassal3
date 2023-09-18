@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'shouldValidateChildrenEvents'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #public }

@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSAlpharoExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Experimental-Alpharo'
+	#category : #'Roassal-Experimental-Alpharo'
 }
 
 { #category : #running }
@@ -22,7 +22,7 @@ RSAlpharoExample >> example02Classes [
 
 	<script: 'self new example02Classes'>
 	| b classes |
-	classes := (RPackage organizer packageNamed: 'Roassal3-Experimental')
+	classes := (RPackage organizer packageNamed: 'Roassal-Experimental')
 		           definedClasses.
 	classes := classes select: [ :cls | cls comment size < 10 ].
 	b := RSAlpharo new.

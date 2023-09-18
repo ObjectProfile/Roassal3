@@ -41,7 +41,7 @@ Class {
 		'bars',
 		'binningStrategy'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #'instance creation' }

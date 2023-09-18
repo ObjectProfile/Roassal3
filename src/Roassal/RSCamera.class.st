@@ -42,7 +42,7 @@ Class {
 		'originMode',
 		'matrix'
 	],
-	#category : #'Roassal3-Camera'
+	#category : #'Roassal-Camera'
 }
 
 { #category : #utilities }

@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-Spec-Obsolete' }
+Package { #name : #'Roassal-Spec-Obsolete' }

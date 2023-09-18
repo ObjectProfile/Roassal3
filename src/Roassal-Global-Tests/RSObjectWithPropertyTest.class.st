@@ -1,7 +1,7 @@
 Class {
 	#name : #RSObjectWithPropertyTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Examples'
+	#category : #'Roassal-Global-Tests-Examples'
 }
 
 { #category : #tests }

@@ -6,7 +6,7 @@ Class {
 		'visualization',
 		'examplesClass'
 	],
-	#category : #'Roassal3-Bloc-Examples'
+	#category : #'Roassal-Bloc-Examples'
 }
 
 { #category : #specs }
@@ -60,7 +60,7 @@ RSExamplesBrowserPresenter >> initializePresenters [
 RSExamplesBrowserPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
-		title: 'Roassal3 Examples Browser - ', examplesClass name;
+		title: 'Roassal Examples Browser - ', examplesClass name;
 		initialExtent: 800 @ 600;
 		centered
 ]

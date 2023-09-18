@@ -1,28 +1,28 @@
 Extension { #name : #SequenceableCollection }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> argmax [
 	"#(1 -3 5 1) argmax >>> 3"
 	"#(1 1 1 1) argmax >>> 1"
 	^ self indexOf: self max
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> asGroup [
 	^ (RSGroup new: self size) addAll: self; yourself
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> max: aSelectorOrOneArgBlock [
 	^ (self collect: aSelectorOrOneArgBlock) max
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> min: aSelectorOrOneArgBlock [
 	^ (self collect: aSelectorOrOneArgBlock) min
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> reverseSortedAs: aSortBlockOrSymbol [
 	"Answer a SortedCollection whose elements are the elements of the
 	receiver. The sort order is defined by the argument, aSortBlock."
@@ -46,7 +46,7 @@ SequenceableCollection >> reverseSortedAs: aSortBlockOrSymbol [
 	^ aSortedCollection
 ]
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 SequenceableCollection >> sortedAs: aSortBlockOrSymbol [
 	"Answer a SortedCollection whose elements are the elements of the
 	receiver. The sort order is defined by the argument, aSortBlock."

@@ -10,7 +10,7 @@ For more information, see the class methods and instance variables of RSCircleLa
 Class {
 	#name : #RSCircleLayout,
 	#superclass : #RSAbstractCircleLayout,
-	#category : #'Roassal3-Layouts-Circle'
+	#category : #'Roassal-Layouts-Circle'
 }
 
 { #category : #examples }

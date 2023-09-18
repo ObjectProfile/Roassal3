@@ -24,7 +24,7 @@ Class {
 		'hasHorizontalScrolling',
 		'hasVerticalScrolling'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #events }

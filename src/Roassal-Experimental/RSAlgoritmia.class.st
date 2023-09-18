@@ -25,7 +25,7 @@ Class {
 		'border',
 		'animation'
 	],
-	#category : #'Roassal3-Experimental-Animations'
+	#category : #'Roassal-Experimental-Animations'
 }
 
 { #category : #update }

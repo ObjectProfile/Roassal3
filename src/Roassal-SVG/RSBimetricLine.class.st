@@ -33,7 +33,7 @@ Class {
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal3-SVG-Shapes'
+	#category : #'Roassal-SVG-Shapes'
 }
 
 { #category : #initialization }

@@ -14,7 +14,7 @@ Symmetric circular easing; scales circleIn for t in {0. 0.5} and circleOut for t
 Class {
 	#name : #RSCircleInterpolator,
 	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #interpolation }

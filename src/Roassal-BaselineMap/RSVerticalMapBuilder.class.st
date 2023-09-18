@@ -4,7 +4,7 @@ I change the layout in a vertical stacked version
 Class {
 	#name : #RSVerticalMapBuilder,
 	#superclass : #RSThemedMapBuilder,
-	#category : #'Roassal3-BaselineMap-Customs'
+	#category : #'Roassal-BaselineMap-Customs'
 }
 
 { #category : #hooks }

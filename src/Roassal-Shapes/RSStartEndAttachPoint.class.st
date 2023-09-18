@@ -8,7 +8,7 @@ Class {
 		'startAttachPoint',
 		'endAttachPoint'
 	],
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : #'Roassal-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }

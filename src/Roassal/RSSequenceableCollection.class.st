@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'group'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #adding }

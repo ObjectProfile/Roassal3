@@ -1,6 +1,6 @@
 Extension { #name : #RSControlConfiguration }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSControlConfiguration class >> example1 [
 	| c controller |
 	c := RSCanvas new.
@@ -10,11 +10,11 @@ RSControlConfiguration class >> example1 [
 	^ c open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSControlConfiguration class >> example2 [
 	| canvas shapes int |
 	canvas := RSCanvas new.
-	shapes := RSLabel models: #('hello' 'world' 'from' 'Roassal3').
+	shapes := RSLabel models: #('hello' 'world' 'from' 'Roassal').
 	canvas addAll: shapes.
 	RSVerticalLineLayout on: shapes.
 	int := RSCanvasController new.

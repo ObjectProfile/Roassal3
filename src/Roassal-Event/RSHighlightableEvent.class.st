@@ -8,7 +8,7 @@ Class {
 		'source',
 		'interaction'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #accessing }

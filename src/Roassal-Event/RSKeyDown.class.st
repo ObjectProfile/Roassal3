@@ -18,5 +18,5 @@ c open
 Class {
 	#name : #RSKeyDown,
 	#superclass : #RSKeyboardEvent,
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }

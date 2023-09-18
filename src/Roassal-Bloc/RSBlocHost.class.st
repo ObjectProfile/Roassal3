@@ -9,7 +9,7 @@ Class {
 		'canvasElement',
 		'lastMousePosition'
 	],
-	#category : #'Roassal3-Bloc-Core'
+	#category : #'Roassal-Bloc-Core'
 }
 
 { #category : #opening }

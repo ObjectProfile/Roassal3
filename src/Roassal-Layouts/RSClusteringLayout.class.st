@@ -10,7 +10,7 @@ Class {
 		'clustersLayout',
 		'forEachLayout'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal-Layouts-Core'
 }
 
 { #category : #accessing }

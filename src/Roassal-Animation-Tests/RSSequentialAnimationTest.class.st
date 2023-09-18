@@ -4,7 +4,7 @@ I have test for sequential animation
 Class {
 	#name : #RSSequentialAnimationTest,
 	#superclass : #RSAnimationTest,
-	#category : #'Roassal3-Animation-Tests'
+	#category : #'Roassal-Animation-Tests'
 }
 
 { #category : #tests }

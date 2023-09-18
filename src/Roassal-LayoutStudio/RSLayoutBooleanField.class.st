@@ -4,7 +4,7 @@ Used to have boolean fields
 Class {
 	#name : #RSLayoutBooleanField,
 	#superclass : #RSLayoutField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #rendering }

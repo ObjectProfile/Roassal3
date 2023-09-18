@@ -1,11 +1,11 @@
 Extension { #name : #RSVerticalCellLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSVerticalCellLayout class >> alignmentOptions [
 	^ #(left center right none)
 ]
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSVerticalCellLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new

@@ -19,7 +19,7 @@ Class {
 		'cameraDelta',
 		'shouldProcessInteraction'
 	],
-	#category : #'Roassal3-Interaction-ElasticBox'
+	#category : #'Roassal-Interaction-ElasticBox'
 }
 
 { #category : #announcer }

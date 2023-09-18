@@ -9,7 +9,7 @@ rembember a balance tree offers a better search experience
 Class {
 	#name : #RSBulkLoadRTreeCollection,
 	#superclass : #RSRTreeShapeCollection,
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #adding }

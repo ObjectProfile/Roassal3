@@ -10,7 +10,7 @@ Class {
 		'rainbowColors',
 		'tileColor'
 	],
-	#category : #'Roassal3-Experimental-Animations'
+	#category : #'Roassal-Experimental-Animations'
 }
 
 { #category : #building }

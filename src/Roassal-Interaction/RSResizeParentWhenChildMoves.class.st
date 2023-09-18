@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'padding'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #hooks }

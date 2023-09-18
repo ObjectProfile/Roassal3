@@ -11,7 +11,7 @@ Class {
 		'labelShapeCell',
 		'gradientLegend'
 	],
-	#category : #'Roassal3-DSM-Core'
+	#category : #'Roassal-DSM-Core'
 }
 
 { #category : #public }

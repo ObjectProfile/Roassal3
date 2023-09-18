@@ -4,7 +4,7 @@ examples from RSKiviat
 Class {
 	#name : #RSKiviatExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

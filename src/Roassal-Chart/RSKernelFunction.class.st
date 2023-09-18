@@ -1,7 +1,7 @@
 Class {
 	#name : #RSKernelFunction,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Chart-Statistics'
+	#category : #'Roassal-Chart-Statistics'
 }
 
 { #category : #'instance creation' }

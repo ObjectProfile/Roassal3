@@ -4,7 +4,7 @@ A RSCircularAroundAVertexLayoutTest is a test class for testing the behavior of 
 Class {
 	#name : #RSCircularAroundAVertexLayoutTest,
 	#superclass : #RSLayoutTest,
-	#category : #'Roassal3-Layouts-Tests'
+	#category : #'Roassal-Layouts-Tests'
 }
 
 { #category : #tests }

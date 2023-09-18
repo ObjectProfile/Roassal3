@@ -4,7 +4,7 @@ Examples of RSHistogramPlot
 Class {
 	#name : #RSHistogramExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

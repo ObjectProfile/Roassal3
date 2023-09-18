@@ -1,6 +1,6 @@
 Extension { #name : #RSBox }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBox >> asBlGeometry [
 
 	^ BlRectangleGeometry new

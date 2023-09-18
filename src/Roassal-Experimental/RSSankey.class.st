@@ -22,7 +22,7 @@ Class {
 		'lines',
 		'boxColor'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : #'Roassal-Experimental-Sankey'
 }
 
 { #category : #'instance creation' }

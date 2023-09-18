@@ -12,7 +12,7 @@ Class {
 		'preferredAngle',
 		'shouldUseProgressBar'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal-Layouts-Core'
 }
 
 { #category : #examples }

@@ -4,7 +4,7 @@ I have examples for animation
 Class {
 	#name : #RSAnimationExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #examples }
@@ -1612,7 +1612,7 @@ RSAnimationExamples >> example24RoassalPerlinNoise [
 	v2 color: Color black.
 
 	v2 addShape: (TSLabel new
-		text: 'Roassal3';
+		text: 'Roassal';
 		fontName: 'Impact';
 		fontSize: 150;
 		border: (TSBorder new color: Color white trans)).
@@ -2173,7 +2173,7 @@ RSAnimationExamples >> example32SimpleClock [
 		         color: Color white;
 		         text: t;
 		         yourself ].
-	roassal := label value: 'Roassal3 2019'.
+	roassal := label value: 'Roassal 2019'.
 	clock := label value: Time now print24.
 	clock fontSize: 100.
 	canvas add: roassal.
@@ -2301,7 +2301,7 @@ RSAnimationExamples >> example35Roassal [
 	<script: 'self new example35Roassal open'>
 	| canvas points paint fscale timeSize text |
 	canvas := RSCanvas new.
-	text := 'Roassal3'.
+	text := 'Roassal'.
 	points := RSPolygon generateUnitNgonPoints: 3 rotation: Float pi.
 
 	canvas addShape: (RSPolygon new
@@ -2380,7 +2380,7 @@ RSAnimationExamples >> example36Title [
 	<script: 'self new example36Title open setLabel: ''Basic Animation'''>
 	| c t1 t2 s line1 line2 line3 line4 title desc r1 r2 pad mid marker sum lineAnime p lblbase |
 	c := RSCanvas new.
-	t1 := 'Roassal3'.
+	t1 := 'Roassal'.
 	t2 := 'It is a new agile visualization engine
 for Pharo 8 and Pharo 9.'.
 	lblbase := RSLabel new

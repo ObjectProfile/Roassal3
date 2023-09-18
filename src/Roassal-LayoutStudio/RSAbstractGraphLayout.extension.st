@@ -1,6 +1,6 @@
 Extension { #name : #RSAbstractGraphLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSAbstractGraphLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutNumberField new

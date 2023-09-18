@@ -7,12 +7,12 @@ http://colorbrewer2.org/learnmore/schemes_full.html
 ---Copyright:
 All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania State University.
 Code by Cynthia is under the Apache License 2.0 (https://github.com/axismaps/colorbrewer/blob/master/LICENCE.txt)
-Roassal3 is distributed under the MIT License, which is compatible with Apache License 2.0 
+Roassal is distributed under the MIT License, which is compatible with Apache License 2.0 
 "
 Class {
 	#name : #RSSequentialColorPalette,
 	#superclass : #RSColorPalette,
-	#category : #'Roassal3-Colors'
+	#category : #'Roassal-Colors'
 }
 
 { #category : #accessing }

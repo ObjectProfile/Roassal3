@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'wrapMaxWidth'
 	],
-	#category : #'Roassal3-Builders-Text'
+	#category : #'Roassal-Builders-Text'
 }
 
 { #category : #initialization }

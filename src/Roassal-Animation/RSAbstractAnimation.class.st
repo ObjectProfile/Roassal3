@@ -1,5 +1,5 @@
 "
-I am the abstract class that defines animations for roassal3
+I am the abstract class that defines animations for Roassal
 "
 Class {
 	#name : #RSAbstractAnimation,
@@ -23,7 +23,7 @@ Class {
 		'canvas',
 		'firstStep'
 	],
-	#category : #'Roassal3-Animation-Core'
+	#category : #'Roassal-Animation-Core'
 }
 
 { #category : #'accessing - defaults' }

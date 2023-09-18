@@ -16,7 +16,7 @@ Class {
 		'compositions',
 		'isAbstract'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : #'Roassal-UML-Descriptor'
 }
 
 { #category : #accessing }

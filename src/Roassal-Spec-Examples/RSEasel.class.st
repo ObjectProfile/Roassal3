@@ -17,7 +17,7 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Examples-Menu'
+	#category : #'Roassal-Spec-Examples-Menu'
 }
 
 { #category : #layout }
@@ -104,7 +104,7 @@ RSEasel >> initializePresenters [
 { #category : #initialization }
 RSEasel >> initializeWindow: w [
 	w
-		title: 'Roassal3 Spec';
+		title: 'Roassal Spec';
 		initialExtent: 800@500
 ]
 

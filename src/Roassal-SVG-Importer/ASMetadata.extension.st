@@ -1,6 +1,6 @@
 Extension { #name : #ASMetadata }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASMetadata >> asShape [
 	^ nil
 ]

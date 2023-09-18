@@ -4,7 +4,7 @@ Nil node for RSRenderTree
 Class {
 	#name : #RSRNilNode,
 	#superclass : #RSAbstractRNode,
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #adding }

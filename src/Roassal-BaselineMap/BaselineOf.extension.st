@@ -1,6 +1,6 @@
 Extension { #name : #BaselineOf }
 
-{ #category : #'*Roassal3-BaselineMap' }
+{ #category : #'*Roassal-BaselineMap' }
 BaselineOf >> inspectionBaselineMap [
 	<inspectorPresentationOrder: 10 title: 'Dependencies Map'>
 	| canvas |
@@ -9,7 +9,7 @@ BaselineOf >> inspectionBaselineMap [
 		build;
 		canvas.
 
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: canvas;
 		yourself
 ]

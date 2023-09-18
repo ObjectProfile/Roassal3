@@ -6,7 +6,7 @@ Trait {
 	#instVars : [
 		'shapeCollection'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #'adding nodes edges' }

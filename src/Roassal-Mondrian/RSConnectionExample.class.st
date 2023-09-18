@@ -1,7 +1,7 @@
 Class {
 	#name : #RSConnectionExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Mondrian-Examples'
+	#category : #'Roassal-Mondrian-Examples'
 }
 
 { #category : #examples }

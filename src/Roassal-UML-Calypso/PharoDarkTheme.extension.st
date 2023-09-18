@@ -1,6 +1,6 @@
 Extension { #name : #PharoDarkTheme }
 
-{ #category : #'*Roassal3-UML-Calypso' }
+{ #category : #'*Roassal-UML-Calypso' }
 PharoDarkTheme >> classBoxBackgroundColor [
 	^ RSUMLCalypsoSettings darkThemeUMLClassColor
 ]

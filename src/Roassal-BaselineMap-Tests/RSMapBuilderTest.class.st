@@ -4,7 +4,7 @@ A BMMapBuilderTest is a test class for testing the behavior of BMMapBuilder
 Class {
 	#name : #RSMapBuilderTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-BaselineMap-Tests'
+	#category : #'Roassal-BaselineMap-Tests'
 }
 
 { #category : #tests }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'animation'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #events }

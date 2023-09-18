@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'palette'
 	],
-	#category : #'Roassal3-DSM-Variations'
+	#category : #'Roassal-DSM-Variations'
 }
 
 { #category : #rendering }

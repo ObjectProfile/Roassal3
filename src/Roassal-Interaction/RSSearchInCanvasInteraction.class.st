@@ -26,7 +26,7 @@ Class {
 		'minimumSearchSize',
 		'searchBlock'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #public }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'extent'
 	],
-	#category : #'Roassal3-Spec-Events'
+	#category : #'Roassal-Spec-Events'
 }
 
 { #category : #accessing }

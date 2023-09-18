@@ -4,7 +4,7 @@ A class to change the system coordinates in `RSCanvas` and `RSCamera`
 Class {
 	#name : #RSCoordinates,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Camera'
+	#category : #'Roassal-Camera'
 }
 
 { #category : #coordinates }

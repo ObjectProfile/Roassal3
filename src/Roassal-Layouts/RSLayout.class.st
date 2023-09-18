@@ -37,7 +37,7 @@ Class {
 	#instVars : [
 		'translator'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal-Layouts-Core'
 }
 
 { #category : #documentation }
@@ -48,7 +48,7 @@ RSLayout class >> addDocumentSectionHierarchy: aBuilder [
 	SpDocumentHierarchyBuilder new
 		fromClass: RSLayout;
 		builder: aBuilder;
-		filter: [ :eachClass | eachClass package packageName beginsWith: 'Roassal3-' ];
+		filter: [ :eachClass | eachClass package packageName beginsWith: 'Roassal-' ];
 		buildFor: self
 ]
 

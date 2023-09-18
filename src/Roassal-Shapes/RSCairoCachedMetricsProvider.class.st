@@ -1,5 +1,5 @@
 "
-I am a basic example of how to provide a text cache for roassal3 RSLabel text extent. But the idea is to use RSCairoMetricsProvider or RSCairoFitMetricsProvider. Only if you want speed for your labels
+I am a basic example of how to provide a text cache for Roassal RSLabel text extent. But the idea is to use RSCairoMetricsProvider or RSCairoFitMetricsProvider. Only if you want speed for your labels
 
 I use a Dictionary for each font, then for each font there is a new Dictionary where key is a char and value is the width of that char with that value.
 
@@ -36,7 +36,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : #'Roassal3-Shapes-TextMetrics'
+	#category : #'Roassal-Shapes-TextMetrics'
 }
 
 { #category : #hooks }

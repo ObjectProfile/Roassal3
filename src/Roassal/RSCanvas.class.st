@@ -40,7 +40,7 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #'instance creation' }

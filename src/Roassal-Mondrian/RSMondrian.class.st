@@ -32,7 +32,7 @@ Class {
 		'lineBuilder',
 		'depth'
 	],
-	#category : #'Roassal3-Mondrian-Core'
+	#category : #'Roassal-Mondrian-Core'
 }
 
 { #category : #'building - graph' }
@@ -94,7 +94,7 @@ RSMondrian >> initialize [
 RSMondrian >> inspectorVisualization [
 	<inspectorPresentationOrder: 90 title: 'Mondrian'>
 	self build.
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: self canvas;
 		yourself
 ]

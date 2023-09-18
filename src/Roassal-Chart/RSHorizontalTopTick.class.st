@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'values'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #rendering }

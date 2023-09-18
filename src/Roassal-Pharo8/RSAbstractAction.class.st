@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'presentation'
 	],
-	#category : #'Roassal3-Pharo8'
+	#category : #'Roassal-Pharo8'
 }
 
 { #category : #public }

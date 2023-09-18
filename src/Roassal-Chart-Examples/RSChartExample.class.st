@@ -4,7 +4,7 @@ I have basic examples for RSChart and some of their decorators
 Class {
 	#name : #RSChartExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

@@ -4,7 +4,7 @@ I excecute my animations at the same time
 Class {
 	#name : #RSParallelAnimation,
 	#superclass : #RSCompositeAnimation,
-	#category : #'Roassal3-Animation-Core'
+	#category : #'Roassal-Animation-Core'
 }
 
 { #category : #actions }

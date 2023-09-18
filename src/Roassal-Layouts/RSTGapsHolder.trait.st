@@ -3,7 +3,7 @@ This trait provides methods to propagate the vertical gap and horizontal gap
 "
 Trait {
 	#name : #RSTGapsHolder,
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #accessing }

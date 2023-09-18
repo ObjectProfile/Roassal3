@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Spec-Morphic'
+	#category : #'Roassal-Spec-Morphic'
 }
 
 { #category : #'class initialization' }

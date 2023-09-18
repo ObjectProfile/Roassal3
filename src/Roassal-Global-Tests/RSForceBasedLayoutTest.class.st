@@ -5,7 +5,7 @@ Class {
 		'canvas',
 		'boxes'
 	],
-	#category : #'Roassal3-Global-Tests-Layouts'
+	#category : #'Roassal-Global-Tests-Layouts'
 }
 
 { #category : #running }

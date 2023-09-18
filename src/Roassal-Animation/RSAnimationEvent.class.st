@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'animation'
 	],
-	#category : #'Roassal3-Animation-Events'
+	#category : #'Roassal-Animation-Events'
 }
 
 { #category : #accessing }

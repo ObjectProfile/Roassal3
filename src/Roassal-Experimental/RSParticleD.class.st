@@ -12,7 +12,7 @@ Class {
 		'decay',
 		'maxLevel'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : #'Roassal-Experimental-Delaunay'
 }
 
 { #category : #accessing }

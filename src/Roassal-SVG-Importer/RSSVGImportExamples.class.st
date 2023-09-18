@@ -4,7 +4,7 @@ I have svg import examples
 Class {
 	#name : #RSSVGImportExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-SVG-Importer'
+	#category : #'Roassal-SVG-Importer'
 }
 
 { #category : #examples }

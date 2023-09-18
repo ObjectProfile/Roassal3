@@ -5,7 +5,7 @@ SER = Show Encompassing Rectangles
 Class {
 	#name : #RSSERAction,
 	#superclass : #RSAbstractAction,
-	#category : #'Roassal3-Pharo8'
+	#category : #'Roassal-Pharo8'
 }
 
 { #category : #hooks }

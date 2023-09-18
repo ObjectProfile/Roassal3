@@ -42,7 +42,7 @@ To get more information read comment of `RSAbstractLine`
 Class {
 	#name : #RSLine,
 	#superclass : #RSAbstractDualLine,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal-Shapes-Lines'
 }
 
 { #category : #testing }

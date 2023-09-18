@@ -4,7 +4,7 @@ Data source based on `FTExampleDataSource` to have a custom table
 Class {
 	#name : #RSDataSourceLayoutStudio,
 	#superclass : #FTExampleDataSource,
-	#category : #'Roassal3-LayoutStudio-Utils'
+	#category : #'Roassal-LayoutStudio-Utils'
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ I return the linear interpolation
 Class {
 	#name : #RSLinearInterpolator,
 	#superclass : #NSInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #modes }

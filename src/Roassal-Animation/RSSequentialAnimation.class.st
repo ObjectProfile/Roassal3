@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentIndex'
 	],
-	#category : #'Roassal3-Animation-Core'
+	#category : #'Roassal-Animation-Core'
 }
 
 { #category : #actions }

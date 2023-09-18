@@ -1,6 +1,6 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 BlockClosure >> rsValue: value [
 	^ self cull: value
 ]

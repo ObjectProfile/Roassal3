@@ -1,6 +1,6 @@
 Extension { #name : #RSComposite }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSComposite >> inspectorShapes [
 	<inspectorPresentationOrder: 100 title: 'Children'>
 	^ SpTablePresenter new

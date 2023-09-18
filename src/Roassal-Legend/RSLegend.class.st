@@ -39,7 +39,7 @@ Class {
 		'isOnDemand',
 		'currentLegend'
 	],
-	#category : #'Roassal3-Legend-Core'
+	#category : #'Roassal-Legend-Core'
 }
 
 { #category : #hooks }

@@ -1,6 +1,6 @@
 Extension { #name : #ASPath }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASPath >> roassalShape [
 	^ RSSVGPath new
 		segments: pathData;

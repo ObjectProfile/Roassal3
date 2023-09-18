@@ -5,7 +5,7 @@ Class {
 		'data',
 		'bar'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal-Chart-Plots'
 }
 
 { #category : #accessing }

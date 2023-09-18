@@ -1,5 +1,5 @@
 "
-Utility class to review roassal3 examples
+Utility class to review Roassal examples
 "
 Class {
 	#name : #RSExamplesBrowser,
@@ -15,7 +15,7 @@ Class {
 		'selectedClass',
 		'searchButton'
 	],
-	#category : #'Roassal3-Spec-Examples-Menu'
+	#category : #'Roassal-Spec-Examples-Menu'
 }
 
 { #category : #layout }
@@ -115,7 +115,7 @@ RSExamplesBrowser >> initializePresenters [
 		label: '<';
 		yourself.
 
-	roassalCanvas := self instantiate: SpRoassal3InspectorPresenter.
+	roassalCanvas := self instantiate: SpRoassalInspectorPresenter.
 
 	codeEditor := self newCode
 		withSyntaxHighlight;

@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSRiceBinning,
 	#superclass : #RSAbstractBinning,
-	#category : #'Roassal3-Chart-Strategy'
+	#category : #'Roassal-Chart-Strategy'
 }
 
 { #category : #hooks }

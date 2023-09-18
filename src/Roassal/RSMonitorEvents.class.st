@@ -1,7 +1,7 @@
 "
 Based on https://developers.google.com/web/tools/chrome-devtools/console/events
 
-MonitoEvents for Roassal3 in order to log some events 
+MonitoEvents for Roassal in order to log some events 
 "
 Class {
 	#name : #RSMonitorEvents,
@@ -10,7 +10,7 @@ Class {
 		'target',
 		'announcementClasses'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #accessing }

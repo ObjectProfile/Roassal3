@@ -5,7 +5,7 @@ Please check how to use this class here: `RSBlink class>> #example`
 Class {
 	#name : #RSBlink,
 	#superclass : #RSInteraction,
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #hooks }

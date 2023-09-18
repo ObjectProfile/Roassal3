@@ -15,7 +15,7 @@ Class {
 		'shouldUseBasicZoom',
 		'shouldShowLegend'
 	],
-	#category : #'Roassal3-Interaction-Utils'
+	#category : #'Roassal-Interaction-Utils'
 }
 
 { #category : #initialization }

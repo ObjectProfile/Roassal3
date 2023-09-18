@@ -41,7 +41,7 @@ Example:
 Class {
 	#name : #RSKeepMarkersSizeRatioInteraction,
 	#superclass : #RSAbstractScaleInteraction,
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #hooks }

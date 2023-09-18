@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'direction'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #accessing }

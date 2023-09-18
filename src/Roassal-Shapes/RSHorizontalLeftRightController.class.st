@@ -4,7 +4,7 @@ Creates an armonic line between from and to
 Class {
 	#name : #RSHorizontalLeftRightController,
 	#superclass : #RSHorizontalCPAPController,
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : #'Roassal-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

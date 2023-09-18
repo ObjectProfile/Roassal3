@@ -8,7 +8,7 @@ Class {
 		'shapesToLayout',
 		'svgShape'
 	],
-	#category : #'Roassal3-Experimental-AcrossPath'
+	#category : #'Roassal-Experimental-AcrossPath'
 }
 
 { #category : #examples }
@@ -16,7 +16,7 @@ RSAcrossPathBuilder >> example01Labels [
 
 	<script: 'self new example01Labels open'>
 	| path |
-	self fromString: 'Roassal3 across the path'.
+	self fromString: 'Roassal across the path'.
 	path := 'M 100 200
              C 200 100 300   0 400 100
              C 500 200 600 300 700 200
@@ -40,7 +40,7 @@ RSAcrossPathBuilder >> example02Labels [
 
 	<script: 'self new example02Labels open'>
 	| path |
-	self fromString: 'Roassal3 across the path'.
+	self fromString: 'Roassal across the path'.
 	path := 'M -50 -50 L 50 -50 L 50 50'.
 	self svgShape: (RSSVGPath new
 			 svgPath: path;
@@ -60,7 +60,7 @@ RSAcrossPathBuilder >> example03Labels [
 
 	<script: 'self new example03Labels open'>
 	| path |
-	self fromString: 'Roassal3 across the path'.
+	self fromString: 'Roassal across the path'.
 	path := 'M 0 0 L 100 0 L 100 100'.
 	self svgShape: (RSSVGPath new
 			 svgPath: path;
@@ -80,7 +80,7 @@ RSAcrossPathBuilder >> example04Labels [
 
 	<script: 'self new example04Labels open'>
 	| path |
-	self fromString: 'Roassal3 across the path'.
+	self fromString: 'Roassal across the path'.
 	path := 'M20,20 L40,25 L60,40 L80,120 L120,140 L200,180'.
 	self svgShape: (RSSVGPath new
 			 svgPath: path;

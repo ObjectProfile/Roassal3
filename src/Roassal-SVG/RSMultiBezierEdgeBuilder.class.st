@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'tension'
 	],
-	#category : #'Roassal3-SVG-Edges'
+	#category : #'Roassal-SVG-Edges'
 }
 
 { #category : #'instance creation' }

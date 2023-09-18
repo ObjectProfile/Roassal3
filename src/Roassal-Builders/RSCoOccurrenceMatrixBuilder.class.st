@@ -26,7 +26,7 @@ Class {
 		'columnSize',
 		'domainRange'
 	],
-	#category : #'Roassal3-Builders-Core'
+	#category : #'Roassal-Builders-Core'
 }
 
 { #category : #examples }

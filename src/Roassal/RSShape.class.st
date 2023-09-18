@@ -42,7 +42,7 @@ Class {
 		'model',
 		'shapeIndex'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #accessing }

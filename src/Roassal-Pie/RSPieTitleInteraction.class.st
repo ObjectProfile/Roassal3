@@ -8,7 +8,7 @@ Class {
 		'labelBuilder',
 		'labelText'
 	],
-	#category : #'Roassal3-Pie-Interactions'
+	#category : #'Roassal-Pie-Interactions'
 }
 
 { #category : #initialization }

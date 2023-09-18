@@ -10,7 +10,7 @@ Class {
 		'useOut',
 		'useIn'
 	],
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #back }

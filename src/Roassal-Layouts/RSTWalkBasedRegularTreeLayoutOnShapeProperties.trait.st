@@ -3,7 +3,7 @@ I adds utility methods to access meta information of the layout algorithm and I 
 "
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayoutOnShapeProperties,
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #properties }

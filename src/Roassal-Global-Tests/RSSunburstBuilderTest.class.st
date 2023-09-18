@@ -4,7 +4,7 @@ A RSSunburstBuilderTest is a test class for testing the behavior of RSSunburstBu
 Class {
 	#name : #RSSunburstBuilderTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Examples'
+	#category : #'Roassal-Global-Tests-Examples'
 }
 
 { #category : #tests }

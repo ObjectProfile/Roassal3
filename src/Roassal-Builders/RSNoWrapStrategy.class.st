@@ -4,7 +4,7 @@ This does not apply a wrap in the text
 Class {
 	#name : #RSNoWrapStrategy,
 	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal3-Builders-Text'
+	#category : #'Roassal-Builders-Text'
 }
 
 { #category : #initialization }

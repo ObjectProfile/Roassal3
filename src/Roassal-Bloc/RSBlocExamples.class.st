@@ -1,7 +1,7 @@
 Class {
 	#name : #RSBlocExamples,
 	#superclass : #Object,
-	#category : #'Roassal3-Bloc-Examples'
+	#category : #'Roassal-Bloc-Examples'
 }
 
 { #category : #accessing }

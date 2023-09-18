@@ -1,7 +1,7 @@
 Class {
 	#name : #RSFlowCanvasExample,
 	#superclass : #Object,
-	#category : #'Roassal3-Mondrian-Flow'
+	#category : #'Roassal-Mondrian-Flow'
 }
 
 { #category : #examples }

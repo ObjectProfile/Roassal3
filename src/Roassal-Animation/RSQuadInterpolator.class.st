@@ -13,7 +13,7 @@ Also equivalent to RSEasingInterpolator poly exponent: 2.
 Class {
 	#name : #RSQuadInterpolator,
 	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #interpolation }

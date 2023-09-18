@@ -1,18 +1,18 @@
 Extension { #name : #BlElement }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 BlElement >> roassalShape [
 
 	^ self userData at: #roassalShape
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 BlElement >> roassalShape: aRSShape [
 
 	self userData at: #roassalShape put: aRSShape
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 BlElement >> updateFromRoassalShape [
 
 	self roassalShape updateBlElement: self.

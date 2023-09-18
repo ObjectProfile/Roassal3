@@ -17,7 +17,7 @@ Class {
 		'announcer',
 		'properties'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #interactions }

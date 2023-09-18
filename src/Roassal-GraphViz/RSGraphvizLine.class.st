@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSGraphvizLine,
 	#superclass : #RSSVGPathLine,
-	#category : #'Roassal3-GraphViz-Core'
+	#category : #'Roassal-GraphViz-Core'
 }
 
 { #category : #initialization }

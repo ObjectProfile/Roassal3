@@ -8,7 +8,7 @@ Class {
 		'classInnerLine',
 		'popup'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #hooks }

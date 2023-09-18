@@ -20,7 +20,7 @@ p open
 Class {
 	#name : #RSChartTitleDecoration,
 	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #rendering }

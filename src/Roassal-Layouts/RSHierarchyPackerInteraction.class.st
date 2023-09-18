@@ -19,7 +19,7 @@ c open
 Another example:
 -=-=-=-=-=-=-=-=-=
 ""Try resizing the window. Note that it also works in the inspector""
-classes := { 'Roassal3-Layouts'. 'Roassal3' }
+classes := { 'Roassal-Layouts'. 'Roassal' }
 	flatCollect: [:pkgname | (RPackage organizer
 		packageNamed: pkgname) definedClasses ].
 shapes := RSGroup new.
@@ -43,7 +43,7 @@ c open
 Another example:
 -=-=-=-=-=-=-=-=-=
 builder := RSUMLClassBuilder new.
-classes := { 'Roassal3-Layouts'. 'Roassal3' }
+classes := { 'Roassal-Layouts'. 'Roassal' }
 	flatCollect: [:pkgname | (RPackage organizer
 		packageNamed: pkgname) definedClasses ].
 builder classes: classes.
@@ -59,7 +59,7 @@ Class {
 	#instVars : [
 		'rectanglePackLayout'
 	],
-	#category : #'Roassal3-Layouts-Interactions'
+	#category : #'Roassal-Layouts-Interactions'
 }
 
 { #category : #private }

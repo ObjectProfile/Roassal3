@@ -23,7 +23,7 @@ Class {
 		'maxValue',
 		'minValue'
 	],
-	#category : #'Roassal3-Chart-Radar'
+	#category : #'Roassal-Chart-Radar'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSDSMTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-DSM'
+	#category : #'Roassal-Global-Tests-DSM'
 }
 
 { #category : #tests }

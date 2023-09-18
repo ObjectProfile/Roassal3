@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selectedItem'
 	],
-	#category : #'Roassal3-Inspector-SP2'
+	#category : #'Roassal-Inspector-SP2'
 }
 
 { #category : #accessing }

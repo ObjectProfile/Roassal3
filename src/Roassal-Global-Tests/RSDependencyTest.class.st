@@ -1,7 +1,7 @@
 Class {
 	#name : #RSDependencyTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Infrastructure'
+	#category : #'Roassal-Global-Tests-Infrastructure'
 }
 
 { #category : #'private - asserting' }
@@ -37,16 +37,16 @@ RSDependencyTest >> packageNamed: aSymbol [
 { #category : #tests }
 RSDependencyTest >> testDependencies [
 
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Layouts'.
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Inspector'.
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Animation'.
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Builders'.
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Chart'.
-	self assertPackage: 'Roassal3' doesNotDependOn: 'Roassal3-Colors'.
-	self assertPackage: 'Roassal3-Shapes' doesNotDependOn: 'Roassal3-Layouts'.
-	self assertPackage: 'Roassal3-Animation' dependOn: 'Roassal3'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Layouts'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Inspector'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Animation'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Builders'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Chart'.
+	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Colors'.
+	self assertPackage: 'Roassal-Shapes' doesNotDependOn: 'Roassal-Layouts'.
+	self assertPackage: 'Roassal-Animation' dependOn: 'Roassal'.
 
 	"Chart uses RSLocation from Layouts"
 
-	self assertPackage: 'Roassal3' dependOn: 'Announcements-Core'
+	self assertPackage: 'Roassal' dependOn: 'Announcements-Core'
 ]

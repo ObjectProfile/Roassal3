@@ -4,7 +4,7 @@ Similar to number field but I can handle rectangles
 Class {
 	#name : #RSLayoutRectangleField,
 	#superclass : #RSLayoutEvalField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #accessing }

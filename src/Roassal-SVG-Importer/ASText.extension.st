@@ -1,6 +1,6 @@
 Extension { #name : #ASText }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASText >> roassalShape [
 	^ RSLabel new
 		yourself

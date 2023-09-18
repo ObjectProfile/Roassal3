@@ -12,7 +12,7 @@ Class {
 		'omega',
 		'treshold'
 	],
-	#category : #'Roassal3-Builders-VennDiagram'
+	#category : #'Roassal-Builders-VennDiagram'
 }
 
 { #category : #examples }

@@ -10,7 +10,7 @@ Class {
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Obsolete'
+	#category : #'Roassal-Spec-Obsolete'
 }
 
 { #category : #specs }
@@ -142,5 +142,5 @@ RSEaselExample >> textAsCode [
 RSEaselExample >> title [
 	"Return the window's title"
 
-	^ 'Roassal3 Spec'
+	^ 'Roassal Spec'
 ]

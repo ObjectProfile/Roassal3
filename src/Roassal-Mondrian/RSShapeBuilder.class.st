@@ -10,7 +10,7 @@ Class {
 		'borderWidth',
 		'labelBlock'
 	],
-	#category : #'Roassal3-Mondrian-Core'
+	#category : #'Roassal-Mondrian-Core'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ RSWeightedCircleLayout is a circle layout that gives more space to big elements 
 Class {
 	#name : #RSWeightedCircleLayout,
 	#superclass : #RSAbstractWeightedCircleLayout,
-	#category : #'Roassal3-Layouts-Circle'
+	#category : #'Roassal-Layouts-Circle'
 }
 
 { #category : #hook }

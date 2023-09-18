@@ -1,6 +1,6 @@
 Extension { #name : #Color }
 
-{ #category : #'*Roassal3-Colors' }
+{ #category : #'*Roassal-Colors' }
 Color >> translucent [
 	"Make the color transparent"
 	^ self alpha: 0.4

@@ -4,7 +4,7 @@ Basic examples about highlighting
 Class {
 	#name : #RSHighlightableExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #examples }
@@ -298,7 +298,7 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	<script: 'self new example08DependendMethods open'>
 	| packagesRegExp packages canvas popup label padding high arrow allClasses allMethods |
-	packagesRegExp := { 'Roassal3-Shapes' }.
+	packagesRegExp := { 'Roassal-Shapes' }.
 
 	packages := packagesRegExp flatCollect: [ :regExp |
 		            RPackageOrganizer default packages select: [ :p |

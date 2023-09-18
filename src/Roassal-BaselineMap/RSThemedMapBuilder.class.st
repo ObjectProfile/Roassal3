@@ -4,7 +4,7 @@ Custom basemap builder that supports theme with pharo
 Class {
 	#name : #RSThemedMapBuilder,
 	#superclass : #RSMapBuilder,
-	#category : #'Roassal3-BaselineMap-Customs'
+	#category : #'Roassal-BaselineMap-Customs'
 }
 
 { #category : #events }

@@ -9,7 +9,7 @@ Class {
 		'y',
 		'z'
 	],
-	#category : #'Roassal3-TreeMap-Circular'
+	#category : #'Roassal-TreeMap-Circular'
 }
 
 { #category : #'instance creation' }

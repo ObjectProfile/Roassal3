@@ -6,7 +6,7 @@ Instances of `RSAbstractVerticalTreeLayout` can be used with `RSVerticalTree`
 Class {
 	#name : #RSAbstractVerticalTreeLayout,
 	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#category : #'Roassal-Layouts-Tree'
 }
 
 { #category : #testing }

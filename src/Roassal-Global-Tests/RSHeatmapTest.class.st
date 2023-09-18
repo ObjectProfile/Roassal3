@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal3-Global-Tests-DSM'
+	#category : #'Roassal-Global-Tests-DSM'
 }
 
 { #category : #running }

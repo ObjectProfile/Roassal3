@@ -1,6 +1,6 @@
 Extension { #name : #RSVerticalLineLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSVerticalLineLayout class >> alignmentOptions [
 	^ #(left center right none)
 ]

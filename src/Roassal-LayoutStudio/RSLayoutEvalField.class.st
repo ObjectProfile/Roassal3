@@ -4,7 +4,7 @@ this field can use a number or a block evaluator, user can select one from a lis
 Class {
 	#name : #RSLayoutEvalField,
 	#superclass : #RSLayoutField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #accessing }

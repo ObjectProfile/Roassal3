@@ -4,7 +4,7 @@ This class iterates over a RSSVGPath path segments
 Class {
 	#name : #RSSegmentsVisitor,
 	#superclass : #RSObject,
-	#category : #'Roassal3-SVG-Segments'
+	#category : #'Roassal-SVG-Segments'
 }
 
 { #category : #visiting }

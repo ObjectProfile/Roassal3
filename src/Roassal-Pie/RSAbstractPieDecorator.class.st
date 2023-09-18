@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : #'Roassal-Pie-Decorators'
 }
 
 { #category : #'instance creation' }

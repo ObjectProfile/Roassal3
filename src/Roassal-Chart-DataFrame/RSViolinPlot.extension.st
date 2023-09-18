@@ -1,6 +1,6 @@
 Extension { #name : #RSViolinPlot }
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot >> categoryBy: aColumnName [
 
 	| newModels newLabels |
@@ -20,7 +20,7 @@ RSViolinPlot >> categoryBy: aColumnName [
 	self xTickLabels: newLabels
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> dataFrame: aDataSeriesOrDataFrame [
 	| violinPlot aDataSeries |
 	violinPlot := self new.
@@ -30,7 +30,7 @@ RSViolinPlot class >> dataFrame: aDataSeriesOrDataFrame [
 	^ violinPlot
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> dataFrame: aDataFrame x: aColumnNameToCategory y: aColumnNameOfData [
 
 	| categoryNames data violinPlot collectionOfDataSeries |
@@ -54,13 +54,13 @@ RSViolinPlot class >> dataFrame: aDataFrame x: aColumnNameToCategory y: aColumnN
 	^ violinPlot
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot >> dataSeries: aDataSeries [
 	self data: aDataSeries asArray.
 	self ylabel: aDataSeries name.
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> example03DataSeries [
 
 	| boxPlot1 toothGrowthDose |
@@ -69,7 +69,7 @@ RSViolinPlot class >> example03DataSeries [
 	^ boxPlot1 open
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> example04DataFrame [
 
 	| boxPlot1 toothGrowth |
@@ -79,7 +79,7 @@ RSViolinPlot class >> example04DataFrame [
 	^ boxPlot1 open
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> example05DataFrameCategoryBy [
 
 	| boxPlot1 toothGrowth |
@@ -90,7 +90,7 @@ RSViolinPlot class >> example05DataFrameCategoryBy [
 	^ boxPlot1 open
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> example06DataFrameHue [
 
 	| boxPlot1 toothGrowth |
@@ -99,7 +99,7 @@ RSViolinPlot class >> example06DataFrameHue [
 	^ boxPlot1 open
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> example07DataFrameCategoryAndHue [
 
 	| boxPlot1 toothGrowth |
@@ -108,7 +108,7 @@ RSViolinPlot class >> example07DataFrameCategoryAndHue [
 	^ boxPlot1 open
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot class >> fromDataFrame: aDataFrame [
 	| violinPlot |
 	violinPlot := self new.
@@ -117,7 +117,7 @@ RSViolinPlot class >> fromDataFrame: aDataFrame [
 	^ violinPlot
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot >> hue: aColumnName [
 
 	| categories clusteredChart |
@@ -140,7 +140,7 @@ RSViolinPlot >> hue: aColumnName [
 	^ clusteredChart
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : #'*Roassal-Chart-DataFrame' }
 RSViolinPlot >> y: aColumnName [
 	
 	self data: [ :df | (df column: aColumnName) asArray ].

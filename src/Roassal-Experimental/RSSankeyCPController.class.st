@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSSankeyCPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : #'Roassal-Experimental-Sankey'
 }
 
 { #category : #hooks }

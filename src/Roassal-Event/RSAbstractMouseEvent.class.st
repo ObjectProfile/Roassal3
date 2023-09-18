@@ -4,7 +4,7 @@ Abstract for mouse events
 Class {
 	#name : #RSAbstractMouseEvent,
 	#superclass : #RSUserInputEvent,
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #testing }

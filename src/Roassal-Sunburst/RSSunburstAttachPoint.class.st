@@ -4,7 +4,7 @@ I am an attach point to build edges
 Class {
 	#name : #RSSunburstAttachPoint,
 	#superclass : #RSAttachPoint,
-	#category : #'Roassal3-Sunburst'
+	#category : #'Roassal-Sunburst'
 }
 
 { #category : #'public - hooks' }

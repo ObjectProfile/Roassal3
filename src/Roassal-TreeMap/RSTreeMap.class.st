@@ -9,7 +9,7 @@ Class {
 		'extent',
 		'inset'
 	],
-	#category : #'Roassal3-TreeMap-Core'
+	#category : #'Roassal-TreeMap-Core'
 }
 
 { #category : #accessing }

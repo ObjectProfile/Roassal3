@@ -1,6 +1,6 @@
-Extension { #name : #SpRoassal3InspectorPresenter }
+Extension { #name : #SpRoassalInspectorPresenter }
 
-{ #category : #'*Roassal3-Pharo9' }
-SpRoassal3InspectorPresenter class >> defaultSpec [
+{ #category : #'*Roassal-Pharo9' }
+SpRoassalInspectorPresenter class >> defaultSpec [
 	^ self defaultLayout
 ]

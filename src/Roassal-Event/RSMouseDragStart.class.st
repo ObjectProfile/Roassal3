@@ -5,5 +5,5 @@ Target: dragged element
 Class {
 	#name : #RSMouseDragStart,
 	#superclass : #RSAbstractMouseEvent,
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }

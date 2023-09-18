@@ -22,7 +22,7 @@ Class {
 		'presentation',
 		'shadowInteraction'
 	],
-	#category : #'Roassal3-Inspector-Interactions'
+	#category : #'Roassal-Inspector-Interactions'
 }
 
 { #category : #hooks }

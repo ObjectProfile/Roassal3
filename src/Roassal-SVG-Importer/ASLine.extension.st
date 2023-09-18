@@ -1,6 +1,6 @@
 Extension { #name : #ASLine }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASLine >> roassalShape [
 	^ RSLine new
 		startPoint: x1@y1;

@@ -13,7 +13,7 @@
 
 [*Visualize the test coverage of Roassal*](https://github.com/pharo-graphics/Roassal/blob/master/ci_data/coverage.png)
 
-Old code is here: https://github.com/ObjectProfile/Roassal3
+Old code is here: https://github.com/ObjectProfile/Roassal
 
 Roassal is an agile visualization engine for [Pharo](http://pharo.org). Roassal was created to enable interactive data visualization, it contains a different groups of shapes an lines that you can use to build your projects, also animations, attach points, events, layouts and a basic chart library.
 Roassal use cairo graphics as backend, in a future will support new backends.

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tree'
 	],
-	#category : #'Roassal3-Global-Tests-Rendering'
+	#category : #'Roassal-Global-Tests-Rendering'
 }
 
 { #category : #accessing }

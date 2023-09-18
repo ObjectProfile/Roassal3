@@ -13,7 +13,7 @@ Class {
 		'southEastQuad',
 		'isLeaf'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #public }

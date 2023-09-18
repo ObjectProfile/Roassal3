@@ -6,7 +6,7 @@ Class {
 		'quantile',
 		'confidencePercentage'
 	],
-	#category : #'Roassal3-Chart-Statistics'
+	#category : #'Roassal-Chart-Statistics'
 }
 
 { #category : #accessing }

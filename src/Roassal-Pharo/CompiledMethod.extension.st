@@ -1,6 +1,6 @@
 Extension { #name : #CompiledMethod }
 
-{ #category : #'*Roassal3-Pharo' }
+{ #category : #'*Roassal-Pharo' }
 CompiledMethod >> protocolName [
 	^ self protocol
 ]

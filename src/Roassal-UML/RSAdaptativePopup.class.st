@@ -1,5 +1,5 @@
 "
-This class is used to modify the popup behavior in Roassal3-UML
+This class is used to modify the popup behavior in Roassal-UML
 
 When classes in canvas are too small it will try to show the the entire class scaled to fit in the canvas. if not it will display the name in a box
 "
@@ -10,7 +10,7 @@ Class {
 		'smallBuilder',
 		'bigBuilder'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #accessing }

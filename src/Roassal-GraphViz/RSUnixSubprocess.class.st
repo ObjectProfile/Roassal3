@@ -47,7 +47,7 @@ Class {
 		'stderrStream',
 		'stdinStream'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : #'Roassal-GraphViz-Core'
 }
 
 { #category : #'instance creation' }

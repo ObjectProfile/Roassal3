@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'classMapBuilder'
 	],
-	#category : #'Roassal3-BaselineMap-UI'
+	#category : #'Roassal-BaselineMap-UI'
 }
 
 { #category : #accessing }

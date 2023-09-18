@@ -8,7 +8,7 @@ Class {
 		'studio',
 		'window'
 	],
-	#category : #'Roassal3-LayoutStudio-Tests'
+	#category : #'Roassal-LayoutStudio-Tests'
 }
 
 { #category : #running }

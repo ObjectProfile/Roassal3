@@ -15,7 +15,7 @@ Class {
 		'smallestIndex',
 		'smallestPower'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #generate }

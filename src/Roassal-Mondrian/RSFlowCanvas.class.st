@@ -8,7 +8,7 @@ Class {
 		'mapping',
 		'breadcrumbsLabel'
 	],
-	#category : #'Roassal3-Mondrian-Flow'
+	#category : #'Roassal-Mondrian-Flow'
 }
 
 { #category : #accessing }

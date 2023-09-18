@@ -33,7 +33,7 @@ Adding single line can be complex in some situation. You may want to look at RSL
 Class {
 	#name : #RSArrowedLine,
 	#superclass : #RSLine,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal-Shapes-Lines'
 }
 
 { #category : #border }

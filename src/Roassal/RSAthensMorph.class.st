@@ -15,7 +15,7 @@ Class {
 		'lastMousePosition',
 		'roassalCanvas'
 	],
-	#category : #'Roassal3-Morph'
+	#category : #'Roassal-Morph'
 }
 
 { #category : #accessing }

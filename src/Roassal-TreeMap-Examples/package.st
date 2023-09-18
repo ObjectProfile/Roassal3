@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-TreeMap-Examples' }
+Package { #name : #'Roassal-TreeMap-Examples' }

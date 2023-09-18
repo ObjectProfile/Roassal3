@@ -4,7 +4,7 @@ I create markers in the visualization
 Class {
 	#name : #RSSimpleMarkerPopupBuilder,
 	#superclass : #RSAbstractChartPopupBuilder,
-	#category : #'Roassal3-Chart-Popup'
+	#category : #'Roassal-Chart-Popup'
 }
 
 { #category : #hooks }

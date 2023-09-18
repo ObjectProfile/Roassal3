@@ -16,7 +16,7 @@ Class {
 		'horizontalGap',
 		'verticalGap'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal-Layouts-Core'
 }
 
 { #category : #testing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'lastDay'
 	],
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'size'
 	],
-	#category : #'Roassal3-Chart-Strategy'
+	#category : #'Roassal-Chart-Strategy'
 }
 
 { #category : #hooks }

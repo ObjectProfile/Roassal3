@@ -1,6 +1,6 @@
 Extension { #name : #NSOrdinalScale }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 NSOrdinalScale >> inspectorColors [
 	<inspectorPresentationOrder: 0 title: 'Colors'>
 	| canvas |
@@ -13,12 +13,12 @@ NSOrdinalScale >> inspectorColors [
 			yourself ]).
 	RSVerticalLineLayout new gapSize: 0; on: canvas nodes.
 	canvas @ RSCanvasController simple.
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: canvas;
 		yourself
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 NSOrdinalScale >> inspectorColorsContext: context [
 	context
 		evaluator: false;

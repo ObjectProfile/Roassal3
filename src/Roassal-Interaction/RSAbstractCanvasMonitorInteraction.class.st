@@ -11,7 +11,7 @@ Class {
 		'lastFrameEndTime',
 		'canvas'
 	],
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #accessing }

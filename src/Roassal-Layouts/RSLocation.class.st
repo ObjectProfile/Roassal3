@@ -21,7 +21,7 @@ Class {
 		'fixedX',
 		'fixedY'
 	],
-	#category : #'Roassal3-Layouts-PositionAndResize'
+	#category : #'Roassal-Layouts-PositionAndResize'
 }
 
 { #category : #examples }

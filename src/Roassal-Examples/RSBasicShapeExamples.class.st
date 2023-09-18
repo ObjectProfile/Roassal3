@@ -4,7 +4,7 @@ I have the basic examples for shapes
 Class {
 	#name : #RSBasicShapeExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #'boxes and ellipses' }

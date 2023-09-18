@@ -1,6 +1,6 @@
 Extension { #name : #RSForceBasedLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSForceBasedLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutBooleanField new

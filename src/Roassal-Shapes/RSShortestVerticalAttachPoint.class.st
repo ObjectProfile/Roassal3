@@ -4,7 +4,7 @@ I am similar to RSVerticalAttachPoint, but I find the shortest line between each
 Class {
 	#name : #RSShortestVerticalAttachPoint,
 	#superclass : #RSOffsetAttachPoint,
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : #'Roassal-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }

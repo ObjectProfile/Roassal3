@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #'instance creation' }

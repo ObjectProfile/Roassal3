@@ -39,7 +39,7 @@ Class {
 	#instVars : [
 		'cornerRadius'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : #'Roassal-Shapes-Bounding'
 }
 
 { #category : #visiting }

@@ -4,7 +4,7 @@ Users can set the timer of the canvas this will affect the animations process, b
 Class {
 	#name : #RSAbstractTimer,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Animation-Core'
+	#category : #'Roassal-Animation-Core'
 }
 
 { #category : #public }

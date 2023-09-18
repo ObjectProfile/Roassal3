@@ -3,7 +3,7 @@ This trait defines a group of utility methods to store information about a node 
 "
 Trait {
 	#name : #RSTLayoutProperties,
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #utilities }

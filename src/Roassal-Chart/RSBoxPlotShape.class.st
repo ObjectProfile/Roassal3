@@ -45,7 +45,7 @@ Class {
 		'notched',
 		'notchWidthPercentage'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal-Chart-Plots'
 }
 
 { #category : #accessing }

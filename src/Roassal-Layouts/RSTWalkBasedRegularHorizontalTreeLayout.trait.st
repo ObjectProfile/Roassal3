@@ -7,7 +7,7 @@ Trait {
 	#name : #RSTWalkBasedRegularHorizontalTreeLayout,
 	#traits : 'RSTGapsHolder',
 	#classTraits : 'RSTGapsHolder classTrait',
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #positioning }

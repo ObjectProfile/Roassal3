@@ -1,7 +1,7 @@
 Class {
 	#name : #RSGraphVizLayoutTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-GraphViz-Tests'
+	#category : #'Roassal-GraphViz-Tests'
 }
 
 { #category : #tests }

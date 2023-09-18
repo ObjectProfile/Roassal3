@@ -14,7 +14,7 @@ Class {
 		'meshMode',
 		'shapes'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : #'Roassal-Basic3D-Core'
 }
 
 { #category : #public }

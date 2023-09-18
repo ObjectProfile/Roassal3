@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'decoration'
 	],
-	#category : #'Roassal3-Chart-Tests-Decoration'
+	#category : #'Roassal-Chart-Tests-Decoration'
 }
 
 { #category : #'building suites' }

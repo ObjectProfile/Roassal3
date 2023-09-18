@@ -8,7 +8,7 @@ Class {
 		'keyValue',
 		'keyName'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #initialization }

@@ -13,7 +13,7 @@ Class {
 		'maxWidth',
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Flow'
+	#category : #'Roassal-Layouts-Flow'
 }
 
 { #category : #public }

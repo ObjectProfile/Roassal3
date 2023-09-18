@@ -1,6 +1,6 @@
 Extension { #name : #RSComposite }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSComposite >> asBlElement [
 
 	| container |
@@ -17,7 +17,7 @@ RSComposite >> asBlElement [
 	^ container
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSComposite >> asBlGeometry [
 
 	^ BlRectangleGeometry new

@@ -21,7 +21,7 @@ Class {
 		'shape',
 		'timeStamp'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #accessing }

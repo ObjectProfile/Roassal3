@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'line'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #'instance creation' }

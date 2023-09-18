@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Spec-Obsolete'
+	#category : #'Roassal-Spec-Obsolete'
 }
 
 { #category : #initialization }

@@ -10,7 +10,7 @@ Class {
 		'arcWidth',
 		'centerWidth'
 	],
-	#category : #'Roassal3-Sunburst'
+	#category : #'Roassal-Sunburst'
 }
 
 { #category : #accessing }

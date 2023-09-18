@@ -1,36 +1,36 @@
 Extension { #name : #RSShape }
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> browseable [
 	self when: RSMouseClick do: [ self model browse  ] for: self
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> draggable [
 	self @ RSDraggable
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> hasShadow [
 	^ self shadow notNil
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> labeled [
 	self @ RSLabeled
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> popup [
 	self @ RSPopup
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> popupText: aBlock [
 	self @ (RSPopup text: aBlock)
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> removeShadow [
 	| key |
 	key := #shadow.
@@ -40,12 +40,12 @@ RSShape >> removeShadow [
 	self removeKey: key.
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> shadow [
 	^ self propertyAt: #shadow
 ]
 
-{ #category : #'*Roassal3-Interaction' }
+{ #category : #'*Roassal-Interaction' }
 RSShape >> shadow: aRSBox [
 	^ self propertyAt: #shadow put: aRSBox
 ]

@@ -30,7 +30,7 @@ Class {
 		'highlightShapes',
 		'propertyKey'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #'instance colors' }

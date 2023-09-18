@@ -1,7 +1,7 @@
 Class {
 	#name : #RSUMLClassBuilderTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-UML-Tests'
+	#category : #'Roassal-UML-Tests'
 }
 
 { #category : #accessing }

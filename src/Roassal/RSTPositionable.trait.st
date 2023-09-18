@@ -3,7 +3,7 @@ I am a trait for BoundingShape and Camera since both of them uses an announcemen
 "
 Trait {
 	#name : #RSTPositionable,
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #accessing }

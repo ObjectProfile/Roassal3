@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'osm'
 	],
-	#category : #'Roassal3-OpenStreetMap'
+	#category : #'Roassal-OpenStreetMap'
 }
 
 { #category : #'accessing - defaults' }

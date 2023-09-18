@@ -1,6 +1,6 @@
 Extension { #name : #RSNoLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSNoLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 ]

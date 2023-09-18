@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSLineChartPopupBuilder,
 	#superclass : #RSAbstractChartPopupBuilder,
-	#category : #'Roassal3-Chart-Popup'
+	#category : #'Roassal-Chart-Popup'
 }
 
 { #category : #hooks }

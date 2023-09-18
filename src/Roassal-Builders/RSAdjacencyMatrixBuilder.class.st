@@ -8,7 +8,7 @@ Class {
 		'connections',
 		'objects'
 	],
-	#category : #'Roassal3-Builders-Example'
+	#category : #'Roassal-Builders-Example'
 }
 
 { #category : #hooks }

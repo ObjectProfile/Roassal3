@@ -1,14 +1,14 @@
 "
-I have basic examples of Roassal3d
+I have basic examples of Roassald
 "
 Class {
-	#name : #RSRoassal3DExamples,
+	#name : #RSRoassalDExamples,
 	#superclass : #Object,
-	#category : #'Roassal3-Basic3D-Examples'
+	#category : #'Roassal-Basic3D-Examples'
 }
 
 { #category : #examples }
-RSRoassal3DExamples >> example01Ball [
+RSRoassalDExamples >> example01Ball [
 	<script: 'self new example01Ball inspect'>
 	| space mesh list |
 	space := RSSpace3D new.
@@ -25,7 +25,7 @@ RSRoassal3DExamples >> example01Ball [
 ]
 
 { #category : #examples }
-RSRoassal3DExamples >> example02Rect [
+RSRoassalDExamples >> example02Rect [
 	<script: 'self new example02Rect inspect'>
 	| space mesh |
 	space := RSSpace3D new.

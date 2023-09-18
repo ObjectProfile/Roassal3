@@ -1,6 +1,6 @@
 Extension { #name : #RSLabel }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSLabel >> asBlElement [
 
 	^ BlTextElement new
@@ -10,12 +10,12 @@ RSLabel >> asBlElement [
 		  yourself
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSLabel >> asBlGeometry [
 	^ self shouldNotImplement
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSLabel >> blRopedText [
 
 	| result |
@@ -37,7 +37,7 @@ RSLabel >> blRopedText [
 	^ result
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSLabel >> updateBlElement: aBlElement [
 
 	aBlElement text: self blRopedText.

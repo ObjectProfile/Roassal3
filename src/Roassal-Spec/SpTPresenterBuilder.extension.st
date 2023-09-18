@@ -1,6 +1,6 @@
 Extension { #name : #SpTPresenterBuilder }
 
-{ #category : #'*Roassal3-Spec' }
+{ #category : #'*Roassal-Spec' }
 SpTPresenterBuilder >> newRoassal [
 	^ self instantiate: SpRoassalPresenter
 ]

@@ -4,7 +4,7 @@ Because class `RSForceBasedLayout` is hard to configure, this object provides a 
 Class {
 	#name : #RSSimpleForceBasedLayout,
 	#superclass : #RSLayout,
-	#category : #'Roassal3-Layouts-Force'
+	#category : #'Roassal-Layouts-Force'
 }
 
 { #category : #hook }

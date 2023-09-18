@@ -12,7 +12,7 @@ Symmetric sinusoidal easing; scales sinIn for t in [0, 0.5] and sinOut for t in 
 Class {
 	#name : #RSSinInterpolator,
 	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #interpolation }

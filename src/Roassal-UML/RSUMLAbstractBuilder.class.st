@@ -8,7 +8,7 @@ Class {
 		'renderer',
 		'modelDescriptor'
 	],
-	#category : #'Roassal3-UML-Builder'
+	#category : #'Roassal-UML-Builder'
 }
 
 { #category : #testing }

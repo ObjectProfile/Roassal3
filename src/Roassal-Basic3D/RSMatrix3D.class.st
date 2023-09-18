@@ -18,7 +18,7 @@ Class {
 		'zz',
 		'z0'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : #'Roassal-Basic3D-Core'
 }
 
 { #category : #inspector }

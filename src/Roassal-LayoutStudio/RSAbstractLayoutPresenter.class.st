@@ -11,7 +11,7 @@ Class {
 		'layoutDefinition',
 		'graphTextEditor'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : #'Roassal-LayoutStudio-Core'
 }
 
 { #category : #opening }

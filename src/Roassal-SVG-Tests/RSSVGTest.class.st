@@ -1,7 +1,7 @@
 Class {
 	#name : #RSSVGTest,
 	#superclass : #RSCanvasTest,
-	#category : #'Roassal3-SVG-Tests'
+	#category : #'Roassal-SVG-Tests'
 }
 
 { #category : #tests }

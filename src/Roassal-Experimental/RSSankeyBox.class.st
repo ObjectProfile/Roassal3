@@ -13,7 +13,7 @@ Class {
 		'value',
 		'last'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : #'Roassal-Experimental-Sankey'
 }
 
 { #category : #accessing }

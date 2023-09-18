@@ -9,7 +9,7 @@ Class {
 		'progressLabel',
 		'highlight'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : #'Roassal-Pie-Decorators'
 }
 
 { #category : #initialization }

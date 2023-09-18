@@ -15,7 +15,7 @@ Class {
 		'random',
 		'colorGenerator'
 	],
-	#category : #'Roassal3-Experimental-Force'
+	#category : #'Roassal-Experimental-Force'
 }
 
 { #category : #accessing }

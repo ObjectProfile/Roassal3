@@ -1,6 +1,6 @@
 Extension { #name : #Symbol }
 
-{ #category : #'*Roassal3' }
+{ #category : #'*Roassal' }
 Symbol >> rsValue: anObject [
 	^ anObject perform: self
 ]

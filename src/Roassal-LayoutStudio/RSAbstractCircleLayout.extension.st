@@ -1,6 +1,6 @@
 Extension { #name : #RSAbstractCircleLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSAbstractCircleLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutAngleField new

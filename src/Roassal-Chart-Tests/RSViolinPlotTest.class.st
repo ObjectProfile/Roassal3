@@ -1,7 +1,7 @@
 Class {
 	#name : #RSViolinPlotTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Core'
+	#category : #'Roassal-Chart-Tests-Core'
 }
 
 { #category : #tests }

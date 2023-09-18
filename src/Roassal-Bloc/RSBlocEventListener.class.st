@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'roassalCanvas'
 	],
-	#category : #'Roassal3-Bloc-Events'
+	#category : #'Roassal-Bloc-Events'
 }
 
 { #category : #'instance creation' }

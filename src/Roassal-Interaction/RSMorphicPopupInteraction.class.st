@@ -8,7 +8,7 @@ Class {
 		'morphBuilder',
 		'gapFromPointer'
 	],
-	#category : #'Roassal3-Interaction-Popup'
+	#category : #'Roassal-Interaction-Popup'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Roassal3-Shapes-TextMetrics'
+	#category : #'Roassal-Shapes-TextMetrics'
 }
 
 { #category : #accessing }

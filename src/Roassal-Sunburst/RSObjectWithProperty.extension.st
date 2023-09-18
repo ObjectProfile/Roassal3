@@ -1,6 +1,6 @@
 Extension { #name : #RSObjectWithProperty }
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> allSChildren [
 	| allChildren index |
 	index := 1.
@@ -11,17 +11,17 @@ RSObjectWithProperty >> allSChildren [
 	^ allChildren
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> isSLeaf [
 	^ self schildren isEmpty
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> schildren [
 	^ self propertyAt: #schildren
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> schildren: aGroupOfShapes [
 
 	"children is used by tree builders usefull to relationate hierarchy visualizations"
@@ -30,18 +30,18 @@ RSObjectWithProperty >> schildren: aGroupOfShapes [
 	aGroupOfShapes do: [ :s | s sparent: self ]
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> sparent [
 	^ self propertyAt: #sparent
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> sparent: anObject [
 	"children is used by tree builders usefull to relationate hierarchy visualizations"
 	self propertyAt: #sparent put: anObject
 ]
 
-{ #category : #'*Roassal3-Sunburst' }
+{ #category : #'*Roassal-Sunburst' }
 RSObjectWithProperty >> withAllSChildren [
 	^ self allSChildren
 		add: self;

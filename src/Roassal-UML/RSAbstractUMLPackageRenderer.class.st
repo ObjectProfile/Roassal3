@@ -8,7 +8,7 @@ Class {
 		'classColor',
 		'packageColor'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #testing }

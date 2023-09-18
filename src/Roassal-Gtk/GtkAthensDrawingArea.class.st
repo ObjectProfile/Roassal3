@@ -11,7 +11,7 @@ Class {
 		'lastExtent',
 		'paintMutex'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : #'Roassal-Gtk'
 }
 
 { #category : #private }

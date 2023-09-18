@@ -1,6 +1,6 @@
 Extension { #name : #RSLineBuilderTest }
 
-{ #category : #'*Roassal3-Layouts-Tests' }
+{ #category : #'*Roassal-Layouts-Tests' }
 RSLineBuilderTest >> testUseInLayout [
 	b
 		canvas: canvas;
@@ -9,7 +9,7 @@ RSLineBuilderTest >> testUseInLayout [
 	self assert: (canvas nodes collect: #position) asArray equals: ({(7.5@7.5). (7.5@32.5). (7.5@57.5). (7.5@82.5). (7.5@107.5). (7.5@132.5). (7.5@157.5). (7.5@182.5). (7.5@207.5). (7.5@232.5)})
 ]
 
-{ #category : #'*Roassal3-Layouts-Tests' }
+{ #category : #'*Roassal-Layouts-Tests' }
 RSLineBuilderTest >> testUseInLayoutDefault [
 
 	b

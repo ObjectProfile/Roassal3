@@ -1,6 +1,6 @@
 Extension { #name : #RSBoundingShape }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSBoundingShape >> inspectorShadowFor: padding color: aColor [
 	| m rect |
 	rect := self baseRectangle expandBy: padding.

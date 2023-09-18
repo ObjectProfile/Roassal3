@@ -10,7 +10,7 @@ Class {
 		'#script',
 		'#currentCanvas'
 	],
-	#category : #'Roassal3-Spec-Core'
+	#category : #'Roassal-Spec-Core'
 }
 
 { #category : #specs }

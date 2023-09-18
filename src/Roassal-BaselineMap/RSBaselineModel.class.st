@@ -10,7 +10,7 @@ Class {
 		'level',
 		'dependencies'
 	],
-	#category : #'Roassal3-BaselineMap-Model'
+	#category : #'Roassal-BaselineMap-Model'
 }
 
 { #category : #comparing }
@@ -62,7 +62,7 @@ RSBaselineModel >> inspectionBaselineMap: builder [
 				ifNotNil: [ map baseline: self baselineClass ] ];
 		build;
 		canvas.
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: canvas;
 		yourself
 ]

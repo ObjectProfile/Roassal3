@@ -1,6 +1,6 @@
 Extension { #name : #RGMethod }
 
-{ #category : #'*Roassal3-UML-Calypso' }
+{ #category : #'*Roassal-UML-Calypso' }
 RGMethod >> isTestMethod [
 	^ false
 ]

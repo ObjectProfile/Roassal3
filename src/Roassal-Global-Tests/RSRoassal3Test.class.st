@@ -1,21 +1,21 @@
 Class {
-	#name : #RSRoassal3Test,
+	#name : #RSRoassalTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Core'
+	#category : #'Roassal-Global-Tests-Core'
 }
 
 { #category : #tests }
-RSRoassal3Test >> testInitializeInRoassal [
+RSRoassalTest >> testInitializeInRoassal [
 
 	| pkgs methods violating |
-	pkgs := self class packageOrganizer packages select: [ :pkg | 'Roassal3*' match: pkg name ].
+	pkgs := self class packageOrganizer packages select: [ :pkg | 'Roassal*' match: pkg name ].
 	methods := pkgs flatCollect: [ :pkg | pkg definedClasses flatCollect: [ :class | class methods ] ].
 	violating := methods select: [ :method | method selector = #initialize and: [ method protocolName ~= #initialization ] ].
 	self assert: violating isEmpty description: 'Roassal initialize methods should be categorized in initialization'
 ]
 
 { #category : #tests }
-RSRoassal3Test >> testOpen [
+RSRoassalTest >> testOpen [
 
 	| v |
 	v := RSCanvas new open.
@@ -24,7 +24,7 @@ RSRoassal3Test >> testOpen [
 ]
 
 { #category : #tests }
-RSRoassal3Test >> testOpenOnce [
+RSRoassalTest >> testOpenOnce [
 
 	| v |
 	v := RSCanvas new openOnce.
@@ -33,7 +33,7 @@ RSRoassal3Test >> testOpenOnce [
 ]
 
 { #category : #tests }
-RSRoassal3Test >> testRemoveInteractionIfPresent [
+RSRoassalTest >> testRemoveInteractionIfPresent [
 	| box |
 	box := RSBox new.
 	self deny: (box announcer handleSubscriberClass: RSPopup).
@@ -52,7 +52,7 @@ RSRoassal3Test >> testRemoveInteractionIfPresent [
 ]
 
 { #category : #tests }
-RSRoassal3Test >> testSubscriberClass [
+RSRoassalTest >> testSubscriberClass [
 	| box |
 	box := RSBox new.
 	self deny: (box announcer handleSubscriberClass: RSPopup).
@@ -64,7 +64,7 @@ RSRoassal3Test >> testSubscriberClass [
 ]
 
 { #category : #tests }
-RSRoassal3Test >> testsRsValue [
+RSRoassalTest >> testsRsValue [
 	| myCutomObjectValueProvider posiblesValuesForRoassal model colors |
 	myCutomObjectValueProvider := NSScale category10.
 

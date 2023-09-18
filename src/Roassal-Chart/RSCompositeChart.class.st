@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'plots'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #adding }

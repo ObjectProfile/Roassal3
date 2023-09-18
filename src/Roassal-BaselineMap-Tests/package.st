@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-BaselineMap-Tests' }
+Package { #name : #'Roassal-BaselineMap-Tests' }

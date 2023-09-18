@@ -1,6 +1,6 @@
 Extension { #name : #RSMouseWheelEvent }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSMouseWheelEvent class >> newFromBlEvent: aBlEvent canvas: roassalCanvas [
 	| instance direction |
 	instance := super 

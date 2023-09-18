@@ -10,7 +10,7 @@ subclasses of this tree should override also Collection abstract methods
 Class {
 	#name : #RSShapeCollection,
 	#superclass : #Collection,
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #adding }

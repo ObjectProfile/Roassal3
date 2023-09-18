@@ -22,7 +22,7 @@ p
 Class {
 	#name : #RSXMarkerDecoration,
 	#superclass : #RSAbstractMarkerDecoration,
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #'public - configuration' }

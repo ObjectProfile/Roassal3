@@ -6,7 +6,7 @@ Class {
 		'shapes',
 		'f'
 	],
-	#category : #'Roassal3-Mondrian-Flow'
+	#category : #'Roassal-Mondrian-Flow'
 }
 
 { #category : #running }

@@ -24,7 +24,7 @@ Class {
 		'b9',
 		'b0'
 	],
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #initialization }

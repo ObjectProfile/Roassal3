@@ -5,7 +5,7 @@ Class {
 		'canvas',
 		'window'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : #'Roassal-Mondrian-Connections'
 }
 
 { #category : #accessing }

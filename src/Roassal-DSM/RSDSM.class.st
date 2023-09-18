@@ -20,7 +20,7 @@ Class {
 		'labelsX',
 		'colorBlock'
 	],
-	#category : #'Roassal3-DSM-Core'
+	#category : #'Roassal-DSM-Core'
 }
 
 { #category : #'hooks - labels' }
