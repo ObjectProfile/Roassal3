@@ -1,4 +1,15 @@
 # Roassal3
+# ATENTTION
+<img width="400" alt="image" src="https://github.com/ObjectProfile/Roassal3/assets/10532890/c92f4033-954f-4e29-a13d-d90ab23dffcd">
+
+WE ARE MOVING
+- Roassal3 => https://github.com/pharo-graphics/Roassal
+- Roassal3Exporters => https://github.com/pharo-graphics/RoassalExporters
+New repositories:
+- RoassalLayouts =>  https://github.com/pharo-graphics/RoassalLayouts
+
+Roassal is part of pharo thats why we want to keep it as part of the pharo ecosystem, thats why we are moving and this repository will be frozen.
+
 [![CI](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml)
 ![Discord](https://img.shields.io/discord/223421264751099906)
 [![Coverage](https://raw.githubusercontent.com/ObjectProfile/Roassal3/master/ci_data/coverageBadge.svg)](https://github.com/ObjectProfile/Roassal3/blob/master/ci_data/coverage.png)
