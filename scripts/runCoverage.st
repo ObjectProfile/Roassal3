@@ -3,17 +3,17 @@
 'Loading spy2 roassal3 and exporters' traceCr.
 [ Metacello new 
 	baseline: 'Spy2'; 
-	repository: 'github://ObjectProfile/Spy2'; 
+	repository: 'github://pharo-graphics/Spy2'; 
 	load: 'HapaoCore' ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 
 [ Metacello new
-    baseline: 'Roassal3';
-    repository: 'github://ObjectProfile/Roassal3';
+    baseline: 'Roassal';
+    repository: 'github://pharo-graphics/Roassal';
     load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 
 [ Metacello new
-    baseline: 'Roassal3Exporters';
-    repository: 'github://ObjectProfile/Roassal3Exporters';
+    baseline: 'RoassalExporters';
+    repository: 'github://pharo-graphics/RoassalExporters';
     load ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 [ 
 'Starting with Hapao' traceCr.

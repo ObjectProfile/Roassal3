@@ -1,5 +1,5 @@
 "
-Baseline for https://github.com/ObjectProfile/Roassal3
+Baseline for https://github.com/pharo-graphics/Roassal
 "
 Class {
 	#name : #BaselineOfRoassal3,
@@ -10,7 +10,7 @@ Class {
 { #category : #baselines }
 BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
-	"https://github.com/ObjectProfile/Roassal3"
+	"https://github.com/pharo-graphics/Roassal"
 	"pharo7 not supported"
 	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
@@ -116,7 +116,7 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://ObjectProfile/NumericScales:v1.01/src' ].
+		spec repository: 'github://pharo-graphics/NumericScales:v1.02/src' ].
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].

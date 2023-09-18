@@ -22,7 +22,6 @@ FreeTypeFontProvider current updateFromSystem.
 
 cout << '>>> Clonning from: '.
 repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
-"repoPath := 'github://ObjectProfile/Roassal3'."
 cout << 'Loading: '; << repoPath; crlf.
 "We load the application software analyzer"
 [ Metacello new
