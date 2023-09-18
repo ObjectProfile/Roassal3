@@ -4,7 +4,7 @@ do nothing
 Class {
 	#name : #RSNothingSelection,
 	#superclass : #RSInitialSelection,
-	#category : #'Roassal3-UML-Calypso-Utilities'
+	#category : #'Roassal-UML-Calypso-Utilities'
 }
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'layout'
 	],
-	#category : #'Roassal3-Layouts-Interactions'
+	#category : #'Roassal-Layouts-Interactions'
 }
 
 { #category : #hooks }

@@ -8,7 +8,7 @@ I encode the main algorithm leaving objects that use my behavior to fullfil some
 "
 Trait {
 	#name : #RSTWalkBasedRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #algorithm }

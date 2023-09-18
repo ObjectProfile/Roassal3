@@ -11,7 +11,7 @@ Class {
 		'tickColor',
 		'spineColor'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #initialization }

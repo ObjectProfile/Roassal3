@@ -12,7 +12,7 @@ Class {
 		'elements',
 		'cubeShape'
 	],
-	#category : #'Roassal3-Basic3D-TODO'
+	#category : #'Roassal-Basic3D-TODO'
 }
 
 { #category : #accessing }

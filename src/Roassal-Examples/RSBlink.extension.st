@@ -1,6 +1,6 @@
 Extension { #name : #RSBlink }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSBlink class >> example [
 
 	| canvas shapes |

@@ -1,12 +1,12 @@
 Extension { #name : #RSBitmap }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBitmap >> asBlGeometry [
 
 	^ BlRectangleGeometry new
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBitmap >> blPaint [
 
 	^ BlImageBackground image: form

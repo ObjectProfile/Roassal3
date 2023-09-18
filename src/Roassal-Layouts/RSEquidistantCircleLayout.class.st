@@ -4,7 +4,7 @@
 Class {
 	#name : #RSEquidistantCircleLayout,
 	#superclass : #RSAbstractWeightedCircleLayout,
-	#category : #'Roassal3-Layouts-Circle'
+	#category : #'Roassal-Layouts-Circle'
 }
 
 { #category : #hook }

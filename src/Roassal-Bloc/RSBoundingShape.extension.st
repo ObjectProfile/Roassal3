@@ -1,6 +1,6 @@
 Extension { #name : #RSBoundingShape }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBoundingShape >> asBlElement [
 
 	^ BlElement new
@@ -10,13 +10,13 @@ RSBoundingShape >> asBlElement [
 		  yourself
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBoundingShape >> asBlGeometry [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : #'*Roassal-Bloc' }
 RSBoundingShape >> updateBlElement: aBlElement [
 
 "	aBlElement transformation: aBlElement transformation asElementTransformation.

@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-OpenStreetMap' }
+Package { #name : #'Roassal-OpenStreetMap' }

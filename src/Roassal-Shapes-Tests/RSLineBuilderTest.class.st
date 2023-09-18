@@ -9,7 +9,7 @@ Class {
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal-Shapes-Tests'
 }
 
 { #category : #running }

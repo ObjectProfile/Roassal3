@@ -19,7 +19,7 @@ Class {
 		'label',
 		'title'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #rendering }

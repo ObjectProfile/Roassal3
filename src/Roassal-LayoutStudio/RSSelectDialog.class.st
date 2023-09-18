@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fastTable'
 	],
-	#category : #'Roassal3-LayoutStudio-Utils'
+	#category : #'Roassal-LayoutStudio-Utils'
 }
 
 { #category : #layout }

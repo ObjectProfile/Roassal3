@@ -1,5 +1,5 @@
 "
-This layout uses unix process to run dot commands, the command input is build based on roassal3 shapes
+This layout uses unix process to run dot commands, the command input is build based on Roassal shapes
 "
 Class {
 	#name : #RSGraphvizLayout,
@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'commandLocation'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : #'Roassal-GraphViz-Core'
 }
 
 { #category : #public }

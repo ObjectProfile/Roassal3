@@ -1,7 +1,7 @@
 Class {
 	#name : #GraphvizFFILibrary,
 	#superclass : #FFILibrary,
-	#category : #'Roassal3-GraphViz-FFI'
+	#category : #'Roassal-GraphViz-FFI'
 }
 
 { #category : #'accessing platform' }

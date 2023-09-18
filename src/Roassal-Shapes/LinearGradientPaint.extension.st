@@ -1,6 +1,6 @@
 Extension { #name : #LinearGradientPaint }
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : #'*Roassal-Shapes' }
 LinearGradientPaint >> leftRight: aRSShape [ 
 	| rect |
 	rect := aRSShape encompassingRectangle.

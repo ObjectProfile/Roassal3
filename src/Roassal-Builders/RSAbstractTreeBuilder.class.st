@@ -1,5 +1,5 @@
 "
-I am a abstract class to create visual elements based on tree structured in roassal3
+I am a abstract class to create visual elements based on tree structured in Roassal
 "
 Class {
 	#name : #RSAbstractTreeBuilder,
@@ -8,7 +8,7 @@ Class {
 		'rootNodes',
 		'weight'
 	],
-	#category : #'Roassal3-Builders-Core'
+	#category : #'Roassal-Builders-Core'
 }
 
 { #category : #private }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-BaselineMap-UI'
+	#category : #'Roassal-BaselineMap-UI'
 }
 
 { #category : #baselines }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'vennDiagram'
 	],
-	#category : #'Roassal3-Global-Tests-Builder'
+	#category : #'Roassal-Global-Tests-Builder'
 }
 
 { #category : #running }

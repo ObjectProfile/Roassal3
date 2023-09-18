@@ -11,7 +11,7 @@ Class {
 		'rectangle',
 		'height'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #'instance creation' }

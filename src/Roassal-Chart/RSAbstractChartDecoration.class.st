@@ -23,7 +23,7 @@ Class {
 		'styler',
 		'masterShape'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #rendering }

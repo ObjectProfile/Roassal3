@@ -4,7 +4,7 @@ When the uml is open, this class will move the target class of the canvas, in on
 Class {
 	#name : #RSDancingSelection,
 	#superclass : #RSInitialSelection,
-	#category : #'Roassal3-UML-Calypso-Utilities'
+	#category : #'Roassal-UML-Calypso-Utilities'
 }
 
 { #category : #'instance creation' }

@@ -1,11 +1,11 @@
 Extension { #name : #UITheme }
 
-{ #category : #'*Roassal3-UML-Calypso' }
+{ #category : #'*Roassal-UML-Calypso' }
 UITheme >> classBoxBackgroundColor [
 	^ RSUMLCalypsoSettings lightThemeUMLClassColor
 ]
 
-{ #category : #'*Roassal3-UML-Calypso' }
+{ #category : #'*Roassal-UML-Calypso' }
 UITheme >> methodsLimitUML [
 	^ RSUMLCalypsoSettings methodsLimitUML
 ]

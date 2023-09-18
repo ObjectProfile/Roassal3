@@ -1,6 +1,6 @@
 Extension { #name : #RSMenuActivable }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSMenuActivable class >> example [
 	| m |
 	

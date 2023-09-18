@@ -12,7 +12,7 @@ Class {
 		'toggleOnCallback',
 		'toggleOffCallback'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : #'Roassal-Mondrian-Connections'
 }
 
 { #category : #public }

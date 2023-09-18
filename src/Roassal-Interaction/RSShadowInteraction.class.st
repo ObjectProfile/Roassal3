@@ -9,7 +9,7 @@ Class {
 		'shadowColor',
 		'shouldPushFront'
 	],
-	#category : #'Roassal3-Interaction-Selection'
+	#category : #'Roassal-Interaction-Selection'
 }
 
 { #category : #examples }

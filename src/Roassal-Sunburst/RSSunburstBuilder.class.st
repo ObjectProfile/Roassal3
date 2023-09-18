@@ -13,7 +13,7 @@ Class {
 		'sliceShape',
 		'color'
 	],
-	#category : #'Roassal3-Sunburst'
+	#category : #'Roassal-Sunburst'
 }
 
 { #category : #strategy }

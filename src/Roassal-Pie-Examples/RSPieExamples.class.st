@@ -1,10 +1,10 @@
 "
-I have examples for RSPieBuilder load the package Roassal3-Pie
+I have examples for RSPieBuilder load the package Roassal-Pie
 "
 Class {
 	#name : #RSPieExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Pie-Examples'
+	#category : #'Roassal-Pie-Examples'
 }
 
 { #category : #data }
@@ -392,7 +392,7 @@ RSPieExamples >> example11OpenningAnimation [
 RSPieExamples >> example12RainbowPie [
 
 	<script:
-	'self new example12RainbowPie open setLabel: ''Roassal3 :V'' '>
+	'self new example12RainbowPie open setLabel: ''Roassal :V'' '>
 	| pie frame n d update |
 	n := 48.
 	d := 100.
@@ -821,11 +821,11 @@ RSPieExamples >> example20AddingRemoving [
 
 { #category : #examples }
 RSPieExamples >> example21ProgressLabel [
-	<script: 'self new example21ProgressLabel open setLabel: ''Roassal3 packages by linesOfCode'''>
+	<script: 'self new example21ProgressLabel open setLabel: ''Roassal packages by linesOfCode'''>
 	| data org pie scale |
 	org := RPackage organizer.
 	data := (org packageNames
-		select: [ :s | 'Roassal3*' match: s  ]
+		select: [ :s | 'Roassal*' match: s  ]
 		thenCollect: [ :s | org packageNamed: s ])
 		sorted: [:a :b | a linesOfCode < b linesOfCode ].
 	pie := RSPie new
@@ -849,11 +849,11 @@ RSPieExamples >> example21ProgressLabel [
 RSPieExamples >> example22RotatedAnimation [
 
 	<script:
-	'self new example22RotatedAnimation open setLabel: ''Roassal3 packages by #linesOfCode'''>
+	'self new example22RotatedAnimation open setLabel: ''Roassal packages by #linesOfCode'''>
 	| data org pie pieLabel animation canvas |
 	org := RPackage organizer.
 	data := (org packageNames
-		         select: [ :s | '*Roassal3*' match: s ]
+		         select: [ :s | '*Roassal*' match: s ]
 		         thenCollect: [ :s | org packageNamed: s ]) sorted: [ :a :b |
 		        a linesOfCode < b linesOfCode ].
 	pie := RSPie new
@@ -899,10 +899,10 @@ RSPieExamples >> example22RotatedAnimation [
 
 { #category : #examples }
 RSPieExamples >> example23RotatedAnimation [
-	<script: 'self new example23RotatedAnimation open setLabel: ''Roassal3 packages by size in the file system'''>
+	<script: 'self new example23RotatedAnimation open setLabel: ''Roassal packages by size in the file system'''>
 	<noTest>
 	| data pie pieLabel animation canvas lines directorySize |
-	data := './pharo-local/iceberg/pharo-graphics/Roassal3/src' asFileReference
+	data := './pharo-local/iceberg/pharo-graphics/Roassal/src' asFileReference
 		directories.
 	directorySize := nil.
 	directorySize := [ :d | | sum |
@@ -1110,7 +1110,7 @@ RSPieExamples >> example25Massiva [
 		cornerRadii: 20;
 		yourself).
 	canvas add: (RSLabel new
-		text: 'Roassal3';
+		text: 'Roassal';
 		fontSize: 30;
 		color: Color white).
 	^ canvas

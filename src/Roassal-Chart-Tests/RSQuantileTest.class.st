@@ -1,7 +1,7 @@
 Class {
 	#name : #RSQuantileTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Statistics'
+	#category : #'Roassal-Chart-Tests-Statistics'
 }
 
 { #category : #tests }

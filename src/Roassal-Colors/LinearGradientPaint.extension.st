@@ -1,6 +1,6 @@
 Extension { #name : #LinearGradientPaint }
 
-{ #category : #'*Roassal3-Colors' }
+{ #category : #'*Roassal-Colors' }
 LinearGradientPaint >> asScale [
 	| sc |
 	sc := NSScale linear.

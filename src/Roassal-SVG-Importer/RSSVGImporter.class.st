@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSSVGImporter,
 	#superclass : #RSObject,
-	#category : #'Roassal3-SVG-Importer'
+	#category : #'Roassal-SVG-Importer'
 }
 
 { #category : #'instance creation' }

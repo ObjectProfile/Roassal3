@@ -10,7 +10,7 @@ Class {
 		'horizontal',
 		'shouldShowBand'
 	],
-	#category : #'Roassal3-Chart-Plots'
+	#category : #'Roassal-Chart-Plots'
 }
 
 { #category : #rendering }

@@ -4,7 +4,7 @@ I have examples for RSTreeMap
 Class {
 	#name : #RSTreeMapExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-TreeMap-Examples'
+	#category : #'Roassal-TreeMap-Examples'
 }
 
 { #category : #examples }
@@ -154,7 +154,7 @@ RSTreeMapExamples >> example07Roassal [
 	b
 		leafWeight: [ :f | f size sqrt ];
 		explore: (IceRepository registry
-				detect: [ :each | each name = 'Roassal3' ]) location
+				detect: [ :each | each name = 'Roassal' ]) location
 			nesting: [:file | file directories
 				reject: [ :dir | dir basename beginsWith: '.' ] ]
 			leaves: #files.
@@ -197,7 +197,7 @@ RSTreeMapExamples >> example07Roassal [
 			controlPointsController: RSShortestHorizontalCPController new;
 			yourself)).
 	title := RSLabel new
-		text: 'Roassal3 Github Repository Directory';
+		text: 'Roassal Github Repository Directory';
 		color: Color yellow;
 		fontName: 'Gill Sans';
 		bold;

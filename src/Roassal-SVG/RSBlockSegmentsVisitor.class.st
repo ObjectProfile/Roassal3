@@ -11,7 +11,7 @@ Class {
 		'moveToBlock',
 		'closeBlock'
 	],
-	#category : #'Roassal3-SVG-Segments'
+	#category : #'Roassal-SVG-Segments'
 }
 
 { #category : #accessing }

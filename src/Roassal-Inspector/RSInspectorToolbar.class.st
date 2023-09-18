@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Inspector-Contexts'
+	#category : #'Roassal-Inspector-Contexts'
 }
 
 { #category : #accessing }

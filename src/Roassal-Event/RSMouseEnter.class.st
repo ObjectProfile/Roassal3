@@ -5,5 +5,5 @@ Target: entered element
 Class {
 	#name : #RSMouseEnter,
 	#superclass : #RSAbstractMouseEvent,
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }

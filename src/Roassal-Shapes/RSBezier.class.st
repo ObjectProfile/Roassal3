@@ -80,7 +80,7 @@ b open
 Class {
 	#name : #RSBezier,
 	#superclass : #RSAbstractControlPointsLine,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal-Shapes-Lines'
 }
 
 { #category : #testing }

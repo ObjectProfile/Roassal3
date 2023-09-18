@@ -4,7 +4,7 @@ I am the test class for TSAthensRenderer
 Class {
 	#name : #RSAthensRendererTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal-Shapes-Tests'
 }
 
 { #category : #tests }

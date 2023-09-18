@@ -17,7 +17,7 @@ align bottom.
 Class {
 	#name : #RSAlignment,
 	#superclass : #RSAbstractShapeHandling,
-	#category : #'Roassal3-Layouts-PositionAndResize'
+	#category : #'Roassal-Layouts-PositionAndResize'
 }
 
 { #category : #examples }

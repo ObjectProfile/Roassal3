@@ -4,7 +4,7 @@ I have basic examples for sunburst
 Class {
 	#name : #RSSunburstExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Sunburst-Examples'
+	#category : #'Roassal-Sunburst-Examples'
 }
 
 { #category : #examples }

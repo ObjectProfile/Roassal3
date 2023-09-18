@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'svgPath'
 	],
-	#category : #'Roassal3-SVG-Shapes'
+	#category : #'Roassal-SVG-Shapes'
 }
 
 { #category : #examples }

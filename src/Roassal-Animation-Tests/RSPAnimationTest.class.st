@@ -5,7 +5,7 @@ Class {
 		'canvas',
 		'animationClass'
 	],
-	#category : #'Roassal3-Animation-Tests'
+	#category : #'Roassal-Animation-Tests'
 }
 
 { #category : #'building suites' }

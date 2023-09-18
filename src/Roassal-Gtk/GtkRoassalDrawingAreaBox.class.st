@@ -20,7 +20,7 @@ Class {
 	#pools : [
 		'GdkEventMask'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : #'Roassal-Gtk'
 }
 
 { #category : #'instance creation' }

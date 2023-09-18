@@ -12,7 +12,7 @@ Class {
 		'useCalypsoUML',
 		'useAnimationInCalypsoBaseline'
 	],
-	#category : #'Roassal3-UML-Calypso-Settings'
+	#category : #'Roassal-UML-Calypso-Settings'
 }
 
 { #category : #accessing }

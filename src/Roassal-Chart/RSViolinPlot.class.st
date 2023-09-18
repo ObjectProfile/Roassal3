@@ -49,7 +49,7 @@ Class {
 		'model',
 		'dataBlock'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #accessing }

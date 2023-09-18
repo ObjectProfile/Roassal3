@@ -4,7 +4,7 @@ I am prepared to sunburst arcs
 Class {
 	#name : #RSSunburstCPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Sunburst'
+	#category : #'Roassal-Sunburst'
 }
 
 { #category : #hooks }

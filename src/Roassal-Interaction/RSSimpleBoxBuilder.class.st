@@ -10,7 +10,7 @@ Class {
 		'border',
 		'padding'
 	],
-	#category : #'Roassal3-Interaction-Popup'
+	#category : #'Roassal-Interaction-Popup'
 }
 
 { #category : #accessing }

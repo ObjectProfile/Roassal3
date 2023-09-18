@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Line'
+	#category : #'Roassal-Layouts-Line'
 }
 
 { #category : #testing }

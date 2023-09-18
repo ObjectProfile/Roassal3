@@ -9,7 +9,7 @@ Class {
 		'position',
 		'radius'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : #'Roassal-Experimental-Delaunay'
 }
 
 { #category : #accessing }

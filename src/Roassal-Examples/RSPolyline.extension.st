@@ -1,6 +1,6 @@
 Extension { #name : #RSPolyline }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSPolyline class >> exampleArrowedPolyline [
 	| line |
 	line := self new.
@@ -12,7 +12,7 @@ RSPolyline class >> exampleArrowedPolyline [
 		open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSPolyline class >> examplePolyline [
 	| line |
 	line := self new.

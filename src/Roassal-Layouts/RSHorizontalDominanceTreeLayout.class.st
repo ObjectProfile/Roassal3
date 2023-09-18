@@ -4,7 +4,7 @@ Dominance analysis from graph theory allows one to locate subordinated elements 
 Class {
 	#name : #RSHorizontalDominanceTreeLayout,
 	#superclass : #RSAbstractHorizontalTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#category : #'Roassal-Layouts-Tree'
 }
 
 { #category : #'private - hook' }

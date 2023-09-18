@@ -1,7 +1,7 @@
 Class {
 	#name : #RSFlameGraphExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-FlameGraph-Examples'
+	#category : #'Roassal-FlameGraph-Examples'
 }
 
 { #category : #examples }

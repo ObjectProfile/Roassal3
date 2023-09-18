@@ -30,7 +30,7 @@ Class {
 		'getRelevantValueBlock',
 		'lines'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #'public - configuration' }

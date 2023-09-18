@@ -8,7 +8,7 @@ Class {
 		'changeLayoutButton',
 		'pickerField'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : #'Roassal-LayoutStudio-Core'
 }
 
 { #category : #layout }

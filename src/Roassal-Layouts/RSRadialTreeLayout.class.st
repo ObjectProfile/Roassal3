@@ -6,7 +6,7 @@ Radial tree layouts are useful for visualizing hierarchical relationships, such 
 Class {
 	#name : #RSRadialTreeLayout,
 	#superclass : #RSAbstractCompactTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#category : #'Roassal-Layouts-Tree'
 }
 
 { #category : #algorithm }

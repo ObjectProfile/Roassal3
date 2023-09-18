@@ -8,7 +8,7 @@ Class {
 		'canvas',
 		'moves'
 	],
-	#category : #'Roassal3-Experimental-Hanoi'
+	#category : #'Roassal-Experimental-Hanoi'
 }
 
 { #category : #'meta level' }

@@ -4,7 +4,7 @@ I use the RSShapeBuilder
 Class {
 	#name : #RSShapeExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #shapes }
@@ -1054,7 +1054,7 @@ RSShapeExamples >> example39RoassalPackages [
 	<noTest>
 	<script: 'self new example39RoassalPackages open'>
 	| packagesRegExp packages canvas color labeled boxes stepping |
-	packagesRegExp := { 'Roassal3*' }.
+	packagesRegExp := { 'Roassal*' }.
 
 	packages := packagesRegExp flatCollect: [ :regExp |
 	    RPackageOrganizer default packages

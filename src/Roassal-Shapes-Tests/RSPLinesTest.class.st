@@ -5,7 +5,7 @@ Class {
 		'shapeClass',
 		'canvas'
 	],
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal-Shapes-Tests'
 }
 
 { #category : #'building suites' }

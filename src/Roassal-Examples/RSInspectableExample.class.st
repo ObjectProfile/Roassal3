@@ -1,10 +1,10 @@
 "
-I have examples of different ways to inspect views an objects in roassal3
+I have examples of different ways to inspect views an objects in Roassal
 "
 Class {
 	#name : #RSInspectableExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #examples }

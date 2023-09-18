@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'athensCanvas'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #accessing }

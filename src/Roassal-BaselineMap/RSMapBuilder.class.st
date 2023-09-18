@@ -9,7 +9,7 @@ Class {
 		'baseline',
 		'context'
 	],
-	#category : #'Roassal3-BaselineMap-UI'
+	#category : #'Roassal-BaselineMap-UI'
 }
 
 { #category : #hooks }

@@ -4,7 +4,7 @@ Inspired by Raven Kwok drawingMachine_10 (http://openprocessing.org/sketch/34320
 Class {
 	#name : #RSForceExample,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Experimental-Force'
+	#category : #'Roassal-Experimental-Force'
 }
 
 { #category : #examples }

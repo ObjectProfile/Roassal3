@@ -3,7 +3,7 @@ Used for objects and shapes with an announcer
 "
 Trait {
 	#name : #RSTAnnounceable,
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #announcer }

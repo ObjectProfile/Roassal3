@@ -15,7 +15,7 @@ Class {
 		'futures',
 		'cacheSize'
 	],
-	#category : #'Roassal3-OpenStreetMap'
+	#category : #'Roassal-OpenStreetMap'
 }
 
 { #category : #public }

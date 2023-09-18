@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'layoutStudio'
 	],
-	#category : #'Roassal3-LayoutStudio-Utils'
+	#category : #'Roassal-LayoutStudio-Utils'
 }
 
 { #category : #layout }

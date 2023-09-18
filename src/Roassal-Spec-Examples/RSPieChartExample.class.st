@@ -11,7 +11,7 @@ Class {
 		'packages',
 		'totalSum'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : #'Roassal-Spec-Examples-Basic'
 }
 
 { #category : #layout }
@@ -33,7 +33,7 @@ RSPieChartExample >> initializePresenters [
 	droplist := self instantiate: SpDropListPresenter.
 	org := RPackage organizer.
 	packages := (org packageNames
-		             select: [ :s | '*Roassal3*' match: s ]
+		             select: [ :s | '*Roassal*' match: s ]
 		             thenCollect: [ :s | org packageNamed: s ]) sorted: [
 		            :a
 		            :b | a linesOfCode > b linesOfCode ].

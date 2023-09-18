@@ -28,7 +28,7 @@ Class {
 		'sliceShape',
 		'sliceColor'
 	],
-	#category : #'Roassal3-Pie-Core'
+	#category : #'Roassal-Pie-Core'
 }
 
 { #category : #'accessing - computed' }

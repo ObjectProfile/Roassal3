@@ -1,27 +1,27 @@
 Extension { #name : #RSCanvas }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> asPresenter [
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: self;
 		yourself
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: self;
 		yourself
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> inspectorCanvasContext: aContext [
 
 	aContext withoutEvaluator
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> inspectorContext [
 	"Return the context used in the canvas. The inspector context contains all the registration that is added to a canvas per default, when being used in the GTInspector. Registrations can be easily diseabled, for example, in case one wishes to disable the opening of a new inspector pane by clicking on an object using:
 ```
@@ -44,14 +44,14 @@ In the example given above, clicking on a circle does not open a new pane in the
 		ifAbsentPut: [ RSContextInteraction new ]
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> inspectorContext: aRSContext [
 	^ self
 		propertyAt: RSAbstractContextInteraction name asSymbol
 		put: aRSContext
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : #'*Roassal-Inspector' }
 RSCanvas >> inspectorShapes [
 	<inspectorPresentationOrder: 100 title: 'Shapes'>
 	^ SpTablePresenter new

@@ -9,7 +9,7 @@ Class {
 		'renderer',
 		'isDrawing'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : #'Roassal-Gtk'
 }
 
 { #category : #private }

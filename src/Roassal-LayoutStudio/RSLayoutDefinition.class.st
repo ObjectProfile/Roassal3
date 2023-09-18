@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fields'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : #'Roassal-LayoutStudio-Core'
 }
 
 { #category : #initialization }

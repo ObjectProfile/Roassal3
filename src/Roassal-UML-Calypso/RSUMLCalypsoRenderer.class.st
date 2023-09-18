@@ -4,7 +4,7 @@ Specific renderer for calypso
 Class {
 	#name : #RSUMLCalypsoRenderer,
 	#superclass : #RSBasicUMLClassRenderer,
-	#category : #'Roassal3-UML-Calypso-Utilities'
+	#category : #'Roassal-UML-Calypso-Utilities'
 }
 
 { #category : #hooks }

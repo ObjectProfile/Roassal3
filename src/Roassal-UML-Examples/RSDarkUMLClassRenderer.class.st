@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'darkColor'
 	],
-	#category : #'Roassal3-UML-Examples'
+	#category : #'Roassal-UML-Examples'
 }
 
 { #category : #initialization }

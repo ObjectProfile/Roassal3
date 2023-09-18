@@ -6,7 +6,7 @@ https://graphviz.org/
 Class {
 	#name : #RSGraphVizExamples,
 	#superclass : #Object,
-	#category : #'Roassal3-GraphViz-Example'
+	#category : #'Roassal-GraphViz-Example'
 }
 
 { #category : #examples }
@@ -390,7 +390,7 @@ RSGraphVizExamples >> example08RoassalPackages [
 			withBorder;
 			draggable;
 			yourself ].
-	packagesRegExp := { 'Roassal3*' }.
+	packagesRegExp := { 'Roassal*' }.
 	packages := packagesRegExp flatCollect: [ :regExp |
 	    RPackageOrganizer default packages
 	        select: [ :p | regExp match: p packageName ] ].

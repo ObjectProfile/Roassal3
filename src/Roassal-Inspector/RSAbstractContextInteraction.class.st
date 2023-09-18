@@ -10,7 +10,7 @@ Class {
 		'presentation',
 		'propagateToChildren'
 	],
-	#category : #'Roassal3-Inspector-Contexts'
+	#category : #'Roassal-Inspector-Contexts'
 }
 
 { #category : #initialization }

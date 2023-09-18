@@ -16,7 +16,7 @@ Class {
 		'builder',
 		'firstNode'
 	],
-	#category : #'Roassal3-Sunburst'
+	#category : #'Roassal-Sunburst'
 }
 
 { #category : #testing }

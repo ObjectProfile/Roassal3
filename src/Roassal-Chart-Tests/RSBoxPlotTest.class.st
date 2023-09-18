@@ -5,7 +5,7 @@ Class {
 		'plot',
 		'y'
 	],
-	#category : #'Roassal3-Chart-Tests-Base'
+	#category : #'Roassal-Chart-Tests-Base'
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ Adjust the size of the shapes
 Class {
 	#name : #RSResize,
 	#superclass : #RSAbstractShapeHandling,
-	#category : #'Roassal3-Layouts-PositionAndResize'
+	#category : #'Roassal-Layouts-PositionAndResize'
 }
 
 { #category : #examples }

@@ -14,7 +14,7 @@ Class {
 	#pools : [
 		'GdkEventMask'
 	],
-	#category : #'Roassal3-Spec-Gtk'
+	#category : #'Roassal-Spec-Gtk'
 }
 
 { #category : #examples }

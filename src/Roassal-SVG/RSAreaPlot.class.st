@@ -8,7 +8,7 @@ Class {
 		'y2Values',
 		'area'
 	],
-	#category : #'Roassal3-SVG-Chart'
+	#category : #'Roassal-SVG-Chart'
 }
 
 { #category : #rendering }

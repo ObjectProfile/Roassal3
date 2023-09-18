@@ -4,7 +4,7 @@ I have basic animation examples
 Class {
 	#name : #RSBasicAnimationExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #examples }

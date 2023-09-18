@@ -4,7 +4,7 @@ Interaction for RSLabels, modify the font size based on the scale of the canvas
 Class {
 	#name : #RSKeepFontSizeRatioInteraction,
 	#superclass : #RSAbstractScaleInteraction,
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #hooks }

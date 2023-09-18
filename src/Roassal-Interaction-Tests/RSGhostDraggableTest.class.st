@@ -4,7 +4,7 @@ A RSGhostDraggableTest is a test class for testing the behavior of RSGhostDragga
 Class {
 	#name : #RSGhostDraggableTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Interaction-Tests-Core'
+	#category : #'Roassal-Interaction-Tests-Core'
 }
 
 { #category : #tests }

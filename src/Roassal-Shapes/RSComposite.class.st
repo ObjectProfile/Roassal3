@@ -6,7 +6,7 @@ Here is a simple example:
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
-label := RSLabel new text: 'Hello Roassal3'.
+label := RSLabel new text: 'Hello Roassal'.
 RSLocation new above; move: box on: label.
 composite := RSComposite new.
 composite shapes: { label . box }.
@@ -21,7 +21,7 @@ A composite can also have a background color. Simply use #color: for this:
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
-label := RSLabel new color: Color black; text: 'Hello Roassal3'.
+label := RSLabel new color: Color black; text: 'Hello Roassal'.
 RSLocation new above; move: box on: label.
 composite := RSComposite new.
 composite color: Color gray.
@@ -38,7 +38,7 @@ A padding describes a space between the border of the composite element and the 
 c := RSCanvas new.
 
 box := RSBox new width: 40; height: 10; color: Color blue.
-label := RSLabel new color: Color black; text: 'Hello Roassal3'.
+label := RSLabel new color: Color black; text: 'Hello Roassal'.
 RSLocation new above; move: box on: label.
 composite := RSComposite new.
 composite color: Color gray.
@@ -123,7 +123,7 @@ Class {
 		'clipChildren',
 		'lines'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : #'Roassal-Shapes-Bounding'
 }
 
 { #category : #'public - creation' }

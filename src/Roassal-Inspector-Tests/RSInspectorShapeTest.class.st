@@ -1,7 +1,7 @@
 Class {
 	#name : #RSInspectorShapeTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Inspector-Tests'
+	#category : #'Roassal-Inspector-Tests'
 }
 
 { #category : #tests }

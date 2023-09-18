@@ -36,7 +36,7 @@ Class {
 	#instVars : [
 		'layout'
 	],
-	#category : #'Roassal3-Layouts-Builder'
+	#category : #'Roassal-Layouts-Builder'
 }
 
 { #category : #examples }

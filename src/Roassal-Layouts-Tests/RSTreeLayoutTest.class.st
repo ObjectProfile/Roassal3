@@ -1,7 +1,7 @@
 Class {
 	#name : #RSTreeLayoutTest,
 	#superclass : #RSLayoutTest,
-	#category : #'Roassal3-Layouts-Tests'
+	#category : #'Roassal-Layouts-Tests'
 }
 
 { #category : #tests }

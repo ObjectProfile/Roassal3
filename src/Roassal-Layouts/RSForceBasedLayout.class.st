@@ -34,7 +34,7 @@ Class {
 		'quadtree',
 		'autoRepulse'
 	],
-	#category : #'Roassal3-Layouts-Force'
+	#category : #'Roassal-Layouts-Force'
 }
 
 { #category : #algorithm }

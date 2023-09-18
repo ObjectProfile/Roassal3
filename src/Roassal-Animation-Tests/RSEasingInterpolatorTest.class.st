@@ -1,7 +1,7 @@
 Class {
 	#name : #RSEasingInterpolatorTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Animation-Tests'
+	#category : #'Roassal-Animation-Tests'
 }
 
 { #category : #tests }

@@ -18,7 +18,7 @@ Class {
 		'period',
 		's'
 	],
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #accessing }

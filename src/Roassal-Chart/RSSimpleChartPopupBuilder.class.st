@@ -53,7 +53,7 @@ Class {
 		'labels',
 		'icons'
 	],
-	#category : #'Roassal3-Chart-Popup'
+	#category : #'Roassal-Chart-Popup'
 }
 
 { #category : #public }

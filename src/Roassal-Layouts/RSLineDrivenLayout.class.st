@@ -11,7 +11,7 @@ Class {
 		'lines',
 		'userDefinedLines'
 	],
-	#category : #'Roassal3-Layouts-ByConnection'
+	#category : #'Roassal-Layouts-ByConnection'
 }
 
 { #category : #testing }

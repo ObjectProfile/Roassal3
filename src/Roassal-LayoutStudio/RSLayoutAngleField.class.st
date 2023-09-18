@@ -4,7 +4,7 @@ A field editor for angles in degrees
 Class {
 	#name : #RSLayoutAngleField,
 	#superclass : #RSLayoutNumberField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #accessing }

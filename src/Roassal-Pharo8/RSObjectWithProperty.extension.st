@@ -1,6 +1,6 @@
 Extension { #name : #RSObjectWithProperty }
 
-{ #category : #'*Roassal3-Pharo8' }
+{ #category : #'*Roassal-Pharo8' }
 RSObjectWithProperty >> gtInspectorProperties: composite [
 	<gtInspectorPresentationOrder: 25>
 	self hasProperties ifFalse: [ ^ self ].

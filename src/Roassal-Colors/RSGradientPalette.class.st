@@ -5,7 +5,7 @@ I use the colors from this website https://webgradients.com/
 Class {
 	#name : #RSGradientPalette,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Colors'
+	#category : #'Roassal-Colors'
 }
 
 { #category : #gradients }

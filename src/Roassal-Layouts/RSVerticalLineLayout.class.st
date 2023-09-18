@@ -4,7 +4,7 @@ A RSVerticalLineLayout locates all the elements vertically.
 Class {
 	#name : #RSVerticalLineLayout,
 	#superclass : #RSAbstractLineLayout,
-	#category : #'Roassal3-Layouts-Line'
+	#category : #'Roassal-Layouts-Line'
 }
 
 { #category : #examples }

@@ -1,10 +1,10 @@
 "
-I am a basic popup for animated content in a view of roassal3
+I am a basic popup for animated content in a view of Roassal
 "
 Class {
 	#name : #RSAnimatedPopup,
 	#superclass : #RSPopup,
-	#category : #'Roassal3-Interaction-Popup'
+	#category : #'Roassal-Interaction-Popup'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ A TSGroupTest is a test class for testing the behavior of TSGroup
 Class {
 	#name : #RSGroupTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal-Shapes-Tests'
 }
 
 { #category : #tests }

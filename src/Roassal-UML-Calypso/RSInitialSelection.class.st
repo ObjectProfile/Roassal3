@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-UML-Calypso-Utilities'
+	#category : #'Roassal-UML-Calypso-Utilities'
 }
 
 { #category : #'instance creation' }

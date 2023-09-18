@@ -55,7 +55,7 @@ Class {
 	#instVars : [
 		'shapeFromModelCache'
 	],
-	#category : #'Roassal3-Core'
+	#category : #'Roassal-Core'
 }
 
 { #category : #visiting }

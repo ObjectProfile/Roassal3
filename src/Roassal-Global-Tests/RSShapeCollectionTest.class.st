@@ -1,7 +1,7 @@
 Class {
 	#name : #RSShapeCollectionTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Rendering'
+	#category : #'Roassal-Global-Tests-Rendering'
 }
 
 { #category : #'tests - adding' }

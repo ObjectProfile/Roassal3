@@ -1,7 +1,7 @@
 Class {
 	#name : #RSConnectionTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Mondrian-Tests'
+	#category : #'Roassal-Mondrian-Tests'
 }
 
 { #category : #tests }

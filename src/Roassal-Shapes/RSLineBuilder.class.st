@@ -97,7 +97,7 @@ Class {
 		'formatString',
 		'canvasHasBeenManuallySet'
 	],
-	#category : #'Roassal3-Shapes-Graph'
+	#category : #'Roassal-Shapes-Graph'
 }
 
 { #category : #'instance creation' }

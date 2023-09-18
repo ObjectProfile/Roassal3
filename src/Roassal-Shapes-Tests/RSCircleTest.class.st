@@ -1,7 +1,7 @@
 Class {
 	#name : #RSCircleTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Shapes-Tests'
+	#category : #'Roassal-Shapes-Tests'
 }
 
 { #category : #tests }

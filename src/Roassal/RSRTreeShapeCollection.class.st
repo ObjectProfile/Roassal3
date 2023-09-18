@@ -1,5 +1,5 @@
 "
-An R-tree for roassal3
+An R-tree for Roassal
 "
 Class {
 	#name : #RSRTreeShapeCollection,
@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'root'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #visiting }

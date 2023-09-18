@@ -1,6 +1,6 @@
 Extension { #name : #ASPolyLine }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASPolyLine >> roassalShape [
 	^ RSPolyline new
 		controlPoints: points;

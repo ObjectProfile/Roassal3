@@ -5,7 +5,7 @@ check RSAbstractRenderCollection
 Class {
 	#name : #RSRenderTreeExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #lines }

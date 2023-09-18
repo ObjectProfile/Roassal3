@@ -18,7 +18,7 @@
 Class {
 	#name : #RSVerticalTick,
 	#superclass : #RSAbstractTick,
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #rendering }

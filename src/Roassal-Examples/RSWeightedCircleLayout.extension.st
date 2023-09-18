@@ -1,6 +1,6 @@
 Extension { #name : #RSWeightedCircleLayout }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSWeightedCircleLayout class >> example1 [
 	| v elements |
 	v := RSCanvas new.

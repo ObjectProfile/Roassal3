@@ -4,7 +4,7 @@ My instances put events on a shape, when this shapes moves it will be on top of 
 Class {
 	#name : #RSNodeOnTopWhenPositionChanged,
 	#superclass : #RSInteraction,
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #hooks }

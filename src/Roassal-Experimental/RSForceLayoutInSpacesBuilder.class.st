@@ -13,7 +13,7 @@ Class {
 		'colorScale',
 		'classes'
 	],
-	#category : #'Roassal3-Experimental-ForceLayoutSpaces'
+	#category : #'Roassal-Experimental-ForceLayoutSpaces'
 }
 
 { #category : #hooks }

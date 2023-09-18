@@ -38,7 +38,7 @@ Class {
 		'ylabel',
 		'ylabelRight'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #'public - plots' }
@@ -239,7 +239,7 @@ RSAbstractChart >> initializeRenderOptions [
 RSAbstractChart >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	self update.
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: self canvas;
 		yourself
 ]

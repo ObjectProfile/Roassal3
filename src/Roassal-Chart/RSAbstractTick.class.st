@@ -12,7 +12,7 @@ Class {
 		'tickLocator',
 		'ticksData'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #public }

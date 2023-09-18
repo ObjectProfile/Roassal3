@@ -6,7 +6,7 @@ Instances of `RSAbstractHorizontalTreeLayout` can be used with `RSHorizontalTree
 Class {
 	#name : #RSAbstractHorizontalTreeLayout,
 	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#category : #'Roassal-Layouts-Tree'
 }
 
 { #category : #testing }

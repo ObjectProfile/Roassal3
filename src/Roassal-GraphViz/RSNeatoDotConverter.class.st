@@ -29,12 +29,12 @@ graph ER {
 Class {
 	#name : #RSNeatoDotConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz-Core'
+	#category : #'Roassal-GraphViz-Core'
 }
 
 { #category : #visiting }
 RSNeatoDotConverter >> writeHeader: aRSGroup [
-	stream << 'graph Roassal3'; crlf; << '{'; crlf; << 'layout=neato;'; crlf
+	stream << 'graph Roassal'; crlf; << '{'; crlf; << 'layout=neato;'; crlf
 ]
 
 { #category : #visiting }

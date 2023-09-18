@@ -7,7 +7,7 @@ Class {
 		'search',
 		'canvas'
 	],
-	#category : #'Roassal3-Interaction-Tests-Core'
+	#category : #'Roassal-Interaction-Tests-Core'
 }
 
 { #category : #running }

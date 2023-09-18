@@ -4,7 +4,7 @@ I am a simple monitor
 Class {
 	#name : #RSSimpleCanvasMonitorInteraction,
 	#superclass : #RSAbstractCanvasMonitorInteraction,
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #initialization }

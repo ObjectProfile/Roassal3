@@ -1,45 +1,45 @@
 "
-I am the default roassal3 inspector presenter. I work with RSContextInteraction
+I am the default Roassal inspector presenter. I work with RSContextInteraction
 "
 Class {
-	#name : #SpRoassal3InspectorPresenter,
+	#name : #SpRoassalInspectorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'canvas',
 		'roassalMorph',
 		'toolBar'
 	],
-	#category : #'Roassal3-Inspector-SP2'
+	#category : #'Roassal-Inspector-SP2'
 }
 
 { #category : #layout }
-SpRoassal3InspectorPresenter class >> defaultLayout [
+SpRoassalInspectorPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #roassalMorph;
 		yourself
 ]
 
 { #category : #ports }
-SpRoassal3InspectorPresenter >> activateOnDoubleClick [
+SpRoassalInspectorPresenter >> activateOnDoubleClick [
 ]
 
 { #category : #ports }
-SpRoassal3InspectorPresenter >> activateOnSingleClick [
+SpRoassalInspectorPresenter >> activateOnSingleClick [
 ]
 
 { #category : #accessing }
-SpRoassal3InspectorPresenter >> canvas [
+SpRoassalInspectorPresenter >> canvas [
 	^ canvas
 ]
 
 { #category : #accessing }
-SpRoassal3InspectorPresenter >> canvas: aRSCanvas [
+SpRoassalInspectorPresenter >> canvas: aRSCanvas [
 	canvas := aRSCanvas.
 	roassalMorph morph: canvas createMorph
 ]
 
 { #category : #enumerating }
-SpRoassal3InspectorPresenter >> createToolbarIfNecessary [
+SpRoassalInspectorPresenter >> createToolbarIfNecessary [
 	| context interactions |
 	context := canvas inspectorContext.
 	interactions := context inspectorInteractions.
@@ -59,30 +59,30 @@ SpRoassal3InspectorPresenter >> createToolbarIfNecessary [
 ]
 
 { #category : #ports }
-SpRoassal3InspectorPresenter >> defaultOutputPort [
+SpRoassalInspectorPresenter >> defaultOutputPort [
 
 	^ self outputSelectionPort
 ]
 
 { #category : #initialization }
-SpRoassal3InspectorPresenter >> initializePresenters [
+SpRoassalInspectorPresenter >> initializePresenters [
 	roassalMorph := self newMorph.
 	toolBar := self newButton.
 	toolBar label: 'fooo'
 ]
 
 { #category : #ports }
-SpRoassal3InspectorPresenter >> outputActivationPort [
+SpRoassalInspectorPresenter >> outputActivationPort [
 	^ SpActivationPort newPresenter: self
 ]
 
 { #category : #ports }
-SpRoassal3InspectorPresenter >> outputSelectionPort [
+SpRoassalInspectorPresenter >> outputSelectionPort [
 	^ SpActivationPort newPresenter: self
 ]
 
 { #category : #enumerating }
-SpRoassal3InspectorPresenter >> whenActivatedDo: aBlock [
+SpRoassalInspectorPresenter >> whenActivatedDo: aBlock [
 	| context |
 	self createToolbarIfNecessary.
 	context := canvas inspectorContext.

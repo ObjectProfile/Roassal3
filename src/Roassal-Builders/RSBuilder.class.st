@@ -12,7 +12,7 @@ First describe your model-object-domain, then the builder will generate the shap
 - `RSBuilder >> #build`: because a builder news to build
 - `RSBuilder >> #container`: to set the container where shapes will be added.
 - `RSBuilder >> #renderIn:`: is abstract class and recives a container, usually a canvas.
-- `RSBuilder >> #asPresenter`: first it calls `build` then it convert the builder into a `SpPresenter` like `SpRoassal3InspectorPresenter`.
+- `RSBuilder >> #asPresenter`: first it calls `build` then it convert the builder into a `SpPresenter` like `SpRoassalInspectorPresenter`.
 - `RSBuilder >> #asShape`: first it calls `build` then it convert the the generated shapes into a `RSComposite` shape.
 - `RSBuilder >> #update`: will remove the elements in the container and will try to render `RSBuilder >>#renderIn:` again the shapes in the container
 
@@ -58,7 +58,7 @@ Class {
 		'container',
 		'shapes'
 	],
-	#category : #'Roassal3-Builders-Core'
+	#category : #'Roassal-Builders-Core'
 }
 
 { #category : #accessing }

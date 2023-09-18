@@ -18,7 +18,7 @@ Class {
 		'childrenWithoutCycles',
 		'parentWithoutCycles'
 	],
-	#category : #'Roassal3-Layouts-ByConnection'
+	#category : #'Roassal-Layouts-ByConnection'
 }
 
 { #category : #utilities }

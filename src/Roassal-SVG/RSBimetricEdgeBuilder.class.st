@@ -8,7 +8,7 @@ Class {
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal3-SVG-Edges'
+	#category : #'Roassal-SVG-Edges'
 }
 
 { #category : #'private - utility' }

@@ -11,7 +11,7 @@ Class {
 		'meshes',
 		'elements'
 	],
-	#category : #'Roassal3-Basic3D-TODO'
+	#category : #'Roassal-Basic3D-TODO'
 }
 
 { #category : #public }

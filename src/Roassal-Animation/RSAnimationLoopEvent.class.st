@@ -4,7 +4,7 @@ for loop events
 Class {
 	#name : #RSAnimationLoopEvent,
 	#superclass : #RSAnimationEvent,
-	#category : #'Roassal3-Animation-Events'
+	#category : #'Roassal-Animation-Events'
 }
 
 { #category : #accessing }

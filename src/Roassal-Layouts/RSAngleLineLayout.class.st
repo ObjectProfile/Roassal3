@@ -8,7 +8,7 @@ Class {
 		'angle',
 		'originalPointer'
 	],
-	#category : #'Roassal3-Layouts-Line'
+	#category : #'Roassal-Layouts-Line'
 }
 
 { #category : #accessing }

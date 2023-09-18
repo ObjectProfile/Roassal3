@@ -1,6 +1,6 @@
 Extension { #name : #RSFlowLayout }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : #'*Roassal-LayoutStudio' }
 RSFlowLayout class >> alignmentOptions [
 	^ #(bottom middle top)
 ]

@@ -45,7 +45,7 @@ Class {
 		'textExtents',
 		'cairoGlyphs'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : #'Roassal-Shapes-Bounding'
 }
 
 { #category : #public }

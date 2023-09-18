@@ -23,7 +23,7 @@ Class {
 		'showRectangles',
 		'originMatrix'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #utilities }

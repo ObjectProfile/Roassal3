@@ -6,7 +6,7 @@ Class {
 		'endAttachPoint',
 		'controller'
 	],
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : #'Roassal-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

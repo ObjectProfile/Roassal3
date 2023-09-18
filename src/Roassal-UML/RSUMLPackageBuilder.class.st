@@ -1,5 +1,5 @@
 "
-I am a builder to create UML package diagrams in Roassal3, see examples
+I am a builder to create UML package diagrams in Roassal, see examples
 "
 Class {
 	#name : #RSUMLPackageBuilder,
@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #'Roassal3-UML-Builder'
+	#category : #'Roassal-UML-Builder'
 }
 
 { #category : #initialization }

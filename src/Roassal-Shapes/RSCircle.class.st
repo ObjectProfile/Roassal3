@@ -16,7 +16,7 @@ c open
 Class {
 	#name : #RSCircle,
 	#superclass : #RSCircularShape,
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : #'Roassal-Shapes-Bounding'
 }
 
 { #category : #visiting }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSCameraTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Core'
+	#category : #'Roassal-Global-Tests-Core'
 }
 
 { #category : #tests }

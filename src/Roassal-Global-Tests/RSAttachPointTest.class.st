@@ -1,7 +1,7 @@
 Class {
 	#name : #RSAttachPointTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Shapes'
+	#category : #'Roassal-Global-Tests-Shapes'
 }
 
 { #category : #tests }

@@ -10,7 +10,7 @@ Class {
 		'enclosingThreshold',
 		'enclosingForce'
 	],
-	#category : #'Roassal3-Layouts-Force'
+	#category : #'Roassal-Layouts-Force'
 }
 
 { #category : #accessing }

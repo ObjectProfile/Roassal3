@@ -1,6 +1,6 @@
 Extension { #name : #RSBezier }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSBezier class >> exampleBezier [
 	| bezier |
 	bezier := self new.
@@ -8,7 +8,7 @@ RSBezier class >> exampleBezier [
 	^ (Smalltalk tools inspector inspect: bezier) window.
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSBezier class >> exampleControlPointsController [
 	| bezier controller points |
 	bezier := self new.

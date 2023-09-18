@@ -4,7 +4,7 @@ I have examples of RSSankey
 Class {
 	#name : #RSSankeyExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : #'Roassal-Experimental-Sankey'
 }
 
 { #category : #examples }

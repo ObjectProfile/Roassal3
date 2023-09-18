@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Interaction-Tests-ElasticBox'
+	#category : #'Roassal-Interaction-Tests-ElasticBox'
 }
 
 { #category : #running }

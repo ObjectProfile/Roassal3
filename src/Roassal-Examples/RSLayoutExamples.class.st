@@ -4,7 +4,7 @@ I use the RSShapeBuilder
 Class {
 	#name : #RSLayoutExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#category : #'Roassal-Examples-Basic'
 }
 
 { #category : #layouts }
@@ -510,7 +510,7 @@ RSLayoutExamples >> example18ClusterTree [
 RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	<script: 'self new example19AutomaticLayoutWhenWindowIsResized open'>
 	| classes shapes c eb |
-	classes := { 'Roassal3-Layouts'. 'Roassal3' }
+	classes := { 'Roassal-Layouts'. 'Roassal' }
 		flatCollect: [:pkgname | (RPackage organizer
 			packageNamed: pkgname) definedClasses ].
 	shapes := RSGroup new.
@@ -744,12 +744,12 @@ RSLayoutExamples >> example22ClassHierarchies [
 ]
 
 { #category : #tests }
-RSLayoutExamples >> example23Roassal3CommitsWithTimeGaps [
+RSLayoutExamples >> example23RoassalCommitsWithTimeGaps [
 	<noTest>
-	<script: 'RSLayoutExamples new example23Roassal3CommitsWithTimeGaps open'>
+	<script: 'RSLayoutExamples new example23RoassalCommitsWithTimeGaps open'>
 	| icerepo commits edges dict aCanvas |
 	icerepo := IceRepository repositories
-		detect: [ :each | each name = 'Roassal3' ]
+		detect: [ :each | each name = 'Roassal' ]
 		ifNone: [ nil ].
 
 	dict := Dictionary new.

@@ -21,7 +21,7 @@ p open
 Class {
 	#name : #RSYLabelDecoration,
 	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #initialization }

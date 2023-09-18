@@ -25,7 +25,7 @@ Class {
 		'animation',
 		'hideAnimation'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #hooks }

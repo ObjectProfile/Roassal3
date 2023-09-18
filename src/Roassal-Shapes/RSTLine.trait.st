@@ -6,7 +6,7 @@ Trait {
 	#instVars : [
 		'formatString'
 	],
-	#category : #'Roassal3-Shapes-Graph'
+	#category : #'Roassal-Shapes-Graph'
 }
 
 { #category : #'public - shape' }

@@ -9,7 +9,7 @@ Class {
 		'animation',
 		'hasDraggable'
 	],
-	#category : #'Roassal3-Layouts-Interactions'
+	#category : #'Roassal-Layouts-Interactions'
 }
 
 { #category : #hooks }

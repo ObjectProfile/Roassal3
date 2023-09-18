@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-UML-Examples' }
+Package { #name : #'Roassal-UML-Examples' }

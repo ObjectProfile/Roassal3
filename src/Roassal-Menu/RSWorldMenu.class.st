@@ -1,5 +1,5 @@
 "
-I am have the menu items for the menu Roassal3 on Tools
+I am have the menu items for the menu Roassal on Tools
 "
 Class {
 	#name : #RSWorldMenu,
@@ -8,7 +8,7 @@ Class {
 		'discord',
 		'roassalIcon'
 	],
-	#category : #'Roassal3-Menu'
+	#category : #'Roassal-Menu'
 }
 
 { #category : #icons }
@@ -33,7 +33,7 @@ RSWorldMenu class >> loadExporters [
 { #category : #loading }
 RSWorldMenu class >> loadFullVersion [
 	"TODO do not discard changes"
-	(UIManager default confirm: 'Do you want to load the last version of Roassal3?')
+	(UIManager default confirm: 'Do you want to load the last version of Roassal?')
 		ifFalse: [ ^ self ].
 	[Metacello new
 		baseline: 'Roassal';
@@ -45,20 +45,20 @@ RSWorldMenu class >> loadFullVersion [
 { #category : #menu }
 RSWorldMenu class >> menu00RoassalOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3)
+	(aBuilder item: #Roassal)
 		parent: #Tools;
-		label: 'Roassal3';
+		label: 'Roassal';
 		icon: self roassalIcon;
 		help: 'A visualization engine';
 		order: 777.
-	(aBuilder item: #Roassal3Help)
-		parent: #Roassal3;
+	(aBuilder item: #RoassalHelp)
+		parent: #Roassal;
 		label: 'Help';
 		icon: (self iconNamed: #glamorousHelp);
 		help: 'Need help?';
 		order: 1.
-	(aBuilder item: #Roassal3Load)
-		parent: #Roassal3;
+	(aBuilder item: #RoassalLoad)
+		parent: #Roassal;
 		label: 'Load...';
 		icon: (self iconNamed: #smallLoadProject);
 		help: 'Load roassal projects';
@@ -67,8 +67,8 @@ RSWorldMenu class >> menu00RoassalOn: aBuilder [
 
 { #category : #menu }
 RSWorldMenu class >> menu01ReportABugOn: aBuilder [
-	(aBuilder item: #Roassal3Bug)
-		parent: #Roassal3Help;
+	(aBuilder item: #RoassalBug)
+		parent: #RoassalHelp;
 		order: 1;
 		label: 'Report a Bug';
 		icon: (self iconNamed: #smallDebug);
@@ -78,8 +78,8 @@ RSWorldMenu class >> menu01ReportABugOn: aBuilder [
 
 { #category : #menu }
 RSWorldMenu class >> menu02GithubOn: aBuilder [
-	(aBuilder item: #Roassal3Git)
-		parent: #Roassal3Help;
+	(aBuilder item: #RoassalGit)
+		parent: #RoassalHelp;
 		order: 2;
 		label: 'Github';
 		help: 'Open Roassal git hubpage';
@@ -90,8 +90,8 @@ RSWorldMenu class >> menu02GithubOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu03DiscordOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3Chat)
-		parent: #Roassal3Help;
+	(aBuilder item: #RoassalChat)
+		parent: #RoassalHelp;
 		order: 3;
 		label: 'Chat with us';
 		help: 'Will open discord web to chat with us in Pharo server';
@@ -102,8 +102,8 @@ RSWorldMenu class >> menu03DiscordOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3Documentation)
-		parent: #Roassal3Help;
+	(aBuilder item: #RoassalDocumentation)
+		parent: #RoassalHelp;
 		order: 4;
 		label: 'Online documentation';
 		help: 'Will open the webpage https://github.com/pharo-graphics/RoassalDocumentation';
@@ -114,8 +114,8 @@ RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu05PluginsOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3Exporters)
-		parent: #Roassal3Load;
+	(aBuilder item: #RoassalExporters)
+		parent: #RoassalLoad;
 		order: 6;
 		label: 'Load exporters';
 		help: 'To export roassal canvas in PNG, PDF, SVG';
@@ -127,8 +127,8 @@ RSWorldMenu class >> menu05PluginsOn: aBuilder [
 RSWorldMenu class >> menu06LoadFullVersionOn: aBuilder [
 
 	<worldMenu>
-	(aBuilder item: #Roassal3LoadFullVersion)
-		parent: #Roassal3Load;
+	(aBuilder item: #RoassalLoadFullVersion)
+		parent: #RoassalLoad;
 		order: 5;
 		label: 'Load full version';
 		help: 'Load full version of Roassal including examples';
@@ -139,8 +139,8 @@ RSWorldMenu class >> menu06LoadFullVersionOn: aBuilder [
 { #category : #menu }
 RSWorldMenu class >> menu11SelfOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Roassal3Self)
-		parent: #Roassal3;
+	(aBuilder item: #RoassalSelf)
+		parent: #Roassal;
 		order: 11;
 		label: 'This menu';
 		help: 'Open RSWorldMenu';

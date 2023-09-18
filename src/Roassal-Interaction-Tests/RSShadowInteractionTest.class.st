@@ -9,7 +9,7 @@ Class {
 		'shape',
 		'interaction'
 	],
-	#category : #'Roassal3-Interaction-Tests-Selection'
+	#category : #'Roassal-Interaction-Tests-Selection'
 }
 
 { #category : #running }

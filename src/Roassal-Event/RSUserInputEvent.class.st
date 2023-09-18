@@ -10,7 +10,7 @@ Class {
 		'shiftKeyPressed',
 		'optionKeyPressed'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #'instance creation' }

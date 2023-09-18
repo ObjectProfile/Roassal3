@@ -32,7 +32,7 @@ Class {
 		'oldExtent',
 		'newExtent'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #accessing }

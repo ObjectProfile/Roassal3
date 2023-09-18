@@ -6,7 +6,7 @@ I apply the attach point, then I return an array with the control points for the
 Class {
 	#name : #RSAbstractCPAPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : #'Roassal-Shapes-ControlPoints'
 }
 
 { #category : #testing }

@@ -102,7 +102,7 @@ c open
 Class {
 	#name : #RSBoxPlot,
 	#superclass : #RSAbstractBandPlot,
-	#category : #'Roassal3-Chart-Core'
+	#category : #'Roassal-Chart-Core'
 }
 
 { #category : #'instance creation' }

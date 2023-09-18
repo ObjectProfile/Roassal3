@@ -1,5 +1,5 @@
 "
-I the main interaction that handles roassal3 general control about a canvas
+I the main interaction that handles Roassal general control about a canvas
 I interact with the Abstract class `RSAbstractControlCanvasInteraction` and its subclasses.
 - interactions: users can access and add new interactions. check also `defaultInteractions`
 - configuration: a configurable object shared by the interaction to know configuration about the controller.
@@ -24,7 +24,7 @@ Class {
 		'interactions',
 		'configuration'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #'instance creation' }

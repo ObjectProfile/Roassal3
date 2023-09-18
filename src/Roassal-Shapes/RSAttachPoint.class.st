@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'inverted'
 	],
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : #'Roassal-Shapes-AttachPoint'
 }
 
 { #category : #'instance creation' }

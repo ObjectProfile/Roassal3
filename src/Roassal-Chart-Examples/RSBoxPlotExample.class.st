@@ -4,7 +4,7 @@ Example plots making use of RSBoxPlot.
 Class {
 	#name : #RSBoxPlotExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

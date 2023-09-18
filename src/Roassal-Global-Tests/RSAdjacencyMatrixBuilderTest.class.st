@@ -5,7 +5,7 @@ Class {
 		'empty',
 		'b'
 	],
-	#category : #'Roassal3-Global-Tests-Examples'
+	#category : #'Roassal-Global-Tests-Examples'
 }
 
 { #category : #running }

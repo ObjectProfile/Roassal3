@@ -49,7 +49,7 @@ Class {
 		'totalNumberOfLeaves',
 		'alpha'
 	],
-	#category : #'Roassal3-Colors'
+	#category : #'Roassal-Colors'
 }
 
 { #category : #private }

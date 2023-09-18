@@ -1,7 +1,7 @@
 Class {
 	#name : #RSBlocMetricProvider,
 	#superclass : #RSMetricsProvider,
-	#category : #'Roassal3-Bloc-Core'
+	#category : #'Roassal-Bloc-Core'
 }
 
 { #category : #hooks }

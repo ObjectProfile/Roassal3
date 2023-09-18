@@ -1,7 +1,7 @@
 Class {
 	#name : #RSInvertedCDF,
 	#superclass : #RSQuantile,
-	#category : #'Roassal3-Chart-Statistics'
+	#category : #'Roassal-Chart-Statistics'
 }
 
 { #category : #initialize }

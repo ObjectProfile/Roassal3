@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'roassalSpec'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : #'Roassal-Spec-Examples-Basic'
 }
 
 { #category : #layout }
@@ -21,11 +21,11 @@ RSBasicSpecExample class >> defaultLayout [
 { #category : #initialization }
 RSBasicSpecExample >> initializePresenters [
 	roassalSpec := self newRoassal.
-	self initializeRoassal3: roassalSpec canvas
+	self initializeRoassal: roassalSpec canvas
 ]
 
 { #category : #initialization }
-RSBasicSpecExample >> initializeRoassal3: canvas [
+RSBasicSpecExample >> initializeRoassal: canvas [
 	| slice magic |
 	slice := RSPieSlice new.
 	slice

@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-Sunburst-Examples' }
+Package { #name : #'Roassal-Sunburst-Examples' }

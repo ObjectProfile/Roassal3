@@ -114,7 +114,7 @@ Class {
 		'shapes',
 		'minAndMaxBlock'
 	],
-	#category : #'Roassal3-Shapes-Util'
+	#category : #'Roassal-Shapes-Util'
 }
 
 { #category : #'instance creation' }

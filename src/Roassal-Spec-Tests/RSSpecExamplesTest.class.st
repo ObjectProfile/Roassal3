@@ -1,7 +1,7 @@
 Class {
 	#name : #RSSpecExamplesTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Spec-Tests'
+	#category : #'Roassal-Spec-Tests'
 }
 
 { #category : #tests }

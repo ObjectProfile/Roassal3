@@ -1,10 +1,10 @@
 Extension { #name : #RSGroup }
 
-{ #category : #'*Roassal3-Pharo8' }
+{ #category : #'*Roassal-Pharo8' }
 RSGroup >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	
-	composite roassal3
+	composite Roassal
 		title: ['Canvas'];
 		initializeCanvas: [ | canvas |
 			canvas := RSCanvas new

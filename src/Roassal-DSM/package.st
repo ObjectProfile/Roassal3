@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-DSM' }
+Package { #name : #'Roassal-DSM' }

@@ -4,7 +4,7 @@ Similar to number field but I can handle points
 Class {
 	#name : #RSLayoutPointField,
 	#superclass : #RSLayoutEvalField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #accessing }

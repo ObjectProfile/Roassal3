@@ -4,7 +4,7 @@ I am a second different way to draw an UML class, similar to the system Torch.
 Here is an example:
 -=-=-=-=-=-=-=-=-=
 builder := RSUMLClassBuilder new.
-classes := { 'Roassal3-Layouts'. 'Roassal3' }
+classes := { 'Roassal-Layouts'. 'Roassal' }
 	flatCollect: [:pkgname | (RPackage organizer
 		packageNamed: pkgname) definedClasses ].
 builder classes: classes.
@@ -21,7 +21,7 @@ Class {
 		'currentTitleWidth',
 		'titleBoxColor'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #layout }

@@ -13,7 +13,7 @@ view @ RSDraggableView.
 Class {
 	#name : #RSInteraction,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #examples }

@@ -14,7 +14,7 @@ Class {
 		'graphWidth',
 		'boxHeight'
 	],
-	#category : #'Roassal3-FlameGraph'
+	#category : #'Roassal-FlameGraph'
 }
 
 { #category : #accessing }

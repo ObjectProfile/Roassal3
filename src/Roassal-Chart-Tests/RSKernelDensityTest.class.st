@@ -1,7 +1,7 @@
 Class {
 	#name : #RSKernelDensityTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Statistics'
+	#category : #'Roassal-Chart-Tests-Statistics'
 }
 
 { #category : #tests }

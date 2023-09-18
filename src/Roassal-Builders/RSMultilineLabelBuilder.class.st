@@ -1,5 +1,5 @@
 "
-I am a builder that can create labels with multiline in roassal3 from objects
+I am a builder that can create labels with multiline in Roassal from objects
 
 ```Smalltalk
 canvas := RSCanvas new.
@@ -24,7 +24,7 @@ Class {
 		'textBlock',
 		'wrapStrategy'
 	],
-	#category : #'Roassal3-Builders-Text'
+	#category : #'Roassal-Builders-Text'
 }
 
 { #category : #hooks }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'position'
 	],
-	#category : #'Roassal3-Chart-Popup'
+	#category : #'Roassal-Chart-Popup'
 }
 
 { #category : #accessing }

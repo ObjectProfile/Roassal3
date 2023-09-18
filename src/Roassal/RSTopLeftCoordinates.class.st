@@ -4,7 +4,7 @@ It uses the center in the top left of the morph window
 Class {
 	#name : #RSTopLeftCoordinates,
 	#superclass : #RSCoordinates,
-	#category : #'Roassal3-Camera'
+	#category : #'Roassal-Camera'
 }
 
 { #category : #hooks }

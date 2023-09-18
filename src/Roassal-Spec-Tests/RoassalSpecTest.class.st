@@ -1,7 +1,7 @@
 Class {
 	#name : #RoassalSpecTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Spec-Tests'
+	#category : #'Roassal-Spec-Tests'
 }
 
 { #category : #tests }
@@ -32,7 +32,7 @@ RoassalSpecTest >> testTakeKeyboardFocus [
 		add: (RSBox new size: 100);
 		@ RSCanvasController;
 		yourself.
-	spec := SpRoassal3InspectorPresenter new.
+	spec := SpRoassalInspectorPresenter new.
 	spec canvas: canvas.
 	window := spec open.
 	window2 := StPlayground new open.

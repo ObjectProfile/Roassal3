@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'lineItemsCountBlock'
 	],
-	#category : #'Roassal3-Layouts-Grid'
+	#category : #'Roassal-Layouts-Grid'
 }
 
 { #category : #public }

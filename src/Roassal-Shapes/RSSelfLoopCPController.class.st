@@ -4,7 +4,7 @@ Used for straight lines and self loop lines
 Class {
 	#name : #RSSelfLoopCPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : #'Roassal-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

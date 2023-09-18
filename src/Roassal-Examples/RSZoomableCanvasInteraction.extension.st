@@ -1,6 +1,6 @@
 Extension { #name : #RSZoomableCanvasInteraction }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSZoomableCanvasInteraction class >> example [
 	| canvas |
 	canvas := self canvasExample.

@@ -6,7 +6,7 @@ Class {
 		'target',
 		'canvas'
 	],
-	#category : #'Roassal3-Layouts-Tests'
+	#category : #'Roassal-Layouts-Tests'
 }
 
 { #category : #running }

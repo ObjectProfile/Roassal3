@@ -1,6 +1,6 @@
 Extension { #name : #RSScrollBarsCanvasInteraction }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSScrollBarsCanvasInteraction class >> example [
 	| canvas |
 	canvas := self canvasExample.
@@ -10,7 +10,7 @@ RSScrollBarsCanvasInteraction class >> example [
 	^ canvas open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : #'*Roassal-Examples' }
 RSScrollBarsCanvasInteraction class >> exampleOriginTopLeft [
 	| canvas |
 	canvas := self canvasExample.

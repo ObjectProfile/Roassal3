@@ -4,7 +4,7 @@ A basic renderer for UML packages
 Class {
 	#name : #RSBasicUMLPackageRenderer,
 	#superclass : #RSAbstractUMLPackageRenderer,
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #hooks }

@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'EmptyExtents'
 	],
-	#category : #'Roassal3-Shapes-TextMetrics'
+	#category : #'Roassal-Shapes-TextMetrics'
 }
 
 { #category : #requirements }

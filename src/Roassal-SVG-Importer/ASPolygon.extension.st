@@ -1,6 +1,6 @@
 Extension { #name : #ASPolygon }
 
-{ #category : #'*Roassal3-SVG-Importer' }
+{ #category : #'*Roassal-SVG-Importer' }
 ASPolygon >> roassalShape [
 	^ RSPolygon new
 		points: points;

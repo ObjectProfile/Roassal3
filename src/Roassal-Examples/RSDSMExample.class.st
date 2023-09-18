@@ -43,7 +43,7 @@ RTDSMExample new installTitle: 'EvolutionDSM'
 Class {
 	#name : #RSDSMExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-DSM'
+	#category : #'Roassal-Examples-DSM'
 }
 
 { #category : #'example-data' }
@@ -345,7 +345,7 @@ RSDSMExample >> example04Token [
 	<script: 'self new example04Token open'>
 
 	| packageRegExp packages getKeywordsFromClass rawKeywords top10Keywords dsm |
-	packageRegExp := { 'Roassal3-*'  }.
+	packageRegExp := { 'Roassal-*'  }.
 	packages := RPackageOrganizer default packages select: [ :p |
 		packageRegExp anySatisfy: [ :r | r match: p packageName ] ].
 

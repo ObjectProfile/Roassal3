@@ -9,7 +9,7 @@
 Class {
 	#name : #RSAutoLocator,
 	#superclass : #RSTickLocator,
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #generate }

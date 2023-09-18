@@ -4,7 +4,7 @@ This is the default coordinate system in roassal, it puts the origin in the cent
 Class {
 	#name : #RSCenterMiddleCoordinates,
 	#superclass : #RSCoordinates,
-	#category : #'Roassal3-Camera'
+	#category : #'Roassal-Camera'
 }
 
 { #category : #public }

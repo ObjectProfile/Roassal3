@@ -11,7 +11,7 @@ Class {
 		'zoomInteraction',
 		'zoomRatio'
 	],
-	#category : #'Roassal3-Interaction-Utils'
+	#category : #'Roassal-Interaction-Utils'
 }
 
 { #category : #zoom }

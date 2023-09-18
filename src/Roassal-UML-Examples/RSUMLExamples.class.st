@@ -4,7 +4,7 @@ I have examples of how to manage the uml builder in different cases
 Class {
 	#name : #RSUMLExamples,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-UML-Examples'
+	#category : #'Roassal-UML-Examples'
 }
 
 { #category : #examples }
@@ -115,7 +115,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	<script: 'self new example08HierarchyPacker open extent: 900@300'>
 	| builder classes |
 	builder := RSUMLClassBuilder new.
-	classes := { 'Roassal3-Layouts'. 'Roassal3' }
+	classes := { 'Roassal-Layouts'. 'Roassal' }
 		flatCollect: [:pkgname | (RPackage organizer
 			packageNamed: pkgname) definedClasses ].
 	builder classes: classes.

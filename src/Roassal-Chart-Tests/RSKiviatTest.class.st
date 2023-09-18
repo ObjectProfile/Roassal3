@@ -4,7 +4,7 @@ A RSKiviatTest is a test class for testing the behavior of RSKiviat
 Class {
 	#name : #RSKiviatTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Radar'
+	#category : #'Roassal-Chart-Tests-Radar'
 }
 
 { #category : #tests }

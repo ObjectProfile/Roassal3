@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-SVG-Examples' }
+Package { #name : #'Roassal-SVG-Examples' }

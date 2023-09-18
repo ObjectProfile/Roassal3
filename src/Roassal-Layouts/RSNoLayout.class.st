@@ -6,7 +6,7 @@ It serves as a placeholder for situations where the user wants to display object
 Class {
 	#name : #RSNoLayout,
 	#superclass : #RSLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#category : #'Roassal-Layouts-Core'
 }
 
 { #category : #hook }

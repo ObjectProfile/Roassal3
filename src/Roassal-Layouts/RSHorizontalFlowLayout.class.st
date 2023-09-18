@@ -5,7 +5,7 @@ A RSHorizontalFlowLayout is a FlowLayout horizontaly arranged, right queued at d
 Class {
 	#name : #RSHorizontalFlowLayout,
 	#superclass : #RSAbstractFlowLayout,
-	#category : #'Roassal3-Layouts-Flow'
+	#category : #'Roassal-Layouts-Flow'
 }
 
 { #category : #examples }

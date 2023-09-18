@@ -4,7 +4,7 @@ Abstract class for all tick locators. A tick locator defines where the ticks of 
 Class {
 	#name : #RSTickLocator,
 	#superclass : #Object,
-	#category : #'Roassal3-Chart-Ticks'
+	#category : #'Roassal-Chart-Ticks'
 }
 
 { #category : #generate }

@@ -4,7 +4,7 @@ This class combines a cluster tree layout and Radial tree layout to undestand bi
 Class {
 	#name : #RSClusterRadialTreeLayout,
 	#superclass : #RSClusterTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#category : #'Roassal-Layouts-Tree'
 }
 
 { #category : #examples }

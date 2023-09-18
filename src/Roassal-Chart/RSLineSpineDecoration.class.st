@@ -10,7 +10,7 @@ Class {
 		'axisX',
 		'axisY'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : #'Roassal-Chart-Decoration'
 }
 
 { #category : #initialization }

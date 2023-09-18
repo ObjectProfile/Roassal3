@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'menuBlock'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : #'Roassal-Interaction-Core'
 }
 
 { #category : #enumerating }

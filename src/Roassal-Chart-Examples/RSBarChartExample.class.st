@@ -4,7 +4,7 @@ I have examples of barcharts
 Class {
 	#name : #RSBarChartExample,
 	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#category : #'Roassal-Chart-Examples'
 }
 
 { #category : #examples }

@@ -4,7 +4,7 @@ I have basic svg examples
 Class {
 	#name : #RSSVGShapeExamples,
 	#superclass : #RSShapeExamples,
-	#category : #'Roassal3-SVG-Examples'
+	#category : #'Roassal-SVG-Examples'
 }
 
 { #category : #examples }

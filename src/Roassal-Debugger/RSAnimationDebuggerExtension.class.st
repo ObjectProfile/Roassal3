@@ -1,5 +1,5 @@
 "
-An experimental debugger for roassal3 animations
+An experimental debugger for Roassal animations
 "
 Class {
 	#name : #RSAnimationDebuggerExtension,
@@ -10,7 +10,7 @@ Class {
 		'canvas',
 		'debugger'
 	],
-	#category : #'Roassal3-Debugger'
+	#category : #'Roassal-Debugger'
 }
 
 { #category : #layout }

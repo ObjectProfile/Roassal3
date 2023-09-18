@@ -13,7 +13,7 @@ Class {
 		'shouldValidateCycles',
 		'childrenSortBlock'
 	],
-	#category : #'Roassal3-Layouts-ByConnection'
+	#category : #'Roassal-Layouts-ByConnection'
 }
 
 { #category : #constants }

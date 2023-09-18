@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'limits'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #utilities }

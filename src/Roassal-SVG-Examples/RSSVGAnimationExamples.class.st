@@ -4,7 +4,7 @@ I have animated svg examples
 Class {
 	#name : #RSSVGAnimationExamples,
 	#superclass : #RSAnimationExamples,
-	#category : #'Roassal3-SVG-Examples'
+	#category : #'Roassal-SVG-Examples'
 }
 
 { #category : #'data - svg' }

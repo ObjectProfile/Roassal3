@@ -8,7 +8,7 @@ Because we have coordinates now, may be we can remove this class.
 Class {
 	#name : #RSKeepCanvasPositionCanvasInteraction,
 	#superclass : #RSAbstractControlCanvasInteraction,
-	#category : #'Roassal3-Interaction-Controls'
+	#category : #'Roassal-Interaction-Controls'
 }
 
 { #category : #hooks }

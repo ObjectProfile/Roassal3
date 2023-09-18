@@ -9,7 +9,7 @@ Class {
 		'polygon',
 		'offset'
 	],
-	#category : #'Roassal3-Experimental-Alpharo'
+	#category : #'Roassal-Experimental-Alpharo'
 }
 
 { #category : #updating }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'items'
 	],
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#category : #'Roassal-LayoutStudio-Fields'
 }
 
 { #category : #rendering }

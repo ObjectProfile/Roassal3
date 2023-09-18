@@ -14,7 +14,7 @@ Also equivalent to RSEasingInterpolator poly exponent: 3.
 Class {
 	#name : #RSCubicInterpolator,
 	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#category : #'Roassal-Animation-Easing'
 }
 
 { #category : #interpolation }

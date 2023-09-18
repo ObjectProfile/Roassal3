@@ -1,7 +1,7 @@
 Class {
 	#name : #RSDraggableTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Interaction-Tests-Core'
+	#category : #'Roassal-Interaction-Tests-Core'
 }
 
 { #category : #tests }

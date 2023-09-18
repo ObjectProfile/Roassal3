@@ -10,7 +10,7 @@ Class {
 		'padding',
 		'currentClassMethods'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : #'Roassal-UML-Rendering'
 }
 
 { #category : #testing }

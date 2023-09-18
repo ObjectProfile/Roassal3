@@ -1,6 +1,6 @@
 Extension { #name : #RSUserInputEvent }
 
-{ #category : #'*Roassal3-Spec-Gtk' }
+{ #category : #'*Roassal-Spec-Gtk' }
 RSUserInputEvent class >> fromGtkEvent: aUserInputEvent [
 	| commandKeyPressed controlKeyPressed shiftKeyPressed optionKeyPressed |
 	aUserInputEvent isEventMotion

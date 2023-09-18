@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'canvasIdString'
 	],
-	#category : #'Roassal3-Interaction-Extra'
+	#category : #'Roassal-Interaction-Extra'
 }
 
 { #category : #initialization }

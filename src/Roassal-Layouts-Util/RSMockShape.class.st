@@ -1,5 +1,5 @@
 "
-The RSMockShape class in Roassal3 is used for testing and mocking purposes. It provides a way to create mock shapes that can be used to test the behavior of other Roassal3 classes that depend on shapes.
+The RSMockShape class in Roassal is used for testing and mocking purposes. It provides a way to create mock shapes that can be used to test the behavior of other Roassal classes that depend on shapes.
 "
 Class {
 	#name : #RSMockShape,
@@ -15,7 +15,7 @@ Class {
 		'width',
 		'height'
 	],
-	#category : #'Roassal3-Layouts-Util'
+	#category : #'Roassal-Layouts-Util'
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 		'base',
 		'border'
 	],
-	#category : #'Roassal3-Examples-Experimental'
+	#category : #'Roassal-Examples-Experimental'
 }
 
 { #category : #events }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSColoredTreePaletteTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Colors'
+	#category : #'Roassal-Global-Tests-Colors'
 }
 
 { #category : #tests }

@@ -1,6 +1,6 @@
 Extension { #name : #AthensCloseSegment }
 
-{ #category : #'*Roassal3-SVG' }
+{ #category : #'*Roassal-SVG' }
 AthensCloseSegment >> visitWith: visitor [
 	visitor visitCloseSegment:  self
 ]

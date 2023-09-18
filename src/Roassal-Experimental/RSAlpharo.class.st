@@ -13,7 +13,7 @@ Class {
 		'random',
 		'redLine'
 	],
-	#category : #'Roassal3-Experimental-Alpharo'
+	#category : #'Roassal-Experimental-Alpharo'
 }
 
 { #category : #hooks }

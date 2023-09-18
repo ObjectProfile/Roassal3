@@ -11,7 +11,7 @@ Class {
 		'elements',
 		'canvas'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : #'Roassal-Basic3D-Core'
 }
 
 { #category : #adding }
@@ -99,7 +99,7 @@ RSSpace3D >> extent: aPoint [
 { #category : #ui }
 RSSpace3D >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
-	composite roassal3
+	composite Roassal
 		title: ['View'];
 		initializeCanvas: [
 			canvas color: Smalltalk ui theme backgroundColor.
@@ -124,7 +124,7 @@ RSSpace3D >> inspector [
 	canvas color: Smalltalk ui theme backgroundColor.
 	canvas zoomToFit.
 
-	^ SpRoassal3InspectorPresenter new
+	^ SpRoassalInspectorPresenter new
 		canvas: canvas;
 		yourself
 ]

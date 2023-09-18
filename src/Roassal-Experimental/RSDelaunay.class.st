@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'epsilon'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : #'Roassal-Experimental-Delaunay'
 }
 
 { #category : #initialization }

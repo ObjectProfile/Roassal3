@@ -6,7 +6,7 @@ Trait {
 	#instVars : [
 		'random'
 	],
-	#category : #'Roassal3-Layouts-Traits'
+	#category : #'Roassal-Layouts-Traits'
 }
 
 { #category : #positioning }

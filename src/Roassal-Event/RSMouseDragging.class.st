@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : #'Roassal3-Event'
+	#category : #'Roassal-Event'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ A RSLabeledTest is a test class for testing the behavior of RSLabeled
 Class {
 	#name : #RSLabeledTest,
 	#superclass : #TestCase,
-	#category : #'Roassal3-Interaction-Tests-Core'
+	#category : #'Roassal-Interaction-Tests-Core'
 }
 
 { #category : #tests }

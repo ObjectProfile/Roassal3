@@ -1,10 +1,10 @@
 Extension { #name : #RSMondrian }
 
-{ #category : #'*Roassal3-Pharo8' }
+{ #category : #'*Roassal-Pharo8' }
 RSMondrian >> gtInspectorViewIn: composite [
 
 	<gtInspectorPresentationOrder: -10>
-	composite roassal3
+	composite Roassal
 		title: [ 'Canvas' ];
 		initializeCanvas: [ self build; canvas ]
 ]

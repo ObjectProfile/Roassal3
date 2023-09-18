@@ -10,7 +10,7 @@ Class {
 		'ty',
 		'value'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : #'Roassal-Experimental-Sankey'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RSWrapLabelTest,
 	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Wrap'
+	#category : #'Roassal-Global-Tests-Wrap'
 }
 
 { #category : #tests }

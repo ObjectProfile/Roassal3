@@ -4,7 +4,7 @@ TODO
 Class {
 	#name : #RSSFDPConverter,
 	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz-Core'
+	#category : #'Roassal-GraphViz-Core'
 }
 
 { #category : #writing }

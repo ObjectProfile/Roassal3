@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'radius'
 	],
-	#category : #'Roassal3-Shapes-Lines'
+	#category : #'Roassal-Shapes-Lines'
 }
 
 { #category : #testing }

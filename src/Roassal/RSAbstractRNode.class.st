@@ -4,7 +4,7 @@ based on nil pattern
 Class {
 	#name : #RSAbstractRNode,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Rendering'
+	#category : #'Roassal-Rendering'
 }
 
 { #category : #visiting }
