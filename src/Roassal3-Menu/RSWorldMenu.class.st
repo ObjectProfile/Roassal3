@@ -24,8 +24,8 @@ RSWorldMenu class >> discordPNGByteArray [
 { #category : #loading }
 RSWorldMenu class >> loadExporters [
 	Metacello new
-		baseline: 'Roassal3Exporters';
-		repository: 'github://ObjectProfile/Roassal3Exporters';
+		baseline: 'RoassalExporters';
+		repository: 'github://pharo-graphics/RoassalExporters';
 		onConflictUseIncoming;
 		load
 ]
@@ -36,8 +36,8 @@ RSWorldMenu class >> loadFullVersion [
 	(UIManager default confirm: 'Do you want to load the last version of Roassal3?')
 		ifFalse: [ ^ self ].
 	[Metacello new
-		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3';
+		baseline: 'Roassal';
+		repository: 'github://pharo-graphics/Roassal';
 		load: 'Full' ] on: MCMergeOrLoadWarning do: [:warning | warning load ].
 	self loadExporters.
 ]
@@ -67,26 +67,24 @@ RSWorldMenu class >> menu00RoassalOn: aBuilder [
 
 { #category : #menu }
 RSWorldMenu class >> menu01ReportABugOn: aBuilder [
-	<worldMenu>
 	(aBuilder item: #Roassal3Bug)
 		parent: #Roassal3Help;
 		order: 1;
 		label: 'Report a Bug';
 		icon: (self iconNamed: #smallDebug);
 		help: 'Will open the github page to report an issue';
-		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/issues/new' ]
+		action: [ WebBrowser openOn: 'https://github.com/pharo-graphics/Roassal/issues/new' ]
 ]
 
 { #category : #menu }
 RSWorldMenu class >> menu02GithubOn: aBuilder [
-	<worldMenu>
 	(aBuilder item: #Roassal3Git)
 		parent: #Roassal3Help;
 		order: 2;
 		label: 'Github';
-		help: 'Open Roassal3 git hubpage';
+		help: 'Open Roassal git hubpage';
 		icon: (self iconNamed: #github);
-		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3/' ]
+		action: [ WebBrowser openOn: 'https://github.com/pharo-graphics/Roassal/' ]
 ]
 
 { #category : #menu }
@@ -108,9 +106,9 @@ RSWorldMenu class >> menu04DocumentationOn: aBuilder [
 		parent: #Roassal3Help;
 		order: 4;
 		label: 'Online documentation';
-		help: 'Will open the webpage https://github.com/ObjectProfile/Roassal3Documentation';
+		help: 'Will open the webpage https://github.com/pharo-graphics/RoassalDocumentation';
 		icon: (self iconNamed: #smallHelp);
-		action: [ WebBrowser openOn: 'https://github.com/ObjectProfile/Roassal3Documentation' ]
+		action: [ WebBrowser openOn: 'https://github.com/pharo-graphics/RoassalDocumentation' ]
 ]
 
 { #category : #menu }

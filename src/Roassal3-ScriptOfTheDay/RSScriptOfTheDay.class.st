@@ -67,8 +67,8 @@ c open' label: 'Enter your Roassal3 script' accept: [ :aScript | self sendScript
 { #category : #'as yet unclassified' }
 RSScriptOfTheDay >> sendScript: aScript [
 	| preamble message window morph |
-	preamble := 'Here is a new script of the day for _Roassal3_: https://github.com/ObjectProfile/Roassal3'.
-	preamble := preamble , String cr , 'Roassal3 is still in an early phase, so the API may evolve.' , String cr.
+	preamble := 'Here is a new script of the day for _Roassal_: https://github.com/pharo-graphics/Roassal'.
+	preamble := preamble , String cr , 'Roassal is still in an early phase, so the API may evolve.' , String cr.
 	message := preamble , String cr, '```Smalltalk' , String cr , aScript , String cr , '```'.
 	window := OpalCompiler new
 			source: aScript;

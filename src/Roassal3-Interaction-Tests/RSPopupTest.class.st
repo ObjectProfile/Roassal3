@@ -102,7 +102,6 @@ RSPopupTest >> testPopupSimple [
 
 { #category : #tests }
 RSPopupTest >> testPopupWithoutMouseLeave [
-	"Test created while debugging https://github.com/ObjectProfile/Roassal3/issues/150"
 	| c |
 	c := RSCanvas new.
 	shapes := (1 to: 30) collect: [ :v | RSEllipse new  model: v; size: 10 ] as: RSGroup.

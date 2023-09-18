@@ -1,5 +1,5 @@
 "
-Created for issue https://github.com/ObjectProfile/Roassal3/issues/56
+ZoomLevel clean text to avoid a lot of drawing elements
 
 Please check class side for examples
 "
