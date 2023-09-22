@@ -1,6 +1,6 @@
-Extension { #name : #RSScrollWheelCanvasInteraction }
+Extension { #name : 'RSScrollWheelCanvasInteraction' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSScrollWheelCanvasInteraction class >> example [
 
 	| canvas |

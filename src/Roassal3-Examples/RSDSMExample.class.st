@@ -41,12 +41,14 @@ RTDSMExample new installTitle: 'EvolutionDSM'
 '
 "
 Class {
-	#name : #RSDSMExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-DSM'
+	#name : 'RSDSMExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Examples-DSM',
+	#package : 'Roassal3-Examples',
+	#tag : 'DSM'
 }
 
-{ #category : #'example-data' }
+{ #category : 'example-data' }
 RSDSMExample class >> collab [
 	^ 'time	n1	n2 	weight
 2005	Lea	Lucas	4.0
@@ -259,7 +261,7 @@ RSDSMExample class >> collab [
 2010	Hugo	Hugo	1.0'
 ]
 
-{ #category : #'example-data' }
+{ #category : 'example-data' }
 RSDSMExample class >> gtinspector [
 	^ 'time	n1	n2 	weight
 51	GTExample	AndreiChis	1
@@ -307,7 +309,7 @@ RSDSMExample class >> gtinspector [
 '
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example01Numbers [
 	<script: 'self new example01Numbers open'>
 	| dsm |
@@ -317,7 +319,7 @@ RSDSMExample >> example01Numbers [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example02Numbers [
 	<script: 'self new example02Numbers open'>
 	| dsm |
@@ -328,7 +330,7 @@ RSDSMExample >> example02Numbers [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example03Classes [
 	<script: 'self new example03Classes open'>
 	| dsm |
@@ -340,7 +342,7 @@ RSDSMExample >> example03Classes [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example04Token [
 	<script: 'self new example04Token open'>
 
@@ -367,7 +369,7 @@ RSDSMExample >> example04Token [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example05TopLabelRotation [
 	<script: 'self new example05TopLabelRotation open'>
 	| dsm v keys |
@@ -385,7 +387,7 @@ RSDSMExample >> example05TopLabelRotation [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example06StronglyConnected [
 	<script: 'self new example06StronglyConnected open'>
 	| dsm v keys |
@@ -402,7 +404,7 @@ RSDSMExample >> example06StronglyConnected [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example07StronglyConnectedWithClasses [
 	<script: 'self new example07StronglyConnectedWithClasses open'>
 	| classes v keys dsm |
@@ -425,7 +427,7 @@ RSDSMExample >> example07StronglyConnectedWithClasses [
 	^ dsm
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example08Heatmap [
 	<script: 'self new example08Heatmap open'>
 	| builder |
@@ -436,7 +438,7 @@ RSDSMExample >> example08Heatmap [
 	^ builder
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example09HeatmapMonths [
 	<script: 'self new example09HeatmapMonths open'>
 	| builder |
@@ -465,7 +467,7 @@ RSDSMExample >> example09HeatmapMonths [
    ^ builder
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example10Vegetables [
 	<script: 'self new example10Vegetables open'>
 	| vegetables farmers values h |
@@ -488,7 +490,7 @@ RSDSMExample >> example10Vegetables [
    ^ h
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example11Heatmap [
 	<script: 'self new example11Heatmap open'>
 	| builder |
@@ -502,7 +504,7 @@ RSDSMExample >> example11Heatmap [
 	^ builder canvas
 ]
 
-{ #category : #sources }
+{ #category : 'sources' }
 RSDSMExample >> example12Heatmap [
 	<script: 'self new example12Heatmap open'>
 	| builder |

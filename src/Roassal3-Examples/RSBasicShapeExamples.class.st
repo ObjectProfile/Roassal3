@@ -2,12 +2,14 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #RSBasicShapeExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#name : 'RSBasicShapeExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Examples-Basic',
+	#package : 'Roassal3-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example01BasicBoxes [
 	<script: 'self new example01BasicBoxes open'>
 	| c |
@@ -23,7 +25,7 @@ RSBasicShapeExamples >> example01BasicBoxes [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example02BasicEllipses [
 	<script: 'self new example02BasicEllipses open'>
 
@@ -40,7 +42,7 @@ RSBasicShapeExamples >> example02BasicEllipses [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example03BasicComposite [
 	<script: 'self new example03BasicComposite open'>
 	| c com |
@@ -69,7 +71,7 @@ RSBasicShapeExamples >> example03BasicComposite [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example04BasicComposite [
 	<script: 'self new example04BasicComposite open'>
 	| c com |
@@ -100,7 +102,7 @@ RSBasicShapeExamples >> example04BasicComposite [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example05BasicGroup [
 	<script: 'self new example05BasicGroup inspect'>
 	| g |
@@ -127,7 +129,7 @@ RSBasicShapeExamples >> example05BasicGroup [
 	^ g
 ]
 
-{ #category : #labels }
+{ #category : 'labels' }
 RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
@@ -162,7 +164,7 @@ RSBasicShapeExamples >> example06BasicLabels [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 
 	<script: 'self new example07EventsMouseMoveDrag open'>
@@ -189,7 +191,7 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example08EllipseBorder [
 	<script: 'self new example08EllipseBorder open'>
 	| c y r |
@@ -217,7 +219,7 @@ RSBasicShapeExamples >> example08EllipseBorder [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example09MouseStep [
 
 	<script: 'self new example09MouseStep open'>
@@ -248,7 +250,7 @@ RSBasicShapeExamples >> example09MouseStep [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example10EllipseMouseMove [
 
 	<script: 'self new example10EllipseMouseMove open'>
@@ -280,7 +282,7 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example11ScaleMouseDistance [
 
 	<script: 'self new example11ScaleMouseDistance open'>
@@ -329,7 +331,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example12BasicLine [
 
 	<script: 'self new example12BasicLine open'>
@@ -366,7 +368,7 @@ RSBasicShapeExamples >> example12BasicLine [
 	^ c
 ]
 
-{ #category : #bitmap }
+{ #category : 'bitmap' }
 RSBasicShapeExamples >> example14BasicBitmap [
 	<script: 'self new example14BasicBitmap open'>
 
@@ -379,7 +381,7 @@ RSBasicShapeExamples >> example14BasicBitmap [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example15BasicRoundBoxes [
 	<script: 'self new example15BasicRoundBoxes open'>
 
@@ -398,7 +400,7 @@ RSBasicShapeExamples >> example15BasicRoundBoxes [
 	^ c
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSBasicShapeExamples >> example17Borders [
 	<script: 'self new example17Borders open'>
 	| c |
@@ -424,7 +426,7 @@ RSBasicShapeExamples >> example17Borders [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example18BasicPieSlice [
 	<script: 'self new example18BasicPieSlice open'>
 	| c |
@@ -440,7 +442,7 @@ RSBasicShapeExamples >> example18BasicPieSlice [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example19PieSlice [
 	<script: 'self new example19PieSlice open'>
 	| c |
@@ -455,7 +457,7 @@ RSBasicShapeExamples >> example19PieSlice [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example20Donut [
 	<script: 'self new example20Donut open'>
 	| c |
@@ -470,7 +472,7 @@ RSBasicShapeExamples >> example20Donut [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example21CornerRadii [
 	<script: 'self new example21CornerRadii open'>
 	| c |
@@ -485,7 +487,7 @@ RSBasicShapeExamples >> example21CornerRadii [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example22BasicPieSlice [
 	<script: 'self new example22BasicPieSlice open'>
 	| c |
@@ -498,7 +500,7 @@ RSBasicShapeExamples >> example22BasicPieSlice [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape open'>
 	| c box |
@@ -519,7 +521,7 @@ RSBasicShapeExamples >> example23FixedShape [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example24Polyline [
 	<script: 'self new example24Polyline open'>
 	| c |
@@ -534,7 +536,7 @@ RSBasicShapeExamples >> example24Polyline [
 	^ c
 ]
 
-{ #category : #labels }
+{ #category : 'labels' }
 RSBasicShapeExamples >> example25LabelWithBorder [
 	<script: 'self new example25LabelWithBorder open'>
 	| c |
@@ -550,7 +552,7 @@ RSBasicShapeExamples >> example25LabelWithBorder [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example26Polygon [
 
 	<script: 'self new example26Polygon open'>
@@ -576,7 +578,7 @@ RSBasicShapeExamples >> example26Polygon [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example27Markers [
 	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
@@ -604,7 +606,7 @@ RSBasicShapeExamples >> example27Markers [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius open '>
 	| c |
@@ -617,7 +619,7 @@ RSBasicShapeExamples >> example29PolylineRadius [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example30PolygonWithRadius [
 
 	<script: 'self new example30PolygonWithRadius open'>
@@ -644,7 +646,7 @@ RSBasicShapeExamples >> example30PolygonWithRadius [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 	<script: 'self new example31BorderAttachPointWithOffset open'>
 	| c s1 s2|
@@ -670,7 +672,7 @@ RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example32RotateShapeByMouse [
 	<script: 'self new example32RotateShapeByMouse open'>
 	| c s |
@@ -684,7 +686,7 @@ RSBasicShapeExamples >> example32RotateShapeByMouse [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	<script: 'self new example33EdgesBetweenChildren open'>
 	| c b1 b2 e1 com1 com2 |
@@ -713,7 +715,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
@@ -748,7 +750,7 @@ RSBasicShapeExamples >> example34PaletteVisualization [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example35KeyEvents [
 
 	<script:
@@ -777,7 +779,7 @@ RSBasicShapeExamples >> example35KeyEvents [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example36PolygonAndCanvas [
 	<script: 'self new example36PolygonAndCanvas open setLabel: ''Zoom in or Zoom out'''>
 	| coords canvas int |
@@ -829,7 +831,7 @@ RSBasicShapeExamples >> example36PolygonAndCanvas [
 	^ canvas
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example37AngleDirection [
 	<script: 'self new example37AngleDirection open setLabel: ''Angle direction in RSPieSlice'''>
 	| canvas slice magic |
@@ -883,7 +885,7 @@ RSBasicShapeExamples >> example37AngleDirection [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example38Interaction [
 
 	<script: 'self new example38Interaction open'>
@@ -929,7 +931,7 @@ RSBasicShapeExamples >> example38Interaction [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example39YikigeiAnimated [
 
 	<script: 'self new example39YikigeiAnimated open'>
@@ -955,7 +957,7 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example40ColorScale [
 	<script: 'self new example40ColorScale open'>
 	| color canvas popup shapes |
@@ -987,7 +989,7 @@ RSBasicShapeExamples >> example40ColorScale [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example41PopupAndMarkers [
 	<script: 'self new example41PopupAndMarkers open'>
 	| line marker canvas |
@@ -1002,7 +1004,7 @@ RSBasicShapeExamples >> example41PopupAndMarkers [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example42GhostDraggable [
 	<script: 'self new example42GhostDraggable open'>
 	| canvas b1 b2 |
@@ -1024,7 +1026,7 @@ RSBasicShapeExamples >> example42GhostDraggable [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example43ShortestAttachPoint [
 	<script: 'self new example43ShortestAttachPoint open'>
 	| canvas numbers marker |
@@ -1067,7 +1069,7 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 	^ canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBasicShapeExamples >> example44AA [
 	<script: 'self new example44AA open'>
 	| canvas |
@@ -1095,7 +1097,7 @@ RSBasicShapeExamples >> example44AA [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLine [
 
 	<script: 'self new example44deCasteljauLine open'>
@@ -1120,7 +1122,7 @@ RSBasicShapeExamples >> example44deCasteljauLine [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineAsBeziers [
 
 	<script: 'self new example44deCasteljauLineAsBeziers open'>
@@ -1144,7 +1146,7 @@ RSBasicShapeExamples >> example44deCasteljauLineAsBeziers [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 
 	<script: 'self new example44deCasteljauLineBernsteinBase open'>
@@ -1167,7 +1169,7 @@ RSBasicShapeExamples >> example44deCasteljauLineBernsteinBase [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 
 	<script: 'self new example44deCasteljauLineClosedControlPoints open'>
@@ -1179,7 +1181,7 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPoints [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineClosedControlPointsArcLengthParameterized [
 
 	<script:
@@ -1193,7 +1195,7 @@ RSBasicShapeExamples >> example44deCasteljauLineClosedControlPointsArcLengthPara
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 
 	<script: 'self new example44deCasteljauLineDegreeElevation open'>
@@ -1212,7 +1214,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDegreeElevation [
 			  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 
 	<script: 'self new example44deCasteljauLineDerivative open'>
@@ -1240,7 +1242,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDerivative [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineDifference [
 
 	<script: 'self new example44deCasteljauLineDifference open'>
@@ -1267,7 +1269,7 @@ RSBasicShapeExamples >> example44deCasteljauLineDifference [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 
 	<script: 'self new example44deCasteljauLineJunctionLeft open'>
@@ -1301,7 +1303,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionLeft [
 			  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 
 	<script: 'self new example44deCasteljauLineJunctionRight open'>
@@ -1338,7 +1340,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRight [
 			  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineJunctionRightLongVerticalLine [
 
 	<script:
@@ -1375,7 +1377,7 @@ RSBasicShapeExamples >> example44deCasteljauLineJunctionRightLongVerticalLine [
 			  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 
 	<script: 'self new example44deCasteljauLineNoteBox open'>
@@ -1393,7 +1395,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBox [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineNoteBoxDegreeElevation [
 
 	<script:
@@ -1406,7 +1408,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxDegreeElevation [
 			  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 
 	<script: 'self new example44deCasteljauLineNoteBoxJunctionOfFourBeziers open'>
@@ -1519,7 +1521,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 
 	<script: 'self new example44deCasteljauLineNoteBoxTopLeftCornerJunction open'>
@@ -1554,7 +1556,7 @@ RSBasicShapeExamples >> example44deCasteljauLineNoteBoxTopLeftCornerJunction [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenC [
 
 	<script: 'self new example44deCasteljauLinePenC open'>
@@ -1573,7 +1575,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenC [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenOrthogonalHorizontalLine [
 
 	<script:
@@ -1605,7 +1607,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenOrthogonalHorizontalLine [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenQ [
 
 	<script: 'self new example44deCasteljauLinePenQ open'>
@@ -1624,7 +1626,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenQ [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenQuote [
 
 	<script: 'self new example44deCasteljauLinePenQuote open'>
@@ -1652,7 +1654,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenQuote [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenS [
 
 	<script: 'self new example44deCasteljauLinePenS open'>
@@ -1672,7 +1674,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenS [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenT [
 
 	<script: 'self new example44deCasteljauLinePenT open'>
@@ -1692,7 +1694,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenT [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePenTwoLines [
 
 	<script: 'self new example44deCasteljauLinePenTwoLines open'>
@@ -1732,7 +1734,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePenTwoLines [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLinePolar [
 
 	<script: 'self new example44deCasteljauLinePolar open'>
@@ -1757,7 +1759,7 @@ RSBasicShapeExamples >> example44deCasteljauLinePolar [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineReflection [
 
 	<script: 'self new example44deCasteljauLineReflection open'>
@@ -1790,7 +1792,7 @@ RSBasicShapeExamples >> example44deCasteljauLineReflection [
 			  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 
 	<script: 'self new example44deCasteljauLineRepeatedControlPoint open'>
@@ -1827,7 +1829,7 @@ RSBasicShapeExamples >> example44deCasteljauLineRepeatedControlPoint [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineReversed [
 
 	<script: 'self new example44deCasteljauLineReversed open'>
@@ -1852,7 +1854,7 @@ RSBasicShapeExamples >> example44deCasteljauLineReversed [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 
 	<script: 'self new example44deCasteljauLineSplitAt open'>
@@ -1880,7 +1882,7 @@ RSBasicShapeExamples >> example44deCasteljauLineSplitAt [
 				  yourself ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
 
 	<script:
@@ -1921,7 +1923,68 @@ RSBasicShapeExamples >> example44deCasteljauRationalLineClosedControlPoints [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
+RSBasicShapeExamples >> example45ExampleRTree [
+
+	<script: 'self new example45ExampleRTree open'>
+	<noTest>
+	| canvas nodes |
+	canvas := RSCanvas new.
+	canvas useRTree.
+	nodes := ((1 to: 30000) collect: [ :i | | label |
+		label := RSLabel text: i.
+		{ label } asShape
+			model: i;
+			padding: 5;
+			color: (i even 
+				ifTrue: [Color blue translucent ]
+				ifFalse: [Color red translucent ]);
+			yourself] as: RSGroup).
+	RSGridLayout on: nodes.
+	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
+	canvas addAll: nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : 'lines' }
+RSBasicShapeExamples >> example46ExampleRTreeInComposites [
+
+	<script: 'self new example46ExampleRTreeInComposites open'>
+	<noTest>
+	| canvas nodes |
+	canvas := RSCanvas new.
+	canvas useRTree.
+	nodes := ((1 to: 10) collect: [ :i | | innerNodes |
+		innerNodes := (1 to: 3000) collect: [ :each | | label |
+			label:= RSLabel text: each.
+			{ label } asShape
+				model: each; 
+				padding: 5;
+				color: (each even 
+					ifTrue: [Color green translucent ]
+					ifFalse: [Color gray translucent ]);
+				yourself
+			 ] as: RSGroup.
+		RSCellLayout on: innerNodes.
+		innerNodes @ RSHighlightable green.
+		innerNodes asShape
+			useRTree;
+			model: i;
+			padding: 20;
+			color: (i even 
+				ifTrue: [Color blue translucent ]
+				ifFalse: [Color red translucent ]);
+			yourself
+			] as: RSGroup).
+	RSGridLayout on: nodes.
+	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
+	canvas addAll: nodes.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : 'lines' }
 RSBasicShapeExamples >> example46NoteInteger [
 
 	<script: 'self new example46NoteInteger open'>
@@ -1932,7 +1995,7 @@ RSBasicShapeExamples >> example46NoteInteger [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example46NoteLoremIpsum [
 
 	<script: 'self new example46NoteLoremIpsum open'>
@@ -1943,7 +2006,32 @@ RSBasicShapeExamples >> example46NoteLoremIpsum [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
+RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
+
+	<script: 'self new example47ExampleRTreeWithOverlapping inspect'>
+	| canvas nodes colorScale |
+	canvas := RSCanvas new.
+	colorScale := NSScale category20.
+	canvas useRTree.
+	nodes := (1 to: 10) collect: [ :i | | label |
+		label := RSLabel text: i.
+		{ label } asShape
+			size: 20;
+			borderColor: Color black;
+			color: (colorScale scale: i);
+			position: i * 15 asPoint;
+			yourself
+			 ] as: RSGroup.
+	canvas addAll: nodes.
+	nodes last pushBack.
+	nodes third pushFront.
+	nodes @ RSHighlightable green.
+	canvas @ RSCanvasController.
+	^ canvas
+]
+
+{ #category : 'lines' }
 RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 
 	| points |
@@ -1961,7 +2049,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineClosedControlPoints [
 		  scale: 100
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 
 	^ RSdeCasteljauLine new
@@ -1994,7 +2082,7 @@ RSBasicShapeExamples >> lineDeCasteljauLineNoteBox [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
 
 	| points bspline1 bspline2 bspline3 bspline4 |
@@ -2020,7 +2108,7 @@ RSBasicShapeExamples >> linesDeCasteljauLineDegreeElevation [
 		  with: bspline4
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> noteInteger [
 
 	^ RSLabel new
@@ -2029,7 +2117,7 @@ RSBasicShapeExamples >> noteInteger [
 		  notedWithPad: Float goldenPlatinumRatio
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> noteLoremIpsum [
 
 	^ RSLabel new
@@ -2039,7 +2127,7 @@ RSBasicShapeExamples >> noteLoremIpsum [
 		  withNoteDo: [ :aBox | aBox color: Color yellow translucent ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBasicShapeExamples >> order [
 	^ 0
 ]

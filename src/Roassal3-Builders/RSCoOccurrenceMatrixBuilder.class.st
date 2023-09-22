@@ -17,8 +17,8 @@ The input data source should implement these methods:
 
 "
 Class {
-	#name : #RSCoOccurrenceMatrixBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSCoOccurrenceMatrixBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'colorScale',
 		'dataSource',
@@ -26,10 +26,12 @@ Class {
 		'columnSize',
 		'domainRange'
 	],
-	#category : #'Roassal3-Builders-Core'
+	#category : 'Roassal3-Builders-Core',
+	#package : 'Roassal3-Builders',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCoOccurrenceMatrixBuilder class >> sampleMatrix [
 
 	^ '"","col_1","col_2","col_3","col_4","col_5","col_6","col_7","col_8","col_9"
@@ -47,7 +49,7 @@ RSCoOccurrenceMatrixBuilder class >> sampleMatrix [
 "row_12","0","0","0","0","0","0","1","0","0"'
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> colorScale [
 	" Answer a scale on the receiver's domain range " 
 	
@@ -55,20 +57,20 @@ RSCoOccurrenceMatrixBuilder >> colorScale [
 		ifNil: [ colorScale := NSScale category20 domain: self domainRange asArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCoOccurrenceMatrixBuilder >> colorScale: anObject [
 
 	colorScale := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> columnNames [
 	"Answer a <Collection> of <String> representing the receiver's data source column names"
 
 	^ self dataSource columnNames
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> columnSize [
 	"Answer the <Number> of columns in the receiver's data source"
 	
@@ -76,7 +78,7 @@ RSCoOccurrenceMatrixBuilder >> columnSize [
 		ifNil: [ columnSize :=  self dataSource columns size ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createBoundingBoxIn: canvas [
 
 	canvas addShape: (RSBox new
@@ -90,7 +92,7 @@ RSCoOccurrenceMatrixBuilder >> createBoundingBoxIn: canvas [
 			 yourself)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createColumnTicksIn: canvas [
 
 	self columnNames doWithIndex: [ :columnName :x |
@@ -110,7 +112,7 @@ RSCoOccurrenceMatrixBuilder >> createColumnTicksIn: canvas [
 		canvas addShape: label ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createDataPointAt: x at: y value: value [
 
 	^ RSCircle new
@@ -121,7 +123,7 @@ RSCoOccurrenceMatrixBuilder >> createDataPointAt: x at: y value: value [
 		  yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createDataPointsIn: canvas [
 
 	self rows doWithIndex: [ :row :y |
@@ -130,7 +132,7 @@ RSCoOccurrenceMatrixBuilder >> createDataPointsIn: canvas [
 				canvas add: (self createDataPointAt: x at: y value: value) ] ] ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createInteractionsIn: canvas [
 
 	canvas nodes @ RSHighlightable red.
@@ -139,7 +141,7 @@ RSCoOccurrenceMatrixBuilder >> createInteractionsIn: canvas [
 		text: [: shape | shape position ])
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createLabelFor: columnName [
 
 	^ RSLabel new
@@ -149,7 +151,7 @@ RSCoOccurrenceMatrixBuilder >> createLabelFor: columnName [
 		  yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createLegendIn: canvas [
 
 	| lb |
@@ -171,7 +173,7 @@ RSCoOccurrenceMatrixBuilder >> createLegendIn: canvas [
 	
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createRowTicksIn: canvas [
 
 	self rowNames doWithIndex: [ : rowName : y |
@@ -190,7 +192,7 @@ RSCoOccurrenceMatrixBuilder >> createRowTicksIn: canvas [
 		canvas addShape: label ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> createTickLineStart: p2 end: p1 [
 
 	^ RSLine new
@@ -201,19 +203,19 @@ RSCoOccurrenceMatrixBuilder >> createTickLineStart: p2 end: p1 [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCoOccurrenceMatrixBuilder >> dataSource [
 
 	^ dataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCoOccurrenceMatrixBuilder >> dataSource: anObject [
 
 	dataSource := anObject
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSCoOccurrenceMatrixBuilder >> defaultContainer [
 
 	| c |
@@ -222,20 +224,20 @@ RSCoOccurrenceMatrixBuilder >> defaultContainer [
     ^ RSCanvas new @ c
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> domainRange [
 
 	^ domainRange
 		ifNil: [ domainRange := 1 to: 10 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCoOccurrenceMatrixBuilder >> domainRange: anObject [
 
 	domainRange := anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoOccurrenceMatrixBuilder >> exportToFile: aString [
 
 	self build.
@@ -247,7 +249,7 @@ RSCoOccurrenceMatrixBuilder >> exportToFile: aString [
 		export
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 
 	self createBoundingBoxIn: canvas.
@@ -259,13 +261,13 @@ RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCoOccurrenceMatrixBuilder >> rowNames [
 
 	^ self dataSource rowNames
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> rowSize [
 	"Answer the <Number> of rows in the receiver's data source"
 	
@@ -273,7 +275,7 @@ RSCoOccurrenceMatrixBuilder >> rowSize [
 		ifNil: [ rowSize := self dataSource rows size ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> rows [
 	"Answer a <Collection> of <Object> representing the receiver's data source rows"
 

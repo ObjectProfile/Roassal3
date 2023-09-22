@@ -1,6 +1,6 @@
-Extension { #name : #RSEasingInterpolator }
+Extension { #name : 'RSEasingInterpolator' }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSEasingInterpolator class >> canvas [
 	<script>
 	| c shapes selectors masterLabel theme radScale |
@@ -65,7 +65,7 @@ RSEasingInterpolator class >> canvas [
 	c open.
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSEasingInterpolator >> inspectorWithTools: selectors [
 	| inspectorCanvas presenter numberField tools |
 	inspectorCanvas := super inspectorCanvas.

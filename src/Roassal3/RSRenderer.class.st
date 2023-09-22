@@ -20,49 +20,51 @@ Future renderes:
 
 "
 Class {
-	#name : #RSRenderer,
-	#superclass : #RSObject,
+	#name : 'RSRenderer',
+	#superclass : 'RSObject',
 	#instVars : [
 		'athensCanvas'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : 'Roassal3-Rendering',
+	#package : 'Roassal3',
+	#tag : 'Rendering'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRenderer >> canvas [
 	^ athensCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRenderer >> canvas: aCanvas [
 	"aCanvas is AthensCanvas"
 	athensCanvas := aCanvas
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitBorder: border [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitBoundingShape: shape [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitCamera: camera [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitCanvas: canvas [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitGroup: aGroup [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitLabel: label [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRenderer >> visitLine: line [
 ]

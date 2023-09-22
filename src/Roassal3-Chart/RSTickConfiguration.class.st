@@ -60,8 +60,8 @@ d
 ```
 "
 Class {
-	#name : #RSTickConfiguration,
-	#superclass : #Object,
+	#name : 'RSTickConfiguration',
+	#superclass : 'Object',
 	#instVars : [
 		'numberOfTicks',
 		'shouldHaveLabels',
@@ -70,10 +70,12 @@ Class {
 		'fontSize',
 		'tickSize'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : 'Roassal3-Chart-Ticks',
+	#package : 'Roassal3-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSTickConfiguration >> createLabelFor: aValue [
 	^ RSLabel new
 		fontSize: self fontSize;
@@ -82,17 +84,17 @@ RSTickConfiguration >> createLabelFor: aValue [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> fontSize [
 	^ fontSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> fontSize: aNumber [
 	fontSize := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTickConfiguration >> initialize [
 	super initialize.
 	self numberOfTicks: 5;
@@ -103,57 +105,57 @@ RSTickConfiguration >> initialize [
 		tickSize: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> labelConversion [
 	^ labelConversion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> labelConversion: aOneArgBlock [
 	labelConversion := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> labelRotation [
 	^ labelRotation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> labelRotation: degreesAsNumber [
 	labelRotation := degreesAsNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> numberOfTicks [
 	^ numberOfTicks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> numberOfTicks: aNumber [
 	numberOfTicks := aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> shouldHaveLabels [
 	^ shouldHaveLabels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> shouldHaveLabels: aBoolean [
 	shouldHaveLabels := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> tickSize [
 	^ tickSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> tickSize: aNumber [
 	tickSize := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTickConfiguration >> updateTickConfiguration: anEvent [
 	| canvas |
 	canvas := anEvent canvas.

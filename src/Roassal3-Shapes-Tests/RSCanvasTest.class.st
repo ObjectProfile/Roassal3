@@ -2,21 +2,22 @@
 I have common tests for shapes and canvas
 "
 Class {
-	#name : #RSCanvasTest,
-	#superclass : #RSTest,
+	#name : 'RSCanvasTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Shapes-Tests'
+	#category : 'Roassal3-Shapes-Tests',
+	#package : 'Roassal3-Shapes-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testAddOneShape [
 
 	canvas addShape: RSBox new.
@@ -24,18 +25,19 @@ RSCanvasTest >> testAddOneShape [
 	self assert: canvas numberOfFixedShapes equals: 0
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testAddShapeBefore [
-	| shape1 shape2 |
-	shape1 := RSBox new size: 20.
-	shape2 := RSEllipse new size: 10.
+	| box ellipse |
+	box := RSBox new size: 20.
+	ellipse := RSEllipse new size: 10.
 
-	canvas add: shape2.
-	canvas addShape: shape1 before: shape2.
-	self assert: canvas shapes asArray equals: { shape1 . shape2 }
+	canvas add: ellipse.
+	
+	canvas addShape: box before: ellipse.
+	self assert: canvas shapes asArray equals: { box . ellipse }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testAntialiasing [
 	| morph |
 	canvas aaBest.
@@ -50,7 +52,7 @@ RSCanvasTest >> testAntialiasing [
 	canvas aaDefault
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testAsForm [
 	| form |
 	canvas add: RSBox new.
@@ -58,7 +60,7 @@ RSCanvasTest >> testAsForm [
 	self assert: form isForm
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 RSCanvasTest >> testAsShapeModel [
 
 	| c compositeShape |
@@ -72,7 +74,7 @@ RSCanvasTest >> testAsShapeModel [
 	self assert: compositeShape children size equals: 20
 ]
 
-{ #category : #'tests - coordinates' }
+{ #category : 'tests - coordinates' }
 RSCanvasTest >> testBasicCoordinates [
 	canvas := RSCanvas new.
 	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
@@ -85,7 +87,7 @@ RSCanvasTest >> testBasicCoordinates [
 	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testDeepNodes [
 
 	| c compo box |
@@ -107,12 +109,12 @@ RSCanvasTest >> testDeepNodes [
 				 compo })
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testDefaultShapeCollection [
 	self assert: canvas shapeCollection class equals: RSSequenceableCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testDrawCanvas [
 	canvas addShape: (RSBox new
 		extent: 100@100;
@@ -124,7 +126,7 @@ RSCanvasTest >> testDrawCanvas [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testDrawCanvasWithGroup [
 	| g |
 	g := RSComposite new.
@@ -139,7 +141,7 @@ RSCanvasTest >> testDrawCanvasWithGroup [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testDrawFixed [
 	| box |
 	box := RSBox new
@@ -160,26 +162,26 @@ RSCanvasTest >> testDrawFixed [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testEmpty [
 	self assert: canvas numberOfShapes equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testEncompassingRectangle [
 	| rect |
 	rect := canvas encompassingRectangle.
 	self assert: rect equals: (Rectangle center: 0@0 extent: RSCamera minimumExtent)
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSCanvasTest >> testEvent [
 	| box |
 	box := RSBox new.
 	box when: RSMouseClick do: [ :evt |  ] for: self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testEventKnowsItsCanvas [
 
 	| evt t |
@@ -191,7 +193,7 @@ RSCanvasTest >> testEventKnowsItsCanvas [
 	self assert: t
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testEventKnowsItsCanvas02 [
 
 	| evt shape |
@@ -203,7 +205,7 @@ RSCanvasTest >> testEventKnowsItsCanvas02 [
 	self assert: evt canvas equals: canvas
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSCanvasTest >> testLowLevelEvent [
 	| box |
 	box := RSBox new size: 30.
@@ -215,7 +217,7 @@ RSCanvasTest >> testLowLevelEvent [
 		identicalTo: box
 ]
 
-{ #category : #'tests - opening' }
+{ #category : 'tests - opening' }
 RSCanvasTest >> testMultipleOpenOnce [
 
 	| c1 c2 win1 win2 |
@@ -231,7 +233,7 @@ RSCanvasTest >> testMultipleOpenOnce [
 	] ensure: [ win1 delete. win2 delete. ]
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testNestedShape [
 
 	| shape innerShape |
@@ -245,7 +247,7 @@ RSCanvasTest >> testNestedShape [
 	self assert: innerShape canvas equals: canvas
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testNestedShapeNotAddedToACanvas [
 
 	| shape innerShape |
@@ -258,7 +260,7 @@ RSCanvasTest >> testNestedShapeNotAddedToACanvas [
 	self assert: innerShape canvas isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testNodesShapesAndEdges [
 	| n1 n2 n3 eb nodes |
 	n1 := RSEllipse new size: 10; model: 1.
@@ -276,7 +278,7 @@ RSCanvasTest >> testNodesShapesAndEdges [
 	self assert: canvas edges size equals: 3
 ]
 
-{ #category : #'tests - opening' }
+{ #category : 'tests - opening' }
 RSCanvasTest >> testOpen [
 
 	| c win |
@@ -286,7 +288,7 @@ RSCanvasTest >> testOpen [
 	win delete
 ]
 
-{ #category : #'tests - opening' }
+{ #category : 'tests - opening' }
 RSCanvasTest >> testOpenOnce [
 
 	| c win morph |
@@ -300,12 +302,12 @@ RSCanvasTest >> testOpenOnce [
 	win delete
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCanvasTest >> testOpening [
 	canvas open delete
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testPush [
 
 	| c blueBox redBox |
@@ -336,7 +338,7 @@ RSCanvasTest >> testPush [
 	self assert: c shapes asArray equals: { redBox . blueBox }
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testPushBackEdges [
 
 	| c blueBox redBox l |
@@ -363,7 +365,7 @@ RSCanvasTest >> testPushBackEdges [
 	self assert: c shapes asArray equals: { l . blueBox . redBox }
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testPushFront [
 
 	| c blueBox redBox |
@@ -397,7 +399,7 @@ RSCanvasTest >> testPushFront [
 	self assert: c shapes asArray equals: { blueBox . redBox }
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testRemovingShapes [
 	| e |
 	e := RSEllipse new.
@@ -407,7 +409,7 @@ RSCanvasTest >> testRemovingShapes [
 	self assert: canvas shapes size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasTest >> testShapeFromModel [
 	| shapes |
 	shapes := (1 to: 3) collect: [ :m | RSBox new model: m; yourself ].
@@ -419,7 +421,7 @@ RSCanvasTest >> testShapeFromModel [
 	self assert: (canvas shapeFromModel: 4) isNil
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testShapeFromModelAndComposite [
 
 	| compo |
@@ -439,7 +441,7 @@ RSCanvasTest >> testShapeFromModelAndComposite [
 	self assert: (canvas deepShapeFromModel: 43) isNil
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testShapeFromModelAndComposite2 [
 
 	| compo compo2 compo3 |
@@ -468,7 +470,7 @@ RSCanvasTest >> testShapeFromModelAndComposite2 [
 	self assert: (canvas deepShapesFromModel: 2) asArray equals: { compo3 children first }
 ]
 
-{ #category : #'tests - composite' }
+{ #category : 'tests - composite' }
 RSCanvasTest >> testShapeFromModelAndComposite3 [
 
 	| compo compo2 compo3 |
@@ -494,13 +496,13 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 	self assert: (canvas deepShapesFromModels: #(41 42)) asArray equals: { compo . compo children first  . compo2 . compo2 children first }
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testUseRTree [
 	canvas useRTree.
 	self assert: canvas shapeCollection class equals: RSRTreeShapeCollection
 ]
 
-{ #category : #'tests - shapes ordering' }
+{ #category : 'tests - shapes ordering' }
 RSCanvasTest >> testVisibleArea [
 	| box smallSize bigSize |
 	smallSize := 100.

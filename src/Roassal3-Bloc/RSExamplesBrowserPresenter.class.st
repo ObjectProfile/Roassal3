@@ -1,15 +1,17 @@
 Class {
-	#name : #RSExamplesBrowserPresenter,
-	#superclass : #SpPresenter,
+	#name : 'RSExamplesBrowserPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'examplesList',
 		'visualization',
 		'examplesClass'
 	],
-	#category : #'Roassal3-Bloc-Examples'
+	#category : 'Roassal3-Bloc-Examples',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Examples'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 RSExamplesBrowserPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
@@ -22,7 +24,7 @@ RSExamplesBrowserPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSExamplesBrowserPresenter class >> exampleOpenRSBlocExamples [
 
 	| app presenter |
@@ -33,7 +35,7 @@ RSExamplesBrowserPresenter class >> exampleOpenRSBlocExamples [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -45,7 +47,7 @@ RSExamplesBrowserPresenter >> connectPresenters [
 			(examplesClass >> aSelection selectedItem) browse ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> initializePresenters [ 
 
 	super initializePresenters.
@@ -56,7 +58,7 @@ RSExamplesBrowserPresenter >> initializePresenters [
 	self refresh.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
@@ -65,7 +67,7 @@ RSExamplesBrowserPresenter >> initializeWindow: aWindowPresenter [
 		centered
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> refresh [
 
 	examplesList
@@ -75,7 +77,7 @@ RSExamplesBrowserPresenter >> refresh [
 	self refreshAccordingToSelectedExample
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> refreshAccordingToSelectedExample [
 
 	examplesList selectedItem
@@ -83,13 +85,13 @@ RSExamplesBrowserPresenter >> refreshAccordingToSelectedExample [
 		ifNotNil: [ :item | self showVisualizationFor: item ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> setModelBeforeInitialization: aClass [
 
 	examplesClass := aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> showNullVisualization [
 
 	visualization space root 
@@ -99,7 +101,7 @@ RSExamplesBrowserPresenter >> showNullVisualization [
 			 yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowserPresenter >> showVisualizationFor: aSelector [
 
 	| aRSCanvas |

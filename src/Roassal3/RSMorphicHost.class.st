@@ -1,13 +1,15 @@
 Class {
-	#name : #RSMorphicHost,
-	#superclass : #RSHost,
+	#name : 'RSMorphicHost',
+	#superclass : 'RSHost',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RSMorphicHost >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
 
@@ -17,26 +19,26 @@ RSMorphicHost >> createMorph [
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicHost >> lastMousePosition [
 	^ morph lastMousePosition - morph bounds origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicHost >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicHost >> morph: aMorph [
 	"Set the RSAthensMorph. The canvas will directly render in the morph"
 
 	morph := aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
@@ -49,7 +51,7 @@ RSMorphicHost >> openWithTitle: aTitleAsString [
 
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 RSMorphicHost >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 

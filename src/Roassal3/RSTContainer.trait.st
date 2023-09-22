@@ -2,14 +2,16 @@
 My users can have edges and nodes useful to build graphs with roassal
 "
 Trait {
-	#name : #RSTContainer,
+	#name : 'RSTContainer',
 	#instVars : [
 		'shapeCollection'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #'adding nodes edges' }
+{ #category : 'adding nodes edges' }
 RSTContainer >> add: aShape [
 	self
 		assert: aShape notNil
@@ -20,7 +22,7 @@ RSTContainer >> add: aShape [
 	^ aShape
 ]
 
-{ #category : #'adding nodes edges' }
+{ #category : 'adding nodes edges' }
 RSTContainer >> addAll: aCollection [
 	"Add a collection of shapes to the canvas. The argument is a collection of shapes."
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
@@ -30,43 +32,61 @@ RSTContainer >> addAll: aCollection [
 	aCollection do: [ :aShape | self add: aShape ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSTContainer >> addAllShapes: aCollection [
 	self assert: [ aCollection isCollection ] description: 'Need to provide a collection as argument'.
 	self assert: [ aCollection allSatisfy: [ :e | e isKindOf: RSShape ] ] description: 'Need to provide a collection of RSShape'.
 	aCollection do: [ :shape | self addShape: shape ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSTContainer >> addBasicShape: aShape [
-	self privateShapes add: aShape.
-	self shapeCollection add: aShape
+	| listOfShapes |
+	listOfShapes := self privateShapes.
+	listOfShapes add: aShape.
+	aShape shapeIndex: listOfShapes size.
+	shapeCollection add: aShape
 ]
 
-{ #category : #'adding nodes edges' }
+{ #category : 'adding nodes edges' }
 RSTContainer >> addEdge: aShape [
 	self edges add: aShape.
 	^ aShape
 ]
 
-{ #category : #'adding nodes edges' }
+{ #category : 'adding nodes edges' }
 RSTContainer >> addLine: aShape [
 	self lines add: aShape.
 	^ aShape
 ]
 
-{ #category : #'adding nodes edges' }
+{ #category : 'adding nodes edges' }
 RSTContainer >> addNode: aShape [
 	self nodes add: aShape.
 	^ aShape
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSTContainer >> addShape: aShape [
 	aShape addedIn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'adding' }
+RSTContainer >> addShape: aShape before: otherShape [
+	| col index |
+	aShape addedIn: self.
+	col := aShape isFixed
+		ifTrue: [ self fixedShapes ]
+		ifFalse: [ self privateShapes ].
+	col remove: aShape.
+	col add: aShape before: otherShape.
+	index := col indexOf: aShape.
+	index to: col size do: [ :i | (col at: i) shapeIndex: i ].
+	aShape isFixed 
+		ifFalse: [ self shapeCollection add: aShape before: otherShape ]
+]
+
+{ #category : 'accessing' }
 RSTContainer >> allChildren [
 	| allChildren index |
 	index := 1.
@@ -77,12 +97,12 @@ RSTContainer >> allChildren [
 	^ allChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> children [
 	^ self nodes
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 	| result |
@@ -92,7 +112,7 @@ RSTContainer >> deepShapeFromModel: anObject [
 	^ result first
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapeFromModel: anObject result: result [
 	"Private method"
 	| t |
@@ -101,7 +121,7 @@ RSTContainer >> deepShapeFromModel: anObject result: result [
 	self nodes do: [ :c | c deepShapeFromModel: anObject result: result ]
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapesFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 	| result |
@@ -110,14 +130,14 @@ RSTContainer >> deepShapesFromModel: anObject [
 	^ result
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapesFromModel: anObject result: result [
 	"Private method"
 	self model = anObject ifTrue: [ result add: self ].
 	self nodes do: [ :c | c deepShapesFromModel: anObject result: result ]
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapesFromModels: someObjects [
 	"Retreive a shape from a given model. Return nil if not found"
 	| result |
@@ -126,19 +146,19 @@ RSTContainer >> deepShapesFromModels: someObjects [
 	^ result
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	(someObjects includes: self model) ifTrue: [ result add: self ].
 	self nodes do: [ :c | c deepShapesFromModel: someObjects result: result ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSTContainer >> defaultShapeCollection [
 	^ RSSequenceableCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> edges [
 	"Return all the lines contained in the canvas."
 	^ self privateEdges
@@ -147,7 +167,12 @@ RSTContainer >> edges [
 			res ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RSTContainer >> fixedShapes [
+	^ self explicitRequirement
+]
+
+{ #category : 'accessing' }
 RSTContainer >> lines [
 	"Return all the lines contained in the canvas."
 	^ self privateEdges
@@ -156,7 +181,7 @@ RSTContainer >> lines [
 			res ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> nodes [
 	"Return all the shapes except lines contained in the canvas."
 	^ self privateNodes
@@ -165,14 +190,14 @@ RSTContainer >> nodes [
 			res ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> numberOfEdges [
 	"OBSOLETE. USE #numberOfLines INSTEAD"
 	"Return the number of edges contained in the container"
 	^ self numberOfLines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> numberOfLines [
 	"Return the number of edges contained in the container"
 	^ self privateEdges
@@ -180,7 +205,7 @@ RSTContainer >> numberOfLines [
 		ifNotNil: [ :aGroupOfEdges | aGroupOfEdges size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> numberOfNodes [
 	"Return the number of nodes contained in the container"
 	^ self privateNodes
@@ -188,75 +213,133 @@ RSTContainer >> numberOfNodes [
 		ifNotNil: [ :aGroupOfNodes | aGroupOfNodes size ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateEdges [
 	^ self explicitRequirement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateEdges: aTSGroup [
 	self explicitRequirement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateNodes [
 	^ self explicitRequirement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateNodes: aTSGroup [
 	self explicitRequirement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateShapes [
 	^ self explicitRequirement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> privateShapes: aCollection [
 	self explicitRequirement
 ]
 
-{ #category : #actions }
+{ #category : 'shapes - ordering' }
+RSTContainer >> pushBack: aShape [
+	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+
+For example:
+```Smalltalk
+c := RSCanvas new.
+shape1 := RSEllipse new size: 50; color: #red.
+shape2 := RSEllipse new size: 50; color: #blue.
+shape2 translateBy: -25@0.
+c add: shape1; add: shape2.
+c pushBack: shape2.
+c.
+```
+"
+	| col |
+	col := aShape isFixed
+		ifTrue: [ self fixedShapes ]
+		ifFalse: [ self privateShapes ].
+	col
+		remove: aShape;
+		addFirst: aShape.
+	aShape isFixed ifFalse: [ self shapeCollection pushBack: aShape ].
+	col doWithIndex: [ :each :index | each shapeIndex: index ].
+]
+
+{ #category : 'actions' }
 RSTContainer >> pushBackEdges [
 	"Push back all the edges"
 	self edges do: [ :e | e pushBack ]
 ]
 
-{ #category : #removing }
+{ #category : 'shapes - ordering' }
+RSTContainer >> pushFront: aShape [
+	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+
+For example:
+```Smalltalk
+c := RSCanvas new.
+shape1 := RSEllipse new size: 50; color: #red.
+shape2 := RSEllipse new size: 50; color: #blue.
+shape2 translateBy: -25@0.
+c add: shape1; add: shape2.
+c pushFront: shape1.
+c.
+```
+The red circle is in front of the blue one, despite the red one is inserted first.
+"
+	| col |
+	col := aShape isFixed
+		ifTrue: [ self fixedShapes ]
+		ifFalse: [ self privateShapes ].
+	
+	col
+		remove: aShape;
+		addLast: aShape.
+	aShape shapeIndex to: col size do: [ :index | (col at: index) shapeIndex: index ].
+]
+
+{ #category : 'removing' }
 RSTContainer >> removeEdge: anEdge [
 	self edges remove: anEdge ifAbsent: [  ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RSTContainer >> removeNode: aNode [
 	self nodes remove: aNode ifAbsent: [  ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RSTContainer >> removeShape: aShape [
 	^ self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> shapeCollection [
 	^ shapeCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> shapeCollection: anRSShapeCollection [
-	shapeCollection := anRSShapeCollection
+	| listOfShapes |
+	shapeCollection := anRSShapeCollection.
+	
+	listOfShapes := self privateShapes.
+	listOfShapes ifNil: [ ^ self ].
+	shapeCollection bulkLoad: listOfShapes.
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> shapeFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapeFromModel: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> shapes [
 	^ self privateShapes
 		ifNil: [ | res |
@@ -264,30 +347,31 @@ RSTContainer >> shapes [
 			res ]
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSTContainer >> shapesFromModel: anObject [
 	"Retreive a shape from a given model. Return nil if not found"
 
 	^ self nodes shapesFromModel: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTContainer >> updateInShapeCollection: aShape [
 	"this is going to update the shape collection cache, spetially in RSRTree"
 	self shapeCollection updateShape: aShape
 ]
 
-{ #category : #'shape - collection' }
+{ #category : 'shape - collection' }
 RSTContainer >> useList [
 	self shapeCollection: RSSequenceableCollection new.
 ]
 
-{ #category : #'shape - collection' }
+{ #category : 'shape - collection' }
 RSTContainer >> useRTree [
+	"use RTree for big data visualizations"
 	self shapeCollection: RSRTreeShapeCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTContainer >> withAllChildren [
 	^ self allChildren
 		add: self;

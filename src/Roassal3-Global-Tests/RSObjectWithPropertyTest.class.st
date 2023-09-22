@@ -1,10 +1,12 @@
 Class {
-	#name : #RSObjectWithPropertyTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Examples'
+	#name : 'RSObjectWithPropertyTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Global-Tests-Examples',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSObjectWithPropertyTest >> testBasic [
 
 	| b1 b2 b3 |
@@ -19,7 +21,7 @@ RSObjectWithPropertyTest >> testBasic [
 	self assert: b3 sparent equals: b1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSObjectWithPropertyTest >> testWithAllChildren [
 
 	| b1 b2 b3 children childrenWithParent schildren b4 |

@@ -2,41 +2,43 @@
 Super class of composite animations
 "
 Class {
-	#name : #RSCompositeAnimation,
-	#superclass : #RSAbstractAnimation,
+	#name : 'RSCompositeAnimation',
+	#superclass : 'RSAbstractAnimation',
 	#instVars : [
 		'animations'
 	],
-	#category : #'Roassal3-Animation-Core'
+	#category : 'Roassal3-Animation-Core',
+	#package : 'Roassal3-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSCompositeAnimation class >> defaultDuration [
 	^ 0 seconds
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSCompositeAnimation >> add: anAnimation [
 	animations add: anAnimation
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSCompositeAnimation >> addAll: array [
 	animations addAll: array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCompositeAnimation >> animations [
 	^ animations
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCompositeAnimation >> reset [
 	super reset.
 	animations := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSCompositeAnimation >> startIfNessesary: animation [
 	animation isRunning ifTrue: [ ^ self ].
 	animation canvas: self canvas.

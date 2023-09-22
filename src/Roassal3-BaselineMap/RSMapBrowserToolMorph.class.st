@@ -2,32 +2,34 @@
 This class creates bridge between my BMMapBuilder and calypso browser
 "
 Class {
-	#name : #RSMapBrowserToolMorph,
-	#superclass : #ClyBrowserToolMorph,
+	#name : 'RSMapBrowserToolMorph',
+	#superclass : 'ClyBrowserToolMorph',
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-BaselineMap-UI'
+	#category : 'Roassal3-BaselineMap-UI',
+	#package : 'Roassal3-BaselineMap',
+	#tag : 'UI'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 RSMapBrowserToolMorph class >> baselineClassActivation [
 	<classAnnotation>
 	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMapBrowserToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^ aBrowserContext isClassSelected
 		and: [ aBrowserContext lastSelectedClass inheritsFrom: BaselineOf ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBrowserToolMorph >> activationPriority [
 	^ -300
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSMapBrowserToolMorph >> build [
 	| canvas morph |
 	canvas := self buildBaselineMap.
@@ -37,7 +39,7 @@ RSMapBrowserToolMorph >> build [
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSMapBrowserToolMorph >> buildBaselineMap [
 	^ RSBaselineMapSettings classMapBuilderOrDefault new
 		baseline: self targetClass;
@@ -46,34 +48,34 @@ RSMapBrowserToolMorph >> buildBaselineMap [
 		canvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMapBrowserToolMorph >> defaultIconName [
 	^ #objects
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMapBrowserToolMorph >> defaultTitle [
 	^ 'Graph'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMapBrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	^ self targetClass = anotherBrowserTool targetClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMapBrowserToolMorph >> setUpModelFromContext [
 	self targetClass: context lastSelectedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBrowserToolMorph >> targetClass [
 
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBrowserToolMorph >> targetClass: anObject [
 
 	targetClass := anObject

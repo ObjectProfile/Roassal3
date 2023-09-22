@@ -3,12 +3,14 @@ This class is used to customize the render collection of roassal
 check RSAbstractRenderCollection
 "
 Class {
-	#name : #RSRenderTreeExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#name : 'RSRenderTreeExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Examples-Basic',
+	#package : 'Roassal3-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example01BigVisualization131k [
 	<script: 'self new example01BigVisualization131k open
 		setLabel: ''131K'' '>
@@ -33,7 +35,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	<script: 'self new example02BigVisualizationHalfMillion open'>
 	<noTest>
@@ -50,15 +52,15 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	"c renderCollection: RSBulkLoadRTreeCollection new."
-	"c @ RSDraggableCanvasInteraction new."
+	c shapeCollection: RSBulkLoadRTreeCollection new.
+	
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.
 	c nodes @ RSHighlightable red.
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example03RTree [
 	<script: 'self new example03RTree inspect'>
 	<noTest>

@@ -1,6 +1,6 @@
 Class {
-	#name : #RSClusterChart,
-	#superclass : #RSCompositeChart,
+	#name : 'RSClusterChart',
+	#superclass : 'RSCompositeChart',
 	#instVars : [
 		'innerClusterScale',
 		'clustersScale',
@@ -9,67 +9,69 @@ Class {
 		'horizontal',
 		'positions'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : 'Roassal3-Chart-Core',
+	#package : 'Roassal3-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSClusterChart >> + aRSPlot [
 	self add: aRSPlot.
 	^ self.
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSClusterChart >> add: aPlot [
 	horizontal := aPlot isHorizontal.
 	super add: aPlot.
 	^ aPlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> bandsMargin [
 	^ bandsMargin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> bandsMargin: floatBetween0And1 [
 	bandsMargin := floatBetween0And1.
 	self computePlotsBands
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSClusterChart >> beforeRenderingIn: aChart [
 	yScale := clustersScale.
 	aChart yScale: aChart.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSClusterChart >> clusterBandValues [
-	positions := Set new.
+	positions := OrderedCollection new.
 	self plots do: [ :plot |
 		plot computeXAndYValues.
-		plot positions do: [ :value | positions add: value ].
+		positions addAll: plot positions.
 	].
-	positions := positions asOrderedCollection.
-	^ positions.
+	positions removeDuplicates.
+	^ positions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> clustersMargin [
 	^ clustersMargin 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> clustersMargin: floatBetween0And1 [
 	clustersMargin := floatBetween0And1.
 	self computePlotsBands.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> clustersScale [
 	^ clustersScale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSClusterChart >> computeClustersScale [
 	| range |
 	range := { self padding x. self extent x - self padding x}.
@@ -81,7 +83,7 @@ RSClusterChart >> computeClustersScale [
 	^ clustersScale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSClusterChart >> computeInnerClusterScale [
 	innerClusterScale := NSScale ordinal
 		domain: (1 to: self numberOfPlots);
@@ -89,7 +91,7 @@ RSClusterChart >> computeInnerClusterScale [
 	^ innerClusterScale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSClusterChart >> computePlotsBands [
 	self computeClustersScale.
 	self computeInnerClusterScale.
@@ -102,7 +104,7 @@ RSClusterChart >> computePlotsBands [
 			positionInInnerClusterScale - (clustersScale rangeBand / 2) ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSClusterChart >> computeTicks [
 	| horizontalTick verticalTick |
 	horizontal 
@@ -118,23 +120,23 @@ RSClusterChart >> computeTicks [
 		 ].
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSClusterChart >> defaultBandsMargin [
 	^ 0.2
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSClusterChart >> defaultClustersMargin [
 	^ 0.2
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSClusterChart >> horizontal [
 	self plots do: [ :plot | plot horizontal ].
 	horizontal := true.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSClusterChart >> initialize [
 	super initialize.
 	clustersMargin := self defaultClustersMargin.
@@ -142,17 +144,17 @@ RSClusterChart >> initialize [
 	horizontal := false.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> innerClusterScale [
 	^ innerClusterScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusterChart >> maxNumberOfBandsPerPlot [
 	^ (self plots collect: [ :plot | plot numberOfBands ]) max.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSClusterChart >> renderIn: aCanvas [
 	horizontal 
 		ifTrue: [ self extent: (self extent x)@(self extent y * (1+(self plots size * 0.1))). ]

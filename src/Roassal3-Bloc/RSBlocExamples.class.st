@@ -1,17 +1,19 @@
 Class {
-	#name : #RSBlocExamples,
-	#superclass : #Object,
-	#category : #'Roassal3-Bloc-Examples'
+	#name : 'RSBlocExamples',
+	#superclass : 'Object',
+	#category : 'Roassal3-Bloc-Examples',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlocExamples class >> allExampleSelectors [
 
 	^ (self selectors select: [ :each | each beginsWith: 'example' ])
 		  sorted
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example01Boxes [
 	<script: 'self new example01Boxes open'>
 	
@@ -31,7 +33,7 @@ RSBlocExamples >> example01Boxes [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example02EllipseAndCircle [
 	<script: 'self new example02EllipseAndCircle open'>
 
@@ -52,7 +54,7 @@ RSBlocExamples >> example02EllipseAndCircle [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example03RotatedBoxes [
 	<script: 'self new example03RotatedBoxes open'>
 
@@ -86,7 +88,7 @@ RSBlocExamples >> example03RotatedBoxes [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example04RotatedLabels [
 	<script: 'self new example04RotatedLabels open'>
 
@@ -125,7 +127,7 @@ RSBlocExamples >> example04RotatedLabels [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example05Ellipses [
 	<script: 'self new example05Ellipses open'>
 
@@ -151,7 +153,7 @@ RSBlocExamples >> example05Ellipses [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example06Polyline [
 	<script: 'self new example06Polyline open'>
 
@@ -169,7 +171,7 @@ RSBlocExamples >> example06Polyline [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example07MouseMove [ 
 	< script:	'self new example07MouseMove open' > 
 	| c size circles box |
@@ -202,7 +204,7 @@ RSBlocExamples >> example07MouseMove [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
 <script: 'self new example08ZoomToFitWhenExtentChangedEvent open' >
 	| canvas |
@@ -224,7 +226,7 @@ RSBlocExamples >> example08ZoomToFitWhenExtentChangedEvent [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example09HierarchyWithCanvasController [
 	<script: 'self new example09HierarchyWithCanvasController open'>
 
@@ -259,7 +261,7 @@ RSBlocExamples >> example09HierarchyWithCanvasController [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example10BasicComposite [
 	<script: 'self new example10BasicComposite open'>
 
@@ -290,7 +292,7 @@ RSBlocExamples >> example10BasicComposite [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example11SimpleClassHierarchy [
 	<script: 'self new example11SimpleClassHierarchy open'>
 
@@ -324,7 +326,7 @@ RSBlocExamples >> example11SimpleClassHierarchy [
 	^ c 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example12Donna [
     <script: 'self new example12Donna open'>
 
@@ -404,7 +406,7 @@ E di pensier
     ^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example13Cluster [
 	<script: 'self new example13Cluster open'>
 
@@ -455,7 +457,7 @@ RSBlocExamples >> example13Cluster [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example14LabelExtent [
 	<script: 'self new example14LabelExtent open'>
 
@@ -488,7 +490,7 @@ RSBlocExamples >> example14LabelExtent [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example15BarPlot [
 	<script: 'self new example15BarPlot open'>
 
@@ -515,7 +517,7 @@ RSBlocExamples >> example15BarPlot [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example16Histogram [
 	<script: 'self new example16Histogram open'>
 
@@ -547,7 +549,7 @@ RSBlocExamples >> example16Histogram [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example17MouseMoveEllipse [ 
 	<script: 'self new example17MouseMoveEllipse open' > 
 	
@@ -579,7 +581,7 @@ RSBlocExamples >> example17MouseMoveEllipse [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example18MouseMoveLine [
 	<script: 'self new example18MouseMoveLine open'>
  	| c rotate size angle |
@@ -614,7 +616,7 @@ RSBlocExamples >> example18MouseMoveLine [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example19Animation [
 	<script: 'self new example19Animation open'>
 
@@ -657,7 +659,7 @@ RSBlocExamples >> example19Animation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example20BoxWindmill [
 	<script: 'self new example20BoxWindmill open'>
 	| canvas shapes extent points frameCount border |
@@ -694,7 +696,7 @@ RSBlocExamples >> example20BoxWindmill [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example21BoxesLineCircles [
 	<script: 'self new example21BoxesLineCircles open'>
 	| canvas extent r movingShapes position alpha update updateLine lineX verticalLine |
@@ -799,7 +801,7 @@ RSBlocExamples >> example21BoxesLineCircles [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example22AnimationOnRightClick [
 
 	         <script: 'self new example22AnimationOnRightClick open'>
@@ -861,7 +863,7 @@ RSBlocExamples >> example22AnimationOnRightClick [
 	         ^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example23Flor [
 	<script: 'self new example23Flor open'>
 	| c frame angleSp alphaS hueS dia1 dia2 |
@@ -907,8 +909,9 @@ RSBlocExamples >> example23Flor [
 	
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example24AnimationLinesInComposite [
+
 	<script: 'self new example24AnimationLinesInComposite open'>
 	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
 	canvas := RSCanvas new.
@@ -919,60 +922,81 @@ RSBlocExamples >> example24AnimationLinesInComposite [
 	hueOffset := 0.
 	angleSp := 0.
 	"<globals>"
-	soffset := nil. size := nil. mult := 0.
+	soffset := nil.
+	size := nil.
+	mult := 0.
 	"</globals>"
 	shape := [ :array |
-		array collect: [ :m | | com ang a line |
-			com := RSComposite new.
-			com model: m + soffset.
-			ang := m degreesToRadians.
-			a := Float halfPi + ang.
-			com propertyAt: #offset put: a * size.
-			line := RSLine new
-				width: 1.5;
-				yourself.
-				
-			com add: line.
-			com translateTo: ang cos @ ang sin * radius * mult.
-			com matrix rotateByRadians: a.
-			com ] ].
-	
-	soffset := 0. size := 12. mult := 1.
+	         array collect: [ :m |
+		         | com ang a line |
+		         com := RSComposite new.
+		         com model: m + soffset.
+		         ang := m degreesToRadians.
+		         a := Float halfPi + ang.
+		         com propertyAt: #offset put: a * size.
+		         line := RSLine new
+			                 width: 1.5;
+			                 yourself.
+
+		         com add: line.
+		         com translateTo: ang cos @ ang sin * radius * mult.
+		         com matrix rotateByRadians: a.
+		         com ] ].
+
+	soffset := 0.
+	size := 12.
+	mult := 1.
 	shapes := shape value: (0 to: 359 by: 12).
 	canvas addAll: shapes.
-	
-	soffset := 180. size := 8. mult := 0.5.
+
+	soffset := 180.
+	size := 8.
+	mult := 0.5.
 	shapes := shape value: (0 to: 359 by: 5).
 	canvas addAll: shapes.
-	
-	soffset := 120. size := 4. mult := 0.5@0.75.
+
+	soffset := 120.
+	size := 4.
+	mult := 0.5 @ 0.75.
 	shapes := shape value: (0 to: 359 by: 5).
-	canvas addAll: shapes."
+	canvas addAll: shapes. "
 	
-	"soffset := 240. size := 4. mult := 0.75@0.5.
+	"
+	soffset := 240.
+	size := 4.
+	mult := 0.75 @ 0.5.
 	shapes := shape value: (0 to: 359 by: 5).
 	canvas addAll: shapes.
 	shapes := canvas nodes.
-	canvas addShape: (RSLabel new 
-		text: 'Roassal';
-		fontSize: 30;
-		color: Color white).
+	canvas addShape: (RSLabel new
+			 position: 0 @ -15;
+			 text: 'Roassal';
+			 fontSize: 30;
+			 color: Color white).
+	canvas addShape: (RSLabel new
+			 position: 0 @ 15;
+			 text: 'on Bloc';
+			 fontSize: 30;
+			 color: Color white).
 	canvas newAnimation repeat onStepDo: [ :t |
-		frame := frame + 1. 
+		frame := frame + 1.
 		angleSp := frame / 300 * Float twoPi.
 		hueOffset := hueOffset + 1.
-		shapes do: [ :s | | pos line |
+		shapes do: [ :s |
+			| pos line |
 			pos := (angleSp negated + (s propertyAt: #offset)) cos * 30.
 			line := s shapes first.
 			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
-			line endPoint: 0@ pos ].
-			canvas signalUpdate.
-		 ].
-	canvas when: RSExtentChangedEvent do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ].
+			line endPoint: 0 @ pos ].
+		canvas signalUpdate ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ]
+		for: self.
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example25Bitmap [
 	<script: 'self new example25Bitmap open'>
 
@@ -997,7 +1021,7 @@ RSBlocExamples >> example25Bitmap [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example26Bezier [
 	<script: 'self new example26Bezier open'>
 
@@ -1018,7 +1042,7 @@ RSBlocExamples >> example26Bezier [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example27BezierAttachPoints [
 	<script: 'self new example27BezierAttachPoints open'>
 
@@ -1059,7 +1083,7 @@ RSBlocExamples >> example27BezierAttachPoints [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example28BezierWithAnimation [
 	<script: 'self new example28BezierWithAnimation open'>
 
@@ -1117,7 +1141,7 @@ RSBlocExamples >> example28BezierWithAnimation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example29Polygon [
 	<script: 'self new example29Polygon open'>
 
@@ -1148,7 +1172,7 @@ RSBlocExamples >> example29Polygon [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example30EllipseWithLinearGradient [
 	<script: 'self new example30EllipseWithLinearGradient open'>
 
@@ -1172,7 +1196,7 @@ RSBlocExamples >> example30EllipseWithLinearGradient [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example31PolygonWithLinearGradient [
 	<script: 'self new example31PolygonWithLinearGradient open'>
 
@@ -1220,7 +1244,7 @@ RSBlocExamples >> example31PolygonWithLinearGradient [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example32FixedShape [
 	<script: 'self new example32FixedShape open'>
 
@@ -1246,7 +1270,7 @@ RSBlocExamples >> example32FixedShape [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example33AnimatedLayout [
 	<script: 'self new example33AnimatedLayout open'>
 
@@ -1298,7 +1322,7 @@ RSBlocExamples >> example33AnimatedLayout [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example34RSLocateWithMouseEvents [
 	<script: 'self new example34RSLocateWithMouseEvents open'>
 	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
@@ -1391,7 +1415,7 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBlocExamples >> example35MouseEnterMouseLeave [
 	<script: 'self new example35MouseEnterMouseLeave open'>
 	"Open Transcript to see the traced events. 
@@ -1436,7 +1460,7 @@ RSBlocExamples >> example35MouseEnterMouseLeave [
 	^ canvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBlocExamples >> newCanvas [
 	^ RSCanvas new
 		useBlocHost;

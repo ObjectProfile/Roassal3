@@ -1,13 +1,15 @@
 Class {
-	#name : #RSArcLengthParameterization,
-	#superclass : #RSParameterization,
+	#name : 'RSArcLengthParameterization',
+	#superclass : 'RSParameterization',
 	#instVars : [
 		'parameterization'
 	],
-	#category : #'Roassal3-Shapes-Util'
+	#category : 'Roassal3-Shapes-Util',
+	#package : 'Roassal3-Shapes',
+	#tag : 'Util'
 }
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSArcLengthParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
 
 	parameterization
@@ -17,7 +19,7 @@ RSArcLengthParameterization >> controlPointsChanged: points overlappingDistances
 	self updateDomain
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 RSArcLengthParameterization >> indexForInserting: newObject into: aSequenceable [
 
 	"Very similar to SortedCollection>>#indexForInserting: with #< as sorting block."
@@ -36,19 +38,19 @@ RSArcLengthParameterization >> indexForInserting: newObject into: aSequenceable 
 	^ low
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSArcLengthParameterization >> parameterization: aParameterization [
 
 	parameterization := aParameterization
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSArcLengthParameterization >> parameterize_RSParametricLine: aLine [
 
 	aLine parameterized_RSArcLengthParameterization: self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSArcLengthParameterization >> postCopy [
 
 	super postCopy.
@@ -56,7 +58,7 @@ RSArcLengthParameterization >> postCopy [
 	parameterization := parameterization copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSArcLengthParameterization >> updateDomain [
 
 	| size totalArcLength |
@@ -87,7 +89,7 @@ RSArcLengthParameterization >> updateDomain [
 		atLast: 1 put: 1.0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSArcLengthParameterization >> withIndexDo: aBlock [
 
 	"First, cumulate arc lengths using the original parameterization."

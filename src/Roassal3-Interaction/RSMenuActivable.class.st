@@ -10,15 +10,17 @@ With the mouse right click event I show a basic popup.
 
 "
 Class {
-	#name : #RSMenuActivable,
-	#superclass : #RSInteraction,
+	#name : 'RSMenuActivable',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'menuBlock'
 	],
-	#category : #'Roassal3-Interaction-Core'
+	#category : 'Roassal3-Interaction-Core',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSMenuActivable >> menuDo: block [
 	"a block with two args
 	first arg, a MenuMorph
@@ -27,7 +29,7 @@ RSMenuActivable >> menuDo: block [
 	menuBlock := block
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMenuActivable >> onShape: aShape [
 	"No need to do anything if empty"
 	menuBlock isNil ifTrue: [ ^ self ].

@@ -1,15 +1,17 @@
 Class {
-	#name : #RSCanvasControllerTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Interaction-Tests-Core'
+	#name : 'RSCanvasControllerTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Interaction-Tests-Core',
+	#package : 'Roassal3-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasControllerTest >> classToTest [
 	^ RSCanvasController
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasControllerTest >> testBasic [
 	| canvas controller |
 	canvas := RSCanvas new.
@@ -21,7 +23,7 @@ RSCanvasControllerTest >> testBasic [
 	self assert: canvas fixedShapes size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasControllerTest >> testNoLegend [
 	| canvas controller |
 	canvas := RSCanvas new.
@@ -31,7 +33,7 @@ RSCanvasControllerTest >> testNoLegend [
 	self assert: canvas fixedShapes size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasControllerTest >> testNoZoomToFitOnExtendChanged [
 	| controller |
 	controller := RSCanvasController new.
@@ -40,7 +42,7 @@ RSCanvasControllerTest >> testNoZoomToFitOnExtendChanged [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCanvasControllerTest >> testZoomToFitOnStart [
 	| canvas box controller window scale pixelPosition newPixelPosition |
 	canvas := RSCanvas new.

@@ -21,8 +21,8 @@ c
 =-=-=-==-=-=-==-=-=-=
 "
 Class {
-	#name : #RSAbstractMarkerDecoration,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSAbstractMarkerDecoration',
+	#superclass : 'RSAbstractChartDecoration',
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
@@ -30,54 +30,56 @@ Class {
 		'getRelevantValueBlock',
 		'lines'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : 'Roassal3-Chart-Decoration',
+	#package : 'Roassal3-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSAbstractMarkerDecoration >> average [
 	self subclassResponsibility
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSAbstractMarkerDecoration >> color: aColor [
 
 	super color: aColor.
 	markerColor := aColor
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 	"This method should be overriden to produce a line"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractMarkerDecoration >> createdShapes [
 	^ lines
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractMarkerDecoration >> defaultDashStyle [
 	^ #(2 2 2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractMarkerDecoration >> defaultMarkerColor [
 	^ Color red
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractMarkerDecoration >> defaultShape [
 	^ RSLine new
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractMarkerDecoration >> getValueToBeMarkedFromPlot: p [
 
 	^ getRelevantValueBlock rsValue: p
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractMarkerDecoration >> initialize [
 
 	super initialize.
@@ -87,22 +89,22 @@ RSAbstractMarkerDecoration >> initialize [
 	markerColor := self color ifNil: [ self defaultMarkerColor ] ifNotNil: [ self color ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractMarkerDecoration >> lines [
 	^ lines
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSAbstractMarkerDecoration >> max [
 	self subclassResponsibility
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSAbstractMarkerDecoration >> min [
 	self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractMarkerDecoration >> renderIn: canvas [
 	
 	| line |
@@ -114,7 +116,7 @@ RSAbstractMarkerDecoration >> renderIn: canvas [
 	lines := { line } as: RSGroup
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSAbstractMarkerDecoration >> value: aValue [
 	"Mark the value"
 	getRelevantValueBlock := aValue

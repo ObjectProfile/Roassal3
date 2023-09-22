@@ -1,6 +1,6 @@
-Extension { #name : #GEllipse }
+Extension { #name : 'GEllipse' }
 
-{ #category : #'*Roassal3-Shapes' }
+{ #category : '*Roassal3-Shapes' }
 GEllipse >> rsScaleWith: anAthensAffineTransform [
 	| m |
 	m := anAthensAffineTransform.

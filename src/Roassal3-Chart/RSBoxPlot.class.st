@@ -100,12 +100,14 @@ c open
 ```
 "
 Class {
-	#name : #RSBoxPlot,
-	#superclass : #RSAbstractBandPlot,
-	#category : #'Roassal3-Chart-Core'
+	#name : 'RSBoxPlot',
+	#superclass : 'RSAbstractBandPlot',
+	#category : 'Roassal3-Chart-Core',
+	#package : 'Roassal3-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSBoxPlot class >> data: aCollection [
 	| boxPlot |
 	boxPlot := self new.
@@ -113,7 +115,7 @@ RSBoxPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example01BoxPlot [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. } .
@@ -121,7 +123,7 @@ RSBoxPlot class >> example01BoxPlot [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> example01Days [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -145,7 +147,7 @@ RSBoxPlot class >> example01Days [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example02BoxPlotOfMultipleDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -156,7 +158,7 @@ RSBoxPlot class >> example02BoxPlotOfMultipleDatasets [
 	^ boxPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example03BoxWithNotch [
 	| p1 y1 |
 
@@ -169,7 +171,7 @@ RSBoxPlot class >> example03BoxWithNotch [
 	^ p1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example04BoxPlotHorizontal [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. } .
@@ -178,7 +180,7 @@ RSBoxPlot class >> example04BoxPlotHorizontal [
 	^ boxPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example05BoxPlotsHorizontal [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -189,7 +191,7 @@ RSBoxPlot class >> example05BoxPlotsHorizontal [
 	^ boxPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example05BoxPlotsHorizontalShowBands [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -201,7 +203,7 @@ RSBoxPlot class >> example05BoxPlotsHorizontalShowBands [
 	^ boxPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example06Days [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -225,7 +227,7 @@ RSBoxPlot class >> example06Days [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example06DaysHorizontal [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -250,7 +252,7 @@ RSBoxPlot class >> example06DaysHorizontal [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example06DaysShowBands [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -277,7 +279,7 @@ RSBoxPlot class >> example06DaysShowBands [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example07BoxPlotGroupsHorizontal [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
 	"TO DO"
@@ -300,7 +302,7 @@ RSBoxPlot class >> example07BoxPlotGroupsHorizontal [
 	^ boxPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlot class >> example08Positions [
 	| boxPlot1 data1 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -313,7 +315,7 @@ RSBoxPlot class >> example08Positions [
 	^ boxPlot1 open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotChangeBoxWidth [
 	| boxPlot1   data1  |
 	data1 := { 12. 12. 13. 14. 15. 24. }.
@@ -324,7 +326,7 @@ RSBoxPlot class >> exampleBoxPlotChangeBoxWidth [
 	^ boxPlot1 open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 	| clusterChart boxPlot1  boxPlot2 data1 data2  |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -343,7 +345,7 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenBoxes [
 	^ clusterChart open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenClusters [
 	| clusterChart boxPlot1  boxPlot2 data1 data2  |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -362,7 +364,7 @@ RSBoxPlot class >> exampleBoxPlotChangeSpaceBetweenClusters [
 	^ clusterChart open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroups [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -381,7 +383,7 @@ RSBoxPlot class >> exampleBoxPlotGroups [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroupsCustomColorPalette [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -401,7 +403,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsCustomColorPalette [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroupsEven [
 	| boxPlot boxPlot1  boxPlot2 data1 data2  |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -416,7 +418,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsEven [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroupsEven4 [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 boxPlot4 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -433,7 +435,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsEven4 [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroupsOdd [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 data1 data2 data3 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -452,7 +454,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - cluster' }
+{ #category : 'examples - cluster' }
 RSBoxPlot class >> exampleBoxPlotGroupsOdd5 [
 	| boxPlot boxPlot1  boxPlot2 boxPlot3 boxPlot4 boxPlot5 data1 data2 data3 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -473,7 +475,7 @@ RSBoxPlot class >> exampleBoxPlotGroupsOdd5 [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyle [
 	| boxPlot data paint |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -488,7 +490,7 @@ RSBoxPlot class >> exampleBoxPlotStyle [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleBoxFillColor [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -499,7 +501,7 @@ RSBoxPlot class >> exampleBoxPlotStyleBoxFillColor [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleBoxFillColorsCollection [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -510,7 +512,7 @@ RSBoxPlot class >> exampleBoxPlotStyleBoxFillColorsCollection [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleMedianLine [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -524,7 +526,7 @@ RSBoxPlot class >> exampleBoxPlotStyleMedianLine [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleMedianLineColor [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -535,7 +537,7 @@ RSBoxPlot class >> exampleBoxPlotStyleMedianLineColor [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleOneMedianLineColor [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -547,7 +549,7 @@ RSBoxPlot class >> exampleBoxPlotStyleOneMedianLineColor [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleOutlierShape [
 	| boxPlot1  data1  |
 	data1 := { { 12. 12. 13. 14. 15. 24. } .
@@ -560,7 +562,7 @@ RSBoxPlot class >> exampleBoxPlotStyleOutlierShape [
 	^ boxPlot1 open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleOutliersColor [
 	| boxPlot boxPlot1  boxPlot2 data1 data2  |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -577,7 +579,7 @@ RSBoxPlot class >> exampleBoxPlotStyleOutliersColor [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleBoxPlotStyleWhiskerFormat [
 	| boxPlot boxPlot1 data1 data2 boxPlot2 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -594,7 +596,7 @@ RSBoxPlot class >> exampleBoxPlotStyleWhiskerFormat [
 	^ boxPlot open.
 ]
 
-{ #category : #'examples - style' }
+{ #category : 'examples - style' }
 RSBoxPlot class >> exampleSetYTicksLabels [
 	| p1 y1 |
 
@@ -607,22 +609,22 @@ RSBoxPlot class >> exampleSetYTicksLabels [
 	^ p1 open.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> boxShapes [
 	^ bandPlotShapes.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> boxShapes: collectionOfRSBoxPlotShape [
 	bandPlotShapes := collectionOfRSBoxPlotShape.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> boxes [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :boxShape | boxShape box ]); yourself.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSBoxPlot >> buildChart [
 	chart add: self.
 	chart
@@ -631,22 +633,22 @@ RSBoxPlot >> buildChart [
 	^ chart
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBoxPlot >> canHandleCluster [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> color: aColor [
 	bandPlotShapes do: [ :boxShape | boxShape color: aColor ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> colors: collectionOfColors [
 	bandPlotShapes with: collectionOfColors do: [ :bandShape :color | bandShape  color: color ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> computeBoxGraphicsCenters [
 	| lastBoxCenter |
 	lastBoxCenter := 1.
@@ -657,37 +659,37 @@ RSBoxPlot >> computeBoxGraphicsCenters [
 	]).
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> computeDefualtXTicks [
 	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfBoxes) ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> confidenceInterval [
 	^ self confidenceIntervals first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> confidenceIntervals [
 	^ bandPlotShapes collect: [ :boxShape | boxShape confidenceInterval ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> confidencePercentage [
 	^ bandPlotShapes collect: [ :boxShape | boxShape confidencePercentage ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> confidencePercentage: aPercentage [
 	bandPlotShapes do: [ :boxShape | boxShape confidencePercentage: aPercentage ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> createdShapes [
 	^ { self boxShapes. }
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> data: aCollection [
 	| collectionOfDatasets |
 	
@@ -699,91 +701,91 @@ RSBoxPlot >> data: aCollection [
 	self computeBoxGraphicsCenters.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBoxPlot >> defaultShape [
 	^ RSPolygon new noPaint.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBoxPlot >> initialize [
 	super initialize.
 	offset := 0.
 	horizontal := false.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> iqr [
 	^ self iqrs first.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> iqrs [
 	^ bandPlotShapes collect: [ :box | box iqr ].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBoxPlot >> isBoxPlot [
 	^ true
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> median [
 	^ self medians first.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> medianConfidenceInterval [
 	^ self medianConfidenceIntervals first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> medianConfidenceIntervals [
 	^ bandPlotShapes collect: [ :boxShape | boxShape medianConfidenceInterval ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> medianLines [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box medianLine ]); yourself.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> medians [
 	^ bandPlotShapes collect: [ :box | box median ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> notch: aBool [
 	bandPlotShapes do: [ :boxShape | boxShape notch: aBool ].	
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> numberOfBoxes [
 	^ self boxShapes size.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> outlier: markerShape [
 	bandPlotShapes do: [ :box | box outlier: markerShape ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> outlierMarker: markerShapeString [
 	bandPlotShapes do: [ :box | box outlierMarker: markerShapeString ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> outliers [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box outliers ]); yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> quartiles [
 	| quartilesArray |
 	quartilesArray := bandPlotShapes collect: [ :boxShape | boxShape quartiles ].
 	bandPlotShapes size = 1 ifTrue: [ ^quartilesArray first ] ifFalse: [ quartilesArray ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	self computeBandsOffset.
@@ -795,17 +797,17 @@ RSBoxPlot >> renderIn: canvas [
 		aRSBoxPlotShape renderIn: canvas ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlot >> whiskerFormat: aString [
 	bandPlotShapes do: [ :box | box whiskerFormat: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> whiskers [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :box | box whiskers ]); yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlot >> y: aCollection [
 	self data: aCollection.
 ]

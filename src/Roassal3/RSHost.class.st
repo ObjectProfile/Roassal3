@@ -1,38 +1,40 @@
 Class {
-	#name : #RSHost,
-	#superclass : #RSObject,
+	#name : 'RSHost',
+	#superclass : 'RSObject',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> canvas [
 
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> canvas: aRSCanvas [
 
 	canvas := aRSCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> defaultWindowTitle [
 
 	^ 'Roassal'
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSHost >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 

@@ -8,30 +8,32 @@ However it doesn't rescale the axis.
 *Collaborators*: `RSLogLocator` is used when rendering ticks.
 "
 Class {
-	#name : #RSLogLocator,
-	#superclass : #RSTickLocator,
+	#name : 'RSLogLocator',
+	#superclass : 'RSTickLocator',
 	#instVars : [
 		'base',
 		'smallestIndex',
 		'smallestPower'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : 'Roassal3-Chart-Ticks',
+	#package : 'Roassal3-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSLogLocator >> base [
 
 	^ base
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSLogLocator >> base: aBase [
 
 	base := aBase.
 	smallestIndex := aBase**(smallestPower) 
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSLogLocator >> generateTicks: aScale with: numberOfTicks [
 
 	| first last power collection tick |
@@ -60,7 +62,7 @@ RSLogLocator >> generateTicks: aScale with: numberOfTicks [
 	^ collection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLogLocator >> initialize [
 
 	super initialize.
@@ -69,19 +71,19 @@ RSLogLocator >> initialize [
 	smallestIndex := base**smallestPower
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 RSLogLocator >> smallestIndex [
 
 	^ smallestIndex
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 RSLogLocator >> smallestPower [
 
 	^ smallestPower
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 RSLogLocator >> smallestPower: aPower [
 
 	smallestPower := aPower.

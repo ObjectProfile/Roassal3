@@ -1,10 +1,12 @@
 Class {
-	#name : #RSLinspaceParameterization,
-	#superclass : #RSIntervalParameterization,
-	#category : #'Roassal3-Shapes-Util'
+	#name : 'RSLinspaceParameterization',
+	#superclass : 'RSIntervalParameterization',
+	#category : 'Roassal3-Shapes-Util',
+	#package : 'Roassal3-Shapes',
+	#tag : 'Util'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLinspaceParameterization >> from: from to: to samples: samples [
 
 	domain := (from to: to) linspace: samples.

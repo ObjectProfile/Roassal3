@@ -1,13 +1,15 @@
 Class {
-	#name : #RSdeCasteljauPolarLine,
-	#superclass : #RSdeCasteljauLine,
+	#name : 'RSdeCasteljauPolarLine',
+	#superclass : 'RSdeCasteljauLine',
 	#instVars : [
 		'ratio'
 	],
-	#category : #'Roassal3-Shapes-Lines'
+	#category : 'Roassal3-Shapes-Lines',
+	#package : 'Roassal3-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSdeCasteljauPolarLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint n |
@@ -27,7 +29,7 @@ RSdeCasteljauPolarLine >> deCasteljau: aSequenceableOfPoints at: t [
 	^ aPoint
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSdeCasteljauPolarLine >> newLine [
 
 	^ super newLine
@@ -35,7 +37,7 @@ RSdeCasteljauPolarLine >> newLine [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSdeCasteljauPolarLine >> ratio: anObject [
 
 	ratio := anObject

@@ -2,11 +2,13 @@
 I provide some parametric lines.
 "
 Trait {
-	#name : #RSTParametricXYLines,
-	#category : #'Roassal3-Examples-Experimental'
+	#name : 'RSTParametricXYLines',
+	#category : 'Roassal3-Examples-Experimental',
+	#package : 'Roassal3-Examples',
+	#tag : 'Experimental'
 }
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricHypotrochoid [
 
 	| s r d a b |
@@ -26,7 +28,7 @@ RSTParametricXYLines >> lineParametricHypotrochoid [
 		  scale: 10
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricLissajous [
 
 	^ RSParametricXYLine new
@@ -37,7 +39,7 @@ RSTParametricXYLines >> lineParametricLissajous [
 		  scale: 100
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricNeil [
 
 	^ RSParametricXYLine new
@@ -48,7 +50,7 @@ RSTParametricXYLines >> lineParametricNeil [
 		  scale: 10
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricNeil2 [
 
 	^ RSParametricXYLine new
@@ -59,7 +61,7 @@ RSTParametricXYLines >> lineParametricNeil2 [
 		  scale: 10
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricTrochoid [
 
 	^ RSParametricXYLine new
@@ -70,7 +72,7 @@ RSTParametricXYLines >> lineParametricTrochoid [
 		  scale: 100
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> lineParametricUnitCircle [
 
 	^ RSParametricXYLine new
@@ -81,7 +83,7 @@ RSTParametricXYLines >> lineParametricUnitCircle [
 		  scale: 100
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSTParametricXYLines >> parametricXYlineButterfly [
 
 	^ RSParametricXYLine new

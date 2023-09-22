@@ -1,6 +1,6 @@
-Extension { #name : #RSCanvasController }
+Extension { #name : 'RSCanvasController' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSCanvasController class >> exampleNoLegend [
 	| canvas int |
 	canvas := RSCanvas new.

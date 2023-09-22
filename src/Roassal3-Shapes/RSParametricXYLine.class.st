@@ -1,20 +1,22 @@
 Class {
-	#name : #RSParametricXYLine,
-	#superclass : #RSParametricLine,
+	#name : 'RSParametricXYLine',
+	#superclass : 'RSParametricLine',
 	#instVars : [
 		'x',
 		'y'
 	],
-	#category : #'Roassal3-Shapes-Lines'
+	#category : 'Roassal3-Shapes-Lines',
+	#package : 'Roassal3-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSParametricXYLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ (x value: t) @ (y value: t)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSParametricXYLine >> newLine [
 
 	^ super newLine
@@ -26,13 +28,13 @@ RSParametricXYLine >> newLine [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParametricXYLine >> notifyDesignPointsChanged [
 
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParametricXYLine >> scale: factor [
 
 	^ self newLine
@@ -41,7 +43,7 @@ RSParametricXYLine >> scale: factor [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSParametricXYLine >> x: xBlock y: yBlock [
 
 	x := xBlock.

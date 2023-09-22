@@ -1,13 +1,15 @@
 Class {
-	#name : #RSHorizontalMidBlockCPAPController,
-	#superclass : #RSHorizontalCPAPController,
+	#name : 'RSHorizontalMidBlockCPAPController',
+	#superclass : 'RSHorizontalCPAPController',
 	#instVars : [
 		'midPointBlock'
 	],
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints',
+	#package : 'Roassal3-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHorizontalMidBlockCPAPController >> controlPointsFor: aLine [
 
 	| anArray ratio mid |
@@ -27,7 +29,7 @@ RSHorizontalMidBlockCPAPController >> controlPointsFor: aLine [
 	^ anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalMidBlockCPAPController >> midPointBlock: anObject [
 
 	midPointBlock := anObject

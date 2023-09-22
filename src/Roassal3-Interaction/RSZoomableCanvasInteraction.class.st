@@ -2,15 +2,17 @@
 I handle the zoom interaction with mouse wheel event, also I handle all the zoom process
 "
 Class {
-	#name : #RSZoomableCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSZoomableCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'animation'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : 'Roassal3-Interaction-Controls',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 RSZoomableCanvasInteraction class >> autoZoomMove: aCanvas newScale: newScale [
 	| scale camera position morphPosition |
 	camera := aCanvas camera.
@@ -25,7 +27,7 @@ RSZoomableCanvasInteraction class >> autoZoomMove: aCanvas newScale: newScale [
 		newScale: newScale.
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 	| scale camera position morphPosition |
 	camera := aCanvas camera.
@@ -40,7 +42,7 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 		newScale: newScale.
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSZoomableCanvasInteraction class >> zoomMove: aCanvas pixelPosition: morphPosition spacePosition: position newScale: newScale [
 	| scale camera |
 	camera := aCanvas camera.
@@ -58,19 +60,19 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas pixelPosition: morphPosit
 			aCanvas signalUpdate ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSZoomableCanvasInteraction >> noLimits [
 	self configuration
 		maxScale: SmallInteger maxVal;
 		minScale: 0.0000000001
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomableCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self
 ]
 
-{ #category : #'events - processing' }
+{ #category : 'events - processing' }
 RSZoomableCanvasInteraction >> processEvent: evt [
 	| delta |
 	animation ifNotNil: [ ^ self ].
@@ -80,7 +82,7 @@ RSZoomableCanvasInteraction >> processEvent: evt [
 	self class zoomMove: evt canvas newScale: (self scaleFor: evt camera scale * delta).
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomableCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Wheel' description: 'To zoom in-out the view'
 ]

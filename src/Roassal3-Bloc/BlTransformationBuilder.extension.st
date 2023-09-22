@@ -1,6 +1,6 @@
-Extension { #name : #BlTransformationBuilder }
+Extension { #name : 'BlTransformationBuilder' }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 BlTransformationBuilder >> transformation [
 
 	^ affineCompositeTransformation

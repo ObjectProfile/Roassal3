@@ -1,21 +1,23 @@
-Extension { #name : #RSAbstractLine }
+Extension { #name : 'RSAbstractLine' }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSAbstractLine >> asBlElement [
 
-	^ self asBlGeometry asElement
+	^ BlElement new
 		  roassalShape: self;
+		  geometry: self asBlGeometry;
+		  beOutskirtsCentered;
 		  in: [ :e | self updateBlElement: e ];
 		  yourself
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSAbstractLine >> asBlGeometry [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSAbstractLine >> updateBlElement: aBlElement [
 	"Update the element. Note: Unlike other shapes, the lines need to update the geometry."
 
@@ -27,7 +29,7 @@ RSAbstractLine >> updateBlElement: aBlElement [
 		background: self blPaint
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSAbstractLine >> updateBlGeometry: aBlGeometry [
 
 	self subclassResponsibility

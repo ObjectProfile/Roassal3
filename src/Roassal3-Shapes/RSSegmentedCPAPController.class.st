@@ -1,20 +1,22 @@
 Class {
-	#name : #RSSegmentedCPAPController,
-	#superclass : #RSAbstractCPAPController,
+	#name : 'RSSegmentedCPAPController',
+	#superclass : 'RSAbstractCPAPController',
 	#instVars : [
 		'controlPointsController',
 		'linearizationPredicate'
 	],
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints',
+	#package : 'Roassal3-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSegmentedCPAPController >> controlPointsController: anObject [
 
 	controlPointsController := anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSegmentedCPAPController >> controlPointsFor: aLine [
 
 	| random anArray from to |
@@ -46,7 +48,7 @@ RSSegmentedCPAPController >> controlPointsFor: aLine [
 	^ anArray
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSegmentedCPAPController >> controlPointsFor_: aLine [
 
 	| random anArray from to |
@@ -78,13 +80,13 @@ RSSegmentedCPAPController >> controlPointsFor_: aLine [
 	^ anArray
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSegmentedCPAPController >> controlPointsFrom: from to: to [
 
 	self shouldNotImplement
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSegmentedCPAPController >> initialize [
 
 	super initialize.
@@ -93,13 +95,13 @@ RSSegmentedCPAPController >> initialize [
 		(from distanceTo: to) < 50 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSegmentedCPAPController >> linearizationPredicate [
 
 	^ linearizationPredicate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSegmentedCPAPController >> linearizationPredicate: aBlock [
 
 	linearizationPredicate := aBlock

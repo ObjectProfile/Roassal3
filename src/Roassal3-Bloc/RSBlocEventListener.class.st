@@ -1,13 +1,15 @@
 Class {
-	#name : #RSBlocEventListener,
-	#superclass : #BlEventListener,
+	#name : 'RSBlocEventListener',
+	#superclass : 'BlEventListener',
 	#instVars : [
 		'roassalCanvas'
 	],
-	#category : #'Roassal3-Bloc-Events'
+	#category : 'Roassal3-Bloc-Events',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSBlocEventListener class >> newForCanvas: aRSHost [ 
 	
 	^ self basicNew
@@ -15,7 +17,7 @@ RSBlocEventListener class >> newForCanvas: aRSHost [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBlocEventListener >> announceEventOfClass: aRSEventClass actionClass: anActionClass from: aBlEvent [
 
 	| targetShape aRSEvent |
@@ -32,7 +34,7 @@ RSBlocEventListener >> announceEventOfClass: aRSEventClass actionClass: anAction
 	targetShape announce: aRSEvent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBlocEventListener >> announceEventOfClass: aRSEventClass from: aBlEvent [
 
 	self
@@ -41,7 +43,7 @@ RSBlocEventListener >> announceEventOfClass: aRSEventClass from: aBlEvent [
 		from: aBlEvent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBlocEventListener >> announceMouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aBlClickEvent [
 	"Translate a Bloc click event to a Roassal click event."
 
@@ -58,7 +60,7 @@ RSBlocEventListener >> announceMouseEventOfClass: defaultClass ifLeftButton: lef
 		from: aBlClickEvent
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> clickEvent: aBlEvent [
 
 	self 
@@ -69,7 +71,7 @@ RSBlocEventListener >> clickEvent: aBlEvent [
 
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> doubleClickEvent: aBlEvent [
 
 	self
@@ -79,17 +81,17 @@ RSBlocEventListener >> doubleClickEvent: aBlEvent [
 		from: aBlEvent
 ]
 
-{ #category : #'dnd handlers' }
+{ #category : 'dnd handlers' }
 RSBlocEventListener >> dragEndEvent: aBlEvent [
 	self announceEventOfClass: RSMouseDragEnd from: aBlEvent
 ]
 
-{ #category : #'dnd handlers' }
+{ #category : 'dnd handlers' }
 RSBlocEventListener >> dragEvent: aBlEvent [
 	self announceEventOfClass: RSMouseDragging from: aBlEvent
 ]
 
-{ #category : #'dnd handlers' }
+{ #category : 'dnd handlers' }
 RSBlocEventListener >> dragStartEvent: aBlEvent [
 	self
 		announceMouseEventOfClass: RSMouseDragStart 
@@ -98,7 +100,7 @@ RSBlocEventListener >> dragStartEvent: aBlEvent [
 		from: aBlEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBlocEventListener >> initializeForCanvas: aRSCanvas [ 
 	
 	self initialize.
@@ -106,26 +108,26 @@ RSBlocEventListener >> initializeForCanvas: aRSCanvas [
 
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> mouseEnterEvent: aBlEvent [
 
 	self announceEventOfClass: RSMouseEnter from: aBlEvent
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> mouseLeaveEvent: aBlEvent [
 
 	self announceEventOfClass: RSMouseLeave from: aBlEvent
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> mouseMoveEvent: aBlEvent [
 	roassalCanvas host lastMousePosition: aBlEvent position.
 	
 	self announceEventOfClass: RSMouseMove from: aBlEvent
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : 'mouse handlers' }
 RSBlocEventListener >> mouseWheelEvent: aBlEvent [
 	aBlEvent vector y isZero ifTrue: [ ^ self ].
 	self announceEventOfClass: RSMouseWheelEvent from: aBlEvent

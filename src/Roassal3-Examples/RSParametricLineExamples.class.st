@@ -2,14 +2,16 @@
 Basic examples about parametric XY lines.
 "
 Class {
-	#name : #RSParametricLineExamples,
-	#superclass : #RSAbstractExamples,
+	#name : 'RSParametricLineExamples',
+	#superclass : 'RSAbstractExamples',
 	#traits : 'RSTParametricXYLines',
 	#classTraits : 'RSTParametricXYLines classTrait',
-	#category : #'Roassal3-Examples-Basic'
+	#category : 'Roassal3-Examples-Basic',
+	#package : 'Roassal3-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricButterfly [
 
 	<script: 'self new example45ParametricButterfly open'>
@@ -20,7 +22,7 @@ RSParametricLineExamples >> example45ParametricButterfly [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricHypotrochoid [
 
 	<script: 'self new example45ParametricHypotrochoid open'>
@@ -31,7 +33,7 @@ RSParametricLineExamples >> example45ParametricHypotrochoid [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricLissajous [
 
 	<script: 'self new example45ParametricLissajous open'>
@@ -42,7 +44,7 @@ RSParametricLineExamples >> example45ParametricLissajous [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricNeil [
 
 	<script: 'self new example45ParametricNeil open'>
@@ -53,7 +55,7 @@ RSParametricLineExamples >> example45ParametricNeil [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricNeil2 [
 
 	<script: 'self new example45ParametricNeil2 open'>
@@ -64,7 +66,7 @@ RSParametricLineExamples >> example45ParametricNeil2 [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricTrochoid [
 
 	<script: 'self new example45ParametricTrochoid open'>
@@ -75,7 +77,7 @@ RSParametricLineExamples >> example45ParametricTrochoid [
 		  yourself
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSParametricLineExamples >> example45ParametricUnitCircle [
 
 	<script: 'self new example45ParametricUnitCircle open'>

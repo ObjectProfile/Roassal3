@@ -3,22 +3,24 @@ A horizontal tick but in top of the chart, takes values from RSChart, this tick 
 
 "
 Class {
-	#name : #RSHorizontalTopTick,
-	#superclass : #RSAbstractTick,
+	#name : 'RSHorizontalTopTick',
+	#superclass : 'RSAbstractTick',
 	#instVars : [
 		'values'
 	],
-	#category : #'Roassal3-Chart-Ticks'
+	#category : 'Roassal3-Chart-Ticks',
+	#package : 'Roassal3-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTopTick >> beforeRenderingIn: aChart [
 
 	self createXScale.
 	self createYScale
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTopTick >> createTickLineFor: aNumber [
 	| value y |
 	value := xScale scale: aNumber.
@@ -29,7 +31,7 @@ RSHorizontalTopTick >> createTickLineFor: aNumber [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTopTick >> createXScale [
 
 	| padding |
@@ -45,39 +47,39 @@ RSHorizontalTopTick >> createXScale [
 				(chart extent x - padding) }
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSHorizontalTopTick >> defaultLabelLocation [
 	^ RSLocation new above offset: 0@ -3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalTopTick >> isHorizontalTick [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTopTick >> max [
 	^ values max max: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTopTick >> min [
 	^ values min min: 0
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTopTick >> updateChartMaxAndMinValues: aChart [
 
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTopTick >> values [
 	^ values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTopTick >> values: aCollection [
 	values := aCollection
 ]

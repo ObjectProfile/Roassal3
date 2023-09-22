@@ -2,17 +2,19 @@
 I'm a RSHost that represents a RSCanvas as BlElement instances, eventually in a BlSpace (window).
 "
 Class {
-	#name : #RSBlocHost,
-	#superclass : #RSHost,
+	#name : 'RSBlocHost',
+	#superclass : 'RSHost',
 	#instVars : [
 		'space',
 		'canvasElement',
 		'lastMousePosition'
 	],
-	#category : #'Roassal3-Bloc-Core'
+	#category : 'Roassal3-Bloc-Core',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Core'
 }
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSBlocHost >> canvasElement [
 	"Analog to RSCanvas>>createMorph"
 
@@ -21,25 +23,25 @@ RSBlocHost >> canvasElement [
 		canvasElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlocHost >> defaultWindowTitle [
 
 	^ super defaultWindowTitle , ' - Bloc'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlocHost >> lastMousePosition [
 
 	^ lastMousePosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlocHost >> lastMousePosition: anObject [
 
 	lastMousePosition := anObject
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSBlocHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
@@ -55,7 +57,7 @@ RSBlocHost >> openWithTitle: aTitleAsString [
 
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSBlocHost >> signalUpdate [
 	"Request a redraw on the canvas."
 
@@ -64,7 +66,7 @@ RSBlocHost >> signalUpdate [
 	canvasElement signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlocHost >> space [
 	"Answer the BlSpace where the the canvas has been opened. If it wasn't opened, the answer is nil."
 

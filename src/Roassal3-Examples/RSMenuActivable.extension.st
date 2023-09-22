@@ -1,6 +1,6 @@
-Extension { #name : #RSMenuActivable }
+Extension { #name : 'RSMenuActivable' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSMenuActivable class >> example [
 	| m |
 	
