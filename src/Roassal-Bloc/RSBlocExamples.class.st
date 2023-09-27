@@ -765,8 +765,11 @@ RSBlocExamples >> example21BoxesLineCircles [
 					color: (each border color alpha: (alpha scale: i));
 					yourself);
 				yourself.
-			ant when: RSPositionChangedEvent do: [ :evt | 
-				s translateTo: evt oldPosition ].
+			ant
+				when: RSPositionChangedEvent
+				do: [ :evt | 
+					s translateTo: evt oldPosition ]
+				for: canvas.
 			ant := s.
 			canvas add: s ] ].
 
@@ -901,8 +904,11 @@ RSBlocExamples >> example23Flor [
 	 	].
 		c signalUpdate.
 		].
-	c when: RSExtentChangedEvent do: [ 
-		c camera zoomToFit: c extent extent: 500 asPoint ].
+	c
+		when: RSExtentChangedEvent
+		do: [ 
+			c camera zoomToFit: c extent extent: 500 asPoint ]
+		for: self.
 	^ c
 	
 ]
@@ -1009,9 +1015,11 @@ RSBlocExamples >> example25Bitmap [
 			model: each;
 			rotateByDegrees: 45;
 			popupText: #key;
-			when: RSMouseClick do: [ :evt |
-				Clipboard clipboardText: evt shape model key.
-				self inform: 'Copied icon name' ] ].
+			when: RSMouseClick
+				do: [ :evt |
+					Clipboard clipboardText: evt shape model key.
+					self inform: 'Copied icon name' ]
+				for: canvas ].
 
 	canvas addAll: shapes.
 	RSGridLayout on: shapes.
@@ -1134,7 +1142,8 @@ RSBlocExamples >> example28BezierWithAnimation [
 		canvas signalUpdate ].
 	canvas
 		when: RSExtentChangedEvent
-		do: [ canvas camera zoomToFit: canvas extent extent: 500 @ 500 ].
+		do: [ canvas camera zoomToFit: canvas extent extent: 500 @ 500 ]
+		for: canvas.
 
 	^ canvas
 ]
@@ -1304,15 +1313,17 @@ RSBlocExamples >> example33AnimatedLayout [
 		RSLabel new
 			isFixed: true;
 			text: sel capitalized;
-			when: RSMouseClick do: [ :evt | | pos1 pos2 |
-				pos1 := shapes collect: #position.
-				update value: sel.
-				pos2 := shapes collect: #position.
-				c newAnimation onStepDo: [ :t |
-					shapes doWithIndex: [ :e :i |
-						e translateTo: ((pos1 at: i) 
-							interpolateTo: (pos2 at: i) at: t) ].
-					c zoomToFit; signalUpdate ] ] ].
+			when: RSMouseClick
+				do: [ :evt | | pos1 pos2 |
+					pos1 := shapes collect: #position.
+					update value: sel.
+					pos2 := shapes collect: #position.
+					c newAnimation onStepDo: [ :t |
+						shapes doWithIndex: [ :e :i |
+							e translateTo: ((pos1 at: i) 
+								interpolateTo: (pos2 at: i) at: t) ].
+						c zoomToFit; signalUpdate ] ]
+				for: c ].
 	c addAll: labels.
 	RSHorizontalLineLayout on: labels.
 
@@ -1360,8 +1371,7 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 				locate offset: t.
 				locate move: movableElement on: fixedElement.
 				updateText value.
-				label signalUpdate.
-				 ]  ].
+				label signalUpdate ] ] for: canvas.
 	
 	canvas add: fixedElement; add: movableElement; add: label.
 	grad2 := (LinearGradientPaint fromArray: 
@@ -1387,9 +1397,10 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 			paint: grad1;
 			model: t;
 			addInteraction: labeled;
-			when: RSMouseEnter do: [:evt | evt traceCr. evt shape paint: grad2; signalUpdate ]; 
-			when: RSMouseLeave do: [:evt | evt traceCr. evt shape paint: grad1; signalUpdate ];
-			when: RSMouseClick do: [:evt | | p |
+			when: RSMouseEnter do: [:evt | evt traceCr. evt shape paint: grad2; signalUpdate ] for: canvas;
+			when: RSMouseLeave do: [:evt | evt traceCr. evt shape paint: grad1; signalUpdate ] for: canvas;
+			when: RSMouseClick do: [:evt |
+				| p |
 				evt shape model value: locate.
 				p := movableElement position.
 				locate move: movableElement on: fixedElement.
@@ -1399,16 +1410,19 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 					from: p;
 					duration: 200 milliSeconds;
 					to: movableElement position;
-					on: movableElement shape set: #position: ]
+					on: movableElement shape set: #position: ] for: canvas
 			] as: RSGroup.
 
 	RSGridLayout new lineItemsCount: 3; on: buttons.
 	RSVerticalLineLayout new alignCenter; gapSize: 30; on: (RSGroup with: canvas nodes with: buttons).
 	canvas addAll: buttons.
 
-	canvas when: RSExtentChangedEvent do: [ 
-		canvas camera zoomToFit: canvas extent * 0.7.
-		canvas signalUpdate ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [ 
+			canvas camera zoomToFit: canvas extent * 0.7.
+			canvas signalUpdate ]
+		for: canvas.
 	
 	^ canvas
 ]
@@ -1438,15 +1452,20 @@ RSBlocExamples >> example35MouseEnterMouseLeave [
 
 	(canvas shapes, { canvas }) asGroup
 		when: RSMouseClick
-			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ]
+			for: canvas;
 		when: RSMouseMove
-			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ]
+			for: canvas;
 		when: RSMouseDoubleClick
-			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ]
+			for: canvas;
 		when: RSMouseEnter
-			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ];
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ]
+			for: canvas;
 		when: RSMouseLeave
-			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ].
+			do: [:evt | evt trace. ' to ' trace. evt shape traceCr ]
+			for: canvas.
 
 	canvas addShape: (RSCircle new
 			model: #red;
