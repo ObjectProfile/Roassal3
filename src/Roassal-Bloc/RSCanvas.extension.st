@@ -7,12 +7,6 @@ RSCanvas >> host [
 ]
 
 { #category : #'*Roassal-Bloc' }
-RSCanvas >> updateBlElement: aRSCanvasElement [ 
-	
-	"TODO"
-]
-
-{ #category : #'*Roassal-Bloc' }
 RSCanvas >> useBlocHost [
 
 	host := RSBlocHost new

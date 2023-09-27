@@ -17,5 +17,5 @@ RSShape >> blBorder [
 { #category : #'*Roassal-Bloc' }
 RSShape >> blPaint [
 
-	^ self paint ifNil: [ Color transparent ]
+	^ self paint ifNil: [ BlBackground transparent ]
 ]

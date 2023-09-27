@@ -1,10 +1,15 @@
+"
+I'm a BlElement that has as children the representation of the regular RSShapes of a RSCanvas. 
+
+Such regular shapes must be translated and scaled according to the camera.
+"
 Class {
 	#name : #RSCameraElement,
 	#superclass : #BlElement,
 	#instVars : [
 		'roassalCanvas'
 	],
-	#category : #'Roassal-Bloc-Core'
+	#category : #'Roassal-Bloc-Elements'
 }
 
 { #category : #'instance creation' }
@@ -28,7 +33,7 @@ RSCameraElement >> initializeWithCanvas: aRSCanvas [
 		constraintsDo: [ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ];
-		updateFromCanvasCamera.
+		updateFromCanvasCamera
 ]
 
 { #category : #accessing }
@@ -39,9 +44,10 @@ RSCameraElement >> roassalShape [
 
 { #category : #accessing }
 RSCameraElement >> updateFromCanvasCamera [
-	| matrix |
-	matrix := roassalCanvas camera originMatrix asBlMatrix.
-	self transformation: (BlElementAbsoluteTransformation matrix: matrix)
+
+	| aMatrix |
+	aMatrix := roassalCanvas camera originMatrix asBlMatrix.
+	self transformation: (BlElementAbsoluteTransformation matrix: aMatrix)
 ]
 
 { #category : #accessing }

@@ -3,9 +3,12 @@ Class {
 	#superclass : #BlElement,
 	#instVars : [
 		'roassalCanvas',
-		'elementListener'
+		'elementListener',
+		'cameraElement',
+		'fixedElements',
+		'regularElements'
 	],
-	#category : #'Roassal-Bloc-Core'
+	#category : #'Roassal-Bloc-Elements'
 }
 
 { #category : #'instance creation' }
@@ -16,63 +19,82 @@ RSCanvasElement class >> newWithCanvas: aRSCanvas [
 		  yourself
 ]
 
+{ #category : #accessing }
+RSCanvasElement >> elementAtShape: aRSShape ifFound: foundBlock ifNone: noneBlock [
+
+	^ self
+			allChildrenBreadthFirstDetect: [ :each |
+				each roassalShape == aRSShape ]
+			ifFound: foundBlock
+			ifNone: noneBlock
+]
+
+{ #category : #private }
+RSCanvasElement >> handleRSShapeAddedEvent: evt [
+		
+	| newChild |
+	newChild := evt shape asBlElement.
+	newChild addBlocToRoassalEventHandler: elementListener.
+	self addChild: newChild
+]
+
+{ #category : #private }
+RSCanvasElement >> handleRSShapeRemovedEvent: evt [
+	
+	self flag: #todo. "Remove handler"
+
+	self
+		elementAtShape: evt shape
+		ifFound: [ :element | element removeFromParent ]
+		ifNone: [ #couldntRemoveShapeElement traceCr ]
+]
+
 { #category : #initialization }
 RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 
 	self initialize.
 
 	roassalCanvas := aRSCanvas.
+
 	elementListener := RSBlocEventListener newForCanvas: aRSCanvas.
+	cameraElement := RSCameraElement newWithCanvas: aRSCanvas.
+
+	fixedElements := self newFixedShapeElements.
+	self addChildren: fixedElements.
+
+	regularElements := self newRegularShapeElements.
+	cameraElement addChildren: regularElements.
 	
 	self
-		background: aRSCanvas color;
-		"border: (BlBorder paint: Color red width: 3);"
-		enqueueTask: self newInfiniteCanvasAnimation;
-		addEventHandler: elementListener;
-		when: BlElementExtentChangedEvent
-			do: [ :evt |
-				aRSCanvas extent: evt source extent.
-				"RSCanvas extent does not trigger signalUpdate"
-				self updateFromRoassalShape ];
-		when: BlElementAddedToSceneGraphEvent 
-			do: [ :evt |  aRSCanvas extent: evt source extent ];
-		constraintsDo:[ :c |
+		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ];
-		syncSignalUpdateFirstTime
+		enqueueTask: (RSBlocAnimationPlayingTask newWithCanvas: aRSCanvas);
+		addChild: cameraElement.
+	
+	self
+		subscribeBlocToRoassal;
+		subscribeRoassalToBloc
 ]
 
-{ #category : #'refreshing - private' }
-RSCanvasElement >> newCameraElement [
-	"Answer a BlElement that has as children the representation of the regular RSShapes of a RSCanvas. 
-	These are the regular shapes, that must be translated and scaled according to the camera."
-
-	^ (RSCameraElement newWithCanvas: roassalCanvas)
-		addChildren: self newRegularShapeElements;
-		yourself
-]
-
-{ #category : #'refreshing - private' }
+{ #category : #private }
 RSCanvasElement >> newFixedShapeElements [
 	"Answer a collection of BlElement instances that represent the #fixedShapes. The fixedShapes of a RSCanvas are shapes that are not affected by camera transformations. They are useful for toolbar buttons or legends, for example."
 
-	^ roassalCanvas fixedShapes collect: [ :each | each asBlElement ]
+	^ roassalCanvas fixedShapes collect: [ :each |
+		  each asBlElement
+			  addBlocToRoassalEventHandler: elementListener;
+			  yourself ]
 ]
 
-{ #category : #'refreshing - private' }
-RSCanvasElement >> newInfiniteCanvasAnimation [
-	"Answer a new Bloc animation that infinitely runs any available Roassal animation (in the canvas)."
-
-	^ RSBlocAnimationPlayingTask new
-		  roassalCanvas: roassalCanvas;
-		  yourself
-]
-
-{ #category : #'refreshing - private' }
+{ #category : #private }
 RSCanvasElement >> newRegularShapeElements [
 	"Answer a collection of BlElement instances that represent the regular RSShapes of a RSCanvas. These are the regular shapes, that must be translated and scaled according to the camera."
 
-	^ roassalCanvas shapes collect: [ :each | each asBlElement ]
+	^ roassalCanvas shapes collect: [ :each |
+		  each asBlElement
+			  addBlocToRoassalEventHandler: elementListener;
+			  yourself ]
 ]
 
 { #category : #accessing }
@@ -94,7 +116,7 @@ RSCanvasElement >> signalUpdate [
 	As an optimization, multiple signalUpdate requests may be converted as a single redraw."
 
 
-	self syncSignalUpdateSecondTimeAndLater.
+	self updateFromRoassalCanvas.
 
 	"Skip if the request is already done."
 "	signalUpdateRequested ifTrue: [ ^ self ].
@@ -109,40 +131,38 @@ RSCanvasElement >> signalUpdate [
 
 ]
 
-{ #category : #refreshing }
-RSCanvasElement >> syncSignalUpdateFirstTime [
-
-	| cameraElement fixedElements |
-	cameraElement := self newCameraElement.
-	fixedElements := self newFixedShapeElements.
+{ #category : #initialization }
+RSCanvasElement >> subscribeBlocToRoassal [
 
 	self
-		addChild: cameraElement;
-		addChildren: fixedElements;
-		allChildrenBreadthFirstDo: [ :each |
-			self flag: #todo. "Workaround until camera element is converted into a layout "
-			each == cameraElement ifFalse: [
-					each addEventHandler: elementListener ] ].
+		addEventHandler: elementListener;
+		addEventHandlerOn: BlElementExtentChangedEvent
+			do: [ :evt |
+				roassalCanvas extent: evt source extent.
+				"RSCanvas extent change does not trigger signalUpdate"
+				self updateFromRoassalCanvas ];
+		addEventHandlerOn: BlElementAddedToSceneGraphEvent 
+			do: [ :evt | roassalCanvas extent: evt source extent ]
+]
+
+{ #category : #initialization }
+RSCanvasElement >> subscribeRoassalToBloc [
 
 	roassalCanvas
-		when: RSShapeAddedEvent do: [ :evt |
-			| newChild |
-			newChild := evt shape asBlElement.
-			newChild withAllChildrenBreadthFirstDo: [ :each |
-					each addEventHandler: elementListener ].
-			self addChild: newChild ]
-		for: self;
-		when: RSShapeRemovedEvent do: [ :evt |
-			self
-				allChildrenBreadthFirstDetect: [ :each |
-					each roassalShape == evt shape ]
-				ifFound: [ :element | element removeFromParent ]
-				ifNone: [ #syncSignalUpdateFirstTime traceCr ] ]
+		when: RSShapeAddedEvent
+		do: [ :evt | self handleRSShapeAddedEvent: evt ]
+		for: self.
+
+	roassalCanvas
+		when: RSShapeRemovedEvent
+		do: [ :evt | self handleRSShapeRemovedEvent: evt ]
 		for: self
 ]
 
 { #category : #refreshing }
-RSCanvasElement >> syncSignalUpdateSecondTimeAndLater [
+RSCanvasElement >> updateFromRoassalCanvas [
 
-	self updateFromRoassalShape
+	self background: roassalCanvas color.
+
+	self childrenDo: [ :each | each updateFromRoassalShape ]
 ]
