@@ -25,10 +25,8 @@ RSLabel >> blRopedText [
 		fontName: self fontName;
 		yourself.
 		
-	self isBold ifTrue: [ 
-		result bold ].
-	self isItalic ifTrue: [ 
-		result italic ].
+	self isBold ifTrue: [ result bold ].
+	self isItalic ifTrue: [ result italic ].
 	
 	self isUnderlined ifTrue: [ 
 		result underline.

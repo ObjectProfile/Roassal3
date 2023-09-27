@@ -17,16 +17,23 @@ RSBoundingShape >> asBlGeometry [
 ]
 
 { #category : #'*Roassal-Bloc' }
-RSBoundingShape >> updateBlElement: aBlElement [
+RSBoundingShape >> blTransformation [
 
-"	aBlElement transformation: aBlElement transformation asElementTransformation.
-"	aBlElement
-		  size: self baseRectangle extent;
-		  transformDo: [ :aBuilder | 
-			  aBuilder transformation addTransformation:
-					  ((BlMatrixTransformation matrix: self matrix asBlMatrix) 
-						   origin: BlAffineTransformationCenterOrigin new).
-			  aBuilder translateBy: self baseRectangle extent / -2 ];
-		  border: self blBorder;
-		  background: self blPaint
+	| anAffineTransformation |
+	anAffineTransformation := BlAffineCompositeTransformation new
+		addTransformation: (BlMatrixTransformation matrix: self matrix asBlMatrix);
+		addTransformation: (BlTranslationTransformation translation: (self baseRectangle extent / -2) asTranslate3D);
+		yourself.
+
+	^ BlElementLocalTransformation newWith: anAffineTransformation
+]
+
+{ #category : #'*Roassal-Bloc' }
+RSBoundingShape >> updateBlElement: aShapeElement [
+
+	aShapeElement
+		size: self baseRectangle extent;
+		border: self blBorder;
+		background: self blPaint;
+		transformation: self blTransformation
 ]

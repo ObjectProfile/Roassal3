@@ -171,22 +171,23 @@ RSBlocExamples >> example06Polyline [
 
 { #category : #examples }
 RSBlocExamples >> example07MouseMove [ 
-	< script:	'self new example07MouseMove open' > 
-	| c size circles box |
-	c := self newCanvas.
+	< script:	'self new example07MouseMove open' >
+
+	| canvas size circles box |
+	canvas := self newCanvas.
 	box := RSBox new size: 200.
-	c add: box.
+	canvas add: box.
 	size := 200.
-	c addAll: (circles := #( magenta yellow red cyan ) collect: [ :sel | 
-			            c add: (RSEllipse new
+	canvas addAll: (circles := #( magenta yellow red cyan ) collect: [ :sel | 
+			            canvas add: (RSEllipse new
 					             size: size;
 					             color: ((Color perform: sel) alpha: 0.4);
 					             yourself) ]).
 	box 
 		when: RSMouseEnter 
-		do: [ :evt | box color: Color random. c signalUpdate ]
+		do: [ :evt | box color: Color random. canvas signalUpdate ]
 		for: self.
-	c
+	canvas
 		when: RSMouseMove
 		do: [ :evt | 
 			| posOffset negOffset |
@@ -196,10 +197,9 @@ RSBlocExamples >> example07MouseMove [
 			circles second position: 0 @ posOffset.
 			circles third position: negOffset @ 0.
 			circles fourth position: 0 @ negOffset.
-
-			c signalUpdate ]
+			canvas signalUpdate ]
 		for: self.
-	^ c
+	^ canvas
 ]
 
 { #category : #examples }
