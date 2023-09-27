@@ -17,8 +17,7 @@ RSBlocHost >> canvasElement [
 	"Analog to RSCanvas>>createMorph"
 
 	^ canvasElement ifNil: [
-		canvasElement := RSCanvasElement newWithCanvas: canvas.
-		canvasElement ]
+		canvasElement := RSCanvasElement newWithCanvas: canvas ]
 ]
 
 { #category : #accessing }
