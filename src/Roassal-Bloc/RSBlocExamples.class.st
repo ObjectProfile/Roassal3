@@ -697,10 +697,9 @@ RSBlocExamples >> example20BoxWindmill [
 { #category : #examples }
 RSBlocExamples >> example21BoxesLineCircles [
 	<script: 'self new example21BoxesLineCircles open'>
+
 	| canvas extent r movingShapes position alpha update updateLine lineX verticalLine |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
-	
+	canvas := self newCanvas.
 	r := Random new.
 	movingShapes := (1 to: 12) collect: [ :i | 
 		RSBox new
@@ -867,9 +866,9 @@ RSBlocExamples >> example22AnimationOnRightClick [
 { #category : #examples }
 RSBlocExamples >> example23Flor [
 	<script: 'self new example23Flor open'>
-	| c frame angleSp alphaS hueS dia1 dia2 |
-	c := RSCanvas new.
-	c useBlocHost.
+
+	| canvas frame angleSp alphaS hueS dia1 dia2 |
+	canvas := self newCanvas.
 	frame := 0.
 	angleSp := 0.
 	hueS := NSScale linear domain: #(50 200); range: #(250 360).
@@ -883,16 +882,16 @@ RSBlocExamples >> example23Flor [
 				s: 0.8 
 				v: 1 
 				alpha: (alphaS scale: m).
-			c addShape: (RSEllipse new
+			canvas addShape: (RSEllipse new
 				color: color;
 				model: i -> m;
 				yourself).
 			 ].
 		 ].
-	c newAnimation repeat onStepDo: [ :t | 
+	canvas newAnimation repeat onStepDo: [ :t | 
 		frame := frame + 1.
 		angleSp := frame / 250.0 * (Float pi * 2).
-		c shapes do: [ :s | 
+		canvas shapes do: [ :s | 
 			| angle i m dist diameter |
 			i := s model key.
 			m := s model value.
@@ -902,24 +901,23 @@ RSBlocExamples >> example23Flor [
 			diameter := dia2 scale: (dia1 scale: dist) sin.
 			s extent: diameter asPoint.
 	 	].
-		c signalUpdate.
+		canvas signalUpdate.
 		].
-	c
+	canvas
 		when: RSExtentChangedEvent
 		do: [ 
-			c camera zoomToFit: c extent extent: 500 asPoint ]
+			canvas camera zoomToFit: canvas extent extent: 500 asPoint ]
 		for: self.
-	^ c
+	^ canvas
 	
 ]
 
 { #category : #examples }
 RSBlocExamples >> example24AnimationLinesInComposite [
-
 	<script: 'self new example24AnimationLinesInComposite open'>
+
 	| canvas frame radius hueOffset angleSp shapes soffset size mult shape |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 	canvas color: Color black.
 	frame := 0.
 	radius := 200.
@@ -1006,8 +1004,7 @@ RSBlocExamples >> example25Bitmap [
 
 	| canvas shapes iconAssociations |
 	iconAssociations := Smalltalk ui icons icons associations sorted: [:a :b | a key < b key ].
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	shapes := iconAssociations collect: [ :each |
 		RSBitmap new
@@ -1032,8 +1029,7 @@ RSBlocExamples >> example26Bezier [
 	<script: 'self new example26Bezier open'>
 
 	| canvas |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 	
 	canvas addShape: (RSBezier new
 		color: Color red;
@@ -1053,8 +1049,7 @@ RSBlocExamples >> example27BezierAttachPoints [
 	<script: 'self new example27BezierAttachPoints open'>
 
 	| canvas box1 box2 line |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 	
 	canvas addShape: (RSBezier new
 		color: Color red;
@@ -1094,8 +1089,7 @@ RSBlocExamples >> example28BezierWithAnimation [
 	<script: 'self new example28BezierWithAnimation open'>
 
 	| canvas size theta sc borderWhite cpController |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	size := 50.
 	theta := 0.
@@ -1153,8 +1147,7 @@ RSBlocExamples >> example29Polygon [
 	<script: 'self new example29Polygon open'>
 
 	| canvas |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	canvas add: (RSBox new
 			 position: 0 @ 0;
@@ -1184,8 +1177,7 @@ RSBlocExamples >> example30EllipseWithLinearGradient [
 	<script: 'self new example30EllipseWithLinearGradient open'>
 
 	| canvas gradient |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	gradient := (LinearGradientPaint fromArray:
 			{0 -> Color red muchDarker.
@@ -1208,8 +1200,7 @@ RSBlocExamples >> example31PolygonWithLinearGradient [
 	<script: 'self new example31PolygonWithLinearGradient open'>
 
 	| canvas polygon labels paint |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
+	canvas := self newCanvas.
 
 	paint := (LinearGradientPaint fromArray:
 			{0 -> 'CC2A49'.
@@ -1255,9 +1246,8 @@ RSBlocExamples >> example31PolygonWithLinearGradient [
 RSBlocExamples >> example32FixedShape [
 	<script: 'self new example32FixedShape open'>
 
-	| c box |
-	c := RSCanvas new.
-	c useBlocHost.
+	| canvas box |
+	canvas := self newCanvas.
 	
 	box := RSBox new
 		extent: 100 asPoint;
@@ -1265,25 +1255,24 @@ RSBlocExamples >> example32FixedShape [
 		color: Color blue;
 		isFixed: true;
 		yourself.
-	c addShape: box.
+	canvas addShape: box.
 	
 	box := RSBox new
 		extent: 100 asPoint;
 		yourself.
-	c addShape: box.
+	canvas addShape: box.
 
-	c camera scale: 2.
+	canvas camera scale: 2.
 
-	^ c
+	^ canvas
 ]
 
 { #category : #examples }
 RSBlocExamples >> example33AnimatedLayout [
 	<script: 'self new example33AnimatedLayout open'>
 
-	| c objects layout update labels shapes color |
-	c := RSCanvas new.
-	c  useBlocHost.
+	| canvas objects layout update labels shapes color |
+	canvas := self newCanvas.
 
 	objects := 1 to: 100.
 	
@@ -1295,9 +1284,9 @@ RSBlocExamples >> example33AnimatedLayout [
 			size: 10;
 			model: m;
 		yourself ].
-	c addAll: shapes.
+	canvas addAll: shapes.
 	RSLineBuilder line 
-		canvas: c;
+		canvas: canvas;
 		objects: objects;
 		connectFrom: [ :value | value //2 ] to: #yourself.
 	layout := RSLayoutBuilder new.
@@ -1306,7 +1295,7 @@ RSBlocExamples >> example33AnimatedLayout [
 		layout on: shapes.
 		 ].
 	update value: #tree.
-	RSZoomToFitCanvasInteraction new animatedZoomToFit: c.
+	RSZoomToFitCanvasInteraction new animatedZoomToFit: canvas.
 
 	labels := #('grid' 'tree' 'cell' 'horizontalTree' 'cluster' 'circle' 'radial' 'sugiyama').
 	labels := labels collect: [ :sel |
@@ -1318,26 +1307,25 @@ RSBlocExamples >> example33AnimatedLayout [
 					pos1 := shapes collect: #position.
 					update value: sel.
 					pos2 := shapes collect: #position.
-					c newAnimation onStepDo: [ :t |
+					canvas newAnimation onStepDo: [ :t |
 						shapes doWithIndex: [ :e :i |
 							e translateTo: ((pos1 at: i) 
 								interpolateTo: (pos2 at: i) at: t) ].
-						c zoomToFit; signalUpdate ] ]
-				for: c ].
-	c addAll: labels.
+						canvas zoomToFit; signalUpdate ] ]
+				for: canvas ].
+	canvas addAll: labels.
 	RSHorizontalLineLayout on: labels.
 
-	^ c
+	^ canvas
 
 ]
 
 { #category : #examples }
 RSBlocExamples >> example34RSLocateWithMouseEvents [
 	<script: 'self new example34RSLocateWithMouseEvents open'>
-	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
 
+	| canvas newBox updateText fixedElement movableElement buttons labeled locate label grad1 grad2 color |
+	canvas := self newCanvas.
 	locate := RSLocation new.
 	color := RSColorPalette qualitative paired3.
 	newBox := [ :m | RSBox new
@@ -1397,8 +1385,12 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 			paint: grad1;
 			model: t;
 			addInteraction: labeled;
-			when: RSMouseEnter do: [:evt | evt traceCr. evt shape paint: grad2; signalUpdate ] for: canvas;
-			when: RSMouseLeave do: [:evt | evt traceCr. evt shape paint: grad1; signalUpdate ] for: canvas;
+			when: RSMouseEnter
+				do: [:evt | evt traceCr. evt shape paint: grad2; signalUpdate ]
+				for: canvas;
+			when: RSMouseLeave
+				do: [:evt | evt traceCr. evt shape paint: grad1; signalUpdate ]
+				for: canvas;
 			when: RSMouseClick do: [:evt |
 				| p |
 				evt shape model value: locate.
@@ -1429,15 +1421,13 @@ RSBlocExamples >> example34RSLocateWithMouseEvents [
 
 { #category : #examples }
 RSBlocExamples >> example35MouseEnterMouseLeave [
-	<script: 'self new example35MouseEnterMouseLeave open'>
 	"Open Transcript to see the traced events. 
 	- Blue ellipse is over the box. 
 	- Red circle does not listen, so mouse events should reach either the other shapes or the canvas."
+	<script: 'self new example35MouseEnterMouseLeave open'>
 
 	| canvas |
-	canvas := RSCanvas new.
-	canvas useBlocHost.
-
+	canvas := self newCanvas.
 	canvas addShape: (RSBox new
 			model: #orange;
 			color: Color orange translucent;
@@ -1479,6 +1469,7 @@ RSBlocExamples >> example35MouseEnterMouseLeave [
 
 { #category : #private }
 RSBlocExamples >> newCanvas [
+
 	^ RSCanvas new
 		useBlocHost;
 		yourself
