@@ -10,6 +10,12 @@ Class {
 	#category : #'Roassal-Bloc-Core'
 }
 
+{ #category : #'private - testing' }
+RSBlocAnimationPlayingTask >> requeueTaskAfterExecution [
+
+	^ true
+]
+
 { #category : #accessing }
 RSBlocAnimationPlayingTask >> roassalCanvas [
 

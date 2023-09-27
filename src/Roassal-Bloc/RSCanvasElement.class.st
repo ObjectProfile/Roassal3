@@ -33,16 +33,13 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 			do: [ :evt |
 				aRSCanvas extent: evt source extent.
 				"RSCanvas extent does not trigger signalUpdate"
-				self updateFromRoassalShape
-				 ];
+				self updateFromRoassalShape ];
 		when: BlElementAddedToSceneGraphEvent 
 			do: [ :evt |  aRSCanvas extent: evt source extent ];
 		constraintsDo:[ :c |
 			c horizontal matchParent.
 			c vertical matchParent ];
-		syncSignalUpdateFirstTime.
-		
-
+		syncSignalUpdateFirstTime
 ]
 
 { #category : #'refreshing - private' }
