@@ -27,7 +27,7 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 	self
 		background: aRSCanvas color;
 		"border: (BlBorder paint: Color red width: 3);"
-		addAnimation: self newInfiniteCanvasAnimation;
+		enqueueTask: self newInfiniteCanvasAnimation;
 		addEventHandler: elementListener;
 		when: BlElementExtentChangedEvent
 			do: [ :evt |
@@ -66,12 +66,9 @@ RSCanvasElement >> newFixedShapeElements [
 RSCanvasElement >> newInfiniteCanvasAnimation [
 	"Answer a new Bloc animation that infinitely runs any available Roassal animation (in the canvas)."
 
-	^ BlNumberTransition new
-		from: 0; to: 1;
-		onStepDo: [ :t | 
-			roassalCanvas playAnimations ];
-		beInfinite;
-		yourself.
+	^ RSBlocAnimationPlayingTask new
+		  roassalCanvas: roassalCanvas;
+		  yourself
 ]
 
 { #category : #'refreshing - private' }
