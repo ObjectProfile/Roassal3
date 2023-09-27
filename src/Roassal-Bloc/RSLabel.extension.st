@@ -3,15 +3,14 @@ Extension { #name : #RSLabel }
 { #category : #'*Roassal-Bloc' }
 RSLabel >> asBlElement [
 
-	^ BlTextElement new
-		  roassalShape: self;
-		  background: Color transparent;
-		  in: [ :e | self updateBlElement: e ];
+	^ (RSLabelElement newWith: self)
+		  updateFromRoassalShape;
 		  yourself
 ]
 
 { #category : #'*Roassal-Bloc' }
 RSLabel >> asBlGeometry [
+
 	^ self shouldNotImplement
 ]
 
@@ -36,18 +35,10 @@ RSLabel >> blRopedText [
 ]
 
 { #category : #'*Roassal-Bloc' }
-RSLabel >> updateBlElement: aBlElement [
+RSLabel >> updateBlElement: aShapeElement [
 
-	aBlElement text: self blRopedText.
-
-	"Force calculation of the extent"
-	aBlElement computeLayout.
-
-	aBlElement transformDo: [ :aBuilder | 
-		aBuilder transformation addTransformation:
-			((BlMatrixTransformation matrix: self matrix asBlMatrix) origin:
-				 BlAffineTransformationCenterOrigin new).
-		aBuilder translateBy: aBlElement extent / -2 ].
-
-	^ aBlElement
+	aShapeElement
+		text: self blRopedText;
+		computeLayout; "Need to force extent calculation"
+		transformation: self blTransformation
 ]

@@ -3,10 +3,9 @@ Extension { #name : #RSBoundingShape }
 { #category : #'*Roassal-Bloc' }
 RSBoundingShape >> asBlElement [
 
-	^ BlElement new
-		  roassalShape: self;
+	^ (RSShapeElement newWith: self)
 		  geometry: self asBlGeometry;
-		  in: [ :e | self updateBlElement: e ];
+		  updateFromRoassalShape;
 		  yourself
 ]
 

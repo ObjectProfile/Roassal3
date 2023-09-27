@@ -7,15 +7,12 @@ RSPolygon >> asBlGeometry [
 ]
 
 { #category : #'*Roassal-Bloc' }
-RSPolygon >> updateBlElement: aBlElement [
+RSPolygon >> updateBlElement: aShapeElement [
 	"We duplicate a lot of code from the inherited from super classes but avoid translation. This is related to the fact that RSPolygon>>points: moves received points to center."
 
-	aBlElement
+	aShapeElement
 		size: self baseRectangle extent;
-		transformDo: [ :aBuilder | 
-			aBuilder transformation addTransformation:
-					((BlMatrixTransformation matrix: self matrix asBlMatrix) origin:
-							 BlAffineTransformationCenterOrigin new) ];
+		transformation: self blTransformation;
 		border: self blBorder;
 		background: self blPaint
 ]

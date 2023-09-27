@@ -3,11 +3,10 @@ Extension { #name : #RSAbstractLine }
 { #category : #'*Roassal-Bloc' }
 RSAbstractLine >> asBlElement [
 
-	^ BlElement new
-		  roassalShape: self;
+	^ (RSShapeElement newWith: self)
 		  geometry: self asBlGeometry;
 		  beOutskirtsCentered;
-		  in: [ :e | self updateBlElement: e ];
+		  updateFromRoassalShape;
 		  yourself
 ]
 

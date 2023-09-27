@@ -10,22 +10,25 @@ Class {
 	#category : #'Roassal-Bloc-Core'
 }
 
+{ #category : #'instance creation' }
+RSBlocAnimationPlayingTask class >> newWithCanvas: aRSCanvas [
+
+	^ self basicNew
+		  initializeWithCanvas: aRSCanvas;
+		  yourself
+]
+
+{ #category : #accessing }
+RSBlocAnimationPlayingTask >> initializeWithCanvas: aRSCanvas [
+
+	self initialize.
+	roassalCanvas := aRSCanvas
+]
+
 { #category : #'private - testing' }
 RSBlocAnimationPlayingTask >> requeueTaskAfterExecution [
 
 	^ true
-]
-
-{ #category : #accessing }
-RSBlocAnimationPlayingTask >> roassalCanvas [
-
-	^ roassalCanvas
-]
-
-{ #category : #accessing }
-RSBlocAnimationPlayingTask >> roassalCanvas: anObject [
-
-	roassalCanvas := anObject
 ]
 
 { #category : #'api - running' }
