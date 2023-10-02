@@ -7,6 +7,15 @@ Class {
 	#category : #'Roassal-Rendering'
 }
 
+{ #category : #examples }
+RSRNilNode class >> example [
+	| null |
+	null := self new.
+	"this object defines nil operations for RNode"
+	null do: [ :each | 1/0 ].
+	^ StInspector openOn: null.
+]
+
 { #category : #adding }
 RSRNilNode >> addChild: newObject [
 	^ RSRNode new: newObject

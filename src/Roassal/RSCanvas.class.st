@@ -43,6 +43,25 @@ Class {
 	#category : #'Roassal-Core'
 }
 
+{ #category : #examples }
+RSCanvas class >> exampleSimple [
+	| canvas |
+	canvas := self new.
+	canvas color: Color black.
+	"add some shapes here"
+	^ canvas open
+]
+
+{ #category : #examples }
+RSCanvas class >> exampleSpec [
+	| canvas spec |
+	canvas := self new.
+	canvas color: Color black.
+	spec := SpMorphPresenter new.
+	spec morph: canvas createMorph.
+	^ spec open window
+]
+
 { #category : #'instance creation' }
 RSCanvas class >> newCenterMiddleOrigin [
 	^ self new
@@ -408,31 +427,6 @@ RSCanvas >> morph: aMorph [
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
 
 	host morph: aMorph
-]
-
-{ #category : #'adding - nodes edges' }
-RSCanvas >> newBox [
-	^ self add: RSBox new
-]
-
-{ #category : #'adding - nodes edges' }
-RSCanvas >> newCircle [
-	^ self add: RSCircle new
-]
-
-{ #category : #'adding - nodes edges' }
-RSCanvas >> newLabel [
-	^ self add: RSLabel new
-]
-
-{ #category : #'adding - nodes edges' }
-RSCanvas >> newLine [
-	^ self add: RSLine new
-]
-
-{ #category : #'adding - nodes edges' }
-RSCanvas >> newPolygon [
-	^ self add: RSPolygon new
 ]
 
 { #category : #actions }

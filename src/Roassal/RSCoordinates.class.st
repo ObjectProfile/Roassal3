@@ -7,6 +7,15 @@ Class {
 	#category : #'Roassal-Camera'
 }
 
+{ #category : #examples }
+RSCoordinates class >> example [
+	| canvas |
+	canvas := RSCanvas new.
+	canvas newCircle radius: 100.
+	canvas camera originMode: self originTopLeft.
+	^ canvas open
+]
+
 { #category : #coordinates }
 RSCoordinates class >> originCenterMiddle [
 	^ RSCenterMiddleCoordinates new

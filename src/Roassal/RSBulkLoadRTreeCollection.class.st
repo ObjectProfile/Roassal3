@@ -1,6 +1,6 @@
 "
-this class is created for example09BigVisualization2raised19
-because there it is hard to balance de rtree by now.
+This class is created for example09BigVisualization2raised19.
+This class is just an example of how you can speed the loading process of new elements.
 
 This class balance de tree using equal number or nodes for each tree. because of that.
 users should provide a (2 raisedTo: n) number of nodes to compute the tree.

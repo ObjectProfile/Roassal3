@@ -1,5 +1,5 @@
 "
-I an an event for animations in trachel
+I an an event for animations in Roassal
 "
 Class {
 	#name : #RSAnimationEvent,

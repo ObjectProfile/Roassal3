@@ -13,6 +13,18 @@ Class {
 	#category : #'Roassal-Rendering'
 }
 
+{ #category : #examples }
+RSShapeCollection class >> exampleList [
+	"in the inspector add and remove shapes"
+	^ StInspector openOn: RSSequenceableCollection new.
+]
+
+{ #category : #examples }
+RSShapeCollection class >> exampleRTree [
+	"this has normal method collections with some new more"
+	^ StInspector openOn: RSRTreeShapeCollection new.
+]
+
 { #category : #adding }
 RSShapeCollection >> add: aShape before: otherShape [
 	^ self subclassResponsibility

@@ -45,6 +45,17 @@ Class {
 	#category : #'Roassal-Camera'
 }
 
+{ #category : #examples }
+RSCamera class >> example [
+	| camera canvas |
+	camera := self new.
+	camera position: 100@100.
+	canvas := RSCanvas new.
+	camera canvas: canvas.
+	canvas camera: camera.
+	^ StInspector openOn: camera
+]
+
 { #category : #utilities }
 RSCamera class >> maxExtentFor: rectangle [
 	^ rectangle extent max: self minimumExtent

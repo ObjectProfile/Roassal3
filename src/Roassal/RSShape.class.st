@@ -45,6 +45,27 @@ Class {
 	#category : #'Roassal-Core'
 }
 
+{ #category : #examples }
+RSShape class >> exampleBox [
+	| box |
+	box := RSBox new.
+	^ StInspector openOn: box
+]
+
+{ #category : #examples }
+RSShape class >> exampleLabel [
+	| lb |
+	lb := RSLabel text: 'Roassal'.
+	^ StInspector openOn: lb
+]
+
+{ #category : #examples }
+RSShape class >> exampleLine [
+	| l |
+	l := RSLine new controlPoints: {10@10. 20@20}.
+	^ StInspector openOn: l
+]
+
 { #category : #accessing }
 RSShape class >> model: anObject [
 	"Create an instance of myself with anObject as model"

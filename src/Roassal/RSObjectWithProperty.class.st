@@ -20,6 +20,22 @@ Class {
 	#category : #'Roassal-Core'
 }
 
+{ #category : #examples }
+RSObjectWithProperty class >> exampleCanvas [
+	| c |
+	c := RSCanvas new.
+	c propertyAt: #rick put: #morty.
+	^ StInspector openOn: c properties.
+]
+
+{ #category : #examples }
+RSObjectWithProperty class >> exampleShapeBox [
+	| shape |
+	shape := RSBox new.
+	shape propertyAt: #randy put: #stan.
+	^ StInspector openOn: shape properties.
+]
+
 { #category : #interactions }
 RSObjectWithProperty >> @ anInteractionClassOrInstance [
 	"Add an interaction to the canvas or a shape.
