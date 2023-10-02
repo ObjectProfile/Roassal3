@@ -141,6 +141,14 @@ RSQuadTree >> soleChild [
 	^ soleChild
 ]
 
+{ #category : #enumeration }
+RSQuadTree >> subQuadsDo: aBlockClosure [
+	northWestQuad ifNotNil: aBlockClosure.
+	northEastQuad ifNotNil: aBlockClosure.
+	southWestQuad ifNotNil: aBlockClosure.
+	southEastQuad ifNotNil: aBlockClosure
+]
+
 { #category : #private }
 RSQuadTree >> visibleShapeContains: aPoint list: listResult [
 	(self rectangle containsPoint: aPoint) ifFalse: [ ^ self ].
