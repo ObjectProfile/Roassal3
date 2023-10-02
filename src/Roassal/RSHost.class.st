@@ -1,3 +1,6 @@
+"
+A host is a backend object that allows to roassal to render in Morphic orr in other Bloc
+"
 Class {
 	#name : #RSHost,
 	#superclass : #RSObject,
@@ -6,6 +9,15 @@ Class {
 	],
 	#category : #'Roassal-Core'
 }
+
+{ #category : #examples }
+RSHost class >> example [
+	| canvas |
+	"default is morphic"
+	canvas := RSCanvas new.
+	canvas useMorphicHost.
+	^ canvas open
+]
 
 { #category : #accessing }
 RSHost >> canvas [

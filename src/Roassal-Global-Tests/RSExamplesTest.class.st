@@ -35,7 +35,7 @@ RSExamplesTest >> testClassSideExamples [
 	
 	methods do:[ :met | | window |
 		[ window := met selector value: met methodClass soleInstance.
-		window isSystemWindow
+		(window isSystemWindow or: [window isWindowPresenter])
 			ifTrue: [ window delete ]
 			ifFalse: [ noSystemWindow add: met ]
 		 ] onErrorDo: [ :error | errors add: met ].

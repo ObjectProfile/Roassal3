@@ -8,7 +8,7 @@ Class {
 RSMonitorEventsTest >> testBasic [
 	| canvas monitor eventClass timeStamp |
 	canvas := RSCanvas new.
-	monitor := RSMonitorEvents new.
+	monitor := RSEventsMonitor new.
 	monitor target: canvas.
 
 	eventClass := nil.
@@ -23,14 +23,12 @@ RSMonitorEventsTest >> testBasic [
 	self assert: timeStamp isNumber.
 
 	monitor unRegister.
-	eventClass := nil.
-	self assert: eventClass isNil
 ]
 
 { #category : #tests }
 RSMonitorEventsTest >> testNoTarget [
 	| monitor |
-	monitor := RSMonitorEvents new.
+	monitor := RSEventsMonitor new.
 	self should: [ monitor onNewEventDo: [  ] for: self ] raise: Error
 ]
 
@@ -39,7 +37,7 @@ RSMonitorEventsTest >> testWriteToFile [
 	| canvas monitor events box fileName storage |
 	canvas := RSCanvas new.
 	box := RSBox new size: 20; yourself.
-	monitor := RSMonitorEvents new.
+	monitor := RSEventsMonitor new.
 	monitor target: box.
 	events := OrderedCollection new.
 	monitor onNewEventDo: [:evt | events add: evt className -> evt timeStamp ] for: self.

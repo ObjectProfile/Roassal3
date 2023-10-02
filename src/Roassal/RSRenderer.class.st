@@ -28,6 +28,12 @@ Class {
 	#category : #'Roassal-Rendering'
 }
 
+{ #category : #examples }
+RSRenderer class >> example [
+	"The only backend for now is Athens, but Sparta or Alexandrie are open"
+	^ RSAthensMorph example
+]
+
 { #category : #accessing }
 RSRenderer >> canvas [
 	^ athensCanvas

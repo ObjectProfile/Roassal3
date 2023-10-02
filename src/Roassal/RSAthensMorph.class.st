@@ -18,6 +18,27 @@ Class {
 	#category : #'Roassal-Morph'
 }
 
+{ #category : #examples }
+RSAthensMorph class >> example [
+	| morph roassalCanvas |
+	"this class is used by RSCanvas, if you can use RSCanvas insted use directly RSAthensMorph"
+	morph := self new.
+	roassalCanvas := RSCanvas new.
+	roassalCanvas newLabel
+		text: 'Hello Roassal';
+		color: Color lightGray translucent;
+		fontSize: 80;
+		bold;
+		borderDo: [:border | border color: Color black; width: 3].
+		
+	morph canvas: roassalCanvas.
+	morph renderer: RSAthensRenderer new.
+	
+	^ (morph openInWindowLabeled: 'Demo')
+		extent: 600@300;
+		yourself
+]
+
 { #category : #accessing }
 RSAthensMorph >> canvas [
 	^ roassalCanvas

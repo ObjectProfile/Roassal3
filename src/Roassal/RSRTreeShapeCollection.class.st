@@ -1,5 +1,14 @@
 "
-An R-tree for Roassal
+An R-tree for Roassal.
+
+Rectangle tree for roassal is a collection that allows
+- find shapes in a point
+- find shapes in a rectangle
+The time searching this elements should be close to log(n)
+
+The tree is balanced, then it does not have the order for the elements. User should define an index `shapeIndex` to keed the order.
+
+Use the inspector to visualize the RTree
 "
 Class {
 	#name : #RSRTreeShapeCollection,

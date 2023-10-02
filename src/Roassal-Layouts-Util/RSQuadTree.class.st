@@ -13,7 +13,7 @@ Class {
 		'southEastQuad',
 		'isLeaf'
 	],
-	#category : #'Roassal-Rendering'
+	#category : #'Roassal-Layouts-Util'
 }
 
 { #category : #public }
@@ -139,14 +139,6 @@ RSQuadTree >> rectangle: aRectangle [
 { #category : #accessing }
 RSQuadTree >> soleChild [
 	^ soleChild
-]
-
-{ #category : #enumeration }
-RSQuadTree >> subQuadsDo: aBlockClosure [
-  northWestQuad ifNotNil: aBlockClosure.
-  northEastQuad ifNotNil: aBlockClosure.
-  southWestQuad ifNotNil: aBlockClosure.
-  southEastQuad ifNotNil: aBlockClosure
 ]
 
 { #category : #private }

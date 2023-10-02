@@ -1,5 +1,5 @@
 "
-BTree node
+RTree node
 "
 Class {
 	#name : #RSRNode,
@@ -13,6 +13,31 @@ Class {
 	],
 	#category : #'Roassal-Rendering'
 }
+
+{ #category : #examples }
+RSRNode class >> example [
+	| root left right |
+	"you can manually manipulate the RNode, but you should use RSRTreeShapeCollection"
+	root := self new.
+	left := self new.
+	right := self new.
+	root left: left.
+	root right: right.
+	left contents: (RSBox model: 'A'); rectangle: (0 asPoint corner: 20 asPoint); height: 1.
+	right contents: (RSBox model: 'B'); rectangle: (30 asPoint corner: 50 asPoint); height: 1.
+	root rectangle: (5 asPoint corner: 45 asPoint); height: 2.
+	
+	^ StInspector openOn: root.
+]
+
+{ #category : #examples }
+RSRNode class >> exampleAdd [
+	| root |
+	"same result but with balance"
+	root := self new: (RSBox model: 'A').
+	root addChild: (RSBox new model: 'B'; position: 20@20).
+	^ StInspector openOn: root
+]
 
 { #category : #'instance creation' }
 RSRNode class >> new: anObject [
@@ -310,6 +335,11 @@ RSRNode >> nodesWithPoint: aPoint list: aCollection [
 { #category : #accessing }
 RSRNode >> rectangle [
 	^ rectangle
+]
+
+{ #category : #accessing }
+RSRNode >> rectangle: aRectangle [
+	rectangle := aRectangle
 ]
 
 { #category : #accessing }

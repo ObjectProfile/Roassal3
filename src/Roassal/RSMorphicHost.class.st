@@ -1,3 +1,6 @@
+"
+Default host for roassal is MorphicHost, but you can add other one.
+"
 Class {
 	#name : #RSMorphicHost,
 	#superclass : #RSHost,
@@ -36,7 +39,7 @@ RSMorphicHost >> morph: aMorph [
 	morph := aMorph
 ]
 
-{ #category : #accessing }
+{ #category : #opening }
 RSMorphicHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 

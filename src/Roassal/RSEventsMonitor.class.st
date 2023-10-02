@@ -1,10 +1,10 @@
 "
 Based on https://developers.google.com/web/tools/chrome-devtools/console/events
 
-MonitoEvents for Roassal in order to log some events 
+MonitorEvents for Roassal in order to log some events 
 "
 Class {
-	#name : #RSMonitorEvents,
+	#name : #RSEventsMonitor,
 	#superclass : #RSObject,
 	#instVars : [
 		'target',
@@ -13,19 +13,34 @@ Class {
 	#category : #'Roassal-Core'
 }
 
+{ #category : #examples }
+RSEventsMonitor class >> example [
+	| canvas monitor |
+	canvas := RSCanvas new.
+	monitor := self new.
+	monitor target: canvas.
+	monitor onNewEventDo: [ :evt | 
+		evt class trace.
+		' ' trace.
+		evt timeStamp traceCr.
+		] for: self.
+	canvas when: RSMouseClick send: #open to: Transcript.
+	^ canvas open
+]
+
 { #category : #accessing }
-RSMonitorEvents >> announcementClasses [
+RSEventsMonitor >> announcementClasses [
 	^ announcementClasses
 ]
 
 { #category : #accessing }
-RSMonitorEvents >> announcementClasses: aCollection [
+RSEventsMonitor >> announcementClasses: aCollection [
 	"aCollection of Announcement "
 	announcementClasses := aCollection
 ]
 
 { #category : #public }
-RSMonitorEvents >> onNewEventDo: aBlockClosure for: aSubscriber [
+RSEventsMonitor >> onNewEventDo: aBlockClosure for: aSubscriber [
 	| events |
 	self assert: self target isNotNil description: 'Must provide a target'.
 	events := self announcementClasses.
@@ -35,16 +50,16 @@ RSMonitorEvents >> onNewEventDo: aBlockClosure for: aSubscriber [
 ]
 
 { #category : #accessing }
-RSMonitorEvents >> target [
+RSEventsMonitor >> target [
 	^ target
 ]
 
 { #category : #accessing }
-RSMonitorEvents >> target: aRSTAnnounceable [
+RSEventsMonitor >> target: aRSTAnnounceable [
 	target := aRSTAnnounceable
 ]
 
 { #category : #public }
-RSMonitorEvents >> unRegister [
+RSEventsMonitor >> unRegister [
 	target removeInteractionIfPresent: self class
 ]

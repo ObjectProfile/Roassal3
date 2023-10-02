@@ -1,5 +1,8 @@
 "
-My users can have edges and nodes useful to build graphs with roassal
+My users can have edges and nodes useful to build graphs with roassal.
+My users area:
+- RSCanvas
+- RSComposite
 "
 Trait {
 	#name : #RSTContainer,
@@ -13,10 +16,10 @@ Trait {
 RSTContainer >> add: aShape [
 	self
 		assert: aShape notNil
-		description: 'Nil cannot be added to a canvas'.
+		description: 'Nil cannot be added to this container'.
 	aShape
-		addedIn: self;
-		renderOn: self.
+		addedIn: self; "will choose the correct collection: lines or nodes"
+		renderOn: self. "will update if necesary the shape"
 	^ aShape
 ]
 
@@ -177,6 +180,79 @@ RSTContainer >> lines [
 		ifNil: [ | res |
 			self privateEdges: (res := RSGroup new).
 			res ]
+]
+
+{ #category : #factory }
+RSTContainer >> newBezier [
+	| s |
+	s := RSBezier new.
+	self add: s.
+	^ s
+	
+]
+
+{ #category : #factory }
+RSTContainer >> newBox [
+	| s |
+	s := RSBox new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newCircle [
+	| s |
+	s := RSCircle new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newEllipse [
+	| s |
+	s := RSEllipse new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newLabel [
+	| s |
+	s := RSLabel new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newLine [
+	| s |
+	s := RSLine new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newPolygon [
+	| s |
+	s := RSPolygon new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newPolyline [
+	| s |
+	s := RSPolyline new.
+	self add: s.
+	^ s
+]
+
+{ #category : #factory }
+RSTContainer >> newSVGPath [
+	| s |
+	s := RSSVGPath new.
+	self add: s.
+	^ s
 ]
 
 { #category : #accessing }
