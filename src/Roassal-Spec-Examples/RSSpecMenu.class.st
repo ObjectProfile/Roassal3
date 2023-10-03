@@ -8,21 +8,10 @@ Class {
 }
 
 { #category : #menu }
-RSSpecMenu class >> classAt: aSymbol [
-	^ self class environment at: aSymbol 
-]
-
-{ #category : #testing }
-RSSpecMenu class >> hasClasses: classes [
-	^ classes allSatisfy: [:k | Smalltalk globals includesKey: k ]
-]
-
-{ #category : #menu }
-RSSpecMenu class >> menu07Examples: aBuilder [	<worldMenu>
+RSSpecMenu class >> menu07Examples: aBuilder [	
+	<worldMenu>
 	| icon |
-	(self hasClasses: #(RSExamplesBrowser RSWorldMenu))
-		ifFalse: [ ^ self ].
-	icon :=  (self classAt:#RSWorldMenu) roassalIcon.
+	icon := RSWorldMenu roassalIcon.
 	(aBuilder item: #RoassalExamples)
 		parent: #Roassal;
 		order: 5;
@@ -36,7 +25,7 @@ RSSpecMenu class >> menu07Examples: aBuilder [	<worldMenu>
 		label: 'Examples Browser';
 		help: 'Open a browser to jump between examples';
 		icon: icon;
-		action: [ (self classAt: #RSExamplesBrowser) new open ]
+		action: [ RSExamplesBrowser new open ]
 ]
 
 { #category : #menu }
@@ -48,7 +37,7 @@ RSSpecMenu class >> menu08PalettesOn: aBuilder [
 		label: 'Color palettes';
 		help: 'Open a color palette chooser';
 		icon: (self iconNamed: #paint);
-		action: [ (self classAt: #RSColorPaletteChooser) new open ]
+		action: [ RSColorPaletteChooser new open ]
 ]
 
 { #category : #menu }
@@ -60,7 +49,7 @@ RSSpecMenu class >> menu09EaselOn: aBuilder [
 		label: 'Easel';
 		help: 'Open a basic window to edit a Roassal script';
 		icon: (self iconNamed: #haloPaint);
-		action: [ (self classAt: #RSEasel) new open ]
+		action: [ RSEasel new open ]
 ]
 
 { #category : #menu }
@@ -84,5 +73,5 @@ RSSpecMenu class >> menu11LayoutStudioOn: aBuilder [
 		label: 'Layout Studio';
 		help: 'Edit some layout properties and check the result';
 		icon: (self iconNamed: #references);
-		action: [ (self classAt: #RSLayoutStudio) new open ]
+		action: [ RSLayoutStudio new open ]
 ]
