@@ -45,7 +45,7 @@ jobs:
         id: tests
         uses: akevalion/PharoTestsAction@v1
         with:
-          removes-repo: 'Roassal, Numeric'
+          removes-repo: 'Roassal3, Numeric'
           baseline: 'Roassal3'
           group: ${{matrix.group}}
           tests: ${{matrix.tests}}
