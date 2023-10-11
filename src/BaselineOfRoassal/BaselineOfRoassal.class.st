@@ -86,7 +86,7 @@ BaselineOfRoassal >> corePackagesNames [
 	'Roassal-Animation'
 	'Roassal-Interaction'
 	'Roassal-Colors'
-	'Roassal-Legend'o
+	'Roassal-Legend'
 	'Roassal-UML'
 	'Roassal-Sunburst'
 	'Roassal-FlameGraph'
