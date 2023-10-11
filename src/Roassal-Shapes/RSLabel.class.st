@@ -35,6 +35,8 @@ For more fonts of your system use: `FreeTypeFontProvider current updateFromSyste
 Class {
 	#name : #RSLabel,
 	#superclass : #RSBoundingShape,
+	#traits : 'RSTLabel',
+	#classTraits : 'RSTLabel classTrait',
 	#instVars : [
 		'text',
 		'fontName',
@@ -444,4 +446,9 @@ c open
 ```
 "
 	self emphasisAdd: TextEmphasis underlined
+]
+
+{ #category : #'accessing - structure variables' }
+RSLabel >> y_bearing [
+	^ self textExtents y_bearing
 ]

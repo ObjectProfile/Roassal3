@@ -24,15 +24,15 @@ RSShapeTest >> testAllConnectedShapes [
 	node5 := canvas shapeFromModel: 5.
 	node6 := canvas shapeFromModel: 6.
 
-	self assert: (node1 allRecursiveConnectedShapes collect: #model) asSortedCollection asArray equals: (1 to: 4).
+	self assert: (node1 allRecursiveConnectedNodes collect: #model) asSortedCollection asArray equals: (1 to: 4).
 
-	self assert: node1 allRecursiveConnectedShapes equals: node2 allRecursiveConnectedShapes.
-	self assert: node1 allRecursiveConnectedShapes equals: node3 allRecursiveConnectedShapes.
-	self assert: node2 allRecursiveConnectedShapes equals: node3 allRecursiveConnectedShapes.
+	self assert: node1 allRecursiveConnectedNodes equals: node2 allRecursiveConnectedNodes.
+	self assert: node1 allRecursiveConnectedNodes equals: node3 allRecursiveConnectedNodes.
+	self assert: node2 allRecursiveConnectedNodes equals: node3 allRecursiveConnectedNodes.
 
-	self assert: node1 allRecursiveConnectedShapes ~= node5 allRecursiveConnectedShapes.
+	self assert: node1 allRecursiveConnectedNodes ~= node5 allRecursiveConnectedNodes.
 
-	self assert: node5 allRecursiveConnectedShapes equals: node6 allRecursiveConnectedShapes
+	self assert: node5 allRecursiveConnectedNodes equals: node6 allRecursiveConnectedNodes
 ]
 
 { #category : #tests }

@@ -2,11 +2,8 @@ Extension { #name : #RSClusteringLayout }
 
 { #category : #'*Roassal-Examples' }
 RSClusteringLayout class >> exampleMondrian [
-	| m nodes class |
-	class := Smalltalk globals
-		at: #RSMondrian
-		ifAbsent: [ ^ RSCanvas new open ].
-	m := class new.
+	| m nodes |
+	m := RSMondrian new.
 	m nodes: Collection allSubclasses.
 	m line connectFrom: #superclass.
 	m normalizeSize: #numberOfLinesOfCode.
@@ -27,11 +24,8 @@ RSClusteringLayout class >> exampleMondrian [
 
 { #category : #'*Roassal-Examples' }
 RSClusteringLayout class >> exampleNumbers [
-	| m nodes class |
-	class := Smalltalk globals
-		at: #RSMondrian
-		ifAbsent: [ ^ RSCanvas new open ].
-	m := class new.
+	| m nodes |
+	m := RSMondrian new.
 	m nodes: (10 to: 50).
 	m line connectFrom: [ :nb | nb // 2 ].
 	m build.
