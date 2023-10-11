@@ -2,17 +2,19 @@
 TODO
 "
 Class {
-	#name : #RSAmeba,
-	#superclass : #Object,
+	#name : 'RSAmeba',
+	#superclass : 'Object',
 	#instVars : [
 		'shape',
 		'polygon',
 		'offset'
 	],
-	#category : #'Roassal3-Experimental-Alpharo'
+	#category : 'Roassal3-Experimental-Alpharo',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Alpharo'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSAmeba >> blink [
 
 	| leftEye rightEye p1 p2 |
@@ -40,7 +42,7 @@ RSAmeba >> blink [
 		when: RSAnimationEndEvent do: [ shape removeKey: #blink ] for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> createBody [
 	| body leftEye rightEye |
 	polygon := RSShapeFactory square size: 100.
@@ -56,7 +58,7 @@ RSAmeba >> createBody [
 	^ body
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> createEye [
 	| eye globe iris irisa irisb |
 	globe := RSEllipse new extent: 25@20; color: Color white.
@@ -68,17 +70,17 @@ RSAmeba >> createEye [
 	^ eye
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAmeba >> isBlinking [
 	^ self shape hasProperty: #blink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> model: anObject [
 	self shape children first model: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> mousePosition [
 	| position |
 	position := self currentWorld currentHand position.
@@ -86,17 +88,17 @@ RSAmeba >> mousePosition [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> offset: aNumber [
 	offset := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAmeba >> shape [
 	^ shape ifNil: [ shape := self createBody ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSAmeba >> update: perlin [
 	| angleInc offsetInc r points |
 	angleInc := 1 / 10.
@@ -113,7 +115,7 @@ RSAmeba >> update: perlin [
 	self updateEyes
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSAmeba >> updateEye: eye [
 	| position angle iris eyepos dist |
 	position := self mousePosition.
@@ -126,7 +128,7 @@ RSAmeba >> updateEye: eye [
 	iris translateTo: (angle cos @ angle sin) * dist
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSAmeba >> updateEyes [
 	self updateEye: self shape children second.
 	self updateEye: self shape children third

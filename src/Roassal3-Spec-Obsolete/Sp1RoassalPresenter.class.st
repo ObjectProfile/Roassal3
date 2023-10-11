@@ -2,20 +2,21 @@
 I am a basic presenter for widgets in roassal with the Spec system
 "
 Class {
-	#name : #Sp1RoassalPresenter,
-	#superclass : #AbstractWidgetPresenter,
+	#name : 'Sp1RoassalPresenter',
+	#superclass : 'AbstractWidgetPresenter',
 	#instVars : [
 		'script'
 	],
-	#category : #'Roassal3-Spec-Obsolete'
+	#category : 'Roassal3-Spec-Obsolete',
+	#package : 'Roassal3-Spec-Obsolete'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 Sp1RoassalPresenter class >> adapterName [
 	^ #Sp1MorphicAdapter
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 Sp1RoassalPresenter class >> defaultSpec [
 	<spec>
 	
@@ -23,29 +24,29 @@ Sp1RoassalPresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Sp1RoassalPresenter >> initialize [
 	super initialize.
 	script := [ :v | ] asValueHolder.
 	script whenChangedDo: [ :s | self refresh ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Sp1RoassalPresenter >> refresh [ 
 	self changed: #applyScript with: #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Sp1RoassalPresenter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Sp1RoassalPresenter >> script [
 	^ script value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Sp1RoassalPresenter >> script: anObject [
 	script value: anObject
 ]

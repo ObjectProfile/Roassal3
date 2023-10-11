@@ -1,15 +1,17 @@
 Class {
-	#name : #RSBarPlotTest,
-	#superclass : #RSTest,
+	#name : 'RSBarPlotTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'x',
 		'y',
 		'plot'
 	],
-	#category : #'Roassal3-Chart-Tests-Base'
+	#category : 'Roassal3-Chart-Tests-Base',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSBarPlotTest >> setUp [
 
 	super setUp.
@@ -18,7 +20,7 @@ RSBarPlotTest >> setUp [
 	plot := RSBarPlot new x: x y: y
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> test2BarPlots [
 	| d1 d2 extent vtick |
 	d1 := #(4 10 5 9).
@@ -33,13 +35,13 @@ RSBarPlotTest >> test2BarPlots [
 		equals: extent+(vtick configuration tickSize @0)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBarPlotTest >> testBasic [
 
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testDoubleBarPlotRawData [
 
 	| data |
@@ -48,7 +50,7 @@ RSBarPlotTest >> testDoubleBarPlotRawData [
 	plot build
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBarPlotTest >> testExtentIsCorrect [
 
 	plot build.
@@ -56,7 +58,7 @@ RSBarPlotTest >> testExtentIsCorrect [
 	self assert: plot extent equals: 250 @ 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testHorizontalBar [
 	
 	x := 0.0 to: 2 count: 10.
@@ -70,7 +72,7 @@ RSBarPlotTest >> testHorizontalBar [
 		 shape height closeTo: plot bars anyOne height ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBarPlotTest >> testMinMaxValue2 [
 
 	plot := RSBarPlot new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
@@ -82,7 +84,7 @@ RSBarPlotTest >> testMinMaxValue2 [
 	self assert: plot maxChartValueY equals: 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBarPlotTest >> testPaddingIsCorrect [
 
 	plot build.
@@ -90,7 +92,7 @@ RSBarPlotTest >> testPaddingIsCorrect [
 	self assert: plot padding equals: 5 @ 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerDefault [
 
 	| tick |
@@ -101,7 +103,7 @@ RSBarPlotTest >> testStylerDefault [
 	self assert: plot styler equals: tick styler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerRedLabel [
 
 	| tick styler |
@@ -114,7 +116,7 @@ RSBarPlotTest >> testStylerRedLabel [
 		(tick labels allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerRedTick [
 
 	| tick styler |
@@ -127,7 +129,7 @@ RSBarPlotTest >> testStylerRedTick [
 		(tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerRedTickInChart [
 
 	| tick styler |
@@ -140,7 +142,7 @@ RSBarPlotTest >> testStylerRedTickInChart [
 		(tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerSpineRed [
 
 	| styler spine |
@@ -152,7 +154,7 @@ RSBarPlotTest >> testStylerSpineRed [
 	self assert: spine box border color equals: Color red
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testStylerTitleLabel [
 
 	| title styler |
@@ -164,7 +166,7 @@ RSBarPlotTest >> testStylerTitleLabel [
 	self assert: title label color equals: Color red
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testVerticalBar [
 	| p |
 	x := 0.0 to: 2 count: 10.
@@ -180,7 +182,7 @@ RSBarPlotTest >> testVerticalBar [
 		 shape width closeTo: p bars anyOne width ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testWithTilteAndLabels [
 
 	plot addDecoration: (RSChartTitleDecoration new
@@ -191,7 +193,7 @@ RSBarPlotTest >> testWithTilteAndLabels [
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBarPlotTest >> testWithoutTicks [
 
 	plot removeAllTicks.

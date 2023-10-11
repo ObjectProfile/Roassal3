@@ -1,6 +1,6 @@
-Extension { #name : #RSDraggableCanvasInteraction }
+Extension { #name : 'RSDraggableCanvasInteraction' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSDraggableCanvasInteraction class >> example [
 	| canvas interaction |
 	canvas := self canvasExample.
@@ -13,7 +13,7 @@ RSDraggableCanvasInteraction class >> example [
 	^ canvas open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSDraggableCanvasInteraction class >> exampleOriginTopLeft [
 	| canvas |
 	canvas := self canvasExample.

@@ -1,6 +1,6 @@
-Extension { #name : #RSKeepCanvasPositionCanvasInteraction }
+Extension { #name : 'RSKeepCanvasPositionCanvasInteraction' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSKeepCanvasPositionCanvasInteraction class >> example [
 	| canvas window |
 	canvas := self canvasExample.

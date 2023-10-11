@@ -2,8 +2,8 @@
 TODO
 "
 Class {
-	#name : #RSAlpharo,
-	#superclass : #RSBuilder,
+	#name : 'RSAlpharo',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'objects',
 		'jarShape',
@@ -13,10 +13,12 @@ Class {
 		'random',
 		'redLine'
 	],
-	#category : #'Roassal3-Experimental-Alpharo'
+	#category : 'Roassal3-Experimental-Alpharo',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Alpharo'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> addGravityAnimation [
 	| box edges mock |
 	box := RSBox new.
@@ -34,7 +36,7 @@ RSAlpharo >> addGravityAnimation [
 		box translateTo: p]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> blinkRandomAmeba [
 	| ameba |
 	random next> 0.05 ifTrue: [ ^ self ].
@@ -43,14 +45,14 @@ RSAlpharo >> blinkRandomAmeba [
 	ameba blink
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAlpharo >> initialize [
 	super initialize.
 	perlin := NSPerlinNoise3 new octaves: 3.
 	random := Random new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> jar [
 	^ jarShape ifNil: [ jarShape :=  RSSVGPath new
 		svgPath: self jarPath;
@@ -60,7 +62,7 @@ RSAlpharo >> jar [
 		yourself ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> jarPath [
 	^ 'M2165 4344 c-49 -2 -199 -11 -332 -19 -346 -22 -537 -49 -563 -80
 -12 -15 -8 -193 5 -253 6 -26 2 -43 -16 -75 -30 -54 -31 -119 -3 -173 l22 -41
@@ -104,17 +106,17 @@ c-13 -26 -53 -75 -92 -112 -48 -44 -72 -74 -76 -96 -7 -34 -1 -31 -163 -71
 975 -9z'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> mousePosition [
 	^ amebas anyOne mousePosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAlpharo >> objects: aCollection [
 	objects := aCollection
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> removeJar [
 
 	| animation |
@@ -141,7 +143,7 @@ RSAlpharo >> removeJar [
 	jarShape propertyAt: #anime put: animation
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAlpharo >> renderIn: aCanvas [
 	aCanvas inspectorContext: RSEmptyContextInteraction new.
 	amebas := objects collect: [ :obj |
@@ -158,7 +160,7 @@ RSAlpharo >> renderIn: aCanvas [
 	aCanvas when: RSMouseClick send: #removeJar to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> setAnimationsIn: aCanvas [
 	"we create 3 different animations, then we can pause one animation with out affectin others"
 	aCanvas newAnimation repeat
@@ -174,7 +176,7 @@ RSAlpharo >> setAnimationsIn: aCanvas [
 		onStepDo: [ self updateRedLine ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> setupLayoutIn: aCanvas [
 	| jar |
 	jar := self jar.
@@ -191,7 +193,7 @@ RSAlpharo >> setupLayoutIn: aCanvas [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAlpharo >> updateRedLine [
 	| trace position |
 	redLine ifNil: [

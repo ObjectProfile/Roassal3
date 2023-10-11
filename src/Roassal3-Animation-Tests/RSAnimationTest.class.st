@@ -2,15 +2,16 @@
 base of animation tests
 "
 Class {
-	#name : #RSAnimationTest,
-	#superclass : #RSTest,
+	#name : 'RSAnimationTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Animation-Tests'
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAnimationTest >> addingInComposite: compositeAnimation duration: aDuration [
 	compositeAnimation
 		add: (RSTransitionAnimation new
@@ -22,7 +23,7 @@ RSAnimationTest >> addingInComposite: compositeAnimation duration: aDuration [
 	self assert: compositeAnimation duration equals: aDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAnimationTest >> createAnimationWith: block animationClass: class [
 	| animation |
 	self assert: canvas animations size equals: 0.
@@ -31,7 +32,7 @@ RSAnimationTest >> createAnimationWith: block animationClass: class [
 	self assert: animation class equals: class
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAnimationTest >> runAnimation: animation threshold: threshold [
 	| time ended |
 
@@ -47,7 +48,7 @@ RSAnimationTest >> runAnimation: animation threshold: threshold [
 		]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAnimationTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new

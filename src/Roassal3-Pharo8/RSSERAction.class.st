@@ -3,12 +3,13 @@ This action show or hide the encompassing rectangles of shapes in the canvas
 SER = Show Encompassing Rectangles
 "
 Class {
-	#name : #RSSERAction,
-	#superclass : #RSAbstractAction,
-	#category : #'Roassal3-Pharo8'
+	#name : 'RSSERAction',
+	#superclass : 'RSAbstractAction',
+	#category : 'Roassal3-Pharo8',
+	#package : 'Roassal3-Pharo8'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSERAction >> execute [
 	| canvas |
 	canvas := self roassalCanvas.
@@ -18,12 +19,12 @@ RSSERAction >> execute [
 	canvas signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSERAction >> icon [
 	^ self iconNamed: #smallDebug 
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSERAction >> title [
 	^ 'Show or hide encompassing rectangles'
 ]

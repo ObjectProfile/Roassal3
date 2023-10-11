@@ -2,17 +2,19 @@
 I am a specific interaction based on the example23RotatedAnimation
 "
 Class {
-	#name : #RSRotatedPieLabelDecorator,
-	#superclass : #RSAbstractPieDecorator,
+	#name : 'RSRotatedPieLabelDecorator',
+	#superclass : 'RSAbstractPieDecorator',
 	#instVars : [
 		'labels',
 		'lines',
 		'animation'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : 'Roassal3-Pie-Decorators',
+	#package : 'Roassal3-Pie',
+	#tag : 'Decorators'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSRotatedPieLabelDecorator >> createAnimation [
 	animation := builder container newAnimation
 		from: 0;
@@ -22,7 +24,7 @@ RSRotatedPieLabelDecorator >> createAnimation [
 		onStepDo: [ :t | self stepShapes: t ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSRotatedPieLabelDecorator >> createLabels [
 	labels := builder objects collect: [ :obj |
 		RSLabel new
@@ -30,7 +32,7 @@ RSRotatedPieLabelDecorator >> createLabels [
 			yourself ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSRotatedPieLabelDecorator >> createLines [
 	lines := builder objects collect: [ :obj |
 		RSPolyline new
@@ -38,7 +40,7 @@ RSRotatedPieLabelDecorator >> createLines [
 			yourself ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSRotatedPieLabelDecorator >> render [
 	| container |
 	self createLabels.
@@ -52,7 +54,7 @@ RSRotatedPieLabelDecorator >> render [
 	self stepShapes: 0
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSRotatedPieLabelDecorator >> stepShapes: t [
 	builder shapes doWithIndex: [ :shape :index |
 		  | a b label ang ext x p1 p2 p3 line |

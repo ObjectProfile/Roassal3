@@ -2,29 +2,30 @@
 A RSLayoutStudioTest is a test class for testing the behavior of RSLayoutStudio
 "
 Class {
-	#name : #RSLayoutStudioTest,
-	#superclass : #TestCase,
+	#name : 'RSLayoutStudioTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'studio',
 		'window'
 	],
-	#category : #'Roassal3-LayoutStudio-Tests'
+	#category : 'Roassal3-LayoutStudio-Tests',
+	#package : 'Roassal3-LayoutStudio-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSLayoutStudioTest >> setUp [
 	super setUp.
 	studio := RSLayoutStudio new.
 	window := studio open.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSLayoutStudioTest >> tearDown [
 	window ifNotNil: [ window delete ].
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSLayoutStudioTest >> testEditGridLayoutUpdatesToolPanel [
 	| layoutClass association oldToolPanel |
 	layoutClass := RSGridLayout.
@@ -37,7 +38,7 @@ RSLayoutStudioTest >> testEditGridLayoutUpdatesToolPanel [
 	self deny: studio controls equals: oldToolPanel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLayoutStudioTest >> testGenerateFromDefaultCreatesAnString [
 	| layoutClass association |
 	layoutClass := RSGridLayout.
@@ -46,7 +47,7 @@ RSLayoutStudioTest >> testGenerateFromDefaultCreatesAnString [
 	self assert: studio generateStringCode equals: 'layout := RSGridLayout new.'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLayoutStudioTest >> testGenerateWithChangedFieldShowsTheFieldAsString [
 	| layoutClass association field |
 	layoutClass := RSGridLayout.
@@ -61,7 +62,7 @@ RSLayoutStudioTest >> testGenerateWithChangedFieldShowsTheFieldAsString [
 	yourself.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLayoutStudioTest >> testOpenShouldCreateAWindow [
 	self assert: window isDisplayed
 ]

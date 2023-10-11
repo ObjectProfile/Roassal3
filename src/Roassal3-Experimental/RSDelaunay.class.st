@@ -2,15 +2,17 @@
 based on https://cdn.rawgit.com/ironwallaby/delaunay/master/delaunay.js
 "
 Class {
-	#name : #RSDelaunay,
-	#superclass : #RSObject,
+	#name : 'RSDelaunay',
+	#superclass : 'RSObject',
 	#classInstVars : [
 		'epsilon'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : 'Roassal3-Experimental-Delaunay',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Delaunay'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> circumCircle: particles indices: in [
 	| p1 p2 p3 y12 y23 xc dx yc dy x1 x2 x3 y1 y2 y3 m2 mx2 my2 m1 mx1 my1 flag |
 	p1 := particles at: in first.
@@ -66,7 +68,7 @@ RSDelaunay class >> circumCircle: particles indices: in [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> dedup: edges [
 	| i j a b m n break before |
 	j := edges size.
@@ -96,7 +98,7 @@ RSDelaunay class >> dedup: edges [
 	 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> generateEdge: open closed: closed vertices: vertices c: c j: j edges: edges [
 	| dx circ vertex dy |
 	"If this point is to the right of this triangle's circumcircle,
@@ -120,7 +122,7 @@ RSDelaunay class >> generateEdge: open closed: closed vertices: vertices c: c j:
 	open remove: circ
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices [
 	| open closed edges size |
 	size := vertices size-3.
@@ -162,12 +164,12 @@ RSDelaunay class >> generateMesh: indices circle: circCircle vertices: vertices 
 	^ open
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RSDelaunay class >> initialize [
 	epsilon := 1.0 / 1048576.0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> supertriangle: vertices [
 	| xmin ymin xmax ymax dx dy dmax xmid ymid |
 	xmin := ymin := SmallInteger maxVal.
@@ -190,7 +192,7 @@ RSDelaunay class >> supertriangle: vertices [
 	 }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunay class >> triangulate: particles [
 	| indices st circCircle nsize vertices |
 	nsize := particles size.

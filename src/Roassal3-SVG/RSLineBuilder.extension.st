@@ -1,6 +1,6 @@
-Extension { #name : #RSLineBuilder }
+Extension { #name : 'RSLineBuilder' }
 
-{ #category : #'*Roassal3-SVG' }
+{ #category : '*Roassal3-SVG' }
 RSLineBuilder class >> bimetricLine [
 	^ RSBimetricEdgeBuilder new: RSBimetricLine new
 ]

@@ -2,24 +2,26 @@
 used to calculate each circle position and radius
 "
 Class {
-	#name : #RSCircleTree,
-	#superclass : #RSObject,
+	#name : 'RSCircleTree',
+	#superclass : 'RSObject',
 	#instVars : [
 		'radius',
 		'x',
 		'y'
 	],
-	#category : #'Roassal3-TreeMap-Circular'
+	#category : 'Roassal3-TreeMap-Circular',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Circular'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleTree class >> radius: aNumber [
 	^ self new
 		radius: aNumber;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleTree class >> vector: vector radius: aNumber [
 	^ self new
 		radius: aNumber;
@@ -28,12 +30,12 @@ RSCircleTree class >> vector: vector radius: aNumber [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> center [
 	^ RSCircleVector x: x y: y
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCircleTree >> combine: circle [
 	| vector deltaRadius radius1 radius2 |
 	radius1 := self radius.
@@ -52,7 +54,7 @@ RSCircleTree >> combine: circle [
 		ifFalse: [ circle ]
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleTree >> distanceTo: circle [
 	| a b |
 	a := x - circle x.
@@ -60,51 +62,51 @@ RSCircleTree >> distanceTo: circle [
 	^ ((a * a) + (b * b)) sqrt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSCircleTree >> intersects: circle [
 	^ (circle center - self center) magnitude < (self radius + circle radius - Number epsilon)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> radius [
 	^ radius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> radius: aNumber [
 	radius := aNumber.
 	x := y := 0
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCircleTree >> scaleFull: factor [
 	x := x * factor.
 	y := y * factor.
 	radius := radius * factor
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCircleTree >> translateBy: vector [
 	x := x + vector x.
 	y := y + vector y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> x [
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> x: aNumber [
 	x := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> y [
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleTree >> y: aNumber [
 	y := aNumber
 ]

@@ -7,21 +7,23 @@ I contain gap distance size between each element, in vertical and horizontal axi
 - gapSize, a number used to change both values, vertical and horizontal
 "
 Class {
-	#name : #RSAbstractFlowLayout,
-	#superclass : #RSAbstractBoxedLayout,
+	#name : 'RSAbstractFlowLayout',
+	#superclass : 'RSAbstractBoxedLayout',
 	#instVars : [
 		'maxWidth',
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Flow'
+	#category : 'Roassal3-Layouts-Flow',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Flow'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractFlowLayout class >> isAbstract [
 	^ self name = #RSAbstractFlowLayout
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 
 	^ self new
@@ -29,7 +31,7 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 
 	^ self new
@@ -38,19 +40,19 @@ RSAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractFlowLayout >> alignment [
 
 	^ alignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractFlowLayout >> alignment: anObject [
 
 	alignment := anObject
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSAbstractFlowLayout >> defaultMaxWidth [
 	^ [ :shapes |
 		(shapes size < 4) 
@@ -62,7 +64,7 @@ RSAbstractFlowLayout >> defaultMaxWidth [
 		]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractFlowLayout >> doExecute: shapes [
 
 	| lines align mocks |
@@ -77,23 +79,23 @@ RSAbstractFlowLayout >> doExecute: shapes [
 	mocks do: [:mock | mock applyToRealElement ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractFlowLayout >> initialize [
 	super initialize.
 	self maxWidth: self defaultMaxWidth
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractFlowLayout >> linesFor: elements [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractFlowLayout >> maxWidth [
 	^ maxWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractFlowLayout >> maxWidth: aSizeInPixels [
 	maxWidth := aSizeInPixels
 ]

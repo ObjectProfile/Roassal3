@@ -2,7 +2,8 @@
 When the canvas add a shape
 "
 Class {
-	#name : #RSShapeAddedEvent,
-	#superclass : #RSCanvasEvent,
-	#category : #'Roassal3-Event'
+	#name : 'RSShapeAddedEvent',
+	#superclass : 'RSCanvasEvent',
+	#category : 'Roassal3-Event',
+	#package : 'Roassal3-Event'
 }

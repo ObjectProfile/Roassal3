@@ -2,12 +2,13 @@
 I am the test class for TSAthensRenderer 
 "
 Class {
-	#name : #RSAthensRendererTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Shapes-Tests'
+	#name : 'RSAthensRendererTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Shapes-Tests',
+	#package : 'Roassal3-Shapes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAthensRendererTest >> testArcCorner [
 	| renderer |
 	renderer := RSAthensRenderer new.

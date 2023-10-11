@@ -4,12 +4,14 @@ read
 https://graphviz.org/
 "
 Class {
-	#name : #RSGraphVizExamples,
-	#superclass : #Object,
-	#category : #'Roassal3-GraphViz-Example'
+	#name : 'RSGraphVizExamples',
+	#superclass : 'Object',
+	#category : 'Roassal3-GraphViz-Example',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Example'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example01Basic [
 	<script: 'self new example01Basic'>
 
@@ -34,7 +36,7 @@ RSGraphVizExamples >> example01Basic [
 	process closeAndCleanStreams
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example02Basic [
 	"<script: 'self new example02Basic'>"
 	"this is just an idea for a future example"
@@ -86,7 +88,7 @@ fontsize=12;
 "RSGraphVizLayout on: canvas shapes."
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example03Basic [
 	<script: 'self new example03Basic'>
 	| canvas node converter process |
@@ -129,7 +131,7 @@ RSGraphVizExamples >> example03Basic [
 	canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example04Layout [
 	<script: 'self new example04Layout'>
 	| canvas node |
@@ -154,7 +156,7 @@ RSGraphVizExamples >> example04Layout [
 	canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example05Layout [
 	<script: 'self new example05Layout'>
 	| canvas node labeled |
@@ -188,7 +190,7 @@ RSGraphVizExamples >> example05Layout [
 	canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example06UniFamilyTree [
 	<script: 'self new example06UniFamilyTree inspect'>
 	| canvas nodeBlock labeled edges nodes baseline |
@@ -221,7 +223,7 @@ RSGraphVizExamples >> example06UniFamilyTree [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 	<script: 'self new example07UniFamilyTreeAnimated'>
 	| canvas nodes com paint base icon show hide animation high labelAnimation force |
@@ -374,7 +376,7 @@ RSGraphVizExamples >> example07UniFamilyTreeAnimated [
 	canvas open extent: 800@600
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example08RoassalPackages [
 	<script: 'self new example08RoassalPackages'>
 	| canvas nodeBlock labeled packagesRegExp packages baseline |
@@ -410,7 +412,7 @@ RSGraphVizExamples >> example08RoassalPackages [
 	canvas inspect
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example09Arrows [
 	<script: 'self new example09Arrows'>
 	| c shapes lb |
@@ -437,7 +439,7 @@ RSGraphVizExamples >> example09Arrows [
 	c openOnce
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example10Mondrian [
 	<script: 'self new example10Mondrian'>
 
@@ -453,7 +455,7 @@ RSGraphVizExamples >> example10Mondrian [
 	m open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> example11RSObjectWithAllSubclasses [
 	<script: 'self new example11RSObjectWithAllSubclasses open'>
 	| c shapes lb |
@@ -473,7 +475,7 @@ RSGraphVizExamples >> example11RSObjectWithAllSubclasses [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSGraphVizExamples >> unixFamilyTree [
 	^ {'5th Edition' -> '6th Edition'.
 	'5th Edition' -> 'PWB 1.0'.

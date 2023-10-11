@@ -26,17 +26,19 @@ c @ RSCanvasController
 -=-=-=-=
 "
 Class {
-	#name : #RSCenteredAttachPoint,
-	#superclass : #RSAttachPoint,
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#name : 'RSCenteredAttachPoint',
+	#superclass : 'RSAttachPoint',
+	#category : 'Roassal3-Shapes-AttachPoint',
+	#package : 'Roassal3-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSCenteredAttachPoint >> basicEndingPointOf: aLine [
 	^ self positionFor: aLine to in: aLine
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSCenteredAttachPoint >> basicStartingPointOf: aLine [
 	^ self positionFor: aLine from in: aLine
 ]

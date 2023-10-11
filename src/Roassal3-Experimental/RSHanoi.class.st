@@ -2,12 +2,14 @@
 a simple hanoi
 "
 Class {
-	#name : #RSHanoi,
-	#superclass : #Object,
-	#category : #'Roassal3-Experimental-Hanoi'
+	#name : 'RSHanoi',
+	#superclass : 'Object',
+	#category : 'Roassal3-Experimental-Hanoi',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Hanoi'
 }
 
-{ #category : #hanoi }
+{ #category : 'hanoi' }
 RSHanoi >> hanoi: anInteger from: a bridge: b to: c [
 	"
 	self new hanoi: 3 from: 'A' bridge: 'B' to: 'C'
@@ -21,12 +23,12 @@ RSHanoi >> hanoi: anInteger from: a bridge: b to: c [
 		 ]
 ]
 
-{ #category : #hanoi }
+{ #category : 'hanoi' }
 RSHanoi >> moveFrom: a to: b [
 	^ 'Move from ', a, ' to: ', b
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSHanoi >> run [
 	<script: 'self new run inspect'>
 	^ self hanoi: 3 from: 'A' bridge: 'B' to: 'C'

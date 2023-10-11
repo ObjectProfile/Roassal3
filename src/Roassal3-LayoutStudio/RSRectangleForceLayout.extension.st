@@ -1,6 +1,6 @@
-Extension { #name : #RSRectangleForceLayout }
+Extension { #name : 'RSRectangleForceLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSRectangleForceLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutNumberField new

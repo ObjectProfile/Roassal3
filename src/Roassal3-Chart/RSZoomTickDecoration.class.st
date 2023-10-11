@@ -2,18 +2,20 @@
 this decoration is an example of how to put some interactions in the canvas and interact with some objects like the ticks in the chart
 "
 Class {
-	#name : #RSZoomTickDecoration,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSZoomTickDecoration',
+	#superclass : 'RSAbstractChartDecoration',
 	#instVars : [
 		'resetLabel',
 		'visibleRectangle',
 		'currentShapes',
 		'elasticBox'
 	],
-	#category : #'Roassal3-Chart-Decoration'
+	#category : 'Roassal3-Chart-Decoration',
+	#package : 'Roassal3-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> boxScale [
 	| spine |
 	spine := chart spine encompassingRectangle.
@@ -22,7 +24,7 @@ RSZoomTickDecoration >> boxScale [
 		range: { visibleRectangle origin. visibleRectangle corner}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> chartElements [
 	| elements |
 	elements := OrderedCollection new.
@@ -32,7 +34,7 @@ RSZoomTickDecoration >> chartElements [
 	^ elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> computeVisibleRectangle: eventRectangle [
 	| rect spine scale |
 	"spine the the chart box"
@@ -43,7 +45,7 @@ RSZoomTickDecoration >> computeVisibleRectangle: eventRectangle [
 	^ (scale scale: rect origin) corner: (scale scale: rect corner)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> createElasticBox [
 	^ RSElasticBoxInteraction new
 		targetShapes: #();
@@ -52,7 +54,7 @@ RSZoomTickDecoration >> createElasticBox [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> createResetLabel [
 	| label |
 	label := self shape copy
@@ -66,12 +68,12 @@ RSZoomTickDecoration >> createResetLabel [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> createdShapes [
 	^ { resetLabel }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSZoomTickDecoration >> defaultShape [
 	^ RSLabel new
 		fontSize: 5;
@@ -79,12 +81,12 @@ RSZoomTickDecoration >> defaultShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSZoomTickDecoration >> elasticBox [
 	^ elasticBox ifNil: [ elasticBox := self createElasticBox ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderIn: canvas [
 	canvas addInteraction: self elasticBox.
 	resetLabel := self createResetLabel.
@@ -94,7 +96,7 @@ RSZoomTickDecoration >> renderIn: canvas [
 	self resetZoom: canvas
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderPlots [
 	| visibleShapes scale |
 	visibleShapes := chart createdShapes select: [ :s | s encompassingRectangle intersects: visibleRectangle ].
@@ -116,7 +118,7 @@ RSZoomTickDecoration >> renderPlots [
 	currentShapes add: visibleShapes
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderPlotsAndTicksIn: canvas [
 	currentShapes := OrderedCollection new.
 	self renderPlots.
@@ -124,13 +126,13 @@ RSZoomTickDecoration >> renderPlotsAndTicksIn: canvas [
 	canvas addAll: currentShapes
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderTicks [
 	self renderYAxis.
 	self renderXAxis
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderXAxis [
 	| horizontalTick tickShapes newPlot scale |
 	horizontalTick := chart horizontalTick.
@@ -156,7 +158,7 @@ RSZoomTickDecoration >> renderXAxis [
 	currentShapes addAll: tickShapes
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomTickDecoration >> renderYAxis [
 	| verticalTick tickShapes ymin ymax scale |
 	verticalTick := chart verticalTick.
@@ -175,7 +177,7 @@ RSZoomTickDecoration >> renderYAxis [
 	currentShapes addAll: tickShapes
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSZoomTickDecoration >> resetZoom: evt [
 	| canvas |
 	canvas := evt canvas.
@@ -187,7 +189,7 @@ RSZoomTickDecoration >> resetZoom: evt [
 	evt signalUpdate
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSZoomTickDecoration >> updateSelection: evt [
 	visibleRectangle := self computeVisibleRectangle: evt shape encompassingRectangle.
 	currentShapes do: #remove.

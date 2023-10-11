@@ -2,27 +2,28 @@
 Gtk Athens drawing area with an associated Roassal canvas
 "
 Class {
-	#name : #GtkRoassalDrawingArea,
-	#superclass : #GtkAthensDrawingArea,
+	#name : 'GtkRoassalDrawingArea',
+	#superclass : 'GtkAthensDrawingArea',
 	#instVars : [
 		'canvas',
 		'renderer',
 		'isDrawing'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : 'Roassal3-Gtk',
+	#package : 'Roassal3-Gtk'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtkRoassalDrawingArea class >> drawingAreaNew [
 	^ self ffiCall: #( #GtkRoassalDrawingArea *gtk_drawing_area_new () )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingArea >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingArea >> canvas: anObject [
 	canvas := anObject.
 	canvas morph: self.
@@ -31,11 +32,11 @@ GtkRoassalDrawingArea >> canvas: anObject [
 	self repaint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtkRoassalDrawingArea >> checkSession [
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkRoassalDrawingArea >> drawOnAthensCanvas: anAthensCanvas [
 
 	anAthensCanvas surface clear: canvas color.
@@ -60,7 +61,7 @@ GtkRoassalDrawingArea >> drawOnAthensCanvas: anAthensCanvas [
 		isDrawing := false ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	
@@ -95,13 +96,13 @@ GtkRoassalDrawingArea >> drawShapesWithBackground: backgroundColor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingArea >> extent [
 
 	^ self canvas extent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtkRoassalDrawingArea >> initialize [
 
 	super initialize.
@@ -111,7 +112,7 @@ GtkRoassalDrawingArea >> initialize [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkRoassalDrawingArea >> showRectanglesIfNecessary: shapes [
 	canvas showRectangles ifFalse: [ ^ self ].
 	
@@ -121,7 +122,7 @@ GtkRoassalDrawingArea >> showRectanglesIfNecessary: shapes [
 		].
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkRoassalDrawingArea >> sizeRequest: aPoint [
 
 	self setSizeRequestWidth: aPoint x height: aPoint y

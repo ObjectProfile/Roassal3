@@ -2,36 +2,38 @@
 Similar like TreeMap, but with circles, please check examples for RSTreeMap and RSCircularTreeMap
 "
 Class {
-	#name : #RSCircularTreeMap,
-	#superclass : #RSAbstractTreeBuilder,
+	#name : 'RSCircularTreeMap',
+	#superclass : 'RSAbstractTreeBuilder',
 	#instVars : [
 		'shape',
 		'baseRadius'
 	],
-	#category : #'Roassal3-TreeMap-Core'
+	#category : 'Roassal3-TreeMap-Core',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircularTreeMap >> baseRadius [
 	^ baseRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircularTreeMap >> baseRadius: aNumber [
 	baseRadius := aNumber
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSCircularTreeMap >> defaultBaseRadius [
 	^ 100
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSCircularTreeMap >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSCircularTreeMap >> defaultShape [
 	^ RSCircle new
 		noPaint;
@@ -39,7 +41,7 @@ RSCircularTreeMap >> defaultShape [
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSCircularTreeMap >> expandCircles: aShape parent: parent [
 	"
 	RTCircularTreeMapExample new example01
@@ -62,7 +64,7 @@ RSCircularTreeMap >> expandCircles: aShape parent: parent [
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSCircularTreeMap >> findBestGapIn: gaps
 	children: children
 	index: i
@@ -93,7 +95,7 @@ RSCircularTreeMap >> findBestGapIn: gaps
 	^ { distance. closest. gap}
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCircularTreeMap >> initialize [
 	super initialize.
 	shape := self defaultShape.
@@ -101,7 +103,7 @@ RSCircularTreeMap >> initialize [
 	self weight: 1
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSCircularTreeMap >> layout: aShape [
 	| children |
 	children := aShape schildren.
@@ -112,7 +114,7 @@ RSCircularTreeMap >> layout: aShape [
 	self layoutNodes: children
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSCircularTreeMap >> layoutNodes: children [
 	| size circles bounds firstCircle cbounding circle distance scale |
 	children ifEmpty: [ ^ self ].
@@ -178,7 +180,7 @@ RSCircularTreeMap >> layoutNodes: children [
 	^ circles
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSCircularTreeMap >> layoutShapes [
 	| virtualRoot |
 	virtualRoot := RSEllipse new.
@@ -189,7 +191,7 @@ RSCircularTreeMap >> layoutShapes [
 			parent: (RSCircleTree radius: self baseRadius)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSCircularTreeMap >> relativeToCirble: circle parent: parent [
 	| res |
 	res := RSCircleTree vector: circle x @ circle y radius: circle radius.
@@ -198,25 +200,25 @@ RSCircularTreeMap >> relativeToCirble: circle parent: parent [
 	^ res
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCircularTreeMap >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self layoutShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircularTreeMap >> shape [
 	^ shape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCircularTreeMap >> shapeFor: anObject [
 	^ shape copy
 		model: anObject;
 		yourself
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSCircularTreeMap >> weight2Rad: aShape [
 	| aNumber |
 	aNumber := self weightOf: aShape.

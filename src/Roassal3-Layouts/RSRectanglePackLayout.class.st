@@ -2,8 +2,8 @@
 A layout that packs elements according to their bounding box. Check #gap and #preferredAngle
 "
 Class {
-	#name : #RSRectanglePackLayout,
-	#superclass : #RSLayout,
+	#name : 'RSRectanglePackLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'freeSpace',
 		'gap',
@@ -12,10 +12,12 @@ Class {
 		'preferredAngle',
 		'shouldUseProgressBar'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSRectanglePackLayout class >> example1 [
 	<noTest>
 	| numberOfBoxes random shapes canvas |
@@ -32,7 +34,7 @@ RSRectanglePackLayout class >> example1 [
 	^ canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSRectanglePackLayout class >> example2 [
 	| nodes canvas shapes |
 	nodes := (1 to: 20) asArray shuffleBy: (Random seed: 42).
@@ -50,7 +52,7 @@ RSRectanglePackLayout class >> example2 [
 	^ canvas open
 ]
 
-{ #category : #'space-calculation' }
+{ #category : 'space-calculation' }
 RSRectanglePackLayout >> bestSpaceFor: anElement [
 	| elementsPadedBox suitableSpaces |
 
@@ -71,12 +73,12 @@ RSRectanglePackLayout >> bestSpaceFor: anElement [
 						ifFalse: [ best ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectanglePackLayout >> boundingBox [
 	^ bounds
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSRectanglePackLayout >> doExecute: shapes [
 	| sortedShapes maxSpace |
 	bounds := 0@0.
@@ -108,12 +110,12 @@ RSRectanglePackLayout >> doExecute: shapes [
 				do: [ :element | self packIn: element ] ]
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSRectanglePackLayout >> doNotUseProgressBar [
 	shouldUseProgressBar := false
 ]
 
-{ #category : #'space-calculation' }
+{ #category : 'space-calculation' }
 RSRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 	| futureCorner preferredAngleInDegrees |
 	futureCorner := aSpace origin + aRectangle extent.
@@ -123,18 +125,18 @@ RSRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 	^ (((futureCorner max: bounds) degrees - preferredAngleInDegrees) abs / preferredAngleInDegrees + 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectanglePackLayout >> gap [
 	"Answer the gap between elements, defined as ''percentage'' of average size. For example, 0.2 means 20%."
 	^ gap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectanglePackLayout >> gap: aFloat [
 	gap := aFloat
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSRectanglePackLayout >> initialize [
 	super initialize.
 	self doNotUseProgressBar.
@@ -142,7 +144,7 @@ RSRectanglePackLayout >> initialize [
 	preferredAngle := Float pi / 4. "Squared"
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RSRectanglePackLayout >> packIn: anElement [
 	translator translateTopLeftOf: anElement to: (self bestSpaceFor: anElement) origin + padding.
 	bounds := bounds max: anElement encompassingRectangle bottomRight + padding.
@@ -150,18 +152,18 @@ RSRectanglePackLayout >> packIn: anElement [
 	self recalculateFreeSpacesWith: anElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectanglePackLayout >> preferredAngle [
 	"Answer the angle (in radians) that the pack algorithm will use to distribute (layout) the elements. For example, setting value of '(2@1) angle', the elements will tend to be distributed horizontally."
 	^ preferredAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectanglePackLayout >> preferredAngle: angleInRadians [
 	preferredAngle := angleInRadians
 ]
 
-{ #category : #'space-calculation' }
+{ #category : 'space-calculation' }
 RSRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
 	| rectangle |
 	rectangle := anElement encompassingRectangle expandBy: padding.
@@ -177,12 +179,12 @@ RSRectanglePackLayout >> recalculateFreeSpacesWith: anElement [
 				space containsRect: subspace ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRectanglePackLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSRectanglePackLayout >> useProgressBar [
 	"Public method. Make the layout use a progress bar"
 	shouldUseProgressBar := true

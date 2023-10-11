@@ -2,8 +2,8 @@
 based on https://www.openprocessing.org/sketch/85954
 "
 Class {
-	#name : #RSAlgoritmia,
-	#superclass : #Object,
+	#name : 'RSAlgoritmia',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'extent',
@@ -25,15 +25,17 @@ Class {
 		'border',
 		'animation'
 	],
-	#category : #'Roassal3-Experimental-Animations'
+	#category : 'Roassal3-Experimental-Animations',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Animations'
 }
 
-{ #category : #update }
+{ #category : 'update' }
 RSAlgoritmia >> cosInterpolateA: val1 withB: val2 at: amt [
 	^ val1 interpolateTo: val2 at: (cos scale: (amt * Float pi) cos)
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAlgoritmia >> doInterpolateA: cOne withB: cTwo inT: beTwixt [
 	^ (1 to: degs) collect: [ :j |
 		(self
@@ -42,7 +44,7 @@ RSAlgoritmia >> doInterpolateA: cOne withB: cTwo inT: beTwixt [
 			at: beTwixt) ]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAlgoritmia >> doSimpleOutline: myCircle [
 	| points polygon n |
 	masterX := masterX + 3.
@@ -68,7 +70,7 @@ RSAlgoritmia >> doSimpleOutline: myCircle [
 		yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAlgoritmia >> initialize [
 	super initialize.
 	"change this variables to get a different result"
@@ -100,7 +102,7 @@ RSAlgoritmia >> initialize [
 	self initializeCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAlgoritmia >> initializeCanvas [
 
 	canvas := RSCanvas new.
@@ -110,14 +112,14 @@ RSAlgoritmia >> initializeCanvas [
 		onStepDo: [:t | self step ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAlgoritmia >> initializeCircles [
 	1 to: models do: [ :i | | zz |
 		zz := rand atRandom.
 		radii at: i put: (self newCircleX: zz y: zz -1 ) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAlgoritmia >> newCircleX: nXstart y: nYstart [
 	| n |
 	^ (1 to: degs) collect: [ :i |
@@ -129,20 +131,20 @@ RSAlgoritmia >> newCircleX: nXstart y: nYstart [
 		n ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAlgoritmia >> open [
 	canvas open
 		setLabel: 'Algoritmia';
 		extent: extent
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlgoritmia >> run01 [
 	<script: 'self new run01'>
 	self open
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlgoritmia >> run02 [
 	<script: 'self new run02'>
 	perlin := NSPerlinNoise3 new octaves: 1.
@@ -153,7 +155,7 @@ RSAlgoritmia >> run02 [
 	self open
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlgoritmia >> run03 [
 	<script: 'self new run03'>
 	nRadius := 3.
@@ -163,7 +165,7 @@ RSAlgoritmia >> run03 [
 	self open
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAlgoritmia >> step [
 	frameCount := frameCount + 1.
 	canvas shapes copy do: #remove.

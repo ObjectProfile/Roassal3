@@ -1,10 +1,12 @@
 Class {
-	#name : #RSHistogramPlotTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Core'
+	#name : 'RSHistogramPlotTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-Chart-Tests-Core',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testBasic [
 	| values plot |
 	values := #(1 2 3 4 5 6 7 8 9 10).
@@ -15,7 +17,7 @@ RSHistogramPlotTest >> testBasic [
 	self assert: (plot yValues allSatisfy: [ :v | v = 1 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testBinSize [
 	| values plot size |
 	values := (1 to: 100) shuffled.
@@ -25,7 +27,7 @@ RSHistogramPlotTest >> testBinSize [
 	self assert: plot bars size equals: size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testBins [
 	| values plot |
 	values := #(1 2 3 4 5 6 7 8 9 10).
@@ -39,7 +41,7 @@ RSHistogramPlotTest >> testBins [
 	self assert: (plot yValues allSatisfy: [ :v | v = 5 ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testBinsCollection [
 	| values plot bins |
 	bins := #(1 5 8 10).
@@ -53,7 +55,7 @@ RSHistogramPlotTest >> testBinsCollection [
 	self assert: plot yValues equals: #(4 3 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testBinsStrat [
 	| values plot strategy size |
 	strategy := RSSturgesBinning new.
@@ -65,7 +67,7 @@ RSHistogramPlotTest >> testBinsStrat [
 	self assert: plot xValues equals: (1 to: 100 by: 99/size)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testCollectDataOfOn [
 
 	| col plot |
@@ -78,7 +80,7 @@ RSHistogramPlotTest >> testCollectDataOfOn [
 	self assert: plot map equals: (Dictionary newFrom: { 1->1. 2->2. 3->3. 4->0. 5->1. 6->2. 7->3. 8->0. 9->1. 10->2 })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testModelWithCollectedData [
 
 	| col plot bars |
@@ -95,7 +97,7 @@ RSHistogramPlotTest >> testModelWithCollectedData [
 	self assert: (plot bars at:4) model sorted equals: #(3 7).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHistogramPlotTest >> testModelWithRawValues [
 
 	| plot bars |

@@ -2,16 +2,18 @@
 I am the default renderer that RSUMLClassBuilder 
 "
 Class {
-	#name : #RSBasicUMLClassRenderer,
-	#superclass : #RSAbstractUMLClassRenderer,
+	#name : 'RSBasicUMLClassRenderer',
+	#superclass : 'RSAbstractUMLClassRenderer',
 	#instVars : [
 		'classInnerLine',
 		'popup'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBasicUMLClassRenderer >> addLines: group title: title [
 	| line rec offset |
 	line := self classInnerLine.
@@ -27,7 +29,7 @@ RSBasicUMLClassRenderer >> addLines: group title: title [
 			endPoint: (rec corner x - offset) @ (title height + group third height)) ]
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine [
 	^ classInnerLine ifNil: [
 		classInnerLine := RSLine new
@@ -35,12 +37,12 @@ RSBasicUMLClassRenderer >> classInnerLine [
 			yourself ]
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSBasicUMLClassRenderer >> classInnerLine: aShape [
 	classInnerLine := aShape
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBasicUMLClassRenderer >> initialize [
 	super initialize.
 	popup := RSPopup new model: #yourself.
@@ -50,7 +52,7 @@ RSBasicUMLClassRenderer >> initialize [
 		yourself)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBasicUMLClassRenderer >> shapeFor: aClass [
 	| shapes box title vars methods |
 	title := self titleFor: aClass.

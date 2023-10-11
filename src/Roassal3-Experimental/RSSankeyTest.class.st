@@ -1,13 +1,15 @@
 Class {
-	#name : #RSSankeyTest,
-	#superclass : #RSTest,
+	#name : 'RSSankeyTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'sankey'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSSankeyTest >> setUp [
 
 	super setUp.
@@ -27,7 +29,7 @@ RSSankeyTest >> setUp [
 	sankey build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxDy [
 
 	self assert: (sankey boxes at: 1) dy equals: 1225 / 3.
@@ -37,7 +39,7 @@ RSSankeyTest >> testBoxDy [
 	self assert: (sankey boxes at: 5) dy equals: 980 / 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxLast [
 
 	self deny: (sankey boxes at: 1) last.
@@ -47,7 +49,7 @@ RSSankeyTest >> testBoxLast [
 	self assert: (sankey boxes at: 5) last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxModel [
 
 	self assert: (sankey boxes at: 1) model equals: #Source1.
@@ -57,7 +59,7 @@ RSSankeyTest >> testBoxModel [
 	self assert: (sankey boxes at: 5) model equals: #Target3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxValue [
 
 	self assert: (sankey boxes at: 1) value equals: 5.
@@ -67,7 +69,7 @@ RSSankeyTest >> testBoxValue [
 	self assert: (sankey boxes at: 5) value equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxX [
 
 	self assert: (sankey boxes at: 1) x equals: 0.
@@ -77,7 +79,7 @@ RSSankeyTest >> testBoxX [
 	self assert: (sankey boxes at: 5) x equals: 960
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testBoxY [
 
 	self assert: ((sankey boxes at: 1) y closeTo: 0 precision: 10e-2).
@@ -87,7 +89,7 @@ RSSankeyTest >> testBoxY [
 	self assert: ((sankey boxes at: 5) y closeTo: 0 precision: 10e-2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testGenerateSankeyUsingSet [
 
 	RSSankey withAllAssociations: {
@@ -97,7 +99,7 @@ RSSankeyTest >> testGenerateSankeyUsingSet [
 			(#Target1 -> 4 -> #Target3) } asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testLineDy [
 
 	self assert: (sankey lines at: 1) dy equals: 1225 / 3.
@@ -106,7 +108,7 @@ RSSankeyTest >> testLineDy [
 	self assert: (sankey lines at: 4) dy equals: 980 / 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testLineModel [
 
 	self
@@ -123,7 +125,7 @@ RSSankeyTest >> testLineModel [
 		equals: (RSSankeyLink on: #Target1 -> 4 -> #Target3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testLineSy [
 
 	self assert: (sankey lines at: 1) sy equals: 0.
@@ -132,7 +134,7 @@ RSSankeyTest >> testLineSy [
 	self assert: (sankey lines at: 4) sy equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testLineTy [
 
 	self assert: (sankey lines at: 1) ty equals: 0.
@@ -141,7 +143,7 @@ RSSankeyTest >> testLineTy [
 	self assert: (sankey lines at: 4) ty equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testLineValue [
 
 	self assert: (sankey lines at: 1) value equals: 5.
@@ -150,7 +152,7 @@ RSSankeyTest >> testLineValue [
 	self assert: (sankey lines at: 4) value equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSankeyTest >> testNodeAndLinksOrders [
 
 	self

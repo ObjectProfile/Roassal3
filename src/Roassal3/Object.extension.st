@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Roassal3' }
+{ #category : '*Roassal3' }
 Object >> rsValue: anArgument [
 	^ self
 ]

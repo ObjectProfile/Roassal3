@@ -2,16 +2,18 @@
 Used to show field definitions for a single layout field picker
 "
 Class {
-	#name : #RSLayoutPickerPresenter,
-	#superclass : #RSAbstractLayoutPresenter,
+	#name : 'RSLayoutPickerPresenter',
+	#superclass : 'RSAbstractLayoutPresenter',
 	#instVars : [
 		'changeLayoutButton',
 		'pickerField'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : 'Roassal3-LayoutStudio-Core',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Core'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSLayoutPickerPresenter class >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #changeLayoutButton expand: false;
@@ -19,13 +21,13 @@ RSLayoutPickerPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSLayoutPickerPresenter class >> open [
 	<script>
 	self new open
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutPickerPresenter >> apply: aRSLayoutField with: anObject [
 	currentLayout perform: aRSLayoutField selector asMutator with: anObject.
 	pickerField add: aRSLayoutField class.
@@ -34,7 +36,7 @@ RSLayoutPickerPresenter >> apply: aRSLayoutField with: anObject [
 		refresh.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutPickerPresenter >> connectPresenters [
 	| boxLayout |
 	changeLayoutButton 
@@ -46,7 +48,7 @@ RSLayoutPickerPresenter >> connectPresenters [
 	
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutPickerPresenter >> createBoxLayout [
 
 	^ SpBoxLayout newVertical
@@ -55,31 +57,31 @@ RSLayoutPickerPresenter >> createBoxLayout [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutPickerPresenter >> edit: anAssociation [
 	super edit: anAssociation.
 	pickerField layoutValue: self currentLayout.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutPickerPresenter >> initializePresenters [
 	changeLayoutButton := self newButton.
 	controls := self newPresenter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutPickerPresenter >> initializeWindow: aWindow [
 	aWindow
 		title: pickerField layoutValue class name;
 		initialExtent: 300@400.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutPickerPresenter >> pickerField [
 	^ pickerField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutPickerPresenter >> pickerField: aRSLayoutPickerField [ 
 	| newLayout | 
 	pickerField := aRSLayoutPickerField.

@@ -4,48 +4,49 @@ I am a layout for sunburst visualization,
 I put the arcs in a constant delta separation, you can define the center width.
 "
 Class {
-	#name : #RSSunburstConstantWidthLayout,
-	#superclass : #RSAbstractSunburstLayout,
+	#name : 'RSSunburstConstantWidthLayout',
+	#superclass : 'RSAbstractSunburstLayout',
 	#instVars : [
 		'arcWidth',
 		'centerWidth'
 	],
-	#category : #'Roassal3-Sunburst'
+	#category : 'Roassal3-Sunburst',
+	#package : 'Roassal3-Sunburst'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstConstantWidthLayout >> arcWidth [
 	^ arcWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstConstantWidthLayout >> arcWidth: aNumber [
 	arcWidth := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstConstantWidthLayout >> centerWidth [
 	^ centerWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstConstantWidthLayout >> centerWidth: anObject [
 	centerWidth := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstConstantWidthLayout >> initialize [
 	super initialize.
 	self arcWidth: 50.
 	self centerWidth: 50
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSSunburstConstantWidthLayout >> setCenterRadius: shape [
 	shape externalRadius: self centerWidth
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSSunburstConstantWidthLayout >> setNormalRadius: shape [
 	| r1 r2 off depth |
 	depth := shape propertyAt: #depth.

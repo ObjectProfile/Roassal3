@@ -15,8 +15,8 @@
 
 "
 Class {
-	#name : #RSAbstractBandPlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSAbstractBandPlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'bandScale',
 		'dataScale',
@@ -26,10 +26,12 @@ Class {
 		'bandPlotShapes',
 		'positions'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : 'Roassal3-Chart-Core',
+	#package : 'Roassal3-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> assignXAndYScales: aChart [
 	bandScale class = NSOrdinalScale ifFalse: [ 
 		self computeScales: aChart. ].
@@ -43,27 +45,27 @@ RSAbstractBandPlot >> assignXAndYScales: aChart [
 	aChart xScale: xScale.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> bandScale: aNSScale [
 	bandScale := aNSScale.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> bandsOffset: aNumberInRange [
 	offset := aNumberInRange
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> bandsWidth [
 	^ bandWidth ifNil: [ bandWidth := self defaultBandsWidth ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> bandsWidth: aNumber [
 	bandWidth := aNumber.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> beforeRenderingIn: aChart [
 	self computeXAndYValues.
 	super beforeRenderingIn: aChart.
@@ -71,7 +73,7 @@ RSAbstractBandPlot >> beforeRenderingIn: aChart [
 	self assignXAndYScales: aChart.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> computeBandsOffset [
 	| bandValues |
 	bandValues := horizontal ifFalse: [ xValues ] ifTrue: [ yValues ].
@@ -80,12 +82,12 @@ RSAbstractBandPlot >> computeBandsOffset [
 	].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> computeBandsWidth [
 	bandPlotShapes do: [ :graphic | graphic bandWidth: self bandsWidth ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> computeScales: aChart [
 	bandScale := NSScale ordinal.
 	horizontal ifFalse: [
@@ -97,7 +99,7 @@ RSAbstractBandPlot >> computeScales: aChart [
 		bandScale rangeBands: yScale range.  ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> computeTicks [
 	| horizontalTick verticalTick |
 	horizontal 
@@ -113,7 +115,7 @@ RSAbstractBandPlot >> computeTicks [
 		 ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractBandPlot >> computeXAndYValues [
 	| dataValues bandPositions maxDataRelatedValue minDataRelatedValue |
 	maxDataRelatedValue := (bandPlotShapes collect: [ :bandPlotShape | bandPlotShape maxDataValue ]) max.
@@ -129,49 +131,49 @@ RSAbstractBandPlot >> computeXAndYValues [
 			yValues := dataValues  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> createdShapes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> defaultBandsWidth [
 	^ bandScale rangeBand * 0.5.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> defaultOffset [
 	^ bandScale scale: 0
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractBandPlot >> defaultShape [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> horizontal [
 	bandPlotShapes do: [ :bs | bs horizontal ].
 	horizontal := true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> isHorizontal [
 	^ horizontal
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractBandPlot >> numberOfBands [
 	^ bandPlotShapes size
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractBandPlot >> positions [
 	positions := positions ifNil: [(1 to: self numberOfBands)].
 	^ positions.
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractBandPlot >> positions: aCollection [
 	self
 		assert: [ aCollection size = bandPlotShapes size ]
@@ -179,12 +181,12 @@ RSAbstractBandPlot >> positions: aCollection [
 	positions := aCollection
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlot >> showBands [
 	bandPlotShapes do: [ :box | box showBand ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlot >> vertical [
 	bandPlotShapes do: [ :bs | bs vertical ].
 	horizontal := false.

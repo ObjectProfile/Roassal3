@@ -1,13 +1,14 @@
 Class {
-	#name : #RSFlowChartTest,
-	#superclass : #TestCase,
+	#name : 'RSFlowChartTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'f'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSFlowChartTest >> setUp [
 	super setUp.
 
@@ -15,13 +16,13 @@ RSFlowChartTest >> setUp [
 	f := RSFlowChart new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowChartTest >> testEmpty [
 
 	self assert: f numberOfElements equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowChartTest >> testSimpleChart [
 
 	| c |

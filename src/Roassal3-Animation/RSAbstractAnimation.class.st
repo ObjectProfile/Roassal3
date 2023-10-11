@@ -2,8 +2,8 @@
 I am the abstract class that defines animations for roassal3
 "
 Class {
-	#name : #RSAbstractAnimation,
-	#superclass : #RSObject,
+	#name : 'RSAbstractAnimation',
+	#superclass : 'RSObject',
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
@@ -23,42 +23,44 @@ Class {
 		'canvas',
 		'firstStep'
 	],
-	#category : #'Roassal3-Animation-Core'
+	#category : 'Roassal3-Animation-Core',
+	#package : 'Roassal3-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractAnimation class >> defaultDuration [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> allDuration [
 	^  self duration * (self isRepeating
 		ifTrue: [ 1 ]
 		ifFalse: [ self loops ])
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSAbstractAnimation >> announcementClasses [
 	^ RSAnimationEvent subclasses
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSAbstractAnimation >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> continue [
 	isPaused ifFalse: [ ^ self ].
 	isPaused := false.
@@ -66,75 +68,75 @@ RSAbstractAnimation >> continue [
 	pauseTime := pauseTime + endPauseTime - startPauseTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> currentLoop [
 	^ currentLoop
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractAnimation >> currentTime [
 	^ canvas currentTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> delay [
 	^ delay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> delay: aDuration [
 	delay := aDuration asMilliSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> duration [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> endPauseTime [
 	^ endPauseTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> endTime [
 	^ endTime
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractAnimation >> hasCompleted [
 	 ^ hasCompleted
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractAnimation >> initialize [
 	super initialize.
 	self reset.
 	canvas := RSDefaultTimer new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractAnimation >> isDelayDone [
 	delay ifNil: [ ^ true ].
 	^ startTime + delay  + pauseTime < self currentTime
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractAnimation >> isPaused [
 	^ isPaused
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractAnimation >> isRepeating [
 	^ loops isInfinite
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractAnimation >> isRunning [
 	^ isRunning
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractAnimation >> loopDone [
 	currentLoop := currentLoop + 1.
 	startPauseTime := endPauseTime := pauseTime := 0.
@@ -143,40 +145,40 @@ RSAbstractAnimation >> loopDone [
 	self announce: (RSAnimationLoopEvent new animation: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> loops [
 	^ loops
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> loops: aNumber [
 	self assert: aNumber >= 1 description: 'The number of times to repeat this animation'.
 	loops := aNumber
 ]
 
-{ #category : #'api - running' }
+{ #category : 'api - running' }
 RSAbstractAnimation >> noRepeat [
 	self loops: 1
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> pause [
 	isPaused ifTrue: [ ^ self ].
 	isPaused := true.
 	startPauseTime := self currentTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> pauseTime [
 	^ pauseTime
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSAbstractAnimation >> privateAnnouncer [
 	^ announcer
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSAbstractAnimation >> refresh [
 	self hasCompleted
 		ifTrue: [ ^ self ].
@@ -192,12 +194,12 @@ RSAbstractAnimation >> refresh [
 	self step.
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 RSAbstractAnimation >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> remove [
 	canvas animations remove: self ifAbsent: [  ].
 	endTime := self currentTime.
@@ -207,13 +209,13 @@ RSAbstractAnimation >> remove [
 	self announce: (RSAnimationEndEvent new animation: self)
 ]
 
-{ #category : #'api - running' }
+{ #category : 'api - running' }
 RSAbstractAnimation >> repeat [
 	"make receiver to be a repeating timer"
 	self loops: Float infinity
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractAnimation >> reset [
 	isRunning := false.
 	firstStep := true.
@@ -227,24 +229,24 @@ RSAbstractAnimation >> reset [
 	pauseTime := 0
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> start [
 	isRunning := true.
 	hasCompleted := false.
 	startTime := self currentTime.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> startLoopTime [
 	^ startLoopTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> startPauseTime [
 	^ startPauseTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractAnimation >> startStep [
 	currentLoop
 		ifNil: [ currentLoop := 0 ].
@@ -252,30 +254,30 @@ RSAbstractAnimation >> startStep [
 		ifNil: [ startLoopTime := self currentTime ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAnimation >> startTime [
 	^ startTime
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSAbstractAnimation >> step [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> stop [
 	isRunning := false.
 	hasCompleted := true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSAbstractAnimation >> toggle [
 	self isPaused
 		ifTrue: [ self continue ]
 		ifFalse: [ self pause ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractAnimation >> updateHasCompleted [
 	hasCompleted ifFalse: [ hasCompleted := currentLoop >= loops ]
 ]

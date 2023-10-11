@@ -5,26 +5,27 @@ You can use radius to set the total radius of sunburst
 or use the selector extent:, that uses radius size
 "
 Class {
-	#name : #RSSunburstExtentLayout,
-	#superclass : #RSAbstractSunburstLayout,
+	#name : 'RSSunburstExtentLayout',
+	#superclass : 'RSAbstractSunburstLayout',
 	#instVars : [
 		'wside'
 	],
-	#category : #'Roassal3-Sunburst'
+	#category : 'Roassal3-Sunburst',
+	#package : 'Roassal3-Sunburst'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstExtentLayout >> extent: aPoint [
 	wside := aPoint x min: aPoint y
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstExtentLayout >> initialize [
 	super initialize.
 	self extent: 500@500
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstExtentLayout >> radiusForDepth: depth [
 	| w2 maxDepth |
 	w2 := wside/2.
@@ -32,12 +33,12 @@ RSSunburstExtentLayout >> radiusForDepth: depth [
 	^ ((depth * w2 * w2) / (maxDepth + 1) ) sqrt
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSSunburstExtentLayout >> setCenterRadius: shape [
 	shape externalRadius: (self radiusForDepth: 1)
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSSunburstExtentLayout >> setNormalRadius: shape [
 	| r1 r2 off depth |
 	depth := shape propertyAt: #depth.

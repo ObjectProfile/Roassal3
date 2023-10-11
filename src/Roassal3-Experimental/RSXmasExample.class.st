@@ -2,12 +2,14 @@
 I am just a demo
 "
 Class {
-	#name : #RSXmasExample,
-	#superclass : #Object,
-	#category : #'Roassal3-Experimental-Xmas2019'
+	#name : 'RSXmasExample',
+	#superclass : 'Object',
+	#category : 'Roassal3-Experimental-Xmas2019',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Xmas2019'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasExample >> background [
 
 	<script: 'self new background open'>
@@ -61,7 +63,7 @@ RSXmasExample >> background [
 	^ v
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasExample >> icon [
 	| c |
 	c := RSComposite new.
@@ -188,7 +190,7 @@ l52 -46 0 -113 0 -113 -80 -76 c-181 -170 -398 -226 -564 -145 -22 10 -41 19
 	^ c
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasExample >> myIcon [
 	<script: 'self new myIcon open'>
 	| canvas c r paint |
@@ -213,7 +215,7 @@ RSXmasExample >> myIcon [
 	^ canvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSXmasExample >> run [
 	<script: 'self new run'>
 	| full background tree icon title world |
@@ -239,7 +241,7 @@ RSXmasExample >> run [
 	(full openInWindowLabeled: '2020') position: 100 asPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasExample >> title [
 	<script: 'self new title open'>
 	| canvas title t2020 |
@@ -279,7 +281,7 @@ RSXmasExample >> title [
 	^ canvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSXmasExample >> tree [
 	<script: 'self new tree open'>
 	| canvas tree |

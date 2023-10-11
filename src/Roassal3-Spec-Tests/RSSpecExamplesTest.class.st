@@ -1,10 +1,11 @@
 Class {
-	#name : #RSSpecExamplesTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-Spec-Tests'
+	#name : 'RSSpecExamplesTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-Spec-Tests',
+	#package : 'Roassal3-Spec-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSpecExamplesTest >> testRunExamples [
 	| classes names |
 	names := #(RSColorPaletteChooser RSEasel RSPieChartExample).

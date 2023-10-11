@@ -2,7 +2,9 @@
 When the animation starts
 "
 Class {
-	#name : #RSAnimationStartEvent,
-	#superclass : #RSAnimationEvent,
-	#category : #'Roassal3-Animation-Events'
+	#name : 'RSAnimationStartEvent',
+	#superclass : 'RSAnimationEvent',
+	#category : 'Roassal3-Animation-Events',
+	#package : 'Roassal3-Animation',
+	#tag : 'Events'
 }

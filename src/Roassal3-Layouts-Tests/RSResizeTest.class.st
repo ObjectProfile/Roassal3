@@ -1,14 +1,15 @@
 Class {
-	#name : #RSResizeTest,
-	#superclass : #TestCase,
+	#name : 'RSResizeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'resize',
 		'shapes'
 	],
-	#category : #'Roassal3-Layouts-Tests'
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSResizeTest >> setUp [
 	super setUp.
 	shapes := (1 to: 3) collect: [ :o |
@@ -20,51 +21,51 @@ RSResizeTest >> setUp [
 	resize shapes: shapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testBiggestExtent [
 	self assert: resize biggestExtent equals: 4 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testBiggestShape [
 	self assert: resize biggestShape equals: shapes last.
 	resize useBiggestShape.
 	self assert: resize fixedShape equals: shapes last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testHighestShape [
 	self assert: resize highestShape equals: shapes last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testSameHeight [
 	resize fixedShape: shapes second.
 	resize sameHeight.
 	self assert: (shapes collect: #extent) sorted asArray equals: (Array with: (2.0@2.0) with: (3.0@2.0) with: (4.0@2.0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testSameSize [
 	resize fixedShape: shapes second.
 	resize sameSize.
 	self assert: (shapes collect: #extent) asSet asArray equals: (Array with: (3.0@2.0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testSameSizeWithoutFixedShape [
 	resize sameSize.
 	self assert: (shapes collect: #extent) asSet asArray equals: (Array with: (4.0 @ 3.0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testSameWidth [
 	resize fixedShape: shapes second.
 	resize sameWidth.
 	self assert: (shapes collect: #extent) sorted asArray equals: (Array with: (3.0@1.0) with:(3.0@2.0) with: (3.0@3.0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSResizeTest >> testWidestShape [
 	self assert: resize widestShape equals: shapes last
 ]

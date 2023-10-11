@@ -2,17 +2,19 @@
 I represent links between sankey charts nodes
 "
 Class {
-	#name : #RSSankeyLink,
-	#superclass : #RSObject,
+	#name : 'RSSankeyLink',
+	#superclass : 'RSObject',
 	#instVars : [
 		'from',
 		'to',
 		'value'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSSankeyLink class >> on: anAssociation [
 
 	^ self new
@@ -22,7 +24,7 @@ RSSankeyLink class >> on: anAssociation [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSSankeyLink >> = anObject [
 
 	^ anObject class == self class and: [
@@ -30,25 +32,25 @@ RSSankeyLink >> = anObject [
 			  anObject to = self to and: [ anObject value = self value ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> from [
 
 	^ from
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> from: anObject [
 
 	from := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSSankeyLink >> hash [
 
 	^ self from hash bitXor: (self to hash bitXor: self value hash)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSSankeyLink >> printOn: stream [
 	stream
 		<< from
@@ -56,25 +58,25 @@ RSSankeyLink >> printOn: stream [
 		<< to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> to [
 
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> to: anObject [
 
 	to := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLink >> value: anObject [
 
 	value := anObject

@@ -2,18 +2,19 @@
 This example works with Spec1
 "
 Class {
-	#name : #RSEaselExample,
-	#superclass : #AbstractWidgetPresenter,
+	#name : 'RSEaselExample',
+	#superclass : 'AbstractWidgetPresenter',
 	#instVars : [
 		'diagram',
 		'label',
 		'text',
 		'button'
 	],
-	#category : #'Roassal3-Spec-Obsolete'
+	#category : 'Roassal3-Spec-Obsolete',
+	#package : 'Roassal3-Spec-Obsolete'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 RSEaselExample class >> defaultSpec [ 
 	<spec: #default>
 	^ 	SpecLayout composed
@@ -27,46 +28,46 @@ RSEaselExample class >> defaultSpec [
 			trow add: #diagram]].
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 RSEaselExample class >> open [
 	<script>
 	self new openWithSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> button [
 	^ button
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> button: anObject [
 	button := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> diagram [
 	^ diagram
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> diagram: anObject [
 	diagram := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEaselExample >> initialExtent [
 
 	^  800@500.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEaselExample >> initializePresenter [
 
 	"This causes the diagram's script to be executed again."
 	button action: [ diagram refresh ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEaselExample >> initializeWidgets [
 
 	label := self newLabel.
@@ -85,27 +86,27 @@ RSEaselExample >> initializeWidgets [
 	diagram script: [ :canvas | self textAsCode value: canvas ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 RSEaselExample >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSEaselExample >> run [
 	<script: 'self new openWithSpec'>
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEaselExample >> startText [
 	^
 'box := RSBox new
@@ -118,17 +119,17 @@ canvas.
 '  asText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> text: anObject [
 	text := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEaselExample >> textAsCode [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 
@@ -138,7 +139,7 @@ RSEaselExample >> textAsCode [
 		evaluate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEaselExample >> title [
 	"Return the window's title"
 

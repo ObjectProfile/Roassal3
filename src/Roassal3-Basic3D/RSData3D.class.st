@@ -2,8 +2,8 @@
 I am a basic data for this basic 3d
 "
 Class {
-	#name : #RSData3D,
-	#superclass : #Object,
+	#name : 'RSData3D',
+	#superclass : 'Object',
 	#instVars : [
 		'extent',
 		'tmat',
@@ -12,15 +12,17 @@ Class {
 		'elements',
 		'cubeShape'
 	],
-	#category : #'Roassal3-Basic3D-TODO'
+	#category : 'Roassal3-Basic3D-TODO',
+	#package : 'Roassal3-Basic3D',
+	#tag : 'TODO'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSData3D >> cube [
 	^ cubeShape
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSData3D >> initialize [
 	super initialize.
 	cubeShape := RSMShape3D cube

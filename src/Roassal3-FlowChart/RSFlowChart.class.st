@@ -1,25 +1,26 @@
 Class {
-	#name : #RSFlowChart,
-	#superclass : #RSObject,
+	#name : 'RSFlowChart',
+	#superclass : 'RSObject',
 	#instVars : [
 		'elements',
 		'variables',
 		'canvas'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RSFlowChart >> accept: aVisitor [
 	aVisitor visitFlowchart: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSFlowChart >> addElement: anElement [
 	elements add: anElement
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSFlowChart >> build [
 	| v |
 	v := RSFCCanvasRenderer new.
@@ -32,12 +33,12 @@ RSFlowChart >> build [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlowChart >> canvas [
 	^ canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> decisionLabeled: aLabel as: variableName yes: variableNameYes no: variableNameNo [
 	| e |
 	e := RSFCDecision new label: aLabel.
@@ -47,17 +48,17 @@ RSFlowChart >> decisionLabeled: aLabel as: variableName yes: variableNameYes no:
 	variables at: variableName put: e
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlowChart >> elements [
 	^ elements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> flowFrom: variable1 to: variable2 [
 	self addElement: (RSFCFlowline new from: (self lookUp: variable1) to: (self lookUp: variable2))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowChart >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
@@ -65,7 +66,7 @@ RSFlowChart >> initialize [
 	canvas := RSCanvas new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> inputOutputLabeled: aLabel as: variableName [
 	| e |
 	e := RSFCInputOutput new label: aLabel.
@@ -73,17 +74,17 @@ RSFlowChart >> inputOutputLabeled: aLabel as: variableName [
 	variables at: variableName put: e
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> lookUp: variable [
 	^ variables at: variable
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> numberOfElements [
 	^ elements size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFlowChart >> processLabeled: aLabel as: variableName [
 	| e |
 	e := RSFCProcess new label: aLabel.

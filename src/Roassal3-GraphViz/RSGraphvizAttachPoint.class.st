@@ -2,17 +2,19 @@
 This attach point is used only by graphviz layout with graphviz line
 "
 Class {
-	#name : #RSGraphvizAttachPoint,
-	#superclass : #RSAttachPoint,
+	#name : 'RSGraphvizAttachPoint',
+	#superclass : 'RSAttachPoint',
 	#instVars : [
 		'points',
 		'startDistance',
 		'endDistance'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSGraphvizAttachPoint >> basicEndingPointOf: anEdge [
 	| p |
 	p := anEdge to position.
@@ -20,7 +22,7 @@ RSGraphvizAttachPoint >> basicEndingPointOf: anEdge [
 	^ points last
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSGraphvizAttachPoint >> basicStartingPointOf: anEdge [
 	| p |
 	p := anEdge from position.
@@ -29,12 +31,12 @@ RSGraphvizAttachPoint >> basicStartingPointOf: anEdge [
 	^ points first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizAttachPoint >> points [
 	^ points
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizAttachPoint >> points: aCollection edge: anEdge [
 	|p1 p2 |
 	self assert: aCollection isNotEmpty description: 'Can not be empty'.

@@ -2,8 +2,8 @@
 Store information about the overlay of the GtkRoassalDrawingAreaBox
 "
 Class {
-	#name : #GtkRoassalDrawingAreaBoxOverlay,
-	#superclass : #Object,
+	#name : 'GtkRoassalDrawingAreaBoxOverlay',
+	#superclass : 'Object',
 	#instVars : [
 		'overlay',
 		'fixed',
@@ -14,55 +14,56 @@ Class {
 	#pools : [
 		'GdkEventMask'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : 'Roassal3-Gtk',
+	#package : 'Roassal3-Gtk'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> extent: anObject [
 	extent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> fixed [
 	^ fixed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> fixed: anObject [
 	fixed := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> overlay [
 	^ overlay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> overlay: anObject [
 	overlay := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBoxOverlay >> position: anObject [
 	position := anObject
 ]

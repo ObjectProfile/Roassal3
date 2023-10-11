@@ -2,22 +2,24 @@
 https://es.wikipedia.org/wiki/Triangulaci%C3%B3n_de_Delaunay
 "
 Class {
-	#name : #RSDelaunayExample,
-	#superclass : #RSObject,
+	#name : 'RSDelaunayExample',
+	#superclass : 'RSObject',
 	#instVars : [
 		'allParticles',
 		'canvas',
 		'useFill'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : 'Roassal3-Experimental-Delaunay',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Delaunay'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSDelaunayExample >> addParticle: aRSParticleD [
 	allParticles add: aRSParticleD
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> anime1 [
 
 	| girl |
@@ -35,7 +37,7 @@ RSDelaunayExample >> anime1 [
 		  for: self
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> anime2 [
 
 	| girl |
@@ -54,7 +56,7 @@ RSDelaunayExample >> anime2 [
 		  for: self
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> anime3 [
 
 	| girl y |
@@ -75,7 +77,7 @@ RSDelaunayExample >> anime3 [
 		  for: self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> borderFor: particle [
 	useFill ifTrue: [ ^ nil ].
 	^ RSBorder new
@@ -84,17 +86,17 @@ RSDelaunayExample >> borderFor: particle [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDelaunayExample >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> colorFor: particle [
 	^ (Color h: particle life * 1.5 + 165 s: 1 v: 1)
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> g1Src [
 	^ '<path d="M2070 2550 c0 -5 -14 -30 -32 -54 -31 -45 -31 -46 -33 -178 0 -74 -4
 -139 -9 -146 -4 -6 -3 -12 2 -12 15 0 42 -75 43 -118 0 -20 3 -31 6 -25 3 8
@@ -250,7 +252,7 @@ l-14 105 6 -107z"/>
 '
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> g2Src [
 	^ '<path d="M1798 2935 c-43 -29 -60 -31 -93 -9 -31 20 -82 21 -102 1 -15 -15
 -15 -29 0 -169 19 -175 15 -167 135 -237 41 -24 73 -50 80 -66 13 -29 102
@@ -447,7 +449,7 @@ l-25 13 24 -20z"/>
 '
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> g3Src [
 	^ '<path d="M753 2930 c-17 -10 -86 -60 -154 -111 -68 -50 -142 -100 -165 -110
 -50 -23 -208 -49 -291 -49 -35 0 -63 -4 -63 -9 0 -18 54 -61 78 -61 20 0 22
@@ -611,22 +613,22 @@ m410 17 c14 -11 53 -54 85 -95 33 -40 62 -72 64 -69 3 2 5 -2 5 -9 0 -6 4 -21
 '
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> girl1 [
 	^ self girlFrom: self g1Src
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> girl2 [
 	^ self girlFrom: self g2Src
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> girl3 [
 	^ self girlFrom: self g3Src
 ]
 
-{ #category : #girls }
+{ #category : 'girls' }
 RSDelaunayExample >> girlFrom: string [
 	"we need a svg file reader :("
 
@@ -653,27 +655,27 @@ RSDelaunayExample >> girlFrom: string [
 	^ com
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> hasAreaLessThan: lim p1: p1 p2: p2 p3: p3 [
 	^ (p1 position distanceTo: p2 position) < lim and: [
 		(p2 position distanceTo: p3 position) < lim and: [
 			(p3 position distanceTo: p1 position) < lim ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDelaunayExample >> initialize [
 	super initialize.
 	useFill := false.
 	allParticles := OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> paintFor: particle [
 	useFill ifFalse: [ ^ nil ].
 	^ self colorFor: particle
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> run [
 
 	<script: 'self new run'>
@@ -707,7 +709,7 @@ RSDelaunayExample >> run [
 	canvas open setLabel: 'Delaunay and Chelmico'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> run2 [
 
 	<script: 'self new run2'>
@@ -730,7 +732,7 @@ RSDelaunayExample >> run2 [
 	canvas open setLabel: 'Delaunay'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSDelaunayExample >> step [
 	| indices |
 	canvas nodes copy do: #remove.
@@ -756,7 +758,7 @@ RSDelaunayExample >> step [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDelaunayExample >> useFill: aBoolean [
 	useFill := aBoolean
 ]

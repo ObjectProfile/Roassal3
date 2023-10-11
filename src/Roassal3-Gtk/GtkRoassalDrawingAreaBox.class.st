@@ -2,8 +2,8 @@
 Gtk Roassal canvas drawing area with scrollbars and overlay for putting Gtk elements into the canvas.
 "
 Class {
-	#name : #GtkRoassalDrawingAreaBox,
-	#superclass : #GtkBox,
+	#name : 'GtkRoassalDrawingAreaBox',
+	#superclass : 'GtkBox',
 	#instVars : [
 		'drawingArea',
 		'horizontalScrollbar',
@@ -20,53 +20,54 @@ Class {
 	#pools : [
 		'GdkEventMask'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : 'Roassal3-Gtk',
+	#package : 'Roassal3-Gtk'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtkRoassalDrawingAreaBox class >> boxNewOrientation: orientation spacing: spacing [
 
 	^ self ffiCall: #(GtkRoassalDrawingAreaBox *gtk_box_new (GtkOrientation orientation, gint spacing))
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtkRoassalDrawingAreaBox class >> new [ 
 
 	^ (self boxNewOrientation: GTK_ORIENTATION_HORIZONTAL spacing: 0) initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> adapter: anAdapter [
 
 	drawingArea adapter: anAdapter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> camera [
 	
 	^ self gtkTrachel canvas camera
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> cameraRectangle [ 
 
 	^ self camera position extent: (self canvas extent / self camera scale)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> canvas [
 	
 	^ self gtkTrachel canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> canvas: aCanvas [
 
 	drawingArea canvas: aCanvas.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> encompassingRectangle [
 
 	| anEncompassingRectangle |
@@ -74,24 +75,24 @@ GtkRoassalDrawingAreaBox >> encompassingRectangle [
 	^ (0@0 min: anEncompassingRectangle topLeft) corner: (anEncompassingRectangle bottomRight) 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> extent [
 
 	^ drawingArea canvas extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> gtkTrachel [
 	^ drawingArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> gtkTrachel: anObject [
 	drawingArea := anObject.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> initialize [
 
 	| horizontalOrientation verticalOrientation vbox  |
@@ -157,7 +158,7 @@ GtkRoassalDrawingAreaBox >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> initializeOverlayInfo [
 
 	| fixed  overlayContainer | 
@@ -181,19 +182,19 @@ GtkRoassalDrawingAreaBox >> initializeOverlayInfo [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> minSize [
 
 	^ 20
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> recalculateOverlay [
 
 	"do nothing here. Override in subclasses"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 	| vScrollbarPosition needsUpdate cameraRect contentRect |
 	needsUpdate := forceUpdate.
@@ -234,12 +235,12 @@ GtkRoassalDrawingAreaBox >> recalculateScrollbars: forceUpdate [
 	self recalculateOverlay.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> scale [ 
 	^ self camera scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> sizeChangedTo: aRect [ 
 
 	drawingArea canvas extent: aRect extent.
@@ -248,19 +249,19 @@ GtkRoassalDrawingAreaBox >> sizeChangedTo: aRect [
 	self recalculateScrollbars: true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> sizeRequest: aPoint [
 
 	drawingArea setSizeRequestWidth: aPoint x height: aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> stepIncrement [
 
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkRoassalDrawingAreaBox >> update: anAspect [
 
 	self recalculateScrollbars: false.

@@ -2,15 +2,17 @@
 I am a builder to create UML package diagrams in Roassal3, see examples
 "
 Class {
-	#name : #RSUMLPackageBuilder,
-	#superclass : #RSUMLAbstractBuilder,
+	#name : 'RSUMLPackageBuilder',
+	#superclass : 'RSUMLAbstractBuilder',
 	#instVars : [
 		'packages'
 	],
-	#category : #'Roassal3-UML-Builder'
+	#category : 'Roassal3-UML-Builder',
+	#package : 'Roassal3-UML',
+	#tag : 'Builder'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSUMLPackageBuilder >> initialize [
 	super initialize.
 	self
@@ -18,24 +20,24 @@ RSUMLPackageBuilder >> initialize [
 		renderer: RSBasicUMLPackageRenderer new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSUMLPackageBuilder >> objects [
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageBuilder >> packages [
 
 	^packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageBuilder >> packages: aCollection [
 
 	packages := aCollection
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSUMLPackageBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self layout on: shapes

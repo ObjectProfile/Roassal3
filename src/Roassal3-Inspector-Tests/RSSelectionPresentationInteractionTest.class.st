@@ -1,10 +1,11 @@
 Class {
-	#name : #RSSelectionPresentationInteractionTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Inspector-Tests'
+	#name : 'RSSelectionPresentationInteractionTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Inspector-Tests',
+	#package : 'Roassal3-Inspector-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionPresentationInteractionTest >> testBasic [
 
 	| c shapes |
@@ -24,7 +25,7 @@ RSSelectionPresentationInteractionTest >> testBasic [
 	self assert: c nodes first hasShadow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionPresentationInteractionTest >> testCanvasInspect [
 
 	| c window |
@@ -37,7 +38,7 @@ RSSelectionPresentationInteractionTest >> testCanvasInspect [
 	self assert: (c hasInteraction: RSSelectionPresentationInteraction)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionPresentationInteractionTest >> testClickOnCanvasShouldUnselectShape [
 
 	| c |
@@ -50,7 +51,7 @@ RSSelectionPresentationInteractionTest >> testClickOnCanvasShouldUnselectShape [
 	self assert: c nodes first shadow isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionPresentationInteractionTest >> testSelectAShapeShouldUnselect [
 
 	| c |

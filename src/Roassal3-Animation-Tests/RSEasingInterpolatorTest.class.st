@@ -1,10 +1,11 @@
 Class {
-	#name : #RSEasingInterpolatorTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-Animation-Tests'
+	#name : 'RSEasingInterpolatorTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSEasingInterpolatorTest >> testAllEasing [
 	"Simply check if no error is raised"
 	| someX |

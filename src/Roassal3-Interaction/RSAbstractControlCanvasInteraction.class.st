@@ -19,15 +19,17 @@ My methods are utilities method to access information of the canvas, like the vi
 
 "
 Class {
-	#name : #RSAbstractControlCanvasInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSAbstractControlCanvasInteraction',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'limits'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : 'Roassal3-Interaction-Controls',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> computeExpandedRectangle: aCanvas [
 	| rectangle matrix |
 	"we obtains the rectangle in the canvas space".
@@ -46,22 +48,22 @@ RSAbstractControlCanvasInteraction >> computeExpandedRectangle: aCanvas [
 	^ rectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlCanvasInteraction >> configuration [
 	^ limits ifNil: [ limits := RSControlConfiguration new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlCanvasInteraction >> configuration: aRSControlConfiguration [
 	limits := aRSControlConfiguration
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCamera: camera [
 	^ self correctCamera: camera matrixDo: [ :mat | ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCamera: camera matrixDo: aBlock [
 	| canvas rectangle matrix origin correctRectangle |
 	canvas := camera canvas.
@@ -77,7 +79,7 @@ RSAbstractControlCanvasInteraction >> correctCamera: camera matrixDo: aBlock [
 	^ origin.
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
 	| canvasRect x y p |
 	p := position.
@@ -112,7 +114,7 @@ RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle
 	^ x@y
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera [
 	| visibleRectangle correctX correctY |
 	visibleRectangle := camera visibleRectangle.
@@ -129,7 +131,7 @@ RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera
 	^ correctX @ correctY extent: rectangle extent
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctValues: array [
 	| min max targetMin targetMax width targetWidth res |
 	min := array first.
@@ -157,13 +159,13 @@ RSAbstractControlCanvasInteraction >> correctValues: array [
 	^ res
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> encompassingRectangleFor: aCanvas [
 	^ aCanvas propertyAt: #encompassingRectangle
 		ifAbsentPut: [ aCanvas encompassingRectangle  ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
 	"^ aCanvas 
 		propertyAt: #expanedEncompassingRectangle
@@ -171,20 +173,20 @@ RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
 	^ self computeExpandedRectangle: aCanvas
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> removeRectanglesFor: aCanvas [
 	aCanvas
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractControlCanvasInteraction >> renderLegendOn: anRSLegend [
 	"put a nice description in this legend builder"
 	self subclassResponsibility
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> scaleFor: aScale [
 	| l |
 	l := self configuration.

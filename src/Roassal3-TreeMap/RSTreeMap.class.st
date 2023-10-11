@@ -2,27 +2,29 @@
 Use RSTreeMap to visualize trees similar to file system where each leaf has a metric value and each branch is a container of more branches or leafs
 "
 Class {
-	#name : #RSTreeMap,
-	#superclass : #RSAbstractTreeBuilder,
+	#name : 'RSTreeMap',
+	#superclass : 'RSAbstractTreeBuilder',
 	#instVars : [
 		'boxShape',
 		'extent',
 		'inset'
 	],
-	#category : #'Roassal3-TreeMap-Core'
+	#category : 'Roassal3-TreeMap-Core',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMap >> boxShape [
 	^ boxShape
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSTreeMap >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTreeMap >> depthShadedBorder [
 	| color depths |
 	depths := self shapes collect: [ :shape | shape depth ] as: SortedCollection.
@@ -33,17 +35,17 @@ RSTreeMap >> depthShadedBorder [
 		shape border: (RSBorder new color: (color rsValue: shape depth))  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMap >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMap >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTreeMap >> focalPointFor: shape [
 	| parent b1 b2 l1 rect |
 	parent := shape sparent.
@@ -59,14 +61,14 @@ RSTreeMap >> focalPointFor: shape [
 	^ l1 endPoint - shape position
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTreeMap >> gradientFill: palette block: aBlock [
 	^ self shapes
 		collect: [ :shape | self gradientFill: palette block: aBlock shape: shape ]
 		as: Bag
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTreeMap >> gradientFill: palette block: aBlock shape: shape [
 	| attribute paint color |
 	attribute := aBlock rsValue: shape model.
@@ -85,7 +87,7 @@ RSTreeMap >> gradientFill: palette block: aBlock shape: shape [
 	^ attribute
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTreeMap >> initialize [
 	super initialize.
 	boxShape := RSBox new
@@ -97,17 +99,17 @@ RSTreeMap >> initialize [
 		inset: 4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMap >> inset [
 	^ inset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMap >> inset: aPoint [
 	inset := aPoint
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSTreeMap >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	RSTreeMapLayout new
@@ -118,7 +120,7 @@ RSTreeMap >> renderIn: aCanvas [
 		on: shapes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTreeMap >> shapeFor: anObject [
 	^ self boxShape copyWithAnnouncer
 		model: anObject;

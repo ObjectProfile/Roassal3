@@ -1,6 +1,6 @@
-Extension { #name : #RSDraggable }
+Extension { #name : 'RSDraggable' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSDraggable class >> example [
 	| canvas |
 	canvas := self canvasExample.

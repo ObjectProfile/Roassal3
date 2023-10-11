@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Roassal3-Layouts' }
+{ #category : '*Roassal3-Layouts' }
 SequenceableCollection >> rsSwapElement: u withElement: v [
 	| index1 index2 |
 	index1 := self indexOf: u.

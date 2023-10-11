@@ -3,12 +3,13 @@ I have instances of linear gradient paints
 I use the colors from this website https://webgradients.com/
 "
 Class {
-	#name : #RSGradientPalette,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Colors'
+	#name : 'RSGradientPalette',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Colors',
+	#package : 'Roassal3-Colors'
 }
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> burningSpring [
 	^ LinearGradientPaint fromArray:
 		{0->'4fb576'.
@@ -20,28 +21,28 @@ RSGradientPalette class >> burningSpring [
 		1->'432c39' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> cloudyKnoxville [
 	^ LinearGradientPaint fromArray:
 		{0->'fdfbfb'.
 		1->'ebedee' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> deepBlue [
 	^ LinearGradientPaint fromArray:
 		{0->'e0c3fc'.
 		1->'8ec5fc' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> dustyGrass [
 	^ LinearGradientPaint fromArray:
 		{0->'d4fc79'.
 		1->'96e6a1' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> fabledSunset [
 	^ LinearGradientPaint fromArray:
 		{0->'231557'.
@@ -50,7 +51,7 @@ RSGradientPalette class >> fabledSunset [
 		1->'FFF800' }
 ]
 
-{ #category : #palette }
+{ #category : 'palette' }
 RSGradientPalette class >> gradient21 [
 	^ NSScale ordinal range:(
 		#('warmFlame'
@@ -77,70 +78,70 @@ RSGradientPalette class >> gradient21 [
 		yourself
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> happyFisher [
 	^ LinearGradientPaint fromArray:
 		{0->'89f7fe'.
 		1->'66a6ff' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> heavyRain [
 	^ LinearGradientPaint fromArray:
 		{0->'cfd9df'.
 		1->'e2ebf0' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> malibuBeach [
 	^ LinearGradientPaint fromArray:
 		{0->'4facfe'.
 		1->'00f2fe' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> morpheusDen [
 	^ LinearGradientPaint fromArray:
 		{0->'30cfd0'.
 		1->'330867' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> nearMoon [
 	^ LinearGradientPaint fromArray:
 		{0->'5ee7df'.
 		1->'b490ca' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> nightFade [
 	^ LinearGradientPaint fromArray:
 		{0->'a18cd1'.
 		1->'fbc2eb' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> northMiracle [
 	^ LinearGradientPaint fromArray:
 		{0->'00dbde'.
 		1->'fc00ff' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> rainyAshville [
 	^ LinearGradientPaint fromArray:
 		{0->'fbc2eb'.
 		1->'a6c1ee' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> redSalvation [
 	^ LinearGradientPaint fromArray:
 		{0->'f43b47'.
 		1->'453a94' }
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 RSGradientPalette class >> roassalCanvas [
 	<example>
 	| canvas gradients |
@@ -161,14 +162,14 @@ RSGradientPalette class >> roassalCanvas [
 	canvas open
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> sunnyMorning [
 	^ LinearGradientPaint fromArray:
 		{0->'f6d365'.
 		1->'fda085' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> sweetPeriod [
 	^ LinearGradientPaint fromArray:
 		{0->'3f51b1'.
@@ -182,35 +183,35 @@ RSGradientPalette class >> sweetPeriod [
 		1->'f7c978' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> temptingAzure [
 	^ LinearGradientPaint fromArray:
 		{0->'84fab0'.
 		1->'8fd3f4' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> trueSunset [
 	^ LinearGradientPaint fromArray:
 		{0->'fa709a'.
 		1->'fee140' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> warmFlame [
 	^ LinearGradientPaint fromArray:
 		{0-> 'ff9a9e'.
 		1->'fad0c4' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> winterNeva [
 	^ LinearGradientPaint fromArray:
 		{0->'a1c4fd'.
 		1->'c2e9fb' }
 ]
 
-{ #category : #gradients }
+{ #category : 'gradients' }
 RSGradientPalette class >> youngPassion [
 	^ LinearGradientPaint fromArray:
 		{(0 -> 'ff867a').

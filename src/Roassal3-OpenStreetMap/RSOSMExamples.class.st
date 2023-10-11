@@ -2,12 +2,13 @@
 I have examples for open street map based on roassal2 previous examples
 "
 Class {
-	#name : #RSOSMExamples,
-	#superclass : #RSObject,
-	#category : #'Roassal3-OpenStreetMap'
+	#name : 'RSOSMExamples',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-OpenStreetMap',
+	#package : 'Roassal3-OpenStreetMap'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> customPopup [
 	| popup |
 	popup := RSPopup new.
@@ -27,7 +28,7 @@ RSOSMExamples >> customPopup [
 	^ popup
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> downloadSeismData [
 	<script: 'self new downloadSeismData inspect'>
 	| csv lines headers|
@@ -43,7 +44,7 @@ RSOSMExamples >> downloadSeismData [
 	
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example01Basic [
 	<script: 'self new example01Basic inspect'>
 	| canvas |
@@ -58,7 +59,7 @@ RSOSMExamples >> example01Basic [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example02Builder [
 	<script: 'self new example02Builder open'>
 	| b |
@@ -66,7 +67,7 @@ RSOSMExamples >> example02Builder [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example03CitySelection [
 
 	<script: 'self new example03CitySelection open'>
@@ -107,7 +108,7 @@ RSOSMExamples >> example03CitySelection [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example04Barcelona [
 	<noTest>
 	<script: 'self new example04Barcelona open'>
@@ -144,7 +145,7 @@ RSOSMExamples >> example04Barcelona [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example05ChartInLondon [
 	<noTest>
 	<script: 'self new example05ChartInLondon open'>
@@ -163,7 +164,7 @@ RSOSMExamples >> example05ChartInLondon [
 	^ canvas.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example06SeismOnEarth [
 	<noTest>
 	<script: 'self new example06SeismOnEarth open
@@ -193,7 +194,7 @@ RSOSMExamples >> example06SeismOnEarth [
 	^ canvas.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example07SeismOnEarthAnimated [
 	<noTest>
 	<script: 'self new example07SeismOnEarthAnimated open
@@ -234,7 +235,7 @@ RSOSMExamples >> example07SeismOnEarthAnimated [
 	^ canvas.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> example08SeismOnEarthAnimatedByTime [
 	<noTest>
 	<script: 'self new example08SeismOnEarthAnimatedByTime open
@@ -273,7 +274,7 @@ RSOSMExamples >> example08SeismOnEarthAnimatedByTime [
 	^ canvas.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> newAnimationByTimeFor: data [ 
 	| shape canvas timeScale delay |
 	shape := data first.
@@ -305,7 +306,7 @@ RSOSMExamples >> newAnimationByTimeFor: data [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> newAnimationFor: data [
 	| shape dateLabel locationLabel canvas magScale duration lineStart |
 	shape := data first.
@@ -335,7 +336,7 @@ RSOSMExamples >> newAnimationFor: data [
 		
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSOSMExamples >> newLineAnimationFor: data [
 	| shape lineStart canvas magScale duration |
 	shape := data first.

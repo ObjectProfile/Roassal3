@@ -1,6 +1,6 @@
-Extension { #name : #RSShapeExamples }
+Extension { #name : 'RSShapeExamples' }
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example03LinePath [
 	<script: 'self new example03LinePath open'>
 
@@ -64,7 +64,7 @@ RSShapeExamples >> example03LinePath [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example06JoinStyles [
 	<script: 'self new example06JoinStyles open'>
 	| canvas line path styles |
@@ -107,7 +107,7 @@ RSShapeExamples >> example06JoinStyles [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example15BimetricLine [
 	<script: 'self new example15BimetricLine open'>
 	| canvas s1 s2 l |
@@ -136,7 +136,7 @@ RSShapeExamples >> example15BimetricLine [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example18ExampleFromMondrian [
 	<script: 'self new example18ExampleFromMondrian open'>
 	| canvas legend |
@@ -183,7 +183,7 @@ blue links = dependencies; layout = force based layout on the inheritance links'
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example25BimetricLineOnLargeExample [
 	<script: 'self new example25BimetricLineOnLargeExample open'>
 	| packagesRegExp packages l packageElements high canvas |
@@ -231,7 +231,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 	<script: 'self new example25BisBimetricLineOnLargeExample open'>
 	"Same than example25BimetricLineOnLargeExample, but with no label"

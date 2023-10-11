@@ -1,1 +1,1 @@
-Package { #name : #'Roassal3-Gtk' }
+Package { #name : 'Roassal3-Gtk' }

@@ -1,6 +1,6 @@
-Extension { #name : #RSShape }
+Extension { #name : 'RSShape' }
 
-{ #category : #'*Roassal3-Animation' }
+{ #category : '*Roassal3-Animation' }
 RSShape >> newAnimation [
 	"Create a new animation"
 	^ parent ifNil: [

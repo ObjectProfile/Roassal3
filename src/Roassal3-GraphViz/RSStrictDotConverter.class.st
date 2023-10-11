@@ -22,17 +22,19 @@ strict graph ip_map {
 ```
 "
 Class {
-	#name : #RSStrictDotConverter,
-	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz-Core'
+	#name : 'RSStrictDotConverter',
+	#superclass : 'RSAbstractDotConverter',
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSStrictDotConverter >> writeHeader: aRSGroup [
 	stream << 'strict graph Roassal3'; crlf; << '{'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSStrictDotConverter >> writeLineConnector: aLine [
 	stream << '--'
 ]

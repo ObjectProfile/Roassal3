@@ -2,8 +2,8 @@
 Gtk drawing area with an Athens canvas
 "
 Class {
-	#name : #GtkAthensDrawingArea,
-	#superclass : #GtkDrawingArea,
+	#name : 'GtkAthensDrawingArea',
+	#superclass : 'GtkDrawingArea',
 	#instVars : [
 		'activeSurface',
 		'rect',
@@ -11,25 +11,26 @@ Class {
 		'lastExtent',
 		'paintMutex'
 	],
-	#category : #'Roassal3-Gtk'
+	#category : 'Roassal3-Gtk',
+	#package : 'Roassal3-Gtk'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtkAthensDrawingArea class >> drawingAreaNew [
 	^ self ffiCall: #( GtkAthensDrawingArea *gtk_drawing_area_new () )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> adapter [
 	^ adapter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> adapter: anObject [
 	adapter := anObject
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> basicDraw: cr [
 
 	self 
@@ -40,46 +41,46 @@ GtkAthensDrawingArea >> basicDraw: cr [
 	self paint: cr
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> changed [ 
 
 	super changed.
 	self repaint.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> critical: aBlock [
 
 	paintMutex ifNil: [ paintMutex := Mutex new ].
 	paintMutex critical: aBlock
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> dpi [
 
 	^ 92
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> draw: cr [
 
 	self basicDraw: cr.
 	^ true
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> drawOnAthensCanvas: aCanvas [
 
 	"redefine me in subclasses"
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> extent [ 
 
 	^ 100@100
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> initialize [
 
 	super initialize.
@@ -88,7 +89,7 @@ GtkAthensDrawingArea >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> newCairoSurface [
 	| newSurface |
 	
@@ -96,7 +97,7 @@ GtkAthensDrawingArea >> newCairoSurface [
 	^ newSurface
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> paint: cr [
 
 	self 
@@ -104,17 +105,17 @@ GtkAthensDrawingArea >> paint: cr [
 		module: CairoLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> rect [
 	^ rect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> rect: anObject [
 	rect := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> repaint [
 	| currentExtent |
 	currentExtent := self extent.
@@ -127,14 +128,14 @@ GtkAthensDrawingArea >> repaint [
 	self queueDraw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> resetSurface [
 
 	activeSurface := self newCairoSurface.
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GtkAthensDrawingArea >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 
 	self 
@@ -142,13 +143,13 @@ GtkAthensDrawingArea >> setSourceSurfaceTo: cr surface: surface x: x y: y [
 		module: CairoLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> sizeRequest: aPoint [
 
 	self setSizeRequestWidth: aPoint x height: aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtkAthensDrawingArea >> viewPortExtent [
 
 	^ adapter rect 

@@ -1,10 +1,12 @@
 Class {
-	#name : #RSConnectionExample,
-	#superclass : #Object,
-	#category : #'Roassal3-Mondrian-Examples'
+	#name : 'RSConnectionExample',
+	#superclass : 'Object',
+	#category : 'Roassal3-Mondrian-Examples',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSConnectionExample >> example01Basic [
 	<script: 'self new example01Basic'>
 
@@ -25,7 +27,7 @@ RSConnectionExample >> example01Basic [
 	]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSConnectionExample >> example02TwoViews [
 
 	<script: 'self new example02TwoViews'>
@@ -55,7 +57,7 @@ RSConnectionExample >> example02TwoViews [
 		c3 build ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSConnectionExample >> example03Code [
 
 	<script: 'self new example03Code'>
@@ -85,7 +87,7 @@ RSConnectionExample >> example03Code [
 		q build ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSConnectionExample >> example04UML [
 
 	<script: 'self new example04UML'>

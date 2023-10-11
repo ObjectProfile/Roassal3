@@ -1,10 +1,11 @@
 Class {
-	#name : #RSClusteringLayoutTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Layouts-Tests'
+	#name : 'RSClusteringLayoutTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusteringLayoutTest >> testBasic [
 
 	| c shapes lb nodes |
@@ -70,7 +71,7 @@ RSClusteringLayoutTest >> testBasic [
 144 @ 65.}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusteringLayoutTest >> testBasic2 [
 
 	| shapes c lb nodes clusters |
@@ -90,7 +91,7 @@ RSClusteringLayoutTest >> testBasic2 [
 	self assert: clusters size equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusteringLayoutTest >> testBasic3 [
 
 	| c shapes lb nodes clusters |
@@ -110,7 +111,7 @@ RSClusteringLayoutTest >> testBasic3 [
 	self assert: clusters size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusteringLayoutTest >> testCycles [
 	| chars canvas shapes |
 	canvas := RSCanvas new.

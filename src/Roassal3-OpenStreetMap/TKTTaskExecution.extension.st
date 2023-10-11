@@ -1,6 +1,6 @@
-Extension { #name : #TKTTaskExecution }
+Extension { #name : 'TKTTaskExecution' }
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 TKTTaskExecution >> future [
 	^ nil
 ]

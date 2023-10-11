@@ -2,37 +2,39 @@
 A package descriptor
 "
 Class {
-	#name : #RSUMLPackageDescriptor,
-	#superclass : #RSUMLAbstractModelDescriptor,
+	#name : 'RSUMLPackageDescriptor',
+	#superclass : 'RSUMLAbstractModelDescriptor',
 	#instVars : [
 		'packagename',
 		'classes',
 		'classname'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : 'Roassal3-UML-Descriptor',
+	#package : 'Roassal3-UML',
+	#tag : 'Descriptor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> classes [
 	^ classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> classes: anObject [
 	classes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> classname [
 	^ classname
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> classname: anObject [
 	classname := anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSUMLPackageDescriptor >> forPharo [
 	self
 		packagename: #name;
@@ -40,12 +42,12 @@ RSUMLPackageDescriptor >> forPharo [
 		classname: #name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> packagename [
 	^ packagename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLPackageDescriptor >> packagename: anObject [
 	packagename := anObject
 ]

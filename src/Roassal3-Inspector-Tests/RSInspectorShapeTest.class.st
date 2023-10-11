@@ -1,10 +1,11 @@
 Class {
-	#name : #RSInspectorShapeTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Inspector-Tests'
+	#name : 'RSInspectorShapeTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Inspector-Tests',
+	#package : 'Roassal3-Inspector-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSInspectorShapeTest >> testNoEvents [
 	| box label composite canvas copy boxCopy labelCopy |
 	box := RSBox new.

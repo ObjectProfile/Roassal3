@@ -1,10 +1,12 @@
 Class {
-	#name : #RSChartTitleDecorationTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Chart-Tests-Base'
+	#name : 'RSChartTitleDecorationTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Chart-Tests-Base',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTitleDecorationTest >> testBasic [
 	| plot title label |
 	plot := RSLinePlot new y: #(1).
@@ -19,7 +21,7 @@ RSChartTitleDecorationTest >> testBasic [
 	self assert: label color equals: Color blue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTitleDecorationTest >> testBasic2 [
 	| plot |
 	plot := RSLinePlot new y: #(1).

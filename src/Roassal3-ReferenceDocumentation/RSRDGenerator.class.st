@@ -1,14 +1,15 @@
 Class {
-	#name : #RSRDGenerator,
-	#superclass : #Object,
+	#name : 'RSRDGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'allClasses',
 		'allKeyClasses'
 	],
-	#category : #'Roassal3-ReferenceDocumentation'
+	#category : 'Roassal3-ReferenceDocumentation',
+	#package : 'Roassal3-ReferenceDocumentation'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> doGenerate [
 	<script: 'self new doGenerate'>
 	| r3Packages |
@@ -20,29 +21,29 @@ RSRDGenerator >> doGenerate [
 	allKeyClasses do: [ :cls | self writeClass: cls ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> isKeyClass: aClass [
 	^ aClass comment lines first = '<keyClass>'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> path [
 	^ '/Users/alexandrebergel/Dropbox/GitRepos/Roassal3/Reference'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> roassal3Methods [
 	^ self roassal3Packages flatCollect: #methods
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> roassal3Packages [
 	^ RPackageOrganizer default packages
 		select: [ :p |
 			#('Numeric' 'Roassal3') anySatisfy: [ :r | p packageName beginsWith: r ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> writeClass: cls [
 
 	| fr ref wr |
@@ -58,7 +59,7 @@ RSRDGenerator >> writeClass: cls [
 	wr nextPutAll: (String cr join: cls comment lines allButFirst) withUnixLineEndings; close
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSRDGenerator >> writeRootFor: someClasses [
 
 	| fr ref w |

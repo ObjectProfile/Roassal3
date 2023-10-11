@@ -2,37 +2,39 @@
 I am base class for RSAlignment and RSResize
 "
 Class {
-	#name : #RSAbstractShapeHandling,
-	#superclass : #RSObject,
+	#name : 'RSAbstractShapeHandling',
+	#superclass : 'RSObject',
 	#instVars : [
 		'shapes',
 		'fixedShape'
 	],
-	#category : #'Roassal3-Layouts-PositionAndResize'
+	#category : 'Roassal3-Layouts-PositionAndResize',
+	#package : 'Roassal3-Layouts',
+	#tag : 'PositionAndResize'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractShapeHandling >> fixedShape [
 	^ fixedShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractShapeHandling >> fixedShape: aShape [
 	"Designate a particular shape for which all the other will be aligned against"
 	fixedShape := aShape
 ]
 
-{ #category : #'private - configuration' }
+{ #category : 'private - configuration' }
 RSAbstractShapeHandling >> ifNoFixedShapeThen: aBlock [
 	fixedShape ifNil: [ aBlock value  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractShapeHandling >> shapes [
 	^ shapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractShapeHandling >> shapes: someShapes [
 	shapes := someShapes asGroup
 ]

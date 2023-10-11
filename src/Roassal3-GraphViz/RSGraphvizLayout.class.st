@@ -2,8 +2,8 @@
 This layout uses unix process to run dot commands, the command input is build based on roassal3 shapes
 "
 Class {
-	#name : #RSGraphvizLayout,
-	#superclass : #RSLineDrivenLayout,
+	#name : 'RSGraphvizLayout',
+	#superclass : 'RSLineDrivenLayout',
 	#instVars : [
 		'dotConverter',
 		'scale',
@@ -13,20 +13,22 @@ Class {
 	#classInstVars : [
 		'commandLocation'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSGraphvizLayout class >> commandLocation [
 	^ commandLocation ifNil: [ commandLocation := self findCommand ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSGraphvizLayout class >> digraph [
 	^ self new digraph
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSGraphvizLayout class >> findCommand [
 	| process |
 	process := RSUnixSubprocess new
@@ -41,29 +43,29 @@ RSGraphvizLayout class >> findCommand [
 	^ process stdout trimBoth
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSGraphvizLayout class >> neato [
 	^ self new neato
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSGraphvizLayout class >> strict [
 	^ self new strict
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSGraphvizLayout class >> twoPi [
 	^ self new twoPi
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSGraphvizLayout >> digraph [
 	^ self
 		dotConverter: RSDigraphDotConverter new;
 		yourself
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGraphvizLayout >> doExecute: shapes [
 	| group process |
 	group := shapes asGroup.
@@ -85,23 +87,23 @@ RSGraphvizLayout >> doExecute: shapes [
 	process closeAndCleanStreams
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> dotConverter [
 	^ dotConverter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> dotConverter: aRSDotConverter [
 	dotConverter := aRSDotConverter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> dotDescription [
 	"Return the dot description, after the doExecute: is executed"
 	^ dotDescription asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> dotDescriptionOf: shapes [
 
 	| group |
@@ -110,27 +112,27 @@ RSGraphvizLayout >> dotDescriptionOf: shapes [
 	^ dotConverter stream contents utf8Encoded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> graphvizResult [
 	"Return the graphviz result"
 	^ graphvizResult
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RSGraphvizLayout >> initialize [
 	super initialize.
 	self dotConverter: RSStrictDotConverter new.
 	self scale: 70 negated
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSGraphvizLayout >> neato [
 	^ self
 		dotConverter: RSNeatoDotConverter new;
 		yourself
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGraphvizLayout >> pointsFor: line [
 	| points n |
 	n := line next asNumber.
@@ -143,7 +145,7 @@ RSGraphvizLayout >> pointsFor: line [
 	^ points
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGraphvizLayout >> positionShapes: elements with: string [
 	| nodeIndex |
 	string ifEmpty: [ self error: 'Error in Dot converter' ].
@@ -176,7 +178,7 @@ RSGraphvizLayout >> positionShapes: elements with: string [
 		 ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGraphvizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: filenameOutput [
 	"
 	self new runningGraphvizInputFilename: 'hello.dot' outputFilename: 'myresult.txt'
@@ -185,36 +187,36 @@ RSGraphvizLayout >> runningGraphvizInputFilename: filenameInput outputFilename: 
 	^ self ffiCall: #( int runGraphviz ( char * filenameInput , char* filenameOutput) ) library: GraphvizFFILibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> scale [
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLayout >> scale: aNumber [
 	scale := aNumber
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSGraphvizLayout >> sfdp [
 	^ self
 		dotConverter: RSSFDPConverter new;
 		yourself
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSGraphvizLayout >> strict [
 	^ self
 		dotConverter: RSStrictDotConverter new;
 		yourself
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGraphvizLayout >> transform: aPoint [
 	^ aPoint * scale
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSGraphvizLayout >> twoPi [
 	^ self
 		dotConverter: RSTwoPiDotConverter new;

@@ -2,72 +2,74 @@
 I represent lines drawn in sankey charts, these lines have instance variables used by Sankey layout algorithmn
 "
 Class {
-	#name : #RSSankeyLine,
-	#superclass : #RSBezier,
+	#name : 'RSSankeyLine',
+	#superclass : 'RSBezier',
 	#instVars : [
 		'sy',
 		'dy',
 		'ty',
 		'value'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> dy [
 
 	^ dy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> dy: anObject [
 
 	dy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> sy [
 
 	^ sy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> sy: anObject [
 
 	sy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> ty [
 
 	^ ty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> ty: anObject [
 
 	ty := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyLine >> value: anObject [
 
 	value := anObject
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyLine >> weightedSource [
 
 	^ self from center * self value
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyLine >> weightedTarget [
 
 	^ self to center * self value

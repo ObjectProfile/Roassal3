@@ -2,8 +2,8 @@
 The representaion of a 3d model just the mesh
 "
 Class {
-	#name : #RSMesh3D,
-	#superclass : #Object,
+	#name : 'RSMesh3D',
+	#superclass : 'Object',
 	#instVars : [
 		'matrix',
 		'tranformed',
@@ -14,10 +14,12 @@ Class {
 		'meshMode',
 		'shapes'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : 'Roassal3-Basic3D-Core',
+	#package : 'Roassal3-Basic3D',
+	#tag : 'Core'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D class >> cubeVector: array [
 	| inst data|
 	inst := self new.
@@ -47,12 +49,12 @@ RSMesh3D class >> cubeVector: array [
 	^ inst
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D class >> cubeWidth: width height: height depth: depth [
 	^ self cubeVector: { width. height. depth }
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D class >> inflate: triangles [
 	| res m1 m2 m3 |
 	res := OrderedCollection new.
@@ -90,7 +92,7 @@ RSMesh3D class >> inflate: triangles [
 	^ res
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D class >> tetrahedron [
 	| list |
 	list := OrderedCollection new.
@@ -117,22 +119,22 @@ RSMesh3D class >> tetrahedron [
 	^ list
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSMesh3D >> add: triangle [
 	triangle addedIn: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSMesh3D >> addAll: list [
 	list do: [ :e | self add: e ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> addTriangle: kv [
 	edges add: kv
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> addVertex: vertex [
 	| index |
 	index := vertices indexOf: vertex.
@@ -142,12 +144,12 @@ RSMesh3D >> addVertex: vertex [
 	^ index
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D >> areaMode [
 	meshMode := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> cos: a [
 	| p v1 v2 v3 ab ac norm normalLenght |
 	p := a key.
@@ -173,7 +175,7 @@ RSMesh3D >> cos: a [
 	^ (norm third / normalLenght) abs
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> createShapes [
 	shapes := edges collect: [:ed |
 		RSPolygon new
@@ -182,19 +184,19 @@ RSMesh3D >> createShapes [
 	self updateShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMesh3D >> edges [
 	^ edges
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D >> elements [
 	^ shapes ifNil: [
 		self createShapes.
 		shapes. ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> getShade: a [
 	| angleCos c r g b |
 	angleCos := self cos: a.
@@ -209,7 +211,7 @@ RSMesh3D >> getShade: a [
 	^ Color r: r g: g b: b
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMesh3D >> initialize [
 	super initialize.
 	matrix := RSMatrix3D new.
@@ -219,17 +221,17 @@ RSMesh3D >> initialize [
 	self areaMode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMesh3D >> matrix [
 	^ matrix
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D >> meshMode [
 	meshMode := true
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RSMesh3D >> transform [
 	transformed ifTrue: [ ^ self ].
 	vertices ifEmpty: [ ^ self ].
@@ -238,22 +240,22 @@ RSMesh3D >> transform [
 	transformed := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMesh3D >> transformed [
 	^ transformed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMesh3D >> transformed: aBool [
 	transformed := aBool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMesh3D >> tvertices [
 	^ tvertices
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D >> update [
 	shapes sort: [ :a :b |
 		(self zof: a) < (self zof: b) ].
@@ -264,7 +266,7 @@ RSMesh3D >> update [
 	^ self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMesh3D >> updateShapes [
 	shapes do: [ :polygon|
 		| v points p ed |
@@ -283,7 +285,7 @@ RSMesh3D >> updateShapes [
 		 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMesh3D >> zof: e [
 	| points sum p |
 	points := e model key.

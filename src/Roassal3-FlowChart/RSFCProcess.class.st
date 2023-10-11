@@ -1,10 +1,11 @@
 Class {
-	#name : #RSFCProcess,
-	#superclass : #RSFCSymbol,
-	#category : #'Roassal3-FlowChart'
+	#name : 'RSFCProcess',
+	#superclass : 'RSFCSymbol',
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCProcess >> accept: visitor [
 	visitor visitProcess: self
 ]

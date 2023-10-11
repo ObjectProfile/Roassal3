@@ -2,8 +2,8 @@
 I am a fairly conventional 3d matrix. I can transform 3d points and perform a variety of manipulations on the transform
 "
 Class {
-	#name : #RSMatrix3D,
-	#superclass : #Object,
+	#name : 'RSMatrix3D',
+	#superclass : 'Object',
 	#instVars : [
 		'xx',
 		'xy',
@@ -18,10 +18,12 @@ Class {
 		'zz',
 		'z0'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : 'Roassal3-Basic3D-Core',
+	#package : 'Roassal3-Basic3D',
+	#tag : 'Core'
 }
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 RSMatrix3D >> gtInspertorMatrix: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite table
@@ -33,7 +35,7 @@ RSMatrix3D >> gtInspertorMatrix: composite [
 		column: '0' evaluated: [ :each | each fourth ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMatrix3D >> identity [
 	xx := yy := zz := 1.
 	xy := xz := x0 := 0.
@@ -41,12 +43,12 @@ RSMatrix3D >> identity [
 	zx := zy := z0 := 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMatrix3D >> initialize [
 	self identity
 ]
 
-{ #category : #tranforming }
+{ #category : 'tranforming' }
 RSMatrix3D >> mult: r [
 	"multiply this matrix by a second matrix, M := M*R"
 	| lxx lxy lxz lx0 lyx lyy lyz ly0 lzx lzy lzz lz0 |
@@ -81,7 +83,7 @@ RSMatrix3D >> mult: r [
 	z0 := lz0
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> scale: f [
 	"scale by f in all dimensions"
 	xx := xx * f.
@@ -100,7 +102,7 @@ RSMatrix3D >> scale: f [
 	z0 := z0 * f
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> scaleX: xf y: yf z: zf [
 	"scale by f in all dimensions"
 	xx := xx * xf.
@@ -119,7 +121,7 @@ RSMatrix3D >> scaleX: xf y: yf z: zf [
 	z0 := z0 * zf
 ]
 
-{ #category : #tranforming }
+{ #category : 'tranforming' }
 RSMatrix3D >> tranform: alist in: result [
 	"tranform a list to a another vector"
 	| lxx lxy lxz lx0 lyx lyy lyz ly0 lzx lzy lzz lz0 |
@@ -146,14 +148,14 @@ RSMatrix3D >> tranform: alist in: result [
 		 ]
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> translateByX: x y: y z: z [
 	x0 := x0 + x.
 	y0 := y0 + y.
 	z0 := z0 + z.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> values [
 	^ Array
 		with: (Array with: xx with: xy with: xz with: x0)
@@ -161,12 +163,12 @@ RSMatrix3D >> values [
 		with: (Array with: zx with: zy with: zz with: x0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> x0 [
 	^ x0
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> xrot: theta [
 	" theta is in radians, rotation in x axis"
 	| ct st nyx nyy nyz ny0 nzx nzy nzz nz0 |
@@ -195,27 +197,27 @@ RSMatrix3D >> xrot: theta [
 	z0 := nz0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> xx [
 	^ xx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> xy [
 	^ xy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> xz [
 	^ xz
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> y0 [
 	^ y0
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> yrot: theta [
 	" theta is in radians, rotation in y axis"
 	| ct st nxx nxy nxz nx0 nzx nzy nzz nz0 |
@@ -244,27 +246,27 @@ RSMatrix3D >> yrot: theta [
 	z0 := nz0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> yx [
 	^ yx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> yy [
 	^ yy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> yz [
 	^ yz
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> z0 [
 	^ z0
 ]
 
-{ #category : #'scaling, rotation, translation' }
+{ #category : 'scaling, rotation, translation' }
 RSMatrix3D >> zrot: theta [
 	" theta is in radians, rotation in z axis"
 	| ct st nyx nyy nyz ny0 nxx nxy nxz nx0 |
@@ -293,17 +295,17 @@ RSMatrix3D >> zrot: theta [
 	x0 := nx0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> zx [
 	^ zx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> zy [
 	^ zy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMatrix3D >> zz [
 	^ zz
 ]

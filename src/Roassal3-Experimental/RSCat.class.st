@@ -2,18 +2,20 @@
 NyanCat
 "
 Class {
-	#name : #RSCat,
-	#superclass : #Object,
+	#name : 'RSCat',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'pixel',
 		'rainbowColors',
 		'tileColor'
 	],
-	#category : #'Roassal3-Experimental-Animations'
+	#category : 'Roassal3-Experimental-Animations',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Animations'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> addAnimationSlider [
 
 	| red black slider label loc layout ps durations |
@@ -63,7 +65,7 @@ RSCat >> addAnimationSlider [
 			label }
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> addCat [
 	| body head feet tail delta |
 	body := self catBody.
@@ -94,7 +96,7 @@ RSCat >> addCat [
 	canvas addAll: feet, { tail. body. head}
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> addRainbow [
 	| rainbow psx psy |
 	rainbow := (1 to: 6 )collect: [ :i | self createRainbowSegFor: i ] as: RSGroup.
@@ -124,7 +126,7 @@ RSCat >> addRainbow [
 	rainbow pushBack
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> addStars [
 	| stars sx r delta |
 	stars := (1 to: 10) collect: [ :i | self newStar ] as: RSGroup.
@@ -145,7 +147,7 @@ RSCat >> addStars [
 	stars pushBack
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> catBody [
 	^ self partFrom: '
 001111111111111111100
@@ -169,7 +171,7 @@ RSCat >> catBody [
 '
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> catFeet [
 	| feet |
 	feet := {
@@ -212,7 +214,7 @@ RSCat >> catFeet [
 	^ feet collect: [ :s | self partFrom: s ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> catHead [
 	^ self partFrom: '
 0011000000001100
@@ -231,7 +233,7 @@ RSCat >> catHead [
 '
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> catTail [
 	| tail ys |
 	tail:= RSGroup with: self firstTail.
@@ -251,7 +253,7 @@ RSCat >> catTail [
 	^ tail asShape
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> createRainbowSegFor: i [
 	| boxes segment |
 	boxes := (1 to: 6) collect: [ :j |
@@ -267,7 +269,7 @@ RSCat >> createRainbowSegFor: i [
 	^ segment
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> firstTail [
 	^ self partFrom: '
 0111
@@ -276,7 +278,7 @@ RSCat >> firstTail [
 0111'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCat >> initialize [
 	super initialize.
 	canvas := RSCanvas new.
@@ -288,7 +290,7 @@ RSCat >> initialize [
 		rangeFrom: { 'black'. '#f6d4ac'. '#f1a9f8'. '#dd63b6'. '#a8c5e9'. '#f9deeb'. 'white'}
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> middleTail [
 	^ self partFrom: '
 11
@@ -298,7 +300,7 @@ RSCat >> middleTail [
 '
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> newStar [
 	| rays |
 	rays :=( 1 to: 4) collect: [ :i | RSBox new color: Color white ].
@@ -337,7 +339,7 @@ RSCat >> newStar [
 			yourself ]) asGroup asShape
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> partFrom: aString [
 	| model g |
 	model := aString trimBoth.
@@ -348,7 +350,7 @@ RSCat >> partFrom: aString [
 	^ g asShape
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCat >> run [
 	<script: 'self new run'>
 	self addCat.
@@ -365,7 +367,7 @@ RSCat >> run [
 	self addAnimationSlider
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSCat >> tileFor: char pos: pos in: group [
 	| tile |
 	char = $0 ifTrue: [ ^ self ].

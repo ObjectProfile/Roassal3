@@ -2,8 +2,8 @@
 Utility class to review roassal3 examples
 "
 Class {
-	#name : #RSExamplesBrowser,
-	#superclass : #SpPresenter,
+	#name : 'RSExamplesBrowser',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'leftButton',
 		'roassalCanvas',
@@ -15,10 +15,12 @@ Class {
 		'selectedClass',
 		'searchButton'
 	],
-	#category : #'Roassal3-Spec-Examples-Menu'
+	#category : 'Roassal3-Spec-Examples-Menu',
+	#package : 'Roassal3-Spec-Examples',
+	#tag : 'Menu'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSExamplesBrowser class >> defaultLayout [
 	| const |
 	const := [ :constraints |
@@ -40,7 +42,7 @@ RSExamplesBrowser class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExamplesBrowser >> classChanged: cls [
 	selectedClass := cls.
 	examples := self computeExamples.
@@ -48,7 +50,7 @@ RSExamplesBrowser >> classChanged: cls [
 	self updateCanvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSExamplesBrowser >> classes [
 	^ (RSAbstractExamples withAllSubclasses select: [ :cls |
 		cls methods anySatisfy: [ :met | met selector beginsWith: 'example' ] ])
@@ -61,7 +63,7 @@ RSExamplesBrowser >> classes [
 			ifFalse: [ x < y  ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowser >> compile: text [
 	[
 		(examples at: index) methodClass compile: text.
@@ -74,7 +76,7 @@ RSExamplesBrowser >> compile: text [
 	] onErrorDo: [ :ex | ex traceCr ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSExamplesBrowser >> computeExamples [
 	selectedClass := self defaultClass.
 	^ (selectedClass methods
@@ -82,7 +84,7 @@ RSExamplesBrowser >> computeExamples [
 		) asSortedCollection: [ :a :b | a selector < b selector ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowser >> connectPresenters [
 
 	classesList	whenSelectedItemChangedDo: [ :cls | self classChanged: cls ].
@@ -92,12 +94,12 @@ RSExamplesBrowser >> connectPresenters [
 	searchButton action: [ self openSpotter ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSExamplesBrowser >> defaultClass [
 	^ selectedClass ifNil: [ self classes first ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowser >> initializePresenters [
 
 	classesList := self newDropList
@@ -127,14 +129,14 @@ RSExamplesBrowser >> initializePresenters [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowser >> initializeWindow: window [
 	window
 		initialExtent: 800@500;
 		title: (examples at: index) fullDisplayString
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSExamplesBrowser >> nextClass [
 	| classes i |
 	classes := classesList items.
@@ -144,13 +146,13 @@ RSExamplesBrowser >> nextClass [
 	^ classes at: i
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExamplesBrowser >> openSpotter [
 	"TODO custom search in spotter to look for examples"
 	StSpotter openWithText: 'Examples'
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSExamplesBrowser >> previousClass [
 	| classes i |
 	classes := classesList items.
@@ -160,12 +162,12 @@ RSExamplesBrowser >> previousClass [
 	^ classes at: i
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSExamplesBrowser >> run [
 	<script: 'self new open'>
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExamplesBrowser >> shiftLeft [
 	index = 1 ifTrue: [
 		index := -1.
@@ -174,7 +176,7 @@ RSExamplesBrowser >> shiftLeft [
 	self updateCanvas
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExamplesBrowser >> shiftRight [
 	index = examples size ifTrue: [
 		^ classesList selectItem: self nextClass.
@@ -182,7 +184,7 @@ RSExamplesBrowser >> shiftRight [
 	self updateCanvas
 ]
 
-{ #category : #updated }
+{ #category : 'updated' }
 RSExamplesBrowser >> updateCanvas [
 	| current canvas |
 	current := examples at: index.
@@ -197,7 +199,7 @@ RSExamplesBrowser >> updateCanvas [
 	] onErrorDo: [ :ex | ex traceCr ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExamplesBrowser >> updatePresenter [
 	index := 1.
 	self classChanged: self defaultClass

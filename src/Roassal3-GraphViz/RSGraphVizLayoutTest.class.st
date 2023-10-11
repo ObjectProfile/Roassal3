@@ -1,10 +1,12 @@
 Class {
-	#name : #RSGraphVizLayoutTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-GraphViz-Tests'
+	#name : 'RSGraphVizLayoutTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-GraphViz-Tests',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGraphVizLayoutTest >> testBasic [
 
 	| m layout |
@@ -33,7 +35,7 @@ stop
 ' copyWithoutAll: String crlf)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGraphVizLayoutTest >> testBasic2 [
 
 	| m layout |

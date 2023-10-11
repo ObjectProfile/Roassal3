@@ -4,18 +4,20 @@ source from
 https://www.answerminer.com/blog/binning-guide-ideal-histogram
 "
 Class {
-	#name : #RSAbstractBinning,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Chart-Strategy'
+	#name : 'RSAbstractBinning',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Chart-Strategy',
+	#package : 'Roassal3-Chart',
+	#tag : 'Strategy'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractBinning >> computeNumberOfBinsFor: aCollection [
 	" should return a number"
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractBinning >> createBinsFor: aCollection [
 	| size |
 	size := self computeNumberOfBinsFor: aCollection.

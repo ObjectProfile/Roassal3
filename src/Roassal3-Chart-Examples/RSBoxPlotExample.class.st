@@ -2,12 +2,13 @@
 Example plots making use of RSBoxPlot.
 "
 Class {
-	#name : #RSBoxPlotExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Chart-Examples'
+	#name : 'RSBoxPlotExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Chart-Examples',
+	#package : 'Roassal3-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlotExample >> example01 [
 	"A simple boxplot"
 	<script: 'self new example01 open'>
@@ -27,7 +28,7 @@ RSBoxPlotExample >> example01 [
 	^ p
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlotExample >> example01new [
 	"A simple boxplot"
 	<script: 'self new example01new open'>
@@ -39,7 +40,7 @@ RSBoxPlotExample >> example01new [
 	^ p
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlotExample >> example02new [
 	"This is a grouped boxplot, comparing different datasets with the same x axis"
 	<script: 'self new example02new open'>
@@ -67,7 +68,7 @@ RSBoxPlotExample >> example02new [
 	^ p.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBoxPlotExample >> example03 [
 	"A simple boxplot"
 	<script: 'self new example03 open'>

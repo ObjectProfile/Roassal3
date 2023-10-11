@@ -1,10 +1,12 @@
 Class {
-	#name : #RSChannelExample,
-	#superclass : #Object,
-	#category : #'Roassal3-Mondrian-Examples'
+	#name : 'RSChannelExample',
+	#superclass : 'Object',
+	#category : 'Roassal3-Mondrian-Examples',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChannelExample >> basicExample [
 
 	<script: 'self new exampleBasic'>
@@ -45,7 +47,7 @@ RSChannelExample >> basicExample [
 	c open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChannelExample >> example3 [
 	<script: 'self new example3'>
 	| c names labels classes classeShapes eb channel scale |
@@ -86,7 +88,7 @@ RSChannelExample >> example3 [
 	c open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChannelExample >> exampleBasic2 [
 	<script: 'self new exampleBasic2'>
 	| c m mondrianNodes oddLabel evenLabel g channel smallLabel bigLabel |
@@ -142,7 +144,7 @@ RSChannelExample >> exampleBasic2 [
 	c open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChannelExample >> exampleBasic3 [
 	<script: 'self new exampleBasic3'>
 	| c m mondrianNodes oddLabel evenLabel g channel smallLabel bigLabel |

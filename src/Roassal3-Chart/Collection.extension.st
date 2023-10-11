@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Roassal3-Chart' }
+{ #category : '*Roassal3-Chart' }
 Collection >> interQuartileRange [
 	| quartiles q1 q3 |
 	quartiles := self quartiles.
@@ -9,7 +9,7 @@ Collection >> interQuartileRange [
 	^ q3 - q1.
 ]
 
-{ #category : #'*Roassal3-Chart' }
+{ #category : '*Roassal3-Chart' }
 Collection >> quartiles [
 	| q1 q2 q3 quantile |
 	quantile := RSInvertedCDF data: self.
@@ -19,7 +19,7 @@ Collection >> quartiles [
 	^  { q1. q2. q3 }.
 ]
 
-{ #category : #'*Roassal3-Chart' }
+{ #category : '*Roassal3-Chart' }
 Collection >> standardDeviation [
 	"It follows the implementation of numpy using the size N (instead of N - 1)"
 	| standardDeviation sum mean |

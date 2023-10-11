@@ -2,26 +2,28 @@
 Use int the calypso system setting, you can create a new subclass and define a new selection strategy
 "
 Class {
-	#name : #RSInitialSelection,
-	#superclass : #RSObject,
+	#name : 'RSInitialSelection',
+	#superclass : 'RSObject',
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Roassal3-UML-Calypso-Utilities'
+	#category : 'Roassal3-UML-Calypso-Utilities',
+	#package : 'Roassal3-UML-Calypso',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSInitialSelection >> on: aCanvas [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInitialSelection >> targetClass [
 
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInitialSelection >> targetClass: anObject [
 
 	targetClass := anObject

@@ -12,30 +12,32 @@
 
 "
 Class {
-	#name : #RSConditionalLayout,
-	#superclass : #RSLayout,
+	#name : 'RSConditionalLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'if',
 		'thenLayout',
 		'elseLayout',
 		'clusterLayout'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> clusterLayout [
 
 	^ clusterLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> clusterLayout: anObject [
 
 	clusterLayout := anObject
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSConditionalLayout >> doExecute: shapes [
 	"Performs the layout"
 
@@ -48,40 +50,40 @@ RSConditionalLayout >> doExecute: shapes [
 	clusterLayout on: { thenShapes. elseShapes }.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> else [
 	^ elseLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> else: aLayout [
 	elseLayout := aLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> if [
 	^ if
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> if: aOneArgBlockOrSymbol [
 	"Take as argument a block that will be used on the shapes. The block should return a boolean"
 	if := aOneArgBlockOrSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> ifConnectedThen: aLayout [
 	self if: [ :shape | shape hasEdges ].
 	self then: aLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> ifNotConnectedThen: aLayout [
 	self if: [ :shape | shape hasEdges not ].
 	self then: aLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSConditionalLayout >> initialize [
 	super initialize.
 	self if: [ :each | true ].
@@ -90,18 +92,18 @@ RSConditionalLayout >> initialize [
 	elseLayout := clusterLayout.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> then [
 
 	^ thenLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> then: aLayout [
 	thenLayout := aLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConditionalLayout >> thenLayout [
 
 	^ thenLayout

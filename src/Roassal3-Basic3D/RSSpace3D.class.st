@@ -2,8 +2,8 @@
 I am the basic space, you can add mesh 3d instances in this object
 "
 Class {
-	#name : #RSSpace3D,
-	#superclass : #Object,
+	#name : 'RSSpace3D',
+	#superclass : 'Object',
 	#instVars : [
 		'extent',
 		'tmat',
@@ -11,15 +11,17 @@ Class {
 		'elements',
 		'canvas'
 	],
-	#category : #'Roassal3-Basic3D-Core'
+	#category : 'Roassal3-Basic3D-Core',
+	#package : 'Roassal3-Basic3D',
+	#tag : 'Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSSpace3D >> add: mesh [
 	meshes add: mesh
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSSpace3D >> build [
 
 	self
@@ -27,7 +29,7 @@ RSSpace3D >> build [
 		buildEvents
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSSpace3D >> buildElements [
 	elements := Dictionary new.
 	meshes do: [ :mesh | | meshElements |
@@ -39,7 +41,7 @@ RSSpace3D >> buildElements [
 		 ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSSpace3D >> buildEvents [
 
 	| prev |
@@ -63,17 +65,17 @@ RSSpace3D >> buildEvents [
 		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> canvas: aRSCanvas [
 	canvas := aRSCanvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSpace3D >> draw [
 	meshes do: [ :mesh |
 		self updateMatrix: mesh.
@@ -81,22 +83,22 @@ RSSpace3D >> draw [
 	canvas signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> elements [
 	^ elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RSSpace3D >> gtInspectorViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3
@@ -108,7 +110,7 @@ RSSpace3D >> gtInspectorViewIn: composite [
 			canvas ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSpace3D >> initialize [
 	super initialize.
 	self
@@ -118,7 +120,7 @@ RSSpace3D >> initialize [
 	tmat := RSMatrix3D new
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RSSpace3D >> inspector [
 	<inspectorPresentationOrder: 90 title: 'View'>
 	canvas color: Smalltalk ui theme backgroundColor.
@@ -129,12 +131,12 @@ RSSpace3D >> inspector [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSpace3D >> meshes [
 	^ meshes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSpace3D >> updateMatrix: mesh [
 	mesh
 		transformed: false;

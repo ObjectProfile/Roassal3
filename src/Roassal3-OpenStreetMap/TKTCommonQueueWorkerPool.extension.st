@@ -1,6 +1,6 @@
-Extension { #name : #TKTCommonQueueWorkerPool }
+Extension { #name : 'TKTCommonQueueWorkerPool' }
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 TKTCommonQueueWorkerPool >> cancelIfNotStarted: aTKTFuture [
 
 	taskQueue removeAllSuchThat: [ :futureExecution |

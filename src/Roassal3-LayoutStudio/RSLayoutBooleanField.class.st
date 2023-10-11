@@ -2,12 +2,14 @@
 Used to have boolean fields
 "
 Class {
-	#name : #RSLayoutBooleanField,
-	#superclass : #RSLayoutField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#name : 'RSLayoutBooleanField',
+	#superclass : 'RSLayoutField',
+	#category : 'Roassal3-LayoutStudio-Fields',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutBooleanField >> createWidget [
 	^ layoutStudio newCheckBox
 		label: label;
@@ -15,17 +17,17 @@ RSLayoutBooleanField >> createWidget [
 		whenChangedDo: [ :aBoolean | self updateField: aBoolean ].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutBooleanField >> renderIn: boxLayout [
 	boxLayout add: self widget expand: false
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutBooleanField >> update [
 	widget state: self layoutValue
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSLayoutBooleanField >> updateWidget: aBoolean [
 	self layoutValue: aBoolean
 ]

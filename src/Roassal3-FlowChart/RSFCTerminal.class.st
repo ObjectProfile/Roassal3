@@ -1,10 +1,11 @@
 Class {
-	#name : #RSFCTerminal,
-	#superclass : #RSFCSymbol,
-	#category : #'Roassal3-FlowChart'
+	#name : 'RSFCTerminal',
+	#superclass : 'RSFCSymbol',
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCTerminal >> accept: visitor [
 	visitor visitTerminal: self
 ]

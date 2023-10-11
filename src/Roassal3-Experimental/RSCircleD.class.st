@@ -2,67 +2,69 @@
 I am an example
 "
 Class {
-	#name : #RSCircleD,
-	#superclass : #Object,
+	#name : 'RSCircleD',
+	#superclass : 'Object',
 	#instVars : [
 		'indices',
 		'position',
 		'radius'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : 'Roassal3-Experimental-Delaunay',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Delaunay'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> i [
 	^ indices first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> indices [
 	^ indices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> indices: array [
 	indices := array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> isRespectLimit: n [
 	^ indices allSatisfy: [ :i | i <= n ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> j [
 	^ indices second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> k [
 	^ indices third
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> position: point [
 	position := point
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> radius [
 	^ radius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> radius: number [
 	radius := number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> x [
 	^ position x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleD >> y [
 	^ position y
 ]

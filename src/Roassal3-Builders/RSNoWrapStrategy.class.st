@@ -2,17 +2,19 @@
 This does not apply a wrap in the text
 "
 Class {
-	#name : #RSNoWrapStrategy,
-	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal3-Builders-Text'
+	#name : 'RSNoWrapStrategy',
+	#superclass : 'RSAbstractWrapStrategy',
+	#category : 'Roassal3-Builders-Text',
+	#package : 'Roassal3-Builders',
+	#tag : 'Text'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSNoWrapStrategy >> initialize [
 	"Subclasses should redefine this method to perform initializations on instance creation"
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSNoWrapStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	^ aRSMultilineLabelBuilder basicShapeFor: aString
 ]

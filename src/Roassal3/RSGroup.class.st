@@ -50,72 +50,74 @@ g shapeFromModel: 'hello' ""=> a RSBox(hello))""
 
 "
 Class {
-	#name : #RSGroup,
-	#superclass : #OrderedCollection,
+	#name : 'RSGroup',
+	#superclass : 'OrderedCollection',
 	#instVars : [
 		'shapeFromModelCache'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSGroup >> accept: aVisitor [
 	aVisitor visitGroup: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> add: shape [
 	self resetShapeFromModelCache.
 	^ super add: shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> addAll: shapes [
 	self resetShapeFromModelCache.
 	^ super addAll: shapes
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RSGroup >> asGroup [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> canvas [
 	self ifEmpty: [ ^ nil ].
 	^ self anyOne canvas
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> color: aColor [
 	"Give the same color to all the shapes"
 	self do: [ :s | s color: (aColor rsValue: s model) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> encompassingRectangle [
 	^ self
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
 		ifNotEmpty: [ Rectangle merging: (self collect: #encompassingRectangle) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> extent [
 	^ self encompassingRectangle extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> height [
 	^ self extent y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> lines [
 	"Return the nodes (i.e., shapes that are not lines) contained in a group"
 	^ self select: #isLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> models: someModels [
 	"Set the model of each shapes contained in the collection. The size of the group must be the same than the someModels collection"
 	self assert: [ someModels isCollection ] description: 'Must provide a collection'.
@@ -123,35 +125,35 @@ RSGroup >> models: someModels [
 	self with: someModels do: [ :s :m | s model: m ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> nodes [
 	"Return the nodes (i.e., shapes that are not lines) contained in a group"
 	^ self select: #isNode
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSGroup >> position [
 	^ self encompassingRectangle center
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> pushBack [
 	"Push back all the shapes contained in the group"
 	self do: [ :each | each pushBack ]
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> pushFront [
 	self do: #pushFront
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> resetShapeFromModelCache [
 	"Reset the cache"
 	shapeFromModelCache := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> shapeFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil
 
@@ -179,14 +181,14 @@ g shapeFromModel: 'hello'
 	^ t
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> shapeFromModelCache [
 	"Define a cache for the element lookup from models"
 	shapeFromModelCache ifNil: [ shapeFromModelCache := Dictionary new ].
 	^ shapeFromModelCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> shapesFromModel: anObject [
 	"Return a shape that corresponds to the object provided as parameter. If none is found, then return nil.
 
@@ -214,7 +216,7 @@ g shapesFromModel: 'hello'
 	^ t
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> shapesFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	| answer t |
@@ -226,7 +228,7 @@ RSGroup >> shapesFromModels: objects [
 	^ answer
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> size: aNumber [
 	"Convenient method. For example:
 ```
@@ -240,32 +242,32 @@ c @ RSCanvasController
 	self do: [ :s | s size: (aNumber rsValue: s model) ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSGroup >> translateBy: delta [
 	self do: [ :e | e translateBy: delta ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSGroup >> translateTo: aPosition [
 	| center |
 	center := self encompassingRectangle floatCenter.
 	self translateBy: aPosition - center
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSGroup >> translateTopLeftTo: aPosition [
 	| center |
 	center := self encompassingRectangle topLeft.
 	self translateBy: aPosition - center
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> translucent [
 	"Make all shapes in the group as translucent"
 	self do: [ :s | s color: s color translucent ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 RSGroup >> when: anAnnouncementClass do: aValuable [
 
 	| subscriberForDeprecation |
@@ -288,7 +290,7 @@ RSGroup >> when: anAnnouncementClass do: aValuable [
 	self when: anAnnouncementClass do: aValuable for: aValuable receiver
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> when: event do: aOneArgBlock for: aSubscriber [
 	"Define a callback for each of the shape contained in the group. For example:
 ```
@@ -303,18 +305,18 @@ c @ RSCanvasController
 	self do: [ :shape | shape when: event do: aOneArgBlock for: aSubscriber ]
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> when: anAnnouncementClass send: aSelector to: anObject [
 	self do: [ :shape | shape when: anAnnouncementClass send: aSelector to: anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGroup >> width [
 	"Return the width of the encompassing rectangle of the group"
 	^ self extent x
 ]
 
-{ #category : #'public - forwarding' }
+{ #category : 'public - forwarding' }
 RSGroup >> withBorder [
 	"Makes all the shapes having a border
 ```

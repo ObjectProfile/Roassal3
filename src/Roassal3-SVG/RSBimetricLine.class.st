@@ -27,23 +27,25 @@ Here is how to use it, from Roassal code
 ```
 "
 Class {
-	#name : #RSBimetricLine,
-	#superclass : #RSSVGPathLine,
+	#name : 'RSBimetricLine',
+	#superclass : 'RSSVGPathLine',
 	#instVars : [
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal3-SVG-Shapes'
+	#category : 'Roassal3-SVG-Shapes',
+	#package : 'Roassal3-SVG',
+	#tag : 'Shapes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBimetricLine >> initialize [
 	super initialize.
 	widthFrom := widthTo := 0.
 	self initializeSVG
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBimetricLine >> initializeSVG [
 	self
 		svgPath: [ :aLine |
@@ -90,22 +92,22 @@ RSBimetricLine >> initializeSVG [
 			builder close ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthFrom [
 	^ widthFrom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthFrom: aNumber [
 	widthFrom := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthTo [
 	^ widthTo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthTo: aNumber [
 	widthTo := aNumber
 ]

@@ -2,8 +2,8 @@
 I represent boxes drawn in sankey charts
 "
 Class {
-	#name : #RSSankeyBox,
-	#superclass : #RSBox,
+	#name : 'RSSankeyBox',
+	#superclass : 'RSBox',
 	#instVars : [
 		'sourceLinks',
 		'targetLinks',
@@ -13,16 +13,18 @@ Class {
 		'value',
 		'last'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> center [
 
 	^ self y + (self dy / 2)
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> computeLinesDepths [
 
 	| sy ty |
@@ -36,38 +38,38 @@ RSSankeyBox >> computeLinesDepths [
 		ty := ty + line dy ]
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> computeValue [
 
 	self value:
 		((self sumLinks: sourceLinks) max: (self sumLinks: targetLinks))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> dy [
 
 	^ dy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> dy: anObject [
 
 	dy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> last [
 
 	^ last ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> last: aBoolean [
 
 	last := aBoolean
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> relaxLeftToRight: alpha [
 
 	targetLinks ifNotEmpty: [
@@ -77,7 +79,7 @@ RSSankeyBox >> relaxLeftToRight: alpha [
 		self y: y + (alpha * (averageY - self center)) ]
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> relaxRightToLeft: alpha [
 
 	sourceLinks ifNotEmpty: [
@@ -87,26 +89,26 @@ RSSankeyBox >> relaxRightToLeft: alpha [
 		self y: y + (alpha * (averageY - self center)) ]
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> sortLinks [
 
 	sourceLinks sort: [ :a1 :b1 | a1 to y < b1 to y ].
 	targetLinks sort: [ :a :b | a from y < b from y ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> sourceLinks [
 
 	^ sourceLinks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> sourceLinks: aCollection [
 
 	sourceLinks := aCollection
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSSankeyBox >> sumLinks: aCollectionOfLinks [
 
 	^ aCollectionOfLinks
@@ -114,49 +116,49 @@ RSSankeyBox >> sumLinks: aCollectionOfLinks [
 		  into: [ :sum :link | link value + sum ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> targetLinks [
 
 	^ targetLinks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> targetLinks: aCollection [
 
 	targetLinks := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> value: anObject [
 
 	value := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> x [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> x: anObject [
 
 	x := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> y [
 
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankeyBox >> y: anObject [
 
 	y := anObject

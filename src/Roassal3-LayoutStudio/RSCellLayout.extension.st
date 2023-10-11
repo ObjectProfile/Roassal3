@@ -1,11 +1,11 @@
-Extension { #name : #RSCellLayout }
+Extension { #name : 'RSCellLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSCellLayout class >> alignmentOptions [
 	^ #(top middle bottom none)
 ]
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSCellLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new

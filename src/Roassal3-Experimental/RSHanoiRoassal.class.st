@@ -2,16 +2,18 @@
 I create a visualization of hanoi
 "
 Class {
-	#name : #RSHanoiRoassal,
-	#superclass : #Object,
+	#name : 'RSHanoiRoassal',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'moves'
 	],
-	#category : #'Roassal3-Experimental-Hanoi'
+	#category : 'Roassal3-Experimental-Hanoi',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Hanoi'
 }
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 RSHanoiRoassal >> animationFor: asso [
 
 	| from to pscale |
@@ -41,7 +43,7 @@ RSHanoiRoassal >> animationFor: asso [
 		  yourself
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 RSHanoiRoassal >> createAnimations [
 
 	| allAnimations |
@@ -53,7 +55,7 @@ RSHanoiRoassal >> createAnimations [
 		for: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHanoiRoassal >> createBoxFor: index size: size [
 	^ RSBox new
 		height: size;
@@ -64,7 +66,7 @@ RSHanoiRoassal >> createBoxFor: index size: size [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHanoiRoassal >> createCanvasFor: anInteger [
 	| color groupA size w |
 	canvas := RSCanvas new.
@@ -85,7 +87,7 @@ RSHanoiRoassal >> createCanvasFor: anInteger [
 		setLabel: 'Hanoi!'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHanoiRoassal >> createGroup: aString length: anInteger size: size index: index [
 	| w g l |
 	canvas propertyAt: aString put: (g:= RSGroup new).
@@ -98,7 +100,7 @@ RSHanoiRoassal >> createGroup: aString length: anInteger size: size index: index
 	g add: l
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 RSHanoiRoassal >> createLink [
 	| node link |
 	node := (RSHanoi >> #moveFrom:to:) ast.
@@ -115,18 +117,18 @@ RSHanoiRoassal >> createLink [
 	^ link
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHanoiRoassal >> createLinkAnCanvas: anInteger [
 	self createCanvasFor: anInteger.
 	^ self createLink
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 RSHanoiRoassal >> group: key [
 	^ canvas propertyAt: key
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSHanoiRoassal >> run [
 	<script: 'self new run'>
 	| link size res |

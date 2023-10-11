@@ -2,25 +2,27 @@
 An utily class
 "
 Class {
-	#name : #SpWrappedItem,
-	#superclass : #Object,
+	#name : 'SpWrappedItem',
+	#superclass : 'Object',
 	#instVars : [
 		'selectedItem'
 	],
-	#category : #'Roassal3-Inspector-SP2'
+	#category : 'Roassal3-Inspector-SP2',
+	#package : 'Roassal3-Inspector',
+	#tag : 'SP2'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpWrappedItem >> selectedItem [
 	^ selectedItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpWrappedItem >> selectedItem: anObject [
 	selectedItem := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpWrappedItem >> transmission [
 	^ selectedItem
 ]

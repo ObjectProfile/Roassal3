@@ -1,6 +1,6 @@
-Extension { #name : #RSAthensRenderer }
+Extension { #name : 'RSAthensRenderer' }
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> allKeyFramesFor: osm [
 	
 	| zoomLevel start end |
@@ -12,7 +12,7 @@ RSAthensRenderer >> allKeyFramesFor: osm [
 		(start y to: end y) collect: [ :yi | {xi. yi. zoomLevel} ] ].
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> createFuture: osm key: key [
 	^ [ self downloadTile: osm key: key ] future
 		onSuccessDo: [ :tile | 
@@ -22,7 +22,7 @@ RSAthensRenderer >> createFuture: osm key: key [
 	
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> downloadTile: osm key: key [
 	^ ZnEasy getPng: ('https://a.tile.openstreetmap.org' asZnUrl
 		addPathSegment: key third printString;
@@ -30,7 +30,7 @@ RSAthensRenderer >> downloadTile: osm key: key [
 		addPathSegment: key second printString , '.png')
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> drawTile: tupleOfThree with: tiles shape: osm [
 	"Draw a single tile at the right position."
 	| aPoint |
@@ -55,7 +55,7 @@ RSAthensRenderer >> drawTile: tupleOfThree with: tiles shape: osm [
 		]
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> drawTiles: newTiles osm: osm [
 	| allKeys |	
 	allKeys := self allKeyFramesFor: osm.
@@ -77,7 +77,7 @@ RSAthensRenderer >> drawTiles: newTiles osm: osm [
 	]
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> getTileAt: aPoint with: osm key: key [
 	"A point has to be xTile @ yTile, integers between 0 and 2^osmZoomLevel - 1"
 	| level future |
@@ -94,7 +94,7 @@ RSAthensRenderer >> getTileAt: aPoint with: osm key: key [
 	^ osm emptyTile
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> loadOldTiles: newTiles osm: osm [
 	| oldTiles emptyTile |
 	oldTiles := osm tiles.
@@ -105,7 +105,7 @@ RSAthensRenderer >> loadOldTiles: newTiles osm: osm [
 	].
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> removeOldTiles: newTiles size: cacheSize [
 	| keys key |
 	keys := newTiles keys.
@@ -116,7 +116,7 @@ RSAthensRenderer >> removeOldTiles: newTiles size: cacheSize [
 	
 ]
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 RSAthensRenderer >> visitOSM: osm [
 	| newTiles |
 	newTiles := OrderedDictionary new.

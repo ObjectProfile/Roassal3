@@ -20,17 +20,19 @@ p
 -=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSXMarkerDecoration,
-	#superclass : #RSAbstractMarkerDecoration,
-	#category : #'Roassal3-Chart-Decoration'
+	#name : 'RSXMarkerDecoration',
+	#superclass : 'RSAbstractMarkerDecoration',
+	#category : 'Roassal3-Chart-Decoration',
+	#package : 'Roassal3-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSXMarkerDecoration >> average [
 	getRelevantValueBlock := [ :aPlot | aPlot definedValuesX average ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSXMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 	| value |
@@ -41,17 +43,17 @@ RSXMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 			to: (aPlot xScale scale: value) @ chart extent y negated
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSXMarkerDecoration >> max [
 	getRelevantValueBlock := [ :p | p maxChartValueX ]
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSXMarkerDecoration >> min [
 	getRelevantValueBlock := [ :p | p minChartValueX ]
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSXMarkerDecoration >> sumUpTo: ratio [
 	self assert: (ratio between: 0 and: 1). 
 	getRelevantValueBlock := [ :aPlot | | total |

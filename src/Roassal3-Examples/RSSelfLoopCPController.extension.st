@@ -1,6 +1,6 @@
-Extension { #name : #RSSelfLoopCPController }
+Extension { #name : 'RSSelfLoopCPController' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSSelfLoopCPController class >> example [
 	| canvas links models arrow |
 	canvas := RSCanvas new.

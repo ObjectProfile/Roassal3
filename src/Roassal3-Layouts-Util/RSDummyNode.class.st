@@ -2,15 +2,16 @@
 A RODummyNode is used by the sugiyama layout
 "
 Class {
-	#name : #RSDummyNode,
-	#superclass : #RSObject,
+	#name : 'RSDummyNode',
+	#superclass : 'RSObject',
 	#instVars : [
 		'edge'
 	],
-	#category : #'Roassal3-Layouts-Util'
+	#category : 'Roassal3-Layouts-Util',
+	#package : 'Roassal3-Layouts-Util'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSDummyNode class >> on: anEdge slot: anIndex [
 
 	^(self new)
@@ -19,51 +20,51 @@ RSDummyNode class >> on: anEdge slot: anIndex [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> edge [
 	^ edge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> edge: anEdge [
 	edge := anEdge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> extent [
 	^ self height @ self width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> height [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> position [
 	^ 0 @ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> signalUpdate [
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> slot: anIndex [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> translateBy: apoint [
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> translateTo: aPoint [
 	"edge index: index point: aPoint"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDummyNode >> width [
 	^ 0
 ]

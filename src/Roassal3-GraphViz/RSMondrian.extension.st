@@ -1,6 +1,6 @@
-Extension { #name : #RSMondrian }
+Extension { #name : 'RSMondrian' }
 
-{ #category : #'*Roassal3-GraphViz' }
+{ #category : '*Roassal3-GraphViz' }
 RSMondrian >> graphvizLine [
 	lineBuilder := RSLineBuilder graphviz.
 	lineBuilder canvas: canvas.

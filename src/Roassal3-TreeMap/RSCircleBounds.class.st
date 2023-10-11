@@ -2,23 +2,25 @@
 used to find the bounds for each circle
 "
 Class {
-	#name : #RSCircleBounds,
-	#superclass : #RSObject,
+	#name : 'RSCircleBounds',
+	#superclass : 'RSObject',
 	#instVars : [
 		'circles',
 		'indices'
 	],
-	#category : #'Roassal3-TreeMap-Circular'
+	#category : 'Roassal3-TreeMap-Circular',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Circular'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleBounds class >> maxCircles: anInteger [
 	^ self new
 		maxCircles: anInteger;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleBounds >> findStart: circle [
 	| high low probe |
 	high := circles size + 1.
@@ -32,13 +34,13 @@ RSCircleBounds >> findStart: circle [
 	^ indices at: low
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleBounds >> maxCircles: anInteger [
 	circles := OrderedCollection new: anInteger.
 	indices := OrderedCollection new: anInteger
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCircleBounds >> push: circle index: index [
 	| new |
 	new := circles

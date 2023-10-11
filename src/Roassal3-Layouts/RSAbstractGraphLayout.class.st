@@ -2,8 +2,8 @@
 It offers methods for initializing the layout, performing layout computations, and updating the positions of nodes and edges based on the chosen algorithm.
 "
 Class {
-	#name : #RSAbstractGraphLayout,
-	#superclass : #RSLineDrivenLayout,
+	#name : 'RSAbstractGraphLayout',
+	#superclass : 'RSLineDrivenLayout',
 	#instVars : [
 		'verticalGap',
 		'horizontalGap',
@@ -13,21 +13,23 @@ Class {
 		'shouldValidateCycles',
 		'childrenSortBlock'
 	],
-	#category : #'Roassal3-Layouts-ByConnection'
+	#category : 'Roassal3-Layouts-ByConnection',
+	#package : 'Roassal3-Layouts',
+	#tag : 'ByConnection'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RSAbstractGraphLayout class >> horizontalGap [
 
 	^3.0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractGraphLayout class >> isAbstract [
 	^ self name = #RSAbstractGraphLayout
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGraphLayout class >> on: elements edges: edges [
 	"Do the layout of the elements tacking into account the provided edges"
 
@@ -36,13 +38,13 @@ RSAbstractGraphLayout class >> on: elements edges: edges [
 		applyOn: elements
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RSAbstractGraphLayout class >> verticalGap [
 
 	^20.0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> allChildrenFor: aNode [
 	| scan scanTop |
 	scan := OrderedCollection withAll: (self childrenFor: aNode).
@@ -53,26 +55,26 @@ RSAbstractGraphLayout >> allChildrenFor: aNode [
 	^ scan
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> cachedChildren [
 	cachedChildren ifNil: [cachedChildren := IdentityDictionary new: 1000].
 	^ cachedChildren
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> cachedParents [
 	cachedParents ifNil: [cachedParents := IdentityDictionary new: 1000].
 	^ cachedParents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> cachedParentsWithHighestNestings [
 	cachedParentsWithHighestNestings
 		ifNil: [cachedParentsWithHighestNestings := IdentityDictionary new: 1000].
 	^ cachedParentsWithHighestNestings
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> childrenFor: aNode [
 	^ self cachedChildren
 		at: aNode
@@ -88,7 +90,7 @@ RSAbstractGraphLayout >> childrenFor: aNode [
 			nodes]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 	^ (self childrenFor: aNode)
 		reject: [:each | aNodeCollection includes: each]
@@ -96,47 +98,47 @@ RSAbstractGraphLayout >> childrenFor: aNode except: aNodeCollection [
 	"we are explicitly not using the default Collection>>difference: behavior here because we want to preserve the order of the collection"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> childrenSortBlock [
 	^ childrenSortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> childrenSortBlock: aBlock [
 	childrenSortBlock := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> childrenWithHighestNestingLevelFor: aNode [
 	^ (self childrenFor: aNode)
 		select: [:eachChild | (self highestNestingParentFor: eachChild) == aNode]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> clear [
 	cachedParents := nil.
 	cachedChildren := nil.
 	cachedParentsWithHighestNestings := nil
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractGraphLayout >> defaultChildrenSortBlock [
 	^ nil
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractGraphLayout >> doInitialize: elements [
 	super doInitialize: elements.
 	self clear.
 	"self greedyCycleRemoval: elements"
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGraphLayout >> doNotValidateCycles [
 	shouldValidateCycles := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 	| parents |
 	^self cachedParentsWithHighestNestings
@@ -149,40 +151,40 @@ RSAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 					[parents detectMax: [:eachParent | self nestingLevelFor: eachParent]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> horizontalGap [
 	"Return the horizontal space, in pixel, between two neighbors"
 	^ horizontalGap ifNil: [ self class horizontalGap ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> horizontalGap: anInteger [
 	"Set the horizontal space, in pixel, between two neighbors"
 	horizontalGap := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractGraphLayout >> initialize [
 	super initialize.
 	self doNotValidateCycles.
 	self childrenSortBlock: self defaultChildrenSortBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> maximumDiameter: aCollection [
 	^ aCollection
 		inject: 0
 		into: [:max :node | max max: (node radius * 2) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> maximumRadius: aCollection [
 	^ aCollection
 		inject: 0
 		into: [:max :node | max max: node radius]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 	| parents parentsNesting |
 	parents := self parentsFor: aNodeFigure.
@@ -193,7 +195,7 @@ RSAbstractGraphLayout >> nestingLevelFor: aNodeFigure [
 		ifFalse: [parentsNesting max + 1]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractGraphLayout >> on: el edges: edgs [
 	"Do the layout of the elements tacking into account the provided edges"
 	self userDefinedLines ifNil: [ self userDefinedLines: edgs ].
@@ -201,7 +203,7 @@ RSAbstractGraphLayout >> on: el edges: edgs [
 	^ self applyOn: el
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> parentsFor: aNode [
 	^ self cachedParents
 		at: aNode
@@ -213,13 +215,13 @@ RSAbstractGraphLayout >> parentsFor: aNode [
 			nodes ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> rootNodesFor: aCollection [
 	^ aCollection select: [:node |
 		(self parentsFor: node) isEmpty ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractGraphLayout >> rootNodesFromCycles: shapes [
 	| graph groups  |
 	graph := RSDSMGraph new: shapes size.
@@ -240,31 +242,31 @@ RSAbstractGraphLayout >> rootNodesFromCycles: shapes [
 		] as: Set) asOrderedCollection.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 	aNode translateBy: aPoint.
 	(self childrenFor: aNode) do: [:child | self shiftTree: child by: aPoint]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractGraphLayout >> shouldValidateCycles [
 	^ shouldValidateCycles
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractGraphLayout >> sortCollection: nodes [
 	self childrenSortBlock
 		ifNotNil: [ :block | nodes sort: block ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> validateCachedParents [
 	self shouldValidateCycles ifFalse: [ ^ self ].
 	self cachedParents keysDo: [ :node |
 		self validateCycleFor: node path: Set new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractGraphLayout >> validateCycleFor: node path: aSet [
 	(aSet includes: node)
 		ifTrue: [ self error: 'cycle with: ', aSet asString ].
@@ -272,18 +274,18 @@ RSAbstractGraphLayout >> validateCycleFor: node path: aSet [
 	(self parentsFor: node) do: [ :parent| self validateCycleFor: parent path: aSet ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGraphLayout >> validateCycles [
 	shouldValidateCycles := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> verticalGap [
 	"Return the vertical space, in pixel, between a layer and a children layer"
 	^ verticalGap ifNil: [ self class verticalGap ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGraphLayout >> verticalGap: anInteger [
 	"Set the vertical space, in pixel, between a layer and a children layer"
 	verticalGap := anInteger

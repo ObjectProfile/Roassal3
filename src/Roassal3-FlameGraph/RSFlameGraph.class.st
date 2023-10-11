@@ -6,31 +6,32 @@ https://github.com/brendangregg/FlameGraph
 
 "
 Class {
-	#name : #RSFlameGraph,
-	#superclass : #RSAbstractTreeBuilder,
+	#name : 'RSFlameGraph',
+	#superclass : 'RSAbstractTreeBuilder',
 	#instVars : [
 		'gap',
 		'boxShape',
 		'graphWidth',
 		'boxHeight'
 	],
-	#category : #'Roassal3-FlameGraph'
+	#category : 'Roassal3-FlameGraph',
+	#package : 'Roassal3-FlameGraph'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlameGraph >> boxHeight: anInteger [
 	"Set the height for the rectangles that will represent the nodes of the tree."
 
 	boxHeight := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlameGraph >> boxShape [
 
 	^ boxShape
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSFlameGraph >> doLayout [
 	"Establish the position and extent of each rectangle of the graph."
 
@@ -52,13 +53,13 @@ RSFlameGraph >> doLayout [
 			roots do: [ :shape | shape sparent: nil ]	 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlameGraph >> gap [
 
 	^ gap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlameGraph >> gap: aPoint [
 	"Set the gap between the rectangles.
 	The x value represents the horizontal gap between siblings.
@@ -67,14 +68,14 @@ RSFlameGraph >> gap: aPoint [
 	gap := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlameGraph >> graphWidth: anInteger [
 	"Set the expected width for the roots."
 
 	graphWidth := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlameGraph >> initialize [
 
 	super initialize.
@@ -87,7 +88,7 @@ RSFlameGraph >> initialize [
 		gap: 1 asPoint
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSFlameGraph >> layoutFlameGraph: aShape [
 
 	self
@@ -95,7 +96,7 @@ RSFlameGraph >> layoutFlameGraph: aShape [
 		setupHorizontallyOn: aShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSFlameGraph >> renderIn: aCanvas [
 
 	super renderIn: aCanvas.
@@ -103,7 +104,7 @@ RSFlameGraph >> renderIn: aCanvas [
 	self doLayout
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSFlameGraph >> setupHorizontallyOn: shape [
 
 	| children parentX parentWidth parentWeight ratio gap2 |
@@ -128,7 +129,7 @@ RSFlameGraph >> setupHorizontallyOn: shape [
 		self layoutFlameGraph: child ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSFlameGraph >> setupVerticallyOn: aShape [
 
 	| depth y |
@@ -140,7 +141,7 @@ RSFlameGraph >> setupVerticallyOn: aShape [
 		height: boxHeight
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSFlameGraph >> shapeFor: anObject [
 
 	^ self boxShape copyWithAnnouncer

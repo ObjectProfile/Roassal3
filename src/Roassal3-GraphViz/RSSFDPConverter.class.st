@@ -2,12 +2,14 @@
 TODO
 "
 Class {
-	#name : #RSSFDPConverter,
-	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz-Core'
+	#name : 'RSSFDPConverter',
+	#superclass : 'RSAbstractDotConverter',
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 RSSFDPConverter >> writeHeader: aRSGroup [
 	stream
 		<< 'graph G {'; crlf;
@@ -15,7 +17,7 @@ RSSFDPConverter >> writeHeader: aRSGroup [
 		<< 'layout = "sfdp" ;'; crlf
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSFDPConverter >> writeLineConnector: aLine [
 	stream << '--'
 ]

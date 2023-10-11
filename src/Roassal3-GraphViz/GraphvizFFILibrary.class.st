@@ -1,10 +1,12 @@
 Class {
-	#name : #GraphvizFFILibrary,
-	#superclass : #FFILibrary,
-	#category : #'Roassal3-GraphViz-FFI'
+	#name : 'GraphvizFFILibrary',
+	#superclass : 'FFILibrary',
+	#category : 'Roassal3-GraphViz-FFI',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'FFI'
 }
 
-{ #category : #'accessing platform' }
+{ #category : 'accessing platform' }
 GraphvizFFILibrary >> macModuleName [
 	{
 		'liball.dylib' .
@@ -14,7 +16,7 @@ GraphvizFFILibrary >> macModuleName [
 	self error: 'Cannot locate the liball library.'
 ]
 
-{ #category : #'accessing platform' }
+{ #category : 'accessing platform' }
 GraphvizFFILibrary >> unixModuleName [
 	^ 'liball.so'
 ]

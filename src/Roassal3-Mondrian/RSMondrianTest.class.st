@@ -1,19 +1,21 @@
 Class {
-	#name : #RSMondrianTest,
-	#superclass : #RSTest,
+	#name : 'RSMondrianTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'm'
 	],
-	#category : #'Roassal3-Mondrian-Tests'
+	#category : 'Roassal3-Mondrian-Tests',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSMondrianTest >> setUp [
 	super setUp.
 	m := RSMondrian new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testBasic [
 	| someNodes |
 	someNodes := m nodes: (1 to: 5).
@@ -23,7 +25,7 @@ RSMondrianTest >> testBasic [
 	self assert: someNodes asArray equals: m canvas shapes asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testBasic2 [
 	| someNodes |
 	m shape size: #yourself.
@@ -42,7 +44,7 @@ RSMondrianTest >> testBasic2 [
 	self assert: someNodes asArray equals: m canvas shapes asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testColoredNodesForEach [
 
 	m shape color: Color blue.
@@ -56,7 +58,7 @@ RSMondrianTest >> testColoredNodesForEach [
 	self assert: (m canvas nodes flatCollect: [ :e | e children collect: #color ]) asSet asArray equals: { Color red }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testComposingMondrian [
 
 	| c compo m2 nodes |
@@ -88,7 +90,7 @@ RSMondrianTest >> testComposingMondrian [
 	self assertIntegerPosition: nodes equals: {2 @ 2. 12 @ 2. 2 @ 12. 12 @ 12}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testEdges [
 
 	m nodes: (1 to: 100).
@@ -100,7 +102,7 @@ RSMondrianTest >> testEdges [
 	self assert: m canvas numberOfEdges equals: 99
 ]
 
-{ #category : #'tests - labeled shape' }
+{ #category : 'tests - labeled shape' }
 RSMondrianTest >> testLabeled01 [
 
 	| shape |
@@ -118,7 +120,7 @@ RSMondrianTest >> testLabeled01 [
 	self assert: shape nodes second text equals: '42'
 ]
 
-{ #category : #'tests - labeled shape' }
+{ #category : 'tests - labeled shape' }
 RSMondrianTest >> testLabeled02 [
 
 	| shape |
@@ -136,7 +138,7 @@ RSMondrianTest >> testLabeled02 [
 	self assert: shape nodes first class equals: RSBox
 ]
 
-{ #category : #'tests - labeled shape' }
+{ #category : 'tests - labeled shape' }
 RSMondrianTest >> testLabeled03HasModel [
 
 	m shape box labeled.
@@ -146,7 +148,7 @@ RSMondrianTest >> testLabeled03HasModel [
 	self assert: m canvas nodes first model equals: 42
 ]
 
-{ #category : #'tests - labeled shape' }
+{ #category : 'tests - labeled shape' }
 RSMondrianTest >> testLabeled03bisHasModel [
 
 	m shape box labeled.
@@ -156,7 +158,7 @@ RSMondrianTest >> testLabeled03bisHasModel [
 	self assert: m canvas nodes first model equals: 42
 ]
 
-{ #category : #'tests - labeled shape' }
+{ #category : 'tests - labeled shape' }
 RSMondrianTest >> testLabeled04HasModel [
 
 	m shape box labeled.
@@ -167,7 +169,7 @@ RSMondrianTest >> testLabeled04HasModel [
 	self assert: (m canvas nodes allSatisfy: #hasModel)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testLabeledOuterShapes01 [
 
 	| shape |
@@ -179,7 +181,7 @@ RSMondrianTest >> testLabeledOuterShapes01 [
 	self assert: shape class equals: RSBox
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testLabeledOuterShapes02 [
 
 	| shape |
@@ -193,7 +195,7 @@ RSMondrianTest >> testLabeledOuterShapes02 [
 	self assert: shape children first class equals: RSBox
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testLabeledOuterShapes03 [
 
 	| shape |
@@ -209,7 +211,7 @@ RSMondrianTest >> testLabeledOuterShapes03 [
 	self assert: shape children second class equals: RSLabel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testLabeledOuterShapes04 [
 
 	| shape |
@@ -227,7 +229,7 @@ RSMondrianTest >> testLabeledOuterShapes04 [
 	self assert: shape children second class equals: RSLabel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testLabeledOuterShapes05 [
 
 	| shape |
@@ -247,7 +249,7 @@ RSMondrianTest >> testLabeledOuterShapes05 [
 	self assert: shape children second class equals: RSLabel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testNesting [
 
 	| c firstNode subNodes |
@@ -271,7 +273,7 @@ RSMondrianTest >> testNesting [
 	self assertIntegerPosition: subNodes equals: {-10 @ -10. 0 @ -10. 10 @ -10. -10 @ 0. 0 @ 0. 10 @ 0. -10 @ 10. 0 @ 10. 10 @ 10}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testNodesForEach [
 
 	m nodes: (1 to: 2) forEach: [ :v |
@@ -285,7 +287,7 @@ RSMondrianTest >> testNodesForEach [
 		  m canvas shapes second . m canvas shapes second children first . m canvas shapes second children second }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testNodesForEachAndLAyout [
 
 	m nodes: #(1) forEach: [ :v |
@@ -300,7 +302,7 @@ RSMondrianTest >> testNodesForEachAndLAyout [
 	self assert: m canvas shapes first children first position ~= m canvas shapes first children second position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testWithNullElement [
 
 	| c lb shape nodes |
@@ -321,7 +323,7 @@ RSMondrianTest >> testWithNullElement [
 	self assert: (lb fromShapes noneSatisfy: [ :s | s model isNil ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMondrianTest >> testWithNullElementWithFixed [
 
 	| c shape lb nodes |

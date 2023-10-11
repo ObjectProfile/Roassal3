@@ -2,15 +2,16 @@
 Users can add actions to the inspector creating a new subclass of abstract action and defined their methods.
 "
 Class {
-	#name : #RSAbstractAction,
-	#superclass : #RSObject,
+	#name : 'RSAbstractAction',
+	#superclass : 'RSObject',
 	#instVars : [
 		'presentation'
 	],
-	#category : #'Roassal3-Pharo8'
+	#category : 'Roassal3-Pharo8',
+	#package : 'Roassal3-Pharo8'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractAction class >> registerActionsOn: presentation [
 	| instances |
 	instances := self allSubclasses reject: #hasAbstractMethods.
@@ -19,33 +20,33 @@ RSAbstractAction class >> registerActionsOn: presentation [
 	instances do: [ :inst | inst registerOn: presentation ].
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> category [ 
 	^ nil
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> execute [
 	self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> executeOn: roassalPresentation [
 	presentation := roassalPresentation.
 	self execute
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> icon [
 	^ nil
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> order [
 	^ 0
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> registerOn: roassalPresentation [
 	presentation := roassalPresentation.
 	roassalPresentation addAction: (GLMGenericAction new
@@ -57,12 +58,12 @@ RSAbstractAction >> registerOn: roassalPresentation [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractAction >> roassalCanvas [
 	^ presentation canvas
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractAction >> title [
 	^ nil
 ]

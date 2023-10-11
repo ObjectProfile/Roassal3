@@ -1,35 +1,37 @@
 Class {
-	#name : #RSCanvasOpening,
-	#superclass : #Object,
+	#name : 'RSCanvasOpening',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'window'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : 'Roassal3-Mondrian-Connections',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Connections'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasOpening >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasOpening >> canvas: anObject [
 	canvas := anObject
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 RSCanvasOpening >> deleteWindow [
 	window ifNil: [ ^ self ].
 	window delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasOpening >> window [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasOpening >> window: anObject [
 	window := anObject
 ]

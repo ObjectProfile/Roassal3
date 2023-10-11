@@ -2,15 +2,16 @@
 TODO
 "
 Class {
-	#name : #RSIdentityMatrix,
-	#superclass : #RSObject,
+	#name : 'RSIdentityMatrix',
+	#superclass : 'RSObject',
 	#instVars : [
 		'rows'
 	],
-	#category : #'Roassal3-Layouts-Util'
+	#category : 'Roassal3-Layouts-Util',
+	#package : 'Roassal3-Layouts-Util'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSIdentityMatrix >> at: u [
 	| row |
 	row := rows
@@ -19,7 +20,7 @@ RSIdentityMatrix >> at: u [
 	^row keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSIdentityMatrix >> at: u at: v [
 	| row |
 	row := rows
@@ -30,7 +31,7 @@ RSIdentityMatrix >> at: u at: v [
 		ifAbsent: [false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSIdentityMatrix >> at: u at: v put: aBoolean [
 	| row |
 	"u -> v"
@@ -44,7 +45,7 @@ RSIdentityMatrix >> at: u at: v put: aBoolean [
 	row at: u put: aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSIdentityMatrix >> initialize [
 	rows := IdentityDictionary new
 ]

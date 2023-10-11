@@ -7,12 +7,14 @@
 *Collaborators*: `RSAutoLocator` is used when rendering ticks.
 "
 Class {
-	#name : #RSAutoLocator,
-	#superclass : #RSTickLocator,
-	#category : #'Roassal3-Chart-Ticks'
+	#name : 'RSAutoLocator',
+	#superclass : 'RSTickLocator',
+	#category : 'Roassal3-Chart-Ticks',
+	#package : 'Roassal3-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSAutoLocator >> generateTicks: aScale with: numberOfTicks [
 	
 	^ aScale niceTicks: numberOfTicks 

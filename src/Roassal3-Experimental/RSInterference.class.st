@@ -2,21 +2,23 @@
 TODO
 "
 Class {
-	#name : #RSInterference,
-	#superclass : #RSObject,
+	#name : 'RSInterference',
+	#superclass : 'RSObject',
 	#instVars : [
 		'position',
 		'mode',
 		'radius'
 	],
-	#category : #'Roassal3-Experimental-Force'
+	#category : 'Roassal3-Experimental-Force',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Force'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInterference >> color: aColor [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSInterference >> initialize [
 	| r |
 	super initialize.
@@ -27,32 +29,32 @@ RSInterference >> initialize [
 	self radius: r next * 300
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInterference >> mode [
 	^ mode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInterference >> mode: aSymbol [
 	mode := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInterference >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInterference >> position: aPoint [
 	position := aPoint
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSInterference >> radius [
 	^ radius
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSInterference >> radius: aNumber [
 	radius := aNumber
 ]

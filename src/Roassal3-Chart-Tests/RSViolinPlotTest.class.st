@@ -1,10 +1,12 @@
 Class {
-	#name : #RSViolinPlotTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-Chart-Tests-Core'
+	#name : 'RSViolinPlotTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-Chart-Tests-Core',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> test4ViolinsAnd2Clusters [
 	| violinPlotA violinPlotB data window chart |
 	
@@ -17,7 +19,7 @@ RSViolinPlotTest >> test4ViolinsAnd2Clusters [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testAxisLabelsAndTitle [
 	| violinPlot data window |
 	data := #(10 20 30 40 40 50).
@@ -30,7 +32,7 @@ RSViolinPlotTest >> testAxisLabelsAndTitle [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testBasicViolinPlot [
 	| violinPlot data window |
 	data := #(10 20 30 40 40 50).
@@ -40,7 +42,7 @@ RSViolinPlotTest >> testBasicViolinPlot [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testBorders [
 	| violinPlotA data |
 	
@@ -50,7 +52,7 @@ RSViolinPlotTest >> testBorders [
 	self assert: violinPlotA borders first class equals: RSBorder.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testBordersColor [
 	| violinPlotA data |
 	
@@ -60,7 +62,7 @@ RSViolinPlotTest >> testBordersColor [
 	self assert: violinPlotA borderColor equals: Color red.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testBordersColors [
 	| violinPlotA data |
 	
@@ -70,7 +72,7 @@ RSViolinPlotTest >> testBordersColors [
 	self assert: violinPlotA bordersColor equals: {Color red. Color green.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testExtractDatasetFromBlock [
 	| data plot result model expectedResult |
 	model := String.
@@ -82,7 +84,7 @@ RSViolinPlotTest >> testExtractDatasetFromBlock [
 	self assert: result equals: {expectedResult}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testExtractDatasetFromSingleArray [
 	| data plot result |
 	data := #(10 20 30 40 40 50).
@@ -91,7 +93,7 @@ RSViolinPlotTest >> testExtractDatasetFromSingleArray [
 	self assert: result equals: {data}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testExtractDatasetFromValue [
 	| data plot result |
 	data := { #(10 20 30 40 40 50) }.
@@ -100,7 +102,7 @@ RSViolinPlotTest >> testExtractDatasetFromValue [
 	self assert: result equals: data.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testModel [
 	| violinPlot aModel window |    
 	aModel := String.
@@ -112,7 +114,7 @@ RSViolinPlotTest >> testModel [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testModelOfEachViolin [
 	| violinPlot aModel1 aModel2 dataset1 dataset2 waysToGetDataFromModel |
 	aModel1 := String.
@@ -128,7 +130,7 @@ RSViolinPlotTest >> testModelOfEachViolin [
 	self assert: violinPlot data equals: {dataset1. dataset2.}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testTwoViolinPlots [
 	| violinPlot data window |
 	data := {{10. 20. 30. 40. 40. 50.}. {1. 30. 30. 30. 30. 40. 40. 50.}.}.
@@ -138,7 +140,7 @@ RSViolinPlotTest >> testTwoViolinPlots [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSViolinPlotTest >> testTwoViolinPlotsClustered [
 	| violinPlotA violinPlotB data window chart |
 	

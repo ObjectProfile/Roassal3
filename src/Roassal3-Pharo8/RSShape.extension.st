@@ -1,6 +1,6 @@
-Extension { #name : #RSShape }
+Extension { #name : 'RSShape' }
 
-{ #category : #'*Roassal3-Pharo8' }
+{ #category : '*Roassal3-Pharo8' }
 RSShape >> inspectorCanvasIn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal3

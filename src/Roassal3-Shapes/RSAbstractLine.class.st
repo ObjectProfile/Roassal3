@@ -51,8 +51,8 @@ line markerEnd: shape asMarker.
 
 "
 Class {
-	#name : #RSAbstractLine,
-	#superclass : #RSShape,
+	#name : 'RSAbstractLine',
+	#superclass : 'RSShape',
 	#traits : 'RSTMarkeable + RSTPositionable',
 	#classTraits : 'RSTMarkeable classTrait + RSTPositionable classTrait',
 	#instVars : [
@@ -61,15 +61,17 @@ Class {
 		'to',
 		'markers'
 	],
-	#category : #'Roassal3-Shapes-Lines'
+	#category : 'Roassal3-Shapes-Lines',
+	#package : 'Roassal3-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine class >> isAbstract [
 	^ self =  RSAbstractLine
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractLine class >> newFrom: aShape to: anotherShape [
 	^ self new
 		from: aShape;
@@ -77,52 +79,52 @@ RSAbstractLine class >> newFrom: aShape to: anotherShape [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RSAbstractLine >> accept: visitor [
 	visitor visitLine: self
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> attachPoint [
 	^ attachPoint
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> attachPoint: anAttachPoint [
 	attachPoint := anAttachPoint
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSAbstractLine >> capButt [
 	self border capButt
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSAbstractLine >> capRound [
 	self border capRound
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSAbstractLine >> capSquare [
 	self border capSquare
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> color [
 	^ self strokePaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> color: aColor [
 	self strokePaint: (Color colorFrom: aColor)
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : 'accessing-computed' }
 RSAbstractLine >> colorFromString: aString [
 	| colorList |
 	colorList := {
@@ -141,7 +143,7 @@ RSAbstractLine >> colorFromString: aString [
 	^ self color. "Default case, when it isn't found the color in the list"
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSAbstractLine >> computeEncompassingRectangle [
 	| cp |
 	cp := self controlPoints.
@@ -150,32 +152,32 @@ RSAbstractLine >> computeEncompassingRectangle [
 			ifNotEmpty: [ Rectangle encompassing: cp ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> controlPoints [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'style - dashes' }
+{ #category : 'style - dashes' }
 RSAbstractLine >> dashArray: arrayOfNumbers [
 	self border dashArray: arrayOfNumbers
 ]
 
-{ #category : #'style - dashes' }
+{ #category : 'style - dashes' }
 RSAbstractLine >> dashed [
 	self dashArray: #(4)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> endPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> endPoint: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> format: aString [
 	"Format for lines a shortcut to define a line styles, or markers
 
@@ -218,28 +220,28 @@ canvas open
 		self border style: style ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> from [
 	^ from
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> from: aShapeOrAPoint [
 	"Set the end point of the line"
 	from := self setAnchor: from shape: aShapeOrAPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> includedRadius [
 	^ self border width / 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> includesPoint: aPoint [
 	^ self hasBorder and: [ (self basicIncludesPoint: aPoint) or: [ self markersIncludesPoint: aPoint ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractLine >> initialize [
 	super initialize.
 	self
@@ -248,7 +250,7 @@ RSAbstractLine >> initialize [
 		withCenteredAttachPoint
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> intersects: aRectangle [
 	| rect res globalMatrix |
 	self isInACanvas ifFalse: [ ^ false ].
@@ -268,42 +270,42 @@ RSAbstractLine >> intersects: aRectangle [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> isControlPointsLine [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> isEdge [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractLine >> isLine [
 	^ true
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSAbstractLine >> joinBevel [
 	self border joinBevel
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSAbstractLine >> joinMiter [
 	self border joinMiter
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSAbstractLine >> joinRound [
 	self border joinRound
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> markerSizeScale [
 	^ 4
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RSAbstractLine >> notifyExtentChanged [
 	self announce: [ RSExtentChangedEvent new
 		shape: self;
@@ -311,28 +313,28 @@ RSAbstractLine >> notifyExtentChanged [
 		newExtent: self controlPoints first - self controlPoints last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> position [
 	^ self encompassingRectangle floatCenter
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSAbstractLine >> postCopy [
 	super postCopy.
 	self border: self border copy
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSAbstractLine >> privateMarkers [
 	^ markers
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSAbstractLine >> privateMarkers: array [
 	markers := array
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSAbstractLine >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeEdge: self.
@@ -342,26 +344,26 @@ RSAbstractLine >> remove [
 	super remove
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractLine >> removeFromParent: aShape [
 	aShape ifNil: [ ^ self ].
 	aShape isPoint ifTrue: [ ^ self ].
 	aShape connectedLines remove: self ifAbsent: [  ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSAbstractLine >> renderOn: aCanvas [
 	aCanvas addEdge: self.
 	self update
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSAbstractLine >> resetPath [
 	super resetPath.
 	self resetBBox
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSAbstractLine >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath.
@@ -369,76 +371,76 @@ RSAbstractLine >> sessionChanged [
 	self markersDo: [ :mark | mark shape sessionChanged ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractLine >> setAnchor: ref shape: anObject [
 	ref ifNotNil: [ ref removeConnectedLine: self ].
 	anObject isPoint ifFalse: [ anObject addConnectedLine: self ].
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> startPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> startPoint: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> strokeColor: aColor [
 	self strokePaint: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> strokePaint [
 	^ self border paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> strokePaint: aPaint [
 	self border paint: aPaint.
 	self markersDo: [:m | m shape paint: aPaint ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> to [
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> to: aShapeOrAPoint [
 	"Set the end point of the line"
 	to := self setAnchor: to shape: aShapeOrAPoint
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAbstractLine >> update [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLine >> width: aNumber [
 	self border width: aNumber
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> withBorderAttachPoint [
 	self attachPoint: RSBorderAttachPoint new
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> withCenteredAttachPoint [
 	self attachPoint: RSCenteredAttachPoint new
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> withHorizontalAttachPoint [
 	self attachPoint: RSHorizontalAttachPoint new
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSAbstractLine >> withVerticalAttachPoint [
 	self attachPoint: RSVerticalAttachPoint new
 ]

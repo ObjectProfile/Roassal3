@@ -7,8 +7,8 @@ Check this example `RSColorPaletteChooser class >> #example1`
 
 "
 Class {
-	#name : #RSColorPaletteChooser,
-	#superclass : #SpPresenter,
+	#name : 'RSColorPaletteChooser',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'buttons',
 		'colors',
@@ -17,10 +17,12 @@ Class {
 		'overHighlight',
 		'boxColorHighlight'
 	],
-	#category : #'Roassal3-Spec-Examples-Menu'
+	#category : 'Roassal3-Spec-Examples-Menu',
+	#package : 'Roassal3-Spec-Examples',
+	#tag : 'Menu'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSColorPaletteChooser class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
@@ -29,7 +31,7 @@ RSColorPaletteChooser class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSColorPaletteChooser class >> example1 [
 	| canvas palette |
 	canvas := RSCanvas new.
@@ -60,7 +62,7 @@ RSColorPaletteChooser class >> example1 [
 	canvas open
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> boxColorFor: color [
 
 	| label box |
@@ -83,12 +85,12 @@ RSColorPaletteChooser >> boxColorFor: color [
 		  yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> boxesFor: anArray [
 	^ anArray collect: [ :color | self boxColorFor: color ] as: RSGroup
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSColorPaletteChooser >> buttonClick: evt [
 	"first we unhighlight the mouse over highlight"
 	overHighlight doUnhighlight: evt shape.
@@ -98,7 +100,7 @@ RSColorPaletteChooser >> buttonClick: evt [
 	evt signalUpdate
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> buttonFor: m [
 	| label box |
 	label := RSLabel new
@@ -114,7 +116,7 @@ RSColorPaletteChooser >> buttonFor: m [
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> buttonModels [
 	^ {
 		('Diverging' -> {
@@ -134,7 +136,7 @@ RSColorPaletteChooser >> buttonModels [
 			(0 @ 30) }) }
 ]
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 RSColorPaletteChooser >> clipTextFor: anObject [
 	| method |
 	anObject isColor
@@ -143,7 +145,7 @@ RSColorPaletteChooser >> clipTextFor: anObject [
 	^ RSColorPalette name, ' ',  currentPalette, ' ', method selector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSColorPaletteChooser >> connectPresenters [
 	self currentPalette: #Diverging.
 	buttons script: [ :canvas |
@@ -152,7 +154,7 @@ RSColorPaletteChooser >> connectPresenters [
 		self renderColorPaletteOn: canvas ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColorPaletteChooser >> controllerInteraction [
 	| controls |
 	controls := RSCanvasController new.
@@ -170,7 +172,7 @@ RSColorPaletteChooser >> controllerInteraction [
 	^ controls
 ]
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 RSColorPaletteChooser >> copyToClipboard: object [
 	| name |
 	Clipboard clipboardText: (self clipTextFor: object).
@@ -179,13 +181,13 @@ RSColorPaletteChooser >> copyToClipboard: object [
 	self inform: name,' copied to clipboard !!!'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColorPaletteChooser >> currentPalette: newPaletteSelector [
 	currentPalette := newPaletteSelector asLowercase asSymbol.
 	colors refresh
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSColorPaletteChooser >> initializeInteractions [
 	selectedHighlight := RSHighlightable new.
 	"because it is a composite and the first children is the background"
@@ -217,14 +219,14 @@ RSColorPaletteChooser >> initializeInteractions [
 	boxColorHighlight highlightColor: Color black
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSColorPaletteChooser >> initializePresenters [
 	self initializeInteractions.
 	buttons := self newRoassal.
 	colors := self newRoassal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSColorPaletteChooser >> initializeWindow: aWindow [
 	aWindow
 		title: 'Color Palettes';
@@ -232,7 +234,7 @@ RSColorPaletteChooser >> initializeWindow: aWindow [
 		centered
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> paletteFor: method [
 	| shapes scale |
 	scale :=  method selector value: currentPalette.
@@ -254,7 +256,7 @@ RSColorPaletteChooser >> paletteFor: method [
 			do: [ :evt | self copyToClipboard: evt shape model]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> paletteFor: palette method: method [
 
 	| shapes |
@@ -277,7 +279,7 @@ RSColorPaletteChooser >> paletteFor: palette method: method [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColorPaletteChooser >> palettes [
 	| colorPalette |
 	colorPalette := currentPalette value: RSColorPalette.
@@ -286,7 +288,7 @@ RSColorPaletteChooser >> palettes [
 		collect: [ :met | self paletteFor: (met selector value: colorPalette) method: met ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSColorPaletteChooser >> polygonFor: points [
 	^ RSPolygon new
 		withBorder;
@@ -302,7 +304,7 @@ RSColorPaletteChooser >> polygonFor: points [
 		yourself
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSColorPaletteChooser >> relayout: evt [
 	| canvas |
 	canvas := evt canvas.
@@ -313,12 +315,12 @@ RSColorPaletteChooser >> relayout: evt [
 	canvas camera translateTo: canvas extent / -2 + (20@0)
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 RSColorPaletteChooser >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSColorPaletteChooser >> renderButtonsOn: canvas [
 	| data buttonShapes |
 	canvas color: '2d5c7f'.
@@ -337,7 +339,7 @@ RSColorPaletteChooser >> renderButtonsOn: canvas [
 	canvas when: RSExtentChangedEvent send: #zoomToFit to: canvas
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 	canvas color: 'f8f9fc'.
 	canvas addAll: self palettes.
@@ -345,7 +347,7 @@ RSColorPaletteChooser >> renderColorPaletteOn: canvas [
 	canvas @ self controllerInteraction
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSColorPaletteChooser >> run [
 	<script: 'self new asWindow open'>
 ]

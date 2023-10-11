@@ -2,24 +2,26 @@
 I return the linear interpolation
 "
 Class {
-	#name : #RSLinearInterpolator,
-	#superclass : #NSInterpolator,
-	#category : #'Roassal3-Animation-Easing'
+	#name : 'RSLinearInterpolator',
+	#superclass : 'NSInterpolator',
+	#category : 'Roassal3-Animation-Easing',
+	#package : 'Roassal3-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #modes }
+{ #category : 'modes' }
 RSLinearInterpolator >> in [
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 RSLinearInterpolator >> inOut [
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSLinearInterpolator >> interpolate: aNumber [
 	^ aNumber
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 RSLinearInterpolator >> out [
 ]

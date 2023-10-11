@@ -1,15 +1,17 @@
 Class {
-	#name : #RSLinePlotTest,
-	#superclass : #RSAbstractPlotTest,
-	#category : #'Roassal3-Chart-Tests-Base'
+	#name : 'RSLinePlotTest',
+	#superclass : 'RSAbstractPlotTest',
+	#category : 'Roassal3-Chart-Tests-Base',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> classToTest [
 	^ RSLinePlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testDefaultValues [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -20,7 +22,7 @@ RSLinePlotTest >> testDefaultValues [
 	self assert: p padding equals: 5 @ 5.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testLineStroke [
 	| p |
 	p := RSLinePlot y: #(1 2 3 4).
@@ -38,7 +40,7 @@ RSLinePlotTest >> testLineStroke [
 	self assert: p border style equals: (RSStrokeStyle fromString: '.').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMarkerShape [
 	| circleMarkersPlot squareMarkersPlot |
 	circleMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -48,7 +50,7 @@ RSLinePlotTest >> testMarkerShape [
 	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMarkerSize [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -57,7 +59,7 @@ RSLinePlotTest >> testMarkerSize [
 	self assert: p shape markerStart shape extent equals: 4@4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMinMaxValue [
 
 	plot := RSLinePlot new y: #(10 13 15).
@@ -68,7 +70,7 @@ RSLinePlotTest >> testMinMaxValue [
 	self assert: plot maxValueY equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testPlotWithOneCollection [
 	| p window |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -85,7 +87,7 @@ RSLinePlotTest >> testPlotWithOneCollection [
 	self flag: 'Add title and rename format2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLine [
 
 	| values line canvas |
@@ -107,7 +109,7 @@ RSLinePlotTest >> testWithWeirdValuesLine [
 	self assert: line controlPoints size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLineWithTicks [
 
 	| values line canvas |
@@ -128,7 +130,7 @@ RSLinePlotTest >> testWithWeirdValuesLineWithTicks [
 	self assert: line controlPoints size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLineWithTicks2 [
 
 	| canvas labels |

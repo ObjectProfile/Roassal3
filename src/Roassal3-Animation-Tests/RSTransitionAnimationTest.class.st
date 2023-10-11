@@ -2,12 +2,13 @@
 I have test for animation in trachel
 "
 Class {
-	#name : #RSTransitionAnimationTest,
-	#superclass : #RSAnimationTest,
-	#category : #'Roassal3-Animation-Tests'
+	#name : 'RSTransitionAnimationTest',
+	#superclass : 'RSAnimationTest',
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTransitionAnimationTest >> testDuration [
 	| animation |
 	animation := RSTransitionAnimation new duration: 2 seconds.
@@ -23,7 +24,7 @@ RSTransitionAnimationTest >> testDuration [
 	self assert: animation allDuration equals: 2 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTransitionAnimationTest >> testStep [
 	| value |
 	value := 0.
@@ -35,7 +36,7 @@ RSTransitionAnimationTest >> testStep [
 	self assert: value equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTransitionAnimationTest >> testStepEvent [
 	| value loop animation |
 	value := nil.
@@ -55,7 +56,7 @@ RSTransitionAnimationTest >> testStepEvent [
 	self deny: animation isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTransitionAnimationTest >> testStepReset [
 	| animation |
 	animation := canvas newAnimation
@@ -74,7 +75,7 @@ RSTransitionAnimationTest >> testStepReset [
 	self runAnimation: animation threshold: 500
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTransitionAnimationTest >> testTransitionAnimationCreation [
 	self
 		createAnimationWith: [ canvas newAnimation ]

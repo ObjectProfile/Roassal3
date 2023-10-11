@@ -2,8 +2,8 @@
 Common class to layout editors
 "
 Class {
-	#name : #RSAbstractLayoutPresenter,
-	#superclass : #SpPresenter,
+	#name : 'RSAbstractLayoutPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'controls',
 		'roassalCanvas',
@@ -11,20 +11,22 @@ Class {
 		'layoutDefinition',
 		'graphTextEditor'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : 'Roassal3-LayoutStudio-Core',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Core'
 }
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSAbstractLayoutPresenter class >> open [
 	^ self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> apply: aRSLayoutField with: anObject [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> attributes [
 	| attributes |
 	attributes := self instantiate: RSLayoutControls.
@@ -32,7 +34,7 @@ RSAbstractLayoutPresenter >> attributes [
 	^ attributes
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSAbstractLayoutPresenter >> changeLayout [
 	| selection |
 	selection := self openLayout.
@@ -40,27 +42,27 @@ RSAbstractLayoutPresenter >> changeLayout [
 	self edit: selection.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> controls [
 	^ controls
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> createBoxLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> currentLayout [
 	^ currentLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> currentLayout: aRSLayout [
 	currentLayout := aRSLayout
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> edit: anAssociation [
 	| class definition |
 	class := anAssociation key.
@@ -68,7 +70,7 @@ RSAbstractLayoutPresenter >> edit: anAssociation [
 	self editLayout: class new definition: definition.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> editLayout: newLayout definition: definition [
 	self
 		currentLayout: newLayout;
@@ -79,17 +81,17 @@ RSAbstractLayoutPresenter >> editLayout: newLayout definition: definition [
 	self update
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> layoutDefinition [
 	^ layoutDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> layoutDefinition: aRSLayoutDefinition [
 	layoutDefinition := aRSLayoutDefinition
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSAbstractLayoutPresenter >> openLayout [
 	| selection items |
 	items := RSLayout classesWithDefinitionsToEdit.
@@ -102,23 +104,23 @@ RSAbstractLayoutPresenter >> openLayout [
 	^ (items detect: [ :each | each key = selection ]).
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAbstractLayoutPresenter >> refresh [
 	layoutDefinition update.
 	roassalCanvas refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLayoutPresenter >> roassalCanvas [
 	^ roassalCanvas
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> titlePrefix [
 	^ 'Edit: '
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractLayoutPresenter >> updateToolPanel [
 	| newControls |
 	newControls := self newPresenter.

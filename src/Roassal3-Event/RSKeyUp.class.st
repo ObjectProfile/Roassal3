@@ -16,7 +16,8 @@ c open
 ]]]
 "
 Class {
-	#name : #RSKeyUp,
-	#superclass : #RSKeyboardEvent,
-	#category : #'Roassal3-Event'
+	#name : 'RSKeyUp',
+	#superclass : 'RSKeyboardEvent',
+	#category : 'Roassal3-Event',
+	#package : 'Roassal3-Event'
 }

@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractGridLayout }
+Extension { #name : 'RSAbstractGridLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSAbstractGridLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutNumberOrBlockField new

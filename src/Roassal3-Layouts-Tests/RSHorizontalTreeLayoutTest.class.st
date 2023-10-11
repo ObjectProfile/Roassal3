@@ -1,22 +1,23 @@
 Class {
-	#name : #RSHorizontalTreeLayoutTest,
-	#superclass : #RSLayoutTest,
-	#category : #'Roassal3-Layouts-Tests'
+	#name : 'RSHorizontalTreeLayoutTest',
+	#superclass : 'RSLayoutTest',
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testBasic [
 	RSHorizontalTreeLayout on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(7.5@23.5). (32.5@15.5). (32.5@35.5). (57.5@11.5). (57.5@23.5). (57.5@31.5). (57.5@39.5). (82.5@7.5). (82.5@15.5). (82.5@23.5)}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testBasicWithHorizontalGap [
 	RSHorizontalTreeLayout new horizontalGap: 50; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(7.5@23.5). (62.5@15.5). (62.5@35.5). (117.5@11.5). (117.5@23.5). (117.5@31.5). (117.5@39.5). (172.5@7.5). (172.5@15.5). (172.5@23.5)}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testBasicWithLeftGap [
 	| withNoGap withGap |
 	RSHorizontalTreeLayout new leftGap: 15; on: canvas nodes.
@@ -25,7 +26,7 @@ RSHorizontalTreeLayoutTest >> testBasicWithLeftGap [
 	self assert: (shapes collect: #position) asArray equals: withGap
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testBasicWithTopGap [
 	| withNoGap withGap |
 	RSHorizontalTreeLayout new topGap: 15; on: canvas nodes.
@@ -34,13 +35,13 @@ RSHorizontalTreeLayoutTest >> testBasicWithTopGap [
 	self assert: (shapes collect: #position) asArray equals: withGap
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testBasicWithVerticalGap [
 	RSHorizontalTreeLayout new verticalGap: 50; on: canvas nodes.
 	self assert: (shapes collect: #position) asArray equals: {(7.5@117.5). (32.5@62.5). (32.5@200.0). (57.5@35.0). (57.5@117.5). (57.5@172.5). (57.5@227.5). (82.5@7.5). (82.5@62.5). (82.5@117.5)}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHorizontalTreeLayoutTest >> testCycles [
 	| chars |
 	canvas := RSCanvas new.

@@ -1,6 +1,6 @@
-Extension { #name : #RSClusteringLayout }
+Extension { #name : 'RSClusteringLayout' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSClusteringLayout class >> exampleMondrian [
 	| m nodes class |
 	class := Smalltalk globals
@@ -25,7 +25,7 @@ RSClusteringLayout class >> exampleMondrian [
 	^ m canvas open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSClusteringLayout class >> exampleNumbers [
 	| m nodes class |
 	class := Smalltalk globals

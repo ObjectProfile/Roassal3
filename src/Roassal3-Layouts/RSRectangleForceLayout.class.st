@@ -3,53 +3,55 @@ I am a specific kind of force based layout that has an enclosing rectangle for e
 
 "
 Class {
-	#name : #RSRectangleForceLayout,
-	#superclass : #RSForceBasedLayout,
+	#name : 'RSRectangleForceLayout',
+	#superclass : 'RSForceBasedLayout',
 	#instVars : [
 		'enclosingRectangle',
 		'enclosingThreshold',
 		'enclosingForce'
 	],
-	#category : #'Roassal3-Layouts-Force'
+	#category : 'Roassal3-Layouts-Force',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Force'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingForce [
 	^ enclosingForce
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingForce: aNumber [
 	"Establishes the force that is applied to the elements when they are close enough to the enclosing rectangle."
 
 	enclosingForce := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingRectangle [
 	^ enclosingRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingRectangle: aRectangleInCanvasSpaceCoordinates [
 	"Establishes the rectangle to enclose the elements."
 
 	enclosingRectangle := aRectangleInCanvasSpaceCoordinates
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingThreshold [
 	^ enclosingThreshold
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleForceLayout >> enclosingThreshold: aNumber [
 	"Establishes the distance from the enclosing rectangle where the repulsion force applies to elements."
 
 	enclosingThreshold := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSRectangleForceLayout >> initialize [
 	super initialize.
 
@@ -58,13 +60,13 @@ RSRectangleForceLayout >> initialize [
 	enclosingRectangle := Rectangle floatCenter: 0@0 extent: 500@500.
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSRectangleForceLayout >> step [
 	self stepRectangleForces.
 	super step
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSRectangleForceLayout >> stepRectangleForces [
 	"Apply a repulsion force to elements that are close to the enclosing rectangle."
 

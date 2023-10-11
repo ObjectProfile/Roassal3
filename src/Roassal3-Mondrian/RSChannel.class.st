@@ -1,6 +1,6 @@
 Class {
-	#name : #RSChannel,
-	#superclass : #Object,
+	#name : 'RSChannel',
+	#superclass : 'Object',
 	#instVars : [
 		'inputGroup',
 		'outputGroup',
@@ -12,10 +12,12 @@ Class {
 		'toggleOnCallback',
 		'toggleOffCallback'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : 'Roassal3-Mondrian-Connections',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Connections'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSChannel >> build [
 
 	inputGroup
@@ -53,53 +55,53 @@ RSChannel >> build [
 		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> color: aColor [
 	color := aColor.
 	highlightable := RSHighlightable new.
 	highlightable highlightColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> defaultColor [
 	^ Color blue
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> doHighlight [
 	highlightable doHighlightShapes: outputGroup
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> doMark [
 
 	outputGroup do: [ :e | self mark: e ]
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> doUnhighlight [
 
 	highlightable unhighlightRecordedShapes: outputGroup
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> doUnmark [
 
 	outputGroup do: [ :e | self unmark: e ]
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> getAllMarksFrom: aShape [
 	"Return all the marks from a shape"
 	^ aShape properties associations select: [ :ass | ass key beginsWith: #mark ] thenCollect: #value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChannel >> initialize [
 	super initialize.
 	isClicked := false.
@@ -112,23 +114,23 @@ RSChannel >> initialize [
 	toggleOnCallback := toggleOffCallback := [ :aShape | "Do nothing for now" ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSChannel >> input: aCollection [
 	self assert: [ aCollection isCollection ] description: 'Should provide a collection'.
 	inputGroup := aCollection asGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> isMarked: shape [
 	^ shape hasProperty: self symbolMarker
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSChannel >> makeNotClickable [
 	isClickable := false
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> mark: shape [
 
 	"Mark a shape by locating below it a red bar. Bars can be stacked in case several marks are on the same shape"
@@ -161,54 +163,54 @@ RSChannel >> mark: shape [
 	shape propertyAt: self symbolMarker put: aMark
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> markGoUp [
 
 	marksGoUpward := true
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> markHeight [
 
 	^ 5
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSChannel >> output: aCollection [
 	self assert: [ aCollection isCollection ] description: 'Should provide a collection'.
 	outputGroup := aCollection asGroup
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> symbolMarker [
 	^ #mark, self hash asString asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> toggleOffCallback [
 
 	^ toggleOffCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> toggleOffCallback: anObject [
 
 	toggleOffCallback := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> toggleOnCallback [
 
 	^ toggleOnCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChannel >> toggleOnCallback: anObject [
 
 	toggleOnCallback := anObject
 ]
 
-{ #category : #'private - highlight' }
+{ #category : 'private - highlight' }
 RSChannel >> unmark: shape [
 	| mark |
 	mark := shape propertyAt: self symbolMarker.

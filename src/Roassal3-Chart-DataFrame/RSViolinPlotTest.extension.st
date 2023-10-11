@@ -1,6 +1,6 @@
-Extension { #name : #RSViolinPlotTest }
+Extension { #name : 'RSViolinPlotTest' }
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : '*Roassal3-Chart-DataFrame' }
 RSViolinPlotTest >> testModelDataFrame [
 	| violinPlot aModel window |	
 	aModel := AIDatasets loadToothGrowth.
@@ -13,7 +13,7 @@ RSViolinPlotTest >> testModelDataFrame [
 	window delete.
 ]
 
-{ #category : #'*Roassal3-Chart-DataFrame' }
+{ #category : '*Roassal3-Chart-DataFrame' }
 RSViolinPlotTest >> testModelOfEachViolinDataSeries [
 	| violinPlot window dataFrame dataSeries1 dataSeries2 |
 	dataFrame := AIDatasets loadToothGrowth.

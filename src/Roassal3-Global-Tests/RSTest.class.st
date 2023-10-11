@@ -2,17 +2,19 @@
 I am the top class for tests
 "
 Class {
-	#name : #RSTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-Global-Tests-Core'
+	#name : 'RSTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-Global-Tests-Core',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSTest class >> isAbstract [
 	^ self = RSTest
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RSTest >> assertIntegerPosition: shapes equals: anArray [
 	self 
 		assert: (shapes collect: [ :each | each position asIntegerPoint ] as: Array)

@@ -2,19 +2,20 @@
 I have test for sequential animation
 "
 Class {
-	#name : #RSSequentialAnimationTest,
-	#superclass : #RSAnimationTest,
-	#category : #'Roassal3-Animation-Tests'
+	#name : 'RSSequentialAnimationTest',
+	#superclass : 'RSAnimationTest',
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequentialAnimationTest >> testAddingAnimations [
 	self
 		addingInComposite: canvas sequentialAnimation
 		duration: 3 second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequentialAnimationTest >> testDuration [
 	| animation |
 	animation := RSSequentialAnimation new.
@@ -41,14 +42,14 @@ RSSequentialAnimationTest >> testDuration [
 	self assert: animation allDuration equals: 2 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequentialAnimationTest >> testSequentialAnimationCreation [
 	self
 		createAnimationWith: [ canvas animationFrom: {} ]
 		animationClass: RSSequentialAnimation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequentialAnimationTest >> testStep [
 	| value animation |
 	value := 0.
@@ -62,7 +63,7 @@ RSSequentialAnimationTest >> testStep [
 	self assert: value equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequentialAnimationTest >> testStepEvent [
 	| value loop animation |
 	value := nil.

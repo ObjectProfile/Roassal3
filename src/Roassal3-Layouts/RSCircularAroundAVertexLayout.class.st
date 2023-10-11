@@ -5,27 +5,29 @@ Then the layout moves the shape with most connexions into the center.
 Users can select the center element using `centerIndex:`, if the center element is index in the collection of objects is not defined, then would be computed using the element with more connections
 "
 Class {
-	#name : #RSCircularAroundAVertexLayout,
-	#superclass : #RSAbstractCircleLayout,
+	#name : 'RSCircularAroundAVertexLayout',
+	#superclass : 'RSAbstractCircleLayout',
 	#instVars : [
 		'centerIndex'
 	],
-	#category : #'Roassal3-Layouts-Circle'
+	#category : 'Roassal3-Layouts-Circle',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Circle'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircularAroundAVertexLayout >> centerIndex [
 
 	^ centerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircularAroundAVertexLayout >> centerIndex: aNumber [
 	"if center index is nil the would be computed"
 	centerIndex := aNumber
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSCircularAroundAVertexLayout >> doExecute: shapes [
 	| centerShape circleLayout rad |
 	centerShape := self findCenterIn: shapes.
@@ -42,7 +44,7 @@ RSCircularAroundAVertexLayout >> doExecute: shapes [
 	centerShape position: (circleLayout computeCenter: rad)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSCircularAroundAVertexLayout >> findCenterIn: aCollection [
 	| max currentSize center |
 	centerIndex ifNotNil: [ ^ aCollection at: centerIndex ].

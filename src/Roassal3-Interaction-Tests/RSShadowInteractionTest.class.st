@@ -2,17 +2,19 @@
 A RSShadowInteractionTest is a test class for testing the behavior of RSShadowInteraction
 "
 Class {
-	#name : #RSShadowInteractionTest,
-	#superclass : #TestCase,
+	#name : 'RSShadowInteractionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'canvas',
 		'shape',
 		'interaction'
 	],
-	#category : #'Roassal3-Interaction-Tests-Selection'
+	#category : 'Roassal3-Interaction-Tests-Selection',
+	#package : 'Roassal3-Interaction-Tests',
+	#tag : 'Selection'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSShadowInteractionTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -22,7 +24,7 @@ RSShadowInteractionTest >> setUp [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testAddShadowSeveralTimesOnAShape [
 
 	shape @ interaction.
@@ -31,7 +33,7 @@ RSShadowInteractionTest >> testAddShadowSeveralTimesOnAShape [
 	self assert: canvas shapes size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testRemoveAllShadows [
 
 	| shapes |
@@ -45,7 +47,7 @@ RSShadowInteractionTest >> testRemoveAllShadows [
 	self assert: (shapes allSatisfy: [ :s | s shadow isNil ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testRemoveShadowFromShape [
 
 	shape @ interaction.
@@ -53,7 +55,7 @@ RSShadowInteractionTest >> testRemoveShadowFromShape [
 	self assert: shape shadow isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testRemoveShadowWhenShadowIsRemoved [
 
 	shape @ interaction.
@@ -62,7 +64,7 @@ RSShadowInteractionTest >> testRemoveShadowWhenShadowIsRemoved [
 	self assert: canvas shapes size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testShadowUpdatePositionWhenShapeMoves [
 
 	shape @ interaction.
@@ -70,14 +72,14 @@ RSShadowInteractionTest >> testShadowUpdatePositionWhenShapeMoves [
 	self assert: shape shadow position equals: shape position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testShapeHasShadow [
 
 	shape @ interaction.
 	self assert: shape shadow notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testShapeIsPushedFront [
 
 	canvas add: RSBox new.
@@ -88,7 +90,7 @@ RSShadowInteractionTest >> testShapeIsPushedFront [
 	self assert: canvas shapes second equals: shape
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShadowInteractionTest >> testWhenCanvasScaleChangedUpdatesShadows [
 
 	| shapes oldShadows newShadows |

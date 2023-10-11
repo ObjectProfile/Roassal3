@@ -2,22 +2,24 @@
 used to calculate the gaps between circles
 "
 Class {
-	#name : #RSCircleGapTree,
-	#superclass : #RSObject,
+	#name : 'RSCircleGapTree',
+	#superclass : 'RSObject',
 	#instVars : [
 		'circles'
 	],
-	#category : #'Roassal3-TreeMap-Circular'
+	#category : 'Roassal3-TreeMap-Circular',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Circular'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleGapTree class >> circle1: aRSCircleTree circle2: aRSCircleTree2 [
 	^ self new
 		circles: { aRSCircleTree. aRSCircleTree2. nil };
 		yourself
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleGapTree >> addGapsTo: gaps closest: closest [
 	| innerGap clazz |
 	clazz := self class.
@@ -29,17 +31,17 @@ RSCircleGapTree >> addGapsTo: gaps closest: closest [
 	gaps add: innerGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleGapTree >> circles [
 	^ circles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleGapTree >> circles: aCollection [
 	circles := aCollection
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleGapTree >> makeGapCircle: r [
 	| in1 in2 r1 r2 d a h p2 x0 y0 x1 y1 x2 y2 |
 	in1 := circles first.

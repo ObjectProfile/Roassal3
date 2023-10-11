@@ -2,24 +2,26 @@
 Vector used with some custom methods to calculate the node position
 "
 Class {
-	#name : #RSCircleVector,
-	#superclass : #RSObject,
+	#name : 'RSCircleVector',
+	#superclass : 'RSObject',
 	#instVars : [
 		'x',
 		'y',
 		'z'
 	],
-	#category : #'Roassal3-TreeMap-Circular'
+	#category : 'Roassal3-TreeMap-Circular',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Circular'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleVector class >> circle: c1 minus: c0 [
 	^ self
 		x: c1 x - c0 x
 		y: c1 y - c0 y
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleVector class >> x: x y: y [
 	^ self new
 		x: x;
@@ -27,7 +29,7 @@ RSCircleVector class >> x: x y: y [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleVector class >> x: x y: y z: z [
 	^ self new
 		x: x;
@@ -36,7 +38,7 @@ RSCircleVector class >> x: x y: y z: z [
 		yourself
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 RSCircleVector >> - w [
 	^ self class
 		x: x - w x
@@ -44,14 +46,14 @@ RSCircleVector >> - w [
 		z: z - w z
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> add: rhs [
 	x := x + rhs x.
 	y := y + rhs y.
 	z := z + rhs z
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> cross: w [
 	^ self class
 		x: (y * w z) - (z * w y)
@@ -59,12 +61,12 @@ RSCircleVector >> cross: w [
 		z: (x * w y) - (y * w x)
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> dot: w [
 	^ (x * w x) + (y * w y) + (z * w z)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCircleVector >> initialize [
 	super initialize.
 	x := 0.
@@ -72,24 +74,24 @@ RSCircleVector >> initialize [
 	z := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSCircleVector >> isZero [
 	^ x isZero and: [ y isZero and: [ z isZero ] ]
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> lengthenBy: val [
 	| mag |
 	mag := self magnitude.
 	self scaleBy: ((mag + val)/ mag)
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> magnitude [
 	^ ( (x * x) + (y * y) + (z * z) ) sqrt
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> normalize [
 	| mag |
 	mag := self magnitude.
@@ -100,13 +102,13 @@ RSCircleVector >> normalize [
 	^ mag
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> normalize: length [
 	self normalize.
 	self scaleBy: length
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> rotate: axis angle: angle [
 	| n |
 	n := self class x: axis x y: axis y z: axis z.
@@ -117,44 +119,44 @@ RSCircleVector >> rotate: axis angle: angle [
 	^ n
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> scaleBy: factor [
 	x := x * factor.
 	y := y * factor.
 	z := z * factor
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSCircleVector >> shortenBy: val [
 	self lengthenBy: val negated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> x [
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> x: anInteger [
 	x := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> y [
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> y: anInteger [
 	y := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> z [
 	^ z
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVector >> z: aNumber [
 	z := aNumber
 ]

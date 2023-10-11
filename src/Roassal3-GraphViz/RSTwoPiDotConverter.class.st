@@ -10,12 +10,14 @@ Hello->World
 ```
 "
 Class {
-	#name : #RSTwoPiDotConverter,
-	#superclass : #RSAbstractDotConverter,
-	#category : #'Roassal3-GraphViz-Core'
+	#name : 'RSTwoPiDotConverter',
+	#superclass : 'RSAbstractDotConverter',
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSTwoPiDotConverter >> writeHeader: aRSGroup [
 	stream
 		<< 'digraph Roassal3{ '; crlf;
@@ -24,7 +26,7 @@ RSTwoPiDotConverter >> writeHeader: aRSGroup [
 		<< 'layout=twopi;'; crlf
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSTwoPiDotConverter >> writeLineConnector: aLine [
 	stream << '->'
 ]

@@ -2,12 +2,13 @@
 I have basic examples of legend builder
 "
 Class {
-	#name : #RSLegendExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Legend-Examples'
+	#name : 'RSLegendExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Legend-Examples',
+	#package : 'Roassal3-Legend-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> canvasExample [
 	| canvas classes |
 	canvas := RSCanvas new.
@@ -35,7 +36,7 @@ RSLegendExamples >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| b |
@@ -49,7 +50,7 @@ RSLegendExamples >> example01Basic [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example02Border [
 	<script: 'self new example02Border open'>
 	| b |
@@ -65,7 +66,7 @@ RSLegendExamples >> example02Border [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example03Vertical [
 	<script: 'self new example03Vertical open'>
 	| b |
@@ -86,7 +87,7 @@ RSLegendExamples >> example03Vertical [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example04Horizontal [
 	<script: 'self new example04Horizontal open'>
 	| b |
@@ -107,7 +108,7 @@ RSLegendExamples >> example04Horizontal [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example05Colors [
 	<script: 'self new example05Colors open'>
 	| b color |
@@ -129,7 +130,7 @@ RSLegendExamples >> example05Colors [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example06BoxColors [
 	<script: 'self new example06BoxColors open'>
 	| b color |
@@ -151,7 +152,7 @@ RSLegendExamples >> example06BoxColors [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example07BoxFading [
 	<script: 'self new example07BoxFading open'>
 	| b |
@@ -164,7 +165,7 @@ RSLegendExamples >> example07BoxFading [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example08Polygons [
 	<script: 'self new example08Polygons open'>
 	| b |
@@ -177,7 +178,7 @@ RSLegendExamples >> example08Polygons [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example09Lines [
 	<script: 'self new example09Lines open'>
 	| b |
@@ -197,7 +198,7 @@ RSLegendExamples >> example09Lines [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example10Location [
 	<script: 'self new example10Location open setLabel: ''TSShape withAllSubclasses'''>
 	| canvas classes b |
@@ -244,7 +245,7 @@ RSLegendExamples >> example10Location [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example11OnDemand [
 	<script: 'self new example11OnDemand open setLabel: ''RSShape withAllSubclasses'''>
 	| b canvas |
@@ -271,7 +272,7 @@ RSLegendExamples >> example11OnDemand [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example12OnPopup [
 	<script: 'self new example12OnPopup open'>
 	| canvas shapes interaction popup |
@@ -319,7 +320,7 @@ RSLegendExamples >> example12OnPopup [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLegendExamples >> example13LinesOfCode [
 	<script: 'self new example13LinesOfCode open'>
 	| canvas |

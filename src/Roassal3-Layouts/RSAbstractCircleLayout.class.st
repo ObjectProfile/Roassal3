@@ -10,8 +10,8 @@ My instance variables are
 You have to override method `doExecute:` to perform the layout process.
 "
 Class {
-	#name : #RSAbstractCircleLayout,
-	#superclass : #RSLayout,
+	#name : 'RSAbstractCircleLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'initialAngle',
 		'scaleFactor',
@@ -19,53 +19,55 @@ Class {
 		'layoutRadius',
 		'centerPoint'
 	],
-	#category : #'Roassal3-Layouts-Circle'
+	#category : 'Roassal3-Layouts-Circle',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Circle'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractCircleLayout class >> isAbstract [
 	^ self = RSAbstractCircleLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> angleIncrement [
 	^ angleIncrement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> angleIncrement: aNumberInRadian [
 	angleIncrement := aNumberInRadian
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> center [
 	^ self centerPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> center: aPoint [
 	self centerPoint: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> centerPoint [
 
 	^ centerPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> centerPoint: aPoint [
 
 	centerPoint := aPoint
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractCircleLayout >> computeCenter: aNumber [
 	"returns the defined center point"
 	^ centerPoint ifNil: [ aNumber @ aNumber ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 
@@ -74,7 +76,7 @@ RSAbstractCircleLayout >> computeIncrementalAngleFor: elements [
 		ifFalse: [ angleIncrement ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractCircleLayout >> computeRadiusFor: elements [
 	"Return the radius of the circle. If none has been set (i.e., initialRadius = 0), then it is computed as the scale factor times the number of elements"
 	^ layoutRadius = 0
@@ -82,59 +84,59 @@ RSAbstractCircleLayout >> computeRadiusFor: elements [
 		ifFalse: [ layoutRadius ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialAngle [
 	"Return the initial angle, in radian"
 	^ initialAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialAngle: aFloat [
 	"aFloat is an angle in Radian."
 	initialAngle := aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialAngleInDegree [
 	"Return the initial angle in degree"
 	^ self initialAngle radiansToDegrees
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialAngleInDegree: aNumber [
 	"Set the initial angle in radian"
 	self initialAngle: aNumber degreesToRadians
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialIncrementalAngle [
 	"Return the initial incremental angle"
 	^ self angleIncrement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialIncrementalAngle: aNumberInRadian [
 	self angleIncrement: aNumberInRadian
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialIncrementalAngleInDegree: aNumberInDegree [
 	self initialIncrementalAngle: aNumberInDegree degreesToRadians
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialRadius [
 	"Return the radius in pixels of the circle"
 	^ layoutRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> initialRadius: aNumber [
 	"Set the radius of the circle"
 	layoutRadius := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractCircleLayout >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 
@@ -149,7 +151,7 @@ RSAbstractCircleLayout >> initialize [
 		angleIncrement: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> radius: aNumber [
 	"
 	Set the radius in pixels of the layout
@@ -157,17 +159,17 @@ RSAbstractCircleLayout >> radius: aNumber [
 	^ self initialRadius: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> scaleBy: aNumber [
 	self scaleFactor: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> scaleFactor [
 	^ scaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractCircleLayout >> scaleFactor: aNumber [
 	scaleFactor := aNumber
 ]

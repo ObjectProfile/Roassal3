@@ -2,38 +2,40 @@
 TODO
 "
 Class {
-	#name : #RSGraphvizLine,
-	#superclass : #RSSVGPathLine,
-	#category : #'Roassal3-GraphViz-Core'
+	#name : 'RSGraphvizLine',
+	#superclass : 'RSSVGPathLine',
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> color [
 	^ self border color
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> color: aColor [
 	self strokeColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphvizLine >> controlPoints [
 	^ self propertyAt: #points ifAbsent: [ super controlPoints ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> initialize [
 	super initialize.
 	self setSVGPath
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSGraphvizLine >> intersects: aRectangle [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> manyPointsFor: edge [
 
 	^ String streamContents: [ :s |
@@ -51,7 +53,7 @@ RSGraphvizLine >> manyPointsFor: edge [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> setSVGPath [
 	self svgPath: [ :edge |
 		(edge hasProperty: #points)
@@ -60,7 +62,7 @@ RSGraphvizLine >> setSVGPath [
 	 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphvizLine >> twoPointsFor: edge [
 	| pos1 pos2 |
 	edge from ifNil: [ ^ 'M0 0 L100 100' ].

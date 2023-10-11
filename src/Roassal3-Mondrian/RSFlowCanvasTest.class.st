@@ -1,15 +1,17 @@
 Class {
-	#name : #RSFlowCanvasTest,
-	#superclass : #TestCase,
+	#name : 'RSFlowCanvasTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'c',
 		'shapes',
 		'f'
 	],
-	#category : #'Roassal3-Mondrian-Flow'
+	#category : 'Roassal3-Mondrian-Flow',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Flow'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSFlowCanvasTest >> setUp [
 	super setUp.
 	f := RSFlowCanvas new.
@@ -25,7 +27,7 @@ RSFlowCanvasTest >> setUp [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowCanvasTest >> testBreadcrumbs [
 
 	self assert: f breadcrumbs isEmpty.
@@ -36,7 +38,7 @@ RSFlowCanvasTest >> testBreadcrumbs [
 	self assert: f canvas numberOfNodes equals: 22
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowCanvasTest >> testNestedNodes [
 
 	| nb box compo |
@@ -60,7 +62,7 @@ RSFlowCanvasTest >> testNestedNodes [
 	self assert: nb equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowCanvasTest >> testSubtyping [
 
 	| nb |

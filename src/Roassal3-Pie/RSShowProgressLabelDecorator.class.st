@@ -2,17 +2,19 @@
 I put interactions on the shapes and a label for updating
 "
 Class {
-	#name : #RSShowProgressLabelDecorator,
-	#superclass : #RSAbstractPieDecorator,
+	#name : 'RSShowProgressLabelDecorator',
+	#superclass : 'RSAbstractPieDecorator',
 	#instVars : [
 		'labelShape',
 		'progressLabel',
 		'highlight'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : 'Roassal3-Pie-Decorators',
+	#package : 'Roassal3-Pie',
+	#tag : 'Decorators'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShowProgressLabelDecorator >> initialize [
 	super initialize.
 	labelShape := RSLabel new.
@@ -23,22 +25,22 @@ RSShowProgressLabelDecorator >> initialize [
 		when: RSUnHighlightEvent do: [ :evt | self updateLabel: nil ] for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShowProgressLabelDecorator >> labelShape [
 	^ labelShape
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSShowProgressLabelDecorator >> progressFor: aShape [
 	^ ((builder values at: aShape index) * 100 / builder totalSum) rounded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShowProgressLabelDecorator >> progressLabel [
 	^ progressLabel
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSShowProgressLabelDecorator >> render [
 	| canvas |
 	progressLabel := self labelShape copy.
@@ -48,7 +50,7 @@ RSShowProgressLabelDecorator >> render [
 	builder shapes @ highlight
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSShowProgressLabelDecorator >> updateLabel: aShape [
 	aShape ifNil: [ ^ progressLabel text: '' ].
 	progressLabel

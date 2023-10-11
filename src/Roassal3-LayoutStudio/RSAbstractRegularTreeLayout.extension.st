@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractRegularTreeLayout }
+Extension { #name : 'RSAbstractRegularTreeLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSAbstractRegularTreeLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutBooleanField new

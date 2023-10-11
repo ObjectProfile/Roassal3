@@ -1,12 +1,12 @@
-Extension { #name : #RSStrokeStyle }
+Extension { #name : 'RSStrokeStyle' }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSStrokeStyle >> blApplyOn: aBlBorderBuilder [ 
 	aBlBorderBuilder
 		lineJoin: self blLineJoin
 ]
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 RSStrokeStyle >> blLineJoin [
 	joinStyle = #joinRound
 		ifTrue: [ ^ BlStrokeLineJoin round ].

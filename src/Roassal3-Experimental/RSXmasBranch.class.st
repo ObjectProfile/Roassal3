@@ -2,8 +2,8 @@
 I am a demo
 "
 Class {
-	#name : #RSXmasBranch,
-	#superclass : #Object,
+	#name : 'RSXmasBranch',
+	#superclass : 'Object',
 	#instVars : [
 		'positions',
 		'thickness',
@@ -11,30 +11,32 @@ Class {
 		'baseIndex',
 		'dTheta'
 	],
-	#category : #'Roassal3-Experimental-Xmas2019'
+	#category : 'Roassal3-Experimental-Xmas2019',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Xmas2019'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSXmasBranch >> addBaseIndex: aPoint [
 	baseIndex add: aPoint
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSXmasBranch >> addPosition: aPoint [
 	positions add: aPoint
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSXmasBranch >> addThickness: aFloat [
 	thickness add: aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> baseIndex [
 	^ baseIndex
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSXmasBranch >> branchRotate: index theta: theta position: reference [
 	| v |
 	v := positions at: index.
@@ -46,17 +48,17 @@ RSXmasBranch >> branchRotate: index theta: theta position: reference [
 	positions at: index put: v
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> dTheta [
 	^ dTheta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> dTheta: aCollection [
 	dTheta := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSXmasBranch >> initialize [
 	super initialize.
 	positions := OrderedCollection new.
@@ -65,27 +67,27 @@ RSXmasBranch >> initialize [
 	isCandidate := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> isCandidate [
 	^ isCandidate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> isCandidate: aBool [
 	isCandidate := aBool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> positions [
 	^ positions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> setLastThickness: aNumber [
 	thickness at: thickness size put: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasBranch >> thickness [
 	^ thickness
 ]

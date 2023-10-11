@@ -1,6 +1,6 @@
-Extension { #name : #RSLabeled }
+Extension { #name : 'RSLabeled' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSLabeled class >> exampleBoxes [
 	| c shapes |
 	c := RSCanvas new.
@@ -22,7 +22,7 @@ RSLabeled class >> exampleBoxes [
 	^ c open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSLabeled class >> exampleLabeledHighlightable [
 	| c shapes |
 	c := RSCanvas new.

@@ -2,32 +2,34 @@
 TODO
 "
 Class {
-	#name : #RSParticleForce,
-	#superclass : #RSObject,
+	#name : 'RSParticleForce',
+	#superclass : 'RSObject',
 	#instVars : [
 		'position',
 		'shape',
 		'color'
 	],
-	#category : #'Roassal3-Experimental-Force'
+	#category : 'Roassal3-Experimental-Force',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Force'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleForce >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleForce >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleForce >> position: aPoint [
 	^ position := aPoint
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSParticleForce >> renderIn: aCanvas [
 	shape ifNil: [
 		shape := RSEllipse new size: 1; color: (Color black alpha: 0.1).
@@ -36,7 +38,7 @@ RSParticleForce >> renderIn: aCanvas [
 	shape position: position
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSParticleForce >> renderIn: aCanvas perlin: perlin [
 	| period n |
 	shape ifNil: [
@@ -50,7 +52,7 @@ RSParticleForce >> renderIn: aCanvas perlin: perlin [
 	shape position: position
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSParticleForce >> renderIn: aCanvas with: colorGenerator [
 
 	shape ifNil: [
@@ -61,7 +63,7 @@ RSParticleForce >> renderIn: aCanvas with: colorGenerator [
 	shape position: position
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSParticleForce >> update: itf with: force [
 	| dist p1 p2 dir |
 	p1 := position.

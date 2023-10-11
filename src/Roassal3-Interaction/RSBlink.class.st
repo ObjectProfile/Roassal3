@@ -3,12 +3,14 @@ Small example of how to create an interaction added a new animation in the canva
 Please check how to use this class here: `RSBlink class>> #example`
 "
 Class {
-	#name : #RSBlink,
-	#superclass : #RSInteraction,
-	#category : #'Roassal3-Interaction-Core'
+	#name : 'RSBlink',
+	#superclass : 'RSInteraction',
+	#category : 'Roassal3-Interaction-Core',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBlink >> onShape: aShape [
 	| canvas previousColor |
 	canvas := aShape canvas.

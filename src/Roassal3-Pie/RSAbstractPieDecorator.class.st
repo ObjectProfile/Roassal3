@@ -2,30 +2,32 @@
 I can decorate builders inspired on decorator pattern
 "
 Class {
-	#name : #RSAbstractPieDecorator,
-	#superclass : #RSObject,
+	#name : 'RSAbstractPieDecorator',
+	#superclass : 'RSObject',
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal3-Pie-Decorators'
+	#category : 'Roassal3-Pie-Decorators',
+	#package : 'Roassal3-Pie',
+	#tag : 'Decorators'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractPieDecorator class >> on: aPieBuilder [
 	self new builder: aPieBuilder; render
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPieDecorator >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPieDecorator >> builder: aBuilder [
 	builder := aBuilder
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPieDecorator >> render [
 	self subclassResponsibility
 ]

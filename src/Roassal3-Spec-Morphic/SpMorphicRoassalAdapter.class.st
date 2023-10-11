@@ -2,22 +2,23 @@
 I am bridging RoassalPresenter and RTView
 "
 Class {
-	#name : #SpMorphicRoassalAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#name : 'SpMorphicRoassalAdapter',
+	#superclass : 'SpAbstractMorphicAdapter',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-Spec-Morphic'
+	#category : 'Roassal3-Spec-Morphic',
+	#package : 'Roassal3-Spec-Morphic'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SpMorphicRoassalAdapter class >> initialize [
 
 	"we need to reset the cached adapter bindigns"
 	SpNullApplication reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpMorphicRoassalAdapter >> adapt: aComposableModel [
 	super adapt: aComposableModel.
 	canvas := widget roassalCanvas.
@@ -36,7 +37,7 @@ SpMorphicRoassalAdapter >> adapt: aComposableModel [
 	canvas notifyExtentChanged: widget extent
 ]
 
-{ #category : #'scripting actions' }
+{ #category : 'scripting actions' }
 SpMorphicRoassalAdapter >> applyScript [
 	| extent |
 	extent := canvas extent.
@@ -45,7 +46,7 @@ SpMorphicRoassalAdapter >> applyScript [
 	canvas notifyExtentChanged: extent
 ]
 
-{ #category : #'scripting actions' }
+{ #category : 'scripting actions' }
 SpMorphicRoassalAdapter >> basicApplyScript [
 	| aModel |
 	aModel := self model.
@@ -54,12 +55,12 @@ SpMorphicRoassalAdapter >> basicApplyScript [
 	self widgetDo: #startStepping
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpMorphicRoassalAdapter >> buildWidget [
 	^ RSCanvas new createMorph
 ]
 
-{ #category : #'scripting actions' }
+{ #category : 'scripting actions' }
 SpMorphicRoassalAdapter >> freeCanvas [
 	| temp |
 	temp := self buildWidget.
@@ -69,7 +70,7 @@ SpMorphicRoassalAdapter >> freeCanvas [
 	canvas extent: widget extent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpMorphicRoassalAdapter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]

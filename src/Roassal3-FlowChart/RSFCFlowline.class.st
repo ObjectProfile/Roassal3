@@ -1,30 +1,31 @@
 Class {
-	#name : #RSFCFlowline,
-	#superclass : #RSFCSymbol,
+	#name : 'RSFCFlowline',
+	#superclass : 'RSFCSymbol',
 	#instVars : [
 		'from',
 		'to'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCFlowline >> accept: visitor [
 	visitor visitFlowline: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFCFlowline >> from [
 	^ from
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFCFlowline >> from: anElement to: anotherElement [
 	from := anElement.
 	to := anotherElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFCFlowline >> to [
 	^ to
 ]

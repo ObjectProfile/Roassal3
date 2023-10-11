@@ -1,10 +1,11 @@
 Class {
-	#name : #RSFlowLayoutTest,
-	#superclass : #RSLayoutTest,
-	#category : #'Roassal3-Layouts-Tests'
+	#name : 'RSFlowLayoutTest',
+	#superclass : 'RSLayoutTest',
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowLayoutTest >> testLinesEven [
 	| layout lines line n |
 	layout := RSFlowLayout new.
@@ -20,7 +21,7 @@ RSFlowLayoutTest >> testLinesEven [
 		equals: (layout gapSize* n)+(shapes first height * (n-1.5))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSFlowLayoutTest >> testLinesOdd [
 	| layout lines line n |
 	layout := RSFlowLayout new.

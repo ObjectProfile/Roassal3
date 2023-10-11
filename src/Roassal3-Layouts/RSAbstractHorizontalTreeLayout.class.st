@@ -4,24 +4,26 @@ The `RSAbstractHorizontalTreeLayout` class is an abstract base class that provid
 Instances of `RSAbstractHorizontalTreeLayout` can be used with `RSHorizontalTreeLayout`
 "
 Class {
-	#name : #RSAbstractHorizontalTreeLayout,
-	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#name : 'RSAbstractHorizontalTreeLayout',
+	#superclass : 'RSAbstractRegularTreeLayout',
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractHorizontalTreeLayout class >> isAbstract [
 	^ self = RSAbstractHorizontalTreeLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractHorizontalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 3.
 	horizontalGap := 20
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSAbstractHorizontalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
 	aNodeCollection isEmpty ifTrue: [ ^ 0 ].
@@ -40,7 +42,7 @@ RSAbstractHorizontalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLaye
 	^ y - aPoint y - self verticalGap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractHorizontalTreeLayout >> rearrangeByLayers: aGraph [
 	| cursor layerDepthSize |
 	cursor := self leftGap.

@@ -1,6 +1,6 @@
 Class {
-	#name : #RSShapeBuilder,
-	#superclass : #Object,
+	#name : 'RSShapeBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'shapeClass',
 		'color',
@@ -10,62 +10,64 @@ Class {
 		'borderWidth',
 		'labelBlock'
 	],
-	#category : #'Roassal3-Mondrian-Core'
+	#category : 'Roassal3-Mondrian-Core',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSShapeBuilder >> arrowedLine [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> borderColor [
 
 	^ borderColor
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> borderColor: aColorOrASymbolOrOneArgBlock [
 
 	borderColor := aColorOrASymbolOrOneArgBlock.
 	borderWidth ifNil: [ borderWidth := 2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> borderWidth [
 
 	^ borderWidth
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> borderWidth: anIntegerOrASymbolOrOneArgBlock [
 
 	borderWidth := anIntegerOrASymbolOrOneArgBlock.
 	borderColor ifNil: [ borderColor := Color black ]
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> box [
 	shapeClass := RSBox.
 	self extent: 5 @ 5
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> circle [
 	shapeClass := RSEllipse.
 	self extent: 5 @ 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> color [
 	^ color
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> color: aOneArgBlockOrAValue [
 	color := aOneArgBlockOrAValue
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSShapeBuilder >> configureNotCompositeShape: aShape model: model [
 
 	width ifNotNil: [ aShape width: (width rsValue: model) ].
@@ -77,7 +79,7 @@ RSShapeBuilder >> configureNotCompositeShape: aShape model: model [
 	aShape color: (color rsValue: model)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSShapeBuilder >> configureShape: aShape [
 
 	"Configure the shape. Note that it returns the same shape, or a different one (in case a composite has to be built)"
@@ -102,35 +104,35 @@ RSShapeBuilder >> configureShape: aShape [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> doesUseLabel [
 	"Return true or false on whether the shape builder has to label the created shapes"
 	^ labelBlock notNil
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> ellipse [
 	shapeClass := RSEllipse.
 	self extent: 5 @ 5
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> extent: aPoint [
 	width := aPoint x.
 	height := aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> height [
 	^ height
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> height: aValueOrAOneArgBlock [
 	height := aValueOrAOneArgBlock
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 	| aColor |
 	aColor := color.
@@ -139,48 +141,48 @@ RSShapeBuilder >> if: oneArgBlock color: aOneArgBlockOrAValue [
 											ifFalse: [ aColor rsValue: obj ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShapeBuilder >> initialize [
 	super initialize.
 	self box.
 	color := Color gray
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> label [
 	shapeClass := RSLabel.
 	width := nil.
 	height := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> labelBlock [
 	"Could be nil if the shape builder must not label"
 	^ labelBlock
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> labeled [
 	self labeled: #asString
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> labeled: aOneArgBlock [
 	"The block takes a model object as argument and must return a string"
 	labelBlock := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> shapeClass [
 	^ shapeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> shapeClass: aClass [
 	shapeClass := aClass
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSShapeBuilder >> shapeOn: anObject [
 	"Return a new shape from the specified configuration"
 	| aShape |
@@ -190,29 +192,29 @@ RSShapeBuilder >> shapeOn: anObject [
 	^ self configureShape: aShape
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSShapeBuilder >> shapesOn: someObjects [
 
 	^ someObjects collect: [ :obj | self shapeOn: obj ] as: RSGroup
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> size: integerOrBlockOrSymbol [
 	self width: integerOrBlockOrSymbol.
 	self height: integerOrBlockOrSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeBuilder >> width [
 	^ width
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> width: aValueOrAOneArgBlock [
 	width := aValueOrAOneArgBlock
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSShapeBuilder >> withBorder [
 	self borderColor: Color black.
 	self borderWidth: 3

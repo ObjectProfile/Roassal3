@@ -1,10 +1,11 @@
 Class {
-	#name : #RSFCInputOutput,
-	#superclass : #RSFCSymbol,
-	#category : #'Roassal3-FlowChart'
+	#name : 'RSFCInputOutput',
+	#superclass : 'RSFCSymbol',
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCInputOutput >> accept: visitor [
 	visitor visitInputOutput: self
 ]

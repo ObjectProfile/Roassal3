@@ -2,8 +2,8 @@
 I am used in the delaunay example
 "
 Class {
-	#name : #RSParticleD,
-	#superclass : #RSObject,
+	#name : 'RSParticleD',
+	#superclass : 'RSObject',
 	#instVars : [
 		'pos',
 		'level',
@@ -12,26 +12,28 @@ Class {
 		'decay',
 		'maxLevel'
 	],
-	#category : #'Roassal3-Experimental-Delaunay'
+	#category : 'Roassal3-Experimental-Delaunay',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Delaunay'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> decay [
 	^ decay ifNil: [ decay := 0.90 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> decay: aNumber [
 	decay := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSParticleD >> initialize [
 	super initialize.
 	life := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> level: anInteger [
 	| r |
 	level := anInteger.
@@ -40,22 +42,22 @@ RSParticleD >> level: anInteger [
 	vel := vel * (NSScale linear domain: {0. self maxLevel}; range: #(5 2); scale: level)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> life [
 	^ life
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> maxLevel [
 	^ maxLevel ifNil: [ maxLevel := 5 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> maxLevel: aNumber [
 	maxLevel := aNumber
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSParticleD >> moveIn: particles [
 	life := life + 1.
 	"add friction"
@@ -73,27 +75,27 @@ RSParticleD >> moveIn: particles [
 		 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> position [
 	^ pos
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> position: aPoint [
 	pos := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParticleD >> velocity [
 	^ vel r
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 RSParticleD >> x [
 	^ pos x
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 RSParticleD >> y [
 	^ pos y
 ]

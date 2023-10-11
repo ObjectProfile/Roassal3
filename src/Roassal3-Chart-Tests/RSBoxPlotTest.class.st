@@ -1,14 +1,16 @@
 Class {
-	#name : #RSBoxPlotTest,
-	#superclass : #RSTest,
+	#name : 'RSBoxPlotTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'plot',
 		'y'
 	],
-	#category : #'Roassal3-Chart-Tests-Base'
+	#category : 'Roassal3-Chart-Tests-Base',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoxPlotTest >> setUp [
 
 	super setUp.
@@ -19,7 +21,7 @@ RSBoxPlotTest >> setUp [
 	plot y: y
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 	| boxPlotA boxPlotB boxPlotC data chart |
 	
@@ -33,7 +35,7 @@ RSBoxPlotTest >> testAdd3BoxPlotsReturnsClusterChart [
 	self assert: chart plots size equals: 3.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	| boxPlot linePlot data x chart |
 	
@@ -50,7 +52,7 @@ RSBoxPlotTest >> testAddBoxPlotAndLinePlotReturnsChart [
 	self assert: chart plots size equals: 2.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	| boxPlotA boxPlotB dataA dataB chart |
 	
@@ -63,7 +65,7 @@ RSBoxPlotTest >> testAddBoxPlotsAddPlotsInTheChart [
 	self assert: chart plots second identicalTo: boxPlotB.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 	| boxPlotA boxPlotB dataA dataB chart |
 	
@@ -76,7 +78,7 @@ RSBoxPlotTest >> testAddBoxPlotsReturnsNewChart [
 	self assert: chart plots size equals: 2.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	| boxPlot linePlot data x chart |
 	x := { 1. 2. }.
@@ -91,7 +93,7 @@ RSBoxPlotTest >> testAddLinePlotAndBoxPlotReturnsChart [
 	self assert: chart plots size equals: 2.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testBoxPlotCreatedWithCollectionOfDatasets [
 	| boxPlot data |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -103,7 +105,7 @@ RSBoxPlotTest >> testBoxPlotCreatedWithCollectionOfDatasets [
 	self assert: boxPlot boxShapes first data equals: data first.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testBoxPlotCreatedWithData [
 	| boxPlot data |
 	data := { 1. 2. 3. 4. 5. }.
@@ -112,7 +114,7 @@ RSBoxPlotTest >> testBoxPlotCreatedWithData [
 	self assert: boxPlot boxShapes first data equals: data.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
 	| p window |
 	y := { 12. 12. 13. 14. 15. 24. }.
@@ -124,7 +126,7 @@ RSBoxPlotTest >> testBoxPlotWithOneBoxShape [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 	| boxPlot data chart chartBox categories window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
@@ -142,7 +144,7 @@ RSBoxPlotTest >> testBoxShouldBeInsideContainerRectangle [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidenceIntervalIsOk [
 
 	| median iqr interval n |
@@ -159,7 +161,7 @@ RSBoxPlotTest >> testConfidenceIntervalIsOk [
 	self assert: interval min equals: median - (1.57 * iqr/(n sqrt))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidenceIntervalMaxIsGreaterThanQuartile3 [
 
 	| confidenceIntervalMax quartile3 |
@@ -173,7 +175,7 @@ RSBoxPlotTest >> testConfidenceIntervalMaxIsGreaterThanQuartile3 [
 	self assert: confidenceIntervalMax > quartile3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidenceIntervalMaxIsLesserThanQuartile3 [
 
 	| confidenceIntervalMax quartile3 |
@@ -187,7 +189,7 @@ RSBoxPlotTest >> testConfidenceIntervalMaxIsLesserThanQuartile3 [
 	self assert: confidenceIntervalMax < quartile3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidenceIntervalMinIsGreaterThanQuartile1 [
 
 	| confidenceIntervalMin quartile1 |
@@ -201,7 +203,7 @@ RSBoxPlotTest >> testConfidenceIntervalMinIsGreaterThanQuartile1 [
 	self assert: confidenceIntervalMin > quartile1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidenceIntervalMinIsLesserThanQuartile1 [
 
 	| confidenceIntervalMin quartile1 |
@@ -215,7 +217,7 @@ RSBoxPlotTest >> testConfidenceIntervalMinIsLesserThanQuartile1 [
 	self assert: confidenceIntervalMin < quartile1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testConfidencePercentageIsCorrectlyChanged [
 
 	plot confidencePercentage: 99.
@@ -224,7 +226,7 @@ RSBoxPlotTest >> testConfidencePercentageIsCorrectlyChanged [
 	self assert: plot confidencePercentage first equals: 99
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testDefaultConfidencePercentageIs95 [
 
 	plot y: {
@@ -235,7 +237,7 @@ RSBoxPlotTest >> testDefaultConfidencePercentageIs95 [
 	self assert: plot confidencePercentage second equals: 95
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testDefaultPlotColors [
 	| boxPlot data chart boxColor window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -251,7 +253,7 @@ RSBoxPlotTest >> testDefaultPlotColors [
 	].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testDefaultXTickLabels [
 	| boxPlot data chart horizontalTick xTickLabels window |
 	self skip.
@@ -267,7 +269,7 @@ RSBoxPlotTest >> testDefaultXTickLabels [
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: xTickLabels.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testNotchBasic [
 
 	plot notch: true.
@@ -275,7 +277,7 @@ RSBoxPlotTest >> testNotchBasic [
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testNumberOfBoxes [
 	| boxPlot data boxes window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -289,7 +291,7 @@ RSBoxPlotTest >> testNumberOfBoxes [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testPositionsCustom [
 	| boxPlot data window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -304,7 +306,7 @@ RSBoxPlotTest >> testPositionsCustom [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testPositionsCustomNotSorted [
 	| boxPlot data window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -321,7 +323,7 @@ RSBoxPlotTest >> testPositionsCustomNotSorted [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testPositionsDefault [
 	| boxPlot data window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -335,7 +337,7 @@ RSBoxPlotTest >> testPositionsDefault [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testPositionsDefaultHorizontal [
 	| boxPlot data window |
 	data := { { 1. 2. 3. 4. 5. } .
@@ -350,7 +352,7 @@ RSBoxPlotTest >> testPositionsDefaultHorizontal [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testXTickLabels [
 	| boxPlot data chart categories horizontalTick yTickLabels window |
 	data := { { 1. 2. 3. 4. 5. } . "A"
@@ -367,7 +369,7 @@ RSBoxPlotTest >> testXTickLabels [
 	self assert: (horizontalTick labels collect: [ :label | label text ]) equals: categories.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoxPlotTest >> testYTickLabels [
 	| boxPlot data chart categories horizontalTick yTickLabels window |
 	data := { { 1. 2. 3. 4. 5. } . "A"

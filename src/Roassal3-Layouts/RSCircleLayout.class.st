@@ -8,12 +8,14 @@ RSCircleLayout supports customizable attributes such as angle offsets, and radia
 For more information, see the class methods and instance variables of RSCircleLayout.
 "
 Class {
-	#name : #RSCircleLayout,
-	#superclass : #RSAbstractCircleLayout,
-	#category : #'Roassal3-Layouts-Circle'
+	#name : 'RSCircleLayout',
+	#superclass : 'RSAbstractCircleLayout',
+	#category : 'Roassal3-Layouts-Circle',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Circle'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircleLayout class >> example1 [
 	| aLayout objects |
 	aLayout := self new.
@@ -27,7 +29,7 @@ RSCircleLayout class >> example1 [
 		open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircleLayout class >> example2 [
 	| nodes canvas shapes |
 	nodes := (1 to: 5).
@@ -42,13 +44,13 @@ RSCircleLayout class >> example2 [
 	^ canvas open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCircleLayout class >> scaleBy: aNumber [
 
 	^self new scaleBy: aNumber
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSCircleLayout >> doExecute: shapes [
 	| angle rad angleInc center |
 	rad := self computeRadiusFor: shapes.

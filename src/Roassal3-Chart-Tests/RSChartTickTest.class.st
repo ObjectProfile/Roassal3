@@ -1,10 +1,12 @@
 Class {
-	#name : #RSChartTickTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Chart-Tests-Base'
+	#name : 'RSChartTickTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Chart-Tests-Base',
+	#package : 'Roassal3-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testDefaultFont [
 	| plot canvas ticks labels defaultFont |
 	plot := RSLinePlot y: #(1 2 3).
@@ -16,7 +18,7 @@ RSChartTickTest >> testDefaultFont [
 	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testDoNotUseNiceLabel [
 
 	| x p numberOfTicks vertical |
@@ -30,7 +32,7 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	self assert: vertical labels size equals: numberOfTicks
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNames [
 
 	| dates y data x plot horizontal |
@@ -52,7 +54,7 @@ RSChartTickTest >> testFromNames [
 	self assert: horizontal labels size equals: dates size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNamesWithEmptyData [
 	| dates x y plot |
 	dates := {}.
@@ -64,7 +66,7 @@ RSChartTickTest >> testFromNamesWithEmptyData [
 	self should: [ plot horizontalTick fromNames: dates ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNamesWithOneData [
 	| names indices values plot |
 	names := { 'Simple'.}.
@@ -79,7 +81,7 @@ RSChartTickTest >> testFromNamesWithOneData [
 	plot build.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testSetFontSize [
 	| plot canvas ticks labels |
 	plot := RSLinePlot y: #(1 2 3).

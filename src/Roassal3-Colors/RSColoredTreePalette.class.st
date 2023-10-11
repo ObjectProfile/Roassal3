@@ -42,17 +42,18 @@ m canvas
 
 "
 Class {
-	#name : #RSColoredTreePalette,
-	#superclass : #RSObject,
+	#name : 'RSColoredTreePalette',
+	#superclass : 'RSObject',
 	#instVars : [
 		'shapes',
 		'totalNumberOfLeaves',
 		'alpha'
 	],
-	#category : #'Roassal3-Colors'
+	#category : 'Roassal3-Colors',
+	#package : 'Roassal3-Colors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [
 
 	| c |
@@ -61,7 +62,7 @@ RSColoredTreePalette >> allLeavesAccessibleFrom: aRootShape [
 	^ c size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSColoredTreePalette >> allLeavesAccessibleFrom: aShape in: result [
 
 	aShape numberOfOutgoingLines = 0
@@ -72,13 +73,13 @@ RSColoredTreePalette >> allLeavesAccessibleFrom: aShape in: result [
 			 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColoredTreePalette >> alpha: alphaValueAsFloat [
 	"Set the transparency of the colors. Take as argument a number between 0.0 and 1.0"
 	alpha := alphaValueAsFloat
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSColoredTreePalette >> assignColor [
 
 	| roots |
@@ -86,7 +87,7 @@ RSColoredTreePalette >> assignColor [
 	roots do: [ :r | self assignColorToRoot: r ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSColoredTreePalette >> assignColorToChildren: children low: low high: high [
 	| step hs |
 	step := high - low / children size.
@@ -97,12 +98,12 @@ RSColoredTreePalette >> assignColorToChildren: children low: low high: high [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSColoredTreePalette >> assignColorToRoot: aRootShape [
 	self assignColorToRoot: aRootShape h: 360 / 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSColoredTreePalette >> assignColorToRoot: aRootShape h: h [
 	| children span |
 
@@ -114,19 +115,19 @@ RSColoredTreePalette >> assignColorToRoot: aRootShape h: h [
 	self assignColorToChildren: children low: h - (span / 2) high: h + (span / 2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSColoredTreePalette >> initialize [
 	super initialize.
 	alpha := 1.0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColoredTreePalette >> shapes [
 
 	^ shapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColoredTreePalette >> shapes: someShapes [
 	"Set the shapes (the nodes) that must be colored"
 	shapes := someShapes.
@@ -136,7 +137,7 @@ RSColoredTreePalette >> shapes: someShapes [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColoredTreePalette >> totalNumberOfLeaves [
 	"Return the total number of leaves"
 	^ totalNumberOfLeaves

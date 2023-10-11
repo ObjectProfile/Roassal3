@@ -6,8 +6,8 @@ I am reimplemented the sankey code from D3 for smalltalk-pharo and some of their
 https://www.d3-graph-gallery.com/sankey
 "
 Class {
-	#name : #RSSankey,
-	#superclass : #RSBuilder,
+	#name : 'RSSankey',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'extent',
 		'nodePadding',
@@ -22,17 +22,19 @@ Class {
 		'lines',
 		'boxColor'
 	],
-	#category : #'Roassal3-Experimental-Sankey'
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSSankey class >> withAllAssociations: aCollection [
 
 	^ self withAllLinks: (aCollection collect: [ :eachAssociation |
 			   RSSankeyLink on: eachAssociation ])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSSankey class >> withAllLinks: aCollection [
 
 	^ self new
@@ -45,31 +47,31 @@ RSSankey class >> withAllLinks: aCollection [
 				   as: OrderedCollection) removeDuplicates
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> boxColor [
 
 	^ boxColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> boxColor: anObject [
 
 	boxColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> boxShape [
 
 	^ boxShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> boxes [
 
 	^ boxes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> boxesByBreadth [
 
 	| boxesByBreadth |
@@ -79,7 +81,7 @@ RSSankey >> boxesByBreadth [
 	^ boxesByBreadth
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> computeBoxesBreadths [
 
 	| remainingBoxes nextBoxes x kx |
@@ -101,7 +103,7 @@ RSSankey >> computeBoxesBreadths [
 		box x: box x * kx ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> computeBoxesDepths [
 
 	| boxesByBreadth alpha |
@@ -122,19 +124,19 @@ RSSankey >> computeBoxesDepths [
 		self computeLinesDepths ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> computeBoxesValues [
 
 	boxes do: [ :eachBox | eachBox computeValue ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> computeLinesDepths [
 
 	boxes do: [ :eachBox | eachBox computeLinesDepths ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> computeSankey [
 
 	self
@@ -144,7 +146,7 @@ RSSankey >> computeSankey [
 		computeLinesDepths
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSankey >> createBoxes [
 
 	^ nodes
@@ -158,7 +160,7 @@ RSSankey >> createBoxes [
 		  as: RSGroup
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSankey >> createLabels [
 
 	^ nodes collect: [ :node |
@@ -168,7 +170,7 @@ RSSankey >> createLabels [
 			  yourself ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSankey >> createLines [
 
 	^ links collect: [ :link |
@@ -187,31 +189,31 @@ RSSankey >> createLines [
 		  line ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSSankey >> defaultContainer [
 
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSSankey >> defaultLineColor [
 
 	^ Color lightGray translucent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> extent [
 
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> extent: anObject [
 
 	extent := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSankey >> initialize [
 
 	super initialize.
@@ -224,93 +226,93 @@ RSSankey >> initialize [
 	self nodePadding: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> iterations [
 
 	^ iterations ifNil: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> iterations: aNumber [
 
 	iterations := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> labelShape [
 
 	^ labelShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> labels [
 
 	^ labels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> lineShape [
 
 	^ lineShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> lines [
 
 	^ lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> links [
 
 	^ links
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> links: aCollection [
 
 	links := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> nodePadding [
 
 	^ nodePadding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> nodePadding: aNumber [
 
 	nodePadding := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> nodes [
 
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSankey >> nodes: aCollection [
 
 	nodes := aCollection asOrderedCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> relaxLeftToRight: alpha boxes: boxesByBreadth [
 
 	boxesByBreadth flattened do: [ :eachBox |
 		eachBox relaxLeftToRight: alpha ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> relaxRightToLeft: alpha boxes: boxesByBreadth [
 
 	boxesByBreadth reversed flattened do: [ :eachBox |
 		eachBox relaxRightToLeft: alpha ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSSankey >> renderIn: aCanvas [
 
 	nodes ifNil: [ ^ self ].
@@ -326,7 +328,7 @@ RSSankey >> renderIn: aCanvas [
 	self updateBoxes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> resolveCollisions: boxesByBreadth [
 
 	| list node dy y0 |
@@ -350,7 +352,7 @@ RSSankey >> resolveCollisions: boxesByBreadth [
 				y0 := node y ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> setupBoxesDepth: boxesByBreadth [
 
 	| ky |
@@ -365,7 +367,7 @@ RSSankey >> setupBoxesDepth: boxesByBreadth [
 	lines do: [ :line | line dy: line value * ky ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSankey >> updateBoxes [
 
 	| side |

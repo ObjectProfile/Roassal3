@@ -2,8 +2,8 @@
 just a demo
 "
 Class {
-	#name : #RSXmasTree,
-	#superclass : #Object,
+	#name : 'RSXmasTree',
+	#superclass : 'Object',
 	#instVars : [
 		'branchPositionFactor',
 		'branchLenghtFactor',
@@ -18,10 +18,12 @@ Class {
 		'treeSize',
 		'map'
 	],
-	#category : #'Roassal3-Experimental-Xmas2019'
+	#category : 'Roassal3-Experimental-Xmas2019',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Xmas2019'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSXmasTree >> initialize [
 	super initialize.
 
@@ -32,7 +34,7 @@ RSXmasTree >> initialize [
 	self initializeBraches
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSXmasTree >> initializeBraches [
 	| frontiers r growth candList |
 	candidateIndex := Array new:3.
@@ -121,7 +123,7 @@ RSXmasTree >> initializeBraches [
 		phaseFactor at: i put: (phaseFactor at: i-1)*(r rsNext: 0.9 and: 1.4) ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSXmasTree >> renderIn: canvas [
 	| color |
 	color := (Color r: 80 g: 0 b: 50 range: 255) alpha: 0.4.
@@ -146,7 +148,7 @@ RSXmasTree >> renderIn: canvas [
 		 ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSXmasTree >> swing [
 	1 to: 3 do: [ :i | | t |
 		t := twigs at: (candidateIndex at: i).
@@ -178,7 +180,7 @@ RSXmasTree >> swing [
 	time >= period ifTrue: [ time := time - period ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSXmasTree >> updateCanvas: canvas [
 
 	2 to: treeSize do: [ :index | | t mi |

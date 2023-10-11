@@ -2,33 +2,35 @@
 Abstract converter for different types of layouts in graphviz
 "
 Class {
-	#name : #RSAbstractDotConverter,
-	#superclass : #Object,
+	#name : 'RSAbstractDotConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'nodes',
 		'dotMode'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDotConverter >> dotMode: aRSDotMode [
 	dotMode := aRSDotMode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> idFor: aShape [
 	^ nodes at: aShape ifAbsentPut: [
 		(nodes size+1) asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDotConverter >> stream [
 	^ stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> visitBoundingShape: aShape [
 	"http://www.graphviz.org/doc/info/attrs.html#d:height"
 	| s |
@@ -42,12 +44,12 @@ RSAbstractDotConverter >> visitBoundingShape: aShape [
 		<< ']'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> visitCanvas: aCanvas [
 	aCanvas shapes accept: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> visitGroup: aRSGroup [
 
 	stream := WriteStream on: String new.
@@ -61,12 +63,12 @@ RSAbstractDotConverter >> visitGroup: aRSGroup [
 	stream close
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> visitLabel: aShape [
 	^ self visitBoundingShape: aShape
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> visitLine: aLine [
 	stream
 		<< '"';
@@ -79,12 +81,12 @@ RSAbstractDotConverter >> visitLine: aLine [
 		<< '"'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> writeHeader: aRSGroup [
 	self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractDotConverter >> writeLineConnector: aLine [
 	self subclassResponsibility
 ]

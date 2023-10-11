@@ -2,15 +2,16 @@
 I am a demo class
 "
 Class {
-	#name : #RSDarkUMLClassRenderer,
-	#superclass : #RSBasicUMLClassRenderer,
+	#name : 'RSDarkUMLClassRenderer',
+	#superclass : 'RSBasicUMLClassRenderer',
 	#instVars : [
 		'darkColor'
 	],
-	#category : #'Roassal3-UML-Examples'
+	#category : 'Roassal3-UML-Examples',
+	#package : 'Roassal3-UML-Examples'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDarkUMLClassRenderer >> initialize [
 	super initialize.
 	darkColor := Color r: 0.130 g: 0.130 b: 0.130.
@@ -23,7 +24,7 @@ RSDarkUMLClassRenderer >> initialize [
 		color: Color white
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDarkUMLClassRenderer >> methodFor: aMethod [
 	| s |
 	s := super methodFor: aMethod.
@@ -31,12 +32,12 @@ RSDarkUMLClassRenderer >> methodFor: aMethod [
 	^ s
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDarkUMLClassRenderer >> setUpCanvas: aCanvas [
 	aCanvas color: darkColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDarkUMLClassRenderer >> titleFor: aClass [
 	| shapes |
 	shapes := RSGroup with: (super titleFor: aClass).

@@ -1,10 +1,11 @@
 Class {
-	#name : #RSOSMTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-OpenStreetMap'
+	#name : 'RSOSMTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-OpenStreetMap',
+	#package : 'Roassal3-OpenStreetMap'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSOSMTest >> testOpen [
 	| b window |
 	b := RSOSMBuilder new.
@@ -13,7 +14,7 @@ RSOSMTest >> testOpen [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSOSMTest >> testRender [
 	| b |
 	b := RSOSMBuilder new.
@@ -21,7 +22,7 @@ RSOSMTest >> testRender [
 	b canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSOSMTest >> testStartEnd [
 	| osm canvas |
 	osm := RSOSMShape new.

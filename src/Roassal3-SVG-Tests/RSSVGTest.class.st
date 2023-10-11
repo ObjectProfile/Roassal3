@@ -1,10 +1,11 @@
 Class {
-	#name : #RSSVGTest,
-	#superclass : #RSCanvasTest,
-	#category : #'Roassal3-SVG-Tests'
+	#name : 'RSSVGTest',
+	#superclass : 'RSCanvasTest',
+	#category : 'Roassal3-SVG-Tests',
+	#package : 'Roassal3-SVG-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSVGTest >> testBimetricLine [
 	| s1 s2 l |
 	canvas := RSCanvas new.
@@ -31,7 +32,7 @@ RSSVGTest >> testBimetricLine [
 	^ canvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSVGTest >> testDrawSVG [
 	canvas addShape: (RSSVGPath new).
 	canvas addShape: (RSSVGPath new
@@ -40,7 +41,7 @@ RSSVGTest >> testDrawSVG [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSVGTest >> testDrawSVGLine [
 	canvas addShape: (RSSVGPathLine new
 		strokeColor: Color red;

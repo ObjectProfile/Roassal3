@@ -2,22 +2,24 @@
 Used to select a layout class with filter enabled
 "
 Class {
-	#name : #RSSelectDialog,
-	#superclass : #SpSelectDialog,
+	#name : 'RSSelectDialog',
+	#superclass : 'SpSelectDialog',
 	#instVars : [
 		'fastTable'
 	],
-	#category : #'Roassal3-LayoutStudio-Utils'
+	#category : 'Roassal3-LayoutStudio-Utils',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Utils'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSSelectDialog class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #list;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSelectDialog >> initializePresenters [
 	super initializePresenters.
 	list := SpMorphPresenter new.
@@ -31,7 +33,7 @@ RSSelectDialog >> initializePresenters [
 	list morph: fastTable
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RSSelectDialog >> items: aCollection [
 	| dataSource |
 	"create a new FTExampleDataSource to have selection in the list"
@@ -41,7 +43,7 @@ RSSelectDialog >> items: aCollection [
 	
 ]
 
-{ #category : #'api - showing' }
+{ #category : 'api - showing' }
 RSSelectDialog >> openModal [
 	| dialog |
 	

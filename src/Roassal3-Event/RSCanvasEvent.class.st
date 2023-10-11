@@ -2,7 +2,8 @@
 I am top class for canvas event
 "
 Class {
-	#name : #RSCanvasEvent,
-	#superclass : #RSEvent,
-	#category : #'Roassal3-Event'
+	#name : 'RSCanvasEvent',
+	#superclass : 'RSEvent',
+	#category : 'Roassal3-Event',
+	#package : 'Roassal3-Event'
 }

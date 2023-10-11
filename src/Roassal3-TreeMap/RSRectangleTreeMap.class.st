@@ -2,17 +2,19 @@
 Utility class for RSTreeMapLayout
 "
 Class {
-	#name : #RSRectangleTreeMap,
-	#superclass : #Rectangle,
+	#name : 'RSRectangleTreeMap',
+	#superclass : 'Rectangle',
 	#instVars : [
 		'currentSubrectangle',
 		'subrectangles',
 		'inset'
 	],
-	#category : #'Roassal3-TreeMap-Rectangle'
+	#category : 'Roassal3-TreeMap-Rectangle',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Rectangle'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSRectangleTreeMap class >> fromContainerBounds: aRectangle withInset: anInteger [
 	| treeRectangle relativeOrigin relativeCorner |
 	treeRectangle := self new.
@@ -27,13 +29,13 @@ RSRectangleTreeMap class >> fromContainerBounds: aRectangle withInset: anInteger
 	^ treeRectangle
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSRectangleTreeMap >> addSubrectangle: aTreeRectangle [
 	self subrectangles add: aTreeRectangle.
 	self currentSubrectangle: aTreeRectangle
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSRectangleTreeMap >> computeHorizontalRemainingSubrectangleFrom: row [
 
 	| areaToLayout remainingSubrectangle currentRect currentOrigin |
@@ -51,14 +53,14 @@ RSRectangleTreeMap >> computeHorizontalRemainingSubrectangleFrom: row [
 	^ remainingSubrectangle
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSRectangleTreeMap >> computeRemainingSubrectangleFrom: row [
 	(self currentSubrectangle isHorizontal)
 		ifTrue: [^ self computeHorizontalRemainingSubrectangleFrom: row ]
 		ifFalse: [ ^ self computeVerticalRemainingSubrectangleFrom: row ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSRectangleTreeMap >> computeVerticalRemainingSubrectangleFrom: row [
 
 	| areaToLayout remainingSubrectangle currentRect currentOrigin |
@@ -76,47 +78,47 @@ RSRectangleTreeMap >> computeVerticalRemainingSubrectangleFrom: row [
 	^ remainingSubrectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> corner: aPoint [
 	corner := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> currentSubrectangle [
 	^ currentSubrectangle ifNil: [ currentSubrectangle := self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> currentSubrectangle: aRectangle [
 	currentSubrectangle := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> inset [
 	^ inset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> inset: aPoint [
 	inset := aPoint
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRectangleTreeMap >> isHorizontal [
 	^ (self width >= self height)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSRectangleTreeMap >> shortestSide [
 	^ self width min: self height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRectangleTreeMap >> subrectangles [
 	^ subrectangles ifNil: [subrectangles := OrderedCollection new]
 ]

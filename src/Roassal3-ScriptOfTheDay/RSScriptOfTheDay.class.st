@@ -1,14 +1,15 @@
 Class {
-	#name : #RSScriptOfTheDay,
-	#superclass : #Object,
+	#name : 'RSScriptOfTheDay',
+	#superclass : 'Object',
 	#instVars : [
 		'serverName',
 		'servers'
 	],
-	#category : #'Roassal3-ScriptOfTheDay'
+	#category : 'Roassal3-ScriptOfTheDay',
+	#package : 'Roassal3-ScriptOfTheDay'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RSScriptOfTheDay class >> initialize [ 
 	(Smalltalk includesKey: #DSWebhookClient) ifFalse: [ 
 		Metacello new
@@ -18,7 +19,7 @@ RSScriptOfTheDay class >> initialize [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> initialize [
 	
 	| path |
@@ -36,7 +37,7 @@ RSScriptOfTheDay >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> loadDiscordSt [
 	Metacello new
 		baseline: #DiscordSt;
@@ -44,7 +45,7 @@ RSScriptOfTheDay >> loadDiscordSt [
 		load: #webhook
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> runMe [
 	<script: 'self new runMe'>
 	UIManager default edit: '"Script of the day: XXXXXXX
@@ -64,7 +65,7 @@ RSGridLayout on: nodes.
 c open' label: 'Enter your Roassal3 script' accept: [ :aScript | self sendScript: aScript ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> sendScript: aScript [
 	| preamble message window morph |
 	preamble := 'Here is a new script of the day for _Roassal3_: https://github.com/ObjectProfile/Roassal3'.
@@ -87,12 +88,12 @@ RSScriptOfTheDay >> sendScript: aScript [
 		send
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> useRealDiscordServer [
 	serverName := servers at: #real
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSScriptOfTheDay >> useTestDiscordServer [
 	serverName := servers at: #test
 ]

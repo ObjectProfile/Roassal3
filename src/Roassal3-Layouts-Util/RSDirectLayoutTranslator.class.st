@@ -2,17 +2,18 @@
 TODO
 "
 Class {
-	#name : #RSDirectLayoutTranslator,
-	#superclass : #RSLayoutTranslator,
-	#category : #'Roassal3-Layouts-Util'
+	#name : 'RSDirectLayoutTranslator',
+	#superclass : 'RSLayoutTranslator',
+	#category : 'Roassal3-Layouts-Util',
+	#package : 'Roassal3-Layouts-Util'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDirectLayoutTranslator class >> isDefault [
 	^ true
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSDirectLayoutTranslator >> translate: element to: newPosition [
 	element translateTo: newPosition
 ]

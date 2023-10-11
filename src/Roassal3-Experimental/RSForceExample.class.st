@@ -2,12 +2,14 @@
 Inspired by Raven Kwok drawingMachine_10 (http://openprocessing.org/sketch/34320).
 "
 Class {
-	#name : #RSForceExample,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Experimental-Force'
+	#name : 'RSForceExample',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Experimental-Force',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Force'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSForceExample >> example01 [
 	<script: 'self new example01 open'>
 	| c |
@@ -16,7 +18,7 @@ RSForceExample >> example01 [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSForceExample >> example02 [
 	<script: 'self new example02 open'>
 	| c |
@@ -29,7 +31,7 @@ RSForceExample >> example02 [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSForceExample >> example03 [
 	<script: 'self new example03 open'>
 	| c |
@@ -42,7 +44,7 @@ RSForceExample >> example03 [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSForceExample >> example04 [
 	<script: 'self new example04 open'>
 	| c |

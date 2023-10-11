@@ -2,12 +2,14 @@
 TODO
 "
 Class {
-	#name : #RSAlpharoExample,
-	#superclass : #Object,
-	#category : #'Roassal3-Experimental-Alpharo'
+	#name : 'RSAlpharoExample',
+	#superclass : 'Object',
+	#category : 'Roassal3-Experimental-Alpharo',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Alpharo'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlpharoExample >> example01Basic [
 	<script: 'self new example01Basic'>
 	| b |
@@ -17,7 +19,7 @@ RSAlpharoExample >> example01Basic [
 	b canvas inspect
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlpharoExample >> example02Classes [
 
 	<script: 'self new example02Classes'>
@@ -35,7 +37,7 @@ RSAlpharoExample >> example02Classes [
 	b canvas inspect
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlpharoExample >> example03Basic [
 	<script: 'self new example03Basic open
 		position: 0@20;

@@ -1,11 +1,11 @@
-Extension { #name : #RSAbstractFlowLayout }
+Extension { #name : 'RSAbstractFlowLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSAbstractFlowLayout class >> alignmentOptions [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSAbstractFlowLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutNumberField new

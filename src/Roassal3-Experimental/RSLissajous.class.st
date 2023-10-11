@@ -2,8 +2,8 @@
 Based on https://es.wikipedia.org/wiki/Curva_de_Lissajous
 "
 Class {
-	#name : #RSLissajous,
-	#superclass : #Object,
+	#name : 'RSLissajous',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'nCircles',
@@ -13,10 +13,12 @@ Class {
 		'dotSize',
 		'cell'
 	],
-	#category : #'Roassal3-Experimental-Animations'
+	#category : 'Roassal3-Experimental-Animations',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Animations'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RSLissajous >> build [
 	| rows columns |
 	canvas color: Color black.
@@ -28,7 +30,7 @@ RSLissajous >> build [
 			self createAnimationFor: row and: column ] ]
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLissajous >> createAnimationFor: row and: column [
 	| col points combined e1 e2  p1 p2 delta dot |
 	e1 := column shapes first.
@@ -56,7 +58,7 @@ RSLissajous >> createAnimationFor: row and: column [
 		]
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSLissajous >> createBigCircleFor: aPoint [
 	| group shape |
 	group := RSGroup new.
@@ -73,7 +75,7 @@ RSLissajous >> createBigCircleFor: aPoint [
 	^ shape
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSLissajous >> createCirclesWith: aBlockClosure [
 	| values shapes |
 	values := (1 to: nCircles) collect: aBlockClosure.
@@ -82,7 +84,7 @@ RSLissajous >> createCirclesWith: aBlockClosure [
 	^ shapes
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLissajous >> createDot [
 	^ RSEllipse new
 		size: dotSize;
@@ -91,7 +93,7 @@ RSLissajous >> createDot [
 		yourself
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLissajous >> createLineAnimationFor: shape [
 	| dot point index line |
 	dot := self createDot.
@@ -116,7 +118,7 @@ RSLissajous >> createLineAnimationFor: shape [
 			]
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSLissajous >> createLineFor: dot [
 	^ RSLine new
 		dashed;
@@ -127,7 +129,7 @@ RSLissajous >> createLineFor: dot [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLissajous >> initialize [
 	super initialize.
 	canvas := RSCanvas new.
@@ -140,7 +142,7 @@ RSLissajous >> initialize [
 	cell := gap + circleSize
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSLissajous >> run [
 	<script: 'self new run'>
 	self build.

@@ -1,18 +1,19 @@
 Class {
-	#name : #RSFCCanvasRenderer,
-	#superclass : #RSFCVisitor,
+	#name : 'RSFCCanvasRenderer',
+	#superclass : 'RSFCVisitor',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCCanvasRenderer >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCCanvasRenderer >> visitDecision: decision [
 	| c aLabel diamond yesShape noShape |
 	aLabel := RSLabel new text: decision label.
@@ -32,7 +33,7 @@ RSFCCanvasRenderer >> visitDecision: decision [
 	canvas add: c
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCCanvasRenderer >> visitFlowline: flowline [
 
 	| shape f t |
@@ -49,12 +50,12 @@ RSFCCanvasRenderer >> visitFlowline: flowline [
 	canvas add: shape
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCCanvasRenderer >> visitInputOutput: flowline [
 	self visitProcess: flowline
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCCanvasRenderer >> visitProcess: process [
 	| s label |
 	label := RSLabel new text: process label.
@@ -67,7 +68,7 @@ RSFCCanvasRenderer >> visitProcess: process [
 	s extent: label extent + (20 @ 20).
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCCanvasRenderer >> visitTerminal: terminal [
 	canvas add: (RSShapeFactory box cornerRadius: 5; model: terminal)
 ]

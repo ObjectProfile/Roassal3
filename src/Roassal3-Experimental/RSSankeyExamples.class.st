@@ -2,12 +2,14 @@
 I have examples of RSSankey
 "
 Class {
-	#name : #RSSankeyExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Experimental-Sankey'
+	#name : 'RSSankeyExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Experimental-Sankey',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Sankey'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example01 [
 	<script: 'self new example01 open'>
 	| data b nodes links |
@@ -36,7 +38,7 @@ RSSankeyExamples >> example01 [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example02Colors [
 	<script: 'self new example02Colors open'>
 	| b |
@@ -47,7 +49,7 @@ RSSankeyExamples >> example02Colors [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example03Colors [
 	<script: 'self new example03Colors open'>
 	| b colors |
@@ -65,7 +67,7 @@ RSSankeyExamples >> example03Colors [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example04Popup [
 	<script: 'self new example04Popup open'>
 	| b |
@@ -81,7 +83,7 @@ RSSankeyExamples >> example04Popup [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example05Animation [
 	<script: 'self new example05Animation open'>
 	| b blue blue2 |
@@ -113,7 +115,7 @@ RSSankeyExamples >> example05Animation [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> example06Gradient [
 	<script: 'self new example06Gradient open'>
 	| b |
@@ -133,7 +135,7 @@ RSSankeyExamples >> example06Gradient [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> sankeyData [
 	<script: 'self new sankeyData inspect'>
 	^ Dictionary new
@@ -260,7 +262,7 @@ RSSankeyExamples >> sankeyData [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSankeyExamples >> smallExample [
 
 	<script: 'self new smallExample open'>

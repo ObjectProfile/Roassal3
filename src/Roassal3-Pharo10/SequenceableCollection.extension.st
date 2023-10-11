@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Roassal3-Pharo10' }
+{ #category : '*Roassal3-Pharo10' }
 SequenceableCollection >> closeTo: aSequenceableCollection precision: aPrecision [
 	"Return true if all my elements are close to the elements of same index of the parameter with a certain precision"
 

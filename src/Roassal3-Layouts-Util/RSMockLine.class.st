@@ -2,8 +2,8 @@
 TODO
 "
 Class {
-	#name : #RSMockLine,
-	#superclass : #RSObject,
+	#name : 'RSMockLine',
+	#superclass : 'RSObject',
 	#instVars : [
 		'from',
 		'to',
@@ -11,55 +11,56 @@ Class {
 		'length',
 		'realLine'
 	],
-	#category : #'Roassal3-Layouts-Util'
+	#category : 'Roassal3-Layouts-Util',
+	#package : 'Roassal3-Layouts-Util'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> from [
 	^ from
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> from: aMockElement [
 	from := aMockElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> length [
 	^ length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> length: aNumber [
 	length := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> realLine [
 	^ realLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> realLine: anRSLine [
 	realLine := anRSLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> strength [
 	^ strength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> strength: aNumber [
 	strength := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> to [
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockLine >> to: aMockElement [
 	to := aMockElement
 ]

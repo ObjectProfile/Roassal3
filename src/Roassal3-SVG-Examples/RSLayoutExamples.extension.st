@@ -1,6 +1,6 @@
-Extension { #name : #RSLayoutExamples }
+Extension { #name : 'RSLayoutExamples' }
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSLayoutExamples >> example14ClassHierarchy [
 	<script: 'self new example14ClassHierarchy open'>
 	| c classes |

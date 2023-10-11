@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractGraphLayout }
+Extension { #name : 'RSAbstractGraphLayout' }
 
-{ #category : #'*Roassal3-LayoutStudio' }
+{ #category : '*Roassal3-LayoutStudio' }
 RSAbstractGraphLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutNumberField new

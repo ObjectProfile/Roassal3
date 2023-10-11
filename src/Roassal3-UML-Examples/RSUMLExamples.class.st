@@ -2,12 +2,13 @@
 I have examples of how to manage the uml builder in different cases
 "
 Class {
-	#name : #RSUMLExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-UML-Examples'
+	#name : 'RSUMLExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-UML-Examples',
+	#package : 'Roassal3-UML-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| builder |
@@ -17,7 +18,7 @@ RSUMLExamples >> example01Basic [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example02ClassDescriptor [
 	<script: 'self new example02ClassDescriptor open'>
 	| builder |
@@ -31,7 +32,7 @@ RSUMLExamples >> example02ClassDescriptor [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example03DifferentLines [
 	<script: 'self new example03DifferentLines open'>
 	| builder marker |
@@ -52,7 +53,7 @@ RSUMLExamples >> example03DifferentLines [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example04Nolines [
 	<script: 'self new example04Nolines open'>
 	| builder |
@@ -65,7 +66,7 @@ RSUMLExamples >> example04Nolines [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example05Horizontal [
 	<script: 'self new example05Horizontal open'>
 	| builder marker |
@@ -88,7 +89,7 @@ RSUMLExamples >> example05Horizontal [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example06CustomText [
 	<script: 'self new example06CustomText open'>
 	| builder |
@@ -99,7 +100,7 @@ RSUMLExamples >> example06CustomText [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example07TorchRenderer [
 	<script: 'self new example07TorchRenderer open'>
 	| builder |
@@ -110,7 +111,7 @@ RSUMLExamples >> example07TorchRenderer [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example08HierarchyPacker [
 	<script: 'self new example08HierarchyPacker open extent: 900@300'>
 	| builder classes |
@@ -125,7 +126,7 @@ RSUMLExamples >> example08HierarchyPacker [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example09Package [
 	<script: 'self new example09Package open'>
 	| builder |
@@ -135,7 +136,7 @@ RSUMLExamples >> example09Package [
 	^ builder canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSUMLExamples >> example10AggregationComposition [
 	<script: 'self new example10AggregationComposition open'>
 	| builder |

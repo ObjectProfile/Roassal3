@@ -2,12 +2,13 @@
 I have svg import examples
 "
 Class {
-	#name : #RSSVGImportExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-SVG-Importer'
+	#name : 'RSSVGImportExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-SVG-Importer',
+	#package : 'Roassal3-SVG-Importer'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSVGImportExamples >> example01SVGImport [
 	<script: 'self new example01SVGImport inspect'>
 	| canvas svg |
@@ -18,7 +19,7 @@ RSSVGImportExamples >> example01SVGImport [
 	^ canvas 
 ]
 
-{ #category : #'data - svg' }
+{ #category : 'data - svg' }
 RSSVGImportExamples >> roassalSVG [
 	^ '<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->

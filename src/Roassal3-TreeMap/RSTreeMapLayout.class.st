@@ -3,8 +3,8 @@ A layout for tree map layout
 Created by Roberto Minelli for Roassal1
 "
 Class {
-	#name : #RSTreeMapLayout,
-	#superclass : #RSLayout,
+	#name : 'RSTreeMapLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'rootNodes',
 		'extent',
@@ -12,27 +12,29 @@ Class {
 		'rectangle',
 		'weight'
 	],
-	#category : #'Roassal3-TreeMap-Rectangle'
+	#category : 'Roassal3-TreeMap-Rectangle',
+	#package : 'Roassal3-TreeMap',
+	#tag : 'Rectangle'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> doExecute: shapes [
 	"Performs the layout"
 	self squarify: rootNodes
 		inRectangle: (RSRectangleTreeMap origin: 0@0 extent: self extent)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 	| sum areas minArea maxArea |
 	areas := row collect: [ :shape | shape propertyAt: #area ].
@@ -44,17 +46,17 @@ RSTreeMapLayout >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 		ifFalse: [ ^ ((((remainingSpace * remainingSpace) * maxArea) / (sum * sum))  max: ((sum * sum) / (minArea * (remainingSpace * remainingSpace)))) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> inset [
 	^ inset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> inset: aPoint [
 	inset := aPoint
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> layoutChildrenOfRow: row [
 	| oldCanvas|
 	oldCanvas := self rectangle veryDeepCopy.
@@ -69,7 +71,7 @@ RSTreeMapLayout >> layoutChildrenOfRow: row [
 	self rectangle: oldCanvas
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> layoutHorizontalRow: row [
 
 	| container totalWidth areaToLayout height |
@@ -81,7 +83,7 @@ RSTreeMapLayout >> layoutHorizontalRow: row [
 	self translateShapesHorizontally: row in: container
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> layoutRow: row [
 	| container |
 	container := rectangle currentSubrectangle.
@@ -92,7 +94,7 @@ RSTreeMapLayout >> layoutRow: row [
 	self prepareNextRectangleAfterRow: row
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> layoutVerticalRow: row [
 	| container totalHeight areaToLayout width |
 	container := rectangle currentSubrectangle.
@@ -103,7 +105,7 @@ RSTreeMapLayout >> layoutVerticalRow: row [
 	self translateShapesVertically: row in: container
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> normalizeAreaOf: shapes byAreaOf: rec [
 	| shapesArea viewArea area |
 	shapes isEmpty ifTrue: [ ^ shapes ].
@@ -118,29 +120,29 @@ RSTreeMapLayout >> normalizeAreaOf: shapes byAreaOf: rec [
 	^ shapes
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> prepareNextRectangleAfterRow: row [
 	| nextRect |
 	nextRect := self rectangle currentSubrectangle computeRemainingSubrectangleFrom: row.
 	self rectangle addSubrectangle: nextRect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> rectangle [
 	^ rectangle
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> rectangle: aTreeRectangle [
 	rectangle := aTreeRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> rootNodes: aCollection [
 	rootNodes := aCollection
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> squarify: children currentRow: row remainingSpace: remainingSpace [
 	| firstShape remainingChildren |
 	firstShape := children first.
@@ -172,7 +174,7 @@ RSTreeMapLayout >> squarify: children currentRow: row remainingSpace: remainingS
 	firstShape pushBack
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> squarify: children inRectangle: aTreeRectangle [
 
 	| elementsToLayout |
@@ -185,7 +187,7 @@ RSTreeMapLayout >> squarify: children inRectangle: aTreeRectangle [
 		remainingSpace: (aTreeRectangle width min: aTreeRectangle height)
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> translateShapesHorizontally: row in: container [
 	| currentPoint |
 	currentPoint := container origin.
@@ -194,7 +196,7 @@ RSTreeMapLayout >> translateShapesHorizontally: row in: container [
 		currentPoint := currentPoint translateBy: ((each width) @ 0 ) ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSTreeMapLayout >> translateShapesVertically: row in: container [
 	| currentPoint |
 	currentPoint := container origin.
@@ -203,12 +205,12 @@ RSTreeMapLayout >> translateShapesVertically: row in: container [
 		currentPoint := currentPoint + (0@(each height)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> weight [
 	^ weight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTreeMapLayout >> weight: aBlock [
 	weight := aBlock
 ]

@@ -5,37 +5,39 @@ My subclasses are `RSAbstractGraphLayout` and `RSForceBasedLayout`
 I define utility methods to find the lines/edges connections used in my subclasses
 "
 Class {
-	#name : #RSLineDrivenLayout,
-	#superclass : #RSLayout,
+	#name : 'RSLineDrivenLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'lines',
 		'userDefinedLines'
 	],
-	#category : #'Roassal3-Layouts-ByConnection'
+	#category : 'Roassal3-Layouts-ByConnection',
+	#package : 'Roassal3-Layouts',
+	#tag : 'ByConnection'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLineDrivenLayout class >> isAbstract [
 	^ self = RSLineDrivenLayout
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLineDrivenLayout class >> on: elements edges: edges [
 	^ self new on: elements edges: edges
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineDrivenLayout class >> withEdges: aCollection [
 
 	^self new userDefinedLines: aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSLineDrivenLayout >> edges [
 	^ lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineDrivenLayout >> edges: aCollection [
 	"Set the list of edges that should be considered for the layout.
 	If none is specified (i.e., if this method is not called), then the
@@ -43,14 +45,14 @@ RSLineDrivenLayout >> edges: aCollection [
 	lines := aCollection
 ]
 
-{ #category : #iterator }
+{ #category : 'iterator' }
 RSLineDrivenLayout >> edgesDo: aBlock [
 	"Iterates over all the edges of the receiver."
 	lines ifNil: [ ^ self ].
 	lines do: aBlock
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLineDrivenLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
 	self userDefinedLines
@@ -66,7 +68,7 @@ RSLineDrivenLayout >> executeOnElements: elements [
 	super executeOnElements: elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineDrivenLayout >> setEdgesFromElements: shapes [
 	shapes isEmpty ifTrue: [ ^ self ].
 
@@ -75,12 +77,12 @@ RSLineDrivenLayout >> setEdgesFromElements: shapes [
 			select: [ :anEdge |shapes includes: anEdge from])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSLineDrivenLayout >> userDefinedLines [
 	^ userDefinedLines
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLineDrivenLayout >> userDefinedLines: aCollectionOfLines [
 	"useful to tell to the layout which edges have to be used for the layout"
 	userDefinedLines := aCollectionOfLines

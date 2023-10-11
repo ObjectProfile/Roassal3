@@ -1,17 +1,18 @@
 Class {
-	#name : #RSParallelAnimationTest,
-	#superclass : #RSAnimationTest,
-	#category : #'Roassal3-Animation-Tests'
+	#name : 'RSParallelAnimationTest',
+	#superclass : 'RSAnimationTest',
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSParallelAnimationTest >> testAddingAnimations [
 	self
 		addingInComposite: canvas parallelAnimation
 		duration: 2 second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSParallelAnimationTest >> testDuration [
 	| animation |
 	animation := RSParallelAnimation new.
@@ -41,14 +42,14 @@ RSParallelAnimationTest >> testDuration [
 	self assert: animation allDuration equals: 4 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSParallelAnimationTest >> testParallelAnimationCreation [
 	self
 		createAnimationWith: [ canvas parallelAnimationFrom: {} ]
 		animationClass: RSParallelAnimation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSParallelAnimationTest >> testStep [
 	| value animation |
 	value := 0.
@@ -64,7 +65,7 @@ RSParallelAnimationTest >> testStep [
 	self assert: value equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSParallelAnimationTest >> testStepEvent [
 	| value loop animation |
 	value := nil.

@@ -1,6 +1,6 @@
-Extension { #name : #RSVerticalCellLayout }
+Extension { #name : 'RSVerticalCellLayout' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSVerticalCellLayout class >> example1 [
 	| c shapes |
 	c := RSCanvas new.

@@ -8,8 +8,8 @@ The `RSAbstractRegularTreeLayout` class is an abstract base class that provides 
 You can use it verticalReversed or horizontalReversed
 "
 Class {
-	#name : #RSAbstractRegularTreeLayout,
-	#superclass : #RSAbstractGraphLayout,
+	#name : 'RSAbstractRegularTreeLayout',
+	#superclass : 'RSAbstractGraphLayout',
 	#instVars : [
 		'alreadyLayoutedNodes',
 		'topGap',
@@ -19,27 +19,29 @@ Class {
 		'shouldBeHorizontallyReversed',
 		'shouldBeVerticallyReversed'
 	],
-	#category : #'Roassal3-Layouts-Tree'
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractRegularTreeLayout class >> isAbstract [
 	^ self = RSAbstractRegularTreeLayout
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	| collection |
 	collection := nodesByLayer at: aNumber ifAbsentPut: [OrderedCollection new].
 	collection addAll: aNodeCollection
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSAbstractRegularTreeLayout >> computeChildrenFor: aNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractRegularTreeLayout >> doExecute: shapes [
 	| rootNodes |
 	alreadyLayoutedNodes := Set new.
@@ -57,23 +59,23 @@ RSAbstractRegularTreeLayout >> doExecute: shapes [
 		self rearrangeByLayers: shapes ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractRegularTreeLayout >> doInitialize: shapes [
 	self clear
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractRegularTreeLayout >> doPost: elements [
 	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
 	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractRegularTreeLayout >> horizontallyReverse [
 	shouldBeHorizontallyReversed := true
 ]
 
-{ #category : #reversing }
+{ #category : 'reversing' }
 RSAbstractRegularTreeLayout >> horizontallyReverse: shapes [
 	"Horizontally reverse the elements, as well as the attachpoints"
 	| g largeur |
@@ -83,7 +85,7 @@ RSAbstractRegularTreeLayout >> horizontallyReverse: shapes [
 		do: [ :el | el translateTo: (largeur - el position x) @ el position y ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractRegularTreeLayout >> initialize [
 	super initialize.
 	topGap := 5.
@@ -93,84 +95,84 @@ RSAbstractRegularTreeLayout >> initialize [
 	shouldBeVerticallyReversed := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> isLayered [
 	"Is the layout layered"
 	^ isLayered
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> isLayered: boolean [
 	"Is the layout layered"
 	isLayered := boolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> layered [
 	self isLayered: true
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSAbstractRegularTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> leftGap [
 	^ leftGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> leftGap: anInteger [
 	"Perform an horizontal translation of the nodes"
 	leftGap := anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
 	"Return if the layout is horizontally reversed"
 	^ shouldBeHorizontallyReversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> shouldBeHorizontallyReversed: aBoolean [
 	shouldBeHorizontallyReversed := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed [
 	"Return if the layout is vertically reversed"
 	^ shouldBeVerticallyReversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> shouldBeVerticallyReversed: aBoolean [
 	shouldBeVerticallyReversed := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> topGap [
 	^ topGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRegularTreeLayout >> topGap: anInteger [
 	"Perform a vertical translation of the nodes"
 	topGap := anInteger
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractRegularTreeLayout >> verticallyReverse [
 	"Reverse the edge extremities"
 	shouldBeVerticallyReversed := true
 ]
 
-{ #category : #reversing }
+{ #category : 'reversing' }
 RSAbstractRegularTreeLayout >> verticallyReverse: elements [
 	"Vertically reverse the elements, as well as the attachpoints"
 	| g hauteur |

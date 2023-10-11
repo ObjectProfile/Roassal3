@@ -2,55 +2,57 @@
 I am a demo
 "
 Class {
-	#name : #RSXmasFrontier,
-	#superclass : #Object,
+	#name : 'RSXmasFrontier',
+	#superclass : 'Object',
 	#instVars : [
 		'position',
 		'velocity',
 		'finished',
 		'thickness'
 	],
-	#category : #'Roassal3-Experimental-Xmas2019'
+	#category : 'Roassal3-Experimental-Xmas2019',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Xmas2019'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> finished [
 	^ finished
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> finished: aBool [
 	finished := aBool
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSXmasFrontier >> initialize [
 	super initialize.
 	finished := false.
 	thickness := SharedRandom globalGenerator rsNext: 10 and: 20
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> position: aPoint [
 	position := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> thickness [
 	^ thickness
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> thickness: aNumber [
 	thickness := aNumber
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSXmasFrontier >> update: factor [
 	| rect r |
 	rect := -10 asPoint corner: 510 asPoint.
@@ -68,12 +70,12 @@ RSXmasFrontier >> update: factor [
 	 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> velocity [
 	^ velocity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSXmasFrontier >> velocity: aPoint [
 	velocity := aPoint
 ]

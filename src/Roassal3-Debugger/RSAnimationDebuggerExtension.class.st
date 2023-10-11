@@ -2,24 +2,25 @@
 An experimental debugger for roassal3 animations
 "
 Class {
-	#name : #RSAnimationDebuggerExtension,
-	#superclass : #SpPresenterWithModel,
+	#name : 'RSAnimationDebuggerExtension',
+	#superclass : 'SpPresenterWithModel',
 	#traits : 'TStDebuggerExtension',
 	#classTraits : 'TStDebuggerExtension classTrait',
 	#instVars : [
 		'canvas',
 		'debugger'
 	],
-	#category : #'Roassal3-Debugger'
+	#category : 'Roassal3-Debugger',
+	#package : 'Roassal3-Debugger'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSAnimationDebuggerExtension >> debuggerLayout [
 
 	^ SpBoxLayout newVertical.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAnimationDebuggerExtension >> updatePresenter [ 
 	(debugger interruptedContext findContextSuchThat: [:ctx | ctx receiver isKindOf: RSAbstractAnimation]) ifNotNil: [ :ctx| 
 		canvas := ctx receiver canvas. 

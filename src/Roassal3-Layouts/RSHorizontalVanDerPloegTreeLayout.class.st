@@ -7,17 +7,19 @@ I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and ful
 [2]: https://github.com/cwi-swat/non-layered-tidy-trees
 "
 Class {
-	#name : #RSHorizontalVanDerPloegTreeLayout,
-	#superclass : #RSHorizontalTreeLayout,
+	#name : 'RSHorizontalVanDerPloegTreeLayout',
+	#superclass : 'RSHorizontalTreeLayout',
 	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularHorizontalTreeLayout',
 	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularHorizontalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],
-	#category : #'Roassal3-Layouts-Tree'
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
@@ -25,7 +27,7 @@ RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 	root := self initialize: elements lineEdges: self edges
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint x breadth: aPoint y

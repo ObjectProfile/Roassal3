@@ -1,6 +1,6 @@
-Extension { #name : #RSLayoutStudio }
+Extension { #name : 'RSLayoutStudio' }
 
-{ #category : #'*Roassal3-Pharo9' }
-RSLayoutStudio class >> defaultSpec [
+{ #category : '*Roassal3-Pharo9' }
+RSLayoutStudio classSide >> defaultSpec [
 	^ self defaultLayout
 ]

@@ -1,14 +1,15 @@
 Class {
-	#name : #RSPLinesTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RSPLinesTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'shapeClass',
 		'canvas'
 	],
-	#category : #'Roassal3-Shapes-Tests'
+	#category : 'Roassal3-Shapes-Tests',
+	#package : 'Roassal3-Shapes-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RSPLinesTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
@@ -19,24 +20,24 @@ RSPLinesTest class >> testParameters [
 	^ m
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSPLinesTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPLinesTest >> shapeClass [
 	^ shapeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPLinesTest >> shapeClass: aClass [
 	"It is expected to have a subclass of RSAbstractLine"
 	shapeClass := aClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPLinesTest >> testDraw [
 
 	canvas addShape: (self shapeClass new
@@ -45,7 +46,7 @@ RSPLinesTest >> testDraw [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPLinesTest >> testDrawMarkers [
 	| line marker |
 	marker := RSPolygon new
@@ -60,7 +61,7 @@ RSPLinesTest >> testDrawMarkers [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPLinesTest >> testPosition [
 	"This test is related to RSTPositionable"
 	| line position delta newPos |

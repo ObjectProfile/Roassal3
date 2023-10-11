@@ -1,6 +1,6 @@
 Class {
-	#name : #RSAbstractConnection,
-	#superclass : #Object,
+	#name : 'RSAbstractConnection',
+	#superclass : 'Object',
 	#instVars : [
 		'inputCanvas',
 		'outputs',
@@ -9,10 +9,12 @@ Class {
 		'windowOpener',
 		'canvasOpenings'
 	],
-	#category : #'Roassal3-Mondrian-Connections'
+	#category : 'Roassal3-Mondrian-Connections',
+	#package : 'Roassal3-Mondrian',
+	#tag : 'Connections'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 RSAbstractConnection >> clickOnShape: aShape [
 	| c win |
 	outputs with: canvasOpenings do: [ :ob :aCanvasOpening |
@@ -29,17 +31,17 @@ RSAbstractConnection >> clickOnShape: aShape [
 	]
 ]
 
-{ #category : #'windows callback' }
+{ #category : 'windows callback' }
 RSAbstractConnection >> deleteAllWindows [
 	canvasOpenings do: [ :co | co deleteWindow ]
 ]
 
-{ #category : #'windows callback' }
+{ #category : 'windows callback' }
 RSAbstractConnection >> doNotOpenWindow [
 	windowOpener := [ :window | window delete ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractConnection >> initialize [
 	super initialize.
 	numberOfCreatedCanvases := 0.
@@ -48,49 +50,49 @@ RSAbstractConnection >> initialize [
 	self openWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> inputCanvas: aCanvasOrBuilder [
 	inputCanvas := aCanvasOrBuilder canvas.
 	self prepareInputCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> lastWindow [
 	"Return a reference to the last window open. If none have been open, then it returns nil"
 	^ lastWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> numberOfCreatedCanvases [
 	"Return the number of created canvases. Useful for testing"
 	^ numberOfCreatedCanvases
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> numberOfOuputs [
 	"Return the number of ouputs the connection has"
 	^ outputs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> numberOfOutputs [
 	^ outputs size
 ]
 
-{ #category : #'windows callback' }
+{ #category : 'windows callback' }
 RSAbstractConnection >> openWindow [
 	"Open per default"
 	windowOpener := [ :canvas | canvas openOnce ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractConnection >> output: oneArgBlock [
 	"Add the callback of what to do in case of particular action in the input canvas"
 	outputs add: oneArgBlock.
 	canvasOpenings add: RSCanvasOpening new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractConnection >> prepareInputCanvas [
 
 	inputCanvas nodes
@@ -101,13 +103,13 @@ RSAbstractConnection >> prepareInputCanvas [
 	inputCanvas nodes @ RSSelectionPresentationInteraction
 ]
 
-{ #category : #'windows callback' }
+{ #category : 'windows callback' }
 RSAbstractConnection >> processWindow: aWindow [
 	lastWindow := aWindow.
 	windowOpener value: aWindow
 ]
 
-{ #category : #'windows callback' }
+{ #category : 'windows callback' }
 RSAbstractConnection >> windowOpener: oneArgBlock [
 	"Take as argument a one-arg block, which will be evaluated on a window that is newly created"
 	windowOpener := oneArgBlock

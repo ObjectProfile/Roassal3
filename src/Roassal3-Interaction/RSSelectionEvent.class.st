@@ -2,20 +2,22 @@
 I represent new event with selection for elastic boxes
 "
 Class {
-	#name : #RSSelectionEvent,
-	#superclass : #RSEvent,
+	#name : 'RSSelectionEvent',
+	#superclass : 'RSEvent',
 	#instVars : [
 		'selectedShapes'
 	],
-	#category : #'Roassal3-Interaction-ElasticBox'
+	#category : 'Roassal3-Interaction-ElasticBox',
+	#package : 'Roassal3-Interaction',
+	#tag : 'ElasticBox'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionEvent >> selectedShapes [
 	^ selectedShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionEvent >> selectedShapes: aRSGroup [
 	selectedShapes := aRSGroup
 ]

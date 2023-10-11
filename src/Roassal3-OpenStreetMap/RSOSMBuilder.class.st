@@ -2,15 +2,16 @@
 This class is to create maps directly with the correct interactions
 "
 Class {
-	#name : #RSOSMBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSOSMBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'osm'
 	],
-	#category : #'Roassal3-OpenStreetMap'
+	#category : 'Roassal3-OpenStreetMap',
+	#package : 'Roassal3-OpenStreetMap'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSOSMBuilder >> defaultContainer [
 	| canvas |
 	
@@ -22,7 +23,7 @@ RSOSMBuilder >> defaultContainer [
 	^ canvas.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> downloadCityCoordinatesFor: aCityName [
 	<script: '(self new downloadCityCoordinatesFor: ''Tarija'') inspect ' >
 	"This is just and example and it contains a limit of 50000 calls. Probably you will need pro account"
@@ -35,12 +36,12 @@ RSOSMBuilder >> downloadCityCoordinatesFor: aCityName [
 		in: [ :city | (city at: 'latitude') asNumber @ (city at: 'longitude') asNumber ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> latLogToRoassalCoordinates: aPoint [
 	^ (self lonToRoassal: aPoint y) @ (self latToRoassal: aPoint x).
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> latLong: aPoint [
 	| canvas location camera |
 	"location in latitud and longitud"
@@ -58,7 +59,7 @@ RSOSMBuilder >> latLong: aPoint [
 
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> latToRoassal: lat [
 	| l cls |
 	cls := osm class.
@@ -66,18 +67,18 @@ RSOSMBuilder >> latToRoassal: lat [
 	^ (Float pi / 4 + (l / 2)) tan ln * cls earthR negated
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> lonToRoassal: lon [
 	^ osm equatorLength * (lon asFloat / 360)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSOSMBuilder >> moveToCity: aCityName [
 	self latLong: (self downloadCityCoordinatesFor: aCityName)
 	
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSOSMBuilder >> renderIn: aCanvas [
 	osm := RSOSMShape new.
 	shapes := { osm }.

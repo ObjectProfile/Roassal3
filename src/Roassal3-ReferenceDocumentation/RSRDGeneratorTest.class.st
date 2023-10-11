@@ -1,10 +1,11 @@
 Class {
-	#name : #RSRDGeneratorTest,
-	#superclass : #TestCase,
-	#category : #'Roassal3-ReferenceDocumentation'
+	#name : 'RSRDGeneratorTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal3-ReferenceDocumentation',
+	#package : 'Roassal3-ReferenceDocumentation'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSRDGeneratorTest >> testIsKeyClass [
 
 	| g |

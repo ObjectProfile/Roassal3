@@ -2,8 +2,8 @@
 The RSMockShape class in Roassal3 is used for testing and mocking purposes. It provides a way to create mock shapes that can be used to test the behavior of other Roassal3 classes that depend on shapes.
 "
 Class {
-	#name : #RSMockShape,
-	#superclass : #RSObject,
+	#name : 'RSMockShape',
+	#superclass : 'RSObject',
 	#instVars : [
 		'position',
 		'weight',
@@ -15,10 +15,11 @@ Class {
 		'width',
 		'height'
 	],
-	#category : #'Roassal3-Layouts-Util'
+	#category : 'Roassal3-Layouts-Util',
+	#package : 'Roassal3-Layouts-Util'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape class >> shapes: aCollection [
 	^ aCollection collect: [ :shape | 
 		self new 
@@ -26,94 +27,94 @@ RSMockShape class >> shapes: aCollection [
 			yourself ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSMockShape >> addWeight [
 	weight := weight + 1
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSMockShape >> applyToRealElement [
 	isFixed ifTrue: [ ^ self ].
 	realShape translateTo: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> canvas [
 	^ realShape canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> charge [
 	^ charge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> charge: aNum [
 	charge := aNum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> encompassingRectangle [
 	^ Rectangle floatCenter: position extent: self extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> extent [
 	^ width @ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> fixPosition [
 	^ fixPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> fixPosition: aPoint [
 	fixPosition := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> height [
 	^ height
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMockShape >> initialize [
 	super initialize.
 	isFixed := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> isFixed [
 	^ isFixed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> isFixed: aBool [
 	isFixed := aBool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> oldPosition [
 	^ oldPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> oldPosition: aPoint [
 	oldPosition := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> realShape [
 	^ realShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> realShape: aRSShape [
 	| extent |
 	extent := aRSShape extent.
@@ -124,27 +125,27 @@ RSMockShape >> realShape: aRSShape [
 	self oldPosition: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> textExtents [
 	^ realShape textExtents
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSMockShape >> translateTo: aPosition [
 	position := aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> weight [
 	^ weight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> weight: aNumber [
 	weight := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMockShape >> width [
 	^ width
 ]

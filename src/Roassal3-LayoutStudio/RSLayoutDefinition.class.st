@@ -2,40 +2,42 @@
 I am group of fields that describe a layout, each field is editable and can be create a presenter that will edit a layout
 "
 Class {
-	#name : #RSLayoutDefinition,
-	#superclass : #RSObject,
+	#name : 'RSLayoutDefinition',
+	#superclass : 'RSObject',
 	#instVars : [
 		'fields'
 	],
-	#category : #'Roassal3-LayoutStudio-Core'
+	#category : 'Roassal3-LayoutStudio-Core',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutDefinition >> add: aRSLayoutField [
 	fields add: aRSLayoutField
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSLayoutDefinition >> fieldNamed: aString [ 
 	^ fields detect: [ :field | field selector = aString ] ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutDefinition >> fields [
 	^ fields
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutDefinition >> generateStringCode [
 	^ String streamContents: [ :stream | self generateStringCodeOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutDefinition >> generateStringCodeOn: stream [
 	self generateStringCodeOn: stream tab: 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [ 
 	| layout changedFields |
 	layout := self layoutStudio.
@@ -61,20 +63,20 @@ RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutDefinition >> initialize [
 	super initialize.
 	fields := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutDefinition >> layoutStudio [
 	^ fields 
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ fields first layoutStudio ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutDefinition >> update [
 	self fields do: [ :field | 
 		field disableEvent; update; enableEvent ].

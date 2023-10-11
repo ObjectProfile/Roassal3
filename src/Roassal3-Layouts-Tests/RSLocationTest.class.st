@@ -1,15 +1,16 @@
 Class {
-	#name : #RSLocationTest,
-	#superclass : #TestCase,
+	#name : 'RSLocationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'shape',
 		'target',
 		'canvas'
 	],
-	#category : #'Roassal3-Layouts-Tests'
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSLocationTest >> setUp [
 	super setUp.
 
@@ -20,20 +21,20 @@ RSLocationTest >> setUp [
 	canvas add: target; add: shape.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testAbove [
 	RSLocation new above; move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: 0 @ -15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testAboveRectangle [
 	RSLocation new above; move: shape on: (0 asPoint corner: 50 asPoint).
 	self assert: shape position equals: 25 @ -5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testBasic [
 	| location |
 	location := RSLocation new.
@@ -48,7 +49,7 @@ RSLocationTest >> testBasic [
 	self assert: shape position equals: 0 asPoint
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testBelow [
 
 	RSLocation new below ; move: shape on: target.
@@ -57,7 +58,7 @@ RSLocationTest >> testBelow [
 	self assert: shape position equals: 0 @ 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInComposite [
 	| composite |
 	canvas := RSCanvas new.
@@ -75,7 +76,7 @@ RSLocationTest >> testInComposite [
 	self assert: shape position equals: 0@0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInComposite2 [
 	| composite |
 	canvas := RSCanvas new.
@@ -94,49 +95,49 @@ RSLocationTest >> testInComposite2 [
 	self assert: shape position equals: 10 asPoint + 0 asPoint
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInnerXInnerY [
 	RSLocation new innerX; innerY; middle; right; move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: 5 @ 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInnerXOuterY [
 	RSLocation new innerX; outerY; bottom; right; move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: 5 @ 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInsideCornerLeft [
 	RSLocation new insideCornerLeft move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: -5 @ -15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testInsideCornerRight [
 	RSLocation new insideCornerRight move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: 5 @ -15.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testMiddleLeft [
 	RSLocation new middle; left; outer; move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: -15 @ 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testMiddleLeftInner [
 	RSLocation new middle; left; inner; move: shape on: target.
 	self assert: target position equals: 0 asPoint.
 	self assert: shape position equals: -5 @ 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLocationTest >> testOutsideXinsideY [
 	RSLocation new outerX; innerY; bottom; right; move: shape on: target.
 	self assert: target position equals: 0 asPoint.

@@ -2,16 +2,18 @@
 This class provides a simple way do push a group of shapes across a given path
 "
 Class {
-	#name : #RSAcrossPathBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSAcrossPathBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'shapesToLayout',
 		'svgShape'
 	],
-	#category : #'Roassal3-Experimental-AcrossPath'
+	#category : 'Roassal3-Experimental-AcrossPath',
+	#package : 'Roassal3-Experimental',
+	#tag : 'AcrossPath'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAcrossPathBuilder >> example01Labels [
 
 	<script: 'self new example01Labels open'>
@@ -35,7 +37,7 @@ RSAcrossPathBuilder >> example01Labels [
 	^ self canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAcrossPathBuilder >> example02Labels [
 
 	<script: 'self new example02Labels open'>
@@ -55,7 +57,7 @@ RSAcrossPathBuilder >> example02Labels [
 	^ self canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAcrossPathBuilder >> example03Labels [
 
 	<script: 'self new example03Labels open'>
@@ -75,7 +77,7 @@ RSAcrossPathBuilder >> example03Labels [
 	^ self canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAcrossPathBuilder >> example04Labels [
 
 	<script: 'self new example04Labels open'>
@@ -95,14 +97,14 @@ RSAcrossPathBuilder >> example04Labels [
 	^ self canvas
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAcrossPathBuilder >> fromString: aString [
 	| groupOfShapes |
 	groupOfShapes := aString collect: [ :char | self labelShapeFor: char ] as: RSGroup.
 	self shapesToLayout: groupOfShapes
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAcrossPathBuilder >> labelShapeFor: char [
 	^ char isSpaceSeparator
 		ifTrue: [
@@ -118,7 +120,7 @@ RSAcrossPathBuilder >> labelShapeFor: char [
 			]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAcrossPathBuilder >> renderIn: aCanvas [
 	| visitor |
 	aCanvas addAll: shapesToLayout.
@@ -131,22 +133,22 @@ RSAcrossPathBuilder >> renderIn: aCanvas [
 	[ shapes isEmpty ] whileFalse: [ shapes removeFirst remove ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAcrossPathBuilder >> shapesToLayout [
 	^ shapesToLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAcrossPathBuilder >> shapesToLayout: aGroupOfShapes [
 	shapesToLayout := aGroupOfShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAcrossPathBuilder >> svgShape [
 	^ svgShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAcrossPathBuilder >> svgShape: aRSSVGPath [
 	svgShape := aRSSVGPath
 ]

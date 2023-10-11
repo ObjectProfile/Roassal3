@@ -1,14 +1,15 @@
 Class {
-	#name : #RSPAnimationTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RSPAnimationTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'canvas',
 		'animationClass'
 	],
-	#category : #'Roassal3-Animation-Tests'
+	#category : 'Roassal3-Animation-Tests',
+	#package : 'Roassal3-Animation-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RSPAnimationTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
@@ -19,23 +20,23 @@ RSPAnimationTest class >> testParameters [
 	^ m
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPAnimationTest >> animationClass [
 	^ animationClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPAnimationTest >> animationClass: aClass [
 	animationClass := aClass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSPAnimationTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPAnimationTest >> testBasic [
 	| animation |
 	animation := self animationClass new.
@@ -61,7 +62,7 @@ RSPAnimationTest >> testBasic [
 	self assert: animation loops equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPAnimationTest >> testBasicInCanvas [
 	| animation |
 	animation := self animationClass new.
@@ -72,7 +73,7 @@ RSPAnimationTest >> testBasicInCanvas [
 	self assert: animation duration equals: self animationClass defaultDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPAnimationTest >> testDelay [
 	| animation |
 	animation := self animationClass new.
@@ -83,7 +84,7 @@ RSPAnimationTest >> testDelay [
 	self assert: animation isDelayDone
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPAnimationTest >> testError [
 
 	| c shape ani |

@@ -1,6 +1,6 @@
-Extension { #name : #RSTransitionAnimation }
+Extension { #name : 'RSTransitionAnimation' }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSTransitionAnimation >> inspectorControls [
 
 	<inspectorPresentationOrder: 0 title: 'Controls'>

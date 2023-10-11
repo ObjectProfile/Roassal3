@@ -1,16 +1,17 @@
 Class {
-	#name : #RSUMLClassBuilderTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-UML-Tests'
+	#name : 'RSUMLClassBuilderTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-UML-Tests',
+	#package : 'Roassal3-UML-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassBuilderTest >> classToTest [
 
 	^ RSUMLClassBuilder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSUMLClassBuilderTest >> testBasic [
 	| builder classes |
 	classes := RSAttachPoint withAllSubclasses.
@@ -20,7 +21,7 @@ RSUMLClassBuilderTest >> testBasic [
 	self assert: builder shapes size equals: classes size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSUMLClassBuilderTest >> testJustClassName [
 	| builder shape  |
 	builder := self classToTest new.

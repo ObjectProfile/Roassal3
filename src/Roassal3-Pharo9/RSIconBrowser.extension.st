@@ -1,6 +1,6 @@
-Extension { #name : #RSIconBrowser }
+Extension { #name : 'RSIconBrowser' }
 
-{ #category : #'*Roassal3-Pharo9' }
-RSIconBrowser class >> defaultSpec [
+{ #category : '*Roassal3-Pharo9' }
+RSIconBrowser classSide >> defaultSpec [
 	^ self defaultLayout
 ]

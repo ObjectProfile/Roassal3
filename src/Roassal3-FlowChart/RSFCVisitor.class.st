@@ -1,30 +1,31 @@
 Class {
-	#name : #RSFCVisitor,
-	#superclass : #Object,
-	#category : #'Roassal3-FlowChart'
+	#name : 'RSFCVisitor',
+	#superclass : 'Object',
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitDecision: decision [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitFlowchart: flowchart [
 	flowchart elements do: [ :e | e accept: self ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitFlowline: flowline [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitInputOutput: flowline [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitProcess: process [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCVisitor >> visitTerminal: terminal [
 ]

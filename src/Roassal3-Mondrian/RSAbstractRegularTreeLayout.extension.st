@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractRegularTreeLayout }
+Extension { #name : 'RSAbstractRegularTreeLayout' }
 
-{ #category : #'*Roassal3-Mondrian' }
+{ #category : '*Roassal3-Mondrian' }
 RSAbstractRegularTreeLayout class >> example1 [
 	| b |
 	b := RSMondrian new.

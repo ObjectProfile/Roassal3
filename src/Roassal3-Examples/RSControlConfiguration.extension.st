@@ -1,6 +1,6 @@
-Extension { #name : #RSControlConfiguration }
+Extension { #name : 'RSControlConfiguration' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSControlConfiguration class >> example1 [
 	| c controller |
 	c := RSCanvas new.
@@ -10,7 +10,7 @@ RSControlConfiguration class >> example1 [
 	^ c open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSControlConfiguration class >> example2 [
 	| canvas shapes int |
 	canvas := RSCanvas new.

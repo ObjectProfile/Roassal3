@@ -1,6 +1,6 @@
-Extension { #name : #AtomicCollection }
+Extension { #name : 'AtomicCollection' }
 
-{ #category : #'*Roassal3-OpenStreetMap' }
+{ #category : '*Roassal3-OpenStreetMap' }
 AtomicCollection >> removeAllSuchThat: aFullBlockClosure [
 
 	^ self subclassResponsibility

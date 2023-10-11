@@ -1,6 +1,6 @@
-Extension { #name : #RSBuilder }
+Extension { #name : 'RSBuilder' }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSBuilder >> asPresenter [
 	self build.
 	^ self container asPresenter

@@ -4,27 +4,29 @@ Based on https://developers.google.com/web/tools/chrome-devtools/console/events
 MonitoEvents for Roassal3 in order to log some events 
 "
 Class {
-	#name : #RSMonitorEvents,
-	#superclass : #RSObject,
+	#name : 'RSMonitorEvents',
+	#superclass : 'RSObject',
 	#instVars : [
 		'target',
 		'announcementClasses'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMonitorEvents >> announcementClasses [
 	^ announcementClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMonitorEvents >> announcementClasses: aCollection [
 	"aCollection of Announcement "
 	announcementClasses := aCollection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMonitorEvents >> onNewEventDo: aBlockClosure for: aSubscriber [
 	| events |
 	self assert: self target isNotNil description: 'Must provide a target'.
@@ -34,17 +36,17 @@ RSMonitorEvents >> onNewEventDo: aBlockClosure for: aSubscriber [
 		target when: evt do: aBlockClosure for: aSubscriber ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMonitorEvents >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMonitorEvents >> target: aRSTAnnounceable [
 	target := aRSTAnnounceable
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSMonitorEvents >> unRegister [
 	target removeInteractionIfPresent: self class
 ]

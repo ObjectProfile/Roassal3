@@ -1,34 +1,35 @@
 Class {
-	#name : #RSFCDecision,
-	#superclass : #RSFCSymbol,
+	#name : 'RSFCDecision',
+	#superclass : 'RSFCSymbol',
 	#instVars : [
 		'yesElement',
 		'noElement'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCDecision >> accept: visitor [
 	visitor visitDecision: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCDecision >> noElement [
 	^ noElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCDecision >> noElement: anObject [
 	noElement := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCDecision >> yesElement [
 	^ yesElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCDecision >> yesElement: anObject [
 	yesElement := anObject
 ]

@@ -2,12 +2,14 @@
 I all some menus in 'Tools-Roassal3' for these examples
 "
 Class {
-	#name : #RSSpecMenu,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Spec-Examples-Menu'
+	#name : 'RSSpecMenu',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Spec-Examples-Menu',
+	#package : 'Roassal3-Spec-Examples',
+	#tag : 'Menu'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 RSSpecMenu class >> menu07Examples: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Examples)
@@ -26,7 +28,7 @@ RSSpecMenu class >> menu07Examples: aBuilder [
 		action: [ RSExamplesBrowser new open ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RSSpecMenu class >> menu08PalettesOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Palettes)
@@ -38,7 +40,7 @@ RSSpecMenu class >> menu08PalettesOn: aBuilder [
 		action: [ RSColorPaletteChooser new open ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RSSpecMenu class >> menu09EaselOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Easel)
@@ -50,7 +52,7 @@ RSSpecMenu class >> menu09EaselOn: aBuilder [
 		action: [ RSEasel new open ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RSSpecMenu class >> menu10IconsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3Icons)
@@ -62,7 +64,7 @@ RSSpecMenu class >> menu10IconsOn: aBuilder [
 		action: [ RSIconBrowser new open ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RSSpecMenu class >> menu11LayoutStudioOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Roassal3LayoutStudio)

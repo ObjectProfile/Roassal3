@@ -2,8 +2,8 @@
 TODO
 "
 Class {
-	#name : #RSForceBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSForceBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'interferences',
 		'particles',
@@ -15,15 +15,17 @@ Class {
 		'random',
 		'colorGenerator'
 	],
-	#category : #'Roassal3-Experimental-Force'
+	#category : 'Roassal3-Experimental-Force',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Force'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> colorGenerator: aRSColorGenerator [
 	colorGenerator := aRSColorGenerator
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSForceBuilder >> createObjects: amt radius: radius class: cls [
 	^ (1 to: amt) collect: [ :i | | r |
 		r := random next * 360.
@@ -33,17 +35,17 @@ RSForceBuilder >> createObjects: amt radius: radius class: cls [
 			yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> force [
 	^ force
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> force: aNumber [
 	force := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSForceBuilder >> initialize [
 	super initialize.
 	interferences := particles := #().
@@ -57,57 +59,57 @@ RSForceBuilder >> initialize [
 		interferencesRadius: 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> interferences [
 	^ interferences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> interferencesRadius [
 	^ interferencesRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> interferencesRadius: anInteger [
 	interferencesRadius := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> interferencesSize [
 	^ interferencesSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> interferencesSize: anInteger [
 	interferencesSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> particles [
 	^ particles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> particlesRadius [
 	^ particlesRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> particlesRadius: anInteger [
 	particlesRadius := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> particlesSize [
 	^ particlesSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBuilder >> particlesSize: anInteger [
 	particlesSize := anInteger
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSForceBuilder >> renderIn: aCanvas [
 	aCanvas color: colorGenerator backgroundColor.
 	self reset.
@@ -115,7 +117,7 @@ RSForceBuilder >> renderIn: aCanvas [
 	aCanvas newAnimation repeat; onStepDo: [ self update: self force ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSForceBuilder >> reset [
 
 	| c |
@@ -131,7 +133,7 @@ RSForceBuilder >> reset [
 		for: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSForceBuilder >> setInterferences [
 	interferences := self
 		createObjects: self interferencesSize
@@ -139,7 +141,7 @@ RSForceBuilder >> setInterferences [
 		class: RSInterference
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSForceBuilder >> setParticles [
 	particles := self
 		createObjects: self particlesSize
@@ -147,7 +149,7 @@ RSForceBuilder >> setParticles [
 		class: RSParticleForce
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSForceBuilder >> update: aFloat [
 	| c |
 	c := self canvas.

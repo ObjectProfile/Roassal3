@@ -2,15 +2,17 @@
 Basic example of how to use SpRoassalPresenter, use it as a reference of how interact with some spec components
 "
 Class {
-	#name : #RSBasicSpecExample,
-	#superclass : #SpPresenter,
+	#name : 'RSBasicSpecExample',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'roassalSpec'
 	],
-	#category : #'Roassal3-Spec-Examples-Basic'
+	#category : 'Roassal3-Spec-Examples-Basic',
+	#package : 'Roassal3-Spec-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSBasicSpecExample class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
@@ -18,13 +20,13 @@ RSBasicSpecExample class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBasicSpecExample >> initializePresenters [
 	roassalSpec := self newRoassal.
 	self initializeRoassal3: roassalSpec canvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBasicSpecExample >> initializeRoassal3: canvas [
 	| slice magic |
 	slice := RSPieSlice new.
@@ -75,7 +77,7 @@ RSBasicSpecExample >> initializeRoassal3: canvas [
 		yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBasicSpecExample >> initializeWindow: w [
 	w
 		title: 'Basic plot';
@@ -83,7 +85,7 @@ RSBasicSpecExample >> initializeWindow: w [
 		centered
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBasicSpecExample >> run [
 	<script: 'self new asWindow open'>
 ]

@@ -3,40 +3,41 @@ I'm a mouse wheel scrolling event.
 
 "
 Class {
-	#name : #RSMouseWheelEvent,
-	#superclass : #RSAbstractMouseEvent,
+	#name : 'RSMouseWheelEvent',
+	#superclass : 'RSAbstractMouseEvent',
 	#instVars : [
 		'direction'
 	],
-	#category : #'Roassal3-Event'
+	#category : 'Roassal3-Event',
+	#package : 'Roassal3-Event'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMouseWheelEvent >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMouseWheelEvent >> direction: anObject [
 	direction := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMouseWheelEvent >> isDown [
 	^ direction = Character arrowDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMouseWheelEvent >> isLeft [
 	^ direction = Character arrowLeft
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMouseWheelEvent >> isRight [
 	^ direction = Character arrowRight
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSMouseWheelEvent >> isUp [
 	^ direction = Character arrowUp
 ]

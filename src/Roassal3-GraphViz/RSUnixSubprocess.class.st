@@ -33,8 +33,8 @@ Public API and Key Messages
 ### Implementation Points
 "
 Class {
-	#name : #RSUnixSubprocess,
-	#superclass : #Object,
+	#name : 'RSUnixSubprocess',
+	#superclass : 'Object',
 	#instVars : [
 		'command',
 		'arguments',
@@ -47,10 +47,12 @@ Class {
 		'stderrStream',
 		'stdinStream'
 	],
-	#category : #'Roassal3-GraphViz-Core'
+	#category : 'Roassal3-GraphViz-Core',
+	#package : 'Roassal3-GraphViz',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSUnixSubprocess class >> command: cmd arguments: args [
 
 	^self new
@@ -58,61 +60,61 @@ RSUnixSubprocess class >> command: cmd arguments: args [
 		arguments: args
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSUnixSubprocess >> addAllEnvVariablesFromParentWithoutOverride [
 
 	self process addAllEnvVariablesFromParentWithoutOverride
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> arguments [
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> arguments: anObject [
 	arguments := anObject
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RSUnixSubprocess >> closeAndCleanStreams [
 
 	process ifNil: [ ^ self ].
 	process closeAndCleanStreams
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #'env building' }
+{ #category : 'env building' }
 RSUnixSubprocess >> envVariables [
 
 	^ process envVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> environmentAt: key put: value [
 	^ self process environmentAt: key put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> errorBlock [
 	^ errorBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> errorBlock: anObject [
 	errorBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> exitCode [
 	"Answer the interpretted exit status, or nil if not available"
 
@@ -120,25 +122,25 @@ RSUnixSubprocess >> exitCode [
 	^ process exitStatusInterpreter exitStatus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> exitStatus [
 	^ process exitStatus
 ]
 
-{ #category : #status }
+{ #category : 'status' }
 RSUnixSubprocess >> exitStatusInterpreter [
 
 	^ process exitStatusInterpreter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSUnixSubprocess >> hasProcess [
 	"Answer a boolean indicating whether the receiver has a process object"
 
 	^ process isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSUnixSubprocess >> initialize [
 
 	super initialize.
@@ -146,12 +148,12 @@ RSUnixSubprocess >> initialize [
 	stdinStream := String new writeStream
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSUnixSubprocess >> isRunning [
 	^ self process isRunning
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSUnixSubprocess >> isSuccess [
 	"Answer whether the command completed successfully.
 	Only valid after the command has completed."
@@ -159,7 +161,7 @@ RSUnixSubprocess >> isSuccess [
 	^process exitStatusInterpreter isSuccess
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSUnixSubprocess >> printOn: aStream [
 
 	process ifNil: [ ^super printOn: aStream ].
@@ -172,18 +174,18 @@ RSUnixSubprocess >> printOn: aStream [
 				[ aStream nextPutAll: 'an Unsuccessfull RSUnixSubprocess' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> process [
 	^ process ifNil: [ process := OSSUnixSubprocess new ]
 ]
 
-{ #category : #status }
+{ #category : 'status' }
 RSUnixSubprocess >> queryExitStatus [
 
 	^ process queryExitStatus
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RSUnixSubprocess >> removeLD_LIBRARY_PATH [
 	"The script for running pharo sets LD_LIBRARY_PATH to the VM directory, which contains non-standard libraries.
 	Unset LD_LIBRARY_PATH."
@@ -192,7 +194,7 @@ RSUnixSubprocess >> removeLD_LIBRARY_PATH [
 	self process envVariables removeKey: 'LD_LIBRARY_PATH'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSUnixSubprocess >> run [
 	"Run the command without waiting"
 
@@ -200,7 +202,7 @@ RSUnixSubprocess >> run [
 	^self runProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSUnixSubprocess >> runAndWait [
 	"Run the command and wait for completion"
 
@@ -211,7 +213,7 @@ RSUnixSubprocess >> runAndWait [
 		ifTrue: [ errorBlock value: self ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSUnixSubprocess >> runProcess [
 	"Run the requested command as a separate process"
 
@@ -245,7 +247,7 @@ RSUnixSubprocess >> runProcess [
 		ifNotNil: [ semaphore signal ] ] fork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSUnixSubprocess >> setCommand [
 	"Set the command or shell command in the process.
 	Either may be specified, but not both :-)"
@@ -263,60 +265,60 @@ RSUnixSubprocess >> setCommand [
 			arguments: arguments ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> shellCommand [
 	^ shellCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> shellCommand: anObject [
 	shellCommand := anObject
 ]
 
-{ #category : #'OS signal sending' }
+{ #category : 'OS signal sending' }
 RSUnixSubprocess >> sigterm [
 	"Ask the external process to terminate"
 
 	^process sigterm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> stderr [
 	^ stderrStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> stdin [
 	^ stdinStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> stdin: aByteArray [
 	stdinStream := aByteArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> stdout [
 	^ stdoutStream contents
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSUnixSubprocess >> terminate [
 	process terminate
 ]
 
-{ #category : #'system startup & shutdown' }
+{ #category : 'system startup & shutdown' }
 RSUnixSubprocess >> terminateOnShutdown [
 
 	self process terminateOnShutdown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> workingDirectory [
 	^ workingDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUnixSubprocess >> workingDirectory: aFileReference [
 
 	workingDirectory := aFileReference asFileReference

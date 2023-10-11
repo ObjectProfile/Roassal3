@@ -1,10 +1,12 @@
 Class {
-	#name : #RSWrapLabelTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Wrap'
+	#name : 'RSWrapLabelTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Global-Tests-Wrap',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Wrap'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSWrapLabelTest >> testWrapStrategyShouldNotProduceDuplicateLabels [
 	| labelBuilder labels line |
 	labelBuilder := RSMultilineLabelBuilder new.

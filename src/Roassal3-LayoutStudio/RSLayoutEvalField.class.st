@@ -2,12 +2,14 @@
 this field can use a number or a block evaluator, user can select one from a list of options
 "
 Class {
-	#name : #RSLayoutEvalField,
-	#superclass : #RSLayoutField,
-	#category : #'Roassal3-LayoutStudio-Fields'
+	#name : 'RSLayoutEvalField',
+	#superclass : 'RSLayoutField',
+	#category : 'Roassal3-LayoutStudio-Fields',
+	#package : 'Roassal3-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutEvalField >> transform: aString [
 	| point |
 	point := self class compiler evaluate: aString.

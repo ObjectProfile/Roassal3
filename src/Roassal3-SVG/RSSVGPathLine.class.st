@@ -21,15 +21,17 @@ this block is executed each time you need to redraw the line. As you can see thi
 But this is only a basic way to draw a custom line. If you will need an special line then you should create a subclass of `RSAbstractLine` then add a methods in `RSAthensRenderer` using the visitor pattern.
 "
 Class {
-	#name : #RSSVGPathLine,
-	#superclass : #RSAbstractDualLine,
+	#name : 'RSSVGPathLine',
+	#superclass : 'RSAbstractDualLine',
 	#instVars : [
 		'svgPath'
 	],
-	#category : #'Roassal3-SVG-Shapes'
+	#category : 'Roassal3-SVG-Shapes',
+	#package : 'Roassal3-SVG',
+	#tag : 'Shapes'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSVGPathLine class >> basicExample [
 	| line a b |
 	line := self new.
@@ -61,33 +63,33 @@ RSSVGPathLine class >> basicExample [
 		open
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSVGPathLine >> buildPathOn: visitor [
 	visitor buildSVGLinePath: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPathLine >> color [
 	^ self paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPathLine >> color: aColor [
 	self paint: aColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSVGPathLine >> initialize [
 	super initialize.
 	self svgPath: [:line |'']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPathLine >> svgPath [
 	^svgPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPathLine >> svgPath: aBlock [
 	"aBlock return a string and recives 1 argument, the svg line"
 	svgPath := aBlock

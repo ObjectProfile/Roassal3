@@ -1,19 +1,20 @@
 Class {
-	#name : #RSAlignmentTest,
-	#superclass : #TestCase,
+	#name : 'RSAlignmentTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'align'
 	],
-	#category : #'Roassal3-Layouts-Tests'
+	#category : 'Roassal3-Layouts-Tests',
+	#package : 'Roassal3-Layouts-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSAlignmentTest >> setUp [
 	super setUp.
 	align := RSAlignment new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testCenter [
 	| es |
 	es := (1 to: 5) collect: [ :v | RSBox new size: 10 ] as: RSGroup.
@@ -23,7 +24,7 @@ RSAlignmentTest >> testCenter [
 	self assert: es encompassingRectangle equals: ((0.0@0.0) corner: (70.0@10.0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromBottom [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -36,7 +37,7 @@ RSAlignmentTest >> testFromBottom [
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromLeft [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -49,7 +50,7 @@ RSAlignmentTest >> testFromLeft [
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromLeftWithAFixShape [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -61,7 +62,7 @@ RSAlignmentTest >> testFromLeftWithAFixShape [
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromLeftWithFixedShape [
 	| es c |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -79,7 +80,7 @@ RSAlignmentTest >> testFromLeftWithFixedShape [
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromRight [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -92,7 +93,7 @@ RSAlignmentTest >> testFromRight [
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromTop [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -105,7 +106,7 @@ RSAlignmentTest >> testFromTop [
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(-50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testFromTopWithAFixShape [
 	| es |
 	es := (10 to: 100 by: 10) collect: [ :n | RSBox new size: n; yourself ].
@@ -120,7 +121,7 @@ RSAlignmentTest >> testFromTopWithAFixShape [
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testHasElement [
 	self deny: align hasShape.
 	align shapes: (Array with: RSBox new).
@@ -129,7 +130,7 @@ RSAlignmentTest >> testHasElement [
 	self deny: align hasShape
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAlignmentTest >> testNoErrorOnDefault [
 
 	RSAlignment new left; right; top; bottom

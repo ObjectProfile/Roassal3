@@ -2,20 +2,22 @@
 TODO
 "
 Class {
-	#name : #RSColorHSBGenerator,
-	#superclass : #RSAbstractColorGenerator,
+	#name : 'RSColorHSBGenerator',
+	#superclass : 'RSAbstractColorGenerator',
 	#instVars : [
 		'colors'
 	],
-	#category : #'Roassal3-Experimental-Force'
+	#category : 'Roassal3-Experimental-Force',
+	#package : 'Roassal3-Experimental',
+	#tag : 'Force'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColorHSBGenerator >> backgroundColor [
 	^ Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSColorHSBGenerator >> colorFor: aParticle [
 	colors ifNil: [ colors := Dictionary new ].
 	^ colors at: aParticle ifAbsentPut: [

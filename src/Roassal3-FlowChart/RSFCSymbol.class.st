@@ -1,23 +1,24 @@
 Class {
-	#name : #RSFCSymbol,
-	#superclass : #RSObject,
+	#name : 'RSFCSymbol',
+	#superclass : 'RSObject',
 	#instVars : [
 		'label'
 	],
-	#category : #'Roassal3-FlowChart'
+	#category : 'Roassal3-FlowChart',
+	#package : 'Roassal3-FlowChart'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSFCSymbol >> accept: visitor [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCSymbol >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFCSymbol >> label: aString [
 	label := aString
 ]
