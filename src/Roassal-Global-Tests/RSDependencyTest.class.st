@@ -43,7 +43,6 @@ RSDependencyTest >> testDependencies [
 	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Builders'.
 	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Chart'.
 	self assertPackage: 'Roassal' doesNotDependOn: 'Roassal-Colors'.
-	self assertPackage: 'Roassal-Shapes' doesNotDependOn: 'Roassal-Layouts'.
 	self assertPackage: 'Roassal-Animation' dependOn: 'Roassal'.
 
 	"Chart uses RSLocation from Layouts"

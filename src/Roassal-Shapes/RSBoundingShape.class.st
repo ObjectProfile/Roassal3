@@ -11,8 +11,8 @@ My subclasses are: `RSBitmap`, `RSBox`, `RSCircularShape`, `RSComposite`, `RSLab
 Class {
 	#name : #RSBoundingShape,
 	#superclass : #RSShape,
-	#traits : 'RSTPositionable',
-	#classTraits : 'RSTPositionable classTrait',
+	#traits : 'RSTPositionable + RSTNode',
+	#classTraits : 'RSTPositionable classTrait + RSTNode classTrait',
 	#instVars : [
 		'baseRectangle',
 		'matrix',
@@ -79,15 +79,6 @@ RSBoundingShape >> addConnectedLine: aLine [
 	self assert: [ aLine isLine ] description: 'Only a line can be added'.
 	(self connectedLines includes: aLine)
 		ifFalse: [ self connectedLines add: aLine ]
-]
-
-{ #category : #accessing }
-RSBoundingShape >> allRecursiveConnectedShapes [
-	"Return the set of all recursively connected shapes."
-	| r |
-	r := Set new.
-	self allRecursiveConnectedShapesIn: r.
-	^ r
 ]
 
 { #category : #private }
@@ -205,7 +196,12 @@ RSBoundingShape >> globalMatrix [
 
 { #category : #testing }
 RSBoundingShape >> hasEdges [
-	"Return true if the shape has any outgoing or incoming edge"
+	^ self hasLines
+]
+
+{ #category : #testing }
+RSBoundingShape >> hasLines [
+	"Return true if the shape has any outgoing or incoming line"
 	^ connectedLines notNil
 ]
 
@@ -237,6 +233,11 @@ RSBoundingShape >> incomingLines [
 	"Return the list of incoming edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedLines select: [ :e | e to == self ]
+]
+
+{ #category : #'accessing - nodes' }
+RSBoundingShape >> incomingNodes [
+	^ self incomingShapes
 ]
 
 { #category : #lines }
@@ -323,6 +324,11 @@ RSBoundingShape >> outgoingLines [
 	"Return the list of outgoing edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedLines select: [ :e | e from == self ]
+]
+
+{ #category : #'accessing - nodes' }
+RSBoundingShape >> outgoingNodes [
+	^ self outgoingShapes
 ]
 
 { #category : #lines }

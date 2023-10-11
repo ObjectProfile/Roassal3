@@ -85,10 +85,8 @@ BaselineOfRoassal >> corePackagesNames [
 	'Roassal-Shapes'
 	'Roassal-Animation'
 	'Roassal-Interaction'
-	'Roassal-Layouts-Util'
-	'Roassal-Layouts'
 	'Roassal-Colors'
-	'Roassal-Legend'
+	'Roassal-Legend'o
 	'Roassal-UML'
 	'Roassal-Sunburst'
 	'Roassal-FlameGraph'
@@ -101,6 +99,8 @@ BaselineOfRoassal >> corePackagesNames [
 	'Roassal-Spec-Morphic'
 	'Roassal-BaselineMap'
 	'Roassal-SVG'
+	'Roassal-Class-Examples'
+	'Roassal-Mondrian'
 	)
 ]
 
@@ -108,7 +108,6 @@ BaselineOfRoassal >> corePackagesNames [
 BaselineOfRoassal >> dependencies: spec [
 	spec baseline: 'Bloc' with: [
 		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
-
 	spec baseline: 'AthensSVG' with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
@@ -126,6 +125,9 @@ BaselineOfRoassal >> dependencies: spec [
 	spec 
    		baseline: 'AIDatasets' 
    		with: [ spec repository: 'github://pharo-ai/datasets' ].
+	spec
+		baseline: 'RoassalLayouts'
+		with: [ spec repository: 'github://pharo-graphics/RoassalLayouts:v1.00/src' ]
 ]
 
 { #category : #'API-packages' }
@@ -153,7 +155,7 @@ BaselineOfRoassal >> extraPackagesNames [
 { #category : #baselines }
 BaselineOfRoassal >> registerPackages: spec [
 	"The packages to use, but not load"
-	spec package: #'Roassal' with: [ spec requires: #('Geometry' 'NumericScales') ].
+	spec package: #'Roassal' with: [ spec requires: #('Geometry' 'NumericScales' 'RoassalLayouts') ].
 	self corePackagesNames, 
 	self examplePackagesNames, 
 	self testPackagesNames, 
@@ -208,7 +210,6 @@ BaselineOfRoassal >> testPackagesNames [
 	'Roassal-Animation-Tests'
 	'Roassal-Shapes-Tests'
 	'Roassal-Interaction-Tests'
-	'Roassal-Layouts-Tests'
 	'Roassal-Chart-Tests'
 	'Roassal-UML-Tests'
 	'Roassal-Spec-Tests'

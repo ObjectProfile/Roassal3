@@ -200,7 +200,7 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 				color: Color black;
 				size: cls numberOfMethods sqrt;
 				yourself
-			 ].
+			 ] as: RSGroup.
 		RSGridLayout on: shapes.
 		RSComposite new
 			color: Color blue translucent;
@@ -248,7 +248,7 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 				color: Color black;
 				size: cls numberOfMethods sqrt;
 				yourself
-			 ].
+			 ] as: RSGroup.
 		RSGridLayout on: shapes.
 		RSComposite new
 			color: Color blue translucent;
