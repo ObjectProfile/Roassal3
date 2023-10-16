@@ -2,8 +2,8 @@
 I have information about how to accessing to one class in the Roassal Uml class builder
 "
 Class {
-	#name : #RSUMLClassDescriptor,
-	#superclass : #RSUMLAbstractModelDescriptor,
+	#name : 'RSUMLClassDescriptor',
+	#superclass : 'RSUMLAbstractModelDescriptor',
 	#instVars : [
 		'instVars',
 		'methods',
@@ -16,41 +16,43 @@ Class {
 		'compositions',
 		'isAbstract'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : 'Roassal3-UML-Descriptor',
+	#package : 'Roassal3-UML',
+	#tag : 'Descriptor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> aggregations [
 	^ aggregations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> aggregations: aCollection [
 	aggregations := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> classname [
 	^ classname
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> classname: aSymbolOrBlock [
 	"In classname N is because this method does not have relation with className method"
 	classname := aSymbolOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> compositions [
 	^ compositions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> compositions: aCollection [
 	compositions := aCollection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSUMLClassDescriptor >> forPharo [
 	self
 		classname: #name;
@@ -63,73 +65,73 @@ RSUMLClassDescriptor >> forPharo [
 		methodsLimit: SmallInteger maxVal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> instVarSelector [
 	^ instVarSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> instVarSelector: aSymbolOrBlock [
 	instVarSelector := aSymbolOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> instVars [
 	^ instVars
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> instVars: aSymbolOrBlock [
 	instVars := aSymbolOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> isAbstract [
 	^ isAbstract
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> isAbstract: aBlockOrString [
 	isAbstract := aBlockOrString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methodSelector [
 	^ methodSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methodSelector: aSymbolOrBlock [
 	methodSelector := aSymbolOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methods: aSymbolOrBlock [
 	methods := aSymbolOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methodsLimit [
 	^ methodsLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> methodsLimit: aNumber [
 	self assert: aNumber >= 1 description: 'Cannot have a negative limit'.
 	methodsLimit := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> superclass [
 	^ superclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLClassDescriptor >> superclass: aSymbolOrBlock [
 	superclass := aSymbolOrBlock
 ]

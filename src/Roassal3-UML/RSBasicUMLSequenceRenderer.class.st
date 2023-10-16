@@ -2,15 +2,17 @@
 A basic renderer for UML sequences.
 "
 Class {
-	#name : #RSBasicUMLSequenceRenderer,
-	#superclass : #RSAbstractUMLSequenceRenderer,
+	#name : 'RSBasicUMLSequenceRenderer',
+	#superclass : 'RSAbstractUMLSequenceRenderer',
 	#instVars : [
 		'lineBuilder'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBasicUMLSequenceRenderer >> initialize [
 
 	super initialize.
@@ -20,7 +22,7 @@ RSBasicUMLSequenceRenderer >> initialize [
 		               yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBasicUMLSequenceRenderer >> shapeFor: timedMessageSend [
 
 	| descriptor startCircle selectorLabel durationLabel goingLine endCircle |

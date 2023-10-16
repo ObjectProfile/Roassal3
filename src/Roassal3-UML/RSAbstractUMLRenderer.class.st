@@ -2,8 +2,8 @@
 Abstract renderer for UML
 "
 Class {
-	#name : #RSAbstractUMLRenderer,
-	#superclass : #RSObject,
+	#name : 'RSAbstractUMLRenderer',
+	#superclass : 'RSObject',
 	#instVars : [
 		'border',
 		'modelDescriptor',
@@ -12,53 +12,55 @@ Class {
 		'boxBorder',
 		'boxColor'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractUMLRenderer class >> isAbstract [
 
 	^self name = #RSAbstractUMLRenderer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> border [
 	^ border ifNil: [ border := self defaultBorder ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> border: aBorder [
 	border := aBorder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> boxBorder [
 	^ boxBorder ifNil: [ boxBorder := self defaultBoxBorder ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> boxBorder: aBorder [
 	boxBorder := aBorder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> boxColor [
 	^ boxColor ifNil: [ boxColor := self defaultBoxColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> boxColor: aColor [
 	boxColor := aColor
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLRenderer >> defaultBorder [
 	^ RSBorder new
 		color: self textColor;
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLRenderer >> defaultBoxBorder [
 	^ RSBorder new
 		width: 5;
@@ -67,52 +69,52 @@ RSAbstractUMLRenderer >> defaultBoxBorder [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> defaultBoxColor [
 	^ Color colorFrom: 'cfd9df'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> defaultLayout [
 	^ self subclassResponsibility
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLRenderer >> defaultTextColor [
 	^ Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> layout [
 	^ layout ifNil: [ layout := self defaultLayout ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> modelDescriptor [
 	^ modelDescriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> modelDescriptor: aModelDescriptor [
 	modelDescriptor := aModelDescriptor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLRenderer >> setUpCanvas: aCanvas [
 	"overridde me"
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLRenderer >> shapeFor: anObject [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> textColor [
 	^ textColor ifNil: [ textColor := self defaultTextColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLRenderer >> textColor: aColor [
 	textColor := aColor
 ]

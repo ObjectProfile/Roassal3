@@ -5,22 +5,24 @@ Structure:
  client		Object -- object performing the message send
 "
 Class {
-	#name : #RSFullMessageSend,
-	#superclass : #MessageSend,
+	#name : 'RSFullMessageSend',
+	#superclass : 'MessageSend',
 	#instVars : [
 		'client',
 		'callerSelector'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : 'Roassal3-UML-Descriptor',
+	#package : 'Roassal3-UML',
+	#tag : 'Descriptor'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSFullMessageSend >> = anObject [
 
 	^ super = anObject and: [ client = anObject client ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RSFullMessageSend >> asReturnMessageSend [
 
 	^ RSReturnMessageSend new
@@ -28,43 +30,43 @@ RSFullMessageSend >> asReturnMessageSend [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFullMessageSend >> callerSelector [
 
 	^ callerSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFullMessageSend >> callerSelector: aSelector [
 
 	callerSelector := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFullMessageSend >> client [
 
 	^ client
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFullMessageSend >> client: anObject [
 
 	client := anObject
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSFullMessageSend >> dispatchCircleShapesOf: anAssociation onSequenceDescritor: aDescriptor [
 
 	^ aDescriptor circleShapesOf: anAssociation messageSend: self
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSFullMessageSend >> dispatchSelectorShapeOnSequenceDescritor: aDescriptor [
 
 	^ aDescriptor selectorShapeOfMessageSend: self
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSFullMessageSend >> dispatchTimespan: aTimespan selectorShape: aShape onSequenceDescritor: aDescriptor [
 
 	^ aDescriptor
@@ -73,19 +75,19 @@ RSFullMessageSend >> dispatchTimespan: aTimespan selectorShape: aShape onSequenc
 		  selectorShape: aShape
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSFullMessageSend >> hash [
 
 	^ super hash bitXor: client hash
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFullMessageSend >> ifMessageSend: msBlock ifReturnMessageSend: rBlock [
 
 	^ msBlock cull: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFullMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 
 	^ self client == self receiver
@@ -93,7 +95,7 @@ RSFullMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 		  ifFalse: [ nsBlock cull: self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFullMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 
 	"I've to record nothing"
@@ -101,6 +103,6 @@ RSFullMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSFullMessageSend >> styleLine: aLine [
 ]

@@ -2,8 +2,8 @@
 A sequence descriptor
 "
 Class {
-	#name : #RSUMLSequenceDescriptor,
-	#superclass : #RSUMLAbstractModelDescriptor,
+	#name : 'RSUMLSequenceDescriptor',
+	#superclass : 'RSUMLAbstractModelDescriptor',
 	#instVars : [
 		'messagesSends',
 		'indexes',
@@ -18,17 +18,19 @@ Class {
 		'heights',
 		'umlBuilder'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : 'Roassal3-UML-Descriptor',
+	#package : 'Roassal3-UML',
+	#tag : 'Descriptor'
 }
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessageSend [
 
 	| xStart yStart xEnd startCircle endCircle clientShape composite startShapes radius |
 	xStart := self xStartOf: timedMessageSend.
 
 	xEnd := timedMessageSend messageSend
-		        ifSelfSend: [ :messageSend | 
+		        ifSelfSend: [ :messageSend |
 			        | width |
 			        width := (levels at: messageSend) third.
 			        xStart + width ]
@@ -47,23 +49,24 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 		               radius: radius;
 		               withBorder;
 		               sameColorAsBorderColor;
-		               when: RSMouseLeftClick do: [ 
-			               (timedMessageSend messageSend client class 
+		               when: RSMouseLeftClick do: [
+			               (timedMessageSend messageSend client class
 				                lookupSelector:
-					                timedMessageSend messageSend callerSelector) 
-				               ifNotNil: [ :cm | cm browse ] ];
+					                timedMessageSend messageSend callerSelector)
+				               ifNotNil: [ :cm | cm browse ] ]
+		               for: self;
 		               yourself.
 
 	startShapes := aMessageSend
-		               ifSelfSend: [ 
+		               ifSelfSend: [
 			               radius := 0.
 			               RSGroup with: startCircle ]
-		               ifNotSelfSend: [ 
+		               ifNotSelfSend: [
 			               radius := clientShape width / 2.
 			               xStart < xEnd
-				               ifTrue: [ 
+				               ifTrue: [
 				               RSGroup with: clientShape with: startCircle ]
-				               ifFalse: [ 
+				               ifFalse: [
 					               radius := radius negated.
 					               RSGroup with: startCircle with: clientShape ] ].
 
@@ -82,7 +85,7 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend messageSend: aMessag
 	^ composite -> endCircle
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: aMessageSend [
 
 	| xStart yStart xEnd startCircle endCircle |
@@ -105,19 +108,19 @@ RSUMLSequenceDescriptor >> circleShapesOf: timedMessageSend returnMessageSend: a
 	^ startCircle -> endCircle
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> columnIndexOf: anObject [
 
 	^ (headers at: anObject) value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> columns [
 
 	^ self columnsWithIndexCollect: [ :each :index | each ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> columnsWithIndexCollect: aBlock [
 
 	| array |
@@ -129,7 +132,7 @@ RSUMLSequenceDescriptor >> columnsWithIndexCollect: aBlock [
 	^ array
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> createCircles [
 
 	messagesSends do: [ :timedMessageSend | 
@@ -138,7 +141,7 @@ RSUMLSequenceDescriptor >> createCircles [
 				 onSequenceDescritor: self) ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> cumulateHeights [
 
 	heights := Array new: indexes size.
@@ -149,7 +152,7 @@ RSUMLSequenceDescriptor >> cumulateHeights [
 	heights := heights scan: [ :acc :each | acc + each ] init: 0
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> cumulateWidths [
 
 	| orderedHeaders |
@@ -223,7 +226,7 @@ RSUMLSequenceDescriptor >> cumulateWidths [
 	widths := widths scan: [ :acc :each | acc + each ] init: 0
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> currentIndentOfLink: aLink [
 
 	| link indent |
@@ -235,17 +238,17 @@ RSUMLSequenceDescriptor >> currentIndentOfLink: aLink [
 	^ indent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> durationLabelOf: anAssociation [
 
 	^ (labels at: anAssociation) value
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aTimespan selectorShape: aShape [
 
 	^ RSLabel new
-		  when: RSMouseClick do: [ aTimespan inspect ];
+		  when: RSMouseClick do: [ aTimespan inspect ] for: self;
 		  text: aTimespan duration asStringScaledUptoHours;
 		  italic;
 		  fontSizeSilverRatio;
@@ -253,7 +256,7 @@ RSUMLSequenceDescriptor >> durationShapeOfMessageSend: aMessageSend timespan: aT
 		  withBoxDo: [ :box | box color: Color transparent ]
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timespan: aTimespan selectorShape: aShape [
 
 	^ RSComposite new
@@ -262,13 +265,13 @@ RSUMLSequenceDescriptor >> durationShapeOfReturnMessageSend: aMessageSend timesp
 		  yourself
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> endCircleOf: anAssociation [
 
 	^ (circles at: anAssociation) value
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSUMLSequenceDescriptor >> forPharo [
 
 	"Set values to be used later"
@@ -276,7 +279,7 @@ RSUMLSequenceDescriptor >> forPharo [
 	
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> headerIfAbsentCreateAt: anObject [
 
 	| anAssoc |
@@ -289,13 +292,13 @@ RSUMLSequenceDescriptor >> headerIfAbsentCreateAt: anObject [
 	^ anAssoc key
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> headerOf: anObject [
 
 	^ (headers at: anObject) key
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 
 	| aShape nicknameShape |
@@ -313,7 +316,7 @@ RSUMLSequenceDescriptor >> headerShapeOf: anObject [
 		  yourself
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> invisibleCircleAtPoint: aPoint [
 
 	^ RSCircle new
@@ -323,18 +326,18 @@ RSUMLSequenceDescriptor >> invisibleCircleAtPoint: aPoint [
 		  yourself
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> messagesSends: anObject [
 
 	messagesSends := anObject
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> nicknameOf: anObject ifAbsent: aBlock [
 
 	^ objectsSeenSoFar
 		  at: anObject
-		  ifPresent: [ :index | 
+		  ifPresent: [ :index |
 			  | nicknameShape |
 			  nicknameShape := RSLabel new
 				                   useDefaultCodeFont;
@@ -342,18 +345,18 @@ RSUMLSequenceDescriptor >> nicknameOf: anObject ifAbsent: aBlock [
 				                   boxedWithPad: Float goldenPlatinumRatio.
 
 			  nicknameShape
-				  when: RSMouseLeftClick do: [ :ev | anObject inspect ];
+				  when: RSMouseLeftClick do: [ :ev | anObject inspect ] for: self;
 				  yourself ]
 		  ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> objectsSeenSoFar: aDictionary [
 
 	objectsSeenSoFar := aDictionary
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> refresh [
 
 	| indentations refMessageSends |
@@ -452,13 +455,13 @@ RSUMLSequenceDescriptor >> refresh [
 		createCircles
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> selectorLabelOf: anAssociation [
 
 	^ (labels at: anAssociation) key
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 
 	| split shapes aligningShapes keywords receiverShape leftLocation |
@@ -472,18 +475,18 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 	split := aMessageSend selector splitOn: $:.
 
 	"In case there is at least one $:, then get rid of *last* empty string."
-	split size > 1 ifTrue: [ 
+	split size > 1 ifTrue: [
 		split := split allButLast collect: [ :each | each , ':' ] ].
 
-	receiverShape := aMessageSend receiver in: [ :recv | 
+	receiverShape := aMessageSend receiver in: [ :recv |
 		                 self
 			                 nicknameOf: recv
-			                 ifAbsent: [ 
+			                 ifAbsent: [
 			                 umlBuilder receiverArgumentsShapeOf: recv ] ].
 
 	aligningShapes := OrderedCollection new.
 
-	keywords := split withIndexCollect: [ :each :index | 
+	keywords := split withIndexCollect: [ :each :index |
 		            | label argument argumentShape |
 		            label := (umlBuilder labelShapeOfString: each)
 			                     bold;
@@ -494,16 +497,16 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 			                        ifAbsent: [ nil ].
 
 		            argumentShape := argument
-			                             ifNil: [ 
+			                             ifNil: [
 				                             RSComposite new
 					                             shapes: {  };
 					                             extent: 0 @ 0;
 					                             yourself ]
-			                             ifNotNil: [ 
+			                             ifNotNil: [
 				                             self
 					                             nicknameOf: argument
-					                             ifAbsent: [ 
-					                             umlBuilder 
+					                             ifAbsent: [
+					                             umlBuilder
 						                             receiverArgumentsShapeOf: argument ] ].
 
 		            leftLocation stick: label on: argumentShape.
@@ -519,10 +522,10 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 
 	leftLocation stick: receiverShape on: keywords first key.
 
-	shapes := { 
+	shapes := {
 		          receiverShape.
 		          (RSComposite new
-			           shapes: (keywords collect: [ :anAssoc | 
+			           shapes: (keywords collect: [ :anAssoc |
 						            RSComposite new
 							            shapes:
 								            (Array with: anAssoc key with: anAssoc value);
@@ -531,13 +534,14 @@ RSUMLSequenceDescriptor >> selectorShapeOfMessageSend: aMessageSend [
 
 	^ RSComposite new
 		  shapes: shapes;
-		  when: RSMouseLeftClick do: [ 
+		  when: RSMouseLeftClick do: [
 			  (aMessageSend receiver class lookupSelector:
-					   aMessageSend selector) ifNotNil: [ :cm | cm browse ] ];
+					   aMessageSend selector) ifNotNil: [ :cm | cm browse ] ]
+		  for: self;
 		  yourself
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 
 	| return |
@@ -548,25 +552,25 @@ RSUMLSequenceDescriptor >> selectorShapeOfReturnMessageSend: aMessageSend [
 		  ifAbsent: [ umlBuilder receiverArgumentsShapeOf: return ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> selfMessageSends [
 
 	^ selfMessageSends
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> startCircleOf: anAssociation [
 
 	^ (circles at: anAssociation) key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> umlBuilder: aBuilder [
 
 	umlBuilder := aBuilder
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> xEndOf: timedMessageSend [
 
 	| indent |
@@ -578,13 +582,13 @@ RSUMLSequenceDescriptor >> xEndOf: timedMessageSend [
 	  + indent
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> xOfColumn: aColumnIndex [
 
 	^ widths at: aColumnIndex
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> xStartOf: timedMessageSend [
 
 	| indent |
@@ -595,13 +599,13 @@ RSUMLSequenceDescriptor >> xStartOf: timedMessageSend [
 		   (headers at: timedMessageSend messageSend client) value) + indent
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> yEnd [
 
 	^ self yStartOf: messagesSends last
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSUMLSequenceDescriptor >> yEndOfHeader: anObject ifAbsent: aBlock [
 
 	^ lastSends
@@ -610,13 +614,13 @@ RSUMLSequenceDescriptor >> yEndOfHeader: anObject ifAbsent: aBlock [
 		  ifAbsent: aBlock
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> yStart [
 
 	^ self yStartOf: messagesSends first
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 RSUMLSequenceDescriptor >> yStartOf: anAssociation [
 
 	^ heights at: (indexes at: anAssociation) key + 1

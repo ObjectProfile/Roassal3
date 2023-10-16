@@ -2,39 +2,41 @@
 I am the representation of the return of a `RSFullMessageSend`.
 "
 Class {
-	#name : #RSReturnMessageSend,
-	#superclass : #LookupKey,
+	#name : 'RSReturnMessageSend',
+	#superclass : 'LookupKey',
 	#instVars : [
 		'return'
 	],
-	#category : #'Roassal3-UML-Descriptor'
+	#category : 'Roassal3-UML-Descriptor',
+	#package : 'Roassal3-UML',
+	#tag : 'Descriptor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> arguments [
 
 	^ self key arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> client [
 
 	^ self key receiver
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSReturnMessageSend >> dispatchCircleShapesOf: anAssociation onSequenceDescritor: aDescriptor [
 
 	^ aDescriptor circleShapesOf: anAssociation returnMessageSend: self
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSReturnMessageSend >> dispatchSelectorShapeOnSequenceDescritor: aDescriptor [
 
 	^ aDescriptor selectorShapeOfReturnMessageSend: self
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 RSReturnMessageSend >> dispatchTimespan: aTimespan selectorShape: aShape onSequenceDescritor: aDescriptor [
 
 	^ aDescriptor
@@ -43,19 +45,19 @@ RSReturnMessageSend >> dispatchTimespan: aTimespan selectorShape: aShape onSeque
 		  selectorShape: aShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSReturnMessageSend >> ifMessageSend: msBlock ifReturnMessageSend: rBlock [
 
 	^ rBlock cull: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSReturnMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 
 	^ self key ifSelfSend: sBlock ifNotSelfSend: nsBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSReturnMessageSend >> printOn: aStream [
 
 	aStream
@@ -69,13 +71,13 @@ RSReturnMessageSend >> printOn: aStream [
 	return printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> receiver [
 
 	^ self key client
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSReturnMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 
 	aDictionary
@@ -83,25 +85,25 @@ RSReturnMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 		at: self receiver put: anAssoc
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> return [
 
 	^ return
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> return: anObject [
 
 	return := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSReturnMessageSend >> selector [
 
 	^ self key selector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSReturnMessageSend >> styleLine: aLine [
 
 	aLine dashArray: { Float goldenPlatinumRatio }

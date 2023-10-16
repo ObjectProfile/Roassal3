@@ -42,7 +42,7 @@ RSParametricLine >> asGroupWithControlNet: aBlock [
 		            above;
 		            yourself.
 
-	points withIndexCollect: [ :each :index | 
+	points withIndexCollect: [ :each :index |
 		| circle label |
 		circle := RSCircle new
 			          model: each;
@@ -60,14 +60,17 @@ RSParametricLine >> asGroupWithControlNet: aBlock [
 
 		location stick: label on: circle.
 
-		circle when: RSPositionChangedEvent do: [ :ev | 
-			circle model: ev newPosition.
-			label text: (ev newPosition asFloatPointRound: 3).
+		circle
+			when: RSPositionChangedEvent
+			do: [ :ev |
+				circle model: ev newPosition.
+				label text: (ev newPosition asFloatPointRound: 3).
 
-			points at: index put: ev newPosition.
-			polyline controlPoints: points.
+				points at: index put: ev newPosition.
+				polyline controlPoints: points.
 
-			self controlPoints: points ].
+				self controlPoints: points ]
+			for: self.
 
 
 		circles at: index put: circle.
@@ -83,7 +86,7 @@ RSParametricLine >> asGroupWithControlNet: aBlock [
 		value: polyline.
 
 	^ RSGroup new
-		  addAll: circles , labels , { 
+		  addAll: circles , labels , {
 					  polyline.
 					  self };
 		  yourself

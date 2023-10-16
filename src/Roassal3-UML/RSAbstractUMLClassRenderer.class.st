@@ -2,24 +2,26 @@
 I have the roassal shapes to build the visualizacion
 "
 Class {
-	#name : #RSAbstractUMLClassRenderer,
-	#superclass : #RSAbstractUMLRenderer,
+	#name : 'RSAbstractUMLClassRenderer',
+	#superclass : 'RSAbstractUMLRenderer',
 	#instVars : [
 		'marker',
 		'edgeBuilder',
 		'padding',
 		'currentClassMethods'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractUMLClassRenderer class >> isAbstract [
 
 	^self name = #RSAbstractUMLClassRenderer
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> adjustBox: box on: shapes [
 	| rect |
 	rect := shapes encompassingRectangle.
@@ -28,12 +30,12 @@ RSAbstractUMLClassRenderer >> adjustBox: box on: shapes [
 		position: rect floatCenter
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> adjustTitle: title on: shapes [
 	title position: shapes encompassingRectangle floatCenter x @ title position y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> aggregationShape [
 	| shape |
 	shape := self compositionShape.
@@ -42,32 +44,32 @@ RSAbstractUMLClassRenderer >> aggregationShape [
 	^ shape
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSAbstractUMLClassRenderer >> applyLayoutOn: shapes [
 	RSVerticalLineLayout new gapSize: 1.5; on: shapes
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSAbstractUMLClassRenderer >> applyMLayoutOn: shapes [
 	self applyLayoutOn: shapes
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSAbstractUMLClassRenderer >> applyVLayoutOn: shapes [
 	self applyLayoutOn: shapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> classBoxPadding [
 	^ padding ifNil: [ padding := self defaultClassBoxPadding ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> classBoxPadding: aPoint [
 	padding := aPoint
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 	^ RSBox new
 		paint: self boxColor;
@@ -75,7 +77,7 @@ RSAbstractUMLClassRenderer >> classBoxShapeFor: aClass [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> compositionShape [
 	| m |
 	m := RSShapeFactory diamond extent: 10@15.
@@ -88,7 +90,7 @@ RSAbstractUMLClassRenderer >> compositionShape [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
 	| rect ellipsis |
 	self needsEllipsis ifFalse: [ ^ self ].
@@ -99,12 +101,12 @@ RSAbstractUMLClassRenderer >> createEllipsisIfNecessaryOn: aGroup [
 	aGroup add: ellipsis
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLClassRenderer >> defaultClassBoxPadding [
 	^ 10@10
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 	| offset |
 	offset := -2.5.
@@ -118,7 +120,7 @@ RSAbstractUMLClassRenderer >> defaultEdgeBuilder [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLClassRenderer >> defaultLayout [
 	| defaultLayout |
 	defaultLayout := RSLayoutBuilder new.
@@ -128,7 +130,7 @@ RSAbstractUMLClassRenderer >> defaultLayout [
 	^ defaultLayout
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLClassRenderer >> defaultMarker [
 	^ RSMarker new
 		shape: (RSShapeFactory triangle
@@ -139,17 +141,17 @@ RSAbstractUMLClassRenderer >> defaultMarker [
 		yourself
 ]
 
-{ #category : #edges }
+{ #category : 'edges' }
 RSAbstractUMLClassRenderer >> edgeBuilder [
 	^ edgeBuilder ifNil: [ edgeBuilder := self defaultEdgeBuilder ]
 ]
 
-{ #category : #edges }
+{ #category : 'edges' }
 RSAbstractUMLClassRenderer >> edgeBuilder: anEdgeBuilder [
 	edgeBuilder := anEdgeBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> ellipsisShape [
 	^ RSLabel new
 		text: '...';
@@ -158,23 +160,23 @@ RSAbstractUMLClassRenderer >> ellipsisShape [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> groupFor: shapes [
 	^ RSGroup streamContents: [ :stream |
 		shapes do: [ :s | s hasChildren ifTrue: [ stream << s ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> marker [
 	^ marker ifNil: [ marker := self defaultMarker ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLClassRenderer >> marker: aMarker [
 	marker := aMarker
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> methodFor: method [
 	^ RSLabel new
 		model: method;
@@ -184,7 +186,7 @@ RSAbstractUMLClassRenderer >> methodFor: method [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> methodsFor: model [
 	| shapes methods |
 	methods := currentClassMethods := modelDescriptor methods rsValue: model.
@@ -199,13 +201,13 @@ RSAbstractUMLClassRenderer >> methodsFor: model [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractUMLClassRenderer >> needsEllipsis [
 	^ currentClassMethods isNotNil
 		and:  [ currentClassMethods size > modelDescriptor methodsLimit ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [
 	aCollection ifNil: [ ^ self ].
 	(RSLineBuilder new: aRSLine)
@@ -214,13 +216,13 @@ RSAbstractUMLClassRenderer >> renderAssociation: aCollection shape: aRSLine [
 		useAssociations: aCollection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractUMLClassRenderer >> renderAssociations [
 	self renderAssociation: self modelDescriptor compositions shape: self compositionShape.
 	self renderAssociation: self modelDescriptor aggregations shape: self aggregationShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> titleFor: model [
 	| label |
 	label := RSLabel new
@@ -233,7 +235,7 @@ RSAbstractUMLClassRenderer >> titleFor: model [
 	^ { label } asGroup asShape padding: 0@ 5; yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> varFor: model [
 
 	^ RSLabel new
@@ -243,7 +245,7 @@ RSAbstractUMLClassRenderer >> varFor: model [
 		  yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLClassRenderer >> varsFor: model [
 	| vars shapes |
 	vars := modelDescriptor instVars rsValue: model.

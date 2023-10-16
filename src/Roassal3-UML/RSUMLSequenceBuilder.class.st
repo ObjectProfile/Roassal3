@@ -2,8 +2,8 @@
 I am a builder to create UML sequence diagrams in Roassal3, see examples
 "
 Class {
-	#name : #RSUMLSequenceBuilder,
-	#superclass : #RSUMLAbstractBuilder,
+	#name : 'RSUMLSequenceBuilder',
+	#superclass : 'RSUMLAbstractBuilder',
 	#instVars : [
 		'messagesSends',
 		'previousMessagesSends',
@@ -13,10 +13,12 @@ Class {
 		'headerShape',
 		'objectsSeenSoFar'
 	],
-	#category : #'Roassal3-UML-Builder'
+	#category : 'Roassal3-UML-Builder',
+	#package : 'Roassal3-UML',
+	#tag : 'Builder'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RSUMLSequenceBuilder >> build [
 
 	self modelDescriptor
@@ -28,7 +30,7 @@ RSUMLSequenceBuilder >> build [
 	^ super build
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 
 	^ RSBox new
@@ -39,19 +41,19 @@ RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> headerShape: aBlock [
 
 	headerShape := aBlock
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceBuilder >> headerShapeOf: anObject [
 
 	^ headerShape value: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSUMLSequenceBuilder >> initialize [
 
 	super initialize.
@@ -99,7 +101,7 @@ RSUMLSequenceBuilder >> initialize [
 						color: box borderColor lighter lighter lighter translucent ] ]
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSUMLSequenceBuilder >> labelShapeOfString: aString [
 
 	^ RSLabel new
@@ -108,7 +110,7 @@ RSUMLSequenceBuilder >> labelShapeOfString: aString [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSUMLSequenceBuilder >> lifeLines: selfLines [
 
 	| lb yStart yEnd descriptor commonIndex transparentHeaders minTopHeader lifelines selfMessageSends |
@@ -192,7 +194,7 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 		  as: RSGroup
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSUMLSequenceBuilder >> lifeLines: selfLines selfMessageSends: selfSends lineBuilder: lb descriptor: descriptor startShape: startShape endShape: endShape [
 
 	selfSends
@@ -214,49 +216,49 @@ RSUMLSequenceBuilder >> lifeLines: selfLines selfMessageSends: selfSends lineBui
 					 to: endShape) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> messagesSends: aCollection [
 
 	messagesSends := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> objects [
 
 	^ messagesSends
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> objectsSeenSoFar: aDictionary [
 
 	objectsSeenSoFar := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> previousHeaders: anObject [
 
 	previousHeaders := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> previousMessagesSends: anObject [
 
 	previousMessagesSends := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> receiverArgumentsShape: anObject [
 
 	receiverArgumentsShape := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> receiverArgumentsShapeOf: anObject [
 
 	^ receiverArgumentsShape value: anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 
 	^ anIndex <= greatestCommonIndex
@@ -268,7 +270,7 @@ RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 		  ifFalse: [ super shapeFor: anObject index: anIndex ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: headerShape min: aBlock [
 
 	^ minTopHeader ifNil: [ headerShape ] ifNotNil: [ 
@@ -281,7 +283,7 @@ RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: headerShape min: aBlock 
 			  ifFalse: [ minTopHeader ] ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSUMLSequenceBuilder >> shapesFor: aCollection [
 
 	greatestCommonIndex := previousMessagesSends greatestCommonIndex:
