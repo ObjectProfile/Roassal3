@@ -184,7 +184,6 @@ RSViolinPlot class >> exampleErrorMargin [
 	violinPlot := self data: data.
 	violinPlot bandwidth: 3.
 	violinPlot verticalTick 
-		integer;
 		numberOfTicks: 10.
 	violinPlot errorMargin: 0.09.
 	^ violinPlot open.
