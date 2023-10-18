@@ -21,17 +21,19 @@ p
 -=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSYMarkerDecoration,
-	#superclass : #RSAbstractMarkerDecoration,
-	#category : #'Roassal-Chart-Decoration'
+	#name : 'RSYMarkerDecoration',
+	#superclass : 'RSAbstractMarkerDecoration',
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSYMarkerDecoration >> average [
 	getRelevantValueBlock := [ :aPlot | aPlot definedValuesY average ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSYMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 
 	| value |
@@ -41,12 +43,12 @@ RSYMarkerDecoration >> createMarkerLineFromPlot: aPlot [
 			to: chart extent x @ (aPlot yScale scale: value)
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSYMarkerDecoration >> max [
 	getRelevantValueBlock := [ :p | p maxChartValueY ]
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSYMarkerDecoration >> min [
 	getRelevantValueBlock := [ :p | p minChartValueY ]
 ]

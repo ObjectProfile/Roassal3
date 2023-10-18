@@ -16,12 +16,14 @@
 ```
 "
 Class {
-	#name : #RSHorizontalTick,
-	#superclass : #RSAbstractTick,
-	#category : #'Roassal-Chart-Ticks'
+	#name : 'RSHorizontalTick',
+	#superclass : 'RSAbstractTick',
+	#category : 'Roassal-Chart-Ticks',
+	#package : 'Roassal-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTick >> createTickLineFor: aNumber [
 	| value zeroY |
 	value := xScale scale: aNumber.
@@ -33,27 +35,27 @@ RSHorizontalTick >> createTickLineFor: aNumber [
 		yourself
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSHorizontalTick >> defaultLabelLocation [
 	^ RSLocation new below offset: 0@3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalTick >> isHorizontalTick [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTick >> max [
 	^ chart maxValueX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalTick >> min [
 	^ chart minChartValueX
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
 	
 	aChart
@@ -61,13 +63,13 @@ RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
 		maxChartValueX: self ticksData last
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHorizontalTick >> useDiagonalLabel [
 	self labelRotation: -45.
 	self labelLocation outer; bottom; left; offset: (self configuration fontSize * 0.5 @ 0)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHorizontalTick >> useVerticalLabel [
 	self labelRotation: -90
 ]

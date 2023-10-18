@@ -2,39 +2,41 @@
 Define a time line, a bit like a Gantt diagram.
 "
 Class {
-	#name : #RSTimeLinePlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSTimeLinePlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'gapRatio',
 		'bars',
 		'barSize'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> barScale [
 	^ yScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> barSize [
 	"Return the width of each bar"
 	^ barSize ifNil: [ self barScale rangeBand ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> barSize: aBarWidth [
 	"Set the width of the bar"
 	barSize := aBarWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> bars [
 	^ bars
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSTimeLinePlot >> beforeRenderingIn: aChart [
 
 	| barScale |
@@ -47,17 +49,17 @@ RSTimeLinePlot >> beforeRenderingIn: aChart [
 	aChart yScale: barScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSTimeLinePlot >> defaultShape [
 	^ RSBox new noPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> entries: aCollection at: aNumber [
 	"example:
 	self entries: { 0 2 4 8}.
@@ -70,23 +72,23 @@ RSTimeLinePlot >> entries: aCollection at: aNumber [
 		y: (Array new: aCollection size withAll: aNumber)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> gapRatio [
 	^ gapRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTimeLinePlot >> gapRatio: anObject [
 	gapRatio := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTimeLinePlot >> initialize [
 	super initialize.
 	self gapRatio: 0.1
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSTimeLinePlot >> renderIn: canvas [
 
 	super renderIn: canvas.

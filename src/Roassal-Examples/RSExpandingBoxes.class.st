@@ -2,24 +2,26 @@
 This is a simple example suggested by Nicolas Anquetil
 "
 Class {
-	#name : #RSExpandingBoxes,
-	#superclass : #RSObject,
+	#name : 'RSExpandingBoxes',
+	#superclass : 'RSObject',
 	#instVars : [
 		'canvas',
 		'color',
 		'base',
 		'border'
 	],
-	#category : #'Roassal-Examples-Experimental'
+	#category : 'Roassal-Examples-Experimental',
+	#package : 'Roassal-Examples',
+	#tag : 'Experimental'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 RSExpandingBoxes >> close: shape [
 	shape children copy do: #remove.
 	self update
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSExpandingBoxes >> initialize [
 	super initialize.
 	canvas := RSCanvas new.
@@ -30,7 +32,7 @@ RSExpandingBoxes >> initialize [
 	border := RSBorder new
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RSExpandingBoxes >> nodeFor: cls [
 	| com |
 	com := base copy.
@@ -41,7 +43,7 @@ RSExpandingBoxes >> nodeFor: cls [
 	^ com
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExpandingBoxes >> open: shape [
 	| children |
 	children := shape model subclasses
@@ -50,7 +52,7 @@ RSExpandingBoxes >> open: shape [
 	self update
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSExpandingBoxes >> processEvent: evt [
 	| shape |
 	shape := evt shape.
@@ -59,7 +61,7 @@ RSExpandingBoxes >> processEvent: evt [
 		ifNotEmpty: [ self close: shape ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSExpandingBoxes >> relayout: shape [
 	shape propertyAt: #original put: shape encompassingRectangle.
 
@@ -69,7 +71,7 @@ RSExpandingBoxes >> relayout: shape [
 	shape padding: 10
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSExpandingBoxes >> run [
 	<script: 'self new run'>
 	canvas add: (self nodeFor: Collection).
@@ -77,13 +79,13 @@ RSExpandingBoxes >> run [
 	canvas open
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSExpandingBoxes >> saveCurrent: shape [
 	shape children do: [ :s | self saveCurrent: s ].
 	shape propertyAt: #current put: shape encompassingRectangle
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSExpandingBoxes >> scale: shape at: t [
 	| rect1 rect2 |
 	shape children do: [ :s | self scale: s at: t ].
@@ -97,7 +99,7 @@ RSExpandingBoxes >> scale: shape at: t [
 	shape extent: (rect1 extent interpolateTo: rect2 extent at: t)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSExpandingBoxes >> update [
 	| first |
 	first := canvas shapes first.
@@ -111,7 +113,7 @@ RSExpandingBoxes >> update [
 			 ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSExpandingBoxes >> zoomCanvans [
 	canvas zoomToFit
 	canvas camera scale: 1

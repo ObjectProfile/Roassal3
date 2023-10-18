@@ -16,12 +16,14 @@
 ```
 "
 Class {
-	#name : #RSVerticalTick,
-	#superclass : #RSAbstractTick,
-	#category : #'Roassal-Chart-Ticks'
+	#name : 'RSVerticalTick',
+	#superclass : 'RSAbstractTick',
+	#category : 'Roassal-Chart-Ticks',
+	#package : 'Roassal-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSVerticalTick >> createTickLineFor: aNumber [
 	| scaledNumber zeroX |
 	scaledNumber := yScale scale: aNumber.
@@ -33,27 +35,27 @@ RSVerticalTick >> createTickLineFor: aNumber [
 		yourself
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSVerticalTick >> defaultLabelLocation [
 	^ RSLocation new outer; left; offset: -2@0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSVerticalTick >> isVerticalTick [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSVerticalTick >> max [
 	^ chart maxValueY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSVerticalTick >> min [
 	^ chart minValueY
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSVerticalTick >> updateChartMaxAndMinValues: aChart [
 
 	aChart

@@ -2,8 +2,8 @@
 RSDoubleBarPlot renders 2 different bars
 "
 Class {
-	#name : #RSDoubleBarPlot,
-	#superclass : #RSHorizontalBarPlot,
+	#name : 'RSDoubleBarPlot',
+	#superclass : 'RSHorizontalBarPlot',
 	#instVars : [
 		'x2Values',
 		'secondColor',
@@ -11,20 +11,22 @@ Class {
 		'bars2',
 		'horizontalTopTick'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> bars2 [
 	^ bars2
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSDoubleBarPlot >> computeSecondColor [
 	^ secondColor ifNil: [ self chart colorFor: x2Values ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDoubleBarPlot >> computeSecondRectagleFor: aPoint index: index [
 	| origin corner sizeOffset offset zero |
 	zero := 0.
@@ -38,7 +40,7 @@ RSDoubleBarPlot >> computeSecondRectagleFor: aPoint index: index [
 		corner: corner + offset + sizeOffset
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSDoubleBarPlot >> createBar2For: aPoint index: index [
 	^ self shape copy
 		model: (self modelFor: aPoint);
@@ -47,7 +49,7 @@ RSDoubleBarPlot >> createBar2For: aPoint index: index [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSDoubleBarPlot >> createXScale [
 	| padding |
 	super createXScale.
@@ -63,18 +65,18 @@ RSDoubleBarPlot >> createXScale [
 			self extent x - padding}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> createdShapes [
 	^ bars, bars2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> horizontalTopTick [
 
 	^ horizontalTopTick
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDoubleBarPlot >> initializeDecorations [
 	
 	super initializeDecorations.
@@ -82,7 +84,7 @@ RSDoubleBarPlot >> initializeDecorations [
 	self addDecoration: horizontalTopTick
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSDoubleBarPlot >> rawData: aCollection x1: bloc1 x2: bloc2 y: bloc3 [
 
 	rawData := aCollection.
@@ -92,7 +94,7 @@ RSDoubleBarPlot >> rawData: aCollection x1: bloc1 x2: bloc2 y: bloc3 [
 		y: (rawData collect: bloc3)
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSDoubleBarPlot >> renderIn: canvas [
 
 	| index |
@@ -109,12 +111,12 @@ RSDoubleBarPlot >> renderIn: canvas [
 	canvas addAll: bars2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> secondColor [
 	^ secondColor
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
 	self assert: x1 size = x2 size description: 'The two collections must have the same size'.
 	self x: x1 y: y.
@@ -122,13 +124,13 @@ RSDoubleBarPlot >> x1: x1 x2: x2 y: y [
 	horizontalTopTick values: x2Values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> x2Scale [
 
 	^ x2Scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDoubleBarPlot >> x2Values [
 	^ x2Values
 ]

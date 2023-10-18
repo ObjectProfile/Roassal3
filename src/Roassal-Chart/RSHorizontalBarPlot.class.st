@@ -2,20 +2,22 @@
 The class for horizontal bar plots
 "
 Class {
-	#name : #RSHorizontalBarPlot,
-	#superclass : #RSAbstractBarPlot,
+	#name : 'RSHorizontalBarPlot',
+	#superclass : 'RSAbstractBarPlot',
 	#instVars : [
 		'left'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalBarPlot >> barScale [
 	^ yScale
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalBarPlot >> beforeRenderingIn: aChart [
 
 	| barScale |
@@ -27,7 +29,7 @@ RSHorizontalBarPlot >> beforeRenderingIn: aChart [
 	aChart yScale: barScale
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHorizontalBarPlot >> computeRectagleFor: aPoint index: index [
 
 	| origin corner sizeOffset offset zero |
@@ -42,7 +44,7 @@ RSHorizontalBarPlot >> computeRectagleFor: aPoint index: index [
 		  corner: corner + offset + sizeOffset
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHorizontalBarPlot >> definedValuesX [
 	"Return the list Y values that are defined"
 	| res |
@@ -51,17 +53,17 @@ RSHorizontalBarPlot >> definedValuesX [
 	^ res, {0}
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalBarPlot >> isHorizontalBarPlot [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalBarPlot >> left [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalBarPlot >> left: aCollection [
 	self
 		assert: yValues size = aCollection size
@@ -69,7 +71,7 @@ RSHorizontalBarPlot >> left: aCollection [
 	left := aCollection
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHorizontalBarPlot >> modelFor: aPoint [
 	^ aPoint x
 ]

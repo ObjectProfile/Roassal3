@@ -12,17 +12,19 @@
 - title: the title of the label.
 "
 Class {
-	#name : #RSAbstractLabelDecoration,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSAbstractLabelDecoration',
+	#superclass : 'RSAbstractChartDecoration',
 	#instVars : [
 		'location',
 		'label',
 		'title'
 	],
-	#category : #'Roassal-Chart-Decoration'
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractLabelDecoration >> createLabel [
 	"Utility method to create a label"
 	^ self shape copy
@@ -31,91 +33,91 @@ RSAbstractLabelDecoration >> createLabel [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> createdShapes [
 	^ { label }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractLabelDecoration >> defaultShape [
 	^ RSLabel new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> fontSize [
 	"Return the font size to use when generating labels"
 	^ self shape fontSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> fontSize: fontSizeToUse [
 	"Set the font size to use when generating labels"
 	self shape fontSize: fontSizeToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> horizontal [
 	"Set the label horizontal"
 	self rotationAngle: 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractLabelDecoration >> initialize [
 	super initialize.
 	location := RSLocation new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> location [
 	^ location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> location: aRSLocation [
 	^ location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> offset [
 	^ location offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> offset: aPointOrNumber [
 	"Set the translation distance to set the label"
 	location offset: aPointOrNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractLabelDecoration >> renderIn: canvas [
 	label := self createLabel.
 	location move: label on: canvas encompassingRectangle.
 	canvas add: label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> rotationAngle: anAngleAsFloat [
 	"Set the rotation the label should have"
 	^ self shape rotateByDegrees: anAngleAsFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> title [
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> title: aLabelAsString [
 	"This method is useful to set the name of an axis"
 	title := aLabelAsString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractLabelDecoration >> vertical [
 	"Set the label vertical"
 	self rotationAngle: -90

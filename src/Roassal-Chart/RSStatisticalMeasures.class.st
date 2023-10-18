@@ -1,15 +1,17 @@
 Class {
-	#name : #RSStatisticalMeasures,
-	#superclass : #RSObject,
+	#name : 'RSStatisticalMeasures',
+	#superclass : 'RSObject',
 	#instVars : [
 		'data',
 		'quantile',
 		'confidencePercentage'
 	],
-	#category : #'Roassal-Chart-Statistics'
+	#category : 'Roassal-Chart-Statistics',
+	#package : 'Roassal-Chart',
+	#tag : 'Statistics'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStatisticalMeasures class >> data: aDataset [
 	| statisticalMeasures |
 	statisticalMeasures := self new.
@@ -19,40 +21,40 @@ RSStatisticalMeasures class >> data: aDataset [
 	^ statisticalMeasures
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> confidenceInterval [
 	| confidenceProbability |
 	confidenceProbability := confidencePercentage / 100.
 	^ { quantile compute: (1-confidenceProbability). quantile compute: confidenceProbability. }
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> confidencePercentage [
 	^ confidencePercentage
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> confidencePercentage: aPercentage [
 
 	confidencePercentage := aPercentage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStatisticalMeasures >> data [
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStatisticalMeasures >> data: aDataset [
 	data := aDataset copy sort.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStatisticalMeasures >> defaultQuantile [
 	^ (RSInvertedCDF data: data).
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> interQuartileRange [
 	| quartiles q1 q3 |
 	quartiles := self quartiles.
@@ -61,7 +63,7 @@ RSStatisticalMeasures >> interQuartileRange [
 	^ q3 - q1.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> iqr [
 	| q1 q3 |
 	q1 := quantile compute: 0.25.
@@ -69,7 +71,7 @@ RSStatisticalMeasures >> iqr [
 	^  (q3 - q1)
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> lowerLimit [
 	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.
@@ -80,7 +82,7 @@ RSStatisticalMeasures >> lowerLimit [
 	^ (data select: [ :d | d >= iqr15 ]) min.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> mean [
 	| sum |
 	sum := 0.
@@ -88,17 +90,17 @@ RSStatisticalMeasures >> mean [
 	^ (sum / (data size)).
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> median [
 	^ self median: data.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> median: aDataset [	
 	^ quantile compute: 0.5.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> medianConfidenceInterval [
 	| notchFactors delta median iqr |
 	notchFactors := Dictionary newFrom: {
@@ -111,7 +113,7 @@ RSStatisticalMeasures >> medianConfidenceInterval [
 	^  { median - delta. median + delta}.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> outliers [
 	| outlierValues lowerLimit upperLimit iterator |
 	outlierValues := OrderedCollection new.
@@ -128,12 +130,12 @@ RSStatisticalMeasures >> outliers [
 	^ outlierValues.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> quantile: aRSQuantileSubclass [
 	quantile := aRSQuantileSubclass.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> quartiles [
 	| q1 q2 q3 |
 	q1 := quantile compute: 0.25.
@@ -142,7 +144,7 @@ RSStatisticalMeasures >> quartiles [
 	^  { q1. q2. q3 }.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> standardDeviation [
 	| standardDeviation sum mean |
 	sum := 0.
@@ -152,7 +154,7 @@ RSStatisticalMeasures >> standardDeviation [
 	^ standardDeviation.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSStatisticalMeasures >> upperLimit [
 	| quartiles q1 q3 iqr iqr15 |
 	quartiles := self quartiles.

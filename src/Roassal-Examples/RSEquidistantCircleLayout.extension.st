@@ -1,6 +1,6 @@
-Extension { #name : #RSEquidistantCircleLayout }
+Extension { #name : 'RSEquidistantCircleLayout' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSEquidistantCircleLayout class >> example1 [
 
 	| v elements |

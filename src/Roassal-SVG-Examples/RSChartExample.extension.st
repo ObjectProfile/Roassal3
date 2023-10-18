@@ -1,6 +1,6 @@
-Extension { #name : #RSChartExample }
+Extension { #name : 'RSChartExample' }
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example13AreaPlot [
 	<script: 'self new example13AreaPlot open'>
 	| x y1 y2 p canvas charts |
@@ -24,7 +24,7 @@ RSChartExample >> example13AreaPlot [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example14AreaPlotWithError [
 	<script: 'self new example14AreaPlotWithError open'>
 	| x y polyfit res y_est y_err c scatter |
@@ -55,7 +55,7 @@ RSChartExample >> example14AreaPlotWithError [
 	^ c
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example15AreaBox [
 	<script: 'self new example15AreaBox open'>
 	| x y1 y2 c |
@@ -73,7 +73,7 @@ RSChartExample >> example15AreaBox [
 	^ c
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example16Series [
 	<script: 'self new example16Series open'>
 	| x cumsum c b y error |
@@ -108,7 +108,7 @@ RSChartExample >> example16Series [
 	^ c canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example17CLPvsUSD [
 	<script: 'self new example17CLPvsUSD open'>
 	| dates y data x c plot paint horizontal |
@@ -166,7 +166,7 @@ RSChartExample >> example17CLPvsUSD [
 	^ c
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSChartExample >> example18Animation [
 
 	<script: 'self new example18Animation inspect'>

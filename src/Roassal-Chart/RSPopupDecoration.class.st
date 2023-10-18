@@ -2,35 +2,37 @@
 I am a popup decoration for instances of line Plots in RSChart by default but you can customize this popup decoration with differents shapebuilders, or popups
 "
 Class {
-	#name : #RSPopupDecoration,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSPopupDecoration',
+	#superclass : 'RSAbstractChartDecoration',
 	#instVars : [
 		'popup'
 	],
-	#category : #'Roassal-Chart-Popup'
+	#category : 'Roassal-Chart-Popup',
+	#package : 'Roassal-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopupDecoration >> chartPopupBuilder [
 	^ self popup chartPopupBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopupDecoration >> chartPopupBuilder: aRSAbstractChartPopupBuilder [
 	self popup chartPopupBuilder: aRSAbstractChartPopupBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopupDecoration >> createdShapes [
 	^ #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPopupDecoration >> defaultShape [
 	^ nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPopupDecoration >> initialize [
 	super initialize.
 	popup := RSChartPopupDecoration new
@@ -39,17 +41,17 @@ RSPopupDecoration >> initialize [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopupDecoration >> popup [
 	^ popup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopupDecoration >> popup: aRSPopup [
 	popup := aRSPopup
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSPopupDecoration >> renderIn: canvas [
 	| box |
 	box := chart spine.

@@ -1,6 +1,6 @@
-Extension { #name : #RSBox }
+Extension { #name : 'RSBox' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSBox class >> example [
 	| box |
 	box := self new.

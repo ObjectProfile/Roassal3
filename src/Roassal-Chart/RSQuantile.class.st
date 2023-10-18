@@ -1,13 +1,15 @@
 Class {
-	#name : #RSQuantile,
-	#superclass : #RSObject,
+	#name : 'RSQuantile',
+	#superclass : 'RSObject',
 	#instVars : [
 		'data'
 	],
-	#category : #'Roassal-Chart-Statistics'
+	#category : 'Roassal-Chart-Statistics',
+	#package : 'Roassal-Chart',
+	#tag : 'Statistics'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSQuantile class >> data: aCollection [
 	| aRSQuantile |
 	aRSQuantile := self new.
@@ -15,12 +17,12 @@ RSQuantile class >> data: aCollection [
 	^ aRSQuantile.
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RSQuantile >> compute: populationPercentage [
 	^ self subclassResponsibility.
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RSQuantile >> data: aCollection [
 	data := aCollection.
 ]

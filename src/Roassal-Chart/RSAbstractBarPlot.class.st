@@ -13,61 +13,63 @@
 - barOffset: shifts the bars left or right
 "
 Class {
-	#name : #RSAbstractBarPlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSAbstractBarPlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'barSize',
 		'bars',
 		'gapRatio',
 		'barOffset'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractBarPlot class >> isAbstract [
 
 	^ self == RSAbstractBarPlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> barOffset [
 	^ barOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> barOffset: aNumber [
 	barOffset := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> barScale [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> barSize [
 	"Return the width of each bar"
 	^ barSize ifNil: [ self barScale rangeBand ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> barSize: aBarWidth [
 	"Set the width of the bar"
 	barSize := aBarWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> bars [
 	^ bars
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractBarPlot >> computeRectagleFor: aPoint index: index [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBarPlot >> createBarFor: aPoint index: index [
 
 	^ self shape copy
@@ -77,29 +79,29 @@ RSAbstractBarPlot >> createBarFor: aPoint index: index [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractBarPlot >> defaultShape [
 
 	^ RSBox new noPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> gapRatio [
 	^ gapRatio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBarPlot >> gapRatio: aNumber [
 	"aNumber between 0 and 1"
 	gapRatio := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractBarPlot >> initialize [
 	super initialize.
 	self
@@ -107,17 +109,17 @@ RSAbstractBarPlot >> initialize [
 		barOffset: 0.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractBarPlot >> isBarPlot [
 	^ true
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractBarPlot >> modelFor: aPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBarPlot >> renderIn: canvas [
 	| index |
 	super renderIn: canvas.

@@ -2,16 +2,18 @@
 I am a abstract class to create visual elements based on tree structured in Roassal
 "
 Class {
-	#name : #RSAbstractTreeBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSAbstractTreeBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'rootNodes',
 		'weight'
 	],
-	#category : #'Roassal-Builders-Core'
+	#category : 'Roassal-Builders-Core',
+	#package : 'Roassal-Builders',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
 	| children aShape leaves nodes|
 
@@ -37,7 +39,7 @@ RSAbstractTreeBuilder >> createElements: atree nesting: block1 leaves: block2 de
 	^ aShape
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 	| children shape |
 
@@ -54,26 +56,26 @@ RSAbstractTreeBuilder >> createElements: atree using: ablock depth: depth [
 	^ shape
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSAbstractTreeBuilder >> explore: atree nesting: block1 leaves: block2 [
 	shapes := RSGroup new.
 	^ (self from: (Array with: atree) nesting: block1 leaves: block2) first
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSAbstractTreeBuilder >> explore: atree using: ablock [
 	shapes := RSGroup new.
 	^ (self from: (Array with: atree) using: ablock) first
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSAbstractTreeBuilder >> from: objects nesting: block1 leaves: block2 [
 	shapes := RSGroup new.
 	rootNodes := objects collect: [:obj | self createElements: obj nesting: block1 leaves: block2 depth: 1 ].
 	^ rootNodes
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSAbstractTreeBuilder >> from: objects using: ablock [
 	shapes := RSGroup new.
 	"This is the main public method. Takes a list of objects, and a block to specify how to recurse"
@@ -81,59 +83,59 @@ RSAbstractTreeBuilder >> from: objects using: ablock [
 	^ rootNodes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractTreeBuilder >> initialize [
 	super initialize.
 	rootNodes := RSGroup new
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSAbstractTreeBuilder >> leafWeight: block [
 	self weight: [ :shape | self weightLeafShape: shape block: block ]
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractTreeBuilder >> minWeightValue [
 	^ 1
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSAbstractTreeBuilder >> modelWeight: anObject [
 	self weight: [ :shape | anObject rsValue: shape model ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTreeBuilder >> renderIn: aCanvas [
 	aCanvas addAll: self shapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTreeBuilder >> rootNodes [
 	^ rootNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTreeBuilder >> rootNodes: anArray [
 	rootNodes := anArray
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractTreeBuilder >> shapeFor: anObject [
 	^ self subclassResponsibility
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSAbstractTreeBuilder >> weight [
 	^ weight
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSAbstractTreeBuilder >> weight: anObject [
 	"one arg block, example [:aRoassalShape | ]"
 	weight := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 	| children weightValue |
 	children := shape schildren.
@@ -146,12 +148,12 @@ RSAbstractTreeBuilder >> weightFromChildren: shape block: aBlock [
 	^ weightValue max: self minWeightValue
 ]
 
-{ #category : #'accessing - keys' }
+{ #category : 'accessing - keys' }
 RSAbstractTreeBuilder >> weightKey [
 	^ #weight
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractTreeBuilder >> weightLeafShape: shape block: aBlock [
 	^ shape
 		propertyAt: self weightKey
@@ -159,7 +161,7 @@ RSAbstractTreeBuilder >> weightLeafShape: shape block: aBlock [
 			self weightFromChildren: shape block: aBlock ]
 ]
 
-{ #category : #weight }
+{ #category : 'weight' }
 RSAbstractTreeBuilder >> weightOf: aShape [
 	^ self weight rsValue: aShape
 ]

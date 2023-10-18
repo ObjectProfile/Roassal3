@@ -2,60 +2,62 @@
 Specific popup, used by RSPopupDecoration
 "
 Class {
-	#name : #RSChartPopupDecoration,
-	#superclass : #RSPopup,
+	#name : 'RSChartPopupDecoration',
+	#superclass : 'RSPopup',
 	#instVars : [
 		'chart',
 		'chartPopupBuilder',
 		'markersPopupBuilder'
 	],
-	#category : #'Roassal-Chart-Popup'
+	#category : 'Roassal-Chart-Popup',
+	#package : 'Roassal-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> chart [
 	^ chart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> chart: aRSChart [
 	chart := aRSChart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> chartPopupBuilder [
 	^ chartPopupBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> chartPopupBuilder: aShapeBuilder [
 	chartPopupBuilder := aShapeBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChartPopupDecoration >> initialize [
 	super initialize.
 	"this composite is created once when the mouse enter into the box shape"
 	self shapeBuilder: [ :obj | RSComposite new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> markersPopupBuilder [
 	^ markersPopupBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartPopupDecoration >> markersPopupBuilder: aRSAbstractChartPopupBuilder [
 	markersPopupBuilder := aRSAbstractChartPopupBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChartPopupDecoration >> releasePopup: popup [
 	popup remove.
 	chart container propertyAt: #popupMarkers ifPresent: [ :old | old remove ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChartPopupDecoration >> translatePopup: popup event: evt [
 	self
 		updatePopup: popup event: evt;
@@ -63,7 +65,7 @@ RSChartPopupDecoration >> translatePopup: popup event: evt [
 	super translatePopup: popup event: evt
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChartPopupDecoration >> updateMarkers: evt [
 	| markers key container builder |
 	builder := self markersPopupBuilder.
@@ -77,7 +79,7 @@ RSChartPopupDecoration >> updateMarkers: evt [
 	^ builder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChartPopupDecoration >> updatePopup: popup event: evt [
 	"we recreate the popup content each time, since the popup should show the nodes change"
 	| builder rect |

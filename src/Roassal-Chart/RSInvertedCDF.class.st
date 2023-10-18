@@ -1,10 +1,12 @@
 Class {
-	#name : #RSInvertedCDF,
-	#superclass : #RSQuantile,
-	#category : #'Roassal-Chart-Statistics'
+	#name : 'RSInvertedCDF',
+	#superclass : 'RSQuantile',
+	#category : 'Roassal-Chart-Statistics',
+	#package : 'Roassal-Chart',
+	#tag : 'Statistics'
 }
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RSInvertedCDF >> compute: populationPercentage [
 	| m j g n|
 	n := data size.
@@ -17,7 +19,7 @@ RSInvertedCDF >> compute: populationPercentage [
 	^ ((1 - (self gama: g)) * (data at: j)) + ((self gama: g)*(data at:(j+1))).
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RSInvertedCDF >> gama: g [
 	| ans | 
 	(g > 0) ifTrue: [ ans := 1 ]. 

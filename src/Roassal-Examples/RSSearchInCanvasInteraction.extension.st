@@ -1,6 +1,6 @@
-Extension { #name : #RSSearchInCanvasInteraction }
+Extension { #name : 'RSSearchInCanvasInteraction' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSSearchInCanvasInteraction class >> exampleCollection [
 	| c shapes lb |
 	c := RSCanvas new.
@@ -19,7 +19,7 @@ RSSearchInCanvasInteraction class >> exampleCollection [
 		yourself
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSSearchInCanvasInteraction class >> exampleCollection2 [
 
 	| c classes g elements high con |

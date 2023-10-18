@@ -19,12 +19,14 @@ p open
 ```
 "
 Class {
-	#name : #RSXLabelDecoration,
-	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal-Chart-Decoration'
+	#name : 'RSXLabelDecoration',
+	#superclass : 'RSAbstractLabelDecoration',
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #'public - positioning shorcuts' }
+{ #category : 'public - positioning shorcuts' }
 RSXLabelDecoration >> above [
 	self location
 		offset: 0@ -5;
@@ -32,7 +34,7 @@ RSXLabelDecoration >> above [
 		center
 ]
 
-{ #category : #'public - positioning shorcuts' }
+{ #category : 'public - positioning shorcuts' }
 RSXLabelDecoration >> below [
 	self location
 		offset: 0@5;
@@ -40,7 +42,7 @@ RSXLabelDecoration >> below [
 		center
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSXLabelDecoration >> initialize [
 	super initialize.
 	self below

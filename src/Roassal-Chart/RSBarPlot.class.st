@@ -25,20 +25,22 @@ d
 ```
 "
 Class {
-	#name : #RSBarPlot,
-	#superclass : #RSAbstractBarPlot,
+	#name : 'RSBarPlot',
+	#superclass : 'RSAbstractBarPlot',
 	#instVars : [
 		'bottom'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlot >> barScale [
 	^ xScale
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlot >> beforeRenderingIn: aChart [
 
 	| barScale |
@@ -50,12 +52,12 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	aChart xScale: barScale.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlot >> bottom [
 	^ bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlot >> bottom: aCollection [
 	self
 		assert: xValues size = aCollection size
@@ -63,12 +65,12 @@ RSBarPlot >> bottom: aCollection [
 	bottom := aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBarPlot >> canHandleCluster [
 	^ true
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBarPlot >> computeRectagleFor: aPoint index: index [
 	| origin corner sizeOffset offset zero |
 	zero := 0.
@@ -82,7 +84,7 @@ RSBarPlot >> computeRectagleFor: aPoint index: index [
 		corner: corner + offset + sizeOffset
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlot >> definedValuesY [
 	"Return the list Y values that are defined"
 	| res |
@@ -91,12 +93,12 @@ RSBarPlot >> definedValuesY [
 	^ res, {0}
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBarPlot >> isVerticalBarPlot [
 	^ true
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBarPlot >> modelFor: aPoint [
 	^ aPoint y
 ]

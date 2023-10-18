@@ -2,31 +2,33 @@
 My subclasses can define the way to wrap a text
 "
 Class {
-	#name : #RSAbstractWrapStrategy,
-	#superclass : #RSObject,
+	#name : 'RSAbstractWrapStrategy',
+	#superclass : 'RSObject',
 	#instVars : [
 		'wrapMaxWidth'
 	],
-	#category : #'Roassal-Builders-Text'
+	#category : 'Roassal-Builders-Text',
+	#package : 'Roassal-Builders',
+	#tag : 'Text'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractWrapStrategy >> initialize [
 	super initialize.
 	self wrapMaxWidth: 200
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractWrapStrategy >> wrapMaxWidth [
 	^ wrapMaxWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractWrapStrategy >> wrapMaxWidth: aNumber [
 	wrapMaxWidth := aNumber
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractWrapStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	^ self subclassResponsibility
 ]

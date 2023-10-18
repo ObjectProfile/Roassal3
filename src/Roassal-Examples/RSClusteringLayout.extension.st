@@ -1,6 +1,6 @@
-Extension { #name : #RSClusteringLayout }
+Extension { #name : 'RSClusteringLayout' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSClusteringLayout class >> exampleMondrian [
 	| m nodes |
 	m := RSMondrian new.
@@ -22,7 +22,7 @@ RSClusteringLayout class >> exampleMondrian [
 	^ m canvas open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSClusteringLayout class >> exampleNumbers [
 	| m nodes |
 	m := RSMondrian new.

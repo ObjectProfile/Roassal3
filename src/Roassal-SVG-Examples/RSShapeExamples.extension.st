@@ -1,6 +1,6 @@
-Extension { #name : #RSShapeExamples }
+Extension { #name : 'RSShapeExamples' }
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example03LinePath [
 	<script: 'self new example03LinePath open'>
 
@@ -64,7 +64,7 @@ RSShapeExamples >> example03LinePath [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example06JoinStyles [
 	<script: 'self new example06JoinStyles open'>
 	| canvas line path styles |
@@ -107,7 +107,7 @@ RSShapeExamples >> example06JoinStyles [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example15BimetricLine [
 	<script: 'self new example15BimetricLine open'>
 	| canvas s1 s2 l |
@@ -136,7 +136,7 @@ RSShapeExamples >> example15BimetricLine [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example18ExampleFromMondrian [
 	<script: 'self new example18ExampleFromMondrian open'>
 	| canvas legend |
@@ -183,33 +183,38 @@ blue links = dependencies; layout = force based layout on the inheritance links'
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example25BimetricLineOnLargeExample [
+
 	<script: 'self new example25BimetricLineOnLargeExample open'>
 	| packagesRegExp packages l packageElements high canvas |
 	packagesRegExp := { 'Calypso*' }.
 
 	packages := packagesRegExp flatCollect: [ :regExp |
-		RPackageOrganizer default packages
-			select: [ :p | regExp match: p packageName ] ].
+		            RPackageOrganizer default packages select: [ :p |
+			            regExp match: p name ] ].
 
-	l := RSLabeled new text: [ :model | model packageName ].
-	packageElements  := packages collect: [ :pkg | | shapes |
-		shapes := pkg definedClasses collect: [ :cls |
-			RSBox new
-				color: Color black;
-				size: cls numberOfMethods sqrt;
-				yourself
-			 ] as: RSGroup.
-		RSGridLayout on: shapes.
-		RSComposite new
-			color: Color blue translucent;
-			model: pkg;
-			addInteraction: l;
-			draggable;
-			shapes: shapes;
-			padding: 5;
-			yourself ] as: RSGroup.
+	l := RSLabeled new text: [ :model | model name ].
+	packageElements := packages
+		                   collect: [ :pkg |
+			                   | shapes |
+			                   shapes := pkg definedClasses
+				                             collect: [ :cls |
+					                             RSBox new
+						                             color: Color black;
+						                             size: cls numberOfMethods sqrt;
+						                             yourself ]
+				                             as: RSGroup.
+			                   RSGridLayout on: shapes.
+			                   RSComposite new
+				                   color: Color blue translucent;
+				                   model: pkg;
+				                   addInteraction: l;
+				                   draggable;
+				                   shapes: shapes;
+				                   padding: 5;
+				                   yourself ]
+		                   as: RSGroup.
 	high := RSHighlightable new.
 	high withLines.
 	high highlightColor: Color red translucent.
@@ -221,42 +226,51 @@ RSShapeExamples >> example25BimetricLineOnLargeExample [
 		canvas: canvas;
 		objects: packages;
 		noBorder;
-		widthFrom:[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
-		widthTo:[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
+		widthFrom: [ :edge |
+			(edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
+		widthTo: [ :edge |
+			(edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
 		paint: Color blue translucent;
 		withBorderAttachPoint;
 		connectFrom: #yourself toAll: #dependentPackages.
-	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+	RSWeightedCircleLayout new
+		initialRadius: 300;
+		on: packageElements.
 	canvas @ RSCanvasController.
 	^ canvas
 ]
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSShapeExamples >> example25BisBimetricLineOnLargeExample [
-	<script: 'self new example25BisBimetricLineOnLargeExample open'>
 	"Same than example25BimetricLineOnLargeExample, but with no label"
+
+	<script: 'self new example25BisBimetricLineOnLargeExample open'>
 	| packagesRegExp packages packageElements high canvas |
 	packagesRegExp := { 'Calypso*' }.
 
 	packages := packagesRegExp flatCollect: [ :regExp |
-		RPackageOrganizer default packages
-			select: [ :p | regExp match: p packageName ] ].
+		            RPackageOrganizer default packages select: [ :p |
+			            regExp match: p name ] ].
 
-	packageElements  := packages collect: [ :pkg | | shapes |
-		shapes := pkg definedClasses collect: [ :cls |
-			RSBox new
-				color: Color black;
-				size: cls numberOfMethods sqrt;
-				yourself
-			 ] as: RSGroup.
-		RSGridLayout on: shapes.
-		RSComposite new
-			color: Color blue translucent;
-			model: pkg;
-			draggable;
-			shapes: shapes;
-			padding: 5;
-			yourself ] as: RSGroup.
+	packageElements := packages
+		                   collect: [ :pkg |
+			                   | shapes |
+			                   shapes := pkg definedClasses
+				                             collect: [ :cls |
+					                             RSBox new
+						                             color: Color black;
+						                             size: cls numberOfMethods sqrt;
+						                             yourself ]
+				                             as: RSGroup.
+			                   RSGridLayout on: shapes.
+			                   RSComposite new
+				                   color: Color blue translucent;
+				                   model: pkg;
+				                   draggable;
+				                   shapes: shapes;
+				                   padding: 5;
+				                   yourself ]
+		                   as: RSGroup.
 	high := RSHighlightable new.
 	high withLines.
 	high highlightColor: Color red translucent.
@@ -268,12 +282,16 @@ RSShapeExamples >> example25BisBimetricLineOnLargeExample [
 		canvas: canvas;
 		objects: packages;
 		noBorder;
-		widthFrom:[ :edge | (edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
-		widthTo:[ :edge | (edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
+		widthFrom: [ :edge |
+			(edge key numberOfDependenciesToward: edge value) sqrt * 4 ];
+		widthTo: [ :edge |
+			(edge value numberOfDependenciesToward: edge key) sqrt * 4 ];
 		paint: Color blue translucent;
 		withBorderAttachPoint;
 		connectFrom: #yourself toAll: #dependentPackages.
-	RSWeightedCircleLayout new initialRadius: 300; on: packageElements.
+	RSWeightedCircleLayout new
+		initialRadius: 300;
+		on: packageElements.
 	canvas @ RSCanvasController.
 	^ canvas
 ]

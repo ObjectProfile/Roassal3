@@ -2,12 +2,14 @@
 This uses a wrapMaxWidth and creates a multiline label
 "
 Class {
-	#name : #RSWrapStrategy,
-	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal-Builders-Text'
+	#name : 'RSWrapStrategy',
+	#superclass : 'RSAbstractWrapStrategy',
+	#category : 'Roassal-Builders-Text',
+	#package : 'Roassal-Builders',
+	#tag : 'Text'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSWrapStrategy >> wordsAndSpacesFor: aString [
 	| tokens flag isWord i |
 	tokens := OrderedCollection new.
@@ -26,7 +28,7 @@ RSWrapStrategy >> wordsAndSpacesFor: aString [
 	^ tokens
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 	| label tokens newLines i currentLine width lastLabel |
 	label := aRSMultilineLabelBuilder
@@ -75,7 +77,7 @@ RSWrapStrategy >> wrapLineShapesFor: line with: aRSMultilineLabelBuilder [
 	^ newLines
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSWrapStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	| lines shapes |
 	lines := aString lines.

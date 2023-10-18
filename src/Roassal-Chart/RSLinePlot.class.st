@@ -2,24 +2,26 @@
 RSLinePlot is a class to create an y vs x plot.
 "
 Class {
-	#name : #RSLinePlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSLinePlot',
+	#superclass : 'RSAbstractPlot',
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'line'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLinePlot class >> example1 [
 	| p |
 	p := (self y: #(1 2 3 4)) format: 'or--'.
 	^ p open.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLinePlot class >> y: aCollection [
 	| linePlot |
 	linePlot := self new.
@@ -27,32 +29,32 @@ RSLinePlot class >> y: aCollection [
 	^ linePlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLinePlot >> createdShapes [
 	^ { line }
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSLinePlot >> defaultShape [
 	^ RSPolyline new color: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLinePlot >> isLinePlot [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLinePlot >> line [
 	^ line
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 RSLinePlot >> marker [
 	^ self shape markers at: 1
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLinePlot >> renderIn: canvas [
 	| controlPoints |
 	super renderIn: canvas.

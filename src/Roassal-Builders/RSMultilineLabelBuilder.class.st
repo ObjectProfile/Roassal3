@@ -16,18 +16,20 @@ canvas @ RSCanvasController
 ```
 "
 Class {
-	#name : #RSMultilineLabelBuilder,
-	#superclass : #RSObject,
+	#name : 'RSMultilineLabelBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'labelShape',
 		'layout',
 		'textBlock',
 		'wrapStrategy'
 	],
-	#category : #'Roassal-Builders-Text'
+	#category : 'Roassal-Builders-Text',
+	#package : 'Roassal-Builders',
+	#tag : 'Text'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMultilineLabelBuilder >> basicShapeFor: aString [
 	| lines |
 	lines := aString lines.
@@ -37,7 +39,7 @@ RSMultilineLabelBuilder >> basicShapeFor: aString [
 		ifFalse: [ self compositeLabelFor: lines ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMultilineLabelBuilder >> compositeLabelFor: lines [
 	| shapes |
 	shapes := lines collect: [:line |
@@ -50,24 +52,24 @@ RSMultilineLabelBuilder >> compositeLabelFor: lines [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMultilineLabelBuilder >> initialize [
 	super initialize.
 	self labelShape: RSLabel new; textBlock: #asString.
 	self wrapStrategy: RSNoWrapStrategy new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> labelShape [
 	^ labelShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> labelShape: aLabelShape [
 	labelShape := aLabelShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> layout [
 	^ layout ifNil: [ layout := RSVerticalLineLayout new
 		alignLeft;
@@ -75,41 +77,41 @@ RSMultilineLabelBuilder >> layout [
 		yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> layout: aRSLayout [
 	layout := aRSLayout
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMultilineLabelBuilder >> shapeFor: anObject [
 	| text |
 	text := self textFor: anObject.
 	^ wrapStrategy wrapTextFor: text with: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMultilineLabelBuilder >> singleLabelFor: text [
 	^ self labelShape copy
 		text: text;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> textBlock: aBlock [
 	textBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> textFor: anObject [
 	^ (textBlock rsValue: anObject) asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> wrapStrategy [
 	^ wrapStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMultilineLabelBuilder >> wrapStrategy: aRSWrapStrategy [
 	wrapStrategy := aRSWrapStrategy
 ]

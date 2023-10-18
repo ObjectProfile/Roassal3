@@ -2,8 +2,8 @@
 A chart styler is responsible to styler a chart and its element, in the future it would be connected to css description
 "
 Class {
-	#name : #RSChartStyler,
-	#superclass : #RSObject,
+	#name : 'RSChartStyler',
+	#superclass : 'RSObject',
 	#instVars : [
 		'textColor',
 		'textFont',
@@ -11,10 +11,12 @@ Class {
 		'tickColor',
 		'spineColor'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChartStyler >> initialize [
 	super initialize.
 	self
@@ -23,61 +25,61 @@ RSChartStyler >> initialize [
 		spineColor: Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> spineColor [
 
 	^ spineColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> spineColor: anObject [
 
 	spineColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textColor [
 
 	^ textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textColor: anObject [
 
 	textColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textFont [
 
 	^ textFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textFont: anObject [
 
 	textFont := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textSize [
 
 	^ textSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> textSize: anObject [
 
 	textSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> tickColor [
 
 	^ tickColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartStyler >> tickColor: anObject [
 
 	tickColor := anObject

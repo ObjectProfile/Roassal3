@@ -2,12 +2,14 @@
 I use the RSShapeBuilder
 "
 Class {
-	#name : #RSLayoutExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Examples-Basic'
+	#name : 'RSLayoutExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Examples-Basic',
+	#package : 'Roassal-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example01LayoutBasic [
 	<script: 'self new example01LayoutBasic open'>
 
@@ -28,7 +30,7 @@ RSLayoutExamples >> example01LayoutBasic [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example02Grid [
 	<script: 'self new example02Grid open'>
 
@@ -44,7 +46,7 @@ RSLayoutExamples >> example02Grid [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example03LayoutColorFadingBasic [
 	<script: 'self new example03LayoutColorFadingBasic open'>
 
@@ -66,7 +68,7 @@ RSLayoutExamples >> example03LayoutColorFadingBasic [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 	<script: 'self new example04LayoutColorFadingBasic2 open'>
 
@@ -89,7 +91,7 @@ RSLayoutExamples >> example04LayoutColorFadingBasic2 [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example05LayoutBasicWithColorFading [
 	<script: 'self new example05LayoutBasicWithColorFading open'>
 	| canvas shapes minAndMax color |
@@ -112,7 +114,7 @@ RSLayoutExamples >> example05LayoutBasicWithColorFading [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example06TreeLayout [
 	<script: 'self new example06TreeLayout open'>
 	| c shapes eb |
@@ -143,7 +145,7 @@ RSLayoutExamples >> example06TreeLayout [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example07ForceBasedLayout [
 	<script: 'self new example07ForceBasedLayout open'>
 	| c shapes eb |
@@ -178,7 +180,7 @@ RSLayoutExamples >> example07ForceBasedLayout [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example08HorizontalTree [
 	<script: 'self new example08HorizontalTree open setLabel: ''Horizontal Tree'''>
 	| c shapes |
@@ -214,7 +216,7 @@ RSLayoutExamples >> example08HorizontalTree [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example09BorderAttachPoint [
 	<script: 'self new example09BorderAttachPoint open setLabel: ''TSShape withAllSubclasses'''>
 	| c shapes |
@@ -233,7 +235,7 @@ RSLayoutExamples >> example09BorderAttachPoint [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example10Locate [
 	<script: 'self new example10Locate open'>
 	| canvas newshape e1 e2 color |
@@ -259,7 +261,7 @@ RSLayoutExamples >> example10Locate [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example11PaddingInComposite [
 	<script: 'self new example11PaddingInComposite open'>
 	| canvas shapes |
@@ -285,7 +287,7 @@ RSLayoutExamples >> example11PaddingInComposite [
 	^ canvas
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	<script: 'self new example12AnimatedForceBasedLayout open'>
 	| c |
@@ -299,7 +301,7 @@ RSLayoutExamples >> example12AnimatedForceBasedLayout [
 	^ c
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLayoutExamples >> example13VisualizeQuatree [
 
 	<script: 'self new example13VisualizeQuatree open'>
@@ -362,7 +364,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example15SimpleClassHierarchy [
 	<script: 'self new example15SimpleClassHierarchy open'>
 	| c methods |
@@ -398,7 +400,7 @@ RSLayoutExamples >> example15SimpleClassHierarchy [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSLayoutExamples >> example16SimpleClassHierarchy [
 	<script: 'self new example16SimpleClassHierarchy open'>
 	| c |
@@ -426,7 +428,7 @@ RSLayoutExamples >> example16SimpleClassHierarchy [
 	^ c
 ]
 
-{ #category : #animations }
+{ #category : 'animations' }
 RSLayoutExamples >> example17ForceBasedLayout [
 	<script: 'self new example17ForceBasedLayout open'>
 	| canvas shapes stepping edges  layout |
@@ -458,7 +460,7 @@ RSLayoutExamples >> example17ForceBasedLayout [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example18ClusterTree [
 	<script: 'self new example18ClusterTree open'>
 	| canvas shapes |
@@ -506,7 +508,7 @@ RSLayoutExamples >> example18ClusterTree [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	<script: 'self new example19AutomaticLayoutWhenWindowIsResized open'>
 	| classes shapes c eb |
@@ -530,7 +532,7 @@ RSLayoutExamples >> example19AutomaticLayoutWhenWindowIsResized [
 	^ c @ RSCanvasController @ RSHierarchyPackerInteraction
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example20FlowLayout [
 
 	<script: 'self new example20FlowLayout open extent: 700@500'>
@@ -645,7 +647,7 @@ RSLayoutExamples >> example20FlowLayout [
 	^ canvas
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example21TreeLayoutEllipses [
 	<script: 'self new example21TreeLayoutEllipses open'>
 	| c shapes eb |
@@ -680,7 +682,7 @@ RSLayoutExamples >> example21TreeLayoutEllipses [
 	^ c
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLayoutExamples >> example22ClassHierarchies [
 
 	<script: 'RSLayoutExamples new example22ClassHierarchies open'>
@@ -743,7 +745,7 @@ RSLayoutExamples >> example22ClassHierarchies [
 		  @ RSCanvasController
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLayoutExamples >> example23RoassalCommitsWithTimeGaps [
 	<noTest>
 	<script: 'RSLayoutExamples new example23RoassalCommitsWithTimeGaps open'>
@@ -840,7 +842,7 @@ RSLayoutExamples >> example23RoassalCommitsWithTimeGaps [
 		@ RSCanvasController
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example24SmartHorizontalTree [
 	<script: 'self new example24SmartHorizontalTree open setLabel: ''Horizontal Tree'''>
 	| c shapes |
@@ -877,7 +879,7 @@ RSLayoutExamples >> example24SmartHorizontalTree [
 	^ c
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 RSLayoutExamples >> example25SortBlock [
 	<script: 'self new example25SortBlock open'>
 	| c shapes |

@@ -2,44 +2,46 @@
 I am an example
 "
 Class {
-	#name : #RSPunchCardBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSPunchCardBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'objects',
 		'metrics',
 		'size'
 	],
-	#category : #'Roassal-Builders-Example'
+	#category : 'Roassal-Builders-Example',
+	#package : 'Roassal-Builders',
+	#tag : 'Example'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> addMetric: aRoassalValue name: name [
 	metrics at: name put: aRoassalValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> boxSize [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> boxSize: aNumber [
 	size := aNumber
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSPunchCardBuilder >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPunchCardBuilder >> initialize [
 	super initialize.
 	metrics := OrderedDictionary new.
 	self boxSize: 10
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPunchCardBuilder >> labelFor: obj [
 	^ RSLabel new
 		text: obj;
@@ -47,22 +49,22 @@ RSPunchCardBuilder >> labelFor: obj [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> metrics [
 	^ metrics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> objects [
 	^ objects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPunchCardBuilder >> objects: aCollection [
 	objects := aCollection
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPunchCardBuilder >> renderDots: aCanvas [
 	| base |
 	base := RSEllipse new popup.
@@ -82,7 +84,7 @@ RSPunchCardBuilder >> renderDots: aCanvas [
 								announcer: base announcer) ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSPunchCardBuilder >> renderIn: aCanvas [
 
 	self
@@ -91,7 +93,7 @@ RSPunchCardBuilder >> renderIn: aCanvas [
 		renderYAxis: aCanvas
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPunchCardBuilder >> renderXAxis: aCanvas [
 
 	| labels |
@@ -106,7 +108,7 @@ RSPunchCardBuilder >> renderXAxis: aCanvas [
 	aCanvas addAll: labels
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPunchCardBuilder >> renderYAxis: aCanvas [
 
 	| labels |

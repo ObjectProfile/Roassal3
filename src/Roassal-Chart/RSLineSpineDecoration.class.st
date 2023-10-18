@@ -2,23 +2,25 @@
 Used to draw line axis
 "
 Class {
-	#name : #RSLineSpineDecoration,
-	#superclass : #RSChartSpineDecoration,
+	#name : 'RSLineSpineDecoration',
+	#superclass : 'RSChartSpineDecoration',
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
 		'axisX',
 		'axisY'
 	],
-	#category : #'Roassal-Chart-Decoration'
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLineSpineDecoration >> defaultShape [
 	^ RSLine new
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLineSpineDecoration >> renderIn: canvas [
 	| x y zeroPoint |
 	axisX := self shape copy.
@@ -35,7 +37,7 @@ RSLineSpineDecoration >> renderIn: canvas [
 	canvas add: box
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineSpineDecoration >> zeroPoint [
 	| x y |
 	y := (0 between: chart minChartValueY and: chart maxChartValueY)

@@ -19,19 +19,21 @@ p open
 ```
 "
 Class {
-	#name : #RSYLabelDecoration,
-	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal-Chart-Decoration'
+	#name : 'RSYLabelDecoration',
+	#superclass : 'RSAbstractLabelDecoration',
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSYLabelDecoration >> initialize [
 	super initialize.
 	self vertical.
 	self left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSYLabelDecoration >> left [
 	self location
 		offset: -5 @ 0;
@@ -40,7 +42,7 @@ RSYLabelDecoration >> left [
 		middle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSYLabelDecoration >> right [
 	self location
 		offset: 5 @ 0;

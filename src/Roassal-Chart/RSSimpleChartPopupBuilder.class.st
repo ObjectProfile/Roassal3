@@ -47,16 +47,18 @@ c build.
 ```
 "
 Class {
-	#name : #RSSimpleChartPopupBuilder,
-	#superclass : #RSLineChartPopupBuilder,
+	#name : 'RSSimpleChartPopupBuilder',
+	#superclass : 'RSLineChartPopupBuilder',
 	#instVars : [
 		'labels',
 		'icons'
 	],
-	#category : #'Roassal-Chart-Popup'
+	#category : 'Roassal-Chart-Popup',
+	#package : 'Roassal-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot color: aColor [
 	self for: aRSLinePlot icon: (RSEllipse new
 		size: 10;
@@ -64,31 +66,31 @@ RSSimpleChartPopupBuilder >> for: aRSLinePlot color: aColor [
 		yourself)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot icon: aRSShape [
 	icons at: aRSLinePlot put: aRSShape
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot text: aString [
 	labels at: aRSLinePlot put: aString
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSimpleChartPopupBuilder >> for: aRSLinePlot text: aString color: aColor [
 	self
 		for: aRSLinePlot text: aString;
 		for: aRSLinePlot color: aColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSimpleChartPopupBuilder >> initialize [
 	super initialize.
 	labels := Dictionary new.
 	icons := Dictionary new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimpleChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
 	| group |
 	group := RSGroup new.

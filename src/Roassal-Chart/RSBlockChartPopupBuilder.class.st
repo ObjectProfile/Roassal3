@@ -2,20 +2,22 @@
 This uses a block, avoid to use this class and create a subclass of RSLineChartPopupBuilder
 "
 Class {
-	#name : #RSBlockChartPopupBuilder,
-	#superclass : #RSLineChartPopupBuilder,
+	#name : 'RSBlockChartPopupBuilder',
+	#superclass : 'RSLineChartPopupBuilder',
 	#instVars : [
 		'rowShapeBlock'
 	],
-	#category : #'Roassal-Chart-Popup'
+	#category : 'Roassal-Chart-Popup',
+	#package : 'Roassal-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockChartPopupBuilder >> rowShapeBlock [
 	^ rowShapeBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockChartPopupBuilder >> rowShapeBlock: aBlock [
 	"two arguments block
 	first argument is the line plot.
@@ -24,7 +26,7 @@ RSBlockChartPopupBuilder >> rowShapeBlock: aBlock [
 	rowShapeBlock := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBlockChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
 	^ rowShapeBlock value: aRSLinePlot value: aPoint
 ]
