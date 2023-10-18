@@ -1,6 +1,6 @@
-Extension { #name : #RSBasicShapeExamples }
+Extension { #name : 'RSBasicShapeExamples' }
 
-{ #category : #'*Roassal-SVG-Examples' }
+{ #category : '*Roassal-SVG-Examples' }
 RSBasicShapeExamples >> example16BasicLinePath [
 
 	<script: 'self new example16BasicLinePath open'>

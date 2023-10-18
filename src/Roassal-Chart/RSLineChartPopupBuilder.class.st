@@ -2,12 +2,14 @@
 TODO
 "
 Class {
-	#name : #RSLineChartPopupBuilder,
-	#superclass : #RSAbstractChartPopupBuilder,
-	#category : #'Roassal-Chart-Popup'
+	#name : 'RSLineChartPopupBuilder',
+	#superclass : 'RSAbstractChartPopupBuilder',
+	#category : 'Roassal-Chart-Popup',
+	#package : 'Roassal-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLineChartPopupBuilder >> rowShapeFor: aRSLinePlot [
 	| valuePoint |
 	valuePoint := self valuePointFor: aRSLinePlot.
@@ -15,12 +17,12 @@ RSLineChartPopupBuilder >> rowShapeFor: aRSLinePlot [
 	^ self rowShapeFor: aRSLinePlot point: valuePoint
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLineChartPopupBuilder >> rowShapeFor: aRSLinePlot point: aPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLineChartPopupBuilder >> shapeFor: aRSChart [
 	| plots |
 	plots := aRSChart plots select: #isLinePlot.
@@ -37,7 +39,7 @@ RSLineChartPopupBuilder >> shapeFor: aRSChart [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLineChartPopupBuilder >> valuePointFor: aRSLinePlot [
 	| xValue yValue index |
 	xValue := (aRSLinePlot xScale invert: position x) roundTo: 1.

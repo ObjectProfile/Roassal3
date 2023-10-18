@@ -2,20 +2,22 @@
 I am an strategy used by RSHistogramPlot by the method binSize:
 "
 Class {
-	#name : #RSBinSizeBinning,
-	#superclass : #RSAbstractBinning,
+	#name : 'RSBinSizeBinning',
+	#superclass : 'RSAbstractBinning',
 	#instVars : [
 		'size'
 	],
-	#category : #'Roassal-Chart-Strategy'
+	#category : 'Roassal-Chart-Strategy',
+	#package : 'Roassal-Chart',
+	#tag : 'Strategy'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBinSizeBinning >> computeNumberOfBinsFor: aCollection [
 	^ (self createBinsFor: aCollection) size - 1
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBinSizeBinning >> createBinsFor: aCollection [
 	| interval |
 	interval := aCollection first to: aCollection last by: size.
@@ -24,13 +26,13 @@ RSBinSizeBinning >> createBinsFor: aCollection [
 		ifFalse: [ interval ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBinSizeBinning >> size [
 
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBinSizeBinning >> size: anObject [
 
 	size := anObject

@@ -18,17 +18,19 @@ p open
 ```
 "
 Class {
-	#name : #RSChartTitleDecoration,
-	#superclass : #RSAbstractLabelDecoration,
-	#category : #'Roassal-Chart-Decoration'
+	#name : 'RSChartTitleDecoration',
+	#superclass : 'RSAbstractLabelDecoration',
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSChartTitleDecoration >> defaultFontSize [
 	^ 15
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChartTitleDecoration >> initialize [
 	super initialize.
 	self fontSize: 15.
@@ -37,7 +39,7 @@ RSChartTitleDecoration >> initialize [
 		above; center
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChartTitleDecoration >> isTitle [
 
 	^ true

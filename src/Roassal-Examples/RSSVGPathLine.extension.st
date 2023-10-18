@@ -1,6 +1,6 @@
-Extension { #name : #RSSVGPathLine }
+Extension { #name : 'RSSVGPathLine' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSSVGPathLine class >> exampleArc [
 	| canvas line |
 	canvas := RSCanvas new.

@@ -32,8 +32,8 @@ p show
 ```
 "
 Class {
-	#name : #RSHistogramPlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSHistogramPlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'map',
 		'x',
@@ -41,45 +41,47 @@ Class {
 		'bars',
 		'binningStrategy'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSHistogramPlot class >> of: aCollection on: aBloc [
 
 	^ self new collectDataOf: aCollection on: aBloc
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> bars [
 	^ bars
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> binSize: aNumber [
 	self binningStrategy: (RSBinSizeBinning new
 		size: aNumber;
 		yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> binningStrategy [
 
 	^ binningStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> binningStrategy: aBinningStrategy [
 	binningStrategy := aBinningStrategy.
 	self computeXYValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> bins [
 	^ bins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> bins: aCollection [
 	self assert: aCollection isCollection description: 'you must provide a collection'.
 	self binningStrategy: (RSFixedBinning new
@@ -87,7 +89,7 @@ RSHistogramPlot >> bins: aCollection [
 		yourself)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSHistogramPlot >> collectDataOf: aCollection on: aBloc [
 
 	x := aCollection collect: aBloc.
@@ -96,12 +98,12 @@ RSHistogramPlot >> collectDataOf: aCollection on: aBloc [
 	self computeXYValues
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSHistogramPlot >> computeBins [
 	^ binningStrategy createBinsFor: x
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSHistogramPlot >> computeXYValues [
 	| prev |
 	x ifNil: [ ^ self ].
@@ -119,41 +121,41 @@ RSHistogramPlot >> computeXYValues [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> createdShapes [
 	^ bars
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSHistogramPlot >> defaultShape [
 	^ RSBox new noPaint
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHistogramPlot >> definedValuesY [
 	"Return the list Y values that are defined"
 	^ yValues, {0}
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSHistogramPlot >> initialize [
 	super initialize.
 	self binningStrategy: RSDefaultBinning new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> map [
 
 	^ map
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> map: aMap [
 
 	map := aMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> model: anArray [
 
 	| toShow xVal xVal2 yVal |
@@ -166,18 +168,18 @@ RSHistogramPlot >> model: anArray [
 		          (map at: e) between: xVal and: xVal2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> numberOfBins [
 	^ self binningStrategy numberOfBins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> numberOfBins: aNumber [
 	self binningStrategy numberOfBins: aNumber.
 	self computeXYValues
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHistogramPlot >> renderIn: canvas [
 
 	super renderIn: canvas.
@@ -197,12 +199,12 @@ RSHistogramPlot >> renderIn: canvas [
 	canvas addAll: bars
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> x [
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHistogramPlot >> x: aCollection [
 	x := aCollection sorted.
 	self computeXYValues

@@ -2,12 +2,14 @@
 I have examples of different ways to inspect views an objects in Roassal
 "
 Class {
-	#name : #RSInspectableExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Examples-Basic'
+	#name : 'RSInspectableExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Examples-Basic',
+	#package : 'Roassal-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInspectableExample >> example01SimpleExample [
 	<script: 'self new example01SimpleExample open'>
 	| canvas boxes inspectable highligtable |
@@ -40,7 +42,7 @@ RSInspectableExample >> example01SimpleExample [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInspectableExample >> example02Inspect [
 
 	<script: 'self new example02Inspect inspect'>
@@ -98,13 +100,13 @@ RSInspectableExample >> example02Inspect [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInspectableExample >> example03Easing [
 	<script: 'self new example03Easing inspect'>
 	^ RSEasingInterpolator bounceOut
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInspectableExample >> example04ChagingContext [
 	<script: 'self new example04ChagingContext inspect'>
 	| c context int |

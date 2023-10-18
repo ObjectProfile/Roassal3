@@ -4,18 +4,20 @@ This does not work for more than two sets for now.
 The formula used to compute it are available at: https://dspace.library.uvic.ca/bitstream/handle/1828/128/phdGradStudiesMay24.pdf
 "
 Class {
-	#name : #RSCircleVennDiagram,
-	#superclass : #RSBuilder,
+	#name : 'RSCircleVennDiagram',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'bigSet',
 		'smallSet',
 		'omega',
 		'treshold'
 	],
-	#category : #'Roassal-Builders-VennDiagram'
+	#category : 'Roassal-Builders-VennDiagram',
+	#package : 'Roassal-Builders',
+	#tag : 'VennDiagram'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircleVennDiagram class >> example1 [
 
 	^ self new
@@ -24,19 +26,19 @@ RSCircleVennDiagram class >> example1 [
 		open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> bigSet [
 
 	^ bigSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> bigSet: anObject [
 
 	bigSet := anObject asSet.
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 RSCircleVennDiagram >> computeDistance [
 
 	| bigRadius smallRadius intersection intersectionWeight lowBoundary highBoundary deltaFunction middle |
@@ -77,13 +79,13 @@ RSCircleVennDiagram >> computeDistance [
 	^ middle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> computeRadius: aSet [
 
 	^ ((self weight: aSet) / Float pi) sqrt
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCircleVennDiagram >> initialize [ 
 	super initialize.
 	bigSet := Set new.
@@ -91,7 +93,7 @@ RSCircleVennDiagram >> initialize [
 	treshold := 0.001. "Accuracy of intersection area"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCircleVennDiagram >> renderIn: aCanvas [
 
 	| bigRadius smallRadius distance |
@@ -114,19 +116,19 @@ RSCircleVennDiagram >> renderIn: aCanvas [
 	aCanvas @ RSCanvasController.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> smallSet [
 
 	^ smallSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> smallSet: anObject [
 
 	smallSet := anObject asSet.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircleVennDiagram >> weight: aSet [
 
 	^ aSet size / omega size

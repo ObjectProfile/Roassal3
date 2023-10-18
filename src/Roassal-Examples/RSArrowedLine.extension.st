@@ -1,6 +1,6 @@
-Extension { #name : #RSArrowedLine }
+Extension { #name : 'RSArrowedLine' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSArrowedLine class >> exampleArrow [
 	| arrow |
 	arrow := self new.

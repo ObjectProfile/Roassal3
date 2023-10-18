@@ -52,21 +52,23 @@ canvas @ RSCanvasController
 ```
 "
 Class {
-	#name : #RSBuilder,
-	#superclass : #RSObject,
+	#name : 'RSBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'container',
 		'shapes'
 	],
-	#category : #'Roassal-Builders-Core'
+	#category : 'Roassal-Builders-Core',
+	#package : 'Roassal-Builders',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> asShape [
 	^ self asShapeFor: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> asShapeFor: model [
 	self build.
 	^ self container asShape
@@ -74,50 +76,52 @@ RSBuilder >> asShapeFor: model [
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RSBuilder >> build [
-	self renderIn: self container.
-	^ self container
+	| roassalContainer |
+	roassalContainer := self container.
+	self renderIn: roassalContainer.
+	^ roassalContainer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> canvas [
 	^ self container canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> container [
 	^ container ifNil: [ container := self defaultContainer ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> container: aTContainer [
 	container := aTContainer
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSBuilder >> defaultContainer [
 	^ RSCanvas new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSBuilder >> open [
 	self build.
 	^ self canvas open
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBuilder >> renderIn: aCanvas [
 	"add some shapes in the canvas"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBuilder >> shapes [
 	^ shapes
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSBuilder >> update [
 	self container shapes do: #remove.
 	self build

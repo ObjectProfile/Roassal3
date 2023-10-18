@@ -2,12 +2,14 @@
 Basic examples about highlighting
 "
 Class {
-	#name : #RSHighlightableExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Examples-Basic'
+	#name : 'RSHighlightableExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Examples-Basic',
+	#package : 'Roassal-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| canvas shapes color |
@@ -35,7 +37,7 @@ RSHighlightableExamples >> example01Basic [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example02ElementEdges [
 	<script: 'self new example02ElementEdges open'>
 	| canvas shapes interaction color |
@@ -65,7 +67,7 @@ RSHighlightableExamples >> example02ElementEdges [
 	^ canvas
 ]
 
-{ #category : #'examples - animated' }
+{ #category : 'examples - animated' }
 RSHighlightableExamples >> example03Interactive [
 
 	<script: 'self new example03Interactive open'>
@@ -102,7 +104,7 @@ RSHighlightableExamples >> example03Interactive [
 	^ canvas
 ]
 
-{ #category : #'examples - animated' }
+{ #category : 'examples - animated' }
 RSHighlightableExamples >> example04Interactive [
 
 	<script: 'self new example04Interactive open'>
@@ -141,7 +143,7 @@ RSHighlightableExamples >> example04Interactive [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example05Border [
 	<script: 'self new example05Border open'>
 	| canvas shapes interaction color |
@@ -170,7 +172,7 @@ RSHighlightableExamples >> example05Border [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example06IterateNext [
 
 	<script: 'self new example06IterateNext open'>
@@ -257,7 +259,7 @@ RSHighlightableExamples >> example06IterateNext [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example07HighlightButtons [
 
 	<script: 'self new example07HighlightButtons open'>
@@ -293,7 +295,7 @@ RSHighlightableExamples >> example07HighlightButtons [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example08DependendMethods [
 
 	<script: 'self new example08DependendMethods open'>
@@ -302,7 +304,7 @@ RSHighlightableExamples >> example08DependendMethods [
 
 	packages := packagesRegExp flatCollect: [ :regExp |
 		            RPackageOrganizer default packages select: [ :p |
-			            regExp match: p packageName ] ].
+			            regExp match: p name ] ].
 
 	canvas := RSCanvas new.
 	popup := RSPopup new.
@@ -377,7 +379,7 @@ RSHighlightableExamples >> example08DependendMethods [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHighlightableExamples >> example09ArrowedLines [
 	<script: 'self new example09ArrowedLines open'>
 	| canvas interaction color shapes |
@@ -411,7 +413,7 @@ RSHighlightableExamples >> example09ArrowedLines [
 	^ canvas
 ]
 
-{ #category : #elastic }
+{ #category : 'elastic' }
 RSHighlightableExamples >> example10ElasticBox [
 
 	<script: 'self new example10ElasticBox open'>
@@ -448,7 +450,7 @@ RSHighlightableExamples >> example10ElasticBox [
 	^ canvas
 ]
 
-{ #category : #elastic }
+{ #category : 'elastic' }
 RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 
 	<script: 'self new example11ElasticBoxWithCustomDraggable open'>
@@ -499,7 +501,7 @@ RSHighlightableExamples >> example11ElasticBoxWithCustomDraggable [
 	^ canvas
 ]
 
-{ #category : #elastic }
+{ #category : 'elastic' }
 RSHighlightableExamples >> example12ShowingEdges [
 	<script: 'self new example12ShowingEdges open'>
 	| canvas shapes color interaction cpController|
@@ -541,7 +543,7 @@ RSHighlightableExamples >> example12ShowingEdges [
 	^ canvas
 ]
 
-{ #category : #elastic }
+{ #category : 'elastic' }
 RSHighlightableExamples >> example13Click [
 
 	<script: 'self new example13Click open'>

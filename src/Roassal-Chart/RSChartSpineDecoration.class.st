@@ -12,25 +12,27 @@ The method is not meant to be used by a normal user as it represents a functiona
 
 "
 Class {
-	#name : #RSChartSpineDecoration,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSChartSpineDecoration',
+	#superclass : 'RSAbstractChartDecoration',
 	#instVars : [
 		'box'
 	],
-	#category : #'Roassal-Chart-Decoration'
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartSpineDecoration >> box [
 	^ box
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartSpineDecoration >> createdShapes [
 	^ { box }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSChartSpineDecoration >> defaultShape [
 	^ RSBox new
 		noPaint;
@@ -38,12 +40,12 @@ RSChartSpineDecoration >> defaultShape [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSChartSpineDecoration >> isSpineDecoration [
 	^ true
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSChartSpineDecoration >> renderIn: canvas [
 
 	box := self shape copy
@@ -53,7 +55,7 @@ RSChartSpineDecoration >> renderIn: canvas [
 	canvas add: box
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartSpineDecoration >> zeroPoint [
 	^ 0 @ self chart extent y
 ]

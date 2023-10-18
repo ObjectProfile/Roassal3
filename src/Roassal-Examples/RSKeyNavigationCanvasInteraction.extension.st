@@ -1,6 +1,6 @@
-Extension { #name : #RSKeyNavigationCanvasInteraction }
+Extension { #name : 'RSKeyNavigationCanvasInteraction' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSKeyNavigationCanvasInteraction class >> example [
 	| canvas |
 	canvas := self canvasExample.
@@ -11,7 +11,7 @@ RSKeyNavigationCanvasInteraction class >> example [
 		yourself
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSKeyNavigationCanvasInteraction class >> exampleNoHorizontalScroll [
 	| canvas interaction |
 	canvas := self canvasExample.
@@ -24,7 +24,7 @@ RSKeyNavigationCanvasInteraction class >> exampleNoHorizontalScroll [
 		yourself
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSKeyNavigationCanvasInteraction class >> exampleNoVerticalScroll [
 	| canvas interaction |
 	canvas := self canvasExample.

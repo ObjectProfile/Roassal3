@@ -1,6 +1,6 @@
-Extension { #name : #RSConditionalLayout }
+Extension { #name : 'RSConditionalLayout' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSConditionalLayout class >> createCanvas [
 	| classes shapes c eb |
 	classes := Collection allSubclasses.
@@ -17,7 +17,7 @@ RSConditionalLayout class >> createCanvas [
 	^ c
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSConditionalLayout class >> exampleCollection [
 	| c |
 	c := self createCanvas.
@@ -28,7 +28,7 @@ RSConditionalLayout class >> exampleCollection [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSConditionalLayout class >> exampleCollection2 [
 	| c |
 	c := self createCanvas.	

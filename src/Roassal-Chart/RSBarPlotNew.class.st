@@ -1,10 +1,12 @@
 Class {
-	#name : #RSBarPlotNew,
-	#superclass : #RSAbstractBandPlot,
-	#category : #'Roassal-Chart-Core'
+	#name : 'RSBarPlotNew',
+	#superclass : 'RSAbstractBandPlot',
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> example01BarPlot [
 	| p1 data1 |
 	data1 := {  9. 9. 7. 20. 5. 10. }.
@@ -12,7 +14,7 @@ RSBarPlotNew class >> example01BarPlot [
 	^ p1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> example02BarPlotHorizontal [
 	| p1 data1 |
 	data1 := {  9. 9. 7. 19. 5. 10. }.
@@ -21,7 +23,7 @@ RSBarPlotNew class >> example02BarPlotHorizontal [
 	^ p1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> example03BarPlotPositions [
 	| p1 data1 |
 	data1 := {  9. 9. 7. 20. 5. 10. }.
@@ -30,7 +32,7 @@ RSBarPlotNew class >> example03BarPlotPositions [
 	^ p1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> example04BarPlotPositions [
 	| x y plot1 |
 	
@@ -40,7 +42,7 @@ RSBarPlotNew class >> example04BarPlotPositions [
 	^ plot1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> exampleClusterBarPlots [
 	| p1 p2 chart data1 data2 x |
 	data1 := {  10. 9. 7 }. "blue"
@@ -52,7 +54,7 @@ RSBarPlotNew class >> exampleClusterBarPlots [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarPlotNew class >> exampleClusterBarPlots4Bars [
 	| p1 p2 chart data1 data2 x p3 p4|
 	data1 := {  10. 9. 7 }. "blue"
@@ -66,28 +68,28 @@ RSBarPlotNew class >> exampleClusterBarPlots4Bars [
 	^ chart open.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBarPlotNew >> canHandleCluster [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlotNew >> createdShapes [
 	^ { bandPlotShapes }
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSBarPlotNew >> data: aCollection [
 	bandPlotShapes := aCollection collect: [ :value | RSBarPlotShape data: value ].
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSBarPlotNew >> defaultShape [
 
 	^ RSBox new noPaint
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBarPlotNew >> initialize [
 	super initialize.
 	horizontal := false.
@@ -95,7 +97,7 @@ RSBarPlotNew >> initialize [
 	offset := 0.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlotNew >> renderIn: canvas [
 	super renderIn: canvas.
 	self computeBandsOffset.

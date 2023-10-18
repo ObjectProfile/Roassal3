@@ -7,12 +7,14 @@
 *Collaborators*: `RSLinearLocator` is used when rendering ticks.
 "
 Class {
-	#name : #RSLinearLocator,
-	#superclass : #RSTickLocator,
-	#category : #'Roassal-Chart-Ticks'
+	#name : 'RSLinearLocator',
+	#superclass : 'RSTickLocator',
+	#category : 'Roassal-Chart-Ticks',
+	#package : 'Roassal-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSLinearLocator >> generateTicks: aScale with: numberOfTicks [
 	
 	^ aScale ticks: numberOfTicks 

@@ -2,8 +2,8 @@
 I define basic configuration for ticks, my subclasses creates lines and labels for each defined axis
 "
 Class {
-	#name : #RSAbstractTick,
-	#superclass : #RSAbstractChartDecoration,
+	#name : 'RSAbstractTick',
+	#superclass : 'RSAbstractChartDecoration',
 	#instVars : [
 		'ticks',
 		'labels',
@@ -12,21 +12,23 @@ Class {
 		'tickLocator',
 		'ticksData'
 	],
-	#category : #'Roassal-Chart-Ticks'
+	#category : 'Roassal-Chart-Ticks',
+	#package : 'Roassal-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> asFloat [
 	self asFloat: 3
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> asFloat: numberOfDecimals [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value asFloat round: numberOfDecimals ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTick >> beforeRenderingIn: aChart [
 
 	self createXScale.
@@ -43,7 +45,7 @@ RSAbstractTick >> beforeRenderingIn: aChart [
 	chart createYScale
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> computeTicksData [
 
 	| scaleToUse data |
@@ -57,17 +59,17 @@ RSAbstractTick >> computeTicksData [
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> configuration [
 	^ configuration ifNil: [ configuration := self defaultConfiguration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> configuration: aRSTickConfiguration [
 	configuration := aRSTickConfiguration
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTick >> createLabelFor: aValue index: index [
 	"Create a label and returns it."
 	| tick lbl |
@@ -78,44 +80,44 @@ RSAbstractTick >> createLabelFor: aValue index: index [
 	^ lbl
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTick >> createTickLineFor: aNumber [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> createdShapes [
 	^ labels, ticks
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractTick >> defaultConfiguration [
 	^ RSTickConfiguration new
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractTick >> defaultLabelLocation [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractTick >> defaultLocator [
 
 	^ RSAutoLocator new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractTick >> defaultShape [
 	^ RSLine new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> doNotUseNiceLabel [
 
 	self locator: RSLinearLocator new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> fontSize: fontSizeToSet [
 	"Set the font size used by the labels associated to ticks"
 
@@ -138,38 +140,38 @@ c
 	self configuration fontSize: fontSizeToSet
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> fromNames: aCollectionOfStrings [
 	| size |
 	size := aCollectionOfStrings size.
 	self ticks: (1 to: size) labels: aCollectionOfStrings.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractTick >> initialize [
 
 	super initialize.
 	tickLocator := self defaultLocator
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> integer [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value asInteger ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> integerWithCommas [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value asInteger asStringWithCommas ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractTick >> isTicksDataNil [
 	^ ticksData isNil.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> labelConversion: oneArgBlock [
 	"This method is used to convert numerical values into a label. This is useful to particularlize labels on the X or Y axes. The parameter block accepts one argument, which is a numerical value. The block should return a string or any other object. When displayed, the message asString will be sent to it.
 
@@ -193,62 +195,62 @@ c
 	self configuration labelConversion: oneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> labelLocation [
 	^ labelLocation ifNil: [ labelLocation := self defaultLabelLocation ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> labelRotation [
 	^ self configuration labelRotation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> labelRotation: aNumber [
 	self configuration labelRotation: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> labels [
 	^ labels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> locator [
 
 	^ tickLocator 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> locator: aLocator [
 
 	tickLocator := aLocator 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> max [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> min [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractTick >> newLineTick [
 	^ self shape copy
 		color: self styler tickColor;
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> noConvertion [
 	"Do not convert the value when determining labels"
 	self labelConversion: [ :value | value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> numberOfTicks: aNumber [
 	"Set the number of ticks to be used. Can be used with doNotUseNiceLabels or not.
 
@@ -268,7 +270,7 @@ c
 	self configuration numberOfTicks: aNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTick >> renderIn: canvas [
 	ticksData := self ticksData.
 	ticks := ticksData collect: [ :value | self createTickLineFor: value ].
@@ -281,7 +283,7 @@ RSAbstractTick >> renderIn: canvas [
 	canvas addAll: labels
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> scaleToUse [
 
 	^ self isHorizontalTick
@@ -289,12 +291,12 @@ RSAbstractTick >> scaleToUse [
 		ifFalse: [ yScale ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractTick >> ticks [
 	^ ticks
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> ticks: collectionOfNumbers labels: collectionOfStrings [
 	self 
 		assert: collectionOfNumbers size = collectionOfStrings size 
@@ -312,35 +314,35 @@ RSAbstractTick >> ticks: collectionOfNumbers labels: collectionOfStrings [
 	].
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> ticksData [
 	^ ticksData ifNil: [ ticksData := self computeTicksData ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> ticksData: collectionOfNumbers [
 	ticksData := collectionOfNumbers
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractTick >> updateChartMaxAndMinValues: aChart [
 
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> useNiceLabel [
 
 	self locator: RSAutoLocator new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> withLabels [
 	"Make the tick have label"
 	self configuration shouldHaveLabels: true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTick >> withNoLabels [
 	"Ticks have no label"
 	self configuration shouldHaveLabels: false

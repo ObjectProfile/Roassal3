@@ -4,27 +4,29 @@ I redefine #renderIn:
 My subclasses needs to implement #objects and: #shapesFor:
 "
 Class {
-	#name : #RSAbstractShapesBuilder,
-	#superclass : #RSBuilder,
-	#category : #'Roassal-Builders-Core'
+	#name : 'RSAbstractShapesBuilder',
+	#superclass : 'RSBuilder',
+	#category : 'Roassal-Builders-Core',
+	#package : 'Roassal-Builders',
+	#tag : 'Core'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractShapesBuilder >> objects [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractShapesBuilder >> renderIn: aCanvas [
 	aCanvas addAll: (shapes := self shapesFor: self objects)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractShapesBuilder >> shapeFor: anObject index: index [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractShapesBuilder >> shapesFor: aCollection [
 	| k |
 	k := 0.

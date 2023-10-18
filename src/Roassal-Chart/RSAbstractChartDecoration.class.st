@@ -14,8 +14,8 @@
 - styler: the style of the decoration
 "
 Class {
-	#name : #RSAbstractChartDecoration,
-	#superclass : #RSObject,
+	#name : 'RSAbstractChartDecoration',
+	#superclass : 'RSObject',
 	#instVars : [
 		'xScale',
 		'yScale',
@@ -23,50 +23,52 @@ Class {
 		'styler',
 		'masterShape'
 	],
-	#category : #'Roassal-Chart-Decoration'
+	#category : 'Roassal-Chart-Decoration',
+	#package : 'Roassal-Chart',
+	#tag : 'Decoration'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> addShape: aShape [
 	"Add a shape to the canvas"
 
 	chart canvas add: aShape
 ]
 
-{ #category : #'private - adding' }
+{ #category : 'private - adding' }
 RSAbstractChartDecoration >> addedIn: aPlot [
 	aPlot addDecoration: self
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> beforeRenderingIn: aChart [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> chart [
 
 	^ chart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> chart: aChart [
 
 	chart := aChart
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSAbstractChartDecoration >> color [
 
 	^ self shape color
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSAbstractChartDecoration >> color: aColor [
 
 	self shape color: aColor
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> createXScale [
 
 	| padding |
@@ -82,7 +84,7 @@ RSAbstractChartDecoration >> createXScale [
 				(chart extent x - padding) }
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> createYScale [
 
 	| padding |
@@ -98,25 +100,25 @@ RSAbstractChartDecoration >> createYScale [
 				(chart extent y negated + padding) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> createdShapes [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractChartDecoration >> defaultShape [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractChartDecoration >> defaultStyler [
 
 	^ RSChartStyler new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractChartDecoration >> initialize [
 
 	super initialize.
@@ -124,97 +126,97 @@ RSAbstractChartDecoration >> initialize [
 	styler := self defaultStyler
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractChartDecoration >> isHorizontalTick [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractChartDecoration >> isPlot [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractChartDecoration >> isSpineDecoration [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractChartDecoration >> isTitle [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractChartDecoration >> isVerticalTick [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> masterShape [
 
 	^ masterShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> renderIn: aCanvas [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> shape [
 
 	^ masterShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> shape: aRSShape [
 
 	masterShape := aRSShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractChartDecoration >> spine [
 	"Return the roassal shape that describes the spine"
 	^ chart spine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> styler [
 
  ^ styler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> styler: aStyler [
 
  styler := aStyler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> xScale [
 
 	^ xScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> xScale: aScale [
 
 	xScale := aScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> yScale [
 
 	^ yScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartDecoration >> yScale: aScale [
 
 	yScale := aScale

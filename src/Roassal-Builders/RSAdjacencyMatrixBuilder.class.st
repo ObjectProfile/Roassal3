@@ -2,22 +2,24 @@
 Used as example
 "
 Class {
-	#name : #RSAdjacencyMatrixBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSAdjacencyMatrixBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'connections',
 		'objects'
 	],
-	#category : #'Roassal-Builders-Example'
+	#category : 'Roassal-Builders-Example',
+	#package : 'Roassal-Builders',
+	#tag : 'Example'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdjacencyMatrixBuilder >> connectingColor [
 
 	^ Color blue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdjacencyMatrixBuilder >> connections: someConnections [
 
 	"Set the connections used by the Adcency Matrix to build the matrix. The connections must be
@@ -26,18 +28,18 @@ RSAdjacencyMatrixBuilder >> connections: someConnections [
 	connections := someConnections
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdjacencyMatrixBuilder >> defaultSize [
 	^ 10
 ]
 
-{ #category : #'private -testing' }
+{ #category : 'private -testing' }
 RSAdjacencyMatrixBuilder >> does: obj1 dependsOn: obj2 [
 	"Return true if there is a connection from obj1 to obj2"
 	^ connections includes: obj1 -> obj2
 ]
 
-{ #category : #'public - cycle' }
+{ #category : 'public - cycle' }
 RSAdjacencyMatrixBuilder >> getAllCycles [
 
 	"Return all the cycles contained in the graph"
@@ -51,7 +53,7 @@ RSAdjacencyMatrixBuilder >> getAllCycles [
 	^ answer
 ]
 
-{ #category : #'public - cycle' }
+{ #category : 'public - cycle' }
 RSAdjacencyMatrixBuilder >> getVisitedNodesStartingFrom: obj [
 	| visiting |
 	visiting := Set new.
@@ -60,18 +62,18 @@ RSAdjacencyMatrixBuilder >> getVisitedNodesStartingFrom: obj [
 	^ visiting
 ]
 
-{ #category : #'public - cycle' }
+{ #category : 'public - cycle' }
 RSAdjacencyMatrixBuilder >> hasCycle [
 	"Return true if the graph has some cycle. Else return false"
 	^ objects anySatisfy: [ :obj | self hasCycleStartingFrom: obj ]
 ]
 
-{ #category : #'public - cycle' }
+{ #category : 'public - cycle' }
 RSAdjacencyMatrixBuilder >> hasCycleStartingFrom: obj [
 	^ (self getVisitedNodesStartingFrom: obj) includes: obj
 ]
 
-{ #category : #'public - cycle' }
+{ #category : 'public - cycle' }
 RSAdjacencyMatrixBuilder >> hasCycleStartingFrom: obj visiting: visiting [
 
 	(visiting includes: obj) ifTrue: [ ^ self ].
@@ -81,7 +83,7 @@ RSAdjacencyMatrixBuilder >> hasCycleStartingFrom: obj visiting: visiting [
 		self hasCycleStartingFrom: o visiting: visiting ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAdjacencyMatrixBuilder >> incomingConnectionsOf: anObject [
 
 	^ connections
@@ -89,7 +91,7 @@ RSAdjacencyMatrixBuilder >> incomingConnectionsOf: anObject [
 		  thenCollect: #value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAdjacencyMatrixBuilder >> initialize [
 
 	super initialize.
@@ -97,42 +99,42 @@ RSAdjacencyMatrixBuilder >> initialize [
 	connections := #(  )
 ]
 
-{ #category : #'public - sorting' }
+{ #category : 'public - sorting' }
 RSAdjacencyMatrixBuilder >> noSorting [
 	"No sorting"
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdjacencyMatrixBuilder >> nonConnectingColor [
 
 	^ Color veryVeryLightGray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdjacencyMatrixBuilder >> numberOfConnections [
 
 	^ connections size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAdjacencyMatrixBuilder >> numberOfIncomingConnectionsOf: anObject [
 
 	^ (self incomingConnectionsOf: anObject) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdjacencyMatrixBuilder >> numberOfObjects [
 
 	^ objects size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAdjacencyMatrixBuilder >> numberOfOutgoingConnectionsOf: anObject [
 
 	^ (self outgoingConnectionsOf: anObject) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdjacencyMatrixBuilder >> objects [
 
 	"Return the objects that are used in both axes"
@@ -140,7 +142,7 @@ RSAdjacencyMatrixBuilder >> objects [
 	^ objects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdjacencyMatrixBuilder >> objects: someObjects [
 
 	"Set the objects that must be used in both axes"
@@ -151,7 +153,7 @@ RSAdjacencyMatrixBuilder >> objects: someObjects [
 	objects := someObjects
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAdjacencyMatrixBuilder >> outgoingConnectionsOf: anObject [
 
 	^ connections
@@ -159,7 +161,7 @@ RSAdjacencyMatrixBuilder >> outgoingConnectionsOf: anObject [
 		  thenCollect: #value
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 
 	"Display the adjacency matrix"
@@ -182,7 +184,7 @@ RSAdjacencyMatrixBuilder >> renderIn: aCanvas [
 	aCanvas shapes @ RSPopup
 ]
 
-{ #category : #'public - sorting' }
+{ #category : 'public - sorting' }
 RSAdjacencyMatrixBuilder >> sortByNumberOfIncomingConnections [
 
 	objects := objects asSortedCollection: [ :a :b |
@@ -191,7 +193,7 @@ RSAdjacencyMatrixBuilder >> sortByNumberOfIncomingConnections [
 	objects := objects asArray
 ]
 
-{ #category : #'public - sorting' }
+{ #category : 'public - sorting' }
 RSAdjacencyMatrixBuilder >> sortByNumberOfOutgoingConnections [
 
 	objects := objects asSortedCollection: [ :a :b |

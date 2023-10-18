@@ -2,17 +2,19 @@
 Basic ellipsis for a single line text
 "
 Class {
-	#name : #RSWrapEllipsisStrategy,
-	#superclass : #RSAbstractWrapStrategy,
-	#category : #'Roassal-Builders-Text'
+	#name : 'RSWrapEllipsisStrategy',
+	#superclass : 'RSAbstractWrapStrategy',
+	#category : 'Roassal-Builders-Text',
+	#package : 'Roassal-Builders',
+	#tag : 'Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSWrapEllipsisStrategy >> ellipsis [
 	^ '...'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSWrapEllipsisStrategy >> wrapTextFor: aString with: aRSMultilineLabelBuilder [
 	| width lines label currentTextWithEllipsis currentText ellipsis |
 	lines := aString lines.

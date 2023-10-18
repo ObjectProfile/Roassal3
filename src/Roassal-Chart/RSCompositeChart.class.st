@@ -2,15 +2,17 @@
 Please use RSCompositeChart
 "
 Class {
-	#name : #RSCompositeChart,
-	#superclass : #RSAbstractChart,
+	#name : 'RSCompositeChart',
+	#superclass : 'RSAbstractChart',
 	#instVars : [
 		'plots'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSCompositeChart >> add: aPlot [
 	"Add a plot to the chart.
 
@@ -32,26 +34,26 @@ c
 	^ aPlot
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSCompositeChart >> addAll: aCollection [
 
 	aCollection do: [ :each | self add: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCompositeChart >> chart [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCompositeChart >> initialize [
 
 	super initialize.
 	plots := OrderedCollection new
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSCompositeChart >> maxChartValueX [
 	"if not set before, returns the maximum x value of all the plots"
 
@@ -64,7 +66,7 @@ RSCompositeChart >> maxChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSCompositeChart >> maxChartValueY [
 	"if not set before, returns the maximum y value of all the plots"
 
@@ -77,7 +79,7 @@ RSCompositeChart >> maxChartValueY [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSCompositeChart >> minChartValueX [
 	"if not set before, returns the minimum x value of all the plots"
 
@@ -90,7 +92,7 @@ RSCompositeChart >> minChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSCompositeChart >> minChartValueY [
 	"if not set before, returns the minimum y value of all the plots"
 
@@ -103,21 +105,21 @@ RSCompositeChart >> minChartValueY [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCompositeChart >> numberOfPlots [
 	"Return the number of plots contained in the chart"
 
 	^ self plots size
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCompositeChart >> openOnce [
 
 	self build.
 	^ self canvas openOnce
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSCompositeChart >> padding: aPoint [
 
 	super padding: aPoint.
@@ -125,13 +127,13 @@ RSCompositeChart >> padding: aPoint [
 	plots do: [ :plot | plot padding: aPoint ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCompositeChart >> plots [
 
 	^ plots
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSCompositeChart >> renderIn: aCanvas [
 
 	decorations , plots do: [ :element | element beforeRenderingIn: self ].
@@ -141,14 +143,14 @@ RSCompositeChart >> renderIn: aCanvas [
 		          as: RSGroup
 ]
 
-{ #category : #'public - scales' }
+{ #category : 'public - scales' }
 RSCompositeChart >> xScale: aScale [
 
 	super xScale: aScale.
 	plots do: [ :plot | plot xScale: aScale ]
 ]
 
-{ #category : #'public - scales' }
+{ #category : 'public - scales' }
 RSCompositeChart >> yScale: aScale [
 
 	super yScale: aScale.

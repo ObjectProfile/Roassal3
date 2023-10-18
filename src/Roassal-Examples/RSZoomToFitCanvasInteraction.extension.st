@@ -1,6 +1,6 @@
-Extension { #name : #RSZoomToFitCanvasInteraction }
+Extension { #name : 'RSZoomToFitCanvasInteraction' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSZoomToFitCanvasInteraction class >> example [
 	| canvas interaction |
 	canvas := self canvasExample.

@@ -1,6 +1,6 @@
-Extension { #name : #RSHighlightable }
+Extension { #name : 'RSHighlightable' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> example [
 	| canvas |
 	canvas := self canvasExample.
@@ -10,7 +10,7 @@ RSHighlightable class >> example [
 		yourself
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleBorder [
 	| c shapes interaction |
 	c := RSCanvas new.
@@ -32,7 +32,7 @@ RSHighlightable class >> exampleBorder [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleGrid [
 	| c shapes interaction |
 	c := RSCanvas new.
@@ -49,7 +49,7 @@ RSHighlightable class >> exampleGrid [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleGrid2 [
 	| c shapes interaction |
 	c := RSCanvas new.
@@ -66,7 +66,7 @@ RSHighlightable class >> exampleGrid2 [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleInteractive [
 
 	| classes c shapes buttonReset selectedShapes highlightable lbl buttonInspect g |
@@ -134,7 +134,7 @@ RSHighlightable class >> exampleInteractive [
 	^ c openOnce
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleNumbers [
 	| c shapes lb int |
 	c := RSCanvas new.
@@ -156,7 +156,7 @@ RSHighlightable class >> exampleNumbers [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSHighlightable class >> exampleTree [
 	| c shapes interaction |
 	c := RSCanvas new.

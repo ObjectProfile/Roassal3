@@ -13,8 +13,8 @@
 - yValues: the y values of the plot
 "
 Class {
-	#name : #RSAbstractPlot,
-	#superclass : #RSAbstractChart,
+	#name : 'RSAbstractPlot',
+	#superclass : 'RSAbstractChart',
 	#instVars : [
 		'chart',
 		'shape',
@@ -22,30 +22,32 @@ Class {
 		'yValues',
 		'rawData'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot class >> isAbstract [
 
 	^ self == RSAbstractPlot
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractPlot class >> points: aCollectionOfPoints [
 	^ self new 
 		x: (aCollectionOfPoints collect: #x) y: (aCollectionOfPoints collect: #y);
 		yourself.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractPlot class >> x: collectionX y: collectionY [
 	^ self new 
 		x: collectionX y: collectionY;
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> + aRSPlot [
 	| newChart |
 	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ]) 
@@ -56,36 +58,36 @@ RSAbstractPlot >> + aRSPlot [
 	^ newChart.
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSAbstractPlot >> addedIn: aRSChart [
 	aRSChart addPlot: self
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> beforeRenderingIn: aChart [
 
 	self createXScale.
 	self createYScale
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> canHandleCluster [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> chart [
 
 	^ chart ifNil: [ self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> chart: aChart [
 
 	chart := aChart
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> checkAssertion [
 
 	self
@@ -97,59 +99,59 @@ RSAbstractPlot >> checkAssertion [
 		'X and Y values have not the same size, and they should'
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSAbstractPlot >> color [
 
 	^ self shape color
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSAbstractPlot >> color: aColor [
 
 	self shape color: aColor
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSAbstractPlot >> computeColor [
 	"Return the color used by the chart element. The color is computed from the chart and from the colorBlock variable"
 
 	^ self color ifNil: [ self chart colorFor: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> createdShapes [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAbstractPlot >> defaultShape [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> definedValuesX [
 	"Return the list of X values that are defined"
 
 	^ xValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> definedValuesY [
 	"Return the list Y values that are defined"
 
 	^ yValues select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractPlot >> initialize [
 
 	super initialize.
 	shape := self defaultShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> invertCoordinates [
 	| auxScale |
 	auxScale := self yScale.
@@ -158,36 +160,36 @@ RSAbstractPlot >> invertCoordinates [
 	self x: self y y: self x.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isBarPlot [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isBoxPlot [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isHorizontalBarPlot [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isLinePlot [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isPlot [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isPointWellDefined: aPoint [
 	"Indicate whether the point deserves to be displayed"
 
@@ -195,29 +197,29 @@ RSAbstractPlot >> isPointWellDefined: aPoint [
 		  aPoint x isNaN not and: [ aPoint y isNaN not ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isScatterPlot [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlot >> isVerticalBarPlot [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> masterShape [
 	^ self shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> masterShape: aShape [
 	self shape: aShape
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSAbstractPlot >> maxChartValueX [
 	"if not set before, returns the maximum x value of the plot"
 
@@ -229,7 +231,7 @@ RSAbstractPlot >> maxChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSAbstractPlot >> maxChartValueY [
 	"if not set before, returns the maximum y value of the plot"
 
@@ -241,21 +243,21 @@ RSAbstractPlot >> maxChartValueY [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> maxValueX [
 	"Return the maximum X value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesX max
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> maxValueY [
 	"Return the maximum Y value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesY max
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSAbstractPlot >> minChartValueX [
 	"if not set before, returns the minimum x value of the plot"
 
@@ -267,7 +269,7 @@ RSAbstractPlot >> minChartValueX [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #'accessing - extension' }
+{ #category : 'accessing - extension' }
 RSAbstractPlot >> minChartValueY [
 	"if not set before, returns the minimum y value of the plot"
 
@@ -279,28 +281,28 @@ RSAbstractPlot >> minChartValueY [
 		  ifNotNil: [ :res | res ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> minValueX [
 	"Return the minimum X value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesX min
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> minValueY [
 	"Return the minimum Y value of the plot, excluding NaN and infinite"
 
 	^ self definedValuesY min
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractPlot >> rawData: aCollection x: bloc1 y: bloc2 [
 
 	rawData := aCollection.
 	self x: (rawData collect: bloc1) y: (rawData collect: bloc2)
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractPlot >> renderIn: aCanvas [
 
 	self beforeRenderingIn: self chart.
@@ -311,31 +313,31 @@ RSAbstractPlot >> renderIn: aCanvas [
 		          as: RSGroup
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSAbstractPlot >> scalePoint: aPoint [
 
 	^ (xScale scale: aPoint x) @ (yScale scale: aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> shape [
 
 	^ shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> shape: aRSShape [
 
 	shape := aRSShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> x [
 
 	^ xValues
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractPlot >> x: aCollection y: aCollection2 [
 	"Define a plot with the X and Y coordinates. Both X and Y are collections of the same size.
 
@@ -373,19 +375,19 @@ c
 	yValues := aCollection2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> xValues [
 
 	^ xValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> y [
 
 	^ yValues
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractPlot >> y: aCollection [
 	"Define a plot with only a Y coordinate. The X coordinate is the index of the data point.
 
@@ -411,7 +413,7 @@ c
 	self x: (1 to: aCollection size) y: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPlot >> yValues [
 
 	^ yValues

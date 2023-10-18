@@ -2,8 +2,8 @@
 this class is related to radar visualization
 "
 Class {
-	#name : #RSKiviat,
-	#superclass : #RSBuilder,
+	#name : 'RSKiviat',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'values',
 		'axisNames',
@@ -23,52 +23,54 @@ Class {
 		'maxValue',
 		'minValue'
 	],
-	#category : #'Roassal-Chart-Radar'
+	#category : 'Roassal-Chart-Radar',
+	#package : 'Roassal-Chart',
+	#tag : 'Radar'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> addRow: aList [
 	values add: aList
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSKiviat >> addRows: aCollection [
 	values addAll: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> axis [
 	^ axis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> axisNames [
 	^ axisNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> axisNames: aCollection [
 	axisNames := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> backgroundColor [
  ^ '#e5ebf6'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> backgroundShapes [
 	^ backgroundShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> border [
 	^ RSBorder new
 		color: Color white;
 		yourself
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSKiviat >> computePointsFor: aCollection [
 	| delta current divisor |
 	divisor := axisNames ifEmpty: [ 1 ] ifNotEmpty: [ axisNames size ].
@@ -82,7 +84,7 @@ RSKiviat >> computePointsFor: aCollection [
 		point ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKiviat >> computeScaleFor: array [
 	| min max |
 	min := minValue
@@ -95,7 +97,7 @@ RSKiviat >> computeScaleFor: array [
 	^ NSScale linear domain: { min. max }; range: { 0. radius }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKiviat >> computeScales [
 	scales := NSScale ordinal.
 	values size = 1 ifTrue: [
@@ -109,7 +111,7 @@ RSKiviat >> computeScales [
 	]
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createAxisLine: name angle: angle [
 	^ RSLine new
 		endPoint: angle cos @ angle sin * radius;
@@ -117,21 +119,21 @@ RSKiviat >> createAxisLine: name angle: angle [
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createAxisName: aString [
 	 ^ RSLabel new
 		text: aString;
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createBorderFor: aRSPolygon [
 	^ RSBorder new
 		color: aRSPolygon color muchDarker;
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createEllipseFor: each [
 	^ RSEllipse new
 		noPaint;
@@ -140,7 +142,7 @@ RSKiviat >> createEllipseFor: each [
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createPolygonFor: each [
 	^ RSPolygon new
 		noPaint;
@@ -151,7 +153,7 @@ RSKiviat >> createPolygonFor: each [
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createShapePointFor: aPoint in: aRSPolygon [
 	^ RSEllipse new
 		color: aRSPolygon color muchDarker;
@@ -160,7 +162,7 @@ RSKiviat >> createShapePointFor: aPoint in: aRSPolygon [
 		yourself
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 RSKiviat >> createValuePolygon: array [
 	| polygon points shapePoints |
 	points := self computePointsFor: array.
@@ -180,17 +182,17 @@ RSKiviat >> createValuePolygon: array [
 	^ polygon
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSKiviat >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSKiviat >> defaultPalette [
 	^ NSScale ordinal range: (NSScale category20 range collect: [:color| color translucent ])
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSKiviat >> fixLabelPosition: label angle: angle [
 	| positions gap |
 	label position: angle cos @ angle sin * radius.
@@ -213,7 +215,7 @@ RSKiviat >> fixLabelPosition: label angle: angle [
 			label translateBy: label baseRectangle bottomRight negated + gap ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSKiviat >> initialize [
 	super initialize.
 	values := OrderedCollection new.
@@ -228,87 +230,87 @@ RSKiviat >> initialize [
 		noDots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> labelGapSize [
 	^ labelGapSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> labelGapSize: aNumber [
 	labelGapSize := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> labels [
 	^ labels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> maxValue [
 	^ maxValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> maxValue: aNumber [
 	maxValue := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> minValue [
 	^ minValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> minValue: aNumber [
 	minValue := aNumber
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> noDots [
 	shouldUseDots := false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> noPolygonBorder [
 	shouldUsePolygonBorder := false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> noPolygonFillColor [
 	shouldUsePolygonFillColor := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> palette [
 	^ palette
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> palette: aNSOrdinalScale [
 	palette := aNSOrdinalScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> polygonShape [
 	^ polygonShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> polygonShapes [
 	^ polygonShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> radius [
 	^ radius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> radius: aNumber [
 	radius := aNumber
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSKiviat >> renderAxisIn: aCanvas [
 	| delta current deltaRadius divisor |
 	divisor := axisNames ifEmpty: [ 1 ] ifNotEmpty: [ axisNames size ].
@@ -335,7 +337,7 @@ RSKiviat >> renderAxisIn: aCanvas [
 	aCanvas addAll: labels
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSKiviat >> renderIn: aCanvas [
 	self assert: values isNotEmpty description: 'Use addRow: first'.
 	axisNames ifNil: [ axisNames := values first collectWithIndex: [ :val :i | i asString ] ].
@@ -345,64 +347,64 @@ RSKiviat >> renderIn: aCanvas [
 	shapes := backgroundShapes, axis, labels, polygonShapes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSKiviat >> renderValuesIn: aCanvas [
 	self computeScales.
 	polygonShapes := values collect: [ :array | self createValuePolygon: array ].
 	aCanvas addAll: polygonShapes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSKiviat >> shouldUseDots [
 	^ shouldUseDots
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSKiviat >> shouldUseEllipse [
 	^ shouldUseEllipse
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSKiviat >> shouldUsePolygonBorder [
 	^ shouldUsePolygonBorder
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSKiviat >> shouldUsePolygonFillColor [
 	^ shouldUsePolygonFillColor
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSKiviat >> tickStep [
 	^ radius / 5
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> useDots [
 	shouldUseDots := true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> useEllipse [
 	shouldUseEllipse := true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> usePolygon [
 	shouldUseEllipse := false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> usePolygonBorder [
 	shouldUsePolygonBorder := true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSKiviat >> usePolygonFillColor [
 	shouldUsePolygonFillColor := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKiviat >> values [
 	^ values
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RSCellLayout }
+Extension { #name : 'RSCellLayout' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSCellLayout class >> example1 [
 	| c shapes |
 	c := RSCanvas new.
@@ -12,7 +12,7 @@ RSCellLayout class >> example1 [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSCellLayout class >> example2 [
 	| c shapes |
 	c := RSCanvas new.
@@ -27,7 +27,7 @@ RSCellLayout class >> example2 [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSCellLayout class >> example3 [
 	| c shapes |
 	c := RSCanvas new.

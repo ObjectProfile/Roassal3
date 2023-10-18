@@ -7,28 +7,30 @@
 *Collaborators*: `RSFixedLocator` is used when rendering ticks.
 "
 Class {
-	#name : #RSFixedLocator,
-	#superclass : #RSTickLocator,
+	#name : 'RSFixedLocator',
+	#superclass : 'RSTickLocator',
 	#instVars : [
 		'ticks'
 	],
-	#category : #'Roassal-Chart-Ticks'
+	#category : 'Roassal-Chart-Ticks',
+	#package : 'Roassal-Chart',
+	#tag : 'Ticks'
 }
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSFixedLocator >> generateTicks: aScale with: numberOfTicks [
 	
 	ticks sort.
 	^ ticks select: [ :e | e >= aScale domain first and: e <= aScale domain last ]
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSFixedLocator >> ticks [
 
 	^ ticks
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RSFixedLocator >> ticks: aCollection [
 
 	ticks := aCollection

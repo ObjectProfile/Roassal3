@@ -6,8 +6,8 @@ This class provides some extents for RSChart
 - padding: an internal gap between plots and base rectangle
 "
 Class {
-	#name : #RSChartExtents,
-	#superclass : #RSObject,
+	#name : 'RSChartExtents',
+	#superclass : 'RSObject',
 	#instVars : [
 		'extent',
 		'maxValueX',
@@ -16,65 +16,67 @@ Class {
 		'minValueY',
 		'padding'
 	],
-	#category : #'Roassal-Chart-Core'
+	#category : 'Roassal-Chart-Core',
+	#package : 'Roassal-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> maxValueX [
 	^ maxValueX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> maxValueX: aNumber [
 	maxValueX := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> maxValueY [
 	^ maxValueY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> maxValueY: aNumber [
 	maxValueY := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> minValueX [
 	^ minValueX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> minValueX: aNumber [
 	minValueX := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> minValueY [
 	^ minValueY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> minValueY: aNumber [
 	minValueY := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> padding [
 	^ padding ifNil: [ padding := 0@0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSChartExtents >> padding: aPoint [
 	padding := aPoint
 ]
