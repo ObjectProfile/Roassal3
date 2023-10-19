@@ -30,6 +30,12 @@ RSParameterization >> controlPointsChanged: points overlappingDistancesSum: cont
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+RSParameterization >> domain [
+
+	^ domain
+]
+
 { #category : 'instance creation' }
 RSParameterization >> from [
 

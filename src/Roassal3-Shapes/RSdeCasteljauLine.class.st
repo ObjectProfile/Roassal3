@@ -385,6 +385,23 @@ RSdeCasteljauLine >> polar: ratio [
 		  yourself
 ]
 
+{ #category : 'accessing' }
+RSdeCasteljauLine >> primitiveRefreshDesignPoints: designPoints controlPoints: destControlPoints parameterDomain: domain [
+
+	<primitive: 'primitive_decasteljau' module: 'LuaPlugin'>
+	self primitiveFail
+	"	^ super refreshControlPoints"
+]
+
+{ #category : 'accessing' }
+RSdeCasteljauLine >> refreshControlPoints [
+
+	^ self
+		  primitiveRefreshDesignPoints: points
+		  controlPoints: controlPoints
+		  parameterDomain: (parameterization domain collect: #asFloat)
+]
+
 { #category : 'accessing - structure variables' }
 RSdeCasteljauLine >> samplesChebyshev: n [
 
