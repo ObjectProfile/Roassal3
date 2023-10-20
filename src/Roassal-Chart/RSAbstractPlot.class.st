@@ -58,11 +58,6 @@ RSAbstractPlot >> + aRSPlot [
 	^ newChart.
 ]
 
-{ #category : 'adding' }
-RSAbstractPlot >> addedIn: aRSChart [
-	aRSChart addPlot: self
-]
-
 { #category : 'rendering' }
 RSAbstractPlot >> beforeRenderingIn: aChart [
 
