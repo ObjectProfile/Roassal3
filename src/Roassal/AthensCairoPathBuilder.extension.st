@@ -1,6 +1,6 @@
-Extension { #name : #AthensCairoPathBuilder }
+Extension { #name : 'AthensCairoPathBuilder' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensCairoPathBuilder >> arcAround: aCenterPoint radius: aRadius startAngle: aStartAngle endAngle: anEndAngle [
 	self
 		arcCenterX: aCenterPoint x
@@ -10,7 +10,7 @@ AthensCairoPathBuilder >> arcAround: aCenterPoint radius: aRadius startAngle: aS
 		endAngle: anEndAngle
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensCairoPathBuilder >> arcAround: aCenterPoint radius: aRadius startAngle: aStartAngle endAngle: anEndAngle cw: aBool [
 	aBool ifTrue: [
 		self
@@ -27,7 +27,7 @@ AthensCairoPathBuilder >> arcAround: aCenterPoint radius: aRadius startAngle: aS
 		endAngle: anEndAngle ]
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensCairoPathBuilder >> arcCos: num [
 	| temp |
 	temp := num.
@@ -37,7 +37,7 @@ AthensCairoPathBuilder >> arcCos: num [
 	^ temp arcCos
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensCairoPathBuilder >> ellipticalArc2: radii xrot: rotationAxis large: largeFlag sweep: sweepFlag to: aPoint [
 
 	"raddi Point, rotationAxis Number, largeFlag Number, sweepFlag Number, aPoint Point"

@@ -1,6 +1,6 @@
-Extension { #name : #SubscriptionRegistry }
+Extension { #name : 'SubscriptionRegistry' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 SubscriptionRegistry >> getInteractionsForClass: eventClass [
 	"Return the list of subscription for a given Event class"
 	| answer |
@@ -11,7 +11,7 @@ SubscriptionRegistry >> getInteractionsForClass: eventClass [
 	^ answer
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 SubscriptionRegistry >> handleEventClass: eventClass [
 	"Return true if the receiver has a callback subscripbed for the event class"
 	^ subscriptions

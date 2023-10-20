@@ -2,27 +2,29 @@
 It uses the center in the top left of the morph window
 "
 Class {
-	#name : #RSTopLeftCoordinates,
-	#superclass : #RSCoordinates,
-	#category : #'Roassal-Camera'
+	#name : 'RSTopLeftCoordinates',
+	#superclass : 'RSCoordinates',
+	#category : 'Roassal-Camera',
+	#package : 'Roassal',
+	#tag : 'Camera'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTopLeftCoordinates class >> gapToCenter: camera [
 	^ camera canvas extent / 2
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTopLeftCoordinates class >> matrixFor: anRSCamera [
 	^ anRSCamera matrix
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTopLeftCoordinates >> gapToCenter: camera [
 	^ camera canvas extent / 2
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTopLeftCoordinates >> matrixFor: anRSCamera [
 	^ anRSCamera matrix
 ]

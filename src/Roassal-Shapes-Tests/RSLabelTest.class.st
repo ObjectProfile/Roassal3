@@ -2,21 +2,22 @@
 A TSLabelTest is a test class for testing the behavior of TSLabel
 "
 Class {
-	#name : #RSLabelTest,
-	#superclass : #RSTest,
+	#name : 'RSLabelTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Shapes-Tests'
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSLabelTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testBuilding [
 
 	| l |
@@ -25,7 +26,7 @@ RSLabelTest >> testBuilding [
 	self assert: l text equals: 'Hello'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testBuilding2 [
 
 	| l |
@@ -35,7 +36,7 @@ RSLabelTest >> testBuilding2 [
 	self assert: l model equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testCairoCachedMetricProvider [
 	| label provider |
 	label := RSLabel new.
@@ -47,7 +48,7 @@ RSLabelTest >> testCairoCachedMetricProvider [
 	self assert: (provider extentsOf: label) class equals: RSTextExtents
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testCairoFitMetricsProvider [
 	| label h |
 	label := RSLabel new.
@@ -57,7 +58,7 @@ RSLabelTest >> testCairoFitMetricsProvider [
 	self assert: h > label height
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testDrawBorderLabel [
 	|  |
 	canvas addShape: (RSLabel new
@@ -70,7 +71,7 @@ RSLabelTest >> testDrawBorderLabel [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testDrawLabel [
 
 	canvas addShape: (RSLabel new
@@ -81,14 +82,14 @@ RSLabelTest >> testDrawLabel [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testHasChildren [
 	| b |
 	b := RSLabel new.
 	self deny: b hasChildren
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testModelWithoutText [
 
 	| l |
@@ -101,7 +102,7 @@ RSLabelTest >> testModelWithoutText [
 	self assert: l text equals: '42'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testSameSize [
 	| l1 l2 |
 	l1 := RSLabel model: 123.
@@ -110,7 +111,7 @@ RSLabelTest >> testSameSize [
 	self assert: l1 extent equals: l2 extent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testUnderlineStruckout [
 	| label |
 	label := RSLabel new.
@@ -121,7 +122,7 @@ RSLabelTest >> testUnderlineStruckout [
 	self assert: label isUnderlined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabelTest >> testWhiteSpace [
 	| normalLabel labelWithSpace labelWithLargeSpace |
 	normalLabel := RSLabel new text: 'test'.

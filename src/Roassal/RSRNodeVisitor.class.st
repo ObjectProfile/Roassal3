@@ -2,32 +2,34 @@
 Visitor that works with `RSRNode`
 "
 Class {
-	#name : #RSRNodeVisitor,
-	#superclass : #RSObject,
+	#name : 'RSRNodeVisitor',
+	#superclass : 'RSObject',
 	#instVars : [
 		'block'
 	],
-	#category : #'Roassal-Rendering'
+	#category : 'Roassal-Rendering',
+	#package : 'Roassal',
+	#tag : 'Rendering'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSRNodeVisitor class >> on: aBlock [
 	^ self basicNew
 		block: aBlock;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNodeVisitor >> block [
 	^ block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNodeVisitor >> block: aBlock [
 	block := aBlock
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRNodeVisitor >> visitNode: aNode [
 	block value: aNode.
 	aNode childrenDo: [ :child | child accept: self ]

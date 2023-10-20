@@ -2,21 +2,22 @@
 Test for all shapes with a matrix an one encompassing rectangle
 "
 Class {
-	#name : #RSBoundingTest,
-	#superclass : #RSTest,
+	#name : 'RSBoundingTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Shapes-Tests'
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoundingTest >> testCreating [
 	| values boxes |
 	values := #(20 30 40 50 10).
@@ -25,14 +26,14 @@ RSBoundingTest >> testCreating [
 	self assert: (boxes allSatisfy: [ :s | s class == RSBox ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> testDrawBitmap [
 	canvas addShape: (RSBitmap new
 		form: (ColorForm extent: 100@100 depth: 32)).
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> testDrawBorder [
 	canvas addShape: (RSEllipse new
 		radius: 100;
@@ -41,7 +42,7 @@ RSBoundingTest >> testDrawBorder [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> testDrawBoxCornerRadius [
 	canvas addShape: (RSBox new
 		extent: 100@100;
@@ -50,7 +51,7 @@ RSBoundingTest >> testDrawBoxCornerRadius [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> testDrawPolygon [
 	canvas addShape: (RSPolygon new).
 	canvas addShape: (RSPolygon new
@@ -64,7 +65,7 @@ RSBoundingTest >> testDrawPolygon [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSBoundingTest >> testDrawRing [
 	| r |
 	r := RSPieSlice new.
@@ -105,7 +106,7 @@ RSBoundingTest >> testDrawRing [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoundingTest >> testFromRectangle [
 
 	| box |
@@ -117,7 +118,7 @@ RSBoundingTest >> testFromRectangle [
 	self assert: box extent equals: 40 @ 30
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoundingTest >> testHasChildren [
 	| b |
 	b := RSBox new.
@@ -126,7 +127,7 @@ RSBoundingTest >> testHasChildren [
 	self deny: b hasChildren
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoundingTest >> testPosition [
 	| b |
 	b := RSBox new.
@@ -134,7 +135,7 @@ RSBoundingTest >> testPosition [
 	b position: 0@0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSBoundingTest >> testTranslateTopLeftTo [
 
 	| b |

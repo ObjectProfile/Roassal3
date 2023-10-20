@@ -1099,14 +1099,14 @@ RSBasicShapeExamples >> example44AA [
 	canvas newAnimation
 		repeat;
 		onStepDo: [ :t |
-			canvas shapes last text: (canvas hasAntialiasing
+			canvas shapes last text: (canvas host hasAntialiasing
 						 ifTrue: [ 'AA enabled' ]
 						 ifFalse: [ 'AA disabled' ]).
 			canvas signalUpdate ];
 		when: RSAnimationLoopEvent do: [ :evt |
-			canvas hasAntialiasing
-				ifTrue: [ canvas disableAntialiasing ]
-				ifFalse: [ canvas enableAntialiasing ].
+			canvas host hasAntialiasing
+				ifTrue: [ canvas host disableAntialiasing ]
+				ifFalse: [ canvas host enableAntialiasing ].
 			canvas signalUpdate ]
 		for: self.
 	^ canvas
