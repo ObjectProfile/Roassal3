@@ -237,18 +237,6 @@ RSCoOccurrenceMatrixBuilder >> domainRange: anObject [
 	domainRange := anObject
 ]
 
-{ #category : 'hooks' }
-RSCoOccurrenceMatrixBuilder >> exportToFile: aString [
-
-	self build.
-	self container 
-		zoomToFit;
-		extent: 4000@500.
-	self container pdfExporter 
-		fileName: aString; 
-		export
-]
-
 { #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 
