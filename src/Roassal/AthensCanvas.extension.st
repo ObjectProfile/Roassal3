@@ -1,6 +1,6 @@
-Extension { #name : #AthensCanvas }
+Extension { #name : 'AthensCanvas' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensCanvas >> privatePaint: anObject [
 	paint := anObject
 ]

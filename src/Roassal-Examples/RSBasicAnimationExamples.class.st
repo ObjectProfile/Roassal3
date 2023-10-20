@@ -299,7 +299,7 @@ RSBasicAnimationExamples >> example09Easing [
 		RSCircle new radius: 0; withBorder; noPaint ].
 
 	canvas := RSCanvas new.
-	canvas aaBest.
+	canvas host aaBest.
 	canvas addAnimation: (RSSequentialAnimation new
 		add: (RSTransitionAnimation new
 			duration: 2 seconds;

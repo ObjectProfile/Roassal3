@@ -1,11 +1,11 @@
-Extension { #name : #AthensAffineTransform }
+Extension { #name : 'AthensAffineTransform' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensAffineTransform >> asFloatTransform [
 	^ self copy floatValues; yourself
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensAffineTransform >> floatValues [
 	"convert all the values to float"
 	x := x asFloat.
@@ -16,7 +16,7 @@ AthensAffineTransform >> floatValues [
 	shy := shy asFloat
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 AthensAffineTransform >> printOn: stream [
 	stream << 'x: '. x printOn: stream.
 	stream << ' y: '. y printOn: stream.

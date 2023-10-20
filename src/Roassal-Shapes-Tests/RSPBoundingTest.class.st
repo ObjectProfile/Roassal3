@@ -1,14 +1,15 @@
 Class {
-	#name : #RSPBoundingTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RSPBoundingTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'shapeClass',
 		'canvas'
 	],
-	#category : #'Roassal-Shapes-Tests'
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RSPBoundingTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
@@ -19,29 +20,29 @@ RSPBoundingTest class >> testParameters [
 	^ m
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSPBoundingTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPBoundingTest >> shapeClass [
 	^ shapeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPBoundingTest >> shapeClass: aShapeClass [
 	shapeClass := aShapeClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPBoundingTest >> testDraw [
 	canvas addShape: (self shapeClass new extent: 50 @ 50).
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPBoundingTest >> testDrawBorder [
 	canvas addShape: (self shapeClass new
 		extent: 100 @ 100;
@@ -50,7 +51,7 @@ RSPBoundingTest >> testDrawBorder [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPBoundingTest >> testPosition [
 	| b |
 	b := self shapeClass new.

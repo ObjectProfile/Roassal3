@@ -2,15 +2,17 @@
 A host is a backend object that allows to roassal to render in Morphic orr in other Bloc
 "
 Class {
-	#name : #RSHost,
-	#superclass : #RSObject,
+	#name : 'RSHost',
+	#superclass : 'RSObject',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Core'
+	#category : 'Roassal-Core',
+	#package : 'Roassal',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHost class >> example [
 	| canvas |
 	"default is morphic"
@@ -19,32 +21,32 @@ RSHost class >> example [
 	^ canvas open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> canvas [
 
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> canvas: aRSCanvas [
 
 	canvas := aRSCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHost >> defaultWindowTitle [
 
 	^ 'Roassal'
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSHost >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 

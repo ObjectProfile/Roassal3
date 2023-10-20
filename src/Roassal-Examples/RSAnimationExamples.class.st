@@ -14,7 +14,7 @@ RSAnimationExamples >> example01BoxWindmill [
 	<script: 'self new example01BoxWindmill open'>
 	| canvas shapes extent points frameCount border |
 	canvas := RSCanvas new.
-	canvas aaNone.
+	canvas host aaNone.
 	canvas color: Color black.
 	extent := 1920@1080.
 	points := (0 to: extent x by: 50) flatCollect: [ :x |

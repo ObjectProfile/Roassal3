@@ -2,19 +2,20 @@
 A TSGroupTest is a test class for testing the behavior of TSGroup
 "
 Class {
-	#name : #RSGroupTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Shapes-Tests'
+	#name : 'RSGroupTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testAddShape [
 	| g |
 	g := RSGroup new.
 	g add: RSBox new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testAsGroup [
 	| t |
 	t := #(1 2 3) asGroup.
@@ -22,7 +23,7 @@ RSGroupTest >> testAsGroup [
 	self assert: t class equals: RSGroup
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testCache01 [
 
 	| shapes shape |
@@ -37,7 +38,7 @@ RSGroupTest >> testCache01 [
 	self deny: shapes shapeFromModelCache isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testCache02 [
 
 	| shapes s sps |
@@ -52,7 +53,7 @@ RSGroupTest >> testCache02 [
 	self assert: sps size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testCache03 [
 
 	| shapes shape |
@@ -64,7 +65,7 @@ RSGroupTest >> testCache03 [
 	self assert: shape model equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testCache04 [
 
 	| es |
@@ -75,7 +76,7 @@ RSGroupTest >> testCache04 [
 	self assert: (es shapesFromModel: 1) size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testDrawGroup [
 	| g c com |
 	c := RSCanvas new.
@@ -88,7 +89,7 @@ RSGroupTest >> testDrawGroup [
 	c createMorph drawOnMockCanvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testModels [
 	| g |
 	g := RSGroup new.
@@ -102,7 +103,7 @@ RSGroupTest >> testModels [
 	self assert: (g collect: [ :s | s model ]) asArray equals: #('hello' 'world' 'bonjour')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testNodesAndLines [
 
 	| g |
@@ -114,7 +115,7 @@ RSGroupTest >> testNodesAndLines [
 	self assert: g lines size equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testShapeFromModel [
 	| group |
 	group := (1 to: 5) collect: [:n | RSBox new model: n; yourself] as: RSGroup.
@@ -122,7 +123,7 @@ RSGroupTest >> testShapeFromModel [
 	self assert: (group shapeFromModel: 5) equals: group last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testTranslateTopLeftTo [
 	| g |
 	g := RSBox models: #(1 2).
@@ -135,7 +136,7 @@ RSGroupTest >> testTranslateTopLeftTo [
 	self assert: g position equals: 52 @ 47
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGroupTest >> testTranslucent [
 	| g |
 	g := RSGroup new.

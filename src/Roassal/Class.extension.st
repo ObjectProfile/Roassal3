@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 Class >> dependentClassesWithOccurences [
 	"Return the list of classes used myself. The result may contains multiple times the same element."
 
@@ -20,7 +20,7 @@ Class >> dependentClassesWithOccurences [
 	^ cll asArray
 ]
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 Class >> numberOfVariables [
 	"Return the number of variables"
 

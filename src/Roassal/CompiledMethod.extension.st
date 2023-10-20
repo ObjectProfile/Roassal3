@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Roassal' }
+{ #category : '*Roassal' }
 CompiledMethod >> dependentClassesWithOccurences [
 	"Return the list of classes used myself. The result contains my superclass. The result may contains multiple times the same element."
 

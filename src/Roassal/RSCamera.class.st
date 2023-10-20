@@ -31,8 +31,8 @@ c
 ```
 "
 Class {
-	#name : #RSCamera,
-	#superclass : #RSObject,
+	#name : 'RSCamera',
+	#superclass : 'RSObject',
 	#traits : 'RSTPositionable',
 	#classTraits : 'RSTPositionable classTrait',
 	#instVars : [
@@ -42,10 +42,12 @@ Class {
 		'originMode',
 		'matrix'
 	],
-	#category : #'Roassal-Camera'
+	#category : 'Roassal-Camera',
+	#package : 'Roassal',
+	#tag : 'Camera'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCamera class >> example [
 	| camera canvas |
 	camera := self new.
@@ -56,47 +58,47 @@ RSCamera class >> example [
 	^ StInspector openOn: camera
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSCamera class >> maxExtentFor: rectangle [
 	^ rectangle extent max: self minimumExtent
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSCamera class >> minimumExtent [
 	^ 0.0001 asPoint
 ]
 
-{ #category : #'accessing coordinates' }
+{ #category : 'accessing coordinates' }
 RSCamera class >> originCenterMiddle [
 	^ RSCoordinates originCenterMiddle
 ]
 
-{ #category : #'accessing coordinates' }
+{ #category : 'accessing coordinates' }
 RSCamera class >> originTopLeft [
 	^ RSCoordinates originTopLeft
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSCamera >> accept: visitor [
 	visitor visitCamera: self
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 RSCamera >> announce: anEvent [
 	canvas announce: anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSCamera >> computeScaleFor: anExtent rectangle: rect [
 	| sc |
 	sc := anExtent / (self class maxExtentFor: rect).
@@ -104,28 +106,28 @@ RSCamera >> computeScaleFor: anExtent rectangle: rect [
 	^ sc
 ]
 
-{ #category : #convertion }
+{ #category : 'convertion' }
 RSCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> extent [
 
 	^ extent
 ]
 
-{ #category : #convertion }
+{ #category : 'convertion' }
 RSCamera >> fromPixelToSpace: aPoint [
 	^ originMode fromPixelToSpace: aPoint camera: self
 ]
 
-{ #category : #convertion }
+{ #category : 'convertion' }
 RSCamera >> fromSpaceToPixel: aPoint [
 	^ originMode fromSpaceToPixel: aPoint camera: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCamera >> initialize [
 	super initialize.
 	matrix := AthensAffineTransform new.
@@ -133,22 +135,22 @@ RSCamera >> initialize [
 	originMode := RSCoordinates originCenterMiddle.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> matrix [
 	^ matrix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> matrix: anAthensAffineTransform [
 	matrix := anAthensAffineTransform
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCamera >> originMatrix [
 	^ originMode matrixFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> originMode [
 
 	"#center or #topLeft"
@@ -156,13 +158,13 @@ RSCamera >> originMode [
 	^ originMode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> originMode: anObject [
 
 	originMode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> position [
 	"Return the position of the camera. For example:
 ```
@@ -177,13 +179,13 @@ returns the value `25 @ 15`
 	^ matrix translation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> position: aPoint [
 	"Set the camera position"
 	matrix translation: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> positionFromSpace: aPoint [
 	| morphPosition zeroPosition |
 	morphPosition := self fromSpaceToPixel: aPoint.
@@ -191,13 +193,13 @@ RSCamera >> positionFromSpace: aPoint [
 	^ (morphPosition - zeroPosition) negated + (originMode gapToCenter: self)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSCamera >> privExtent: aRect [
 
 	extent := aRect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSCamera >> privateScale: aFloatNumber [
 	| position |
 	scale := aFloatNumber.
@@ -208,12 +210,12 @@ RSCamera >> privateScale: aFloatNumber [
 		translation: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> scale [
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> scale: aFloatNumber [
 	"Set the scaling factor applied by the camera. A factor of 1.0 means that no zooming is applied. if the factor is < 1, then the perceived effect is a zoom out. If the factor is > 1, then the effect is a zoom out."
 	| oldScale |
@@ -227,36 +229,36 @@ RSCamera >> scale: aFloatNumber [
 		newScale: aFloatNumber ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCamera >> setMatrix: anAthensAffineTransform [
 	anAthensAffineTransform multiplyBy: self originMatrix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCamera >> visibleRectangle [
 	^ originMode visibleRectangleFor: self
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSCamera >> zoomToFit [
 	self zoomToFit: canvas extent * 0.9
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSCamera >> zoomToFit: anExtent [
 	self
 		zoomToFit: anExtent
 		rectangle: canvas encompassingRectangle
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSCamera >> zoomToFit: anExtent extent: otherExtent [
 	self
 		zoomToFit: anExtent
 		rectangle: (Rectangle floatCenter: 0@0 extent: otherExtent)
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSCamera >> zoomToFit: anExtent rectangle: rect [
 	| sc |
 	sc := (self computeScaleFor: anExtent rectangle: rect).

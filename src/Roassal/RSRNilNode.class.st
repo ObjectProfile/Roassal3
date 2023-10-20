@@ -2,12 +2,14 @@
 Nil node for RSRenderTree
 "
 Class {
-	#name : #RSRNilNode,
-	#superclass : #RSAbstractRNode,
-	#category : #'Roassal-Rendering'
+	#name : 'RSRNilNode',
+	#superclass : 'RSAbstractRNode',
+	#category : 'Roassal-Rendering',
+	#package : 'Roassal',
+	#tag : 'Rendering'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSRNilNode class >> example [
 	| null |
 	null := self new.
@@ -16,12 +18,12 @@ RSRNilNode class >> example [
 	^ StInspector openOn: null.
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSRNilNode >> addChild: newObject [
 	^ RSRNode new: newObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNilNode >> isNilNode [
 	^ true
 ]

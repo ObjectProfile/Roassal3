@@ -2,12 +2,13 @@
 I am test class for composite shapes in roassal
 "
 Class {
-	#name : #RSCompositeTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Shapes-Tests'
+	#name : 'RSCompositeTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testAdjustChildren [
 
 	| box circle g composite |
@@ -24,7 +25,7 @@ RSCompositeTest >> testAdjustChildren [
 	self assert: composite extent equals: (20 @ 45)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testAdjustChildrenTwice [
 	| box circle composite  |
 	box := RSBox new size: 20.
@@ -48,7 +49,7 @@ RSCompositeTest >> testAdjustChildrenTwice [
 	self assert: composite position equals: 75@75
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testEdgesCanvasAndComposite01 [
 	"basic case in a canvas"
 	| c b1 b2 e1 |
@@ -62,7 +63,7 @@ RSCompositeTest >> testEdgesCanvasAndComposite01 [
 	self assert: e1 endPoint equals: b2 position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testEdgesCanvasAndComposite02 [
 	"basic example in composite"
 	| c b1 b2 e1 |
@@ -76,7 +77,7 @@ RSCompositeTest >> testEdgesCanvasAndComposite02 [
 	self assert: e1 endPoint equals: b2 position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testEdgesCanvasAndComposite03 [
 	"from box to child"
 	| c b1 b2 e1 com |
@@ -95,7 +96,7 @@ RSCompositeTest >> testEdgesCanvasAndComposite03 [
 	self assert: e1 endPoint equals: b2 position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testEdgesCanvasAndComposite04 [
 	"from child to child"
 	| c b1 b2 e1 com1 com2 |
@@ -121,7 +122,7 @@ RSCompositeTest >> testEdgesCanvasAndComposite04 [
 	self assert: e1 endPoint equals: com2 position + b2 position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testEdgesCanvasAndComposite05 [
 	"from child to box, where the edge is with the child"
 	| c b1 b2 e1 com |
@@ -143,7 +144,7 @@ RSCompositeTest >> testEdgesCanvasAndComposite05 [
 	self assert: e1 endPoint equals: b2 position
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testHasChildren [
 	| b |
 	b := RSComposite new.
@@ -154,7 +155,7 @@ RSCompositeTest >> testHasChildren [
 	self assert: b hasChildren
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testModelForIt [
 
 	| s |
@@ -164,7 +165,7 @@ RSCompositeTest >> testModelForIt [
 	self assert: s color equals: Color pink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testPaddingOkay [
 	"No error should be raised"
 
@@ -181,7 +182,7 @@ RSCompositeTest >> testPaddingOkay [
 		padding: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCompositeTest >> testPositionInCanvas [
 	| box composite canvas |
 	canvas := RSCanvas new.
