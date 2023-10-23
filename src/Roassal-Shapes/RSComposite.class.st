@@ -457,7 +457,8 @@ RSComposite >> removeShape: shape [
 
 { #category : 'composite' }
 RSComposite >> resetChildren [
-	children := RSGroup new:0
+	children := RSGroup new: 0.
+	shapeCollection := self shapeCollection class new.
 ]
 
 { #category : 'path' }

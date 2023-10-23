@@ -200,3 +200,13 @@ RSCompositeTest >> testPositionInCanvas [
 	self assert: box position equals: 10@10.
 	self assert: box positionInCanvas equals: 110@110
 ]
+
+{ #category : 'tests' }
+RSCompositeTest >> testResetChildren [
+	| composite copy |
+	composite := { RSBox new } asShape.
+	copy := composite copy.
+	copy resetChildren.
+	self assert: copy children isEmpty.
+	self assert: copy shapeCollection isEmpty
+]
