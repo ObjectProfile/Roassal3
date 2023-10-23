@@ -40,12 +40,14 @@ Adding single line can be complex in some situation. You may want to look at `RS
 To get more information read comment of `RSAbstractLine`
 "
 Class {
-	#name : #RSLine,
-	#superclass : #RSAbstractDualLine,
-	#category : #'Roassal-Shapes-Lines'
+	#name : 'RSLine',
+	#superclass : 'RSAbstractDualLine',
+	#category : 'Roassal-Shapes-Lines',
+	#package : 'Roassal-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLine >> basicIncludesPoint: aPoint [
 	^ aPoint
 		onLineFrom: self startPoint
@@ -53,7 +55,7 @@ RSLine >> basicIncludesPoint: aPoint [
 		within: self includedRadius
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSLine >> buildPathOn: visitor [
 	visitor buildLinePath: self
 ]

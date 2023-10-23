@@ -2,46 +2,48 @@
 I allow to inspect another view or windows. It can be configurable to set the kind of view you want to inspect
 "
 Class {
-	#name : #RSInspectableInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSInspectableInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'highlightable',
 		'inspectorWindow',
 		'inspectShapeBlock',
 		'selectedShape'
 	],
-	#category : #'Roassal-Inspector-Interactions'
+	#category : 'Roassal-Inspector-Interactions',
+	#package : 'Roassal-Inspector',
+	#tag : 'Interactions'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInspectableInteraction >> deselectIfNecessary [
 	"Nothing to unselect"
 	selectedShape ifNil: [ ^ self ].
 	highlightable doUnhighlight: selectedShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectableInteraction >> highlightable [
 	^ highlightable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectableInteraction >> highlightable: anObject [
 	highlightable := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSInspectableInteraction >> initialize [
 	super initialize.
 	highlightable := RSHighlightable new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectableInteraction >> inspectElementBlock [
 	^ inspectShapeBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInspectableInteraction >> inspectShape: aShape [
 	| oldInspectorWindow canvasMorph |
 	self deselectIfNecessary.
@@ -62,13 +64,13 @@ RSInspectableInteraction >> inspectShape: aShape [
 	oldInspectorWindow := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectableInteraction >> inspectShapeBlock: oneArgBlock [
 	"The block should return a window"
 	inspectShapeBlock := oneArgBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInspectableInteraction >> onShape: aShape [
 	aShape
 		when: RSMouseLeftClick

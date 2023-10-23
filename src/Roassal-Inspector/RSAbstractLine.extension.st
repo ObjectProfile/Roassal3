@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractLine }
+Extension { #name : 'RSAbstractLine' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 RSAbstractLine >> inspectorShadowFor: padding color: aColor [
 
 	^ self copy

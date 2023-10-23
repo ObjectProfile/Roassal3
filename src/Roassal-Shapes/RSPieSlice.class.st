@@ -3,8 +3,8 @@ A ring shape to draw ring in a circle shape, not in a ellipse.
 
 "
 Class {
-	#name : #RSPieSlice,
-	#superclass : #RSBoundingShape,
+	#name : 'RSPieSlice',
+	#superclass : 'RSBoundingShape',
 	#instVars : [
 		'alphaAngle',
 		'betaAngle',
@@ -13,15 +13,17 @@ Class {
 		'segmentSpacing',
 		'cornerRadii'
 	],
-	#category : #'Roassal-Shapes-Bounding'
+	#category : 'Roassal-Shapes-Bounding',
+	#package : 'Roassal-Shapes',
+	#tag : 'Bounding'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> alphaAngle [
 	^ alphaAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> alphaAngle: stAngle [
 	"Starting angle"
 	| old |
@@ -31,7 +33,7 @@ RSPieSlice >> alphaAngle: stAngle [
 	self resetPath
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSPieSlice >> arcRadiusAuto [
 	| e i |
 	e := externalRadius.
@@ -39,12 +41,12 @@ RSPieSlice >> arcRadiusAuto [
 	self cornerRadii: ((i * i) + (e * e)) sqrt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> betaAngle [
 	^ betaAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> betaAngle: ndAngle [
 	"Finishing angle"
 	| old |
@@ -54,12 +56,12 @@ RSPieSlice >> betaAngle: ndAngle [
 	self resetPath
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSPieSlice >> buildPathOn: visitor [
 	visitor buildRingPath: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> centroid: off [
 	| r a |
 	r := (innerRadius + externalRadius)/2.
@@ -68,12 +70,12 @@ RSPieSlice >> centroid: off [
 	^ (a cos @ (a sin negated) * r) + self position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> cornerRadii [
 	^ cornerRadii
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> cornerRadii: aNumber [
 	| old |
 	self
@@ -85,41 +87,41 @@ RSPieSlice >> cornerRadii: aNumber [
 	self resetPath
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSPieSlice >> emphasizeWith: anInteger [
 	| angle |
 	angle := self middleAngle degreesToRadians.
 	self translateBy: (angle cos @ angle sin negated) * anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> extent: aPoint [
 	super extent: aPoint.
 	externalRadius := (aPoint x min: aPoint y)/2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> externalRadius [
 	^ externalRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> externalRadius: eR [
 	self extent: (eR * 2) asPoint
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPieSlice >> initialize [
 	super initialize.
 	cornerRadii := innerRadius := externalRadius := betaAngle := alphaAngle := segmentSpacing := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> innerRadius [
 	^ innerRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> innerRadius: iR [
 	| old |
 	old := innerRadius.
@@ -128,17 +130,17 @@ RSPieSlice >> innerRadius: iR [
 	self resetPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> middleAngle [
 	^ (alphaAngle + betaAngle) / 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> middleRadius [
 	^ (self innerRadius + self externalRadius) / 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSPieSlice >> preciseIncludesPoint: aPoint [
 	| invertedPoint a b i e n d |
 	invertedPoint := matrix rsInverseTransform: aPoint.
@@ -160,12 +162,12 @@ RSPieSlice >> preciseIncludesPoint: aPoint [
 		ifFalse: [ a <= n | (n <= b) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> segmentSpacing [
 	^ segmentSpacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> segmentSpacing: anAngleInDegrees [
 	| old |
 	old := segmentSpacing.
@@ -174,7 +176,7 @@ RSPieSlice >> segmentSpacing: anAngleInDegrees [
 	self resetPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPieSlice >> shiftAngles: aNumber [
 	self
 		alphaAngle: alphaAngle + aNumber;

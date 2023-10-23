@@ -2,16 +2,18 @@
 New Control points controller for bezier lines in this visualization
 "
 Class {
-	#name : #RSShortestHorizontalCPController,
-	#superclass : #RSAbstractCPController,
+	#name : 'RSShortestHorizontalCPController',
+	#superclass : 'RSAbstractCPController',
 	#instVars : [
 		'startOffset',
 		'endOffset'
 	],
-	#category : #'Roassal-Shapes-ControlPoints'
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShortestHorizontalCPController >> controlPointsFor: aLine [
 	| r1 r2 ap c1 c2 c3 c4 mid off1 off2 |
 	ap := aLine attachPoint.
@@ -34,23 +36,23 @@ RSShortestHorizontalCPController >> controlPointsFor: aLine [
 	^ { c1. c2. c3. c4 }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShortestHorizontalCPController >> endOffset [
 	^ endOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShortestHorizontalCPController >> endOffset: aNumber [
 	endOffset := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShortestHorizontalCPController >> initialize [
 	super initialize.
 	startOffset := endOffset := 0
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShortestHorizontalCPController >> rectangleFor: shape line: line [
 	| r ap |
 	ap := line attachPoint.
@@ -59,12 +61,12 @@ RSShortestHorizontalCPController >> rectangleFor: shape line: line [
 		corner: (ap positionFor: shape in: line point: r corner)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShortestHorizontalCPController >> startOffset [
 	^ startOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShortestHorizontalCPController >> startOffset: aNumber [
 	startOffset := aNumber
 ]

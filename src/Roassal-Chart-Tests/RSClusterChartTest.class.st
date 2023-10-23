@@ -1,10 +1,12 @@
 Class {
-	#name : #RSClusterChartTest,
-	#superclass : #TestCase,
-	#category : #'Roassal-Chart-Tests-Core'
+	#name : 'RSClusterChartTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal-Chart-Tests-Core',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusterChartTest >> testBandsMargin [
 	| data boxPlot1 boxPlot2 clusterChart bandsWidth newBandsWidth |
 	
@@ -21,7 +23,7 @@ RSClusterChartTest >> testBandsMargin [
 	self assert: (bandsWidth > newBandsWidth).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusterChartTest >> testClustersHorizontal [
 	| data boxPlot1 boxPlot2 clusterChart window |
 	
@@ -36,7 +38,7 @@ RSClusterChartTest >> testClustersHorizontal [
 	window delete.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSClusterChartTest >> testClustersMargin [
 	| data boxPlot1 boxPlot2 clusterChart clustersScaleRangeBand newClustersScaleRangeBand |
 	

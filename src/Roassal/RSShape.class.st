@@ -32,6 +32,8 @@ Although most of the configuration may be carried out by directly sending an obj
 Class {
 	#name : 'RSShape',
 	#superclass : 'RSObjectWithProperty',
+	#traits : 'RSTPositionable + RTWithEncompassingRectangle',
+	#classTraits : 'RSTPositionable classTrait + RTWithEncompassingRectangle classTrait',
 	#instVars : [
 		'paint',
 		'path',
@@ -39,8 +41,7 @@ Class {
 		'parent',
 		'isFixed',
 		'encompassingRectangle',
-		'model',
-		'shapeIndex'
+		'model'
 	],
 	#category : 'Roassal-Core',
 	#package : 'Roassal',
@@ -425,24 +426,6 @@ RSShape >> index: anObject [
 	self propertyAt: #index put: anObject
 ]
 
-{ #category : 'private' }
-RSShape >> indexesArray [
-
-	| vector |
-	vector := RSGroup new.
-	self indexesArrayIn: vector.
-	^ vector
-]
-
-{ #category : 'private' }
-RSShape >> indexesArrayIn: aCollection [
-
-	parent ifNil: [ ^ self ].
-
-	parent indexesArrayIn: aCollection.
-	aCollection add: shapeIndex
-]
-
 { #category : 'initialization' }
 RSShape >> initialize [
 	super initialize.
@@ -626,6 +609,11 @@ RSShape >> resetBBox [
 RSShape >> resetChildren [
 ]
 
+{ #category : 'rectangle' }
+RSShape >> resetEncompassingRectangle [
+	encompassingRectangle := nil
+]
+
 { #category : 'path' }
 RSShape >> resetPath [
 	path := nil
@@ -650,17 +638,6 @@ RSShape >> setAsFixed [
 { #category : 'accessing' }
 RSShape >> shape [
 	^ self
-]
-
-{ #category : 'private' }
-RSShape >> shapeIndex [
-	^ shapeIndex
-]
-
-{ #category : 'private' }
-RSShape >> shapeIndex: aNumber [
-	"used by shapeCollection, do not use this method"
-	shapeIndex := aNumber
 ]
 
 { #category : 'accessing - computed' }

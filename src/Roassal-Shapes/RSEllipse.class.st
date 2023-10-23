@@ -14,17 +14,19 @@ c open
 ```
 "
 Class {
-	#name : #RSEllipse,
-	#superclass : #RSCircularShape,
-	#category : #'Roassal-Shapes-Bounding'
+	#name : 'RSEllipse',
+	#superclass : 'RSCircularShape',
+	#category : 'Roassal-Shapes-Bounding',
+	#package : 'Roassal-Shapes',
+	#tag : 'Bounding'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSEllipse >> buildPathOn: visitor [
 	visitor buildEllipsePath: self
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RSEllipse >> geometry [
 	| rect e p |
 	rect := self encompassingRectangle.
@@ -37,12 +39,12 @@ RSEllipse >> geometry [
 		coVertex: p + (0@ e y)
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RSEllipse >> invert [
 	self translateTo: self position y @ self position x
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSEllipse >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
@@ -58,12 +60,12 @@ RSEllipse >> preciseIncludesPoint: aPoint [
 	^ (t1 < t2)  or: [ t1 closeTo: t2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEllipse >> radius [
 	^ self extent x / 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEllipse >> radius: integer [
 	self extent: integer * 2 asPoint
 ]

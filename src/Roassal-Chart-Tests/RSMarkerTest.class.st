@@ -1,10 +1,12 @@
 Class {
-	#name : #RSMarkerTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Chart-Tests-Base'
+	#name : 'RSMarkerTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerTest >> testAverageX [
 
 	| plot marker mark |
@@ -14,7 +16,7 @@ RSMarkerTest >> testAverageX [
 	self assert: mark equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerTest >> testAverageY [
 
 	| plot marker mark |
@@ -24,7 +26,7 @@ RSMarkerTest >> testAverageY [
 	self assert: mark equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerTest >> testSumUpTo [
 
 	| plot marker mark |
@@ -36,7 +38,7 @@ RSMarkerTest >> testSumUpTo [
 	self assert: mark equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerTest >> testSumUpToLimit0 [
 
 	| plot marker mark |
@@ -47,7 +49,7 @@ RSMarkerTest >> testSumUpToLimit0 [
 	self assert: mark equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerTest >> testSumUpToLimit1 [
 
 	| plot marker mark |

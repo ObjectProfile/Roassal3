@@ -1,19 +1,21 @@
 Class {
-	#name : #RSShapeBuilderTest,
-	#superclass : #TestCase,
+	#name : 'RSShapeBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal-Global-Tests-Mondrian'
+	#category : 'Roassal-Global-Tests-Mondrian',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Mondrian'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSShapeBuilderTest >> setUp [
 	super setUp.
 	b := RSShapeBuilder new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testBox [
 
 	| result |
@@ -25,7 +27,7 @@ RSShapeBuilderTest >> testBox [
 	self assert: (result collect: #model) asArray equals: #(1 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testCircle [
 
 	| result |
@@ -37,7 +39,7 @@ RSShapeBuilderTest >> testCircle [
 	self assert: (result collect: #model) asArray equals: #(1 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testLabel [
 
 	| result |
@@ -49,7 +51,7 @@ RSShapeBuilderTest >> testLabel [
 	self assert: (result collect: #model) asArray equals: #(1 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testLabel2 [
 
 	| result |
@@ -70,7 +72,7 @@ RSShapeBuilderTest >> testLabel2 [
 	self assert: result first width < result second width
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testLabeled [
 
 	| shape |
@@ -89,7 +91,7 @@ RSShapeBuilderTest >> testLabeled [
 	self assert: shape children first class equals: RSBox
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testLabeled02 [
 
 	| shape lbl |
@@ -106,7 +108,7 @@ RSShapeBuilderTest >> testLabeled02 [
 	self assert: shape children first class equals: RSBox
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testLabeled03 [
 
 	| shape lbl |
@@ -123,7 +125,7 @@ RSShapeBuilderTest >> testLabeled03 [
 	self assert: shape children first class equals: RSBox
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeBuilderTest >> testWithBorder [
 
 	| result shape |

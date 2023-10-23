@@ -2,12 +2,14 @@
 A RSKiviatTest is a test class for testing the behavior of RSKiviat
 "
 Class {
-	#name : #RSKiviatTest,
-	#superclass : #TestCase,
-	#category : #'Roassal-Chart-Tests-Radar'
+	#name : 'RSKiviatTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal-Chart-Tests-Radar',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Radar'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKiviatTest >> testAccessingCreatedShapes [
 	| kiviat |
 	kiviat := RSKiviat new.
@@ -27,7 +29,7 @@ RSKiviatTest >> testAccessingCreatedShapes [
 			collect: [ :selector | (kiviat perform: selector) size ]) sum
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKiviatTest >> testBasic [
 	| kiviat |
 	kiviat := RSKiviat new.
@@ -40,7 +42,7 @@ RSKiviatTest >> testBasic [
 	self deny: kiviat shouldUseDots
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKiviatTest >> testMaxMinValues [
 	| kiviat |
 	"one value"
@@ -52,7 +54,7 @@ RSKiviatTest >> testMaxMinValues [
 	kiviat build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKiviatTest >> testOddCollectionSize [
 	| kiviat |
 	kiviat := RSKiviat new.
@@ -61,7 +63,7 @@ RSKiviatTest >> testOddCollectionSize [
 	self should: [ kiviat build ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKiviatTest >> testZeroValues [
 	| kiviat |
 	"one value"

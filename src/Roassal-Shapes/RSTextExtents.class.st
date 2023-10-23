@@ -2,8 +2,8 @@
 Extents for RSLabel
 "
 Class {
-	#name : #RSTextExtents,
-	#superclass : #RSObject,
+	#name : 'RSTextExtents',
+	#superclass : 'RSObject',
 	#instVars : [
 		'width',
 		'height',
@@ -15,15 +15,17 @@ Class {
 	#classVars : [
 		'EmptyExtents'
 	],
-	#category : #'Roassal-Shapes-TextMetrics'
+	#category : 'Roassal-Shapes-TextMetrics',
+	#package : 'Roassal-Shapes',
+	#tag : 'TextMetrics'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 RSTextExtents class >> empty [
 	^ EmptyExtents ifNil: [ EmptyExtents := self new empty ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTextExtents >> empty [
 	self
 		width: 0;
@@ -34,7 +36,7 @@ RSTextExtents >> empty [
 		y_bearing: 0
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTextExtents >> from: ref [
 	"ref is a CairoTextExtents"
 	self
@@ -46,17 +48,17 @@ RSTextExtents >> from: ref [
 		y_bearing: ref y_bearing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> height [
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> height: aNumber [
 	height := aNumber
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSTextExtents >> printOn: s [
 	s << self className; << '('.
 	#(x_bearing y_bearing width height x_advance y_advance) do: [ :sel |
@@ -66,59 +68,59 @@ RSTextExtents >> printOn: s [
 	s << ')'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTextExtents >> translationPoint [
 	| ybn |
 	ybn := y_bearing negated.
 	^ ((( width + x_bearing / -2) )  @ 0) + (0@((ybn/2)- ((height- ybn)/2)))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> width: aNumber [
 	width := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> x_advance [
 	^ x_advance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> x_advance: aNumber [
 	x_advance := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> x_bearing [
 	^ x_bearing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> x_bearing: aNumber [
 	x_bearing := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> y_advance [
 	^ y_advance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> y_advance: aNumber [
 	y_advance := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> y_bearing [
 	^ y_bearing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTextExtents >> y_bearing: aNumber [
 	y_bearing := aNumber
 ]

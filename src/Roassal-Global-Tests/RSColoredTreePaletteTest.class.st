@@ -1,10 +1,12 @@
 Class {
-	#name : #RSColoredTreePaletteTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Colors'
+	#name : 'RSColoredTreePaletteTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Colors',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Colors'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSColoredTreePaletteTest >> testBasic [
 
 	| c nodes lb ctp node1 node2 node3 |
@@ -35,7 +37,7 @@ RSColoredTreePaletteTest >> testBasic [
 	self assert: node1 color ~= node2 color
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSColoredTreePaletteTest >> testLeaves [
 
 	| c nodes lb ctp node1 node2 node3 |
@@ -62,7 +64,7 @@ RSColoredTreePaletteTest >> testLeaves [
 	self assert: ctp totalNumberOfLeaves equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSColoredTreePaletteTest >> testPalettes [
 
 	RSColorPalette subclasses do: [ :cls |

@@ -1,10 +1,12 @@
 Class {
-	#name : #RSMonitorEventsTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Shapes'
+	#name : 'RSMonitorEventsTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Shapes',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Shapes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMonitorEventsTest >> testBasic [
 	| canvas monitor eventClass timeStamp |
 	canvas := RSCanvas new.
@@ -25,14 +27,14 @@ RSMonitorEventsTest >> testBasic [
 	monitor unRegister.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMonitorEventsTest >> testNoTarget [
 	| monitor |
 	monitor := RSEventsMonitor new.
 	self should: [ monitor onNewEventDo: [  ] for: self ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMonitorEventsTest >> testWriteToFile [
 	| canvas monitor events box fileName storage |
 	canvas := RSCanvas new.

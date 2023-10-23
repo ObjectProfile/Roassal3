@@ -1,10 +1,12 @@
 Class {
-	#name : #RSChannelTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Mondrian'
+	#name : 'RSChannelTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Mondrian',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Mondrian'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChannelTest >> testAnnouncement [
 
 	| c start end channel |
@@ -23,7 +25,7 @@ RSChannelTest >> testAnnouncement [
 	self assert: start announcer numberOfSubscriptions equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChannelTest >> testBasic [
 
 	| c m mondrianNodes oddLabel evenLabel bigLabel smallLabel g channel |
@@ -82,7 +84,7 @@ RSChannelTest >> testBasic [
 	oddLabel announce: RSMouseClick
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChannelTest >> testBasicWithCallbacks [
 
 	| c m mondrianNodes oddLabel evenLabel bigLabel smallLabel g channel value |
@@ -149,7 +151,7 @@ RSChannelTest >> testBasicWithCallbacks [
 	self assert: value asArray equals: #('ONOdd' 'OFFOdd')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChannelTest >> testLocationsOfUnderlines [
 
 	| c lbl1 lbl2 box channel1 channel2 markBlue markRed |

@@ -112,7 +112,7 @@ RSCanvasTest >> testDeepNodes [
 
 { #category : 'tests - shapes ordering' }
 RSCanvasTest >> testDefaultShapeCollection [
-	self assert: canvas shapeCollection class equals: RSSequenceableCollection
+	self assert: canvas shapeCollection class equals: RTSequenceableCollection
 ]
 
 { #category : 'running' }
@@ -500,7 +500,7 @@ RSCanvasTest >> testShapeFromModelAndComposite3 [
 { #category : 'tests - shapes ordering' }
 RSCanvasTest >> testUseRTree [
 	canvas useRTree.
-	self assert: canvas shapeCollection class equals: RSRTreeShapeCollection
+	self assert: canvas shapeCollection class equals: RTreeCollection
 ]
 
 { #category : 'tests - shapes ordering' }

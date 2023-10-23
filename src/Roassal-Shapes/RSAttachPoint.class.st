@@ -2,20 +2,22 @@
 I am the base for attach points
 "
 Class {
-	#name : #RSAttachPoint,
-	#superclass : #RSObject,
+	#name : 'RSAttachPoint',
+	#superclass : 'RSObject',
 	#instVars : [
 		'inverted'
 	],
-	#category : #'Roassal-Shapes-AttachPoint'
+	#category : 'Roassal-Shapes-AttachPoint',
+	#package : 'Roassal-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAttachPoint class >> centered [
 	^ RSCenteredAttachPoint new
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAttachPoint class >> example [
 	| attachPoint c red blue line |
 	attachPoint := RSBorderAttachPoint new.
@@ -40,23 +42,23 @@ RSAttachPoint class >> example [
 	^ c open
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAttachPoint class >> isAbstract [
 
 	^ self == RSAttachPoint
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSAttachPoint >> basicEndingPointOf: aLine [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSAttachPoint >> basicStartingPointOf: aLine [
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAttachPoint >> commonParents: shape in: aLine [
 	| current parents |
 	current := shape parent.
@@ -69,7 +71,7 @@ RSAttachPoint >> commonParents: shape in: aLine [
 	^ parents
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSAttachPoint >> endingPointOf: aLine [
 	"Return the end point of a line.
 
@@ -100,28 +102,28 @@ RSAttachPoint >> endingPointOf: aLine [
         ifFalse: [ self basicEndingPointOf: aLine ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAttachPoint >> hasParents: shape in: aLine [
 	^ shape parent notNil and: [ aLine parent notNil ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAttachPoint >> initialize [
 	super initialize.
 	inverted := false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAttachPoint >> inverted [
 	inverted := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAttachPoint >> isInverted [
 	^ inverted
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAttachPoint >> matrixFor: commonParents [
 	| matrix |
 	matrix := AthensAffineTransform new.
@@ -129,13 +131,13 @@ RSAttachPoint >> matrixFor: commonParents [
 	^ matrix
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAttachPoint >> positionFor: shape in: aLine [
 	shape isPoint ifTrue: [ ^ shape ].
 	^ self positionFor: shape in: aLine point: shape position
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAttachPoint >> positionFor: shape in: aLine point: pos [
 	| commonParents |
 	shape isPoint ifTrue: [ ^ shape ].
@@ -147,7 +149,7 @@ RSAttachPoint >> positionFor: shape in: aLine point: pos [
 	^ (self matrixFor: commonParents) transform: pos
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSAttachPoint >> startingPointOf: aLine [
 "Return the starting point of a line.
 
@@ -178,7 +180,7 @@ RSAttachPoint >> startingPointOf: aLine [
         ifFalse: [ self basicStartingPointOf: aLine ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAttachPoint >> straight [
 	inverted := false
 ]

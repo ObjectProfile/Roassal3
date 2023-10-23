@@ -5,61 +5,63 @@ My subclasses are `RSLine` and `RSSVGPathLine`
 
 "
 Class {
-	#name : #RSAbstractDualLine,
-	#superclass : #RSAbstractLine,
+	#name : 'RSAbstractDualLine',
+	#superclass : 'RSAbstractLine',
 	#instVars : [
 		'startPoint',
 		'endPoint'
 	],
-	#category : #'Roassal-Shapes-Lines'
+	#category : 'Roassal-Shapes-Lines',
+	#package : 'Roassal-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractDualLine class >> isAbstract [
 	^ self = RSAbstractDualLine
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSAbstractDualLine >> basicTranslateBy: delta [
 	self translateBy: delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> controlPoints [
 	^ Array with: self startPoint with: self endPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> controlPoints: aCollection [ 
 	self assert: aCollection size = 2 description: 'Should have two points.'.
 	self startPoint: aCollection first; endPoint: aCollection second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> endPoint [
 	^ endPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> endPoint: point [
 	endPoint := point.
 	self resetPath.
 	self notifyExtentChanged
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractDualLine >> initialize [
 	super initialize.
 	startPoint := 0@0.
 	endPoint := 100@100
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSAbstractDualLine >> invert [
 	self controlPoints: ( self controlPoints collect: [ :p | p y @ p x ]).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> position: aPoint [
 	| position delta |
 	position := self position.
@@ -70,18 +72,18 @@ RSAbstractDualLine >> position: aPoint [
 		resetPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> startPoint [
 	^ startPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractDualLine >> startPoint: point [
 	startPoint := point.
 	self resetPath
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAbstractDualLine >> update [
 	"Note that before calling this method, an attach point has to be set. Consider the following example:
 ```

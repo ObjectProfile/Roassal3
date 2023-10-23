@@ -1,11 +1,11 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 Array >> asShape [
 	^ self asShapeFor: nil
 ]
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 Array >> asShapeFor: model [
 	^ RSComposite new
 		model: model;

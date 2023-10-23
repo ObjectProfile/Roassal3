@@ -33,25 +33,27 @@ canvas open
 ```
 "
 Class {
-	#name : #RSBlockCPController,
-	#superclass : #RSAbstractCPController,
+	#name : 'RSBlockCPController',
+	#superclass : 'RSAbstractCPController',
 	#instVars : [
 		'block'
 	],
-	#category : #'Roassal-Shapes-ControlPoints'
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockCPController >> block [
 	^ block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockCPController >> block: aBlockClosure [
 	block := aBlockClosure
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBlockCPController >> controlPointsFor: aLine [
 	^ block cull: aLine
 ]

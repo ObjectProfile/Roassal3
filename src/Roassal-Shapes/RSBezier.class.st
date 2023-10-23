@@ -78,12 +78,14 @@ b open
 ```
 "
 Class {
-	#name : #RSBezier,
-	#superclass : #RSAbstractControlPointsLine,
-	#category : #'Roassal-Shapes-Lines'
+	#name : 'RSBezier',
+	#superclass : 'RSAbstractControlPointsLine',
+	#category : 'Roassal-Shapes-Lines',
+	#package : 'Roassal-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSBezier >> basicIncludesPoint: aPoint [
 	"Not perfect but close enough"
 	| cp lines ir |
@@ -108,12 +110,12 @@ RSBezier >> basicIncludesPoint: aPoint [
 		 ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBezier >> buildPathOn: visitor [
 	visitor buildBezierPath: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBezier >> controlPoints: anArrayOfPoints [
 	self
 		assert: anArrayOfPoints notNil
@@ -123,13 +125,13 @@ RSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBezier >> lines [
 	| c b a via1 via2 start end cp |
 	cp := controlPoints.

@@ -1,6 +1,6 @@
 Class {
-	#name : #SpRSTransitionInspectorPresenter,
-	#superclass : #SpPresenter,
+	#name : 'SpRSTransitionInspectorPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'slider',
 		'visualization',
@@ -14,10 +14,12 @@ Class {
 		'togglePauseLbl',
 		'togglePauseIcn'
 	],
-	#category : #'Roassal-Inspector-SP2'
+	#category : 'Roassal-Inspector-SP2',
+	#package : 'Roassal-Inspector',
+	#tag : 'SP2'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRSTransitionInspectorPresenter >> animation: anAnimation [
 
 	animation := anAnimation.
@@ -41,7 +43,7 @@ SpRSTransitionInspectorPresenter >> animation: anAnimation [
 	visualization morph: animation canvas createMorph
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SpRSTransitionInspectorPresenter >> debugAnimationStep [
 
 	| process session |
@@ -56,7 +58,7 @@ SpRSTransitionInspectorPresenter >> debugAnimationStep [
 	3 timesRepeat: [ session stepInto ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRSTransitionInspectorPresenter >> defaultLayout [
 
 	^ SpBoxLayout newVertical
@@ -76,7 +78,7 @@ SpRSTransitionInspectorPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SpRSTransitionInspectorPresenter >> disableDebuggingControls [
 
 	slider disable.
@@ -84,7 +86,7 @@ SpRSTransitionInspectorPresenter >> disableDebuggingControls [
 	debug disable
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SpRSTransitionInspectorPresenter >> enableDebuggingControls [
 
 	sliderMorph updateValue.
@@ -93,7 +95,7 @@ SpRSTransitionInspectorPresenter >> enableDebuggingControls [
 			debug enable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRSTransitionInspectorPresenter >> initializePresenters [
 
 	togglePauseLbl := 'Pin and pause'.
@@ -121,7 +123,7 @@ SpRSTransitionInspectorPresenter >> initializePresenters [
 	self disableDebuggingControls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SpRSTransitionInspectorPresenter >> step [
 
 	|progress|
@@ -131,7 +133,7 @@ SpRSTransitionInspectorPresenter >> step [
 
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SpRSTransitionInspectorPresenter >> toggle [
 
 	animation isPaused

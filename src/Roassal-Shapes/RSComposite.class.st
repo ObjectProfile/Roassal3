@@ -113,8 +113,8 @@ c open.
 ```
 "
 Class {
-	#name : #RSComposite,
-	#superclass : #RSBoundingShape,
+	#name : 'RSComposite',
+	#superclass : 'RSBoundingShape',
 	#traits : 'RSTContainer',
 	#classTraits : 'RSTContainer classTrait',
 	#instVars : [
@@ -123,10 +123,12 @@ Class {
 		'clipChildren',
 		'lines'
 	],
-	#category : #'Roassal-Shapes-Bounding'
+	#category : 'Roassal-Shapes-Bounding',
+	#package : 'Roassal-Shapes',
+	#tag : 'Bounding'
 }
 
-{ #category : #'public - creation' }
+{ #category : 'public - creation' }
 RSComposite class >> boxesForModels: aCollection [
 	| box label |
 	box := RSBox new.
@@ -137,7 +139,7 @@ RSComposite class >> boxesForModels: aCollection [
 	^ self models: aCollection box: box label: label
 ]
 
-{ #category : #'public - creation' }
+{ #category : 'public - creation' }
 RSComposite class >> model: anObject forIt: twoArgsBlock [
 	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the twoArgsBlock. The variable twoArgsBlock points to a two argument block. The first argument is the object model, and the second argument is the composite.
 
@@ -159,7 +161,7 @@ c open
 	^ (self models: (Array with: anObject) forEach: twoArgsBlock) first
 ]
 
-{ #category : #'public - creation' }
+{ #category : 'public - creation' }
 RSComposite class >> models: aCollection box: boxShape label: labelShape [
 	^ aCollection collect: [ :each |
 		| box label |
@@ -174,7 +176,7 @@ RSComposite class >> models: aCollection box: boxShape label: labelShape [
 			yourself ] as: RSGroup
 ]
 
-{ #category : #'public - creation' }
+{ #category : 'public - creation' }
 RSComposite class >> models: models boxes: boxShapes labels: labelShapes [
 
 	| shapes |
@@ -192,7 +194,7 @@ RSComposite class >> models: models boxes: boxShapes labels: labelShapes [
 	^ shapes
 ]
 
-{ #category : #'public - creation' }
+{ #category : 'public - creation' }
 RSComposite class >> models: someObjects forEach: twoArgsBlock [
 	"This method returns a collection (RSGroup) of composite shapes, for which each shape is defined using the the oneArgBlock.
 
@@ -232,18 +234,18 @@ c open
 		  as: RSGroup
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSComposite >> addRecursivelyIn: aCollection [
 	super addRecursivelyIn: aCollection.
 	self shapes do: [ :n | n addRecursivelyIn: aCollection ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSComposite >> addShapesIn: aCollection position: position [
 	| pos result includesPoint |
 	includesPoint := self includesPoint: position.
@@ -256,7 +258,7 @@ RSComposite >> addShapesIn: aCollection position: position [
 	includesPoint ifTrue: [ aCollection add: self ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSComposite >> adjustToChildren [
 "Recompute the encompassing rectangle of the composite shape from the position of the children.
 
@@ -288,17 +290,17 @@ composite extent '=> (20.0@50.0)'
 	self position = (0@0) ifTrue: [ self translateTo: delta negated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> camera [
 	^ parent camera
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSComposite >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> children: aRSGroup [
 	"
 	create a groups of elements or trachel shapes, then added them to this composite shape
@@ -312,17 +314,17 @@ RSComposite >> children: aRSGroup [
 	self adjustToChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> clipChildren [
 	^ clipChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> clipChildren: aBoolean [
 	clipChildren := aBoolean
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSComposite >> copyWithoutAnnouncer [
 	| copy |
 	copy := self copy.
@@ -335,25 +337,25 @@ RSComposite >> copyWithoutAnnouncer [
 	^ copy
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSComposite >> deepShapesFromModels: someObjects result: result [
 	"Private method"
 	(someObjects includes: self model) ifTrue: [ result add: self ].
 	self nodes do: [ :c | c deepShapesFromModels: someObjects result: result ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> fixedShapes [
 	"composite does not contains fixed shapes"
 	^ self shouldNotImplement
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSComposite >> hasChildren [
 	^ children notNil and: [ children isNotEmpty ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSComposite >> initialize [
 	super initialize.
 	self shapeCollection: self defaultShapeCollection.
@@ -363,12 +365,12 @@ RSComposite >> initialize [
 	self resetPath
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSComposite >> isComposite [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> padding: aMargin [
 	"Set the padding, i.e., the distance between the nested shapes and the outter composite shape.
 The argument, anObject can be a number, a point or Margin.
@@ -411,37 +413,37 @@ c
 	children do: [ :s | s basicTranslateBy: center ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateEdges [
 	^ lines
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateEdges: aRSGroup [
 	lines := aRSGroup
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateNodes [
 	^ nodes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateNodes: aRSGroup [
 	nodes := aRSGroup
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateShapes [
 	^ children
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSComposite >> privateShapes: aCollection [
 	children := aCollection
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RSComposite >> removeShape: shape [
 	| evt |
 	children remove: shape.
@@ -453,22 +455,22 @@ RSComposite >> removeShape: shape [
 	shape announce: evt
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSComposite >> resetChildren [
 	children := RSGroup new:0
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSComposite >> resetPath [
 	path := baseRectangle
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSComposite >> resizeWithChildrenTo: aPointExtent [
 	self scaleBy: aPointExtent / self baseRectangle extent
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSComposite >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath.
@@ -476,7 +478,7 @@ RSComposite >> sessionChanged [
 	children do: #sessionChanged
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSComposite >> shapeWithAction: eventClass forPosition: position [
 	| res pos |
 	"used for fixed shapes"
@@ -488,7 +490,7 @@ RSComposite >> shapeWithAction: eventClass forPosition: position [
 	^ super shapeWithAction: eventClass forPosition: position
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSComposite >> shapeWithActionForPosition: position [
 	| res pos |
 	"used in fixed shapes"
@@ -499,17 +501,17 @@ RSComposite >> shapeWithActionForPosition: position [
 	^ super shapeWithActionForPosition: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> shapes [
 	^ self children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSComposite >> shapes: aRSGroup [
 	self children: aRSGroup
 ]
 
-{ #category : #'edges - deprecated' }
+{ #category : 'edges - deprecated' }
 RSComposite >> updateConnectedEdges [
 	"Update the edge connected to elements contained in the composite. This happens when a shape is drag and dropped. For example:
 
@@ -541,7 +543,7 @@ c @ RSCanvasController
 			ifTrue: [ child updateConnectedEdges ] ]
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSComposite >> updateConnectedLines [
 	"Update the lines connected to elements contained in the composite. This happens when a shape is drag and dropped. For example:
 

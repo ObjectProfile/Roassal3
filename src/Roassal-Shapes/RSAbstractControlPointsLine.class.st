@@ -45,52 +45,54 @@ The previous script allows you to modify the bezier line using movable nodes.
 Similar to the super class these lines supports markers, and attach points.
 "
 Class {
-	#name : #RSAbstractControlPointsLine,
-	#superclass : #RSAbstractLine,
+	#name : 'RSAbstractControlPointsLine',
+	#superclass : 'RSAbstractLine',
 	#instVars : [
 		'controlPoints',
 		'controlPointsController'
 	],
-	#category : #'Roassal-Shapes-Lines'
+	#category : 'Roassal-Shapes-Lines',
+	#package : 'Roassal-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractControlPointsLine class >> isAbstract [
 	^ self =  RSAbstractControlPointsLine
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSAbstractControlPointsLine >> basicTranslateBy: delta [
 	controlPoints := controlPoints collect: [:p | p + delta ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> controlPoints [
 	^ controlPoints ifNil: [ controlPoints := { 0@0. 0@0 } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> controlPoints: anArrayOfPoints [
 	controlPoints := anArrayOfPoints collect: #asFloatPoint.
 	self resetPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> controlPointsController [
 	^ controlPointsController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> controlPointsController: aCPController [
 	controlPointsController := aCPController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> endPoint [
 	^ self controlPoints last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> endPoint: aPoint [
 	self controlPoints
 		at: self controlPoints size
@@ -98,12 +100,12 @@ RSAbstractControlPointsLine >> endPoint: aPoint [
 	self resetPath
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractControlPointsLine >> isControlPointsLine [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> position: aPoint [
 	| position delta |
 	position := self position.
@@ -111,18 +113,18 @@ RSAbstractControlPointsLine >> position: aPoint [
 	self controlPoints: controlPoints + delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> startPoint [
 	^ self controlPoints first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlPointsLine >> startPoint: aPoint [
 	self controlPoints at: 1 put: aPoint.
 	self resetPath
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSAbstractControlPointsLine >> update [
 	controlPointsController ifNil: [ ^ self ].
 	self

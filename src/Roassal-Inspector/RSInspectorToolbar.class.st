@@ -2,30 +2,32 @@
 Use this class to add specific interactions with icons an buttons for your canvas in the inspector
 "
 Class {
-	#name : #RSInspectorToolbar,
-	#superclass : #RSObject,
+	#name : 'RSInspectorToolbar',
+	#superclass : 'RSObject',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Inspector-Contexts'
+	#category : 'Roassal-Inspector-Contexts',
+	#package : 'Roassal-Inspector',
+	#tag : 'Contexts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectorToolbar class >> interactions [
 	^ self withAllSubclasses reject: [ :cls | cls isAbstract or:[ cls hasAbstractMethods ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectorToolbar >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSInspectorToolbar >> canvas: aRSCanvas [
 	canvas := aRSCanvas
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInspectorToolbar >> newButton [
 	^ self subclassResponsibility
 ]

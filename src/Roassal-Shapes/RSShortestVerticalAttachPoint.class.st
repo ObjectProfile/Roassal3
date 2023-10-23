@@ -2,12 +2,14 @@
 I am similar to RSVerticalAttachPoint, but I find the shortest line between each shape bounding box.
 "
 Class {
-	#name : #RSShortestVerticalAttachPoint,
-	#superclass : #RSOffsetAttachPoint,
-	#category : #'Roassal-Shapes-AttachPoint'
+	#name : 'RSShortestVerticalAttachPoint',
+	#superclass : 'RSOffsetAttachPoint',
+	#category : 'Roassal-Shapes-AttachPoint',
+	#package : 'Roassal-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSShortestVerticalAttachPoint >> basicEndingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.
@@ -21,7 +23,7 @@ RSShortestVerticalAttachPoint >> basicEndingPointOf: aLine [
 		ifFalse: [ p2 ]
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSShortestVerticalAttachPoint >> basicStartingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.

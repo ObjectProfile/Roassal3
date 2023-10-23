@@ -25,12 +25,14 @@ I can return the control points for horizontal lines
 ```
 "
 Class {
-	#name : #RSHorizontalCPAPController,
-	#superclass : #RSAbstractCPAPController,
-	#category : #'Roassal-Shapes-ControlPoints'
+	#name : 'RSHorizontalCPAPController',
+	#superclass : 'RSAbstractCPAPController',
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHorizontalCPAPController >> controlPointsFrom: from to: to [
 	| mid |
 	mid := (from + to)/2.

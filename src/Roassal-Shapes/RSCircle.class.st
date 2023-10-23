@@ -14,23 +14,25 @@ c open
 ```
 "
 Class {
-	#name : #RSCircle,
-	#superclass : #RSCircularShape,
-	#category : #'Roassal-Shapes-Bounding'
+	#name : 'RSCircle',
+	#superclass : 'RSCircularShape',
+	#category : 'Roassal-Shapes-Bounding',
+	#package : 'Roassal-Shapes',
+	#tag : 'Bounding'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSCircle >> buildPathOn: visitor [
 	visitor buildEllipsePath: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircle >> extent: aPoint [
 	self assert: [ aPoint x = aPoint y ] description: 'Width and height should have the same value'.
 	super extent: aPoint
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RSCircle >> geometry [
 	| rect e p |
 	rect := self encompassingRectangle.
@@ -43,13 +45,13 @@ RSCircle >> geometry [
 		coVertex:p + (e x@ 0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircle >> height: anInteger [
 	"use `radius:` instead"
 	self error: 'Should not be performed'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSCircle >> preciseIncludesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
 	| invertedPoint radius other delta xOverY t1 t2 rect |
@@ -65,17 +67,17 @@ RSCircle >> preciseIncludesPoint: aPoint [
 	^ (t1 < t2)  or: [ t1 closeTo: t2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircle >> radius [
 	^ self extent x / 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircle >> radius: integer [
 	self extent: integer * 2 asPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCircle >> width: anInteger [
 	"use `radius:` instead"
 	self error: 'Should not be performed'

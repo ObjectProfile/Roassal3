@@ -4,32 +4,34 @@ A context is very usefull to describe de default interactions for a canvas.
 My subclasses should override interaction
 "
 Class {
-	#name : #RSAbstractContextInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSAbstractContextInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'presentation',
 		'propagateToChildren'
 	],
-	#category : #'Roassal-Inspector-Contexts'
+	#category : 'Roassal-Inspector-Contexts',
+	#package : 'Roassal-Inspector',
+	#tag : 'Contexts'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractContextInteraction >> initialize [
 	super initialize.
 	self propagateToChildren: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractContextInteraction >> inspectorInteractions [
 	^ RSInspectorToolbar interactions
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractContextInteraction >> interactionsToBeRegistered [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractContextInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
 	self interactionsToBeRegistered do: [ :i |
@@ -45,22 +47,22 @@ RSAbstractContextInteraction >> onShape: aShape [
 		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractContextInteraction >> presentation [
 	^ presentation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractContextInteraction >> presentation: aGlamourPresentation [
 	presentation := aGlamourPresentation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractContextInteraction >> propagateToChildren [
 	^ propagateToChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractContextInteraction >> propagateToChildren: bool [
 	propagateToChildren := bool
 ]

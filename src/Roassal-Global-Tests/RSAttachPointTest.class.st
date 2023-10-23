@@ -1,10 +1,12 @@
 Class {
-	#name : #RSAttachPointTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Shapes'
+	#name : 'RSAttachPointTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Shapes',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Shapes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAttachPointTest >> testBorderAttachPoint [
 	| b1 b2 l c |
 	b1 := RSBox new size: 20.
@@ -25,7 +27,7 @@ RSAttachPointTest >> testBorderAttachPoint [
 	self assert: (l attachPoint endingPointOf: l) equals: 50 @ 45
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAttachPointTest >> testCenteredAttachPoint [
 	| b1 b2 l c |
 	b1 := RSBox new size: 20.
@@ -46,7 +48,7 @@ RSAttachPointTest >> testCenteredAttachPoint [
 	self assert: (l attachPoint endingPointOf: l) equals: 60 @ 50
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAttachPointTest >> testHorizontalAttachPoint [
 	| b1 b2 l c |
 	b1 := RSBox new size: 20.
@@ -67,7 +69,7 @@ RSAttachPointTest >> testHorizontalAttachPoint [
 	self assert: (l attachPoint endingPointOf: l) equals: 50 @ 50
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAttachPointTest >> testInverted [
 	| ap e1 e2 line |
 	ap := RSCenteredAttachPoint new.
@@ -87,7 +89,7 @@ RSAttachPointTest >> testInverted [
 	self assert: e1 position equals: line endPoint
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAttachPointTest >> testVerticalAttachPoint [
 	| b1 b2 l c |
 	b1 := RSBox new size: 20.

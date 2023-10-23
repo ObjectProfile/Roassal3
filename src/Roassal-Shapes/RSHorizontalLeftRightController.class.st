@@ -2,12 +2,14 @@
 Creates an armonic line between from and to
 "
 Class {
-	#name : #RSHorizontalLeftRightController,
-	#superclass : #RSHorizontalCPAPController,
-	#category : #'Roassal-Shapes-ControlPoints'
+	#name : 'RSHorizontalLeftRightController',
+	#superclass : 'RSHorizontalCPAPController',
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHorizontalLeftRightController >> controlPointsFrom: from to: to [
 	| mid c1 c2 c3 c4 delta diff |
 	mid := (from + to)/2.

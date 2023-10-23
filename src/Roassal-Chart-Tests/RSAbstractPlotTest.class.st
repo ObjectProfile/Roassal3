@@ -1,25 +1,27 @@
 Class {
-	#name : #RSAbstractPlotTest,
-	#superclass : #RSTest,
+	#name : 'RSAbstractPlotTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'plot',
 		'x',
 		'y'
 	],
-	#category : #'Roassal-Chart-Tests-Base'
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractPlotTest class >> isAbstract [
 	^ self =  RSAbstractPlotTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> classToTest [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSAbstractPlotTest >> setUp [
 
 	super setUp.
@@ -28,13 +30,13 @@ RSAbstractPlotTest >> setUp [
 	plot := self classToTest new x: x y: y
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testBasic [
 
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testExtentIsCorrect [
 
 	plot build.
@@ -42,7 +44,7 @@ RSAbstractPlotTest >> testExtentIsCorrect [
 	self assert: plot extent equals: 250 @ 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testInvert [
 	| xScale yScale |
 	
@@ -58,7 +60,7 @@ RSAbstractPlotTest >> testInvert [
 	self assert: plot y equals: x.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMinMaxValue2 [
 
 	plot := self classToTest new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
@@ -70,7 +72,7 @@ RSAbstractPlotTest >> testMinMaxValue2 [
 	self assert: plot maxChartValueY equals: -10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMustInclude0 [
 
 	plot := self classToTest new y: #( 10 13 15 ).
@@ -83,7 +85,7 @@ RSAbstractPlotTest >> testMustInclude0 [
 	self assert: plot maxChartValueY equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMustInclude02 [
 
 	plot := self classToTest new y: #( -10 -13 -15 ).
@@ -96,7 +98,7 @@ RSAbstractPlotTest >> testMustInclude02 [
 	self assert: plot maxChartValueY equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMustInclude03 [
 
 	plot := self classToTest new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
@@ -110,7 +112,7 @@ RSAbstractPlotTest >> testMustInclude03 [
 	self assert: plot maxChartValueY equals: -10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMustInclude04 [
 
 	plot := self classToTest new y: (-3.14 to: 3.14 by: 0.1) sin.
@@ -121,7 +123,7 @@ RSAbstractPlotTest >> testMustInclude04 [
 	self assert: plot maxValueY equals: 0.9999417202299663
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testMustInclude05 [
 
 	plot := self classToTest new y: (-3.14 to: 3.14 by: 0.1) sin.
@@ -133,7 +135,7 @@ RSAbstractPlotTest >> testMustInclude05 [
 	self assert: plot maxValueY equals: 0.9999417202299663
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testPaddingIsCorrect [
 
 	plot build.
@@ -141,7 +143,7 @@ RSAbstractPlotTest >> testPaddingIsCorrect [
 	self assert: plot padding equals: 5 @ 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testRawdata [
 
 	| data |
@@ -150,7 +152,7 @@ RSAbstractPlotTest >> testRawdata [
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerDefault [
 
 	| tick |
@@ -163,7 +165,7 @@ RSAbstractPlotTest >> testStylerDefault [
 	self assert: plot styler equals: tick styler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerRedLabel [
 
 	| tick styler |
@@ -178,7 +180,7 @@ RSAbstractPlotTest >> testStylerRedLabel [
 		(tick labels allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerRedTick [
 
 	| tick styler |
@@ -193,7 +195,7 @@ RSAbstractPlotTest >> testStylerRedTick [
 		(tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerRedTickInChart [
 
 	| tick styler |
@@ -208,7 +210,7 @@ RSAbstractPlotTest >> testStylerRedTickInChart [
 		(tick ticks allSatisfy: [ :line | line color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerSpineRed [
 
 	| styler spine |
@@ -222,7 +224,7 @@ RSAbstractPlotTest >> testStylerSpineRed [
 	self assert: spine box border color equals: Color red
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testStylerTitleLabel [
 
 	| title styler |
@@ -236,7 +238,7 @@ RSAbstractPlotTest >> testStylerTitleLabel [
 	self assert: title label color equals: Color red
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testWithAxisLabel [
 
 	plot xlabel: 'X axis'.
@@ -247,7 +249,7 @@ RSAbstractPlotTest >> testWithAxisLabel [
 		equals: 'X axis'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testWithTitle [
 
 	plot title: 'Hello World'.
@@ -258,7 +260,7 @@ RSAbstractPlotTest >> testWithTitle [
 		equals: 'Hello World'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testWithTitleAndLabels [
 
 	plot := self classToTest new.
@@ -271,7 +273,7 @@ RSAbstractPlotTest >> testWithTitleAndLabels [
 	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testWithoutTicks [
 
 	plot removeAllTicks.
@@ -281,7 +283,7 @@ RSAbstractPlotTest >> testWithoutTicks [
 	self assert: plot verticalTick equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAbstractPlotTest >> testYMarker [
 
 	| marker line |

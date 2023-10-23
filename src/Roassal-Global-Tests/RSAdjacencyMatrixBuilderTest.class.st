@@ -1,14 +1,16 @@
 Class {
-	#name : #RSAdjacencyMatrixBuilderTest,
-	#superclass : #RSTest,
+	#name : 'RSAdjacencyMatrixBuilderTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'empty',
 		'b'
 	],
-	#category : #'Roassal-Global-Tests-Examples'
+	#category : 'Roassal-Global-Tests-Examples',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSAdjacencyMatrixBuilderTest >> setUp [
 
 	super setUp.
@@ -19,14 +21,14 @@ RSAdjacencyMatrixBuilderTest >> setUp [
 	b connections: { 1 -> 2 . 1 -> 3 . 2 -> 4 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testBasic01 [
 
 	self assert: empty numberOfObjects equals: 0.
 	self assert: empty numberOfConnections equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testBasic02 [
 
 	empty objects: (1 to: 10).
@@ -34,7 +36,7 @@ RSAdjacencyMatrixBuilderTest >> testBasic02 [
 	self assert: empty numberOfConnections equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testBasic03 [
 
 	empty objects: #( 'hello' 'bonjour' 'Guten Morgen' ).
@@ -42,7 +44,7 @@ RSAdjacencyMatrixBuilderTest >> testBasic03 [
 	self assert: empty numberOfConnections equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testConnections01 [
 
 	empty connections: {
@@ -56,13 +58,13 @@ RSAdjacencyMatrixBuilderTest >> testConnections01 [
 	self deny: (empty does: 1 dependsOn: 42)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testCycle01 [
 
 	self deny: b hasCycle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testCycle02 [
 
 	b := RSAdjacencyMatrixBuilder new.
@@ -80,13 +82,13 @@ RSAdjacencyMatrixBuilderTest >> testCycle02 [
 	self assert: b hasCycle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testCycle03 [
 
 	self deny: empty hasCycle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testCycle04 [
 
 	b := RSAdjacencyMatrixBuilder new.
@@ -122,7 +124,7 @@ RSAdjacencyMatrixBuilderTest >> testCycle04 [
 	self assert: (b getAllCycles includes: (Set withAll: #(3 4)))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testIncomingConnectionsOf [
 	self assert: (b incomingConnectionsOf: 3) equals: #(3).
 	self assert: (b numberOfIncomingConnectionsOf: 4) equals: 1.
@@ -131,14 +133,14 @@ RSAdjacencyMatrixBuilderTest >> testIncomingConnectionsOf [
 	self assert: (b numberOfIncomingConnectionsOf: 1) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testOutgoingConnectionsOf [
 	self assert: (b outgoingConnectionsOf: 1) equals: #(2 3).
 	self assert: (b numberOfOutgoingConnectionsOf: 1) equals: 2.
 	self assert: (b numberOfOutgoingConnectionsOf: 2) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testRendering01 [
 	| canvas allCells |
 	canvas := b build.
@@ -155,13 +157,13 @@ RSAdjacencyMatrixBuilderTest >> testRendering01 [
 	self assert: allCells second color equals: b connectingColor
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testSorting01 [
 	b build.
 	self assert: b objects equals: (1 to: 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSAdjacencyMatrixBuilderTest >> testSorting02 [
 	b := RSAdjacencyMatrixBuilder new.
 	b objects: (1 to: 4).

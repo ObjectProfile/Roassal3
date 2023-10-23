@@ -1,15 +1,17 @@
 Class {
-	#name : #RSStartEndCPAPController,
-	#superclass : #RSAbstractCPAPController,
+	#name : 'RSStartEndCPAPController',
+	#superclass : 'RSAbstractCPAPController',
 	#instVars : [
 		'startAttachPoint',
 		'endAttachPoint',
 		'controller'
 	],
-	#category : #'Roassal-Shapes-ControlPoints'
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSStartEndCPAPController >> controlPointsFor: aLine [
 
 	| ap sp ep |
@@ -21,25 +23,25 @@ RSStartEndCPAPController >> controlPointsFor: aLine [
 		  to: (ep endingPointOf: aLine)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSStartEndCPAPController >> controlPointsFrom: fromPoint to: toPoint [
 
 	^ controller controlPointsFrom: fromPoint to: toPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStartEndCPAPController >> controller: aCPAPController [
 
 	controller := aCPAPController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStartEndCPAPController >> endAttachPoint: anAttachPoint [
 
 	endAttachPoint := anAttachPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStartEndCPAPController >> startAttachPoint: anAttachPoint [
 
 	startAttachPoint := anAttachPoint

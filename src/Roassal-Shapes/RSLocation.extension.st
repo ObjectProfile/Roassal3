@@ -1,6 +1,6 @@
-Extension { #name : #RSLocation }
+Extension { #name : 'RSLocation' }
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 RSLocation >> stick: movableShape on: baseShape [
 	| block |
 	block := [ self move: movableShape on: baseShape ].

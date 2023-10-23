@@ -2,11 +2,13 @@
 I am a trait to create markers in some especific classes
 "
 Trait {
-	#name : #RSTMarkeable,
-	#category : #'Roassal-Shapes-Traits'
+	#name : 'RSTMarkeable',
+	#category : 'Roassal-Shapes-Traits',
+	#package : 'Roassal-Shapes',
+	#tag : 'Traits'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSTMarkeable >> hasMarkers [
 	| m |
 	m := self privateMarkers.
@@ -14,7 +16,7 @@ RSTMarkeable >> hasMarkers [
 		m anySatisfy: [ :mar | mar notNil ].  ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> marker: aMarker [
 	| m |
 	m := aMarker asMarker.
@@ -25,14 +27,14 @@ RSTMarkeable >> marker: aMarker [
 	^ m
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerEnd [
 	^ self markers
 		ifNil: [ nil ]
 		ifNotNil: [ :m | m third ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerEnd: marker [
 	| m |
 	marker ifNil: [ ^ nil ].
@@ -41,14 +43,14 @@ RSTMarkeable >> markerEnd: marker [
 	^ m
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerMid [
 	^ self markers
 		ifNil: [ nil ]
 		ifNotNil: [ :m | m second ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerMid: marker [
 	| m |
 	marker ifNil: [ ^ nil ].
@@ -57,7 +59,7 @@ RSTMarkeable >> markerMid: marker [
 	^ m
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTMarkeable >> markerShapesInPositionDo: aBlock [
 	| cp |
 	cp := self controlPoints.
@@ -66,14 +68,14 @@ RSTMarkeable >> markerShapesInPositionDo: aBlock [
 	self markerEnd ifNotNil: [ :marker | marker withEnd: cp do: aBlock ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerStart [
 	^ self markers
 		ifNil: [ nil ]
 		ifNotNil: [ :m | m first ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerStart: marker [
 	| m |
 	marker ifNil: [ ^ nil ].
@@ -82,7 +84,7 @@ RSTMarkeable >> markerStart: marker [
 	^ m
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markerStartEnd: aMarker [
 	| m |
 	m := aMarker asMarker.
@@ -92,7 +94,7 @@ RSTMarkeable >> markerStartEnd: aMarker [
 	^ m
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markers [
 	^ self privateMarkers
 		ifNil: [ | array |
@@ -101,12 +103,12 @@ RSTMarkeable >> markers [
 			array ]
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> markersDo: block [
 	self markers do: [ :m | m ifNotNil: block  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSTMarkeable >> markersIncludesPoint: aPoint [
 	self hasMarkers ifFalse: [ ^ false ].
 	self markerShapesInPositionDo: [ :m |
@@ -115,17 +117,17 @@ RSTMarkeable >> markersIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> privateMarkers [
 	^ self explicitRequirement
 ]
 
-{ #category : #'accessing - markers' }
+{ #category : 'accessing - markers' }
 RSTMarkeable >> privateMarkers: array [
 	 self explicitRequirement
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTMarkeable >> resetMarkers [
 	self privateMarkers: nil
 ]

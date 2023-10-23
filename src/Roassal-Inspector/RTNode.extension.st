@@ -1,7 +1,7 @@
-Extension { #name : #RSRNode }
+Extension { #name : 'RTNode' }
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> addMenu: canvas [
+{ #category : '*Roassal-Inspector' }
+RTNode >> addMenu: canvas [
 	canvas addAll: ((1 to: self height) collect: [ :each |
 		RSLabel new
 			color: 'black';
@@ -22,8 +22,8 @@ RSRNode >> addMenu: canvas [
 	for: self
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> addWithChildren: canvas [
+{ #category : '*Roassal-Inspector' }
+RTNode >> addWithChildren: canvas [
 	| circle label |
 	circle := RSEllipse new
 		size: 20;
@@ -44,8 +44,8 @@ RSRNode >> addWithChildren: canvas [
 	self childrenDo: [ :child | child addWithChildren: canvas ]
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> addWithChildren: canvas level: level palette: palette [
+{ #category : '*Roassal-Inspector' }
+RTNode >> addWithChildren: canvas level: level palette: palette [
 	| color |
 	color := (palette scale: level) alpha: 0.7.
 	canvas add: (RSBox new
@@ -58,8 +58,8 @@ RSRNode >> addWithChildren: canvas level: level palette: palette [
 	self childrenDo: [ :child | child addWithChildren: canvas level: level + 1 palette: palette ]
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent [
+{ #category : '*Roassal-Inspector' }
+RTNode >> addWithChildren: canvas level: level palette: palette parent: parent [
 	| color box |
 	color := (palette scale: level) alpha: 0.7.
 	box := RSBox new
@@ -80,14 +80,14 @@ RSRNode >> addWithChildren: canvas level: level palette: palette parent: parent 
 			parent: box ]
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> asRSCanvasForQueries [
+{ #category : '*Roassal-Inspector' }
+RTNode >> asRSCanvasForQueries [
 	| canvas box point log zet |
 	canvas := self newCanvas.
 	zet := self. "arc warden"
 	canvas addAll: (zet collect: [:value |
 		RSBox new
-			fromRectangle: (self bbox: value);
+			fromRectangle: value rectangle;
 			color: Color black;
 			yourself
 		]).
@@ -115,8 +115,8 @@ RSRNode >> asRSCanvasForQueries [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> asRSCanvasForRectangles [
+{ #category : '*Roassal-Inspector' }
+RTNode >> asRSCanvasForRectangles [
 	| canvas palette list |
 	palette := NSScale category20.
 	canvas := self newCanvas.
@@ -132,8 +132,8 @@ RSRNode >> asRSCanvasForRectangles [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> asRSCanvasTree [
+{ #category : '*Roassal-Inspector' }
+RTNode >> asRSCanvasTree [
 	| canvas palette |
 	palette := NSScale category20.
 	canvas := self newCanvas.
@@ -147,8 +147,8 @@ RSRNode >> asRSCanvasTree [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> asRSCanvasWithParentPath [
+{ #category : '*Roassal-Inspector' }
+RTNode >> asRSCanvasWithParentPath [
 	| canvas palette leafs |
 	palette := NSScale category20.
 	canvas := self newCanvas.
@@ -166,8 +166,8 @@ RSRNode >> asRSCanvasWithParentPath [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> createBoxesIn: canvas palette: palette level: level [
+{ #category : '*Roassal-Inspector' }
+RTNode >> createBoxesIn: canvas palette: palette level: level [
 	| color box children |
 	color := (palette scale: level) alpha: 0.6.
 	box := RSBox new
@@ -186,48 +186,48 @@ RSRNode >> createBoxesIn: canvas palette: palette level: level [
 	^ box
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> inspectorQueries [
+{ #category : '*Roassal-Inspector' }
+RTNode >> inspectorQueries [
 	<inspectorPresentationOrder: 4 title: 'Queries'>
 	^ SpRoassalInspectorPresenter new
 		canvas: self asRSCanvasForQueries;
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> inspectorRectangles [
+{ #category : '*Roassal-Inspector' }
+RTNode >> inspectorRectangles [
 	<inspectorPresentationOrder: 1 title: 'Rectangles'>
 	^ SpRoassalInspectorPresenter new
 		canvas: self asRSCanvasForRectangles;
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> inspectorTree [
+{ #category : '*Roassal-Inspector' }
+RTNode >> inspectorTree [
 	<inspectorPresentationOrder: 3 title: 'Tree'>
 	^ SpRoassalInspectorPresenter new
 		canvas: self asRSCanvasTree;
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> inspectorWithParent [
+{ #category : '*Roassal-Inspector' }
+RTNode >> inspectorWithParent [
 	<inspectorPresentationOrder: 2 title: 'With Parent'>
 	^ SpRoassalInspectorPresenter new
 		canvas: self asRSCanvasWithParentPath;
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> newCanvas [
+{ #category : '*Roassal-Inspector' }
+RTNode >> newCanvas [
 	^ RSCanvas new
 		addInteraction: RSCanvasController;
 		in: [ :canvas | canvas inspectorContext interactionsToBeRegistered first noPushFront ];
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> parentHighlightable [
+{ #category : '*Roassal-Inspector' }
+RTNode >> parentHighlightable [
 	^ RSHighlightable new
 		when: RSHighlightEvent do: [ :evt |
 			| parents |
@@ -248,15 +248,15 @@ RSRNode >> parentHighlightable [
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> parentsFor: shape list: list [
+{ #category : '*Roassal-Inspector' }
+RTNode >> parentsFor: shape list: list [
 	shape ifNil: [ ^ self ].
 	shape model isLeaf ifFalse: [ list add: shape ].
 	self parentsFor: (shape propertyAt: #parent) list: list
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> queryResult: aRect [
+{ #category : '*Roassal-Inspector' }
+RTNode >> queryResult: aRect [
 	| link node nodesVisited nodesInPointVisited nodesInPoint nodesInRectangle |
 	nodesInPoint := OrderedCollection new.
 	nodesInRectangle := OrderedCollection new.
@@ -289,8 +289,8 @@ RSRNode >> queryResult: aRect [
 			<< nodesVisited asString ]
 ]
 
-{ #category : #'*Roassal-Inspector' }
-RSRNode >> updateLog: log rectangle: aRect [
+{ #category : '*Roassal-Inspector' }
+RTNode >> updateLog: log rectangle: aRect [
 	| builder |
 	builder := RSMultilineLabelBuilder new.
 	builder labelShape color: Color black.

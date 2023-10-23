@@ -2,12 +2,14 @@
 Old version of metrics provider used in Roassal2 with fonts. It is a little slow
 "
 Class {
-	#name : #RSPharoMetricsProvider,
-	#superclass : #RSMetricsProvider,
-	#category : #'Roassal-Shapes-TextMetrics'
+	#name : 'RSPharoMetricsProvider',
+	#superclass : 'RSMetricsProvider',
+	#category : 'Roassal-Shapes-TextMetrics',
+	#package : 'Roassal-Shapes',
+	#tag : 'TextMetrics'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPharoMetricsProvider >> extentsOf: aRSLabel [
 	| w h font text |
 	font := aRSLabel font.

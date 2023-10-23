@@ -1,13 +1,15 @@
 Class {
-	#name : #RSTickLocatorTest,
-	#superclass : #RSTest,
+	#name : 'RSTickLocatorTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'ticks'
 	],
-	#category : #'Roassal-Chart-Tests-Base'
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSTickLocatorTest >> setUp [
 
 	super setUp.
@@ -18,7 +20,7 @@ RSTickLocatorTest >> setUp [
 		range: #( 0 200 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testAutoLocatorDataIsOk [
 
 	| data |
@@ -29,13 +31,13 @@ RSTickLocatorTest >> testAutoLocatorDataIsOk [
 	self assert: (data at: 5) equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testAutoLocatorIsDefault [
 
 	self assert: ticks locator class equals: RSAutoLocator
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk [
 
 	ticks numberOfTicks: 3.
@@ -44,7 +46,7 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk [
 	self assert: ticks configuration numberOfTicks equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk2 [
 
 	ticks numberOfTicks: 8.
@@ -53,7 +55,7 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk2 [
 	self assert: ticks configuration numberOfTicks equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk3 [
 
 	ticks numberOfTicks: 11.
@@ -62,7 +64,7 @@ RSTickLocatorTest >> testAutoLocatorNumberOfTicksIsOk3 [
 	self assert: ticks configuration numberOfTicks equals: 13
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorDataIsOk [
 
 	| ticksCol data |
@@ -73,7 +75,7 @@ RSTickLocatorTest >> testFixedLocatorDataIsOk [
 	self assert: data equals: #( 0 1 4 6 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorDataIsOkWithCollectionTooLarge [
 
 	| ticksCol data |
@@ -84,7 +86,7 @@ RSTickLocatorTest >> testFixedLocatorDataIsOkWithCollectionTooLarge [
 	self assert: data equals: #( 0 1 4 6 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorDataIsOkWithUnsortedCollection [
 
 	| ticksCol data |
@@ -95,7 +97,7 @@ RSTickLocatorTest >> testFixedLocatorDataIsOkWithUnsortedCollection [
 	self assert: data equals: #(0 1 4 6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOk [
 
 	| ticksCol data |
@@ -106,7 +108,7 @@ RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOk [
 	self assert: ticks configuration numberOfTicks equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithCollectionTooLarge [
 
 	| ticksCol data |
@@ -117,7 +119,7 @@ RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithCollectionTooLarge [
 	self assert: ticks configuration numberOfTicks equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithUnsortedCollection [
 
 	| ticksCol data |
@@ -128,7 +130,7 @@ RSTickLocatorTest >> testFixedLocatorNumberOfTicksIsOkWithUnsortedCollection [
 	self assert: ticks configuration numberOfTicks equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testFixedLocatorRaisesErrorWithEmptyCollection [
 
 	| ticksCol |
@@ -138,7 +140,7 @@ RSTickLocatorTest >> testFixedLocatorRaisesErrorWithEmptyCollection [
 	self should: [ ticks ticksData ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLinearLocatorDataIsOk [
 
 	| data |
@@ -151,7 +153,7 @@ RSTickLocatorTest >> testLinearLocatorDataIsOk [
 	self assert: (data at: 5) equals: 24 / 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLinearLocatorNumberOfTicksIsOk [
 
 	ticks
@@ -162,7 +164,7 @@ RSTickLocatorTest >> testLinearLocatorNumberOfTicksIsOk [
 	self assert: ticks configuration numberOfTicks equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorBaseIsCorrectlyChanged [
 
 	| locator |
@@ -171,7 +173,7 @@ RSTickLocatorTest >> testLogLocatorBaseIsCorrectlyChanged [
 	self assert: locator base equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDataIsOk [
 
 	| data |
@@ -188,7 +190,7 @@ RSTickLocatorTest >> testLogLocatorDataIsOk [
 	self assert: (data at: 7) equals: 1000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtNegative [
 
 	| data |
@@ -205,7 +207,7 @@ RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtNegative [
 	self assert: (data at: 7) equals: 1000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtZero [
 
 	| data |
@@ -222,7 +224,7 @@ RSTickLocatorTest >> testLogLocatorDataIsOkStartingAtZero [
 	self assert: (data at: 7) equals: 1000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDataIsOkWithReversedDomain [
 
 	| data |
@@ -239,7 +241,7 @@ RSTickLocatorTest >> testLogLocatorDataIsOkWithReversedDomain [
 	self assert: (data at: 7) equals: 1000.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDefaultBaseIs10 [
 
 	| locator |
@@ -248,7 +250,7 @@ RSTickLocatorTest >> testLogLocatorDefaultBaseIs10 [
 	self assert: locator base equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorDefaultSmallestPowerIsMinus3 [
 
 	| locator |
@@ -257,7 +259,7 @@ RSTickLocatorTest >> testLogLocatorDefaultSmallestPowerIsMinus3 [
 	self assert: locator smallestPower equals: -3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOk [
 
 	| data |
@@ -268,7 +270,7 @@ RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOk [
 	self assert: data size equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtNegative [
 
 	| data |
@@ -279,7 +281,7 @@ RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtNegative [
 	self assert: data size equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtZero [
 
 	| data |
@@ -290,7 +292,7 @@ RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkStartingAtZero [
 	self assert: data size equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkWithReversedDomain [
 
 	| data |
@@ -301,7 +303,7 @@ RSTickLocatorTest >> testLogLocatorNumberOfTicksIsOkWithReversedDomain [
 	self assert: data size equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorRaisesErrorWithNegativeData [
 
 	ticks xScale: (NSLogScale new domain: #( -10 -1 )).
@@ -309,7 +311,7 @@ RSTickLocatorTest >> testLogLocatorRaisesErrorWithNegativeData [
 	self should: [ ticks ticksData ] raise: DomainError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrect [
 
 	| locator |
@@ -318,7 +320,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrect [
 	self assert: locator smallestIndex equals: 10**(-3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingBase [
 
 	| locator |
@@ -327,7 +329,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingBase [
 	self assert: locator smallestIndex equals: 2**(-3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingSmallestPower [
 
 	| locator |
@@ -336,7 +338,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingSmallestPo
 	self assert: locator smallestIndex equals: 10**(-2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSTickLocatorTest >> testTickLocatorCorrectlyChanged [
 
 	ticks locator: RSLinearLocator new.

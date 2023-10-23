@@ -333,9 +333,8 @@ RSCanvas >> host [
 ]
 
 { #category : 'private' }
-RSCanvas >> indexesArrayIn: aCollection [
+RSCanvas >> indexesFromRootIn: aCollection [
 	"do nothing"
-	
 ]
 
 { #category : 'initialization' }

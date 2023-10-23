@@ -1,1 +1,1 @@
-Package { #name : #'Roassal-Chart-Tests' }
+Package { #name : 'Roassal-Chart-Tests' }

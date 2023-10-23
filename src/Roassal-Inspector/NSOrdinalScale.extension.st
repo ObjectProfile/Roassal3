@@ -1,6 +1,6 @@
-Extension { #name : #NSOrdinalScale }
+Extension { #name : 'NSOrdinalScale' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 NSOrdinalScale >> inspectorColors [
 	<inspectorPresentationOrder: 0 title: 'Colors'>
 	| canvas |
@@ -18,7 +18,7 @@ NSOrdinalScale >> inspectorColors [
 		yourself
 ]
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 NSOrdinalScale >> inspectorColorsContext: context [
 	context
 		evaluator: false;

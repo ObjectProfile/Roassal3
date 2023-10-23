@@ -613,7 +613,7 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	athensCanvas setAA: aRSCanvas host antialiasing.
 
 	aRSCanvas camera accept: self.
-	(aRSCanvas shapeCollection shapesAtRectangle: canvasRect) accept: self.
+	(aRSCanvas shapeCollection shapesAtRectangle: canvasRect) do: [ :s | s accept: self].
 
 	"We display the elements that are _NOT_ subject to the camera"
 	matrix loadIdentity.
@@ -635,7 +635,7 @@ RSAthensRenderer >> visitChildrenIfNecessary: shape [
 				corner: (rectangle corner min: shape baseRectangle corner) ].
 	visibleChildren := shape shapeCollection shapesAtRectangle: rectangle.
 
-	draw := [ visibleChildren accept: self ].
+	draw := [ visibleChildren do: [:s | s accept: self] ].
 	
 	shape clipChildren
 		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
