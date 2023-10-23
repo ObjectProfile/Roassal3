@@ -47,7 +47,7 @@ RSTContainer >> addBasicShape: aShape [
 	| listOfShapes |
 	listOfShapes := self privateShapes.
 	listOfShapes add: aShape.
-	aShape shapeIndex: listOfShapes size.
+	aShape entryIndex: listOfShapes size.
 	shapeCollection add: aShape
 ]
 
@@ -84,9 +84,9 @@ RSTContainer >> addShape: aShape before: otherShape [
 	col remove: aShape.
 	col add: aShape before: otherShape.
 	index := col indexOf: aShape.
-	index to: col size do: [ :i | (col at: i) shapeIndex: i ].
+	index to: col size do: [ :i | (col at: i) entryIndex: i ].
 	aShape isFixed 
-		ifFalse: [ self shapeCollection add: aShape before: otherShape ]
+		ifFalse: [ self shapeCollection updateEntry: aShape before: otherShape ]
 ]
 
 { #category : 'accessing' }
@@ -342,7 +342,7 @@ c.
 		remove: aShape;
 		addFirst: aShape.
 	aShape isFixed ifFalse: [ self shapeCollection pushBack: aShape ].
-	col doWithIndex: [ :each :index | each shapeIndex: index ].
+	col doWithIndex: [ :each :index | each entryIndex: index ].
 ]
 
 { #category : 'actions' }
@@ -375,7 +375,7 @@ The red circle is in front of the blue one, despite the red one is inserted firs
 	col
 		remove: aShape;
 		addLast: aShape.
-	aShape shapeIndex to: col size do: [ :index | (col at: index) shapeIndex: index ].
+	aShape entryIndex to: col size do: [ :index | (col at: index) entryIndex: index ].
 ]
 
 { #category : 'removing' }
@@ -433,7 +433,7 @@ RSTContainer >> shapesFromModel: anObject [
 { #category : 'private' }
 RSTContainer >> updateInShapeCollection: aShape [
 	"this is going to update the shape collection cache, spetially in RSRTree"
-	self shapeCollection updateShape: aShape
+	self shapeCollection updateEntry: aShape
 ]
 
 { #category : 'shape - collection' }

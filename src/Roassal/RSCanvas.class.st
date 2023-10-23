@@ -123,7 +123,7 @@ c @ RSCanvasController.
 ```
 "
 	fixedShapes add: aShape.
-	aShape shapeIndex: fixedShapes size.
+	aShape entryIndex: fixedShapes size.
 ]
 
 { #category : 'animations' }
@@ -529,8 +529,8 @@ RSCanvas >> removeShape: shape [
 	shape isFixed
 		ifFalse: [ self shapeCollection remove: shape ].
 	collection remove: shape.
-	shape shapeIndex to: collection size 
-		do: [ :i | (collection at: i) shapeIndex: i ].
+	shape entryIndex to: collection size 
+		do: [ :i | (collection at: i) entryIndex: i ].
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new
 		       shape: shape;
@@ -614,7 +614,7 @@ RSCanvas >> shapesFromModels: objects [
 { #category : 'event processing' }
 RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 	| result |
-	result := self shapeCollection shapesAtPoint: aPositionInSpace.
+	result := self shapeCollection entriesAtPoint: aPositionInSpace.
 	result := result select: [ :s | s hasEventCallback ].
 	^ result
 ]
