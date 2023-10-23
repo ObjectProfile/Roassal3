@@ -265,7 +265,7 @@ BaselineOfRoassal >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 [
 BaselineOfRoassal >> rtree: spec [
 	spec
 		baseline: 'RTree'
-		with: [ spec repository: 'github://pharo-graphics/RTree:v1.00/src' ]
+		with: [ spec repository: 'github://pharo-graphics/RTree/src' ]
 ]
 
 { #category : 'dependencies' }
