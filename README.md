@@ -1,7 +1,6 @@
 # Roassal
 [![CI](https://github.com/pharo-graphics/Roassal/actions/workflows/runTests.yml/badge.svg)](https://github.com/pharo-graphics/Roassal/actions/workflows/runTests.yml)
 ![Discord](https://img.shields.io/discord/223421264751099906)
-[![Coverage](https://raw.githubusercontent.com/pharo-graphics/Roassal/master/ci_data/coverageBadge.svg)](https://github.com/pharo-graphics/Roassal/blob/master/ci_data/coverage.png)
 
 [![Pharo 8](https://img.shields.io/badge/Pharo-8.0-%23aac9ff.svg)](https://pharo.org/download)
 [![Pharo 9](https://img.shields.io/badge/Pharo-9.0-%23aac9ff.svg)](https://pharo.org/download)
