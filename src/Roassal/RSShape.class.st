@@ -32,8 +32,8 @@ Although most of the configuration may be carried out by directly sending an obj
 Class {
 	#name : 'RSShape',
 	#superclass : 'RSObjectWithProperty',
-	#traits : 'RSTPositionable + RTWithEncompassingRectangle',
-	#classTraits : 'RSTPositionable classTrait + RTWithEncompassingRectangle classTrait',
+	#traits : 'RSTPositionable + RTEntry',
+	#classTraits : 'RSTPositionable classTrait + RTEntry classTrait',
 	#instVars : [
 		'paint',
 		'path',
@@ -118,6 +118,12 @@ RSShape >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
+{ #category : 'adding' }
+RSShape >> addEntriesIn: aCollection position: position [
+	(self includesPoint: position)
+		ifTrue: [ aCollection add: self ]
+]
+
 { #category : 'private - adding' }
 RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
 	| key myAnimations parentAnimations |
@@ -136,12 +142,6 @@ RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
 { #category : 'adding' }
 RSShape >> addRecursivelyIn: aCollection [
 	aCollection add: self
-]
-
-{ #category : 'adding' }
-RSShape >> addShapesIn: aCollection position: position [
-	(self includesPoint: position)
-		ifTrue: [ aCollection add: self ]
 ]
 
 { #category : 'private - adding' }

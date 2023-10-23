@@ -235,6 +235,19 @@ c open
 ]
 
 { #category : 'adding' }
+RSComposite >> addEntriesIn: aCollection position: position [
+	| pos result includesPoint |
+	includesPoint := self includesPoint: position.
+	self clipChildren ifTrue: [ 
+		includesPoint ifFalse: [ ^ self ].
+		 ].
+	pos := self matrix rsInverseTransform: position.
+	result := self shapeCollection entriesAtPoint: pos.
+	aCollection addAll: result.
+	includesPoint ifTrue: [ aCollection add: self ]
+]
+
+{ #category : 'adding' }
 RSComposite >> addFixedShape: aShape [
 	self error: 'Composite can not add a fixed shape'
 ]
@@ -243,19 +256,6 @@ RSComposite >> addFixedShape: aShape [
 RSComposite >> addRecursivelyIn: aCollection [
 	super addRecursivelyIn: aCollection.
 	self shapes do: [ :n | n addRecursivelyIn: aCollection ]
-]
-
-{ #category : 'adding' }
-RSComposite >> addShapesIn: aCollection position: position [
-	| pos result includesPoint |
-	includesPoint := self includesPoint: position.
-	self clipChildren ifTrue: [ 
-		includesPoint ifFalse: [ ^ self ].
-		 ].
-	pos := self matrix rsInverseTransform: position.
-	result := self shapeCollection shapesAtPoint: pos.
-	aCollection addAll: result.
-	includesPoint ifTrue: [ aCollection add: self ]
 ]
 
 { #category : 'public' }
@@ -447,7 +447,7 @@ RSComposite >> privateShapes: aCollection [
 RSComposite >> removeShape: shape [
 	| evt |
 	children remove: shape.
-	shape shapeIndex to: children size do: [ :i | (children at: i) shapeIndex: i ].
+	shape entryIndex to: children size do: [ :i | (children at: i) entryIndex: i ].
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new shape: shape.
 	self shapeCollection remove: shape.

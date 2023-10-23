@@ -27,9 +27,9 @@ RSSequenceableCollectionTest >> testIncludes [
 	| result |
 	list addAll: { RSBox new size: 10. RSBox new position: 50@50; size: 10 asPoint}.
 	self assert: list size equals: 2.
-	result := list shapesAtPoint:  -100@ -100.
+	result := list entriesAtPoint:  -100@ -100.
 	self assert: result isEmpty.
-	result := list shapeAtPoint: -100@ -100.
+	result := list entryAtPoint: -100@ -100 ifNone: [ nil ].
 	self assert: result isNil
 ]
 
