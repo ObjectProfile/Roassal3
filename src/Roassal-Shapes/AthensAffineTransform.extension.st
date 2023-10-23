@@ -1,6 +1,6 @@
-Extension { #name : #AthensAffineTransform }
+Extension { #name : 'AthensAffineTransform' }
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 AthensAffineTransform >> rsInverseTransform: aPoint [
 	"We assume matrix is never degenerated"
 	| px py y0 x0 epsilon |

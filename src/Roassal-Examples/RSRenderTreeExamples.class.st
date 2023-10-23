@@ -52,7 +52,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	c shapeCollection: RSBulkLoadRTreeCollection new.
+	c shapeCollection: RTBulkLoadRTreeCollection new.
 	
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.
@@ -65,7 +65,7 @@ RSRenderTreeExamples >> example03RTree [
 	<script: 'self new example03RTree inspect'>
 	<noTest>
 	| tree random canvas |
-	tree := RSRTreeShapeCollection new.
+	tree := RTreeCollection new.
 	random := Random new.
 	random seed: 777.
 	canvas := RSCanvas new.

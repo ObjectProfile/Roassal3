@@ -2,43 +2,45 @@
 I can define offsets in each side of the attach point
 "
 Class {
-	#name : #RSOffsetAttachPoint,
-	#superclass : #RSAttachPoint,
+	#name : 'RSOffsetAttachPoint',
+	#superclass : 'RSAttachPoint',
 	#instVars : [
 		'startOffset',
 		'endOffset'
 	],
-	#category : #'Roassal-Shapes-AttachPoint'
+	#category : 'Roassal-Shapes-AttachPoint',
+	#package : 'Roassal-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSOffsetAttachPoint class >> isAbstract [
 
 	^ self == RSOffsetAttachPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSOffsetAttachPoint >> endOffset [
 	^ endOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSOffsetAttachPoint >> endOffset: aNumber [
 	endOffset := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSOffsetAttachPoint >> initialize [
 	super initialize.
 	startOffset := endOffset := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSOffsetAttachPoint >> startOffset [
 	^ startOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSOffsetAttachPoint >> startOffset: aNumber [
 	startOffset := aNumber
 ]

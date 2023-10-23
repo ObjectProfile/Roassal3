@@ -1,10 +1,12 @@
 Class {
-	#name : #RSConnectionTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Mondrian'
+	#name : 'RSConnectionTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Mondrian',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Mondrian'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSConnectionTest >> testBasic [
 
 	| c connection |
@@ -34,13 +36,13 @@ RSConnectionTest >> testBasic [
 	connection deleteAllWindows
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSConnectionTest >> testLastwindowIsNil [
 
 	self assert: RSPopupConnection new lastWindow isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSConnectionTest >> testNumberOfOutputs [
 
 	self assert: RSPopupConnection new numberOfOutputs equals: 0

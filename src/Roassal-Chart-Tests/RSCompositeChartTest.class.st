@@ -1,20 +1,22 @@
 Class {
-	#name : #RSCompositeChartTest,
-	#superclass : #RSTest,
+	#name : 'RSCompositeChartTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'chart'
 	],
-	#category : #'Roassal-Chart-Tests-Base'
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> setUp [
 
 	super setUp.
 	chart := RSCompositeChart new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testAddAll [
 
 	| p1 p2 plots x1 x2 |
@@ -29,7 +31,7 @@ RSCompositeChartTest >> testAddAll [
 	chart build
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testExtentIsCorrect [
 
 	| plot x |
@@ -42,7 +44,7 @@ RSCompositeChartTest >> testExtentIsCorrect [
 	self assert: plot extent equals: 250 @ 200
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testMinMaxValuesAreCorrect [
 
 	| p1 p2 x1 x2 |
@@ -64,7 +66,7 @@ RSCompositeChartTest >> testMinMaxValuesAreCorrect [
 	self assert: chart maxChartValueY equals: 36
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testPaddingIsCorrect [
 
 	| plot x |
@@ -77,7 +79,7 @@ RSCompositeChartTest >> testPaddingIsCorrect [
 	self assert: plot padding equals: 0 @ 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testXScaleIsCorrect [
 
 	| p1 p2 x1 x2 |
@@ -97,7 +99,7 @@ RSCompositeChartTest >> testXScaleIsCorrect [
 	self assert: p2 xScale domain equals: #( -6 5 )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSCompositeChartTest >> testYScaleIsCorrect [
 
 	| p1 p2 x1 x2 |

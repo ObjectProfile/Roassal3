@@ -2,12 +2,14 @@
 A RSSunburstBuilderTest is a test class for testing the behavior of RSSunburstBuilder
 "
 Class {
-	#name : #RSSunburstBuilderTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Global-Tests-Examples'
+	#name : 'RSSunburstBuilderTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Global-Tests-Examples',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSunburstBuilderTest >> testBasic [
 	| segment1 segment2 line attachPoint startPoint endPoint |
 	segment1 := RSPieSlice new

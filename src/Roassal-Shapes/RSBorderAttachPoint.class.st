@@ -55,15 +55,17 @@ c @ RSCanvasController
 -=-=-=-=
 "
 Class {
-	#name : #RSBorderAttachPoint,
-	#superclass : #RSOffsetAttachPoint,
+	#name : 'RSBorderAttachPoint',
+	#superclass : 'RSOffsetAttachPoint',
 	#instVars : [
 		'offset'
 	],
-	#category : #'Roassal-Shapes-AttachPoint'
+	#category : 'Roassal-Shapes-AttachPoint',
+	#package : 'Roassal-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> basicEndingPointOf: aLine [
 	^ self
 		basicPointFrom: aLine to
@@ -72,7 +74,7 @@ RSBorderAttachPoint >> basicEndingPointOf: aLine [
 		offset: endOffset
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: aLine offset: aNumber [
 	| source target line shift res vector unit |
 	source := self geometryFor: fromShape edge: aLine.
@@ -92,7 +94,7 @@ RSBorderAttachPoint >> basicPointFrom: fromShape to: toShape of: aLine offset: a
 	^ res asPoint + (unit * aNumber)
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> basicStartingPointOf: aLine [
 	^ self
 		basicPointFrom: aLine from
@@ -101,13 +103,13 @@ RSBorderAttachPoint >> basicStartingPointOf: aLine [
 		offset: startOffset
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 	^ ((aLine intersectionsWith: aSource) detectMin: [ :p | p asPoint distanceTo: aLine v2 ])
 		ifNil: [ aSource center ]
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> geometryFor: shape edge: aLine [
 	| g commonParents matrix |
 	g := shape geometry.
@@ -122,23 +124,23 @@ RSBorderAttachPoint >> geometryFor: shape edge: aLine [
 	^ g
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBorderAttachPoint >> initialize [
 	super initialize.
 	offset := 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderAttachPoint >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderAttachPoint >> offset: aNumber [
 	offset := aNumber
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSBorderAttachPoint >> offsetNormalFor: aLine [
 	"Return the offset in case of multiple edges with the same starting and ending points"
 

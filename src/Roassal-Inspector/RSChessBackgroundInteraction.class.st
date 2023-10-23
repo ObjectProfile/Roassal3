@@ -2,24 +2,26 @@
 I am a basici class
 "
 Class {
-	#name : #RSChessBackgroundInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
-	#category : #'Roassal-Inspector-Interactions'
+	#name : 'RSChessBackgroundInteraction',
+	#superclass : 'RSAbstractCanvasInteraction',
+	#category : 'Roassal-Inspector-Interactions',
+	#package : 'Roassal-Inspector',
+	#tag : 'Interactions'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChessBackgroundInteraction >> onShape: aCanvas [
 	aCanvas when: RSExtentChangedEvent send: #updateExtent: to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChessBackgroundInteraction >> removeBoxes: evt [
 	evt canvas
 		propertyAt: self class name
 		ifPresent: [ :boxes | boxes do: #remove ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSChessBackgroundInteraction >> updateExtent: evt [
 	| extent side counter even camera canvas boxes color theme |
 	theme := Smalltalk ui theme.

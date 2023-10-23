@@ -2,51 +2,53 @@
 I have information about the corner radius and methods to create it
 "
 Class {
-	#name : #RSCornerRadius,
-	#superclass : #RSObject,
+	#name : 'RSCornerRadius',
+	#superclass : 'RSObject',
 	#instVars : [
 		'bottomRight',
 		'bottomLeft',
 		'topRight',
 		'topLeft'
 	],
-	#category : #'Roassal-Shapes-Border'
+	#category : 'Roassal-Shapes-Border',
+	#package : 'Roassal-Shapes',
+	#tag : 'Border'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> bottom: aNumber [
 	bottomLeft := bottomRight := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> bottomLeft [
 	"Define the bottom left of the radius"
 	^ bottomLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> bottomLeft: aNumber [
 	bottomLeft := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> bottomRight [
 	^ bottomRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> bottomRight: aNumber [
 	"Example of value could be 200"
 	bottomRight := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCornerRadius >> initialize [
 	super initialize.
 	self radius: 0
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSCornerRadius >> interpolateTo: other at: t [
 	"other is an instance of RSCornerRadius
 	t is a float between 0 and 1"
@@ -59,52 +61,52 @@ RSCornerRadius >> interpolateTo: other at: t [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> left: aNumber [
 	topLeft := bottomLeft := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> max [
 	^ topLeft max: (topRight max: (bottomLeft max: bottomRight))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> min [
 	^ topLeft min: (topRight min: (bottomLeft min: bottomRight))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> radius: aNumber [
 	topLeft := topRight := bottomLeft := bottomRight := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> right: aNumber [
 	topRight := bottomRight := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> top: aNumber [
 	topLeft := topRight := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> topLeft [
 	^ topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> topLeft: aNumber [
 	topLeft := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> topRight [
 	^ topRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCornerRadius >> topRight: aNumber [
 	topRight := aNumber
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RSPolyInterpolator }
+Extension { #name : 'RSPolyInterpolator' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 RSPolyInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ self inspectorWithTools: { #exponent }

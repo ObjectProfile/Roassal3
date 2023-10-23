@@ -2,12 +2,14 @@
 This provider uses the exact width and height of CairoFontMetricsProvider
 "
 Class {
-	#name : #RSCairoFitMetricsProvider,
-	#superclass : #RSMetricsProvider,
-	#category : #'Roassal-Shapes-TextMetrics'
+	#name : 'RSCairoFitMetricsProvider',
+	#superclass : 'RSMetricsProvider',
+	#category : 'Roassal-Shapes-TextMetrics',
+	#package : 'Roassal-Shapes',
+	#tag : 'TextMetrics'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCairoFitMetricsProvider >> extentsOf: aRSLabel [
 	| rawExt cairoFont glyphs |
 	cairoFont := aRSLabel cairoFont.

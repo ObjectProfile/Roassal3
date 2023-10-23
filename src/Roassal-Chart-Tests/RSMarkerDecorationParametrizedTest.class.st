@@ -2,15 +2,17 @@
 A RSXLabelDecorationTest is a test class for testing the behavior of RSXLabelDecoration
 "
 Class {
-	#name : #RSMarkerDecorationParametrizedTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RSMarkerDecorationParametrizedTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'decoration'
 	],
-	#category : #'Roassal-Chart-Tests-Decoration'
+	#category : 'Roassal-Chart-Tests-Decoration',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Decoration'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RSMarkerDecorationParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -20,13 +22,13 @@ RSMarkerDecorationParametrizedTest class >> testParameters [
 		  yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerDecorationParametrizedTest >> decoration: aMarkerDecoration [
 
 	decoration := aMarkerDecoration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerDecorationParametrizedTest >> testBorder [
 
 	| border |
@@ -38,14 +40,14 @@ RSMarkerDecorationParametrizedTest >> testBorder [
 	self assert: decoration border equals: border
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerDecorationParametrizedTest >> testColor [
 
 	decoration color: Color blue.
 	self assert: decoration color equals: Color blue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerDecorationParametrizedTest >> testMarker [
 
 	| aMarker |
@@ -56,7 +58,7 @@ RSMarkerDecorationParametrizedTest >> testMarker [
 	self assert: decoration shape markers first equals: aMarker
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSMarkerDecorationParametrizedTest >> testWidth [
 
 	decoration width: 18.

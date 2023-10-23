@@ -16,16 +16,18 @@ c open
 
 "
 Class {
-	#name : #RSSelectionPresentationInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSSelectionPresentationInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'presentation',
 		'shadowInteraction'
 	],
-	#category : #'Roassal-Inspector-Interactions'
+	#category : 'Roassal-Inspector-Interactions',
+	#package : 'Roassal-Inspector',
+	#tag : 'Interactions'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSelectionPresentationInteraction >> addInteractionToCanvas: aCanvas [
 
 	aCanvas ifNil: [ ^ self ].
@@ -33,20 +35,20 @@ RSSelectionPresentationInteraction >> addInteractionToCanvas: aCanvas [
 	aCanvas when: RSMouseClick send: #removeShadow: to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSelectionPresentationInteraction >> initialize [
 
 	super initialize.
 	shadowInteraction := RSShadowInteraction new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> noPushFront [
 
 	shadowInteraction shouldPushFront: false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSelectionPresentationInteraction >> onShape: aShape [
 
 	
@@ -56,40 +58,40 @@ RSSelectionPresentationInteraction >> onShape: aShape [
 	aShape when: RSMouseClick send: #selection: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> padding [
 
 	^ shadowInteraction padding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> padding: aNumber [
 
 	shadowInteraction padding: aNumber 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> presentation [
 	^ presentation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> presentation: aRSRoassalPresentation [
 	presentation := aRSRoassalPresentation
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 RSSelectionPresentationInteraction >> release [
 	presentation := nil
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSelectionPresentationInteraction >> removeShadow: evt [
 
 	shadowInteraction removeShadowsOn: evt canvas
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSelectionPresentationInteraction >> selection: evt [
 
 	"evt can be a RSShape or RSEvent"
@@ -104,13 +106,13 @@ RSSelectionPresentationInteraction >> selection: evt [
 	aShape signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> shadowColor [
 
 	^ shadowInteraction shadowColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionPresentationInteraction >> shadowColor: aColor [
 
 	shadowInteraction shadowColor: aColor

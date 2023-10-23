@@ -1,10 +1,12 @@
 Class {
-	#name : #RSKernelDensityTest,
-	#superclass : #TestCase,
-	#category : #'Roassal-Chart-Tests-Statistics'
+	#name : 'RSKernelDensityTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal-Chart-Tests-Statistics',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Statistics'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testBadKernelArgument [
 	| kernelDensity anXValue |
 	anXValue := 30.
@@ -13,7 +15,7 @@ RSKernelDensityTest >> testBadKernelArgument [
 	self should: [ kernelDensity kernel: RSKernelDensity gaussian. ] raise: Error.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testBasicNewKernelDensity [
 	| kernelDensity anXValue |
 	anXValue := 30.
@@ -23,7 +25,7 @@ RSKernelDensityTest >> testBasicNewKernelDensity [
 	self assert: (kernelDensity evaluateKernel: anXValue) closeTo: 1.4736e-196.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testComputeBandwidth [
 	| data kernelDensity |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
@@ -31,7 +33,7 @@ RSKernelDensityTest >> testComputeBandwidth [
 	self assert: kernelDensity bandwidth closeTo: 8.432115827458984.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testComputeDensityCurveDataOnlyOneValue [
 	| kernelDensity data |
 	data := #(87 87 87 87 87 87).
@@ -39,7 +41,7 @@ RSKernelDensityTest >> testComputeDensityCurveDataOnlyOneValue [
 	self assert: kernelDensity curveStep closeTo: 0.01.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testComputeDensityCurveStep [
 	| kernelDensity data |
 	data := #(14 15 28 27 32 35).
@@ -47,7 +49,7 @@ RSKernelDensityTest >> testComputeDensityCurveStep [
 	self assert: kernelDensity curveStep closeTo: 0.21.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testDefaultErrorMargin [
 	| kernelDensity data |
 	data := { 100. 200. 300. 400. 500. 600. }.
@@ -55,7 +57,7 @@ RSKernelDensityTest >> testDefaultErrorMargin [
 	self assert: kernelDensity errorMargin closeTo: kernelDensity defaultErrorMargin.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testDensityCurveSample [
 	| data proveValues validationValues kernelDensity |
 	data := #(14 15 28 27 32 35).
@@ -66,7 +68,7 @@ RSKernelDensityTest >> testDensityCurveSample [
 	self assert: (kernelDensity densityCurveSample: proveValues) closeTo: validationValues precision: 0.01.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testGetStandardDeviation [
 	| data standardDeviation |
 	data := #(6 7 15 36 39 40 41 42 43 47 49).
@@ -74,14 +76,14 @@ RSKernelDensityTest >> testGetStandardDeviation [
 	self assert: standardDeviation closeTo: 15.134657288477642.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testKDEDefaultBandwidth [
 	| kernelDensity |
 	kernelDensity := RSKernelDensity gaussian.
 	self assert: kernelDensity bandwidth isNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testKDESetBandwidth [
 	| kernelDensity anXValue |
 	kernelDensity := RSKernelDensity gaussian.
@@ -90,7 +92,7 @@ RSKernelDensityTest >> testKDESetBandwidth [
  	self assert: (kernelDensity evaluateKernel: anXValue) closeTo: 1.4736e-196.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testKernelDensityEstimation [
 	| kernelDensity anXValue data |
 	data := #(14 15 28 27 32 35).
@@ -101,7 +103,7 @@ RSKernelDensityTest >> testKernelDensityEstimation [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testKernelFunction [
 	| kernelDensity anXValue |
 	kernelDensity := RSKernelDensity gaussian.
@@ -109,7 +111,7 @@ RSKernelDensityTest >> testKernelFunction [
  	self assert: (kernelDensity evaluateKernel: anXValue) closeTo: 1.4736e-196.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testSetDensityCurveStep [
 	| kernelDensity data densityCurveBeforeStepChange densityCurveAfterStepChange|
 	data := #(14 15 28 27 32 35).
@@ -121,7 +123,7 @@ RSKernelDensityTest >> testSetDensityCurveStep [
 	self assert: densityCurveBeforeStepChange size > densityCurveAfterStepChange size.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSKernelDensityTest >> testSetErrorMargin [
 	| kernelDensity data densityCurveSizeBefore densityCurveSizeAfter |
 	data := { 100. 200. 300. 400. 500. 600. }.

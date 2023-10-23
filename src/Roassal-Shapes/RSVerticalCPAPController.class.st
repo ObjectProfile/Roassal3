@@ -25,12 +25,14 @@ v := RSCanvas new.
 ```
 "
 Class {
-	#name : #RSVerticalCPAPController,
-	#superclass : #RSAbstractCPAPController,
-	#category : #'Roassal-Shapes-ControlPoints'
+	#name : 'RSVerticalCPAPController',
+	#superclass : 'RSAbstractCPAPController',
+	#category : 'Roassal-Shapes-ControlPoints',
+	#package : 'Roassal-Shapes',
+	#tag : 'ControlPoints'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSVerticalCPAPController >> controlPointsFrom: from to: to [
 	| mid |
 	mid := (from + to)/2.

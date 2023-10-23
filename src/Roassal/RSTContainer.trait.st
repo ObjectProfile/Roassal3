@@ -158,7 +158,7 @@ RSTContainer >> deepShapesFromModels: someObjects result: result [
 
 { #category : 'defaults' }
 RSTContainer >> defaultShapeCollection [
-	^ RSSequenceableCollection new
+	^ RTSequenceableCollection new
 ]
 
 { #category : 'accessing' }
@@ -438,13 +438,13 @@ RSTContainer >> updateInShapeCollection: aShape [
 
 { #category : 'shape - collection' }
 RSTContainer >> useList [
-	self shapeCollection: RSSequenceableCollection new.
+	self shapeCollection: RTSequenceableCollection new.
 ]
 
 { #category : 'shape - collection' }
 RSTContainer >> useRTree [
 	"use RTree for big data visualizations"
-	self shapeCollection: RSRTreeShapeCollection new.
+	self shapeCollection: RTreeCollection new.
 ]
 
 { #category : 'accessing' }

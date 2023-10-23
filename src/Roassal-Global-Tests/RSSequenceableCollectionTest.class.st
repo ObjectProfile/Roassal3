@@ -1,26 +1,28 @@
 Class {
-	#name : #RSSequenceableCollectionTest,
-	#superclass : #RSTest,
+	#name : 'RSSequenceableCollectionTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'list'
 	],
-	#category : #'Roassal-Global-Tests-Rendering'
+	#category : 'Roassal-Global-Tests-Rendering',
+	#package : 'Roassal-Global-Tests',
+	#tag : 'Rendering'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSSequenceableCollectionTest >> setUp [
 	super setUp.
-	list := RSSequenceableCollection new
+	list := RTSequenceableCollection new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequenceableCollectionTest >> testBasic [
 
 	list isEmpty.
 	self assert: list size isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequenceableCollectionTest >> testIncludes [
 	| result |
 	list addAll: { RSBox new size: 10. RSBox new position: 50@50; size: 10 asPoint}.
@@ -31,7 +33,7 @@ RSSequenceableCollectionTest >> testIncludes [
 	self assert: result isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSequenceableCollectionTest >> testOneElement [
 	list add: (RSBox new size: 10).
 	self deny: list isEmpty

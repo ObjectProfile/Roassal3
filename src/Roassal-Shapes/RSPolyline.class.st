@@ -14,15 +14,17 @@ c open
 Please review comment of `RSAbstractControlPointsLine` and `RSAbstractLine`.
 "
 Class {
-	#name : #RSPolyline,
-	#superclass : #RSAbstractControlPointsLine,
+	#name : 'RSPolyline',
+	#superclass : 'RSAbstractControlPointsLine',
 	#instVars : [
 		'radius'
 	],
-	#category : #'Roassal-Shapes-Lines'
+	#category : 'Roassal-Shapes-Lines',
+	#package : 'Roassal-Shapes',
+	#tag : 'Lines'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSPolyline >> basicIncludesPoint: aPoint [
 	"Answer whether any segment of this polyline includes aPoint."
 	self controlPoints overlappingPairsDo: [ :a :b |
@@ -31,17 +33,17 @@ RSPolyline >> basicIncludesPoint: aPoint [
 	^ false
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSPolyline >> buildPathOn: visitor [
 	visitor buildPolylinePath: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPolyline >> cornerRadii [
 	^ radius ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPolyline >> cornerRadii: aNumber [
 	radius := aNumber abs.
 	self resetPath

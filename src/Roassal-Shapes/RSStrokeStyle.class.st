@@ -2,18 +2,20 @@
 I represent different styles for the stroke
 "
 Class {
-	#name : #RSStrokeStyle,
-	#superclass : #RSObject,
+	#name : 'RSStrokeStyle',
+	#superclass : 'RSObject',
 	#instVars : [
 		'capStyle',
 		'joinStyle',
 		'dashArray',
 		'dashOffset'
 	],
-	#category : #'Roassal-Shapes-Border'
+	#category : 'Roassal-Shapes-Border',
+	#package : 'Roassal-Shapes',
+	#tag : 'Border'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSStrokeStyle class >> fromString: aString [
 	| inst |
 	inst := self new.
@@ -27,7 +29,7 @@ RSStrokeStyle class >> fromString: aString [
 	^ nil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSStrokeStyle >> = anObject [
 	^ self == anObject or: [
 		anObject notNil and: [
@@ -37,55 +39,55 @@ RSStrokeStyle >> = anObject [
 						dashArray = anObject dashArray ] ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> capStyle [
 	^ capStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> capStyle: symbol [
 	capStyle := symbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> dashArray [
 	^ dashArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> dashArray: array [
 	self assert: array isArray description: 'enter an array of numbers'.
 	dashArray := array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> dashOffset [
 	^ dashOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> dashOffset: aNumber [
 	dashOffset := aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSStrokeStyle >> hash [
 	^ ((capStyle hash hashMultiply + joinStyle hash) hashMultiply +
 	  (dashOffset hash hashMultiply + dashArray hash)) hashMultiply
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSStrokeStyle >> initialize [
 	super initialize.
 	dashOffset := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> joinStyle [
 	^ joinStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSStrokeStyle >> joinStyle: symbol [
 	joinStyle := symbol
 ]

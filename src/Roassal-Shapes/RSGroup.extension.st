@@ -1,6 +1,6 @@
-Extension { #name : #RSGroup }
+Extension { #name : 'RSGroup' }
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 RSGroup >> asShape [
 	"Convert a RSGroup into a shape. Pretty convenient to create a group of shapes as a composite.
 Consider the following example:
@@ -27,7 +27,7 @@ c @ RSCanvasController
 	^ self asShapeFor: nil
 ]
 
-{ #category : #'*Roassal-Shapes' }
+{ #category : '*Roassal-Shapes' }
 RSGroup >> asShapeFor: model [
 	"Convert a RSGroup into a shape, and tis shape has a model. Pretty convenient to create a group of shapes as a composite.
 Consider the following example:

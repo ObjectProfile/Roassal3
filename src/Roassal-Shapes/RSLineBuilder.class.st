@@ -81,8 +81,8 @@ c open
 ```
 "
 Class {
-	#name : #RSLineBuilder,
-	#superclass : #RSObject,
+	#name : 'RSLineBuilder',
+	#superclass : 'RSObject',
 	#traits : 'RSTLine',
 	#classTraits : 'RSTLine classTrait',
 	#instVars : [
@@ -97,10 +97,12 @@ Class {
 		'formatString',
 		'canvasHasBeenManuallySet'
 	],
-	#category : #'Roassal-Shapes-Graph'
+	#category : 'Roassal-Shapes-Graph',
+	#package : 'Roassal-Shapes',
+	#tag : 'Graph'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> arrowedDirectedBezier [
 	| marker ext |
 	ext := 15 @ 20.
@@ -116,17 +118,17 @@ RSLineBuilder class >> arrowedDirectedBezier [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> arrowedLine [
 	^ self new: RSShapeFactory arrowedLine
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> arrowedLineWithOffset [
 	^ self arrowedLineWithOffset: 0.2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> arrowedLineWithOffset: aFloat [
 	"[0, 1] value"
 	| inst |
@@ -135,102 +137,102 @@ RSLineBuilder class >> arrowedLineWithOffset: aFloat [
 	^ inst
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> bezier [
 	^ self new: RSBezier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> directedBezier [
 	^ (self new: RSBezier new)
 		controlPointsController: RSDirectedBezierCPAPController new;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> horizontalBezier [
 	^ self horizontalLine: RSBezier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> horizontalLine: aShape [
 	^ (self new: aShape)
 		controlPointsController: RSHorizontalCPAPController new;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> line [
 	^ self new: RSLine new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> new [
 	^ self error: 'Should not use #new to create an edge builder. Instead, use a #line, #arrowedLine.'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> new: aRSShape [
 	 ^ super new
 		shape: aRSShape;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> orthoHorizontal [
 	^ self horizontalLine: RSPolyline new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> orthoVertical [
 	^ self verticalLine: RSPolyline new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> polyline [
 	^ self new: RSPolyline new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> verticalBezier [
 	^ self verticalLine: RSBezier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder class >> verticalLine: aShape [
 	^ (self new: aShape)
 		controlPointsController: RSVerticalCPAPController new;
 		yourself
 ]
 
-{ #category : #'public - repetition' }
+{ #category : 'public - repetition' }
 RSLineBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> arrowMarkerEnd [
 
 	self markerEnd: (RSShapeFactory arrow size: 10; color: self shape color)
 ]
 
-{ #category : #'public - attach point' }
+{ #category : 'public - attach point' }
 RSLineBuilder >> attachPoint [
 	^ self shape attachPoint
 ]
 
-{ #category : #'public - attach point' }
+{ #category : 'public - attach point' }
 RSLineBuilder >> attachPoint: anAttachPoint [
 	self shape attachPoint: anAttachPoint
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLineBuilder >> beDirectional [
 	"When lines are created, this allow for having lines going from A to B, and from B to A"
 	beDirectional := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> canvas [
 	"Return the canvas if it was manually set using #canvas: or infer it from the shapes added to the builder"
 	(canvas isNil and: [ fromShapes notNil ]) ifTrue: [ canvas := fromShapes anyOne canvas ].
@@ -238,27 +240,27 @@ RSLineBuilder >> canvas [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> canvas: aCanvas [
 	"Provide a reference to the Roassal canvas in which (i) shapes will be looked up and (ii) lines will be added"
 	canvasHasBeenManuallySet := true.
 	canvas := aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> canvasNodes [
 	"Return the nodes of the canvas"
 	canvas ifNil: [ ^ #() ].
 	^ canvas nodes
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectFrom: aBlockOrASymbol [
 	"Connect each shapes with the shapes for which the model matches aBlockOrASymbol"
 	^ self connectFrom: aBlockOrASymbol to: [ :each | each ]
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	| toShape fromShape |
 	self resetCreatedEdges.
@@ -270,7 +272,7 @@ RSLineBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 	"Define edges from a particular shape to another set of shapes. For example:
 
@@ -312,12 +314,12 @@ c open
 	^ createdEdges
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol [
 	^ self connectFromAll: aFromBlockOrSymbol to: [ :each | each ]
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 	| toElement tfromElements |
@@ -332,12 +334,12 @@ RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectTo: aBlockOrASymbol [
 	^ self connectFrom: [ :each | each ] to: aBlockOrASymbol
 ]
 
-{ #category : #'public - line' }
+{ #category : 'public - line' }
 RSLineBuilder >> connectToAll: aBlockOrASymbol [
 	"Should this method use connectFrom:ToAll: ?????"
 	| tmptoElements |
@@ -351,14 +353,14 @@ RSLineBuilder >> connectToAll: aBlockOrASymbol [
 	^ createdEdges
 ]
 
-{ #category : #'private - utility' }
+{ #category : 'private - utility' }
 RSLineBuilder >> createEdgeIfNecessaryFrom: fromShape to: toShape [
 	"This is a private method. Create, if necessary, an edge between two elements"
 	(self shouldCreateEdgeFrom: fromShape to: toShape)
 		ifTrue: [ createdEdges add: (self edgeFrom: fromShape to: toShape) ]
 ]
 
-{ #category : #'private - utility' }
+{ #category : 'private - utility' }
 RSLineBuilder >> edgeFrom: source to: target [
 	"source and target are elements"
 	| line |
@@ -376,13 +378,13 @@ RSLineBuilder >> edgeFrom: source to: target [
 	^ line
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> fromObjects [
 	"Return the list of objects considered as targets for the edges"
 	^ self fromShapes collect: #model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> fromObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ canvasHasBeenManuallySet ] description: 'A canvas has to be set, please use #canvas: before'.
@@ -392,13 +394,13 @@ RSLineBuilder >> fromObjects: someObjectsOrABlock [
 		ifFalse: [ self fromShapes: (canvas nodes select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> fromShapes [
 	fromShapes ifNil: [ ^ self canvasNodes select: #hasModel ].
 	^ fromShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> fromShapes: someShapes [
 	self assert: [ someShapes isCollection ].
 	self assert: [ someShapes allSatisfy: [ :s | s class inheritsFrom: RSShape ] ] description: 'Need to provide a collection of RSShape'.
@@ -406,7 +408,7 @@ RSLineBuilder >> fromShapes: someShapes [
 	fromShapes := someShapes asGroup
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLineBuilder >> initialize [
 	super initialize.
 	self noRepetition.
@@ -418,38 +420,38 @@ RSLineBuilder >> initialize [
 	self beDirectional
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLineBuilder >> isBidirectional [
 	"Return true or false, indicating whether the edge builder is bidirectional or not (i.e., if
 	edges from A to B, __and__ B to A can be created"
 	^ beDirectional
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLineBuilder >> makeBidirectional [
 	"When lines are created, this method does not allow for having lines going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
 	beDirectional := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> moveBehind [
 	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"
 	shouldMoveBehind := true
 ]
 
-{ #category : #'private - utility' }
+{ #category : 'private - utility' }
 RSLineBuilder >> moveBehindIfNecessary: someEdges [
 	shouldMoveBehind ifFalse: [ ^ self ].
 	someEdges pushBack
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLineBuilder >> noBidirectional [
 	"When lines are created, this method does not allow for having lines going from A to B, and from B to A. Only A to B, __OR__, B to A is created"
 	beDirectional := false
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLineBuilder >> noRepetition [
 	"Avoid having more than one edge between two elements
 
@@ -469,12 +471,12 @@ b canvas numberOfEdges
 	allowRepetition := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> object: anObject [
 	^ self objects: (Array with: anObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> objects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
@@ -482,24 +484,24 @@ RSLineBuilder >> objects: someObjectsOrABlock [
 	self fromObjects: someObjectsOrABlock
 ]
 
-{ #category : #'private - utility' }
+{ #category : 'private - utility' }
 RSLineBuilder >> resetCreatedEdges [
 	createdEdges := RSGroup new
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSLineBuilder >> shape [
 	^ shape
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSLineBuilder >> shape: aRSShape [
 	"Set the shape used to build edges"
 	self assert: [ aRSShape isLine ] description: 'Only a line can be provided to a line builder'.
 	shape := aRSShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> shapes: someShapes [
 	"This method is used to provide a set of Roassal shapes. Models will be looked up in these elements"
 	self assert: [ someShapes isCollection ] description: 'Must provide a collection'.
@@ -510,12 +512,12 @@ RSLineBuilder >> shapes: someShapes [
 	self fromShapes: someShapes
 ]
 
-{ #category : #'public - repetition' }
+{ #category : 'public - repetition' }
 RSLineBuilder >> shouldAllowRepetition [
 	^ allowRepetition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLineBuilder >> shouldCreateEdgeFrom: fromShape to: toShape [
 	"Return true if an edge has to be created"
 	fromShape == toShape ifTrue: [ ^ false ].
@@ -525,7 +527,7 @@ RSLineBuilder >> shouldCreateEdgeFrom: fromShape to: toShape [
 	^ true
 ]
 
-{ #category : #'public - source' }
+{ #category : 'public - source' }
 RSLineBuilder >> source: objects connectFrom: fromblock to: toBlock [
 	"Define some edges from objects that are not part of the canvas"
 	"
@@ -566,7 +568,7 @@ b"
 	^ self useAssociations: assocs
 ]
 
-{ #category : #'public - source' }
+{ #category : 'public - source' }
 RSLineBuilder >> source: objects connectFrom: fromblock toAll: toBlock [
 	"Define some edges from objects that are not part of the view
 
@@ -607,7 +609,7 @@ b"
 	^ self useAssociations: assocs
 ]
 
-{ #category : #'public - source' }
+{ #category : 'public - source' }
 RSLineBuilder >> source: objects connectFromAll: fromBlock to: toBlock [
 	"Define some edges from objects that are not part of the view
 
@@ -648,7 +650,7 @@ b"
 	^ self useAssociations: assocs
 ]
 
-{ #category : #'attach point' }
+{ #category : 'attach point' }
 RSLineBuilder >> startAttachPoint: startAttachPoint endAttachPoint: endAttachPoint [
 
 	| controller |
@@ -660,18 +662,18 @@ RSLineBuilder >> startAttachPoint: startAttachPoint endAttachPoint: endAttachPoi
 	self controlPointsController: controller
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> toObject: anObject [
 	^ self toObjects: (Array with: anObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> toObjects [
 	"Return the list of objects considered as sources for the edges"
 	^ self toShapes collect: #model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> toObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ canvasHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
@@ -681,18 +683,18 @@ RSLineBuilder >> toObjects: someObjectsOrABlock [
 		ifFalse: [ self toShapes: (canvas nodes select: [ :el | someObjectsOrABlock rsValue: el model ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> toShapes [
 	toShapes ifNil: [ ^ self canvasNodes ].
 	^ toShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLineBuilder >> toShapes: someShapes [
 	toShapes := someShapes asGroup
 ]
 
-{ #category : #'public - associations' }
+{ #category : 'public - associations' }
 RSLineBuilder >> useAssociation: assoc [
 	"assoc have to be between model objects"
 	| result |
@@ -703,7 +705,7 @@ RSLineBuilder >> useAssociation: assoc [
 	^ result first
 ]
 
-{ #category : #'public - associations' }
+{ #category : 'public - associations' }
 RSLineBuilder >> useAssociations: associations [
 	"Draw edges between shapes using associations. Each association has to follow the pattern: startmodel -> endmodel
 
@@ -735,25 +737,25 @@ b open
 	^ createdEdges
 ]
 
-{ #category : #'public - associations' }
+{ #category : 'public - associations' }
 RSLineBuilder >> useElementAssociations: associationsBetweenElements [
 	associationsBetweenElements do: [ :assoc |
 		self edgeFrom: assoc key to: assoc value ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder >> verticalBezier [
 	^ self verticalLine: RSBezier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSLineBuilder >> verticalLine: aShape [
 	^ (self shape: aShape)
 		controlPointsController: RSVerticalCPAPController new;
 		yourself
 ]
 
-{ #category : #'public - attach point' }
+{ #category : 'public - attach point' }
 RSLineBuilder >> withBorderAttachPoint [
 	"Make the produced line use a border attach point. For example:
 -=-=-=-=-=-=-=-=-=-=
@@ -782,7 +784,7 @@ c @ RSCanvasController
 	self attachPoint: RSBorderAttachPoint new
 ]
 
-{ #category : #'public - attach point' }
+{ #category : 'public - attach point' }
 RSLineBuilder >> withHorizontalAttachPoint [
 	"Make the produced line use a vertical attach point. For example:
 -=-=-=-=-=-=-=-=-=-=
@@ -811,7 +813,7 @@ c @ RSCanvasController
 	self attachPoint: RSHorizontalAttachPoint new
 ]
 
-{ #category : #'public - attach point' }
+{ #category : 'public - attach point' }
 RSLineBuilder >> withVerticalAttachPoint [
 	"Make the produced line use a vertical attach point. For example:
 ```

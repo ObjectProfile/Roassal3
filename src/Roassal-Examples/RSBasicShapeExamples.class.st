@@ -1184,6 +1184,7 @@ RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
 	nodes := (1 to: 10) collect: [ :i | | label |
 		label := RSLabel text: i.
 		{ label } asShape
+			model: i;
 			size: 20;
 			borderColor: Color black;
 			color: (colorScale scale: i);

@@ -26,12 +26,14 @@ c @ RSControlsCanvas
 -=-=-=-=
 "
 Class {
-	#name : #RSHorizontalAttachPoint,
-	#superclass : #RSOffsetAttachPoint,
-	#category : #'Roassal-Shapes-AttachPoint'
+	#name : 'RSHorizontalAttachPoint',
+	#superclass : 'RSOffsetAttachPoint',
+	#category : 'Roassal-Shapes-AttachPoint',
+	#package : 'Roassal-Shapes',
+	#tag : 'AttachPoint'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSHorizontalAttachPoint >> basicEndingPointOf: aLine [
 	^ self
 		positionFor: aLine to
@@ -39,7 +41,7 @@ RSHorizontalAttachPoint >> basicEndingPointOf: aLine [
 		point: aLine to encompassingRectangle leftCenter + (endOffset@0)
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 RSHorizontalAttachPoint >> basicStartingPointOf: aLine [
 	^ self
 		positionFor: aLine from

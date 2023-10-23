@@ -1,15 +1,17 @@
 Class {
-	#name : #RSScatterPlotTest,
-	#superclass : #RSAbstractPlotTest,
-	#category : #'Roassal-Chart-Tests-Base'
+	#name : 'RSScatterPlotTest',
+	#superclass : 'RSAbstractPlotTest',
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSScatterPlotTest >> classToTest [
 	^ RSScatterPlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSScatterPlotTest >> testCreateScatterPlot [
 	| scatterPlot xScale yScale |
 	scatterPlot := RSScatterPlot new.

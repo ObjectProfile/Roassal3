@@ -1,6 +1,6 @@
-Extension { #name : #RSPieSlice }
+Extension { #name : 'RSPieSlice' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 RSPieSlice >> inspectorShadowFor: padding color: aColor [
 	| m rect |
 	rect := self baseRectangle expandBy: padding.

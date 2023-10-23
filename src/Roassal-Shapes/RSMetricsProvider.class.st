@@ -4,25 +4,27 @@ Users can propose a different RSMetricProvider. RSLabel uses by default `RSMetri
 
 "
 Class {
-	#name : #RSMetricsProvider,
-	#superclass : #RSObject,
+	#name : 'RSMetricsProvider',
+	#superclass : 'RSObject',
 	#classVars : [
 		'Default'
 	],
-	#category : #'Roassal-Shapes-TextMetrics'
+	#category : 'Roassal-Shapes-TextMetrics',
+	#package : 'Roassal-Shapes',
+	#tag : 'TextMetrics'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMetricsProvider class >> default [
 	^ Default ifNil: [ Default := RSCairoMetricsProvider new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMetricsProvider class >> default: aRSMetricsProvider [
 	Default := aRSMetricsProvider
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMetricsProvider >> extentsOf: aRSLabel [
 	^ self subclassResponsibility
 ]
