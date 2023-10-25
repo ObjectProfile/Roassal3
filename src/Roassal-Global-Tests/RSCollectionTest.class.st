@@ -83,7 +83,7 @@ RSCollectionTest >> testAdd [
 	self assert: shapeCollection size equals: 3
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 RSCollectionTest >> testContainsPoint [
 	| box shape position |
 	position := 1000 asPoint.
@@ -216,7 +216,7 @@ RSCollectionTest >> testGetShapesFromRectangleInCompositeWithChildOutside [
 	self assert: listOfShapes asArray isEmpty
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 RSCollectionTest >> testOneElement [
 
 	shapeCollection add: (RSBox new size: 10).
@@ -233,7 +233,7 @@ RSCollectionTest >> testRemoveOneElement [
 	self assert: shapeCollection isEmpty
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 RSCollectionTest >> testSortResultArray [
 
 	| shapes a b c d tree e |

@@ -1,6 +1,6 @@
-Extension { #name : #AthensCloseSegment }
+Extension { #name : 'AthensCloseSegment' }
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 AthensCloseSegment >> visitWith: visitor [
 	visitor visitCloseSegment:  self
 ]

@@ -1,13 +1,13 @@
-Extension { #name : #AthensCubicSegment }
+Extension { #name : 'AthensCubicSegment' }
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 AthensCubicSegment >> durationFor: aPoint [
 	| d |
 	d := to distanceTo: aPoint.
 	^ 1 / (d*0.5)
 ]
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 AthensCubicSegment >> pointsWithStart: aPoint duration: duration [
 	| c b a |
 	c := 3 * (via1 - aPoint).
@@ -19,7 +19,7 @@ AthensCubicSegment >> pointsWithStart: aPoint duration: duration [
 		]
 ]
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 AthensCubicSegment >> visitWith: visitor [
 	visitor visitCubicSegment: self
 ]

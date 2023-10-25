@@ -47,20 +47,22 @@ v
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSMultiBezierEdgeBuilder,
-	#superclass : #RSLineBuilder,
+	#name : 'RSMultiBezierEdgeBuilder',
+	#superclass : 'RSLineBuilder',
 	#instVars : [
 		'tension'
 	],
-	#category : #'Roassal-SVG-Edges'
+	#category : 'Roassal-SVG-Edges',
+	#package : 'Roassal-SVG',
+	#tag : 'Edges'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMultiBezierEdgeBuilder class >> multiBezier [
 	^ self new: RSSVGPathLine new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMultiBezierEdgeBuilder >> applyTensionOn: points [
 	| n dp p1 ten |
 	n := points size - 1.
@@ -73,7 +75,7 @@ RSMultiBezierEdgeBuilder >> applyTensionOn: points [
 		points at: i put: (1 - ten) * (p1 + (t * dp)) + (ten * p)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMultiBezierEdgeBuilder >> commonAncestor: edge with: selector [
 	| a b aNodes bNodes sharedNode remove |
 	a := edge from.
@@ -95,7 +97,7 @@ RSMultiBezierEdgeBuilder >> commonAncestor: edge with: selector [
 	^ sharedNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	"obtaint a list of points from the elements in the view based on a selector"
 	| from to ancestor shapes search index |
@@ -121,7 +123,7 @@ RSMultiBezierEdgeBuilder >> commonShapes: edge with: selector [
 	^ shapes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 	| t followers |
 	followers := OrderedCollection new.
@@ -132,7 +134,7 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 	^ followers
 ]
 
-{ #category : #'public - line path' }
+{ #category : 'public - line path' }
 RSMultiBezierEdgeBuilder >> following: selector [
 	self shape svgPath: [ :line | [:builder |
 		| points commonShapes att a b |
@@ -157,12 +159,12 @@ RSMultiBezierEdgeBuilder >> following: selector [
 			to: points last ] ]
 ]
 
-{ #category : #'public - line path' }
+{ #category : 'public - line path' }
 RSMultiBezierEdgeBuilder >> tension [
 	^ tension ifNil: [ tension := 0.7 ]
 ]
 
-{ #category : #'public - line path' }
+{ #category : 'public - line path' }
 RSMultiBezierEdgeBuilder >> tension: aNumberOrBlock [
 	"tension should evaluate it and return a value between 0 and 1.
 	0 means straight lines

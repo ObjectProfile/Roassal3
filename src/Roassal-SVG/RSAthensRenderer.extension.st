@@ -1,6 +1,6 @@
-Extension { #name : #RSAthensRenderer }
+Extension { #name : 'RSAthensRenderer' }
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 RSAthensRenderer >> buildSVGLinePath: line [
 	| string |
 	string := line svgPath value: line.
@@ -16,7 +16,7 @@ RSAthensRenderer >> buildSVGLinePath: line [
 	]
 ]
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 RSAthensRenderer >> buildSVGPath: svg [
 	svg segments ifNil: [ ^ self ].
 	svg segments

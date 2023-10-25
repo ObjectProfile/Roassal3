@@ -3,38 +3,40 @@ I use block for each segment
 This class is just for examples and demos. For a better visitor for each segment try to create a new subclass of RSSegmentsVisitor
 "
 Class {
-	#name : #RSBlockSegmentsVisitor,
-	#superclass : #RSSegmentsVisitor,
+	#name : 'RSBlockSegmentsVisitor',
+	#superclass : 'RSSegmentsVisitor',
 	#instVars : [
 		'lineToBlock',
 		'curveViaAndToBlock',
 		'moveToBlock',
 		'closeBlock'
 	],
-	#category : #'Roassal-SVG-Segments'
+	#category : 'Roassal-SVG-Segments',
+	#package : 'Roassal-SVG',
+	#tag : 'Segments'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockSegmentsVisitor >> closeBlock: aBlockClosure [
 	closeBlock := aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockSegmentsVisitor >> curveViaAndToBlock: aBlockClosure [
 	curveViaAndToBlock := aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockSegmentsVisitor >> lineToBlock: aBlockClosure [
 	lineToBlock := aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBlockSegmentsVisitor >> moveToBlock: aBlockClosure [
 	moveToBlock := aBlockClosure
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSBlockSegmentsVisitor >> simplePoints: aBlock [
 
 	| current first simplePoints |
@@ -52,27 +54,27 @@ RSBlockSegmentsVisitor >> simplePoints: aBlock [
 				simplePoints value: (AthensLineSegment new point: first) ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBlockSegmentsVisitor >> visitCloseSegment: aSegment [
 	closeBlock value: aSegment
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBlockSegmentsVisitor >> visitCubicSegment: aSegment [
 	curveViaAndToBlock value: aSegment
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBlockSegmentsVisitor >> visitLineSegment: aSegment [
 	lineToBlock value: aSegment
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBlockSegmentsVisitor >> visitMoveSegment: aSegment [
 	moveToBlock value: aSegment
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBlockSegmentsVisitor >> visitQuadSegment: aSegment [
 	lineToBlock value: aSegment
 ]

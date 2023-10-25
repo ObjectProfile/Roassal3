@@ -378,6 +378,13 @@ RSCanvas >> initialize [
 	self useMorphicHost
 ]
 
+{ #category : 'updating' }
+RSCanvas >> invalidate [
+	"this will call to draw all the visible area"
+	self camera invalidate.
+	self signalUpdate
+]
+
 { #category : 'accessing' }
 RSCanvas >> lastMousePosition [
 	^ host lastMousePosition

@@ -1,6 +1,6 @@
-Extension { #name : #RSShapeFactory }
+Extension { #name : 'RSShapeFactory' }
 
-{ #category : #'*Roassal-SVG' }
+{ #category : '*Roassal-SVG' }
 RSShapeFactory class >> svgPath [
 	^ RSSVGPath new
 ]

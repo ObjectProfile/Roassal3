@@ -2,12 +2,14 @@
 This class iterates over a RSSVGPath path segments
 "
 Class {
-	#name : #RSSegmentsVisitor,
-	#superclass : #RSObject,
-	#category : #'Roassal-SVG-Segments'
+	#name : 'RSSegmentsVisitor',
+	#superclass : 'RSObject',
+	#category : 'Roassal-SVG-Segments',
+	#package : 'Roassal-SVG',
+	#tag : 'Segments'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitBoundingShape: aRSSVGPath [
 	| b segment |
 	b := AthensSimplePathBuilder new.
@@ -19,22 +21,22 @@ RSSegmentsVisitor >> visitBoundingShape: aRSSVGPath [
 		segment := segment next ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitCloseSegment: aSegment [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitCubicSegment: aSegment [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitLineSegment: aSegment [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitMoveSegment: aSegment [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSegmentsVisitor >> visitQuadSegment: aSegment [
 ]

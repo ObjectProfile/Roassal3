@@ -116,42 +116,33 @@ RSKiviatExample >> example05RestaurantAnimation [
 	canvas := kiviat canvas.
 	canvas add: (animatedPolygon := RSPolygon new withBorder).
 	canvas add: (title := RSLabel new
-			          text: 'Restaurant: 1';
-			          fontSize: 15;
-			          color: 'black';
-			          position: 0 @ -250).
+		text: 'Restaurant: 1';
+		fontSize: 15;
+		color: 'black';
+		position: 0 @ -250).
 	animations := shapes collectWithIndex: [ :fromShape :index |
-		              | k toShape |
-		              k := index + 1.
-		              k > shapes size ifTrue: [ k := 1 ].
-		              toShape := shapes at: k.
+		| k toShape |
+		k := index + 1.
+		k > shapes size ifTrue: [ k := 1 ].
+		toShape := shapes at: k.
 
-		              canvas transitionAnimation
-			              duration: 3 seconds;
-			              easing: RSEasingInterpolator expIn;
-			              when: RSAnimationEndEvent
-			              do: [ :evt | title text: 'Restaurant: ' , k asString ]
-			              for: self;
-			              onStepDo: [ :t |
-				              animatedPolygon
-					              privatePoints: (fromShape points
-							               with: toShape points
-							               collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
-					              resetPath;
-					              color:
-						              (fromShape color
-							               interpolateTo: toShape color
-							               at: t);
-					              position:
-						              (fromShape position
-							               interpolateTo: toShape position
-							               at: t).
-				              animatedPolygon border color:
-					              (fromShape border color
-						               interpolateTo: toShape border color
-						               at: t).
-				              canvas signalUpdate ] ].
+		canvas transitionAnimation
+			duration: 3 seconds;
+			easing: RSEasingInterpolator expIn;
+			when: RSAnimationEndEvent
+				do: [ :evt | title text: 'Restaurant: ' , k asString ]
+				for: self;
+			onStepDo: [ :t |
+				animatedPolygon
+					privatePoints: (fromShape points
+						with: toShape points
+						collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
+					resetPath;
+					color: (fromShape color interpolateTo: toShape color at: t);
+					position: (fromShape position interpolateTo: toShape position at: t).
+				animatedPolygon border color: (fromShape border color interpolateTo: toShape border color at: t). ] ].
 	(canvas animationFrom: animations) repeat.
+	canvas newAnimation repeat onStepDo: [ canvas invalidate ].
 	^ kiviat canvas
 ]
 
