@@ -122,7 +122,7 @@ RSShadowInteraction >> onShape: aShape [
 
 	self addInteractionToCanvas: aShape.
 	self putShadowOn: aShape.
-	
+
 	(aShape hasInteraction: self class) ifTrue: [ ^ self ].
 	aShape
 		when: RSPositionChangedEvent send: #updateShadow: to: self;
@@ -137,7 +137,7 @@ RSShadowInteraction >> padding [
 ]
 
 { #category : 'hooks' }
-RSShadowInteraction >> padding: number [ 
+RSShadowInteraction >> padding: number [
 
 	padding := number
 ]
@@ -210,8 +210,8 @@ RSShadowInteraction >> shouldPushFront [
 ]
 
 { #category : 'accessing' }
-RSShadowInteraction >> shouldPushFront: aBoolean [ 
-	
+RSShadowInteraction >> shouldPushFront: aBoolean [
+
 	shouldPushFront := aBoolean
 ]
 

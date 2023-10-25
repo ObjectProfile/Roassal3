@@ -26,39 +26,40 @@ canvas open
 ```
 "
 Class {
-	#name : #RSExtentChangedEvent,
-	#superclass : #RSShapeEvent,
+	#name : 'RSExtentChangedEvent',
+	#superclass : 'RSShapeEvent',
 	#instVars : [
 		'oldExtent',
 		'newExtent'
 	],
-	#category : #'Roassal-Event'
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSExtentChangedEvent >> newExtent [
 	^ newExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSExtentChangedEvent >> newExtent: aPoint [
 	newExtent := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSExtentChangedEvent >> oldExtent [
 	^ oldExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSExtentChangedEvent >> oldExtent: aPoint [
 	oldExtent := aPoint
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSExtentChangedEvent >> printOn: aStream [
 	aStream <<'newExtent: '.
 	newExtent printOn: aStream.
 	aStream << ' oldExtent:'.
-	oldExtent printOn: aStream.
+	oldExtent printOn: aStream
 ]

@@ -2,23 +2,25 @@
 I am a basic presenter for widgets in roassal with the Spec system
 "
 Class {
-	#name : #SpRoassalPresenter,
-	#superclass : #SpAbstractWidgetPresenter,
+	#name : 'SpRoassalPresenter',
+	#superclass : 'SpAbstractWidgetPresenter',
 	#traits : 'SpTContextMenu',
 	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
 		'#script',
 		'#currentCanvas'
 	],
-	#category : #'Roassal-Spec-Core'
+	#category : 'Roassal-Spec-Core',
+	#package : 'Roassal-Spec',
+	#tag : 'Core'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 SpRoassalPresenter class >> adapterName [
 	^ #RoassalAdapter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpRoassalPresenter class >> on: anOwningPresenter withCanvas: aTrachelCanvas [
 
 	^ self basicNew
@@ -28,59 +30,59 @@ SpRoassalPresenter class >> on: anOwningPresenter withCanvas: aTrachelCanvas [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpRoassalPresenter class >> open [
 	<script>
 	^ self new open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> canvas [
 	^ currentCanvas ifNil: [ currentCanvas := RSCanvas new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> canvas: aRSCanvas [
 	currentCanvas := aRSCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> currentCanvas [
 	^ currentCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRoassalPresenter >> initialize [
 	super initialize.
 	script := [ :aCanvas | ] asValueHolder.
 	script whenChangedDo: [ :s | self refresh ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 SpRoassalPresenter >> refresh [
 	self changed: #applyScript with: #()
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 SpRoassalPresenter >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> script [
 	^ script value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> script: anObject [
 	script value: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRoassalPresenter >> whenPresenterResized: aBlock [
 
-	self announcer 
-		when: PresenterResized 
+	self announcer
+		when: PresenterResized
 		do: [ :ann | aBlock cull: ann extent ]
 		 for: self
 ]

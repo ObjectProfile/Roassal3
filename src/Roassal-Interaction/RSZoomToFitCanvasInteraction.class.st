@@ -25,17 +25,17 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	camera := aCanvas camera.
 	oldScale := camera scale.
 	oldPosition := camera position.
-	aCanvas zoomToFit. 
-	
+	aCanvas zoomToFit.
+
 	newPosition := camera position.
 	newScale := camera scale.
-	
+
 	camera translateTo: oldPosition; scale: oldScale.
-	oldScale < 1 ifTrue: [ 
+	oldScale < 1 ifTrue: [
 		aCanvas newAnimation
 			duration: 500 milliSeconds;
 			easing: RSEasingInterpolator backOut;
-			onStepDo: [ :t | 
+			onStepDo: [ :t |
 				camera
 					position: (oldPosition interpolateTo: newPosition at: t);
 					scale: (oldScale interpolateTo: newScale at: t).
@@ -52,7 +52,6 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 				aCanvas signalUpdate];
 			yourself.
 		}
-	
 ]
 
 { #category : 'hooks' }

@@ -2,41 +2,43 @@
 I am group of fields that describe a layout, each field is editable and can be create a presenter that will edit a layout
 "
 Class {
-	#name : #RSLayoutDefinition,
-	#superclass : #RSObject,
+	#name : 'RSLayoutDefinition',
+	#superclass : 'RSObject',
 	#instVars : [
 		'fields'
 	],
-	#category : #'Roassal-LayoutStudio-Core'
+	#category : 'Roassal-LayoutStudio-Core',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutDefinition >> add: aRSLayoutField [
 	fields add: aRSLayoutField
 ]
 
-{ #category : #'accessing - computed' }
-RSLayoutDefinition >> fieldNamed: aString [ 
+{ #category : 'accessing - computed' }
+RSLayoutDefinition >> fieldNamed: aString [
 	^ fields detect: [ :field | field selector = aString ] ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutDefinition >> fields [
 	^ fields
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutDefinition >> generateStringCode [
 	^ String streamContents: [ :stream | self generateStringCodeOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutDefinition >> generateStringCodeOn: stream [
 	self generateStringCodeOn: stream tab: 0
 ]
 
-{ #category : #printing }
-RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [ 
+{ #category : 'printing' }
+RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [
 	| layout changedFields |
 	layout := self layoutStudio.
 	layout ifNil: [ ^ stream << '"Nothing to generate"' ].
@@ -44,7 +46,7 @@ RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [
 	tabsSize isZero ifTrue: [ stream << 'layout := '].
 	stream << layout class name << ' new'.
 	changedFields := fields select: [ :field | field hasChanged ].
-	changedFields ifEmpty: [ 
+	changedFields ifEmpty: [
 		tabsSize isZero ifTrue: [ stream << '.' ].
 		^ self ].
 	changedFields do: [ :field |
@@ -56,26 +58,24 @@ RSLayoutDefinition >> generateStringCodeOn: stream tab: tabsSize [
 	stream cr.
 	tabsSize + 1 timesRepeat: [stream tab].
 	stream << 'yourself'.
-	tabsSize isZero ifTrue: [ stream << '.' ].
-	
-	
+	tabsSize isZero ifTrue: [ stream << '.' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutDefinition >> initialize [
 	super initialize.
 	fields := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutDefinition >> layoutStudio [
-	^ fields 
+	^ fields
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ fields first layoutStudio ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutDefinition >> update [
-	self fields do: [ :field | 
-		field disableEvent; update; enableEvent ].
+	self fields do: [ :field |
+		field disableEvent; update; enableEvent ]
 ]

@@ -53,7 +53,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		c add: b2.
 	].
 	c shapeCollection: RTBulkLoadRTreeCollection new.
-	
+
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.
 	c nodes @ RSHighlightable red.

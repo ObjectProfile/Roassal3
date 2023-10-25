@@ -83,7 +83,7 @@ c addDecoration: (RSHorizontalTick new).
 c addDecoration: (RSVerticalTick new).
 c
 ```"
-	
+
 	decorations add: aDecoration.
 	aDecoration chart: self.
 	aDecoration styler: self styler.
@@ -441,7 +441,7 @@ RSAbstractChart >> updateChart: anEvent [
 	canvas := anEvent canvas.
 	self extent: canvas extent.
 	self update.
-	canvas zoomToFit.
+	canvas zoomToFit
 ]
 
 { #category : 'accessing' }
@@ -504,17 +504,17 @@ RSAbstractChart >> xSqrt [
 
 { #category : 'decoration' }
 RSAbstractChart >> xTickLabels: aCollection [
-	self horizontalTick fromNames: aCollection.
+	self horizontalTick fromNames: aCollection
 ]
 
 { #category : 'decoration' }
 RSAbstractChart >> xTicks: collectionOfNumbers labels: aCollection [
-	self horizontalTick ticks: collectionOfNumbers labels: aCollection.
+	self horizontalTick ticks: collectionOfNumbers labels: aCollection
 ]
 
 { #category : 'decoration' }
 RSAbstractChart >> xlabel [
-	
+
 	^ xlabel
 ]
 
@@ -533,7 +533,7 @@ RSAbstractChart >> xlabel: aTitle offset: aPointOrANumber [
 
 { #category : 'decoration' }
 RSAbstractChart >> xlabelTop [
-	
+
 	^ xlabelTop
 ]
 
@@ -568,9 +568,9 @@ RSAbstractChart >> yRawLog [
 
 { #category : 'public - scales' }
 RSAbstractChart >> yRawLog: aNumber [
-	
+
 	self verticalTick locator: (RSLogLocator new base: aNumber).
-	^ self yScale: (NSLogScale new base: aNumber) 
+	^ self yScale: (NSLogScale new base: aNumber)
 ]
 
 { #category : 'public - scales' }
@@ -594,17 +594,17 @@ RSAbstractChart >> ySqrt [
 
 { #category : 'decoration' }
 RSAbstractChart >> yTickLabels: aCollection [
-	self verticalTick fromNames: aCollection.
+	self verticalTick fromNames: aCollection
 ]
 
 { #category : 'decoration' }
 RSAbstractChart >> yTicks: collectionOfNumbers labels: aCollection [
-	self verticalTick ticks: collectionOfNumbers labels: aCollection.
+	self verticalTick ticks: collectionOfNumbers labels: aCollection
 ]
 
 { #category : 'decoration' }
 RSAbstractChart >> ylabel [
-	
+
 	^ ylabel
 ]
 

@@ -21,17 +21,17 @@ RSAbstractBandPlotShape >> addChildrenToComposite [
 	shapesToRender := self shapesToRender.
 	self addAll: shapesToRender.
 	self adjustToChildren.
-	^ self.
+	^ self
 ]
 
 { #category : 'band' }
 RSAbstractBandPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
+	bandOffset := aNumber
 ]
 
 { #category : 'scales' }
 RSAbstractBandPlotShape >> bandScale [
-	^ bandScale.
+	^ bandScale
 ]
 
 { #category : 'scales' }
@@ -51,19 +51,19 @@ RSAbstractBandPlotShape >> color [
 
 { #category : 'accessing' }
 RSAbstractBandPlotShape >> color: aColor [
-	color := aColor.
+	color := aColor
 ]
 
 { #category : 'shapes' }
 RSAbstractBandPlotShape >> computeBandRectangle [
 	^ RSPolygon new
-			points: { 
-			(bandOffset-(bandWidth/2)) @ dataScale range first. 
+			points: {
+			(bandOffset-(bandWidth/2)) @ dataScale range first.
 			(bandOffset+(bandWidth/2)) @ dataScale range first.
-			(bandOffset+(bandWidth/2)) @ dataScale range last. 
+			(bandOffset+(bandWidth/2)) @ dataScale range last.
 			(bandOffset-(bandWidth/2)) @ dataScale range last
 			};
-			color: Color blue translucent.
+			color: Color blue translucent
 ]
 
 { #category : 'shapes' }
@@ -73,7 +73,7 @@ RSAbstractBandPlotShape >> createShapesAndLines [
 
 { #category : 'scales' }
 RSAbstractBandPlotShape >> dataScale [
-	^ dataScale.
+	^ dataScale
 ]
 
 { #category : 'scales' }
@@ -88,7 +88,7 @@ RSAbstractBandPlotShape >> defaultShouldShowBand [
 
 { #category : 'public' }
 RSAbstractBandPlotShape >> horizontal [
-	horizontal := true.
+	horizontal := true
 ]
 
 { #category : 'rendering' }
@@ -119,15 +119,15 @@ RSAbstractBandPlotShape >> shapesToRender [
 
 { #category : 'band' }
 RSAbstractBandPlotShape >> shouldShowBand: aBoolean [
-	shouldShowBand := aBoolean.
+	shouldShowBand := aBoolean
 ]
 
 { #category : 'public' }
 RSAbstractBandPlotShape >> showBand [
-	self shouldShowBand: true.
+	self shouldShowBand: true
 ]
 
 { #category : 'public' }
 RSAbstractBandPlotShape >> vertical [
-	horizontal := false.
+	horizontal := false
 ]

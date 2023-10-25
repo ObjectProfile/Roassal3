@@ -26,9 +26,9 @@ RSAbstractTimer class >> example [
 	timer := RSVariableTimer new.
 	c timer: timer.
 	"I can control the time :V"
-	[ 5 timesRepeat: [  
+	[ 5 timesRepeat: [
 		timer addTime: 500 milliSeconds.
-		(Delay forSeconds: 1) wait 
+		(Delay forSeconds: 1) wait
 		] ] fork.
 	^ c open
 ]

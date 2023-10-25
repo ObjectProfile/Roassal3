@@ -18,7 +18,7 @@ Class {
 RSLinePlot class >> example1 [
 	| p |
 	p := (self y: #(1 2 3 4)) format: 'or--'.
-	^ p open.
+	^ p open
 ]
 
 { #category : 'instance creation' }

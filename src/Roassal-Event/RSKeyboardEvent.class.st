@@ -2,42 +2,43 @@
 A base class for keyboard events.
 "
 Class {
-	#name : #RSKeyboardEvent,
-	#superclass : #RSUserInputEvent,
+	#name : 'RSKeyboardEvent',
+	#superclass : 'RSUserInputEvent',
 	#instVars : [
 		'keyValue',
 		'keyName'
 	],
-	#category : #'Roassal-Event'
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSKeyboardEvent >> initialize [
 	super initialize.
 	keyValue := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKeyboardEvent >> keyName [
 	^ keyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKeyboardEvent >> keyName: aString [
 	keyName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKeyboardEvent >> keyValue [
 	^ keyValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKeyboardEvent >> keyValue: anObject [
 	keyValue := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSKeyboardEvent >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 

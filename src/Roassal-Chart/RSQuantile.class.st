@@ -14,15 +14,15 @@ RSQuantile class >> data: aCollection [
 	| aRSQuantile |
 	aRSQuantile := self new.
 	aRSQuantile data: aCollection.
-	^ aRSQuantile.
+	^ aRSQuantile
 ]
 
 { #category : 'initialize' }
 RSQuantile >> compute: populationPercentage [
-	^ self subclassResponsibility.
+	^ self subclassResponsibility
 ]
 
 { #category : 'initialize' }
 RSQuantile >> data: aCollection [
-	data := aCollection.
+	data := aCollection
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RSLocation }
+Extension { #name : 'RSLocation' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLocation class >> example1 [
 	| canvas box1 box2 label |
 	canvas := RSCanvas new.
@@ -15,13 +15,13 @@ RSLocation class >> example1 [
 
 	label := RSLabel new text: 'Move the mouse above me'.
 	canvas add: label.
-	self new 
+	self new
 		above;
 		stick: label on: box1.
 	^ canvas open
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLocation class >> example2 [
 	| canvas group baseShape redShape |
 	canvas := RSCanvas new.

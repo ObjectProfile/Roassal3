@@ -16,6 +16,6 @@ Class {
 
 { #category : 'generate' }
 RSAutoLocator >> generateTicks: aScale with: numberOfTicks [
-	
-	^ aScale niceTicks: numberOfTicks 
+
+	^ aScale niceTicks: numberOfTicks
 ]

@@ -17,7 +17,7 @@ RSCellLayout class >> example2 [
 	| c shapes |
 	c := RSCanvas new.
 	"each component has different extent. But each line of the layout contains 10 shapes maximun"
-	shapes := RSComposite 
+	shapes := RSComposite
 		boxesForModels: SequenceableCollection withAllSubclasses.
 	c addAll: shapes.
 	self new
@@ -32,7 +32,7 @@ RSCellLayout class >> example3 [
 	| c shapes |
 	c := RSCanvas new.
 	"each component has different extent. But each line of the layout contains 10 shapes maximun"
-	shapes := RSComposite 
+	shapes := RSComposite
 		boxesForModels: ((1 to: 9) collect: [:i | 'X']).
 	c addAll: shapes.
 	self new

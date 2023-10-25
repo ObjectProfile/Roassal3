@@ -46,12 +46,12 @@ RSStatisticalMeasures >> data [
 
 { #category : 'accessing' }
 RSStatisticalMeasures >> data: aDataset [
-	data := aDataset copy sort.
+	data := aDataset copy sort
 ]
 
 { #category : 'accessing' }
 RSStatisticalMeasures >> defaultQuantile [
-	^ (RSInvertedCDF data: data).
+	^ (RSInvertedCDF data: data)
 ]
 
 { #category : 'accessing - computed' }
@@ -60,7 +60,7 @@ RSStatisticalMeasures >> interQuartileRange [
 	quartiles := self quartiles.
 	q1 := quartiles at: 1.
 	q3 := quartiles at: 3.
-	^ q3 - q1.
+	^ q3 - q1
 ]
 
 { #category : 'accessing - computed' }
@@ -79,7 +79,7 @@ RSStatisticalMeasures >> lowerLimit [
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
 	iqr15 := q1 - (1.5 * iqr).
-	^ (data select: [ :d | d >= iqr15 ]) min.
+	^ (data select: [ :d | d >= iqr15 ]) min
 ]
 
 { #category : 'accessing - computed' }
@@ -87,17 +87,17 @@ RSStatisticalMeasures >> mean [
 	| sum |
 	sum := 0.
 	data do: [ :xi | sum := sum + xi ].
-	^ (sum / (data size)).
+	^ (sum / (data size))
 ]
 
 { #category : 'accessing - computed' }
 RSStatisticalMeasures >> median [
-	^ self median: data.
+	^ self median: data
 ]
 
 { #category : 'accessing - computed' }
-RSStatisticalMeasures >> median: aDataset [	
-	^ quantile compute: 0.5.
+RSStatisticalMeasures >> median: aDataset [
+	^ quantile compute: 0.5
 ]
 
 { #category : 'accessing - computed' }
@@ -110,29 +110,29 @@ RSStatisticalMeasures >> medianConfidenceInterval [
 	iqr := self iqr.
 	delta := (notchFactors at: confidencePercentage) * iqr / (data size sqrt).
 	median := self median.
-	^  { median - delta. median + delta}.
+	^  { median - delta. median + delta}
 ]
 
 { #category : 'accessing - computed' }
 RSStatisticalMeasures >> outliers [
 	| outlierValues lowerLimit upperLimit iterator |
 	outlierValues := OrderedCollection new.
-	lowerLimit := self lowerLimit. 
+	lowerLimit := self lowerLimit.
 	upperLimit := self upperLimit.
 	iterator := 1.
-	[(data at:iterator)<lowerLimit] whileTrue: [ 
+	[(data at:iterator)<lowerLimit] whileTrue: [
 		outlierValues add: (data at:iterator).
 		iterator := iterator + 1 ].
 	iterator := data size.
-	[(data at:iterator)>upperLimit] whileTrue: [ 
-		outlierValues add: (data at:iterator). 
+	[(data at:iterator)>upperLimit] whileTrue: [
+		outlierValues add: (data at:iterator).
 		iterator := iterator - 1].
-	^ outlierValues.
+	^ outlierValues
 ]
 
 { #category : 'accessing - computed' }
 RSStatisticalMeasures >> quantile: aRSQuantileSubclass [
-	quantile := aRSQuantileSubclass.
+	quantile := aRSQuantileSubclass
 ]
 
 { #category : 'accessing - computed' }
@@ -141,7 +141,7 @@ RSStatisticalMeasures >> quartiles [
 	q1 := quantile compute: 0.25.
 	q2 := quantile compute: 0.50.
 	q3 := quantile compute: 0.75.
-	^  { q1. q2. q3 }.
+	^  { q1. q2. q3 }
 ]
 
 { #category : 'accessing - computed' }
@@ -151,7 +151,7 @@ RSStatisticalMeasures >> standardDeviation [
 	mean := self mean.
 	data do: [ :observationX | sum := sum + ((observationX - mean) squared) ].
 	standardDeviation := (mean/(data size)) sqrt.
-	^ standardDeviation.
+	^ standardDeviation
 ]
 
 { #category : 'accessing - computed' }
@@ -162,5 +162,5 @@ RSStatisticalMeasures >> upperLimit [
 	q3 := quartiles at: 3.
 	iqr := self interQuartileRange.
 	iqr15 := q3 + (1.5 * iqr).
-	^ (data select: [ :d | d <= iqr15 ]) max.
+	^ (data select: [ :d | d <= iqr15 ]) max
 ]

@@ -2,12 +2,13 @@
 Examples of RSHistogramPlot
 "
 Class {
-	#name : #RSHistogramExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Chart-Examples'
+	#name : 'RSHistogramExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Chart-Examples',
+	#package : 'Roassal-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example01RandomValues [
 	<script: 'self new example01RandomValues open'>
 	| c p values |
@@ -19,7 +20,7 @@ RSHistogramExample >> example01RandomValues [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example02Histogram [
 	<script: 'self new example02Histogram open'>
 	| values c plot |
@@ -31,7 +32,7 @@ RSHistogramExample >> example02Histogram [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example03Bins [
 	<script: 'self new example03Bins open'>
 	| values  canvas shapes |
@@ -53,7 +54,7 @@ RSHistogramExample >> example03Bins [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example04BinningStrat [
 	<script: 'self new example04BinningStrat open'>
 	| values  canvas shapes |
@@ -80,7 +81,7 @@ RSHistogramExample >> example04BinningStrat [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example05Interactions [
 	<script: 'self new example05Interactions open'>
 	| c p |
@@ -91,7 +92,7 @@ RSHistogramExample >> example05Interactions [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example06Animations [
 	<script: 'self new example06Animations open'>
 	| c p |
@@ -123,13 +124,13 @@ RSHistogramExample >> example06Animations [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example07Shortcut [
 	<script: 'self new example07Shortcut open'>
 	^ self randomValues rsHistogram
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example08Strategies [
 	<script: 'self new example08Strategies open'>
 	| x y canvas shapes |
@@ -158,7 +159,7 @@ RSHistogramExample >> example08Strategies [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example09BinsCollection [
 	<script: 'self new example09BinsCollection open'>
 	| values c plot |
@@ -170,7 +171,7 @@ RSHistogramExample >> example09BinsCollection [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHistogramExample >> example10Objects [
 	<script: 'self new example10Objects open'>
 	| c plot classes tick |
@@ -201,19 +202,19 @@ RSHistogramExample >> example10Objects [
 	^ c canvas
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSHistogramExample >> normal: x mean: mean stdDev: std [
 	^ (-0.5 * Float twoPi log - std log -
 		 ( ((x - mean) raisedTo: 2) / (2 * std * std))) exp
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSHistogramExample >> randomValues [
 	<script: 'self new randomValues inspect'>
 	^ self randomValues: 170 scale: 10 size: 250
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSHistogramExample >> randomValues: loc scale: scale size: size [
 	| low upp mean stdDev r |
 	"TODO generate a new method to creatte random values with normal distribution"

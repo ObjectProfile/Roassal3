@@ -2,8 +2,8 @@
 I am a heatmap, based on requirements of issue #562
 "
 Class {
-	#name : #RSHeatmap,
-	#superclass : #RSDSM,
+	#name : 'RSHeatmap',
+	#superclass : 'RSDSM',
 	#instVars : [
 		'dataMatrix',
 		'colorPalette',
@@ -11,32 +11,34 @@ Class {
 		'labelShapeCell',
 		'gradientLegend'
 	],
-	#category : #'Roassal-DSM-Core'
+	#category : 'Roassal-DSM-Core',
+	#package : 'Roassal-DSM',
+	#tag : 'Core'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSHeatmap >> colorPalette [
 	^ colorPalette
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHeatmap >> colorPalette: anNSLinearScale [
 	colorPalette := anNSLinearScale
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> computeColor: aNumberInDataMatrix [
 	^ colorPalette scale: aNumberInDataMatrix
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSHeatmap >> computeDomain [
 	| allNumbers|
 	allNumbers := dataMatrix flatCollect: #yourself.
 	^ { allNumbers min. allNumbers max }
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> createGradienBox [
 	| row range box paint |
 	row := (self rowAt: 1) asGroup.
@@ -49,19 +51,19 @@ RSHeatmap >> createGradienBox [
 	^ box
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> createGradientLegend [
 	| domain lb minLabel maxLabel box group legend lastRow |
 	domain := colorPalette domain.
 	lb := self labelShapeCell.
 	minLabel := lb shapeFor: domain first.
 	maxLabel := lb shapeFor: domain last.
-	box := self createGradienBox. 
+	box := self createGradienBox.
 	group := { minLabel. box. maxLabel }.
 	RSHorizontalLineLayout new alignMiddle; on: group.
 	legend := group asShape.
 	lastRow := (self rowAt: matrix numberOfColumns) asGroup.
-	RSLocation new 
+	RSLocation new
 		outer;
 		bottom;
 		right;
@@ -69,7 +71,7 @@ RSHeatmap >> createGradientLegend [
 	^ legend
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> createShape: tuple [
 	| box |
 	box := shape copy.
@@ -79,12 +81,12 @@ RSHeatmap >> createShape: tuple [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHeatmap >> dataMatrix [
 	^ dataMatrix
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSHeatmap >> dataMatrix: aMatrix [
 	self assert: aMatrix notEmpty description: 'you need data in your matrix'.
 	self assert: (aMatrix allSatisfy: [ :each | each notEmpty ]) description: 'you do not have data in your rows'.
@@ -93,50 +95,49 @@ RSHeatmap >> dataMatrix: aMatrix [
 	colorPalette domain: self computeDomain
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSHeatmap >> defaultColorPalette [
 	^ NSScale linear range: (#('EFF3FF' '08519C') collect: [ :each | Color colorFrom: each ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHeatmap >> gradientLegend [
 	^ gradientLegend
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSHeatmap >> initialize [
 	super initialize.
 	self colorPalette: self defaultColorPalette.
 	self shouldShowCellLabels: true.
-	self labelShapeCell: RSMultilineLabelBuilder new.
+	self labelShapeCell: RSMultilineLabelBuilder new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHeatmap >> labelShapeCell [
 	^ labelShapeCell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHeatmap >> labelShapeCell: aBlock [
 	labelShapeCell := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> newLabelFor: aComposite [
 	| position |
 	position := aComposite propertyAt: self matrixKey.
-	^ self labelShapeCell shapeFor: ((dataMatrix at: position y) at: position x).
+	^ self labelShapeCell shapeFor: ((dataMatrix at: position y) at: position x)
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSHeatmap >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	gradientLegend := self createGradientLegend.
-	aCanvas add: gradientLegend.
-	
+	aCanvas add: gradientLegend
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSHeatmap >> setUpShape: aComposite [
 	| label matrixIndex value box |
 	super setUpShape: aComposite.
@@ -146,18 +147,18 @@ RSHeatmap >> setUpShape: aComposite [
 		label := self newLabelFor: aComposite.
 		aComposite add: label.
 	].
-	box := self shouldShowCellLabels 
+	box := self shouldShowCellLabels
 		ifTrue: [ aComposite children first]
 		ifFalse: [ aComposite ].
 	box color: (self color cull: value)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHeatmap >> shouldShowCellLabels [
 	^ shouldShowCellLabels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHeatmap >> shouldShowCellLabels: aBoolean [
 	shouldShowCellLabels := aBoolean
 ]

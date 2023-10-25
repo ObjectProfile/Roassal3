@@ -2,12 +2,13 @@
 I have examples of barcharts
 "
 Class {
-	#name : #RSBarChartExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Chart-Examples'
+	#name : 'RSBarChartExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Chart-Examples',
+	#package : 'Roassal-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example01TwoBars [
 
 	<script: 'self new example01TwoBars open'>
@@ -43,7 +44,7 @@ RSBarChartExample >> example01TwoBars [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example02TwoHorizontalBars [
 	<script: 'self new example02TwoHorizontalBars open'>
 	| c p p2 x y size lb |
@@ -72,7 +73,7 @@ RSBarChartExample >> example02TwoHorizontalBars [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example03TilePaint [
 	<script: 'self new example03TilePaint open'>
 
@@ -143,7 +144,7 @@ RSBarChartExample >> example03TilePaint [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example04VerticalStack [
 	<script: 'self new example04VerticalStack open'>
 	| c menMeans womenMeans lb |
@@ -167,7 +168,7 @@ RSBarChartExample >> example04VerticalStack [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example05HorizontalStack [
 
 	<script: 'self new example05HorizontalStack open'>
@@ -192,7 +193,7 @@ RSBarChartExample >> example05HorizontalStack [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example06BarAnimation [
 	<script: 'self new example06BarAnimation open'>
 	| canvas bars |
@@ -226,7 +227,7 @@ RSBarChartExample >> example06BarAnimation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSBarChartExample >> example07DoubleBar [
 
 	<script: 'self new example07DoubleBar open'>

@@ -35,14 +35,14 @@ RSAbstractControlCanvasInteraction >> computeExpandedRectangle: aCanvas [
 	"we obtains the rectangle in the canvas space".
 	rectangle := self encompassingRectangleFor: aCanvas.
 	matrix := aCanvas camera originMatrix.
-	
+
 	"then we convert that to morph coordinates"
-	rectangle := Rectangle encompassing: (rectangle corners 
+	rectangle := Rectangle encompassing: (rectangle corners
 		collect: [:corner | matrix transform: corner]).
 	"we expand the rectangle with the padding"
 	rectangle := self configuration padding expandRectangle: rectangle.
 	"the rectangle returns to the canvas space"
-	rectangle := Rectangle encompassing: (rectangle corners 
+	rectangle := Rectangle encompassing: (rectangle corners
 		collect: [:corner | matrix inverseTransform: corner]).
 
 	^ rectangle
@@ -76,19 +76,19 @@ RSAbstractControlCanvasInteraction >> correctCamera: camera matrixDo: aBlock [
 		correctRectangle := self correctRectangle: rectangle camera: camera.
 		diff := (matrix transform: rectangle origin) - (matrix transform: correctRectangle origin).
 		origin := origin - diff ].
-	^ origin.
+	^ origin
 ]
 
 { #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
 	| canvasRect x y p |
 	p := position.
-	
+
 	canvasRect := Rectangle
 		floatCenter: p
 		extent: aCanvas extent / scale.
 	canvasRect := aCanvas visibleRectangle.
-	
+
 	x := rectangle width <= canvasRect width
 		ifTrue: [rectangle origin x < canvasRect origin x
 			ifTrue: [ p x - (canvasRect origin x - rectangle origin x) ]
@@ -141,21 +141,21 @@ RSAbstractControlCanvasInteraction >> correctValues: array [
 	width := max - min.
 	targetWidth := targetMax - targetMin.
 	res := width < targetWidth ifTrue: [
-		max < targetMax ifTrue: [ 
+		max < targetMax ifTrue: [
 			min < targetMin
 				ifTrue: [ min + (targetMin - min) ]
 				ifFalse: [ min ]
 		] ifFalse: [ min - (max - targetMax) ].
-	] ifFalse: [ 
-		max < targetMax ifTrue: [ 
+	] ifFalse: [
+		max < targetMax ifTrue: [
 			min-(max - targetMax)
-		] ifFalse: [ 
+		] ifFalse: [
 			min < targetMin
 				ifTrue: [ min ]
 				ifFalse: [ min + (targetMin - min) ]
 		].
 	].
-	
+
 	^ res
 ]
 
@@ -167,7 +167,7 @@ RSAbstractControlCanvasInteraction >> encompassingRectangleFor: aCanvas [
 
 { #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
-	"^ aCanvas 
+	"^ aCanvas
 		propertyAt: #expanedEncompassingRectangle
 		ifAbsentPut: [ self computeExpandedRectangle: aCanvas ]."
 	^ self computeExpandedRectangle: aCanvas

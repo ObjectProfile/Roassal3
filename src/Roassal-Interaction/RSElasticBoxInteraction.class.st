@@ -120,12 +120,12 @@ RSElasticBoxInteraction >> createCameraAnimation: event [
 	| canvas animation position correct |
 	canvas := event canvas.
 	cameraDelta := 0 asPoint.
-	(canvas hasProperty: self class) ifTrue: [ 
+	(canvas hasProperty: self class) ifTrue: [
 		(canvas propertyAt: self class) stop ].
 	animation := canvas newAnimation.
 	animation
 		repeat;
-		onStepDo: [ 
+		onStepDo: [
 			canvas camera translateBy: cameraDelta.
 			position := canvas camera position.
 			correct := self correctCamera: canvas camera.
@@ -174,7 +174,7 @@ RSElasticBoxInteraction >> initialize [
 	self useNegativeBox.
 	self targetShapes: #nodes.
 	shouldProcessInteraction := false.
-	selectedShapes := #().
+	selectedShapes := #()
 ]
 
 { #category : 'public' }
@@ -184,7 +184,7 @@ RSElasticBoxInteraction >> noNegativeBox [
 
 { #category : 'hooks' }
 RSElasticBoxInteraction >> onShape: aCanvas [
-	
+
 	aCanvas
 		when: RSMouseLeftDragStart send: #processDragStart: to: self;
 		when: RSMouseDragging send: #processDragging: to: self;
@@ -221,7 +221,6 @@ RSElasticBoxInteraction >> processDragging: event [
 
 { #category : 'rendering' }
 RSElasticBoxInteraction >> renderLegendOn: anRSLegend [
-	
 ]
 
 { #category : 'accessing' }
@@ -248,7 +247,7 @@ RSElasticBoxInteraction >> shouldUseNegativeBox [
 { #category : 'event processing' }
 RSElasticBoxInteraction >> stopCameraAnimation: event [
 
-	event canvas propertyAt: self class ifPresent: [ :animation | 
+	event canvas propertyAt: self class ifPresent: [ :animation |
 		animation stop.
 		event canvas removeKey: self class ]
 ]

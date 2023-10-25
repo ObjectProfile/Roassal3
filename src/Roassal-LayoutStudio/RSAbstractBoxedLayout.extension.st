@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractBoxedLayout }
+Extension { #name : 'RSAbstractBoxedLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSAbstractBoxedLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutNumberField new

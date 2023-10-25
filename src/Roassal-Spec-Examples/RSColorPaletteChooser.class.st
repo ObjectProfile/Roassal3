@@ -308,7 +308,7 @@ RSColorPaletteChooser >> polygonFor: points [
 RSColorPaletteChooser >> relayout: evt [
 	| canvas |
 	canvas := evt canvas.
-	
+
 	RSFlowLayout new
 		maxWidth: canvas extent;
 		on: canvas shapes.

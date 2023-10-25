@@ -56,7 +56,7 @@ RSDensityPlot class >> exampleBasicDensityPlot [
 	data := #(14 15 28 27 32 35).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 4.
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -65,7 +65,7 @@ RSDensityPlot class >> exampleBasicDensityPlot2 [
 	data := #(5 5 5 45 45 45).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 4.
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -74,7 +74,7 @@ RSDensityPlot class >> exampleBasicDensityPlot3 [
 	data := #(10 10 10 10).
 	densityPlot := self data: data.
 "	densityPlot bandwidth: 4."
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -83,7 +83,7 @@ RSDensityPlot class >> exampleBasicDensityPlot4 [
 	data := #(-25 -25 -25 -25 10 20 30 40 50 50 50 50 ).
 	densityPlot := self data: data.
 	densityPlot bandwidth: 10.
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -93,7 +93,7 @@ RSDensityPlot class >> exampleBasicDensityPlot5 [
 	densityPlot := self data: data.
 	densityPlot bandwidth." -0.02545046473618206"
 "	densityPlot bandwidth: 4."
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -105,11 +105,11 @@ RSDensityPlot class >> exampleDensityPlotCreateWithKernelDesity [
 	densityPlot := self kernelDensity: kernelDensity.
 	densityPlot shape
 		color: Color blue translucent;
-		border: (RSBorder new 
-			color: Color red; 
+		border: (RSBorder new
+			color: Color red;
 			width: 2;
 			dashArray: #(2 4)).
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'examples' }
@@ -119,7 +119,7 @@ RSDensityPlot class >> exampleDensityPlotWithLabels [
 	densityPlot := self data: data.
 	densityPlot bandwidth: 10.
 	densityPlot xlabel: 'X label'; ylabel: 'Y label'; title: 'Density plot (bandwidth:10)'.
-	^ densityPlot open.
+	^ densityPlot open
 ]
 
 { #category : 'accessing' }
@@ -137,20 +137,18 @@ RSDensityPlot >> area [
 
 { #category : 'accessing' }
 RSDensityPlot >> areaColor [
-	^ self computeColor.
+	^ self computeColor
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> bandwidth [
-	^ kernelDensity bandwidth.
-	
+	^ kernelDensity bandwidth
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> bandwidth: aNumber [
 	kernelDensity bandwidth: aNumber.
-	self computeCurvePoints.
-	
+	self computeCurvePoints
 ]
 
 { #category : 'private' }
@@ -160,7 +158,7 @@ RSDensityPlot >> computeCurvePoints [
 	xValues := { curvePoints first x. curvePoints last x. }.
 	ys := curvePoints collect: [ :point | point y ].
 	yMax := ys max.
-	yValues := {0. yMax. }.
+	yValues := {0. yMax. }
 ]
 
 { #category : 'accessing' }
@@ -175,68 +173,67 @@ RSDensityPlot >> curvePoints [
 
 { #category : 'accessing' }
 RSDensityPlot >> data [
-	^ kernelDensity data.
+	^ kernelDensity data
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> data: aCollection [
 	kernelDensity data: aCollection.
-	self computeCurvePoints.
+	self computeCurvePoints
 ]
 
 { #category : 'defaults' }
 RSDensityPlot >> defaultAreaColor [
-	^ area color.
-	
+	^ area color
 ]
 
 { #category : 'defaults' }
 RSDensityPlot >> defaultKernelDensity [
-	^ RSKernelDensity new.
+	^ RSKernelDensity new
 ]
 
 { #category : 'defaults' }
 RSDensityPlot >> defaultLineColor [
-	^ Color r:117 g:107 b:177 range: 255.
+	^ Color r:117 g:107 b:177 range: 255
 ]
 
 { #category : 'accessing - defaults' }
-RSDensityPlot >> defaultShape [ 
+RSDensityPlot >> defaultShape [
 	^ RSPolygon new
-		noPaint.
+		noPaint
 ]
 
 { #category : 'initialization' }
 RSDensityPlot >> initialize [
 	super initialize.
-	kernelDensity := self defaultKernelDensity.
+	kernelDensity := self defaultKernelDensity
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> kde: aNumber [
-	^ kernelDensity kde: aNumber.
+	^ kernelDensity kde: aNumber
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> kernel [
-	^ kernelDensity kernel.
+	^ kernelDensity kernel
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> kernel: anRSKernelFunction [
 	kernelDensity kernel: anRSKernelFunction.
-	self computeCurvePoints.
+	self computeCurvePoints
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> kernelDensity [
-	^ kernelDensity.
+	^ kernelDensity
 ]
 
 { #category : 'accessing' }
 RSDensityPlot >> kernelDensity: anRSKernelDensity [
 	kernelDensity := anRSKernelDensity.
-	self computeCurvePoints.
+	self computeCurvePoints
 ]
 
 { #category : 'rendering' }
@@ -254,5 +251,5 @@ RSDensityPlot >> renderIn: canvas [
 	curve add: closingPointEnd.
 	lastPoint := curve last.
 	area points: (curve collect: [ :aPoint | self scalePoint: aPoint ]).
-	canvas add: area.
+	canvas add: area
 ]

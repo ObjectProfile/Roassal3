@@ -1,6 +1,6 @@
-Extension { #name : #RSCircleLayout }
+Extension { #name : 'RSCircleLayout' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSCircleLayout class >> example1 [
 	| aLayout objects |
 	aLayout := self new.
@@ -14,7 +14,7 @@ RSCircleLayout class >> example1 [
 		open
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSCircleLayout class >> example2 [
 	| nodes canvas shapes |
 	nodes := (1 to: 5).

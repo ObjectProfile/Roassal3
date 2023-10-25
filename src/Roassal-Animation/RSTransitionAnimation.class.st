@@ -178,9 +178,8 @@ RSTransitionAnimation >> scale: aScale [
 ]
 
 { #category : 'refreshing' }
-RSTransitionAnimation >> step [	
+RSTransitionAnimation >> step [
 	self stepWithNumber: self progress
-
 ]
 
 { #category : 'accessing' }

@@ -19,25 +19,25 @@ RSLinePlotTest >> testDefaultValues [
 	p xlabel: 'X label'.
 	p build.
 	self assert: p extent equals: 250 @ 200.
-	self assert: p padding equals: 5 @ 5.
+	self assert: p padding equals: 5 @ 5
 ]
 
 { #category : 'tests' }
 RSLinePlotTest >> testLineStroke [
 	| p |
 	p := RSLinePlot y: #(1 2 3 4).
-	
+
 	p format: '--'.
 	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '--').
-	
+
 	p format: '-.'.
 	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '-.').
-	
+
 	p format: '.'.
 	p build.
-	self assert: p border style equals: (RSStrokeStyle fromString: '.').
+	self assert: p border style equals: (RSStrokeStyle fromString: '.')
 ]
 
 { #category : 'tests' }
@@ -47,7 +47,7 @@ RSLinePlotTest >> testMarkerShape [
 	squareMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 's-r'.
 	self assert: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 'o') class name.
 	self deny: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
-	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
+	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name
 ]
 
 { #category : 'tests' }

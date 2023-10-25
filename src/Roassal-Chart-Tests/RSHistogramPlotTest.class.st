@@ -73,9 +73,9 @@ RSHistogramPlotTest >> testCollectDataOfOn [
 	| col plot |
 	col := 1 to: 10.
 	plot := RSHistogramPlot new.
-	
+
 	plot collectDataOf: col on: [ :e | e % 4 ]; numberOfBins: 4.
-	
+
 	self assert: plot x equals: #(0 0 1 1 1 2 2 2 3 3).
 	self assert: plot map equals: (Dictionary newFrom: { 1->1. 2->2. 3->3. 4->0. 5->1. 6->2. 7->3. 8->0. 9->1. 10->2 })
 ]
@@ -86,15 +86,15 @@ RSHistogramPlotTest >> testModelWithCollectedData [
 	| col plot bars |
 	col := 1 to: 10.
 	plot := RSHistogramPlot new.
-	
+
 	plot collectDataOf: col on: [ :e | e % 4 ]; numberOfBins: 4.
 	plot build.
 	bars := plot bars.
-	
+
 	self assert: (plot bars at:1) model sorted equals: #(4 8).
 	self assert: (plot bars at:2) model sorted equals: #(1 5 9).
 	self assert: (plot bars at:3) model sorted equals: #(2 6 10).
-	self assert: (plot bars at:4) model sorted equals: #(3 7).
+	self assert: (plot bars at:4) model sorted equals: #(3 7)
 ]
 
 { #category : 'tests' }
@@ -102,13 +102,13 @@ RSHistogramPlotTest >> testModelWithRawValues [
 
 	| plot bars |
 	plot := RSHistogramPlot new.
-	
+
 	plot x: #(0 1 3 3 1 1); bins: (0 to: 4).
 	plot build.
 	bars := plot bars.
-	
+
 	self assert: (plot bars at:1) model equals: 0->1->1.
 	self assert: (plot bars at:2) model equals: 1->2->3.
 	self assert: (plot bars at:3) model equals: 2->3->0.
-	self assert: (plot bars at:4) model equals: 3->4->2.
+	self assert: (plot bars at:4) model equals: 3->4->2
 ]

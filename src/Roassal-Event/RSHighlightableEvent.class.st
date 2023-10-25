@@ -2,31 +2,32 @@
 I am a basic event for class RSHighlightable interaction
 "
 Class {
-	#name : #RSHighlightableEvent,
-	#superclass : #RSEvent,
+	#name : 'RSHighlightableEvent',
+	#superclass : 'RSEvent',
 	#instVars : [
 		'source',
 		'interaction'
 	],
-	#category : #'Roassal-Event'
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHighlightableEvent >> interaction [
 	^ interaction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHighlightableEvent >> interaction: aInteraction [
 	interaction := aInteraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHighlightableEvent >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHighlightableEvent >> source: anElementOrView [
 	source := anElementOrView
 ]

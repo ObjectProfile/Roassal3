@@ -1,12 +1,12 @@
-Extension { #name : #RSFlowLayout }
+Extension { #name : 'RSFlowLayout' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSFlowLayout class >> exampleLabel [
-	
+
 	| words r wordShapes c |
 	words := (String loremIpsum: 100) substrings.
 	r := Random new.
-	wordShapes := words collect: [ :w | 
+	wordShapes := words collect: [ :w |
 		RSLabel new
 			fontSize: (r nextInteger: 30);
 			text: w ] as: RSGroup.

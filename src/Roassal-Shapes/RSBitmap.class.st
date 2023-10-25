@@ -16,12 +16,10 @@ Class {
 RSBitmap class >> newFrom: anObject [
 	| shape |
 	shape := self new.
-	shape form: (anObject isString 
+	shape form: (anObject isString
 		ifTrue: [ (self iconNamed: anObject) ]
 		ifFalse: [anObject ]).
 	^ shape
-	
-		
 ]
 
 { #category : 'private' }
@@ -38,8 +36,7 @@ RSBitmap >> extent: newExtent [
 	oldExtent := self extent.
 	(oldExtent = (0 @ 0)) ifTrue: [ ^ self ].
 	matrix scaleBy: newExtent / oldExtent.
-	self resetBBox.
-	
+	self resetBBox
 ]
 
 { #category : 'accessing' }

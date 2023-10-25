@@ -2,20 +2,22 @@
 event used to notify a change of the extent
 "
 Class {
-	#name : #PresenterResized,
-	#superclass : #Announcement,
+	#name : 'PresenterResized',
+	#superclass : 'Announcement',
 	#instVars : [
 		'extent'
 	],
-	#category : #'Roassal-Spec-Events'
+	#category : 'Roassal-Spec-Events',
+	#package : 'Roassal-Spec',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PresenterResized >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PresenterResized >> extent: anObject [
 	extent := anObject
 ]

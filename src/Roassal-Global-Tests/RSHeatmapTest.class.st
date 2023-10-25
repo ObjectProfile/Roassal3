@@ -13,7 +13,7 @@ Class {
 RSHeatmapTest >> setUp [
 	super setUp.
 
-	builder := RSHeatmap new.
+	builder := RSHeatmap new
 ]
 
 { #category : 'tests' }
@@ -27,8 +27,7 @@ RSHeatmapTest >> testBuildCreateCompositeShapes [
 	self assert: cell isComposite.
 	self assert: cell children size equals: 2.
 	self assert: cell children first class equals: RSBox.
-	self assert: cell children second class equals: RSLabel.
-	
+	self assert: cell children second class equals: RSLabel
 ]
 
 { #category : 'tests' }
@@ -57,7 +56,7 @@ RSHeatmapTest >> testHeatmapContainsAGradientLegend [
 	self assert: legend isComposite.
 	self assert: legend children first isLabel.
 	self assert: legend children second class equals: RSBox.
-	self assert: legend children third isLabel.
+	self assert: legend children third isLabel
 ]
 
 { #category : 'tests' }

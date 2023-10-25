@@ -100,7 +100,7 @@ RSTLine >> format: aString [
 	'--' dashed line.
 	'-.' dashed line with small line then point
 	'.' dashed line with points
-	
+
 	For colors use:
 	'r' red
 	'g' green
@@ -110,14 +110,14 @@ RSTLine >> format: aString [
 	'y' yellow
 	'k' black
 	'w' white
-	
+
 	There is no order of marker, stroke or color specification.
 	'r.o'
 	'.or'
 	'o.r'
 	 "
 	formatString := aString.
-	self shape format: formatString.
+	self shape format: formatString
 ]
 
 { #category : 'public - shape' }

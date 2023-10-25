@@ -1,6 +1,6 @@
-Extension { #name : #RSLayout }
+Extension { #name : 'RSLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSLayout class >> classesWithDefinitionsToEdit [
 
 	^ ((self withAllSubclasses
@@ -10,7 +10,7 @@ RSLayout class >> classesWithDefinitionsToEdit [
 		sorted: [ :a :b | a key name < b key name ]
 ]
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSLayout class >> layoutDefinition [
 	^ nil
 ]

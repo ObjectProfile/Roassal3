@@ -1,14 +1,16 @@
 Class {
-	#name : #RSTransformableTest,
-	#superclass : #RSTest,
+	#name : 'RSTransformableTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal-Interaction-Tests-Core'
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -18,12 +20,12 @@ RSTransformableTest >> setUp [
 	canvas addAll: shapes
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testBasic [
 	shapes @ RSTransformable
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testBasic02 [
 	| s interaction handles |
 	interaction := RSTransformable new.
@@ -42,7 +44,7 @@ RSTransformableTest >> testBasic02 [
 	self assert: handles isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testCornerDirections [
 	| interaction base new |
 	interaction := RSTransformable new.
@@ -73,7 +75,7 @@ RSTransformableTest >> testCornerDirections [
 	self assert: new equals: 20@20 -> (120@100)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testDrag [
 	| s interaction |
 	interaction := RSTransformable new.
@@ -87,7 +89,7 @@ RSTransformableTest >> testDrag [
 	self assert: (canvas propertyAt: interaction key) notNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testDrag2 [
 	| s interaction |
 	interaction := RSTransformable new.
@@ -99,7 +101,7 @@ RSTransformableTest >> testDrag2 [
 	self assert: (canvas propertyAt: interaction key) isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSTransformableTest >> testUpdateShape [
 	| s interaction rect handles |
 	interaction := RSTransformable new.

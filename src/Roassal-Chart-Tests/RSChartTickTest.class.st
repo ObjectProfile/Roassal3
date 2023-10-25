@@ -15,7 +15,7 @@ RSChartTickTest >> testDefaultFont [
 	ticks := plot verticalTick.
 	labels := ticks labels.
 	defaultFont := labels anyOne class familyFontName .
-	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ]).
+	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ])
 ]
 
 { #category : 'tests' }
@@ -43,10 +43,10 @@ RSChartTickTest >> testFromNames [
 		dates add: d.
 		y add: f ].
 	x := 1 to: dates size.
-	
+
 	plot := RSLinePlot new x: x y: y.
 	plot extent: 300 @ 200.
-	
+
 	horizontal := plot horizontalTick fromNames: dates.
 	plot verticalTick numberOfTicks: 10;
 			 asFloat.
@@ -78,7 +78,7 @@ RSChartTickTest >> testFromNamesWithOneData [
 		yourself.
 	plot horizontalTick fromNames: names.
 	plot removeVerticalTicks.
-	plot build.
+	plot build
 ]
 
 { #category : 'tests' }
@@ -90,5 +90,5 @@ RSChartTickTest >> testSetFontSize [
 	ticks configuration fontSize: 12.
 	plot build.
 	labels := ticks labels.
-	self assert: (labels allSatisfy: [ :label | label fontSize = 12 ]).
+	self assert: (labels allSatisfy: [ :label | label fontSize = 12 ])
 ]

@@ -27,7 +27,7 @@ RSObjectWithProperty class >> exampleCanvas [
 	| c |
 	c := RSCanvas new.
 	c propertyAt: #rick put: #morty.
-	^ StInspector openOn: c properties.
+	^ StInspector openOn: c properties
 ]
 
 { #category : 'examples' }
@@ -35,7 +35,7 @@ RSObjectWithProperty class >> exampleShapeBox [
 	| shape |
 	shape := RSBox new.
 	shape propertyAt: #randy put: #stan.
-	^ StInspector openOn: shape properties.
+	^ StInspector openOn: shape properties
 ]
 
 { #category : 'interactions' }
@@ -77,8 +77,8 @@ RSObjectWithProperty >> canvas [
 
 { #category : 'events' }
 RSObjectWithProperty >> click [
-	"Simulate a click. 
-	
+	"Simulate a click.
+
 For example:
 -=-=-=-=-=-=-=-=-=
 c := RSCanvas new.
@@ -91,10 +91,10 @@ box click.
 c
 -=-=-=-=-=-=-=-=-=
 "
-	self announcer announce: (RSMouseClick new 
+	self announcer announce: (RSMouseClick new
 		canvas: self canvas;
-		shape: self; 
-		yourself).
+		shape: self;
+		yourself)
 ]
 
 { #category : 'interactions' }

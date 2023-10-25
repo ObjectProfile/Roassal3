@@ -32,10 +32,10 @@ RSAthensMorph class >> example [
 		fontSize: 80;
 		bold;
 		borderDo: [:border | border color: Color black; width: 3].
-		
+
 	morph canvas: roassalCanvas.
 	morph renderer: RSAthensRenderer new.
-	
+
 	^ (morph openInWindowLabeled: 'Demo')
 		extent: 600@300;
 		yourself
@@ -118,7 +118,7 @@ v canvas buildMorph drawOnMockCanvas
 RSAthensMorph >> drawShapes [
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [ :athensCanvas |
-		renderer 
+		renderer
 			surface: surface;
 			canvas: athensCanvas.
 		roassalCanvas accept: renderer.

@@ -55,13 +55,13 @@ RSBarPlotTest >> testDoubleBarPlotRawData [
 RSBarPlotTest >> testExtentIsCorrect [
 
 	plot build.
-	
+
 	self assert: plot extent equals: 250 @ 200
 ]
 
 { #category : 'tests' }
 RSBarPlotTest >> testHorizontalBar [
-	
+
 	x := 0.0 to: 2 count: 10.
 	y := (x raisedTo: 2) - 2.
 	plot := RSHorizontalBarPlot new x: x y: y.
@@ -78,7 +78,7 @@ RSBarPlotTest >> testMinMaxValue2 [
 
 	plot := RSBarPlot new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
 	plot build.
-	
+
 	self assert: plot minChartValueX equals: 4.
 	self assert: plot maxChartValueX equals: 9.
 	self assert: plot minChartValueY equals: -15.
@@ -89,7 +89,7 @@ RSBarPlotTest >> testMinMaxValue2 [
 RSBarPlotTest >> testPaddingIsCorrect [
 
 	plot build.
-	
+
 	self assert: plot padding equals: 5 @ 5
 ]
 

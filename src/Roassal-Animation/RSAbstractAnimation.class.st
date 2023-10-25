@@ -254,12 +254,12 @@ RSAbstractAnimation >> refresh [
 		ifFalse: [ ^ self ].
 	self isPaused
 		ifTrue: [ ^ self ].
-	firstStep ifTrue: [ 
+	firstStep ifTrue: [
 		firstStep := false.
 		pauseTime := 0.
 		self announce: (RSAnimationStartEvent new animation: self)
 		 ].
-	self step.
+	self step
 ]
 
 { #category : 'dependencies' }
@@ -301,7 +301,7 @@ RSAbstractAnimation >> reset [
 RSAbstractAnimation >> start [
 	isRunning := true.
 	hasCompleted := false.
-	startTime := self currentTime.
+	startTime := self currentTime
 ]
 
 { #category : 'accessing' }

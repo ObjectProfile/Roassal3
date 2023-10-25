@@ -87,7 +87,7 @@ RSMondrianTest >> testComposingMondrian [
 
 	self assert: c numberOfEdges equals: 3.
 	self assert: c numberOfNodes equals: 5.
-	self assertIntegerPosition: nodes equals: {2 @ 2. 12 @ 2. 2 @ 12. 12 @ 12}.
+	self assertIntegerPosition: nodes equals: {2 @ 2. 12 @ 2. 2 @ 12. 12 @ 12}
 ]
 
 { #category : 'tests' }
@@ -270,7 +270,7 @@ RSMondrianTest >> testNesting [
 
 	subNodes := firstNode nodes.
 	self assert: subNodes size equals: 9.
-	self assertIntegerPosition: subNodes equals: {-10 @ -10. 0 @ -10. 10 @ -10. -10 @ 0. 0 @ 0. 10 @ 0. -10 @ 10. 0 @ 10. 10 @ 10}.
+	self assertIntegerPosition: subNodes equals: {-10 @ -10. 0 @ -10. 10 @ -10. -10 @ 0. 0 @ 0. 10 @ 0. -10 @ 10. 0 @ 10. 10 @ 10}
 ]
 
 { #category : 'tests' }

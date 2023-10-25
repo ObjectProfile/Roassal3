@@ -1,1 +1,1 @@
-Package { #name : #'Roassal-LayoutStudio' }
+Package { #name : 'Roassal-LayoutStudio' }

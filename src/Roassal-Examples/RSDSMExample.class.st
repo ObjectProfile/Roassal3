@@ -453,7 +453,7 @@ RSDSMExample >> example09HeatmapMonths [
 	builder shape extent: 40 @ 15.
 	builder colorPalette: (NSScale linear
 		range: {Color gray. Color purple muchDarker}).
-	builder labelShapeCell labelShape 
+	builder labelShapeCell labelShape
 		border: (RSBorder new color: Color black; width: 0.3);
 		color: Color white.
 	builder objectsX: #('<0.1' '0.1-4.0' '4.1-10' '10.1-20' '>20').

@@ -336,7 +336,7 @@ RSRTreeTest >> testThreeElementsContains [
 
 	result := tree entriesAtRectangle: (-20@ -20 corner: 30@30).
 	self assert: result size equals: 3.
-	self assert: result asArray equals: { b2. b1. b3 }.
+	self assert: result asArray equals: { b2. b1. b3 }
 ]
 
 { #category : 'tests - adding' }

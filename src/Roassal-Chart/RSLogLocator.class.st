@@ -30,7 +30,7 @@ RSLogLocator >> base [
 RSLogLocator >> base: aBase [
 
 	base := aBase.
-	smallestIndex := aBase**(smallestPower) 
+	smallestIndex := aBase**(smallestPower)
 ]
 
 { #category : 'generate' }

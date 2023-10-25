@@ -240,10 +240,10 @@ RSHighlightable >> doHighlightShapes: shapes onCanvas: aCanvas [
 	| allHShapes |
 	self unhighlightRecordedShapes: aCanvas.
 	shapes ifEmpty: [ ^ self ].
-	allHShapes := shapes flatCollect: [ :s | 
+	allHShapes := shapes flatCollect: [ :s |
 		              | hshapes |
 		              hshapes := self highlightShapesFor: s.
-		              hshapes do: [ :hs | 
+		              hshapes do: [ :hs |
 			              self announceHighlight: hs source: s ].
 		              hshapes ].
 	shapes first canvas propertyAt: self propertyKey put: allHShapes

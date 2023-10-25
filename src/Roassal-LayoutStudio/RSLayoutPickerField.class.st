@@ -2,20 +2,22 @@
 This field creates a button, the button will open a window to edit a layout based on field definitions
 "
 Class {
-	#name : #RSLayoutPickerField,
-	#superclass : #RSLayoutField,
+	#name : 'RSLayoutPickerField',
+	#superclass : 'RSLayoutField',
 	#instVars : [
 		'cachedFields'
 	],
-	#category : #'Roassal-LayoutStudio-Fields'
+	#category : 'Roassal-LayoutStudio-Fields',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSLayoutPickerField >> add: aClass [
 	cachedFields add: aClass
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutPickerField >> createWidget [
 	^ layoutStudio newButton
 		label: 'Edit: ', self layoutValue class name;
@@ -23,39 +25,39 @@ RSLayoutPickerField >> createWidget [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutPickerField >> currentLayout [
 	^ self layoutValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutPickerField >> initialize [
 	super initialize.
 	cachedFields := Set new
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutPickerField >> openEditor [
 	RSLayoutPickerPresenter new
 		pickerField: self;
-		open.
+		open
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutPickerField >> printOn: stream tab: tabSize [
 
 	| definition |
 	stream << selector << ': '.
 	definition := self layoutValue class layoutDefinition.
-	definition fields do: [ :field | 
+	definition fields do: [ :field |
 		(cachedFields includes: field class) ifTrue: [ field hasChanged: true ].
 		field layoutStudio: self ].
 	cachedFields ifNotEmpty: [stream << '('].
 	definition generateStringCodeOn: stream tab: tabSize.
-	cachedFields ifNotEmpty: [stream << ')'].
+	cachedFields ifNotEmpty: [stream << ')']
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutPickerField >> update [
 	widget label: 'Edit: ', self layoutValue asString
 ]

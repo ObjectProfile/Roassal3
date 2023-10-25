@@ -12,13 +12,13 @@ RSCanvas >> controllerInteraction: aCanvasController [
 
 { #category : '*Roassal-Interaction' }
 RSCanvas >> searchInteraction [
-	
+
 	^ self propertyAt: RSSearchInCanvasInteraction
 ]
 
 { #category : '*Roassal-Interaction' }
 RSCanvas >> searchInteraction: anRSSearchInCanvasInteraction [
-	
+
 	self propertyAt: RSSearchInCanvasInteraction put: anRSSearchInCanvasInteraction
 ]
 
@@ -34,7 +34,7 @@ RSCanvas >> selectedShapes: aGroupOfShapes [
 
 { #category : '*Roassal-Interaction' }
 RSCanvas >> selectionInteraction [
-	
+
 	^ self propertyAt: RSSelectionInCanvasInteraction
 ]
 
@@ -62,6 +62,6 @@ RSCanvas >> shadowInteraction [
 ]
 
 { #category : '*Roassal-Interaction' }
-RSCanvas >> shadowInteraction: aRSShadowInteraction [ 
+RSCanvas >> shadowInteraction: aRSShadowInteraction [
 	self propertyAt: RSShadowInteraction put: aRSShadowInteraction
 ]

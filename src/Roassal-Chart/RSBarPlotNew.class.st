@@ -11,7 +11,7 @@ RSBarPlotNew class >> example01BarPlot [
 	| p1 data1 |
 	data1 := {  9. 9. 7. 20. 5. 10. }.
 	p1 := self new data: data1.
-	^ p1 open.
+	^ p1 open
 ]
 
 { #category : 'examples' }
@@ -20,7 +20,7 @@ RSBarPlotNew class >> example02BarPlotHorizontal [
 	data1 := {  9. 9. 7. 19. 5. 10. }.
 	p1 := (self new) data: data1.
 	p1 horizontal.
-	^ p1 open.
+	^ p1 open
 ]
 
 { #category : 'examples' }
@@ -29,17 +29,17 @@ RSBarPlotNew class >> example03BarPlotPositions [
 	data1 := {  9. 9. 7. 20. 5. 10. }.
 	p1 := self new data: data1.
 	p1 positions: { 1. 2. 3. 6. 7. 8. }.
-	^ p1 open.
+	^ p1 open
 ]
 
 { #category : 'examples' }
 RSBarPlotNew class >> example04BarPlotPositions [
 	| x y plot1 |
-	
+
 	x := 4 to: 10 by: 0.1.
 	y := x sin.
 	plot1 := self new data: y; positions: x.
-	^ plot1 open.
+	^ plot1 open
 ]
 
 { #category : 'examples' }
@@ -51,7 +51,7 @@ RSBarPlotNew class >> exampleClusterBarPlots [
 	p1 := (self new) data: data1.
 	p2 := (self new) data: data2.
 	chart := p1 + p2.
-	^ chart open.
+	^ chart open
 ]
 
 { #category : 'examples' }
@@ -65,7 +65,7 @@ RSBarPlotNew class >> exampleClusterBarPlots4Bars [
 	p3 := self new data: data1.
 	p4 := self new data: data2.
 	chart := p1 + p2 + p3 + p4.
-	^ chart open.
+	^ chart open
 ]
 
 { #category : 'testing' }
@@ -80,7 +80,7 @@ RSBarPlotNew >> createdShapes [
 
 { #category : 'public' }
 RSBarPlotNew >> data: aCollection [
-	bandPlotShapes := aCollection collect: [ :value | RSBarPlotShape data: value ].
+	bandPlotShapes := aCollection collect: [ :value | RSBarPlotShape data: value ]
 ]
 
 { #category : 'accessing - defaults' }
@@ -94,7 +94,7 @@ RSBarPlotNew >> initialize [
 	super initialize.
 	horizontal := false.
 	bandPlotShapes := OrderedCollection new.
-	offset := 0.
+	offset := 0
 ]
 
 { #category : 'rendering' }
@@ -106,5 +106,5 @@ RSBarPlotNew >> renderIn: canvas [
 		barPlotShape color ifNil: [ barPlotShape color: self computeColor. ].
 		barPlotShape bandScale: bandScale.
 		barPlotShape dataScale: dataScale.
-		barPlotShape renderIn: canvas ].
+		barPlotShape renderIn: canvas ]
 ]

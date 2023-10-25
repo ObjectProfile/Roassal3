@@ -8,10 +8,10 @@ Class {
 
 { #category : 'instance creation' }
 RSKernelFunction class >> gaussian [
-	^ RSKernelGaussianFunction new.
+	^ RSKernelGaussianFunction new
 ]
 
 { #category : 'accessing' }
 RSKernelFunction >> evaluate: aNumber [
-	^ self subclassResponsibility.
+	^ self subclassResponsibility
 ]

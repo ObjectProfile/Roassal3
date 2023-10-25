@@ -49,7 +49,7 @@ RSBarPlot >> beforeRenderingIn: aChart [
 	barScale := NSOrdinalScale new
 		domain: xValues;
 		rangeBands: xScale range padding: gapRatio.
-	aChart xScale: barScale.
+	aChart xScale: barScale
 ]
 
 { #category : 'accessing' }

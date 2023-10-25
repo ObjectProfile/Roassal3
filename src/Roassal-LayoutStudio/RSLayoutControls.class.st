@@ -2,36 +2,38 @@
 This presenter provides a group of controls based on key methods of layout to perform the edition
 "
 Class {
-	#name : #RSLayoutControls,
-	#superclass : #SpPresenter,
+	#name : 'RSLayoutControls',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'layoutStudio'
 	],
-	#category : #'Roassal-LayoutStudio-Utils'
+	#category : 'Roassal-LayoutStudio-Utils',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Utils'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSLayoutControls class >> defaultLayout [
 	^ SpBoxLayout newVertical
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutControls >> boxLayoutSpace [
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutControls >> layoutStudio [
 	^ layoutStudio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutControls >> layoutStudio: aSpLayoutStudio [
 	layoutStudio := aSpLayoutStudio.
 	self updateFields
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSLayoutControls >> updateFields [
 	| boxLayout fields |
 	boxLayout := SpBoxLayout newVertical.

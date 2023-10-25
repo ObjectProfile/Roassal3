@@ -2,12 +2,14 @@
 A RSGhostDraggableTest is a test class for testing the behavior of RSGhostDraggable
 "
 Class {
-	#name : #RSGhostDraggableTest,
-	#superclass : #TestCase,
-	#category : #'Roassal-Interaction-Tests-Core'
+	#name : 'RSGhostDraggableTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGhostDraggableTest >> testBasic [
 	| shape interaction c |
 	c := RSCanvas new.
@@ -27,7 +29,7 @@ RSGhostDraggableTest >> testBasic [
 	self assert: (shape propertyAt: #ghost) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSGhostDraggableTest >> testComposite [
 	| shape interaction c |
 	c := RSCanvas new.

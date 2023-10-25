@@ -2,15 +2,16 @@
 Examples related to timeline
 "
 Class {
-	#name : #RSTimelineExample,
-	#superclass : #RSAbstractExamples,
+	#name : 'RSTimelineExample',
+	#superclass : 'RSAbstractExamples',
 	#instVars : [
 		'lastDay'
 	],
-	#category : #'Roassal-Chart-Examples'
+	#category : 'Roassal-Chart-Examples',
+	#package : 'Roassal-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTimelineExample >> createRandomData [
 	| perlin r |
 	perlin := NSPerlinNoise3 new octaves: 3.
@@ -27,7 +28,7 @@ RSTimelineExample >> createRandomData [
 		]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTimelineExample >> example01Gantt [
 	<script: 'self new example01Gantt open'>
 	| chart data names plot |
@@ -57,7 +58,7 @@ RSTimelineExample >> example01Gantt [
 	^ chart canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTimelineExample >> example02Labeled [
 	<script: 'self new example02Labeled open'>
 	| chart data names plot |
@@ -93,7 +94,7 @@ RSTimelineExample >> example02Labeled [
 	^ chart canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTimelineExample >> example03ZoomInAxis [
 	<script: 'self new example03ZoomInAxis open'>
 	| data chart names |
@@ -116,7 +117,7 @@ RSTimelineExample >> example03ZoomInAxis [
 	^ chart
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTimelineExample >> printDate: day [
 	| label |
 	"use a method, remeber this is an example"

@@ -37,7 +37,7 @@ RSShape >> removeShadow [
 	(self hasProperty: key) ifFalse: [ ^ self ].
 	"self removeInteractionIfPresent: RSShadowInteraction."
 	self shadow remove.
-	self removeKey: key.
+	self removeKey: key
 ]
 
 { #category : '*Roassal-Interaction' }

@@ -51,8 +51,8 @@ RSCoOccurrenceMatrixBuilder class >> sampleMatrix [
 
 { #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> colorScale [
-	" Answer a scale on the receiver's domain range " 
-	
+	" Answer a scale on the receiver's domain range "
+
 	^ colorScale
 		ifNil: [ colorScale := NSScale category20 domain: self domainRange asArray ]
 ]
@@ -73,8 +73,8 @@ RSCoOccurrenceMatrixBuilder >> columnNames [
 { #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> columnSize [
 	"Answer the <Number> of columns in the receiver's data source"
-	
-	^ columnSize 
+
+	^ columnSize
 		ifNil: [ columnSize :=  self dataSource columns size ]
 ]
 
@@ -136,7 +136,7 @@ RSCoOccurrenceMatrixBuilder >> createDataPointsIn: canvas [
 RSCoOccurrenceMatrixBuilder >> createInteractionsIn: canvas [
 
 	canvas nodes @ RSHighlightable red.
-	canvas nodes @ (RSPopup new 
+	canvas nodes @ (RSPopup new
 		model: #yourself;
 		text: [: shape | shape position ])
 ]
@@ -160,7 +160,7 @@ RSCoOccurrenceMatrixBuilder >> createLegendIn: canvas [
 	lb location inner; top; right; offset: (-10 @ 10).
 	lb container: canvas.
 	self domainRange doWithIndex: [ : domainValue : index |
-		lb 
+		lb
 			text: domainValue asString
 			withBoxColor: (self colorScale scale: domainValue) ].
 	lb legendDo: [ :l |
@@ -169,8 +169,7 @@ RSCoOccurrenceMatrixBuilder >> createLegendIn: canvas [
 			withBorder;
 			padding: 30 ].
 	lb onDemand: 'Info'.
-	lb build.
-	
+	lb build
 ]
 
 { #category : 'hooks' }
@@ -178,7 +177,7 @@ RSCoOccurrenceMatrixBuilder >> createRowTicksIn: canvas [
 
 	self rowNames doWithIndex: [ : rowName : y |
 		| p1 p2 tickLine label |
-		
+
 		p1 := -1 @ y.
 		p2 := p1 + (1 @ 0).
 		tickLine := self createTickLineStart: p2 end: p1.
@@ -245,8 +244,7 @@ RSCoOccurrenceMatrixBuilder >> renderIn: canvas [
 	self createRowTicksIn: canvas.
 	self createDataPointsIn: canvas.
 	self createLegendIn: canvas.
-	self createInteractionsIn: canvas.
-
+	self createInteractionsIn: canvas
 ]
 
 { #category : 'accessing' }
@@ -258,8 +256,8 @@ RSCoOccurrenceMatrixBuilder >> rowNames [
 { #category : 'rendering' }
 RSCoOccurrenceMatrixBuilder >> rowSize [
 	"Answer the <Number> of rows in the receiver's data source"
-	
-	^ rowSize 
+
+	^ rowSize
 		ifNil: [ rowSize := self dataSource rows size ]
 ]
 

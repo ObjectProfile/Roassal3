@@ -21,9 +21,9 @@ RSAttachPoint class >> centered [
 RSAttachPoint class >> example [
 	| attachPoint c red blue line |
 	attachPoint := RSBorderAttachPoint new.
-	c := RSCanvas new. 
+	c := RSCanvas new.
 	red := RSBox new
-		size: 50; 
+		size: 50;
 		color: Color red;
 		yourself.
 	blue := RSBox new
@@ -32,7 +32,7 @@ RSAttachPoint class >> example [
 		position: 100@100;
 		yourself.
 	line := RSLine new
-		from: red; 
+		from: red;
 		to: blue;
 		attachPoint: RSBorderAttachPoint new;
 		yourself.

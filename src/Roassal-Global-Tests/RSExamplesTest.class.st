@@ -34,7 +34,7 @@ RSExamplesTest >> testClassSideExamples [
 		flatCollect: [:cls | cls class methods ]).
 	errors := OrderedCollection new.
 	noSystemWindow := OrderedCollection new.
-	
+
 	methods do:[ :met | | window |
 		[ window := met selector value: met methodClass soleInstance.
 		(window isSystemWindow or: [window isWindowPresenter])

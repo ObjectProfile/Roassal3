@@ -32,7 +32,7 @@ RSCanvasTest >> testAddShapeBefore [
 	ellipse := RSEllipse new size: 10.
 
 	canvas add: ellipse.
-	
+
 	canvas addShape: box before: ellipse.
 	self assert: canvas shapes asArray equals: { box . ellipse }
 ]
@@ -79,13 +79,13 @@ RSCanvasTest >> testAsShapeModel [
 RSCanvasTest >> testBasicCoordinates [
 	canvas := RSCanvas new.
 	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
-	
+
 	canvas originTopLeft.
 	self assert: canvas originMode class equals: RSCamera originTopLeft class.
 	self deny: canvas originMode class equals: RSCamera originCenterMiddle class.
-	
+
 	canvas originCenterMiddle.
-	self assert: canvas originMode class equals: RSCamera originCenterMiddle class.
+	self assert: canvas originMode class equals: RSCamera originCenterMiddle class
 ]
 
 { #category : 'tests' }

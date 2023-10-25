@@ -19,7 +19,7 @@ Class {
 
 { #category : 'generate' }
 RSFixedLocator >> generateTicks: aScale with: numberOfTicks [
-	
+
 	ticks sort.
 	^ ticks select: [ :e | e >= aScale domain first and: e <= aScale domain last ]
 ]

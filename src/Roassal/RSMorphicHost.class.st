@@ -56,7 +56,7 @@ RSMorphicHost >> antialiasing [
 RSMorphicHost >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
 
-	morph := RSAthensMorph new. 
+	morph := RSAthensMorph new.
 	morph renderer: RSAthensRenderer new.
 	morph canvas: canvas.
 	^ morph
@@ -133,7 +133,6 @@ RSMorphicHost >> openWithTitle: aTitleAsString [
 	window extent: 500 @ 500.
 	morph privateOwner: window.
 	^ window
-
 ]
 
 { #category : 'antialiasing' }

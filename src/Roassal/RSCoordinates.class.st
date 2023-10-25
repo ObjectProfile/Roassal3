@@ -73,6 +73,6 @@ RSCoordinates >> visibleRectangleFor: anRSCamera rectangle: aRectangle [
 	"returns the visible rectangle in the canvas space"
 	matrix := self matrixFor: anRSCamera.
 
-	^ Rectangle encompassing: (aRectangle corners collect: [ :point | 
+	^ Rectangle encompassing: (aRectangle corners collect: [ :point |
 			   matrix inverseTransform: point ])
 ]

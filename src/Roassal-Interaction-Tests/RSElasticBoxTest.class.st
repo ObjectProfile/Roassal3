@@ -2,15 +2,17 @@
 A RSAbstractElasticBoxTest is a test class for testing the behavior of RSAbstractElasticBox
 "
 Class {
-	#name : #RSElasticBoxTest,
-	#superclass : #TestCase,
+	#name : 'RSElasticBoxTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Interaction-Tests-ElasticBox'
+	#category : 'Roassal-Interaction-Tests-ElasticBox',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'ElasticBox'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSElasticBoxTest >> setUp [
 	| shapes |
 	super setUp.
@@ -20,12 +22,12 @@ RSElasticBoxTest >> setUp [
 	canvas addAll: shapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSElasticBoxTest >> testBasic [
 	canvas @ RSElasticBoxInteraction
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSElasticBoxTest >> testEvents [
 	| number elastic |
 	elastic := RSElasticBoxInteraction new.
@@ -43,7 +45,7 @@ RSElasticBoxTest >> testEvents [
 	self assert: number equals: 11
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSElasticBoxTest >> testEventsDraggableCanvas [
 	| elastic number |
 	elastic := RSElasticBoxInteraction new.

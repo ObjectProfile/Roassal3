@@ -2,41 +2,43 @@
 This field uses a list of objects to pick one
 "
 Class {
-	#name : #RSLayoutChooseField,
-	#superclass : #RSLayoutField,
+	#name : 'RSLayoutChooseField',
+	#superclass : 'RSLayoutField',
 	#instVars : [
 		'items'
 	],
-	#category : #'Roassal-LayoutStudio-Fields'
+	#category : 'Roassal-LayoutStudio-Fields',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutChooseField >> createWidget [
 	^ layoutStudio newDropList
 		items: items;
 		selectItem: self layoutValue;
 		display: [ :item | item asString ];
-		whenSelectedItemChangedDo: [ :item | self updateField: item ].
+		whenSelectedItemChangedDo: [ :item | self updateField: item ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutChooseField >> items [
 
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutChooseField >> items: anObject [
 
 	items := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutChooseField >> update [
 	widget selectItem: self layoutValue
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSLayoutChooseField >> updateWidget: aString [
 	self layoutValue: (self transform: aString)
 ]

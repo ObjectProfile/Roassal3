@@ -8,5 +8,5 @@ Class {
 
 { #category : 'accessing' }
 RSKernelGaussianFunction >> evaluate: aNumber [
-	^ ((0-((aNumber squared)/2))) exp / ((2 * (Float pi)) sqrt).
+	^ ((0-((aNumber squared)/2))) exp / ((2 * (Float pi)) sqrt)
 ]

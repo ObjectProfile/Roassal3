@@ -1,17 +1,19 @@
 Class {
-	#name : #RSDraggableTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Interaction-Tests-Core'
+	#name : 'RSDraggableTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableTest >> testBasic [
 	| box |
 	box := RSBox new.
 	box @ RSDraggable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableTest >> testCheckChildrenActions [
 	| box composite |
 	box := RSBox new model: 'foo'; popup; yourself.
@@ -19,7 +21,7 @@ RSDraggableTest >> testCheckChildrenActions [
 	self should: [ composite draggable ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableTest >> testDisableCheckChildrenActions [
 	| box composite draggable |
 	box := RSBox new model: 'foo'; popup; yourself.

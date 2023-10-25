@@ -1,6 +1,6 @@
-Extension { #name : #RSGridLayout }
+Extension { #name : 'RSGridLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSGridLayout class >> layoutDefinition [
 	^ super layoutDefinition
 		add: (RSLayoutChooseField new
@@ -16,7 +16,7 @@ RSGridLayout class >> layoutDefinition [
 		yourself
 ]
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSGridLayout class >> verticalAlignmentOptions [
 	^ #(top middle bottom)
 ]

@@ -12,21 +12,21 @@ Class {
 
 { #category : 'accessing' }
 RSBarPlotShape class >> data: aValue [
-	^ (self new) data: aValue.
+	^ (self new) data: aValue
 ]
 
 { #category : 'shapes' }
 RSBarPlotShape >> createBar [
 	| barPoints |
-	
-	barPoints := { 
-		(bandOffset-(bandWidth/2)) @ (dataScale scale: 0)."bottom left" 
+
+	barPoints := {
+		(bandOffset-(bandWidth/2)) @ (dataScale scale: 0)."bottom left"
 		(bandOffset+(bandWidth/2)) @ (dataScale scale: 0)."bottom right"
 		(bandOffset+(bandWidth/2)) @ (dataScale scale: data)."top right"
-		(bandOffset-(bandWidth/2)) @ (dataScale scale: data)."top left" 
+		(bandOffset-(bandWidth/2)) @ (dataScale scale: data)."top left"
 	} asOrderedCollection.
-	
-	bar points: barPoints.
+
+	bar points: barPoints
 ]
 
 { #category : 'shapes' }
@@ -47,7 +47,7 @@ RSBarPlotShape >> data: aValue [
 RSBarPlotShape >> defaultBar [
 	^ RSPolygon new
 		color: color;
-		border: (RSBorder new color: Color black; joinRound).
+		border: (RSBorder new color: Color black; joinRound)
 ]
 
 { #category : 'initialization' }
@@ -55,7 +55,7 @@ RSBarPlotShape >> initialize [
 	super initialize.
 	bar := self defaultBar.
 	horizontal := false.
-	shouldShowBand := self defaultShouldShowBand.
+	shouldShowBand := self defaultShouldShowBand
 ]
 
 { #category : 'rendering' }
@@ -74,5 +74,5 @@ RSBarPlotShape >> minDataValue [
 { #category : 'rendering' }
 RSBarPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
-	canvas add: self.
+	canvas add: self
 ]

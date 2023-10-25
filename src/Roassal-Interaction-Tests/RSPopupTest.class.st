@@ -1,14 +1,16 @@
 Class {
-	#name : #RSPopupTest,
-	#superclass : #RSTest,
+	#name : 'RSPopupTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal-Interaction-Tests-Core'
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSPopupTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -20,14 +22,14 @@ bar';
 	canvas addAll: shapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testMorphicPopup [
 	canvas createMorph.
 	shapes @ RSMorphicPopupInteraction.
 	shapes first announce: RSMouseMove new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testMultiline [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .
@@ -38,13 +40,13 @@ RSPopupTest >> testMultiline [
 	self assert: canvas fixedShapes first shapes second shapes size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testNoPopup [
 	shapes first announce: RSMouseEnter.
 	self assert: canvas numberOfShapes equals: shapes size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testPopup [
 	| c |
 	c := RSCanvas new.
@@ -74,7 +76,7 @@ RSPopupTest >> testPopup [
 	self assert: c fixedShapes last children last text equals: '2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testPopupOnElementNotAddedToAView [
 	| b |
 	b := RSBox new.
@@ -83,7 +85,7 @@ RSPopupTest >> testPopupOnElementNotAddedToAView [
 	"Should not produce an error"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testPopupSimple [
 	| c s |
 	c := RSCanvas new.
@@ -100,7 +102,7 @@ RSPopupTest >> testPopupSimple [
 	self assert: c fixedShapes first children second text equals: '42'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testPopupWithoutMouseLeave [
 	| c |
 	c := RSCanvas new.
@@ -129,7 +131,7 @@ RSPopupTest >> testPopupWithoutMouseLeave [
 	self assert: c fixedShapes last children last text equals: '2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSPopupTest >> testWithPopup [
 	shapes @ RSPopup.
 	self assert: canvas fixedShapes size equals: 0 .

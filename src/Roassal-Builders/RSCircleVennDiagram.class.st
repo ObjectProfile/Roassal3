@@ -35,7 +35,7 @@ RSCircleVennDiagram >> bigSet [
 { #category : 'accessing' }
 RSCircleVennDiagram >> bigSet: anObject [
 
-	bigSet := anObject asSet.
+	bigSet := anObject asSet
 ]
 
 { #category : 'computation' }
@@ -86,7 +86,7 @@ RSCircleVennDiagram >> computeRadius: aSet [
 ]
 
 { #category : 'initialization' }
-RSCircleVennDiagram >> initialize [ 
+RSCircleVennDiagram >> initialize [
 	super initialize.
 	bigSet := Set new.
 	smallSet := Set new.
@@ -113,7 +113,7 @@ RSCircleVennDiagram >> renderIn: aCanvas [
 		radius: smallRadius * 10;
 		position: distance * 10 @ 0;
 		color: Color red translucent.
-	aCanvas @ RSCanvasController.
+	aCanvas @ RSCanvasController
 ]
 
 { #category : 'accessing' }
@@ -125,7 +125,7 @@ RSCircleVennDiagram >> smallSet [
 { #category : 'accessing' }
 RSCircleVennDiagram >> smallSet: anObject [
 
-	smallSet := anObject asSet.
+	smallSet := anObject asSet
 ]
 
 { #category : 'accessing' }

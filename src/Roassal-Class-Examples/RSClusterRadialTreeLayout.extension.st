@@ -1,6 +1,6 @@
-Extension { #name : #RSClusterRadialTreeLayout }
+Extension { #name : 'RSClusterRadialTreeLayout' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSClusterRadialTreeLayout class >> exampleWithNumber [
 	| canvas shapes color |
 	canvas := RSCanvas new.

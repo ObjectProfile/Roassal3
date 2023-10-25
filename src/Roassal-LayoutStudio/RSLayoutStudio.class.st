@@ -2,17 +2,19 @@
 Basic layout studio to interact with layout and all subclasses
 "
 Class {
-	#name : #RSLayoutStudio,
-	#superclass : #RSAbstractLayoutPresenter,
+	#name : 'RSLayoutStudio',
+	#superclass : 'RSAbstractLayoutPresenter',
 	#instVars : [
 		'menu',
 		'nodes',
 		'oldPositions'
 	],
-	#category : #'Roassal-LayoutStudio-Core'
+	#category : 'Roassal-LayoutStudio-Core',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Core'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSLayoutStudio class >> defaultLayout [
 	^ SpPanedLayout newLeftToRight
 		positionOfSlider: 280;
@@ -24,18 +26,18 @@ RSLayoutStudio class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 RSLayoutStudio class >> open [
 	<script>
 	self new open
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutStudio class >> renderGraphIn: anRSCanvas [
 	RSLayout canvasExampleIn: anRSCanvas
 ]
 
-{ #category : #animation }
+{ #category : 'animation' }
 RSLayoutStudio >> addAnimation: anRSCanvas [
 	| newPositions |
 	newPositions := nodes collect: [ :each | each position ].
@@ -53,19 +55,19 @@ RSLayoutStudio >> addAnimation: anRSCanvas [
 			 ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> apply: aRSLayoutField with: anObject [
 	self saveNodesPosition.
 	currentLayout perform: aRSLayoutField selector asMutator with: anObject.
 	self refresh
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSLayoutStudio >> canvasController [
 	^ RSCanvasController new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutStudio >> connectPresenters [
 	| initialLayout |
 	initialLayout := RSCircleLayout.
@@ -74,7 +76,7 @@ RSLayoutStudio >> connectPresenters [
 	roassalCanvas script: [ :canvas | self renderIn: canvas ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> createBoxLayout [
 	^ SpBoxLayout newVertical
 		add: (SpBoxLayout newVertical
@@ -88,29 +90,29 @@ RSLayoutStudio >> createBoxLayout [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSLayoutStudio >> defaultGraphText [
 	^ '"canvas is an instance of RSCanvas use it to render a graph"
 RSLayoutStudio renderGraphIn: canvas'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> edit: anAssociation [
 	self saveNodesPosition.
 	super edit: anAssociation
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> generateCodeAndOpenIt [
 	^ StPlayground openContents: self generateStringCode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSLayoutStudio >> generateStringCode [
 	^ layoutDefinition generateStringCode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutStudio >> initializePresenters [
 	menu := self mainMenu.
 	menu addKeybindingsTo: self.
@@ -119,7 +121,7 @@ RSLayoutStudio >> initializePresenters [
 	roassalCanvas := self newRoassal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayoutStudio >> initializeWindow: aWindow [
 	| title |
 	title := 'Layout Studio'.
@@ -130,7 +132,7 @@ RSLayoutStudio >> initializeWindow: aWindow [
 		centered
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSLayoutStudio >> mainMenu [
 	^ self newMenuBar
 		addGroup: [ :group |
@@ -153,18 +155,18 @@ RSLayoutStudio >> mainMenu [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutStudio >> menu [
 	^ menu
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutStudio >> renderGraphIn: anRSCanvas [
 	"this method will render a graph in a canvas using the source text code editor"
 	self textAsBlockClosure value: anRSCanvas
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutStudio >> renderIn: anRSCanvas [
 	self renderGraphIn: anRSCanvas.
 	nodes := anRSCanvas nodes.
@@ -174,13 +176,13 @@ RSLayoutStudio >> renderIn: anRSCanvas [
 	self addAnimation: anRSCanvas
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> saveNodesPosition [
 	nodes ifNil: [ ^self ].
-	oldPositions := nodes collect: [ :each | each position ].
+	oldPositions := nodes collect: [ :each | each position ]
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSLayoutStudio >> textAsBlockClosure [
 	^ self class compiler
 		source: '[:canvas | ' , graphTextEditor text asString , ']';
@@ -188,7 +190,7 @@ RSLayoutStudio >> textAsBlockClosure [
 		evaluate
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayoutStudio >> titlePrefix [
 	^ 'Layout Studio on: '
 ]

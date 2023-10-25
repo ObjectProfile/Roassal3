@@ -15,7 +15,7 @@ NSInterpolator >> canvasForInspector [
 			color: (theme caretColor alpha: 0.2);
 			resetBBox;
 			yourself ] as: RSGroup.
-	
+
 	line := RSPolyline new border: (RSBorder new width: 4).
 	canvas addShape: line.
 	cp := OrderedCollection new.

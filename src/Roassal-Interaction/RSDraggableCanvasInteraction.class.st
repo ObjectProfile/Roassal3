@@ -49,7 +49,7 @@ RSDraggableCanvasInteraction class >> right [
 { #category : 'mouse' }
 RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
-	self mouseEvent: RSMouseDragStart.
+	self mouseEvent: RSMouseDragStart
 ]
 
 { #category : 'computing' }
@@ -213,10 +213,10 @@ RSDraggableCanvasInteraction >> noLimits [
 
 { #category : 'hooks' }
 RSDraggableCanvasInteraction >> onShape: aCanvas [
-	aCanvas 
+	aCanvas
 		when: self mouseEvent send: #mouseStart: to: self;
 		when: RSMouseDragging send: #mouseDragging: to: self;
-		when: RSMouseDragEnd send: #mouseEnd: to: self.
+		when: RSMouseDragEnd send: #mouseEnd: to: self
 ]
 
 { #category : 'rendering' }

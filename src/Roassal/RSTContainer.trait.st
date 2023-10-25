@@ -43,13 +43,14 @@ RSTContainer >> addAllShapes: aCollection [
 ]
 
 { #category : 'adding' }
-RSTContainer >> addBasicShape: aShape [
-	| listOfShapes |
-	listOfShapes := self privateShapes.
-	listOfShapes add: aShape.
-	aShape entryIndex: listOfShapes size.
-	shapeCollection add: aShape.
-	aShape invalidate.
+RSTContainer >> addBasicShape: arg1 [
+
+	| tmp1 |
+	tmp1 := self privateShapes.
+	tmp1 add: arg1.
+	arg1 entryIndex: tmp1 size.
+	shapeCollection add: arg1.
+	arg1 invalidate
 ]
 
 { #category : 'adding nodes edges' }
@@ -86,7 +87,7 @@ RSTContainer >> addShape: aShape before: otherShape [
 	col add: aShape before: otherShape.
 	index := col indexOf: aShape.
 	index to: col size do: [ :i | (col at: i) entryIndex: i ].
-	aShape isFixed 
+	aShape isFixed
 		ifFalse: [ self shapeCollection updateEntry: aShape before: otherShape ]
 ]
 
@@ -191,7 +192,6 @@ RSTContainer >> newBezier [
 	s := RSBezier new.
 	self add: s.
 	^ s
-	
 ]
 
 { #category : 'factory' }
@@ -321,30 +321,18 @@ RSTContainer >> privateShapes: aCollection [
 ]
 
 { #category : 'shapes - ordering' }
-RSTContainer >> pushBack: aShape [
-	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+RSTContainer >> pushBack: arg1 [
 
-For example:
-```Smalltalk
-c := RSCanvas new.
-shape1 := RSEllipse new size: 50; color: #red.
-shape2 := RSEllipse new size: 50; color: #blue.
-shape2 translateBy: -25@0.
-c add: shape1; add: shape2.
-c pushBack: shape2.
-c.
-```
-"
-	| col |
-	col := aShape isFixed
-		ifTrue: [ self fixedShapes ]
-		ifFalse: [ self privateShapes ].
-	col
-		remove: aShape;
-		addFirst: aShape.
-	aShape isFixed ifFalse: [ self shapeCollection pushBack: aShape ].
-	col doWithIndex: [ :each :index | each entryIndex: index ].
-	aShape invalidate
+	| tmp1 |
+	tmp1 := arg1 isFixed
+		        ifTrue: [ self fixedShapes ]
+		        ifFalse: [ self privateShapes ].
+	tmp1
+		remove: arg1;
+		addFirst: arg1.
+	arg1 isFixed ifFalse: [ self shapeCollection pushBack: arg1 ].
+	tmp1 doWithIndex: [ :arg2 :arg3 | arg2 entryIndex: arg3 ].
+	arg1 invalidate
 ]
 
 { #category : 'actions' }
@@ -354,32 +342,22 @@ RSTContainer >> pushBackEdges [
 ]
 
 { #category : 'shapes - ordering' }
-RSTContainer >> pushFront: aShape [
-	"Shapes are ordered in the same order they are inserted. The order can be changed using #pushFront: and #pushBack.
+RSTContainer >> pushFront: arg1 [
 
-For example:
-```Smalltalk
-c := RSCanvas new.
-shape1 := RSEllipse new size: 50; color: #red.
-shape2 := RSEllipse new size: 50; color: #blue.
-shape2 translateBy: -25@0.
-c add: shape1; add: shape2.
-c pushFront: shape1.
-c.
-```
-The red circle is in front of the blue one, despite the red one is inserted first.
-"
-	| col |
-	col := aShape isFixed
-		ifTrue: [ self fixedShapes ]
-		ifFalse: [ self privateShapes ].
-	
-	col
-		remove: aShape;
-		addLast: aShape.
-	aShape isFixed ifFalse: [ self shapeCollection pushFront: aShape ].
-	aShape entryIndex to: col size do: [ :index | (col at: index) entryIndex: index ].
-	aShape invalidate
+	| tmp1 tmp2 |
+	tmp1 := arg1 isFixed
+		        ifTrue: [ self fixedShapes ]
+		        ifFalse: [ self privateShapes ].
+	tmp1
+		remove: arg1;
+		addLast: arg1.
+	arg1 isFixed ifFalse: [ self shapeCollection pushFront: arg1 ].
+	tmp2 := tmp1 size.
+	arg1 entryIndex to: tmp2 do: [ :tmp3 |
+	(tmp1 at: tmp3) entryIndex: tmp3 ].
+	arg1
+		entryIndex;
+		invalidate
 ]
 
 { #category : 'removing' }
@@ -406,10 +384,10 @@ RSTContainer >> shapeCollection [
 RSTContainer >> shapeCollection: anRSShapeCollection [
 	| listOfShapes |
 	shapeCollection := anRSShapeCollection.
-	
+
 	listOfShapes := self privateShapes.
 	listOfShapes ifNil: [ ^ self ].
-	shapeCollection bulkLoad: listOfShapes.
+	shapeCollection bulkLoad: listOfShapes
 ]
 
 { #category : 'looking up shapes' }
@@ -447,13 +425,13 @@ RSTContainer >> updateInShapeCollection: aShape [
 
 { #category : 'shape - collection' }
 RSTContainer >> useList [
-	self shapeCollection: RTSequenceableCollection new.
+	self shapeCollection: RTSequenceableCollection new
 ]
 
 { #category : 'shape - collection' }
 RSTContainer >> useRTree [
 	"use RTree for big data visualizations"
-	self shapeCollection: RTreeCollection new.
+	self shapeCollection: RTreeCollection new
 ]
 
 { #category : 'accessing' }
