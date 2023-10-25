@@ -27,23 +27,45 @@ Here is how to use it, from Roassal code
 ```
 "
 Class {
-	#name : #RSBimetricLine,
-	#superclass : #RSSVGPathLine,
+	#name : 'RSBimetricLine',
+	#superclass : 'RSSVGPathLine',
 	#instVars : [
 		'widthFrom',
 		'widthTo'
 	],
-	#category : #'Roassal-SVG-Shapes'
+	#category : 'Roassal-SVG-Shapes',
+	#package : 'Roassal-SVG',
+	#tag : 'Shapes'
 }
 
-{ #category : #initialization }
+{ #category : 'accessing - computed' }
+RSBimetricLine >> computeEncompassingRectangle [
+	| p1 p2 b points |
+	points := OrderedCollection new.
+	p1 := startPoint.
+	p2 := endPoint.
+	b := RSBorder new.
+	b width: self widthFrom.
+	b expandPoint: p1 to: p2.
+	b width: self widthTo.
+	p2 := b expandPoint: p2 to: p1.
+	border := b.
+	b width: self widthFrom.
+	self addTwoPointsBasedInWidthFrom: p1 to: p2 in: points.
+	b width: self widthTo.
+	self addTwoPointsBasedInWidthFrom: p2 to: p1 in: points.
+	border := nil.
+	^ Rectangle encompassing: points.
+]
+
+{ #category : 'initialization' }
 RSBimetricLine >> initialize [
 	super initialize.
 	widthFrom := widthTo := 0.
 	self initializeSVG
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBimetricLine >> initializeSVG [
 	self
 		svgPath: [ :aLine |
@@ -90,22 +112,22 @@ RSBimetricLine >> initializeSVG [
 			builder close ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthFrom [
 	^ widthFrom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthFrom: aNumber [
 	widthFrom := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthTo [
 	^ widthTo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBimetricLine >> widthTo: aNumber [
 	widthTo := aNumber
 ]

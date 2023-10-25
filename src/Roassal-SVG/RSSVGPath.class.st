@@ -2,22 +2,24 @@
 TODO
 "
 Class {
-	#name : #RSSVGPath,
-	#superclass : #RSBoundingShape,
+	#name : 'RSSVGPath',
+	#superclass : 'RSBoundingShape',
 	#instVars : [
 		'svgPath',
 		'segments',
 		'polygons'
 	],
-	#category : #'Roassal-SVG-Shapes'
+	#category : 'Roassal-SVG-Shapes',
+	#package : 'Roassal-SVG',
+	#tag : 'Shapes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSSVGPath >> buildPathOn: visitor [
 	visitor buildSVGPath: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> centerSegment: segment absolute: absolute position: position [
 	"maybe we can have an iterator with polymorphic objects"
 	| key args |
@@ -42,7 +44,7 @@ RSSVGPath >> centerSegment: segment absolute: absolute position: position [
 	^ absolute
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> centerSegments [
 	| rect absolute position |
 	rect := self segmentsRectangle.
@@ -62,7 +64,7 @@ RSSVGPath >> centerSegments [
 	baseRectangle := Rectangle floatCenter: 0@0 extent: rect extent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> computePolygons [
 	| subPath absolute position point |
 	polygons := OrderedCollection new.
@@ -109,14 +111,14 @@ RSSVGPath >> computePolygons [
 	polygons add: subPath
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> computeSegments [
 	| pathData |
 	pathData := ASPathConverter new stream: svgPath readStream.
 	segments := pathData convertPathData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPath >> extent: newExtent [
 	| min max s extent |
 	segments ifNil: [ ^ self ].
@@ -138,7 +140,7 @@ RSSVGPath >> extent: newExtent [
 	super extent: newExtent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSSVGPath >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix rsInverseTransform: aPoint.
@@ -151,29 +153,29 @@ RSSVGPath >> includesPoint: aPoint [
 				(apt polygon: eachPolygon) includesPoint: invertedPoint]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPath >> segments [
 	^ segments
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> segments: aCollection [
 	segments := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSSVGPath >> segmentsRectangle [
 	| allPoints |
 	allPoints := polygons flatCollect: [:poly | poly ].
 	^ Rectangle encompassing: allPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPath >> svgPath [
 	^ svgPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSVGPath >> svgPath: aString [
 	svgPath := aString.
 	self computeSegments.

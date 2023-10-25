@@ -112,6 +112,7 @@ RSShapeExamples >> example15BimetricLine [
 	<script: 'self new example15BimetricLine open'>
 	| canvas s1 s2 l |
 	canvas := RSCanvas new.
+	canvas showDirtyRectangle.
 	s1 := RSBox new
 		color: Color blue;
 		draggable;

@@ -2,16 +2,18 @@
 TODO
 "
 Class {
-	#name : #RSAreaPlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSAreaPlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'y2Values',
 		'area'
 	],
-	#category : #'Roassal-SVG-Chart'
+	#category : 'Roassal-SVG-Chart',
+	#package : 'Roassal-SVG',
+	#tag : 'Chart'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAreaPlot >> addPointAt: index in: s [
 	| xval y1val y2val |
 	index > xValues size ifTrue: [ ^ self ].
@@ -38,28 +40,28 @@ RSAreaPlot >> addPointAt: index in: s [
 	 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAreaPlot >> area [
 	^ area
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAreaPlot >> computePath [
 	^ String streamContents: [ :s |
 		self addPointAt: 1 in: s ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAreaPlot >> createdShapes [
 	^ {area}
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSAreaPlot >> defaultShape [
 	^ RSSVGPath new noPaint
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAreaPlot >> definedValuesY [
 	| temp|
 	temp := y2Values.
@@ -67,7 +69,7 @@ RSAreaPlot >> definedValuesY [
 	^ yValues , temp select: [ :v | v isNaN not and: [ v isInfinite not ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAreaPlot >> pointFor: aPoint [
 	| spoint |
 	spoint := (xScale scale: aPoint x) @ (yScale scale: aPoint y).
@@ -77,7 +79,7 @@ RSAreaPlot >> pointFor: aPoint [
 	^ spoint x asFloat printString,' ',spoint y asFloat printString
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAreaPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	canvas add: (area := self shape copy
@@ -86,7 +88,7 @@ RSAreaPlot >> renderIn: canvas [
 		yourself)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAreaPlot >> x: aCollection1 y1: aCollection2 y2: aCollection3OrNumber [
 	"collections should have the same size"
 	xValues := aCollection1.
@@ -94,12 +96,12 @@ RSAreaPlot >> x: aCollection1 y1: aCollection2 y2: aCollection3OrNumber [
 	y2Values := aCollection3OrNumber
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAreaPlot >> x: aCollection y: aCollection2 [
 	self shouldNotImplement
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAreaPlot >> y: aCollection [
 	self shouldNotImplement
 ]

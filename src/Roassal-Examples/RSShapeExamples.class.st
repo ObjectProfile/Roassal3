@@ -423,8 +423,7 @@ RSShapeExamples >> example17Labeled [
 	<script: 'self new example17Labeled open'>
 	| canvas e1 e2 s line label |
 	canvas := RSCanvas new.
-	canvas showEncompassingRectangles.
-	canvas showDirtyRectangle.
+	
 	s := [ :m |
 		RSEllipse new
 			border: RSBorder new;
