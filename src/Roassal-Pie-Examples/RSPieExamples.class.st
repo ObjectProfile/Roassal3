@@ -746,11 +746,11 @@ RSPieExamples >> example20AddingRemoving [
 	updateLabel := nil.
 	update := nil.
 	canvas addShape: (RSBox new
-			 extent: 100 @ 200;
-			 noPaint;
-			 withBorder;
-			 position: 300 @ 100;
-			 yourself).
+		extent: 100 @ 200;
+		noPaint;
+		withBorder;
+		position: 300 @ 100;
+		yourself).
 	pie sliceShape
 		innerRadius: 70;
 		externalRadius: 220.
@@ -758,64 +758,64 @@ RSPieExamples >> example20AddingRemoving [
 		sliceColor: [ :slice | color scale: slice model ];
 		build.
 	pieClick := [
-	            pie shapes
-		            when: RSMouseClick
-		            do: [ :evt |
-			            objects remove: evt shape model.
-			            removed add: evt shape model.
-			            update value ]
-		            for: self ].
+		pie shapes
+			when: RSMouseClick
+		 	do: [ :evt |
+				objects remove: evt shape model.
+				removed add: evt shape model.
+				update value ]
+		   for: self ].
 	pieClick value.
 	updatePie := [
-	             shapes := pie shapes.
-	             shapes do: #remove.
-	             pie
-		             slice: #linesOfCode;
-		             build.
-	             pieClick value.
-	             pie shapes do: [ :shape |
-		             | x y |
-		             x := shape alphaAngle.
-		             y := shape betaAngle.
-		             shapes
-			             detect: [ :e1 | e1 model = shape model ]
-			             ifFound: [ :e1 |
-				             canvas newAnimation
-					             easing: RSEasingInterpolator quad;
-					             onStepDo: [ :t |
-						             shape
-							             alphaAngle: (e1 alphaAngle interpolateTo: x at: t);
-							             betaAngle: (e1 betaAngle interpolateTo: y at: t);
-							             signalUpdate ] ] ].
-	             pie shapes size > shapes size ifTrue: [
-		             | shape x |
-		             shape := pie shapes last.
-		             x := shape alphaAngle.
-		             canvas newAnimation
-			             easing: RSEasingInterpolator quad;
-			             onStepDo: [ :t |
-				             shape
-					             alphaAngle: (shape betaAngle interpolateTo: x at: t);
-					             signalUpdate ] ] ].
+		shapes := pie shapes.
+		shapes do: #remove.
+		pie
+			slice: #linesOfCode;
+			build.
+		pieClick value.
+		pie shapes do: [ :shape |
+			| x y |
+			x := shape alphaAngle.
+			y := shape betaAngle.
+			shapes
+				detect: [ :e1 | e1 model = shape model ]
+				ifFound: [ :e1 |
+					canvas newAnimation
+						easing: RSEasingInterpolator quad;
+						onStepDo: [ :t |
+							shape
+								alphaAngle: (e1 alphaAngle interpolateTo: x at: t);
+								betaAngle: (e1 betaAngle interpolateTo: y at: t);
+								signalUpdate ] ] ].
+		pie shapes size > shapes size ifTrue: [
+			| shape x |
+			shape := pie shapes last.
+			x := shape alphaAngle.
+			canvas newAnimation
+				easing: RSEasingInterpolator quad;
+				onStepDo: [ :t |
+					shape
+						alphaAngle: (shape betaAngle interpolateTo: x at: t);
+						signalUpdate ] ] ].
 	updateLabel := [
-	               labels do: #remove.
-	               canvas addAll:
-		               (labels := removed collectWithIndex: [ :m :index |
-			                          RSLabel new
-				                          fontName: 'Source Sans Pro';
-				                          model: m;
-				                          text: m;
-				                          position: index * (0 @ 30) + (300 @ 0);
-				                          when: RSMouseClick do: [ :evt |
-					                          | model |
-					                          model := evt shape model.
-					                          objects add: model.
-					                          removed remove: model.
-					                          update value ];
-				                          yourself ]) ].
+		labels do: #remove.
+		canvas addAll: (labels := removed collectWithIndex: [ :m :index |
+			RSLabel new
+				fontName: 'Source Sans Pro';
+				model: m;
+				text: m;
+				position: index * (0 @ 30) + (300 @ 0);
+				when: RSMouseClick do: [ :evt |
+					| model |
+					model := evt shape model.
+					objects add: model.
+					removed remove: model.
+					update value ]
+				for: self;
+				yourself ]) ].
 	update := [
-	          updatePie value.
-	          updateLabel value ].
+		updatePie value.
+		updateLabel value ].
 	canvas zoomToFit.
 	canvas when: RSExtentChangedEvent do: [ canvas zoomToFit ] for: self.
 	^ canvas
@@ -876,24 +876,24 @@ RSPieExamples >> example22RotatedAnimation [
 	@ (RSPopup text: [ :obj | obj linesOfCode asString , 'LOC' ]).
 	pie shapes @ pieLabel.
 	animation := canvas newAnimation
-		             from: 0;
-		             to: 360;
-		             repeat;
-		             duration: 15 seconds;
-		             onStepDo: [ :t |
-			             pie shapes do: [ :shape |
-					             | att a b l ext ang |
-					             att := shape properties.
-					             a := att at: #a ifAbsentPut: [ shape alphaAngle ].
-					             b := att at: #b ifAbsentPut: [ shape betaAngle ].
-					             shape alphaAngle: a + t.
-					             shape betaAngle: b + t.
-					             l := shape propertyAt: pieLabel labelKey.
-					             ang := shape alphaAngle + shape betaAngle / 2 % 360.
-					             ext := l extent x / 2 @ 0.
-					             (ang between: 90 and: 270) ifFalse: [
-							             ext := ext negated ].
-					             l position: (shape centroid: 80) - ext ] ].
+		from: 0;
+		to: 360;
+		repeat;
+		duration: 15 seconds;
+		onStepDo: [ :t |
+			pie shapes do: [ :shape |
+				| att a b l ext ang |
+				att := shape properties.
+				a := att at: #a ifAbsentPut: [ shape alphaAngle ].
+				b := att at: #b ifAbsentPut: [ shape betaAngle ].
+				shape alphaAngle: a + t.
+				shape betaAngle: b + t.
+				l := shape propertyAt: pieLabel labelKey.
+				ang := shape alphaAngle + shape betaAngle / 2 % 360.
+				ext := l extent x / 2 @ 0.
+				(ang between: 90 and: 270) ifFalse: [
+					ext := ext negated ].
+				l position: (shape centroid: 80) - ext ] ].
 	canvas add: (RSLabel new text: pie totalSum asString , ' LOC').
 	canvas @ RSCanvasController.
 	^ canvas
@@ -901,79 +901,89 @@ RSPieExamples >> example22RotatedAnimation [
 
 { #category : 'examples' }
 RSPieExamples >> example23RotatedAnimation [
-	<script: 'self new example23RotatedAnimation open setLabel: ''Roassal packages by size in the file system'''>
+
+	<script:
+	'self new example23RotatedAnimation open setLabel: ''Roassal packages by size in the file system'''>
 	<noTest>
 	| data pie pieLabel animation canvas lines directorySize |
-	data := './pharo-local/iceberg/pharo-graphics/Roassal/src' asFileReference
-		directories.
+	data := './pharo-local/iceberg/pharo-graphics/Roassal/src'
+		        asFileReference directories.
 	directorySize := nil.
-	directorySize := [ :d | | sum |
-		sum := 0.
-		d children do: [ :child |
-			sum := sum + (child isDirectory
-				ifTrue: [ directorySize value: child ]
-				ifFalse: [ child size ]) ].
-		sum ].
+	directorySize := [ :d |
+	                 | sum |
+	                 sum := 0.
+	                 d children do: [ :child |
+		                 sum := sum + (child isDirectory
+			                         ifTrue: [ directorySize value: child ]
+			                         ifFalse: [ child size ]) ].
+	                 sum ].
 	data := data sort: [ :a :b |
-		(directorySize value: a) > (directorySize value: b) ].
+		        (directorySize value: a) > (directorySize value: b) ].
 	pie := RSPie new
-		objects: data;
-		slice: [:dir | (directorySize value: dir) sqrt ].
+		       objects: data;
+		       slice: [ :dir | (directorySize value: dir) sqrt ].
 	canvas := pie canvas.
 	animation := nil.
 	pie sliceShape
 		innerRadius: 70;
 		segmentSpacing: 0.5;
 		externalRadius: 220.
-	pie
-		sliceColor: NSScale category20b.
+	pie sliceColor: NSScale category20b.
 	pieLabel := RSPieLabeledInteraction new.
 	pieLabel labelText: #basename.
 	pie build.
 	pie shapes
-		@ (RSPopup text: [ :obj|
-			obj basename, String cr,
-			(directorySize value: obj) humanReadableSIByteSize ]);
+		@ (RSPopup text: [ :obj |
+					 obj basename , String cr
+					 , (directorySize value: obj) humanReadableSISizeString ]);
 		@ pieLabel;
-		when: RSMouseClick do: [ animation toggle ].
+		when: RSMouseClick do: [ animation toggle ] for: self.
 
-	lines := pie shapes collect: [:s | RSPolyline new
-		border: (RSBorder new dashArray: #(3));
-		yourself ].
+	lines := pie shapes collect: [ :s |
+		         RSPolyline new
+			         border: (RSBorder new dashArray: #( 3 ));
+			         yourself ].
 	canvas addAll: lines.
 	canvas add: (RSLabel new
-		text: (directorySize value: data first parent) humanReadableSIByteSize;
-		yourself).
+			 text:
+				 (directorySize value: data first parent)
+					 humanReadableSISizeString;
+			 yourself).
 	animation := canvas newAnimation
-		from: 0; to: 360; repeat; duration: 15 seconds;
-		onStepDo: [ :t |
-			pie shapes do: [ :shape | | att a b label ext ang x p1 p2 p3 line |
-				att := shape properties.
-				a := att at: #a ifAbsentPut: [ shape alphaAngle ].
-				b := att at: #b ifAbsentPut: [ shape betaAngle ].
-				shape alphaAngle: a + t.
-				shape betaAngle: b + t.
-				label := shape propertyAt: pieLabel labelKey.
-				ang := ((shape alphaAngle + shape betaAngle)/2) %360.
-				ext := label extent x/2 @ 0.
-				x := -250.
-				(ang between: 90 and: 270) ifFalse: [
-					ext := ext negated.
-					x := x negated ].
-				p1 := shape centroid: 0.
-				p2 := shape centroid: 80.
-				p3 := x @ p2 y.
-				line := lines at: shape index.
-				line shape
-					controlPoints: { p1. p2. p3 }.
-				label position: p3-ext.
-			]
-		].
+		             from: 0;
+		             to: 360;
+		             repeat;
+		             duration: 15 seconds;
+		             onStepDo: [ :t |
+			             pie shapes do: [ :shape |
+					             | att a b label ext ang x p1 p2 p3 line |
+					             att := shape properties.
+					             a := att at: #a ifAbsentPut: [ shape alphaAngle ].
+					             b := att at: #b ifAbsentPut: [ shape betaAngle ].
+					             shape alphaAngle: a + t.
+					             shape betaAngle: b + t.
+					             label := shape propertyAt: pieLabel labelKey.
+					             ang := shape alphaAngle + shape betaAngle / 2 % 360.
+					             ext := label extent x / 2 @ 0.
+					             x := -250.
+					             (ang between: 90 and: 270) ifFalse: [
+							             ext := ext negated.
+							             x := x negated ].
+					             p1 := shape centroid: 0.
+					             p2 := shape centroid: 80.
+					             p3 := x @ p2 y.
+					             line := lines at: shape index.
+					             line shape controlPoints: {
+								             p1.
+								             p2.
+								             p3 }.
+					             label position: p3 - ext ] ].
 	canvas camera zoomToFit: 270 asPoint.
-	canvas when: RSExtentChangedEvent do: [
-		canvas camera
-			zoomToFit: canvas extent * 0.9
-			extent: 800@600 ].
+	canvas
+		when: RSExtentChangedEvent
+		do: [
+		canvas camera zoomToFit: canvas extent * 0.9 extent: 800 @ 600 ]
+		for: self.
 	^ canvas
 ]
 

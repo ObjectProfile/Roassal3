@@ -449,7 +449,8 @@ RSAbstractLine >> strokePaint [
 { #category : 'accessing' }
 RSAbstractLine >> strokePaint: aPaint [
 	self border paint: aPaint.
-	self markersDo: [:m | m shape paint: aPaint ]
+	self markersDo: [:m | m shape paint: aPaint ].
+	self invalidate.
 ]
 
 { #category : 'accessing' }

@@ -103,12 +103,10 @@ RSExamplesBrowser >> connectPresenters [
 	searchButton action: [ self openSpotter ].
 	showEncompassingRectanglesButton whenChangedDo: [ :state |
 		roassalCanvas canvas shouldShowEncompassingRectangles: state.
-		roassalCanvas canvas camera invalidate.
-		roassalCanvas canvas signalUpdate ].
+		roassalCanvas canvas invalidate ].
 	showDirtyRectangleButton whenChangedDo: [ :state |
 		roassalCanvas canvas shouldShowDirtyRectangle: state.
-		roassalCanvas canvas camera invalidate.
-		roassalCanvas canvas signalUpdate  ]
+		roassalCanvas canvas invalidate ]
 ]
 
 { #category : 'private' }

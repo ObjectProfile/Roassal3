@@ -627,13 +627,13 @@ RSLayoutExamples >> example20FlowLayout [
 		canvas shouldShowEncompassingRectangles
 			ifTrue: [ canvas hideEncompassingRectangles ]
 			ifFalse: [ canvas showEncompassingRectangles ].
-		canvas camera invalidate. canvas signalUpdate ].
+		canvas invalidate ].
 		'Show/Hide Underlines'.
 		[
 		labels first isUnderlined
 			ifTrue: [ labels do: #normal ]
 			ifFalse: [ labels do: #underline ].
-		canvas camera invalidate. canvas signalUpdate
+		canvas invalidate
 		] } pairsDo: [ :s :a |
 		(newLabel value: s)
 			fontSize: 12;

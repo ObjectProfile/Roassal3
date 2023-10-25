@@ -547,18 +547,18 @@ RSHighlightableExamples >> example12ShowingEdges [
 RSHighlightableExamples >> example13Click [
 
 	<script: 'self new example13Click open'>
-	| canvas shapes color interaction selectedItems interaction2 |
+	| canvas shapes color clickInteraction selectedItems highlightInteraction |
 	canvas := RSCanvas new.
-
+	canvas showDirtyRectangle.
 	color := RSColorPalette sequential bupu3.
 	shapes := (1 to: 20) collect: [ :m |
-		          RSBox new
-			          size: 10;
-			          model: m;
-			          draggable;
-			          withBorder;
-			          color: (color scale: m);
-			          yourself ].
+		RSBox new
+			size: 10;
+			model: m;
+			draggable;
+			withBorder;
+			color: (color scale: m);
+			yourself ].
 
 	RSLineBuilder line
 		canvas: canvas;
@@ -568,7 +568,8 @@ RSHighlightableExamples >> example13Click [
 
 	selectedItems := OrderedCollection new.
 
-	interaction := RSHighlightable red withLines.
+	clickInteraction := RSHighlightable red withLines.
+	highlightInteraction := RSHighlightable red withLines.
 	canvas nodes
 		when: RSMouseLeftClick
 		do: [ :evt |
@@ -577,18 +578,18 @@ RSHighlightableExamples >> example13Click [
 			(selectedItems includes: shape)
 				ifTrue: [ selectedItems remove: shape ]
 				ifFalse: [ selectedItems add: shape ].
-			interaction doHighlightShapes: selectedItems.
+			highlightInteraction unhighlightRecordedShapes: evt canvas.
+			clickInteraction doHighlightShapes: selectedItems.
 			evt signalUpdate ]
 		for: self.
 	canvas
 		when: RSMouseClick
 		do: [ :evt |
 			selectedItems removeAll.
-			interaction unhighlightRecordedShapes: evt.
+			clickInteraction unhighlightRecordedShapes: evt.
 			evt signalUpdate ]
 		for: self.
-	interaction2 := RSHighlightable red withLines.
-	canvas nodes @ interaction2.
+	canvas nodes @ highlightInteraction.
 	RSClusterTreeLayout on: shapes.
 	canvas zoomToFit.
 	^ canvas

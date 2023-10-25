@@ -1110,8 +1110,7 @@ RSBasicShapeExamples >> example44AA [
 			canvas host hasAntialiasing
 				ifTrue: [ canvas host disableAntialiasing ]
 				ifFalse: [ canvas host enableAntialiasing ].
-			canvas camera invalidate.
-			canvas signalUpdate ]
+			canvas invalidate]
 		for: self.
 	^ canvas
 ]

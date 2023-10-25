@@ -107,8 +107,7 @@ c
 
 	self onStepDo: [ :t |
 		object perform: sel withArguments: { t }.
-		canvas camera invalidate.
-		canvas signalUpdate
+		canvas invalidate
 	]
 ]
 
