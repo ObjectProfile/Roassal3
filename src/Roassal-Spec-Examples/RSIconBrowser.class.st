@@ -8,22 +8,24 @@ self iconNamed: #pharo
 But what icons are available? this class present them so you can use them in your projects
 "
 Class {
-	#name : #RSIconBrowser,
-	#superclass : #SpPresenter,
+	#name : 'RSIconBrowser',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Spec-Examples-Menu'
+	#category : 'Roassal-Spec-Examples-Menu',
+	#package : 'Roassal-Spec-Examples',
+	#tag : 'Menu'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSIconBrowser class >> defaultLayout [
 	^ SpBoxLayout newVertical
 		add: #canvas;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSIconBrowser >> connectPresenters [
 
 	| c icons shapes |
@@ -46,12 +48,12 @@ RSIconBrowser >> connectPresenters [
 	c @ RSCanvasController
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSIconBrowser >> initializePresenters [
 	canvas := self newRoassal
 ]
 
-{ #category : #TOREMOVE }
+{ #category : 'TOREMOVE' }
 RSIconBrowser >> title [
 	^ 'Icons'
 ]

@@ -2,21 +2,23 @@
 I am a popup that uses Morphic and can be visible outside of the RSCanvas.
 "
 Class {
-	#name : #RSMorphicPopupInteraction,
-	#superclass : #RSAbstractPopupInteraction,
+	#name : 'RSMorphicPopupInteraction',
+	#superclass : 'RSAbstractPopupInteraction',
 	#instVars : [
 		'morphBuilder',
 		'gapFromPointer'
 	],
-	#category : #'Roassal-Interaction-Popup'
+	#category : 'Roassal-Interaction-Popup',
+	#package : 'Roassal-Interaction',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicPopupInteraction >> backgroundColor [
 	^ Smalltalk ui theme backgroundColor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	| popup vertices targetMorph world |
 	targetMorph := self morphBuilder cull: (self modelFor: aShape).
@@ -36,34 +38,34 @@ RSMorphicPopupInteraction >> createPopupFor: aShape event: event [
 	^ popup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicPopupInteraction >> gapFromPointer [
 	^ gapFromPointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicPopupInteraction >> gapFromPointer: aPoint [
 	gapFromPointer := aPoint
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMorphicPopupInteraction >> initialize [
 	super initialize.
 	self morphBuilder: [ :model | self popupFor: model ].
 	gapFromPointer := 0@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicPopupInteraction >> morphBuilder [
 	^ morphBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMorphicPopupInteraction >> morphBuilder: aBlock [
 	morphBuilder := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMorphicPopupInteraction >> popupFor: model [
 	^ model asString asTextMorph
 		backgroundColor: (Smalltalk ui theme backgroundColor alpha: 0.9);
@@ -73,17 +75,17 @@ RSMorphicPopupInteraction >> popupFor: model [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMorphicPopupInteraction >> popupKey [
 	^ #popupMorph
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMorphicPopupInteraction >> releasePopup: popup [
 	popup delete
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMorphicPopupInteraction >> translatePopup: aMorph event: evt [
 	| position xdelta ydelta cMorph world |
 	cMorph := evt canvas morph.

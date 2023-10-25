@@ -38,7 +38,9 @@ RSAnimationExamples >> example01BoxWindmill [
 				s matrix
 					loadIdentity;
 					translateBy: s model;
-					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95  ].
+					rotateByRadians: (s model x + s model y + frameCount) degreesToRadians * 1.95.
+				s resetBBox.
+			].
 			frameCount := frameCount + 1. ].
 	"canvas @ RSGraphCanvasMonitorInteraction."
 	^ canvas
@@ -750,7 +752,7 @@ RSAnimationExamples >> example12Sky [
 	frame := 0.
 	canvas shouldClearBackground: false.
 	(canvas newAnimation duration: 5 seconds;onStepDo: [ :t| ])
-		when: RSAnimationEndEvent do: [ box remove ].
+		when: RSAnimationEndEvent do: [ box remove ] for: self.
 	canvas newAnimation repeat
 		onStepDo: [ :t |
 			frame := frame + 0.1.
@@ -762,7 +764,7 @@ RSAnimationExamples >> example12Sky [
 					e position: ang cos @ ang sin negated * radius + (2500 @ 3000) ] ].
 	(client := ZnEasy client)
 		url:
-			'http://www.transparentpng.com/download/mountain/68IzPF-mountain-clipart-png-photos.png';
+			'https://www.transparentpng.com/download/mountain/68IzPF-mountain-clipart-png-photos.png';
 		accept: ZnMimeType imagePng;
 		signalProgress: true;
 		get.
@@ -773,10 +775,10 @@ RSAnimationExamples >> example12Sky [
 		do: [ | e s |
 			e := canvas extent.
 			s := e x / 2200.
-			"2200 x 800 = image extent"
 			canvas camera
 				scale: s;
-				translateTo: 0 @ (e y / s - 800) / 2 negated ].
+				translateBy: 0@ image height / 5]
+		for: self.
 	^ canvas
 ]
 

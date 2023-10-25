@@ -3,29 +3,31 @@ This interaction put dragging events. Use mouse left click to start the draging 
 This interaction will modify the current matrix of the target shape.
 "
 Class {
-	#name : #RSRotated,
-	#superclass : #RSInteraction,
+	#name : 'RSRotated',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'drag',
 		'targetShape',
 		'totalAngle',
 		'prevAngle'
 	],
-	#category : #'Roassal-Interaction-Core'
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSRotated >> dragEnd: evt [
 	drag := false.
 	prevAngle := nil
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSRotated >> dragStart: evt [
 	drag := true
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSRotated >> dragging: evt [
 	| angle |
 	drag ifFalse: [ ^ self ].
@@ -37,16 +39,17 @@ RSRotated >> dragging: evt [
 	targetShape matrix
 		loadIdentity;
 		rotateByRadians: totalAngle.
-	evt signalUpdate
+	targetShape resetBBox.
+	targetShape signalUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSRotated >> initialize [
 	super initialize.
 	drag := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSRotated >> onShape: aShape [
 	targetShape := aShape.
 	aShape parent

@@ -2,17 +2,19 @@
 Shadow Interaction puts a shadow in a shape
 "
 Class {
-	#name : #RSShadowInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSShadowInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'padding',
 		'shadowColor',
 		'shouldPushFront'
 	],
-	#category : #'Roassal-Interaction-Selection'
+	#category : 'Roassal-Interaction-Selection',
+	#package : 'Roassal-Interaction',
+	#tag : 'Selection'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSShadowInteraction class >> exampleBasic [
 	| canvas |
 	canvas := self canvasExample.
@@ -20,7 +22,7 @@ RSShadowInteraction class >> exampleBasic [
 	^ canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSShadowInteraction class >> exampleLine [
 	| canvas int line |
 	canvas := self canvasExample.
@@ -33,7 +35,7 @@ RSShadowInteraction class >> exampleLine [
 	^ canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSShadowInteraction class >> examplePieSlice [
 	| canvas int slice |
 	canvas := self canvasExample.
@@ -54,7 +56,7 @@ RSShadowInteraction class >> examplePieSlice [
 	^ canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSShadowInteraction class >> examplePolygon [
 	| canvas int polygon |
 	canvas := self canvasExample.
@@ -68,7 +70,7 @@ RSShadowInteraction class >> examplePolygon [
 	^ canvas open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSShadowInteraction class >> exampleShadowColor [
 	| canvas int |
 	canvas := self canvasExample.
@@ -78,7 +80,7 @@ RSShadowInteraction class >> exampleShadowColor [
 	^ canvas open
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> addInteractionToCanvas: aShape [
 
 	| canvas |
@@ -89,7 +91,7 @@ RSShadowInteraction >> addInteractionToCanvas: aShape [
 	canvas when: RSScaleChangedEvent send: #updateAllShadows: to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> createShadowFor: aShape [
 
 	^ (aShape
@@ -99,7 +101,7 @@ RSShadowInteraction >> createShadowFor: aShape [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShadowInteraction >> initialize [
 
 	super initialize.
@@ -108,12 +110,12 @@ RSShadowInteraction >> initialize [
 	self shouldPushFront: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShadowInteraction >> key [
 	^ #shadowShapeList
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> onShape: aShape [
 
 	aShape shadow ifNotNil: [ ^ self ].
@@ -128,19 +130,19 @@ RSShadowInteraction >> onShape: aShape [
 		when: RSShapeRemovedEvent send: #removeShadow: to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> padding [
 
 	^ padding
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> padding: number [ 
 
 	padding := number
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> putShadowOn: aShape [
 
 	| shadow canvas list |
@@ -157,7 +159,7 @@ RSShadowInteraction >> putShadowOn: aShape [
 	list add: aShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> removeShadow: evt [
 
 	| canvas shape |
@@ -169,7 +171,7 @@ RSShadowInteraction >> removeShadow: evt [
 		ifPresent: [ :list | list remove: shape ifAbsent: [  ] ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RSShadowInteraction >> removeShadowsOn: aRSCanvas [
 	| key |
 	key := self key.
@@ -179,7 +181,7 @@ RSShadowInteraction >> removeShadowsOn: aRSCanvas [
 	aRSCanvas removeKey: key
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> scaleFrom: aShape [
 
 	"Return the scale used by the canvas of the shape"
@@ -189,31 +191,31 @@ RSShadowInteraction >> scaleFrom: aShape [
 	^ aShape canvas camera scale
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> shadowColor [
 
 	^ shadowColor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> shadowColor: aColor [
 
 	shadowColor := aColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShadowInteraction >> shouldPushFront [
 
 	^ shouldPushFront
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShadowInteraction >> shouldPushFront: aBoolean [ 
 	
 	shouldPushFront := aBoolean
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> updateAllShadows: evt [
 
 	| canvas |
@@ -223,7 +225,7 @@ RSShadowInteraction >> updateAllShadows: evt [
 		ifPresent: [ :list | list do: [ :shape | self updateShadow: shape ] ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSShadowInteraction >> updateShadow: evt [
 
 	| shadow shape |

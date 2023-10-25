@@ -2,25 +2,27 @@
 I am a special case to drag elements with the draggable interaction and the RSForceBasedLayout
 "
 Class {
-	#name : #RSDraggableForceInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSDraggableForceInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'layout'
 	],
-	#category : #'Roassal-Interaction-Layouts'
+	#category : 'Roassal-Interaction-Layouts',
+	#package : 'Roassal-Interaction',
+	#tag : 'Layouts'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDraggableForceInteraction >> layout [
 	^ layout
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDraggableForceInteraction >> layout: aForceLayout [
 	layout := aForceLayout
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDraggableForceInteraction >> onShape: aShape [
 
 	aShape removeInteractionIfPresent: RSDraggable.

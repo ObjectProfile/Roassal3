@@ -111,24 +111,24 @@ RSBasicAnimationExamples >> example04DashAnimation [
 	c := RSCanvas new.
 	form := self iconNamed: #eyedropper.
 	paint := AthensCairoPatternSurfacePaint createForSurface:
-		         (AthensCairoSurface fromForm: form).
+		(AthensCairoSurface fromForm: form).
 	paint origin: (form extent / 2) negated.
 	border := RSBorder new
-		          color: Color purple;
-		          dashArray: #( 4 ).
+		color: Color purple;
+		dashArray: #( 4 ).
 	box := RSBox new
-		       paint: paint;
-		       extent: form extent;
-		       border: border;
-		       scaleBy: 3.
+		paint: paint;
+		extent: form extent;
+		border: border;
+		scaleBy: 3.
 
 	c addShape: box.
 
 	animation := c newAnimation
-		             repeat;
-		             from: 0;
-		             to: 8;
-		             on: border set: #dashOffset:.
+		repeat;
+		from: 0;
+		to: 8;
+		on: border set: #dashOffset:.
 	box
 		when: RSMouseClick
 		do: [ :a |
@@ -233,7 +233,7 @@ RSBasicAnimationExamples >> example07CornerRadius [
 			range: #(0 1 0));
 		onStepDo: [:t |
 			b cornerRadius: (from interpolateTo: to at: t).
-			c signalUpdate.
+			b signalUpdate.
 			].
 	^ c
 ]

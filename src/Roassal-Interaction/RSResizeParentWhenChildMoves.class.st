@@ -2,43 +2,45 @@
 Based on simple moves of inner children, this interactions allow nodes to keep in the parent and update it
 "
 Class {
-	#name : #RSResizeParentWhenChildMoves,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSResizeParentWhenChildMoves',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'padding'
 	],
-	#category : #'Roassal-Interaction-Core'
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> brotherFor: shape from: children [
 	^ children
 		detect: [ :child | child ~= shape ]
 		ifNone: [ nil ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> childrenFor: parent [
 	^ parent children
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSResizeParentWhenChildMoves >> defaultPadding [
 	^ 10
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSResizeParentWhenChildMoves >> initialize [
 	super initialize.
 	self padding: self defaultPadding
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSResizeParentWhenChildMoves >> isValidParent: parent [
 	^ parent isNotNil and: [ parent isShape ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> onShape: aCanvas [
 	aCanvas isShape
 		ifTrue: [ ^ self registerShape: aCanvas ].
@@ -46,27 +48,27 @@ RSResizeParentWhenChildMoves >> onShape: aCanvas [
 	aCanvas allChildren do: [ :child | self registerShape: child ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSResizeParentWhenChildMoves >> padding [
 	^ padding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSResizeParentWhenChildMoves >> padding: aNumberPointOrMargin [
 	padding := aNumberPointOrMargin
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> parentFor: shape [
 	^ shape parent
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> prepare: shape with: parent [
 	"do nothing"
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> registerShape: child [
 	child
 		when: RSPositionChangedEvent
@@ -74,7 +76,7 @@ RSResizeParentWhenChildMoves >> registerShape: child [
 		to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSResizeParentWhenChildMoves >> resizeParent: evt [
 	| shape parent lastPosition delta children brother reference |
 	shape := evt shape.

@@ -5,16 +5,18 @@ Also this camera has a configurable`zoomRatio:` default value is 0.9(90%) of the
 I work with `RSZoomToFitCanvasInteraction`
 "
 Class {
-	#name : #RSConfigurableCamera,
-	#superclass : #RSCamera,
+	#name : 'RSConfigurableCamera',
+	#superclass : 'RSCamera',
 	#instVars : [
 		'zoomInteraction',
 		'zoomRatio'
 	],
-	#category : #'Roassal-Interaction-Utils'
+	#category : 'Roassal-Interaction-Utils',
+	#package : 'Roassal-Interaction',
+	#tag : 'Utils'
 }
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSConfigurableCamera >> computeScaleFor: anExtent rectangle: rect [
 	| sc int canvasRect |
 	sc := super computeScaleFor: anExtent rectangle: rect.
@@ -33,27 +35,27 @@ RSConfigurableCamera >> computeScaleFor: anExtent rectangle: rect [
 	^ sc
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConfigurableCamera >> zoomInteraction [
 	^ zoomInteraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConfigurableCamera >> zoomInteraction: aRSZoomToFitCanvasInteraction [
 	zoomInteraction := aRSZoomToFitCanvasInteraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConfigurableCamera >> zoomRatio [
 	^ zoomRatio ifNil: [ 0.9 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSConfigurableCamera >> zoomRatio: aNumber [
 	zoomRatio := aNumber
 ]
 
-{ #category : #zoom }
+{ #category : 'zoom' }
 RSConfigurableCamera >> zoomToFit [
 	| int |
 	int := self zoomInteraction.

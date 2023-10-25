@@ -2,12 +2,14 @@
 My instances put events on a shape, when this shapes moves it will be on top of the visualization
 "
 Class {
-	#name : #RSNodeOnTopWhenPositionChanged,
-	#superclass : #RSInteraction,
-	#category : #'Roassal-Interaction-Extra'
+	#name : 'RSNodeOnTopWhenPositionChanged',
+	#superclass : 'RSInteraction',
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSNodeOnTopWhenPositionChanged >> moveToTop: evt [
 	| shape |
 	shape := evt shape.
@@ -17,7 +19,7 @@ RSNodeOnTopWhenPositionChanged >> moveToTop: evt [
 	(shape withAllChildren flatCollect: #connectedLines) do: #pushFront
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSNodeOnTopWhenPositionChanged >> onShape: aShape [
 	aShape
 		when: RSPositionChangedEvent

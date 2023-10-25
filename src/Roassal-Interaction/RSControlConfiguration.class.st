@@ -6,19 +6,22 @@ For examples:
 - `RSControlConfiguration class >> #example2`
 "
 Class {
-	#name : #RSControlConfiguration,
-	#superclass : #RSObject,
+	#name : 'RSControlConfiguration',
+	#superclass : 'RSObject',
 	#instVars : [
 		'padding',
 		'maxScale',
 		'minScale',
 		'shouldUseBasicZoom',
-		'shouldShowLegend'
+		'shouldShowLegend',
+		'shouldAnimateZoom'
 	],
-	#category : #'Roassal-Interaction-Utils'
+	#category : 'Roassal-Interaction-Utils',
+	#package : 'Roassal-Interaction',
+	#tag : 'Utils'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSControlConfiguration >> initialize [
 	super initialize.
 	self
@@ -28,69 +31,82 @@ RSControlConfiguration >> initialize [
 		maxScale: 7;
 		padding: 25;
 		withLegend;
-		noBasicZoom
+		noBasicZoom;
+		shouldAnimateZoom: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> maxScale [
 	^ maxScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> maxScale: aNum [
 	"Set the maximum scale for the configuration.
 	Used in the zoom in level"
 	maxScale := aNum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> minScale [
 	^ minScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> minScale: aNum [
 	"Set the minimum scale allowed by the configuration.
 	Used in zoom out level"
 	minScale := aNum
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSControlConfiguration >> noBasicZoom [
 	shouldUseBasicZoom := false
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSControlConfiguration >> noLegend [
 	shouldShowLegend := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> padding [
 	^ padding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSControlConfiguration >> padding: aMargin [
 	padding := aMargin asMargin
 ]
 
-{ #category : #testing }
+{ #category : 'accessing' }
+RSControlConfiguration >> shouldAnimateZoom [
+
+	^ shouldAnimateZoom
+]
+
+{ #category : 'accessing' }
+RSControlConfiguration >> shouldAnimateZoom: aBoolean [
+
+	shouldAnimateZoom := aBoolean
+]
+
+{ #category : 'testing' }
 RSControlConfiguration >> shouldShowLegend [
 	^ shouldShowLegend
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSControlConfiguration >> shouldUseBasicZoom [
 	^ shouldUseBasicZoom
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSControlConfiguration >> useBasicZoom [
 	shouldUseBasicZoom := true
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSControlConfiguration >> withLegend [
 	shouldShowLegend := true
 ]

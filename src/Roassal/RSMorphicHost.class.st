@@ -6,7 +6,8 @@ Class {
 	#superclass : 'RSHost',
 	#instVars : [
 		'morph',
-		'antialiasing'
+		'antialiasing',
+		'dirtyRectangle'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
@@ -59,6 +60,20 @@ RSMorphicHost >> createMorph [
 	morph renderer: RSAthensRenderer new.
 	morph canvas: canvas.
 	^ morph
+]
+
+{ #category : 'accessing' }
+RSMorphicHost >> dirtyRectangle [
+	^ dirtyRectangle
+]
+
+{ #category : 'accessing' }
+RSMorphicHost >> dirtyRectangle: aRectangleOrNil [
+	| visibleRectangle |
+	dirtyRectangle := aRectangleOrNil.
+	dirtyRectangle ifNil: [ ^ self ].
+	visibleRectangle := canvas visibleRectangle.
+	dirtyRectangle := dirtyRectangle intersect: visibleRectangle
 ]
 
 { #category : 'antialiasing' }
@@ -131,4 +146,11 @@ RSMorphicHost >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 
 	morph changed
+]
+
+{ #category : 'update' }
+RSMorphicHost >> updateDirtyRectangleWith: aRectangle [
+	self dirtyRectangle: (dirtyRectangle
+			 ifNil: [ aRectangle ]
+			 ifNotNil: [ dirtyRectangle merge: aRectangle ])
 ]

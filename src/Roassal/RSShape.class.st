@@ -41,7 +41,8 @@ Class {
 		'parent',
 		'isFixed',
 		'encompassingRectangle',
-		'model'
+		'model',
+		'isDirty'
 	],
 	#category : 'Roassal-Core',
 	#package : 'Roassal',
@@ -148,11 +149,11 @@ RSShape >> addRecursivelyIn: aCollection [
 RSShape >> addedIn: aCanvas [
 	"This is a private method"
 	| evt |
+	parent ifNotNil: [ self remove ].
+	parent := aCanvas.
 	self isFixed
 		ifTrue: [ aCanvas addFixedShape: self ]
 		ifFalse: [ aCanvas addBasicShape: self ].
-	parent ifNotNil: [ self remove ].
-	parent := aCanvas.
 	self addPendingAnimationsIn: parent.
 
 	evt := RSShapeAddedEvent new shape: self.
@@ -192,7 +193,8 @@ RSShape >> border [
 
 { #category : 'border' }
 RSShape >> border: aBorder [
-	border := aBorder
+	border := aBorder.
+	self resetBBox
 ]
 
 { #category : 'border' }
@@ -218,13 +220,22 @@ c @ RSCanvasController.
 c open
 ```"
 	border ifNil: [ self withBorder ].
-	self border color: aColor
+	self border color: aColor.
+	self invalidate
+]
+
+{ #category : 'border' }
+RSShape >> borderDo: aBlock [
+	border ifNil: [ border := RSBorder new ].
+	aBlock value: border.
+	self resetBBox
 ]
 
 { #category : 'border' }
 RSShape >> borderWidth: aNumber [
 	border ifNil: [ self withBorder ].
-	self border width: aNumber
+	self border width: aNumber.
+	self resetBBox
 ]
 
 { #category : 'accessing - computed' }
@@ -263,7 +274,7 @@ c add: (RSBox new size: 50; color: Color blue).
 c
 ```
 	"
-	paint := aColor.
+	self paint: aColor.
 	paint isColor ifTrue: [ ^ self ].
 	paint := Color colorFrom: aColor
 ]
@@ -430,7 +441,8 @@ RSShape >> index: anObject [
 RSShape >> initialize [
 	super initialize.
 	paint := self defaultColor.
-	isFixed := false
+	isFixed := false.
+	isDirty := true
 ]
 
 { #category : 'testing' }
@@ -441,9 +453,32 @@ RSShape >> intersects: aRectangle [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'dirty areas' }
+RSShape >> invalidate [
+	| camera rectangle |
+	parent ifNil: [ ^ self ].
+	self isDirty: true.
+	rectangle := self encompassingRectangle.
+	(self isFixed and: [self isInACanvas] )ifTrue: [
+		camera := parent camera.
+		rectangle := camera originMode visibleRectangleFor: camera rectangle: rectangle.
+	].
+	parent updateDirtyRectangleWith: rectangle
+]
+
 { #category : 'testing' }
 RSShape >> isComposite [
 	^ false
+]
+
+{ #category : 'accessing' }
+RSShape >> isDirty [
+	^ isDirty
+]
+
+{ #category : 'accessing' }
+RSShape >> isDirty: anObject [
+	isDirty := anObject
 ]
 
 { #category : 'testing' }
@@ -501,7 +536,8 @@ RSShape >> model: anObject [
 
 { #category : 'border' }
 RSShape >> noBorder [
-	border := nil
+	border := nil.
+	self resetBBox
 ]
 
 { #category : 'accessing' }
@@ -517,7 +553,8 @@ RSShape >> paint [
 { #category : 'accessing' }
 RSShape >> paint: aPaint [
 	"Receive a Color or an Athens paint object"
-	paint := aPaint
+	paint := aPaint.
+	self invalidate
 ]
 
 { #category : 'accessing' }
@@ -598,10 +635,18 @@ RSShape >> renderOn: aCanvas [
 
 { #category : 'initialization' }
 RSShape >> resetBBox [
+
 	| shouldUpdate |
-	shouldUpdate := parent notNil and: [ self isFixed not ].
-	shouldUpdate 
-		ifTrue: [ parent updateInShapeCollection: self ]
+	shouldUpdate := parent notNil.
+
+	shouldUpdate
+		ifTrue: [ "We have to update the dirty rectangle with the old position first."
+			self invalidate.
+			self isFixed
+				ifTrue: [ encompassingRectangle := nil ]
+				ifFalse: [ parent updateInShapeCollection: self ].
+			"We then have to update the dirty rectangle with the new position."
+			self invalidate ]
 		ifFalse: [ encompassingRectangle := nil ]
 ]
 
@@ -630,8 +675,8 @@ RSShape >> setAsFixed [
 	"Per default, a shape is subject to the camera mouvement. If the camera is relocated, shapes appears to be relocated. This behavior can be avoided by sending the message #setAsFixed to a shape, which makes the shape fixed in the canvas. This is useful to define menus.
 
 	The message setAsFixed must be send after being added to a canvas"
-	parent ifNil: [ self error: 'Add first this shape in the canvas' ].
-	parent setAsFixed: self.
+	
+	parent ifNotNil: [ parent setAsFixed: self. ^ self ].
 	isFixed := true
 ]
 
@@ -660,6 +705,7 @@ RSShape >> shapeWithActionForPosition: position [
 RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
+	self invalidate.
 	parent signalUpdate
 ]
 
@@ -671,4 +717,9 @@ RSShape >> width [
 { #category : 'accessing' }
 RSShape >> width: aNumber [
 	self subclassResponsibility
+]
+
+{ #category : 'border' }
+RSShape >> withBorder [
+	self border: RSBorder new
 ]

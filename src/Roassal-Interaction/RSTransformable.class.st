@@ -10,32 +10,34 @@ You must provide this class with aCanvas instance or the initialized element mus
 
 "
 Class {
-	#name : #RSTransformable,
-	#superclass : #RSInteraction,
+	#name : 'RSTransformable',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'currentShape',
 		'currentMatrix',
 		'baseRectangle'
 	],
-	#category : #'Roassal-Interaction-Core'
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> bottomCenter: position rectangle: rectangle [
 	^ rectangle origin -> (rectangle corner x @ position y)
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> bottomLeft: position rectangle: rectangle [
 	^ (position x @ rectangle origin y) -> (rectangle corner x @ position y)
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> bottomRight: position rectangle: rectangle [
 	^ rectangle origin -> position
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTransformable >> boxShape [
 	^ RSPolygon new
 		noPaint;
@@ -44,7 +46,7 @@ RSTransformable >> boxShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransformable >> cornersAndSides [
 	^ {
 
@@ -58,7 +60,7 @@ RSTransformable >> cornersAndSides [
 	#leftCenter -> #left.}
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTransformable >> createHandleFor: association [
 	| handle |
 	handle := RSEllipse new
@@ -76,7 +78,7 @@ RSTransformable >> createHandleFor: association [
 	^ handle
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTransformable >> createHandlesFor: shape [
 	| handles circles |
 	handles := RSGroup new.
@@ -92,12 +94,12 @@ RSTransformable >> createHandlesFor: shape [
 	^ handles
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 RSTransformable >> cursorForCorner: aCorner [
 	^ Cursor perform: ('resize' , aCorner capitalized) asSymbol
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTransformable >> disableHandles: evt [
 	| shape key bool |
 	shape := evt shape.
@@ -108,7 +110,7 @@ RSTransformable >> disableHandles: evt [
 	shape propertyAt: key put: #disable
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTransformable >> enableHandles: evt [
 	| shape key |
 	shape := evt shape.
@@ -118,17 +120,17 @@ RSTransformable >> enableHandles: evt [
 	self showHandles: evt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransformable >> key [
 	^ self class name
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> leftCenter: position rectangle: rectangle [
 	^ (position x @ rectangle origin y) -> rectangle corner
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTransformable >> onShape: aShape [
 	aShape isNode ifFalse: [ ^ self ].
 	aShape announcer
@@ -137,7 +139,7 @@ RSTransformable >> onShape: aShape [
 		when: RSMouseDragEnd send: #enableHandles: to: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTransformable >> registerCanvasEventsIfNecessary: evt [
 	| canvas |
 	canvas := evt canvas.
@@ -148,12 +150,12 @@ RSTransformable >> registerCanvasEventsIfNecessary: evt [
 		to: self
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 RSTransformable >> removeCursor [
 	self setCursor: nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTransformable >> removeHandles: evt [
 	| canvas key handles |
 	canvas := evt canvas.
@@ -167,12 +169,12 @@ RSTransformable >> removeHandles: evt [
 	canvas signalUpdate
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> rightCenter: position rectangle: rectangle [
 	^ rectangle origin -> (position x @ rectangle corner y)
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTransformable >> rotationShape [
 	"TODO"
 	^ RSBitmap new
@@ -183,7 +185,7 @@ RSTransformable >> rotationShape [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTransformable >> saveCurrentShapeState [
 	| r matrix |
 	currentShape ifNil: [ ^ self ].
@@ -202,22 +204,22 @@ RSTransformable >> saveCurrentShapeState [
 		translation: currentShape position
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSTransformable >> saveHandles: handles evt: evt [
 	evt canvas propertyAt: self key put: handles
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 RSTransformable >> setCursor: cursor [
 	self currentWorld currentHand showTemporaryCursor: cursor
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 RSTransformable >> showCursor: evt [
 	self setCursor: (self cursorForCorner: evt shape model value)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSTransformable >> showHandles: evt [
 
 	| parent shape handles |
@@ -232,27 +234,27 @@ RSTransformable >> showHandles: evt [
 	evt signalUpdate
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 RSTransformable >> showRotationCursor [
 	self setCursor: Cursor webLink
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> topCenter: position rectangle: rectangle [
 	^ (rectangle origin x @ position y) -> rectangle corner
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> topLeft: position rectangle: rectangle [
 	^ position -> rectangle corner
 ]
 
-{ #category : #rectangle }
+{ #category : 'rectangle' }
 RSTransformable >> topRight: position rectangle: rectangle [
 	^ (rectangle origin x @ position y) -> (position x @ rectangle corner y)
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSTransformable >> updateCurrentShape: evt [
 
 	| handle newRec scale pos rect e |
@@ -285,7 +287,7 @@ RSTransformable >> updateCurrentShape: evt [
 	evt signalUpdate
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSTransformable >> updateHandles: evt [
 	| canvas handles rect base points circles matrix  |
 	currentShape ifNil: [ ^ self ].

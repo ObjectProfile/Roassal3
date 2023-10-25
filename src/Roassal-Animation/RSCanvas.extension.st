@@ -1,23 +1,23 @@
-Extension { #name : #RSCanvas }
+Extension { #name : 'RSCanvas' }
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> animationFrom: array [
 	^ self compositeAnimation: self sequentialAnimation from: array
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> compositeAnimation: aRSCompositeAnimation from: array [
 	aRSCompositeAnimation addAll: array.
 	self addAnimation: aRSCompositeAnimation.
 	^ aRSCompositeAnimation
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> currentTime [
 	^ self timer currentTime
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> newAnimation [
 	"Define a new transition animation, schedule it, and return it (useful to tune it).
 
@@ -41,32 +41,32 @@ RSCanvas >> newAnimation [
 	^ anime
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> parallelAnimation [
 	^ RSParallelAnimation new
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> parallelAnimationFrom: array [
 	^ self compositeAnimation: self parallelAnimation from: array
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> sequentialAnimation [
 	^ RSSequentialAnimation new
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> timer [
 	^ self propertyAt: #timer ifAbsentPut: [ RSDefaultTimer new ]
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> timer: aRSAbstractTimer [
 	self propertyAt: #timer put: aRSAbstractTimer
 ]
 
-{ #category : #'*Roassal-Animation' }
+{ #category : '*Roassal-Animation' }
 RSCanvas >> transitionAnimation [
 	^ RSTransitionAnimation new
 ]

@@ -2,25 +2,27 @@
 This roassal timer, changes the time depending the user's needs. Ideally you add time when you complete a task with the canvas
 "
 Class {
-	#name : #RSVariableTimer,
-	#superclass : #RSAbstractTimer,
+	#name : 'RSVariableTimer',
+	#superclass : 'RSAbstractTimer',
 	#instVars : [
 		'currentTime'
 	],
-	#category : #'Roassal-Animation-Core'
+	#category : 'Roassal-Animation-Core',
+	#package : 'Roassal-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSVariableTimer >> addTime: aDuration [
 	currentTime := currentTime + aDuration asMilliSeconds
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSVariableTimer >> currentTime [
 	^ currentTime
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSVariableTimer >> initialize [
 	super initialize.
 	currentTime := RSDefaultTimer new currentTime

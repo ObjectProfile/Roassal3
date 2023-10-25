@@ -41,18 +41,6 @@ RSLineBuilderTest >> testAllowRepetitionAndUseAssociations [
 ]
 
 { #category : 'tests' }
-RSLineBuilderTest >> testBorder [
-	| numberOfLines |
-	b canvas: canvas.
-	b connectFrom: [ :vv | vv // 2 ].
-
-	numberOfLines := canvas lines size.
-	self assert: numberOfLines > 0.
-
-	self assert: (canvas edges collect: #border) asSet size equals: 1
-]
-
-{ #category : 'tests' }
 RSLineBuilderTest >> testConnectFrom [
 	| e |
 	b canvas: canvas.

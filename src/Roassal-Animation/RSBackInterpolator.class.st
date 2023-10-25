@@ -10,26 +10,28 @@ RSEasingInterpolator backInOut
 Symmetric anticipatory easing; scales backIn for t in [0, 0.5] and backOut for t in [0.5, 1].
 "
 Class {
-	#name : #RSBackInterpolator,
-	#superclass : #RSEasingInterpolator,
+	#name : 'RSBackInterpolator',
+	#superclass : 'RSEasingInterpolator',
 	#instVars : [
 		'overshoot'
 	],
-	#category : #'Roassal-Animation-Easing'
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBackInterpolator >> initialize [
 	super initialize.
 	overshoot := 1.70158
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBackInterpolator >> interpolateIn: t [
 	^ t * t * ((overshoot + 1) * t - overshoot)
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBackInterpolator >> interpolateInOut: i [
 	"((t *= 2) < 1 ? t * t * ((s + 1) * t - s) : (t -= 2) * t * ((s + 1) * t + s) + 2) / 2;"
 	| t |
@@ -41,19 +43,19 @@ RSBackInterpolator >> interpolateInOut: i [
 			t * t * ((overshoot + 1) * t + overshoot) + 2 ])/2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBackInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.
 	^ t * t * ((overshoot + 1) * t + overshoot) + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBackInterpolator >> overshoot [
 	^ overshoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBackInterpolator >> overshoot: aNumber [
 	overshoot := aNumber
 ]

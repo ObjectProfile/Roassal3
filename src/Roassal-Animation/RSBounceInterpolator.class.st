@@ -10,8 +10,8 @@ RSEasingInterpolator bounceInOut
 Symmetric bounce easing; scales bounceIn for t in [0, 0.5] and bounceOut for t in [0.5, 1].
 "
 Class {
-	#name : #RSBounceInterpolator,
-	#superclass : #RSEasingInterpolator,
+	#name : 'RSBounceInterpolator',
+	#superclass : 'RSEasingInterpolator',
 	#instVars : [
 		'b1',
 		'b2',
@@ -24,10 +24,12 @@ Class {
 		'b9',
 		'b0'
 	],
-	#category : #'Roassal-Animation-Easing'
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBounceInterpolator >> initialize [
 	super initialize.
 	b1 := 4 / 11.
@@ -42,12 +44,12 @@ RSBounceInterpolator >> initialize [
 	b0 := 1 / b1 / b1
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBounceInterpolator >> interpolateIn: t [
 	^ 1 - (self interpolateOut: 1 - t)
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBounceInterpolator >> interpolateInOut: i [
 	"((t *= 2) <= 1 ? 1 - bounceOut(1 - t) : bounceOut(t - 1) + 1) / 2;"
 	| t |
@@ -57,7 +59,7 @@ RSBounceInterpolator >> interpolateInOut: i [
 		ifFalse: [ (self interpolateOut: t - 1) + 1 ] )/2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSBounceInterpolator >> interpolateOut: i [
 	| t |
 	t := i.

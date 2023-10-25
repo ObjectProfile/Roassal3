@@ -6,9 +6,9 @@ Class {
 		'shapeCollectionClass',
 		'canvas'
 	],
-	#category : 'Roassal-Global-Tests-Core',
+	#category : 'Roassal-Global-Tests-Rendering',
 	#package : 'Roassal-Global-Tests',
-	#tag : 'Core'
+	#tag : 'Rendering'
 }
 
 { #category : 'building suites' }
@@ -84,25 +84,6 @@ RSCollectionTest >> testAdd [
 ]
 
 { #category : 'tests' }
-RSCollectionTest >> testContainsPoint [
-	| box shape position |
-	position := 1000 asPoint.
-	box := RSBox new
-		size: 100 asPoint;
-		position: position;
-		yourself.
-	canvas add: box.
-	self assert: shapeCollection notEmpty.
-	shape := canvas shapeWithActionForPosition: position.
-	self assert: shape isNil.
-	shape := shapeCollection entryAtPoint: position.
-	self assert: shape equals: box.
-	box @ RSDraggable.
-	shape := canvas shapeWithActionForPosition: position.
-	self assert: shape equals: box
-]
-
-{ #category : 'tests' }
 RSCollectionTest >> testContainsPointInComposite [
 	| box shapes position composite |
 	position := 1000 asPoint.
@@ -119,6 +100,25 @@ RSCollectionTest >> testContainsPointInComposite [
 	self assert: shapes first equals: composite.
 	shapes := shapeCollection entriesAtPoint: position.
 	self assert: shapes size equals: 2.
+]
+
+{ #category : 'tests' }
+RSCollectionTest >> testContainsShapeWithInteractions [
+	| box shape position |
+	position := 1000 asPoint.
+	box := RSBox new
+		size: 100 asPoint;
+		position: position;
+		yourself.
+	canvas add: box.
+	self assert: shapeCollection notEmpty.
+	shape := canvas shapeWithActionForPosition: position.
+	self assert: shape isNil.
+	shape := shapeCollection entryAtPoint: position.
+	self assert: shape equals: box.
+	box @ RSDraggable.
+	shape := canvas shapeWithActionForPosition: position.
+	self assert: shape equals: box
 ]
 
 { #category : 'tests' }
@@ -197,30 +197,6 @@ RSCollectionTest >> testGetShapesFromRectangleInCompositeWithChildOutside [
 	self assert: listOfShapes asArray isEmpty
 ]
 
-{ #category : 'tests' }
-RSCollectionTest >> testIncludes [
-	| result |
-	shapeCollection addAll: { RSBox new size: 10. RSBox new position: 50@50; size: 10 asPoint}.
-	self assert: shapeCollection size equals: 2.
-	result := shapeCollection entriesAtPoint:  -100@ -100.
-	self assert: result isEmpty.
-	result := shapeCollection entryAtPoint: -100@ -100 ifNone: [ nil ].
-	self assert: result isNil
-]
-
-{ #category : 'tests' }
-RSCollectionTest >> testIsEmpty [
-
-	self assert: shapeCollection isEmpty
-]
-
-{ #category : 'tests' }
-RSCollectionTest >> testOneElement [
-
-	shapeCollection add: (RSBox new size: 10).
-	self deny: shapeCollection isEmpty
-]
-
 { #category : 'tests - removing' }
 RSCollectionTest >> testRemoveOneElement [
 	| box |
@@ -229,25 +205,4 @@ RSCollectionTest >> testRemoveOneElement [
 	box remove.
 	self assert: canvas shapes isEmpty.
 	self assert: shapeCollection isEmpty.
-]
-
-{ #category : 'tests' }
-RSCollectionTest >> testSortResultArray [
-
-	| shapes a b c d tree e |
-	shapes := { 
-		          ((a := RSBox model: 'a') -> { 1. 1 }).
-		          ((b := RSBox model: 'b') -> { 1. 2 }).
-		          ((c := RSBox model: 'c') -> { 3. 1 }).
-		          ((d := RSBox model: 'd') -> { 1. 4 }).
-		          ((e := RSBox model: 'e') -> { 1. 4. 1 }) }.
-	tree := RTreeCollection new.
-	tree sortResultList: shapes.
-
-	self assert: (shapes collect: #key) equals: { 
-			c.
-			e.
-			d.
-			b.
-			a }
 ]

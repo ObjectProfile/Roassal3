@@ -2,19 +2,21 @@
 I am a simple monitor
 "
 Class {
-	#name : #RSSimpleCanvasMonitorInteraction,
-	#superclass : #RSAbstractCanvasMonitorInteraction,
-	#category : #'Roassal-Interaction-Extra'
+	#name : 'RSSimpleCanvasMonitorInteraction',
+	#superclass : 'RSAbstractCanvasMonitorInteraction',
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSimpleCanvasMonitorInteraction >> initializeShape [
 	shape := RSLabel new
 		color: Color green;
 		yourself
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSSimpleCanvasMonitorInteraction >> updateShape [
 	shape text: self lastFramePerSecond asString, 'fps'
 ]

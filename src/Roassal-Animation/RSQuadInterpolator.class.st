@@ -11,17 +11,19 @@ Symmetric quadratic easing; scales quadIn for t in [0, 0.5] and quadOut for t in
 Also equivalent to RSEasingInterpolator poly exponent: 2.
 "
 Class {
-	#name : #RSQuadInterpolator,
-	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal-Animation-Easing'
+	#name : 'RSQuadInterpolator',
+	#superclass : 'RSEasingInterpolator',
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSQuadInterpolator >> interpolateIn: t [
 	 ^ t*t
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSQuadInterpolator >> interpolateInOut: i [
 	| t |
 	t := i *2.
@@ -32,7 +34,7 @@ RSQuadInterpolator >> interpolateInOut: i [
 			t * (2- t)+1 ]) /2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSQuadInterpolator >> interpolateOut: t [
 	^ t * (2 - t)
 ]

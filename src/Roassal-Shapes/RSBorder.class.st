@@ -58,15 +58,6 @@ Class {
 	#tag : 'Border'
 }
 
-{ #category : 'comparing' }
-RSBorder >> = anObject [
-	^ self == anObject or: [
-		anObject notNil and: [
-			width = anObject width and: [
-				paint = anObject paint and: [
-					style = anObject style ] ] ] ]
-]
-
 { #category : 'visiting' }
 RSBorder >> accept: visitor [
 	^ visitor visitBorder: self
@@ -167,9 +158,18 @@ c
 	self pStyle dashOffset: offset
 ]
 
-{ #category : 'comparing' }
-RSBorder >> hash [
-	^ (width hash hashMultiply + paint hash) hashMultiply + style hash
+{ #category : 'public' }
+RSBorder >> expandPoint: p1 to: p2 [
+	| vector unit w capStyle |
+
+	style ifNil: [ ^ p1 ].
+	capStyle := style capStyle.
+	capStyle == #capButt ifTrue: [ ^ p1 ].
+	w := self width / 2.
+
+	vector := p1 - p2.
+	unit := vector / (vector r max: 1).
+	^ p1 + (unit * w)
 ]
 
 { #category : 'initialization' }
@@ -232,6 +232,12 @@ RSBorder >> style: aStyle [
 { #category : 'accessing' }
 RSBorder >> width [
 	^ width
+]
+
+{ #category : 'accessing' }
+RSBorder >> width2 [
+	"the width divided by 2 because the border is always in the center, roassal does not use something like outliers in bloc"
+	^ width / 2
 ]
 
 { #category : 'accessing' }

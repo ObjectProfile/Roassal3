@@ -6,18 +6,20 @@ When the canvas is resized this interaction puts the camera view in the top left
 Because we have coordinates now, may be we can remove this class.
 "
 Class {
-	#name : #RSKeepCanvasPositionCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
-	#category : #'Roassal-Interaction-Controls'
+	#name : 'RSKeepCanvasPositionCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSKeepCanvasPositionCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSExtentChangedEvent send: #processEvent: to: self.
 	self processEvent: aCanvas
 ]
 
-{ #category : #'events - processing' }
+{ #category : 'events - processing' }
 RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
 	| canvas camera r padding topLeftPadding zero origin |
 	self removeRectanglesFor: evt canvas.
@@ -35,6 +37,6 @@ RSKeepCanvasPositionCanvasInteraction >> processEvent: evt [
 	evt signalUpdate
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSKeepCanvasPositionCanvasInteraction >> renderLegendOn: aLegendBuilder [
 ]

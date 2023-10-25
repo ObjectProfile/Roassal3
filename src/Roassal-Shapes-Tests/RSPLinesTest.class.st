@@ -73,8 +73,5 @@ RSPLinesTest >> testPosition [
 	self assert: line position equals: position + delta.
 
 	line translateTo: newPos.
-	self assert: line position equals: newPos.
-
-	"line position: 0@0.
-	self assert: line position equals: 0@0."
+	self assert: line position closeTo: newPos.
 ]

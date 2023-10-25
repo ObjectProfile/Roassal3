@@ -2,8 +2,8 @@
 I have a canvas monitor
 "
 Class {
-	#name : #RSGraphCanvasMonitorInteraction,
-	#superclass : #RSAbstractCanvasMonitorInteraction,
+	#name : 'RSGraphCanvasMonitorInteraction',
+	#superclass : 'RSAbstractCanvasMonitorInteraction',
 	#instVars : [
 		'polyline',
 		'label',
@@ -11,10 +11,12 @@ Class {
 		'polyScale',
 		'polygon'
 	],
-	#category : #'Roassal-Interaction-Extra'
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphCanvasMonitorInteraction >> box [
 	^ RSBox new
 		extent: 100@ 50;
@@ -23,7 +25,7 @@ RSGraphCanvasMonitorInteraction >> box [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSGraphCanvasMonitorInteraction >> defaultLabel [
 	^ RSLabel new
 		bold;
@@ -33,14 +35,14 @@ RSGraphCanvasMonitorInteraction >> defaultLabel [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSGraphCanvasMonitorInteraction >> defaultPolygon [
 	^ RSPolygon new
 		cornerRadii: 5;
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSGraphCanvasMonitorInteraction >> defaultPolyline [
 	^ RSPolyline new
 		controlPoints: #();
@@ -48,7 +50,7 @@ RSGraphCanvasMonitorInteraction >> defaultPolyline [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphCanvasMonitorInteraction >> initialize [
 	polyScale := NSScale linear
 		domain: { 1@0. 100@65 };
@@ -57,7 +59,7 @@ RSGraphCanvasMonitorInteraction >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGraphCanvasMonitorInteraction >> initializeShape [
 	shape := RSShapeFactory composite
 		noPaint;
@@ -66,22 +68,22 @@ RSGraphCanvasMonitorInteraction >> initializeShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphCanvasMonitorInteraction >> label [
 	^ label ifNil: [ label := self defaultLabel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphCanvasMonitorInteraction >> polygon [
 	^ polygon ifNil: [ polygon := self defaultPolygon ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGraphCanvasMonitorInteraction >> polyline [
 	^ polyline ifNil: [ polyline := self defaultPolyline ]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSGraphCanvasMonitorInteraction >> updatePolygonPaint [
 	| rect start |
 	rect := polygon encompassingRectangle.
@@ -95,7 +97,7 @@ RSGraphCanvasMonitorInteraction >> updatePolygonPaint [
 			stop: start - (0@ 50) )
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSGraphCanvasMonitorInteraction >> updateShape [
 	| cp |
 	frames add: self lastFramePerSecond.

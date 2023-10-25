@@ -2,53 +2,55 @@
 I create a popup from an object
 "
 Class {
-	#name : #RSSimplePopupBuilder,
-	#superclass : #RSObject,
+	#name : 'RSSimplePopupBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'labelBuilder',
 		'boxBuilder'
 	],
-	#category : #'Roassal-Interaction-Popup'
+	#category : 'Roassal-Interaction-Popup',
+	#package : 'Roassal-Interaction',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimplePopupBuilder >> boxBuilder [
 	^ boxBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimplePopupBuilder >> boxBuilder: aRSSimpleBoxBuilder [
 	boxBuilder := aRSSimpleBoxBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimplePopupBuilder >> boxFor: lbl [
 	^ self boxBuilder shapeFor: lbl
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSimplePopupBuilder >> initialize [
 	super initialize.
 	self labelBuilder: RSMultilineLabelBuilder new.
 	self boxBuilder: RSSimpleBoxBuilder new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimplePopupBuilder >> labelBuilder [
 	^ labelBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimplePopupBuilder >> labelBuilder: aLabelBuilder [
 	labelBuilder := aLabelBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimplePopupBuilder >> labelFor: anObject [
 	^ labelBuilder shapeFor: anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimplePopupBuilder >> shapeFor: anObject [
 	| lbl box |
 	lbl := self labelFor: anObject.
@@ -58,7 +60,7 @@ RSSimplePopupBuilder >> shapeFor: anObject [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimplePopupBuilder >> textBlock: aBlock [
 	labelBuilder textBlock: aBlock
 ]

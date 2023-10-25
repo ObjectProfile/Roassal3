@@ -2,36 +2,38 @@
 I excecute my animations at the same time
 "
 Class {
-	#name : #RSParallelAnimation,
-	#superclass : #RSCompositeAnimation,
-	#category : #'Roassal-Animation-Core'
+	#name : 'RSParallelAnimation',
+	#superclass : 'RSCompositeAnimation',
+	#category : 'Roassal-Animation-Core',
+	#package : 'Roassal-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSParallelAnimation >> continue [
 	super continue.
 	animations do: #continue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSParallelAnimation >> duration [
 	animations ifEmpty: [ ^ 0 asDuration ].
 	^ (animations collect: #allDuration) max
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSParallelAnimation >> pause [
 	super pause.
 	animations do: #pause
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSParallelAnimation >> start [
 	super start.
 	animations do: [ :anime | self startIfNessesary: anime ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSParallelAnimation >> step [
 	| activeAnimations activeSize |
 	self startStep.

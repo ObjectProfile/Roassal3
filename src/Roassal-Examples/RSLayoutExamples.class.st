@@ -624,14 +624,17 @@ RSLayoutExamples >> example20FlowLayout [
 	{
 		'Show/Hide Boxes'.
 		[
-		canvas shouldShowRectangles
+		canvas shouldShowEncompassingRectangles
 			ifTrue: [ canvas hideEncompassingRectangles ]
-			ifFalse: [ canvas showEncompassingRectangles ] ].
+			ifFalse: [ canvas showEncompassingRectangles ].
+		canvas camera invalidate. canvas signalUpdate ].
 		'Show/Hide Underlines'.
 		[
 		labels first isUnderlined
 			ifTrue: [ labels do: #normal ]
-			ifFalse: [ labels do: #underline ] ] } pairsDo: [ :s :a |
+			ifFalse: [ labels do: #underline ].
+		canvas camera invalidate. canvas signalUpdate
+		] } pairsDo: [ :s :a |
 		(newLabel value: s)
 			fontSize: 12;
 			when: RSMouseClick do: [
@@ -838,6 +841,7 @@ RSLayoutExamples >> example23RoassalCommitsWithTimeGaps [
 				pushBack ] ].
 
 	^ aCanvas
+		useRTree;
 		zoomToFit;
 		@ RSCanvasController
 ]

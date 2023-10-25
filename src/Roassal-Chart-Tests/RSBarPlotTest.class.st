@@ -22,7 +22,7 @@ RSBarPlotTest >> setUp [
 
 { #category : 'tests' }
 RSBarPlotTest >> test2BarPlots [
-	| d1 d2 extent vtick |
+	| d1 d2 extent vtick width |
 	d1 := #(4 10 5 9).
 	d2 := #(-5 -6 -3 -3 ).
 	plot := RSBarPlot new y: d1.
@@ -30,9 +30,10 @@ RSBarPlotTest >> test2BarPlots [
 	vtick := plot verticalTick withNoLabels.
 	plot removeHorizontalTicks.
 	plot build.
+	width := plot spine border width.
 	self
 		assert: plot canvas encompassingRectangle extent
-		equals: extent+(vtick configuration tickSize @0)
+		equals: extent+(vtick configuration tickSize @0)+(width / 2 @ width)
 ]
 
 { #category : 'running' }

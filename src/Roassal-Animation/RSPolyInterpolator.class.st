@@ -14,36 +14,38 @@ RSEasingInterpolator polyInOut
 Symmetric polynomial easing; scales polyIn for t in [0, 0.5] and polyOut for t in [0.5, 1]. If the exponent is not specified, it defaults to 3, equivalent to cubic.
 "
 Class {
-	#name : #RSPolyInterpolator,
-	#superclass : #RSEasingInterpolator,
+	#name : 'RSPolyInterpolator',
+	#superclass : 'RSEasingInterpolator',
 	#instVars : [
 		'exponent'
 	],
-	#category : #'Roassal-Animation-Easing'
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPolyInterpolator >> exponent [
 	^ exponent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPolyInterpolator >> exponent: aNumber [
 	exponent := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPolyInterpolator >> initialize [
 	super initialize.
 	self exponent: 3
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSPolyInterpolator >> interpolateIn: i [
 	^ i raisedTo: exponent
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSPolyInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
@@ -52,7 +54,7 @@ RSPolyInterpolator >> interpolateInOut: i [
 		ifFalse: [ 2 - ( ( 2 - t) raisedTo: exponent ) ]) / 2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSPolyInterpolator >> interpolateOut:  t [
 	^ 1 - ((1 -t) raisedTo: exponent)
 ]

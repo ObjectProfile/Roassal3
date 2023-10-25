@@ -2,16 +2,18 @@
 I define accessors for min and max scale value for some scale interactions
 "
 Class {
-	#name : #RSAbstractScaleInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSAbstractScaleInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'minScale',
 		'maxScale'
 	],
-	#category : #'Roassal-Interaction-Extra'
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractScaleInteraction >> initialize [
 	super initialize.
 	self
@@ -19,27 +21,27 @@ RSAbstractScaleInteraction >> initialize [
 		maxScale: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractScaleInteraction >> maxScale [
 	^ maxScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractScaleInteraction >> maxScale: aNumber [
 	maxScale := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractScaleInteraction >> minScale [
 	^ minScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractScaleInteraction >> minScale: aNumber [
 	minScale := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractScaleInteraction >> scaleFor: anEvent [
 	| delta |
 	delta := 1 / anEvent newScale.

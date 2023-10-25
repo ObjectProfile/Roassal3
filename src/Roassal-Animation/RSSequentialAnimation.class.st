@@ -2,26 +2,28 @@
 I wait until one animation ends to start the another animation
 "
 Class {
-	#name : #RSSequentialAnimation,
-	#superclass : #RSCompositeAnimation,
+	#name : 'RSSequentialAnimation',
+	#superclass : 'RSCompositeAnimation',
 	#instVars : [
 		'currentIndex'
 	],
-	#category : #'Roassal-Animation-Core'
+	#category : 'Roassal-Animation-Core',
+	#package : 'Roassal-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSSequentialAnimation >> continue [
 	super continue.
 	self currentDo: #continue
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSSequentialAnimation >> current [
 	^ animations at: currentIndex ifAbsent: [ nil ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSSequentialAnimation >> currentDo: block [
 	| current |
 	current := self current.
@@ -29,7 +31,7 @@ RSSequentialAnimation >> currentDo: block [
 	block value: current
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSSequentialAnimation >> currentHasCompleted [
 	| current |
 	current := self current.
@@ -37,25 +39,25 @@ RSSequentialAnimation >> currentHasCompleted [
 	^ current hasCompleted
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSequentialAnimation >> duration [
 	animations ifEmpty: [ ^ 0 asDuration ].
 	^ (animations collect: #allDuration) sum
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSSequentialAnimation >> pause [
 	super pause.
 	self currentDo: #pause
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSSequentialAnimation >> start [
 	super start.
 	currentIndex := 1
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSSequentialAnimation >> step [
 	self startStep.
 	self stepCurrent.
@@ -68,7 +70,7 @@ RSSequentialAnimation >> step [
 	self updateHasCompleted
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSSequentialAnimation >> stepCurrent [
 	| current |
 	current := self current.

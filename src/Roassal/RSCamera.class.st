@@ -135,6 +135,12 @@ RSCamera >> initialize [
 	originMode := RSCoordinates originCenterMiddle.
 ]
 
+{ #category : 'public' }
+RSCamera >> invalidate [
+	canvas ifNil: [ ^ self ].
+	self canvas dirtyRectangle: self visibleRectangle
+]
+
 { #category : 'accessing' }
 RSCamera >> matrix [
 	^ matrix
@@ -182,7 +188,8 @@ returns the value `25 @ 15`
 { #category : 'accessing' }
 RSCamera >> position: aPoint [
 	"Set the camera position"
-	matrix translation: aPoint
+	matrix translation: aPoint.
+	self invalidate
 ]
 
 { #category : 'accessing' }
@@ -218,15 +225,18 @@ RSCamera >> scale [
 { #category : 'accessing' }
 RSCamera >> scale: aFloatNumber [
 	"Set the scaling factor applied by the camera. A factor of 1.0 means that no zooming is applied. if the factor is < 1, then the perceived effect is a zoom out. If the factor is > 1, then the effect is a zoom out."
+
 	| oldScale |
 	scale = aFloatNumber ifTrue: [ ^ self ].
 	oldScale := scale.
 	"this method will call loadIdentity in camera matrix"
 	self privateScale: aFloatNumber.
-	self canvas announce: [ RSScaleChangedEvent new
-		canvas: self canvas;
-		oldScale: oldScale;
-		newScale: aFloatNumber ]
+	self canvas announce: [
+		RSScaleChangedEvent new
+			canvas: self canvas;
+			oldScale: oldScale;
+			newScale: aFloatNumber ].
+	self invalidate
 ]
 
 { #category : 'public' }
